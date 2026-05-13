@@ -1,232 +1,150 @@
-Received: from mx0b-0031df01.pphosted.com (mx0b-0031df01.pphosted.com [205.220.180.131])
+Received: from BL2PR02CU003.outbound.protection.outlook.com (mail-eastusazon11021109.outbound.protection.outlook.com [52.101.52.109])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 985FE25A33F;
-	Wed, 13 May 2026 13:31:59 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.180.131
-ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1778679121; cv=none; b=cV6MEZFEGjOE8YlZqiIhlU+Nqi3jki+Heax2XEJr5bcPrxZo43ikN9niODbvwTEutGipFKWe0cfidoTTKngmPYbaKF57rNYhTCvPiDdVKQF+3RrJUsXpecT49Tq12dkr6DIVrugrvKShnZvpehqBGUsB8Leo+gRJv09RiowI03k=
-ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1778679121; c=relaxed/simple;
-	bh=JR52Ov9pxs+GhxeSP7Wdp7k5v0uGN4/ysN2z3C1z1uM=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=rRX/s90KFlhlQYcmr7w6U6WN4e+Sc4jS1dKq417eu+KJEQnLEq+MvQ4dfLCo3yJiyL+ueOySW1NU7XnC/9Gq85fYjDduvaUwOzXLHFRzUaD+P0Ki4PWnHa/U2h14/aDzxOgKJy3xRlwIMP/1ng646SEb5k32x4j6XB119OV7ZsU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com; spf=pass smtp.mailfrom=qualcomm.com; dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b=L35RNrRb; arc=none smtp.client-ip=205.220.180.131
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=qualcomm.com
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7D31E3F412B
+	for <sashiko-reviews@lists.linux.dev>; Wed, 13 May 2026 13:46:43 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=fail smtp.client-ip=52.101.52.109
+ARC-Seal:i=2; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
+	t=1778680004; cv=fail; b=TUNyJ1YYSu0PdYqXpuUX1fdZmPdOBN+GXCTYglkoUVvJesgQ8/fC9YHXbkJ/vbo5gVBLb8qLOc0eXwJpaCliHTHilA04+aX+vV5IItZqKwDvm+Qn9jj5skEcEqnqETryyfgQ01skL7grrBIfExO2wOyjUwUponbrCDhlRZYDiFg=
+ARC-Message-Signature:i=2; a=rsa-sha256; d=subspace.kernel.org;
+	s=arc-20240116; t=1778680004; c=relaxed/simple;
+	bh=gR6jGxC+mY583HlwlLHlfzOZND3SuX3g+bh1rO5SHgA=;
+	h=Message-ID:Date:Subject:To:Cc:References:From:In-Reply-To:
+	 Content-Type:MIME-Version; b=h/F8h5RWMl6Rr4TDjQLfzeV+yhuW4S6ndETWKiNO6oM4gtJxJes15bfshCIWHC3S/mhP10W+3iljVhjum9lOjaxpLeS1VJu3m7Moo0TLP2gIO9LlzbQpRiiRrJjM41s6xvRh0u367OoOZDYOkVyFEgPk1y0TO8gTIZkOkWbm1/k=
+ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=cornelisnetworks.com; spf=pass smtp.mailfrom=cornelisnetworks.com; dkim=pass (2048-bit key) header.d=cornelisnetworks.com header.i=@cornelisnetworks.com header.b=WHb+vdZE; arc=fail smtp.client-ip=52.101.52.109
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=cornelisnetworks.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=cornelisnetworks.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b="L35RNrRb"
-Received: from pps.filterd (m0279868.ppops.net [127.0.0.1])
-	by mx0a-0031df01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id 64DAVLFS3430151;
-	Wed, 13 May 2026 13:31:51 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=qualcomm.com; h=
-	cc:content-transfer-encoding:content-type:date:from:in-reply-to
-	:message-id:mime-version:references:subject:to; s=qcppdkim1; bh=
-	+Z9CF0PHRUZfgrMFz7Ke/C/05Lw0TTbfxjvrqLAahqw=; b=L35RNrRbcAY+NK6Z
-	jDurbt2fX7mVDoQdYaMCWxYWr+xP6uJKyhp/+TEbZboEQL86TFzAQxnDK4RyNpwX
-	J+w4VNnjjt5o+TgSz34DxnGALaA6XiPSpDaW3d16kaN2zlfzDorz+GcglHrZzrCL
-	MpWrpbUVJtjRQDuTMLvfTz92mBDSsQeXLKHJ3D3iaTzpXzP8oHXCtmqPjwqzwbqr
-	LsrYf2+emPAGeH0zMmH9Tfj2vTLKJWm0yVbHZ9aGXAyYMmrYju1hk+QYdNk08gd6
-	w3ZbqVCrcH4TB5f1wPee/v42iMt7zumd3aVSbMdb3VnoQQso8lK5u9abbXMdwWRH
-	ByhV9A==
-Received: from apblrppmta01.qualcomm.com (blr-bdr-fw-01_GlobalNAT_AllZones-Outside.qualcomm.com [103.229.18.19])
-	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 4e4qmcgmgr-1
-	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Wed, 13 May 2026 13:31:50 +0000 (GMT)
-Received: from pps.filterd (APBLRPPMTA01.qualcomm.com [127.0.0.1])
-	by APBLRPPMTA01.qualcomm.com (8.18.1.7/8.18.1.7) with ESMTP id 64DDVlVW014639;
-	Wed, 13 May 2026 13:31:47 GMT
-Received: from pps.reinject (localhost [127.0.0.1])
-	by APBLRPPMTA01.qualcomm.com (PPS) with ESMTPS id 4e1x0jemsh-1
-	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Wed, 13 May 2026 13:31:47 +0000 (GMT)
-Received: from APBLRPPMTA01.qualcomm.com (APBLRPPMTA01.qualcomm.com [127.0.0.1])
-	by pps.reinject (8.18.1.12/8.18.1.12) with ESMTP id 64DDVl5L014632;
-	Wed, 13 May 2026 13:31:47 GMT
-Received: from hu-devc-hyd-u22-c.qualcomm.com (hu-kotarake-hyd.qualcomm.com [10.213.97.140])
-	by APBLRPPMTA01.qualcomm.com (PPS) with ESMTPS id 64DDVlxs014627
-	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Wed, 13 May 2026 13:31:47 +0000 (GMT)
-Received: by hu-devc-hyd-u22-c.qualcomm.com (Postfix, from userid 2389607)
-	id 4DAD8B35; Wed, 13 May 2026 19:01:46 +0530 (+0530)
-Date: Wed, 13 May 2026 19:01:46 +0530
-From: Rakesh Kota <rakesh.kota@oss.qualcomm.com>
-To: sashiko-reviews@lists.linux.dev
-Cc: Komal Bajaj <komal.bajaj@oss.qualcomm.com>, robh@kernel.org,
-        linux-phy@lists.infradead.org, neil.armstrong@linaro.org,
-        vkoul@kernel.org, olteanv@gmail.com, krzk+dt@kernel.org,
-        conor+dt@kernel.org, devicetree@vger.kernel.org
-Subject: Re: [PATCH 3/4] arm64: dts: qcom: Add Shikra CQM SoM platform
-Message-ID: <20260513133146.doe4rr6ahb4nrri4@hu-kotarake-hyd.qualcomm.com>
-References: <20260512-shikra-dt-v1-3-716438330dd0@oss.qualcomm.com>
- <20260513042836.073F9C2BCB7@smtp.kernel.org>
+	dkim=pass (2048-bit key) header.d=cornelisnetworks.com header.i=@cornelisnetworks.com header.b="WHb+vdZE"
+ARC-Seal: i=1; a=rsa-sha256; s=arcselector10001; d=microsoft.com; cv=none;
+ b=U86NKykpaqMdbFayx2a+yKK1YXsxaBCUoEexADW/b62Pny8HLljxD72CAEQSvjUjkcNO/8RTwcBUahkf0hp0lfncxF0ewFNGRFttgCHlfaEm2sGgFmFtJHxYVlEpeZO1XqcrrKFW+kgx117PTrb2hdId0f7WtcMADMQg8VxzfBmtSns4PCciilDBtNrUJmMgHMOZc41lgUYC9HZUCZ+IUHyerAh0JrorQq03Jo7pUo6lajiZfjrt2s6XJL04G7jKhk2egKxL0fTUtHLpbVDQ8DfLBxUCuu5uza4knuTjMRRBtU25BGPeouj7ykC5BjRJcV2FoqaJxR+L+BvVuC4Jhw==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com;
+ s=arcselector10001;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
+ bh=noRzeOOAzLAfk/knBfmmtRzcaWhVlNxZXf17kLkbC7Y=;
+ b=O+ZlHkN8cPCOWQrzIfSQs8Rv3L0mhWChemT/E89NiuDNTF+7Un46hB9jdx5C09t31+sLrzQ3JocgHugVqDi/fJmD3UnH0OisftY4I5/ukW4ysTQZQJBhLwzfpCyRzYjEVx7gmVWUjPXXNE39GXs59CSwdAXbNa2jXPXcLAiOw604dFypsL3oEg9EeTzUFv9SzYTJd2tpivgpUbEWyh5rdwDRPkpWcOxZxYmbbh/N9P3FEmZ/hMLnZFt6oG7JXsrOsoUddawgD+3Ydkt0T9vOOsPhs+GOooaPks5xo9Jp9wV7zQ1CJUHitxh1Br+zIP1SavV2htqMPoNefHeTg8Eg/g==
+ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
+ smtp.mailfrom=cornelisnetworks.com; dmarc=pass action=none
+ header.from=cornelisnetworks.com; dkim=pass header.d=cornelisnetworks.com;
+ arc=none
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=cornelisnetworks.com;
+ s=selector1;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
+ bh=noRzeOOAzLAfk/knBfmmtRzcaWhVlNxZXf17kLkbC7Y=;
+ b=WHb+vdZEm7Leg2Qh3fFtdmFh4iN5sUABqXETyNwFnTajs5LLxECpqIpbi7sz4uUNLaj1zykwdnR/ZUU0uqcPi+uiIbp1ODJ8547/N3hE1b9HrPMH6yPf+J1LfHCWl2gVG+VBKRarBLD2qkBmEUnTLPXuO8lA6GG7hV0CVggemzavSPxoM5DcNqKAN4O+mBDwUnjOtEiMt2e5T5nYfxKMEIJ/p+TRkSRfFsa+EHaQmqAta/Gp+j9SxpQ9ZzsukVpuU4ni5XC7H9ggyeIc03bmkEYiBnpMhrJSNATV1w5ysvawg8Tt6AWfxNSHSL2KM4iqhTnJn9Rd6z7B7TNDcXL1Dg==
+Authentication-Results: dkim=none (message not signed)
+ header.d=none;dmarc=none action=none header.from=cornelisnetworks.com;
+Received: from SA1PR01MB7248.prod.exchangelabs.com (2603:10b6:806:1f3::14) by
+ DS1PR01MB8967.prod.exchangelabs.com (2603:10b6:8:21b::13) with Microsoft SMTP
+ Server (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
+ 15.20.9891.23; Wed, 13 May 2026 13:46:38 +0000
+Received: from SA1PR01MB7248.prod.exchangelabs.com
+ ([fe80::42ce:7e6d:25b5:95be]) by SA1PR01MB7248.prod.exchangelabs.com
+ ([fe80::42ce:7e6d:25b5:95be%6]) with mapi id 15.21.0025.012; Wed, 13 May 2026
+ 13:46:37 +0000
+Message-ID: <a644d363-8a55-484b-994d-5a617b64526b@cornelisnetworks.com>
+Date: Wed, 13 May 2026 09:45:57 -0400
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH v3 02/10] IB/rdmavt: Don't abuse udata and
+ ib_respond_udata()
+To: Jason Gunthorpe <jgg@nvidia.com>, sashiko-reviews@lists.linux.dev
+Cc: linux-hyperv@vger.kernel.org
+References: <2-v3-4effdebad75a+e1-rdma_udata_rep_jgg@nvidia.com>
+ <20260513031237.4280DC2BCB0@smtp.kernel.org>
+ <20260513113835.GE7655@nvidia.com>
+Content-Language: en-US
+From: Dennis Dalessandro <dennis.dalessandro@cornelisnetworks.com>
+In-Reply-To: <20260513113835.GE7655@nvidia.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
+X-ClientProxiedBy: CH0PR08CA0009.namprd08.prod.outlook.com
+ (2603:10b6:610:33::14) To SA1PR01MB7248.prod.exchangelabs.com
+ (2603:10b6:806:1f3::14)
 Precedence: bulk
 X-Mailing-List: sashiko-reviews@lists.linux.dev
 List-Id: <sashiko-reviews.lists.linux.dev>
 List-Subscribe: <mailto:sashiko-reviews+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:sashiko-reviews+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=iso-8859-1
-Content-Disposition: inline
-Content-Transfer-Encoding: 8bit
-In-Reply-To: <20260513042836.073F9C2BCB7@smtp.kernel.org>
-X-QCInternal: smtphost
-X-QCInternal: smtphost
-X-Proofpoint-GUID: y4GziVTAWi6UdMV5wtMI6r33G-6ETHa7
-X-Authority-Analysis: v=2.4 cv=Hu5G3UTS c=1 sm=1 tr=0 ts=6a047d47 cx=c_pps
- a=Ou0eQOY4+eZoSc0qltEV5Q==:117 a=Ou0eQOY4+eZoSc0qltEV5Q==:17
- a=8nJEP1OIZ-IA:10 a=NGcC8JguVDcA:10 a=VkNPw1HP01LnGYTKEx00:22
- a=u7WPNUs3qKkmUXheDGA7:22 a=ZpdpYltYx_vBUK5n70dp:22 a=c92rfblmAAAA:8
- a=EUspDBNiAAAA:8 a=JfrnYn6hAAAA:8 a=VwQbUJbxAAAA:8 a=RkLvNQZQ2IQHFO4gP24A:9
- a=3ZKOabzyN94A:10 a=wPNLvfGTeEIA:10 a=GvGzcOZaWPEFPQC_NcjD:22
- a=1CNFftbPRP8L7MoqJWF3:22
-X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwNTEzMDEzOCBTYWx0ZWRfX7EWw0QuoGMYa
- dIEqMmNVfYDKFAJo0aMnw0CmdjYtD0p355iZ0aip10De/KdxMNA3HdLQ4+4Sny7qGMnhhXblQM1
- hUbtF0eo+1FRLenY8eJ0rjmo0rcQth0IyVS7WML2Ko2YcrmfSWJ7QwP5WIX2PRVfeLHxLcqYkBE
- vMoKcymcWmaTRbLvde5aRk2RIny4B8LKIgAWh+m2edDsvSleK321PHkNE4VKidmeNkKNSPU0QDA
- HYWI8fEqG5OhwkHtUPParPdN+KhYOZm2C4YzffMXKvxXvAlfTuvyPa8U0hn4LVEPK4kNbYJkcou
- pOe4CBb1No5czzB6ZwNMk7QvLih6hf8fM5WcMlrMCOck2JolFcNgDxLUi1LK4qdsh7c9H/dNSQC
- xe0q3wp95JxRFevioAEpegROiOzGRPJ7xmK5Ow/OYHc64Nf2NHqvg3abRb6/uXeErvaZgCq+FUQ
- FQpSf2keJVSd0aIC8YA==
-X-Proofpoint-ORIG-GUID: y4GziVTAWi6UdMV5wtMI6r33G-6ETHa7
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.293,Aquarius:18.0.1143,Hydra:6.1.51,FMLib:17.12.100.49
- definitions=2026-05-13_01,2026-05-08_02,2025-10-01_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
- phishscore=0 malwarescore=0 impostorscore=0 priorityscore=1501 spamscore=0
- clxscore=1011 bulkscore=0 suspectscore=0 adultscore=0 lowpriorityscore=0
- classifier=typeunknown authscore=0 authtc= authcc= route=outbound adjust=0
- reason=mlx scancount=1 engine=8.22.0-2605050000 definitions=main-2605130138
+X-MS-PublicTrafficType: Email
+X-MS-TrafficTypeDiagnostic: SA1PR01MB7248:EE_|DS1PR01MB8967:EE_
+X-MS-Office365-Filtering-Correlation-Id: d620fca1-de1e-4e6f-1a9a-08deb0f60e08
+X-MS-Exchange-AtpMessageProperties: SA
+X-MS-Exchange-SenderADCheck: 1
+X-MS-Exchange-AntiSpam-Relay: 0
+X-Microsoft-Antispam:
+	BCL:0;ARA:13230040|376014|1800799024|366016|55112099003|56012099003|18002099003|22082099003;
+X-Microsoft-Antispam-Message-Info:
+	nfFz/ORf0k3eoI1JlFHhP5SgaXYjrAZVQFdNT1SpgFohNTdlfc5ruYeubO5Kq+DICRed/vtCzt+/DhuW/Fv5zc943QuhJks0CbH+rO0cfAwwjZX0F+s0HjrAapcP2KJqXtOWjRi2JkpRAy0SrFsAKCbwBg7SA9lAc4NvFllJRyaqAjvfqM0PQWx3uAqjiF9wgr8hyEXMY3sK04v3zptXggQFDTRjckkTXff8tAxFGQs9gi4E8DlvIIvYj6LryiT/Qa5xcuXxwQbWrWR4hs9WBwVaTUAq9R4SFhcVviQNY1EJFlrYOGAHHRrdEZqpZmrXmwryk7ORa+FDqHFd9S7Jy/wGJkt68DRicX6c7pkwFCBtpVGGGn4uJBFg9q3gVcnJKHo8vm1M8N2l6q0NTlZCcEQ5gt1DuAnt6laUJRWWqFGPUi7lIixDUeNtMl/VJQgkyxMa42pPfxs2L7jUYRmdgME4Vq6luiOkyrQrDb90ENOXxC0jKTb45O+A69IvKJEQiYLJpRCp1lppV0EPqJahxNhGiIoWXVqpATU9mGI/SoT+8Ep0SxThedfwreyIN9cEVAk4/Z1S5bKKLI+E+XX8FlupczcE9eoI5gocbvTnlensizcDPM9X9VehcBHR7zlRePuomFJzuJ1v+GR8+U3Npz8UGt1B3Gs20g/ldjfATkAtzOtulRnUPn8Q5RKRKDeq
+X-Forefront-Antispam-Report:
+	CIP:255.255.255.255;CTRY:;LANG:en;SCL:1;SRV:;IPV:NLI;SFV:NSPM;H:SA1PR01MB7248.prod.exchangelabs.com;PTR:;CAT:NONE;SFS:(13230040)(376014)(1800799024)(366016)(55112099003)(56012099003)(18002099003)(22082099003);DIR:OUT;SFP:1102;
+X-MS-Exchange-AntiSpam-MessageData-ChunkCount: 1
+X-MS-Exchange-AntiSpam-MessageData-0:
+	=?utf-8?B?TllxcVFyNFhWZjVENlZSZWpNWmZWMk9Pb0hmYUcrYlFPN0F1aGZ1cnc5M1M0?=
+ =?utf-8?B?RnlmVUttNythZlhKS2d6Mlc1bjRvREdOWnRPaktYdDNSNHo3dks1OHpVL0du?=
+ =?utf-8?B?UGhUeXJGRHRqZUs4bzhmVHVseThvNUJHNUxiMEFIakNJdVBud2tJMFpaYzJt?=
+ =?utf-8?B?Rjl1SUlpWUVpUUdmMktveU1pYTdybHJNSWI2QmFlN1k1WnNPUVN5bE5Pb2tL?=
+ =?utf-8?B?UGZRZWhQbFJ3N0xySGpWaGFHaEZsY3RqVVRWUmpJa1BxblNpWmZmZ1ZEWEhM?=
+ =?utf-8?B?eVBmaTN0VSs3bnBKNjhwWFVkNHljV1RmcVVWcFNUbWZNS0N6dHkwK0puTG1m?=
+ =?utf-8?B?Z2g1OVRNbFNJLzNSU2tXUEVjVXNBOGdTaGl3dmFNblVZNitUQjM4eW93V0Ex?=
+ =?utf-8?B?S1ZLdDFlZHVyQzdBTUtsTktYN3FVT1RrVHdqdS90QVdVbzYyNS9zTVhDaFcx?=
+ =?utf-8?B?OTJZRXVFeGVCUGFWdTZqNFBFUVlUaVNrOG5aeTVGSlVNMDhqMTk3R0RFc24r?=
+ =?utf-8?B?M1pENFZJUkMvMVVMTVFZRGRoWVVLckEwMW9wWTdMZURaN2k2WE4rS0F6Rllo?=
+ =?utf-8?B?MUZRS3Q5Y2FzN0J2aEo1ZWdSNW0zNDBqOWgrdnZiMHlDU3QzN0hDZVdoampO?=
+ =?utf-8?B?cjBzcEVzTTdPbmM4NllBQk1NR2VJYnUzck9NWGMremluNjNqcmNVWGY1NG82?=
+ =?utf-8?B?ZE90ZDhhOVh1dDNuTE1VbWw3M3lSb0tmblArR0tKR0tlVlBZK0J1Z0EvdTBr?=
+ =?utf-8?B?QTd6YlZyMzltbnl4RHM1UjRSNWpQZ0FYdnNjQ21vT3FrWEc1eHZNNzZLRWEw?=
+ =?utf-8?B?eTlKalFvZTh0eWs2TTRlcUlwR3dsRTJkZ2FtWGlHejFjSDArUlZCa1VsTXlL?=
+ =?utf-8?B?SDI5cmVuSHNOeCtrN0kxN2d4WDJjUytoVm9qLzVhUk9jaVBDSW5jVkJJMHdL?=
+ =?utf-8?B?YUQ0Ty9BaHREVzJhY01MT0lkT2cyYWN3L2ZDQjRjdlRwV0hsWStudUlzZWZi?=
+ =?utf-8?B?cFBGSCsvTjhyWjhSVWJLS0tMZS93dDQ0WVJnamRmZm1weGpjUCs5anBsVlYy?=
+ =?utf-8?B?dk9KeUxZOGw2RXhVNVZmUGxOVVNla09GeUtmL1kyV01VT1hjdjhNSW9SZnM0?=
+ =?utf-8?B?MkZMTFpPeU55RHFwNnpPYTR2REZRb0lCWHRHWWgzblpzL1hFM3Z0TTRienYr?=
+ =?utf-8?B?MnBRclk5bkljYkIrMHY0WS9UaUxqV3FzUStMQXVvUndzNGNzWUs1dGdEcUhl?=
+ =?utf-8?B?ZllUWU5KZDdBcnp0Wm1GYmdLRnNaSTNTNmRQelRnMVUwLzNRRWIwRWtjbXNs?=
+ =?utf-8?B?UHZ5d3gyaFhuMGJWaXZraEZpVHBBVTI1S3ZTZ283UXA5Y2NtRHV1SmVWVHR1?=
+ =?utf-8?B?UmxmWXdScDVUdzZ6Z29BSWNIYnkrVUlQWGtDVjEyaGc3SWQraTk2ZTdoVmJK?=
+ =?utf-8?B?NkhrUDlnNnVuM3UvM0xDTDFhY1pjVUMzZG9wK3A1S1RUMVNRSnR1MllqN0l1?=
+ =?utf-8?B?SXJMRUlUKzFqZVk0UDVjT2VTcXh0MldvN0NSWFUvc0NKT0QxOHFjR0NtZlBO?=
+ =?utf-8?B?R0xveklpUGgxbkhUcUFVZk9EU29LMHJsZ3BQb3lYa1pKS2pFVkNDeXZOaW5j?=
+ =?utf-8?B?elBrNjhwV0R1eDdzZTdpeC8yWnFPcVd5NTJVd25jb0pYMFV0TDRuSzNwcUd0?=
+ =?utf-8?B?ajdjajhmOHUvOWRjd3Q3TGp4ZEpSSy93Z1V1em1aT2xYeDR2Z01uSytoRDFN?=
+ =?utf-8?B?RFlzUlFNMFRkTXM2YXhweEwySnlqNzZ4SkMxSXZ3cnY1cmgvamZ6UWthVHBt?=
+ =?utf-8?B?VG1VQlFtOVU4bzRweEdRYjRSRDBpQ2h2dTkvTDVpeUg4MjhyZllFOTdjWVgr?=
+ =?utf-8?B?MnpjZ3JSNEpDa2taKzJTZzN6U3kwTzhEd2hoWjdna0ZSa0dtTlZ1MmFGM2Rx?=
+ =?utf-8?B?KzBPQjUrVTlIWU5rK0dDQWdKVGpwVlBIM3ZNMWFlRGxnclp5bE8vUUtnWHhq?=
+ =?utf-8?B?MU9MUmE2eCtSOGRONnRCU1RyVDBQR3g3VHc5RFpjb2F4ekFURno0MnNkbUQ5?=
+ =?utf-8?B?U0Q0UVEvL294ZjFNRTNXNTV5MEloTHZVdGNBTEpKOUNpYWVUSkdwbWRremx3?=
+ =?utf-8?B?UHYyNlAveEFYMTAwd1prZjdBWXdFUzBMNmlWWEhuZ3MvOGUzL1cxaVA0am5o?=
+ =?utf-8?B?NGhYamtJRjJ3emZuVlNZd1BnMUFaYW5aMjNVZ2VESlNwWXlCWFlxVlRSMVJY?=
+ =?utf-8?B?YzNBUWRrVmIrV05pc1NXYUI2MlRXRUxib2VucTRackxEdTRFUWtLVUhDaTly?=
+ =?utf-8?B?a29NMUMvNFVmOFNWUVRNRDlaK2Q5SzYxand4cklPdG8zd2FOOGNuUHBhZEVp?=
+ =?utf-8?Q?PcmG/BuFOc5OP1QtQJEfijCdKMSVymp8yCu9f?=
+X-OriginatorOrg: cornelisnetworks.com
+X-MS-Exchange-CrossTenant-Network-Message-Id: d620fca1-de1e-4e6f-1a9a-08deb0f60e08
+X-MS-Exchange-CrossTenant-AuthSource: SA1PR01MB7248.prod.exchangelabs.com
+X-MS-Exchange-CrossTenant-AuthAs: Internal
+X-MS-Exchange-CrossTenant-OriginalArrivalTime: 13 May 2026 13:46:37.8716
+ (UTC)
+X-MS-Exchange-CrossTenant-FromEntityHeader: Hosted
+X-MS-Exchange-CrossTenant-Id: 4dbdb7da-74ee-4b45-8747-ef5ce5ebe68a
+X-MS-Exchange-CrossTenant-MailboxType: HOSTED
+X-MS-Exchange-CrossTenant-UserPrincipalName: Pcia8W8hLgPKkLgA43LwNG+y26jSiJR0CN662KDJInSQUyMNjQlci6jWII+NchL4NlkC/24JSVBdhtCY/Fa4aEioe/phXn+Mm43LGvQ8o660OYZMMWetaT05/L0/8Tio
+X-MS-Exchange-Transport-CrossTenantHeadersStamped: DS1PR01MB8967
 
-On Wed, May 13, 2026 at 04:28:35AM +0000, sashiko-bot@kernel.org wrote:
-> Thank you for your contribution! Sashiko AI review found 2 potential issue(s) to consider:
-> - [High] The PMIC regulator definitions omit their required input supply dependencies (e.g., `vdd_s2-supply`, `vdd_l3-supply`), breaking the power hierarchy.
-> - [Medium] The device tree inaccurately hardcodes the `compatible` string to a different PMIC model (`qcom,rpm-pm2250-regulators`) instead of explicitly identifying the actual hardware (PM4125).
-> --
+On 5/13/26 7:38 AM, Jason Gunthorpe wrote:
+> On Wed, May 13, 2026 at 03:12:36AM +0000, sashiko-bot@kernel.org wrote:
+>> Thank you for your contribution! Sashiko AI review found 5 potential issue(s) to consider:
+>> - [Critical] TOCTOU heap buffer overflow due to unvalidated `num_sge` from user-shared memory.
+>> - [High] Memory leak of the kernel queue structure (`srq->rq.kwq`) on user-backed SRQ modifications.
+>> - [High] Locking imbalance and freeing memory while locked.
+>> - [High] Inconsistent state and Use-After-Free on error path.
+>> - [Low] Uninitialized variable compiler warning for `offset_addr`.
+>> --
 > 
-> commit 457abf6e7ac410430c866842e08e602ec3daaa51
-> Author: Komal Bajaj <komal.bajaj@oss.qualcomm.com>
-> 
-> arm64: dts: qcom: Add Shikra CQM SoM platform
-> 
-> Add device tree include for the CQM variant of the Shikra System-on-Module.
-> This variant integrates the Shikra SoC and PM4125 PMIC. The DTSI includes
-> the common shikra.dtsi and adds PM4125 PMIC regulator definitions.
-> 
-> > diff --git a/arch/arm64/boot/dts/qcom/shikra-cqm-som.dtsi b/arch/arm64/boot/dts/qcom/shikra-cqm-som.dtsi
-> > new file mode 100644
-> > index 0000000000000..401e71720519d
-> > --- /dev/null
-> > +++ b/arch/arm64/boot/dts/qcom/shikra-cqm-som.dtsi
-> [ ... ]
-> > +&rpm_requests {
-> > +	regulators {
-> > +		compatible = "qcom,rpm-pm2250-regulators";
-> 
-> Since the commit message indicates this is a PM4125 PMIC, should the
-> compatible string include a specific identifier for the actual hardware?
-> 
-> Using a specific identifier like "qcom,rpm-pm4125-regulators" alongside
-> the fallback allows the kernel to apply specific quirks if PM4125 errata
-> are discovered later.
->
-PM2250 and PM4125 share identical regulator hardware with no functional
-differences. Therefore, using qcom,rpm-pm2250-regulators as the
-compatible string is sufficient i think.
+> These are all pre-existing and rvt is too confusing to try to fix be
+> me. Dennis will have to handle them
 
-> > +
-> > +		pm4125_s2: s2 {
-> > +			regulator-min-microvolt = <1000000>;
-> > +			regulator-max-microvolt = <1200000>;
-> > +		};
-> 
-> Do these regulators need to explicitly define their input supply dependencies
-> such as vdd_s2-supply?
-> 
-> Without these properties, the regulator framework might be unaware that the
-> PMIC regulators draw power from upstream supplies.
-> 
-> If the kernel dynamically manages the upstream supply and its reference count
-> drops to zero, could it be disabled, causing an unexpected power loss for
-> downstream components?
-> 
-As per the Qualcomm system design, the parent-child supply relationships
-for these regulators are managed by the AOP (Always-On Processor) FW.
+Will take care of it.
 
-regards
-Rakesh Kota
-> [ ... ]
-> 
-> -- 
-> Sashiko AI review · https://sashiko.dev/#/patchset/20260512-shikra-dt-v1-0-716438330dd0@oss.qualcomm.com?part=3
-> 
-> -- 
-> linux-phy mailing list
-> linux-phy@lists.infradead.org
-> https://lists.infradead.org/mailman/listinfo/linux-phy
-On Wed, May 13, 2026 at 04:28:35AM +0000, sashiko-bot@kernel.org wrote:
-> Thank you for your contribution! Sashiko AI review found 2 potential issue(s) to consider:
-> - [High] The PMIC regulator definitions omit their required input supply dependencies (e.g., `vdd_s2-supply`, `vdd_l3-supply`), breaking the power hierarchy.
-> - [Medium] The device tree inaccurately hardcodes the `compatible` string to a different PMIC model (`qcom,rpm-pm2250-regulators`) instead of explicitly identifying the actual hardware (PM4125).
-> --
-> 
-> commit 457abf6e7ac410430c866842e08e602ec3daaa51
-> Author: Komal Bajaj <komal.bajaj@oss.qualcomm.com>
-> 
-> arm64: dts: qcom: Add Shikra CQM SoM platform
-> 
-> Add device tree include for the CQM variant of the Shikra System-on-Module.
-> This variant integrates the Shikra SoC and PM4125 PMIC. The DTSI includes
-> the common shikra.dtsi and adds PM4125 PMIC regulator definitions.
-> 
-> > diff --git a/arch/arm64/boot/dts/qcom/shikra-cqm-som.dtsi b/arch/arm64/boot/dts/qcom/shikra-cqm-som.dtsi
-> > new file mode 100644
-> > index 0000000000000..401e71720519d
-> > --- /dev/null
-> > +++ b/arch/arm64/boot/dts/qcom/shikra-cqm-som.dtsi
-> [ ... ]
-> > +&rpm_requests {
-> > +	regulators {
-> > +		compatible = "qcom,rpm-pm2250-regulators";
-> 
-> Since the commit message indicates this is a PM4125 PMIC, should the
-> compatible string include a specific identifier for the actual hardware?
-> 
-> Using a specific identifier like "qcom,rpm-pm4125-regulators" alongside
-> the fallback allows the kernel to apply specific quirks if PM4125 errata
-> are discovered later.
->
-PM2250 and PM4125 share identical regulator hardware with no functional
-differences. Therefore, using qcom,rpm-pm2250-regulators as the
-compatible string is sufficient i think.
-
-> > +
-> > +		pm4125_s2: s2 {
-> > +			regulator-min-microvolt = <1000000>;
-> > +			regulator-max-microvolt = <1200000>;
-> > +		};
-> 
-> Do these regulators need to explicitly define their input supply dependencies
-> such as vdd_s2-supply?
-> 
-> Without these properties, the regulator framework might be unaware that the
-> PMIC regulators draw power from upstream supplies.
-> 
-> If the kernel dynamically manages the upstream supply and its reference count
-> drops to zero, could it be disabled, causing an unexpected power loss for
-> downstream components?
-> 
-As per the Qualcomm system design, the parent-child supply relationships
-for these regulators are managed by the AOP (Always-On Processor) FW.
-
-regards
-Rakesh Kota
-> [ ... ]
-> 
-> -- 
-> Sashiko AI review · https://sashiko.dev/#/patchset/20260512-shikra-dt-v1-0-716438330dd0@oss.qualcomm.com?part=3
-> 
-> -- 
-> linux-phy mailing list
-> linux-phy@lists.infradead.org
-> https://lists.infradead.org/mailman/listinfo/linux-phy
+-Denny
