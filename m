@@ -1,282 +1,190 @@
-Received: from PH0PR06CU001.outbound.protection.outlook.com (mail-westus3azon11011023.outbound.protection.outlook.com [40.107.208.23])
+Received: from mx0b-0031df01.pphosted.com (mx0b-0031df01.pphosted.com [205.220.180.131])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9CF423A5E64
-	for <sashiko-reviews@lists.linux.dev>; Wed, 13 May 2026 11:38:39 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=fail smtp.client-ip=40.107.208.23
-ARC-Seal:i=2; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1778672322; cv=fail; b=nl/p2B8+c2qbQM13BCQiUF2GF7BHp7x7ofAldw8BGBUxYgPLX98/dKrFgSKV3EsFf1xuZj7F5nuJ+SsDy0JFfBePqS7/mKQPFrHv3DwtGlt3L4/V4bRR8sc5oM3lex4GILpOhVAHFnb+QzCGxY4SvR4EXO2z6kgfxfyuC4EfKPE=
-ARC-Message-Signature:i=2; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1778672322; c=relaxed/simple;
-	bh=IPo+ztGIrnBdg0pWoBzgJi7wl7pfqhnmc5qf+jeTq1Q=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:Content-Type:
-	 Content-Disposition:In-Reply-To:MIME-Version; b=IlH5iCyMsOQyFwzE2+vLJXVHMe9qss1qPIVtNxbS0PeRBVRgdH9iZyCaEvsH2L9GX1Cq/rwI2TE4ENvvjo1Lve6jQOPeoHTHnVyfPjmU9Z4jN/h/WkcdZaPdxmrPc+0/EQJbXTmf/xd/FRfRG4zBLIUJ7al4J+owNu/d+PJrsYs=
-ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=nvidia.com; spf=fail smtp.mailfrom=nvidia.com; dkim=pass (2048-bit key) header.d=Nvidia.com header.i=@Nvidia.com header.b=I9VDcd+t; arc=fail smtp.client-ip=40.107.208.23
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=nvidia.com
-Authentication-Results: smtp.subspace.kernel.org; spf=fail smtp.mailfrom=nvidia.com
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 21CAE3FE374
+	for <sashiko-reviews@lists.linux.dev>; Wed, 13 May 2026 12:01:53 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.180.131
+ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
+	t=1778673715; cv=none; b=NGAIske4RqgJCa2tVGgrW1fn8gFSMtKMySUHQQinJReYm3Vw+U2pPrVaxFBLnMCIFC6XAJdaWivmAxyoT/00eg80GeZGdWUY7sft2iNcOd0dIof2kHbHOVHmsbcch79gop2cemr/zax2/HI1Ic5AYbFdbeBpPls4bMpZuzfNluw=
+ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
+	s=arc-20240116; t=1778673715; c=relaxed/simple;
+	bh=l7r4NlK8GxrngcUyxh3lBxyq7gyU1/f8+FQ5izPScLs=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=WkvtRCAuRAsYqPY/fmKURzOtGDpvDeR5AIF8LjfKfplW75O1KwNB7lAWsn2fddF8nydlZHB3ik5YVQ2NaEYibYi77IuESurEODiST8DO94aOkEss6XZXgxwoF5S/3378OlU3XyP7jb1/X82+jbcMtLHBPg0sBuNLgfjDLvTh82Y=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com; spf=pass smtp.mailfrom=oss.qualcomm.com; dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b=aE+MQUZL; dkim=pass (2048-bit key) header.d=oss.qualcomm.com header.i=@oss.qualcomm.com header.b=hAiJNaXe; arc=none smtp.client-ip=205.220.180.131
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=oss.qualcomm.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=Nvidia.com header.i=@Nvidia.com header.b="I9VDcd+t"
-ARC-Seal: i=1; a=rsa-sha256; s=arcselector10001; d=microsoft.com; cv=none;
- b=RJ5cTWNqyr6yIIhvavbp8RZkMo8JXQLOo2MxiQH8S0VI0WS0jI9+xIAXT8Yij9VQm6Qv4ExsvWsJ08t/HUl9lEjL0WkiNQ5sjeClcv8cYEFwSjenFE6C02LccvHhqS86mZBe7j6JbfFXqrS8xtmOx1wdUQh6BYlcky0bzTCY1hO80cMWbUYsDipsJNyes4eF/aztHUe/tVW65JuBPbQ3zPxk1cPTS+v/yQ6a+kQvANQzGapJi2yghl7dNVUhRRprxWAAFCDKMOuaNzHqEFtLjBusSEhE2yaMFCEJKwQ0zIii6ozR6cE99ULUMr1corUu8geNr/AWdtKoteM4I84b6g==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com;
- s=arcselector10001;
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
- bh=pSQlI2rKqEvhk634d/McIM/N5Tll7Xl5AsBOKyCuOmY=;
- b=IUQrg9Onu0t7dJwpSci1UrLUlLSNuZpicrBSrO/6WYXFOGPdUTGsYS9rZmlr5hsBVrYXqtaJGz+OWvb3/Bh9mG7GMeV1DRavuTpMjWne/PbM2IYJL9dhJpHoFhi9/fB4lVrH/+Zu/a11EC8Pnp+bz496KYuE+6zWBFo8Zq9XuR/hbrbHGJ/6hPwuZCcgEGpYYtzLp28BBsCtZ9wt69a/BnEI/0HMCLNiJ92QV1mwBWlC/vJQZELU8UAgwmLJemTkfh6GfViTXOqtNdouJU+RkJG9T1U4sMX8FFkFz6lqowqRrf++tEGRSE6SHvRb2ZDmNBEFP5Q7GhxDmYwyZp8QMA==
-ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
- smtp.mailfrom=nvidia.com; dmarc=pass action=none header.from=nvidia.com;
- dkim=pass header.d=nvidia.com; arc=none
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=Nvidia.com;
- s=selector2;
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
- bh=pSQlI2rKqEvhk634d/McIM/N5Tll7Xl5AsBOKyCuOmY=;
- b=I9VDcd+tmkpw4HtwfhAXUylsUb5DiC5ixwxx8E0slAfJZRIpJsolQvw2HecKiUBAyzU/MYRakFpBqITrj0c/m1+hsA9EpWbY5iWPev8B7nIHLdnjBeiZ+c84J7UxJsDIChDvaeuv9tAu77hJFxwiCRbfLB8c0RXgWV7GyZJEEvqt85nHm6dG8vqguEUVFCFxJ4EjJKQc46OXUHYlZKrO2N1Y01K6ZI7d2h2JxnYxZ9mt3m+JiiAsw7IfGQbAB1aFXXX83ld3EE+DXMgvmUKQqHDn51nzUSRBkzLa18uvpRPVl/OVmBH6aMNR7X0m1A+CIyd2MVbUbscaoCvkTkNVnw==
-Authentication-Results: dkim=none (message not signed)
- header.d=none;dmarc=none action=none header.from=nvidia.com;
-Received: from LV8PR12MB9620.namprd12.prod.outlook.com (2603:10b6:408:2a1::19)
- by DS0PR12MB8072.namprd12.prod.outlook.com (2603:10b6:8:dd::11) with
- Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.9913.11; Wed, 13 May
- 2026 11:38:36 +0000
-Received: from LV8PR12MB9620.namprd12.prod.outlook.com
- ([fe80::299d:f5e0:3550:1528]) by LV8PR12MB9620.namprd12.prod.outlook.com
- ([fe80::299d:f5e0:3550:1528%5]) with mapi id 15.20.9913.009; Wed, 13 May 2026
- 11:38:36 +0000
-Date: Wed, 13 May 2026 08:38:35 -0300
-From: Jason Gunthorpe <jgg@nvidia.com>
-To: sashiko-reviews@lists.linux.dev,
-	Dennis Dalessandro <dennis.dalessandro@cornelisnetworks.com>
-Cc: linux-hyperv@vger.kernel.org
-Subject: Re: [PATCH v3 02/10] IB/rdmavt: Don't abuse udata and
- ib_respond_udata()
-Message-ID: <20260513113835.GE7655@nvidia.com>
-References: <2-v3-4effdebad75a+e1-rdma_udata_rep_jgg@nvidia.com>
- <20260513031237.4280DC2BCB0@smtp.kernel.org>
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-Content-Transfer-Encoding: 8bit
-In-Reply-To: <20260513031237.4280DC2BCB0@smtp.kernel.org>
-X-ClientProxiedBy: MN0P220CA0028.NAMP220.PROD.OUTLOOK.COM
- (2603:10b6:208:52e::21) To LV8PR12MB9620.namprd12.prod.outlook.com
- (2603:10b6:408:2a1::19)
+	dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b="aE+MQUZL";
+	dkim=pass (2048-bit key) header.d=oss.qualcomm.com header.i=@oss.qualcomm.com header.b="hAiJNaXe"
+Received: from pps.filterd (m0279873.ppops.net [127.0.0.1])
+	by mx0a-0031df01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id 64D9jkDh3007701
+	for <sashiko-reviews@lists.linux.dev>; Wed, 13 May 2026 12:01:53 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=qualcomm.com; h=
+	cc:content-transfer-encoding:content-type:date:from:in-reply-to
+	:message-id:mime-version:references:subject:to; s=qcppdkim1; bh=
+	dY9hc/f+wkbZ17ghb1zJTtuvuVvCHXDi0+lDIqQHkRE=; b=aE+MQUZLedjmQBPB
+	2BqLbPF6GSyByNBJxAaUbm1GE1qS5HXaBSw91lS2ITm6Z3T8RnnJ0kM00Q863Mb3
+	uA1nRsnUADS2ZtGAEwAGZ0eff/lYSrg6hBUu3A30R0sy1lPWpUarou2TbM2VbJgZ
+	IkhTivRoAwQJiV581iETaWS1IUkcgofOPlltGBVNN7Ctg+S68TPUv8gSEUJXVcWW
+	E1z5xHH+lonY8b2PQX2nyG61R+q9CDZ2zDetrmcLfb+j98fmg7iPCvVGF88r7AUX
+	Qh4p1JwFsH3DNlQYFjPyH0QAZqAhYx+6Nor/o6nQoIldsGrtk18xnaAr65Uhq9jb
+	kllIDw==
+Received: from mail-ot1-f69.google.com (mail-ot1-f69.google.com [209.85.210.69])
+	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 4e4py0gfbs-1
+	(version=TLSv1.3 cipher=TLS_AES_128_GCM_SHA256 bits=128 verify=NOT)
+	for <sashiko-reviews@lists.linux.dev>; Wed, 13 May 2026 12:01:52 +0000 (GMT)
+Received: by mail-ot1-f69.google.com with SMTP id 46e09a7af769-7dbd50dee52so15186128a34.2
+        for <sashiko-reviews@lists.linux.dev>; Wed, 13 May 2026 05:01:52 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=oss.qualcomm.com; s=google; t=1778673712; x=1779278512; darn=lists.linux.dev;
+        h=in-reply-to:content-transfer-encoding:content-disposition
+         :mime-version:references:message-id:subject:cc:to:from:date:from:to
+         :cc:subject:date:message-id:reply-to;
+        bh=dY9hc/f+wkbZ17ghb1zJTtuvuVvCHXDi0+lDIqQHkRE=;
+        b=hAiJNaXeAVohNPWhqA/6xBL3eKZsxV/tPKIvZEKBWFfy00PkEfeJ0qI+l7dDFZNGX3
+         JqOGe+vyCAK82qZe26amRxa3Vsiiup2XkyDqE6mPwRRWU9xarccPE0PAqBY977JBbVeb
+         818gegCnJyoR0EiX2RTgpRx80R38VMLLXoo0j7AJIT47RAl08LiBKuy75gh7/obJ3EsP
+         xgMJcl5wLqLnX6KCFXI9XU5jE3r4nwTJTboqC9S/HwA39VNPHEueGHbwTdZ2geLReyp9
+         Aex4WDLo9TDPLddDNVstbbhSyq5hBSvHVPtMBjKH7h9XwLTx0KBK87pM7ZZlCVRRgHyb
+         6s0Q==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20251104; t=1778673712; x=1779278512;
+        h=in-reply-to:content-transfer-encoding:content-disposition
+         :mime-version:references:message-id:subject:cc:to:from:date:x-gm-gg
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+        bh=dY9hc/f+wkbZ17ghb1zJTtuvuVvCHXDi0+lDIqQHkRE=;
+        b=EqIo/kZ9K+0R/f0hRkjrxNDFMYVfRi/6BqGRjB5pfJDl+EjMFo7giIs/S30e2GPswY
+         YB2vn5K4GSmT9AO+Z2byjMjoKt60CKWbTIT/zODIKERpKW13KTGn3KpmMzbJbpSPf7B9
+         hdJT/6WweYTQwg9stosgXTeUeoc/W/AWh3EEQNgJm1vnKrqULib/vPEl1sOkr8bc0nLs
+         sAdWRhihttOckYL3kaHtkRRrMNakSBjw5eT98F+GlY6EvmhsrCGc3aKHRWox4EPZMX7A
+         jdlpW36uYhZlm41nAQ+IhQA2nfGV/muspI66KyStVuNuVM8ySFCbtRKp3SbsvnSuLVLy
+         +I3w==
+X-Gm-Message-State: AOJu0YyiL2I8aaFr9pMARTMo46Ohi/ud+QJ7m7SKO2NoP/+iSMZ5OexT
+	UsbqVKXwb44hiaeydzhyTuyT7Yc6PtfQGxm4gJhaZD8/lE5bhWawco83D66nviDn/9FNfhwjas8
+	7zshpdOWmw83tv0jStokqQn4W1MPimdrWz0xIU3Y1GvRBnuQlbirpSXktIj603BuZmL7UpA9WLB
+	m1o94=
+X-Gm-Gg: Acq92OGnLOx9zy/HKszG2i7jBbm2F1ac8gNX5j7ARQ0wa605dyv9JPG8WRr1uhWRdej
+	Uvt/yP7Bni/K9TroIdNL2I+0B6xrjOdT6x6aW5/1S5DmqNrM0N3GN12foHRPbmak2spkP9kdxZK
+	ajAx9LNjux2r0gij9L9EX8228N9/AHfRNHYmTf3x4a2keZV6PsCtCIDlDL9uGi7ZU7lZtQ8RS2X
+	o0lW+Xbq0SU3GV8NeVLi+O+Yf/8ogPhI6Mve/KSTP8DDrnj8t/8lYSdHnnGT0nqLdUKWD1kslP3
+	BW3eNXBtO0DoAWw+9D3IWUKYFZ/yelUvc6/3IHe8/HQDIxW5XpVIkVi7y5A58AyVxGmhotI2JFI
+	OdxrPADMRIgmcbv9XhVsbyg3R0pBTT7JTTcOrDgVAHbKF1JVeGKH2iIGojlaI8o4A+HYe1Fep25
+	pepDlNW6fuBColSfyQEX7Q7Pgd4hd8q9ifpBg=
+X-Received: by 2002:a05:6830:4998:b0:7dc:3d7e:40d8 with SMTP id 46e09a7af769-7e3da8411cbmr1739044a34.28.1778673711227;
+        Wed, 13 May 2026 05:01:51 -0700 (PDT)
+X-Received: by 2002:a05:6830:4998:b0:7dc:3d7e:40d8 with SMTP id 46e09a7af769-7e3da8411cbmr1738996a34.28.1778673710670;
+        Wed, 13 May 2026 05:01:50 -0700 (PDT)
+Received: from umbar.lan (2001-14ba-a073-af00-264b-feff-fe8b-be8a.rev.dnainternet.fi. [2001:14ba:a073:af00:264b:feff:fe8b:be8a])
+        by smtp.gmail.com with ESMTPSA id 2adb3069b0e04-5a8a951cfb4sm4026836e87.20.2026.05.13.05.01.48
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Wed, 13 May 2026 05:01:49 -0700 (PDT)
+Date: Wed, 13 May 2026 15:01:47 +0300
+From: Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>
+To: sashiko-reviews@lists.linux.dev
+Cc: Komal Bajaj <komal.bajaj@oss.qualcomm.com>, robh@kernel.org,
+        linux-phy@lists.infradead.org, neil.armstrong@linaro.org,
+        vkoul@kernel.org, olteanv@gmail.com, krzk+dt@kernel.org,
+        conor+dt@kernel.org, devicetree@vger.kernel.org
+Subject: Re: [PATCH 3/4] arm64: dts: qcom: Add Shikra CQM SoM platform
+Message-ID: <t2sw6owdxy5iyodjqsldbw6bfaqnezhgvc4hhylxuyrrbjkjto@iwf4dr5nmot3>
+References: <20260512-shikra-dt-v1-3-716438330dd0@oss.qualcomm.com>
+ <20260513042836.073F9C2BCB7@smtp.kernel.org>
 Precedence: bulk
 X-Mailing-List: sashiko-reviews@lists.linux.dev
 List-Id: <sashiko-reviews.lists.linux.dev>
 List-Subscribe: <mailto:sashiko-reviews+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:sashiko-reviews+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-X-MS-PublicTrafficType: Email
-X-MS-TrafficTypeDiagnostic: LV8PR12MB9620:EE_|DS0PR12MB8072:EE_
-X-MS-Office365-Filtering-Correlation-Id: 84e91581-70bd-402f-43ff-08deb0e42b6b
-X-MS-Exchange-SenderADCheck: 1
-X-MS-Exchange-AntiSpam-Relay: 0
-X-Microsoft-Antispam:
-	BCL:0;ARA:13230040|366016|376014|1800799024|56012099003|22082099003|18002099003|11063799003;
-X-Microsoft-Antispam-Message-Info:
-	LH7mbmUEkA5XiThebhad2vZlLbWilfbtKywvFQ+PT1TOi3w+GcSUNNX//pxEObMRvRtutUMzecnjA6NS7uBfGJMSw1QnNa7MPsF2tgFm23ZfW9YKm/EYM/uJNdzSIkB51sXDH0QRHo4TDGcCgYxcgmd0Ml70ecVXdN3/BwWivZjzVbPryejTGzp45caIY3w0PIo0qpsu4Ij46Af43/mdy/C7Mm9W1GVk79KgvyBTkCBPRrrc95eWeQQgc1DPhKnEIzmnIVG1c0hJbcmLPhl74jjry/AqHnCrpeEaL2wNF22po1bdisLmaun8VYiBxjSERRiMpKx/XywufMK/zTKF9AMWFlYUh0h0Cid2Nc+IrdLu1ECxw50sNMVMXaOGCfdaHqPRmQW6pxmopxp7AGtH/49HbyQqBKWLlFgzVIVA3g2Q9sJ+XOxhz+jiSDHS1qtske6oSCoBSdBcwi+EzctgQ3NVG8RYd2XoT7zqpkr9DGTfJZEJlmq+B3W5gwgYiQq/ume726Urt4lefNXAqn/5Hv8/VYYHxUXB5u7pvJ0ZnPImepLqJQaISydsMou8CvESi71tAe4V3yKDfYxOd7Es25FB0LmsLwLMzT7VgCjSD5PbxXbAbjReOmK0SGKQI/0GeGayGniFGVEsVrxppJFLEHPSe0MQI2REQ9J8jXKD//cJXxYKs3Yoep1rULCY+ozm
-X-Forefront-Antispam-Report:
-	CIP:255.255.255.255;CTRY:;LANG:en;SCL:1;SRV:;IPV:NLI;SFV:NSPM;H:LV8PR12MB9620.namprd12.prod.outlook.com;PTR:;CAT:NONE;SFS:(13230040)(366016)(376014)(1800799024)(56012099003)(22082099003)(18002099003)(11063799003);DIR:OUT;SFP:1101;
-X-MS-Exchange-AntiSpam-MessageData-ChunkCount: 1
-X-MS-Exchange-AntiSpam-MessageData-0:
-	=?utf-8?B?b1ptUGVLbS9ZMHVYQW1KaGVMRU5PVFFqQ1QyeTIvZ1I1cTgybExCUGpGZ1Zz?=
- =?utf-8?B?TVg4bGlNRFhZanRpbGdXNk11SUdXbW16MjJnTVRFTVhwTllnQ0tmL0UyNkVO?=
- =?utf-8?B?dzBpVVoxeTlVQXkrMS84c1ZESGlGUnJhaHJFSnVTampabnJqSjVCN1pucEJL?=
- =?utf-8?B?VkxaQUVnYnhDMGs5ZVVNKy9pRHYxSDh4OFppWnBoY3ZRQXNWKzVWWEhUZnkz?=
- =?utf-8?B?bXVUTmVTTUc3NFNOSXFQN1crWmQzQ3RQaW1XYmhQNWNKYi9tNHhMekIyWWg2?=
- =?utf-8?B?YkQ2L2FuNlBpcXdTQlIvcXhoOEV0VTVYaGE4cERjN0V5VEltL1ZSTU45UVVt?=
- =?utf-8?B?RnhLd2hlRE1BeFJTazZJK2loOTY1UTNHMkdTQlBIRDl6d2NLSGN1aWxsbEtO?=
- =?utf-8?B?Vk9SWTZHOWlzT1hIT2l0UUZBbnZsMlVrWGNDRVdOaXRXQ2RDQm14NkdRcFRV?=
- =?utf-8?B?VTNzaUNxTVFYTThnZlFGNjJ1b0M3VGxyTGEvU1N3ZEVIK3k4eEszQkY5WW1v?=
- =?utf-8?B?cGpkT21ETXJEQlEyVkpKOXo1ZUR6SkFyaW52UkJhTTIvakU5cHJEWTJsR2JQ?=
- =?utf-8?B?QUd0UE9pc1B0aThENWJXa2ZWSER6WHB6WmlnQ2dSSGN5bVpyb3o2dUlxUEJT?=
- =?utf-8?B?ZWs0d0pkck1jY1laamlqejdQNjRkK3FMVWt2bHRxZTRvcUxNa2F5eUh6Ymwx?=
- =?utf-8?B?dUJESXg3dmJyN2NpZFZDOE5ZZUp1Ri9RNmVBTjBXOExaRTV5d3YrYjhEc1Zm?=
- =?utf-8?B?WGljZXJYWXNTQUt2bVh0U0c0WGNKT3lvR0FnK2VRWXFUTjdrRW9vYUNQRndE?=
- =?utf-8?B?Rmx3Q3JOdGY0Z0RQS2xTd0FvNzNHa0tkY0J1a1oxblp5cHpJQnVuWmNxRlh2?=
- =?utf-8?B?bGs1K29KYWh3c3NhbitYRVdaRGJiTkR4OVBzYk9KWmRvM2xtajJURlgxK3hB?=
- =?utf-8?B?dWJtTVJvdks5VitwRG9ibGRRL1hWRjZZa1o0SHNaRVpFTDQydG1VUU5VQXcx?=
- =?utf-8?B?dVQxWi9lL21SK3dnSm5NeEkrb2E3bFhsRlNCU1E2KzVjQm51d0hZdWp5T2Zr?=
- =?utf-8?B?WmkzL09hcGJDKzh4Y2tKb214R1diZkdmT2xzbnZxU3pBbGZ0Y3JZZWE1bkR0?=
- =?utf-8?B?eERmY0NIZVd6RVNsV1RTMTJGNDlSejl4WmM3OVkrNEhMMkJOeUorTWNKY25i?=
- =?utf-8?B?ZHkyTDNPRlVuM0t3MkZ4V0FJNng3dzNISHpZOCtHbUIwUk9JY1d5K0FRM3V0?=
- =?utf-8?B?dVNNSGtoYnpySnZWZzBJdTAzbWNkV0lEMlR4eFRxeXdsaHdPbFJtbVFzSEY3?=
- =?utf-8?B?cWdXVk5hYVUvQk0zYzJYQmJFSTcxQ2tLNEw1Y2s4Y0VoYjlrVXJZbEdhNlND?=
- =?utf-8?B?SzhmQXlXRFJ2L0x2OEl0aWVSRmVTZU5lR3IxRy9EMnhLb3NqbUVCSzh3Vlor?=
- =?utf-8?B?N29uTDFYN1VCaklDdU1yY1A1dUVWWjZCSHJFdDVWUWMrNXBRREduRUVCM0hG?=
- =?utf-8?B?SWpmbFM5eGtWd2xVbEVselMyZ3FxdlF3a01sY1pta3ZsS0d4eWNyWXZWVldZ?=
- =?utf-8?B?Y1JkR0w1M2pJNkhKRlRSaWpkYzJqbGxRWXMxa2dwUHYrcDJycDhpNXhCcXF3?=
- =?utf-8?B?NzJhWEcrSHlkeCtWaGR0MXBEUElPMk9aQ25vWHZwWjZCN2RkN0cxdU9YVW5W?=
- =?utf-8?B?TERsOFhJSldzSS9MSXNhUGRvWEZrL2ErSXZSNlludTgvdWFUaVZKMEJDaGY4?=
- =?utf-8?B?eEVHYWFzTFZwQmpWaVJlNERQSjdud08zcWsyMFBVMDYrNUZHa2NmNjVSL001?=
- =?utf-8?B?SlR3dDFCdm9Qd2ZXNTFEV1FEY2w4L1poMHhYM3JqOEhlYkJtbnV3OWxVVFI0?=
- =?utf-8?B?clR6bkNFeFZqUkJoOTZ5ZVVuT3VjMEZDalpMczJlWkx3c2piS3c3NlBnTkYr?=
- =?utf-8?B?MklIN0hJUW51alVSSWk5cklsU0YxNit2YXdwZERFdmdUQjNqRnNsS2g4K2Y5?=
- =?utf-8?B?NkZkYjEyNHVtZStqdVo0RkkwSndYd0hKUzV2Y0hqTnkveTZTVVlEall5SUtM?=
- =?utf-8?B?NloremYzZ3VNS3FUSXJkdEVtUTFxN0UyOFBVU1Qyd0NqR1MwYkNQdlJnSWFJ?=
- =?utf-8?B?NUZmTXRRZmhLdUhUY0RuSi84cXZYd3hnTUt4V2h3NFBiVFNzL1J5TnloZHBG?=
- =?utf-8?B?enBVaG85c0diVHFmNUNERlRTc3VmbjhnSmNpTnVhbVl6Z0JxMlNxaVNNY0pa?=
- =?utf-8?B?Z2xlMnhKbUVLL0EwZWtuSHZMTjJZeWNhZHUzYmVNcVpvdTE4bEdEbVU1ZzVY?=
- =?utf-8?Q?j62Ql7dgQxktuZKlbp?=
-X-OriginatorOrg: Nvidia.com
-X-MS-Exchange-CrossTenant-Network-Message-Id: 84e91581-70bd-402f-43ff-08deb0e42b6b
-X-MS-Exchange-CrossTenant-AuthSource: LV8PR12MB9620.namprd12.prod.outlook.com
-X-MS-Exchange-CrossTenant-AuthAs: Internal
-X-MS-Exchange-CrossTenant-OriginalArrivalTime: 13 May 2026 11:38:36.2371
- (UTC)
-X-MS-Exchange-CrossTenant-FromEntityHeader: Hosted
-X-MS-Exchange-CrossTenant-Id: 43083d15-7273-40c1-b7db-39efd9ccc17a
-X-MS-Exchange-CrossTenant-MailboxType: HOSTED
-X-MS-Exchange-CrossTenant-UserPrincipalName: PLE8eNpEorCs3T5udLMekw/cyhiTASzNlNClbBSigtTMe1wYJpJOreNnsB5xHsuW
-X-MS-Exchange-Transport-CrossTenantHeadersStamped: DS0PR12MB8072
+Content-Type: text/plain; charset=iso-8859-1
+Content-Disposition: inline
+Content-Transfer-Encoding: 8bit
+In-Reply-To: <20260513042836.073F9C2BCB7@smtp.kernel.org>
+X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwNTEzMDEyNSBTYWx0ZWRfX+jn4Si/zwclY
+ 7hfx/VviZFOk6fiPlNMNyPXLR0lewJ/4pyAt8W/Bvj0oGn9Yhn0ULDBRUaBIgIyhQhwvlZs2wfc
+ f8ETG29RyLafKm7JeRp5Qv9bpd3QwpgPzGubIbBfC7n4KJWyilw5AFX0974kHy/YKPY5Gdqj6Ah
+ dHMLQbu2Yibspji070IqfcojPQ9WMVu03UdaNMMz3Tv7FvVY0HC6j8OyDcv2gjgo76f1zghs2/o
+ 2p3p6cdGUfG67F16irJhz+jle6UvVxSTmfxCvCEYRaWhvaggdgrVDyfwh/cykhgtVnE7sP1xWvH
+ Yy6nNvNIz9lJDeD2Y9nqEhqIzY17Wb8fue0Dg88GF+Mg6cKddJ171aA0/gGkFAl1k2ux5Ohgiot
+ zNoC826Tyjnz6yUtAGrjTnA/rnlSYbjrUwRDar9ja0GLnUNKUK6aCTM4BIC2jpkfkBBw10/hFtQ
+ vN8PHJEEyQzXQFKsdDQ==
+X-Authority-Analysis: v=2.4 cv=XqXK/1F9 c=1 sm=1 tr=0 ts=6a046830 cx=c_pps
+ a=z9lCQkyTxNhZyzAvolXo/A==:117 a=xqWC_Br6kY4A:10 a=8nJEP1OIZ-IA:10
+ a=NGcC8JguVDcA:10 a=s4-Qcg_JpJYA:10 a=VkNPw1HP01LnGYTKEx00:22
+ a=u7WPNUs3qKkmUXheDGA7:22 a=rJkE3RaqiGZ5pbrm-msn:22 a=c92rfblmAAAA:8
+ a=EUspDBNiAAAA:8 a=VwQbUJbxAAAA:8 a=5d6JBiFWPPR-1DGLDXwA:9 a=3ZKOabzyN94A:10
+ a=wPNLvfGTeEIA:10 a=EyFUmsFV_t8cxB2kMr4A:22 a=GvGzcOZaWPEFPQC_NcjD:22
+X-Proofpoint-ORIG-GUID: MZO8K_HDpvHM8hXXZy_k-oz0Vulbsi90
+X-Proofpoint-GUID: MZO8K_HDpvHM8hXXZy_k-oz0Vulbsi90
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.293,Aquarius:18.0.1143,Hydra:6.1.51,FMLib:17.12.100.49
+ definitions=2026-05-13_01,2026-05-08_02,2025-10-01_01
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
+ priorityscore=1501 spamscore=0 phishscore=0 bulkscore=0 impostorscore=0
+ lowpriorityscore=0 malwarescore=0 adultscore=0 clxscore=1011 suspectscore=0
+ classifier=typeunknown authscore=0 authtc= authcc= route=outbound adjust=0
+ reason=mlx scancount=1 engine=8.22.0-2605050000 definitions=main-2605130125
 
-On Wed, May 13, 2026 at 03:12:36AM +0000, sashiko-bot@kernel.org wrote:
-> Thank you for your contribution! Sashiko AI review found 5 potential issue(s) to consider:
-> - [Critical] TOCTOU heap buffer overflow due to unvalidated `num_sge` from user-shared memory.
-> - [High] Memory leak of the kernel queue structure (`srq->rq.kwq`) on user-backed SRQ modifications.
-> - [High] Locking imbalance and freeing memory while locked.
-> - [High] Inconsistent state and Use-After-Free on error path.
-> - [Low] Uninitialized variable compiler warning for `offset_addr`.
+On Wed, May 13, 2026 at 04:28:35AM +0000, sashiko-bot@kernel.org wrote:
+> Thank you for your contribution! Sashiko AI review found 2 potential issue(s) to consider:
+> - [High] The PMIC regulator definitions omit their required input supply dependencies (e.g., `vdd_s2-supply`, `vdd_l3-supply`), breaking the power hierarchy.
+> - [Medium] The device tree inaccurately hardcodes the `compatible` string to a different PMIC model (`qcom,rpm-pm2250-regulators`) instead of explicitly identifying the actual hardware (PM4125).
 > --
+> 
+> commit 457abf6e7ac410430c866842e08e602ec3daaa51
+> Author: Komal Bajaj <komal.bajaj@oss.qualcomm.com>
+> 
+> arm64: dts: qcom: Add Shikra CQM SoM platform
+> 
+> Add device tree include for the CQM variant of the Shikra System-on-Module.
+> This variant integrates the Shikra SoC and PM4125 PMIC. The DTSI includes
+> the common shikra.dtsi and adds PM4125 PMIC regulator definitions.
+> 
+> > diff --git a/arch/arm64/boot/dts/qcom/shikra-cqm-som.dtsi b/arch/arm64/boot/dts/qcom/shikra-cqm-som.dtsi
+> > new file mode 100644
+> > index 0000000000000..401e71720519d
+> > --- /dev/null
+> > +++ b/arch/arm64/boot/dts/qcom/shikra-cqm-som.dtsi
+> [ ... ]
+> > +&rpm_requests {
+> > +	regulators {
+> > +		compatible = "qcom,rpm-pm2250-regulators";
+> 
+> Since the commit message indicates this is a PM4125 PMIC, should the
+> compatible string include a specific identifier for the actual hardware?
+> 
+> Using a specific identifier like "qcom,rpm-pm4125-regulators" alongside
+> the fallback allows the kernel to apply specific quirks if PM4125 errata
+> are discovered later.
 
-These are all pre-existing and rvt is too confusing to try to fix be
-me. Dennis will have to handle them
- 
-> commit dac7699d9e58c179b3a8859ac64da79e5fd21f46
-> Author: Jason Gunthorpe <jgg@ziepe.ca>
-> Subject: IB/rdmavt: Don't abuse udata and ib_respond_udata()
+This can be ignored. The compat is a leftover from the historically
+incorrect naming.
+
 > 
-> This commit modifies rvt_modify_srq to use copy_to_user directly instead
-> of ib_copy_to_udata for returning the offset address.
+> > +
+> > +		pm4125_s2: s2 {
+> > +			regulator-min-microvolt = <1000000>;
+> > +			regulator-max-microvolt = <1200000>;
+> > +		};
 > 
-> > diff --git a/drivers/infiniband/sw/rdmavt/srq.c b/drivers/infiniband/sw/rdmavt/srq.c
-> > index fe125bf85b272..d022aa56c5bfd 100644
-> > --- a/drivers/infiniband/sw/rdmavt/srq.c
-> > +++ b/drivers/infiniband/sw/rdmavt/srq.c
-> > @@ -128,6 +128,7 @@ int rvt_modify_srq(struct ib_srq *ibsrq, struct ib_srq_attr *attr,
-> >  	struct rvt_srq *srq = ibsrq_to_rvtsrq(ibsrq);
-> >  	struct rvt_dev_info *dev = ib_to_rvt(ibsrq->device);
-> >  	struct rvt_rq tmp_rq = {};
-> > +	__u64 offset_addr;
-> >  	int ret = 0;
-> >  
-> >  	if (attr_mask & IB_SRQ_MAX_WR) {
+> Do these regulators need to explicitly define their input supply dependencies
+> such as vdd_s2-supply?
 > 
-> Could hoisting offset_addr lead to a compiler warning for being potentially
-> uninitialized?
+> Without these properties, the regulator framework might be unaware that the
+> PMIC regulators draw power from upstream supplies.
 > 
-> The compiler might assume udata->inlen could change concurrently across the
-> spin_lock_irq() and spin_unlock_irq() calls. If the first check fails
-> but the second one passes:
-> 
-> if (udata && udata->inlen >= sizeof(__u64))
-> 
-> Does this allow offset_addr to be used without initialization?
+> If the kernel dynamically manages the upstream supply and its reference count
+> drops to zero, could it be disabled, causing an unexpected power loss for
+> downstream components?
+
+And this is a correct comment. Please provide missing supplies.
+
 > 
 > [ ... ]
-> 
-> > @@ -149,19 +150,17 @@ int rvt_modify_srq(struct ib_srq *ibsrq, struct ib_srq_attr *attr,
-> >  			return -ENOMEM;
-> >  		/* Check that we can write the offset to mmap. */
-> >  		if (udata && udata->inlen >= sizeof(__u64)) {
-> > -			__u64 offset_addr;
-> >  			__u64 offset = 0;
-> >  
-> >  			ret = ib_copy_from_udata(&offset_addr, udata,
-> >  						 sizeof(offset_addr));
-> >  			if (ret)
-> >  				goto bail_free;
-> > -			udata->outbuf = (void __user *)
-> > -					(unsigned long)offset_addr;
-> > -			ret = ib_copy_to_udata(udata, &offset,
-> > -					       sizeof(offset));
-> > -			if (ret)
-> > +			if (copy_to_user(u64_to_user_ptr(offset_addr), &offset,
-> > +					 sizeof(offset))) {
-> > +				ret = -EFAULT;
-> >  				goto bail_free;
-> > +			}
-> >  		}
-> >  
-> >  		spin_lock_irq(&srq->rq.kwq->c_lock);
-> 
-> Can this code leak the kernel queue structure?
-> 
-> When resizing a user-backed SRQ, the code fetches elements from the old
-> user-mapped queue. In the udata path, okwq is left as NULL:
-> 
-> if (udata) {
->         owq = srq->rq.wq;
->         head = RDMA_READ_UAPI_ATOMIC(owq->head);
->         tail = RDMA_READ_UAPI_ATOMIC(owq->tail);
-> } else {
->         okwq = srq->rq.kwq;
->         ...
-> 
-> When it later calls kvfree(okwq), it seems nothing is freed, which could
-> permanently leak the old kwq structure.
-> 
-> Is there a lock imbalance here when the queue is replaced?
-> 
-> The original queue is locked with:
-> 
-> spin_lock_irq(&srq->rq.kwq->c_lock);
-> 
-> But then the queue pointer is replaced:
-> 
-> srq->rq.kwq = tmp_rq.kwq;
-> 
-> When the lock is released:
-> 
-> spin_unlock_irq(&srq->rq.kwq->c_lock);
-> 
-> Does this unlock the new queue instead of the old one, and then free the old
-> queue via kvfree(okwq) while its lock is still held?
-> 
-> Can the loop migrating WQEs overflow the destination buffer?
-> 
-> The number of scatter-gather elements is read directly from user-shared
-> memory:
-> 
-> wqe = rvt_get_rwqe_ptr(&srq->rq, tail);
-> p->wr_id = wqe->wr_id;
-> p->num_sge = wqe->num_sge;
-> for (i = 0; i < wqe->num_sge; i++)
->         p->sg_list[i] = wqe->sg_list[i];
-> 
-> If a userspace program concurrently modifies num_sge to a large value, could
-> this loop exceed the bounds of tmp_rq.kwq->curr_wq, since the destination
-> size was calculated based on srq->rq.max_sge?
-> 
-> [ ... ]
-> 
-> > @@ -236,10 +235,10 @@ int rvt_modify_srq(struct ib_srq *ibsrq, struct ib_srq_attr *attr,
-> >  			 * See rvt_mmap() for details.
-> >  			 */
-> >  			if (udata && udata->inlen >= sizeof(__u64)) {
-> > -				ret = ib_copy_to_udata(udata, &ip->offset,
-> > -						       sizeof(ip->offset));
-> > -				if (ret)
-> > -					return ret;
-> > +				if (copy_to_user(u64_to_user_ptr(offset_addr),
-> > +						 &ip->offset,
-> > +						 sizeof(ip->offset)))
-> > +					return -EFAULT;
-> >  			}
-> >  
-> 
-> Does returning -EFAULT here leave the kernel and userspace in an inconsistent
-> state?
-> 
-> At this point, the kernel has already applied the SRQ size change, replaced
-> the queue, and permanently freed the old memory:
-> 
-> vfree(owq);
-> kvfree(okwq);
-> 
-> If copy_to_user fails and returns -EFAULT, userspace might interpret this as
-> a failed resize and continue using its existing memory mapping of the old
-> queue. Could this lead to a use-after-free since the pages have already
-> been freed?
 > 
 > -- 
-> Sashiko AI review Â· https://sashiko.dev/#/patchset/0-v3-4effdebad75a+e1-rdma_udata_rep_jgg@nvidia.com?part=2
+> Sashiko AI review · https://sashiko.dev/#/patchset/20260512-shikra-dt-v1-0-716438330dd0@oss.qualcomm.com?part=3
+
+-- 
+With best wishes
+Dmitry
