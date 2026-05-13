@@ -1,150 +1,178 @@
-Received: from BL2PR02CU003.outbound.protection.outlook.com (mail-eastusazon11021109.outbound.protection.outlook.com [52.101.52.109])
+Received: from mx0b-0031df01.pphosted.com (mx0b-0031df01.pphosted.com [205.220.180.131])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7D31E3F412B
-	for <sashiko-reviews@lists.linux.dev>; Wed, 13 May 2026 13:46:43 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=fail smtp.client-ip=52.101.52.109
-ARC-Seal:i=2; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1778680004; cv=fail; b=TUNyJ1YYSu0PdYqXpuUX1fdZmPdOBN+GXCTYglkoUVvJesgQ8/fC9YHXbkJ/vbo5gVBLb8qLOc0eXwJpaCliHTHilA04+aX+vV5IItZqKwDvm+Qn9jj5skEcEqnqETryyfgQ01skL7grrBIfExO2wOyjUwUponbrCDhlRZYDiFg=
-ARC-Message-Signature:i=2; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1778680004; c=relaxed/simple;
-	bh=gR6jGxC+mY583HlwlLHlfzOZND3SuX3g+bh1rO5SHgA=;
-	h=Message-ID:Date:Subject:To:Cc:References:From:In-Reply-To:
-	 Content-Type:MIME-Version; b=h/F8h5RWMl6Rr4TDjQLfzeV+yhuW4S6ndETWKiNO6oM4gtJxJes15bfshCIWHC3S/mhP10W+3iljVhjum9lOjaxpLeS1VJu3m7Moo0TLP2gIO9LlzbQpRiiRrJjM41s6xvRh0u367OoOZDYOkVyFEgPk1y0TO8gTIZkOkWbm1/k=
-ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=cornelisnetworks.com; spf=pass smtp.mailfrom=cornelisnetworks.com; dkim=pass (2048-bit key) header.d=cornelisnetworks.com header.i=@cornelisnetworks.com header.b=WHb+vdZE; arc=fail smtp.client-ip=52.101.52.109
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=cornelisnetworks.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=cornelisnetworks.com
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 31DF122CBD9;
+	Wed, 13 May 2026 14:29:48 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.180.131
+ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
+	t=1778682589; cv=none; b=gJ+ZtiCwXmo1azf/jMtOz5TSLJ1+gn3sjgRTKzpnB3D5f5RS9MvMM7hx1J5VxC9SZVsqPh/S9zALwGaLnhwmuePrHsJaWhBXTr0mPIWERHtOlOuNqFdmKyYSeDp7T6ThmNDJcF+PGmAv5OfJGwF3b2lSe/Ad8fsTL8GcEyrJ+BA=
+ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
+	s=arc-20240116; t=1778682589; c=relaxed/simple;
+	bh=GeR3iF08ycBzV98BGKHM08u8wIRaRdn/y1FRS6LHvBQ=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=CMPbgIu8/MVb1aTHTr8Q4U4i2ZxjfJdmSzFWtgXILZ4Hf507OCZurOey7iF6g8V8h4z33p1AkvmsvYJo7+SYefiiaOYDi509IXFraBOFlwf0yBTxlS7d7SrdR7gT8ZM8DFvo4+HsOQul/t+Abgs3uHIAOLy7/W5aEYX8HVlIcqI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com; spf=pass smtp.mailfrom=qualcomm.com; dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b=UxU3VWSe; arc=none smtp.client-ip=205.220.180.131
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=qualcomm.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=cornelisnetworks.com header.i=@cornelisnetworks.com header.b="WHb+vdZE"
-ARC-Seal: i=1; a=rsa-sha256; s=arcselector10001; d=microsoft.com; cv=none;
- b=U86NKykpaqMdbFayx2a+yKK1YXsxaBCUoEexADW/b62Pny8HLljxD72CAEQSvjUjkcNO/8RTwcBUahkf0hp0lfncxF0ewFNGRFttgCHlfaEm2sGgFmFtJHxYVlEpeZO1XqcrrKFW+kgx117PTrb2hdId0f7WtcMADMQg8VxzfBmtSns4PCciilDBtNrUJmMgHMOZc41lgUYC9HZUCZ+IUHyerAh0JrorQq03Jo7pUo6lajiZfjrt2s6XJL04G7jKhk2egKxL0fTUtHLpbVDQ8DfLBxUCuu5uza4knuTjMRRBtU25BGPeouj7ykC5BjRJcV2FoqaJxR+L+BvVuC4Jhw==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com;
- s=arcselector10001;
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
- bh=noRzeOOAzLAfk/knBfmmtRzcaWhVlNxZXf17kLkbC7Y=;
- b=O+ZlHkN8cPCOWQrzIfSQs8Rv3L0mhWChemT/E89NiuDNTF+7Un46hB9jdx5C09t31+sLrzQ3JocgHugVqDi/fJmD3UnH0OisftY4I5/ukW4ysTQZQJBhLwzfpCyRzYjEVx7gmVWUjPXXNE39GXs59CSwdAXbNa2jXPXcLAiOw604dFypsL3oEg9EeTzUFv9SzYTJd2tpivgpUbEWyh5rdwDRPkpWcOxZxYmbbh/N9P3FEmZ/hMLnZFt6oG7JXsrOsoUddawgD+3Ydkt0T9vOOsPhs+GOooaPks5xo9Jp9wV7zQ1CJUHitxh1Br+zIP1SavV2htqMPoNefHeTg8Eg/g==
-ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
- smtp.mailfrom=cornelisnetworks.com; dmarc=pass action=none
- header.from=cornelisnetworks.com; dkim=pass header.d=cornelisnetworks.com;
- arc=none
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=cornelisnetworks.com;
- s=selector1;
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
- bh=noRzeOOAzLAfk/knBfmmtRzcaWhVlNxZXf17kLkbC7Y=;
- b=WHb+vdZEm7Leg2Qh3fFtdmFh4iN5sUABqXETyNwFnTajs5LLxECpqIpbi7sz4uUNLaj1zykwdnR/ZUU0uqcPi+uiIbp1ODJ8547/N3hE1b9HrPMH6yPf+J1LfHCWl2gVG+VBKRarBLD2qkBmEUnTLPXuO8lA6GG7hV0CVggemzavSPxoM5DcNqKAN4O+mBDwUnjOtEiMt2e5T5nYfxKMEIJ/p+TRkSRfFsa+EHaQmqAta/Gp+j9SxpQ9ZzsukVpuU4ni5XC7H9ggyeIc03bmkEYiBnpMhrJSNATV1w5ysvawg8Tt6AWfxNSHSL2KM4iqhTnJn9Rd6z7B7TNDcXL1Dg==
-Authentication-Results: dkim=none (message not signed)
- header.d=none;dmarc=none action=none header.from=cornelisnetworks.com;
-Received: from SA1PR01MB7248.prod.exchangelabs.com (2603:10b6:806:1f3::14) by
- DS1PR01MB8967.prod.exchangelabs.com (2603:10b6:8:21b::13) with Microsoft SMTP
- Server (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
- 15.20.9891.23; Wed, 13 May 2026 13:46:38 +0000
-Received: from SA1PR01MB7248.prod.exchangelabs.com
- ([fe80::42ce:7e6d:25b5:95be]) by SA1PR01MB7248.prod.exchangelabs.com
- ([fe80::42ce:7e6d:25b5:95be%6]) with mapi id 15.21.0025.012; Wed, 13 May 2026
- 13:46:37 +0000
-Message-ID: <a644d363-8a55-484b-994d-5a617b64526b@cornelisnetworks.com>
-Date: Wed, 13 May 2026 09:45:57 -0400
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v3 02/10] IB/rdmavt: Don't abuse udata and
- ib_respond_udata()
-To: Jason Gunthorpe <jgg@nvidia.com>, sashiko-reviews@lists.linux.dev
-Cc: linux-hyperv@vger.kernel.org
-References: <2-v3-4effdebad75a+e1-rdma_udata_rep_jgg@nvidia.com>
- <20260513031237.4280DC2BCB0@smtp.kernel.org>
- <20260513113835.GE7655@nvidia.com>
-Content-Language: en-US
-From: Dennis Dalessandro <dennis.dalessandro@cornelisnetworks.com>
-In-Reply-To: <20260513113835.GE7655@nvidia.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
-X-ClientProxiedBy: CH0PR08CA0009.namprd08.prod.outlook.com
- (2603:10b6:610:33::14) To SA1PR01MB7248.prod.exchangelabs.com
- (2603:10b6:806:1f3::14)
+	dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b="UxU3VWSe"
+Received: from pps.filterd (m0279873.ppops.net [127.0.0.1])
+	by mx0a-0031df01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id 64D9jgE73007391;
+	Wed, 13 May 2026 14:29:41 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=qualcomm.com; h=
+	cc:content-transfer-encoding:content-type:date:from:in-reply-to
+	:message-id:mime-version:references:subject:to; s=qcppdkim1; bh=
+	dzi0WqqpoKiwCDZK2vIon9CGDsy/Ns+F9BdTazJ2ZUE=; b=UxU3VWSeDby+kzON
+	k+ImhcO3hhopOLl/85NxVWqssyDzp4sJL3kbv2Zqt7EWecXs0TkBtF1+A1n5dBxj
+	WssRMB9JOLTmNWbHz+nA31WsXGg9dtmi8fw4049foODyEPFgQ1rc7qkEPKo7NpSQ
+	uZov1RSxtPhNsFzn6qmEWfmhvj7xLUKw1puwdY62Rg5cuv1w99R9dAUMtSSmfdEm
+	7859rlIyV4sdHDwr8+ekK0dixexKqxUZzHLxWPVkQcJzMHAG8dkrO2KW8mkdwsEJ
+	se7OBkZyX1MEx73TstSpsK2JHwgeKVVcGJmWgFZzBNt6xR5DVDzh0lXb3jaE/qU+
+	IUzJaA==
+Received: from apblrppmta02.qualcomm.com (blr-bdr-fw-01_GlobalNAT_AllZones-Outside.qualcomm.com [103.229.18.19])
+	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 4e4py0h17v-1
+	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+	Wed, 13 May 2026 14:29:40 +0000 (GMT)
+Received: from pps.filterd (APBLRPPMTA02.qualcomm.com [127.0.0.1])
+	by APBLRPPMTA02.qualcomm.com (8.18.1.7/8.18.1.7) with ESMTP id 64DETbh0017668;
+	Wed, 13 May 2026 14:29:37 GMT
+Received: from pps.reinject (localhost [127.0.0.1])
+	by APBLRPPMTA02.qualcomm.com (PPS) with ESMTPS id 4e1x0jrfau-1
+	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+	Wed, 13 May 2026 14:29:37 +0000 (GMT)
+Received: from APBLRPPMTA02.qualcomm.com (APBLRPPMTA02.qualcomm.com [127.0.0.1])
+	by pps.reinject (8.18.1.12/8.18.1.12) with ESMTP id 64DETb0j017661;
+	Wed, 13 May 2026 14:29:37 GMT
+Received: from hu-devc-hyd-u22-c.qualcomm.com (hu-kotarake-hyd.qualcomm.com [10.213.97.140])
+	by APBLRPPMTA02.qualcomm.com (PPS) with ESMTPS id 64DETbNB017660
+	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+	Wed, 13 May 2026 14:29:37 +0000 (GMT)
+Received: by hu-devc-hyd-u22-c.qualcomm.com (Postfix, from userid 2389607)
+	id 9EB92B22; Wed, 13 May 2026 19:59:36 +0530 (+0530)
+Date: Wed, 13 May 2026 19:59:36 +0530
+From: Rakesh Kota <rakesh.kota@oss.qualcomm.com>
+To: Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>
+Cc: sashiko-reviews@lists.linux.dev,
+        Komal Bajaj <komal.bajaj@oss.qualcomm.com>, robh@kernel.org,
+        linux-phy@lists.infradead.org, neil.armstrong@linaro.org,
+        vkoul@kernel.org, olteanv@gmail.com, krzk+dt@kernel.org,
+        conor+dt@kernel.org, devicetree@vger.kernel.org
+Subject: Re: [PATCH 3/4] arm64: dts: qcom: Add Shikra CQM SoM platform
+Message-ID: <20260513142936.kauwa3czigfs7qs5@hu-kotarake-hyd.qualcomm.com>
+References: <20260512-shikra-dt-v1-3-716438330dd0@oss.qualcomm.com>
+ <20260513042836.073F9C2BCB7@smtp.kernel.org>
+ <t2sw6owdxy5iyodjqsldbw6bfaqnezhgvc4hhylxuyrrbjkjto@iwf4dr5nmot3>
 Precedence: bulk
 X-Mailing-List: sashiko-reviews@lists.linux.dev
 List-Id: <sashiko-reviews.lists.linux.dev>
 List-Subscribe: <mailto:sashiko-reviews+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:sashiko-reviews+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-X-MS-PublicTrafficType: Email
-X-MS-TrafficTypeDiagnostic: SA1PR01MB7248:EE_|DS1PR01MB8967:EE_
-X-MS-Office365-Filtering-Correlation-Id: d620fca1-de1e-4e6f-1a9a-08deb0f60e08
-X-MS-Exchange-AtpMessageProperties: SA
-X-MS-Exchange-SenderADCheck: 1
-X-MS-Exchange-AntiSpam-Relay: 0
-X-Microsoft-Antispam:
-	BCL:0;ARA:13230040|376014|1800799024|366016|55112099003|56012099003|18002099003|22082099003;
-X-Microsoft-Antispam-Message-Info:
-	nfFz/ORf0k3eoI1JlFHhP5SgaXYjrAZVQFdNT1SpgFohNTdlfc5ruYeubO5Kq+DICRed/vtCzt+/DhuW/Fv5zc943QuhJks0CbH+rO0cfAwwjZX0F+s0HjrAapcP2KJqXtOWjRi2JkpRAy0SrFsAKCbwBg7SA9lAc4NvFllJRyaqAjvfqM0PQWx3uAqjiF9wgr8hyEXMY3sK04v3zptXggQFDTRjckkTXff8tAxFGQs9gi4E8DlvIIvYj6LryiT/Qa5xcuXxwQbWrWR4hs9WBwVaTUAq9R4SFhcVviQNY1EJFlrYOGAHHRrdEZqpZmrXmwryk7ORa+FDqHFd9S7Jy/wGJkt68DRicX6c7pkwFCBtpVGGGn4uJBFg9q3gVcnJKHo8vm1M8N2l6q0NTlZCcEQ5gt1DuAnt6laUJRWWqFGPUi7lIixDUeNtMl/VJQgkyxMa42pPfxs2L7jUYRmdgME4Vq6luiOkyrQrDb90ENOXxC0jKTb45O+A69IvKJEQiYLJpRCp1lppV0EPqJahxNhGiIoWXVqpATU9mGI/SoT+8Ep0SxThedfwreyIN9cEVAk4/Z1S5bKKLI+E+XX8FlupczcE9eoI5gocbvTnlensizcDPM9X9VehcBHR7zlRePuomFJzuJ1v+GR8+U3Npz8UGt1B3Gs20g/ldjfATkAtzOtulRnUPn8Q5RKRKDeq
-X-Forefront-Antispam-Report:
-	CIP:255.255.255.255;CTRY:;LANG:en;SCL:1;SRV:;IPV:NLI;SFV:NSPM;H:SA1PR01MB7248.prod.exchangelabs.com;PTR:;CAT:NONE;SFS:(13230040)(376014)(1800799024)(366016)(55112099003)(56012099003)(18002099003)(22082099003);DIR:OUT;SFP:1102;
-X-MS-Exchange-AntiSpam-MessageData-ChunkCount: 1
-X-MS-Exchange-AntiSpam-MessageData-0:
-	=?utf-8?B?TllxcVFyNFhWZjVENlZSZWpNWmZWMk9Pb0hmYUcrYlFPN0F1aGZ1cnc5M1M0?=
- =?utf-8?B?RnlmVUttNythZlhKS2d6Mlc1bjRvREdOWnRPaktYdDNSNHo3dks1OHpVL0du?=
- =?utf-8?B?UGhUeXJGRHRqZUs4bzhmVHVseThvNUJHNUxiMEFIakNJdVBud2tJMFpaYzJt?=
- =?utf-8?B?Rjl1SUlpWUVpUUdmMktveU1pYTdybHJNSWI2QmFlN1k1WnNPUVN5bE5Pb2tL?=
- =?utf-8?B?UGZRZWhQbFJ3N0xySGpWaGFHaEZsY3RqVVRWUmpJa1BxblNpWmZmZ1ZEWEhM?=
- =?utf-8?B?eVBmaTN0VSs3bnBKNjhwWFVkNHljV1RmcVVWcFNUbWZNS0N6dHkwK0puTG1m?=
- =?utf-8?B?Z2g1OVRNbFNJLzNSU2tXUEVjVXNBOGdTaGl3dmFNblVZNitUQjM4eW93V0Ex?=
- =?utf-8?B?S1ZLdDFlZHVyQzdBTUtsTktYN3FVT1RrVHdqdS90QVdVbzYyNS9zTVhDaFcx?=
- =?utf-8?B?OTJZRXVFeGVCUGFWdTZqNFBFUVlUaVNrOG5aeTVGSlVNMDhqMTk3R0RFc24r?=
- =?utf-8?B?M1pENFZJUkMvMVVMTVFZRGRoWVVLckEwMW9wWTdMZURaN2k2WE4rS0F6Rllo?=
- =?utf-8?B?MUZRS3Q5Y2FzN0J2aEo1ZWdSNW0zNDBqOWgrdnZiMHlDU3QzN0hDZVdoampO?=
- =?utf-8?B?cjBzcEVzTTdPbmM4NllBQk1NR2VJYnUzck9NWGMremluNjNqcmNVWGY1NG82?=
- =?utf-8?B?ZE90ZDhhOVh1dDNuTE1VbWw3M3lSb0tmblArR0tKR0tlVlBZK0J1Z0EvdTBr?=
- =?utf-8?B?QTd6YlZyMzltbnl4RHM1UjRSNWpQZ0FYdnNjQ21vT3FrWEc1eHZNNzZLRWEw?=
- =?utf-8?B?eTlKalFvZTh0eWs2TTRlcUlwR3dsRTJkZ2FtWGlHejFjSDArUlZCa1VsTXlL?=
- =?utf-8?B?SDI5cmVuSHNOeCtrN0kxN2d4WDJjUytoVm9qLzVhUk9jaVBDSW5jVkJJMHdL?=
- =?utf-8?B?YUQ0Ty9BaHREVzJhY01MT0lkT2cyYWN3L2ZDQjRjdlRwV0hsWStudUlzZWZi?=
- =?utf-8?B?cFBGSCsvTjhyWjhSVWJLS0tMZS93dDQ0WVJnamRmZm1weGpjUCs5anBsVlYy?=
- =?utf-8?B?dk9KeUxZOGw2RXhVNVZmUGxOVVNla09GeUtmL1kyV01VT1hjdjhNSW9SZnM0?=
- =?utf-8?B?MkZMTFpPeU55RHFwNnpPYTR2REZRb0lCWHRHWWgzblpzL1hFM3Z0TTRienYr?=
- =?utf-8?B?MnBRclk5bkljYkIrMHY0WS9UaUxqV3FzUStMQXVvUndzNGNzWUs1dGdEcUhl?=
- =?utf-8?B?ZllUWU5KZDdBcnp0Wm1GYmdLRnNaSTNTNmRQelRnMVUwLzNRRWIwRWtjbXNs?=
- =?utf-8?B?UHZ5d3gyaFhuMGJWaXZraEZpVHBBVTI1S3ZTZ283UXA5Y2NtRHV1SmVWVHR1?=
- =?utf-8?B?UmxmWXdScDVUdzZ6Z29BSWNIYnkrVUlQWGtDVjEyaGc3SWQraTk2ZTdoVmJK?=
- =?utf-8?B?NkhrUDlnNnVuM3UvM0xDTDFhY1pjVUMzZG9wK3A1S1RUMVNRSnR1MllqN0l1?=
- =?utf-8?B?SXJMRUlUKzFqZVk0UDVjT2VTcXh0MldvN0NSWFUvc0NKT0QxOHFjR0NtZlBO?=
- =?utf-8?B?R0xveklpUGgxbkhUcUFVZk9EU29LMHJsZ3BQb3lYa1pKS2pFVkNDeXZOaW5j?=
- =?utf-8?B?elBrNjhwV0R1eDdzZTdpeC8yWnFPcVd5NTJVd25jb0pYMFV0TDRuSzNwcUd0?=
- =?utf-8?B?ajdjajhmOHUvOWRjd3Q3TGp4ZEpSSy93Z1V1em1aT2xYeDR2Z01uSytoRDFN?=
- =?utf-8?B?RFlzUlFNMFRkTXM2YXhweEwySnlqNzZ4SkMxSXZ3cnY1cmgvamZ6UWthVHBt?=
- =?utf-8?B?VG1VQlFtOVU4bzRweEdRYjRSRDBpQ2h2dTkvTDVpeUg4MjhyZllFOTdjWVgr?=
- =?utf-8?B?MnpjZ3JSNEpDa2taKzJTZzN6U3kwTzhEd2hoWjdna0ZSa0dtTlZ1MmFGM2Rx?=
- =?utf-8?B?KzBPQjUrVTlIWU5rK0dDQWdKVGpwVlBIM3ZNMWFlRGxnclp5bE8vUUtnWHhq?=
- =?utf-8?B?MU9MUmE2eCtSOGRONnRCU1RyVDBQR3g3VHc5RFpjb2F4ekFURno0MnNkbUQ5?=
- =?utf-8?B?U0Q0UVEvL294ZjFNRTNXNTV5MEloTHZVdGNBTEpKOUNpYWVUSkdwbWRremx3?=
- =?utf-8?B?UHYyNlAveEFYMTAwd1prZjdBWXdFUzBMNmlWWEhuZ3MvOGUzL1cxaVA0am5o?=
- =?utf-8?B?NGhYamtJRjJ3emZuVlNZd1BnMUFaYW5aMjNVZ2VESlNwWXlCWFlxVlRSMVJY?=
- =?utf-8?B?YzNBUWRrVmIrV05pc1NXYUI2MlRXRUxib2VucTRackxEdTRFUWtLVUhDaTly?=
- =?utf-8?B?a29NMUMvNFVmOFNWUVRNRDlaK2Q5SzYxand4cklPdG8zd2FOOGNuUHBhZEVp?=
- =?utf-8?Q?PcmG/BuFOc5OP1QtQJEfijCdKMSVymp8yCu9f?=
-X-OriginatorOrg: cornelisnetworks.com
-X-MS-Exchange-CrossTenant-Network-Message-Id: d620fca1-de1e-4e6f-1a9a-08deb0f60e08
-X-MS-Exchange-CrossTenant-AuthSource: SA1PR01MB7248.prod.exchangelabs.com
-X-MS-Exchange-CrossTenant-AuthAs: Internal
-X-MS-Exchange-CrossTenant-OriginalArrivalTime: 13 May 2026 13:46:37.8716
- (UTC)
-X-MS-Exchange-CrossTenant-FromEntityHeader: Hosted
-X-MS-Exchange-CrossTenant-Id: 4dbdb7da-74ee-4b45-8747-ef5ce5ebe68a
-X-MS-Exchange-CrossTenant-MailboxType: HOSTED
-X-MS-Exchange-CrossTenant-UserPrincipalName: Pcia8W8hLgPKkLgA43LwNG+y26jSiJR0CN662KDJInSQUyMNjQlci6jWII+NchL4NlkC/24JSVBdhtCY/Fa4aEioe/phXn+Mm43LGvQ8o660OYZMMWetaT05/L0/8Tio
-X-MS-Exchange-Transport-CrossTenantHeadersStamped: DS1PR01MB8967
+Content-Type: text/plain; charset=iso-8859-1
+Content-Disposition: inline
+Content-Transfer-Encoding: 8bit
+In-Reply-To: <t2sw6owdxy5iyodjqsldbw6bfaqnezhgvc4hhylxuyrrbjkjto@iwf4dr5nmot3>
+X-QCInternal: smtphost
+X-QCInternal: smtphost
+X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwNTEzMDE0NyBTYWx0ZWRfX8gDSvfk+iXn5
+ ssL2+AGXpcMb7LcuUAZ4vbhPycr5aRHDrBo4+ai/3d5ktYm56fLxTGv9K7naiigVk//5o3UuVnd
+ y96Y3WAweQXBKmvCnXU1wGJR3PUVjelLGqJfXyiZtvjG70XK19P/VPPpOvJsR5OEahbgogAj9FL
+ XmxNxew8n9EWVp7b/Tq4ysYfauGgxMmHm3fVt9jDcvjGODbY6FdVGZKq6VO1XYTpBCpZOuifsFE
+ IUr7YipUlGyjHzY4w8Nh+ho66mHfStR+vXn0DUDjhIjuU6mCMvQbi8p6errBmdKVyPli3PZ4hX7
+ vWccjxFmGZY2NF010B3x+a4dcw1fqTW79nbyfWZHYoJVxznD1io+u9uRXOAVEPuBgDapFcYjrZI
+ S9L7GOmp84wHgGzZ5++2Jm3Th3pkSrDVZYD8DxvFxbPQY5lv+Ta+zgqY8VRzdVZHT+E0kccAj2U
+ t3C3JkiKUWHo4jxQroA==
+X-Authority-Analysis: v=2.4 cv=XqXK/1F9 c=1 sm=1 tr=0 ts=6a048ad5 cx=c_pps
+ a=Ou0eQOY4+eZoSc0qltEV5Q==:117 a=Ou0eQOY4+eZoSc0qltEV5Q==:17
+ a=8nJEP1OIZ-IA:10 a=NGcC8JguVDcA:10 a=VkNPw1HP01LnGYTKEx00:22
+ a=u7WPNUs3qKkmUXheDGA7:22 a=rJkE3RaqiGZ5pbrm-msn:22 a=c92rfblmAAAA:8
+ a=EUspDBNiAAAA:8 a=JfrnYn6hAAAA:8 a=VwQbUJbxAAAA:8 a=di-1_IvPOJKa7E1frQIA:9
+ a=3ZKOabzyN94A:10 a=wPNLvfGTeEIA:10 a=GvGzcOZaWPEFPQC_NcjD:22
+ a=1CNFftbPRP8L7MoqJWF3:22
+X-Proofpoint-ORIG-GUID: vFY16SLsJwzj4ERAqKfxsgIzzrCp98z1
+X-Proofpoint-GUID: vFY16SLsJwzj4ERAqKfxsgIzzrCp98z1
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.293,Aquarius:18.0.1143,Hydra:6.1.51,FMLib:17.12.100.49
+ definitions=2026-05-13_01,2026-05-13_01,2025-10-01_01
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
+ priorityscore=1501 spamscore=0 phishscore=0 bulkscore=0 impostorscore=0
+ lowpriorityscore=0 malwarescore=0 adultscore=0 clxscore=1015 suspectscore=0
+ classifier=typeunknown authscore=0 authtc= authcc= route=outbound adjust=0
+ reason=mlx scancount=1 engine=8.22.0-2605050000 definitions=main-2605130147
 
-On 5/13/26 7:38 AM, Jason Gunthorpe wrote:
-> On Wed, May 13, 2026 at 03:12:36AM +0000, sashiko-bot@kernel.org wrote:
->> Thank you for your contribution! Sashiko AI review found 5 potential issue(s) to consider:
->> - [Critical] TOCTOU heap buffer overflow due to unvalidated `num_sge` from user-shared memory.
->> - [High] Memory leak of the kernel queue structure (`srq->rq.kwq`) on user-backed SRQ modifications.
->> - [High] Locking imbalance and freeing memory while locked.
->> - [High] Inconsistent state and Use-After-Free on error path.
->> - [Low] Uninitialized variable compiler warning for `offset_addr`.
->> --
+On Wed, May 13, 2026 at 03:01:47PM +0300, Dmitry Baryshkov wrote:
+> On Wed, May 13, 2026 at 04:28:35AM +0000, sashiko-bot@kernel.org wrote:
+> > Thank you for your contribution! Sashiko AI review found 2 potential issue(s) to consider:
+> > - [High] The PMIC regulator definitions omit their required input supply dependencies (e.g., `vdd_s2-supply`, `vdd_l3-supply`), breaking the power hierarchy.
+> > - [Medium] The device tree inaccurately hardcodes the `compatible` string to a different PMIC model (`qcom,rpm-pm2250-regulators`) instead of explicitly identifying the actual hardware (PM4125).
+> > --
+> > 
+> > commit 457abf6e7ac410430c866842e08e602ec3daaa51
+> > Author: Komal Bajaj <komal.bajaj@oss.qualcomm.com>
+> > 
+> > arm64: dts: qcom: Add Shikra CQM SoM platform
+> > 
+> > Add device tree include for the CQM variant of the Shikra System-on-Module.
+> > This variant integrates the Shikra SoC and PM4125 PMIC. The DTSI includes
+> > the common shikra.dtsi and adds PM4125 PMIC regulator definitions.
+> > 
+> > > diff --git a/arch/arm64/boot/dts/qcom/shikra-cqm-som.dtsi b/arch/arm64/boot/dts/qcom/shikra-cqm-som.dtsi
+> > > new file mode 100644
+> > > index 0000000000000..401e71720519d
+> > > --- /dev/null
+> > > +++ b/arch/arm64/boot/dts/qcom/shikra-cqm-som.dtsi
+> > [ ... ]
+> > > +&rpm_requests {
+> > > +	regulators {
+> > > +		compatible = "qcom,rpm-pm2250-regulators";
+> > 
+> > Since the commit message indicates this is a PM4125 PMIC, should the
+> > compatible string include a specific identifier for the actual hardware?
+> > 
+> > Using a specific identifier like "qcom,rpm-pm4125-regulators" alongside
+> > the fallback allows the kernel to apply specific quirks if PM4125 errata
+> > are discovered later.
 > 
-> These are all pre-existing and rvt is too confusing to try to fix be
-> me. Dennis will have to handle them
+> This can be ignored. The compat is a leftover from the historically
+> incorrect naming.
+> 
+> > 
+> > > +
+> > > +		pm4125_s2: s2 {
+> > > +			regulator-min-microvolt = <1000000>;
+> > > +			regulator-max-microvolt = <1200000>;
+> > > +		};
+> > 
+> > Do these regulators need to explicitly define their input supply dependencies
+> > such as vdd_s2-supply?
+> > 
+> > Without these properties, the regulator framework might be unaware that the
+> > PMIC regulators draw power from upstream supplies.
+> > 
+> > If the kernel dynamically manages the upstream supply and its reference count
+> > drops to zero, could it be disabled, causing an unexpected power loss for
+> > downstream components?
+> 
+> And this is a correct comment. Please provide missing supplies.
+>
+As per the Qualcomm system design, the parent-child supply relationship
+is managed by the RPM firmware, not the Linux regulator framework. The
+RPM ensures the parent supply is never disabled until all subsystem
+votes are cleared. 
 
-Will take care of it.
-
--Denny
+regards
+Rakesh kota
+> > 
+> > [ ... ]
+> > 
+> > -- 
+> > Sashiko AI review · https://sashiko.dev/#/patchset/20260512-shikra-dt-v1-0-716438330dd0@oss.qualcomm.com?part=3
+> 
+> -- 
+> With best wishes
+> Dmitry
+> 
+> -- 
+> linux-phy mailing list
+> linux-phy@lists.infradead.org
+> https://lists.infradead.org/mailman/listinfo/linux-phy
