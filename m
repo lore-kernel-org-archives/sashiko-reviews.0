@@ -1,219 +1,205 @@
-Received: from mail-pf1-f176.google.com (mail-pf1-f176.google.com [209.85.210.176])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from BN8PR05CU002.outbound.protection.outlook.com (mail-eastus2azon11011069.outbound.protection.outlook.com [52.101.57.69])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 07EAF392C48
-	for <sashiko-reviews@lists.linux.dev>; Wed, 13 May 2026 04:56:24 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.210.176
-ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1778648186; cv=none; b=JfQosjqQo10F+z1d6RugZQ+8udrm5mZAhoX0nOC4HUxqsS1/XG+GLrPaSMKBTRyY+aTwadI+B+PKVZvFHirurTor2nV6NAPa9/d24g9TLbBSaI1BmRcsaATQbMigPxIjRtq//zEMB6n3dAd8j5kTkKg+Y4GuBWj0gFWQUwYZTM4=
-ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1778648186; c=relaxed/simple;
-	bh=oEFqrGJElVWsJCJsodudX+JDfgrg6P0Nyniu6jzWYn8=;
-	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=IyhcZERd9uNJqDF0gPhHhLslyCpODlu2BpmKBFu1CTJlfFjyjr9hOprU32Hi8HC2zRZM6yK6IOnjvwSPh5OQH2EnNJakIj/MFtb+Wpgo4nWb2rSJgWy1XJ09iF5wPwNgOQ77w6ai+tGxZsgTg/fNp8T+r4doqm/UCYoSl2siuxI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=roeck-us.net; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=FQcCnIjG; arc=none smtp.client-ip=209.85.210.176
-Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=roeck-us.net
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 934403D3499
+	for <sashiko-reviews@lists.linux.dev>; Wed, 13 May 2026 06:25:50 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=fail smtp.client-ip=52.101.57.69
+ARC-Seal:i=2; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
+	t=1778653552; cv=fail; b=WZBzA67XgbPpgN6DFYJiAAodj80Q+DccWD3mLLPmWuE8sXdQlSP2TTE04PBSDQ7cqE7p25wCr6w3UUbVk6X0pjW6F0dgzi8uUuPGELcmdZ+wl/PDpO5V1ptmaZelHEcbwZsRmviu2A7AM1Qu0F3BgeC7byexm4vR0ZZzm3Yyg6o=
+ARC-Message-Signature:i=2; a=rsa-sha256; d=subspace.kernel.org;
+	s=arc-20240116; t=1778653552; c=relaxed/simple;
+	bh=/oUtx8GL87fwf9IasJt+wEDSmFvYxYi1BI7q8GfOuR0=;
+	h=Message-ID:Date:Subject:To:Cc:References:From:In-Reply-To:
+	 Content-Type:MIME-Version; b=VsyGl7HI1W8SO1LjgTEV2llF6ZhrfmOceouKbUmDxECpz6huT7ZDgbmqGtGiPBmiX+OYJtajP0YfHcd8R7ysm3GklWspt6rJBO1NS3aZYWK+V7j8ArY+ksz4vv1HL37mgWPcq/a7MP6jbuDZis8Sn5Lyu3zvMiNYSSHhr7b6tik=
+ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=altera.com; spf=pass smtp.mailfrom=altera.com; dkim=pass (2048-bit key) header.d=altera.com header.i=@altera.com header.b=K7fH/+o/; arc=fail smtp.client-ip=52.101.57.69
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=altera.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=altera.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="FQcCnIjG"
-Received: by mail-pf1-f176.google.com with SMTP id d2e1a72fcca58-835386ff122so5946378b3a.3
-        for <sashiko-reviews@lists.linux.dev>; Tue, 12 May 2026 21:56:24 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20251104; t=1778648184; x=1779252984; darn=lists.linux.dev;
-        h=content-transfer-encoding:in-reply-to:autocrypt:from
-         :content-language:references:cc:to:subject:user-agent:mime-version
-         :date:message-id:sender:from:to:cc:subject:date:message-id:reply-to;
-        bh=BY2NFR2OVpU0WhoUPQAwuaAExP4/KT35v4Z4OHaj9Es=;
-        b=FQcCnIjGkg0qmMSSIqWmTyfYg/nigbOFk6taGiCOAP7QZUVC5ZCuBbAPvBq1uYislq
-         p4Ad5/vPPaj20mcbzTnG4z337div7GUTpvCLvVGCmrCzRlHP3HEQQE+RMSRKKj/12D6b
-         2M6YAYMeS0LCfvUnOso1clYXKDqI93HQk1s8K6cjYkBheIXdqAROLPO+YxZMWyPsE80I
-         T3iuv63JpE9hBbJHH83HyJt5exBzsmYlw8IXos4Zom1fMbqh8by78l7QBZfbr2E6y+X8
-         5uBiMiCWMpSvwYvBnjIaXBS5dxvvfKqzt/vHq5vD4uh1sf00X+5lyHYwJNavUfoPeOY9
-         N1aQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20251104; t=1778648184; x=1779252984;
-        h=content-transfer-encoding:in-reply-to:autocrypt:from
-         :content-language:references:cc:to:subject:user-agent:mime-version
-         :date:message-id:sender:x-gm-gg:x-gm-message-state:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=BY2NFR2OVpU0WhoUPQAwuaAExP4/KT35v4Z4OHaj9Es=;
-        b=n48DKYo2EtbxQVewjWWzFwh34U8IjjvomlWb5jVUQGm8dmu/nTh46j52hivfa9cyWm
-         I3pF6P7oq/ZGA1UBbtp5X6QHiI+B+AAL+uzi/B+bu2xgbqJQN5CGObYVPXoCg1yjC2/P
-         /0fU2Kh+UH25SlTGYzB3SMk5NrYyHQ0rU7RCZctJK7htrVkj/wlnxJ0wc/fjTcdRMBIp
-         nsXXNzkIVbo11UsV4u4CfNy4NHfywV5zWtn+HaAdWFUdTNunkdJ9f/dMvh2J4TPYrGeI
-         /smKVYUNFncZn/4uMw2iXxWYbxFUd6fCAHABqvJpeA5dZPAx0lAUXdD/MeQiNcbj/tQt
-         Fhrw==
-X-Gm-Message-State: AOJu0YyKzoVUYJ4PhEe69/AtPPjmTLAwdbLXrQFoJrNPZr3599pW0gDc
-	LlwTts02o2H0DD/UERmi3dnlDydDhkemarH4o7bfXsNkvE8ANN2pKOH7OHlgrA==
-X-Gm-Gg: Acq92OHRzr9UNtBvcJFTGqU2idHhJScM2nc3De5eeYv8+ZWtq02qJdd+52fs5V1qG4j
-	Kzqn+FQ5UINpdzc/4a7hexqCo1SY0rnVctJGgABNTmni2oDsFqnixxN8NnjroWetWjZMBzOBJ5a
-	MBHRfxt8vvpiD93Pu5DEn/Pg5L7MUhdgIqXnVFjgXd3HR4C0Wj6keSGV8rrPuHf+OjpX6EYvXkw
-	d0j6NtZP2G4EA1jbCcf4hKxd5qL6UIsiwKKFiQU6TnDwXnx8N3oeuw2YAY2jy/weG+u8Dx74Ufz
-	ha5Kn183zm6BjvGu9nc2KIYvE5jZa4B/1ieUCSuSN0D7FVLblNexlehFJwP9zpc2X590Cisqneh
-	zcUuyYNmJcrsUHf8TkK46860qx6Xcq5G/M+mmvc3DZGiyNhLWf9+fS2+YUXqLLhnMQbW/sZBWMU
-	dGyofgFvDPZbiKVW4Dmu+i8xMmrlLmK6y7M0/JuIMl3GgJkeEEVI9Fw/DiGXKV+S+iGQnF++wk
-X-Received: by 2002:a05:6a00:2291:b0:835:4776:7d7b with SMTP id d2e1a72fcca58-83f042b9b10mr1696659b3a.42.1778648183897;
-        Tue, 12 May 2026 21:56:23 -0700 (PDT)
-Received: from ?IPV6:2600:1700:e321:62f0:da43:aeff:fecc:bfd5? ([2600:1700:e321:62f0:da43:aeff:fecc:bfd5])
-        by smtp.gmail.com with ESMTPSA id d2e1a72fcca58-83967dbf0cesm30881108b3a.46.2026.05.12.21.56.22
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Tue, 12 May 2026 21:56:23 -0700 (PDT)
-Sender: Guenter Roeck <groeck7@gmail.com>
-Message-ID: <9fa93f79-526f-427b-bc43-1216fb5ce94e@roeck-us.net>
-Date: Tue, 12 May 2026 21:56:22 -0700
+	dkim=pass (2048-bit key) header.d=altera.com header.i=@altera.com header.b="K7fH/+o/"
+ARC-Seal: i=1; a=rsa-sha256; s=arcselector10001; d=microsoft.com; cv=none;
+ b=mrBFx10zulfTgFLAjIGKdTXTnFb8HBUPJqu+ORDCCRJE4O6u6IrwfX+hUezVUefYbGnxNMehvFOhQXcKFVHfOIrfD5jz3tiKC/+PvebPj6ac/FzEw1TPlaHugPMjbNrf2qtZ85AbPLMx5aES6Rss3Khf44I5+UVg8HfFz9bZtCWBVf1ox7jBZ6tFP8hi90BDrrfXGtvItjSzh4LTG4Rj52LQf+Azan4lgv/b9dDecB1CDR7nW41qctWlaq0A6SWbSrj43lcGLQlKyVyr1JW5sed3++L+xIcC8YbQnqy7k9OiLocUM38F7rRcHrsC7RRkk20dJTf13efjYNYCs1Df/w==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com;
+ s=arcselector10001;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
+ bh=oh/77BRg6ShO55wyDAUyYXU2HIobNkmI+6THHXlm1J0=;
+ b=UYvX7MhDAjMkuDPFuoPQq6tsJcbDHKSDSrM+Cd8QjKVzusMiOovvNywoTKRXMaJZZKCIgJcD4+0edgcvX0EkuU5A2YeuZi4XR/IAHcskUFB5aKAlVjLIh/aW1B4oQH9RqeSQe0aski2f+FsGnhLcn8gkF8Dul7UJxuSRIbM3mz0sQDsDqCNLJGLtCGAdu1CW38rOF9Kej2JiPtXjjaYfSp4xeNtHBtZmEmWAwJya0cDL3C1DhrCvb1K7Mj0iLtV2tTlPnNMx7q2Xao+rHdCU6r/HZbFkoYgPxgfnxxcTZhrFy/M8tSWkKP5/tvzK3KZj7JOXn+WD7TllmAePFkjsUw==
+ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
+ smtp.mailfrom=altera.com; dmarc=pass action=none header.from=altera.com;
+ dkim=pass header.d=altera.com; arc=none
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=altera.com;
+ s=selector2;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
+ bh=oh/77BRg6ShO55wyDAUyYXU2HIobNkmI+6THHXlm1J0=;
+ b=K7fH/+o/kIbwHnzsg9X5mVzdJtwt1TDU13tye3+Kppi8KyriDY+mytNuwGSm2KdMW1toUc1zeTRBfaZZ+pZtf43GGk4bSkYq7RrzBubBf9BE/UgTJUFMlrHoSHYK2IQrdvE0Yg3wcvcAyWQig6l8lFH2gRMXTPzYmvCReLEhQdPaYsl5tcIJNQXTJCNJhux+3c4RxNMuDMz7/6lraDhivZhA66S6Ilj42n9kNrNvM9+tsNNCaVLBHB6vXncNxGhllUwVnGQOu6WQgaZPhACzcBq8iNDvAM771ob11KvtRt8OLJDVuU37OxUJckOjHtuPl5GGAw41XoJOcIJXRKCpeg==
+Authentication-Results: dkim=none (message not signed)
+ header.d=none;dmarc=none action=none header.from=altera.com;
+Received: from DM4PR03MB6208.namprd03.prod.outlook.com (2603:10b6:5:39c::19)
+ by SA5PR03MB989124.namprd03.prod.outlook.com (2603:10b6:806:4d6::12) with
+ Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.9913.11; Wed, 13 May
+ 2026 06:25:48 +0000
+Received: from DM4PR03MB6208.namprd03.prod.outlook.com
+ ([fe80::2216:93ef:67b:9e04]) by DM4PR03MB6208.namprd03.prod.outlook.com
+ ([fe80::2216:93ef:67b:9e04%6]) with mapi id 15.20.9913.009; Wed, 13 May 2026
+ 06:25:47 +0000
+Message-ID: <cd07e035-dbfa-40ca-b285-7b3a982f74b3@altera.com>
+Date: Wed, 13 May 2026 11:55:38 +0530
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH v1 5/9] arm64: dts: agilex5: add SOCDK eMMC daughter board
+ support
+To: sashiko-reviews@lists.linux.dev
+Cc: krzk+dt@kernel.org, devicetree@vger.kernel.org, conor+dt@kernel.org,
+ robh@kernel.org
+References: <20260511202132.5597-6-tanmay.kathpalia@altera.com>
+ <20260513012239.8FB2AC2BCB0@smtp.kernel.org>
+Content-Language: en-US
+From: "Kathpalia, Tanmay" <tanmay.kathpalia@altera.com>
+In-Reply-To: <20260513012239.8FB2AC2BCB0@smtp.kernel.org>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 8bit
+X-ClientProxiedBy: MA5PR01CA0048.INDPRD01.PROD.OUTLOOK.COM
+ (2603:1096:a01:1d6::7) To DM4PR03MB6208.namprd03.prod.outlook.com
+ (2603:10b6:5:39c::19)
 Precedence: bulk
 X-Mailing-List: sashiko-reviews@lists.linux.dev
 List-Id: <sashiko-reviews.lists.linux.dev>
 List-Subscribe: <mailto:sashiko-reviews+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:sashiko-reviews+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 2/2] hwmon: (pmbus/d1u74t) Add Murata D1U74T PSU driver
-To: sashiko-reviews@lists.linux.dev,
- Abdurrahman Hussain <abdurrahman@nexthop.ai>
-Cc: robh@kernel.org, krzk+dt@kernel.org, devicetree@vger.kernel.org,
- conor+dt@kernel.org, linux-hwmon@vger.kernel.org
-References: <20260511-d1u74t-v1-2-623c2bc1532a@nexthop.ai>
- <20260513031519.A55BCC2BCB0@smtp.kernel.org>
-Content-Language: en-US
-From: Guenter Roeck <linux@roeck-us.net>
-Autocrypt: addr=linux@roeck-us.net; keydata=
- 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
- np3900V20aS7eD9K8GTU0TGC1pyz6IVJwIE=
-In-Reply-To: <20260513031519.A55BCC2BCB0@smtp.kernel.org>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
+X-MS-PublicTrafficType: Email
+X-MS-TrafficTypeDiagnostic: DM4PR03MB6208:EE_|SA5PR03MB989124:EE_
+X-MS-Office365-Filtering-Correlation-Id: 359ba86f-8fbd-4078-3114-08deb0b87886
+X-MS-Exchange-AtpMessageProperties: SA
+X-MS-Exchange-SenderADCheck: 1
+X-MS-Exchange-AntiSpam-Relay: 0
+X-Microsoft-Antispam:
+	BCL:0;ARA:13230040|366016|376014|1800799024|55112099003|22082099003|56012099003|18002099003|11063799003;
+X-Microsoft-Antispam-Message-Info:
+	kuUdaGu2oDSb/3uLL6r1BSwrgTWxUv/xi/2Hx8e9DEEvahQL7O2KTcf+MzYUHLqkK/L2vA1Y0Zxi7nRMUH1Nt1TTw3PN0t6LV96jmKFE2JgYmtL2b9UEMSEmDCOTu0TPp9wC2ZvyYIl31FEd038RInhaKdZsewRsYawiDzXjcghYbEH4tdYWxZDUjvRsmDJTN8tX2wuoZF219Y1sWK+IXuUo/o78P0qWLWSzHwvkDfmpriet5cu3XKLICjquv9Ob+4TD/NV7IqbnBUlnG4MVfdVrM9pjaZWCjqONF3eDXoPjF9f7ozF/NgYrOtBQ3htccND2z/SOyFDObtO/piRPewUeH5Ec1KPgRj41J7Hiv+n8alSqPMwtFhYaE5VAsdO6gWlyLn5iAgi0779levwCHDY7n3GMfG5U01o44e1O6L+HqH/D7kDM4BL52PMA8dnR15qQvVmoV2zrNDKCcBWeGjki2r64RMHgt1D3UIU4qm16RkOMWPUNMBwdPr70ofN7u85Srwh6bk5uR31mTRDm8zXa/+OspGTDPNK4GhCDEzoTCQ7Qu9UH507gO6UctFjFiFdafyR1cEZLChHKVB2Ggajyq3ptksGwH3g1e+fpLi0J0ZF/DlvAxszc4BPBc7YgqGFYBG6J5cGFWj12yXGsemt3UsC+Vb8AbU6sM1UjvyCp5jWmbru54ZeZZGsUabjB
+X-Forefront-Antispam-Report:
+	CIP:255.255.255.255;CTRY:;LANG:en;SCL:1;SRV:;IPV:NLI;SFV:NSPM;H:DM4PR03MB6208.namprd03.prod.outlook.com;PTR:;CAT:NONE;SFS:(13230040)(366016)(376014)(1800799024)(55112099003)(22082099003)(56012099003)(18002099003)(11063799003);DIR:OUT;SFP:1101;
+X-MS-Exchange-AntiSpam-MessageData-ChunkCount: 1
+X-MS-Exchange-AntiSpam-MessageData-0:
+	=?utf-8?B?TklCcWx5Q1RscVl6c0NpNldzTzBhaDRjaUY3MFlobW56ZThmQmVDUThJNDZl?=
+ =?utf-8?B?WFhkTkhLL2RRZUtqV1ZSZnlwaG9ZYWFMOU82ZWNsc2M2b2dLaWt1b3NaRktM?=
+ =?utf-8?B?K2hjZ3NYZXVFdVhkTElzMUJtWHppblJlOEhqWllpMDJ6dFlBM2ZRL1IrRk44?=
+ =?utf-8?B?NHBBcUV6ME1lTngvRE8xMkg5TmxNNnlleGxwSmZiMnkzQlZyVWRxRlRZTi9J?=
+ =?utf-8?B?RnQ1a3I3TkNxc1Jmc05nMTExZzY5WGJqeXB2NVJmVjMzOVJHQlZkTU5Sc1pq?=
+ =?utf-8?B?anlYNEFXaHB6aHZKaUlCVHROcDF6VURqbk5EU1MwaXlvSEhXYW0ra1JPRHIr?=
+ =?utf-8?B?Q3FwVDlzalhPdjl6Z002SGZNQWlVVWE0ekZITVJnak9PSWU0M3E1aklFRllL?=
+ =?utf-8?B?dEV0VGZ0d3FuM0FGbGl1YUVpSU45WDMzTFc0alNweUIvejNYY3ZGeUtHcUk3?=
+ =?utf-8?B?bTA3OEJ1VVU1MkhOVlhhOGxPTFd4RWNIMnMzNkRGNFBjaGxnTFlPTkVwOXQx?=
+ =?utf-8?B?ZjRrcmRHUTByclBXemEvclBTZ0lrY3QwTkdTVkhnYk90a3YvTlBPbGJRMjkz?=
+ =?utf-8?B?K0VWZHBCWGNGSk43Wmpwemw3QmRHM3VsaHhQZFlzelVXd2ZNTnZyVXYyUlZ0?=
+ =?utf-8?B?cW9DYnpSV1ZmRk1CckJNY3hVa0dRM2NicXlJKzM2bFdZRDJzaDkrUlZQVFR4?=
+ =?utf-8?B?L213MXN4OUtHWkZGRUIvdHFoRGlDcFVoUmk1WUtkUTA3c3dvejNSN0VGZkZF?=
+ =?utf-8?B?R2lzOUZIK0VHNFhFQ05yYmtuSXk3QUQ1M2lNaHhqZVZ3MVFIY0l6NFd3SmRr?=
+ =?utf-8?B?dkI1ZG5PYWllMmp0M2ZiTmJLdUU0QmdZSlVPK2R5UEZ3V2Nqb1JQekNXU1ph?=
+ =?utf-8?B?NVBsd0ZreG1INm5IdjlXcGRxaHdSR3BhMlBFc0QyVDc1SCtpQ1QrTVJ2S3NG?=
+ =?utf-8?B?M3crSVNESjFGUTNwdjIxTUQ1RTZqeFVvNy96Nyt6Q09jczNaYURKZnhqVVVq?=
+ =?utf-8?B?YjZFQnJULzJ0dXhjUlN2MFBweVV1d2t3SVJxSTZnSXdPZTVOTWZuN29mdlRL?=
+ =?utf-8?B?bGJHa3FwS1lpT1JPZUpQcDc1Skk5MzhaRmMwdkN0VWkzVnFNczdnMnhSUUZY?=
+ =?utf-8?B?V1FIdmpmb0ZOTFcrOFdsWXlqS3N2YWZkcnBVdW9RZDFWekxnV1IvWFdEUkMx?=
+ =?utf-8?B?d293V1RqMUNQR3JuazNIN2xlZ25aNklPZWtWdjVBMGtORHR2TWJqSXdDcE5x?=
+ =?utf-8?B?blNKM3hBMnh6MnMxNDl0L2pocVdpU0JzcXNVa3g5dWpTU2Z0L25UenRUUmRR?=
+ =?utf-8?B?Q0lQUFpoanpzN2dNSjU0TGk0TWN4SDNLT29HSzJxa1VnMnVOTFQrTXFoWWhK?=
+ =?utf-8?B?R1M0eWIvUzh4UDNJZzhiY2hzNFdkeVJvdkcyOFo3d3BlYW52b0JHY2J4RnMx?=
+ =?utf-8?B?R2hMVVBtb3FSYjVWR2xGQlJNQWhDcEJBd28wMXBFK1c3K3Y2MWNOYStIaW81?=
+ =?utf-8?B?YWlQNkxKcVhaUFJjSnhTbVQ5eGRZaEliVDl5TDZzTUJEd0lOMk9VbjVqYlBX?=
+ =?utf-8?B?ZUVvVjE4bUl0ZzRZNG5oQW1BTkhnUnhLRWpPa0s2NnFqRm1CZnZCa1U2MEJQ?=
+ =?utf-8?B?UlVKQVR5UWhtYW8xT1BuM3VBWnJxQW9pVllhSENQUEp2Nnh6c1ozVFVLbjBK?=
+ =?utf-8?B?VzZLOXRKeFVLaWQvWG1jQXdITDN1dm53UG5wZ2t4ejcwTldvWHo4ZjBpd2xt?=
+ =?utf-8?B?dnhJR1pEaXUwb1ZuVnpKM0RpUUttOEZpcWZsaUZqZkNvNWM4emtTbWxRSUNE?=
+ =?utf-8?B?ME0xM3ovS1FwTXdlWGlZaXhzZ3crc01ZZy9HWnZpM1JLVGVzbmgxUHg1ajE1?=
+ =?utf-8?B?TTdQTXoybERlNEsrRERBMGFiQnR0c0kvTEUrd0trcWFDL2FVWWpsN3hLa2k2?=
+ =?utf-8?B?ZjZLRlNxZ21EYWFRZFM3b3d2Rld1TmZXcjN3djJ0MThMbVB2eG04aDBPeWRw?=
+ =?utf-8?B?dlJiSWR0OHN0bUlLV1dvVkpCaTQrQjBVT2NNOFh5WW8yTm5tN043QUsxWjNs?=
+ =?utf-8?B?akJuYi80RVB3dENzdWp0OHRwZExRZDVxdy9TZEM4NlJoOFVscnp5ZHJJdHor?=
+ =?utf-8?B?WFd0ZDA1SGcvUmlFaWVrWlY1TTRkQk1mR3d4WmE1bTd6ell3dVNzdUdtMVR1?=
+ =?utf-8?B?V3FSd0YyQVcxbzMvVVEvTU82TzNWZ2Y1SmZlakxXZkdwT3R3RHBVK2xhYkZ6?=
+ =?utf-8?B?M0ttL25xRWNmYm02Y3NvbjJnUTFwc09FdTJPeDQ1MTYreGE3elFBUVg3WTlE?=
+ =?utf-8?B?SlpjREJUYU1Kd2hBL2htNEk3UzJ5NUdtNlhub084UWR1TitWLzM0OTRwUHBa?=
+ =?utf-8?Q?Y/V6U/QWXq0y9Dkk=3D?=
+X-OriginatorOrg: altera.com
+X-MS-Exchange-CrossTenant-Network-Message-Id: 359ba86f-8fbd-4078-3114-08deb0b87886
+X-MS-Exchange-CrossTenant-AuthSource: DM4PR03MB6208.namprd03.prod.outlook.com
+X-MS-Exchange-CrossTenant-AuthAs: Internal
+X-MS-Exchange-CrossTenant-OriginalArrivalTime: 13 May 2026 06:25:47.7257
+ (UTC)
+X-MS-Exchange-CrossTenant-FromEntityHeader: Hosted
+X-MS-Exchange-CrossTenant-Id: fbd72e03-d4a5-4110-adce-614d51f2077a
+X-MS-Exchange-CrossTenant-MailboxType: HOSTED
+X-MS-Exchange-CrossTenant-UserPrincipalName: uDcUS52PtIkrY07cQyRRJrJvA2Ey36BWe+H2zps6DNDTlY+CvEyGPpKUo4OWWcPEkNQmPbMcX6uMFiY3B3aWdWG0+CAG8iG/lMGoRBuWBoA=
+X-MS-Exchange-Transport-CrossTenantHeadersStamped: SA5PR03MB989124
 
-Hi,
 
-On 5/12/26 20:15, sashiko-bot@kernel.org wrote:
-> Thank you for your contribution! Sashiko AI review found 3 potential issue(s) to consider:
-> - [Medium] The driver fails to verify the number of bytes read (`rc`) from `PMBUS_MFR_MODEL` before calling `strncmp(buf, "D1U74T-W", 8)`.
-> - [Low] Copy-paste errors in `Documentation/hwmon/d1u74t.rst` for `in2_*` attributes.
-> - [Low] Inconsistent error handling styles for failure modes returning `-ENODEV` in the probe function.
+On 5/13/2026 6:52 AM, sashiko-bot@kernel.org wrote:
+> Thank you for your contribution! Sashiko AI review found 2 potential issue(s) to consider:
+> - [High] The `no-1-8-v` property in the `&emmc` node explicitly disables the 1.8V HS200 and HS400 modes, contradicting the commit intent.
+> - [Medium] A board-specific fixed regulator (`emmc_io_1v8_reg`) is improperly defined in the shared SoC-level `.dtsi` file and placed under a memory-mapped bus.
 > --
-> 
-> commit a76e770177dc6ee5472b638d5e12f032fd0a5cd5
-> Author: Abdurrahman Hussain <abdurrahman@nexthop.ai>
-> 
-> hwmon: (pmbus/d1u74t) Add Murata D1U74T PSU driver
-> 
-> This commit introduces a new PMBus driver for Murata D1U74T power supplies.
-> It relies on the core PMBus framework and checks the manufacturer ID and
-> model string during probe.
-> 
->> diff --git a/Documentation/hwmon/d1u74t.rst b/Documentation/hwmon/d1u74t.rst
->> new file mode 100644
->> index 0000000000000..f7786ebba0b47
->> --- /dev/null
->> +++ b/Documentation/hwmon/d1u74t.rst
->> @@ -0,0 +1,97 @@
+>
+> commit 832d2f01748902348b5ee8ddc2a87d8dfab30896
+> Author: Tanmay Kathpalia <tanmay.kathpalia@altera.com>
+>
+> arm64: dts: agilex5: add SOCDK eMMC daughter board support
+>
+> This commit adds device tree support for the Agilex5 SOCDK eMMC daughter
+> board. It introduces the new board dts file and adds a fixed 1.8V regulator
+> for the eMMC I/O voltage to the common SoC dtsi.
+>
+>> diff --git a/arch/arm64/boot/dts/intel/socfpga_agilex5.dtsi b/arch/arm64/boot/dts/intel/socfpga_agilex5.dtsi
+>> index 7e080f13166f2..feb4ccb317a71 100644
+>> --- a/arch/arm64/boot/dts/intel/socfpga_agilex5.dtsi
+>> +++ b/arch/arm64/boot/dts/intel/socfpga_agilex5.dtsi
 > [ ... ]
->> +in2_label		"vout1"
->> +in2_input		Measured input voltage
->> +in2_crit		Critical input over voltage
->> +in2_crit_alarm		Critical input over voltage alarm
->> +in2_lcrit		Critical input under voltage fault
->> +in2_lcrit_alarm		Critical input under voltage fault alarm
->> +in2_max			Maximum input over voltage
->> +in2_max_alarm		Maximum input over voltage alarm
->> +in2_min			Minimum input under voltage warning
->> +in2_min_alarm		Minimum input under voltage warning alarm
->> +in2_rated_min		Minimum rated input voltage
->> +in2_rated_max		Maximum rated input voltage
-> 
-> This isn't a bug, but should these descriptions refer to output voltage
-> instead of input voltage, since the label is vout1?
-> 
-> [ ... ]
->> diff --git a/drivers/hwmon/pmbus/d1u74t.c b/drivers/hwmon/pmbus/d1u74t.c
->> new file mode 100644
->> index 0000000000000..3127e0e5a23de
->> --- /dev/null
->> +++ b/drivers/hwmon/pmbus/d1u74t.c
->> @@ -0,0 +1,85 @@
-> [ ... ]
->> +static int d1u74t_probe(struct i2c_client *client)
->> +{
->> +	char buf[I2C_SMBUS_BLOCK_MAX + 2] = { 0 };
->> +	struct device *dev = &client->dev;
->> +	int rc;
+>> @@ -317,6 +317,14 @@ sd_io_1v8_reg: regulator-1p8v {
+>>   					<3300000 0x0>;
+>>   		};
+>>   
+>> +		emmc_io_1v8_reg: regulator-fixed-1p8v {
+>> +			compatible = "regulator-fixed";
+>> +			regulator-name = "emmc-io-power";
+>> +			regulator-min-microvolt = <1800000>;
+>> +			regulator-max-microvolt = <1800000>;
+>> +			regulator-always-on;
+>> +		};
 >> +
->> +	rc = i2c_smbus_read_block_data(client, PMBUS_MFR_ID, buf);
->> +	if (rc < 0)
->> +		return dev_err_probe(dev, rc, "Failed to read PMBUS_MFR_ID\n");
->> +
->> +	if (rc != 9 || strncmp(buf, "Murata-PS", 9)) {
->> +		buf[rc] = '\0';
->> +		dev_err(dev, "Unsupported Manufacturer ID '%s'\n", buf);
->> +		return -ENODEV;
->> +	}
-> 
-> This isn't a bug, but could dev_err_probe() be used here for consistency
-> with the other error paths in this function?
-> 
->> +
->> +	rc = i2c_smbus_read_block_data(client, PMBUS_MFR_MODEL, buf);
->> +	if (rc < 0)
->> +		return dev_err_probe(dev, rc,
->> +				     "Failed to read PMBUS_MFR_MODEL\n");
->> +
->> +	if (strncmp(buf, "D1U74T-W", 8)) {
->> +		buf[rc] = '\0';
->> +		return dev_err_probe(dev, -ENODEV, "Model '%s' not supported\n",
->> +				     buf);
->> +	}
-> 
-> Does this code evaluate stale data in the buffer if the model read returns
-> fewer than 8 bytes?
-> 
-> The buf array isn't cleared between the manufacturer and model reads. If
-> i2c_smbus_read_block_data() successfully returns a length smaller than 8,
-> strncmp() could end up comparing against leftover characters from the
-> previous Murata-PS string since rc isn't verified before the comparison.
-> 
-I think those are all valid issues. Please fix.
+> Will this cause every Agilex 5 board to inadvertently instantiate and enable
+> this regulator, even if they do not have the eMMC daughter card attached?
+> Since this appears to be a board-specific regulator, would it be better
+> placed at the root level of the board-specific socfpga_agilex5_socdk_emmc.dts
+> file?
+>
+> Additionally, does placing this node inside a memory-mapped bus without a reg
+> property trigger device tree compiler warnings?
 
-Thanks,
-Guenter
+Agreed, this is board-specific and should not be in the shared SoC dtsi.
+Will be moved to socfpga_agilex5_socdk_emmc.dts in v2.
+>
+>> diff --git a/arch/arm64/boot/dts/intel/socfpga_agilex5_socdk_emmc.dts b/arch/arm64/boot/dts/intel/socfpga_agilex5_socdk_emmc.dts
+>> new file mode 100644
+>> index 0000000000000..87bde9fa69c6c
+>> --- /dev/null
+>> +++ b/arch/arm64/boot/dts/intel/socfpga_agilex5_socdk_emmc.dts
+> [ ... ]
+>> +&emmc {
+>> +	status = "okay";
+>> +
+>> +	no-sd;
+>> +	no-sdio;
+>> +	no-1-8-v;
+> The commit message states the eMMC controller is configured for HS200 and
+> HS400 modes at 1.8V. Does the no-1-8-v property prevent these high-speed
+> modes from functioning?
+>
+> In the SDHCI core, parsing no-1-8-v sets the SDHCI_QUIRK2_NO_1_8_V flag,
+> which strips out the MMC_CAP2_HSX00_1_8V and MMC_CAP2_HS400_ES capabilities
+> during host setup. Since the eMMC IO is explicitly supplied by a 1.8V
+> regulator, shouldn't this property be removed to allow HS200 and HS400
+> negotiation?
+
+
+no-1-8-v sets SDHCI_QUIRK2_NO_1_8_V which prevents HS200/HS400
+negotiation — contradicting the intent. Will be removed in v2.
 
