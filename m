@@ -1,222 +1,184 @@
-Received: from bali.collaboradmins.com (bali.collaboradmins.com [148.251.105.195])
+Received: from out-179.mta0.migadu.com (out-179.mta0.migadu.com [91.218.175.179])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D0ABB3F4114
-	for <sashiko-reviews@lists.linux.dev>; Wed, 13 May 2026 17:15:17 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=148.251.105.195
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 95D983911C0
+	for <sashiko-reviews@lists.linux.dev>; Wed, 13 May 2026 17:20:09 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=91.218.175.179
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1778692522; cv=none; b=iLy/Q0liN/f63JsiGZVtO3OuAZSoE7JemkDdNLOhlKDQYKWjWNwVCo46sVEjzbJMocxKNr6foiB4IkVx/Zm8E0OUzQPJL7YTpB6ZWaaX1oDLq4DNf5g4VPk+GQmdwZOem4Yn+sm6x57tPpvDoe2L8Xlaht7xKY6bnNw6qob2GfI=
+	t=1778692811; cv=none; b=dBiPsmlQi8dYib+TIZu0HpSQqlqLFrerCgTjYvQMjNh1qLabB0YCkbNZFGasBuQq1B1dbAuCYg5cVvcLgqaNbTz7HTgEwAlcN7xqnNTPo//i6Daf9hNuRyq21nYthPtClhbr7QixBlSsjh8uJ/ptVNXcOSJC+dVjP3GnPPJCL64=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1778692522; c=relaxed/simple;
-	bh=ETtkUcliRC63eAZF9QVpf4cgvbdnySylqjotlgZBxLQ=;
+	s=arc-20240116; t=1778692811; c=relaxed/simple;
+	bh=C/omiLM/r7V93VaTAIE+KF7mnPxoyr9AFcoTKaoSLac=;
 	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=Vocx19AI/+dr9APyYNoHeiQAPfwX9/3RkHcwtESWiAW3bIdm2H1TX9QVEcX9fV4WC98xt1Itoi72HyNQGa4zLXiVK9+ITaWHlpdmqoFuuKZTP+yxOZJZSPl8kwt0PxwK+yVihGRZihof5p6ahZO+iVAcirAxrI9jgLOuZtipnSA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=collabora.com; spf=pass smtp.mailfrom=collabora.com; dkim=pass (2048-bit key) header.d=collabora.com header.i=@collabora.com header.b=IpGq2UHU; arc=none smtp.client-ip=148.251.105.195
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=collabora.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=collabora.com
+	 In-Reply-To:Content-Type; b=TohN0YrKTtdzFzMNxtlRvISgQ2Y+i5IVJ2QsNIpL6fFfgR2kqw+N5pDcLikdxm5MetcRj7orgUp56dNNiNm+MXz30SY86QeR2SgzLeu2OwTk2g4uVceMIbiGb7HwteHpz0loXE3oGsaU/SpHzrBgSl2vILFE9zjXcD+ugVdOcKw=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linux.dev; spf=pass smtp.mailfrom=linux.dev; dkim=pass (1024-bit key) header.d=linux.dev header.i=@linux.dev header.b=FALyrhD8; arc=none smtp.client-ip=91.218.175.179
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linux.dev
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linux.dev
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=collabora.com header.i=@collabora.com header.b="IpGq2UHU"
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=collabora.com;
-	s=mail; t=1778692514;
-	bh=ETtkUcliRC63eAZF9QVpf4cgvbdnySylqjotlgZBxLQ=;
-	h=Date:Subject:To:Cc:References:From:In-Reply-To:From;
-	b=IpGq2UHU2xAXLTnRRocGEMC4d9zoyp/3sljXKeqDvw7n4b+VABCp8gB94eYWQ2Ddr
-	 hOy80EZoPiRO/FNbjV0dxPvQ0RmwAw1Np4ts1FJkR+Kx/39B9Sg9Qk8NiKyi2zsKnr
-	 1nRftPbSKYV55MU+UnK6iVTWgaXH627pfaLPXjsJk72DvohPXZbfcvhdELO3aPAZuE
-	 8VXXPBk5eCIiAEDfQXoecQ8Wj6Urcm5L1/gY1ZM03Z3yJlXM+6ZvbDUsHzLi+74xGr
-	 aXf1BfIQk8y/UcFOzN4d4ketlMa1ehoBejhAlL6DHtqVzv8shdDnHV1ZACIvGxpwcl
-	 ZMQz3qn1ZV6Eg==
-Received: from [100.64.0.241] (unknown [100.64.0.241])
-	(using TLSv1.3 with cipher TLS_AES_128_GCM_SHA256 (128/128 bits)
-	 key-exchange X25519 server-signature RSA-PSS (4096 bits) server-digest SHA256)
-	(No client certificate requested)
-	(Authenticated sender: cristicc)
-	by bali.collaboradmins.com (Postfix) with ESMTPSA id 5500017E04F2;
-	Wed, 13 May 2026 19:15:14 +0200 (CEST)
-Message-ID: <2e54875b-e31c-4e03-b377-026580ceb1b9@collabora.com>
-Date: Wed, 13 May 2026 20:15:13 +0300
+	dkim=pass (1024-bit key) header.d=linux.dev header.i=@linux.dev header.b="FALyrhD8"
+Message-ID: <8cabc830-7aa1-4830-bc97-8756145d45f8@linux.dev>
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linux.dev; s=key1;
+	t=1778692795;
+	h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+	 to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+	 content-transfer-encoding:content-transfer-encoding:
+	 in-reply-to:in-reply-to:references:references;
+	bh=YHy9TjdQ1GyBjJIO3lOl0MZgD404LiUSrXXuRuDKq9U=;
+	b=FALyrhD8efWX1wYEaET+8Rt0RfIVLebNwd8gwNBVwEi5UUu37oIOCayhZ1cZycpvblRXgl
+	C7dBf0vpgZA6t5XtFb2QsgEwCk8aaJeYGh6H6vcxhMOx5kuxP2GnRoNCydhrhZFM2dBwwr
+	tqeQ8MNsdeqrSRM98SbTPcB4/d2SizE=
+Date: Wed, 13 May 2026 10:19:50 -0700
 Precedence: bulk
 X-Mailing-List: sashiko-reviews@lists.linux.dev
 List-Id: <sashiko-reviews.lists.linux.dev>
 List-Subscribe: <mailto:sashiko-reviews+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:sashiko-reviews+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v2 2/6] phy: rockchip: samsung-hdptx: Handle uncommitted
- PHY config changes
+Subject: Re: [PATCH bpf v3 2/3] bpf: Avoid faultable build ID reads under mm
+ locks
 To: sashiko-reviews@lists.linux.dev
-Cc: vkoul@kernel.org, olteanv@gmail.com, linux-phy@lists.infradead.org,
- neil.armstrong@linaro.org
-References: <20260511-hdptx-clk-fixes-v2-2-664e41379cab@collabora.com>
- <20260512235710.A6AC1C2BCB0@smtp.kernel.org>
+Cc: bpf@vger.kernel.org
+References: <20260512032906.2670326-3-ihor.solodrai@linux.dev>
+ <20260513040354.ED092C2BCC7@smtp.kernel.org>
 Content-Language: en-US
-From: Cristian Ciocaltea <cristian.ciocaltea@collabora.com>
-In-Reply-To: <20260512235710.A6AC1C2BCB0@smtp.kernel.org>
+X-Report-Abuse: Please report any abuse attempt to abuse@migadu.com and include these headers.
+From: Ihor Solodrai <ihor.solodrai@linux.dev>
+In-Reply-To: <20260513040354.ED092C2BCC7@smtp.kernel.org>
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 7bit
+X-Migadu-Flow: FLOW_OUT
 
-On 5/13/26 2:57 AM, sashiko-bot@kernel.org wrote:
-> Thank you for your contribution! Sashiko AI review found 4 potential issue(s) to consider:
-> - [High] Abuse of CCF determine_rate corrupts the clock tree rate cache.
-> - [High] Ignored return value in clk_ops.prepare masks hardware initialization failures.
-> - [High] Missing mutual exclusion between CCF and PHY frameworks causes concurrent hardware corruption.
-> - [High] Unbalanced PHY usage count on lane mode configuration failure in rk_hdptx_phy_power_on.
+On 5/12/26 9:03 PM, sashiko-bot@kernel.org wrote:
+> Thank you for your contribution! Sashiko AI review found 3 potential issue(s) to consider:
+> - [High] Sleepable build ID parsing unconditionally fails on systems where CONFIG_PER_VMA_LOCK is disabled.
+> - [High] Incorrect VMA classification using `!vma->vm_file` violates MM API and risks unsafe driver reads.
+> - [High] Missing caching causes a severe performance regression due to redundant file I/O for IPs within the same VMA.
+
+Sashiko essentially repeated the issues flagged by BPF CI bot,
+which I already replied to. Same in the second message.
+
+Ignoring these for now.
+
 > --
 > 
-> commit 53b6461d3d35f9f83438d0a57cf5379f7c1fcba8
-> Author: Cristian Ciocaltea <cristian.ciocaltea@collabora.com>
+> commit 8402e095f9b6a82fa06a32af10007e005d6c5e76
+> Author: Ihor Solodrai <ihor.solodrai@linux.dev>
+> bpf: Avoid faultable build ID reads under mm locks
 > 
-> phy: rockchip: samsung-hdptx: Handle uncommitted PHY config changes
+> This commit updates the stackmap sleepable path to avoid calling
+> build_id_parse_file() while holding mmap_lock or a per-VMA read lock. It
+> achieves this by acquiring a stable read-side reference to the backing file,
+> dropping the VMA lock, and then parsing the build ID.
 > 
-> Any changes to the PHY link rate and/or color depth done via the HDMI
-> PHY configuration API are not immediately programmed into the hardware,
-> but are delayed until the PHY usage count gets incremented from 0 to 1,
-> that is when it is powered on or when the PLL clock exposed through
-> the CCF API is prepared, whichever comes first.
+> Link: https://lore.kernel.org/all/20251218005818.614819-1-shakeel.butt@linux.dev/
+> Link: https://lore.kernel.org/all/20260128183232.2854138-1-andrii@kernel.org/
+> 
+>> diff --git a/kernel/bpf/stackmap.c b/kernel/bpf/stackmap.c
+>> index 4ef0fd06cea58..c1e96df360c3f 100644
+>> --- a/kernel/bpf/stackmap.c
+>> +++ b/kernel/bpf/stackmap.c
 > 
 > [ ... ]
 > 
->> diff --git a/drivers/phy/rockchip/phy-rockchip-samsung-hdptx.c b/drivers/phy/rockchip/phy-rockchip-samsung-hdptx.c
->> index 7fb1c22318bbf..12c259d9544cf 100644
->> --- a/drivers/phy/rockchip/phy-rockchip-samsung-hdptx.c
->> +++ b/drivers/phy/rockchip/phy-rockchip-samsung-hdptx.c
->> @@ -1347,25 +1354,22 @@ static int rk_hdptx_phy_consumer_get(struct rk_hdptx_phy *hdptx)
->>  		return 0;
+>> @@ -158,6 +159,105 @@ static inline void stack_map_build_id_set_ip(struct bpf_stack_build_id *id)
+>>  	memset(id->build_id, 0, BUILD_ID_SIZE_MAX);
+>>  }
 >>  
->>  	ret = regmap_read(hdptx->grf, GRF_HDPTX_STATUS, &status);
->> -	if (ret)
->> -		goto dec_usage;
->> -
->> -	if (status & HDPTX_O_PLL_LOCK_DONE)
->> -		dev_warn(hdptx->dev, "PLL locked by unknown consumer!\n");
->> +	if (ret) {
->> +		atomic_dec(&hdptx->usage_count);
->> +		return ret;
+>> +struct stack_map_vma_lock {
+>> +	bool vma_locked;
+>> +	struct vm_area_struct *vma;
+>> +	struct mm_struct *mm;
+>> +};
+>> +
+>> +static struct vm_area_struct *
+>> +stack_map_lock_vma(struct stack_map_vma_lock *lock, unsigned long ip)
+>> +{
+> 
+> [ ... ]
+> 
+>> +	vma = vma_lookup(mm, ip);
+>> +	if (!vma) {
+>> +		mmap_read_unlock(mm);
+>> +		return NULL;
 >> +	}
->>  
->>  	if (mode == PHY_MODE_DP) {
->>  		rk_hdptx_dp_reset(hdptx);
->>  	} else {
->> -		ret = rk_hdptx_pll_cmn_config(hdptx);
->> -		if (ret)
->> -			goto dec_usage;
->> +		/*
->> +		 * Ignore PLL config errors at this point as pll_config_dirty
->> +		 * was not reset and, therefore, operation will be retried.
->> +		 */
->> +		rk_hdptx_pll_cmn_config(hdptx);
->>  	}
->>  
->>  	return 0;
+>> +
+>> +#ifdef CONFIG_PER_VMA_LOCK
+>> +	if (!vma_start_read_locked(vma)) {
+>> +		mmap_read_unlock(mm);
+>> +		return NULL;
+>> +	}
+>> +	mmap_read_unlock(mm);
+>> +#else
+>> +	mmap_read_unlock(mm);
+>> +	return NULL;
+>> +#endif
 > 
-> Does dropping the return value of rk_hdptx_pll_cmn_config() mask hardware
-> initialization failures?
-
-No, it's done on purpose, per the comment above (the error is not critical at
-this point and we don't want to bail out too early).
-
+> Does this unconditionally fail on systems where CONFIG_PER_VMA_LOCK is
+> disabled?
 > 
-> If pll_config_dirty is false (for example, the clock was previously prepared
-> and unprepared), a subsequent failure won't be retried later.
-
-The retry is done either by rk_hdptx_phy_clk_set_rate() or
-rk_hdptx_phy_power_on(), whichever comes first.
-
+> Looking at the fallback block, it unlocks the mmap_read_lock and returns
+> NULL. Will this cause stack_map_get_build_id_offset_sleepable() to always
+> receive a NULL VMA and fail to extract any build IDs on architectures lacking
+> per-VMA lock support?
 > 
-> Also, if a caller invokes clk_prepare_enable() but not clk_set_rate() or
-> phy_power_on(), will the hardware remain unconfigured while CCF incorrectly
-> assumes the clock is running?
-
-That's not a valid usecase, the hardware will be eventually programmed by one of
-the two functions above - the clock provider is dependent on the PHY
-configuration, which may happen after clk_prepare_enable().
-
+> [ ... ]
 > 
->> @@ -1700,16 +1704,20 @@ static int rk_hdptx_phy_power_on(struct phy *phy)
->>  		if (ret)
->>  			rk_hdptx_phy_consumer_put(hdptx, true);
->>  	} else {
->> -		regmap_write(hdptx->grf, GRF_HDPTX_CON0,
->> -			     HDPTX_MODE_SEL << 16 | FIELD_PREP(HDPTX_MODE_SEL, 0x0));
->> +		if (hdptx->pll_config_dirty)
->> +			ret = rk_hdptx_pll_cmn_config(hdptx);
->>  
->> -		if (hdptx->hdmi_cfg.mode == PHY_HDMI_MODE_FRL)
->> -			ret = rk_hdptx_frl_lcpll_mode_config(hdptx);
->> -		else
->> -			ret = rk_hdptx_tmds_ropll_mode_config(hdptx);
->> +		if (!ret) {
->> +			regmap_write(hdptx->grf, GRF_HDPTX_CON0,
->> +				     HDPTX_MODE_SEL << 16 | FIELD_PREP(HDPTX_MODE_SEL, 0x0));
->>  
->> -		if (ret)
->> +			if (hdptx->hdmi_cfg.mode == PHY_HDMI_MODE_FRL)
->> +				ret = rk_hdptx_frl_lcpll_mode_config(hdptx);
->> +			else
->> +				ret = rk_hdptx_tmds_ropll_mode_config(hdptx);
->> +		} else {
->>  			rk_hdptx_phy_consumer_put(hdptx, true);
+>> +static void stack_map_get_build_id_offset_sleepable(struct bpf_stack_build_id *id_offs,
+>> +						    u32 trace_nr)
+>> +{
+>> +	struct mm_struct *mm = current->mm;
+>> +	struct stack_map_vma_lock lock = {
+>> +		.vma_locked = false,
+>> +		.vma = NULL,
+>> +		.mm = mm,
+>> +	};
+>> +	unsigned long vm_pgoff, vm_start;
+>> +	struct vm_area_struct *vma;
+>> +	struct file *file;
+>> +	u64 ip;
+>> +
+>> +	for (u32 i = 0; i < trace_nr; i++) {
+> 
+> I see this is addressed in a later commit in the series ("bpf: Cache build
+> IDs in sleepable stackmap path"), but is there a risk of a performance
+> regression here?
+> 
+> The original non-sleepable path cached the previous VMA and build ID. Since
+> that caching logic is missing here, will adjacent stack frames from the same
+> binary repeatedly trigger file reference acquisitions and blocking reads for
+> every single IP?
+> 
+>> +		ip = READ_ONCE(id_offs[i].ip);
+>> +		vma = stack_map_lock_vma(&lock, ip);
+>> +		if (!vma || !vma->vm_file) {
+> 
+> Is checking vma->vm_file sufficient to determine if the mapping is
+> file-backed?
+> 
+> Anonymous VMAs, such as private mappings of /dev/zero or driver mappings
+> calling vma_set_anonymous(), can legitimately have vm_file set.
+> 
+> Could passing these anonymous VMAs to build_id_parse_file() invoke
+> __kernel_read() on a driver's read handler, leading to unintended side
+> effects or hangs?
+> 
+> Would it be safer to use !vma_is_anonymous(vma) instead?
+> 
+>> +			stack_map_build_id_set_ip(&id_offs[i]);
+>> +			stack_map_unlock_vma(&lock);
+>> +			continue;
 >> +		}
->>  	}
+>> +
+>> +		file = get_file(vma->vm_file);
+>> +		vm_pgoff = vma->vm_pgoff;
+>> +		vm_start = vma->vm_start;
+>> +		stack_map_unlock_vma(&lock);
+>> +
+>> +		/* build_id_parse_file() may block on filesystem reads */
+>> +		if (build_id_parse_file(file, id_offs[i].build_id, NULL)) {
+>> +			stack_map_build_id_set_ip(&id_offs[i]);
+>> +			fput(file);
+>> +			continue;
+>> +		}
 > 
-> If rk_hdptx_tmds_ropll_mode_config() or rk_hdptx_frl_lcpll_mode_config()
-> fails, ret is set but the else block is never executed. Does this leave
-> usage_count unbalanced and prevent the PHY from being powered down? I noted
-> this was addressed later in the series by commit "phy: rockchip:
-> samsung-hdptx: Drop TMDS rate setup workaround", but wanted to point it out.
 
-If rk_hdptx_pll_cmn_config() above succeeds, it's very unlikely any of the
-*_mode_config() calls fails. The indicated commit does indeed eliminate this
-theoretical issue - I can still handle it in this patch if a new revision is
-required.
-
-> 
-> Also, does this logic introduce a race condition between CCF (clk_prepare)
-> and the PHY framework (phy_power_on)? The usage_count is atomic, but there
-> appears to be no mutual exclusion for the hardware configuration itself.
-> 
-> If Thread A calls clk_prepare() and increments the count to 1, it starts the
-> lengthy rk_hdptx_pll_cmn_config() hardware sequence.
-> 
-> If Thread B calls phy_power_on() concurrently and increments the count to 2,
-> it returns immediately from rk_hdptx_phy_consumer_get(). Thread B will then
-> evaluate hdptx->pll_config_dirty, see it is still true, and concurrently
-> execute rk_hdptx_pll_cmn_config() while Thread A is already modifying the
-> same registers.
-
-No, that's not a valid usecase - the calls are orchestrated by the DRM subystem,
-which guaranties the sequence of operations, e.g. configuring PHY (w/o HW
-programming) -> setting clk rate (w/ HW programming) -> powering PHY (w/ HW
-progamming).
-
-> 
->> @@ -2303,8 +2314,19 @@ static int rk_hdptx_phy_clk_determine_rate(struct clk_hw *hw,
->>  {
->>  	struct rk_hdptx_phy *hdptx = to_rk_hdptx_phy(hw);
->>  
->> -	if (hdptx->hdmi_cfg.mode == PHY_HDMI_MODE_FRL)
->> -		return hdptx->hdmi_cfg.rate;
->> +	/*
->> +	 * Invalidate current clock rate to ensure rk_hdptx_phy_clk_set_rate()
->> +	 * will be invoked to commit PLL configuration.
->> +	 */
->> +	if (hdptx->pll_config_dirty) {
->> +		req->rate = 0;
->> +		return 0;
->> +	}
-> 
-> Does returning req->rate = 0 here corrupt the clock tree rate cache?
-> 
-> By returning 0 to bypass CCF's optimization and force set_rate(), the Common
-> Clock Framework will cache 0 Hz as the actual hardware rate and propagate it
-> downstream. 
-> 
-> Could this cause downstream consumers (like the VOP2 display clock dclk)
-> or rate change notifiers to receive 0 Hz, potentially leading to
-> division-by-zero errors or broken pixel clock math?
-
-No, invalidating the CCF rate doesn't have any negative side effect - this is
-very short-lived state which ensures a set_rate() call from VOP2 is imminent.
-This is really necessary in order to address the usecases described in the
-commit message, e.g. pixel clock rate not varying with bpc (from consumer/VOP2
-perspective).
