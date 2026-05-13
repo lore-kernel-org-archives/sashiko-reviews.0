@@ -1,159 +1,100 @@
-Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
+Received: from out-183.mta0.migadu.com (out-183.mta0.migadu.com [91.218.175.183])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C8E173E9C30;
-	Wed, 13 May 2026 10:35:21 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B21BE3E8688
+	for <sashiko-reviews@lists.linux.dev>; Wed, 13 May 2026 10:45:47 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=91.218.175.183
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1778668521; cv=none; b=LAMjsDfq7yulamku6EHpO0rX7DTE1yY6Vqv+h0v8B5y1WT5Hnq5D4L+3us/3jFjM+kbxpj9KQ8PUzlDmv07fckj0q5NUWMWRGuKzDTgZftMeCbBbvis01JIEijch04iqPK7g7MtaTr8jhrfbqVGndKikm3xF53K1R6D1lqwHWiU=
+	t=1778669149; cv=none; b=EBelrWuK/Cq8rV1y+il9fug6YhclzCH3oiFf1tPP2/0wEtEKYRSyurW/bSv5v4RJibkQWRvYfX7lJ31aCceT7ssNBvp8M4W4vRpvwvHomjjvfKlVEAmc0DoReTEs/BSiqmpvoE2mcq80sEKB9mVSTga7xW4FR24Pkudcpbx1DIA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1778668521; c=relaxed/simple;
-	bh=LJEnQGCxmpT8H5OOyRq2BjQAVPyNqXeudAIu9GFxSBM=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=bJFd0ZSP/KIx3y98hBPRWC3ccE7rGOR0h/W8XzetpTC0RNVGtbDQ0nEYdlsL48eOlTBhzai6+++rXH/W5fwvTUUANWIAKZGPhtdOauMuAD+lN2PjmUyH9LiphDyAf3ACIsyl+seUlwojDLm8HpuVLhXgd7tcEBqnAyh8cKRQKcg=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=jjtiSQSE; arc=none smtp.client-ip=10.30.226.201
+	s=arc-20240116; t=1778669149; c=relaxed/simple;
+	bh=vJMaQAKhWt2IHR0zyYCI4h8U1T/fJieG9BdbySH7Szc=;
+	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
+	 In-Reply-To:Content-Type; b=nxtctJKc4nL6IMGUZQCvywSZlX6Qfo4JT8DfUsOXe8Hr9lXePuKDBQaA0VjS86/ihI/vJUnehErFfwjCT9GNHJ7DmiGTe6i8IFDSYchf4OyRMvgV0r85gbyZI+KGz8w0XHfS11Sm/nFwCsC1hqdvihrMFkjtfMaenOa/uvPalFc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linux.dev; spf=pass smtp.mailfrom=linux.dev; dkim=pass (1024-bit key) header.d=linux.dev header.i=@linux.dev header.b=SnUhzysc; arc=none smtp.client-ip=91.218.175.183
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linux.dev
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linux.dev
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="jjtiSQSE"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id E3876C2BCC7;
-	Wed, 13 May 2026 10:35:20 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1778668521;
-	bh=LJEnQGCxmpT8H5OOyRq2BjQAVPyNqXeudAIu9GFxSBM=;
-	h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
-	b=jjtiSQSEtVPbIQJULENgyqQ5HO7XywtjOTdlcLlC74wDqaqhWZPu0sQj85LErqBCF
-	 8yGKDWkzxs1/9st2SY33taBno/GNZezEVQ7WRORKiHKejxz8XhV17jsakPBjsqha9k
-	 M2HDS3URszd6y33KiecijcY/nxGyHQfevQjKWlHw9TkJUmW4EVkFiMfRR+gS22+bbJ
-	 +LvDphHRmJ0CxgR6ZDRxbpzc/ODKf98Upw2byXQ0ROtyWmmYjcEX0+ywXyDVKU7zVp
-	 idljGyhQlVdxWm5q6VV9bi50f2SbwxVr4UrhOmN1VdgyR2ZSLbHHYBzoOddEc84WwQ
-	 +rVJVuOEz5ixw==
-Date: Wed, 13 May 2026 12:35:18 +0200
-From: Lorenzo Bianconi <lorenzo@kernel.org>
-To: sashiko-reviews@lists.linux.dev
-Cc: robh@kernel.org, conor+dt@kernel.org, krzk+dt@kernel.org,
-	devicetree@vger.kernel.org, netdev@vger.kernel.org
-Subject: Re: [PATCH net-next v6 11/12] net: airoha: Support multiple LAN/WAN
- interfaces for hw MAC address configuration
-Message-ID: <agRT5gMzYuk2qqsX@lore-desk>
-References: <20260511-airoha-eth-multi-serdes-v6-11-c899462c4f75@kernel.org>
- <20260512234745.34227C2BCB0@smtp.kernel.org>
+	dkim=pass (1024-bit key) header.d=linux.dev header.i=@linux.dev header.b="SnUhzysc"
+Message-ID: <3c9b4ff0-7a62-4053-83c7-23151905c742@linux.dev>
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linux.dev; s=key1;
+	t=1778669145;
+	h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+	 to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+	 content-transfer-encoding:content-transfer-encoding:
+	 in-reply-to:in-reply-to:references:references;
+	bh=3OUBgLcGIWLl2rOMcr+4WnW+aK5rNC4EH7u5rXEsvo8=;
+	b=SnUhzyscOJX5vDycjsbEeM5Tqb8fenhozw+xdAVexBkt4s0/3jueHUlud08qGjkep9Q15A
+	UL3ZGNWW+hrlEnQFEWcs+EhCyBis4z4MgwFQKTIxaETkGBHZrXaFev7n6gMs8iDNtvh2QW
+	Ljy0IWboWJighFahJePFGygPR+BceVw=
+Date: Wed, 13 May 2026 18:45:35 +0800
 Precedence: bulk
 X-Mailing-List: sashiko-reviews@lists.linux.dev
 List-Id: <sashiko-reviews.lists.linux.dev>
 List-Subscribe: <mailto:sashiko-reviews+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:sashiko-reviews+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: multipart/signed; micalg=pgp-sha512;
-	protocol="application/pgp-signature"; boundary="HK6WfaX2FoNzYPzr"
-Content-Disposition: inline
-In-Reply-To: <20260512234745.34227C2BCB0@smtp.kernel.org>
+Subject: Re: [PATCH bpf-next v13 6/8] bpf: Add syscall common attributes
+ support for map_create
+Content-Language: en-US
+To: sashiko-reviews@lists.linux.dev
+Cc: bpf@vger.kernel.org
+References: <20260511152817.89191-7-leon.hwang@linux.dev>
+ <20260512233658.CEED7C2BCB0@smtp.kernel.org>
+X-Report-Abuse: Please report any abuse attempt to abuse@migadu.com and include these headers.
+From: Leon Hwang <leon.hwang@linux.dev>
+In-Reply-To: <20260512233658.CEED7C2BCB0@smtp.kernel.org>
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 7bit
+X-Migadu-Flow: FLOW_OUT
 
+On 13/5/26 07:36, sashiko-bot@kernel.org wrote:
+[...]
+>> +
+>> +	err = __map_create(attr, uattr, log);
+>> +
+>> +	ret = bpf_log_attr_finalize(&attr_log, log);
+>> +	if (ret) {
+>> +		if (err >= 0)
+>> +			close_fd(err);
+> 
+> Is it safe to call close_fd() here? Since __map_create() uses
+> bpf_map_new_fd() to allocate and publish the file descriptor via
+> fd_install(), the file descriptor is already visible to userspace.
+> 
 
---HK6WfaX2FoNzYPzr
-Content-Type: text/plain; charset=iso-8859-1
-Content-Disposition: inline
-Content-Transfer-Encoding: quoted-printable
+I think it is acceptable to close_fd() here, that the duration between
+fd_install() and close_fd() is short.
 
-> Thank you for your contribution! Sashiko AI review found 2 potential issu=
-e(s) to consider:
-> - [High] Strict OUI matching logic breaks random MAC initialization and c=
-reates a MAC configuration deadlock.
-> - [Medium] Unaligned stack array passed to Ethernet helper functions.
-> --
->=20
-> commit c741e4a94d25c6203f98c2a4392d2ea65e6c3156
-> Author: Lorenzo Bianconi <lorenzo@kernel.org>
->=20
-> net: airoha: Support multiple LAN/WAN interfaces for hw MAC address confi=
-guration
->=20
-> This commit extends the hardware LAN/WAN MAC address configuration logic =
-to
-> derive the correct minimum and maximum values when multiple interfaces are
-> configured as LAN or WAN. It assumes all interfaces configured in the same
-> group share a common upper MAC address.
->=20
-> > diff --git a/drivers/net/ethernet/airoha/airoha_eth.c b/drivers/net/eth=
-ernet/airoha/airoha_eth.c
-> > --- a/drivers/net/ethernet/airoha/airoha_eth.c
-> > +++ b/drivers/net/ethernet/airoha/airoha_eth.c
-> > @@ -71,20 +71,67 @@ static void airoha_qdma_irq_disable(struct airoha_i=
-rq_bank *irq_bank,
-> >  	airoha_qdma_set_irqmask(irq_bank, index, mask, 0);
-> >  }
-> > =20
-> > -static void airoha_set_macaddr(struct airoha_gdm_dev *dev, const u8 *a=
-ddr)
-> > +static int airoha_set_macaddr(struct airoha_gdm_dev *dev, const u8 *ad=
-dr)
-> >  {
-> >  	struct airoha_eth *eth =3D dev->eth;
-> > -	u32 val, reg;
-> > +	u8 ref_addr[ETH_ALEN] =3D {};
->=20
-> Is this stack array missing a 16-bit alignment attribute?
->=20
-> ether_addr_copy() and is_zero_ether_addr() require their arguments to be
-> 16-bit aligned. On systems lacking CONFIG_HAVE_EFFICIENT_UNALIGNED_ACCESS,
-> passing an unaligned stack array cast to a u16 pointer will cause alignme=
-nt
-> traps.
->=20
-> Could this be declared with __aligned(2) or as a u16 array?
+> Could this introduce a regression where a concurrent thread closes this
+> file descriptor and opens a new, unrelated file that receives the exact
+> same fd number? If that happens, it seems this close_fd() might
+> inadvertently close the unrelated file.
+> 
 
-ack, I will fix it in v7.
+This regression is valid.
 
->=20
-> [ ... ]
-> > +			if (netdev->reg_state !=3D NETREG_REGISTERED)
-> > +				continue;
-> > +
-> > +			ether_addr_copy(ref_addr, netdev->dev_addr);
-> [ ... ]
-> > +	if (!is_zero_ether_addr(ref_addr) && memcmp(ref_addr, addr, 3)) {
-> > +		/* According to the HW design, hw mac address MS bits
-> > +		 * must be the same for each net_device with the same
-> > +		 * LAN/WAN configuration.
-> > +		 */
-> > +		return -EINVAL;
-> > +	}
->=20
-> Can this strict OUI matching break device probe or create a configuration
-> deadlock?
->=20
-> If the device tree does not provide MAC addresses, the driver generates r=
-andom
-> MACs via eth_hw_addr_random(), which produces differing OUIs. When the se=
-cond
-> interface attempts to register during probe, this check will fail,
-> register_netdev() will return -EINVAL, and the entire driver probe will a=
-bort.
->=20
-> Additionally, can this prevent userspace from migrating the MAC addresses=
- to a
-> new OUI using "ip link set"?
->=20
-> The first interface update attempt would be rejected because its new OUI
-> would not match the OUI of the remaining unmodified interfaces.
+However, since the new fd hasn't been returned to user space, user space
+thread seems unable to get the exact fd number to close it.
 
-As already pointed out, this is a requirement imposed by the hw design.
+> Additionally, since the map is published globally via its ID before fd
+> installation in bpf_map_alloc_id(), could another thread acquire a
+> reference to the map before this error path? It looks like the map might
+> remain alive and accessible even though the syscall returns a failure.
+> 
+I think this is not an issue, as the map is valid for other threads. The
+map's lifecycle is maintained by its own refcnt. close_fd() will dec the
+refcnt instead of destroying the map.
 
-Regards,
-Lorenzo
+Thanks,
+Leon
 
->=20
-> --=20
-> Sashiko AI review =B7 https://sashiko.dev/#/patchset/20260511-airoha-eth-=
-multi-serdes-v6-0-c899462c4f75@kernel.org?part=3D11
+>> +		err = ret;
+>> +	}
+>> +
+>> +free:
+>> +	kfree(log);
+>> +	return err;
+>> +}
+> 
 
---HK6WfaX2FoNzYPzr
-Content-Type: application/pgp-signature; name=signature.asc
-
------BEGIN PGP SIGNATURE-----
-
-iHUEABYKAB0WIQTquNwa3Txd3rGGn7Y6cBh0uS2trAUCagRT5gAKCRA6cBh0uS2t
-rLW/AQD4m7PAEXyvb3gFS9eyNox/xtKbmG3rc517uPAgmLhtygD/Y938DMlZwZa2
-cp/j+aZgwDWrz2s2RIsT2h0HXkQJ1Ak=
-=grwD
------END PGP SIGNATURE-----
-
---HK6WfaX2FoNzYPzr--
