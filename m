@@ -1,211 +1,233 @@
-Received: from BL0PR03CU003.outbound.protection.outlook.com (mail-eastusazon11012066.outbound.protection.outlook.com [52.101.53.66])
+Received: from out198-19.us.a.mail.aliyun.com (out198-19.us.a.mail.aliyun.com [47.90.198.19])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D832D3D3D15
-	for <sashiko-reviews@lists.linux.dev>; Wed, 13 May 2026 06:34:32 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=fail smtp.client-ip=52.101.53.66
-ARC-Seal:i=2; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1778654074; cv=fail; b=UQvy/GR3UfGEGfauexV1wSrAuT7vJzeNrZSZ94i8aneVNjgMCaxoKM2EwuRypi/uQ3Y1dPi4oWSrewkorUQRaeZpVAIt7pCwy3nBZO68xe2kAGnsLs+n7GlpBfuLjH74dIvdPMTdwDy2i0HlugmJn2/N/bgyeC4klNhstYlR3A4=
-ARC-Message-Signature:i=2; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1778654074; c=relaxed/simple;
-	bh=Amvk4W0o3DpOhhlszCnPFvZIQFcwYd7PMq0vew3wrTQ=;
-	h=Message-ID:Date:Subject:To:Cc:References:From:In-Reply-To:
-	 Content-Type:MIME-Version; b=giSmJwGNbG7t4qxtEWEc+dRif/wic7rZbF7q1by1L764dzjV+B5LlyFY3addcNgQ5yNZhsEYoj+GQT3BG9fDgLPDHgLceMofGFgB2U65kuvQbHmiso8I1Wq8oI52y60ZbQZOAuUih3PXBfDVh0YjbNE4zssAIzNO83tlWRM026A=
-ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=altera.com; spf=pass smtp.mailfrom=altera.com; dkim=pass (2048-bit key) header.d=altera.com header.i=@altera.com header.b=UN6UQgDE; arc=fail smtp.client-ip=52.101.53.66
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=altera.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=altera.com
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EEA0B3D5C05
+	for <sashiko-reviews@lists.linux.dev>; Wed, 13 May 2026 07:18:59 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=47.90.198.19
+ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
+	t=1778656742; cv=none; b=Y5wEUol1slJ3fN2eZ4v7wvGemrUi2JLhUk6lpkx/g//R77CMvuX48XDqW9YXdOE5mZJUk78ERz4PRlisq7MFI2O5zHUgcyQoOYOyTgt8vYkszdcRr2VcFPEjv2w0ALPHErXhZOgwIU7cW8FjLVXE7C/GiAYbwD/WBFIJYqLM0nA=
+ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
+	s=arc-20240116; t=1778656742; c=relaxed/simple;
+	bh=QsHEW1JdmqmkfyZTfonQtwjYZe6c5LBxUYVFUTAcOPM=;
+	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
+	 To:Cc:Content-Type; b=GI6sxjO3I9Ghc0uL83daIR7zFE/oM98y2z3Yvsme8F8g8Xx5QTbcBg1zazG72eyHb8zo0udb70D9XtiK5zcSi+FfW1IKzNME+2uypc9A/D8MYIZRg1/wslvmg64LARY5b0feg4j7DctsF2qs3feyZKr6nRAufOtbTiN8GBdfc3g=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=lontium.com; spf=pass smtp.mailfrom=lontium.com; dkim=pass (2048-bit key) header.d=lontium.com header.i=@lontium.com header.b=OcdFzYAI; arc=none smtp.client-ip=47.90.198.19
+Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=lontium.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=lontium.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=altera.com header.i=@altera.com header.b="UN6UQgDE"
-ARC-Seal: i=1; a=rsa-sha256; s=arcselector10001; d=microsoft.com; cv=none;
- b=WTrVuj5OaocXRypXylpMKYbM33AhRRMTBqZOCzwvsRbtS98CTuunysxCAPGK6+w+xPsRQMG5Fhkyl7JMVU+sI2XPD8XJ39qUEXmzb/QRsH+pYiKFpsZ3PaHFEIMUBv+QOf7svpoXExUYlcAXIOwwPonEDYK5+nBTXKDldXPm5w/gy+SK6kmWda5zJ4kD857Yp697mi5+wl9LkWkxaTwnZuV0O5OONqzyIOmBvygXGv+txNXdGItPiaCaTwvOZNy5TrGCXditBcFyrtSiipYHeZwRCtu+dYwTsNZ+NVflVzUXP89Agnt1Swumbr2bygj7/uzGEvpcd0TKREMehUdgCg==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com;
- s=arcselector10001;
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
- bh=opCv8U8lp30ryXHxo1xbJgo00tnc+hBl5S//tlWuSVg=;
- b=ifWawv6bTSVpLMcQ7KqPly1LSzKoSxQ0ALxzxVKEIZEX9exxWPWAmnhx7G3ykTTfepE6qZHngsw1M0kvasgPb3oEWyFBDj11Y7DG6KqwU6cDQVJ0zO+We2wiVgYlL6PKdtA4+iWKUTp6n23B8XEFjyBiatSYLmYrzzX8FZsLaXk0/p0mUhBio7uXQxnnytkkyyglTSLkIeHm8Q8lMPnxdumUilsnTw1clNjolSiMGe8FkOwQ/vOVtzJ7yclPI6rd49nkzn2VKw1IP8aDogksGnjpeLdZxlRRUpZLR6GsZUoAu6BDAFuf61ZDJGfmAziqyYOWmXO3Phgi8Hy2ZCIFPA==
-ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
- smtp.mailfrom=altera.com; dmarc=pass action=none header.from=altera.com;
- dkim=pass header.d=altera.com; arc=none
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=altera.com;
- s=selector2;
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
- bh=opCv8U8lp30ryXHxo1xbJgo00tnc+hBl5S//tlWuSVg=;
- b=UN6UQgDE8AGD5kyv7E0btCvj7mU50mxId/SPAlGhBJwmfpXif1J1YNtccGCKeLg6ggtJMUNp7JEGEddt0F1i9k8MLza1jq4+u+ZSHgsbK20hfgF0nrJbdz5vknJv365d7nKFJxwlRT4HGNM1beS5Nf0y8Z9Au7jzL2eWnqQ03sESkN6Tr19/YOau+ugZQLX5wkoCkuytZlhGvYbkzCK+TtSW0szsFvO6LDGt6pHCgAz9InhNuR4ZqBBgpWGALOKeA2aEV0rwFrArpJ8kQnpBMR9nOib4ugB92++E0tqXp+jH/pd6h1Z8tbOTvwzzA5Zjv8AjGx5KdB9pu3sBQF8+SQ==
-Authentication-Results: dkim=none (message not signed)
- header.d=none;dmarc=none action=none header.from=altera.com;
-Received: from DM4PR03MB6208.namprd03.prod.outlook.com (2603:10b6:5:39c::19)
- by BLAPR03MB5538.namprd03.prod.outlook.com (2603:10b6:208:285::9) with
- Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.9891.15; Wed, 13 May
- 2026 06:34:29 +0000
-Received: from DM4PR03MB6208.namprd03.prod.outlook.com
- ([fe80::2216:93ef:67b:9e04]) by DM4PR03MB6208.namprd03.prod.outlook.com
- ([fe80::2216:93ef:67b:9e04%6]) with mapi id 15.20.9913.009; Wed, 13 May 2026
- 06:34:29 +0000
-Message-ID: <674baab1-b6e9-4388-ab7a-d1348d855703@altera.com>
-Date: Wed, 13 May 2026 12:04:22 +0530
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v1 3/9] arm64: dts: agilex5: add Cadence SD6HC controller
- and SOCDK enablement
-To: sashiko-reviews@lists.linux.dev
-Cc: robh@kernel.org, krzk+dt@kernel.org, devicetree@vger.kernel.org,
- conor+dt@kernel.org
-References: <20260511202132.5597-4-tanmay.kathpalia@altera.com>
- <20260513004303.51A74C2BCF5@smtp.kernel.org>
-Content-Language: en-US
-From: "Kathpalia, Tanmay" <tanmay.kathpalia@altera.com>
-In-Reply-To: <20260513004303.51A74C2BCF5@smtp.kernel.org>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
-X-ClientProxiedBy: MA5PR01CA0039.INDPRD01.PROD.OUTLOOK.COM
- (2603:1096:a01:1d6::12) To DM4PR03MB6208.namprd03.prod.outlook.com
- (2603:10b6:5:39c::19)
+	dkim=pass (2048-bit key) header.d=lontium.com header.i=@lontium.com header.b="OcdFzYAI"
+DKIM-Signature:v=1; a=rsa-sha256; c=relaxed/relaxed;
+	d=lontium.com; s=default;
+	t=1778656723; h=MIME-Version:From:Date:Message-ID:Subject:To:Content-Type;
+	bh=DUWgtEeLjpo1vNh2+QkOBk1kPDLJmhxUmkhc8h/nZJM=;
+	b=OcdFzYAIyLRztr69xDessmSGbqRFwkqEPOnwodMtiRok8xIeG6KpZx++/aOCTt+dKd+rRechjQwRjP/bQpcH9HlSwCAy2Mkv1aBBlk113h6UHTwKrKibPq0J/CMxHHbGaMZueJTJkeAr/N5eBq14CrKdvz1K1fn4bzc3ZP98uKowxeUnnSbDLG4U7O2/1ipUQa6SpAhMFT/W0iYZb+MKMjfXsHwAPIhZlBSOduKgZ5ZnpYKXpUit/28lyWmKcXWXRJtRRKXgbTHEo1ulCtlZ4fks25Shhkp+Fr4tC4tmMA4wllUoGPIlb3Ecq13MxwnwrsIahnXyVQQygrrnAcyfAw==
+X-Alimail-AntiSpam:AC=CONTINUE;BC=0.07436764|-1;CH=green;DM=|CONTINUE|false|;DS=CONTINUE|ham_regular_dialog|0.320713-0.0274654-0.651822;FP=4490223146391758010|2|1|2|0|-1|-1|-1;HT=maildocker-contentspam033037021130;MF=syyang@lontium.com;NM=1;PH=DS;RN=1;RT=1;SR=0;TI=SMTPD_---.hW1cxtq_1778656720;
+Received: from mail-oo1-f47.google.com(mailfrom:syyang@lontium.com fp:SMTPD_---.hW1cxtq_1778656720 cluster:ay29)
+          by smtp.aliyun-inc.com;
+          Wed, 13 May 2026 15:18:41 +0800
+Received: by mail-oo1-f47.google.com with SMTP id 006d021491bc7-694932346a1so2334502eaf.3
+        for <sashiko-reviews@lists.linux.dev>; Wed, 13 May 2026 00:18:41 -0700 (PDT)
+X-Gm-Message-State: AOJu0YyRsPO88Ou2AS3QrafOh0CDieADoCchAjehu1SBylotcfsETJBA
+	gFlpfNOAkucQ78VEyAGWSGobUb5+FoZ+8y7b0Ty0jBIMZd12/+92VtTCpZ31q7O+6jje7GaMxy2
+	bau2Anlu7Z+EV8o/frGznZZCotJN/I7w=
+X-Received: by 2002:a05:6820:1b0c:b0:696:1bde:cd8f with SMTP id
+ 006d021491bc7-69b78e45ce0mr1226841eaf.53.1778656719922; Wed, 13 May 2026
+ 00:18:39 -0700 (PDT)
 Precedence: bulk
 X-Mailing-List: sashiko-reviews@lists.linux.dev
 List-Id: <sashiko-reviews.lists.linux.dev>
 List-Subscribe: <mailto:sashiko-reviews+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:sashiko-reviews+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-X-MS-PublicTrafficType: Email
-X-MS-TrafficTypeDiagnostic: DM4PR03MB6208:EE_|BLAPR03MB5538:EE_
-X-MS-Office365-Filtering-Correlation-Id: 584205e6-70f0-4087-aa52-08deb0b9afb1
-X-MS-Exchange-AtpMessageProperties: SA
-X-MS-Exchange-SenderADCheck: 1
-X-MS-Exchange-AntiSpam-Relay: 0
-X-Microsoft-Antispam:
-	BCL:0;ARA:13230040|1800799024|366016|376014|55112099003|3023799003|56012099003|22082099003|18002099003|11063799003;
-X-Microsoft-Antispam-Message-Info:
-	PqTOpqu+zi0MJPInoQsZoah0TNSuzRASDm+DxEoTbTl+LJ7W3C0rgiPfD/AsXLimEAfZ/uYBlPCgvhFwToWPCKjOp5So/9XQAfxHEq1fUI2+8Ahfl9FOVZd01ulyg2xv1lWidxrCOSxZfHYjaDm2IQcaUK6frkEWbq8H4qWbSMuKrLiIPsshHHFld0Rn6JXHOXvCPapO2sRexyt1B8GEstRn5qLdKzqZUTUr0ed48/i4kIHYXQup4IMgIqbVD+z2OvDWMqFEe4f8NTjCYEkhu7lEAtEqxbrBymTJalkUXPU2ZEk5v8TBr406t8bj8+CE/hqv2TZXwV9GCElCmdQoJNtcurtneZgWMnpMy6BD0zt7IZh1ltnhwkPpb5TClPcnvohmywxbKkUexbFTj9DIwdKKl913RCJM1Eg9CyrrVy28bYld1AYEhzcO4csTUpNlRHMdRvvHRkCli27CSb0qf+A4dca72r87VeN+Yiuo3IV0xJX1xp/Btd5tXw5105IpIBxVge0+X8jPvg9CHce9twnwoLfzbYHmnpwa19Fel9VKFxIGoUumWiV6XNOMnGyJmr/c+s/Zbuav9QEz9Ihr5fcYz9dxCddzLOPFbK6HSp6ejsw5vMwVztPyUm/VIDbUcfI0WsyxDXaywboYt3+AVNOP/NwjZuq3bpPvsp+qlYlIl70IiXHdUuu9r0ts/3AX
-X-Forefront-Antispam-Report:
-	CIP:255.255.255.255;CTRY:;LANG:en;SCL:1;SRV:;IPV:NLI;SFV:NSPM;H:DM4PR03MB6208.namprd03.prod.outlook.com;PTR:;CAT:NONE;SFS:(13230040)(1800799024)(366016)(376014)(55112099003)(3023799003)(56012099003)(22082099003)(18002099003)(11063799003);DIR:OUT;SFP:1101;
-X-MS-Exchange-AntiSpam-MessageData-ChunkCount: 1
-X-MS-Exchange-AntiSpam-MessageData-0:
-	=?utf-8?B?bzhSN3kvc1dHdE1oendvUWo2aXVwRE9aMkdIOXZzakdQYWcrRGx2c3VCaCtK?=
- =?utf-8?B?TWFhRGN3NHNtL2pJWGRaUDRZVzlKaU5ORHRxVXRCRzRwcnNaVzRDb2RLc1M3?=
- =?utf-8?B?aVhnbnZ6NVpLRDJVRUtvUTRUeHptcXVqQmJWTXQvMC8xRDNSNHhlSitKZXVK?=
- =?utf-8?B?bVJkeWV0Vzk5U1YyK0FrK3MvTXBkQUJ0dnUySDUrdmxHeUtxbUdUUXFxaThh?=
- =?utf-8?B?RnpiaVpDcFFCak9RYmY2bHZQbmVPbU1ibXNoMVp3VWZUbXNKc2dGTG9VRFFS?=
- =?utf-8?B?bytrOGx2Vmd6ZFRiRW5jZzJmY2ZvVWNnd2NFRzhrYTc1QklRdWNOcFpKZmoz?=
- =?utf-8?B?M3dkNUhWckVCTW1lYmtNTjd5RjE2UWJoL0xmRzdFdkFOaTdxYmZhUWdpaWRk?=
- =?utf-8?B?ZGZvL2d3MXhRU2NrTDlWQVk4ZzczTHdWVjJ3aWhvbDBVQXlqZ3FzYkVHSGlY?=
- =?utf-8?B?QmhVOFZsQWVRV2hmc0I3OXhxdmRhS3hZZmpIU1VaZkdocFVhZjhmbEZGQUJy?=
- =?utf-8?B?N1FvNkk0K1VCZTZMeUQveTdEZ2pKMFI1N3F0dUU3NDBOY1ZnUmxiQi9NMjc2?=
- =?utf-8?B?NlF2a1hzalMxVFRvSlJVMTBxWENHQmw3elVnalNrOGhRZTQ4R0lqcDl2U0FV?=
- =?utf-8?B?VEJpc2trTU5KaVBMR04zbko4dy82SEVDUisrbEVJcXB3YkF6REJnblczbHdo?=
- =?utf-8?B?R29EQ0hrelpyUUlqcitiekhMQXVNRFNsSGJvYXBFOWdtNUxtUWhaY3UyTmtB?=
- =?utf-8?B?eUR6WEFISUVuWS9oU0VESDZ5dnFqRTJnaUN4VFgzOE9Temc0Y0RXdDgzM0k0?=
- =?utf-8?B?Z1hiVnA5SndsRmp4S09kMFRURVRTbllCVGdVeEgwSE1PWmgyZ2dDT21Ra3Yx?=
- =?utf-8?B?N3R0L3R4WU9BbkhGM1N2QU9rdWpoWm9ZL2UzcHFJM3A0UW05enR6Y096OTVj?=
- =?utf-8?B?OVBybnVBRnBiaEZseGRwSDNDcUU3c3duSVRFYWZwQ2ZxNFpBSFlvTTF5djhv?=
- =?utf-8?B?YmN6c0xrd2Q4RTlGRXZ3Z3NqdFVYWVJRc2QrMkNab2paWnBlU0ZhRERCUjVX?=
- =?utf-8?B?UE1jV1cxRmo3TThoSnVvTFVuWktxNmE1MitwZXI5aXJiMFovbVZ4bGpiQ1Vl?=
- =?utf-8?B?ZHdMSWV1UG4zUzlCNnEwSW9yY2x6WERZbXNmVk9Tc0ZzSUx5NnlUdFZISWE5?=
- =?utf-8?B?Q0xzb1luRURQTDkyK3FHYUxKNi9KalBjTFdsRmRsQkt6b1JtVjJmck5NNnFH?=
- =?utf-8?B?NzV0dHBoL0hueGRJOUR4MlM2Qjc4YVllbTNMMFhFcFdCd3Mrai9OaDJZdmRU?=
- =?utf-8?B?TlVrbG5mU3haaWN2RjVXaDVnNk9EOHRET1dmakFqNDhicG0zTDJoMzZqaVRk?=
- =?utf-8?B?aStFbHJSVUdjNStIUllGQ3F5ZzZ2eWpHOUdoTXdwYWJrbjRDTEN3M2t1YnlS?=
- =?utf-8?B?ZjRaV0ZXMkgvZjBoZk9SOGIrWGJWSFBscjQ5VWhudDIrT3JUT2taSXUvcWo2?=
- =?utf-8?B?djI1MHowVmROSTBMWGRIclA3dHRKbENkYVVvOWFCU1NmcFZhNUpIQW1Vczlu?=
- =?utf-8?B?bkZTc28wZ1hEYWZJeUU4K2g3dnRQMEVDQW1meHlsejdTMitSZHQ5ckV2bE93?=
- =?utf-8?B?ck5MQXVTNGtkOGZvSHhUcWhlaWNzYlZiZS9IQTFLRVREY280Rzd0NjZ6c2dE?=
- =?utf-8?B?NGFZUGM2TSt0MmNmWjRseHh0bVcxZVJVNkxZR1Q0c0pOQi9HREFuYWswSmQx?=
- =?utf-8?B?eU1VZkhSdXppV1cwWFNEaEl3bnl4OEhIMnVpcis2aStyZEErZjE2QnJvOTFu?=
- =?utf-8?B?eDJEenFQM285Z2cvZjhMZVE5YS9FS3c3aTc2Vzc3OEh1SG8wZGNzQzk2YUx5?=
- =?utf-8?B?ZUlja2I3WWtLL0NJbThlTTl1enFKcnpEUStYRjdhV3l1Z241a2RVMklNa252?=
- =?utf-8?B?TnFEVWpTRkpvOWpUNG9pMnlkWmU2UnRKVE1GMTJULzZObXlBeGk1Q2dxVzJp?=
- =?utf-8?B?cU1tQjk4UDNXVVVKUWg1OVQySldnOTA1dkkrQmJmWTY2RXNIVXNBR2hHU1Qr?=
- =?utf-8?B?MVpaYWtudGlMZjJQaWd6MlpKVkhJY0orUk9DdnFyNDJPcGEwQjZlTnlSd29t?=
- =?utf-8?B?bFJuL0lLblU4aHk1WnBmOXg0bVdmaUgrK2ozZ2VvQllEUnpLN2xJV0YxMEVQ?=
- =?utf-8?B?bnQ4eTFPejVZTERWYnR3Uy9tVGl3czJicE9KaWhnRTlXc1hYNGVSeWJpWExy?=
- =?utf-8?B?NGJnMHA3VHZnZDFUOEk0SFNSN3dHT1hmOEs0bVYwSS9HbXBseHl5cW4zRHAr?=
- =?utf-8?B?Tndaa2dsSmxVUjROSlBTeUYxT3VtNDJqNklIbGFXZ1g3Q0p3bzV5RE5pVnE2?=
- =?utf-8?Q?VJxq+2nZM72g7+8E=3D?=
-X-OriginatorOrg: altera.com
-X-MS-Exchange-CrossTenant-Network-Message-Id: 584205e6-70f0-4087-aa52-08deb0b9afb1
-X-MS-Exchange-CrossTenant-AuthSource: DM4PR03MB6208.namprd03.prod.outlook.com
-X-MS-Exchange-CrossTenant-AuthAs: Internal
-X-MS-Exchange-CrossTenant-OriginalArrivalTime: 13 May 2026 06:34:29.7228
- (UTC)
-X-MS-Exchange-CrossTenant-FromEntityHeader: Hosted
-X-MS-Exchange-CrossTenant-Id: fbd72e03-d4a5-4110-adce-614d51f2077a
-X-MS-Exchange-CrossTenant-MailboxType: HOSTED
-X-MS-Exchange-CrossTenant-UserPrincipalName: R6ppg0McFdIhuOHdnZzyGark5P8wAMMgOAryty0MCg5R3hP3/e3w2g1KiN4SmG80VUI9twp59WnNN11R9IYb+88lww5vW6KDJjaa2/lYpdM=
-X-MS-Exchange-Transport-CrossTenantHeadersStamped: BLAPR03MB5538
+References: <20260512064013.40066-3-syyang@lontium.com> <20260513060452.F227DC2BCB7@smtp.kernel.org>
+In-Reply-To: <20260513060452.F227DC2BCB7@smtp.kernel.org>
+From: Sunyun Yang <syyang@lontium.com>
+Date: Wed, 13 May 2026 15:18:27 +0800
+X-Gmail-Original-Message-ID: <CAFQXuNbsGTkx9a6mw9bVYwn9WnZi3N=zT7tUDZ+NF5RYk_KEbw@mail.gmail.com>
+X-Gm-Features: AVHnY4JoYhVY-9EthCMWPYiHC0PojkQOT1cXob0mNhrxpZakFrJ4sxsbubOWX2A
+Message-ID: <CAFQXuNbsGTkx9a6mw9bVYwn9WnZi3N=zT7tUDZ+NF5RYk_KEbw@mail.gmail.com>
+Subject: Re: [PATCH v7 2/2] drm/bridge: Add Lontium LT7911EXC eDP to MIPI DSI bridge
+To: sashiko-reviews@lists.linux.dev
+Cc: conor+dt@kernel.org, krzk+dt@kernel.org, robh@kernel.org, 
+	devicetree@vger.kernel.org
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 
+<sashiko-bot@kernel.org> =E4=BA=8E2026=E5=B9=B45=E6=9C=8813=E6=97=A5=E5=91=
+=A8=E4=B8=89 14:04=E5=86=99=E9=81=93=EF=BC=9A
+>
+> Thank you for your contribution! Sashiko AI review found 7 potential issu=
+e(s) to consider:
+> - [Critical] Firmware upgrade via sysfs races with DRM atomic modeset cal=
+lbacks, risking hardware bricking.
+      it will be fixed in next version.
 
-On 5/13/2026 6:13 AM, sashiko-bot@kernel.org wrote:
-> Thank you for your contribution! Sashiko AI review found 2 potential issue(s) to consider:
-> - [Medium] Board-specific regulators are incorrectly defined in the generic SoC .dtsi file and placed inside a simple-bus.
-> - [Low] The Cadence SD6HC node includes an undocumented and unsupported `fifo-depth` property.
+> - [High] Hardware reset in `remove` callback races with DRM bridge teardo=
+wn.
+       we will remove set reset gpio in `remove`.  the chip has
+hardware protection, no need to consider backpowering.
+
+> - [Medium] Undefined behavior in CRC validation due to integer promotion.
+      it will be fixed in next version.
+
+> - [Medium] Incomplete display configuration and missing MIPI DSI host reg=
+istration.
+        it will be fixed in next version.
+
+> - [Medium] Unbalanced reset pin state on probe failure creates backpoweri=
+ng risk.
+      the chip has hardware protection, no need to consider backpowering.
+
+> - [Medium] Ignored return values for critical I2C writes during firmware =
+upgrades.
+       it will be fixed in next version.
+
+> - [Low] `dev_err_probe()` used outside of `probe` context.
+      it will be fixed in next version.
 > --
 >
-> commit cd8114ca6cbb7c0bc2b1d26651ea445b3eef24ec
-> Author: Tanmay Kathpalia <tanmay.kathpalia@altera.com>
+> commit 0bae053b4ef87003ffe3f7c844f0ddb1092f16bf
+> Author: Sunyun Yang <syyang@lontium.com>
+> Date:   Tue May 12 06:40:13 2026 +0000
 >
-> arm64: dts: agilex5: add Cadence SD6HC controller and SOCDK enablement
+>     drm/bridge: Add Lontium LT7911EXC eDP to MIPI DSI bridge
 >
-> This commit adds an SD/MMC controller node backed by the Cadence SD6HC
-> to the Agilex5 SoC device tree. It also enables the controller on the
-> SOCDK board with high-speed and UHS-I modes.
+>     This commit adds support for the Lontium LT7911EXC eDP to MIPI DSI
+>     bridge. It implements I2C-based setup, display configuration, and
+>     provides a firmware update mechanism.
 >
->> diff --git a/arch/arm64/boot/dts/intel/socfpga_agilex5.dtsi b/arch/arm64/boot/dts/intel/socfpga_agilex5.dtsi
->> --- a/arch/arm64/boot/dts/intel/socfpga_agilex5.dtsi
->> +++ b/arch/arm64/boot/dts/intel/socfpga_agilex5.dtsi
+> The commit message states:
+> > It implements I2C-based setup, display configuration, and
+> > provides a firmware update mechanism.
+>
+> Is this description completely accurate? Looking at the drm_bridge_funcs
+> implementation, there are no atomic_enable/disable functions configuring
+> the display. Additionally, as an eDP to MIPI DSI bridge, should it also
+> register a mipi_dsi_host so downstream panels can attach?
+>
+> > diff --git a/drivers/gpu/drm/bridge/lontium-lt7911exc.c b/drivers/gpu/d=
+rm/bridge/lontium-lt7911exc.c
+> > new file mode 100644
+> > --- /dev/null
+> > +++ b/drivers/gpu/drm/bridge/lontium-lt7911exc.c
 > [ ... ]
->> @@ -300,6 +300,44 @@ portb: gpio-controller@0 {
->>   			};
->>   		};
->>   
->> +		sd_emmc_power: regulator-fixed-3p3v {
->> +			compatible = "regulator-fixed";
->> +			regulator-name = "card-power";
->> +			regulator-min-microvolt = <3300000>;
->> +			regulator-max-microvolt = <3300000>;
->> +			regulator-always-on;
->> +		};
->> +
->> +		sd_io_1v8_reg: regulator-1p8v {
->> +			compatible = "regulator-gpio";
->> +			regulator-name = "sd-bus-io-power";
->> +			regulator-min-microvolt = <1800000>;
->> +			regulator-max-microvolt = <3300000>;
->> +			states =	<1800000 0x1>,
->> +					<3300000 0x0>;
->> +		};
-> Should these board-specific regulators be defined in the generic SoC
-> dtsi file instead of the board dts file?
+> > +static void lt7911exc_block_erase(struct lt7911exc *lt7911exc)
+> > +{
+> [ ... ]
+> > +     regmap_multi_reg_write(lt7911exc->regmap, seq_write, ARRAY_SIZE(s=
+eq_write));
+> > +
+> > +     msleep(200);
+> > +     dev_dbg(dev, "erase flash done.\n");
+> > +}
 >
-> Placing them here forces these external board-level circuitry
-> definitions onto all future boards using this SoC.
+> Could this silently fail to erase the flash? If regmap_multi_reg_write()
+> fails due to hardware communication errors, the driver will continue and
+> attempt to write new firmware data to an unerased flash segment. Should
+> the return value be checked here and in lt7911exc_prog_init()?
 >
-> Additionally, because they are placed inside a simple-bus without a reg
-> property, it looks like they will trigger simple_bus_reg compiler
-> warnings. The sd_io_1v8_reg node is also missing the mandatory gpios
-> property in the dtsi, which might cause dtbs_check schema validation
-> failures for any board that does not explicitly provide one.
-
-The sd_emmc_power and sd_io_1v8_reg regulators are
-board-specific and will be moved to the board DTS file in v2. I
-will also run dtbs_check schema validation to catch any
-remaining issues before sending v2.
+> [ ... ]
+> > +static int lt7911exc_upgrade_result(struct lt7911exc *lt7911exc, u32 c=
+rc32)
+> > +{
+> [ ... ]
+> > +     read_hw_crc =3D crc_tmp[0] << 24 | crc_tmp[1] << 16 |
+> > +                             crc_tmp[2] << 8 | crc_tmp[3];
 >
->> +
->> +		emmc: mmc@10808000 {
->> +			#address-cells = <1>;
->> +			#size-cells = <0>;
->> +			compatible = "altr,agilex5-sd6hc", "cdns,sd6hc";
->> +			reg = <0x10808000 0x1000>;
->> +			interrupts = <GIC_SPI 96 IRQ_TYPE_LEVEL_HIGH>;
->> +			fifo-depth = <0x800>;
-> Is the fifo-depth property supported by the Cadence SDHC binding?
+> Can this cause a signed integer overflow? In C, u8 values are implicitly
+> promoted to signed 32-bit integers before shifting. If crc_tmp[0] is 128
+> or greater, shifting left by 24 bits will shift into the sign bit. Would
+> explicitly casting to u32 prevent this?
 >
-> The Cadence SDHC binding specifies unevaluatedProperties: false and
-> does not appear to define or support fifo-depth, which seems to be a
-> leftover from Synopsys DesignWare MMC bindings.
+> [ ... ]
+> > +static int lt7911exc_firmware_upgrade(struct lt7911exc *lt7911exc)
+> > +{
+> [ ... ]
+> > +     /*1. load firmware*/
+> > +     ret =3D request_firmware(&fw, FW_FILE, dev);
+> > +     if (ret)
+> > +             return dev_err_probe(dev, ret, "failed to load '%s'\n", F=
+W_FILE);
 >
-> While the driver will ignore it, its presence might cause a dtbs_check
-> schema validation failure.
-
-fifo-depth is not supported by the Cadence SD6HC binding. It will
-be removed in v2. I will verify with dtbs_check schema
-validation before sending.
+> Is it safe to use dev_err_probe() outside of a probe context? This functi=
+on
+> is called exclusively from the sysfs store callback. Calling dev_err_prob=
+e()
+> here might interfere with deferred probe tracking.
+>
+> [ ... ]
+> > +static void lt7911exc_atomic_pre_enable(struct drm_bridge *bridge, str=
+uct drm_atomic_state *state)
+> > +{
+> > +     struct lt7911exc *lt7911exc =3D bridge_to_lt7911exc(bridge);
+> > +
+> > +     lt7911exc_reset(lt7911exc);
+> > +}
+>
+> [ ... ]
+>
+> > +static ssize_t lt7911exc_firmware_store(struct device *dev, struct dev=
+ice_attribute *attr,
+> > +                                     const char *buf, size_t len)
+> > +{
+> [ ... ]
+> > +     lt7911exc_lock(lt7911exc);
+> > +
+> > +     ret =3D lt7911exc_firmware_upgrade(lt7911exc);
+>
+> Can a DRM atomic modeset race with a firmware upgrade here?
+>
+> The sysfs attribute protects internal I2C sequences with ocm_lock, but th=
+e
+> DRM bridge callbacks toggle the reset_gpio without acquiring this lock.
+>
+> If a display modeset occurs concurrently with a firmware flash, could the
+> hardware reset pin be toggled mid-flash and corrupt the firmware?
+>
+> [ ... ]
+> > +static int lt7911exc_probe(struct i2c_client *client)
+> > +{
+> [ ... ]
+> > +     lt7911exc_reset(lt7911exc);
+> > +
+> > +     lt7911exc_lock(lt7911exc);
+> > +
+> > +     lt7911exc->fw_version =3D lt7911exc_read_version(lt7911exc);
+> > +
+> > +     lt7911exc_unlock(lt7911exc);
+> > +     if (lt7911exc->fw_version < 0)
+> > +             return dev_err_probe(dev, lt7911exc->fw_version, "failed =
+read version of chip\n");
+>
+> If lt7911exc_read_version() fails, does this leave the reset pin in an
+> unbalanced state?
+>
+> The lt7911exc_reset() call leaves the reset_gpio low, and as noted in the
+> remove function, it should be pulled high to prevent backpowering. Should
+> the error path assert the reset pin high?
+>
+> [ ... ]
+> > +     return devm_drm_bridge_add(dev, &lt7911exc->bridge);
+> > +}
+> > +
+> > +static void lt7911exc_remove(struct i2c_client *client)
+> > +{
+> > +     struct lt7911exc *lt7911exc =3D i2c_get_clientdata(client);
+> > +
+> > +     /* pull reset low to prevent backpowering*/
+> > +     gpiod_set_value_cansleep(lt7911exc->reset_gpio, 1);
+> > +}
+>
+> Does this teardown sequence race with DRM operations?
+>
+> Because the bridge is registered with devm_drm_bridge_add(), it will be
+> unregistered during the devres cleanup phase, which happens after the
+> driver's remove callback has finished.
+>
+> Since lt7911exc_remove() asserts the reset pin to shut down the hardware,
+> could concurrent DRM operations attempt to access the disabled hardware
+> while it is still registered?
+>
+> --
+> Sashiko AI review =C2=B7 https://sashiko.dev/#/patchset/20260512064013.40=
+066-1-syyang@lontium.com?part=3D2
