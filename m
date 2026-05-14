@@ -1,181 +1,204 @@
-Received: from mail-m49229.qiye.163.com (mail-m49229.qiye.163.com [45.254.49.229])
+Received: from mx0b-0031df01.pphosted.com (mx0b-0031df01.pphosted.com [205.220.180.131])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 42F373CAE65
-	for <sashiko-reviews@lists.linux.dev>; Thu, 14 May 2026 07:43:27 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=45.254.49.229
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F37753955F5
+	for <sashiko-reviews@lists.linux.dev>; Thu, 14 May 2026 09:28:50 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.180.131
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1778744612; cv=none; b=RE1owChMd3gl+lr8eke8ipUjiSX4ifWlsHkxwpp4vvNjgBeDp1oKafmzPe/8kMBUfldDSClOn2bRMhOylKyXyueYmEaMkVYOjUXIhmKWIeLUhevvBTdqxM0JTXJEC6u8TNJe//7TPEEpAbh1ETLZBxG4rEv9qKP0Taq3rIMaqyo=
+	t=1778750932; cv=none; b=rGcrvifHvKuUraO9DIePgyvFBuD36//D2IvuWM8ZyVmPmUTF+E2pScSPIFJ/fXrkqugOPjA+DDFCcRUDR4zvUuJ59LW6V2C1+YgVxdLcZtBoYouzVqCUPYpRw6IfzGH8jpyk+l+eD5fEVWIFLq6YBMdEIs2A8cjGHEIH9lOsEKI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1778744612; c=relaxed/simple;
-	bh=IoKzoM6/Z57dXqLNaplXe0EQEP1kl1tN6XhAwdBSJ+k=;
-	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=AD20oBiodw9dHGcTfpyHYmFFalmgRw9wQuE/1J9+x5fTTn88xpBYxpwQyuqjlhWdrvxFgb7VEZSWnbPiZ9cx7+kN7PrdLxUjvBCd7b/f65A46C1RngSun5SNt5/A/Xc1OKrtjyYaVlfxA2J4YeaYbS5JnSM059jJwEeZLs1vmeM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=rock-chips.com; spf=pass smtp.mailfrom=rock-chips.com; dkim=pass (1024-bit key) header.d=rock-chips.com header.i=@rock-chips.com header.b=WxGzprOz; arc=none smtp.client-ip=45.254.49.229
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=rock-chips.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=rock-chips.com
+	s=arc-20240116; t=1778750932; c=relaxed/simple;
+	bh=eb9GI3Ik7tKkTtsi+hd+WYKwmb9P4O3AFMHxum3Lw9M=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=nJ1CUkB0Bjms9SAvsI3GImcwMQuF+XxFx9fRgHiP1xyxInxaNINn1ui/2ydxFKUwpCsAv2u8fn+YmLzV+y6ORDIFbOC07usW51adn4VUqZTbIxHIMYO/kxeDLA3nzhzx6ZUg7dc4fZ0sOfmp6sql/jgssyiSr7qYYAzf7FbmK94=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com; spf=pass smtp.mailfrom=oss.qualcomm.com; dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b=AKoJQpi7; dkim=pass (2048-bit key) header.d=oss.qualcomm.com header.i=@oss.qualcomm.com header.b=TvXL+TCc; arc=none smtp.client-ip=205.220.180.131
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=oss.qualcomm.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=rock-chips.com header.i=@rock-chips.com header.b="WxGzprOz"
-Received: from [172.16.12.43] (unknown [61.154.14.86])
-	by smtp.qiye.163.com (Hmail) with ESMTP id 3e63187bb;
-	Thu, 14 May 2026 15:38:08 +0800 (GMT+08:00)
-Message-ID: <58e9a6d9-b77a-45aa-8d39-294399c85cc0@rock-chips.com>
-Date: Thu, 14 May 2026 15:38:08 +0800
+	dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b="AKoJQpi7";
+	dkim=pass (2048-bit key) header.d=oss.qualcomm.com header.i=@oss.qualcomm.com header.b="TvXL+TCc"
+Received: from pps.filterd (m0279870.ppops.net [127.0.0.1])
+	by mx0a-0031df01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id 64E9Gni81095283
+	for <sashiko-reviews@lists.linux.dev>; Thu, 14 May 2026 09:28:50 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=qualcomm.com; h=
+	cc:content-type:date:from:in-reply-to:message-id:mime-version
+	:references:subject:to; s=qcppdkim1; bh=JZdaKTAzggE+dJA6GpUXOyxK
+	2DDdS9Y3B1CJJnVdArQ=; b=AKoJQpi7pC883APWeeBtFtrD7+wxf1Ww7N6xAOkx
+	D9qinPZ1C6JUi+P2cH75/flvdIojK80NG01uK23AxNZTwuHk0tEVbH/17EYgWFUM
+	/9psiQtFHN3Zx4E8fs+UO7MiKhQIqwdGbqIeE0xPw0BYUCHuQsLxVO33PmuwUdLO
+	52BwXvkgAcMMO+mPsjOfqChDntoSvrB3x3rdhEBSRiNojnucUr9T/tNu7rx/SPXb
+	rBO4coJmCRzGCTaflf5qs7mph7R2vvT/oiruVVshJ6s2Vd77l1nFYhAmDSqQg1kJ
+	YY0LQtBxmL0Izlt8EQITYRudSns1YaUYLz04aTAXvsYvZw==
+Received: from mail-qt1-f200.google.com (mail-qt1-f200.google.com [209.85.160.200])
+	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 4e563hh8ar-1
+	(version=TLSv1.3 cipher=TLS_AES_128_GCM_SHA256 bits=128 verify=NOT)
+	for <sashiko-reviews@lists.linux.dev>; Thu, 14 May 2026 09:28:49 +0000 (GMT)
+Received: by mail-qt1-f200.google.com with SMTP id d75a77b69052e-514b5d6bb45so61660491cf.2
+        for <sashiko-reviews@lists.linux.dev>; Thu, 14 May 2026 02:28:49 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=oss.qualcomm.com; s=google; t=1778750929; x=1779355729; darn=lists.linux.dev;
+        h=in-reply-to:content-disposition:mime-version:references:message-id
+         :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
+        bh=JZdaKTAzggE+dJA6GpUXOyxK2DDdS9Y3B1CJJnVdArQ=;
+        b=TvXL+TCcIx6WIQ+xVvgW7NbOa+KOzfBP3TtsHKeqnc/CNdAUInn6HuOUp5vFO33A6Q
+         +ymcLwM2Qiio5JB7mSiFZ6sBaKQahq/+wAq95BOmO8/jfI3PfirxFGJn6njMHR51TdCs
+         jxNxb2laaxSzQD5dFYUrKniVV6+BYhwzYq0N85DWMxFESFBspwAFFQUE5EI1+hAT9uDC
+         8XnWwn6qZfY+JRWjnGwTaHSJ4B1zv+WhgfD+HE9md7aEQiGYbTa7fw8KJZ+E2mOVTws9
+         oP4OQwsysFxhfqS8uOmEQzSKiImRptbJK/hUelgqERBhLbPLJl+Olh2PvLs8Jj/gUcgB
+         rfnQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20251104; t=1778750929; x=1779355729;
+        h=in-reply-to:content-disposition:mime-version:references:message-id
+         :subject:cc:to:from:date:x-gm-gg:x-gm-message-state:from:to:cc
+         :subject:date:message-id:reply-to;
+        bh=JZdaKTAzggE+dJA6GpUXOyxK2DDdS9Y3B1CJJnVdArQ=;
+        b=rbq280PWQPTTg3Tu6NRNvxxrCfaUgslCy3xk7wwxFm61ywRAlV4NHpDCRcqFky5FBr
+         yaxUxPCsL9YiscTKAwwsmwC58xdxhrYA9fubqcD+s9OD8KDmqnskk4Cb7n2IqpDTWBct
+         l8px9BXXtKRQIQ1ZOssDuwRuyRc721it0gB78I3LyGcruApQhQ+w3KBcryoNRjufLAAx
+         BF+qBf8Ez0ndZ9SePEmHS1dv6dceq+TC/9HdePVubfgeALLi94PgySnyyFZP/PMMUahC
+         psxNhtshCeHAy9RAoPpNGS09hqD0ghIw+gg5ihq9xpF4mF8EeTtslD+Pk3Y7Yuj+O1K8
+         sOmw==
+X-Gm-Message-State: AOJu0YzdLl4+XRaIjxOD47fgiZYWOlpk2CZOq7ECvQ+PoYg+SsMp7jrr
+	mplTpBaZyrqVVLFVTs7EqMyhgwt7hLL2xqq9y255eyvf2Pqf4OVHgDeoUjcJW0DfLaiP1lBVnLk
+	nx2oMm9D/ohCon0NRKP8Rq8r9b9UiKAm08mh1iEApy+Idnm4byJp5zolTjsuuOuOU9ch265Ul71
+	DFALE=
+X-Gm-Gg: Acq92OFlZhipTCM4kByYazw08LcLk3oovaQVoMI2TNsNIIt9lTUyHuIjFZ9xb3KfqX6
+	vk+0h6JmPiNYG/vKAHD9SRV8CxAOl+YerHcpCOZj4CTBuwhyXouxfIXJb3Pxv3zLi/2GptNnDKY
+	XoY+v8Ps+DtRWkN07F6kDovS96D5rjB+skdBAW3KhkZGndJ4AY/NYCYd7mwFMfImcpUH8q7ktG+
+	6Kb7kJe8pJjp6ugFyBKekcqqWyU3sfKY0h9wUa/N+vAaJY94Qq11BT+bi40DNLf5p6W/SZ6h8pP
+	fzYbzlgIbp7tbnh4fOEyw6e1Fo1UzTfqGLtUzAyElpz064oz4Fqj/0DueMJbGMwx/gulX6urAbj
+	LODEVsKTL7pzqeNTTw6aZ8F1d5Fg3aI+EXMiOMElufSqqg6RkSSiGk4XEG20eNi1YpnZEUYpXjb
+	pBYbNfRzQMhh0KhxZ7TOwCmfG7q4CKKxx/vLw=
+X-Received: by 2002:a05:622a:3ca:b0:50b:4946:2781 with SMTP id d75a77b69052e-5162f5a3c6emr93345561cf.38.1778750928844;
+        Thu, 14 May 2026 02:28:48 -0700 (PDT)
+X-Received: by 2002:a05:622a:3ca:b0:50b:4946:2781 with SMTP id d75a77b69052e-5162f5a3c6emr93345391cf.38.1778750928411;
+        Thu, 14 May 2026 02:28:48 -0700 (PDT)
+Received: from umbar.lan (2001-14ba-a073-af00-264b-feff-fe8b-be8a.rev.dnainternet.fi. [2001:14ba:a073:af00:264b:feff:fe8b:be8a])
+        by smtp.gmail.com with ESMTPSA id 2adb3069b0e04-5a9164bc518sm361532e87.39.2026.05.14.02.28.45
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Thu, 14 May 2026 02:28:46 -0700 (PDT)
+Date: Thu, 14 May 2026 12:28:44 +0300
+From: Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>
+To: sashiko-reviews@lists.linux.dev
+Cc: conor+dt@kernel.org, devicetree@vger.kernel.org, krzk+dt@kernel.org,
+        robh@kernel.org
+Subject: Re: [PATCH v6 3/6] arm64: dts: qcom: sc8280xp: Add Iris core
+Message-ID: <pfvh4kxhrorhykdhzackmn572wfqbeawdusn2qegsugueblagu@a3wf4pmozztx>
+References: <20260513-iris-sc8280xp-v6-3-0d11d90d3e26@oss.qualcomm.com>
+ <20260514045715.E22CCC2BCB7@smtp.kernel.org>
 Precedence: bulk
 X-Mailing-List: sashiko-reviews@lists.linux.dev
 List-Id: <sashiko-reviews.lists.linux.dev>
 List-Subscribe: <mailto:sashiko-reviews+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:sashiko-reviews+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v5 01/10] dt-bindings: display: rockchip: analogix-dp: Fix
- hclk as third clock for RK3588
-To: sashiko-reviews@lists.linux.dev
-Cc: devicetree@vger.kernel.org, krzk+dt@kernel.org, conor+dt@kernel.org,
- robh@kernel.org
-References: <20260513074414.2053435-2-damon.ding@rock-chips.com>
- <20260514025123.D758DC19425@smtp.kernel.org>
-Content-Language: en-US
-From: Damon Ding <damon.ding@rock-chips.com>
-In-Reply-To: <20260514025123.D758DC19425@smtp.kernel.org>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
-X-HM-Tid: 0a9e256be58903a3kunmb52ad2ddc771c
-X-HM-MType: 1
-X-HM-Spam-Status: e1kfGhgUHx5ZQUpXWQgPGg8OCBgUHx5ZQUlOS1dZFg8aDwILHllBWSg2Ly
-	tZV1koWUFITzdXWRgWCB1ZQUpXWS1ZQUlXWQ8JGhUIEh9ZQVlDTB0YVhhKGkhCSkseTh5MTVYVFA
-	kWGhdVEwETFhoSFyQUDg9ZV1kYEgtZQVlNSlVKTk9VSk9VQ01ZV1kWGg8SFR0UWUFZT0tIVUpLSU
-	9PT0hVSktLVUpCS0tZBg++
-DKIM-Signature: a=rsa-sha256;
-	b=WxGzprOznWAUfFWi3nrZyyRpBA3fSwzGiYboygkNyTi/qSLy4D5JQ2vx+AdIaIq/KWF26XDTQ5jg85WIXV14mz2xhk0PwNgCHdtJ3h2AFLZsKDJmCvuSkggvxKADL/iraVezQw/ffN4KsxRm31HK1lPlZ9zrZcZJgEpI9TN0WJ0=; c=relaxed/relaxed; s=default; d=rock-chips.com; v=1;
-	bh=sQ3BCKjfz52siRf7KbRAMx4SaiJ9IA0GFI5jrZL+0IY=;
-	h=date:mime-version:subject:message-id:from;
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <20260514045715.E22CCC2BCB7@smtp.kernel.org>
+X-Proofpoint-GUID: IUuR0H0TnG65v40kmITD_RQhUp1VHPin
+X-Proofpoint-ORIG-GUID: IUuR0H0TnG65v40kmITD_RQhUp1VHPin
+X-Authority-Analysis: v=2.4 cv=DewnbPtW c=1 sm=1 tr=0 ts=6a0595d1 cx=c_pps
+ a=JbAStetqSzwMeJznSMzCyw==:117 a=xqWC_Br6kY4A:10 a=kj9zAlcOel0A:10
+ a=NGcC8JguVDcA:10 a=s4-Qcg_JpJYA:10 a=VkNPw1HP01LnGYTKEx00:22
+ a=u7WPNUs3qKkmUXheDGA7:22 a=gowsoOTTUOVcmtlkKump:22 a=VwQbUJbxAAAA:8
+ a=EUspDBNiAAAA:8 a=CKH5FQq_NqdB-pMRBGYA:9 a=CjuIK1q_8ugA:10
+ a=uxP6HrT_eTzRwkO_Te1X:22
+X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwNTE0MDA5MiBTYWx0ZWRfX6N5N7j+bJUim
+ eEdQi3z5Qy7oNV72S9LKJtGHyKoFz4TvR4Gdpbd+cS5g/vFCMruIKNtro/IJUbx/I0yFb0xQhZ4
+ tUWRetl6R5TDCN1jyBtZJig1rwVRjKALpjVR0D1ABLh9Fx/o5aTTz7271dOXDUR62cqT7AfKIoS
+ Becl/Z3nMykkRlKsX6pCUSXHvGnmmYnVwN6ZAG+8rEGhzmEFcK/GQ6xchGoYNc45mTQhIt3pzyr
+ MEs3jZdWGODwaTkGR0Hf9KjkN/Ai70J7Kc7wsnqC7xiS+/tPV8J/qGgFAtHWG2Ff+xsKglWv4i/
+ spJVZkHcfR30gzrpxK/C2U+Fzytzu3uwpHV44edm0402VbUKHfrBb5gDTC3aUs3l7r9AoGUnMaz
+ 5wnfuYbFdwth3MThrglsa3QVedhP9+5VWdKmTiJT9BVNxDwcyl88aXqxNWVICvldlCUYNgP+dL1
+ p5q0F8XhnmhPVzyeqjA==
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.293,Aquarius:18.0.1143,Hydra:6.1.51,FMLib:17.12.100.49
+ definitions=2026-05-14_02,2026-05-13_01,2025-10-01_01
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
+ bulkscore=0 clxscore=1015 suspectscore=0 priorityscore=1501
+ lowpriorityscore=0 adultscore=0 phishscore=0 spamscore=0 malwarescore=0
+ impostorscore=0 classifier=typeunknown authscore=0 authtc= authcc=
+ route=outbound adjust=0 reason=mlx scancount=1 engine=8.22.0-2605050000
+ definitions=main-2605140092
 
-On 5/14/2026 10:51 AM, sashiko-bot@kernel.org wrote:
-> Thank you for your contribution! Sashiko AI review found 1 potential issue(s) to consider:
-> - [Medium] The device tree schema fails to correctly enforce the required number of clocks in the conditional blocks by omitting `minItems` and `maxItems` constraints.
+On Thu, May 14, 2026 at 04:57:15AM +0000, sashiko-bot@kernel.org wrote:
+> Thank you for your contribution! Sashiko AI review found 3 potential issue(s) to consider:
+> - [High] The Venus/Iris driver ignores the `mmcx` power domain, failing to vote for its performance states which will cause MMCX under-voltage and AXI bus hangs at high clock speeds.
+> - [Low] The `power-domains` property in the `video-codec` node has 4 items, but the YAML binding `qcom,sm8250-venus.yaml` restricts it to a maximum of 3 items.
+> - [Low] The reserved memory node name 'pil_video_region@86700000' uses underscores instead of hyphens.
 > --
 > 
-> commit 1eeef10904ab6c1e09008c1f85fab2353dd23f79
-> Author: Damon Ding <damon.ding@rock-chips.com>
+> commit 436af127f4d0421fee1976f98a2eab9818c98aa4
+> Author: Konrad Dybcio <konradybcio@kernel.org>
 > 
-> dt-bindings: display: rockchip: analogix-dp: Fix hclk as third clock for RK3588
+> arm64: dts: qcom: sc8280xp: Add Iris core
 > 
-> This commit enforces a third clock name on a per-compatible basis for
-> the analogix-dp driver. It removes the implicit clock enablement from
-> the GRF phandle and explicitly defines the clocks required for each SoC.
+> Add the required nodes to enable Iris core on SC8280XP.
 > 
->> diff --git a/Documentation/devicetree/bindings/display/rockchip/rockchip,analogix-dp.yaml b/Documentation/devicetree/bindings/display/rockchip/rockchip,analogix-dp.yaml
->> index d99b23b88cc59..8001c1facf986 100644
->> --- a/Documentation/devicetree/bindings/display/rockchip/rockchip,analogix-dp.yaml
->> +++ b/Documentation/devicetree/bindings/display/rockchip/rockchip,analogix-dp.yaml
+> diff --git a/arch/arm64/boot/dts/qcom/sc8280xp.dtsi b/arch/arm64/boot/dts/qcom/sc8280xp.dtsi
+> --- a/arch/arm64/boot/dts/qcom/sc8280xp.dtsi
+> +++ b/arch/arm64/boot/dts/qcom/sc8280xp.dtsi
+> [ ... ]
+> @@ -691,6 +694,11 @@ reserved-region@85b00000 {
+>  			no-map;
+>  		};
+>  
+> > +		pil_video_mem: pil_video_region@86700000 {
+> > +			reg = <0 0x86700000 0 0x500000>;
+> > +			no-map;
+> > +		};
+> > +
+> 
+> This isn't a bug, but device tree conventions expect node names to use hyphens
+> instead of underscores. Should pil_video_region@86700000 be renamed to
+> pil-video-region@86700000 to avoid dtc W=1 warnings?
+
+Indeed, I'll fix it.
+
 > 
 > [ ... ]
+> @@ -4181,6 +4189,97 @@ usb_1_dwc3_ss: endpoint {
+>  			};
+>  		};
+>  
+> > +		iris: video-codec@aa00000 {
+> > +			compatible = "qcom,sc8280xp-iris", "qcom,sm8250-venus";
+> > +			reg = <0x0 0x0aa00000 0x0 0x100000>;
+> > +			interrupts = <GIC_SPI 174 IRQ_TYPE_LEVEL_HIGH>;
+> [ ... ]
+> > +			power-domains = <&videocc MVS0C_GDSC>,
+> > +					<&videocc MVS0_GDSC>,
+> > +					<&rpmhpd SC8280XP_MX>,
+> > +					<&rpmhpd SC8280XP_MMCX>;
+> > +			power-domain-names = "venus",
+> > +					     "vcodec0",
+> > +					     "mx",
+> > +					     "mmcx";
 > 
->> @@ -60,6 +57,33 @@ required:
->>   allOf:
->>     - $ref: /schemas/display/bridge/analogix,dp.yaml#
->>   
->> +  - if:
->> +      properties:
->> +        compatible:
->> +          contains:
->> +            enum:
->> +              - rockchip,rk3288-dp
->> +    then:
->> +      properties:
->> +        clock-names:
->> +          items:
->> +            - const: dp
->> +            - const: pclk
-> 
-> Should this block include maxItems: 2? The top-level schema defines
-> maxItems: 3, which might allow a device tree with an extra unvalidated
-> third clock string to silently pass validation here.
-> 
->> +
->> +  - if:
->> +      properties:
->> +        compatible:
->> +          contains:
->> +            enum:
->> +              - rockchip,rk3399-edp
->> +    then:
->> +      properties:
->> +        clock-names:
->> +          items:
->> +            - const: dp
->> +            - const: pclk
->> +            - const: grf
-> 
-> Does this block need minItems: 3 to ensure the grf clock is actually
-> enforced? Because the top-level schema allows minItems: 2, a device tree
-> omitting the third clock might still pass validation.
-> 
->> +
->>     - if:
->>         properties:
->>           compatible:
->> @@ -68,6 +92,11 @@ allOf:
->>                 - rockchip,rk3588-edp
->>       then:
->>         properties:
->> +        clock-names:
->> +          items:
->> +            - const: dp
->> +            - const: pclk
->> +            - const: hclk
-> 
-> Similarly, does this block also require minItems: 3? Without it, the
-> hclk requirement might not be strictly enforced if the schema validation
-> falls back to the top-level minItems: 2 allowance.
-> 
->>           resets:
->>             minItems: 2
->>           reset-names:
-> 
+> Does the YAML binding for qcom,sm8250-venus support 4 power domains?
 
-After adding the maxItems and minItems as AI suggested, there are some 
-warnings via:
+This is handled by the series at [1], which is now merged into
+media-committers tree (and pending for next).
 
-make dt_binding_check 
-DT_SCHEMA_FILES=Documentation/devicetree/bindings/display/rockchip/rockchip,analogix-dp.yaml
+[1] https://lore.kernel.org/linux-arm-msm/20260209-iris-venus-fix-sm8250-v5-1-0a22365d3585@oss.qualcomm.com/
 
-/home/ding/drm-misc/Documentation/devicetree/bindings/display/rockchip/rockchip,analogix-dp.yaml: 
-allOf:1:then:properties:clock-names: {'maxItems': 2, 'items': [{'const': 
-'dp'}, {'const': 'pclk'}]} should not be valid under {'required': 
-['maxItems']}
-         hint: "maxItems" is not needed with an "items" list
-         from schema $id: http://devicetree.org/meta-schemas/items.yaml#
-/home/ding/drm-misc/Documentation/devicetree/bindings/display/rockchip/rockchip,analogix-dp.yaml: 
-allOf:2:then:properties:clock-names: 'oneOf' conditional failed, one 
-must be fixed:
-         [{'const': 'dp'}, {'const': 'pclk'}, {'const': 'grf'}] is too long
-         [{'const': 'dp'}, {'const': 'pclk'}, {'const': 'grf'}] is too short
-         False schema does not allow 3
-         1 was expected
-         3 is greater than the maximum of 2
-         hint: "minItems" is only needed if less than the "items" list 
-length
-         from schema $id: http://devicetree.org/meta-schemas/items.yaml#
-/home/ding/drm-misc/Documentation/devicetree/bindings/display/rockchip/rockchip,analogix-dp.yaml: 
-allOf:3:then:properties:clock-names: 'oneOf' conditional failed, one 
-must be fixed:
-         [{'const': 'dp'}, {'const': 'pclk'}, {'const': 'hclk'}] is too long
-         [{'const': 'dp'}, {'const': 'pclk'}, {'const': 'hclk'}] is too 
-short
-         False schema does not allow 3
-         1 was expected
-         3 is greater than the maximum of 2
-         hint: "minItems" is only needed if less than the "items" list 
-length
-         from schema $id: http://devicetree.org/meta-schemas/items.yaml#
-   LINT    ./Documentation/devicetree/bindings
-   DTEX 
-Documentation/devicetree/bindings/display/rockchip/rockchip,analogix-dp.example.dts
-   DTC [C] 
-Documentation/devicetree/bindings/display/rockchip/rockchip,analogix-dp.example.dtb
+> 
+> Without adding a conditional block for qcom,sc8280xp-iris, won't this fail
+> dtbs_check since the fallback schema restricts power-domains to a maximum
+> of 3 items (venus, vcodec0, mx)?
+> 
+> Additionally, since this falls back to qcom,sm8250-venus, will the Venus
+> driver properly attach and vote for the mmcx power domain?
+> 
+> The video codec driver using sm8250 data explicitly defines only mx as the
+> OPP power domain. As a result, devm_pm_domain_attach_list() might only
+> attach mx and ignore mmcx.
+> 
+> If mmcx is ignored by the driver, won't it remain permanently at the lowest
+> statically configured state? When the codec dynamically scales to higher
+> frequencies (e.g., 560MHz) requiring turbo_l1 for mmcx, could this lead to
+> hardware under-voltage and AXI bus lockups?
 
-Best regards,
-Damon
-
+-- 
+With best wishes
+Dmitry
