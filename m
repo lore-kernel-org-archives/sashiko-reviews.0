@@ -1,128 +1,171 @@
-Received: from SN4PR2101CU001.outbound.protection.outlook.com (mail-southcentralusazon11012049.outbound.protection.outlook.com [40.93.195.49])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-pj1-f51.google.com (mail-pj1-f51.google.com [209.85.216.51])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7B6F83890E8
-	for <sashiko-reviews@lists.linux.dev>; Wed, 13 May 2026 23:23:43 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=fail smtp.client-ip=40.93.195.49
-ARC-Seal:i=2; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1778714624; cv=fail; b=ucQa1Kn16IG/XV3N87mon9FmgbW5AG5o7A6/Yah0uP57XQEb/aWVP03RM/5iBIlIawDpaxZqtT+OceZJSE8L1VRH044htR8OGtC8MIT/x9s+H97wPw/MzO1WGkDNNcJwN0s5UUvEdARe2iJE2SQGcAKr5aqjKH578keGNdvbFmY=
-ARC-Message-Signature:i=2; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1778714624; c=relaxed/simple;
-	bh=aaB/whdWsHJEEDr6Xi0e9VrU3BfrZ6iGfmp9RS9EfJA=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:Content-Type:
-	 Content-Disposition:In-Reply-To:MIME-Version; b=Usj4HRnED9MCVFUPqbiuQYXJfIO00zQRKHc6gjFn2Z71sYUEvh5b1pOHf4FCkzMS0te5IyeQpToZI+ke67nSsxa90UXFkVP0+kymCf8YmXAnePt4sUuvee8OUh0QKvnWKFyCp+5t+RIy50WPBCtKmFH8u8RFETfJu6pSFMXYZBg=
-ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=nvidia.com; spf=fail smtp.mailfrom=nvidia.com; dkim=pass (2048-bit key) header.d=Nvidia.com header.i=@Nvidia.com header.b=n2ompQ6J; arc=fail smtp.client-ip=40.93.195.49
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=nvidia.com
-Authentication-Results: smtp.subspace.kernel.org; spf=fail smtp.mailfrom=nvidia.com
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 12F6A78F4A
+	for <sashiko-reviews@lists.linux.dev>; Thu, 14 May 2026 00:10:10 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.216.51
+ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
+	t=1778717412; cv=none; b=uL96w2LSFMCZ9CHIEZoi5iU4ocb6wxd8R0isETJ+SgykqpiiU1nDQgBkAu1a1ePLccFhn65g9WWQo+1DsmzeDZSyy6dWbbvLHjXXbbRYyRYqlTPCJmf/6XA3B1ldMXP3no6RsaTxeLXiC5Axi5WChrwmyPsXNCZ2BDX7/ulmIcw=
+ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
+	s=arc-20240116; t=1778717412; c=relaxed/simple;
+	bh=sS7wBLkPaNaEhn29un7LA5fVRg51/JIbqc/tbQVEgp8=;
+	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
+	 In-Reply-To:Content-Type; b=eg0qJElGs7Q6EV+0eefLh/mxCTtBCs62TlFwm4Vw0Jq6UezXyQr1P584WkXb4v0/VDlbzodG0oajAPR8umPZp73qURrAoQ9BT8+8gEm8zxOvsrHly8d7M7cODNEhcBeyoN6ZjVrlyUmB6tJy77kuwhw4bnx3JbWzE8BJU0WW300=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=roeck-us.net; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=prp1kk14; arc=none smtp.client-ip=209.85.216.51
+Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=roeck-us.net
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=Nvidia.com header.i=@Nvidia.com header.b="n2ompQ6J"
-ARC-Seal: i=1; a=rsa-sha256; s=arcselector10001; d=microsoft.com; cv=none;
- b=kiLjmNnddeXFvwEqDtdVzwm3iZFN3NQ07vAzSMw0airTDqJRN+IooOqOC7/c2YTVK/hsC5spaXUb6MQGCpuzOZ+Ybi9hoPHbyA2OO4oPkT65VV07O/JHwmBjWZseLx0OKnqnYgE++msjcSygQi1vj2dYJ/UxEwvUgSHAdknlRyqU15Vol6nLzu61jUkbx2b0SVXVEEmYoLWQoGD1tubWxE0gslHEDPsdrfdY6TF+QOiITw67clfIcVlv2/MUMD/hmbTnOxMNJttH4OJpzIETXtgVPQMu84QfLo0gQJZHOeg2dvjoX462LVNGrGWqTsv4USsnoUbHa74f9xG3O4x60g==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com;
- s=arcselector10001;
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
- bh=aaB/whdWsHJEEDr6Xi0e9VrU3BfrZ6iGfmp9RS9EfJA=;
- b=konxHFwkBYjyleN4jgvo0Ny4YzxaYm58EcBs8DUyRrUztMJzKJzQRnuX5bfcpzgUWVaGvYnoFJcXoX+OL6kY13Mc8L1o8pF1hXL2dCr7AA1JylRv+mvwnkNxK0AAmoXF5pTJG+kaWmHQMAgBl5CGBgiHn1TwnExGdEkjoK15s7S/S+3o50qmifcCFdq/mLoYqZfOTTOJjAZWNDPA7stgTE6rU4Riqbnw6tTszMWXPqN+/r/o2BInNtrTvUuLT40UJrbhuuV1lCL5ygzhKENhW/eJHPTfPisBNZrXkhwJHBFkD8X5axF0jKCgv1419/hevChxY17vdxvQXWUeKH0bZQ==
-ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
- smtp.mailfrom=nvidia.com; dmarc=pass action=none header.from=nvidia.com;
- dkim=pass header.d=nvidia.com; arc=none
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=Nvidia.com;
- s=selector2;
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
- bh=aaB/whdWsHJEEDr6Xi0e9VrU3BfrZ6iGfmp9RS9EfJA=;
- b=n2ompQ6JtrVyAWQsC/y8JIiVhj/vmAGDD8SbCFyBvFY6+DuOle1XA08w7bH9g1msZ1sqnROzfrKeQw54WNqEwOBIR69dbgiZWlnQl0hc2SyNUEmqtwDdW7mUUBV36fdExCgXPuiGlBKXvS6nYM3CpSrHcWQpdxbvOxRe0DT1sc+2LtnjfsczjYmhP8anBkK0fFt3ILTtW5iNwTml0AN5rAapk5aOejEbb2Lkgb39IctcL+5oKRCcfwg6nCyDe/gqj4wQ1ejVZ47ySIjNU+SZi2eemYl8DNqZhz0yb9T7xeJ4G+wQsgJv5ONMtqaFqYinUQ+CJC3DuJcglEJn/88fdw==
-Authentication-Results: dkim=none (message not signed)
- header.d=none;dmarc=none action=none header.from=nvidia.com;
-Received: from LV8PR12MB9620.namprd12.prod.outlook.com (2603:10b6:408:2a1::19)
- by IA1PR12MB6259.namprd12.prod.outlook.com (2603:10b6:208:3e5::17) with
- Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.9913.12; Wed, 13 May
- 2026 23:23:37 +0000
-Received: from LV8PR12MB9620.namprd12.prod.outlook.com
- ([fe80::299d:f5e0:3550:1528]) by LV8PR12MB9620.namprd12.prod.outlook.com
- ([fe80::299d:f5e0:3550:1528%5]) with mapi id 15.20.9913.009; Wed, 13 May 2026
- 23:23:37 +0000
-Date: Wed, 13 May 2026 20:23:35 -0300
-From: Jason Gunthorpe <jgg@nvidia.com>
-To: sashiko-reviews@lists.linux.dev
-Cc: linux-hyperv@vger.kernel.org
-Subject: Re: [PATCH v3 10/10] RDMA: Replace memset with = {} pattern for
- ib_respond_udata()
-Message-ID: <20260513232335.GE787748@nvidia.com>
-References: <10-v3-4effdebad75a+e1-rdma_udata_rep_jgg@nvidia.com>
- <20260513205916.926F0C19425@smtp.kernel.org>
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <20260513205916.926F0C19425@smtp.kernel.org>
-X-ClientProxiedBy: YT2PR01CA0027.CANPRD01.PROD.OUTLOOK.COM
- (2603:10b6:b01:38::32) To LV8PR12MB9620.namprd12.prod.outlook.com
- (2603:10b6:408:2a1::19)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="prp1kk14"
+Received: by mail-pj1-f51.google.com with SMTP id 98e67ed59e1d1-366070f71adso6720118a91.2
+        for <sashiko-reviews@lists.linux.dev>; Wed, 13 May 2026 17:10:10 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20251104; t=1778717410; x=1779322210; darn=lists.linux.dev;
+        h=content-transfer-encoding:in-reply-to:autocrypt:from
+         :content-language:references:cc:to:subject:user-agent:mime-version
+         :date:message-id:sender:from:to:cc:subject:date:message-id:reply-to;
+        bh=vOAcYdPyXHkFqrxKp0cDRmdzYG13zNkZb7reoBLfuYo=;
+        b=prp1kk14tc9b4OnK1+8jKZ0Iqk2pr43HsIBEuFKlYtKQuFMAlkCEmNwkbhwzv3gt6a
+         ZWfjuytggL+04/FMRDhlGzjQj4JdIEDpvzR5H15IiQEfU+IgaHMNmjI1W2DMD/cwd8VB
+         AHHji4V/begWSzM7AE4h9ysBNuVLfkiOguvtK78y8IrMWWqS6OFXJPIOwyL9MZANPv8a
+         q7AaxtWLKu39EiJVcZY8PnaGt1mq+1+2iZXdczc+DT7Od8bRqmltLDGqZKW4qvzhnR0y
+         yTh4TUaxPGg4/MkLfiBxZuDtufUIrcOfB/H4JwHDxVva7rj0w75twwvYHyY38nd0lIxy
+         81RA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20251104; t=1778717410; x=1779322210;
+        h=content-transfer-encoding:in-reply-to:autocrypt:from
+         :content-language:references:cc:to:subject:user-agent:mime-version
+         :date:message-id:sender:x-gm-gg:x-gm-message-state:from:to:cc
+         :subject:date:message-id:reply-to;
+        bh=vOAcYdPyXHkFqrxKp0cDRmdzYG13zNkZb7reoBLfuYo=;
+        b=Fbw6fQhMvV5LT01gCRKj460slDRr1aij/Kck30q1JH93WufioHXb00njvl2qjaDPeu
+         JgtXsW7USWZ0uxmUJ88xg/AINqYQ8ysV7VNs3WOkJQV8tW2Neh6GkH/o4TkvoL5BVSeh
+         UXqfH0yEAF6OTFCTioKs0jtupt6SRizi2Xackc3XHsnZxe9Yy7PoYGRQcyQ+vJarpgnj
+         hqnt/Ikg7QaF6WcKEnytcNCa/W+rF1vtDYFb3PJligYG2kdBlxvV8fchtOQl6w/ryyto
+         2fqxydDp6phTv2Yqa0reCHezwmsQFgXnQiwsursyNCTUlUngu7tSFT+p18zF7JZiiMFV
+         0CEg==
+X-Gm-Message-State: AOJu0Ywim1mb8tFcWPdcJCgarKEkBv1AEpWFBLb0VWDB2h1PBy9A2iIY
+	GqVLGjBhEL/ubkWACdpJBmRWBcZ9d3D8vo69LphN89xOm+JjDtliyGTqIGJdaQ==
+X-Gm-Gg: Acq92OFZ0WmAuiUG3Zhda6/0NhWJN1U8H4/OKMjutxMZ11Xif/T8MqWZd8jl/1dHd50
+	hQi4zYXYUWEF6ZGZG3DdWESn5DJccRoRDxa4R64MvbnAPG59T/fBHdlCwPEoUD/ip91jmMfbPrT
+	x2/wbSN9RT5UYW3FiMDA55EaE0JqaQA4/F44l/6gbV/qHR1ILm00qi8972bVqy0WLID1Yv2zWuY
+	OeDxzZf6cFjaoMK437iTy9bQHUgWuu1YY4QtrNdbbEpzrc3oaZ7dUrizqVq0pRnVWe+7WUPu1og
+	JAseHWIogX3qqqffv4hmAAJXOY8gsppZUABDQDnyIqjeiK3VEtaFg7aQcgRJ2ocb58YWm5y/Q0k
+	V5pX1YDaOOd46jUuXNFuYo2QqI4WG4+dnLQzfuxqFjGeFylfB1hApDTdN6td+p2YPqJDrJPRgr+
+	Gfnde9bnSnRA+lm90sg0hMJ17E+/cr4w4OwLA806jxaPIYq0w+lJzPRPP/55uZrFxTvgGX3kioP
+	zkdRN3rmq4=
+X-Received: by 2002:a17:90b:564e:b0:368:c2b1:ec9e with SMTP id 98e67ed59e1d1-368f79c728dmr5590441a91.22.1778717405565;
+        Wed, 13 May 2026 17:10:05 -0700 (PDT)
+Received: from ?IPV6:2600:1700:e321:62f0:da43:aeff:fecc:bfd5? ([2600:1700:e321:62f0:da43:aeff:fecc:bfd5])
+        by smtp.gmail.com with ESMTPSA id 98e67ed59e1d1-368ee626aaasm4494949a91.15.2026.05.13.17.10.04
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Wed, 13 May 2026 17:10:05 -0700 (PDT)
+Sender: Guenter Roeck <groeck7@gmail.com>
+Message-ID: <45353c6d-3941-484a-a88a-49183227b7df@roeck-us.net>
+Date: Wed, 13 May 2026 17:10:04 -0700
 Precedence: bulk
 X-Mailing-List: sashiko-reviews@lists.linux.dev
 List-Id: <sashiko-reviews.lists.linux.dev>
 List-Subscribe: <mailto:sashiko-reviews+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:sashiko-reviews+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-X-MS-PublicTrafficType: Email
-X-MS-TrafficTypeDiagnostic: LV8PR12MB9620:EE_|IA1PR12MB6259:EE_
-X-MS-Office365-Filtering-Correlation-Id: 56b9dc6d-456b-4593-78b9-08deb146a8ba
-X-MS-Exchange-SenderADCheck: 1
-X-MS-Exchange-AntiSpam-Relay: 0
-X-Microsoft-Antispam:
-	BCL:0;ARA:13230040|376014|1800799024|366016|11063799003|4143699003|22082099003|18002099003|56012099003;
-X-Microsoft-Antispam-Message-Info:
-	1B16rXitsrn2pOKpqW3CuJvZ1V+otU0CD2WGTHzr1NNPavqd1+MPt+MDQbICzJtIEriy/M58o/au1Hz+U3tcPwfcPFOKZwSAQErhYcL1VQ1bxB7fpPzmhCMKHi6uaLPmp7yADZRRhjngQE+rcL1hvQdgSTWNgxMmucbXjTWO9K4xf8+olIx69QkF3oZCJcv4mnsQRaatRAWiJZIi3G9R2WIGxg+pEahEYuAiHR/CTf9tYOkG0Cf+zC1uSipZ9u8WMauNaZvUIYEwjD/+9ANuUPgcGjoZ6ORbtCdPXyFGgtWKNa2QUtlG4DOzzXfm5dVHRP++wdKonRypShaIbpnah2dxQFi4MrklO/O6sPILY6nrWFTTiGFbn/NwZmje7f7OA7nHM3hzi1uFXkL7R6WMs4RutO84dmOxxiw+TmHSyNFWxA/RK1W5B/QbeDRwrZUoabYKQrItTomo551zWqCkYCqJzpkyc6lhF0qyNUR3dSSKxPTvtEvrbX1hb33cSNqOnr0zyjy5YsuvpfQ/AF/jPiznZj2f2JCKwkQUHIVusKEe5qJ1Yem5P+Eza7QP1f/9YcA4DwjGXRfV52GQJz3ncgCCuRZRqgfnPJchaaDi1U9qXDP0yrKF5Gf2J2a5h84h0U3EB6qEyvziWAJ5EHUDCVSprVxFxD9vCpUp9T6srpNLpjiPzViKPmtHsuOs47It
-X-Forefront-Antispam-Report:
-	CIP:255.255.255.255;CTRY:;LANG:en;SCL:1;SRV:;IPV:NLI;SFV:NSPM;H:LV8PR12MB9620.namprd12.prod.outlook.com;PTR:;CAT:NONE;SFS:(13230040)(376014)(1800799024)(366016)(11063799003)(4143699003)(22082099003)(18002099003)(56012099003);DIR:OUT;SFP:1101;
-X-MS-Exchange-AntiSpam-MessageData-ChunkCount: 1
-X-MS-Exchange-AntiSpam-MessageData-0:
-	=?us-ascii?Q?Q5cUftQDJKiLy5JOXr/iXnvjhXYSKkRF5C+drYIlZ8grl3oeg6OoaChzkmiV?=
- =?us-ascii?Q?txSPjyt6apVuuQ4d5hLghl1AMM4KPHW8+578rU26kx8b5JC0j5dIAoR05Ont?=
- =?us-ascii?Q?E89sNdwGJP1toN+/Cmm5lsRZtUWu3OUJKSTBYHC9A+SO58iizIGXzeNP1UPI?=
- =?us-ascii?Q?B9pKokJI9kE0OLTBU0BQ6xCaZhpjsez2RgeYCqpZKjJVnw+W3vVWH0oLfQBG?=
- =?us-ascii?Q?t0ChWFwkr9fH4YCuoDpdDtbonq+Z+jmPYde65llsTp9FnK9FJJk7csx+rhEh?=
- =?us-ascii?Q?t7YaHRlIFoKNrrc9DbxIIXfByTKjPC9CsJdxgPibpBXdSIWNDxVbT+SLk3xq?=
- =?us-ascii?Q?57eAP9aNy5T//7mkxyqgKFUzx5u1HRrOOasZ9lbrLKPsRnvepCzWkqTcJNRE?=
- =?us-ascii?Q?rLzcjMwYp6bu4TbiZ1F3wpZForKw8/v/egKmt+27Oqp/oVoxKvGVTHOmm53B?=
- =?us-ascii?Q?2XKswSN8oFaMLTvLmJQsJmuyKrxfUoX2kb4n1d17wkxKwP/PN/h0cPBeZsno?=
- =?us-ascii?Q?FgDPEv33s0anuwA2SBaD8Xb8vcI8WO3lWC9M/XIq71UhyJKwf0TZq8kkTMpe?=
- =?us-ascii?Q?UDq+uG8yE3+VfPZVu5FPDjLsykLe6S5rLL6jOwZNtJQjHNDZrK6zeJLpoth3?=
- =?us-ascii?Q?S3N/At/t/xP/4NFk4OFF0duZ8Wptq3vhRhzot2eJdtcgh78s3cFaYU1HBSzC?=
- =?us-ascii?Q?9j1/0dmCr4mDbJ2NJ8iRPnvAbIxKvvFf2gldEs0bu1txIoj7R1d4NH+TYqtU?=
- =?us-ascii?Q?E0p10cPEhAaDo6l3f2KC2sXOA4CY5hWkMcZkeaGYJ1aPdyYIz6c+h7uhxEhU?=
- =?us-ascii?Q?a+TeZbzB7//zNNnI3dLbvTmwcD+2vMZe4fbrFXaeQi5JTmLq/1BNhX4qKZ7A?=
- =?us-ascii?Q?Zy5JmDwx/84BbN3rJXxLdvNcNSso/6zVNrEe3Fg+l4RTeEok9gLAM5u5p2CX?=
- =?us-ascii?Q?LM/oDDRolO/96PnphH0W6XsQUeR/zN7pY3v2ngHG2EGyp5zo9MfUHGfjAqLv?=
- =?us-ascii?Q?9E99Hcw5tLw9hx6+lbeX8G4dXecIxYGznhBF+fwhsv+LItJ4yp3tgkX3SzU1?=
- =?us-ascii?Q?BIskOlnCvEbziAhyd9j7/5Ykan+6Z13iHkcvRlDp+BrWvWL5BUVy7SUK77oS?=
- =?us-ascii?Q?W/MiL0SsS30pBeBqSy6opHTeKbPBLwnzBIvdWoxuOd1rJgMOzPvu3jPRA73C?=
- =?us-ascii?Q?vuT6jgPq1QhDiWVFDAyO4FyCAMhvugVeYRKow/dR32E4UPNo0bPVPNN16OsS?=
- =?us-ascii?Q?R0k3bHQxchMkShnG5t51Sp7h0jGTvDdOddo7nc5z9nbLJEqMk2kzN/XGw1Af?=
- =?us-ascii?Q?tak3BMOoNP2xi8NaRo1koZEN0uE1ioqjcYBP8E9uwInvznXqHH8cXEim7bPK?=
- =?us-ascii?Q?iS/P26Daqsuw5B5D9OB+E1VIc8C35JgGtgbFJyTxRn030gUHbdvsQqsfTCDx?=
- =?us-ascii?Q?T2QbFl0J1WmGGQM5YyhpzKTCAj4OYIMENnuSA3RVU7FmEcem9kxXhL+tNrvu?=
- =?us-ascii?Q?iwVgqgLwxGmWomBhdThQyAE8+iCEXLfDz2+P40YY3P4ZvOJkPdoLOiUlCwd0?=
- =?us-ascii?Q?X5jTfxmWdZAb6tQKyjMxouf35eBmt0UQKVWQjHcel6nOr0FK9wBhit3L8/5N?=
- =?us-ascii?Q?NjeoZmAU9zTMTPquWBoPI3zDUER30AzkpPfqjVgCCvin9ZF2qDJf8JsDCSGW?=
- =?us-ascii?Q?dRvuYDa0HHw7ofZNV60aNMb14IULU/oAzwNoTtBy2qMU3nCM?=
-X-OriginatorOrg: Nvidia.com
-X-MS-Exchange-CrossTenant-Network-Message-Id: 56b9dc6d-456b-4593-78b9-08deb146a8ba
-X-MS-Exchange-CrossTenant-AuthSource: LV8PR12MB9620.namprd12.prod.outlook.com
-X-MS-Exchange-CrossTenant-AuthAs: Internal
-X-MS-Exchange-CrossTenant-OriginalArrivalTime: 13 May 2026 23:23:37.2675
- (UTC)
-X-MS-Exchange-CrossTenant-FromEntityHeader: Hosted
-X-MS-Exchange-CrossTenant-Id: 43083d15-7273-40c1-b7db-39efd9ccc17a
-X-MS-Exchange-CrossTenant-MailboxType: HOSTED
-X-MS-Exchange-CrossTenant-UserPrincipalName: mqJQs3mMRzAU8iIad6rVQ80dAKW6oYGdCOS15i1vsROQrk39SGOQ8H5f6y3IXo/X
-X-MS-Exchange-Transport-CrossTenantHeadersStamped: IA1PR12MB6259
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH] hwmon: (nct7802) Add time step attributes for tweaking
+ responsiveness
+To: sashiko-reviews@lists.linux.dev,
+ Ronan Dalton <ronan.dalton@alliedtelesis.co.nz>
+Cc: linux-hwmon@vger.kernel.org
+References: <20260512041607.988078-2-ronan.dalton@alliedtelesis.co.nz>
+ <20260513233146.CBAC5C2BCB3@smtp.kernel.org>
+Content-Language: en-US
+From: Guenter Roeck <linux@roeck-us.net>
+Autocrypt: addr=linux@roeck-us.net; keydata=
+ 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
+ np3900V20aS7eD9K8GTU0TGC1pyz6IVJwIE=
+In-Reply-To: <20260513233146.CBAC5C2BCB3@smtp.kernel.org>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
 
-On Wed, May 13, 2026 at 08:59:15PM +0000, sashiko-bot@kernel.org wrote:
-> The commit message notes that qedr_copy_qp_uresp() is already called with
-> zeroed memory. If the caller is using aggregate initialization (= {}) on
-> the stack, this may not completely zero the memory.
+On 5/13/26 16:31, sashiko-bot@kernel.org wrote:
+> Thank you for your contribution! Sashiko AI review found 1 potential issue(s) to consider:
+> - [Low] kstrtoul is called with base 0 for a time interval, allowing unintended octal parsing.
+> --
+> 
+> commit 3cecff14f185e191b2b2e66dc9e9e9cb80c25244
+> Author: Ronan Dalton <ronan.dalton@alliedtelesis.co.nz>
+> 
+> hwmon: (nct7802) Add time step attributes for tweaking responsiveness
+> 
+> This commit adds sysfs attributes to configure the step up and step down
+> time intervals for the Smart Fan mode on the nct7802 chip. The user-facing
+> values are specified in milliseconds and clamped to valid ranges.
+> 
+>> diff --git a/drivers/hwmon/nct7802.c b/drivers/hwmon/nct7802.c
+>> index 8c9351da12c6e..f30123fd908cd 100644
+>> --- a/drivers/hwmon/nct7802.c
+>> +++ b/drivers/hwmon/nct7802.c
+> [ ... ]
+>> +static ssize_t step_time_store(struct device *dev,
+>> +			       struct device_attribute *attr, const char *buf,
+>> +			       size_t count, bool step_up)
+>> +{
+>> +	struct nct7802_data *data = dev_get_drvdata(dev);
+>> +	unsigned long val;
+>> +	unsigned int reg;
+>> +	int ret;
+>> +
+>> +	ret = kstrtoul(buf, 0, &val);
+> 
+> Does this allow unintended octal parsing?
+> 
+> Using base 0 means that a zero-padded string written from a userspace script
+> (e.g., echo 0150 > step_up_time) will be parsed as an octal number rather
+> than decimal.
+> 
+> Should this use base 10 instead to prevent surprising behavior and match
+> other standard sysfs attribute parsers in this driver?
+> 
+Agreed. Please fix.
 
-This isn't true, c23 standardized ={} as "empty initializtion"
-clearing padding and the kernel has long relied on this behavior.
+Thanks,
+Guenter
 
-Jason
