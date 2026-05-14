@@ -1,232 +1,337 @@
-Received: from outbound.st.icloud.com (p-east2-cluster4-host10-snip4-8.eps.apple.com [57.103.78.229])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-qv1-f46.google.com (mail-qv1-f46.google.com [209.85.219.46])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9EC3A3E2769
-	for <sashiko-reviews@lists.linux.dev>; Thu, 14 May 2026 13:44:39 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=57.103.78.229
-ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1778766281; cv=none; b=MGE5Kte/PEMJ4cnbfASX3KpyR2VZWD4q2zG/wXucd8CdujZiF5ryuHBZBox8SoCAl9SBZ9ACWYcnEbh07GTALoZOINV32OhT5eQxJUAfVkXWBXCh14rCcNo5qHtJk0K66mY3xfDrspylVsF8v4QjWTz+IiGwrfza9EeLD7oAzqI=
-ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1778766281; c=relaxed/simple;
-	bh=A8U1xY12M3A2wyf9roouYoZwYJjaLgjYvrZuEznIDZc=;
-	h=Message-ID:Date:MIME-Version:Subject:From:To:Cc:References:
-	 In-Reply-To:Content-Type; b=Vq56sUSJMiVxtjSE+Vm02ol4GiXsJsWDKQBbH7xE/yJoGqjtmRhwZkQ9LqMckP3qsgCOcVoawiEpd40MY5Dk2lrO4e29tqoIUuCjoLAofsRalE/rcFp0xo7YnnsvFJ8cQeVSk6W9tH8ZxkLCOzGQJrhy8RZ2gvfhxb75U59h6bI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=icloud.com; spf=pass smtp.mailfrom=icloud.com; dkim=pass (2048-bit key) header.d=icloud.com header.i=@icloud.com header.b=k8vSg3ai; arc=none smtp.client-ip=57.103.78.229
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=icloud.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=icloud.com
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2D0C8248867
+	for <sashiko-reviews@lists.linux.dev>; Thu, 14 May 2026 13:48:39 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=pass smtp.client-ip=209.85.219.46
+ARC-Seal:i=2; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
+	t=1778766520; cv=pass; b=ZjieP+kfo+awxGYkFTWwGb2e/5gc44msfb3JU7yO5MrooxiRxekm9I5i2gJ5MDdMAXyjNooL1pDCCJKQH3klM8aeQ1bDh55ozPXTwTeQxRTgOOMhcFNNq/tTsIKZnBFxJYyMN9oJuB12TcUdX3aGIVJmcsCkGCCxJ7TGxZwD4nQ=
+ARC-Message-Signature:i=2; a=rsa-sha256; d=subspace.kernel.org;
+	s=arc-20240116; t=1778766520; c=relaxed/simple;
+	bh=aKCJjxQ7V3dO6eK1gNWZ6oqy7EqfvCbd5MBzRRyNsM4=;
+	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
+	 To:Cc:Content-Type; b=MGy8wrfu/Bm+h6E09g4MgkQ9iL7eoY+kS48Lyjyri+v3e/kriiEHhpKyWR3wRHsudRxZlPz1sNsTsZG634dK8Qkh4p/rCVov3ILFDe5q8vsfnVBp17ifuZk/vkVJ97/LhIwG+yW5NQFzRjs0BYABA9N/npSaYt7TyM+8tIOA2eI=
+ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=N4n4dz/G; arc=pass smtp.client-ip=209.85.219.46
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=icloud.com header.i=@icloud.com header.b="k8vSg3ai"
-Received: from outbound.st.icloud.com (unknown [127.0.0.2])
-	by p00-icloudmta-asmtp-us-east-1a-100-percent-7 (Postfix) with ESMTPS id D1BCC18027E3;
-	Thu, 14 May 2026 13:44:35 +0000 (UTC)
-X-ICL-Out-Info: HUtFAUMEWwJACUgBTUQeDx5WFlZNRAJCTQhJC0MCWBxCCUAdXA9cEhVdRVsYRRlLHVgWAV8GWXIZWhRcGFNFUR9UWFUJCgNHAksBXgxZWQBBCzhaDlsERxQXG1wAFxlRTQxYWwhbBA8fTAxRAkIFVl5KDB0EVAddBV1WUAJaS0IES0VoXAVcHEAXSB1faktWFAQRUAFYHlZeWhdeTVoCVk0FGQpdVgkBQwtVCgsPXR9EDUAFQA9ZBkMUSAQODlNXQ19PBloPK1sTVRdGCRkIXR0HWEcURw4PGVoUXBhT
-Dkim-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=icloud.com; s=1a1hai; t=1778766278; x=1781358278; bh=X0zygd0f1+Tax4Vkbl7Qijv7ri6A554qWT7Lzx5ilPQ=; h=Message-ID:Date:MIME-Version:Subject:From:To:Content-Type:x-icloud-hme; b=k8vSg3aiBCfjArhKnjHRotf9JVdZ/pHbvTs9cGw7EffQnzd6btXejB1IQ9IMvSrUp17y8Xovm0euLC8+pGtxk4yfmALL7OFl0ZXk0w0R/+iuLXQtIyi4qrt1XLpsrZFVtp+fnJ52iQCTgTASvJ0pY8j9vs3KlnuhxkfSIZw2switjnvTTB8GRHfaI/taoHlQFVfRclddKKczioSGUI6qOuTmqn+vwJ4/4xUuCHRK9wxniOsF4Mo0iZo1s3U1wW0itIEEQ8gmoA4I/P3xpXeIX3fptlHBM7oNjBnnjBx4qxXsI1PwDqxDrnsAS0SBvVKswZ39Se0RYPvXs9GrDDWyRA==
-Received: from [192.168.89.3] (unknown [17.42.251.67])
-	by p00-icloudmta-asmtp-us-east-1a-100-percent-7 (Postfix) with ESMTPSA id 7567E1800DA1;
-	Thu, 14 May 2026 13:44:32 +0000 (UTC)
-Message-ID: <a90ab332-9f86-4486-8243-07c98e3f7578@icloud.com>
-Date: Thu, 14 May 2026 22:44:30 +0900
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="N4n4dz/G"
+Received: by mail-qv1-f46.google.com with SMTP id 6a1803df08f44-8b62ca1d28eso71825076d6.2
+        for <sashiko-reviews@lists.linux.dev>; Thu, 14 May 2026 06:48:38 -0700 (PDT)
+ARC-Seal: i=1; a=rsa-sha256; t=1778766518; cv=none;
+        d=google.com; s=arc-20240605;
+        b=OZUvV76vwIHlnymqxKrEkQhOFkXnIat2/vJCZu/AnESQs+CGMsN4T+udV5CpliqRFt
+         GA6FMqf/N00RAnN46iXzXCHVPsflE4SrgSXFPedrZHib7+q3eFlS8Pe+EGfIv68ZoTs9
+         kJlIkfgdF0ciPMqK1CbgzpqDOjyWx6iuEsskNjBHxWDHMkPhyMXOBPW/fnx+VkvkBwBv
+         8gvQeh/qSCR4dZAD2ddvsoxKt5dY2rvzAW8yI1na8J4Vj4ZRhLP1bdudY4EYcUL4cf7n
+         9VZhpdU8+la835iPHRKBIamjaZgOy5SixYls2CnwCSD9p63eAtwQSvwi0LZQBRFfsLJv
+         0N2w==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com; s=arc-20240605;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:dkim-signature;
+        bh=P7V+svfvmPORbGEpy9kH2oGvJhOmw0DtV4AhxNSn0F8=;
+        fh=2xfOhBJyN5MrDXDnqEqgkqZlEOPXo6XBQo6m99gnAL4=;
+        b=jubSRRHxo24bzQCIsi9X/aotvdizIvagTQyqgOKOA8psqhW4xDVgDxPZ/Vs6F+rigA
+         gl1lNzGOGDkALJBG+LHlqxGV/TvM9elqMEXxQWHX5pMuJWqlBsqHPswaF9mjs/D5xhns
+         a+YJnt70BnhbC4fZ8Rs3iiTqM5d41LZb9rZ2UTkYJYlSd5Id7rqKzgCt9c1TyKjKey+Y
+         GYhthxDXd6QbPuKQxW4wuZSZZm8CQUjOTfkFr668YXz7Fbnb1VRbPrWqlwo/H27y4WxO
+         vNhb3cYkQegzyyILIDv9UL9gopE1aKwcBCMy/v6BwulFppjwQcInR6lZdMh3acqNMKKT
+         6eUg==;
+        darn=lists.linux.dev
+ARC-Authentication-Results: i=1; mx.google.com; arc=none
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20251104; t=1778766518; x=1779371318; darn=lists.linux.dev;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=P7V+svfvmPORbGEpy9kH2oGvJhOmw0DtV4AhxNSn0F8=;
+        b=N4n4dz/GKUFrEycc9dpZ9VIsS6gaNksuDbdtqH3l23cledBY7eo+7m8NmVLaA8VXi5
+         Mk9XjgrSHitJUVhSH2oSwOVMX0vl3EoYLHRTKfS6OryuLy3emjzlZASkNXJ0W0zqVtMD
+         HabJNeXLkfP+8MwUAIzaEq7CK0RXs0PMwrT9TQ6/n3mNiLd837+flnmnR/C/akblDObb
+         9CdCyp950SZ6No9J/aAFeXGh29NG/2qYC/4nxcYBT1sUrLLMggsBdVP4w8NcLfjkA6Up
+         NnmM+cQvD8lcFvdiinWKD15+WwllX4CQG6/5lU3Y9n/Rh5AmcHnH8l+cbYtvXTuljQ39
+         TfFA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20251104; t=1778766518; x=1779371318;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:x-gm-gg:x-gm-message-state:from
+         :to:cc:subject:date:message-id:reply-to;
+        bh=P7V+svfvmPORbGEpy9kH2oGvJhOmw0DtV4AhxNSn0F8=;
+        b=BEze8wzWX9ANt/+f/KegVfs+v3VNySiy/tOK297N8FjfIBm3QQQVCuh+SbWXMwgnuA
+         Oa7Z5uLWE4o+eWiOdwTfvqDgnOwwHUEk12JmsEk2xGhaZi29B9Vv+rxLIB/qqEs+VAf1
+         v7eTwMKYqQwbQbdr9+DsKJUmYzXQx357HMQWfKjs9LB9ollFSy7kHNTLytVKEeYyvlfp
+         PBf+QdIqC6xnEX8OWR5JI33qOCXpXiGxVGueEXAZVWnFity/0nNPt9AsXA1j+HUa/+dB
+         Fn+ToLGaaU9USl3GdqOQTdI5oXLL8eCjiOXRmQ+YqaToNBK0cs2YXowTvmpVSBNs3chR
+         4FXQ==
+X-Gm-Message-State: AOJu0YxHGwAvof7T6XfkjkM0v1kARVnawWu20RoPAuAsRhNC27ziuISD
+	Gln7T1odHrRiDu2Tb1EnP5xV1+6jBZjI4c9voQK26HGKGnBJdaIrlgjCRAL8Z3IrSOyQ6zhDTqI
+	voIMsWvP+LRlbWvQjHdSTIvahlEyYWJ4A1g==
+X-Gm-Gg: Acq92OEDBmP9vmpdECIQdibIDU1tMwH4610TNrEMA7D7tWTyrJbWmChSt7ftAmkIQWM
+	Zv2eGw3kO2kQgxFszQRcjZGAIEfE9gGIF20vWmjdavx+nqYintHxH+3oS6UNeaEX9mlEZhNdIbV
+	ihaGqtdy2S1c0S0C0/SZ1f884L9dJw7LwH55JjGlAbUEYpi6ndY48WeKyUu1W20QHbEZk6vkp+n
+	bVF0aXL88L+I6Ivb8Lc+bBbopDCOWUIGxzymMOBLTugI95t1iSCurp/+81sAJaaZ2yrb0uHcyPZ
+	jUV2pd7h
+X-Received: by 2002:a05:6214:4a87:b0:8ca:e16:9654 with SMTP id
+ 6a1803df08f44-8ca0e169b66mr10237246d6.51.1778766517852; Thu, 14 May 2026
+ 06:48:37 -0700 (PDT)
 Precedence: bulk
 X-Mailing-List: sashiko-reviews@lists.linux.dev
 List-Id: <sashiko-reviews.lists.linux.dev>
 List-Subscribe: <mailto:sashiko-reviews+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:sashiko-reviews+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v5 1/2] usb: xhci-pci: add AMD Promontory 21 PCI glue
-From: Jihong Min <hurryman2212@icloud.com>
-To: Guenter Roeck <linux@roeck-us.net>, sashiko-reviews@lists.linux.dev,
- Jihong Min <hurryman2212@gmail.com>
-Cc: linux-hwmon@vger.kernel.org, linux-pci@vger.kernel.org
-References: <20260512213910.871859-2-hurryman2212@gmail.com>
- <20260514004055.1BBCAC19425@smtp.kernel.org>
- <110e9a0d-bc91-4959-8a7b-1a055d0b49f7@roeck-us.net>
- <1f296d29-3d43-4dd3-b751-8a0892b4095a@icloud.com>
-Content-Language: en-US
-In-Reply-To: <1f296d29-3d43-4dd3-b751-8a0892b4095a@icloud.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 8bit
-X-Proofpoint-ORIG-GUID: IUO5mu-FEVIVRFQpvEyvaEJFKi_7noXr
-X-Authority-Info-Out: v=2.4 cv=PJICOPqC c=1 sm=1 tr=0 ts=6a05d1c4
- cx=c_apl:c_pps:t_out a=YrL12D//S6tul8v/L+6tKg==:117
- a=YrL12D//S6tul8v/L+6tKg==:17 a=IkcTkHD0fZMA:10 a=NGcC8JguVDcA:10
- a=x7bEGLp0ZPQA:10 a=5jDBv52wX64A:10 a=VkNPw1HP01LnGYTKEx00:22
- a=VwQbUJbxAAAA:8 a=pGLkceISAAAA:8 a=OENqQS9qO4l8JokY8NoA:9 a=3ZKOabzyN94A:10
- a=QEXdDO2ut3YA:10 a=PgRulw5oR9JgysbTFEid:22 a=oa2-kN79Xhin27rcel9q:22
-X-Proofpoint-GUID: IUO5mu-FEVIVRFQpvEyvaEJFKi_7noXr
-X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwNTE0MDEzOCBTYWx0ZWRfX/clbLfrG89WI
- J9qsJJr1gPDSk3TswECra8u5+1SQPs22sHR/drfKxnstCo/41V9O/XzdV7QrhKrj2TpOk+3nhlW
- 3fxPkjZ+qZFn0ksLT+IazQpAVTUfcySWYz3V9h0gsADFv+1V1gAcgpHwej8YFhLliLZ1hZl8KiF
- slE0vbjvB4FgrOCLaKwakP/tgCMSm0H4UooWhvhY77vH2MmoDpdjxf1BITVtRM9EafCvVqtfInU
- +p694q9Gqz/ZDlfdNx+7jAy4xZMXg1l8XLzdbEkFKAAPt9DMd+su9Nwa+Koy9IXq+kMCzxw5kpJ
- wHBI6LtQdFcrLPSSaHvGz8QkSJELveKios+rUUtrSGeFEGrKqI1tF7beRYIOz0=
+References: <20260513231445.3213501-3-derekjohn.clark@gmail.com> <20260514122200.E52C4C2BCB3@smtp.kernel.org>
+In-Reply-To: <20260514122200.E52C4C2BCB3@smtp.kernel.org>
+From: Derek John Clark <derekjohn.clark@gmail.com>
+Date: Thu, 14 May 2026 06:48:26 -0700
+X-Gm-Features: AVHnY4KSZC4VkJHQRXm-_XFmPM9aMSk8J4vuVM8tNCzABESdwXLpTFZ87pMFfAw
+Message-ID: <CAFqHKTm0G_HznwTmcOCEumihzXzgSbAj7u8Xm_5GWKUB1g1fKw@mail.gmail.com>
+Subject: Re: [PATCH v2 2/4] HID: hid-msi: Add M-key mapping attributes
+To: sashiko-reviews@lists.linux.dev
+Cc: dmitry.torokhov@gmail.com, linux-input@vger.kernel.org
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 
+On Thu, May 14, 2026 at 5:22=E2=80=AFAM <sashiko-bot@kernel.org> wrote:
+>
+> Thank you for your contribution! Sashiko AI review found 5 potential issu=
+e(s) to consider:
+> - [High] The `cfg_mutex` guard in `claw_hw_output_report()` is scoped to =
+an `if` block, releasing the lock before the critical section executes.
+> - [High] Lockless concurrent access to `profile_pending` between process =
+and interrupt contexts causes data corruption and sequence mismatches on de=
+layed responses.
+> - [High] Unsafe assumption of USB transport in `claw_probe()` causes type=
+ confusion and invalid pointer dereference for non-USB devices.
+> - [High] Returning an error from `claw_profile_event()` for a spurious ev=
+ent unconditionally triggers `complete()`, causing premature wakeups of unr=
+elated commands.
+> - [Medium] The function `claw_buttons_store()` illegally mixes scope-base=
+d `guard()` cleanup with `goto`-based error handling.
+> --
+>
+> commit 42be71c046dc9b6b31d28598f5e0bb568d78b7a1
+> Author: Derek J. Clark <derekjohn.clark@gmail.com>
+>
+> HID: hid-msi: Add M-key mapping attributes
+>
+> Adds attributes that allow for remapping the M-keys with up to 5 values
+> when in macro mode.
+>
+> > diff --git a/drivers/hid/hid-msi.c b/drivers/hid/hid-msi.c
+> > index 8915942af15e6..13ba2747fdb66 100644
+> > --- a/drivers/hid/hid-msi.c
+> > +++ b/drivers/hid/hid-msi.c
+>
+> [ ... ]
+>
+> > @@ -125,6 +294,31 @@ static int claw_gamepad_mode_event(struct claw_drv=
+data *drvdata,
+> >       return 0;
+> >  }
+> >
+> > +static int claw_profile_event(struct claw_drvdata *drvdata, struct cla=
+w_command_report *cmd_rep)
+> > +{
+> > +     u8 *codes;
+> > +     int i;
+> > +
+> > +     switch (drvdata->profile_pending) {
+> > +     case CLAW_M1_PENDING:
+> > +     case CLAW_M2_PENDING:
+> > +             codes =3D (drvdata->profile_pending =3D=3D CLAW_M1_PENDIN=
+G) ?
+> > +                     drvdata->m1_codes : drvdata->m2_codes;
+> > +             /* Extract key codes; replace disabled (0xff) with 0x00, =
+which is (null) in _show */
+> > +             for (i =3D 0; i < CLAW_KEYS_MAX; i++)
+> > +                     codes[i] =3D (cmd_rep->data[6 + i] !=3D 0xff) ? c=
+md_rep->data[6 + i] : 0x00;
+> > +             break;
+>
+> Is it safe to read and modify profile_pending locklessly here in the
+> interrupt handler?
+>
+> Since claw_buttons_show() modifies this state in process context under
+> profile_mutex, if a sysfs request times out and a subsequent request star=
+ts,
+> could the delayed ACK from the first request cause this handler to see th=
+e
+> new profile_pending state and corrupt the new request's buffer?
 
-On 5/14/26 22:38, Jihong Min wrote:
->
-> On 5/14/26 10:20, Guenter Roeck wrote:
->> On 5/13/26 17:40, sashiko-bot@kernel.org wrote:
->>> Thank you for your contribution! Sashiko AI review found 2 potential 
->>> issue(s) to consider:
->>> - [High] The Kconfig dependency `depends on USB_XHCI_PCI=y` 
->>> completely disables PROM21 support for systems where the core driver 
->>> is built as a module.
->>> - [Low] Signed integer overflow when calculating the auxiliary 
->>> device ID.
->>> -- 
->>>
->>> commit 20f4e35b2f88ebe2b8988b4f07fe7cc28199096b
->>> Author: Jihong Min <hurryman2212@gmail.com>
->>> Subject: usb: xhci-pci: add AMD Promontory 21 PCI glue
->>>
->>> This commit adds a small PCI glue driver for AMD Promontory 21 xHCI
->>> controllers. It binds the controllers, delegates USB host operation to
->>> the common xHCI PCI core, and creates an auxiliary device for optional
->>> temperature sensor support.
->>>
->>>> diff --git a/drivers/usb/host/Kconfig b/drivers/usb/host/Kconfig
->>>> --- a/drivers/usb/host/Kconfig
->>>> +++ b/drivers/usb/host/Kconfig
->>>
->>> [ ... ]
->>>
->>>> @@ -42,6 +42,26 @@ config USB_XHCI_PCI
->>>>       depends on USB_PCI
->>>>       default y
->>>>   +config USB_XHCI_PCI_PROM21
->>>> +    bool "AMD Promontory 21 xHCI PCI support"
->>>> +    depends on X86
->>>> +    depends on USB_XHCI_PCI=y
->>>
->>> Does depending strictly on USB_XHCI_PCI=y cause a configuration 
->>> regression
->>> for most distributions where the core driver is configured as a module?
->>>
->>> The driver source appears fully capable of being built as a module, 
->>> using
->>> module-related macros and module_pci_driver().
->>>
->>> If the intent is to prevent an early boot mismatch where xhci-pci is
->>> built-in but the PROM21 glue is a module, could this instead be a 
->>> tristate
->>> option using depends on USB_XHCI_PCI and depends on !(USB_XHCI_PCI=y 
->>> && m)?
->>> This would enforce the boot constraint while preserving support for 
->>> modular
->>> kernel builds.
->>>
->>
->> That makes sense to me. That would be stronger than using default (which
->> was my idea of dealing with the problem). Restricting the code to 
->> USB_XHCI_PCI=y
->> seems to be a bit extreme.
->
-> Hi Guenter,
->
-> I looked more closely at the Kconfig part of the Sashiko suggestion.
->
-> The concern itself is valid: the v5 dependency on USB_XHCI_PCI=y is too
-> strict because it prevents the PROM21 PCI glue from being built when
-> USB_XHCI_PCI=m.
->
-> However, I do not think the suggested expression works as intended:
->
->   depends on !(USB_XHCI_PCI=y && m)
->
-> With Kconfig tristate logic, `m` is a tristate literal, not "this 
-> symbol is
-> being built as a module". If USB_XHCI_PCI=y, then:
->
->   USB_XHCI_PCI=y && m  => m
->   !(USB_XHCI_PCI=y && m) => m
->
-> So the dependency becomes `m`, which limits USB_XHCI_PCI_PROM21 to `m` 
-> instead
-> of allowing `y`. That is the opposite of what we need for the built-in
-> xhci-pci case.
->
-> The combinations I think we want are:
->
->   USB_XHCI_PCI=y  -> USB_XHCI_PCI_PROM21=y or n, but not m
->   USB_XHCI_PCI=m  -> USB_XHCI_PCI_PROM21=m or n
->   USB_XHCI_PCI=n  -> USB_XHCI_PCI_PROM21=n
->
-> I see a few possible ways to handle this:
->
-> 1. Keep USB_XHCI_PCI_PROM21 as a visible tristate:
->
->      config USB_XHCI_PCI_PROM21
->        tristate "AMD Promontory 21 xHCI PCI support"
->        depends on X86
->        depends on USB_XHCI_PCI
->        default USB_XHCI_PCI
->        select AUXILIARY_BUS
->
->    This supports USB_XHCI_PCI=m, but it still lets a user select the 
-> unsafe
->    USB_XHCI_PCI=y / USB_XHCI_PCI_PROM21=m combination.
->
-> 2. Keep it visible and rely on help text to warn users not to select 
-> `m` when
->    USB_XHCI_PCI=y.
->
->    This is simple, but it does not actually prevent the bad combination.
->
-> 3. Use IS_REACHABLE() in xhci-pci.c instead of IS_ENABLED().
->
->    That would prevent built-in xhci-pci from rejecting PROM21 devices 
-> when the
->    PROM21 glue is only available as a module. However, it also means the
->    PROM21 glue/hwmon path would not be used in that configuration 
-> unless the
->    PCI device is rebound later, so I do not think it is ideal.
->
-> 4. Make USB_XHCI_PCI_PROM21 a hidden tristate that follows USB_XHCI_PCI:
->
->      config USB_XHCI_PCI_PROM21
->        tristate
->        depends on X86
->        depends on USB_XHCI_PCI
->        default USB_XHCI_PCI
->        select AUXILIARY_BUS
->
->    Then the value follows the common xhci-pci driver:
->
->      USB_XHCI_PCI=y  -> USB_XHCI_PCI_PROM21=y
->      USB_XHCI_PCI=m  -> USB_XHCI_PCI_PROM21=m
->      USB_XHCI_PCI=n  -> USB_XHCI_PCI_PROM21=n
->
->    This prevents the unsafe y/m split while still supporting modular
->    USB_XHCI_PCI builds. The actual user-visible sensor option remains
->    SENSORS_PROM21_XHCI.
->
-> My current preference is option 4, because the PROM21 PCI glue is not 
-> really a
-> user-facing feature by itself. It exists so the common xhci-pci driver 
-> can hand
-> PROM21 devices to the PROM21-specific glue and so the optional hwmon 
-> driver can
-> bind through the auxiliary device. The user-visible part remains the 
-> hwmon
-> sensor driver.
->
-> Does that sound reasonable to you, or would you prefer one of the other
-> approaches?
->
-> Thanks,
-> Jihong
->
-One follow-up to my previous mail:
+The lock covers this case as it is only released after the completion
+fires or time out, after this.
 
-If we go with option 4 and make USB_XHCI_PCI_PROM21 a hidden tristate
-symbol, I think its help text should probably be removed as well, since the
-symbol would no longer have a user-visible prompt.
+> > +     default:
+> > +             dev_warn(&drvdata->hdev->dev,
+> > +                      "Got profile event without changes pending from =
+command: %x\n",
+> > +                      cmd_rep->cmd);
+> > +             return -EINVAL;
+> > +     }
+> > +     drvdata->profile_pending =3D CLAW_NO_PENDING;
+> > +
+> > +     return 0;
+> > +}
+> > +
+> >  static int claw_raw_event(struct claw_drvdata *drvdata, struct hid_rep=
+ort *report,
+> >                         u8 *data, int size)
+> >  {
+>
+> [ ... ]
+>
+> > @@ -146,6 +340,9 @@ static int claw_raw_event(struct claw_drvdata *drvd=
+ata, struct hid_report *repor
+> >       case CLAW_COMMAND_TYPE_GAMEPAD_MODE_ACK:
+> >               ret =3D claw_gamepad_mode_event(drvdata, cmd_rep);
+> >               break;
+> > +     case CLAW_COMMAND_TYPE_READ_PROFILE_ACK:
+> > +             ret =3D claw_profile_event(drvdata, cmd_rep);
+> > +             break;
+> >       case CLAW_COMMAND_TYPE_ACK:
+> >               break;
+> >       default:
+>
+> When claw_profile_event() returns -EINVAL for a spurious event,
+> claw_raw_event() breaks from the switch and unconditionally calls
+> complete(&drvdata->send_cmd_complete).
+That case is unlikely as the profile events are serialized by a mutex.
+Holding the completion until timeout would only result in delaying
+subsequent calls.
 
-The user-visible option would remain SENSORS_PROM21_XHCI, where the hwmon
-sensor help text can stay.
+> Could this prematurely wake up a thread waiting on a completely different
+> command, such as WRITE_PROFILE_DATA?
+>
+> [ ... ]
+>
+> > @@ -366,6 +563,161 @@ static ssize_t reset_store(struct device *dev, st=
+ruct device_attribute *attr,
+> >  }
+> >  static DEVICE_ATTR_WO(reset);
+> >
+> > +static int button_mapping_name_to_code(const char *name)
+> > +{
+>
+> [ ... ]
+>
+> > +static int claw_buttons_store(struct device *dev, const char *buf, u8 =
+mkey_idx)
+> > +{
+> > +     struct hid_device *hdev =3D to_hid_device(dev);
+> > +     struct claw_drvdata *drvdata =3D hid_get_drvdata(hdev);
+> > +     u8 data[] =3D { 0x01, (drvdata->bmap_addr[mkey_idx] >> 8) & 0xff,
+> > +                   drvdata->bmap_addr[mkey_idx] & 0xff, 0x07,
+> > +                   0x04, 0x00, 0xff, 0xff, 0xff, 0xff, 0xff };
+> > +     size_t len =3D ARRAY_SIZE(data);
+> > +     int ret, key_count, i;
+> > +     char **raw_keys;
+> > +
+> > +     raw_keys =3D argv_split(GFP_KERNEL, buf, &key_count);
+> > +     if (!raw_keys)
+> > +             return -ENOMEM;
+> > +
+> > +     guard(mutex)(&drvdata->rom_mutex); /* all err_free paths must be =
+in scope */
+> > +     if (key_count > CLAW_KEYS_MAX) {
+> > +             ret =3D -EINVAL;
+> > +             goto err_free;
+> > +     }
+> > +
+> > +     if (key_count =3D=3D 0)
+> > +             goto set_buttons;
+> > +
+> > +     for (i =3D 0; i < key_count; i++) {
+> > +             ret =3D button_mapping_name_to_code(raw_keys[i]);
+> > +             if (ret < 0)
+> > +                     goto err_free;
+> > +
+> > +             data[6 + i] =3D ret;
+> > +     }
+> > +
+> > +set_buttons:
+> > +     ret =3D claw_hw_output_report(hdev, CLAW_COMMAND_TYPE_WRITE_PROFI=
+LE_DATA, data, len, 8);
+>
+> While reviewing the addition of these sysfs attributes, I noticed a
+> pre-existing issue in claw_hw_output_report() that is exacerbated by
+> the concurrent sysfs requests added here:
+>
+> drivers/hid/hid-msi.c:claw_hw_output_report() {
+>     ...
+>     if (timeout) {
+>         guard(mutex)(&drvdata->cfg_mutex);
+>         reinit_completion(&drvdata->send_cmd_complete);
+>     }
+>     ...
+> }
+>
+> Since guard() is scoped to the if block, the mutex is immediately release=
+d at
+> the closing brace.
+>
+> Doesn't this mean hid_hw_output_report() and
+> wait_for_completion_interruptible_timeout() execute entirely without
+> the lock, defeating the intended serialization and allowing concurrent
+> requests to race?
+>
+> > +     if (ret < 0)
+> > +             goto err_free;
+> > +
+> > +     ret =3D claw_hw_output_report(hdev, CLAW_COMMAND_TYPE_SYNC_TO_ROM=
+, NULL, 0, 8);
+> > +
+> > +err_free:
+> > +     argv_free(raw_keys);
+> > +     return ret;
+> > +}
+>
+> Is it safe to mix goto-based error handling with scope-based guard() clea=
+nup
+> in the same function?
 
-Does that sound right?
+I'll make this a scoped guard over claw_hw_output_report.
 
-Thanks,
-Jihong
+> According to the cleanup guidelines, functions should either convert
+> entirely to scope-based cleanup, for example by using a DEFINE_FREE
+> wrapper for argv_free, or not use guard() at all to avoid confusing
+> ownership semantics.
+>
+> [ ... ]
+>
+> > @@ -432,8 +796,31 @@ static void cfg_resume_fn(struct work_struct *work=
+)
+> >               dev_err(&drvdata->hdev->dev, "Failed to set gamepad mode =
+settings: %d\n", ret);
+> >  }
+> >
+> > +static void claw_features_supported(struct claw_drvdata *drvdata)
+> > +{
+>
+> [ ... ]
+>
+> >  static int claw_probe(struct hid_device *hdev, u8 ep)
+> >  {
+> > +     struct usb_interface *intf =3D to_usb_interface(hdev->dev.parent)=
+;
+> > +     struct usb_device *udev =3D interface_to_usbdev(intf);
+>
+> Is it guaranteed that this device is always connected via USB?
 
+This function is only called by msi_probe, which checks for a valid
+USB device as a first step.
+
+> If this driver is bound to a device connected over a non-USB transport li=
+ke
+> I2C, Bluetooth, or UHID, hdev->dev.parent would not be a valid USB
+> interface, which could cause an invalid pointer dereference here.
+>
+> Could this code check hid_is_usb(hdev) first or read the version from
+> hdev->version instead?
+>
+> >       struct claw_drvdata *drvdata;
+> >       int ret;
+>
+> --
+> Sashiko AI review =C2=B7 https://sashiko.dev/#/patchset/20260513231445.32=
+13501-1-derekjohn.clark@gmail.com?part=3D2
