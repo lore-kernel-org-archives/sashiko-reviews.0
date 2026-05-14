@@ -1,104 +1,143 @@
-Received: from stravinsky.debian.org (stravinsky.debian.org [82.195.75.108])
+Received: from mail.cjdns.fr (mail.cjdns.fr [5.135.140.105])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 13D6A3CE098;
-	Thu, 14 May 2026 14:52:39 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=82.195.75.108
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9D1C5426EDE
+	for <sashiko-reviews@lists.linux.dev>; Thu, 14 May 2026 15:22:15 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=5.135.140.105
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1778770361; cv=none; b=nrCmMknKRloFkrX14CsAtHkwHoYXPBzG/YX4QXb/u3JY0U7+KU9RP6n1jypIWCuvbTVy9LUF+v/PGmlRaBHiiG3MdP49JzCcEEYf3obTKxhBC6EPCrfrusK72fRWAYT3hnL4tKTzKbjyd5upFSz4uoRztd5/ZkoqMLtjOD01N/o=
+	t=1778772137; cv=none; b=BKIKMHDuKeW6n/3m77PA/aYrmjTgTlRvCzxy3TbDj2rnAuuUixjHIVFQHv+DRCG2bzY2GOYlXi/m0od5brr0MVKLPLg/SWvyyw6QRd5dY4Y4llb7iUV2QOcQHSh7OASQqvhL78f26bY2cW+IBPlrbqcBqdEdlaNW6GyKrQt25IM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1778770361; c=relaxed/simple;
-	bh=JJJOVJikQnlVfnlPKoBMfb9G3U4vH6Xwl3VpWCTgAsk=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=COEM1kX8zB6YShoWT0/uIA5Ze0rD5ntX96S4sdhhhFzEaS0po2X8L1dPllkdpr6EmbsDqWlApD8nut5/QMGRdDSQbRpIsMSW1+f+YEgVOC+Ei9obO/AinmTRJRj2mD26svQADXD/grqliMqIXcXGjfuQ2gJM3VoZvtv1vuD7SRA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=debian.org; spf=pass smtp.mailfrom=debian.org; dkim=pass (2048-bit key) header.d=debian.org header.i=@debian.org header.b=pIUoeYUb; arc=none smtp.client-ip=82.195.75.108
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=debian.org
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=debian.org
+	s=arc-20240116; t=1778772137; c=relaxed/simple;
+	bh=V6qObgAZ/8hMUFqea2LYv5tf6j+hTtLWS+i37NwyaQA=;
+	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
+	 In-Reply-To:Content-Type; b=S8WyNyk53X6N+XZM8P7NBNbDrAdWj/Iyc5X+FArnF+AUMVAs82WRLwJcR7stusYniGLe131r2BLkJBiDBotfGue7UmGvjQ+RHcN/c2FRBUzOlb4q/T7AwPXPfXYNj71MUuNtbB/GZEmXs0pAVuIFMAhjaLTP8Kqi+/XiBtVrR9M=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=cjdns.fr; spf=none smtp.mailfrom=cjdns.fr; dkim=pass (2048-bit key) header.d=cjdns.fr header.i=@cjdns.fr header.b=msAy41lZ; arc=none smtp.client-ip=5.135.140.105
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=cjdns.fr
+Authentication-Results: smtp.subspace.kernel.org; spf=none smtp.mailfrom=cjdns.fr
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=debian.org header.i=@debian.org header.b="pIUoeYUb"
-DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed; d=debian.org;
-	s=smtpauto.stravinsky; h=X-Debian-User:In-Reply-To:Content-Type:MIME-Version:
-	References:Message-ID:Subject:Cc:To:From:Date:Reply-To:
-	Content-Transfer-Encoding:Content-ID:Content-Description;
-	bh=HApBGbUIopWE1eKRprPbgwODOdGqjWiFYdpjK0iQJgw=; b=pIUoeYUbHBZQ3fl16jbbkB7Vti
-	+gJ49RyJnSxsRufj0QoSyUy5UY7Fhs/oBXOaTFsa0Y25zYj4VjY6QUbsbykrNpTBhZz0qjMUSuOYv
-	1TJuM8bbEuW9tInprDCfBRvkU6gf/vQpSBJc6fPkz2pWWqt+zsyHIgtrqc3hb1/3WoOkLS1J4ZHPK
-	m4n3uR9QBDoQqWHLdmTWlExrw3nQn6y1jj1YySa8TNS2taAZddWBzQCKtQkzysi4yTXtenqIzyOQg
-	5OqlYwfV0AbbnJOE25dFVLsDJPnmw/b84g+KviVXIoyiHUCgN0OUCLGO60gthrOys8Bm2BHt2GRTL
-	VXXE8/LQ==;
-Received: from authenticated user
-	by stravinsky.debian.org with esmtpsa (TLS1.3:ECDHE_X25519__RSA_PSS_RSAE_SHA256__AES_256_GCM:256)
-	(Exim 4.96)
-	(envelope-from <leitao@debian.org>)
-	id 1wNXQS-0041Fs-31;
-	Thu, 14 May 2026 14:52:37 +0000
-Date: Thu, 14 May 2026 07:52:32 -0700
-From: Breno Leitao <leitao@debian.org>
-To: sashiko-reviews@lists.linux.dev
-Cc: bpf@vger.kernel.org
-Subject: Re: [PATCH net-next 1/6] atm: convert to getsockopt_iter
-Message-ID: <agXhTGVurhrJmBNu@gmail.com>
-References: <20260513-getsock_four-v1-1-fe7f0e756fac@debian.org>
- <20260514124501.43BC2C2BCB3@smtp.kernel.org>
+	dkim=pass (2048-bit key) header.d=cjdns.fr header.i=@cjdns.fr header.b="msAy41lZ"
+Received: from [127.0.0.1] (localhost [127.0.0.1]) by localhost (Mailerdaemon) with ESMTPSA id 3D18E3C049D;
+	Thu, 14 May 2026 17:22:08 +0200 (CEST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=cjdns.fr; s=dkim;
+	t=1778772130; h=from:subject:date:message-id:to:cc:mime-version:content-type:
+	 content-transfer-encoding:content-language:in-reply-to:references;
+	bh=iPIEtsOB9x3Ey5zEUP6k0EZzT9HMxltvUAX8Ft7+obc=;
+	b=msAy41lZfa3wmojt6qzahl/zTAhRJ0D4yQx0gU7+ju8UXA+lYWxoP3QXfJhr3tPG2Lx9g7
+	aDACBEOH2lB75yu1r96HFfvVaqUYuPYwRrDIReLPLHN7MOCeqNM+q8Mk2/8km3TAMD5rge
+	JOpYk4aXrfpJ93XY4gooDRf4sQzm8Qn01/e2tk4vRUdYmyIyJxeLxZ2dVnLlqjssxpWTIo
+	jncILW7g6C8Hak/Cig/DvqeE7IcOXzlAXNDAxbAW7m0z2IjOrqUWM5j2q/Y+rGW31633Sr
+	87SGBBZ16VuhlewcEq2m57sngixx5yFzKd4d73PVxTGj8qVDdoxXCY0UHGm+Dg==
+Message-ID: <23568f49-4b58-4acd-85fa-7eba5e99b46c@cjdns.fr>
+Date: Thu, 14 May 2026 17:22:05 +0200
 Precedence: bulk
 X-Mailing-List: sashiko-reviews@lists.linux.dev
 List-Id: <sashiko-reviews.lists.linux.dev>
 List-Subscribe: <mailto:sashiko-reviews+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:sashiko-reviews+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <20260514124501.43BC2C2BCB3@smtp.kernel.org>
-X-Debian-User: leitao
+User-Agent: Mozilla Thunderbird Beta
+Subject: Re: [PATCH v2 1/5] dt-bindings: timer: econet: Update EN751627 for
+ multi-IRQ
+To: sashiko-reviews@lists.linux.dev
+Cc: devicetree@vger.kernel.org, conor+dt@kernel.org, krzk+dt@kernel.org,
+ robh@kernel.org
+References: <20260514000601.3430262-2-cjd@cjdns.fr>
+ <20260514114243.126F4C2BCB3@smtp.kernel.org>
+Content-Language: en-US
+From: Caleb James DeLisle <cjd@cjdns.fr>
+In-Reply-To: <20260514114243.126F4C2BCB3@smtp.kernel.org>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
+X-Last-TLS-Session-Version: TLSv1.3
 
-On Thu, May 14, 2026 at 12:45:00PM +0000, sashiko-bot@kernel.org wrote:
-> > diff --git a/net/atm/common.c b/net/atm/common.c
-> > --- a/net/atm/common.c
-> > +++ b/net/atm/common.c
+
+On 14/05/2026 13:42, sashiko-bot@kernel.org wrote:
+> Thank you for your contribution! Sashiko AI review found 4 potential issue(s) to consider:
+> - [High] Invalid fallback compatible string for incompatible hardware.
+> - [Medium] Outdated top-level binding description.
+> - [Low] Missing item descriptions for the new interrupts.
+> - [Low] Grammatical errors in the commit message.
+> --
+>
+> commit 5cbd9643ff098f6fa9a3e82043e46dcf9b0a9953
+> Author: Caleb James DeLisle <cjd@cjdns.fr>
+>
+> dt-bindings: timer: econet: Update EN751627 for multi-IRQ
+>
+> This commit updates the en751627 timer hardware to use individual IRQs
+> per-timer rather than the shared percpu IRQ used by the en751221 family.
+>
+>> The former uses a percpu IRQ for all timers while the
+>> later uses an individual IRQ numbers per-timer.
+> This isn't a bug, but there appear to be typos in the commit message.
+> Should it say "latter" instead of "later", and "individual IRQ numbers"
+> instead of "an individual IRQ numbers"?
+
+
+:sigh: it seems I'm physically incapable of not doing this. Anyway glad 
+for the bot to pick up after me.
+
+
+>
+>> diff --git a/Documentation/devicetree/bindings/timer/econet,en751221-timer.yaml b/Documentation/devicetree/bindings/timer/econet,en751221-timer.yaml
+>> index c1e7c2b6afde1..f338739e039c6 100644
+>> --- a/Documentation/devicetree/bindings/timer/econet,en751221-timer.yaml
+>> +++ b/Documentation/devicetree/bindings/timer/econet,en751221-timer.yaml
+> Does the top-level description in this file also need an update?
+>
+> It still explicitly claims that the timer has a single interrupt line using a
+> percpu-devid interrupt mechanism, which is no longer accurate for the entire
+> binding.
+
+
+Good catch.
+
+
+>
 > [ ... ]
-> > @@ -797,13 +798,13 @@ int vcc_setsockopt(struct socket *sock, int level, int optname,
-> >  }
-> >  
-> >  int vcc_getsockopt(struct socket *sock, int level, int optname,
-> > -		   char __user *optval, int __user *optlen)
-> > +		   sockopt_t *opt)
-> >  {
-> >  	struct atm_vcc *vcc;
-> > +	unsigned long val;
-> >  	int len;
-> >  
-> > -	if (get_user(len, optlen))
-> > -		return -EFAULT;
-> > +	len = opt->optlen;
-> >  	if (__SO_LEVEL_MATCH(optname, level) && len != __SO_SIZE(optname))
-> >  		return -EINVAL;
+>> @@ -52,21 +52,31 @@ allOf:
+>>             items:
+>>               - description: VPE timers 0 and 1
+>>               - description: VPE timers 2 and 3
+>> +        interrupts:
+>> +          description: An interrupt for each timer (one per VPE)
+>> +          minItems: 4
+> Could this include an items list detailing the specific purpose of each
+> of the four interrupts? Defining an items array for each interrupt (such as
+> Timer for VPE 0, VPE 1, etc.) would help ensure clarity for driver developers
+> and enforce a consistent definition order.
+IMO should be self-evident.
+>
 > [ ... ]
-> >  	case SO_SETCLP:
-> > -		return put_user(vcc->atm_options & ATM_ATMOPT_CLP ? 1 : 0,
-> > -				(unsigned long __user *)optval) ? -EFAULT : 0;
-> > +		val = vcc->atm_options & ATM_ATMOPT_CLP ? 1 : 0;
-> > +		return copy_to_iter(&val, sizeof(val), &opt->iter_out) !=
-> > +		       sizeof(val) ? -EFAULT : 0;
-> 
-> On 64-bit systems, val is an unsigned long (8 bytes). However, __SO_SIZE
-> for SO_SETCLP is 4 bytes, which is enforced by the length check above.
-> 
-> Since the opt->iter_out iterator is restricted to 4 bytes, copy_to_iter()
-> will truncate the copy to 4 bytes and return 4. Does this mean the
-> subsequent check against sizeof(val) (8 bytes) will always fail and return
-> -EFAULT unconditionally?
-> 
-> Additionally, on 64-bit big-endian systems, does copying the first 4 bytes
-> of an 8-byte unsigned long always copy zeroes, ignoring the actual flag
-> value?
-> 
-> Would declaring val as an int instead of an unsigned long resolve both the
-> copy size mismatch and the potential endianness issue here?
-
-Good catch, dear LLM. This seems a real regression!
-
-val should be "int" or u32 instead of "long int" in this case. I will
-update.
-
---
-pw-bot: cr
+>>   examples:
+>>     - |
+>> +    #include <dt-bindings/interrupt-controller/mips-gic.h>
+>>       timer@1fbf0400 {
+>>           compatible = "econet,en751627-timer", "econet,en751221-timer";
+> Is it safe to retain econet,en751221-timer as a fallback compatible string?
+>
+> Device Tree fallback strings declare that an older OS can safely operate the
+> hardware using the fallback driver. Since econet,en751627-timer uses four
+> individual shared IRQs while econet,en751221-timer strictly uses a single
+> percpu IRQ, they appear to have fundamentally incompatible interrupt
+> topologies.
+>
+> If an older kernel boots using the fallback, the legacy
+> timer-econet-en751221 driver will attempt to map the first shared IRQ as a
+> percpu IRQ via request_percpu_irq(). This will fail with -EINVAL, causing
+> the timer driver to fail to initialize and potentially leading to a boot
+> failure or system hang.
+>
+> Should econet,en751627-timer be defined as a standalone compatible string
+> without the econet,en751221-timer fallback?
+I find this argument compelling so I'll switch.
+>
+>>           reg = <0x1fbf0400 0x100>, <0x1fbe0000 0x100>;
+>>           interrupt-parent = <&intc>;
+>> -        interrupts = <30>;
+>> +        interrupts = <GIC_SHARED 30 IRQ_TYPE_LEVEL_HIGH>,
+>> +                     <GIC_SHARED 29 IRQ_TYPE_LEVEL_HIGH>,
+>> +                     <GIC_SHARED 37 IRQ_TYPE_LEVEL_HIGH>,
+>> +                     <GIC_SHARED 36 IRQ_TYPE_LEVEL_HIGH>;
+>>           clocks = <&hpt_clock>;
+>>       };
