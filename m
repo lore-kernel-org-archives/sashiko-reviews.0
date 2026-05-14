@@ -1,148 +1,164 @@
-Received: from mail-pj1-f42.google.com (mail-pj1-f42.google.com [209.85.216.42])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from mgamail.intel.com (mgamail.intel.com [198.175.65.12])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 771E03A5445
-	for <sashiko-reviews@lists.linux.dev>; Thu, 14 May 2026 18:49:00 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.216.42
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C19D23A0EA6
+	for <sashiko-reviews@lists.linux.dev>; Thu, 14 May 2026 19:06:22 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=198.175.65.12
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1778784546; cv=none; b=u/fHgYt4L3f4AuW9IQLkdDXl5/UjbTGTT6HESrFD3czax+f4QNKnu1q+w/IzteFDlTFGT2ff5zP14JrqbWqKyDTTA8etuqMFoN9dqHVTToIe+8uB+HcI76igKdZ1/eaFtNnjy86teWOGxuxzUsqIJjTeNs05IN3BZdPVoooIqMI=
+	t=1778785584; cv=none; b=PqrbNbNHPl5RWbZoH75ri4RVeYhx0r+64ZePWEdkTLaOsD33thR69jHNbhFfA6viun7ZpyX/Dn7mmITd4r3zsoO1dSikySy1TXryjwOtgqROsiJFBzQa9p8aot8fCIWvHgDhHkUGmgyNPNkz2UGPSywHGkJWu0zffHxZ3BA7Q3E=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1778784546; c=relaxed/simple;
-	bh=S+HQA3DBDmaAzjxiWBE3o5kycRdNrVouq6LdlBu+WoI=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=A4NAmIyzNTGeEj+CAYz1YCJKgFZokryegjc/CFm9LFiLaH8GYPXtXOPuyVlAvdV4KhaxXeFYpE3I7kzzBhErXWQ9PbeeT5NRW+mDVTHWpMQc3ZEEnPw3mZ6HWUlNH5tXG7ur2HTnJe7lfbnjhHiFaYVfYRI/TW7SNl2xxHi5q1o=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=google.com; spf=pass smtp.mailfrom=google.com; dkim=pass (2048-bit key) header.d=google.com header.i=@google.com header.b=UmFOaipo; arc=none smtp.client-ip=209.85.216.42
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=google.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=google.com
+	s=arc-20240116; t=1778785584; c=relaxed/simple;
+	bh=qBcJ8vKNSneL/rpZZLxYZd6ePo2FHj+D372yqVvkKuI=;
+	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
+	 In-Reply-To:Content-Type; b=sZkUSRlcP1VFqYZ/gsxqxoaQy2RiLHajO3/ypZbn3tQ6oXHCCO9NpksPVl8yUCu785jvZR+QTqbjoEjVIlhHvP2QJhiULqx6y0NZr3OyGkPe8lEDBdFA7pcVKarr0NFzPQW1MLR8F8h0VNYaMtFU37dM3o0d/QXA3Lph4zutbkI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=intel.com; spf=pass smtp.mailfrom=intel.com; dkim=pass (2048-bit key) header.d=intel.com header.i=@intel.com header.b=QE4AgIKN; arc=none smtp.client-ip=198.175.65.12
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=intel.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=intel.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=google.com header.i=@google.com header.b="UmFOaipo"
-Received: by mail-pj1-f42.google.com with SMTP id 98e67ed59e1d1-36643b96b99so6064015a91.0
-        for <sashiko-reviews@lists.linux.dev>; Thu, 14 May 2026 11:49:00 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=google.com; s=20251104; t=1778784539; x=1779389339; darn=lists.linux.dev;
-        h=in-reply-to:content-transfer-encoding:content-disposition
-         :mime-version:references:message-id:subject:cc:to:from:date:from:to
-         :cc:subject:date:message-id:reply-to;
-        bh=O8yEpAjdQMsKna7KcQWgbLZNAzQyoKwhHcUHxguzEl8=;
-        b=UmFOaipo71nOoNH7mq7KAZ3GKe4nk/+yGMNa+1/jp2GY5tAwTFTohOajoSNyFH1W8O
-         O+GG4s8vJtOMK9yliBjIp4jO1HxWXHhKJQgVPHHjUKRVPFOxeijh4lCgCOrwJgwvs0UB
-         T7TPon2NVH3gJ25RDtBsTNY5lAH0N8Q6F5MCWsZw/ik3f7Pmhh/izeoZjImBPrbh8Kus
-         8cwtJqSuR7bzxVzagsC1nwgAR2tt1MYL3BZPwGowjMDZM26D5TROPDRaszi9kX/7PqPn
-         rKU6WFXh06A8N22RkWon55pUDRJIjIkCw75PiR6ldyrbPVzsI/EyBUR5Bw9btyfievAe
-         K9+A==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20251104; t=1778784539; x=1779389339;
-        h=in-reply-to:content-transfer-encoding:content-disposition
-         :mime-version:references:message-id:subject:cc:to:from:date:x-gm-gg
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=O8yEpAjdQMsKna7KcQWgbLZNAzQyoKwhHcUHxguzEl8=;
-        b=j99f0P86rlMXvJ7NBGzdQRHyCbMSE9kmXa4jGzlZZd/Xug4PLba7xkGoTJYldK9sU3
-         89OA8WNbUXxGXjHd7knghqXz0pNI6XFrEKcZkVXPx2PGg+8Zw+z4V2hhb7QDDvGsbGWG
-         xqJwPE/hVjckNjc5ef0K37ald7RcH4jOM/F3kP6RRjzbvPrKRMVpoXupnxWY8H9s30NY
-         /kqRXtlSoJFfkvpJ6Is5BkqKtHaSviXC1PtkggSma8J9DFs7jTp/J+jYrIhKTtpkKNMN
-         92YVxF8Is8wjm9SDSXwDRokVw4laEKGH+H6kn1uy5hutdQZ4NJQdH0LMSsmxf8n2DWX+
-         +6Vw==
-X-Gm-Message-State: AOJu0YxSJpuyBjb380RF6Q60E8pbPPq4JzmoldkgzgPhX98giDeYnqxc
-	CS5nyQc67LHX0dnApCNyXyWvz7uC/ShTV2fiDuosp9n7N9t6N4k9e1je0yKchlxPANb/7uNn3sk
-	HzsFIgA==
-X-Gm-Gg: Acq92OFdL5lGiw9Ak7su0jyuVid2Wk935K8zdHqE/3lZv5PKsN6vwBDRQFVa4zVA4ZA
-	nXnb+/H6EZWV+VB8AU3cHIRXCiD7Hu19NVEYh9yaiJ4l7GVB3iIvs2eUAERimxKti9ogd1yLwrx
-	jmztI5ufnl5cdGVtMIk1Y5zUkURu6jnGLvyvLyPAXMvNagexfa86C38DzsKQfnHBWhnwVjIQOAc
-	107SXf8ABcGGBfw7oX1kR3TdwTUexORe8F7EfBisAMTaFxLdSMe+NYKSRZixxtvEjMhENJI/j+r
-	Yii+VOe/HAdEk8Wc+M+aiDcF10liRPeqhOqJvVutYDJl4fLo8GhVNKXpRoH99BJF0Wf9TZYrh7z
-	4IrBSIFEXzTrIg6qE73toum0DA38l0xhD9Lo1vBOh1C3prKSAhhG/nNu6fzNpED2EWWEEFfzOQk
-	VpP+X9uHLf7TD9fg4gXsj/J8Pt+7k1wVmPJUJyWmbXrK11VarbK+0JEdojp0pQTiT3lfxOsYuo
-X-Received: by 2002:a17:90b:3dc4:b0:365:fca2:8bdd with SMTP id 98e67ed59e1d1-36951778509mr672982a91.0.1778784538661;
-        Thu, 14 May 2026 11:48:58 -0700 (PDT)
-Received: from google.com (56.149.168.34.bc.googleusercontent.com. [34.168.149.56])
-        by smtp.gmail.com with ESMTPSA id 98e67ed59e1d1-369517a820fsm315498a91.10.2026.05.14.11.48.58
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Thu, 14 May 2026 11:48:58 -0700 (PDT)
-Date: Thu, 14 May 2026 18:48:55 +0000
-From: David Matlack <dmatlack@google.com>
-To: sashiko-reviews@lists.linux.dev
-Cc: linux-pci@vger.kernel.org
-Subject: Re: [PATCH v5 09/11] PCI: liveupdate: Freeze preservation status
- during shutdown
-Message-ID: <agYZF7W-hRtj_IX6@google.com>
-References: <20260512184846.119396-10-dmatlack@google.com>
- <20260514031440.483F0C19425@smtp.kernel.org>
+	dkim=pass (2048-bit key) header.d=intel.com header.i=@intel.com header.b="QE4AgIKN"
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
+  d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
+  t=1778785583; x=1810321583;
+  h=message-id:date:mime-version:subject:to:cc:references:
+   from:in-reply-to:content-transfer-encoding;
+  bh=qBcJ8vKNSneL/rpZZLxYZd6ePo2FHj+D372yqVvkKuI=;
+  b=QE4AgIKNHgSvuBmG7keih0ixnRrlJt4gcu6neuqLMYDqB1FGFJXUg0q3
+   +wa2Ey/RPj1REQrbwCTxViBy+WyXtihWNlA/JS1D7DmvCt1EwrhnmINy5
+   uHhfG0rkN1NUoIlyI8SaA5o3dXgi3GB2Ue8eWX6eq+px6phyYv9k/bQsJ
+   HomjztiYl4q08F5OWsWjLRtQA0mxNMJr+MyduDAa3mqpx0c6av4XKEx1c
+   XY3S9Dk7fhXgbf1dEbr84PqQbwKHnkdRvMEZ1hgprFos9Pruym2lYGM3Y
+   a/1BYqHZTRBE5gTgwOuHgPZ1FZ1PJkNR+A+NyjOb2mYepWGA7UGAIYqdS
+   Q==;
+X-CSE-ConnectionGUID: 32pZS/LDTamKHRh6vo2adg==
+X-CSE-MsgGUID: 8tz25saCT1S3NQcJgK0gZQ==
+X-IronPort-AV: E=McAfee;i="6800,10657,11786"; a="91201573"
+X-IronPort-AV: E=Sophos;i="6.23,235,1770624000"; 
+   d="scan'208";a="91201573"
+Received: from fmviesa009.fm.intel.com ([10.60.135.149])
+  by orvoesa104.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 14 May 2026 12:06:23 -0700
+X-CSE-ConnectionGUID: N+VcM6DhSj+J/h8jcaskAg==
+X-CSE-MsgGUID: 69pllpBYRoqbYrYxRDatHw==
+X-ExtLoop1: 1
+X-IronPort-AV: E=Sophos;i="6.23,235,1770624000"; 
+   d="scan'208";a="232075741"
+Received: from jaimerod-mobl.amr.corp.intel.com (HELO [10.125.32.83]) ([10.125.32.83])
+  by fmviesa009-auth.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 14 May 2026 12:06:21 -0700
+Message-ID: <54179bc4-b895-4613-9d08-155fee7371da@intel.com>
+Date: Thu, 14 May 2026 12:06:20 -0700
 Precedence: bulk
 X-Mailing-List: sashiko-reviews@lists.linux.dev
 List-Id: <sashiko-reviews.lists.linux.dev>
 List-Subscribe: <mailto:sashiko-reviews+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:sashiko-reviews+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=iso-8859-1
-Content-Disposition: inline
-Content-Transfer-Encoding: 8bit
-In-Reply-To: <20260514031440.483F0C19425@smtp.kernel.org>
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH 1/7] perf/x86/intel/uncore: Rename refcount fields and
+ other cleanups
+To: sashiko-reviews@lists.linux.dev
+Cc: linux-perf-users@vger.kernel.org
+References: <20260512233048.9577-2-zide.chen@intel.com>
+ <20260514005809.D4D0CC19425@smtp.kernel.org>
+Content-Language: en-US
+From: "Chen, Zide" <zide.chen@intel.com>
+In-Reply-To: <20260514005809.D4D0CC19425@smtp.kernel.org>
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 7bit
 
-On 2026-05-14 03:14 AM, sashiko-bot@kernel.org wrote:
+
+
+On 5/13/2026 5:58 PM, sashiko-bot@kernel.org wrote:
 > Thank you for your contribution! Sashiko AI review found 2 potential issue(s) to consider:
-> - [High] Preservation rollback fails if the device is concurrently frozen, breaking bridge hierarchy invariants.
-> - [Low] Syntax error in the !CONFIG_PCI_LIVEUPDATE stub for pci_liveupdate_freeze().
+> - [High] NULL Pointer Dereference in `uncore_pci_pmu_unregister()` when device registration fails.
+> - [High] NULL Pointer Dereference (previously reported as UAF) during perf event operations if a PCI device is removed while events are active.
 > --
 > 
-> commit f49768e50767ced554fd83ab7e5016423c3d87a2
-> Author: David Matlack <dmatlack@google.com>
+> commit 247a617f910d49e9f19af35d0216a5b938d9d034
+> Author: Zide Chen <zide.chen@intel.com>
 > 
-> PCI: liveupdate: Freeze preservation status during shutdown
+> perf/x86/intel/uncore: Rename refcount fields and other cleanups
 > 
-> Freeze a device's outgoing preservation status (preserved or not preserved)
-> during shutdown. This enables the PCI core and drivers to safely make
-> decisions based on the device's preservation status during shutdown.
+> This commit renames several fields and parameters in the intel uncore PMU
+> driver to clarify their purpose, such as activeboxes to die_refcnt and
+> box->refcnt to box->cpu_refcnt. It also fixes a typo and removes an
+> incorrect refcount increment.
 > 
-> > diff --git a/drivers/pci/liveupdate.c b/drivers/pci/liveupdate.c
-> > index 6ab03bd548b37..825166a579130 100644
-> > --- a/drivers/pci/liveupdate.c
-> > +++ b/drivers/pci/liveupdate.c
-> > @@ -334,6 +334,11 @@ static int pci_liveupdate_unpreserve_device(struct pci_ser *ser, struct pci_dev
-> >  
-> >  	guard(write_lock)(&dev->liveupdate.lock);
-> >  
-> > +	if (dev->liveupdate.frozen) {
-> > +		pci_WARN(dev, 1, "Cannot unpreserve device after it is frozen!\n");
-> > +		return -EINVAL;
-> > +	}
-> 
-> During preservation rollback, can this check leave a child device preserved
-> while its parent is not?
-> 
-> If pci_liveupdate_preserve_path() successfully preserves a child device,
-> but fails to preserve the parent bridge, it attempts to roll back by calling
-> pci_liveupdate_unpreserve_device() on the child.
-> 
-> If a concurrent system shutdown calls pci_liveupdate_freeze() on the child
-> device before this rollback occurs, this check will return -EINVAL and
-> fail the rollback.
-> 
-> Does this result in a broken topology being passed to the incoming kernel?
-
-Hm yes that race does look possible. Will fix in v6.
-
+>> diff --git a/arch/x86/events/intel/uncore.c b/arch/x86/events/intel/uncore.c
+>> index e9cc1ba921c5e..e200f4744eb9b 100644
+>> --- a/arch/x86/events/intel/uncore.c
+>> +++ b/arch/x86/events/intel/uncore.c
 > 
 > [ ... ]
 > 
-> > diff --git a/drivers/pci/liveupdate.h b/drivers/pci/liveupdate.h
-> > index fd7693c7ddd21..30deaa673efed 100644
-> > --- a/drivers/pci/liveupdate.h
-> > +++ b/drivers/pci/liveupdate.h
-> [ ... ]
-> > @@ -26,6 +27,10 @@ static inline void pci_liveupdate_cleanup_device(struct pci_dev *dev)
-> >  {
-> >  }
-> >  
-> > +static inline void pci_liveupdate_freeze(struct pci_dev *dev);
-> > +{
-> > +}
+>> @@ -1230,7 +1229,7 @@ static void uncore_pci_pmu_unregister(struct intel_uncore_pmu *pmu, int die)
+>>  	struct intel_uncore_box *box = pmu->boxes[die];
+>>  
+>>  	pmu->boxes[die] = NULL;
+>> -	if (atomic_dec_return(&pmu->activeboxes) == 0)
+>> +	if (atomic_dec_return(&pmu->die_refcnt) == 0)
+>>  		uncore_pmu_unregister(pmu);
+>>  	uncore_box_exit(box);
 > 
-> Does this stray semicolon after the function signature cause a compilation
-> error for kernels built without CONFIG_PCI_LIVEUPDATE?
+> While reviewing these unregistration changes, I noticed a pre-existing issue
+> here.
+> 
+> If PMU registration fails during PCI device probe, uncore_pci_pmu_register()
+> frees the box and sets pmu->boxes[die] = NULL.
+> 
+> Later, when the device is removed, the bus notifier calls
+> uncore_pci_pmu_unregister() which fetches the NULL box:
+> 
+>     struct intel_uncore_box *box = pmu->boxes[die];
+> 
+> and passes it to uncore_box_exit(box).
+> 
+> Since uncore_box_exit() does not check for NULL before testing box->flags:
 
-Yup, Mike Rapoport and kernel-test-robot also flagged this off-list.
-Will fix in v6.
+Yes, you are right, uncore_pci_pmu_unregister() should validate the box:
+
+diff --git a/arch/x86/events/intel/uncore.c b/arch/x86/events/intel/uncore.c
+index 208901ea280c..edf608ba8e9a 100644
+--- a/arch/x86/events/intel/uncore.c
++++ b/arch/x86/events/intel/uncore.c
+@@ -1285,8 +1285,11 @@ static void uncore_pci_pmu_unregister(struct
+intel_uncore_pmu *pmu, int die)
+        pmu->boxes[die] = NULL;
+        if (atomic_dec_return(&pmu->die_refcnt) == 0)
+                uncore_pmu_unregister(pmu);
+-       uncore_box_exit(box);
+-       kfree(box);
++
++       if (box) {
++               uncore_box_exit(box);
++               kfree(box);
++       }
+ }
 
 > 
-> -- 
-> Sashiko AI review · https://sashiko.dev/#/patchset/20260512184846.119396-1-dmatlack@google.com?part=9
+> static inline void uncore_box_exit(struct intel_uncore_box *box)
+> {
+>         if (test_and_clear_bit(UNCORE_BOX_FLAG_INITIALIZED, &box->flags)) {
+> 
+> Does this sequence result in a NULL pointer dereference?
+> 
+> Additionally, if a PCI device is removed while perf events are still active
+> on its CPU, this function sets pmu->boxes[die] = NULL and frees the box.
+> > If other dies still have boxes present, die_refcnt will be greater
+than zero
+> and uncore_pmu_unregister(pmu) is bypassed.
+
+Yes, this series is mostly focusing on the MSR/MMIO uncore paths, not
+PCI hot plug/unplug handling yet.  I plan to address them in follow-up
+patches.
+
+
+> Could this leave active events scheduled in the perf subsystem?
+> 
+> If the perf subsystem later attempts to read or stop the event,
+> uncore_event_to_box() would return NULL. Would subsequent calls like
+> uncore_perf_event_update() or accesses to box->n_active then trigger a NULL
+> pointer dereference when operating on the missing box?
+> 
+>>  	kfree(box);
+>>  }
+> 
+
