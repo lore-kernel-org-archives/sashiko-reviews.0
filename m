@@ -1,72 +1,72 @@
-Received: from mail-pl1-f174.google.com (mail-pl1-f174.google.com [209.85.214.174])
+Received: from mail-pj1-f42.google.com (mail-pj1-f42.google.com [209.85.216.42])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4B256309EF4
-	for <sashiko-reviews@lists.linux.dev>; Thu, 14 May 2026 18:46:30 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.214.174
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 771E03A5445
+	for <sashiko-reviews@lists.linux.dev>; Thu, 14 May 2026 18:49:00 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.216.42
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1778784392; cv=none; b=Tum0XB0R6nTgHRHeOMoonjg3MGcxjGUr5kByrr0Q/Wu6GtRB+wIV8f50V3zXj1wp+1LCz2lEVx35+7Z1Wfy5Bxn+BGbplEIDSvR6slEBXiOtSN38h0Jmd136UDfOwl5AqbFEv1geIdcADfPMjHoHQXu/uI5ihy3YWztzfHfokL4=
+	t=1778784546; cv=none; b=u/fHgYt4L3f4AuW9IQLkdDXl5/UjbTGTT6HESrFD3czax+f4QNKnu1q+w/IzteFDlTFGT2ff5zP14JrqbWqKyDTTA8etuqMFoN9dqHVTToIe+8uB+HcI76igKdZ1/eaFtNnjy86teWOGxuxzUsqIJjTeNs05IN3BZdPVoooIqMI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1778784392; c=relaxed/simple;
-	bh=ZWs/UHYsK84uYEnQZ3cF1K4U4pbiZVAZeP1d+14kwb4=;
+	s=arc-20240116; t=1778784546; c=relaxed/simple;
+	bh=S+HQA3DBDmaAzjxiWBE3o5kycRdNrVouq6LdlBu+WoI=;
 	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=iSILKWiz13Xaj9QUEHwyGHxWcjulSFyaNFx01stDHHojNvMxLqR/Je7DtVtV2jJ9m5iKi+YGR8xrbpEeYsys2lfD1JQmpR3J2JLqglq4TsDBCIxvgTfogYw5iddn0X29TGPAmP+re5bIMtqx6jy+N/F965fg+OY2h5iH1DMKp4A=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=google.com; spf=pass smtp.mailfrom=google.com; dkim=pass (2048-bit key) header.d=google.com header.i=@google.com header.b=ZJfq7he4; arc=none smtp.client-ip=209.85.214.174
+	 Content-Type:Content-Disposition:In-Reply-To; b=A4NAmIyzNTGeEj+CAYz1YCJKgFZokryegjc/CFm9LFiLaH8GYPXtXOPuyVlAvdV4KhaxXeFYpE3I7kzzBhErXWQ9PbeeT5NRW+mDVTHWpMQc3ZEEnPw3mZ6HWUlNH5tXG7ur2HTnJe7lfbnjhHiFaYVfYRI/TW7SNl2xxHi5q1o=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=google.com; spf=pass smtp.mailfrom=google.com; dkim=pass (2048-bit key) header.d=google.com header.i=@google.com header.b=UmFOaipo; arc=none smtp.client-ip=209.85.216.42
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=google.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=google.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=google.com header.i=@google.com header.b="ZJfq7he4"
-Received: by mail-pl1-f174.google.com with SMTP id d9443c01a7336-2ba17c8cfacso84971735ad.2
-        for <sashiko-reviews@lists.linux.dev>; Thu, 14 May 2026 11:46:30 -0700 (PDT)
+	dkim=pass (2048-bit key) header.d=google.com header.i=@google.com header.b="UmFOaipo"
+Received: by mail-pj1-f42.google.com with SMTP id 98e67ed59e1d1-36643b96b99so6064015a91.0
+        for <sashiko-reviews@lists.linux.dev>; Thu, 14 May 2026 11:49:00 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=google.com; s=20251104; t=1778784389; x=1779389189; darn=lists.linux.dev;
+        d=google.com; s=20251104; t=1778784539; x=1779389339; darn=lists.linux.dev;
         h=in-reply-to:content-transfer-encoding:content-disposition
          :mime-version:references:message-id:subject:cc:to:from:date:from:to
          :cc:subject:date:message-id:reply-to;
-        bh=mNwkE7l7eZCybJrXfUk9UXry5vm3L6Ks/wwD4RybeTU=;
-        b=ZJfq7he4TvxZFARYxh1+V+J5kRMD/K9Y3YfMkugPfPVhFCtXU2MOkJt7E5af4xyLb7
-         xlRzdO5DMjAMZXh3Tu3ESnwJ17WiyDxL7jNm4fJ7zMVDblkJ1WwNu5oE31vw6cCnKMy4
-         vsNSI03jZRhEGrMpsrVQWZmJA2PkB1WlzEpOtCH2Uja84SvijuW3fT26DCT6mAgFAN5A
-         szS9mt+Db7ucyawI2q3Rq2RbJTVMySh3cdlBoWPp91ltK0vgEraagQumjM2t69/lvH1v
-         VTEHdukY1J7P2X9vUP5gw9WLhL58SKjGm/Z/7L/zmE/GAMVaO/1mON6Jvc4X+/O/4Mig
-         HoXQ==
+        bh=O8yEpAjdQMsKna7KcQWgbLZNAzQyoKwhHcUHxguzEl8=;
+        b=UmFOaipo71nOoNH7mq7KAZ3GKe4nk/+yGMNa+1/jp2GY5tAwTFTohOajoSNyFH1W8O
+         O+GG4s8vJtOMK9yliBjIp4jO1HxWXHhKJQgVPHHjUKRVPFOxeijh4lCgCOrwJgwvs0UB
+         T7TPon2NVH3gJ25RDtBsTNY5lAH0N8Q6F5MCWsZw/ik3f7Pmhh/izeoZjImBPrbh8Kus
+         8cwtJqSuR7bzxVzagsC1nwgAR2tt1MYL3BZPwGowjMDZM26D5TROPDRaszi9kX/7PqPn
+         rKU6WFXh06A8N22RkWon55pUDRJIjIkCw75PiR6ldyrbPVzsI/EyBUR5Bw9btyfievAe
+         K9+A==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20251104; t=1778784389; x=1779389189;
+        d=1e100.net; s=20251104; t=1778784539; x=1779389339;
         h=in-reply-to:content-transfer-encoding:content-disposition
          :mime-version:references:message-id:subject:cc:to:from:date:x-gm-gg
          :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=mNwkE7l7eZCybJrXfUk9UXry5vm3L6Ks/wwD4RybeTU=;
-        b=fPNlSLHXeItjPucskNxIv6oozmWW2bXV8GpyhgfFrvXo8/KcYCTYVsn/rHiERbw0cT
-         S0U4zjOR7TWJGLNHyeRNF7QnkBVkICHnvrphtYcH307H7I2C2M/Yr7hIKANK/dJsA5W7
-         spMkYfcx/j0InugKeLYK/0CjcFvSIaxhDmgkXuiAm0Y4oewTFBF476DaHl+9H9ezgaeA
-         iVI/S5DalvYqz3zrnGpdfSfCv/t/p4vd2JcMKLLWf8Cr16PSRtK7VGdiRyKkRsCL8LxU
-         NoRpUelxCi2661jrqTahNNf9AoBjEUa/kkNDgOUI0vCDjo2G5IYkVEltdy2JUnCP3Iwq
-         h9Mg==
-X-Gm-Message-State: AOJu0YwYQFXXr7+bLPEv5TUcfK1VRACgA8Nn0YZoXZwIfFYJo1nECLSk
-	EsVk1ecPRb4NJMw8IURgj/NpONj8Ew4YQ5HbYIFJweqykAfM2Pcufv3G1Dxao+ICC8HTQRGzVVf
-	rxlHTEg==
-X-Gm-Gg: Acq92OHHStn0T+D0JREHR4DBKWtK7VrFLNEfzN2LkhJdi7NboOj1r1KR9uEra6BAF+x
-	Dc9NsTWY7CnNSDM9qbERt/4aJPkG8jGGEz6Y/J0V9S1NZVjV+ZX7XkbDip7PV9OgFzQeN3szgiV
-	ukUJ2ilxwPhLLmqrajbn5+9hEj5Fjyg3tZtC5nEgyZp7vRZ4ejOjxV3hdFNUwV+000G2cTOnaeV
-	VZ3ys4kL24k48eJY/zYbyDoo+SAJ4howbK6Mf+F9Y2Ej0pvhHLda1STWVHAzfN3m0Y1sZpF4hu6
-	V2FrPT/rPYmS+1xuh6wum1nr5JciyWySE1Rl0Z1PMi18YZF0BCvxDsUQeOo2AiNFkk1w6TlxZi0
-	PCitCUCM9d81KoYvHfcgSLVqhKKannNFgYbIRbOlXvh42IQ4h0rMzYYhmM9E+v26qyeQHd5pzHp
-	ZBRHKJS4AgW1zHwPbV/AWQJMKULe8u5ylVgtXcuw0b2h+M+SDnLbZsiwuOeOmMnadIMsJO+wCb
-X-Received: by 2002:a17:902:c948:b0:2b2:4f43:b48c with SMTP id d9443c01a7336-2bd7e8423a7mr7937695ad.14.1778784388674;
-        Thu, 14 May 2026 11:46:28 -0700 (PDT)
+        bh=O8yEpAjdQMsKna7KcQWgbLZNAzQyoKwhHcUHxguzEl8=;
+        b=j99f0P86rlMXvJ7NBGzdQRHyCbMSE9kmXa4jGzlZZd/Xug4PLba7xkGoTJYldK9sU3
+         89OA8WNbUXxGXjHd7knghqXz0pNI6XFrEKcZkVXPx2PGg+8Zw+z4V2hhb7QDDvGsbGWG
+         xqJwPE/hVjckNjc5ef0K37ald7RcH4jOM/F3kP6RRjzbvPrKRMVpoXupnxWY8H9s30NY
+         /kqRXtlSoJFfkvpJ6Is5BkqKtHaSviXC1PtkggSma8J9DFs7jTp/J+jYrIhKTtpkKNMN
+         92YVxF8Is8wjm9SDSXwDRokVw4laEKGH+H6kn1uy5hutdQZ4NJQdH0LMSsmxf8n2DWX+
+         +6Vw==
+X-Gm-Message-State: AOJu0YxSJpuyBjb380RF6Q60E8pbPPq4JzmoldkgzgPhX98giDeYnqxc
+	CS5nyQc67LHX0dnApCNyXyWvz7uC/ShTV2fiDuosp9n7N9t6N4k9e1je0yKchlxPANb/7uNn3sk
+	HzsFIgA==
+X-Gm-Gg: Acq92OFdL5lGiw9Ak7su0jyuVid2Wk935K8zdHqE/3lZv5PKsN6vwBDRQFVa4zVA4ZA
+	nXnb+/H6EZWV+VB8AU3cHIRXCiD7Hu19NVEYh9yaiJ4l7GVB3iIvs2eUAERimxKti9ogd1yLwrx
+	jmztI5ufnl5cdGVtMIk1Y5zUkURu6jnGLvyvLyPAXMvNagexfa86C38DzsKQfnHBWhnwVjIQOAc
+	107SXf8ABcGGBfw7oX1kR3TdwTUexORe8F7EfBisAMTaFxLdSMe+NYKSRZixxtvEjMhENJI/j+r
+	Yii+VOe/HAdEk8Wc+M+aiDcF10liRPeqhOqJvVutYDJl4fLo8GhVNKXpRoH99BJF0Wf9TZYrh7z
+	4IrBSIFEXzTrIg6qE73toum0DA38l0xhD9Lo1vBOh1C3prKSAhhG/nNu6fzNpED2EWWEEFfzOQk
+	VpP+X9uHLf7TD9fg4gXsj/J8Pt+7k1wVmPJUJyWmbXrK11VarbK+0JEdojp0pQTiT3lfxOsYuo
+X-Received: by 2002:a17:90b:3dc4:b0:365:fca2:8bdd with SMTP id 98e67ed59e1d1-36951778509mr672982a91.0.1778784538661;
+        Thu, 14 May 2026 11:48:58 -0700 (PDT)
 Received: from google.com (56.149.168.34.bc.googleusercontent.com. [34.168.149.56])
-        by smtp.gmail.com with ESMTPSA id d9443c01a7336-2bd5cfe49a4sm29394575ad.38.2026.05.14.11.46.28
+        by smtp.gmail.com with ESMTPSA id 98e67ed59e1d1-369517a820fsm315498a91.10.2026.05.14.11.48.58
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Thu, 14 May 2026 11:46:28 -0700 (PDT)
-Date: Thu, 14 May 2026 18:46:25 +0000
+        Thu, 14 May 2026 11:48:58 -0700 (PDT)
+Date: Thu, 14 May 2026 18:48:55 +0000
 From: David Matlack <dmatlack@google.com>
 To: sashiko-reviews@lists.linux.dev
 Cc: linux-pci@vger.kernel.org
-Subject: Re: [PATCH v5 07/11] PCI: liveupdate: Inherit ACS flags in incoming
- preserved devices
-Message-ID: <agYYgQc-gjs7-III@google.com>
-References: <20260512184846.119396-8-dmatlack@google.com>
- <20260514023718.1A7A4C19425@smtp.kernel.org>
+Subject: Re: [PATCH v5 09/11] PCI: liveupdate: Freeze preservation status
+ during shutdown
+Message-ID: <agYZF7W-hRtj_IX6@google.com>
+References: <20260512184846.119396-10-dmatlack@google.com>
+ <20260514031440.483F0C19425@smtp.kernel.org>
 Precedence: bulk
 X-Mailing-List: sashiko-reviews@lists.linux.dev
 List-Id: <sashiko-reviews.lists.linux.dev>
@@ -76,83 +76,73 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=iso-8859-1
 Content-Disposition: inline
 Content-Transfer-Encoding: 8bit
-In-Reply-To: <20260514023718.1A7A4C19425@smtp.kernel.org>
+In-Reply-To: <20260514031440.483F0C19425@smtp.kernel.org>
 
-On 2026-05-14 02:37 AM, sashiko-bot@kernel.org wrote:
+On 2026-05-14 03:14 AM, sashiko-bot@kernel.org wrote:
 > Thank you for your contribution! Sashiko AI review found 2 potential issue(s) to consider:
-> - [High] Modifying pci_dev state while holding only a read lock in pci_liveupdate_init_acs().
-> - [High] Intel SPT PCH root ports bypass the ACS quirk rejection check, causing their custom ACS control registers to be permanently lost on the new kernel.
+> - [High] Preservation rollback fails if the device is concurrently frozen, breaking bridge hierarchy invariants.
+> - [Low] Syntax error in the !CONFIG_PCI_LIVEUPDATE stub for pci_liveupdate_freeze().
 > --
 > 
-> commit 9befbb904977419650ee202e0854fc1452e0a9de
+> commit f49768e50767ced554fd83ab7e5016423c3d87a2
 > Author: David Matlack <dmatlack@google.com>
 > 
-> PCI: liveupdate: Inherit ACS flags in incoming preserved devices
+> PCI: liveupdate: Freeze preservation status during shutdown
 > 
-> This commit updates the live update process to inherit Access Control
-> Services (ACS) flags on incoming preserved devices. It caches the
-> inherited ACS controls established by the previous kernel so they do
-> not change after a reset.
+> Freeze a device's outgoing preservation status (preserved or not preserved)
+> during shutdown. This enables the PCI core and drivers to safely make
+> decisions based on the device's preservation status during shutdown.
 > 
 > > diff --git a/drivers/pci/liveupdate.c b/drivers/pci/liveupdate.c
-> > index d8e06afde2c76..e3cd6d76636c3 100644
+> > index 6ab03bd548b37..825166a579130 100644
 > > --- a/drivers/pci/liveupdate.c
 > > +++ b/drivers/pci/liveupdate.c
-> [ ... ]
-> > @@ -361,6 +373,16 @@ static int pci_liveupdate_preserve_device_new(struct pci_ser *ser, struct pci_de
-> >  {
-> >  	int i;
+> > @@ -334,6 +334,11 @@ static int pci_liveupdate_unpreserve_device(struct pci_ser *ser, struct pci_dev
 > >  
-> > +	/*
-> > +	 * Do not preserve a devices that rely on device-specific ACS
-> > +	 * equivalents (for now) since that would complicate keeping ACS
-> > +	 * flags constant across Live Update.
-> > +	 */
-> > +	if (dev->dev_flags & PCI_DEV_FLAGS_ACS_ENABLED_QUIRK) {
-> > +		pci_warn(dev, "Refusing to preserve device that relies on ACS quirks\n");
+> >  	guard(write_lock)(&dev->liveupdate.lock);
+> >  
+> > +	if (dev->liveupdate.frozen) {
+> > +		pci_WARN(dev, 1, "Cannot unpreserve device after it is frozen!\n");
 > > +		return -EINVAL;
 > > +	}
 > 
-> Can Intel SPT PCH root ports bypass this check?
+> During preservation rollback, can this check leave a child device preserved
+> while its parent is not?
 > 
-> Looking at pci_quirk_enable_intel_spt_pch_acs(), it does not appear to set
-> the PCI_DEV_FLAGS_ACS_ENABLED_QUIRK flag.
+> If pci_liveupdate_preserve_path() successfully preserves a child device,
+> but fails to preserve the parent bridge, it attempts to roll back by calling
+> pci_liveupdate_unpreserve_device() on the child.
 > 
-> If these ports bypass the check and are preserved, pci_liveupdate_init_acs()
-> will only cache the standard PCI_ACS_CTRL register, ignoring the
-> device-specific INTEL_SPT_ACS_CTRL register.
+> If a concurrent system shutdown calls pci_liveupdate_freeze() on the child
+> device before this rollback occurs, this check will return -EINVAL and
+> fail the rollback.
 > 
-> When the new kernel calls pci_enable_acs(), pci_liveupdate_inherit_acs()
-> will restore the standard register and return true, skipping the
-> pci_dev_specific_enable_acs() path entirely.
-> 
-> Will this cause a regression where the custom ACS configuration is lost?
+> Does this result in a broken topology being passed to the incoming kernel?
 
-Yes looks like it, I will account for Intel SPT PCH root ports in v6.
+Hm yes that race does look possible. Will fix in v6.
 
 > 
 > [ ... ]
-> > @@ -671,6 +694,32 @@ void pci_liveupdate_finish(struct pci_dev *dev)
+> 
+> > diff --git a/drivers/pci/liveupdate.h b/drivers/pci/liveupdate.h
+> > index fd7693c7ddd21..30deaa673efed 100644
+> > --- a/drivers/pci/liveupdate.h
+> > +++ b/drivers/pci/liveupdate.h
+> [ ... ]
+> > @@ -26,6 +27,10 @@ static inline void pci_liveupdate_cleanup_device(struct pci_dev *dev)
+> >  {
 > >  }
-> >  EXPORT_SYMBOL_GPL(pci_liveupdate_finish);
 > >  
-> > +void pci_liveupdate_init_acs(struct pci_dev *dev)
+> > +static inline void pci_liveupdate_freeze(struct pci_dev *dev);
 > > +{
-> > +	guard(read_lock)(&dev->liveupdate.lock);
-> > +
-> > +	if (!dev->acs_cap || !dev->liveupdate.incoming)
-> > +		return;
-> > +
-> > +	pci_read_config_word(dev, dev->acs_cap + PCI_ACS_CTRL, &dev->liveupdate.acs_ctrl);
 > > +}
 > 
-> Does this mutate dev->liveupdate.acs_ctrl while holding a read lock?
-> 
-> Since pci_read_config_word() writes the read value into the acs_ctrl
-> pointer, should this use write_lock to avoid a data race regression?
+> Does this stray semicolon after the function signature cause a compilation
+> error for kernels built without CONFIG_PCI_LIVEUPDATE?
 
-Yes, will fix.
+Yup, Mike Rapoport and kernel-test-robot also flagged this off-list.
+Will fix in v6.
 
 > 
 > -- 
-> Sashiko AI review · https://sashiko.dev/#/patchset/20260512184846.119396-1-dmatlack@google.com?part=7
+> Sashiko AI review · https://sashiko.dev/#/patchset/20260512184846.119396-1-dmatlack@google.com?part=9
