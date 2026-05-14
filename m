@@ -1,193 +1,137 @@
-Received: from de-smtp-delivery-119.mimecast.com (de-smtp-delivery-119.mimecast.com [194.104.109.119])
+Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B55553B1034
-	for <sashiko-reviews@lists.linux.dev>; Thu, 14 May 2026 10:53:44 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=194.104.109.119
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F3B78357D03;
+	Thu, 14 May 2026 11:09:03 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1778756026; cv=none; b=bQlf/NTfrdz/yJKzqEXXwuAzQ6iRnM4XVDVlOZjaqiONgo6NIP7DJhAOFyVQTPEFNPiZ8uHDX3D8OCtJjFlY8i3vAUQ5qsJA9MCuxSxNCNWQCXkL4uuCJguKlP8YkQ//OZh1VNSUljzU4ONCE4lNHegXR2gj3y7YuxCvwCl6BLQ=
+	t=1778756944; cv=none; b=VvYpkXqtzyi0Mplwy/Y+kDhyWfi4gr/5UPCV8ZjGVp3VmEkLP2W4PNped6+GofwasYcy8evw6At03CQfphmidubztl0ZpRUmMfN8mSyBpnap5ZOFHHI25NK29NiFU6L/Lmn/EgCL+Nnn87ljYjcUaa/OFj3zao7cUKBQz+bVl/c=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1778756026; c=relaxed/simple;
-	bh=jxkYCwFS/j94NgmXD6wkRuEtJfn4ZkR0Qfwx6Gzq3zg=;
-	h=Date:From:To:CC:Subject:Message-ID:References:In-Reply-To:
-	 MIME-Version:Content-Type:Content-Disposition; b=kQVqJ1M4+QNdGqq6S5rea11Cdi5vRrsQ5zthUwqxRZTskBStZRTPBJd+fUXtPnaK+1BTLdF3Zh2zM1EbHp1JvasBFlm5kV3lOsOMxO9fXilFa03RkZmSKL41Ofh35WfckuWBTLfI51H4wHCnjhu1qmZasaNj/onSNjYND+ubDgk=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=data-modul.com; spf=pass smtp.mailfrom=data-modul.com; arc=none smtp.client-ip=194.104.109.119
-Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=data-modul.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=data-modul.com
-Received: from AM0PR83CU005.outbound.protection.outlook.com
- (mail-westeuropeazon11020073.outbound.protection.outlook.com
- [52.101.69.73]) by relay.mimecast.com with ESMTP with STARTTLS
- (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- de-mta-45-U_XzCkZlPM2Oo8_NMflZDQ-1; Thu, 14 May 2026 12:53:35 +0200
-X-MC-Unique: U_XzCkZlPM2Oo8_NMflZDQ-1
-X-Mimecast-MFC-AGG-ID: U_XzCkZlPM2Oo8_NMflZDQ_1778756014
-Received: from PAXPR01MB8486.eurprd01.prod.exchangelabs.com
- (2603:10a6:102:227::10) by DU4PR01MB12195.eurprd01.prod.exchangelabs.com
- (2603:10a6:10:620::21) with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.21.25.18; Thu, 14 May
- 2026 10:53:33 +0000
-Received: from PAXPR01MB8486.eurprd01.prod.exchangelabs.com
- ([fe80::5adb:b6ca:f689:1ac6]) by PAXPR01MB8486.eurprd01.prod.exchangelabs.com
- ([fe80::5adb:b6ca:f689:1ac6%3]) with mapi id 15.21.0025.012; Thu, 14 May 2026
- 10:53:33 +0000
-Date: Thu, 14 May 2026 12:53:30 +0200
-From: =?utf-8?B?QsO2cmdlIFN0csO8bXBmZWw=?= <bstruempfel@data-modul.com>
+	s=arc-20240116; t=1778756944; c=relaxed/simple;
+	bh=Q17owuwcb5oic1hGE9fU0C/o2hgW0cGiph2+aUZl7kg=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=PK6PoVSzLI19JxwnxdedcxDCbs/DI/7LMKPUvKxvPJcs6XqrodbxAsAjmUXjR0ul/OoffGgtAueNbf8Tou1l9dwD3hzwxsFOhh0hTe2RxoMBU4XN2K6SjpigCMIwN+8JcA3uLJ6MqAqstcAow2HPVM1sAIOMbsApIOW82TWgUa8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=o9Ba38PX; arc=none smtp.client-ip=10.30.226.201
+Authentication-Results: smtp.subspace.kernel.org;
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="o9Ba38PX"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 96D7FC2BCB3;
+	Thu, 14 May 2026 11:09:02 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+	s=k20201202; t=1778756943;
+	bh=Q17owuwcb5oic1hGE9fU0C/o2hgW0cGiph2+aUZl7kg=;
+	h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
+	b=o9Ba38PX8bWY4b4lwMDjmbzc3es1XySsLv95sxiJ3CnmEby2MFt7qtP5x6+86R2Ja
+	 v1jWYlxRJ29bEHvdBCcEPG9acuAj4xmzWbqmRsXFhd6whnekMwk26p0DczUgRCisnD
+	 x2kf5RFwvORbPzxtg3iKt5ZaiRSQa6D9pkf8oP0TgOpvfT5Avsu+WxYEA+TpKQbvdW
+	 aGb8CglsA3MWrgi18STRBSSQ/gei4bDrAJmczhl28Ypus4DnzadC3Cw+ALJrv398Ji
+	 UNGwwZvkZWhbphMh9uqAgDnksvDAHFod/mGt7LG1XT69vIgwtJqVz6R1z/9GD7qSsd
+	 hxSP6BnavFjcA==
+Date: Thu, 14 May 2026 13:08:59 +0200
+From: Niklas Cassel <cassel@kernel.org>
 To: sashiko-reviews@lists.linux.dev
-CC: krzk+dt@kernel.org, conor+dt@kernel.org, devicetree@vger.kernel.org, 
-	robh@kernel.org
-Subject: Re: [PATCH v2 1/2] dt-bindings: display/bridge: lt9211: Add
- drive-strength-microamp property
-Message-ID: <agWizk0NTYLsds3z@DATAMODULBOERGELINUX>
-References: <20260513133127.376458-2-bstruempfel@data-modul.com>
- <20260514052603.BE46FC2BCC6@smtp.kernel.org>
-In-Reply-To: <20260514052603.BE46FC2BCC6@smtp.kernel.org>
-X-ClientProxiedBy: FR4P281CA0405.DEUP281.PROD.OUTLOOK.COM
- (2603:10a6:d10:cf::11) To PAXPR01MB8486.eurprd01.prod.exchangelabs.com
- (2603:10a6:102:227::10)
+Cc: dlemoal@kernel.org, linux-ide@vger.kernel.org
+Subject: Re: [PATCH v4 4/4] ata: libata-scsi: do not needlessly defer
+ commands when using PMP with FBS
+Message-ID: <agWtS_We9Ljnq2TY@fedora>
+References: <20260513151359.1075403-10-cassel@kernel.org>
+ <20260514100530.A6A2FC2BCC7@smtp.kernel.org>
 Precedence: bulk
 X-Mailing-List: sashiko-reviews@lists.linux.dev
 List-Id: <sashiko-reviews.lists.linux.dev>
 List-Subscribe: <mailto:sashiko-reviews+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:sashiko-reviews+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-X-MS-PublicTrafficType: Email
-X-MS-TrafficTypeDiagnostic: PAXPR01MB8486:EE_|DU4PR01MB12195:EE_
-X-MS-Office365-Filtering-Correlation-Id: 9f960f2a-1aa8-4392-e551-08deb1a70a84
-X-MS-Exchange-SenderADCheck: 1
-X-MS-Exchange-AntiSpam-Relay: 0
-X-Microsoft-Antispam: BCL:0;ARA:13230040|10070799003|1800799024|376014|366016|4143699003|18002099003|22082099003|56012099003|3023799003
-X-Microsoft-Antispam-Message-Info: VU5n3AIh8GHgVqqrW8HwIcV9qJ8XKmCnQblfO1ng6FMAMUKQrfLriURvjqwcl1R5we0bVHe9MokX6b1YJPl5SVc0WdS/VRQ12l9xstS2RXtJ1pYO4SgpPsN+OC3E3qQuokuk10lNlPKUF65xFOeUpb5BG33CmmOeBCXT9GVlMUmQiitUMPx+vRpaCT1MQB2mOF51VdVvWXWnbo3eoH/R5/dqoo0miqC2ac9GBeSJCQ9fS/hzrer+pCFbkaa+i0qS/fxmspBLQKU6QAXaMgvtSiXjFHt7feR+v1Rwy/qqhztmkaIag8GeO+tEpft8hUGcdQaadn9R+cbDZsRzT/EA4j+uHqnk9n9YmsoncsmD5feiPAgNU5Aho6a3PyvGl8TKxeK1oLu1dQL8Juf0Zj3YMNbX5iyeaimsltk5CHMHgI8WV22DPwTEk8aI5sAFoKefHOf82Op1C4ERlDay1GalKlOEpsR0XtDEhjVUFDU347BsXN0phVOCp21Uo9hbHp7RoNqWtAUiJnc06Te8l8hN6R1T8YALN5AxJYDlNvc18CYzGkLBSir4mU31Wtk3pnuiabb0nriEbMJCHS/tIZep9BmWqynK7hRAqs7H3+h1ZKzmN1Q6i9f1zmrgtKub/BXsw3fxl0R8+xwMcV+WMIRi2g==
-X-Forefront-Antispam-Report: CIP:255.255.255.255;CTRY:;LANG:en;SCL:1;SRV:;IPV:NLI;SFV:NSPM;H:PAXPR01MB8486.eurprd01.prod.exchangelabs.com;PTR:;CAT:NONE;SFS:(13230040)(10070799003)(1800799024)(376014)(366016)(4143699003)(18002099003)(22082099003)(56012099003)(3023799003);DIR:OUT;SFP:1102
-X-MS-Exchange-AntiSpam-MessageData-ChunkCount: 2
-X-MS-Exchange-AntiSpam-MessageData-0: =?us-ascii?Q?NKCbCvN/jRBUN6ZL0QoQFwN7QOub14xUXvxO2oVn7SiUk/grb3FvwW3jeoqb?=
- =?us-ascii?Q?aL1YAtWz+gM6dcDZWtuprXgrJO9Lyn9d1ZvEyb32SSXO7C6aK8d+mpqBnQvk?=
- =?us-ascii?Q?ZtvqSETusEUEudYp4UuQesKjYNLP+dA9EUVWiznE9cKHXnDERl/NLRcglK8J?=
- =?us-ascii?Q?k7W0tpM+mGgJ21u2dvvWzfQSTyQHOF0+4mlGKQumv6Qnx/stMvKNdgZpQ/Mx?=
- =?us-ascii?Q?VzJig1ksRejJb1TVR7i27dBOM9PvP7NTdDf+SHTSrx2180+bVA2GOtunxsj6?=
- =?us-ascii?Q?30EBbXs8OpUfX5XuAdYsi5evLi1Eq1AV53tVODIXZlan+3vFg7mwLxPpnppg?=
- =?us-ascii?Q?P84Pm1JHRHmdbedNprhJeij50KIL4dwOFz2vJiy2JAgyDGZSUoAHbfMA3bUl?=
- =?us-ascii?Q?r6GlT4g7gZEtHCTX5Fd5dArStl/AXxSTGX4Pt7+rEWDVh4XM6u7Y2sACxe9J?=
- =?us-ascii?Q?WHiFRSLd7KpHoZGd552kFEP4hvsF1BCK5pG6OSbx/vyaxA6myT1WKfxrX497?=
- =?us-ascii?Q?Mp0pZavQR2T18ucjo5iF58Tms9hiRR9TFTLcoFqA/9FcKm0tICgbZS0DMXs6?=
- =?us-ascii?Q?ag2/eEin7e2DHwpj+WZvkO4dP2kp+HE1GHmGpakCLPZU4rBLdWoP9Vplp+Md?=
- =?us-ascii?Q?i1M5KuwoOg4f1x03OndIfipkesh8IrIkAPVWhikHW+9TzJDFGI0SuEQO8WdM?=
- =?us-ascii?Q?4qvGikyvtGPzTzIG+cd/IXfaUH4o35ieqPMXkkoT54clkqpvzjyhrpSfwuA8?=
- =?us-ascii?Q?aDLrlq5/RojnmX7elOpKBESbowK3ebre9c70MBYgpLpqdW1ONVR1fF8oQtDU?=
- =?us-ascii?Q?Q+P22x9FW0nSKXn/3tr/usrNZ+z3xmne6+FRr4/ES57u4yJRImXUSubghfnK?=
- =?us-ascii?Q?lBXAHaqmzQzLUdmKRjUnUS4x6GF/s0hfSZov547spUbhrgbIGw4xlfWPmzVB?=
- =?us-ascii?Q?ChrPpfx5uyYfp/gkLGVrdhnqHrlnmM6CFuzb+Q7WsY4ueCsdJIyUshhEIpl3?=
- =?us-ascii?Q?vPFhqdUd8Bs57UamWSimKe/neDPS6MyEbFztEFhAp0Vl+VmzPoHoPEKjy0Q3?=
- =?us-ascii?Q?HdCEwqPErEqMLDvpEskuCZMuPfMn9i0eRot9zVhUMkV3wd5caCp3XI2y4ow5?=
- =?us-ascii?Q?e/aI/BnYyt4Yh05+t2c6w1rWmmloIZzkgiCPlPiNgKW+aXUacT5sTikYguKY?=
- =?us-ascii?Q?39g/RoWLtU9uvc/qf/AW8HPvMqokYB+h3MUbClrge9oCPiuqWeBv0eWl8MDo?=
- =?us-ascii?Q?nmvi5t8BXPak7YiiWtBdlFQvu43gSaMl/hVbZM4o65VJ/TYwKezjmkOLoK0O?=
- =?us-ascii?Q?iUn3FJTlU+I+ILiNSxDQ1P5sBILtCd/Z1kWTsAOkA8TnyyZven+FNFDlWtLm?=
- =?us-ascii?Q?SFIXma8C3YK75WjCUV+W3CNdwsFTDx0RjN7bdmET40m430qrW2IG85lszjTD?=
- =?us-ascii?Q?4B5a6GY/7NSXeyMX45tyCd2RkWcSixQ54QyEWdyDMBYznGpFDwHOpZk6ChMQ?=
- =?us-ascii?Q?/Ieja7omOqjGsucGrchkPkq78S+xlYnFtkA4U5r6TkGrDO2N5gh0/+PJb5hG?=
- =?us-ascii?Q?NPGlh5WedIKjyUSFDelkTpXcE5ZtWee2aGbJXskIJV/LXobWAOZh26cOWIAc?=
- =?us-ascii?Q?8FvcSFDppgjwjtPeqy5Fh7CH3k7obfeFDnNPFwo8SeMW+HCd8vPNM2NwjIJA?=
- =?us-ascii?Q?usuX8caOVtB8+QNjmCFOZfO4xsUhZbJMyNti9tPtf2Qs14IpbT64ZqwS89UZ?=
- =?us-ascii?Q?DWMdShU/qi+tHeDREFmqFR2HXMmm7YUyshiH7rsaZbOdPrUTBK/fOxiEQ5gw?=
-X-MS-Exchange-AntiSpam-MessageData-1: 23qSx6l7zbldz+z9ipj7qkWTz8j/2s0Zb7s=
-X-Exchange-RoutingPolicyChecked: mlXtu0vj07xnCKRJ8S/OcaxJtgFecy2lVhpz3aa8dBzFdN5ql2EqrOD7LWT7Hvv7Hzh+MudvXVUwcKVOfKk5zXxwgK8mOe6Kdm7DkHAjlJRJhEeqgWFlNYmpXLumWK8NofZkHlIDLwYF633yr7QjcCxuZFulVHhwf/ShCwMag2jB0/Qb72sGvbiqp2L4MMF5GB1FjJV9T5HeUhMQHjMubNz4GWgXeEyJNbbRroZ9ye2NED/EI5S14rI8DOmfRwnZ0/r6Yd9N1QYYTLny+2nYVNlVSLOCcdxY26bHSVsiKmpUTBdz5hx0rP10dPc5UDcCyLejU3JMvaCKI+m2T9b+uA==
-X-OriginatorOrg: data-modul.com
-X-MS-Exchange-CrossTenant-Network-Message-Id: 9f960f2a-1aa8-4392-e551-08deb1a70a84
-X-MS-Exchange-CrossTenant-AuthSource: PAXPR01MB8486.eurprd01.prod.exchangelabs.com
-X-MS-Exchange-CrossTenant-AuthAs: Internal
-X-MS-Exchange-CrossTenant-OriginalArrivalTime: 14 May 2026 10:53:32.9451
- (UTC)
-X-MS-Exchange-CrossTenant-FromEntityHeader: Hosted
-X-MS-Exchange-CrossTenant-Id: d72fb47f-f4be-4915-91c7-ebd53299157b
-X-MS-Exchange-CrossTenant-MailboxType: HOSTED
-X-MS-Exchange-CrossTenant-UserPrincipalName: xJNWZ49jubJeHgSAmrGDSyly6J+Hcwc93x3TTwe49/F+7c4VtHx3eN1sAq8N2un1Eg/wzC0HiM5e1OdTXKokwwdjPvCHjNe/LAqmyh976Co=
-X-MS-Exchange-Transport-CrossTenantHeadersStamped: DU4PR01MB12195
-X-Mimecast-Spam-Score: 0
-X-Mimecast-MFC-PROC-ID: ats8mH6v9g9fGrE5Nkq_cG2441V47rzW6jffzCvbhpM_1778756014
-X-Mimecast-Originator: data-modul.com
-Content-Type: text/plain; charset=UTF-8
+Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-Content-Transfer-Encoding: quoted-printable
+In-Reply-To: <20260514100530.A6A2FC2BCC7@smtp.kernel.org>
 
-On Thu, May 14, 2026 at 05:26:03AM +0000, sashiko-bot@kernel.org wrote:
-> Thank you for your contribution! Sashiko AI review found 1 potential issu=
-e(s) to consider:
-> - [High] The values for `drive-strength-microamp` are scaled incorrectly =
-by a factor of 100, violating the standard device tree unit suffix.
+On Thu, May 14, 2026 at 10:05:29AM +0000, sashiko-bot@kernel.org wrote:
+> Thank you for your contribution! Sashiko AI review found 2 potential issue(s) to consider:
+> - [Critical] Hardware exclusivity violation and race condition due to removed port-wide barrier.
+> - [High] Cross-link command starvation due to per-link deferred_qc wakeups.
 > --
->=20
-
-Thank you for your review
-
-> commit ab265d46e886455894986f313701d72a9407a58e
-> Author: Boerge Struempfel <bstruempfel@data-modul.com>
->=20
-> dt-bindings: display/bridge: lt9211: Add drive-strength-microamp property
->=20
-> This commit adds the drive-strength-microamp property to configure the
-> LT9211 LVDS TX output driver current. It specifies sixteen discrete level=
-s
-> ranging from 12 to 36.
->=20
-> > diff --git a/Documentation/devicetree/bindings/display/bridge/lontium,l=
-t9211.yaml b/Documentation/devicetree/bindings/display/bridge/lontium,lt921=
-1.yaml
-> > --- a/Documentation/devicetree/bindings/display/bridge/lontium,lt9211.y=
-aml
-> > +++ b/Documentation/devicetree/bindings/display/bridge/lontium,lt9211.y=
-aml
+> 
+> commit ec58a121e5df098567314ab23ec810f87424e7ab
+> Author: Niklas Cassel <cassel@kernel.org>
+> 
+> ata: libata-scsi: do not needlessly defer commands when using PMP with FBS
+> 
+> This patch moves deferred_qc from struct ata_port to struct ata_link.
+> This allows mixing non-NCQ and NCQ commands on the same port across
+> different links when using Port Multipliers that support FIS-Based Switching.
+> 
+> > diff --git a/drivers/ata/libata-scsi.c b/drivers/ata/libata-scsi.c
+> > index 02f2d7416c839..bd09d48d718da 100644
+> > --- a/drivers/ata/libata-scsi.c
+> > +++ b/drivers/ata/libata-scsi.c
 > [ ... ]
-> > +  drive-strength-microamp:
-> > +    description:
-> > +      LVDS TX output driver current. Sixteen discrete levels are suppo=
-rted,
-> > +      corresponding to the following nominal values in microamps.
-> > +    enum: [12, 14, 16, 17, 19, 20, 22, 23, 25, 27, 28, 30, 31, 33, 34,=
- 36]
->=20
-> Are these values scaled incorrectly for a property ending in -microamp?
->=20
-> Properties with the -microamp suffix typically require values in true
-> microamperes. A standard LVDS driver requires differential currents in th=
-e
-> milliamp range, typically 1.25 mA to 3.59 mA, to generate a standard 350 =
-mV
-> swing over a 100-ohm termination.
->=20
-> Values from 12 to 36 microamps appear to be physically insufficient for L=
-VDS
-> signaling.
->=20
-> If the actual intended currents are 1.25 mA to 3.59 mA, shouldn't the enu=
-m
-> values be 1250, 1406, 1562, up to 3594 to accurately reflect true
-> microamperes?
->=20
+> > @@ -1676,10 +1677,10 @@ void ata_scsi_deferred_qc_work(struct work_struct *work)
+> >  	 * such case, we should not need any more deferring the qc, so warn if
+> >  	 * qc_defer() says otherwise.
+> >  	 */
+> > -	qc = ap->deferred_qc;
+> > +	qc = link->deferred_qc;
+> >  	if (qc && !ata_port_eh_scheduled(ap)) {
+> >  		WARN_ON_ONCE(ap->ops->qc_defer(qc));
+> > -		ap->deferred_qc = NULL;
+> > +		link->deferred_qc = NULL;
+> >  		ata_qc_issue(qc);
+> >  	}
+> 
+> Could this lead to a hardware exclusivity violation?
+> 
+> Before this patch, ap->deferred_qc acted as a port-wide barrier. Now that
+> it's scoped to the link, it allows other links to issue commands while one
+> link has a deferred command pending.
+> 
+> If Link A defers a non-NCQ command, its workqueue gets scheduled. In the
+> window before the workqueue executes, Link B can receive and issue a command
+> since linkB->deferred_qc is NULL.
+> 
+> When Link A's workqueue runs, it evaluates the WARN_ON_ONCE above. Because
+> Link B is now active, qc_defer() would correctly flag a conflict and return
+> non-zero. However, the WARN_ON_ONCE does not abort execution, so the code
+> proceeds to unconditionally call ata_qc_issue(qc). This would issue Link A's
+> non-NCQ command while Link B's command is already active.
 
-I double-checked the partial datasheet I was provided by Lontium. It
-states for RG_MLTX_HSDRV_ISEL: "Port A/B mipi/lvds tx hstx current
-select, 4'b0000 =3D 12.5 =C2=B5A, 4'b1111 =3D 35.9735 =C2=B5A, step =3D 1.5=
-625 =C2=B5A".
-Those are the values I took as a reference for this commit. However, I
-did not measure them myself and this might be a mistake in the datasheet
-or there might be some amplification happening after, which is not
-described in the part of the datasheet I got.
+Thank you Sashiko, but being able to issue commands to multiple links at
+the same time is the whole point of this series.
 
-Maybe someone else has more insight into this?
+With PMP FBS, it is allowed to mix NCQ and non-NCQ to *different drives*.
 
-In the meantime, I will try to follow up with our hardware team and try
-to contact Lontium to clarify where this discrepancy between the
-datasheet values and the expected LVDS output current range comes from.
+Mixing NCQ and non-NCQ commands to the *the same drive* will still not
+be allowed.
 
-> --=20
-> Sashiko AI review   https://sashiko.dev/#/patchset/20260513133127.376458-=
-1-bstruempfel@data-modul.com?part=3D1
+So this change in behavior is very much intended.
 
---=20
-Best regards,
-B=C3=B6rge Str=C3=BCmpfel
 
-DATA MODUL AG
-Landsberger Str. 322
-80687 M=C3=BCnchen
+> 
+> [ ... ]
+> > @@ -1759,11 +1765,12 @@ static void ata_scsi_qc_complete(struct ata_queued_cmd *qc)
+> >  
+> >  	ata_scsi_qc_done(qc, false, 0);
+> >  
+> > -	ata_scsi_schedule_deferred_qc(ap);
+> > +	ata_scsi_schedule_deferred_qc(link);
+> >  }
+> 
+> Can this cause cross-link command starvation for deferred commands?
+> 
+> In ata_scsi_qc_issue(), if a CBS PMP link is blocked because another link
+> holds exclusive port access, it explicitly stores the command in
+> linkA->deferred_qc. When the active link (Link B) completes its commands,
+> ata_scsi_qc_complete() now only evaluates the completing link (Link B).
+> 
+> Since Link A's deferred_qc is completely ignored during Link B's completion,
+> and Link A has no active commands to trigger its own completion, will its
+> deferred command be permanently stranded, eventually causing a SCSI timeout?
 
+This review comment is correct, but this was because of a mistake in
+V4 which accidentally did "goto defer_qc" instead of "goto free_qc".
+
+This is fixed in V5. In V5 PMP CBS will never make use of the deferred QC
+issuing via workqueue feature, so this review command can be disregarded.
+
+
+Kind regards,
+Niklas
