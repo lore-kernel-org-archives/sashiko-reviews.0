@@ -1,148 +1,85 @@
-Received: from out-174.mta1.migadu.com (out-174.mta1.migadu.com [95.215.58.174])
+Received: from stravinsky.debian.org (stravinsky.debian.org [82.195.75.108])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 11FBD2882B7
-	for <sashiko-reviews@lists.linux.dev>; Thu, 14 May 2026 16:07:43 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=95.215.58.174
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 195AC3176E0;
+	Thu, 14 May 2026 16:52:14 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=82.195.75.108
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1778774866; cv=none; b=OUtOTdOjpf3STedJu/68nX0bbiP1p+Vkd1AtlppNslLumlOd7ylH9XZ2YbBOX6OEcn417VbIoQTj6QudX7woOJziY0GxAC+InVvDmj21J3h55l6EJZw1bcnLPkKQe3U67DC9hQ9Oi5+pVpLPgHlIRVMsBXf3fuWMoU8PrvMbzq0=
+	t=1778777536; cv=none; b=P+YkDA6/OV3JxJFmJ2R0dkKk8teS8xCtMl+UM+cu4MUY/HxB231p9dOpW6S4zNtXqiXuj/QngI9h6qzOL9mHvJvg4n8S1tdrSV5hYtfCSxzHHzSP2eGU5iZx/2tlU9OsEVg/ckUOixswHpEV7R8FxOZZTsz+UYENm2B0Vpk55qc=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1778774866; c=relaxed/simple;
-	bh=ty58WcXPAydchM571MmZb2AXta8xY/EwAKamRKtB5/Y=;
-	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=moLm84P7PvRefzHFQsRj7TMGbnN6V/C+CJ9ccQAunwRSQC9T5vFYIg1ksr4GFprqsApwiQaM45GDCW1JTMgwthGchxEmqOgc0uKlbx6ytWzX5NMNTHnNwsRkgQkNvLjeigjilpj7CVH/5Xw0YCRvSfd327qJTkxvjAOxGyl7DeU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linux.dev; spf=pass smtp.mailfrom=linux.dev; dkim=pass (1024-bit key) header.d=linux.dev header.i=@linux.dev header.b=P5ToL46i; arc=none smtp.client-ip=95.215.58.174
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linux.dev
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linux.dev
+	s=arc-20240116; t=1778777536; c=relaxed/simple;
+	bh=20d5NURmdg8XNVDu9VX3zqh/CxhFwYLXtozrsR4MlM0=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=XR3WVquskEsx9tCCStsUjGd9V06MF1LBMFlBsY8Es8lWtk5QpGAKer9v97JjtXipwf3F8iAFxmPlb3wBUyWQ7K02TGbSKboq++Uzm+N980vp5l5vDBulcMyWqtxZ7GvzmUpU27KjxNyt5WO3DaGxIEieg8La9lUokGcQPiNmNg0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=debian.org; spf=pass smtp.mailfrom=debian.org; dkim=pass (2048-bit key) header.d=debian.org header.i=@debian.org header.b=L/HvwL+d; arc=none smtp.client-ip=82.195.75.108
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=debian.org
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=debian.org
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linux.dev header.i=@linux.dev header.b="P5ToL46i"
-Message-ID: <9797c09e-432b-4ff6-81a7-9ca44571ff8b@linux.dev>
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linux.dev; s=key1;
-	t=1778774862;
-	h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
-	 to:to:cc:cc:mime-version:mime-version:content-type:content-type:
-	 content-transfer-encoding:content-transfer-encoding:
-	 in-reply-to:in-reply-to:references:references;
-	bh=QKstYJLweobTgz553FOl56gOTveSg9NSj5BK0hdL9yU=;
-	b=P5ToL46iOltJ+sFfhWAJmSAzX3lRR6gpT2vTVT30y3ZWUmvLoeamu3yIOJQWge0o5Tsn5J
-	swDwztduztVgtVLt4c54V8+h1sfmwXjQyNfutomNwQpyswgULGG1tTSYjZvzKFem0mJKHJ
-	i9LGADjr2TnYVY0pRk1lDJ4evkEwiHs=
-Date: Thu, 14 May 2026 09:07:34 -0700
+	dkim=pass (2048-bit key) header.d=debian.org header.i=@debian.org header.b="L/HvwL+d"
+DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed; d=debian.org;
+	s=smtpauto.stravinsky; h=X-Debian-User:In-Reply-To:Content-Type:MIME-Version:
+	References:Message-ID:Subject:Cc:To:From:Date:Reply-To:
+	Content-Transfer-Encoding:Content-ID:Content-Description;
+	bh=Q+mJ7FFyAUMwWpfkEoOmIfAbcnlwS948ryL40IUiiFs=; b=L/HvwL+dfN5rN2iiWC9UQNqLal
+	BQHl2Wno9FFr8djE2wCsc82CRC+nDEHEihwlmq7m9sesXU9G0LSJu18WrOkDagofxFsVAEmE/RfKI
+	b9MejL0I7VcoMzvz6bRmoZYBtdMGTf1rS+kFX76mwdvpPWH9TYJavOaBsdbpar7wQKVGy6ilkuwjt
+	mEMVe20BbUOzGsfI5xn+UqSe1magdIgD2XnVt9ZPkHIN0i05um+Ixqqs9/NxgI+X0Ens0xEPYWDzp
+	d/5wmmBBGPWE6jQpvJMHYD3yS9M1v882QipOEzRypvBl3iuHadhVmfzmC/4ahqdGnjO5QsHN4SBVz
+	J0qwNbLQ==;
+Received: from authenticated user
+	by stravinsky.debian.org with esmtpsa (TLS1.3:ECDHE_X25519__RSA_PSS_RSAE_SHA256__AES_256_GCM:256)
+	(Exim 4.96)
+	(envelope-from <leitao@debian.org>)
+	id 1wNZIA-0045gD-0X;
+	Thu, 14 May 2026 16:52:10 +0000
+Date: Thu, 14 May 2026 09:52:05 -0700
+From: Breno Leitao <leitao@debian.org>
+To: sashiko-reviews@lists.linux.dev
+Cc: bpf@vger.kernel.org
+Subject: Re: [PATCH net-next 3/6] af_iucv: convert to getsockopt_iter
+Message-ID: <agX81xwmAFERRs_0@gmail.com>
+References: <20260513-getsock_four-v1-3-fe7f0e756fac@debian.org>
+ <20260514124502.5C2ABC2BCB3@smtp.kernel.org>
 Precedence: bulk
 X-Mailing-List: sashiko-reviews@lists.linux.dev
 List-Id: <sashiko-reviews.lists.linux.dev>
 List-Subscribe: <mailto:sashiko-reviews+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:sashiko-reviews+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Subject: Re: [PATCH bpf-next v4 05/25] bpf: Support stack arguments for bpf
- functions
-Content-Language: en-GB
-To: sashiko-reviews@lists.linux.dev
-Cc: bpf@vger.kernel.org
-References: <20260513045015.2385013-1-yonghong.song@linux.dev>
- <20260514104638.BD792C2BCB3@smtp.kernel.org>
-X-Report-Abuse: Please report any abuse attempt to abuse@migadu.com and include these headers.
-From: Yonghong Song <yonghong.song@linux.dev>
-In-Reply-To: <20260514104638.BD792C2BCB3@smtp.kernel.org>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
-X-Migadu-Flow: FLOW_OUT
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <20260514124502.5C2ABC2BCB3@smtp.kernel.org>
+X-Debian-User: leitao
 
+On Thu, May 14, 2026 at 12:45:01PM +0000, sashiko-bot@kernel.org wrote:
+> If iucv->hs_dev is cleared concurrently by another thread holding the lock
+> (such as during iucv_sock_close), could the compiler emit two separate
+> memory loads for hs_dev since READ_ONCE() isn't used?
 
+It is unclear  if there is another concurrent user here, honestly.
 
-On 5/14/26 12:46 PM, sashiko-bot@kernel.org wrote:
-> Thank you for your contribution! Sashiko AI review found 1 potential issue(s) to consider:
-> - [Critical] Bypass of caller stack argument initialization checks allows NULL pointer dereferences and out-of-bounds heap reads, leading to verifier crashes or privilege escalation.
-> --
->
-> commit 64c850bac22b15ca90af1ba361a4d764104b6ffb
-> Author: Yonghong Song <yonghong.song@linux.dev>
->
-> bpf: Support stack arguments for bpf functions
->
-> This commit allows the compiler to pass additional arguments via a dedicated
-> stack area through the BPF_REG_PARAMS (r11) register. It tracks outgoing stack
-> arguments and introduces bounds checks for stack arguments in BPF subprograms.
->
->> diff --git a/kernel/bpf/verifier.c b/kernel/bpf/verifier.c
->> index 3bafb7ad2ba71..69965d2c5fdd5 100644
->> --- a/kernel/bpf/verifier.c
->> +++ b/kernel/bpf/verifier.c
->> @@ -4050,6 +4080,103 @@ static int check_stack_write(struct bpf_verifier_env *env,
->>   	return err;
->>   }
->>   
->> +/*
->> + * Read a value from the incoming stack arg area.
->> + * off is a positive offset from r11 (e.g. +8 for arg6, +16 for arg7).
->> + */
->> +static int check_stack_arg_read(struct bpf_verifier_env *env, struct bpf_func_state *state,
->> +				int off, int dst_regno)
->> +{
->> +	struct bpf_subprog_info *subprog = &env->subprog_info[state->subprogno];
->> +	struct bpf_verifier_state *vstate = env->cur_state;
->> +	int spi = off / BPF_REG_SIZE - 1;
->> +	struct bpf_func_state *caller, *cur;
->> +	struct bpf_reg_state *arg;
->> +
->> +	if (state->no_stack_arg_load) {
->> +		verbose(env, "r11 load must be before any r11 store or call insn\n");
->> +		return -EINVAL;
->> +	}
->> +
->> +	if (spi + 1 > bpf_in_stack_arg_cnt(subprog)) {
->> +		verbose(env, "invalid read from stack arg off %d depth %d\n",
->> +			off, bpf_in_stack_arg_cnt(subprog) * BPF_REG_SIZE);
->> +		return -EACCES;
->> +	}
->> +
->> +	caller = vstate->frame[vstate->curframe - 1];
->> +	arg = &caller->stack_arg_regs[spi];
-> Could this lead to an out-of-bounds read or a NULL pointer dereference?
->
-> If check_outgoing_stack_args() is skipped (e.g. due to an error in
-> btf_prepare_func_args()), caller->stack_arg_regs might be NULL or smaller
-> than spi. Since check_func_call() or push_callback_call() can ignore
-> btf_check_func_arg_match() failures for static subprograms or callbacks,
-> the callee can still execute.
->
-> If sub->arg_cnt was updated before the failure, bpf_in_stack_arg_cnt(subprog)
-> would be greater than 0, allowing this check to pass and potentially accessing
-> unallocated memory.
+iucv_sock_close() is the only writer of iucv->hs_dev and only runs from the
+protocol release callback, which the socket layer invokes after the last file
+reference drops. 
 
-Yes, it is possible for an out-of-bound read or a NULL pointer dereference.
-This can be reproduced with inline asm where the caller does not have
-any outgoing stack arguments but callee has incoming stack arguments.
+The getsockopt() syscall holds an fd reference for its entire duration via
+fdget()/fdput(), so iucv_sock_close() cannot run concurrently with the
+SO_MSGSIZE read on the same socket. There is no other writer of hs_dev, and the
+aligned pointer load cannot tear on any architecture Linux supports, so the
+existing code cannot observe a NULL dereference or use-after-free in practice.
 
-Will fix.
+At the same time, SO_MSGLIMIT has the lock:
 
->
-> [ ... ]
->
->> @@ -8922,6 +9078,7 @@ static int btf_check_func_arg_match(struct bpf_verifier_env *env, int subprog,
->>   				    struct bpf_reg_state *regs)
->>   {
->>   	struct bpf_subprog_info *sub = subprog_info(env, subprog);
->> +	struct bpf_func_state *caller = cur_func(env);
->>   	struct bpf_verifier_log *log = &env->log;
->>   	u32 i;
->>   	int ret;
->> @@ -8930,13 +9087,16 @@ static int btf_check_func_arg_match(struct bpf_verifier_env *env, int subprog,
->>   	if (ret)
->>   		return ret;
->>   
->> +	ret = check_outgoing_stack_args(env, caller, sub->arg_cnt);
->> +	if (ret)
->> +		return ret;
->> +
-> Is it possible for btf_prepare_func_args() to return an error after modifying
-> sub->arg_cnt?
->
-> For instance, if a BTF tag is unsupported in a static subprogram,
-> btf_prepare_func_args() will return an error after already assigning
-> sub->arg_cnt. This skips check_outgoing_stack_args(), which is responsible
-> for verifying that the caller actually allocated and initialized
-> caller->stack_arg_regs. This could lead to the unverified memory access
-> mentioned above.
->
+          case SO_MSGLIMIT:
+                  lock_sock(sk);
+                  val = (iucv->path != NULL) ? iucv->path->msglim /* connected */
+                                             : iucv->msglimit;    /* default */
+                  release_sock(sk);
+                  break;
 
+So, although this is not an issue per-se, it is an extra safe to get a lock
+around iucv->hs_dev in SO_MSGSIZE as well, more as a defensive programming than
+a bug fix.
+
+That said, my plan is to include this lock protection in my series, but not as
+a fix (thus, not sending to 'net')
