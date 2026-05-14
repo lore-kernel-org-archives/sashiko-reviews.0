@@ -1,42 +1,45 @@
-Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
+Received: from stravinsky.debian.org (stravinsky.debian.org [82.195.75.108])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BD2C63E024C;
-	Thu, 14 May 2026 14:42:16 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 13D6A3CE098;
+	Thu, 14 May 2026 14:52:39 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=82.195.75.108
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1778769736; cv=none; b=BLdbjayIw1rvRgh7J4nVHZPW3lGoNzg4/oQfmm3cFixfIia9z7+Ev96M9OS8ck3jKfWt1Y9XF18nuWl0tKm6XrT2ONYP27t7pyxoRbHXhM4lkAZ2A2SAd6RuxNdvbIJcvava/SOgqXGiimItedJsLbVXEOK+oSBtjfjzjsebi6c=
+	t=1778770361; cv=none; b=nrCmMknKRloFkrX14CsAtHkwHoYXPBzG/YX4QXb/u3JY0U7+KU9RP6n1jypIWCuvbTVy9LUF+v/PGmlRaBHiiG3MdP49JzCcEEYf3obTKxhBC6EPCrfrusK72fRWAYT3hnL4tKTzKbjyd5upFSz4uoRztd5/ZkoqMLtjOD01N/o=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1778769736; c=relaxed/simple;
-	bh=q/Qpk81UwCbtSa4zrr4b89ohb7zLtbr21yyWHZFdP6U=;
+	s=arc-20240116; t=1778770361; c=relaxed/simple;
+	bh=JJJOVJikQnlVfnlPKoBMfb9G3U4vH6Xwl3VpWCTgAsk=;
 	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=bLAThn0S3HX3+WXxO9DIulsZISMWCfCUgQn60Rln6+f1H9hi5urMagAW3EFaQeEkvW0tFsja1Lf1NHsSD7QdGDwA+PZxmKqSL6oJKoqfYVM3b+MIJttwd3/C3IQryUVLCK0k+zJFjeQPEZ9tSpNyjfpDrwCyV6cNCNxQg1qJctQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=UmstQxzD; arc=none smtp.client-ip=10.30.226.201
+	 Content-Type:Content-Disposition:In-Reply-To; b=COEM1kX8zB6YShoWT0/uIA5Ze0rD5ntX96S4sdhhhFzEaS0po2X8L1dPllkdpr6EmbsDqWlApD8nut5/QMGRdDSQbRpIsMSW1+f+YEgVOC+Ei9obO/AinmTRJRj2mD26svQADXD/grqliMqIXcXGjfuQ2gJM3VoZvtv1vuD7SRA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=debian.org; spf=pass smtp.mailfrom=debian.org; dkim=pass (2048-bit key) header.d=debian.org header.i=@debian.org header.b=pIUoeYUb; arc=none smtp.client-ip=82.195.75.108
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=debian.org
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=debian.org
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="UmstQxzD"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 24BF2C2BCB3;
-	Thu, 14 May 2026 14:42:15 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1778769736;
-	bh=q/Qpk81UwCbtSa4zrr4b89ohb7zLtbr21yyWHZFdP6U=;
-	h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
-	b=UmstQxzDqmqhYGx/nWH3uhGfsGl41ssF2Sd91HLGQr7VEU1ltjE7bMS6L7d8TjO+X
-	 igmPcyrIog/tb6jq908DjJKNqkE+au5pMZ8azaTmp4mxgbU1lDoqhSKAQrRQLrvkG7
-	 1Njw1G1gc//+isavq+eeJ+BNzDgta6seGBtzxe+A1C2XBw/T3dMhjvskycGnmFyHSF
-	 7IEkqItrnFAwjyXUlYWQ9v+7/EosNdT5Wgw1NcSyWiTehtkeOy79CEq4JUV3Qt9RgD
-	 Ju8R+4m+btqiJYZF6NbsqL0XJY27RB5LBabMvg+LN/oRWjUbgZjapA/NhOuMYxFKtl
-	 wZQqMrSIc85tA==
-Date: Thu, 14 May 2026 09:42:14 -0500
-From: Rob Herring <robh@kernel.org>
+	dkim=pass (2048-bit key) header.d=debian.org header.i=@debian.org header.b="pIUoeYUb"
+DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed; d=debian.org;
+	s=smtpauto.stravinsky; h=X-Debian-User:In-Reply-To:Content-Type:MIME-Version:
+	References:Message-ID:Subject:Cc:To:From:Date:Reply-To:
+	Content-Transfer-Encoding:Content-ID:Content-Description;
+	bh=HApBGbUIopWE1eKRprPbgwODOdGqjWiFYdpjK0iQJgw=; b=pIUoeYUbHBZQ3fl16jbbkB7Vti
+	+gJ49RyJnSxsRufj0QoSyUy5UY7Fhs/oBXOaTFsa0Y25zYj4VjY6QUbsbykrNpTBhZz0qjMUSuOYv
+	1TJuM8bbEuW9tInprDCfBRvkU6gf/vQpSBJc6fPkz2pWWqt+zsyHIgtrqc3hb1/3WoOkLS1J4ZHPK
+	m4n3uR9QBDoQqWHLdmTWlExrw3nQn6y1jj1YySa8TNS2taAZddWBzQCKtQkzysi4yTXtenqIzyOQg
+	5OqlYwfV0AbbnJOE25dFVLsDJPnmw/b84g+KviVXIoyiHUCgN0OUCLGO60gthrOys8Bm2BHt2GRTL
+	VXXE8/LQ==;
+Received: from authenticated user
+	by stravinsky.debian.org with esmtpsa (TLS1.3:ECDHE_X25519__RSA_PSS_RSAE_SHA256__AES_256_GCM:256)
+	(Exim 4.96)
+	(envelope-from <leitao@debian.org>)
+	id 1wNXQS-0041Fs-31;
+	Thu, 14 May 2026 14:52:37 +0000
+Date: Thu, 14 May 2026 07:52:32 -0700
+From: Breno Leitao <leitao@debian.org>
 To: sashiko-reviews@lists.linux.dev
-Cc: Svyatoslav Ryhel <clamor95@gmail.com>, linux-input@vger.kernel.org,
-	conor+dt@kernel.org, dmitry.torokhov@gmail.com, krzk+dt@kernel.org,
-	devicetree@vger.kernel.org
-Subject: Re: [PATCH v5 1/2] dt-bindings: input: Document Imagis ISA1200
- haptic motor driver
-Message-ID: <20260514144214.GA472306-robh@kernel.org>
-References: <20260512102445.55372-2-clamor95@gmail.com>
- <20260513201558.808C4C19425@smtp.kernel.org>
+Cc: bpf@vger.kernel.org
+Subject: Re: [PATCH net-next 1/6] atm: convert to getsockopt_iter
+Message-ID: <agXhTGVurhrJmBNu@gmail.com>
+References: <20260513-getsock_four-v1-1-fe7f0e756fac@debian.org>
+ <20260514124501.43BC2C2BCB3@smtp.kernel.org>
 Precedence: bulk
 X-Mailing-List: sashiko-reviews@lists.linux.dev
 List-Id: <sashiko-reviews.lists.linux.dev>
@@ -45,66 +48,57 @@ List-Unsubscribe: <mailto:sashiko-reviews+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-In-Reply-To: <20260513201558.808C4C19425@smtp.kernel.org>
+In-Reply-To: <20260514124501.43BC2C2BCB3@smtp.kernel.org>
+X-Debian-User: leitao
 
-On Wed, May 13, 2026 at 08:15:57PM +0000, sashiko-bot@kernel.org wrote:
-> Thank you for your contribution! Sashiko AI review found 1 potential issue(s) to consider:
-> - [Medium] Missing scalar type definitions for `imagis,period-ns` and `imagis,duty-cycle-ns` cause schema bounds validation to be silently bypassed.
-> --
-> 
-> commit c2a7ef2ca3d62317c69bc5b6a450107172eeeac7
-> Author: Svyatoslav Ryhel <clamor95@gmail.com>
-> 
-> dt-bindings: input: Document Imagis ISA1200 haptic motor driver
-> 
-> This commit documents the Imagis ISA1200 haptic motor driver. It introduces
-> a new YAML binding schema for the driver, specifying properties like
-> control-gpios, clocks, and internal PWM configurations.
-> 
-> > diff --git a/Documentation/devicetree/bindings/input/imagis,isa1200.yaml b/Documentation/devicetree/bindings/input/imagis,isa1200.yaml
-> > new file mode 100644
-> > index 0000000000000..bbe6f99d39c19
-> > --- /dev/null
-> > +++ b/Documentation/devicetree/bindings/input/imagis,isa1200.yaml
+On Thu, May 14, 2026 at 12:45:00PM +0000, sashiko-bot@kernel.org wrote:
+> > diff --git a/net/atm/common.c b/net/atm/common.c
+> > --- a/net/atm/common.c
+> > +++ b/net/atm/common.c
 > [ ... ]
-> > @@ -0,0 +1,140 @@
+> > @@ -797,13 +798,13 @@ int vcc_setsockopt(struct socket *sock, int level, int optname,
+> >  }
+> >  
+> >  int vcc_getsockopt(struct socket *sock, int level, int optname,
+> > -		   char __user *optval, int __user *optlen)
+> > +		   sockopt_t *opt)
+> >  {
+> >  	struct atm_vcc *vcc;
+> > +	unsigned long val;
+> >  	int len;
+> >  
+> > -	if (get_user(len, optlen))
+> > -		return -EFAULT;
+> > +	len = opt->optlen;
+> >  	if (__SO_LEVEL_MATCH(optname, level) && len != __SO_SIZE(optname))
+> >  		return -EINVAL;
 > [ ... ]
-> > +  imagis,mode:
-> > +    $ref: /schemas/types.yaml#/definitions/uint32
-> > +    description: |
-> > +      Defines the motor type isa1200 drives
-> > +      0 - LRA (Linear Resonant Actuator)
-> > +      1 - ERM (Eccentric Rotating Mass)
-> > +    enum: [0, 1]
-> > +    default: 0
-> > +
-> > +  imagis,period-ns:
-> > +    description:
-> > +      Period of the internal PWM channel in nanoseconds.
-> > +    minimum: 10000
-> > +    maximum: 30000
-> > +
-> > +  imagis,duty-cycle-ns:
-> > +    description:
-> > +      Duty cycle of the external/internal PWM channel in nanoseconds,
-> > +      defaults to 50% of the channel's period
+> >  	case SO_SETCLP:
+> > -		return put_user(vcc->atm_options & ATM_ATMOPT_CLP ? 1 : 0,
+> > -				(unsigned long __user *)optval) ? -EFAULT : 0;
+> > +		val = vcc->atm_options & ATM_ATMOPT_CLP ? 1 : 0;
+> > +		return copy_to_iter(&val, sizeof(val), &opt->iter_out) !=
+> > +		       sizeof(val) ? -EFAULT : 0;
 > 
-> Will the minimum and maximum bounds on imagis,period-ns be silently ignored
-> during validation?
+> On 64-bit systems, val is an unsigned long (8 bytes). However, __SO_SIZE
+> for SO_SETCLP is 4 bytes, which is enforced by the length check above.
 > 
-> The core property-units.yaml schema automatically assigns an array type to
-> properties ending in -ns. Without an explicit reference to
-> /schemas/types.yaml#/definitions/uint32, these properties are evaluated as
-> arrays rather than scalar integers. 
+> Since the opt->iter_out iterator is restricted to 4 bytes, copy_to_iter()
+> will truncate the copy to 4 bytes and return 4. Does this mean the
+> subsequent check against sizeof(val) (8 bytes) will always fail and return
+> -EFAULT unconditionally?
 > 
-> In standard JSON Schema, numeric constraints like minimum and maximum are
-> ignored when applied to an array instance. Adding the uint32 type reference
-> for both imagis,period-ns and imagis,duty-cycle-ns would ensure the
-> constraints are properly enforced on a single scalar value.
+> Additionally, on 64-bit big-endian systems, does copying the first 4 bytes
+> of an 8-byte unsigned long always copy zeroes, ignoring the actual flag
+> value?
+> 
+> Would declaring val as an int instead of an unsigned long resolve both the
+> copy size mismatch and the potential endianness issue here?
 
-Wrong.
+Good catch, dear LLM. This seems a real regression!
 
-While that's true for json-schema, the standard unit properties 
-schemas will be fixed up to the right type.
+val should be "int" or u32 instead of "long int" in this case. I will
+update.
 
-Rob
+--
+pw-bot: cr
