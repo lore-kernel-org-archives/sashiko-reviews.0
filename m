@@ -1,283 +1,181 @@
-Received: from mail-dl1-f43.google.com (mail-dl1-f43.google.com [74.125.82.43])
+Received: from mail-dl1-f51.google.com (mail-dl1-f51.google.com [74.125.82.51])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CC5BA318ECD
-	for <sashiko-reviews@lists.linux.dev>; Thu, 14 May 2026 18:27:36 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=74.125.82.43
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A9AC42BDC26
+	for <sashiko-reviews@lists.linux.dev>; Thu, 14 May 2026 18:39:19 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=74.125.82.51
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1778783258; cv=none; b=uf0accq0d5mFNNM6gm2+F/kz016CjWKDLIYkYNzJ80tPQIP06T9daxplPwN5B3+fLk7sLWQB57fQqlDoJhQiu+kVJZTk7d73kbnX4f+wSLGkaIK3N/kv6EsgFP7FDqwLh25BOey/YkI05rBBPEcdzGzwq94JWv4wiR2MlDOCS7M=
+	t=1778783961; cv=none; b=hMDlb6yvaSCXRSi/eShqpamIwgWF65OHrt8Hs3vc9ERq+RxeoCl79cndjShGkf5prxfMddZZ0SMZXo3qYj+9xrxRp4QYlw3AGRboaArB4OGZK95ahkoX+5e2YOoeLZyZBrTLMR8XAf/Pi9FgnyVRyDGIegvLD98lb7PF+arTxXg=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1778783258; c=relaxed/simple;
-	bh=aVw1OWGbmIDbHVY3BwLts2n5HpVXMHPTRJSvQJGBYAk=;
+	s=arc-20240116; t=1778783961; c=relaxed/simple;
+	bh=VZ1xLmoHmA/GZka2t1HsgohbquNga/6PsqItSxVcfqk=;
 	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=jMAB0IUL0PgZ2wFNyeEpWslaSuhgWEthDkA5T/IeYO3N1+SITKrLvkQBQ31Jp25TmvyxJODK9S+A1RMqADY3+UdQeG1gw9QYWXgQpgMXWAl6fvCWAM88C+u3fE15HIhMUxrEEcLd2FQxtBaUDWA+x5xOCOvgMJXKEiqyrjOprbg=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=google.com; spf=pass smtp.mailfrom=google.com; dkim=pass (2048-bit key) header.d=google.com header.i=@google.com header.b=JN67OH/q; arc=none smtp.client-ip=74.125.82.43
+	 Content-Type:Content-Disposition:In-Reply-To; b=P3+Hz9M4baBvJtse4EMV0KqS2frO8077iYWFjfERKwtCM1+K9jjrPzTUmk1zl5wfPJg4/C6f1gevHIALpFykTTF9DXBLn3yLIoZzXc79WlC8lYnGAO1zb8WA89ZmznLbgQ28XEXqz7EUZVtf+X7xsGInftsm3lSFn1BraQk/NzE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=google.com; spf=pass smtp.mailfrom=google.com; dkim=pass (2048-bit key) header.d=google.com header.i=@google.com header.b=muakzEoh; arc=none smtp.client-ip=74.125.82.51
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=google.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=google.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=google.com header.i=@google.com header.b="JN67OH/q"
-Received: by mail-dl1-f43.google.com with SMTP id a92af1059eb24-1335cb20406so419079c88.0
-        for <sashiko-reviews@lists.linux.dev>; Thu, 14 May 2026 11:27:36 -0700 (PDT)
+	dkim=pass (2048-bit key) header.d=google.com header.i=@google.com header.b="muakzEoh"
+Received: by mail-dl1-f51.google.com with SMTP id a92af1059eb24-132cccd3d77so204c88.1
+        for <sashiko-reviews@lists.linux.dev>; Thu, 14 May 2026 11:39:19 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=google.com; s=20251104; t=1778783256; x=1779388056; darn=lists.linux.dev;
-        h=in-reply-to:content-transfer-encoding:content-disposition
-         :mime-version:references:message-id:subject:cc:to:from:date:from:to
-         :cc:subject:date:message-id:reply-to;
-        bh=hg6IMrnQ8rIdunh62Bq5pOIvEVv9aCeOeb/XYHKMD4Q=;
-        b=JN67OH/qornZBKfP8nylMyyFDYhY8oKVo8r4v339XYyR+dYv1Q6Vr989c3CQQLUYpI
-         8rCpOZPgL9l0Im648b6n6On1IRJLx5WA7XKcplnjH1NfGWVDv7beLa9hlJS4hNGC4IFf
-         x3qtYMgOyWfQWhPlepIfzXv5RZEZxgaCi0VwVxLJtZDC9LFEk++/9obgV6n0ykQaBoRZ
-         krRFyQ97uo/jSMZ4IkVwaAfs6M+/u4Ur88qwtGyfaEEnA8g/CFyymlEyetSAJMva429j
-         TUqyft4lD8kz2rMtULJwB9sxTmj5JG93SBHTls6MjLAizS/zX5T5B6WA3vFn/rwxlJKn
-         PPAw==
+        d=google.com; s=20251104; t=1778783959; x=1779388759; darn=lists.linux.dev;
+        h=in-reply-to:content-disposition:mime-version:references:message-id
+         :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
+        bh=2xyoK6RbsaezwMoF/eYHV3i96uwAfiWW7vUcLVu1RGs=;
+        b=muakzEoham6O7IsWQqZT/61/TgdiNo2myP6lP6f6ZEmtWjoMB2RGaylgz3c+BXije6
+         7qOjHhyy1nYhNv8ekg0RMURvmhakJy1F0vBCFQJ3G5HRYOOPPHqrggjoL/FbDJjhL9/X
+         IhFJt+HIc1QeD/qJ+fyUsvNHV2rMUaZKuvkyyCVVNL7Pxm9d4iW1gJLhmvPBXcNpT6Ql
+         IPKBttfm4vn/9enC67KHCpEEhlvHhsfoboQS518xC2zU1Z6W4zCCnqsKMpCvL4Olbgw8
+         r4h4TVMXpfqOxQmXandEHLwiibD88yB3G8HmLJxb5bcHxHqI2uv9tfMnIFWXQEvy3Euu
+         n4+g==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20251104; t=1778783256; x=1779388056;
-        h=in-reply-to:content-transfer-encoding:content-disposition
-         :mime-version:references:message-id:subject:cc:to:from:date:x-gm-gg
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=hg6IMrnQ8rIdunh62Bq5pOIvEVv9aCeOeb/XYHKMD4Q=;
-        b=m33ZDMt/y/KTyrts7PzO3WXrwPiQm070Si1ltoQFb5y3xWwW1TnjuF7lw1Rub4avpG
-         iem5IxjBFBo9VxJtrkXcjYWSsVTxQ4OXtbagv8cTHWfRqiFi5dhLTxix94+L3x53CLOG
-         DrqHg+C3QiKvBfpGQ+7w3eQwi4J2knpm3JqRFXc+ViYsdY4A7uFykXWlTOl4LOPPT6Kp
-         UKRo3i1Y+iwsMmirN9GM9FuBXC/tA0CyIUQORNKndITjAoq/QB00Y8YmY2IFj5RHy0ct
-         JYMTQrrHhmhoikSx7UHjHC4+s6+q1zFtQll4kCHdvgusB8arfiPP12oflQnisSGyS9cx
-         NvRQ==
-X-Gm-Message-State: AOJu0Yw9blayHFtIR1U5ipoUQHTTAh0qsB00tD4kdRAlV99nzzqZK4bt
-	BgNU3HdNnANmQLE4fG9fL7Iz9f2kL26GrhJ2rLPxKkEXjIrL6JDvxzgez2+UP1/ibejuvPX7cPB
-	NJZKntQ==
-X-Gm-Gg: Acq92OEuDdYyTMfiNRZCoOsMaOlC/dpeM4/xXBpeBJgy6xgeGCN2aTqh8FnhoJHc+82
-	qcsPeudw/J5mos8KLNlxtg7xb21hF+qDBrHAQt9K8wNjN8uT4ooDiADyzcC0K4ZXS+wIlq32suP
-	7Q/h7RPfcR/9qeOXVgQLTZNFM1v4PctyNuf1+wNARVM7P+UCaLGLYaFAh4esWX+iErxT3FDJeVs
-	xsWyZQ+RM7tu0TutiPnwYJrS+yjmei50qJ3gV+yn3eyZE/3PL5W8XqaMmKhWgLqZo6dr3Ea2Faf
-	3/tq7InEvFHYTCV2uAWRyzmdEaSWLFUi+uTl+8PpVQ6Q/B4PQZcvKsmhNL/z6RLtfobWi44bmkC
-	jAGuqp0dDB/8saf+mHP3TaHHRlOm3qyM80RJWKNpcbHbWxK8G3O29H6+rjui23naMXqN3L/zadh
-	kHgw/SQky4LZY5qWY+7jD5zmU1u3xWCRJ2xbta84yyb12zrNZqs6Vt4SMYzqhVft/f1tEk0StzX
-	D0bJq3hDeY=
-X-Received: by 2002:a05:7022:41a7:b0:134:def6:e70b with SMTP id a92af1059eb24-1350451e322mr126140c88.6.1778783254874;
-        Thu, 14 May 2026 11:27:34 -0700 (PDT)
-Received: from google.com (56.149.168.34.bc.googleusercontent.com. [34.168.149.56])
-        by smtp.gmail.com with ESMTPSA id a92af1059eb24-134cf44668asm4587270c88.6.2026.05.14.11.27.34
+        d=1e100.net; s=20251104; t=1778783959; x=1779388759;
+        h=in-reply-to:content-disposition:mime-version:references:message-id
+         :subject:cc:to:from:date:x-gm-gg:x-gm-message-state:from:to:cc
+         :subject:date:message-id:reply-to;
+        bh=2xyoK6RbsaezwMoF/eYHV3i96uwAfiWW7vUcLVu1RGs=;
+        b=pPIzCuJ5mWdtU5olaHF+JUf3fKLkTSLEzXW01AQNwJxkY7apH9sgiKFX9X61LMEwWv
+         SI1yknKBYpb44TCY1CtSOGhxZpbEyyAXkch6O660maJ0K4wO/OM6TnBcMUYFGnUZDgGO
+         mHo4OPNpsotcAaf/HF5lajcBXPMOGGWk5OT9GrYimMC8M065XD0q1ICui3dhsYVnWC6B
+         0nSy5k4kcE2XxCppHpdla899y6aawQ+EDclnpLaki4dTO+0ydba/v0lCSN0inHPq8XlU
+         dNWGLRd5Y6DvTFwqWy02SUX1xJacHFeEGm0eiiCfarRDfKeKq4zQ5E7Ji3ptS+BJeUW9
+         1tQw==
+X-Gm-Message-State: AOJu0Yw5YpjA6qu6N7NiNAHvpSdyp90frlcdJ6hzWu3GEZZY0lJ6Z+fb
+	VzuTsL55To2ZPVGAPiClJEXXe1NM9/g5ek03z5q5m1OJga/BnXoo2a/2oKyLgxa7tg==
+X-Gm-Gg: Acq92OE5/GDBioOziEHOYr2qZUgeMQnbD63JN64ggSYZYAlGWRMB7QrW65T4HxdDxl1
+	WYfffbolH9N+94jZIdU8mSvLxxMD4amj+vWwl8RvYWqJaaOhNKuNhVE2z9SPGmHv4aOWZvL5Gg/
+	/K87cfSwTExfq0kTiXet/z4tyIsZB/2T/wSevrC0N538pMo1moe1WE8KZDNmG+lzJXj+PDI1SiS
+	hsfEYcVmwn1yz3HvqQ78Niy94zXpyawi7yWMX8gF1jGmidyP/Y1cwxFjIfDaCtOy8cm1e3ly8tf
+	2dikFUaH7O+VzDehHeBexOV/Ezf7qF6pBodu61mk/ZfzcpJACsqw4ZwaVUDunvNSLLliMN3xaO0
+	0yX495pLsctWjVkDpAyzB6NQ17wHeqv390l/ARQTuU71u3MX0IxpSUkoqv7PvCKzCHgqk4F9daR
+	hKBStRTWkDrdA0uxKD+A4+MqfNWApRJZqimatTGgjw9sPZL9sSq9lBkkK/PJ88ZdTmBN77lFFZS
+	gOMN8uPDdUQzFgibp2tb8uKpJqyf9fCiKvBz1s1styaMtZ+pK3OIN0P
+X-Received: by 2002:a05:7022:1286:b0:12c:8f55:cd0d with SMTP id a92af1059eb24-13503ce1652mr15715c88.8.1778783958064;
+        Thu, 14 May 2026 11:39:18 -0700 (PDT)
+Received: from google.com (112.174.16.34.bc.googleusercontent.com. [34.16.174.112])
+        by smtp.gmail.com with ESMTPSA id 5a478bee46e88-30293e2ea6dsm4071783eec.4.2026.05.14.11.39.17
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Thu, 14 May 2026 11:27:34 -0700 (PDT)
-Date: Thu, 14 May 2026 18:27:30 +0000
-From: David Matlack <dmatlack@google.com>
-To: sashiko-reviews@lists.linux.dev
-Cc: linux-pci@vger.kernel.org
-Subject: Re: [PATCH v5 03/11] PCI: liveupdate: Track incoming preserved PCI
- devices
-Message-ID: <agYUEtoSFyvJewNg@google.com>
-References: <20260512184846.119396-4-dmatlack@google.com>
- <20260514010518.B0B41C19425@smtp.kernel.org>
+        Thu, 14 May 2026 11:39:17 -0700 (PDT)
+Date: Thu, 14 May 2026 18:39:13 +0000
+From: Carlos Llamas <cmllamas@google.com>
+To: Mykyta Yatsenko <mykyta.yatsenko5@gmail.com>
+Cc: sashiko-reviews@lists.linux.dev, bpf@vger.kernel.org
+Subject: Re: [PATCH] libbpf: fix UAF in strset__add_str()
+Message-ID: <agYW0bzWPkBipMkX@google.com>
+References: <20260513232055.1681859-1-cmllamas@google.com>
+ <20260514115711.133F4C2BCB3@smtp.kernel.org>
+ <89d34016-cf82-4beb-989c-e4fc2e3cd29e@gmail.com>
 Precedence: bulk
 X-Mailing-List: sashiko-reviews@lists.linux.dev
 List-Id: <sashiko-reviews.lists.linux.dev>
 List-Subscribe: <mailto:sashiko-reviews+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:sashiko-reviews+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=iso-8859-1
+Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-Content-Transfer-Encoding: 8bit
-In-Reply-To: <20260514010518.B0B41C19425@smtp.kernel.org>
+In-Reply-To: <89d34016-cf82-4beb-989c-e4fc2e3cd29e@gmail.com>
 
-On 2026-05-14 01:05 AM, sashiko-bot@kernel.org wrote:
-> Thank you for your contribution! Sashiko AI review found 6 potential issue(s) to consider:
-> - [High] Integer truncation in `pci_ser_xa_key()` drops the upper 16 bits of the PCI domain.
-> - [High] Memory leak of KHO-preserved physical pages in the error path of `pci_flb_retrieve()`.
-> - [High] Subsystem guide violation: `pci_flb_preserve()` calls a KHO serialization API without checking `kho_is_enabled()`.
-> - [High] Data corruption in `pci_liveupdate_unpreserve()` due to decrementing `ser->nr_devices` without compacting the array.
-> - [High] Use-after-free risk because `pci_flb_unpreserve()` leaves dangling pointers in `dev->liveupdate.outgoing`.
-> - [High] `pci_liveupdate_finish()` calls `pci_liveupdate_flb_put_incoming()` under a write lock, risking a sleep-in-atomic bug.
-> --
+On Thu, May 14, 2026 at 02:38:01PM +0100, Mykyta Yatsenko wrote:
 > 
-> commit 46fdddc110c525ef02301643989348b7f03a10c0
-> Author: David Matlack <dmatlack@google.com>
 > 
-> PCI: liveupdate: Track incoming preserved PCI devices
+> On 5/14/26 12:57 PM, sashiko-bot@kernel.org wrote:
+> > Thank you for your contribution! Sashiko AI review found 3 potential issue(s) to consider:
+> > - [High] Unpatched Use-After-Free in strset__find_str()
+> > - [High] Use-After-Free in BTF add APIs due to btf_ensure_modifiable() freeing raw_data
+> > - [Medium] Early return in strset__add_str() breaks hash map deduplication invariants
+> > --
+> > 
+> > commit 2a7bfcb093726b849608e340f9bda7c5e3f56ac2
+> > Author: Carlos Llamas <cmllamas@google.com>
+> > 
+> > libbpf: fix UAF in strset__add_str()
+> > 
+> > This commit addresses a heap-use-after-free in strset__add_str() that occurs
+> > when the provided string points into the internal strset data buffer.
+> > It adds a boundary check to return the offset directly if the string is
+> > already within the buffer, avoiding a dangling pointer during reallocation.
+> > 
+> > [ ... ]
+> >>  |     #0 0x55d25155a2a7 in memcpy (tools/bpf/resolve_btfids/resolve_btfids+0xcf2a7)
+> >>  |     #1 0x55d2515d708e in strset__add_str tools/lib/bpf/strset.c:162:2
+> >>  |     #2 0x55d2515c730b in btf__add_str tools/lib/bpf/btf.c:2109:8
+> >>  |     #3 0x55d2515c9020 in btf__add_func_param tools/lib/bpf/btf.c:3108:14
+> > [ ... ]
+> > 
+> > Does btf__add_str() have another use-after-free when operating on a
+> > non-modifiable BTF object?
+> > 
+> > If a user calls btf__add_str(btf, s) where s is a pointer returned by
+> > btf__name_by_offset() (which points into btf->raw_data),
+> > btf_ensure_modifiable(btf) is called.
+> > 
+> > btf_ensure_modifiable() allocates new buffers and calls
+> > btf_invalidate_raw_data(btf), which frees btf->raw_data.
+> > 
+> > At this point, the argument s becomes a dangling pointer before
+> > strset__add_str() is even called, making the boundary check added by this
+> > patch evaluate against the freed raw_data.
+> > 
+> >> diff --git a/tools/lib/bpf/strset.c b/tools/lib/bpf/strset.c
+> >> index 2464bcbd04e03..7d2b2784172e5 100644
+> >> --- a/tools/lib/bpf/strset.c
+> >> +++ b/tools/lib/bpf/strset.c
+> >> @@ -141,10 +141,15 @@ int strset__find_str(struct strset *set, const char *s)
+> > 
+> > Does strset__find_str() suffer from the same vulnerability being fixed here?
+> > 
+> > It follows the exact same pattern as strset__add_str(): it temporarily
+> > appends s by calling strset_add_str_mem(set, len), which may realloc() the
+> > internal buffer.
+> > 
+> > If s points into the internal buffer, the realloc() frees the old memory,
+> > leaving s dangling before the memcpy() occurs.
+> > 
+> >>   */
+> >>  int strset__add_str(struct strset *set, const char *s)
+> >>  {
+> >> +	const char *strs = strset__data(set);
+> >>  	long old_off, new_off, len;
+> >>  	void *p;
+> >>  	int err;
+> >>  
+> >> +	/* Check whether 's' is already in the strset data buffer */
+> >> +	if (strs && s >= strs && s < strs + set->strs_data_len)
+> >> +		return s - strs;
+> > 
+> > Can this early return break hash map deduplication invariants if s is a
+> > substring?
+> > 
+> > If a caller passes a pointer to a substring of an existing string, the
+> > function returns the substring's offset but skips inserting it into
+> > set->strs_hash.
+> > 
+> > Because the substring is never added to the hash map, subsequent lookups for
+> > it via strset__find_str() will fail, and future additions from an external
+> > pointer will duplicate the string.
+> > 
+> > Would it be safer to calculate the offset, perform the realloc(), and then
+> > re-calculate the s pointer instead of returning early?
+> > 
 > 
-> This commit adds support for tracking pci devices preserved across a kexec
-> via live update. It introduces setup and cleanup hooks for the pci core to
-> manage the incoming live update state of these devices.
-> 
-> > diff --git a/drivers/pci/liveupdate.c b/drivers/pci/liveupdate.c
-> > index 9c4582ecd55cc..f14396dd14773 100644
-> > --- a/drivers/pci/liveupdate.c
-> > +++ b/drivers/pci/liveupdate.c
-> > @@ -85,6 +101,21 @@ struct pci_flb_outgoing {
-> >  	struct mutex lock;
-> >  };
-> >  
-> > +/**
-> > + * struct pci_flb_incoming - Incoming PCI FLB object
-> > + * @ser: The incoming struct pci_ser from the previous kernel.
-> > + * @xa: Xarray used to quickly lookup devices in @ser.
-> > + */
-> > +struct pci_flb_incoming {
-> > +	struct pci_ser *ser;
-> > +	struct xarray xa;
-> > +};
-> > +
-> > +static unsigned long pci_ser_xa_key(u32 domain, u16 bdf)
-> > +{
-> > +	return domain << 16 | bdf;
-> > +}
-> 
-> Can this integer shift truncate the upper 16 bits of the pci domain?
-> 
-> Because domain is a u32, the shift expression evaluates as a 32-bit integer.
-> This discards the upper 16 bits before the result is promoted to the 64-bit
-> unsigned long return type.
-> 
-> If devices are in domains >= 0x10000, this will produce colliding keys,
-> causing them to overwrite each other in the xarray.
-> 
-> Could this be cast before the shift, such as
-> ((unsigned long)domain << 16) | bdf?
+> It looks like sashiko is right, addressing the same issue in strset__find_str()
+> and handling substring case could be useful.
 
-Ah I thought I had fixed that in v5. Will fix in v6.
+The substring case is interesting, it can save memory space I suppose.
+Although it sounds like a brand new use-case, since users would need to
+perform some pointer manipulation on 's' first e.g. strstr(). Also, per
+the current logic doing so would still trigger the same UAF.
 
-> > +
-> >  static int pci_flb_preserve(struct liveupdate_flb_op_args *args)
-> >  {
-> >  	struct pci_flb_outgoing *outgoing;
-> 
-> Does this function need to check kho_is_enabled() before proceeding?
-> 
-> According to the kho subsystem guidelines, all callers of serialization-side
-> kho APIs (like kho_alloc_preserve() used later in this function) must
-> gate their usage on kho_is_enabled().
-> 
-> Failing to check the enabled state can cause null pointer dereferences or
-> silently add useless tracking state that will never be used.
-> 
-> [ ... ]
-> 
-> > @@ -140,13 +171,44 @@ static void pci_flb_unpreserve(struct liveupdate_flb_op_args *args)
-> 
-> Can pci_flb_unpreserve() cause a use-after-free risk by leaving dangling
-> pointers?
-> 
-> When an outgoing live update is aborted, this function frees the outgoing->ser
-> memory via kho_unpreserve_free(). However, it does not clear the
-> dev->liveupdate.outgoing pointers in the pci devices that were already
-> preserved.
-> 
-> If a new live update is initiated and pci_liveupdate_unpreserve() is called
-> on those devices, it will execute memset(dev_ser, 0, ...) on the dangling
-> dev->liveupdate.outgoing pointer, corrupting memory.
+It does seem like more than just fixing the bug though. Would adding the
+support for substrings still get backported to stable without a user?
 
-This was addressed in the patch 2 thread.
+Yeah, it seems strset__find_str() suffers from the same issue. In
+general, it feels wrong to call these two APIs with a string that is
+already present in the buffer.
 
-> 
-> >  
-> >  static int pci_flb_retrieve(struct liveupdate_flb_op_args *args)
-> >  {
-> > -	args->obj = phys_to_virt(args->data);
-> > +	struct pci_flb_incoming *incoming;
-> > +	int i, ret;
-> > +
-> > +	incoming = kmalloc_obj(*incoming);
-> > +	if (!incoming)
-> > +		return -ENOMEM;
-> > +
-> > +	incoming->ser = phys_to_virt(args->data);
-> > +
-> > +	xa_init(&incoming->xa);
-> > +
-> > +	for (i = 0; i < incoming->ser->max_nr_devices; i++) {
-> > +		struct pci_dev_ser *dev_ser = &incoming->ser->devices[i];
-> > +		unsigned long key;
-> > +
-> > +		if (!dev_ser->refcount)
-> > +			continue;
-> > +
-> > +		key = pci_ser_xa_key(dev_ser->domain, dev_ser->bdf);
-> > +		ret = xa_err(xa_store(&incoming->xa, key, dev_ser, GFP_KERNEL));
-> > +		if (ret) {
-> > +			xa_destroy(&incoming->xa);
-> > +			kfree(incoming);
-> > +			return ret;
-> > +		}
-> 
-> Does this error path leak the preserved physical pages?
-> 
-> If xa_store() fails, this returns an error code without calling
-> kho_restore_free(incoming->ser). Because the function returns an error and
-> does not populate args->obj, the live update core will not call the .finish
-> callback to clean up the memory.
+Anyway, thanks for the feedback and the example. I'll send a v2 with the
+suggestions.
 
-Yes if retrieve fails then the preserved struct pci_ser gets leaked. The
-user is likely going to reboot the system anyway since the preserved
-devices will not able to be retrieved, so I don't think leaking is a
-problem in practice. But I also don't see any reason why we have to leak
-it. I will free it in v6.
-
-> 
-> [ ... ]
-> 
-> > @@ -268,6 +330,163 @@ void pci_liveupdate_unpreserve(struct pci_dev *dev)
-> >  }
-> >  EXPORT_SYMBOL_GPL(pci_liveupdate_unpreserve);
-> 
-> Can pci_liveupdate_unpreserve() corrupt the live update tracking state by
-> leaving holes in the array?
-> 
-> Looking at the body of pci_liveupdate_unpreserve():
-> 
-> drivers/pci/liveupdate.c:pci_liveupdate_unpreserve() {
->     ...
->     ser->nr_devices--;
->     memset(dev_ser, 0, sizeof(*dev_ser));
->     ...
-> }
-> 
-> If a device other than the most recently preserved one is unpreserved, this
-> leaves a hole in the array and moves the allocation cursor backward.
-> Subsequent device preservations will overwrite currently preserved, valid
-> devices at that index.
-
-Leaving a hole in the array is the intention. ser->nr_devices is not a
-cursor, it is the number of valid (non-hole) elements of the devices
-array. pci_liveupdate_preserve() specifically walks through the entire
-array to find the first non-hole to use for the next device.
-
-> [ ... ]
-> 
-> > +void pci_liveupdate_finish(struct pci_dev *dev)
-> > +{
-> > +	guard(write_lock)(&dev->liveupdate.lock);
-> > +
-> > +	if (!dev->liveupdate.incoming) {
-> > +		pci_warn(dev, "Cannot finish preserving an unpreserved device\n");
-> > +		return;
-> > +	}
-> > +
-> > +	pci_info(dev, "Device is finished participating in Live Update\n");
-> > +
-> > +	/*
-> > +	 * Drop the refcount so this device does not get treated as an incoming
-> > +	 * device again, e.g. in case pci_liveupdate_setup_device() gets called
-> > +	 * again because the device is hot-plugged.
-> > +	 */
-> > +	dev->liveupdate.incoming->refcount = 0;
-> > +	dev->liveupdate.incoming = NULL;
-> > +
-> > +	/* Drop this device's reference on the incoming FLB. */
-> > +	pci_liveupdate_flb_put_incoming();
-> > +}
-> 
-> Can calling pci_liveupdate_flb_put_incoming() under a write lock cause a
-> sleep-in-atomic bug?
-> 
-> This function calls pci_liveupdate_flb_put_incoming() while holding
-> dev->liveupdate.lock (an rwlock) for writing. If the put function acquires a
-> sleepable lock internally, calling it from atomic context will trigger a bug.
-> 
-> This contrasts with pci_liveupdate_cleanup_device() which drops the lock
-> first using scoped_guard().
-
-Ah I fixed this in a later patch in the series but forgot to also
-address it in this intermediate state. Will fix in v6.
-
-> 
-> -- 
-> Sashiko AI review · https://sashiko.dev/#/patchset/20260512184846.119396-1-dmatlack@google.com?part=3
+--
+Carlos Llamas
