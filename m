@@ -1,113 +1,205 @@
-Received: from mail.cjdns.fr (mail.cjdns.fr [5.135.140.105])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-pl1-f175.google.com (mail-pl1-f175.google.com [209.85.214.175])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C173F33121E
-	for <sashiko-reviews@lists.linux.dev>; Thu, 14 May 2026 16:56:20 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=5.135.140.105
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4DDDF388E6F
+	for <sashiko-reviews@lists.linux.dev>; Thu, 14 May 2026 18:16:29 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.214.175
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1778777782; cv=none; b=izW9buSPpLrC0zZr5NSoedS6r9e9VZYeSk02Qw/qxptJEUNDVUNAbb4RXUspGJIgaeo+R7N+EC4vpKUb/68/SyxgZEBwoDeVA4tRhwxhuCs1LnTkgg8GWNIkUK3DIrnk84Cvcaw0VaprHEeLj/q8bF4hKgIIG2ENWAfm2zm0Cos=
+	t=1778782590; cv=none; b=A0sAutGBZHydQ9TVlBnPxFbgqKw8GpFDtJfm232WDmxQ0Ju+34AUmy8MJ9lux87ncnMl57+q6/cozB+90wM3xDM5KyVANR/lgFDjv9CoUJgRyWzhZNagKmfEu7efthjYnCLThBzV1dGls9rmtaYh7gobLHkSWGSx0jjcn6OdbBw=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1778777782; c=relaxed/simple;
-	bh=5ULVOCgR+aIMYOuMkruHNrVw/rTZYAg8CEk8Xdm5pxo=;
-	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=br5IDYMK88eyobxR0Q7jvefCHw4HhzyV0OPuc198TEXppEaO41hCNIIcy9RK7pP6twbV3VQ8+VW7FbBQwyqWQhBboocL4nGTOu5GqUU2s6LzGGVMlnlyFYN6X/SN0IR/d2KaE35IeU+tQHrL1SCfoscAtGWX4MEQm0GvhLtSYNU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=cjdns.fr; spf=none smtp.mailfrom=cjdns.fr; dkim=pass (2048-bit key) header.d=cjdns.fr header.i=@cjdns.fr header.b=JDt02rvo; arc=none smtp.client-ip=5.135.140.105
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=cjdns.fr
-Authentication-Results: smtp.subspace.kernel.org; spf=none smtp.mailfrom=cjdns.fr
+	s=arc-20240116; t=1778782590; c=relaxed/simple;
+	bh=LlKBPVfZt6k55SzB3EeP58F5fOxBhXQRYxzjH7+tFVE=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=i/uK6ZbpNUbokxLPV4LhzTqC3yWEflLGT5zI/LYn3HAuTfedNGQWJ/YJIKCaQtMVYhmyw9AJYlPn3AWdK9it/HmLYIATO39xfkdIhB/soKD0+wQRY07ls2UppIBf0jIyFIznPEeP3KR4ycNmJa0VnmFfo02XcRHtsKwGUbhgDXE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=google.com; spf=pass smtp.mailfrom=google.com; dkim=pass (2048-bit key) header.d=google.com header.i=@google.com header.b=mAYP7cFG; arc=none smtp.client-ip=209.85.214.175
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=google.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=google.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=cjdns.fr header.i=@cjdns.fr header.b="JDt02rvo"
-Received: from [127.0.0.1] (localhost [127.0.0.1]) by localhost (Mailerdaemon) with ESMTPSA id 15C1A3C392C;
-	Thu, 14 May 2026 18:56:16 +0200 (CEST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=cjdns.fr; s=dkim;
-	t=1778777777; h=from:subject:date:message-id:to:cc:mime-version:content-type:
-	 content-transfer-encoding:content-language:in-reply-to:references;
-	bh=jrQZUENFZB71CdcUq7065FvlPBBJ+5mCQIWY7rRfEEY=;
-	b=JDt02rvo6MmqK9SbHQ2R4ofLQ7KV6YumbjteB1dVmW4oiOi6dDjQgt2uPFhxQxXUuKa10/
-	4UIqCqrK5ViTb9NlA2jJMtlie1g/pfdtU7yGJ1s3/EG4Wlbl6f2/XiwaAP8QdH6qEQHPwq
-	S4iGECpx+UdVhdBiXm0GzQVt9FkPAbb+vXJOEUHi+wn+jYrTTsFOBfe/zhXA8t6bhhJ2lq
-	Dbs0sLxAskk3C06qCT6nZnLbWdebI4PLo3vkv76J8vh0CYh1gIOIaaMYtYOr7CYMkEX+8f
-	yxsHE7jRW9pbwndRX90jiPDruS5FH43qIsSzL9XtI3A29xIP6YZinsToWdJuWw==
-Message-ID: <b11694d8-5f4f-4f24-bf53-bad3b5394a04@cjdns.fr>
-Date: Thu, 14 May 2026 18:56:15 +0200
+	dkim=pass (2048-bit key) header.d=google.com header.i=@google.com header.b="mAYP7cFG"
+Received: by mail-pl1-f175.google.com with SMTP id d9443c01a7336-2b7d3ecc10dso82193275ad.2
+        for <sashiko-reviews@lists.linux.dev>; Thu, 14 May 2026 11:16:29 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=google.com; s=20251104; t=1778782588; x=1779387388; darn=lists.linux.dev;
+        h=in-reply-to:content-transfer-encoding:content-disposition
+         :mime-version:references:message-id:subject:cc:to:from:date:from:to
+         :cc:subject:date:message-id:reply-to;
+        bh=cC7g+W3PbRFAIT/5EGy8Wrg/Kml67wts/KuJpeskYOY=;
+        b=mAYP7cFGOuQrbl5xaFcwXFWeNTBg9FX+a9UN/CtPkzLWyE+mtfahvJZ8VIdC63w4Ch
+         aIGBVuw/ZTFJaxnCS3hbTWqw/h570mvshvLQ5YlUaMsFdjuR5sRROEyER8skTfrcAO4Z
+         SqyOIg1nVVT6SfE3N2cMX9U3+fBYrV0GGmcMyO8RhEP6vsEddhVlEQyL94K8PiDVLLCS
+         szcyEtQDuOLWa72Gu31GONCPqn4ks2D6ZDGpit1OsPo+K1uaK3jXs2gMNnnkyVzSL0E/
+         DNsL+ZxBc+sP58imAsLiFCuAVfWHG4f24x4s/wOTyx+qPSctvSO9QsC4Ct8HtZ4Z5uWm
+         IY4Q==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20251104; t=1778782588; x=1779387388;
+        h=in-reply-to:content-transfer-encoding:content-disposition
+         :mime-version:references:message-id:subject:cc:to:from:date:x-gm-gg
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+        bh=cC7g+W3PbRFAIT/5EGy8Wrg/Kml67wts/KuJpeskYOY=;
+        b=I+9k9kUa2FxOZoGO5Avx3Um+97ticwLMgDAsqMAtl210ORy0FZZrgNTqjyinj2bOB9
+         vr6/AX9AmvGN9SMgoB7zLUVOaHwCq9l0phSVj3iWThSkLNpH+wicfgw4SZTaxC7vuB6A
+         u+VLUdAj65rLW1M0C8OnzGTxBJyIpg1FXmbXcaSWGpvtLSJcwV9D8hNUrVHul0d7VXv8
+         2uOZ3hVbAMnFJq1n7G6/t84cUOqnGjXf0Fiq6GBRFH4CaveINkks1L4pE5YHu8vcISq6
+         IXN0jnFk6gR++Ts8bzxCvLAVFXkx4DYIm9iL+EbAu/x0S5j3mcmH16HqEZOgSC+nxYG0
+         4BRg==
+X-Gm-Message-State: AOJu0YxErZmTnzOMuJ+naqksKhbrfyfFmCYlWLaPzmZgZpuFACEua5GQ
+	plW2E2YLKmdh1SJ1JVplYxeBK9ykXOZloefGw1/s71r7CZStyZDDOBtpOhlHyi3Fw+Rd01zt0b8
+	Qn7q/vQ==
+X-Gm-Gg: Acq92OGPB6QOeY8MyuGYwPRbkd4UuDopGPFax+mABP4RlT/61UIRWTUs9YSc1ivpX6T
+	JZL54z3yAjw+7noK8ST08x06zmBy961Y30cleBeW3wSdkw/1lpjoL3qNO9gZIgpxkT8QZzwAqa2
+	d5//m2Kvpi2AYVuB2fKVSMgaGbfYAJstmKxnQ5AdtbtLWtWqUqkVABz43QdnlIyt9xmykXxhB+f
+	TUu4k4ySGWeR7MXmPmol99NcCZRBPfvQxNyDFUQpeHKCValcuk9ed35szVqTrqveTfosf2ezjuG
+	nrUDSqba51X4Ieq9BQtYqTyRzsLJgZtu+YhMvG/tE95a4nU055hOqqMMeTDR09Bo+s/3IxkybeY
+	uUrj53n9ukRiiehD9QUOH5TdQxYk1wpvKNE8cfA1aiAvFZOpQvcUqieC2v1aIGcxf9JoLUN98bR
+	Ssa2Gv4fvcztxqGWV0KphA/ZnkhmSZXSm8A9tYxsv3q+49aQVAlfqeL6kij4g7iKRdEewL60QS
+X-Received: by 2002:a17:903:22cc:b0:2b2:6b58:9317 with SMTP id d9443c01a7336-2bd7e91e3a2mr6066215ad.39.1778782587583;
+        Thu, 14 May 2026 11:16:27 -0700 (PDT)
+Received: from google.com (56.149.168.34.bc.googleusercontent.com. [34.168.149.56])
+        by smtp.gmail.com with ESMTPSA id d9443c01a7336-2bd5c263a0fsm33093835ad.37.2026.05.14.11.16.26
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Thu, 14 May 2026 11:16:27 -0700 (PDT)
+Date: Thu, 14 May 2026 18:16:23 +0000
+From: David Matlack <dmatlack@google.com>
+To: sashiko-reviews@lists.linux.dev
+Cc: linux-pci@vger.kernel.org
+Subject: Re: [PATCH v5 02/11] PCI: liveupdate: Track outgoing preserved PCI
+ devices
+Message-ID: <agYRd0xQs0r8OOKA@google.com>
+References: <20260512184846.119396-3-dmatlack@google.com>
+ <20260514003111.4F10AC19425@smtp.kernel.org>
 Precedence: bulk
 X-Mailing-List: sashiko-reviews@lists.linux.dev
 List-Id: <sashiko-reviews.lists.linux.dev>
 List-Subscribe: <mailto:sashiko-reviews+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:sashiko-reviews+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird Beta
-Subject: Re: [PATCH v2 4/5] clocksource/timer-econet-en751221: Unmap io mem on
- probe error
-To: sashiko-reviews@lists.linux.dev
-Cc: devicetree@vger.kernel.org, conor+dt@kernel.org, robh@kernel.org,
- krzk+dt@kernel.org
-References: <20260514000601.3430262-5-cjd@cjdns.fr>
- <20260514125641.C94F2C2BCB3@smtp.kernel.org>
-Content-Language: en-US
-From: Caleb James DeLisle <cjd@cjdns.fr>
-In-Reply-To: <20260514125641.C94F2C2BCB3@smtp.kernel.org>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
-X-Last-TLS-Session-Version: TLSv1.3
+Content-Type: text/plain; charset=iso-8859-1
+Content-Disposition: inline
+Content-Transfer-Encoding: 8bit
+In-Reply-To: <20260514003111.4F10AC19425@smtp.kernel.org>
 
-
-On 14/05/2026 14:56, sashiko-bot@kernel.org wrote:
-> Thank you for your contribution! Sashiko AI review found 1 potential issue(s) to consider:
-> - [Critical] Unmapping IO memory after a successful `clocksource_mmio_init()` registration introduces a fatal use-after-unmap vulnerability.
+On 2026-05-14 12:31 AM, sashiko-bot@kernel.org wrote:
+> Thank you for your contribution! Sashiko AI review found 2 potential issue(s) to consider:
+> - [Critical] Dangling pointer in dev->liveupdate.outgoing causes Use-After-Free memory corruption and state leaks if a device is not properly unpreserved.
+> - [High] Missing `kho_is_enabled()` check in `pci_flb_preserve()` violates KHO subsystem guidelines.
 > --
->
-> commit dd9c92736c75fb466e09313766fb39cf62c86394
-> Author: Caleb James DeLisle <cjd@cjdns.fr>
-> clocksource/timer-econet-en751221: Unmap io mem on probe error
->
-> This commit updates the econet timer initialization to unmap the IO
-> memory blocks if an error occurs during probe.
->
->> --- a/drivers/clocksource/timer-econet-en751221.c
->> +++ b/drivers/clocksource/timer-econet-en751221.c
+> 
+> commit f946f5d8b0614325899345e29b5315ff6d5139e9
+> Author: David Matlack <dmatlack@google.com>
+> 
+> PCI: liveupdate: Track outgoing preserved PCI devices
+> 
+> This patch adds APIs to allow drivers to notify the PCI core of which devices
+> are being preserved across a Live Update. It allocates a struct pci_ser via
+> the KHO subsystem to track the outgoing preserved devices.
+> 
+> > diff --git a/drivers/pci/liveupdate.c b/drivers/pci/liveupdate.c
+> > --- a/drivers/pci/liveupdate.c
+> > +++ b/drivers/pci/liveupdate.c
+> 
 > [ ... ]
->> @@ -198,12 +199,12 @@ static int __init timer_init(struct device_node *np)
->>   				    clocksource_mmio_readl_up);
->>   	if (ret) {
->>   		pr_err("%pOFn: clocksource_mmio_init failed: %d", np, ret);
->> -		return ret;
->> +		goto err_unmap;
->>   	}
->>   
->>   	ret = cevt_init(np);
->>   	if (ret < 0)
->> -		return ret;
->> +		goto err_unmap;
-> If clocksource_mmio_init() succeeds, it registers the clocksource and saves
-> the mapped IO pointer. If the subsequent cevt_init() fails, the code now
-> jumps to err_unmap and unmaps the memory via iounmap().
-Yeah I need to go back through this again.
->
-> Since clocksource_mmio_init() does not provide a way to unregister the
-> clocksource, the registered clocksource will remain active. When the kernel
-> reads from this clocksource later, will it dereference the unmapped IO memory
-> and cause a use-after-unmap regression?
->
-> Looking at clocksource_mmio_init() in drivers/clocksource/mmio.c:
->
-> clocksource_mmio_init() {
->          ...
->          cs->reg = base;
->          cs->clksrc.read = read;
->          ...
->          return clocksource_register_hz(&cs->clksrc, hz);
-> }
->
-> Before this patch, if cevt_init() failed, the driver returned an error
-> without unmapping the memory, which allowed the already-registered
-> clocksource to safely continue functioning.
->
+> 
+> > @@ -74,27 +110,30 @@ static int pci_flb_preserve(struct liveupdate_flb_op_args *args)
+> >  
+> >  	size = struct_size_t(struct pci_ser, devices, max_nr_devices);
+> >  
+> > -	ser = kho_alloc_preserve(size);
+> > -	if (IS_ERR(ser))
+> > -		return PTR_ERR(ser);
+> > +	outgoing->ser = kho_alloc_preserve(size);
+> 
+> Does this allocation need to be gated by kho_is_enabled()?
+
+No, if kho_is_enabled() is false then liveupdate_register_flb() would
+have returned -EOPNOTSUPP and thus this callback would never be run.
+
+> 
+> If KHO is disabled, kho_alloc_preserve() will silently add tracking state
+> that will never be used.
+> 
+> > +	if (IS_ERR(outgoing->ser)) {
+> > +		kfree(outgoing);
+> > +		return PTR_ERR(outgoing->ser);
+> > +	}
+> >  
+> >  	pr_debug("Preserved struct pci_ser with room for %u devices\n",
+> >  		 max_nr_devices);
+> 
 > [ ... ]
->> +err_unmap:
->> +	for (int i = 0; i < ARRAY_SIZE(econet_timer.membase); i++) {
->> +		if (econet_timer.membase[i])
->> +			iounmap(econet_timer.membase[i]);
->> +	}
->> +
->> +	return ret;
->>   }
+> 
+> >  static void pci_flb_unpreserve(struct liveupdate_flb_op_args *args)
+> >  {
+> > -	struct pci_ser *ser = args->obj;
+> > +	struct pci_flb_outgoing *outgoing = args->obj;
+> >  
+> > -	WARN_ON_ONCE(ser->nr_devices);
+> > -	kho_unpreserve_free(ser);
+> > +	WARN_ON_ONCE(outgoing->ser->nr_devices);
+> > +	kho_unpreserve_free(outgoing->ser);
+> > +	kfree(outgoing);
+> 
+> If a driver fails to unpreserve a device before the FLB is torn down, this
+> WARN_ON_ONCE triggers, but the memory is still freed.
+> 
+> Does this leave dev->liveupdate.outgoing pointing to freed memory?
+
+Yes, if a driver unpreserves a device without notifying the PCI core
+then that would lead to the PCI core having a pointer to freed memory.
+
+I can make this code more robust against buggy drivers in v6.
+
+> 
+> >  
+> >  	pr_debug("Unpreserved struct pci_ser\n");
+> >  }
+> 
+> [ ... ]
+> 
+> > +void pci_liveupdate_unpreserve(struct pci_dev *dev)
+> > +{
+> > +	struct pci_flb_outgoing *outgoing = NULL;
+> > +	struct pci_dev_ser *dev_ser;
+> > +	struct pci_ser *ser;
+> > +	int ret;
+> > +
+> > +	ret = liveupdate_flb_get_outgoing(&pci_liveupdate_flb, (void **)&outgoing);
+> > +
+> > +	if (ret || !outgoing) {
+> > +		pci_warn(dev, "Cannot unpreserve device without outgoing Live Update state\n");
+> > +		return;
+> > +	}
+> > +
+> > +	guard(mutex)(&outgoing->lock);
+> > +	ser = outgoing->ser;
+> > +
+> > +	guard(write_lock)(&dev->liveupdate.lock);
+> > +
+> > +	dev_ser = dev->liveupdate.outgoing;
+> > +	if (!dev_ser) {
+> > +		pci_warn(dev, "Cannot unpreserve device that is not preserved\n");
+> > +		return;
+> > +	}
+> > +
+> > +	pci_info(dev, "Device will no longer be preserved across next Live Update\n");
+> > +	ser->nr_devices--;
+> > +	memset(dev_ser, 0, sizeof(*dev_ser));
+> 
+> If dev->liveupdate.outgoing was left dangling from a previous torn-down
+> session, can this corrupt memory?
+> 
+> If a new Live Update session starts, pci_liveupdate_unpreserve() would
+> fetch the new outgoing FLB but operate on the old dangling
+> dev->liveupdate.outgoing pointer.
+> 
+> Does this code cause a use-after-free in the memset() here, as well as
+> corrupt the new session's counter when decrementing ser->nr_devices?
+
+I will clean up any dangling pointers during pci_flb_unpreserve() in v6
+to protect the PCI core against buggy drivers.
+
+> 
+> > +	dev->liveupdate.outgoing = NULL;
+> > +}
+> 
+> -- 
+> Sashiko AI review · https://sashiko.dev/#/patchset/20260512184846.119396-1-dmatlack@google.com?part=2
