@@ -1,73 +1,73 @@
-Received: from mail-pf1-f173.google.com (mail-pf1-f173.google.com [209.85.210.173])
+Received: from mail-pl1-f170.google.com (mail-pl1-f170.google.com [209.85.214.170])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E84F9290DBB
-	for <sashiko-reviews@lists.linux.dev>; Thu, 14 May 2026 18:39:27 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.210.173
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B3149391829
+	for <sashiko-reviews@lists.linux.dev>; Thu, 14 May 2026 18:41:12 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.214.170
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1778783969; cv=none; b=EhR9Z8784Ab7gEK1m0ZvOjgfKFdhawDicFuyCR61WalQ2ZWBNmemHPTnRvbh1jCCVxChCIy2UF6D19DAU662vWPfZN4EU2zS/Djt5Tp7S+Jeu7iAze1ELi5OuIUqDG3DEx9UWwF81SUwbYiEkDA+m86+BvzumRazciLSThX63sA=
+	t=1778784075; cv=none; b=Gsd2/RMh4pCbvfy+tCre2P/H9X2/FgNlM4JdA4Kgb2KRKUczfWon2V607K1MQUKF0NE8u9W0tHGNKcw4B6OxJpmFcDcZAG0h9C2uzKLTw7fQ3W9ADXLszaPH5TzeKYL1ZIgbM6Y31VmPOc6jv/OXX/o1blByeAEcoxfpbC9WUWQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1778783969; c=relaxed/simple;
-	bh=IrF0zGrTHmpd++IPJHJubaUM4ePJN6hA/bybSS4Ofz0=;
+	s=arc-20240116; t=1778784075; c=relaxed/simple;
+	bh=0lKuO/cTqQS7pGsVVjbnHgg88YxPkt0DwiFy+aM6C9U=;
 	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=oerO+el7ezHKJpHtTuj2m9SngInujqEa9RK+mRfUlIQkyIE40pbZznd6uN1AnH49kuEfAFvuS0gbQK2Ig4+ZSzL6yadtlSoLp0hidDTOIzNeItNVdw/fVs7akDp17N+aWmdFsPPpn6wQ/j2wq+1dHbZVuA9e+tOTB6b0tfqA6bY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=google.com; spf=pass smtp.mailfrom=google.com; dkim=pass (2048-bit key) header.d=google.com header.i=@google.com header.b=tr3qvB/v; arc=none smtp.client-ip=209.85.210.173
+	 Content-Type:Content-Disposition:In-Reply-To; b=VC6YpALUMcXsX/nt/xNOCUjIZ2+A7WBLV1VUMbpp3SRbgoR2Yb3TZ5bW/s+oESmVzqF8DYsKBUA/JO959VhKY0lmdpNzRelFRyENKof0Qy0yFCb/kZBDhtcEDRKCGSLM1I/f/cG/jrC3wR2DDfhmRF2XKvZSrKktCg0h7IWWMPM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=google.com; spf=pass smtp.mailfrom=google.com; dkim=pass (2048-bit key) header.d=google.com header.i=@google.com header.b=ryeqhbky; arc=none smtp.client-ip=209.85.214.170
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=google.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=google.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=google.com header.i=@google.com header.b="tr3qvB/v"
-Received: by mail-pf1-f173.google.com with SMTP id d2e1a72fcca58-83ea84df1d0so2226518b3a.2
-        for <sashiko-reviews@lists.linux.dev>; Thu, 14 May 2026 11:39:27 -0700 (PDT)
+	dkim=pass (2048-bit key) header.d=google.com header.i=@google.com header.b="ryeqhbky"
+Received: by mail-pl1-f170.google.com with SMTP id d9443c01a7336-2b7d3ecc10dso82427425ad.2
+        for <sashiko-reviews@lists.linux.dev>; Thu, 14 May 2026 11:41:12 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=google.com; s=20251104; t=1778783966; x=1779388766; darn=lists.linux.dev;
+        d=google.com; s=20251104; t=1778784071; x=1779388871; darn=lists.linux.dev;
         h=in-reply-to:content-transfer-encoding:content-disposition
          :mime-version:references:message-id:subject:cc:to:from:date:from:to
          :cc:subject:date:message-id:reply-to;
-        bh=lLOCOr0MLE6BsBE2JUx9eHh9btnIM0Pqg1T53aQwE2M=;
-        b=tr3qvB/v9picvR/sz/pACDHc6F2yfhSkeQzCrS2iQ0apTr28eX/SPZqB7rdryCQi23
-         jkF9x4XqO6jW1+DMfyxAFZhG4OOCYrrUAEFC6iW96n4ieVldAVgKHFdaTIDFqrpm2JQ7
-         rOeQoMj2bVtst9r8DYQLMO3HtQTwzbeRpefwZG3+UTwZ6S/eGBAmIVLgH18KYCd6xp7z
-         2Kf+S+sXIutI5c3Qg3I3Uo5KSPD06B7r/tqf97MMDvXbeS4b9EWzFr3PPDClXUmc2JU5
-         3pcQmlEBa6UhYoXfWWFAo2e9W7oONfgDwQx3mOKF1t3qQ4k+f0DzOtzrwE59MLzIfn2m
-         hIJA==
+        bh=/9wI3EBrzulRZ/UWRjzk7TAc6Cxt2CXG7DkwZbEc8og=;
+        b=ryeqhbkyfMEe98t294jR+80v2/GIDz0fLn9TSDzYhXr75Zqf/pBOVBsYkiTkZC7J/J
+         lGhuIOAyQ1oXQbLiTJy1X6BFiFTkxweW+FPctsx3yhCOuOzJcqrvXUyBugMbSxg+eI47
+         p+R9o6dl/TS2dINB/8FQKOEqU+Qp7RpsIvn1uQpDFeoyog890gMADz5D5rcQ2Mv/QQSC
+         PeAnp0yjHWB0nOl6PH3G9PkiUdl8Qx9I6UZVr6ix7IhRyMVQXl0++3K73BeSwpGRZM1O
+         etR38+hDM/kq3cTVUhtnjtksto39cpJ1Pe1O/bmETqge/89jQp2NGZdxyI12/PbXwenR
+         Zhqg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20251104; t=1778783966; x=1779388766;
+        d=1e100.net; s=20251104; t=1778784071; x=1779388871;
         h=in-reply-to:content-transfer-encoding:content-disposition
          :mime-version:references:message-id:subject:cc:to:from:date:x-gm-gg
          :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=lLOCOr0MLE6BsBE2JUx9eHh9btnIM0Pqg1T53aQwE2M=;
-        b=eVuv8Nap+L6yoPWOWlwEcQH9+zz7MPo+J3GhLpn0XZqizc8bwT+e1IW8i7nCal/Deh
-         AGwaLWF1OS/rxALN7+SLOf3UrJESV7bVVsha7/M65FdhX+U2YU48LygmvMfe9LYCFQpJ
-         x9Ms/zMgl454s19/VMfprFq3HK2goOpIGPzLgkY/fR2z4EWlsC/6Gyp+pBOVBzv89i/H
-         lZM3KUMvyzhdd6RuR9F5e7tDW3NF5jusPbyBKNwtqrs+7mebcOQBaCcnQuZkwnuU9MlX
-         k+feHGOWXnZ1QAwfPSc+r+jOF5s/VN3nMKGFKP/gosoN4hordiPzKCFk15s224iNg5dt
-         J8jg==
-X-Gm-Message-State: AOJu0YzbpbBxCpeEzPqwkIjU6VujXUErIFvNQjM2T7bVoCSN2rI0aJTn
-	DskiyHwbygyr7IJDtpW4J7UhaDa2SelGpN8TrULszwfim7goAWUr8JoUAFbztd030/VAtQIDRNe
-	mkU2auQ==
-X-Gm-Gg: Acq92OFyY/PR7m+IrgS3vOBY0f72LfAYWlssNDwxMQHR1iP8caF2DhpmVaBm3BKUJwS
-	yLd/BsNN8X3A4elmTvmcYFptHJG54ieUF8AD8u6kVt8rje7Y3V3eyhAHRp0dLRguLvkDNTcRr8+
-	FVXqFiBGH4oEuQ7yicYkl6kVu5p8GkYUi5Ia3tKbFTyQHAIoQrOvn4071Z5wiX4A1Ajc7DWuD0y
-	xfr/qXE6R9vsTYWwhD4Rw95nmgqhai4wj6hnHd4q29uJ36y2uRf+4AI2/aJzSsykhO9QDR4LImC
-	xpeOmUlD0FH2A81xYQSNAPH2TjTjouXB1JDrbbgmZ4D1j731yGSQ9FVMvEztmA4HZyjYrHDJKAZ
-	K/h3+fXJmL/4qMbfi9EqxexCxEuAeZoZlZ/tiW7KUyxRjIB9hGGvv0M0EZkCyHhBu4wHAEX4e5s
-	qrV3F9mOGEm4LnyfIdHirCzPbeQnDWs0bCRyFEwDYisXBnyTT8LBtW+M+piFHTA7I5CpW6kbax2
-	uDlY35vWZ8=
-X-Received: by 2002:a05:6a00:ad5:b0:823:cbb:a484 with SMTP id d2e1a72fcca58-83f33cbf6abmr694029b3a.14.1778783965954;
-        Thu, 14 May 2026 11:39:25 -0700 (PDT)
+        bh=/9wI3EBrzulRZ/UWRjzk7TAc6Cxt2CXG7DkwZbEc8og=;
+        b=Ed12QvXkaPat2mlA/ShKIhE2tsgR1eAcwSgTlxX4ycaRhU+eXdE5/dSU5XkmTzLZ84
+         7JEN8yw5Ll9va6e4csg5BrYwlY//pMVGQ35JneTB0z5BjtzIB9URnVM/q9+06ItfCe20
+         FnHm119DwV39U+2ch+n24iD+/ZLO1MiJrGueOKURBDj06O1/IanC5YKRahaBepXMMeu3
+         WaNAvJ2z2Q3m7/Etqf9cjhkOzMm5DtJzjnrnNa/0Dl+ImTvzVpehRMq0eHSDwfRL6prC
+         dZJiR9hNjDuT0KzBSg3sSOkLHzG4ga4FszqvJ6nPQxob0IrJ40s69cNogSS+6JDLcPU0
+         TUVQ==
+X-Gm-Message-State: AOJu0YyKaBZjflV9Fw5xnjRaePPtO0+fCInOm7u9oRRqOb35Zx7XrYcr
+	o6vSypM81LMDtg2qcq5UX2J8aZ5nEPu4/mbncNQo86V9I0k1JSJlNGnRxEeON07UGwb3fQXFPt1
+	7qnyoSQ==
+X-Gm-Gg: Acq92OHsVbWw4Q37PnZooVDt2CyXYaxk5SZ3BGhC5bykqSxreiOQlTlmpUpRpUh90XI
+	K1SQUzHhCbh0GRmynZth1a+kvZNKzfAB/d8EPNKNv7iOCj7oO01/EKIX5edXObmp/GUY1jqMIZL
+	B/q2Rxf/SfktJi5Xt3sh+Zoycy262IKP76FMF1bVnkTdDosWsS9qtpjppEbBLaqyva4zm54GIcw
+	+b9tdTMGVac2TgoCV4Hyh5Ieho/kf5wMy/FVPOmxd6Fyb0NszHM70pvAI3M5mXXu1ZYZJfi28Iv
+	C3PHRy9y3vYvSfKPSSfl3q5wfZDPGx9af4n6x/YWQzBcZNNXMdLKGwt8tl7v/Q7PehWrpEw9mCu
+	kVKgPsGdzjW7+0gxoeuPMbcIepAXUfi3ViMTTPoLlKDoMYg7VPH5iwveKdxpHpiV+Txma7gNJ9F
+	M37tEENbugmVMgjfyMdQOexnU/gQNDzThEAFFrVraN9UQsmvKuyjoJDV7L8q6SklMn9qNIkwuoR
+	UKxqZnN8jY=
+X-Received: by 2002:a17:902:d702:b0:2b7:88f9:9c3d with SMTP id d9443c01a7336-2bd7e7cb191mr6124705ad.12.1778784070937;
+        Thu, 14 May 2026 11:41:10 -0700 (PDT)
 Received: from google.com (56.149.168.34.bc.googleusercontent.com. [34.168.149.56])
-        by smtp.gmail.com with ESMTPSA id d2e1a72fcca58-83f19c78844sm3268209b3a.47.2026.05.14.11.39.25
+        by smtp.gmail.com with ESMTPSA id d9443c01a7336-2bd5c263a0fsm33512605ad.37.2026.05.14.11.41.10
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Thu, 14 May 2026 11:39:25 -0700 (PDT)
-Date: Thu, 14 May 2026 18:39:22 +0000
+        Thu, 14 May 2026 11:41:10 -0700 (PDT)
+Date: Thu, 14 May 2026 18:41:07 +0000
 From: David Matlack <dmatlack@google.com>
 To: sashiko-reviews@lists.linux.dev
 Cc: linux-pci@vger.kernel.org
-Subject: Re: [PATCH v5 05/11] PCI: liveupdate: Keep bus numbers constant
- during Live Update
-Message-ID: <agYW2pLTsjwuNBg2@google.com>
-References: <20260512184846.119396-6-dmatlack@google.com>
- <20260514013646.C4F8BC19425@smtp.kernel.org>
+Subject: Re: [PATCH v5 06/11] PCI: liveupdate: Auto-preserve upstream bridges
+ across Live Update
+Message-ID: <agYXQ76N4mSDOqHC@google.com>
+References: <20260512184846.119396-7-dmatlack@google.com>
+ <20260514020517.DE0DFC19425@smtp.kernel.org>
 Precedence: bulk
 X-Mailing-List: sashiko-reviews@lists.linux.dev
 List-Id: <sashiko-reviews.lists.linux.dev>
@@ -77,80 +77,132 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=iso-8859-1
 Content-Disposition: inline
 Content-Transfer-Encoding: 8bit
-In-Reply-To: <20260514013646.C4F8BC19425@smtp.kernel.org>
+In-Reply-To: <20260514020517.DE0DFC19425@smtp.kernel.org>
 
-On 2026-05-14 01:36 AM, sashiko-bot@kernel.org wrote:
+On 2026-05-14 02:05 AM, sashiko-bot@kernel.org wrote:
 > Thank you for your contribution! Sashiko AI review found 1 potential issue(s) to consider:
-> - [High] Bridge bus numbers are inadvertently cleared for 'broken' topologies during Live Update, modifying the hardware fabric and disrupting active memory transactions.
+> - [High] Kernel stack overflow via deep recursion in `pci_liveupdate_preserve_path()`.
 > --
 > 
-> commit 0f468978660735d49ff81fb445992a21db06f9ce
+> commit 9dcae64241d06ee18edeb26c25b9a7b263aa05a4
 > Author: David Matlack <dmatlack@google.com>
 > 
-> PCI: liveupdate: Keep bus numbers constant during Live Update
+> PCI: liveupdate: Auto-preserve upstream bridges across Live Update
 > 
-> During Live Update, preserved devices must be allowed to continue performing
-> memory transactions. This commit modifies the PCI core to always inherit
-> bridge bus numbers when any devices are preserved, avoiding topology
-> changes that could disrupt ongoing operations.
+> This commit introduces tracking to auto-preserve upstream PCI bridges when a
+> device is preserved across a Live Update. It adds functions to preserve,
+> unpreserve, and finish the preservation of devices and recursively applies
+> these to upstream bridges up to the root port.
 > 
-> > diff --git a/drivers/pci/probe.c b/drivers/pci/probe.c
-> > index b5fdc5017f921..08ea9324647ba 100644
-> > --- a/drivers/pci/probe.c
-> > +++ b/drivers/pci/probe.c
+> > diff --git a/drivers/pci/liveupdate.c b/drivers/pci/liveupdate.c
+> > index 558fbaec8dddd..d8e06afde2c76 100644
+> > --- a/drivers/pci/liveupdate.c
+> > +++ b/drivers/pci/liveupdate.c
 > 
 > [ ... ]
 > 
-> > @@ -1497,8 +1505,7 @@ static int pci_scan_bridge_extend(struct pci_bus *bus, struct pci_dev *dev,
-> >  		 * do in the second pass.
-> >  		 */
-> >  		if (!pass) {
-> > -			if (pcibios_assign_all_busses() || broken)
-> > -
-> > +			if (assign_new_buses || broken)
-> >  				/*
-> >  				 * Temporarily disable forwarding of the
-> >  				 * configuration cycles on all bridges in
-> > @@ -1512,6 +1519,12 @@ static int pci_scan_bridge_extend(struct pci_bus *bus, struct pci_dev *dev,
-> >  			goto out;
-> >  		}
+> > @@ -363,8 +389,82 @@ int pci_liveupdate_preserve(struct pci_dev *dev)
 > 
-> Does this code accidentally clear the secondary and subordinate bus numbers
-> for bridges with a "broken" configuration during a Live Update?
+> [ ... ]
 > 
-> In the first pass (!pass), if the bridge topology is invalid (broken == 1),
-> the code enters the if (assign_new_buses || broken) branch and executes a
-> pci_write_config_dword() that disables configuration cycles.
-> 
-> Since the pci_liveupdate_inherit_buses() safety check happens after this
-> block, the hardware fabric gets modified before the early return. Can this
-> disrupt ongoing memory transactions for preserved downstream devices?
-
-No, it is on purpose, not accidental.
-
-If the bridges bus secondary and/or subordinate bus numbers are
-misconfigured during a Live Update then the options are:
-
- 1. Proceed with enumeration with the misconfigured
-    secondary/subordinate numbers.
- 2. Clear the misconfigured numbers and refuse to enumerate further.
- 3. Clear the misconfigured numbers and then assign new bus numbers.
-
-(1) seems like a bad idea to try to proceed with a misconfigured bridge.
-(3) could lead to the bus numbers assigned to preserved endpoints
-changing, which could lead to corruption (e.g. memory transactions being
-routed to the wrong devices). (2) seems like the only sane option.
-
-> 
-> > +		if (pci_liveupdate_inherit_buses()) {
-> > +			pci_err(dev, "Cannot reconfigure bridge during Live Update!\n");
-> > +			pci_err(dev, "Downstream devices will not be enumerated!\n");
-> > +			goto out;
-> > +		}
+> > +static int pci_liveupdate_preserve_path(struct pci_ser *ser, struct pci_dev *dev)
+> > +{
+> > +	int ret;
 > > +
-> >  		/* Clear errors */
-> >  		pci_write_config_word(dev, PCI_STATUS, 0xffff);
-> >
+> > +	if (!dev)
+> > +		return 0;
+> > +
+> > +	ret = pci_liveupdate_preserve_device(ser, dev);
+> > +	if (ret)
+> > +		return ret;
+> > +
+> > +	ret = pci_liveupdate_preserve_path(ser, dev->bus->self);
+> 
+> Can this recursion cause a kernel stack overflow?
+> 
+> The PCI specification allows up to 256 nested buses in a single domain, which
+> can occur with deep Thunderbolt or USB4 topologies.
+> 
+> Because the recursive call to pci_liveupdate_preserve_path() is followed by a
+> potential call to pci_liveupdate_unpreserve_device(), it cannot be optimized
+> as a tail call. This forces a new stack frame for every level of the PCI
+> hierarchy, which could overflow the standard kernel stack, especially with
+> KASAN enabled, and cause a crash.
+> 
+> Could this be rewritten to use an iterative approach instead?
+
+I used recursion to simplify the code and based on the pre-existing
+examples of using recursion in the PCI core, e.g.
+pci_scan_bridge_extend(). But I will take a look at an iterative
+approach for v6.
+
+> 
+> > +	if (ret) {
+> > +		pci_liveupdate_unpreserve_device(ser, dev);
+> > +		return ret;
+> > +	}
+> > +
+> > +	return 0;
+> > +}
+> 
+> [ ... ]
+> 
+> > +static void pci_liveupdate_unpreserve_path(struct pci_ser *ser, struct pci_dev *dev)
+> > +{
+> > +	if (!dev)
+> > +		return;
+> > +
+> > +	if (pci_liveupdate_unpreserve_device(ser, dev))
+> > +		return;
+> > +
+> > +	pci_liveupdate_unpreserve_path(ser, dev->bus->self);
+> 
+> Does this code have the same recursion issue as pci_liveupdate_preserve_path()
+> and require an iterative approach?
+
+See above.
+
+> 
+> > +}
+> 
+> [ ... ]
+> 
+> > @@ -519,28 +656,18 @@ void pci_liveupdate_cleanup_device(struct pci_dev *dev)
+> 
+> [ ... ]
+> 
+> >  void pci_liveupdate_finish(struct pci_dev *dev)
+> >  {
+> > -	guard(write_lock)(&dev->liveupdate.lock);
+> > -
+> > -	if (!dev->liveupdate.incoming) {
+> > -		pci_warn(dev, "Cannot finish preserving an unpreserved device\n");
+> > +	if (!dev)
+> >  		return;
+> > -	}
+> > -
+> > -	pci_info(dev, "Device is finished participating in Live Update\n");
+> >  
+> > -	/*
+> > -	 * Drop the refcount so this device does not get treated as an incoming
+> > -	 * device again, e.g. in case pci_liveupdate_setup_device() gets called
+> > -	 * again because the device is hot-plugged.
+> > -	 */
+> > -	dev->liveupdate.incoming->refcount = 0;
+> > -	dev->liveupdate.incoming = NULL;
+> > +	if (pci_liveupdate_finish_device(dev))
+> > +		return;
+> >  
+> > -	/* Drop this device's reference on the incoming FLB. */
+> > -	pci_liveupdate_flb_put_incoming();
+> > +	pci_liveupdate_finish(dev->bus->self);
+> 
+> Does this code also have the same recursion issue?
+
+See above.
+
+> 
+> >  }
 > 
 > -- 
-> Sashiko AI review · https://sashiko.dev/#/patchset/20260512184846.119396-1-dmatlack@google.com?part=5
+> Sashiko AI review · https://sashiko.dev/#/patchset/20260512184846.119396-1-dmatlack@google.com?part=6
