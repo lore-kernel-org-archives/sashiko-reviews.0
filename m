@@ -1,236 +1,147 @@
-Received: from mail.cjdns.fr (mail.cjdns.fr [5.135.140.105])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-dy1-f170.google.com (mail-dy1-f170.google.com [74.125.82.170])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E2D623B840F
-	for <sashiko-reviews@lists.linux.dev>; Thu, 14 May 2026 20:32:48 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=5.135.140.105
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 669CB3AEF34
+	for <sashiko-reviews@lists.linux.dev>; Thu, 14 May 2026 20:58:46 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=74.125.82.170
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1778790770; cv=none; b=u8ACSjM6r1CaKV8nFxzQEQcnrWCOqf+kjH0YHYlocgGdGJqcL+FqLof4i3GMg8kCwDWVQEjgogWZg8VC0rOoZybCh4A3OGoi5tMH7UVa3NkKlPm/1ps67jUW8nntz/EgYPqUnTOEJVAFFR9nPGKekau87jG2IsfZOSdb7xTiNMw=
+	t=1778792327; cv=none; b=iQumeUlK6e6jhZCeW5s3JdwBgL35wOezeOK9tJG+roM6+rxLazZAc+9nE+PzZ2j8Zpig9EJ5jJlcp9Gqzahh3QEldEm/I6kZEDoSCTISZ6oas+E1knnCfA4mRsjK4FqO0H+ZE+myGPTPG6xqIhojG2wTSy5mCw9aVZ9qLlJ1yYU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1778790770; c=relaxed/simple;
-	bh=BIS+z9ImuxkzSNdjiSLS9/iIpa5p+yZQT1eTWQobi64=;
+	s=arc-20240116; t=1778792327; c=relaxed/simple;
+	bh=zKiIWcZodX4k/LMu479yY2TQAIj4tGk4ug8P25zXyBU=;
 	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=Mg/szXMQKkP9ArjN5JBAePdy5PqOieOPKXJ6jkswnR/qCjtP7mhymZGT+VhcNbYbEIhYJkn/Tc93fgZ7nxDjQQEngVnNIAsuzetBM8YlvKJvkgxhhn+gUmPQSIBcu/+uVFLM/U2pcFy8kqyOoft+0h0RXTDab5brhvjfa7JrqFQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=cjdns.fr; spf=none smtp.mailfrom=cjdns.fr; dkim=pass (2048-bit key) header.d=cjdns.fr header.i=@cjdns.fr header.b=f0Q3xFpC; arc=none smtp.client-ip=5.135.140.105
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=cjdns.fr
-Authentication-Results: smtp.subspace.kernel.org; spf=none smtp.mailfrom=cjdns.fr
+	 In-Reply-To:Content-Type; b=KpA9OMQR9rrWVFrRr2/7lhhpYzxJ/K3r85Fyq09T2h4JYoeGL6lk8lcamwpmWzrg150Xwo8uy62rVuvkRFCbwtJ/nyz8XpNJi5mwma5IH7B9kg0HN6HWz5kB0+Hg9u+50iR53zQrjgxK98cTGO8uDyqSDLu9sFIr1UhygLyRREM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=roeck-us.net; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=Oe6qgOq/; arc=none smtp.client-ip=74.125.82.170
+Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=roeck-us.net
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=cjdns.fr header.i=@cjdns.fr header.b="f0Q3xFpC"
-Received: from [127.0.0.1] (localhost [127.0.0.1]) by localhost (Mailerdaemon) with ESMTPSA id E6A733C4F5E;
-	Thu, 14 May 2026 22:32:43 +0200 (CEST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=cjdns.fr; s=dkim;
-	t=1778790765; h=from:subject:date:message-id:to:cc:mime-version:content-type:
-	 content-transfer-encoding:content-language:in-reply-to:references;
-	bh=pULZ85QUZYUodhdsIKipH6Dxfe+iLBqcbN7tmCAqB3U=;
-	b=f0Q3xFpC7v81j9mZjtMlHylOlmWYp451y8RT7ZoR0XTy/I+xRLx+W7MO7D/0vJguYcSbhz
-	ewH24wo1oEkQTo46wCLvvQg4GnhHENsdj7oWTVuoydRxyzLXxGXAbd2TrAiQTqu/Zjjs11
-	EDvgedtWLt/IT4cLzhAmhrCsZ8s7/jAe3yfPQ5ZyZeyqf5v8CaL2QoQNoHD+DJfWkFzuW/
-	+VpWgxEkM93/oGWat5oLegan/vwh8nORwTIi1KGcDG7w0yXsg9dJp46d0NDmcQzKf0tBzU
-	Tnh4P1ecl3MlWqqdxZZnYEgOmWwkj4Ys+0apJ+0zk27FLE5qUNRWTPpdPX28CA==
-Message-ID: <1adcfbd4-c269-4b1f-9e03-a697732faac8@cjdns.fr>
-Date: Thu, 14 May 2026 22:32:42 +0200
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="Oe6qgOq/"
+Received: by mail-dy1-f170.google.com with SMTP id 5a478bee46e88-2b4520f6b32so13995741eec.0
+        for <sashiko-reviews@lists.linux.dev>; Thu, 14 May 2026 13:58:46 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20251104; t=1778792325; x=1779397125; darn=lists.linux.dev;
+        h=content-transfer-encoding:in-reply-to:autocrypt:from
+         :content-language:references:cc:to:subject:user-agent:mime-version
+         :date:message-id:sender:from:to:cc:subject:date:message-id:reply-to;
+        bh=xbz4lt4OHMSKpnmgA3s6hklA6EIJQ7W2N6JkysWUJ2M=;
+        b=Oe6qgOq/FNBXUcPP3IgGrUZZt8kpqJCsVn4XROVSCN1lKC4NFJv63BLGYjEZH7kdk/
+         e9TcNagnPWOC6JVMpuWUg6CLHL4nsCSjG7jjs31FZx7Wwi9cg8e03tKuaMYFbyGcWUqk
+         6iu1MOcmAP8gr4gFAPFHU5y+IfAzyRvpQYn6lqsIIhSPnP3XuZU2/09Rb9Zp3TWO5sVn
+         iQW1oxa+JTXYXpyTB9oC89f9rB2ubeWaNs39EpD5kjEKrlXpXz7EiSXYFyCpsRPTfu6M
+         ef9KmC0TXibICapXhU7/BUrKvGAEgpqhEQqn6uQWt9iQgcnUK5nxbEjsxeXnP5K5n5cZ
+         bgbQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20251104; t=1778792325; x=1779397125;
+        h=content-transfer-encoding:in-reply-to:autocrypt:from
+         :content-language:references:cc:to:subject:user-agent:mime-version
+         :date:message-id:sender:x-gm-gg:x-gm-message-state:from:to:cc
+         :subject:date:message-id:reply-to;
+        bh=xbz4lt4OHMSKpnmgA3s6hklA6EIJQ7W2N6JkysWUJ2M=;
+        b=IrrB2hr5x8BL+MBeZfLWPLRh4ngpeMjF0AjyPedhqNkUWmQRmaduxIjIhKE6eRfXRw
+         QGJ4los9NLTi+7nJAk7/nRbTTz0HzPiqFMpZItHZNACEerJ1JE+eTogsePWlhuKW/IAE
+         YMI16gWfXbuEN9TcDVrr5Ih7pA8myW8zur419llOYtYnMSomodKSgD1k5C5HdNYAFWDv
+         4JFrwxMBvqNL4BlmwEoSrXqA3KLgR4MIJ/EHaXru4+0PBCvDFDe98TYHoDKbGHdokHXP
+         BW4DsbIKMP/mNQVNRs+SLfbxepyoUUkpfG5iXnCtnx19I+mQQ83zXZeFvVf0Ww8t7DhR
+         KbGg==
+X-Gm-Message-State: AOJu0YwtB1eG7uDaak0s2Y3gslrpn6Pwkglk+C6pWTDdE6ZsUqnBJ3x2
+	jkCzYpEn6lRL77ENoXP17ykQNwcmNwHKkkWM2NJ6yxnhSZjlB9KzWe/9
+X-Gm-Gg: Acq92OFxHdMhe4q5WA23Q7hNTzye9YQ4w4HoZ2Zh/DFftWaMMzBED2e56sLoSvhJpOA
+	Ckq0I6ei2vvsoiZvkHZgmnZMCFItiu3WEKEA0u0HG90M8iyM61JUWH0lhS8yiyL33A6iusglwIP
+	7g/QsREHPnfQfKSxsnGWB05o5/wSMSqzgmMfaBZaJz63ei4bNTQn4jWlBWYd/rKfliW3UB+CMqz
+	bugIvmEesiAOF/hOLnC+upUg5ZvH6aq/iFXXBoWJH492D2cJw7b7IGWFs91RFiGYmBJq6ZXYxAi
+	zeDIzdmlrjtStCHyZ0ey7+TrAQa1Q6ZmWlGEFuGv9rbC4Q4WpqPZr149PFYOxL1JgG/DWEYJSow
+	lcrjQRtMW8J7sJbDPPcz9roQiPvOGc49epH2GxRywMwpsQQXsOWgGy676zQ0dK30DPwpRnF41O7
+	hkMxhs+39/RZaJGroXQRMQHmtjVnxf6PWlKXWX6bzJeU21x4Q5ilE2kNVoMEY6LxAZg5gSygQWB
+	/yFjBE3kdE=
+X-Received: by 2002:a05:7301:19a5:b0:302:56fe:46fc with SMTP id 5a478bee46e88-3039816a844mr586117eec.13.1778792325356;
+        Thu, 14 May 2026 13:58:45 -0700 (PDT)
+Received: from ?IPV6:2600:1700:e321:62f0:da43:aeff:fecc:bfd5? ([2600:1700:e321:62f0:da43:aeff:fecc:bfd5])
+        by smtp.gmail.com with ESMTPSA id 5a478bee46e88-302944ffb85sm4493840eec.7.2026.05.14.13.58.44
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Thu, 14 May 2026 13:58:44 -0700 (PDT)
+Sender: Guenter Roeck <groeck7@gmail.com>
+Message-ID: <12188f7f-ab27-4967-9d74-c8dd81bc5d5f@roeck-us.net>
+Date: Thu, 14 May 2026 13:58:43 -0700
 Precedence: bulk
 X-Mailing-List: sashiko-reviews@lists.linux.dev
 List-Id: <sashiko-reviews.lists.linux.dev>
 List-Subscribe: <mailto:sashiko-reviews+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:sashiko-reviews+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird Beta
-Subject: Re: [PATCH v2 5/5] clocksource/timer-econet-en751221: Support irq
- number per timer
-To: sashiko-reviews@lists.linux.dev
-Cc: devicetree@vger.kernel.org, krzk+dt@kernel.org, conor+dt@kernel.org,
- robh@kernel.org
-References: <20260514000601.3430262-6-cjd@cjdns.fr>
- <20260514161816.A2133C2BCB3@smtp.kernel.org>
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH 2/2] scsi: mpt3sas: add hwmon support
+To: Louis Sautier <sautier.louis@gmail.com>
+Cc: sashiko-reviews@lists.linux.dev, linux-hwmon@vger.kernel.org
+References: <20260512214703.655633-3-sautier.louis@gmail.com>
+ <20260514010209.5C3ABC19425@smtp.kernel.org>
+ <106e2981-35a1-4559-ae20-2026c224f590@gmail.com>
+ <388bb990-3df0-4eb4-983d-59c502397b8c@roeck-us.net>
+ <agYpHdvQiUtsXeJw@localhost>
 Content-Language: en-US
-From: Caleb James DeLisle <cjd@cjdns.fr>
-In-Reply-To: <20260514161816.A2133C2BCB3@smtp.kernel.org>
+From: Guenter Roeck <linux@roeck-us.net>
+Autocrypt: addr=linux@roeck-us.net; keydata=
+ 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
+ np3900V20aS7eD9K8GTU0TGC1pyz6IVJwIE=
+In-Reply-To: <agYpHdvQiUtsXeJw@localhost>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 7bit
-X-Last-TLS-Session-Version: TLSv1.3
 
+On 5/14/26 12:57, Louis Sautier wrote:
+> On Wed, 13 May 2026 22:17:26 -0700, Guenter Roeck wrote:
+>> If you use a recent kernel, the hwmon subsystem serializes sysfs accesses,
+>> so hammering it from multiple threads should not substantially increase
+>> the back-end load. If you have 16 readers, 15 of them will wait for the
+>> hwmon subsystem lock. All lock contention will happen in the hwmon core.
+> 
+> Right, I wasn't aware of this mechanism. So the amplification
+> path the bot worried about doesn't actually exist?
+> 
 
-On 14/05/2026 18:18, sashiko-bot@kernel.org wrote:
-> Thank you for your contribution! Sashiko AI review found 9 potential issue(s) to consider:
-> - [High] NULL pointer dereference due to requesting IRQ before initializing clock_event_device.
-> - [High] Interrupt storm and system lockup due to incorrect IRQ context handling.
-> - [High] Unconditional MMIO mapping based on NR_CPUS causes initialization failure on older platforms.
-> - [High] Use-After-Free of MMIO memory on initialization error path.
-> - [High] Out-of-bounds per-CPU memory access if DT defines more IRQs than nr_cpu_ids.
-> - [Medium] Returning `-EINVAL` from hotplug startup callback aborts CPU hotplug registration.
-> - [Medium] Missing CPU hotplug teardown callback leaves hardware timer running.
-> - [Medium] Heuristic hardware detection fails on uniprocessor configurations of multi-IRQ SoCs.
-> - [Low] Missing `CLOCK_EVT_FEAT_PERCPU` flag for clock event devices in multi-IRQ mode.
-> --
->
-> commit 7bc20cbfbe69fc307b80fd4b2cd349dcdd20410b
-> Author: Caleb James DeLisle <cjd@cjdns.fr>
-> Subject: clocksource/timer-econet-en751221: Support irq number per timer
->
-> This commit adds support for both percpu and individual IRQ per timer modes.
-> It handles standard mti,gic compatible interrupt controllers found on MIPS
-> 1004Kc based systems.
->
-> Link: https://github.com/openwrt/openwrt/commit/fab098cb6121647ca9cc6e501d56ebe8a9ea550b#diff-a09ee5e4166e89df337d03c1455dce7b81eb89797b1d0f714476b188e6685334
->
->> diff --git a/drivers/clocksource/timer-econet-en751221.c b/drivers/clocksource/timer-econet-en751221.c
->> index 4b712eb4db6f6..642af9fcda60e 100644
->> --- a/drivers/clocksource/timer-econet-en751221.c
->> +++ b/drivers/clocksource/timer-econet-en751221.c
-> [ ... ]
->> @@ -21,14 +22,26 @@
->>   #define ECONET_MAX_DELTA		GENMASK(ECONET_BITS - 2, 0)
->>   /* 34Kc hardware has 1 block and 1004Kc has 2. */
->>   #define ECONET_NUM_BLOCKS		DIV_ROUND_UP(NR_CPUS, 2)
->> +#define ECONET_MAX_IRQS			NR_CPUS
->>   
->>   static struct {
->>   	void __iomem	*membase[ECONET_NUM_BLOCKS];
->>   	u32		freq_hz;
->> +	int		irqs[ECONET_MAX_IRQS];
->> +	int		num_irqs;
->>   } econet_timer __ro_after_init;
->>   
->>   static DEFINE_PER_CPU(struct clock_event_device, econet_timer_pcpu);
->>   
->> +/* This timer supports two interrupt controller models, either 1 IRQ which is in per-cpu
->> + * mode which is used on 34Kc CPUs, and separate IRQ number per CPU which is used on
->> + * 1004Kc CPUs with GIC intc.
->> + */
->> +static inline bool is_percpu_irq(void)
->> +{
->> +	return econet_timer.num_irqs == 1;
->> +}
-> If an SoC using the standard GIC model is configured as a uniprocessor system,
-> will the Device Tree only describe 1 interrupt?
-Such a DT wouldn't pass validation, however perhaps there is too much 
-code inferring whether we're a EN751221 or an EN751627. Will think on it.
->
-> If so, does this heuristic mistakenly invoke request_percpu_irq() on a standard
-> SPI interrupt, preventing timer initialization?
->
->> @@ -98,12 +111,21 @@ static int cevt_init_cpu(uint cpu)
->>   	struct clock_event_device *cd = &per_cpu(econet_timer_pcpu, cpu);
->>   	u32 reg;
->>   
->> +	if (!is_percpu_irq() && cpu >= econet_timer.num_irqs)
->> +		return -EINVAL;
-> Since this function is registered as a CPU hotplug startup callback via
-> cpuhp_setup_state(), does returning an error here cause the hotplug core
-> to abort and rollback the state?
->
-> Should this return 0 instead when intentionally skipping a CPU?
-A CPU without a timer is non-functional, so IMO this should fail as hard 
-as possible.
->
->> @@ -171,6 +193,44 @@ static int __init cevt_init(struct device_node *np)
->>   	return ret;
->>   }
->>   
->> +static int __init cevt_init_multi_irq(struct device_node *np)
->> +{
->> +	int i, ret;
->> +
->> +	for (i = 0; i < econet_timer.num_irqs; i++) {
->> +		struct clock_event_device *cd = &per_cpu(econet_timer_pcpu, i);
-> If the system boots with restricted CPUs (e.g. nr_cpus=1) but the device tree
-> provides multiple IRQs, will this loop access uninitialized __per_cpu_offset
-> indices?
->
-> Should the iteration be bounded by nr_cpu_ids?
-Okay yes.
->
->> +
->> +		econet_timer.irqs[i] = irq_of_parse_and_map(np, i);
->> +		if (econet_timer.irqs[i] <= 0) {
->> +			pr_err("%pOFn: irq_of_parse_and_map failed", np);
->> +			ret = -EINVAL;
->> +			goto err_free_irqs;
->> +		}
->> +
->> +		ret = request_irq(econet_timer.irqs[i], cevt_interrupt,
->> +				  IRQF_TIMER | IRQF_NOBALANCING,
->> +				  np->name, NULL);
-> Because standard IRQs can be routed to a default CPU before
-> irq_force_affinity() is applied, can an interrupt for CPU 1's timer execute
-> on CPU 0?
->
-> If so, will CPU 0 check its own timer, find it not pending, and
-> return IRQ_NONE without acknowledging CPU 1's timer, causing an IRQ storm?
->
-> Should a dev_id be passed here and retrieved in the interrupt handler
-> instead of relying on this_cpu_ptr()?
-Think I'll use IRQ_NOAUTOEN and enable later, so if for some reason the 
-CPU never starts it will failsafe.
->
-> Also, since request_irq() immediately unmasks the interrupt, what happens if
-> a timer interrupt is already pending from the bootloader?
-I think with IRQ_NOAUTOEN this will be fine.
->
-> Will cevt_interrupt() execute immediately, retrieve the statically
-> zero-initialized clock_event_device, and dereference a NULL dev->cpumask
-> because cevt_setup_clockevent() has not yet been called?
-IRQ_NOAUTOEN fixes this.
->
->> +		if (ret < 0) {
->> +			pr_err("%pOFn: IRQ %d setup failed (%d)\n", np,
->> +			       econet_timer.irqs[i], ret);
->> +			irq_dispose_mapping(econet_timer.irqs[i]);
->> +			goto err_free_irqs;
->> +		}
->> +
->> +		cevt_setup_clockevent(cd, np, econet_timer.irqs[i], i);
->> +		cevt_dev_init(i);
-> Should the CLOCK_EVT_FEAT_PERCPU flag be set on the clock_event_device
-> here to inform the clockevents core about the hardware's strict CPU
-> locality?
-Whoops, that was a mistake.
->
->> @@ -184,6 +244,12 @@ static int __init timer_init(struct device_node *np)
->>   
->>   	econet_timer.freq_hz = clk_get_rate(clk);
->>   
->> +	econet_timer.num_irqs = of_irq_count(np);
->> +	if (econet_timer.num_irqs <= 0 || econet_timer.num_irqs > ECONET_MAX_IRQS) {
->> +		pr_err("%pOFn: invalid IRQ count %d\n", np, econet_timer.num_irqs);
->> +		return -EINVAL;
->> +	}
->> +
->>   	for (int i = 0; i < ARRAY_SIZE(econet_timer.membase); i++) {
->>   		econet_timer.membase[i] = of_iomap(np, i);
-> Since the 34Kc platform only has 1 timer block and provides a single reg
-> region in its Device Tree, will of_iomap(np, 1) return NULL and cause
-> initialization to fail if NR_CPUS makes ARRAY_SIZE(econet_timer.membase)
-> evaluate to 2 or more?
-Will address per note on previous patch.
->
->> @@ -202,7 +268,11 @@ static int __init timer_init(struct device_node *np)
->>   		goto err_unmap;
->>   	}
->>   
->> -	ret = cevt_init(np);
->> +	if (is_percpu_irq())
->> +		ret = cevt_init(np);
->> +	else
->> +		ret = cevt_init_multi_irq(np);
->> +
->>   	if (ret < 0)
->>   		goto err_unmap;
-> If cevt_init_multi_irq() fails and the code jumps to err_unmap, the
-> previously registered clocksource from clocksource_mmio_init() is not
-> unregistered.
->
-> Does this leave the timekeeping subsystem with a dangling pointer to the
-> unmapped MMIO region, leading to a crash on the next time read?
-Will re-work following notes on previous patch.
-> Additionally, when a CPU goes offline, is the hardware timer ever disabled
-> since there is no teardown callback provided to cpuhp_setup_state() in this
-> function and no set_state_shutdown function?
->
-> Will the online CPUs continuously receive timer interrupts from the offline
-> CPU's running timer?
-Reference code does not set CONFIG_HOTPLUG_CPU, and similar chips 
-(MT7621) do not set it in OpenWrt so I'm not sure it it's known how to 
-get it working. In any case I think if we ever get there, the timer will 
-be just one of many concerns.
+The bot didn't really claim that multiple hwmon accesses would or could
+happen in parallel. Either case, if you want to implement caching in the
+driver, please feel free to do so, just don't blame it on lack of
+serialization by the hwmon subsystem.
+
+Thanks,
+Guenter
+
