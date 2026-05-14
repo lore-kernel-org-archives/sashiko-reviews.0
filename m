@@ -1,65 +1,31 @@
-Received: from mail-wm1-f49.google.com (mail-wm1-f49.google.com [209.85.128.49])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from outbound.st.icloud.com (p-east2-cluster3-host10-snip4-10.eps.apple.com [57.103.77.151])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6EC413E0221
-	for <sashiko-reviews@lists.linux.dev>; Thu, 14 May 2026 13:38:06 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.49
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9D3CF3E024C
+	for <sashiko-reviews@lists.linux.dev>; Thu, 14 May 2026 13:38:36 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=57.103.77.151
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1778765887; cv=none; b=ElH6dO96so31YAR4DYKtMg+X5XU0jK/e8K5lqC8qfzRqKrs5Ay1CgdOdK957LnjwNayCk/XmBEFxrqsiHnkzWbVn2MT2TDsiQCh3HRMpmxTlo3ioGS55GyROV1QbnYOntmafvS9D2epGumwn02ETpG/6A0V1PGqU1Qv/Vy1fP+E=
+	t=1778765918; cv=none; b=qP5l2h28szfLpTQl8JjqrLqE1FtVtHSDc9xLvHzLYWAgLIwKDyh76v51w4jv4kctL3WIpXBg1GtDdGDAZZLnK+hFdT/9Kp2l7JxjIdH2wqs+fH4QC7ZfEJbepiqIWRFPD+WRZ8sin/DeDzbFJpXcpxAhn3UqG6gYJU+b9BqhRaA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1778765887; c=relaxed/simple;
-	bh=EYe5i7U06obZaSKsx3nkMPXmoLndtc7LHXjPjq9kkxg=;
+	s=arc-20240116; t=1778765918; c=relaxed/simple;
+	bh=O/doFj7csfg18ZBGJFGri6BLgKvth+2y3yd7NviIpHY=;
 	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=NRo6U50uUAtmliCVTek/VBwh1AbH5A2UVFwKvCx/0UR596M7O9Z+foCznt7eNQZzvrPqLcrVgCNkEcVOmXiwqeX13wlZfXa/4N6Yfzx+GZnknKhQS3xT4t0hchWLUDsPNrorRHV0j+0CDmYpp5UkU6uVTPvt7kb1jxfCxG+YM3M=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=m+JKeBuc; arc=none smtp.client-ip=209.85.128.49
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+	 In-Reply-To:Content-Type; b=nw76Ty+xpVroxtr9EUXrL6ZTYMuQeGUG/9odLnqpe7sCTn6HYA/jmUpvjVoemm/fG0EFYMPGfUiFDgKfXQTMCL5QxfhzqdxnytMFyDBCx46rmVG3pT/rRVHhc/gYlqFIHd/TjLYxxUe/RaJgjBebU9/R2YekvWZcaAuVhlmIFJ0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=icloud.com; spf=pass smtp.mailfrom=icloud.com; dkim=pass (2048-bit key) header.d=icloud.com header.i=@icloud.com header.b=gSPdbxXz; arc=none smtp.client-ip=57.103.77.151
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=icloud.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=icloud.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="m+JKeBuc"
-Received: by mail-wm1-f49.google.com with SMTP id 5b1f17b1804b1-48fde648a71so4262245e9.0
-        for <sashiko-reviews@lists.linux.dev>; Thu, 14 May 2026 06:38:06 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20251104; t=1778765885; x=1779370685; darn=lists.linux.dev;
-        h=content-transfer-encoding:in-reply-to:from:content-language
-         :references:cc:to:subject:user-agent:mime-version:date:message-id
-         :from:to:cc:subject:date:message-id:reply-to;
-        bh=7FQneXHJVgZUqsoqN0Zr1+A0P9r+lfB5u3ZpVDacsh4=;
-        b=m+JKeBucOiPm6aOGXkqPNOJaTyFjrLVBtSBg+qOkariFt/I0Uix5WWOiZpE4LkdeXw
-         +JGHNTCh70ns8ToqGMAMhuBLg2qK3yB0FGRbn++4XI5WI7t9FQEYeS0KG33l9DyZKzKW
-         g3qmrogoMZKc0sjyl7gz/VWGIeokRZcWdh/w0EjtMho1jbAynaveSyIsDTKr+GGaqJH7
-         bLRAFMdkS75nl8j9fEDkx7ctWZj+M5GV6Ol/21cp0R0ESyTiBWJiToxiQZO3JsdnYHQJ
-         8kuUdXgaDHdXNL49DmvAJ44QzNxZSDUGGyrKUuvf6gK3cQdXEHTcU5U5+G+ffo+pnJOk
-         EEIA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20251104; t=1778765885; x=1779370685;
-        h=content-transfer-encoding:in-reply-to:from:content-language
-         :references:cc:to:subject:user-agent:mime-version:date:message-id
-         :x-gm-gg:x-gm-message-state:from:to:cc:subject:date:message-id
-         :reply-to;
-        bh=7FQneXHJVgZUqsoqN0Zr1+A0P9r+lfB5u3ZpVDacsh4=;
-        b=hbTPjZVbQF6qBkea9CUpbdSSErZAI4j2tTfmolYqrNuPIPRpRp05Ypz7Zl28qmH8k0
-         vgm9suP/U1xmyHJvhcFo4nYU0n1indWbAC+3+hJyvIz+jmr32z16FUk+FFjCk8C5z3Qc
-         b+n6YmpOCEEouDR3aGIFtMMf/AvXcNb3ngfuVo0NbjvLBdnnAqCc/5orOvG+4MPCXjXF
-         J8j4vfVX/YuWD1NUKssC2fvkNAUmZWW61l+MiNYEoVKBOS+A/f2OgDeYTwqS6GFWAzVr
-         d9QFzxcD9yB2sJOAKJJsL5UDpb2Pt+d4OXXWjloOxm+hgRW2+W/Dgbi3+6yalreVJV0R
-         ozMw==
-X-Gm-Message-State: AOJu0Yxh1woI1dMVxSzjGez8e12npLNu8tRHhMF96YWBn0lMwu/tltTO
-	YZntulIkDbVZ2m4fiU6U/3ibBmRUujRz6y2cg1XbQobDXO3vB8HPgZ7R7qfPUyaf
-X-Gm-Gg: Acq92OETDf9nE5YI6U+1L5v2L1PQ3Egd6NH+38iR/i6BrKam+JWA0uFxLakxiSZxVX8
-	C+uBs7pxECIt0anGCvgj3DHPGwwCfJNpBr4vdSVcjW4la274gq4J5JLSzmDUBgW7jMBQBW+BNlY
-	abveyIOdRC3L6MH+HFrOD2csJzyRW8xxW6WirslTNJRZ6uoDabZ5dkqqo6CG7M9C4ZwHqChdgL1
-	BuycXreebmcFY9jppNrKOeueiYJ6YrrvyG//9coTiRJtP5HAZbiHTv1Zjr1Q1k2xjEg7SgHy+rx
-	OU2+kz1d3SvMK/Pl4leJ1SzC/uRuo2njAWB39OaFMH3vXVQQVgh8HKEb3oGBGCe+yePJKgpOwqL
-	vE670D7+cikR28atC82c+olBGmXd3+9doaKf1iw7+hsJ9svp9bp40hZSRW8NJj2Tl4uwbxA2Xan
-	dOOzgL+YlKny2OBklqL2bOjJaR+PuKH8qkII6djwdgxSr5CF26329jnixWiWUT
-X-Received: by 2002:a05:600c:1503:b0:48d:50a:6ef4 with SMTP id 5b1f17b1804b1-48fe24883f7mr8110055e9.11.1778765884710;
-        Thu, 14 May 2026 06:38:04 -0700 (PDT)
-Received: from ?IPV6:2a03:83e0:1126:4:5c5e:8180:a47c:53d9? ([2620:10d:c092:500::4:7c71])
-        by smtp.gmail.com with ESMTPSA id 5b1f17b1804b1-48fe45dd180sm153305e9.2.2026.05.14.06.38.02
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Thu, 14 May 2026 06:38:04 -0700 (PDT)
-Message-ID: <89d34016-cf82-4beb-989c-e4fc2e3cd29e@gmail.com>
-Date: Thu, 14 May 2026 14:38:01 +0100
+	dkim=pass (2048-bit key) header.d=icloud.com header.i=@icloud.com header.b="gSPdbxXz"
+Received: from outbound.st.icloud.com (unknown [127.0.0.2])
+	by p00-icloudmta-asmtp-us-east-1a-60-percent-5 (Postfix) with ESMTPS id 677141800106;
+	Thu, 14 May 2026 13:38:33 +0000 (UTC)
+X-ICL-Out-Info: HUtFAUMEWwJACUgBTUQeDx5WFlZNRAJCTQhJC0MCWBxCCUAdXA9cEhVdRVsYRRlLHVgWAV8GWXIZWhRcGFNFUR9UWFUJCgNHAksBXgxZWQBBCzhaDlsERxQXG1wAFxlRTQxYWwhbBA8fTAxRAkIFVl5KDB0EVAddBV1WUAJaS0IES0VoXAVcHEAXSB1faktWFAQRUAFYHlZeWhdeTVoCVk0FSVVfDl1WQgBVAAkDWB9EXRwAQFVcB0EUQFJdD1IAEg1IClhWK1sTVRdGCRkIXR0HWEcURw4PGVoUXBhT
+Dkim-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=icloud.com; s=1a1hai; t=1778765915; x=1781357915; bh=pJ03J3gv+pPu0pE4n76DoaNuYNMVHpq20sg52l+h1M4=; h=Message-ID:Date:MIME-Version:Subject:To:From:Content-Type:x-icloud-hme; b=gSPdbxXzjQ6B2AOwax0njk04KDn94DiL8+e3FSkFIAuBGTDFv9CGKA5fN7nVYJ5ievXt/CeYCxpkynZvyR/CZu0DVwhXcmoCkTACx1WN60vw2u7fIKgqC9cfFYTgNrq91m7tOK1WzPEkAWGh9zWwirzNuMQNj2aJqKbLyclj3/ehQuRauN9Lz1KtWpUd+qHZintbyNnTDSMULQyFsIUM8mm+mxKuRsuad4zLjsH8uW5WBjbDoj9kRRPLRMwU9ezKRcc5WhkXhpaaGlIqJUPWdKgt3zaQaL3VLlP/PsmikqqbHcJy4lPXOmVU9y9US7Qo7QvI/eLIhoK1RhV0bu4SFA==
+Received: from [192.168.89.3] (unknown [17.42.251.67])
+	by p00-icloudmta-asmtp-us-east-1a-60-percent-5 (Postfix) with ESMTPSA id 426FB1801205;
+	Thu, 14 May 2026 13:38:31 +0000 (UTC)
+Message-ID: <1f296d29-3d43-4dd3-b751-8a0892b4095a@icloud.com>
+Date: Thu, 14 May 2026 22:38:28 +0900
 Precedence: bulk
 X-Mailing-List: sashiko-reviews@lists.linux.dev
 List-Id: <sashiko-reviews.lists.linux.dev>
@@ -67,129 +33,180 @@ List-Subscribe: <mailto:sashiko-reviews+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:sashiko-reviews+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH] libbpf: fix UAF in strset__add_str()
-To: sashiko-reviews@lists.linux.dev, Carlos Llamas <cmllamas@google.com>
-Cc: bpf@vger.kernel.org
-References: <20260513232055.1681859-1-cmllamas@google.com>
- <20260514115711.133F4C2BCB3@smtp.kernel.org>
+Subject: Re: [PATCH v5 1/2] usb: xhci-pci: add AMD Promontory 21 PCI glue
+To: Guenter Roeck <linux@roeck-us.net>, sashiko-reviews@lists.linux.dev,
+ Jihong Min <hurryman2212@gmail.com>
+Cc: linux-hwmon@vger.kernel.org, linux-pci@vger.kernel.org
+References: <20260512213910.871859-2-hurryman2212@gmail.com>
+ <20260514004055.1BBCAC19425@smtp.kernel.org>
+ <110e9a0d-bc91-4959-8a7b-1a055d0b49f7@roeck-us.net>
 Content-Language: en-US
-From: Mykyta Yatsenko <mykyta.yatsenko5@gmail.com>
-In-Reply-To: <20260514115711.133F4C2BCB3@smtp.kernel.org>
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 7bit
+From: Jihong Min <hurryman2212@icloud.com>
+In-Reply-To: <110e9a0d-bc91-4959-8a7b-1a055d0b49f7@roeck-us.net>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 8bit
+X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwNTE0MDEzNyBTYWx0ZWRfX+4t04ZTY0sCP
+ HBpPPU+0/DF6XjAP5v8muFLKJ80mHqlY+mH5TrQUIxgr+57rgpphH12Dan/NSVU3++KafIqwhqk
+ EWHhbzn2halTk/q5FlFuO5QMlOtDjAn5cP6ACOGf0niInHpLJYvVVMVKYXDC1qmd/hI0ChhaH+Q
+ ozExATlW8/whNaxDDtBIuyPowXPsSTWZGM0TF6NmvZ2vW+7xf6KgiTmtfd5DDoXGEB7tIjJJzqf
+ LbrQqkM1t8ElkjvY4vKxLSSCDefeuBfEea2kSxVkjSmT14z7coyL2wdf+zxyiFd17IIgRStjEw6
+ lAPHDXRNyqerU9ZElhaDvgxI9bBBE+K52vSL7uE6QNrgEEHcGMCODry1BdAcEA=
+X-Proofpoint-GUID: v-KqTNKEOFx4hDELZLGLOy1NjWYxPSoB
+X-Authority-Info-Out: v=2.4 cv=d5f4CBjE c=1 sm=1 tr=0 ts=6a05d05a
+ cx=c_apl:c_pps:t_out a=YrL12D//S6tul8v/L+6tKg==:117
+ a=YrL12D//S6tul8v/L+6tKg==:17 a=IkcTkHD0fZMA:10 a=NGcC8JguVDcA:10
+ a=x7bEGLp0ZPQA:10 a=5jDBv52wX64A:10 a=VkNPw1HP01LnGYTKEx00:22
+ a=VwQbUJbxAAAA:8 a=pGLkceISAAAA:8 a=s_VNyIFniyjZU9L2bDwA:9 a=3ZKOabzyN94A:10
+ a=QEXdDO2ut3YA:10 a=PgRulw5oR9JgysbTFEid:22 a=oa2-kN79Xhin27rcel9q:22
+X-Proofpoint-ORIG-GUID: v-KqTNKEOFx4hDELZLGLOy1NjWYxPSoB
 
 
+On 5/14/26 10:20, Guenter Roeck wrote:
+> On 5/13/26 17:40, sashiko-bot@kernel.org wrote:
+>> Thank you for your contribution! Sashiko AI review found 2 potential 
+>> issue(s) to consider:
+>> - [High] The Kconfig dependency `depends on USB_XHCI_PCI=y` 
+>> completely disables PROM21 support for systems where the core driver 
+>> is built as a module.
+>> - [Low] Signed integer overflow when calculating the auxiliary device 
+>> ID.
+>> -- 
+>>
+>> commit 20f4e35b2f88ebe2b8988b4f07fe7cc28199096b
+>> Author: Jihong Min <hurryman2212@gmail.com>
+>> Subject: usb: xhci-pci: add AMD Promontory 21 PCI glue
+>>
+>> This commit adds a small PCI glue driver for AMD Promontory 21 xHCI
+>> controllers. It binds the controllers, delegates USB host operation to
+>> the common xHCI PCI core, and creates an auxiliary device for optional
+>> temperature sensor support.
+>>
+>>> diff --git a/drivers/usb/host/Kconfig b/drivers/usb/host/Kconfig
+>>> --- a/drivers/usb/host/Kconfig
+>>> +++ b/drivers/usb/host/Kconfig
+>>
+>> [ ... ]
+>>
+>>> @@ -42,6 +42,26 @@ config USB_XHCI_PCI
+>>>       depends on USB_PCI
+>>>       default y
+>>>   +config USB_XHCI_PCI_PROM21
+>>> +    bool "AMD Promontory 21 xHCI PCI support"
+>>> +    depends on X86
+>>> +    depends on USB_XHCI_PCI=y
+>>
+>> Does depending strictly on USB_XHCI_PCI=y cause a configuration 
+>> regression
+>> for most distributions where the core driver is configured as a module?
+>>
+>> The driver source appears fully capable of being built as a module, 
+>> using
+>> module-related macros and module_pci_driver().
+>>
+>> If the intent is to prevent an early boot mismatch where xhci-pci is
+>> built-in but the PROM21 glue is a module, could this instead be a 
+>> tristate
+>> option using depends on USB_XHCI_PCI and depends on !(USB_XHCI_PCI=y 
+>> && m)?
+>> This would enforce the boot constraint while preserving support for 
+>> modular
+>> kernel builds.
+>>
+>
+> That makes sense to me. That would be stronger than using default (which
+> was my idea of dealing with the problem). Restricting the code to 
+> USB_XHCI_PCI=y
+> seems to be a bit extreme.
 
-On 5/14/26 12:57 PM, sashiko-bot@kernel.org wrote:
-> Thank you for your contribution! Sashiko AI review found 3 potential issue(s) to consider:
-> - [High] Unpatched Use-After-Free in strset__find_str()
-> - [High] Use-After-Free in BTF add APIs due to btf_ensure_modifiable() freeing raw_data
-> - [Medium] Early return in strset__add_str() breaks hash map deduplication invariants
-> --
-> 
-> commit 2a7bfcb093726b849608e340f9bda7c5e3f56ac2
-> Author: Carlos Llamas <cmllamas@google.com>
-> 
-> libbpf: fix UAF in strset__add_str()
-> 
-> This commit addresses a heap-use-after-free in strset__add_str() that occurs
-> when the provided string points into the internal strset data buffer.
-> It adds a boundary check to return the offset directly if the string is
-> already within the buffer, avoiding a dangling pointer during reallocation.
-> 
-> [ ... ]
->>  |     #0 0x55d25155a2a7 in memcpy (tools/bpf/resolve_btfids/resolve_btfids+0xcf2a7)
->>  |     #1 0x55d2515d708e in strset__add_str tools/lib/bpf/strset.c:162:2
->>  |     #2 0x55d2515c730b in btf__add_str tools/lib/bpf/btf.c:2109:8
->>  |     #3 0x55d2515c9020 in btf__add_func_param tools/lib/bpf/btf.c:3108:14
-> [ ... ]
-> 
-> Does btf__add_str() have another use-after-free when operating on a
-> non-modifiable BTF object?
-> 
-> If a user calls btf__add_str(btf, s) where s is a pointer returned by
-> btf__name_by_offset() (which points into btf->raw_data),
-> btf_ensure_modifiable(btf) is called.
-> 
-> btf_ensure_modifiable() allocates new buffers and calls
-> btf_invalidate_raw_data(btf), which frees btf->raw_data.
-> 
-> At this point, the argument s becomes a dangling pointer before
-> strset__add_str() is even called, making the boundary check added by this
-> patch evaluate against the freed raw_data.
-> 
->> diff --git a/tools/lib/bpf/strset.c b/tools/lib/bpf/strset.c
->> index 2464bcbd04e03..7d2b2784172e5 100644
->> --- a/tools/lib/bpf/strset.c
->> +++ b/tools/lib/bpf/strset.c
->> @@ -141,10 +141,15 @@ int strset__find_str(struct strset *set, const char *s)
-> 
-> Does strset__find_str() suffer from the same vulnerability being fixed here?
-> 
-> It follows the exact same pattern as strset__add_str(): it temporarily
-> appends s by calling strset_add_str_mem(set, len), which may realloc() the
-> internal buffer.
-> 
-> If s points into the internal buffer, the realloc() frees the old memory,
-> leaving s dangling before the memcpy() occurs.
-> 
->>   */
->>  int strset__add_str(struct strset *set, const char *s)
->>  {
->> +	const char *strs = strset__data(set);
->>  	long old_off, new_off, len;
->>  	void *p;
->>  	int err;
->>  
->> +	/* Check whether 's' is already in the strset data buffer */
->> +	if (strs && s >= strs && s < strs + set->strs_data_len)
->> +		return s - strs;
-> 
-> Can this early return break hash map deduplication invariants if s is a
-> substring?
-> 
-> If a caller passes a pointer to a substring of an existing string, the
-> function returns the substring's offset but skips inserting it into
-> set->strs_hash.
-> 
-> Because the substring is never added to the hash map, subsequent lookups for
-> it via strset__find_str() will fail, and future additions from an external
-> pointer will duplicate the string.
-> 
-> Would it be safer to calculate the offset, perform the realloc(), and then
-> re-calculate the s pointer instead of returning early?
-> 
+Hi Guenter,
 
-It looks like sashiko is right, addressing the same issue in strset__find_str()
-and handling substring case could be useful.
-maybe adding a helper like this:
+I looked more closely at the Kconfig part of the Sashiko suggestion.
 
-/* 
- * Returns the offset of the string in set and length which set needs to
- * grow by to include the string.
- */
-int strset__offset(struct strset *set, const char *s, long *off, long *grow)
-{
-	long len;
-	const char *strs = strset__data(set);
-	void *p;
+The concern itself is valid: the v5 dependency on USB_XHCI_PCI=y is too
+strict because it prevents the PROM21 PCI glue from being built when
+USB_XHCI_PCI=m.
 
-	if (s >= strs && s < strs + set->strs_data_len) {
-		*off = s - strs;
-		*grow = 0;
-		return 0;
-	}
+However, I do not think the suggested expression works as intended:
 
-	len = strlen(s) + 1;
-	p = strset_add_str_mem(set, len);
-	if (!p)
-		return -ENOMEM;
-	memcpy(p, s, len);
-	*off = set->strs_data_len;
-	*grow = len;
-	return 0;
-} 
+   depends on !(USB_XHCI_PCI=y && m)
 
-> [ ... ]
-> 
+With Kconfig tristate logic, `m` is a tristate literal, not "this symbol is
+being built as a module". If USB_XHCI_PCI=y, then:
+
+   USB_XHCI_PCI=y && m  => m
+   !(USB_XHCI_PCI=y && m) => m
+
+So the dependency becomes `m`, which limits USB_XHCI_PCI_PROM21 to `m` 
+instead
+of allowing `y`. That is the opposite of what we need for the built-in
+xhci-pci case.
+
+The combinations I think we want are:
+
+   USB_XHCI_PCI=y  -> USB_XHCI_PCI_PROM21=y or n, but not m
+   USB_XHCI_PCI=m  -> USB_XHCI_PCI_PROM21=m or n
+   USB_XHCI_PCI=n  -> USB_XHCI_PCI_PROM21=n
+
+I see a few possible ways to handle this:
+
+1. Keep USB_XHCI_PCI_PROM21 as a visible tristate:
+
+      config USB_XHCI_PCI_PROM21
+        tristate "AMD Promontory 21 xHCI PCI support"
+        depends on X86
+        depends on USB_XHCI_PCI
+        default USB_XHCI_PCI
+        select AUXILIARY_BUS
+
+    This supports USB_XHCI_PCI=m, but it still lets a user select the unsafe
+    USB_XHCI_PCI=y / USB_XHCI_PCI_PROM21=m combination.
+
+2. Keep it visible and rely on help text to warn users not to select `m` 
+when
+    USB_XHCI_PCI=y.
+
+    This is simple, but it does not actually prevent the bad combination.
+
+3. Use IS_REACHABLE() in xhci-pci.c instead of IS_ENABLED().
+
+    That would prevent built-in xhci-pci from rejecting PROM21 devices 
+when the
+    PROM21 glue is only available as a module. However, it also means the
+    PROM21 glue/hwmon path would not be used in that configuration 
+unless the
+    PCI device is rebound later, so I do not think it is ideal.
+
+4. Make USB_XHCI_PCI_PROM21 a hidden tristate that follows USB_XHCI_PCI:
+
+      config USB_XHCI_PCI_PROM21
+        tristate
+        depends on X86
+        depends on USB_XHCI_PCI
+        default USB_XHCI_PCI
+        select AUXILIARY_BUS
+
+    Then the value follows the common xhci-pci driver:
+
+      USB_XHCI_PCI=y  -> USB_XHCI_PCI_PROM21=y
+      USB_XHCI_PCI=m  -> USB_XHCI_PCI_PROM21=m
+      USB_XHCI_PCI=n  -> USB_XHCI_PCI_PROM21=n
+
+    This prevents the unsafe y/m split while still supporting modular
+    USB_XHCI_PCI builds. The actual user-visible sensor option remains
+    SENSORS_PROM21_XHCI.
+
+My current preference is option 4, because the PROM21 PCI glue is not 
+really a
+user-facing feature by itself. It exists so the common xhci-pci driver 
+can hand
+PROM21 devices to the PROM21-specific glue and so the optional hwmon 
+driver can
+bind through the auxiliary device. The user-visible part remains the hwmon
+sensor driver.
+
+Does that sound reasonable to you, or would you prefer one of the other
+approaches?
+
+Thanks,
+Jihong
 
