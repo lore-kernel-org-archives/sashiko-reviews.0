@@ -1,34 +1,34 @@
 Received: from mail.cjdns.fr (mail.cjdns.fr [5.135.140.105])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 46BF733F58A
-	for <sashiko-reviews@lists.linux.dev>; Thu, 14 May 2026 16:52:45 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C173F33121E
+	for <sashiko-reviews@lists.linux.dev>; Thu, 14 May 2026 16:56:20 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=5.135.140.105
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1778777566; cv=none; b=qtVQJMmd+n8eUyc4l0Z/8aHpTVO8sZsQU+C+sRM1Ype71tDEEt7bWe+QTUxSh7n1PM8/TL6gxE0zZjXUlAg26w7blIBw5ol4ISW8fNYWCFDIQqobut6iti7AnCpc8nz+HGBOYSoiVWTgnmQjH/UEgHfs6775lw1vX1s6JioAGeA=
+	t=1778777782; cv=none; b=izW9buSPpLrC0zZr5NSoedS6r9e9VZYeSk02Qw/qxptJEUNDVUNAbb4RXUspGJIgaeo+R7N+EC4vpKUb/68/SyxgZEBwoDeVA4tRhwxhuCs1LnTkgg8GWNIkUK3DIrnk84Cvcaw0VaprHEeLj/q8bF4hKgIIG2ENWAfm2zm0Cos=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1778777566; c=relaxed/simple;
-	bh=T7MiKuNKPSjYpbT2yVTb8OJ15sQpp/3LQD/kqrBHGM4=;
+	s=arc-20240116; t=1778777782; c=relaxed/simple;
+	bh=5ULVOCgR+aIMYOuMkruHNrVw/rTZYAg8CEk8Xdm5pxo=;
 	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=sFr3+Az7GeHHyQSbs3ddiEvFHH+2JEajwcJANgOcHy6ccMuTcnADtN8rfMVK7WlvGR042z/t6wpb5o4YKwyVLyAQBsb06UEOAcRLYPbp9rCmzVt/rFTSMdZ3DfTkDDw3aNVPL3yLRNwnDSKg5eHp0RTb7Mlh0BIOTkYj36q1FQU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=cjdns.fr; spf=pass smtp.mailfrom=cjdns.fr; dkim=pass (2048-bit key) header.d=cjdns.fr header.i=@cjdns.fr header.b=NsfP5vPu; arc=none smtp.client-ip=5.135.140.105
+	 In-Reply-To:Content-Type; b=br5IDYMK88eyobxR0Q7jvefCHw4HhzyV0OPuc198TEXppEaO41hCNIIcy9RK7pP6twbV3VQ8+VW7FbBQwyqWQhBboocL4nGTOu5GqUU2s6LzGGVMlnlyFYN6X/SN0IR/d2KaE35IeU+tQHrL1SCfoscAtGWX4MEQm0GvhLtSYNU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=cjdns.fr; spf=none smtp.mailfrom=cjdns.fr; dkim=pass (2048-bit key) header.d=cjdns.fr header.i=@cjdns.fr header.b=JDt02rvo; arc=none smtp.client-ip=5.135.140.105
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=cjdns.fr
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=cjdns.fr
+Authentication-Results: smtp.subspace.kernel.org; spf=none smtp.mailfrom=cjdns.fr
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=cjdns.fr header.i=@cjdns.fr header.b="NsfP5vPu"
-Received: from [127.0.0.1] (localhost [127.0.0.1]) by localhost (Mailerdaemon) with ESMTPSA id 3252A3C1EA3;
-	Thu, 14 May 2026 18:52:38 +0200 (CEST)
+	dkim=pass (2048-bit key) header.d=cjdns.fr header.i=@cjdns.fr header.b="JDt02rvo"
+Received: from [127.0.0.1] (localhost [127.0.0.1]) by localhost (Mailerdaemon) with ESMTPSA id 15C1A3C392C;
+	Thu, 14 May 2026 18:56:16 +0200 (CEST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=cjdns.fr; s=dkim;
-	t=1778777562; h=from:subject:date:message-id:to:cc:mime-version:content-type:
+	t=1778777777; h=from:subject:date:message-id:to:cc:mime-version:content-type:
 	 content-transfer-encoding:content-language:in-reply-to:references;
-	bh=s9cMvDXYkfw5lrJ7QeUOGkm4umH3v9JSvja3rLol0zg=;
-	b=NsfP5vPu93J3dr4t75yrYa9UE7PXfQE9XITzTzaV9j1SEBM9CLyCwPHPyzgQs+kyzzREDE
-	H+OwL9suZbKqqlPP9YcRehV/3XYknl8ZMQIbwGE515KWsUfNC91ZDbOnyP71X+Blgd6NZe
-	3IvSvz3FbgXRpdIjIDCQfpgg8fRVxKM2l1Zu4X0c/F3olFMsIAJAicovSpom6wKdwCY9VR
-	X/+wG8mdv9zauY8ivw/9dlv5UsOrtpkFf0ZJNh/GUP1GtCaF/srxz0HrVTP8GhWBZfLkyV
-	ypLPMuzT0UhW8Xb61EdfOcVhhSnekxjksWAoMaM+rkYVsk1B7rLMopQydG4urA==
-Message-ID: <e08d8cb8-5096-4421-a3f0-cba31eb39f7f@cjdns.fr>
-Date: Thu, 14 May 2026 18:52:38 +0200
+	bh=jrQZUENFZB71CdcUq7065FvlPBBJ+5mCQIWY7rRfEEY=;
+	b=JDt02rvo6MmqK9SbHQ2R4ofLQ7KV6YumbjteB1dVmW4oiOi6dDjQgt2uPFhxQxXUuKa10/
+	4UIqCqrK5ViTb9NlA2jJMtlie1g/pfdtU7yGJ1s3/EG4Wlbl6f2/XiwaAP8QdH6qEQHPwq
+	S4iGECpx+UdVhdBiXm0GzQVt9FkPAbb+vXJOEUHi+wn+jYrTTsFOBfe/zhXA8t6bhhJ2lq
+	Dbs0sLxAskk3C06qCT6nZnLbWdebI4PLo3vkv76J8vh0CYh1gIOIaaMYtYOr7CYMkEX+8f
+	yxsHE7jRW9pbwndRX90jiPDruS5FH43qIsSzL9XtI3A29xIP6YZinsToWdJuWw==
+Message-ID: <b11694d8-5f4f-4f24-bf53-bad3b5394a04@cjdns.fr>
+Date: Thu, 14 May 2026 18:56:15 +0200
 Precedence: bulk
 X-Mailing-List: sashiko-reviews@lists.linux.dev
 List-Id: <sashiko-reviews.lists.linux.dev>
@@ -36,100 +36,78 @@ List-Subscribe: <mailto:sashiko-reviews+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:sashiko-reviews+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird Beta
-Subject: Re: [PATCH v2 3/5] clocksource/timer-econet-en751221: Always map all
- membase blocks
+Subject: Re: [PATCH v2 4/5] clocksource/timer-econet-en751221: Unmap io mem on
+ probe error
 To: sashiko-reviews@lists.linux.dev
-Cc: krzk+dt@kernel.org, conor+dt@kernel.org, devicetree@vger.kernel.org,
- robh@kernel.org
-References: <20260514000601.3430262-4-cjd@cjdns.fr>
- <20260514123004.10908C2BCB3@smtp.kernel.org>
+Cc: devicetree@vger.kernel.org, conor+dt@kernel.org, robh@kernel.org,
+ krzk+dt@kernel.org
+References: <20260514000601.3430262-5-cjd@cjdns.fr>
+ <20260514125641.C94F2C2BCB3@smtp.kernel.org>
 Content-Language: en-US
 From: Caleb James DeLisle <cjd@cjdns.fr>
-In-Reply-To: <20260514123004.10908C2BCB3@smtp.kernel.org>
+In-Reply-To: <20260514125641.C94F2C2BCB3@smtp.kernel.org>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 7bit
 X-Last-TLS-Session-Version: TLSv1.3
 
 
-On 14/05/2026 14:30, sashiko-bot@kernel.org wrote:
-> Thank you for your contribution! Sashiko AI review found 2 potential issue(s) to consider:
-> - [High] Unconditional iteration up to a compile-time constant array size causes timer initialization to fail on hardware with fewer timer blocks, breaking boot.
-> - [High] The per-CPU timer interrupt is unmasked before the clockevent device is registered, creating a race window that can lead to a NULL pointer dereference.
+On 14/05/2026 14:56, sashiko-bot@kernel.org wrote:
+> Thank you for your contribution! Sashiko AI review found 1 potential issue(s) to consider:
+> - [Critical] Unmapping IO memory after a successful `clocksource_mmio_init()` registration introduces a fatal use-after-unmap vulnerability.
 > --
 >
-> commit 1a3827645212808ad5c364c42807919047db1da2
+> commit dd9c92736c75fb466e09313766fb39cf62c86394
 > Author: Caleb James DeLisle <cjd@cjdns.fr>
+> clocksource/timer-econet-en751221: Unmap io mem on probe error
 >
-> clocksource/timer-econet-en751221: Always map all membase blocks
+> This commit updates the econet timer initialization to unmap the IO
+> memory blocks if an error occurs during probe.
 >
-> This commit simplifies the logic by unconditionally mapping all timer memory
-> blocks up to ARRAY_SIZE(econet_timer.membase), instead of computing the
-> number of blocks dynamically based on the number of possible CPUs.
->
->> diff --git a/drivers/clocksource/timer-econet-en751221.c b/drivers/clocksource/timer-econet-en751221.c
->> index 5def3e536b21c..e79069d9a826d 100644
 >> --- a/drivers/clocksource/timer-econet-en751221.c
 >> +++ b/drivers/clocksource/timer-econet-en751221.c
->> @@ -173,7 +173,6 @@ static int __init cevt_init(struct device_node *np)
->>   
->>   static int __init timer_init(struct device_node *np)
->>   {
->> -	int num_blocks = DIV_ROUND_UP(num_possible_cpus(), 2);
->>   	struct clk *clk;
->>   	int ret;
 > [ ... ]
->
->> @@ -185,7 +184,7 @@ static int __init timer_init(struct device_node *np)
+>> @@ -198,12 +199,12 @@ static int __init timer_init(struct device_node *np)
+>>   				    clocksource_mmio_readl_up);
+>>   	if (ret) {
+>>   		pr_err("%pOFn: clocksource_mmio_init failed: %d", np, ret);
+>> -		return ret;
+>> +		goto err_unmap;
+>>   	}
 >>   
->>   	econet_timer.freq_hz = clk_get_rate(clk);
->>   
->> -	for (int i = 0; i < num_blocks; i++) {
->> +	for (int i = 0; i < ARRAY_SIZE(econet_timer.membase); i++) {
->>   		econet_timer.membase[i] = of_iomap(np, i);
->>   		if (!econet_timer.membase[i]) {
->>   			pr_err("%pOFn: failed to map register [%d]\n", np, i);
-> Could this cause a regression on systems with fewer timer blocks, like the
-> EN751221 (34Kc) which only has 1 block?
+>>   	ret = cevt_init(np);
+>>   	if (ret < 0)
+>> -		return ret;
+>> +		goto err_unmap;
+> If clocksource_mmio_init() succeeds, it registers the clocksource and saves
+> the mapped IO pointer. If the subsequent cevt_init() fails, the code now
+> jumps to err_unmap and unmaps the memory via iounmap().
+Yeah I need to go back through this again.
 >
-> Since ARRAY_SIZE(econet_timer.membase) is based on CONFIG_NR_CPUS, it
-> expands to a compile-time constant that can exceed the actual number of
-> hardware blocks.
+> Since clocksource_mmio_init() does not provide a way to unregister the
+> clocksource, the registered clocksource will remain active. When the kernel
+> reads from this clocksource later, will it dereference the unmapped IO memory
+> and cause a use-after-unmap regression?
 >
-> If a kernel is built with CONFIG_NR_CPUS=4 or higher, this loop will attempt
-> to map 2 or more blocks. On a system with only 1 timer block and 1 reg entry
-> in its device tree, of_iomap(np, 1) will fail and return NULL.
+> Looking at clocksource_mmio_init() in drivers/clocksource/mmio.c:
 >
-> Because the error path unconditionally returns -ENXIO and aborts timer
-> initialization, could this completely break booting on these platforms?
-Okay I'm convinced. I think num_possible_cpus() wasn't right either. 
-What I think I'll do is fail if I'm not able to map half the num_irqs. 
-I'll also tighten up num_irqs to only allow 1 or 4 since those are the 
-only valid configurations.
->
-> This isn't a regression introduced by this commit, but looking at
-> cevt_init_cpu():
->
-> drivers/clocksource/timer-econet-en751221.c:cevt_init_cpu() {
-> 	...
-> 	enable_percpu_irq(cd->irq, IRQ_TYPE_NONE);
->
-> 	/* Do this last because it synchronously configures the timer */
-> 	clockevents_config_and_register(cd, econet_timer.freq_hz,
-> 					ECONET_MIN_DELTA, ECONET_MAX_DELTA);
-> 	...
+> clocksource_mmio_init() {
+>          ...
+>          cs->reg = base;
+>          cs->clksrc.read = read;
+>          ...
+>          return clocksource_register_hz(&cs->clksrc, hz);
 > }
 >
-> Is it possible for a timer interrupt to fire immediately after
-> enable_percpu_irq() is called?
+> Before this patch, if cevt_init() failed, the driver returned an error
+> without unmapping the memory, which allowed the already-registered
+> clocksource to safely continue functioning.
 >
-> If an interrupt fires before clockevents_config_and_register() completes,
-> could the interrupt handler dereference a NULL dev->event_handler(dev)?
->
-> Calling clockevents_config_and_register() before unmasking the interrupt
-> might close this potential race window.
-
-Both percpu and multi-irq have this issue.
-
-Probably easiest to just do: if (dev->event_handler) 
-dev->event_handler(dev);
-
+> [ ... ]
+>> +err_unmap:
+>> +	for (int i = 0; i < ARRAY_SIZE(econet_timer.membase); i++) {
+>> +		if (econet_timer.membase[i])
+>> +			iounmap(econet_timer.membase[i]);
+>> +	}
+>> +
+>> +	return ret;
+>>   }
