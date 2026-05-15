@@ -1,102 +1,191 @@
-Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
+Received: from out-170.mta0.migadu.com (out-170.mta0.migadu.com [91.218.175.170])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5F1B71DC9B3;
-	Fri, 15 May 2026 15:47:33 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 83ED930DD1D
+	for <sashiko-reviews@lists.linux.dev>; Fri, 15 May 2026 16:00:43 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=91.218.175.170
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1778860053; cv=none; b=V5fRQOTy+t+wIEp6HSXHkiCn5ygvdNFwmqmJKd8fSOTIhj37YistG7L24+M+AzWZjlhsMEmRzg4wPZa3gqet1aHMpbQ34MluXRNqAeNNsBbqI6fxJdUXXIzgPg57N+NUGFTIdjahB9zwy00TzFI58GU+ph5FmaT6I0Y1tt8IaFU=
+	t=1778860845; cv=none; b=mgYDlu9hsYDRowVlXSYIDKZCrcR9ZOe+ytZ3JwtvppeXBtGvDVMg8ESuTu0T2KCdW5jDU/42p4X4mdZeYYsrii3kui3BZQbt2rJ/WAtPufVgY8fbT1DYKWrB8rs1QyoRFaOzbvc2YYOQmu59U04oFiLQLDOCIp00gM6QJfu1Tnc=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1778860053; c=relaxed/simple;
-	bh=nAxuzXMOK+miwIa6OcLsPEoy+WyYQNEXt6Jh5/C42mM=;
-	h=Date:From:To:Cc:Subject:Message-ID:MIME-Version:Content-Type:
-	 Content-Disposition:In-Reply-To; b=aCjr0/UpJvWeIJOuj80/O3KNNe0lMWbj0eOzaPtFNNBYEylw+UPY5huvwmkP+zeKBCbilgdgVNDBaNmmYRlhielaNJYSfiVpV8YNw2BvLsyibmDn3UMlvU1wGBqnZUPyRIygxs+6Tdzqz2jImPRWl2J1x25d+TuwLXOS8eSipDU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=FA+rcpwB; arc=none smtp.client-ip=10.30.226.201
+	s=arc-20240116; t=1778860845; c=relaxed/simple;
+	bh=Ub+HHYwjO1+lxofLSRkh8STGn5WXTdBwdkuuUqwKeo4=;
+	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
+	 In-Reply-To:Content-Type; b=BslIjxQyn2F5uSCGuWssaXvtBptGqh+SP2/LY3dPLLiBP0TaqKfpRhZPjIJMIX8yazxP5nOQsRnJ+hWws4LL4JTdEFuD8XmmxMmahsNE1K+bb2iw3zk7LWvIjNIFxEtnjEsQ+vJgBb5p3f9EunQONhyhb5pl3SEsYLQB+1kYwBA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linux.dev; spf=pass smtp.mailfrom=linux.dev; dkim=pass (1024-bit key) header.d=linux.dev header.i=@linux.dev header.b=WLEMHrTh; arc=none smtp.client-ip=91.218.175.170
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linux.dev
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linux.dev
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="FA+rcpwB"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id CAF42C2BCC9;
-	Fri, 15 May 2026 15:47:32 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1778860053;
-	bh=nAxuzXMOK+miwIa6OcLsPEoy+WyYQNEXt6Jh5/C42mM=;
-	h=Date:From:To:Cc:Subject:In-Reply-To:From;
-	b=FA+rcpwB7CHc3UEez0UHqJOOEIrted4CGnF6OLJdFocL2hgz2RGYxjug6GNM3wkOd
-	 2q4ASG927C0C79kBdGfKeG7yEw2xNPR0lOBZROSijpGUVRzK5vyIdQlZwJIdKWF/19
-	 8gYNyRqUjhT5g9w79ZFA4D42en+eibl1UfUN81gVPGpzqtd9X1D6qcwRHc8+5pWq+4
-	 P21LJP9LUvFgk4swSWP6zAz0Bh7g9FLj8AoMelDiVG8fvpAcI2LFf7DIHT4CehT8es
-	 ODLMcId891v44O6mTQbu/S15k0e6yJhoLLPt/Tmm5V7iQUk5HRJqMiTJ6oKc8VatMO
-	 PT+WcYFn4nKYA==
-Date: Fri, 15 May 2026 10:47:31 -0500
-From: Bjorn Helgaas <helgaas@kernel.org>
-To: Lukas Wunner <lukas@wunner.de>
-Cc: sashiko-reviews@lists.linux.dev, linux-pci@vger.kernel.org,
-	"Rafael J . Wysocki" <rafael@kernel.org>,
-	Marco Nenciarini <mnencia@kcore.it>,
-	Michal Winiarski <michal.winiarski@intel.com>,
-	Ilpo Jarvinen <ilpo.jarvinen@linux.intel.com>,
-	Eric Chanudet <echanude@redhat.com>,
-	Jean Guyader <jean.guyader@gmail.com>,
-	Alex Williamson <alex@shazbot.org>, Sinan Kaya <okaya@kernel.org>,
-	Mario Limonciello <superm1@kernel.org>,
-	Mika Westerberg <mika.westerberg@linux.intel.com>,
-	linux-kernel@vger.kernel.org, Bjorn Helgaas <bhelgaas@google.com>
-Subject: Re: [PATCH v1] PCI: Wait for device readiness after D3hot ->
- D0uninitialized transition
-Message-ID: <20260515154731.GA479800@bhelgaas>
+	dkim=pass (1024-bit key) header.d=linux.dev header.i=@linux.dev header.b="WLEMHrTh"
+Message-ID: <84f08f28-74bf-487c-8040-e8d2e8613d2b@linux.dev>
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linux.dev; s=key1;
+	t=1778860841;
+	h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+	 to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+	 content-transfer-encoding:content-transfer-encoding:
+	 in-reply-to:in-reply-to:references:references;
+	bh=fUCCgeTdkJgjWNvOF/GLKvQNQNHdViTt6U3DlbfbncQ=;
+	b=WLEMHrThMN88npRCgMV6JDqNhbw7bmjzoz6HqrPgsKrr5dA9YAad9GZbIiZv9NTqjgsF+k
+	XDAgpLxqllIrp3+ScakQX6Bx8Cy9wR+YIMtF7RvJZYpFJXdqhQ3fAeZRFhEaP+z4VqIbDj
+	hTzoEO6VrWXx/GfrRa5PBvqEyfgliSo=
+Date: Fri, 15 May 2026 09:00:34 -0700
 Precedence: bulk
 X-Mailing-List: sashiko-reviews@lists.linux.dev
 List-Id: <sashiko-reviews.lists.linux.dev>
 List-Subscribe: <mailto:sashiko-reviews+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:sashiko-reviews+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <agcVvg1ntQPbivr9@wunner.de>
+Subject: Re: [PATCH bpf-next v4 11/25] bpf: Reject stack arguments in
+ non-JITed programs
+Content-Language: en-GB
+To: sashiko-reviews@lists.linux.dev
+Cc: bpf@vger.kernel.org
+References: <20260513045049.2390444-1-yonghong.song@linux.dev>
+ <20260514235918.CAA8DC2BCB3@smtp.kernel.org>
+X-Report-Abuse: Please report any abuse attempt to abuse@migadu.com and include these headers.
+From: Yonghong Song <yonghong.song@linux.dev>
+In-Reply-To: <20260514235918.CAA8DC2BCB3@smtp.kernel.org>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 8bit
+X-Migadu-Flow: FLOW_OUT
 
-On Fri, May 15, 2026 at 02:46:54PM +0200, Lukas Wunner wrote:
-> On Thu, May 14, 2026 at 04:38:11PM -0500, Bjorn Helgaas wrote:
-> > On Thu, May 14, 2026 at 08:06:25PM +0000, sashiko-bot@kernel.org wrote:
-> > > > +		if (!(pmcsr & PCI_PM_CTRL_NO_SOFT_RESET))
-> > > > +			pci_dev_wait(dev, "power up D3hot->D0uninitialized",
-> > > > +				     PCIE_RESET_READY_POLL_MS);
-> > > 
-> > > Is it safe to ignore the return value of pci_dev_wait() here?
-> > > 
-> > > If the device times out or disconnects, pci_dev_wait() returns -ENOTTY. By
-> > > ignoring this error, pci_power_up() continues, unconditionally sets
-> > > dev->current_state = PCI_D0, and can return success (1 for need_restore).
-> > > 
-> > > If pci_power_up() returns success, will callers like pci_back_from_sleep()
-> > > execute pci_restore_state() against an unresponsive device, which could
-> > > potentially trigger PCIe Master Aborts, AER events, or system crashes?
-> > > 
-> > > Should pci_power_up() propagate the error from pci_dev_wait() to prevent
-> > > this?
-> > 
-> > Good point.  I think it should look like this instead:
-> > 
-> >     if (state == PCI_D3hot) {
-> >             pci_dev_d3_sleep(dev);
-> >             if (!(pmcsr & PCI_PM_CTRL_NO_SOFT_RESET)) {
-> >                     ret = pci_dev_wait(dev, "power up D3hot->D0uninitialized",
-> >                                        PCIE_RESET_READY_POLL_MS);
-> >                     if (ret) {
-> >                             pci_err(dev, "Not ready after soft reset\n");
-> >                             dev->current_state = PCI_D3cold;
-> >                             return -EIO;
-> >                     }
-> 
-> pci_dev_wait() already emits a warning message on timeout, so the
-> additional pci_err() is probably not needed.  Otherwise the user
-> would see duplicate messages, i.e.:
-> 
->   pci SSSS:BB:DD.F: not ready 60000ms after power up D3hot->D0uninitialized
->   pci SSSS:BB:DD.F: Not ready after soft reset
 
-True, it is redundant.  My thinking was that the other message from
-pci_power_up() is KERN_ERR, while the one from pci_dev_wait() is only
-KERN_WARNING.
 
-But maybe that message from pci_dev_wait() should be KERN_ERR instead
-of KERN_WARNING?  As far as that device is concerned, the lack of
-response does seem like more than just a warning.
+On 5/15/26 1:59 AM, sashiko-bot@kernel.org wrote:
+> Thank you for your contribution! Sashiko AI review found 2 potential issue(s) to consider:
+> - [Critical] The patch fails to prevent interpreter fallback if stack arguments are used only in nested subprograms (e.g., Main -> Subprog A -> Subprog B). This can lead to a kernel crash via an uninitialized R11 dereference.
+> - [Low] Standalone global functions with stack arguments are rejected with `-ENOTSUPP` without a verifier log, instead of `-EINVAL` with a descriptive message.
+> --
+>
+> commit 851a484e2b5b68983f11bc3764118f2bcba5acb0
+> Author: Yonghong Song <yonghong.song@linux.dev>
+>
+> bpf: Reject stack arguments in non-JITed programs
+>
+> This patch attempts to reject programs that use stack arguments when running in
+> the interpreter, as the interpreter does not support the BPF_REG_PARAMS (r11)
+> register. It does this by checking for stack arguments in
+> __bpf_prog_select_runtime() and bpf_fixup_call_args().
+>
+>> diff --git a/kernel/bpf/core.c b/kernel/bpf/core.c
+>> index ae10b9ca018df..958d86f0beac3 100644
+>> --- a/kernel/bpf/core.c
+>> +++ b/kernel/bpf/core.c
+>> @@ -2599,7 +2599,7 @@ struct bpf_prog *__bpf_prog_select_runtime(struct bpf_verifier_env *env, struct
+>>   		goto finalize;
+>>   
+>>   	if (IS_ENABLED(CONFIG_BPF_JIT_ALWAYS_ON) ||
+>> -	    bpf_prog_has_kfunc_call(fp))
+>> +	    bpf_prog_has_kfunc_call(fp) || (env && env->subprog_info[0].stack_arg_cnt))
+>>   		jit_needed = true;
+> Does this condition correctly catch stack arguments in nested subprograms?
+
+I think the above condition '(env && env->subprog_info[0].stack_arg_cnt)' is
+unnecessary. This check is for the *main* prog. main prog should not call kfunc,
+otherwise jit_needed must be true. helper does not have stack arguments.
+
+If bpf-to-bpf calls are used in this prog, then bpf_fixup_call_args() will
+do some checking for all subprogs.
+
+>
+> env->subprog_info[0].stack_arg_cnt only tracks the main program's incoming
+> and direct outgoing stack arguments. If the main program calls Subprog A with
+> no stack arguments, and Subprog A calls Subprog B with more than 5 arguments,
+> the main program's stack_arg_cnt remains 0.
+>
+> If bpf_prog_jit_compile() subsequently fails for the main program,
+> jit_needed evaluates to false and it falls back to the interpreter.
+>
+>>   
+>>   	if (!bpf_prog_select_interpreter(fp))
+>> diff --git a/kernel/bpf/fixups.c b/kernel/bpf/fixups.c
+>> index ba86039789fdf..19056016eed8b 100644
+>> --- a/kernel/bpf/fixups.c
+>> +++ b/kernel/bpf/fixups.c
+>> @@ -1407,6 +1407,12 @@ int bpf_fixup_call_args(struct bpf_verifier_env *env)
+>>   		verbose(env, "calling kernel functions are not allowed in non-JITed programs\n");
+>>   		return -EINVAL;
+>>   	}
+> Is it possible for bpf_jit_subprogs() to succeed earlier in this function
+> and return 0, bypassing these new checks entirely?
+>
+> If jit_requested is true, bpf_jit_subprogs() is called before this
+> point:
+>
+> kernel/bpf/fixups.c:bpf_fixup_call_args() {
+>      ...
+> 	if (env->prog->jit_requested &&
+> 	    !bpf_prog_is_offloaded(env->prog->aux)) {
+> 		err = bpf_jit_subprogs(env);
+> 		if (err == 0)
+> 			return 0;
+>      ...
+> }
+>
+> If it succeeds, the function returns 0 early, skipping the new loop.
+
+But if bpf_jit_subprogs() succeed (with more than one subprog), then we will have
+            prog->bpf_func = func[0]->bpf_func;
+
+In __bpf_prog_select_runtime(), we have
+	   if (fp->bpf_func)
+                 goto finalize;
+So interpreter will be ignored since jit has done successfully.
+
+>
+> Combined with the issue in __bpf_prog_select_runtime() above, the interpreter
+> could end up executing the main program and processing BPF_PSEUDO_CALL
+> instructions by jumping to the un-JITted instructions of the subprograms.
+>
+> When Subprog A writes to outgoing stack slots via BPF_REG_PARAMS (r11), the
+> interpreter will use an uninitialized r11, potentially corrupting memory.
+>
+>> +	for (i = 1; i < env->subprog_cnt; i++) {
+> Should this loop start at i = 0 to properly handle standalone global
+> functions?
+
+We can do this. Previously I skip 'i = 0' due to
+
+                 if (env->prog->aux->func_info_aux) {
+                         ret = btf_prepare_func_args(env, 0);
+                         if (ret || sub->arg_cnt != 1 || sub->args[0].arg_type != ARG_PTR_TO_CTX) {
+                                 env->prog->aux->func_info_aux[0].unreliable = true;
+
+                 }
+
+since the main prog may have a btf which have more than 5 arguments although
+in reality it will have just one argument. If I have i = 0, this will reject
+interpreter which is not correct.
+
+Now we have the following change
+
+                 if (env->prog->aux->func_info_aux) {
+                         ret = btf_prepare_func_args(env, 0);
+                         if (ret || sub->arg_cnt != 1 || sub->args[0].arg_type != ARG_PTR_TO_CTX) {
+                                 env->prog->aux->func_info_aux[0].unreliable = true;
+                                 sub->arg_cnt = 1;
+                                 sub->stack_arg_cnt = 0;
+                         }
+                 }
+
+So we can safely start from i = 0. Note that i = 0 will definitely
+succeed since we have sub->arg_cnt = 1 above. So change to i = 0
+won't change anything but can avoid confusion.
+
+>
+> For standalone global functions that are verified independently,
+> env->subprog_cnt is 1. Starting the loop at i = 1 skips the global
+> function entirely.
+>
+> The program is still safely rejected later in __bpf_prog_select_runtime()
+> because env->subprog_info[0].stack_arg_cnt > 0 correctly sets
+> jit_needed = true, leading to an -ENOTSUPP return. However, starting at
+> i = 0 would emit the expected verifier log and return -EINVAL instead of
+> failing silently with -ENOTSUPP.
+>
+>> +		if (bpf_in_stack_arg_cnt(&env->subprog_info[i])) {
+>> +			verbose(env, "stack args are not supported in non-JITed programs\n");
+>> +			return -EINVAL;
+>> +		}
+>> +	}
+>>   	if (env->subprog_cnt > 1 && env->prog->aux->tail_call_reachable) {
+
