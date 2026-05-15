@@ -1,161 +1,137 @@
-Received: from mail-wr1-f44.google.com (mail-wr1-f44.google.com [209.85.221.44])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0F9213FB7C1
-	for <sashiko-reviews@lists.linux.dev>; Fri, 15 May 2026 08:25:15 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.221.44
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E853637C11B;
+	Fri, 15 May 2026 08:27:24 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1778833517; cv=none; b=ahDF6EtQtGacTxqzxKXmbaTxL/J+3Bontq8XLtjbjuo1u8lJcfjKiVLsjKKcrGNktgbjG1WRO/b9R8H+GkgKkYp7iy+UtgTKfiHo4DvVdVlZUUjjoyR+ofGYXQT1nJYDOOj1anfoUqixIl54lURjFS3kdi/E6uPpgfK/O1PKgOc=
+	t=1778833645; cv=none; b=Yv5yu6gSTY4tGzRlhMM3f2ukRrrM4HjMQK1XA1YcsyJ/DGe3812NqqFyy0XWEOKrpqaJ0sed0GlqjiRp5hP3ggnbY9a+JNNtB4saPegKiJECmQ01Rq+ay5sR/m4LdDfQupENJinpsQrvz1rniwboIAO9SaJE6hqbWaWguq2vGy0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1778833517; c=relaxed/simple;
-	bh=x7M8QMRLEdW4Rrh+jkBoFBRBtP4oSw/c9kEx6akVmCc=;
-	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=Npox8hnCBsFuqNStcdikfkLlKCPZ4C5gS3LYU+Tb1If8d2XND7DNQRLEinDWu1C3J6l2fOVLLpEe7VqddGT8l6F1YbNYVedFUvJJr9QjFGAkLNqE1ka43lWtJIyun16Gvc19IpgE1ztvXhZy497Pp5JPnDwjZoqimFRvVyVCv6o=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=Dy0kXche; arc=none smtp.client-ip=209.85.221.44
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
+	s=arc-20240116; t=1778833645; c=relaxed/simple;
+	bh=HOXXqmybq5QwFKFflHP5my0ZlvqRbZxynm6vGw92Flg=;
+	h=Date:Message-ID:From:To:Cc:Subject:In-Reply-To:References:
+	 MIME-Version:Content-Type; b=jAYGBy407uA3sLYE95v6C7v9d7wCr2tTSdI33Ux6Da7NbdKW+EVYOoDuPNxt8ne4cpIcimG7YQpcZ6qfaX0QOl3SvhJtaM5d5CK6o10U3y/3k4IVW6YLoL/cGpMyuh0Dy/W6AaW/evTuec+NcdYtu+qQ+ufE22qgxu+PSXf6rZA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=nyW1i8dO; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="Dy0kXche"
-Received: by mail-wr1-f44.google.com with SMTP id ffacd0b85a97d-43eb05b1875so5274032f8f.3
-        for <sashiko-reviews@lists.linux.dev>; Fri, 15 May 2026 01:25:15 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1778833514; x=1779438314; darn=lists.linux.dev;
-        h=content-transfer-encoding:in-reply-to:from:content-language
-         :references:cc:to:subject:user-agent:mime-version:date:message-id
-         :from:to:cc:subject:date:message-id:reply-to;
-        bh=B8R9wMI16Tg8iAgIRKSdM3jyUIf/EyyLOvedUo+31Xs=;
-        b=Dy0kXcheaKhjVAAG5uJqp3XSUCnL0+frpqVfB0vU4+1CldUaijQpYAi32XPOkg4JK4
-         UUYMR7azxr2NpyvTgSLawJXuLLXL2+SaKeC8GNB2U3NZEJWmTBBZ/241dvH1ksGK4IQJ
-         /NE4bJFoMgZfFDsf5oQvwwEODmFEqMTeCEWPVPYJM/seohaVTQZy/Wm/XaiFBv021rom
-         C1uKuN7Wplkr969ijx0PiFIi+oveiJlIRSmCNWGjQAgzFCKl3VvqWKEJlYBpk6JEZSfW
-         ijFRNdt6XO1CpkcGWLowoJ93E7I5KnoJrQavJz0BUXMJjOXnW6hYB+8rpjf6bc+Dbx0N
-         zXvw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20251104; t=1778833514; x=1779438314;
-        h=content-transfer-encoding:in-reply-to:from:content-language
-         :references:cc:to:subject:user-agent:mime-version:date:message-id
-         :x-gm-gg:x-gm-message-state:from:to:cc:subject:date:message-id
-         :reply-to;
-        bh=B8R9wMI16Tg8iAgIRKSdM3jyUIf/EyyLOvedUo+31Xs=;
-        b=TlVEzD4URMMGBgUSStOmozMfXG8dCz3UHLKK20b5chKD9GKfKtfUBE+VvuWFi9b01T
-         Q24GTGUjZ5EB3c3bO1XaqD7EbUJhe5UIEvCdjCU8o1MIjxY1aOyMTK58w9VHbU/qC0XJ
-         uDW/jFjQvRKsuo9kR1q0aCNnGWCv0IjmClNOBJuBABhwR1u9OBvfZlOiicvY5qNGRrFl
-         xUUvfj32bE4qnvFwIFTXWDeYJ4ipnF3SDMtM6kYkNusSN8cvAiVkztb0awtvbicJ90qI
-         JBJnagy1hAOqAH0fpnOGkTkyiUsRNCtl2cIoGq+xYExjf14kt49o8o3YtY8RRROtj8fu
-         +sjQ==
-X-Gm-Message-State: AOJu0Yx/pQ/exAO6jEMTUh704ZQlNWTH+a6f7Q6U/AjccHbCAwfbKuyk
-	bv9HHxpn/74NizENV6az1qRrrYk5HezHyBLGQjrx+kL6MYBnRtuxZH8pYh7j+1ftIXW3U9bS92V
-	4VTtkPyc=
-X-Gm-Gg: Acq92OEAnUCEJ2Xf3wCjWu4TsYX4P476oqqQILfk3vRkJHTXgSPuVdpLRYJaRNIhuNL
-	b09thP/dY5jGLIF2Z+lDbmG5159XKOguRinsh/afPCOMu47nVJ2p5OEaSq2M9sYkvly7U+RCQ1h
-	ftGdDCG4i8368JVbcy4aL0nTAuXZWOHYrN/wKOptL2BAyVkIWwYgZ2XC0zsmS18sqN3hG5Vbkbe
-	lXeGjh3YKPzaLmDCSKCBNN2YdI/PbZFmv6lNiDXiAVnIxejz4Ca4tbP4tKtwSgK8PmuSRY/m743
-	HSOMPWfkDn9S/eZQPwWfuUubHudv/5oYIERnC9grrx8nAlTbzDF3x3LrrSG2e/VLS7R9edGDvQK
-	dhzhajd7ElsKdOjTCm4utQbkIXuzmvBbq/L2e4K8c+eWzCCl/lFvYT1xeWvWuul2Vfu+544fhk3
-	EExhniuV7YilJ57/4qiEUxP9rEKRf/IifTX/zBwdE=
-X-Received: by 2002:a05:6000:2c12:b0:452:87de:d3a6 with SMTP id ffacd0b85a97d-45e5c6048d1mr3580229f8f.33.1778833514418;
-        Fri, 15 May 2026 01:25:14 -0700 (PDT)
-Received: from [192.168.1.3] ([185.48.77.170])
-        by smtp.gmail.com with ESMTPSA id ffacd0b85a97d-45d9ec3ac86sm13115730f8f.14.2026.05.15.01.25.13
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Fri, 15 May 2026 01:25:14 -0700 (PDT)
-Message-ID: <69034d26-e886-48f2-a20b-524854a5c00f@linaro.org>
-Date: Fri, 15 May 2026 09:25:13 +0100
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="nyW1i8dO"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 77063C2BCB0;
+	Fri, 15 May 2026 08:27:24 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+	s=k20201202; t=1778833644;
+	bh=HOXXqmybq5QwFKFflHP5my0ZlvqRbZxynm6vGw92Flg=;
+	h=Date:From:To:Cc:Subject:In-Reply-To:References:From;
+	b=nyW1i8dOCbj19sa63ha/mgMMqwdQVUUZ6YC/Bos8/BC3h19ymefGl40v88CYtr6fy
+	 yU/2pp4iVilkcJSkPmn+pjhhwrFZrRtjrKllNFjHABgtUeGVUgGmOjGP4/mKCNwIkk
+	 UXsPB1Z7SHsiLYgTKbJKZkgcBevOS+W5ZTzD/ioqTaiPBgHEHvmyntplUPokCj4zev
+	 XSNqPNnpGEY/KphD90Teuh4wTEX03e/mcBFIoLJty+z/4sCaG9tnuYN5bAwwz2UO9O
+	 1CViRgeljYOsoBLz9fj2OqtY+8UKxuhF+0q7YjR1SyjzBeILhmGyK6XirkEDTh4Mrh
+	 hjnWxpirYQvZA==
+Received: from sofa.misterjones.org ([185.219.108.64] helo=lobster-girl.misterjones.org)
+	by disco-boy.misterjones.org with esmtpsa  (TLS1.3) tls TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384
+	(Exim 4.98.2)
+	(envelope-from <maz@kernel.org>)
+	id 1wNntC-00000002c3G-1OTt;
+	Fri, 15 May 2026 08:27:22 +0000
+Date: Fri, 15 May 2026 09:30:37 +0100
+Message-ID: <87qznd9is2.wl-maz@kernel.org>
+From: Marc Zyngier <maz@kernel.org>
+To: sashiko-reviews@lists.linux.dev
+Cc: conor+dt@kernel.org,
+	robh@kernel.org,
+	devicetree@vger.kernel.org,
+	krzk+dt@kernel.org
+Subject: Re: [PATCH v2 03/17] clocksource/drivers/arm_arch_timer: Default to EL2 virtual timer when running VHE
+In-Reply-To: <20260514212312.BC29AC2BCB3@smtp.kernel.org>
+References: <20260514150945.3917510-4-maz@kernel.org>
+	<20260514212312.BC29AC2BCB3@smtp.kernel.org>
+User-Agent: Wanderlust/2.15.9 (Almost Unreal) SEMI-EPG/1.14.7 (Harue)
+ FLIM-LB/1.14.9 (=?UTF-8?B?R29qxY0=?=) APEL-LB/10.8 EasyPG/1.0.0 Emacs/30.1
+ (aarch64-unknown-linux-gnu) MULE/6.0 (HANACHIRUSATO)
 Precedence: bulk
 X-Mailing-List: sashiko-reviews@lists.linux.dev
 List-Id: <sashiko-reviews.lists.linux.dev>
 List-Subscribe: <mailto:sashiko-reviews+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:sashiko-reviews+unsubscribe@lists.linux.dev>
-MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 5/6] tools/build: selftests: Allow versioning LLVM lld
-To: sashiko-reviews@lists.linux.dev
-Cc: dmitry.torokhov@gmail.com, bpf@vger.kernel.org,
- linux-input@vger.kernel.org, linux-perf-users@vger.kernel.org
-References: <20260514-james-perf-llvm-version-v1-5-6cac1a9a4c8d@linaro.org>
- <20260514184543.C6400C2BCB3@smtp.kernel.org>
-Content-Language: en-US
-From: James Clark <james.clark@linaro.org>
-In-Reply-To: <20260514184543.C6400C2BCB3@smtp.kernel.org>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
+MIME-Version: 1.0 (generated by SEMI-EPG 1.14.7 - "Harue")
+Content-Type: text/plain; charset=US-ASCII
+X-SA-Exim-Connect-IP: 185.219.108.64
+X-SA-Exim-Rcpt-To: sashiko-reviews@lists.linux.dev, conor+dt@kernel.org, robh@kernel.org, devicetree@vger.kernel.org, krzk+dt@kernel.org
+X-SA-Exim-Mail-From: maz@kernel.org
+X-SA-Exim-Scanned: No (on disco-boy.misterjones.org); SAEximRunCond expanded to false
 
-
-
-On 14/05/2026 7:45 pm, sashiko-bot@kernel.org wrote:
+On Thu, 14 May 2026 22:23:12 +0100,
+sashiko-bot@kernel.org wrote:
+> 
 > Thank you for your contribution! Sashiko AI review found 1 potential issue(s) to consider:
-> - [High] Using `-fuse-ld=ld.lld` breaks compilation of BPF selftests with GCC.
+> - [High] kvm_arch_ptp_get_crosststamp requests the physical counter from KVM when ARCH_TIMER_HYP_VIRT_PPI is used, conflicting with the virtual counter clocksource.
 > --
 > 
-> commit 18e1876d18fad631b521da817483ba47293a9020
-> Author: James Clark <james.clark@linaro.org>
+> commit 46b3cf01730c13b97527ab1495a76cb40a0bdad8
+> Author: Marc Zyngier <maz@kernel.org>
 > 
-> tools/build: selftests: Allow versioning LLVM lld
+> clocksource/drivers/arm_arch_timer: Default to EL2 virtual timer when running VHE
 > 
-> This commit updates Makefile.include to add an LLD variable, matching the
-> rest of the LLVM toolchain. It modifies the BPF selftests Makefile to use
-> this new LLD variable instead of hardcoding lld.
+> This commit switches the arch timer code to default to the virtual timer
+> when running in VHE mode. It ensures that the system clocksource utilizes
+> the virtual counter by treating ARCH_TIMER_HYP_VIRT_PPI similarly to
+> ARCH_TIMER_VIRT_PPI.
 > 
->> diff --git a/tools/scripts/Makefile.include b/tools/scripts/Makefile.include
->> index 380ad84ac51e6..5c2d505cba62b 100644
->> --- a/tools/scripts/Makefile.include
->> +++ b/tools/scripts/Makefile.include
+> > diff --git a/drivers/clocksource/arm_arch_timer.c b/drivers/clocksource/arm_arch_timer.c
+> > index 90aeff44a2764..e3eb527650ec7 100644
+> > --- a/drivers/clocksource/arm_arch_timer.c
+> > +++ b/drivers/clocksource/arm_arch_timer.c
+> 
 > [ ... ]
->> @@ -91,6 +92,7 @@ else
->>     # Some tools still require Clang, LLC and/or LLVM utils
->>     $(call allow-override,CLANG,clang)
->>     $(call allow-override,LLC,llc)
->> +  $(call allow-override,LLD,ld.lld)
 > 
-> Could setting LLD to ld.lld when not using LLVM cause issues for BPF
-> selftests compilation with GCC?
+> > @@ -912,7 +913,8 @@ static void __init arch_counter_register(void)
+> >  	int width;
+> >  
+> >  	if ((IS_ENABLED(CONFIG_ARM64) && !is_hyp_mode_available()) ||
+> > -	    arch_timer_uses_ppi == ARCH_TIMER_VIRT_PPI) {
+> > +	    arch_timer_uses_ppi == ARCH_TIMER_VIRT_PPI ||
+> > +	    arch_timer_uses_ppi == ARCH_TIMER_HYP_VIRT_PPI) {
+> >  		if (arch_timer_counter_has_wa()) {
+> >  			rd = arch_counter_get_cntvct_stable;
+> >  			scr = raw_counter_get_cntvct_stable;
 > 
+> Could this cause a mismatch in kvm_arch_ptp_get_crosststamp() where it still
+> only checks for ARCH_TIMER_VIRT_PPI?
+> 
+> When ARCH_TIMER_HYP_VIRT_PPI is selected, the clocksource is backed by the
+> virtual counter here, but kvm_arch_ptp_get_crosststamp() will fall through
+> to the else branch and request KVM_PTP_PHYS_COUNTER from KVM:
+> 
+> drivers/clocksource/arm_arch_timer.c:kvm_arch_ptp_get_crosststamp() {
+> 	...
+> 	if (arch_timer_uses_ppi == ARCH_TIMER_VIRT_PPI)
+> 		ptp_counter = KVM_PTP_VIRT_COUNTER;
+> 	else
+> 		ptp_counter = KVM_PTP_PHYS_COUNTER;
+> 	...
+> }
+> 
+> When running as an L1 guest hypervisor in VHE mode, could this pair the
+> guest's virtual clocksource with the host's returned physical counter
+> timestamp?
 
-$(LLD) is only used in one place, and it's used with $(CLANG) so this is 
-impossible.
+A VHE guest always sees physical and virtual timer being equal. There
+should be no offset applied, as per the architecture. The only case
+where an offset can be applied is when TGE=0 and that FEAT_ECV_POFF is
+implemented and enabled. But that an offset applied by the guest
+itself, and not the host.
 
->>     $(call allow-override,LLVM_CONFIG,llvm-config)
->>     $(call allow-override,LLVM_OBJCOPY,llvm-objcopy)
->>     $(call allow-override,LLVM_STRIP,llvm-strip)
->> diff --git a/tools/testing/selftests/bpf/Makefile b/tools/testing/selftests/bpf/Makefile
->> index 6ef6872adbc3e..44ba829e5d4dd 100644
->> --- a/tools/testing/selftests/bpf/Makefile
->> +++ b/tools/testing/selftests/bpf/Makefile
->> @@ -245,9 +245,9 @@ $(OUTPUT)/%:%.c
->>   
->>   # LLVM's ld.lld doesn't support all the architectures, so use it only on x86
->>   ifeq ($(SRCARCH),$(filter $(SRCARCH),x86 riscv))
->> -LLD := lld
->> +USE_LD := $(LLD)
->>   else
->> -LLD := $(shell command -v $(LD))
->> +USE_LD := $(shell command -v $(LD))
->>   endif
->>   
->>   # Filter out -static for liburandom_read.so and its dependent targets so that static builds
->> @@ -258,7 +258,7 @@ $(OUTPUT)/liburandom_read.so: urandom_read_lib1.c urandom_read_lib2.c liburandom
->>   		     $(filter-out -static,$(CFLAGS) $(LDFLAGS)) \
->>   		     $(filter %.c,$^) $(filter-out -static,$(LDLIBS)) \
->>   		     -Wno-unused-command-line-argument \
->> -		     -fuse-ld=$(LLD) -Wl,-znoseparate-code -Wl,--build-id=sha1 \
->> +		     -fuse-ld=$(USE_LD) -Wl,-znoseparate-code -Wl,--build-id=sha1 \
-> 
-> When LLVM=1 is not set, CC defaults to gcc. The Makefile uses
-> $(CC) ... -fuse-ld=$(USE_LD) to link liburandom_read.so.
-> 
-> Because USE_LD evaluates to ld.lld, gcc receives -fuse-ld=ld.lld.
-> 
-> However, GCC's command-line option parser is strictly hardcoded to accept
-> only specific linker names (lld, bfd, gold, mold). It does not recognize
-> -fuse-ld=ld.lld or absolute paths, and fails with an error like:
-> 
-> gcc: error: unrecognized command-line option '-fuse-ld=ld.lld'; did you mean '-fuse-ld=lld'?
-> 
-> Does this regression break the default GCC build of BPF selftests on x86
-> and riscv architectures?
-> 
+> Since the host hypervisor (L0) can apply an offset to the virtual counter,
+> comparing the guest's virtual counter cycle with the host's physical counter
+> timestamp might result in an incorrect time offset and affect PTP clock
+> synchronization for nested VHE guests.
 
-Same as above. $(CC) is not used with $(LLD). You'd probably want to use 
-$(LD) in a $(CC) build command anyway.
+If there was an offset applied to one counter but not the other, L0
+would be completely buggy.
 
+The only benefit to following the PPI in the case of a VHE guest would
+be to avoid a trap. So this only affects performance, not correctness.
 
+	M.
+
+-- 
+Jazz isn't dead. It just smells funny.
