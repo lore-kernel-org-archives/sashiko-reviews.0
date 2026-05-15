@@ -1,118 +1,126 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7BCDB37DACB;
-	Fri, 15 May 2026 07:47:54 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 223923176E0;
+	Fri, 15 May 2026 08:19:55 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1778831274; cv=none; b=sJx9x0hfHLBSP2tIVt/4AEY79FY9vgZMzaccf7t1Qrp7h4qg9cbQN40V120ZYEW1Fzr65IORsE8vsa0VyYc/s9EigzVKkmCtpRi/xd/lD1s2+aEU9a8U5K2+g6NDwPDAKVwdUyNaHko+ly0lOlXJTx/2UBhoPUSW3DLcYB7UDm0=
+	t=1778833196; cv=none; b=JDygXwe6wq6YsK+OSPKVZ2VmTbS+9IF1hB3DiyMZf013TlcPGg5FPLQ582rq3GQI1NYJImv9nqtSu9/MiGApc92g2vNxQOd8In4WFR8Db1zMXpkUVZH/83vfNDmbFtyNhJ+eg4byu6kQVdmY15dJa5X/IKoheKcXEg1Zrlln9EM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1778831274; c=relaxed/simple;
-	bh=izNuGR6qE4zq7M8ypskK9BWaIcT/nZhg9aHxbsgjr/4=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=Lt93LNLY2/I7T1HQhySh2/bvchHBHZPrkgZ/+Cjq7OPRNjrCvHV1vc4e7cMXA+jPIkk5J0ZjqeUGgoZhbPyY1odNbDhwnHjuoIBpopg9aFwUDRj/Pvfne9yXzo2mP1uoMLCuta5h7xGvBKm6ATYpT/fsOvRIlP+UBCJ+/wj1eNI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=Pfhq/DRf; arc=none smtp.client-ip=10.30.226.201
+	s=arc-20240116; t=1778833196; c=relaxed/simple;
+	bh=DVW3zGuRiAwtlxV6sDechZsTz70XEBaeqt1QBsRL1w0=;
+	h=Date:Message-ID:From:To:Cc:Subject:In-Reply-To:References:
+	 MIME-Version:Content-Type; b=kHZQRcwj1PM8eeQaeisElMUCq+y/HCIkkl+dLThmVU4JXGPCDG+RWFtZxWP5VhsKr4+50tXqPd/VZT1kbXzVaJKXaM62Iiy5nU69mxhxuIJFzgPIWYNb/n21PraHgqj7MwMVP1ES4oKGp5IjElwtSzrQYiAKJsy4K9+wnQycNeI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=UuuPRH7I; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="Pfhq/DRf"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8BCBCC2BCB0;
-	Fri, 15 May 2026 07:47:53 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="UuuPRH7I"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id A2A51C2BCB0;
+	Fri, 15 May 2026 08:19:55 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1778831274;
-	bh=izNuGR6qE4zq7M8ypskK9BWaIcT/nZhg9aHxbsgjr/4=;
-	h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
-	b=Pfhq/DRfGP/PVqA8gNwwlMi5lTugFu8k9OSgBEU6jFruuQrMjyjpwBnCJ1DbAqsjv
-	 aic7MxO91HvmWCqQTfU+grKaeYH0bU8O0BlV+WXobTF26vqjkYrexfNoTFdrZ1Q+9N
-	 u/wGNymQ8Y1AFBmRdLo616i+19oy3Azoo6Iu0a+sZeTrEbL9/YTwsiTk+vFpXPWr/o
-	 LfSaEckJ86G4OvzJc6Ex9++oU97pKS/TxDiGgaUlMEUAzjFGNY7e6jx9qUD64A5juF
-	 GRwVTvS9rNgx2wNvjiYgqglAtiX9z4p/w4ZlgqszoKXgiAxQ8LXkMYRnoQ76/g5ddw
-	 8n3qAutOws5ng==
-Date: Fri, 15 May 2026 07:47:51 +0000
-From: Yixun Lan <dlan@kernel.org>
+	s=k20201202; t=1778833195;
+	bh=DVW3zGuRiAwtlxV6sDechZsTz70XEBaeqt1QBsRL1w0=;
+	h=Date:From:To:Cc:Subject:In-Reply-To:References:From;
+	b=UuuPRH7IPZPbcK0LZ3o14TgqdgwVbURcINWZ6iyumNFirfL1QM18nouUZ9UYh1MFj
+	 R/WS9LHpZXAOV9PMamTfjgytnro7vboE8yEdnLAOMLQiJ3c26y9c6dEWwQpFeoGNTT
+	 yEUQ0SIhNAJRRSXQSKwXopJzNGoKhNqMBL6jNU7PbksZC+kNxxRAh7CBulneD2zQrS
+	 27bmrLzX5/Rk7PsTU+VL4uVGgaashbQkBIIAxEMjqq1xFZeb69fj33xor4T4dNhs0T
+	 Vw1QK+2c6gs2wtQ0BPdvqBW2UzKI88bH08yqkPATGZePNsA1AEzOnshraBvzndVEHg
+	 7mEs1tQA1aHPA==
+Received: from sofa.misterjones.org ([185.219.108.64] helo=lobster-girl.misterjones.org)
+	by disco-boy.misterjones.org with esmtpsa  (TLS1.3) tls TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384
+	(Exim 4.98.2)
+	(envelope-from <maz@kernel.org>)
+	id 1wNnlx-00000002bwo-3229;
+	Fri, 15 May 2026 08:19:53 +0000
+Date: Fri, 15 May 2026 09:23:08 +0100
+Message-ID: <87tss99j4j.wl-maz@kernel.org>
+From: Marc Zyngier <maz@kernel.org>
 To: sashiko-reviews@lists.linux.dev
-Cc: robh@kernel.org, krzk+dt@kernel.org, conor+dt@kernel.org,
-	devicetree@vger.kernel.org, spacemit@lists.linux.dev
-Subject: Re: [PATCH] riscv: dts: spacemit: drop unnecessary power supply from
- PCIe
-Message-ID: <20260515074751-GKB3663945@kernel.org>
-References: <20260513-k1-pcie-fix-supply-v1-1-4eecbdd44ebe@kernel.org>
- <20260514005435.484B5C2BCB8@smtp.kernel.org>
+Cc: robh@kernel.org,	devicetree@vger.kernel.org,	krzk+dt@kernel.org,
+	conor+dt@kernel.org, =?UTF-8?B?IkFuZHJlYXMgRsOkcmJlciI=?=
+ <afaerber@suse.de>, Yu-Chun Lin <eleanor.lin@realtek.com>
+Subject: Re: [PATCH v2 14/17] arm64: dts: realtek: Add EL2 virtual timer interrupt
+In-Reply-To: <20260514231804.000CCC2BCB3@smtp.kernel.org>
+References: <20260514150945.3917510-15-maz@kernel.org>
+	<20260514231804.000CCC2BCB3@smtp.kernel.org>
+User-Agent: Wanderlust/2.15.9 (Almost Unreal) SEMI-EPG/1.14.7 (Harue)
+ FLIM-LB/1.14.9 (=?UTF-8?B?R29qxY0=?=) APEL-LB/10.8 EasyPG/1.0.0 Emacs/30.1
+ (aarch64-unknown-linux-gnu) MULE/6.0 (HANACHIRUSATO)
 Precedence: bulk
 X-Mailing-List: sashiko-reviews@lists.linux.dev
 List-Id: <sashiko-reviews.lists.linux.dev>
 List-Subscribe: <mailto:sashiko-reviews+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:sashiko-reviews+unsubscribe@lists.linux.dev>
-MIME-Version: 1.0
-Content-Type: text/plain; charset=iso-8859-1
-Content-Disposition: inline
-Content-Transfer-Encoding: 8bit
-In-Reply-To: <20260514005435.484B5C2BCB8@smtp.kernel.org>
+MIME-Version: 1.0 (generated by SEMI-EPG 1.14.7 - "Harue")
+Content-Type: text/plain; charset=US-ASCII
+X-SA-Exim-Connect-IP: 185.219.108.64
+X-SA-Exim-Rcpt-To: sashiko-reviews@lists.linux.dev, robh@kernel.org, devicetree@vger.kernel.org, krzk+dt@kernel.org, conor+dt@kernel.org, afaerber@suse.de, eleanor.lin@realtek.com
+X-SA-Exim-Mail-From: maz@kernel.org
+X-SA-Exim-Scanned: No (on disco-boy.misterjones.org); SAEximRunCond expanded to false
 
-Hi
-
-On 00:54 Thu 14 May     , sashiko-bot@kernel.org wrote:
+On Fri, 15 May 2026 00:18:03 +0100,
+sashiko-bot@kernel.org wrote:
+> 
 > Thank you for your contribution! Sashiko AI review found 1 potential issue(s) to consider:
-> - [High] Removing `vpcie3v3-supply` from the PCIe controller node breaks power sequencing because the `spacemit,k1-pcie` driver expects it on the controller node.
+> - [High] Incomplete implementation: missing update for Realtek Kent SoC family which specifies an incorrect EL2 virtual timer interrupt.
 > --
 > 
-> commit ab7558e23a3bb4900f7961804151870f4c1f99fe
-> Author: Yixun Lan <dlan@kernel.org>
+> commit 3b73638950a28ecc324e1c28fa4fb9fcb13d5567
+> Author: Marc Zyngier <maz@kernel.org>
 > 
-> riscv: dts: spacemit: drop unnecessary power supply from PCIe
+> arm64: dts: realtek: Add EL2 virtual timer interrupt
 > 
-> This commit removes the vpcie3v3-supply property from the PCIe controller
-> nodes in the Banana Pi F3 and Milk-V Jupiter device trees. The commit message
-> states that the supply belongs to the child port node rather than the Root
-> Complex, aligning with the dt-binding documentation.
+> This commit adds the missing EL2 virtual timer interrupt to ARMv8.2-based
+> Realtek SoCs. It updates rtd16xx.dtsi by adding the fifth timer interrupt
+> with GIC_PPI 12.
 > 
-> Link: https://lore.kernel.org/all/20251113214540.2623070-4-elder@riscstar.com/
+> > diff --git a/arch/arm64/boot/dts/realtek/rtd16xx.dtsi b/arch/arm64/boot/dts/realtek/rtd16xx.dtsi
+> > index 3a7f6e35b7f74..43b13d133c324 100644
+> > --- a/arch/arm64/boot/dts/realtek/rtd16xx.dtsi
+> > +++ b/arch/arm64/boot/dts/realtek/rtd16xx.dtsi
+> > @@ -105,7 +105,8 @@ timer {
+> >  		interrupts = <GIC_PPI 13 IRQ_TYPE_LEVEL_LOW>,
+> >  			     <GIC_PPI 14 IRQ_TYPE_LEVEL_LOW>,
+> >  			     <GIC_PPI 11 IRQ_TYPE_LEVEL_LOW>,
+> > -			     <GIC_PPI 10 IRQ_TYPE_LEVEL_LOW>;
+> > +			     <GIC_PPI 10 IRQ_TYPE_LEVEL_LOW>,
+> > +			     <GIC_PPI 12 IRQ_TYPE_LEVEL_LOW>;
+> >  	};
 > 
-> > diff --git a/arch/riscv/boot/dts/spacemit/k1-bananapi-f3.dts b/arch/riscv/boot/dts/spacemit/k1-bananapi-f3.dts
-> > index e20daa50a152f..c70081856606f 100644
-> > --- a/arch/riscv/boot/dts/spacemit/k1-bananapi-f3.dts
-> > +++ b/arch/riscv/boot/dts/spacemit/k1-bananapi-f3.dts
-> > @@ -316,7 +316,6 @@ &pcie1_port {
-> >  };
-> >  
-> >  &pcie1 {
-> > -	vpcie3v3-supply = <&pcie_vcc_3v3>;
+> Does this update miss another Realtek ARMv8.2+ SoC file?
 > 
-> Will removing the vpcie3v3-supply property from the controller node break
-> power sequencing?
+> Looking at arch/arm64/boot/dts/realtek/kent.dtsi (used by RTD1501, RTD1861,
+> and RTD1920), the fifth timer interrupt is currently defined as
+> <GIC_PPI 9 IRQ_TYPE_LEVEL_HIGH>.
 > 
-No, I don't think so, the PCIe RC do not require external power supply
+> PPI 9 is the GIC vCPU maintenance interrupt, rather than the EL2 virtual
+> timer interrupt which should be PPI 12:
+> 
+> arch/arm64/boot/dts/realtek/kent.dtsi:
+> 	timer {
+> 		compatible = "arm,armv8-timer";
+> 		interrupts = <GIC_PPI 13 IRQ_TYPE_LEVEL_LOW>,
+> 			     <GIC_PPI 14 IRQ_TYPE_LEVEL_LOW>,
+> 			     <GIC_PPI 11 IRQ_TYPE_LEVEL_LOW>,
+> 			     <GIC_PPI 10 IRQ_TYPE_LEVEL_LOW>,
+> 			     <GIC_PPI  9 IRQ_TYPE_LEVEL_HIGH>;
+> 	};
+> 
+> Another patch in this series (clocksource/drivers/arm_arch_timer: Default
+> to EL2 virtual timer when running VHE) changes the driver to use the EL2
+> virtual timer by default on VHE systems.
+> 
+> If the kernel uses the EL2 virtual timer on these Realtek SoCs, could it
+> request the wrong interrupt (PPI 9 instead of PPI 12), causing timer
+> interrupts to not be delivered and resulting in a boot hang regression?
 
-> Looking at drivers/pci/controller/dwc/pcie-spacemit-k1.c, the host driver
-> calls devm_regulator_get_enable(dev, "vpcie3v3") during k1_pcie_probe().
-> 
-Right, I think the vpcie3v3 supply should be removed from host driver
+That's definitely odd, as PPI9 is present in two interrupt specifiers
+(timer and GIC). Obviously, that's not possible.
 
-> Without this property on the controller node, won't the driver fall back
-> to a dummy regulator?
-> 
-Currently, yes if above code not removed, it will fallback to dummy
-regulator if no vpcie3v3-supply specified
+I'll add a tentative fix for that in the next round. Maybe Andreas or
+Yu-Chun can check in the meantime?
 
-> Since the spacemit-k1-pcie driver does not currently integrate with the PCI
-> power control framework (by calling pci_pwrctrl_create_devices()), does any
-> driver in the kernel actually control the power supply for the child port node?
-> 
-Yes, the PCIe sub ports node will request the power supply, in 
-drivers/pci/pwrctrl/generic.c:119
- slot_pwrctrl_probe() -> of_regulator_buck_get_all()
-
-> While this issue might be masked on the Banana Pi F3 and Milk-V Jupiter
-> boards because their vpcie3v3 regulators are defined as regulator-always-on,
-> does this change break dynamic power management for the PCIe slots?
-> 
-> Should the host driver be updated to adopt the pci_pwrctrl framework before
-> dropping this property from the device tree?
-> 
-The host driver already adopt pci_pwrctrl framework
-
-> [ ... ]
-> 
-> -- 
-> Sashiko AI review · https://sashiko.dev/#/patchset/20260513-k1-pcie-fix-supply-v1-1-4eecbdd44ebe@kernel.org?part=1
+	M.
 
 -- 
-Yixun Lan (dlan)
+Jazz isn't dead. It just smells funny.
