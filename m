@@ -1,30 +1,66 @@
-Received: from dggsgout11.his.huawei.com (dggsgout11.his.huawei.com [45.249.212.51])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-wr1-f44.google.com (mail-wr1-f44.google.com [209.85.221.44])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 906AE346E46
-	for <sashiko-reviews@lists.linux.dev>; Fri, 15 May 2026 08:22:52 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=45.249.212.51
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0F9213FB7C1
+	for <sashiko-reviews@lists.linux.dev>; Fri, 15 May 2026 08:25:15 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.221.44
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1778833377; cv=none; b=IUWCtNeQRQSuLe8aiVvKOm07fBxssAuZc/wxzRey/Lv5CPZbYcOrBNhA19ilRkeQNfMJXF3RoRaN97YYSE+OsTIvjp1F+FHgDLwVd7VBDNEqb+xFWlSswOxKaaIrvoUbQwDSHmswh93EBYQEFDEGFKvdHnrFRDC/wj7Iyn+YxGo=
+	t=1778833517; cv=none; b=ahDF6EtQtGacTxqzxKXmbaTxL/J+3Bontq8XLtjbjuo1u8lJcfjKiVLsjKKcrGNktgbjG1WRO/b9R8H+GkgKkYp7iy+UtgTKfiHo4DvVdVlZUUjjoyR+ofGYXQT1nJYDOOj1anfoUqixIl54lURjFS3kdi/E6uPpgfK/O1PKgOc=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1778833377; c=relaxed/simple;
-	bh=uGH79Qe5Nxk+XQtAedptezHiJaC3AK/HimWsrPG0n8Q=;
+	s=arc-20240116; t=1778833517; c=relaxed/simple;
+	bh=x7M8QMRLEdW4Rrh+jkBoFBRBtP4oSw/c9kEx6akVmCc=;
 	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=Lx2kNVYMgLIlUrNDeuUi+jAEB/IJS1ngUMC1AE/ArLZQu+P/ObJF9DS2GDtAECwrwKlqDE69XLkQTiGtgb2LagvgAz/xvuSct19gRPcKWvX/33q1j1ahEZXu4n9vKTZi7ppTBQB+dLShlkiVF9Lk7r6Q8fUMw8BpUjWi3S2wp5k=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=huaweicloud.com; spf=pass smtp.mailfrom=huaweicloud.com; arc=none smtp.client-ip=45.249.212.51
-Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=huaweicloud.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=huaweicloud.com
-Received: from mail.maildlp.com (unknown [172.19.163.177])
-	by dggsgout11.his.huawei.com (SkyGuard) with ESMTPS id 4gH0YK2FgSzYQthT
-	for <sashiko-reviews@lists.linux.dev>; Fri, 15 May 2026 16:22:13 +0800 (CST)
-Received: from mail02.huawei.com (unknown [10.116.40.128])
-	by mail.maildlp.com (Postfix) with ESMTP id D5C884057D
-	for <sashiko-reviews@lists.linux.dev>; Fri, 15 May 2026 16:22:48 +0800 (CST)
-Received: from [10.174.176.179] (unknown [10.174.176.179])
-	by APP4 (Coremail) with SMTP id gCh0CgAn71rX1wZqvAV8CQ--.4219S3;
-	Fri, 15 May 2026 16:22:48 +0800 (CST)
-Message-ID: <202055f8-d4a1-4524-a74c-4742562ef036@huaweicloud.com>
-Date: Fri, 15 May 2026 16:22:47 +0800
+	 In-Reply-To:Content-Type; b=Npox8hnCBsFuqNStcdikfkLlKCPZ4C5gS3LYU+Tb1If8d2XND7DNQRLEinDWu1C3J6l2fOVLLpEe7VqddGT8l6F1YbNYVedFUvJJr9QjFGAkLNqE1ka43lWtJIyun16Gvc19IpgE1ztvXhZy497Pp5JPnDwjZoqimFRvVyVCv6o=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=Dy0kXche; arc=none smtp.client-ip=209.85.221.44
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
+Authentication-Results: smtp.subspace.kernel.org;
+	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="Dy0kXche"
+Received: by mail-wr1-f44.google.com with SMTP id ffacd0b85a97d-43eb05b1875so5274032f8f.3
+        for <sashiko-reviews@lists.linux.dev>; Fri, 15 May 2026 01:25:15 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linaro.org; s=google; t=1778833514; x=1779438314; darn=lists.linux.dev;
+        h=content-transfer-encoding:in-reply-to:from:content-language
+         :references:cc:to:subject:user-agent:mime-version:date:message-id
+         :from:to:cc:subject:date:message-id:reply-to;
+        bh=B8R9wMI16Tg8iAgIRKSdM3jyUIf/EyyLOvedUo+31Xs=;
+        b=Dy0kXcheaKhjVAAG5uJqp3XSUCnL0+frpqVfB0vU4+1CldUaijQpYAi32XPOkg4JK4
+         UUYMR7azxr2NpyvTgSLawJXuLLXL2+SaKeC8GNB2U3NZEJWmTBBZ/241dvH1ksGK4IQJ
+         /NE4bJFoMgZfFDsf5oQvwwEODmFEqMTeCEWPVPYJM/seohaVTQZy/Wm/XaiFBv021rom
+         C1uKuN7Wplkr969ijx0PiFIi+oveiJlIRSmCNWGjQAgzFCKl3VvqWKEJlYBpk6JEZSfW
+         ijFRNdt6XO1CpkcGWLowoJ93E7I5KnoJrQavJz0BUXMJjOXnW6hYB+8rpjf6bc+Dbx0N
+         zXvw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20251104; t=1778833514; x=1779438314;
+        h=content-transfer-encoding:in-reply-to:from:content-language
+         :references:cc:to:subject:user-agent:mime-version:date:message-id
+         :x-gm-gg:x-gm-message-state:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=B8R9wMI16Tg8iAgIRKSdM3jyUIf/EyyLOvedUo+31Xs=;
+        b=TlVEzD4URMMGBgUSStOmozMfXG8dCz3UHLKK20b5chKD9GKfKtfUBE+VvuWFi9b01T
+         Q24GTGUjZ5EB3c3bO1XaqD7EbUJhe5UIEvCdjCU8o1MIjxY1aOyMTK58w9VHbU/qC0XJ
+         uDW/jFjQvRKsuo9kR1q0aCNnGWCv0IjmClNOBJuBABhwR1u9OBvfZlOiicvY5qNGRrFl
+         xUUvfj32bE4qnvFwIFTXWDeYJ4ipnF3SDMtM6kYkNusSN8cvAiVkztb0awtvbicJ90qI
+         JBJnagy1hAOqAH0fpnOGkTkyiUsRNCtl2cIoGq+xYExjf14kt49o8o3YtY8RRROtj8fu
+         +sjQ==
+X-Gm-Message-State: AOJu0Yx/pQ/exAO6jEMTUh704ZQlNWTH+a6f7Q6U/AjccHbCAwfbKuyk
+	bv9HHxpn/74NizENV6az1qRrrYk5HezHyBLGQjrx+kL6MYBnRtuxZH8pYh7j+1ftIXW3U9bS92V
+	4VTtkPyc=
+X-Gm-Gg: Acq92OEAnUCEJ2Xf3wCjWu4TsYX4P476oqqQILfk3vRkJHTXgSPuVdpLRYJaRNIhuNL
+	b09thP/dY5jGLIF2Z+lDbmG5159XKOguRinsh/afPCOMu47nVJ2p5OEaSq2M9sYkvly7U+RCQ1h
+	ftGdDCG4i8368JVbcy4aL0nTAuXZWOHYrN/wKOptL2BAyVkIWwYgZ2XC0zsmS18sqN3hG5Vbkbe
+	lXeGjh3YKPzaLmDCSKCBNN2YdI/PbZFmv6lNiDXiAVnIxejz4Ca4tbP4tKtwSgK8PmuSRY/m743
+	HSOMPWfkDn9S/eZQPwWfuUubHudv/5oYIERnC9grrx8nAlTbzDF3x3LrrSG2e/VLS7R9edGDvQK
+	dhzhajd7ElsKdOjTCm4utQbkIXuzmvBbq/L2e4K8c+eWzCCl/lFvYT1xeWvWuul2Vfu+544fhk3
+	EExhniuV7YilJ57/4qiEUxP9rEKRf/IifTX/zBwdE=
+X-Received: by 2002:a05:6000:2c12:b0:452:87de:d3a6 with SMTP id ffacd0b85a97d-45e5c6048d1mr3580229f8f.33.1778833514418;
+        Fri, 15 May 2026 01:25:14 -0700 (PDT)
+Received: from [192.168.1.3] ([185.48.77.170])
+        by smtp.gmail.com with ESMTPSA id ffacd0b85a97d-45d9ec3ac86sm13115730f8f.14.2026.05.15.01.25.13
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Fri, 15 May 2026 01:25:14 -0700 (PDT)
+Message-ID: <69034d26-e886-48f2-a20b-524854a5c00f@linaro.org>
+Date: Fri, 15 May 2026 09:25:13 +0100
 Precedence: bulk
 X-Mailing-List: sashiko-reviews@lists.linux.dev
 List-Id: <sashiko-reviews.lists.linux.dev>
@@ -32,125 +68,94 @@ List-Subscribe: <mailto:sashiko-reviews+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:sashiko-reviews+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH] blk-cgroup: Fix UAF in blkcg_activate_policy() by using
- blkg_tryget()
+Subject: Re: [PATCH 5/6] tools/build: selftests: Allow versioning LLVM lld
 To: sashiko-reviews@lists.linux.dev
-Cc: tj@kernel.org, mkoutny@suse.com, hannes@cmpxchg.org
-References: <20260515061516.3461291-1-wozizhi@huaweicloud.com>
- <20260515065057.B6856C2BCB0@smtp.kernel.org>
-From: Zizhi Wo <wozizhi@huaweicloud.com>
-In-Reply-To: <20260515065057.B6856C2BCB0@smtp.kernel.org>
+Cc: dmitry.torokhov@gmail.com, bpf@vger.kernel.org,
+ linux-input@vger.kernel.org, linux-perf-users@vger.kernel.org
+References: <20260514-james-perf-llvm-version-v1-5-6cac1a9a4c8d@linaro.org>
+ <20260514184543.C6400C2BCB3@smtp.kernel.org>
+Content-Language: en-US
+From: James Clark <james.clark@linaro.org>
+In-Reply-To: <20260514184543.C6400C2BCB3@smtp.kernel.org>
 Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 8bit
-X-CM-TRANSID:gCh0CgAn71rX1wZqvAV8CQ--.4219S3
-X-Coremail-Antispam: 1UD129KBjvJXoWxGFyrKr43AryDJw1ktF4Utwb_yoWrGrWDp3
-	y5W390k3yDXF9aqF4UZa48X34Fka1rJrWUtrWxK3s5CrWagr1Iga12kr4qvrWfJFs7JFyY
-	qr10qw1qkF45u3DanT9S1TB71UUUUU7qnTZGkaVYY2UrUUUUjbIjqfuFe4nvWSU5nxnvy2
-	9KBjDU0xBIdaVrnRJUUUgqb4IE77IF4wAFF20E14v26r1j6r4UM7CY07I20VC2zVCF04k2
-	6cxKx2IYs7xG6rWj6s0DM7CIcVAFz4kK6r1j6r18M28lY4IEw2IIxxk0rwA2F7IY1VAKz4
-	vEj48ve4kI8wA2z4x0Y4vE2Ix0cI8IcVAFwI0_tr0E3s1l84ACjcxK6xIIjxv20xvEc7Cj
-	xVAFwI0_GcCE3s1l84ACjcxK6I8E87Iv67AKxVW0oVCq3wA2z4x0Y4vEx4A2jsIEc7CjxV
-	AFwI0_GcCE3s1le2I262IYc4CY6c8Ij28IcVAaY2xG8wAqx4xG64xvF2IEw4CE5I8CrVC2
-	j2WlYx0E2Ix0cI8IcVAFwI0_Jr0_Jr4lYx0Ex4A2jsIE14v26r1j6r4UMcvjeVCFs4IE7x
-	kEbVWUJVW8JwACjcxG0xvEwIxGrwCF04k20xvY0x0EwIxGrwCFx2IqxVCFs4IE7xkEbVWU
-	JVW8JwC20s026c02F40E14v26r1j6r18MI8I3I0E7480Y4vE14v26r106r1rMI8E67AF67
-	kF1VAFwI0_JF0_Jw1lIxkGc2Ij64vIr41lIxAIcVC0I7IYx2IY67AKxVWUJVWUCwCI42IY
-	6xIIjxv20xvEc7CjxVAFwI0_Jr0_Gr1lIxAIcVCF04k26cxKx2IYs7xG6r1j6r1xMIIF0x
-	vEx4A2jsIE14v26r1j6r4UMIIF0xvEx4A2jsIEc7CjxVAFwI0_Gr0_Gr1UYxBIdaVFxhVj
-	vjDU0xZFpf9x07UE-erUUUUU=
-X-CM-SenderInfo: pzr2x6tkl6x35dzhxuhorxvhhfrp/
+Content-Transfer-Encoding: 7bit
 
 
 
-在 2026/5/15 14:50, sashiko-bot@kernel.org 写道:
-> Thank you for your contribution! Sashiko AI review found 2 potential issue(s) to consider:
-> - [High] The patch's use of blkg_tryget() fails to prevent attaching a new policy data (pd) to a dying blkg, leading to missing pd_offline_fn() calls and Use-After-Free.
-> - [High] A data race between the enomem error path in blkcg_activate_policy() and blkg_free_workfn() leads to a Double Free of policy data (pd).
+On 14/05/2026 7:45 pm, sashiko-bot@kernel.org wrote:
+> Thank you for your contribution! Sashiko AI review found 1 potential issue(s) to consider:
+> - [High] Using `-fuse-ld=ld.lld` breaks compilation of BPF selftests with GCC.
 > --
 > 
-> commit da91b1cb03d7c713258f7a3e519577dc77ff3991
-> Author: Zizhi Wo <wozizhi@huaweicloud.com>
+> commit 18e1876d18fad631b521da817483ba47293a9020
+> Author: James Clark <james.clark@linaro.org>
 > 
-> blk-cgroup: Fix UAF in blkcg_activate_policy() by using blkg_tryget()
+> tools/build: selftests: Allow versioning LLVM lld
 > 
-> This commit attempts to fix a use-after-free issue by replacing blkg_get()
-> with blkg_tryget() to skip dying blkgs during policy activation, and hoists
-> the ref acquisition to the top of the loop.
+> This commit updates Makefile.include to add an LLD variable, matching the
+> rest of the LLVM toolchain. It modifies the BPF selftests Makefile to use
+> this new LLD variable instead of hardcoding lld.
 > 
->> diff --git a/block/blk-cgroup.c b/block/blk-cgroup.c
->> index 554c87bb4a865..03b6ce9348488 100644
->> --- a/block/blk-cgroup.c
->> +++ b/block/blk-cgroup.c
->> @@ -1621,6 +1621,10 @@ int blkcg_activate_policy(struct gendisk *disk, const struct blkcg_policy *pol)
->>   		if (blkg->pd[pol->plid])
->>   			continue;
->>   
->> +		/* a destroyed blkg may still be on q->blkg_list; skip it via tryget */
->> +		if (!blkg_tryget(blkg))
->> +			continue;
-> 
-> Does blkg_tryget() adequately filter out destroyed blkgs here?
-> 
-> Since blkg_tryget() wraps percpu_ref_tryget(), it succeeds as long as the
-> refcount is non-zero, even if the percpu ref has been killed.
-> 
-> If a memory allocation fails below, the loop drops the queue_lock and holds a
-> reference via pinned_blkg. If a concurrent cgroup removal calls
-> blkg_destroy() while the lock is dropped, the blkg is killed but its
-> refcount remains greater than zero.
-> 
-> When the loop retries, blkg_tryget() will succeed on this killed blkg. This
-> allows the new policy data to be attached and onlined. Because
-> blkg_destroy() has already run, pd_offline_fn() will never be called for
-> this new policy data, which can lead to a use-after-free when the refcount
-> finally drops to zero and blkg_free_workfn() cleans it up without unlinking
-> it from scheduler lists.
-> 
+>> diff --git a/tools/scripts/Makefile.include b/tools/scripts/Makefile.include
+>> index 380ad84ac51e6..5c2d505cba62b 100644
+>> --- a/tools/scripts/Makefile.include
+>> +++ b/tools/scripts/Makefile.include
 > [ ... ]
+>> @@ -91,6 +92,7 @@ else
+>>     # Some tools still require Clang, LLC and/or LLVM utils
+>>     $(call allow-override,CLANG,clang)
+>>     $(call allow-override,LLC,llc)
+>> +  $(call allow-override,LLD,ld.lld)
+> 
+> Could setting LLD to ld.lld when not using LLVM cause issues for BPF
+> selftests compilation with GCC?
+> 
 
-Indeed, the queue_lock is released midway, causing the blkg to be
-killed, and the allocated pd still cannot go offline. :(
+$(LLD) is only used in one place, and it's used with $(CLANG) so this is 
+impossible.
 
-Is it necessary to introduce a function like this to avoid the issue?
-
-static inline bool blkg_tryget_live(struct blkcg_gq *blkg)
-{
-     return blkg && percpu_ref_tryget_live(&blkg->refcnt);
-}
-
->> @@ -1666,6 +1669,8 @@ int blkcg_activate_policy(struct gendisk *disk, const struct blkcg_policy *pol)
->>   		pd->online = true;
+>>     $(call allow-override,LLVM_CONFIG,llvm-config)
+>>     $(call allow-override,LLVM_OBJCOPY,llvm-objcopy)
+>>     $(call allow-override,LLVM_STRIP,llvm-strip)
+>> diff --git a/tools/testing/selftests/bpf/Makefile b/tools/testing/selftests/bpf/Makefile
+>> index 6ef6872adbc3e..44ba829e5d4dd 100644
+>> --- a/tools/testing/selftests/bpf/Makefile
+>> +++ b/tools/testing/selftests/bpf/Makefile
+>> @@ -245,9 +245,9 @@ $(OUTPUT)/%:%.c
 >>   
->>   		spin_unlock(&blkg->blkcg->lock);
->> +
->> +		blkg_put(blkg);
->>   	}
+>>   # LLVM's ld.lld doesn't support all the architectures, so use it only on x86
+>>   ifeq ($(SRCARCH),$(filter $(SRCARCH),x86 riscv))
+>> -LLD := lld
+>> +USE_LD := $(LLD)
+>>   else
+>> -LLD := $(shell command -v $(LD))
+>> +USE_LD := $(shell command -v $(LD))
+>>   endif
+>>   
+>>   # Filter out -static for liburandom_read.so and its dependent targets so that static builds
+>> @@ -258,7 +258,7 @@ $(OUTPUT)/liburandom_read.so: urandom_read_lib1.c urandom_read_lib2.c liburandom
+>>   		     $(filter-out -static,$(CFLAGS) $(LDFLAGS)) \
+>>   		     $(filter %.c,$^) $(filter-out -static,$(LDLIBS)) \
+>>   		     -Wno-unused-command-line-argument \
+>> -		     -fuse-ld=$(LLD) -Wl,-znoseparate-code -Wl,--build-id=sha1 \
+>> +		     -fuse-ld=$(USE_LD) -Wl,-znoseparate-code -Wl,--build-id=sha1 \
 > 
-> Can the addition of this blkg_put() inside the loop trigger a double-free
-> race with the enomem error path?
+> When LLVM=1 is not set, CC defaults to gcc. The Makefile uses
+> $(CC) ... -fuse-ld=$(USE_LD) to link liburandom_read.so.
 > 
-> If the refcount drops to zero here, blkg_free_workfn() is scheduled. If a
-
-This situation seems unlikely to occur because:
-
-   1) both blkg_tryget() and the final blkg_put() are executed within the
-   queue_lock, preventing concurrency with blkg_destroy().
-
-   2) the initial blkg_tryget() ensures that after the blkg_put() call
-   here, the blkg still holds a reference count.
-
-> subsequent allocation fails and the function jumps to the enomem path, that
-> path iterates over q->blkg_list, locks the queue_lock and blkcg->lock,
-> calls pol->pd_free_fn(pd), and then sets blkg->pd[pol->plid] = NULL.
+> Because USE_LD evaluates to ld.lld, gcc receives -fuse-ld=ld.lld.
 > 
-> Concurrently, blkg_free_workfn() only acquires q->blkcg_mutex. It delays
-> removing the blkg from q->blkg_list until after freeing all policy data.
+> However, GCC's command-line option parser is strictly hardcoded to accept
+> only specific linker names (lld, bfd, gold, mold). It does not recognize
+> -fuse-ld=ld.lld or absolute paths, and fails with an error like:
 > 
-> Since the two paths use different locks, they do not synchronize. Both paths
-> could read the same non-null pd pointer and call pd_free_fn() on it,
-> resulting in a double-free.
+> gcc: error: unrecognized command-line option '-fuse-ld=ld.lld'; did you mean '-fuse-ld=lld'?
+> 
+> Does this regression break the default GCC build of BPF selftests on x86
+> and riscv architectures?
 > 
 
-Thanks,
-Zizhi Wo
+Same as above. $(CC) is not used with $(LLD). You'd probably want to use 
+$(LD) in a $(CC) build command anyway.
+
 
