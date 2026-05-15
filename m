@@ -1,139 +1,216 @@
-Received: from mout-y-111.mailbox.org (mout-y-111.mailbox.org [91.198.250.236])
+Received: from mail.cjdns.fr (mail.cjdns.fr [5.135.140.105])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E4E2030B50F
-	for <sashiko-reviews@lists.linux.dev>; Fri, 15 May 2026 13:12:51 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=91.198.250.236
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7325436EA8D
+	for <sashiko-reviews@lists.linux.dev>; Fri, 15 May 2026 13:34:58 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=5.135.140.105
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1778850773; cv=none; b=QymjJ4ZgjRxY+s1CGWMuJeBnJKXzYv9JMsNS/7psr3zTWMLXVodBjsFQsWTjNMjAAcnS7u5LZ1jWG977JpTM6qQOqTrxiFQ9pN8e8/0EJi0mgBbpSe4d+ayCLLGm+RdNL0Zg7i1DPsfg2zA9DyZ8oJyRjnV72rGQ50o2qAoFBlY=
+	t=1778852100; cv=none; b=HxqSOgvWLHkXSDqd1WL9ph0BvS9g9VgmbPnqbBSbgFqKwdLL+t5lAPTdI/7T1VhGI3HQjOto9yfDq2tJpM7FHLJzyP5Qgc9NhR63nXLgrX7BfT8+t3yCWsT7jvZEpaI8uSDu3vMucmaHLI2WUZFPe0m3QY85mRIl2XGoXy4FSHE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1778850773; c=relaxed/simple;
-	bh=woKa/z5tR3VSNXhWG5wN26/BLRodpzbqh0NC8VnTJos=;
-	h=Date:From:To:Message-ID:In-Reply-To:References:Subject:
-	 MIME-Version:Content-Type; b=XxOs7Wl6niRhA9ZF9UHE3ggHD1PLl/gHjsS66PPYi8DBflsfYhZh5/LyOB938K0OMO8k7HrNb58HL1zWikjEi494GfR37lYZPKBw5Z4SsodXfxG2s9Z9EbXrV8hF7zV+dQFeVE9J6sG1FnHYDXIQ0NqfY6Hj5V8JnwgDtOO5x9M=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=mailbox.org; spf=pass smtp.mailfrom=mailbox.org; dkim=pass (2048-bit key) header.d=mailbox.org header.i=@mailbox.org header.b=Gx8aCw/a; arc=none smtp.client-ip=91.198.250.236
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=mailbox.org
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=mailbox.org
+	s=arc-20240116; t=1778852100; c=relaxed/simple;
+	bh=NCET79qZworMeGxlUtbnqOq50zq63+sJvrMAPaiTqmg=;
+	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
+	 In-Reply-To:Content-Type; b=SWxLP2F6++o+MR+krWO6tQhoZi4ego/yI8kiRq/qn4JV5fEanxHLj0LvayIqeLq9uSqS6wAD+QuuT95rT4D35e2q6kZiA4lHSjy5hGc1wXnmyH0oeOlLvQLJhdVsBN5427ixOjIKnmi8HvPOdK3bCDNJOt59h5+GK+UvO5DFuPQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=cjdns.fr; spf=none smtp.mailfrom=cjdns.fr; dkim=pass (2048-bit key) header.d=cjdns.fr header.i=@cjdns.fr header.b=bknCUXBu; arc=none smtp.client-ip=5.135.140.105
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=cjdns.fr
+Authentication-Results: smtp.subspace.kernel.org; spf=none smtp.mailfrom=cjdns.fr
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=mailbox.org header.i=@mailbox.org header.b="Gx8aCw/a"
-Received: from smtp2.mailbox.org (smtp2.mailbox.org [IPv6:2001:67c:2050:b231:465::2])
-	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
-	 key-exchange X25519 server-signature RSA-PSS (4096 bits) server-digest SHA256)
-	(No client certificate requested)
-	by mout-y-111.mailbox.org (Postfix) with ESMTPS id 4gH6rn3p6Mz9ygk
-	for <sashiko-reviews@lists.linux.dev>; Fri, 15 May 2026 15:06:01 +0200 (CEST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=mailbox.org; s=mail20150812;
-	t=1778850361;
-	h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
-	 to:to:cc:mime-version:mime-version:content-type:content-type:
-	 content-transfer-encoding:content-transfer-encoding:
-	 in-reply-to:in-reply-to:references:references;
-	bh=xoTfyT/uGT71dbeAF6gJOp2mqEkjD8iKlr75jcg2G68=;
-	b=Gx8aCw/aIVeTuYaeKOyBWj4wpPRphqwZgxwTDdzaRo6OIZ2xhfQltcMYsi9h9CoAEabG4p
-	lAFlecRSaa+SVV91iLtbQuDVo+V/IiM9zpISpze4k3wHaa/d+IYKODadfEmM9t9xFNKMS9
-	AmI/IaE1dPe3m2n8lPPQ6lm/YrKrHWArWqpSN+NtVVB++7aT7Spld+v2qhAbIAXTEx1oPF
-	2ehq4LXIiHq5RAejPf9DBTE8GQJK+fYkcOei2kgiuDYyNhFvk9kSzSobA10KqmAe25ZksI
-	Pj46Zzx8F/ikTqQZU3xlR0cj2qtAiEzzkzVSVlHF4Bz0qwsYklahv3OXfG3TqQ==
-Date: Fri, 15 May 2026 21:06:00 +0800 (CST)
-From: Ming Qing <a0yami@mailbox.org>
-To: sashiko-reviews@lists.linux.dev
-Message-ID: <1845890461.615194.1778850360629@app.mailbox.org>
-In-Reply-To: <20260515125231.BD66FC2BCB0@smtp.kernel.org>
-References: <20260515122952.59209-1-a0yami@mailbox.org>
- <20260515125231.BD66FC2BCB0@smtp.kernel.org>
-Subject: Re: [PATCH] cgroup/rstat: validate cpu before css_rstat_cpu()
- access
+	dkim=pass (2048-bit key) header.d=cjdns.fr header.i=@cjdns.fr header.b="bknCUXBu"
+Received: from [127.0.0.1] (localhost [127.0.0.1]) by localhost (Mailerdaemon) with ESMTPSA id A16943E2A72;
+	Fri, 15 May 2026 15:34:54 +0200 (CEST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=cjdns.fr; s=dkim;
+	t=1778852095; h=from:subject:date:message-id:to:cc:mime-version:content-type:
+	 content-transfer-encoding:content-language:in-reply-to:references;
+	bh=A5zmeGSN+y1eB9ovPme0Em/fslZDHREQBQZ+/qd911k=;
+	b=bknCUXBuLti5q0f9ZMuKNon9Wcm1gf0EoenQcEslk0B5FVXdV+2X2kW0LD9tnYtzibTkzY
+	2xmgv3xDCCMYbiFyncIidH+FzGnveyQ9thlEN4oCeSsG6VqhyR1KtZIx11kh0cNP2LEPQ5
+	ZrBt3OCBMS5GNfu/aU8QHq4BGZC3eX1fLnVITWfH+yo1U74DVfsD5s7umqPfxFYVVXlfru
+	bqAsoz5pCG1meAVhV9rC21jzByOt2z3ZBSf5V5wT9nDvLgEWeJ309jwCRQ7xBVOroKXlTU
+	DqNxRDOZsXpIxE49PP514pWOB41vutfRJt4cAOe7a0+yAPL+kNrQPBns2CsEKA==
+Message-ID: <22d7274b-640a-470e-86b0-997a4b6e102d@cjdns.fr>
+Date: Fri, 15 May 2026 15:34:53 +0200
 Precedence: bulk
 X-Mailing-List: sashiko-reviews@lists.linux.dev
 List-Id: <sashiko-reviews.lists.linux.dev>
 List-Subscribe: <mailto:sashiko-reviews+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:sashiko-reviews+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: quoted-printable
-X-Priority: 3
-Importance: Normal
-X-MBO-RS-META: bj7zn7qu9qmg19mptxypz46znx4p1rq8
-X-MBO-RS-ID: b0e87f435c694be56c8
+User-Agent: Mozilla Thunderbird Beta
+Subject: Re: [PATCH v7 2/2] PCI: mediatek: Add support for EcoNet EN7528 SoC
+To: sashiko-reviews@lists.linux.dev, Bjorn Helgaas <helgaas@kernel.org>
+Cc: robh@kernel.org, devicetree@vger.kernel.org, linux-pci@vger.kernel.org,
+ krzk+dt@kernel.org, conor+dt@kernel.org
+References: <20260514151318.3444959-3-cjd@cjdns.fr>
+ <20260514210141.2DEF2C2BCB3@smtp.kernel.org>
+Content-Language: en-US
+From: Caleb James DeLisle <cjd@cjdns.fr>
+In-Reply-To: <20260514210141.2DEF2C2BCB3@smtp.kernel.org>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 8bit
+X-Last-TLS-Session-Version: TLSv1.3
 
-Thanks for taking a look.
+Regarding this, I could use some advice. Bjorn I tagged you in because 
+you're probably best to have an opinion here.
 
-I think this is separate from the bug fixed by this patch. The reproducer p=
-asses the self css obtained from the cgroup iterator, i.e. a live cgroup ob=
-ject. For cgroup::self, css_rstat_init(&cgrp->self) is called during cgroup=
- creation before the cgroup is committed and made visible. For subsystem cs=
-ses, css_create() calls css_rstat_init(css) before linking the css into the=
- hierarchy/id and before online_css().
 
-So BPF-visible live css objects which use rstat should already have css->rs=
-tat_cpu initialized. Also, on current kernels, kfunc pointer arguments are =
-trusted by default; the absence of an explicit KF_TRUSTED_ARGS flag does no=
-t mean that an arbitrary css pointer can be passed to the kfunc.
-
-The issue fixed here is the missing validation of the caller-provided cpu a=
-rgument before css_rstat_cpu(css, cpu). If there is a concrete tracing path=
- which can pass a partially initialized css to this kfunc, that would be a =
-separate bug and should be handled separately.
-
-> =E5=9C=A8 2026/05/15 20:52 CST sashiko-bot@kernel.org =E5=86=99=E9=81=93:
->=20
-> =20
-> Thank you for your contribution! Sashiko AI review found 1 potential issu=
-e(s) to consider:
-> - [High] The `css_rstat_updated` kfunc is vulnerable to a kernel panic if=
- a BPF tracing program passes a `css` pointer where `css->rstat_cpu` is uni=
-nitialized (NULL).
+On 14/05/2026 23:01, sashiko-bot@kernel.org wrote:
+> Thank you for your contribution! Sashiko AI review found 5 potential issue(s) to consider:
+> - [High] mtk_pcie_retrain() iterates the PCI bus without locks and holds an unreferenced device pointer, leading to a Use-After-Free.
+> - [High] mtk_pcie_retrain() only retrains the first root port, silently ignoring any other ports on the same host.
+> - [High] Link retraining occurs after downstream endpoint drivers are probed, causing a race condition that can lead to system crashes.
+> - [High] Calling virt_to_phys() on an __iomem pointer causes undefined behavior and potential memory corruption.
+> - [Medium] The IS_BUILTIN() workaround silently degrades hardware capabilities when the driver is compiled as a module.
 > --
->=20
-> commit e8d546639085dcc3eee578c0dace07ba513cb482
-> Author: Qing Ming <a0yami@mailbox.org>
->=20
-> cgroup/rstat: validate cpu before css_rstat_cpu() access
->=20
-> This commit adds a bounds and validity check for the cpu parameter in
-> css_rstat_updated() to prevent an out-of-bounds array access when called
-> from a BPF program.
->=20
-> > diff --git a/kernel/cgroup/rstat.c b/kernel/cgroup/rstat.c
-> > --- a/kernel/cgroup/rstat.c
-> > +++ b/kernel/cgroup/rstat.c
+>
+> commit 08338fe344200ef55148194108ab3b65616af7c7
+> Author: Caleb James DeLisle <cjd@cjdns.fr>
+> Subject: PCI: mediatek: Add support for EcoNet EN7528 SoC
+>
+> This commit adds support for the PCIe controller found on EcoNet EN7528 SoCs.
+> It introduces a hardware quirk to retrain the link after startup, as some
+> ports capable of Gen2 operation will initially start at Gen1 speeds.
+>
+>> diff --git a/drivers/pci/controller/pcie-mediatek.c b/drivers/pci/controller/pcie-mediatek.c
+>> --- a/drivers/pci/controller/pcie-mediatek.c
+>> +++ b/drivers/pci/controller/pcie-mediatek.c
 > [ ... ]
-> > @@ -90,6 +91,9 @@ __bpf_kfunc void css_rstat_updated(struct cgroup_subs=
-ys_state *css, int cpu)
-> >  =09     !IS_ENABLED(CONFIG_ARCH_HAS_NMI_SAFE_THIS_CPU_OPS)) && in_nmi(=
-))
-> >  =09=09return;
-> > =20
-> > +=09if (unlikely(cpu < 0 || cpu >=3D nr_cpu_ids || !cpu_possible(cpu)))
-> > +=09=09return;
-> > +
-> >  =09rstatc =3D css_rstat_cpu(css, cpu);
->=20
-> Could this still lead to a panic if css->rstat_cpu is uninitialized?
->=20
-> The existing check at the top of this function:
->=20
->     if (!css_uses_rstat(css))
->         return;
->=20
-> only verifies that css->ss->css_rstat_flush is defined. It doesn't appear
-> to check if the per-cpu memory css->rstat_cpu has actually been allocated=
-.
->=20
-> If a BPF program intercepts a css object during allocation (for example, =
-by
-> tracing init_and_link_css before css_rstat_init completes), or if an
-> untrusted pointer is passed because the kfunc lacks KF_TRUSTED_ARGS,
-> css->rstat_cpu could be NULL.
->=20
-> In that scenario, css_rstat_cpu() would compute per_cpu_ptr(NULL, cpu),
-> which returns an offset from NULL rather than a valid memory address. The
-> subsequent call to llist_on_list() would then dereference this invalid
-> address.
->=20
-> Should there be an explicit check for !css->rstat_cpu to safely handle
-> uninitialized rstat state from BPF callers?
->=20
-> --=20
-> Sashiko AI review =C2=B7 https://sashiko.dev/#/patchset/20260515122952.59=
-209-1-a0yami@mailbox.org?part=3D1
+>> @@ -753,6 +764,135 @@ static int mtk_pcie_startup_port_v2(struct mtk_pcie_port *port)
+> [ ... ]
+>> +	/* Activate INTx interrupts */
+>> +	val = readl(port->base + PCIE_INT_MASK);
+>> +	val &= ~INTX_MASK;
+>> +	writel(val, port->base + PCIE_INT_MASK);
+>> +
+>> +	if (IS_ENABLED(CONFIG_PCI_MSI))
+>> +		mtk_pcie_enable_msi(port);
+> Is it safe to call mtk_pcie_enable_msi() here? Looking at
+> mtk_pcie_enable_msi(), it calculates the message address using:
+>
+>      virt_to_phys(port->base + PCIE_MSI_VECTOR)
+>
+> Since port->base is an ioremapped __iomem pointer, passing it to
+> virt_to_phys() produces undefined behavior and could return a garbage
+> physical address. If this address overlaps with valid physical RAM mapped
+> for DMA, could memory writes from the PCIe endpoint corrupt random system
+> memory?
+Learned a few things from that note. Seems ioremap is just giving us a 
+KSEG1 address and virt_to_phys() is getting the real address back. In 
+any case I'm just doing what the driver already does.
+>
+>> +
+>> +	/* Set AHB to PCIe translation windows */
+> [ ... ]
+>> +static int mtk_pcie_retrain(struct device *dev, struct pci_host_bridge *host)
+>> +{
+>> +	struct pci_dev *rp;
+>> +	int ret = -ENOENT;
+>> +	u16 lnksta = 0;
+>> +	u32 speed;
+>> +
+>> +	/* Should already have been warned about during startup_port */
+>> +	if (!IS_BUILTIN(CONFIG_PCIE_MEDIATEK))
+>> +		return 0;
+>> +
+>> +	for_each_pci_bridge(rp, host->bus) {
+>> +		if (pci_pcie_type(rp) == PCI_EXP_TYPE_ROOT_PORT)
+>> +			goto found_port;
+>> +	}
+>> +
+>> +	/* Should not happen */
+>> +	return dev_err_probe(dev, ret, "root port not found\n");
+>> +
+>> +found_port:
+> The commit message mentions that it is most convenient to retrain every port
+> after startup. Does the goto found_port here unintentionally skip all
+> subsequent root ports by breaking out of the loop after the first match?
+There aren't any.
+>
+> Also, is it safe to traverse host->bus->devices via for_each_pci_bridge()
+> without holding the pci_bus_sem read lock? If a device is concurrently added
+> or removed, this might lead to list corruption.
+>
+> Finally, pcie_retrain_link() is a sleepable function. Because the code does
+> not acquire a reference to the root port via pci_dev_get() before sleeping,
+> could a concurrent removal event free the pci_dev structure and result in a
+> use-after-free?
+
+
+Okay here's the one I have a question about:
+
+There's a bunch of related issues here, and I don't see any way to 
+perfectly resolve all of them without moving retrain up before 
+pci_host_probe(), but as noted previously without a mapped bus I can't 
+just call pcie_retrain_link() and I have to - at worst - manually find 
+the registers which is an annoying amount of additional code.
+
+ From the vendor code, it looks like it should be about 50-70 lines of 
+code to do this manually. The question is, is this race adding more 
+complexity than that code?
+
+I think wrapping the mtk_pcie_retrain() call in a 
+pci_lock_rescan_remove() lock should stop any downstream probing while 
+pcie_retrain_link() sleeps, but if it happens that a downstream device 
+ends up probing on a different CPU, in the moment 
+between pci_host_probe() and pci_lock_rescan_remove(), we still have the 
+problem of retraining while the device is setting up. Though this is 
+admittedly a pretty tiny race window.
+
+So I think the options are:
+
+1. Do nothing
+
+2. Add pci_lock_rescan_remove() - I'm not informed enough to know if 
+this can introduce other issues...
+
+3. Give up on using pcie_retrain_link() and do it manually before 
+pci_host_probe()
+
+
+I'm leaning toward #2 but I also don't know what I don't know, so I 
+could use a little advice.
+
+
+
+>
+>> +
+>> +#if IS_BUILTIN(CONFIG_PCIE_MEDIATEK)
+>> +	ret = pcie_retrain_link(rp, true);
+>> +#endif
+> Does this silently degrade hardware capabilities when the driver is compiled
+> as a loadable module? The Kconfig definition allows CONFIG_PCIE_MEDIATEK to
+> be a tristate module, so users compiling it as a module might find their PCIe
+> devices permanently stuck at Gen1 speeds.
+Handled in the if statement above, noted in previous version of the patch.
+>
+>> +
+>> +	if (ret)
+> [ ... ]
+>> @@ -1149,6 +1289,13 @@ static int mtk_pcie_probe(struct platform_device *pdev)
+>>   	if (err)
+>>   		goto put_resources;
+>>   
+>> +	/*
+>> +	 * Ignore error because pci_host_probe() was already called, and in any
+>> +	 * case it is possible that the port will still work as Gen1.
+>> +	 */
+>> +	if (pcie->soc->quirks & MTK_PCIE_RETRAIN)
+>> +		mtk_pcie_retrain(dev, host);
+>> +
+>>   	return 0;
+> Does retraining the link at this stage introduce a race condition with
+> downstream endpoints?
+>
+> By the time pci_host_probe() completes successfully, the PCIe bus is fully
+> enumerated and downstream endpoint drivers (such as NVMe or WiFi) have been
+> probed. If those drivers are actively issuing MMIO or DMA requests, forcing
+> the physical link into the Recovery state could cause PCIe completion timeouts
+> and potentially lead to fatal kernel crashes.
+
+Issue noted above.
+
+
+Thanks,
+
+Caleb
+
+
