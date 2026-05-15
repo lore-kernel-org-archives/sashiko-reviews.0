@@ -1,144 +1,130 @@
-Received: from mail-pl1-f175.google.com (mail-pl1-f175.google.com [209.85.214.175])
+Received: from mail-wr1-f42.google.com (mail-wr1-f42.google.com [209.85.221.42])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3BB903806DC
-	for <sashiko-reviews@lists.linux.dev>; Fri, 15 May 2026 19:40:34 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=pass smtp.client-ip=209.85.214.175
-ARC-Seal:i=2; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1778874035; cv=pass; b=MrBymc5dJexEabVUA5ZyAmcFzznsEuSLVXtGGozJylB14tUMD0E0+aCpOJAZ8kNK4r4DLRhhFnRsekIKHOumhAFs9xUnPfETmdrS4m7CLknAnDNoEo9ZpDlF3Hrv6aWi89EytbfCczMpbCROS0l8z72NBAxUwn9PxVfwRMms+oY=
-ARC-Message-Signature:i=2; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1778874035; c=relaxed/simple;
-	bh=YKwe6jSULfstrnXD5pmaH7VOhInZQUPQ48ryfkK9oy0=;
-	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
-	 To:Cc:Content-Type; b=lgw18UTRxGCSoICQX5VdzSeQ2/FMuUoIJTUeocPwD7HJ+hsSE5utB8AOXf4/dD7Nt7WmSNRfUee1lhjRaDk/jTzp338Ud9cnr5RrU8hKRRjdu+f8Ek5TVOwnzUVaazBMEZSqySdx7VF4JjLqcSB19xCtCOEK0Avnu97r6ndZv5s=
-ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=google.com; spf=pass smtp.mailfrom=google.com; dkim=pass (2048-bit key) header.d=google.com header.i=@google.com header.b=eK3nNobc; arc=pass smtp.client-ip=209.85.214.175
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=google.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=google.com
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 908C8413D80
+	for <sashiko-reviews@lists.linux.dev>; Fri, 15 May 2026 19:54:05 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.221.42
+ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
+	t=1778874848; cv=none; b=nKyML5L0VQFBAsSWdxF+lG1ISec5LGPnIUJ9551XrZa6LBvIkY1KdzqJTPYCKrgArHsaD9cpUzzn+1Z//mHNpR+lDEFg3PMECcnM3c42BZflyzZMUlle8IxkCtlbJQlqPtDtNgIUzAX71lsxW08TLqz1iXhDcUt5Q/wxI6bGL3w=
+ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
+	s=arc-20240116; t=1778874848; c=relaxed/simple;
+	bh=9z5ofOW3zF4tIwOxw6MLgiE61uAc+fsPZsMYSZAw7cg=;
+	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
+	 In-Reply-To:Content-Type; b=ML+xbqicdJDNoEsLtjPj5ZDsoYMO8oruMYBhbVGM4XnlTNBonJcfnwK0c7xbR1U/lm0wqXrN5wzbLOB2uKPC35nb1tsbuU/RIV8IK/gUgLV8df+qsrcsWxdlCM8l9irYpn9tL4Kl5qJu/OnYw7rK2tNMB87YAzujqNHAUjw5lfw=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=jfjLGKN9; arc=none smtp.client-ip=209.85.221.42
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=google.com header.i=@google.com header.b="eK3nNobc"
-Received: by mail-pl1-f175.google.com with SMTP id d9443c01a7336-2b46da8c48eso6805ad.1
-        for <sashiko-reviews@lists.linux.dev>; Fri, 15 May 2026 12:40:34 -0700 (PDT)
-ARC-Seal: i=1; a=rsa-sha256; t=1778874033; cv=none;
-        d=google.com; s=arc-20240605;
-        b=BaWWG+4Krh/24R+ugAyNKnc9E7xxq5+jbVZmMOF2Muux791qxcS/cZgjRrXe5DaCLE
-         AgKtGxUXj7kfB+Z0G912Gf6NuxTYpQn0yG3/pk5T4MnivafFUIswCk52dMifpp9zMHqW
-         SWobMo43s8eKpkiDlEZvR8txZzdhIJB/qIUcWpB2Ye0yciIH96GpjePKZ7aONg7x2o+p
-         b6U7LwSS4nuVEM6jYd1ew650KZkCo/QArWowdrR54WUorrA45eEFnHQEqOfwt3B4uXh3
-         mv4x87+a5MQDBCUxxDzvr/vgEUkTdzxywgUF+hWI0a85cgsoB766aoSpcJhHJlrddnZl
-         Gw+A==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com; s=arc-20240605;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:dkim-signature;
-        bh=YKwe6jSULfstrnXD5pmaH7VOhInZQUPQ48ryfkK9oy0=;
-        fh=6/+p72sCy7cAFRjOIdttegdodMuDLgxAAg/Wgl3twWY=;
-        b=Ltph5POZ6LdANkeK9yBtUjayF8ipfTi3CervvOa+w2ApBxE1ZC/fUe2RjIZ1j6m5ju
-         1OnC36o5K2tN/3RaKwFsycY7Nge4HScb4pwXx/CB45nag1TJc2kLpBog7yNJQtQwXQnP
-         EohacsQEOs6ZH/T5SjHP2AegqJ7izAVXgOqaMfwuMXuKhPtcpBIiOYVZQeOEgKVyNMfF
-         f+j6RIfbiQn9veKifNxi33GnGuxLZJ5vJtjPymqVFVp2MbHn4V0zxgLJcr5RMM3kQmZS
-         lTppq9n7cUil+9DVqnkVs2ZhXYabBMsdZcCYfx2psGWyWTt2yTNyXZDHM3AMy2WVY90g
-         vwbg==;
-        darn=lists.linux.dev
-ARC-Authentication-Results: i=1; mx.google.com; arc=none
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="jfjLGKN9"
+Received: by mail-wr1-f42.google.com with SMTP id ffacd0b85a97d-45297094718so98533f8f.3
+        for <sashiko-reviews@lists.linux.dev>; Fri, 15 May 2026 12:54:05 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=google.com; s=20251104; t=1778874033; x=1779478833; darn=lists.linux.dev;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=YKwe6jSULfstrnXD5pmaH7VOhInZQUPQ48ryfkK9oy0=;
-        b=eK3nNobccnz/3xaU1O5UMDI4+HqhbSF+DD0gUhDmDNjgLvr73PYF038fPGGp+qboJD
-         HjlRPT1Vb0HH/vxsbUhTlZwXUoJ2QvW/57PfuoPFXWvIjIKNZq8sPISWOUZPrHMwCG/t
-         pDDpP0rgd5gPhgtwsazhSZhFtjgKdSyeKivN5GB/LUNOBkp3p6b3IJN1/JuQzEBRjxW+
-         nF0aLDuawOBjjSTwGl2CBB8NiKhbkeSE41zYl+wGBY00GMrjgZFq7je1P7tGVgedBwc8
-         eXOIEjLabEFQ64g2Dg3ZTCsPQpSPWrN1xFt++pWqoTMT31xiDGUUBAQiYlKXRc0IVAMT
-         iyhA==
+        d=gmail.com; s=20251104; t=1778874844; x=1779479644; darn=lists.linux.dev;
+        h=content-transfer-encoding:in-reply-to:from:content-language
+         :references:cc:to:subject:user-agent:mime-version:date:message-id
+         :from:to:cc:subject:date:message-id:reply-to;
+        bh=U+RFDSNSW3gsfyThVyv4mA2CxoP8ob3lZvZu86McAFU=;
+        b=jfjLGKN94+xCOrfv2+GeSuRAEMQRJmkBoG3wOnB8BFTs2GKFFTUXBH7eqAL/dE2tBv
+         i93qusO7x6nw7SqeWq31m0yvy+TEkG5DkZYKT2z0BJ0Ks7Efx07V2phvyirjNmnwFaIH
+         z9Iyi8XDnW5xmmgR0PJthm11LuMsRhOcO2VIz4vlI3lWWe6QuW6gY/IcHysMS699PYxJ
+         y/pWRLFNnrrcEFmXIp0PXfDDQ5wKPhD4F4BAzVoZDZFEnwMIoP/IQopf50KQKwsuNhMd
+         gnlQak++vAHJo8bFe7BtAJMC1f8A5QWzyWPyVFNy/3vGY1KxyaWnJtHnxYoc2nEQB5sJ
+         mQ3w==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20251104; t=1778874033; x=1779478833;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:x-gm-gg:x-gm-message-state:from
-         :to:cc:subject:date:message-id:reply-to;
-        bh=YKwe6jSULfstrnXD5pmaH7VOhInZQUPQ48ryfkK9oy0=;
-        b=PrxP0g8YCW59BXZ6IsMgbANWlIhdVPjc2vkQhGvUdIXEtxHtyBVpsyYsOhhui8JkXw
-         wqJ3YdTfa6Vh3DaphTkHh9UVey7I41vLb0JmY6aZB95aHv7C4U00kdJ4skaZqaXi3GD7
-         wkbmEF7BP8+YghHzpM+1qcZ+F6aVAwTI7FVryPaWPOUHfoSoQFbHHURVl/HGrt3nqO9c
-         gXIF9/ADDuRUmmVEMgaW6S5k/J/hFxkm4GgZV3qM09/+zjbKYiIoIwDYGhhC8gJhGx5V
-         iwIeJDOvNJmYFVxb3UMXPYCX7Myt4BmgZvcCwKuo7VSVspXQrgKh+scZblQ0RrB+RxYt
-         ypDg==
-X-Gm-Message-State: AOJu0Yw/zrsXmqaEcxMtYDyKuZhvN5MDIy0Ie3tGvVUvUD5FIlsUGPZz
-	wrx0M6COuL59b/wuJ8AzfVQNKd7AK8S78ldd68nokqf2ZlNriZc172vAWG7hSQKSlToHvh4jJZG
-	bE4KTAQgSBuVKpvXkrSOOTb3GSPUyz65TZ6RhQOndAa60gu0+aIWU+Nmg
-X-Gm-Gg: Acq92OFMxK2oV0heXcqlLA3nVN00Z+SAkKynznIuNH4Gm8wmp58fl/8Mu9B8RU2E4YQ
-	TBGdI2YGKGe+e6YchXZbRoSlg2xEf77aQ1beAy012q5FjeRY4PMet376QsuOvfDKzeclpjl0lkw
-	XYd0YY+Xh6EJzrTmJiStqyahht+TUTddltCtc3iALFLeOpXm9PpmbN0TkNUXAzboJzokr+EfV3Y
-	JyEuOlq/UF1nCr9dwbFOUyT3ctul4MHH+jadrMLA3nkKtGUBohgIhcg5onCLZ3PnyE3KhfXMahY
-	ommRO7wU/5mrJFdu7Zvf6CE0wOx0fQ==
-X-Received: by 2002:a17:903:28e:b0:2bd:6dad:3df8 with SMTP id
- d9443c01a7336-2bda0ea389amr433985ad.22.1778874032694; Fri, 15 May 2026
- 12:40:32 -0700 (PDT)
+        d=1e100.net; s=20251104; t=1778874844; x=1779479644;
+        h=content-transfer-encoding:in-reply-to:from:content-language
+         :references:cc:to:subject:user-agent:mime-version:date:message-id
+         :x-gm-gg:x-gm-message-state:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=U+RFDSNSW3gsfyThVyv4mA2CxoP8ob3lZvZu86McAFU=;
+        b=JZUsZq1RieVOc8Sg7VM/4lthVpUMdSImuN/5WvLIKP6VnhsBTkSSw9LXuZ0/G2Rbev
+         JGz5Ibc/ne0PdXt3dFtxEZAX3eK8w31/GhI6/DVf5a0pYidgeUeK6ylCyU96cV93o2iA
+         kVCJqmtW9K5XCgwyedDI2KneKXbcINRRZ66E90bvWijZC6E3L/yypxMWJa56FVXzIIsw
+         9xqjWgP/U7ESE/la1Cx+lims0B23AeL8rA1Suq5XLrmafRqGzLABWy8MjJ4jDFWfTwHP
+         dxokf70qOwTzLIE4ccTLkrWWSEJeuYyhuHnbzfh04C94oQfQqlcyR13rVhgVQ4b0ZhqD
+         rNlA==
+X-Gm-Message-State: AOJu0YyYnfKFkgp7Jm7VcBfoB+qzriqGlsA3Wmy4rDSv1xQ21DmoI1ir
+	he6BpWlG99Segquk/L2Ry4eqk4SJtfetMWqnkJCtPG4z570/ibruEVTGrk1PUERN
+X-Gm-Gg: Acq92OG2BoTj5i9bH0OLyFK5EMXe/gE8EuJQn5Jg3Dbv0xE3odaNeFfmM1uE/ocZ1m9
+	sYNXVpPb0lQAxPCZVc15PJ9XSqlE7NgiU/Tz1SQbI5hdYWxFhLKu8MaGh14c8PudWUFEEu4hQ5r
+	3XSxHoSUs5CfZyR32nhMI9A8x3LDpaxgkAFXgDNqeu+8m9+yqBUCmAoMuZL1Btj5B3wiV//xr0V
+	uHodEOGTSvYdHrDuzT3YqoR4dnMT/vG8ANzMaQWpaC42SQtayNvIK3JubhSD1yMgH3o/iQd533F
+	fHJKOrfMJRn4D53mNewwEWMz8jkuWUcf3YFKfFtE+m+ZPfmvUnJHUXAfpuo+7plwoxFiP+Dc+FV
+	9dmvAUIYUFwjObLdjU8h3Ome0sgAnq81JEFePiqidxc0ItYVkDipYY3sWmWUi9k1DUtSbb6yOYX
+	OWP1sXQkUhjabbL7CL6kxh1SVNhRdZhS14GMi434F9eSQ+z6qqiyI4n9OBLFd6uZxY+526QfwKy
+	MJ8rcxNdol6OT8n4SAYrAFf520xPlmZ
+X-Received: by 2002:a05:6000:1ace:b0:45d:3cbf:bdda with SMTP id ffacd0b85a97d-45e5c58d4ccmr7721860f8f.20.1778874843831;
+        Fri, 15 May 2026 12:54:03 -0700 (PDT)
+Received: from ?IPV6:2a01:4b00:bd1f:f500:f867:fc8a:5174:5755? ([2a01:4b00:bd1f:f500:f867:fc8a:5174:5755])
+        by smtp.gmail.com with ESMTPSA id ffacd0b85a97d-45da15a6454sm16989475f8f.34.2026.05.15.12.54.03
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Fri, 15 May 2026 12:54:03 -0700 (PDT)
+Message-ID: <b158bfbc-dfa7-4e87-bda0-430bab4b7538@gmail.com>
+Date: Fri, 15 May 2026 20:54:03 +0100
 Precedence: bulk
 X-Mailing-List: sashiko-reviews@lists.linux.dev
 List-Id: <sashiko-reviews.lists.linux.dev>
 List-Subscribe: <mailto:sashiko-reviews+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:sashiko-reviews+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-References: <20260515180806.246914-1-sigmatwojastara@gmail.com> <20260515181547.99D82C2BCB0@smtp.kernel.org>
-In-Reply-To: <20260515181547.99D82C2BCB0@smtp.kernel.org>
-From: Ian Rogers <irogers@google.com>
-Date: Fri, 15 May 2026 12:40:21 -0700
-X-Gm-Features: AVHnY4KI1lrja2wjIoxRnOM6Okw9ETfkCmzYrHCz9L_mjetwnnwff4VNJUH4ucQ
-Message-ID: <CAP-5=fUV6W=TBXbCHARMJwm1Pjb4uJCO82EZ3fjU7jsiR51t0w@mail.gmail.com>
-Subject: Re: [PATCH] treewide: replace /usr/bin/python3 shebangs with env python3
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH bpf-next 1/3] bpf: Export btf_get_module_btf() and
+ btf_relocate_id()
 To: sashiko-reviews@lists.linux.dev
-Cc: Oli R <sigmatwojastara@gmail.com>, linux-perf-users@vger.kernel.org
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
+Cc: bpf@vger.kernel.org
+References: <20260515-generic_tracepoint-v1-1-aa619fa94132@meta.com>
+ <20260515175618.A4059C2BCB0@smtp.kernel.org>
+Content-Language: en-US
+From: Mykyta Yatsenko <mykyta.yatsenko5@gmail.com>
+In-Reply-To: <20260515175618.A4059C2BCB0@smtp.kernel.org>
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 7bit
 
-On Fri, May 15, 2026 at 11:35=E2=80=AFAM <sashiko-bot@kernel.org> wrote:
->
-> Thank you for your contribution! Sashiko AI review found 1 potential issu=
-e(s) to consider:
-> - [Medium] Commit message states it replaces `#!/usr/bin/python3` shebang=
-s and causes no functional changes, but actually changes `#!/usr/bin/python=
-` to `#!/usr/bin/env python3` in `tools/perf/tests/shell/lib/perf_json_outp=
-ut_lint.py`.
+
+
+On 5/15/26 6:56 PM, sashiko-bot@kernel.org wrote:
+> Thank you for your contribution! Sashiko AI review found 1 potential issue(s) to consider:
+> - [Medium] API Asymmetry and Resource Leak due to unexported btf_put()
 > --
->
-> commit 7d3e9689ede53be80434b3ba8cd07c27777d11ad
-> Author: Oli R <sigmatwojastara@gmail.com>
->
-> treewide: replace /usr/bin/python3 shebangs with env python3
->
-> This commit replaces hardcoded /usr/bin/python3 interpreter paths with
-> /usr/bin/env python3 to improve portability.
->
-> > treewide: replace /usr/bin/python3 shebangs with env python3
+> 
+> commit 51050bef777abcb3d2969804b1e3693feb10a170
+> Author: Mykyta Yatsenko <yatsenko@meta.com>
+> 
+> bpf: Export btf_get_module_btf() and btf_relocate_id()
+> 
+> This commit makes btf_get_module_btf() and btf_relocate_id() available outside
+> kernel/bpf/btf.c by exporting them. This allows the tracing core to look up
+> module BTF and translate split BTF ids.
+> 
+>> diff --git a/kernel/bpf/btf.c b/kernel/bpf/btf.c
+>> index 77af44d8a3ad3..aa88d18247bda 100644
+>> --- a/kernel/bpf/btf.c
+>> +++ b/kernel/bpf/btf.c
 > [ ... ]
-> > No functional changes intended.
->
-> Is this description accurate?
->
+>> @@ -8500,7 +8501,7 @@ struct module *btf_try_get_module(const struct btf *btf)
+>>  /* Returns struct btf corresponding to the struct module.
+>>   * This function can return NULL or ERR_PTR.
+>>   */
+>> -static struct btf *btf_get_module_btf(const struct module *module)
+>> +struct btf *btf_get_module_btf(const struct module *module)
+>>  {
 > [ ... ]
->
-> > diff --git a/tools/perf/tests/shell/lib/perf_json_output_lint.py b/tool=
-s/perf/tests/shell/lib/perf_json_output_lint.py
-> > index dafbde56cc76f..dccafd507bb79 100644
-> > --- a/tools/perf/tests/shell/lib/perf_json_output_lint.py
-> > +++ b/tools/perf/tests/shell/lib/perf_json_output_lint.py
-> > @@ -1,4 +1,4 @@
-> > -#!/usr/bin/python
-> > +#!/usr/bin/env python3
->
-> Could this affect functionality on systems where python defaults to Pytho=
-n 2
-> or is managed differently?
+>> @@ -8529,6 +8530,7 @@ static struct btf *btf_get_module_btf(const struct module *module)
+>>  
+>>  	return btf;
+>>  }
+>> +EXPORT_SYMBOL_GPL(btf_get_module_btf);
+> 
+> Because btf_get_module_btf() increments the reference count on the returned
+> struct btf object using btf_get(), callers are required to release this
+> reference by calling btf_put().
+> 
+> Since btf_put() is not exported, won't loadable modules using this new API
+> fail to link or be forced to leak the struct btf reference?
+> 
+> Alternatively, if these functions are only meant for the tracing core, which
+> is always built-in, are these EXPORT_SYMBOL_GPL declarations necessary?
+> 
 
-The change looks good to me, but I wonder it should be split into
-separate patches for the different subsystems. We do not care about
-Python 2, so I think some review prompt improvements are necessary.
-
-Thanks!
-Ian
-
-> --
-> Sashiko AI review =C2=B7 https://sashiko.dev/#/patchset/20260515180806.24=
-6914-1-sigmatwojastara@gmail.com?part=3D1
->
+yes, I should drop EXPORT_SYMBOL_GPL, and move these function prototypes
+to the header.
