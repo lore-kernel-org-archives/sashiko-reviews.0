@@ -1,177 +1,306 @@
-Received: from OS0P286CU011.outbound.protection.outlook.com (mail-japanwestazon11010015.outbound.protection.outlook.com [52.101.228.15])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-qv1-f53.google.com (mail-qv1-f53.google.com [209.85.219.53])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A1D453CE098
-	for <sashiko-reviews@lists.linux.dev>; Thu, 14 May 2026 22:56:26 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=fail smtp.client-ip=52.101.228.15
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 038FD21256C
+	for <sashiko-reviews@lists.linux.dev>; Fri, 15 May 2026 00:25:00 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=pass smtp.client-ip=209.85.219.53
 ARC-Seal:i=2; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1778799388; cv=fail; b=lVsdpHN0JsUc03vLiXcxhMcMdKZBE8hxshn9MFmhu6mHYUdnm3Vsl/hZbpXyMswWvAq/OBM7pZay6TWI6Jeu/PYJ9FRm/o+vUhUGxJqNH9Sy8C6PVcJiA5KFbUxTHJEC9Mgval8IdN31HXtNMrs8tZ6VmNNA8V6U9iSMFVdldl4=
+	t=1778804702; cv=pass; b=DfgLfV2tUfsp5q/CXC6jh4ol/edi8zApcGhnmHm4F8/W8iUF1SR3TEp4dEkH6hHPalH75hr1JB/uGGJBBmiUBGch6oga+aNV7+nlOEmnNpVWLkNKQVQm2MkpjdRw+Ya09/TZ72eW5TxnFgX5S4fyENpBSIE4R9NOGXnlYP+WCtw=
 ARC-Message-Signature:i=2; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1778799388; c=relaxed/simple;
-	bh=/moJf4d0l1H2rNoveqilYqW7G08JliCqQoHDbu4+3+U=;
-	h=From:To:CC:Subject:Date:Message-ID:References:In-Reply-To:
-	 Content-Type:MIME-Version; b=BIw3MUUlRWky9Eg5lVzKeN+494jwpMXZT67PFrNf3soO9/DfAbOZTGRL9VFFCxOExpO6RxuhSkkHOIY0okTiZ3Wduzpv313H6ydxoKAY8VP01d5a8jibmmnSw4oMWHupzdjr/LWOt2RU59+dVoDNQvHf5QFIUJuO9/4FNvO7vTo=
-ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=bp.renesas.com; spf=pass smtp.mailfrom=bp.renesas.com; dkim=pass (1024-bit key) header.d=bp.renesas.com header.i=@bp.renesas.com header.b=ttQ1XSKg; arc=fail smtp.client-ip=52.101.228.15
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=bp.renesas.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=bp.renesas.com
+	s=arc-20240116; t=1778804702; c=relaxed/simple;
+	bh=K871+pGIP1NzejKUiG1MEO4ti/+MsA2yb4IZUH/K96w=;
+	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
+	 To:Cc:Content-Type; b=kjMO/toAtN8fOJgya+ixB4qxlEvrDMo//YBrIed/CF9r2HUhPWn9p9rXX3obN/RRCE7O3mX25cwUDY24YrIF/+NOdaN5AaDIfg6VRvibyZyUaw21vs/ZalJAJsEkjXe3ilAklARCWCunS7U8YdQ/3c5STJ0gyjA/KV/1XGpvKxU=
+ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=UBAIWG/5; arc=pass smtp.client-ip=209.85.219.53
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=bp.renesas.com header.i=@bp.renesas.com header.b="ttQ1XSKg"
-ARC-Seal: i=1; a=rsa-sha256; s=arcselector10001; d=microsoft.com; cv=none;
- b=jANIuGmjqL8VmqLOEeawl5AF5VRHPSJUHniLC0UzIrqQkghqEvIwp4Wmbygw6sKNMe1LtNGKi/hNWVzVC0o3Az3s10bBHmm1uwnrfjNUpI6XRD3LmWl2XBycNC5AGvzLTTwlJBwdpHBGnph2GXcahLywSe0yrTknlTtrPnFAy3LxSpQT+xgXvoUG8BJkBvySO/0aR6IeCgf7rh+ymvWQtRDNWno5T0lG0v1XtK9jMb5n/00WUixlHNKUbtlMNqoC+4q9cxA5f5yQpkyNi772QTmFUGuvwAIG/3ijYd1k4u8+Y1Fp7y8eifpb3xMMyQEzia86rQhrRfGhqWH5yIEgGA==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com;
- s=arcselector10001;
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
- bh=/moJf4d0l1H2rNoveqilYqW7G08JliCqQoHDbu4+3+U=;
- b=XlZq2M2T4nWJtUU5Ee2qVEbzmOjLWmvIut6uSCgdNWZDBWMxQlWDQup7xpl0bYqXYsy1FJhPNTx73Z4nl+Swfs+onHcXjTrxVePE6VwH5MSkkxtESX+Gg6rLolRJ8xOwwhiAS2lWRaCnyDKUYpCIhXETTNANoRfNLlF+c+sLMVtlmbELxtV1gTWePYXQuOTcPXYvaWpFo9O7vBnoEFb3q21yJOIeuD4FL0c1MCIT5u7A/S9b/g4jTOtKIE8345R8v/QIbnfWom7cOSed0vaoniDtfplbAEBVT3GRoAvmK9qUj/OAoYaDVL3UwIi5/GJfQcyNzB5N3hJUAWIDwXndTg==
-ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
- smtp.mailfrom=bp.renesas.com; dmarc=pass action=none
- header.from=bp.renesas.com; dkim=pass header.d=bp.renesas.com; arc=none
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=bp.renesas.com;
- s=selector1;
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
- bh=/moJf4d0l1H2rNoveqilYqW7G08JliCqQoHDbu4+3+U=;
- b=ttQ1XSKgBJ6Y3nDD4Cncge0cFdS8ZF14fyjauB5LZNjUHiBg0cKlPp6d9SP0uwrUil/dzLayjWqPoMhtvY/gpsJkFT0dXW+ZzS0JK226+9h2ELdCICs6F0pBLBLRv+ifXg9+7oPoguSWDVNacexFMeKieakhIkTL7kPeJLpSgqc=
-Received: from TY6PR01MB17377.jpnprd01.prod.outlook.com (2603:1096:405:35b::6)
- by TY4PR01MB13445.jpnprd01.prod.outlook.com (2603:1096:405:1e0::13) with
- Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.9913.11; Thu, 14 May
- 2026 22:56:23 +0000
-Received: from TY6PR01MB17377.jpnprd01.prod.outlook.com
- ([fe80::f373:26d6:86c4:6aa3]) by TY6PR01MB17377.jpnprd01.prod.outlook.com
- ([fe80::f373:26d6:86c4:6aa3%6]) with mapi id 15.20.9913.012; Thu, 14 May 2026
- 22:56:23 +0000
-From: John Madieu <john.madieu.xa@bp.renesas.com>
-To: "sashiko-reviews@lists.linux.dev" <sashiko-reviews@lists.linux.dev>
-CC: "krzk+dt@kernel.org" <krzk+dt@kernel.org>, "conor+dt@kernel.org"
-	<conor+dt@kernel.org>, wsa+renesas <wsa+renesas@sang-engineering.com>,
-	"devicetree@vger.kernel.org" <devicetree@vger.kernel.org>, "robh@kernel.org"
-	<robh@kernel.org>
-Subject: RE: [PATCH v6 14/16] ASoC: rsnd: src: Add SRC reset and clock support
- for RZ/G3E
-Thread-Topic: [PATCH v6 14/16] ASoC: rsnd: src: Add SRC reset and clock
- support for RZ/G3E
-Thread-Index: AQHc4j08eobqidsIDEiVEE4+07blV7YM+fKAgAEquMA=
-Date: Thu, 14 May 2026 22:56:23 +0000
-Message-ID:
- <TY6PR01MB17377BC1A8B40AC436C7B2151FF072@TY6PR01MB17377.jpnprd01.prod.outlook.com>
-References: <20260512182631.3842065-15-john.madieu.xa@bp.renesas.com>
- <20260514050500.5AA86C2BCB7@smtp.kernel.org>
-In-Reply-To: <20260514050500.5AA86C2BCB7@smtp.kernel.org>
-Accept-Language: en-US, en-GB
-Content-Language: en-US
-X-MS-Has-Attach:
-X-MS-TNEF-Correlator:
-authentication-results: dkim=none (message not signed)
- header.d=none;dmarc=none action=none header.from=bp.renesas.com;
-x-ms-publictraffictype: Email
-x-ms-traffictypediagnostic: TY6PR01MB17377:EE_|TY4PR01MB13445:EE_
-x-ms-office365-filtering-correlation-id: 4b50c497-78a8-4aed-55f3-08deb20c0572
-x-ld-processed: 53d82571-da19-47e4-9cb4-625a166a4a2a,ExtAddr
-x-ms-exchange-senderadcheck: 1
-x-ms-exchange-antispam-relay: 0
-x-microsoft-antispam:
- BCL:0;ARA:13230040|366016|1800799024|376014|38070700021|11063799003|56012099003|22082099003|18002099003|4143699003;
-x-microsoft-antispam-message-info:
- N3N+5RWPFO0kA82q/pJcQNJx/TCkbH8Gh6FvSHyMvq6wwwElZqQUPW2GeTNfY4ICt0Nipd8VXNImsb59DaUUmsjXwCeLEGvLijmS7dmhkMFk576j8I/RSR+n/I4jC8EmUTu0WEuGwoYBX0dWpWTNIYd9yNGyQRTxSkpNRaJb5Av5DBWjuA3LztEhxrvvCZ44HoKyWDirvetnreE1f3obqRsH/XMxKTk0QTAciTucTQ6l9dKf6Ne86k7W0v6mFDTJEs90JmXrNkc2jZEjrWCSmCiPPmba5c/iyBzyTDWnZg2Oj8g3o5wi8GsJ2pp0FNOnxsi/JJxgcpk50EYdWYsTsr8yo34wbp0rcsjUb/PQKZG8NbUahq5w3C/Xp3NetDCjfvYDsW2HwUoYugOmHBYvv2jdiuGJMddA92Kw+76pBDxpWjF75kV3CGTlTlzLP1sb3PDiA09h9Msj/lH/J/8eVhb4gONnULQQYeLr7k7yFJn5EXPBvDi/Qo5LSBwSEmRCOhpP2NXrQsakEeXXtYwxazRgymnrHCLZukZYvSQUDP17DK9kHMhsxDzD9GtJVi9ljEu73L8k2nW2zYKDvbQXJ0Ari9jsPwOLNXM/UgVl5H8Dw8XfPe9tCXoV8zIEHtDJPpkeaCS7HyNfKIR7A6119BCaD8eENw2kMoSG45vQTQrBQ77BJVenasj26m4UcyVSjJdyUjCMBhisV/6vpA3PB4goBe/aj8WNO94WdHT/aAWBWGO/DI76j4LQVV0VWm+o
-x-forefront-antispam-report:
- CIP:255.255.255.255;CTRY:;LANG:en;SCL:1;SRV:;IPV:NLI;SFV:NSPM;H:TY6PR01MB17377.jpnprd01.prod.outlook.com;PTR:;CAT:NONE;SFS:(13230040)(366016)(1800799024)(376014)(38070700021)(11063799003)(56012099003)(22082099003)(18002099003)(4143699003);DIR:OUT;SFP:1101;
-x-ms-exchange-antispam-messagedata-chunkcount: 1
-x-ms-exchange-antispam-messagedata-0:
- =?utf-8?B?N3pHNmFVTGdyeXZsdHBrSGZ6VnhkakxveStZa25DSUhCbmNzb2k5REFOOXRB?=
- =?utf-8?B?N1pjYWNEdC91VTROTnpHbVlGRWo5ZDdlMmZkbElyZTRFL1NXV1dQZ0Fkbmw1?=
- =?utf-8?B?cUtRSHpvR0NCYTIweUdhS05wWGlHQnY3UXBwT0IyS2QyZlhIWDJQMXljbVE0?=
- =?utf-8?B?b1dtTWxOUktsWDJ1WHdVWnlkRjNuQ2Q0QnF5Qi9zMmFhc3A5NENjVHpnOW9K?=
- =?utf-8?B?QUdaemJNK2d2dDBKcmliL2NURmt5Y0dScW1xeS92N0xLbWtrS1pyTHErMjZW?=
- =?utf-8?B?clRwbG1lTkNQWmM2Yk1pOW83bmROdWhwSkU1Zit3aVIzU2hUTENMS2NyT1dm?=
- =?utf-8?B?aHB2bVZUY21sd05pZUR4STRockgrQndDWGI3WXdkN2M2alRtT1NBOFY1THRs?=
- =?utf-8?B?b3RQRHcyQmFmc1VlT2FlVW1qQXhPRnRBMzhLQ2RrbjVUaFVJYm9uM0xmVHpC?=
- =?utf-8?B?U0hlWnRoT2pIUVRlTjY4U2NqTldvTjNraEx5Y3YyM1Z5Z2dqRGNKa2pOS25w?=
- =?utf-8?B?eWcrRTBLaUgwWXNzTXM4dEliYW85YXk5a3VSUG5oRW1WbGtjY1g3S2tIbTM1?=
- =?utf-8?B?SmZOTkp0N1dHUmJvYlJId2V2OENzbEdYSVZrYSsydFNob3ZORFVRUDljazZp?=
- =?utf-8?B?SUZ6bWJnTW1aVjVZa21mNnJmZ24xOFd6SSt6eFJNdE9DZVhMMFhvbm9iQis3?=
- =?utf-8?B?Ym5kMXNobW43MlBod0MxeFh0Wi9EaW44K2pVQzVKSFBpbm0vYW5waFkzeTNM?=
- =?utf-8?B?V0piMm9pRUs4Q1JjSGtEbXFrYlRlcklha2NsdGtTbzYwN2JLTXhGWGM5MlJS?=
- =?utf-8?B?aFQ4TnJUVHc4cU1oTFhUaU8zOVlaYTBjcmFwUGVuazRxMTA3eTV0a2VLQ0tR?=
- =?utf-8?B?MU1OUitvSk5ydUh0TEtEakF6akJYWEQ0OEFsdldRMERXSC9SbWo5a0puWThM?=
- =?utf-8?B?N2svQXA2YzdFRWtEdisxaUVjNW9xTWlxK3ErVmxndWlQOWo5TzNlMDNKMno2?=
- =?utf-8?B?MldweTQ2OTF1Y2FGNE9UY3hrTlBuQjJXS3RzaXRhbDdiaUZLRUNodkRGWExS?=
- =?utf-8?B?NlRnMUhtQkV4Z3pjekdFVFIwbmdTbEdtK0JwTHJ4a3QvYjNFckROb0NNeTlk?=
- =?utf-8?B?MHBZd0xJNDFGekJrNVFuWEd5d3BKM3hTS2RVU2FuNzJxQmVpc2R2eGd3QkhP?=
- =?utf-8?B?UURzZXJzSHhGd0toLytMVC9QeE5VQk9JWW8zZ05Iamh2V0lzVktaUHRwcUF1?=
- =?utf-8?B?RjA0cUpzMkxpcjFvVC9qblFUZmlIUDNja2lSTWU3RmlxT1hrN29UY3ZBWUtu?=
- =?utf-8?B?U1pGakZJUmpPYzhyNG1EK2ZUSzI5dnUyWGZMYWhGVU9UTlhwVmxyaEJKVFBM?=
- =?utf-8?B?K21FNWdUT1N6K09Xb0s5VEkzRGN2akg5VlNHOHZRdmg5dUh6R3dQU3FSbHMv?=
- =?utf-8?B?ZFNKSlZuemNXeitSTDUzV3hrVGcyVkpJTDh6SDVIWjhlYkJSOWJ5SGRhRU1Q?=
- =?utf-8?B?cUs5MzRreU1tUXA2dGZaRVg4WHhreUg5VDd6eEdKMm5sSGdxNE1vcW9lWE5K?=
- =?utf-8?B?eWE5TVFnaUV6VVcvT05uQUsrL3FZamhLRVNMcHpVeHI2aG5idmF2K1JuR3JL?=
- =?utf-8?B?eGF5b1U5cy9VTHB6ZklYVjl0NVExcXcvTy9lNUZtK0UvYVBJZDRTTFo1UHdB?=
- =?utf-8?B?VTdQUGx5WHR6b0ZuNG1LWDlZVlNTYXBkMTdIRlk1OHVld1B3cUNXb1pnZkRN?=
- =?utf-8?B?L1dMN3JtNllySDBYbTh2RSs2L1hDWWFkR05ZRm9menVEVGN1eHZwS09vWHRR?=
- =?utf-8?B?ai95Z2pGeWlNVElRNlBvb3FObW9BOGw0N081dSt0RmJ6U0VjZWRkQ3lsa3Ju?=
- =?utf-8?B?ODdZYkEzakt6WGowbHM4QlJZQUV6VElKaDgrYjlScWdOYUxDYlVIYVdSblBx?=
- =?utf-8?B?RHp5bk5tUXE4eGFySndNSitjQnJVRUZKdDFVUWZFUGFZVTcrNFkxZHNwVnlP?=
- =?utf-8?B?VUFJYzVDS203TVgzR0t4cFc4aWk1bjd1WjYyTllKWkRxK0FEZmRPc2RKLzdI?=
- =?utf-8?B?KzQxUS9kZktMUC9UMGwva05DSGJaWVI2RWQ5WkpOaE8vMjUydkZOeWdlcVhp?=
- =?utf-8?B?czRnVS8wRXFFVE8xakxxbTNnMmVDcXlLcWhKWGJKeUFISkJZUTVrc24vNnZo?=
- =?utf-8?B?ZWNxdlFleG1VUkNOQnNPRldHMm43WWRodXF4Q1AvMlpjT2xocWh2WGRsSExH?=
- =?utf-8?B?VVNDM0RCNXc1T0xPS1czbWcyUmN4ZVFTRGJGaHFERFNhS2h0TXFoMWJadHMv?=
- =?utf-8?B?RGlBY05ueXhTVjRyeFBUWFVrMjdMbjRUa2kzS1JlSjNISFNuY2xJNlZ5ek1l?=
- =?utf-8?Q?NSB3JIWHJL3PDLgo=3D?=
-Content-Type: text/plain; charset="utf-8"
-Content-Transfer-Encoding: base64
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="UBAIWG/5"
+Received: by mail-qv1-f53.google.com with SMTP id 6a1803df08f44-8b3d6b215cfso127999206d6.3
+        for <sashiko-reviews@lists.linux.dev>; Thu, 14 May 2026 17:25:00 -0700 (PDT)
+ARC-Seal: i=1; a=rsa-sha256; t=1778804700; cv=none;
+        d=google.com; s=arc-20240605;
+        b=WXivRKqmcMss6widbR+RuJY2VmJvM2h6GjMZ/ahw+HRTnC6bYxoeCDZXhhEX+C/+gP
+         n1+B217oVgKzC/eNXWBqjgt2qhokMkF64xKy7SU/9l2EqPLGccDRpaIh4JaDzSXMybNV
+         9dQd1K5YulPrB4D/lENrF/rW82Cb8YUuBS3eGyhzBXh0EioJWOABe75PNTmNKM2Vahql
+         Z6LHOfWwlvQYet2PuU34pm44wIPFbcFvEGvBVQuNG/GcjErsM25T2JymUUDR63q319f2
+         6zHlmqg2BoOlDAbzCB8/F/WXeTU5/SYo+rlrlcL4slpRDzEn8flGnyTAd9vgOI7z8mbN
+         Ynmw==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com; s=arc-20240605;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:dkim-signature;
+        bh=t3/9zsBGRo1OaAkS5aFHkNdTHJVrH4TRyw2nmNFqF2k=;
+        fh=yP9nXh3uEx2Oi4EohrO5J9pTgsj4qmV+0fif0Msznug=;
+        b=CFF8U9E16OqNcIKavKVlKDyKn8Zso+huFVmfbwSjRt/CoKsg3/kcSLdHSfeCH97xkI
+         xu5HFALrk0Hmio5VmuQV8bPn/1HRQ80dvNgSHEg/r2Nxiks9seiMhzH8Aj0RYppgRs58
+         y4gqYn5l7jWodvrAsDhJG82UKid/TfnWf1tr3fRhaVMq1ZuVVz7v/HluKH2Ffg7+kynl
+         CF4VurzsalG8S0kOvK9WTRLq6+spRldueeAoBUldc3ic2XOVqLnjQAdFZODTV7S86vgm
+         aNhP7qZDhUxGdIAxBRfiT3+FyxZPHtWON1POx61m99yxhLxW0f+y9O+5X0KJWjHjVenq
+         e/qA==;
+        darn=lists.linux.dev
+ARC-Authentication-Results: i=1; mx.google.com; arc=none
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20251104; t=1778804700; x=1779409500; darn=lists.linux.dev;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=t3/9zsBGRo1OaAkS5aFHkNdTHJVrH4TRyw2nmNFqF2k=;
+        b=UBAIWG/5HAnXHU86yevvKOQd1Z9i85scZ6MHLP8EI4irDGp8FcY2bE+PTBFcvEHtIR
+         zTZfVCxcEy8umGkAtUvL2gMZ+vThC8ktc+0wbmaN3bwQco+2yG7QNN4XRtyiILGpoX2Y
+         OGG7Ti/H8Yj8wuXwtkxQRcansoOBuaLi9lhgtRmKMHJWugcdsmU5fZDGVpUieyGlHnId
+         Jzf64jAD3/pRXEuAqfUZEYOCdgGDzYZAhDy57dft/bPnLi/zlKlyZxIY8deDNYIQK3cA
+         JRZ/GjDAxOvRG3sC4S58OgoWHXIBNocv9yZPSO7B2m6igT4CQIEbX6z0uh9c2zVSCi5b
+         v1iw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20251104; t=1778804700; x=1779409500;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:x-gm-gg:x-gm-message-state:from
+         :to:cc:subject:date:message-id:reply-to;
+        bh=t3/9zsBGRo1OaAkS5aFHkNdTHJVrH4TRyw2nmNFqF2k=;
+        b=iFxJ23wXJV6P+5frQ3bLv9brMcwqfmy3G+H3RTwW2dl/OG9lqRHvWa/W+0bud1jQq6
+         yOIs0xkQW89NN75l5rqnPxDCb/ttALLf1aiEIatelaT5OSdJL/xkv8xO1PoT3wx7KF6t
+         q3/UcOq+RHescYjmrZjDu/mOXMBbpaxD1u8HGrpZ4yuaRpnJXpik+nDSF6KkERomaJuc
+         uxA3i0RsW7u3LcIocKdk9QJIrQQVTEeoJeh8u9vszS8NDMJQLBNTk+Jaqt7hgewpB75b
+         L442cgi6EQHS9gfgR+5tt3YnklYGoV+en1oWIikxiRLMAA5fsMWRE6Nc2pm2ikkSqc3/
+         +www==
+X-Gm-Message-State: AOJu0Yz5/UoBC6GOH30VeCqKnOKOqX1bYH0PH/+8WEinudqQ1I1d7WR7
+	e003aqTLd26T9w6eXuw4VYpAm8/6qiFrb09q/+3+Opa8r1i3+oGC7EQ2gzP+vswNdqurTDmczjK
+	D5XZdL+FhNrjNKbkPCg20GHq8DNXdutiAcr+j
+X-Gm-Gg: Acq92OGf7Gk4gNR0ro0c1DKdfLlQId0jcyiBC6PL7EMn+kO4a3oly5NnWaJRqiYmShR
+	4rMrz3xtwqykWYkocWCr5VNcOLPzBOHEnzfoyyWtHSY9nOc5y4IPZDg0ZErplWqagnLc6uKqN+R
+	8ZjSJNW668/exF8JEX53t+OG1mLY9H+lmFDoyNP9HYX1y/JhtVyJKhmETdmQHhdKmffD4vmoVes
+	x+KNPey7feB9VOTjWnSQ3ZwNsiSg6OJMKXfCztfJ/3o0SHtCBr3chHM5tgnl70xzHWOduiertJm
+	CKt54Ia2yfC8Hjyf
+X-Received: by 2002:a05:6214:3f86:b0:8ca:164c:a851 with SMTP id
+ 6a1803df08f44-8ca164cab11mr3792766d6.41.1778804699859; Thu, 14 May 2026
+ 17:24:59 -0700 (PDT)
 Precedence: bulk
 X-Mailing-List: sashiko-reviews@lists.linux.dev
 List-Id: <sashiko-reviews.lists.linux.dev>
 List-Subscribe: <mailto:sashiko-reviews+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:sashiko-reviews+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-X-OriginatorOrg: bp.renesas.com
-X-MS-Exchange-CrossTenant-AuthAs: Internal
-X-MS-Exchange-CrossTenant-AuthSource: TY6PR01MB17377.jpnprd01.prod.outlook.com
-X-MS-Exchange-CrossTenant-Network-Message-Id: 4b50c497-78a8-4aed-55f3-08deb20c0572
-X-MS-Exchange-CrossTenant-originalarrivaltime: 14 May 2026 22:56:23.3697
- (UTC)
-X-MS-Exchange-CrossTenant-fromentityheader: Hosted
-X-MS-Exchange-CrossTenant-id: 53d82571-da19-47e4-9cb4-625a166a4a2a
-X-MS-Exchange-CrossTenant-mailboxtype: HOSTED
-X-MS-Exchange-CrossTenant-userprincipalname: i5HVWjiR15+0ye0ir6juHKRgxkCA7AfjyC0sqHwX6Ha7V0+WsudM7m89mNITqO9i3G3ZPskssEy+ZSB7dx53ijc4UPI01nME+HrpMzPOfZY=
-X-MS-Exchange-Transport-CrossTenantHeadersStamped: TY4PR01MB13445
+References: <20260513155723.230707-1-andrewmaney05@gmail.com> <20260514065043.1F11AC2BCC7@smtp.kernel.org>
+In-Reply-To: <20260514065043.1F11AC2BCC7@smtp.kernel.org>
+From: Andrew Maney <andrewmaney05@gmail.com>
+Date: Thu, 14 May 2026 20:24:47 -0400
+X-Gm-Features: AVHnY4LTy48LZkM9GvpbK4JwtBCoc-eeUzEJoDhb0pBeE9B9IEmlG-o2DGeB93U
+Message-ID: <CAO1jzHiiTKaSnT1mkVPCfBAcGNGKdB3UY9uWp-qAzVFqH2ZEjw@mail.gmail.com>
+Subject: Re: [PATCH] HID: Expose LattePanda IOTA UPS as a power_supply device
+To: sashiko-reviews@lists.linux.dev
+Cc: linux-input@vger.kernel.org, Jiri Kosina <jikos@kernel.org>, bentiss@kernel.org
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 
-SGksDQoNCj4gLS0tLS1PcmlnaW5hbCBNZXNzYWdlLS0tLS0NCj4gRnJvbTogc2FzaGlrby1ib3RA
-a2VybmVsLm9yZyA8c2FzaGlrby1ib3RAa2VybmVsLm9yZz4NCj4gU2VudDogRG9ubmVyc3RhZywg
-MTQuIE1haSAyMDI2IDA3OjA1DQo+IFRvOiBKb2huIE1hZGlldSA8am9obi5tYWRpZXUueGFAYnAu
-cmVuZXNhcy5jb20+DQo+IFN1YmplY3Q6IFJlOiBbUEFUQ0ggdjYgMTQvMTZdIEFTb0M6IHJzbmQ6
-IHNyYzogQWRkIFNSQyByZXNldCBhbmQgY2xvY2sNCj4gc3VwcG9ydCBmb3IgUlovRzNFDQo+IA0K
-PiBbWW91IGRvbid0IG9mdGVuIGdldCBlbWFpbCBmcm9tIHNhc2hpa28tYm90QGtlcm5lbC5vcmcu
-IExlYXJuIHdoeSB0aGlzIGlzDQo+IGltcG9ydGFudCBhdCBodHRwczovL2FrYS5tcy9MZWFybkFi
-b3V0U2VuZGVySWRlbnRpZmljYXRpb24gXQ0KPiANCj4gVGhhbmsgeW91IGZvciB5b3VyIGNvbnRy
-aWJ1dGlvbiEgU2FzaGlrbyBBSSByZXZpZXcgZm91bmQgMiBwb3RlbnRpYWwNCj4gaXNzdWUocykg
-dG8gY29uc2lkZXI6DQo+IC0gW01lZGl1bV0gTWlzc2luZyBlcnJvciByb2xsYmFjayBpbiB0aGUg
-cHJvYmUgbG9vcCBsZWF2ZXMgaGFyZHdhcmUNCj4gcGVybWFuZW50bHkgZGVhc3NlcnRlZC4NCj4g
-LSBbTG93XSBSZWR1bmRhbnQgZGV2cmVzIGFsbG9jYXRpb25zIGZvciBhIHNoYXJlZCByZXNldCBj
-b250cm9sIGluc2lkZSBhDQo+IGxvb3AuDQo+IC0tDQo+IA0KPiBjb21taXQgOTg3ZWNmMzU3NmYw
-NjgxYWQwODA5YWVlZDIyNGYxNDI0MWE3NThjZQ0KPiBBdXRob3I6IEpvaG4gTWFkaWV1IDxqb2hu
-Lm1hZGlldS54YUBicC5yZW5lc2FzLmNvbT4NCj4gDQo+IEFTb0M6IHJzbmQ6IHNyYzogQWRkIFNS
-QyByZXNldCBhbmQgY2xvY2sgc3VwcG9ydCBmb3IgUlovRzNFDQo+IA0KPiBUaGlzIGNvbW1pdCBp
-bnRyb2R1Y2VzIGV4cGxpY2l0IFNhbXBsaW5nIFJhdGUgQ29udmVydGVyIFVuaXQgKFNDVSkgcmVz
-ZXQNCj4gYW5kIGNsb2NrIG1hbmFnZW1lbnQgZm9yIHRoZSBSWi9HM0UgU29DLiBJdCBhZGRzIHN1
-cHBvcnQgZm9yIHRoZSBzaGFyZWQNCj4gU0NVIHJlc2V0IGNvbnRyb2xsZXIgdXNlZCBieSBhbGwg
-U1JDIG1vZHVsZXMgYW5kIG1hbmFnZXMgdGhlIFNDVSBzdXBwbHkNCj4gY2xvY2sgd2l0aCB0aGUg
-c2FtZSBsaWZldGltZSBhcyB0aGUgb3RoZXIgU0NVIGNsb2Nrcy4NCj4gDQo+ID4gZGlmZiAtLWdp
-dCBhL3NvdW5kL3NvYy9yZW5lc2FzL3JjYXIvc3JjLmMNCj4gPiBiL3NvdW5kL3NvYy9yZW5lc2Fz
-L3JjYXIvc3JjLmMNCj4gPiAtLS0gYS9zb3VuZC9zb2MvcmVuZXNhcy9yY2FyL3NyYy5jDQo+ID4g
-KysrIGIvc291bmQvc29jL3JlbmVzYXMvcmNhci9zcmMuYw0KPiANCj4gWyAuLi4gXQ0KPiANCj4g
-PiBAQCAtNzU0LDYgKzc5MiwxNiBAQCBpbnQgcnNuZF9zcmNfcHJvYmUoc3RydWN0IHJzbmRfcHJp
-diAqcHJpdikNCj4gPiAgICAgICAgICAgICAgICAgICAgICAgZ290byByc25kX3NyY19wcm9iZV9k
-b25lOw0KPiA+ICAgICAgICAgICAgICAgfQ0KPiA+DQo+ID4gKyAgICAgICAgICAgICAvKg0KPiA+
-ICsgICAgICAgICAgICAgICogUlovRzNFIHVzZXMgYSBzaGFyZWQgU0NVIHJlc2V0IGNvbnRyb2xs
-ZXIgZm9yIGFsbCBTUkMNCj4gbW9kdWxlcy4NCj4gPiArICAgICAgICAgICAgICAqIFItQ2FyIHBs
-YXRmb3JtcyB0eXBpY2FsbHkgZG9uJ3QgaGF2ZSBTUkMgcmVzZXQNCj4gY29udHJvbHMuDQo+ID4g
-KyAgICAgICAgICAgICAgKi8NCj4gPiArICAgICAgICAgICAgIHJzdGMgPSBkZXZtX3Jlc2V0X2Nv
-bnRyb2xfZ2V0X29wdGlvbmFsX3NoYXJlZChkZXYsDQo+ID4gKyAic2N1Iik7DQo+IA0KPiBJcyBp
-dCBpbnRlbmRlZCB0byBmZXRjaCB0aGUgc2hhcmVkIHJlc2V0IGNvbnRyb2wgaW5zaWRlIHRoZSBs
-b29wPw0KDQpObywgd2lsbCBhY3F1aXJlIG9uY2UgYmVmb3JlIHRoZSBsb29wIGFuZCBwYXNzIHRo
-ZSBzYW1lIHJzdGMgdG8NCmV2ZXJ5IHJzbmRfbW9kX2luaXQoKSBjYWxsLiBUaGUgc2hhcmVkLXJl
-c2V0IGZyYW1ld29yayBjb3JyZWN0bHkNCmhhbmRsZXMgTiBkZWFzc2VydHMgb24gYSBzaW5nbGUg
-aGFuZGxlLCBzbyBoYXJkd2FyZSBiZWhhdmlvdXIgaXMNCnVuY2hhbmdlZC4NCg0KUmVnYXJkcywN
-CkpvaG4NCg==
+On Thu, May 14, 2026 at 2:50=E2=80=AFAM <sashiko-bot@kernel.org> wrote:
+>
+> Thank you for your contribution! Sashiko AI review found 7 potential issu=
+e(s) to consider:
+> - [High] Kernel panic due to invalid type cast when transport is not USB =
+(e.g. uhid).
+> - [High] Kernel panic from dereferencing an ERR_PTR in the raw event hand=
+ler.
+> - [High] Exposing fabricated 0 values for unsupported TIME_TO_EMPTY prope=
+rties causes immediate system shutdown.
+> - [Medium] Hardcoded sysfs name prevents multiple devices and causes prob=
+e failure.
+> - [Medium] Data race on `ups->charge_limit`.
+> - [Low] Missing `POWER_SUPPLY` dependency in Kconfig causes build failure=
+s.
+> - [Low] Driver synchronously blocks the probe path for 3 seconds.
+> --
+>
+> commit 7d140ce589ec6c637bec5ce8b0c27bf8634322c6
+> Author: Andrew Maney <andrewmaney05@gmail.com>
+> Subject: HID: Expose LattePanda IOTA UPS as a power_supply device
+>
+> This commit adds a driver for the LattePanda IOTA UPS. It exposes battery
+> status, capacity, and charging status via the power_supply subsystem by p=
+arsing
+> custom HID reports.
+>
+> > diff --git a/drivers/hid/Kconfig b/drivers/hid/Kconfig
+> > --- a/drivers/hid/Kconfig
+> > +++ b/drivers/hid/Kconfig
+> > @@ -105,6 +105,16 @@ config HID_HAPTIC
+> >
+> >  menu "Special HID drivers"
+> >
+> > +config HID_LATTEPANDA_IOTA_UPS
+> > +     tristate "LattePanda IOTA UPS"
+> > +     depends on USB_HID && X86
+>
+> If the kernel is configured with CONFIG_POWER_SUPPLY=3Dm and
+> CONFIG_HID_LATTEPANDA_IOTA_UPS=3Dy, will the built-in HID driver fail to =
+link
+> against the modular power supply core? Should this include a dependency o=
+n
+> POWER_SUPPLY?
+>
+> > diff --git a/drivers/hid/hid-lattepanda-iota-ups.c b/drivers/hid/hid-la=
+ttepanda-iota-ups.c
+> > --- /dev/null
+> > +++ b/drivers/hid/hid-lattepanda-iota-ups.c
+> [ ... ]
+> > +static enum power_supply_property iota_ups_properties[] =3D {
+> > +     POWER_SUPPLY_PROP_STATUS,
+> > +     POWER_SUPPLY_PROP_CAPACITY,
+> > +     POWER_SUPPLY_PROP_PRESENT,
+> > +     POWER_SUPPLY_PROP_ONLINE,
+> > +     POWER_SUPPLY_PROP_SCOPE,
+> > +     POWER_SUPPLY_PROP_TECHNOLOGY,
+> > +     POWER_SUPPLY_PROP_CHARGE_CONTROL_END_THRESHOLD,
+> > +     POWER_SUPPLY_PROP_CAPACITY_LEVEL,
+> > +     POWER_SUPPLY_PROP_TIME_TO_EMPTY_NOW,
+> > +     POWER_SUPPLY_PROP_TIME_TO_FULL_NOW,
+>
+> If the hardware doesn't support reporting time remaining, is it safe to
+> include these properties and return 0?
+>
+> Returning 0 seconds remaining while discharging can signal to userspace p=
+ower
+> daemons like UPower or systemd-logind that the battery is empty, which mi=
+ght
+> trigger an immediate emergency suspend or shutdown. Could these unsupport=
+ed
+> properties be omitted from the array entirely?
+>
+> [ ... ]
+> > +static int iota_ups_set_property(struct power_supply *supply,
+> > +                              enum power_supply_property psp,
+> > +                              const union power_supply_propval *val)
+> > +{
+> > +     struct iota_ups *ups =3D power_supply_get_drvdata(supply);
+> > +
+> > +     if (psp =3D=3D POWER_SUPPLY_PROP_CHARGE_CONTROL_END_THRESHOLD) {
+> > +             /*
+> > +              * V1.0 supports 80% and 100% charge limits only, set via
+> > +              * DIP switch on the board. This property allows userspac=
+e
+> > +              * to inform the driver which limit is configured.
+> > +              */
+> > +             if (val->intval !=3D 80 && val->intval !=3D 100)
+> > +                     return -EINVAL;
+> > +             ups->charge_limit =3D val->intval;
+>
+> Does this introduce a data race on ups->charge_limit?
+>
+> This field is modified here without holding ups->lock, but it is concurre=
+ntly
+> read in iota_ups_raw_event() and iota_ups_get_property() where it is
+> protected by spin_lock_irqsave(). Should this assignment also be
+> protected by the spinlock?
+>
+> [ ... ]
+> > +static int iota_ups_raw_event(struct hid_device *hdev,
+> > +                           struct hid_report *report,
+> > +                           u8 *data, int size)
+> > +{
+> > +     struct iota_ups *ups =3D hid_get_drvdata(hdev);
+> [ ... ]
+> > +     /*
+> > +      * Notify the power_supply core outside the spinlock. This
+> > +      * triggers UPower's PropertiesChanged signal with the new values=
+.
+> > +      */
+> > +     if (changed && ups->psu)
+> > +             power_supply_changed(ups->psu);
+>
+> Could ups->psu contain an error pointer here?
+>
+> In iota_ups_probe(), if devm_power_supply_register() fails, it returns an
+> error pointer like ERR_PTR(-ENOMEM), which gets directly assigned to ups-=
+>psu.
+>
+> Because hid_hw_start() is called earlier, raw HID events can be processed
+> concurrently before the hardware is stopped in the error path. Since an e=
+rror
+> pointer is not NULL, the check (changed && ups->psu) would pass, and
+> power_supply_changed() would be called with the error pointer, leading to=
+ a
+> crash.
+>
+> Would it be safer to assign the return value of devm_power_supply_registe=
+r()
+> to a local variable first, and only update ups->psu on success?
+>
+> [ ... ]
+> > +static int iota_ups_probe(struct hid_device *hdev,
+> > +                       const struct hid_device_id *id)
+> > +{
+> [ ... ]
+> > +     /* Retrieve serial number from the USB descriptor */
+> > +     udev =3D to_usb_device(hdev->dev.parent->parent);
+> > +     if (udev->serial)
+> > +             strscpy(ups->serial, udev->serial, sizeof(ups->serial));
+>
+> Can this cause a kernel panic if the HID device is instantiated via users=
+pace
+> mock drivers like uhid?
+>
+> When using uhid (which allows setting the bus type to BUS_USB), the paren=
+t
+> device is the uhid character device, not a usb_interface. Dereferencing t=
+he
+> resulting struct usb_device pointer would perform an out-of-bounds memory
+> read.
+>
+> Should the driver verify the transport layer using hid_is_usb() before
+> dereferencing USB-specific structures, or simply use hdev->uniq instead?
+>
+> [ ... ]
+> > +     /*
+> > +      * Wait for both status and capacity reports before registering.
+> > +      * The device sends reports every ~1 second; 3 seconds is safe.
+> > +      */
+> > +     wait_for_completion_timeout(&ups->got_initial_data,
+> > +                                 msecs_to_jiffies(3000));
+>
+> Does blocking the probe path for 3 seconds cause issues for device
+> enumeration?
+>
+> Calling wait_for_completion_timeout() synchronously stalls the kernel's
+> device enumeration thread for that bus, which can unnecessarily delay the
+> overall system boot process or stall the handling of other devices during
+> hotplug.
+>
+> Could the registration be deferred, or could the device be registered
+> immediately with an unknown state instead of blocking?
+>
+> > +
+> > +     ups->psu_desc.name                      =3D "lattepanda-iota-ups"=
+;
+>
+> Is it possible to have multiple of these UPS devices connected to a singl=
+e
+> system?
+>
+> If a second device is plugged in, it will attempt to register a sysfs
+> directory with the exact same hardcoded name, which fails with -EEXIST.
+>
+> This probe failure would then trigger the error pointer panic mentioned
+> earlier. Should the driver dynamically construct a unique name using
+> devm_kasprintf() with dev_name(&hdev->dev)?
+>
+> --
+> Sashiko AI review =C2=B7 https://sashiko.dev/#/patchset/20260513155723.23=
+0707-1-andrewmaney05@gmail.com?part=3D1
+
+Thanks for the detailed review! I'll do the following in v3:
+* Remove TIME_TO_EMPTY_NOW and TIME_TO_FULL_NOW to avoid spurious
+shutdowns. The UPS board doesn't currently have any way to report
+these values as of right now.
+* Add the POWER_SUPPLY requirement to Kconfig.
+* Fix the data race for ups->charge_limit in set_property.
+* Address the 3 second probe delay, it may not be needed. Registering
+the UPS immediately with an unknown state may not be safe if its
+reports are misinterpreted.
+* Fix ERR_PTR panic with a local variable.
+* Fix uhid panic with hid_is_usb() before dereferencing.
+* Use devm_kasprintf() for a unique sysfs name. It is not currently
+possible to have more than one UPS board connected to the IOTA, but
+I'll implement this as a safeguard in case future hardware revisions
+add support for multiple boards.
+
+Thanks,
+Andrew
