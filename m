@@ -1,216 +1,269 @@
-Received: from mail.cjdns.fr (mail.cjdns.fr [5.135.140.105])
+Received: from AM0PR02CU008.outbound.protection.outlook.com (mail-westeuropeazon11013023.outbound.protection.outlook.com [52.101.72.23])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7325436EA8D
-	for <sashiko-reviews@lists.linux.dev>; Fri, 15 May 2026 13:34:58 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=5.135.140.105
-ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1778852100; cv=none; b=HxqSOgvWLHkXSDqd1WL9ph0BvS9g9VgmbPnqbBSbgFqKwdLL+t5lAPTdI/7T1VhGI3HQjOto9yfDq2tJpM7FHLJzyP5Qgc9NhR63nXLgrX7BfT8+t3yCWsT7jvZEpaI8uSDu3vMucmaHLI2WUZFPe0m3QY85mRIl2XGoXy4FSHE=
-ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1778852100; c=relaxed/simple;
-	bh=NCET79qZworMeGxlUtbnqOq50zq63+sJvrMAPaiTqmg=;
-	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=SWxLP2F6++o+MR+krWO6tQhoZi4ego/yI8kiRq/qn4JV5fEanxHLj0LvayIqeLq9uSqS6wAD+QuuT95rT4D35e2q6kZiA4lHSjy5hGc1wXnmyH0oeOlLvQLJhdVsBN5427ixOjIKnmi8HvPOdK3bCDNJOt59h5+GK+UvO5DFuPQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=cjdns.fr; spf=none smtp.mailfrom=cjdns.fr; dkim=pass (2048-bit key) header.d=cjdns.fr header.i=@cjdns.fr header.b=bknCUXBu; arc=none smtp.client-ip=5.135.140.105
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=cjdns.fr
-Authentication-Results: smtp.subspace.kernel.org; spf=none smtp.mailfrom=cjdns.fr
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BB6173B5850;
+	Fri, 15 May 2026 14:35:27 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=fail smtp.client-ip=52.101.72.23
+ARC-Seal:i=2; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
+	t=1778855731; cv=fail; b=OSrl79Jnj8p8L4abZgCVWpHhNO6/K23J22ji7/aRS9ZaC16bYsxhDtOHuso9k8Zay8+VWceal0RvwyjZdRaDqwgrFzJDZo9g72bniQ1sa+Mr10lszxeHNhsKjRrNa4w9hYkVvSzB7KbYmGiv4dI4U4pklxWSkNcraXK/VGq57X8=
+ARC-Message-Signature:i=2; a=rsa-sha256; d=subspace.kernel.org;
+	s=arc-20240116; t=1778855731; c=relaxed/simple;
+	bh=HjvX65GSer+BBC/6rubPEVfspecCj3oFj7UIT28rA6w=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:Content-Type:
+	 Content-Disposition:In-Reply-To:MIME-Version; b=nyqO19rjCozqBedswtXoV7N8UOvg/IPFXYqikOu62hDLUdANY3H7qID/O9tYyqNug0h5UDQa/niej+ZQO/SXgB2fucri9C7+rfRzHEjZCF0ulJY+b0ubVOarCyDoY13yIPCWJibHhenLMcIRMIscPenvP5XLtdhmjrT+dgGnN7A=
+ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=nxp.com; spf=pass smtp.mailfrom=nxp.com; dkim=fail (2048-bit key) header.d=nxp.com header.i=@nxp.com header.b=WVmokrcb reason="signature verification failed"; arc=fail smtp.client-ip=52.101.72.23
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=nxp.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=nxp.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=cjdns.fr header.i=@cjdns.fr header.b="bknCUXBu"
-Received: from [127.0.0.1] (localhost [127.0.0.1]) by localhost (Mailerdaemon) with ESMTPSA id A16943E2A72;
-	Fri, 15 May 2026 15:34:54 +0200 (CEST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=cjdns.fr; s=dkim;
-	t=1778852095; h=from:subject:date:message-id:to:cc:mime-version:content-type:
-	 content-transfer-encoding:content-language:in-reply-to:references;
-	bh=A5zmeGSN+y1eB9ovPme0Em/fslZDHREQBQZ+/qd911k=;
-	b=bknCUXBuLti5q0f9ZMuKNon9Wcm1gf0EoenQcEslk0B5FVXdV+2X2kW0LD9tnYtzibTkzY
-	2xmgv3xDCCMYbiFyncIidH+FzGnveyQ9thlEN4oCeSsG6VqhyR1KtZIx11kh0cNP2LEPQ5
-	ZrBt3OCBMS5GNfu/aU8QHq4BGZC3eX1fLnVITWfH+yo1U74DVfsD5s7umqPfxFYVVXlfru
-	bqAsoz5pCG1meAVhV9rC21jzByOt2z3ZBSf5V5wT9nDvLgEWeJ309jwCRQ7xBVOroKXlTU
-	DqNxRDOZsXpIxE49PP514pWOB41vutfRJt4cAOe7a0+yAPL+kNrQPBns2CsEKA==
-Message-ID: <22d7274b-640a-470e-86b0-997a4b6e102d@cjdns.fr>
-Date: Fri, 15 May 2026 15:34:53 +0200
+	dkim=fail reason="signature verification failed" (2048-bit key) header.d=nxp.com header.i=@nxp.com header.b="WVmokrcb"
+ARC-Seal: i=1; a=rsa-sha256; s=arcselector10001; d=microsoft.com; cv=none;
+ b=y+VOoqK7tvBCnFL4mW9n/vNmJj1+UY0XmDmUtMT8ovuaXviBvi6t9j+QrXIQEz3p8FNLxyrQgsLn6t5tBxHK9TBheyqV+z0eVIqak8wFwuNZZi+1JNzwZgpg05ZtAOGHc9wdpjdU3B4a+xhS0NCc0sH+1++7bdVXk8IJXI0Gjtvd6OAf5nbUpIGBtpo0Wj3nvm+YUy0TXira/p00nE1LM2pkG0egSjP7dhWaFauI4M9/MLgUePZUps0T3OkQOQ6s+9n0QN+uNihJV0q93AuNuE8gxPizWBlAxaNBsBoroNJmaqq/SxlLVvd8AiiQ+nqi1jQxFUKiw9CfilOu/cFYSw==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com;
+ s=arcselector10001;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
+ bh=HeAINXacJh37H+mSyVBCY8ws9epvKTUxUWweUqJXiAw=;
+ b=N4WHwrZx/Vr68RpSWapjolpbMJLz+YN/BHTD+/s+bO2LS8pAN7Hf0b0QGUqCz586DmG1VrDyGrdoPl5GYGHv8DnDllxfJSj8KfOajCJgfFEjoV3nj7PncNmqIOVqi4J7eTSCakn+dCNEo7wH1NWMGsUAA4X0r94ciSG2E7SsOWhpjwU3c7Fe4glC3f395PwXwGjPxPb9AdIDR4rvsuYeVM1aA2zGtQ/a2r/bPEfqqWl2d7Z64S9OjefL0ADOogUd2PBUwePpc8Atyssu9TMuN17za9Xe31pgNaQ2Uj4PP62oIIqaqNLTqU9fbGjpQgixpq+azMXji8hVVQCEIW0JAw==
+ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
+ smtp.mailfrom=nxp.com; dmarc=pass action=none header.from=nxp.com; dkim=pass
+ header.d=nxp.com; arc=none
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=nxp.com; s=selector1;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
+ bh=HeAINXacJh37H+mSyVBCY8ws9epvKTUxUWweUqJXiAw=;
+ b=WVmokrcb02CP8HzMCZ7K5Oh6m7VIPEwnexzOw53yjojO4AKheEPbJ983hFONa9eAR1VJoeMU0XxoqIBOjfWKMtJoY5Ey43rUcRklGOms8CpTFIRaA2mbu/JgCZhRMkrkOlomFH06PSyKRwvnJQLCS/NHLYavbd2yRVGegXJsw+8CVDVGIRIDx5AULLeYsxY5OZPbiozcuQAXU3D1iLYQVima/z3+pgPYzS2qJk+W7vY2+nzjQXA9rnhE3Tw4xYcTiXrtZaB+inBBYoC5OPKudOm02OmRN66jEsrKXsC9aDHg93Fe8/InOSF4lWwvItgKlFX/KxHM7K4TXW3M1eo6vQ==
+Authentication-Results: dkim=none (message not signed)
+ header.d=none;dmarc=none action=none header.from=nxp.com;
+Received: from PA4PR04MB9366.eurprd04.prod.outlook.com (2603:10a6:102:2a9::8)
+ by GV2PR04MB11959.eurprd04.prod.outlook.com (2603:10a6:150:2f1::20) with
+ Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.9913.11; Fri, 15 May
+ 2026 14:35:20 +0000
+Received: from PA4PR04MB9366.eurprd04.prod.outlook.com
+ ([fe80::75e4:8143:ddbc:6588]) by PA4PR04MB9366.eurprd04.prod.outlook.com
+ ([fe80::75e4:8143:ddbc:6588%3]) with mapi id 15.20.9913.009; Fri, 15 May 2026
+ 14:35:20 +0000
+Date: Fri, 15 May 2026 10:35:13 -0400
+From: Frank Li <Frank.li@nxp.com>
+To: sashiko-reviews@lists.linux.dev
+Cc: Pankaj Gupta <pankaj.gupta@nxp.com>, imx@lists.linux.dev,
+	Frank.Li@kernel.org
+Subject: Re: [PATCH -next] firmware: imx: se_ctrl: fix init_device_context()
+ error path
+Message-ID: <agcvIVe0y_B4tOlu@lizhi-Precision-Tower-5810>
+References: <20260514090457.2186933-1-pankaj.gupta@nxp.com>
+ <20260514175132.EEF00C2BCB3@smtp.kernel.org>
+Content-Type: text/plain; charset=iso-8859-1
+Content-Disposition: inline
+Content-Transfer-Encoding: 8bit
+In-Reply-To: <20260514175132.EEF00C2BCB3@smtp.kernel.org>
+X-ClientProxiedBy: SJ0PR13CA0216.namprd13.prod.outlook.com
+ (2603:10b6:a03:2c1::11) To PA4PR04MB9366.eurprd04.prod.outlook.com
+ (2603:10a6:102:2a9::8)
 Precedence: bulk
 X-Mailing-List: sashiko-reviews@lists.linux.dev
 List-Id: <sashiko-reviews.lists.linux.dev>
 List-Subscribe: <mailto:sashiko-reviews+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:sashiko-reviews+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird Beta
-Subject: Re: [PATCH v7 2/2] PCI: mediatek: Add support for EcoNet EN7528 SoC
-To: sashiko-reviews@lists.linux.dev, Bjorn Helgaas <helgaas@kernel.org>
-Cc: robh@kernel.org, devicetree@vger.kernel.org, linux-pci@vger.kernel.org,
- krzk+dt@kernel.org, conor+dt@kernel.org
-References: <20260514151318.3444959-3-cjd@cjdns.fr>
- <20260514210141.2DEF2C2BCB3@smtp.kernel.org>
-Content-Language: en-US
-From: Caleb James DeLisle <cjd@cjdns.fr>
-In-Reply-To: <20260514210141.2DEF2C2BCB3@smtp.kernel.org>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 8bit
-X-Last-TLS-Session-Version: TLSv1.3
+X-MS-PublicTrafficType: Email
+X-MS-TrafficTypeDiagnostic: PA4PR04MB9366:EE_|GV2PR04MB11959:EE_
+X-MS-Office365-Filtering-Correlation-Id: 3eeb1da3-3b48-4649-fb99-08deb28f3097
+X-MS-Exchange-SenderADCheck: 1
+X-MS-Exchange-AntiSpam-Relay: 0
+X-Microsoft-Antispam:
+	BCL:0;ARA:13230040|366016|19092799006|52116014|376014|1800799024|38350700014|4143699003|22082099003|18002099003|56012099003|11063799003;
+X-Microsoft-Antispam-Message-Info:
+	XplKbaIf3R9pXYwKrhTJ5uinjiPEE+ma6oKPwy6LDdfOpQqSU437GlUJBU0SzQX3pLZvYnFF+i8vWyWeOia1AIaDQIZZ38YXfgl6yM+mS8tJps5gKxxVzDR+URbvXgOTbk/HV3YWxXV3B9o0Nr37HAC8ZysW5fP5AEuxaL18AQlaqCUSonG4sP6wDg6BujXzs8BcfIkxEQsiYKKJda6avxxfnpawZAhkXjat78FY3hl29w8GfK0AfHOPDxMAggnFrWCm/62sAGpIOoA3CGLjbnd0f3DoLnYqHl0LlCjhTIQppCPvlda1cbdwOgltgp3jBCFYmru1+Za1KfwnYCPq78X/UgvJ9SitKv+OtjaC0bCAAIUJYwakye/5hfW8cgIzk+AMp3pCajl+Q6DxkbkAz7kzUazHdpqkIO4kp8dEpuvF2jrwsQ7bO59GIEST5js5R5knJXhEMFQM/h/G4BEzBapa3PnnzVwlrBxvJRmn9E6Rzr1yZ7dHFpaZ0CHK1E8kZ4B4/dl6Fv5I+TLVhHHBlDXr3arzKE9O2yPqsR8fd4ebZtWWqMQjstGlYC8m+hSzX3BMXuSXHZGNfnUz/KyJN/DxiVpk282xqXztym6RJyCmWKc/6CJli5ickF799W0kMQkP0LOXXMYtmWmr5xT/QGUnpuHyAkXA+OATknc/AC2QoTK2ZVjnNiyb94bSSXtj
+X-Forefront-Antispam-Report:
+	CIP:255.255.255.255;CTRY:;LANG:en;SCL:1;SRV:;IPV:NLI;SFV:NSPM;H:PA4PR04MB9366.eurprd04.prod.outlook.com;PTR:;CAT:NONE;SFS:(13230040)(366016)(19092799006)(52116014)(376014)(1800799024)(38350700014)(4143699003)(22082099003)(18002099003)(56012099003)(11063799003);DIR:OUT;SFP:1101;
+X-MS-Exchange-AntiSpam-MessageData-ChunkCount: 1
+X-MS-Exchange-AntiSpam-MessageData-0:
+	=?iso-8859-1?Q?zML2JtFHeYsdfuFYVngetLYwoiBxFF+/ZyZfoOok7r5bAswcvMNELSNItm?=
+ =?iso-8859-1?Q?TrjYPeKIdBp/xsSfx2xCg9FQsvIacQlntB+Hl8Fv+OJZ0O3zpspcuSSY/O?=
+ =?iso-8859-1?Q?XENNHZGEXdgq5I0La9NqfmGcrGW8PJBrkUQMedM0SEyRO7I6KeqLVVWLYL?=
+ =?iso-8859-1?Q?L6Znc4fv8eVAe0WuhHErtR2a9eNRJu4lFhUrdkX4+uJGZhPmDOYNJ6kNHz?=
+ =?iso-8859-1?Q?bGjGkw3e+nBLSEfOo6GIoFTGwhNv4eBC8476iN3TYtnuvNX3gfhZxyGgkq?=
+ =?iso-8859-1?Q?LmryucvHSVJHwZOttdrAx5HXgXabk1tgpIl7GMvTLbQSVA1hKapZS0ObpJ?=
+ =?iso-8859-1?Q?fiSm4Kiu9CZl+Pyq34z3JRbiA1NeB26PKFnWlVbR/Vjk8W4AbZnZZVc49E?=
+ =?iso-8859-1?Q?cDxAcfdqdrGheoH7ovj2BDromb9Q4Ic/UN38smPNHStbcrHIq7SkcNxiIc?=
+ =?iso-8859-1?Q?kr9XdjVke+xkh3P5jzbr2E7Q6B9lKEmBqT9KBfXDGh5xQm09EarEiJQYwO?=
+ =?iso-8859-1?Q?6SeVUnrDv2joQxy6KM0F9WnHhetcecb/Eura6wFrYl+CUJ2HOjQRa7J6Xe?=
+ =?iso-8859-1?Q?IWZYrrySmoiaVq5gD9V0YHXorvuBDKWA/KKUmbHssvnQmlFk8fEfcxmqVa?=
+ =?iso-8859-1?Q?16DnTmbipKmuLwFdTXQGvic2q/pwhtB/f31tRqfOUzzxfgjQezku+R14NN?=
+ =?iso-8859-1?Q?XJ/Kc7T+AGunXeC7/7r+WVv93Eq4YKizliOKRbDVqiSduS92q94W4klZmU?=
+ =?iso-8859-1?Q?KSFKm/0kOPRnzC/gumdxEAn93+41I+u9KvfUXsy2KYwvKuhhWFE+Jw3ZEr?=
+ =?iso-8859-1?Q?fO3OwCd5V7bOXb7QeLyiZX4auwDt+18dlQoSjpGQ5IVP5qxJo59uE8beCK?=
+ =?iso-8859-1?Q?B260c7/i/KAdWzabv4oVY4QPd0bloKs3di2iKUkKEmKs7bsKFyzYZ4VUC1?=
+ =?iso-8859-1?Q?2e/bkWtryDabvEQ9Cutohg4s11P0N3Y5BWQJwSN7mSlff/I0T9FwKHQVJ+?=
+ =?iso-8859-1?Q?yxOOsw5pR/Gjz0F+1uL24WsRbCqlEuQBUIrLU3J9Pn3VjMNlfHKxR3Trwf?=
+ =?iso-8859-1?Q?kpLGHmOy5bO9YB2PCiWcl3QTr8Ar/WFcm/9L1egAeW9EN1UGVPKuqw97qI?=
+ =?iso-8859-1?Q?OXNy686a/EjKKC4WniPkr4xZb3NX372mSYC7sqLgjLgMBo46DkTG703tv0?=
+ =?iso-8859-1?Q?blIYWYfqKe6D2JDRuIqUyJ/HrbncWU2J7WW95BjDmR+SjBktjFBD/zamkA?=
+ =?iso-8859-1?Q?n4oToRfh2pFe2xo4Gut6LlQxPCEhyyKeVj92PvXNWpOygq0WaojD0KFsBj?=
+ =?iso-8859-1?Q?kaoxIcg8+4Xn9Kze/Cwm7OAf5k+pXFjPxbFtTDkyitXGxe1MttFE1xJyuH?=
+ =?iso-8859-1?Q?YGYe9ss7GQdOr0T5nIkef3ADcd2h7Dqr07xASumNEn0Rs874FGWHm47ukw?=
+ =?iso-8859-1?Q?ttyEYg/eUPtA029kK49QnqgMZmXpbGhcmROFUTkhfMPwXPh5eAuV+KZV2t?=
+ =?iso-8859-1?Q?BtC9aD/lzGUBehvCozQl4ldBasqHSwg7nDyErl5MEan04iIJvihmRO4AQF?=
+ =?iso-8859-1?Q?SrLHPAnqyh2PJrtihKKRp7j7zmUSMba9ChDiG+ehW3A1uzb8LMDdWnn3yG?=
+ =?iso-8859-1?Q?nbPCV5uKa13l2lnjUHvcmkYaSTmvYRiQIHCXVlJ47nZJ8KCuTNaasV2GqB?=
+ =?iso-8859-1?Q?+mKq2NfQhjAsmOOxAUnweBR+Bu8Dm3YVbcRh5xHS3VGgbSzuPgblUo5ndw?=
+ =?iso-8859-1?Q?eanhUUxZN7KC6wJdOTwaP+xQ63n/odojVcDa253vLrZDgM?=
+X-OriginatorOrg: nxp.com
+X-MS-Exchange-CrossTenant-Network-Message-Id: 3eeb1da3-3b48-4649-fb99-08deb28f3097
+X-MS-Exchange-CrossTenant-AuthSource: PA4PR04MB9366.eurprd04.prod.outlook.com
+X-MS-Exchange-CrossTenant-AuthAs: Internal
+X-MS-Exchange-CrossTenant-OriginalArrivalTime: 15 May 2026 14:35:20.0261
+ (UTC)
+X-MS-Exchange-CrossTenant-FromEntityHeader: Hosted
+X-MS-Exchange-CrossTenant-Id: 686ea1d3-bc2b-4c6f-a92c-d99c5c301635
+X-MS-Exchange-CrossTenant-MailboxType: HOSTED
+X-MS-Exchange-CrossTenant-UserPrincipalName: o0Bvz0KZJNqoYraO3ko/jY0v8+PMXBB56uMJlW9jna/SWVvvOFbivW9qKY5D/d3F8iY3DNACL8NrH6BDVnzvZw==
+X-MS-Exchange-Transport-CrossTenantHeadersStamped: GV2PR04MB11959
 
-Regarding this, I could use some advice. Bjorn I tagged you in because 
-you're probably best to have an opinion here.
-
-
-On 14/05/2026 23:01, sashiko-bot@kernel.org wrote:
-> Thank you for your contribution! Sashiko AI review found 5 potential issue(s) to consider:
-> - [High] mtk_pcie_retrain() iterates the PCI bus without locks and holds an unreferenced device pointer, leading to a Use-After-Free.
-> - [High] mtk_pcie_retrain() only retrains the first root port, silently ignoring any other ports on the same host.
-> - [High] Link retraining occurs after downstream endpoint drivers are probed, causing a race condition that can lead to system crashes.
-> - [High] Calling virt_to_phys() on an __iomem pointer causes undefined behavior and potential memory corruption.
-> - [Medium] The IS_BUILTIN() workaround silently degrades hardware capabilities when the driver is compiled as a module.
+On Thu, May 14, 2026 at 05:51:32PM +0000, sashiko-bot@kernel.org wrote:
+> Thank you for your contribution! Sashiko AI review found 6 potential issue(s) to consider:
+> - [High] Use-After-Free of `dev_ctx` during implicit `mutex_unlock` in `se_if_fops_close()`.
+> - [High] Data race and list corruption on `priv->dev_ctx_list` due to mismatched locks.
+> - [High] Permanent resource leak and Denial of Service (DoS) in `.release` handler due to interruptible locking.
+> - [High] Double free, list poisoning, and Use-After-Free vulnerabilities during driver unbind.
+> - [High] Use-After-Free of asynchronous mailbox messages in `se_if_fops_write()`.
+> - [High] Data race and memory leak in `se_ioctl()` `SE_IOCTL_ENABLE_CMD_RCV` command.
 > --
 >
-> commit 08338fe344200ef55148194108ab3b65616af7c7
-> Author: Caleb James DeLisle <cjd@cjdns.fr>
-> Subject: PCI: mediatek: Add support for EcoNet EN7528 SoC
+...
 >
-> This commit adds support for the PCIe controller found on EcoNet EN7528 SoCs.
-> It introduces a hardware quirk to retrain the link after startup, as some
-> ports capable of Gen2 operation will initially start at Gen1 speeds.
+> drivers/firmware/imx/se_ctrl.c:se_if_fops_close() {
+>     ...
+> 	scoped_cond_guard(mutex_intr, return -EBUSY, &dev_ctx->fops_lock) {
+>         ...
+> 		list_del(&dev_ctx->link);
+>         ...
+> }
 >
->> diff --git a/drivers/pci/controller/pcie-mediatek.c b/drivers/pci/controller/pcie-mediatek.c
->> --- a/drivers/pci/controller/pcie-mediatek.c
->> +++ b/drivers/pci/controller/pcie-mediatek.c
-> [ ... ]
->> @@ -753,6 +764,135 @@ static int mtk_pcie_startup_port_v2(struct mtk_pcie_port *port)
-> [ ... ]
->> +	/* Activate INTx interrupts */
->> +	val = readl(port->base + PCIE_INT_MASK);
->> +	val &= ~INTX_MASK;
->> +	writel(val, port->base + PCIE_INT_MASK);
->> +
->> +	if (IS_ENABLED(CONFIG_PCI_MSI))
->> +		mtk_pcie_enable_msi(port);
-> Is it safe to call mtk_pcie_enable_msi() here? Looking at
-> mtk_pcie_enable_msi(), it calculates the message address using:
+> If multiple files are closed concurrently, or an open and close happen at the
+> same time, couldn't this corrupt the doubly linked list?
 >
->      virt_to_phys(port->base + PCIE_MSI_VECTOR)
+> > +	priv->active_devctx_count++;
+> > +
+> >  	return ret;
+> >  }
 >
-> Since port->base is an ioremapped __iomem pointer, passing it to
-> virt_to_phys() produces undefined behavior and could return a garbage
-> physical address. If this address overlaps with valid physical RAM mapped
-> for DMA, could memory writes from the PCIe endpoint corrupt random system
+> This isn't a bug in the diff, but is there a use-after-free in
+> se_if_fops_close()?
+>
+> drivers/firmware/imx/se_ctrl.c:se_if_fops_close() {
+>     ...
+> 	scoped_cond_guard(mutex_intr, return -EBUSY, &dev_ctx->fops_lock) {
+>         ...
+> 		kfree(dev_ctx->devname);
+> 		kfree(dev_ctx);
+> 	}
+>     ...
+> }
+>
+> Because scoped_cond_guard automatically calls mutex_unlock(&dev_ctx->fops_lock)
+> when the scope block terminates, won't it unlock the mutex after
+> kfree(dev_ctx) has already freed the memory containing the lock?
+
+Looks like it makes sense. you can't free dev_ctx in this guard. Please
+double check other AI review result.
+
+Frank
+
+>
+>
+> This isn't a bug in the diff, but does the interruptible lock cause a
+> permanent memory leak and potential denial of service when closing the file?
+>
+> drivers/firmware/imx/se_ctrl.c:se_if_fops_close() {
+>     ...
+> 	scoped_cond_guard(mutex_intr, return -EBUSY, &dev_ctx->fops_lock) {
+>         ...
+> 		kfree(dev_ctx);
+> 	}
+>
+> 	return 0;
+> }
+>
+> If the calling process has a pending signal, the lock acquisition fails and
+> returns -EBUSY, skipping the kfree and DMA cleanup. Since the VFS ignores
+> the return value of the release handler and destroys the file unconditionally,
+> does this permanently leak dev_ctx and its DMA memory, allowing an attacker
+> to exhaust system memory by repeatedly opening and forcefully closing the
+> device?
+>
+>
+> This isn't a bug in the diff, but could driver unbind cause a double free
+> or list poisoning?
+>
+> During driver unbind, devres automatically frees the priv structure.
+> Then se_if_probe_cleanup() iterates over the list:
+>
+> drivers/firmware/imx/se_ctrl.c:se_if_probe_cleanup() {
+>     ...
+> 	if (priv->dev_ctx_mono_count) {
+> 		list_for_each_entry_safe(dev_ctx, t_dev_ctx, &priv->dev_ctx_list, link) {
+> 			list_del(&dev_ctx->link);
+> 			priv->active_devctx_count--;
+> 		}
+> 	}
+>     ...
+> }
+>
+> Since it removes the links but doesn't free dev_ctx or revoke open file
+> descriptors, if a userspace process later closes a surviving file descriptor,
+> won't se_if_fops_close() call list_del(&dev_ctx->link) again on the removed
+> node, and also dereference the already-freed dev_ctx->priv structure?
+>
+>
+> This isn't a bug in the diff, but is there a use-after-free for asynchronous
+> mailbox messages?
+>
+> In se_if_fops_write(), tx_msg is allocated and queued:
+>
+> drivers/firmware/imx/se_ctrl.c:se_if_fops_write() {
+>     ...
+> 		struct se_api_msg *tx_msg __free(kfree) = memdup_user(buf, size);
+> 		if (IS_ERR(tx_msg))
+> 			return PTR_ERR(tx_msg);
+>         ...
+> 		err = ele_msg_send(dev_ctx, tx_msg, size);
+>
+> 		return err;
+> 	}
+> }
+>
+> The mailbox channel is non-blocking (priv->se_mb_cl.tx_block = false), so
+> the framework can queue the message pointer asynchronously. Because tx_msg
+> uses the __free(kfree) attribute, it is immediately freed upon returning.
+> When the mailbox controller processes the queue later, won't it read from
+> the freed memory?
+>
+>
+> This isn't a bug in the diff, but does SE_IOCTL_ENABLE_CMD_RCV have a data
+> race?
+>
+> The command modifies the global driver state:
+>
+> drivers/firmware/imx/se_ctrl.c:se_ioctl() {
+>     ...
+> 	scoped_cond_guard(mutex_intr, return -EBUSY, &dev_ctx->fops_lock) {
+> 		switch (cmd) {
+> 		case SE_IOCTL_ENABLE_CMD_RCV:
+> 			if (!priv->cmd_receiver_clbk_hdl.dev_ctx) {
+> 				if (!priv->cmd_receiver_clbk_hdl.rx_msg) {
+> 					priv->cmd_receiver_clbk_hdl.rx_msg =
+> 						kzalloc(MAX_NVM_MSG_LEN,
+> 							GFP_KERNEL);
+>         ...
+> 				priv->cmd_receiver_clbk_hdl.dev_ctx = dev_ctx;
+>     ...
+> }
+>
+> Since this section is only protected by the per-file lock dev_ctx->fops_lock,
+> if two processes invoke this ioctl concurrently, they hold different locks.
+> Can they both bypass the !priv->cmd_receiver_clbk_hdl.dev_ctx check, leading
+> to concurrent kzalloc allocations that overwrite the shared pointer and leak
 > memory?
-Learned a few things from that note. Seems ioremap is just giving us a 
-KSEG1 address and virt_to_phys() is getting the real address back. In 
-any case I'm just doing what the driver already does.
 >
->> +
->> +	/* Set AHB to PCIe translation windows */
-> [ ... ]
->> +static int mtk_pcie_retrain(struct device *dev, struct pci_host_bridge *host)
->> +{
->> +	struct pci_dev *rp;
->> +	int ret = -ENOENT;
->> +	u16 lnksta = 0;
->> +	u32 speed;
->> +
->> +	/* Should already have been warned about during startup_port */
->> +	if (!IS_BUILTIN(CONFIG_PCIE_MEDIATEK))
->> +		return 0;
->> +
->> +	for_each_pci_bridge(rp, host->bus) {
->> +		if (pci_pcie_type(rp) == PCI_EXP_TYPE_ROOT_PORT)
->> +			goto found_port;
->> +	}
->> +
->> +	/* Should not happen */
->> +	return dev_err_probe(dev, ret, "root port not found\n");
->> +
->> +found_port:
-> The commit message mentions that it is most convenient to retrain every port
-> after startup. Does the goto found_port here unintentionally skip all
-> subsequent root ports by breaking out of the loop after the first match?
-There aren't any.
->
-> Also, is it safe to traverse host->bus->devices via for_each_pci_bridge()
-> without holding the pci_bus_sem read lock? If a device is concurrently added
-> or removed, this might lead to list corruption.
->
-> Finally, pcie_retrain_link() is a sleepable function. Because the code does
-> not acquire a reference to the root port via pci_dev_get() before sleeping,
-> could a concurrent removal event free the pci_dev structure and result in a
-> use-after-free?
-
-
-Okay here's the one I have a question about:
-
-There's a bunch of related issues here, and I don't see any way to 
-perfectly resolve all of them without moving retrain up before 
-pci_host_probe(), but as noted previously without a mapped bus I can't 
-just call pcie_retrain_link() and I have to - at worst - manually find 
-the registers which is an annoying amount of additional code.
-
- From the vendor code, it looks like it should be about 50-70 lines of 
-code to do this manually. The question is, is this race adding more 
-complexity than that code?
-
-I think wrapping the mtk_pcie_retrain() call in a 
-pci_lock_rescan_remove() lock should stop any downstream probing while 
-pcie_retrain_link() sleeps, but if it happens that a downstream device 
-ends up probing on a different CPU, in the moment 
-between pci_host_probe() and pci_lock_rescan_remove(), we still have the 
-problem of retraining while the device is setting up. Though this is 
-admittedly a pretty tiny race window.
-
-So I think the options are:
-
-1. Do nothing
-
-2. Add pci_lock_rescan_remove() - I'm not informed enough to know if 
-this can introduce other issues...
-
-3. Give up on using pcie_retrain_link() and do it manually before 
-pci_host_probe()
-
-
-I'm leaning toward #2 but I also don't know what I don't know, so I 
-could use a little advice.
-
-
-
->
->> +
->> +#if IS_BUILTIN(CONFIG_PCIE_MEDIATEK)
->> +	ret = pcie_retrain_link(rp, true);
->> +#endif
-> Does this silently degrade hardware capabilities when the driver is compiled
-> as a loadable module? The Kconfig definition allows CONFIG_PCIE_MEDIATEK to
-> be a tristate module, so users compiling it as a module might find their PCIe
-> devices permanently stuck at Gen1 speeds.
-Handled in the if statement above, noted in previous version of the patch.
->
->> +
->> +	if (ret)
-> [ ... ]
->> @@ -1149,6 +1289,13 @@ static int mtk_pcie_probe(struct platform_device *pdev)
->>   	if (err)
->>   		goto put_resources;
->>   
->> +	/*
->> +	 * Ignore error because pci_host_probe() was already called, and in any
->> +	 * case it is possible that the port will still work as Gen1.
->> +	 */
->> +	if (pcie->soc->quirks & MTK_PCIE_RETRAIN)
->> +		mtk_pcie_retrain(dev, host);
->> +
->>   	return 0;
-> Does retraining the link at this stage introduce a race condition with
-> downstream endpoints?
->
-> By the time pci_host_probe() completes successfully, the PCIe bus is fully
-> enumerated and downstream endpoint drivers (such as NVMe or WiFi) have been
-> probed. If those drivers are actively issuing MMIO or DMA requests, forcing
-> the physical link into the Recovery state could cause PCIe completion timeouts
-> and potentially lead to fatal kernel crashes.
-
-Issue noted above.
-
-
-Thanks,
-
-Caleb
-
-
+> --
+> Sashiko AI review � https://sashiko.dev/#/patchset/20260514090457.2186933-1-pankaj.gupta@nxp.com?part=1
