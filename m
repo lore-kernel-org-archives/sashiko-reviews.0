@@ -1,193 +1,239 @@
-Received: from mail-wm1-f50.google.com (mail-wm1-f50.google.com [209.85.128.50])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from mgamail.intel.com (mgamail.intel.com [198.175.65.17])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5847F37DAA6
-	for <sashiko-reviews@lists.linux.dev>; Fri, 15 May 2026 20:09:47 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.50
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1C44E405C41
+	for <sashiko-reviews@lists.linux.dev>; Fri, 15 May 2026 22:13:10 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=198.175.65.17
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1778875789; cv=none; b=fbqcJTuLyRqDWg1HkTmSIDuHW6I2z6OgnRHZpDezEurl6veOnWQ7R+Uy4vWOD4zmSL5sA1abUSfglLE7+aEo0Sa/ZUGRAYrR2bH6TWf8gLKwRKLxY9tymhGW6ZLTv/elsYB17VmVmcWZl2m/3blAjSAX4a7tViRyvPKY69k26lg=
+	t=1778883192; cv=none; b=pWxOUxyLe7BvW4s1XC2P8LpG3cfMZUwHLUEtlj6eDBiz1+/RVWOVLYtun9fP24xCPI/QkKtUiQUL7PkmFANKALUYM6QsRAmfo//RcWxprz1A+0Qgi7D1zMBsfwpkcyDsNvc/U/6Gt4Y7IwyDbfkzPe3QyGMcNLETm+EFP8beSBE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1778875789; c=relaxed/simple;
-	bh=eHYdQTeQyDvfFdCM0KGLCYSBT9jr3H9LQqqjbauCO+I=;
-	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=Dpum2biCijz5x/UzWrzlVMi3BP72diS3IuATaP5XhKOIp9dS+KOKxtpA/xCbQZkgpqBfLNfzKSChxOBwsHnom7yWMOmVbhBw5oGpeFwaYbNLMEG3sEEwbnurjcM/AJ++j0Zpq+egyzaeoPZ5NiLDrc44300rF22/w5Tfx3sF/v0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=LquQbzXW; arc=none smtp.client-ip=209.85.128.50
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+	s=arc-20240116; t=1778883192; c=relaxed/simple;
+	bh=g/xqUL8SxWZxhvsedyvZWYmyTXwHkSBnqFOnidbelcc=;
+	h=Date:From:To:Cc:Subject:Message-ID:In-Reply-To:References:
+	 MIME-Version:Content-Type; b=HDkZf6Bf/oel8We9Df28mbelLOnhLvejSxEP1agQ+8QxDDxztWR8BGAdT7ZubIHi/zCnxuIsxmZAZpfjwWpqA2zYWIQlxIPHmvhckhVRq0WHAFb08wUyAX6AnEzoFeIXkqeU3vHR4FuSi4qvHDGdNDw9BVBjMRib8cAD2JlHz/s=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linux.intel.com; spf=pass smtp.mailfrom=linux.intel.com; dkim=pass (2048-bit key) header.d=intel.com header.i=@intel.com header.b=hKPZA6FF; arc=none smtp.client-ip=198.175.65.17
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linux.intel.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linux.intel.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="LquQbzXW"
-Received: by mail-wm1-f50.google.com with SMTP id 5b1f17b1804b1-488ff90d6c7so1311745e9.2
-        for <sashiko-reviews@lists.linux.dev>; Fri, 15 May 2026 13:09:47 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20251104; t=1778875786; x=1779480586; darn=lists.linux.dev;
-        h=content-transfer-encoding:in-reply-to:from:content-language
-         :references:cc:to:subject:user-agent:mime-version:date:message-id
-         :from:to:cc:subject:date:message-id:reply-to;
-        bh=+S5wVxWfcKMGbz7T+itvslblDRSu63n1AJM/TQSrJjM=;
-        b=LquQbzXWbu/U7H0Sq98zIHGGOZWOgUS9CO9UZqC9pVTLt9U10IM04OmC9u+SYtK+Bs
-         +0bzulF1cX1Bs6o34yczBQZcKn5qZwf1aIomKQsc/tiCJjGyZk11JbHj29elv/IF/X68
-         sfDQONSPdrEoUpi+HXlzWPYUTEwdUxpHRjLiKXZRnRNXLU+GCv2kz6UviwSRpFHZRvSP
-         h4aVscfa/nxmKJYXKdr/qjSRfx0zD9sd9d/VGdJ6+MBnPq8ZbLqRRiUfZeZ5Et/BTT9X
-         KyLstb/KwZy0cq5Echt6fxBL07MFA8pCJz4ZjKBfAoAJYNfh9ZdIjIyne1ferhbuM7Q1
-         bImg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20251104; t=1778875786; x=1779480586;
-        h=content-transfer-encoding:in-reply-to:from:content-language
-         :references:cc:to:subject:user-agent:mime-version:date:message-id
-         :x-gm-gg:x-gm-message-state:from:to:cc:subject:date:message-id
-         :reply-to;
-        bh=+S5wVxWfcKMGbz7T+itvslblDRSu63n1AJM/TQSrJjM=;
-        b=P0DFkyzKjH46eJvQENvgHw536b6u0gbMKj0FnNvxMfsQMmuB5sac448QJ6vOnTHrpH
-         s/dwAlC53U5gY5ckb/F7/G9NBDexL/V9tBHO4RxEb8e7Zpo246Y4S9kGpQTiLAzNpWjW
-         JILmpOuQrW1TIEFcS0LY7X8Mmxkv5UO4bDA1lr0Yz82YWRmSk+FB0zQk1m4MQM05z88r
-         itT+MfqzlZGWnwjxMYBk6u3mCkhm1ROzLQkwpe0urMBxCYMtd5HMIFD+1EMD8c50rfVL
-         PRU4lfBRgsx48oZuqdqnXJmQpBwhTcQoboYDQ9khJVw8zH9HME12bDmB973ikjbhjtlX
-         M8ag==
-X-Gm-Message-State: AOJu0Yx52qDiRkz2XNDpz3grpYagwTjY2Lf8KwFnKA/a+e9eSqBAyUCD
-	tcwozQqgHggsNhKbt1mgKyl0SOVot/w+tsFL3GK06K1drP+7KtuCz5Z7+iIutZ0n
-X-Gm-Gg: Acq92OFoTUeXqJLn0R0Pad5Evf2pIICsmWE3WOKsz9m9T1kBSM671D5W2ZYCkktD2ps
-	INfdq6nVCIALDLLqPrqpe280zaWr9tHTnTcYfzjV8YuPJI/G78/CPCcP/sVPdWnHzF5GaZy8Dph
-	U5B3s8XddvA060/FVUG8E4WNo7CLAtQIcTmkHTOm7NcfQy/yLDPCd0g43c0mIn6h92d2c2VtYHR
-	IaIf65AzCRQQsXAHLWh0IoVyVwhiz5qznpNJ6etyilFRcu+Ig21EXsOvPnyyfn9rEN4ksrOBqq6
-	VOg0ThWG/L6qyEoeBI2ZjoAR7fy9F5kRjEVBNvJeO8ptk2v05Y/TMda7kotyI4AWAmF3HTkjls8
-	J+R/yynTxWnDi9WD8ahUMwoxcz9lMp4/m/EShvvAu/RhwxnoKhKbfhmyeuC2YXC552f0QD/rbrT
-	UMP9TZx96JFKn2tkTsfpq/SOEYgjqaHlV8v7S7sUHMT74riSFMnr1f/gThKyjZ1OWLTWSIm9ad+
-	w8z2OoSsQs=
-X-Received: by 2002:a05:600c:34d4:b0:48f:e230:c3fa with SMTP id 5b1f17b1804b1-48fe6626a58mr75827145e9.32.1778875785529;
-        Fri, 15 May 2026 13:09:45 -0700 (PDT)
-Received: from ?IPV6:2a01:4b00:bd1f:f500:f867:fc8a:5174:5755? ([2a01:4b00:bd1f:f500:f867:fc8a:5174:5755])
-        by smtp.gmail.com with ESMTPSA id 5b1f17b1804b1-48fe5694fbfsm149747125e9.6.2026.05.15.13.09.45
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Fri, 15 May 2026 13:09:45 -0700 (PDT)
-Message-ID: <8b2d626f-9fe2-47fc-830d-a26183913d77@gmail.com>
-Date: Fri, 15 May 2026 21:09:44 +0100
+	dkim=pass (2048-bit key) header.d=intel.com header.i=@intel.com header.b="hKPZA6FF"
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
+  d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
+  t=1778883191; x=1810419191;
+  h=date:from:to:cc:subject:message-id:in-reply-to:
+   references:mime-version:content-transfer-encoding;
+  bh=g/xqUL8SxWZxhvsedyvZWYmyTXwHkSBnqFOnidbelcc=;
+  b=hKPZA6FFVdtJ+awu13CeY+It0nUoefgwdV7MPop7bwLlfle2laPcMKNn
+   nFr2MuWpm6HF7sNketxdSdSbyt8+Xy9sqXT9koY5OrOGasG9SPyfx3cxU
+   D1ZaFtzS1+cHuaPvf50Bp8ioktamNIMDZx7OLTX6Q2XGgFjH9Oj/ebjW+
+   zDRChhWvL0rFCLstv1gGmGlflc2ZQ1zfII0nlDfMchEqqolisia65fkle
+   CeNGKPzuWCAhb0ErMyIsdpLlOKxmJ0RGWlC6abPlkT8AQeAu09327XYvk
+   +Z16DFVasIf0fKgBLPN7GtmP9oZlsZPPoMKl55MJVeXU0Pd2Y48ErzWxV
+   w==;
+X-CSE-ConnectionGUID: 0LyuaSV4SmexsX+QMMqP4g==
+X-CSE-MsgGUID: 2eBj4z7OQiuhNBwTfZD2vg==
+X-IronPort-AV: E=McAfee;i="6800,10657,11787"; a="79821708"
+X-IronPort-AV: E=Sophos;i="6.23,237,1770624000"; 
+   d="scan'208";a="79821708"
+Received: from orviesa008.jf.intel.com ([10.64.159.148])
+  by orvoesa109.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 15 May 2026 15:13:10 -0700
+X-CSE-ConnectionGUID: dT5k2weyQ4qekEMUHiRoaQ==
+X-CSE-MsgGUID: cWb2vYzyT9i5/7+G8ctAjA==
+X-ExtLoop1: 1
+X-IronPort-AV: E=Sophos;i="6.23,237,1770624000"; 
+   d="scan'208";a="238692115"
+Received: from patelni-desk.amr.corp.intel.com (HELO localhost) ([10.2.248.44])
+  by orviesa008-auth.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 15 May 2026 15:13:11 -0700
+Date: Fri, 15 May 2026 15:13:09 -0700
+From: Nirmal Patel <nirmal.patel@linux.intel.com>
+To: sashiko-bot@kernel.org
+Cc: sashiko-reviews@lists.linux.dev, linux-pci@vger.kernel.org
+Subject: Re: [PATCH v4] PCI: vmd: Add feature to add BIOS enumerated
+ devices.
+Message-ID: <20260515151309.000005f4@linux.intel.com>
+In-Reply-To: <20260514222038.92A8FC2BCC7@smtp.kernel.org>
+References: <20260514215131.179743-1-nirmal.patel@linux.intel.com>
+	<20260514222038.92A8FC2BCC7@smtp.kernel.org>
+X-Mailer: Claws Mail 4.2.0 (GTK 3.24.41; x86_64-w64-mingw32)
 Precedence: bulk
 X-Mailing-List: sashiko-reviews@lists.linux.dev
 List-Id: <sashiko-reviews.lists.linux.dev>
 List-Subscribe: <mailto:sashiko-reviews+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:sashiko-reviews+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH bpf-next 3/3] selftests/bpf: Add test for tracepoint
- btf_ids tracefs file
-To: sashiko-reviews@lists.linux.dev
-Cc: bpf@vger.kernel.org
-References: <20260515-generic_tracepoint-v1-3-aa619fa94132@meta.com>
- <20260515183659.31941C2BCB0@smtp.kernel.org>
-Content-Language: en-US
-From: Mykyta Yatsenko <mykyta.yatsenko5@gmail.com>
-In-Reply-To: <20260515183659.31941C2BCB0@smtp.kernel.org>
-Content-Type: text/plain; charset=UTF-8
+Content-Type: text/plain; charset=US-ASCII
 Content-Transfer-Encoding: 7bit
 
+On Thu, 14 May 2026 22:20:38 +0000
+sashiko-bot@kernel.org wrote:
 
+> Thank you for your contribution! Sashiko AI review found 5 potential
+> issue(s) to consider:
+> - [Critical] VMD MEMBAR2 payload resource overlaps with internal
+> hardware shadow registers, exposing them to child devices.
+> - [High] MSI-X remapping is incorrectly enabled on hardware that no
+> longer supports it when BIOS physical offsets are present.
+> - [High] Missing `pci_free_irq_vectors()` in error paths causes IRQ
+> capacity leaks.
+> - [High] Calculated end bus number for the VMD root bus can exceed
+> the absolute PCI limit (255), corrupting bus enumeration.
+> - [Low] Hardcoding device ID in core routing logic instead of
+> utilizing existing feature flags. --
+I will address them.
+> 
+> commit 68d8397e4bc530fad180d8f900d3ca84607b00a1
+> Author: Nirmal Patel <nirmal.patel@linux.intel.com>
+> 
+> PCI: vmd: Add feature to add BIOS enumerated devices.
+> 
+> This commit adds support for newer VMD hardware by relying on the
+> BIOS to enumerate the device tree and assign configurations. It reads
+> the bus hide range and shadow register values directly from VMD
+> BAR4/BAR5.
+> 
+> > diff --git a/drivers/pci/controller/vmd.c
+> > b/drivers/pci/controller/vmd.c index d4ae250d4bc6d..6a5879d099a16
+> > 100644 --- a/drivers/pci/controller/vmd.c
+> > +++ b/drivers/pci/controller/vmd.c
+> > @@ -393,7 +407,12 @@ static void __iomem *vmd_cfg_addr(struct
+> > vmd_dev *vmd, struct pci_bus *bus, unsigned int devfn, int reg, int
+> > len) {
+> >  	unsigned int busnr_ecam = bus->number - vmd->busn_start;
+> > -	u32 offset = PCIE_ECAM_OFFSET(busnr_ecam, devfn, reg);
+> > +	u32 offset;
+> > +
+> > +	if (vmd->dev->device == PCI_DEVICE_ID_INTEL_VMD_28C1)
+> > +		busnr_ecam = bus->number;
+> > +
+> > +	offset = PCIE_ECAM_OFFSET(busnr_ecam, devfn, reg);  
+> 
+> This isn't a bug, but does it make sense to use the explicit device
+> ID check here instead of using the existing vmd_features bitmask?
+> Adding a feature flag might scale better for future hardware
+> iterations.
+> 
+Ack.
+> [ ... ]
+> > @@ -711,6 +770,54 @@ static int vmd_alloc_irqs(struct vmd_dev *vmd)
+> >  
+> [ ... ]
+> > +static int vmd_prepare_offsets_and_bus(struct vmd_dev *vmd,
+> > +					unsigned long features,
+> > +					resource_size_t
+> > *membar2_offset,
+> > +					resource_size_t *offset1,
+> > +					resource_size_t *offset2)
+> > +{
+> > +	int ret;
+> > +
+> > +	/*
+> > +	 * Shadow registers may exist in certain VMD device ids
+> > which allow
+> > +	 * guests to correctly assign host physical addresses to
+> > the root ports
+> > +	 * and child devices. These registers will either return
+> > the host value
+> > +	 * or 0, depending on an enable bit in the VMD device.
+> > +	 */
+> > +	/*
+> > +	 * For certain VMD devices (i.e. 0x28C1), BIOS places
+> > device info
+> > +	 * in BAR4 shadow registers to determine the base bus
+> > number and memory
+> > +	 * offsets.
+> > +	 */
+> > +	if (features & VMD_FEAT_USE_BIOS_INFO) {
+> > +		if (resource_type(&vmd->dev->resource[4]) ==
+> > IORESOURCE_MEM) {
+> > +			ret = vmd_get_bus_info_from_bar4(vmd,
+> > offset1, offset2);
+> > +			if (ret)
+> > +				return ret;
+> > +		}
+> > +	} else if (features & VMD_FEAT_HAS_MEMBAR_SHADOW) {
+> > +		*membar2_offset = MB2_SHADOW_OFFSET +
+> > MB2_SHADOW_SIZE;  
+> 
+> When VMD_FEAT_USE_BIOS_INFO evaluates to true, the else if block is
+> skipped and membar2_offset remains at its default 0x2000. Could this
+> allow the guest payload resource to overlap with the new 28C1
+> hardware shadow registers located at 0x2818 to 0x2840, exposing them
+> to child devices?
 
-On 5/15/26 7:36 PM, sashiko-bot@kernel.org wrote:
-> Thank you for your contribution! Sashiko AI review found 2 potential issue(s) to consider:
-> - [Medium] Missing test environment check for `bpf_testmod` module causes spurious test failures.
-> - [Medium] Out-of-bounds array reads and cascading failures due to non-aborting assertions and missing length checks.
-> --
-> 
-> commit 1c2fbe8e9b6c6c1082b4ae630c67ceb3b5db79b5
-> Author: Mykyta Yatsenko <yatsenko@meta.com>
-> 
-> selftests/bpf: Add test for tracepoint btf_ids tracefs file
-> 
-> This commit adds a selftest to verify that the BTF IDs exposed in the
-> tracefs btf_ids file for a module tracepoint match the expected FUNC_PROTO
-> and STRUCT representations. It uses the bpf_testmod_test_read tracepoint
-> to exercise the module/split-BTF path.
-> 
->> diff --git a/tools/testing/selftests/bpf/prog_tests/tp_btf_ids.c b/tools/testing/selftests/bpf/prog_tests/tp_btf_ids.c
->> new file mode 100644
->> --- /dev/null
->> +++ b/tools/testing/selftests/bpf/prog_tests/tp_btf_ids.c
+Let me adjust it to avoid potential overlap.
+
 > 
 > [ ... ]
+> > @@ -784,32 +891,10 @@ static int vmd_enable_domain(struct vmd_dev
+> > *vmd, unsigned long features)  
+> [ ... ]
+> > +	ret = vmd_prepare_offsets_and_bus(vmd, features,
+> > &membar2_offset,
+> > +					  &offset[0], &offset[1]);
+> > +	if(ret)
+> > +		return ret;
+> >  
+> >  	res = &vmd->dev->resource[VMD_CFGBAR];
+> >  	vmd->resources[0] = (struct resource) {
+> >  		.name  = "VMD CFGBAR",
+> >  		.start = vmd->busn_start,
+> >  		.end   = vmd->busn_start + (resource_size(res) >>
+> > 20) - 1,  
 > 
->> +void test_tp_btf_ids(void)
->> +{
->> +	const struct btf_type *proto_t, *rec_t;
->> +	const struct btf_param *params;
->> +	const struct btf_member *members;
->> +	struct btf_ids_info info;
->> +	struct btf *vmlinux_btf, *btf;
->> +	const char *name;
->> +	int err;
->> +
-> 
-> Since this test relies on bpf_testmod_test_read from the bpf_testmod.ko
-> kernel module, should there be a check for env.has_testmod here? 
-> 
+> Since the 28C1 CFGBAR size is 256 MB, resource_size(res) >> 20
+> evaluates to 256. If the BIOS assigns a non-zero vmd->busn_start
+> (e.g., 128), does this cause the calculated .end to exceed the
+> maximum 8-bit PCI bus limit of 255 and corrupt bus enumeration?
 
-yes
-
-> Without it, if the module is not loaded, the test might fail with a missing
-> tracefs directory instead of gracefully skipping via test__skip().
-> 
->> +	err = read_btf_ids(&info);
->> +	if (!ASSERT_OK(err, "read btf_ids"))
->> +		return;
+I am working on another patch to use DEFINE_RES_BUS*() in ioport.h
 > 
 > [ ... ]
+> > @@ -880,7 +965,8 @@ static int vmd_enable_domain(struct vmd_dev
+> > *vmd, unsigned long features) if (ret)
+> >  			return ret;
+> >  	} else {
+> > -		vmd_set_msi_remapping(vmd, false);
+> > +		if (!(features & VMD_FEAT_USE_BIOS_INFO))
+> > +			vmd_set_msi_remapping(vmd, false);
+> >  	}  
 > 
->> +	/*
->> +	 * raw_btf_id should be the FUNC_PROTO of __bpf_trace_<call>:
->> +	 *   void *__data, struct task_struct *task,
->> +	 *   struct bpf_testmod_test_read_ctx *ctx
->> +	 */
->> +	proto_t = btf__type_by_id(btf, info.raw_id);
->> +	if (!ASSERT_OK_PTR(proto_t, "raw type_by_id"))
->> +		goto out;
->> +	if (!ASSERT_TRUE(btf_is_func_proto(proto_t), "raw is FUNC_PROTO"))
->> +		goto out;
->> +	ASSERT_EQ(btf_vlen(proto_t), 3, "func_proto arg count");
->> +
->> +	params = btf_params(proto_t);
->> +	ASSERT_STREQ(param_name(btf, &params[0]), "__data", "arg0 name");
->> +	ASSERT_STREQ(param_name(btf, &params[1]), "task", "arg1 name");
->> +	ASSERT_STREQ(param_name(btf, &params[2]), "ctx", "arg2 name");
+> The commit message mentions that MSI-X remapping enable/disable is no
+> longer supported on this hardware. If the BIOS populates non-zero
+> physical offsets, offset[0] or offset[1] will be non-zero, forcing
+> execution into the if branch above this code:
 > 
-> Does this code risk reading out of bounds if btf_vlen(proto_t) is less than 3?
+> drivers/pci/controller/vmd.c:vmd_enable_domain() {
+>     ...
+>     if (!(features & VMD_FEAT_CAN_BYPASS_MSI_REMAP) ||
+>         offset[0] || offset[1]) {
+>         ret = vmd_alloc_irqs(vmd);
+>         ...
+>         vmd_set_msi_remapping(vmd, true);
 > 
-> The ASSERT_EQ macro logs a failure but does not inherently abort the
-> function execution. Should this be wrapped in a conditional check, such as
-> if (!ASSERT_EQ(...)) goto out, to prevent accessing params[2] if the length
-> is too small?
+> Does this unconditionally enable MSI-X remapping on hardware that no
+> longer supports it?
 > 
-
-ok, I'll apply all these in v2
-
->> +
->> +	/*
->> +	 * tp_btf_id should be STRUCT trace_event_raw_<call> with the
->> +	 * fields declared by TP_STRUCT__entry plus the common header.
->> +	 */
->> +	rec_t = btf__type_by_id(btf, info.tp_id);
->> +	if (!ASSERT_OK_PTR(rec_t, "tp type_by_id"))
->> +		goto out;
->> +	if (!ASSERT_TRUE(btf_is_struct(rec_t), "tp is STRUCT"))
->> +		goto out;
->> +	name = btf__name_by_offset(btf, rec_t->name_off);
->> +	ASSERT_STREQ(name, "trace_event_raw_bpf_testmod_test_read",
->> +		     "tp struct name");
->> +
->> +	members = btf_members(rec_t);
->> +	ASSERT_STREQ(member_name(btf, &members[0]), "ent", "field0 name");
->> +	ASSERT_STREQ(member_name(btf, &members[1]), "pid", "field1 name");
->> +	ASSERT_STREQ(member_name(btf, &members[2]), "comm", "field2 name");
->> +	ASSERT_STREQ(member_name(btf, &members[3]), "off", "field3 name");
->> +	ASSERT_STREQ(member_name(btf, &members[4]), "len", "field4 name");
+> Also, looking at vmd_alloc_irqs() called in that same path:
 > 
-> Similarly, is it necessary to assert btf_vlen(rec_t) and conditionally jump
-> to out if it is too small before accessing members[0] through members[4]?
+> drivers/pci/controller/vmd.c:vmd_alloc_irqs() {
+>     ...
+>     vmd->msix_count = pci_alloc_irq_vectors(dev, ...);
+>     if (vmd->msix_count < 0)
+>         return vmd->msix_count;
 > 
-> If the structure layout changes or is malformed, this might read adjacent
-> BTF data.
+>     vmd->irqs = devm_kcalloc(...);
+>     if (!vmd->irqs)
+>         return -ENOMEM;
+>     ...
+> }
 > 
->> +out:
->> +	btf__free(btf);
->> +	btf__free(vmlinux_btf);
->> +}
+> If devm_kcalloc() or devm_request_irq() fails, it returns without
+> freeing the vectors. Should pci_free_irq_vectors() be called in these
+> error paths to prevent IRQ capacity leaks? 
+> 
+> Furthermore, if vmd_alloc_irqs() succeeds, but a subsequent function
+> like vmd_create_irq_domain() fails, does this leak the allocated IRQ
+> vectors since there is no call to pci_free_irq_vectors() in the error
+> paths?
 > 
 
+Let me fix it using features & VMD_FEAT_USE_BIOS_INFO.
