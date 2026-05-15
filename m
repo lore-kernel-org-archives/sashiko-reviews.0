@@ -1,135 +1,132 @@
-Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
+Received: from out-179.mta0.migadu.com (out-179.mta0.migadu.com [91.218.175.179])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C673B3D890E;
-	Fri, 15 May 2026 17:24:34 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A06EB3F99E2
+	for <sashiko-reviews@lists.linux.dev>; Fri, 15 May 2026 17:55:39 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=91.218.175.179
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1778865874; cv=none; b=GQNahzmYT849n1Z2U5hX0eL9O5Mw86rS5YnyDSHpNIUPDIQnpid/OGGOt2hBA09BNKsRweebhLSSN8yxCh5aSENOjNuP+uDpikNMgV0j3/w0nFCtfXI0HvG533P6UYvvm3Glj+AgjRnPMGZoiwov9aE85bLJqpSL4WxI+L4nHjg=
+	t=1778867741; cv=none; b=bNeo5zHawi3XTHty8MXfLdSD/23b1sLqiFvGJz4JPivIldixSgkCUszX9xOWaHmMN1Mb1Sw0D3nXiAbrs7hSKb099BLY8TP+rcdC4z5g12F7f3O6gZLSMOL4QOwgFktqm53p2u9TqF7o5p5AdyJnnes93IdlAcdUCOd9yZEdH20=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1778865874; c=relaxed/simple;
-	bh=qq67U4kKDQmCOTQy7btyPXWKsKzzgH9USf781n7iIhk=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=tFLERhYYfjmniIA9sGav4+CvqnqlAMKZBC7+GvyVL6PIe9BZuNQco/qg1axeINI7QKMdvL7Q95vuqJbtdRMzvfwFNTlV54tODAUED9heAt7iQ/ot+m+AvJ72lfq4BpDZd5eatOk7TnKGrkLStHbSxW8/hpiyLEJpjiqJAmwaYJg=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=jGrpQBri; arc=none smtp.client-ip=10.30.226.201
+	s=arc-20240116; t=1778867741; c=relaxed/simple;
+	bh=mEMKTbmT/lZPhB9ajUudtyUiBzSXwFr0mvTg1d/QJTo=;
+	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
+	 In-Reply-To:Content-Type; b=qUDFl878SM2BoCiqDpiJZYf/K+qTJPMFoJrgijtgqmUDZd4TAx7iF0blVNGMFCaR6yRQPTFbTT/vrPWVjk0Q2xFc/UwJl0rwZgm4sIvjGhed97U9QNf5VBXwIucY/qb4uYIAa0KvIhJRM3e21KXl7h/HgC4ltdks8EUKxb/wuZQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linux.dev; spf=pass smtp.mailfrom=linux.dev; dkim=pass (1024-bit key) header.d=linux.dev header.i=@linux.dev header.b=HYXJzc8l; arc=none smtp.client-ip=91.218.175.179
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linux.dev
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linux.dev
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="jGrpQBri"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1B575C2BCB0;
-	Fri, 15 May 2026 17:24:32 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1778865874;
-	bh=qq67U4kKDQmCOTQy7btyPXWKsKzzgH9USf781n7iIhk=;
-	h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
-	b=jGrpQBriLzDUBUTbuSbbmLNybhApT5HpfyBrAw8CmIh9lJHYuzfIeXQBwEL11LY9C
-	 Qz+z2qaCQF3JTQdSm2HNE1COVRh/RhYHbd+l19kVCrt4GSfNAOwuXHOpDM/eFfw28+
-	 HIUkHm13CTQ2Xkd0NhXabnIt+Q502VmV/UKz/NqOBkJgxiX1QxjY1v+XmuzD5gkG2K
-	 6ein0XuP2RxbGMN6GrBnS9L8CbCHpCbkLnNHFFbQfZkWZ/neV5TID+fJ/Xi+sN4SlR
-	 xvC562Une7IyugG319efAACeFtTeilV6/rysZj9ruZVAvbels6x/iSPZmj1GaxqPy8
-	 W/gRzy5l7UlhQ==
-Date: Fri, 15 May 2026 18:24:30 +0100
-From: Conor Dooley <conor@kernel.org>
-To: sashiko-reviews@lists.linux.dev
-Cc: marius.cristea@microchip.com, robh@kernel.org, krzk+dt@kernel.org,
-	devicetree@vger.kernel.org, conor+dt@kernel.org
-Subject: Re: [PATCH v4 1/2] dt-bindings: iio: adc: add support for PAC1944
-Message-ID: <20260515-rupture-humped-772e7e2072c9@spud>
-References: <20260515092946.10791-2-marius.cristea@microchip.com>
- <20260515093849.4E62CC2BCB0@smtp.kernel.org>
+	dkim=pass (1024-bit key) header.d=linux.dev header.i=@linux.dev header.b="HYXJzc8l"
+Message-ID: <aea80ccf-0f4f-44eb-bd7a-cb55e9f3f71b@linux.dev>
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linux.dev; s=key1;
+	t=1778867737;
+	h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+	 to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+	 content-transfer-encoding:content-transfer-encoding:
+	 in-reply-to:in-reply-to:references:references;
+	bh=Yy5pN3VENTzp0c+7QBcjZQ0FxPNZaCm0xVf+QxiavQQ=;
+	b=HYXJzc8lT7NPlDx0xztaTnMAF9fYitvs2JwLRNAPiOjnZxDsYJD+C5x1DKYuZUpO8QH9Jl
+	eCXrFeoyfbNouN7bJs9J3TK+pzoLCGIpjsKZc/7Tfa6AjcdfIL/4WhQQnkIZ28L0HDcl7E
+	AC/+iiZUn57D5QiXFGAx/mgV/GjBNT8=
+Date: Fri, 15 May 2026 10:55:32 -0700
 Precedence: bulk
 X-Mailing-List: sashiko-reviews@lists.linux.dev
 List-Id: <sashiko-reviews.lists.linux.dev>
 List-Subscribe: <mailto:sashiko-reviews+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:sashiko-reviews+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: multipart/signed; micalg=pgp-sha512;
-	protocol="application/pgp-signature"; boundary="Xqvlnm0IK55KDOeE"
-Content-Disposition: inline
-In-Reply-To: <20260515093849.4E62CC2BCB0@smtp.kernel.org>
+Subject: Re: [PATCH bpf-next v4 17/25] bpf,x86: Implement JIT support for
+ stack arguments
+Content-Language: en-GB
+To: sashiko-reviews@lists.linux.dev
+Cc: bpf@vger.kernel.org
+References: <20260513045122.2393118-1-yonghong.song@linux.dev>
+ <20260515060214.CD991C2BCB0@smtp.kernel.org>
+X-Report-Abuse: Please report any abuse attempt to abuse@migadu.com and include these headers.
+From: Yonghong Song <yonghong.song@linux.dev>
+In-Reply-To: <20260515060214.CD991C2BCB0@smtp.kernel.org>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
+X-Migadu-Flow: FLOW_OUT
 
 
---Xqvlnm0IK55KDOeE
-Content-Type: text/plain; charset=iso-8859-1
-Content-Disposition: inline
-Content-Transfer-Encoding: quoted-printable
 
-On Fri, May 15, 2026 at 09:38:47AM +0000, sashiko-bot@kernel.org wrote:
-> Thank you for your contribution! Sashiko AI review found 1 potential issu=
-e(s) to consider:
-> - [Medium] The binding defines GPIO controller capabilities but omits `gp=
-io-controller` and `#gpio-cells` from the `required` list and `examples` bl=
-ock.
+On 5/15/26 8:02 AM, sashiko-bot@kernel.org wrote:
+> Thank you for your contribution! Sashiko AI review found 1 potential issue(s) to consider:
+> - [Critical] When a BPF program with an exception boundary calls a function with more than 5 arguments, unwinding an exception via bpf_throw() restores callee-saved registers from the wrong stack offset, corrupting kernel registers.
 > --
->=20
-> commit a57d647e4dad8345f6c818b69281dba50b43a7f4
-> Author: Marius Cristea <marius.cristea@microchip.com>
->=20
-> dt-bindings: iio: adc: add support for PAC1944
->=20
-> This commit introduces the device tree schema for the Microchip PAC194X
-> and PAC195X series of Power Monitors with Accumulator. It covers variants
-> for high-side and low-side current sensing or floating VBUS applications.
->=20
-> > diff --git a/Documentation/devicetree/bindings/iio/adc/microchip,pac194=
-4.yaml b/Documentation/devicetree/bindings/iio/adc/microchip,pac1944.yaml
-> > new file mode 100644
-> > index 0000000000000..eca1b25f038be
-> > --- /dev/null
-> > +++ b/Documentation/devicetree/bindings/iio/adc/microchip,pac1944.yaml
+>
+> commit 86dff956386bae1d3e030c84363f5b56f2e023a7
+> Author: Yonghong Song <yonghong.song@linux.dev>
+>
+> bpf,x86: Implement JIT support for stack arguments
+>
+> This commit implements x86_64 JIT support for BPF functions and kfuncs with
+> more than 5 arguments. The extra arguments are passed on the stack, maintaining
+> compatibility with the x86-64 calling convention. It introduces logic to handle
+> pushing outgoing arguments to the stack area below the callee-saved registers.
+>
+>> diff --git a/arch/x86/net/bpf_jit_comp.c b/arch/x86/net/bpf_jit_comp.c
+>> index ea9e707e8abff..ceefefb4da217 100644
+>> --- a/arch/x86/net/bpf_jit_comp.c
+>> +++ b/arch/x86/net/bpf_jit_comp.c
 > [ ... ]
-> > +required:
-> > +  - compatible
-> > +  - reg
-> > +  - vdd-supply
-> > +  - "#address-cells"
-> > +  - "#size-cells"
->=20
-> Should `gpio-controller` and `#gpio-cells` be added to this `required` li=
-st?
->=20
-> According to the dt-bindings guidelines, when a binding defines hardware
-> provider capabilities such as a GPIO controller, the standard properties
-> should be explicitly required to prevent incomplete device tree nodes from
-> passing schema validation.
-
-Same here as the other series, bot is not capable of deducing that
-interrupts and gpio use have some mutual exclusion.
-
->=20
+>
+>> @@ -1700,6 +1755,42 @@ static int do_jit(struct bpf_verifier_env *env, struct bpf_prog *bpf_prog, int *
+>>   			push_r12(&prog);
+>>   		push_callee_regs(&prog, callee_regs_used);
+>>   	}
+>> +
+>> +	/* Compute callee-saved register area size. */
+>> +	callee_saved_size = 0;
 > [ ... ]
-> > +examples:
-> > +  - |
-> > +    i2c {
-> > +        #address-cells =3D <1>;
-> > +        #size-cells =3D <0>;
-> > +
-> > +        power-monitor@10 {
-> > +            compatible =3D "microchip,pac1954";
-> > +            reg =3D <0x10>;
-> > +            vdd-supply =3D <&vdd>;
-> > +
-> > +            #address-cells =3D <1>;
-> > +            #size-cells =3D <0>;
->=20
-> Should `gpio-controller` and `#gpio-cells` also be included in this examp=
-le
-> block?
->=20
-> If they are added to the required properties list, omitting them from the
-> examples section might cause dt_binding_check to fail.
->=20
-> --=20
-> Sashiko AI review =B7 https://sashiko.dev/#/patchset/20260515092946.10791=
--1-marius.cristea@microchip.com?part=3D1
+>
+>> +	/*
+>> +	 * Allocate outgoing stack arg area for args 7+ only.
+>> +	 * Arg 6 goes into r9 register, not on stack.
+>> +	 */
+>> +	outgoing_rsp = out_stack_arg_cnt > 1 ? (out_stack_arg_cnt - 1) * 8 : 0;
+>> +	emit_sub_rsp(&prog, outgoing_rsp);
+> Does allocating the outgoing stack arguments area (outgoing_rsp) after pushing
+> the callee-saved registers cause an issue when unwinding an exception via
+> bpf_throw()?
 
---Xqvlnm0IK55KDOeE
-Content-Type: application/pgp-signature; name="signature.asc"
+Yes, this is indeed an issue, we need to restore 'rsp' between
 
------BEGIN PGP SIGNATURE-----
+         if (is_exception_cb) {
+                 EMIT3(0x48, 0x89, 0xF4); /* mov rsp, rsi */
+                 EMIT3(0x48, 0x89, 0xD5); /* mov rbp, rdx */
 
-iHUEABYKAB0WIQRh246EGq/8RLhDjO14tDGHoIJi0gUCagdWzgAKCRB4tDGHoIJi
-0iZyAQCEwzG130eW3qs1q7JPfBcCdzk+pniFsZaK7Cfwp++HzgD8CAsNW01wgJDm
-8FVZhJYG6cZvt/yZWCL9DANj8GYMVgg=
-=FGza
------END PGP SIGNATURE-----
+and
 
---Xqvlnm0IK55KDOeE--
+                 /* The main frame must have exception_boundary as true, so we
+                  * first restore those callee-saved regs from stack, before
+                  * reusing the stack frame.
+                  */
+                 pop_callee_regs(&prog, all_callee_regs_used);
+                 pop_r12(&prog);
+                 /* Reset the stack frame. */
+                 EMIT3(0x48, 0x89, 0xEC); /* mov rsp, rbp */
+	}
+
+due to stack argument.
+
+But I would like to know whether we want to support this
+exception + stack_args combination or not.
+
+>
+> When bpf_throw() is called, the stack unwinder (arch_bpf_stack_walk()) captures
+> the current stack pointer (sp) of the BPF frame, which points to the bottom of
+> this outgoing_rsp area.
+>
+> bpf_throw() passes this shifted sp to the exception callback in the rsi
+> register.
+>
+> The JIT-generated exception callback executes mov rsp, rsi followed by
+> pop_callee_regs(). Because rsp is offset by outgoing_rsp bytes below the actual
+> saved registers, the pop instructions will read from the outgoing arguments area
+> instead of the saved registers.
+>
+> Could returning to the kernel with corrupted callee-saved registers cause
+> unpredictable behavior or panics?
+>
+
