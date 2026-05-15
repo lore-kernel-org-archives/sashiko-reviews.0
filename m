@@ -1,154 +1,95 @@
-Received: from out-185.mta0.migadu.com (out-185.mta0.migadu.com [91.218.175.185])
+Received: from out-180.mta0.migadu.com (out-180.mta0.migadu.com [91.218.175.180])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1DAAD3CF02D
-	for <sashiko-reviews@lists.linux.dev>; Fri, 15 May 2026 16:40:09 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=91.218.175.185
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C42B630569C
+	for <sashiko-reviews@lists.linux.dev>; Fri, 15 May 2026 16:42:05 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=91.218.175.180
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1778863212; cv=none; b=X/n6Tj2/bNu5rafwe6rDD3kGiL7NIrCj9ydeNQxzLE9A8dMszWwMnOxA4azIwg9FPHqz+cEq3GJM0Vr9yO5l4AUbPnLezKLb1/SVyzOfXyWOdBB0dHBjLgXpRx8ZL6nuwDfMhdmwcvJ6GgzX/XvBpqn91y/88Pj5okkjiF03HWI=
+	t=1778863327; cv=none; b=DKEUTt7Yg2w+9bIjD3RCvGTJ99YE/xr86io2zjYDPVdi5wOvYmLzlSc6gWmyWXF9A9RbtS76UvCtTWnPZZ9vptXsa4uB/E0G0wWqF3SQufiUEYs2186Zs0ogOuHzK9USjs+eo7jELdhS1VvA6fzUVf1XeSgYvp7VezJT3/2cC9o=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1778863212; c=relaxed/simple;
-	bh=vfptBbJElZ3Op7RaU6ED5TpNfMzlrdsbJQRKcutL+3s=;
+	s=arc-20240116; t=1778863327; c=relaxed/simple;
+	bh=62drjeh5dhAX/g/y6JkPlxuQsyJVC0xvC0LkIPsZR7c=;
 	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=qYYmgJ33N0oSzb9oyDpfLx3WWOvRwyT06rzntap9M6/mt09idaB9uUPT7rCEw+JtzkvG5umAIcqQPoA3q49hprLvD/e3QbJq4sCTD6Q7RFKYDAf68srftudz4wfpJFQ9nt0G7gA/RfiOP1vBK5tJRh8vuQY0mBm0KN2I4y6nf0I=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linux.dev; spf=pass smtp.mailfrom=linux.dev; dkim=pass (1024-bit key) header.d=linux.dev header.i=@linux.dev header.b=amTkad5a; arc=none smtp.client-ip=91.218.175.185
+	 In-Reply-To:Content-Type; b=J+5VN8WocMWLFtiUq4r+YycYmkE6bOIlWMqiBgxgLEDJsltztJ2VMWw0vp4bA5iVb1tU2KHcdR5W8SFuQIGueADkiHQUODawlUYQfjnwNxhbX3GpcN5eTxRFpSs/6DrUZuSpS8lg1Ni3zUBKclgu08+HiRHeT+tfflxoX9+LkEA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linux.dev; spf=pass smtp.mailfrom=linux.dev; dkim=pass (1024-bit key) header.d=linux.dev header.i=@linux.dev header.b=ZLO+/dkx; arc=none smtp.client-ip=91.218.175.180
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linux.dev
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linux.dev
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linux.dev header.i=@linux.dev header.b="amTkad5a"
-Message-ID: <862c4eb6-c1ba-4570-beda-2baaec63d904@linux.dev>
+	dkim=pass (1024-bit key) header.d=linux.dev header.i=@linux.dev header.b="ZLO+/dkx"
+Message-ID: <26e1b9f7-e504-4d32-9558-91efcf21b69a@linux.dev>
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linux.dev; s=key1;
-	t=1778863207;
+	t=1778863323;
 	h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
 	 to:to:cc:cc:mime-version:mime-version:content-type:content-type:
 	 content-transfer-encoding:content-transfer-encoding:
 	 in-reply-to:in-reply-to:references:references;
-	bh=/ELEz5GLh6Ex/92yMj17L1f58o+Y+p7rGA5o60AYmfc=;
-	b=amTkad5aVcPB6UGHqSnCEyHZdgGITW04bXtwlTCM1B91i4GfFmwFERiXPOwvE289PiooTl
-	EpGbg5k+kCAECWO8oNjOhzKUJcFO0lpmuUIqflTCJXSdP84ufeLkjUEvAaYvykylF0xNHJ
-	dLvW5dz52xmW+IGXWHaEkPTR/GYMirY=
-Date: Fri, 15 May 2026 09:39:57 -0700
+	bh=foXbL4lx3pZAD18PZXJ65fNyqmyO/YG6ferThXGW978=;
+	b=ZLO+/dkxm7udcXF6eM4qpTCa1F3qLYYv/MFmTsyeIP+KvieAF7r42DaDQ3nF9PBKq9InUY
+	jo2umvAZOI1hjHVxCmC636APv+rmfdGLobPGEEzQUR0IcysCqbAWWhjWR2JlmvBcGf4eJD
+	FANY33blPVIY3x/e2MboAAA3MP1Vz00=
+Date: Fri, 15 May 2026 09:41:51 -0700
 Precedence: bulk
 X-Mailing-List: sashiko-reviews@lists.linux.dev
 List-Id: <sashiko-reviews.lists.linux.dev>
 List-Subscribe: <mailto:sashiko-reviews+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:sashiko-reviews+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Subject: Re: [PATCH bpf-next v4 15/25] bpf: Reject stack arguments if tail
- call reachable
+Subject: Re: [PATCH bpf-next v4 16/25] bpf: Disable private stack for x86_64
+ if stack arguments used
 Content-Language: en-GB
 To: sashiko-reviews@lists.linux.dev
 Cc: bpf@vger.kernel.org
-References: <20260513045109.2392108-1-yonghong.song@linux.dev>
- <20260515032335.C4FE4C2BCB0@smtp.kernel.org>
+References: <20260513045114.2392291-1-yonghong.song@linux.dev>
+ <20260515052828.B53C0C2BCB0@smtp.kernel.org>
 X-Report-Abuse: Please report any abuse attempt to abuse@migadu.com and include these headers.
 From: Yonghong Song <yonghong.song@linux.dev>
-In-Reply-To: <20260515032335.C4FE4C2BCB0@smtp.kernel.org>
+In-Reply-To: <20260515052828.B53C0C2BCB0@smtp.kernel.org>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 8bit
 X-Migadu-Flow: FLOW_OUT
 
 
 
-On 5/15/26 5:23 AM, sashiko-bot@kernel.org wrote:
-> Thank you for your contribution! Sashiko AI review found 2 potential issue(s) to consider:
-> - [High] Order-dependent verification allows invalid programs combining tail calls and stack arguments to bypass checks.
-> - [High] Exception and async callbacks bypass the new stack argument and tail call restriction.
+On 5/15/26 7:28 AM, sashiko-bot@kernel.org wrote:
+> Thank you for your contribution! Sashiko AI review found 1 potential issue(s) to consider:
+> - [Low] Hardcoding architecture-specific JIT register limitations into the generic BPF verifier.
 > --
 >
-> commit 807349b213e40b7418c45dc1ae2cee5695bf101d
+> commit d388190c12c82279caa212e6edeefb82d873dd00
 > Author: Yonghong Song <yonghong.song@linux.dev>
 >
-> bpf: Reject stack arguments if tail call reachable
+> bpf: Disable private stack for x86_64 if stack arguments used
 >
-> This patch updates the BPF verifier to reject programs that combine tail calls
-> with stack arguments, as tail calls are deprecated. It hooks into the call
-> depth traversal to fail verification if stack arguments are present in a
-> call chain that can reach a tail call.
+> This commit disables private stack support on x86_64 when stack arguments
+> are used, because x86-64 uses R9 for both the private stack frame pointer
+> and arg6. Other architectures have enough registers to support both.
 >
 >> diff --git a/kernel/bpf/verifier.c b/kernel/bpf/verifier.c
->> index a363811aec7a0..47df3f40a71cf 100644
+>> index 47df3f40a71cf..745e13cfb54d6 100644
 >> --- a/kernel/bpf/verifier.c
 >> +++ b/kernel/bpf/verifier.c
->> @@ -5267,14 +5267,23 @@ static int check_max_stack_depth_subprog(struct bpf_verifier_env *env, int idx,
->>   	 * this info will be utilized by JIT so that we will be preserving the
->>   	 * tail call counter throughout bpf2bpf calls combined with tailcalls
->>   	 */
->> -	if (tail_call_reachable)
->> +	if (tail_call_reachable) {
->>   		for (tmp = idx; tmp >= 0; tmp = dinfo[tmp].caller) {
->>   			if (subprog[tmp].is_exception_cb) {
->>   				verbose(env, "cannot tail call within exception cb\n");
->>   				return -EINVAL;
->>   			}
->> +			if (subprog[tmp].stack_arg_cnt) {
-> Can this check be bypassed depending on the order of subprogram calls?
+>> @@ -5163,7 +5163,10 @@ static int check_max_stack_depth_subprog(struct bpf_verifier_env *env, int idx,
+>>   	}
+>>   
+>>   	subprog_depth = round_up_stack_depth(env, subprog[idx].stack_depth);
+>> -	if (priv_stack_supported) {
+>> +	if (IS_ENABLED(CONFIG_X86_64) && subprog[idx].stack_arg_cnt) {
+> Is it appropriate to hardcode host architecture macros like
+> IS_ENABLED(CONFIG_X86_64) directly into the core verifier logic?
+>
+> This isn't a bug, but it introduces architecture-specific constraints into the
+> generic BPF verifier. Would it be better to handle this by querying JIT backend
+> capabilities via a generic API (e.g., passing stack argument requirements to a
+> JIT capability checker) so the verifier remains architecture-agnostic?
 
-No.
+Disabling private stack support in verifier sounds better. We do have
+two cases of '#ifdef CONFIG_X86_64' in verifier.
 
 >
-> If a main program calls subprogram A (which uses stack args) and then
-> subprogram B (which has a tail call), it seems subprogram A might be
-> evaluated first when tail_call_reachable is false, bypassing this check.
->
-> When subprogram B is evaluated, it sets tail_call_reachable to true,
-> which propagates to the main program.
->
-> When the main program finishes, only the main program's stack_arg_cnt is
-> checked, allowing the program to pass verification.
-
-But in this case, main program stack_arg_cnt is not 0, so -EINVAL will return.
-
-> If the calls were reversed, subprogram A would inherit the true state and
-> be correctly rejected.
->
-> Does this sequence allow invalid programs to bypass the safety check?
->
->> +				verbose(env, "tail_calls are not allowed in programs with stack args\n");
->> +				return -EINVAL;
->> +			}
->>   			subprog[tmp].tail_call_reachable = true;
->>   		}
->> +	} else if (!idx && subprog[0].has_tail_call && subprog[0].stack_arg_cnt) {
-> Does this fallback check miss exception and async callbacks?
-
-This check does not deal with exception and async callbacks.
-
->
-> By explicitly checking !idx and subprog[0], it appears to assume the main
-> program is the only call graph root.
->
-> Since exception and async callbacks are verified independently as their own
-> root programs (where idx > 0), would a callback that contains a tail call,
-> uses stack arguments, and makes no BPF-to-BPF calls bypass both the primary
-> tail_call_reachable check and this fallback check?
-
-As far as I know, callback and exception prog are not allowing tail call.
-For example:
-                 if (subprog[sidx].is_async_cb) {
-                         if (subprog[sidx].has_tail_call) {
-                                 verifier_bug(env, "subprog has tail_call and async cb");
-                                 return -EFAULT;
-                         }
-			...
-		}
-
-...
-         if (tail_call_reachable) {
-                 for (tmp = idx; tmp >= 0; tmp = dinfo[tmp].caller) {
-                         if (subprog[tmp].is_exception_cb) {
-                                 verbose(env, "cannot tail call within exception cb\n");
-                                 return -EINVAL;
-                         }
-			...
-		}
-	}
-
->
->> +		verbose(env, "tail_calls are not allowed in programs with stack args\n");
->> +		return -EINVAL;
->> +	}
->> +
->>   	if (subprog[0].tail_call_reachable)
->>   		env->prog->aux->tail_call_reachable = true;
+>> +		/* x86-64 uses R9 for both private stack frame pointer and arg6. */
+>> +		subprog[idx].priv_stack_mode = NO_PRIV_STACK;
+>> +	} else if (priv_stack_supported) {
+>>   		/* Request private stack support only if the subprog stack
+>>   		 * depth is no less than BPF_PRIV_STACK_MIN_SIZE. This is to
+>>   		 * avoid jit penalty if the stack usage is small.
 
