@@ -1,284 +1,156 @@
-Received: from mail-dy1-f180.google.com (mail-dy1-f180.google.com [74.125.82.180])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from DB3PR0202CU003.outbound.protection.outlook.com (mail-northeuropeazon11010025.outbound.protection.outlook.com [52.101.84.25])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 282152773C3
-	for <sashiko-reviews@lists.linux.dev>; Fri, 15 May 2026 01:49:52 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=74.125.82.180
-ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1778809794; cv=none; b=IdshLc39Ox0GUj0gqAmSmLB7aiTDzz2MshneXjsHLrdoPppKXmxZkEw38uk3Or1umqPTvVJKAEC1QRthjAVVUaaz83CfuwZOZOtcCnM9+cbgjZQvMBtzrfLSXVqR9+Smrcix5Waz2zZDTzHfxQKcBcIVgxI3TNZZzmzSE2lAVGU=
-ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1778809794; c=relaxed/simple;
-	bh=SIkgv8WQ93LCQ71jhhL3Di/xP8TbuCuowvj1KosLZko=;
-	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=X0AxvKiABWjVPeOpJhoi3iAagUOvuztEQBF5W9dq/n6pndV9fkzYobpvh5l3U7/JJ1K7a3LQMvvJIUvqiKra4P0sj4Prz6gqoCCn9ij6lIUzKuQ6Kai6B86E6Ee10y3DfRiPky1kNa29MITdg4VQ2xJmShtEWO3fkGeF13BbErc=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=roeck-us.net; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=AhM2fgAM; arc=none smtp.client-ip=74.125.82.180
-Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=roeck-us.net
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 033D137FF51;
+	Fri, 15 May 2026 02:55:11 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=fail smtp.client-ip=52.101.84.25
+ARC-Seal:i=2; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
+	t=1778813713; cv=fail; b=SSqk0oXKxAgLYj49fsUCKPuwXmhk3xNIT8c0lSts6DrngH0eZSUb1zEhDeGeoASryaTQ9rMinsk91VPDd6H5cUoRIYyHyG734qxmQCLfZxqQ7F8T39/c0q6mVRxD7shoP2TPURMncr/51fFt6hqjAno/zsFuzZ6+m/FZw7M6cAE=
+ARC-Message-Signature:i=2; a=rsa-sha256; d=subspace.kernel.org;
+	s=arc-20240116; t=1778813713; c=relaxed/simple;
+	bh=PP4dl1GPvB6sM7/bwqWnCHew75aQykw2Zj10crOXSq0=;
+	h=From:To:CC:Subject:Date:Message-ID:References:In-Reply-To:
+	 Content-Type:MIME-Version; b=LJlqU3Ltn2VK33Jy0E/X/sezO1kbj0fW0mA99wXrQlqULB5dGof8A+VJFmQ7i9VO0wUewyHqpNVpqQqeyG4kgEhZOgcce9LLTrMONWd33WiX/iqLGKcMqYgxYAMNik8zA7YbhTMroQfz8x5RE99HaKhmXeT8Txri9CMFE9+BdoI=
+ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=nxp.com; spf=pass smtp.mailfrom=nxp.com; dkim=pass (2048-bit key) header.d=nxp.com header.i=@nxp.com header.b=RBGKRp2H; arc=fail smtp.client-ip=52.101.84.25
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=nxp.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=nxp.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="AhM2fgAM"
-Received: by mail-dy1-f180.google.com with SMTP id 5a478bee46e88-2c156c4a9efso12033858eec.1
-        for <sashiko-reviews@lists.linux.dev>; Thu, 14 May 2026 18:49:52 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20251104; t=1778809792; x=1779414592; darn=lists.linux.dev;
-        h=content-transfer-encoding:in-reply-to:autocrypt:from
-         :content-language:references:cc:to:subject:user-agent:mime-version
-         :date:message-id:sender:from:to:cc:subject:date:message-id:reply-to;
-        bh=zrNDITa07PIrUrnI0P0l/esE24/KQSx6Tox+P9NMGxo=;
-        b=AhM2fgAMBu2RhCZJjHkknlI73ZGuAFc6XBvkecypj8cinKJZBihIXEDNUO2iiS+LFX
-         Nn5Xrwj0/DP9mm5+VBj63J6jh61IANPVuv0X89tweTT9dskZKsqS6UpH/7JmjjLlawkF
-         vlIxcBU31MJ1O2+55+A05YH3Qukj/ID1UB4MWzzLaxDth5b0aYbdq/d22YCAdSWFkN1d
-         b4SjLqPXlTN+54yf/wGiR29UIdCYxYb1grmtaJ7PO8AdX/Cv2k5B+uZ6/a3wx4DpsLDz
-         gf+HOeRcQwdsKlgCjT15L1MQ4j3yHHjRYARLB8ED8i4ZOvf7JaHrwBjqbG8MiyM3PruR
-         ZVIA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20251104; t=1778809792; x=1779414592;
-        h=content-transfer-encoding:in-reply-to:autocrypt:from
-         :content-language:references:cc:to:subject:user-agent:mime-version
-         :date:message-id:sender:x-gm-gg:x-gm-message-state:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=zrNDITa07PIrUrnI0P0l/esE24/KQSx6Tox+P9NMGxo=;
-        b=EcKSXkRXQBah2vXNS2gcSxnMU3yx3DziotqBy2r4vvY0eGWZglKp3Q6hlRpH924thL
-         m+KxkZfK7o/oYRHUiS62jC5TIvjB8FyyyEqdtFhidzTFBCCea1MIRpfVAD8nay7tXpMy
-         N3l3pAbmlJPAXKtGgSa6Pam0oT3OUsL4YETBHksOJRh7GpkymrxAUBJB/FcraTpqYknh
-         Ls0Q7gdNXlpwaM8eKZKH1+zQSQ1rrVEiN1YSvIz3O51s1BrqTVk0olhFp4Qezw5cwaGW
-         Vrd5jBs1OPSMFfFvCxff7hASmcOohXYDHm9bpf5ooCBi1Pp4e31l0e1s+blMe43OulUs
-         hUqg==
-X-Forwarded-Encrypted: i=1; AFNElJ8utL3dxAeg7OOCpXyLHPYUjlCrYu5kU5x87I0b3RD5GNDPpTUQYj3lvbhvNN8jUz/Qp8aKOh51aMU46GFYGGY=@lists.linux.dev
-X-Gm-Message-State: AOJu0YwQvM4uDwiOaG9PUG8zzcob7etlwMMcuUEJ/Yw7MGQ9tKBFxnhU
-	dR00kiaC0Gx5R77uJgqnm4rYypQTd8RjOVatyd5vtUYWhowVfSUaRN1H
-X-Gm-Gg: Acq92OFepwLRBej0zOOh9QvDxs8H34Q+JDybeAvz8rf+GMq+R5q/a+X9BT8d6Yh2dtL
-	go3YuZOHtg1TXRV2VydesM3hJDfYjcxVfL7MitA4EJTzbOY9fFcYzWlrOm0YE52ch7VqYmumQsT
-	LQq7i2ZG/7grfn8kXqX9YEzjISY8YRyik7DIJ6wKCJo8DQ21tkaCt1k2Oiq4KR7D3f7V7Gdiaku
-	u8z9rf3y37RPrGioPNf0wI134aPA3REPbneeeO4JCG0ACK5JZ5BwWyD39eefzwZmMrPr+NMHD57
-	iKx+aQZLWbEGcW0kIfmza3xJoBQ94CvGURe/p6tatSZKVmgkonV0e9bBs2LXSfghYKfWZ03za6V
-	Y1vDyjTqNnM2R+LOdIX+ieHac/dsOXZ38e3Wt7aXd/ySmeP5zXE6MyL4GRFhejStGiidOArCKCz
-	dQBRsuxksdEhyBvci/GYHyBJxCtdmMhD4w2eOSZBh8v9TS8xeE3kCNxHZdBK/gDG/rLhQDKYqP/
-	k6L0dNGqao=
-X-Received: by 2002:a05:7022:311:b0:12d:b396:eaed with SMTP id a92af1059eb24-1350440ae04mr818420c88.9.1778809792003;
-        Thu, 14 May 2026 18:49:52 -0700 (PDT)
-Received: from ?IPV6:2600:1700:e321:62f0:da43:aeff:fecc:bfd5? ([2600:1700:e321:62f0:da43:aeff:fecc:bfd5])
-        by smtp.gmail.com with ESMTPSA id a92af1059eb24-134cbed2232sm7676638c88.7.2026.05.14.18.49.50
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Thu, 14 May 2026 18:49:51 -0700 (PDT)
-Sender: Guenter Roeck <groeck7@gmail.com>
-Message-ID: <a1ada282-ecc4-4b9f-a479-c5bddf25e641@roeck-us.net>
-Date: Thu, 14 May 2026 18:49:50 -0700
+	dkim=pass (2048-bit key) header.d=nxp.com header.i=@nxp.com header.b="RBGKRp2H"
+ARC-Seal: i=1; a=rsa-sha256; s=arcselector10001; d=microsoft.com; cv=none;
+ b=rAGjOtns+9zfmLf3MIR+w7l7iz7/LiQ9ggJ+qNKMCYV8w4sP7eJx+0oIlN2J88w+oyOPUHNF3vOzdUHI8LrckN6FXk134uQGFcgBpBRkA3I3gOthPz613QEl8Zc3YSwjGaNpL5gjxzJQ9xkAPrxTnBndIt5O09qh/jzX6viUWgtHANH29OKWVXTlVQgZWayViTfUv3RiIlr1xXjwchxNYMu/2c343da7hwaieRUg6T8KXbZHRpRJTTDO2eIUzGA5e+4tK6aK0w1TW1Hgtx7CKIguIBjR7d/pA9FPSMbQWnALtsOIkZod2uW7JE+GegR8IA2S8fTvkzsRWqs/SV9Wbg==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com;
+ s=arcselector10001;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
+ bh=w/U6xjOt1dPok4kvYeDsmTQTFoczGlnyEr4STSMh+ZA=;
+ b=x1Kq0XuhK0uJ5D1tBAL0f8KnP7SzrvTfeGUvS2hvo0f/TG1JdqtY89ycrYoPObQt+6SvyweiNIPvmkSndcYoU5uNUxcC7hmy9EEGljOJSDjfmUj93GkpnYBPdhoEDHZLUY55MHzl3x1uWwgcCmuejJaVPIUVCwl3KTnbsSk+nnsxCoEc9oWM2Xo/V/ZNgksiFsTV+9eVc1483M9EJlDbfeLdYqLLZpFLs029co/zepS7WmndjFCrAq1dZXSRUIQ6P4kCabZbR2oco2f1OSVhPRpeNysQRlsz2MPvS/Z5D29C2PBLzPPhc8VY5CcmN1fFt/dWQJTEd3drt5N165JMgg==
+ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
+ smtp.mailfrom=nxp.com; dmarc=pass action=none header.from=nxp.com; dkim=pass
+ header.d=nxp.com; arc=none
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=nxp.com; s=selector1;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
+ bh=w/U6xjOt1dPok4kvYeDsmTQTFoczGlnyEr4STSMh+ZA=;
+ b=RBGKRp2HXgKwcnW+DwBHpIPwaIpZd+r0mGKtexDWKr1HbBuMNhmW/8bUHlfC0uOrXzOM+5JeDZhj0glrNx8bHR7vEIEHtMeYb+d5ktZ5VSIX9aV99EAiRYMLrv/NT7xWGYtZfEkloOhwCNbJBwwbf9p3X3+KPIUvQTP6QEPMCg0WPJB2/LqXdK821T5DcCPXhzHhZYMTGMF8dlzI3CAOg1EUAdsrexQkogSh5Gcz1yt+gjp+axWeNKmlSbMpmyrywoFY+cL2UoocKczfGu8ZjF58T9YrYYz7H2bc26sXUgVqVwhX1sboePabRbDapwe6PyJ5UXHL/1WHim/9W81jVw==
+Received: from DBBPR04MB7500.eurprd04.prod.outlook.com (2603:10a6:10:1f4::16)
+ by GV2PR04MB12139.eurprd04.prod.outlook.com (2603:10a6:150:2ff::7) with
+ Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.9913.11; Fri, 15 May
+ 2026 02:55:07 +0000
+Received: from DBBPR04MB7500.eurprd04.prod.outlook.com
+ ([fe80::c291:543b:4bde:cee7]) by DBBPR04MB7500.eurprd04.prod.outlook.com
+ ([fe80::c291:543b:4bde:cee7%6]) with mapi id 15.20.9913.009; Fri, 15 May 2026
+ 02:55:07 +0000
+From: Wei Fang <wei.fang@nxp.com>
+To: "sashiko-reviews@lists.linux.dev" <sashiko-reviews@lists.linux.dev>
+CC: "krzk+dt@kernel.org" <krzk+dt@kernel.org>, "conor+dt@kernel.org"
+	<conor+dt@kernel.org>, "Frank.Li@kernel.org" <Frank.Li@kernel.org>,
+	"robh@kernel.org" <robh@kernel.org>, "devicetree@vger.kernel.org"
+	<devicetree@vger.kernel.org>, "imx@lists.linux.dev" <imx@lists.linux.dev>
+Subject: RE: [PATCH v7 net-next 09/15] net: dsa: add NETC switch tag support
+Thread-Topic: [PATCH v7 net-next 09/15] net: dsa: add NETC switch tag support
+Thread-Index: AQHc4oUVF3SVBvtUOEeHVNmeJ2a4bLYM/iYAgAFo+sA=
+Date: Fri, 15 May 2026 02:55:07 +0000
+Message-ID:
+ <DBBPR04MB75009C358384D59E492BB04E88042@DBBPR04MB7500.eurprd04.prod.outlook.com>
+References: <20260513030454.1666570-10-wei.fang@nxp.com>
+ <20260514052203.57A35C2BCB7@smtp.kernel.org>
+In-Reply-To: <20260514052203.57A35C2BCB7@smtp.kernel.org>
+Accept-Language: en-US
+Content-Language: en-US
+X-MS-Has-Attach:
+X-MS-TNEF-Correlator:
+authentication-results: dkim=none (message not signed)
+ header.d=none;dmarc=none action=none header.from=nxp.com;
+x-ms-publictraffictype: Email
+x-ms-traffictypediagnostic: DBBPR04MB7500:EE_|GV2PR04MB12139:EE_
+x-ms-office365-filtering-correlation-id: a56a0a35-f0e9-4cda-9745-08deb22d5f55
+x-ms-exchange-senderadcheck: 1
+x-ms-exchange-antispam-relay: 0
+x-microsoft-antispam:
+ BCL:0;ARA:13230040|1800799024|366016|376014|19092799006|22082099003|18002099003|56012099003|4143699003|38070700021|11063799003|3023799003;
+x-microsoft-antispam-message-info:
+ WqXtZwBKjXq1XN8JDGDMAAfbBsDtWWp+G6SwJKP4dOnEQ49l3weaSgQeUlHX537DIbJWg4+ZdtU/R/33I93UrH7QZki9clwmee+CRBqB9xw475t55Y9ekwgVosDA71/3wr7lWsBpMrIqAgtlLyU55LZ7kDPLnEQhlAclGAoolbQ+epCgKPvpMV7Be9LSQkxjWQh+6s3GoXy1vHGrexBpkXPfbbBVReGzMVtU8O1qBXqQqZdDyu7iS3e6necJmOBnmuciwNUvGNMHkro8nIQqrEimJziEjVAJ/gj/u4fEgpsVjvlhkrzu91WqSrdNgh9oDDK14CYg8ril3qlX/JkNDQuaEJN94XGaS0QsEcX4oJT+Bgs/5LW5D+Ix4aI5s1aJNPFmfQXlFk9LPQPg09l/cynp4CA7D+JQr4JEsBJ1Yj4zmDmO2kglcLFbdV7oaYa7aGJFiCRH1X6xTLmK8LNy/mErlTJWa3L8cQD9tWMzMBzAX6S6LPXXlDt50ITdPeN+MsVb/hpa/rj0JqxXABoIj7SJJyLRPTgVU9xPWRdYXjCoaC/gZ2Qj/f/ip5WpNVn79n2GDJrZnv9DixbMjY2zbst95BylCCZuKRYUS8bLodIw7yTveYFIbHlGXdnGXyCbNAWSajG/ygngiTayzEVNF6YELAsJtPOn3Ij8koSCxr+UAEnfXBdvLCP1MUohyEAvNv+BkYtAJxmugDDDCP7RiJDdO6WnjhfgerGxiKMaKVbtE9eTsx7I3nsKex/0hwNu
+x-forefront-antispam-report:
+ CIP:255.255.255.255;CTRY:;LANG:en;SCL:1;SRV:;IPV:NLI;SFV:NSPM;H:DBBPR04MB7500.eurprd04.prod.outlook.com;PTR:;CAT:NONE;SFS:(13230040)(1800799024)(366016)(376014)(19092799006)(22082099003)(18002099003)(56012099003)(4143699003)(38070700021)(11063799003)(3023799003);DIR:OUT;SFP:1101;
+x-ms-exchange-antispam-messagedata-chunkcount: 1
+x-ms-exchange-antispam-messagedata-0:
+ =?us-ascii?Q?IbzinvugiphEyjFuToEREQlOA+bnggkQ0fBJfgCXYK7gsiI434eO4SYlWMlv?=
+ =?us-ascii?Q?fUuDBjnOWoQTVBOEnUy6uWR6eDAAAoNaZiNszODlOgRmUtMHtmXT9C4epdNr?=
+ =?us-ascii?Q?W3bvjB+jNemW/iluPKomUiCSla1vQNKIe7S/jOkVXCOdAWCChIyf2pUyFCNr?=
+ =?us-ascii?Q?buGJO/LA+XRWYI04cJJSHm7i6BAFyG2ncDAejQjxZhRJNcd0Pnxo0kU4AUQ/?=
+ =?us-ascii?Q?40GA4DScCZpZvlyOCzRzlSbdlQi7GzYhGycSShm4aynXgNPEOKMGgnDpKSrO?=
+ =?us-ascii?Q?yKe06y1AafnPtJkeL42nQfVXdhbWNpAYBVtKbbg/Nuru7dcLkM5S1voyn5Oj?=
+ =?us-ascii?Q?FOB3Y1D0AFwfMhP0MY8EBlI/SLLOR5HRFTvFpa4wQknMP61Ha/Hgoenpw1UN?=
+ =?us-ascii?Q?olYf1gpwj+J+vFEgTd9UzBHXjKaQIzULPc3gVSjYJYi8KfVwACCs5nC8GAhS?=
+ =?us-ascii?Q?BacWaXUftWBzQMw1Lukm0InjPxlyVsBTB36DYS9HADjOetDvX0WdNVTJ8FmO?=
+ =?us-ascii?Q?BB4i3L+QmEf+/sW0jT0uEo11kKXtJbDEAaNgGr/x+AfJJ+PTk6tSsqiDCWKk?=
+ =?us-ascii?Q?a29EVfb5SQIDipTCW2oHCQtuBv6+i0cclyzIt73DcH/V0hs5WdfEyw7VvS+i?=
+ =?us-ascii?Q?zi7h9gs/Q2DYcsFNzKoY6N/g+q6wV+zpO4SXORXfrtX6xtHgI1I/VhkGFdjq?=
+ =?us-ascii?Q?V3kDUi3axZWC9V4yr3DAL444dF7aC/MO0PeOgqnFEGANTPOjMfCS5WOj2TiZ?=
+ =?us-ascii?Q?m3tW/iN3QBX74NsiRw1DUHcAKJRsaCSs486fSMmfrHR19Jd5BASPVk+sT8sX?=
+ =?us-ascii?Q?NcCDDmkFFtuaMmHywbkdS+WdHDBAuH3HQ3pMI3jhq+2W4n+NMD7cPb2fB8s1?=
+ =?us-ascii?Q?QgR2A31RTfSxdcbcX5Ai6cFZrcSj9falYRX2i3ZBxyaoptt8emhc9hOutbWI?=
+ =?us-ascii?Q?vnJoQDneS63UMi+QC03UORJSL4j5MZGlMks39aGp5gg6X38bLhK1bwmyKraq?=
+ =?us-ascii?Q?Vyo6G8InGqMH0/WxbWK8SQlxmM4MM99xNHOSpZe1NRnn9OziSMXOiOTT56Gf?=
+ =?us-ascii?Q?Ljn4/51GC8rd1q/IAjcWPzO+hJoZn0dbXjpVlLRPwPaL0Mv4Gw8RSFzb48gQ?=
+ =?us-ascii?Q?HlS6dXHMGaEWsLu5EV+r13XB/7SuicXBhTz8w+lc28jYRNGY43+EGYmJiShT?=
+ =?us-ascii?Q?EFYtUyRKu+i+lS8KO9udjXF64kA20aRv7Uk94GTLdWsPTzqNiBPN4/OEgSlF?=
+ =?us-ascii?Q?k+myUWjMSdv5odvGurmFLgfCfzHtKHvLbwfRqWU/Fb8rErcaWk3cZ/plZhmN?=
+ =?us-ascii?Q?KzKLls5Sz/KLTj8eS5qz7h2rdWxoY4XUTS4xkxmkGG2yu8jj3/vdFEva2/gm?=
+ =?us-ascii?Q?ktpYuCmDpDJlKb3PEyXx5TeMwyzly9l+zru4E6h+wF3xDE2i9lnVYB5YnMyR?=
+ =?us-ascii?Q?NDV6rkmNrP1SCsozAuZWHbcw3oD7odFLX0ezpO8RqnZnD1elvbG+MrYqJs/3?=
+ =?us-ascii?Q?TcMP/CibfCJ/WjM6H5kFDDiFSNh0F0nlUBm5ZVpEnnKo67skqhEWwqvmWC/1?=
+ =?us-ascii?Q?O4Xj6jzbLAu4oTqkieuINFBdEE6YuGmz/r9wX/+aFOeY7vrH3ze4KJlDL/yh?=
+ =?us-ascii?Q?cYDOIsLiqspkVHGqnqtiDeoVkmLh1ilP/nlrem++G9X2kuGQ/N04KO8PuNPS?=
+ =?us-ascii?Q?KGKHI0Ksa90hL79zh9ip/E9+YhSbz2Mzk87pTp4zLuoN3Vce?=
+Content-Type: text/plain; charset="us-ascii"
+Content-Transfer-Encoding: quoted-printable
 Precedence: bulk
 X-Mailing-List: sashiko-reviews@lists.linux.dev
 List-Id: <sashiko-reviews.lists.linux.dev>
 List-Subscribe: <mailto:sashiko-reviews+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:sashiko-reviews+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v5 1/2] usb: xhci-pci: add AMD Promontory 21 PCI glue
-To: Jihong Min <hurryman2212@icloud.com>, sashiko-reviews@lists.linux.dev,
- Jihong Min <hurryman2212@gmail.com>
-Cc: linux-hwmon@vger.kernel.org, linux-pci@vger.kernel.org
-References: <20260512213910.871859-2-hurryman2212@gmail.com>
- <20260514004055.1BBCAC19425@smtp.kernel.org>
- <110e9a0d-bc91-4959-8a7b-1a055d0b49f7@roeck-us.net>
- <1f296d29-3d43-4dd3-b751-8a0892b4095a@icloud.com>
- <a90ab332-9f86-4486-8243-07c98e3f7578@icloud.com>
-Content-Language: en-US
-From: Guenter Roeck <linux@roeck-us.net>
-Autocrypt: addr=linux@roeck-us.net; keydata=
- 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
- np3900V20aS7eD9K8GTU0TGC1pyz6IVJwIE=
-In-Reply-To: <a90ab332-9f86-4486-8243-07c98e3f7578@icloud.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 8bit
+X-OriginatorOrg: nxp.com
+X-MS-Exchange-CrossTenant-AuthAs: Internal
+X-MS-Exchange-CrossTenant-AuthSource: DBBPR04MB7500.eurprd04.prod.outlook.com
+X-MS-Exchange-CrossTenant-Network-Message-Id: a56a0a35-f0e9-4cda-9745-08deb22d5f55
+X-MS-Exchange-CrossTenant-originalarrivaltime: 15 May 2026 02:55:07.5404
+ (UTC)
+X-MS-Exchange-CrossTenant-fromentityheader: Hosted
+X-MS-Exchange-CrossTenant-id: 686ea1d3-bc2b-4c6f-a92c-d99c5c301635
+X-MS-Exchange-CrossTenant-mailboxtype: HOSTED
+X-MS-Exchange-CrossTenant-userprincipalname: OZhCHyZi7ZfCuWgo+D4Dzjt+7uA0l4O2/PwBZ7dRC5xkTBT6ihYa/7PbZ24gHLMH0lbtV7a/pB4xbb+KEQEQzw==
+X-MS-Exchange-Transport-CrossTenantHeadersStamped: GV2PR04MB12139
 
-On 5/14/26 06:44, Jihong Min wrote:
-> 
-> On 5/14/26 22:38, Jihong Min wrote:
->>
->> On 5/14/26 10:20, Guenter Roeck wrote:
->>> On 5/13/26 17:40, sashiko-bot@kernel.org wrote:
->>>> Thank you for your contribution! Sashiko AI review found 2 potential issue(s) to consider:
->>>> - [High] The Kconfig dependency `depends on USB_XHCI_PCI=y` completely disables PROM21 support for systems where the core driver is built as a module.
->>>> - [Low] Signed integer overflow when calculating the auxiliary device ID.
->>>> -- 
->>>>
->>>> commit 20f4e35b2f88ebe2b8988b4f07fe7cc28199096b
->>>> Author: Jihong Min <hurryman2212@gmail.com>
->>>> Subject: usb: xhci-pci: add AMD Promontory 21 PCI glue
->>>>
->>>> This commit adds a small PCI glue driver for AMD Promontory 21 xHCI
->>>> controllers. It binds the controllers, delegates USB host operation to
->>>> the common xHCI PCI core, and creates an auxiliary device for optional
->>>> temperature sensor support.
->>>>
->>>>> diff --git a/drivers/usb/host/Kconfig b/drivers/usb/host/Kconfig
->>>>> --- a/drivers/usb/host/Kconfig
->>>>> +++ b/drivers/usb/host/Kconfig
->>>>
->>>> [ ... ]
->>>>
->>>>> @@ -42,6 +42,26 @@ config USB_XHCI_PCI
->>>>>       depends on USB_PCI
->>>>>       default y
->>>>>   +config USB_XHCI_PCI_PROM21
->>>>> +    bool "AMD Promontory 21 xHCI PCI support"
->>>>> +    depends on X86
->>>>> +    depends on USB_XHCI_PCI=y
->>>>
->>>> Does depending strictly on USB_XHCI_PCI=y cause a configuration regression
->>>> for most distributions where the core driver is configured as a module?
->>>>
->>>> The driver source appears fully capable of being built as a module, using
->>>> module-related macros and module_pci_driver().
->>>>
->>>> If the intent is to prevent an early boot mismatch where xhci-pci is
->>>> built-in but the PROM21 glue is a module, could this instead be a tristate
->>>> option using depends on USB_XHCI_PCI and depends on !(USB_XHCI_PCI=y && m)?
->>>> This would enforce the boot constraint while preserving support for modular
->>>> kernel builds.
->>>>
->>>
->>> That makes sense to me. That would be stronger than using default (which
->>> was my idea of dealing with the problem). Restricting the code to USB_XHCI_PCI=y
->>> seems to be a bit extreme.
->>
->> Hi Guenter,
->>
->> I looked more closely at the Kconfig part of the Sashiko suggestion.
->>
->> The concern itself is valid: the v5 dependency on USB_XHCI_PCI=y is too
->> strict because it prevents the PROM21 PCI glue from being built when
->> USB_XHCI_PCI=m.
->>
->> However, I do not think the suggested expression works as intended:
->>
->>   depends on !(USB_XHCI_PCI=y && m)
->>
->> With Kconfig tristate logic, `m` is a tristate literal, not "this symbol is
->> being built as a module". If USB_XHCI_PCI=y, then:
->>
->>   USB_XHCI_PCI=y && m  => m
->>   !(USB_XHCI_PCI=y && m) => m
->>
->> So the dependency becomes `m`, which limits USB_XHCI_PCI_PROM21 to `m` instead
->> of allowing `y`. That is the opposite of what we need for the built-in
->> xhci-pci case.
->>
->> The combinations I think we want are:
->>
->>   USB_XHCI_PCI=y  -> USB_XHCI_PCI_PROM21=y or n, but not m
->>   USB_XHCI_PCI=m  -> USB_XHCI_PCI_PROM21=m or n
->>   USB_XHCI_PCI=n  -> USB_XHCI_PCI_PROM21=n
->>
->> I see a few possible ways to handle this:
->>
->> 1. Keep USB_XHCI_PCI_PROM21 as a visible tristate:
->>
->>      config USB_XHCI_PCI_PROM21
->>        tristate "AMD Promontory 21 xHCI PCI support"
->>        depends on X86
->>        depends on USB_XHCI_PCI
->>        default USB_XHCI_PCI
->>        select AUXILIARY_BUS
->>
->>    This supports USB_XHCI_PCI=m, but it still lets a user select the unsafe
->>    USB_XHCI_PCI=y / USB_XHCI_PCI_PROM21=m combination.
->>
->> 2. Keep it visible and rely on help text to warn users not to select `m` when
->>    USB_XHCI_PCI=y.
->>
->>    This is simple, but it does not actually prevent the bad combination.
->>
->> 3. Use IS_REACHABLE() in xhci-pci.c instead of IS_ENABLED().
->>
->>    That would prevent built-in xhci-pci from rejecting PROM21 devices when the
->>    PROM21 glue is only available as a module. However, it also means the
->>    PROM21 glue/hwmon path would not be used in that configuration unless the
->>    PCI device is rebound later, so I do not think it is ideal.
->>
->> 4. Make USB_XHCI_PCI_PROM21 a hidden tristate that follows USB_XHCI_PCI:
->>
->>      config USB_XHCI_PCI_PROM21
->>        tristate
->>        depends on X86
->>        depends on USB_XHCI_PCI
->>        default USB_XHCI_PCI
->>        select AUXILIARY_BUS
->>
->>    Then the value follows the common xhci-pci driver:
->>
->>      USB_XHCI_PCI=y  -> USB_XHCI_PCI_PROM21=y
->>      USB_XHCI_PCI=m  -> USB_XHCI_PCI_PROM21=m
->>      USB_XHCI_PCI=n  -> USB_XHCI_PCI_PROM21=n
->>
->>    This prevents the unsafe y/m split while still supporting modular
->>    USB_XHCI_PCI builds. The actual user-visible sensor option remains
->>    SENSORS_PROM21_XHCI.
->>
->> My current preference is option 4, because the PROM21 PCI glue is not really a
->> user-facing feature by itself. It exists so the common xhci-pci driver can hand
->> PROM21 devices to the PROM21-specific glue and so the optional hwmon driver can
->> bind through the auxiliary device. The user-visible part remains the hwmon
->> sensor driver.
->>
->> Does that sound reasonable to you, or would you prefer one of the other
->> approaches?
->>
->> Thanks,
->> Jihong
->>
-> One follow-up to my previous mail:
-> 
-> If we go with option 4 and make USB_XHCI_PCI_PROM21 a hidden tristate
-> symbol, I think its help text should probably be removed as well, since the
-> symbol would no longer have a user-visible prompt.
-> 
-Agreed.
+> > +static void netc_flow_dissect(const struct sk_buff *skb, __be16 *proto=
+,
+> > +			      int *offset)
+> > +{
+> > +	struct netc_tag_cmn *tag_cmn =3D (struct netc_tag_cmn *)(skb->data - =
+2);
+> > +	int subtype =3D FIELD_GET(NETC_TAG_SUBTYPE, tag_cmn->type);
+>=20
+> Is it safe to access skb->data directly here without validating the linea=
+r
+> length of the skb?
+>=20
+> While the comment below notes that hardware-received frames will have
+> sufficient linear data, skb_flow_dissect() can also be invoked on locally
+> injected packets (for example, via AF_PACKET sockets, bpf_prog_test_run,
+> or tc hooks). For these locally generated packets, skb_headlen(skb) might
+> be extremely small or even zero.
+>=20
+> Could this lead to an out-of-bounds read and kernel panic if the skb is
+> fragmented? Would it be better to use skb_header_pointer() or validate th=
+at
+> skb_headlen(skb) is large enough before dereferencing?
 
-> The user-visible option would remain SENSORS_PROM21_XHCI, where the hwmon
-> sensor help text can stay.
-> 
-> Does that sound right?
-> 
-Yes.
-
-Thanks,
-Guenter
+ETH_P_XDSA is only set on the RX path by eth_type_trans(). All locally inje=
+cted
+packets travel on the TX path, and skb->protocol retains its original value=
+ instead
+of ETH_P_XDSA. Therefore, the DSA guard condition proto =3D=3D htons(ETH_P_=
+XDSA)
+in __skb_flow_dissect() is not true, and .flow_dissect() will not be called=
+.
 
