@@ -1,48 +1,49 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 223923176E0;
-	Fri, 15 May 2026 08:19:55 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8856C37BE8E;
+	Fri, 15 May 2026 08:21:15 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1778833196; cv=none; b=JDygXwe6wq6YsK+OSPKVZ2VmTbS+9IF1hB3DiyMZf013TlcPGg5FPLQ582rq3GQI1NYJImv9nqtSu9/MiGApc92g2vNxQOd8In4WFR8Db1zMXpkUVZH/83vfNDmbFtyNhJ+eg4byu6kQVdmY15dJa5X/IKoheKcXEg1Zrlln9EM=
+	t=1778833275; cv=none; b=UGx3yM26kefbo86lbUtBg+JOE6f08GnwLh+MuDhrDCGJXvZaIAkh5OqQ4jnM4xMAblTlhp3EbL1IkZ+EmHKkuTYiosnadhsUw9KVfRfc1P9mViFIpKIs4dNf2XTsTVb82BCT0GkAbP4Q7ZrfWiwXvSuraRrKl8EtHNgumct5Ug4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1778833196; c=relaxed/simple;
-	bh=DVW3zGuRiAwtlxV6sDechZsTz70XEBaeqt1QBsRL1w0=;
+	s=arc-20240116; t=1778833275; c=relaxed/simple;
+	bh=fncsyLLDmUrl81XOBce8mHfBxoufAcTXHGLJ6bqsG7E=;
 	h=Date:Message-ID:From:To:Cc:Subject:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=kHZQRcwj1PM8eeQaeisElMUCq+y/HCIkkl+dLThmVU4JXGPCDG+RWFtZxWP5VhsKr4+50tXqPd/VZT1kbXzVaJKXaM62Iiy5nU69mxhxuIJFzgPIWYNb/n21PraHgqj7MwMVP1ES4oKGp5IjElwtSzrQYiAKJsy4K9+wnQycNeI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=UuuPRH7I; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version:Content-Type; b=KtMM8Vx912GWAgubfQgBQv2DoCb9JUWYXRfIc6y7F9A9al/333bpJ25CVAHONVzlZ5SDZdtcvQHx9fc6j6MOYnesScUGymfr64AfMascgw0N0WDoBeQ5rfbIKBQPZo2xjLypCY67A6IVIe04RayPk+zpjQTEkO7hC4nXpytXr2k=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=RONHB/qJ; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="UuuPRH7I"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id A2A51C2BCB0;
-	Fri, 15 May 2026 08:19:55 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="RONHB/qJ"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 25A4AC2BCB0;
+	Fri, 15 May 2026 08:21:15 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1778833195;
-	bh=DVW3zGuRiAwtlxV6sDechZsTz70XEBaeqt1QBsRL1w0=;
+	s=k20201202; t=1778833275;
+	bh=fncsyLLDmUrl81XOBce8mHfBxoufAcTXHGLJ6bqsG7E=;
 	h=Date:From:To:Cc:Subject:In-Reply-To:References:From;
-	b=UuuPRH7IPZPbcK0LZ3o14TgqdgwVbURcINWZ6iyumNFirfL1QM18nouUZ9UYh1MFj
-	 R/WS9LHpZXAOV9PMamTfjgytnro7vboE8yEdnLAOMLQiJ3c26y9c6dEWwQpFeoGNTT
-	 yEUQ0SIhNAJRRSXQSKwXopJzNGoKhNqMBL6jNU7PbksZC+kNxxRAh7CBulneD2zQrS
-	 27bmrLzX5/Rk7PsTU+VL4uVGgaashbQkBIIAxEMjqq1xFZeb69fj33xor4T4dNhs0T
-	 Vw1QK+2c6gs2wtQ0BPdvqBW2UzKI88bH08yqkPATGZePNsA1AEzOnshraBvzndVEHg
-	 7mEs1tQA1aHPA==
+	b=RONHB/qJX7Ul1SwBf8w5jd1/wiJlcPuopA9ysOcyCb94v4nTqEMfiHO8PJx0v7CLU
+	 YVzE4FuZranY00gdvM9yyFsgiQt/4bWSklthqBzHevyQCwmjokoyPUzbLjV1LFpm3b
+	 6yk6MqofiEDxiQWnB8L5hf9KWav78XnN1B07FC1tKb8aKoszt8VnIKddjKaEcDT/tv
+	 bi3IvE0HzoZB1A0CEnkYiiWHxWgcCkNLNyaRrctQgSxp9nUeHE0u9h7MxtcWxhSg3h
+	 EFby8Ja5+5Eh0OLe0+6e2KbeqElZWqMX098hy3tHhy4kEGaEda/x9tl2FX8GueMqPj
+	 o3IQVSnGw8HiQ==
 Received: from sofa.misterjones.org ([185.219.108.64] helo=lobster-girl.misterjones.org)
 	by disco-boy.misterjones.org with esmtpsa  (TLS1.3) tls TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384
 	(Exim 4.98.2)
 	(envelope-from <maz@kernel.org>)
-	id 1wNnlx-00000002bwo-3229;
-	Fri, 15 May 2026 08:19:53 +0000
-Date: Fri, 15 May 2026 09:23:08 +0100
-Message-ID: <87tss99j4j.wl-maz@kernel.org>
+	id 1wNnnF-00000002byC-0ORI;
+	Fri, 15 May 2026 08:21:13 +0000
+Date: Fri, 15 May 2026 09:24:28 +0100
+Message-ID: <87se7t9j2b.wl-maz@kernel.org>
 From: Marc Zyngier <maz@kernel.org>
 To: sashiko-reviews@lists.linux.dev
-Cc: robh@kernel.org,	devicetree@vger.kernel.org,	krzk+dt@kernel.org,
-	conor+dt@kernel.org, =?UTF-8?B?IkFuZHJlYXMgRsOkcmJlciI=?=
- <afaerber@suse.de>, Yu-Chun Lin <eleanor.lin@realtek.com>
-Subject: Re: [PATCH v2 14/17] arm64: dts: realtek: Add EL2 virtual timer interrupt
-In-Reply-To: <20260514231804.000CCC2BCB3@smtp.kernel.org>
-References: <20260514150945.3917510-15-maz@kernel.org>
-	<20260514231804.000CCC2BCB3@smtp.kernel.org>
+Cc: robh@kernel.org,
+	devicetree@vger.kernel.org,
+	krzk+dt@kernel.org,
+	conor+dt@kernel.org
+Subject: Re: [PATCH v2 13/17] arm64: dts: qcom: Add EL2 virtual timer interrupt
+In-Reply-To: <20260514230629.34892C2BCB3@smtp.kernel.org>
+References: <20260514150945.3917510-14-maz@kernel.org>
+	<20260514230629.34892C2BCB3@smtp.kernel.org>
 User-Agent: Wanderlust/2.15.9 (Almost Unreal) SEMI-EPG/1.14.7 (Harue)
  FLIM-LB/1.14.9 (=?UTF-8?B?R29qxY0=?=) APEL-LB/10.8 EasyPG/1.0.0 Emacs/30.1
  (aarch64-unknown-linux-gnu) MULE/6.0 (HANACHIRUSATO)
@@ -54,71 +55,80 @@ List-Unsubscribe: <mailto:sashiko-reviews+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0 (generated by SEMI-EPG 1.14.7 - "Harue")
 Content-Type: text/plain; charset=US-ASCII
 X-SA-Exim-Connect-IP: 185.219.108.64
-X-SA-Exim-Rcpt-To: sashiko-reviews@lists.linux.dev, robh@kernel.org, devicetree@vger.kernel.org, krzk+dt@kernel.org, conor+dt@kernel.org, afaerber@suse.de, eleanor.lin@realtek.com
+X-SA-Exim-Rcpt-To: sashiko-reviews@lists.linux.dev, robh@kernel.org, devicetree@vger.kernel.org, krzk+dt@kernel.org, conor+dt@kernel.org
 X-SA-Exim-Mail-From: maz@kernel.org
 X-SA-Exim-Scanned: No (on disco-boy.misterjones.org); SAEximRunCond expanded to false
 
-On Fri, 15 May 2026 00:18:03 +0100,
+On Fri, 15 May 2026 00:06:26 +0100,
 sashiko-bot@kernel.org wrote:
 > 
 > Thank you for your contribution! Sashiko AI review found 1 potential issue(s) to consider:
-> - [High] Incomplete implementation: missing update for Realtek Kent SoC family which specifies an incorrect EL2 virtual timer interrupt.
+> - [Medium] The commit message claims to add the EL2 virtual timer interrupt, but for `sdx75.dtsi` and `milos.dtsi` it actually adds the EL2 physical timer interrupt (`GIC_PPI 10`).
 > --
 > 
-> commit 3b73638950a28ecc324e1c28fa4fb9fcb13d5567
+> commit 3f4b80b2c0c05477bcee12a9ba5b2e0a5b15a672
 > Author: Marc Zyngier <maz@kernel.org>
 > 
-> arm64: dts: realtek: Add EL2 virtual timer interrupt
+> arm64: dts: qcom: Add EL2 virtual timer interrupt
 > 
-> This commit adds the missing EL2 virtual timer interrupt to ARMv8.2-based
-> Realtek SoCs. It updates rtd16xx.dtsi by adding the fifth timer interrupt
-> with GIC_PPI 12.
+> This commit adds the missing EL2 virtual timer interrupt to the timer nodes
+> across multiple Qualcomm SoC device trees.
 > 
-> > diff --git a/arch/arm64/boot/dts/realtek/rtd16xx.dtsi b/arch/arm64/boot/dts/realtek/rtd16xx.dtsi
-> > index 3a7f6e35b7f74..43b13d133c324 100644
-> > --- a/arch/arm64/boot/dts/realtek/rtd16xx.dtsi
-> > +++ b/arch/arm64/boot/dts/realtek/rtd16xx.dtsi
-> > @@ -105,7 +105,8 @@ timer {
+> > arm64: dts: qcom: Add EL2 virtual timer interrupt
+> > 
+> > The ARMv8.1+ based CPUs used in a number of Qualcomm SoCs are missing
+> > the EL2 virtual timer interrupt. Add it.
+> 
+> Is this description entirely accurate?
+> 
+> The commit message explicitly states it adds the missing EL2 virtual timer
+> interrupt, but it appears to also add the EL2 physical timer interrupt in
+> a couple of files where the virtual timer was already present.
+> 
+> [ ... ]
+> 
+> > diff --git a/arch/arm64/boot/dts/qcom/milos.dtsi b/arch/arm64/boot/dts/qcom/milos.dtsi
+> > index 4a64a98a434b6..b991124b8ce9f 100644
+> > --- a/arch/arm64/boot/dts/qcom/milos.dtsi
+> > +++ b/arch/arm64/boot/dts/qcom/milos.dtsi
+> > @@ -3235,6 +3235,7 @@ timer {
+> >  		interrupts = <GIC_PPI 13 IRQ_TYPE_LEVEL_LOW 0>,
+> >  			     <GIC_PPI 14 IRQ_TYPE_LEVEL_LOW 0>,
+> >  			     <GIC_PPI 11 IRQ_TYPE_LEVEL_LOW 0>,
+> > +			     <GIC_PPI 10 IRQ_TYPE_LEVEL_LOW 0>,
+> >  			     <GIC_PPI 12 IRQ_TYPE_LEVEL_LOW 0>;
+> >  	};
+> >  };
+> 
+> Does this inadvertently add the EL2 physical timer instead of the virtual
+> timer?
+> 
+> The virtual timer (GIC_PPI 12) is already present here, and this addition
+> is for GIC_PPI 10.
+> 
+> [ ... ]
+> 
+> > diff --git a/arch/arm64/boot/dts/qcom/sdx75.dtsi b/arch/arm64/boot/dts/qcom/sdx75.dtsi
+> > index d1b61530b562f..b6cdf71051026 100644
+> > --- a/arch/arm64/boot/dts/qcom/sdx75.dtsi
+> > +++ b/arch/arm64/boot/dts/qcom/sdx75.dtsi
+> > @@ -1583,6 +1583,7 @@ timer {
 > >  		interrupts = <GIC_PPI 13 IRQ_TYPE_LEVEL_LOW>,
 > >  			     <GIC_PPI 14 IRQ_TYPE_LEVEL_LOW>,
 > >  			     <GIC_PPI 11 IRQ_TYPE_LEVEL_LOW>,
-> > -			     <GIC_PPI 10 IRQ_TYPE_LEVEL_LOW>;
 > > +			     <GIC_PPI 10 IRQ_TYPE_LEVEL_LOW>,
-> > +			     <GIC_PPI 12 IRQ_TYPE_LEVEL_LOW>;
+> >  			     <GIC_PPI 12 IRQ_TYPE_LEVEL_LOW>;
 > >  	};
+> >  };
 > 
-> Does this update miss another Realtek ARMv8.2+ SoC file?
-> 
-> Looking at arch/arm64/boot/dts/realtek/kent.dtsi (used by RTD1501, RTD1861,
-> and RTD1920), the fifth timer interrupt is currently defined as
-> <GIC_PPI 9 IRQ_TYPE_LEVEL_HIGH>.
-> 
-> PPI 9 is the GIC vCPU maintenance interrupt, rather than the EL2 virtual
-> timer interrupt which should be PPI 12:
-> 
-> arch/arm64/boot/dts/realtek/kent.dtsi:
-> 	timer {
-> 		compatible = "arm,armv8-timer";
-> 		interrupts = <GIC_PPI 13 IRQ_TYPE_LEVEL_LOW>,
-> 			     <GIC_PPI 14 IRQ_TYPE_LEVEL_LOW>,
-> 			     <GIC_PPI 11 IRQ_TYPE_LEVEL_LOW>,
-> 			     <GIC_PPI 10 IRQ_TYPE_LEVEL_LOW>,
-> 			     <GIC_PPI  9 IRQ_TYPE_LEVEL_HIGH>;
-> 	};
-> 
-> Another patch in this series (clocksource/drivers/arm_arch_timer: Default
-> to EL2 virtual timer when running VHE) changes the driver to use the EL2
-> virtual timer by default on VHE systems.
-> 
-> If the kernel uses the EL2 virtual timer on these Realtek SoCs, could it
-> request the wrong interrupt (PPI 9 instead of PPI 12), causing timer
-> interrupts to not be delivered and resulting in a boot hang regression?
+> Similarly, could the commit message be updated to mention this fix, or
+> should this physical timer addition be split into a separate patch?
 
-That's definitely odd, as PPI9 is present in two interrupt specifiers
-(timer and GIC). Obviously, that's not possible.
+These hunks were not supposed to be there, and were intended as a
+separate fix (though I suspect these machines have never booted Linux
+at EL2...).
 
-I'll add a tentative fix for that in the next round. Maybe Andreas or
-Yu-Chun can check in the meantime?
+I'll drop that from the next round.
 
 	M.
 
