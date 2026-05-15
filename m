@@ -1,99 +1,122 @@
-Received: from out-171.mta0.migadu.com (out-171.mta0.migadu.com [91.218.175.171])
+Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AD17D4CA264
-	for <sashiko-reviews@lists.linux.dev>; Fri, 15 May 2026 16:57:40 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=91.218.175.171
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D193F380FE8;
+	Fri, 15 May 2026 17:08:31 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1778864262; cv=none; b=V/cb3vY4f0EOXeuLytLefJHH+YPBg+9DomlgF3VkoCXtpdZMsQM4lo5iyFwmonmxv0c1NKq0SH2QnO/B1EaH8glNGZpASzUlcN4iz56yjBZninnOA4qqysXGEmVLORxT4tbiNKpePXHXIgI7rtIlxJ4rSJNetrJeh7hOctxDvFU=
+	t=1778864911; cv=none; b=CULNmgWblkFNAQ1booVPBD6yP7sbmQYM8vS/2r2bPrRX0rt/kNTSo0OJ25HLlMkH/gZ3oefFQJG2D6wLxnX80OugY9wCDtcT6+cPbSxus1xAC6k/bk0ClRMr0+PUTnj0AjH+VX21NHUEIIa0soa2gwAMv0GRldkzTsytejG5Bmk=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1778864262; c=relaxed/simple;
-	bh=HfDLRigbh/n6E84Sx5NzrBMlJciHBWOgs6Fm8/bRYfQ=;
-	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=Fc0a/YtDXUfXbk2E5cB3MZ4linR26EsXrXyhrVfkp64Ey83S68Erx+ijFzSRWnsrffOyig9PYegw2lnfWrFKWt+7aYhD5hLeLbklH/CI2MRmhFFHggyR5nipFLIpsi1U9Ac1Q6SFrNmRSDUVD+ccr7jUzqWqmVSwu2pNvVIMbtY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linux.dev; spf=pass smtp.mailfrom=linux.dev; dkim=pass (1024-bit key) header.d=linux.dev header.i=@linux.dev header.b=dV5Jnq+b; arc=none smtp.client-ip=91.218.175.171
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linux.dev
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linux.dev
+	s=arc-20240116; t=1778864911; c=relaxed/simple;
+	bh=vtfXNuA8zD9LOyQaeVk5+l3MR2Lkun0ntP92/yVmZl0=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=D3wUq14DJfBugqp5GhK+F2gQOGCDwTuTrAH2b75V8pbxn9IXWVe3JxoIk/M/p2+9jj8ugki366+VAnFMJt/p/9rZnnlF00L1bKGSdrwyFCd1H0jt6O/Yclc8cZQ6l1Bge66cKTmRf9dglTZKSkWTh7GdSN/QhLZ0k97reebruk4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=XmuWqvFp; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linux.dev header.i=@linux.dev header.b="dV5Jnq+b"
-Message-ID: <46b576ec-a2e2-4501-9be5-094ce840e9f0@linux.dev>
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linux.dev; s=key1;
-	t=1778864258;
-	h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
-	 to:to:cc:cc:mime-version:mime-version:content-type:content-type:
-	 content-transfer-encoding:content-transfer-encoding:
-	 in-reply-to:in-reply-to:references:references;
-	bh=Js5Qjb6/DNEMn0Vvez1+YQ4G9KxW/8EhfaWypbw/RX8=;
-	b=dV5Jnq+bbABu9UYDYMUj8tBiQBUW0UtMsi2+Pg7qs0H9TrPcYgKhngBpDUNq+LSnguf0nn
-	ufjpmIhVJiXQehjHQrNPnCpy3+aO1wTg/p29LpsaTQfl79O5LsoCTO6PMe8fFkRhVI+sR1
-	NIEe5a+fyzDxWivNa9a4vbfp4ZvXyR0=
-Date: Fri, 15 May 2026 09:57:33 -0700
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="XmuWqvFp"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2D7E1C2BCB0;
+	Fri, 15 May 2026 17:08:30 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+	s=k20201202; t=1778864911;
+	bh=vtfXNuA8zD9LOyQaeVk5+l3MR2Lkun0ntP92/yVmZl0=;
+	h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
+	b=XmuWqvFpdGMuMlAewPyZ5Au/Xv2usTnJZcWzokoeqKgFA8Jk70FcE3id6p7/v5OnS
+	 yENu68AhbqN89MMKZXELTr/W42i0rd7piiLnE7BFgb8N1cLzv9JrDTBqy2dgfvHJUz
+	 CFpxH04nqANy4bNpHd27gToTIV4/sj0JwfwFQ/Qt5rTIAfeMnaTB0l2SBGpmEVj7S1
+	 hy/rQGfVS2IRATPkXwdmGDwPCn8NDeDdgGo/Tt88G1Do9gAoFDME57q+iiCeIIpp5e
+	 YmPZv/zO49VLO9LVGEe4vHdJkgDbhnCPPUkZnvd1Th2zRnCG/LuUworcMg3Toz6/xL
+	 nxGIlK/uMd91g==
+Date: Fri, 15 May 2026 18:08:26 +0100
+From: Conor Dooley <conor@kernel.org>
+To: sashiko-reviews@lists.linux.dev
+Cc: Radu Sabau via B4 Relay <devnull+radu.sabau.analog.com@kernel.org>,
+	krzk+dt@kernel.org, devicetree@vger.kernel.org, robh@kernel.org,
+	conor+dt@kernel.org
+Subject: Re: [PATCH v11 1/6] dt-bindings: iio: adc: add AD4691 family
+Message-ID: <20260515-geometric-uptight-c4e467a92790@spud>
+References: <20260515-ad4692-multichannel-sar-adc-driver-v11-1-eab27d852ac2@analog.com>
+ <20260515133752.EE3CCC2BCB0@smtp.kernel.org>
 Precedence: bulk
 X-Mailing-List: sashiko-reviews@lists.linux.dev
 List-Id: <sashiko-reviews.lists.linux.dev>
 List-Subscribe: <mailto:sashiko-reviews+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:sashiko-reviews+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Subject: Re: [PATCH bpf-next v4 18/25] selftests/bpf: Add tests for BPF
- function stack arguments
-Content-Language: en-GB
-To: sashiko-reviews@lists.linux.dev
-Cc: bpf@vger.kernel.org
-References: <20260513045127.2397187-1-yonghong.song@linux.dev>
- <20260515061609.B8AB1C2BCB0@smtp.kernel.org>
-X-Report-Abuse: Please report any abuse attempt to abuse@migadu.com and include these headers.
-From: Yonghong Song <yonghong.song@linux.dev>
-In-Reply-To: <20260515061609.B8AB1C2BCB0@smtp.kernel.org>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
-X-Migadu-Flow: FLOW_OUT
+Content-Type: multipart/signed; micalg=pgp-sha512;
+	protocol="application/pgp-signature"; boundary="ZGgL7fGpZZ1xzXrU"
+Content-Disposition: inline
+In-Reply-To: <20260515133752.EE3CCC2BCB0@smtp.kernel.org>
 
 
+--ZGgL7fGpZZ1xzXrU
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+Content-Transfer-Encoding: quoted-printable
 
-On 5/15/26 8:16 AM, sashiko-bot@kernel.org wrote:
-> Thank you for your contribution! Sashiko AI review found 1 potential issue(s) to consider:
-> - [Medium] The test `test_async_cb_many` uses a hardcoded `usleep(50)` to wait for an asynchronous BPF timer to execute, which is prone to race conditions and flakiness on loaded CI systems.
+On Fri, May 15, 2026 at 01:37:52PM +0000, sashiko-bot@kernel.org wrote:
+> Thank you for your contribution! Sashiko AI review found 1 potential issu=
+e(s) to consider:
+> - [Medium] The binding defines GPIO controller capabilities but omits `gp=
+io-controller` and `#gpio-cells` from the `required` list and the `examples=
+` section.
 > --
->
-> commit 12812727f17076398fed8cfc802771db232582f8
-> Author: Yonghong Song <yonghong.song@linux.dev>
->
-> selftests/bpf: Add tests for BPF function stack arguments
->
-> This commit adds selftests for stack argument passing in BPF-to-BPF subprog
-> and kfunc calls with more than 5 arguments. It covers scalar, pointer, mixed,
-> dynptr, memory buffer, iterator, const string, and timer pointers.
->
->> diff --git a/tools/testing/selftests/bpf/prog_tests/stack_arg.c b/tools/testing/selftests/bpf/prog_tests/stack_arg.c
->> new file mode 100644
->> index 0000000000000..d61bac33f8092
->> --- /dev/null
->> +++ b/tools/testing/selftests/bpf/prog_tests/stack_arg.c
+>=20
+> commit 5576d49868d1ae53d794381f2b3e2079954441db
+> Author: Radu Sabau <radu.sabau@analog.com>
+>=20
+> dt-bindings: iio: adc: add AD4691 family
+>=20
+> This commit adds device tree bindings for the Analog Devices AD4691 family
+> of multichannel SAR ADCs. It defines hardware connections including power
+> domains, PWM, reset GPIOs, and interrupt sources, along with providing
+> two binding examples.
+>=20
+> > diff --git a/Documentation/devicetree/bindings/iio/adc/adi,ad4691.yaml =
+b/Documentation/devicetree/bindings/iio/adc/adi,ad4691.yaml
+> > new file mode 100644
+> > index 0000000000000..af28a0c1cfa9e
+> > --- /dev/null
+> > +++ b/Documentation/devicetree/bindings/iio/adc/adi,ad4691.yaml
+>=20
 > [ ... ]
->> +static void test_async_cb_many(void)
->> +{
-> [ ... ]
->> +	run_subtest(skel->progs.test_async_cb_many_args, 0);
->> +
->> +	/* Wait for the timer callback to fire and verify the result.
->> +	 * 10+20+30+40+50+60+70+80 = 360
->> +	 */
->> +	usleep(50);
-> Could this short sleep lead to flaky test failures on loaded CI systems?
->
-> Timer callbacks are executed in softirq context, and under load, scheduling
-> delays could easily exceed 50 microseconds. This might cause the test process
-> to wake up and read timer_result before the callback has actually executed.
->
-> Would a polling loop with a reasonable timeout be more reliable here?
+>=20
+> > +  gpio-controller: true
+> > +
+> > +  '#gpio-cells':
+> > +    const: 2
+> > +
+> > +  '#trigger-source-cells':
+> > +    description:
+> > +      This node can act as a trigger source. The single cell in a cons=
+umer
+> > +      reference specifies the GP pin number (0-3) used as the trigger =
+output.
+> > +    const: 1
+> > +
+> > +required:
+> > +  - compatible
+> > +  - reg
+> > +  - avdd-supply
+> > +  - vio-supply
+>=20
+> Since the binding defines the device as a GPIO controller, should
+> gpio-controller and #gpio-cells be added to this required list?
+>=20
+> Omitting these properties from the required list might allow incomplete
+> device tree nodes to pass validation.
 
-The prog_tests/tiemr.c uses 'usleep(50);' which seems working fine.
-So I used it too.
+This is crap right? The gpio pins are the same as the interrupt ones so
+it has to be optional?
 
->
->> +	ASSERT_EQ(skel->bss->timer_result, 360, "timer_result");
->> +
->> +out:
->> +	stack_arg__destroy(skel);
->> +}
+--ZGgL7fGpZZ1xzXrU
+Content-Type: application/pgp-signature; name="signature.asc"
 
+-----BEGIN PGP SIGNATURE-----
+
+iHUEABYKAB0WIQRh246EGq/8RLhDjO14tDGHoIJi0gUCagdTCgAKCRB4tDGHoIJi
+0sN/AQD0lgiPetp8pj7CID6wl0wC85pDJhAXEjpgTNHDsUK9xwEArBFxeNaus2dD
+GuVZlDjJNZUvnMDAG8Ncc1lu66LCHws=
+=asaa
+-----END PGP SIGNATURE-----
+
+--ZGgL7fGpZZ1xzXrU--
