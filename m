@@ -1,166 +1,105 @@
-Received: from mail-pl1-f179.google.com (mail-pl1-f179.google.com [209.85.214.179])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 897D12F7EF7
-	for <sashiko-reviews@lists.linux.dev>; Fri, 15 May 2026 23:27:55 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=pass smtp.client-ip=209.85.214.179
-ARC-Seal:i=2; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1778887676; cv=pass; b=P+Uc0HvXocP8xwji81zQ49I6XyCJQp+ROnkqcoeUvfOWHt0Y0lof2e0OGu+AUdx7b4iXEdIVP73FIXfTSdhf/Q9QZ4Y/ziYHhuuF1GhY7zBz+X0LPbPp77Mvx6F8dLIjGKWkZ6giNkns/3tKcAcyFA75GJCaVEkN+yczkdDHtNM=
-ARC-Message-Signature:i=2; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1778887676; c=relaxed/simple;
-	bh=YwWC4WFrkmp2ONYjnJoQn8j2jErDcE/QFo/5x5YPLwM=;
-	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
-	 To:Cc:Content-Type; b=HLrnQrwdI66RoBFtIpo1Jul8d4sxkPeoUAvpzXVwsB7HIuyw/20NPNItTrd+kUos9vjzpHPzhe0dDo9kbxfxXPVMyNmxP6fxDEXEdEs11UGiSFWlQQIbbY2AHMldVzyN3SoKnSu/qFYevfUXGat/6H2UlpGw67KsgkWzLJ97h/Y=
-ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=google.com; spf=pass smtp.mailfrom=google.com; dkim=pass (2048-bit key) header.d=google.com header.i=@google.com header.b=QRgCbjs1; arc=pass smtp.client-ip=209.85.214.179
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=google.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=google.com
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 339FC18DB1A;
+	Sat, 16 May 2026 07:55:48 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
+ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
+	t=1778918149; cv=none; b=qFfcMV4kAu7iN2snI78jAy5lWWSvTJAnnbbdBWbgDZIQn3xfSjXRbnPxXmeIXIls1EZzgwS6HT6uIE+QQkTaoeekmynau9vjEae3OoAl1oSGSlg0I2tYtHLOQBD997dQIQfHai9SxuZ74Ron/wjlD9vw+gh6uAIdFylqLKjvKjM=
+ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
+	s=arc-20240116; t=1778918149; c=relaxed/simple;
+	bh=lyKQDl9shdzld6H85nuhDfW5SWBWfpPfHmTt2wTHX9M=;
+	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
+	 In-Reply-To:Content-Type; b=n0Ef/41eE+MxvAh1ftPDucLxvvwUQdRiyEWvYyF//3xCq0iG9RgApbWXsss3siBd7AFvlMwDADD6B6xvhipsttr91LwQxnJy/nh1XkUX8FF2ukBeI2w13glp7mHf69Mdk2RSu5/yfBqCCcf3wuwQz0zl6zG3iN3K6V57/TKUHsU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=iW11IbnG; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=google.com header.i=@google.com header.b="QRgCbjs1"
-Received: by mail-pl1-f179.google.com with SMTP id d9443c01a7336-2ba3b9bcf69so465ad.0
-        for <sashiko-reviews@lists.linux.dev>; Fri, 15 May 2026 16:27:55 -0700 (PDT)
-ARC-Seal: i=1; a=rsa-sha256; t=1778887675; cv=none;
-        d=google.com; s=arc-20240605;
-        b=OoINV9Vl1Q47gjwqyEebHFjAePfF3oEm4saufnKxPEVGgAhKm6DcX9hmmEWbAzfJrY
-         CzRsGIs0Nlm1B0lwGwTasuoV5OWpQCr5LWRBlt3kOV0zRttt/wHwcKlsg/o1SPdmj3Dn
-         jWFMyRU2d9xzYPf1mgnmGiHgcgjBfcBE/fBr814tmy8Ozb2D7kdX+U2+JoI6MTQsIdSs
-         5xgKmJ3e71DHkPMDJK/brX2P7hC+hQi+I8eq0TPxSqdXWa5PxigG1lEyiHqDxqeJ8nU0
-         Vz1ITKCDyUU4LbrTEHIykhnGprRZzukEfEpZPj2ehsT5SzGNecEAEChTaDLWnrXZG2Oa
-         yUTQ==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com; s=arc-20240605;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:dkim-signature;
-        bh=XU6/qLMq0pTyP8x21lr53W/CjJX1qRINA5YR5iUfpIY=;
-        fh=fAUcOLMJrL6/gSlJAi6JxZuXRW8JDI9oXae6bn18h+k=;
-        b=EL3WOT3dFjXVitn6ANYA6jt4ttaPFuyB0ltx3OujPevDa6XWt319Wrx3eVNLNMcGJg
-         +bOWx2ydHO8bV3KG16jIjvjSqcZWBOhkPfcyeKpbLABNTbq3iDXFlQKbfMHDDbO6vdqQ
-         Yi4cv4F8XL3X7SejRk0SURTEbxPGO8eLKZk5cSnCRl6O4uBpdf7V6xmFLFeaBh2Eopfo
-         tahHISx0m75icZo/mUB1OdpsjLviDR/iMUrDXpZ9y4sSs+hxqnr3CivpO8OOwlCnHNex
-         tjlsAdfGMGY4vtD013Go2whFL1yhkZuvX4ri2vOi6/SXg4JBPV6fpbrXTnK5Jno306+x
-         AZcw==;
-        darn=lists.linux.dev
-ARC-Authentication-Results: i=1; mx.google.com; arc=none
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=google.com; s=20251104; t=1778887675; x=1779492475; darn=lists.linux.dev;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=XU6/qLMq0pTyP8x21lr53W/CjJX1qRINA5YR5iUfpIY=;
-        b=QRgCbjs1hk7HLYusFAB1st1UvkX+U6tfudxFwy2/91C0sEDEkOfx29QIvgX6EMykMn
-         Pay214CDLBBnpeziGZ7TLAh5hDJYkbGf7gOJxBlSj+tunckDRDuXpUjlTb9y17qhLHsS
-         F01aSZ0/4Y4/vLooUKM3AyWSg/giLxCWIqcFMO0LiolOAk0JE9w2DBikGdS3GgL6gV1T
-         Q8acCWbMWPtcDpbO0DZ+dcjVZaQ+M1UMs4G/3AT0q6UWI5kyRiBy4LgVTWb2CwJWioHb
-         K9d99C6MUV7pSE/5tcqjCnt57lYdQ1k/exmu+IlrgSQP8Y5XMKrv3d8qzjeMalBGKM0r
-         Rlmw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20251104; t=1778887675; x=1779492475;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:x-gm-gg:x-gm-message-state:from
-         :to:cc:subject:date:message-id:reply-to;
-        bh=XU6/qLMq0pTyP8x21lr53W/CjJX1qRINA5YR5iUfpIY=;
-        b=iD1PXw5MyKbBDoRig+Ycfm/YlOE7wzf4Tk8dXHur7njfg1ZsQmEPJlvcH4MNsBAuTS
-         VglkCYSAFQBbZ5Cwf1Bfmhz61Ny8sQau03D9HP1ln8I9ozw+Aa0nL3GHi1AmP7jtUi25
-         Wb3h4EW0NQJcRCUQ32adw48a/uJ0bBPa0r89BISDyLlJ7klhUIu/V38LH+0pVbhdxTAK
-         oqi1XtW+LOr5A34wYDwiDuih1ergdX3KXQvXQQYgp9nbc761TjUU7OGJRu5LYwyqQKbt
-         BBoa8PBrP1LEcp1Qbh+hwYXDJnIkimGBGtW0g258ytK6c34mgVhKfRqxV51YRQMk7L7f
-         +CCQ==
-X-Gm-Message-State: AOJu0YwBtqajzXZHEHgESDq+UcKkx7JifcU3xtInowrwGfyCte2Ts+iI
-	YfPa4HfNy1m1Ijt3ptAgHYG1Wo7PY7gxg6Gv6NzX3h6W2dCF/1g5+rSE++ix1THEqs4A95YqE6A
-	tU1pwG4vQQ2cEKuFs7a83/MRl99U5T1q4NX758VjdeKTyW2JRNT2KhpaY
-X-Gm-Gg: Acq92OEF6/saUydMX6DGHFIzGQZyv7oOMyvxBwH4xzoPKtSnB5x3jKTzFkeXxABMYxC
-	O4bY1RAQV3sLXd5vvNqNXINfocWUu6vRElKI2hzeSEKcLB83ZaFjCbAUIu4j1TgDdc9TKhBmcVG
-	vKJAxpXLZOnRYdS1R+CE5dL8AL5ELWGK+unUO0vPPAfNSQ6Rq0UUWyqvzN5Dh6sTNrRDh9icBJw
-	pR4nk38jFbbjGo1w67j6NzQ10wAOisvHMWH8QDAEDRSBTt0Ij/yhKt2DU1EK74gWqqK7z3ly6Eu
-	1tiopDj4lp+7pZrCpIg=
-X-Received: by 2002:a17:903:2312:b0:2bd:3bfd:74f1 with SMTP id
- d9443c01a7336-2bda0deeaffmr1117315ad.2.1778887674217; Fri, 15 May 2026
- 16:27:54 -0700 (PDT)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="iW11IbnG"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id DE611C19425;
+	Sat, 16 May 2026 07:55:47 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+	s=k20201202; t=1778918148;
+	bh=lyKQDl9shdzld6H85nuhDfW5SWBWfpPfHmTt2wTHX9M=;
+	h=Date:Subject:To:Cc:References:From:In-Reply-To:From;
+	b=iW11IbnG7DzrBCyv3suJ0ytxRdSyQHAOzMUdqD8Ptv9F52y41VcRwD6DHqAZq0nhV
+	 jfaKHsrNe7diTW2sRUF7vXrvNp/+S4sy4t7Cg29opvo94ixqwnhLf/eEpm0oc2sfLM
+	 5yqYq6IPjQicDkn0F4dl0QTylg/TqhKlXDS9tTVAJo7sWN4YMP59xVqFeW9fQGOmz/
+	 O5bdDA4ehxVzNsKPEAM9+KKvdY/ehYQJAlWbwdTO12hYkkqyD9wpHhuFX3jKgKJBwr
+	 YXfPajo2YkUc40j8VYyVzQRdrEi+F4YNZHkK4FEXkhwQkT6mziQaGNwVs5jTLLMO8q
+	 M67Z6YCwyHUAg==
+Message-ID: <b004dde7-f883-44c5-ba37-6084ffb6d061@kernel.org>
+Date: Sat, 16 May 2026 09:55:45 +0200
 Precedence: bulk
 X-Mailing-List: sashiko-reviews@lists.linux.dev
 List-Id: <sashiko-reviews.lists.linux.dev>
 List-Subscribe: <mailto:sashiko-reviews+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:sashiko-reviews+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-References: <20260515193314.1593560-9-irogers@google.com> <20260515195302.B0AD5C2BCB0@smtp.kernel.org>
-In-Reply-To: <20260515195302.B0AD5C2BCB0@smtp.kernel.org>
-From: Ian Rogers <irogers@google.com>
-Date: Fri, 15 May 2026 16:27:42 -0700
-X-Gm-Features: AVHnY4JgeNjpXX7_zw_F_IFv0Az7NoDc8QDwKILAiMbLPJlzNoJdyG58uLM06zg
-Message-ID: <CAP-5=fVnZXqsoeh_4+uxHyyVeOer-zMiSTh-nbbihDR1HgEZig@mail.gmail.com>
-Subject: Re: [PATCH v5 08/14] perf build: Move libsymbol dependency out of
- prepare step
-To: sashiko-reviews@lists.linux.dev
-Cc: bpf@vger.kernel.org, linux-perf-users@vger.kernel.org
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH RESEND] Documentation: fix typo in heading for max31730
+To: sashiko-reviews@lists.linux.dev, Hassan Maazu <maazudev@proton.me>
+Cc: linux-hwmon@vger.kernel.org
+References: <hGgiFItk4iaav9-zfXL4hA_EVmxAaZYRbYviXz8aKKzOVAqduObTpd-PvRy1-9Ksuziam1HIXZNEkXbw3znqWX86Lplbq-Axo3fImYbtNZA=@proton.me>
+ <20260516060236.B92E2C19425@smtp.kernel.org>
+From: Krzysztof Kozlowski <krzk@kernel.org>
+Content-Language: en-US
+Autocrypt: addr=krzk@kernel.org; keydata=
+ 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 a/A=
+In-Reply-To: <20260516060236.B92E2C19425@smtp.kernel.org>
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 7bit
 
-On Fri, May 15, 2026 at 12:53=E2=80=AFPM <sashiko-bot@kernel.org> wrote:
->
-> Thank you for your contribution! Sashiko AI review found 1 potential issu=
-e(s) to consider:
-> - [Low] Removing `$(LIBSYMBOL)` from the `prepare` step breaks the `make =
-check` target and manual object file compilation (e.g., `make util/symbol.o=
-`).
-> --
->
-> commit 6df47358116c567d6b28b1ca848835d2f69dc679
-> Author: Ian Rogers <irogers@google.com>
->
-> perf build: Move libsymbol dependency out of prepare step
->
-> This commit moves the libsymbol dependency out of the prepare step and in=
-to
-> the dependencies for the bench and util libraries to reduce serialization
-> during the build.
->
-> > diff --git a/tools/perf/Makefile.perf b/tools/perf/Makefile.perf
-> > index 876065a02de6f..96a68723109fc 100644
-> > --- a/tools/perf/Makefile.perf
-> > +++ b/tools/perf/Makefile.perf
->
-> [ ... ]
->
-> > @@ -637,8 +637,7 @@ prepare: $(OUTPUT)PERF-VERSION-FILE \
-> >       bpf-skel-prepare \
-> >       $(LIBAPI) \
-> >       $(LIBPERF) \
-> > -     $(LIBSUBCMD) \
-> > -     $(LIBSYMBOL)
-> > +     $(LIBSUBCMD)
->
-> Could removing $(LIBSYMBOL) from the prepare step introduce a regression =
-for
-> the make check target and manual object file compilation?
->
-> Both the make check target and the generic object fallback rules, such as
-> make util/symbol.o, depend exclusively on the prepare target:
->
-> check: prepare
->         if sparse; \
-> ...
->
-> $(OUTPUT)%.o: %.c prepare FORCE
->         $(Q)$(MAKE) -f $(srctree)/tools/build/Makefile.build dir=3D$(buil=
-d-dir) $@
->
-> Previously, prepare triggered the $(LIBSYMBOL) target, which installed
-> required libsymbol headers like <symbol/kallsyms.h>.
->
-> By removing this dependency, are we no longer guaranteed to have the
-> necessary headers installed when running make check or manually building
-> object files from a clean tree?
->
-> It appears this could cause them to fail with a 'No such file or director=
-y'
-> error when processing files that include libsymbol headers.
+On 16/05/2026 08:02, sashiko-bot@kernel.org wrote:
+>> Wrong device name used in heading.
+>>
+>> Signed-off-by: Hassan Maazu <maazudev@proton.me>
+> 
+> Reviewed-by: Sashiko <sashiko-bot@kernel.org>
+> 
 
-It would, so the user shouldn't do this, they should just use regular
-targets like "all" or build these targets incrementally after running
-an "all" build. Putting the target on these rules would be equivalent
-to putting it back in the prepare step.
+What is that? Sashiko CANNOT attest reviewer statement oversight. Stop
+this nonsense.
 
-Thanks,
-Ian
 
-> --
-> Sashiko AI review =C2=B7 https://sashiko.dev/#/patchset/20260515193314.15=
-93560-1-irogers@google.com?part=3D8
+Best regards,
+Krzysztof
