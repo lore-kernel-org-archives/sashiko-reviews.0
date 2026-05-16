@@ -1,215 +1,161 @@
-Received: from mail-dy1-f177.google.com (mail-dy1-f177.google.com [74.125.82.177])
+Received: from mail-pf1-f169.google.com (mail-pf1-f169.google.com [209.85.210.169])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 04E70274B32
-	for <sashiko-reviews@lists.linux.dev>; Sat, 16 May 2026 23:22:32 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=74.125.82.177
-ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1778973754; cv=none; b=GiRGgIR0x8wxhgTyWKsH8OBqN6IoxCqOx2DIyNBU5w0tc9R0CvbDCtPwXjYWVaT1+16F4NYe6loK+U/2R/qg63aPVKfr21jbulPPlvWWIv+hIdZ0LNCHqgQjvJNrD6NhlyvAtF/4VsNwuDZjHQ+1XcxfoGKAFEOcJe0rmJyfPQM=
-ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1778973754; c=relaxed/simple;
-	bh=lFFO3qzKcB523jU5P7ZsP2W9YiCK4vDJLXG9EC4pmRk=;
-	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=Xjg5w+RFl8DdvenL/MxIQN+hN9CfGn8a8iSpCX/bWVjb6z1mBhxuJovSC8+t42erMRH7vkLm6dwpP7g0ZDFoW+iSWNlzSkQP7vegmkrlHOfsH1lOjkzEd7FLJaxw3i8vUmLIrQGYnclFkn8OGSSUycKQ2BpLWqrHk3/V3xQSvg8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=roeck-us.net; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=s4fW+fhC; arc=none smtp.client-ip=74.125.82.177
-Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=roeck-us.net
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 21C0538D3E0
+	for <sashiko-reviews@lists.linux.dev>; Sat, 16 May 2026 23:50:24 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=pass smtp.client-ip=209.85.210.169
+ARC-Seal:i=2; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
+	t=1778975426; cv=pass; b=A+TKk8LRBgPuXbV8zE6tvwXquw+d5t0CqOvEZjmT2C4GX7BxRmfBVhoUwBEn5i9VuW6K5YAeczdYy6XIX1HoIDy+pVES2+RIdM0TGc7jTUqZgJ5y7LWhValb4t1a3Ze7T8BpiyToPO8l5GctpPj34sLUkZuAElHV4f5GCv2hMH4=
+ARC-Message-Signature:i=2; a=rsa-sha256; d=subspace.kernel.org;
+	s=arc-20240116; t=1778975426; c=relaxed/simple;
+	bh=Ls8MgqgcsH4l0RhCEuS7VvenDTm2U2W/j/zfAviF4qw=;
+	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
+	 To:Cc:Content-Type; b=tuviai4UNgSMUqREVmMeitHyhRpdEOJcL7go3HRT983mqFheIrpNrIfRZCTDpyU3zSfcsac5ecucEWoYD+xGJj6AJD0LOSn51XQGnS3cUlKVQwV+pufukSpeV1PiXXiZE0FxofFezdhfxbk/ChtNIJtP3zgdsA0RFJK6qC0b18U=
+ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=ffwIKxt5; arc=pass smtp.client-ip=209.85.210.169
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="s4fW+fhC"
-Received: by mail-dy1-f177.google.com with SMTP id 5a478bee46e88-2f3c623322bso4156220eec.0
-        for <sashiko-reviews@lists.linux.dev>; Sat, 16 May 2026 16:22:32 -0700 (PDT)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="ffwIKxt5"
+Received: by mail-pf1-f169.google.com with SMTP id d2e1a72fcca58-824c9da9928so291241b3a.3
+        for <sashiko-reviews@lists.linux.dev>; Sat, 16 May 2026 16:50:24 -0700 (PDT)
+ARC-Seal: i=1; a=rsa-sha256; t=1778975424; cv=none;
+        d=google.com; s=arc-20240605;
+        b=LmbepFpbEOTM+XdM4FReMX8M5RGHtV79aNV4fjwNPjj3zWpH7GKtDMgqZRsuTRJyF0
+         sCvKZZtSYN3xWAAeTUgLJHyY1o0DigpzjhCLAcM9zoZ7Wzukpr3uBtsKt4fcr3u2tbSm
+         eVvaZyuj0mVNIpTyWUKbznoYVZ9D7ONLWy0bSIecJcX2USNINTM9MLP3BXpUhLJyjEmG
+         2G2N+A/6dmaVpYy/SEBoItKjH36KYex7T/Z45fF7T8StyEh35wJvBm55RtRVb88u+ukM
+         kzFEuz+L9V504gEUQLkmJm4urjCKfG+uuJehmVsgGLNfbgckX4f//ElF9zFWQSERv582
+         ZoYQ==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com; s=arc-20240605;
+        h=cc:to:subject:message-id:date:from:in-reply-to:references
+         :mime-version:dkim-signature;
+        bh=aaUVd+PrR+MWOhU16AHCI1f+AVuqzEpKha/ErWOe6+g=;
+        fh=clJjuPX1wp73EmI+aQ2kiO/nitl34gvpDqzRs0i0+c0=;
+        b=GM0H8mPAM2Ku2ZCrtI7yCVBPCOc8jh1JVGusPGsXjiJ3tMxo7m60+4zw5zAswlgzgs
+         NZ1ESuQm0bzVuEtCTE/48tJugZ4HzTTtAxuIDQFfprZbtidMcYqyeFUliv6DfR1nmdww
+         Wa+kdeHzJj07wWuqwdPHAbZZg9oq9a702TLx43HTi6GO99uKMriH0Qs1NISpebXePyR9
+         23LRsvKbLuhIfY1UZiObQB49BVlTNm/ecU+RonXcY0MrL5D4TrjaUW22Lw5+TSHi2V6c
+         OPoW/DEPDu/bhrjzoqXfloL0ofurDeR3F8Yc6Jvo1j42ZFbG6x65NGFIIjq+HAcjz5OC
+         iPCg==;
+        darn=lists.linux.dev
+ARC-Authentication-Results: i=1; mx.google.com; arc=none
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20251104; t=1778973752; x=1779578552; darn=lists.linux.dev;
-        h=content-transfer-encoding:in-reply-to:autocrypt:from
-         :content-language:references:cc:to:subject:user-agent:mime-version
-         :date:message-id:sender:from:to:cc:subject:date:message-id:reply-to;
-        bh=7L9PwLQsx3aiXw6hRLj/XoSJpF+zWJf7IJ8jsScG1uc=;
-        b=s4fW+fhChM4czA6s2n7I2Jg/2sEVXpCdS3V5Fe9Dro4SJYPlI7KITXH44Q5v1HLNY8
-         /ZiBxzPis1/eTXNzeE/Onao2l8ViylN4ot/Z9rCV74gwHTfvt6xfU/SptFesQNRqFtDA
-         h9mBWQpzSt5YURr0Ttuom11fRhIWQbK9t2UYFBkjqUxfXOSoirsI2XY3gINELWVtL/q7
-         M7qZroGyqEVcp/W1zjUNVyTFOgdYOOcm89mAtSRx60ybwjhq3G7fYwqUk1B3vVsCfSBe
-         HHK0MWEX45eICHYPMzVHciqx2RgGY5mC+UA9NVYVOc998HS851liS4r09ZqmB5v2OaA2
-         wvig==
+        d=gmail.com; s=20251104; t=1778975424; x=1779580224; darn=lists.linux.dev;
+        h=cc:to:subject:message-id:date:from:in-reply-to:references
+         :mime-version:from:to:cc:subject:date:message-id:reply-to;
+        bh=aaUVd+PrR+MWOhU16AHCI1f+AVuqzEpKha/ErWOe6+g=;
+        b=ffwIKxt5Qft0xtG+YKmHIYH3TrDFuSfsA89d7Iz3+OZqUJd9wF41tLWQiQPQTdufcL
+         oxPoLsg6i1plScgADhHbBqjBsAk4DTK+/O7TVU0iPSk3lOtQdwGWA9imp6GwcmpnWviD
+         XS4Qy2TKHebxtOrpEBUH19WrOQ0Tr4So255kF1Y7g/m18ZUdetrWR2Uq0amROHslXSma
+         ALRFf0hipwx0t0mxgxrxo1DECNdcWG7QuA3jVBW1Z4oXoh9vrAwyZR92J6FpL3rAX4Oq
+         IJ0P5Pl/SKILpGioUlGR+4gaLm1PMHA3Xhrc8A2a/AXsPz02r2H5a0dtE/A8OVi70LBa
+         X7OQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20251104; t=1778973752; x=1779578552;
-        h=content-transfer-encoding:in-reply-to:autocrypt:from
-         :content-language:references:cc:to:subject:user-agent:mime-version
-         :date:message-id:sender:x-gm-gg:x-gm-message-state:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=7L9PwLQsx3aiXw6hRLj/XoSJpF+zWJf7IJ8jsScG1uc=;
-        b=JCwTDAtXofj/ucWXonlUSgqxxOE/MxlbZTFF9zf/Mpu8x8ef6kzmi+JgwDaodm6oYt
-         ToiPBjgS48jG188hlHnwhc24VuVxFf7ASF4mf7BnVssOaa+qbbz/38ulsp/365aE00PU
-         bmuvtYSKiig5ktKe2QXpv+le3X7CK9/Dnk7XPMRsNA54R4mGomNhr3PPywNKsCwKoYFm
-         2cp7Y6sNbCtVhwF6XMl3ZU5Yk253/HyFQGs956ZeTqOj+64PPeclwmCq8PU0EgJ8MNVD
-         QYFcR00WtkJueuC/M6+Gv9lOWnHqS2fNU61TxPEXtzHsO1IAkiy8F1ohkcDpfVHg2Vin
-         fkKg==
-X-Gm-Message-State: AOJu0YyUsTQGpscgLdPe7B33Igr/G/VtImgBQb9oyJIXd76nHQ62b2Um
-	e0z8EoF8j7iCPkHtDBn197S5fnTlsld+MQ6QeEx+PqIBPnHZiVUlo9sLfzK9jHYQ
-X-Gm-Gg: Acq92OGi0CeZBI3MIFMkQfuMxIBmc2GHDd8gvywBZEO3yJaaXvCUZIXiLSjvhymHV1W
-	d+DTlkb0BqqfBfBIz+01J/6PsGA7D0qphCgRYevXHVfremGtz2JDUjS49wtI7mcYpHfJs0tAvl0
-	F/FVJB4F56CokxSFCalpkpk1zKAq90jUlAOfpeYSeE0gwJbH1Zs3I/HwVjjJXwp5vXzOaYbOA8F
-	Pc/8UDxnByGbMDgUWtgY/43WmQC4XBazP4Cqva92W0bsm4HnPBPJ4OadfVRNVUQyXbt7ZfNn2M3
-	iJFYKl3NbvyVdwLNWWrLNZEGyXCn4Ow3fRYFVJxmzJ0ZGpU8W0hYh8h/MRXOC26w56UrzxQ+Wkl
-	ZxDWhs7IbYm+AL7gZyrmSJoJ5oGrbW+u3k1xlFZvHs27YvKQWtXcH2KrXMX/SH+QuaG3aURpr/5
-	D9cltbG0b8khZHB/RRcK+HU52xsrOv+aVgKMGr+Luv1z5JRmGzpvvFWBDhm83WM/NZzEzJ3RdQ
-X-Received: by 2002:a05:7022:688c:b0:12a:713b:8964 with SMTP id a92af1059eb24-13504414c3bmr4732145c88.11.1778973752002;
-        Sat, 16 May 2026 16:22:32 -0700 (PDT)
-Received: from ?IPV6:2600:1700:e321:62f0:da43:aeff:fecc:bfd5? ([2600:1700:e321:62f0:da43:aeff:fecc:bfd5])
-        by smtp.gmail.com with ESMTPSA id a92af1059eb24-134cbcb93f3sm15913265c88.3.2026.05.16.16.22.31
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Sat, 16 May 2026 16:22:31 -0700 (PDT)
-Sender: Guenter Roeck <groeck7@gmail.com>
-Message-ID: <8cf390d7-214d-4738-8fa5-5e4ed970b038@roeck-us.net>
-Date: Sat, 16 May 2026 16:22:30 -0700
+        d=1e100.net; s=20251104; t=1778975424; x=1779580224;
+        h=cc:to:subject:message-id:date:from:in-reply-to:references
+         :mime-version:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=aaUVd+PrR+MWOhU16AHCI1f+AVuqzEpKha/ErWOe6+g=;
+        b=BZVnLjmkG8Bpawy+Y6unTYBE8r2HOXe1HMjOaLi4ov05eGDVI6vU2fPPPSrGwKdMvY
+         tX827Fbr1SmMHx4pVX1vZLzlQ3fQ6RcZFbT7/WOI7yWWmTb6t0zqiXGeEYNczG4I2EY/
+         XPcCKUvBI9HDdkmji0u+qegTN9gsWs13HVX7ODmzKYXCGOFUJVVCqyDFrr0npYpRJcZ+
+         9Esst2+iRAHJwNbVYmGw1V2l8eIICHYorM4jGM9qS/BG7V13cckTiwm6Miua4QjyjkTn
+         5yPulHs2HX80z7Gk18BXNZxPq0U/CRM0Dgg4Ma167v3DtNlLu+2JApJHINlj/48dOD+K
+         EeVw==
+X-Gm-Message-State: AOJu0YxY4m+RyHs74oGe8XXGGxbk9i29UMuCWTNAaTDvhaYpzTZTKBKO
+	2Y5hKQVexwRDZNvD0RgVANlOJkwAl/B3RhZJugSMotZref+6bBioCsaLMq/Lbu8bKUFltjI3XB+
+	GAgGZJd//uEx+NtZtmJYMk/buVKJpCoFZiR6t
+X-Gm-Gg: Acq92OGcjIc1GufhZRP/Q7rE9grYXv6mhIXeI+TLMTmGPT54SZ67H3A2coA+cGysGli
+	wP3rOTESX0+F1hQ0PWFlaH8F4P2hW9g8KdnOm6wLBYH/F45fLvNNKfhvp/CebTxQ8S10q4XpTdN
+	fBf+huMZazTNeUpod+R7sDrlhMvhORsmNwWpajmNJQYp1pX6lL/yHwMhKH93Amu83bJcYXs98PA
+	mCGknXzgIc9VttFRdyZGS34pHhUXGO8aheNyTUcVbykt3jPJG9n8xlOTbwXFQwmbz6DOQDEobtr
+	ur2a9po0jgFC91F6b+KtlznPc4S841aK65Rnar3D
+X-Received: by 2002:a05:6a00:3928:b0:837:fe75:104e with SMTP id
+ d2e1a72fcca58-83f33bae7d8mr10282417b3a.5.1778975424205; Sat, 16 May 2026
+ 16:50:24 -0700 (PDT)
 Precedence: bulk
 X-Mailing-List: sashiko-reviews@lists.linux.dev
 List-Id: <sashiko-reviews.lists.linux.dev>
 List-Subscribe: <mailto:sashiko-reviews+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:sashiko-reviews+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v2 2/2] hwmon: raspberrypi: Add voltage input support
-To: sashiko-reviews@lists.linux.dev,
- Shubham Chakraborty <chakrabortyshubham66@gmail.com>
-Cc: linux-hwmon@vger.kernel.org
-References: <20260516191555.17978-3-chakrabortyshubham66@gmail.com>
- <20260516194503.3B563C19425@smtp.kernel.org>
-Content-Language: en-US
-From: Guenter Roeck <linux@roeck-us.net>
-Autocrypt: addr=linux@roeck-us.net; keydata=
- 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
- np3900V20aS7eD9K8GTU0TGC1pyz6IVJwIE=
-In-Reply-To: <20260516194503.3B563C19425@smtp.kernel.org>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
+References: <20260513105003.81880-1-phucduc.bui@gmail.com> <20260514043314.62222C2BCB7@smtp.kernel.org>
+ <CAABR9nGhwtBu9Yhbn-BTD1Scykp2h6eQbtQtT13DcnekUdum1A@mail.gmail.com> <CAABR9nGZM3Bnb3DnObdp2nOJmW6ezmXqRSBtgS00Ps2ve4zsbg@mail.gmail.com>
+In-Reply-To: <CAABR9nGZM3Bnb3DnObdp2nOJmW6ezmXqRSBtgS00Ps2ve4zsbg@mail.gmail.com>
+From: Bui Duc Phuc <phucduc.bui@gmail.com>
+Date: Sun, 17 May 2026 06:50:13 +0700
+X-Gm-Features: AVHnY4IsUkQfn46YMLJeefxvMG0oEQBhPAdzpdl8m066r_PvU5WUFTx-_5lbq4I
+Message-ID: <CAABR9nGsb_zvH1w6GFDqGFNCYjThCGuQ+RC91Bpkwu=h9ypcJg@mail.gmail.com>
+Subject: Re: [PATCH] ASoC: sun4i-spdif: Use guard() for spin locks
+To: sashiko-reviews@lists.linux.dev, Mark Brown <broonie@kernel.org>
+Cc: linux-sunxi@lists.linux.dev, Liam Girdwood <lgirdwood@gmail.com>, 
+	Jaroslav Kysela <perex@perex.cz>, Takashi Iwai <tiwai@suse.com>, Chen-Yu Tsai <wens@kernel.org>, 
+	Jernej Skrabec <jernej.skrabec@gmail.com>, Samuel Holland <samuel@sholland.org>, 
+	Marcus Cooper <codekipper@gmail.com>, Chen Ni <nichen@iscas.ac.cn>, linux-sound@vger.kernel.org, 
+	linux-arm-kernel@lists.infradead.org, linux-kernel@vger.kernel.org
+Content-Type: text/plain; charset="UTF-8"
 
-On 5/16/26 12:45, sashiko-bot@kernel.org wrote:
-> Thank you for your contribution! Sashiko AI review found 2 potential issue(s) to consider:
-> - [Critical] Unconditional self-rescheduling of the background workqueue leads to a use-after-free on device removal.
-> - [Medium] The driver incorrectly detects and exposes unsupported voltage channels due to unverified firmware responses.
-> --
-> 
-> commit aa874218705dba1c84bc41a7c3b61abd93bbf0a2
-> Author: Shubham Chakraborty <chakrabortyshubham66@gmail.com>
-> 
-> hwmon: raspberrypi: Add voltage input support
-> 
-> This commit extends the raspberrypi-hwmon driver to expose firmware-provided
-> voltage measurements. It adds core and SDRAM voltage inputs, converting
-> the values from microvolts to millivolts for the hwmon subsystem.
-> Inputs are only exposed if the firmware reports support for the corresponding
-> voltage ID.
-> 
->> diff --git a/drivers/hwmon/raspberrypi-hwmon.c b/drivers/hwmon/raspberrypi-hwmon.c
->> index a2938881ccd2f..4f96f37116f32 100644
->> --- a/drivers/hwmon/raspberrypi-hwmon.c
->> +++ b/drivers/hwmon/raspberrypi-hwmon.c
-> 
-> [ ... ]
-> 
->> @@ -56,6 +70,23 @@ static void rpi_firmware_get_throttled(struct rpi_hwmon_data *data)
->>   	hwmon_notify_event(data->hwmon_dev, hwmon_in, hwmon_in_lcrit_alarm, 0);
->>   }
->>   
->> +static int rpi_firmware_get_voltage(struct rpi_hwmon_data *data, u32 id,
->> +				    long *val)
->> +{
->> +	struct rpi_firmware_get_value packet;
->> +	int ret;
->> +
->> +	packet.id = cpu_to_le32(id);
->> +	packet.val = 0;
->> +	ret = rpi_firmware_property(data->fw, RPI_FIRMWARE_GET_VOLTAGE,
->> +				    &packet, sizeof(packet));
-> 
-> If the firmware does not support the RPI_FIRMWARE_GET_VOLTAGE tag or the
-> specific voltage ID, could the mailbox transaction still return 0 without
-> modifying the tag buffer?
-> 
-> If so, packet.val would remain 0 and this function would return success.
-> During probe, this would cause the channel to be incorrectly flagged as
-> supported, exposing sysfs files that permanently read 0mV.
-> 
-> Would it be safer to initialize packet.val to a sentinel value like ~0
-> before querying the firmware to verify the voltage ID is actually supported?
-> 
+Hi all
 
-I guess we have to assume (hope) that the firmware interface returns
-an error in this case.
+I would like to make a small correction to my previous email, and
+also confirm one additional point before preparing another patch.
 
->> +	if (ret)
->> +		return ret;
->> +
->> +	*val = le32_to_cpu(packet.val) / 1000;
->> +	return 0;
->> +}
->> +
->>   static void get_values_poll(struct work_struct *work)
->>   {
->>   	struct rpi_hwmon_data *data;
-> 
-> Does the unconditional rescheduling in get_values_poll() cause a
-> use-after-free regression during driver removal?
-> 
-> If the work function executes concurrently with driver unbind,
-> cancel_delayed_work_sync() will wait for it to finish. However,
-> get_values_poll() currently reschedules itself just before returning:
-> 
-> get_values_poll() {
->          ...
->          schedule_delayed_work(&data->get_values_poll_work, 2 * HZ);
-> }
-> 
-> After cancellation completes, devres frees the memory for data. When the
-> rescheduled work executes later, it accesses the freed data pointer.
-> 
-> Could a shutdown flag be added to safely prevent rescheduling during
-> teardown?
-> 
+Correction:
 
-That does indeed look like a problem. Please feel free to submit a separate
-patch to fix it.
+> However, I also looked at a similar case in the
+> micfil_rate_set() function from the fsl_micfil driver:
+> https://elixir.bootlin.com/linux/v7.1-rc3/source/sound/soc/fsl/fsl_micfil.c
 
-Thanks,
-Guenter
+In my previous email, I referred to the function as
+micfil_rate_set(), but the correct name is
+micfil_range_set().
 
+Additional point for confirmation:
+
+Currently, in sun4i_spdif_runtime_suspend(), the clocks are
+disabled in the following order:
+
+clk_disable_unprepare(host->spdif_clk);
+clk_disable_unprepare(host->apb_clk);
+
+Meanwhile, in sun4i_spdif_runtime_resume(), the clocks are
+enabled in this order:
+
+clk_prepare_enable(host->spdif_clk);
+ret = clk_prepare_enable(host->apb_clk);
+
+I checked the binding documentation here:
+
+https://elixir.bootlin.com/linux/v7.1-rc3/source/Documentation/devicetree/bindings/sound/allwinner,sun4i-a10-spdif.yaml
+
+It describes the clocks as:
+
+properties:
+  clocks:
+    items:
+      - description: Bus Clock
+      - description: Module Clock
+
+  clock-names:
+    items:
+      - const: apb
+      - const: spdif
+
+From my understanding, apb_clk is the bus clock, while
+spdif_clk is the module clock.
+
+If that understanding is correct, then the suspend path seems
+reasonable since the module clock is disabled before the bus
+clock.
+
+However, in the resume path, the module clock is currently
+enabled before the bus clock. It may make more sense to enable
+the bus clock first, followed by the module clock.
+
+If my understanding is correct, I would like to prepare an
+additional patch to reorder the clock enable sequence.
+
+Please let me know if this interpretation makes sense.
+
+Best Regard,
+Phuc
