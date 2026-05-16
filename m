@@ -1,78 +1,118 @@
-Received: from out-180.mta0.migadu.com (out-180.mta0.migadu.com [91.218.175.180])
+Received: from smtp153-165.sina.com.cn (smtp153-165.sina.com.cn [61.135.153.165])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CD2B93876BD
-	for <sashiko-reviews@lists.linux.dev>; Sat, 16 May 2026 22:00:10 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=91.218.175.180
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E0916374186
+	for <sashiko-reviews@lists.linux.dev>; Sat, 16 May 2026 22:05:00 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=61.135.153.165
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1778968812; cv=none; b=UWGRwKdYpkwcSmwwuQXyMz1WgTjZ15LcVwSLHjFDrQIqetz7xIR5hboPVRUavVqw5PUqGNrlb4dBeLZZ4ODaqiDkPXdTgGWYLCq0KCg7baDCAaqdZgpV2rVpr63sIAGjzZkzDTFW1rm/iHko95feeAndq/HHtca8j3lgQcKdRwc=
+	t=1778969106; cv=none; b=rrtJS/lslWVjzEJiGxEU3rIgpGIvtEAJXbn7mxtch5zIiCCBsjwB23jIlRTNvpPvDXP/+fsYVP/I5gjxNGot1D1MIsVh1quB5uC7YSt3xXi9zm+ZsRUX788qsuVKfId/19Q6pCRWAp7PPvHDi9z9woWBnvBgaOWJ7RaFm1LpxOo=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1778968812; c=relaxed/simple;
-	bh=evs3SefPe7zmlbL4lVVeXN67p+GYCKzfw1GIeNqfdj0=;
-	h=Content-Type:Mime-Version:Subject:From:In-Reply-To:Date:Cc:
-	 Message-Id:References:To; b=RiFwjW311f9oQV2tuGR/ux8exjUyBq3xgI8j6U4o5hCSwL8vqd2w9HGstzD7aPnAqm17J6akoTVM+ENFHDA8C4SKq+jIPsYdVtX8dvjR11ow8iGTbOG9rC/ooeYaYlsigkJyR7yyNiefhUrDNvVdVK6S0QleuL1KIIZKTKFf5Lc=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linux.dev; spf=pass smtp.mailfrom=linux.dev; dkim=pass (1024-bit key) header.d=linux.dev header.i=@linux.dev header.b=xZeIi0Tl; arc=none smtp.client-ip=91.218.175.180
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linux.dev
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linux.dev
+	s=arc-20240116; t=1778969106; c=relaxed/simple;
+	bh=zYIl+qz7G2t/DzlRbO/QBttRJX1uUt1lVnONNZPF9HQ=;
+	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
+	 MIME-Version:Content-Type; b=LLMNG+Y9xvUUZMsHRP6Tq5cP8QlCYWQ+6bRatZbqgOJrJ6UtQSknh7chEhJ8nRNoTxTXqZdYTR2EXJLJB1F06e7+12F7yLXbMhGYgcfnSxRr5MAwYzE/yk6BP2jax+MaPrarsevXtnPN7rwtk/TOmZH4ZKG7Ckozfx9Q+uh4Row=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=sina.com; spf=pass smtp.mailfrom=sina.com; dkim=pass (1024-bit key) header.d=sina.com header.i=@sina.com header.b=zUb+V4C0; arc=none smtp.client-ip=61.135.153.165
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=sina.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=sina.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linux.dev header.i=@linux.dev header.b="xZeIi0Tl"
-Content-Type: text/plain; charset=utf-8
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linux.dev; s=key1;
-	t=1778968798;
-	h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
-	 to:to:cc:cc:mime-version:mime-version:content-type:content-type:
-	 content-transfer-encoding:content-transfer-encoding:
-	 in-reply-to:in-reply-to:references:references;
-	bh=evs3SefPe7zmlbL4lVVeXN67p+GYCKzfw1GIeNqfdj0=;
-	b=xZeIi0Tlqux/y6Id/ouEyJDMMhs36HofgMSFjOtY0uH4H4dxN41BM4AnUOW92emR28d267
-	Re4XK8X2mj204JOpqLoKGt+8+ruYqMebIs+F6UJY+ZBPcUR4oSeeKJBGOXepyIvyg321Tj
-	IKjuJqjLqx9cJaxmy5uNcr7mD2wLgmI=
-Content-Transfer-Encoding: quoted-printable
+	dkim=pass (1024-bit key) header.d=sina.com header.i=@sina.com header.b="zUb+V4C0"
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=sina.com; s=201208; t=1778969101;
+	bh=Jy9ahS+BHqG75wogZN5Y6lXx4PExc2rGGex7c/TQ2Zs=;
+	h=From:Subject:Date:Message-ID;
+	b=zUb+V4C0UNKj/SRwMqY5Y5w3peKkv500hScPLXnp4NurNf7Msx0AlpqLjtkH9pFZX
+	 jty7NAZtJOJ8Z0s4eXSJh9c9OiFw40DjYirflnyTKwDYUUMnhbQzitGgzIMPL6Qee9
+	 poqiBw13aMWxEDRCBVU/+T/UczrTR9iuvJCdaYEA=
+X-SMAIL-HELO: localhost.localdomain
+Received: from unknown (HELO localhost.localdomain)([114.249.62.144])
+	by sina.com (10.54.253.32) with ESMTP
+	id 6A08EA0000005A8C; Sat, 17 May 2026 06:04:49 +0800 (CST)
+X-Sender: hdanton@sina.com
+X-Auth-ID: hdanton@sina.com
+Authentication-Results: sina.com;
+	 spf=none smtp.mailfrom=hdanton@sina.com;
+	 dkim=none header.i=none;
+	 dmarc=none action=none header.from=hdanton@sina.com
+X-SMAIL-MID: 8816344456600
+X-SMAIL-UIID: D7E886744C4B498CA0360549BEC3498D-20260517-060449-1
+From: Hillf Danton <hdanton@sina.com>
+To: Theodore Tso <tytso@mit.edu>
+Cc: Roman Gushchin <roman.gushchin@linux.dev>,
+	Krzysztof Kozlowski <krzk@kernel.org>,
+	Konstantin Ryabitsev <mricon@kernel.org>,
+	Guenter Roeck <linux@roeck-us.net>,
+	sashiko-bot@kernel.org,
+	sashiko-reviews@lists.linux.dev,
+	linux-kernel@vger.kernel.org
+Subject: Re: Stop false review statements
+Date: Sun, 17 May 2026 06:04:36 +0800
+Message-ID: <20260516220439.738-1-hdanton@sina.com>
+In-Reply-To: <20260516204143.GB26730@macsyma-wired.lan>
+References: <b5989c0f-90da-42cc-a623-3b60df077848@kernel.org> <FA45D2AD-1135-4480-8423-63C0D37FE78D@linux.dev>
 Precedence: bulk
 X-Mailing-List: sashiko-reviews@lists.linux.dev
 List-Id: <sashiko-reviews.lists.linux.dev>
 List-Subscribe: <mailto:sashiko-reviews+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:sashiko-reviews+unsubscribe@lists.linux.dev>
-Mime-Version: 1.0 (1.0)
-Subject: Re: Stop false review statements
-X-Report-Abuse: Please report any abuse attempt to abuse@migadu.com and include these headers.
-From: Roman Gushchin <roman.gushchin@linux.dev>
-In-Reply-To: <4f3d7f48-5766-425b-91f6-0acdb5554584@kernel.org>
-Date: Sat, 16 May 2026 14:59:44 -0700
-Cc: debarbos@redhat.com, Arnaldo Carvalho de Melo <acme@kernel.org>,
- Greg KH <gregkh@linuxfoundation.org>,
- Konstantin Ryabitsev <mricon@kernel.org>,
- Guenter Roeck <linux@roeck-us.net>, sashiko-bot@kernel.org,
- sashiko-reviews@lists.linux.dev, sashiko@lists.linux.dev,
- Linux Kernel Workflows <workflows@vger.kernel.org>,
- Linux Kernel Mailing List <linux-kernel@vger.kernel.org>,
- devicetree@vger.kernel.org, kfree@google.com
-Message-Id: <07602616-412B-4ED8-95D7-588C0D077EE3@linux.dev>
-References: <4f3d7f48-5766-425b-91f6-0acdb5554584@kernel.org>
-To: Krzysztof Kozlowski <krzk@kernel.org>
-X-Migadu-Flow: FLOW_OUT
+MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
 
+On Sat, 16 May 2026 16:41:43 -0400 Theodore Tso wrote:
+> On Sat, May 16, 2026 at 12:15:12PM -0700, Roman Gushchin wrote:
+> > > The trouble is that subsystem is mailing list, thus I still got all of
+> > > them via b4, which is used to get the discussion.
+> > > 
+> > > Send them only to the maintainer, for example. Or maintainer + authors.
+> > > 
+> > > Basically the same as LKP is doing.
+> > 
+> > There are subsystems which want email reviews to be sent to the subsystem
+> > mailing list. In fact, all currently configured email policies came from maintainers,
+> > I don’t push anything based on my own preferences.
+> 
+> In the case of ext4, we have a weekly video conference of the core
+> developers, and last week I asked the ext4 core developers whether we
+> should start cc'ing the linux-ext4 list.  When I first asked Roman to
+> send the reviews to the me as the reviewer and the patch author, I
+> didn't want to cc the list in the case people would find annoying.
+> 
+> The discussion in our video chat was that the quality of the reviews
+> was quite good, and the only feedback from the ext4 developers was (a)
+> pre-existing problems that were unrelated the patch series, (b)
+> sometimes the problems that was pointed out are ones that we don't
+> care about (for example, there was a recent comment about readahead
+> detection being racy, and that was not ext4-specific, and readahead is
+> a hint and if two processes are reading the file at the same
+> time.... oh cares how the system handles the hueristic of something
+> which is a hint anyway), and (c) while Shashiko is good at pointing
+> out problems, its suggestted solutions aren't as good.
+> 
+> But that's OK, on the whole, the Sashiko is finding problems that
+> humans very familiar with code base had missed.
 
+Feel free to add why. In over 80% or just a couple cases a week?
 
-> On May 16, 2026, at 2:33=E2=80=AFPM, Krzysztof Kozlowski <krzk@kernel.org>=
- wrote:
->=20
-> I find it opposite: clogging commits with useless information, because
-> some arbitrary and completely closed-source tool did analysis means
-> nothing to me one year later when I look at the commit in the Git history.=
+> And so it's certainly better than most human reviewers.
+>
+Only ext4 specific? In the past 6 months?
 
-
-This is simple not true: Sashiko is fully open-source, under Apache 2.0 lice=
-nse
-and the code belongs to LF. Yes, the instance behind sashiko.dev is using
-Gemini 3.1 Pro LLM, which is not open-source, but it=E2=80=99s not a fundame=
-ntal limitation -=20
-Sashiko is supporting various LLMs, including open models - it=E2=80=99s jus=
-t a practical
-choice: to my knowledge the quality of open models is not on par with fronti=
-er closed
-models and it would require a non-trivial amount of hardware and infrastruct=
-ure to run
-an open model at the required scale.
-
-Thanks=
+> Based on that, the consensus of the ext4 core developers that it would
+> be better to make sure that the linux-ext4 list should be cc'ed.  So
+> that's a decision that didn't come from me as the ext4 maintainer, but
+> after consulting with core ext4 developers and reviewers.
+> 
+> > I agree, it’s sometimes gets tricky when a patchset is sent to
+> > multiple mailing lists, which policy to apply.
+> 
+> What I would suggest is that if we have a patch which is cc'ed to say,
+> linux-xfs, linux-ext4, and linux-fsdevel, as well as a dozen
+> developers suggested by get_maintainer.pl, and only the ext4 list has
+> requested the reviews, then only send it to the ext4 maintainer, the
+> ext4 mailing list, and the patch author.  The Sashiko review doesn't
+> need to be cc'ed to the other lists, or the dozen or so other
+> maintainers.
+> 
+> Cheers,
+> 
+> 					- Ted
+> 
