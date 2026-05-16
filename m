@@ -1,126 +1,223 @@
-Received: from layka.disroot.org (layka.disroot.org [178.21.23.139])
+Received: from mail-pl1-f171.google.com (mail-pl1-f171.google.com [209.85.214.171])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0A9C9380FCE
-	for <sashiko-reviews@lists.linux.dev>; Sat, 16 May 2026 10:37:22 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=178.21.23.139
-ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1778927846; cv=none; b=Y3vVgO2fMZhIWmq2pVmdVovk4q5AW5gPs5M/aUNjxMnXx5mbP3ZGntcjtpsXBGa+w0YaZ7Bo9veH8PGq4s5BfhflhWuvDbRH/Txq1CaXc2uk0xVf/1wQkrflzNHhqzK12t7J8/mmbnhIw1Q+VfVwEXGMriF2sRjTFHPgKXML4Xc=
-ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1778927846; c=relaxed/simple;
-	bh=GN8VTVTylq06skIcTqkgY8Pba8oQMATmzxCcqDylYKE=;
-	h=Mime-Version:Content-Type:Date:Message-Id:Cc:Subject:From:To:
-	 References:In-Reply-To; b=rkwUZoB+RKquu/aOolqLlD8LXdTCgLgt0MNMIHV8hHJNCMWrHboaiLxmNTwD89kB/aOcUC/aCP6Ddr74IlAOPIoBirUU3Z75pOt/pcCsOuN+lgVc5JdgQL+66UfvA8Kd2fXY4I/VI1dfeVBa8xLSOxF31FpkUMllcSCxoU//z/A=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=disroot.org; spf=pass smtp.mailfrom=disroot.org; dkim=pass (2048-bit key) header.d=disroot.org header.i=@disroot.org header.b=QtSs9YMP; arc=none smtp.client-ip=178.21.23.139
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=disroot.org
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=disroot.org
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 93CD43D649F
+	for <sashiko-reviews@lists.linux.dev>; Sat, 16 May 2026 11:56:32 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=pass smtp.client-ip=209.85.214.171
+ARC-Seal:i=2; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
+	t=1778932593; cv=pass; b=tGoEHCiw/fYsrNjad0jUA1b4cJ4HcJHCcnFJ4uKNxJ31KkdYcCKZitnHnHsMlgBd0orcmLazMIIgqiaVrYH/UORCFkXgIBLGXsu4OvLtrWwfqzorhfucYDOxGFRO51RGaAZ4vxcPbXNEMCrd6fTb6vK6vudjo5lxJ8WrEry3si0=
+ARC-Message-Signature:i=2; a=rsa-sha256; d=subspace.kernel.org;
+	s=arc-20240116; t=1778932593; c=relaxed/simple;
+	bh=7QyYKbH4NtzTLiNAjB//SALR0HNWGH6snToS6ryNEIg=;
+	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
+	 To:Cc:Content-Type; b=LafwFegUTbrtfqiYAy8VI62UjHrl6UEVbt19CwLCy+vPa7FwztoaoeZObxzxjolNxbORRbczUbJfAyYC8o5OnGgFhJJPRPisO42aygndQuY9AfzgdbpTf1lvv+8kHLER0e8g1uNme5vP3PVWwoOR8xHhXc2JWlo29GbuRtIy/sk=
+ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=GBa2Skx3; arc=pass smtp.client-ip=209.85.214.171
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=disroot.org header.i=@disroot.org header.b="QtSs9YMP"
-Received: from mail01.disroot.lan (localhost [127.0.0.1])
-	by disroot.org (Postfix) with ESMTP id 2EFC226F31;
-	Sat, 16 May 2026 12:37:15 +0200 (CEST)
-X-Virus-Scanned: SPAM Filter at disroot.org
-Received: from layka.disroot.org ([127.0.0.1])
- by localhost (disroot.org [127.0.0.1]) (amavis, port 10024) with ESMTP
- id 8p_R7JXcycJI; Sat, 16 May 2026 12:37:14 +0200 (CEST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=disroot.org; s=mail;
-	t=1778927834; bh=GN8VTVTylq06skIcTqkgY8Pba8oQMATmzxCcqDylYKE=;
-	h=Date:Cc:Subject:From:To:References:In-Reply-To;
-	b=QtSs9YMPFG8psIhwuC7/v1S35JSk3OQhJcMXx9dccdtcoAYEEY4Q4ShQWrUQ3sVbO
-	 kPfPESjEDHTSq1h2rn5rRImpaNgXvj6CZm1Fl1mGXglR+5or5ff/Jsi89WcgtSlLkM
-	 bxsDFkqtvPIA74HBr2KGSkOw7bSenq1lsZdKAqLwcPcpP3/Y8nYi3LdidSM6xIf7q9
-	 p8FWwrL/0WhXLgfexL4D7wuUcHZFVB8P5CFzXSTAXgvr+W2JHY2izvzCILHXevS7pk
-	 DA3Sgt8mGoe49buUGQpLDILG3O0tnKmnM0pAp9A2EmRB8ueZ2R4tlJAxBzO7sM+e3R
-	 8nRFgTgc+74aw==
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="GBa2Skx3"
+Received: by mail-pl1-f171.google.com with SMTP id d9443c01a7336-2ba0714574fso4149495ad.2
+        for <sashiko-reviews@lists.linux.dev>; Sat, 16 May 2026 04:56:32 -0700 (PDT)
+ARC-Seal: i=1; a=rsa-sha256; t=1778932592; cv=none;
+        d=google.com; s=arc-20240605;
+        b=ahhJMq/YaeIoHVzrUjjus1xSTffPV4Pp1HPp/EsZNkB60O3DLKVyfvHzd/MwbDtwYU
+         YLCHlXn5OYY0I/sPrBHSL/qcFa3dS7Lki1rxgPqmh3UMbDgvWYOXQOY16c7YeyKO+tYC
+         OwVWJu+U4WLBsyCUBGnVWJwgt0qv/nbVI2s9aOIDEJrxz+8DZyQgbrtSq7kYHmMWnvIk
+         C1URV+PNE2pc/Lb55iVTCp3ANjrI+WiBcnsD+ClLCcoTjDAAsNdoXEqSBHXrO0NSWi5f
+         1I7O9FqU7BVCGhjL6om3U19CA+XmOqqIEnjIU4lRPgBe4ulQaL015v7srG8AIRBoW9dM
+         tlbQ==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com; s=arc-20240605;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:dkim-signature;
+        bh=g3Tnm8GfrdaS1CO5k7Ifb/71wv0N1iYSyYKMb0AGSQU=;
+        fh=clJjuPX1wp73EmI+aQ2kiO/nitl34gvpDqzRs0i0+c0=;
+        b=IZShpGb8Y9TO8ZTyyZy1eLV7OeGgt/vBdpCw5954+RArVUaS+fr19L7848kRLz+rAs
+         D6R4yvkovkzTVCyzA69/K1tmHDq1+XkKXrnCc33q/QY1LQHpu9OU8sMbwUaf1Buhd9q0
+         gXWnaXEAz5lPmRDIq2E21e9WTClXdUn4V6WpehP+Q65L3hOdZQdY3kNbo6i9U5a4AhV4
+         MMITfFCqxhU9Cuk5d8aPGyCQ8m71nmz3BzHq0/cJlwJBjCMbnT/gD2O75kwPFyCHfxJh
+         WojUKzQCpAc3YP+6rAtvA74YRj4R11i1eBNSc83jd3+NxEmZl2NdXIyDyHz0r6Va2Zrm
+         Xl/g==;
+        darn=lists.linux.dev
+ARC-Authentication-Results: i=1; mx.google.com; arc=none
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20251104; t=1778932592; x=1779537392; darn=lists.linux.dev;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=g3Tnm8GfrdaS1CO5k7Ifb/71wv0N1iYSyYKMb0AGSQU=;
+        b=GBa2Skx3bUtX6dzBC4TAzSSHQ4xM76vabwuAeUI5MzqyYdMdGwLfz3U4hr9YM+Zrq4
+         k3rZSSVAcuY9euP/mz/eqq7lugpmQu9cBsjy/QNWClKyZbgp62wz4d58gU26AKPzUKJz
+         vyR2kNEcCNWMlS3A3wfLX5oo/fN1nvHT/TTWZSZ+Otl/DR/bAx2nlamhW8u7E3MCWcGj
+         fNFZCyJnFizPx2nMhLBrEcK7WZMO2VCpayfgYj1B7oxhLS7T3RDHcLgQweVmrVINPMbx
+         pGV6qAnG6ICVWn5lMaWxbJwlQYwgLCJCsDnVrNl0ZFvE31tsGMcW/BQj4/stQxPmUNWz
+         +3HQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20251104; t=1778932592; x=1779537392;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:x-gm-gg:x-gm-message-state:from
+         :to:cc:subject:date:message-id:reply-to;
+        bh=g3Tnm8GfrdaS1CO5k7Ifb/71wv0N1iYSyYKMb0AGSQU=;
+        b=hb2L+BtEYFZE8kSbEUib3iqDio/yftpYaXR85/2LbJflsejS1CwK5zWlRh++1RT69v
+         JOREvRm7xnVrCUncocchrqq3UyBCbZ8jv6BLrKtbYbq/JXB4/zsEuJrIqSwM6HJ6tmkp
+         +TcHw94kv6DtwA4edNeE0NYM1coTQIo4xY1rxncoo+65Rj+LQzFm7s/CMWe5Kr+uzduq
+         QfYUoJDHHM37/CSLlf6BAiQRtBJQiwNTOMv6fzn08vsAxUOV0LMxZJt6G2maHrmT2q01
+         TBUZXjylDZojXIVf//Xvf3B9fhVC0nNi8VFCva6gHPAKFw97i5fhpqKmrgeMjkQNMb88
+         EeAg==
+X-Gm-Message-State: AOJu0Yx0p2WZmzRmyuSe7mCnS8kVgmjgR9LC57/NA7JQoXZyQtBEphyv
+	lG2uKx0IcBPoHHctEzQMazG2hIbGjN83poLjIlPijHv475nFCAeFrEzeHNH23CL1U5mJbvqGLnv
+	dhhgFuzBIlZntZB8TFsUwF+K/rUWa9ztfyuhE
+X-Gm-Gg: Acq92OFb++zyItzgyqVy63sFxV/dujNB5p48hKfi2v3Xd+XnY2p19uhs1MaNQUc0Adp
+	2w4EnxwElQJW+uO8+W3sfQwdVqpYEoBd3fTjrEQp3eGOeaFP2Vth1zysAR7DXgHZUbnAnHuOtZC
+	4n52HlsHIEJjct208mg1pb2uqibfF9FuuMJPQZzku7mUAVGnyCI6VJsQse14VbhQllsSn5bGXmU
+	dVcmxPBynhOuHYQLUVfx4ZbvoMWhGU2N7VP2k4GTZ7aE7HBikBfkPcaD8cr10XDW69XhYItH/7S
+	Wfd7zDzB96TDgxiCj+KDWrDuIMbjnpdykrgJZCZ1
+X-Received: by 2002:a17:902:fc84:b0:2b2:eb9d:1648 with SMTP id
+ d9443c01a7336-2bd7e9a02e3mr81606565ad.37.1778932591918; Sat, 16 May 2026
+ 04:56:31 -0700 (PDT)
 Precedence: bulk
 X-Mailing-List: sashiko-reviews@lists.linux.dev
 List-Id: <sashiko-reviews.lists.linux.dev>
 List-Subscribe: <mailto:sashiko-reviews+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:sashiko-reviews+unsubscribe@lists.linux.dev>
-Mime-Version: 1.0
+MIME-Version: 1.0
+References: <20260513105003.81880-1-phucduc.bui@gmail.com> <20260514043314.62222C2BCB7@smtp.kernel.org>
+ <CAABR9nGhwtBu9Yhbn-BTD1Scykp2h6eQbtQtT13DcnekUdum1A@mail.gmail.com>
+In-Reply-To: <CAABR9nGhwtBu9Yhbn-BTD1Scykp2h6eQbtQtT13DcnekUdum1A@mail.gmail.com>
+From: Bui Duc Phuc <phucduc.bui@gmail.com>
+Date: Sat, 16 May 2026 18:56:18 +0700
+X-Gm-Features: AVHnY4K87wbzdoBlkwWjKd4mYgN3M-8jhbsSCXPKekL4N1DL1gksd-L0oaFEhQw
+Message-ID: <CAABR9nGZM3Bnb3DnObdp2nOJmW6ezmXqRSBtgS00Ps2ve4zsbg@mail.gmail.com>
+Subject: Re: [PATCH] ASoC: sun4i-spdif: Use guard() for spin locks
+To: sashiko-reviews@lists.linux.dev, Mark Brown <broonie@kernel.org>
+Cc: linux-sunxi@lists.linux.dev, Liam Girdwood <lgirdwood@gmail.com>, 
+	Jaroslav Kysela <perex@perex.cz>, Takashi Iwai <tiwai@suse.com>, Chen-Yu Tsai <wens@kernel.org>, 
+	Jernej Skrabec <jernej.skrabec@gmail.com>, Samuel Holland <samuel@sholland.org>, 
+	Marcus Cooper <codekipper@gmail.com>, Chen Ni <nichen@iscas.ac.cn>, linux-sound@vger.kernel.org, 
+	linux-arm-kernel@lists.infradead.org, linux-kernel@vger.kernel.org
+Content-Type: text/plain; charset="UTF-8"
 Content-Transfer-Encoding: quoted-printable
-Content-Type: text/plain; charset=UTF-8
-Date: Sat, 16 May 2026 16:07:05 +0530
-Message-Id: <DIK1A93ZZZY5.3HB73O465YR3S@disroot.org>
-Cc: <robh@kernel.org>, <krzk+dt@kernel.org>, <conor+dt@kernel.org>,
- <devicetree@vger.kernel.org>
-Subject: Re: [PATCH v7 04/10] mfd: sec: add support for S2MU005 PMIC
-From: "Kaustabh Chakraborty" <kauschluss@disroot.org>
-To: <sashiko-reviews@lists.linux.dev>, "Kaustabh Chakraborty"
- <kauschluss@disroot.org>
-References: <20260516-s2mu005-pmic-v7-4-73f9702fb461@disroot.org>
- <20260515222508.BF4ADC2BCB0@smtp.kernel.org>
-In-Reply-To: <20260515222508.BF4ADC2BCB0@smtp.kernel.org>
 
-On 2026-05-15 22:25 +00:00, sashiko-bot wrote:
-> Thank you for your contribution! Sashiko AI review found 1 potential issu=
-e(s) to consider:
-> - [High] Missing `.use_ack =3D true` in `s2mu005_irq_chip` causes an infi=
-nite interrupt storm.
-> --
->
-> commit 6e3b1141ae78b94854e84436a682b1574f6933ac
-> Author: Kaustabh Chakraborty <kauschluss@disroot.org>
->
-> mfd: sec: add support for S2MU005 PMIC
->
-> This commit adds support for Samsung's S2MU005 PMIC. It introduces a new
-> device type and handles its specific revision register fetching, as well
-> as providing its interrupt chips and child cell definitions.
->
->> diff --git a/drivers/mfd/sec-irq.c b/drivers/mfd/sec-irq.c
->> index 133188391f7c2..42862807be1a0 100644
->> --- a/drivers/mfd/sec-irq.c
->> +++ b/drivers/mfd/sec-irq.c
->
-> [ ... ]
->
->> @@ -337,6 +397,16 @@ static const struct regmap_irq_chip s2mpu05_irq_chi=
-p =3D {
->>  	.ack_base =3D S2MPU05_REG_INT1,
->>  };
->> =20
->> +static const struct regmap_irq_chip s2mu005_irq_chip =3D {
->> +	.name =3D "s2mu005",
->> +	.irqs =3D s2mu005_irqs,
->> +	.num_irqs =3D ARRAY_SIZE(s2mu005_irqs),
->> +	.num_regs =3D 4,
->> +	.status_base =3D S2MU005_REG_CHGR_INT1,
->> +	.mask_base =3D S2MU005_REG_CHGR_INT1M,
->> +	.get_irq_reg =3D s2mu005_irq_get_reg,
->> +};
->
-> Does this structure need .use_ack =3D true?
->
-> In s2mu005_irq_chip, .ack_base is not explicitly set, so it implicitly
-> initializes to 0. The .status_base is set to S2MU005_REG_CHGR_INT1, which=
- is
-> the first enumerator in s2mu005_reg and thus equals 0.
->
-> The regmap-irq core framework relies on the condition if (chip->ack_base =
-||
-> chip->use_ack) to determine if it should write back to the hardware regis=
-ters
-> to acknowledge and clear the interrupts. Because both evaluate to 0 (fals=
-e),
-> regmap-irq assumes the chip is clear-on-read and completely skips the ACK
-> execution.
->
-> Since Samsung PMICs require a Write-1-to-Clear sequence to clear interrup=
-t
-> status registers, without the ACK write, the hardware PMIC continuously
-> asserts the physical IRQ line.
->
-> As the interrupt uses IRQF_ONESHOT, the moment the threaded handler compl=
-etes
-> and unmasks the interrupt at the controller, the still-asserted hardware =
-line
-> will immediately re-trigger the interrupt.
->
-> Could this loop cause an infinite interrupt storm, starving the CPU and
-> leading to a hard lockup?
+Hi,
 
-This actually does not happen, this PMIC device doesn't require ack.
-There's no interrupt storm when testing, and neither does the downstream
-driver implement ack-ing code.
+I am not entirely sure whether the issue is exactly as
+described in the Sashiko review.
 
+However, I also looked at a similar case in the
+micfil_rate_set() function from the fsl_micfil driver:
+https://elixir.bootlin.com/linux/v7.1-rc3/source/sound/soc/fsl/fsl_micfil.c
+
+There, pm_runtime_resume_and_get() is also used to ensure
+that the device is runtime-resumed before accessing the
+registers.
+
+To address the review comments and avoid mixing functional
+changes with the cleanup/refactoring using guard/scoped_guard,
+I am planning to split this into two separate patches:
+
+Patch 1: replace spin_lock_irqsave() /
+spin_unlock_irqrestore() with scoped_guard() / guard()
+
++ scoped_guard(spinlock_irqsave, &host->lock) {
+
+    regmap_read(...);
+
++ }
+
+Patch 2: add runtime PM handling around register accesses
+
++ ret =3D pm_runtime_resume_and_get(dev);
++ if (ret < 0)
++     return ret;
+
+  scoped_guard(spinlock_irqsave, &host->lock) {
+
+      regmap_read(...);
+
+  }
+
++ pm_runtime_put(dev);
+
+This should make the review easier and clearly separate the
+functional change from the refactoring.
+Does this approach look reasonable to you?
+If so, please let me know and I will prepare the
+corresponding patches.
+
+Best Regard,
+Phuc
+
+
+
+
+On Thu, May 14, 2026 at 6:22=E2=80=AFPM Bui Duc Phuc <phucduc.bui@gmail.com=
+> wrote:
+>
+> Thanks for the review.
+>
+> This seems to be pre-existing behavior rather than something
+> introduced by this patch, since the current change only converts
+> the locking to use guard() helpers and does not modify the
+> runtime PM handling.
+>
+> If this turns out to be a real issue, it would probably be better
+> addressed separately from this cleanup patch.
+>
+>
+> On Thu, May 14, 2026 at 11:33=E2=80=AFAM <sashiko-bot@kernel.org> wrote:
+> >
+> > Thank you for your contribution! Sashiko AI review found 1 potential is=
+sue(s) to consider:
+> > - [High] Hardware State / PM Violation leading to bus hang
+> > --
+> >
+> > commit 0686001584788d984a0f16403183bcad78fe4176
+> > Author: bui duc phuc <phucduc.bui@gmail.com>
+> >
+> > ASoC: sun4i-spdif: Use guard() for spin locks
+> >
+> > This commit refactors the locking in the sun4i-spdif driver to use the
+> > guard() macro for spinlocks. It replaces manual spin_lock_irqsave() and
+> > spin_unlock_irqrestore() calls with scope-based cleanup.
+> >
+> > > diff --git a/sound/soc/sunxi/sun4i-spdif.c b/sound/soc/sunxi/sun4i-sp=
+dif.c
+> > > --- a/sound/soc/sunxi/sun4i-spdif.c
+> > > +++ b/sound/soc/sunxi/sun4i-spdif.c
+> > > @@ -427,10 +427,9 @@ static int sun4i_spdif_get_status(struct snd_kco=
+ntrol *kcontrol,
+> > >       struct snd_soc_dai *cpu_dai =3D snd_kcontrol_chip(kcontrol);
+> > >       struct sun4i_spdif_dev *host =3D snd_soc_dai_get_drvdata(cpu_da=
+i);
+> > >       u8 *status =3D ucontrol->value.iec958.status;
+> > > -     unsigned long flags;
+> > >       unsigned int reg;
+> > >
+> > > -     spin_lock_irqsave(&host->lock, flags);
+> > > +     guard(spinlock_irqsave)(&host->lock);
+> > >
+> > >       regmap_read(host->regmap, SUN4I_SPDIF_TXCHSTA0, &reg);
+> >
+> > While this issue isn't new to this patch, does this code risk a bus han=
+g if
+> > the device is runtime-suspended?
+> >
+> > The regmap configuration lacks a cache, and these ALSA kcontrols can be
+> > accessed by userspace at any time. If the audio stream is idle, the dev=
+ice
+> > will be runtime-suspended and its APB bus clock (apb_clk) will be disab=
+led.
+> >
+> > Accessing the physical registers with the clock disabled will trigger a=
+n
+> > asynchronous external abort.
+> >
+> > Would it make sense to ensure the device is runtime-resumed (perhaps vi=
+a
+> > pm_runtime_get_sync() outside the spinlock guard) before touching the
+> > hardware?
+> >
+> > [ ... ]
+> >
+> > --
+> > Sashiko AI review =C2=B7 https://sashiko.dev/#/patchset/20260513105003.=
+81880-1-phucduc.bui@gmail.com?part=3D1
