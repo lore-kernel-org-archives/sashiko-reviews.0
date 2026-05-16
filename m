@@ -1,68 +1,33 @@
-Received: from mail-dl1-f41.google.com (mail-dl1-f41.google.com [74.125.82.41])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2706F3D47C2
-	for <sashiko-reviews@lists.linux.dev>; Sat, 16 May 2026 12:14:13 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=74.125.82.41
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7FCD43D412C;
+	Sat, 16 May 2026 12:16:41 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1778933655; cv=none; b=VMKIT17Wp/a5MRBLEvn2RyEa8SIWeYoP1Bl3A/0rVGg2CzhiK0/XhDBr2lfVZCAWAxIHR2LSDpPy7/x7RMCJk5MYPa4FUGK/nFYl9J56y3L24OyKzT139Az4vi0/pr8Z09/E+P5XZrMHMo6b3UgVdv13n6lSZxqpfIOKxYOz07w=
+	t=1778933801; cv=none; b=c1CcSgAHbiYOWxwuRsMSbjBGTkjHP9djlPMTHmdlIOLNdSq1JMNsvQMkmXhBJfiQgMEe0zJqmkQ3cbFToUmV85uuvr7IqORRrR/ajb4mR4ySIm75r7nyX4CyQZFjktxlf1QlEorFADF0+gSAQ1luKkfv9czh7r0zEyHo2kHC0uk=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1778933655; c=relaxed/simple;
-	bh=NXstNpsh57964jU5eVuSN4GcLNqI+VymMcfVvCPW3uE=;
+	s=arc-20240116; t=1778933801; c=relaxed/simple;
+	bh=WJJdM2GBQBU6zkoygc0mTUB+abvzCTEb+FKA3sn21+g=;
 	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=Sx27s0xt7O1oFtK+Uzi+5lQ1T2MIf1s5wDE6SGMOuoUF+02fLFh0cT8L4sxIk0E7GUA4NjyERHJIh+xlOmN2vpEm07Id8rpWc3db0KRp/f3J/fj4qLW09+wpKAVnXC1lBwLdrLbpo5Q6XiSKPznsu5MaO/wmsiCNMdJrcI6qay8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=roeck-us.net; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=Vkr1Soqk; arc=none smtp.client-ip=74.125.82.41
-Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=roeck-us.net
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+	 In-Reply-To:Content-Type; b=uHDbXPSrgTwlh7bQ5t2yX8HaqAEPHNU/1xugr+GtKblCQdXkFjVKi0UkXVAKnQUnONb8T5DbNV8gy3UIFWP1bjfSiIqiP9qbe194EZ7ntYQd6qQOX3QQAZuGj7LDDHPWdKSI1dclCNloy1nzZfNOPop+WunmU+lK4+yEgm0Bzo8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=t0OQD/7u; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="Vkr1Soqk"
-Received: by mail-dl1-f41.google.com with SMTP id a92af1059eb24-12c1a170a50so770479c88.0
-        for <sashiko-reviews@lists.linux.dev>; Sat, 16 May 2026 05:14:13 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20251104; t=1778933653; x=1779538453; darn=lists.linux.dev;
-        h=content-transfer-encoding:in-reply-to:autocrypt:from
-         :content-language:references:cc:to:subject:user-agent:mime-version
-         :date:message-id:sender:from:to:cc:subject:date:message-id:reply-to;
-        bh=WfRu3W9UXERmyIjiKGpcfMwX45w5ccCYkQKnR4ynbas=;
-        b=Vkr1SoqklhNhau13eBDmZXuZsE1kvpDzjbmmW5loXJh9g2J+U3Ml6g7XWSjU1AFp31
-         oi5wLXifbyuxCdL0ignbYJikDU4w2j5NdWubGbb7myRpDiwEE7TiPEIRi6VnlFWR93Jh
-         O+fVoHw+eiSem9j9TFAb5Acx8DgCaI8DF3KSIWEYpHWoiRGu83oNh89y4uU3EjJeW8xo
-         ErCyv6vPzMMAZaCxrdWHjSV50aF6ay5ST83GCGDobQxiE96eF5FTsBQ051LfBZ0Efmml
-         Y+xaOWmV6B+D6SVcS1DFdzQ3h9ws44lYlk9xH3c3A11oDSSUiBrpx4IVYCVe4VqO3mNJ
-         1tZQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20251104; t=1778933653; x=1779538453;
-        h=content-transfer-encoding:in-reply-to:autocrypt:from
-         :content-language:references:cc:to:subject:user-agent:mime-version
-         :date:message-id:sender:x-gm-gg:x-gm-message-state:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=WfRu3W9UXERmyIjiKGpcfMwX45w5ccCYkQKnR4ynbas=;
-        b=YeCfePLH1EDh+HVrY1WHaAA10rsA0kP/acFnmR1H6ttgxOL33EtMz2+eRcdpWIxUT8
-         xdWxwfLrVSBzpv0KhG60iPvxJNaqUcsrbdWpuGnQWtJfL26YWcZSFrejuzIoIDOwifPF
-         gp5dRaO1yUWbx04dA+cILVXJPckB6X8zZhOB7wCOToJQ8kKElbAGTMmdE7oJYwLJR5Hr
-         L0hQBgDSKSJ5jIit4bUjYBPv9xxWq4gjQMRXXrG9uZjkBmQBGcExsXI8LfBjP5188/T9
-         bwW0W99AIFNFshpzzoU4T8EKnXJQUNx4LfauQ3WdFTFEbnwoLzIJLeBNxo4eAYPvmFRf
-         /EDw==
-X-Forwarded-Encrypted: i=1; AFNElJ8QZNVr2LZ9d2eFC3M1J4tIgJHgRywDLjFrM+EvXCdcFqgST9e8pLnW6uantnociwoPqAnULp+rz6WrMeELqhI=@lists.linux.dev
-X-Gm-Message-State: AOJu0YxlANKp9oaDzwyeBLvksKLKrMTCQOSe8rNZ4CrNYx56djrVY9FZ
-	Y4n7kZ7zezDGxdPxBhgUeCkRWfcY5MSGOyNqKLjdKYJPGwENTWBMw/6h
-X-Gm-Gg: Acq92OGYYT5Sf7gMrbnFRpmt8CQTg996+Y+QfMzWOMPSg3TCFlbCKHccgJSRxQWn7UC
-	Hhvlr3rp7vBGZSA+i1r5jLukfC/zRaukDfB2+HsdKKbYxTgIPkA3gl4IuJhHtYMBLT8u7Ib7crs
-	MXkxyK3hi/v0AkgfsCE6WmUP/i/AX/llEzjosqiHAqpXVPWjdG7uVIfqW4FmofcAONGjqarpYbZ
-	fUlskNbyReDRn/y8ivhuiuZLAsPLFTlYkLFRZngIfGIvxH0hL1bVVYpgXZOXjSM1lvzNfNQAz0p
-	57SUP+xiOvRNewJDIthnyYxI1iLO4oq4ZQqInG7i187uSJsIP0W7uF/LDYubh+G1CmIJpIGWSy3
-	ZXCjkC+QeDxMZ69dEPrWcJJNRDWNlR0GOWY4M2z8MrOGnfPsYqfdbRBEH/hCWmqvqsMfw4QyzTc
-	FDReFxy18+XsoQxDD7lkaexR/PSSVzcwLJ7l1rqGNLu2VxH6T12jgG2HTC1n188yBtbDpoem6Ll
-	uR+O51zHlg=
-X-Received: by 2002:a05:7022:128c:b0:12c:6e85:505c with SMTP id a92af1059eb24-1350440a9cbmr3283254c88.4.1778933653130;
-        Sat, 16 May 2026 05:14:13 -0700 (PDT)
-Received: from ?IPV6:2600:1700:e321:62f0:da43:aeff:fecc:bfd5? ([2600:1700:e321:62f0:da43:aeff:fecc:bfd5])
-        by smtp.gmail.com with ESMTPSA id a92af1059eb24-134cc3490bcsm11753600c88.15.2026.05.16.05.14.12
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Sat, 16 May 2026 05:14:12 -0700 (PDT)
-Sender: Guenter Roeck <groeck7@gmail.com>
-Message-ID: <94f708bc-f78a-41bc-974a-b54604fae1e1@roeck-us.net>
-Date: Sat, 16 May 2026 05:14:11 -0700
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="t0OQD/7u"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1F863C19425;
+	Sat, 16 May 2026 12:16:38 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+	s=k20201202; t=1778933800;
+	bh=WJJdM2GBQBU6zkoygc0mTUB+abvzCTEb+FKA3sn21+g=;
+	h=Date:Subject:To:Cc:References:From:In-Reply-To:From;
+	b=t0OQD/7uFusEHtay4DPoPyYxHpr7crDrRMzX6ChEtY6sFLyXas8e/t4xT39wzP5yG
+	 ItQkVc/HKS89Alm5pTO5jlebFVotI3fFxerNojXO0opw6tMeJs/AmsnmWlnSaxZ3+t
+	 oNq0Tn1IvdgPEfjpsA2C7C8TLOWAbfDBfdPa0ntMcNIdpYZ/UVnYCb+5RtEX3UqdWh
+	 HpEYSSuLVvj+Q9KrOSjJooGrzIC4Mh4oGJZq1Xku9pyLO73rwiaj6jAXJZjGIFDves
+	 BCmvRS5pBgTmC42pvQ5WLxPLlgPDVZ3xqXCj8Q3Q11z8KUWR39IbKcp+NCOvfDmxJ3
+	 TWmY5QuHatsOg==
+Message-ID: <221cc52e-9918-43ea-b196-622a8cc6db05@kernel.org>
+Date: Sat, 16 May 2026 14:16:37 +0200
 Precedence: bulk
 X-Mailing-List: sashiko-reviews@lists.linux.dev
 List-Id: <sashiko-reviews.lists.linux.dev>
@@ -70,85 +35,129 @@ List-Subscribe: <mailto:sashiko-reviews+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:sashiko-reviews+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH] hwmon: (lm75) Add explicit header include
-To: Krzysztof Kozlowski <krzk@kernel.org>, sashiko-reviews@lists.linux.dev,
- Flaviu Nistor <flaviu.nistor@gmail.com>,
- Roman Gushchin <roman.gushchin@linux.dev>
-Cc: linux-hwmon@vger.kernel.org
-References: <20260516075708.6682-1-flaviu.nistor@gmail.com>
- <20260516080647.4C31AC19425@smtp.kernel.org>
- <3f20b310-fd59-46d7-ad1f-201c755b690a@kernel.org>
+Subject: Re: Stop false review statements
+To: Guenter Roeck <linux@roeck-us.net>
+Cc: sashiko-bot@kernel.org, sashiko-reviews@lists.linux.dev,
+ sashiko@lists.linux.dev, Linux Kernel Workflows <workflows@vger.kernel.org>,
+ Linux Kernel Mailing List <linux-kernel@vger.kernel.org>,
+ "devicetree@vger.kernel.org" <devicetree@vger.kernel.org>, kfree@google.com
+References: <ad139e54-a7f0-4d09-832c-6b2bf2e93e03@kernel.org>
+ <fcc4b719-2696-4f31-bac4-6c07f8ddec47@roeck-us.net>
+From: Krzysztof Kozlowski <krzk@kernel.org>
 Content-Language: en-US
-From: Guenter Roeck <linux@roeck-us.net>
-Autocrypt: addr=linux@roeck-us.net; keydata=
- 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
- np3900V20aS7eD9K8GTU0TGC1pyz6IVJwIE=
-In-Reply-To: <3f20b310-fd59-46d7-ad1f-201c755b690a@kernel.org>
-Content-Type: text/plain; charset=UTF-8; format=flowed
+Autocrypt: addr=krzk@kernel.org; keydata=
+ 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 a/A=
+In-Reply-To: <fcc4b719-2696-4f31-bac4-6c07f8ddec47@roeck-us.net>
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 7bit
 
-On 5/16/26 01:14, Krzysztof Kozlowski wrote:
-> On 16/05/2026 10:06, sashiko-bot@kernel.org wrote:
->>> Since device_property_read_string() is used in the
->>> probe function add explicit include for
->>> linux/mod_devicetable.h and linux/property.h rather
->>> than having implicit inclusions.
->>> Header linux/of.h can be removed and also of_match_ptr()
->>> improving non-Device Tree compatibility of the driver.
->>>
->>> Signed-off-by: Flaviu Nistor <flaviu.nistor@gmail.com>
+On 16/05/2026 14:11, Guenter Roeck wrote:
+> On Sat, May 16, 2026 at 10:05:02AM +0200, Krzysztof Kozlowski wrote:
+>> What the hell is that:
 >>
->> Reviewed-by: Sashiko <sashiko-bot@kernel.org>
+>> https://lore.kernel.org/all/20260515190707.033BDC2BCB0@smtp.kernel.org/
+>>
+>> As a bot you CANNOT MAKE a Reviewer's statement of oversight. You are
+>> not a damn human do be able to make such statement. You are a bot, a tool.
 >>
 > 
-> NAK, fake tag.
+> Where exactly do the rules say that ? I seem to miss that.
 > 
+> There is a policy document about _contributions_ made by AI, but I don't
+> see the one that says that AI agents must not provide Reviewed-by: tags.
 
-Until and unless there is an official policy that explicitly states
-that AI agents MUST NOT provide Reviewed-by: tags, I will ignore your
-NAKs on patches submitted in my scope of responsibility. Please point
-to the policy, not to your opinion about review feedback from AI agents.
+Quotes from the existing policy:
 
-Thanks,
-Guenter
+1. "By offering my Reviewed-by: tag, I state that:"
 
+Tool cannot use first person "I". Tool cannot "state that".
+
+2. "A Reviewed-by tag is *a statement of opinion* that the patch is an
+ appropriate modification of the kernel without any remaining serious"
+
+Tool cannot make a statement of opinion.
+
+3. "Any interested reviewer (who has done the work) can offer a
+Reviewed-by".
+
+Tool is not a reviewer as a person, thus above does not grant the tool
+permission to offer a tag.
+
+> 
+>> Stop faking tags.
+>>
+>> And really, considering how many false positives Sashiko produces, how
+>> poor review comments it gives, how many misleading comments, it's
+>> unacceptable to me to consider that a review.
+>>
+>> Amount of useless noise Sashiko produces already changed my mind how
+>> useful that tool is.
+> 
+> We seem to have completely different experiences. Yes, it does produce
+> false positives, just like humans do. However, I have seen it find many
+> real bugs, including many in patches which already had Reviewed-by: tags
+> from (presumably) human reviewers.
+
+Of course it finds bugs. But it also produces - roughly - 80-90% false
+positives, completely useless.
+
+This is very poor review score.
+
+> 
+> Again, it appears that our experience is completely different than mine,
+> but after several weeks of getting code reviews from sashiko I do have to
+> say that I trust its review feedback significantly more than human reviews.
+> Sure, it does not guarantee that a patch is indeed bug free. A human review
+> doesn't guarantee it either.
+> 
+>>
+>> I will be NAKing every damn tag produced by such tools.
+> 
+> I'd like to see an official policy. Until then I'll ignore your NAK in my
+> scope of responsibility.
+
+:)
+
+Best regards,
+Krzysztof
