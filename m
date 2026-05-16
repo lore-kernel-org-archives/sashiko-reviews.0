@@ -1,33 +1,33 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4538B380FC3;
-	Sat, 16 May 2026 08:06:44 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id ED75A372681;
+	Sat, 16 May 2026 08:07:01 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1778918804; cv=none; b=ZepgvHQZrA/rTJs0+aZG5sg/casbnNoyEG4jcACMcFmze9kax6svPx6ScOmR/GSsu8fz5OPWy3RUvevorenv5vrvnKtwd5ax36PpONEa41bZ68W+Ac+W/jVI372nDdgyhiCP1SNw7Ip+ClQH7Ihk+8oVNlf1lbzvwzHCDuO+UNU=
+	t=1778918822; cv=none; b=hbCXN7J6bBPpAtM3AZP4i7iZJaBVkaJqKePQSIAteOOBv1ueNt9bZVJz+uy811KwwFOcuJ77BsvVKbM5JL3b6gqLM28fdtt2HCbAnL0DZyKHnkp7819EEt4dyP37fIE76oOtbxkRCGWvcWV9Om5hturektzbrTl2lWsX7WiDKuM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1778918804; c=relaxed/simple;
-	bh=M3QbY342WYiDcF7bGDxy5MSdQpaSdFlTPCHhpJtGE7s=;
+	s=arc-20240116; t=1778918822; c=relaxed/simple;
+	bh=73A8eNWNypa6Q6X+sSdLDeP2/T8SpuHmPJjswFft5C0=;
 	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=ZDo3P+A758Pkawxjvik1PrGfCEz98TUP+xPFjG5zeZZGMpK0avN+pQtkoYpN7zGcxMuUVqtj1yaWxGjTMWy6GI4V8luQKSnPAeteLOLo+ebjIwpyw+f4KA3UXSJpoHnw7xUmdU9au7IfcitXC1CM2E9EcUFdLfElzs027Cyeuo0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=in8+fCwo; arc=none smtp.client-ip=10.30.226.201
+	 In-Reply-To:Content-Type; b=Bq9Bij4rYRTCdVkHrGc+MRUWgLI5EaaKUidsTXaybd2xxORNf6yWTgyXbzCR/W0tAexATcR0g+WGLhR1RnNHHkKwgpBM8qXCBys7A9EB/Y9ElB/O4Abj2o/k4U8izQ7bdj6inQjgb+y0dQe5h1Cm1zHaI48/kwmHLCw3Ej4CUqk=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=bOkwS8Fl; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="in8+fCwo"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2E348C19425;
-	Sat, 16 May 2026 08:06:42 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="bOkwS8Fl"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 97489C19425;
+	Sat, 16 May 2026 08:07:00 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1778918803;
-	bh=M3QbY342WYiDcF7bGDxy5MSdQpaSdFlTPCHhpJtGE7s=;
+	s=k20201202; t=1778918821;
+	bh=73A8eNWNypa6Q6X+sSdLDeP2/T8SpuHmPJjswFft5C0=;
 	h=Date:Subject:To:Cc:References:From:In-Reply-To:From;
-	b=in8+fCwodfdJhgsyBO7+7qC9M8FwsqHIxILHw6grlbPiJItW1WlPZO4CjzWkzrXr2
-	 5W8ANEkzfnCJqJivbxfIvSBf/NN1omzB5w1X9XdRlqVD7MyOTHCdgOSxMZ3ahJtKFr
-	 Tfiydck2+/PJvaUKJlHgkxWTSHE0KN1VUJrUfhK02zGU68CdE55kuYe0wPPKLd+6BF
-	 xZiwZ0h4HE07apf/Ls2HjTl03sui3DmGlpidQUMYrj7ZYZMnVH22ENwPBM5GumJivi
-	 zMcFLV0hKWttnDykLWT7I/7dd6HBfk77Dzr/v4dlhQeYT8TssNs0IlT0S42BcfpUsP
-	 IxI2pAuur+UAw==
-Message-ID: <9671efcb-8347-4b56-8b2d-2f7edd04f424@kernel.org>
-Date: Sat, 16 May 2026 10:06:40 +0200
+	b=bOkwS8FlNNONdkE6zNSc5M+9WL8es31mDNt+/rxxtsRwmP7BbnCcms24s2Re9jJZf
+	 6FJ5b89ajTuUje/GtloM+M7klmEP0ebfnjHeTIutCZnqBZxUuN9C1bAo0UE0WwBcJv
+	 PNPMKYr4ZVyneLB/OmNAc6Eg5dHR7jG5NeyIQDryQfxDqFvg/yXcTVnbBtCeEo18ck
+	 4D3P7o9SL/1M4uAVXEXaawRqD1QiB/ozYDTETTxDK3ApVRPg3HP2IUxN0Z32BGR7xn
+	 Byk0H3Q8EfQcSvfN073pNJiUNS7RbYdq0gjTl4bdip4gc2uYCaSscvmuUk4boBb8cd
+	 KvYwfK7P2qf9w==
+Message-ID: <04803ae3-990b-462d-968a-94999366499e@kernel.org>
+Date: Sat, 16 May 2026 10:06:59 +0200
 Precedence: bulk
 X-Mailing-List: sashiko-reviews@lists.linux.dev
 List-Id: <sashiko-reviews.lists.linux.dev>
@@ -35,13 +35,12 @@ List-Subscribe: <mailto:sashiko-reviews+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:sashiko-reviews+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v12 3/6] pinctrl: core: Make pin group callbacks optional
- for pin-only drivers
-To: sashiko-reviews@lists.linux.dev, Oleksij Rempel <o.rempel@pengutronix.de>
-Cc: krzk+dt@kernel.org, robh@kernel.org, linux-hwmon@vger.kernel.org,
- conor+dt@kernel.org, devicetree@vger.kernel.org
-References: <20260515160537.115808-4-o.rempel@pengutronix.de>
- <20260515174309.B55B4C2BCB0@smtp.kernel.org>
+Subject: Re: [PATCH] Documentation: hwmon: adt7411: document supported sysfs
+ attributes
+To: sashiko-reviews@lists.linux.dev, Chen-Shi-Hong <eric039eric@gmail.com>
+Cc: linux-hwmon@vger.kernel.org
+References: <20260516035245.1604-1-eric039eric@gmail.com>
+ <20260516035715.BEFE0C19425@smtp.kernel.org>
 From: Krzysztof Kozlowski <krzk@kernel.org>
 Content-Language: en-US
 Autocrypt: addr=krzk@kernel.org; keydata=
@@ -87,30 +86,24 @@ Autocrypt: addr=krzk@kernel.org; keydata=
  jWt87ecuHlpL3uuQ0ZZNWqHgZoQLXoqC2ZV5KrtKWb/jyiFX/sxSrodALf0zf+tfHv0FZWT2
  zHjUqd0t4njD/UOsuIMOQn4Ig0SdivYPfZukb5cdasKJukG1NOpbW7yRNivaCnfZz6dTawXw
  XRIV/KDsHQiyVxKvN73bThKhONkcX2LWuD928tAR6XMM2G5ovxLe09vuOzzfTWQDsm++9UKF a/A=
-In-Reply-To: <20260515174309.B55B4C2BCB0@smtp.kernel.org>
+In-Reply-To: <20260516035715.BEFE0C19425@smtp.kernel.org>
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 7bit
 
-On 15/05/2026 19:43, sashiko-bot@kernel.org wrote:
->> Currently, the pinctrl core strictly requires all drivers to implement
->> .get_groups_count and .get_group_name callbacks in their pinctrl_ops.
+On 16/05/2026 05:57, sashiko-bot@kernel.org wrote:
+>> The adt7411 driver exposes additional standard hwmon attributes beyond
+>> the ones currently listed in Documentation/hwmon/adt7411.rst.
 >>
->> However, for simple pinctrl drivers that act purely as GPIO controllers
->> and pin-specific configuration proxies, without any concept of muxing or
->> pin groups, this strict requirement forces the implementation of dummy
->> callbacks just to satisfy pinctrl_check_ops().
+>> Document voltage min/max/alarm attributes, temperature min/max and
+>> min_alarm/max_alarm attributes, and the temp2_fault attribute for the
+>> external temperature channel.
 >>
->> Relax this requirement for pin-only drivers by making the group callbacks
->> optional when no muxing or group pin configuration support is provided.
->> Update the core and debugfs helpers to check for the existence of these
->> callbacks before invoking them.
+>> Also update the documentation to clarify that analog inputs in1 and in2
+>> are not available when the external temperature sensor is enabled, and
+>> remove the outdated statement claiming that external temperature support
+>> and limit registers are unsupported.
 >>
->> Drivers that provide muxing or group pin configuration operations still
->> must implement group enumeration and naming callbacks, and are rejected
->> at registration time if they do not.
->>
->> Suggested-by: Linus Walleij <linusw@kernel.org>
->> Signed-off-by: Oleksij Rempel <o.rempel@pengutronix.de>
+>> Signed-off-by: Chen-Shi-Hong <eric039eric@gmail.com>
 > 
 > Reviewed-by: Sashiko <sashiko-bot@kernel.org>
 > 
