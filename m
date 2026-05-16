@@ -1,182 +1,243 @@
-Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from layka.disroot.org (layka.disroot.org [178.21.23.139])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 70778405C5A;
-	Sat, 16 May 2026 12:29:19 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7BA143D8120
+	for <sashiko-reviews@lists.linux.dev>; Sat, 16 May 2026 12:44:09 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=178.21.23.139
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1778934559; cv=none; b=ZjiyjJZoPrE1aeoQwX11pEMjxX3AwMbB8qARIp3OnoHP54QGLt/YCK1n43YSdfy3+TaRyz5OZW4o10aus9vIv+7sB+uabltKw2bLpRY0UZLECa3BAoWqSODm1+fCXcekISZzHKVH0F0nOJAdlVrhK6pdQ71xIBgBqMEAYhV9u4k=
+	t=1778935452; cv=none; b=StATeZXCt3GB1zzHV8zUuZqwuRT2XG0EHOby7IzvGnVH/qsyEIkF6A68YLNbYONEXvk1LXe4rEkfhlTamor49CqS9Berouu/u74WABFIouTXiKy4XupfuRfswNHTUM/0JrAS91elFGgamv6QgKEEw+VXiofEJ5HzPrSKkPlSckg=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1778934559; c=relaxed/simple;
-	bh=Lbp5oUIRM/Mc5rIExQYk1XGR6tzLA4ZDVN/RucFG268=;
-	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=BhL7UY+PViQP/2sMHhDeee7stVgRDHnECHLxDj/4i/JuXW+UcoG24uQxTsPugtEpvl/o2KvzLJpCYK5p/pXmRcT/AVDDzGknAM+ggOb96yjC/AcDczjHwwbdEU/AuEea7F+PSKXni1pX8UBpAeBmez745u8xXh9SwWOordfsyNI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=rRJUIoHO; arc=none smtp.client-ip=10.30.226.201
+	s=arc-20240116; t=1778935452; c=relaxed/simple;
+	bh=ckx1x0sUwpi41seZmj+D+RK41xCsTA25D9MdcStdVM8=;
+	h=Mime-Version:Content-Type:Date:Message-Id:From:To:Cc:Subject:
+	 References:In-Reply-To; b=JckOkMhsNgcV1tQa6mbnYiUakurNGVwTXDY1DXUEB+y4i8cm2p6t2egZH3wJgJyAZLSozrVekhZtM5m/F5rL5vhzJvMssuMMx1ph6DZqs2fz5ZM51oF7nbV900d614Bwv5s2z3yEy35KxoZ30HtlBStQlDeTo0vAyirIMYnKyxc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=disroot.org; spf=pass smtp.mailfrom=disroot.org; dkim=pass (2048-bit key) header.d=disroot.org header.i=@disroot.org header.b=hJncLNgN; arc=none smtp.client-ip=178.21.23.139
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=disroot.org
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=disroot.org
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="rRJUIoHO"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id CA5A4C19425;
-	Sat, 16 May 2026 12:29:16 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1778934559;
-	bh=Lbp5oUIRM/Mc5rIExQYk1XGR6tzLA4ZDVN/RucFG268=;
-	h=Date:Subject:To:Cc:References:From:In-Reply-To:From;
-	b=rRJUIoHOEHWutR0CIyrwZ9LOE0CJ8SyPSU+3JdwYX7fDtU2Q83ywS99rsetJh+vgE
-	 zcm7OBPOVttsYCF5Qr3PN5Kq6sFo+gvjRf39g7PhReTN/hgOcpjF2riWwJwfUgujr0
-	 J9ZXGPcqKv1o+rGG8PkwVWq5wCr9F4xOqaYWurcNVwFdo+2pHpJfhskdDvn8lOp72v
-	 FzxyzhUKgAsMDfr+253PuUP+rDZ5rjQYjogzh392gJZ9rDKltEOu4Ll28rVdT89+Dt
-	 6L6m2cDZq68b4ZEUlYDNtoxCrn1u8YlVC5y7SWCfob48U8vKCsw5Bhccgv0YI5hXik
-	 SqP59284JuKqQ==
-Message-ID: <b5f2a21a-9530-4efe-aed5-cc96aab74e88@kernel.org>
-Date: Sat, 16 May 2026 14:29:15 +0200
+	dkim=pass (2048-bit key) header.d=disroot.org header.i=@disroot.org header.b="hJncLNgN"
+Received: from mail01.disroot.lan (localhost [127.0.0.1])
+	by disroot.org (Postfix) with ESMTP id E15BB27023;
+	Sat, 16 May 2026 14:44:07 +0200 (CEST)
+X-Virus-Scanned: SPAM Filter at disroot.org
+Received: from layka.disroot.org ([127.0.0.1])
+ by localhost (disroot.org [127.0.0.1]) (amavis, port 10024) with ESMTP
+ id Kd3DKUEgHG5k; Sat, 16 May 2026 14:44:07 +0200 (CEST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=disroot.org; s=mail;
+	t=1778935447; bh=ckx1x0sUwpi41seZmj+D+RK41xCsTA25D9MdcStdVM8=;
+	h=Date:From:To:Cc:Subject:References:In-Reply-To;
+	b=hJncLNgNw9PdACjR9C/8p/7W7cYXRMnlYFXW1sHyiTwgBTe2aKSVTbugXPLKcngOQ
+	 0q+57bIYXmh17X5QmUmlMMgWh21WE1HIBE9ZNeHmsJdBsec9EzSJBJxoXNn7Rk5mJh
+	 dipHhK5PetZos/Nk1UCCJT7zF24LtJsTj1gg0uAj2GCWvMG0c1Wv+whuBI2kVzfbSx
+	 IilVJ2xXZBRZFEiAPM5rrgDAD5SCgNeBrswuN43px7A0CaYI337oN77r8YIxPczFpA
+	 dZP6zGC4m/OnRPABdVYoteYHM51stbaEuylECFCzUER3GIhnjjLVGzJJsUzjLrajHf
+	 6glyWR4sFeFPw==
 Precedence: bulk
 X-Mailing-List: sashiko-reviews@lists.linux.dev
 List-Id: <sashiko-reviews.lists.linux.dev>
 List-Subscribe: <mailto:sashiko-reviews+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:sashiko-reviews+unsubscribe@lists.linux.dev>
-MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: Stop false review statements
-To: Guenter Roeck <linux@roeck-us.net>
-Cc: sashiko-bot@kernel.org, sashiko-reviews@lists.linux.dev,
- sashiko@lists.linux.dev, Linux Kernel Workflows <workflows@vger.kernel.org>,
- Linux Kernel Mailing List <linux-kernel@vger.kernel.org>,
- "devicetree@vger.kernel.org" <devicetree@vger.kernel.org>, kfree@google.com
-References: <ad139e54-a7f0-4d09-832c-6b2bf2e93e03@kernel.org>
- <fcc4b719-2696-4f31-bac4-6c07f8ddec47@roeck-us.net>
- <221cc52e-9918-43ea-b196-622a8cc6db05@kernel.org>
- <fd3b2ca7-4d64-4c4b-98a3-7d3285fa6826@roeck-us.net>
-From: Krzysztof Kozlowski <krzk@kernel.org>
-Content-Language: en-US
-Autocrypt: addr=krzk@kernel.org; keydata=
- xsFNBFVDQq4BEAC6KeLOfFsAvFMBsrCrJ2bCalhPv5+KQF2PS2+iwZI8BpRZoV+Bd5kWvN79
- cFgcqTTuNHjAvxtUG8pQgGTHAObYs6xeYJtjUH0ZX6ndJ33FJYf5V3yXqqjcZ30FgHzJCFUu
- JMp7PSyMPzpUXfU12yfcRYVEMQrmplNZssmYhiTeVicuOOypWugZKVLGNm0IweVCaZ/DJDIH
- gNbpvVwjcKYrx85m9cBVEBUGaQP6AT7qlVCkrf50v8bofSIyVa2xmubbAwwFA1oxoOusjPIE
- J3iadrwpFvsZjF5uHAKS+7wHLoW9hVzOnLbX6ajk5Hf8Pb1m+VH/E8bPBNNYKkfTtypTDUCj
- NYcd27tjnXfG+SDs/EXNUAIRefCyvaRG7oRYF3Ec+2RgQDRnmmjCjoQNbFrJvJkFHlPeHaeS
- BosGY+XWKydnmsfY7SSnjAzLUGAFhLd/XDVpb1Een2XucPpKvt9ORF+48gy12FA5GduRLhQU
- vK4tU7ojoem/G23PcowM1CwPurC8sAVsQb9KmwTGh7rVz3ks3w/zfGBy3+WmLg++C2Wct6nM
- Pd8/6CBVjEWqD06/RjI2AnjIq5fSEH/BIfXXfC68nMp9BZoy3So4ZsbOlBmtAPvMYX6U8VwD
- TNeBxJu5Ex0Izf1NV9CzC3nNaFUYOY8KfN01X5SExAoVTr09ewARAQABzSVLcnp5c3p0b2Yg
- S296bG93c2tpIDxrcnprQGtlcm5lbC5vcmc+wsGVBBMBCgA/AhsDBgsJCAcDAgYVCAIJCgsE
- FgIDAQIeAQIXgBYhBJvQfg4MUfjVlne3VBuTQ307QWKbBQJoF1BKBQkWlnSaAAoJEBuTQ307
- QWKbHukP/3t4tRp/bvDnxJfmNdNVn0gv9ep3L39IntPalBFwRKytqeQkzAju0whYWg+R/rwp
- +r2I1Fzwt7+PTjsnMFlh1AZxGDmP5MFkzVsMnfX1lGiXhYSOMP97XL6R1QSXxaWOpGNCDaUl
- ajorB0lJDcC0q3xAdwzRConxYVhlgmTrRiD8oLlSCD5baEAt5Zw17UTNDnDGmZQKR0fqLpWy
- 786Lm5OScb7DjEgcA2PRm17st4UQ1kF0rQHokVaotxRM74PPDB8bCsunlghJl1DRK9s1aSuN
- hL1Pv9VD8b4dFNvCo7b4hfAANPU67W40AaaGZ3UAfmw+1MYyo4QuAZGKzaP2ukbdCD/DYnqi
- tJy88XqWtyb4UQWKNoQqGKzlYXdKsldYqrLHGoMvj1UN9XcRtXHST/IaLn72o7j7/h/Ac5EL
- 8lSUVIG4TYn59NyxxAXa07Wi6zjVL1U11fTnFmE29ALYQEXKBI3KUO1A3p4sQWzU7uRmbuxn
- naUmm8RbpMcOfa9JjlXCLmQ5IP7Rr5tYZUCkZz08LIfF8UMXwH7OOEX87Y++EkAB+pzKZNNd
- hwoXulTAgjSy+OiaLtuCys9VdXLZ3Zy314azaCU3BoWgaMV0eAW/+gprWMXQM1lrlzvwlD/k
- whyy9wGf0AEPpLssLVt9VVxNjo6BIkt6d1pMg6mHsUEVzsFNBFVDXDQBEADNkrQYSREUL4D3
- Gws46JEoZ9HEQOKtkrwjrzlw/tCmqVzERRPvz2Xg8n7+HRCrgqnodIYoUh5WsU84N03KlLue
- MNsWLJBvBaubYN4JuJIdRr4dS4oyF1/fQAQPHh8Thpiz0SAZFx6iWKB7Qrz3OrGCjTPcW6ei
- OMheesVS5hxietSmlin+SilmIAPZHx7n242u6kdHOh+/SyLImKn/dh9RzatVpUKbv34eP1wA
- GldWsRxbf3WP9pFNObSzI/Bo3kA89Xx2rO2roC+Gq4LeHvo7ptzcLcrqaHUAcZ3CgFG88CnA
- 6z6lBZn0WyewEcPOPdcUB2Q7D/NiUY+HDiV99rAYPJztjeTrBSTnHeSBPb+qn5ZZGQwIdUW9
- YegxWKvXXHTwB5eMzo/RB6vffwqcnHDoe0q7VgzRRZJwpi6aMIXLfeWZ5Wrwaw2zldFuO4Dt
- 91pFzBSOIpeMtfgb/Pfe/a1WJ/GgaIRIBE+NUqckM+3zJHGmVPqJP/h2Iwv6nw8U+7Yyl6gU
- BLHFTg2hYnLFJI4Xjg+AX1hHFVKmvl3VBHIsBv0oDcsQWXqY+NaFahT0lRPjYtrTa1v3tem/
- JoFzZ4B0p27K+qQCF2R96hVvuEyjzBmdq2esyE6zIqftdo4MOJho8uctOiWbwNNq2U9pPWmu
- 4vXVFBYIGmpyNPYzRm0QPwARAQABwsF8BBgBCgAmAhsMFiEEm9B+DgxR+NWWd7dUG5NDfTtB
- YpsFAmgXUF8FCRaWWyoACgkQG5NDfTtBYptO0w//dlXJs5/42hAXKsk+PDg3wyEFb4NpyA1v
- qmx7SfAzk9Hf6lWwU1O6AbqNMbh6PjEwadKUk1m04S7EjdQLsj/MBSgoQtCT3MDmWUUtHZd5
- RYIPnPq3WVB47GtuO6/u375tsxhtf7vt95QSYJwCB+ZUgo4T+FV4hquZ4AsRkbgavtIzQisg
- Dgv76tnEv3YHV8Jn9mi/Bu0FURF+5kpdMfgo1sq6RXNQ//TVf8yFgRtTUdXxW/qHjlYURrm2
- H4kutobVEIxiyu6m05q3e9eZB/TaMMNVORx+1kM3j7f0rwtEYUFzY1ygQfpcMDPl7pRYoJjB
- dSsm0ZuzDaCwaxg2t8hqQJBzJCezTOIkjHUsWAK+tEbU4Z4SnNpCyM3fBqsgYdJxjyC/tWVT
- AQ18NRLtPw7tK1rdcwCl0GFQHwSwk5pDpz1NH40e6lU+NcXSeiqkDDRkHlftKPV/dV+lQXiu
- jWt87ecuHlpL3uuQ0ZZNWqHgZoQLXoqC2ZV5KrtKWb/jyiFX/sxSrodALf0zf+tfHv0FZWT2
- zHjUqd0t4njD/UOsuIMOQn4Ig0SdivYPfZukb5cdasKJukG1NOpbW7yRNivaCnfZz6dTawXw
- XRIV/KDsHQiyVxKvN73bThKhONkcX2LWuD928tAR6XMM2G5ovxLe09vuOzzfTWQDsm++9UKF a/A=
-In-Reply-To: <fd3b2ca7-4d64-4c4b-98a3-7d3285fa6826@roeck-us.net>
+Mime-Version: 1.0
+Content-Transfer-Encoding: quoted-printable
 Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 7bit
+Date: Sat, 16 May 2026 18:13:57 +0530
+Message-Id: <DIK3ZE2OHPPC.1MTV4U3YJUMF0@disroot.org>
+From: "Kaustabh Chakraborty" <kauschluss@disroot.org>
+To: <sashiko-reviews@lists.linux.dev>, "Kaustabh Chakraborty"
+ <kauschluss@disroot.org>
+Cc: <conor+dt@kernel.org>, <devicetree@vger.kernel.org>, <robh@kernel.org>,
+ <krzk+dt@kernel.org>
+Subject: Re: [PATCH v7 06/10] leds: flash: add support for Samsung S2M
+ series PMIC flash LED device
+References: <20260516-s2mu005-pmic-v7-6-73f9702fb461@disroot.org>
+ <20260515221558.11108C2BCB0@smtp.kernel.org>
+In-Reply-To: <20260515221558.11108C2BCB0@smtp.kernel.org>
 
-On 16/05/2026 14:23, Guenter Roeck wrote:
-> On 5/16/26 05:16, Krzysztof Kozlowski wrote:
->> On 16/05/2026 14:11, Guenter Roeck wrote:
->>> On Sat, May 16, 2026 at 10:05:02AM +0200, Krzysztof Kozlowski wrote:
->>>> What the hell is that:
->>>>
->>>> https://lore.kernel.org/all/20260515190707.033BDC2BCB0@smtp.kernel.org/
->>>>
->>>> As a bot you CANNOT MAKE a Reviewer's statement of oversight. You are
->>>> not a damn human do be able to make such statement. You are a bot, a tool.
->>>>
->>>
->>> Where exactly do the rules say that ? I seem to miss that.
->>>
->>> There is a policy document about _contributions_ made by AI, but I don't
->>> see the one that says that AI agents must not provide Reviewed-by: tags.
->>
->> Quotes from the existing policy:
->>
->> 1. "By offering my Reviewed-by: tag, I state that:"
->>
->> Tool cannot use first person "I". Tool cannot "state that".
->>
->> 2. "A Reviewed-by tag is *a statement of opinion* that the patch is an
->>   appropriate modification of the kernel without any remaining serious"
->>
->> Tool cannot make a statement of opinion.
->>
->> 3. "Any interested reviewer (who has done the work) can offer a
->> Reviewed-by".
->>
->> Tool is not a reviewer as a person, thus above does not grant the tool
->> permission to offer a tag.
->>
-> 
-> I'd like to see that explicitly spelled out. Until then it is your opinion.
+On 2026-05-15 22:15 +00:00, sashiko-bot wrote:
+> Thank you for your contribution! Sashiko AI review found 5 potential issu=
+e(s) to consider:
+> - [Medium] The V4L2 external_strobe_set callback triggers a software stro=
+be instead of configuring a hardware strobe.
+> - [Medium] The OF match table is declared but never assigned to the platf=
+orm_driver struct.
+> - [Medium] Inconsistent Torch maximum brightness constraints between Sysf=
+s and V4L2.
+> - [Medium] Lack of mutual exclusion between Torch and Flash modes.
+> - [Medium] Hardware state leak on probe failure or module unload.
+> --
+>
+> commit b304c8fc634e3a0a1b0e1d670a3987ad37675a8c
+> Author: Kaustabh Chakraborty <kauschluss@disroot.org>
+>
+> leds: flash: add support for Samsung S2M series PMIC flash LED device
+>
+> This commit adds support for flash LEDs found in Samsung S2M series PMICs=
+,
+> such as the S2MU005. The driver supports two independently controlled cha=
+nnels
+> that can operate in both torch and flash modes.
+>
+>> diff --git a/drivers/leds/flash/leds-s2m-flash.c b/drivers/leds/flash/le=
+ds-s2m-flash.c
+>> new file mode 100644
+>> index 0000000000000..6ee8db094611a
+>> --- /dev/null
+>> +++ b/drivers/leds/flash/leds-s2m-flash.c
+>
+> [ ... ]
+>
+>> +static int s2m_fled_flash_external_strobe_set(struct v4l2_flash *v4l2_f=
+lash, bool enable)
+>> +{
+>> +	struct s2m_led *led =3D to_s2m_led(v4l2_flash->fled_cdev);
+>> +
+>> +	return led->fled.ops->strobe_set(&led->fled, enable);
+>> +}
+>
+> Does this implementation fire the flash immediately instead of configurin=
+g
+> it to wait for a hardware strobe signal?
+>
+> The V4L2 API contract expects external_strobe_set to merely arm the devic=
+e
+> for an external hardware pin assertion. If the PMIC lacks true
+> hardware-based external strobe support, should has_external_strobe be
+> omitted instead?
 
-It is not an opinion. It is written. I gave you quotes.
+This function performs hardware-based external strobing, and the flash
+seems to fire immediately. I don't have access to the documentation for
+this device, so I can't know internal details, but it does work as
+expected.
 
-Do you want to spell the rules of English language? That tool is not a
-person?
+> [ ... ]
+>
+>> +static int s2mu005_fled_torch_brightness_set(struct led_classdev *cdev,=
+ enum led_brightness value)
+>> +{
+> [ ... ]
+>> +	ret =3D regmap_set_bits(led->regmap, led->reg_enable, S2MU005_FLED_TOR=
+CH_EN(led->channel));
+>> +	if (ret) {
+>> +		dev_err(cdev->dev, "failed to enable torch LED\n");
+>> +		goto unlock;
+>> +	}
+>> +
+>> +unlock:
+>> +	mutex_unlock(&led->lock);
+>> +
+>> +	return ret;
+>> +}
+>> +
+>> +static int s2mu005_fled_flash_strobe_set(struct led_classdev_flash *fle=
+d, bool state)
+>> +{
+> [ ... ]
+>> +	ret =3D regmap_set_bits(led->regmap, led->reg_enable, S2MU005_FLED_FLA=
+SH_EN(led->channel));
+>> +	if (ret) {
+>> +		dev_err(fled->led_cdev.dev, "failed to enable flash LED\n");
+>> +		goto unlock;
+>> +	}
+>> +
+>> +unlock:
+>> +	mutex_unlock(&led->lock);
+>> +
+>> +	return ret;
+>> +}
+>
+> Since the LED subsystem allows Sysfs to enable Torch and Flash
+> independently, is there a risk that both modes could be active
+> simultaneously in the PMIC registers?
+>
+> Neither s2mu005_fled_torch_brightness_set() nor
+> s2mu005_fled_flash_strobe_set() appears to clear the enable bit for the
+> opposite mode.
 
-Shall I send the patch like:
+Yes, both can be simultaneously active, but no, there's no risk. The
+reason is that the torch and the flash are two separate, independent
+LEDs, thus being controllable independently. So there is no need of
+negotiation required between torch and flash mode.
 
-  Any interested reviewer (who has done the work) can offer a
-  Reviewed-by.
- +In English "reviewer" is a person [1].
- + [1] https://en.wiktionary.org/wiki/reviewer
+> [ ... ]
+>
+>> +static int s2mu005_fled_init(struct s2m_led *led, struct device *dev, s=
+truct regmap *regmap,
+>> +			     unsigned int nr_channels)
+>> +{
+> [ ... ]
+>> +	/* Enable the LED channels. */
+>> +	ret =3D regmap_set_bits(regmap, S2MU005_REG_FLED_CTRL1, S2MU005_FLED_C=
+H_EN);
+>> +	if (ret)
+>> +		return dev_err_probe(dev, ret, "failed to enable LED channels\n");
+>> +
+>> +	return 0;
+>> +}
+>
+> If the probe fails during child node iteration, or if the module is
+> unloaded, does this leave the PMIC LED block permanently powered on?=20
+>
+> It looks like S2MU005_FLED_CH_EN is set globally here but never cleared o=
+n
+> failure or removal, which could cause a resource and power leak.
 
-Seriously, you expect to document the English language?
+FIXME. Although a non-issue in testing, it is duly appropriate to unset
+it, in the driver .remove() callback.
 
-> 
->>>
->>>> Stop faking tags.
->>>>
->>>> And really, considering how many false positives Sashiko produces, how
->>>> poor review comments it gives, how many misleading comments, it's
->>>> unacceptable to me to consider that a review.
->>>>
->>>> Amount of useless noise Sashiko produces already changed my mind how
->>>> useful that tool is.
->>>
->>> We seem to have completely different experiences. Yes, it does produce
->>> false positives, just like humans do. However, I have seen it find many
->>> real bugs, including many in patches which already had Reviewed-by: tags
->>> from (presumably) human reviewers.
->>
->> Of course it finds bugs. But it also produces - roughly - 80-90% false
->> positives, completely useless.
->>
-> 
-> Really ? The ones I have seen are - roughly, to use the same term - 80-90%
-> true positives. Maybe you should explicitly ask for no Sashiko reviews in
-> your scope of responsibility.
+> [ ... ]
+>
+>> +static int s2mu005_fled_init_channel(struct s2m_led *led, struct device=
+ *dev,
+>> +				     struct fwnode_handle *fwnp)
+>> +{
+> [ ... ]
+>> +	cdev->max_brightness =3D 16;
+>> +	cdev->brightness_set_blocking =3D s2mu005_fled_torch_brightness_set;
+>> +	cdev->flags |=3D LED_DEV_CAP_FLASH;
+> [ ... ]
+>> +	v4l2_cfg.intensity.min =3D led->fled.brightness.min;
+>> +	v4l2_cfg.intensity.step =3D led->fled.brightness.step;
+>> +	v4l2_cfg.intensity.max =3D led->fled.brightness.max;
+>> +	v4l2_cfg.intensity.val =3D led->fled.brightness.val;
+>
+> Does this create an inconsistency between the Sysfs and V4L2 Torch maximu=
+m
+> brightness constraints?
+>
+> The code sets cdev->max_brightness to 16, but v4l2_cfg.intensity is
+> initialized using the Flash constraints. Since led->fled.brightness limit=
+s
+> the brightness to 375,000 uA (effectively level 15), V4L2 users might be
+> artificially restricted to level 15 while Sysfs users can reach 16.
 
-I already sent a patch to stop receiving all these emails and I stopped
-reading them completely, when fetched via b4 for review in mutt workflow.
+As explained above, torch and flash LEDs are different. The flash is
+restricted to 15 as the level-16 equivalent causes flickering (the cause
+is unknown), but the same is not true for the torch LED. Hence the
+discrepancy.
 
-But this is not the point.
+> [ ... ]
+>
+>> +static const struct of_device_id s2m_fled_of_match_table[] =3D {
+>> +	{ .compatible =3D "samsung,s2mu005-flash", .data =3D (void *)S2MU005 }=
+,
+>> +	{ /* sentinel */ },
+>> +};
+>> +MODULE_DEVICE_TABLE(of, s2m_fled_of_match_table);
+>> +
+>> +static struct platform_driver s2m_fled_driver =3D {
+>> +	.driver =3D {
+>> +		.name =3D "s2m-flash",
+>> +	},
+>> +	.probe =3D s2m_fled_probe,
+>> +	.id_table =3D s2m_fled_id_table,
+>> +};
+>> +module_platform_driver(s2m_fled_driver);
+>
+> Should s2m_fled_of_match_table be assigned to the .of_match_table field
+> within the driver structure here?
+>
+> It appears to be declared and exported above, but never assigned to the
+> driver. This might prevent Device Tree compatible string matching.
 
-Our docs clearly state what Reviewed-by means, regardless of the quality
-of the actual review. Poor quality is just another reason, less
-important, though.
-
-Best regards,
-Krzysztof
+This is intended behavior, as was also documented in a previous revision
+of this patch.
