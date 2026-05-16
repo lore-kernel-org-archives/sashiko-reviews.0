@@ -1,33 +1,41 @@
-Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from smtp.forwardemail.net (smtp.forwardemail.net [121.127.44.66])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 36AB2191;
-	Sat, 16 May 2026 19:32:28 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AAF8E2EA749
+	for <sashiko-reviews@lists.linux.dev>; Sat, 16 May 2026 19:43:50 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=121.127.44.66
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1778959949; cv=none; b=E8LcJJ/mOyQm6SFYDBc30Fj4M9Ogue0aithuyYrdWDYSxO9MEl1dlXj6Dhj+eeRJBbFmQjJU3NVs3HiXAQSiBQtUE7tlEnBcnSBgbCYUYNfcgvwrXoL6Bj2F8u3V3Q2US+FjIoqLq4Tf+S3wb/Lnqv1hzC+pZ3sHshDuy2oIAKg=
+	t=1778960638; cv=none; b=r0Y7KmLOaz9nZJHFZk+3mj9LwaRai/WFSf28g2CKLCGVUY1To0vx6OKkLrodLhFO4fUrhcrgYbUpJ+YhzA7XJ+mxssN/DPDVLZB/RiS4NA2NNzelwrBXIiIhNc+WozrYHmt6VbIBw9sSxD6bB6v+mCiXSMZbqwtrCM0o8LDR7OA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1778959949; c=relaxed/simple;
-	bh=y2QxKdp0IpJbIPuJXX2Q8Xyf7FvOXID9Znadskk+T80=;
+	s=arc-20240116; t=1778960638; c=relaxed/simple;
+	bh=bYlta0w20xk/enusfdwKFxIvCllKKtiNmuIAyRU2IW4=;
 	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=sZy1tk5HHfjEQEVEhY0Tg0vQjCypBvCU9FpmlgrWRjuQW4gW+mpLPpdbpngd0n6j43c3PLZIhcn9sdhSDJGf3b7WS3vLZS8z3h9hbIw1VR+z7URJJdKQC5BvpneCcN6og5SmFWZfdsuzhWcLKlHlIyKDTgYL/phxOaZ0jmM+B/w=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=U3q5Gbpw; arc=none smtp.client-ip=10.30.226.201
+	 In-Reply-To:Content-Type; b=hed8esACog5HH8PJeT+OzUJq/ow31S5bm0/oHQySxpF0sCb0pGuH3eQ4yIvW8TjMZBYbTlBEUu49kCqk8PyP1FrxF3+07q4ay+iWXiGmP4LqRts0r9Km2a3eQsby6ATvL9WW5i/eEXGpGOzxH9pWwqkk4v4H7rxoELWocWZ9qWM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=kwiboo.se; spf=pass smtp.mailfrom=fe-bounces.kwiboo.se; dkim=pass (2048-bit key) header.d=kwiboo.se header.i=@kwiboo.se header.b=Xp3pneCg; arc=none smtp.client-ip=121.127.44.66
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=kwiboo.se
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=fe-bounces.kwiboo.se
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="U3q5Gbpw"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 30C9AC19425;
-	Sat, 16 May 2026 19:32:27 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1778959948;
-	bh=y2QxKdp0IpJbIPuJXX2Q8Xyf7FvOXID9Znadskk+T80=;
-	h=Date:Subject:To:Cc:References:From:In-Reply-To:From;
-	b=U3q5GbpwVWahnZf+64yR7Qyv1KjOAXFoNOBXnB97sojhFVKmdV8zOGCw/+roNFxWT
-	 rzPc/nIxpy6Ry35fjVjjvfkmIaCU1Qc1lj+zwsASjMp2ip33zNJ1hEdJoKdoiuxErG
-	 qFxkx9gUBwPY9QKm5un6eP7p6MaCK0rfmx+fhnkYbvW2ytnPr1LvPHN7jKhxmb2TUL
-	 /D5IJVNqkTdwPL2b7Ba/WuN5KLsfriSJmJ2tWU6smfhdfjGAQMgklWLVpWzMoeCLfx
-	 zq8nh4GvoDZX/A5zflSDf21hSBaFEWK7aOLN9KmvTP95a8kwAw95TyYOFPjGWJsZAc
-	 Lg542v3NAsYdQ==
-Message-ID: <f77eaf7c-72c1-4646-b412-733b566d3643@kernel.org>
-Date: Sat, 16 May 2026 21:32:25 +0200
+	dkim=pass (2048-bit key) header.d=kwiboo.se header.i=@kwiboo.se header.b="Xp3pneCg"
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=kwiboo.se;
+ h=Content-Transfer-Encoding: Content-Type: In-Reply-To: From: References:
+ Cc: To: Subject: MIME-Version: Date: Message-ID; q=dns/txt;
+ s=fe-e1b5cab7be; t=1778960619;
+ bh=qdqxexX5mOstRuzAbF9sWFbFUGmWoYy5Hp06rH3GWRM=;
+ b=Xp3pneCgND0iDDekkEXi+CyWIhP5OmpgD6IU1NBw4wWiUpILGfywM68+4eEuX50lxOpLeMOMh
+ ndtkGfnx48H3d530NY8NwSDUfxYBzfnPpttZBo8oxY5sjd4c8OnSPBrUWyU+TRXoqW1czr7PIvt
+ kwPIf9OwyZeW7yAiW7ungzGA9685Md/w0XUAwY43eZgZ9yeWKbxrMoFmbDiebananQjUg4qwvZn
+ S4u+sp/wVQw6QWhNak/BujhaXkItVa14KB7oukGYZ0ZpJH8KNMx6cVZ07Cl1avjvAhKaY6jvy4V
+ xmBbkn4epdXTrvXBuYr9whMIUr0nXhvcslwDMz5Ohcrw==
+X-Forward-Email-ID: 6a08c8e55c12e46019b2216b
+X-Forward-Email-Sender: rfc822; jonas@kwiboo.se, smtp.forwardemail.net,
+ 121.127.44.66
+X-Forward-Email-Version: 2.8.12
+X-Forward-Email-Website: https://forwardemail.net
+X-Complaints-To: abuse@forwardemail.net
+X-Report-Abuse: abuse@forwardemail.net
+X-Report-Abuse-To: abuse@forwardemail.net
+Message-ID: <533dd01f-9516-4267-9376-1e5ba42ba124@kwiboo.se>
+Date: Sat, 16 May 2026 21:43:30 +0200
 Precedence: bulk
 X-Mailing-List: sashiko-reviews@lists.linux.dev
 List-Id: <sashiko-reviews.lists.linux.dev>
@@ -35,125 +43,101 @@ List-Subscribe: <mailto:sashiko-reviews+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:sashiko-reviews+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v3 1/3] dt-bindings: iio: adc: Add GPADC for Allwinner
- A523
-To: sashiko-reviews@lists.linux.dev,
- Michal Piekos <michal.piekos@mmpsystems.pl>
-Cc: robh@kernel.org, devicetree@vger.kernel.org, krzk+dt@kernel.org,
- linux-sunxi@lists.linux.dev, conor+dt@kernel.org
-References: <20260516-sunxi-a523-gpadc-v3-1-a3a04cff2620@mmpsystems.pl>
- <20260516055003.3F014C19425@smtp.kernel.org>
-From: Krzysztof Kozlowski <krzk@kernel.org>
+Subject: Re: [PATCH v6 13/22] drm: bridge: dw_hdmi: Use generic CEC notifier
+ helpers
+To: sashiko-reviews@lists.linux.dev
+Cc: Frank.Li@kernel.org, linux-sunxi@lists.linux.dev, imx@lists.linux.dev,
+ neil.armstrong@linaro.org, linux-amlogic@lists.infradead.org
+References: <20260516183838.2024991-14-jonas@kwiboo.se>
+ <20260516192001.27E4EC19425@smtp.kernel.org>
 Content-Language: en-US
-Autocrypt: addr=krzk@kernel.org; keydata=
- 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 a/A=
-In-Reply-To: <20260516055003.3F014C19425@smtp.kernel.org>
+From: Jonas Karlman <jonas@kwiboo.se>
+In-Reply-To: <20260516192001.27E4EC19425@smtp.kernel.org>
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 7bit
 
-On 16/05/2026 07:50, sashiko-bot@kernel.org wrote:
-> Thank you for your contribution! Sashiko AI review found 2 potential issue(s) to consider:
-> - [Low] Brittle schema conditional matching for compatible string
-> - [Low] Missing device tree example for the newly added A523 variant
+On 5/16/2026 9:20 PM, sashiko-bot@kernel.org wrote:
+> Thank you for your contribution! Sashiko AI review found 1 potential issue(s) to consider:
+> - [High] Use-After-Free and Memory Leak in CEC notifier cleanup due to drmm and manual lifecycle mismatch
 > --
 > 
-> commit 8ef795d51c1bc739366c917fc7bb2c4c8c5c937c
-> Author: Michal Piekos <michal.piekos@mmpsystems.pl>
+> commit eb59f6fe976b03aa5f719b79a28355b27f403bfe
+> Author: Jonas Karlman <jonas@kwiboo.se>
+> Subject: drm: bridge: dw_hdmi: Use generic CEC notifier helpers
 > 
-> dt-bindings: iio: adc: Add GPADC for Allwinner A523
+> This commit replaces open-coded CEC notifier handling with generic CEC
+> helpers using drmm_connector_hdmi_cec_notifier_register. It also removes
+> the manual notifier unregistration from dw_hdmi_connector_destroy.
 > 
-> Add support for the GPADC for the Allwinner A523, which introduces a
-> second clock compared to previous generations.
+>> The drmm release action for the generic CEC notifier should run just
+>> before dw_hdmi_connector_destroy(), closely matching the lifetime of
+>> the replaced CEC notifier and the connector.
 > 
->> diff --git a/Documentation/devicetree/bindings/iio/adc/allwinner,sun20i-d1-gpadc.yaml b/Documentation/devicetree/bindings/iio/adc/allwinner,sun20i-d1-gpadc.yaml
->> index da605a051b949..6467800d30e27 100644
->> --- a/Documentation/devicetree/bindings/iio/adc/allwinner,sun20i-d1-gpadc.yaml
->> +++ b/Documentation/devicetree/bindings/iio/adc/allwinner,sun20i-d1-gpadc.yaml
-> 
+> Is this lifecycle assumption accurate for drivers that do not use drmm
+> for mode config?
+
+Yes, drm_mode_config_init() was converted to call its drmm_ variant in
+v5.8-rc1, with commit c3b790ea07a1 ("drm: Manage drm_mode_config_init
+with drmm_"). Effectively meaning that all drm drivers use drmm for mode
+config.
+
+>> diff --git a/drivers/gpu/drm/bridge/synopsys/dw-hdmi.c b/drivers/gpu/drm/bridge/synopsys/dw-hdmi.c
+>> --- a/drivers/gpu/drm/bridge/synopsys/dw-hdmi.c
+>> +++ b/drivers/gpu/drm/bridge/synopsys/dw-hdmi.c
 > [ ... ]
+>> @@ -2547,9 +2543,6 @@ static void dw_hdmi_connector_destroy(struct drm_connector *connector)
+>>  {
+>>  	struct dw_hdmi *hdmi = container_of(connector, struct dw_hdmi, connector);
+>>  
+>> -	cec_notifier_conn_unregister(hdmi->cec_notifier);
+>> -	hdmi->cec_notifier = NULL;
+>> -
+>>  	drm_connector_cleanup(connector);
+>>  	drm_bridge_put(&hdmi->bridge);
+>>  }
 > 
->> +allOf:
->> +  - if:
->> +      properties:
->> +        compatible:
->> +          enum:
->> +            - allwinner,sun55i-a523-gpadc
-> 
-> Could this conditional matching be brittle?
-> 
-> Using a strict enum instead of contains: enum will fail if a future
-> hardware variant uses allwinner,sun55i-a523-gpadc as a fallback string
-> in an array. Would it be better to use contains: enum here to ensure
-> standard extensibility?
+> Since drm_connector_cleanup() zeroes the connector memory, and
+> drm_bridge_put() can drop the final reference to the bridge (which frees
+> the dw_hdmi structure and its embedded connector), could this lead to a
+> use-after-free?
 
-Nitpick. Code is correct. Sashiko prompts are asking to skip nitpicks so
-why do we deal with this?
+It should not, destroy() is the last call made for the connector, and
+the drm_bridge_put() is here to ensure that the struct dw_hdmi is still
+around when drm_connector_cleanup() is called, to avoid a use-after-free.
 
-Really the quality of Sashiko reviews for DT at least deteriorated or
-was always poor but I just did not notice :(
-
+> If a user-space application holds an open file descriptor to the DRM device
+> during driver unbind, the DRM device remains alive. The deferred drmm
+> release action will only execute later when the file descriptor is closed
+> and the DRM device's refcount drops to zero.
 > 
->> +    then:
->> +      properties:
->> +        clocks:
->> +          items:
->> +            - description: Bus clock
->> +            - description: Module clock
->> +        clock-names:
->> +          items:
->> +            - const: bus
->> +            - const: mod
->> +      required:
->> +        - clock-names
+> When the drmm action eventually runs, it will dereference the freed
+> connector pointer.
 > 
-> Should an example be added for the allwinner,sun55i-a523-gpadc variant
-> in the examples section?
+> Additionally, because drm_connector_cleanup() executes
+> memset(connector, 0, sizeof(*connector)), won't connector->cec.data become
+> NULL? This would cause the delayed drmm release action to silently skip
+> unregistration, leaking the cec_notifier object.
+
+It should not, drmm release actions are called in reverse order, and
+drmm_connector_hdmi_cec_notifier_register() is called last, meaning its
+release action should be called before drm_mode_config_cleanup() is
+called by the the release action for drmm_mode_config_init().
+
+Regards,
+Jonas
+
+> [ ... ]
+>> @@ -2609,15 +2600,8 @@ static int dw_hdmi_connector_create(struct dw_hdmi *hdmi)
+> [ ... ]
+>> -	notifier = cec_notifier_conn_register(hdmi->dev, NULL, &conn_info);
+>> -	if (!notifier)
+>> -		return -ENOMEM;
+>> -
+>> -	hdmi->cec_notifier = notifier;
+>> -
+>> -	return 0;
+>> +	return drmm_connector_hdmi_cec_notifier_register(connector, NULL,
+>> +							 hdmi->dev);
+>>  }
 > 
-> Without an example, it appears the new constraints for the two clocks
-> and the clock-names property will not be tested during dt_binding_check.
 
-Again crappy Sashiko reasoning...
-
-Best regards,
-Krzysztof
