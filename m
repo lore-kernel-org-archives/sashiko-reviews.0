@@ -1,210 +1,74 @@
-Received: from mail-pl1-f169.google.com (mail-pl1-f169.google.com [209.85.214.169])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1866C405C3A
-	for <sashiko-reviews@lists.linux.dev>; Sat, 16 May 2026 15:19:15 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.214.169
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 600D21643B;
+	Sat, 16 May 2026 15:20:35 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1778944756; cv=none; b=GXuBJ6hz0S8rTk/U1nrNxEKg3QPK82SrykO2tZrnYNdnNoFnOGNVIqMi/8dnZrLNEJgMedKc527vvnA795Kggb4OISn6pkxUc/2bWWcWyJxCxSop6FnecuZsvsqKQpmzy/cdtr8FSWKeNfCZ3PGSThc0fuMm91/JJGHIpp5844Y=
+	t=1778944835; cv=none; b=rKXjApCQGv3N8kcH9FUvDzI8Z0RfoViNW07OlvvSn+RfhXYKUc4P8hXmFjaXmJloozQC1DYZaZujl/JaCel0HaAJKMzhHV7gfmpUieEyYfLmVniOj1s9LTV3uMsLoWcKHgbw0nA0olenRBYiVggrylvec7Afp0JeIJCkk4EOz/0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1778944756; c=relaxed/simple;
-	bh=Pw8b5bPQqcNlcW3aCbB9ag/FgzotRKgymsVwoZrW7mk=;
-	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=P++3ACcLPRZ2mGaJw0kuGAK0lZbNJfQchOPdEePkM4UXNJ2RIQYULpLw8XQR+McnTgFDp5sgFax2rRfAe/kN/GoeShTlNYhbRn/45fgjDUv3H1z1nfLmTSEUrawDg3gs+RG6cxbcU8sn4ieRZMs4avfDkicLA3qaab+BtBZWEt8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=roeck-us.net; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=Fs8SB23a; arc=none smtp.client-ip=209.85.214.169
-Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=roeck-us.net
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+	s=arc-20240116; t=1778944835; c=relaxed/simple;
+	bh=hZWT1+S7pf1KBuMIvxH6MYDNtNRLSd9AeWaEI9ygGX0=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=bYCufR0KLaRgwS5e1Bm9OKv8La/GgQgBjKA4zXD3nluPIXO0U/DaMz4PgldKXVmCekz9KwqRG/eryKBKiyP7xZy8/g/SKeF8omj9ecYG2WaJf1IIsCmOXzgEzlaD0M56ELoBRx3NbqvWfFIqkB+tEZU6ooO1mpBrkkBR2KrySXE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=FeSjBCWl; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="Fs8SB23a"
-Received: by mail-pl1-f169.google.com with SMTP id d9443c01a7336-2ba17c8cfacso9249415ad.2
-        for <sashiko-reviews@lists.linux.dev>; Sat, 16 May 2026 08:19:15 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20251104; t=1778944754; x=1779549554; darn=lists.linux.dev;
-        h=content-transfer-encoding:in-reply-to:autocrypt:from
-         :content-language:references:cc:to:subject:user-agent:mime-version
-         :date:message-id:sender:from:to:cc:subject:date:message-id:reply-to;
-        bh=rj8rndSFiycmqOwIbgdwAMxdgZDADNL4od2Tb81O+Tg=;
-        b=Fs8SB23aST1vJGTKXqOpHGdEQt0/deE2QlxKkRy9LBrOOVit/QkKdhjZHvNx9GLqkN
-         ncUVfHT+BrjdPJBhbfq/f0Tab+dfJtsqy/vuYOs51WlECGE+Ps1b2HMBIkIOfoqp1Zl1
-         XN6MOYjzhokucJdzY2Ve0qihwK2HAJuBywu7e9wwgLBD94cag9ZRaMiM607ejdX/vIvN
-         X8W9UKK+3wajBxEVj/FlYxqYRFGrMJqWa2mZ1GGesYMP2HtxQ+eiSaq6gHFDlgy1BbJf
-         +hUCbFxzlWl0glk9X5TaYwcJiIp6NGFhHRzBJ28HF00LhDuscBI0gUBDhlqU2MGaFAt+
-         BEfw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20251104; t=1778944754; x=1779549554;
-        h=content-transfer-encoding:in-reply-to:autocrypt:from
-         :content-language:references:cc:to:subject:user-agent:mime-version
-         :date:message-id:sender:x-gm-gg:x-gm-message-state:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=rj8rndSFiycmqOwIbgdwAMxdgZDADNL4od2Tb81O+Tg=;
-        b=ggb3xg15dApfc29rgQ8jJGu2yJtWP5sqeQ8MI0Z0hfh0uSvsSwzHGV8n1wcJbC/6sl
-         7RuaUWjNjsAUdZM3H9VPtLMqVA9hJw+s7NgTHetNAKRJKffqwdDw3QRiobqdDS2C3BIO
-         1y8a020B/tk4rg2v9r7l5Md/Bw6BzC4SOC/duQaqKNDAxmvmLEA/4W0HCJ+5OShq4jQ6
-         OH/bKx72ttGNcXt9EP8UBsTMA9agsaHs0Eotstaq9JO4HN3mWbDj2NOA85YyznSwxL09
-         rNfyArY9qPzWWagxPUW2XxP9hmy6CtVVZsKvmqYdnPJciPGj96mNIQT1w18HquLPBOkj
-         7mtA==
-X-Gm-Message-State: AOJu0YyaaKZL64Dzd0pRM+LcFiHLlW/gFsnWpIQ3fROPEiW7V9Y+vKEA
-	niD/BX1A3OUcwfjwgKsQmomT4MvEaFnPbQZinfv1GKk462YdcLFzoIH4vrtpRJQv
-X-Gm-Gg: Acq92OFVPhbwk4s0kjLXbbvoaAnRy524I7NGgwYoNbO1PEiq3Z5UIVTLFuUOHJPYZLI
-	7WF9WU7hCfRnwzE2VEnJbkzAuFSQzcgwHnGwAg5k49i6D2VJc2lr4Stzkxt7GgJEhqVOY8TOW0e
-	35Qhzoz74Ambq9riH7dL0C1LcNUYf+e5I9g8AohEuGGtotC2HL8D35sYwTYhZkGI/nqvsfZ6yzk
-	1vfrCPLxgkIjcmUoqXBczULgk3Kl0DqjyLw4Y2CL9zpQYYNaRWSVopJSrszHeZnyp/9aJXlNIoR
-	e9k1J0Sr38yg5g9ztfklnBrsWyix3/cQm9aV1KvPFxOHUFqR42DcbbOABKn2zPeNevb0jy8J/Lp
-	d99/oBBd0/V+O668yX4r0XfJ377mMh22nf+ApiRtX1sbfYSSyBQSytVYZEeAPq+S3nGIvMSrbjS
-	TR8TH3iRHaxtLCG0uKgcahc5exNPZfX4R9T+LfkbseeyFXNg5Dpyn+8Wz5AYbk+NOBeFnDgEzQ
-X-Received: by 2002:a17:902:a701:b0:2bd:5b20:a5b5 with SMTP id d9443c01a7336-2bd7e951360mr67938555ad.37.1778944754433;
-        Sat, 16 May 2026 08:19:14 -0700 (PDT)
-Received: from ?IPV6:2600:1700:e321:62f0:da43:aeff:fecc:bfd5? ([2600:1700:e321:62f0:da43:aeff:fecc:bfd5])
-        by smtp.gmail.com with ESMTPSA id d9443c01a7336-2bdc58575dfsm3068475ad.20.2026.05.16.08.19.13
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Sat, 16 May 2026 08:19:13 -0700 (PDT)
-Sender: Guenter Roeck <groeck7@gmail.com>
-Message-ID: <23b62e32-8773-49f4-98d2-3c32b229650c@roeck-us.net>
-Date: Sat, 16 May 2026 08:19:13 -0700
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="FeSjBCWl"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id E3A2FC19425;
+	Sat, 16 May 2026 15:20:34 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+	s=k20201202; t=1778944835;
+	bh=hZWT1+S7pf1KBuMIvxH6MYDNtNRLSd9AeWaEI9ygGX0=;
+	h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
+	b=FeSjBCWl1mDJl78NS8KdfpLoZX6GWc544GDZeELaelIJrIeTOy2+VhgrYZ/p4cb0v
+	 E0jOR10jz0Gc+3bha1s2sDrlAeMNTcb2hv+QDD45ddYGi3LQRZQa6rckxwm8hWD8iX
+	 8EGCYj5cNgM5tBxtXHjlB+ySG3hNTCgMrrdqcAOXfg9cRQDb7wKAr1Q8tA9NrDESDD
+	 wtD6PowG7Rjy9dGvO6NMQPD/LXv+qr4O3pq0+GTyBJwTgWc8DSaVverNGgmm30Km2z
+	 bjGR4Wbg7yaIKqLMLgnBaHIp22QKrb9t7lOHsD6XjeXRq4FjkoWmvI/80d0czQMb2a
+	 TbCyU0ByT9sfw==
+Date: Sat, 16 May 2026 11:20:33 -0400
+From: Konstantin Ryabitsev <mricon@kernel.org>
+To: Guenter Roeck <linux@roeck-us.net>
+Cc: Krzysztof Kozlowski <krzk@kernel.org>, sashiko-bot@kernel.org, 
+	sashiko-reviews@lists.linux.dev, sashiko@lists.linux.dev, 
+	Linux Kernel Workflows <workflows@vger.kernel.org>, Linux Kernel Mailing List <linux-kernel@vger.kernel.org>, 
+	"devicetree@vger.kernel.org" <devicetree@vger.kernel.org>, kfree@google.com
+Subject: Re: Stop false review statements
+Message-ID: <20260516-upbeat-tody-of-feminism-4ab00a@lemur>
+References: <ad139e54-a7f0-4d09-832c-6b2bf2e93e03@kernel.org>
+ <fcc4b719-2696-4f31-bac4-6c07f8ddec47@roeck-us.net>
 Precedence: bulk
 X-Mailing-List: sashiko-reviews@lists.linux.dev
 List-Id: <sashiko-reviews.lists.linux.dev>
 List-Subscribe: <mailto:sashiko-reviews+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:sashiko-reviews+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v4 2/2] hwmon: (pmbus/d1u74t) Add Murata D1U74T PSU driver
-To: sashiko-reviews@lists.linux.dev,
- Abdurrahman Hussain <abdurrahman@nexthop.ai>
-Cc: devicetree@vger.kernel.org, robh@kernel.org, krzk+dt@kernel.org,
- linux-hwmon@vger.kernel.org, conor+dt@kernel.org
-References: <20260514-d1u74t-v4-2-1f1ee7b002ec@nexthop.ai>
- <20260515033458.CFBFCC2BCB0@smtp.kernel.org>
-Content-Language: en-US
-From: Guenter Roeck <linux@roeck-us.net>
-Autocrypt: addr=linux@roeck-us.net; keydata=
- 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
- np3900V20aS7eD9K8GTU0TGC1pyz6IVJwIE=
-In-Reply-To: <20260515033458.CFBFCC2BCB0@smtp.kernel.org>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+In-Reply-To: <fcc4b719-2696-4f31-bac4-6c07f8ddec47@roeck-us.net>
 
-On 5/14/26 20:34, sashiko-bot@kernel.org wrote:
-> Thank you for your contribution! Sashiko AI review found 2 potential issue(s) to consider:
-> - [Low] Missing includes for <linux/module.h> and <linux/string.h>.
-> - [Low] Logging raw I2C device strings without escaping.
-> --
+On Sat, May 16, 2026 at 05:11:28AM -0700, Guenter Roeck wrote:
+> On Sat, May 16, 2026 at 10:05:02AM +0200, Krzysztof Kozlowski wrote:
+> > What the hell is that:
+> > 
+> > https://lore.kernel.org/all/20260515190707.033BDC2BCB0@smtp.kernel.org/
+> > 
+> > As a bot you CANNOT MAKE a Reviewer's statement of oversight. You are
+> > not a damn human do be able to make such statement. You are a bot, a tool.
+> > 
 > 
-> commit f645f72f2f4d8cc53bec169fb4350e6231e649a4
-> Author: Abdurrahman Hussain <abdurrahman@nexthop.ai>
+> Where exactly do the rules say that ? I seem to miss that.
 > 
-> hwmon: (pmbus/d1u74t) Add Murata D1U74T PSU driver
-> 
-> This commit adds a PMBus client driver for the Murata D1U74T power supplies.
-> 
-> Closes: https://lore.kernel.org/oe-kbuild-all/202605122253.zInzmUeX-lkp@intel.com/
-> 
->> diff --git a/drivers/hwmon/pmbus/d1u74t.c b/drivers/hwmon/pmbus/d1u74t.c
->> new file mode 100644
->> index 0000000000000..286ba492e3362
->> --- /dev/null
->> +++ b/drivers/hwmon/pmbus/d1u74t.c
->> @@ -0,0 +1,86 @@
->> +// SPDX-License-Identifier: GPL-2.0-or-later
->> +/*
->> + * Copyright 2026 Nexthop Systems.
->> + */
->> +
->> +#include <linux/i2c.h>
->> +#include <linux/of.h>
->> +#include <linux/pmbus.h>
->> +
->> +#include "pmbus.h"
-> 
-> This isn't a bug, but should this file include <linux/module.h> and
-> <linux/string.h>? It uses module-specific macros like MODULE_DEVICE_TABLE
-> and MODULE_AUTHOR, as well as the strncmp function. While compilation might
-> succeed due to transitive includes, it could lead to build failures or
-> implicit declaration warnings on some architectures.
-> 
+> There is a policy document about _contributions_ made by AI, but I don't
+> see the one that says that AI agents must not provide Reviewed-by: tags.
 
-I added that; no need to resend.
+From my perspective, AI agents must NOT use the Reviewed-by tag for the
+following reasons:
 
-> [ ... ]
-> 
->> +static int d1u74t_probe(struct i2c_client *client)
->> +{
->> +	char buf[I2C_SMBUS_BLOCK_MAX + 2] = { 0 };
->> +	struct device *dev = &client->dev;
->> +	int rc;
->> +
->> +	rc = i2c_smbus_read_block_data(client, PMBUS_MFR_ID, buf);
->> +	if (rc < 0)
->> +		return dev_err_probe(dev, rc, "Failed to read PMBUS_MFR_ID\n");
->> +
->> +	if (rc != 9 || strncmp(buf, "Murata-PS", 9)) {
->> +		buf[rc] = '\0';
->> +		return dev_err_probe(dev, -ENODEV,
->> +				     "Unsupported Manufacturer ID '%s'\n",
->> +				     buf);
->> +	}
->> +
->> +	rc = i2c_smbus_read_block_data(client, PMBUS_MFR_MODEL, buf);
->> +	if (rc < 0)
->> +		return dev_err_probe(dev, rc,
->> +				     "Failed to read PMBUS_MFR_MODEL\n");
->> +
->> +	if (rc < 8 || strncmp(buf, "D1U74T-W", 8)) {
->> +		buf[rc] = '\0';
->> +		return dev_err_probe(dev, -ENODEV, "Model '%s' not supported\n",
->> +				     buf);
->> +	}
-> 
-> Does this code log potentially unescaped strings directly from the device?
-> 
-> Since the I2C bus can return garbage data or unprintable characters from a
-> malfunctioning device, using the %s format specifier could result in
-> corrupted log output. Would it be safer to use the %*pE specifier to safely
-> escape these untrusted strings?
-> 
-Possibly, but I'll let it go for now. Other drivers do the same. It can be
-fixed in a follow-up patch if needed.
+- We consider this a "person-trailer" and it implies agency
+- Adding yourself to a commit via a trailer is a *binding responsibility* for
+  the change. A lot of tooling will cc the Reviewed-by addresses on follow-up
+  messages regarding code in this commit. If the address is bogus or doesn't
+  go to a developer, this is both wasteful and potentially frustrating.
 
-Thanks,
-Guenter
-
+-K
