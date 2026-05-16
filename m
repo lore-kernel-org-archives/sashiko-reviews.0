@@ -1,32 +1,33 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 788FF171AF;
-	Sat, 16 May 2026 08:05:06 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 490E0171AF;
+	Sat, 16 May 2026 08:06:34 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1778918706; cv=none; b=mUUXsijqCd0kxee0xiWtc7aI9QdZHois+08rP70D17G1IrLN3pjHt9B07uEWyCm42yF/7TqRCVsCyb6XFjLOMzr9SXVxgLkK2UaiZ+zi7DFy4Aou564lEYSLd9FC0DjpK01D+5625TmPymLBtNIxIyGWYOnYxP/SSAEW1sA0/f0=
+	t=1778918794; cv=none; b=kld+6hcKzduo6BpcSlUUnpG5J7iOZmsSZyXN9NNVhYx1ofEFRtHEJm1/3Jp8+qGQJyghKdFDAlHLGAUcaqzNQlG+WmTSRt2UuAmLrNTVNU67crulofM64Qfy5WW2ckda26lr8ppzI03JFdVMPXAyUR6oQhWrb4jQy6kwHelqcj8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1778918706; c=relaxed/simple;
-	bh=pjV7CDYxaxC5w8+sIJg4uxxQ9VArF5VLsm+w3BmrJp4=;
-	h=Message-ID:Date:MIME-Version:From:To:Subject:Content-Type; b=rBaBt34EU9wmvxPTkqdXPS2tmtjgLXHBeEQg3gXeLioRrjUjB8Oan5RHRfkQcuY5PprygwCfjMfoRj/qSOeVfiVmAC0Cz7pTxMt76JxGFq0ywoHx0gTEdkLTrHdYgnsuk5UE6+hLh+t4KNcWLw7mhV2xMixDHCuiKB7Qkq0nVuA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=pFz7rmeU; arc=none smtp.client-ip=10.30.226.201
+	s=arc-20240116; t=1778918794; c=relaxed/simple;
+	bh=6QEEQie7p+zy+rGX2jwDJCDq0zv+Tjf8uhHk2xM3zNE=;
+	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
+	 In-Reply-To:Content-Type; b=EJc3QmBnlupVpvJ5rLVKIcq//lNB+L3IllvOVISlv44AU7yldGKFfFKB3FC679qiyVMBt/dTBu+uEyVIXadHW5Z4l+budhhv7gMi8ofFQ61z/JQyxCesC+kmMkMfiBv+8YEKzW8NQfXfWmeGss70+3DTn2DOqzDLpsk7qggIIpU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=ZMKhYeLl; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="pFz7rmeU"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7A4A7C19425;
-	Sat, 16 May 2026 08:05:04 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="ZMKhYeLl"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5535FC19425;
+	Sat, 16 May 2026 08:06:32 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1778918705;
-	bh=pjV7CDYxaxC5w8+sIJg4uxxQ9VArF5VLsm+w3BmrJp4=;
-	h=Date:From:To:Subject:From;
-	b=pFz7rmeUXEczPYVH93h2cQWOBNp3klpSfgZqb4du+7uKFVeVPjmQ79fNEdapckSsZ
-	 37JGZG15pS0xH31lvipFry3UVe13z3bFtCVfL5nJnWTKGVu+EgPN1h5SJ29C76Qi0X
-	 8Ze4o9HUP3JlIkk/epJJaS6GktOFHvmpm2qaHjwjEnjbFBi9WPwn8/bVBR5oUu1lLG
-	 5Jgw1/xV+W55RPHQnf9naKPnFNojNthFUqjh1Wp9BavkM+YhZ0RKyZlW0AU8plEuFW
-	 bH/88f7M88N+RoIVfVDb+tV0FB6j3wM4oFgy/Gu36LJs+LrrXlff2HaKSTdyEr3Mta
-	 BdFX23uOsH+2A==
-Message-ID: <ad139e54-a7f0-4d09-832c-6b2bf2e93e03@kernel.org>
-Date: Sat, 16 May 2026 10:05:02 +0200
+	s=k20201202; t=1778918794;
+	bh=6QEEQie7p+zy+rGX2jwDJCDq0zv+Tjf8uhHk2xM3zNE=;
+	h=Date:Subject:To:Cc:References:From:In-Reply-To:From;
+	b=ZMKhYeLl8VXA0NnG1zRh68V/EQsgGXakX30dS7joKs+78LvP7Gx8h3c+wW/IOpegZ
+	 hVbEAll4E5bo0NoM6A9UmjYVmZYA7yOFfJzJ7y9B3O/OuPYxC2ddTVjF2QQOOd56rM
+	 v4GFIZV/PWbcIq+IM1nInjuBGxcwhILxbJAxst530Lpj3ZMfxEUHeWhXKqUxiNItRm
+	 cKbOxcxu3koP6IA+X9Y6ZrfmYH4sRLHj90UoX4g2dLOROS+p/B501qDb/23IQ8Snht
+	 siip+qz9cSEeLfJxATNWsXJbH4bTAj5Da0AdvollTBgjw2UnMOg+lrQNAzb+1WQKeo
+	 /55YQTZhTuepA==
+Message-ID: <e573fb8f-b507-4d54-b990-57f0ea66fec5@kernel.org>
+Date: Sat, 16 May 2026 10:06:30 +0200
 Precedence: bulk
 X-Mailing-List: sashiko-reviews@lists.linux.dev
 List-Id: <sashiko-reviews.lists.linux.dev>
@@ -34,13 +35,14 @@ List-Subscribe: <mailto:sashiko-reviews+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:sashiko-reviews+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH v12 5/6] hwmon: add NXP MC33978/MC34978 driver
+To: sashiko-reviews@lists.linux.dev, Oleksij Rempel <o.rempel@pengutronix.de>
+Cc: devicetree@vger.kernel.org, robh@kernel.org, krzk+dt@kernel.org,
+ conor+dt@kernel.org, linux-hwmon@vger.kernel.org
+References: <20260515160537.115808-6-o.rempel@pengutronix.de>
+ <20260515183847.D8091C2BCB0@smtp.kernel.org>
 From: Krzysztof Kozlowski <krzk@kernel.org>
 Content-Language: en-US
-To: sashiko-bot@kernel.org, sashiko-reviews@lists.linux.dev,
- sashiko@lists.linux.dev, Linux Kernel Workflows <workflows@vger.kernel.org>,
- Linux Kernel Mailing List <linux-kernel@vger.kernel.org>,
- "devicetree@vger.kernel.org" <devicetree@vger.kernel.org>
-Subject: Stop false review statements
 Autocrypt: addr=krzk@kernel.org; keydata=
  xsFNBFVDQq4BEAC6KeLOfFsAvFMBsrCrJ2bCalhPv5+KQF2PS2+iwZI8BpRZoV+Bd5kWvN79
  cFgcqTTuNHjAvxtUG8pQgGTHAObYs6xeYJtjUH0ZX6ndJ33FJYf5V3yXqqjcZ30FgHzJCFUu
@@ -84,28 +86,38 @@ Autocrypt: addr=krzk@kernel.org; keydata=
  jWt87ecuHlpL3uuQ0ZZNWqHgZoQLXoqC2ZV5KrtKWb/jyiFX/sxSrodALf0zf+tfHv0FZWT2
  zHjUqd0t4njD/UOsuIMOQn4Ig0SdivYPfZukb5cdasKJukG1NOpbW7yRNivaCnfZz6dTawXw
  XRIV/KDsHQiyVxKvN73bThKhONkcX2LWuD928tAR6XMM2G5ovxLe09vuOzzfTWQDsm++9UKF a/A=
+In-Reply-To: <20260515183847.D8091C2BCB0@smtp.kernel.org>
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 7bit
 
-What the hell is that:
+On 15/05/2026 20:38, sashiko-bot@kernel.org wrote:
+>> Add hardware monitoring support for the NXP MC33978/MC34978 Multiple
+>> Switch Detection Interface (MSDI).
+>>
+>> The hardware utilizes a clear-on-read FAULT register, but physical
+>> faults remain asserted as long as the underlying condition exists. This
+>> asserts a global FAULT_STAT bit on the SPI bus. To handle this without
+>> trapping the CPU in an interrupt storm, this driver implements the
+>> following architecture:
+>> - Requests a rising-edge nested IRQ (IRQF_TRIGGER_RISING) from the MFD
+>>   core to catch the initial 0 -> 1 transition of the global fault state.
+>> - Caches hwmon-specific alarm bits and calculates state edges (XOR) to
+>>   isolate alarm transitions from system integrity faults.
+>> - Implements a 1Hz delayed workqueue that polls the hardware as long as
+>>   any alarm is active. This compensates for the edge-triggered IRQ by
+>>   discovering secondary faults that occur without a rising edge, and
+>>   detecting when the hardware clears.
+>>
+>> Assisted-by: Gemini:gemini-3.1-pro Sashiko
+>> Signed-off-by: Oleksij Rempel <o.rempel@pengutronix.de>
+> 
+> Reviewed-by: Sashiko <sashiko-bot@kernel.org>
 
-https://lore.kernel.org/all/20260515190707.033BDC2BCB0@smtp.kernel.org/
 
-As a bot you CANNOT MAKE a Reviewer's statement of oversight. You are
-not a damn human do be able to make such statement. You are a bot, a tool.
+NAK, fake tag.
 
-Stop faking tags.
-
-And really, considering how many false positives Sashiko produces, how
-poor review comments it gives, how many misleading comments, it's
-unacceptable to me to consider that a review.
-
-Amount of useless noise Sashiko produces already changed my mind how
-useful that tool is.
-
-I will be NAKing every damn tag produced by such tools.
+https://lore.kernel.org/linux-devicetree/ad139e54-a7f0-4d09-832c-6b2bf2e93e03@kernel.org/T/#u
 
 
 Best regards,
 Krzysztof
-
