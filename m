@@ -1,33 +1,32 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9E4DF18DB1A;
-	Sat, 16 May 2026 07:56:26 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 788FF171AF;
+	Sat, 16 May 2026 08:05:06 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1778918186; cv=none; b=rfqbCKdHFX7kQIT6yJc0is9DdVonjabRMh7oGaRVEtEEQTqkcHHjm2uPNEDUigSPG5qdAlGtUyiSsoBby4N3g+KjBrOQ76VAKsnmMhYXr0TSenJy+4FGu64REintiCxmiqtFxzEuABQnfuZ+4slNW4FTkjMa4wmLgumlK5WwKis=
+	t=1778918706; cv=none; b=mUUXsijqCd0kxee0xiWtc7aI9QdZHois+08rP70D17G1IrLN3pjHt9B07uEWyCm42yF/7TqRCVsCyb6XFjLOMzr9SXVxgLkK2UaiZ+zi7DFy4Aou564lEYSLd9FC0DjpK01D+5625TmPymLBtNIxIyGWYOnYxP/SSAEW1sA0/f0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1778918186; c=relaxed/simple;
-	bh=QLpimf2mTc5uEmHCmkOIkCwDPngDdgWmVNJz617coAo=;
-	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=XALvcKVsS7H6J964L0bDTzStazcBUB4urt8yz+pmxeLF2Cmv8MMh1Dh13dbXUNgQCzCuzAAVNsevpytT9VAHlqJHCo4XRmSBU8Q5cXsO3zLbhnup+Y6tSASVXV59uBdmHkSnUNqpFIsfci0Uj0xSeMesR4ThBhRTxHXPd++SM9Y=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=K6YqegU0; arc=none smtp.client-ip=10.30.226.201
+	s=arc-20240116; t=1778918706; c=relaxed/simple;
+	bh=pjV7CDYxaxC5w8+sIJg4uxxQ9VArF5VLsm+w3BmrJp4=;
+	h=Message-ID:Date:MIME-Version:From:To:Subject:Content-Type; b=rBaBt34EU9wmvxPTkqdXPS2tmtjgLXHBeEQg3gXeLioRrjUjB8Oan5RHRfkQcuY5PprygwCfjMfoRj/qSOeVfiVmAC0Cz7pTxMt76JxGFq0ywoHx0gTEdkLTrHdYgnsuk5UE6+hLh+t4KNcWLw7mhV2xMixDHCuiKB7Qkq0nVuA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=pFz7rmeU; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="K6YqegU0"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9745FC19425;
-	Sat, 16 May 2026 07:56:24 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="pFz7rmeU"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7A4A7C19425;
+	Sat, 16 May 2026 08:05:04 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1778918186;
-	bh=QLpimf2mTc5uEmHCmkOIkCwDPngDdgWmVNJz617coAo=;
-	h=Date:Subject:To:Cc:References:From:In-Reply-To:From;
-	b=K6YqegU0H6/Zv0qfnnHEKTcgvOMejCu5q0uUNDJAVboj2oLPV5rZTbu23SkV3ErOM
-	 ISO4ymYdf70NoMlzux4YD3I/rM8K6L4g7SI6UZ3E5M/lHJM1+Ug+3wgkn/YqdyQFiq
-	 WcGOPvzy+LU4cBA8UuXcZW1+Wn/SUH0lmrU/l+PaVZtiMmQLRUQpnr7YoFkJSpNhf8
-	 VgE3+3VnEdVpkERw/fJNDvFxmSI4ax1I+3LlfRaK1Wi8gpvObnJi5hjRlg3nQupuBk
-	 p+pHY8Jalt8PCCN6tafbwlWoW5ez6VMvYKe9aRVlXuZ4lRsFdb7Ewc2pZSoP4OQ2m/
-	 8IA3f/LhzJsdQ==
-Message-ID: <afcbfcef-4c86-4222-bf48-fc12acf914a9@kernel.org>
-Date: Sat, 16 May 2026 09:56:23 +0200
+	s=k20201202; t=1778918705;
+	bh=pjV7CDYxaxC5w8+sIJg4uxxQ9VArF5VLsm+w3BmrJp4=;
+	h=Date:From:To:Subject:From;
+	b=pFz7rmeUXEczPYVH93h2cQWOBNp3klpSfgZqb4du+7uKFVeVPjmQ79fNEdapckSsZ
+	 37JGZG15pS0xH31lvipFry3UVe13z3bFtCVfL5nJnWTKGVu+EgPN1h5SJ29C76Qi0X
+	 8Ze4o9HUP3JlIkk/epJJaS6GktOFHvmpm2qaHjwjEnjbFBi9WPwn8/bVBR5oUu1lLG
+	 5Jgw1/xV+W55RPHQnf9naKPnFNojNthFUqjh1Wp9BavkM+YhZ0RKyZlW0AU8plEuFW
+	 bH/88f7M88N+RoIVfVDb+tV0FB6j3wM4oFgy/Gu36LJs+LrrXlff2HaKSTdyEr3Mta
+	 BdFX23uOsH+2A==
+Message-ID: <ad139e54-a7f0-4d09-832c-6b2bf2e93e03@kernel.org>
+Date: Sat, 16 May 2026 10:05:02 +0200
 Precedence: bulk
 X-Mailing-List: sashiko-reviews@lists.linux.dev
 List-Id: <sashiko-reviews.lists.linux.dev>
@@ -35,14 +34,13 @@ List-Subscribe: <mailto:sashiko-reviews+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:sashiko-reviews+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v12 6/6] mux: add NXP MC33978/MC34978 AMUX driver
-To: sashiko-reviews@lists.linux.dev, Oleksij Rempel <o.rempel@pengutronix.de>
-Cc: krzk+dt@kernel.org, devicetree@vger.kernel.org,
- linux-hwmon@vger.kernel.org, robh@kernel.org, conor+dt@kernel.org
-References: <20260515160537.115808-7-o.rempel@pengutronix.de>
- <20260515190707.033BDC2BCB0@smtp.kernel.org>
 From: Krzysztof Kozlowski <krzk@kernel.org>
 Content-Language: en-US
+To: sashiko-bot@kernel.org, sashiko-reviews@lists.linux.dev,
+ sashiko@lists.linux.dev, Linux Kernel Workflows <workflows@vger.kernel.org>,
+ Linux Kernel Mailing List <linux-kernel@vger.kernel.org>,
+ "devicetree@vger.kernel.org" <devicetree@vger.kernel.org>
+Subject: Stop false review statements
 Autocrypt: addr=krzk@kernel.org; keydata=
  xsFNBFVDQq4BEAC6KeLOfFsAvFMBsrCrJ2bCalhPv5+KQF2PS2+iwZI8BpRZoV+Bd5kWvN79
  cFgcqTTuNHjAvxtUG8pQgGTHAObYs6xeYJtjUH0ZX6ndJ33FJYf5V3yXqqjcZ30FgHzJCFUu
@@ -86,23 +84,28 @@ Autocrypt: addr=krzk@kernel.org; keydata=
  jWt87ecuHlpL3uuQ0ZZNWqHgZoQLXoqC2ZV5KrtKWb/jyiFX/sxSrodALf0zf+tfHv0FZWT2
  zHjUqd0t4njD/UOsuIMOQn4Ig0SdivYPfZukb5cdasKJukG1NOpbW7yRNivaCnfZz6dTawXw
  XRIV/KDsHQiyVxKvN73bThKhONkcX2LWuD928tAR6XMM2G5ovxLe09vuOzzfTWQDsm++9UKF a/A=
-In-Reply-To: <20260515190707.033BDC2BCB0@smtp.kernel.org>
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 7bit
 
-On 15/05/2026 21:07, sashiko-bot@kernel.org wrote:
->> Add a mux-control driver for the 24-to-1 analog multiplexer (AMUX)
->> embedded in the NXP MC33978/MC34978 Multiple Switch Detection
->> Interface (MSDI) devices.
->>
->> Assisted-by: Gemini:gemini-3.1-pro Sashiko
->> Signed-off-by: Oleksij Rempel <o.rempel@pengutronix.de>
-> 
-> Reviewed-by: Sashiko <sashiko-bot@kernel.org>
-> 
+What the hell is that:
 
-NAK! You cannot make reviewer statement oversight.
+https://lore.kernel.org/all/20260515190707.033BDC2BCB0@smtp.kernel.org/
+
+As a bot you CANNOT MAKE a Reviewer's statement of oversight. You are
+not a damn human do be able to make such statement. You are a bot, a tool.
+
+Stop faking tags.
+
+And really, considering how many false positives Sashiko produces, how
+poor review comments it gives, how many misleading comments, it's
+unacceptable to me to consider that a review.
+
+Amount of useless noise Sashiko produces already changed my mind how
+useful that tool is.
+
+I will be NAKing every damn tag produced by such tools.
 
 
 Best regards,
 Krzysztof
+
