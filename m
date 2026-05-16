@@ -1,171 +1,138 @@
-Received: from mail-pl1-f178.google.com (mail-pl1-f178.google.com [209.85.214.178])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 902D0356764
-	for <sashiko-reviews@lists.linux.dev>; Sat, 16 May 2026 15:51:45 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.214.178
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 621A73246ED;
+	Sat, 16 May 2026 18:28:51 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1778946706; cv=none; b=B/kn5YA8ZRxJ4i75waiflg5Tf3+TKZfc9/T7wobWLQA//25IMHrZ4BcuUzb40xZqj8DGYyjoqV9mQxyvQHZEy1oaJZmuW4KI2XetEvriVo7KeZYMi7gYIFNwO9FUwYHNhvVGWt+Pt4rLHCiQz3ZTZWcIQfmCfSsBeOHePL0mVqM=
+	t=1778956131; cv=none; b=JufQX3kta47Z7WHI0sOjmvaVskobLV3mlzcAMPq00hwKdtlYw7XM3gdWi2KLVUR+cJ+9catqbAEjJalgXMGriGdhtkNY8VwrrZO57vbI3ZgcTL4PS18CQVpko7lijcYgbsFJpPcz+YmfFwhNE2z9Bgwk027IBGv3F2v/3Ob03f0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1778946706; c=relaxed/simple;
-	bh=nO1iPAHL++UmR2y3CU/E0GVxto24i+BZ0kPWySFj0m8=;
-	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=df7W+Ce1BTcyojMGTCK/hu0e9Kc5yx56tSFSyeXMNOgXuCLZj1FkwD52NxlY+q6TwcFvRurrMWKMXTHXRi3OYSqJUS8fuoQ6EfV0I+gp2M7+ZwO1xPMPkb/vTHilgy3Ux4BkVvfUbJRPrqqDVlMRsnPUufcK9TLs/kMbdOxJOD0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=roeck-us.net; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=sXp9XQ7g; arc=none smtp.client-ip=209.85.214.178
-Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=roeck-us.net
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+	s=arc-20240116; t=1778956131; c=relaxed/simple;
+	bh=mXJY5235/mBb2b98kaVDFKXZ9bb0TIVibMCemRFnxRE=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=It6VQFShoWaphnCqWMTax/EeysalYrbGT4g8EESzapFhcWV+UrHSzcc/ha9d0BnJGhG52sFzIF1beKLcCkKcB7H5/hOmfARmu1AdCyMwwSnD3rNAfFUev8PQL//Vymm+zRisZJ+eSjzJE+RttuKwiklIsnpdSRUJg3VyLzb/v0k=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=NeGMkcZn; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="sXp9XQ7g"
-Received: by mail-pl1-f178.google.com with SMTP id d9443c01a7336-2bcd3ac3307so5217855ad.0
-        for <sashiko-reviews@lists.linux.dev>; Sat, 16 May 2026 08:51:45 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20251104; t=1778946705; x=1779551505; darn=lists.linux.dev;
-        h=content-transfer-encoding:in-reply-to:autocrypt:from
-         :content-language:references:cc:to:subject:user-agent:mime-version
-         :date:message-id:sender:from:to:cc:subject:date:message-id:reply-to;
-        bh=2IUc5k1iXS35LL71ghjiDI4fOzIuLreckHEqQfAipz0=;
-        b=sXp9XQ7gCq//q6WV1wM3mEoiBE4PrzhOAL1uyEYmjAhzk0MImgE5cjLXkwvj/QuCHR
-         XSopUcQQoML/DWPeq2SJG5ujCUyE4lRnRxOY2DcaSt8WjHDK+y6b/pzDCkLjqnX4/SeR
-         Y6ow5F2U9brZCO2urBzVXQw2YsEDQ2Uft1+7LRyDjjNTY5m5xcBWbhi54qGoWNg8f2/p
-         9GbxZJAOPauYInLJlIfPrz/arqDTmFDTqR6OW6AOHD04YbH8iOWmFposOVh8j65vRfZ/
-         mMFetTPmHTRWAia9+2HjMTExhhlDQNb7RPn2NQ3gwjkgqeG2tJyq4lf4WWiPriGWJdEh
-         Uq3Q==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20251104; t=1778946705; x=1779551505;
-        h=content-transfer-encoding:in-reply-to:autocrypt:from
-         :content-language:references:cc:to:subject:user-agent:mime-version
-         :date:message-id:sender:x-gm-gg:x-gm-message-state:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=2IUc5k1iXS35LL71ghjiDI4fOzIuLreckHEqQfAipz0=;
-        b=NNrdrGUKhOivdWhEWR3yAj0sePFHYBuhq7OosgOQF/BPLLc92f0mXXFESA3PexqIQQ
-         tdtGdR1pFydI8UdwSx8TeqbDy0cuZ2HHFImhFRRVRcldzgr2QrMZEbCKW5+gEAEbbj1R
-         /FHCCc6JKKcCBsOXB2r/lrMvM1p8+TANUhhGyRbzUSAD04r+jIHPXGtAphRuWV6c+Q4X
-         2uAhv05dQd2V738G4zQK2Et0kmhjP3dr3ndjG2hTf2a8Iutm+EEC5cj2eweQ1T/x/apx
-         wR6fTBRzrMmrr6y5wDd73vwmH3VXz9XTiljJKyzSyyRcrLkTeJg8nmxAiFMuAcapXiaF
-         /Zwg==
-X-Gm-Message-State: AOJu0YzLkF/Eir8X/Tl7E/UBB7ye+ABgwIFXkjNm6oeYRBlP9Zuwu30z
-	TxwKBkbcqx0pPnzLlfqTkg1LIWV2UH+qUOIRa/EEmJi+QJRUz1cZiV39mXlZDEAT
-X-Gm-Gg: Acq92OFXKfAkkPn9LI/FvWBTECgTO6CMfEyklQmBpm3RAHN/gdpNYIB3ZzIOCZucBZr
-	INTAHtbM9c1+8U9wgGu2CyG+AF9O+o692AbI0xrppqU5zx9gVSiCQvwJUgBAQIwd3Z99rpGsPNb
-	/anxPBJwtAQjfb9d1tj/sjwmWB8vi+kS9JB8iY3nlcEbj1mLG2WwCcemMHpP5eV9DCBcPMQ9tuW
-	7yFVghBvlXpeGEzpPvhCLqmwUHtWmm0g9pg4YFt42gvibyrrXQSCplWu9xg6x+rZd6orl4hrzTC
-	AfPY+WJzC63JEUeT5pejrri0gxYYHqzwfXfbeDLmfyaUaPsdsoGyFLVw9xS5OQoe0F6Xw9sLmoY
-	zebxSoSW7MCuxgTn1lujYJYR0DSrhse+RYndwHP6aCU0qAEobneltbnoi4TVsQUK7Apuk+F6NoT
-	eaCJ2UemdoSq/CjbTsScnF5ewjSrg7orQ/HBW6LYWSxY4eKIiIFFvFs7WITGZqpVGqOXzkzUIrn
-	Oqry/U3t+s=
-X-Received: by 2002:a17:903:3884:b0:2bd:b585:55f5 with SMTP id d9443c01a7336-2bdb585571amr17474795ad.8.1778946704682;
-        Sat, 16 May 2026 08:51:44 -0700 (PDT)
-Received: from ?IPV6:2600:1700:e321:62f0:da43:aeff:fecc:bfd5? ([2600:1700:e321:62f0:da43:aeff:fecc:bfd5])
-        by smtp.gmail.com with ESMTPSA id d9443c01a7336-2bd5bd60275sm88717315ad.7.2026.05.16.08.51.43
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Sat, 16 May 2026 08:51:44 -0700 (PDT)
-Sender: Guenter Roeck <groeck7@gmail.com>
-Message-ID: <fd38d9d9-d755-425a-bb1e-100606ce62b0@roeck-us.net>
-Date: Sat, 16 May 2026 08:51:43 -0700
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="NeGMkcZn"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 433E8C19425;
+	Sat, 16 May 2026 18:28:50 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+	s=k20201202; t=1778956130;
+	bh=mXJY5235/mBb2b98kaVDFKXZ9bb0TIVibMCemRFnxRE=;
+	h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
+	b=NeGMkcZnMR6+qAtHZs0g6NSGYOLRtoQLnGOT9+I7YlaaLEKRp3O9AdDKEcqJ3pcjk
+	 OKZjCGhzDcELJy+9JkXVpXfJombLgQxpE68oBMg58U+JUhyD06Q4A3uTJa0+lwlXNa
+	 vS/himEEyPfPrqj9jEMMGQcXQTFn+/M6Pc9nzh3Jv/gmqNoPMcI1dzcya6ZKOf8bfT
+	 +V+40u8GHE6ytQaBA73JPTsDVjaDBSHb7/8q2LFMEB0Qzq1FaZg99RychxursAVeOx
+	 ZiYWYL29xbExQwepUWC+YshKi89feFFMjZFb8VjQN+0DYWAw5S5fIFDp65rk3MUcvT
+	 vb7DolI1RKUNg==
+Date: Sat, 16 May 2026 15:28:47 -0300
+From: Arnaldo Carvalho de Melo <acme@kernel.org>
+To: Roman Gushchin <roman.gushchin@linux.dev>
+Cc: Greg KH <gregkh@linuxfoundation.org>,
+	Konstantin Ryabitsev <mricon@kernel.org>,
+	Guenter Roeck <linux@roeck-us.net>,
+	Krzysztof Kozlowski <krzk@kernel.org>, sashiko-bot@kernel.org,
+	sashiko-reviews@lists.linux.dev, sashiko@lists.linux.dev,
+	Linux Kernel Workflows <workflows@vger.kernel.org>,
+	Linux Kernel Mailing List <linux-kernel@vger.kernel.org>,
+	devicetree@vger.kernel.org, kfree@google.com
+Subject: Re: Stop false review statements
+Message-ID: <agi3X76XwcBJ-KmH@x1>
+References: <2026051631-trolling-juggling-da1c@gregkh>
+ <0902F8E6-C495-40A1-975D-92D3B72D44AE@linux.dev>
 Precedence: bulk
 X-Mailing-List: sashiko-reviews@lists.linux.dev
 List-Id: <sashiko-reviews.lists.linux.dev>
 List-Subscribe: <mailto:sashiko-reviews+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:sashiko-reviews+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 1/5] hwmon: (pmbus/adm1266) seed timestamp from the
- real-time clock
-To: sashiko-reviews@lists.linux.dev,
- Abdurrahman Hussain <abdurrahman@nexthop.ai>
-Cc: linux-hwmon@vger.kernel.org
-References: <20260515-adm1266-fixes-v1-1-1c1ea1349cfe@nexthop.ai>
- <20260515222808.8E97CC2BCB0@smtp.kernel.org>
-Content-Language: en-US
-From: Guenter Roeck <linux@roeck-us.net>
-Autocrypt: addr=linux@roeck-us.net; keydata=
- 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
- np3900V20aS7eD9K8GTU0TGC1pyz6IVJwIE=
-In-Reply-To: <20260515222808.8E97CC2BCB0@smtp.kernel.org>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+Content-Transfer-Encoding: 8bit
+In-Reply-To: <0902F8E6-C495-40A1-975D-92D3B72D44AE@linux.dev>
 
-On 5/15/26 15:28, sashiko-bot@kernel.org wrote:
-> Thank you for your contribution! Sashiko AI review found 2 potential issue(s) to consider:
-> - [Medium] Fetching wall-clock time during device probe yields an uninitialized value, defeating the purpose of the patch.
-> - [Medium] Switching from monotonic time to wall-clock time introduces a Year 2038 silent truncation bug.
-> --
-> 
-> commit a6888c73c1a25c1329fffa916ee8e1654b5eaa1a
-> Author: Abdurrahman Hussain <abdurrahman@nexthop.ai>
-> 
-> hwmon: (pmbus/adm1266) seed timestamp from the real-time clock
-> 
-> This commit switches the adm1266 driver to use ktime_get_real_seconds()
-> instead of ktime_get_seconds() to seed the chip's SET_RTC register.
-> The intention is to provide wall-clock time for blackbox records.
-> 
->> diff --git a/drivers/hwmon/pmbus/adm1266.c b/drivers/hwmon/pmbus/adm1266.c
->> index d90f8f80be8e0..a86666c73a5e9 100644
->> --- a/drivers/hwmon/pmbus/adm1266.c
->> +++ b/drivers/hwmon/pmbus/adm1266.c
->> @@ -432,7 +432,7 @@ static int adm1266_set_rtc(struct adm1266_data *data)
->>   	char write_buf[6];
->>   	int i;
->>   
->> -	kt = ktime_get_seconds();
->> +	kt = ktime_get_real_seconds();
-> 
-> Since adm1266_set_rtc() is called during device probe, will the wall-clock
-> time be initialized at this point?
-> 
-> During early boot, before the system timekeeper is synchronized with a
-> hardware RTC or NTP, ktime_get_real_seconds() might return a near-zero
-> value. Would this effectively behave like a monotonic timestamp and
-> silently defeat the purpose of the patch?
-> 
+On Sat, May 16, 2026 at 08:49:39AM -0700, Roman Gushchin wrote:
+> > On May 16, 2026, at 8:45 AM, Greg KH <gregkh@linuxfoundation.org> wrote:
+> > ﻿On Sat, May 16, 2026 at 08:41:43AM -0700, Roman Gushchin wrote:
+> >>>> On May 16, 2026, at 8:20 AM, Konstantin Ryabitsev <mricon@kernel.org> wrote:
 
-Possibly, but I'd like to see actual evidence of that. ktime_get_real_seconds()
-is used throughout the kernel by various drivers, including security code.
-I didn't find any indication of handling the situation described above.
-Given that, since the patch is a real improvement, I applied it as-is.
-We can discuss improvements if it turns out to be insufficient.
+> >>> ﻿On Sat, May 16, 2026 at 05:11:28AM -0700, Guenter Roeck wrote:
+> >>>>> On Sat, May 16, 2026 at 10:05:02AM +0200, Krzysztof Kozlowski wrote:
+> >>>>> What the hell is that:
+> 
+> >>>>> https://lore.kernel.org/all/20260515190707.033BDC2BCB0@smtp.kernel.org/
+ 
+> >>>>> As a bot you CANNOT MAKE a Reviewer's statement of oversight. You are
+> >>>>> not a damn human do be able to make such statement. You are a bot, a tool.
+ 
+> >>>> Where exactly do the rules say that ? I seem to miss that.
+ 
+> >>>> There is a policy document about _contributions_ made by AI, but I don't
+> >>>> see the one that says that AI agents must not provide Reviewed-by: tags.
+ 
+> >>> From my perspective, AI agents must NOT use the Reviewed-by tag for the
+> >>> following reasons:
 
-Thanks,
-Guenter
+> >>> - We consider this a "person-trailer" and it implies agency
+> >>> - Adding yourself to a commit via a trailer is a *binding responsibility* for
+> >>> the change. A lot of tooling will cc the Reviewed-by addresses on follow-up
+> >>> messages regarding code in this commit. If the address is bogus or doesn't
+> >>> go to a developer, this is both wasteful and potentially frustrating.
 
+> >> Hi Konstantin!
+
+> >> The goal here is to inform maintainers that sashiko has successfully reviewed the patch
+> >> and there were no findings, otherwise maintainers have to go to the web site and check the status.
+
+> > That's fine.
+
+> >> I’m not attached to any specific form of it, I thought Reviewed-by is the most obvious form.
+> >> And we use Reported-by: tags with various tooling for years.
+
+> > Reported-by: shows the existance of a problem that some tool found, a
+> > subtle difference here.
+
+> >> What do you think is the best form?
+
+> >> I’ll pause sending reviewed-by tags until we have a discussion and agreement here.
+ 
+> > Just say it in some other text form, that our tools will not pick up.
+> > Like:
+> >    Tool XXXX reports that all is good:
+> >        https://....
+ 
+> > or something like that?
+ 
+> Sure, works for me.
+
+Couldn't this be something like:
+
+AI-analysed-by: bot-X
+
+Sometimes we expect them to run and produce results, that we should
+check, and in my experience act upon and sometimes ignore, as usual with
+any type of comments, when I don't get those results I usually go and
+look at the web interface, be it the public one or the private one I use
+(while contributing to one of them, sashiko for full disclosure), to see
+if it is just that it is taking longer to process that specific patch or
+if it really finished.
+
+If I go in the morning to look at my inbox and see everything there it
+reduces some steps for me.
+
+So, yeah, Reviewed-by is definetly for definetly persons, but having
+some tag that states that it went thru automated reviewing^Wanalysis by
+a definetly bot/thing/whatever that some people think is useful seems
+useful.
+
+And of course I think this should be all opt-in by each and every
+maintainer, this definetly is not something to be uniformly agreed on,
+so if some mechanism is put in place for, say, sashiko, to reply that it
+didn't find any problem with a particular patch for the subsystem I'm
+involved with, then I'd like for that info to be provided as a reply to
+the message.
+
+Cheers,
+
+- Arnaldo
