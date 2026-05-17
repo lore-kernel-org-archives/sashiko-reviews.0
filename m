@@ -1,179 +1,120 @@
-Received: from out-189.mta0.migadu.com (out-189.mta0.migadu.com [91.218.175.189])
+Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C00062DECB2
-	for <sashiko-reviews@lists.linux.dev>; Sun, 17 May 2026 19:53:45 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=91.218.175.189
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BA13D199920;
+	Sun, 17 May 2026 20:46:14 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1779047627; cv=none; b=lsHBIQLbMdDbYxDFNScXsYAeQR9Qgt45RIfMXqJ112TSyVIVRSg6v+BE9RajQEhUPDnQtuVk5iDHO+npytRU/T44YWVLQ50HahqXpqcR54cQbqFBT41hsmeyKiaHIQXzN1sAb/RzkK3bLyJGw8eWnqlQcF7LY7EhjW+qQk+4EcQ=
+	t=1779050774; cv=none; b=TiP91pXyhiPWFJx9eempJ7QSPZnLStA7qKvYECgThQF+HYyZBZuv1+kGHRC08kJ/eDHDHD4c6rWIrsHKj0qVYIgx8XQ3zndbJKtcaevbF2mSbhRnL7mv8JgitTzUWR2CIWPWxsxe3FXkao7XZJIm3/L8J3xfAsIN/zqzNJQ6Mrk=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1779047627; c=relaxed/simple;
-	bh=rziN1hh0A5wT+pZjQfWI+vaKYthAU6o0Wnfyfi7LghU=;
-	h=Content-Type:From:Mime-Version:Subject:Message-Id:Date:Cc:To; b=PsyKbEk1kjgQh731/OOkf5D4Cr/Z6ILh4blQcck319qxa/Toay79j8qYCIQLLdX1yHE+wQTNgqL4ag95m9kzo4fxY/zXoQ2FROIq0F28pedOyzEGIYsh0Rj+C0fJ3jKJON+Fn4ssWDY5Kj8j7OvBYiVBjqsTWM8fRTt5eiO9X0M=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linux.dev; spf=pass smtp.mailfrom=linux.dev; dkim=pass (1024-bit key) header.d=linux.dev header.i=@linux.dev header.b=K6b+mF8g; arc=none smtp.client-ip=91.218.175.189
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linux.dev
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linux.dev
+	s=arc-20240116; t=1779050774; c=relaxed/simple;
+	bh=B9rfiTJRjyjXAJSEgvhZLZHwcNBRgl8iA7YymCZHq34=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=RwaXC19kiGe25z0VkRgLBQdGSGXY6FJuadf8WnmuLvXnXduJpvXGFA9iSO2fANwd/ndCMB/9d87ie4Omt2qleAIBTU6tzJCgDdEBSSzukWW8OVkFUC7vxn34GXyZquyLacpRgBWL7jzXnq/JgkThSJ5mCAoMm+/cBviBTYVaXOs=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=KQiuEFrA; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linux.dev header.i=@linux.dev header.b="K6b+mF8g"
-Content-Type: text/plain; charset=utf-8
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linux.dev; s=key1;
-	t=1779047614;
-	h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
-	 to:to:cc:cc:mime-version:mime-version:content-type:content-type:
-	 content-transfer-encoding:content-transfer-encoding;
-	bh=rrXf+swBl4yp9CtNuCEzzNucE6Q+vtW2TZ7N7Ibq2Gk=;
-	b=K6b+mF8gJmKtADw1GEqNvYlcofJiUFGBMiRX6rw836icAeNlS551hvn+MjBEI6bbqj0efr
-	iLA9NeKDJYFHvXe9konzB3cnVIY3LLCX+Lm1UJTQrklmdIGQGQhvBiBdte0esAWxVlUj4T
-	9jfylDEjzThfEv7/696dY2je91bJDk4=
-Content-Transfer-Encoding: quoted-printable
-X-Report-Abuse: Please report any abuse attempt to abuse@migadu.com and include these headers.
-From: Roman Gushchin <roman.gushchin@linux.dev>
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="KQiuEFrA"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3CD63C2BCB0;
+	Sun, 17 May 2026 20:46:13 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+	s=k20201202; t=1779050774;
+	bh=B9rfiTJRjyjXAJSEgvhZLZHwcNBRgl8iA7YymCZHq34=;
+	h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
+	b=KQiuEFrAzqI0m/Q6iomWRf3UJ7D1NfdkLWFmTel3bBKAVcedvwiVwtiN/A3On+QCq
+	 wGiqNuD8yPrx4A1rUG/ft7NRn6lZ/CY2T8ro88k2oROewATRDUYUh2oORcuTALp/tf
+	 yL+98lT4Q2GjoJPD6KCzI8tUqnD3hJlpvFSPs0tiwCpVo2iuuqKFUlaq+8cJN29Rhi
+	 C+CreBY/KrhUBtvBDUyIBDVZKLG0duV7H/0im/QiIbt3t4aZ1wXDUfbWGG3Xa2KWIt
+	 9UVo+NPbrgluY9fd1mUS7fExoxDy5jN/IE91CFjozr2v0q760iIMxUDp01jL2fiVbc
+	 xrDasXVRc5Uvw==
+Date: Sun, 17 May 2026 21:46:10 +0100
+From: Conor Dooley <conor@kernel.org>
+To: sashiko-reviews@lists.linux.dev
+Cc: Chuanhong Guo <gch981213@gmail.com>, robh@kernel.org,
+	conor+dt@kernel.org, devicetree@vger.kernel.org
+Subject: Re: [PATCH 1/4] riscv: add Siflower RISC-V SoC family Kconfig support
+Message-ID: <20260517-aground-shadow-d4ac455623fe@spud>
+References: <20260517-sf21-topcrm-v1-1-438f2e0513ff@gmail.com>
+ <20260517143152.C3318C2BCB0@smtp.kernel.org>
 Precedence: bulk
 X-Mailing-List: sashiko-reviews@lists.linux.dev
 List-Id: <sashiko-reviews.lists.linux.dev>
 List-Subscribe: <mailto:sashiko-reviews+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:sashiko-reviews+unsubscribe@lists.linux.dev>
-Mime-Version: 1.0 (1.0)
-Subject: Re: Stop false review statements
-Message-Id: <2CB46AD9-BD19-4FAC-B992-C1CDBB9C36C0@linux.dev>
-Date: Sun, 17 May 2026 12:53:19 -0700
-Cc: Greg KH <gregkh@linuxfoundation.org>,
- Krzysztof Kozlowski <krzk@kernel.org>, debarbos@redhat.com,
- Arnaldo Carvalho de Melo <acme@kernel.org>,
- Konstantin Ryabitsev <mricon@kernel.org>,
- Guenter Roeck <linux@roeck-us.net>, sashiko-bot@kernel.org,
- sashiko-reviews@lists.linux.dev, sashiko@lists.linux.dev,
- Linux Kernel Workflows <workflows@vger.kernel.org>,
- Linux Kernel Mailing List <linux-kernel@vger.kernel.org>,
- devicetree@vger.kernel.org, kfree@google.com
-To: Mauro Carvalho Chehab <mchehab+huawei@kernel.org>
-X-Migadu-Flow: FLOW_OUT
+MIME-Version: 1.0
+Content-Type: multipart/signed; micalg=pgp-sha512;
+	protocol="application/pgp-signature"; boundary="bSL9o6xos8LVkq/6"
+Content-Disposition: inline
+In-Reply-To: <20260517143152.C3318C2BCB0@smtp.kernel.org>
 
 
-> On May 17, 2026, at 11:56=E2=80=AFAM, Mauro Carvalho Chehab <mchehab+huawe=
-i@kernel.org> wrote:
-> =EF=BB=BFOn Sun, 17 May 2026 11:17:06 -0700
-> Roman Gushchin <roman.gushchin@linux.dev> wrote:
+--bSL9o6xos8LVkq/6
+Content-Type: text/plain; charset=iso-8859-1
+Content-Disposition: inline
+Content-Transfer-Encoding: quoted-printable
+
+On Sun, May 17, 2026 at 02:31:52PM +0000, sashiko-bot@kernel.org wrote:
+> Thank you for your contribution! Sashiko AI review found 1 potential issu=
+e(s) to consider:
+> - [Medium] Conditionally selecting the `ARM_AMBA` hardware bus based on t=
+he `TTY` software subsystem.
+> --
 >=20
->>> On May 17, 2026, at 9:40=E2=80=AFAM, Mauro Carvalho Chehab <mchehab+huaw=
-ei@kernel.org> wrote:
->>> =EF=BB=BFOn Sun, 17 May 2026 12:12:00 +0200
->>> Greg KH <gregkh@linuxfoundation.org> wrote:
->>>>> On Sun, May 17, 2026 at 12:05:56PM +0200, Mauro Carvalho Chehab wrote:=
-
->>>>> On Sat, 16 May 2026 14:59:44 -0700
->>>>> Roman Gushchin <roman.gushchin@linux.dev> wrote:
->>>>>>> On May 16, 2026, at 2:33=E2=80=AFPM, Krzysztof Kozlowski <krzk@kerne=
-l.org> wrote:
->>>>>>> I find it opposite: clogging commits with useless information, becau=
-se
->>>>>>> some arbitrary and completely closed-source tool did analysis means
->>>>>>> nothing to me one year later when I look at the commit in the Git hi=
-story.     =20
->>>>>> This is simple not true: Sashiko is fully open-source, under Apache 2=
-.0 license
->>>>>> and the code belongs to LF.    =20
->>>>>> Yes, the instance behind sashiko.dev is using
->>>>>> Gemini 3.1 Pro LLM, which is not open-source, but it=E2=80=99s not a f=
-undamental limitation -
->>>>>> Sashiko is supporting various LLMs, including open models - it=E2=80=99=
-s just a practical
->>>>>> choice: to my knowledge the quality of open models is not on par with=
- frontier closed
->>>>>> models    =20
->>>>> I would very much prefer using an open source LLM, even if not in pair=
-
->>>>> with latest paid models.
->>>>>> and it would require a non-trivial amount of hardware and infrastruct=
-ure to run
->>>>>> an open model at the required scale.   =20
->>>>> IMHO the best would be to have them running on some infra that would a=
-ccept
->>>>> open source models (*). If there aren't enough resources to have our o=
-wn
->>>>> infra, there are offers out there which allows running open source mod=
-els
->>>>> like https://ollama.com/pricing (I never used myself).
->>>>> (*) For instance, Qwen3.6 is brand new and licensed under apache-2.0.
->>>>>   Not bad on my tests running it locally.   =20
->>>> You can run the tool locally, with whatever model you want, if you want=
-
->>>> to.
->>>> But for now, let's just take the free credits that Google is willing to=
-
->>>> throw at this thing and let it give us reviews IF the maintainer of the=
-
->>>> subsystem feels it is something they want to do.  No one is forcing
->>>> maintainers to do this. =20
->>> If Google and/or others are willing to give free credits on their cloud,=
-
->>> they could instead or in addition give free credits to run ollama
->>> there, allowing us to use different models.
->>> =46rom my side, while I won't personally object getting reviews from
->>> Sashiko/Gemini, this is something I can't reproduce locally. I would
->>> very much want something where I can select my LLM preferred model
->>> and run on my ollama docker container on my own GPU, in a way that
->>> I could run it locally before even sending a patch series. =20
->>=20
->> 2 thoughts here:
->> 1) I actually tried to run it with ollama on my personal framework 13. Ad=
-ding nominal support is trivial,
->> but the whole thing is not really useful: I can get maybe few hundreds to=
-kens per second using
->> a quantified model with reduced quality; an average sashiko review is con=
-suming 3.5 millions tokens
->> (with Gemini 3.1 pro, it=E2=80=99s also model-dependent).
+> commit 49824e33ae15603df7f899c7df0a4ab9b5f20eed
+> Author: Chuanhong Guo <gch981213@gmail.com>
 >=20
-> Do you mean 3.5 millions tokens per patch series? If so, that
-> sounds a lot! Why does it require too many tokens?
-
-It=E2=80=99s an average per patch, not a series. Some are much cheaper, some=
- are much more expensive.
-Sashiko posts token cost nearby each review.
-
-Why it uses many tokens? Because in many cases it has to dig deep into the c=
-ode.
-Long sessions with multiple tool calls are expensive. Also Sashiko has a mul=
-ti-stage
-architecture, effectively it reviews every patch multiple times from differe=
-nt angles.
-It has a measurable influence on the quality of reviews. The current generat=
-ion of LLMs
-is not good at spotting various types of issues at once: once it sees a memo=
-ry leak
-it can=E2=80=99t think anymore on e.g. locking issues. Also just by running t=
-he same thing multiple times
-and combining the result you can meaningfully improve the quality.
-
->> I=E2=80=99m personally all in on having the entire thing as open as possi=
-ble and I believe Sashiko is what
->> is realistically the best at this moment - a fully open-source harness an=
-d set of prompts which
->> can work with a variety of models.
->> I=E2=80=99m happy to merge a support for any LLM model which can produce d=
-ecent review results.
->>=20
->> 2) Due to probabilistic nature of LLMs, nothing is reproducible in a stri=
-ct sense of the word.
->> Even with exactly the same model/harness/prompts you=E2=80=99ll get diffe=
-rent results every time you run it.
->> It=E2=80=99s unfortunate, but it is what it is at the moment.
+> riscv: add Siflower RISC-V SoC family Kconfig support
 >=20
-> By "reproduce locally", I didn't mean in strict sense. Sure, LLM answers
-> won't be identical, but I suspect that at least most of the major issues
-> on a patch series would be reported by any decent model.
+> This adds Kconfig support for the Siflower RISC-V SoCs, including the
+> SF21A6826 and SF21H8898 chips. It defines ARCH_SIFLOWER, selects the
+> relevant T-Head errata, and conditionally selects ARM_AMBA for the UART.
+>=20
+> > diff --git a/arch/riscv/Kconfig.socs b/arch/riscv/Kconfig.socs
+> > index c174ac0ec46b4..9996591cd9dbf 100644
+> > --- a/arch/riscv/Kconfig.socs
+> > +++ b/arch/riscv/Kconfig.socs
+> [ ... ]
+> > @@ -37,6 +37,13 @@ config ARCH_SIFIVE
+> >  	help
+> >  	  This enables support for SiFive SoC platform hardware.
+> > =20
+> > +config ARCH_SIFLOWER
+> > +	bool "Siflower RISC-V SoCs"
+> > +	select ARM_AMBA if TTY
+>=20
+> Should ARM_AMBA be selected conditionally based on TTY?
+>=20
+> ARM_AMBA models the presence of a physical hardware bus, which exists
+> regardless of whether the TTY software subsystem is enabled. Even if the
 
-I believe we=E2=80=99re not quite there yet. Models do differ in their abili=
-ties to spot
-various types of bugs and also producing false positives. Some types of issu=
-es
-(e.g. complex locking issues) are really hard for best of the current models=
-.
+There's no point having the driver built if there's no driver built for
+devices on the bus, I think is the angle here.
 
-> So, if we have something that one can locally run using its GPU, being
-> able to get an answer in the range of a couple of minutes per patch
-> should be enough to catch most of the issues.
+> PL011 UART is currently the only AMBA device on this platform, tying the
+> hardware bus infrastructure to a software abstraction might cause issues =
+if
+> other AMBA devices are added later and TTY is disabled.
+>=20
+> Would it be better to select ARM_AMBA unconditionally, similar to how oth=
+er
+> architectures handle it?
+>=20
+> > +	select ERRATA_THEAD
+> > +	help
+> > +	  This enables support for Siflower RISC-V SoC platform hardware.
+>=20
+> --=20
+> Sashiko AI review =B7 https://sashiko.dev/#/patchset/20260517-sf21-topcrm=
+-v1-0-438f2e0513ff@gmail.com?part=3D1
 
-I=E2=80=99m happy to be wrong here, but my understanding is that it=E2=80=99=
-s not realistic now.
-Sashiko reviews taking longer with production grade hardware.=
+--bSL9o6xos8LVkq/6
+Content-Type: application/pgp-signature; name="signature.asc"
+
+-----BEGIN PGP SIGNATURE-----
+
+iHUEABYKAB0WIQRh246EGq/8RLhDjO14tDGHoIJi0gUCagopEgAKCRB4tDGHoIJi
+0k+xAP9fybmFULqTMp78JR3HvZz13xvD1grBcGF3UZ5crBVmKQD+LWKVv/Z7b7LW
+EpcZjGfuRvzUq1Agf1+/ePr7u9e2hQg=
+=xE5w
+-----END PGP SIGNATURE-----
+
+--bSL9o6xos8LVkq/6--
