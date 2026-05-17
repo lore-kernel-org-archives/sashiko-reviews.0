@@ -1,217 +1,133 @@
-Received: from mail-pf1-f181.google.com (mail-pf1-f181.google.com [209.85.210.181])
+Received: from mail-lf1-f51.google.com (mail-lf1-f51.google.com [209.85.167.51])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8941F1F418F
-	for <sashiko-reviews@lists.linux.dev>; Sun, 17 May 2026 04:41:40 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.210.181
-ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1778992901; cv=none; b=E0w0JaSZWsAKfFNP0ieSXY4q689QEaf8OHiP0o3wVjd/sJL6CpPeE17SpzWQ0XAH2zgPkFEJYffCeA+fK+6h1pBnzl+rWAe8JYcbNLVyKSWfi6fZgXwGobx6kz0vhigVnEW3Gg0fXxpjOZwW8AsygCpD8IGqbLUFMtY5yYAxuck=
-ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1778992901; c=relaxed/simple;
-	bh=qSD1iAiziV1PDbFRDFZu8LZXTjF64/acluP8JL+NbBw=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=fMtCg83LuQiAVzNuUXAPbtTFkW31WA+sIpQ/w0BeOSW1TveMcC0h7dMzVk+RtWwvnrytC0vxxpBdhyQWTtvp0nSu90r+0R0LsQx4J/CP7Xgq4dbHXYy6T0FtfgTbIreusdSLDNpvEVsKSLFaGVsi0xcW6LZggmL7QBPzHg+91N8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=lqgvbK82; arc=none smtp.client-ip=209.85.210.181
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E7E194502F
+	for <sashiko-reviews@lists.linux.dev>; Sun, 17 May 2026 06:16:01 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=pass smtp.client-ip=209.85.167.51
+ARC-Seal:i=2; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
+	t=1778998564; cv=pass; b=SNqIBaMXAWyT0Y8vRqJrIUf+ekavpIIDnv3EGSGnAhP3QzHkQgtyp5+xy2iqI/s8IMTkCA5mBWsFm/p74+zdpjA2NWPWnxe0mHJUzbC03k43aYKPCcmV3waKuiVqWZAh2HlRi0VNbQqPuzY/+jQiUjEOgpj+0U9Vj2RMPW3iY2U=
+ARC-Message-Signature:i=2; a=rsa-sha256; d=subspace.kernel.org;
+	s=arc-20240116; t=1778998564; c=relaxed/simple;
+	bh=KQwepD6izLpoXVuCEseHVqNDIYjLt7x9FUc+tmd2nvk=;
+	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
+	 To:Cc:Content-Type; b=LWr+A2yjZnCI/WuoYXZbA9Od5OGqrqxJkGP6PVMXwHrTIJb6143bENfXUIwCI2gNWKdEfQKLNltwdrHVSgPKOwGsdzohULz0wcjKu0FZpUTQxJpr45GF/3qCXwFlNkMTtq+hI6AuzirRBoaca1E+DkpN03cNDZ64GTCm2W1AIxs=
+ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=XMV/ih4z; arc=pass smtp.client-ip=209.85.167.51
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="lqgvbK82"
-Received: by mail-pf1-f181.google.com with SMTP id d2e1a72fcca58-83ef1d17904so1169486b3a.1
-        for <sashiko-reviews@lists.linux.dev>; Sat, 16 May 2026 21:41:40 -0700 (PDT)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="XMV/ih4z"
+Received: by mail-lf1-f51.google.com with SMTP id 2adb3069b0e04-5a884815606so1632830e87.0
+        for <sashiko-reviews@lists.linux.dev>; Sat, 16 May 2026 23:16:01 -0700 (PDT)
+ARC-Seal: i=1; a=rsa-sha256; t=1778998560; cv=none;
+        d=google.com; s=arc-20240605;
+        b=PFtmCfY47R0KvWOlL/AGTf8sIA1nhrc7UY/x8ldLovalFsMiGcX6gBO2JH+HbVDqaa
+         /p6HAP9Czk78JSv35c4opTmrMoGRCmw9RzBhxZPWuDgf90EHSOdSmaLDNbGCI1jBxHSA
+         OFbCYZ7Xrx0uGcwOpuBf3wwGws1aWk3idc89K4vXl5FTou0dMTB/BFwGI752RJc2Jpow
+         0HvBco6vDQthGpDM7B7H9jIzMhZGo6hSubTUgGZoJrXE3h4DPsKlEY9uBaQ2KlVClvyQ
+         PYFtbB8uKXZBWw6lNACJsQhkylv3OtXtKiOlepUp2e9Lbh4+b09+fC0hkCSDeDuLgAPf
+         PfPA==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com; s=arc-20240605;
+        h=cc:to:subject:message-id:date:from:in-reply-to:references
+         :mime-version:dkim-signature;
+        bh=cZb6AJaZ1xadPD91ePgoZT8bZhlU06q0reAG9tkJInc=;
+        fh=uA360uvxR9S0K/Y4Lovo7aIaGlBwzVBnnb2BKWupr/4=;
+        b=IeArOL5VwmwXaYgBSe4c6mgGBlx0OeZT64pQikmvWzZqAKl6rAzoupao4PK+ZvvUfp
+         MFgJelgcCucvkvI8JwxE0fgmlnvO0X3cB7wd9YfRkH+jD+pYK63w+yXOuUogQUSG2n2r
+         ZBr4Ix5BCgHkXf+6oM3lSX5EDUSy+idwhNXzNBMDu56ClyKqg34rKazAwMBIUCWxP8U/
+         cw4y84sf54TqrYG8DuwOsHZEFuw1nmqpWk1/X21ONM0uPmNXX86wMUNRAgH+kO0C5wR4
+         wRtkf0WC2z37o9+F2ZYmaCxtJMcxPdVfFPJRqeDCcDsF3Urad5Pvr36Vq6RK4D6pRz6d
+         PZEA==;
+        darn=lists.linux.dev
+ARC-Authentication-Results: i=1; mx.google.com; arc=none
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20251104; t=1778992900; x=1779597700; darn=lists.linux.dev;
-        h=in-reply-to:content-transfer-encoding:content-disposition
-         :mime-version:references:message-id:subject:cc:to:from:date:from:to
-         :cc:subject:date:message-id:reply-to;
-        bh=tgM/imni8OBMR+8bMpL6Wt69F8bl6c0wLVOsI5NzgJI=;
-        b=lqgvbK82eivbuU08HJ6BtDlojdJaSdLFl9j7R22uWb+PaY6K7d7FFwa27nc6t0ARzt
-         9+CtNFJmt3uxsTjGnmmP0I5FbkR6jUlRODmX1a7OnLN/NlDMg2154L4KLaoXOAJ4/3kL
-         yvSdjuuS9h7CSzvuhh4OHt/4c40NRpwEasaLBbXoTDdIP2GExLyYurh9zrv60YlIrJ1d
-         CqkPBSwIAHri87GSHGUJDToUi14Yq8Jk5NKyLWvfrvc5uyaDbdjwTQblJmWdIs40Supn
-         unEKiHkLjgWOIWF0m7cwF2XMZPYfcac3XEH7rXd/Y5MhARq9fBO8AdGtDCRCLgCOzE2L
-         1PRQ==
+        d=gmail.com; s=20251104; t=1778998560; x=1779603360; darn=lists.linux.dev;
+        h=cc:to:subject:message-id:date:from:in-reply-to:references
+         :mime-version:from:to:cc:subject:date:message-id:reply-to;
+        bh=cZb6AJaZ1xadPD91ePgoZT8bZhlU06q0reAG9tkJInc=;
+        b=XMV/ih4zxEod1oUyPXqMzz2IJ0GK9TcbT20zx3ZikCLJVzqO4u/y7b43eLd65jaL+J
+         8FgNGvp1uzRbXZ3HMTqGwQrHZR9zzowXSq26JZwUo7NyvIsFssb6Nz4OKwljwqh7geNA
+         ErySP3CqFeHct5bDotcUsXwYqcUNFlOiK5fnNBjB0Al7V+L4HPER4DxeYPocuaIhSquy
+         Jcqr4yqwtVW5hiVxvclWqipix2EZh6RriWj5l7MKdh+4KAeEsAXuDxMpKndKCAyxd8YX
+         paBvN6NqFDIlGHqMjlcFM0/8TimgjJLFjLI2RXlNuCpV2anPiUdhhD3xQGAuegQPkJT3
+         C6SA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20251104; t=1778992900; x=1779597700;
-        h=in-reply-to:content-transfer-encoding:content-disposition
-         :mime-version:references:message-id:subject:cc:to:from:date:x-gm-gg
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=tgM/imni8OBMR+8bMpL6Wt69F8bl6c0wLVOsI5NzgJI=;
-        b=m+7Dv+kl3G//v8r/F/39tljdVluWc8iwOXOuRSV5n/WpYN3LjYw/JiMc3hZXbukR4V
-         2XmFjfQL72FKzTlAtYNbwgq9iNSu6QB9XofEFvdinFbBUvCouIsN2NR16/vKT5jOLzkw
-         3s0H/2FxogQy3/9Or6FZu9FYW48KntrBP3wUedxioy9UbLT5J+O3LE22B7xhlbD8jv12
-         WJS+Y94lzi0UgVYjx9YQrOEgNox3t6F5JGvUs8Zr5brnbTH284znYXgJTa2sVLWILPiq
-         mhyErxOQFVp5Jv13ohyPZkD6C3AikqqJ3weV9fQqSkwvLkpY5dH+7ADtg5sMHMAJ/cVk
-         XUqQ==
-X-Gm-Message-State: AOJu0YyA0N9sVuEx9XRhrhuGQSkTmzuHvtEBuTY71fgomyo0HMZp5EjB
-	BcMViRDVtPuFhPJoUnd+IlTvttPtvO9B3TPQyj1rjT72n3P0Bx6+G5gFLy/RiklT
-X-Gm-Gg: Acq92OG10ir8Zgnkn5oUI6UKOOEoF8NW4SdTHEgLxJxAVvdhaSl7/J/Z4kyc0dOZkE5
-	99hl4zQg63vx67zQOR5niPr+GiAwv85I8jvdnfysBp/beVtP/Y1lX3Z6aZjFnVhfHfQYQLK5cWm
-	N2BrGVP9Il+ZxKFAkq7mM7mZGmg80EwPaGhhGbJvAYxs6N2psCoGUxf93uOW9rBiW7zYx8aGOp7
-	QoDzm8uKIiZRTWuUQ/wV2MNK2eAIjAvoTUCs09UUyF3Z3nIhjymH6nFwXeqVGqqkttkdg4f24rM
-	FdMnB/gcK3cGB48b3WweabXaZITwmpCHvICE5QP9YfDNT9b4J3/Eiv3OLmr8EUqOT13bIbpC4Db
-	fWOdUPDz0qIp9ib817QQfqPpV+27Wu4xomjUF0PFQ3ePHJxW0MMDIuSolLZ3gTEyG1YTZ2+eIYg
-	EMgk1BorikF+Eusc/sS4FExyA=
-X-Received: by 2002:a05:6a00:414e:b0:82f:4a4d:377e with SMTP id d2e1a72fcca58-83f33d9d741mr10897233b3a.28.1778992899922;
-        Sat, 16 May 2026 21:41:39 -0700 (PDT)
-Received: from localhost ([2001:19f0:8001:1b2d:5400:5ff:fefa:a95d])
-        by smtp.gmail.com with ESMTPSA id d2e1a72fcca58-83f19c5b4bfsm10862196b3a.28.2026.05.16.21.41.39
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Sat, 16 May 2026 21:41:39 -0700 (PDT)
-Date: Sun, 17 May 2026 12:41:07 +0800
-From: Inochi Amaoto <inochiama@gmail.com>
-To: sashiko-reviews@lists.linux.dev, Inochi Amaoto <inochiama@gmail.com>
-Cc: conor+dt@kernel.org, linux-pci@vger.kernel.org, robh@kernel.org, 
-	devicetree@vger.kernel.org
-Subject: Re: [PATCH v2 5/5] PCI: spacemit-k1: Add Spacemit K3 PCIe host
- controller support
-Message-ID: <aglGV-bsTxiJcjVs@inochi.infowork>
-References: <20260517014841.254085-6-inochiama@gmail.com>
- <20260517031620.E1854C2BCB7@smtp.kernel.org>
+        d=1e100.net; s=20251104; t=1778998560; x=1779603360;
+        h=cc:to:subject:message-id:date:from:in-reply-to:references
+         :mime-version:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=cZb6AJaZ1xadPD91ePgoZT8bZhlU06q0reAG9tkJInc=;
+        b=kxYLUfSTfEqSHrEGdnzv3QF/gV4Y8aYSWOrfy4ksJ2cXLZDusRT19U16rKY7VHhLJu
+         /irLH/W4X4wVaqbA3ZC8otsqd2uNhI/WKen4HW5ehgQGb+CUdYFlgK9wiAUym6r5OVNV
+         /l6vhG78iSn4Kd9O8xypxh/29g4x1UC5JLwLh7BMBbmC4gryJS7jShXCsTHi0VpUlHNg
+         XhFPzFfUJtKOHTHPmE0R0m0SkcFVjEYWVcRDPB8fk8VBZGwnPdf/3uc99z5V5KAzQeG7
+         xKfMctf32vnLCprT2QfwvJyNa6gJyy2Lf7znvn7G8EvXK6Sn1RW3QNyuB20XzvTFbYWz
+         Cc1Q==
+X-Gm-Message-State: AOJu0Yz+kOTtm3vxxOLZzNh2izrlU5wrK/JObhUgT+/640u5r/a6dAHU
+	sGnlL7qAMO7XDhRbRKj4sov5bwOx0TRPXmfrWCgbpZ5YUIUP84SX8iEeZqCtulxVkmQki8rpLAg
+	zip7PKp8aNaQ3HO+ix9G+am6GnOErOhr/aNeCaqlepg==
+X-Gm-Gg: Acq92OG1s60zssOFMuBqx9iQPE0AD9htTQTEgi+Tltd9v05k/HncBpF2bGPbb4tq4Ns
+	+qVzL9IPsBMXclqFUUmItlhB4CeRzPvBerBpCNeaAJi+wBazJlJAd4LAuGUYZXOBplS7r5nuuS6
+	J9858BKMfQDLQUHbwEDeS9++e6METvtISf537UM9OWPRvFIcBDm8w8gx64vmRsKcbI41/JfaYQe
+	unccPl/+rq9z8wyoI+SLosyOx3ZWC23PeorKfuJ4imQBu+Gt1V1Z5nU9+4H+h0CxPcjucQN0/mC
+	i3PTZ1XbodWH12RTWc3hsnbgRnUy/VxKSFNzRFfCdkrvtva9Ag==
+X-Received: by 2002:a05:6512:128a:b0:5a8:65ce:e83b with SMTP id
+ 2adb3069b0e04-5aa0e60cfadmr3117551e87.7.1778998559852; Sat, 16 May 2026
+ 23:15:59 -0700 (PDT)
 Precedence: bulk
 X-Mailing-List: sashiko-reviews@lists.linux.dev
 List-Id: <sashiko-reviews.lists.linux.dev>
 List-Subscribe: <mailto:sashiko-reviews+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:sashiko-reviews+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=iso-8859-1
-Content-Disposition: inline
-Content-Transfer-Encoding: 8bit
-In-Reply-To: <20260517031620.E1854C2BCB7@smtp.kernel.org>
+References: <20260515123018.80147-6-kerneljasonxing@gmail.com>
+ <20260516123128.BA67BC19425@smtp.kernel.org> <CAL+tcoB=cW0tuoJLfoRKoNX2rYSTcF_c09nyZqq0ZZQEJHJP9A@mail.gmail.com>
+In-Reply-To: <CAL+tcoB=cW0tuoJLfoRKoNX2rYSTcF_c09nyZqq0ZZQEJHJP9A@mail.gmail.com>
+From: Jason Xing <kerneljasonxing@gmail.com>
+Date: Sun, 17 May 2026 14:15:22 +0800
+X-Gm-Features: AVHnY4IzglYJ7hA4FzDnVyoltczY2JD9hsjiM39e-19Twt4_xVRlot1zyCdw2n8
+Message-ID: <CAL+tcoD0VbrgdZYv4Nj0kgvon6RUXnXbWjoxcgCQ6qPanqR+7A@mail.gmail.com>
+Subject: Re: [PATCH net v2 5/5] selftests/xsk: fix multi-buffer invalid desc
+ tests for drain_cont
+To: sashiko-reviews@lists.linux.dev
+Cc: bpf@vger.kernel.org
+Content-Type: text/plain; charset="UTF-8"
 
-On Sun, May 17, 2026 at 03:16:20AM +0000, sashiko-bot@kernel.org wrote:
-> Thank you for your contribution! Sashiko AI review found 5 potential issue(s) to consider:
-> - [High] MMIO registers are accessed before the controller's clocks are enabled, leading to a synchronous external abort or system crash.
-> - [High] Incorrect use of `u32_replace_bits()` combined with bitwise OR (`|=`) fails to clear existing bits.
-> - [High] Missing Root Complex mode configuration for the K3 controller due to a copy-paste error.
-> - [Medium] A bitmask macro for a completely different field is incorrectly passed as the replacement value to `u32_replace_bits()`, writing unexpected values.
-> - [Medium] Asymmetric teardown: `k1_pcie_deinit()` fails to assert reset on the K3 controller because it uses a reset line the controller is explicitly configured to ignore.
-> --
-> 
-> commit 2826ac7fe9e0d0c0dd248a7fc412ce12f4d7b491
-> Author: Inochi Amaoto <inochiama@gmail.com>
-> 
-> PCI: spacemit-k1: Add Spacemit K3 PCIe host controller support
-> 
-> This commit adds host controller support for the Spacemit K3 PCIe IP. It
-> introduces K3-specific initialization, PHY enablement, and MSI host setup,
-> hooking these into the existing spacemit-k1 driver.
-> 
-> > diff --git a/drivers/pci/controller/dwc/pcie-spacemit-k1.c b/drivers/pci/controller/dwc/pcie-spacemit-k1.c
-> > index 7f6f1df31cd81..7854d26220a98 100644
-> > --- a/drivers/pci/controller/dwc/pcie-spacemit-k1.c
-> > +++ b/drivers/pci/controller/dwc/pcie-spacemit-k1.c
-> [ ... ]
-> > @@ -262,6 +278,152 @@ static const struct dw_pcie_ops k1_pcie_ops = {
-> [ ... ]
-> > +static int k3_pcie_init(struct dw_pcie_rp *pp)
-> > +{
-> [ ... ]
-> > +	/*
-> > +	 * Put the controller in root complex mode, and indicate that
-> > +	 * Vaux (3.3v) is present.
-> > +	 */
-> > +	regmap_set_bits(k1->pmu, k1->pmu_off + PCIE_CONTROL_LOGIC,
-> > +			PCIE_PERSTN_OUT | PCIE_PERSTN_OE);
-> 
-> Does this code configure the controller as a Root Complex? 
-> 
-> The comment mentions putting the controller in root complex mode, but the 
-> register write only sets the PERSTN bits. In the K1 initialization, this is 
-> done by setting DEVICE_TYPE_RC, which appears to be missing here.
-> 
+> > > @@ -950,17 +950,11 @@ static int complete_pkts(struct xsk_socket_info *xsk, int batch_size)
+> > >
+> > >       rcvd = xsk_ring_cons__peek(&xsk->umem->cq, batch_size, &idx);
+> > >       if (rcvd) {
+> > > -             if (rcvd > xsk->outstanding_tx) {
+> > > -                     u64 addr = *xsk_ring_cons__comp_addr(&xsk->umem->cq, idx + rcvd - 1);
+> > > -
+> > > -                     ksft_print_msg("[%s] Too many packets completed\n", __func__);
+> > > -                     ksft_print_msg("Last completion address: %llx\n",
+> > > -                                    (unsigned long long)addr);
+> > > -                     return TEST_FAILURE;
+> > > -             }
+> > > -
+> > >               xsk_ring_cons__release(&xsk->umem->cq, rcvd);
+> > > -             xsk->outstanding_tx -= rcvd;
+> > > +             if (rcvd > xsk->outstanding_tx)
+> > > +                     xsk->outstanding_tx = 0;
+> > > +             else
+> > > +                     xsk->outstanding_tx -= rcvd;
+> >
+> > Does clamping xsk->outstanding_tx to 0 mask underlying regressions by
+> > silently discarding unexpected completions?
+> >
+> > If the kernel correctly generates CQ entries for invalid descriptors now,
+> > could outstanding_tx be incremented by the total number of submitted
+> > descriptors instead of only the valid ones?
 
-Unlike K1, K3 does not needs this.
+Well, this assumption doesn't always hold because
+xsk_cq_cancel_locked() cancels the desc from cq. I confirmed this with
+testing - switching to outstanding_tx += i causes 6 additional test
+failures.
 
-> > +
-> > +	val = dw_pcie_readl_dbi(pci, GEN3_EQ_CONTROL_OFF);
-> > +	val = u32_replace_bits(val, GEN3_EQ_CONTROL_OFF_PHASE23_EXIT_MODE,
-> > +			       GEN3_EQ_CONTROL_OFF_PSET_REQ_VEC);
-> 
-> Is the replacement value intended to be GEN3_EQ_CONTROL_OFF_PHASE23_EXIT_MODE? 
-> 
-> This passes a bitmask macro for a completely different field into 
-> u32_replace_bits(), which shifts the value into the target mask and writes an 
-> unexpected value into the register.
-> 
+Since this series fixs the wrong behavior and publishes the
+invalid/overflowed desc into the cq, outstanding_tx is no longer used
+as the verification in selftests. But it is still useful, like as an
+indicator on when to kick the txq.
 
-The GEN3_EQ_CONTROL_OFF_PHASE23_EXIT_MODE should be BIT(7),
-it is a mistake.
-
-> > +	dw_pcie_writel_dbi(pci, GEN3_EQ_CONTROL_OFF, val);
-> [ ... ]
-> > +static int k3_pcie_msi_host_init(struct dw_pcie_rp *pp)
-> > +{
-> > +	struct dw_pcie *pci = to_dw_pcie_from_pp(pp);
-> > +	u32 val;
-> > +
-> > +	dw_pcie_dbi_ro_wr_en(pci);
-> > +
-> > +	val = dw_pcie_readl_dbi(pci, COHERENCY_CONTROL_3_OFF);
-> > +	val |= u32_replace_bits(val, K3_CACHE_MSTR_AWCACHE_BEHAVIOR,
-> > +				K3_CACHE_MSTR_AWCACHE_MODE);
-> 
-> Will this clear the existing bits correctly? 
-> 
-> The u32_replace_bits() macro returns the fully modified 32-bit word. By using 
-> the bitwise OR assignment (|=), the original bits from val are ORed with the 
-> new bits, leaving any originally set bits as 1 instead of clearing them.
-> 
-
-Yes, it is wrong, I will fix it.
-
-> > +	dw_pcie_writel_dbi(pci, COHERENCY_CONTROL_3_OFF, val);
-> [ ... ]
-> > +static const struct dw_pcie_host_ops k3_pcie_host_ops = {
-> > +	.init		= k3_pcie_init,
-> > +	.deinit		= k1_pcie_deinit,
-> 
-> Can k1_pcie_deinit() successfully assert the reset for the K3 controller? 
-> 
-> During initialization, k3_pcie_init() sets PCIE_IGNORE_PERSTN in 
-> PCIE_CONTROL_LOGIC. If k1_pcie_deinit() attempts to assert reset using 
-> PCIE_RC_PERST, the hardware might ignore it, leaving the device improperly 
-> reset during teardown.
-> 
-> > +	.msi_init	= k3_pcie_msi_host_init,
-> > +};
-> [ ... ]
-> > +static void k3_pcie_clear_irq_status(struct k1_pcie *k1,
-> > +				     u32 *status0, u32 *status1, u32 *status2)
-> > +{
-> > +	*status0 = readl_relaxed(k1->link + K3_PHY_AHB_IRQSTATUS_INTX);
-> > +	*status1 = readl_relaxed(k1->link + INTR_STATUS);
-> > +	*status2 = readl_relaxed(k1->link + K3_ADDR_INTR_STATUS1);
-> > +
-> > +	writel_relaxed(*status0, k1->link + K3_PHY_AHB_IRQSTATUS_INTX);
-> > +	writel_relaxed(*status1, k1->link + INTR_STATUS);
-> > +	writel_relaxed(*status2, k1->link + K3_ADDR_INTR_STATUS1);
-> > +}
-> > +
-> > +static int k3_pcie_parse_port(struct k1_pcie *k1)
-> > +{
-> [ ... ]
-> > +	k1->phy_count = i;
-> > +	if (k1->phy_count == 0)
-> > +		return -EINVAL;
-> > +
-> > +	k3_pcie_clear_irq_status(k1, &status0, &status1, &status2);
-> > +
-> > +	return 0;
-> > +}
-> 
-> Could accessing these MMIO registers before the clocks are enabled cause a
-> synchronous external abort?
-> 
-
-No problems, these register is always ready.
-
-> The probe function calls parse_port() before dw_pcie_host_init(). This means
-> k3_pcie_clear_irq_status() performs direct MMIO reads and writes to the 
-> k1->link registers before k1_pcie_enable_resources() is called later in 
-> k3_pcie_init(). 
-> 
-> Accessing an unclocked peripheral can cause a bus stall on ARM/RISC-V 
-> architectures.
-> 
-> -- 
-> Sashiko AI review · https://sashiko.dev/#/patchset/20260517014841.254085-1-inochiama@gmail.com?part=5
+Thanks,
+Jason
