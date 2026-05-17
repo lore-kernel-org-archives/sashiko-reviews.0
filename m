@@ -1,162 +1,147 @@
-Received: from mail-pl1-f173.google.com (mail-pl1-f173.google.com [209.85.214.173])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from out-172.mta0.migadu.com (out-172.mta0.migadu.com [91.218.175.172])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 54A253C1404
-	for <sashiko-reviews@lists.linux.dev>; Sun, 17 May 2026 17:21:44 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=pass smtp.client-ip=209.85.214.173
-ARC-Seal:i=2; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1779038507; cv=pass; b=b1+gqGn4QDZvlfjbQ3QlL++GaY6sVFLKBsoPVL5+YoDCMBQF2vxLQHZ2uwupnHVnpNGVizbjUGvXB56KnRPebWebWvyOq5U4vSD3zZ4uwzPTuwOkfzTwU5Jff5NjrUfDz7Mv9kPVdYK3uQo54ehlG6hB4LegqoV0tlHUvJX9CYw=
-ARC-Message-Signature:i=2; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1779038507; c=relaxed/simple;
-	bh=aPJ6l4K5VDLP8O6wMFzmNPEZXhlE2m0bYZNICDB9cRg=;
-	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
-	 To:Cc:Content-Type; b=LtFQzN4okmb9MSGZQdbRbepYrtFh1GXvrv6XqqNHXMysZTy2fM9z+bkrFJTnAciR5Yif49mogPxZQQoJsIeFpcevY5+bT7LmTH2tAheSygzX9vUj3Onma60oF499uVnqMbtDe2BoBZq2RDSvpQKwHZNq+oKUAkwp7zCMGE6s3Js=
-ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=google.com; spf=pass smtp.mailfrom=google.com; dkim=pass (2048-bit key) header.d=google.com header.i=@google.com header.b=tUaWbw/4; arc=pass smtp.client-ip=209.85.214.173
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=google.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=google.com
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0BFC649659
+	for <sashiko-reviews@lists.linux.dev>; Sun, 17 May 2026 18:17:22 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=91.218.175.172
+ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
+	t=1779041845; cv=none; b=AiQL/XO1q2jwZXNJlNNHgbe6LpdD1GVyBGV4g5hKFHhuxG6fT2vENxTNxia7wu7dD2bid1xpJDnA6L+9UFTgnTygVseOVDcW6EMQbvKCCKdijG6IsFG5M8wUf9EPli12WNdlPJNZkOHSRVLvgD2ygiGpUFUFL8LurxtiemMS8fo=
+ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
+	s=arc-20240116; t=1779041845; c=relaxed/simple;
+	bh=Jc0oI27BJRqxTgiwmeXb1Pw6NYMKJm8lZhAG6r+k05o=;
+	h=Content-Type:Mime-Version:Subject:From:In-Reply-To:Date:Cc:
+	 Message-Id:References:To; b=a6VblKhE83fyhHMWFue7IOrVB1MWZtYTtoCSE/jVnxYl6jEGgz6jPTTTj6P2b7zRBGLlYLPh7b8osT/o4OsDczrn3kQN8+s9tZ3i7qD2k/mRiwU5L34dJVShw4UZ4VH/QGmOBcwc3+KB3PL5MAObgISKzOgw/NrYHAQCT2AHKQI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linux.dev; spf=pass smtp.mailfrom=linux.dev; dkim=pass (1024-bit key) header.d=linux.dev header.i=@linux.dev header.b=qxO9T+OK; arc=none smtp.client-ip=91.218.175.172
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linux.dev
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linux.dev
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=google.com header.i=@google.com header.b="tUaWbw/4"
-Received: by mail-pl1-f173.google.com with SMTP id d9443c01a7336-2ba180a022dso15ad.1
-        for <sashiko-reviews@lists.linux.dev>; Sun, 17 May 2026 10:21:44 -0700 (PDT)
-ARC-Seal: i=1; a=rsa-sha256; t=1779038502; cv=none;
-        d=google.com; s=arc-20240605;
-        b=g2m5AnSzRTJqYyAKslhVPEBycsEdK57y+bajG/47KdkUYsmilhn9zvN9s8MTK0Bp2l
-         W8VH9lMFPxmj5B0LQFiXT7Jutc3gCrgObQiGiF32yGP1+VIIHF7RgGXeDM93Nspzx4Jo
-         IRQqKoczkNXO7DDZk8JnXCA0ViduRiEnaJ/ifZTCFMBjg09xsj8kk3hb5Pb5ynNSjKCP
-         GPLUMYLGVFPdq4LjRdN1tswwvBR+j4RElrcZQtN9mczk7M5Ltoy0EScdWfIlEVasADFN
-         cm8FfHUfBeTozvnvq056F2otVdnLqHbQ/TwYzEPWcKTSfNsZutmmpK+0XeuM53Y7j4Tk
-         tJ0w==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com; s=arc-20240605;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:dkim-signature;
-        bh=aPJ6l4K5VDLP8O6wMFzmNPEZXhlE2m0bYZNICDB9cRg=;
-        fh=6/+p72sCy7cAFRjOIdttegdodMuDLgxAAg/Wgl3twWY=;
-        b=CQrnDbxl6nCioNQOB9ez3afv/H+Fpl24k27tI2ly/RSpBzgJN+dV7PPSvNfYf6SyMw
-         lozmoDP7oHqpHyL/FNPRcCSWa1B4FxbzGhVU3HkGEwtDOQYfQ76MJCT4oBX/wlIx8iDF
-         i3YLI+jnz47DiBKZ0ZbkKw/dURaqIyBnS0L0LPXPRQf00YFoQ7bDdWcI0EqXKDLOkh64
-         qvT8QWo/ZvHZ7ePp0lRR/1GktqSg7jXCuZnijduZleTQGiYwvWX7CMSxMMoT8tE0A5BF
-         1CXKsjJdKz/cL3jvGtHOjPGyeCmBysmDvcyJXOKFKc0r8UhRH9n6DVkkapitiPVE+DLb
-         cd1w==;
-        darn=lists.linux.dev
-ARC-Authentication-Results: i=1; mx.google.com; arc=none
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=google.com; s=20251104; t=1779038502; x=1779643302; darn=lists.linux.dev;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=aPJ6l4K5VDLP8O6wMFzmNPEZXhlE2m0bYZNICDB9cRg=;
-        b=tUaWbw/4IQO7RV7iO5/sm51G6A2TLExV78N80QVlYKUfVNrn1o9UYv+ayWeFYAfXWN
-         1xL6OeSAnv4/Ci7lr1wudBFVtGHlkl7r6Ks2bQJqosp2BhAjzFOewdR5wTmzAREfZgkA
-         ZPbNssG/ERnI8pCjRP2ndJXSi1TeeBiG0iG4TVkY4bRw+mLCM42RCxSIzKPxn30rkPxS
-         0zC7ziUhdkJB2A7VtjOgl8qHnFCraCrYSnDmpFF0z5cmumm1/372iOrUZTYshMcai6Lf
-         bJjVKCIm/CI8imNQwrUI2JcAOp2jh4pNP09FLdi+gIFY/jBFPem22/AKwrOlKuuIDqz5
-         mCXQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20251104; t=1779038502; x=1779643302;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:x-gm-gg:x-gm-message-state:from
-         :to:cc:subject:date:message-id:reply-to;
-        bh=aPJ6l4K5VDLP8O6wMFzmNPEZXhlE2m0bYZNICDB9cRg=;
-        b=ZYHw0PfAUWk3i+tdeyLDH8vIuGVqF2Oi1svTzfTB/MPS+wZlLiEsRiP844fVvcajct
-         3Ehrhvz77Xo0o8qerQQsDWKBryC+QBQs7r/+iLmL+eCw39ymgJdzWZS+4vVVkFm9AF12
-         HhgbfMghkRD4o87FiQwxd0uQi6A+m+EePIhydwcwyLu/3b8hGgmGTuBHZHVOUTH14laE
-         Xx2J6PWd6rGt92hhLiL3He1VWYcGsUSQtjcKZBqjYzLyZD7bOtoirK8ZQEuFPvlwFBxC
-         jJkPexXeSVStQAebcD5RP1rNwMO4vpbVkXkAaNV4rGdX1jZb29J+jmWdHBZZmzfHCW9p
-         4MbQ==
-X-Gm-Message-State: AOJu0YxqjBrBIUDZgu4iHTVcYPm/7YgZroUDdslO/Q9Jl80OU8rOYAhq
-	cxxYWCAZ4TqWl+yUIvlFVabGNnGwDQ5lVw7V27c1TsLW52dEMHkVGuKmO80ZNgibC/H//KK1O07
-	SuZUMCDDnVRIJjweclF0eCqDHdOYznQkyrgmGGbiEdB09jX6eBMRTBQOx62s=
-X-Gm-Gg: Acq92OFjxtP49hKhvNLyGRZdz9c04Y07mD20bn9csPgtW3u0cLPOGmFgFK9Dxva4BqH
-	6gNmPEaQGydGQfWCfZwbXtF06E8B89xjvAT99Xk4l8N1BjCejhFGLqSEG02uUaVzj8g8tiXt68m
-	hx2lvZ/c5bzsFNOcrplJVbPEPdRg9GJIRS0EqIpfcMAUFVfKBeWYJPIBD11oOg8HaTDeq2v/ttr
-	gNrRsH0tytcKpyD6+3BnrGwK3rmuX1shuQU7S2QhkVnFA8vEctoV44DpBJwXs1pgkPto8lhLvQD
-	9UZPl+5PvQbZDIRsmwY=
-X-Received: by 2002:a17:902:ef52:b0:2bd:6dad:7ccb with SMTP id
- d9443c01a7336-2bdb32bb6damr1621875ad.23.1779038501863; Sun, 17 May 2026
- 10:21:41 -0700 (PDT)
+	dkim=pass (1024-bit key) header.d=linux.dev header.i=@linux.dev header.b="qxO9T+OK"
+Content-Type: text/plain; charset=utf-8
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linux.dev; s=key1;
+	t=1779041840;
+	h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+	 to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+	 content-transfer-encoding:content-transfer-encoding:
+	 in-reply-to:in-reply-to:references:references;
+	bh=WwyP5R5wq5SGP6g/sgNJXlA2/rET4gV/1lwvi9uooIY=;
+	b=qxO9T+OKwZSHYsiMIJMY+9YcZ4PnZ8XfFsSpOTjtlnmw8EP0ADiMS272sGHzbEHiJfMslJ
+	+WXdTWchz4NHJNMh0DkL/Ya14D6kpKdc31FHo2cxCNQRROog6GBF29RLkeWsqCmA4MOPrA
+	Ung/rGMie4NpRak6b7zyb5LMY3Q7nK4=
+Content-Transfer-Encoding: quoted-printable
 Precedence: bulk
 X-Mailing-List: sashiko-reviews@lists.linux.dev
 List-Id: <sashiko-reviews.lists.linux.dev>
 List-Subscribe: <mailto:sashiko-reviews+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:sashiko-reviews+unsubscribe@lists.linux.dev>
-MIME-Version: 1.0
-References: <20260515180806.246914-1-sigmatwojastara@gmail.com>
- <20260515181547.99D82C2BCB0@smtp.kernel.org> <CAP-5=fUV6W=TBXbCHARMJwm1Pjb4uJCO82EZ3fjU7jsiR51t0w@mail.gmail.com>
-In-Reply-To: <CAP-5=fUV6W=TBXbCHARMJwm1Pjb4uJCO82EZ3fjU7jsiR51t0w@mail.gmail.com>
-From: Ian Rogers <irogers@google.com>
-Date: Sun, 17 May 2026 10:21:29 -0700
-X-Gm-Features: AVHnY4KdT5rjjwznCh38hIDbeBmXMvzC1f47yJU-7v-Yd1spQDbtuPjNa7IT6DU
-Message-ID: <CAP-5=fXt50fNw3=CCJ97VHGAb-8gzjEz1fPfnVK4kLQbWXSJvw@mail.gmail.com>
-Subject: Re: [PATCH] treewide: replace /usr/bin/python3 shebangs with env python3
-To: sashiko-reviews@lists.linux.dev
-Cc: Oli R <sigmatwojastara@gmail.com>, linux-perf-users@vger.kernel.org
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
+Mime-Version: 1.0 (1.0)
+Subject: Re: Stop false review statements
+X-Report-Abuse: Please report any abuse attempt to abuse@migadu.com and include these headers.
+From: Roman Gushchin <roman.gushchin@linux.dev>
+In-Reply-To: <20260517183959.37441984@foz.lan>
+Date: Sun, 17 May 2026 11:17:06 -0700
+Cc: Greg KH <gregkh@linuxfoundation.org>,
+ Krzysztof Kozlowski <krzk@kernel.org>, debarbos@redhat.com,
+ Arnaldo Carvalho de Melo <acme@kernel.org>,
+ Konstantin Ryabitsev <mricon@kernel.org>,
+ Guenter Roeck <linux@roeck-us.net>, sashiko-bot@kernel.org,
+ sashiko-reviews@lists.linux.dev, sashiko@lists.linux.dev,
+ Linux Kernel Workflows <workflows@vger.kernel.org>,
+ Linux Kernel Mailing List <linux-kernel@vger.kernel.org>,
+ devicetree@vger.kernel.org, kfree@google.com
+Message-Id: <F2FBD939-179D-467B-9FA8-BAA44F6C7524@linux.dev>
+References: <20260517183959.37441984@foz.lan>
+To: Mauro Carvalho Chehab <mchehab+huawei@kernel.org>
+X-Migadu-Flow: FLOW_OUT
 
-On Fri, May 15, 2026 at 12:40=E2=80=AFPM Ian Rogers <irogers@google.com> wr=
-ote:
->
-> On Fri, May 15, 2026 at 11:35=E2=80=AFAM <sashiko-bot@kernel.org> wrote:
-> >
-> > Thank you for your contribution! Sashiko AI review found 1 potential is=
-sue(s) to consider:
-> > - [Medium] Commit message states it replaces `#!/usr/bin/python3` sheba=
-ngs and causes no functional changes, but actually changes `#!/usr/bin/pyth=
-on` to `#!/usr/bin/env python3` in `tools/perf/tests/shell/lib/perf_json_ou=
-tput_lint.py`.
-> > --
-> >
-> > commit 7d3e9689ede53be80434b3ba8cd07c27777d11ad
-> > Author: Oli R <sigmatwojastara@gmail.com>
-> >
-> > treewide: replace /usr/bin/python3 shebangs with env python3
-> >
-> > This commit replaces hardcoded /usr/bin/python3 interpreter paths with
-> > /usr/bin/env python3 to improve portability.
-> >
-> > > treewide: replace /usr/bin/python3 shebangs with env python3
-> > [ ... ]
-> > > No functional changes intended.
-> >
-> > Is this description accurate?
-> >
-> > [ ... ]
-> >
-> > > diff --git a/tools/perf/tests/shell/lib/perf_json_output_lint.py b/to=
-ols/perf/tests/shell/lib/perf_json_output_lint.py
-> > > index dafbde56cc76f..dccafd507bb79 100644
-> > > --- a/tools/perf/tests/shell/lib/perf_json_output_lint.py
-> > > +++ b/tools/perf/tests/shell/lib/perf_json_output_lint.py
-> > > @@ -1,4 +1,4 @@
-> > > -#!/usr/bin/python
-> > > +#!/usr/bin/env python3
-> >
-> > Could this affect functionality on systems where python defaults to Pyt=
-hon 2
-> > or is managed differently?
->
-> The change looks good to me, but I wonder it should be split into
-> separate patches for the different subsystems. We do not care about
-> Python 2, so I think some review prompt improvements are necessary.
->
-> Thanks!
-> Ian
 
-For the review prompts I sent out:
-https://github.com/masoncl/review-prompts/pull/62
-https://lore.kernel.org/linux-perf-users/CAP-5=3DfW5Wozj=3DF2dnXoLTWmUjudNW=
-Lyjjg95CuP3Jk9bLcYwww@mail.gmail.com/
 
-In case you are interested, I'm trying to clean up perf's python code
-in this series (v1 sent Oct. 2025):
-https://lore.kernel.org/linux-perf-users/20260428071903.1886173-1-irogers@g=
-oogle.com/
-Testing and reviewing is always appreciated!
+> On May 17, 2026, at 9:40=E2=80=AFAM, Mauro Carvalho Chehab <mchehab+huawei=
+@kernel.org> wrote:
+>=20
+> =EF=BB=BFOn Sun, 17 May 2026 12:12:00 +0200
+> Greg KH <gregkh@linuxfoundation.org> wrote:
+>=20
+>>> On Sun, May 17, 2026 at 12:05:56PM +0200, Mauro Carvalho Chehab wrote:
+>>> On Sat, 16 May 2026 14:59:44 -0700
+>>> Roman Gushchin <roman.gushchin@linux.dev> wrote:
+>>>=20
+>>>>> On May 16, 2026, at 2:33=E2=80=AFPM, Krzysztof Kozlowski <krzk@kernel.=
+org> wrote:
+>>>>>=20
+>>>>> I find it opposite: clogging commits with useless information, because=
 
-Thanks,
-Ian
+>>>>> some arbitrary and completely closed-source tool did analysis means
+>>>>> nothing to me one year later when I look at the commit in the Git hist=
+ory.   =20
+>>>>=20
+>>>> This is simple not true: Sashiko is fully open-source, under Apache 2.0=
+ license
+>>>> and the code belongs to LF.  =20
+>>>=20
+>>>> Yes, the instance behind sashiko.dev is using
+>>>> Gemini 3.1 Pro LLM, which is not open-source, but it=E2=80=99s not a fu=
+ndamental limitation -
+>>>> Sashiko is supporting various LLMs, including open models - it=E2=80=99=
+s just a practical
+>>>> choice: to my knowledge the quality of open models is not on par with f=
+rontier closed
+>>>> models  =20
+>>>=20
+>>> I would very much prefer using an open source LLM, even if not in pair
+>>> with latest paid models.
+>>>=20
+>>>> and it would require a non-trivial amount of hardware and infrastructur=
+e to run
+>>>> an open model at the required scale. =20
+>>>=20
+>>> IMHO the best would be to have them running on some infra that would acc=
+ept
+>>> open source models (*). If there aren't enough resources to have our own=
 
-> > --
-> > Sashiko AI review =C2=B7 https://sashiko.dev/#/patchset/20260515180806.=
-246914-1-sigmatwojastara@gmail.com?part=3D1
-> >
+>>> infra, there are offers out there which allows running open source model=
+s
+>>> like https://ollama.com/pricing (I never used myself).
+>>>=20
+>>> (*) For instance, Qwen3.6 is brand new and licensed under apache-2.0.
+>>>    Not bad on my tests running it locally. =20
+>>=20
+>> You can run the tool locally, with whatever model you want, if you want
+>> to.
+>>=20
+>> But for now, let's just take the free credits that Google is willing to
+>> throw at this thing and let it give us reviews IF the maintainer of the
+>> subsystem feels it is something they want to do.  No one is forcing
+>> maintainers to do this.
+>=20
+> If Google and/or others are willing to give free credits on their cloud,
+> they could instead or in addition give free credits to run ollama
+> there, allowing us to use different models.
+>=20
+> =46rom my side, while I won't personally object getting reviews from
+> Sashiko/Gemini, this is something I can't reproduce locally. I would
+> very much want something where I can select my LLM preferred model
+> and run on my ollama docker container on my own GPU, in a way that
+> I could run it locally before even sending a patch series.
+
+2 thoughts here:
+1) I actually tried to run it with ollama on my personal framework 13. Addin=
+g nominal support is trivial,
+but the whole thing is not really useful: I can get maybe few hundreds token=
+s per second using
+a quantified model with reduced quality; an average sashiko review is consum=
+ing 3.5 millions tokens
+(with Gemini 3.1 pro, it=E2=80=99s also model-dependent).
+I=E2=80=99m personally all in on having the entire thing as open as possible=
+ and I believe Sashiko is what=20
+is realistically the best at this moment - a fully open-source harness and s=
+et of prompts which=20
+can work with a variety of models.
+I=E2=80=99m happy to merge a support for any LLM model which can produce dec=
+ent review results.
+
+2) Due to probabilistic nature of LLMs, nothing is reproducible in a strict s=
+ense of the word.
+Even with exactly the same model/harness/prompts you=E2=80=99ll get differen=
+t results every time you run it.
+It=E2=80=99s unfortunate, but it is what it is at the moment.
+
