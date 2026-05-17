@@ -1,133 +1,124 @@
-Received: from mail-lf1-f51.google.com (mail-lf1-f51.google.com [209.85.167.51])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E7E194502F
-	for <sashiko-reviews@lists.linux.dev>; Sun, 17 May 2026 06:16:01 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=pass smtp.client-ip=209.85.167.51
-ARC-Seal:i=2; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1778998564; cv=pass; b=SNqIBaMXAWyT0Y8vRqJrIUf+ekavpIIDnv3EGSGnAhP3QzHkQgtyp5+xy2iqI/s8IMTkCA5mBWsFm/p74+zdpjA2NWPWnxe0mHJUzbC03k43aYKPCcmV3waKuiVqWZAh2HlRi0VNbQqPuzY/+jQiUjEOgpj+0U9Vj2RMPW3iY2U=
-ARC-Message-Signature:i=2; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1778998564; c=relaxed/simple;
-	bh=KQwepD6izLpoXVuCEseHVqNDIYjLt7x9FUc+tmd2nvk=;
-	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
-	 To:Cc:Content-Type; b=LWr+A2yjZnCI/WuoYXZbA9Od5OGqrqxJkGP6PVMXwHrTIJb6143bENfXUIwCI2gNWKdEfQKLNltwdrHVSgPKOwGsdzohULz0wcjKu0FZpUTQxJpr45GF/3qCXwFlNkMTtq+hI6AuzirRBoaca1E+DkpN03cNDZ64GTCm2W1AIxs=
-ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=XMV/ih4z; arc=pass smtp.client-ip=209.85.167.51
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D60CB336884;
+	Sun, 17 May 2026 08:25:39 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
+ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
+	t=1779006339; cv=none; b=MeaT3cFclKIAO3VJ0yoVFVbDU20iNVg6kjCuBw/id5RAdceQSgCSU3jOQPTW6NflDD5/2NyVv+GB6gEVZJYDFZu5+kfe4HyX6VsXE4k+nFELurHZSyKv5t+27cUp6NtRDoc3SIY94xlzuZfl6185UvCMUZo6WiwMdlak0JIjo48=
+ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
+	s=arc-20240116; t=1779006339; c=relaxed/simple;
+	bh=llp+J3zqo0qhY5+D9nsoNFKS+VH9miaL9ErLeWHqGYY=;
+	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
+	 In-Reply-To:Content-Type; b=B+1zMzOz6oepHppS/vTAmmiD7/7s4ILm8mljuuomIQC3Efg4YR7KIvRPeG3iACgKRE3X+vu0XORt8zbEVZiLmI3lqaN+CVpbLWnYFNjpPYMcezPEScTprxfKZQ7O22XG19LlPGWEtW8rnD0UGj1k2cuXB4ayFf4RQudo2O7CzSM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=GcDD9VxQ; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="XMV/ih4z"
-Received: by mail-lf1-f51.google.com with SMTP id 2adb3069b0e04-5a884815606so1632830e87.0
-        for <sashiko-reviews@lists.linux.dev>; Sat, 16 May 2026 23:16:01 -0700 (PDT)
-ARC-Seal: i=1; a=rsa-sha256; t=1778998560; cv=none;
-        d=google.com; s=arc-20240605;
-        b=PFtmCfY47R0KvWOlL/AGTf8sIA1nhrc7UY/x8ldLovalFsMiGcX6gBO2JH+HbVDqaa
-         /p6HAP9Czk78JSv35c4opTmrMoGRCmw9RzBhxZPWuDgf90EHSOdSmaLDNbGCI1jBxHSA
-         OFbCYZ7Xrx0uGcwOpuBf3wwGws1aWk3idc89K4vXl5FTou0dMTB/BFwGI752RJc2Jpow
-         0HvBco6vDQthGpDM7B7H9jIzMhZGo6hSubTUgGZoJrXE3h4DPsKlEY9uBaQ2KlVClvyQ
-         PYFtbB8uKXZBWw6lNACJsQhkylv3OtXtKiOlepUp2e9Lbh4+b09+fC0hkCSDeDuLgAPf
-         PfPA==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com; s=arc-20240605;
-        h=cc:to:subject:message-id:date:from:in-reply-to:references
-         :mime-version:dkim-signature;
-        bh=cZb6AJaZ1xadPD91ePgoZT8bZhlU06q0reAG9tkJInc=;
-        fh=uA360uvxR9S0K/Y4Lovo7aIaGlBwzVBnnb2BKWupr/4=;
-        b=IeArOL5VwmwXaYgBSe4c6mgGBlx0OeZT64pQikmvWzZqAKl6rAzoupao4PK+ZvvUfp
-         MFgJelgcCucvkvI8JwxE0fgmlnvO0X3cB7wd9YfRkH+jD+pYK63w+yXOuUogQUSG2n2r
-         ZBr4Ix5BCgHkXf+6oM3lSX5EDUSy+idwhNXzNBMDu56ClyKqg34rKazAwMBIUCWxP8U/
-         cw4y84sf54TqrYG8DuwOsHZEFuw1nmqpWk1/X21ONM0uPmNXX86wMUNRAgH+kO0C5wR4
-         wRtkf0WC2z37o9+F2ZYmaCxtJMcxPdVfFPJRqeDCcDsF3Urad5Pvr36Vq6RK4D6pRz6d
-         PZEA==;
-        darn=lists.linux.dev
-ARC-Authentication-Results: i=1; mx.google.com; arc=none
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20251104; t=1778998560; x=1779603360; darn=lists.linux.dev;
-        h=cc:to:subject:message-id:date:from:in-reply-to:references
-         :mime-version:from:to:cc:subject:date:message-id:reply-to;
-        bh=cZb6AJaZ1xadPD91ePgoZT8bZhlU06q0reAG9tkJInc=;
-        b=XMV/ih4zxEod1oUyPXqMzz2IJ0GK9TcbT20zx3ZikCLJVzqO4u/y7b43eLd65jaL+J
-         8FgNGvp1uzRbXZ3HMTqGwQrHZR9zzowXSq26JZwUo7NyvIsFssb6Nz4OKwljwqh7geNA
-         ErySP3CqFeHct5bDotcUsXwYqcUNFlOiK5fnNBjB0Al7V+L4HPER4DxeYPocuaIhSquy
-         Jcqr4yqwtVW5hiVxvclWqipix2EZh6RriWj5l7MKdh+4KAeEsAXuDxMpKndKCAyxd8YX
-         paBvN6NqFDIlGHqMjlcFM0/8TimgjJLFjLI2RXlNuCpV2anPiUdhhD3xQGAuegQPkJT3
-         C6SA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20251104; t=1778998560; x=1779603360;
-        h=cc:to:subject:message-id:date:from:in-reply-to:references
-         :mime-version:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=cZb6AJaZ1xadPD91ePgoZT8bZhlU06q0reAG9tkJInc=;
-        b=kxYLUfSTfEqSHrEGdnzv3QF/gV4Y8aYSWOrfy4ksJ2cXLZDusRT19U16rKY7VHhLJu
-         /irLH/W4X4wVaqbA3ZC8otsqd2uNhI/WKen4HW5ehgQGb+CUdYFlgK9wiAUym6r5OVNV
-         /l6vhG78iSn4Kd9O8xypxh/29g4x1UC5JLwLh7BMBbmC4gryJS7jShXCsTHi0VpUlHNg
-         XhFPzFfUJtKOHTHPmE0R0m0SkcFVjEYWVcRDPB8fk8VBZGwnPdf/3uc99z5V5KAzQeG7
-         xKfMctf32vnLCprT2QfwvJyNa6gJyy2Lf7znvn7G8EvXK6Sn1RW3QNyuB20XzvTFbYWz
-         Cc1Q==
-X-Gm-Message-State: AOJu0Yz+kOTtm3vxxOLZzNh2izrlU5wrK/JObhUgT+/640u5r/a6dAHU
-	sGnlL7qAMO7XDhRbRKj4sov5bwOx0TRPXmfrWCgbpZ5YUIUP84SX8iEeZqCtulxVkmQki8rpLAg
-	zip7PKp8aNaQ3HO+ix9G+am6GnOErOhr/aNeCaqlepg==
-X-Gm-Gg: Acq92OG1s60zssOFMuBqx9iQPE0AD9htTQTEgi+Tltd9v05k/HncBpF2bGPbb4tq4Ns
-	+qVzL9IPsBMXclqFUUmItlhB4CeRzPvBerBpCNeaAJi+wBazJlJAd4LAuGUYZXOBplS7r5nuuS6
-	J9858BKMfQDLQUHbwEDeS9++e6METvtISf537UM9OWPRvFIcBDm8w8gx64vmRsKcbI41/JfaYQe
-	unccPl/+rq9z8wyoI+SLosyOx3ZWC23PeorKfuJ4imQBu+Gt1V1Z5nU9+4H+h0CxPcjucQN0/mC
-	i3PTZ1XbodWH12RTWc3hsnbgRnUy/VxKSFNzRFfCdkrvtva9Ag==
-X-Received: by 2002:a05:6512:128a:b0:5a8:65ce:e83b with SMTP id
- 2adb3069b0e04-5aa0e60cfadmr3117551e87.7.1778998559852; Sat, 16 May 2026
- 23:15:59 -0700 (PDT)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="GcDD9VxQ"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9D51CC2BCB0;
+	Sun, 17 May 2026 08:25:36 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+	s=k20201202; t=1779006339;
+	bh=llp+J3zqo0qhY5+D9nsoNFKS+VH9miaL9ErLeWHqGYY=;
+	h=Date:Subject:To:Cc:References:From:In-Reply-To:From;
+	b=GcDD9VxQ3TtrOPLlZxlxf8uzI+LIkX2bzPFhCfVRQhNoDBqFQdZqZYinmz0NVAzwB
+	 fnD5nBUmyxDR5CPtpnJg/ACT3Oy9BuemgGcwBBSe6DZP40FbzCBaIJ07kvNcIEIiVT
+	 QyyUYxifLTqExXlwm7PB9cDqyjBGxFlnScfHAghzBj16TdRd0FSoh2qjPD8VoJeS8S
+	 2gv+ltgm8nViSJlVRjTgVVruI7rMhobXm2YLQScqNw+1CWIQNyFP6GXoEg3wHnarqa
+	 pYrcO0LR8rZA1Zx+Y2aI0je4Jo4GBn01h2ez5eYk7pfMIif7wEL4bT5oOdZOSoPL4j
+	 DguS9p4cg2vtQ==
+Message-ID: <c975d3a2-0534-4a0e-ab25-3cd8ad978a83@kernel.org>
+Date: Sun, 17 May 2026 10:25:34 +0200
 Precedence: bulk
 X-Mailing-List: sashiko-reviews@lists.linux.dev
 List-Id: <sashiko-reviews.lists.linux.dev>
 List-Subscribe: <mailto:sashiko-reviews+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:sashiko-reviews+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-References: <20260515123018.80147-6-kerneljasonxing@gmail.com>
- <20260516123128.BA67BC19425@smtp.kernel.org> <CAL+tcoB=cW0tuoJLfoRKoNX2rYSTcF_c09nyZqq0ZZQEJHJP9A@mail.gmail.com>
-In-Reply-To: <CAL+tcoB=cW0tuoJLfoRKoNX2rYSTcF_c09nyZqq0ZZQEJHJP9A@mail.gmail.com>
-From: Jason Xing <kerneljasonxing@gmail.com>
-Date: Sun, 17 May 2026 14:15:22 +0800
-X-Gm-Features: AVHnY4IzglYJ7hA4FzDnVyoltczY2JD9hsjiM39e-19Twt4_xVRlot1zyCdw2n8
-Message-ID: <CAL+tcoD0VbrgdZYv4Nj0kgvon6RUXnXbWjoxcgCQ6qPanqR+7A@mail.gmail.com>
-Subject: Re: [PATCH net v2 5/5] selftests/xsk: fix multi-buffer invalid desc
- tests for drain_cont
-To: sashiko-reviews@lists.linux.dev
-Cc: bpf@vger.kernel.org
-Content-Type: text/plain; charset="UTF-8"
+User-Agent: Mozilla Thunderbird
+Subject: Re: Stop false review statements
+To: Roman Gushchin <roman.gushchin@linux.dev>
+Cc: debarbos@redhat.com, Arnaldo Carvalho de Melo <acme@kernel.org>,
+ Greg KH <gregkh@linuxfoundation.org>,
+ Konstantin Ryabitsev <mricon@kernel.org>, Guenter Roeck
+ <linux@roeck-us.net>, sashiko-bot@kernel.org,
+ sashiko-reviews@lists.linux.dev, sashiko@lists.linux.dev,
+ Linux Kernel Workflows <workflows@vger.kernel.org>,
+ Linux Kernel Mailing List <linux-kernel@vger.kernel.org>,
+ devicetree@vger.kernel.org, kfree@google.com
+References: <4f3d7f48-5766-425b-91f6-0acdb5554584@kernel.org>
+ <07602616-412B-4ED8-95D7-588C0D077EE3@linux.dev>
+From: Krzysztof Kozlowski <krzk@kernel.org>
+Content-Language: en-US
+Autocrypt: addr=krzk@kernel.org; keydata=
+ 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 a/A=
+In-Reply-To: <07602616-412B-4ED8-95D7-588C0D077EE3@linux.dev>
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
 
-> > > @@ -950,17 +950,11 @@ static int complete_pkts(struct xsk_socket_info *xsk, int batch_size)
-> > >
-> > >       rcvd = xsk_ring_cons__peek(&xsk->umem->cq, batch_size, &idx);
-> > >       if (rcvd) {
-> > > -             if (rcvd > xsk->outstanding_tx) {
-> > > -                     u64 addr = *xsk_ring_cons__comp_addr(&xsk->umem->cq, idx + rcvd - 1);
-> > > -
-> > > -                     ksft_print_msg("[%s] Too many packets completed\n", __func__);
-> > > -                     ksft_print_msg("Last completion address: %llx\n",
-> > > -                                    (unsigned long long)addr);
-> > > -                     return TEST_FAILURE;
-> > > -             }
-> > > -
-> > >               xsk_ring_cons__release(&xsk->umem->cq, rcvd);
-> > > -             xsk->outstanding_tx -= rcvd;
-> > > +             if (rcvd > xsk->outstanding_tx)
-> > > +                     xsk->outstanding_tx = 0;
-> > > +             else
-> > > +                     xsk->outstanding_tx -= rcvd;
-> >
-> > Does clamping xsk->outstanding_tx to 0 mask underlying regressions by
-> > silently discarding unexpected completions?
-> >
-> > If the kernel correctly generates CQ entries for invalid descriptors now,
-> > could outstanding_tx be incremented by the total number of submitted
-> > descriptors instead of only the valid ones?
+On 16/05/2026 23:59, Roman Gushchin wrote:
+> 
+> 
+>> On May 16, 2026, at 2:33 PM, Krzysztof Kozlowski <krzk@kernel.org> wrote:
+>>
+>> I find it opposite: clogging commits with useless information, because
+>> some arbitrary and completely closed-source tool did analysis means
+>> nothing to me one year later when I look at the commit in the Git history.
+> 
+> This is simple not true: Sashiko is fully open-source, under Apache 2.0 license
+> and the code belongs to LF. Yes, the instance behind sashiko.dev is using
+> Gemini 3.1 Pro LLM, which is not open-source, but it’s not a fundamental limitation - 
+> Sashiko is supporting various LLMs, including open models - it’s just a practical
+> choice: to my knowledge the quality of open models is not on par with frontier closed
+> models and it would require a non-trivial amount of hardware and infrastructure to run
+> an open model at the required scale.
 
-Well, this assumption doesn't always hold because
-xsk_cq_cancel_locked() cancels the desc from cq. I confirmed this with
-testing - switching to outstanding_tx += i causes 6 additional test
-failures.
+Sashiko is open, but it is not the Sashiko which performs the review but
+closed source LLM behind.
 
-Since this series fixs the wrong behavior and publishes the
-invalid/overflowed desc into the cq, outstanding_tx is no longer used
-as the verification in selftests. But it is still useful, like as an
-indicator on when to kick the txq.
+Information that closed source LLM did some analysis is no more useful
+than all other cases I mentioned - LKP, Smatch, Coverity or checkpatch -
+of which most are even open source...
 
-Thanks,
-Jason
+Best regards,
+Krzysztof
