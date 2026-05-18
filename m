@@ -1,128 +1,258 @@
-Received: from mail-wm1-f54.google.com (mail-wm1-f54.google.com [209.85.128.54])
+Received: from mail-lf1-f41.google.com (mail-lf1-f41.google.com [209.85.167.41])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 33654221DB3
-	for <sashiko-reviews@lists.linux.dev>; Mon, 18 May 2026 08:31:56 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.54
-ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1779093117; cv=none; b=m69TU86TGzjwM4Frvv69Vk9WePpo7k7FNxRmclsWIrXi0wmvUVV730qrTZ/ZPGEQHdAQsWzqnnGMO6Kd1CT0dYaizFwUb932Bn7/Oc6g45UCCAH3mE6XCPjJeBN75ye1H8nRFVZBzpYK1VhKgPcvGU0iEYHA57kiJdaaNk4BEao=
-ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1779093117; c=relaxed/simple;
-	bh=PmpScwcGJyXezoD1P7i8aSqy8+IuUXibgGwQ+ap6uj0=;
-	h=From:Date:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=F2f5eqUhIThf2rdnfa5SwkbjmIpOS4aY1qc6P1459GHgTUR6ZfDioglAEAKyzdc+1WgMh1P69hLUuZCa/GCwZA+uUUTeTGUXEdFh5iJIE9Dbjx/vfkEg3VGynb8DDZVB7tJt0ULQlXiXYJvz8kS0yMvP1vDnsFmNeJikf40Cz9I=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=E0beJFyH; arc=none smtp.client-ip=209.85.128.54
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D8F033E51CD
+	for <sashiko-reviews@lists.linux.dev>; Mon, 18 May 2026 09:07:03 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=pass smtp.client-ip=209.85.167.41
+ARC-Seal:i=2; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
+	t=1779095225; cv=pass; b=WC7NiciI8pw9Ohe9DRoSTpQbMrvNWgLOk1WZJNDUcqWqi3P/H64vUnmreQMfKojqg4W/Su67dPzbTax5bMm9dd0NcIqmUBqCbMu0cdATkMeCH6qXaVvFVQV5Fvtc6deD7gIxUpLW3/WhQvO/lduKwLvIjHiKwuLGq7YwbPl6P8w=
+ARC-Message-Signature:i=2; a=rsa-sha256; d=subspace.kernel.org;
+	s=arc-20240116; t=1779095225; c=relaxed/simple;
+	bh=9DM4qFj/buo+UBPSULdadhr2vBlrJYfk5WdGNzc/i6U=;
+	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
+	 To:Cc:Content-Type; b=KvmeB6nPRX3UBN20eN/AgQdShnAB0ei5UqAlv2lF4wbgPZQpeEsczVpq+C43g7dV1PZVc4kDn27QLQxkbxOldHJ2BK8bnJPCPSW1YeV3pXykxC0jzPrVIITAEMQJwzTiGEMmUg6NfFfl0xwkFo1LGnvgiw8rg7ib8dXLG27fzjo=
+ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=U6D3jD3e; arc=pass smtp.client-ip=209.85.167.41
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="E0beJFyH"
-Received: by mail-wm1-f54.google.com with SMTP id 5b1f17b1804b1-488b0046078so17287155e9.1
-        for <sashiko-reviews@lists.linux.dev>; Mon, 18 May 2026 01:31:56 -0700 (PDT)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="U6D3jD3e"
+Received: by mail-lf1-f41.google.com with SMTP id 2adb3069b0e04-5a748d5ece4so1979607e87.2
+        for <sashiko-reviews@lists.linux.dev>; Mon, 18 May 2026 02:07:03 -0700 (PDT)
+ARC-Seal: i=1; a=rsa-sha256; t=1779095222; cv=none;
+        d=google.com; s=arc-20240605;
+        b=Hye+6upYCJJQjuh8QwcBdB4ZHr91eMZ0FmUdtjUPdIkz/nqJOekKCRO31Vb2j+hqN6
+         j/TWadxG23dIgppJ7E1pD+/6W49FMDyWvJpbMcP7PuhUKarjC8E7tetVBKa4nu29cYjw
+         XRUhZBEk3JnnsWeJhzkA4XgwdymevKaLcA3zdYexMy0V63lHl1gcKaTe2/YGy0DwVkZt
+         uke0VEmr1q77p23TgAUUatC4lgpokFj9hkGLQOJmtC6wO6DaeZ03aVh1z/Z5OYxv3R+d
+         T/iGHic0wIMC7c/ZsNmsqjSN0cBeBnsG9yyBWJ7wgVI/3nVi+wr6PTaROwkY/o3CMA0P
+         Rwgw==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com; s=arc-20240605;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:dkim-signature;
+        bh=TmMV+o90q+i4tF81/qjwEZD+GrK37jZ87CMwSL7czsQ=;
+        fh=uA360uvxR9S0K/Y4Lovo7aIaGlBwzVBnnb2BKWupr/4=;
+        b=M9it1/8FFD0PLBOJ/dcAP2CFJSWZgZbCtUks+b2cIQw3QPcvR/vj8qbayJbl5entbi
+         r/jNlef4vYTFBV0ROdeRijXmcADsZWktJ1mj0Q95C3uyQ0OqyAdsZibGuL+0RrkS65WW
+         SmOQ27ioCY6DBEEaagRb2Ohi+ChvRE00aNfwpgy9QvWY+Yjb9lzDkZU1TkKM1Aq3X0mq
+         fLHLGzlt9PWAhtHtaLyNwKCp1sGG7NJWnFRoKGWjvCOQ0HCvbWFdB9jhMU6/eh8ww33Y
+         o5OpV01/uZPIvBqlm0DUwkUu2CtmIFgKjJaYtHGK3mZ++kcMkxvw5tF9k+PzDKbukkCP
+         whiw==;
+        darn=lists.linux.dev
+ARC-Authentication-Results: i=1; mx.google.com; arc=none
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20251104; t=1779093115; x=1779697915; darn=lists.linux.dev;
-        h=in-reply-to:content-disposition:mime-version:references:message-id
-         :subject:cc:to:date:from:from:to:cc:subject:date:message-id:reply-to;
-        bh=Pw8ouC4hEgSVvRs2LGBCbdqdtEj1Oh885FP+LlzBSas=;
-        b=E0beJFyH08qkGoyQ8DmjNs/UhfK2qNRMDhZmzz0+uJq0MOl1IGA9uMdFD3mYFNYzow
-         wyJJ624I4cigkbV84s7sgKuZhB5+l5ZVY+QtA6FpAFhhrkAvOW/9jn5O0MiACZOnCRFN
-         6wZ2SqPgbxQCMuKNtaaacFUbxIYezu50UGvZrZwZ3H2tyCIC37j6YnC8eA5Ovw/Hg+NW
-         y4ZqrLuGH6O0nMwdpKVFRUMpJWSeD0Rcw458LxoSQQ8z9GTbJGQS1vafOa2ZJ4KZHPQM
-         0xYYyULPuTRn+Wk+h4lzb9tjxrvilh2dOO/uZdcFqZMYGtPsNp4jwarFHffY/fS+VvJe
-         BsWg==
+        d=gmail.com; s=20251104; t=1779095222; x=1779700022; darn=lists.linux.dev;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=TmMV+o90q+i4tF81/qjwEZD+GrK37jZ87CMwSL7czsQ=;
+        b=U6D3jD3egy5/6bI2CSUH4l7n3/iumlDW/bdnH+25A4k1pRzkUdrK6368hQzyybMSLz
+         fAtjoxj113LbVCnONwr7q2qHOoOl5FSmJBNd/+UgfFXdwaxptWq2y12hTOmmyREF18F/
+         /GDoF41sdY1NKDqhlQZB8jnfIkpmqpEZceZNl8syXN8iA9bN5lznQWvRuPVJM7WHMfTQ
+         oFRy6cnJuQfDILXK/thcmwpqadxIwINzY3DDu5BmZdiImmAIIqpgI57M09vjw6czEaYW
+         ly+WtLkVwXTiSkdz9g0J3vKqifxcIb5iUUM3SI6h9IvGOsKWOB6sabyWiq6zTuVewWUH
+         whNg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20251104; t=1779093115; x=1779697915;
-        h=in-reply-to:content-disposition:mime-version:references:message-id
-         :subject:cc:to:date:from:x-gm-gg:x-gm-message-state:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=Pw8ouC4hEgSVvRs2LGBCbdqdtEj1Oh885FP+LlzBSas=;
-        b=Kuzg93m6SMGPytj1EuuM5ZxzjvI1hf1woiezU1FbLmGnckSPZgrhbgHHOVBtm6Teu5
-         B/4AlPdzA8PpRdW6/fv5g8LFNq2uVGQW7k3Cg3Gzl9YielOrnZdOqfeV40oroSP+MLPl
-         hnS3RCTZ2ZNtwIPxCAi/zJXhfzSWWCJA03Cjpp4O1a0KldHfeUcr3nWcbjZSEbJNZIhc
-         16GGNWvwjtDgcEfQh2rU3FYQ/ZL4vpI4xl6lOYEfUs1o4zBXf2sIXtlx2vdFUdOc9cTY
-         q667fFr9ntuhPokLCEpBpH+U+sS9Krv1P+e+b8PKxOtfqdbpHwT6gspXuzuQkfO8+ivU
-         52Pw==
-X-Gm-Message-State: AOJu0Yy7tt4DSeko7iL0S4fJ0Kb8yRTvbq0BnJHwmY4DsDWqdok1OTcE
-	p7jpCg9sdh4/89n//KQmVTM7w38nB0ZVL3Y464l52mx9FhYxCwvlPef8
-X-Gm-Gg: Acq92OHmImJvh28j1xn4sfhuClyYkv78HzKWS3jXLcpbBvSbVEnfS98h/TNNfEX/a7I
-	J98VUL5rIX7coTmquaXapieZe5IxnqFeaT4YVIfhqEiuSe30aPvRGIsov4CK3/98glXVposp6Ap
-	pWVhOGbCXgqW21SK/BVy5mifGG2Nlthxrn0T4HHJX8xUO+CGruOVeC+AouKjGj9XiyWqYyCPEAV
-	Er7EKxjANGzYpAnQ6EA2DiJ1eZs6yqH82tcPF9SUS/cxhCEJOcbKePnQiQcwaTDxxpMUmhv9Uy/
-	/O+XoNPrRqzUPsYCfpWV21HOdAWn1SLrItwHvc5fVf6dI0UX7MDR51Ia04CMQsMrH6i8ap0Cj7X
-	7WPvtpzZcYImysiW3rxKhgnnb/TOIOjO5u7MILiark0cfdNRZF07C8KQiFmuy2jNut9vZs/JbJ0
-	BVAlX1AOPE5oTyql8=
-X-Received: by 2002:a05:600c:5297:b0:48a:5342:36b5 with SMTP id 5b1f17b1804b1-48fe61ed375mr212210515e9.21.1779093114436;
-        Mon, 18 May 2026 01:31:54 -0700 (PDT)
-Received: from krava ([2a02:8308:a00c:e200:b655:ff13:e355:16a3])
-        by smtp.gmail.com with ESMTPSA id 5b1f17b1804b1-48febe6b9efsm112607115e9.5.2026.05.18.01.31.53
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Mon, 18 May 2026 01:31:53 -0700 (PDT)
-From: Jiri Olsa <olsajiri@gmail.com>
-X-Google-Original-From: Jiri Olsa <jolsa@kernel.org>
-Date: Mon, 18 May 2026 10:31:51 +0200
-To: Jiri Olsa <olsajiri@gmail.com>
-Cc: sashiko-reviews@lists.linux.dev, bpf@vger.kernel.org
-Subject: Re: [PATCH 1/7] uprobes/x86: Move optimized uprobe from nop5 to nop10
-Message-ID: <agrOd1GVFYSH_txN@krava>
-References: <20260514135342.22130-2-jolsa@kernel.org>
- <20260514200545.C672EC2BCB3@smtp.kernel.org>
- <agcSP6LxxpRA4ICO@krava>
- <agmpurrWy15nahPK@krava>
+        d=1e100.net; s=20251104; t=1779095222; x=1779700022;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:x-gm-gg:x-gm-message-state:from
+         :to:cc:subject:date:message-id:reply-to;
+        bh=TmMV+o90q+i4tF81/qjwEZD+GrK37jZ87CMwSL7czsQ=;
+        b=a9YL0AQixtzyCHn1KhLELueIEtGb0XhhsWyXmwCJWMEbeS0BJPIT0vErCK7tyWw5mH
+         Iuj4P2L6402IdK0prc0jagOcJbto/SubvLMTRQPHcsFLqQQOw8dXZfN+ZWpXQ/j9zsKC
+         vbfhDm1GNv9GcDATgcHVd36KS7tFi6wv9q6YG1OFnGD0LCx/iurfgNNKlCUguIVczMRV
+         KwK4kUp0SdhNxjl+BIclGRrL59OVtNN/yApz2E0ONWNR5YsNhPjc7e1OkQ5Mh8f7bayF
+         ojWj0gWaRuAfMJUcG58AlCjBfFhPDwYRr8l5+/iIMrZIIhkpcUvczoGH/zgLgFrvP46H
+         DaUg==
+X-Gm-Message-State: AOJu0YwSd4CbQGDp46sVGkVS3lf7ZFIBjs91xhQ/zrcTzDhMVWYWdtn8
+	ft73ocyJPKfQnwiNYuI1Z1k18CbYgWQf8GTXkwSc53zjsUBY9QjW0/tjwn+tTHu/GEjHYT4rXIk
+	JP/o8mCuHH3841ATjy2VtShML/lANpCOWsHN7E42A+CBh
+X-Gm-Gg: Acq92OHnE0os/IoPzFpbugE8oijSuXU4BhFLw/LLEt31mNPBtoI0lnhMkEbFb5A5bNT
+	Ulwa7TsiggqucC9fo7pI1YDjARXplYKaKftDYQhOWoalRfQE37unepXrx29VyOlPyTDFF6v7YTn
+	bnz5JtvROc0B+izvAf0jt2fwvrZ/9EuYcMkSp4JRjYln6gFlnkGJG+1hrvnYRlPqzPn7+TRF82k
+	MoikzieF9+7qdYCTWl1l4lROsR4Q49cBszbFgFjwG3BzJe/gapFVbDG41CL3n3JGJY29BzO1N0e
+	zEERQWPRWQ7wf3YcfvpIGycyLt5IF7htj4S4R1Kf
+X-Received: by 2002:a05:6512:1053:b0:5a8:99c8:94b7 with SMTP id
+ 2adb3069b0e04-5aa0e616b94mr4663489e87.18.1779095221568; Mon, 18 May 2026
+ 02:07:01 -0700 (PDT)
 Precedence: bulk
 X-Mailing-List: sashiko-reviews@lists.linux.dev
 List-Id: <sashiko-reviews.lists.linux.dev>
 List-Subscribe: <mailto:sashiko-reviews+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:sashiko-reviews+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <agmpurrWy15nahPK@krava>
+References: <20260517063311.28921-2-kerneljasonxing@gmail.com> <20260518063407.C3B99C2BCB7@smtp.kernel.org>
+In-Reply-To: <20260518063407.C3B99C2BCB7@smtp.kernel.org>
+From: Jason Xing <kerneljasonxing@gmail.com>
+Date: Mon, 18 May 2026 17:06:23 +0800
+X-Gm-Features: AVHnY4LKrw0qFtbHGKqfXcu-V7tP9AzJn4y6fuq2eTHGnnu_X0lVCJt5SRs-J-k
+Message-ID: <CAL+tcoCp19F2rNxYL_LoGsY5MuBZ6cGKSZsj6D7kvQZcYp0wJg@mail.gmail.com>
+Subject: Re: [PATCH net v3 1/5] xsk: cache csum_start/csum_offset to fix
+ TOCTOU in xsk_skb_metadata()
+To: sashiko-reviews@lists.linux.dev
+Cc: bpf@vger.kernel.org
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 
-On Sun, May 17, 2026 at 01:42:50PM +0200, Jiri Olsa wrote:
+On Mon, May 18, 2026 at 2:34=E2=80=AFPM <sashiko-bot@kernel.org> wrote:
+>
+> Thank you for your contribution! Sashiko AI review found 3 potential issu=
+e(s) to consider:
+> - [Critical] The `skb->csum_start` assignment in `xsk_skb_metadata` can s=
+ilently wrap around 16 bits on architectures with large page sizes (e.g., 6=
+4KB), leading to negative checksum offsets and hardware descriptor corrupti=
+on.
+> - [High] Software checksum fallback (`skb_checksum_help`) in `xsk_build_s=
+kb_zerocopy()` operates on an empty linear SKB, unconditionally failing and=
+ dropping packets.
+> - [High] Returning `-EINVAL` from `xsk_skb_metadata` permanently wedges t=
+he AF_XDP TX queue, causing a local Denial of Service.
+> --
+>
+> commit a101fbe76c494016d6edebf7d5d5e0dc173c0af5
+> Author: Jason Xing <kerneljasonxing@gmail.com>
+>
+> xsk: cache csum_start/csum_offset to fix TOCTOU in xsk_skb_metadata()
+>
+> The TX metadata area resides in the UMEM buffer which is memory-mapped
+> and concurrently writable by userspace. In xsk_skb_metadata(),
+> csum_start and csum_offset are read from shared memory for bounds
+> validation, then read again for skb assignment. This commit fixes a TOCTO=
+U
+> race by reading these values into local variables once.
+>
+> Closes: https://lore.kernel.org/all/20260503200927.73EA1C2BCB4@smtp.kerne=
+l.org/
+> Fixes: 48eb03dd2630 ("xsk: Add TX timestamp and TX checksum offload suppo=
+rt")
+>
+> > diff --git a/net/xdp/xsk.c b/net/xdp/xsk.c
+> > index 5e5786cd9af55..f8c8a8c9dfba5 100644
+> > --- a/net/xdp/xsk.c
+> > +++ b/net/xdp/xsk.c
+> > @@ -811,13 +812,15 @@ static int xsk_skb_metadata(struct sk_buff *skb, =
+void *buffer,
+> >               return -EINVAL;
+> >
+> >       if (meta->flags & XDP_TXMD_FLAGS_CHECKSUM) {
+> > -             if (unlikely(meta->request.csum_start +
+> > -                          meta->request.csum_offset +
+> > +             csum_start =3D READ_ONCE(meta->request.csum_start);
+> > +             csum_offset =3D READ_ONCE(meta->request.csum_offset);
+> > +
+> > +             if (unlikely(csum_start + csum_offset +
+> >                            sizeof(__sum16) > desc->len))
+> >                       return -EINVAL;
+>
+> Does returning -EINVAL here wedge the AF_XDP TX queue?
+>
+> If xsk_skb_metadata() rejects invalid metadata and returns -EINVAL,
+> xsk_build_skb() appears to propagate this error without advancing the
+> consumer pointer via xskq_cons_release(xs->tx).
+>
+> When __xsk_generic_xmit() receives the -EINVAL error, it bypasses
+> the post-loop cleanup and the invalid descriptor is never consumed.
+>
+> Could this put the socket into an infinite loop on subsequent sendmsg() c=
+alls?
 
-SNIP
+I should state that the first two bugs are valid and pre-existing, so
+no action needs to be performed in this series.
 
-> > > Is there a similar issue for forked children that inherit the optimized
-> > > 10-byte sequence?
-> > > 
-> > > During fork, uprobe_mmap() installs a breakpoint in the child by writing
-> > > 0xCC to the first byte, changing the instruction from 48 8d... to cc 8d...
-> > > 
-> > > If the uprobe is unregistered before the child hits and re-optimizes it,
-> > > __is_optimized() will return false because is_lea_insn() strictly expects
-> > > the first byte to be 0x48:
-> > > 
-> > > arch/x86/kernel/uprobes.c:is_lea_insn() {
-> > >         return !memcmp(insn, lea_rsp, LEA_INSN_SIZE);
-> > > }
-> > > 
-> > > The fallback check for the re-attached probe on top of jmp8 also fails
-> > > because insn[1] is 0x8d, not OPT_JMP8_OFFSET.
-> > > 
-> > > Could set_orig_insn() then fall back to writing just the first byte of
-> > > the original instruction over the 0xcc, again leaving 66 8d 64 24 80 e8 ...
-> > > and silently truncating the child's stack pointer?
-> > 
-> > nice.. maybe we can skip the install_breakpoint call in uprobe_mmap
-> > for optimized probes.. will check
-> 
-> I think we need to dup uprobe trampolines on fork like below
+Yes, it will cause xsk to get stuck in the send syscall infinitely. I
+think -EINVAL should be dealt with the same method as -EOVERFLOW:
+diff --git a/net/xdp/xsk.c b/net/xdp/xsk.c
+index 5e5786cd9af5..c6cf2434a7c9 100644
+--- a/net/xdp/xsk.c
++++ b/net/xdp/xsk.c
+@@ -1010,6 +1010,10 @@ static struct sk_buff *xsk_build_skb(struct xdp_sock=
+ *xs,
+                        xs->tx->invalid_descs++;
+                }
+                xskq_cons_release(xs->tx);
++       } else if (err =3D=3D -EINVAL) {
++               xsk_cq_cancel_locked(xs->pool, 1);
++               xs->tx->invalid_descs++;
++               xskq_cons_release(xs->tx);
+        } else {
+                /* Let application retry */
+                xsk_cq_cancel_locked(xs->pool, 1);
+@@ -1059,7 +1063,7 @@ static int __xsk_generic_xmit(struct sock *sk)
+                skb =3D xsk_build_skb(xs, &desc);
+                if (IS_ERR(skb)) {
+                        err =3D PTR_ERR(skb);
+-                       if (err !=3D -EOVERFLOW)
++                       if (err !=3D -EOVERFLOW && err !=3D -EINVAL)
+                                goto out;
+                        err =3D 0;
+                        continue;
 
-or just allow it to be copied on fork
+>
+> > -             skb->csum_start =3D hr + meta->request.csum_start;
+> > -             skb->csum_offset =3D meta->request.csum_offset;
+> > +             skb->csum_start =3D hr + csum_start;
+> > +             skb->csum_offset =3D csum_offset;
+>
+> Could this addition overflow skb->csum_start on architectures with large =
+page
+> sizes?
+>
+> Since desc->len can be up to PAGE_SIZE (e.g., 65536 bytes on ARM64 or
+> PowerPC), csum_start could be as large as 65534. Adding the driver headro=
+om
+> (hr) could cause the sum to exceed 65535, truncating when assigned to the
+> 16-bit skb->csum_start field.
+>
+> When the driver later computes skb_checksum_start_offset(skb), could this
+> result in a negative integer and cause out-of-bounds offsets to be progra=
+mmed
+> into the hardware?
 
-jirka
+Ack, it should be checked in advance like this:
+diff --git a/net/xdp/xsk.c b/net/xdp/xsk.c
+index 5e5786cd9af5..1fd7a70e5d38 100644
+--- a/net/xdp/xsk.c
++++ b/net/xdp/xsk.c
+@@ -816,6 +816,9 @@ static int xsk_skb_metadata(struct sk_buff *skb,
+void *buffer,
+                             sizeof(__sum16) > desc->len))
+                        return -EINVAL;
 
++               if (unlikely((u32)hr + csum_start > U16_MAX))
++                       return -EINVAL;
++
+                skb->csum_start =3D hr + meta->request.csum_start;
+                skb->csum_offset =3D meta->request.csum_offset;
+                skb->ip_summed =3D CHECKSUM_PARTIAL;
 
----
-diff --git a/arch/x86/kernel/uprobes.c b/arch/x86/kernel/uprobes.c
-index 4d91930aa792..e0067d1b6242 100644
---- a/arch/x86/kernel/uprobes.c
-+++ b/arch/x86/kernel/uprobes.c
-@@ -719,7 +719,7 @@ static struct uprobe_trampoline *create_uprobe_trampoline(unsigned long vaddr)
- 
- 	tramp->vaddr = vaddr;
- 	vma = _install_special_mapping(mm, tramp->vaddr, PAGE_SIZE,
--				VM_READ|VM_EXEC|VM_MAYEXEC|VM_MAYREAD|VM_DONTCOPY|VM_IO,
-+				VM_READ|VM_EXEC|VM_MAYEXEC|VM_MAYREAD|VM_IO,
- 				&tramp_mapping);
- 	if (IS_ERR(vma)) {
- 		kfree(tramp);
+>
+> >               skb->ip_summed =3D CHECKSUM_PARTIAL;
+> >
+> >               if (unlikely(pool->tx_sw_csum)) {
+> >                       int err;
+> >
+> >                       err =3D skb_checksum_help(skb);
+> >                       if (err)
+> >                               return err;
+> >               }
+>
+> Does skb_checksum_help() unconditionally fail here for zero-copy AF_XDP
+> sockets?
+>
+> xsk_build_skb_zerocopy() creates a non-linear SKB where data is stored in
+> fragments, meaning skb_headlen(skb) is 0.
+>
+> Inside skb_checksum_help(), it checks if the offset is greater than or eq=
+ual
+> to skb_headlen(skb). Since skb_headlen() is 0, this check always evaluate=
+s
+> to true, triggering a WARN_ONCE and returning -EINVAL.
+>
+> Could this cause all checksummed packets to be dropped when hardware offl=
+oad
+> is unsupported and pool->tx_sw_csum is true?
+
+I don't think we need to move the check ahead as warn_once is simply enough=
+...
+
+Thanks,
+Jason
