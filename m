@@ -1,113 +1,160 @@
-Received: from mail-pg1-f201.google.com (mail-pg1-f201.google.com [209.85.215.201])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C9492396D36
-	for <sashiko-reviews@lists.linux.dev>; Mon, 18 May 2026 21:14:37 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.215.201
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5202E37702C;
+	Mon, 18 May 2026 21:28:37 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1779138879; cv=none; b=Fp330ctRwJPHx0pkXl/OgwMhSl3WYSN9oAc2OfRiADrfDisVorjNM90nxagMt0+5dDt19MVi900O4JYo/Gc0YzMxlGMv+nbbc7nNDlawBCBoffDYIcd/sRSmGyIPCmNtW8rzB/jbL+qhdZYngzqjBs7tFKy1bbDZZH5S4yk7QNA=
+	t=1779139717; cv=none; b=gEsOGpfFCT8yaHlNM65tm5cQ6ofaSqXHGbIQq0p3cg/BpbxV7YzmnPNyBHpCBvtzqooZ0UJJIvYOUJZyH6t5UwgIw8tH0vuE8E3CW/LHCq+ALw3uUeEPKlDb60UgnwsOtdErrNPmh5JCC9tEaVxDcErxD/AXcgL1LZO7Hhqgs0s=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1779138879; c=relaxed/simple;
-	bh=6FgsMK20z2ieU5Def3pMwxUzvlyh5j56ZnCu7u+YAtg=;
-	h=Date:In-Reply-To:Mime-Version:References:Message-ID:Subject:From:
-	 To:Cc:Content-Type; b=Wq9HcFBu86yeGK5PTCV7SdB/VNL5cjaR78As+trmlntWOVRIB246lhPj0iSU9XQjT0DM1MwOvHnKfgG5ZRz+dhTizvbSpC+wP6GV3JvoLNBB4knoF5U/gnWm1i+xv0FogWFYuKuFzVhFQmRIqvItTQSwcFHBqPeIUfu8K39nOXQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=google.com; spf=pass smtp.mailfrom=flex--seanjc.bounces.google.com; dkim=pass (2048-bit key) header.d=google.com header.i=@google.com header.b=iS7r9OOb; arc=none smtp.client-ip=209.85.215.201
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=google.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=flex--seanjc.bounces.google.com
+	s=arc-20240116; t=1779139717; c=relaxed/simple;
+	bh=eyDCCuFqDPxb9ufc2iMt/dv8APMsKsrr9czfOUagKUQ=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=kWYS3MJZU+9a9dzxxEHgFWT8k/TFZvDPACdfb937/B1bEJPhs3emDVmX/0mG6eMjm/QW6GXcOVnL/8lT8GwiENlEQH32TcnCq1tGyeOOTT5Xj/+dGt3/MSMLn8JxeCnUjWky1qYwxYQ2EgtlwpSIYL+70fPj0JLT3jaHxMIAbqM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=cM2mYQoQ; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=google.com header.i=@google.com header.b="iS7r9OOb"
-Received: by mail-pg1-f201.google.com with SMTP id 41be03b00d2f7-c82c4772950so1211799a12.1
-        for <sashiko-reviews@lists.linux.dev>; Mon, 18 May 2026 14:14:37 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=google.com; s=20251104; t=1779138877; x=1779743677; darn=lists.linux.dev;
-        h=cc:to:from:subject:message-id:references:mime-version:in-reply-to
-         :date:from:to:cc:subject:date:message-id:reply-to;
-        bh=5Zo21oM2VaVJk1wHkstVYW2kwV5RKdIS60liRPY2giE=;
-        b=iS7r9OObcqNYJZbTUwVSxx9xDQtJIcwAa5hBD6zke3fbbeKkR0OfGmNwfpWPFj27So
-         ol+u+Vm+jYFQxLaTtVW8a/ksypY9BLU3WUMVXAWR+C9Wshrt9piCJGZToqcDtUzMKvZx
-         Uajlj+30VMP9oQ0NisuXY59Qz92jTl0VgGseZ/yitQOcUI+FyXYfYkJMzU30JW+ihlyi
-         cCy9vpRf+iHhIshgMohiETy4avD1kpMPQsl5WkyOynV0q5Z0Jjse5vKv4gcMieI1rjyI
-         QNsFNag9PJ3lQ21SvKSIR9FEUDhRWBDYgsO7Hd+RN9UfQ0JwUKQeNmMNecthMHPkgKQD
-         YJHA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20251104; t=1779138877; x=1779743677;
-        h=cc:to:from:subject:message-id:references:mime-version:in-reply-to
-         :date:x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=5Zo21oM2VaVJk1wHkstVYW2kwV5RKdIS60liRPY2giE=;
-        b=cHLcxazzYPwmv3L1BNgUg0g9qIdGUCEghgtlCZ7kFeMX/G1N18WjW4G5gXLugxydFt
-         +LM06ehuQNDKrJKmTkaBLcqbB/yd252T3hMoztDXXYYVkXElKkYl5yILAZUrtLH0cuwO
-         +mh6FaVBtsDM8H99YFpxMsGrJgLBOSwrgADJTPiAf+VVLdGP+UR1hbg8TqRE4Wctxoo/
-         qc6n4cKNfEwdj7avKcK4BUv45Shwcl8bB8g2V25v8RtkgieuMUH8++eGY9umvzuSfpIS
-         R0tRd3IYW1NFLnJS0dFvdqz/vxvoXCgXqVNo10HeWbdX2VJNHRkNGM+d+cTeUGm8Uiq3
-         298g==
-X-Gm-Message-State: AOJu0YzJRADr92k4MPJL38vIOtYIy1eXWGGAliqaJHC/kY6kowFrqkWR
-	7jGIlTJUsqNCHjS3ZVNvfApFulERQTGYJZx1MO0l9TeNLWbBKP0SQLozyOjFy04tuZeOdAParOv
-	WfE8EIuuJYE62URkAxFuKPRzPhoOPPcJCcUWsZV1itk/RJ6dGSfA2x8Y/KCsfzkLKBef54ZSKPP
-	4TwchfPyrvoRr/uSIbI6fDon/+EFhCxge7+24mDodxrchG2h/U
-X-Received: from pfuj2.prod.google.com ([2002:a05:6a00:1302:b0:837:7965:c70c])
- (user=seanjc job=prod-delivery.src-stubby-dispatcher) by 2002:a05:6a00:a907:b0:837:f111:b70
- with SMTP id d2e1a72fcca58-83f18d5b89cmr17688828b3a.4.1779138876899; Mon, 18
- May 2026 14:14:36 -0700 (PDT)
-Date: Mon, 18 May 2026 14:14:36 -0700
-In-Reply-To: <20260515194804.AE30FC2BCB0@smtp.kernel.org>
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="cM2mYQoQ"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4682AC2BCB7;
+	Mon, 18 May 2026 21:28:36 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+	s=k20201202; t=1779139716;
+	bh=eyDCCuFqDPxb9ufc2iMt/dv8APMsKsrr9czfOUagKUQ=;
+	h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
+	b=cM2mYQoQuKsr5CeE6ZGXvvSIVt2v7jWedNc6N10pf0FNt4U6htNlHs863SvFtlDjy
+	 TcKS0aAWksi32VGLUuGrmRMjrMjP+X0gjTlT9P6dIcPLzxLX/T69JA7ks6CpalgE8j
+	 PTeC6SisqI+XelbbySo8+GESuXd0UTPqHSkDC2XqK7Kc+64xjF1YsFtd96PF5BNX2T
+	 6t1En6LtfPU0clYT15RMH6ltjcQlmjM1k1L2pxAd/zgPKb/CNJyAW7hwbue//a15Mm
+	 tlkdMdz9WUdWniaTLwSyRx6CDCsCEOFmKBZuswQ1rXl1W+VO8K1cvy6Swz84/GbbOy
+	 krU5yN1J+ojcQ==
+Date: Mon, 18 May 2026 23:28:34 +0200
+From: Lorenzo Bianconi <lorenzo@kernel.org>
+To: sashiko-reviews@lists.linux.dev
+Cc: robh@kernel.org, devicetree@vger.kernel.org, conor+dt@kernel.org,
+	netdev@vger.kernel.org
+Subject: Re: [PATCH net-next v7 07/10] net: airoha: Support multiple
+ net_devices for a single FE GDM port
+Message-ID: <aguEgmX1FDblt0g5@lore-desk>
+References: <20260516-airoha-eth-multi-serdes-v7-7-99e0093303e2@kernel.org>
+ <20260517055813.7DF3AC2BCF5@smtp.kernel.org>
 Precedence: bulk
 X-Mailing-List: sashiko-reviews@lists.linux.dev
 List-Id: <sashiko-reviews.lists.linux.dev>
 List-Subscribe: <mailto:sashiko-reviews+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:sashiko-reviews+unsubscribe@lists.linux.dev>
-Mime-Version: 1.0
-References: <20260515191942.1892718-30-seanjc@google.com> <20260515194804.AE30FC2BCB0@smtp.kernel.org>
-Message-ID: <aguBPFuPX0ih_ybf@google.com>
-Subject: Re: [PATCH v3 29/41] x86/paravirt: Plumb a return code into __paravirt_set_sched_clock()
-From: Sean Christopherson <seanjc@google.com>
-To: sashiko-reviews@lists.linux.dev
-Cc: linux-hyperv@vger.kernel.org
-Content-Type: text/plain; charset="us-ascii"
+MIME-Version: 1.0
+Content-Type: multipart/signed; micalg=pgp-sha512;
+	protocol="application/pgp-signature"; boundary="Axhv31oSMd8Sc3vC"
+Content-Disposition: inline
+In-Reply-To: <20260517055813.7DF3AC2BCF5@smtp.kernel.org>
 
-On Fri, May 15, 2026, sashiko-bot@kernel.org wrote:
-> Thank you for your contribution! Sashiko AI review found 1 potential issue(s) to consider:
-> - [High] kvm_sched_clock_read is registered as the system sched_clock before its required offset (kvm_sched_clock_offset) is initialized.
+
+--Axhv31oSMd8Sc3vC
+Content-Type: text/plain; charset=iso-8859-1
+Content-Disposition: inline
+Content-Transfer-Encoding: quoted-printable
+
+> Thank you for your contribution! Sashiko AI review found 1 potential issu=
+e(s) to consider:
+> - [High] Hardware state corruption for shared GDM ports
 > --
-> 
-> commit b6e429e4990c00d845488d46e8dc4132f3a2fd8b
-> Author: Sean Christopherson <seanjc@google.com>
-> x86/paravirt: Plumb a return code into __paravirt_set_sched_clock()
-> 
-> This commit adds a return code to __paravirt_set_sched_clock() to allow the
-> kernel to reject attempts to use a PV sched_clock. It updates the caller
-> in kvmclock to check the return value and abort initialization if needed.
-> 
-> > diff --git a/arch/x86/kernel/kvmclock.c b/arch/x86/kernel/kvmclock.c
-> > index d3bb281c0805d..9b3d1ed1a96dc 100644
-> > --- a/arch/x86/kernel/kvmclock.c
-> > +++ b/arch/x86/kernel/kvmclock.c
-> [ ... ]
-> > @@ -338,10 +338,12 @@ static int kvmclock_setup_percpu(unsigned int cpu)
-> >  
-> >  static __init void kvm_sched_clock_init(bool stable)
-> >  {
-> > +	if (__paravirt_set_sched_clock(kvm_sched_clock_read, stable,
-> > +				       kvm_save_sched_clock_state,
-> > +				       kvm_restore_sched_clock_state))
-> > +		return;
+>=20
+> commit 68e8fa8fe02248409d0048f81217cd5cf7eda775
+> Author: Lorenzo Bianconi <lorenzo@kernel.org>
+>=20
+> net: airoha: Support multiple net_devices for a single FE GDM port
+>=20
+> This commit introduces support for multiple net_devices connected to the =
+same
+> Frame Engine GDM port via an external hardware arbiter. Note that issues =
+with
+> shared hardware state introduced here appear to be addressed in later com=
+mits
+> such as 28e02ac461157 ("net: airoha: Do not stop GDM port if it is shared=
+")
+> and 01081daf7ce24 ("net: airoha: Introduce WAN device flag"), which add p=
+ort
+> user reference counting, aggregate the maximum MTU, and restrict WAN loop=
+back
+> configuration.
+>=20
+> > diff --git a/drivers/net/ethernet/airoha/airoha_eth.c b/drivers/net/eth=
+ernet/airoha/airoha_eth.c
+> > --- a/drivers/net/ethernet/airoha/airoha_eth.c
+> > +++ b/drivers/net/ethernet/airoha/airoha_eth.c
+> > @@ -3035,11 +3043,25 @@ static int airoha_alloc_gdm_device(struct airoh=
+a_eth *eth,
+> >  			 netdev->dev_addr);
+> >  	}
+> > =20
+> > +	/* Allowed nbq for EN7581 on GDM3 port are 4 and 5 for PCIE0
+> > +	 * and PCIE1 respectively.
+> > +	 */
+> > +	index =3D nbq;
+> > +	if (index && airoha_is_7581(eth) && port->id =3D=3D AIROHA_GDM3_IDX)
+> > +		index -=3D 4;
 > > +
-> >  	kvm_sched_clock_offset = kvm_clock_read();
-> 
-> Could this cause a massive backward jump in system time if an NMI or early
-> exception calls sched_clock() right after registration?
-> 
-> __paravirt_set_sched_clock() uses static_call_update() to globally publish
-> kvm_sched_clock_read() as the live system sched_clock. Since the
-> initialization of kvm_sched_clock_offset is now delayed until after this
-> registration completes, any early caller will execute kvm_sched_clock_read()
-> with a zero offset, returning a huge absolute raw clock value.
-> 
-> When the code resumes, it sets the offset to the current raw clock value.
-> Subsequent sched_clock() calls will abruptly subtract this large offset,
-> causing time to jump backwards and violating monotonic clock guarantees.
-> 
-> Would it be safer to initialize kvm_sched_clock_offset before calling
-> __paravirt_set_sched_clock(), since calculating the offset early has no
-> side effects even if the registration is subsequently rejected?
+> > +	if (index >=3D ARRAY_SIZE(port->devs) || port->devs[index]) {
+> > +		dev_err(eth->dev, "invalid nbq id: %d\n", nbq);
+> > +		return -EINVAL;
+> > +	}
+> > +
+> > +	netdev->dev.of_node =3D of_node_get(np);
+> >  	dev =3D netdev_priv(netdev);
+> >  	dev->dev =3D netdev;
+> >  	dev->port =3D port;
+> > -	port->dev =3D dev;
+> >  	dev->eth =3D eth;
+> > +	dev->nbq =3D nbq;
+> > +	port->devs[index] =3D dev;
+>=20
+> With multiple net_devices now sharing a single GDM port, could this cause
+> hardware state corruption when configuring shared hardware registers?
+>=20
+> For example, in airoha_dev_init(), airoha_set_gdm2_loopback() overwrites
+> the global REG_FE_WAN_PORT register entirely, which might wipe out the
+> configuration of previously initialized devices on the same port:
+>=20
+> 	airoha_fe_rmw(eth, REG_FE_WAN_PORT,
+> 		      WAN1_EN_MASK | WAN1_MASK | WAN0_MASK,
+> 		      FIELD_PREP(WAN0_MASK, src_port));
 
-Hmm, yes.  I'll also add a comment explaining exactly that.
+A subsequent patch enforces this constraints, we can have at most one port
+configured as WAN.
+
+>=20
+> Additionally, in airoha_dev_stop(), unconditionally writing FE_PSE_PORT_D=
+ROP
+> to REG_GDM_FWD_CFG(port->id) appears to drop all traffic for the entire
+> GDM port, breaking other active devices sharing it.
+
+This is fixed by a subsequent patch.
+
+>=20
+> Similarly, in airoha_dev_change_mtu(), overwriting REG_GDM_LEN_CFG(port->=
+id)
+> with a lower MTU could restrict the hardware limit for the entire port, c=
+ausing
+> packet drops for other devices that require a higher MTU.
+
+This is fixed by a subsequent patch.
+
+Regards,
+Lorenzo
+
+>=20
+> --=20
+> Sashiko AI review =B7 https://sashiko.dev/#/patchset/20260516-airoha-eth-=
+multi-serdes-v7-0-99e0093303e2@kernel.org?part=3D7
+
+--Axhv31oSMd8Sc3vC
+Content-Type: application/pgp-signature; name=signature.asc
+
+-----BEGIN PGP SIGNATURE-----
+
+iHUEABYKAB0WIQTquNwa3Txd3rGGn7Y6cBh0uS2trAUCaguEggAKCRA6cBh0uS2t
+rOGUAP4+h4SnhYv7A5cnc3SGymqWz+mx16+yAngGdIj593XdCQD/ZRFRYAKc8FEw
+K+WgUT2j49heWAsMLi22SOayZk6xwAo=
+=abbF
+-----END PGP SIGNATURE-----
+
+--Axhv31oSMd8Sc3vC--
