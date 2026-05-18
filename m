@@ -1,146 +1,92 @@
-Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-wm1-f44.google.com (mail-wm1-f44.google.com [209.85.128.44])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 13C2038E124;
-	Mon, 18 May 2026 19:40:28 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6E1D138945A
+	for <sashiko-reviews@lists.linux.dev>; Mon, 18 May 2026 19:46:31 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.44
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1779133229; cv=none; b=IWhy6HUXgiMaBENGlXRY6rXg9VPGoStvR1YfiB+t8n0Do5o9JXL5fz8Fk4Jc+8MOlKDqSCkxD2ttEMrYH/jJRGYxJKTbhnAEENQtvoPg9mNAKl43eUa6DYZ4k2XCeDmIqCcFoBK/kYSazouGY8Fi+6gbMSq1t4dvhoBMk/P+0Aw=
+	t=1779133593; cv=none; b=jek0W/E59hTP0ZB2unDejr0gOtsRnAC/OQX53MKYa8eeEGXJtDfa66eayZbBacl2J2zqBMWd3npGmmCBfKCFXDfF11Os4/8yuCOvh5yBA8LqzOQHScBeLL924kAZsWxqJqxr3Lik/bBzTsKkpax2WccPj0crpptkzfVnnfhw6F8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1779133229; c=relaxed/simple;
-	bh=Lj2y6Z/5yB8RGF1dZj4AOFVgzx3lRYityrUd9Yu85wY=;
-	h=Date:From:To:Cc:Subject:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=cXlvikDSbJl9TE+oHWPpUa0xeFFeBqUAtknl7z1CftX2/T5PGFK7c0tnrNmk2P/PHpVB4v+9MDIvToVL7puy/wybb04jJ6hAfYuEvP2c1KyaThvW5mwHWT/musB+Rv7DjdADMiqPVWOfHEA4eC19Vh/OSZ4PSV2HLpo6bo02D70=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=JKnDeAtu; arc=none smtp.client-ip=10.30.226.201
+	s=arc-20240116; t=1779133593; c=relaxed/simple;
+	bh=VdwNJ8/RRSGa6smjQtGivvMghdJohUW6vOp7PH82XIc=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=TpkQucABhBm/9ZLRv7t3ih73jpA+dbyToRtFy+8m3TZ+uzz1UDOvfIAJeG+UGaYUFDFWLBQ7Ano03iVanqmCDt13J+EjzQOQ4YV4UT+x+h8hDKgUyptkFrpXtedEWPAlH0Nw3miC5kNJIdXLkCjFALHpYzRHGVAC2/Ao/bH81sQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=CGaKiCl/; arc=none smtp.client-ip=209.85.128.44
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="JKnDeAtu"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 68AD2C2BCB7;
-	Mon, 18 May 2026 19:40:25 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1779133228;
-	bh=Lj2y6Z/5yB8RGF1dZj4AOFVgzx3lRYityrUd9Yu85wY=;
-	h=Date:From:To:Cc:Subject:In-Reply-To:References:From;
-	b=JKnDeAtu/QV8Ha15MCZOZm/ucdQ/st7/AJB6NHDPW4+2YAIGegtsUIIttkbKhWg8w
-	 iXCh99HSSN7QsxV5QcE7XIQEFGLpjAHfh/5jG5Zyy3sFK+0ORwTQsahxWbNlds+aXs
-	 PlVcVj/BD9CPnqdfZlVW4Mbx0ODreKQLuOsh70CVr2JJ2rTvOhTJmdptdh2lJ2UFWz
-	 gb5VByelsFgfYSTgvVOWubD5Owf5Ftxo7agFcGAJ4D8y/V3VIhmtY5B5SdbNoo8cy9
-	 uzIUJTDwTmhtW9HF7y2VpE6vvfLTph8u9k5jddf4k+3apv64gYD9uLUPu1O1BDSPiX
-	 KgJL4SuTZw21A==
-Date: Mon, 18 May 2026 21:40:22 +0200
-From: Mauro Carvalho Chehab <mchehab+huawei@kernel.org>
-To: "Theodore Tso" <tytso@mit.edu>
-Cc: Jani Nikula <jani.nikula@intel.com>, Roman Gushchin
- <roman.gushchin@linux.dev>, Krzysztof Kozlowski <krzk@kernel.org>,
- debarbos@redhat.com, Arnaldo Carvalho de Melo <acme@kernel.org>, Greg KH
- <gregkh@linuxfoundation.org>, Konstantin Ryabitsev <mricon@kernel.org>,
- Guenter Roeck <linux@roeck-us.net>, sashiko-bot@kernel.org,
- sashiko-reviews@lists.linux.dev, sashiko@lists.linux.dev, Linux Kernel
- Workflows <workflows@vger.kernel.org>, Linux Kernel Mailing List
- <linux-kernel@vger.kernel.org>, devicetree@vger.kernel.org,
- kfree@google.com
-Subject: Re: Stop false review statements
-Message-ID: <20260518214022.5f94f917@foz.lan>
-In-Reply-To: <20260518121601.GA87957@macsyma-wired.lan>
-References: <4f3d7f48-5766-425b-91f6-0acdb5554584@kernel.org>
-	<07602616-412B-4ED8-95D7-588C0D077EE3@linux.dev>
-	<2e20badf27b6910d619329841e37d2961556056f@intel.com>
-	<20260518121601.GA87957@macsyma-wired.lan>
-X-Mailer: Claws Mail 4.4.0 (GTK 3.24.52; x86_64-redhat-linux-gnu)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="CGaKiCl/"
+Received: by mail-wm1-f44.google.com with SMTP id 5b1f17b1804b1-488a88aeec9so32618675e9.2
+        for <sashiko-reviews@lists.linux.dev>; Mon, 18 May 2026 12:46:31 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20251104; t=1779133590; x=1779738390; darn=lists.linux.dev;
+        h=in-reply-to:content-disposition:mime-version:references:message-id
+         :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
+        bh=12EE8Opxoylr62oq1gP9QJGH+sUKwH6pdG1cIQyJcXw=;
+        b=CGaKiCl/4EjTQKyqU+bWcVUP1K4Mg+zecQp7tFUd+BMsuJzLOCp1w7aZVnFRTXILKo
+         qCLCfq3MRfiYIEjd8MlVO3/pj5GWetn0ndmyEpuNQb2rB63f8W0bdCRnAtT5JoYo+/tw
+         v6VQrqX8Il1akH6CpGVWMhiC2KfMKrEeEpiV7p5UqwX9LJ3g5UEeL/vW27s4EYr3a2YW
+         e9aSYNV4uvBsKbBIXIiEqznuv4l93KwFLDyVn0ceV12/ewY7l/PLgA8RNXT++FRI8z34
+         wMhzzGCfZQVDKrBv/ySyrAykc+RSyihzb7X7MTnW6BADyE/H+qS5XFGOKk/HLF3X1xwg
+         4/9g==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20251104; t=1779133590; x=1779738390;
+        h=in-reply-to:content-disposition:mime-version:references:message-id
+         :subject:cc:to:from:date:x-gm-gg:x-gm-message-state:from:to:cc
+         :subject:date:message-id:reply-to;
+        bh=12EE8Opxoylr62oq1gP9QJGH+sUKwH6pdG1cIQyJcXw=;
+        b=FL1zwdpT9OUvoXYxr9Cu4qh3sqDCRIzMdRkuNU+JtqXtDsCtUDixCU87XznraMGMdd
+         wp9Ux5SpmfxEiVD2Cc23bg73ddTN1nkef3HTHAPNm5YT2YQd5Z75quMPKoCstEReZhze
+         dXG60MojGGfGh217NzjbAsLTqIyWvfdm4t5nN8YkXZ7iYCQTi2CzhGIDkHv30ov0QKKI
+         SUJkNARXgI7cEz/xj2CyX5+sDtjhCwd/AbLxK4dtXNkz4iG93T/wZnseOnHM8SMPx/UB
+         k06C9NSCnmbB3bOooL+Q/q5lhJYP9aQ6LP91gvdNKO4tZ4cgIuZ1/dnn51O47w7Gs+jC
+         YReA==
+X-Gm-Message-State: AOJu0Yw6RyxJUHrOyHXSdHlRmiEc8Fk6RwBGV8IioukoB9KxxbNnmBRY
+	DqDsp/f3s/9xELRewJ9VMxIc09q+SlhnVbdhr3LjPHwRHNhcSdXDqi6GtinYL/nY
+X-Gm-Gg: Acq92OGIq5AqEN9ClZtOBcq++oILGRMhkvYrnOojtApMheQV7ayDdCosvXAbUs2+aOI
+	LnuPnC+tkCrcS6R7z4SN0XjVoLA0lcHnb5CxGYxmuLyC3s4YliQ962chh9RKpC9tdddlGa+WaIK
+	MdwiX0Z7GVMDdoLWkPcD+Hj+Z+4v/F357G3YeArAIIBsixWJK2flzVt4VjDwOeB6OwIOzoyg/dA
+	HYIt7tGCaugNHa6nj5NrYC8UjkbMkVFrdDW6RCNHISSjkLTJ/MgGDxu2UaxiSkXwCfhSQsEZIVP
+	XQ/aKMUY1IUsyH1CiLiX+o7z9TYmIJVWXxf81N3C98KEVWCdVqEhokOJQ/VjoJdqtjkfv7PvKGY
+	9/U4Z+BADjY1WBzAx0gywtYfRwNLgKvFxZjt3z+dzC22UEaVzYlGFllktAIn4CUKqboRlgrGSuQ
+	YRCyMYGxA=
+X-Received: by 2002:a05:600c:4504:b0:48f:d1b8:9a9c with SMTP id 5b1f17b1804b1-48fe60e14bamr246537865e9.7.1779133589646;
+        Mon, 18 May 2026 12:46:29 -0700 (PDT)
+Received: from localhost ([2603:c027:c000:3cde::f])
+        by smtp.gmail.com with ESMTPSA id 5b1f17b1804b1-48ff43f8799sm165921765e9.2.2026.05.18.12.46.28
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Mon, 18 May 2026 12:46:29 -0700 (PDT)
+Date: Mon, 18 May 2026 21:46:27 +0200
+From: Louis Sautier <sautier.louis@gmail.com>
+To: sashiko-reviews@lists.linux.dev
+Cc: linux-hwmon@vger.kernel.org
+Subject: Re: [PATCH v2 2/2] scsi: mpt3sas: add hwmon support
+Message-ID: <agtsk8mSxPaIz_tX@localhost>
+References: <20260518184109.770185-3-sautier.louis@gmail.com>
+ <20260518193758.889DCC2BCB7@smtp.kernel.org>
 Precedence: bulk
 X-Mailing-List: sashiko-reviews@lists.linux.dev
 List-Id: <sashiko-reviews.lists.linux.dev>
 List-Subscribe: <mailto:sashiko-reviews+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:sashiko-reviews+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: quoted-printable
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <20260518193758.889DCC2BCB7@smtp.kernel.org>
 
-On Mon, 18 May 2026 08:16:01 -0400
-"Theodore Tso" <tytso@mit.edu> wrote:
+On Mon, 18 May 2026 19:37:57 +0000, sashiko-bot@kernel.org wrote:
+> > +config SCSI_MPT3SAS_HWMON
+> > +	bool "LSI MPT Fusion SAS hwmon support"
+> > +	depends on SCSI_MPT3SAS && HWMON
+> > +	depends on !(SCSI_MPT3SAS=y && HWMON=m)
+> > +	help
+> > +	Say Y here to expose the IOC and board temperature sensors of
+> > +	LSI / Broadcom SAS HBAs (such as the 9300, 9400, and 9500 series)
+> > +	through hwmon. See Documentation/hwmon/mpt3sas.rst for details.
+> 
+> This isn't a bug, but the help text references a documentation file that
+> doesn't seem to be included in this patch. Is Documentation/hwmon/mpt3sas.rst
+> missing from this commit, or was this added in a separate patch series?
 
-> On Mon, May 18, 2026 at 11:04:29AM +0300, Jani Nikula wrote:
-> > > Sashiko is supporting various LLMs, including open models - it=E2=80=
-=99s just a practical
-> > > choice: to my knowledge the quality of open models is not on par with=
- frontier closed
-> > > models and it would require a non-trivial amount of hardware and infr=
-astructure to run
-> > > an open model at the required scale. =20
-> >=20
-> > In the context of the "Reviewed-by: Sashiko" discussion, this actually
-> > makes it really hard to assess the quality of those reviews. =20
->=20
-> Agreed.  There's a reason why the coding-assistants.rst specifies the
-> model which is used:
->=20
->   Assisted-by: AGENT_NAME:MODEL_VERSION [TOOL1] [TOOL2]
->=20
-> The problem is that (as Jon has pointed out) coding-assistants.rst was
-> intended for use when the tool was beging used to help create the code
-> --- that is, "Coding Assistants".  What we're doing here is more of a
-> reviewer assistance.  Something like:
->=20
->   Scanned-by: AGENT_NAME:MODEL_VERSION [TOOL1] [TOOL2]
->=20
-> Would be more interesting, but it doesn't actually tell us anything
-> about what the results were of the scan.
-
-I don't like scanned-by, even for a tool that would always get the
-same results like checkpatch. For LLM, this is even worse, as two runs
-may give different results for the same code.
-
-IMO what makes much more sense is to add information there when
-a change was done due avoid a problem detected by sashiko, and what
-was the fixed issue, e.g. a textual description like:
-
-	Changed locking schema after Sashiko's report report about
-	XXX race condition.
-
-Also, except if 100% of the=20
-
-> One of the problems here is that there is a distinction between the
-> infrastructure and review prompts in the Sashiko github repository,
-> and the reviews that are being published by Sashiko the web service
-> being run by Google that is being lost by some folks.  So I wonder if
-> for now, we should just do something like:
->=20
-> Link: https://sashiko.dev/#/patchset/20260515091829.194810-1-me%40linux.b=
-eauty
-
-Adding a link makes sense to me. It doesn't need to be to the
-sashiko's email though: it can be to the entire thread.
-
-> Or just have a link to lore where the review has responded to the
-> Sashiko review stating where the Sashiko review reported a
-> pre-existing condition (perhaps one that we don't care about because
-> races in readahead logic is really Not A Big Deal, etc.)  We go for
-> this strategy, it would actually be better for the Shashiko.dev review
-> to get cc'ed to the mailing list.
->=20
-> Personally, I think that's probably be best way to go.  We already
-> don't insert into the git commit an explanation of why some bullsh*t
-> review by some wannabe human reviewer should be ignored, or why a
-> discussion of some problem discovered by a human review in the source
-> of the review would be handled in a future patch set.  That's what the
-> discussion on lore.kernel.org is for.  And we shouldn't treat AI
-> reviews any different from how we deal with human reviews.  So if we
-> want to give credit to an AI review, then let's go with the
-> Scanned-by.=20
-
-If the entire content of a Sashiko review is ignored, I don't think
-it is worth adding anything. Just like we do with humans, IMO the
-best is to just mention what changed due to some feedback received
-by a human or by a bot, mentioning who/what bot helped to identify
-the issue.
-
-> Or we can just let people look at the mailing list, and
-> if people want to have statistics, we can ask people to use a script
-> running against public inbox to figure things out.
->=20
-> 						- Ted
->=20
-
-
-
-Thanks,
-Mauro
+I forgot to remove this sentence after dropping the documentation. I
+will do it in v3.
