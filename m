@@ -1,67 +1,89 @@
-Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
-	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 821B03A962B;
-	Mon, 18 May 2026 05:31:55 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
+Received: from zg8tmtyylji0my4xnjeumjiw.icoremail.net (zg8tmtyylji0my4xnjeumjiw.icoremail.net [162.243.161.220])
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id A0E193BF69C
+	for <sashiko-reviews@lists.linux.dev>; Mon, 18 May 2026 06:15:50 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=162.243.161.220
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1779082315; cv=none; b=i8oHUn2QFFWCSMgae0fqRRFVtAz0BsC4PBoE3Q7gOgA/UFtmCNHe59b3ZiTwiVhVaw3LWWPDXV94J8zkbPu2vF/2eE4+5Qfpt5UJJu9MfI5vqSNCaG0L9mCkX61HO852Bjblq71KzpM3HqJL600HyqlujWGyBFOOPea9hxdOupY=
+	t=1779084956; cv=none; b=MZ/NugOojzgjjMTVWrun6/vJNXIwwOWWxmOOGEll01dKomU2ynPv/EC2o23Co3Rp/JrNC4Yfh+ihwM3aZ006v9Wgwqzi1LczjyxAro83LsuBzbkAkGgOC8aT3aNoTckop3DQEwT/RPNk3qwo2hAOzeY/kt901bdbcbtkn7bKrTU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1779082315; c=relaxed/simple;
-	bh=wSBv1BFWMwVdgkBPMo0C+dZxMuMebWrU53NFLkUEhAI=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=GKGyfpbDJha64PQsny1fNVgHSTB6L0js8CtdvhxDe5KicqTpFcPEdCa9vYXUgeacdWUEkCBfeB24wu+xw25j5LlHLvqP64fTmPKQL6TGqOV6ffwdTuZsR5N4u3SvPLCmVL72ywBIpvyIhlIc/Yz9H7xEkcHwGPi5fKF99pvvM1I=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=e8bF5Tut; arc=none smtp.client-ip=10.30.226.201
-Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="e8bF5Tut"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id DF570C2BCB7;
-	Mon, 18 May 2026 05:31:53 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1779082314;
-	bh=wSBv1BFWMwVdgkBPMo0C+dZxMuMebWrU53NFLkUEhAI=;
-	h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
-	b=e8bF5TutASJW27gnqlPRKI6n1cKJYvtFzAKKc42Rvd5Q3X/H5PWctsr8RrqCp4LUP
-	 d47HMNFsLLh1Enhz6a11pUfIcsld1lR0ufVh8XfVm9iBejUHSwh8Vz2ol3ouAAIelL
-	 e6+nequ4fPqhMMQ9dg99DihuaUobZH63WYM28/Ak=
-Date: Mon, 18 May 2026 07:31:58 +0200
-From: Greg KH <gregkh@linuxfoundation.org>
-To: Mauro Carvalho Chehab <mchehab+huawei@kernel.org>
-Cc: Roman Gushchin <roman.gushchin@linux.dev>,
-	Krzysztof Kozlowski <krzk@kernel.org>, debarbos@redhat.com,
-	Arnaldo Carvalho de Melo <acme@kernel.org>,
-	Konstantin Ryabitsev <mricon@kernel.org>,
-	Guenter Roeck <linux@roeck-us.net>, sashiko-bot@kernel.org,
-	sashiko-reviews@lists.linux.dev, sashiko@lists.linux.dev,
-	Linux Kernel Workflows <workflows@vger.kernel.org>,
-	Linux Kernel Mailing List <linux-kernel@vger.kernel.org>,
-	devicetree@vger.kernel.org, kfree@google.com
-Subject: Re: Stop false review statements
-Message-ID: <2026051808-coil-blaspheme-8910@gregkh>
-References: <20260517183959.37441984@foz.lan>
- <F2FBD939-179D-467B-9FA8-BAA44F6C7524@linux.dev>
- <20260517205606.3b035316@foz.lan>
+	s=arc-20240116; t=1779084956; c=relaxed/simple;
+	bh=attnInHP7M2QikeQ33hIVmkhpcTpP2HXxNPUM8PpmPE=;
+	h=Date:From:To:Cc:Subject:In-Reply-To:References:Content-Type:
+	 MIME-Version:Message-ID; b=rYuBxVCXaT+9iSAqhs8+5KxsCBacnFsdZL19VgV563hhTMNxkrPk/DckUZJuHcgedOE/vthF5ChoZyaKIkSp9LQ3YnhaygH2RqFiMHl0/V/x6jej6L1K1DIeOMdBEmQkFpa7nGGT3pyFCBMmIuhtx2uFTmCE1hdJ5UsApGBmfpQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=eswincomputing.com; spf=pass smtp.mailfrom=eswincomputing.com; arc=none smtp.client-ip=162.243.161.220
+Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=eswincomputing.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=eswincomputing.com
+Received: from dongxuyang$eswincomputing.com ( [10.12.96.41] ) by
+ ajax-webmail-app2 (Coremail) ; Mon, 18 May 2026 14:15:22 +0800 (GMT+08:00)
+Date: Mon, 18 May 2026 14:15:22 +0800 (GMT+08:00)
+X-CM-HeaderCharset: UTF-8
+From: "Xuyang Dong" <dongxuyang@eswincomputing.com>
+To: sashiko-reviews@lists.linux.dev
+Cc: mturquette@baylibre.com, sboyd@kernel.org, robh@kernel.org,
+	krzk+dt@kernel.org, conor+dt@kernel.org, linux-clk@vger.kernel.org,
+	devicetree@vger.kernel.org, linux-kernel@vger.kernel.org,
+	p.zabel@pengutronix.de, huangyifeng@eswincomputing.com,
+	dongxuyang@eswincomputing.com, benoit.monin@bootlin.com,
+	bmasney@redhat.com, ningyu@eswincomputing.com,
+	linmin@eswincomputing.com, pinkesh.vaghela@einfochips.com
+Subject: Re: Re: [PATCH v5 2/3] clk: eswin: Add eic7700 HSP clock driver
+X-Priority: 3
+X-Mailer: Coremail Webmail Server Version 2024.2-cmXT6 build
+ 20241203(6b039d88) Copyright (c) 2002-2026 www.mailtech.cn
+ mispb-72143050-eaf5-4703-89e0-86624513b4ce-eswincomputing.com
+In-Reply-To: <20260514191921.C57AEC2BCB3@smtp.kernel.org>
+References: <20260514114533.1376-1-dongxuyang@eswincomputing.com>
+ <20260514191921.C57AEC2BCB3@smtp.kernel.org>
+Content-Transfer-Encoding: base64
+Content-Type: text/plain; charset=UTF-8
 Precedence: bulk
 X-Mailing-List: sashiko-reviews@lists.linux.dev
 List-Id: <sashiko-reviews.lists.linux.dev>
 List-Subscribe: <mailto:sashiko-reviews+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:sashiko-reviews+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <20260517205606.3b035316@foz.lan>
+Message-ID: <21bf5be7.64a3.19e39b98f34.Coremail.dongxuyang@eswincomputing.com>
+X-Coremail-Locale: zh_CN
+X-CM-TRANSID:TQJkCgA3TJ96rgpqiFcaAA--.4293W
+X-CM-SenderInfo: pgrqw5xx1d0w46hv4xpqfrz1xxwl0woofrz/1tbiAgELAmoJ7hIZz
+	QAAsB
+X-Coremail-Antispam: 1Ur529EdanIXcx71UUUUU7IcSsGvfJ3iIAIbVAYjsxI4VWxJw
+	CS07vEb4IE77IF4wCS07vE1I0E4x80FVAKz4kxMIAIbVAFxVCaYxvI4VCIwcAKzIAtYxBI
+	daVFxhVjvjDU=
 
-On Sun, May 17, 2026 at 08:56:06PM +0200, Mauro Carvalho Chehab wrote:
-> By "reproduce locally", I didn't mean in strict sense. Sure, LLM answers
-> won't be identical, but I suspect that at least most of the major issues 
-> on a patch series would be reported by any decent model.
-> 
-> So, if we have something that one can locally run using its GPU, being
-> able to get an answer in the range of a couple of minutes per patch
-> should be enough to catch most of the issues.
+PiAKPiBUaGFuayB5b3UgZm9yIHlvdXIgY29udHJpYnV0aW9uISBTYXNoaWtvIEFJIHJldmlldyBm
+b3VuZCAxIHBvdGVudGlhbCBpc3N1ZShzKSB0byBjb25zaWRlcjoKPiAtIFtIaWdoXSBUaGUgS2Nv
+bmZpZyBlbnRyeSBgQ09NTU9OX0NMS19FSUM3NzAwX0hTUGAgaXMgbWlzc2luZyBhIGBzZWxlY3Qg
+UkVHTUFQX01NSU9gIGRlcGVuZGVuY3ksIGNhdXNpbmcgbGlua2VyIGVycm9ycyB1bmRlciBgQ09N
+UElMRV9URVNUYC4KPiAtLQo+IAo+IGNvbW1pdCAxYTNjNWUwZWExNGQ2MjFkMzA3NzJhYzk5Y2I1
+MzcyZmU2N2M1ZDZmCj4gQXV0aG9yOiBYdXlhbmcgRG9uZyA8ZG9uZ3h1eWFuZ0Blc3dpbmNvbXB1
+dGluZy5jb20+Cj4gCj4gY2xrOiBlc3dpbjogQWRkIGVpYzc3MDAgSFNQIGNsb2NrIGRyaXZlcgo+
+IAo+IFRoaXMgY29tbWl0IGFkZHMgdGhlIEVTV0lOIEVJQzc3MDAgaGlnaC1zcGVlZCBwZXJpcGhl
+cmFscyBzeXN0ZW0gY2xvY2sKPiBjb250cm9sbGVyIGRyaXZlciBhbmQgcmVnaXN0ZXJzIGFuIGF1
+eGlsaWFyeSBkZXZpY2UgbmFtZWQgaHNwLXJlc2V0Lgo+IAo+ID4gZGlmZiAtLWdpdCBhL2RyaXZl
+cnMvY2xrL2Vzd2luL0tjb25maWcgYi9kcml2ZXJzL2Nsay9lc3dpbi9LY29uZmlnCj4gPiBpbmRl
+eCAwNDA2ZWM0OTllYzljLi5lNmNjMmE0MDdiYWM4IDEwMDY0NAo+ID4gLS0tIGEvZHJpdmVycy9j
+bGsvZXN3aW4vS2NvbmZpZwo+ID4gKysrIGIvZHJpdmVycy9jbGsvZXN3aW4vS2NvbmZpZwo+ID4g
+QEAgLTEzLDMgKzEzLDE1IEBAIGNvbmZpZyBDT01NT05fQ0xLX0VJQzc3MDAKPiA+ICAJICBTb0Mu
+IFRoZSBjbG9jayBjb250cm9sbGVyIGdlbmVyYXRlcyBhbmQgc3VwcGxpZXMgY2xvY2tzIHRvIHZh
+cmlvdXMKPiA+ICAJICBwZXJpcGhlcmFscyB3aXRoaW4gdGhlIFNvQy4KPiA+ICAJICBTYXkgeWVz
+IGhlcmUgdG8gc3VwcG9ydCB0aGUgY2xvY2sgY29udHJvbGxlciBvbiB0aGUgRUlDNzcwMCBTb0Mu
+Cj4gPiArCj4gPiArY29uZmlnIENPTU1PTl9DTEtfRUlDNzcwMF9IU1AKPiA+ICsJdHJpc3RhdGUg
+IkVJQzc3MDAgSFNQIENsb2NrIERyaXZlciIKPiA+ICsJZGVwZW5kcyBvbiBBUkNIX0VTV0lOIHx8
+IENPTVBJTEVfVEVTVAo+ID4gKwlzZWxlY3QgQVVYSUxJQVJZX0JVUwo+ID4gKwlzZWxlY3QgQ09N
+TU9OX0NMS19FSUM3NzAwCj4gPiArCXNlbGVjdCBSRVNFVF9FSUM3NzAwX0hTUCBpZiBSRVNFVF9D
+T05UUk9MTEVSCj4gCj4gRG9lcyB0aGlzIEtjb25maWcgZW50cnkgbmVlZCB0byBzZWxlY3QgUkVH
+TUFQX01NSU8/Cj4gCgpIaSBTYXNoaWtvLAoKVGhlIG5leHQgdmVyc2lvbiB3aWxsIGFkZCAnc2Vs
+ZWN0IFJFR01BUF9NTUlPJyBpbiB0aGUgS2NvbmZpZyBlbnRyeS4KCkJlc3QgcmVnYXJkcywKWHV5
+YW5nIERvbmcKCj4gVGhlIGRyaXZlciBjYWxscyBkZXZtX3JlZ21hcF9pbml0X21taW8oKSBpbiBl
+aWM3NzAwX2hzcF9jbGtfcHJvYmUoKS4gV2hlbgo+IGJ1aWxkaW5nIHVuZGVyIENPTVBJTEVfVEVT
+VCBvbiBjb25maWd1cmF0aW9ucyB3aGVyZSBubyBvdGhlciBjb21wb25lbnQKPiBjb2luY2lkZW50
+YWxseSBzZWxlY3RzIFJFR01BUF9NTUlPLCB0aGlzIGNhbiByZXN1bHQgaW4gYW4gdW5kZWZpbmVk
+Cj4gcmVmZXJlbmNlIHRvIF9fZGV2bV9yZWdtYXBfaW5pdF9tbWlvX2NsayBsaW5rZXIgZXJyb3Iu
+Cj4gCj4gPiArCWhlbHAKPiA+ICsJICBUaGlzIGRyaXZlciBwcm92aWRlcyBzdXBwb3J0IGZvciBj
+bG9jayBjb250cm9sbGVyIG9uIEVTV0lOIEVJQzc3MDAKPiA+ICsJICBIU1AuIFRoZSBjbG9jayBj
+b250cm9sbGVyIGdlbmVyYXRlcyBhbmQgc3VwcGxpZXMgY2xvY2tzIHRvIGhpZ2gKPiA+ICsJICBz
+cGVlZCBwZXJpcGhlcmFscyB3aXRoaW4gdGhlIFNvQy4KPiA+ICsJICBTYXkgeWVzIGhlcmUgdG8g
+c3VwcG9ydCB0aGUgY2xvY2sgY29udHJvbGxlciBvbiB0aGUgRUlDNzcwMCBIU1AuCj4gCj4gLS0g
+Cj4gU2FzaGlrbyBBSSByZXZpZXcgwrcgaHR0cHM6Ly9zYXNoaWtvLmRldi8jL3BhdGNoc2V0LzIw
+MjYwNTE0MTE0MjEyLjkwMy0xLWRvbmd4dXlhbmdAZXN3aW5jb21wdXRpbmcuY29tP3BhcnQ9Mgo=
 
-That should be possible now, you can submit a patch locally to the
-system.  I have a "cheat-sheet" around here somewhere that explains how
-to do that, no idea why it's not part of the documentation.  I can dig
-it up after breakfast...
-
-greg k-h
