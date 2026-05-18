@@ -1,111 +1,189 @@
-Received: from mail-pl1-f201.google.com (mail-pl1-f201.google.com [209.85.214.201])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3CF5D24DFF9
-	for <sashiko-reviews@lists.linux.dev>; Mon, 18 May 2026 20:57:14 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.214.201
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A3910371CEC;
+	Mon, 18 May 2026 20:59:14 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1779137836; cv=none; b=H84kQzcg8506LSuQKZ8pfGmk7pYcMBzfbFPQRVKiY1YUV0Blw8fkILYFzYo/jJ/ihJBpLVx0oet4duUVz0VgGk+u2hE/IejNhIX4AIEfs1X2E6NLZLLJQja5Lbjh1vNP8Gan88ZW6n2mL7oLaDy3db0qQ3D+pdAFXk7bCJrB1mM=
+	t=1779137954; cv=none; b=Ej1fE4KnuJKVqCHz37//m8x1UFI8CjBOXaDGWtly8wlFKqtR8DNLzvHAO6cWOFAdWdjQVuK9xzs1xE5Jpo9IoZi+5Y0wSh1bqVooFnIN7n4Mo2F2G70xgBsTmmGwP3JjV+gr6sapByhGDmxpZUPxKdzedV4xAlggwfDfGHiHYGk=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1779137836; c=relaxed/simple;
-	bh=06kv6crDp6XZKshrhUXskI9fXrzeLGzJNXc6n7rslSQ=;
-	h=Date:In-Reply-To:Mime-Version:References:Message-ID:Subject:From:
-	 To:Cc:Content-Type; b=GxK6wP/jSNass223X01ff8dEvU9gnOHjGomt5mdwtC5+vo1c4X2wmgl4IQraVDf4yw5YQO7kI0gAcg8HTz487wk04cMhQHEio7UBclwBQ7a2jAurDv/Teni4TAzrQ8XfoqWcgweCByQ6eWkSARH+J0qeLYOi7PA0xcEpITltRio=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=google.com; spf=pass smtp.mailfrom=flex--seanjc.bounces.google.com; dkim=pass (2048-bit key) header.d=google.com header.i=@google.com header.b=maW3Ef//; arc=none smtp.client-ip=209.85.214.201
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=google.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=flex--seanjc.bounces.google.com
+	s=arc-20240116; t=1779137954; c=relaxed/simple;
+	bh=lO7cK/BdKDswb57EujED7Mp/I6vQbg0rlmtGY4RNQMs=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=k4ekJAr6HZiE3H5YUcd0NWzn6P8S/twxTnnvKxXQ5+iXGj6aRwcDrPuuiGJqgj05YbcjZFs/OnFTAhd5kT36dEzzOhSa7MZJwp05orbqgsvUHqjWcwemT56963td5CmkkF3MaKj5nNxACK4Uz13rtiaAWWpSlKuhAE8zdWQkmpA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=s5mCG/9X; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=google.com header.i=@google.com header.b="maW3Ef//"
-Received: by mail-pl1-f201.google.com with SMTP id d9443c01a7336-2b2ecc96a9aso32415295ad.1
-        for <sashiko-reviews@lists.linux.dev>; Mon, 18 May 2026 13:57:14 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=google.com; s=20251104; t=1779137834; x=1779742634; darn=lists.linux.dev;
-        h=cc:to:from:subject:message-id:references:mime-version:in-reply-to
-         :date:from:to:cc:subject:date:message-id:reply-to;
-        bh=LBzoFdeurFIMNQx3LZwRN9zVdUKex6zY1ADox/ll04w=;
-        b=maW3Ef//5UA+Rnqil+KlTbdypRXxabKfL2Mm7pGo55LMUsk7Uw6zcfmQ8UumRFNxKn
-         2UmzPGZmgidiPGWl/oeJ0UmJNuHUT/2NHFu1GiALnigEw2yRCyn9cEUY4oIehAlrb1Tu
-         Tv+VlOv3X4288pha8Pg8nvAOgA4KT0O0GGfHNQyWe+g/osDPzlLHx2M4BobKQztFFJZZ
-         ksdEG/2qfuh23Bu8L60tL0eu4gnFRvZxgow5Ll8k4xjjhVGMB6LEEkZdamtmHxkoRkSz
-         G2VsqJrOEkDsd0P0P3yjLrc+hyNRR8c1PXOB3V0Kr7X7cuQc8S0cK20feV7ZsYzFNwHN
-         KYzA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20251104; t=1779137834; x=1779742634;
-        h=cc:to:from:subject:message-id:references:mime-version:in-reply-to
-         :date:x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=LBzoFdeurFIMNQx3LZwRN9zVdUKex6zY1ADox/ll04w=;
-        b=nz0H1zTTofrmSwBqo8Tr+lPbSGxWTOyoYGZ0GK0623otvvbmGvvEBuPK0NitQXwQbg
-         RiQiYHn856Tjphzmv10t6IfZ4ZcLMRzN/7RFcjRy39z/mbRwNP8uTJPeiziO0u29YCI8
-         0C492DntWQD49Ffn554XzxS6ct0AwrZEXK6iVWAaf2Guefe+K0exEW/MNBZTANmERORa
-         1qQsglJJzoSBveSGQ5HKN7FlIRDnjidK/pSH7oddy0r+U4e8x7v9T7+quzR2Pk1aJTYE
-         OLmjKdrLUOF+gcfDjz4rbQNx7O++Bb4ULnAaAk6+IDERo80L8rYRhlWGj1nAbAE/keHo
-         pb2w==
-X-Gm-Message-State: AOJu0Yx/H+3rwuBlc5l0voncoCs5HZ06ZqxHVGHlrq51blMDdegyVEWG
-	tXy3KYyALMb+EAVe8bQ+pzVSHEEDPG6bJEdxxrGhZUhMvvFdBwO/2v2+tfPTr0qsuYoM3qVPqBK
-	ISkV4xM3fxV9EA1eCZevErBWCZXuqoHeDaSyO4j6lGSMqeYacp2Ehc3ENmxk/vJilTopiFjyAIu
-	zjp2ELbK3/8PYglEJd/t9tROAgLPAjy/3BAk7Sh08sWm06bz7f
-X-Received: from plbbb3.prod.google.com ([2002:a17:902:bc83:b0:2bc:b04b:d296])
- (user=seanjc job=prod-delivery.src-stubby-dispatcher) by 2002:a17:903:3bc7:b0:2b4:6d92:b002
- with SMTP id d9443c01a7336-2bd7e9e58aemr193521345ad.37.1779137833388; Mon, 18
- May 2026 13:57:13 -0700 (PDT)
-Date: Mon, 18 May 2026 13:57:12 -0700
-In-Reply-To: <20260515195557.DEF05C2BCB0@smtp.kernel.org>
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="s5mCG/9X"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id EF85BC2BCB7;
+	Mon, 18 May 2026 20:59:13 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+	s=k20201202; t=1779137954;
+	bh=lO7cK/BdKDswb57EujED7Mp/I6vQbg0rlmtGY4RNQMs=;
+	h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
+	b=s5mCG/9X8XK4N9oT6M0Kj1mPdrW/JIjhOp/TTpr53pul2Fa7pNEknOxnaSbmUucJa
+	 5UZpMQ0oWt++Y9uD7Ws+HDNeEnqUGqsFwH6/hGGaYzpLyaGhZXu+/CYI3+9Ocd/LTH
+	 Rq1zNAPVHF3Cebone50LSS38Veb8MhgwbBGGxOGcllL8H1aS7oTLlWDJXPPheCe5QL
+	 l1qqKSeTg0G2UQ2sqDxzvGgXgD8QF8hzF+a38l3OXlYrOJd4RiYh7GIyMai4JDK3Nx
+	 CEplR/PpPQem9D6kT8zfh/qUR+ovZQsNo2vSY0RNIfZB5bAlk/xi9txb6AStZ8/wdg
+	 vP/Vqc5mBRQGg==
+Date: Mon, 18 May 2026 22:59:11 +0200
+From: Lorenzo Bianconi <lorenzo@kernel.org>
+To: sashiko-reviews@lists.linux.dev
+Cc: robh@kernel.org, conor+dt@kernel.org, devicetree@vger.kernel.org,
+	netdev@vger.kernel.org
+Subject: Re: [PATCH net-next v7 02/10] net: airoha: Introduce airoha_gdm_dev
+ struct
+Message-ID: <agt9n4qF3hyardCB@lore-desk>
+References: <20260516-airoha-eth-multi-serdes-v7-2-99e0093303e2@kernel.org>
+ <20260517055812.CEC33C2BCB0@smtp.kernel.org>
 Precedence: bulk
 X-Mailing-List: sashiko-reviews@lists.linux.dev
 List-Id: <sashiko-reviews.lists.linux.dev>
 List-Subscribe: <mailto:sashiko-reviews+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:sashiko-reviews+unsubscribe@lists.linux.dev>
-Mime-Version: 1.0
-References: <20260515191942.1892718-37-seanjc@google.com> <20260515195557.DEF05C2BCB0@smtp.kernel.org>
-Message-ID: <agt9KJ1LDU5zVMIs@google.com>
-Subject: Re: [PATCH v3 36/41] x86/kvmclock: Get local APIC bus frequency from
- PV CPUID Timing Info
-From: Sean Christopherson <seanjc@google.com>
-To: sashiko-reviews@lists.linux.dev
-Cc: linux-hyperv@vger.kernel.org
-Content-Type: text/plain; charset="us-ascii"
+MIME-Version: 1.0
+Content-Type: multipart/signed; micalg=pgp-sha512;
+	protocol="application/pgp-signature"; boundary="I5Ic1VMvRwYsDD/n"
+Content-Disposition: inline
+In-Reply-To: <20260517055812.CEC33C2BCB0@smtp.kernel.org>
 
-On Fri, May 15, 2026, sashiko-bot@kernel.org wrote:
-> Thank you for your contribution! Sashiko AI review found 1 potential issue(s) to consider:
-> - [High] lapic_timer_period is incorrectly assigned the raw APIC frequency in kHz, which fails to account for the kernel's HZ configuration and breaks APIC timer calibration for any HZ != 1000.
+
+--I5Ic1VMvRwYsDD/n
+Content-Type: text/plain; charset=iso-8859-1
+Content-Disposition: inline
+Content-Transfer-Encoding: quoted-printable
+
+> Thank you for your contribution! Sashiko AI review found 2 potential issu=
+e(s) to consider:
+> - [High] The patch introduces a race condition exposing a partially initi=
+alized port, leading to a NULL pointer dereference in NAPI polling handlers.
+> - [High] The `airoha_get_dsa_tag` function lacks packet length validation=
+ before stripping the MTK DSA tag, leading to an out-of-bounds memory acces=
+s and `skb->len` integer underflow.
 > --
-> 
-> commit e5bbef05c7ba30fb00c716accae48693e295289a
-> Author: Sean Christopherson <seanjc@google.com>
-> 
-> x86/kvmclock: Get local APIC bus frequency from PV CPUID Timing Info
-> 
-> This commit reads the local APIC bus frequency from the PV CPUID leaf
-> and uses it to directly set lapic_timer_period, bypassing the standard
-> calibration process.
-> 
-> > diff --git a/arch/x86/kernel/kvmclock.c b/arch/x86/kernel/kvmclock.c
-> > --- a/arch/x86/kernel/kvmclock.c
-> > +++ b/arch/x86/kernel/kvmclock.c
+>=20
+> commit 3474bcc37d20c84839dc4e74bab44197a0507f51
+> Author: Lorenzo Bianconi <lorenzo@kernel.org>
+>=20
+> net: airoha: Introduce airoha_gdm_dev struct
+>=20
+> This commit introduces the airoha_gdm_dev structure to collect net_device
+> related info, preparing the driver for a 1:n relationship between GDM por=
+ts
+> and net_devices.
+>=20
+> > diff --git a/drivers/net/ethernet/airoha/airoha_eth.c b/drivers/net/eth=
+ernet/airoha/airoha_eth.c
+> > index 5a027cc7ffcb1..3ca0dbd19275a 100644
+> > --- a/drivers/net/ethernet/airoha/airoha_eth.c
+> > +++ b/drivers/net/ethernet/airoha/airoha_eth.c
+>=20
 > [ ... ]
-> > @@ -200,10 +200,19 @@ void kvmclock_cpu_action(enum kvm_guest_cpu_action action)
-> >   */
-> >  static unsigned long kvm_get_tsc_khz(void)
-> >  {
-> > +#ifdef CONFIG_X86_LOCAL_APIC
-> > +	u32 apic_khz = kvm_para_apic_bus_khz();
-> > +
-> >  	/*
-> > -	 * If KVM advertises the frequency directly in CPUID, use that
-> > -	 * instead of reverse-calculating it from the KVM clock data.
-> > +	 * Use the TSC frequency from KVM's (and other hypervisors') PV CPUID
-> > +	 * leaf when available, instead of reverse-calculating it from the KVM
-> > +	 * clock data.  As a bonus, the CPUID leaf also includes the local APIC
-> > +	 * bus/timer frequency.
-> >  	 */
-> > +	if (apic_khz)
-> > +		lapic_timer_period = apic_khz;
-> 
-> Does setting lapic_timer_period directly to apic_khz assume that HZ is
-> always configured to 1000?
-> 
-> The lapic_timer_period variable represents the number of APIC timer ticks
-> per jiffy. This is usually calculated as (frequency_in_hz / HZ), which would
-> be (apic_khz * 1000) / HZ.
+>=20
+> > @@ -2007,7 +2020,7 @@ static netdev_tx_t airoha_dev_xmit(struct sk_buff=
+ *skb,
+> >  	u8 fport;
+> > =20
+> >  	qid =3D airoha_qdma_get_txq(qdma, skb_get_queue_mapping(skb));
+> > -	tag =3D airoha_get_dsa_tag(skb, dev);
+> > +	tag =3D airoha_get_dsa_tag(skb, netdev);
+>=20
+> While looking at this patch, I noticed an issue in airoha_get_dsa_tag() t=
+hat
+> pre-exists in the code. Does this function lack packet length validation
+> before pulling the MTK DSA tag?
+>=20
+> airoha_get_dsa_tag() unconditionally performs memmove() and __skb_pull():
+>=20
+>         memmove(skb->data + MTK_HDR_LEN, skb->data, 2 * ETH_ALEN);
+>         __skb_pull(skb, MTK_HDR_LEN);
+>=20
+> If an unprivileged user sends an undersized packet via a raw socket
+> (AF_PACKET), could this result in an out-of-bounds memory access and cause
+> skb->len to integer-underflow?
+>=20
+> This could lead to dma_map_single() attempting to map a massive amount of
+> memory, potentially causing an IOMMU fault and a local denial-of-service.
 
-Ugh, TIL.  That's quite evil.  I'll fix in the next version.
+As already pointed out, this does not seem an issue.
+
+>=20
+> [ ... ]
+>=20
+> > @@ -2975,53 +3060,22 @@ static int airoha_alloc_gdm_port(struct airoha_=
+eth *eth,
+> >  		return -EINVAL;
+> >  	}
+> > =20
+> > -	dev =3D devm_alloc_etherdev_mqs(eth->dev, sizeof(*port),
+> > -				      AIROHA_NUM_NETDEV_TX_RINGS,
+> > -				      AIROHA_NUM_RX_RING);
+> > -	if (!dev) {
+> > -		dev_err(eth->dev, "alloc_etherdev failed\n");
+> > +	port =3D devm_kzalloc(eth->dev, sizeof(*port), GFP_KERNEL);
+> > +	if (!port)
+> >  		return -ENOMEM;
+>=20
+> [ ... ]
+>=20
+> > -	port =3D netdev_priv(dev);
+> >  	u64_stats_init(&port->stats.syncp);
+> >  	spin_lock_init(&port->stats.lock);
+> > -	port->eth =3D eth;
+> > -	port->dev =3D dev;
+> >  	port->id =3D id;
+> >  	/* XXX: Read nbq from DTS */
+> >  	port->nbq =3D id =3D=3D AIROHA_GDM3_IDX && airoha_is_7581(eth) ? 4 : =
+0;
+> >  	eth->ports[p] =3D port;
+> > =20
+> > -	return airoha_metadata_dst_alloc(port);
+> > +	err =3D airoha_metadata_dst_alloc(port);
+> > +	if (err)
+> > +		return err;
+> > +
+> > +	return airoha_alloc_gdm_device(eth, port, np);
+> >  }
+>=20
+> Could an interrupt cause a NULL pointer dereference in the NAPI handlers?
+>=20
+> Since NAPI is enabled earlier in airoha_probe() via airoha_qdma_start_nap=
+i(),
+> and eth->ports[p] is assigned here before airoha_alloc_gdm_device() popul=
+ates
+> port->dev, NAPI handlers like airoha_qdma_rx_process() could see a NULL
+> port->dev:
+>=20
+> airoha_qdma_rx_process()
+>         ...
+>         port =3D eth->ports[p];
+>         netdev =3D port->dev->dev;
+>=20
+> I note that this issue is fixed later in the series by commit 68e8fa8fe02=
+24
+> ("net: airoha: Support multiple net_devices for a single FE GDM port"), w=
+hich
+> changes port->dev to an array and adds proper NULL checks.
+
+ack, I will fix it in v8.
+
+Regards,
+Lorenzo
+
+>=20
+> --=20
+> Sashiko AI review =B7 https://sashiko.dev/#/patchset/20260516-airoha-eth-=
+multi-serdes-v7-0-99e0093303e2@kernel.org?part=3D2
+
+--I5Ic1VMvRwYsDD/n
+Content-Type: application/pgp-signature; name=signature.asc
+
+-----BEGIN PGP SIGNATURE-----
+
+iHUEABYKAB0WIQTquNwa3Txd3rGGn7Y6cBh0uS2trAUCagt9nwAKCRA6cBh0uS2t
+rBeLAQCdlm/QAuyNFWuTfclaOJkPj3v/jYi7gcrxxPmerVRw1QD9EL4eO6LNj9Rk
+bDp2khdOoGbazmqN+YdLfTX70ZT5IAI=
+=t9f+
+-----END PGP SIGNATURE-----
+
+--I5Ic1VMvRwYsDD/n--
