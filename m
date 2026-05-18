@@ -1,92 +1,139 @@
-Received: from mail-wm1-f44.google.com (mail-wm1-f44.google.com [209.85.128.44])
+Received: from mail-pj1-f74.google.com (mail-pj1-f74.google.com [209.85.216.74])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6E1D138945A
-	for <sashiko-reviews@lists.linux.dev>; Mon, 18 May 2026 19:46:31 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.44
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9463B38F929
+	for <sashiko-reviews@lists.linux.dev>; Mon, 18 May 2026 20:28:36 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.216.74
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1779133593; cv=none; b=jek0W/E59hTP0ZB2unDejr0gOtsRnAC/OQX53MKYa8eeEGXJtDfa66eayZbBacl2J2zqBMWd3npGmmCBfKCFXDfF11Os4/8yuCOvh5yBA8LqzOQHScBeLL924kAZsWxqJqxr3Lik/bBzTsKkpax2WccPj0crpptkzfVnnfhw6F8=
+	t=1779136118; cv=none; b=E/xTLQNK4RyJA6tbNeIbQxnLd/uDBrRm+wjc3A47XG4rcOd2NTXpMpMJ/5rCzhDPRCKPOIKrumnN6IJLbfaHb8ToqsMzomqunrTCCa2+L+7YcOf81SRkpxFMi0lGbGrpnHkculthbGOfvUNWKG48vfrOUfn0dJWvx1OwbXObad4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1779133593; c=relaxed/simple;
-	bh=VdwNJ8/RRSGa6smjQtGivvMghdJohUW6vOp7PH82XIc=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=TpkQucABhBm/9ZLRv7t3ih73jpA+dbyToRtFy+8m3TZ+uzz1UDOvfIAJeG+UGaYUFDFWLBQ7Ano03iVanqmCDt13J+EjzQOQ4YV4UT+x+h8hDKgUyptkFrpXtedEWPAlH0Nw3miC5kNJIdXLkCjFALHpYzRHGVAC2/Ao/bH81sQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=CGaKiCl/; arc=none smtp.client-ip=209.85.128.44
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+	s=arc-20240116; t=1779136118; c=relaxed/simple;
+	bh=hmHa3lERLAq0VNHm3jD5e+yPlQ3U2iPLROYP9DzeTNo=;
+	h=Date:In-Reply-To:Mime-Version:References:Message-ID:Subject:From:
+	 To:Cc:Content-Type; b=KnvBU/AqO9XuC1KKHJf1jOh6FVzCUC/ZkFUOnWhk5Dormw3U9FqO1WXt0VmWBNf/ZDUkUmUdZzjsKpRzSXGDmWDuR/+Q3rodrcLaeatD295rkImn0SIO+ojJnRXAn4wUuonWMxlspXzh4zQW6wRspsRHmgCehQq9mYEYM+LESjM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=google.com; spf=pass smtp.mailfrom=flex--seanjc.bounces.google.com; dkim=pass (2048-bit key) header.d=google.com header.i=@google.com header.b=ohF4nzK1; arc=none smtp.client-ip=209.85.216.74
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=google.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=flex--seanjc.bounces.google.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="CGaKiCl/"
-Received: by mail-wm1-f44.google.com with SMTP id 5b1f17b1804b1-488a88aeec9so32618675e9.2
-        for <sashiko-reviews@lists.linux.dev>; Mon, 18 May 2026 12:46:31 -0700 (PDT)
+	dkim=pass (2048-bit key) header.d=google.com header.i=@google.com header.b="ohF4nzK1"
+Received: by mail-pj1-f74.google.com with SMTP id 98e67ed59e1d1-36641fe4aedso5674839a91.1
+        for <sashiko-reviews@lists.linux.dev>; Mon, 18 May 2026 13:28:36 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20251104; t=1779133590; x=1779738390; darn=lists.linux.dev;
-        h=in-reply-to:content-disposition:mime-version:references:message-id
-         :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
-        bh=12EE8Opxoylr62oq1gP9QJGH+sUKwH6pdG1cIQyJcXw=;
-        b=CGaKiCl/4EjTQKyqU+bWcVUP1K4Mg+zecQp7tFUd+BMsuJzLOCp1w7aZVnFRTXILKo
-         qCLCfq3MRfiYIEjd8MlVO3/pj5GWetn0ndmyEpuNQb2rB63f8W0bdCRnAtT5JoYo+/tw
-         v6VQrqX8Il1akH6CpGVWMhiC2KfMKrEeEpiV7p5UqwX9LJ3g5UEeL/vW27s4EYr3a2YW
-         e9aSYNV4uvBsKbBIXIiEqznuv4l93KwFLDyVn0ceV12/ewY7l/PLgA8RNXT++FRI8z34
-         wMhzzGCfZQVDKrBv/ySyrAykc+RSyihzb7X7MTnW6BADyE/H+qS5XFGOKk/HLF3X1xwg
-         4/9g==
+        d=google.com; s=20251104; t=1779136116; x=1779740916; darn=lists.linux.dev;
+        h=cc:to:from:subject:message-id:references:mime-version:in-reply-to
+         :date:from:to:cc:subject:date:message-id:reply-to;
+        bh=j1XaWuXLMM9xEhwF3D0/7qJrCIna4fGcfUBNTL97l5Y=;
+        b=ohF4nzK17lQM9rOemVDjv4QjT1WRuwzObnyfph9tMu/XGJUTuNd1fPPy0PnPn4EiOu
+         7lvy0BvN59soUISTd6vSFGYIQxpTPxiemDvoviXvulryY24hy/qJNFwtwKjClYM1FcjT
+         OvroIyDhnLCFZU6o6+Ra/8uBJV2SR4zhRRljLjgW5/KYUCW6H8PhGWJHUkpGM9Wn54BB
+         o1ml9128n6I6qj26EMwqlUYnUhCz8Thqi51TkqEyaedgZfH2JlEM8lmZig12iL4Rm32K
+         udoPB7RzrJUatPFtFcrraEbYJfyAmtuUYLr0xbxVB50G/NqH8e1emgw7trR9KZNJw23h
+         MFMA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20251104; t=1779133590; x=1779738390;
-        h=in-reply-to:content-disposition:mime-version:references:message-id
-         :subject:cc:to:from:date:x-gm-gg:x-gm-message-state:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=12EE8Opxoylr62oq1gP9QJGH+sUKwH6pdG1cIQyJcXw=;
-        b=FL1zwdpT9OUvoXYxr9Cu4qh3sqDCRIzMdRkuNU+JtqXtDsCtUDixCU87XznraMGMdd
-         wp9Ux5SpmfxEiVD2Cc23bg73ddTN1nkef3HTHAPNm5YT2YQd5Z75quMPKoCstEReZhze
-         dXG60MojGGfGh217NzjbAsLTqIyWvfdm4t5nN8YkXZ7iYCQTi2CzhGIDkHv30ov0QKKI
-         SUJkNARXgI7cEz/xj2CyX5+sDtjhCwd/AbLxK4dtXNkz4iG93T/wZnseOnHM8SMPx/UB
-         k06C9NSCnmbB3bOooL+Q/q5lhJYP9aQ6LP91gvdNKO4tZ4cgIuZ1/dnn51O47w7Gs+jC
-         YReA==
-X-Gm-Message-State: AOJu0Yw6RyxJUHrOyHXSdHlRmiEc8Fk6RwBGV8IioukoB9KxxbNnmBRY
-	DqDsp/f3s/9xELRewJ9VMxIc09q+SlhnVbdhr3LjPHwRHNhcSdXDqi6GtinYL/nY
-X-Gm-Gg: Acq92OGIq5AqEN9ClZtOBcq++oILGRMhkvYrnOojtApMheQV7ayDdCosvXAbUs2+aOI
-	LnuPnC+tkCrcS6R7z4SN0XjVoLA0lcHnb5CxGYxmuLyC3s4YliQ962chh9RKpC9tdddlGa+WaIK
-	MdwiX0Z7GVMDdoLWkPcD+Hj+Z+4v/F357G3YeArAIIBsixWJK2flzVt4VjDwOeB6OwIOzoyg/dA
-	HYIt7tGCaugNHa6nj5NrYC8UjkbMkVFrdDW6RCNHISSjkLTJ/MgGDxu2UaxiSkXwCfhSQsEZIVP
-	XQ/aKMUY1IUsyH1CiLiX+o7z9TYmIJVWXxf81N3C98KEVWCdVqEhokOJQ/VjoJdqtjkfv7PvKGY
-	9/U4Z+BADjY1WBzAx0gywtYfRwNLgKvFxZjt3z+dzC22UEaVzYlGFllktAIn4CUKqboRlgrGSuQ
-	YRCyMYGxA=
-X-Received: by 2002:a05:600c:4504:b0:48f:d1b8:9a9c with SMTP id 5b1f17b1804b1-48fe60e14bamr246537865e9.7.1779133589646;
-        Mon, 18 May 2026 12:46:29 -0700 (PDT)
-Received: from localhost ([2603:c027:c000:3cde::f])
-        by smtp.gmail.com with ESMTPSA id 5b1f17b1804b1-48ff43f8799sm165921765e9.2.2026.05.18.12.46.28
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Mon, 18 May 2026 12:46:29 -0700 (PDT)
-Date: Mon, 18 May 2026 21:46:27 +0200
-From: Louis Sautier <sautier.louis@gmail.com>
-To: sashiko-reviews@lists.linux.dev
-Cc: linux-hwmon@vger.kernel.org
-Subject: Re: [PATCH v2 2/2] scsi: mpt3sas: add hwmon support
-Message-ID: <agtsk8mSxPaIz_tX@localhost>
-References: <20260518184109.770185-3-sautier.louis@gmail.com>
- <20260518193758.889DCC2BCB7@smtp.kernel.org>
+        d=1e100.net; s=20251104; t=1779136116; x=1779740916;
+        h=cc:to:from:subject:message-id:references:mime-version:in-reply-to
+         :date:x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+        bh=j1XaWuXLMM9xEhwF3D0/7qJrCIna4fGcfUBNTL97l5Y=;
+        b=dTqcfD9yqj+6ZCuwkO0Kj9QOCcg3dksUc5jviAMAFptMjo3HoRzZ74B/ZtVqBSxdYP
+         zdVVpi9LDwq3fSt+Tti6QyKDQWTvt0OIxQJRR69m2AnAo5sJp2JFXJ5efInSPrDWWFuz
+         dRMRlTikgTJVmD47O0VhY07yU3Jkols6pZQPuHkFLuqf+YyLkVb9v/L7IR7FZ3BmSvfm
+         hJtkofCxbeSfMsi5rGKRcYPVndZ47u/kQZROgSVROJlfEJ6S+SLQhgzf8LWr2iL0DwTn
+         Tt3K/pTbBSj1ljUMz0aHVq0zuqd0WkLtvGVudsP0br1tlYSqLAbOoWJptU7MJWF6LTtn
+         yjFA==
+X-Gm-Message-State: AOJu0YxrYcNw/SUMjN9Srr9ZMOrzgVD0JiWjdtyqgJVOSkSFOndhrWZy
+	W4sQ79eWPsITa0L3av1ThhOT8U4KQhLwnfG0Z1rWMQaLKyJEkl8p7xwEIEYS/sI7UK/D3VxCRG8
+	0hapEXlzf04FdcPt/C7Oh7afdZLV9MTG3V5pyY3KIKUqY1QvgagtUb/VQOZxl3zFOu9lHX+glat
+	EjNZXEY+33wR07IMGiqAU3Anud8PnQ3w3Yw7/QHbZ0EGkOiiqR
+X-Received: from plge17.prod.google.com ([2002:a17:902:cf51:b0:2bd:7970:b71f])
+ (user=seanjc job=prod-delivery.src-stubby-dispatcher) by 2002:a17:90b:3842:b0:368:147b:536c
+ with SMTP id 98e67ed59e1d1-36951b75c26mr15658555a91.13.1779136115645; Mon, 18
+ May 2026 13:28:35 -0700 (PDT)
+Date: Mon, 18 May 2026 13:28:35 -0700
+In-Reply-To: <20260515200929.19F2CC2BCB3@smtp.kernel.org>
 Precedence: bulk
 X-Mailing-List: sashiko-reviews@lists.linux.dev
 List-Id: <sashiko-reviews.lists.linux.dev>
 List-Subscribe: <mailto:sashiko-reviews+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:sashiko-reviews+unsubscribe@lists.linux.dev>
-MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <20260518193758.889DCC2BCB7@smtp.kernel.org>
+Mime-Version: 1.0
+References: <20260515191942.1892718-38-seanjc@google.com> <20260515200929.19F2CC2BCB3@smtp.kernel.org>
+Message-ID: <agt2c3WXwLk23aeY@google.com>
+Subject: Re: [PATCH v3 37/41] x86/kvmclock: Use TSC for sched_clock if it's
+ constant and non-stop
+From: Sean Christopherson <seanjc@google.com>
+To: sashiko-reviews@lists.linux.dev
+Cc: linux-hyperv@vger.kernel.org
+Content-Type: text/plain; charset="us-ascii"
 
-On Mon, 18 May 2026 19:37:57 +0000, sashiko-bot@kernel.org wrote:
-> > +config SCSI_MPT3SAS_HWMON
-> > +	bool "LSI MPT Fusion SAS hwmon support"
-> > +	depends on SCSI_MPT3SAS && HWMON
-> > +	depends on !(SCSI_MPT3SAS=y && HWMON=m)
-> > +	help
-> > +	Say Y here to expose the IOC and board temperature sensors of
-> > +	LSI / Broadcom SAS HBAs (such as the 9300, 9400, and 9500 series)
-> > +	through hwmon. See Documentation/hwmon/mpt3sas.rst for details.
+On Fri, May 15, 2026, sashiko-bot@kernel.org wrote:
+> Thank you for your contribution! Sashiko AI review found 1 potential issue(s) to consider:
+> - [High] Bypassing `kvm_sched_clock_init()` when `CONSTANT_TSC` is present
+> ignores KVM's `PVCLOCK_TSC_STABLE_BIT`, leading to unfiltered backward time
+> jumps in the core scheduler.  --
 > 
-> This isn't a bug, but the help text references a documentation file that
-> doesn't seem to be included in this patch. Is Documentation/hwmon/mpt3sas.rst
-> missing from this commit, or was this added in a separate patch series?
+> commit 57cf68835ef70733c037ca9ffa04fd39e1d70027
+> Author: Sean Christopherson <seanjc@google.com>
+> 
+> x86/kvmclock: Use TSC for sched_clock if it's constant and non-stop
+> 
+> This commit updates kvmclock_init to prefer the TSC over kvmclock for
+> sched_clock when the TSC is constant, non-stop, and not marked unstable.
+> It does this by bypassing kvm_sched_clock_init and instead modifying the
+> TSC properties so that TSC becomes the preferred clocksource.
+> 
+> Link: https://lore.kernel.org/all/Z4hDK27OV7wK572A@google.com
+> 
+> > diff --git a/arch/x86/kernel/kvmclock.c b/arch/x86/kernel/kvmclock.c
+> > --- a/arch/x86/kernel/kvmclock.c
+> > +++ b/arch/x86/kernel/kvmclock.c
+> [ ... ]
+> > @@ -416,22 +416,22 @@ void __init kvmclock_init(void)
+> [ ... ]
+> >  	if (boot_cpu_has(X86_FEATURE_CONSTANT_TSC) &&
+> >  	    boot_cpu_has(X86_FEATURE_NONSTOP_TSC) &&
+> >  	    !check_tsc_unstable()) {
+> >  		kvm_clock.rating = 299;
+> >  		tsc_properties = TSC_FREQ_KNOWN_AND_RELIABLE;
+> > +	} else {
+> > +		kvm_sched_clock_init(stable);
+> >  	}
+> >  
+> > -	kvm_sched_clock_init(stable);
+> 
+> Does bypassing kvm_sched_clock_init() when CONSTANT_TSC is present
+> accidentally ignore KVM's PVCLOCK_TSC_STABLE_BIT?
+> 
+> CONSTANT_TSC indicates the hardware TSC rate doesn't change with power
+> states, but it doesn't guarantee cross-CPU synchronization, such as across
+> multi-socket systems or differing vCPU offsets from hotplug and migration.
+> KVM explicitly signals this cross-CPU stability via PVCLOCK_TSC_STABLE_BIT,
+> which is mapped to the stable variable.
+> 
+> Prior to this patch, kvm_sched_clock_init() was always called, invoking
+> __paravirt_set_sched_clock() with the stable flag. This allowed the system
+> to call clear_sched_clock_stable() if the hypervisor could not guarantee
+> synchronization, enabling crucial per-CPU monotonicity filters in
+> sched_clock_cpu().
+> 
+> By skipping kvm_sched_clock_init() entirely and registering
+> TSC_FREQ_KNOWN_AND_RELIABLE, the kernel's native cross-CPU TSC synchronization
+> checks and the clocksource watchdog appear to be bypassed.
 
-I forgot to remove this sentence after dropping the documentation. I
-will do it in v3.
+This is very much intented behavior.
+
+> If KVM clears PVCLOCK_TSC_STABLE_BIT, could this result in the guest
+> ignoring the condition and using raw, unfiltered rdtsc() values?
+
+Yes, that's the entire point.
+ 
+Note, PVCLOCK_TSC_STABLE_BIT is still set in pvclock_read_flags(&hv_clock_boot[0].pvti),
+so anything else that directly consumes PVCLOCK_TSC_STABLE_BIT still does the
+right thing.  E.g. kvm_setup_vsyscall_timeinfo() will still set kvm_clock's vDSO
+mode to VDSO_CLOCKMODE_PVCLOCK, to communicate that kvm_lock can be used for the
+vDSO page, *if* it's chose.
+
+> When tasks migrate between vCPUs with differing TSC offsets, this regression
+> might cause backward time jumps in sched_clock(), which breaks rq_clock
+> monotonicity and corrupts CFS vruntime and min_vruntime calculations.
+
+Only if the host messed up and incorrectly advertised CONSTANT+NONSTOP.
