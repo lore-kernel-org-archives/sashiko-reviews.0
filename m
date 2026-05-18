@@ -1,97 +1,134 @@
-Received: from mgamail.intel.com (mgamail.intel.com [192.198.163.8])
+Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 29A773EE1D5
-	for <sashiko-reviews@lists.linux.dev>; Mon, 18 May 2026 16:34:44 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=192.198.163.8
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D9687481FC3;
+	Mon, 18 May 2026 16:39:11 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1779122086; cv=none; b=VBGrqc+MKNsATqM6KJceTBOoYkEgtng1p55pp2sCNs4HqwDY8kz1PZzRgDpCL5+yo9jHnvgTdaMgesMmw+YvQN1Tz9qry9wuniaKn96iL0uT8354+EUSfVD4ce/tCFJbpUTEXxN3gwT04iNp+DhdWSWLVTqy5JokLyPmR5mtls8=
+	t=1779122351; cv=none; b=oHma/eNZkTJUmIzz7WsIxkS8es21hcze/svgMfOr/BL7bjEqeL0bZVjTg5QnTxIKetVTFjxSq/hs329DVX3j9wseYMaiT1BG5hdhpDDG2btWbDtjKMSbje/7VmGsXpAwkhwxkl5guDlIklB82/lRhFtoRcJigpbs+NLHcgT96Oc=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1779122086; c=relaxed/simple;
-	bh=sBQFoLE033+2KzzyiFT/dlWK00kjE6B1jfHaTnnTCLg=;
-	h=From:Date:To:cc:Subject:In-Reply-To:Message-ID:References:
-	 MIME-Version:Content-Type; b=hdPxNsFOmTiINh2pAvijpCVI+M1EGjNTnIX8YyVTq7C3L6VMzuhDqYZ8buG6bvzQYeAiSuygI4/IerKbt0B71pFIYD6amqBYWYUuUZPEA2S0FF0fxcOVN3nVXx/QKehNAwwqieIrnp/n8n8yHydymwKI/loL6DjXnPFWUYOulGY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linux.intel.com; spf=pass smtp.mailfrom=linux.intel.com; dkim=pass (2048-bit key) header.d=intel.com header.i=@intel.com header.b=ctVY4dY+; arc=none smtp.client-ip=192.198.163.8
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linux.intel.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linux.intel.com
+	s=arc-20240116; t=1779122351; c=relaxed/simple;
+	bh=Stf0ehQABcL3BWcb4wO+GZaxhOMvSkzAfcn2Ijq0AG0=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=rKxEyT0+jFU5Xc0U1UBJ6WzZ/bytHIcVhnWlDdffjK5b8QJ2E+7sR7iNc4Pe7v0oX1Ez7mJYwqQ18NV/aslzo7m9jyZhRlV+e/bcF45JcecE4eYP9FSeeH6TcXzmxo08p0ix+SYhfm2AJ4NKJuVBzdNcBcZGqAJQp5V/izq5BVs=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=Ri+taL0k; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=intel.com header.i=@intel.com header.b="ctVY4dY+"
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
-  d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
-  t=1779122085; x=1810658085;
-  h=from:date:to:cc:subject:in-reply-to:message-id:
-   references:mime-version;
-  bh=sBQFoLE033+2KzzyiFT/dlWK00kjE6B1jfHaTnnTCLg=;
-  b=ctVY4dY+IPBG1ecISmRz0gUy6MnsrMz8AA5L04DPjrWnCLJJnFlay0oM
-   SUKdWFkY1o3JcWHxl3SP/+TBY3wv3qPyjH7Ue5aBHXRF4dtIbcvJQ1S/T
-   vTJaiSNkH2AOjNpvCMN1oYiJ8/SFsz/MfJW4biGfre11QNnOx1l+g2NrC
-   KumW0fGr6e6ypIjFkFOiEPygDX1F8pDAte2p8TscZflV9bdP6eT2TSTUm
-   DFNOmP+iXHvVCa2CsnEzXtKz5Rr4Fnito6NsW0wI174MZdJxpfAUN2yjp
-   hdKk5SClB7HGybPXux4U5ukihc8MlMMeG+xA1NEG83yloiYMFaXfVXP83
-   A==;
-X-CSE-ConnectionGUID: 49iYLGYCTYeBzDTZj8j2ng==
-X-CSE-MsgGUID: vPAohQl2SmuQp5XxTmIPIA==
-X-IronPort-AV: E=McAfee;i="6800,10657,11790"; a="97550548"
-X-IronPort-AV: E=Sophos;i="6.23,242,1770624000"; 
-   d="scan'208";a="97550548"
-Received: from fmviesa010.fm.intel.com ([10.60.135.150])
-  by fmvoesa102.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 18 May 2026 09:34:45 -0700
-X-CSE-ConnectionGUID: cTO3XNYETFu+YnhsHiXHfQ==
-X-CSE-MsgGUID: SmlCRPVKTTeierLDRkJAGw==
-X-ExtLoop1: 1
-X-IronPort-AV: E=Sophos;i="6.23,242,1770624000"; 
-   d="scan'208";a="235224202"
-Received: from ijarvine-mobl1.ger.corp.intel.com (HELO localhost) ([10.245.244.101])
-  by fmviesa010-auth.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 18 May 2026 09:34:42 -0700
-From: =?UTF-8?q?Ilpo=20J=C3=A4rvinen?= <ilpo.jarvinen@linux.intel.com>
-Date: Mon, 18 May 2026 19:34:39 +0300 (EEST)
-To: "Li,Rongqing(ACG CCN)" <lirongqing@baidu.com>
-cc: "sashiko-reviews@lists.linux.dev" <sashiko-reviews@lists.linux.dev>, 
-    "ryder.lee@mediatek.com" <ryder.lee@mediatek.com>, 
-    "linux-pci@vger.kernel.org" <linux-pci@vger.kernel.org>
-Subject: =?GB2312?Q?Re=3A_=B4=F0=B8=B4=3A_=5B=CD=E2=B2=BF=D3=CA=BC=FE=5D_Re?=
- =?GB2312?Q?=3A_=5BPATCH=5D_PCI=3A_mediatek=3A_Fix_operator_pr?=
- =?GB2312?Q?ecedence_in_PCIE=5FFTS=5FNUM=5FL0_macro?=
-In-Reply-To: <953a48ccc3a94a29887a8059edc21a2a@baidu.com>
-Message-ID: <3994196b-b86d-9b88-b1da-6522d245d1c8@linux.intel.com>
-References: <20260515005552.2343-1-lirongqing@baidu.com> <20260515013659.DC03BC2BCC7@smtp.kernel.org> <953a48ccc3a94a29887a8059edc21a2a@baidu.com>
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="Ri+taL0k"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 92DCCC2BCB7;
+	Mon, 18 May 2026 16:39:10 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+	s=k20201202; t=1779122351;
+	bh=Stf0ehQABcL3BWcb4wO+GZaxhOMvSkzAfcn2Ijq0AG0=;
+	h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
+	b=Ri+taL0kKcikhS3U246fV7VwmCwQVJ6iR4pUT7Y1ejnazoXIXqjNukoVEtnXYq4lE
+	 H9J3jMBXFgj+4iIZwHXfMn0US77NnnM26zye4J+RRc4jt/+lY7C4FT9sbpQWzLkoXS
+	 3lKf16QcCWIYaD112BN30pqxYvycFepjSujK34DF99lOud7ieetTWqTwDUzu+yfk5x
+	 lXurmf8G/GOUGgYBX1RIb3baq/h9LbplM+2ki7B+fyjHYAjnvf0daBI/oLqZSyouZd
+	 NdgD8a3RBpVpTsXSmGL5WNhSxi+QnnX9e1cSQniKU9PWXZuOhZia/Y1d5DQU0wQZSI
+	 16mpmxkrjQ6TQ==
+Date: Mon, 18 May 2026 17:39:08 +0100
+From: Conor Dooley <conor@kernel.org>
+To: sashiko-reviews@lists.linux.dev
+Cc: "lianfeng.ouyang" <lianfeng.ouyang@starfivetech.com>,
+	devicetree@vger.kernel.org, conor+dt@kernel.org, robh@kernel.org
+Subject: Re: [PATCH v2 1/2] dt-bindings: Add bindings for StarFive JHB100 SoC
+ trng controller
+Message-ID: <20260518-try-county-894e2fc4a433@spud>
+References: <20260518065243.20865-2-lianfeng.ouyang@starfivetech.com>
+ <20260518070622.446D9C2BCB7@smtp.kernel.org>
 Precedence: bulk
 X-Mailing-List: sashiko-reviews@lists.linux.dev
 List-Id: <sashiko-reviews.lists.linux.dev>
 List-Subscribe: <mailto:sashiko-reviews+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:sashiko-reviews+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=US-ASCII
+Content-Type: multipart/signed; micalg=pgp-sha512;
+	protocol="application/pgp-signature"; boundary="Nobh5KDaNa7Qm609"
+Content-Disposition: inline
+In-Reply-To: <20260518070622.446D9C2BCB7@smtp.kernel.org>
 
-On Mon, 18 May 2026, Li,Rongqing(ACG CCN) wrote:
 
-> 
-> > 
-> > Thank you for your contribution! Sashiko AI review found 2 potential issue(s)
-> > to consider:
-> > - [High] Fixing the macro changes the configured FTS number from 0 to 80,
-> > conflicting with the comment requiring 250 and potentially breaking L0s link
-> > recovery.
-> 
-> This requires confirmation from MediaTek
-> 
-> 
-> > - [Low] Missing explicit inclusion of `<linux/bitfield.h>` for `FIELD_PREP()`.
-> 
-> This isn't an issue. The current file includes ../pci.h, and ../pci.h 
-> includes linux/bitfield.h 
+--Nobh5KDaNa7Qm609
+Content-Type: text/plain; charset=iso-8859-1
+Content-Disposition: inline
+Content-Transfer-Encoding: quoted-printable
 
-While likely true on surface, nothing in pci.h is fundamendally such that 
-it would require bitfield.h.
+Sashiko devs,
 
-The include is there because of some static inline functions but lets say 
-somebody want's to refactor those functions into some .c file if the 
-function logic gets too complicated (infact, both are quite complicated 
-as is!) and remove the bitfield.h include. At that point, indirect include 
-chains are making the post refactoring cleanup harder.
+On Mon, May 18, 2026 at 07:06:21AM +0000, sashiko-bot@kernel.org wrote:
+> Thank you for your contribution! Sashiko AI review found 1 potential issu=
+e(s) to consider:
+> - [Medium] Removing the existing 'starfive,jh8100-trng' compatible string=
+ breaks backwards compatibility.
+> --
+>=20
+> commit 847e83dc6a2024f6cb7a70fd0453035b2808bedb
+> Author: Lianfeng Ouyang <lianfeng.ouyang@starfivetech.com>
+>=20
+> dt-bindings: Add bindings for StarFive JHB100 SoC trng controller
+>=20
+> This commit adds device tree bindings for the StarFive JHB100 SoC TRNG
+> controller, updates the maintainer, and removes the JH8100 compatible
+> string.
+>=20
+> > diff --git a/Documentation/devicetree/bindings/rng/starfive,jh7110-trng=
+=2Eyaml b/Documentation/devicetree/bindings/rng/starfive,jh7110-trng.yaml
+> > index 4639247e9e510..d21769b7d54e6 100644
+> > --- a/Documentation/devicetree/bindings/rng/starfive,jh7110-trng.yaml
+> > +++ b/Documentation/devicetree/bindings/rng/starfive,jh7110-trng.yaml
+>=20
+> [ ... ]
+>=20
+> >  properties:
+> >    compatible:
+> > -    oneOf:
+> > -      - items:
+> > -          - const: starfive,jh8100-trng
+> > -          - const: starfive,jh7110-trng
+> > -      - const: starfive,jh7110-trng
+> > +    enum:
+> > +      - starfive,jh7110-trng
+> > +      - starfive,jhb100-trng
+>=20
+> Does removing the existing "starfive,jh8100-trng" compatible string break
+> backwards compatibility?
 
-That's why it's better to include what you use in each file.
+The commit message is perfunctory but does attempt to explains this.
+Since the bot reply fails to retain the commit message as quoted text,
+it's annoying to go figure that out.
 
--- 
- i.
+It's really annoying that this happens, especially when the LLM text
+references the commit message. Can you please change the email response
+settings to retain the commit messages?
 
+Cheers,
+Conor.
+
+>=20
+> Device tree bindings represent a stable ABI, and removing the previously
+> merged "starfive,jh8100-trng" string breaks dt-schema validation for any
+> existing or downstream device trees that used it. Even if the hardware is
+> no longer supported, the standard practice is to retain such strings,
+> perhaps optionally adding "deprecated: true", rather than deleting them
+> outright.
+>=20
+> > =20
+> >    reg:
+> >      maxItems: 1
+>=20
+> --=20
+> Sashiko AI review =B7 https://sashiko.dev/#/patchset/20260518065243.20865=
+-1-lianfeng.ouyang@starfivetech.com?part=3D1
+
+--Nobh5KDaNa7Qm609
+Content-Type: application/pgp-signature; name="signature.asc"
+
+-----BEGIN PGP SIGNATURE-----
+
+iHUEABYKAB0WIQRh246EGq/8RLhDjO14tDGHoIJi0gUCagtArAAKCRB4tDGHoIJi
+0o12AQDfhow6+UreCj+Kxz2nab/sMC839yIeHrsR1Pq22+htBwD7BfQZx0HnYdXo
+fxDeTRst6kAiF7iC3miaaV0wMcgM1Qk=
+=lwZU
+-----END PGP SIGNATURE-----
+
+--Nobh5KDaNa7Qm609--
