@@ -1,160 +1,175 @@
-Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-lf1-f54.google.com (mail-lf1-f54.google.com [209.85.167.54])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5202E37702C;
-	Mon, 18 May 2026 21:28:37 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
-ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1779139717; cv=none; b=gEsOGpfFCT8yaHlNM65tm5cQ6ofaSqXHGbIQq0p3cg/BpbxV7YzmnPNyBHpCBvtzqooZ0UJJIvYOUJZyH6t5UwgIw8tH0vuE8E3CW/LHCq+ALw3uUeEPKlDb60UgnwsOtdErrNPmh5JCC9tEaVxDcErxD/AXcgL1LZO7Hhqgs0s=
-ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1779139717; c=relaxed/simple;
-	bh=eyDCCuFqDPxb9ufc2iMt/dv8APMsKsrr9czfOUagKUQ=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=kWYS3MJZU+9a9dzxxEHgFWT8k/TFZvDPACdfb937/B1bEJPhs3emDVmX/0mG6eMjm/QW6GXcOVnL/8lT8GwiENlEQH32TcnCq1tGyeOOTT5Xj/+dGt3/MSMLn8JxeCnUjWky1qYwxYQ2EgtlwpSIYL+70fPj0JLT3jaHxMIAbqM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=cM2mYQoQ; arc=none smtp.client-ip=10.30.226.201
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6933A395D87
+	for <sashiko-reviews@lists.linux.dev>; Mon, 18 May 2026 21:38:55 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=pass smtp.client-ip=209.85.167.54
+ARC-Seal:i=2; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
+	t=1779140336; cv=pass; b=S/8r0ZizxwJjUxA0omKpzRUkfwZGYjULDxjbZPS0kGEaWfrCGS20FFBYSOe9M+yIdWG/AfzocBHf+iJrxVa1TCkVEBYolB4GlxAaUF+R/WCHf1cnTjFz42sf8wDSnLxv0Yen2dRuY//YabDQGz905WdvWqb0hDKaTfFA7B4+LGA=
+ARC-Message-Signature:i=2; a=rsa-sha256; d=subspace.kernel.org;
+	s=arc-20240116; t=1779140336; c=relaxed/simple;
+	bh=pNW/aYejClTHOe/GUM7OBh5zmikOgfplrUaLnAuzvrg=;
+	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
+	 To:Cc:Content-Type; b=fCTQ2LYecEicDf1fpOH2B0D83sdphXEM83pHz3QlFZJLwj5cpDrv9s0NujAmUnZo1m5PE01e+UEmK8/mN3SzVcFVzeXvPoir9OGbeZrEgtn6fgE6thoBxTdeWypa1qVdwH5lH4Hn+xYT/LyuWCCPAcoQsKJ9htDblOFDK/knmRk=
+ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=JC7UFo88; arc=pass smtp.client-ip=209.85.167.54
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="cM2mYQoQ"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4682AC2BCB7;
-	Mon, 18 May 2026 21:28:36 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1779139716;
-	bh=eyDCCuFqDPxb9ufc2iMt/dv8APMsKsrr9czfOUagKUQ=;
-	h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
-	b=cM2mYQoQuKsr5CeE6ZGXvvSIVt2v7jWedNc6N10pf0FNt4U6htNlHs863SvFtlDjy
-	 TcKS0aAWksi32VGLUuGrmRMjrMjP+X0gjTlT9P6dIcPLzxLX/T69JA7ks6CpalgE8j
-	 PTeC6SisqI+XelbbySo8+GESuXd0UTPqHSkDC2XqK7Kc+64xjF1YsFtd96PF5BNX2T
-	 6t1En6LtfPU0clYT15RMH6ltjcQlmjM1k1L2pxAd/zgPKb/CNJyAW7hwbue//a15Mm
-	 tlkdMdz9WUdWniaTLwSyRx6CDCsCEOFmKBZuswQ1rXl1W+VO8K1cvy6Swz84/GbbOy
-	 krU5yN1J+ojcQ==
-Date: Mon, 18 May 2026 23:28:34 +0200
-From: Lorenzo Bianconi <lorenzo@kernel.org>
-To: sashiko-reviews@lists.linux.dev
-Cc: robh@kernel.org, devicetree@vger.kernel.org, conor+dt@kernel.org,
-	netdev@vger.kernel.org
-Subject: Re: [PATCH net-next v7 07/10] net: airoha: Support multiple
- net_devices for a single FE GDM port
-Message-ID: <aguEgmX1FDblt0g5@lore-desk>
-References: <20260516-airoha-eth-multi-serdes-v7-7-99e0093303e2@kernel.org>
- <20260517055813.7DF3AC2BCF5@smtp.kernel.org>
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="JC7UFo88"
+Received: by mail-lf1-f54.google.com with SMTP id 2adb3069b0e04-5a742b8b72eso3511023e87.1
+        for <sashiko-reviews@lists.linux.dev>; Mon, 18 May 2026 14:38:55 -0700 (PDT)
+ARC-Seal: i=1; a=rsa-sha256; t=1779140333; cv=none;
+        d=google.com; s=arc-20240605;
+        b=Ug5a+1upw/2DOQ2OyDFSLi4MRFMaa1kf2meMSGXGX/tZzKdvEYFYOzuElDLFtC3cq0
+         aUz+Ki7B6JHO8Z1dvK5YejXqSoII1SubFoGXYe3m4j+vYvHcHqCU6N2PpWJus5UvkkSA
+         aulu8wY7HU8QG+6pqnc7RgfteEtKB/b7ZgkQuK30XKxw0Svrg5FXUGa/Qak53Zd6DugF
+         wVusbmmUgM5wS9Q2UwDnD4u5KNPAoM/ZI0OcpaMnmfDSxSEyitnx6Jk1oJ+9Ni5CM6i7
+         ukjDU+mYznrV3f2uJLxBHTRvN8V/NRwTFWcnowX8DQ0RDMGN+wiwGu0vDyv8iZChlDi3
+         S6xg==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com; s=arc-20240605;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:dkim-signature;
+        bh=euGMTDy6+FwGD5XxUGxxeqRVdpXKKopqQh8ghrZGdtc=;
+        fh=zt2hjtFWVrBSbexOnXx/digRN2O0tNSOK4/ceCsrIlE=;
+        b=UkhFxOX5t1Zf5jUV+qShXXmPWdHAU9nEd1bWPR4ONrmEA1jc4cpGkTRXr0SxnxIiWK
+         ckSLvmCFT00IEvouwGeJUl2OQTGf7k4IcF8IuH7dQr+sGtLeL5BwyBLJnNL8mlXm0LOB
+         Gw8VshPbjkU67/ZQDeghk2RSj4WuzQ1ozETjlLCXEqH9cxvAOz1j57zYnOo0wKjlvxbg
+         pQgmC8+NJhHgtGZ6SZTCAKd4QxUDujYI4CdqvM0WL1wiGdNJW4DlS9fi85dW/KVTVaNW
+         vsDz3ycmcCuYHz8x4gvvW4rDpm+2RexsB/OImT1gGArCRotlruVo64h7N+bd0RvMNuQj
+         zmjw==;
+        darn=lists.linux.dev
+ARC-Authentication-Results: i=1; mx.google.com; arc=none
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20251104; t=1779140333; x=1779745133; darn=lists.linux.dev;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=euGMTDy6+FwGD5XxUGxxeqRVdpXKKopqQh8ghrZGdtc=;
+        b=JC7UFo88IZmWOL9uKWpuF2jU3RzdGRCVOCC5YRvm3W8tF5/V90ANWk9z0KX8XS7tXl
+         IwIxCA0nyBOwTZPtiOYj79i3k5W4Me2G+N8akRnWYr2/ILItqZiYZvxrOeh2kR7GZT96
+         d+oCZKru8IUvXwgP62h1xE/9ld4vU1RRYbDW0bVcojvlCl4/UShSLAZoTTWNi1IqeAQM
+         9uhM0a65P24Q35PTShLCvmgBD/lwmRCzImP6onLr1M9RkW4gPcXuLkzE2ZkMYatv6CgX
+         +K3QKxN/3OQLxOD+PyzvE+OcfLauT2rP7gvCm7cN1YhncA29FhwCXbyuCmW3dLzjyC9p
+         Z2bg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20251104; t=1779140333; x=1779745133;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:x-gm-gg:x-gm-message-state:from
+         :to:cc:subject:date:message-id:reply-to;
+        bh=euGMTDy6+FwGD5XxUGxxeqRVdpXKKopqQh8ghrZGdtc=;
+        b=qa4FbtaNrXHYPLgiiv2Yq9ypyAkQmUl9R/FDccOpaXbZrAhVqVPu56D/Yayj/s0WSM
+         NnGdl24DxiwFQwJaMGKXYKtnCwurWwO5mY7OqeQMyjXiHqUsh2qbrcRwQcgUzmXJ7v+J
+         sAaOvNyD57V6Bqe+8V4ebHrqQlD8KA6VaSGab5EAT1klEjhltXgdX0FIlTAzsGX6d4bc
+         nk1mw4xLTNEcTM/4rS2asPeTJ4Hv9T9EbIwJcM+w26C0YQp3FO3UYnm0eBBEWk2ef6B0
+         Vud7FuaP0d0cNXY5eNzhJOY/DB1IPhxmjTvRMq8RetLtPBGhmL2up2t1EAJprfnvdBqJ
+         qjdQ==
+X-Gm-Message-State: AOJu0YzXecGnmEJCePOAvUsgPv1vZc4wnl0K+fs6cMN0Ax+xF3Hl5FHw
+	+O9La5VTsGHLotujNjJmx80WsOybj+aTXqVRh3R35SUO765ZIT9zNk8aUkkZkTUxgLwezFhmrrH
+	XkMlqzb4Hec+r0RkiAIQPdAvkhNyBYI45etnGiJ4=
+X-Gm-Gg: Acq92OEn6XQ9IPprCrJDFupz1Sc1iT9dqFmIKE3bU5G3zBF4zLgiXN55yMusfAg2DP7
+	f1blB6BxrsDWgTYzT9Gf5PXMzX7O7ab9kJzy8F/7fDtjjrq6gOnik9Ou0tUpoB6WSw+u80bxLVI
+	zDtmEyCGaHLbTQFKfEhRZ7w+I3xNnsKcUOXmjLqMXQreQD0HpCaV7iXmS2ozF1EOo8Nt5wEtoZu
+	FoaJ3d2rxKmqWa3zwmQzWo60s/7aA8aoICJi5ZxiwvlOQaawVRxekyoMTU1YM/leRlvNCWFRlmv
+	YCptYJTgR76nLGC5MSa4gZiadejIVylmCvdbVhaotQD9gqxEVrF4+6rFPjPMLf5XluW5hDm2AK+
+	Wndh16ssUg5H9gsmxyrAQuLVhsCP+RTcs4wepCQjw/WbKPNA5qGbVJUl+2w==
+X-Received: by 2002:a05:6512:159f:b0:5a8:891f:388 with SMTP id
+ 2adb3069b0e04-5aa0e73e985mr4841694e87.29.1779140332773; Mon, 18 May 2026
+ 14:38:52 -0700 (PDT)
 Precedence: bulk
 X-Mailing-List: sashiko-reviews@lists.linux.dev
 List-Id: <sashiko-reviews.lists.linux.dev>
 List-Subscribe: <mailto:sashiko-reviews+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:sashiko-reviews+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: multipart/signed; micalg=pgp-sha512;
-	protocol="application/pgp-signature"; boundary="Axhv31oSMd8Sc3vC"
-Content-Disposition: inline
-In-Reply-To: <20260517055813.7DF3AC2BCF5@smtp.kernel.org>
-
-
---Axhv31oSMd8Sc3vC
-Content-Type: text/plain; charset=iso-8859-1
-Content-Disposition: inline
+References: <20260518210957.10545-1-rosenp@gmail.com> <20260518211925.A24FDC2BCB7@smtp.kernel.org>
+In-Reply-To: <20260518211925.A24FDC2BCB7@smtp.kernel.org>
+From: Rosen Penev <rosenp@gmail.com>
+Date: Mon, 18 May 2026 14:38:40 -0700
+X-Gm-Features: AVHnY4JxHyvIhyT3-GXyQNQ7qtL3R-Vt6nEkpFJolQTPixllWzj9q7mU0PPN1UU
+Message-ID: <CAKxU2N_ErLkFgvpCCexcvaGbzozdSV4y5w3ER+DaEgFLC-hPsw@mail.gmail.com>
+Subject: Re: [PATCH] watchdog: ath79_wdt: select OF and COMPILE_TEST
+To: sashiko-reviews@lists.linux.dev
+Cc: linux-watchdog@vger.kernel.org
+Content-Type: text/plain; charset="UTF-8"
 Content-Transfer-Encoding: quoted-printable
 
-> Thank you for your contribution! Sashiko AI review found 1 potential issu=
+On Mon, May 18, 2026 at 2:19=E2=80=AFPM <sashiko-bot@kernel.org> wrote:
+>
+> Thank you for your contribution! Sashiko AI review found 2 potential issu=
 e(s) to consider:
-> - [High] Hardware state corruption for shared GDM ports
+> - [High] Permanent failure of deferred probing and device re-binding due =
+to uncleared global `wdt_base` pointer on error paths.
+> - [Medium] Mismatch between Kconfig changes and commit message regarding =
+OF dependency.
 > --
->=20
-> commit 68e8fa8fe02248409d0048f81217cd5cf7eda775
-> Author: Lorenzo Bianconi <lorenzo@kernel.org>
->=20
-> net: airoha: Support multiple net_devices for a single FE GDM port
->=20
-> This commit introduces support for multiple net_devices connected to the =
-same
-> Frame Engine GDM port via an external hardware arbiter. Note that issues =
-with
-> shared hardware state introduced here appear to be addressed in later com=
-mits
-> such as 28e02ac461157 ("net: airoha: Do not stop GDM port if it is shared=
-")
-> and 01081daf7ce24 ("net: airoha: Introduce WAN device flag"), which add p=
-ort
-> user reference counting, aggregate the maximum MTU, and restrict WAN loop=
-back
-> configuration.
->=20
-> > diff --git a/drivers/net/ethernet/airoha/airoha_eth.c b/drivers/net/eth=
-ernet/airoha/airoha_eth.c
-> > --- a/drivers/net/ethernet/airoha/airoha_eth.c
-> > +++ b/drivers/net/ethernet/airoha/airoha_eth.c
-> > @@ -3035,11 +3043,25 @@ static int airoha_alloc_gdm_device(struct airoh=
-a_eth *eth,
-> >  			 netdev->dev_addr);
-> >  	}
-> > =20
-> > +	/* Allowed nbq for EN7581 on GDM3 port are 4 and 5 for PCIE0
-> > +	 * and PCIE1 respectively.
-> > +	 */
-> > +	index =3D nbq;
-> > +	if (index && airoha_is_7581(eth) && port->id =3D=3D AIROHA_GDM3_IDX)
-> > +		index -=3D 4;
-> > +
-> > +	if (index >=3D ARRAY_SIZE(port->devs) || port->devs[index]) {
-> > +		dev_err(eth->dev, "invalid nbq id: %d\n", nbq);
-> > +		return -EINVAL;
-> > +	}
-> > +
-> > +	netdev->dev.of_node =3D of_node_get(np);
-> >  	dev =3D netdev_priv(netdev);
-> >  	dev->dev =3D netdev;
-> >  	dev->port =3D port;
-> > -	port->dev =3D dev;
-> >  	dev->eth =3D eth;
-> > +	dev->nbq =3D nbq;
-> > +	port->devs[index] =3D dev;
->=20
-> With multiple net_devices now sharing a single GDM port, could this cause
-> hardware state corruption when configuring shared hardware registers?
->=20
-> For example, in airoha_dev_init(), airoha_set_gdm2_loopback() overwrites
-> the global REG_FE_WAN_PORT register entirely, which might wipe out the
-> configuration of previously initialized devices on the same port:
->=20
-> 	airoha_fe_rmw(eth, REG_FE_WAN_PORT,
-> 		      WAN1_EN_MASK | WAN1_MASK | WAN0_MASK,
-> 		      FIELD_PREP(WAN0_MASK, src_port));
-
-A subsequent patch enforces this constraints, we can have at most one port
-configured as WAN.
-
->=20
-> Additionally, in airoha_dev_stop(), unconditionally writing FE_PSE_PORT_D=
-ROP
-> to REG_GDM_FWD_CFG(port->id) appears to drop all traffic for the entire
-> GDM port, breaking other active devices sharing it.
-
-This is fixed by a subsequent patch.
-
->=20
-> Similarly, in airoha_dev_change_mtu(), overwriting REG_GDM_LEN_CFG(port->=
-id)
-> with a lower MTU could restrict the hardware limit for the entire port, c=
-ausing
-> packet drops for other devices that require a higher MTU.
-
-This is fixed by a subsequent patch.
-
-Regards,
-Lorenzo
-
->=20
-> --=20
-> Sashiko AI review =B7 https://sashiko.dev/#/patchset/20260516-airoha-eth-=
-multi-serdes-v7-0-99e0093303e2@kernel.org?part=3D7
-
---Axhv31oSMd8Sc3vC
-Content-Type: application/pgp-signature; name=signature.asc
-
------BEGIN PGP SIGNATURE-----
-
-iHUEABYKAB0WIQTquNwa3Txd3rGGn7Y6cBh0uS2trAUCaguEggAKCRA6cBh0uS2t
-rOGUAP4+h4SnhYv7A5cnc3SGymqWz+mx16+yAngGdIj593XdCQD/ZRFRYAKc8FEw
-K+WgUT2j49heWAsMLi22SOayZk6xwAo=
-=abbF
------END PGP SIGNATURE-----
-
---Axhv31oSMd8Sc3vC--
+>
+> commit 279311df3b831cb8a967974beeea1a51baecd0ac
+> Author: Rosen Penev <rosenp@gmail.com>
+>
+> watchdog: ath79_wdt: select OF and COMPILE_TEST
+>
+> This has always been an OF driver. Select OF in Kconfig.
+>
+> Add COMPILE_TEST for all platforms, not just ARM.
+>
+> > watchdog: ath79_wdt: select OF and COMPILE_TEST
+> >
+> > This has always been an OF driver. Select OF in Kconfig.
+>
+> There is a discrepancy between the commit message and the implemented cod=
+e.
+> The commit message states it will "select OF", but the patch implements
+> "depends on OF". Could the commit message be updated to match the
+> implementation?
+Yeah probably.
+>
+> > diff --git a/drivers/watchdog/Kconfig b/drivers/watchdog/Kconfig
+> > index dc78729ba2a5d..1590f82941ba8 100644
+> > --- a/drivers/watchdog/Kconfig
+> > +++ b/drivers/watchdog/Kconfig
+> > @@ -1811,7 +1811,8 @@ config M54xx_WATCHDOG
+> >
+> >  config ATH79_WDT
+> >       tristate "Atheros AR71XX/AR724X/AR913X hardware watchdog"
+> > -     depends on ATH79 || (ARM && COMPILE_TEST)
+> > +     depends on ATH79 || COMPILE_TEST
+> > +     depends on OF
+>
+> [ ... ]
+>
+> While reviewing this patch, I noticed an existing issue in the probe
+> function's error handling. The driver uses a global pointer to enforce a
+> singleton instance:
+Yes, this is an ancient driver that needs to be migrated to
+watchdog_device. This is not relevant to COMPILE_TEST though.
+>
+> drivers/watchdog/ath79_wdt.c:ath79_wdt_probe() {
+>     ...
+>         if (wdt_base)
+>                 return -EBUSY;
+>
+>         wdt_base =3D devm_platform_ioremap_resource(pdev, 0);
+>         if (IS_ERR(wdt_base))
+>                 return PTR_ERR(wdt_base);
+>
+>         wdt_clk =3D devm_clk_get_enabled(&pdev->dev, "wdt");
+>         if (IS_ERR(wdt_clk))
+>                 return PTR_ERR(wdt_clk);
+>     ...
+> }
+>
+> If devm_platform_ioremap_resource() returns an error pointer, or if a
+> later step like devm_clk_get_enabled() returns -EPROBE_DEFER, the global
+> wdt_base pointer is never cleared.
+>
+> Does this permanently break deferred probing and device re-binding? On a
+> second probe attempt, the uncleared wdt_base pointer would still evaluate
+> to true, causing the probe to immediately fail with -EBUSY.
+>
+> Similarly, since ath79_wdt_remove() does not clear wdt_base, will unloadi=
+ng
+> and reloading the driver also fail?
+>
+> --
+> Sashiko AI review =C2=B7 https://sashiko.dev/#/patchset/20260518210957.10=
+545-1-rosenp@gmail.com?part=3D1
