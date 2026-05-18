@@ -1,293 +1,146 @@
-Received: from sendmail.purelymail.com (sendmail.purelymail.com [34.202.193.197])
+Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CC2C91DB13A
-	for <sashiko-reviews@lists.linux.dev>; Mon, 18 May 2026 19:24:16 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=34.202.193.197
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 13C2038E124;
+	Mon, 18 May 2026 19:40:28 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1779132258; cv=none; b=XoDPKY3eN5+qbZUeOPk3WF3llLe+zHS1osr0GSeDrtfCZluNEhrrnU+GI4imXZI/oTAB0lr8dgd9IF+nDWztgQzaP3LEny9UNTM1GXND7JzNJ4HgvhZJ2DWuwCVoYQqjum2/Qbx0bDm4838Lg5kQbZCprbLZIj2NOJRlmXCNEo8=
+	t=1779133229; cv=none; b=IWhy6HUXgiMaBENGlXRY6rXg9VPGoStvR1YfiB+t8n0Do5o9JXL5fz8Fk4Jc+8MOlKDqSCkxD2ttEMrYH/jJRGYxJKTbhnAEENQtvoPg9mNAKl43eUa6DYZ4k2XCeDmIqCcFoBK/kYSazouGY8Fi+6gbMSq1t4dvhoBMk/P+0Aw=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1779132258; c=relaxed/simple;
-	bh=7QpXqPtM383HeEX6NMmi2uMXUm/iQn1FQiQwHQU/FuQ=;
-	h=Message-ID:Subject:From:To:Cc:Date:In-Reply-To:References:
-	 Content-Type:MIME-Version; b=XdUlVx4aXn05cs8psH5XdM48Wxfm8gWv4BGbURjXwzEkUrd8Itu7FBUze7pThekzfNceNGfLwYT/lstcQXUO6r6ENBBqH/epa4CF2jYDubfr8OClSFDeVWDY5r9Yb2AuUYwtXHgS167SGBGvb4nSqWzaeNtIZxEYNQib0/peofY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=bes.tel; spf=pass smtp.mailfrom=bes.tel; dkim=pass (2048-bit key) header.d=bes.tel header.i=@bes.tel header.b=aTzT+CYG; dkim=pass (2048-bit key) header.d=purelymail.com header.i=@purelymail.com header.b=XxbYmmlc; arc=none smtp.client-ip=34.202.193.197
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=bes.tel
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=bes.tel
+	s=arc-20240116; t=1779133229; c=relaxed/simple;
+	bh=Lj2y6Z/5yB8RGF1dZj4AOFVgzx3lRYityrUd9Yu85wY=;
+	h=Date:From:To:Cc:Subject:Message-ID:In-Reply-To:References:
+	 MIME-Version:Content-Type; b=cXlvikDSbJl9TE+oHWPpUa0xeFFeBqUAtknl7z1CftX2/T5PGFK7c0tnrNmk2P/PHpVB4v+9MDIvToVL7puy/wybb04jJ6hAfYuEvP2c1KyaThvW5mwHWT/musB+Rv7DjdADMiqPVWOfHEA4eC19Vh/OSZ4PSV2HLpo6bo02D70=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=JKnDeAtu; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=bes.tel header.i=@bes.tel header.b="aTzT+CYG";
-	dkim=pass (2048-bit key) header.d=purelymail.com header.i=@purelymail.com header.b="XxbYmmlc"
-DKIM-Signature: a=rsa-sha256; b=aTzT+CYGL1kt+DaVMP0OmWKj9M/yb7+RGAf/5ivjsG8vu0b6JXpwEKEsj0ukjHQcDOh9i2zBDRL7800hw4AtnrlgoBbsxq6/fE9cF+aBECRTKtX871oTjRaQTtDIeK7RPc32G5c+Q7ugir6Lrh6G+TRVM2z0LHvV74gKGhpRa9OJO09euSZJbyp7glV6cNTteqCXcIlxEUJ6XGz5AZlhakJeS0IG+XKIxA/fCU/yoGtsC1xY9AGzNj0lR79xoxEMkL1h3VqdnB5GZ1uqxTbLXXPY2bPEaDNUhg9ge7LOPV/fsNiwPeBO7k+vsIeBGw9xoShQLYG9hyOvMd6K3KBXNg==; s=purelymail2; d=bes.tel; v=1; bh=7QpXqPtM383HeEX6NMmi2uMXUm/iQn1FQiQwHQU/FuQ=; h=Received:Received:Subject:From:To:Date;
-DKIM-Signature: a=rsa-sha256; b=XxbYmmlcgCwgZI7XkfQ1y+tZppUZ/XY3Ha1nWNB/DEk5btILQhn23z75r8dtnHr9tLyomPEAMJ1HGOMfh1sIf5SFKsDQ1JzKVm8SWSQCSveVQzYeue77FEMCXHye+z+Eu6zxwZk4Bkmlikbo7rzlBQ9wFicxkCrqAaZG2vZsPRT3lbXqfMYdyXc6lzcKUsvCQQO4vFnck45aytKVXlgBgLmrXBEha9pUrlQNR8Q+mN6R0FNaeBV7EM8nrBe8pxgYs1PEROnSs3SrwymJD+okyt5haxRltiZIBSCk2kzbsBMjjGRoiEjyuIAL6jvAnNmkJkJBD3xAKGVuM3HxCZpF/Q==; s=purelymail2; d=purelymail.com; v=1; bh=7QpXqPtM383HeEX6NMmi2uMXUm/iQn1FQiQwHQU/FuQ=; h=Feedback-ID:Received:Received:Subject:From:To:Date;
-Feedback-ID: 19882:3702:null:purelymail
-X-Pm-Original-To: sashiko-reviews@lists.linux.dev
-Received: by smtp.purelymail.com (Purelymail SMTP) with ESMTPSA id -700216346;
-          (version=TLSv1.3 cipher=TLS_AES_256_GCM_SHA384);
-          Mon, 18 May 2026 19:24:05 +0000 (UTC)
-Received: from [10.2.161.35] (unknown [10.2.161.35])
-	by awak.mobi (Postfix) with ESMTPSA id A347D361380;
-	Mon, 18 May 2026 21:24:04 +0200 (CEST)
-Message-ID: <9865f220ce268ca322ce8d1059399e7e33c47bf7.camel@bes.tel>
-Subject: Re: [PATCH] HID: lg-g15: Add support for the Logitech G710/G710+
- gaming keyboards
-From: Xavier Bestel <xav@bes.tel>
-To: sashiko-reviews@lists.linux.dev, Hans de Goede <hansg@kernel.org>
-Cc: linux-input@vger.kernel.org, dmitry.torokhov@gmail.com
-Date: Mon, 18 May 2026 21:24:03 +0200
-In-Reply-To: <20260518161227.BCAF6C2BCB7@smtp.kernel.org>
-References: <20260518153519.605627-1-xav@bes.tel>
-	 <20260518161227.BCAF6C2BCB7@smtp.kernel.org>
-Autocrypt: addr=xav@bes.tel; prefer-encrypt=mutual;
- keydata=mDMEaBuzUBYJKwYBBAHaRw8BAQdAGHVrbf6OLBOo4PjYPoYLSIOV+u8/rKgFlLM4pk+rj
- eC0G1hhdmllciBCZXN0ZWwgPHhhdkBiZXMudGVsPoiWBBMWCgA+FiEEPYfp8pYhYROehNkEULR9s/
- 9K9OgFAmgbs1ACGwMFCQWjmoAFCwkIBwIGFQoJCAsCBBYCAwECHgECF4AACgkQULR9s/9K9OgeJAD
- /aPp0IPj5ahqo7DGo1Xk8/t7afPAHYMBeV03Fte4f57EBAPKvhRUTyR4+CrPtGERWfoYlxNkp5yKr
- wwkjUbLon1AG
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
-User-Agent: Evolution 3.56.2-9 
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="JKnDeAtu"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 68AD2C2BCB7;
+	Mon, 18 May 2026 19:40:25 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+	s=k20201202; t=1779133228;
+	bh=Lj2y6Z/5yB8RGF1dZj4AOFVgzx3lRYityrUd9Yu85wY=;
+	h=Date:From:To:Cc:Subject:In-Reply-To:References:From;
+	b=JKnDeAtu/QV8Ha15MCZOZm/ucdQ/st7/AJB6NHDPW4+2YAIGegtsUIIttkbKhWg8w
+	 iXCh99HSSN7QsxV5QcE7XIQEFGLpjAHfh/5jG5Zyy3sFK+0ORwTQsahxWbNlds+aXs
+	 PlVcVj/BD9CPnqdfZlVW4Mbx0ODreKQLuOsh70CVr2JJ2rTvOhTJmdptdh2lJ2UFWz
+	 gb5VByelsFgfYSTgvVOWubD5Owf5Ftxo7agFcGAJ4D8y/V3VIhmtY5B5SdbNoo8cy9
+	 uzIUJTDwTmhtW9HF7y2VpE6vvfLTph8u9k5jddf4k+3apv64gYD9uLUPu1O1BDSPiX
+	 KgJL4SuTZw21A==
+Date: Mon, 18 May 2026 21:40:22 +0200
+From: Mauro Carvalho Chehab <mchehab+huawei@kernel.org>
+To: "Theodore Tso" <tytso@mit.edu>
+Cc: Jani Nikula <jani.nikula@intel.com>, Roman Gushchin
+ <roman.gushchin@linux.dev>, Krzysztof Kozlowski <krzk@kernel.org>,
+ debarbos@redhat.com, Arnaldo Carvalho de Melo <acme@kernel.org>, Greg KH
+ <gregkh@linuxfoundation.org>, Konstantin Ryabitsev <mricon@kernel.org>,
+ Guenter Roeck <linux@roeck-us.net>, sashiko-bot@kernel.org,
+ sashiko-reviews@lists.linux.dev, sashiko@lists.linux.dev, Linux Kernel
+ Workflows <workflows@vger.kernel.org>, Linux Kernel Mailing List
+ <linux-kernel@vger.kernel.org>, devicetree@vger.kernel.org,
+ kfree@google.com
+Subject: Re: Stop false review statements
+Message-ID: <20260518214022.5f94f917@foz.lan>
+In-Reply-To: <20260518121601.GA87957@macsyma-wired.lan>
+References: <4f3d7f48-5766-425b-91f6-0acdb5554584@kernel.org>
+	<07602616-412B-4ED8-95D7-588C0D077EE3@linux.dev>
+	<2e20badf27b6910d619329841e37d2961556056f@intel.com>
+	<20260518121601.GA87957@macsyma-wired.lan>
+X-Mailer: Claws Mail 4.4.0 (GTK 3.24.52; x86_64-redhat-linux-gnu)
 Precedence: bulk
 X-Mailing-List: sashiko-reviews@lists.linux.dev
 List-Id: <sashiko-reviews.lists.linux.dev>
 List-Subscribe: <mailto:sashiko-reviews+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:sashiko-reviews+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: quoted-printable
 
-Le lundi 18 mai 2026 =C3=A0 16:12 +0000, sashiko-bot@kernel.org a =C3=A9cri=
-t=C2=A0:
-> Thank you for your contribution! Sashiko AI review found 5 potential issu=
-e(s) to consider:
-> - [Critical] Missing workqueue cancellation on module unload or device re=
-moval causes a Use-After-Free
-> - [High] Missing edge detection for Game Mode and brightness buttons lead=
-s to USB bus spam and state desynchronization
-> - [High] Data race on `g15->transfer_buf` during device probe
-> - [Medium] LED brightness callbacks violate the API contract by returning=
- success on failure
-> - [Medium] Hardware events arriving before LED registration trigger a ker=
-nel WARN_ON
-> --
->=20
-> commit f98ec9abc4841148689435f75f93ed341ba49d7d
-> Author: Xavier Bestel <xav@bes.tel>
->=20
-> HID: lg-g15: Add support for the Logitech G710/G710+ gaming keyboards
->=20
-> Add support for the Logitech G710 and G710+ gaming keyboards to the
-> hid-lg-g15 driver, exposing the G-keys, M-keys, game mode toggle, and
-> brightness cycle buttons.
->=20
-> > diff --git a/drivers/hid/hid-lg-g15.c b/drivers/hid/hid-lg-g15.c
-> > --- a/drivers/hid/hid-lg-g15.c
-> > +++ b/drivers/hid/hid-lg-g15.c
->=20
-> [ ... ]
->=20
-> > @@ -597,6 +605,234 @@ static int lg_g510_mkey_led_set(struct led_classd=
-ev *led_cdev,
-> > =C2=A0	return ret;
-> > =C2=A0}
-> > =C2=A0
-> > +/******** G710 LED functions ********/
->=20
-> [ ... ]
->=20
-> > +static int lg_g710_mkey_led_set(struct led_classdev *led_cdev,
-> > +			=C2=A0 enum led_brightness brightness)
-> > +{
->=20
-> [ ... ]
->=20
-> > +	ret =3D hid_hw_raw_request(g15->hdev, LG_G710_FEATURE_M_KEYS_LEDS,
-> > +				 g15->transfer_buf, 2,
-> > +				 HID_FEATURE_REPORT, HID_REQ_SET_REPORT);
-> > +	if (ret =3D=3D 2) {
-> > +		/* Success */
-> > +		g15_led->brightness =3D brightness;
-> > +		ret =3D 0;
-> > +	} else {
-> > +		if (ret !=3D -EPIPE)
-> > +			hid_err(g15->hdev, "Error setting LED brightness: %d\n", ret);
-> > +		/* -EPIPE is transient (USB stall), cache is unchanged, retry next t=
-ime */
-> > +		ret =3D 0;
-> > +	}
-> > +
-> > +	mutex_unlock(&g15->mutex);
-> > +
-> > +	return ret;
-> > +}
->=20
-> Does returning 0 here break the LED class API contract when a hard error
-> like -EIO or -ENODEV occurs?
->=20
-> If we return success despite hardware failure, won't the internal softwar=
-e
-> cache update while the physical hardware remains unchanged, leading to a
-> permanent desynchronization between sysfs and the device?
+On Mon, 18 May 2026 08:16:01 -0400
+"Theodore Tso" <tytso@mit.edu> wrote:
 
-Right, will fix.
+> On Mon, May 18, 2026 at 11:04:29AM +0300, Jani Nikula wrote:
+> > > Sashiko is supporting various LLMs, including open models - it=E2=80=
+=99s just a practical
+> > > choice: to my knowledge the quality of open models is not on par with=
+ frontier closed
+> > > models and it would require a non-trivial amount of hardware and infr=
+astructure to run
+> > > an open model at the required scale. =20
+> >=20
+> > In the context of the "Reviewed-by: Sashiko" discussion, this actually
+> > makes it really hard to assess the quality of those reviews. =20
+>=20
+> Agreed.  There's a reason why the coding-assistants.rst specifies the
+> model which is used:
+>=20
+>   Assisted-by: AGENT_NAME:MODEL_VERSION [TOOL1] [TOOL2]
+>=20
+> The problem is that (as Jon has pointed out) coding-assistants.rst was
+> intended for use when the tool was beging used to help create the code
+> --- that is, "Coding Assistants".  What we're doing here is more of a
+> reviewer assistance.  Something like:
+>=20
+>   Scanned-by: AGENT_NAME:MODEL_VERSION [TOOL1] [TOOL2]
+>=20
+> Would be more interesting, but it doesn't actually tell us anything
+> about what the results were of the scan.
 
->=20
-> [ ... ]
->=20
-> > @@ -890,6 +1136,71 @@ static int lg_g510_leds_event(struct lg_g15_data =
-*g15, u8 *data)
-> > =C2=A0	return 0;
-> > =C2=A0}
-> > =C2=A0
-> > +static int lg_g710_event(struct lg_g15_data *g15, u8 *data, int size)
-> > +{
->=20
-> [ ... ]
->=20
-> > +	/*
-> > +	 * Detect brightness key presses and schedule the work function
-> > +	 * to cycle cached brightness and notify userspace.
-> > +	 * Bit 10 =3D WASD backlight (maps to LG_G15_LCD_BRIGHTNESS slot).
-> > +	 * Bit 11 =3D Kbd backlight (maps to LG_G15_KBD_BRIGHTNESS slot).
-> > +	 */
-> > +	if (pressed_keys & BIT(10)) {
-> > +		set_bit(LG_G15_LCD_BRIGHTNESS, &g15->brightness_changed);
-> > +		schedule_work(&g15->work);
-> > +	}
-> > +	if (pressed_keys & BIT(11)) {
-> > +		set_bit(LG_G15_KBD_BRIGHTNESS, &g15->brightness_changed);
-> > +		schedule_work(&g15->work);
-> > +	}
-> > +
-> > +	/* Game mode toggle =E2=80=94 bit 12 is a state bit, trigger on any c=
-hange */
-> > +	if (pressed_keys & BIT(12)) {
-> > +		set_bit(LG_G15_GAMEMODE, &g15->brightness_changed);
-> > +		schedule_work(&g15->work);
-> > +	}
->=20
-> Could these bitwise checks cause continuous triggering on every HID repor=
-t
-> received?
->=20
-> Since the game mode toggle check evaluates the absolute state, if game mo=
-de
-> is enabled (for instance, while holding a macro key), won't this continuo=
-usly
-> schedule the workqueue, spam the USB bus with synchronous get-report requ=
-ests,
-> and flood userspace with duplicate notifications?
->=20
-> Also, since the condition evaluates to false when game mode is disabled, =
-will
-> userspace ever be notified of the disabled state?
->=20
-> Similarly for the brightness buttons, does checking the absolute state me=
-an
-> that holding the button down will rapidly decrement the software brightne=
-ss
-> cache and permanently desynchronize it from the physical hardware?
->=20
-> Should the driver track previous states and trigger actions only on edge
-> transitions instead?
+I don't like scanned-by, even for a tool that would always get the
+same results like checkpatch. For LLM, this is even worse, as two runs
+may give different results for the same code.
 
-Right again, will add edge detection.
+IMO what makes much more sense is to add information there when
+a change was done due avoid a problem detected by sashiko, and what
+was the fixed issue, e.g. a textual description like:
 
-> [ ... ]
->=20
-> > @@ -1212,6 +1562,13 @@ static int lg_g15_probe(struct hid_device *hdev,=
- const struct hid_device_id *id)
-> > =C2=A0	case LG_Z10:
-> > =C2=A0		connect_mask =3D HID_CONNECT_HIDRAW;
-> > =C2=A0		break;
-> > +	case LG_G710:
-> > +		INIT_WORK(&g15->work, lg_g710_leds_changed_work);
-> > +		hdev->quirks |=3D HID_QUIRK_NOGET;
-> > +		connect_mask =3D HID_CONNECT_DEFAULT;
-> > +		gkeys_settings_feature_report =3D LG_G710_FEATURE_EXTRA_KEYS;
-> > +		gkeys =3D 6;
-> > +		break;
-> > =C2=A0	}
-> > =C2=A0
-> > =C2=A0	ret =3D hid_hw_start(hdev, connect_mask);
->=20
-> This isn't a bug introduced exclusively by this patch, but does the lack =
-of a
-> remove callback or devres action to cancel the scheduled work risk a
-> use-after-free?
->=20
-> The driver allocates the context structure using devm_kzalloc and initial=
-izes
-> the work struct, but nothing calls cancel_work_sync on shutdown. If the w=
-ork
-> is pending or running on the system workqueue when devm frees the memory,
-> won't it dereference freed memory?
+	Changed locking schema after Sashiko's report report about
+	XXX race condition.
 
-Sure, but it probably ought to be changed in a separate patch, if ever.
+Also, except if 100% of the=20
 
-> [ ... ]
+> One of the problems here is that there is a distinction between the
+> infrastructure and review prompts in the Sashiko github repository,
+> and the reviews that are being published by Sashiko the web service
+> being run by Google that is being lost by some folks.  So I wonder if
+> for now, we should just do something like:
 >=20
-> > @@ -1234,11 +1591,13 @@ static int lg_g15_probe(struct hid_device *hdev=
-, const struct hid_device_id *id)
-> > =C2=A0	}
-> > =C2=A0
-> > =C2=A0	if (gkeys_settings_feature_report) {
-> > +		int report_size =3D (g15->model =3D=3D LG_G710) ? gkeys * 2 : gkeys;
-> > =C2=A0
-> > =C2=A0		g15->transfer_buf[0] =3D gkeys_settings_feature_report;
-> > -		memset(g15->transfer_buf + 1, 0, gkeys);
-> > +		memset(g15->transfer_buf + 1, 0, report_size);
-> > =C2=A0		ret =3D hid_hw_raw_request(g15->hdev,
-> > =C2=A0				gkeys_settings_feature_report,
-> > -				g15->transfer_buf, gkeys + 1,
-> > +				g15->transfer_buf, report_size + 1,
-> > =C2=A0				HID_FEATURE_REPORT, HID_REQ_SET_REPORT);
-> > =C2=A0	}
->=20
-> This isn't a new bug, but since this lockless access to the transfer buff=
-er
-> occurs right after hid_hw_start, could an incoming HID report concurrentl=
-y
-> schedule the work queue?
->=20
-> The asynchronous worker safely locks the mutex before mutating the exact =
-same
-> transfer buffer. Does this allow the workqueue to overwrite the buffer wh=
-ile
-> the probe function is actively using it, resulting in malformed requests?
+> Link: https://sashiko.dev/#/patchset/20260515091829.194810-1-me%40linux.b=
+eauty
 
-Same. I'll defer to Hans for better judgement.
+Adding a link makes sense to me. It doesn't need to be to the
+sashiko's email though: it can be to the entire thread.
 
-> [ ... ]
+> Or just have a link to lore where the review has responded to the
+> Sashiko review stating where the Sashiko review reported a
+> pre-existing condition (perhaps one that we don't care about because
+> races in readahead logic is really Not A Big Deal, etc.)  We go for
+> this strategy, it would actually be better for the Shashiko.dev review
+> to get cc'ed to the mailing list.
 >=20
-> > @@ -1327,12 +1686,18 @@ static int lg_g15_probe(struct hid_device *hdev=
-, const struct hid_device_id *id)
-> > =C2=A0		goto error_hw_stop;
-> > =C2=A0
-> > =C2=A0	/* Register LED devices */
-> > -	for (i =3D 0; i < LG_G15_LED_MAX; i++) {
-> > +	for (i =3D 0; i <=3D LG_G15_MACRO_RECORD; i++) {
-> > =C2=A0		ret =3D lg_g15_register_led(g15, i, led_names[i]);
-> > =C2=A0		if (ret)
-> > =C2=A0			goto error_hw_stop;
-> > =C2=A0	}
-> > =C2=A0
-> > +	if (g15->model =3D=3D LG_G710) {
-> > +		ret =3D lg_g15_register_led(g15, LG_G15_GAMEMODE, "g15::gamemode");
-> > +		if (ret)
-> > +			goto error_hw_stop;
-> > +	}
->=20
-> Because hid_hw_start is called earlier in the probe sequence, is it possi=
-ble
-> for a hardware event to trigger lg_g710_event before these LEDs are actua=
-lly
-> registered?
->=20
-> If the worker thread runs and invokes the brightness hardware changed
-> notification on zero-initialized, unregistered LED devices, won't the
-> internal sysfs nodes be NULL, triggering a stack trace warning in the LED
-> core?
+> Personally, I think that's probably be best way to go.  We already
+> don't insert into the git commit an explanation of why some bullsh*t
+> review by some wannabe human reviewer should be ignored, or why a
+> discussion of some problem discovered by a human review in the source
+> of the review would be handled in a future patch set.  That's what the
+> discussion on lore.kernel.org is for.  And we shouldn't treat AI
+> reviews any different from how we deal with human reviews.  So if we
+> want to give credit to an AI review, then let's go with the
+> Scanned-by.=20
 
-Same again.
+If the entire content of a Sashiko review is ignored, I don't think
+it is worth adding anything. Just like we do with humans, IMO the
+best is to just mention what changed due to some feedback received
+by a human or by a bot, mentioning who/what bot helped to identify
+the issue.
 
-Hans, I'll fix the 2 issues I introduced (brightness/game-mode edge
-detection and error filtering). What about the pre-existing errors
-reported by sashiko ?
+> Or we can just let people look at the mailing list, and
+> if people want to have statistics, we can ask people to use a script
+> running against public inbox to figure things out.
+>=20
+> 						- Ted
+>=20
+
+
+
+Thanks,
+Mauro
