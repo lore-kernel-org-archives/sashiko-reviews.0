@@ -1,98 +1,97 @@
-Received: from mail-oi1-f177.google.com (mail-oi1-f177.google.com [209.85.167.177])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from mgamail.intel.com (mgamail.intel.com [192.198.163.8])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B8DF82EA468
-	for <sashiko-reviews@lists.linux.dev>; Mon, 18 May 2026 16:13:02 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.167.177
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 29A773EE1D5
+	for <sashiko-reviews@lists.linux.dev>; Mon, 18 May 2026 16:34:44 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=192.198.163.8
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1779120789; cv=none; b=dTiqN95dBTNuZpGlBgZMUtEtp+zPjG0Gnst1ODaP7gP3zu794VYFV/B9D25woqq5wmkbqm3s2sI4MjuzTNaPCos/EJt3jpNtNgdPd2UQ5qEp/Pcfp7uDNKkooUZ8ZTcmqFJEcJ8XqpzGfCH40lf22SI6FfHEixnFtXLtawugYzU=
+	t=1779122086; cv=none; b=VBGrqc+MKNsATqM6KJceTBOoYkEgtng1p55pp2sCNs4HqwDY8kz1PZzRgDpCL5+yo9jHnvgTdaMgesMmw+YvQN1Tz9qry9wuniaKn96iL0uT8354+EUSfVD4ce/tCFJbpUTEXxN3gwT04iNp+DhdWSWLVTqy5JokLyPmR5mtls8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1779120789; c=relaxed/simple;
-	bh=tPH3UHYA7l8VRAO21OcMYyZqTzp2i6IfDEbVAUhWAfY=;
-	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=jsCN7sZAc87ZZ4RRATKhRo/OMswqZ/dPOZwJTElaYczhPtKsc5OEI1TBc7w9B4JbTNEZiWNHdh9J1vqCkZ152L1+XoLiKGMpjHgTFcbmhuUBGJ2T/K20CLs6qDYh/H4GiAdD00h5B4uVldKvVtN8ti3Yi4AV8pVyInbBZUbRLm8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=SOMHaWIH; arc=none smtp.client-ip=209.85.167.177
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+	s=arc-20240116; t=1779122086; c=relaxed/simple;
+	bh=sBQFoLE033+2KzzyiFT/dlWK00kjE6B1jfHaTnnTCLg=;
+	h=From:Date:To:cc:Subject:In-Reply-To:Message-ID:References:
+	 MIME-Version:Content-Type; b=hdPxNsFOmTiINh2pAvijpCVI+M1EGjNTnIX8YyVTq7C3L6VMzuhDqYZ8buG6bvzQYeAiSuygI4/IerKbt0B71pFIYD6amqBYWYUuUZPEA2S0FF0fxcOVN3nVXx/QKehNAwwqieIrnp/n8n8yHydymwKI/loL6DjXnPFWUYOulGY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linux.intel.com; spf=pass smtp.mailfrom=linux.intel.com; dkim=pass (2048-bit key) header.d=intel.com header.i=@intel.com header.b=ctVY4dY+; arc=none smtp.client-ip=192.198.163.8
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linux.intel.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linux.intel.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="SOMHaWIH"
-Received: by mail-oi1-f177.google.com with SMTP id 5614622812f47-479e6bc357eso845628b6e.2
-        for <sashiko-reviews@lists.linux.dev>; Mon, 18 May 2026 09:13:01 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20251104; t=1779120776; x=1779725576; darn=lists.linux.dev;
-        h=content-transfer-encoding:mime-version:references:in-reply-to
-         :message-id:date:subject:cc:to:from:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=tPH3UHYA7l8VRAO21OcMYyZqTzp2i6IfDEbVAUhWAfY=;
-        b=SOMHaWIHY9jTGY42DHBOcyWto6dW9ZMm+yYpAEC/vmQ5CXMg+Phcv49jviwtzUi8Bi
-         b2UnMbHy1pg6+BG2HAIR+5xp8yAA4LDt/HPCS8I+kellWJHVFaZgV1+TqMURP33cNI8Q
-         nwbsY55C6JvSWggPq+ZYRWExSQzHsATXWJZzF8734B7IRninw7dlIrMSlKbQpL1gnzkt
-         VscS+SibCMGWPFBuFy++0gwmUstKaL0gSe10cM5SaWtkG0V3Dd+SFPeJw1XdKj8BRs6W
-         6nRavYWTh3OIxKUH4I7ERkB3s061N4qDIQP1yg6MaAHziu+jE1veJMifY/RYtXNeZsm1
-         Q3gA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20251104; t=1779120776; x=1779725576;
-        h=content-transfer-encoding:mime-version:references:in-reply-to
-         :message-id:date:subject:cc:to:from:x-gm-gg:x-gm-message-state:from
-         :to:cc:subject:date:message-id:reply-to;
-        bh=tPH3UHYA7l8VRAO21OcMYyZqTzp2i6IfDEbVAUhWAfY=;
-        b=JoNJCYpFnZvF7PiMVr1jxL22LPKp1REzsX0dyZiu12/EwOa7dXAJ9eVpx+tzfI2QUm
-         eJcw5I52xYOZ5Qc5diyPF/6z+p8WSD3V9Lhn9SGyzo2LOid6pHDzzWbxeGAoQyNQiEDL
-         q+g54q3kWL54jFZ6ESjOah1pppdNrKCw/l2Wzb87vHSklnmirVVDeSIgiaPQxqTou098
-         Jym16WiduV5P9MVYJGawGEyMUP7XR7MBtedXPmBIgSqui0jkWpSZ3s9Sk3Kzond8kfz0
-         NzAdVjezhIJ/V73VQV4TkFtcYoEpZ6LXpq6RG+a+TqFSqM8Ct7L/BZQPJZGEjQiz+ibW
-         i92g==
-X-Forwarded-Encrypted: i=1; AFNElJ92v/Uxs5KcDThgVn0+QiU2/j3eYv+MtSwZjQXLkOAUFkd0H4tW7u0Mg+YNLYna9yVmwYQEv0h5MzLwtG2hDFY=@lists.linux.dev
-X-Gm-Message-State: AOJu0YzgnQLMHheo8vvN7vGMM4z0hG8AKXd72Ujz8hDKCx2V8mvnJnID
-	fEtdPQ8ketc1/Hhu8WzHYNpLmsPOH/KS85IulwtPYhh3BNozCGMuxUia
-X-Gm-Gg: Acq92OGOyUZ6L4pAbqGUbeCn6AE7IYlUNNk+jT7Sq85K3fUemCnl0Xwc4AmQMQxhajb
-	Q1dBSoFW0m+o+3RBrQKVxzkfPN8134iZWq8/keHqDcaKtpio+WAxZhdtYXbS2nPTfGl4uVn8ZEU
-	YIaqOXN5jPJiMceMDBu4kUqHNF9sl+OPGFC1Qcg0kzhgOkcI3CD2hV4Ev97ye7ztbJOvqlrghrO
-	dZTmmOofYjg2vWvaSmTvH4yJw3r2xgodSxZLfdtOC07eglXjqdtGBqme42GhzbaMmgBj/dDGm1n
-	NgdD5939tSiCafuQyPli21F6mLwR+GQ//sGJj8EHlIQLDjYwA5i1kM3bT14eo+zxguDvPjrRl+P
-	G9+tBORtXaypEt7PV9n4oOi2xktunutNkacEDsQyNjeOP6IgMZ2zSyk6jjpMVaabWqZg5UoY2eF
-	yo/Feh206x8iSX6u5dFVnesWC2t/0Gaz5rdjS6oY1h0+ojzJqdizfbso/bqouy1dXY
-X-Received: by 2002:a05:6808:e693:b0:47c:6c99:f20d with SMTP id 5614622812f47-482e57ad3bemr7154228b6e.40.1779120776293;
-        Mon, 18 May 2026 09:12:56 -0700 (PDT)
-Received: from Dell.cheetah-searobin.ts.net ([108.243.219.47])
-        by smtp.gmail.com with ESMTPSA id 5614622812f47-482ee531c50sm5244120b6e.14.2026.05.18.09.12.54
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Mon, 18 May 2026 09:12:54 -0700 (PDT)
-From: Akash Sukhavasi <akash.sukhavasi@gmail.com>
-To: sashiko-bot@kernel.org
-Cc: akash.sukhavasi@gmail.com,
-	conor+dt@kernel.org,
-	devicetree@vger.kernel.org,
-	robh@kernel.org,
-	sashiko-reviews@lists.linux.dev
-Subject: Re: [PATCH 2/2] dt-bindings: usb: richtek,rt1711h: add missing 'port' property
-Date: Mon, 18 May 2026 11:12:48 -0500
-Message-ID: <20260518161253.21655-1-akash.sukhavasi@gmail.com>
-X-Mailer: git-send-email 2.54.0
-In-Reply-To: <20260518144521.0A681C2BCB7@smtp.kernel.org>
-References: <20260518144521.0A681C2BCB7@smtp.kernel.org>
+	dkim=pass (2048-bit key) header.d=intel.com header.i=@intel.com header.b="ctVY4dY+"
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
+  d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
+  t=1779122085; x=1810658085;
+  h=from:date:to:cc:subject:in-reply-to:message-id:
+   references:mime-version;
+  bh=sBQFoLE033+2KzzyiFT/dlWK00kjE6B1jfHaTnnTCLg=;
+  b=ctVY4dY+IPBG1ecISmRz0gUy6MnsrMz8AA5L04DPjrWnCLJJnFlay0oM
+   SUKdWFkY1o3JcWHxl3SP/+TBY3wv3qPyjH7Ue5aBHXRF4dtIbcvJQ1S/T
+   vTJaiSNkH2AOjNpvCMN1oYiJ8/SFsz/MfJW4biGfre11QNnOx1l+g2NrC
+   KumW0fGr6e6ypIjFkFOiEPygDX1F8pDAte2p8TscZflV9bdP6eT2TSTUm
+   DFNOmP+iXHvVCa2CsnEzXtKz5Rr4Fnito6NsW0wI174MZdJxpfAUN2yjp
+   hdKk5SClB7HGybPXux4U5ukihc8MlMMeG+xA1NEG83yloiYMFaXfVXP83
+   A==;
+X-CSE-ConnectionGUID: 49iYLGYCTYeBzDTZj8j2ng==
+X-CSE-MsgGUID: vPAohQl2SmuQp5XxTmIPIA==
+X-IronPort-AV: E=McAfee;i="6800,10657,11790"; a="97550548"
+X-IronPort-AV: E=Sophos;i="6.23,242,1770624000"; 
+   d="scan'208";a="97550548"
+Received: from fmviesa010.fm.intel.com ([10.60.135.150])
+  by fmvoesa102.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 18 May 2026 09:34:45 -0700
+X-CSE-ConnectionGUID: cTO3XNYETFu+YnhsHiXHfQ==
+X-CSE-MsgGUID: SmlCRPVKTTeierLDRkJAGw==
+X-ExtLoop1: 1
+X-IronPort-AV: E=Sophos;i="6.23,242,1770624000"; 
+   d="scan'208";a="235224202"
+Received: from ijarvine-mobl1.ger.corp.intel.com (HELO localhost) ([10.245.244.101])
+  by fmviesa010-auth.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 18 May 2026 09:34:42 -0700
+From: =?UTF-8?q?Ilpo=20J=C3=A4rvinen?= <ilpo.jarvinen@linux.intel.com>
+Date: Mon, 18 May 2026 19:34:39 +0300 (EEST)
+To: "Li,Rongqing(ACG CCN)" <lirongqing@baidu.com>
+cc: "sashiko-reviews@lists.linux.dev" <sashiko-reviews@lists.linux.dev>, 
+    "ryder.lee@mediatek.com" <ryder.lee@mediatek.com>, 
+    "linux-pci@vger.kernel.org" <linux-pci@vger.kernel.org>
+Subject: =?GB2312?Q?Re=3A_=B4=F0=B8=B4=3A_=5B=CD=E2=B2=BF=D3=CA=BC=FE=5D_Re?=
+ =?GB2312?Q?=3A_=5BPATCH=5D_PCI=3A_mediatek=3A_Fix_operator_pr?=
+ =?GB2312?Q?ecedence_in_PCIE=5FFTS=5FNUM=5FL0_macro?=
+In-Reply-To: <953a48ccc3a94a29887a8059edc21a2a@baidu.com>
+Message-ID: <3994196b-b86d-9b88-b1da-6522d245d1c8@linux.intel.com>
+References: <20260515005552.2343-1-lirongqing@baidu.com> <20260515013659.DC03BC2BCC7@smtp.kernel.org> <953a48ccc3a94a29887a8059edc21a2a@baidu.com>
 Precedence: bulk
 X-Mailing-List: sashiko-reviews@lists.linux.dev
 List-Id: <sashiko-reviews.lists.linux.dev>
 List-Subscribe: <mailto:sashiko-reviews+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:sashiko-reviews+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8bit
+Content-Type: text/plain; charset=US-ASCII
 
-> Is this port node indented correctly in the example?
->
-> It looks like the 10-space indentation places it inside the connector node
-> rather than as a top-level property of the rt1711h@4e node as intended by
-> the schema update.
->
-> Should it be aligned with fewer spaces to be a sibling of the connector node
-> instead?
->
-> --
-> Sashiko AI review · https://sashiko.dev/#/patchset/20260518142901.1747-1-akash.sukhavasi@gmail.com?part=2
+On Mon, 18 May 2026, Li,Rongqing(ACG CCN) wrote:
 
-Thanks for catching this. The port node was incorrectly nested inside
-the connector, moved it to be a sibling and fixed the indentation.
+> 
+> > 
+> > Thank you for your contribution! Sashiko AI review found 2 potential issue(s)
+> > to consider:
+> > - [High] Fixing the macro changes the configured FTS number from 0 to 80,
+> > conflicting with the comment requiring 250 and potentially breaking L0s link
+> > recovery.
+> 
+> This requires confirmation from MediaTek
+> 
+> 
+> > - [Low] Missing explicit inclusion of `<linux/bitfield.h>` for `FIELD_PREP()`.
+> 
+> This isn't an issue. The current file includes ../pci.h, and ../pci.h 
+> includes linux/bitfield.h 
 
-Will send v2.
+While likely true on surface, nothing in pci.h is fundamendally such that 
+it would require bitfield.h.
+
+The include is there because of some static inline functions but lets say 
+somebody want's to refactor those functions into some .c file if the 
+function logic gets too complicated (infact, both are quite complicated 
+as is!) and remove the bitfield.h include. At that point, indirect include 
+chains are making the post refactoring cleanup harder.
+
+That's why it's better to include what you use in each file.
+
+-- 
+ i.
+
