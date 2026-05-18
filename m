@@ -1,212 +1,144 @@
-Received: from mail-pl1-f172.google.com (mail-pl1-f172.google.com [209.85.214.172])
+Received: from mail-pg1-f173.google.com (mail-pg1-f173.google.com [209.85.215.173])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2A95537BE7A
-	for <sashiko-reviews@lists.linux.dev>; Mon, 18 May 2026 02:50:50 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=pass smtp.client-ip=209.85.214.172
-ARC-Seal:i=2; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1779072652; cv=pass; b=SvhxOH2TBAGNAK7xEmeicl7sPD0un2so1ZvhvHP9Z/qwkHchyTqFrSBrr6KHe8ewxbF+B6LzjfYz5qHiZ89HvMs9DspOg9Xh01rJ3NKj2LRrWCv84iDfydzyf7oa8NNqXOzxu3A1dd9TiZKSzb8ON490GH8dp51IHuLwa8j4hqg=
-ARC-Message-Signature:i=2; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1779072652; c=relaxed/simple;
-	bh=Ooa7cW2D1IYd9NZSoSPSMtct3nfjHy2qVBuFonf3asI=;
-	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
-	 To:Cc:Content-Type; b=VrJSY7Cpo0IZIyYd4Dxm8VkI0/6NhQ0ICsUMtbQrLXFnFC9yOwyHL8EHpy3NaJZQG+lAvCy6P2JXyyyNIQF/YMxy1AxKQ4JMhVKdWrih0bjYBpCPUtlR1V8NsEk2v/MM6Fg0lXcWWVuWehiGh10mWuvpmSe/ac8mbhBf6aZ6mF8=
-ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=google.com; spf=pass smtp.mailfrom=google.com; dkim=pass (2048-bit key) header.d=google.com header.i=@google.com header.b=c1EiadDz; arc=pass smtp.client-ip=209.85.214.172
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=google.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=google.com
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3DFD53803CB
+	for <sashiko-reviews@lists.linux.dev>; Mon, 18 May 2026 03:24:46 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.215.173
+ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
+	t=1779074687; cv=none; b=dR8TGCFw0a5jerD1h2qQkIfaeBbYFkYmpY63FM8dohLkSAyf5OWbLN3AVSByrVTPDvGhuaO2OA6CFV8rn4BejwAdl8rvWehL5houzE9Mv+ugdPdS4d6TOrIiQDHYJa0wR1CGDy5ZXq5ARo6Lf9pgiQBlryhy+xGqgv9ND0kRB90=
+ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
+	s=arc-20240116; t=1779074687; c=relaxed/simple;
+	bh=pTLlp5bzp9ouQFshixLL/vuTExg1XTsP7YGkmFuARog=;
+	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
+	 MIME-Version; b=siHuxr0atb942NXKXz200AMAQWuQbKa/rMEf/oqpCUdOLT81OVJ9Vv2+Bl1H7QdvrOQrpVK5w0bCp/LZ58RAQAeyQPzpnzmnaPyYvTpgo96YWvw6k328LHKo8pnScttUssxuKjVjRvqbxpdSK7pBkUVqn0J3qpHAvW7XNO+qZ68=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=CDgnO764; arc=none smtp.client-ip=209.85.215.173
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=google.com header.i=@google.com header.b="c1EiadDz"
-Received: by mail-pl1-f172.google.com with SMTP id d9443c01a7336-2b46da8c48eso475ad.1
-        for <sashiko-reviews@lists.linux.dev>; Sun, 17 May 2026 19:50:50 -0700 (PDT)
-ARC-Seal: i=1; a=rsa-sha256; t=1779072650; cv=none;
-        d=google.com; s=arc-20240605;
-        b=OpwE8yVRZ7KwvsTdIewkxQ3SztU2wEW93hwBHWh+Kwvep6dcMrj+J4aKwYNEMdJCsn
-         5CYttXW4ECpEDFn8Rm8DcukH2jdFvDvvI7hVSxZyUAHedrjJpldY2wdP1BKbAXT1+vy7
-         ++upwH891upTZODqvwGUq5Dcsx8oA6lXkniTf2FXmQW/6QI0e0ciF0Z0zuRnCvH06eUl
-         RozYLgMkBxFxComwSsnPYmP0sVWy+1Bf8bvaIjjc3F6GXKHS1b7CUAbo3DnOGWHvWodn
-         urqjOPz2Euqj48529QXzdqqDTO5dUb6baogt4cLzQ+1NZFemlq517xBNSrXoDYhjq9Ac
-         nzdA==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com; s=arc-20240605;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:dkim-signature;
-        bh=GlQ9sX2+ndV8BDI+ZX/9maNZGwPG1ORF3D1rWw5qgqs=;
-        fh=BxU8RlEWmYNqNZFKfXpOiBPx5nJANX7WtqYlMNvtC1Y=;
-        b=FDHf5EMc1OiucDQCWSSU1uabG8FVTQb2q1EuxndJ7v0qmjDGITfvLogcjeukN1JP5r
-         AibFD7ovabqMyYDn3cYwfwNFFwY7c4M50nUl1lgkKpaxGpM+CUzvphLKmRVyOtHSxIeM
-         iOa03bFrjG6EQMQb4aszivaMmzPDcu0AMQy7PR6aV5iXhuQLuoQu4RgizO/lXAGF9+th
-         D7VrLWqw461U3bwqbwkrdUO4o3Zdzk4DUPBdNZ5zsV+LhYLlVwXkLwKy2FXjD2RJfNtl
-         OcDU3Vva3otdEBMkZNx4K8UbERK3K7WmJnolLbQ2+Vn/b0L2YHNT1kzMrGhtcc/6DLja
-         BR3A==;
-        darn=lists.linux.dev
-ARC-Authentication-Results: i=1; mx.google.com; arc=none
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="CDgnO764"
+Received: by mail-pg1-f173.google.com with SMTP id 41be03b00d2f7-c828daf83e2so712044a12.2
+        for <sashiko-reviews@lists.linux.dev>; Sun, 17 May 2026 20:24:46 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=google.com; s=20251104; t=1779072650; x=1779677450; darn=lists.linux.dev;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:from:to:cc:subject:date
+        d=gmail.com; s=20251104; t=1779074685; x=1779679485; darn=lists.linux.dev;
+        h=content-transfer-encoding:mime-version:references:in-reply-to
+         :message-id:date:subject:cc:to:from:from:to:cc:subject:date
          :message-id:reply-to;
-        bh=GlQ9sX2+ndV8BDI+ZX/9maNZGwPG1ORF3D1rWw5qgqs=;
-        b=c1EiadDzAcGtFMftuykmsraFEXPu+9AjnnHnIe+NlOJOYGsIL+ummsjeU+e7KpRuBU
-         Xy/EFs3wivpahKw+/pXOcPme4b0bTyXu7IP7muwjKmU1uoyryhTYJ0IfYftMrOatW5O6
-         WobwGJRU/DsKGtz83dGH5iExwYm9Tcq++uGQZOJuMMsyrQ2gTChRScUxZHV+2lnZPYjB
-         giGPV4gKOmkSrz3S8IyJcceRRSpway6j4y0EyiC6PuSL0LKiMf6dTBLVtx1ARFJkxL2A
-         wqOxWP4NBkpfQZDf8qMCvh1nhpKRkmFpeN8dTLdwqzamadPyeKwocukdiYROrMiocTPB
-         cqCg==
+        bh=/3928H8NXYePWZBZfOKMv4+zmyhzTHFKKV0PQCWA/vU=;
+        b=CDgnO764mZN1ahtzKXMF+imNxXmZOTJa3tu/Wysz9X+EjKGeb0FfrIBBuBqKNHiVv4
+         L+tXIzIH7R1B1jQOvbXOP3OfQqoKwwMxeprz0hx9OPoZ4XOeHtoir/ghDM/ItOwuEeh9
+         w9NwtAzuiNu6g1gwZ5dTcoACgMk03NDYOa/v4515B18/bmgb+T7IBX/vLy1W7D/oM1oq
+         tQG+2WICrWZ/EKXKXQXgQ/uR6XFG7bfvXslmukeurwAlRWqZ5+oY7hNNPCUJfHhNTVN+
+         Gc5zUZ6TQ/aguQ+V+c3ecNmzlbmE21hXdBIGHTtBSsY/0Ht9ShE031I2bH4Ydk5ssTzb
+         yTWg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20251104; t=1779072650; x=1779677450;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:x-gm-gg:x-gm-message-state:from
+        d=1e100.net; s=20251104; t=1779074685; x=1779679485;
+        h=content-transfer-encoding:mime-version:references:in-reply-to
+         :message-id:date:subject:cc:to:from:x-gm-gg:x-gm-message-state:from
          :to:cc:subject:date:message-id:reply-to;
-        bh=GlQ9sX2+ndV8BDI+ZX/9maNZGwPG1ORF3D1rWw5qgqs=;
-        b=mahVTuG/mh/LLS+2rOj10Do1yk5PvulxIlQIuW34BFtRPw79W6NylwrK2QquoY1ncO
-         eBv2BB7w6dx16iOzyYTyASRi3iOYvOvvXjLUnPFwruvyblnitxE4T5XQXPhys1WeaLyS
-         4J8Njg3e4dQ3RCwqP7+YoJUPRvSOzhu5Qr/czDDZrRNR693JYcxgRu2qaxitNa92Kvm+
-         vkLBi75RqCn14uD9kltzo/8iJ7qf0YqsKK+Omqr/WUZdLqj7ZsG9LT+/DeFol74OrEpX
-         Ch8pQ9R7W/LbSybXWx+MAN54/7fWJ8J4NgiJ3qz8OMzEKw71yocgVLglechEJ9O11iAa
-         RpZw==
-X-Gm-Message-State: AOJu0Yxyunk/3XtwSKDtPAeZYLPKKuVfyzkhWYRmAYkmwC/0eWmPewhL
-	bTxuhObEWyUsDqWowLFp/GPOL9Cnzjap9MxjlLiechJvoi1IpK/H6Ih2CdvJ06lUMxZgXq8Nvqq
-	5rNRco141kR8PmE9nxGw1JNt8WPDDI984k3VHUzcq
-X-Gm-Gg: Acq92OHKPpv6gWnkUPFdWMXke0MfkzzGpVgyQK98IjXQB0l/+Lp+/whKB6mMIdDTug0
-	O2A8DlO3/bPqsZeZQV2IopbBrze+4GWIOECpKnYa8xyxygr63OSIi9iIVmjEz73m3Ba/cnGh8QW
-	CtGO1z5EE/YcGiAW3IH/Lumw6A6Bgd1FRidlfZF4YpvdbX42JfPEOdp7RSI55g3MBPyZrK8z+9w
-	11jHQ7/4YzZBNB8zDRiRAYMc95IW47au3UFqA04pYxjcHnxhbj0hKI+Zdl4fLeZARJbRAo13rKr
-	Ui4fMcw6uEH4SBTA3YY=
-X-Received: by 2002:a17:902:ebc2:b0:2ba:73c3:49b0 with SMTP id
- d9443c01a7336-2bdb03acb3dmr1784335ad.14.1779072649647; Sun, 17 May 2026
- 19:50:49 -0700 (PDT)
+        bh=/3928H8NXYePWZBZfOKMv4+zmyhzTHFKKV0PQCWA/vU=;
+        b=cDsQCL08xcCA6Sc13GIAg96eVWuJT123VTBqZfuXs9icYYNX1MK+c8pU1GHi1Eev2Y
+         WGoKDUoIIfTKzdQo5IIUfWh5vfXQxBTz1xcHy3uG7oodc5gn39tlNpTXv4V9Z1A/igql
+         ZLKEWJHQzQktFlGXC5Fxhr3u+6ePDfZ4vWPTDKIw3jNNaRuGynVDm0Z3cR34GbZ73P11
+         QAdxawv9VbNuO1Ypu496lm7nO6HP+eXcKZvglULwhgokmeN2m+RIvx3rffMqCzUGGQq6
+         xVWv3mgMQMLet4uHpLwke0fzlIEFGE6jkexNrebdVrUxLIgzQjVXgSp7p1hqvVLiwPpd
+         LyKQ==
+X-Forwarded-Encrypted: i=1; AFNElJ9aWchHuhij9yePNbLHnkJCh9SCQjBXx2HVxJ48uOwKHlNXfD2IW+dzRb8j9+kSA4Qp9AUoiNmtXdWQA1b+PhQ=@lists.linux.dev
+X-Gm-Message-State: AOJu0YwHlw0vxt2l7Lrkn/umHTKw1WmUY4R11C364gwExhEI6YUiQv0L
+	i+XliovwZ/6OxNtpu6SJPaTFNfH19j8PRhCU4Mi919KZDUOJ+K2g/6vE
+X-Gm-Gg: Acq92OHMzM538FxbrWt9+Qmf2DXXD7VBlvinPMeb66qhbN1FM4IW6QO7ddcbv9G5xgc
+	2ZEDntotDtC8XiCSgXNGDOBvoXEMGN2iBAQRncyR+iJ/JwnkFrD9P8W0jf1+wqn7ZsnUz9KSOgi
+	7HdNYJG/HjVQrOJp/HXGPN3n22S31Og2LHgAWkhg42xaGjROgGe4aLRzoRfFa6cWGkrE18F0Npe
+	04aDe97qn5D8TB2sxv/t0P9sAMML9QmDj3d6hNpepeA7IprA55SCJl2roQxs4bEs898bjnfM2c3
+	7HqvJ3jzdCHPBpfUcKcJTUd0meibGZ65T7aFsD/rGHtP/mQ0TKhdCDSz37rmeD6F1fBsbeK9UKA
+	EQzcZxf/iAPemE7TDNxjvIKhsfcWUCGfPljpsLLeymMH/r1LqG0OJzMUi3iiuvwPdvlR/L7vSRH
+	zGmP7LwB2udVQ/zTB3snIxrjP65CfKQVSgi8Lg9SSBrUF1i1cN8jiJ1P7lS43pTa8p+amSCmweQ
+	qI=
+X-Received: by 2002:a05:6a20:12ce:b0:39c:643e:f062 with SMTP id adf61e73a8af0-3b22e666e6bmr15766495637.7.1779074685504;
+        Sun, 17 May 2026 20:24:45 -0700 (PDT)
+Received: from yafangs-Air ([240e:46d:2600:5755:6da0:fa04:3566:e6d3])
+        by smtp.gmail.com with ESMTPSA id 41be03b00d2f7-c82bb07d2fesm11721506a12.9.2026.05.17.20.24.42
+        (version=TLS1_3 cipher=TLS_CHACHA20_POLY1305_SHA256 bits=256/256);
+        Sun, 17 May 2026 20:24:45 -0700 (PDT)
+From: Yafang Shao <laoar.shao@gmail.com>
+To: sashiko-bot@kernel.org
+Cc: jikos@kernel.org,
+	joe.lawrence@redhat.com,
+	jpoimboe@kernel.org,
+	live-patching@vger.kernel.org,
+	mbenes@suse.cz,
+	pmladek@suse.com,
+	sashiko-reviews@lists.linux.dev,
+	song@kernel.org
+Subject: Re: [PATCH] livepatch: Allow to handle lifetime of shadow variables using the livepatch state
+Date: Mon, 18 May 2026 11:24:36 +0800
+Message-ID: <20260518032436.49958-1-laoar.shao@gmail.com>
+X-Mailer: git-send-email 2.50.1
+In-Reply-To: <20260514220757.412F4C2BCB3@smtp.kernel.org>
+References: <20260514220757.412F4C2BCB3@smtp.kernel.org>
 Precedence: bulk
 X-Mailing-List: sashiko-reviews@lists.linux.dev
 List-Id: <sashiko-reviews.lists.linux.dev>
 List-Subscribe: <mailto:sashiko-reviews+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:sashiko-reviews+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-References: <20260515193314.1593560-11-irogers@google.com> <20260515195854.1A3C0C2BCB0@smtp.kernel.org>
- <CAP-5=fXM_bGY8uiVa-U9SiFrwY+Dxkrt=s66dfoL9YR7=14Edg@mail.gmail.com> <agpuOvZvo_HNnYsr@z2>
-In-Reply-To: <agpuOvZvo_HNnYsr@z2>
-From: Ian Rogers <irogers@google.com>
-Date: Sun, 17 May 2026 19:50:37 -0700
-X-Gm-Features: AVHnY4Jksalie_5MKvIzN7MMZ2hXiEY_ggE5_dwHwA_XCUpwR3bvH9_CRgzrGBs
-Message-ID: <CAP-5=fUfUzKVsrOLUZ7d0FsMcWc=vp5hfmL7Yymnj7Zd9L2tWw@mail.gmail.com>
-Subject: Re: [PATCH v5 10/14] perf pmu-events: Split big_c_string storage into
- standalone compilation unit
-To: Namhyung Kim <namhyung@kernel.org>
-Cc: sashiko-reviews@lists.linux.dev, linux-perf-users@vger.kernel.org, 
-	bpf@vger.kernel.org
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
+Content-Transfer-Encoding: 8bit
 
-On Sun, May 17, 2026 at 6:41=E2=80=AFPM Namhyung Kim <namhyung@kernel.org> =
-wrote:
->
-> On Fri, May 15, 2026 at 04:25:29PM -0700, Ian Rogers wrote:
-> > On Fri, May 15, 2026 at 12:58=E2=80=AFPM <sashiko-bot@kernel.org> wrote=
-:
-> > >
-> > > Thank you for your contribution! Sashiko AI review found 1 potential =
-issue(s) to consider:
-> > > - [Medium] Incremental build breakage and partial clean failure due t=
-o Makefile dependency chaining and Python file closing order.
-> > > --
-> > >
-> > > commit 6c014984ddc9092cbb7ef975a3904baefa427ed5
-> > > Author: Ian Rogers <irogers@google.com>
-> > >
-> > > perf pmu-events: Split big_c_string storage into standalone compilati=
-on unit
-> > >
-> > > This commit splits the large big_c_string literal into a dedicated
-> > > pmu-events-string.c file to allow parallel compilation during Kbuild.
-> > > It updates jevents.py to output both files and adjusts the Makefile
-> > > dependencies to ensure jevents.py is only executed once.
-> > >
-> > > > In jevents.py, defer closing output_string_file until
-> > > > the absolute tail of main() to guarantee identical modification tim=
-estamps
-> > > > with output_file, preventing redundant rebuilds during incremental =
-runs.
-> > >
-> > > Is this guarantee accurate? Since output_file is never explicitly clo=
-sed
-> > > in main(), it gets flushed and closed automatically during Python
-> > > interpreter shutdown, strictly after main() returns.
-> > >
-> > > Will this result in pmu-events.c having a slightly newer modification
-> > > timestamp than pmu-events-string.c on filesystems with nanosecond
-> > > resolution?
-> >
-> > So previously we were worried about the opposite scenario. Using &:
-> > for a group of generated files solves the problem but Linux builds
-> > only require GNU make 4.0 not 4.3, which added this group construct.
-> > We may need to drop this change as I don't see a way to satisfy
-> > Sashiko.
->
-> Isn't the message at the end a proposed solution by Sashiko to satisfy
-> the problem?  See below ...
->
->
-> > > > diff --git a/tools/perf/pmu-events/Build b/tools/perf/pmu-events/Bu=
-ild
-> > > > --- a/tools/perf/pmu-events/Build
-> > > > +++ b/tools/perf/pmu-events/Build
-> > >
-> > > [ ... ]
-> > >
-> > > > @@ -224,6 +234,10 @@ endif
-> > > >  # and inputs are dependencies.
-> > > >  $(PMU_EVENTS_C): $(JEVENTS_DEPS)
-> > > >       $(call rule_mkdir)
-> > > > -     $(Q)$(call echo-cmd,gen)$(PYTHON) $(JEVENTS_PY) $(JEVENTS_ARC=
-H) $(JEVENTS_MODEL) $(OUT_DIR) $@
-> > > > +     $(Q)$(call echo-cmd,gen)$(PYTHON) $(JEVENTS_PY) $(JEVENTS_ARC=
-H) $(JEVENTS_MODEL) \
-> > > > +            $(OUT_DIR) $(PMU_EVENTS_C) $(PMU_EVENTS_STRING_C)
-> > > > +
-> > > > +$(PMU_EVENTS_STRING_C): $(PMU_EVENTS_C)
-> > > > +     @:
-> > >
-> > > If pmu-events.c consistently ends up newer than pmu-events-string.c
-> > > due to the Python teardown order, won't Make permanently see
-> > > pmu-events-string.c as out-of-date?
-> > >
-> > > Could this silently trigger redundant recompilations of pmu-events-st=
-ring.o
-> > > and relinking of perf on every incremental build?
-> > >
-> > > Additionally, if pmu-events-string.c is deleted while pmu-events.c
-> > > remains up-to-date, Make will execute this dummy recipe and then atte=
-mpt
-> > > to compile a missing file. Does this pattern handle partial cleanups
-> > > gracefully without creating a build regression?
-> > >
-> > > > diff --git a/tools/perf/pmu-events/jevents.py b/tools/perf/pmu-even=
-ts/jevents.py
-> > > > --- a/tools/perf/pmu-events/jevents.py
-> > > > +++ b/tools/perf/pmu-events/jevents.py
-> > >
-> > > [ ... ]
-> > >
-> > > > @@ -1476,6 +1488,8 @@ struct pmu_table_entry {
-> > > >    print_mapping_table(archs)
-> > > >    print_system_mapping_table()
-> > > >    print_metricgroups()
-> > > > +  if _args.output_string_file:
-> > > > +    _args.output_string_file.close()
-> > > >
-> > > >  if __name__ =3D=3D '__main__':
-> > > >    main()
-> > >
-> > > Should _args.output_file.close() be added here alongside
-> > > output_string_file.close() to ensure their final filesystem writes ha=
-ppen
-> > > simultaneously before interpreter shutdown?
->
-> ... here.  Or, maybe you can call os.utime().
+> Will this callback run in an atomic context, unlike the other state callbacks?
 
-Let's give it a try.
+> All existing state callbacks execute in standard process context and are
+> permitted to sleep. However, looking at klp_shadow_free_all(), it invokes
+> the destructor while holding klp_shadow_lock:
 
-Thanks,
-Ian
-
-> Thanks,
-> Namhyung
+> kernel/livepatch/shadow.c:klp_shadow_free_all() {
+> 	 ...
+>	 spin_lock_irqsave(&klp_shadow_lock, flags);
 >
+>	 hash_for_each(klp_shadow_hash, i, shadow, node) {
+>	 	if (klp_shadow_match(shadow, shadow->obj, id))
+>	 		klp_shadow_free_struct(shadow, dtor);
+>	 }
+>
+>	 spin_unlock_irqrestore(&klp_shadow_lock, flags);
+> }
+
+> If a user assumes this callback runs in process context like the other
+> state callbacks and includes sleeping operations, couldn't this trigger
+> a scheduling while atomic panic?
+
+This problem wasn't introduced by this change; it already existed beforehand.
+There shouldn't be any sleeping operations in klp_shadow_dtor_t. Maybe we
+should rename it to klp_shadow_atomic_dtor_t.
+
+[...]
+
+> Does tying shadow variable lifetime to the global patch state cause leaks when
+> dealing with loadable modules?
+
+> If a livepatch applies to a loadable module, it may allocate shadow variables
+> keyed to the module's dynamically allocated objects.
+
+> When the target module is unloaded, klp_module_going() unpatches the module's
+> objects. However, because the state is a global property of the patch, no
+> state callbacks are invoked and the state is not considered obsolete. This
+> leaves the shadow variables for the unloaded module orphaned in the global
+> hash table.
+
+> If the module is subsequently reloaded and allocates new objects at the same
+> memory addresses, wouldn't klp_shadow_alloc() fail with a duplicate warning,
+> or klp_shadow_get() incorrectly return stale data?
+
+You're right, this is an issue. We need to ensure the associated shadow
+variables are freed during klp_module_going().
+
+[...]
+
+> Can this permanently leak shadow variables and state during an atomic replace?
+
+> Livepatch supports stacking, allowing multiple active patches (e.g., Patch A
+> and Patch B) to define the same state. If an atomic replace patch (Patch C)
+> is loaded, it replaces both A and B.
+
+With the introduction of replace_set, it's no longer possible for different
+patches to define the same state within the same set. So, I don't think this
+is an issue.
+
