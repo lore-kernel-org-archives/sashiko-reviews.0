@@ -1,132 +1,165 @@
-Received: from mail-oa1-f52.google.com (mail-oa1-f52.google.com [209.85.160.52])
+Received: from mail-ed1-f48.google.com (mail-ed1-f48.google.com [209.85.208.48])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9020013D8B1
-	for <sashiko-reviews@lists.linux.dev>; Mon, 18 May 2026 14:17:43 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=pass smtp.client-ip=209.85.160.52
-ARC-Seal:i=2; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1779113866; cv=pass; b=VZUrA7TEaK6ukMafT3tZp2Hn6KyS/PNTn6yGvVvNXtDzSrBupStOWdvrBhHi1NEaDVG40dexbLvGkvESFUzQKJut+LupzS77JyD1tnPSnn5gho23yuosNYHPJEwiUViNYV+tbOL2PAH1cRppQOdawN2KGkkJHZsLryDI2IGNZNM=
-ARC-Message-Signature:i=2; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1779113866; c=relaxed/simple;
-	bh=m9vXK639duMrGCvxYu968cLO8RpsbdfFH6e0KuGkFCQ=;
-	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
-	 To:Cc:Content-Type; b=sCFsK2ZgFXusQyEMeFolwKbsZoOkUPmrlq/n61WO9WPMY7vyX2bORXAtTapR6DOr6U2Rf4ngOSjEbCHZpdV0MJGJ9JAF5PCa7gDbYpd2J27A1A53ZydaTZ7Xbjlpq66G8YCeKXjO6iH2BfBsn31pwpFke7qcJh/4pSmS0JQiGCs=
-ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=WuIqfJ0M; arc=pass smtp.client-ip=209.85.160.52
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3FAF71EB5C2
+	for <sashiko-reviews@lists.linux.dev>; Mon, 18 May 2026 14:26:25 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.208.48
+ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
+	t=1779114390; cv=none; b=TuZKp5H8Dz3QMWvixlSXYMFSHJfcBNM1gf3ZsCSmwiOaYoZJsm4O0vwa13qukiD2tWttgghB0l7xJ2U2R40elL8+F/u3M8cIJDbBeooL6j0Dpd9U2r9V+ImS7VsvVR5fw+fFwWY/dCW6VTmY97GV1SwzVVs4yUCdbLYweuolaUE=
+ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
+	s=arc-20240116; t=1779114390; c=relaxed/simple;
+	bh=jj8C42vP8d402qhEj5BRNKUYabfpNU3fCaowD0OVNto=;
+	h=From:Date:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=iq33j4ByYbynpQfL2MMI7RaSGuo+J1QledaKM05csViopn/QZ8Mmd2YotTOUDGfyZSpeiCJ6o8fwE8vV/ePmWTz1NXfH9ebPRJB1W8l8QoTJ0SeDXKR98WNlGGpcFhVSKHFiex5zKjGbIcMKnPMiJ1dgTdNUAEyIYYx1Bf8vhQ4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=VNMpJ2Ej; arc=none smtp.client-ip=209.85.208.48
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="WuIqfJ0M"
-Received: by mail-oa1-f52.google.com with SMTP id 586e51a60fabf-43aaeb6c96bso335583fac.3
-        for <sashiko-reviews@lists.linux.dev>; Mon, 18 May 2026 07:17:42 -0700 (PDT)
-ARC-Seal: i=1; a=rsa-sha256; t=1779113861; cv=none;
-        d=google.com; s=arc-20240605;
-        b=RHAOl9NexgwYJtSapkjUsAr0rHZ7DpED5MEL6qYsVjB4LPXHCOv77rgZbciufuZzy4
-         7Op8sx78gHtgmwo7yCwde7e/L2U7F5VAWmaTWT0UnbGrO/+HDcswXq9cfOaRGyleVdEq
-         XBpF6UZt41pay4fAm4DAL1vN8Cz25CSAW2VhXhKJLlpr0quNSSNDygJi8fHOwUCe0A1t
-         bJDHG/XY9nFKLDF0tgQ77VOf+sU3xRGLSW4DZhti2FxGlJABdEWwk6Q1jW5jPLQgatZ3
-         /K8zjyyyEIMpKpzTIP4K6hOoAo7z765uSQ7TV5ZPHFpZHkE+IzzBXakVmDiXE4Wv8vu8
-         GGSA==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com; s=arc-20240605;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:dkim-signature;
-        bh=pDKx3EeB+e+ODwyRdpNDzr6olUBON+DX/SSLXnx9QzU=;
-        fh=+ykpOC5HbCyJhIibAubnV7Ig+XqtePvwQgLqMx/6w6U=;
-        b=UJFJ0WyjTWbikfW1qSvmsOQ512RFtqQezRiYhNOCiQsHvgAv+Ktc74AaXuliwYMNlJ
-         mnfulQfwVtQ7/pHFmmZAHypzG5ydGIBrm/B8AF+EYMtDh904cLqrAdk/ufXUCfILVxGP
-         A4v7/6oeib2vpcpndmEDasMWFbV0+JNttGEk854nZuZAHH194hHmTYh2Aod1RO/d/6hZ
-         Hwe2TPd4Rw0gZ3JqGMPUGLrxT/4QeEnGhxvnW+cm/meTDt3e4bxbX4KybcJTUciqflIr
-         +fl02a1Oh0Fcr3D8FFhUHJ4vnYcHXtDtGE+4VeJwR/1QVmYwlr4ZpW+UGPmMD+YU73QV
-         NvJQ==;
-        darn=lists.linux.dev
-ARC-Authentication-Results: i=1; mx.google.com; arc=none
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="VNMpJ2Ej"
+Received: by mail-ed1-f48.google.com with SMTP id 4fb4d7f45d1cf-6746d0b2b4aso4069981a12.3
+        for <sashiko-reviews@lists.linux.dev>; Mon, 18 May 2026 07:26:25 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20251104; t=1779113861; x=1779718661; darn=lists.linux.dev;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=pDKx3EeB+e+ODwyRdpNDzr6olUBON+DX/SSLXnx9QzU=;
-        b=WuIqfJ0M3nha4aoT/IoK/jB5dCQ6zFFBVU68btryIiGPtJkseeCfLU8VT71c0h83am
-         AoqLF8es3jN6yZJziJT7SwzpDocYmGuToQ9P0xbGE83fgnr+lSYZdje+0bE+SY9+uiBV
-         3EUmwmTdano4dMo1Fn1NpWdoJ3wjF0nXqu6jHLQT6TC2PwE6Hsdr+Pwcwzf2ygK8VA/H
-         soTz0GAO8mfLS5iqOkXpuhZsUsgwOXCi0cFyU8Hx+we60z4fJAgayUxQX/eSvshCYbkq
-         kY5osSSHVPU4wBx11LUemBgITIL057jYptJWSGasVRTRQco5Xia5gpjFxOxTDL0oNC4x
-         3b5Q==
+        d=gmail.com; s=20251104; t=1779114382; x=1779719182; darn=lists.linux.dev;
+        h=in-reply-to:content-transfer-encoding:content-disposition
+         :mime-version:references:message-id:subject:cc:to:date:from:from:to
+         :cc:subject:date:message-id:reply-to;
+        bh=IkhDiryJOpnQp+hMnQvA4acbZ3NW2ct6Ye+UJkfo1fw=;
+        b=VNMpJ2EjO+VjPwh74i7OFU5Yv5zkCwoYQaS94wsiTaZaI/dWPGvuRGYuuJto1QB/3F
+         VExcXnCSkQiixwyrvxMSHdsFiimhKVjf5676wLyzDLlRfVDhLL/xMRYQvcsgjBmGplTP
+         3M7EfcRpD38uicXKj4GnqCGWKu63l1i5NFjvPvFtMmAGq5iJgqyRpTG9kenLTQV8t65X
+         pAjmSWuOhsPjwFTtXxPNd7gOzGB/cy6CGiiuQlzAgIwiWESCSVR/tVHThXCltqDE+y/i
+         yLdid98FHD+fQJczfsRSplROpoYRF6LZxd2q0kqqa/n1jEbyZ9FptL30U2rHJ0H8j/jV
+         R0jg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20251104; t=1779113861; x=1779718661;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:x-gm-gg:x-gm-message-state:from
-         :to:cc:subject:date:message-id:reply-to;
-        bh=pDKx3EeB+e+ODwyRdpNDzr6olUBON+DX/SSLXnx9QzU=;
-        b=iMV0LlAbsLaZTMd5eltHPQ9Hgy0DUE0+TivrFS33XbTuIuQ9X2nirTi1Nbqiy8XeFJ
-         bnt1m4r/tzZCgVj++ytkq8g6LmywTaSrAA+08AEvnrB4Wo7/SvYdsfn1VqQv8dCKgT3o
-         qeATFnQmiTcsoXH0rgDkqIvnHXX09EGS6bty2C4WtgJ3NudKc7iiHGunl3cmhinvkqlE
-         JcPMYv6lJNWdRgjh5WPcPhRAXG5ZPOE3AOMy75cHjulif6wwjCIosFyTjguifP48JoSM
-         mFynHkqdyV3QxiVTwQbOQCMv+jDP9925Y1WBs09oeikujNP/qvQ0rVXnbzeTXfqIzOp3
-         mH/Q==
-X-Gm-Message-State: AOJu0YxRV56G49e+b9pXyp/y2YI20BSVyH1qD3LmIx/YQR0Cc4OuQLlm
-	hmXVbV6KwMZsniXm6tdHBUcDG55J4/Sjs7dECuYvkJcNZgvPC68gy1Dcl7vC4hOHHdOeto6fn9T
-	yEdq3qLvN/uNh3gt2RTpa1efRHcKubzFUMXrA
-X-Gm-Gg: Acq92OFx4zCPD/X/GfbSPM4WrvseExf41V01FB07X3qw6VL645Eb84ukjYYsaiIxxTJ
-	vXXKxQpN7q4MOqvV2UyuIxCfsh3yq9u6k/xI7blxQiX62DlQAiaW1H4RVnln+nIDjhPggMKOpxv
-	9PzmLZ/lF1gBWs6YscHJsU2Y9VQRVK3bA+6cR4XZGQlYv5vA+AXZMkQepfYSUM+Hbh9RNenBU9w
-	nyAI8va40LdIvi7CT90b2VXXp/yG2t3A7+wgUViwg2cG9qqNMHsgO2+Aaf+tSDDlezE3rTqS9V/
-	eBGW3cBp
-X-Received: by 2002:a05:6870:3346:b0:439:cd73:3864 with SMTP id
- 586e51a60fabf-43a2d9d7e03mr9872675fac.13.1779113861493; Mon, 18 May 2026
- 07:17:41 -0700 (PDT)
+        d=1e100.net; s=20251104; t=1779114382; x=1779719182;
+        h=in-reply-to:content-transfer-encoding:content-disposition
+         :mime-version:references:message-id:subject:cc:to:date:from:x-gm-gg
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+        bh=IkhDiryJOpnQp+hMnQvA4acbZ3NW2ct6Ye+UJkfo1fw=;
+        b=q7Dj693n6DJc6pwuYR8lBQbuIslRlbhNCzBpOtDrv+jsob5B47x7xMhtsn5RHh4Aql
+         PjCX5iTKKmiPgD4sDQGpOf+KmeIQmW6tQQvjFkdThhGXWzBC8vI4o6vt+uhSz5qNFnmw
+         TTlQmfIf7w+cLP8WdjZ2DhLsxKTadonDMSuJdXE68P1fePIFA+y2hwL2vryy5iQrrs2u
+         mA8C/IdQQVXQMPOL4H73YM+dWIdSvMaQpZUkCMDauBwYa3R2kVerZsYQm3BT+odTxXfT
+         2/6qQ3PPpU+p0u4dHPJ5EbFvVv5awbhHhDq8snzkGrQGebpCJ0EhIu0HmtvMFXSjmW+7
+         kLYA==
+X-Gm-Message-State: AOJu0YyYmK+m5qVAR9J+5RTbg2Unulx1hNnKQ8R4uwkN3On2qMn40XyS
+	HwQGUG7bvuv0scHISduLrRtotpuBHbqgptG87DygoZqwyzqm0MpKFo/UJndRuTUk
+X-Gm-Gg: Acq92OFT9hro0USz2OkYx/fsxL+dU1TL8DiK+5WZ3U9+m1rQ4hz9Rbj3eILW/sAhHYU
+	KBX9lZRsgE6CPRn/uQuC1JJGgNdSz3Q6oDzLhDOUItuZ3Y/ovYuNFM9es34fDWIpbd0n16gjOcV
+	Rpl3WmhhzqmYTr0BrxzaJc6gNw3ofOj7pc+P1fYWo10ZtOaz14wO/9W7K+BswwjuZ+jyz2foctG
+	AinXlx+7H4deaFCsBIVA+w6k/NUEO2s/22qivI4N5ZaJ6QeIEw6A5/W9l/EMChH0yS/OwKf4MVB
+	tQmVw+QyMKg+7AvFTYH3vD3W829S2xo1Z3n091G/UJ2FT6heumNnoF2uGtr4JzJn/fXhj6T+cPD
+	/DLSPhyCiqfy5DKMsSHhVSLBoVveJrm08mRVLvII/9cbtUNvmcvDWmYAUteC2X+EML+SGmbarEN
+	2Bo1RfZ+mx/2SGIn/Wa1Ad9O1Qs5OJ1Hrwqaq1BMOBDTgGPcA1r+PDtTcL/jLFBuuKKm9pO4mFl
+	KjPWcXaBVHQZyA2fIId3izhiCEZKwg8283sTXCUd0O3PbJzkYqGQ3+7XurKVGpmbqWFevw=
+X-Received: by 2002:a17:907:9705:b0:bd5:9a2:6c7d with SMTP id a640c23a62f3a-bd5177d6672mr847883566b.4.1779114382418;
+        Mon, 18 May 2026 07:26:22 -0700 (PDT)
+Received: from RDEALENC-L01.ad.analog.com (24.206.116.103.netskope-rdns.com. [24.206.116.103])
+        by smtp.gmail.com with ESMTPSA id 4fb4d7f45d1cf-684744d13aesm2764498a12.18.2026.05.18.07.26.19
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Mon, 18 May 2026 07:26:21 -0700 (PDT)
+From: Rodrigo Alencar <455.rodrigo.alencar@gmail.com>
+X-Google-Original-From: Rodrigo Alencar <rdealenc@rdealenc-l01.ad.analog.com>
+Date: Mon, 18 May 2026 15:26:15 +0100
+To: sashiko-reviews@lists.linux.dev, 
+	Rodrigo Alencar via B4 Relay <devnull+rodrigo.alencar.analog.com@kernel.org>
+Cc: devicetree@vger.kernel.org, conor+dt@kernel.org, robh@kernel.org
+Subject: Re: [PATCH v5 03/13] iio: core: add hierarchical channel
+ relationships
+Message-ID: <vlasqyhpdcxtdw7isyapmpxaqw6wwpni3el2jzckfh22i6bgiy@7ikszah6elga>
+References: <20260517-ad9910-iio-driver-v5-3-31599c88314a@analog.com>
+ <20260517185618.4810EC2BCB0@smtp.kernel.org>
 Precedence: bulk
 X-Mailing-List: sashiko-reviews@lists.linux.dev
 List-Id: <sashiko-reviews.lists.linux.dev>
 List-Subscribe: <mailto:sashiko-reviews+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:sashiko-reviews+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-References: <20260517-sf21-topcrm-v1-1-438f2e0513ff@gmail.com>
- <20260517143152.C3318C2BCB0@smtp.kernel.org> <20260517-aground-shadow-d4ac455623fe@spud>
-In-Reply-To: <20260517-aground-shadow-d4ac455623fe@spud>
-From: Chuanhong Guo <gch981213@gmail.com>
-Date: Mon, 18 May 2026 22:17:29 +0800
-X-Gm-Features: AVHnY4KG3bvfW6nL4igtsM3606_UnBal56cQai2nWjWSCWUL_A_EBt_yZCq-Ksw
-Message-ID: <CAJsYDVKtfZCSNT0FgM1M5Wc-+MQ7eegT9+3T-DG=vRa4dMmKFA@mail.gmail.com>
-Subject: Re: [PATCH 1/4] riscv: add Siflower RISC-V SoC family Kconfig support
-To: Conor Dooley <conor@kernel.org>
-Cc: sashiko-reviews@lists.linux.dev, robh@kernel.org, conor+dt@kernel.org, 
-	devicetree@vger.kernel.org
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+Content-Transfer-Encoding: 8bit
+In-Reply-To: <20260517185618.4810EC2BCB0@smtp.kernel.org>
 
-Hi!
+On 26/05/17 06:56PM, sashiko-bot@kernel.org wrote:
+> Thank you for your contribution! Sashiko AI review found 1 potential issue(s) to consider:
+> - [Medium] Exposing the hierarchical relationship via channel labels creates an ambiguous UAPI for userspace.
+> --
+> 
+> commit 64c6f961f1d7645c58f732e4bd4c11200b999e93
+> Author: Rodrigo Alencar <rodrigo.alencar@analog.com>
+> 
+> iio: core: add hierarchical channel relationships
+> 
+> This commit introduces a parent-child relationship between IIO channels.
+> It adds a parent pointer to the iio_chan_spec struct and exposes this
+> relationship to userspace through a new "parent" sysfs attribute that
+> returns the parent channel's label.
+> 
+> > diff --git a/drivers/iio/industrialio-core.c b/drivers/iio/industrialio-core.c
+> > index 5c8404efd0a56..348ac7a597385 100644
+> > --- a/drivers/iio/industrialio-core.c
+> > +++ b/drivers/iio/industrialio-core.c
+> 
+> [ ... ]
+> 
+> > @@ -1263,6 +1271,31 @@ static int iio_device_add_channel_label(struct iio_dev *indio_dev,
+> >  	return 1;
+> >  }
+> >  
+> > +static int iio_device_add_channel_parent(struct iio_dev *indio_dev,
+> > +					 struct iio_chan_spec const *chan)
+> > +{
+> > +	struct iio_dev_opaque *iio_dev_opaque = to_iio_dev_opaque(indio_dev);
+> > +	int ret;
+> > +
+> > +	if (!chan->parent || (!indio_dev->info->read_label &&
+> > +			      !chan->parent->extend_name))
+> > +		return 0;
+> 
+> Is relying on channel labels robust enough for programmatic parent resolution?
+> 
+> IIO channel labels are optional, human-readable descriptors and are not
+> guaranteed by the core to be unique. If multiple channels within a device
+> share the same label, how can userspace definitively resolve which specific
+> channel is the parent?
+> 
+> Also, if a driver establishes a hierarchy where chan->parent is set, but the
+> parent channel lacks a label, this attribute is silently omitted, hiding the
+> relationship entirely.
+> 
+> Would it be more reliable to expose a definitive, unique identifier (such as
+> the parent channel's sysfs prefix or index) rather than relying on an optional
+> descriptive string?
 
-On Mon, May 18, 2026 at 4:46=E2=80=AFAM Conor Dooley <conor@kernel.org> wro=
-te:
-> [...]
-> > >       This enables support for SiFive SoC platform hardware.
-> > >
-> > > +config ARCH_SIFLOWER
-> > > +   bool "Siflower RISC-V SoCs"
-> > > +   select ARM_AMBA if TTY
-> >
-> > Should ARM_AMBA be selected conditionally based on TTY?
-> >
-> > ARM_AMBA models the presence of a physical hardware bus, which exists
-> > regardless of whether the TTY software subsystem is enabled. Even if th=
-e
->
-> There's no point having the driver built if there's no driver built for
-> devices on the bus, I think is the angle here.
->
-> > PL011 UART is currently the only AMBA device on this platform, tying th=
-e
-> > hardware bus infrastructure to a software abstraction might cause issue=
-s if
-> > other AMBA devices are added later and TTY is disabled.
+A bit impressive that sashiko can comment on that architecture level.
 
-I copied this from the vendor tree. PL011 is the only peripheral on this ch=
-ip
-requiring this flag, and there's no more AMBA-driver compatible devices
-on this SoC.
-However I'll change this one in v2 since I don't want to add the only flag
-in the kernel which conditionally select ARM_AMBA :P
+Those are all good points. I suppose I went for this because otherwise it would
+require refactoring core code to get the needed parts from __iio_device_attr_init()
+that gets you the channel name without the attribute part.
 
---=20
-Regards,
-Chuanhong Guo
+Maybe we should have a function that outputs a channel name into a buffer based on
+__iio_device_attr_init() behavior, and that could be reused.
+
+> > +
+> > +	ret = __iio_add_chan_devattr("parent",
+> > +				     chan,
+> > +				     &iio_read_channel_parent,
+> > +				     NULL,
+> > +				     0,
+> > +				     IIO_SEPARATE,
+> > +				     &indio_dev->dev,
+> > +				     NULL,
+> > +				     &iio_dev_opaque->channel_attr_list);
+> > +	if (ret < 0)
+> > +		return ret;
+> > +
+> > +	return 1;
+> > +}
+> 
+> -- 
+> Sashiko AI review · https://sashiko.dev/#/patchset/20260517-ad9910-iio-driver-v5-0-31599c88314a@analog.com?part=3
+
+-- 
+Kind regards,
+
+Rodrigo Alencar
