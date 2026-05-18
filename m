@@ -1,182 +1,143 @@
-Received: from mail-lj1-f169.google.com (mail-lj1-f169.google.com [209.85.208.169])
+Received: from mail-wm1-f42.google.com (mail-wm1-f42.google.com [209.85.128.42])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9FF523E2AD5
-	for <sashiko-reviews@lists.linux.dev>; Mon, 18 May 2026 09:19:48 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=pass smtp.client-ip=209.85.208.169
-ARC-Seal:i=2; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1779095990; cv=pass; b=I1V/YQOvPmOzT/CfPL8zSgcehRqims8wQHZo22N+wf6D7sV0oqvfrRknbaua0PSEXL5XdlJq84OgCyhQYbNK9TbhMbvVfAjZurxKMYL/IVeMYBJooiE/kDhkDN1hn6/gHNk7784XTjlIiP0zmSN+8f27MJKXqaJgU6INEPPmaaM=
-ARC-Message-Signature:i=2; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1779095990; c=relaxed/simple;
-	bh=CnwT4/j5fv+DeDtRFPNWlL8z+nuZTW/Y6juMWgr5UTA=;
-	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
-	 To:Cc:Content-Type; b=eaj+wpvVj/G90jkY/OtJ5kLxCLLmCJrXUaqMF2/FJgwz9ZHp67VBvA1DZu/kxgYALgphtt1bdzfd1BGG7s5Sbltw8gpG3Y4zNPiCUrcK0cREphE0fP8xdMIGvCUec39pj6D1J78io1scCMlCAgvuVAq9RdVqp4jThXAQWopB3wM=
-ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=hr2H0SGM; arc=pass smtp.client-ip=209.85.208.169
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3E80831714F
+	for <sashiko-reviews@lists.linux.dev>; Mon, 18 May 2026 09:47:57 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.42
+ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
+	t=1779097678; cv=none; b=pDhnwkNuUU5FDhw41UpFFBVOB52N6S0kHVkIxvE5wfHI+oZU0Z26YhXqY7NqXyUpwkUSxTNtm/lP+tx+h48k3cQZiIZMe/aXe5IWRfU7coWWz/RJKSUVT8mGbx5vQfjzzKt5Ey0RFIcsIZK/CmJGrMV3nvqiVtuxeAiZ4ApGR3Q=
+ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
+	s=arc-20240116; t=1779097678; c=relaxed/simple;
+	bh=kQwAY/l0CYICe34k0IpNyn+TG1YD4kxDzsA4u0x5DHg=;
+	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
+	 In-Reply-To:Content-Type; b=PMXvFXPjPsB+VW3Xnt++1yvT/qQRaDxqmWB3QNaTnmmMzYjq4mNFvoL6IoltRwOY59CSpAiTL2VnjJrSVPzBu94vgcLxYVUgNS5AfdelnhBi91ko5yts8OJRF9e+bxs+c54yUAo2fjQd0IJikS5a+W3ma5kqtCv78p5uhmc0Yng=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=W7Z3J/Vp; arc=none smtp.client-ip=209.85.128.42
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="hr2H0SGM"
-Received: by mail-lj1-f169.google.com with SMTP id 38308e7fff4ca-393da8f389bso20410741fa.1
-        for <sashiko-reviews@lists.linux.dev>; Mon, 18 May 2026 02:19:48 -0700 (PDT)
-ARC-Seal: i=1; a=rsa-sha256; t=1779095986; cv=none;
-        d=google.com; s=arc-20240605;
-        b=YqYpeI1LDNodM+WwzdR7pJ1d7pjSabxe0MS2PtVqb91cQvA/9j/Ah/+qOWX13sxVtV
-         ebyKNqJ82ykOHz+iNb2pBh3xjz73NSJQiW+ZrUm9g+iN9hxEmYA8BZhxNvzfvm258spd
-         X5xCf+QjrMjs4UyqAtFPeiP/KilNPofbPsY5SgxvL/H/S8ALU5fx/LqRG2skR0Ah68IZ
-         yPDTSl/xEJHSyFOJpLv5rvE20e30mTbIqK6fKe4I1mgrqo/U/je2owtWmDYjvDkgAZG8
-         d9u4H7BwfRvkPLgbR/M+xR0zDdx3xIX6xrmKZcmCOk/7CTD1podBXip9xRtZIAn6GwNS
-         jr0w==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com; s=arc-20240605;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:dkim-signature;
-        bh=8oKVlndyjRSm5d1QJ38g8kShcN69mqPrJOMQfWnQBQ4=;
-        fh=uA360uvxR9S0K/Y4Lovo7aIaGlBwzVBnnb2BKWupr/4=;
-        b=fignk8KUybVwPtFC2+XsvHkbpYIx8VreQ5zgUd+Z5O9GwMFvEMYqLZWJKvu+zH4NJP
-         Hd7eUybGDqfHX8Da8+i1AyphJIMv/rfUr6148I/NPsq+Vu7X0cWUjopNHggWx+h3bllC
-         P5E7YxwdkzH9rFO9SuPpiw6a0BNeSdK/GCDnP94CGRh7bly3D+xstcUlBM4orhsdGBHg
-         XByUWY0VXX7s4uFuBd1Z9AiEbu4mcaxDRByySOFmsFC6Fkh0T69hYTEIEhW7X7A7xwxE
-         OBSZny+Og1rgVs8xLRLDGRI0bPNWwOSi3txCictgRcUoZqrNgNtUQkRHkLM06CX6lPWq
-         /pSQ==;
-        darn=lists.linux.dev
-ARC-Authentication-Results: i=1; mx.google.com; arc=none
+	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="W7Z3J/Vp"
+Received: by mail-wm1-f42.google.com with SMTP id 5b1f17b1804b1-488b0046078so18169765e9.1
+        for <sashiko-reviews@lists.linux.dev>; Mon, 18 May 2026 02:47:57 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20251104; t=1779095986; x=1779700786; darn=lists.linux.dev;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=8oKVlndyjRSm5d1QJ38g8kShcN69mqPrJOMQfWnQBQ4=;
-        b=hr2H0SGMPbzd4ZQQFA9GAycOvdAI8I+ywIR1Y+BdWBhaJ5NHZO1epk69iuZA9dAeuN
-         HbV7NMwb9/beS1aKevFKCtLZsYYq+l3bWW+qB+VJbqBLQBlkMwdfLIgWUYUbG/iVxo3i
-         Ti+hphaU6RuN4DhI9VMmB4uFVuBnzyw6J4+7s/9qlcYRLlpZ4wz0cUnpPb+Ost79nLEC
-         y5680HUPnK3YTVw0zFChO3ourBApeFnIqcZ/7JBd9h72DC44rwsjz/Q7ADU88SHhmul5
-         4VoZtQHeImu9CUu0LQQu4j1enLRn1wXYGjJShLyIBjQTdQoqUdA4NT6O4VsnWVnFof5l
-         xyZA==
+        d=linaro.org; s=google; t=1779097676; x=1779702476; darn=lists.linux.dev;
+        h=content-transfer-encoding:in-reply-to:from:content-language
+         :references:cc:to:subject:user-agent:mime-version:date:message-id
+         :from:to:cc:subject:date:message-id:reply-to;
+        bh=T/EO1D6TrcoAaYAZG0MsX8/FpcPXBdwplKszfXP85PU=;
+        b=W7Z3J/VpFJRS7jspLf8ZoJs/qpuZVFP99TQ7NBHN1eMH7NzzXtUi2ayOHgg6D6vz4J
+         oubnDwBa8ihL0oMq4o/5gB8UsqurV+nfVADcROuNzLurgRYAFJJGyuXudD4tXQk9VDBs
+         mcLvhM+ZCwqnaaktJABRnRlrGJimiuK0m1yoC3CSt100OFWfxWXI6RXrgWAx8lSK0J7+
+         Y2LkdWfXz7ub/5eB9p0G96sNm+K7d3rlpku174uSft3s6fQMfU+DlGg6z/DKQXN+qEuc
+         l2EStdM0PyxLvJJzbMUUaw35Oin5RbNwCaqLgKsqmZwbTQcSVkFCLFWsfrfRMXtR+oyD
+         2Agw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20251104; t=1779095986; x=1779700786;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:x-gm-gg:x-gm-message-state:from
-         :to:cc:subject:date:message-id:reply-to;
-        bh=8oKVlndyjRSm5d1QJ38g8kShcN69mqPrJOMQfWnQBQ4=;
-        b=gb5+qxgSpXcb/qKKdQ61GzmdIsRFNXxJOOat+YNfE9F59kuot4T3X5NX3g/oWImxnA
-         5VStagVRi3L58NfEhdYnKZHOp73fJsoUFxi5B0H2wr++rking/k2Jzm/EGr/CAOH6PXb
-         Zzu3uZWfSth4xdq8JIQevjRJA023yCbYeyZ1ZU6+bJiamm3MBcfsIaIIge14c70CSkns
-         9T31PE+hp4y8CKbuK4gy2+cRQyBoDMrMyBdp6Bagq7zPfsbAcqS6JpkGt5dd/IYOpbUv
-         sjUj7xHelokCU7pLgtI3xlIp7GC6VUXrFl2FjFXo46VGpDYinHvNsKNFycyxuv6fDONV
-         GNGQ==
-X-Gm-Message-State: AOJu0YyMAYTZ22NApl60VWMWxo+w6DxQjpRbRESssTlUvrlvNW8SKrnN
-	1AKmU+LwXZDOTHpaeFaDJav2X16tCBqEE1xJ1XIBR9Tn3WsxwmVfybkLwkWpI/abiaz3S/uDNkV
-	bW9vhdlPcon3aNnck+cK8+uBCNLOdlC+SUTwAaL9mUuH/
-X-Gm-Gg: Acq92OFl0AvcFHNQN9H/Y7plIUpTj+y4MWhbooKv2NxlPp9UwFMMgu/4b2IxQx06r0H
-	K65IBLNHxoKxEMftItqr+k8OTPYccpA3i4U7ZL7wR8DWmjMEpsClqp7EkrkBz4iH6vZH8mA8EaR
-	pzLawPDUajA3FsCKb1bYG6A2+fv4HhvEo3RTGf9ZcTEu/TtY0Mzi9YBY74mKMh2uJlsk6UQgzQ6
-	xDuliU4+oB+DA2RDvrNiubBYDIX/VmIvNHWYYoFgALuJQ69CtQrtW5DC8GDuOZu+gNl6hUCZ+Tb
-	AwEmuILQOgJSC8COAxGVjQ3QBa3rOWra/rtwG/Pb
-X-Received: by 2002:a05:6512:400f:b0:5a8:97d7:8c45 with SMTP id
- 2adb3069b0e04-5aa0e73f2admr3639645e87.36.1779095985952; Mon, 18 May 2026
- 02:19:45 -0700 (PDT)
+        d=1e100.net; s=20251104; t=1779097676; x=1779702476;
+        h=content-transfer-encoding:in-reply-to:from:content-language
+         :references:cc:to:subject:user-agent:mime-version:date:message-id
+         :x-gm-gg:x-gm-message-state:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=T/EO1D6TrcoAaYAZG0MsX8/FpcPXBdwplKszfXP85PU=;
+        b=bLlrVi8MW9tsWIK4sX44PWo56Qk5Zmlm30bLk5Ba6szSpLqhyAdh8+D/zJYvTL0V1R
+         zshn/gqfFpIpcEB52dES3kvL5RSJklq31PVXjK3kkB25y4yfBQf8TlSCfmR7db17sFjb
+         ho1OyarqhusF/FeOMZzBJMdXBhS0F422jqOxtyB3+Oqrwk3HPrh0zTJvBLxmzDkPKBSs
+         6tUyRL1Jd0VikjSdxTJWyo6BHYvTXWZbqc4BEpjD0b/VIOirHo+cRErCTs4Vr3yQ2SFs
+         WmJz+pnKKY+w+KXBpLk8VIl1PY/jA5afV8ciEpggqsec8wlZ+MgUFnavaJoXPyOeWpT6
+         s3Lg==
+X-Gm-Message-State: AOJu0YzX24xw4sUbD9NMOy07lKaQgmw3u7LkS8pES2TCAKjJXbOWvkVx
+	2ZXUDMW36SSB0FC1lMdjSF6iVP4kR4rwC0goRN1SZev+JPWDWO3Qrf578GfBWd5y0uLWnmDYIKG
+	DYiri7Ds=
+X-Gm-Gg: Acq92OEvw8fOU1Q3AoF64a5FLisdd+COZVkDx6yMLs73zH8hyJHDJPgMCelh6DezX3Z
+	1hMVldV6p6/YAB361OVVkTJJ+hRl9eoFfn0ybwKGiNC0VDiN9r3UZEQwYqXzZAogqEzQQIsn9aL
+	9js5BAHgF/EEaYy09zXJcQAxB43y55MMVfDpKamWQ4NgUubiqW/3p+v8b+iYoZ5P1P5mLwXz84g
+	qEGJW8IIIGhhGt+RalC/LkPv0dsi1WLkYL+T200OTDt1+nQD9x3gG3B9Wokro2W8KspzFjk8xtz
+	ttMxsLFAglfNEHJZCPTXo/eBtQ0fImR78FD7SCRNAzT+svuPmad8fui1q5nip/Q2Fj3WVfGmD6n
+	RIbudnvniHgNPN63fP7+SyOHbhguUky67FrVJWYhLQUKCfAmb6t2TBPsJEpaRPX8pdzx/CFMaew
+	xEV7C8sem3XzatKriExSzH2g6ULk65
+X-Received: by 2002:a05:600c:34d4:b0:48f:e245:394e with SMTP id 5b1f17b1804b1-48fe631f631mr226307655e9.27.1779097675702;
+        Mon, 18 May 2026 02:47:55 -0700 (PDT)
+Received: from [192.168.1.3] ([185.48.77.170])
+        by smtp.gmail.com with ESMTPSA id 5b1f17b1804b1-4900c16c744sm58005165e9.3.2026.05.18.02.47.54
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Mon, 18 May 2026 02:47:55 -0700 (PDT)
+Message-ID: <ef5688a7-3e1d-47be-aca7-cc6e564e059c@linaro.org>
+Date: Mon, 18 May 2026 10:47:53 +0100
 Precedence: bulk
 X-Mailing-List: sashiko-reviews@lists.linux.dev
 List-Id: <sashiko-reviews.lists.linux.dev>
 List-Subscribe: <mailto:sashiko-reviews+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:sashiko-reviews+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-References: <20260517063311.28921-6-kerneljasonxing@gmail.com> <20260518063408.EEA18C2BCB7@smtp.kernel.org>
-In-Reply-To: <20260518063408.EEA18C2BCB7@smtp.kernel.org>
-From: Jason Xing <kerneljasonxing@gmail.com>
-Date: Mon, 18 May 2026 17:19:08 +0800
-X-Gm-Features: AVHnY4JpVNBI7i63KPNT8vcPuVNlZxz95g7r0WhIXmRC5pRncmxLmDuftdPRNG8
-Message-ID: <CAL+tcoDzmU942WOxeX7j=fdn8Xd_itF55=bg0RMv32+Bfx_wbQ@mail.gmail.com>
-Subject: Re: [PATCH net v3 5/5] selftests/xsk: drain CQ to wait for TX completion
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH v2 5/6] tools/build: selftests: Allow versioning LLVM lld
 To: sashiko-reviews@lists.linux.dev
-Cc: bpf@vger.kernel.org
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
+Cc: dmitry.torokhov@gmail.com, linux-perf-users@vger.kernel.org,
+ bpf@vger.kernel.org, linux-input@vger.kernel.org
+References: <20260518-james-perf-llvm-version-v2-5-f12cc4f031d8@linaro.org>
+ <20260518093237.90640C2BCC6@smtp.kernel.org>
+Content-Language: en-US
+From: James Clark <james.clark@linaro.org>
+In-Reply-To: <20260518093237.90640C2BCC6@smtp.kernel.org>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
 
-On Mon, May 18, 2026 at 2:34=E2=80=AFPM <sashiko-bot@kernel.org> wrote:
->
-> Thank you for your contribution! Sashiko AI review found 1 potential issu=
-e(s) to consider:
-> - [Medium] The racy drain loop in `wait_for_tx_completion()` can exit pre=
-maturely and fail to drain pending CQ entries, leading to test flakiness.
+
+
+On 18/05/2026 10:32 am, sashiko-bot@kernel.org wrote:
+> Thank you for your contribution! Sashiko AI review found 1 potential issue(s) to consider:
+> - [Medium] Empty USE_LD variable causes clang build failure in selftests when ld.lld is not in PATH.
 > --
->
-> commit 25f4d14929e097cf7028dd26ec4e4bae16aa1a5b
-> Author: Jason Xing <kerneljasonxing@gmail.com>
->
-> selftests/xsk: drain CQ to wait for TX completion
->
-> This patch addresses test timeouts in xsk multi-buffer invalid-desc tests
-> caused by dropped descriptors publishing their buffer addresses to the
-> completion queue. It clamps outstanding_tx to zero to handle extra CQ
-> completions and adds a drain loop to consume remaining entries.
->
-> > diff --git a/tools/testing/selftests/bpf/prog_tests/test_xsk.c b/tools/=
-testing/selftests/bpf/prog_tests/test_xsk.c
-> > index 7950c504ed289..1f196c8ebc738 100644
-> > --- a/tools/testing/selftests/bpf/prog_tests/test_xsk.c
-> > +++ b/tools/testing/selftests/bpf/prog_tests/test_xsk.c
->
+> 
+> commit 371ca22c55bb0fa6502ac06f7b33d63418ad16ff
+> Author: James Clark <james.clark@linaro.org>
+> 
+> tools/build: selftests: Allow versioning LLVM lld
+> 
+> This commit adds an LLD variable to Makefile.include to allow versioning of
+> LLVM's linker, keeping it consistent with the rest of the LLVM toolchain. It
+> modifies the BPF selftests Makefile to resolve the full path of the linker
+> using the command -v shell utility.
+> 
+>> diff --git a/tools/testing/selftests/bpf/Makefile b/tools/testing/selftests/bpf/Makefile
+>> index 6ef6872adbc3e..836e783f0170e 100644
+>> --- a/tools/testing/selftests/bpf/Makefile
+>> +++ b/tools/testing/selftests/bpf/Makefile
+> 
 > [ ... ]
->
-> > @@ -1293,6 +1289,17 @@ static int wait_for_tx_completion(struct xsk_soc=
-ket_info *xsk)
-> >               complete_pkts(xsk, xsk->batch_size);
-> >       }
-> >
-> > +     do {
-> > +             if (xsk_ring_prod__needs_wakeup(&xsk->tx))
-> > +                     kick_tx(xsk);
-> > +             rcvd =3D xsk_ring_cons__peek(&xsk->umem->cq, xsk->batch_s=
-ize, &idx);
-> > +             if (rcvd)
-> > +                     xsk_ring_cons__release(&xsk->umem->cq, rcvd);
-> > +     } while (rcvd);
->
-> Could this drain loop exit prematurely? If the hardware or kernel is slig=
-htly
-> delayed in posting the remaining completions, xsk_ring_cons__peek() will
-> return 0 on the first iteration, causing the loop to terminate immediatel=
-y
-> without waiting.
->
-> > +
-> > +     usleep(100);
-> > +     complete_pkts(xsk, xsk->batch_size);
->
-> Relying on a hardcoded usleep(100) and a single complete_pkts() call migh=
-t
-> not be sufficient if the hardware takes longer than 100us or if the numbe=
-r
-> of remaining completions exceeds xsk->batch_size.
->
-> Would it be more robust to track the total number of submitted descriptor=
-s
-> (including invalid ones) in outstanding_tx instead of using a timeout-bas=
-ed
-> drain?
+> 
+>> @@ -245,9 +245,9 @@ $(OUTPUT)/%:%.c
+>>   
+>>   # LLVM's ld.lld doesn't support all the architectures, so use it only on x86
+>>   ifeq ($(SRCARCH),$(filter $(SRCARCH),x86 riscv))
+>> -LLD := lld
+>> +USE_LD := $(shell command -v $(LLD))
+> 
+> Does this cause the build to fail if the toolchain directory is not in the
+> system PATH?
+> 
+> If a user explicitly specifies the compiler using an absolute path like
+> CLANG=/path/to/clang, but does not add the toolchain directory to their PATH,
+> the command -v utility will return an empty string.
 
-No, I tried before. It caused more failures of xsk selftests because
-not all the descs are published in the cq:
-1) address-invalid descriptors are silently dropped by
-xskq_cons_peek_desc() via xp_validate_desc() without writing any CQ
-entry.
-2) only drain_cont descriptors and successfully sent descriptors
-produce CQ entries.
+If they don't use LLVM= and use CLANG= with an absolute path then they 
+need to set all the tools with an absolute path. That's the problem that 
+setting the path with a prefix for all tools with LLVM= solved.
 
-Since we cannot predict at submission time which descriptors will hit
-the drain_cont path, outstanding_tx cannot precisely track the number
-of expected CQ entries. The do-while drain loop handles this gap. That
-means this current impl is a conservative safety way.
+I suppose this could _technically_ be a regression, but so could adding 
+any new build rule that added a new tool that wouldn't be set in 
+someones existing build command. Being that strict would mean we can't 
+ever add new tools so I don't think this is an issue. And I don't think 
+there's a way to solve this and also respect the documented rules of LLVM=
 
-Thanks,
-Jason
+> 
+> This would cause USE_LD to be empty, leading to a malformed argument like
+> -fuse-ld= being passed to clang later in the Makefile, which then fails with
+> an invalid linker name error.
+> 
+> Previously, passing the hardcoded lld allowed clang to natively resolve the
+> linker relative to its own binary location. Is there a way to support both
+> versioned linker names and absolute compiler paths without relying entirely
+> on the system PATH?
+> 
+> [ ... ]
+> 
 
->
-> > +
-> >       return TEST_PASS;
-> >  }
-> >
->
-> --
-> Sashiko AI review =C2=B7 https://sashiko.dev/#/patchset/20260517063311.28=
-921-1-kerneljasonxing@gmail.com?part=3D5
