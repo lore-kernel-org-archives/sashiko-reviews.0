@@ -1,93 +1,92 @@
-Received: from mail-lf1-f54.google.com (mail-lf1-f54.google.com [209.85.167.54])
+Received: from mail-lj1-f169.google.com (mail-lj1-f169.google.com [209.85.208.169])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 66C72389452
-	for <sashiko-reviews@lists.linux.dev>; Mon, 18 May 2026 09:10:33 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=pass smtp.client-ip=209.85.167.54
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9FF523E2AD5
+	for <sashiko-reviews@lists.linux.dev>; Mon, 18 May 2026 09:19:48 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=pass smtp.client-ip=209.85.208.169
 ARC-Seal:i=2; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1779095434; cv=pass; b=D6pSUC9EKCGArOobDxjjOmNuagA9BI773Hj1beYtNB5INXDKY40CmpcN/I8Q4EES/ksKmALlqpEstwO8iSlQ0dOsGCV7dXz7OhuHRQTg6BTQCmikWqT1bg+DdkRe08jgyHFk3kqTMKu/43yDyhzGQGnpoy953eEymtjE0/hgboA=
+	t=1779095990; cv=pass; b=I1V/YQOvPmOzT/CfPL8zSgcehRqims8wQHZo22N+wf6D7sV0oqvfrRknbaua0PSEXL5XdlJq84OgCyhQYbNK9TbhMbvVfAjZurxKMYL/IVeMYBJooiE/kDhkDN1hn6/gHNk7784XTjlIiP0zmSN+8f27MJKXqaJgU6INEPPmaaM=
 ARC-Message-Signature:i=2; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1779095434; c=relaxed/simple;
-	bh=uHTN8NfGJnT96dgsJXFP3/yIeb0sw4lgywvjuy6wQtM=;
+	s=arc-20240116; t=1779095990; c=relaxed/simple;
+	bh=CnwT4/j5fv+DeDtRFPNWlL8z+nuZTW/Y6juMWgr5UTA=;
 	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
-	 To:Cc:Content-Type; b=EWXbk7TTiFNrlObpqBbcCR2lu91f2Ex7VtlynN5R5MWsmzKqMpHHZIwvv5SKd66weY69EEvGOW2As4qlmrHJYUHqZ8NlF/fMTMr+Tq36aeGLth5BZ/o8LZTwUZ9UJONL0PJjpUwzRFK/GDxF6CCTmyLFWKmdh3QqDLjBMdblu5w=
-ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=qZHe5aSb; arc=pass smtp.client-ip=209.85.167.54
+	 To:Cc:Content-Type; b=eaj+wpvVj/G90jkY/OtJ5kLxCLLmCJrXUaqMF2/FJgwz9ZHp67VBvA1DZu/kxgYALgphtt1bdzfd1BGG7s5Sbltw8gpG3Y4zNPiCUrcK0cREphE0fP8xdMIGvCUec39pj6D1J78io1scCMlCAgvuVAq9RdVqp4jThXAQWopB3wM=
+ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=hr2H0SGM; arc=pass smtp.client-ip=209.85.208.169
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="qZHe5aSb"
-Received: by mail-lf1-f54.google.com with SMTP id 2adb3069b0e04-5a8ee4b703fso1867300e87.0
-        for <sashiko-reviews@lists.linux.dev>; Mon, 18 May 2026 02:10:33 -0700 (PDT)
-ARC-Seal: i=1; a=rsa-sha256; t=1779095431; cv=none;
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="hr2H0SGM"
+Received: by mail-lj1-f169.google.com with SMTP id 38308e7fff4ca-393da8f389bso20410741fa.1
+        for <sashiko-reviews@lists.linux.dev>; Mon, 18 May 2026 02:19:48 -0700 (PDT)
+ARC-Seal: i=1; a=rsa-sha256; t=1779095986; cv=none;
         d=google.com; s=arc-20240605;
-        b=dCWQhJ/m0l0aTfeNwB08pFHrZ//bNZopkLkSLlottpQT5tgw7ZDXfZdWaGAiMrLYIO
-         EPOV9T/zJdFV5qGw+120VyMeG02+ciCDQDSVyyRo0JrcUGFQIPBdeCMEgvOQocLom713
-         77MXVHUTQPZ2ob4S2ImObLoFeACJiCf2YJDO+Awyic3PXRaGNZH+iThtG50PODYZgUOR
-         nm8t06gElTN9s5A0oduZvRYamFcuYuSDNilrEEdYZN7IjLaLtcoXzLpUIHYeV9EwWXIW
-         L27jE6eimoxkl9z6zZ4OR88OgGrM3dmxouBOavQYYncXVoEUAKIhYSNPD6Mb96bThXqh
-         Uatg==
+        b=YqYpeI1LDNodM+WwzdR7pJ1d7pjSabxe0MS2PtVqb91cQvA/9j/Ah/+qOWX13sxVtV
+         ebyKNqJ82ykOHz+iNb2pBh3xjz73NSJQiW+ZrUm9g+iN9hxEmYA8BZhxNvzfvm258spd
+         X5xCf+QjrMjs4UyqAtFPeiP/KilNPofbPsY5SgxvL/H/S8ALU5fx/LqRG2skR0Ah68IZ
+         yPDTSl/xEJHSyFOJpLv5rvE20e30mTbIqK6fKe4I1mgrqo/U/je2owtWmDYjvDkgAZG8
+         d9u4H7BwfRvkPLgbR/M+xR0zDdx3xIX6xrmKZcmCOk/7CTD1podBXip9xRtZIAn6GwNS
+         jr0w==
 ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com; s=arc-20240605;
         h=content-transfer-encoding:cc:to:subject:message-id:date:from
          :in-reply-to:references:mime-version:dkim-signature;
-        bh=/r1K8bP8+PsseAKaC+qZbXn1qbLOc7jjZj2aJft2jRY=;
+        bh=8oKVlndyjRSm5d1QJ38g8kShcN69mqPrJOMQfWnQBQ4=;
         fh=uA360uvxR9S0K/Y4Lovo7aIaGlBwzVBnnb2BKWupr/4=;
-        b=CSKvS28vFjBS+rkVMtBcuN2k2du5e+5AuIIuRU6+4Po0cw3Y4cq/j+wvzX0wvE5ZJr
-         R7jYJlNM6WzNxV8Fapu/5rES8IHFBA9eu64gqmi4WSVLukmcA2pESgB1VS8GlA7M50u/
-         2NMSyNwc+2X+FZ/tMLhYLLH9k6q/Eqh77v8G4ddxgM/Ry9xtSAwDDRu7I+pvLX8O7ZMb
-         zrArxJNis+PMWAyJmp15huI2RkBqUmMgHM5/hv12+nGeIdAIFCoZdf9s+wey3JUbeej2
-         rz4C1c3Fqb1Wz953Bff8ko9lSff2Ek8swLq50E+RVfCOlqff0aNQndlwyK36GxsztRrT
-         qPLA==;
+        b=fignk8KUybVwPtFC2+XsvHkbpYIx8VreQ5zgUd+Z5O9GwMFvEMYqLZWJKvu+zH4NJP
+         Hd7eUybGDqfHX8Da8+i1AyphJIMv/rfUr6148I/NPsq+Vu7X0cWUjopNHggWx+h3bllC
+         P5E7YxwdkzH9rFO9SuPpiw6a0BNeSdK/GCDnP94CGRh7bly3D+xstcUlBM4orhsdGBHg
+         XByUWY0VXX7s4uFuBd1Z9AiEbu4mcaxDRByySOFmsFC6Fkh0T69hYTEIEhW7X7A7xwxE
+         OBSZny+Og1rgVs8xLRLDGRI0bPNWwOSi3txCictgRcUoZqrNgNtUQkRHkLM06CX6lPWq
+         /pSQ==;
         darn=lists.linux.dev
 ARC-Authentication-Results: i=1; mx.google.com; arc=none
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20251104; t=1779095431; x=1779700231; darn=lists.linux.dev;
+        d=gmail.com; s=20251104; t=1779095986; x=1779700786; darn=lists.linux.dev;
         h=content-transfer-encoding:cc:to:subject:message-id:date:from
          :in-reply-to:references:mime-version:from:to:cc:subject:date
          :message-id:reply-to;
-        bh=/r1K8bP8+PsseAKaC+qZbXn1qbLOc7jjZj2aJft2jRY=;
-        b=qZHe5aSbEfULn1AEm4QCh+a6i7ea6X9KIO5OvKpTqCgirfkTWbKn7jIWRy8q3DDh0N
-         0OfGYNCOl4mdj+rbR0axe428JuV2GH0+5gywXSQgFQnrxk2Pyzt956Q5HrntQmFp/NrZ
-         lIMuvU2KJ0ofiazysbXm1834cYUEkHBCfRijH3eKHcaW3KiOT52jPwKe0D+NpzhOJx8E
-         hwY4u4CHDOEDCMvrsbuUH8sluEvF1jjdn634AXwrwIvHRIWSSjBt1jMs9rtFlukqCHcT
-         LsFZEXsW9MaM60NHvatdol+YIBwQ6n2tQOYpkQMxWvXe+bM3xSmlbIZsqjQhHFSQa6s4
-         UhcA==
+        bh=8oKVlndyjRSm5d1QJ38g8kShcN69mqPrJOMQfWnQBQ4=;
+        b=hr2H0SGMPbzd4ZQQFA9GAycOvdAI8I+ywIR1Y+BdWBhaJ5NHZO1epk69iuZA9dAeuN
+         HbV7NMwb9/beS1aKevFKCtLZsYYq+l3bWW+qB+VJbqBLQBlkMwdfLIgWUYUbG/iVxo3i
+         Ti+hphaU6RuN4DhI9VMmB4uFVuBnzyw6J4+7s/9qlcYRLlpZ4wz0cUnpPb+Ost79nLEC
+         y5680HUPnK3YTVw0zFChO3ourBApeFnIqcZ/7JBd9h72DC44rwsjz/Q7ADU88SHhmul5
+         4VoZtQHeImu9CUu0LQQu4j1enLRn1wXYGjJShLyIBjQTdQoqUdA4NT6O4VsnWVnFof5l
+         xyZA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20251104; t=1779095431; x=1779700231;
+        d=1e100.net; s=20251104; t=1779095986; x=1779700786;
         h=content-transfer-encoding:cc:to:subject:message-id:date:from
          :in-reply-to:references:mime-version:x-gm-gg:x-gm-message-state:from
          :to:cc:subject:date:message-id:reply-to;
-        bh=/r1K8bP8+PsseAKaC+qZbXn1qbLOc7jjZj2aJft2jRY=;
-        b=l8g6/ry/NmEiE49LDCE7BYUbsbZ6olYLnFThInbIh/XLZwMzWeD5n/T1Or/ibteIbi
-         HF4+bN+2YwI/x0e3WVj9blLYewWD8aQl8UMl1Lul5/JcC70Oi2ecm2FqGBAwhjnhFxlx
-         W3Cr28paVH2agGVY/foVEzrxzLWndgzkXIB+oALZ4CHqE1zM3ULrcMY+56b3tKNrIwe/
-         Go3lnJGfxm2rx6UynAQp68YAEwO+t60s/w3bN3iumKgUyGtw6zha0/r+wTsZ76nJJ46+
-         LlIi53zXu6RiyeLJWXfGYXO2PRGDM+JWjHwBbksFBDcgurmQg+TB4/gtyeRDrcx8KwZX
-         vixA==
-X-Gm-Message-State: AOJu0YxL5HlmGj9mkuxBmpnn/yn25PBYSe276S5Ia5b0wh2BxbXH8OdC
-	hRkA9VjP75qBJOJR9OGc6uSPTqgnwuyXW9pwZm3WAKqC50io9CTQK82eNCOma7W6X0n6yn4oGt1
-	7S1687J43Hh4tHZ4bBnaRwPu5gyIR+vpFST8YAoyRpU78
-X-Gm-Gg: Acq92OG16qTBelrb7nG9NM1fw4oaDBa9bDWvN+a5KnbvGgepfFmOIMxeJZhyt6AudwE
-	N8hSLwL2mrm5bNmwhd8U1T/2qY6kG+UgCnnnv/oKgGDIVjZMZew0jHEDXTj2GDqATCQGNZVI+xw
-	mWih2LYCDFyyl/yo4ex/iYIYTzJL5kQhCz8GaPYuQ91X8J0hkAQxOrfbThYZIHuaq7dMMkUGDxN
-	wDIYtYzW5AdJhpm15OBjeTYtcGeMN3rqBdOyGFB0G+Nxgu6ldYAcFTIO1x1hG+u2obGFFQ4t7i8
-	Z/9Os3tuE87o3M5BbSmbfPApCjCTzHYN8QVeJqFS
-X-Received: by 2002:a05:6512:2384:b0:5a2:c4f1:2635 with SMTP id
- 2adb3069b0e04-5aa0e74e119mr3652064e87.41.1779095430563; Mon, 18 May 2026
- 02:10:30 -0700 (PDT)
+        bh=8oKVlndyjRSm5d1QJ38g8kShcN69mqPrJOMQfWnQBQ4=;
+        b=gb5+qxgSpXcb/qKKdQ61GzmdIsRFNXxJOOat+YNfE9F59kuot4T3X5NX3g/oWImxnA
+         5VStagVRi3L58NfEhdYnKZHOp73fJsoUFxi5B0H2wr++rking/k2Jzm/EGr/CAOH6PXb
+         Zzu3uZWfSth4xdq8JIQevjRJA023yCbYeyZ1ZU6+bJiamm3MBcfsIaIIge14c70CSkns
+         9T31PE+hp4y8CKbuK4gy2+cRQyBoDMrMyBdp6Bagq7zPfsbAcqS6JpkGt5dd/IYOpbUv
+         sjUj7xHelokCU7pLgtI3xlIp7GC6VUXrFl2FjFXo46VGpDYinHvNsKNFycyxuv6fDONV
+         GNGQ==
+X-Gm-Message-State: AOJu0YyMAYTZ22NApl60VWMWxo+w6DxQjpRbRESssTlUvrlvNW8SKrnN
+	1AKmU+LwXZDOTHpaeFaDJav2X16tCBqEE1xJ1XIBR9Tn3WsxwmVfybkLwkWpI/abiaz3S/uDNkV
+	bW9vhdlPcon3aNnck+cK8+uBCNLOdlC+SUTwAaL9mUuH/
+X-Gm-Gg: Acq92OFl0AvcFHNQN9H/Y7plIUpTj+y4MWhbooKv2NxlPp9UwFMMgu/4b2IxQx06r0H
+	K65IBLNHxoKxEMftItqr+k8OTPYccpA3i4U7ZL7wR8DWmjMEpsClqp7EkrkBz4iH6vZH8mA8EaR
+	pzLawPDUajA3FsCKb1bYG6A2+fv4HhvEo3RTGf9ZcTEu/TtY0Mzi9YBY74mKMh2uJlsk6UQgzQ6
+	xDuliU4+oB+DA2RDvrNiubBYDIX/VmIvNHWYYoFgALuJQ69CtQrtW5DC8GDuOZu+gNl6hUCZ+Tb
+	AwEmuILQOgJSC8COAxGVjQ3QBa3rOWra/rtwG/Pb
+X-Received: by 2002:a05:6512:400f:b0:5a8:97d7:8c45 with SMTP id
+ 2adb3069b0e04-5aa0e73f2admr3639645e87.36.1779095985952; Mon, 18 May 2026
+ 02:19:45 -0700 (PDT)
 Precedence: bulk
 X-Mailing-List: sashiko-reviews@lists.linux.dev
 List-Id: <sashiko-reviews.lists.linux.dev>
 List-Subscribe: <mailto:sashiko-reviews+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:sashiko-reviews+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-References: <20260517063311.28921-4-kerneljasonxing@gmail.com> <20260518063408.5F995C2BCC6@smtp.kernel.org>
-In-Reply-To: <20260518063408.5F995C2BCC6@smtp.kernel.org>
+References: <20260517063311.28921-6-kerneljasonxing@gmail.com> <20260518063408.EEA18C2BCB7@smtp.kernel.org>
+In-Reply-To: <20260518063408.EEA18C2BCB7@smtp.kernel.org>
 From: Jason Xing <kerneljasonxing@gmail.com>
-Date: Mon, 18 May 2026 17:09:52 +0800
-X-Gm-Features: AVHnY4J_yeFtAi1KRLa-mCcAxqRBNxA_wAMywBg2D4_zBLETSSfz2IEZgdQ_oGU
-Message-ID: <CAL+tcoBK5DD8Hn9_6XGwm+9U2_zPxVUAtnoHr+wk-gKjcJ_etw@mail.gmail.com>
-Subject: Re: [PATCH net v3 3/5] xsk: drain continuation descs after overflow
- in xsk_build_skb()
+Date: Mon, 18 May 2026 17:19:08 +0800
+X-Gm-Features: AVHnY4JpVNBI7i63KPNT8vcPuVNlZxz95g7r0WhIXmRC5pRncmxLmDuftdPRNG8
+Message-ID: <CAL+tcoDzmU942WOxeX7j=fdn8Xd_itF55=bg0RMv32+Bfx_wbQ@mail.gmail.com>
+Subject: Re: [PATCH net v3 5/5] selftests/xsk: drain CQ to wait for TX completion
 To: sashiko-reviews@lists.linux.dev
 Cc: bpf@vger.kernel.org
 Content-Type: text/plain; charset="UTF-8"
@@ -97,81 +96,87 @@ On Mon, May 18, 2026 at 2:34=E2=80=AFPM <sashiko-bot@kernel.org> wrote:
 >
 > Thank you for your contribution! Sashiko AI review found 1 potential issu=
 e(s) to consider:
-> - [Medium] The commit message claims the function returns `-EOVERFLOW` af=
-ter draining is complete, but the code merely uses `continue;`.
+> - [Medium] The racy drain loop in `wait_for_tx_completion()` can exit pre=
+maturely and fail to drain pending CQ entries, leading to test flakiness.
 > --
 >
-> commit 5c0ce4e27ce234e8586a243e61aed44e90c34548
+> commit 25f4d14929e097cf7028dd26ec4e4bae16aa1a5b
 > Author: Jason Xing <kerneljasonxing@gmail.com>
 >
-> xsk: drain continuation descs after overflow in xsk_build_skb()
+> selftests/xsk: drain CQ to wait for TX completion
 >
-> This patch adds a drain_cont flag to xdp_sock to properly drain leftover
-> continuation descriptors when a multi-buffer packet exceeds MAX_SKB_FRAGS=
-.
-> The main TX loop handles these leftover descriptors individually by retur=
-ning
-> them to the completion queue with standard backpressure mechanisms.
+> This patch addresses test timeouts in xsk multi-buffer invalid-desc tests
+> caused by dropped descriptors publishing their buffer addresses to the
+> completion queue. It clamps outstanding_tx to zero to handle extra CQ
+> completions and adds a drain loop to consume remaining entries.
 >
-> Closes: https://lore.kernel.org/all/20260425041726.85FB3C2BCB2@smtp.kerne=
-l.org/
->
-> > When the last fragment
-> > (without XDP_PKT_CONTD) is processed, the flag is cleared and the
-> > function returns -EOVERFLOW so the next call starts with a fresh
-> > budget for normal packets.
->
-> Is this description accurate?
->
-> > diff --git a/net/xdp/xsk.c b/net/xdp/xsk.c
-> > index 0a6203c425766..298194b7335e1 100644
-> > --- a/net/xdp/xsk.c
-> > +++ b/net/xdp/xsk.c
+> > diff --git a/tools/testing/selftests/bpf/prog_tests/test_xsk.c b/tools/=
+testing/selftests/bpf/prog_tests/test_xsk.c
+> > index 7950c504ed289..1f196c8ebc738 100644
+> > --- a/tools/testing/selftests/bpf/prog_tests/test_xsk.c
+> > +++ b/tools/testing/selftests/bpf/prog_tests/test_xsk.c
 >
 > [ ... ]
 >
-> > @@ -1062,6 +1064,23 @@ static int __xsk_generic_xmit(struct sock *sk)
-> >                       goto out;
-> >               }
+> > @@ -1293,6 +1289,17 @@ static int wait_for_tx_completion(struct xsk_soc=
+ket_info *xsk)
+> >               complete_pkts(xsk, xsk->batch_size);
+> >       }
 > >
-> > +             if (unlikely(xs->drain_cont)) {
-> > +                     unsigned long flags;
-> > +                     u32 idx;
-> > +
-> > +                     spin_lock_irqsave(&xs->pool->cq_prod_lock, flags)=
-;
-> > +                     idx =3D xskq_get_prod(xs->pool->cq);
-> > +                     xskq_prod_write_addr(xs->pool->cq, idx, desc.addr=
-);
-> > +                     xskq_prod_submit_n(xs->pool->cq, 1);
-> > +                     spin_unlock_irqrestore(&xs->pool->cq_prod_lock, f=
-lags);
-> > +
-> > +                     xs->tx->invalid_descs++;
-> > +                     xskq_cons_release(xs->tx);
-> > +                     if (!xp_mb_desc(&desc))
-> > +                             xs->drain_cont =3D false;
-> > +                     continue;
+> > +     do {
+> > +             if (xsk_ring_prod__needs_wakeup(&xsk->tx))
+> > +                     kick_tx(xsk);
+> > +             rcvd =3D xsk_ring_cons__peek(&xsk->umem->cq, xsk->batch_s=
+ize, &idx);
+> > +             if (rcvd)
+> > +                     xsk_ring_cons__release(&xsk->umem->cq, rcvd);
+> > +     } while (rcvd);
 >
-> Looking at the implementation here, the code clears the flag and executes
-> a continue statement, which proceeds to the next descriptor using the
-> remaining budget instead of returning -EOVERFLOW.
+> Could this drain loop exit prematurely? If the hardware or kernel is slig=
+htly
+> delayed in posting the remaining completions, xsk_ring_cons__peek() will
+> return 0 on the first iteration, causing the loop to terminate immediatel=
+y
+> without waiting.
 >
-> Could the code and the commit message be out of sync?
+> > +
+> > +     usleep(100);
+> > +     complete_pkts(xsk, xsk->batch_size);
+>
+> Relying on a hardcoded usleep(100) and a single complete_pkts() call migh=
+t
+> not be sufficient if the hardware takes longer than 100us or if the numbe=
+r
+> of remaining completions exceeds xsk->batch_size.
+>
+> Would it be more robust to track the total number of submitted descriptor=
+s
+> (including invalid ones) in outstanding_tx instead of using a timeout-bas=
+ed
+> drain?
 
-Right, will reword the commit log:
-"When the last fragment (without XDP_PKT_CONTD) is processed, the flag
-is cleared and the loop continues to process subsequent descriptors
-with the remaining budget."
+No, I tried before. It caused more failures of xsk selftests because
+not all the descs are published in the cq:
+1) address-invalid descriptors are silently dropped by
+xskq_cons_peek_desc() via xp_validate_desc() without writing any CQ
+entry.
+2) only drain_cont descriptors and successfully sent descriptors
+produce CQ entries.
+
+Since we cannot predict at submission time which descriptors will hit
+the drain_cont path, outstanding_tx cannot precisely track the number
+of expected CQ entries. The do-while drain loop handles this gap. That
+means this current impl is a conservative safety way.
 
 Thanks,
 Jason
 
 >
-> > +             }
 > > +
-> >               skb =3D xsk_build_skb(xs, &desc);
+> >       return TEST_PASS;
+> >  }
+> >
 >
 > --
 > Sashiko AI review =C2=B7 https://sashiko.dev/#/patchset/20260517063311.28=
-921-1-kerneljasonxing@gmail.com?part=3D3
+921-1-kerneljasonxing@gmail.com?part=3D5
