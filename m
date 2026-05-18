@@ -1,203 +1,194 @@
-Received: from mail-wr1-f54.google.com (mail-wr1-f54.google.com [209.85.221.54])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from PH8PR06CU001.outbound.protection.outlook.com (mail-westus3azon11012068.outbound.protection.outlook.com [40.107.209.68])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A59A23F786B
-	for <sashiko-reviews@lists.linux.dev>; Mon, 18 May 2026 12:11:52 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.221.54
-ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1779106314; cv=none; b=ayWMj6Uxlq1bjSXXwDeIz6HzdygBSS7mzhL0ha5HPcUPr0N/ZACAEKzIMRUxyvKuZlpVAYPaiFKA3xyLzfRSnxC/EwgIXsVkVvN8+ZlIQInSjpyqTGmbCkVbOJKJcNT1vK83hZ6ehGUkptDgLGhffdVMypEbO7trf0ofYZTolmg=
-ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1779106314; c=relaxed/simple;
-	bh=CpDAs4T7K7Cl8E9QS7pZZ9OgoaIoAom4ZHkQ91+R07o=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=Dnh1FnjbFYpg+dUf5ng/fKFqZboG9E0kI2u5lpWbQ1shd/Ilky1L5yljscOyMUnS+cWhwWgY5IA3fDYG/JbYhGTi3YQ3QdG2jOiLkzTtXzDWt8Tz63vpDEGHGJexGmx+YH3FcJmyciLgak5WHwVOC1pQ9lbdSsOBEm0zMS7K/Wc=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=e8V5k+BH; arc=none smtp.client-ip=209.85.221.54
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B79403FDC07
+	for <sashiko-reviews@lists.linux.dev>; Mon, 18 May 2026 12:16:52 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=fail smtp.client-ip=40.107.209.68
+ARC-Seal:i=2; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
+	t=1779106614; cv=fail; b=enl1Co5BRNdDjGVTw2bpAterOu09Otqe0LUn5OTxYb3vK2PLgAArivodamDFx/l/GI6s7EMQB96I67V59+NAIpy4SXMR9iIUBGfsq+oJVXpV0voN79FI+h9zsnCZwaHuHV9Gxxg0M+dZoJ8dN7emR9J7odErHqwJIk5Mt0vsURk=
+ARC-Message-Signature:i=2; a=rsa-sha256; d=subspace.kernel.org;
+	s=arc-20240116; t=1779106614; c=relaxed/simple;
+	bh=VvoTsicAUnXo7/a36Nn/zH7v0EZ3j63f4WLiw/jh8gc=;
+	h=Message-ID:Date:Subject:To:Cc:References:From:In-Reply-To:
+	 Content-Type:MIME-Version; b=StmrE8oj+DWPCOLwDFyqi11bEyIZi0+6bgtotRYmqRkjW9ElY+g7mgHrvTDygkaNoY4ArcJPsO/JKew3EFTxF24Uild/okuIfmN1nMoRNqcGuQTYv+WsZeSR3b4wg09W2vrJf79REsRzC3B2ru1VIivX0ogT6lMCbF1d40yDXuI=
+ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=amd.com; spf=fail smtp.mailfrom=amd.com; dkim=pass (1024-bit key) header.d=amd.com header.i=@amd.com header.b=hKj/5JbR; arc=fail smtp.client-ip=40.107.209.68
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=amd.com
+Authentication-Results: smtp.subspace.kernel.org; spf=fail smtp.mailfrom=amd.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="e8V5k+BH"
-Received: by mail-wr1-f54.google.com with SMTP id ffacd0b85a97d-4585a116a4aso1760289f8f.3
-        for <sashiko-reviews@lists.linux.dev>; Mon, 18 May 2026 05:11:52 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20251104; t=1779106311; x=1779711111; darn=lists.linux.dev;
-        h=in-reply-to:content-transfer-encoding:content-disposition
-         :mime-version:references:message-id:subject:cc:to:from:date:from:to
-         :cc:subject:date:message-id:reply-to;
-        bh=ZWPo8KenTZciGOuDsKcmTAV6wQo2SX9JR2xge+PTEcs=;
-        b=e8V5k+BHgz5q3Mj4xjyjwRGrOfnSAgEMavVCQOCo4SZzK4Zfi5iHDbhHcyLO1547Tq
-         TpB3aIGxwc90LwwAtrUWloUMDcf1urwY4Ta1nO/1mL0U0culUuThcnQKgiJKhNg3q71u
-         MCuklIupRVzhE+Pl8Zh7FSBvzsHMQnfigd8aaI2M73iG9jzAGX9rtyc1eigoPU+biDBp
-         gspik/NKolgjHIduMTkQzFzii4U5rkIYErJpEd0L0AGln05sFOOFixMk5S7jSpHoiwuC
-         4aEF9rDFvKQtiupanYn3dDNm2BMk1xeabNfxD84HABaoYzm7m8jdF79AkTpkzZxY8hNm
-         mIiQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20251104; t=1779106311; x=1779711111;
-        h=in-reply-to:content-transfer-encoding:content-disposition
-         :mime-version:references:message-id:subject:cc:to:from:date:x-gm-gg
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=ZWPo8KenTZciGOuDsKcmTAV6wQo2SX9JR2xge+PTEcs=;
-        b=ED49InG5Y9gg6i9G0e/34BmObtw3X4GFOX/S5FMxJf/qBhsEGErdur+RVRTg0nyfv0
-         dVq/Dx2teNVGNRnaxmFJi3IrHbDcwZCD9ZDSfAAlLtKgJXmo1F8Jt2udowbvS/aDFtan
-         S6WMT8G5QxiEvIdbIEbXQjXbzb0RDd2HEHwOuM8RoXxNM+P7rKEIuGuwIpN40l741EM5
-         iav6FMI8HzDDkN9lplTx/4OFMKZb+BN2IS8QF3eTQxKDXnn1P2E/GDhI2irwNTn25UUz
-         83WmiRaBM0QB4ntM0pdjLnAUgmClFsivyv4t0abJjBgEf+N6SmPontj4P43v/W4Dq+n0
-         kHdA==
-X-Gm-Message-State: AOJu0YyGTZ1HuMxjNQ16sM8T2GfsUkhRToze73xbUDuwSrqS5lf/dZY4
-	POfBlrFwPtFi30nmblzTxfDdTbthcJCp+fMgdJyq2aldXFMEwgEgprfyL+y0bNsl
-X-Gm-Gg: Acq92OErDLDjyZx9ykiqZnVcUe3IfvoLkRTbEtRiVpGZrF+GRXVHleJwq92HBP79sJi
-	FBYwsHDK+4zVNuTImwYjJCVYah4VoTpAWvWfH/iaxJbLBvqHf8NtyNhbvmejoW19Ug7YLbyf/mt
-	7AGu42iCYd6pPZV5EzUZgSO3U98UNp0DqtzVEd/gl2wMP/IadUoXPy1O2gxyU1BHgUfBv8M8gNJ
-	99jivUYO5jru3CRD8bSF+vu4FMrgJ+URbNoiqHzX2TegHAhMvBK1dsMem8rk+tMde2V5CuUvhFW
-	IvOlAPnX4sEiIYRAK4z/sfmuzVqjQOLToHWoaCmP5M7el0wJOe772+VAxorXA/7zgSn56Wdi2jq
-	mU8ZQZuMljNTVahwp3ahJpjJTOVY9EcQzRFtfINhtPVAT8u4x3058pZ3lLA+MHBV/JBx4TSAzsM
-	Awo7ofh28FGE04rgfvV4fd1zKCNtkCtLSc83GXUQx/DMuDKdyURzZAGYM=
-X-Received: by 2002:a05:6000:2207:b0:45e:73eb:2a75 with SMTP id ffacd0b85a97d-45e73eb2ab3mr10959554f8f.16.1779106310843;
-        Mon, 18 May 2026 05:11:50 -0700 (PDT)
-Received: from gmail.com (deskosmtp.auranext.com. [195.134.167.217])
-        by smtp.gmail.com with ESMTPSA id ffacd0b85a97d-45da0a19c2dsm38056869f8f.21.2026.05.18.05.11.49
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Mon, 18 May 2026 05:11:50 -0700 (PDT)
-Date: Mon, 18 May 2026 14:11:48 +0200
-From: Mahe Tardy <mahe.tardy@gmail.com>
+	dkim=pass (1024-bit key) header.d=amd.com header.i=@amd.com header.b="hKj/5JbR"
+ARC-Seal: i=1; a=rsa-sha256; s=arcselector10001; d=microsoft.com; cv=none;
+ b=ZBtvzITpVNrRticVqYTqDuw/WvwJ5Yfu8MMDp2K06Lak/PuoUyGuNFGxsK8/9x3nO0oTVmq6zTX+uWKFgvBJ8qVfvCIzo8fEFO8aVX+i8Ba207DjuE3gR7n8QQp1ALQQjdTt4qZZuVSTY+KzmiIQOfYvx7qrzGZuqUlqhzEH9clV+oPLTUonnhkaKZKirBFd1ocVav2JKOhHjxuJRghCG1xC9bDemDUovLwBHYjuC/xWtB1Ho4ZTSDDxTKDKTSj49CJXxo6ZaUUw+c1wyKbog1qvbjiFLtu4fK0E7JMuF1oFFeSzWMHdxk1Klhem08zWrgj2voH5ldiIdA601m3/1A==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com;
+ s=arcselector10001;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
+ bh=3IJC1UM7Y4WC4QZaQXRpEoZb+aqBeRjsboKIMX7l8n8=;
+ b=Cgnfjs5luyX9yoCbL87sualfjrFKj4dqx1CB6zIyvvJ6a/j3hAuzS10fRg0vG8z1e7U/MxdyCAr3HoPCgr1ZdDEk2xRxFf5+6xrbmrPA/gdlsLlv2A5exXMD9lp3eD8SE4gryCldXnUnFGgQwHJOWx4RileYL0OWmFqYjBhXXjMigIK6pep45wlm+xyxjhXxy8d2wDkdj4qBKK21grXqNtI6tWcklaHD+6Qrfp5M5VeMqjAq4mXXyS1WrrqyGO6PKLU+1oJhIfW0drUlQWwQCLdh8zvUTUwD5KfqOqTVPECjkbaJQLl3IIW8WZt9nSXRjxRBNH4+RwfZ0teH8sr3+Q==
+ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
+ smtp.mailfrom=amd.com; dmarc=pass action=none header.from=amd.com; dkim=pass
+ header.d=amd.com; arc=none
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=amd.com; s=selector1;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
+ bh=3IJC1UM7Y4WC4QZaQXRpEoZb+aqBeRjsboKIMX7l8n8=;
+ b=hKj/5JbRiAg8gTiG68EJD/vUS9wkATZFZc/75n0BYwq2Y9zjF+30EgYYbXDpIJkCdhXSyrUtfZkj+/o3kkqZp8/mN2/BDwgzSXbEM8yEMooL/nEXqww/HCMz6XmmhWSt2QlMV+TGl7MuC4oIg735opdZ9dYuvD/qbvPNdHuYCtk=
+Authentication-Results: dkim=none (message not signed)
+ header.d=none;dmarc=none action=none header.from=amd.com;
+Received: from BN9PR12MB5259.namprd12.prod.outlook.com (2603:10b6:408:100::17)
+ by LV2PR12MB5726.namprd12.prod.outlook.com (2603:10b6:408:17e::9) with
+ Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.21.25.20; Mon, 18 May
+ 2026 12:16:49 +0000
+Received: from BN9PR12MB5259.namprd12.prod.outlook.com
+ ([fe80::122c:cca7:c2b3:90ed]) by BN9PR12MB5259.namprd12.prod.outlook.com
+ ([fe80::122c:cca7:c2b3:90ed%4]) with mapi id 15.21.0025.022; Mon, 18 May 2026
+ 12:16:49 +0000
+Message-ID: <7e036790-3e3b-452a-8895-d7bff66ccf36@amd.com>
+Date: Mon, 18 May 2026 17:46:45 +0530
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH] dmaengine: Fix device kref underflow in dma_chan_put()
 To: sashiko-reviews@lists.linux.dev
-Cc: bpf@vger.kernel.org
-Subject: Re: [PATCH bpf-next v5 1/4] bpf: add bpf_icmp_send kfunc
-Message-ID: <agsCBIBtnRdo54dK@gmail.com>
-References: <20260515194746.50920-2-mahe.tardy@gmail.com>
- <20260515202358.20252C2BCB0@smtp.kernel.org>
+Cc: vkoul@kernel.org, Frank.Li@kernel.org, dmaengine@vger.kernel.org
+References: <20260518-dmaengine-kref-fix-v1-1-4d6125048fb7@amd.com>
+ <20260518082920.B9BB1C2BCB7@smtp.kernel.org>
+Content-Language: en-US
+From: "Garg, Shivank" <shivankg@amd.com>
+In-Reply-To: <20260518082920.B9BB1C2BCB7@smtp.kernel.org>
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
+X-ClientProxiedBy: PN5PR01CA0035.INDPRD01.PROD.OUTLOOK.COM
+ (2603:1096:c01:260::13) To BN9PR12MB5259.namprd12.prod.outlook.com
+ (2603:10b6:408:100::17)
 Precedence: bulk
 X-Mailing-List: sashiko-reviews@lists.linux.dev
 List-Id: <sashiko-reviews.lists.linux.dev>
 List-Subscribe: <mailto:sashiko-reviews+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:sashiko-reviews+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=iso-8859-1
-Content-Disposition: inline
-Content-Transfer-Encoding: 8bit
-In-Reply-To: <20260515202358.20252C2BCB0@smtp.kernel.org>
+X-MS-PublicTrafficType: Email
+X-MS-TrafficTypeDiagnostic: BN9PR12MB5259:EE_|LV2PR12MB5726:EE_
+X-MS-Office365-Filtering-Correlation-Id: 242fa27c-bfc1-43f7-44f4-08deb4d75678
+X-MS-Exchange-SenderADCheck: 1
+X-MS-Exchange-AntiSpam-Relay: 0
+X-Microsoft-Antispam:
+	BCL:0;ARA:13230040|366016|376014|1800799024|56012099003|22082099003|18002099003|11063799003|4143699003;
+X-Microsoft-Antispam-Message-Info:
+	vLXd/EpQR+z+h3WtGrP1igZi9hK5XOiCF2Odb4QhNVtpbV9cwsOLOUCPdYET+eEOqC5LP6l1MSixZN3lNt/QNEtpd/H9AFW+PLuuKSVo4vEtUojUE9DlpPfRRgNXG+Rov142SxUQcMeEs6BMf/K0vMqzvqvhgh9o2laBfVoaeezqSz3v7H5kd9F9/mH7Rrg3FBX7sWtK3NnUcc5/KhvG9Ry2ft9rIDtHx6jCxR1qCxPxRX/ElmbLmkLmuc3aKJ857v1tZcmdB4M2BKSRyvrklXWtVvVo4Z1Q+QL8RrSOXDMk2AEQBbZJz0ltTJoPmKip4ncGLRl0OCrCqxAjNnYJeO5HunSm1TX8YX4duDcGBIlLO1CsutTYFFFlYxEqCpshUtOODT3uCSsEipOWUR0GSWTpODZMlfpmRTp3zs6EdnSZ1fTHWQ0o8yOoWX05HgZ6J2qc/Bvr9smw1DRU8868cQ5QYAatyT4EfDKoNjLDpFp9btwomviqTmfuJUFuNNLRXAtyy/d1qBwTK4mP3ESgRW+nfRdoZM7yfkRGsHvmgGZrw86nOBsBEZQzkLX4iDtSRxVUyy7JUXk91g46PbVrsygq/mmUD2S/GRNKz6NCe1wFOYigDShcnffBQKHuJ9bThJWKXiO/gmMuSRrwzvBHvg==
+X-Forefront-Antispam-Report:
+	CIP:255.255.255.255;CTRY:;LANG:en;SCL:1;SRV:;IPV:NLI;SFV:NSPM;H:BN9PR12MB5259.namprd12.prod.outlook.com;PTR:;CAT:NONE;SFS:(13230040)(366016)(376014)(1800799024)(56012099003)(22082099003)(18002099003)(11063799003)(4143699003);DIR:OUT;SFP:1101;
+X-MS-Exchange-AntiSpam-MessageData-ChunkCount: 1
+X-MS-Exchange-AntiSpam-MessageData-0:
+	=?utf-8?B?K25JUmtMaTI1QnlTVmJYdy92T0s2b3RwZlhQZk1uVUJjMFJkK2kyMTlyVmgx?=
+ =?utf-8?B?QTg4UUVBWmpORXB6aG1OS21PUVhqUWRHamQrTWVCRnZUaHhhUGI3WC9ReXJE?=
+ =?utf-8?B?bXNTTHhySHExUFdIaWdFN1NCakI2b0xLMDhpRnpXWW1MSUQwS0RJTEQrZVpj?=
+ =?utf-8?B?K2dHTGpqeERic2ttY2M3bHBTK0plUjRnN29pZHpuenFrUkJ1N2diWFBKaE5h?=
+ =?utf-8?B?VzFMdklOMWFtREtIa29zb2Y5MVM2dXJmcC9wNTI2Zi9xblNLb2o4eTR6bFJL?=
+ =?utf-8?B?c04rajJSRm1keWdkR0VyQlhvMisrUmlaZW1sYkRWNEw2UzBoUHNjUlNsQXNl?=
+ =?utf-8?B?L0FvTGRqSWswMXllVW81VXJmb2JKb1N0T3lvQmhUd2lxRnF6ZnV4Y0Vya2JM?=
+ =?utf-8?B?dnlZb1hGeFVacnN0WEFFTlBMM2Rvdk5qVnhUNGJTQ3d0OCtYakNEUXVhdUI0?=
+ =?utf-8?B?Y1VxZ3A2ZldVRWVMc3l5UkRPdE54c2lTcWh5SHB4L3dtdWdNVUIzeXJ3K3A4?=
+ =?utf-8?B?SmlCNjc5dGY5YzdoNkV2eU4vb3l0ZXd0WWl2T0x1eUtQZXNGbGVpUXB4OEhT?=
+ =?utf-8?B?ZTVHSjFKMTN6b1FvTllNdE1uTG45eDEyK2FCVjZuOUxBaXNHWjBCWUZWeHFV?=
+ =?utf-8?B?bUI3UXRrajluS3VlWTFndW85OEMrcjM5dnV4MnNMUXp5V1dGWmtEeXR0NTJP?=
+ =?utf-8?B?ek1wN0xWWXhodkZBSXhjdU1ERWpPa2dTdlZYNFlibjJoUXdNQy92dm1yVFhh?=
+ =?utf-8?B?TUZzUFh5OTY2WTA1MXY4MU52RDJmNk5xc1M0eHEyTGpORzE1aE01RmJkbS9K?=
+ =?utf-8?B?R1dQREQ4Zko2R3czRDAyQ3B1MlRsclRlcjc1NmFEVFMxUElsYTBnWlRva2Nm?=
+ =?utf-8?B?VW5tWDB3R3QyblhKenFhVDZGSVc1RGRsd1JOVlhVOFkwVjJQN0JxWjZwaW04?=
+ =?utf-8?B?a09BMGowVldRN3ZDdGg3M0NMWEpjakR0RSs3ZU9CRk9KaE9XQS9LWmdta1FE?=
+ =?utf-8?B?clIrNXJNZGhOT0lObGVFNlpQY2FaV01xZWhzNzcxMElIK25JbGNnenFPTzk5?=
+ =?utf-8?B?Rms2NHlJRGJyZlpsVFUvOG5NSi9SZDduOWdzVUF1K3F3RGt0UTRDRk5FZlJq?=
+ =?utf-8?B?SzlBTmx3dTM5aW9xaEJXVVRyY0g2NnRVenorK1B5S2VZYnpHdUs2czZIdmdR?=
+ =?utf-8?B?VVdBVW9qQkE0QnRqZUprWE9GdllnU2JKTlpkOVpISjVxZVMyWE90ZVBRblJr?=
+ =?utf-8?B?bzZ4OGpmNDdTbTBRWWVZbSsxTEJwUGlLSUg0RXZUOE9JRldzbStUVVA5bUpo?=
+ =?utf-8?B?Z2x3WUdXem0xTUdEcERodmI3MWFGTU1oanBYa3NsY1lVdVM1bGhaRkpFdWxF?=
+ =?utf-8?B?Q3grOVlCamh3T29xLzI1cjFzTUs4MnpCb3VlYm1ibU5OT1JMVlJOSWYwOU5u?=
+ =?utf-8?B?amI4eEc0WkE1elY5a3ZCcElTS3E1R0lkWDY2Tno0enVoeXZ3LzQyK0ZFMFEx?=
+ =?utf-8?B?S24xOHFnT001dEt0a1lUOWFwYkVaREVGRFNRazJuZlAwekdlMEVGMFh3RDEv?=
+ =?utf-8?B?b3c1N05aOStQSmZqTHNCOFVrVndnRlZGY0ZLMFhTc0NwSGozS1RSNlZBVG5Q?=
+ =?utf-8?B?bHhJVENMYmFWdE94MGttREZiTm5RL2MwSWRKT08zRnovR1hNM0NCeW1rMU1S?=
+ =?utf-8?B?cHJDc1BuWXVTQVlIaUlZQ2R1Ri91Umt5REZCK1F0ZStROFpTR3VLMmdHWHB4?=
+ =?utf-8?B?NVAxd0xBeXZVWEJ1cCtRSUFRZzYzOUZudWFpUzJUTWVSdzdxczRXanoyeDlu?=
+ =?utf-8?B?ZUdDUUhxd0FaaXpnM0tGL2R2NTlOT0hVU0cyeTUrVXR3K3NrNkNvaHdvVGNq?=
+ =?utf-8?B?cFBSdGdHV0RZZ09vdmpKN0l6QzBZYnhxYUUvUFRjNXVPR005ak5haUxJOGc3?=
+ =?utf-8?B?NzdES0pHaWNPRGh2UUV6ZlR1QmJZK3ZPYXl6RVZYYXhVTmtoejNXaHJQMkJk?=
+ =?utf-8?B?YzRUVjFOTlNRNzRSR09GVVhRZTV1WUVwZWpqdUwvbXZIcjZGRXg5eVlRZjlT?=
+ =?utf-8?B?ZU9LaVFyN1lSZWJST1pmenJWdUhkdkNDYkoyaGFNSGtpNytXWndQRjNRSERJ?=
+ =?utf-8?B?MjJGVmU0aCs5L2VDQ242akxucjk2N0IvS2Fid0xzWnpRSmZtdU5BajFpK1d4?=
+ =?utf-8?B?ME9JdVRQT0FtVFdxd3ZuOXdNODFxak9zbHZlY1l4VWgwVDhKZzZFN3FaZmVB?=
+ =?utf-8?B?OFIvSTZYSmtlZmlZU01YSURFU0tjZ0lUNzY4OW9TcEhmcmY3dm0zSkpPSlZw?=
+ =?utf-8?B?cW13MzFUWHN4N2hMcGpFVGMweWoyOWJ3SDdwN0w0M1VRbGVXSDlodz09?=
+X-OriginatorOrg: amd.com
+X-MS-Exchange-CrossTenant-Network-Message-Id: 242fa27c-bfc1-43f7-44f4-08deb4d75678
+X-MS-Exchange-CrossTenant-AuthSource: BN9PR12MB5259.namprd12.prod.outlook.com
+X-MS-Exchange-CrossTenant-AuthAs: Internal
+X-MS-Exchange-CrossTenant-OriginalArrivalTime: 18 May 2026 12:16:49.6097
+ (UTC)
+X-MS-Exchange-CrossTenant-FromEntityHeader: Hosted
+X-MS-Exchange-CrossTenant-Id: 3dd8961f-e488-4e60-8e11-a82d994e183d
+X-MS-Exchange-CrossTenant-MailboxType: HOSTED
+X-MS-Exchange-CrossTenant-UserPrincipalName: p655VfU1Y6krq9k5LblchHE0JxYEEbhrbE6e+NL5MHIT9ECvViwufx+5b/kZbCdGSYb4nfYbg6uJL8+zArcenA==
+X-MS-Exchange-Transport-CrossTenantHeadersStamped: LV2PR12MB5726
 
-On Fri, May 15, 2026 at 08:23:57PM +0000, sashiko-bot@kernel.org wrote:
-> Thank you for your contribution! Sashiko AI review found 3 potential issue(s) to consider:
-> - [Critical] Calling pskb_network_may_pull() on the original skb before cloning modifies the SKB layout, causing BPF packet pointer Use-After-Free and panicking on shared SKBs.
-> - [High] IPv4 ICMP generation fails silently in TC ingress due to a missing routing table entry.
-> - [Medium] Unsafe use of a per-CPU recursion protection flag without disabling preemption or bottom-halves causes spurious failures.
+
+
+On 5/18/2026 1:59 PM, sashiko-bot@kernel.org wrote:
+> Thank you for your contribution! Sashiko AI review found 1 potential issue(s) to consider:
+> - [High] Pre-existing Use-After-Free vulnerabilities in dma_chan_put() and dma_release_channel() due to device memory release before teardown completes.
 > --
 > 
-> commit a8e749b3f92e491c40d461bbeec717cff3d92cd2
-> Author: Mahe Tardy <mahe.tardy@gmail.com>
-> One line subject: bpf: add bpf_icmp_send kfunc
+> commit dcce1cbcc027c7a50b03bed56fe875a7390be677
+> Author: Shivank Garg <shivankg@amd.com>
 > 
-> This commit adds the bpf_icmp_send kfunc, allowing cgroup_skb and tc
-> programs to generate ICMP error messages instead of silently dropping
-> packets. It clones the skb to preserve the original buffer, checks bounds
-> with pskb_network_may_pull, and relies on icmp_send or icmpv6_send to
-> transmit the error message.
+> dmaengine: Fix device kref underflow in dma_chan_put()
 > 
-> > diff --git a/net/core/filter.c b/net/core/filter.c
-> > index 9590877b0714f..a1fe20b45f29a 100644
-> > --- a/net/core/filter.c
-> > +++ b/net/core/filter.c
+> This commit addresses a device kref underflow by ensuring the device reference
+> is only dropped when the client count reaches zero, matching the slow-path get.
 > 
-> [ ... ]
+>> diff --git a/drivers/dma/dmaengine.c b/drivers/dma/dmaengine.c
+>> --- a/drivers/dma/dmaengine.c
+>> +++ b/drivers/dma/dmaengine.c
+>> @@ -515,7 +515,9 @@ static void dma_chan_put(struct dma_chan *chan)
+>>               chan->route_data = NULL;
+>>       }
+>>
+>> -     dma_device_put(chan->device);
+>> +     /* This channel is not in use anymore, drop the device ref */
+>> +     if (!chan->client_count)
+>> +             dma_device_put(chan->device);
+>>       module_put(dma_chan_to_owner(chan));
+>>  }
 > 
-> > @@ -12464,6 +12466,95 @@ __bpf_kfunc int bpf_xdp_pull_data(struct xdp_md *x, u32 len)
-> >  	return 0;
-> >  }
-> >  
-> > +static DEFINE_PER_CPU(bool, bpf_icmp_send_in_progress);
-> > +
-> > +/**
-> > + * bpf_icmp_send - Send an ICMP control message
-> > + * @skb: Packet that triggered the control message
-> > + * @type: ICMP type (only ICMP_DEST_UNREACH/ICMPV6_DEST_UNREACH supported)
+> This isn't a bug introduced by this patch, but does this sequence present
+> a use-after-free risk?
 > 
-> [ ... ]
+> If dma_device_put() drops the final reference to the device (for example,
+> if the provider module previously unregistered the DMA device), it can
+> trigger the device release callback and free the dma_device and dma_chan
+> memory.
 > 
-> > +__bpf_kfunc int bpf_icmp_send(struct __sk_buff *__skb, int type, int code)
-> > +{
-> > +	struct sk_buff *skb = (struct sk_buff *)__skb;
-> > +	struct sk_buff *nskb;
-> > +	bool *in_progress;
-> > +
-> > +	in_progress = this_cpu_ptr(&bpf_icmp_send_in_progress);
-> > +	if (*in_progress)
-> > +		return -EBUSY;
+> If that happens, module_put(dma_chan_to_owner(chan)) will dereference the
+> freed memory, as dma_chan_to_owner() accesses chan->device->owner.
 > 
-> Since cgroup_skb egress programs execute in process context, they can be
-> interrupted by network RX softirqs on the same CPU.
+> Additionally, when dma_chan_put() is called from dma_release_channel(),
+> returning from this function leads to further accesses of the freed memory.
+> dma_release_channel() continues to access chan->device->privatecnt,
+> chan->device->cap_mask, chan->slave, and chan->name, which could cause a
+> series of use-after-free issues during teardown or hot-unplug.
 > 
-> If a task sets *in_progress to true and is immediately preempted by a softirq
-> that runs a TC ingress program calling bpf_icmp_send(), will it read the same
-> per-CPU flag and spuriously fail with -EBUSY?
-> 
-> Does this critical section need to run with bottom-halves disabled?
+> --
+> Sashiko AI review Â· https://sashiko.dev/#/patchset/20260518-dmaengine-kref-fix-v1-1-4d6125048fb7@amd.com?part=1
 
-So failing close with EBUSY might be okay in the first place, maybe we'd
-like to have two PER_CPU in_progress flags, one for softirq and one for
-process contexts?
+Thanks, this makes sense.
 
-> 
-> > +
-> > +	switch (skb->protocol) {
-> > +#if IS_ENABLED(CONFIG_INET)
-> > +	case htons(ETH_P_IP):
-> > +		if (type != ICMP_DEST_UNREACH)
-> > +			return -EOPNOTSUPP;
-> > +		if (code < 0 || code > NR_ICMP_UNREACH)
-> > +			return -EINVAL;
-> > +
-> > +		if (!pskb_network_may_pull(skb, sizeof(struct iphdr)))
-> > +			return -EBADMSG;
-> 
-> Does calling pskb_network_may_pull() on the original skb before cloning modify
-> the packet layout? If the headers span into paged fragments, this could
-> trigger reallocation of the linear data buffer via pskb_expand_head().
-> 
-> Since this kfunc lacks flags like KF_INVALIDATE_PKT_PTRS, could the BPF
-> verifier allow programs to retain and dereference stale direct packet
-> pointers?
-> 
-> Additionally, if the original skb is shared (which is common in tc and
-> cgroup_skb), would pskb_expand_head() hit a BUG_ON(skb_shared(skb)) and panic
-> the kernel? Should the packet be cloned first before pulling headers?
+I'm able to reproduce the dma_chan_put() use-after-free issue with KASAN:
 
-Fixed
+            slab-use-after-free in dma_chan_put+0x3e6/0x4c0
+            Read of size 8 by task insmod/6319
+            Freed by task 6319:
+              kfree+0x225/0x470
+              dma_chan_put+0x395/0x4c0
+              dmaengine_put+0xf8/0x160
 
-> 
-> > +
-> > +		nskb = skb_clone(skb, GFP_ATOMIC);
-> > +		if (!nskb)
-> > +			return -ENOMEM;
-> > +
-> > +		memset(IPCB(nskb), 0, sizeof(struct inet_skb_parm));
-> > +
-> > +		*in_progress = true;
-> > +		icmp_send(nskb, type, code, 0);
-> 
-> The commit message notes this is "mostly for tc ingress progs". Since TC
-> ingress happens before IP routing, skb_rtable(nskb) will be NULL here.
-> 
-> Looking at __icmp_send(), it checks for a routing entry and aborts early if
-> missing:
-> 
-> net/ipv4/icmp.c:__icmp_send() {
->         ...
->         rt = skb_rtable(skb_in);
->         if (!rt)
->                 goto out;
->         ...
-> }
-> 
-> Will this cause IPv4 ICMP generation to silently fail for TC ingress programs?
+I'll add the fix for this in next posting.
 
-Yeah, we need the net patches to route the pkt that I dropped in v5,
-let's put them back in v6.
+Best regards,
+Shivank
 
-> 
-> > +		*in_progress = false;
-> > +		kfree_skb(nskb);
-> > +		break;
-> > +#endif
-> 
-> -- 
-> Sashiko AI review · https://sashiko.dev/#/patchset/20260515194746.50920-1-mahe.tardy@gmail.com?part=1
