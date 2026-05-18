@@ -1,41 +1,42 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D9687481FC3;
-	Mon, 18 May 2026 16:39:11 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C54D348AE29;
+	Mon, 18 May 2026 16:47:11 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1779122351; cv=none; b=oHma/eNZkTJUmIzz7WsIxkS8es21hcze/svgMfOr/BL7bjEqeL0bZVjTg5QnTxIKetVTFjxSq/hs329DVX3j9wseYMaiT1BG5hdhpDDG2btWbDtjKMSbje/7VmGsXpAwkhwxkl5guDlIklB82/lRhFtoRcJigpbs+NLHcgT96Oc=
+	t=1779122831; cv=none; b=PwHTZalGvX/tXYg3hxNOZW0fOGnYw0i4gKWAyJrAbp5cWwDGC8mst68O+JXVrcY1lhNzJ5u64eOdL27u8DEvGyqFmLBSMx4GmZNRLAG/xzg1WIr4f1hHB+Sqyg94vpUafo3W1ZNf1mXdzg41QPG5K5ykHckpZ8+hdHll5cpTVW4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1779122351; c=relaxed/simple;
-	bh=Stf0ehQABcL3BWcb4wO+GZaxhOMvSkzAfcn2Ijq0AG0=;
+	s=arc-20240116; t=1779122831; c=relaxed/simple;
+	bh=vlXPQJ0n+FxiQ5yHTycwVp3+DG9L5PjEk5xES/9jr/c=;
 	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=rKxEyT0+jFU5Xc0U1UBJ6WzZ/bytHIcVhnWlDdffjK5b8QJ2E+7sR7iNc4Pe7v0oX1Ez7mJYwqQ18NV/aslzo7m9jyZhRlV+e/bcF45JcecE4eYP9FSeeH6TcXzmxo08p0ix+SYhfm2AJ4NKJuVBzdNcBcZGqAJQp5V/izq5BVs=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=Ri+taL0k; arc=none smtp.client-ip=10.30.226.201
+	 Content-Type:Content-Disposition:In-Reply-To; b=qs3YPKOAsGqWHuLJOENNwkLzzrY7LCzfuJLumH45iHUHAfNh59S1CHNTz//RAjhedkkUW9BVztX+PPC944VIWUptQvMvkvAeBmUhE+BCVdT/56M85GZugZc485yqLIN7dGcvs0Ra7+dpw839BDPu6uHkuzeiEjvDldfdpxEFfjc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=qV2tYE57; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="Ri+taL0k"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 92DCCC2BCB7;
-	Mon, 18 May 2026 16:39:10 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="qV2tYE57"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 231D8C2BCB7;
+	Mon, 18 May 2026 16:47:09 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1779122351;
-	bh=Stf0ehQABcL3BWcb4wO+GZaxhOMvSkzAfcn2Ijq0AG0=;
+	s=k20201202; t=1779122831;
+	bh=vlXPQJ0n+FxiQ5yHTycwVp3+DG9L5PjEk5xES/9jr/c=;
 	h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
-	b=Ri+taL0kKcikhS3U246fV7VwmCwQVJ6iR4pUT7Y1ejnazoXIXqjNukoVEtnXYq4lE
-	 H9J3jMBXFgj+4iIZwHXfMn0US77NnnM26zye4J+RRc4jt/+lY7C4FT9sbpQWzLkoXS
-	 3lKf16QcCWIYaD112BN30pqxYvycFepjSujK34DF99lOud7ieetTWqTwDUzu+yfk5x
-	 lXurmf8G/GOUGgYBX1RIb3baq/h9LbplM+2ki7B+fyjHYAjnvf0daBI/oLqZSyouZd
-	 NdgD8a3RBpVpTsXSmGL5WNhSxi+QnnX9e1cSQniKU9PWXZuOhZia/Y1d5DQU0wQZSI
-	 16mpmxkrjQ6TQ==
-Date: Mon, 18 May 2026 17:39:08 +0100
+	b=qV2tYE57grbbtPIULVsZPN/fs4Hlaw3SCEOAQWE7SsK6Vlc8YcLoCyhF4qXlF3X9S
+	 KQ6i4+wMxkYGkUWAMCQg77h6OdzQAl+T7qjFwtsxwe2wIrYW3n9G/BAE5qOmu2Z47T
+	 w380ZdHGmnkT5fO7J+IbnqxFM/bz86otaRaz7rw6nVCPTgQRhSFYzcAjEKzymF594C
+	 7D6SM8o6s6ndNGgh6RVN7ch5EmdWfpEnBRNSCa6I65ZDxBelqW5tthghxFT532GTGU
+	 r5vvyabauNnD+PKbjWyUIBsD29GujhFvuWX/zuQOPcw597ywAteuKK28vJVS67T8w3
+	 nHy6LQVM67sQA==
+Date: Mon, 18 May 2026 17:47:07 +0100
 From: Conor Dooley <conor@kernel.org>
 To: sashiko-reviews@lists.linux.dev
-Cc: "lianfeng.ouyang" <lianfeng.ouyang@starfivetech.com>,
-	devicetree@vger.kernel.org, conor+dt@kernel.org, robh@kernel.org
-Subject: Re: [PATCH v2 1/2] dt-bindings: Add bindings for StarFive JHB100 SoC
- trng controller
-Message-ID: <20260518-try-county-894e2fc4a433@spud>
-References: <20260518065243.20865-2-lianfeng.ouyang@starfivetech.com>
- <20260518070622.446D9C2BCB7@smtp.kernel.org>
+Cc: Alexander Sverdlin <alexander.sverdlin@gmail.com>, robh@kernel.org,
+	devicetree@vger.kernel.org, linux-sunxi@lists.linux.dev,
+	conor+dt@kernel.org
+Subject: Re: [PATCH v3 2/5] dt-bindings: arm: sunxi: Add Baijie HelperBoard
+ A133 compatible
+Message-ID: <20260518-sandlot-womanlike-c7a1dc7a3294@spud>
+References: <20260517234134.2737320-3-alexander.sverdlin@gmail.com>
+ <20260517235006.92840C2BCB0@smtp.kernel.org>
 Precedence: bulk
 X-Mailing-List: sashiko-reviews@lists.linux.dev
 List-Id: <sashiko-reviews.lists.linux.dev>
@@ -43,92 +44,82 @@ List-Subscribe: <mailto:sashiko-reviews+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:sashiko-reviews+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Type: multipart/signed; micalg=pgp-sha512;
-	protocol="application/pgp-signature"; boundary="Nobh5KDaNa7Qm609"
+	protocol="application/pgp-signature"; boundary="sQzAchun1Nh7Z/VC"
 Content-Disposition: inline
-In-Reply-To: <20260518070622.446D9C2BCB7@smtp.kernel.org>
+In-Reply-To: <20260517235006.92840C2BCB0@smtp.kernel.org>
 
 
---Nobh5KDaNa7Qm609
-Content-Type: text/plain; charset=iso-8859-1
+--sQzAchun1Nh7Z/VC
+Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
 Content-Transfer-Encoding: quoted-printable
 
-Sashiko devs,
-
-On Mon, May 18, 2026 at 07:06:21AM +0000, sashiko-bot@kernel.org wrote:
+On Sun, May 17, 2026 at 11:50:06PM +0000, sashiko-bot@kernel.org wrote:
 > Thank you for your contribution! Sashiko AI review found 1 potential issu=
 e(s) to consider:
-> - [Medium] Removing the existing 'starfive,jh8100-trng' compatible string=
- breaks backwards compatibility.
+> - [Low] Missing standalone compatible entry for the Core board.
 > --
 >=20
-> commit 847e83dc6a2024f6cb7a70fd0453035b2808bedb
-> Author: Lianfeng Ouyang <lianfeng.ouyang@starfivetech.com>
+> commit 76fcabeafe7a55386e6089c83f652ab14cf4b7ec
+> Author: Alexander Sverdlin <alexander.sverdlin@gmail.com>
 >=20
-> dt-bindings: Add bindings for StarFive JHB100 SoC trng controller
+> dt-bindings: arm: sunxi: Add Baijie HelperBoard A133 compatible
 >=20
-> This commit adds device tree bindings for the StarFive JHB100 SoC TRNG
-> controller, updates the maintainer, and removes the JH8100 compatible
-> string.
+> Baijie HelperBoard A133 is a development board around their A133 Core
+> board. Introduce a compatible for both the Core and the development
+> boards.
 >=20
-> > diff --git a/Documentation/devicetree/bindings/rng/starfive,jh7110-trng=
-=2Eyaml b/Documentation/devicetree/bindings/rng/starfive,jh7110-trng.yaml
-> > index 4639247e9e510..d21769b7d54e6 100644
-> > --- a/Documentation/devicetree/bindings/rng/starfive,jh7110-trng.yaml
-> > +++ b/Documentation/devicetree/bindings/rng/starfive,jh7110-trng.yaml
->=20
+> > diff --git a/Documentation/devicetree/bindings/arm/sunxi.yaml b/Documen=
+tation/devicetree/bindings/arm/sunxi.yaml
+> > index 9e4627f97d7e3..845b5a93686e7 100644
+> > --- a/Documentation/devicetree/bindings/arm/sunxi.yaml
+> > +++ b/Documentation/devicetree/bindings/arm/sunxi.yaml
+> > @@ -96,6 +96,12 @@ properties:
 > [ ... ]
+> > +      - description: Baijie Helper A133
+> > +        items:
+> > +          - const: baijie,helper-a133
+> > +          - const: baijie,helper-a133-core
+> > +          - const: allwinner,sun50i-a100
+> > +
 >=20
-> >  properties:
-> >    compatible:
-> > -    oneOf:
-> > -      - items:
-> > -          - const: starfive,jh8100-trng
-> > -          - const: starfive,jh7110-trng
-> > -      - const: starfive,jh7110-trng
-> > +    enum:
-> > +      - starfive,jh7110-trng
-> > +      - starfive,jhb100-trng
+> The commit message states the intent to "Introduce a compatible for both =
+the
+> Core and the development boards."
 >=20
-> Does removing the existing "starfive,jh8100-trng" compatible string break
-> backwards compatibility?
-
-The commit message is perfunctory but does attempt to explains this.
-Since the bot reply fails to retain the commit message as quoted text,
-it's annoying to go figure that out.
-
-It's really annoying that this happens, especially when the LLM text
-references the commit message. Can you please change the email response
-settings to retain the commit messages?
-
-Cheers,
-Conor.
-
+> Since this items list requires exactly three elements, it correctly valid=
+ates
+> the development board, but it appears a device tree written solely for the
+> standalone Core board would be rejected.
 >=20
-> Device tree bindings represent a stable ABI, and removing the previously
-> merged "starfive,jh8100-trng" string breaks dt-schema validation for any
-> existing or downstream device trees that used it. Even if the hardware is
-> no longer supported, the standard practice is to retain such strings,
-> perhaps optionally adding "deprecated: true", rather than deleting them
-> outright.
+> If the Core board were used with a different custom carrier board in the
+> future, would it need its own standalone compatible entry?
 >=20
-> > =20
-> >    reg:
-> >      maxItems: 1
+> For example:
 >=20
-> --=20
-> Sashiko AI review =B7 https://sashiko.dev/#/patchset/20260518065243.20865=
--1-lianfeng.ouyang@starfivetech.com?part=3D1
+>       - description: Baijie Helper A133 Core
+>         items:
+>           - const: baijie,helper-a133-core
+>           - const: allwinner,sun50i-a100
 
---Nobh5KDaNa7Qm609
+This example is complete crap, compared to the point that is apparently
+being made about different carriers.
+
+> Does omitting a standalone entry for the Core board limit flexibility for=
+ future
+> designs based on it?
+
+Obviously not.
+
+--sQzAchun1Nh7Z/VC
 Content-Type: application/pgp-signature; name="signature.asc"
 
 -----BEGIN PGP SIGNATURE-----
 
-iHUEABYKAB0WIQRh246EGq/8RLhDjO14tDGHoIJi0gUCagtArAAKCRB4tDGHoIJi
-0o12AQDfhow6+UreCj+Kxz2nab/sMC839yIeHrsR1Pq22+htBwD7BfQZx0HnYdXo
-fxDeTRst6kAiF7iC3miaaV0wMcgM1Qk=
-=lwZU
+iHUEABYKAB0WIQRh246EGq/8RLhDjO14tDGHoIJi0gUCagtCiwAKCRB4tDGHoIJi
+0hTBAQCRBFFBgigvpaWfKQ/anWyIKWSu02n7V4zI2MiUTYQEsgD/SubCx43ZVsTB
+B7sM8dyYZ869ZKCDx16A05eCV/fBdQE=
+=DTkF
 -----END PGP SIGNATURE-----
 
---Nobh5KDaNa7Qm609--
+--sQzAchun1Nh7Z/VC--
