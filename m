@@ -1,101 +1,128 @@
-Received: from mgamail.intel.com (mgamail.intel.com [192.198.163.14])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-wm1-f54.google.com (mail-wm1-f54.google.com [209.85.128.54])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7F0E43CDBD1;
-	Mon, 18 May 2026 08:22:31 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=192.198.163.14
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 33654221DB3
+	for <sashiko-reviews@lists.linux.dev>; Mon, 18 May 2026 08:31:56 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.54
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1779092552; cv=none; b=gKCzQtA8Qu1QETjJFM5yrhhjVGNde/SVUHSLDgbkuDCWvTkvACmyIk1CbTNqG6C1DgVnRU/9G/HJxwYlApDKZ/nzaCuUe569dYUMTewasNnvYcXShRyzdfcJBcNJG4DkD0AHdteRNjAE6LLugm5twsF++pi5gF5IMcbXnUt022w=
+	t=1779093117; cv=none; b=m69TU86TGzjwM4Frvv69Vk9WePpo7k7FNxRmclsWIrXi0wmvUVV730qrTZ/ZPGEQHdAQsWzqnnGMO6Kd1CT0dYaizFwUb932Bn7/Oc6g45UCCAH3mE6XCPjJeBN75ye1H8nRFVZBzpYK1VhKgPcvGU0iEYHA57kiJdaaNk4BEao=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1779092552; c=relaxed/simple;
-	bh=JKQXM+aklvzg+HECTcbU6iBFBwV9nwFA+IONcsJPURo=;
-	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
-	 MIME-Version:Content-Type; b=OzCCscd9VeGn3bGCrIurhT8nHKzUrr6RGm6ecNPwyNspFjxHk6F8HLxDxd7fnO4zJAuSVthDNNPLhf7kbkPjE8diVdNkdLEVqWPTamhj4R6tsm/O2lFbK0FxY2IL7IQye9Hp28Axl/JXvatMpdDD8/qwtvmyMJdYBQEyP7lqOdA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=intel.com; spf=pass smtp.mailfrom=intel.com; dkim=pass (2048-bit key) header.d=intel.com header.i=@intel.com header.b=b/40gpvp; arc=none smtp.client-ip=192.198.163.14
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=intel.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=intel.com
+	s=arc-20240116; t=1779093117; c=relaxed/simple;
+	bh=PmpScwcGJyXezoD1P7i8aSqy8+IuUXibgGwQ+ap6uj0=;
+	h=From:Date:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=F2f5eqUhIThf2rdnfa5SwkbjmIpOS4aY1qc6P1459GHgTUR6ZfDioglAEAKyzdc+1WgMh1P69hLUuZCa/GCwZA+uUUTeTGUXEdFh5iJIE9Dbjx/vfkEg3VGynb8DDZVB7tJt0ULQlXiXYJvz8kS0yMvP1vDnsFmNeJikf40Cz9I=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=E0beJFyH; arc=none smtp.client-ip=209.85.128.54
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=intel.com header.i=@intel.com header.b="b/40gpvp"
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
-  d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
-  t=1779092551; x=1810628551;
-  h=from:to:cc:subject:in-reply-to:references:date:
-   message-id:mime-version;
-  bh=JKQXM+aklvzg+HECTcbU6iBFBwV9nwFA+IONcsJPURo=;
-  b=b/40gpvpAGxWZauVNT0VcKJyuNnss9ex8mLlKm6ha6XssVBKQ7MMFpkj
-   tfxOa+WFypwgrJXebeIILyAKMVMJ7EdiHGrGKE8/5pKkXSSKtJoMJSVxd
-   healg+O46s08MZ2Y99mX34M5R9d657S4cBhi+za2k48y9OeimOdfBCpt/
-   zvgMTBlnYRSUumMPoaM6GOoEZyhGZ1lotYwGsVyatYPsJQ0yop+1AXLnE
-   KkmkJfL/+h0EN0h3cBE8cwFv5mCgCFxNkHZwU38DYzcNufT2rR0eSxFVm
-   lsE4oW78/gsuewQT1LCQiY0fm1X8UJ5VBxYf3zXy6f4ZvFaQKMu1pYBxg
-   A==;
-X-CSE-ConnectionGUID: 0uLhyUPZS3219xFbUcQI0A==
-X-CSE-MsgGUID: gDsUaoXRQmuG7arKtrKaww==
-X-IronPort-AV: E=McAfee;i="6800,10657,11789"; a="79970699"
-X-IronPort-AV: E=Sophos;i="6.23,241,1770624000"; 
-   d="scan'208";a="79970699"
-Received: from orviesa010.jf.intel.com ([10.64.159.150])
-  by fmvoesa108.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 18 May 2026 01:22:29 -0700
-X-CSE-ConnectionGUID: 1uM92fndQOqU2AOGjgD0Rg==
-X-CSE-MsgGUID: BrsBKavTSHyg+BioSlzHug==
-X-ExtLoop1: 1
-X-IronPort-AV: E=Sophos;i="6.23,241,1770624000"; 
-   d="scan'208";a="238480389"
-Received: from conormcd-mobl2.ger.corp.intel.com (HELO localhost) ([10.245.244.1])
-  by orviesa010-auth.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 18 May 2026 01:22:24 -0700
-From: Jani Nikula <jani.nikula@intel.com>
-To: Jonathan Corbet <corbet@lwn.net>, Guenter Roeck <linux@roeck-us.net>,
- Krzysztof Kozlowski <krzk@kernel.org>
-Cc: sashiko-bot@kernel.org, sashiko-reviews@lists.linux.dev,
- sashiko@lists.linux.dev, Linux Kernel Workflows
- <workflows@vger.kernel.org>, Linux Kernel Mailing List
- <linux-kernel@vger.kernel.org>, "devicetree@vger.kernel.org"
- <devicetree@vger.kernel.org>, kfree@google.com, Dave Airlie
- <airlied@redhat.com>, Simona Vetter <simona.vetter@ffwll.ch>
-Subject: Re: Stop false review statements
-In-Reply-To: <877bp2m586.fsf@trenco.lwn.net>
-Organization: Intel Finland Oy - BIC 0357606-4 - c/o Alberga Business Park,
- 6 krs Bertel Jungin Aukio 5, 02600 Espoo, Finland
-References: <ad139e54-a7f0-4d09-832c-6b2bf2e93e03@kernel.org>
- <fcc4b719-2696-4f31-bac4-6c07f8ddec47@roeck-us.net>
- <221cc52e-9918-43ea-b196-622a8cc6db05@kernel.org>
- <fd3b2ca7-4d64-4c4b-98a3-7d3285fa6826@roeck-us.net>
- <877bp2m586.fsf@trenco.lwn.net>
-Date: Mon, 18 May 2026 11:22:20 +0300
-Message-ID: <6010df0409abe1c9fc922ce57d7baa6c6998fa49@intel.com>
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="E0beJFyH"
+Received: by mail-wm1-f54.google.com with SMTP id 5b1f17b1804b1-488b0046078so17287155e9.1
+        for <sashiko-reviews@lists.linux.dev>; Mon, 18 May 2026 01:31:56 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20251104; t=1779093115; x=1779697915; darn=lists.linux.dev;
+        h=in-reply-to:content-disposition:mime-version:references:message-id
+         :subject:cc:to:date:from:from:to:cc:subject:date:message-id:reply-to;
+        bh=Pw8ouC4hEgSVvRs2LGBCbdqdtEj1Oh885FP+LlzBSas=;
+        b=E0beJFyH08qkGoyQ8DmjNs/UhfK2qNRMDhZmzz0+uJq0MOl1IGA9uMdFD3mYFNYzow
+         wyJJ624I4cigkbV84s7sgKuZhB5+l5ZVY+QtA6FpAFhhrkAvOW/9jn5O0MiACZOnCRFN
+         6wZ2SqPgbxQCMuKNtaaacFUbxIYezu50UGvZrZwZ3H2tyCIC37j6YnC8eA5Ovw/Hg+NW
+         y4ZqrLuGH6O0nMwdpKVFRUMpJWSeD0Rcw458LxoSQQ8z9GTbJGQS1vafOa2ZJ4KZHPQM
+         0xYYyULPuTRn+Wk+h4lzb9tjxrvilh2dOO/uZdcFqZMYGtPsNp4jwarFHffY/fS+VvJe
+         BsWg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20251104; t=1779093115; x=1779697915;
+        h=in-reply-to:content-disposition:mime-version:references:message-id
+         :subject:cc:to:date:from:x-gm-gg:x-gm-message-state:from:to:cc
+         :subject:date:message-id:reply-to;
+        bh=Pw8ouC4hEgSVvRs2LGBCbdqdtEj1Oh885FP+LlzBSas=;
+        b=Kuzg93m6SMGPytj1EuuM5ZxzjvI1hf1woiezU1FbLmGnckSPZgrhbgHHOVBtm6Teu5
+         B/4AlPdzA8PpRdW6/fv5g8LFNq2uVGQW7k3Cg3Gzl9YielOrnZdOqfeV40oroSP+MLPl
+         hnS3RCTZ2ZNtwIPxCAi/zJXhfzSWWCJA03Cjpp4O1a0KldHfeUcr3nWcbjZSEbJNZIhc
+         16GGNWvwjtDgcEfQh2rU3FYQ/ZL4vpI4xl6lOYEfUs1o4zBXf2sIXtlx2vdFUdOc9cTY
+         q667fFr9ntuhPokLCEpBpH+U+sS9Krv1P+e+b8PKxOtfqdbpHwT6gspXuzuQkfO8+ivU
+         52Pw==
+X-Gm-Message-State: AOJu0Yy7tt4DSeko7iL0S4fJ0Kb8yRTvbq0BnJHwmY4DsDWqdok1OTcE
+	p7jpCg9sdh4/89n//KQmVTM7w38nB0ZVL3Y464l52mx9FhYxCwvlPef8
+X-Gm-Gg: Acq92OHmImJvh28j1xn4sfhuClyYkv78HzKWS3jXLcpbBvSbVEnfS98h/TNNfEX/a7I
+	J98VUL5rIX7coTmquaXapieZe5IxnqFeaT4YVIfhqEiuSe30aPvRGIsov4CK3/98glXVposp6Ap
+	pWVhOGbCXgqW21SK/BVy5mifGG2Nlthxrn0T4HHJX8xUO+CGruOVeC+AouKjGj9XiyWqYyCPEAV
+	Er7EKxjANGzYpAnQ6EA2DiJ1eZs6yqH82tcPF9SUS/cxhCEJOcbKePnQiQcwaTDxxpMUmhv9Uy/
+	/O+XoNPrRqzUPsYCfpWV21HOdAWn1SLrItwHvc5fVf6dI0UX7MDR51Ia04CMQsMrH6i8ap0Cj7X
+	7WPvtpzZcYImysiW3rxKhgnnb/TOIOjO5u7MILiark0cfdNRZF07C8KQiFmuy2jNut9vZs/JbJ0
+	BVAlX1AOPE5oTyql8=
+X-Received: by 2002:a05:600c:5297:b0:48a:5342:36b5 with SMTP id 5b1f17b1804b1-48fe61ed375mr212210515e9.21.1779093114436;
+        Mon, 18 May 2026 01:31:54 -0700 (PDT)
+Received: from krava ([2a02:8308:a00c:e200:b655:ff13:e355:16a3])
+        by smtp.gmail.com with ESMTPSA id 5b1f17b1804b1-48febe6b9efsm112607115e9.5.2026.05.18.01.31.53
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Mon, 18 May 2026 01:31:53 -0700 (PDT)
+From: Jiri Olsa <olsajiri@gmail.com>
+X-Google-Original-From: Jiri Olsa <jolsa@kernel.org>
+Date: Mon, 18 May 2026 10:31:51 +0200
+To: Jiri Olsa <olsajiri@gmail.com>
+Cc: sashiko-reviews@lists.linux.dev, bpf@vger.kernel.org
+Subject: Re: [PATCH 1/7] uprobes/x86: Move optimized uprobe from nop5 to nop10
+Message-ID: <agrOd1GVFYSH_txN@krava>
+References: <20260514135342.22130-2-jolsa@kernel.org>
+ <20260514200545.C672EC2BCB3@smtp.kernel.org>
+ <agcSP6LxxpRA4ICO@krava>
+ <agmpurrWy15nahPK@krava>
 Precedence: bulk
 X-Mailing-List: sashiko-reviews@lists.linux.dev
 List-Id: <sashiko-reviews.lists.linux.dev>
 List-Subscribe: <mailto:sashiko-reviews+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:sashiko-reviews+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <agmpurrWy15nahPK@krava>
 
-On Sun, 17 May 2026, Jonathan Corbet <corbet@lwn.net> wrote:
-> That said, I was certainly considering *human* reviewers at the time,
-> and all of the people who agreed with the suggested policy were too.
-> Adding bots seems like a stretch to me.
->
-> I can't speak for subsystems that require Reviewed-by tags on their
-> commits, but I'm not sure that their maintainers would accept an
-> automated review as satisfying that requirement.
+On Sun, May 17, 2026 at 01:42:50PM +0200, Jiri Olsa wrote:
 
-For the parts of the drm subsystem that have a committer/maintainer
-model, one of the requirements for pushing is that at least two people
-have been involved. Reviewed-by is one of the ways to record this is
-indeed the case.
+SNIP
 
-I can't speak for the entire subsystem either, but to me it was always
-about people, trust, and the community.
+> > > Is there a similar issue for forked children that inherit the optimized
+> > > 10-byte sequence?
+> > > 
+> > > During fork, uprobe_mmap() installs a breakpoint in the child by writing
+> > > 0xCC to the first byte, changing the instruction from 48 8d... to cc 8d...
+> > > 
+> > > If the uprobe is unregistered before the child hits and re-optimizes it,
+> > > __is_optimized() will return false because is_lea_insn() strictly expects
+> > > the first byte to be 0x48:
+> > > 
+> > > arch/x86/kernel/uprobes.c:is_lea_insn() {
+> > >         return !memcmp(insn, lea_rsp, LEA_INSN_SIZE);
+> > > }
+> > > 
+> > > The fallback check for the re-attached probe on top of jmp8 also fails
+> > > because insn[1] is 0x8d, not OPT_JMP8_OFFSET.
+> > > 
+> > > Could set_orig_insn() then fall back to writing just the first byte of
+> > > the original instruction over the 0xcc, again leaving 66 8d 64 24 80 e8 ...
+> > > and silently truncating the child's stack pointer?
+> > 
+> > nice.. maybe we can skip the install_breakpoint call in uprobe_mmap
+> > for optimized probes.. will check
+> 
+> I think we need to dup uprobe trampolines on fork like below
 
-We may add ways to record that an LLM has reviewed a patch, but I think
-the fundamental requirement that two human beings have been involved is
-going to remain.
+or just allow it to be copied on fork
+
+jirka
 
 
-BR,
-Jani.
-
-
--- 
-Jani Nikula, Intel
+---
+diff --git a/arch/x86/kernel/uprobes.c b/arch/x86/kernel/uprobes.c
+index 4d91930aa792..e0067d1b6242 100644
+--- a/arch/x86/kernel/uprobes.c
++++ b/arch/x86/kernel/uprobes.c
+@@ -719,7 +719,7 @@ static struct uprobe_trampoline *create_uprobe_trampoline(unsigned long vaddr)
+ 
+ 	tramp->vaddr = vaddr;
+ 	vma = _install_special_mapping(mm, tramp->vaddr, PAGE_SIZE,
+-				VM_READ|VM_EXEC|VM_MAYEXEC|VM_MAYREAD|VM_DONTCOPY|VM_IO,
++				VM_READ|VM_EXEC|VM_MAYEXEC|VM_MAYREAD|VM_IO,
+ 				&tramp_mapping);
+ 	if (IS_ERR(vma)) {
+ 		kfree(tramp);
