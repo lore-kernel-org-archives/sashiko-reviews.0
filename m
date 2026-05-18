@@ -1,85 +1,157 @@
-Received: from mail.eswincomputing.com (mail.eswincomputing.com [123.124.195.78])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-qt1-f172.google.com (mail-qt1-f172.google.com [209.85.160.172])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 672443E0257
-	for <sashiko-reviews@lists.linux.dev>; Mon, 18 May 2026 06:21:51 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=123.124.195.78
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 00F063B584A
+	for <sashiko-reviews@lists.linux.dev>; Mon, 18 May 2026 06:37:38 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.160.172
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1779085322; cv=none; b=Y+bXqFSZgQwLMuSRRLFq3qtGrtnFjcLIwDxLXi1cJcxNa1ZmBIQobCXYJLUfZJ7Nx4j5SafugL61tWnPIrDWbD/uwkf/c5iuXQ40u3A/WKWvXVDXd/29HAXY6mxiOXhZvykTRGejvdN/Y/E/5hgW00dzYV7hhquQ4K43ILHVP/U=
+	t=1779086262; cv=none; b=Ehbw1CVdYEeEBYDWoTq2ftnPVIBOcZEOUu8bgVKwhJVGES5mt6Bvw7cVRc0yK033/ntvb87uTAKEwsNPo75wtWrCwA+UoPmaBLOamSa4hAzCQX7NId510nR4VleS7ak15hVSJWhlbfc7+0UILWtD9G5+gz3AtekhvfnkJBuzlCc=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1779085322; c=relaxed/simple;
-	bh=Y20Ds8Qt4A+0IswD78M8o8++pnWh8jQGVCd/QoQilJI=;
-	h=Date:From:To:Cc:Subject:In-Reply-To:References:Content-Type:
-	 MIME-Version:Message-ID; b=EeVR1esRohppaXzjxTxoDzE9TXOvhOvA8o5mXc47mk2YI74cXJ3QKVEwUWxZrdUDTkGEzp1OLt71MkPYsrQ9Hzw+lvqrSsMufbst9BwwQc2xwxbw/61alUrwszpM40sQ9w2QXljDCVBDUG4WzvFzaajt2HGF81grii8njTTYI8A=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=eswincomputing.com; spf=pass smtp.mailfrom=eswincomputing.com; arc=none smtp.client-ip=123.124.195.78
-Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=eswincomputing.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=eswincomputing.com
-Received: from dongxuyang$eswincomputing.com ( [10.12.96.41] ) by
- ajax-webmail-app2 (Coremail) ; Mon, 18 May 2026 14:21:11 +0800 (GMT+08:00)
-Date: Mon, 18 May 2026 14:21:11 +0800 (GMT+08:00)
-X-CM-HeaderCharset: UTF-8
-From: "Xuyang Dong" <dongxuyang@eswincomputing.com>
-To: sashiko-reviews@lists.linux.dev
-Cc: p.zabel@pengutronix.de, mturquette@baylibre.com, sboyd@kernel.org,
-	robh@kernel.org, krzk+dt@kernel.org, conor+dt@kernel.org,
-	linux-clk@vger.kernel.org, devicetree@vger.kernel.org,
-	linux-kernel@vger.kernel.org, huangyifeng@eswincomputing.com,
-	dongxuyang@eswincomputing.com, benoit.monin@bootlin.com,
-	bmasney@redhat.com, ningyu@eswincomputing.com,
-	linmin@eswincomputing.com, pinkesh.vaghela@einfochips.com
-Subject: Re: Re: [PATCH v5 3/3] reset: eswin: Add eic7700 HSP reset driver
-X-Priority: 3
-X-Mailer: Coremail Webmail Server Version 2024.2-cmXT6 build
- 20241203(6b039d88) Copyright (c) 2002-2026 www.mailtech.cn
- mispb-72143050-eaf5-4703-89e0-86624513b4ce-eswincomputing.com
-In-Reply-To: <20260514195305.C4132C2BCB3@smtp.kernel.org>
-References: <20260514114738.1641-1-dongxuyang@eswincomputing.com>
- <20260514195305.C4132C2BCB3@smtp.kernel.org>
-Content-Transfer-Encoding: base64
-Content-Type: text/plain; charset=UTF-8
+	s=arc-20240116; t=1779086262; c=relaxed/simple;
+	bh=4opVSGVK1pUcuw9hzNkK2EOLoJi7osP12yDz7HhOVnM=;
+	h=Mime-Version:Content-Type:Date:Message-Id:Cc:Subject:From:To:
+	 References:In-Reply-To; b=G+yEAzT4xhvSn3u5y8M6gODeoJcBeXPNmpznLs4iuWNkhTL+SpjDbl0ppwhjwFIWHHsaEmPPT/NqbuNLfUBWqA3he9c9NM3XwjAfgy0bfSDYDQopEdBJXaY84l9CaXAyYZCE+ZccEbpbXfKdCOTSed/27ItyXxR0qNRXqYMWLi8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=LIuGWl79; arc=none smtp.client-ip=209.85.160.172
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+Authentication-Results: smtp.subspace.kernel.org;
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="LIuGWl79"
+Received: by mail-qt1-f172.google.com with SMTP id d75a77b69052e-50e594413c2so14435821cf.0
+        for <sashiko-reviews@lists.linux.dev>; Sun, 17 May 2026 23:37:38 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20251104; t=1779086256; x=1779691056; darn=lists.linux.dev;
+        h=in-reply-to:references:to:from:subject:cc:message-id:date
+         :content-transfer-encoding:mime-version:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=0cE+xwVdh3twnCV3V0E994pEurq17/WwBVoFWrClUTg=;
+        b=LIuGWl79tg/jY9QT5GbT9KsUMaBpvEOBetbMWsDgW1A0rXbmvqPKzCuLlDizz78BOL
+         2wof5+h21ew1nZU++aoKHtE/lDlE/ijaT2+ySH4Vj/9UOxHK2JXWKY+KZsAr9fHTr4A0
+         UBoVE+oGumJuE0Qb0YjptzKghA9OF0fLbXV1LQSYrjrqkrvaVyAYovVjFsOi7rZqiu9q
+         PSWCG44qL04jS022uCXJea8vYqK+iXrOBUjn5AP0vQaA5J7Pr5QuPGR6joEbjxg4uVe/
+         OetYPMbazh/VzOKLjTlatS8hvOMerXLo0R+4dqXlSS1sKpl6Jk4AUWY2cZldkaBVfjdA
+         BZUw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20251104; t=1779086256; x=1779691056;
+        h=in-reply-to:references:to:from:subject:cc:message-id:date
+         :content-transfer-encoding:mime-version:x-gm-gg:x-gm-message-state
+         :from:to:cc:subject:date:message-id:reply-to;
+        bh=0cE+xwVdh3twnCV3V0E994pEurq17/WwBVoFWrClUTg=;
+        b=lASHYo1Jt6b16pvYZVSp5M5SFPK/TfjwzZxzcXuyZkHYcocunU91YdvnVXu1bg7F3s
+         uZ6/0O1S6R32X0ePN5x6964bw2h5gm67hxvjK3yQGIy6lYVzKSjQ849EkEMQFNOVns7m
+         OkeUb2GOfYwLvDL7FAAGXuWfDAdXWsb39m/W0Cr9Vki0Ukl3M6/HcAwe6SA+4C3HTI1e
+         OvM1hpBa4tQxNdJiEqunmiLv28Wc/FkAsmgD+SFChZpaH+8SEAG1xHiew/EhFlQ12SHE
+         +SUR6dNgcrymxU7lQpqxAWToeMFgr67lbEOkUmkkFkS2RY/dERtog9RsDIPNR9goosl3
+         qVFg==
+X-Gm-Message-State: AOJu0Yx0VbSY1MdG8BfrHdJX+MNZmIud47+ymwNKIHLdS+UxPRJ9IBnJ
+	m/3cpwPOssTQYBHZ2xzRwNG2ISxymMlEsU7U7MGgnP4Fk3e55TpIKUSTElyYVnHr
+X-Gm-Gg: Acq92OGHh7wd1UBBSNq5B0JM8Mka3iSR7Fx5M0tkOh5XnRtQSzO9tqROjQF8qrNvrqb
+	RYJ/mMw0Gpo6QQ57dpgXyaI3/5L/B8FFiXup0ryoMrB02GFYqKxpT3LHrioEpiY5huGX+A43/Wt
+	H8kB3p6tyuce1PnqzmdJm22BbbISszPdOZJ66o+qQzKbTNWRq/kiGzau6ZygNcp517i2DTHXEF5
+	5a33DWAfz3gwZtOzD1hKSZccPJc+2A78QDM+08ZSqWqJgBDgyNJh70qhbAo6GlhEI/m6WPeXWdz
+	CtmiSeymcP0yptKoUa+eUreE4Ly+4LBSYg8PtolXtxhcA5VX2zUc3xWFrUQU9rHKkE+UmfdsKUE
+	956bblIpmHAGvT6jFsf/izSkjWrmBBQe0Ep0SyxiPowIHyzK4Q4OIBIpscmXbeGW2GlUpZp/UnO
+	y+PtjZSyEc0li+tzgD8ShSxu2uY8zf1zmrtw9Q2B8YzEp5FISiL39a/Q5FfFrOV6ksWIdWUatFv
+	mS8L6VqgU92cRc1vobI0vpGYTsElaltP3aXGoirTNYnT7G3D9I=
+X-Received: by 2002:a05:622a:a950:b0:50e:18f9:b5e2 with SMTP id d75a77b69052e-5164155c029mr175840921cf.6.1779086256196;
+        Sun, 17 May 2026 23:37:36 -0700 (PDT)
+Received: from localhost ([2601:644:8000:5b5d:7285:c2ff:fe45:8a32])
+        by smtp.gmail.com with ESMTPSA id 6a1803df08f44-8ca360952f9sm46958916d6.15.2026.05.17.23.37.34
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Sun, 17 May 2026 23:37:35 -0700 (PDT)
 Precedence: bulk
 X-Mailing-List: sashiko-reviews@lists.linux.dev
 List-Id: <sashiko-reviews.lists.linux.dev>
 List-Subscribe: <mailto:sashiko-reviews+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:sashiko-reviews+unsubscribe@lists.linux.dev>
-MIME-Version: 1.0
-Message-ID: <46181743.64a6.19e39bee0c7.Coremail.dongxuyang@eswincomputing.com>
-X-Coremail-Locale: zh_CN
-X-CM-TRANSID:TQJkCgAnPJ_XrwpqtFcaAA--.4269W
-X-CM-SenderInfo: pgrqw5xx1d0w46hv4xpqfrz1xxwl0woofrz/1tbiAgELAmoJ7hIa-
-	gAAsx
-X-Coremail-Antispam: 1Ur529EdanIXcx71UUUUU7IcSsGvfJ3iIAIbVAYjsxI4VWxJw
-	CS07vEb4IE77IF4wCS07vE1I0E4x80FVAKz4kxMIAIbVAFxVCaYxvI4VCIwcAKzIAtYxBI
-	daVFxhVjvjDU=
+Mime-Version: 1.0
+Content-Transfer-Encoding: quoted-printable
+Content-Type: text/plain; charset=UTF-8
+Date: Sun, 17 May 2026 23:37:33 -0700
+Message-Id: <DILLFY3D4HQN.2KOV4CVPYXTV0@gmail.com>
+Cc: <dmitry.torokhov@gmail.com>, <linux-input@vger.kernel.org>
+Subject: Re: [PATCH] Input: mtk-pmic-keys - use of_device_get_match_data()
+From: "Rosen Penev" <rosenp@gmail.com>
+To: <sashiko-reviews@lists.linux.dev>, "Rosen Penev" <rosenp@gmail.com>
+X-Mailer: aerc 0.21.0-0-g5549850facc2
+References: <20260518042046.981861-1-rosenp@gmail.com>
+ <20260518043409.EC97EC2BCB7@smtp.kernel.org>
+In-Reply-To: <20260518043409.EC97EC2BCB7@smtp.kernel.org>
 
-PiAKPiBUaGFuayB5b3UgZm9yIHlvdXIgY29udHJpYnV0aW9uISBTYXNoaWtvIEFJIHJldmlldyBm
-b3VuZCAxIHBvdGVudGlhbCBpc3N1ZShzKSB0byBjb25zaWRlcjoKPiAtIFtMb3ddIE1pc3Npbmcg
-YCNpbmNsdWRlIDxsaW51eC9tb2R1bGUuaD5gIGZvciBtb2R1bGUgbWFjcm9zLgo+IC0tCj4gCj4g
-Y29tbWl0IDA4MjgxZjA1OTZhNzY0ZTE5MWNiZWNmZDlkYzEyYjBiNTFmNjczMGYKPiBBdXRob3I6
-IFh1eWFuZyBEb25nIDxkb25neHV5YW5nQGVzd2luY29tcHV0aW5nLmNvbT4KPiAKPiByZXNldDog
-ZXN3aW46IEFkZCBlaWM3NzAwIEhTUCByZXNldCBkcml2ZXIKPiAKPiBUaGlzIGNvbW1pdCBhZGRz
-IGFuIGF1eGlsaWFyeSBkcml2ZXIgdG8gc3VwcG9ydCB0aGUgRVNXSU4gRUlDNzcwMCBoaWdoLXNw
-ZWVkCj4gcGVyaXBoZXJhbHMgc3lzdGVtLiBUaGUgcmVzZXQgY29udHJvbGxlciBpcyBjcmVhdGVk
-IHVzaW5nIHRoZSBhdXhpbGlhcnkgZGV2aWNlCj4gZnJhbWV3b3JrLgo+IAo+ID4gZGlmZiAtLWdp
-dCBhL2RyaXZlcnMvcmVzZXQvcmVzZXQtZWljNzcwMC1oc3AuYyBiL2RyaXZlcnMvcmVzZXQvcmVz
-ZXQtZWljNzcwMC1oc3AuYwo+ID4gbmV3IGZpbGUgbW9kZSAxMDA2NDQKPiA+IGluZGV4IDAwMDAw
-MDAwMDAwMDAuLmJkZDRmNWUzZDdhNzYKPiA+IC0tLSAvZGV2L251bGwKPiA+ICsrKyBiL2RyaXZl
-cnMvcmVzZXQvcmVzZXQtZWljNzcwMC1oc3AuYwo+ID4gQEAgLTAsMCArMSwxMTIgQEAKPiA+ICsv
-LyBTUERYLUxpY2Vuc2UtSWRlbnRpZmllcjogR1BMLTIuMAo+ID4gKy8qCj4gPiArICogQ29weXJp
-Z2h0IDIwMjYsIEJlaWppbmcgRVNXSU4gQ29tcHV0aW5nIFRlY2hub2xvZ3kgQ28uLCBMdGQuLgo+
-ID4gKyAqIEFsbCByaWdodHMgcmVzZXJ2ZWQuCj4gPiArICoKPiA+ICsgKiBFU1dJTiBFSUM3NzAw
-IEhTUCBSZXNldCBEcml2ZXIKPiA+ICsgKgo+ID4gKyAqIEF1dGhvcnM6IFh1eWFuZyBEb25nIDxk
-b25neHV5YW5nQGVzd2luY29tcHV0aW5nLmNvbT4KPiA+ICsgKi8KPiA+ICsKPiA+ICsjaW5jbHVk
-ZSA8bGludXgvYXV4aWxpYXJ5X2J1cy5oPgo+ID4gKyNpbmNsdWRlIDxsaW51eC9kZXZpY2UuaD4K
-PiA+ICsjaW5jbHVkZSA8bGludXgvcmVnbWFwLmg+Cj4gPiArI2luY2x1ZGUgPGxpbnV4L3Jlc2V0
-LWNvbnRyb2xsZXIuaD4KPiAKPiBUaGlzIGlzbid0IGEgYnVnLCBidXQgc2hvdWxkIHRoaXMgZmls
-ZSBleHBsaWNpdGx5IGluY2x1ZGUgPGxpbnV4L21vZHVsZS5oPj8KPiAKCkhpIFNhc2hpa28sCgo8
-bGludXgvbW9kdWxlLmg+wqB3aWxsIGJlIGluY2x1ZGVkIGluIHRoZSBuZXh0IHZlcnNpb24uCgpC
-ZXN0IHJlZ2FyZHMsClh1eWFuZyBEb25nCgo+IFRoZSBjb2RlIHJlbGllcyBvbiBtb2R1bGUtc3Bl
-Y2lmaWMgbWFjcm9zIHN1Y2ggYXMgVEhJU19NT0RVTEUsCj4gTU9EVUxFX0RFVklDRV9UQUJMRSwg
-TU9EVUxFX0xJQ0VOU0UsIE1PRFVMRV9BVVRIT1IsIGFuZCBNT0RVTEVfREVTQ1JJUFRJT04KPiBs
-YXRlciBpbiB0aGUgZmlsZS4gUmVseWluZyBvbiBhbiBpbXBsaWNpdCBpbmNsdWRlIGNvdWxkIGxl
-YWQgdG8gdW5leHBlY3RlZAo+IGJ1aWxkIGZhaWx1cmVzIGlmIGhlYWRlciBkZXBlbmRlbmNpZXMg
-Y2hhbmdlIGluIHRoZSBmdXR1cmUuCj4gCj4gLS0gCj4gU2FzaGlrbyBBSSByZXZpZXcgwrcgaHR0
-cHM6Ly9zYXNoaWtvLmRldi8jL3BhdGNoc2V0LzIwMjYwNTE0MTE0MjEyLjkwMy0xLWRvbmd4dXlh
-bmdAZXN3aW5jb21wdXRpbmcuY29tP3BhcnQ9Mwo=
+On Sun May 17, 2026 at 9:34 PM PDT, sashiko-bot wrote:
+> Thank you for your contribution! Sashiko AI review found 2 potential issu=
+e(s) to consider:
+> - [High] Missing NULL check for of_device_get_match_data() result leads t=
+o NULL pointer dereference.
+> - [High] Mismatch between child counting and iteration logic can cause ou=
+t-of-bounds array accesses.
+> --
+>
+> commit 0ee3fee49ccf02b7e629f90533e67fc9b40d2b9e
+> Author: Rosen Penev <rosenp@gmail.com>
+>
+> Input: mtk-pmic-keys - use of_device_get_match_data()
+>
+> This commit simplifies the driver to fetch PMIC key register data directl=
+y
+> using of_device_get_match_data(). It also removes the unneeded of_device.=
+h
+> include.
+>
+>> diff --git a/drivers/input/keyboard/mtk-pmic-keys.c b/drivers/input/keyb=
+oard/mtk-pmic-keys.c
+>> index c78d9f6d97c4f..fd684ac169386 100644
+>> --- a/drivers/input/keyboard/mtk-pmic-keys.c
+>> +++ b/drivers/input/keyboard/mtk-pmic-keys.c
+> [ ... ]
+>> @@ -342,7 +339,7 @@ static int mtk_pmic_keys_probe(struct platform_devic=
+e *pdev)
+>>
+>>  	keys->dev =3D &pdev->dev;
+>>  	keys->regmap =3D pmic_chip->regmap;
+>> -	mtk_pmic_regs =3D of_id->data;
+>> +	mtk_pmic_regs =3D of_device_get_match_data(&pdev->dev);
+>
+> While this isn't a new issue introduced by this patch, can mtk_pmic_regs =
+be
+> NULL here if the device is bound manually via sysfs without a matching
+> device tree node?
+>
+> If mtk_pmic_regs is NULL, it appears it is unconditionally dereferenced
+> later when calling mtk_pmic_keys_lp_reset_setup().
+>
+> Would it make sense to add a check for !mtk_pmic_regs right after fetchin=
+g
+> the match data?
+No because every compatible has a non NULL data component.
+>
+>
+> Also, while reviewing this probe function, I noticed another pre-existing
+> issue further down:
+>
+> 	keycount =3D of_get_available_child_count(node);
+> 	if (keycount > MTK_PMIC_MAX_KEY_COUNT ||
+> 	    keycount > ARRAY_SIZE(irqnames)) {
+> 		dev_err(keys->dev, "too many keys defined (%d)\n", keycount);
+> 		return -EINVAL;
+> 	}
+>
+> 	for_each_child_of_node_scoped(node, child) {
+> 		keys->keys[index].regs =3D &mtk_pmic_regs->keys_regs[index];
+>
+> Is there a mismatch between the child counting and iteration logic?
+>
+> The validation check uses of_get_available_child_count(), which ignores
+> disabled nodes. But the loop uses for_each_child_of_node_scoped(), which
+> iterates over all children, including disabled ones.
+>
+> If a disabled child node exists in the device tree alongside available on=
+es,
+> could the loop execute more times than the initial validation accounted f=
+or?
+> This might increment the index variable past the allocated array bounds,
+> leading to out-of-bounds accesses on irqnames[] and keys->keys[].
+>
+> Would updating the loop to use for_each_available_child_of_node_scoped()
+> prevent this?
+Yes. Interesting that pre-existing issues are flagged...
+
