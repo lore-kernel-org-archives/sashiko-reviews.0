@@ -1,131 +1,163 @@
-Received: from mail-wr1-f42.google.com (mail-wr1-f42.google.com [209.85.221.42])
+Received: from mail-pf1-f201.google.com (mail-pf1-f201.google.com [209.85.210.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A57DE279DCC
-	for <sashiko-reviews@lists.linux.dev>; Mon, 18 May 2026 18:49:35 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.221.42
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B1F4E381AFA
+	for <sashiko-reviews@lists.linux.dev>; Mon, 18 May 2026 19:17:45 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.210.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1779130177; cv=none; b=T5XYeYl6IhWXUKSKPhYkUZMt8IjTBWeWVevo2tRMcq1IMhkeLC/01jEmll1aITtX/ZGA/gQm4ZpNkGC8z/5ks6/IvRrR2KmxNEMA1i90yZyIwDPa+yP5qgwl3bxP6OftxVVx2+F54mTezShHf/KuBUdLFygO248ULVNvwI3nZBM=
+	t=1779131867; cv=none; b=K30goxKqS2FG1m8d03qvl1DU7pMke4FDuQJdYla91odJk4VTpeWbcVVhV+9460Vj2+BjPTMJioyu/YY2xMgDDKDDoTe+44iamJhJyNiyvjDL3x2jGcBARDzOiTonmJahA6LhbcH17PeVap3/MKCwsnZk8oO2pg/0W7y31w33hD0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1779130177; c=relaxed/simple;
-	bh=MC6vPKbNlgjaWmED6rvvCIpirl9l+mwWzP22ZBRnHDE=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=AGOpdt5DvTvotWt9+FW6da2gC5QBY5j1BUz2W8ZHl+4CxbTlkC7GTwC4ZS+26+dRKVyJ5WdDTyw06Nc5Y2v+seL7VLEUS2IIuyAVSOluXTeQVbWl/ZrElrqsH8Dz1856JCQKAclkp71ejUzVZsVQHvwJfS1rw5y9l6uOQ0zTjGs=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=qSMKfEc1; arc=none smtp.client-ip=209.85.221.42
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+	s=arc-20240116; t=1779131867; c=relaxed/simple;
+	bh=ofODDOkkvzbqdsQg3gi+Qv4QDhxERbrkRCRKD59JhLk=;
+	h=Date:In-Reply-To:Mime-Version:References:Message-ID:Subject:From:
+	 To:Cc:Content-Type; b=BGbG+L33FESaWCPUkBPGTPIoKFa6qk92g/0YGBRLv3Qpgnl546Zce/2ezGaIk3+aeS6UYYhAP5mSxGc2Mi40CJJdLfppspz3GC6USCJwlimV6b2lvjlt6iQd7ysoPDLkZnlvxwzZ8bVE4W4stp9Pm9+ytMXEINGNKu0fQUgzW5Y=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=google.com; spf=pass smtp.mailfrom=flex--seanjc.bounces.google.com; dkim=pass (2048-bit key) header.d=google.com header.i=@google.com header.b=WksYPHZA; arc=none smtp.client-ip=209.85.210.201
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=google.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=flex--seanjc.bounces.google.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="qSMKfEc1"
-Received: by mail-wr1-f42.google.com with SMTP id ffacd0b85a97d-45e7c636e74so1006183f8f.0
-        for <sashiko-reviews@lists.linux.dev>; Mon, 18 May 2026 11:49:35 -0700 (PDT)
+	dkim=pass (2048-bit key) header.d=google.com header.i=@google.com header.b="WksYPHZA"
+Received: by mail-pf1-f201.google.com with SMTP id d2e1a72fcca58-83f24cd00f8so1524192b3a.0
+        for <sashiko-reviews@lists.linux.dev>; Mon, 18 May 2026 12:17:45 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20251104; t=1779130174; x=1779734974; darn=lists.linux.dev;
-        h=in-reply-to:content-transfer-encoding:content-disposition
-         :mime-version:references:message-id:subject:cc:to:from:date:from:to
-         :cc:subject:date:message-id:reply-to;
-        bh=ycA5svcD7G5NV7SE5711YCA0d1sVSC7pnvewKsFkowE=;
-        b=qSMKfEc1y2b+NQ/yGIdB9g2MbnX+t3U6OM4X/9G171Wb84oGs8HFtX+Wa5GJQNgB2w
-         G5Yj2fvTXBgTeuFZkqtUv6hKwucWGJm2VRXHg4sVv5kwuChKJSZLhN6LAFUNL18imola
-         9VbAZ3Pf1Z3Wcy3oi5p4d9qgGTJ7ZVoVkqksziWQ6JZeyPLWXtcR5dBCW7m50J1byuZm
-         cbn98cj/bZur64kuTzcf72B5FRuMxh+XQYEMIJK2onZJGBPBZh5+Nkg5WmWo2Xxt16co
-         Mcc/ei0SmMsdVovMONzdpBW0SSvHkRHZ063CSLVLkPmx+rhpiop+E/Pj5gTHx9HV2GHN
-         db6Q==
+        d=google.com; s=20251104; t=1779131865; x=1779736665; darn=lists.linux.dev;
+        h=cc:to:from:subject:message-id:references:mime-version:in-reply-to
+         :date:from:to:cc:subject:date:message-id:reply-to;
+        bh=byBkYmeeTqdoqUtx0ontJmxUgTZsHoHtMo8LuZGH+UU=;
+        b=WksYPHZAnmiKGADRz0VPapy4RYCVfYFGWzdX7rw6Yhrrg0g/RY4Woee4oR33nlZH8W
+         kPQkUb7AhWe7sISOY8RT6rgVkqQ+2MI5uOXVEDcyK5gN0lSSgXxOteRH69/7yflOiJOz
+         9+L9cX3PNv9KNEeXQluuVYv2cWK4kYRNeKYIFPu71f5oxa3bELec4XI/OMDOw9MeJpsf
+         yYH+w0WcR6E7TAesWJ6BWwkFFeFRN9tb4zu8CE/LhPhG9GVhbIkmy/uTcubvMhbT0TMw
+         yIGZlzyBbgNXXzC12/nSn2bruf8cPsdyRuvTByxHy2e2iL36YdwSkDtvlB/f1SwXR+ZZ
+         wpdg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20251104; t=1779130174; x=1779734974;
-        h=in-reply-to:content-transfer-encoding:content-disposition
-         :mime-version:references:message-id:subject:cc:to:from:date:x-gm-gg
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=ycA5svcD7G5NV7SE5711YCA0d1sVSC7pnvewKsFkowE=;
-        b=Kb5gFIUN+95Mo3SwEhhKy5LcBeOmxi8f8nlDi5wZ9BYUbcZoY34wvD5JjU/c6PHLP/
-         tdxsr8NBfJR4uySdmDod7X5Gr5R8JpmaL0VAx7WXywu9BmeWrnh1egcedtGxtp85pJZf
-         8VFkW9Waj73RQcqqAAr36sdM4zlyQ3tg9B7+ZtFCr0ghPk6nzrU01tVJJtAgGUUjVGqG
-         mxWLDoTc4mA3L12Q079+aLISsQs7wkxmaAgiWXIjt3dtE+5i9gPqIN9TYHyMT5/2u8tK
-         7nupX6JVuYcUMiwIBay/1Xof134k1LpBDD52HJPwlEq4ggFn0ImgmZbFjQqKY8pxt+9J
-         k0zg==
-X-Gm-Message-State: AOJu0Yy9rrmUipwmqx1wChxTmecqMs9AoOxdyiKLZF7ZauxsBl57oR3t
-	H/JOshUiYiwFEkPaLQU5iL9VGsi8WWW6rqKOB08zJRGOc7go9v2M8qkuqpzaqcvI
-X-Gm-Gg: Acq92OF9KOfZyazToO1wNmhXSgkh6LZ58akgvKDfJwXaM5nR2xQk/4aZLF2MbTRE/xu
-	L/Ks51QBUxRkcP28Fh6WMglcpqmM7VrZeOrWkC55Hu83vFuFrYAP2usprwiWk1UgsFXn996o778
-	unn1G5EDN5yUivtQn0jP6qphqQCk296/2nlrCUMZx0djfTEocFO2ojPed0j4EUTxtxg+tJUzHK7
-	pozzXvR5yl6Ne/cYEiagrw/oSsSJ+H50xEhAld+HXCr8MANjcgpYB4big3qRLEygo/yf3AfvOSX
-	XHdpZjIUYMtsGScG2OoWIFGPM0lJaMdRSOgew+qo2zhs0O+UyMCPMLmcLjRKBTJPBi4Uwz1wRnD
-	PHb/hVgwQzI8EJ4n7coTEd9wRX652UPlaQNhUQ1FeRb0HXL7sAu9aFQkpGtTMQq3isRrjDtrsuR
-	DCjOfUYbO6S0XPK4tmoPhACm3knTUlvp9TPLNGg5vCfThycAAdCWplAMq4Y12wtLYgJzSEUROQN
-	dAAwGFlsHeDN6JD3eTCZWT3ag3o+WYFjOG1bIutLyfPuF2CEjsezizPewWH2xkMTJMWIPKq+Msy
-	8FDtUBEktB1IfIUPttuVGteR6wjxk7YhP469MXNyUE6ZqiXm5vAb
-X-Received: by 2002:a05:600c:4fd4:b0:48a:581c:ead with SMTP id 5b1f17b1804b1-48fe60ed7b7mr225620585e9.10.1779130173722;
-        Mon, 18 May 2026 11:49:33 -0700 (PDT)
-Received: from mail.gmail.com (2a01cb0889497e0002302090c50a60b9.ipv6.abo.wanadoo.fr. [2a01:cb08:8949:7e00:230:2090:c50a:60b9])
-        by smtp.gmail.com with ESMTPSA id 5b1f17b1804b1-4900c16c744sm88940555e9.3.2026.05.18.11.49.32
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Mon, 18 May 2026 11:49:33 -0700 (PDT)
-Date: Mon, 18 May 2026 20:49:31 +0200
-From: Paul Chaignon <paul.chaignon@gmail.com>
-To: sashiko-reviews@lists.linux.dev
-Cc: bpf@vger.kernel.org
-Subject: Re: [PATCH bpf-next] selftests/bpf: Override EXTRA_LDFLAGS for
- static builds
-Message-ID: <agtfO9lHdKdP92Mo@mail.gmail.com>
-References: <714556da329c812988010ffe53173d9152570a78.1778669303.git.paul.chaignon@gmail.com>
- <20260514042304.EF3ECC2BCB7@smtp.kernel.org>
+        d=1e100.net; s=20251104; t=1779131865; x=1779736665;
+        h=cc:to:from:subject:message-id:references:mime-version:in-reply-to
+         :date:x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+        bh=byBkYmeeTqdoqUtx0ontJmxUgTZsHoHtMo8LuZGH+UU=;
+        b=rBHdyi1AEZZXUdT8Hh4BHE4L2BtaEI99Qhu9E6VDOHtvG2lBYzh22Rdb20e5zjmctf
+         Np9E5Wg82lEbcOd5t29o619eN8tgWhsS57ebBsofAIDVHr5nFWc0u8bf6ALw4NEJYLRB
+         fcqhd1c/kb9HfJejTFBLc/M0G3VubPUemMvPNFhunzEQ7QNuhm8VsVTHhErdoMU4lXVV
+         88vudsJjacu3CWStH5T0TxWmlwg763ebjf4o3Wbg+wZfBBVYxzXhwyw1BhlVqrZDk5J8
+         IFkZsdg4SSQjcfIjyBAtIJ3MsLdHS2XT1WwwEoH5ljF6bL/S4zATncY7XIImEI9roRq0
+         8CaQ==
+X-Gm-Message-State: AOJu0Yxd8ejKOAmcqLnvYUCuMl4+jEXLnCEOIOVBQdUBTe88fSSnxy3M
+	2PUDRv5KJ11RnmS4mMLekF8s0PEcxf/ZoCztPJHa6FBXzTGL/MhiDNJSKy5KnedzNWe1HMOisfc
+	guvWzgDKIRH6HcOfrO9SZk3SWN63kVy02e4Efd4G84b4LIADMVa0ON3eSkLFSECRFOSNYTVmKuy
+	eXMUnXmyqUVF4DteavI/lIMAe35pAeK9CK4PXYWzj/hNI9qf0Y
+X-Received: from pfbeq4.prod.google.com ([2002:a05:6a00:37c4:b0:82f:344e:386a])
+ (user=seanjc job=prod-delivery.src-stubby-dispatcher) by 2002:a05:6a00:3010:b0:820:2f9b:fe31
+ with SMTP id d2e1a72fcca58-83f33cf0645mr17477098b3a.30.1779131864734; Mon, 18
+ May 2026 12:17:44 -0700 (PDT)
+Date: Mon, 18 May 2026 12:17:44 -0700
+In-Reply-To: <20260515201628.9E3C5C2BCB3@smtp.kernel.org>
 Precedence: bulk
 X-Mailing-List: sashiko-reviews@lists.linux.dev
 List-Id: <sashiko-reviews.lists.linux.dev>
 List-Subscribe: <mailto:sashiko-reviews+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:sashiko-reviews+unsubscribe@lists.linux.dev>
-MIME-Version: 1.0
-Content-Type: text/plain; charset=iso-8859-1
-Content-Disposition: inline
-Content-Transfer-Encoding: 8bit
-In-Reply-To: <20260514042304.EF3ECC2BCB7@smtp.kernel.org>
+Mime-Version: 1.0
+References: <20260515191942.1892718-33-seanjc@google.com> <20260515201628.9E3C5C2BCB3@smtp.kernel.org>
+Message-ID: <agtl2L4Y_jE1MAai@google.com>
+Subject: Re: [PATCH v3 32/41] x86/tsc: Rejects attempts to override TSC
+ calibration with lesser routine
+From: Sean Christopherson <seanjc@google.com>
+To: sashiko-reviews@lists.linux.dev
+Cc: linux-hyperv@vger.kernel.org
+Content-Type: text/plain; charset="us-ascii"
 
-On Thu, May 14, 2026 at 04:23:04AM +0000, sashiko-bot@kernel.org wrote:
+On Fri, May 15, 2026, sashiko-bot@kernel.org wrote:
 > Thank you for your contribution! Sashiko AI review found 1 potential issue(s) to consider:
-> - [Medium] The suggested workaround `EXTRA_LDFLAGS=-static` in README.rst breaks the bpftool build or silently disables LLVM support.
+> - [Medium] Spurious WARN_ON stack trace on every boot for CoCo (SEV-SNP/TDX) guests under KVM.
 > --
 > 
-> commit dcbd0d5d7a0eb4a9300ad0890d83b7e4cdfd3aeb
-> Author: Paul Chaignon <paul.chaignon@gmail.com>
+> commit e57255e4d076143a67d0e6e44f914aec31aed8c7
+> Author: Sean Christopherson <seanjc@google.com>
 > 
-> selftests/bpf: Override EXTRA_LDFLAGS for static builds
+> x86/tsc: Rejects attempts to override TSC calibration with lesser routine
 > 
-> This commit updates the README.rst for BPF selftests to include
-> EXTRA_LDFLAGS=-static when recommending how to statically link,
-> in order to fix shared library loading errors with libLLVM.so
-> when running vmtest.sh.
+> This commit adds a sanity check when registering a TSC frequency calibration
+> routine to ensure the incoming routine is as robust as the outgoing one,
+> rejecting it with a warning if it is not. This prevents replacing a trusted
+> calibration source with a less trusted one.
 > 
-> > diff --git a/tools/testing/selftests/bpf/README.rst b/tools/testing/selftests/bpf/README.rst
-> > index 776fbe3cb8f9b..37164322a1023 100644
-> > --- a/tools/testing/selftests/bpf/README.rst
-> > +++ b/tools/testing/selftests/bpf/README.rst
-> > @@ -77,7 +77,7 @@ In case of linker errors when running selftests, try using static linking:
+> > diff --git a/arch/x86/kernel/tsc.c b/arch/x86/kernel/tsc.c
+> > index 98bef1d06fa9d..7a261214fa3ef 100644
+> > --- a/arch/x86/kernel/tsc.c
+> > +++ b/arch/x86/kernel/tsc.c
+> > @@ -1319,8 +1319,13 @@ void tsc_register_calibration_routines(unsigned long (*calibrate_tsc)(void),
 > >  
-> >  .. code-block:: console
-> >  
-> > -  $ LDLIBS=-static PKG_CONFIG='pkg-config --static' vmtest.sh
-> > +  $ LDLIBS=-static EXTRA_LDFLAGS=-static PKG_CONFIG='pkg-config --static' vmtest.sh
+> >  	if (properties & TSC_FREQUENCY_KNOWN)
+> >  		setup_force_cpu_cap(X86_FEATURE_TSC_KNOWN_FREQ);
+> > +	else if (WARN_ON(boot_cpu_has(X86_FEATURE_TSC_KNOWN_FREQ)))
+> > +		return;
+> > +
+> >  	if (properties & TSC_RELIABLE)
+> >  		setup_force_cpu_cap(X86_FEATURE_TSC_RELIABLE);
+> > +	else if (WARN_ON(boot_cpu_has(X86_FEATURE_TSC_RELIABLE)))
+> > +		return;
 > 
-> Can adding EXTRA_LDFLAGS=-static break the bpftool build or silently disable
-> LLVM support?
+> Will this cause a spurious warning stack trace on every boot for CoCo
+> (SEV-SNP/TDX) guests under KVM?
 > 
-> In the bpftool Makefile, LLVM's --system-libs and -lstdc++ are only appended
-> to LIBS if llvm-config --shared-mode outputs 'static'. However, the
-> feature-llvm test in tools/build/feature/Makefile unconditionally includes
-> --system-libs and uses g++, which automatically includes -lstdc++.
+> For KVM CoCo guests, CoCo registers first via tsc_early_init(), setting both
+> TSC_FREQUENCY_KNOWN and X86_FEATURE_TSC_RELIABLE.
 > 
-> If a system has static LLVM libraries but llvm-config --shared-mode is set
-> to 'shared' (common on many distros), the feature-llvm test statically links
-> successfully, but bpftool's Makefile will attempt to build with LLVM support
-> using gcc -static while omitting --system-libs and -lstdc++. This can cause
-> the build to fail with undefined references.
+> KVM then registers second via kvmclock_init(). At this point in the patch
+> series, KVM only passes TSC_FREQUENCY_KNOWN, so the properties & TSC_RELIABLE
+> check is false, and it falls through to this WARN_ON. Since CoCo already set
+> the capability, the condition evaluates to true.
+> 
+> I see this is fixed later in the series by the commit "x86/kvmclock: Mark TSC
+> as reliable when it's constant and nonstop", which modifies KVM to pass
+> TSC_FREQ_KNOWN_AND_RELIABLE on modern hardware, preventing this warning.
+> 
+> Could the patch ordering be adjusted to prevent this intermediate regression?
 
-I'm not sure I'm following this, but I have static LLVM libraries with
-llvm-config --shared-mode set to "shared" and everything seems to build
-fine.
+Ah shoot, no.  Well, not entirely.  Because when running as a CoCo guest with a
+trusted TSC, the kernel needs to prevent overwriting the TSC calibration, *period*.
+I.e. changing the ordering will eliminate the unwanted WARN, but it won't fix the
+underlying goof that the trusted calibration routines are still being overwritten
+with untrusted routines.
 
-> 
-> Additionally, if static LLVM libraries are entirely absent, the feature test
-> fails, causing bpftool to silently build without LLVM support.
-> 
-> -- 
-> Sashiko AI review · https://sashiko.dev/#/patchset/714556da329c812988010ffe53173d9152570a78.1778669303.git.paul.chaignon@gmail.com?part=1
+Hrm, the SNP secure TSC code complicates things, but I suspect it's broken.  If
+it's indeed broken, then I think we can add a TSC_TRUSTED flag and then do:
+
+	if (WARN_ON_ONCE(!calibrate_tsc))
+		return;
+
+	if (properties & TSC_FREQUENCY_KNOWN)
+		setup_force_cpu_cap(X86_FEATURE_TSC_KNOWN_FREQ);
+	else if (WARN_ON(boot_cpu_has(X86_FEATURE_TSC_KNOWN_FREQ)))
+		return;
+
+	if (properties & TSC_RELIABLE)
+		setup_force_cpu_cap(X86_FEATURE_TSC_RELIABLE);
+	else if (WARN_ON(boot_cpu_has(X86_FEATURE_TSC_RELIABLE)))
+		return;
+
+	if (!cpu_has_trusted_tsc() || (properties & TSC_TRUSTED))
+		x86_platform.calibrate_tsc = calibrate_tsc;
+
+	if (calibrate_cpu)
+		x86_platform.calibrate_cpu = calibrate_cpu;
+
+
+Tom / Nikunj,
+
+Isn't it completely wrong to assume the CPU frequency is the same as the TSC
+frequency?  The changelog says the difference "does not apply", but that makes
+no sense.
+
+    Use the GUEST_TSC_FREQ MSR to discover the TSC frequency instead of
+    relying on kvm-clock based frequency calibration.  Override both CPU and
+    TSC frequency calibration callbacks with securetsc_get_tsc_khz(). Since
+    the difference between CPU base and TSC frequency does not apply in this
+    case, the same callback is being used.
+
+E.g. if the host passed through APERF/MPERF, then the difference most definitely
+applies.  If TSC != CPU frequency, then knowingly using bad data is even worse
+(far, far worse) than hoping the untrusted host is playing nice.
+
+If the TSC and CPU frequencies are somehow guaranteed to be the same (which I
+can't possibly imagine is the case), then the above won't work because we also
+want to prevent overriding calibrate_cpu().
