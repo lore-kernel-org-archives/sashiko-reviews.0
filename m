@@ -1,150 +1,137 @@
-Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-pg1-f202.google.com (mail-pg1-f202.google.com [209.85.215.202])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C3A4B3A7F61;
-	Mon, 18 May 2026 22:12:38 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5C6CF39903C
+	for <sashiko-reviews@lists.linux.dev>; Mon, 18 May 2026 22:18:10 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.215.202
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1779142358; cv=none; b=neybbxE6nwJq4mXYUkTKlITgAPUgWequ1o3Bi3briZIu9bK8QfC2vQ6PBWdI5nHxS+9XATyaOXjZXIS9uW9bbjPgf66+hTrAkFdPbaknIFm078MKfcLJHPJx2cMtDwNEPR0Elb5LkwFMDI2P8b++Mqt42J9bqJLxO/2M1jcXbOo=
+	t=1779142691; cv=none; b=rLQOSqo3MkynGNpacWDHkZlitkmyetDrY4yqhceUtfrc6K1Y3s/U49aktZSZ7a4KFgk6jDr4owHK8X+iqCsJrgrCNV5tbfePSSYCtAzreWsDYzvventwx9pq/jTsjjI7cypy/mJ/daeJwUVg76kB37LkE9aYPNpHdgCGSvYb7XY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1779142358; c=relaxed/simple;
-	bh=SpNSHREmYK9MboW8xao/l5nmvqGd0LP2u2S/vlfhRZI=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=ccvmZX4BtDa06j8xcJ5E38wd1xYJd6EYBb0a2hUIPKz3/2ZMn4d231pN8zyFGzcW3PDTKPtxXfS9uEZ4UXimFO0NHVx4dfTZrW4UU6hw1CS9kSSnxFUhP+qXJnncqIzVSTNJx5RUJoEN8hkL0IXwgr5rVXq78CC69zRS1WYyHWs=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=Oq5onsJH; arc=none smtp.client-ip=10.30.226.201
+	s=arc-20240116; t=1779142691; c=relaxed/simple;
+	bh=d38a//3QyE8FATQBxvy1992MNITy+ZsMH60ugHt1tIs=;
+	h=Date:In-Reply-To:Mime-Version:References:Message-ID:Subject:From:
+	 To:Cc:Content-Type; b=DXMXQ9qgXO88YXIb5tUJVcbjIkKXes3+HI2lwwIKpBgJBf1i/C9nO6YPPDVddmxZlkLo5hrlYTXfl48vsCHE2YrsP/3CQj9JptwzOQenEXv8iRMMzW0IjOsqvjl6hFvOUfIncFPm/UPxVjioDFYh6Gu7/6ov4ksp1gpxuUt3+DQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=google.com; spf=pass smtp.mailfrom=flex--seanjc.bounces.google.com; dkim=pass (2048-bit key) header.d=google.com header.i=@google.com header.b=CQitHiRG; arc=none smtp.client-ip=209.85.215.202
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=google.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=flex--seanjc.bounces.google.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="Oq5onsJH"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 526ACC2BCB7;
-	Mon, 18 May 2026 22:12:38 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1779142358;
-	bh=SpNSHREmYK9MboW8xao/l5nmvqGd0LP2u2S/vlfhRZI=;
-	h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
-	b=Oq5onsJHXHSNhfRbB5G20Ieyw3XwN5NhjZTGriT1nuN9il3gUmGmylT+bTUZQbY7l
-	 xW+G4xeB7CW32ZYztnYNqv/MX82OIN/NLuxEwt11uLbLJz5MUrsposqB3dYeByMNj0
-	 SC0+gUe32tpIFTamWb1pYPw1XxaHhq3G8SfyaludWqHM8z+I/MAMBtSG7NpGXmYn2s
-	 axsRZB+CbBqtKM7LKHK1w5K8/LukCJqkL5ThYfXhnPGqERYbc1sMrJRf6rMx4mIBBB
-	 kbSEJ6LW/b8STaCD9j8K8M5J+9CYTs9v3cP51X4lTCvMv+uSj0PDZSMC9z4/pFin5G
-	 l3jT/YlhuTFVw==
-Date: Tue, 19 May 2026 00:12:36 +0200
-From: Lorenzo Bianconi <lorenzo@kernel.org>
-To: sashiko-reviews@lists.linux.dev
-Cc: devicetree@vger.kernel.org, robh@kernel.org, conor+dt@kernel.org,
-	netdev@vger.kernel.org
-Subject: Re: [PATCH net-next v7 08/10] net: airoha: Do not stop GDM port if
- it is shared
-Message-ID: <aguO1JODHEKFnsyk@lore-desk>
-References: <20260516-airoha-eth-multi-serdes-v7-8-99e0093303e2@kernel.org>
- <20260517055814.DB1F8C2BCB0@smtp.kernel.org>
+	dkim=pass (2048-bit key) header.d=google.com header.i=@google.com header.b="CQitHiRG"
+Received: by mail-pg1-f202.google.com with SMTP id 41be03b00d2f7-c8279604464so4379360a12.1
+        for <sashiko-reviews@lists.linux.dev>; Mon, 18 May 2026 15:18:10 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=google.com; s=20251104; t=1779142690; x=1779747490; darn=lists.linux.dev;
+        h=cc:to:from:subject:message-id:references:mime-version:in-reply-to
+         :date:from:to:cc:subject:date:message-id:reply-to;
+        bh=r5JlOTR1piV9fHtSRwQQLLSwH+2VVdLHIVfygz0qDnE=;
+        b=CQitHiRG6ozTNn814cPW2lOcVD1dGToQw4sTCO4/yOPYtwKxF7v42uuxlpj0I+4kxX
+         iyiTWtaJiKYn/QM79BpCOLcX8/YU84sJPVTt9zKSGVasZbwv2i6g8UU3AJgednax9wbo
+         fNzPg0v8o574wr52sa9B+jB93L+dw6NqYYFM0v8nJUfJpLBIuXkHG+y07KlDPYvnWMn9
+         1iYnewZGNtIYtOAsj03LepwrMaCCyW79onsnnwBc0iWuOjNWUyKzuKNpAzzXXpPghiPd
+         YTWG1vDJXWcguXpULKGA+A5C6wEDEBgEXxNBbM5CDH73VKrOYl6HzLOs+Cxn4wCb/mC0
+         vBSg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20251104; t=1779142690; x=1779747490;
+        h=cc:to:from:subject:message-id:references:mime-version:in-reply-to
+         :date:x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+        bh=r5JlOTR1piV9fHtSRwQQLLSwH+2VVdLHIVfygz0qDnE=;
+        b=r1S6prrdMKcplKvVdyouQ31v4yAR+itj1mIf7mPuFzmj05iIIDLtHV/7TE0sW720Zd
+         WoZZrGyC9+QO72MXOz1UFphj0bLIQdJgcgn9aStyP58roevcVsBeCwJ0R++jWpibjJzk
+         x4ptGatLIGTD34dMfL57CIfHtCTCS6b4hc2tAo9LNtN/rMxfAiJVHqZzbkWNMdgin96b
+         RH/j1jTXppnfZPebohX15OIOkHaOX3OMns9SDgL0bjjJE0Ew31/vuLU2NDXXvB8rFvrf
+         oBaQClbBa72QAXM7RwWECDywO0oin0M8AFFKVSHIWMKEnX5a8z0+i3ndSNt2rL6/SUrR
+         DG5w==
+X-Gm-Message-State: AOJu0YxXHUeXEzNlEdowOhG9IpMnl5C9Kr7riSoL6kPLVKtwG1G4aKmn
+	zkWKCoWrvBMI5czO7kVe1hpTEkZjeRlhIczVGDMgHaKRs5rBc8UMU/0/onJXzut0ZKcKlVYlbdh
+	DXf283PqlPOQzE2T9DZTrw/mw+bB8Cs00yMi3tosWnVdsFk028URUbovx1rkVEOJ2M9I3/d8SuS
+	P63nG5i27xH4yLqX7nf1x3nXVcOu9yECFa6uYzU0nMO4fBIsS9
+X-Received: from pfob24.prod.google.com ([2002:aa7:8718:0:b0:83e:f637:eeed])
+ (user=seanjc job=prod-delivery.src-stubby-dispatcher) by 2002:a05:6a00:244c:b0:83a:7516:5be0
+ with SMTP id d2e1a72fcca58-83f33f3b5d3mr16454915b3a.50.1779142689463; Mon, 18
+ May 2026 15:18:09 -0700 (PDT)
+Date: Mon, 18 May 2026 15:18:08 -0700
+In-Reply-To: <20260515194535.56B84C2BCB0@smtp.kernel.org>
 Precedence: bulk
 X-Mailing-List: sashiko-reviews@lists.linux.dev
 List-Id: <sashiko-reviews.lists.linux.dev>
 List-Subscribe: <mailto:sashiko-reviews+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:sashiko-reviews+unsubscribe@lists.linux.dev>
-MIME-Version: 1.0
-Content-Type: multipart/signed; micalg=pgp-sha512;
-	protocol="application/pgp-signature"; boundary="4fI9wqHOzbR04jOR"
-Content-Disposition: inline
-In-Reply-To: <20260517055814.DB1F8C2BCB0@smtp.kernel.org>
+Mime-Version: 1.0
+References: <20260515191942.1892718-32-seanjc@google.com> <20260515194535.56B84C2BCB0@smtp.kernel.org>
+Message-ID: <aguQIJQYsarMScnl@google.com>
+Subject: Re: [PATCH v3 31/41] x86/tsc: Pass KNOWN_FREQ and RELIABLE as params
+ to registration
+From: Sean Christopherson <seanjc@google.com>
+To: sashiko-reviews@lists.linux.dev
+Cc: linux-hyperv@vger.kernel.org, Michael Kelley <mhklinux@outlook.com>
+Content-Type: text/plain; charset="us-ascii"
 
++Michael (sashiko was quite stingy with its Cc list)
 
---4fI9wqHOzbR04jOR
-Content-Type: text/plain; charset=iso-8859-1
-Content-Disposition: inline
-Content-Transfer-Encoding: quoted-printable
-
-On May 17, sashiko-bot@kernel.org wrote:
-> Thank you for your contribution! Sashiko AI review found 1 potential issu=
-e(s) to consider:
-> - [Medium] Flawed hardware MTU recalculation logic in airoha_dev_change_m=
-tu() for shared GDM ports
+On Fri, May 15, 2026, sashiko-bot@kernel.org wrote:
+> Thank you for your contribution! Sashiko AI review found 1 potential issue(s) to consider:
+> - [High] Hyper-V VMs with an invariant TSC but no frequency MSRs lose the X86_FEATURE_TSC_RELIABLE capability.
 > --
->=20
-> commit 28e02ac4611575e19c4f6eef3fa74c11d4debb6e
-> Author: Lorenzo Bianconi <lorenzo@kernel.org>
->=20
-> net: airoha: Do not stop GDM port if it is shared
->=20
-> This commit updates the driver to allow multiple devices to share the same
-> GDM port. It stops the port only when no other devices are using it and
-> adjusts the hardware MTU to accommodate all active devices.
->=20
-> > diff --git a/drivers/net/ethernet/airoha/airoha_eth.c b/drivers/net/eth=
-ernet/airoha/airoha_eth.c
-> > index 8558790eca644..c70e3ace38e25 100644
-> > --- a/drivers/net/ethernet/airoha/airoha_eth.c
-> > +++ b/drivers/net/ethernet/airoha/airoha_eth.c
->=20
-> [ ... ]
->=20
-> > @@ -1917,13 +1945,18 @@ static void airoha_dev_get_stats64(struct net_d=
-evice *netdev,
-> >  static int airoha_dev_change_mtu(struct net_device *netdev, int mtu)
-> >  {
-> >  	struct airoha_gdm_dev *dev =3D netdev_priv(netdev);
-> > +	u32 cur_len, len =3D ETH_HLEN + mtu + ETH_FCS_LEN;
-> >  	struct airoha_gdm_port *port =3D dev->port;
-> > -	u32 len =3D ETH_HLEN + mtu + ETH_FCS_LEN;
-> >  	struct airoha_eth *eth =3D dev->eth;
-> > =20
-> > -	airoha_fe_rmw(eth, REG_GDM_LEN_CFG(port->id),
-> > -		      GDM_LONG_LEN_MASK,
-> > -		      FIELD_PREP(GDM_LONG_LEN_MASK, len));
-> > +	cur_len =3D airoha_fe_get(eth, REG_GDM_LEN_CFG(port->id),
-> > +				GDM_LONG_LEN_MASK);
-> > +	if (len > cur_len || !port->users ||
-> > +	    (port->users =3D=3D 1 && netif_running(netdev)))
-> > +		airoha_fe_rmw(eth, REG_GDM_LEN_CFG(port->id),
-> > +			      GDM_LONG_LEN_MASK,
-> > +			      FIELD_PREP(GDM_LONG_LEN_MASK, len));
+> 
+> commit 0c0fbc4f0451c30c0e87e0e3591ea4f487eff75c
+> Author: Sean Christopherson <seanjc@google.com>
+> 
+> x86/tsc: Pass KNOWN_FREQ and RELIABLE as params to registration
+> 
+> This commit adds a tsc_properties parameter to the paravirtual TSC
+> calibration registration routine to consolidate feature flag tracking.
+> It updates various hypervisor initialization paths to pass combined flags
+> instead of manually setting the CPU capabilities.
+> 
+> > diff --git a/arch/x86/kernel/cpu/mshyperv.c b/arch/x86/kernel/cpu/mshyperv.c
+> > --- a/arch/x86/kernel/cpu/mshyperv.c
+> > +++ b/arch/x86/kernel/cpu/mshyperv.c
+> > @@ -516,8 +516,13 @@ static void __init ms_hyperv_init_platform(void)
+> >  
+> >  	if (ms_hyperv.features & HV_ACCESS_FREQUENCY_MSRS &&
+> >  	    ms_hyperv.misc_features & HV_FEATURE_FREQUENCY_MSRS_AVAILABLE) {
+> > -		tsc_register_calibration_routines(hv_get_tsc_khz, hv_get_tsc_khz);
+> > -		setup_force_cpu_cap(X86_FEATURE_TSC_KNOWN_FREQ);
+> > +		enum tsc_properties tsc_properties = TSC_FREQUENCY_KNOWN;
 > > +
->=20
-> The commit message states that the driver must "always set in GDM_LONG_LE=
-N_MASK
-> field of REG_GDM_LEN_CFG register the maximum MTU of all running net_devi=
-ces
-> connected to the same GDM port."
->=20
-> Does this logic successfully recalculate the MTU when the MTU of a running
-> device is decreased while sibling devices are also running? In that scena=
-rio,
-> len > cur_len evaluates to false, which appears to skip the update and le=
-ave
-> the hardware MTU stuck at the previous larger value.
->=20
-> Additionally, if an administratively down device has its MTU increased,
-> len > cur_len can evaluate to true. Does this prematurely increase the
-> hardware MTU, exposing the running sibling devices to larger frames based
-> on a stopped device's configuration?
->=20
-> Would it be more accurate to iterate over the devices to compute the
-> actual maximum MTU of all active devices here, similar to the approach ta=
-ken
-> in airoha_dev_stop()?
+> > +		if (ms_hyperv.features & HV_ACCESS_TSC_INVARIANT)
+> > +			tsc_properties = TSC_FREQ_KNOWN_AND_RELIABLE;
+> > +
+> > +		tsc_register_calibration_routines(hv_get_tsc_khz, hv_get_tsc_khz,
+> > +						  tsc_properties);
+> >  	}
+> 
+> [ ... ]
+> 
+> > @@ -629,7 +634,6 @@ static void __init ms_hyperv_init_platform(void)
+> >  		 * is called.
+> >  		 */
+> >  		wrmsrq(HV_X64_MSR_TSC_INVARIANT_CONTROL, HV_EXPOSE_INVARIANT_TSC);
+> > -		setup_force_cpu_cap(X86_FEATURE_TSC_RELIABLE);
+> >  	}
+> 
+> If a Hyper-V VM exposes an invariant TSC but lacks the frequency MSRs,
+> does it bypass the tsc_register_calibration_routines() block entirely?
 
-ack, I will fix it in v8.
+Yes.
 
-Regards,
-Lorenzo
+> Without the standalone setup_force_cpu_cap(X86_FEATURE_TSC_RELIABLE) call
+> here, it looks like these VMs will lose the reliable flag.
+> 
+> Will this inadvertently enable the TSC watchdog, potentially causing a
+> performance regression if the system falsely marks the TSC as unstable due
+> to virtualization scheduling delays?
 
->=20
-> >  	WRITE_ONCE(netdev->mtu, mtu);
-> > =20
-> >  	return 0;
->=20
-> --=20
-> Sashiko AI review =B7 https://sashiko.dev/#/patchset/20260516-airoha-eth-=
-multi-serdes-v7-0-99e0093303e2@kernel.org?part=3D8
+Hmm, I was going to say that the change was intentional and desriable, but looking
+at this yet again, I don't think that's true.  Enabling HV_EXPOSE_INVARIANT_TSC
+just means the kernel will (probably) set X86_FEATURE_CONSTANT_TSC and
+X86_FEATURE_NONSTOP_TSC during early_init_intel(), AFAICT it doesn't lead to
+X86_FEATURE_TSC_RELIABLE being set.  And I think in this case, marking the TSC
+as reliable makes sense; even if the kernel doesn't user Hyper-V's calibration
+info, the host is still clearly telling the guest that the TSC is reliable.
 
---4fI9wqHOzbR04jOR
-Content-Type: application/pgp-signature; name=signature.asc
+Michael, does keeping the
 
------BEGIN PGP SIGNATURE-----
+		setup_force_cpu_cap(X86_FEATURE_TSC_RELIABLE);
 
-iHUEABYKAB0WIQTquNwa3Txd3rGGn7Y6cBh0uS2trAUCaguO1AAKCRA6cBh0uS2t
-rMxgAQDiakfXuN/EA6krRVayUEnnJQbuFJCEexGZqaq235AU3AD+Le3t1oYn1xLl
-/VNCiOD0wX6ypPz3JFSR2KHEa4TRxgo=
-=5jbV
------END PGP SIGNATURE-----
-
---4fI9wqHOzbR04jOR--
+but also passing TSC_FREQ_KNOWN_AND_RELIABLE to the calibration routine make
+sense?
