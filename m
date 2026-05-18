@@ -1,189 +1,113 @@
-Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-pg1-f201.google.com (mail-pg1-f201.google.com [209.85.215.201])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A3910371CEC;
-	Mon, 18 May 2026 20:59:14 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C9492396D36
+	for <sashiko-reviews@lists.linux.dev>; Mon, 18 May 2026 21:14:37 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.215.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1779137954; cv=none; b=Ej1fE4KnuJKVqCHz37//m8x1UFI8CjBOXaDGWtly8wlFKqtR8DNLzvHAO6cWOFAdWdjQVuK9xzs1xE5Jpo9IoZi+5Y0wSh1bqVooFnIN7n4Mo2F2G70xgBsTmmGwP3JjV+gr6sapByhGDmxpZUPxKdzedV4xAlggwfDfGHiHYGk=
+	t=1779138879; cv=none; b=Fp330ctRwJPHx0pkXl/OgwMhSl3WYSN9oAc2OfRiADrfDisVorjNM90nxagMt0+5dDt19MVi900O4JYo/Gc0YzMxlGMv+nbbc7nNDlawBCBoffDYIcd/sRSmGyIPCmNtW8rzB/jbL+qhdZYngzqjBs7tFKy1bbDZZH5S4yk7QNA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1779137954; c=relaxed/simple;
-	bh=lO7cK/BdKDswb57EujED7Mp/I6vQbg0rlmtGY4RNQMs=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=k4ekJAr6HZiE3H5YUcd0NWzn6P8S/twxTnnvKxXQ5+iXGj6aRwcDrPuuiGJqgj05YbcjZFs/OnFTAhd5kT36dEzzOhSa7MZJwp05orbqgsvUHqjWcwemT56963td5CmkkF3MaKj5nNxACK4Uz13rtiaAWWpSlKuhAE8zdWQkmpA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=s5mCG/9X; arc=none smtp.client-ip=10.30.226.201
+	s=arc-20240116; t=1779138879; c=relaxed/simple;
+	bh=6FgsMK20z2ieU5Def3pMwxUzvlyh5j56ZnCu7u+YAtg=;
+	h=Date:In-Reply-To:Mime-Version:References:Message-ID:Subject:From:
+	 To:Cc:Content-Type; b=Wq9HcFBu86yeGK5PTCV7SdB/VNL5cjaR78As+trmlntWOVRIB246lhPj0iSU9XQjT0DM1MwOvHnKfgG5ZRz+dhTizvbSpC+wP6GV3JvoLNBB4knoF5U/gnWm1i+xv0FogWFYuKuFzVhFQmRIqvItTQSwcFHBqPeIUfu8K39nOXQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=google.com; spf=pass smtp.mailfrom=flex--seanjc.bounces.google.com; dkim=pass (2048-bit key) header.d=google.com header.i=@google.com header.b=iS7r9OOb; arc=none smtp.client-ip=209.85.215.201
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=google.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=flex--seanjc.bounces.google.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="s5mCG/9X"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id EF85BC2BCB7;
-	Mon, 18 May 2026 20:59:13 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1779137954;
-	bh=lO7cK/BdKDswb57EujED7Mp/I6vQbg0rlmtGY4RNQMs=;
-	h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
-	b=s5mCG/9X8XK4N9oT6M0Kj1mPdrW/JIjhOp/TTpr53pul2Fa7pNEknOxnaSbmUucJa
-	 5UZpMQ0oWt++Y9uD7Ws+HDNeEnqUGqsFwH6/hGGaYzpLyaGhZXu+/CYI3+9Ocd/LTH
-	 Rq1zNAPVHF3Cebone50LSS38Veb8MhgwbBGGxOGcllL8H1aS7oTLlWDJXPPheCe5QL
-	 l1qqKSeTg0G2UQ2sqDxzvGgXgD8QF8hzF+a38l3OXlYrOJd4RiYh7GIyMai4JDK3Nx
-	 CEplR/PpPQem9D6kT8zfh/qUR+ovZQsNo2vSY0RNIfZB5bAlk/xi9txb6AStZ8/wdg
-	 vP/Vqc5mBRQGg==
-Date: Mon, 18 May 2026 22:59:11 +0200
-From: Lorenzo Bianconi <lorenzo@kernel.org>
-To: sashiko-reviews@lists.linux.dev
-Cc: robh@kernel.org, conor+dt@kernel.org, devicetree@vger.kernel.org,
-	netdev@vger.kernel.org
-Subject: Re: [PATCH net-next v7 02/10] net: airoha: Introduce airoha_gdm_dev
- struct
-Message-ID: <agt9n4qF3hyardCB@lore-desk>
-References: <20260516-airoha-eth-multi-serdes-v7-2-99e0093303e2@kernel.org>
- <20260517055812.CEC33C2BCB0@smtp.kernel.org>
+	dkim=pass (2048-bit key) header.d=google.com header.i=@google.com header.b="iS7r9OOb"
+Received: by mail-pg1-f201.google.com with SMTP id 41be03b00d2f7-c82c4772950so1211799a12.1
+        for <sashiko-reviews@lists.linux.dev>; Mon, 18 May 2026 14:14:37 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=google.com; s=20251104; t=1779138877; x=1779743677; darn=lists.linux.dev;
+        h=cc:to:from:subject:message-id:references:mime-version:in-reply-to
+         :date:from:to:cc:subject:date:message-id:reply-to;
+        bh=5Zo21oM2VaVJk1wHkstVYW2kwV5RKdIS60liRPY2giE=;
+        b=iS7r9OObcqNYJZbTUwVSxx9xDQtJIcwAa5hBD6zke3fbbeKkR0OfGmNwfpWPFj27So
+         ol+u+Vm+jYFQxLaTtVW8a/ksypY9BLU3WUMVXAWR+C9Wshrt9piCJGZToqcDtUzMKvZx
+         Uajlj+30VMP9oQ0NisuXY59Qz92jTl0VgGseZ/yitQOcUI+FyXYfYkJMzU30JW+ihlyi
+         cCy9vpRf+iHhIshgMohiETy4avD1kpMPQsl5WkyOynV0q5Z0Jjse5vKv4gcMieI1rjyI
+         QNsFNag9PJ3lQ21SvKSIR9FEUDhRWBDYgsO7Hd+RN9UfQ0JwUKQeNmMNecthMHPkgKQD
+         YJHA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20251104; t=1779138877; x=1779743677;
+        h=cc:to:from:subject:message-id:references:mime-version:in-reply-to
+         :date:x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+        bh=5Zo21oM2VaVJk1wHkstVYW2kwV5RKdIS60liRPY2giE=;
+        b=cHLcxazzYPwmv3L1BNgUg0g9qIdGUCEghgtlCZ7kFeMX/G1N18WjW4G5gXLugxydFt
+         +LM06ehuQNDKrJKmTkaBLcqbB/yd252T3hMoztDXXYYVkXElKkYl5yILAZUrtLH0cuwO
+         +mh6FaVBtsDM8H99YFpxMsGrJgLBOSwrgADJTPiAf+VVLdGP+UR1hbg8TqRE4Wctxoo/
+         qc6n4cKNfEwdj7avKcK4BUv45Shwcl8bB8g2V25v8RtkgieuMUH8++eGY9umvzuSfpIS
+         R0tRd3IYW1NFLnJS0dFvdqz/vxvoXCgXqVNo10HeWbdX2VJNHRkNGM+d+cTeUGm8Uiq3
+         298g==
+X-Gm-Message-State: AOJu0YzJRADr92k4MPJL38vIOtYIy1eXWGGAliqaJHC/kY6kowFrqkWR
+	7jGIlTJUsqNCHjS3ZVNvfApFulERQTGYJZx1MO0l9TeNLWbBKP0SQLozyOjFy04tuZeOdAParOv
+	WfE8EIuuJYE62URkAxFuKPRzPhoOPPcJCcUWsZV1itk/RJ6dGSfA2x8Y/KCsfzkLKBef54ZSKPP
+	4TwchfPyrvoRr/uSIbI6fDon/+EFhCxge7+24mDodxrchG2h/U
+X-Received: from pfuj2.prod.google.com ([2002:a05:6a00:1302:b0:837:7965:c70c])
+ (user=seanjc job=prod-delivery.src-stubby-dispatcher) by 2002:a05:6a00:a907:b0:837:f111:b70
+ with SMTP id d2e1a72fcca58-83f18d5b89cmr17688828b3a.4.1779138876899; Mon, 18
+ May 2026 14:14:36 -0700 (PDT)
+Date: Mon, 18 May 2026 14:14:36 -0700
+In-Reply-To: <20260515194804.AE30FC2BCB0@smtp.kernel.org>
 Precedence: bulk
 X-Mailing-List: sashiko-reviews@lists.linux.dev
 List-Id: <sashiko-reviews.lists.linux.dev>
 List-Subscribe: <mailto:sashiko-reviews+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:sashiko-reviews+unsubscribe@lists.linux.dev>
-MIME-Version: 1.0
-Content-Type: multipart/signed; micalg=pgp-sha512;
-	protocol="application/pgp-signature"; boundary="I5Ic1VMvRwYsDD/n"
-Content-Disposition: inline
-In-Reply-To: <20260517055812.CEC33C2BCB0@smtp.kernel.org>
+Mime-Version: 1.0
+References: <20260515191942.1892718-30-seanjc@google.com> <20260515194804.AE30FC2BCB0@smtp.kernel.org>
+Message-ID: <aguBPFuPX0ih_ybf@google.com>
+Subject: Re: [PATCH v3 29/41] x86/paravirt: Plumb a return code into __paravirt_set_sched_clock()
+From: Sean Christopherson <seanjc@google.com>
+To: sashiko-reviews@lists.linux.dev
+Cc: linux-hyperv@vger.kernel.org
+Content-Type: text/plain; charset="us-ascii"
 
-
---I5Ic1VMvRwYsDD/n
-Content-Type: text/plain; charset=iso-8859-1
-Content-Disposition: inline
-Content-Transfer-Encoding: quoted-printable
-
-> Thank you for your contribution! Sashiko AI review found 2 potential issu=
-e(s) to consider:
-> - [High] The patch introduces a race condition exposing a partially initi=
-alized port, leading to a NULL pointer dereference in NAPI polling handlers.
-> - [High] The `airoha_get_dsa_tag` function lacks packet length validation=
- before stripping the MTK DSA tag, leading to an out-of-bounds memory acces=
-s and `skb->len` integer underflow.
+On Fri, May 15, 2026, sashiko-bot@kernel.org wrote:
+> Thank you for your contribution! Sashiko AI review found 1 potential issue(s) to consider:
+> - [High] kvm_sched_clock_read is registered as the system sched_clock before its required offset (kvm_sched_clock_offset) is initialized.
 > --
->=20
-> commit 3474bcc37d20c84839dc4e74bab44197a0507f51
-> Author: Lorenzo Bianconi <lorenzo@kernel.org>
->=20
-> net: airoha: Introduce airoha_gdm_dev struct
->=20
-> This commit introduces the airoha_gdm_dev structure to collect net_device
-> related info, preparing the driver for a 1:n relationship between GDM por=
-ts
-> and net_devices.
->=20
-> > diff --git a/drivers/net/ethernet/airoha/airoha_eth.c b/drivers/net/eth=
-ernet/airoha/airoha_eth.c
-> > index 5a027cc7ffcb1..3ca0dbd19275a 100644
-> > --- a/drivers/net/ethernet/airoha/airoha_eth.c
-> > +++ b/drivers/net/ethernet/airoha/airoha_eth.c
->=20
+> 
+> commit b6e429e4990c00d845488d46e8dc4132f3a2fd8b
+> Author: Sean Christopherson <seanjc@google.com>
+> x86/paravirt: Plumb a return code into __paravirt_set_sched_clock()
+> 
+> This commit adds a return code to __paravirt_set_sched_clock() to allow the
+> kernel to reject attempts to use a PV sched_clock. It updates the caller
+> in kvmclock to check the return value and abort initialization if needed.
+> 
+> > diff --git a/arch/x86/kernel/kvmclock.c b/arch/x86/kernel/kvmclock.c
+> > index d3bb281c0805d..9b3d1ed1a96dc 100644
+> > --- a/arch/x86/kernel/kvmclock.c
+> > +++ b/arch/x86/kernel/kvmclock.c
 > [ ... ]
->=20
-> > @@ -2007,7 +2020,7 @@ static netdev_tx_t airoha_dev_xmit(struct sk_buff=
- *skb,
-> >  	u8 fport;
-> > =20
-> >  	qid =3D airoha_qdma_get_txq(qdma, skb_get_queue_mapping(skb));
-> > -	tag =3D airoha_get_dsa_tag(skb, dev);
-> > +	tag =3D airoha_get_dsa_tag(skb, netdev);
->=20
-> While looking at this patch, I noticed an issue in airoha_get_dsa_tag() t=
-hat
-> pre-exists in the code. Does this function lack packet length validation
-> before pulling the MTK DSA tag?
->=20
-> airoha_get_dsa_tag() unconditionally performs memmove() and __skb_pull():
->=20
->         memmove(skb->data + MTK_HDR_LEN, skb->data, 2 * ETH_ALEN);
->         __skb_pull(skb, MTK_HDR_LEN);
->=20
-> If an unprivileged user sends an undersized packet via a raw socket
-> (AF_PACKET), could this result in an out-of-bounds memory access and cause
-> skb->len to integer-underflow?
->=20
-> This could lead to dma_map_single() attempting to map a massive amount of
-> memory, potentially causing an IOMMU fault and a local denial-of-service.
-
-As already pointed out, this does not seem an issue.
-
->=20
-> [ ... ]
->=20
-> > @@ -2975,53 +3060,22 @@ static int airoha_alloc_gdm_port(struct airoha_=
-eth *eth,
-> >  		return -EINVAL;
-> >  	}
-> > =20
-> > -	dev =3D devm_alloc_etherdev_mqs(eth->dev, sizeof(*port),
-> > -				      AIROHA_NUM_NETDEV_TX_RINGS,
-> > -				      AIROHA_NUM_RX_RING);
-> > -	if (!dev) {
-> > -		dev_err(eth->dev, "alloc_etherdev failed\n");
-> > +	port =3D devm_kzalloc(eth->dev, sizeof(*port), GFP_KERNEL);
-> > +	if (!port)
-> >  		return -ENOMEM;
->=20
-> [ ... ]
->=20
-> > -	port =3D netdev_priv(dev);
-> >  	u64_stats_init(&port->stats.syncp);
-> >  	spin_lock_init(&port->stats.lock);
-> > -	port->eth =3D eth;
-> > -	port->dev =3D dev;
-> >  	port->id =3D id;
-> >  	/* XXX: Read nbq from DTS */
-> >  	port->nbq =3D id =3D=3D AIROHA_GDM3_IDX && airoha_is_7581(eth) ? 4 : =
-0;
-> >  	eth->ports[p] =3D port;
-> > =20
-> > -	return airoha_metadata_dst_alloc(port);
-> > +	err =3D airoha_metadata_dst_alloc(port);
-> > +	if (err)
-> > +		return err;
+> > @@ -338,10 +338,12 @@ static int kvmclock_setup_percpu(unsigned int cpu)
+> >  
+> >  static __init void kvm_sched_clock_init(bool stable)
+> >  {
+> > +	if (__paravirt_set_sched_clock(kvm_sched_clock_read, stable,
+> > +				       kvm_save_sched_clock_state,
+> > +				       kvm_restore_sched_clock_state))
+> > +		return;
 > > +
-> > +	return airoha_alloc_gdm_device(eth, port, np);
-> >  }
->=20
-> Could an interrupt cause a NULL pointer dereference in the NAPI handlers?
->=20
-> Since NAPI is enabled earlier in airoha_probe() via airoha_qdma_start_nap=
-i(),
-> and eth->ports[p] is assigned here before airoha_alloc_gdm_device() popul=
-ates
-> port->dev, NAPI handlers like airoha_qdma_rx_process() could see a NULL
-> port->dev:
->=20
-> airoha_qdma_rx_process()
->         ...
->         port =3D eth->ports[p];
->         netdev =3D port->dev->dev;
->=20
-> I note that this issue is fixed later in the series by commit 68e8fa8fe02=
-24
-> ("net: airoha: Support multiple net_devices for a single FE GDM port"), w=
-hich
-> changes port->dev to an array and adds proper NULL checks.
+> >  	kvm_sched_clock_offset = kvm_clock_read();
+> 
+> Could this cause a massive backward jump in system time if an NMI or early
+> exception calls sched_clock() right after registration?
+> 
+> __paravirt_set_sched_clock() uses static_call_update() to globally publish
+> kvm_sched_clock_read() as the live system sched_clock. Since the
+> initialization of kvm_sched_clock_offset is now delayed until after this
+> registration completes, any early caller will execute kvm_sched_clock_read()
+> with a zero offset, returning a huge absolute raw clock value.
+> 
+> When the code resumes, it sets the offset to the current raw clock value.
+> Subsequent sched_clock() calls will abruptly subtract this large offset,
+> causing time to jump backwards and violating monotonic clock guarantees.
+> 
+> Would it be safer to initialize kvm_sched_clock_offset before calling
+> __paravirt_set_sched_clock(), since calculating the offset early has no
+> side effects even if the registration is subsequently rejected?
 
-ack, I will fix it in v8.
-
-Regards,
-Lorenzo
-
->=20
-> --=20
-> Sashiko AI review =B7 https://sashiko.dev/#/patchset/20260516-airoha-eth-=
-multi-serdes-v7-0-99e0093303e2@kernel.org?part=3D2
-
---I5Ic1VMvRwYsDD/n
-Content-Type: application/pgp-signature; name=signature.asc
-
------BEGIN PGP SIGNATURE-----
-
-iHUEABYKAB0WIQTquNwa3Txd3rGGn7Y6cBh0uS2trAUCagt9nwAKCRA6cBh0uS2t
-rBeLAQCdlm/QAuyNFWuTfclaOJkPj3v/jYi7gcrxxPmerVRw1QD9EL4eO6LNj9Rk
-bDp2khdOoGbazmqN+YdLfTX70ZT5IAI=
-=t9f+
------END PGP SIGNATURE-----
-
---I5Ic1VMvRwYsDD/n--
+Hmm, yes.  I'll also add a comment explaining exactly that.
