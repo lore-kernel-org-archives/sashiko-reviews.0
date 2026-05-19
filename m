@@ -1,144 +1,109 @@
-Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
-	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D7EBA351C0B;
-	Tue, 19 May 2026 09:55:30 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
+Received: from azure-sdnproxy.icoremail.net (azure-sdnproxy.icoremail.net [4.193.249.245])
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 6E80F477983
+	for <sashiko-reviews@lists.linux.dev>; Tue, 19 May 2026 09:58:30 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=4.193.249.245
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1779184530; cv=none; b=hYVl7X6jFjNqnyUCwRuH7m6wRg4jvaGGn3LsBCX4nf+2vOkzOlKZCNhIaVN6rLydn4WYe1X6PflY15UKzEM1Y37cm8Keo+Api2HfXWhAICvphFiT/YYwj71LA97/S2nF/DdxqypodkrvRq1YHKjElyPmBacBGnvmk6O0DV0Ox+0=
+	t=1779184714; cv=none; b=mGAuRxdbupJWvmMlrXAM9mcbsxz5S6pnzj9Gr/GFhGssFgquJda+kEWcOA/k7qw85oWp3EsVJxZlevyUQ8Bz7MnwPWdPILPaxNpW5M1EmzBtbpGNnWg5+/oRFq0s7YPpWRMlA4zBj7C/UmXwnazjbfyvZ14gWbx0ZHZtayVt8zE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1779184530; c=relaxed/simple;
-	bh=P68ocLlfcKq8sVnOcphv9kpBQ+r9lZFcgkUppEe9QY0=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=BuUctXO7Oz/wtoBL12NbcmxsP43VRlqURuKq75ttYUNry2Ad5bKkyoZJ0vf1VWlJSqTkAQspc8eXRsv9YGZrrYy3e1g8lpbMhu1NM5Wo0NBbNVCq+MpKNs0RGhJ5zoKYWrbJpIoBnI6tdE1Lx7wlkfZStBE3ZsTYWyKRsBrPWVo=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=QOxWZbLR; arc=none smtp.client-ip=10.30.226.201
-Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="QOxWZbLR"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5DCDFC2BCF5;
-	Tue, 19 May 2026 09:55:29 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1779184530;
-	bh=P68ocLlfcKq8sVnOcphv9kpBQ+r9lZFcgkUppEe9QY0=;
-	h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
-	b=QOxWZbLRx8wwsYl8j9fGRHGyeY7CuTV0qqQFTksbogaNR7ZQHcH1OAfNC95OTVCh+
-	 n8Y+f4NxjQW5G2WT1EnzWKj9Nakt90JoWtCkCMAqjTpWL0TYdef5y/i1SPtqFvW1v1
-	 jP85gqVMr5Edl3KkHleAshLxFTY9sdPzEok5tMXBjbB0gKPeOYfMZFR7YYXqZAg+JU
-	 lJHeDqhbrKN4oWU8hNluNCvIpbLpoQWiWsRhRTfol4JtFDRwfqnHOmefVPgY7kZDUP
-	 UGCl2EEQM3QxLCvQhGXmP9RtmJzwIV6XDZm01inM5v1dS3JaemNS4sGn/i/Y/UG4ha
-	 2woeC4V38tysg==
-Date: Tue, 19 May 2026 10:55:27 +0100
-From: Conor Dooley <conor@kernel.org>
-To: =?utf-8?B?5p2O5b+X?= <lizhi2@eswincomputing.com>
-Cc: sashiko-reviews@lists.linux.dev, robh@kernel.org,
-	devicetree@vger.kernel.org, conor+dt@kernel.org
-Subject: Re: Re: [PATCH net v2 1/5] dt-bindings: ethernet: eswin: add
- optional TXD and RXD delay register offsets
-Message-ID: <20260519-presuming-arrest-718fc461b055@spud>
-References: <20260518022023.427-1-lizhi2@eswincomputing.com>
- <20260519022334.35742C2BCB7@smtp.kernel.org>
- <20260519-thinness-slashing-cc0310904419@spud>
- <44d1ad42.8505.19e3fa56a49.Coremail.lizhi2@eswincomputing.com>
+	s=arc-20240116; t=1779184714; c=relaxed/simple;
+	bh=s4crRc70t9E81GiHJUKzRaYciZkXC0AybIIx2ZsjaZA=;
+	h=Date:From:To:Cc:Subject:In-Reply-To:References:Content-Type:
+	 MIME-Version:Message-ID; b=mA0iUIPiRm0fOJPOy9ZFD0O5MuWeZzKOzVyv4DzTFCh+ap2jQ6dpmvonCN0kEppf+xKln777j7YR+9Weal/IOSOy79H4DhbiNDRIx+qMKjZ84glTiVmfux6L0ePuxjdNC4YzCkuMbCuxoR1ZkX91SNZtF9H2o8jul09CgbBJqno=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=eswincomputing.com; spf=pass smtp.mailfrom=eswincomputing.com; arc=none smtp.client-ip=4.193.249.245
+Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=eswincomputing.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=eswincomputing.com
+Received: from lizhi2$eswincomputing.com ( [10.11.96.26] ) by
+ ajax-webmail-app1 (Coremail) ; Tue, 19 May 2026 17:58:19 +0800 (GMT+08:00)
+Date: Tue, 19 May 2026 17:58:19 +0800 (GMT+08:00)
+X-CM-HeaderCharset: UTF-8
+From: =?UTF-8?B?5p2O5b+X?= <lizhi2@eswincomputing.com>
+To: sashiko-reviews@lists.linux.dev
+Cc: conor+dt@kernel.org, devicetree@vger.kernel.org, robh@kernel.org
+Subject: Re: Re: [PATCH net v2 2/5] net: stmmac: eswin: fix HSP CSR init
+ ordering after clock enable
+X-Priority: 3
+X-Mailer: Coremail Webmail Server Version 2024.2-cmXT6 build
+ 20241203(6b039d88) Copyright (c) 2002-2026 www.mailtech.cn
+ mispb-72143050-eaf5-4703-89e0-86624513b4ce-eswincomputing.com
+In-Reply-To: <20260519022335.931D6C2BCB7@smtp.kernel.org>
+References: <20260518022055.444-1-lizhi2@eswincomputing.com>
+ <20260519022335.931D6C2BCB7@smtp.kernel.org>
+Content-Transfer-Encoding: base64
+Content-Type: text/plain; charset=UTF-8
 Precedence: bulk
 X-Mailing-List: sashiko-reviews@lists.linux.dev
 List-Id: <sashiko-reviews.lists.linux.dev>
 List-Subscribe: <mailto:sashiko-reviews+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:sashiko-reviews+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: multipart/signed; micalg=pgp-sha512;
-	protocol="application/pgp-signature"; boundary="KnJSF7QB1NgE5tAq"
-Content-Disposition: inline
-In-Reply-To: <44d1ad42.8505.19e3fa56a49.Coremail.lizhi2@eswincomputing.com>
+Message-ID: <1b6c329a.8507.19e3fac06f0.Coremail.lizhi2@eswincomputing.com>
+X-Coremail-Locale: en_US
+X-CM-TRANSID:TAJkCgDHW3A7NAxqtbYaAA--.5521W
+X-CM-SenderInfo: xol2xx2s6h245lqf0zpsxwx03jof0z/1tbiAgEMDGoLP5IfyAACsa
+X-Coremail-Antispam: 1Ur529EdanIXcx71UUUUU7IcSsGvfJ3iIAIbVAYjsxI4VW3Jw
+	CS07vEb4IE77IF4wCS07vE1I0E4x80FVAKz4kxMIAIbVAFxVCaYxvI4VCIwcAKzIAtYxBI
+	daVFxhVjvjDU=
 
-
---KnJSF7QB1NgE5tAq
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-Content-Transfer-Encoding: quoted-printable
-
-On Tue, May 19, 2026 at 05:51:05PM +0800, =E6=9D=8E=E5=BF=97 wrote:
->=20
->=20
->=20
-> > -----Original Messages-----
-> > From: "Conor Dooley" <conor@kernel.org>
-> > Send time:Tuesday, 19/05/2026 17:11:59
-> > To: sashiko-reviews@lists.linux.dev
-> > Cc: lizhi2@eswincomputing.com, robh@kernel.org, devicetree@vger.kernel.=
-org, conor+dt@kernel.org
-> > Subject: Re: [PATCH net v2 1/5] dt-bindings: ethernet: eswin: add optio=
-nal TXD and RXD delay register offsets
-> >=20
-> > On Tue, May 19, 2026 at 02:23:33AM +0000, sashiko-bot@kernel.org wrote:
-> > > Thank you for your contribution! Sashiko AI review found 1 potential =
-issue(s) to consider:
-> > > - [Medium] Missing `minItems: 4` constraint makes the newly added opt=
-ional cells mandatory, breaking schema backward compatibility.
-> > > --
-> > >=20
-> > > commit 2992483df88af2823c275fc86187f7e38acbee5c
-> > > Author: Zhi Li <lizhi2@eswincomputing.com>
-> > >=20
-> > > dt-bindings: ethernet: eswin: add optional TXD and RXD delay register=
- offsets
-> > >=20
-> > > This commit documents two optional cells in the eswin,hsp-sp-csr prop=
-erty
-> > > for the TXD and RXD delay control register offsets.
-> > >=20
-> > > > diff --git a/Documentation/devicetree/bindings/net/eswin,eic7700-et=
-h.yaml b/Documentation/devicetree/bindings/net/eswin,eic7700-eth.yaml
-> > > > --- a/Documentation/devicetree/bindings/net/eswin,eic7700-eth.yaml
-> > > > +++ b/Documentation/devicetree/bindings/net/eswin,eic7700-eth.yaml
-> > >=20
-> > > [ ... ]
-> > >=20
-> > > > @@ -82,6 +91,8 @@ properties:
-> > > >            - description: Offset of AXI clock controller Low-Power =
-request
-> > > >                           register
-> > > >            - description: Offset of register controlling TX/RX cloc=
-k delay
-> > > > +          - description: Optional offset of register controlling T=
-XD delay
-> > > > +          - description: Optional offset of register controlling R=
-XD delay
-> > >=20
-> > > Will this make the two new offsets strictly required instead of optio=
-nal?
-> > >=20
-> > > In dt-schema, when an items list defines a tuple, minItems implicitly
-> > > defaults to the total number of items in that list. By increasing the=
- list
-> > > from 4 to 6 items without adding a minItems: 4 constraint to the inne=
-r items
-> > > list, won't validation now strictly require exactly 6 items?
-> > >=20
-> > > Could this cause dt_binding_check to fail for existing device trees t=
-hat
-> > > correctly specify only the original 4 elements?
-> >=20
-> > Looks like a valid complaint to me.
-> > pw-bot: changes-requested
-> >=20
-> You're right, this is a valid issue.
->=20
-> I'll fix it in v3 by adding only minItems: 4 to preserve backward
-> compatibility with existing 4-cell device trees.
->=20
-> Should I drop your Acked-by in v3 due to the schema change, or should
-> it be retained?
-
-Just fix it, and you can retain.
-
---KnJSF7QB1NgE5tAq
-Content-Type: application/pgp-signature; name="signature.asc"
-
------BEGIN PGP SIGNATURE-----
-
-iHUEABYKAB0WIQRh246EGq/8RLhDjO14tDGHoIJi0gUCagwzjwAKCRB4tDGHoIJi
-0otQAQDm1kk2i60YjFGgUWijyPbE2FoJPZiCkqbk18+HKWun4QD+J3Hs6fI3lQC5
-JtmJl87KXaRMy4+WlNT+LBuj5nr5Qgg=
-=fhGo
------END PGP SIGNATURE-----
-
---KnJSF7QB1NgE5tAq--
+CgoKPiAtLS0tLU9yaWdpbmFsIE1lc3NhZ2VzLS0tLS0KPiBGcm9tOiBzYXNoaWtvLWJvdEBrZXJu
+ZWwub3JnCj4gU2VuZCB0aW1lOlR1ZXNkYXksIDE5LzA1LzIwMjYgMTA6MjM6MzUKPiBUbzogbGl6
+aGkyQGVzd2luY29tcHV0aW5nLmNvbQo+IENjOiBjb25vcitkdEBrZXJuZWwub3JnLCBkZXZpY2V0
+cmVlQHZnZXIua2VybmVsLm9yZywgcm9iaEBrZXJuZWwub3JnCj4gU3ViamVjdDogUmU6IFtQQVRD
+SCBuZXQgdjIgMi81XSBuZXQ6IHN0bW1hYzogZXN3aW46IGZpeCBIU1AgQ1NSIGluaXQgb3JkZXJp
+bmcgYWZ0ZXIgY2xvY2sgZW5hYmxlCj4gCj4gVGhhbmsgeW91IGZvciB5b3VyIGNvbnRyaWJ1dGlv
+biEgU2FzaGlrbyBBSSByZXZpZXcgZm91bmQgMSBwb3RlbnRpYWwgaXNzdWUocykgdG8gY29uc2lk
+ZXI6Cj4gLSBbSGlnaF0gSGFyZHdhcmUgU3RhdGUgTG9zcyBvbiBSZXN1bWU6IFRoZSBIU1AgQ1NS
+IHJlZ2lzdGVycyBhcmUgbm90IHJlc3RvcmVkIGR1cmluZyBzeXN0ZW0gcmVzdW1lLCBjb250cmFk
+aWN0aW5nIHRoZSBjb21taXQgbWVzc2FnZS4KPiAtLQo+IAo+IGNvbW1pdCA2MjdmNTEwZWU1NTZm
+ZjQzMjJlMGY0ZWQwYjYwZmRkMjczMzcwODBmCj4gQXV0aG9yOiBaaGkgTGkgPGxpemhpMkBlc3dp
+bmNvbXB1dGluZy5jb20+Cj4gCj4gbmV0OiBzdG1tYWM6IGVzd2luOiBmaXggSFNQIENTUiBpbml0
+IG9yZGVyaW5nIGFmdGVyIGNsb2NrIGVuYWJsZQo+IAo+IFRoaXMgY29tbWl0IG1vdmVzIHRoZSBI
+U1AgQ1NSIGNvbmZpZ3VyYXRpb24gaW4gdGhlIEVJQzc3MDAgRFdNQUMgZ2x1ZSBkcml2ZXIKPiBp
+bnRvIHRoZSBwb3N0LWNsb2NrLWVuYWJsZSBpbml0aWFsaXphdGlvbiBwYXRoIHRvIGVuc3VyZSBw
+cm9wZXIgb3JkZXJpbmcuCj4gVGhlIGludGVudCBpcyB0byBwcmV2ZW50IHJlZ2lzdGVyIGFjY2Vz
+cyBiZWZvcmUgY2xvY2sgZW5hYmxlbWVudCBhbmQgZW5zdXJlCj4gZGV0ZXJtaW5pc3RpYyBpbml0
+aWFsaXphdGlvbiBkdXJpbmcgcHJvYmUgb3IgcmVzdW1lLgo+IAo+ID4gICAgIFRoaXMgY2hhbmdl
+IGVuc3VyZXMgZGV0ZXJtaW5pc3RpYyBpbml0aWFsaXphdGlvbiBhbmQgcHJldmVudHMKPiA+ICAg
+ICBjbG9jay1kZXBlbmRlbnQgcmVnaXN0ZXIgYWNjZXNzIGZhaWx1cmVzIGR1cmluZyBwcm9iZSBv
+ciByZXN1bWUuCj4gCj4gQXJlIHRoZSBIU1AgQ1NSIHJlZ2lzdGVycyBhY3R1YWxseSByZXN0b3Jl
+ZCBkdXJpbmcgc3lzdGVtIHJlc3VtZT8KPiAKPiBUaGUgZHJpdmVyIG92ZXJyaWRlcyB0aGUgY29y
+ZSByZXN1bWUgY2FsbGJhY2sgYnkgc2V0dGluZwo+IHBsYXRfZGF0LT5yZXN1bWUgPSBlaWM3NzAw
+X2R3bWFjX3Jlc3VtZS4gQmVjYXVzZSBhIGN1c3RvbSByZXN1bWUgY2FsbGJhY2sgaXMKPiBwcm92
+aWRlZCwgdGhlIFNUTU1BQyBjb3JlIGludm9rZXMgdGhpcyBpbnN0ZWFkIG9mIHRoZSBkZWZhdWx0
+Cj4gc3RtbWFjX3BsYXRfcmVzdW1lKCkgKHdoaWNoIHdvdWxkIGhhdmUgY2FsbGVkIHBsYXQtPmlu
+aXQoKSkuCj4gCj4gPiBkaWZmIC0tZ2l0IGEvZHJpdmVycy9uZXQvZXRoZXJuZXQvc3RtaWNyby9z
+dG1tYWMvZHdtYWMtZWljNzcwMC5jIGIvZHJpdmVycy9uZXQvZXRoZXJuZXQvc3RtaWNyby9zdG1t
+YWMvZHdtYWMtZWljNzcwMC5jCj4gPiBpbmRleCBiY2I4ZTAwMGU3MjBiLi42MzAwMWM0YWNkYjdh
+IDEwMDY0NAo+ID4gLS0tIGEvZHJpdmVycy9uZXQvZXRoZXJuZXQvc3RtaWNyby9zdG1tYWMvZHdt
+YWMtZWljNzcwMC5jCj4gPiArKysgYi9kcml2ZXJzL25ldC9ldGhlcm5ldC9zdG1pY3JvL3N0bW1h
+Yy9kd21hYy1laWM3NzAwLmMKPiAKPiBbIC4uLiBdCj4gCj4gPiBAQCAtNjEsOCArNjYsMjggQEAg
+c3RhdGljIGludCBlaWM3NzAwX2Nsa3NfY29uZmlnKHZvaWQgKnByaXYsIGJvb2wgZW5hYmxlZCkK
+PiA+ICBzdGF0aWMgaW50IGVpYzc3MDBfZHdtYWNfaW5pdChzdHJ1Y3QgZGV2aWNlICpkZXYsIHZv
+aWQgKnByaXYpCj4gPiAgewo+ID4gIAlzdHJ1Y3QgZWljNzcwMF9xb3NfcHJpdiAqZHdjID0gcHJp
+djsKPiA+ICsJaW50IHJldDsKPiA+ICsKPiA+ICsJcmV0ID0gZWljNzcwMF9jbGtzX2NvbmZpZyhk
+d2MsIHRydWUpOwo+ID4gKwlpZiAocmV0KQo+ID4gKwkJcmV0dXJuIHJldDsKPiA+ICsKPiA+ICsJ
+cmV0ID0gcmVnbWFwX3NldF9iaXRzKGR3Yy0+ZWljNzcwMF9oc3BfcmVnbWFwLAo+ID4gKwkJCSAg
+ICAgIGR3Yy0+ZXRoX3BoeV9jdHJsX29mZnNldCwKPiA+ICsJCQkgICAgICBFSUM3NzAwX0VUSF9U
+WF9DTEtfU0VMIHwKPiA+ICsJCQkgICAgICBFSUM3NzAwX0VUSF9QSFlfSU5URl9TRUxJKTsKPiA+
+ICsJaWYgKHJldCkgewo+ID4gKwkJZWljNzcwMF9jbGtzX2NvbmZpZyhkd2MsIGZhbHNlKTsKPiA+
+ICsJCXJldHVybiByZXQ7Cj4gPiArCX0KPiA+ICsKPiA+ICsJcmVnbWFwX3dyaXRlKGR3Yy0+ZWlj
+NzcwMF9oc3BfcmVnbWFwLCBkd2MtPmV0aF9heGlfbHBfY3RybF9vZmZzZXQsCj4gPiArCQkgICAg
+IEVJQzc3MDBfRVRIX0NTWVNSRVFfVkFMKTsKPiA+ICAKPiA+IC0JcmV0dXJuIGVpYzc3MDBfY2xr
+c19jb25maWcoZHdjLCB0cnVlKTsKPiA+ICsJcmVnbWFwX3dyaXRlKGR3Yy0+ZWljNzcwMF9oc3Bf
+cmVnbWFwLCBkd2MtPmV0aF9jbGtfb2Zmc2V0LAo+ID4gKwkJICAgICBkd2MtPmV0aF9jbGtfZGx5
+X3BhcmFtKTsKPiA+ICsKPiA+ICsJcmV0dXJuIDA7Cj4gPiAgfQo+IAo+IFNpbmNlIGVpYzc3MDBf
+ZHdtYWNfcmVzdW1lKCkgb25seSBjYWxscyBwbV9ydW50aW1lX2ZvcmNlX3Jlc3VtZShkZXYpIGFu
+ZAo+IGRvZXNuJ3QgaW52b2tlIGVpYzc3MDBfZHdtYWNfaW5pdCgpLCB0aGUgSFNQIENTUiBjb25m
+aWd1cmF0aW9uIHdvbid0IGJlCj4gcmUtYXBwbGllZCB1cG9uIHN5c3RlbSByZXN1bWUuIElmIHRo
+ZSBoYXJkd2FyZSBsb3NlcyBzdGF0ZSBkdXJpbmcgc3VzcGVuZCwKPiB3aWxsIHRoZSBSR01JSSBk
+ZWxheXMgYmUgcGVybWFuZW50bHkgbG9zdCwgbGVhZGluZyB0byBhIE1BQyBoYW5nIG9yIHNpbGVu
+dAo+IG5ldHdvcmsgZmFpbHVyZT8KPiAKPiBBbHNvLCBpZiB3ZSB0cnkgdG8gZml4IHRoaXMgYnkg
+bmFpdmVseSBjYWxsaW5nIGluaXQoKSBmcm9tIHJlc3VtZSgpLCB3b3VsZAo+IGl0IGNhdXNlIGEg
+Y2xvY2sgcmVmZXJlbmNlIGxlYWs/IHBtX3J1bnRpbWVfZm9yY2VfcmVzdW1lKCkgYWxyZWFkeQo+
+IHJlLWVuYWJsZXMgdGhlIGNsb2NrcyB2aWEgdGhlIHJ1bnRpbWUgUE0gY2FsbGJhY2tzLCBzbyB0
+aGUgQ1NSIGNvbmZpZ3VyYXRpb24KPiBtaWdodCBuZWVkIHRvIGJlIGZhY3RvcmVkIG91dCBpbnRv
+IGEgc2VwYXJhdGUgaGVscGVyIGZ1bmN0aW9uLgo+IAoKWW91J3JlIHJpZ2h0LCB0aGlzIHdhcyBz
+aW1wbHkgYSBtaXN0YWtlIGluIHRoZSBjb21taXQgbWVzc2FnZS4KClRoZXJlIGlzIG5vIHJlc3Vt
+ZSBwYXRoIGludm9sdmVkIOKAlCBvbmx5IHByb2JlIGNhbGxzCmVpYzc3MDBfZHdtYWNfaW5pdCgp
+LCB3aGVyZSB0aGUgSFNQIENTUiBjb25maWd1cmF0aW9uIGlzIGFwcGxpZWQKYWZ0ZXIgY2xvY2sg
+ZW5hYmxlbWVudC4KCkknbGwgZml4IHRoZSBjb21taXQgbWVzc2FnZSBpbiB2MyBhY2NvcmRpbmds
+eS4KClRoYW5rcyBmb3IgdGhlIHJldmlldy4K
