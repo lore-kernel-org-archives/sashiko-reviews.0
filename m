@@ -1,71 +1,71 @@
-Received: from mail-wm1-f43.google.com (mail-wm1-f43.google.com [209.85.128.43])
+Received: from mail-wm1-f42.google.com (mail-wm1-f42.google.com [209.85.128.42])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 067383BB680
-	for <sashiko-reviews@lists.linux.dev>; Tue, 19 May 2026 20:36:33 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.43
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 082773BB680
+	for <sashiko-reviews@lists.linux.dev>; Tue, 19 May 2026 20:36:43 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.42
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1779222995; cv=none; b=Dhkvaw6Paa4DWlwf2QLn00nSazRgEs1EBbSs2y5Tc8730sEZ3oVlu14iz0aH8uoQfvVPf1m8PMGH+wOpR9LoceETnahyGzaNjjwrdx7vgxBn7f2C72qtYNL3MFWxQzL5wuUtnQW3MxJNh5jiyE3bMw/R0/42ndJqic2eupFYTAI=
+	t=1779223005; cv=none; b=mPwLZ6nPLC0uCi/+tnXibGOZHR7lcO6/Jzx1KuBaY8ZddfHkBOGz60QVnmF3OIeEVINBuCF9wDsuD/bAoRHxZ/XWn0kfhFqJON6WqCGwPpHUcj/xw0rNfIwOxFPQjY8kre8BnYxQGa+gE4x3YadvlItImn6DKgQHPvlS9U3HtLQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1779222995; c=relaxed/simple;
-	bh=z+b8oSAhGac0PPOEOgqAaY2KPvnFvX88FrL6kKbwnuM=;
+	s=arc-20240116; t=1779223005; c=relaxed/simple;
+	bh=NVyzgDHHwWqFDEQ5sBwjAOuZvof1APUbmO5Rw5xQkDU=;
 	h=From:Date:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=IlkRMqGY94CSGHuIuXMPYbzPbSnF8hd8dD2Lep87qHyYxsrkw23mVPk9OHuXjnzws6yDy1DxvIRPjCFrybQCQ4OhqtScVKqsE9YIVcUX24DtLRB2GOASyaFEejWX2ll9kXRyufaPnllJyoKwlO6KLzpFSBvxr/qsCKkaO6G0O0Y=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=dXoGVBdW; arc=none smtp.client-ip=209.85.128.43
+	 Content-Type:Content-Disposition:In-Reply-To; b=irUIpo4olpN71wlGfchu/eWvQzC0D3W2aDliAH7MWa1itOmbJK3yjOx1d7n05vpfse9vpS4v64O5XRR6lotEN0PVtyF2OA+GtR5XeMxzlUbOA+IbOjcwnJ35LIm/AG2TDa+Naw28p9bLuud1WPBbuMYC5d2AyjdiMRmTwwCOhDI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=raAH9CIF; arc=none smtp.client-ip=209.85.128.42
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="dXoGVBdW"
-Received: by mail-wm1-f43.google.com with SMTP id 5b1f17b1804b1-48fe26a177cso29921185e9.1
-        for <sashiko-reviews@lists.linux.dev>; Tue, 19 May 2026 13:36:33 -0700 (PDT)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="raAH9CIF"
+Received: by mail-wm1-f42.google.com with SMTP id 5b1f17b1804b1-48a7fe4f40bso49278605e9.0
+        for <sashiko-reviews@lists.linux.dev>; Tue, 19 May 2026 13:36:43 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20251104; t=1779222992; x=1779827792; darn=lists.linux.dev;
+        d=gmail.com; s=20251104; t=1779223002; x=1779827802; darn=lists.linux.dev;
         h=in-reply-to:content-disposition:mime-version:references:message-id
          :subject:cc:to:date:from:from:to:cc:subject:date:message-id:reply-to;
-        bh=eeVdBSMYoYIb7T6Hj+x3MKxdLQwgQrCjVyxD0/Djjko=;
-        b=dXoGVBdW+e2eqnWA+rLzdyLc0UnzNZvZwbBK0Oj0ySBuCVi2IxHwWT7E/iFiawAyKw
-         Vp8DmDKg1TKHkmiog6dXskUk2W/2YTaDgjuROsDYnRjaPs8EC7HuykqToyMUULHMG9IW
-         ieSMoax7qh0TIZtwVTuFkCCH2iCqZ70FiqoJxj7JMa37a8U82vZr54AAieHFhi0MJaKW
-         3iUN0GA+HanVRl8wtSApQ3ROzjAlT69hcQfVrpEBr3f9wVCmX66qDBa8m2XEerKMl795
-         M2GA/kZIHnUzD4LWPxiLWMmN2PXY5l7O/+MOIzwI3tcJ/2Wwx+mJPJChzX9aThBkTnkn
-         w11w==
+        bh=//Sc7HUu0N0n0srzJTcA3hqC03vufTnNxLsUSy9rPDk=;
+        b=raAH9CIFaJS2XKhXSVhGbcWbdIpEKfGbHTDMT4otqKLDdmQz5xQlpY6tnUTJ0aVt3i
+         BXVNduDUAj0HHcqZvPvt3amRV04+JRuSkd+r6wf++ZCRILo8oqn/+qVB4xfNQ4Z4gFxY
+         8fFKHDYTMj0Xrwsc4JwRpkV8Jh3EmNXiz7NvJDhCr6EsvOFztXnPDylI6dOoEe6gim8a
+         ZbeVWzyf++BW5rRcS8NtDk9A9PiT/6+2l+XTHP2rwPW826vJEN7oiUiMj96korbMmFhF
+         bOEEnxt+b29vQ4nF3yrIHJSFwOLJeVtADqVGDWjyR+SLrYlxFPpeazoO8lNCvp74YAWb
+         m9nQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20251104; t=1779222992; x=1779827792;
+        d=1e100.net; s=20251104; t=1779223002; x=1779827802;
         h=in-reply-to:content-disposition:mime-version:references:message-id
          :subject:cc:to:date:from:x-gm-gg:x-gm-message-state:from:to:cc
          :subject:date:message-id:reply-to;
-        bh=eeVdBSMYoYIb7T6Hj+x3MKxdLQwgQrCjVyxD0/Djjko=;
-        b=USCfbXkuRZqr/pLL4ckV1mumFN4Tv8eWjW9kziJKUwXBre1DFZYwVSTUslw+C9o8dy
-         AOEgq5sZb2TfNN5LZXhxwdfzkagfxYIITlAe11TBTPVARwf1tkId8kyeCzjxyre81Gjn
-         pXpZI5qEzqboOUp8q4jFAnqRtEH5a8z2bwXKfc3UUZ1LRvDMVqZY1+fMSCY3afzCE9do
-         vjXeITUc498HyRBiCk3cZ6HJm4/WrLMz0EohWd1FLbzauwRS/3uENKRk3LjwxLbLEzY3
-         MITysHk/K6ilr7KwJIs7Lkw66YUVbllfQAbjSA/iVhpfGKOchcETkgFcvXE+2NCXdfyK
-         XW7A==
-X-Gm-Message-State: AOJu0YyRpkTE+5UkqednZ3jRZl/DE8raMmDs2CSVjk8coLRXoK2Yc+3b
-	Eblf+MS2MDrN3piLwU5iUVqujtgXgRJBOSUylqVIJQbxGJD+wfDS690q2wVCRzxH
-X-Gm-Gg: Acq92OH4aidzr4g1aC6pLU+uJpiUOwZpAosi5tOy1KYkycEUw6H4TpORX9AiW92BS7G
-	LgXnxNx0YCnVjikm0Y1jWyKpumWfMbfcEcN3+FGGZlGrORDDTueLcKStugYKnXXXv3xuz62wS7X
-	VRg+HWPEkOwikgVZ1Nq3lSY7qagVMFLZG6S74CSmB+fJRclLFhSg1u2EMqFibAurGn/SmIJhJK9
-	Mwhl9LfKTZ69RngPjM/56uEmfXlhWbe3SOpS68Q0JEBsUl86IRjYttBzQJqT1plQCc1gcCk9t1T
-	3jRUPxso7XxHWAVAYuqQgP3oSiY8Kos0mhBP2d3M2qnWKrMlG5Z4V+5m1a9Kh2XXLRS1u94yZ7q
-	k5nrRp2ujimpjOd0ic6SYIl6P/+FA+pBwpbs8Ojl/DXUswyLPfmKjkvI0fMuAWeO94g6ZAElp6m
-	AIOvbmeGGyOaA=
-X-Received: by 2002:a05:600c:470e:b0:489:201c:dc46 with SMTP id 5b1f17b1804b1-48fe60ea590mr306222665e9.12.1779222992370;
-        Tue, 19 May 2026 13:36:32 -0700 (PDT)
+        bh=//Sc7HUu0N0n0srzJTcA3hqC03vufTnNxLsUSy9rPDk=;
+        b=a4qxQ8xL6UGcg/Jyrny6FvSmBKZs8keLVRapHt0lwXB7R08ywOSKIk3xzz6632lJEc
+         mGd0dAj9mq3SLUrC07BRRhBPZBnj3teJjyFB4Gzoz+BUDTt5NtUxGhouxMlxlkUsg52m
+         zHti4C2mIwPOu0D3AJtd0Zq0hy6IdyPzO5K2cqSNhjMsIghe6vqupA2jbiRgNjyBp/7G
+         jrjGXcjFHpmYrzAbixFAZXlo7kKTOzHGzsta6rtbFgcJe69ruRJ9InDd0rIFlJZwbldn
+         WU6fE2N2cccvbXlxleD3Ls87UU8ki3nXeYSsDaXcEN4Y/YtSTiLjMS2JbEfwbsJXp+QF
+         qGpg==
+X-Gm-Message-State: AOJu0YxoAIM4NhJNoKSMbOEng9uNbkvkAUt9Uz+h9lSLsPAMiDcRGmym
+	lsbI6nF3sV91596gWE506LSGiOmAg15RVCOY3ziAnIRj6ARbyLE38ry7glvahIt7
+X-Gm-Gg: Acq92OFSDUf+RJ+1LQzszcqViKaEc1rFsx6B1TAzeb0foz7U8UyMbaifQC0UWLcTh8z
+	HQ8rO+U1Fr5lMk+YfZUJ+6ix1f8mybI8oG4xqISGI3hd/qqidFaFIFz/Z2n6Eou/JxBW92XUzCE
+	TumyhJ6iEwTjT890AeUtCN/O7Ll9WeRgY2O5w9GhFh4d0GJGtoE3CbbSa2XDDZ8QlkYMLocjAY0
+	7ASoEK3+NprQ/Gi/p+SQua4sY6pg7kPm9COpuaeC/xQLYhuGOaaWK9bmf1lzfeqkU7t0Mylux+z
+	yCwW+V2dnPrNR+2+P4fmHQYkGSqYjfCX9oKdHFMoYFExwgRho2ux23Hw2fzkNGsx7o1nVsDJB9z
+	PcGumkiMe/8MGEfbtxCNEf6WoQkdy+vztYbS8/Vtrb/O4JZdVkwQ7RuplXAMglfybG9+vTd9r8E
+	0rVPdY/qW0L2jNBhMTVN9gN+JpyFlcHXuP
+X-Received: by 2002:a05:600c:4e53:b0:490:1640:8269 with SMTP id 5b1f17b1804b1-490164089c7mr136785135e9.18.1779223002427;
+        Tue, 19 May 2026 13:36:42 -0700 (PDT)
 Received: from krava ([176.74.159.170])
-        by smtp.gmail.com with ESMTPSA id 5b1f17b1804b1-48fe5ab527asm388321145e9.11.2026.05.19.13.36.31
+        by smtp.gmail.com with ESMTPSA id 5b1f17b1804b1-48fe5ab3977sm381364305e9.9.2026.05.19.13.36.41
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Tue, 19 May 2026 13:36:31 -0700 (PDT)
+        Tue, 19 May 2026 13:36:41 -0700 (PDT)
 From: Jiri Olsa <olsajiri@gmail.com>
 X-Google-Original-From: Jiri Olsa <jolsa@kernel.org>
-Date: Tue, 19 May 2026 22:36:30 +0200
+Date: Tue, 19 May 2026 22:36:40 +0200
 To: sashiko-reviews@lists.linux.dev
 Cc: bpf@vger.kernel.org
-Subject: Re: [PATCHv2 06/11] selftests/bpf: Emit nop,nop10 instructions combo
- for x86_64 arch
-Message-ID: <agzJzm_p_Y9s-Zt2@krava>
-References: <20260518105957.123445-7-jolsa@kernel.org>
- <20260518111733.E696AC2BCB7@smtp.kernel.org>
+Subject: Re: [PATCHv2 07/11] selftests/bpf: Change uprobe syscall tests to
+ use nop10
+Message-ID: <agzJ2HV2BX0ST3MC@krava>
+References: <20260518105957.123445-8-jolsa@kernel.org>
+ <20260518111604.CC731C2BCB7@smtp.kernel.org>
 Precedence: bulk
 X-Mailing-List: sashiko-reviews@lists.linux.dev
 List-Id: <sashiko-reviews.lists.linux.dev>
@@ -74,59 +74,108 @@ List-Unsubscribe: <mailto:sashiko-reviews+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-In-Reply-To: <20260518111733.E696AC2BCB7@smtp.kernel.org>
+In-Reply-To: <20260518111604.CC731C2BCB7@smtp.kernel.org>
 
-On Mon, May 18, 2026 at 11:17:33AM +0000, sashiko-bot@kernel.org wrote:
-> Thank you for your contribution! Sashiko AI review found 2 potential issue(s) to consider:
-> - [Medium] The patch modifies `USDT_NOP` to emit an 11-byte `nop, nop10` sequence, breaking existing BPF selftests that explicitly expect `nop, nop5`.
-> - [Medium] Libbpf is not updated to recognize the new `nop, nop10` sequence, causing the intended uprobe optimization to silently fail.
+On Mon, May 18, 2026 at 11:16:04AM +0000, sashiko-bot@kernel.org wrote:
+> Thank you for your contribution! Sashiko AI review found 3 potential issue(s) to consider:
+> - [Medium] Missing update to USDT_NOP macro causes `subtest_optimized_attach` test failure.
+> - [Medium] Inadequate search bounds in `find_instr()` may cause false test failures.
+> - [Low] Misleading benchmark and function names referencing `nop5`.
 > --
 > 
-> commit 1ccfa6afa421e13f88c377be82ec249ff187bf51
+> commit 1996488ddbe422eb1d441da9b06aafe6bd47e6d1
 > Author: Jiri Olsa <jolsa@kernel.org>
 > 
-> selftests/bpf: Emit nop,nop10 instructions combo for x86_64 arch
+> selftests/bpf: Change uprobe syscall tests to use nop10
 > 
-> This commit updates the USDT_NOP macro in the BPF selftests to use a nop,nop10
-> instruction sequence instead of nop,nop5 for x86_64. This is intended to
-> support nop10 optimization testing.
+> Optimized uprobes are now on top of 10-bytes nop instructions,
+> reflect that in existing tests.
 > 
-> > diff --git a/tools/testing/selftests/bpf/usdt.h b/tools/testing/selftests/bpf/usdt.h
-> > index c71e21df38b32..d359663b9c329 100644
-> > --- a/tools/testing/selftests/bpf/usdt.h
-> > +++ b/tools/testing/selftests/bpf/usdt.h
-> > @@ -313,7 +313,7 @@ struct usdt_sema { volatile unsigned short active; };
-> >  #if defined(__ia64__) || defined(__s390__) || defined(__s390x__)
-> >  #define USDT_NOP			nop 0
-> >  #elif defined(__x86_64__)
-> > -#define USDT_NOP                       .byte 0x90, 0x0f, 0x1f, 0x44, 0x00, 0x0 /* nop, nop5 */
-> > +#define USDT_NOP                       .byte 0x90, 0x66, 0x66, 0x0f, 0x1f, 0x84, 0x00, 0x00, 0x00, 0x00, 0x00 /* nop, nop10 */
+> > diff --git a/tools/testing/selftests/bpf/benchs/bench_trigger.c b/tools/testing/selftests/bpf/benchs/bench_trigger.c
+> > index 2f22ec61667b9..bcc4820c802e5 100644
+> > --- a/tools/testing/selftests/bpf/benchs/bench_trigger.c
+> > +++ b/tools/testing/selftests/bpf/benchs/bench_trigger.c
+> > @@ -398,7 +398,7 @@ static void *uprobe_producer_ret(void *input)
+> >  #ifdef __x86_64__
+> >  __nocf_check __weak void uprobe_target_nop5(void)
+> >  {
+> > -	asm volatile (".byte 0x0f, 0x1f, 0x44, 0x00, 0x00");
+> > +	asm volatile (".byte 0x66, 0x66, 0x0f, 0x1f, 0x84, 0x00, 0x00, 0x00, 0x00, 0x00");
+> >  }
+> >  
+> >  static void *uprobe_producer_nop5(void *input)
 > 
-> Will this change break the existing BPF selftests that explicitly expect the
-> nop,nop5 sequence?
+> This isn't a bug, but should the function and benchmark names also be updated?
 > 
-> Looking at tools/testing/selftests/bpf/prog_tests/usdt.c,
-> subtest_optimized_attach() uses find_instr() to search for a hardcoded 6-byte
-> sequence:
-> 
->     const char nop1_nop5_combo[] = { 0x90, 0x0f, 0x1f, 0x44, 0x00, 0x00 };
->     ...
->     addr_2 = find_instr(usdt_2, nop1_nop5_combo, sizeof(nop1_nop5_combo));
-> 
-> Because usdt_2.c is compiled with the new 11-byte nop,nop10 sequence,
-> find_instr() will return NULL and cause the ASSERT_OK_PTR() check to fail.
-> 
-> Additionally, does libbpf need to be updated to recognize this new sequence?
-> 
-> In tools/lib/bpf/usdt.c, has_nop_combo() appears to be hardcoded to check only
-> for the 6-byte nop,nop5 sequence.
-> 
-> If libbpf doesn't recognize the new 11-byte sequence, it won't increment the
-> instruction pointer to skip the initial 1-byte nop. This would cause the
-> uprobe to attach to the unoptimized 1-byte nop instead of utilizing the
-> intended optimization.
+> The benchmark exposes names like uprobe-nop5 and uretprobe-nop5, but they are
+> now testing a 10-byte nop.
 
-as I wrote in cover letter I prefer to keep these separated to make
-the review easier.. we can squash it once we think it's good to go
+they are updated in following separate commit 
+
+> 
+> [ ... ]
+> 
+> > diff --git a/tools/testing/selftests/bpf/prog_tests/usdt.c b/tools/testing/selftests/bpf/prog_tests/usdt.c
+> > index 69759b27794d7..a160d7c4fa0d3 100644
+> > --- a/tools/testing/selftests/bpf/prog_tests/usdt.c
+> > +++ b/tools/testing/selftests/bpf/prog_tests/usdt.c
+> > @@ -252,7 +252,7 @@ extern void usdt_1(void);
+> >  extern void usdt_2(void);
+> >  
+> >  static unsigned char nop1[1] = { 0x90 };
+> > -static unsigned char nop1_nop5_combo[6] = { 0x90, 0x0f, 0x1f, 0x44, 0x00, 0x00 };
+> > +static unsigned char nop1_nop10_combo[11] = { 0x90, 0x66, 0x66, 0x0f, 0x1f, 0x84, 0x00, 0x00, 0x00, 0x00, 0x00 };
+> 
+> Is the loop in find_instr() adequate to find this instruction sequence?
+> 
+> tools/testing/selftests/bpf/prog_tests/usdt.c:find_instr() {
+> 	for (i = 0; i < 10; i++) {
+> 		if (!memcmp(instr, fn + i, cnt))
+> 			return fn + i;
+> 	}
+> 	return NULL;
+> }
+> 
+> In uprobe_syscall.c, find_nop10() was updated to search up to 128 bytes to
+> account for compiler-generated prologues. If a modern compiler generates a
+> prologue longer than 9 bytes for usdt_2(), this will prematurely terminate and
+> cause the subtest_optimized_attach() test to fail.
+
+yea find_instr needs same update, will fix
+
+> 
+> [ ... ]
+> 
+> > @@ -271,17 +271,17 @@ static void subtest_optimized_attach(void)
+> >  	__u8 *addr_1, *addr_2;
+> >  
+> >  	/* usdt_1 USDT probe has single nop instruction */
+> > -	addr_1 = find_instr(usdt_1, nop1_nop5_combo, 6);
+> > -	if (!ASSERT_NULL(addr_1, "usdt_1_find_nop1_nop5_combo"))
+> > +	addr_1 = find_instr(usdt_1, nop1_nop10_combo, 11);
+> > +	if (!ASSERT_NULL(addr_1, "usdt_1_find_nop1_nop10_combo"))
+> >  		return;
+> >  
+> >  	addr_1 = find_instr(usdt_1, nop1, 1);
+> >  	if (!ASSERT_OK_PTR(addr_1, "usdt_1_find_nop1"))
+> >  		return;
+> >  
+> > -	/* usdt_2 USDT probe has nop,nop5 instructions combo */
+> > -	addr_2 = find_instr(usdt_2, nop1_nop5_combo, 6);
+> > -	if (!ASSERT_OK_PTR(addr_2, "usdt_2_find_nop1_nop5_combo"))
+> > +	/* usdt_2 USDT probe has nop,nop10 instructions combo */
+> > +	addr_2 = find_instr(usdt_2, nop1_nop10_combo, 11);
+> > +	if (!ASSERT_OK_PTR(addr_2, "usdt_2_find_nop1_nop10_combo"))
+> 
+> Does this test fail because USDT_NOP was not updated in usdt.h?
+> 
+> The test expects to find the 11-byte nop1_nop10_combo, but usdt_2.c relies on
+> the default definition of USDT_NOP from tools/testing/selftests/bpf/usdt.h.
+> 
+> Because usdt.h was not updated in this patch, usdt_2.c will compile with the
+> 6-byte nop sequence, causing find_instr() to return NULL here and the
+> ASSERT_OK_PTR to fail.
+
+it's updated separately in another commit
 
 jirka
