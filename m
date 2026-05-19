@@ -1,194 +1,241 @@
-Received: from mail-wm1-f45.google.com (mail-wm1-f45.google.com [209.85.128.45])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from MRWPR03CU001.outbound.protection.outlook.com (mail-francesouthazon11011039.outbound.protection.outlook.com [40.107.130.39])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 729EE39D6C9
-	for <sashiko-reviews@lists.linux.dev>; Tue, 19 May 2026 08:27:09 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.45
-ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1779179231; cv=none; b=je33Ic34+fzBdHRMY/S5V486Da8ZxEVwfaXdFIF0ZVuSZ5tpPIY+kD0X42mfGC8YEkbSK3QUc1+1Lmwlu95jyS3Qnqt4DFIIuIzN1IK/IgeuV7gsXJK8HgkJ6r+oSeX0lEs9UBAp6JtjBDLnfRX4Yu3euz9Qyq5tPecW2t7N8lQ=
-ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1779179231; c=relaxed/simple;
-	bh=vHq/QwysCAgnNKiBTbbYeanowaRKF+5PysX/4OYh2GU=;
-	h=Message-ID:Date:MIME-Version:From:Subject:To:Cc:References:
-	 In-Reply-To:Content-Type; b=ASvO0Di1fT4y2wB4pohr71uirSTUmnV2cZ/U3UHkXdIrAkq/JW8kIZkR4egZzaBdjgid2Z9O4K40yOUJ1TNt9uilOhpjuIuv5qzgOsu1/FeDGI4fsFnyQPrCkxOZTUbKXnkDd/GldZuJh9/2d8mD8x6IkLyE9M77Kd5elQupw7Y=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=q3d8gALe; arc=none smtp.client-ip=209.85.128.45
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 31F863E1218;
+	Tue, 19 May 2026 08:30:03 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=fail smtp.client-ip=40.107.130.39
+ARC-Seal:i=2; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
+	t=1779179405; cv=fail; b=NFtBgwn43H6FT5rHDKuP4+fBFFnt+ehYp+YKNZT4RKNnf2E+BkPkUIb5vW7/YfjNmQGlLAmg174o0PLzFONllnXQMN9705CRXWwfN6nEG2toOBqmVpfjoVD+73f9xgUxfTk8LTlrHDsVsIuOCZmpMnDysO9FuH/g13jTCRgp4NI=
+ARC-Message-Signature:i=2; a=rsa-sha256; d=subspace.kernel.org;
+	s=arc-20240116; t=1779179405; c=relaxed/simple;
+	bh=1TFM4n+WR/4hTxaiqDk/gAYX55i2V6pSu+zTDM0jpB4=;
+	h=From:To:CC:Subject:Date:Message-ID:References:In-Reply-To:
+	 Content-Type:MIME-Version; b=C+w7cfy3D9G1js/C+kYAkGK3p3WbBo6RUj9MsP42BibojLPQnU1SmHRzV9Tzzvu8nRTZfNH9Ja5dMcMRswBkB61HTB+R4Cvv06ie1RtpXVd+Abi/CLduTOPJE0xzNQnKUstUQRhzzzddg2oKZOQRSx7OTcPGEpMKLIRe3sJWyRg=
+ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=nxp.com; spf=pass smtp.mailfrom=nxp.com; dkim=pass (2048-bit key) header.d=nxp.com header.i=@nxp.com header.b=UREQqQAh; arc=fail smtp.client-ip=40.107.130.39
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=nxp.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=nxp.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="q3d8gALe"
-Received: by mail-wm1-f45.google.com with SMTP id 5b1f17b1804b1-488e1a8ac40so31993805e9.2
-        for <sashiko-reviews@lists.linux.dev>; Tue, 19 May 2026 01:27:09 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1779179228; x=1779784028; darn=lists.linux.dev;
-        h=content-transfer-encoding:in-reply-to:organization:autocrypt
-         :content-language:references:cc:to:subject:reply-to:from:user-agent
-         :mime-version:date:message-id:from:to:cc:subject:date:message-id
-         :reply-to;
-        bh=li8pLXuBuaVtnggQNVW2WcAL7ywg8DDPWHRsGjdEDzE=;
-        b=q3d8gALejGzOobABTkh/JI1X+0YE1BkmaMYa057akmuaE7C3FuoM5kEUWafLvk+BDJ
-         v59McB3YdtRDhci0goCXZk+Xk6f2nztKQJLJ94G3el6YfuHnoDsm6g/Hm4rCmcAtC1uQ
-         Y7Z4hndL/uyMQ5PTx5fkiDtfj9X/DSjRvKpBnTbvJRXx7huPTsCmn2X95Zp7zzz2nc6C
-         a6kBF9YGz6/cqZyH2TrGHZz8K0ITQcgJnCo7UUql0Rs1W8p9tgcjhAbc0Je0G+clrSjo
-         f/Dm9wTA3NKzWKMG5Vb6BNJmgbqP9b9Yk+n4eLrJZdoU926ntVxaCd0zGqkkiOVgm69H
-         TBZw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20251104; t=1779179228; x=1779784028;
-        h=content-transfer-encoding:in-reply-to:organization:autocrypt
-         :content-language:references:cc:to:subject:reply-to:from:user-agent
-         :mime-version:date:message-id:x-gm-gg:x-gm-message-state:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=li8pLXuBuaVtnggQNVW2WcAL7ywg8DDPWHRsGjdEDzE=;
-        b=rOCDhfZxS+JWCyzvYfimrpMMFv6WlRwbEQ9a8XmAbnHgtXkrXA0f635APNbAga5y3U
-         giENIit5VYwvdhyTaZylgvQtbkABlzI0+A3cS1A5I3KJRTn/TtePZYvow5vckUYlUm8+
-         Y2M9gN3267OI2lhurcdn3mjhE+YlmyDapS79nQecui7QhyarHBa3rDlBfH/PmWEfm7om
-         cUXn2KvATVsing1u6AKcO6gVa+8v9uK6WbJieFYc2/j7H1UZXyhHdGVm0urUQFMgNUZy
-         Xv9aQTvZM8RIwgC6IAd1JqxSntEEVcmwRVhIGSVRW5Ssp5cZtRAj3HLcpXmht4nnkOsN
-         0TeQ==
-X-Gm-Message-State: AOJu0YxbLdZLlJSZcEXZb8v+J5H3sK5AL5pvvrYPnRsAbZx23/c8n5t/
-	jZXZ+bzHkJnsRZ/NKTerQWQZJQiL/6ALZzg9EWO7aPsalSfMefDu7QAjn/8P7F7i/l4MMAdnpKq
-	86AOZ
-X-Gm-Gg: Acq92OFf0oT3A99QUVP4JVZDh7oTYbLXbCTOyqju0mVVsq64RsZUgyoEiNjfoU2PI9+
-	5jv3V3RPw+94p2Ds9P9okJyrWd6rBb5DKZ36RcdDFBPhD3dPWFtU/JaXiZInCKPFCqFRzQMBW9/
-	f59/it3ShoPeubGWZWKUtcvjIFPlriFzAOmz3O4s0ahGivTeDw4iJhpXJ8D3LX66H7PW0ix5PxU
-	VsE+sOUpIUad9OfnaiQFnJZll7Um19rVhdJQpPANk/C2FH+6PzmGxU0xBXGGi6v8CFqDX89oCA2
-	ThyRVXqOq3bI7WLna5fRcb+mLHaneIfYNi95OQjlTSfk6vnCdh7VTNv8eOCmQ9hYiAuUrnnJAra
-	0SJ0SbbaeQCtoae1AfG5kYI8ehKqal+ZStBbz1rpcQUkE9mjuKGbFIVXdiPvNyequoBoqgrQSb0
-	gXwxO9QPu57rMQpFksN5BiyY3Y+fjzUYryBPcpLUR275wATDHc1BE+Z8ZR06LN7DY1ZpmYl8LFr
-	yaJtsV57pH9xe0=
-X-Received: by 2002:a05:600c:a406:b0:48e:82cc:4d4c with SMTP id 5b1f17b1804b1-48fe6514939mr226969685e9.23.1779179227682;
-        Tue, 19 May 2026 01:27:07 -0700 (PDT)
-Received: from ?IPV6:2a01:e0a:106d:1080:1d4b:274c:94d:a69f? ([2a01:e0a:106d:1080:1d4b:274c:94d:a69f])
-        by smtp.gmail.com with ESMTPSA id 5b1f17b1804b1-48fe5cab7c5sm328708975e9.12.2026.05.19.01.27.07
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Tue, 19 May 2026 01:27:07 -0700 (PDT)
-Message-ID: <cfc5814b-fcee-4d61-83bd-6a977b792cc2@linaro.org>
-Date: Tue, 19 May 2026 10:27:06 +0200
+	dkim=pass (2048-bit key) header.d=nxp.com header.i=@nxp.com header.b="UREQqQAh"
+ARC-Seal: i=1; a=rsa-sha256; s=arcselector10001; d=microsoft.com; cv=none;
+ b=Bw7IV5cBhlIclMFgTp98JJLmoXdSrSpMH13PX9vMgOCYqTt3k2hkMe+EOlfcYrKnlmwlAhe3eDx4lsqBOpsI2yEXGLDEXeefJYdgDF425t0B21rAqM5KmaopcFMu5LzISjoQlxz/FuXyIt5TyLwGEOMVUp0G8hdyZSQqn38UyfizYZmH8C/PVxFs8pUUPbfqCpUeLcsQgGnl6Jh5y8LFnfCZkUIp5QBT3aLzxFWNybNypRjWYi7/VyZeitXRzaKkfXD+JAudiwJlktxe6HH4gvk58NJEvy5SCZ0hOpighnHUxWUXycizg5U4qkIEgUrJYPSDdvyGE5O5/XCqaRoXjg==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com;
+ s=arcselector10001;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
+ bh=5S54wqPMCBuDPiPb/VN4oRYIudc+SjgieAhLGXSqWMo=;
+ b=dblArK5Gv1vRTptsRZzUqVV42xtcYXDTgP245wTiLLa30pVJ41ceH+Kt0ifS3alp6hhxHE/JPAtD0wNdic3vR2+1EC3yfFDWjVndcNucFrXroCo3OdIrCF/MWXwQ4YB+Yg+sthJsIXVD8yJmN/y0z7IcT7JizcoP2VcHiSsZDUV126VoK6pXqrzjp9CRnWNGgbyN2cgqgi3CQo1iXPDj6H1pXtDso6zBIoIvvteo871DZLG0XoTmwkbpDGgnYDVSlCnOn/STucjTLqWu8+JN6wlM1z5sL8spcmvcbo3ELFjbRlHl72/j7IwwUvp1pDFThwihgEXrhmDNKoIiJthWkA==
+ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
+ smtp.mailfrom=nxp.com; dmarc=pass action=none header.from=nxp.com; dkim=pass
+ header.d=nxp.com; arc=none
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=nxp.com; s=selector1;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
+ bh=5S54wqPMCBuDPiPb/VN4oRYIudc+SjgieAhLGXSqWMo=;
+ b=UREQqQAhNZA7thfzcjIWGrhwNSRRr6VRdSk3hjcyBPrl2RCYO39D1bBCwoKjQdZGv8uFpWzG1uLfQdSLroC2QljWZLqPzyousD4JLPzn2MCkxf4aOsb/I1l0717F+bE/vHYsNxLrs2IlJbqu49BYNdcX6z7oHamFtp9aNM55c83N2X/iMWmSfCNmWsL4Ag4ZKewTeXjR+oyc/KPMlJRcaUqpcqUkG/QiL5t3csbE+aZt043qBMCOLnfpApYFFpY0WXFMTszOxCVyKd9PlXdV7FL7Rlbq9rLJcWsWO9qTsG/uTehXfa8LhvVe8FnS+6fJqC2XJ4KKLVe3+VVCV70AuQ==
+Received: from VI1PR04MB6861.eurprd04.prod.outlook.com (2603:10a6:803:13c::9)
+ by AS4PR04MB9716.eurprd04.prod.outlook.com (2603:10a6:20b:4fa::8) with
+ Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.21.25.24; Tue, 19 May
+ 2026 08:30:01 +0000
+Received: from VI1PR04MB6861.eurprd04.prod.outlook.com
+ ([fe80::7f96:4bde:2e55:cd5]) by VI1PR04MB6861.eurprd04.prod.outlook.com
+ ([fe80::7f96:4bde:2e55:cd5%6]) with mapi id 15.21.0048.013; Tue, 19 May 2026
+ 08:30:00 +0000
+From: Jacky Bai <ping.bai@nxp.com>
+To: "sashiko-reviews@lists.linux.dev" <sashiko-reviews@lists.linux.dev>
+CC: "imx@lists.linux.dev" <imx@lists.linux.dev>, "Frank.Li@kernel.org"
+	<Frank.Li@kernel.org>
+Subject: RE: [PATCH] clk: imx: Add audio PLL debugfs for K-divider control
+Thread-Topic: [PATCH] clk: imx: Add audio PLL debugfs for K-divider control
+Thread-Index: AQHc4e58tc5C9w/OBUW4877OM2GKnbYMY3gAgAirlRA=
+Date: Tue, 19 May 2026 08:30:00 +0000
+Message-ID:
+ <VI1PR04MB6861029A07FA85FAE55F099087002@VI1PR04MB6861.eurprd04.prod.outlook.com>
+References: <20260512-imx8m_pll_debugfs-v1-1-e1e44b21be90@nxp.com>
+ <20260513200412.A7D34C19425@smtp.kernel.org>
+In-Reply-To: <20260513200412.A7D34C19425@smtp.kernel.org>
+Accept-Language: en-US, zh-CN
+Content-Language: en-US
+X-MS-Has-Attach:
+X-MS-TNEF-Correlator:
+authentication-results: dkim=none (message not signed)
+ header.d=none;dmarc=none action=none header.from=nxp.com;
+x-ms-publictraffictype: Email
+x-ms-traffictypediagnostic: VI1PR04MB6861:EE_|AS4PR04MB9716:EE_
+x-ms-office365-filtering-correlation-id: 39506a73-43ed-4606-1f0c-08deb580d177
+x-ms-exchange-senderadcheck: 1
+x-ms-exchange-antispam-relay: 0
+x-microsoft-antispam:
+ BCL:0;ARA:13230040|376014|19092799006|366016|1800799024|56012099003|38070700021|18002099003|22082099003|4143699003|11063799005;
+x-microsoft-antispam-message-info:
+ B35YuM8fpAt2Kw0so/iFstOfpgDkO3tPiXa2k0zAmTnr3DcoruBvOCIYF+Xc8xrzpS7Q1qzPQm4fSUBpy5nxtuzYDMNcB8T7JdQPuTW+Ss8MC58S18E3gb5lRVvtQ20mFQ+ZsxKtJu/oyDstvgD3DJSWuN6ych9+Udbw5H5ow9zQ3raeBXOt/V6yaawIckZXsieHxmVBzmvu4S61CwVY51dajpQte3mnCQG+sxVChRu3wKq7UqbWte8bxnMYHEocztniMReiPVxdAnLC4KNsTyDM5qbyh/iE+e+wBEjckYaf7VYJuWyjPMo0OVn6WlooukDSvfhVGcH0ZVSwYrwbW+m2iCqK1QPuaiXofGBcgwnzZV0tmr2wycy0L5TVew1jShy8jG+4zgAIlBESvPHiVmZRAZYPl5idyoC5k4+eXCv1Dl/1Loat8UFQC8CUrkkX+JhXE9Ea/a5+0VW9h8RXkCyOLaKCtbW9gY0HoasuSn/10ciUxM90iU87SGyT3UhNkdSMSx8rXkaZnzxGbd8CAfJyErnAyfRIbxArQjbcEtK3OpOKE6pHyOqzJ6/qkw2cYxSXPZyzpvycQk9yjkTD5dHXCAFVpx0eczG+Diss0LAhYC4KtNxrFBjn1X2dJe7GZKj/GuFWWRhA/vEJ8cIa5SPAk6TkoXpNN2CQo1T/vtm05plhKTrMXtXMGLM8YJxQ7cynOUzjiaIkMAgbnXD81kVdKgDCahLFVEJWteW9NZ6+ygHbOvRTsC6sEaDxm50y
+x-forefront-antispam-report:
+ CIP:255.255.255.255;CTRY:;LANG:en;SCL:1;SRV:;IPV:NLI;SFV:NSPM;H:VI1PR04MB6861.eurprd04.prod.outlook.com;PTR:;CAT:NONE;SFS:(13230040)(376014)(19092799006)(366016)(1800799024)(56012099003)(38070700021)(18002099003)(22082099003)(4143699003)(11063799005);DIR:OUT;SFP:1101;
+x-ms-exchange-antispam-messagedata-chunkcount: 1
+x-ms-exchange-antispam-messagedata-0:
+ =?us-ascii?Q?lymCCH01PPgHKywEM470mMTtOtNTSPULp2FZgCAvtAtSkULZvBNO/TrL/MZV?=
+ =?us-ascii?Q?2/m4/u7IPuxvyobM+PdabDVsfYaiV2hCrjdscOoHD7FV+JMCCUOoXUcmD/Ya?=
+ =?us-ascii?Q?qEdz2iAaGFabVvm5sqltejocNPDLZWweF3svSFSiu27za+0+GhqXQBXqKk8P?=
+ =?us-ascii?Q?e4XpBv7k+8ESneKt+xcRVX4zPgOp9Yz04iHNuVF7Dvj0a8xjQQ32MaL4I+1N?=
+ =?us-ascii?Q?lYDd5Xu5rDJN8195bwBpjNtKRl+fN1Lz+KJs7I2MT4Q+DRndkDkyYSNTZUyL?=
+ =?us-ascii?Q?lUKVbFfqBJXGcBeEpxuyL7W8SptJ+3WHgPoJmsPixwzYmswMg6FwzhUbMk3w?=
+ =?us-ascii?Q?CtX8ObUNKf7t8d/37XugQkPqme0K7bkcqMnwviPW/4Zod8UgERn4tALFQcWV?=
+ =?us-ascii?Q?wMaUMlomnXDnSrZhZ+fRZ3rMAaHdilHax+jMOubuZGiCZtCKKEyvuwWp8fL9?=
+ =?us-ascii?Q?Yb+xnNiyhImNgrlWd4CjWcK34xYi3VBDUmgztCt0HYwMEcGqUejWKrl2OkFK?=
+ =?us-ascii?Q?QRPfTnQ5g3/aUOSd7tCRyUrm6D9XQZaM9uyt/CmXlE3KuHJsPV2NSgtk2hVT?=
+ =?us-ascii?Q?rWNKit39FYHveoQoiFuCSh10n9pOaQJjPeCJI39WxLkqhdAK0fBMJ0ct3uPV?=
+ =?us-ascii?Q?q2Sv9H3mj2gx1DfrNVZkmx0UCRpjNqeFzseTDwLjsH4YWKafWqYfZ0InTn6R?=
+ =?us-ascii?Q?pw4cPwaQeF4Drw2GEUo8T6HTmPHFXGm6fMD0RmHrKYq8kAE+R1RQFCRxZUXJ?=
+ =?us-ascii?Q?F6cicSm97gDiXTGRJ/6RBLWMn8uIkx7PUUe7oGlbJe+buYg0/44E8ItW3KBS?=
+ =?us-ascii?Q?ObI79cVJHlfguFiWAATLC1cgZCAV5iQ9fl7Aj+/QdVbb+vqJl+jIi0pNBnSb?=
+ =?us-ascii?Q?kkdz+0UOsrzlfKUzh0cmLy2F3Sh7DAyUQcr3W3J3jrhYB/MnSql6w1ST+TUF?=
+ =?us-ascii?Q?xP/1UtNrx6N8Z2zVPI2j4dMhN5z+ZY+HG9vSNIAXk8EJyt6Aa/eV/esF9bAD?=
+ =?us-ascii?Q?6OrSlmTh0yIQ4u8/FJUWYecDXN2Q/m5d0n00ipq3VPciZctrDw8EQfPoN4y8?=
+ =?us-ascii?Q?E4AAkOejzsyvBwgzxJXsZmeDsdXNZVsaRWiwOytFLtzbCSvJwbaL2h3pH835?=
+ =?us-ascii?Q?f93d0bUtm7BYTZplktf1SU0PZ0a4v/oSYzuyRrE6vhBRpypptTqwr2V3vkbG?=
+ =?us-ascii?Q?2SQNyQxudaUEZ+6v6u7ql5Io7M/kTGQ3inJsTcATzM+7pcoiryQjKvfpHNAa?=
+ =?us-ascii?Q?00QPE86XFVu7XFoulfDzwQOo/0o42yfyu70bk1QwBZdI0L9s7UaeEp9uX1MO?=
+ =?us-ascii?Q?FnLeNWNdsMHhanXdj70GuV3Ex84/lC7djkvvm7bFYAYYuWDqphnW5tpU//VD?=
+ =?us-ascii?Q?vQthWO6wY5dpUwJEmLbEORjgF0B1iZ/Chtp7NjusI772xt6EqF//5hyr6k1M?=
+ =?us-ascii?Q?9OAcp3uT5gd+4EMqA/fpvhmhrLIUeXRAKrPFTbuM3yMlFVtMeWZffalA5nym?=
+ =?us-ascii?Q?IH3+cxxAgJiHhrxHrMNXcHhhEQtzZkWL7rwW0R3dVoYPPcCO7o+6CgOfoQJU?=
+ =?us-ascii?Q?L4BMmz92xxrbOhanSzY7kKgp0EV7WvktDIx0azinJI3xapUYxCVyA3QtXGdU?=
+ =?us-ascii?Q?Q4/c2kj11F+ZMLXD6mLk6aGrN9TnOxU8OjMxHhcsDxcyxyeVVTzYy9u4cNhd?=
+ =?us-ascii?Q?pAS4qX30D7RsioWRTGYFZ5HsiF7hM+pPCKHZSfxeLA+lhRfd?=
+Content-Type: text/plain; charset="us-ascii"
+Content-Transfer-Encoding: quoted-printable
 Precedence: bulk
 X-Mailing-List: sashiko-reviews@lists.linux.dev
 List-Id: <sashiko-reviews.lists.linux.dev>
 List-Subscribe: <mailto:sashiko-reviews+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:sashiko-reviews+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-From: Neil Armstrong <neil.armstrong@linaro.org>
-Reply-To: Neil Armstrong <neil.armstrong@linaro.org>
-Subject: Re: [PATCH v4 1/2] dt-bindings: display: panel: document the Renesas
- R63419 based dual-DSI video mode Display Panels
-To: sashiko-reviews@lists.linux.dev
-Cc: wsa+renesas@sang-engineering.com, robh@kernel.org,
- devicetree@vger.kernel.org, conor+dt@kernel.org
-References: <20260519-topic-sm8650-ayaneo-pocket-s2-r63419-v4-1-b8929af5e951@linaro.org>
- <20260519081829.6B1B7C2BCB3@smtp.kernel.org>
-Content-Language: en-US, fr
-Autocrypt: addr=neil.armstrong@linaro.org; keydata=
- xsBNBE1ZBs8BCAD78xVLsXPwV/2qQx2FaO/7mhWL0Qodw8UcQJnkrWmgTFRobtTWxuRx8WWP
- GTjuhvbleoQ5Cxjr+v+1ARGCH46MxFP5DwauzPekwJUD5QKZlaw/bURTLmS2id5wWi3lqVH4
- BVF2WzvGyyeV1o4RTCYDnZ9VLLylJ9bneEaIs/7cjCEbipGGFlfIML3sfqnIvMAxIMZrvcl9
- qPV2k+KQ7q+aXavU5W+yLNn7QtXUB530Zlk/d2ETgzQ5FLYYnUDAaRl+8JUTjc0CNOTpCeik
- 80TZcE6f8M76Xa6yU8VcNko94Ck7iB4vj70q76P/J7kt98hklrr85/3NU3oti3nrIHmHABEB
- AAHNKk5laWwgQXJtc3Ryb25nIDxuZWlsLmFybXN0cm9uZ0BsaW5hcm8ub3JnPsLAkQQTAQoA
- OwIbIwULCQgHAwUVCgkICwUWAgMBAAIeAQIXgBYhBInsPQWERiF0UPIoSBaat7Gkz/iuBQJk
- Q5wSAhkBAAoJEBaat7Gkz/iuyhMIANiD94qDtUTJRfEW6GwXmtKWwl/mvqQtaTtZID2dos04
- YqBbshiJbejgVJjy+HODcNUIKBB3PSLaln4ltdsV73SBcwUNdzebfKspAQunCM22Mn6FBIxQ
- GizsMLcP/0FX4en9NaKGfK6ZdKK6kN1GR9YffMJd2P08EO8mHowmSRe/ExAODhAs9W7XXExw
- UNCY4pVJyRPpEhv373vvff60bHxc1k/FF9WaPscMt7hlkbFLUs85kHtQAmr8pV5Hy9ezsSRa
- GzJmiVclkPc2BY592IGBXRDQ38urXeM4nfhhvqA50b/nAEXc6FzqgXqDkEIwR66/Gbp0t3+r
- yQzpKRyQif3OwE0ETVkGzwEIALyKDN/OGURaHBVzwjgYq+ZtifvekdrSNl8TIDH8g1xicBYp
- QTbPn6bbSZbdvfeQPNCcD4/EhXZuhQXMcoJsQQQnO4vwVULmPGgtGf8PVc7dxKOeta+qUh6+
- SRh3vIcAUFHDT3f/Zdspz+e2E0hPV2hiSvICLk11qO6cyJE13zeNFoeY3ggrKY+IzbFomIZY
- 4yG6xI99NIPEVE9lNBXBKIlewIyVlkOaYvJWSV+p5gdJXOvScNN1epm5YHmf9aE2ZjnqZGoM
- Mtsyw18YoX9BqMFInxqYQQ3j/HpVgTSvmo5ea5qQDDUaCsaTf8UeDcwYOtgI8iL4oHcsGtUX
- oUk33HEAEQEAAcLAXwQYAQIACQUCTVkGzwIbDAAKCRAWmrexpM/4rrXiB/sGbkQ6itMrAIfn
- M7IbRuiSZS1unlySUVYu3SD6YBYnNi3G5EpbwfBNuT3H8//rVvtOFK4OD8cRYkxXRQmTvqa3
- 3eDIHu/zr1HMKErm+2SD6PO9umRef8V82o2oaCLvf4WeIssFjwB0b6a12opuRP7yo3E3gTCS
- KmbUuLv1CtxKQF+fUV1cVaTPMyT25Od+RC1K+iOR0F54oUJvJeq7fUzbn/KdlhA8XPGzwGRy
- 4zcsPWvwnXgfe5tk680fEKZVwOZKIEuJC3v+/yZpQzDvGYJvbyix0lHnrCzq43WefRHI5XTT
- QbM0WUIBIcGmq38+OgUsMYu4NzLu7uZFAcmp6h8g
-Organization: Linaro
-In-Reply-To: <20260519081829.6B1B7C2BCB3@smtp.kernel.org>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
+X-OriginatorOrg: nxp.com
+X-MS-Exchange-CrossTenant-AuthAs: Internal
+X-MS-Exchange-CrossTenant-AuthSource: VI1PR04MB6861.eurprd04.prod.outlook.com
+X-MS-Exchange-CrossTenant-Network-Message-Id: 39506a73-43ed-4606-1f0c-08deb580d177
+X-MS-Exchange-CrossTenant-originalarrivaltime: 19 May 2026 08:30:00.7687
+ (UTC)
+X-MS-Exchange-CrossTenant-fromentityheader: Hosted
+X-MS-Exchange-CrossTenant-id: 686ea1d3-bc2b-4c6f-a92c-d99c5c301635
+X-MS-Exchange-CrossTenant-mailboxtype: HOSTED
+X-MS-Exchange-CrossTenant-userprincipalname: dbHaDuKn8n8OnFUDx6EgDMHZp1bdU9TRBXtux/y4CrOo4gHfOiO+QMm7jLerF28RFdiNqgOqzlKTbHdOEPhITw==
+X-MS-Exchange-Transport-CrossTenantHeadersStamped: AS4PR04MB9716
 
-On 5/19/26 10:18, sashiko-bot@kernel.org wrote:
-> Thank you for your contribution! Sashiko AI review found 3 potential issue(s) to consider:
-> - [Medium] The `reg` property is omitted from the `required` list.
-> - [Medium] Schema validation bypass for dual-DSI ports structure.
-> - [Medium] Flipped positive/negative voltage regulator assignments in the dt-binding example.
+> Subject: Re: [PATCH] clk: imx: Add audio PLL debugfs for K-divider contro=
+l
+>=20
+> [You don't often get email from sashiko-bot@kernel.org. Learn why this is
+> important at https://aka.ms/LearnAboutSenderIdentification ]
+>=20
+> Thank you for your contribution! Sashiko AI review found 3 potential issu=
+e(s)
+> to consider:
+> - [High] Unchecked ERR_PTR dereference in `audio_pll_debug_init()` causes
+> kernel panic if PLL registration fails.
+> - [High] Lockless read-modify-write of PLL registers causes a race condit=
+ion
+> with the Common Clock Framework.
+> - [Medium] Missing bounds checking allows the K-divider to wrap around,
+> causing massive frequency jumps.
 > --
-> 
-> commit b7585613be27a07063e2837b4b237f47e298a1f5
-> Author: Neil Armstrong <neil.armstrong@linaro.org>
-> 
-> dt-bindings: display: panel: document the Renesas R63419 based dual-DSI video mode Display Panels
-> 
-> This commit documents the Renesas R63419 generic DDIC used to control
-> dual-DSI LCD panels, specifically for the Ayaneo gaming handheld devices.
-> 
->> diff --git a/Documentation/devicetree/bindings/display/panel/renesas,r63419.yaml b/Documentation/devicetree/bindings/display/panel/renesas,r63419.yaml
->> new file mode 100644
->> index 0000000000000..e4db01f88302c
->> --- /dev/null
->> +++ b/Documentation/devicetree/bindings/display/panel/renesas,r63419.yaml
-> 
+>=20
+> commit 654083d958b35cc8cdcae8664a30b757df4a7f7a
+> Author: Jacky Bai <ping.bai@nxp.com>
+>=20
+> clk: imx: Add audio PLL debugfs for K-divider control
+>=20
+> This commit adds debugfs support for runtime tuning of the audio PLL K
+> divider on i.MX platforms. It exposes delta_k and pll_parameter interface=
+s to
+> adjust and monitor the fractional dividers.
+>=20
+> > diff --git a/drivers/clk/imx/clk-pll14xx.c
+> > b/drivers/clk/imx/clk-pll14xx.c index 39600ee22be30..59f126f354741
+> > 100644
+> > --- a/drivers/clk/imx/clk-pll14xx.c
+> > +++ b/drivers/clk/imx/clk-pll14xx.c
+>=20
 > [ ... ]
-> 
->> +description:
->> +  The Renesas R63419 is a generic DDIC used to control dual-DSI LCD panels.
->> +
->> +allOf:
->> +  - $ref: panel-common.yaml#
-> 
-> Since this documents a dual-DSI panel, should this reference
-> panel-common-dual.yaml# instead?
-> 
-> Referencing panel-common-dual.yaml# would correctly enforce the dual-DSI
-> topology constraints and validate the ports structure for dual-link DSI
-> panels.
-
-Good point
-
-> 
+>=20
+> > @@ -551,3 +552,81 @@ struct clk_hw *imx_dev_clk_hw_pll14xx(struct
+> > device *dev, const char *name,
+>=20
 > [ ... ]
-> 
->> +required:
->> +  - compatible
->> +  - vdd-supply
->> +  - vddio-supply
->> +  - vsp-supply
->> +  - vsn-supply
->> +  - vci-supply
->> +  - backlight
->> +  - reset-gpios
->> +  - ports
-> 
-> Should reg be included in this required list?
-> 
-> The Renesas R63419 is a DSI peripheral and must be instantiated as a child
-> node under a DSI controller bus, which inherently requires a reg property for
-> its virtual channel. Omitting it from the required list allows incomplete
-> nodes to pass validation.
+>=20
+> > +static int pll_delta_k_set(void *data, u64 val) {
+> > +     struct clk_pll14xx *pll =3D to_clk_pll14xx(data);
+> > +     s16 delta_k =3D (s16)val;
+> > +     u32 div_ctl1;
+> > +     s16 kdiv;
+> > +
+> > +     div_ctl1 =3D readl_relaxed(pll->base + DIV_CTL1);
+> > +     kdiv =3D FIELD_GET(KDIV_MASK, div_ctl1) + delta_k;
+>=20
+> If a user provides a large positive delta_k that pushes kdiv beyond 32767=
+, will
+> this s16 addition wrap around to a large negative number? Does this need =
+a
+> clamp_val() check to prevent abrupt frequency discontinuities?
+>=20
 
-Good point
+Will fix it v2.
 
-> 
+> > +     writel_relaxed(FIELD_PREP(KDIV_MASK, kdiv), pll->base +
+> > + DIV_CTL1);
+>=20
+> Because this read-modify-write sequence is performed without acquiring th=
+e
+> CCF prepare lock or a hardware spinlock, can it race with a concurrent
+> clk_set_rate() operation?
+>=20
+> If CCF is updating DIV_CTL1 at the same time, could this overwrite the CC=
+F's
+> register changes and desynchronize the hardware state?
+>=20
+
+Fix in v2.
+
+> > +
+> > +     return 0;
+> > +}
+>=20
 > [ ... ]
-> 
->> +            reset-gpios = <&gpio 176 GPIO_ACTIVE_LOW>;
->> +
->> +            vdd-supply = <&vdd_3v0_lcd>;
->> +            vddio-supply = <&vdd_1v8_io>;
->> +            vsn-supply = <&vdd_5v0_pos>;
->> +            vsp-supply = <&vdd_5v0_neg>;
-> 
-> Are the voltage regulator assignments flipped in this example?
-> 
-> It looks like vsn-supply (Voltage Supply Negative) is mapped to the positive
-> regulator, while vsp-supply (Voltage Supply Positive) is mapped to the
-> negative one.
+>=20
+> > +void audio_pll_debug_init(struct clk_hw *hws[], unsigned int
+> > +num_plls) {
+> > +     struct dentry *rootdir, *audio_pll_dir;
+> > +     const char *pll_name;
+> > +     int i;
+> > +
+> > +     rootdir =3D debugfs_create_dir("audio_pll_monitor", NULL);
+> > +
+> > +     for (i =3D 0; i < num_plls; i++) {
+> > +             pll_name =3D clk_hw_get_name(hws[i]);
+>=20
+> In imx8mm_clocks_probe(), if the PLL fails to register, the hws array mig=
+ht
+> contain an error pointer. When clk_hw_get_name() is called here, it direc=
+tly
+> dereferences hw->core:
+>=20
+> clk_hw_get_name(const struct clk_hw *hw) {
+>         return hw->core->name;
+> }
+>=20
+> Could this code cause a kernel panic by dereferencing an error pointer if=
+ the
+> PLL registration failed earlier?
 
-Good finding even if it's only an example, will fix
+Fix in v2.
 
-> 
-> [ ... ]
-> 
-
+BR
+>=20
+> > +             audio_pll_dir =3D debugfs_create_dir(pll_name, rootdir);
+> > +             debugfs_create_file_unsafe("delta_k", 0200, audio_pll_dir=
+,
+> > +                             hws[i], &delta_k_fops);
+> > +             debugfs_create_file("pll_parameter", 0444, audio_pll_dir,
+> > +                             hws[i], &pll_setting_fops);
+> > +     }
+> > +}
+>=20
+> --
