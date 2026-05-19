@@ -1,41 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2D63E3DB30C;
-	Tue, 19 May 2026 17:17:39 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CB27B3DB332;
+	Tue, 19 May 2026 17:21:55 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1779211060; cv=none; b=LQm3JQZiqe2kBt6ekBZV5DxpRNmjehrI5XGXPjtC8S59JZ/TYerw4DxRy3j/LCFpJxaPIOx1GXE6ADsfdNxbNJwF9DhPJ2YEHG7zPuOhLHCCqNKzDYZmFeGJ8fYkzi2VW3HNMcpLb9QSRb2ZYEO251uXoplVe7z41P23443ps2w=
+	t=1779211315; cv=none; b=BVttrneoFOwEj01OfwVKoJlhGABGJ6LVM0GTb93I80EYBge0aAfZXrTpK3jIeGL93W6bVdePBOcfY0/PBMRl0OPpaNwigK8beElESNXEOqiEvcAuLGN1O3zDAu/1CxwMV8yDJdTDuUAjQnYaXw5uwYJhIFD9zLkTn6eEsmsuuYk=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1779211060; c=relaxed/simple;
-	bh=wASe8AAF6eqB7WwYUuPGtNWG3HLiAbXhwp3iwMlE0Xo=;
+	s=arc-20240116; t=1779211315; c=relaxed/simple;
+	bh=Ia3/QcXqzSymaJJ8l6fAmOGDHX35UkO1yPopuOfh8PE=;
 	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=WnePV1SQb7XGGZCjQkdlvBvqPv2FdWJjTdAtyBvuXIf2Pr9hn9ttGfcTb9+cnm9XZJNp3dnbQgqnAhmjm5uM3nWUnotT5kefZQqFdTBNpvoLjvBQBZyU0CDfaKrMFWZrSQoAaT1yi3AtFVSf/WxjsyKssEw2wEqfpE6/xWqSvxk=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=tSXkSoUa; arc=none smtp.client-ip=10.30.226.201
+	 Content-Type:Content-Disposition:In-Reply-To; b=F3GixHMwGAJPTH5YKYuXA6B4kJy/dETDMrJ/uAfg494E4b99LLGnEj+tuO3vnOj3l4YiOa4gY52WD4m/GFFZcg+M+dQXh7bbA01EUi1U+l9lk6STk+/XBtmOkEyxTQTv/D0lXct28vHAvv/2F/vwW6S+u2CPH8IggMIV9DqXRlQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=s1JHUYFt; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="tSXkSoUa"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 96002C2BCC6;
-	Tue, 19 May 2026 17:17:38 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="s1JHUYFt"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5DFA8C2BCB3;
+	Tue, 19 May 2026 17:21:54 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1779211059;
-	bh=wASe8AAF6eqB7WwYUuPGtNWG3HLiAbXhwp3iwMlE0Xo=;
+	s=k20201202; t=1779211315;
+	bh=Ia3/QcXqzSymaJJ8l6fAmOGDHX35UkO1yPopuOfh8PE=;
 	h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
-	b=tSXkSoUaw+zwTJXhN6Xro+NKzYFDYzMXbCRh3JgIfqILgfW8BmzO7yUzeSqTan3ie
-	 86fMRY4afe7EpswOvpryxoDIsHM1gliSH7Np0wvJAJBvHFY2e/+iDOY3I9lz1Vv/Lk
-	 rw3njoqLcq9rknX9pwIQE9mmHfETkuZdm2HcJDRCxdKGoVFTcivcWv1iQUb6zW2iHR
-	 IF8tgGPtb/srY5iaBU/mccp/vswNlWhikOJ8MSANBcNUm5wg1Y7OtRYeOQQkf1k4fT
-	 Qxm9Jk+QRPwD9c4kqs15feEgSMMUdHQbqRg+3U66bZitHBxNVpCCECGUt50HtxcfEA
-	 fwjZoKUSa/YKA==
-Date: Tue, 19 May 2026 18:17:36 +0100
+	b=s1JHUYFt/ryA5ujSO53Gh+Bvqwq00n3D+IfYOKgWQpOuJhHd3JNU8XhBCkyLFf3Mf
+	 mjcy5AYiUsahNWwurebRahxCXNURXQ5cYK3yIDeoqcocdwFpaE2gTqs86Kr9HWjaIe
+	 4hhaVwc2RgYrgQyG68sOtl8Mqr6aiZhx0jpbtYUbkKM1PEsARdfne6FpFw20p/cLSM
+	 sVgMZd0lS1EIpUP7hyWzSz4Fjv9FA0q0A6c4gUIk0+aJMg+1wlP3cuuiyPe0Gl7gWT
+	 JP0Z0BSzCHkMtIXo9XPWkFsZ8jGGRQp3e84JRMA24f500lGAkAfpkpqm1oUOMF8PbX
+	 i28R1Wj8DKCvg==
+Date: Tue, 19 May 2026 18:21:52 +0100
 From: Conor Dooley <conor@kernel.org>
 To: sashiko-reviews@lists.linux.dev
-Cc: Jianhua Lin <jianhua.lin@mediatek.com>, robh@kernel.org,
-	conor+dt@kernel.org, devicetree@vger.kernel.org
-Subject: Re: [PATCH v8 2/3] dt-bindings: media: mediatek-jpeg-encoder: add
- MT8189 compatible string
-Message-ID: <20260519-handshake-blanching-46001b94fa41@spud>
-References: <20260519021726.19137-3-jianhua.lin@mediatek.com>
- <20260519023551.B50ECC2BCB7@smtp.kernel.org>
+Cc: Piyush Patle <piyushpatle228@gmail.com>, robh@kernel.org,
+	devicetree@vger.kernel.org, conor+dt@kernel.org
+Subject: Re: [PATCH v9 04/11] dt-bindings: iio: adc: hx711: add HX710B support
+Message-ID: <20260519-cherisher-trouble-e72d6c6d5c38@spud>
+References: <20260518220228.63322-5-piyushpatle228@gmail.com>
+ <20260518221101.A38E9C2BCB7@smtp.kernel.org>
 Precedence: bulk
 X-Mailing-List: sashiko-reviews@lists.linux.dev
 List-Id: <sashiko-reviews.lists.linux.dev>
@@ -43,124 +42,82 @@ List-Subscribe: <mailto:sashiko-reviews+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:sashiko-reviews+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Type: multipart/signed; micalg=pgp-sha512;
-	protocol="application/pgp-signature"; boundary="37tIGJDtDHdsBqyt"
+	protocol="application/pgp-signature"; boundary="mfTuUQjY6TrG/bcM"
 Content-Disposition: inline
-In-Reply-To: <20260519023551.B50ECC2BCB7@smtp.kernel.org>
+In-Reply-To: <20260518221101.A38E9C2BCB7@smtp.kernel.org>
 
 
---37tIGJDtDHdsBqyt
+--mfTuUQjY6TrG/bcM
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
 Content-Transfer-Encoding: quoted-printable
 
-On Tue, May 19, 2026 at 02:35:51AM +0000, sashiko-bot@kernel.org wrote:
-> Thank you for your contribution! Sashiko AI review found 2 potential issu=
+On Mon, May 18, 2026 at 10:10:54PM +0000, sashiko-bot@kernel.org wrote:
+> Thank you for your contribution! Sashiko AI review found 1 potential issu=
 e(s) to consider:
-> - [Medium] The commit silently introduces a new `mediatek,larb` property =
-and makes it mandatory for the MT8189 variant without any mention in the co=
-mmit message.
-> - [Low] The new compatible string `mediatek,mt8189-jpgenc` is defined usi=
-ng an `enum` containing a single item instead of `const`.
+> - [Low] The newly added `dvdd-supply` property is described as HX710B-spe=
+cific but is not forbidden on HX711 nodes in the schema.
 > --
 >=20
-> commit de42f55ad078326b54b85cf561d120b901b074be
-> Author: Jianhua Lin <jianhua.lin@mediatek.com>
+> commit e277e4c3f21226be9f52ecf29adbdc5f6f73f38d
+> Author: Piyush Patle <piyushpatle228@gmail.com>
 >=20
-> dt-bindings: media: mediatek-jpeg-encoder: add MT8189 compatible string
+> dt-bindings: iio: adc: hx711: add HX710B support
 >=20
-> This commit adds the compatible string for the JPEG encoder block found
-> in the MediaTek MT8189 SoC. It is added as a standalone compatible string
-> without falling back to the generic identifier to ensure proper 34-bit IO=
-VA
-> address space support.
+> This commit adds support for the HX710B ADC chip. It adds the avia,hx710b
+> compatible string, documents the HX710B-specific dvdd-supply and vref-sup=
+ply
+> properties, and updates the schema constraints.
 >=20
-> > diff --git a/Documentation/devicetree/bindings/media/mediatek-jpeg-enco=
-der.yaml b/Documentation/devicetree/bindings/media/mediatek-jpeg-encoder.ya=
-ml
-> > index 5b15f8977f67f..f75871e72633b 100644
-> > --- a/Documentation/devicetree/bindings/media/mediatek-jpeg-encoder.yaml
-> > +++ b/Documentation/devicetree/bindings/media/mediatek-jpeg-encoder.yaml
-> > @@ -14,13 +14,17 @@ description: |-
-> > =20
-> >  properties:
-> >    compatible:
-> > -    items:
-> > +    oneOf:
-> >        - enum:
-> > -          - mediatek,mt2701-jpgenc
-> > -          - mediatek,mt8183-jpgenc
-> > -          - mediatek,mt8186-jpgenc
-> > -          - mediatek,mt8188-jpgenc
-> > -      - const: mediatek,mtk-jpgenc
-> > +          - mediatek,mt8189-jpgenc
->=20
-> This isn't a bug, but dt_binding_check usually warns about using an enum =
-with
-> a single item. Should this use const instead?
-
-No it doesn't. Also "This isn't a bug, but it is a bug" is how this
-sentence reads, makes no sense.
-
-It should only be a const if there's not likely to be other devices
-joining the enum.
-
->=20
-> > +      - items:
-> > +          - enum:
-> > +              - mediatek,mt2701-jpgenc
-> > +              - mediatek,mt8183-jpgenc
-> > +              - mediatek,mt8186-jpgenc
-> > +              - mediatek,mt8188-jpgenc
-> > +          - const: mediatek,mtk-jpgenc
-> > +
+> > diff --git a/Documentation/devicetree/bindings/iio/adc/avia-hx711.yaml =
+b/Documentation/devicetree/bindings/iio/adc/avia-hx711.yaml
+> > index 9134bbe413796..b2b5c7bdf05e6 100644
+> > --- a/Documentation/devicetree/bindings/iio/adc/avia-hx711.yaml
+> > +++ b/Documentation/devicetree/bindings/iio/adc/avia-hx711.yaml
 >=20
 > [ ... ]
 >=20
-> > @@ -45,6 +49,10 @@ properties:
-> >        Documentation/devicetree/bindings/iommu/mediatek,iommu.yaml for =
-details.
-> >        Ports are according to the HW.
-> > =20
-> > +  mediatek,larb:
-> > +    $ref: /schemas/types.yaml#/definitions/phandle
-> > +    description: A phandle to the smi_larb node.
-> > +
-> >  required:
-> >    - compatible
-> >    - reg
-> > @@ -54,6 +62,16 @@ required:
-> >    - power-domains
-> >    - iommus
+> > @@ -53,6 +69,21 @@ properties:
+> >      maximum: 2500000
+> >      default: 400000
 > > =20
 > > +allOf:
 > > +  - if:
 > > +      properties:
 > > +        compatible:
-> > +          contains:
-> > +            const: mediatek,mt8189-jpgenc
+> > +          const: avia,hx710b
 > > +    then:
+> > +      properties:
+> > +        vsup-supply: false
+> > +        rate-gpios: false
 > > +      required:
-> > +        - mediatek,larb
+> > +        - vref-supply
+> > +    else:
+> > +      properties:
+> > +        vref-supply: false
 >=20
-> The commit message mentions the standalone compatible string is needed for
-> 34-bit IOVA address space support, but it doesn't mention adding the new
-> mediatek,larb property or making it mandatory for the MT8189 variant.
+> The commit message mentions documenting the HX710B-specific DVDD and VREF
+> supplies. While vref-supply is explicitly forbidden on HX711 nodes in this
+> else branch, dvdd-supply is not.
 >=20
-> Could the commit message be updated to explain the purpose and necessity =
-of
-> this new hardware constraint?
+> Does this schema unintentionally allow the dvdd-supply property on avia,h=
+x711
+> nodes? Should dvdd-supply: false also be added to this else branch?
 
-Yes.
+No.
 
---37tIGJDtDHdsBqyt
+https://lore.kernel.org/all/20260512-frantic-finch-2b268bed4e15@spud/
+
+
+--mfTuUQjY6TrG/bcM
 Content-Type: application/pgp-signature; name="signature.asc"
 
 -----BEGIN PGP SIGNATURE-----
 
-iHQEABYKAB0WIQRh246EGq/8RLhDjO14tDGHoIJi0gUCagybMAAKCRB4tDGHoIJi
-0iPGAPi9e7DUOOOi0nCgG8BiGowUr5y5hn17Zn7//tpbphXfAQDjsdNH5I3wXOrg
-tf/TgofBB9ZPi9LS1KASQ7BymoiYDA==
-=4go5
+iHUEABYKAB0WIQRh246EGq/8RLhDjO14tDGHoIJi0gUCagycMAAKCRB4tDGHoIJi
+0iiqAQDEL7f9fP5DR0zuRQCfEE1KsOBfkhWa5RZe2o2FXLDC6wD+MEeM5nDcT/or
++QsdkzJKZbZGTo03ozjHh4i3fw3YlAM=
+=l2f8
 -----END PGP SIGNATURE-----
 
---37tIGJDtDHdsBqyt--
+--mfTuUQjY6TrG/bcM--
