@@ -1,213 +1,226 @@
-Received: from AM0PR02CU008.outbound.protection.outlook.com (mail-westeuropeazon11013055.outbound.protection.outlook.com [52.101.72.55])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-yw1-f178.google.com (mail-yw1-f178.google.com [209.85.128.178])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 744C3357739;
-	Tue, 19 May 2026 05:52:14 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=fail smtp.client-ip=52.101.72.55
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C97A039D6C9
+	for <sashiko-reviews@lists.linux.dev>; Tue, 19 May 2026 06:47:26 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=pass smtp.client-ip=209.85.128.178
 ARC-Seal:i=2; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1779169936; cv=fail; b=uqRt1n6RQtczWLfXrM7VY8Ups/BU0O4gTiFwKeUAP9diLxULR55uF7pzjdx2qJ3FW2WM+RMFkY3axawMGMX13dZ2wX7E988nq18UoPVkA8GJQiiuoABMNv5/RjXHSgO1pl30H7s/DyCeSQo9DmskwSIkZnQoNMZgaKlJ2HHifWA=
+	t=1779173248; cv=pass; b=PfiotBGft2UQTnrvVp8G62+AJy7zblBsbIcAP6ivKmEBObm2J5YKP8YbRNKC5Mx6yUmynWSirAI1gAO3PvAxDKjZkynLLhdAK+RVIzj+Vd6wkOprUxe0TzCKYkygnRC0Z522r8F0af8hggEwp/JheSwiGWBxirEAH+cuu0/8618=
 ARC-Message-Signature:i=2; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1779169936; c=relaxed/simple;
-	bh=mksmrctzS8el0NS2UwCg0tD7XI2wGdonxFdKlaH0HIY=;
-	h=From:To:CC:Subject:Date:Message-ID:References:In-Reply-To:
-	 Content-Type:MIME-Version; b=dijLUyEbxsM0EcvLD4bpmKkKmccG7dTImZPcKRxvmIi19yZ1T8c+UadA8OJ/8lCCscNbolYWXCsFuTrbk+kl/PqIr200+lwH/K8DNwQaV8sD3/GhiWoOwhd5OquiPBGFJBSEUcUI5iCO75mFajGvFmTvoY3hF1LzQJx+T+cIW9I=
-ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=nxp.com; spf=pass smtp.mailfrom=nxp.com; dkim=pass (2048-bit key) header.d=nxp.com header.i=@nxp.com header.b=Gcp8oE9h; arc=fail smtp.client-ip=52.101.72.55
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=nxp.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=nxp.com
+	s=arc-20240116; t=1779173248; c=relaxed/simple;
+	bh=NyNDhvSyv7XRMowpgU81uTJFnsKmqI+7pkyzUxT0azo=;
+	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
+	 To:Cc:Content-Type; b=ZihR8sztP/HU7rsJg0X+3j/ngt6PYQY1ggW/yp5KqcdV8GSv+oEeDUImUGjfecz9K8QYkkS4QgLEK8gU5cjJzGfCxpbTZGwm1WHlyCeLM4Zswg3/rZE71u6LBLFSkxOQ/dUHV5AdRGR3y5evhjTvgcQWs5sEV6Hs9sxSSNixHoE=
+ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=FwSxUvDs; arc=pass smtp.client-ip=209.85.128.178
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=nxp.com header.i=@nxp.com header.b="Gcp8oE9h"
-ARC-Seal: i=1; a=rsa-sha256; s=arcselector10001; d=microsoft.com; cv=none;
- b=I02xdi6+YvfcMj7wgENeMDUTjbmbSK6ZZI0o+x7M08tt8uUCxsdviGnhhBOn29/oy++QD6bkVuncQltn8mGQnV5sunvFzkhnZgP9v5ZtC7wpNOuTqNIaT0Qh9pRjwWSKgteHFZYDL35JBxWfS5JWtgi9ugMp4wva3b0ClkWr9H4ZiGnqncsCVxtRcfu/4jRGZj3EhFiuPY9Gj04B2OB72idZUOw1EWnm009jRDTRrIIk5jh28B1x+u/qjFe3tf4xT8rP12IFiL11jgIpz1R0ag5jGlVQbUDA+7AmCXJjbKm6wAoQaGK8SRvboAXuADGC+EkJUDJKGWd59RYSIHG08A==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com;
- s=arcselector10001;
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
- bh=CBQ0mv69fjostFxpfv56D0Kaa3/EsrUeqLn+s60KJqA=;
- b=SWhiDzv8xA2ySh8Swvn9tpGb7CmrUoR+eJ81On1wLD6VHcpA4J9Q6Yh+UgcgSQMO95lyxuQwagj2BpIn162g7RyXB4MROlmble9gDs74XRa02tRqonJGnhiGOmTRrRiKF1WuLYXmI8Je+ZOpkLFWCsYZCz7Oy2951uIBuFY+tuJOGmIFgF68RHVI+GKfxsccsSNqwoFWUbtp/ZF/cyWFQkYxh7+lEitPLK7RW7jN+T9/libcU3jIu7s4mQ/cUjB0wvRulgESl2e7vy5FZ8rb04zno+Ko6LmtiJ7ZprcPsFFbO5KqWkStcV9gtz1nB6lao2rbQhz6wHqQqjIG2uzbCw==
-ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
- smtp.mailfrom=nxp.com; dmarc=pass action=none header.from=nxp.com; dkim=pass
- header.d=nxp.com; arc=none
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=nxp.com; s=selector1;
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
- bh=CBQ0mv69fjostFxpfv56D0Kaa3/EsrUeqLn+s60KJqA=;
- b=Gcp8oE9hX1Vpd44NQMATS3CnjB7fK95yEiyq6ObN0mMCEb8s8YusSnDq/JO0WYp57zaHz0bTPD9yJaodWqagiOqKnxMzcKwvz8mlNB4OLc5yLULapjhE0T7SXch969rdhjSvLWvpCuxIc55WVM2kQVcOIMsty3CHuNp7ODHmy6krqsLzjRhkdU3xzObVmyRQiWZSE8BuKtB7o/N5lHVb2AtwC9fZ5Zn4x0fhkHgpvs+B3Jx7Xx1o79LY3HpYll04tYC8sa3OpU5LYiRl3Dh9Ennj6xJj23GItPqeqk4zGLRA1G/08zqlYTwaw4effqlF3y9Rh+3XLqP8p4sBIOWpFQ==
-Received: from DBBPR04MB7500.eurprd04.prod.outlook.com (2603:10a6:10:1f4::16)
- by VI1PR04MB10002.eurprd04.prod.outlook.com (2603:10a6:800:1d7::22) with
- Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.21.48.14; Tue, 19 May
- 2026 05:52:11 +0000
-Received: from DBBPR04MB7500.eurprd04.prod.outlook.com
- ([fe80::c291:543b:4bde:cee7]) by DBBPR04MB7500.eurprd04.prod.outlook.com
- ([fe80::c291:543b:4bde:cee7%6]) with mapi id 15.20.9913.009; Tue, 19 May 2026
- 05:52:11 +0000
-From: Wei Fang <wei.fang@nxp.com>
-To: "sashiko-reviews@lists.linux.dev" <sashiko-reviews@lists.linux.dev>
-CC: "Frank.Li@kernel.org" <Frank.Li@kernel.org>, "imx@lists.linux.dev"
-	<imx@lists.linux.dev>
-Subject: RE: [PATCH v2 net 8/9] net: enetc: fix initialization order to
- prevent use of uninitialized resources
-Thread-Topic: [PATCH v2 net 8/9] net: enetc: fix initialization order to
- prevent use of uninitialized resources
-Thread-Index: AQHc5nLpmOljOwZT/06dP/xS4Sj/2bYUq3QAgAAuIrA=
-Date: Tue, 19 May 2026 05:52:11 +0000
-Message-ID:
- <DBBPR04MB7500836C280BE5A10F4600FF88002@DBBPR04MB7500.eurprd04.prod.outlook.com>
-References: <20260518030535.1057228-9-wei.fang@nxp.com>
- <20260519030416.B8ADBC2BCB7@smtp.kernel.org>
-In-Reply-To: <20260519030416.B8ADBC2BCB7@smtp.kernel.org>
-Accept-Language: en-US
-Content-Language: en-US
-X-MS-Has-Attach:
-X-MS-TNEF-Correlator:
-authentication-results: dkim=none (message not signed)
- header.d=none;dmarc=none action=none header.from=nxp.com;
-x-ms-publictraffictype: Email
-x-ms-traffictypediagnostic: DBBPR04MB7500:EE_|VI1PR04MB10002:EE_
-x-ms-office365-filtering-correlation-id: c319f51c-1ba6-4e38-8518-08deb56ac536
-x-ms-exchange-senderadcheck: 1
-x-ms-exchange-antispam-relay: 0
-x-microsoft-antispam:
- BCL:0;ARA:13230040|1800799024|366016|19092799006|376014|38070700021|22082099003|56012099003|18002099003|4143699003|11063799003;
-x-microsoft-antispam-message-info:
- tHRj/mADFd5sCzwNsgNw+5TOaWujBTBI3B++xXnHfN2CuKW4lhB2zpg0wPibZnsYnKP09P9Ne4wrgr/LtihgRjp4ojcN7TNAmOqo1+FTbHMn46Z3ekCZLo1s9rE2NTww4uGbUkYgfewhYPhSJTp+yc5dxmeieQOXzJae+THGGLYQeSd/NB9YySo4xC9GXkKL+t9ysH0pFGutHIHvkmXcW+aeGbotdggoMxVwRpFmgDlmCVJZEpzDcy2gsma0qtvKovO1kAzgZCaRhTemV7cZbIbFV1JPUjufYtGtm5g4OEqceOdAeiDp2xsk7R5csT68ohRXHnIDlS1He+/1WarZJOj/ZI1A0Txz9L81RhyT7lP8Obt7YzkMStCvMKAxj4I37ZbOX6a2EFFZ5mauDJojLvem8t6BupFqh9UtYQ+mq80OIAQzR4xhJIigTN0IcKLagjBj+eT6PMEgtz/78A5K2vucNPYwa3qQZEw0PAY3HIBzctYUWrT7/P/K8VBZWO2QOflfE33kud0K1AQKxh9a0qjwuK5bz4vEJs1ikbjSCiiOT0L3y6UYSLzpRv/YHCSdSxvPQiLCZxI56qX1W5LjmuC5qKWWzCfXX2sRjiVNvN+KGlxQj93Wb1bM9Pjk2OZ4zSfIl5IJkVJNjhQvU1FjzDyjYxbB5orwiwvEBSLTyTQLcLIZlIe6YK5xF2ViLnOlIRy3ZyCUKIVJHZbAzS4uGRIt9tOKoaZFl+GsjVoEv3LL2UQd3i7mS5y6JQYancjc
-x-forefront-antispam-report:
- CIP:255.255.255.255;CTRY:;LANG:en;SCL:1;SRV:;IPV:NLI;SFV:NSPM;H:DBBPR04MB7500.eurprd04.prod.outlook.com;PTR:;CAT:NONE;SFS:(13230040)(1800799024)(366016)(19092799006)(376014)(38070700021)(22082099003)(56012099003)(18002099003)(4143699003)(11063799003);DIR:OUT;SFP:1101;
-x-ms-exchange-antispam-messagedata-chunkcount: 1
-x-ms-exchange-antispam-messagedata-0:
- =?us-ascii?Q?IrGNGyRXjWwoe8/elZ5ZynLER0f2EIJW8Wtm2NlpNdozy/nTjr3M+gF8ZK7w?=
- =?us-ascii?Q?3fkbcPkBmwaI7s7HSU/NvBEYRtxvltGlW4Ek53yajXN01tzxIj/qysBxQYaj?=
- =?us-ascii?Q?IS2YH2Vh70TxfI8CLAkeFDTxNdRv6faw68ml0ud7/wtP5NtNA/cnBd6K2aRE?=
- =?us-ascii?Q?zULh9xh8qfCxg/+GmFrHT5+vTsqwq35MxIZT/DMcBW4RZ6SV5yYdEEF7wBQK?=
- =?us-ascii?Q?nnVHCaqNxkGbJgnXzqsf6Mwn2WuAkqWSdLIaBKcUNVepQ3YppNqskE2TPNfF?=
- =?us-ascii?Q?FzFSbtA60VGiSNpCAW+wHyXQhTQiicKzmk5rFxx1nmFKRGzYfHSMufbgUwS4?=
- =?us-ascii?Q?U9iWfFKBQg7OgvE7P4dIwG0r7yDrWT4B4icGexcJ8acndPxCrGYTlojX6ZUo?=
- =?us-ascii?Q?Z78bz9B9nepjjVLW51MEwsCKZhHKwj2oYa/8c8LZPWlc2u0mdXeEzAFNB6JF?=
- =?us-ascii?Q?C8y59AoJCOKQduhT4dS8aHJBv01zunqJT6IRHe7rEhSyQtmTG+5EFNwH72NQ?=
- =?us-ascii?Q?pHoe1wpH2yD/tcR4pVTt7a5HTjpOKV0eIsXyaXyhbWxZBq0feOWlnYUrloXb?=
- =?us-ascii?Q?MPQu1Snl6q/VO8fM5Zj/S4989eahE9RLJ2mQz7wg6yN2tJX0UR44o26xT2e+?=
- =?us-ascii?Q?uZVvmODcsvv9d/FiJkhdMk/u0Lv7TIJlMWFFZ9hJtN2rur9FbM1n2WMKuQwM?=
- =?us-ascii?Q?PZA1LB06RVg2PQb4Gj3FK5zg0M5yBvLuMDi9b9WWRD7c1cTJyUC2vtGrdnCy?=
- =?us-ascii?Q?FYltPMUhYRxA59FTaJGtdtCJPWiSMM50lutqjcfbrnFglYgf2I7vSdZIK2aP?=
- =?us-ascii?Q?kgwm50laNeTqENGwDHupPzPZMzMusOm1XsbKbpL06OIe09YCan3pUowPXWAi?=
- =?us-ascii?Q?xS0x3Y1R2NS1IoQwvJm3roTlihLymjyFSFl3OV2NG+g9c0yutXI1LSPElYiK?=
- =?us-ascii?Q?SegRBFZacPheG7yVbiy6CzzbZ8qb4+CUBW1Z52YH0yz1fEt7MI8Y9oudVBZ+?=
- =?us-ascii?Q?9Ji/9CfLBg4IbweuWTpvZO3Ugj2mhy923zFmdEWSw4Z6cvjkESg9GM5I2Flt?=
- =?us-ascii?Q?slx/C9PbMExz4W/iNhaweXB6WYtkG+0HO2gOOaRNazYF6jciKbXvTXyieTSs?=
- =?us-ascii?Q?WJd0HSBdFyo3CPjVDDyf6qyFrlgnIasXna2Ubv8tASRuZZJWKm76AayAaCA2?=
- =?us-ascii?Q?J0YUHZw8Ddt9GfnsvpHAv+Z8wz9Ie1yGZU56rxH9hbJAYIkqduU6YYgyrNAB?=
- =?us-ascii?Q?KWzKgzsGbwpbZeBk2V4HKoDd3EuOsI5wJ1FVM2c9bGZwQZDBREqHc20Q0cob?=
- =?us-ascii?Q?RpCDD8t/9AXqQTV5wU5+1Q1k6EIgwloRfqARBwvFihyTOHA4vAev8Li3yTv9?=
- =?us-ascii?Q?q06gzmzv7InMaZW4yyv73zBY/QcscC74IVGNxR4CnThLBfYA8z8Kb7DXeDgj?=
- =?us-ascii?Q?D0StRJq088pDHQ+MHXxtct3EQ36ou/bSevJIgL7M99yjXjSBXND1ZjgRTE5x?=
- =?us-ascii?Q?WOeCCdJbLGE+HHHimOrqbTmhihYlvn3MQECkpIVSj2sB9xihWEew25+VsUQz?=
- =?us-ascii?Q?RP5Gle6IRgMjlEhPJ7diZODAY8LaNleMlxYo2sHHj8lpB4xIsWiRg8G2vc5r?=
- =?us-ascii?Q?c61FzejSfjFAO9RiF23cpMhxk/KPu8WGV2mM19TEHvw9hrFc4bnA2h5d//37?=
- =?us-ascii?Q?CREZZJtyUs+amTkNr++NbvJJuRz8Ls7RNaL7/LDbLLsfzA4a?=
-Content-Type: text/plain; charset="us-ascii"
-Content-Transfer-Encoding: quoted-printable
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="FwSxUvDs"
+Received: by mail-yw1-f178.google.com with SMTP id 00721157ae682-7bdec52f48dso24225037b3.0
+        for <sashiko-reviews@lists.linux.dev>; Mon, 18 May 2026 23:47:26 -0700 (PDT)
+ARC-Seal: i=1; a=rsa-sha256; t=1779173246; cv=none;
+        d=google.com; s=arc-20240605;
+        b=H523cy9c09zKMmof3eoopLjbZLyGr0fTCwBrLLoB6hmePuWoHGbiEXWkkCWZc17SRL
+         3DG0YWlKWPEWJcGcOliusULjYKzA20I/SpoBXG2RKE2ekqK8qRPxpOU3g4cJ44fmVDLs
+         dQwnPnUR1WpqC1sO7QPum1cXzMfGrglrbUKrJLfZ3Myic0RxIcnVp4+0jv80ZOF5a2qO
+         YBqles3LLlNK4Z4lOhINtzXuiPAn0MPr+Mf6FMWOUNifvjgrp37iHL8fh2DiPLNYqX1Q
+         EsHCHhtF8AKqytMEOYpId3jkNWXbvjlfhOYOPn2JJ+aPan2ChgGgwqxz4skDHIrb0WAC
+         +reA==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com; s=arc-20240605;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:dkim-signature;
+        bh=eaSPx0wbxWVv539GDTg5+Kyju9uz5Da///Zk6u5kJUA=;
+        fh=jNN73ROUAWpOnqcFckj/je1cyezepSLhAlHS00pwn+I=;
+        b=e3jO+AHqa2r12QOsDWp75g//09G7lUFyCRm2RjRF6uxGWtdPx0SWBz0JeuOZfKCKBS
+         7AyipVgHU9GNBzOSdvkTsVWXgesShlTqQDHLsqZeF1p1jNI3ePAAnBA+NFDHiq5sJHCE
+         qEvc80L5Dqk+jwwk6FjFapBs+RYS6MUdeWcmyXQ5qvD8QFro7x5Q4STdzZIOHTPhjE9S
+         Cs3Hevv1wHrdyrC/xRbtW12ehINcSowfIFKobBMJpPgLYBPGQhMhQ1JXSowynMgziHox
+         cehLumLWwaQtmMA7zUzGCLu2LOuJXsjOIPkkm04JzO1uORxZX1se9yJfNzoMSTVvvRNW
+         fuKg==;
+        darn=lists.linux.dev
+ARC-Authentication-Results: i=1; mx.google.com; arc=none
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20251104; t=1779173246; x=1779778046; darn=lists.linux.dev;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=eaSPx0wbxWVv539GDTg5+Kyju9uz5Da///Zk6u5kJUA=;
+        b=FwSxUvDsIiABz6AGUsHd3tubhokkCTpfjU7l8kYYK2zBh6NKvXdjc89V32F0AJQQwf
+         uuKG/wGa/RD/H8gvdrgr7FrecLNR00LIlfW9p5bWBD+6X5kesiUCptEBet4JbUc7uP9b
+         WKfDxdkg08k9/V5TxslBNAVewZpwEhU6AyA1j+/9wU9VJjMj+974zMXUdNKNY5V2wust
+         pooRN8mjEvJWFgPBnHemr0Z5cb10woIlOs7g10z8MVL2WaedLQMbQhLIndfRyiJ6JoZs
+         BPe9c4w29otqZJ0WcsuJnL4SE29h2B5ZSkF0wpb1E8/OfER+doILTEDhF07L5Vt8F7Vd
+         wbjw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20251104; t=1779173246; x=1779778046;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:x-gm-gg:x-gm-message-state:from
+         :to:cc:subject:date:message-id:reply-to;
+        bh=eaSPx0wbxWVv539GDTg5+Kyju9uz5Da///Zk6u5kJUA=;
+        b=URTheLN6z0gY053GRvWbueevihR9WZ3QdrpEofwKSf+yDWdGzptDfAUGh0aYq/LEac
+         nYuD+4dBQQ1LLw/TJ9avGKAxcceR8z36MYHsQt//KSBrLYQJRUeNMe3tJA525F+RV0Uf
+         TjsaZykuYonqa+/Km1eY04/uvIT3a0ACl6smuUAkfq1jZfylFlWDq1+q5CDLdMQKmk7F
+         1H3gH3W11wB271Qd+0VOrIQhQF1tgoqlR74CkjewF09KaCFEbLwINLkaXcq7+KGIvAWf
+         sTlQMl4sddttCPCiyyn6vBERDEzDTF4zwPgiavfAscLp7fXfXfH+riYjU4GcznXK2kRh
+         sjSA==
+X-Gm-Message-State: AOJu0YyASdjCbSe6aIk+UllgLYw+YtyjrDpvnFXp9XPpls/1Sn5lWViO
+	17ztyH8ObszLbKj2yVfDTpUDzOdYLDNp2kBOf3Y9VU/SlGRKbCpdMHt1eyHBvOSzkd4mQfULUdf
+	pVdnsGmzWljpD5lTjqk9Ln4D4PWACrXB3Nf+fUSc=
+X-Gm-Gg: Acq92OFf5pi0LjsTTwbBy7yr4MHbLWnPF2Y8knkf09/5fvBq6fnPjA/vy8CgzEFYa2m
+	MS2/nbQOM4L9fEHTGunud3puN5Mpw62w7Qa9CvO3K/tDI2CM/KB8TW3qHZYizL57nee0BF8OaPH
+	REkfur6iEgXIQHD/hGA1lmMrg9SruFPVanCyiDlwLU9znrVaJcMYNwWXke61YAC+NbNifKarPpx
+	6Bi3+1aKCw7TX2dPzbiP6EhwtDKq/hCcIy29cuIuBAe0TOY8YCMMZEBKWuURUDR7eYt4KsrXkUO
+	igjWz+wDqbagH5EPJ3Ji1rHLJ7ma4QjxhqsPYEo9
+X-Received: by 2002:a05:690c:c15:b0:7c6:e377:1dc6 with SMTP id
+ 00721157ae682-7c7e3134169mr200189587b3.0.1779173245682; Mon, 18 May 2026
+ 23:47:25 -0700 (PDT)
 Precedence: bulk
 X-Mailing-List: sashiko-reviews@lists.linux.dev
 List-Id: <sashiko-reviews.lists.linux.dev>
 List-Subscribe: <mailto:sashiko-reviews+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:sashiko-reviews+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-X-OriginatorOrg: nxp.com
-X-MS-Exchange-CrossTenant-AuthAs: Internal
-X-MS-Exchange-CrossTenant-AuthSource: DBBPR04MB7500.eurprd04.prod.outlook.com
-X-MS-Exchange-CrossTenant-Network-Message-Id: c319f51c-1ba6-4e38-8518-08deb56ac536
-X-MS-Exchange-CrossTenant-originalarrivaltime: 19 May 2026 05:52:11.2538
- (UTC)
-X-MS-Exchange-CrossTenant-fromentityheader: Hosted
-X-MS-Exchange-CrossTenant-id: 686ea1d3-bc2b-4c6f-a92c-d99c5c301635
-X-MS-Exchange-CrossTenant-mailboxtype: HOSTED
-X-MS-Exchange-CrossTenant-userprincipalname: AZbhEnCBra7TNW4v2Na9JyPogyVkpgDWoodeG3Ld8iFXebYMg49unm22nTsUsyLL8UyccrlB6no6sYBLBTSk3g==
-X-MS-Exchange-Transport-CrossTenantHeadersStamped: VI1PR04MB10002
+References: <20260513143321.26185-6-laoar.shao@gmail.com> <20260514224000.8316FC2BCB3@smtp.kernel.org>
+In-Reply-To: <20260514224000.8316FC2BCB3@smtp.kernel.org>
+From: Yafang Shao <laoar.shao@gmail.com>
+Date: Tue, 19 May 2026 14:46:49 +0800
+X-Gm-Features: AVHnY4JvQLoFhFQyXqActjgjy4XZjyhfXkPZbhv95lsGfAQ4gvQIoFIxkJ2j3RE
+Message-ID: <CALOAHbD28PLp=35mV6n2G=tKtf8rGb_uVbTb4wY=6Erm+wjLGQ@mail.gmail.com>
+Subject: Re: [RFC PATCH 5/6] livepatch: Remove obsolete per-object callbacks
+To: sashiko-reviews@lists.linux.dev
+Cc: jikos@kernel.org, joe.lawrence@redhat.com, mbenes@suse.cz, song@kernel.org, 
+	pmladek@suse.com, jpoimboe@kernel.org, live-patching@vger.kernel.org
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 
-> > @@ -151,14 +149,17 @@ void enetc_msg_psi_free(struct enetc_pf *pf)
-> >  	struct enetc_si *si =3D pf->si;
-> >  	int i;
-> >
-> > +	/* disable MR interrupts */
-> > +	enetc_msg_disable_mr_int(&si->hw);
-> > +
-> > +	/* de-register message passing interrupt handler */
-> > +	free_irq(pci_irq_vector(si->pdev, ENETC_SI_INT_IDX), si);
-> > +
-> >  	cancel_work_sync(&pf->msg_task);
->=20
-> Can this sequence cause an unhandled interrupt?
->=20
-> Since free_irq() is now called before cancel_work_sync(), if the mailbox
-> workqueue task (enetc_msg_task()) is executing during cancel_work_sync(),
-> the task might unconditionally re-enable hardware MR interrupts at the en=
-d
-> of its execution via enetc_msg_enable_mr_int().
->=20
-> This could create a window between the work task finishing and the second
-> enetc_msg_disable_mr_int() call where hardware MR interrupts are enabled
-> but
-> the OS IRQ handler is already freed.
->=20
-> If a Virtual Function (VF) sends a message during this window, could the
-> hardware assert the MSI-X interrupt, resulting in a spurious IRQ that mig=
-ht
-> disable the IRQ line?
->=20
-> This regression is fixed later in the patch series by commit
-> 675d55bcc780129a27acba4ec3a3cd33ecd510fc ("net: enetc: avoid VF->PF
-> mailbox
-> timeout during SR-IOV teardown"), which avoids the issue by destroying th=
-e
-> VFs before cleaning up the PF mailbox.
+On Fri, May 15, 2026 at 6:40=E2=80=AFAM <sashiko-bot@kernel.org> wrote:
+>
+> Thank you for your contribution! Sashiko AI review found 3 potential issu=
+e(s) to consider:
+> - [Critical] Out-of-bounds ELF relocations causing memory corruption
+> - [High] Silent failure of livepatch state callbacks due to missing initi=
+alization
+> - [Low] Build failures due to unmigrated selftests and samples
+> --
+>
+> commit deb761bd65e9a96a95798282bde72ddb362e1c0d
+> Author: Yafang Shao <laoar.shao@gmail.com>
+>
+> livepatch: Remove obsolete per-object callbacks
+>
+> This commit removes obsolete per-object callbacks from the livepatch fram=
+ework
+> in favor of per-state callbacks. It drops the callback fields from the kl=
+p
+> object structures and updates objtool and the livepatch core scripts.
+>
+> > All selftests have been migrated to the new per-state callbacks, making=
+ the
+> > per-object callbacks redundant.
+>
+> Is this description accurate?
 
-These patches are part of a series and are all designed to address issues
-introduced by commit beb74ac878c8 ("enetc: Add vf to pf messaging
-support"). If subsequent patches have already resolved the issue you're
-reporting, please refrain from reporting it again, it's pointless and a was=
-te
-of time.
+Selftests are untouched in this RFC. I'll revise the commit log accordingly=
+.
 
->=20
+>
+> The callbacks field was removed from struct klp_object, but if modules li=
+ke
+> samples/livepatch/livepatch-callbacks-demo.c or the selftests still use i=
+t
+> in their klp_object declarations, won't this cause build failures?
+>
+> > diff --git a/scripts/livepatch/init.c b/scripts/livepatch/init.c
+> > index 9265e0e504e0c..570366b9268c4 100644
+> > --- a/scripts/livepatch/init.c
+> > +++ b/scripts/livepatch/init.c
+> > @@ -63,8 +63,6 @@ static int __init livepatch_mod_init(void)
 > >
-> > -	/* disable MR interrupts */
-> > +	/* MR interrupts may be re-enabled by workqueue */
-> >  	enetc_msg_disable_mr_int(&si->hw);
+> >               obj->name =3D obj_ext->name;
+> >               obj->funcs =3D funcs;
+> > -
+> > -             memcpy(&obj->callbacks, &obj_ext->callbacks, sizeof(struc=
+t klp_callbacks));
+> >       }
 > >
-> >  	for (i =3D 0; i < pf->num_vfs; i++)
-> >  		enetc_msg_free_mbx(si, i);
->=20
-> Does this teardown sequence leave a race window where active VFs can
-> corrupt
-> memory?
->=20
-> While this pre-existing issue wasn't introduced by this patch, calling
-> enetc_msg_psi_free() before pci_disable_sriov() means PF mailbox resource=
-s
-> are freed while VFs are still active and capable of sending messages.
->=20
-> During teardown, enetc_msg_free_mbx() clears the 64-bit DMA address
-> registers via two sequential 32-bit writes:
->=20
-> enetc_msg_free_mbx() {
->     ...
->     enetc_wr(hw, ENETC_PSIVMSGRCVAR0(idx), 0);
->     enetc_wr(hw, ENETC_PSIVMSGRCVAR1(idx), 0);
->     ...
+> >       patch->mod =3D THIS_MODULE;
+>
+> Will the state callbacks be executed when the patch is enabled?
+>
+> Looking at livepatch_mod_init() after these changes, patch->states is nev=
+er
+> initialized:
+>
+> scripts/livepatch/init.c:livepatch_mod_init() {
+>         ...
+>         patch->mod =3D THIS_MODULE;
+>         patch->objs =3D objs;
+>
+>         /* TODO patch->states */
+>
+>         patch->replace_set =3D KLP_REPLACE_TAG;
+>         return klp_enable_patch(patch);
 > }
->=20
-> If an active VF sends a message between these writes, could the hardware
-> DMA
-> into a torn 64-bit address?
->=20
-> Additionally, if a message is sent immediately after dma_free_coherent() =
-in
-> enetc_msg_free_mbx(), could the hardware perform a DMA write into kernel
-> memory that has already been returned to the allocator?
->=20
-> This pre-existing issue is fixed later in the patch series by commit
-> 675d55bcc780129a27acba4ec3a3cd33ecd510fc ("net: enetc: avoid VF->PF
-> mailbox
-> timeout during SR-IOV teardown"), which safely calls pci_disable_sriov()
-> first to ensure all VFs are removed before mailbox teardown.
+>
+> When klp_states_pre_patch() iterates over patch->states, won't it silentl=
+y
+> skip the uninitialized callbacks?
 
-Likewise.
+Since these callbacks have been moved to klp_state, they must be
+initialized first. Note that the KLP_*_PATCH_CALLBACK macros are
+broken after patch #6; I will fix this in the next version.
 
+>
+> > diff --git a/tools/objtool/klp-diff.c b/tools/objtool/klp-diff.c
+> > index 4d1f9e9977eb9..6e2762de3d512 100644
+> > --- a/tools/objtool/klp-diff.c
+> > +++ b/tools/objtool/klp-diff.c
+> [ ... ]
+> > @@ -1566,8 +1566,8 @@ static int create_klp_sections(struct elfs *e)
+> >               reloc =3D find_reloc_by_dest(e->out, sym->sec, sym->offse=
+t);
+> >
+> >               if (!elf_create_reloc(e->out, obj_sec,
+> > -                                   offsetof(struct klp_object_ext, cal=
+lbacks) +
+> > -                                   offsetof(struct klp_callbacks, pre_=
+patch),
+> > +                                   offsetof(struct klp_state_ext, call=
+backs) +
+> > +                                   offsetof(struct klp_state_callbacks=
+, pre_patch),
+> >                                     reloc->sym, reloc_addend(reloc), R_=
+ABS64))
+> >                       return -1;
+> >       }
+>
+> Does this result in out-of-bounds memory writes during ELF relocation?
+>
+> Earlier in create_klp_sections(), obj_sec is allocated using the size of
+> struct klp_object_ext, which is 24 bytes:
+>
+> tools/objtool/klp-diff.c:create_klp_sections() {
+>         size_t obj_size  =3D sizeof(struct klp_object_ext);
+>         ...
+>         obj_sec  =3D elf_create_section_pair(e->out, KLP_OBJECTS_SEC, obj=
+_size, 0, 0);
+>
+> However, the new relocations are created using offsets from a completely
+> different structure, struct klp_state_ext.
+>
+> Because offsetof(struct klp_state_ext, callbacks) is 16, and the callback
+> offsets go up to 24, this applies relocations at offsets 16, 24, 32, and =
+40
+> within obj_sec.
+>
+> Won't the relocation at offset 16 corrupt klp_object_ext.nr_funcs, and th=
+e
+> subsequent relocations write entirely out of bounds of the 24-byte obj_se=
+c
+> buffer?
+
+Nice catch. I will fix it in the next version.
+
+--=20
+Regards
+Yafang
