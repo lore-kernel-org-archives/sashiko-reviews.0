@@ -1,253 +1,180 @@
-Received: from relay.hostedemail.com (smtprelay0014.hostedemail.com [216.40.44.14])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-pf1-f171.google.com (mail-pf1-f171.google.com [209.85.210.171])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BD534367B6D
-	for <sashiko-reviews@lists.linux.dev>; Tue, 19 May 2026 18:17:36 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=216.40.44.14
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EFB4435A3B1
+	for <sashiko-reviews@lists.linux.dev>; Tue, 19 May 2026 18:22:33 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.210.171
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1779214658; cv=none; b=qj8KeiPJCTIFIOZ55sukd3+gNVXnR9zozq7DMk/am+HaRyvl4up2DZOp5gWkETFQnjzLHH0tS45RWrUldcnwo5vBKU4Js8CbD1JVoI/Z8MQIgtZGcmUKKhwyOSWCGnc7ZeyJh04K8DQIGVFeelshzThheIpHksOpPADV6Z5pbKc=
+	t=1779214955; cv=none; b=YYUvxcZOYZigVTQEyv2MsErqBDhXStCRhUEzUjI8eVHiUYk5pl4LtVfIVNW+tbQmlGVZnHPyh9so0I2VnCR70zJNdwVjtak4EBM0V6pTD1Nb9geDW3MCcLVDWtSXiTmGIdAJDeotFQGNIUmiuVMe6EXpBpkL4XhnLNwOyymzow0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1779214658; c=relaxed/simple;
-	bh=Xscm9khAV5fwxprpZsOpY7a91iE/PVR1LkvJNAhG1Jo=;
-	h=Date:From:To:Cc:Subject:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=IR02/cPvPI6l9x6vYWsroAdplGIvLs31w4NbD0OzbLJmsbb1DwA7iKzJbmawfeX1KbwYBa0sFmL0p01dI5vtnDcys0a5zMwHtoN/2KQbil/cTpnxdZrWr6BdzXEDc8owHpjhL01MBiwEpR2/tObafHVusHv+Ed1ElkEVLqGCF9k=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=goodmis.org; spf=pass smtp.mailfrom=goodmis.org; arc=none smtp.client-ip=216.40.44.14
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=goodmis.org
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=goodmis.org
-Received: from omf10.hostedemail.com (lb01a-stub [10.200.18.249])
-	by unirelay08.hostedemail.com (Postfix) with ESMTP id DDB8C1408DF;
-	Tue, 19 May 2026 18:17:29 +0000 (UTC)
-Received: from [HIDDEN] (Authenticated sender: rostedt@goodmis.org) by omf10.hostedemail.com (Postfix) with ESMTPA id 036C642;
-	Tue, 19 May 2026 18:17:27 +0000 (UTC)
-Date: Tue, 19 May 2026 14:17:26 -0400
-From: Steven Rostedt <rostedt@goodmis.org>
-To: sashiko-bot@kernel.org
-Cc: sashiko-reviews@lists.linux.dev, bpf@vger.kernel.org, LKML
- <linux-kernel@vger.kernel.org>, Linux trace kernel
- <linux-trace-kernel@vger.kernel.org>, Masami Hiramatsu
- <mhiramat@kernel.org>
-Subject: Re: [PATCH v5] tracing/eprobes: Allow use of BTF names to
- dereference pointers
-Message-ID: <20260519141726.613e2e54@fedora>
-In-Reply-To: <20260519174848.176A6C2BCB3@smtp.kernel.org>
-References: <20260519130144.40e71a00@fedora>
-	<20260519174848.176A6C2BCB3@smtp.kernel.org>
-X-Mailer: Claws Mail 4.4.0 (GTK 3.24.52; x86_64-redhat-linux-gnu)
+	s=arc-20240116; t=1779214955; c=relaxed/simple;
+	bh=/iZEIInf+h07QsZt9LdbOhTRLtwkJCA5Nww+jvwEjz8=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=AFEQ9NIuAYJQcAB4Nn2iHF83uPuUtNoi+X9EYv8kFfRBcwPyGGiZiGFF8DseuxfJnHkFAqdfQ3QYFgSRD+zda9p8pe6SQfzz4ciKDOn/wStAGcWQDNFiWDDTmDg6RyzLvb/r1dvfZepZJPRxsipPeYrigbiC8Vh7U0iULnKYq0o=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=Hn256KXH; arc=none smtp.client-ip=209.85.210.171
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+Authentication-Results: smtp.subspace.kernel.org;
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="Hn256KXH"
+Received: by mail-pf1-f171.google.com with SMTP id d2e1a72fcca58-8354461da74so1716685b3a.1
+        for <sashiko-reviews@lists.linux.dev>; Tue, 19 May 2026 11:22:33 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20251104; t=1779214953; x=1779819753; darn=lists.linux.dev;
+        h=in-reply-to:content-transfer-encoding:content-disposition
+         :mime-version:references:message-id:subject:cc:to:from:date:from:to
+         :cc:subject:date:message-id:reply-to;
+        bh=djwlqTMl8+NOKghG5Z1Hqhs/9/X6wY6hcEaIBs4ftFI=;
+        b=Hn256KXHfDAVIoMoQAe0tQCmJxIgP4tfRXqMobpz9ZNgIJ/Ika3Ng4R4FeiMetii2h
+         iAuHFhLJMd6EEMQBT4N9y9JdlrEncO8uoD15C76gx3Tb5DmNKprUBGpM4R4Dqm/FPpD2
+         rOHcVsKVenYQRBp2qGXXIdSjxfWSgKJt535lfZjowhsrrIyNylWKCIPamH9oTgwJpbL7
+         lhlj3xwR7yPZT109aKJVu22ynFQDXcJ3ns19RRcHNn/KOPUg4a+1R442/SJY/MFip647
+         HUDHDjZRccHcOfBohcpF4K7zlE3LuFarZrD/Melo041pWZGehX4O0YnwXLShgSRM743W
+         vY4Q==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20251104; t=1779214953; x=1779819753;
+        h=in-reply-to:content-transfer-encoding:content-disposition
+         :mime-version:references:message-id:subject:cc:to:from:date:x-gm-gg
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+        bh=djwlqTMl8+NOKghG5Z1Hqhs/9/X6wY6hcEaIBs4ftFI=;
+        b=cA/68+e5AsF5NedGCpJo/wIg+sBvnpjPeNciXZjoCDTI2WEYtbohQ6ac0baJp0PiEM
+         MFPF7VxkWjd4o0MWtbl2w+SIwLXF5h0T0Bvke2LRIMRBY2vHkTMDAgyqZ5D0YbuKUjTn
+         zufMl8JbwwOUGiPS3ZhH0Xv6B+I/LBZOxHriNnw+sdLNqUWWAd3CJN33xqFqPddW6ZU3
+         bQUHYcCMSjBjKXZ+F+5P2uKF0nGn9QjSh+tM03T4KJvzzb97f8DwialM0kSNO9g1v1kh
+         KnH/AFEByJTx8XJ2E9YmKxkHHyucdsYyUDVjRvkCLfDfAqmaxRDoot7Jafi7Bdqv+0KS
+         8yLw==
+X-Gm-Message-State: AOJu0Yy2YR3YjWebHjzcslriALrLcZAg4LeHkq+voJPgq8SRR/NxCYeB
+	3xTyEQ6TZ0H6tY+ZYqwk38sWZWAIZen2UNj0FyO95A5exKbbynYzd+afRIgm4Q==
+X-Gm-Gg: Acq92OGNLC+D/duazR9ZK3Wl04+rRyYOGH8Hop+2Ee6ysK6VPi8MSl/ZaUJ+y1NKgac
+	Aj9nrvYlOackathgLOk4dA6huQhw0Z7muJAhkYrdpkZIRIqicpT4/cweq6cLSVxAQRh/J4aXA5j
+	bIwqIVbv0Y3XYmg8mXI43LmuyWEFgPiGINIiSI1h2GgWEVJnks9VQkQg8vn4imBrZ5JcMHm8IyT
+	V/Y9pECN/IOc+ZfQ3yO12Jv0LO3BVQpnejLVflrLAj4l8U0M0/kiA7Q6QWXQ/jqIYqM5wycpmzd
+	npFHJDKdhVGLs7UtWmPQDBf4sM9VrU7mdmpIbGXDBmVMtju/35KvVKmrYVSaaRBByneNV2S4aCD
+	+8SpBdQU7XPpLKXgcJL0rLVM9hUh43cViQo9zqVQVUrfGhvTg1+pAt7ib+/hvLwWO1UcwaDa4um
+	NJiHOrT8i/VxVVzAdp/3z3j2rXsgcl7E7JcD7mX/uI6EwqWGFnrWjHw4mAzVHWSEFMDEF4nluxb
+	c8ICVLyogiB8nkp
+X-Received: by 2002:a05:6a00:1f09:b0:835:41f3:f43e with SMTP id d2e1a72fcca58-83f33c45c8cmr21236031b3a.16.1779214952946;
+        Tue, 19 May 2026 11:22:32 -0700 (PDT)
+Received: from cchengyang.duckdns.org (36-225-116-93.dynamic-ip.hinet.net. [36.225.116.93])
+        by smtp.gmail.com with ESMTPSA id d2e1a72fcca58-83f19c5ce1fsm18712359b3a.35.2026.05.19.11.22.31
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Tue, 19 May 2026 11:22:32 -0700 (PDT)
+Date: Wed, 20 May 2026 02:22:29 +0800
+From: Cheng-Yang Chou <yphbchou0911@gmail.com>
+To: sashiko-reviews@lists.linux.dev
+Cc: sched-ext@lists.linux.dev
+Subject: Re: [PATCH 2/2] sched_ext, rcu: Upgrade RCU stall paths to report
+ cpumask of stalled CPUs
+Message-ID: <20260520020904.G8ffa@cchengyang.duckdns.org>
+References: <20260519171745.1551340-3-yphbchou0911@gmail.com>
+ <20260519175231.520A0C2BCB3@smtp.kernel.org>
 Precedence: bulk
 X-Mailing-List: sashiko-reviews@lists.linux.dev
 List-Id: <sashiko-reviews.lists.linux.dev>
 List-Subscribe: <mailto:sashiko-reviews+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:sashiko-reviews+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=US-ASCII
-Content-Transfer-Encoding: 7bit
-X-Rspamd-Queue-Id: 036C642
-X-Stat-Signature: ojoqpestf56n3bjp476kj1w543wmgcx1
-X-Rspamd-Server: rspamout03
-X-Session-Marker: 726F737465647440676F6F646D69732E6F7267
-X-Session-ID: U2FsdGVkX1/Z1J3+bHKVx9Du++DWn38MbgQCZ0hJoCE=
-X-HE-Tag: 1779214647-249727
-X-HE-Meta: U2FsdGVkX1+ek3CS1dgaY7L9GiwmPFmBYqbuS4cXXdFPdQh2271xIFP6DGPhtFr1XgrM6iWU3509QsSDvweKQiELeRXRqwBthCP63yEoSTx3kJO00PfvgVb6s6b6Zym3BVLdsgnqgjB7TXS2K4tWxDhFmZM+FbtOre7NGffJyXeFiFhUEuB3b79oOohGuqgX7Sbmy7ErcVofPEfcPJSkwpZkhkmvB9CaDOGYQaRQKwBs0brXTteDCARE4Tor1HK39wMVne9jx7spLP/Nth82msBb+eWxM+Flt75lz3CNEfSXL89RIBv35F6KSDACKWieY3pW/p3+4pbjD8WzjFDzb4pXbBZDR2L32deKWAa+WV5AQA4tpPiEneLIADmfEdCLK0/g/rqnqYCckMUBLL0EiQ==
+Content-Type: text/plain; charset=iso-8859-1
+Content-Disposition: inline
+Content-Transfer-Encoding: 8bit
+In-Reply-To: <20260519175231.520A0C2BCB3@smtp.kernel.org>
 
-On Tue, 19 May 2026 17:48:47 +0000
-sashiko-bot@kernel.org wrote:
-
-> Thank you for your contribution! Sashiko AI review found 5 potential issue(s) to consider:
-> - [High] Using `(STRUCT)` typecasts for non-eprobes leaves the base fetch instruction uninitialized (`FETCH_OP_NOP`), silently breaking the probe.
-> - [High] Prematurely clearing `TPARG_FL_TYPECAST` causes cross-BTF type confusion and breaks string fetches.
-> - [Medium] Erroneous caching of `struct_btf` restricts a single trace probe to using typecasts from only one BTF object, preventing cross-module lookups.
-> - [Medium] Cross-BTF string table access in `parse_btf_arg()` causes invalid string comparisons.
-> - [Low] `clear_btf_context()` fails to clear `ctx->struct_btf` after dropping its reference.
+On Tue, May 19, 2026 at 05:52:29PM +0000, sashiko-bot@kernel.org wrote:
+> Thank you for your contribution! Sashiko AI review found 1 potential issue(s) to consider:
+> - [High] Dynamic memory allocation (`GFP_ATOMIC`) in the RCU stall detector path can cause a hard deadlock, masking the system hang instead of reporting it.
 > --
 > 
-> commit de4b6287a7069fde24b0e0f679a545a06fb9ae6c
-> Author: Steven Rostedt <rostedt@goodmis.org>
+> commit ffd18e78b03bfaba9705c61803e8bd0bb6325d38
+> Author: Cheng-Yang Chou <yphbchou0911@gmail.com>
 > 
-> tracing/eprobes: Allow use of BTF names to dereference pointers
+> sched_ext, rcu: Upgrade RCU stall paths to report cpumask of stalled CPUs
 > 
-> Add syntax to the parsing of eprobes to be able to typecast a trace event
-> field that is a pointer to a structure.
+> This commit updates the RCU stall paths to capture all stalled CPUs in a
+> cpumask rather than just the detecting CPU. The cpumask is passed through
+> the stall handlers and dumped first during a sched_ext state dump to avoid
+> losing the stalled CPUs to truncation.
 > 
-> > diff --git a/kernel/trace/trace_probe.c b/kernel/trace/trace_probe.c
-> > index e1c73065dae51..2bc9f4ca8aa7e 100644
-> > --- a/kernel/trace/trace_probe.c
-> > +++ b/kernel/trace/trace_probe.c
-> > @@ -464,6 +470,27 @@ static const char *fetch_type_from_btf_type(struct btf *btf,
-> >  	return NULL;
-> >  }
-> >  
-> > +static int query_btf_struct(const char *sname, struct traceprobe_parse_context *ctx)
-> > +{
-> > +	int id;
-> > +
-> > +	if (!ctx->struct_btf) {
-> > +		struct btf *btf;
-> > +
-> > +		id = bpf_find_btf_id(sname, BTF_KIND_STRUCT, &btf);
-> > +		if (id < 0)
-> > +			return id;
-> > +		ctx->struct_btf = btf;
-> > +	} else {
-> > +		id = btf_find_by_name_kind(ctx->struct_btf, sname, BTF_KIND_STRUCT);  
-> 
-> [Severity: Medium]
-> Does caching struct_btf here restrict a single trace probe event to using
-> typecasts from only one BTF object?
-> 
-> If a probe attempts to typecast structures from two different kernel
-> modules, wouldn't the lookup for the second module's struct fail because
-> it only searches the cached BTF object of the first module (or vmlinux)?
-
-Hmm, good point. I guess I should clear the struct_btf at the end of
-the '(' switch case.
-
-> 
-> > +		if (id < 0)
-> > +			return id;
-> > +	}
-> > +
-> > +	ctx->last_struct = btf_type_by_id(ctx->struct_btf, id);
-> > +	return 0;
-> > +}  
+> > diff --git a/kernel/rcu/tree_exp.h b/kernel/rcu/tree_exp.h
+> > index 82cada459e5d0..b8f4ca984c1c9 100644
+> > --- a/kernel/rcu/tree_exp.h
+> > +++ b/kernel/rcu/tree_exp.h
 > 
 > [ ... ]
 > 
-> > @@ -515,6 +542,10 @@ static void clear_btf_context(struct traceprobe_parse_context *ctx)
-> >  		ctx->params = NULL;
-> >  		ctx->nr_params = 0;
-> >  	}
-> > +	if (ctx->struct_btf) {
-> > +		btf_put(ctx->struct_btf);
-> > +		ctx->last_struct = NULL;  
-> 
-> [Severity: Low]
-> Should ctx->struct_btf be explicitly set to NULL after btf_put() drops
-> the reference?
-
-I'm thinking of dropping it in the '(' switch case.
-
-> 
-> While the traceprobe_parse_context might be destroyed shortly after
-> parsing completes, leaving a dangling pointer could potentially lead to a
-> use-after-free and double-free if any future refactoring reuses the
-> parsing context across multiple trace events.
-> 
-> > +	}
-> >  }  
-> 
-> [ ... ]
-> 
-> > @@ -672,7 +739,7 @@ static int parse_btf_arg(char *varname,
-> >  		return 0;
-> >  	}
+> > @@ -659,23 +662,28 @@ static void synchronize_rcu_expedited_wait(void)
 > >  
-> > -	if (!ctx->btf) {
-> > +	if (!btf) {
-> >  		ret = query_btf_context(ctx);
-> >  		if (ret < 0 || ctx->nr_params == 0) {
-> >  			trace_probe_log_err(ctx->offset, NO_BTF_ENTRY);
-> > @@ -682,7 +749,7 @@ static int parse_btf_arg(char *varname,
-> >  	params = ctx->params;
+> >  	for (;;) {
+> >  		unsigned long j;
+> > +		cpumask_var_t stalled_mask;
+> > +		bool have_mask;
 > >  
-> >  	for (i = 0; i < ctx->nr_params; i++) {
-> > -		const char *name = btf_name_by_offset(ctx->btf, params[i].name_off);
-> > +		const char *name = btf_name_by_offset(btf, params[i].name_off);  
-> 
-> [Severity: Medium]
-> When parsing a typecast argument, btf evaluates to ctx->struct_btf. The
-> parameter matching loop then calls btf_name_by_offset() using that btf.
-> 
-> Since params[i].name_off originates from the function's BTF (ctx->btf,
-> populated by previous non-typecast arguments), could this lead to reading
-> from the wrong string table if ctx->struct_btf is a different kernel
-> module?
-
-The new patch will skip this for TYPECAST arguments. Well, at least for
-trace events.
-
-> 
-> This might result in invalid string comparisons or returning
-> (invalid-name-offset) if it reads out of bounds.
-> 
+> >  		if (synchronize_rcu_expedited_wait_once(jiffies_stall))
+> >  			return;
+> >  		if (rcu_stall_is_suppressed())
+> >  			continue;
 > >  
-> >  		if (name && !strcmp(name, varname)) {
-> >  			if (tparg_is_function_entry(ctx->flags)) {  
-> 
-> [ ... ]
-> 
-> > @@ -1231,6 +1301,30 @@ parse_probe_arg(char *arg, const struct fetch_type *type,
-> >  				code->op = FETCH_OP_IMM;
-> >  		}
-> >  		break;
-> > +	case '(':
-> > +		tmp = strchr(arg, ')');
-> > +		if (!tmp) {
-> > +			trace_probe_log_err(ctx->offset + strlen(arg),
-> > +					    DEREF_OPEN_BRACE);
-> > +			return -EINVAL;
-> > +		}
-> > +		*tmp = '\0';
-> > +		ret = query_btf_struct(arg + 1, ctx);
-> > +		*tmp = ')';
+> > +		have_mask = zalloc_cpumask_var(&stalled_mask, GFP_ATOMIC | __GFP_NOWARN);
 > > +
-> > +		if (ret < 0) {
-> > +			trace_probe_log_err(ctx->offset + 1, NO_PTR_STRCT);
-> > +			return -EINVAL;
-> > +		}
-> > +
-> > +		ctx->flags |= TPARG_FL_TYPECAST;
-> > +		tmp++;
-> > +
-> > +		ctx->offset += tmp - arg;
-> > +		ret = parse_btf_arg(tmp, pcode, end, ctx);  
 > 
 > [Severity: High]
-> When parse_probe_arg() evaluates the (STRUCT) syntax for kprobes or
-> fprobes, it sets TPARG_FL_TYPECAST and calls parse_btf_arg(). Inside
-> parse_btf_arg(), ctx_btf() evaluates to ctx->struct_btf, so it bypasses
-> query_btf_context() and jumps to found_type.
+> Could this allocation cause a hard deadlock during an RCU stall?
 > 
-> However, it doesn't seem to initialize code->op with a valid base fetch
-> instruction like FETCH_OP_ARG or FETCH_OP_REG.
+> If CONFIG_CPUMASK_OFFSTACK=y is set, zalloc_cpumask_var() performs a dynamic
+> memory allocation via kmalloc(). If the stalled CPU is stuck holding a memory
+> allocator lock (such as zone->lock or the SLUB list_lock), the detecting CPU
+> will deadlock trying to acquire it.
 > 
-> Could this leave the base instruction as FETCH_OP_NOP (0)? If so, it
-> seems the base address would be 0, causing subsequent field dereferences
-> to safely fail on 0 + offset due to copy_from_kernel_nofault(). This might
-> allow unsupported syntax like (sk_buff)%di->dev to parse but silently
-> fetch nothing.
+> Additionally, GFP_ATOMIC includes __GFP_KSWAPD_RECLAIM, which can wake up
+> kswapd and acquire scheduler locks (pi_lock, rq->lock). If the stalled
+> CPU holds one of these scheduler locks, it could also deadlock here.
+> 
+> This would completely prevent the RCU stall warning from being printed
+> and mask the root cause of the hang. Would it be safer to use a
+> statically preallocated cpumask for stall reporting?
 
-Yeah, I may have to force this not to work with function types.
+I think the concern is valid, will fix this by pre-allocating static
+cpumask in rcu_init() and clearing at the start of each stall report.
 
 > 
-> > +		ctx->flags &= ~TPARG_FL_TYPECAST;  
+> >  		nbcon_cpu_emergency_enter();
+> >  
+> >  		j = jiffies;
+> 
+> [ ... ]
+> 
+> > diff --git a/kernel/rcu/tree_stall.h b/kernel/rcu/tree_stall.h
+> > index b67532cb87705..90d6eaf1b8415 100644
+> > --- a/kernel/rcu/tree_stall.h
+> > +++ b/kernel/rcu/tree_stall.h
+> 
+> [ ... ]
+> 
+> > @@ -645,6 +647,8 @@ static void print_other_cpu_stall(unsigned long gp_seq, unsigned long gps)
+> >  	if (rcu_stall_is_suppressed())
+> >  		return;
+> >  
+> > +	have_mask = zalloc_cpumask_var(&stalled_mask, GFP_ATOMIC | __GFP_NOWARN);
+> > +
 > 
 > [Severity: High]
-> The TPARG_FL_TYPECAST flag is cleared here, but ctx->last_type still
-> points to a type originating from ctx->struct_btf.
+> Can this dynamic allocation also trigger a hard deadlock?
 > 
-> Later in traceprobe_parse_probe_arg_body(),
-> check_prepare_btf_string_fetch() is called. Since the flag is cleared,
-> ctx_btf() will incorrectly return ctx->btf (vmlinux for kprobes, or
-> NULL for eprobes).
-> 
-> Does this cause check_prepare_btf_string_fetch() to return 0 for eprobes
-> and skip adding the necessary dummy FETCH_OP_DEREF for string fetches?
-> Without this dummy dereference, string fetches on character pointers
-> in eprobes might fail by reading the raw pointer value itself as a string.
-> 
-> Also, for kprobes, could this cause type confusion if
-> btf_type_skip_modifiers() looks up a module's type ID inside the vmlinux
-> BTF?
-
-As mentioned above, I need to put and clear the last_struct here.
-
-Thanks,
-
--- Steve
-
-
-> 
-> > +		ctx->last_struct = NULL;
-> > +		break;  
+> print_other_cpu_stall() executes in a critical diagnostic context with
+> IRQs disabled (enforced by lockdep_assert_irqs_disabled()). Similar to
+> the issue in synchronize_rcu_expedited_wait(), allocating memory here
+> might deadlock if the stalled CPU holds a lock required by the memory
+> allocator or scheduler.
 > 
 
+Ditto.
+
+
+> >  	nbcon_cpu_emergency_enter();
+> >  
+> >  	/*
+> 
+> -- 
+> Sashiko AI review · https://sashiko.dev/#/patchset/20260519171745.1551340-1-yphbchou0911@gmail.com?part=2
+
+-- 
+Cheers,
+Cheng-Yang
