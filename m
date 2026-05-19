@@ -1,195 +1,262 @@
-Received: from azure-sdnproxy.icoremail.net (azure-sdnproxy.icoremail.net [52.175.55.52])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id C61983EFFB6
-	for <sashiko-reviews@lists.linux.dev>; Tue, 19 May 2026 09:40:19 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=52.175.55.52
+Received: from mail-wm1-f45.google.com (mail-wm1-f45.google.com [209.85.128.45])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+	(No client certificate requested)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CFFE63DFC62
+	for <sashiko-reviews@lists.linux.dev>; Tue, 19 May 2026 09:40:47 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.45
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1779183623; cv=none; b=g8IeyTS1reXXOpmxEiw+1TxEGxXJSNcU6Ae3QBWOjB1c+hdeBv5SLTcxNhsx1smPzJUBRyz0IJDjMrkHxKCNO6k6vXa9c7VM5r/H5oMGicmoEKIv4/92upwzFL0zJZa1pkkocHtHBUYbc4ONlDDZ04B6qgqcEEL57q+z+a1fCCw=
+	t=1779183651; cv=none; b=locj1VVZs5wBHj9Y4bMMBESQ+2PAR5BT7tW9gJbY+1fW4i2JLzPPR8G/11l/oMBrhxwCdAJMu/Zoszvw27H7TtHYt0J4TaZblrXRkpKkagJJEOdzU1AhagV/8MJoUxyhtokaqcc/w/x4lwY1nKRjRLrM1fmxGPmzfHMcFeKQ/QE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1779183623; c=relaxed/simple;
-	bh=/33F3ODAOZ1ryIdQp3vdaR8/LC4DOoNzTXIM9OL+kf4=;
-	h=Date:From:To:Cc:Subject:In-Reply-To:References:Content-Type:
-	 MIME-Version:Message-ID; b=IiDmOvBja6TqLoI7wnhMxN4vDez5xLbKoOtG3V03BjNjzvv7am31SGpED291q8vHQ2cZydbm0O1VwTq1N/VHWsLlCo61KjVGcN0Sn2KPBeEPxC6iZFIN9jMhn1e6MHf4j532HWPWG3PSYz5G/lc0RjdM3wNVZS463YX8UWIepi4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=eswincomputing.com; spf=pass smtp.mailfrom=eswincomputing.com; arc=none smtp.client-ip=52.175.55.52
-Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=eswincomputing.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=eswincomputing.com
-Received: from hehuan1$eswincomputing.com ( [10.12.96.103] ) by
- ajax-webmail-app2 (Coremail) ; Tue, 19 May 2026 17:40:09 +0800 (GMT+08:00)
-Date: Tue, 19 May 2026 17:40:09 +0800 (GMT+08:00)
-X-CM-HeaderCharset: UTF-8
-From: "Huan He" <hehuan1@eswincomputing.com>
-To: "Guenter Roeck" <linux@roeck-us.net>
-Cc: sashiko-reviews@lists.linux.dev, linux-hwmon@vger.kernel.org,
-	robh@kernel.org, krzk+dt@kernel.org, conor+dt@kernel.org,
-	devicetree@vger.kernel.org,
-	=?UTF-8?B?5a6B5a6H?= <ningyu@eswincomputing.com>,
-	"Min Lin" <linmin@eswincomputing.com>,
-	"Yulin Lu" <luyulin@eswincomputing.com>,
-	pinkesh.vaghela@einfochips.com
-Subject: Re: Re: [PATCH v5 2/2] hwmon: Add Eswin EIC7700 PVT sensor driver
-X-Priority: 3
-X-Mailer: Coremail Webmail Server Version 2024.2-cmXT6 build
- 20241203(6b039d88) Copyright (c) 2002-2026 www.mailtech.cn
- mispb-72143050-eaf5-4703-89e0-86624513b4ce-eswincomputing.com
-In-Reply-To: <fd9b767e-18e5-40a6-b503-52427852951c@roeck-us.net>
-References: <20260515092128.483-1-hehuan1@eswincomputing.com>
- <20260515100355.A7497C2BCB0@smtp.kernel.org>
- <fd9b767e-18e5-40a6-b503-52427852951c@roeck-us.net>
-Content-Transfer-Encoding: base64
-Content-Type: text/plain; charset=UTF-8
+	s=arc-20240116; t=1779183651; c=relaxed/simple;
+	bh=VPfhGcHMuYqIFg43VC51oRIuHSoNubcOka7ZZDStQsI=;
+	h=Message-ID:Date:MIME-Version:From:Subject:To:Cc:References:
+	 In-Reply-To:Content-Type; b=t82LAFBNVK9y5x1b3lrPgDq+UaQ2lme9ffQnMMj8jCP5735LgMlX7dmr6kxqN/dpr8wL7uPxBiBrp1As56Ki0VoRrKAYtkXrthVEzengo51D8HhVtAmX7s7hIovxhBQlrlp/6fCfIoX4q3vhnnRxkjPBMfgB2NNS3C/Rxs0q/f8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=R/qodgcO; arc=none smtp.client-ip=209.85.128.45
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
+Authentication-Results: smtp.subspace.kernel.org;
+	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="R/qodgcO"
+Received: by mail-wm1-f45.google.com with SMTP id 5b1f17b1804b1-48a3e9862f0so19158885e9.1
+        for <sashiko-reviews@lists.linux.dev>; Tue, 19 May 2026 02:40:47 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linaro.org; s=google; t=1779183645; x=1779788445; darn=lists.linux.dev;
+        h=content-transfer-encoding:in-reply-to:organization:autocrypt
+         :content-language:references:cc:to:subject:reply-to:from:user-agent
+         :mime-version:date:message-id:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=Zmz8kYjsz4oQGCSzPJQMt0UAlV/XMzBL2I4qyh5OljU=;
+        b=R/qodgcOgtuSHDqTJTA+pJ0qbCZB6JgyprNifWL/E1ZXpUNzasYclxPcs7bwzLto/y
+         27FGJfeab7w9pcTOMfj1dZsfF4dkNLo+qSeaffhhXCm/eWiBkCMlxJSO0/xbl7xnVjGi
+         wSKCcA4vGDoIr1WT3bEQUtJ/4b0POVpK/zSQ0AOMmuzF6l3tei/R8Z2s4m2XgTk8m6Pz
+         SWlipEe7ymmxTx5GHrwvlXx1T4zkj3RDUQF/Mcoxg8NamkBOfxxwVaN8gLvTjTQ8APP3
+         Wg73gG2y/z5nCt5nZi72voUPreyDck5ezaEhUl/efvX8brcBGqLck18ulG4ZItf8+Xci
+         ExTQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20251104; t=1779183645; x=1779788445;
+        h=content-transfer-encoding:in-reply-to:organization:autocrypt
+         :content-language:references:cc:to:subject:reply-to:from:user-agent
+         :mime-version:date:message-id:x-gm-gg:x-gm-message-state:from:to:cc
+         :subject:date:message-id:reply-to;
+        bh=Zmz8kYjsz4oQGCSzPJQMt0UAlV/XMzBL2I4qyh5OljU=;
+        b=qtR3ueDlQpVFNzdBfAb76uM4BlhIeDz/ke60UqhI1szPLMUSRMzCRlQccg6cuBqAvy
+         Pr7yngisFtv4mGE0kh9k4JgfhUJAcE+dj6jbjK9PKiYU//W4GFIEYyV9YMeS6MfNew28
+         Ks9z5SvW922aWjyLFi8os4L7N3Lng3UOAhX4eHbn3nRe7ndVFEC/GjBvqSlSSoQ7Mg9l
+         ZsTBCp8LRxzJwEPICMWsZdKuHX7L8kfWSPxzTM+594xN9tAfZIHTKf3hswqOIvDCeCMW
+         kRlWiJQ66NkNvzvugRC8NFANaSjz6dMVY6eQJ4dvANehEQjnAgKurhYsxCBCLA2Yyowr
+         /m2w==
+X-Gm-Message-State: AOJu0YxRQTb0FwbuleK6xQj3DV5QVc1upnAwUteIXz+joa/R0moSePzQ
+	seC3/qAHfkduOJq4E3CeqCPXGWa70LuCB6oo4CW3fsxMaGbPfGk4KaXB/Q5D9TvQWN/sf1eBCOM
+	2B1vA
+X-Gm-Gg: Acq92OEGnPS6IfeYGFJLUyXPmQBzPDIlqzSl5H+vDmHeo97MawH97MDYWbjV/Gnoolu
+	Ho0LE54N+MbvOuBrQuoI+QgseVmlB8Avqr+QsU0noWjCvncusL6nC4lve26T5lBHm+fFSFAsGND
+	jCUTmOfdoBO4c9JN/z+3xZypMXPxlxSCJICIfFvnIffNkEIya7ucdch0FIUmi+b+21hEaKHA/wf
+	3dKdxlOxdDnwtZxCQibcW4GP8UcKgIgHREbShNxjcoX45x+I5ORIHR1N6rldwLqSyukg3mVxd4V
+	IvcyloulxfgF/XGfZYpj8nuMP38+DvrwuqGKXGXwjxcd6ESAdGFVmmUUhmf0K7yQ4GNBmSZsgtm
+	Fbb5rYqxX+vXakLePVktkf6YeIcq5DKSKK57nbmVrLrGDC9AbFMZrt05JH5K6OPUObl/kM64saH
+	aXV6ckbDyML/sS/iUjo81m3R1v/LG3IvdMoGzF6ubHtcTLT7KD3N51PXZLfqxk+pE7lTrEZA1k1
+	E4E
+X-Received: by 2002:a05:600c:8485:b0:48a:5339:a46 with SMTP id 5b1f17b1804b1-48fe537fb70mr10152505e9.9.1779183645032;
+        Tue, 19 May 2026 02:40:45 -0700 (PDT)
+Received: from ?IPV6:2a01:e0a:106d:1080:1d4b:274c:94d:a69f? ([2a01:e0a:106d:1080:1d4b:274c:94d:a69f])
+        by smtp.gmail.com with ESMTPSA id 5b1f17b1804b1-48fed253f93sm100627705e9.16.2026.05.19.02.40.44
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Tue, 19 May 2026 02:40:44 -0700 (PDT)
+Message-ID: <5a16843f-3642-413c-a35b-ecb399a73dc2@linaro.org>
+Date: Tue, 19 May 2026 11:40:43 +0200
 Precedence: bulk
 X-Mailing-List: sashiko-reviews@lists.linux.dev
 List-Id: <sashiko-reviews.lists.linux.dev>
 List-Subscribe: <mailto:sashiko-reviews+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:sashiko-reviews+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Message-ID: <d049fb4.6590.19e3f9b6875.Coremail.hehuan1@eswincomputing.com>
-X-Coremail-Locale: zh_CN
-X-CM-TRANSID:TQJkCgAnPqH6LwxqsLEaAA--.6414W
-X-CM-SenderInfo: 5khk3tzqr6v25zlqu0xpsx3x1qjou0bp/1tbiAQEMCmoLPx0fgwAA
-	sZ
-X-Coremail-Antispam: 1Ur529EdanIXcx71UUUUU7IcSsGvfJ3iIAIbVAYjsxI4VWkKw
-	CS07vEb4IE77IF4wCS07vE1I0E4x80FVAKz4kxMIAIbVAFxVCaYxvI4VCIwcAKzIAtYxBI
-	daVFxhVjvjDU=
+User-Agent: Mozilla Thunderbird
+From: Neil Armstrong <neil.armstrong@linaro.org>
+Reply-To: Neil Armstrong <neil.armstrong@linaro.org>
+Subject: Re: [PATCH v3 2/2] backlight: Add SY7758 6-channel High Efficiency
+ LED Driver support
+To: sashiko-reviews@lists.linux.dev
+Cc: devicetree@vger.kernel.org, conor+dt@kernel.org, robh@kernel.org
+References: <20260519-topic-sm8650-ayaneo-pocket-s2-sy7758-v3-2-ec8194bbc885@linaro.org>
+ <20260519090836.44E0CC2BCC9@smtp.kernel.org>
+Content-Language: en-US, fr
+Autocrypt: addr=neil.armstrong@linaro.org; keydata=
+ xsBNBE1ZBs8BCAD78xVLsXPwV/2qQx2FaO/7mhWL0Qodw8UcQJnkrWmgTFRobtTWxuRx8WWP
+ GTjuhvbleoQ5Cxjr+v+1ARGCH46MxFP5DwauzPekwJUD5QKZlaw/bURTLmS2id5wWi3lqVH4
+ BVF2WzvGyyeV1o4RTCYDnZ9VLLylJ9bneEaIs/7cjCEbipGGFlfIML3sfqnIvMAxIMZrvcl9
+ qPV2k+KQ7q+aXavU5W+yLNn7QtXUB530Zlk/d2ETgzQ5FLYYnUDAaRl+8JUTjc0CNOTpCeik
+ 80TZcE6f8M76Xa6yU8VcNko94Ck7iB4vj70q76P/J7kt98hklrr85/3NU3oti3nrIHmHABEB
+ AAHNKk5laWwgQXJtc3Ryb25nIDxuZWlsLmFybXN0cm9uZ0BsaW5hcm8ub3JnPsLAkQQTAQoA
+ OwIbIwULCQgHAwUVCgkICwUWAgMBAAIeAQIXgBYhBInsPQWERiF0UPIoSBaat7Gkz/iuBQJk
+ Q5wSAhkBAAoJEBaat7Gkz/iuyhMIANiD94qDtUTJRfEW6GwXmtKWwl/mvqQtaTtZID2dos04
+ YqBbshiJbejgVJjy+HODcNUIKBB3PSLaln4ltdsV73SBcwUNdzebfKspAQunCM22Mn6FBIxQ
+ GizsMLcP/0FX4en9NaKGfK6ZdKK6kN1GR9YffMJd2P08EO8mHowmSRe/ExAODhAs9W7XXExw
+ UNCY4pVJyRPpEhv373vvff60bHxc1k/FF9WaPscMt7hlkbFLUs85kHtQAmr8pV5Hy9ezsSRa
+ GzJmiVclkPc2BY592IGBXRDQ38urXeM4nfhhvqA50b/nAEXc6FzqgXqDkEIwR66/Gbp0t3+r
+ yQzpKRyQif3OwE0ETVkGzwEIALyKDN/OGURaHBVzwjgYq+ZtifvekdrSNl8TIDH8g1xicBYp
+ QTbPn6bbSZbdvfeQPNCcD4/EhXZuhQXMcoJsQQQnO4vwVULmPGgtGf8PVc7dxKOeta+qUh6+
+ SRh3vIcAUFHDT3f/Zdspz+e2E0hPV2hiSvICLk11qO6cyJE13zeNFoeY3ggrKY+IzbFomIZY
+ 4yG6xI99NIPEVE9lNBXBKIlewIyVlkOaYvJWSV+p5gdJXOvScNN1epm5YHmf9aE2ZjnqZGoM
+ Mtsyw18YoX9BqMFInxqYQQ3j/HpVgTSvmo5ea5qQDDUaCsaTf8UeDcwYOtgI8iL4oHcsGtUX
+ oUk33HEAEQEAAcLAXwQYAQIACQUCTVkGzwIbDAAKCRAWmrexpM/4rrXiB/sGbkQ6itMrAIfn
+ M7IbRuiSZS1unlySUVYu3SD6YBYnNi3G5EpbwfBNuT3H8//rVvtOFK4OD8cRYkxXRQmTvqa3
+ 3eDIHu/zr1HMKErm+2SD6PO9umRef8V82o2oaCLvf4WeIssFjwB0b6a12opuRP7yo3E3gTCS
+ KmbUuLv1CtxKQF+fUV1cVaTPMyT25Od+RC1K+iOR0F54oUJvJeq7fUzbn/KdlhA8XPGzwGRy
+ 4zcsPWvwnXgfe5tk680fEKZVwOZKIEuJC3v+/yZpQzDvGYJvbyix0lHnrCzq43WefRHI5XTT
+ QbM0WUIBIcGmq38+OgUsMYu4NzLu7uZFAcmp6h8g
+Organization: Linaro
+In-Reply-To: <20260519090836.44E0CC2BCC9@smtp.kernel.org>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
 
-SGkgU2FzaGlrbywgR3VlbnRlciwKClRoYW5rIHlvdSB2ZXJ5IG11Y2ggZm9yIHlvdXIgZGV0YWls
-ZWQgcmV2aWV3LiBXZSBhcHByZWNpYXRlIHRoZSBmZWVkYmFjay4KCj4gT24gNS8xNS8yNiAwMzow
-Mywgc2FzaGlrby1ib3RAa2VybmVsLm9yZyB3cm90ZToKPiA+IFRoYW5rIHlvdSBmb3IgeW91ciBj
-b250cmlidXRpb24hIFNhc2hpa28gQUkgcmV2aWV3IGZvdW5kIDcgcG90ZW50aWFsIGlzc3VlKHMp
-IHRvIGNvbnNpZGVyOgo+ID4gLSBbQ3JpdGljYWxdIFRoZSB0aW1lb3V0IGNhbGN1bGF0aW9uIGZv
-ciBzZW5zb3IgY29udmVyc2lvbiBldmFsdWF0ZXMgdG8gMCBqaWZmaWVzLCBjYXVzaW5nIGFsbCBy
-ZWFkcyB0byBpbnN0YW50bHkgZmFpbC4KPiA+IC0gW0hpZ2hdIE1pc3NpbmcgcG1fcnVudGltZV9k
-aXNhYmxlKCkgaW4gdGhlIGRldnJlcyBjbGVhbnVwIHBhdGggbGVhZHMgdG8gYW4gdW5iYWxhbmNl
-ZCBkaXNhYmxlX2RlcHRoLgo+ID4gLSBbSGlnaF0gQ2xvY2sgbGVha2FnZSBvbiB0aGUgSVJRIHJl
-cXVlc3QgZXJyb3IgcGF0aCB3aGVuIENPTkZJR19QTSBpcyBkaXNhYmxlZC4KPiA+IC0gW0hpZ2hd
-IFJhY2UgY29uZGl0aW9uIGJldHdlZW4gSVNSIGFuZCBtYWluIHRocmVhZCBsZWFrcyBQTSBydW50
-aW1lIGFjdGl2ZSBzdGF0ZS4KPiA+IC0gW0hpZ2hdIEluY29ycmVjdCBpbml0aWFsaXphdGlvbiBv
-cmRlciBjYXVzZXMgYW4gSVJRIHN0b3JtIGR1cmluZyBwcm9iZSBpZiBhbiBpbnRlcnJ1cHQgZmly
-ZXMgZWFybHkuCj4gPiAtIFtIaWdoXSBMYWNrIG9mIGludGVybmFsIGxvY2tpbmcgaW4gZWljNzcw
-MF9wdnRfaHdtb25fcmVhZCBhbGxvd3MgY29uY3VycmVudCBoYXJkd2FyZSBzdGF0ZSBjb3JydXB0
-aW9uLgo+ID4gLSBbTWVkaXVtXSBVc2VsZXNzIGFuZCBpbmNvcnJlY3RseSBvcmRlcmVkIGRldnJl
-cyBhY3Rpb24gZm9yIHVuYmxvY2tpbmcgc3lzZnMgcmVhZGVycy4KPiA+IC0tCj4gPiAKPiA+IGNv
-bW1pdCBmZTc4OTIyZDUxMDFiM2EwN2NhNWVhMGZiZDBmZDVlOWNiYTBkY2M5Cj4gPiBBdXRob3I6
-IEh1YW4gSGUgPGhlaHVhbjFAZXN3aW5jb21wdXRpbmcuY29tPgo+ID4gCj4gPiBod21vbjogQWRk
-IEVzd2luIEVJQzc3MDAgUFZUIHNlbnNvciBkcml2ZXIKPiA+IAo+ID4gQWRkIHN1cHBvcnQgZm9y
-IEVTV0lOIEVJQzc3MDAgVm9sdGFnZSBhbmQgVGVtcGVyYXR1cmUgc2Vuc29yLiBUaGUgZHJpdmVy
-Cj4gPiBzdXBwb3J0cyB0ZW1wZXJhdHVyZSBhbmQgdm9sdGFnZSBtb25pdG9yaW5nIHdpdGggcG9s
-eW5vbWlhbCBjb252ZXJzaW9uLAo+ID4gYW5kIHByb3ZpZGVzIHN5c2ZzIGludGVyZmFjZSBmb3Ig
-c2Vuc29yIGRhdGEgYWNjZXNzLgo+ID4gCj4gPj4gZGlmZiAtLWdpdCBhL2RyaXZlcnMvaHdtb24v
-ZWljNzcwMC1wdnQuYyBiL2RyaXZlcnMvaHdtb24vZWljNzcwMC1wdnQuYwo+ID4+IGluZGV4IDAw
-MDAwMDAwMDAwMDAuLmNkY2ZhMDMxY2RiZGIKPiA+PiAtLS0gL2Rldi9udWxsCj4gPj4gKysrIGIv
-ZHJpdmVycy9od21vbi9laWM3NzAwLXB2dC5jCj4gPiBbIC4uLiBdCj4gPj4gK3N0YXRpYyBpcnFy
-ZXR1cm5fdCBlaWM3NzAwX3B2dF9oYXJkX2lzcihpbnQgaXJxLCB2b2lkICpkYXRhKQo+ID4+ICt7
-Cj4gPiBbIC4uLiBdCj4gPj4gKwl2YWwgPSByZWFkbChwdnQtPnJlZ3MgKyBQVlRfREFUQSk7Cj4g
-Pj4gKwlXUklURV9PTkNFKHB2dC0+ZGF0YV9jYWNoZSwgRklFTERfR0VUKFBWVF9EQVRBX09VVCwg
-dmFsKSk7Cj4gPj4gKwljb21wbGV0ZSgmcHZ0LT5jb252ZXJzaW9uKTsKPiA+PiArCj4gPj4gKwlp
-ZiAoSVNfRU5BQkxFRChDT05GSUdfUE0pKQo+ID4+ICsJCXBtX3J1bnRpbWVfcHV0X25vaWRsZShw
-dnQtPmRldik7Cj4gPj4gKwo+ID4+ICsJcmV0dXJuIElSUV9IQU5ETEVEOwo+ID4+ICt9Cj4gPiAK
-PiA+IElmIHRoZSBtYWluIHRocmVhZCBpbiBlaWM3NzAwX3B2dF9od21vbl9yZWFkKCkgZHJvcHMg
-dGhlIHVzYWdlIGNvdW50IGZyb20gMgo+ID4gdG8gMSBiZWZvcmUgdGhlIElTUiBkcm9wcyBpdCBm
-cm9tIDEgdG8gMCwgd2lsbCBib3RoIHRocmVhZHMgZmFpbCB0byB0cmlnZ2VyCj4gPiB0aGUgaWRs
-ZSBjYWxsYmFjaz8KPiA+IAo+ID4gVGhpcyBjb3VsZCBsZWF2ZSB0aGUgZGV2aWNlIGluZGVmaW5p
-dGVseSBpbiB0aGUgYWN0aXZlIHN0YXRlLiBTaG91bGQgdGhlIElTUgo+ID4gdXNlIHBtX3J1bnRp
-bWVfcHV0X2F1dG9zdXNwZW5kKCkgb3IgcG1fcnVudGltZV9wdXQoKSBpbnN0ZWFkIG9mCj4gPiBw
-bV9ydW50aW1lX3B1dF9ub2lkbGUoKT8KCkkgd2lsbCBmaXggdGhpcyBieSByZXBsYWNpbmcgcG1f
-cnVudGltZV9wdXRfbm9pZGxlKCkgaW4gdGhlIElTUiB3aXRoCnBtX3J1bnRpbWVfcHV0KCksIHNv
-IHRoZSBmaW5hbCByZWZlcmVuY2UgZHJvcCBjYW4gc3RpbGwgdHJpZ2dlciBydW50aW1lIFBNCmlk
-bGUgaGFuZGxpbmcuCgpUaGUgSVNSIHdpbGwgYmUgY2hhbmdlZCBhbG9uZyB0aGVzZSBsaW5lczoK
-CsKgIMKgIGNvbXBsZXRlKCZwdnQtPmNvbnZlcnNpb24pOwoKICDCoCBpZiAoSVNfRU5BQkxFRChD
-T05GSUdfUE0pKQotIMKgIMKgIMKgIHBtX3J1bnRpbWVfcHV0X25vaWRsZShwdnQtPmRldik7Cisg
-wqAgwqAgwqAgcG1fcnVudGltZV9wdXQocHZ0LT5kZXYpOwoKPiA+IAo+ID4gWyAuLi4gXQo+ID4+
-ICtzdGF0aWMgaW50IGVpYzc3MDBfcHZ0X3JlYWRfZGF0YShzdHJ1Y3QgcHZ0X2h3bW9uICpwdnQs
-Cj4gPj4gKwkJCQkgZW51bSBwdnRfc2Vuc29yX3R5cGUgdHlwZSwgbG9uZyAqdmFsKQo+ID4+ICt7
-Cj4gPj4gKwl1bnNpZ25lZCBsb25nIHRpbWVvdXQ7Cj4gPiBbIC4uLiBdCj4gPj4gKwl0aW1lb3V0
-ID0gMiAqIHVzZWNzX3RvX2ppZmZpZXMoa3RpbWVfdG9fdXMocHZ0LT50aW1lb3V0KSk7Cj4gPj4g
-KwlyZXQgPSB3YWl0X2Zvcl9jb21wbGV0aW9uX3RpbWVvdXQoJnB2dC0+Y29udmVyc2lvbiwgdGlt
-ZW91dCk7Cj4gPiAKPiA+IEJlY2F1c2UgcHZ0LT50aW1lb3V0IGlzIDMzMyBtaWNyb3NlY29uZHMs
-IHdpbGwgdXNlY3NfdG9famlmZmllcygzMzMpIGV2YWx1YXRlCj4gPiB0byAwIG9uIHN0YW5kYXJk
-IGtlcm5lbCBjb25maWd1cmF0aW9ucyBsaWtlIEhaPTEwMDA/Cj4gPiAKPiA+IElmIHNvLCB0aGlz
-IGFjdHMgYXMgYSBub24tYmxvY2tpbmcgY2hlY2sgYW5kIHdhaXRfZm9yX2NvbXBsZXRpb25fdGlt
-ZW91dCgpCj4gPiBjb3VsZCBpbnN0YW50bHkgcmV0dXJuIDAsIGNhdXNpbmcgYWxsIHJlYWRzIHRv
-IHBlcm1hbmVudGx5IGZhaWwgd2l0aAo+ID4gLUVUSU1FRE9VVC4KClRoaXMgbG9va3MgbGlrZSBh
-IGZhbHNlIHBvc2l0aXZlLgoKdXNlY3NfdG9famlmZmllcygpIGV2ZW50dWFsbHkgZ29lcyB0aHJv
-dWdoIF91c2Vjc190b19qaWZmaWVzKCksIHdoaWNoCnJvdW5kcyB1cCBpbnN0ZWFkIG9mIHRydW5j
-YXRpbmcgdG8gemVybzoKCsKgIMKgIHN0YXRpYyBpbmxpbmUgdW5zaWduZWQgbG9uZyBfdXNlY3Nf
-dG9famlmZmllcyhjb25zdCB1bnNpZ25lZCBpbnQgdSkKwqAgwqAgewrCoCDCoCDCoCDCoCByZXR1
-cm4gKHUgKyAoVVNFQ19QRVJfU0VDIC8gSFopIC0gMSkgLyAoVVNFQ19QRVJfU0VDIC8gSFopOwrC
-oCDCoCB9CgpTbyB3aXRoIEhaPTEwMDA6CgrCoCDCoCB1c2Vjc190b19qaWZmaWVzKDMzMykgPSAo
-MzMzICsgMTAwMCAtIDEpIC8gMTAwMCA9IDEKClRoZXJlZm9yZSBmb3IgcHZ0LT50aW1lb3V0ID0g
-MzMzIHVzLCB0aGUgdGltZW91dCBkb2VzIG5vdCBjb2xsYXBzZSB0byAwCmppZmZpZXMuIFRoZSBj
-dXJyZW50IGNvZGUgZXZhbHVhdGVzIHRvIDIgamlmZmllcywgc28Kd2FpdF9mb3JfY29tcGxldGlv
-bl90aW1lb3V0KCkgcmVtYWlucyBibG9ja2luZyByYXRoZXIgdGhhbiBiZWNvbWluZyBhCm5vbi1i
-bG9ja2luZyBjaGVjay4KCj4gPiAKPiA+IFsgLi4uIF0KPiA+PiArc3RhdGljIGludCBlaWM3NzAw
-X3B2dF9od21vbl9yZWFkKHN0cnVjdCBkZXZpY2UgKmRldiwKPiA+PiArCQkJCSAgZW51bSBod21v
-bl9zZW5zb3JfdHlwZXMgdHlwZSwgdTMyIGF0dHIsCj4gPj4gKwkJCQkgIGludCBjaCwgbG9uZyAq
-dmFsKQo+ID4+ICt7Cj4gPj4gKwlzdHJ1Y3QgcHZ0X2h3bW9uICpwdnQgPSBkZXZfZ2V0X2RydmRh
-dGEoZGV2KTsKPiA+IAo+ID4gVGhlIGRyaXZlciByZWdpc3RlcnMgdGhlIHRlbXBlcmF0dXJlIHNl
-bnNvciB3aXRoIHRoZSB0aGVybWFsIHN1YnN5c3RlbSB2aWEKPiA+IHRoZSBIV01PTl9DX1JFR0lT
-VEVSX1RaIGZsYWcuCj4gPiAKPiA+IElmIHRoZXJtYWwgem9uZSBiYWNrZ3JvdW5kIHBvbGxpbmcg
-ZGlyZWN0bHkgaW52b2tlcyB0aGlzIHJlYWQgY2FsbGJhY2sgd2hpbGUKPiA+IGEgdXNlciBjb25j
-dXJyZW50bHkgcmVhZHMgYSBod21vbiBzeXNmcyBhdHRyaWJ1dGUsIGlzIHRoZXJlIGEgcmFjZSBj
-b25kaXRpb24/Cj4gPiBEb2VzIHRoaXMgbmVlZCBhbiBpbnRlcm5hbCBtdXRleCB0byBwcmV2ZW50
-IGNvbmN1cnJlbnQgaGFyZHdhcmUgc3RhdGUKPiA+IGNvcnJ1cHRpb24/Cj4gPiAKPiAKPiBGYWxz
-ZSBwb3NpdGl2ZS4gUG9sbGluZyBpcyB0aHJvdWdoIHRoZSBod21vbiBzdWJzeXN0ZW0sIHdoaWNo
-IHByb3RlY3RzIHN1Y2gKPiBhY2Nlc3NlcyB3aXRoIHRoZSBod21vbiBzdWJzeXN0ZW0gbG9jay4K
-PiAKPiAKPiBUaGUgb3RoZXIgY29uY2VybnMgc2VlbSByZWFsLiBQbGVhc2UgYWRkcmVzcy4KPiAK
-PiBUaGFua3MsCj4gR3VlbnRlcgo+IAo+ID4gWyAuLi4gXQo+ID4+ICtzdGF0aWMgc3RydWN0IHB2
-dF9od21vbiAqZWljNzcwMF9wdnRfY3JlYXRlX2RhdGEoc3RydWN0IHBsYXRmb3JtX2RldmljZSAq
-cGRldikKPiA+PiArewo+ID4gWyAuLi4gXQo+ID4+ICsJcmV0ID0gZGV2bV9hZGRfYWN0aW9uKGRl
-diwgcHZ0X2NsZWFyX2RhdGEsIHB2dCk7Cj4gPiAKPiA+IEJlY2F1c2UgZGV2cmVzIGFjdGlvbnMg
-ZXhlY3V0ZSBpbiByZXZlcnNlIG9yZGVyIG9mIHJlZ2lzdHJhdGlvbiAoTElGTyksIHdpbGwKPiA+
-IHRoaXMgYWN0aW9uIHJ1biBhZnRlciB0aGUgaHdtb24gZGV2aWNlIGlzIHVucmVnaXN0ZXJlZD8K
-PiA+IAo+ID4gU2luY2UgaHdtb24gdW5yZWdpc3RyYXRpb24gYmxvY2tzIHVudGlsIGFsbCBhY3Rp
-dmUgc3lzZnMgcmVhZCBvcGVyYXRpb25zCj4gPiBmaW5pc2gsIHRoZSByZWFkZXIgd291bGQgaGF2
-ZSBhbHJlYWR5IGNvbXBsZXRlZCBiZWZvcmUgcHZ0X2NsZWFyX2RhdGEgcnVucywKPiA+IHdoaWNo
-IG1pZ2h0IG1ha2UgaXQgaW5lZmZlY3RpdmUgZm9yIHVuYmxvY2tpbmcgc3lzZnMgcmVhZGVycy4K
-Ckkgd2lsbCByZW1vdmUgcHZ0X2NsZWFyX2RhdGEoKSBhbmQgdGhlIGFzc29jaWF0ZWQgZGV2bV9h
-ZGRfYWN0aW9uKCkgY2FsbC4KCj4gPiAKPiA+IFsgLi4uIF0KPiA+PiArc3RhdGljIHZvaWQgZWlj
-NzcwMF9wdnRfZGlzYWJsZV9wbV9ydW50aW1lKHZvaWQgKmRhdGEpCj4gPj4gK3sKPiA+PiArCXN0
-cnVjdCBwdnRfaHdtb24gKnB2dCA9IGRhdGE7Cj4gPj4gKwo+ID4+ICsJcG1fcnVudGltZV9kb250
-X3VzZV9hdXRvc3VzcGVuZChwdnQtPmRldik7Cj4gPj4gKwlwbV9ydW50aW1lX2ZvcmNlX3N1c3Bl
-bmQocHZ0LT5kZXYpOwo+ID4+ICsKPiA+PiArCWlmICghSVNfRU5BQkxFRChDT05GSUdfUE0pKQo+
-ID4+ICsJCWNsa19kaXNhYmxlX3VucHJlcGFyZShwdnQtPmNsayk7Cj4gPj4gK30KPiA+IAo+ID4g
-U2hvdWxkIHRoaXMgY3VzdG9tIGRldnJlcyBjbGVhbnVwIGFjdGlvbiBjYWxsIHBtX3J1bnRpbWVf
-ZGlzYWJsZSgpPwo+ID4gCj4gPiBJZiB0aGUgbW9kdWxlIGlzIHVubG9hZGVkIGFuZCB0aGVuIHJl
-LXByb2JlZCwgY291bGQgdGhlIHVuYmFsYW5jZWQKPiA+IGRpc2FibGVfZGVwdGggY2F1c2UgYW4g
-IlVuYmFsYW5jZWQgcG1fcnVudGltZV9lbmFibGUhIiB3YXJuaW5nIGFuZCBjb3JydXB0Cj4gPiB0
-aGUgcG93ZXIgbWFuYWdlbWVudCBzdGF0ZT8KClRoaXMgbG9va3MgbGlrZSBhIGZhbHNlIHBvc2l0
-aXZlLgoKVGhlIGNsZWFudXAgcGF0aCBhbHJlYWR5IGNhbGxzIHBtX3J1bnRpbWVfZm9yY2Vfc3Vz
-cGVuZCgpLCBhbmQKcG1fcnVudGltZV9mb3JjZV9zdXNwZW5kKCkgaXRzZWxmIGludm9rZXMgcG1f
-cnVudGltZV9kaXNhYmxlKCkgaW4gdGhlIFBNCmNvcmUuCkFkZGluZyBhbm90aGVyIGV4cGxpY2l0
-IHBtX3J1bnRpbWVfZGlzYWJsZSgpIGFmdGVyCnBtX3J1bnRpbWVfZm9yY2Vfc3VzcGVuZCgpIHdv
-dWxkIG92ZXItaW5jcmVtZW50IGRpc2FibGVfZGVwdGggYW5kIGJyZWFrCnRoZSByZXByb2JlIHBh
-dGguCgo+ID4gCj4gPj4gKwo+ID4+ICtzdGF0aWMgaW50IGVpYzc3MDBfcHZ0X3Byb2JlKHN0cnVj
-dCBwbGF0Zm9ybV9kZXZpY2UgKnBkZXYpCj4gPj4gK3sKPiA+IFsgLi4uIF0KPiA+PiArCWlmIChJ
-U19FTkFCTEVEKENPTkZJR19QTSkpCj4gPj4gKwkJY2xrX2Rpc2FibGVfdW5wcmVwYXJlKHB2dC0+
-Y2xrKTsKPiA+PiArCj4gPj4gKwlyZXQgPSBlaWM3NzAwX3B2dF9yZXF1ZXN0X2lycShwdnQpOwo+
-ID4+ICsJaWYgKHJldCkKPiA+PiArCQlyZXR1cm4gcmV0Owo+ID4gCj4gPiBJZiBDT05GSUdfUE0g
-aXMgZGlzYWJsZWQsIHRoZSBjbG9jayByZW1haW5zIGVuYWJsZWQuIElmCj4gPiBlaWM3NzAwX3B2
-dF9yZXF1ZXN0X2lycSgpIGZhaWxzIGhlcmUsIGRvZXMgdGhlIGZ1bmN0aW9uIHJldHVybiB3aXRo
-b3V0Cj4gPiBkaXNhYmxpbmcgdGhlIGNsb2NrPyBUaGlzIGNvdWxkIHBlcm1hbmVudGx5IGxlYWsg
-dGhlIGNsb2NrIHJlZmVyZW5jZSBiZWNhdXNlCj4gPiB0aGUgZGV2cmVzIGNsZWFudXAgYWN0aW9u
-IGlzIG5vdCB5ZXQgcmVnaXN0ZXJlZC4KClRoaXMgY29uY2VybiBpcyB2YWxpZC4KCldoZW4gQ09O
-RklHX1BNIGlzIGRpc2FibGVkLCB0aGUgY2xvY2sgcmVtYWlucyBlbmFibGVkIGFmdGVyIHByb2Jl
-LXRpbWUKaW5pdGlhbGl6YXRpb24uIElmIGVpYzc3MDBfcHZ0X3JlcXVlc3RfaXJxKCkgZmFpbHMg
-YmVmb3JlIHRoZSBkZXZyZXMgUE0gY2xlYW51cAphY3Rpb24gaXMgcmVnaXN0ZXJlZCwgdGhlIGNs
-b2NrIGNhbiBpbmRlZWQgYmUgbGVha2VkLgoKSSB3aWxsIGZpeCB0aGlzIGJ5IGV4cGxpY2l0bHkg
-ZGlzYWJsaW5nIHRoZSBjbG9jayBvbiB0aGUgSVJRIHJlcXVlc3QgZXJyb3IgcGF0aAp3aGVuIENP
-TkZJR19QTSBpcyBkaXNhYmxlZC4KClRoZSBwcm9iZSB3aWxsIGJlIGNoYW5nZWQgYWxvbmcgdGhl
-c2UgbGluZXM6CgrCoCDCoCByZXQgPSBlaWM3NzAwX3B2dF9yZXF1ZXN0X2lycShwdnQpOwotIMKg
-IGlmIChyZXQpCisgwqAgaWYgKHJldCkgeworIMKgIMKgIMKgIGlmICghSVNfRU5BQkxFRChDT05G
-SUdfUE0pKQorIMKgIMKgIMKgIMKgIMKgIGNsa19kaXNhYmxlX3VucHJlcGFyZShwdnQtPmNsayk7
-CsKgIMKgIMKgIMKgIHJldHVybiByZXQ7CisgwqAgfQoKPiA+IAo+ID4+ICsKPiA+PiArCXBtX3J1
-bnRpbWVfZW5hYmxlKCZwZGV2LT5kZXYpOwo+ID4gCj4gPiBTaW5jZSB0aGUgSVJRIGlzIHVubWFz
-a2VkIGJlZm9yZSBwbV9ydW50aW1lX2VuYWJsZSgpIGlzIGNhbGxlZCwgd2hhdCBoYXBwZW5zCj4g
-PiBpZiB0aGUgaGFyZHdhcmUgYXNzZXJ0cyBhbiBpbnRlcnJ1cHQgaW4gdGhpcyB3aW5kb3c/Cj4g
-PiAKPiA+IElmIGVpYzc3MDBfcHZ0X2hhcmRfaXNyKCkgZmlyZXMsIHBtX3J1bnRpbWVfZ2V0X2lm
-X2FjdGl2ZSgpIHdvdWxkIHJldHVybgo+ID4gLUVJTlZBTCBhbmQgdGhlIGhhbmRsZXIgd291bGQg
-cmV0dXJuIElSUV9OT05FIHdpdGhvdXQgY2xlYXJpbmcgdGhlIGludGVycnVwdC4KPiA+IFNpbmNl
-IHRoZSBpbnRlcnJ1cHQgaXMgbGV2ZWwtdHJpZ2dlcmVkIChJUlFGX1RSSUdHRVJfSElHSCksIGNv
-dWxkIHRoaXMgY2F1c2UKPiA+IGFuIGluZmluaXRlIElSUSBzdG9ybSB0aGF0IGxvY2tzIHVwIHRo
-ZSBDUFU/CgpNeSB1bmRlcnN0YW5kaW5nIGlzIHRoYXQgZWljNzcwMF9wdnRfaW5pdF9pZmFjZSgp
-IGFscmVhZHkgY2xlYXJzCnRoZSBpbnRlcnJ1cHQgc3RhdHVzIGFuZCBkaXNhYmxlcyBQVlRfRU5B
-X0VOIGJlZm9yZSB0aGUgSVJRIGlzIHJlcXVlc3RlZCwKc28gbm8gbmV3IGludGVycnVwdCBpcyBl
-eHBlY3RlZCBpbiB0aGUgcmVxdWVzdF9pcnEoKSAtPiBwbV9ydW50aW1lX2VuYWJsZSgpCndpbmRv
-dy4KCkdpdmVuIHRoYXQsIGRvIHlvdSB0aGluayBhbiBhZGRpdGlvbmFsIGNoYW5nZSBpcyBzdGls
-bCBuZWVkZWQgaGVyZT8KCkJlc3QgcmVnYXJkcywKSHVhbiBIZQo=
+On 5/19/26 11:08, sashiko-bot@kernel.org wrote:
+> Thank you for your contribution! Sashiko AI review found 7 potential issue(s) to consider:
+> - [High] The 'enable' GPIO is not properly deasserted before the 'vddio' regulator is disabled, causing potential hardware backpowering.
+> - [High] Loss of critical register configuration on system resume if power is lost.
+> - [Medium] The generic driver hardcodes board-specific electrical parameters instead of parsing them from the Device Tree.
+> - [Medium] The driver treats the 'enable' GPIO as strictly mandatory, preventing it from probing on boards where the pin is hardwired.
+> - [Medium] Missing `<linux/delay.h>` header inclusion for `fsleep()`.
+> - [Low] Typo in Kconfig help text ('Socket' instead of 'Pocket').
+> - [Low] The `MSK_LED_ENABLE` macro is defined but never used.
+> --
+> 
+> commit ad75708c40d354dbaee72f90622daea36e29195d
+> Author: KancyJoe <kancy2333@outlook.com>
+> 
+> backlight: Add SY7758 6-channel High Efficiency LED Driver support
+> 
+> Implement support for the Silergy SY7758 6-channel High Efficiency LED
+> Driver used for backlight brightness control in the Ayaneo Pocket S2
+> dual-DSI panel.
+> 
+>> diff --git a/drivers/video/backlight/Kconfig b/drivers/video/backlight/Kconfig
+>> index a7a3fbaf7c29e..052ac80c82137 100644
+>> --- a/drivers/video/backlight/Kconfig
+>> +++ b/drivers/video/backlight/Kconfig
+> [ ... ]
+>> +config BACKLIGHT_SY7758
+>> +	tristate "Backlight Driver for Silergy SY7758"
+>> +	depends on I2C
+>> +	select REGMAP_I2C
+>> +	help
+>> +	  Say Y to enable the backlight driver for the Silergy SY7758
+>> +	  backlight controller found in Ayaneo Socket S2.
+> 
+> This isn't a bug, but there is a typo (Socket instead of Pocket) in the help
+> text.
+> 
+>> diff --git a/drivers/video/backlight/sy7758.c b/drivers/video/backlight/sy7758.c
+>> new file mode 100644
+>> index 0000000000000..a6087e687b640
+>> --- /dev/null
+>> +++ b/drivers/video/backlight/sy7758.c
+>> @@ -0,0 +1,259 @@
+>> +// SPDX-License-Identifier: GPL-2.0-only
+>> +/*
+>> + * Silergy SY7758 6-channel High Efficiency LED Driver
+>> + *
+>> + * Copyright (C) 2025 Kancy Joe <kancy2333@outlook.com>
+>> + * Copyright (C) 2026 Linaro Limited
+>> + * Author: Neil Armstrong <neil.armstrong@linaro.org>
+>> + */
+>> +#include <linux/backlight.h>
+>> +#include <linux/module.h>
+>> +#include <linux/i2c.h>
+>> +#include <linux/of.h>
+>> +#include <linux/err.h>
+>> +#include <linux/bits.h>
+>> +#include <linux/regmap.h>
+>> +#include <linux/bitfield.h>
+>> +#include <linux/gpio/consumer.h>
+>> +#include <linux/regulator/consumer.h>
+> 
+> Should <linux/delay.h> be included here? The driver explicitly calls fsleep()
+> in sy7758_probe(), but relies on implicit header inclusion.
+
+Fixed
+
+> 
+> [ ... ]
+>> +#define MSK_BRT_12BIT_H		GENMASK(3, 0)
+>> +#define MSK_LED_ENABLE		GENMASK(5, 0)
+> 
+> Is MSK_LED_ENABLE intended to be used? It appears to be defined here but is
+> never used anywhere in the driver code.
+
+Dropped
+
+> 
+> [ ... ]
+>> +static const struct backlight_ops sy7758_backlight_ops = {
+>> +	.options = BL_CORE_SUSPENDRESUME,
+>> +	.update_status = sy7758_backlight_update_status,
+>> +};
+> 
+> Since BL_CORE_SUSPENDRESUME is set, the backlight core will call
+> update_status() on resume. If the system turns off the vddio regulator or I2C
+> power domain during suspend, won't the configuration registers programmed in
+> sy7758_init() (such as REG_DEV_CTL and the OTP configurations) be lost?
+> 
+> Does this driver need explicit suspend and resume callbacks to reapply the
+> hardware initialization sequence?
+
+This won't happen, the vddio & gpio are kept on
+
+> 
+>> +static int sy7758_init(struct sy7758 *sydev)
+>> +{
+> [ ... ]
+>> +	ret = regmap_write(sydev->regmap, REG_OTP_CFG0,
+>> +			   FIELD_PREP(MSK_CFG0_CURRENT_LOW, 85));
+>> +	if (ret)
+>> +		return ret;
+>> +
+>> +	ret = regmap_write(sydev->regmap, REG_OTP_CFG1,
+>> +			   BIT_CFG1_PDET_STDBY |
+>> +			   FIELD_PREP(MSK_CFG1_CURRENT_MAX, 1) |
+>> +			   FIELD_PREP(MSK_CFG1_CURRENT_HIGH, 10));
+> 
+> These values (85, 1, 10) appear to be board-specific electrical limits for the
+> Ayaneo panel. Could hardcoding them cause issues if this generic driver is
+> reused for other boards?
+> 
+> Should these parameters be parsed from Device Tree properties instead?
+
+Will be added later if needed
+
+> 
+> [ ... ]
+>> +static int sy7758_probe(struct i2c_client *client)
+>> +{
+> [ ... ]
+>> +	/* Get and enable regulators */
+>> +	ret = devm_regulator_get_enable(dev, "vddio");
+>> +	if (ret)
+>> +		return dev_err_probe(dev, ret, "failed to get regulator\n");
+>> +
+>> +	fsleep(100);
+>> +
+>> +	/* Get enable GPIO and set to high */
+>> +	sydev->gpio = devm_gpiod_get(dev, "enable", GPIOD_OUT_HIGH);
+> 
+> On driver unbind or probe failure, devres will release resources in LIFO
+> order. This means the GPIO descriptor is freed via gpiod_put() before the
+> vddio regulator is disabled.
+> 
+> Because gpiod_put() does not change the physical pin state, won't the enable
+> pin remain driven high while the main chip power is turned off? Could this
+> cause hardware backpowering through the chip's protection diodes?
+> 
+> Does the driver need a custom devm_add_action_or_reset() callback to
+> explicitly drive the GPIO low before the regulator is disabled?
+> 
+> Additionally, if a board implements the SY7758 with the enable pin permanently
+> pulled high in hardware, this devm_gpiod_get() call will return -ENOENT and
+> unconditionally fail probe.
+> 
+> Could this use devm_gpiod_get_optional() to allow the driver to probe
+> successfully on such boards?
+> 
+
+Not an issue, as specified in the spec the gpio level is powered by the vddio.
+
+
