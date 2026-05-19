@@ -1,253 +1,218 @@
-Received: from mx0a-0031df01.pphosted.com (mx0a-0031df01.pphosted.com [205.220.168.131])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
-	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F106D3A7857;
-	Tue, 19 May 2026 06:55:34 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.168.131
+Received: from ultrarisc.com (unknown [218.76.62.146])
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id BE8103A1CF3
+	for <sashiko-reviews@lists.linux.dev>; Tue, 19 May 2026 06:55:51 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=218.76.62.146
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1779173736; cv=none; b=fNzy7cOXy542gOeGaZ5oOdemi/KuFhLTaFcnIO7xijnydHKt5B5uuY6n/+3NpYfRmRj/SfMlncOXcJbThJSlTqClcWhmo6j59ZxxUTGlFYG94elB8Rhm9c0U//6BNU28vDN7AjhO5sAyx3Tgut0pKHBlJ55q6savIFxc3qXfsKk=
+	t=1779173754; cv=none; b=lgVApMMF6nF2fBFxrUqZMy0oYh69HjCU1kTq40AsUh/lSlrHzzZfYjynT14+1PnWWU9NCPvE6FW5tcA5BUKY+T7tvlfY+UJ9qKzoe2pgR5PICxvO+Wjs0TtNWSxrr2pnD84Kb0G4Np+NIFiQV2gP0Ue33AnCmaSoFBiwzD3V5SU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1779173736; c=relaxed/simple;
-	bh=fgNzbDBuscOMK5K2benapcqpzqN2CvS+MjI3jhWGbW4=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=TY04TY+PTVyXMGH9C0y/JJR28V68G6yMlqEOVuOmUSKNMHkWWCl2g2gwxDiDzWu4GhkecO4pi64n/7XXqjfm036GczKn2ZLbrjJSyVXq0GergtdsID+EHz4/fxcm/6OnXfVyjpwJ9J0G9lgMNStUOCd1h1MAtmooaPs5psyb+x4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com; spf=pass smtp.mailfrom=qualcomm.com; dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b=RPC1HT7+; arc=none smtp.client-ip=205.220.168.131
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=qualcomm.com
+	s=arc-20240116; t=1779173754; c=relaxed/simple;
+	bh=dYE4AApZFhLZjpKQpGXrC4Tf3oqVMEplO+zE9uAR8cQ=;
+	h=MIME-Version:Content-Type:Subject:From:To:Cc:In-Reply-To:
+	 References:Date:Message-Id; b=IJAqqeJASLDTRGUOz+6EQIopPoOs0bZLE+xQnSskHeaddy+w2+tKgV9wRhpj1HWJhPND0ahkr4fBkxoKLZjqDMWuVRnn2yV6yqpHttn7NCAFHcQa8d3Q0waapPtL7ohjxaR2SJwcrArNskkIFYSE3ONVxkD0AQeMpNhzoTqjXCY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=ultrarisc.com; spf=pass smtp.mailfrom=ultrarisc.com; dkim=pass (1024-bit key) header.d=ultrarisc.com header.i=@ultrarisc.com header.b=qz6FknnX; arc=none smtp.client-ip=218.76.62.146
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=ultrarisc.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=ultrarisc.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b="RPC1HT7+"
-Received: from pps.filterd (m0279864.ppops.net [127.0.0.1])
-	by mx0a-0031df01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id 64J1WIJl2975542;
-	Tue, 19 May 2026 06:55:31 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=qualcomm.com; h=
-	cc:content-transfer-encoding:content-type:date:from:in-reply-to
-	:message-id:mime-version:references:subject:to; s=qcppdkim1; bh=
-	fp0TdVJpJDa0rgixp8cNzMgcylXEBSFwBIwfBxAfqBQ=; b=RPC1HT7+az8LAQ0/
-	sYTjEjE8KPDgYpr2hMOcb38Jsz5cqp2w+6XmGI4m/M0LiLahN6ISOyrJoBMswTjO
-	ZRZSlKUB8FStuoSSsgnxhJN8gAxVlXgbhfgq34Oga0l1NPw/02D3Q9cP7cu+kMg/
-	b3qP/2LPMKDe58lETstzq+De0nRrCMYGCaj9gsYoukNMsdNaUS2TdiCuJOybrBe+
-	VGd7mqX7QX9hi8ws8IdOFwX/nwmlieNTipfcR/mn3gOBtzkKGiFi04BrnDH1ln31
-	Au1AwN9VLP+tNjrgq4rCpJpsrXUACG8xbnMNXXUCFDA73NTIUZihsBUYOBVHFZHv
-	41jutA==
-Received: from apblrppmta01.qualcomm.com (blr-bdr-fw-01_GlobalNAT_AllZones-Outside.qualcomm.com [103.229.18.19])
-	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 4e84v4b2hu-1
-	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Tue, 19 May 2026 06:55:31 +0000 (GMT)
-Received: from pps.filterd (APBLRPPMTA01.qualcomm.com [127.0.0.1])
-	by APBLRPPMTA01.qualcomm.com (8.18.1.7/8.18.1.7) with ESMTP id 64J6tD0u020667;
-	Tue, 19 May 2026 06:55:13 GMT
-Received: from pps.reinject (localhost [127.0.0.1])
-	by APBLRPPMTA01.qualcomm.com (PPS) with ESMTPS id 4e712fh6g3-1
-	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Tue, 19 May 2026 06:55:13 +0000 (GMT)
-Received: from APBLRPPMTA01.qualcomm.com (APBLRPPMTA01.qualcomm.com [127.0.0.1])
-	by pps.reinject (8.18.1.12/8.18.1.12) with ESMTP id 64J6tDa9020649;
-	Tue, 19 May 2026 06:55:13 GMT
-Received: from hu-devc-hyd-u22-c.qualcomm.com (hu-kotarake-hyd.qualcomm.com [10.213.97.140])
-	by APBLRPPMTA01.qualcomm.com (PPS) with ESMTPS id 64J6tDrb020645
-	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Tue, 19 May 2026 06:55:13 +0000 (GMT)
-Received: by hu-devc-hyd-u22-c.qualcomm.com (Postfix, from userid 2389607)
-	id A51F3B04; Tue, 19 May 2026 12:25:12 +0530 (+0530)
-Date: Tue, 19 May 2026 12:25:12 +0530
-From: Rakesh Kota <rakesh.kota@oss.qualcomm.com>
-To: sashiko-reviews@lists.linux.dev
-Cc: robh@kernel.org, conor+dt@kernel.org, devicetree@vger.kernel.org,
-        jishnu.prakash@oss.qualcomm.com, kamal.wadhwa@oss.qualcomm.com,
-        konradybcio@kernel.org
-Subject: Re: [PATCH 2/2] power: supply: qcom_battmgr: Add support batteryless
- boards as MAINS
-Message-ID: <20260519065512.uobvdvsdx2ggoyyj@hu-kotarake-hyd.qualcomm.com>
-References: <20260518-add_dc_in_support-v1-2-31fbaa329879@oss.qualcomm.com>
- <20260518151013.0F8E6C2BCB8@smtp.kernel.org>
+	dkim=pass (1024-bit key) header.d=ultrarisc.com header.i=@ultrarisc.com header.b="qz6FknnX"
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+	d=ultrarisc.com; s=dkim; h=Received:MIME-Version:Content-Type:
+	Content-Transfer-Encoding:Subject:From:To:Cc:In-Reply-To:
+	References:Date:Message-Id; bh=BLCfAvmO7/A3EPN8rkPtqd9egvTbT4ODi
+	hJiZkiN3uM=; b=qz6FknnXYNblOLJsbXbgnAaNhXd5W95z7zRDtua2ubSQT6iqV
+	jQOyorm58Pq5bpAWcMn3nhNaNda+Tpom5GDEK8YdPcaXJntkRO9S4kbnHmG7pw7j
+	3Dvhv2E/pFyug8E3MykL3NFnTm4I63nQVc/19UhQkWJYenoASCxYBHrvdg=
+Received: from [127.0.0.1] (unknown [192.168.100.1])
+	by localhost.localdomain (Coremail) with SMTP id AQAAfwAnYUJ_CQxq3tIEAA--.6315S2;
+	Tue, 19 May 2026 14:55:59 +0800 (CST)
 Precedence: bulk
 X-Mailing-List: sashiko-reviews@lists.linux.dev
 List-Id: <sashiko-reviews.lists.linux.dev>
 List-Subscribe: <mailto:sashiko-reviews+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:sashiko-reviews+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
+Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 8bit
-In-Reply-To: <20260518151013.0F8E6C2BCB8@smtp.kernel.org>
-X-QCInternal: smtphost
-X-QCInternal: smtphost
-X-Authority-Analysis: v=2.4 cv=VJPtWdPX c=1 sm=1 tr=0 ts=6a0c0963 cx=c_pps
- a=Ou0eQOY4+eZoSc0qltEV5Q==:117 a=Ou0eQOY4+eZoSc0qltEV5Q==:17
- a=IkcTkHD0fZMA:10 a=NGcC8JguVDcA:10 a=VkNPw1HP01LnGYTKEx00:22
- a=u7WPNUs3qKkmUXheDGA7:22 a=DJpcGTmdVt4CTyJn9g5Z:22 a=c92rfblmAAAA:8
- a=EUspDBNiAAAA:8 a=VwQbUJbxAAAA:8 a=uR8Etrdt1h4LkKDUJSYA:9 a=3ZKOabzyN94A:10
- a=QEXdDO2ut3YA:10 a=GvGzcOZaWPEFPQC_NcjD:22
-X-Proofpoint-ORIG-GUID: LTL10dxMd45dLsJ14pVLodOluXnWYw34
-X-Proofpoint-GUID: LTL10dxMd45dLsJ14pVLodOluXnWYw34
-X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwNTE5MDA2NiBTYWx0ZWRfX3hHTw0hVbLW2
- dYhP/G1ImcRcy15mOrIJ19jN1+7Ogbie0ZrGuH+j0BfeU9ZW7z+cUbGcudrwumzcCMzsWr/meNa
- 808dghmXm8XQMU29Ukz2GykJRC3pZ4NMAkGxbfsXixGKlh587E1v1Lq6wGNPSQLLtHcHmwTN0Fp
- xfkcqb0A6LxjI6YPcV2C93alfTwWxgRzpCD9ZqzBIPrZ7PUc+rml17jYUbDuqsjjnK/qTpOW5Q+
- I18aZWHqn+Tz9+W1H9qnqZs4LSak73vLfGZbS9YfivCmq26jhRMSQfd9HOngDz1hket7uH2R4Xe
- c5jMT2+Dz/5dhw2OYwijkQRxow3gJYRy5U466D++fZ0fr2RJ1WNvGxALr5QEan9sBogaasLtEBW
- AvuSsdq6+3VN2DNJzC0kD7x5nOfXjSR8iUFqiSmw/By6oveSlh6XXFinKEbtJcHn6HbNDOklulp
- eWQ91I64T3nmdDRtoww==
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.293,Aquarius:18.0.1143,Hydra:6.1.51,FMLib:17.12.100.49
- definitions=2026-05-19_02,2026-05-18_01,2025-10-01_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
- priorityscore=1501 impostorscore=0 adultscore=0 malwarescore=0 bulkscore=0
- spamscore=0 suspectscore=0 lowpriorityscore=0 clxscore=1015 phishscore=0
- classifier=typeunknown authscore=0 authtc= authcc= route=outbound adjust=0
- reason=mlx scancount=1 engine=8.22.0-2605130000 definitions=main-2605190066
+Subject: Re: [PATCH 5/9] riscv: dts: ultrarisc: Add initial device tree for
+ UltraRISC DP1000
+From: Jia Wang <wangjia@ultrarisc.com>
+To: sashiko-reviews@lists.linux.dev
+Cc: Jia Wang via B4 Relay <devnull+wangjia.ultrarisc.com@kernel.org>, 
+ krzk+dt@kernel.org, robh@kernel.org, devicetree@vger.kernel.org, 
+ conor+dt@kernel.org
+In-Reply-To: <20260515020249.AAE16C2BCB3@smtp.kernel.org>
+References: <20260515-ultrarisc-pinctrl-v1-5-bf559589ea8a@ultrarisc.com>
+ <20260515020249.AAE16C2BCB3@smtp.kernel.org>
+Date: Tue, 19 May 2026 14:55:18 +0800
+Message-Id: <177917371892.3328776.8027306472566945764.b4-reply@b4>
+X-Mailer: b4 0.15-dev
+X-Developer-Signature: v=1; a=ed25519-sha256; t=1779173719; l=5468;
+ i=wangjia@ultrarisc.com; s=20260515; h=from:subject:message-id;
+ bh=dYE4AApZFhLZjpKQpGXrC4Tf3oqVMEplO+zE9uAR8cQ=;
+ b=y7WpbrtrUHKLtTBDhxKywax9V9Xxzi5xewjPmhllKJTC2ZutUOqD2I/Mf5V0FNGeE50DHnSKN
+ u5GXMPXmRryDbiigoSMiKIy1T/jMpraxb94xqEOW4qopWdu6orhnU94
+X-Developer-Key: i=wangjia@ultrarisc.com; a=ed25519;
+ pk=wGVm18siRScehKOkOz0WKxgxDy7IezHEszhnN4/TUCY=
+X-CM-TRANSID:AQAAfwAnYUJ_CQxq3tIEAA--.6315S2
+X-Coremail-Antispam: 1UD129KBjvJXoWxuw45JFWrWw1xJr4xCr1xKrg_yoW7WrW5pa
+	y3WFW5Cr4kJr4IywsFqw1UAa43J3WDAFW3Wr1DCryY9rs09Fy0yrWIka1UXry8Xr4kuwnF
+	qF45u348tw1DuaDanT9S1TB71UUUUU7qnTZGkaVYY2UrUUUUjbIjqfuFe4nvWSU5nxnvy2
+	9KBjDU0xBIdaVrnRJUUUvjb7Iv0xC_Kw4lb4IE77IF4wAFF20E14v26r1j6r4UM7CY07I2
+	0VC2zVCF04k26cxKx2IYs7xG6rWj6s0DM7CIcVAFz4kK6r1j6r18M28lY4IEw2IIxxk0rw
+	A2F7IY1VAKz4vEj48ve4kI8wA2z4x0Y4vE2Ix0cI8IcVAFwI0_Jr0_JF4l84ACjcxK6xII
+	jxv20xvEc7CjxVAFwI0_Jr0_Gr1l84ACjcxK6I8E87Iv67AKxVWUJVW8JwA2z4x0Y4vEx4
+	A2jsIEc7CjxVAFwI0_Gr0_Gr1UM2AIxVAIcxkEcVAq07x20xvEncxIr21l5I8CrVACY4xI
+	64kE6c02F40Ex7xfMcIj6xIIjxv20xvE14v26r1j6r18McIj6I8E87Iv67AKxVWUJVW8Jw
+	Am72CE4IkC6x0Yz7v_Jr0_Gr1lF7xvr2IYc2Ij64vIr41lc7CjxVAaw2AFwI0_JF0_Jw1l
+	c2xSY4AK6svPMxAIw28IcxkI7VAKI48JMxC20s026xCaFVCjc4AY6r1j6r4UMI8I3I0E5I
+	8CrVAFwI0_Jr0_Jr4lx2IqxVCjr7xvwVAFwI0_JrI_JrWlx4CE17CEb7AF67AKxVWUAVWU
+	twCIc40Y0x0EwIxGrwCI42IY6xIIjxv20xvE14v26r1j6r1xMIIF0xvE2Ix0cI8IcVCY1x
+	0267AKxVWUJVW8JwCI42IY6xAIw20EY4v20xvaj40_Jr0_JF4lIxAIcVC2z280aVAFwI0_
+	Jr0_Gr1lIxAIcVC2z280aVCY1x0267AKxVWUJVW8JbIYCTnIWIevJa73UjIFyTuYvjxUgt
+	r4UUUUU
+X-CM-SenderInfo: pzdqwylld63zxwud2x1vfou0bp/1tbiAQALEWoKjMQAHAACst
 
-On Mon, May 18, 2026 at 03:10:12PM +0000, sashiko-bot@kernel.org wrote:
-> Thank you for your contribution! Sashiko AI review found 2 potential issue(s) to consider:
-> - [High] The new MAINS power supply exposes BATTERY properties (STATUS, PRESENT) instead of ONLINE, breaking userspace expectations.
-> - [Medium] The `qcom,batteryless` property is silently ignored on `SC8280XP` and `X1E80100` variants.
+On 2026-05-15 02:02 +0000, sashiko-bot@kernel.org wrote:
+> Thank you for your contribution! Sashiko AI review found 6 potential issue(s) to consider:
+> - [High] The `gpio-ranges` property values in `gpio_b`, `gpio_c`, and `gpio_d` incorrectly specify a local GPIO base that exceeds the available pins.
+> - [High] PCI I/O space is incorrectly mapped 1:1 to a high CPU address, breaking legacy PCI endpoints.
+> - [High] The Ethernet node incorrectly defines a broadcast MAC address as its local unicast MAC address.
+> - [Medium] Mismatch between CPU node unit addresses and their `reg` properties.
+> - [Medium] Ethernet compatible strings are listed in the wrong order.
+> - [Low] Clock node names contain underscores instead of hyphens.
 > --
 > 
-> commit fd3fd36bafd15a4f0b8a90d2f6b2f13ff0fc3a3d
-> Author: Rakesh Kota <rakesh.kota@oss.qualcomm.com>
+> commit f5aec289ca4daa2ae7f4c27bac4b1694ece4043b
+> Author: Jia Wang <wangjia@ultrarisc.com>
 > 
-> power: supply: qcom_battmgr: Add support batteryless boards as MAINS
+> riscv: dts: ultrarisc: Add initial device tree for UltraRISC DP1000
 > 
-> This commit adds support for the qcom,batteryless device tree property to
-> register the power supply as a MAINS type instead of a BATTERY. This is
-> intended to prevent userspace from triggering battery power-saving sequences
-> on boards powered directly by adapters.
+> Add the base device tree for the UltraRISC DP1000 SoC. It describes the
+> 8×CP100 CPU cores and essential SoC peripherals including the interrupt
+> controller, pinctrl, GPIO, UART, SPI, I2C, PCIe, GMAC and the DMA
+> controller.
 > 
-> > diff --git a/drivers/power/supply/qcom_battmgr.c b/drivers/power/supply/qcom_battmgr.c
-> > index 490137a23d00e..35d266375d8c4 100644
-> > --- a/drivers/power/supply/qcom_battmgr.c
-> > +++ b/drivers/power/supply/qcom_battmgr.c
+> Link: https://lore.kernel.org/lkml/20260427-ultrarisc-pcie-v4-2-98935f6cdfb5@ultrarisc.com/
+> Link: https://lore.kernel.org/lkml/20260429-ultrarisc-serial-v7-3-e475cce9e274@ultrarisc.com/
+> 
+> > diff --git a/arch/riscv/boot/dts/ultrarisc/dp1000.dtsi b/arch/riscv/boot/dts/ultrarisc/dp1000.dtsi
+> > new file mode 100644
+> > index 0000000000000..1aae53fc1a2b1
+> > --- /dev/null
+> > +++ b/arch/riscv/boot/dts/ultrarisc/dp1000.dtsi
+> > @@ -0,0 +1,851 @@
 > [ ... ]
-> > @@ -930,6 +931,47 @@ static const struct power_supply_desc sm8550_bat_psy_desc = {
-> >  	.property_is_writeable = qcom_battmgr_bat_is_writeable,
-> >  };
-> >  
-> > +static int qcom_battmgr_dcin_get_property(struct power_supply *psy,
-> > +					  enum power_supply_property psp,
-> > +					  union power_supply_propval *val)
-> > +{
-> > +	struct qcom_battmgr *battmgr = power_supply_get_drvdata(psy);
-> > +	int ret;
-> > +
-> > +	if (!battmgr->service_up)
-> > +		return -EAGAIN;
-> > +
-> > +	ret = qcom_battmgr_bat_sm8350_update(battmgr, psp);
-> > +	if (ret < 0)
-> > +		return ret;
-> > +
-> > +	switch (psp) {
-> > +	case POWER_SUPPLY_PROP_STATUS:
-> > +		val->intval = battmgr->status.status;
-> > +		break;
-> > +	case POWER_SUPPLY_PROP_PRESENT:
-> > +		val->intval = battmgr->info.present;
-> > +		break;
-> > +	default:
-> > +		return -EINVAL;
-> > +	}
-> > +
-> > +	return 0;
-> > +}
-> > +
-> > +static const enum power_supply_property dcin_props[] = {
-> > +	POWER_SUPPLY_PROP_STATUS,
-> > +	POWER_SUPPLY_PROP_PRESENT,
-> > +};
-> > +
-> > +static const struct power_supply_desc dcin_psy_desc = {
-> > +	.name = "qcom-battmgr-dcin",
-> > +	.type = POWER_SUPPLY_TYPE_MAINS,
-> > +	.properties = dcin_props,
-> > +	.num_properties = ARRAY_SIZE(dcin_props),
-> > +	.get_property = qcom_battmgr_dcin_get_property,
-> > +};
+> > +		cpu4: cpu@4 {
+> > +			compatible = "ultrarisc,cp100", "riscv";
+> > +			reg = <0x10>;
 > 
-> Since dcin_psy_desc is registered as POWER_SUPPLY_TYPE_MAINS, should it
-> expose POWER_SUPPLY_PROP_ONLINE instead of POWER_SUPPLY_PROP_STATUS and
-> POWER_SUPPLY_PROP_PRESENT?
+> Does the unit address in the node name here correctly match the first
+> address specified in its reg property?
 > 
-> Userspace power managers typically expect MAINS power supplies to report their
-> active state via the ONLINE property.
-> 
-> If the firmware returns PRESENT=0 on a batteryless board, won't userspace
-> fail to recognize the AC adapter as an active power source and still trigger
-> power-saving or shutdown sequences?
+> The Devicetree Specification mandates that the hexadecimal value after the @
+> must exactly match the reg value to avoid parser errors and dtc compiler
+> warnings. Should these be renamed to cpu@10, cpu@11, cpu@12, and cpu@13?
 >
-You are right. For POWER_SUPPLY_TYPE_MAINS, userspace expects ONLINE
-to indicate the active state of the supply, not STATUS or PRESENT which
-are battery-centric properties.
 
-I will fixs this in the next version.
+The unit address should match the reg value. I'll rename them to
+cpu@10..cpu@13 in v2. Thanks.
+ 
+> [ ... ]
+> > +	clocks {
+> > +		device_clk: device_clk {
+> 
+> Is it intended to use underscores in these clock node names?
+> 
+> Device tree naming conventions generally require node names to use hyphens
+> instead of underscores (e.g., device-clk) to avoid triggering strict
+> character warnings.
+>
 
-static enum power_supply_property dcin_props[] = {
-	POWER_SUPPLY_PROP_ONLINE,
-};
+Will rename to use hyphens in v2.
+ 
+> [ ... ]
+> > +			gpio_b: gpio-port@1 {
+> > +				compatible = "snps,dw-apb-gpio-port";
+> > +				reg = <1>;
+> > +				gpio-controller;
+> > +				#gpio-cells = <2>;
+> > +				snps,nr-gpios = <8>;
+> > +				gpio-ranges = <&pmx0 16 0 8>;
+> 
+> Will operations on local GPIOs 0-7 have a valid pinmux mapping with this
+> configuration?
+> 
+> The gpio-ranges property uses the format <pinctrl_phandle gpio_base
+> pinctrl_base count>. By specifying a local gpio_base of 16 for a port with
+> only 8 pins, it seems gpiolib will fail to configure pins 0-7 correctly.
+> 
+> Should this be inverted to <&pmx0 0 16 8> to map local GPIOs 0-7 to
+> pinctrl pins 16-23? This appears to be similarly configured for gpio_c and
+> gpio_d as well.
+>
 
-static int qcom_battmgr_dcin_get_property(struct power_supply *psy,
-					  enum power_supply_property
-					  psp,
-					  union power_supply_propval *val)
-{
-	switch (psp) {
-	case POWER_SUPPLY_PROP_ONLINE:
-		val->intval = 1;
-		break;
-	default:
-		return -EINVAL;
-	}
-return 0;
-}
+Good catch. Will fix the gpio-ranges mapping for gpio_b, gpio_c, and gpio_d
+in v2. Thanks.
+ 
+> [ ... ]
+> > +		pcie_x16: pcie@21000000 {
+> > +			compatible = "ultrarisc,dp1000-pcie";
+> > +			reg = <0x0 0x21000000 0x0 0x01000000>,
+> > +			      <0x0 0x4fff0000 0x0 0x00010000>;
+> > +			reg-names = "dbi", "config";
+> > +			ranges = <0x81000000  0x0 0x4fbf0000  0x0 0x4fbf0000  0x0 0x00400000>,
+> 
+> Can legacy PCI endpoints and HBAs that only decode 16-bit I/O addresses
+> successfully initialize with this mapping?
+> 
+> The ranges property maps the CPU MMIO address 0x4fbf0000 directly to the
+> PCI bus I/O address 0x4fbf0000 (indicated by the 0x81000000 bitfield).
+> Would it be better to map the CPU MMIO region to a PCI bus I/O address of 0
+> instead?
+> 
+
+Will change PCI I/O address to 0 in v2.
 
 > [ ... ]
-> > @@ -1690,7 +1733,9 @@ static int qcom_battmgr_probe(struct auxiliary_device *adev,
-> >  			return dev_err_probe(dev, PTR_ERR(battmgr->wls_psy),
-> >  					     "failed to register wireless charing power supply\n");
-> >  	} else {
-> > -		if (battmgr->variant == QCOM_BATTMGR_SM8550)
-> > +		if (battmgr->batteryless)
-> > +			psy_desc = &dcin_psy_desc;
-> > +		else if (battmgr->variant == QCOM_BATTMGR_SM8550)
-> >  			psy_desc = &sm8550_bat_psy_desc;
-> >  		else
-> >  			psy_desc = &sm8350_bat_psy_desc;
+> > +		ethernet: ethernet@38000000 {
+> > +			compatible = "snps,dwmac", "snps,dwmac-5.10a";
 > 
-> Does this bypass the qcom,batteryless property on SC8280XP and X1E80100
-> variants?
+> Could the OS prematurely bind to the generic driver before applying
+> hardware-specific driver quirks with this ordering? Device tree bindings
+> typically require the compatible array to be ordered from most specific to
+> least specific.
 > 
-> Looking at qcom_battmgr_probe(), the check for battmgr->batteryless is only
-> placed inside the else block which executes for SM8350 and SM8550:
-> 
-> drivers/power/supply/qcom_battmgr.c:qcom_battmgr_probe() {
-> ...
-> 	if (battmgr->variant == QCOM_BATTMGR_SC8280XP ||
-> 	    battmgr->variant == QCOM_BATTMGR_X1E80100) {
-> 		if (battmgr->variant == QCOM_BATTMGR_X1E80100)
-> 			psy_desc = &x1e80100_bat_psy_desc;
-> 		else
-> 			psy_desc = &sc8280xp_bat_psy_desc;
-> 
-> 		battmgr->bat_psy = devm_power_supply_register(dev, psy_desc, &psy_cfg);
-> ...
-> 	} else {
-> 		if (battmgr->batteryless)
-> 			psy_desc = &dcin_psy_desc;
-> ...
-> }
-> 
-> If a board uses the SC8280XP or X1E80100 variant, won't it bypass this check
-> and unconditionally register the standard battery power supply?
-> 
-Currently, batteryless support is only implemented for the qcs6490-rb3gen2(Kodiak)
-board. SC8280XP and X1E80100 variants do not have batteryless hardware
-at this time, so there is no immediate concern.
 
-We can revisit and extend this support when batteryless hardware becomes
-available for those variants. That said, if you feel it's cleaner to
-generalize the check now to avoid future leakage, happy to extend it —
-please let us know your preference.
+Will reorder in v2.
 
-regards
-Rakesh Kota
+> > +			reg = <0x00 0x38000000 0x00 0x1000000>;
+> > +			clocks = <&csr_clk>;
+> > +			clock-names = "stmmaceth";
+> > +			interrupt-parent = <&plic>;
+> > +			interrupts = <84>;
+> > +			interrupt-names = "macirq";
+> > +			local-mac-address = [ff ff ff ff ff ff];
+> 
+> Will the network driver initialize with an invalid broadcast MAC address if
+> the bootloader does not dynamically overwrite this value?
+> 
+> Using a broadcast address as a source MAC violates IEEE 802.3 standards,
+> and upstream network switches may drop packets sent by this interface.
+> Should this be omitted or zeroed out as a placeholder?
+> 
+
+Will remove the local-mac-address placeholder in v2. Thanks.
+
+> > +			max-speed = <1000>;
+> > +			phy-mode = "rgmii-id";
+> > +			snps,txpbl = <8>;
+> > +			snps,rxpbl = <8>;
+> > +		};
+> 
 > -- 
-> Sashiko AI review · https://sashiko.dev/#/patchset/20260518-add_dc_in_support-v1-0-31fbaa329879@oss.qualcomm.com?part=2
+> Sashiko AI review · https://sashiko.dev/#/patchset/20260515-ultrarisc-pinctrl-v1-0-bf559589ea8a@ultrarisc.com?part=5
+> 
+
+Best Regards,
+Jia Wang
+
+
