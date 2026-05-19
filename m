@@ -1,181 +1,145 @@
-Received: from mail-wm1-f42.google.com (mail-wm1-f42.google.com [209.85.128.42])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from out-173.mta1.migadu.com (out-173.mta1.migadu.com [95.215.58.173])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 082773BB680
-	for <sashiko-reviews@lists.linux.dev>; Tue, 19 May 2026 20:36:43 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.42
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4B6FB37C0F3
+	for <sashiko-reviews@lists.linux.dev>; Tue, 19 May 2026 22:50:46 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=95.215.58.173
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1779223005; cv=none; b=mPwLZ6nPLC0uCi/+tnXibGOZHR7lcO6/Jzx1KuBaY8ZddfHkBOGz60QVnmF3OIeEVINBuCF9wDsuD/bAoRHxZ/XWn0kfhFqJON6WqCGwPpHUcj/xw0rNfIwOxFPQjY8kre8BnYxQGa+gE4x3YadvlItImn6DKgQHPvlS9U3HtLQ=
+	t=1779231052; cv=none; b=DaOcHD6o/7MPO58onegw5m5knUA3a+2ybZ2lVVAQPEnn4YIITgs8voiudFqyxzjMVMRUDBlZqASv0Un0zhqChpaWTPRit84TdTp47V0b9rxEXVjsyU3gvOpCX75u0Nep2Mee4nvfh6aIzCcSGp7C4OsqcCDMGK9bNXP3Ms7CawA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1779223005; c=relaxed/simple;
-	bh=NVyzgDHHwWqFDEQ5sBwjAOuZvof1APUbmO5Rw5xQkDU=;
-	h=From:Date:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=irUIpo4olpN71wlGfchu/eWvQzC0D3W2aDliAH7MWa1itOmbJK3yjOx1d7n05vpfse9vpS4v64O5XRR6lotEN0PVtyF2OA+GtR5XeMxzlUbOA+IbOjcwnJ35LIm/AG2TDa+Naw28p9bLuud1WPBbuMYC5d2AyjdiMRmTwwCOhDI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=raAH9CIF; arc=none smtp.client-ip=209.85.128.42
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+	s=arc-20240116; t=1779231052; c=relaxed/simple;
+	bh=qvunAzYom6U7kpS/NXewRpm05Vb+irFPzTHjhYYV2zU=;
+	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
+	 In-Reply-To:Content-Type; b=WggScRzuGjAYuMywBWCLI+8RQdIAxDkVrORRjmDAz4bUhP43St6xvoFjii/dWzibIBcqu/oFNAlTh4ixoaz736nzuss7RoF4VSuF2QxKlWbajKRja2nPPju7TlD2U3eLzaJ9P1/4e2eTAdhwlerrnW90JhWA0EIJgf9e9lMEB8o=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linux.dev; spf=pass smtp.mailfrom=linux.dev; dkim=pass (1024-bit key) header.d=linux.dev header.i=@linux.dev header.b=K7ZJOBx2; arc=none smtp.client-ip=95.215.58.173
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linux.dev
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linux.dev
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="raAH9CIF"
-Received: by mail-wm1-f42.google.com with SMTP id 5b1f17b1804b1-48a7fe4f40bso49278605e9.0
-        for <sashiko-reviews@lists.linux.dev>; Tue, 19 May 2026 13:36:43 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20251104; t=1779223002; x=1779827802; darn=lists.linux.dev;
-        h=in-reply-to:content-disposition:mime-version:references:message-id
-         :subject:cc:to:date:from:from:to:cc:subject:date:message-id:reply-to;
-        bh=//Sc7HUu0N0n0srzJTcA3hqC03vufTnNxLsUSy9rPDk=;
-        b=raAH9CIFaJS2XKhXSVhGbcWbdIpEKfGbHTDMT4otqKLDdmQz5xQlpY6tnUTJ0aVt3i
-         BXVNduDUAj0HHcqZvPvt3amRV04+JRuSkd+r6wf++ZCRILo8oqn/+qVB4xfNQ4Z4gFxY
-         8fFKHDYTMj0Xrwsc4JwRpkV8Jh3EmNXiz7NvJDhCr6EsvOFztXnPDylI6dOoEe6gim8a
-         ZbeVWzyf++BW5rRcS8NtDk9A9PiT/6+2l+XTHP2rwPW826vJEN7oiUiMj96korbMmFhF
-         bOEEnxt+b29vQ4nF3yrIHJSFwOLJeVtADqVGDWjyR+SLrYlxFPpeazoO8lNCvp74YAWb
-         m9nQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20251104; t=1779223002; x=1779827802;
-        h=in-reply-to:content-disposition:mime-version:references:message-id
-         :subject:cc:to:date:from:x-gm-gg:x-gm-message-state:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=//Sc7HUu0N0n0srzJTcA3hqC03vufTnNxLsUSy9rPDk=;
-        b=a4qxQ8xL6UGcg/Jyrny6FvSmBKZs8keLVRapHt0lwXB7R08ywOSKIk3xzz6632lJEc
-         mGd0dAj9mq3SLUrC07BRRhBPZBnj3teJjyFB4Gzoz+BUDTt5NtUxGhouxMlxlkUsg52m
-         zHti4C2mIwPOu0D3AJtd0Zq0hy6IdyPzO5K2cqSNhjMsIghe6vqupA2jbiRgNjyBp/7G
-         jrjGXcjFHpmYrzAbixFAZXlo7kKTOzHGzsta6rtbFgcJe69ruRJ9InDd0rIFlJZwbldn
-         WU6fE2N2cccvbXlxleD3Ls87UU8ki3nXeYSsDaXcEN4Y/YtSTiLjMS2JbEfwbsJXp+QF
-         qGpg==
-X-Gm-Message-State: AOJu0YxoAIM4NhJNoKSMbOEng9uNbkvkAUt9Uz+h9lSLsPAMiDcRGmym
-	lsbI6nF3sV91596gWE506LSGiOmAg15RVCOY3ziAnIRj6ARbyLE38ry7glvahIt7
-X-Gm-Gg: Acq92OFSDUf+RJ+1LQzszcqViKaEc1rFsx6B1TAzeb0foz7U8UyMbaifQC0UWLcTh8z
-	HQ8rO+U1Fr5lMk+YfZUJ+6ix1f8mybI8oG4xqISGI3hd/qqidFaFIFz/Z2n6Eou/JxBW92XUzCE
-	TumyhJ6iEwTjT890AeUtCN/O7Ll9WeRgY2O5w9GhFh4d0GJGtoE3CbbSa2XDDZ8QlkYMLocjAY0
-	7ASoEK3+NprQ/Gi/p+SQua4sY6pg7kPm9COpuaeC/xQLYhuGOaaWK9bmf1lzfeqkU7t0Mylux+z
-	yCwW+V2dnPrNR+2+P4fmHQYkGSqYjfCX9oKdHFMoYFExwgRho2ux23Hw2fzkNGsx7o1nVsDJB9z
-	PcGumkiMe/8MGEfbtxCNEf6WoQkdy+vztYbS8/Vtrb/O4JZdVkwQ7RuplXAMglfybG9+vTd9r8E
-	0rVPdY/qW0L2jNBhMTVN9gN+JpyFlcHXuP
-X-Received: by 2002:a05:600c:4e53:b0:490:1640:8269 with SMTP id 5b1f17b1804b1-490164089c7mr136785135e9.18.1779223002427;
-        Tue, 19 May 2026 13:36:42 -0700 (PDT)
-Received: from krava ([176.74.159.170])
-        by smtp.gmail.com with ESMTPSA id 5b1f17b1804b1-48fe5ab3977sm381364305e9.9.2026.05.19.13.36.41
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Tue, 19 May 2026 13:36:41 -0700 (PDT)
-From: Jiri Olsa <olsajiri@gmail.com>
-X-Google-Original-From: Jiri Olsa <jolsa@kernel.org>
-Date: Tue, 19 May 2026 22:36:40 +0200
-To: sashiko-reviews@lists.linux.dev
-Cc: bpf@vger.kernel.org
-Subject: Re: [PATCHv2 07/11] selftests/bpf: Change uprobe syscall tests to
- use nop10
-Message-ID: <agzJ2HV2BX0ST3MC@krava>
-References: <20260518105957.123445-8-jolsa@kernel.org>
- <20260518111604.CC731C2BCB7@smtp.kernel.org>
+	dkim=pass (1024-bit key) header.d=linux.dev header.i=@linux.dev header.b="K7ZJOBx2"
+Message-ID: <b239e40b-8065-4ebd-a275-d4e4528e187b@linux.dev>
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linux.dev; s=key1;
+	t=1779231044;
+	h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+	 to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+	 content-transfer-encoding:content-transfer-encoding:
+	 in-reply-to:in-reply-to:references:references;
+	bh=Pg2m1U+9WYeCEE25g9gd/+MPxvr2fLvjle/mkoWv1io=;
+	b=K7ZJOBx2UOrOqe75wO3wWadIyzaGZk7lPo1BmHqsd9/AzHNoQpMZSjvcB+jvmTFzMwkUP5
+	FzLuPx8eUXCbTpQ1AJvEhqfXTOiVxERWNGYMXqtSIPU2HN+ja8f3nkfrH6ppf6+IHuyKzt
+	ABNhgciVVVW+ZTdgR1IvqjOXnRzY2s0=
+Date: Tue, 19 May 2026 15:50:30 -0700
 Precedence: bulk
 X-Mailing-List: sashiko-reviews@lists.linux.dev
 List-Id: <sashiko-reviews.lists.linux.dev>
 List-Subscribe: <mailto:sashiko-reviews+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:sashiko-reviews+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <20260518111604.CC731C2BCB7@smtp.kernel.org>
+Subject: Re: [RFC PATCH bpf-next 08/12] bpf: Add a few bpf_cgroup_array_*
+ helper functions
+To: sashiko-reviews@lists.linux.dev
+Cc: bpf@vger.kernel.org, Yonghong Song <yonghong.song@linux.dev>
+References: <20260519215841.2984970-9-martin.lau@linux.dev>
+ <20260519224522.6B0941F000E9@smtp.kernel.org>
+Content-Language: en-US
+X-Report-Abuse: Please report any abuse attempt to abuse@migadu.com and include these headers.
+From: Martin KaFai Lau <martin.lau@linux.dev>
+In-Reply-To: <20260519224522.6B0941F000E9@smtp.kernel.org>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
+X-Migadu-Flow: FLOW_OUT
 
-On Mon, May 18, 2026 at 11:16:04AM +0000, sashiko-bot@kernel.org wrote:
-> Thank you for your contribution! Sashiko AI review found 3 potential issue(s) to consider:
-> - [Medium] Missing update to USDT_NOP macro causes `subtest_optimized_attach` test failure.
-> - [Medium] Inadequate search bounds in `find_instr()` may cause false test failures.
-> - [Low] Misleading benchmark and function names referencing `nop5`.
+On 5/19/26 3:45 PM, sashiko-bot@kernel.org wrote:
+> Thank you for your contribution! Sashiko AI review found 2 potential issue(s) to consider:
+> 
+> New issues:
+> - [High] bpf_cgroup_array_copy_to_user() incorrectly returns -ENOSPC when the requested count is zero.
+> 
+> Pre-existing issues:
+> - [Critical] purge_effective_progs() calculates linear indices that do not account for BPF_F_PREORDER physical reordering, leading to Use-After-Free.
 > --
 > 
-> commit 1996488ddbe422eb1d441da9b06aafe6bd47e6d1
-> Author: Jiri Olsa <jolsa@kernel.org>
+> commit 23e774d89cf8101cef3b2e8789a63f7fb930be02
+> Author: Martin KaFai Lau <martin.lau@kernel.org>
 > 
-> selftests/bpf: Change uprobe syscall tests to use nop10
+> bpf: Add a few bpf_cgroup_array_* helper functions
 > 
-> Optimized uprobes are now on top of 10-bytes nop instructions,
-> reflect that in existing tests.
+> This patch adds bpf_cgroup_array_*() helper functions to prepare for
+> supporting struct_ops maps in the cgroup bpf array. These helpers currently
+> skip the dummy_bpf_prog, which is the same as the existing behavior.
+> The callers are changed to use these new helpers as a no-op change.
 > 
-> > diff --git a/tools/testing/selftests/bpf/benchs/bench_trigger.c b/tools/testing/selftests/bpf/benchs/bench_trigger.c
-> > index 2f22ec61667b9..bcc4820c802e5 100644
-> > --- a/tools/testing/selftests/bpf/benchs/bench_trigger.c
-> > +++ b/tools/testing/selftests/bpf/benchs/bench_trigger.c
-> > @@ -398,7 +398,7 @@ static void *uprobe_producer_ret(void *input)
-> >  #ifdef __x86_64__
-> >  __nocf_check __weak void uprobe_target_nop5(void)
-> >  {
-> > -	asm volatile (".byte 0x0f, 0x1f, 0x44, 0x00, 0x00");
-> > +	asm volatile (".byte 0x66, 0x66, 0x0f, 0x1f, 0x84, 0x00, 0x00, 0x00, 0x00, 0x00");
-> >  }
-> >  
-> >  static void *uprobe_producer_nop5(void *input)
-> 
-> This isn't a bug, but should the function and benchmark names also be updated?
-> 
-> The benchmark exposes names like uprobe-nop5 and uretprobe-nop5, but they are
-> now testing a 10-byte nop.
-
-they are updated in following separate commit 
-
+>> diff --git a/kernel/bpf/cgroup.c b/kernel/bpf/cgroup.c
+>> index b5769f5401e64..a033aa479ab6e 100644
+>> --- a/kernel/bpf/cgroup.c
+>> +++ b/kernel/bpf/cgroup.c
 > 
 > [ ... ]
 > 
-> > diff --git a/tools/testing/selftests/bpf/prog_tests/usdt.c b/tools/testing/selftests/bpf/prog_tests/usdt.c
-> > index 69759b27794d7..a160d7c4fa0d3 100644
-> > --- a/tools/testing/selftests/bpf/prog_tests/usdt.c
-> > +++ b/tools/testing/selftests/bpf/prog_tests/usdt.c
-> > @@ -252,7 +252,7 @@ extern void usdt_1(void);
-> >  extern void usdt_2(void);
-> >  
-> >  static unsigned char nop1[1] = { 0x90 };
-> > -static unsigned char nop1_nop5_combo[6] = { 0x90, 0x0f, 0x1f, 0x44, 0x00, 0x00 };
-> > +static unsigned char nop1_nop10_combo[11] = { 0x90, 0x66, 0x66, 0x0f, 0x1f, 0x84, 0x00, 0x00, 0x00, 0x00, 0x00 };
+>> +static int bpf_cgroup_array_copy_to_user(struct bpf_prog_array *array,
+>> +					 __u32 __user *prog_ids, int cnt,
+>> +					 enum cgroup_bpf_attach_type atype)
+>> +{
+>> +	struct bpf_prog_array_item *item;
+>> +	int i = 0;
+>> +	u32 id;
+>> +
+>> +	for (item = array->items; item->prog && i < cnt; item++) {
+>> +		if (item->prog == bpf_cgroup_array_dummy(atype))
+>> +			continue;
+>> +		id = item->prog->aux->id;
+>> +		if (copy_to_user(prog_ids + i, &id, sizeof(id)))
+>> +			return -EFAULT;
+>> +		i++;
+>> +	}
+>> +	return item->prog ? -ENOSPC : 0;
+>> +}
 > 
-> Is the loop in find_instr() adequate to find this instruction sequence?
+> [Severity: High]
+> If cnt is 0 (which happens if the attach type only has dummy programs,
+> causing bpf_cgroup_array_length() to return 0), the loop condition i < cnt
+> will fail immediately. At this point, item->prog still points to a dummy
+> program (which is not NULL).
 > 
-> tools/testing/selftests/bpf/prog_tests/usdt.c:find_instr() {
-> 	for (i = 0; i < 10; i++) {
-> 		if (!memcmp(instr, fn + i, cnt))
-> 			return fn + i;
-> 	}
-> 	return NULL;
-> }
+> Does this incorrectly return -ENOSPC instead of 0?
 > 
-> In uprobe_syscall.c, find_nop10() was updated to search up to 128 bytes to
-> account for compiler-generated prologues. If a modern compiler generates a
-> prologue longer than 9 bytes for usdt_2(), this will prematurely terminate and
-> cause the subtest_optimized_attach() test to fail.
-
-yea find_instr needs same update, will fix
-
+> If this occurs during __cgroup_bpf_query(), it looks like the entire
+> syscall could fail with -ENOSPC even when the user provided a large enough
+> buffer.
 > 
 > [ ... ]
 > 
-> > @@ -271,17 +271,17 @@ static void subtest_optimized_attach(void)
-> >  	__u8 *addr_1, *addr_2;
-> >  
-> >  	/* usdt_1 USDT probe has single nop instruction */
-> > -	addr_1 = find_instr(usdt_1, nop1_nop5_combo, 6);
-> > -	if (!ASSERT_NULL(addr_1, "usdt_1_find_nop1_nop5_combo"))
-> > +	addr_1 = find_instr(usdt_1, nop1_nop10_combo, 11);
-> > +	if (!ASSERT_NULL(addr_1, "usdt_1_find_nop1_nop10_combo"))
-> >  		return;
-> >  
-> >  	addr_1 = find_instr(usdt_1, nop1, 1);
-> >  	if (!ASSERT_OK_PTR(addr_1, "usdt_1_find_nop1"))
-> >  		return;
-> >  
-> > -	/* usdt_2 USDT probe has nop,nop5 instructions combo */
-> > -	addr_2 = find_instr(usdt_2, nop1_nop5_combo, 6);
-> > -	if (!ASSERT_OK_PTR(addr_2, "usdt_2_find_nop1_nop5_combo"))
-> > +	/* usdt_2 USDT probe has nop,nop10 instructions combo */
-> > +	addr_2 = find_instr(usdt_2, nop1_nop10_combo, 11);
-> > +	if (!ASSERT_OK_PTR(addr_2, "usdt_2_find_nop1_nop10_combo"))
+>> @@ -1124,7 +1185,7 @@ static void purge_effective_progs(struct cgroup *cgrp, struct bpf_prog *prog,
+>>   				lockdep_is_held(&cgroup_mutex));
+>>   
+>>   		/* Remove the program from the array */
+>> -		WARN_ONCE(bpf_prog_array_delete_safe_at(progs, pos),
+>> +		WARN_ONCE(bpf_cgroup_array_delete_safe_at(progs, pos, atype),
 > 
-> Does this test fail because USDT_NOP was not updated in usdt.h?
+> [Severity: Critical]
+> This is a pre-existing issue, but does pos correctly reflect the program's
+> physical index in the effective array?
 > 
-> The test expects to find the 11-byte nop1_nop10_combo, but usdt_2.c relies on
-> the default definition of USDT_NOP from tools/testing/selftests/bpf/usdt.h.
-> 
-> Because usdt.h was not updated in this patch, usdt_2.c will compile with the
-> 6-byte nop sequence, causing find_instr() to return NULL here and the
-> ASSERT_OK_PTR to fail.
+> When building the effective program array, compute_effective_progs() places
+> programs with BPF_F_PREORDER at the beginning of the array. However,
+> purge_effective_progs() calculates pos by sequentially iterating through
+> the hierarchy's hlists, which does not account for this reordering.
 
-it's updated separately in another commit
+It is a question I have also raised in the commit message of patch 9 also.
+> 
+> If update_effective_progs() fails (for example, due to OOM) during detach,
+> purge_effective_progs() is called as a fallback.
+> 
+> With the incorrect pos, could bpf_cgroup_array_delete_safe_at() overwrite
+> the wrong program with a dummy, leaving the intended program in the
+> effective array?
+> 
+> Since __cgroup_bpf_detach() subsequently calls bpf_prog_put() on the
+> detached program, the effective array would be left holding a dangling
+> pointer to a freed bpf_prog, which could result in a use-after-free when
+> the cgroup hook runs.
+> 
+>>   			  "Failed to purge a prog from array at index %d", pos);
+>>   	}
+>>   }
+> 
 
-jirka
