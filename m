@@ -1,59 +1,59 @@
-Received: from AM0PR02CU008.outbound.protection.outlook.com (mail-westeuropeazon11013052.outbound.protection.outlook.com [52.101.72.52])
+Received: from AM0PR02CU008.outbound.protection.outlook.com (mail-westeuropeazon11013055.outbound.protection.outlook.com [52.101.72.55])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A91092FE05B;
-	Tue, 19 May 2026 05:49:01 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=fail smtp.client-ip=52.101.72.52
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 744C3357739;
+	Tue, 19 May 2026 05:52:14 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=fail smtp.client-ip=52.101.72.55
 ARC-Seal:i=2; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1779169743; cv=fail; b=UyGvPRKi0o6fvSbd16cegXskHcCNuWU6VEB2veGBn+JeT9zFHwzFOrZRSE3kWD16NPotIVppnz9XzqQaPlnwWjCG5HQvTfrIKJS2Ckg4nDac9tIcsU5hm6Q4lGB+wozcJM8d2gsXMI/9yctXOiH46fk8aIRRjy7mdPjljWd8Y9U=
+	t=1779169936; cv=fail; b=uqRt1n6RQtczWLfXrM7VY8Ups/BU0O4gTiFwKeUAP9diLxULR55uF7pzjdx2qJ3FW2WM+RMFkY3axawMGMX13dZ2wX7E988nq18UoPVkA8GJQiiuoABMNv5/RjXHSgO1pl30H7s/DyCeSQo9DmskwSIkZnQoNMZgaKlJ2HHifWA=
 ARC-Message-Signature:i=2; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1779169743; c=relaxed/simple;
-	bh=iamI8KsGdeAp6r+W0o/aaFXDhtC+/5GG2tsm7JA6OLU=;
+	s=arc-20240116; t=1779169936; c=relaxed/simple;
+	bh=mksmrctzS8el0NS2UwCg0tD7XI2wGdonxFdKlaH0HIY=;
 	h=From:To:CC:Subject:Date:Message-ID:References:In-Reply-To:
-	 Content-Type:MIME-Version; b=VFEOgU+RQNjMrtJ9UTHHQB5jpI7BD/kwoKpDikFkkt2oMJBWOQONkrnVQMO+TQiAsT2h9sa2crj9NYR35j4vxiF2/AmSg4uVCUXbMrIPzFTC3X6RHAMK1pRq0+z1dz5zXgEOItLvGXp/rcAN+OCGxOL3AjbGqHLpah8J+weyUuA=
-ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=nxp.com; spf=pass smtp.mailfrom=nxp.com; dkim=pass (2048-bit key) header.d=nxp.com header.i=@nxp.com header.b=lzUAcDNy; arc=fail smtp.client-ip=52.101.72.52
+	 Content-Type:MIME-Version; b=dijLUyEbxsM0EcvLD4bpmKkKmccG7dTImZPcKRxvmIi19yZ1T8c+UadA8OJ/8lCCscNbolYWXCsFuTrbk+kl/PqIr200+lwH/K8DNwQaV8sD3/GhiWoOwhd5OquiPBGFJBSEUcUI5iCO75mFajGvFmTvoY3hF1LzQJx+T+cIW9I=
+ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=nxp.com; spf=pass smtp.mailfrom=nxp.com; dkim=pass (2048-bit key) header.d=nxp.com header.i=@nxp.com header.b=Gcp8oE9h; arc=fail smtp.client-ip=52.101.72.55
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=nxp.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=nxp.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=nxp.com header.i=@nxp.com header.b="lzUAcDNy"
+	dkim=pass (2048-bit key) header.d=nxp.com header.i=@nxp.com header.b="Gcp8oE9h"
 ARC-Seal: i=1; a=rsa-sha256; s=arcselector10001; d=microsoft.com; cv=none;
- b=MS4dYnfjpKUuFykLS4U/XhmAvH5ErX7HOBRpGX7y6GSFYr30MBxNkkFm1TpG7GI5hrBVSp92QvEhPoUIUR+cGo+sEC1+P+FbYkXfhc8NBd7Xw5Xh4inEhnQgq6vvXCGNNLjIwi/wFX1nne3n/oFdnGtZTQJHWjsMUYO1NV60KeLIB+MvAkq0ilVwOxArLRM7HIMgsedWkJvm7WCePBD3S472maZnewnFKu+aNeH2X6y8+YPE3uBUU/OGXXsSRzYMFlbCzdskJjxusNk7dUzjUKQOfQFn5lzh68z01hwCPU0WPrlsR5niC2+oajO5Y7WMaxLRZzDSA7dsYnZkoUJrmg==
+ b=I02xdi6+YvfcMj7wgENeMDUTjbmbSK6ZZI0o+x7M08tt8uUCxsdviGnhhBOn29/oy++QD6bkVuncQltn8mGQnV5sunvFzkhnZgP9v5ZtC7wpNOuTqNIaT0Qh9pRjwWSKgteHFZYDL35JBxWfS5JWtgi9ugMp4wva3b0ClkWr9H4ZiGnqncsCVxtRcfu/4jRGZj3EhFiuPY9Gj04B2OB72idZUOw1EWnm009jRDTRrIIk5jh28B1x+u/qjFe3tf4xT8rP12IFiL11jgIpz1R0ag5jGlVQbUDA+7AmCXJjbKm6wAoQaGK8SRvboAXuADGC+EkJUDJKGWd59RYSIHG08A==
 ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com;
  s=arcselector10001;
  h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
- bh=RntkQROpNrz1kxQMwWY0FbNr9NIlRBkZsXbZUPHklDE=;
- b=y5zxlTg18lEw56ISx56t8W9j9iU7btIFR/IWTGBqm1e+z9Hopdsnpa4dwowAsn5WVtTun/qwvMrMmmDIMrIHXHmbMYkVgmF6UuSY85ksdG2zJb9eJj6UZuuWJ23f04jpfa29AG6/M98chw+9FFAGLPqLAryjAC3k6XzriJbM9OsfAsmead6BpqlxNBoWVAKYReOyU0IM0vIxkzW4yKNVe1D+esJANBIm0AOTZtdLgKTOPZjlhErV1Vz8g3WhvGw4bVyLEwdRPd7P/u54UW3+sJ4K4eO4X4b6HmDTWAq/d2FEzrK/yebv6mUG0rsJZeJZ3IT3Acl9Myg0BKoTfbHqDw==
+ bh=CBQ0mv69fjostFxpfv56D0Kaa3/EsrUeqLn+s60KJqA=;
+ b=SWhiDzv8xA2ySh8Swvn9tpGb7CmrUoR+eJ81On1wLD6VHcpA4J9Q6Yh+UgcgSQMO95lyxuQwagj2BpIn162g7RyXB4MROlmble9gDs74XRa02tRqonJGnhiGOmTRrRiKF1WuLYXmI8Je+ZOpkLFWCsYZCz7Oy2951uIBuFY+tuJOGmIFgF68RHVI+GKfxsccsSNqwoFWUbtp/ZF/cyWFQkYxh7+lEitPLK7RW7jN+T9/libcU3jIu7s4mQ/cUjB0wvRulgESl2e7vy5FZ8rb04zno+Ko6LmtiJ7ZprcPsFFbO5KqWkStcV9gtz1nB6lao2rbQhz6wHqQqjIG2uzbCw==
 ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
  smtp.mailfrom=nxp.com; dmarc=pass action=none header.from=nxp.com; dkim=pass
  header.d=nxp.com; arc=none
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=nxp.com; s=selector1;
  h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
- bh=RntkQROpNrz1kxQMwWY0FbNr9NIlRBkZsXbZUPHklDE=;
- b=lzUAcDNyJy6wOkGNJUFrO+4QMwGOs8683XB6dxtvlQLBvaaFRzLeCO3dN+mQNegHNO9/ESADDTVvHOPR7hoCv/XTLXIZ99Ft9ybCB82Zxe/dfYc8WcBv9v1q11hVQDH+tVdLSQRxbV8f5iI5w3BijvbEQsTK185HLPFzolahjSBmb6AND1ttljSgeE8AeAfVAjYMQ79pEBgRIZPx1Ihc8SNdSNAJZQXVp210bKzruzTtKGXZrP6by7xd9aPg+lxe3u380eVutTY1BBRmQBaUqKH6JUpoopbIeywpvnXVrf7R4hsS0YP5Jph2sMf+FOjS7uY0+UF2ZP5zGsEmVWQ/ig==
+ bh=CBQ0mv69fjostFxpfv56D0Kaa3/EsrUeqLn+s60KJqA=;
+ b=Gcp8oE9hX1Vpd44NQMATS3CnjB7fK95yEiyq6ObN0mMCEb8s8YusSnDq/JO0WYp57zaHz0bTPD9yJaodWqagiOqKnxMzcKwvz8mlNB4OLc5yLULapjhE0T7SXch969rdhjSvLWvpCuxIc55WVM2kQVcOIMsty3CHuNp7ODHmy6krqsLzjRhkdU3xzObVmyRQiWZSE8BuKtB7o/N5lHVb2AtwC9fZ5Zn4x0fhkHgpvs+B3Jx7Xx1o79LY3HpYll04tYC8sa3OpU5LYiRl3Dh9Ennj6xJj23GItPqeqk4zGLRA1G/08zqlYTwaw4effqlF3y9Rh+3XLqP8p4sBIOWpFQ==
 Received: from DBBPR04MB7500.eurprd04.prod.outlook.com (2603:10a6:10:1f4::16)
  by VI1PR04MB10002.eurprd04.prod.outlook.com (2603:10a6:800:1d7::22) with
  Microsoft SMTP Server (version=TLS1_2,
  cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.21.48.14; Tue, 19 May
- 2026 05:48:57 +0000
+ 2026 05:52:11 +0000
 Received: from DBBPR04MB7500.eurprd04.prod.outlook.com
  ([fe80::c291:543b:4bde:cee7]) by DBBPR04MB7500.eurprd04.prod.outlook.com
  ([fe80::c291:543b:4bde:cee7%6]) with mapi id 15.20.9913.009; Tue, 19 May 2026
- 05:48:57 +0000
+ 05:52:11 +0000
 From: Wei Fang <wei.fang@nxp.com>
 To: "sashiko-reviews@lists.linux.dev" <sashiko-reviews@lists.linux.dev>
 CC: "Frank.Li@kernel.org" <Frank.Li@kernel.org>, "imx@lists.linux.dev"
 	<imx@lists.linux.dev>
-Subject: RE: [PATCH v2 net 7/9] net: enetc: fix VF-to-PF message handler
- unbounded loop DoS
-Thread-Topic: [PATCH v2 net 7/9] net: enetc: fix VF-to-PF message handler
- unbounded loop DoS
-Thread-Index: AQHc5nLmRwL2mJt4AU+O1iSToa2OSbYUq3OAgAAIH5A=
-Date: Tue, 19 May 2026 05:48:56 +0000
+Subject: RE: [PATCH v2 net 8/9] net: enetc: fix initialization order to
+ prevent use of uninitialized resources
+Thread-Topic: [PATCH v2 net 8/9] net: enetc: fix initialization order to
+ prevent use of uninitialized resources
+Thread-Index: AQHc5nLpmOljOwZT/06dP/xS4Sj/2bYUq3QAgAAuIrA=
+Date: Tue, 19 May 2026 05:52:11 +0000
 Message-ID:
- <DBBPR04MB750088F9BBED2516DEAE767788002@DBBPR04MB7500.eurprd04.prod.outlook.com>
-References: <20260518030535.1057228-8-wei.fang@nxp.com>
- <20260519030415.A7F22C2BCB7@smtp.kernel.org>
-In-Reply-To: <20260519030415.A7F22C2BCB7@smtp.kernel.org>
+ <DBBPR04MB7500836C280BE5A10F4600FF88002@DBBPR04MB7500.eurprd04.prod.outlook.com>
+References: <20260518030535.1057228-9-wei.fang@nxp.com>
+ <20260519030416.B8ADBC2BCB7@smtp.kernel.org>
+In-Reply-To: <20260519030416.B8ADBC2BCB7@smtp.kernel.org>
 Accept-Language: en-US
 Content-Language: en-US
 X-MS-Has-Attach:
@@ -62,46 +62,46 @@ authentication-results: dkim=none (message not signed)
  header.d=none;dmarc=none action=none header.from=nxp.com;
 x-ms-publictraffictype: Email
 x-ms-traffictypediagnostic: DBBPR04MB7500:EE_|VI1PR04MB10002:EE_
-x-ms-office365-filtering-correlation-id: 2c7eef65-2ef0-47f2-4e98-08deb56a5166
+x-ms-office365-filtering-correlation-id: c319f51c-1ba6-4e38-8518-08deb56ac536
 x-ms-exchange-senderadcheck: 1
 x-ms-exchange-antispam-relay: 0
 x-microsoft-antispam:
  BCL:0;ARA:13230040|1800799024|366016|19092799006|376014|38070700021|22082099003|56012099003|18002099003|4143699003|11063799003;
 x-microsoft-antispam-message-info:
- 5eL7344Vcidh7FgokauHwXjFpasX8NP+miLzxD+IQZt0XIpkzhPwV9tU6WVeZYe3g5c24I1stNa3htXEdDPZuiGWVd7JsKX7CtFALwCGR/XhAIzeEKV9qgKTZ6hsUIn42utMBSaek1BqyM+mrpOUAyhAXKfDjR54TtNffbRiXRPIWQIIm7y64VoAH2LeITKVdnPM75YeIiK/WVTAisG+ZlrRma77la9c5cl3itW/ULSrQEJrkB3eNqgRvm2jTFF6Jgji17VROXIljCub9YHaCgxY2vj4qUyw2Zq0lOjzjvJ+SGo5uErw+JyCpEmWw15Cv1Flk7VeSSaBcZ7IWJkwOPWuV41NeYVGhc6TA6YXgtRscNPsYlOP7aGI7t2/GUOSyofrPfQcVSyX17g3YIov3UuOCal1weydZLid6G3VKrnrMdJezpTxmSzzDaaEr6aktmrLVTdGsjE4MV+IZDHbKqTFljTgnj3g75wanO7XRSAEGeoA0LJ3jp+MkO788BzCMsMg7LGRD6X8b3B1/A4oGi25UCHHHUJL8d1GaLh7PCnZNYCfzhYueEdx+wFgIjTFsX/cebB/QOJXfjRtnbi1Hzl5zNl1KJsE+171+gzyl4d3bR39L8LkGcr41l6YO2cAMfmbc9vaeKjF0MIXAGWC1jIgr9gvwZQ5ItOAQPTRDZg5wctUa4PkkOI9A9kyVdud/9mCeE2QuoeY0x73YL6cG8WrfGVCnvYIxp0u8f5cskBGlpKR0y/4FS5QOCarfL8l
+ tHRj/mADFd5sCzwNsgNw+5TOaWujBTBI3B++xXnHfN2CuKW4lhB2zpg0wPibZnsYnKP09P9Ne4wrgr/LtihgRjp4ojcN7TNAmOqo1+FTbHMn46Z3ekCZLo1s9rE2NTww4uGbUkYgfewhYPhSJTp+yc5dxmeieQOXzJae+THGGLYQeSd/NB9YySo4xC9GXkKL+t9ysH0pFGutHIHvkmXcW+aeGbotdggoMxVwRpFmgDlmCVJZEpzDcy2gsma0qtvKovO1kAzgZCaRhTemV7cZbIbFV1JPUjufYtGtm5g4OEqceOdAeiDp2xsk7R5csT68ohRXHnIDlS1He+/1WarZJOj/ZI1A0Txz9L81RhyT7lP8Obt7YzkMStCvMKAxj4I37ZbOX6a2EFFZ5mauDJojLvem8t6BupFqh9UtYQ+mq80OIAQzR4xhJIigTN0IcKLagjBj+eT6PMEgtz/78A5K2vucNPYwa3qQZEw0PAY3HIBzctYUWrT7/P/K8VBZWO2QOflfE33kud0K1AQKxh9a0qjwuK5bz4vEJs1ikbjSCiiOT0L3y6UYSLzpRv/YHCSdSxvPQiLCZxI56qX1W5LjmuC5qKWWzCfXX2sRjiVNvN+KGlxQj93Wb1bM9Pjk2OZ4zSfIl5IJkVJNjhQvU1FjzDyjYxbB5orwiwvEBSLTyTQLcLIZlIe6YK5xF2ViLnOlIRy3ZyCUKIVJHZbAzS4uGRIt9tOKoaZFl+GsjVoEv3LL2UQd3i7mS5y6JQYancjc
 x-forefront-antispam-report:
  CIP:255.255.255.255;CTRY:;LANG:en;SCL:1;SRV:;IPV:NLI;SFV:NSPM;H:DBBPR04MB7500.eurprd04.prod.outlook.com;PTR:;CAT:NONE;SFS:(13230040)(1800799024)(366016)(19092799006)(376014)(38070700021)(22082099003)(56012099003)(18002099003)(4143699003)(11063799003);DIR:OUT;SFP:1101;
 x-ms-exchange-antispam-messagedata-chunkcount: 1
 x-ms-exchange-antispam-messagedata-0:
- =?us-ascii?Q?bH7y9m5PAEX4v9C1FTaeNKzUZsLVjHm17s+AWajKeHTc0NocQ/ma6a8HWcC8?=
- =?us-ascii?Q?h3rps6AmrLkC2dh07HRBsIYM+UlM52mSpJ6MZHhy1nJoyeGGzPQdq2akQDbi?=
- =?us-ascii?Q?PV4ydF3ZuSUGszcLe1m/sdK3PzYiJKLXLDUoRDkfZsQ4qQTsCGBdxicSqQnF?=
- =?us-ascii?Q?I3D8uBtmkCcR21VRdiI7cLaVF4m8KdD1JeJ1y/7jzA8zWN6UypdoOtQ5GiS1?=
- =?us-ascii?Q?Y2dFKKImPlcGPzvO5nAW3mERRVDsgIqhdnwVMp8nvy3dp7WPgv0T8is/R+58?=
- =?us-ascii?Q?h36XWHBSGaIGjpyAnl9yKukVvjJSwH0V2SdDz4RfA1S8OxySZZkqS/8fLQwA?=
- =?us-ascii?Q?EzKaKpSJ+UOlLpAiD2iM7bxdwPu4h9qGLW4I4oamehlsNXNIeoRhGHodzkaU?=
- =?us-ascii?Q?3vsUepXLYVKdJKZh2DRbpVs00oUEI18qXHlJel2Uu6l7lGqcX7+YxoWRaBen?=
- =?us-ascii?Q?jgNIYN7vWbAfwsBBxiGSrwiz0YMBmDUZLQEF4QtuDjyma3881QaaLQ0QTQ2U?=
- =?us-ascii?Q?hzxe6s4J/CyNxSKwFSTgxrQrEs/nA2M/ntqm6jLPR0vv8jZ9YxT8XR8t+JVB?=
- =?us-ascii?Q?cU2Gf5jcdtBk/d5DfmzCxwEcizPUHfZ5qERYPs/wwxyPqM8Im501AjygRJlR?=
- =?us-ascii?Q?ztGgEpvtqGAFMiyROIzo1I47YKGh0+fMolzqx49RVUmTaNrTUW63FO9FiNBR?=
- =?us-ascii?Q?dwtIY08v3qvSd/IyAYelac2Vskossha1uJGQmCqNIGXY8N/uYYCWbW5nVUjL?=
- =?us-ascii?Q?VUlxXn0+u43Kx4EunG3so38Zt8jlbEeOXiW2Zj1ck43jthpJ55x3nh1iKVUW?=
- =?us-ascii?Q?zeyorlPeWSw59SPLPg24R13Libif052F1r+kLmcaI5fS5sGGGcbl6mlr6IdD?=
- =?us-ascii?Q?48tktjkN1mUcSnuDXX9nCNE9bZ+qkubNW4jfx011UwD415SZsxP59tAaQO/H?=
- =?us-ascii?Q?FTosUMEJ6EuM1zyQkmdlMr39SZKyLtdHdX7i7pzH+IGvDoBTKzL1S3ADp5dr?=
- =?us-ascii?Q?BUUVs/Z0FpNr0h7vZpbvxClPjqXYinClBJvEOe+c35RJU6YE7cGpuMUrwh6M?=
- =?us-ascii?Q?JLjOvtfAFYwk4XImkwO/pQc4C6ywiyvWXBEqWJjQR9wJOjA8FvM8AZoda+wb?=
- =?us-ascii?Q?zyGP+C9DUqoXOEbe+y4PQT2DcBtOE9vqfcxxoKShZKhNWYV7hgt8bGROo9Pm?=
- =?us-ascii?Q?TIe8HEochH7LFAfTvLcPMXIdNmQz77nZw6F1eVo3nkFy1MiACb0TmKT9vUyt?=
- =?us-ascii?Q?yjzjmkkfRtoO1awGgjRPodahvw0bNfE4xE8DFIa5HQ6rFg+rEGFDBVKp3qN6?=
- =?us-ascii?Q?Vkcv9FoT1Lczsup4gucGVkABsal/v7Y38GZ0PqhH+Ud8g40ulxTFt9z+atUR?=
- =?us-ascii?Q?WqisIyFyIsr9UzwZaQOuLDMk1calDDXirAnqzOMjkd6N8prYvxK9Q99TxmKK?=
- =?us-ascii?Q?Y1rATvOw2E4Oqqzvx08N4R8MJBcUQiKQMJbPxAVMMpdZyxa1htnMw8udbTvY?=
- =?us-ascii?Q?oViiLkbKP3WVlGdWxJHiziXAkv2DOf34YGp+50Shbpbk9UGaLDJjtFAjTL6X?=
- =?us-ascii?Q?6sMVmoLPHWMu7E/x/dVukqaEBGp03fP9jztELei2LDyVHRR+yDrMXsyukXDt?=
- =?us-ascii?Q?KDcHA2Pt50BphbwMWn76LObDYjEuryCnK3Y7gpoUk92aI7CqaumBYSQ4cV6F?=
- =?us-ascii?Q?2a3+DUQVEqLWpHCzGGJF8rV732Y3f+90ZjVNhhVEb8mUHTMi?=
+ =?us-ascii?Q?IrGNGyRXjWwoe8/elZ5ZynLER0f2EIJW8Wtm2NlpNdozy/nTjr3M+gF8ZK7w?=
+ =?us-ascii?Q?3fkbcPkBmwaI7s7HSU/NvBEYRtxvltGlW4Ek53yajXN01tzxIj/qysBxQYaj?=
+ =?us-ascii?Q?IS2YH2Vh70TxfI8CLAkeFDTxNdRv6faw68ml0ud7/wtP5NtNA/cnBd6K2aRE?=
+ =?us-ascii?Q?zULh9xh8qfCxg/+GmFrHT5+vTsqwq35MxIZT/DMcBW4RZ6SV5yYdEEF7wBQK?=
+ =?us-ascii?Q?nnVHCaqNxkGbJgnXzqsf6Mwn2WuAkqWSdLIaBKcUNVepQ3YppNqskE2TPNfF?=
+ =?us-ascii?Q?FzFSbtA60VGiSNpCAW+wHyXQhTQiicKzmk5rFxx1nmFKRGzYfHSMufbgUwS4?=
+ =?us-ascii?Q?U9iWfFKBQg7OgvE7P4dIwG0r7yDrWT4B4icGexcJ8acndPxCrGYTlojX6ZUo?=
+ =?us-ascii?Q?Z78bz9B9nepjjVLW51MEwsCKZhHKwj2oYa/8c8LZPWlc2u0mdXeEzAFNB6JF?=
+ =?us-ascii?Q?C8y59AoJCOKQduhT4dS8aHJBv01zunqJT6IRHe7rEhSyQtmTG+5EFNwH72NQ?=
+ =?us-ascii?Q?pHoe1wpH2yD/tcR4pVTt7a5HTjpOKV0eIsXyaXyhbWxZBq0feOWlnYUrloXb?=
+ =?us-ascii?Q?MPQu1Snl6q/VO8fM5Zj/S4989eahE9RLJ2mQz7wg6yN2tJX0UR44o26xT2e+?=
+ =?us-ascii?Q?uZVvmODcsvv9d/FiJkhdMk/u0Lv7TIJlMWFFZ9hJtN2rur9FbM1n2WMKuQwM?=
+ =?us-ascii?Q?PZA1LB06RVg2PQb4Gj3FK5zg0M5yBvLuMDi9b9WWRD7c1cTJyUC2vtGrdnCy?=
+ =?us-ascii?Q?FYltPMUhYRxA59FTaJGtdtCJPWiSMM50lutqjcfbrnFglYgf2I7vSdZIK2aP?=
+ =?us-ascii?Q?kgwm50laNeTqENGwDHupPzPZMzMusOm1XsbKbpL06OIe09YCan3pUowPXWAi?=
+ =?us-ascii?Q?xS0x3Y1R2NS1IoQwvJm3roTlihLymjyFSFl3OV2NG+g9c0yutXI1LSPElYiK?=
+ =?us-ascii?Q?SegRBFZacPheG7yVbiy6CzzbZ8qb4+CUBW1Z52YH0yz1fEt7MI8Y9oudVBZ+?=
+ =?us-ascii?Q?9Ji/9CfLBg4IbweuWTpvZO3Ugj2mhy923zFmdEWSw4Z6cvjkESg9GM5I2Flt?=
+ =?us-ascii?Q?slx/C9PbMExz4W/iNhaweXB6WYtkG+0HO2gOOaRNazYF6jciKbXvTXyieTSs?=
+ =?us-ascii?Q?WJd0HSBdFyo3CPjVDDyf6qyFrlgnIasXna2Ubv8tASRuZZJWKm76AayAaCA2?=
+ =?us-ascii?Q?J0YUHZw8Ddt9GfnsvpHAv+Z8wz9Ie1yGZU56rxH9hbJAYIkqduU6YYgyrNAB?=
+ =?us-ascii?Q?KWzKgzsGbwpbZeBk2V4HKoDd3EuOsI5wJ1FVM2c9bGZwQZDBREqHc20Q0cob?=
+ =?us-ascii?Q?RpCDD8t/9AXqQTV5wU5+1Q1k6EIgwloRfqARBwvFihyTOHA4vAev8Li3yTv9?=
+ =?us-ascii?Q?q06gzmzv7InMaZW4yyv73zBY/QcscC74IVGNxR4CnThLBfYA8z8Kb7DXeDgj?=
+ =?us-ascii?Q?D0StRJq088pDHQ+MHXxtct3EQ36ou/bSevJIgL7M99yjXjSBXND1ZjgRTE5x?=
+ =?us-ascii?Q?WOeCCdJbLGE+HHHimOrqbTmhihYlvn3MQECkpIVSj2sB9xihWEew25+VsUQz?=
+ =?us-ascii?Q?RP5Gle6IRgMjlEhPJ7diZODAY8LaNleMlxYo2sHHj8lpB4xIsWiRg8G2vc5r?=
+ =?us-ascii?Q?c61FzejSfjFAO9RiF23cpMhxk/KPu8WGV2mM19TEHvw9hrFc4bnA2h5d//37?=
+ =?us-ascii?Q?CREZZJtyUs+amTkNr++NbvJJuRz8Ls7RNaL7/LDbLLsfzA4a?=
 Content-Type: text/plain; charset="us-ascii"
 Content-Transfer-Encoding: quoted-printable
 Precedence: bulk
@@ -113,120 +113,101 @@ MIME-Version: 1.0
 X-OriginatorOrg: nxp.com
 X-MS-Exchange-CrossTenant-AuthAs: Internal
 X-MS-Exchange-CrossTenant-AuthSource: DBBPR04MB7500.eurprd04.prod.outlook.com
-X-MS-Exchange-CrossTenant-Network-Message-Id: 2c7eef65-2ef0-47f2-4e98-08deb56a5166
-X-MS-Exchange-CrossTenant-originalarrivaltime: 19 May 2026 05:48:56.9885
+X-MS-Exchange-CrossTenant-Network-Message-Id: c319f51c-1ba6-4e38-8518-08deb56ac536
+X-MS-Exchange-CrossTenant-originalarrivaltime: 19 May 2026 05:52:11.2538
  (UTC)
 X-MS-Exchange-CrossTenant-fromentityheader: Hosted
 X-MS-Exchange-CrossTenant-id: 686ea1d3-bc2b-4c6f-a92c-d99c5c301635
 X-MS-Exchange-CrossTenant-mailboxtype: HOSTED
-X-MS-Exchange-CrossTenant-userprincipalname: Hm70SQKOyVFwGLM7OnPzCfM+7tPfAIU8251TVHBmWAe0aftWXIzdE9jWBqld64eR2ZTI9ejN7Rr/GvnR/DiCpQ==
+X-MS-Exchange-CrossTenant-userprincipalname: AZbhEnCBra7TNW4v2Na9JyPogyVkpgDWoodeG3Ld8iFXebYMg49unm22nTsUsyLL8UyccrlB6no6sYBLBTSk3g==
 X-MS-Exchange-Transport-CrossTenantHeadersStamped: VI1PR04MB10002
 
-> > diff --git a/drivers/net/ethernet/freescale/enetc/enetc_msg.c
-> b/drivers/net/ethernet/freescale/enetc/enetc_msg.c
-> > index b4d7457097e60..39f057fe85c70 100644
-> > --- a/drivers/net/ethernet/freescale/enetc/enetc_msg.c
-> > +++ b/drivers/net/ethernet/freescale/enetc/enetc_msg.c
-> > @@ -32,32 +32,32 @@ static void enetc_msg_task(struct work_struct
-> *work)
-> >  {
-> >  	struct enetc_pf *pf =3D container_of(work, struct enetc_pf, msg_task)=
-;
-> >  	struct enetc_hw *hw =3D &pf->si->hw;
-> > -	unsigned long mr_mask;
-> > +	u32 mr_status;
+> > @@ -151,14 +149,17 @@ void enetc_msg_psi_free(struct enetc_pf *pf)
+> >  	struct enetc_si *si =3D pf->si;
 > >  	int i;
 > >
-> > -	for (;;) {
-> > -		mr_mask =3D enetc_rd(hw, ENETC_PSIMSGRR) &
-> ENETC_PSIMSGRR_MR_MASK;
-> > -		if (!mr_mask) {
-> > -			/* re-arm MR interrupts, w1c the IDR reg */
-> > -			enetc_wr(hw, ENETC_PSIIDR, ENETC_PSIIER_MR_MASK);
-> > -			enetc_msg_enable_mr_int(hw);
-> > -			return;
-> > -		}
-> > +	mr_status =3D enetc_rd(hw, ENETC_PSIMSGRR) &
-> ENETC_PSIMSGRR_MR_MASK;
-> > +	if (!mr_status)
-> > +		goto out;
->=20
-> Could this cause a regression if SR-IOV is disabled while a VF has pendin=
-g
-> messages, and then re-enabled with fewer VFs (a smaller pf->num_vfs)?
-> Wouldn't the leftover message bits in ENETC_PSIMSGRR and ENETC_PSIIDR for
-> the
-> now-inactive VFs remain set?
-
-The VF is disabled when SR-IOV, I do not think there will have pending
-messages. And even so, it have no impact, because it will not trigger CPU
-interrupt if the VF is not enabled (as the corresponding VF MR interrupt
-is not enabled).
-
->=20
-> Since the loop below only processes up to pf->num_vfs, it looks like thos=
-e
-> leftover bits would never be cleared. Could this cause mr_status to remai=
-n
-> non-zero but unhandled, leading to an immediate interrupt storm when
-> interrupts are re-enabled?
-
-There is not interrupt storm, the corresponding interrupt in ENETC_PSIIER
-is not enabled, so it will not trigger any CPU interrupts.
-
->=20
-> >
-> > -		for (i =3D 0; i < pf->num_vfs; i++) {
-> > -			u32 psimsgrr;
-> > -			u16 msg_code;
-> > +	for (i =3D 0; i < pf->num_vfs; i++) {
-> > +		u32 psimsgrr;
-> > +		u16 msg_code;
+> > +	/* disable MR interrupts */
+> > +	enetc_msg_disable_mr_int(&si->hw);
 > > +
-> > +		if (!(ENETC_PSIMSGRR_MR(i) & mr_status))
-> > +			continue;
-> >
-> > -			if (!(ENETC_PSIMSGRR_MR(i) & mr_mask))
-> > -				continue;
-> > +		enetc_msg_handle_rxmsg(pf, i, &msg_code);
-> >
-> > -			enetc_msg_handle_rxmsg(pf, i, &msg_code);
-> > +		/* w1c to clear the corresponding VF MR bit */
-> > +		enetc_wr(hw, ENETC_PSIIDR, ENETC_PSIIDR_MR(i));
-> >
-> > -			psimsgrr =3D ENETC_SIMSGSR_SET_MC(msg_code);
-> > -			psimsgrr |=3D ENETC_PSIMSGRR_MR(i); /* w1c */
-> > -			enetc_wr(hw, ENETC_PSIMSGRR, psimsgrr);
+> > +	/* de-register message passing interrupt handler */
+> > +	free_irq(pci_irq_vector(si->pdev, ENETC_SI_INT_IDX), si);
+> > +
+> >  	cancel_work_sync(&pf->msg_task);
 >=20
-> Could writing to ENETC_PSIIDR before ENETC_PSIMSGRR introduce a
-> regression
-> involving a race condition with new incoming messages?
+> Can this sequence cause an unhandled interrupt?
+>=20
+> Since free_irq() is now called before cancel_work_sync(), if the mailbox
+> workqueue task (enetc_msg_task()) is executing during cancel_work_sync(),
+> the task might unconditionally re-enable hardware MR interrupts at the en=
+d
+> of its execution via enetc_msg_enable_mr_int().
+>=20
+> This could create a window between the work task finishing and the second
+> enetc_msg_disable_mr_int() call where hardware MR interrupts are enabled
+> but
+> the OS IRQ handler is already freed.
+>=20
+> If a Virtual Function (VF) sends a message during this window, could the
+> hardware assert the MSI-X interrupt, resulting in a spurious IRQ that mig=
+ht
+> disable the IRQ line?
+>=20
+> This regression is fixed later in the patch series by commit
+> 675d55bcc780129a27acba4ec3a3cd33ecd510fc ("net: enetc: avoid VF->PF
+> mailbox
+> timeout during SR-IOV teardown"), which avoids the issue by destroying th=
+e
+> VFs before cleaning up the PF mailbox.
 
-No, ENETC_PSIMSGRR[MRn] and ENETC_PSIIDR[MRn] bits have the same
-function, both indicate that the PF receives a message from VSI n. But the
-high 16-bit of ENETC_PSIMSGRR is message code field, this field provides
-the result of the message back to the VSI which it originated.
-
-Therefore, the normal order should be to write ENETC_PSIIDR first and then
-ENETC_PSIMSGRR, because writing ENETC_PSIMSGRR will return message
-code to VSI, indicating that message processing is complete and VSI can saf=
-ely
-send the next message.
+These patches are part of a series and are all designed to address issues
+introduced by commit beb74ac878c8 ("enetc: Add vf to pf messaging
+support"). If subsequent patches have already resolved the issue you're
+reporting, please refrain from reporting it again, it's pointless and a was=
+te
+of time.
 
 >=20
-> If a guest VM sends a new message in the narrow window between these two
-> register writes, the hardware would set the MR bit in both registers agai=
-n.
-> The subsequent write to ENETC_PSIMSGRR would then clear the newly set
-> message bit, but the bit in ENETC_PSIIDR would remain asserted.
+> >
+> > -	/* disable MR interrupts */
+> > +	/* MR interrupts may be re-enabled by workqueue */
+> >  	enetc_msg_disable_mr_int(&si->hw);
+> >
+> >  	for (i =3D 0; i < pf->num_vfs; i++)
+> >  		enetc_msg_free_mbx(si, i);
 >=20
-> When the task re-enables interrupts at the "out" label, wouldn't the
-> uncleared ENETC_PSIIDR bit immediately trigger a hardware interrupt?
+> Does this teardown sequence leave a race window where active VFs can
+> corrupt
+> memory?
 >=20
-> Then on the next invocation, mr_status would be read as 0, and the task
-> would jump to "out" without clearing ENETC_PSIIDR. This would re-enable
-> interrupts and potentially cause an interrupt storm. The original code
-> appeared to handle this by unconditionally clearing ENETC_PSIIDR when
-> mr_status was 0.
+> While this pre-existing issue wasn't introduced by this patch, calling
+> enetc_msg_psi_free() before pci_disable_sriov() means PF mailbox resource=
+s
+> are freed while VFs are still active and capable of sending messages.
 >=20
+> During teardown, enetc_msg_free_mbx() clears the 64-bit DMA address
+> registers via two sequential 32-bit writes:
+>=20
+> enetc_msg_free_mbx() {
+>     ...
+>     enetc_wr(hw, ENETC_PSIVMSGRCVAR0(idx), 0);
+>     enetc_wr(hw, ENETC_PSIVMSGRCVAR1(idx), 0);
+>     ...
+> }
+>=20
+> If an active VF sends a message between these writes, could the hardware
+> DMA
+> into a torn 64-bit address?
+>=20
+> Additionally, if a message is sent immediately after dma_free_coherent() =
+in
+> enetc_msg_free_mbx(), could the hardware perform a DMA write into kernel
+> memory that has already been returned to the allocator?
+>=20
+> This pre-existing issue is fixed later in the patch series by commit
+> 675d55bcc780129a27acba4ec3a3cd33ecd510fc ("net: enetc: avoid VF->PF
+> mailbox
+> timeout during SR-IOV teardown"), which safely calls pci_disable_sriov()
+> first to ensure all VFs are removed before mailbox teardown.
+
+Likewise.
 
