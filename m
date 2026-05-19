@@ -1,228 +1,94 @@
-Received: from mx0b-0031df01.pphosted.com (mx0b-0031df01.pphosted.com [205.220.180.131])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
-	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D6AB047CC8E
-	for <sashiko-reviews@lists.linux.dev>; Tue, 19 May 2026 09:49:50 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.180.131
+Received: from zg8tmja2lje4os4yms4ymjma.icoremail.net (zg8tmja2lje4os4yms4ymjma.icoremail.net [206.189.21.223])
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id CD94646AF0F
+	for <sashiko-reviews@lists.linux.dev>; Tue, 19 May 2026 09:51:14 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=206.189.21.223
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1779184192; cv=none; b=bRp8FC6eICmScQOf5hi6Nh0cEM4xkI/JdJxX7osYYMZa5e22Ip7QTRJWfrGIQ1naqxkciIIGkkhLp4g9N09C16dsjBdjehFWmp6KuC8NNzMmjMxrLtxOJV5HrQ/hl7nZYSOHhBmLgqb5qPoEJ0NA+gZlMypvOoLY7NrqimRtIWc=
+	t=1779184278; cv=none; b=oSqA8MFiwI8qnwYr1SLcFkHTO+WimTEV65UtS9W4ANZMDCcWS0268HjxsOKlEXw0nA2CAxh/aiL7UaiOiP3Z0cIXFbzsdvEkOm+2duZYcwsN2nbZ57elBzoZK8S6RX3sANnuUe37GMtrioOKc4c1C4S9oHR88TsWqbfluvlTPuU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1779184192; c=relaxed/simple;
-	bh=IE6y29krFs7/CtIxj8/P8WU7kdj0mN1A0foV17+ef0o=;
-	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=AznE322v3tsMfNW4LTx1+Jl9IwpTE5QIsBiGXcLW44VEoQA7CV+1NptD4HfJYeibTD6XchnEV/5/+d6/5xneflesd63N/0sG9OrmC2Fa8AIQBbavPaAYltUyyNijQtWOPNX0OTwc0qMfz0Gbj9tDonJGofs9zWzwEBiieYFjjgI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com; spf=pass smtp.mailfrom=oss.qualcomm.com; dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b=pISHkWUP; dkim=pass (2048-bit key) header.d=oss.qualcomm.com header.i=@oss.qualcomm.com header.b=UmAM7YJ6; arc=none smtp.client-ip=205.220.180.131
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=oss.qualcomm.com
-Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b="pISHkWUP";
-	dkim=pass (2048-bit key) header.d=oss.qualcomm.com header.i=@oss.qualcomm.com header.b="UmAM7YJ6"
-Received: from pps.filterd (m0279873.ppops.net [127.0.0.1])
-	by mx0a-0031df01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id 64J4sXm2254340
-	for <sashiko-reviews@lists.linux.dev>; Tue, 19 May 2026 09:49:50 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=qualcomm.com; h=
-	cc:content-transfer-encoding:content-type:date:from:in-reply-to
-	:message-id:mime-version:references:subject:to; s=qcppdkim1; bh=
-	sBtjktn/3wn6yr624wkAeDkkUIrRoZ3BsNhBAG45sVA=; b=pISHkWUPdBue0n01
-	/v+xPTDZ3RzcD3gBuSSDVUfiqPAFV1mAwVVTMVv+NA1UGFoc3K5p2dYsLrBBMSx3
-	mAHkdgFXdyTmcm6xHT6rJlill3+NJeOSyMJ9Q2iEI+oYtfUeZxrc6U4cUXv/EcF6
-	FcbaZ84ZXlzestGVKPUzE7QMnSb4muh3vzj11lLKUBIdbO8PXnHUWRncbjM3co7U
-	crJTGv3uS7A1hr0jpg8iQMBZKPj4cD+47SzyTasSSqZN0JALKP35+c0EgUp5u0lu
-	c7lJMYpvUAXKq4cnSYHzpz7a+zFlvOs5zdtdKFyvip9r4Oxw2vWcHgIUcR8aStd1
-	ezDbpg==
-Received: from mail-pl1-f200.google.com (mail-pl1-f200.google.com [209.85.214.200])
-	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 4e8h87s8rf-1
-	(version=TLSv1.3 cipher=TLS_AES_128_GCM_SHA256 bits=128 verify=NOT)
-	for <sashiko-reviews@lists.linux.dev>; Tue, 19 May 2026 09:49:49 +0000 (GMT)
-Received: by mail-pl1-f200.google.com with SMTP id d9443c01a7336-2b99eb06178so86563835ad.2
-        for <sashiko-reviews@lists.linux.dev>; Tue, 19 May 2026 02:49:49 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=oss.qualcomm.com; s=google; t=1779184189; x=1779788989; darn=lists.linux.dev;
-        h=content-transfer-encoding:in-reply-to:from:content-language
-         :references:cc:to:subject:user-agent:mime-version:date:message-id
-         :from:to:cc:subject:date:message-id:reply-to;
-        bh=sBtjktn/3wn6yr624wkAeDkkUIrRoZ3BsNhBAG45sVA=;
-        b=UmAM7YJ6yKoWmhl66MFIGU9RBIYm2DUo3tPjia2vDvvrhgOiB4UED9wHsCd2JAI+6L
-         rrZBbV8+9HB7g0n6BUQposx9Q0QE6SKSS7C3W7iIF/+RRJnmiigRdbomSxjuCS7a2VFk
-         qhwm7aQTn/XV6Ug4KVq79jbLzXyZmBrT4h9flGs+Im+isTUbIjoGuiJRKDQqz/wpNaIj
-         Wv+i92hwspnJsL4cH0UfizzDYsDqHzWzejDiUe7zhPWbcAp08RJCMa9/VtRkK+otddPF
-         92Ivm/gjjOaeLN3V1mIYQI59Rx7BtsfNeErBT5aS9O9ZVFt+q/17H/mpdiYSHQNmQWK7
-         FX0A==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20251104; t=1779184189; x=1779788989;
-        h=content-transfer-encoding:in-reply-to:from:content-language
-         :references:cc:to:subject:user-agent:mime-version:date:message-id
-         :x-gm-gg:x-gm-message-state:from:to:cc:subject:date:message-id
-         :reply-to;
-        bh=sBtjktn/3wn6yr624wkAeDkkUIrRoZ3BsNhBAG45sVA=;
-        b=l/hqzSobsqH093xagSeGYq9GaFE8zzaX9bsno15mczDWuzvw6NIE3HctD51KKzAX2J
-         SnxzvPT5n/vesfNlkyIf2xKmpNB1PM+AijNlIOTJs8Sfv9aXcQ9EhJ8YDMX+bFyGgR1I
-         F7cELGtV6OyYgJmn5/FUHN5BrJokPfhTWNGJYjfOuLDGIft0HwoxQGTtBPE8atcODVQ0
-         lJrIzVduXXCJgu8jpjxbIvrzdjV4TIqz1Q9npqn4ZO8t5GOOoiUCD7CjI0wsLhqz7qwQ
-         CuxzeM6HhAAKSw26Ncto/Za6bb8Sr4xtMjuToV0QmZXLohNbooS5d8FunCMkhCC+OT5R
-         HERQ==
-X-Gm-Message-State: AOJu0YzWeq/WZo9OGUlnkEQ4q235dcpltS8R51XlWyMD/T7ToHsSnhxS
-	a7OgznJCXXm3y4zOdBOJQLkZ4tUXhzE1Z3WUVRmCVaoNBTJieM87F2cchfDkheqFo9UF5tTA5bw
-	UMHzRJuzy608AhCW076uVcvvuZKgHM01UIxGNNy+TvRT8yKkQaBM+AcW+GTuNt0xChhf3x+ipsC
-	K7We4=
-X-Gm-Gg: Acq92OGU87L0E0Ltrsp0ikUOebQg2oUaWdEn/7ILNu7r417DQJpHDiWU3ztVFQXXQ3v
-	sNZ0+ZNdFbRyriFX+S5TeEH5EPGyZs//nXsFC87B7UpQ10epf9UXKrCyhZbMD99tt2HZVfNJxKE
-	aO21tZfAHwUw2wP40cqFSIFIXDGGoPgr1sVKukLID4wIUuKpwGADo7NCTQ9MR7n74MOHGiYINYW
-	tjjGCqG73gsSmBXUVQP9pLh8zXjDjdnC3PgQIBCvmh+drePptEKiWTg1Ur6+8WChLjVm+xmn4rk
-	nQXAwdJ0wIm7nmgnsZ3P1VKjY5TteWr89fMXjskYhQq2v2KWSxmfqM85EYzEaoEd2Rxg0yjztZ1
-	9+hJSIgKgWtWnmw+ZFvxh9vrd+gegGu2d6vCEHbIprKgHHwGMSRcm+VRVEgo=
-X-Received: by 2002:a17:903:44cd:b0:2bd:6732:6817 with SMTP id d9443c01a7336-2bd7e8d3578mr136422985ad.23.1779184188789;
-        Tue, 19 May 2026 02:49:48 -0700 (PDT)
-X-Received: by 2002:a17:903:44cd:b0:2bd:6732:6817 with SMTP id d9443c01a7336-2bd7e8d3578mr136422675ad.23.1779184188242;
-        Tue, 19 May 2026 02:49:48 -0700 (PDT)
-Received: from [10.219.57.29] ([202.46.23.19])
-        by smtp.gmail.com with ESMTPSA id d9443c01a7336-2bd5cfe6b8fsm186570885ad.46.2026.05.19.02.49.44
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Tue, 19 May 2026 02:49:47 -0700 (PDT)
-Message-ID: <0f79dcff-0676-4e83-8f85-6345313f75d6@oss.qualcomm.com>
-Date: Tue, 19 May 2026 15:19:42 +0530
+	s=arc-20240116; t=1779184278; c=relaxed/simple;
+	bh=h9vgR4R2L2SoIj0B+/bJHJ26dviCKAQx5xB/tcQX9Rg=;
+	h=Date:From:To:Cc:Subject:In-Reply-To:References:Content-Type:
+	 MIME-Version:Message-ID; b=IKTOAxJueFKWXIrf3ro5Y2R+FGEk2WOTPk7uf+ograYBFe2Pu5+Q/7CXVuOTnmni96tnN55+8otPL8onwVIYb5qJK/HSxd5fecMFsO3M5a2y+HT7yFuYiB6bH9D6JvLaZy8Pa5LW9rjSxLjSBRJZFqqdrAqO0T7rot4YvyiSrJI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=eswincomputing.com; spf=pass smtp.mailfrom=eswincomputing.com; arc=none smtp.client-ip=206.189.21.223
+Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=eswincomputing.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=eswincomputing.com
+Received: from lizhi2$eswincomputing.com ( [10.11.96.26] ) by
+ ajax-webmail-app1 (Coremail) ; Tue, 19 May 2026 17:51:05 +0800 (GMT+08:00)
+Date: Tue, 19 May 2026 17:51:05 +0800 (GMT+08:00)
+X-CM-HeaderCharset: UTF-8
+From: =?UTF-8?B?5p2O5b+X?= <lizhi2@eswincomputing.com>
+To: "Conor Dooley" <conor@kernel.org>
+Cc: sashiko-reviews@lists.linux.dev, robh@kernel.org,
+	devicetree@vger.kernel.org, conor+dt@kernel.org
+Subject: Re: Re: [PATCH net v2 1/5] dt-bindings: ethernet: eswin: add
+ optional TXD and RXD delay register offsets
+X-Priority: 3
+X-Mailer: Coremail Webmail Server Version 2024.2-cmXT6 build
+ 20241203(6b039d88) Copyright (c) 2002-2026 www.mailtech.cn
+ mispb-72143050-eaf5-4703-89e0-86624513b4ce-eswincomputing.com
+In-Reply-To: <20260519-thinness-slashing-cc0310904419@spud>
+References: <20260518022023.427-1-lizhi2@eswincomputing.com>
+ <20260519022334.35742C2BCB7@smtp.kernel.org>
+ <20260519-thinness-slashing-cc0310904419@spud>
+Content-Transfer-Encoding: base64
+Content-Type: text/plain; charset=UTF-8
 Precedence: bulk
 X-Mailing-List: sashiko-reviews@lists.linux.dev
 List-Id: <sashiko-reviews.lists.linux.dev>
 List-Subscribe: <mailto:sashiko-reviews+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:sashiko-reviews+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 2/4] arm64: dts: qcom: Introduce Shikra SoC base dtsi
-To: sashiko-reviews@lists.linux.dev
-Cc: linux-phy@lists.infradead.org, krzk+dt@kernel.org,
-        devicetree@vger.kernel.org, neil.armstrong@linaro.org,
-        olteanv@gmail.com, conor+dt@kernel.org, robh@kernel.org,
-        vkoul@kernel.org
-References: <20260512-shikra-dt-v1-2-716438330dd0@oss.qualcomm.com>
- <20260513040623.03F36C2BCC7@smtp.kernel.org>
-Content-Language: en-US
-From: Komal Bajaj <komal.bajaj@oss.qualcomm.com>
-In-Reply-To: <20260513040623.03F36C2BCC7@smtp.kernel.org>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
-X-Proofpoint-GUID: NFHh8REaF2KuavP-jFZDwuZkOnL2TtqG
-X-Proofpoint-ORIG-GUID: NFHh8REaF2KuavP-jFZDwuZkOnL2TtqG
-X-Authority-Analysis: v=2.4 cv=a9sAM0SF c=1 sm=1 tr=0 ts=6a0c323d cx=c_pps
- a=IZJwPbhc+fLeJZngyXXI0A==:117 a=j4ogTh8yFefVWWEFDRgCtg==:17
- a=IkcTkHD0fZMA:10 a=NGcC8JguVDcA:10 a=s4-Qcg_JpJYA:10
- a=VkNPw1HP01LnGYTKEx00:22 a=u7WPNUs3qKkmUXheDGA7:22 a=rJkE3RaqiGZ5pbrm-msn:22
- a=VwQbUJbxAAAA:8 a=EUspDBNiAAAA:8 a=1Btu4tQq9WNLzPClb6kA:9 a=QEXdDO2ut3YA:10
- a=uG9DUKGECoFWVXl0Dc02:22
-X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwNTE5MDA5NSBTYWx0ZWRfX85q6Ujz4ZOLn
- Z6pwJaG9BgxKJfebuxFiCWBQSbK138lm6/wDXtKxs5u806lCygkC5zR6HhuRSe/9unz779/z5Ef
- +1LvgfMEnEkENeSi+T73e3k6H5E4NBZqBjry5X2UVSkLJdh/JdfXQcj6px1k5iHst3/c90MIUCs
- r6SGsOmDxANKsfUqCN2dYiy0uNgzxUxg5l/y8PjePvDingfDah0cMzDv8TYpM01IZ5KuBprd6v6
- qOYTwXZwZy0Ip79SNwE7x2SbG6buL/9tehvwyd8VYwjfPrLLDKuLkbP3NtlmBLf9416QqZMCA4g
- vh91ouS8wh77OOnHQLSAcHptyn9sC+H/VECLvRGnKpCWQm5+ZsSwu5UTun5FQt/0KwGLMcg/oWq
- j/2qBnyLgx+nN0gVJNPIWtn7MswP9ILNQmFDhdVGr81RDXBN4ydTtX0oc0FrC52kNXt9IfN/f1w
- Vuximrj4uR4lNFdiTNA==
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.293,Aquarius:18.0.1143,Hydra:6.1.51,FMLib:17.12.100.49
- definitions=2026-05-19_03,2026-05-18_01,2025-10-01_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
- malwarescore=0 priorityscore=1501 impostorscore=0 adultscore=0 clxscore=1015
- lowpriorityscore=0 bulkscore=0 suspectscore=0 spamscore=0 phishscore=0
- classifier=typeunknown authscore=0 authtc= authcc= route=outbound adjust=0
- reason=mlx scancount=1 engine=8.22.0-2605130000 definitions=main-2605190095
+Message-ID: <44d1ad42.8505.19e3fa56a49.Coremail.lizhi2@eswincomputing.com>
+X-Coremail-Locale: en_US
+X-CM-TRANSID:TAJkCgBnCXOJMgxqY7YaAA--.7609W
+X-CM-SenderInfo: xol2xx2s6h245lqf0zpsxwx03jof0z/1tbiAQEMDGoLPx0fmAABsF
+X-Coremail-Antispam: 1Ur529EdanIXcx71UUUUU7IcSsGvfJ3iIAIbVAYjsxI4VWxJw
+	CS07vEb4IE77IF4wCS07vE1I0E4x80FVAKz4kxMIAIbVAFxVCaYxvI4VCIwcAKzIAtYxBI
+	daVFxhVjvjDU=
 
-On 5/13/2026 9:36 AM, sashiko-bot@kernel.org wrote:
-> Thank you for your contribution! Sashiko AI review found 4 potential issue(s) to consider:
-> - [High] Invalid PPI interrupt numbers (1, 2, 3, 0) are specified for the ARMv8 generic timer instead of the architecturally required numbers (13, 14, 11, 10).
-> - [Medium] The `sdhc_1` node incorrectly uses RPMh interconnect tags (`QCOM_ICC_TAG_ALWAYS`, `QCOM_ICC_TAG_ACTIVE_ONLY`) on an RPM-based interconnect topology.
-> - [Medium] The USB SuperSpeed wakeup interrupt (`ss_phy_irq`) directly references the GIC instead of routing through the MPM, breaking system wake-up from deep sleep.
-> - [Low] The `sdhc_1` node uses the undeclared macro `RPMHPD_CX` for its `power-domains` property, which will cause a Device Tree compiler syntax error.
-> --
->
-> commit e2ee94ef3a5741f2cb9aae14dbef52c5f4a760f1
-> Author: Komal Bajaj <komal.bajaj@oss.qualcomm.com>
-> Subject: arm64: dts: qcom: Introduce Shikra SoC base dtsi
->
-> This commit adds initial device tree support for the Qualcomm Shikra SoC, an
-> IoT-focused platform featuring a Cortex-A55 and Cortex-A78C cluster. It
-> configures RPM-based power and clock management alongside various peripherals
-> like USB, eMMC, and the generic timer.
->
->> diff --git a/arch/arm64/boot/dts/qcom/shikra.dtsi b/arch/arm64/boot/dts/qcom/shikra.dtsi
->> new file mode 100644
->> index 0000000000000..262c488add1ec
->> --- /dev/null
->> +++ b/arch/arm64/boot/dts/qcom/shikra.dtsi
-> [ ... ]
->
->> +		sdhc_1: mmc@4744000 {
->> +			compatible = "qcom,shikra-sdhci", "qcom,sdhci-msm-v5";
->> +
->> +			reg = <0x0 0x04744000 0x0 0x1000>,
->> +			      <0x0 0x04745000 0x0 0x1000>;
-> [ ... ]
->
->> +			interconnects = <&system_noc MASTER_SDCC_1 QCOM_ICC_TAG_ALWAYS
->> +					&mc_virt SLAVE_EBI_CH0 QCOM_ICC_TAG_ALWAYS>,
->> +					<&mem_noc MASTER_AMPSS_M0 QCOM_ICC_TAG_ACTIVE_ONLY
->> +					&config_noc SLAVE_SDCC_1 QCOM_ICC_TAG_ACTIVE_ONLY>;
-> Since the Shikra SoC utilizes an RPM-based architecture, should this node use
-> interconnect tags from qcom,rpm-icc.h (such as RPM_ALWAYS_TAG) instead?
-> Passing RPMh interconnect tags from qcom,icc.h to an RPM interconnect provider
-> might result in unhandled parameters or silent bandwidth request failures.
-
-ACK, macro to be updated as per the RPM header. Will update in next series.
-
->
->> +			interconnect-names = "sdhc-ddr",
->> +					     "cpu-sdhc";
->> +
->> +			power-domains = <&rpmpd RPMHPD_CX>;
-> Does this power-domains assignment use an undeclared macro? RPMHPD_CX belongs
-> to RPMh-based power domains, while this platform relies on RPMPD. This looks
-> like it will cause a dtc syntax error during the build.
-
-ACK, PD to be updated as per the available and compatible power-domain 
-as per the architecture.
-
->
-> [ ... ]
->
->> +		usb_1: usb@4e00000 {
->> +			compatible = "qcom,shikra-dwc3", "qcom,snps-dwc3";
->> +			reg = <0x0 0x04e00000 0x0 0xfc100>;
-> [ ... ]
->
->> +			interrupts-extended = <&intc GIC_SPI 255 IRQ_TYPE_LEVEL_HIGH>,
->> +					      <&intc GIC_SPI 302 IRQ_TYPE_LEVEL_HIGH>,
->> +					      <&intc GIC_SPI 260 IRQ_TYPE_LEVEL_HIGH>,
->> +					      <&intc GIC_SPI 254 IRQ_TYPE_LEVEL_HIGH>,
->> +					      <&intc GIC_SPI 422 IRQ_TYPE_LEVEL_HIGH>;
->> +			interrupt-names = "dwc_usb3",
->> +					  "pwr_event",
->> +					  "qusb2_phy",
->> +					  "hs_phy_irq",
->> +					  "ss_phy_irq";
-> The mpm node correctly maps pin 12 to GIC SPI 422 for the DWC3 ss_phy_irq.
-> Could routing this directly to the GIC here instead of hierarchically through
-> the mpm (e.g., <&mpm 12 IRQ_TYPE_LEVEL_HIGH>) prevent the hardware from
-> waking up from low-power states upon USB activity?
-
-ACK, will update to use MPM for ss_phy_irq instead of direct GIC for usb.
-
-Thanks
-Komal
-
->
-> [ ... ]
->
->> +	timer {
->> +		compatible = "arm,armv8-timer";
->> +
->> +		interrupts = <GIC_PPI 1 IRQ_TYPE_LEVEL_LOW>,
->> +			     <GIC_PPI 2 IRQ_TYPE_LEVEL_LOW>,
->> +			     <GIC_PPI 3 IRQ_TYPE_LEVEL_LOW>,
->> +			     <GIC_PPI 0 IRQ_TYPE_LEVEL_LOW>;
->> +	};
-> Are these PPI interrupt numbers correct for the ARMv8 generic timer? The
-> architecturally defined numbers are typically 13 for Secure, 14 for Non-secure,
-> 11 for Virtual, and 10 for Hypervisor. Using invalid hardware IRQ lines here
-> could prevent the kernel from receiving scheduler ticks and stall the boot.
->
->> +};
-
+CgoKPiAtLS0tLU9yaWdpbmFsIE1lc3NhZ2VzLS0tLS0KPiBGcm9tOiAiQ29ub3IgRG9vbGV5IiA8
+Y29ub3JAa2VybmVsLm9yZz4KPiBTZW5kIHRpbWU6VHVlc2RheSwgMTkvMDUvMjAyNiAxNzoxMTo1
+OQo+IFRvOiBzYXNoaWtvLXJldmlld3NAbGlzdHMubGludXguZGV2Cj4gQ2M6IGxpemhpMkBlc3dp
+bmNvbXB1dGluZy5jb20sIHJvYmhAa2VybmVsLm9yZywgZGV2aWNldHJlZUB2Z2VyLmtlcm5lbC5v
+cmcsIGNvbm9yK2R0QGtlcm5lbC5vcmcKPiBTdWJqZWN0OiBSZTogW1BBVENIIG5ldCB2MiAxLzVd
+IGR0LWJpbmRpbmdzOiBldGhlcm5ldDogZXN3aW46IGFkZCBvcHRpb25hbCBUWEQgYW5kIFJYRCBk
+ZWxheSByZWdpc3RlciBvZmZzZXRzCj4gCj4gT24gVHVlLCBNYXkgMTksIDIwMjYgYXQgMDI6MjM6
+MzNBTSArMDAwMCwgc2FzaGlrby1ib3RAa2VybmVsLm9yZyB3cm90ZToKPiA+IFRoYW5rIHlvdSBm
+b3IgeW91ciBjb250cmlidXRpb24hIFNhc2hpa28gQUkgcmV2aWV3IGZvdW5kIDEgcG90ZW50aWFs
+IGlzc3VlKHMpIHRvIGNvbnNpZGVyOgo+ID4gLSBbTWVkaXVtXSBNaXNzaW5nIGBtaW5JdGVtczog
+NGAgY29uc3RyYWludCBtYWtlcyB0aGUgbmV3bHkgYWRkZWQgb3B0aW9uYWwgY2VsbHMgbWFuZGF0
+b3J5LCBicmVha2luZyBzY2hlbWEgYmFja3dhcmQgY29tcGF0aWJpbGl0eS4KPiA+IC0tCj4gPiAK
+PiA+IGNvbW1pdCAyOTkyNDgzZGY4OGFmMjgyM2MyNzVmYzg2MTg3ZjdlMzhhY2JlZTVjCj4gPiBB
+dXRob3I6IFpoaSBMaSA8bGl6aGkyQGVzd2luY29tcHV0aW5nLmNvbT4KPiA+IAo+ID4gZHQtYmlu
+ZGluZ3M6IGV0aGVybmV0OiBlc3dpbjogYWRkIG9wdGlvbmFsIFRYRCBhbmQgUlhEIGRlbGF5IHJl
+Z2lzdGVyIG9mZnNldHMKPiA+IAo+ID4gVGhpcyBjb21taXQgZG9jdW1lbnRzIHR3byBvcHRpb25h
+bCBjZWxscyBpbiB0aGUgZXN3aW4saHNwLXNwLWNzciBwcm9wZXJ0eQo+ID4gZm9yIHRoZSBUWEQg
+YW5kIFJYRCBkZWxheSBjb250cm9sIHJlZ2lzdGVyIG9mZnNldHMuCj4gPiAKPiA+ID4gZGlmZiAt
+LWdpdCBhL0RvY3VtZW50YXRpb24vZGV2aWNldHJlZS9iaW5kaW5ncy9uZXQvZXN3aW4sZWljNzcw
+MC1ldGgueWFtbCBiL0RvY3VtZW50YXRpb24vZGV2aWNldHJlZS9iaW5kaW5ncy9uZXQvZXN3aW4s
+ZWljNzcwMC1ldGgueWFtbAo+ID4gPiAtLS0gYS9Eb2N1bWVudGF0aW9uL2RldmljZXRyZWUvYmlu
+ZGluZ3MvbmV0L2Vzd2luLGVpYzc3MDAtZXRoLnlhbWwKPiA+ID4gKysrIGIvRG9jdW1lbnRhdGlv
+bi9kZXZpY2V0cmVlL2JpbmRpbmdzL25ldC9lc3dpbixlaWM3NzAwLWV0aC55YW1sCj4gPiAKPiA+
+IFsgLi4uIF0KPiA+IAo+ID4gPiBAQCAtODIsNiArOTEsOCBAQCBwcm9wZXJ0aWVzOgo+ID4gPiAg
+ICAgICAgICAgIC0gZGVzY3JpcHRpb246IE9mZnNldCBvZiBBWEkgY2xvY2sgY29udHJvbGxlciBM
+b3ctUG93ZXIgcmVxdWVzdAo+ID4gPiAgICAgICAgICAgICAgICAgICAgICAgICAgIHJlZ2lzdGVy
+Cj4gPiA+ICAgICAgICAgICAgLSBkZXNjcmlwdGlvbjogT2Zmc2V0IG9mIHJlZ2lzdGVyIGNvbnRy
+b2xsaW5nIFRYL1JYIGNsb2NrIGRlbGF5Cj4gPiA+ICsgICAgICAgICAgLSBkZXNjcmlwdGlvbjog
+T3B0aW9uYWwgb2Zmc2V0IG9mIHJlZ2lzdGVyIGNvbnRyb2xsaW5nIFRYRCBkZWxheQo+ID4gPiAr
+ICAgICAgICAgIC0gZGVzY3JpcHRpb246IE9wdGlvbmFsIG9mZnNldCBvZiByZWdpc3RlciBjb250
+cm9sbGluZyBSWEQgZGVsYXkKPiA+IAo+ID4gV2lsbCB0aGlzIG1ha2UgdGhlIHR3byBuZXcgb2Zm
+c2V0cyBzdHJpY3RseSByZXF1aXJlZCBpbnN0ZWFkIG9mIG9wdGlvbmFsPwo+ID4gCj4gPiBJbiBk
+dC1zY2hlbWEsIHdoZW4gYW4gaXRlbXMgbGlzdCBkZWZpbmVzIGEgdHVwbGUsIG1pbkl0ZW1zIGlt
+cGxpY2l0bHkKPiA+IGRlZmF1bHRzIHRvIHRoZSB0b3RhbCBudW1iZXIgb2YgaXRlbXMgaW4gdGhh
+dCBsaXN0LiBCeSBpbmNyZWFzaW5nIHRoZSBsaXN0Cj4gPiBmcm9tIDQgdG8gNiBpdGVtcyB3aXRo
+b3V0IGFkZGluZyBhIG1pbkl0ZW1zOiA0IGNvbnN0cmFpbnQgdG8gdGhlIGlubmVyIGl0ZW1zCj4g
+PiBsaXN0LCB3b24ndCB2YWxpZGF0aW9uIG5vdyBzdHJpY3RseSByZXF1aXJlIGV4YWN0bHkgNiBp
+dGVtcz8KPiA+IAo+ID4gQ291bGQgdGhpcyBjYXVzZSBkdF9iaW5kaW5nX2NoZWNrIHRvIGZhaWwg
+Zm9yIGV4aXN0aW5nIGRldmljZSB0cmVlcyB0aGF0Cj4gPiBjb3JyZWN0bHkgc3BlY2lmeSBvbmx5
+IHRoZSBvcmlnaW5hbCA0IGVsZW1lbnRzPwo+IAo+IExvb2tzIGxpa2UgYSB2YWxpZCBjb21wbGFp
+bnQgdG8gbWUuCj4gcHctYm90OiBjaGFuZ2VzLXJlcXVlc3RlZAo+IApZb3UncmUgcmlnaHQsIHRo
+aXMgaXMgYSB2YWxpZCBpc3N1ZS4KCkknbGwgZml4IGl0IGluIHYzIGJ5IGFkZGluZyBvbmx5IG1p
+bkl0ZW1zOiA0IHRvIHByZXNlcnZlIGJhY2t3YXJkCmNvbXBhdGliaWxpdHkgd2l0aCBleGlzdGlu
+ZyA0LWNlbGwgZGV2aWNlIHRyZWVzLgoKU2hvdWxkIEkgZHJvcCB5b3VyIEFja2VkLWJ5IGluIHYz
+IGR1ZSB0byB0aGUgc2NoZW1hIGNoYW5nZSwgb3Igc2hvdWxkCml0IGJlIHJldGFpbmVkPwoKVGhh
+bmtzLgo=
