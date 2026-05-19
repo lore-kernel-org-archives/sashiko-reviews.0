@@ -1,226 +1,253 @@
-Received: from mail-yw1-f178.google.com (mail-yw1-f178.google.com [209.85.128.178])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from mx0a-0031df01.pphosted.com (mx0a-0031df01.pphosted.com [205.220.168.131])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C97A039D6C9
-	for <sashiko-reviews@lists.linux.dev>; Tue, 19 May 2026 06:47:26 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=pass smtp.client-ip=209.85.128.178
-ARC-Seal:i=2; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1779173248; cv=pass; b=PfiotBGft2UQTnrvVp8G62+AJy7zblBsbIcAP6ivKmEBObm2J5YKP8YbRNKC5Mx6yUmynWSirAI1gAO3PvAxDKjZkynLLhdAK+RVIzj+Vd6wkOprUxe0TzCKYkygnRC0Z522r8F0af8hggEwp/JheSwiGWBxirEAH+cuu0/8618=
-ARC-Message-Signature:i=2; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1779173248; c=relaxed/simple;
-	bh=NyNDhvSyv7XRMowpgU81uTJFnsKmqI+7pkyzUxT0azo=;
-	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
-	 To:Cc:Content-Type; b=ZihR8sztP/HU7rsJg0X+3j/ngt6PYQY1ggW/yp5KqcdV8GSv+oEeDUImUGjfecz9K8QYkkS4QgLEK8gU5cjJzGfCxpbTZGwm1WHlyCeLM4Zswg3/rZE71u6LBLFSkxOQ/dUHV5AdRGR3y5evhjTvgcQWs5sEV6Hs9sxSSNixHoE=
-ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=FwSxUvDs; arc=pass smtp.client-ip=209.85.128.178
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F106D3A7857;
+	Tue, 19 May 2026 06:55:34 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.168.131
+ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
+	t=1779173736; cv=none; b=fNzy7cOXy542gOeGaZ5oOdemi/KuFhLTaFcnIO7xijnydHKt5B5uuY6n/+3NpYfRmRj/SfMlncOXcJbThJSlTqClcWhmo6j59ZxxUTGlFYG94elB8Rhm9c0U//6BNU28vDN7AjhO5sAyx3Tgut0pKHBlJ55q6savIFxc3qXfsKk=
+ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
+	s=arc-20240116; t=1779173736; c=relaxed/simple;
+	bh=fgNzbDBuscOMK5K2benapcqpzqN2CvS+MjI3jhWGbW4=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=TY04TY+PTVyXMGH9C0y/JJR28V68G6yMlqEOVuOmUSKNMHkWWCl2g2gwxDiDzWu4GhkecO4pi64n/7XXqjfm036GczKn2ZLbrjJSyVXq0GergtdsID+EHz4/fxcm/6OnXfVyjpwJ9J0G9lgMNStUOCd1h1MAtmooaPs5psyb+x4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com; spf=pass smtp.mailfrom=qualcomm.com; dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b=RPC1HT7+; arc=none smtp.client-ip=205.220.168.131
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=qualcomm.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="FwSxUvDs"
-Received: by mail-yw1-f178.google.com with SMTP id 00721157ae682-7bdec52f48dso24225037b3.0
-        for <sashiko-reviews@lists.linux.dev>; Mon, 18 May 2026 23:47:26 -0700 (PDT)
-ARC-Seal: i=1; a=rsa-sha256; t=1779173246; cv=none;
-        d=google.com; s=arc-20240605;
-        b=H523cy9c09zKMmof3eoopLjbZLyGr0fTCwBrLLoB6hmePuWoHGbiEXWkkCWZc17SRL
-         3DG0YWlKWPEWJcGcOliusULjYKzA20I/SpoBXG2RKE2ekqK8qRPxpOU3g4cJ44fmVDLs
-         dQwnPnUR1WpqC1sO7QPum1cXzMfGrglrbUKrJLfZ3Myic0RxIcnVp4+0jv80ZOF5a2qO
-         YBqles3LLlNK4Z4lOhINtzXuiPAn0MPr+Mf6FMWOUNifvjgrp37iHL8fh2DiPLNYqX1Q
-         EsHCHhtF8AKqytMEOYpId3jkNWXbvjlfhOYOPn2JJ+aPan2ChgGgwqxz4skDHIrb0WAC
-         +reA==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com; s=arc-20240605;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:dkim-signature;
-        bh=eaSPx0wbxWVv539GDTg5+Kyju9uz5Da///Zk6u5kJUA=;
-        fh=jNN73ROUAWpOnqcFckj/je1cyezepSLhAlHS00pwn+I=;
-        b=e3jO+AHqa2r12QOsDWp75g//09G7lUFyCRm2RjRF6uxGWtdPx0SWBz0JeuOZfKCKBS
-         7AyipVgHU9GNBzOSdvkTsVWXgesShlTqQDHLsqZeF1p1jNI3ePAAnBA+NFDHiq5sJHCE
-         qEvc80L5Dqk+jwwk6FjFapBs+RYS6MUdeWcmyXQ5qvD8QFro7x5Q4STdzZIOHTPhjE9S
-         Cs3Hevv1wHrdyrC/xRbtW12ehINcSowfIFKobBMJpPgLYBPGQhMhQ1JXSowynMgziHox
-         cehLumLWwaQtmMA7zUzGCLu2LOuJXsjOIPkkm04JzO1uORxZX1se9yJfNzoMSTVvvRNW
-         fuKg==;
-        darn=lists.linux.dev
-ARC-Authentication-Results: i=1; mx.google.com; arc=none
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20251104; t=1779173246; x=1779778046; darn=lists.linux.dev;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=eaSPx0wbxWVv539GDTg5+Kyju9uz5Da///Zk6u5kJUA=;
-        b=FwSxUvDsIiABz6AGUsHd3tubhokkCTpfjU7l8kYYK2zBh6NKvXdjc89V32F0AJQQwf
-         uuKG/wGa/RD/H8gvdrgr7FrecLNR00LIlfW9p5bWBD+6X5kesiUCptEBet4JbUc7uP9b
-         WKfDxdkg08k9/V5TxslBNAVewZpwEhU6AyA1j+/9wU9VJjMj+974zMXUdNKNY5V2wust
-         pooRN8mjEvJWFgPBnHemr0Z5cb10woIlOs7g10z8MVL2WaedLQMbQhLIndfRyiJ6JoZs
-         BPe9c4w29otqZJ0WcsuJnL4SE29h2B5ZSkF0wpb1E8/OfER+doILTEDhF07L5Vt8F7Vd
-         wbjw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20251104; t=1779173246; x=1779778046;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:x-gm-gg:x-gm-message-state:from
-         :to:cc:subject:date:message-id:reply-to;
-        bh=eaSPx0wbxWVv539GDTg5+Kyju9uz5Da///Zk6u5kJUA=;
-        b=URTheLN6z0gY053GRvWbueevihR9WZ3QdrpEofwKSf+yDWdGzptDfAUGh0aYq/LEac
-         nYuD+4dBQQ1LLw/TJ9avGKAxcceR8z36MYHsQt//KSBrLYQJRUeNMe3tJA525F+RV0Uf
-         TjsaZykuYonqa+/Km1eY04/uvIT3a0ACl6smuUAkfq1jZfylFlWDq1+q5CDLdMQKmk7F
-         1H3gH3W11wB271Qd+0VOrIQhQF1tgoqlR74CkjewF09KaCFEbLwINLkaXcq7+KGIvAWf
-         sTlQMl4sddttCPCiyyn6vBERDEzDTF4zwPgiavfAscLp7fXfXfH+riYjU4GcznXK2kRh
-         sjSA==
-X-Gm-Message-State: AOJu0YyASdjCbSe6aIk+UllgLYw+YtyjrDpvnFXp9XPpls/1Sn5lWViO
-	17ztyH8ObszLbKj2yVfDTpUDzOdYLDNp2kBOf3Y9VU/SlGRKbCpdMHt1eyHBvOSzkd4mQfULUdf
-	pVdnsGmzWljpD5lTjqk9Ln4D4PWACrXB3Nf+fUSc=
-X-Gm-Gg: Acq92OFf5pi0LjsTTwbBy7yr4MHbLWnPF2Y8knkf09/5fvBq6fnPjA/vy8CgzEFYa2m
-	MS2/nbQOM4L9fEHTGunud3puN5Mpw62w7Qa9CvO3K/tDI2CM/KB8TW3qHZYizL57nee0BF8OaPH
-	REkfur6iEgXIQHD/hGA1lmMrg9SruFPVanCyiDlwLU9znrVaJcMYNwWXke61YAC+NbNifKarPpx
-	6Bi3+1aKCw7TX2dPzbiP6EhwtDKq/hCcIy29cuIuBAe0TOY8YCMMZEBKWuURUDR7eYt4KsrXkUO
-	igjWz+wDqbagH5EPJ3Ji1rHLJ7ma4QjxhqsPYEo9
-X-Received: by 2002:a05:690c:c15:b0:7c6:e377:1dc6 with SMTP id
- 00721157ae682-7c7e3134169mr200189587b3.0.1779173245682; Mon, 18 May 2026
- 23:47:25 -0700 (PDT)
+	dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b="RPC1HT7+"
+Received: from pps.filterd (m0279864.ppops.net [127.0.0.1])
+	by mx0a-0031df01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id 64J1WIJl2975542;
+	Tue, 19 May 2026 06:55:31 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=qualcomm.com; h=
+	cc:content-transfer-encoding:content-type:date:from:in-reply-to
+	:message-id:mime-version:references:subject:to; s=qcppdkim1; bh=
+	fp0TdVJpJDa0rgixp8cNzMgcylXEBSFwBIwfBxAfqBQ=; b=RPC1HT7+az8LAQ0/
+	sYTjEjE8KPDgYpr2hMOcb38Jsz5cqp2w+6XmGI4m/M0LiLahN6ISOyrJoBMswTjO
+	ZRZSlKUB8FStuoSSsgnxhJN8gAxVlXgbhfgq34Oga0l1NPw/02D3Q9cP7cu+kMg/
+	b3qP/2LPMKDe58lETstzq+De0nRrCMYGCaj9gsYoukNMsdNaUS2TdiCuJOybrBe+
+	VGd7mqX7QX9hi8ws8IdOFwX/nwmlieNTipfcR/mn3gOBtzkKGiFi04BrnDH1ln31
+	Au1AwN9VLP+tNjrgq4rCpJpsrXUACG8xbnMNXXUCFDA73NTIUZihsBUYOBVHFZHv
+	41jutA==
+Received: from apblrppmta01.qualcomm.com (blr-bdr-fw-01_GlobalNAT_AllZones-Outside.qualcomm.com [103.229.18.19])
+	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 4e84v4b2hu-1
+	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+	Tue, 19 May 2026 06:55:31 +0000 (GMT)
+Received: from pps.filterd (APBLRPPMTA01.qualcomm.com [127.0.0.1])
+	by APBLRPPMTA01.qualcomm.com (8.18.1.7/8.18.1.7) with ESMTP id 64J6tD0u020667;
+	Tue, 19 May 2026 06:55:13 GMT
+Received: from pps.reinject (localhost [127.0.0.1])
+	by APBLRPPMTA01.qualcomm.com (PPS) with ESMTPS id 4e712fh6g3-1
+	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+	Tue, 19 May 2026 06:55:13 +0000 (GMT)
+Received: from APBLRPPMTA01.qualcomm.com (APBLRPPMTA01.qualcomm.com [127.0.0.1])
+	by pps.reinject (8.18.1.12/8.18.1.12) with ESMTP id 64J6tDa9020649;
+	Tue, 19 May 2026 06:55:13 GMT
+Received: from hu-devc-hyd-u22-c.qualcomm.com (hu-kotarake-hyd.qualcomm.com [10.213.97.140])
+	by APBLRPPMTA01.qualcomm.com (PPS) with ESMTPS id 64J6tDrb020645
+	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+	Tue, 19 May 2026 06:55:13 +0000 (GMT)
+Received: by hu-devc-hyd-u22-c.qualcomm.com (Postfix, from userid 2389607)
+	id A51F3B04; Tue, 19 May 2026 12:25:12 +0530 (+0530)
+Date: Tue, 19 May 2026 12:25:12 +0530
+From: Rakesh Kota <rakesh.kota@oss.qualcomm.com>
+To: sashiko-reviews@lists.linux.dev
+Cc: robh@kernel.org, conor+dt@kernel.org, devicetree@vger.kernel.org,
+        jishnu.prakash@oss.qualcomm.com, kamal.wadhwa@oss.qualcomm.com,
+        konradybcio@kernel.org
+Subject: Re: [PATCH 2/2] power: supply: qcom_battmgr: Add support batteryless
+ boards as MAINS
+Message-ID: <20260519065512.uobvdvsdx2ggoyyj@hu-kotarake-hyd.qualcomm.com>
+References: <20260518-add_dc_in_support-v1-2-31fbaa329879@oss.qualcomm.com>
+ <20260518151013.0F8E6C2BCB8@smtp.kernel.org>
 Precedence: bulk
 X-Mailing-List: sashiko-reviews@lists.linux.dev
 List-Id: <sashiko-reviews.lists.linux.dev>
 List-Subscribe: <mailto:sashiko-reviews+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:sashiko-reviews+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-References: <20260513143321.26185-6-laoar.shao@gmail.com> <20260514224000.8316FC2BCB3@smtp.kernel.org>
-In-Reply-To: <20260514224000.8316FC2BCB3@smtp.kernel.org>
-From: Yafang Shao <laoar.shao@gmail.com>
-Date: Tue, 19 May 2026 14:46:49 +0800
-X-Gm-Features: AVHnY4JvQLoFhFQyXqActjgjy4XZjyhfXkPZbhv95lsGfAQ4gvQIoFIxkJ2j3RE
-Message-ID: <CALOAHbD28PLp=35mV6n2G=tKtf8rGb_uVbTb4wY=6Erm+wjLGQ@mail.gmail.com>
-Subject: Re: [RFC PATCH 5/6] livepatch: Remove obsolete per-object callbacks
-To: sashiko-reviews@lists.linux.dev
-Cc: jikos@kernel.org, joe.lawrence@redhat.com, mbenes@suse.cz, song@kernel.org, 
-	pmladek@suse.com, jpoimboe@kernel.org, live-patching@vger.kernel.org
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+Content-Transfer-Encoding: 8bit
+In-Reply-To: <20260518151013.0F8E6C2BCB8@smtp.kernel.org>
+X-QCInternal: smtphost
+X-QCInternal: smtphost
+X-Authority-Analysis: v=2.4 cv=VJPtWdPX c=1 sm=1 tr=0 ts=6a0c0963 cx=c_pps
+ a=Ou0eQOY4+eZoSc0qltEV5Q==:117 a=Ou0eQOY4+eZoSc0qltEV5Q==:17
+ a=IkcTkHD0fZMA:10 a=NGcC8JguVDcA:10 a=VkNPw1HP01LnGYTKEx00:22
+ a=u7WPNUs3qKkmUXheDGA7:22 a=DJpcGTmdVt4CTyJn9g5Z:22 a=c92rfblmAAAA:8
+ a=EUspDBNiAAAA:8 a=VwQbUJbxAAAA:8 a=uR8Etrdt1h4LkKDUJSYA:9 a=3ZKOabzyN94A:10
+ a=QEXdDO2ut3YA:10 a=GvGzcOZaWPEFPQC_NcjD:22
+X-Proofpoint-ORIG-GUID: LTL10dxMd45dLsJ14pVLodOluXnWYw34
+X-Proofpoint-GUID: LTL10dxMd45dLsJ14pVLodOluXnWYw34
+X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwNTE5MDA2NiBTYWx0ZWRfX3hHTw0hVbLW2
+ dYhP/G1ImcRcy15mOrIJ19jN1+7Ogbie0ZrGuH+j0BfeU9ZW7z+cUbGcudrwumzcCMzsWr/meNa
+ 808dghmXm8XQMU29Ukz2GykJRC3pZ4NMAkGxbfsXixGKlh587E1v1Lq6wGNPSQLLtHcHmwTN0Fp
+ xfkcqb0A6LxjI6YPcV2C93alfTwWxgRzpCD9ZqzBIPrZ7PUc+rml17jYUbDuqsjjnK/qTpOW5Q+
+ I18aZWHqn+Tz9+W1H9qnqZs4LSak73vLfGZbS9YfivCmq26jhRMSQfd9HOngDz1hket7uH2R4Xe
+ c5jMT2+Dz/5dhw2OYwijkQRxow3gJYRy5U466D++fZ0fr2RJ1WNvGxALr5QEan9sBogaasLtEBW
+ AvuSsdq6+3VN2DNJzC0kD7x5nOfXjSR8iUFqiSmw/By6oveSlh6XXFinKEbtJcHn6HbNDOklulp
+ eWQ91I64T3nmdDRtoww==
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.293,Aquarius:18.0.1143,Hydra:6.1.51,FMLib:17.12.100.49
+ definitions=2026-05-19_02,2026-05-18_01,2025-10-01_01
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
+ priorityscore=1501 impostorscore=0 adultscore=0 malwarescore=0 bulkscore=0
+ spamscore=0 suspectscore=0 lowpriorityscore=0 clxscore=1015 phishscore=0
+ classifier=typeunknown authscore=0 authtc= authcc= route=outbound adjust=0
+ reason=mlx scancount=1 engine=8.22.0-2605130000 definitions=main-2605190066
 
-On Fri, May 15, 2026 at 6:40=E2=80=AFAM <sashiko-bot@kernel.org> wrote:
->
-> Thank you for your contribution! Sashiko AI review found 3 potential issu=
-e(s) to consider:
-> - [Critical] Out-of-bounds ELF relocations causing memory corruption
-> - [High] Silent failure of livepatch state callbacks due to missing initi=
-alization
-> - [Low] Build failures due to unmigrated selftests and samples
+On Mon, May 18, 2026 at 03:10:12PM +0000, sashiko-bot@kernel.org wrote:
+> Thank you for your contribution! Sashiko AI review found 2 potential issue(s) to consider:
+> - [High] The new MAINS power supply exposes BATTERY properties (STATUS, PRESENT) instead of ONLINE, breaking userspace expectations.
+> - [Medium] The `qcom,batteryless` property is silently ignored on `SC8280XP` and `X1E80100` variants.
 > --
->
-> commit deb761bd65e9a96a95798282bde72ddb362e1c0d
-> Author: Yafang Shao <laoar.shao@gmail.com>
->
-> livepatch: Remove obsolete per-object callbacks
->
-> This commit removes obsolete per-object callbacks from the livepatch fram=
-ework
-> in favor of per-state callbacks. It drops the callback fields from the kl=
-p
-> object structures and updates objtool and the livepatch core scripts.
->
-> > All selftests have been migrated to the new per-state callbacks, making=
- the
-> > per-object callbacks redundant.
->
-> Is this description accurate?
-
-Selftests are untouched in this RFC. I'll revise the commit log accordingly=
-.
-
->
-> The callbacks field was removed from struct klp_object, but if modules li=
-ke
-> samples/livepatch/livepatch-callbacks-demo.c or the selftests still use i=
-t
-> in their klp_object declarations, won't this cause build failures?
->
-> > diff --git a/scripts/livepatch/init.c b/scripts/livepatch/init.c
-> > index 9265e0e504e0c..570366b9268c4 100644
-> > --- a/scripts/livepatch/init.c
-> > +++ b/scripts/livepatch/init.c
-> > @@ -63,8 +63,6 @@ static int __init livepatch_mod_init(void)
-> >
-> >               obj->name =3D obj_ext->name;
-> >               obj->funcs =3D funcs;
-> > -
-> > -             memcpy(&obj->callbacks, &obj_ext->callbacks, sizeof(struc=
-t klp_callbacks));
-> >       }
-> >
-> >       patch->mod =3D THIS_MODULE;
->
-> Will the state callbacks be executed when the patch is enabled?
->
-> Looking at livepatch_mod_init() after these changes, patch->states is nev=
-er
-> initialized:
->
-> scripts/livepatch/init.c:livepatch_mod_init() {
->         ...
->         patch->mod =3D THIS_MODULE;
->         patch->objs =3D objs;
->
->         /* TODO patch->states */
->
->         patch->replace_set =3D KLP_REPLACE_TAG;
->         return klp_enable_patch(patch);
-> }
->
-> When klp_states_pre_patch() iterates over patch->states, won't it silentl=
-y
-> skip the uninitialized callbacks?
-
-Since these callbacks have been moved to klp_state, they must be
-initialized first. Note that the KLP_*_PATCH_CALLBACK macros are
-broken after patch #6; I will fix this in the next version.
-
->
-> > diff --git a/tools/objtool/klp-diff.c b/tools/objtool/klp-diff.c
-> > index 4d1f9e9977eb9..6e2762de3d512 100644
-> > --- a/tools/objtool/klp-diff.c
-> > +++ b/tools/objtool/klp-diff.c
+> 
+> commit fd3fd36bafd15a4f0b8a90d2f6b2f13ff0fc3a3d
+> Author: Rakesh Kota <rakesh.kota@oss.qualcomm.com>
+> 
+> power: supply: qcom_battmgr: Add support batteryless boards as MAINS
+> 
+> This commit adds support for the qcom,batteryless device tree property to
+> register the power supply as a MAINS type instead of a BATTERY. This is
+> intended to prevent userspace from triggering battery power-saving sequences
+> on boards powered directly by adapters.
+> 
+> > diff --git a/drivers/power/supply/qcom_battmgr.c b/drivers/power/supply/qcom_battmgr.c
+> > index 490137a23d00e..35d266375d8c4 100644
+> > --- a/drivers/power/supply/qcom_battmgr.c
+> > +++ b/drivers/power/supply/qcom_battmgr.c
 > [ ... ]
-> > @@ -1566,8 +1566,8 @@ static int create_klp_sections(struct elfs *e)
-> >               reloc =3D find_reloc_by_dest(e->out, sym->sec, sym->offse=
-t);
-> >
-> >               if (!elf_create_reloc(e->out, obj_sec,
-> > -                                   offsetof(struct klp_object_ext, cal=
-lbacks) +
-> > -                                   offsetof(struct klp_callbacks, pre_=
-patch),
-> > +                                   offsetof(struct klp_state_ext, call=
-backs) +
-> > +                                   offsetof(struct klp_state_callbacks=
-, pre_patch),
-> >                                     reloc->sym, reloc_addend(reloc), R_=
-ABS64))
-> >                       return -1;
-> >       }
+> > @@ -930,6 +931,47 @@ static const struct power_supply_desc sm8550_bat_psy_desc = {
+> >  	.property_is_writeable = qcom_battmgr_bat_is_writeable,
+> >  };
+> >  
+> > +static int qcom_battmgr_dcin_get_property(struct power_supply *psy,
+> > +					  enum power_supply_property psp,
+> > +					  union power_supply_propval *val)
+> > +{
+> > +	struct qcom_battmgr *battmgr = power_supply_get_drvdata(psy);
+> > +	int ret;
+> > +
+> > +	if (!battmgr->service_up)
+> > +		return -EAGAIN;
+> > +
+> > +	ret = qcom_battmgr_bat_sm8350_update(battmgr, psp);
+> > +	if (ret < 0)
+> > +		return ret;
+> > +
+> > +	switch (psp) {
+> > +	case POWER_SUPPLY_PROP_STATUS:
+> > +		val->intval = battmgr->status.status;
+> > +		break;
+> > +	case POWER_SUPPLY_PROP_PRESENT:
+> > +		val->intval = battmgr->info.present;
+> > +		break;
+> > +	default:
+> > +		return -EINVAL;
+> > +	}
+> > +
+> > +	return 0;
+> > +}
+> > +
+> > +static const enum power_supply_property dcin_props[] = {
+> > +	POWER_SUPPLY_PROP_STATUS,
+> > +	POWER_SUPPLY_PROP_PRESENT,
+> > +};
+> > +
+> > +static const struct power_supply_desc dcin_psy_desc = {
+> > +	.name = "qcom-battmgr-dcin",
+> > +	.type = POWER_SUPPLY_TYPE_MAINS,
+> > +	.properties = dcin_props,
+> > +	.num_properties = ARRAY_SIZE(dcin_props),
+> > +	.get_property = qcom_battmgr_dcin_get_property,
+> > +};
+> 
+> Since dcin_psy_desc is registered as POWER_SUPPLY_TYPE_MAINS, should it
+> expose POWER_SUPPLY_PROP_ONLINE instead of POWER_SUPPLY_PROP_STATUS and
+> POWER_SUPPLY_PROP_PRESENT?
+> 
+> Userspace power managers typically expect MAINS power supplies to report their
+> active state via the ONLINE property.
+> 
+> If the firmware returns PRESENT=0 on a batteryless board, won't userspace
+> fail to recognize the AC adapter as an active power source and still trigger
+> power-saving or shutdown sequences?
 >
-> Does this result in out-of-bounds memory writes during ELF relocation?
->
-> Earlier in create_klp_sections(), obj_sec is allocated using the size of
-> struct klp_object_ext, which is 24 bytes:
->
-> tools/objtool/klp-diff.c:create_klp_sections() {
->         size_t obj_size  =3D sizeof(struct klp_object_ext);
->         ...
->         obj_sec  =3D elf_create_section_pair(e->out, KLP_OBJECTS_SEC, obj=
-_size, 0, 0);
->
-> However, the new relocations are created using offsets from a completely
-> different structure, struct klp_state_ext.
->
-> Because offsetof(struct klp_state_ext, callbacks) is 16, and the callback
-> offsets go up to 24, this applies relocations at offsets 16, 24, 32, and =
-40
-> within obj_sec.
->
-> Won't the relocation at offset 16 corrupt klp_object_ext.nr_funcs, and th=
-e
-> subsequent relocations write entirely out of bounds of the 24-byte obj_se=
-c
-> buffer?
+You are right. For POWER_SUPPLY_TYPE_MAINS, userspace expects ONLINE
+to indicate the active state of the supply, not STATUS or PRESENT which
+are battery-centric properties.
 
-Nice catch. I will fix it in the next version.
+I will fixs this in the next version.
 
---=20
-Regards
-Yafang
+static enum power_supply_property dcin_props[] = {
+	POWER_SUPPLY_PROP_ONLINE,
+};
+
+static int qcom_battmgr_dcin_get_property(struct power_supply *psy,
+					  enum power_supply_property
+					  psp,
+					  union power_supply_propval *val)
+{
+	switch (psp) {
+	case POWER_SUPPLY_PROP_ONLINE:
+		val->intval = 1;
+		break;
+	default:
+		return -EINVAL;
+	}
+return 0;
+}
+
+> [ ... ]
+> > @@ -1690,7 +1733,9 @@ static int qcom_battmgr_probe(struct auxiliary_device *adev,
+> >  			return dev_err_probe(dev, PTR_ERR(battmgr->wls_psy),
+> >  					     "failed to register wireless charing power supply\n");
+> >  	} else {
+> > -		if (battmgr->variant == QCOM_BATTMGR_SM8550)
+> > +		if (battmgr->batteryless)
+> > +			psy_desc = &dcin_psy_desc;
+> > +		else if (battmgr->variant == QCOM_BATTMGR_SM8550)
+> >  			psy_desc = &sm8550_bat_psy_desc;
+> >  		else
+> >  			psy_desc = &sm8350_bat_psy_desc;
+> 
+> Does this bypass the qcom,batteryless property on SC8280XP and X1E80100
+> variants?
+> 
+> Looking at qcom_battmgr_probe(), the check for battmgr->batteryless is only
+> placed inside the else block which executes for SM8350 and SM8550:
+> 
+> drivers/power/supply/qcom_battmgr.c:qcom_battmgr_probe() {
+> ...
+> 	if (battmgr->variant == QCOM_BATTMGR_SC8280XP ||
+> 	    battmgr->variant == QCOM_BATTMGR_X1E80100) {
+> 		if (battmgr->variant == QCOM_BATTMGR_X1E80100)
+> 			psy_desc = &x1e80100_bat_psy_desc;
+> 		else
+> 			psy_desc = &sc8280xp_bat_psy_desc;
+> 
+> 		battmgr->bat_psy = devm_power_supply_register(dev, psy_desc, &psy_cfg);
+> ...
+> 	} else {
+> 		if (battmgr->batteryless)
+> 			psy_desc = &dcin_psy_desc;
+> ...
+> }
+> 
+> If a board uses the SC8280XP or X1E80100 variant, won't it bypass this check
+> and unconditionally register the standard battery power supply?
+> 
+Currently, batteryless support is only implemented for the qcs6490-rb3gen2(Kodiak)
+board. SC8280XP and X1E80100 variants do not have batteryless hardware
+at this time, so there is no immediate concern.
+
+We can revisit and extend this support when batteryless hardware becomes
+available for those variants. That said, if you feel it's cleaner to
+generalize the check now to avoid future leakage, happy to extend it —
+please let us know your preference.
+
+regards
+Rakesh Kota
+> -- 
+> Sashiko AI review · https://sashiko.dev/#/patchset/20260518-add_dc_in_support-v1-0-31fbaa329879@oss.qualcomm.com?part=2
