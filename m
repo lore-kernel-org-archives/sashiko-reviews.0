@@ -1,178 +1,189 @@
-Received: from mx0b-0031df01.pphosted.com (mx0b-0031df01.pphosted.com [205.220.180.131])
+Received: from PA4PR04CU001.outbound.protection.outlook.com (mail-francecentralazon11013050.outbound.protection.outlook.com [40.107.162.50])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9E4213EE1F2
-	for <sashiko-reviews@lists.linux.dev>; Tue, 19 May 2026 09:16:30 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.180.131
-ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1779182192; cv=none; b=Q3csJevkQoPgnKRwpOi7NBK9sRMkXelG5yfQdgSiJwUW7zDOL1S5JsBoJUPKqV7HfXNChK+xRPPp2tBNg2HBaAG4tRWBWomzKRtrVobRAuxXkkzUt9SHsHujpOqfACY2ilrD9rUUGEmaBkLkjGB+gUywYwZwxV8OwRs06DrKHq8=
-ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1779182192; c=relaxed/simple;
-	bh=meiWCPHyURF5vDzlM799sll2lsGfBrKbnf/hnAW+oXo=;
-	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=VmjxPzXawjhZ2JX0a17UhGctaO/QsfAIODje5DW77EGMg47/oz7wV9sDwNUD41IlrcalwCV6BfvShKmuX1wfHXV3daRce0v91oq60pXd6txHGPa2vGuAJ2n2vkB8h6wHUIQ0okCrqdJus4Ffmr1soQQJao+lMRshEhWbbtqUc+s=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com; spf=pass smtp.mailfrom=oss.qualcomm.com; dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b=WV79AhLx; dkim=pass (2048-bit key) header.d=oss.qualcomm.com header.i=@oss.qualcomm.com header.b=Vi6RbXSM; arc=none smtp.client-ip=205.220.180.131
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=oss.qualcomm.com
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C2BEF3EF0AF;
+	Tue, 19 May 2026 09:23:30 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=fail smtp.client-ip=40.107.162.50
+ARC-Seal:i=2; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
+	t=1779182612; cv=fail; b=H/mlkW3qcqucUFnsr+4QZoURN2pf9rb9v26Spkno7e8LvJn/GlIx32GLIUwn+ZGyxBTMIu8emyBJptqb7OQMQPbpAl7jBnfyDZhqo79Znll/cXe0qg3kUJeWUfnbjJAy1Hyxfv0gP5n+xCNi2gWHX3RajdBYLqnmvvwzyq6y20E=
+ARC-Message-Signature:i=2; a=rsa-sha256; d=subspace.kernel.org;
+	s=arc-20240116; t=1779182612; c=relaxed/simple;
+	bh=qYwWWH1AKi41B+YhY0AJRyducvT79e+Yy8keVN7PBiU=;
+	h=From:To:CC:Subject:Date:Message-ID:References:In-Reply-To:
+	 Content-Type:MIME-Version; b=Tkcoy2ySfUAh9bOUJgyxu0To86Hi2QAer+5vlKqgH/JWvoE4tYwn3sabPb1hbXbz2V+S8O5j+jLI6I60ppuiYa8hcYq53/qbUPDcmVr4eZsOWlXDVMPAMZn8OUYkCEeQpKcbxVEbk0qLVVmrxSzdAXWFaDq1+4BYW1vH3u1x7XQ=
+ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=nxp.com; spf=pass smtp.mailfrom=nxp.com; dkim=pass (2048-bit key) header.d=nxp.com header.i=@nxp.com header.b=YvRrWGjR; arc=fail smtp.client-ip=40.107.162.50
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=nxp.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=nxp.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b="WV79AhLx";
-	dkim=pass (2048-bit key) header.d=oss.qualcomm.com header.i=@oss.qualcomm.com header.b="Vi6RbXSM"
-Received: from pps.filterd (m0279872.ppops.net [127.0.0.1])
-	by mx0a-0031df01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id 64J5aH4e867200
-	for <sashiko-reviews@lists.linux.dev>; Tue, 19 May 2026 09:16:29 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=qualcomm.com; h=
-	cc:content-transfer-encoding:content-type:date:from:in-reply-to
-	:message-id:mime-version:references:subject:to; s=qcppdkim1; bh=
-	V4jAbOofP9LU2wzeFyGIgRya0ftzPYY+XoOJTSUa8Gk=; b=WV79AhLxQEqsZMv+
-	a//NZ6xbPX86W69ez5T5GUi3ZkdWx2qDNblu0txR/sCQBTTr9nqJuy+Xo4UvXyHH
-	LZu6G1dOi1o1L0QAUwCB95kgJwKxkJfc4f2BmtZG4EsB/EA0xnnjEaWVIVUaEHm/
-	7KznTSE8BHljEbOn6QS4Z4gXx/9wnF/y7Vz0aNTrBihtnSod5hKSV0CRVrg1fioO
-	EpWPV5IYNppyYgDsb4h0CAq8tPzKkqbvAmeEruArsWqfvF/s7H3aIVu3eyTclb5F
-	U7JGKh6eaDquuTHuaQTR8WjViwHCbX2IX4Bf7AGx50xDRNTlh/9utVt2YVgl3OQs
-	z56ybA==
-Received: from mail-pf1-f198.google.com (mail-pf1-f198.google.com [209.85.210.198])
-	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 4e8hv1gxyg-1
-	(version=TLSv1.3 cipher=TLS_AES_128_GCM_SHA256 bits=128 verify=NOT)
-	for <sashiko-reviews@lists.linux.dev>; Tue, 19 May 2026 09:16:29 +0000 (GMT)
-Received: by mail-pf1-f198.google.com with SMTP id d2e1a72fcca58-82fa2165c3eso2132130b3a.0
-        for <sashiko-reviews@lists.linux.dev>; Tue, 19 May 2026 02:16:29 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=oss.qualcomm.com; s=google; t=1779182188; x=1779786988; darn=lists.linux.dev;
-        h=content-transfer-encoding:in-reply-to:from:content-language
-         :references:cc:to:subject:user-agent:mime-version:date:message-id
-         :from:to:cc:subject:date:message-id:reply-to;
-        bh=V4jAbOofP9LU2wzeFyGIgRya0ftzPYY+XoOJTSUa8Gk=;
-        b=Vi6RbXSM5+M5Rua+0uCQabi42gUlidfZcQiGECcUQlp1fR2yCUi2EH6kSf/am4raRj
-         CuJMAZ2M46AJTPK09NyBMEV2oJ2fcbqtH4NQtJI1vkSpJgJJXmx1dI1VWv8x3By+4wKr
-         lLkeQr6LbN073wgGQFNBfyzx8ro5qsuN2M+Yc52lME3YJk6nQpfF3+i96lUsIOBS//La
-         gr0V+6Ky/FlLlVg5IP9+QIS5hSh3HGdPkmsIJ79Cxnxdv5QKlpmONjxgWq9mR8GN9rVR
-         ZjLwrmiUyhwdg7EAwiL6BK+oNzabj3H6JwQEacrJsFrZpxKiRWI4MtuE/9FD4yMOhbmX
-         nAgA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20251104; t=1779182188; x=1779786988;
-        h=content-transfer-encoding:in-reply-to:from:content-language
-         :references:cc:to:subject:user-agent:mime-version:date:message-id
-         :x-gm-gg:x-gm-message-state:from:to:cc:subject:date:message-id
-         :reply-to;
-        bh=V4jAbOofP9LU2wzeFyGIgRya0ftzPYY+XoOJTSUa8Gk=;
-        b=bePglaveC7Mi6ot/crlWXsjzaum7G/7e8kXm9zwdRqX0s1ABERJh3xD45BWB/+GjTA
-         x4SisjnDLaQcwrZqs55mO+iBNg+1dpgR2hf13M7fPCSXxHmmFPF9vfZFU7xwJT6Ljdza
-         rKF7aTEmSoahbA+l89Rj/P/GoyxYtALWu64fgCAo35UZH9d14PmSHiW7QbmefNOiIaP5
-         +DDPWpte5SI41avSEIw2BDrp9Sz8PzUOV5hRAIgjne5yC2QYHJyckjbC8uyZ35Bey0Ns
-         1kI9pVxMU0pHTabqArZ1kcbPXS5ts4MdKp9o1YOc70B56mCMA0VDymBxf8jpB5D97Z5A
-         yKpg==
-X-Gm-Message-State: AOJu0YzNQJkJKYq2G4euE/eE5QWbr78xSklZv9llcBOF4ekDR709+hw6
-	3APzEKU1mo6HDk7IrQixsexPgl/PPez/EkgkNGqNU+w8JdH9pQDgSojjFCxuC1mp6N3NjiI4JlT
-	3euXF2Wd3I/RV/kzM5kwwkyT+D4uasWpfWEjNo8mdATDazezmCnxGYkMhRVZrx/R9h3JtpPO5RE
-	1ilSc=
-X-Gm-Gg: Acq92OGcoznSWl0cnJ05GevKVWLNym0WnC9kUJlL/RkFErZVLYepS2rWeZqsq9XfrbT
-	gm0I7urpJ9TqIf2dJko1a4njGHoPl1sVcSJMobBYU6eljA/7KlJOBMK32THMWbSKxa1AaN8d6CP
-	7z/H/N5OaSLXclvN5GKMJbr1A1fo2s+NpE0dPYq6QKt9l+Ysqi803O+UNvjtrJyA8BH1PKD5r71
-	t2iRAeFKHtcVKYmDxTR0jVG43bAx26adKP/RQBufRn3U2wv3FnZZVFkmfmFihiyTCHb9Q6lNp9P
-	RBLrfPxo0IZErUb/ZjyvGrgt90u3UoOkXqnAFZm9vP7+mTPbMNXujdagqcSfXvDLtABxkOEwze2
-	XgofA3ZKVEpo9WuSBsWjiGx8nBLENLNhSXPWUkPD8gVymZVkw
-X-Received: by 2002:a05:6a00:2793:b0:83f:2568:d456 with SMTP id d2e1a72fcca58-83f33d277e9mr18248172b3a.29.1779182188312;
-        Tue, 19 May 2026 02:16:28 -0700 (PDT)
-X-Received: by 2002:a05:6a00:2793:b0:83f:2568:d456 with SMTP id d2e1a72fcca58-83f33d277e9mr18248149b3a.29.1779182187809;
-        Tue, 19 May 2026 02:16:27 -0700 (PDT)
-Received: from [10.219.57.29] ([202.46.23.19])
-        by smtp.gmail.com with ESMTPSA id d2e1a72fcca58-83f197815cesm21166287b3a.24.2026.05.19.02.16.25
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Tue, 19 May 2026 02:16:27 -0700 (PDT)
-Message-ID: <2f490d31-07c6-435f-b96b-0857471c03bd@oss.qualcomm.com>
-Date: Tue, 19 May 2026 14:46:23 +0530
+	dkim=pass (2048-bit key) header.d=nxp.com header.i=@nxp.com header.b="YvRrWGjR"
+ARC-Seal: i=1; a=rsa-sha256; s=arcselector10001; d=microsoft.com; cv=none;
+ b=ujtXFJFj0PF6X79eQPB1LL538ueRzHkX8Gev5VcYzoB91YovzUgxgiNaAn5NbMixFfVm0B3mHOCA0RVnUwhGqdyF+4o10wAjWkENKGA5TqcM7XX8HrO2druIpG4LgPYNNvp3LSw+pyF3D19NVIKaJHHnv9U5V8Y24bFkm2MzMRjR6s3XizkEpZGuiRPUiWY6yaFaY+NqeI7OWfNU6UtzxFQI9/3zIedKeDUT49/XYsSELkHPgWhvsU7oVHeGpZ7MTY0EmIQBBTHDij7prqX7FaQYWRGgpCO8I2214wsnbLkVcNKxmS9521YYk06HpB0kzEhGrpdsZEpjcf7d2jK+Zw==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com;
+ s=arcselector10001;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
+ bh=pvHa2r62TBQvGPurHsbxLQKHIWTBhxt6vssEU0daLOo=;
+ b=I6mEx5+JEsysrp2P82UAp/3x4t1dwwwrEDM1ybgCsZI65havbZqyaWONwWZLNUEYo4CKrHLSxbUlmXn59OyflejpxNjKqNiEGL1xtfAMHNPx0l7iZ2Ya9933Ql71/+U2TffL++f09QXiZy7Ap5roZLOVmxwhLW5/V+xkoZLPvTILC3rh/HrlHB5vYh/n+M7OGI/81WFP88Qqnshr+oMVxut53iXode+jZgg8WDOkqeFyEi9nBs18SggJs5Kw+y9v/F6E41nZYLRr3yGuE1o3c/yeK7bblAtG4vNtP/zxaJIi8zuJDDGVEsW4zaYdgSpXKb7QAkLuRUWXZO01b/Kt0Q==
+ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
+ smtp.mailfrom=nxp.com; dmarc=pass action=none header.from=nxp.com; dkim=pass
+ header.d=nxp.com; arc=none
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=nxp.com; s=selector1;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
+ bh=pvHa2r62TBQvGPurHsbxLQKHIWTBhxt6vssEU0daLOo=;
+ b=YvRrWGjRYH/d3Hyq1+qzyzpZpmn/0o3x/dSUSCoZll/KqpoCSUCVpPiInANA35pm5/+v92I+0kwVkLH/JTolxGo5VGzoOGZkI/jkfzV6bt4j8q70E+K0awzIwbx2wvuZsGee4P/hnO2zCWMbPgJY81eB1Q0vcR1wwEQLkqUvrVBgaJBRw6xNkWSu15TORcGOy/yNe85KJxzFIxbeXvMuVd7xx30n/7vSQSilGUmla6VxHkrnYcyS5WakCjBBV8uTXkx0Eq7C3Q4PGx/F2QQkrNowyWX/C0q2plR8ZEmzXuF4wflvBsoESvFspmxsbnTlXxwBPPJ7fz9cTAdepb9HVg==
+Received: from DBBPR04MB7500.eurprd04.prod.outlook.com (2603:10a6:10:1f4::16)
+ by DB9PR04MB8377.eurprd04.prod.outlook.com (2603:10a6:10:25c::5) with
+ Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.21.48.14; Tue, 19 May
+ 2026 09:23:27 +0000
+Received: from DBBPR04MB7500.eurprd04.prod.outlook.com
+ ([fe80::c291:543b:4bde:cee7]) by DBBPR04MB7500.eurprd04.prod.outlook.com
+ ([fe80::c291:543b:4bde:cee7%6]) with mapi id 15.20.9913.009; Tue, 19 May 2026
+ 09:23:26 +0000
+From: Wei Fang <wei.fang@nxp.com>
+To: "sashiko-reviews@lists.linux.dev" <sashiko-reviews@lists.linux.dev>
+CC: "conor+dt@kernel.org" <conor+dt@kernel.org>, "robh@kernel.org"
+	<robh@kernel.org>, "Frank.Li@kernel.org" <Frank.Li@kernel.org>,
+	"imx@lists.linux.dev" <imx@lists.linux.dev>, "devicetree@vger.kernel.org"
+	<devicetree@vger.kernel.org>
+Subject: RE: [PATCH v8 net-next 09/15] net: dsa: add NETC switch tag support
+Thread-Topic: [PATCH v8 net-next 09/15] net: dsa: add NETC switch tag support
+Thread-Index: AQHc5p+zeOkrNVowXEyHCQIZICFFkrYVBN+AgAAPw8A=
+Date: Tue, 19 May 2026 09:23:26 +0000
+Message-ID:
+ <DBBPR04MB75000698156070EBCC44E89788002@DBBPR04MB7500.eurprd04.prod.outlook.com>
+References: <20260518082506.1318236-10-wei.fang@nxp.com>
+ <20260519082533.A9D7DC2BCB3@smtp.kernel.org>
+In-Reply-To: <20260519082533.A9D7DC2BCB3@smtp.kernel.org>
+Accept-Language: en-US
+Content-Language: en-US
+X-MS-Has-Attach:
+X-MS-TNEF-Correlator:
+authentication-results: dkim=none (message not signed)
+ header.d=none;dmarc=none action=none header.from=nxp.com;
+x-ms-publictraffictype: Email
+x-ms-traffictypediagnostic: DBBPR04MB7500:EE_|DB9PR04MB8377:EE_
+x-ms-office365-filtering-correlation-id: 35b57288-6a37-46ec-f424-08deb5884853
+x-ms-exchange-senderadcheck: 1
+x-ms-exchange-antispam-relay: 0
+x-microsoft-antispam:
+ BCL:0;ARA:13230040|19092799006|366016|376014|1800799024|22082099003|18002099003|56012099003|11063799006|38070700021|4143699003|3023799003;
+x-microsoft-antispam-message-info:
+ oWTZDtxDMX/5QrBcQLxBFg6wahrSjISpUOO8gvjiLyGjH9AjJiPoEJWU/6GxsDDgkrgDM2wI77qbGP/rqh9kSESfvNMAE36k9vzcvBGpsECfqGN6yzWH6lRF8R1lpWdZL+nZ3geC5zs3w7LVsu+I8Puau4gZRDdSovrhp+BDBuhkAfkWSaOvVHu7BkaB9Ci2bPsocW4m6QrWFCiw+GSfXJM5vBtKXNgAc1zQTAVtZciMgWgSTTM5u6h8MAOHVjKVDBE7sZo65IAmdBwul7bOv5n+LbpHwMxDBlbDsr8TPe/sfWx6jBA+h9/jJ4zjOa0jlPD+TlB5ECE1u+fO6ERvw9AbP3t/pgdQ9BWoUvqMHVCg417bsaFseg0TeFOLKnVVhp2tiJ7wrRES3BOPnJ8xzlaFKVXzYIta3FUuU8dqtxQv1PftiF4OAaIUDf0fsjvcmvFn9INrBzQBkM+wW1qo8c8vKmJGto6pypmiNMV0cYBGyUUtUCBT2ztlAtOhQ8DRUOUTN2aCDv0YqvXDQAH2LDdnANLbxNyq4Z3Pz5eHWRDQXo7eMmVF/5he6kPZ2iwPOx+A5/U3GPC4Ve1lS432LGfkJV28vIrFTh1uwFJMzJ2GDTYRGkZ0W4le3mIKgDtcKkM17s8PtxdfRDvIvnSkeydsj9ET1b5ilek6Dv7x1t5d1OlJZve0j0a9Hh3mKmgFIrPufSUux5pZJqQy9jaBCRdsinOgWdL/6nJOqw1ZLZVI8G7PEO0ycfNxVtR3RvPv
+x-forefront-antispam-report:
+ CIP:255.255.255.255;CTRY:;LANG:en;SCL:1;SRV:;IPV:NLI;SFV:NSPM;H:DBBPR04MB7500.eurprd04.prod.outlook.com;PTR:;CAT:NONE;SFS:(13230040)(19092799006)(366016)(376014)(1800799024)(22082099003)(18002099003)(56012099003)(11063799006)(38070700021)(4143699003)(3023799003);DIR:OUT;SFP:1101;
+x-ms-exchange-antispam-messagedata-chunkcount: 1
+x-ms-exchange-antispam-messagedata-0:
+ =?us-ascii?Q?g66J+lgJrOjh1oUDE9HDU0iLDpxsJwelpZUGYEPjcmNmFqxb1MraDaYafvnZ?=
+ =?us-ascii?Q?pelnHV8drUr1mWIsHZsLZBvZ3ztwOq0/Af7SbjqGzETBkXleHVuNtL4e0YK7?=
+ =?us-ascii?Q?qw3tiFbRUfeBtdn1CewPlbb4Sy1h94yxiyO0bEUHjyOSHwFz4MMcAMw758rP?=
+ =?us-ascii?Q?cWfP7NI/9xToGfHB6V+zrMaNWXrV50zNzbx/CZkkLpd+85IlbY71/i0hI4LA?=
+ =?us-ascii?Q?c2rnOsae3/7sYxZJ/kxOXwRxKYOsW87Xgpd+Zpgl+hRPiYe4b9sTN2TWjJDn?=
+ =?us-ascii?Q?m73gSaYQWFAzSb77OFKWuukvwqK8UcZcHMkZ9AkVbNFShP8QItZ405J9hhZ2?=
+ =?us-ascii?Q?KCg9mdFztX7mB8Zeb5C0NFbj/c/TsJM9CW3q1DYR5LJyvnPk0jG1LQfdNPNX?=
+ =?us-ascii?Q?weZt5gxC+Q7IBCJsgeiP0oAbgQ48u2geenCdAI7S1CqLcRMG7LhpQ9Vs+djD?=
+ =?us-ascii?Q?klTKMNh/b1NmBNY5Ix7iY1NcbOFegtgh7Ww5BVCb2Kv3/x5+xPK+GKXErKaG?=
+ =?us-ascii?Q?wxafMopRFwKFtsu4i2aU15lNde/tB46IS9to+h9IrJBceK0GrqIqRCfuaxkd?=
+ =?us-ascii?Q?4zLwHLUBBYD0nblhccVxGkC6D0NOyyLVzdtG37WzA1oFOyG81VBGXPSe3cI3?=
+ =?us-ascii?Q?4yqdgo3thY+Tn5ApDD9tRGckYimX3PF9jotDNsVMbiiRosuwr0TUNiZIHoBQ?=
+ =?us-ascii?Q?fowBNEKbzHZRmJzNfZjAO+QdKzl+8hN0ZzcPsAANefz4VW38KM7ChOv8u7Ef?=
+ =?us-ascii?Q?uw1PcupT9YMIQsRyRhAGybMaWEgAagJuw8AAY0jdkfM0QU4qC58wKqC1p+vw?=
+ =?us-ascii?Q?ULGDgbUlAW9ZA5gyzBnNHme4W+OxBfv495R6aE8aC52PEn4zrUA9gmNjDiq2?=
+ =?us-ascii?Q?llJabxNZRMPMTXJSE1KjvwrgHmznPuOb1e7Q9vSHKZHvpnxb8rFq9Nj0Vd96?=
+ =?us-ascii?Q?047ZFiVelH8gTrAQRnoCpd5B+hUtwBaPrW31j0g1vZRunRmoNZGIarNMOhBG?=
+ =?us-ascii?Q?BHnGAWDIPi+z1EogLp3hdg3yzddo+YuNuXTjzswTeK8jtaID9UHio+y5j+ZI?=
+ =?us-ascii?Q?ras93+4lyQC2f9N4mGLGgRS4ctRf8uxRek8vIZsmIhXo5dnzVC+eDxljulZj?=
+ =?us-ascii?Q?+uCsk28VtqnzqWwrAGxgZeVg/Xhl2kKM9wX9CHbVeumwpgCInY0sPEzodWsC?=
+ =?us-ascii?Q?0N0RTbNiYjQQ00D3NzTVMjD1Bylw2Fr6vkm6jKY5vGPUND9AM+KrPguvtb4E?=
+ =?us-ascii?Q?ljHZs9mOvCn5uyaYmjueSXsf3843qc9FP4RXxm+eJCUd34Ujp5pRLG1kiAl0?=
+ =?us-ascii?Q?MpydfCKNCXDmul6wu0mxh4KSOzJU00u7b5CY0hMcbsyi9v1UHUyNt2plG6ot?=
+ =?us-ascii?Q?bXz0yu3A5vSaqpnHl7SMEk4JCyJQ8iGisnXVCTRfmpfK5PA/846ANxY+3lky?=
+ =?us-ascii?Q?ylZKuMm6ps49oJbiLHjO8SFKchoNoBFGJ20TJi0Tp6YlpLRZupAJ92bOMOJz?=
+ =?us-ascii?Q?TthJeKK9+rAFilnrLaHYfPbsbeXQR+aPRzijXI+57nt5pEfGMFZD9/NwMAJI?=
+ =?us-ascii?Q?17Q680sgQri2IEsQBSjVFndSmuZTfIC+FKwYaEUiI4kCzrbHcl/YUss5bV04?=
+ =?us-ascii?Q?CSE+75rw1BTMdDkbUBi+ayBWY0OZg+3haDEfOAPlY0R3k9DkstrKTh7m4dQy?=
+ =?us-ascii?Q?fzYd3nNhbQPjrvssobm9P1d99M8i3S3So/zic1sk2rC0AHii?=
+Content-Type: text/plain; charset="us-ascii"
+Content-Transfer-Encoding: quoted-printable
 Precedence: bulk
 X-Mailing-List: sashiko-reviews@lists.linux.dev
 List-Id: <sashiko-reviews.lists.linux.dev>
 List-Subscribe: <mailto:sashiko-reviews+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:sashiko-reviews+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 1/2] dt-bindings: remoteproc: qcom,shikra-pas: Document
- Shikra PAS remoteprocs
-To: sashiko-reviews@lists.linux.dev
-Cc: conor+dt@kernel.org, krzk+dt@kernel.org, robh@kernel.org,
-        devicetree@vger.kernel.org
-References: <20260514-shikra-rproc-v1-1-9afdedeee002@oss.qualcomm.com>
- <20260514100608.4E1C8C2BCB3@smtp.kernel.org>
-Content-Language: en-US
-From: Komal Bajaj <komal.bajaj@oss.qualcomm.com>
-In-Reply-To: <20260514100608.4E1C8C2BCB3@smtp.kernel.org>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 8bit
-X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwNTE5MDA5MCBTYWx0ZWRfX78td3ScSa4P4
- Fsxj62ISXbGjvgZkG0+3qMxPXdzpqzY/a2JcYmxzq3AFYCeiREg+aOTrecSd8GgdmFndBZHeSK8
- P1uJaFd6Yy9T3HqJUy4sw+e5NfikCNIYV2/oytFC11rf+a8o697ow1lO4sDNghmzJyANwgiLZSr
- sqdaEXVYpL0jbnsOoqoYt8lyPu5/aAcAUTm450BN1vpbsUXMaAOFODTBjo3TFD8la3RQjK9boy7
- xDL8IQ8LtEd41V17TC2Vf6uRgtFywEdnU8AXAzZfi4ZvPNJCX1P51DgxuUcuvcUyxzE8mvLNlD3
- zrLLTJrk59xHVoSGs5O2hV3Bi9mAws5my3k0m7ckeECFPlGSi0DrxRiIAhQHk02MzCMiBMNq28D
- VzQPyB1FY8X02Smg8MWiGXjq//FCsSl2oYBGhpbxjSwXOULHM3DqZ8+7kje/IM5FrHw7s9Rk4r4
- 8YHNFHzl0mDOzDpuy5g==
-X-Proofpoint-GUID: -VLHE10Al1wIpkl1czv5OAiD_wE5uHRV
-X-Proofpoint-ORIG-GUID: -VLHE10Al1wIpkl1czv5OAiD_wE5uHRV
-X-Authority-Analysis: v=2.4 cv=WZM8rUhX c=1 sm=1 tr=0 ts=6a0c2a6d cx=c_pps
- a=m5Vt/hrsBiPMCU0y4gIsQw==:117 a=j4ogTh8yFefVWWEFDRgCtg==:17
- a=IkcTkHD0fZMA:10 a=NGcC8JguVDcA:10 a=s4-Qcg_JpJYA:10
- a=VkNPw1HP01LnGYTKEx00:22 a=u7WPNUs3qKkmUXheDGA7:22 a=yx91gb_oNiZeI1HMLzn7:22
- a=VwQbUJbxAAAA:8 a=EUspDBNiAAAA:8 a=s87QuijNsyLxGFwhyOoA:9 a=3ZKOabzyN94A:10
- a=QEXdDO2ut3YA:10 a=IoOABgeZipijB_acs4fv:22
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.293,Aquarius:18.0.1143,Hydra:6.1.51,FMLib:17.12.100.49
- definitions=2026-05-19_02,2026-05-18_01,2025-10-01_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
- lowpriorityscore=0 malwarescore=0 suspectscore=0 priorityscore=1501
- phishscore=0 spamscore=0 impostorscore=0 adultscore=0 bulkscore=0
- clxscore=1015 classifier=typeunknown authscore=0 authtc= authcc=
- route=outbound adjust=0 reason=mlx scancount=1 engine=8.22.0-2605130000
- definitions=main-2605190090
+X-OriginatorOrg: nxp.com
+X-MS-Exchange-CrossTenant-AuthAs: Internal
+X-MS-Exchange-CrossTenant-AuthSource: DBBPR04MB7500.eurprd04.prod.outlook.com
+X-MS-Exchange-CrossTenant-Network-Message-Id: 35b57288-6a37-46ec-f424-08deb5884853
+X-MS-Exchange-CrossTenant-originalarrivaltime: 19 May 2026 09:23:26.6776
+ (UTC)
+X-MS-Exchange-CrossTenant-fromentityheader: Hosted
+X-MS-Exchange-CrossTenant-id: 686ea1d3-bc2b-4c6f-a92c-d99c5c301635
+X-MS-Exchange-CrossTenant-mailboxtype: HOSTED
+X-MS-Exchange-CrossTenant-userprincipalname: DWjslj2LG4fcP/mQlw94R8ULDJYAwQI+BoeSizX+omLc0kwuw93Q3RbUlufRhn0XHGeAOMc4kTVWhTeNqkf4wg==
+X-MS-Exchange-Transport-CrossTenantHeadersStamped: DB9PR04MB8377
 
-
-On 5/14/2026 3:36 PM, sashiko-bot@kernel.org wrote:
-> Thank you for your contribution! Sashiko AI review found 1 potential issue(s) to consider:
-> - [Low] The device tree binding example provides two interconnect paths, violating the `maxItems: 1` constraint inherited from `qcom,pas-common.yaml`.
-> --
->
-> commit 6b248da80633195199f478d98724a0590dfdff63
-> Author: Komal Bajaj <komal.bajaj@oss.qualcomm.com>
->
-> dt-bindings: remoteproc: qcom,shikra-pas: Document Shikra PAS remoteprocs
->
-> This commit documents the bindings for the CDSP, LPAICP and MPSS PAS on
-> the Shikra SoC.
->
->> diff --git a/Documentation/devicetree/bindings/remoteproc/qcom,shikra-pas.yaml b/Documentation/devicetree/bindings/remoteproc/qcom,shikra-pas.yaml
->> new file mode 100644
->> --- /dev/null
->> +++ b/Documentation/devicetree/bindings/remoteproc/qcom,shikra-pas.yaml
+> > diff --git a/net/dsa/tag_netc.c b/net/dsa/tag_netc.c
+> > new file mode 100644
+> > index 0000000000000..ccedfe3a80b64
+> > --- /dev/null
+> > +++ b/net/dsa/tag_netc.c
+> > @@ -0,0 +1,214 @@
+> > +// SPDX-License-Identifier: GPL-2.0
+> > +/*
+> > + * Copyright 2025-2026 NXP
+> > + */
+> > +
+> > +#include <linux/dsa/tag_netc.h>
+> > +
+> > +#include "tag.h"
+>=20
+> This isn't a bug, but should linux/bitfield.h be explicitly included here=
+?
+> This file uses the FIELD_GET and FIELD_PREP macros.
+>=20
 > [ ... ]
->
->> +examples:
->> +  - |
->> +    #include <dt-bindings/clock/qcom,rpmcc.h>
-> [ ... ]
->
->> +        clocks = <&rpmcc RPM_SMD_XO_CLK_SRC>;
->> +        clock-names = "xo";
->> +
->> +        interconnects = <&mem_noc MASTER_AMPSS_M0 RPM_ALWAYS_TAG
->> +                         &mc_virt SLAVE_EBI_CH0 RPM_ALWAYS_TAG>,
->> +                        <&system_noc MASTER_CRYPTO_CORE0 RPM_ALWAYS_TAG
->> +                         &mc_virt SLAVE_EBI_CH0 RPM_ALWAYS_TAG>;
-> Will this cause a validation failure during make dt_binding_check?
->
-> The qcom,pas-common.yaml schema, which is included earlier in this file
-> via a $ref, restricts the interconnects property to a maximum of 1 item.
-> However, the example block here provides two interconnect paths.
+>=20
+> > +static void netc_flow_dissect(const struct sk_buff *skb, __be16 *proto=
+,
+> > +			      int *offset)
+> > +{
+> > +	struct netc_tag_cmn *tag_cmn =3D (struct netc_tag_cmn *)(skb->data - =
+2);
+> > +	int subtype =3D FIELD_GET(NETC_TAG_SUBTYPE, tag_cmn->type);
+> > +	int type =3D FIELD_GET(NETC_TAG_TYPE, tag_cmn->type);
+> > +	int tag_len =3D netc_get_rx_tag_len(type, subtype);
+> > +
+> > +	/* The RX minimum frame length of the NETC switch port is 64 bytes,
+> > +	 * and the frame is received by the ENETC driver. From the hardware
+> > +	 * perspective, the receive buffer of RX BD is at least 128 bytes,
+> > +	 * so the switch tag header is guaranteed to be in the linear region
+> > +	 * of the skb.
+> > +	 */
+> > +	*offset =3D tag_len;
+> > +	*proto =3D ((__be16 *)skb->data)[(tag_len / 2) - 1];
+>=20
+> Can this cause an out-of-bounds read if an skb is injected from userspace
+> (e.g., via raw sockets, traffic control filters, or BPF) directed at the
+> conduit interface?
 
-This seems correct — interconnects constraint in qcom,pas-common.yaml is 
-currently set to maxItems: 1. I willl update it to maxItems: 2 to 
-accommodate SoCs that require two interconnect paths.
+No, I do not think so. ETH_P_XDSA is only set on the RX path by
+eth_type_trans(). All locally injected packets travel on the TX path, and
+skb->protocol retains its original value instead of ETH_P_XDSA. Therefore,
+the DSA guard condition proto =3D=3D htons(ETH_P_XDSA) in __skb_flow_dissec=
+t()
+is not true, and .flow_dissect() will not be called.
 
-Thanks
-Komal
-
->
->> +
->> +        power-domains = <&rpmpd RPMHPD_CX>;
->> +        power-domain-names = "cx";
+>=20
+> If the injected skb has zero headroom (skb->data =3D=3D skb->head), readi=
+ng
+> skb->data - 2 will underflow the allocated buffer.
+>=20
+> Similarly, if the injected skb is fragmented and lacks sufficient data in
+> the linear region, reading the inner protocol directly from skb->data
+> could read past the valid linear area.
+>=20
+> Since the skb is passed as const to flow_dissect, pskb_may_pull cannot
+> be used. Would it be better to use skb_header_pointer to safely access
+> these packet headers?
+>=20
 
