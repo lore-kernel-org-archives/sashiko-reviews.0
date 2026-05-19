@@ -1,180 +1,199 @@
-Received: from mail-pf1-f171.google.com (mail-pf1-f171.google.com [209.85.210.171])
+Received: from mail-yw1-f180.google.com (mail-yw1-f180.google.com [209.85.128.180])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EFB4435A3B1
-	for <sashiko-reviews@lists.linux.dev>; Tue, 19 May 2026 18:22:33 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.210.171
-ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1779214955; cv=none; b=YYUvxcZOYZigVTQEyv2MsErqBDhXStCRhUEzUjI8eVHiUYk5pl4LtVfIVNW+tbQmlGVZnHPyh9so0I2VnCR70zJNdwVjtak4EBM0V6pTD1Nb9geDW3MCcLVDWtSXiTmGIdAJDeotFQGNIUmiuVMe6EXpBpkL4XhnLNwOyymzow0=
-ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1779214955; c=relaxed/simple;
-	bh=/iZEIInf+h07QsZt9LdbOhTRLtwkJCA5Nww+jvwEjz8=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=AFEQ9NIuAYJQcAB4Nn2iHF83uPuUtNoi+X9EYv8kFfRBcwPyGGiZiGFF8DseuxfJnHkFAqdfQ3QYFgSRD+zda9p8pe6SQfzz4ciKDOn/wStAGcWQDNFiWDDTmDg6RyzLvb/r1dvfZepZJPRxsipPeYrigbiC8Vh7U0iULnKYq0o=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=Hn256KXH; arc=none smtp.client-ip=209.85.210.171
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0BE7036C0D6
+	for <sashiko-reviews@lists.linux.dev>; Tue, 19 May 2026 18:52:04 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=pass smtp.client-ip=209.85.128.180
+ARC-Seal:i=2; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
+	t=1779216726; cv=pass; b=MJtaPHtB8JZIGBkPc3qUtvMjelwdlN4w3Gt/0TfBGMGMigrlqdejJpQHbc+OnymAdJxQNP+mKcd8NBQwbOLApsc4Ve6XjQ0j8Ofec0VW/hAUnR/UAfG2QxdxMuWe8n+IcEaBCqZC0iAF0Ts8hfJz9/rtLOj3+7Rx/TN3Zi4/W9o=
+ARC-Message-Signature:i=2; a=rsa-sha256; d=subspace.kernel.org;
+	s=arc-20240116; t=1779216726; c=relaxed/simple;
+	bh=J1DOYXoQ50Kqq50Ha0/7M1Dv6M3XMd7yir8gTRFgKNY=;
+	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
+	 To:Cc:Content-Type; b=qyfxWdo9kyV4pkMlT0wQR12mYle3LrFhgl5f8v+OZU63AcJPE2KnL+6KKFrLT6Nsi90duKv2VwvYAQmWB5pdgG9IBgcKBrlGirMhw1RXiYuMl9TO1xBiuMoPh704SzXi/A0MRhuoRnkCMxCJNfGLh3WOUFaqGk45P2B+gsXZjBw=
+ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=AaWUOYRi; arc=pass smtp.client-ip=209.85.128.180
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="Hn256KXH"
-Received: by mail-pf1-f171.google.com with SMTP id d2e1a72fcca58-8354461da74so1716685b3a.1
-        for <sashiko-reviews@lists.linux.dev>; Tue, 19 May 2026 11:22:33 -0700 (PDT)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="AaWUOYRi"
+Received: by mail-yw1-f180.google.com with SMTP id 00721157ae682-7bdf83185bbso35610207b3.2
+        for <sashiko-reviews@lists.linux.dev>; Tue, 19 May 2026 11:52:04 -0700 (PDT)
+ARC-Seal: i=1; a=rsa-sha256; t=1779216724; cv=none;
+        d=google.com; s=arc-20240605;
+        b=cHMozS6slPsrJxXLNRkRDhXsHg3IS8b5cQO6Kmon93a3oFNiooGKmcO4qW0jMFYSY3
+         yn4l5AAmBeb266rkSAinMgfYL/HPFKuDa2VLpjobf8iqpfsOmsq85wKAj0COX4V1nGG7
+         SqJ4v5A3hAqfvv+bNZkxwCR089oumqHy1exBTfE4k21dBUgReIb4LKiH2lqwR/IW7Kfo
+         D3IPvsb7Fde2RU+tn5yQRo9c4VYHCxZT5K075fvduc/YL0F4AKT12aL4PXRTlsL5c2sQ
+         0uQJlIseY8HpdHhB0nKfchujWb11HyUuqWTQSbtg4GrgemJvh/hSr111uzUxVRERPQpU
+         xfzg==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com; s=arc-20240605;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:dkim-signature;
+        bh=y0v4eEHup7uWRxuJ488zQzWFOVLc6XJagBWSyDGtp2A=;
+        fh=uA360uvxR9S0K/Y4Lovo7aIaGlBwzVBnnb2BKWupr/4=;
+        b=XdWu52AXC+QxYtTS0GRxH3QBINIpn5IPv3qBwtLHhzbd+nBUlTmQJzCyTj+4xBdZTE
+         TjSt60bKUtWIyzGQwICJmpLyBD6zgBMIRMyX7T19jtWQM/cwItbOSwsEPK2D2LYq8sTx
+         ieyOs9hX874nc+guNTQBTR+eyG1wzuhtcSA+Ge3+f+7fH6aCy42sDA7MvhymizHc5OjB
+         CKDPuALPjDcmz+dM/Ie3Uy3JFW4bMCG5yzg3MYeH3scxV8Urhy4tYS+6q4YUNoxJ1LYb
+         J4SmWTAS9rVDE1H+BsFjjaS4TIw5uK/NcMoQ94yTS+nD6BODIb5zJpNGYdpQxA45Bs7P
+         7M1Q==;
+        darn=lists.linux.dev
+ARC-Authentication-Results: i=1; mx.google.com; arc=none
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20251104; t=1779214953; x=1779819753; darn=lists.linux.dev;
-        h=in-reply-to:content-transfer-encoding:content-disposition
-         :mime-version:references:message-id:subject:cc:to:from:date:from:to
-         :cc:subject:date:message-id:reply-to;
-        bh=djwlqTMl8+NOKghG5Z1Hqhs/9/X6wY6hcEaIBs4ftFI=;
-        b=Hn256KXHfDAVIoMoQAe0tQCmJxIgP4tfRXqMobpz9ZNgIJ/Ika3Ng4R4FeiMetii2h
-         iAuHFhLJMd6EEMQBT4N9y9JdlrEncO8uoD15C76gx3Tb5DmNKprUBGpM4R4Dqm/FPpD2
-         rOHcVsKVenYQRBp2qGXXIdSjxfWSgKJt535lfZjowhsrrIyNylWKCIPamH9oTgwJpbL7
-         lhlj3xwR7yPZT109aKJVu22ynFQDXcJ3ns19RRcHNn/KOPUg4a+1R442/SJY/MFip647
-         HUDHDjZRccHcOfBohcpF4K7zlE3LuFarZrD/Melo041pWZGehX4O0YnwXLShgSRM743W
-         vY4Q==
+        d=gmail.com; s=20251104; t=1779216724; x=1779821524; darn=lists.linux.dev;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=y0v4eEHup7uWRxuJ488zQzWFOVLc6XJagBWSyDGtp2A=;
+        b=AaWUOYRiZPN6g3AujVX2u+hx/ZtF40e/+c2TXv2mFl/JB1P/Rfl5rtLLNnFdtFpTSq
+         BaZd92xv/xQX0K8OFM+wg/NCE645hlvRDe1LHddvSf/vSVq3RjI+kr+Dyuq22907RIfV
+         i7/c4VF4GzngJ1d6QMU+JgwBn+GnMupS2ilLHsI/9UvUffpUwRNj2PkFnB57xsyhBB+H
+         EPMRFcMfJKp0EzVGVA6DnOAslW6I7Io2U0RB8RZLff2ZMhmtbzN+aWRcfFaKYztQSTew
+         SalMOoTJCmOU8eCqRgJeyIhkAMcNwNd81Wak3bcXIgRDlWM+pdwUCws4iQ6I8PNTzZBj
+         We6w==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20251104; t=1779214953; x=1779819753;
-        h=in-reply-to:content-transfer-encoding:content-disposition
-         :mime-version:references:message-id:subject:cc:to:from:date:x-gm-gg
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=djwlqTMl8+NOKghG5Z1Hqhs/9/X6wY6hcEaIBs4ftFI=;
-        b=cA/68+e5AsF5NedGCpJo/wIg+sBvnpjPeNciXZjoCDTI2WEYtbohQ6ac0baJp0PiEM
-         MFPF7VxkWjd4o0MWtbl2w+SIwLXF5h0T0Bvke2LRIMRBY2vHkTMDAgyqZ5D0YbuKUjTn
-         zufMl8JbwwOUGiPS3ZhH0Xv6B+I/LBZOxHriNnw+sdLNqUWWAd3CJN33xqFqPddW6ZU3
-         bQUHYcCMSjBjKXZ+F+5P2uKF0nGn9QjSh+tM03T4KJvzzb97f8DwialM0kSNO9g1v1kh
-         KnH/AFEByJTx8XJ2E9YmKxkHHyucdsYyUDVjRvkCLfDfAqmaxRDoot7Jafi7Bdqv+0KS
-         8yLw==
-X-Gm-Message-State: AOJu0Yy2YR3YjWebHjzcslriALrLcZAg4LeHkq+voJPgq8SRR/NxCYeB
-	3xTyEQ6TZ0H6tY+ZYqwk38sWZWAIZen2UNj0FyO95A5exKbbynYzd+afRIgm4Q==
-X-Gm-Gg: Acq92OGNLC+D/duazR9ZK3Wl04+rRyYOGH8Hop+2Ee6ysK6VPi8MSl/ZaUJ+y1NKgac
-	Aj9nrvYlOackathgLOk4dA6huQhw0Z7muJAhkYrdpkZIRIqicpT4/cweq6cLSVxAQRh/J4aXA5j
-	bIwqIVbv0Y3XYmg8mXI43LmuyWEFgPiGINIiSI1h2GgWEVJnks9VQkQg8vn4imBrZ5JcMHm8IyT
-	V/Y9pECN/IOc+ZfQ3yO12Jv0LO3BVQpnejLVflrLAj4l8U0M0/kiA7Q6QWXQ/jqIYqM5wycpmzd
-	npFHJDKdhVGLs7UtWmPQDBf4sM9VrU7mdmpIbGXDBmVMtju/35KvVKmrYVSaaRBByneNV2S4aCD
-	+8SpBdQU7XPpLKXgcJL0rLVM9hUh43cViQo9zqVQVUrfGhvTg1+pAt7ib+/hvLwWO1UcwaDa4um
-	NJiHOrT8i/VxVVzAdp/3z3j2rXsgcl7E7JcD7mX/uI6EwqWGFnrWjHw4mAzVHWSEFMDEF4nluxb
-	c8ICVLyogiB8nkp
-X-Received: by 2002:a05:6a00:1f09:b0:835:41f3:f43e with SMTP id d2e1a72fcca58-83f33c45c8cmr21236031b3a.16.1779214952946;
-        Tue, 19 May 2026 11:22:32 -0700 (PDT)
-Received: from cchengyang.duckdns.org (36-225-116-93.dynamic-ip.hinet.net. [36.225.116.93])
-        by smtp.gmail.com with ESMTPSA id d2e1a72fcca58-83f19c5ce1fsm18712359b3a.35.2026.05.19.11.22.31
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Tue, 19 May 2026 11:22:32 -0700 (PDT)
-Date: Wed, 20 May 2026 02:22:29 +0800
-From: Cheng-Yang Chou <yphbchou0911@gmail.com>
-To: sashiko-reviews@lists.linux.dev
-Cc: sched-ext@lists.linux.dev
-Subject: Re: [PATCH 2/2] sched_ext, rcu: Upgrade RCU stall paths to report
- cpumask of stalled CPUs
-Message-ID: <20260520020904.G8ffa@cchengyang.duckdns.org>
-References: <20260519171745.1551340-3-yphbchou0911@gmail.com>
- <20260519175231.520A0C2BCB3@smtp.kernel.org>
+        d=1e100.net; s=20251104; t=1779216724; x=1779821524;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:x-gm-gg:x-gm-message-state:from
+         :to:cc:subject:date:message-id:reply-to;
+        bh=y0v4eEHup7uWRxuJ488zQzWFOVLc6XJagBWSyDGtp2A=;
+        b=Z4NQGKoiNBtQiK4zvxkUtm4B6VRHvf4vfgayTNEp3Etcf9mEKYpFVRSq4KoiSXppCd
+         1jVNKROi05YbX6zXhQz0nYf/0F8hYTnoWC0cbfDGvQ9nvgBds1Ce5y8DZdNrO/7MygAq
+         Qs0U3ttG8YQ2WNYnxkAuWzmGbXtDr7VA3QUfltvYjcVgT439VyZPwdCubuGMKwfcUNTW
+         y5CADUzw20KUrWobMdtkzWdXBLvUhRg3vPIJNXj0HRcHDtP75PZWyvMJAtXMVajRcLR3
+         Mjq7T1iKXalE6NLBHOOUK9Rh1zwsP9k+QfPmV4K94LUVF7IIthjWbIb3/o9gCH7i7DDs
+         w4XA==
+X-Gm-Message-State: AOJu0YzvIpMRoQWFhu2wFmphOrsbUbbCv/iXMKDkKxHiEsUTbH8hVkFO
+	DbLfzAYQ5VzuT4IhzxSTkH0gf9DeArSFgQ+O21KGPkXI9ooA3UFGHzPjTP/GwpQk5b909ymtFZB
+	QOfmF7akZBaq/p4RjYI/tf3w1/0YMhUmkIjoq
+X-Gm-Gg: Acq92OHWlVOxugCY8d8p/kJoX6mcTRmnf2CoD0ZOuQylDnuGq7V6t216SIvGBs7cM1S
+	OyktzR0DCdlmvEfjf1AFN9wh36r+x4xJojvU+y1j9UmsAhM46qrdDBjjVYS0usqcEIXTsfNF/rN
+	ej+bidZyCV0uHHcGTp44wB4lX0gv6IGkisYgQ59N5jJYvV4rsLjAFtlxgNiOYyBs/hwBoKDUmVC
+	876HHQ11lhfAl2fOBnKVSaJPxke6ksfq7BbxEWWwDqMRP5qb/aNCx77Aq35upNVuB1vOVKOI6Of
+	fXX+jUejSbHr94vF2TmH
+X-Received: by 2002:a05:690c:3489:b0:7b2:aabd:535b with SMTP id
+ 00721157ae682-7c95b8275bemr231881707b3.27.1779216723881; Tue, 19 May 2026
+ 11:52:03 -0700 (PDT)
 Precedence: bulk
 X-Mailing-List: sashiko-reviews@lists.linux.dev
 List-Id: <sashiko-reviews.lists.linux.dev>
 List-Subscribe: <mailto:sashiko-reviews+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:sashiko-reviews+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=iso-8859-1
-Content-Disposition: inline
-Content-Transfer-Encoding: 8bit
-In-Reply-To: <20260519175231.520A0C2BCB3@smtp.kernel.org>
+References: <20260519181314.2731658-6-ameryhung@gmail.com> <20260519184538.7A705C2BCB3@smtp.kernel.org>
+In-Reply-To: <20260519184538.7A705C2BCB3@smtp.kernel.org>
+From: Amery Hung <ameryhung@gmail.com>
+Date: Tue, 19 May 2026 11:51:50 -0700
+X-Gm-Features: AVHnY4LJJTANE2G-zMmaNS4BPCZbX4vvoaum5PSGvKO3Cw88Pb5PYzIt-gsbh4E
+Message-ID: <CAMB2axNDfA_M4bss4obQOMi0y6a99kFVUECeWhs_uyaWm7Yeug@mail.gmail.com>
+Subject: Re: [PATCH bpf-next v5 05/14] bpf: Refactor object relationship
+ tracking and fix dynptr UAF bug
+To: sashiko-reviews@lists.linux.dev
+Cc: bpf@vger.kernel.org
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 
-On Tue, May 19, 2026 at 05:52:29PM +0000, sashiko-bot@kernel.org wrote:
-> Thank you for your contribution! Sashiko AI review found 1 potential issue(s) to consider:
-> - [High] Dynamic memory allocation (`GFP_ATOMIC`) in the RCU stall detector path can cause a hard deadlock, masking the system hang instead of reporting it.
+On Tue, May 19, 2026 at 11:45=E2=80=AFAM <sashiko-bot@kernel.org> wrote:
+>
+> Thank you for your contribution! Sashiko AI review found 1 potential issu=
+e(s) to consider:
+> - [Critical] Incorrect indexing of `__state->stack` for outgoing stack ar=
+guments in the `bpf_for_each_reg_in_vstate_mask` macro leads to out-of-boun=
+ds heap access and potential memory corruption.
 > --
-> 
-> commit ffd18e78b03bfaba9705c61803e8bd0bb6325d38
-> Author: Cheng-Yang Chou <yphbchou0911@gmail.com>
-> 
-> sched_ext, rcu: Upgrade RCU stall paths to report cpumask of stalled CPUs
-> 
-> This commit updates the RCU stall paths to capture all stalled CPUs in a
-> cpumask rather than just the detecting CPU. The cpumask is passed through
-> the stall handlers and dumped first during a sched_ext state dump to avoid
-> losing the stalled CPUs to truncation.
-> 
-> > diff --git a/kernel/rcu/tree_exp.h b/kernel/rcu/tree_exp.h
-> > index 82cada459e5d0..b8f4ca984c1c9 100644
-> > --- a/kernel/rcu/tree_exp.h
-> > +++ b/kernel/rcu/tree_exp.h
-> 
+>
+> commit 936dee8aae85e40857f1379da85e7a73536e2261
+> Author: Amery Hung <ameryhung@gmail.com>
+>
+> bpf: Refactor object relationship tracking and fix dynptr UAF bug
+>
+> This commit refactors object relationship tracking in the verifier and fi=
+xes
+> a dynptr use-after-free bug where file/skb dynptrs are not invalidated wh=
+en
+> the parent referenced object is freed.
+>
+> > diff --git a/include/linux/bpf_verifier.h b/include/linux/bpf_verifier.=
+h
+> > index 2cb4c7b0eab68..d83b9fbfef7f0 100644
+> > --- a/include/linux/bpf_verifier.h
+> > +++ b/include/linux/bpf_verifier.h
+>
 > [ ... ]
-> 
-> > @@ -659,23 +662,28 @@ static void synchronize_rcu_expedited_wait(void)
-> >  
-> >  	for (;;) {
-> >  		unsigned long j;
-> > +		cpumask_var_t stalled_mask;
-> > +		bool have_mask;
-> >  
-> >  		if (synchronize_rcu_expedited_wait_once(jiffies_stall))
-> >  			return;
-> >  		if (rcu_stall_is_suppressed())
-> >  			continue;
-> >  
-> > +		have_mask = zalloc_cpumask_var(&stalled_mask, GFP_ATOMIC | __GFP_NOWARN);
-> > +
-> 
-> [Severity: High]
-> Could this allocation cause a hard deadlock during an RCU stall?
-> 
-> If CONFIG_CPUMASK_OFFSTACK=y is set, zalloc_cpumask_var() performs a dynamic
-> memory allocation via kmalloc(). If the stalled CPU is stuck holding a memory
-> allocator lock (such as zone->lock or the SLUB list_lock), the detecting CPU
-> will deadlock trying to acquire it.
-> 
-> Additionally, GFP_ATOMIC includes __GFP_KSWAPD_RECLAIM, which can wake up
-> kswapd and acquire scheduler locks (pi_lock, rq->lock). If the stalled
-> CPU holds one of these scheduler locks, it could also deadlock here.
-> 
-> This would completely prevent the RCU stall warning from being printed
-> and mask the root cause of the hang. Would it be safer to use a
-> statically preallocated cpumask for stall reporting?
-
-I think the concern is valid, will fix this by pre-allocating static
-cpumask in rcu_init() and clearing at the start of each stall report.
-
-> 
-> >  		nbcon_cpu_emergency_enter();
-> >  
-> >  		j = jiffies;
-> 
+>
+> > @@ -585,7 +591,7 @@ bpf_get_spilled_stack_arg(int slot, struct bpf_func=
+_state *frame)
+> >            iter < frame->out_stack_arg_cnt;                          \
+> >            iter++, reg =3D bpf_get_spilled_stack_arg(iter, frame))
+> >
+> > -#define bpf_for_each_reg_in_vstate_mask(__vst, __state, __reg, __mask,=
+ __expr)   \
+> > +#define bpf_for_each_reg_in_vstate_mask(__vst, __state, __reg, __stack=
+, __mask, __expr)   \
+> >       ({                                                               =
+\
+> >               struct bpf_verifier_state *___vstate =3D __vst;          =
+  \
+> >               int ___i, ___j;                                          =
+\
+>
 > [ ... ]
-> 
-> > diff --git a/kernel/rcu/tree_stall.h b/kernel/rcu/tree_stall.h
-> > index b67532cb87705..90d6eaf1b8415 100644
-> > --- a/kernel/rcu/tree_stall.h
-> > +++ b/kernel/rcu/tree_stall.h
-> 
-> [ ... ]
-> 
-> > @@ -645,6 +647,8 @@ static void print_other_cpu_stall(unsigned long gp_seq, unsigned long gps)
-> >  	if (rcu_stall_is_suppressed())
-> >  		return;
-> >  
-> > +	have_mask = zalloc_cpumask_var(&stalled_mask, GFP_ATOMIC | __GFP_NOWARN);
-> > +
-> 
-> [Severity: High]
-> Can this dynamic allocation also trigger a hard deadlock?
-> 
-> print_other_cpu_stall() executes in a critical diagnostic context with
-> IRQs disabled (enforced by lockdep_assert_irqs_disabled()). Similar to
-> the issue in synchronize_rcu_expedited_wait(), allocating memory here
-> might deadlock if the stalled CPU holds a lock required by the memory
-> allocator or scheduler.
-> 
+>
+> > @@ -600,19 +607,26 @@ bpf_get_spilled_stack_arg(int slot, struct bpf_fu=
+nc_state *frame)
+> >                       bpf_for_each_spilled_reg(___j, __state, __reg, __=
+mask) { \
+> >                               if (!__reg)                              =
+\
+> >                                       continue;                        =
+\
+> > +                             __stack =3D &__state->stack[___j];       =
+  \
+> >                               (void)(__expr);                          =
+\
+> >                       }                                                =
+\
+> >                       bpf_for_each_spilled_stack_arg(___j, __state, __r=
+eg) { \
+> >                               if (!__reg)                              =
+\
+> >                                       continue;                        =
+\
+> > +                             __stack =3D &__state->stack[___j];       =
+  \
+>
+> [Severity: Critical]
+> Is it safe to index the stack array using the out_stack_arg_cnt index her=
+e?
+>
+> In the bpf_for_each_spilled_stack_arg loop, ___j represents the index int=
+o
+> the stack_arg_regs array, which is bounded by out_stack_arg_cnt. However,
+> this line sets __stack =3D &__state->stack[___j], which indexes the local
+> function stack array (bounded by allocated_stack / BPF_REG_SIZE).
+>
+> Since a BPF program can push stack arguments without allocating a local
+> stack, ___j might exceed the local stack size, computing an out-of-bounds
+> pointer.
+>
+> When release_reference() iterates over these registers, it evaluates
+> stack->slot_type[BPF_REG_SIZE - 1], which reads out-of-bounds memory.
+> If this memory coincidentally contains the value for STACK_DYNPTR (2),
+> could this result in invalidate_dynptr() being called erroneously,
+> writing STACK_INVALID across multiple slots and corrupting adjacent
+> kernel memory?
 
-Ditto.
+Right. I should set __stack to NULL in for stack args.
 
-
-> >  	nbcon_cpu_emergency_enter();
-> >  
-> >  	/*
-> 
-> -- 
-> Sashiko AI review · https://sashiko.dev/#/patchset/20260519171745.1551340-1-yphbchou0911@gmail.com?part=2
-
--- 
-Cheers,
-Cheng-Yang
+>
+> >                               (void)(__expr);                          =
+\
+> >                       }                                                =
+\
+> >               }                                                        =
+\
+> >       })
+>
+> --
+> Sashiko AI review =C2=B7 https://sashiko.dev/#/patchset/20260519181314.27=
+31658-1-ameryhung@gmail.com?part=3D5
