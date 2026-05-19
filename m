@@ -1,174 +1,219 @@
-Received: from DB3PR0202CU003.outbound.protection.outlook.com (mail-northeuropeazon11010069.outbound.protection.outlook.com [52.101.84.69])
+Received: from DM1PR04CU001.outbound.protection.outlook.com (mail-centralusazon11020092.outbound.protection.outlook.com [52.101.61.92])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EF8EF2BEFFD;
-	Tue, 19 May 2026 03:23:38 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=fail smtp.client-ip=52.101.84.69
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6FF082C11C6
+	for <sashiko-reviews@lists.linux.dev>; Tue, 19 May 2026 03:26:08 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=fail smtp.client-ip=52.101.61.92
 ARC-Seal:i=2; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1779161020; cv=fail; b=ra6h1m4kS+SfZtf5iihgfrtcK4NP+VcNxmCqBPwCP7eTZstgNZpZ9aLkVWAWZFMsbCVCMo1k3R/16BKA33pfW0HtKOiYoDAwlEaQlI/YrIQL566yvGMlL00AW+BYKYkx4KIeENMo3ujF1K0wZmUlKw32aO/ldamp/5vmx9ss4hA=
+	t=1779161169; cv=fail; b=iMiDSKHqJrw0q9zoSRmKGp1mIk3onjpIRO14ZwlQVomq5Jz2fjpnONB0m9CuzbS7N4eQgZc0HInaEBugQSBmRFsJCB9WaZBa+wNt4qLlJwtOkBbDHRIOP6pge3P9CzQCvqtDD7cimeCCDxzrGIWi2waNdA9yAbRFeU1XeYGZac8=
 ARC-Message-Signature:i=2; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1779161020; c=relaxed/simple;
-	bh=RKWZ8/31uSEZTjq+O1lpIqHECI4Yn+MS7r2WX6pX1zs=;
-	h=From:To:CC:Subject:Date:Message-ID:References:In-Reply-To:
-	 Content-Type:MIME-Version; b=KCB5GdwnWqFu6F8a3ZTzvqj53XbqES7TwIfJZex3v8eVyYVsIfJpLZB5twxvL5CLTx3Tr2ArkzfEDMPJH6zUAiceg92DeS5xUIPHZ2VVrQ8XZwzdUcq+6of1TcJea+qL/WQ+ovb9fcmJFiJizully7sIOJ7pP6ZUhaMq8JK2DWs=
-ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=nxp.com; spf=pass smtp.mailfrom=nxp.com; dkim=pass (2048-bit key) header.d=nxp.com header.i=@nxp.com header.b=lpG0VXwC; arc=fail smtp.client-ip=52.101.84.69
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=nxp.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=nxp.com
+	s=arc-20240116; t=1779161169; c=relaxed/simple;
+	bh=zRH6IUACUcQRqnpiPQ7QiKYsPdxzuKjLd0gc/qfBn7E=;
+	h=Message-ID:Date:Subject:To:Cc:References:From:In-Reply-To:
+	 Content-Type:MIME-Version; b=Ac6n9LciB+g7CF1zdrp9LgSQC3mGfTKJAsBZzmWqjuUdJz5HlsXUZSaaIbviykKfy0hJHwA552qLW7TwMMm3MgsFh5p7nKS0UQhsH/c7AdOOTk1QT+dYNXAzblV/b8az5R2lqQCBWCqdiyBpsuqsVRT7XroLWagFKxLeS5ibhow=
+ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=amperemail.onmicrosoft.com; spf=pass smtp.mailfrom=os.amperecomputing.com; dkim=fail (0-bit key) header.d=amperemail.onmicrosoft.com header.i=@amperemail.onmicrosoft.com header.b=dby8HjhW reason="key not found in DNS"; arc=fail smtp.client-ip=52.101.61.92
+Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=amperemail.onmicrosoft.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=os.amperecomputing.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=nxp.com header.i=@nxp.com header.b="lpG0VXwC"
+	dkim=fail reason="key not found in DNS" (0-bit key) header.d=amperemail.onmicrosoft.com header.i=@amperemail.onmicrosoft.com header.b="dby8HjhW"
 ARC-Seal: i=1; a=rsa-sha256; s=arcselector10001; d=microsoft.com; cv=none;
- b=QiyM9B+YOhQESw5H8yluC8nI/RYymO5EymaVinNtX+5bAawFRNVA6nuRxXI+qoRYiXW2qgaG+s9ah8wpgxn4qv0sHXV41CKyG0JD+JiW4kvzUaapeehNc06LWCb3wCAwrahGtwK9NY3joXHPgD+VnAWayWYxmXbKDF9dXbfsa28h2DzD8VEc/clw9xVCnpxkzw8lWUBwIULiRhuR6DLHeY0HSWLi7+LFMx1mHHCJA07BuCErKgaM2FLZ4O9RyXntVZjrBHAkQ28wHJ1JzG25ol85a8ZjsUVIjqwhzQ72iVkyZvAYMzmwCtJ3eC9TNdOwqNN9GpsNbL78oW07BgWTFw==
+ b=RuDtOU++XwM/9aoZaNAuUrGCrAWfIUojd3dthSsZKNkidY4U/CGVCc/QShjnB9q3PnMWdDi8BDDzMtFtPw8fO9mmeLIBtpGU3sErP8FZUwvV6N5oHGHfXqFNIXudhwMbNhdPeWqSKhMFei3cwmxdYEdchbC4njQrvB4+XbMeRKENiisOcclFC1gUf5oIAmvoWjdlPrQ3+0dyjjOo3l7pxcJweStEkTBuLGcYFwTkEiRUpCIDqprbiG9FhjbG0Lya3xtEpm+wE3F7cOVBeAsV8Ke2nJ8ritGl3xp+WJ//V9gSwkAg3gNQUYielX/zjgQLc1RVXe+pT1GTFkDGXvOBRA==
 ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com;
  s=arcselector10001;
  h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
- bh=AKPxHznZYmJW+jcEGniI5eiZ2FQVoq5JtSBKVbXbiy4=;
- b=XNe/oKi77zdJP8QX7g2E09v3unQ3VngtD7OYtZAGXrSGxKsMSlj3feYIZv1N0z6K+GoeGvujei/MIeOIOumkITWJzoEc3yfCQPl5ctJCoyLhsGLSzy0XJLrWMtYygBrfqrf4DHZtppnGLiGRJcX16VIrfUcyr3ublaK3fITlIn9hBkcGyLSe+ZjCy9oBWAU+hxTLjjVuFEG7+r7haUOi4zcHkYnIf3jpFzwUsv6cgmarrC2DZ7/V19QVtfxhemwzzEvmbKtTVZm6Dca7g1+dAQ19Y85u8kQEmIqbq8lxDtLKLYj/afHzdkdKJqqTOPx8PuYtwt4mLnH9d12t7Pee7A==
+ bh=Td4/Gvg32SJYA8BxSPJ/qCLxwwyR/y3zo0FDriS5XdQ=;
+ b=OGcVdkwKdGuo8O11KOe9ePqJosXjZmhkYquXSbOsiHNj3VuG2KRJZW2hzNyfsWbyOGMFWToGmz74GLLs0rIar+zIZD2h9jjUxMIuCK5SZ0613qQFsXKlr6MeS5Wetnl1C3cvhIlg2kaKE3N8KYTQwRsTp+rom/LzWwMiGaCHm+59XaBWk1QShOH5IgYXWesaXMWEfpkvwfvCTZmpNLwGToACTdh04QWZx8jBnE93c1Ui+E0d4Ff8pRUEjobPg84A5pHRlmpSeI/rpdJu0lUPnwxbTEU0r/8EQxvLzUi0B/wPkBs3KlumlWbseB7nnCEWkZzaHI2TK9dxRfzi4/w2Og==
 ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
- smtp.mailfrom=nxp.com; dmarc=pass action=none header.from=nxp.com; dkim=pass
- header.d=nxp.com; arc=none
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=nxp.com; s=selector1;
+ smtp.mailfrom=os.amperecomputing.com; dmarc=pass action=none
+ header.from=amperemail.onmicrosoft.com; dkim=pass
+ header.d=amperemail.onmicrosoft.com; arc=none
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=amperemail.onmicrosoft.com; s=selector1-amperemail-onmicrosoft-com;
  h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
- bh=AKPxHznZYmJW+jcEGniI5eiZ2FQVoq5JtSBKVbXbiy4=;
- b=lpG0VXwCwQBysW4yD+ccG5KxF5fRemdAex9XEcQZSMcLXu/3q3Y8oJQ1N+uQqOhMRKgiCsJyzWpqJ5F7ytob22YR7UIpwjDcWfL6ndQsPoD+eGjnHybhlgF6hthj+sqsg01+08xXFsPjsGGkJKxTZdXRxDenoCzimBWBMUE6XZk4qvZTXUT6zT+RDeBfJ0fUnLttU5D7mOiIEG7wX8QLXrlVw7SrekLcL+MlgOkIXyMb2aFCNC2h667vopkUh17zeQwoVxItK1g/m/ednCUX62TzpZs+cIVa7enMUHKxNDN6mNQU7b/Q+RLzga/Z9cz15KFoLM36mU0X2aj/pYdNFw==
-Received: from DBBPR04MB7500.eurprd04.prod.outlook.com (2603:10a6:10:1f4::16)
- by DBBPR04MB7804.eurprd04.prod.outlook.com (2603:10a6:10:1e0::13) with
- Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.21.25.24; Tue, 19 May
- 2026 03:23:36 +0000
-Received: from DBBPR04MB7500.eurprd04.prod.outlook.com
- ([fe80::c291:543b:4bde:cee7]) by DBBPR04MB7500.eurprd04.prod.outlook.com
- ([fe80::c291:543b:4bde:cee7%6]) with mapi id 15.20.9913.009; Tue, 19 May 2026
- 03:23:36 +0000
-From: Wei Fang <wei.fang@nxp.com>
-To: "sashiko-reviews@lists.linux.dev" <sashiko-reviews@lists.linux.dev>
-CC: "imx@lists.linux.dev" <imx@lists.linux.dev>, "Frank.Li@kernel.org"
-	<Frank.Li@kernel.org>
-Subject: RE: [PATCH v2 net 5/9] net: enetc: fix race condition in VF MAC
- address configuration
-Thread-Topic: [PATCH v2 net 5/9] net: enetc: fix race condition in VF MAC
- address configuration
-Thread-Index: AQHc5nLhMUF/EWJG2Uuh4aFJ2thSmbYUq3GAgAAEk9A=
-Date: Tue, 19 May 2026 03:23:36 +0000
-Message-ID:
- <DBBPR04MB7500404B43BE9278EF55A66E88002@DBBPR04MB7500.eurprd04.prod.outlook.com>
-References: <20260518030535.1057228-6-wei.fang@nxp.com>
- <20260519030413.8C2E1C2BCB7@smtp.kernel.org>
-In-Reply-To: <20260519030413.8C2E1C2BCB7@smtp.kernel.org>
-Accept-Language: en-US
+ bh=Td4/Gvg32SJYA8BxSPJ/qCLxwwyR/y3zo0FDriS5XdQ=;
+ b=dby8HjhWlS5bVzu69UPydj6AT0gOwOwMPiZaRtRBJxYQZGT4ZusfzR3G5obLlBFwwf6sLEG87YCrBSftmcqMY5WBXQOC7EginqM6rFDUXrdyj3yfkzXc3n3en56Kmc+Y0NVSPrxEsR4xq0R6lqeSO0eR/OibAS9MuvkkUQkqd0I=
+Authentication-Results: dkim=none (message not signed)
+ header.d=none;dmarc=none action=none header.from=amperemail.onmicrosoft.com;
+Received: from BN3PR01MB9212.prod.exchangelabs.com (2603:10b6:408:2cb::8) by
+ SA0PR01MB6170.prod.exchangelabs.com (2603:10b6:806:ec::14) with Microsoft
+ SMTP Server (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
+ 15.21.25.24; Tue, 19 May 2026 03:26:05 +0000
+Received: from BN3PR01MB9212.prod.exchangelabs.com
+ ([fe80::44f3:1050:dce8:1ea9]) by BN3PR01MB9212.prod.exchangelabs.com
+ ([fe80::44f3:1050:dce8:1ea9%6]) with mapi id 15.21.0025.023; Tue, 19 May 2026
+ 03:26:05 +0000
+Message-ID: <23b56652-d191-40cd-a382-f261a912b1f7@amperemail.onmicrosoft.com>
+Date: Mon, 18 May 2026 23:26:02 -0400
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH v02] mailbox: pcc: report errors for PCC clients
+To: sashiko-reviews@lists.linux.dev,
+ Adam Young <admiyo@os.amperecomputing.com>
+Cc: linux-hwmon@vger.kernel.org
+References: <20260518193006.27425-1-admiyo@os.amperecomputing.com>
+ <20260518203533.56E46C2BCB7@smtp.kernel.org>
 Content-Language: en-US
-X-MS-Has-Attach:
-X-MS-TNEF-Correlator:
-authentication-results: dkim=none (message not signed)
- header.d=none;dmarc=none action=none header.from=nxp.com;
-x-ms-publictraffictype: Email
-x-ms-traffictypediagnostic: DBBPR04MB7500:EE_|DBBPR04MB7804:EE_
-x-ms-office365-filtering-correlation-id: 8c8f2ba8-6df3-4533-6c46-08deb5560379
-x-ms-exchange-senderadcheck: 1
-x-ms-exchange-antispam-relay: 0
-x-microsoft-antispam:
- BCL:0;ARA:13230040|376014|1800799024|19092799006|366016|38070700021|11063799003|4143699003|56012099003|22082099003|18002099003;
-x-microsoft-antispam-message-info:
- RodkDsjiofqmpHqwazOV/454ZsRTB7fiIpERkD5vJz2BuXfTqo4y1bS/+Z7iHMkobThc+5aw6T5k+04C2kTMgEDrnw1T7bLWKWxzlB+duLvtbSn6O3VmD8IpFhu/78Ms+lJDi+be5+czrEgoKn2CKyS7+A1dueiWc/KlFJN9zCGewEM5H8srZj3vhw9ZuSf5Wlbqf0OEUtVwtplYT2SyKu8XaeJsJhnsiR2uHE0O7eNgkWgmTxtOmeixItEUyUBYcWdgc12TryNl/7H899ZQBaELOIx3aFwsR2uPUwoLzPTJC+JfbLZg/Hh34kmaqmVDDMFca/2NVy8C36aWl1Q5oCGjrsOTcVEL5Wd20buFB3Vi3Aq1fJaczQIjokrlcQ/JHNMpaEDgsrlS9j6zgGthgZhYonQUJ0t16svEnLLk9uv04ZXzo7FCz9F3kyBXkE5RS8JWaTfbDhDwVdaMpdEJjWMsPkAVb05rrtoUKi6nfbYH2g9GX8qaS3b7JGDVF9feaJGHzPqzAuPOGeO1px5vsHHRZ3Tz3910tktwifB48cmw7gw4J8ofoL7hnmFevnMguGfTsdyWgf7c6xKRI85cedFkY39bmvqFrEXJPBtpsvgDhZve//RV7QKyZ6uhwfoscewOx3l4CD8kmJ2ArhXr4YBM2EiDTlqq14Y/vshVF0UvBBkgI6X5grxbE1mYcfX5Wpzmiw/Dx4AD3x42njwda0ThfzurZr6aKV5G5LW+LXVOgsuZ8O6giNEudgEE6RWw
-x-forefront-antispam-report:
- CIP:255.255.255.255;CTRY:;LANG:en;SCL:1;SRV:;IPV:NLI;SFV:NSPM;H:DBBPR04MB7500.eurprd04.prod.outlook.com;PTR:;CAT:NONE;SFS:(13230040)(376014)(1800799024)(19092799006)(366016)(38070700021)(11063799003)(4143699003)(56012099003)(22082099003)(18002099003);DIR:OUT;SFP:1101;
-x-ms-exchange-antispam-messagedata-chunkcount: 1
-x-ms-exchange-antispam-messagedata-0:
- =?us-ascii?Q?ZdR0NAVUgiEH6XwtRGfNmahYUDpJa5cfXtIzbWLLmH2ZcdNkXFAVoHglquWy?=
- =?us-ascii?Q?RFlq1As+0Lq0jPx+2r42Rp64RgR+U0fFa8D4Hn5hejeQt3fCN88HChk1t8kl?=
- =?us-ascii?Q?Zx/rv9NMKiwl1IYWKdD+S0K7JJZGthyFLvoMWZ/G+OAD0FeUxNF8QtHjHAKx?=
- =?us-ascii?Q?h3R1nCOoNzMrWomX4rDMKW2E/hWSjug6EEmDbTkNHe8JibZ9KOSo2g5SFuar?=
- =?us-ascii?Q?euLodq2EcwrAcIOhrSF6QnsTo+cdWmRenfP9MV3O9w7+DFWvjsscy8cJisNa?=
- =?us-ascii?Q?JWvYTRRohSwZcYafYYgfls9ATfhRxIb888gOZcPEd9mf8nJwgi3NTgmLdWQM?=
- =?us-ascii?Q?mAi37SlfJAXMeB+OufIMe+C/vyueGE4XjnYirqZNxSTFPM/kJkUnH8bU6p5Z?=
- =?us-ascii?Q?Rb8oMRF798GtdNAHH1aRJq5blyXDFjUrfFKg1gfoY5mz+2Xz8I8XugFabUnv?=
- =?us-ascii?Q?x5y06G0qIdTKy3mMz23nGfxsAXM7hSSGd53cmO6JxOUWGNc1Ig55R9U8u6AG?=
- =?us-ascii?Q?eFpnZZ+hcruSjFTEBEe7U/TnNTycw4xXA3yktup6Mj6sN/RGQM+0DEMazdOH?=
- =?us-ascii?Q?NYphhm2hur+AbNM3XskJH91Ix+CvjLUc3L/ydGvq+Uw1JN1gHoKV1lpRY7DW?=
- =?us-ascii?Q?2rKBJwHzTC/7AA/DcRSC2lBX6SAp8vaPkKKuZaiAoyQtF3jwcYcgHg9u9WBS?=
- =?us-ascii?Q?P6Jj1a6GWMow/NYcz/o/CtyiFyTsyzixryJ2OUuK7npjIlnUIJMkyOp53a8c?=
- =?us-ascii?Q?FVMt8lpDgKoc6hsB1ymh/RBAoa6vqBWywuNnbsuiwRkUN6dz+BOIaE2M/yqc?=
- =?us-ascii?Q?+4CfBWwhTYiojGnlYokzuK/OAV2VJcng/Af0+2eF7iSt4S6i9HWy97MW18Eo?=
- =?us-ascii?Q?3PhLIOSUxumLUxGaRj8D2Ha5UULyB0jsfvkV9OeAFJkkLZ6TQlErfMHCRan5?=
- =?us-ascii?Q?DR5B6pgwpAOYOYxajxGEOzLrllLJm0RHH73uITAfTmjiYu+z9IsoxA91qzSZ?=
- =?us-ascii?Q?NFfmz++U+8Ts5+fsRj5FzrsBHU0gD7tInzUYSbUmm8i62n/Kt3PsJm76Ozwj?=
- =?us-ascii?Q?3OlsKTNZ2xSEEDXmujw+JPhyvZHNfh/OP9vCtfmOzkWTbK0jq4fg7NS/w/Ug?=
- =?us-ascii?Q?NlwVJDwWCbTS0B12kYVk/jgH3MDADTNmp2m2nw6lPyxkhW38iNq+iwdtZX/r?=
- =?us-ascii?Q?OS2rPcDXe6uzrxBEnz5xQoBTXvhQSAmW7IUndHEX9mB2bihzP2NNLma/ORck?=
- =?us-ascii?Q?h78lpgHjkKN+UNFwKCWNekhwYd4fMyqiWjyHP6lNydC1MPrcQ933JZLq9XkJ?=
- =?us-ascii?Q?nO9vJQbcUkPH5chjio3+2Va2+gl62QlUZuw3Wc7vOFQA05Uo7hEOSOswSwNe?=
- =?us-ascii?Q?5f5o8C3KInw4VmeWYG3R0jaXbbyCD9nxuUcNJ3x+Bv/+WNabYxcavKDd3xXO?=
- =?us-ascii?Q?Wx7xzLdY3fk7VCXqu8Yd79tj2QsOCSBWdyFMkEj9W+mVrfHY3m4VFL8/zcNU?=
- =?us-ascii?Q?TgTW5PwQetnj+VPm6sICP7sf5itGbsE11ZxTtJrsUIgF2NVCUlILTMaRtdiv?=
- =?us-ascii?Q?Ck6RrU7Wg2ghMzcbM/edQ3Jh5+/f7kHoebwwtoYAgwSZRKJocwtEFXYOqRIH?=
- =?us-ascii?Q?HW47YqydT/CvCvKymipQHymrQWZDmPRCn/ynGf8+tbfdDy9I85WUVZlNUctp?=
- =?us-ascii?Q?2pAEPIjXs0l4peizcUTv7mnOkN6Se0bSuXf972B0Dk8MtFOV?=
-Content-Type: text/plain; charset="us-ascii"
-Content-Transfer-Encoding: quoted-printable
+From: Adam Young <admiyo@amperemail.onmicrosoft.com>
+In-Reply-To: <20260518203533.56E46C2BCB7@smtp.kernel.org>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 8bit
+X-ClientProxiedBy: CY5PR18CA0017.namprd18.prod.outlook.com
+ (2603:10b6:930:5::34) To BN3PR01MB9212.prod.exchangelabs.com
+ (2603:10b6:408:2cb::8)
 Precedence: bulk
 X-Mailing-List: sashiko-reviews@lists.linux.dev
 List-Id: <sashiko-reviews.lists.linux.dev>
 List-Subscribe: <mailto:sashiko-reviews+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:sashiko-reviews+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-X-OriginatorOrg: nxp.com
+X-MS-PublicTrafficType: Email
+X-MS-TrafficTypeDiagnostic: BN3PR01MB9212:EE_|SA0PR01MB6170:EE_
+X-MS-Office365-Filtering-Correlation-Id: c9dd764d-96a5-4876-a242-08deb5565c41
+X-MS-Exchange-AtpMessageProperties: SA
+X-MS-Exchange-SenderADCheck: 1
+X-MS-Exchange-AntiSpam-Relay: 0
+X-Microsoft-Antispam:
+	BCL:0;ARA:13230040|1800799024|366016|10070799003|376014|55112099003|22082099003|18002099003|56012099003|4143699003|11063799003;
+X-Microsoft-Antispam-Message-Info:
+	Zaemzz7+mZ37MGSHPHlpM6yM2bsPaXnj2S8s/a7HnIkqv1jRHa5Ryu2VZ9YDuOg7lMZwbJwSE0zOcAola5EwlKY+qt1K4ETc2qSYXP1gH8xymlk+ThlwDPflO2gpLsnWMoj+X4LoRwY92MmwtCGwjW8RO3WoIGF5EvVajX7lyhATBQYcj9oq8QLECNJ9kESFnMFeEC5WlpkOQHGrorTzY7Ed/6E5PCXSGazVL4XRYhl5ZL4IHnBwHEfSBh2GyoxCyybL8MMJqwyY9R+M6cjuan4qu1j6OON9yFe1vQ66VvBPLtWCu/gphmtpQ13J/PPmuZU1UXCXFemdqC2MyqWpAXHUgzREutM3Va+e9j1GJ3GNh0h9C0s/Ru9nvzo4F46VMQLda31fvBqoAHsiihQrEXeQpZp4NXzJf4IaUN51ZA4iYR2AxHewwWFJseXjoJ4/HNgUFJTNwUim0JckJscbdOLF8ayl3cgIo+Wff/4xod2HDvwDyueNJQHVkdY7YRLiu/2u3FsJDV6XF9vURbSnYrgLbx3Los+VXrnwPBQdDiPJv19QUT3neCjbZ3iXfyR5V2E39qk0dvpZMToLS0SZvskbVQTSW8CuQyzg7+dgQ1go2ibya1ek2SJs1885pb64Bf3D8TVFsriUbhAMwUFefDp9ZtPhvBcNfkCJ64t6ZMdOaukWd+3XFD2gi8rHFJCL
+X-Forefront-Antispam-Report:
+	CIP:255.255.255.255;CTRY:;LANG:en;SCL:1;SRV:;IPV:NLI;SFV:NSPM;H:BN3PR01MB9212.prod.exchangelabs.com;PTR:;CAT:NONE;SFS:(13230040)(1800799024)(366016)(10070799003)(376014)(55112099003)(22082099003)(18002099003)(56012099003)(4143699003)(11063799003);DIR:OUT;SFP:1102;
+X-MS-Exchange-AntiSpam-MessageData-ChunkCount: 2
+X-MS-Exchange-AntiSpam-MessageData-0:
+	=?utf-8?B?VVcwY201NVRGNGxWYzJxejh4aG9QR1ZGNCtpRjcrZnA0RC9sL2tpWHN0Tk9r?=
+ =?utf-8?B?TVc1d0hYVzNjZ2g2eU5BQTB4SU9hajJJUTB4MDVzRDJCejByRk5SQUxPNkhE?=
+ =?utf-8?B?RTRLSFhxVlYxbWxMa2V4OXhnVFJYMU41VFFjSHRoTjBtZHdqR2ZqNlJmR3hJ?=
+ =?utf-8?B?dkxQUCtvb1BYVFZaN0tKM3I3MHVkUk5FZkplSFlSRDU4Y2FMRUZBaFovbndR?=
+ =?utf-8?B?MFAzNXhtSDZ0WTJGVmdZZGRnS0lxaTBKWkxRSlYveWJ4cWQ3WkN0MTJRVmVm?=
+ =?utf-8?B?WDR6WnViZ09WTGt6eWJDOTArWnpQcDJQbjFXYU0xY2lYMXJJWXRIc1hnMHFv?=
+ =?utf-8?B?czM3RXFIRjZGb2pKbUMzdC9kZFoyWk05RGNJbmljN1hHdFNzNXBjb0lkeUwy?=
+ =?utf-8?B?U1NjSC9IVTV2WEtZU0VIenlGZm11NG5LeC9lVi9LekxMWHRMbTNLYWRxSUdH?=
+ =?utf-8?B?MmU3OFZaeENMRjk0RFhtL1B6TTI5TEF1TDVyL2ozYXo2Zm9wb0d2U3l5WE5v?=
+ =?utf-8?B?ZFdadUUrci93OEdXNzlJOXJLeEdCNGNSQXlZUjN0bVVYNTB0OE14WDNJY1Fm?=
+ =?utf-8?B?WkMyVmdGcWl6NHpLL1ZuUWpjakVtV2ZzenpFQTRHcHFTM2dWTFgzMXdEMmsy?=
+ =?utf-8?B?K3ptd000SHFzUjdrc0RyM0NVSnoxV00xcFFoSEw0Y1lBNTNCM2V5YzAyVWFH?=
+ =?utf-8?B?NTZPc0E2VmpQZGtIcTBpZnV4Z2N2TUFyWmg2eFdwTys0UWNnK3JmZWk1MjQv?=
+ =?utf-8?B?NEJEY1F3STk2bVYyYS80NVRDUGRhbjhXRHJYSXcxWnprRW12YVppenpZOWUx?=
+ =?utf-8?B?d05XL3BvQUdHRG1WRUZGaUdTN0RtTjdwcTd1V3owbHB0eHQrVjNvWjRvL09i?=
+ =?utf-8?B?RGpacytxWnNPaThhQXFaZEhuem11NHAyc0hIUjQvVWhMY3l5bm5kbFVaaC9H?=
+ =?utf-8?B?cUZPSWhsL3U2cTd5S0xLTGg0cEpid1E4aWFHOXpWYURLMi8zeURUMFFsa0Jl?=
+ =?utf-8?B?cTg5THI3dGZkekNFVU83emM1WEVVYjNBZGNqemZueWl0Y0J5MXVQQ09UVk9P?=
+ =?utf-8?B?aTZ1WjMxaER4NzRYVnYxQjdwUkRjaE5PaWxmcHFvdlJVZlY3M1VHdmZUZnhr?=
+ =?utf-8?B?NFJnUGd6VkdQcEZPMjVtK2xYRkVudVIwbmsyUVlmeWUrT0ExN0VUS3VnV3dM?=
+ =?utf-8?B?a1R4ODlkOGgzdUsrRTl4V0ZDekVNdFN3L0V4clRIak5pcEU3TW9LT09tOGhH?=
+ =?utf-8?B?dzliY1Jtb2MzVlREamRwWUkwZ1l5NXozaDZFQ1d3QjNXRWY4QjB2d3FCOGJM?=
+ =?utf-8?B?U3lvbHgzVzh1L3k5QWswb1p6WGszYlhJcjhHWFprRzJ2OEZCUXpqS3ZsZlk1?=
+ =?utf-8?B?ZGFDQ0QxYWNPTUc0QU9nYmJyUllGUVdiSEs1aU9TbkFhWWMrMTF6R0JoNEFi?=
+ =?utf-8?B?clFDakt3ckNpaW14QnZzaHVFQnRYZlRRVFZnMVdHb20veWxMUmx4MmZ3RlRt?=
+ =?utf-8?B?MmpXT1J3U2pCbVFQdS9pU2FzV0pZc1dtUTM4VWV2WlUxZlkyMWxwYzRsa3Zt?=
+ =?utf-8?B?enJEcWtLNHFqcE5rOEVQTk5ZNXhFVWFnaVhjZE5WQUpaSmEvTktXelpOMWlo?=
+ =?utf-8?B?MmtxNnE3aktodkI0eDc5cm1ML2JUUmc4Zkd5ZVdUaUdGRDJiZTJCN0Nmd0Zo?=
+ =?utf-8?B?YVJTRFBxMXhPY1Ixa0J5b2pCbVRBNGkxQnZvcC9NMHRhVmxSNUNOMUhsdTR1?=
+ =?utf-8?B?T1BldnFXYjE0V2FNcUNZQzh3enY4MVVZZG5ta3ZreExLTk5ObDF3OHZLeU01?=
+ =?utf-8?B?SUt3LzdiUHk4aStvUDF5LzJoL3p4WkpkcDNDMEtYcmM0NndTOHRTNEdHaWJS?=
+ =?utf-8?B?YnFGZUxKL09ZY1kvTVlQWmNkZEtzQjZKdXNzbTRiVllhNkVWTHd1dVVUV1Ur?=
+ =?utf-8?B?UjNVT1ZjcnJRZHJGN2VDQUplMkJoYzUyTU4zbVl3a2VCQzNWalB6RkFtdG9r?=
+ =?utf-8?B?U1k5d2k0VVY1MTZCaFJFcVZ1b0ljOXVKUTFLbGRIWittNWJXZ0x2LytOL3Bv?=
+ =?utf-8?B?OG42VG5KQklDQ0FtRGFzM3FNMWhSNnVYamhxYXBJb0VQZWdNd3VVdnY3cGdP?=
+ =?utf-8?B?dkRLa3Bmb1BWa1k2OUUyb3RoSEpBQVhpMEV6bjRhNGpqNG10R2ZFQ2VnMUlX?=
+ =?utf-8?B?emtPSTBydFNMSTI0VDgxY1FaMm94S0dMamVzNlpndWxhUkF4eTR6WTB4ZWVr?=
+ =?utf-8?B?V1gxWXJRTzl1bzF3TDlZTFVZaFZsendqVVlrb1BEVm5YRTZvYXhWVFd1OHY4?=
+ =?utf-8?B?bzZlelR5V3lZanVYZnVMcE14czZSS0Q0TVM0UG5ob3NpS0tXTk91bmpPdmZl?=
+ =?utf-8?Q?Oxx2JgRCl6uEGMC0cljpjHO+BKVX6+DtbuDwdisGRovR/?=
+X-MS-Exchange-AntiSpam-MessageData-1:
+	2iFVmOE3IaelFsRpeE6hDy1IAwP0XiE48zgSNEB0IBjhglzAzE0k8xVj
+X-OriginatorOrg: amperemail.onmicrosoft.com
+X-MS-Exchange-CrossTenant-Network-Message-Id: c9dd764d-96a5-4876-a242-08deb5565c41
+X-MS-Exchange-CrossTenant-AuthSource: BN3PR01MB9212.prod.exchangelabs.com
 X-MS-Exchange-CrossTenant-AuthAs: Internal
-X-MS-Exchange-CrossTenant-AuthSource: DBBPR04MB7500.eurprd04.prod.outlook.com
-X-MS-Exchange-CrossTenant-Network-Message-Id: 8c8f2ba8-6df3-4533-6c46-08deb5560379
-X-MS-Exchange-CrossTenant-originalarrivaltime: 19 May 2026 03:23:36.3146
+X-MS-Exchange-CrossTenant-OriginalArrivalTime: 19 May 2026 03:26:05.4061
  (UTC)
-X-MS-Exchange-CrossTenant-fromentityheader: Hosted
-X-MS-Exchange-CrossTenant-id: 686ea1d3-bc2b-4c6f-a92c-d99c5c301635
-X-MS-Exchange-CrossTenant-mailboxtype: HOSTED
-X-MS-Exchange-CrossTenant-userprincipalname: W5pIifLGbYAlQ2v1oy+i0hg4tb6PCWf+A4lZjOOLUEdgu+7PU0Ci9j/8mdG+vAemTXb0Pn2+0fGpYAksFnzbxw==
-X-MS-Exchange-Transport-CrossTenantHeadersStamped: DBBPR04MB7804
+X-MS-Exchange-CrossTenant-FromEntityHeader: Hosted
+X-MS-Exchange-CrossTenant-Id: 3bc2b170-fd94-476d-b0ce-4229bdc904a7
+X-MS-Exchange-CrossTenant-MailboxType: HOSTED
+X-MS-Exchange-CrossTenant-UserPrincipalName: GFwgwoZcQvLb5IFeqvmfgPM5vJ+2u2oHGuJaCsGqQZMuD1myMOAQtqwE8vn57xBe3C4oXlJ9kGl6PMJoyoOutilIebC1bHgidkLlClVt7rS51M3PHbvvT3hhcTkugE7V
+X-MS-Exchange-Transport-CrossTenantHeadersStamped: SA0PR01MB6170
 
-> > @@ -989,6 +996,9 @@ static int enetc_pf_probe(struct pci_dev *pdev,
-> >  			err =3D -ENOMEM;
-> >  			goto err_alloc_vf_state;
-> >  		}
-> > +
-> > +		for (int i =3D 0; i < pf->total_vfs; i++)
-> > +			mutex_init(&pf->vf_state[i].lock);
-> >  	}
-> >
-> >  	err =3D enetc_setup_mac_addresses(node, pf);
->=20
-> Should these newly initialized mutexes be cleaned up with mutex_destroy()=
- on
-> the error paths in this function?
 
-No need.
-In enetc_pf_probe(), SR-IOV is not enabled and pf->vf_state is freed after =
-the
-PF's network device is deregistered, so the mutex is not held when freeing
-pf->vf_state.
+On 5/18/26 16:35, sashiko-bot@kernel.org wrote:
+> Thank you for your contribution! Sashiko AI review found 3 potential issue(s) to consider:
+> - [High] Clients relying on `rx_callback` for completion will timeout on error because `mbox_chan_received_data` is skipped.
+> - [High] Slave subspace (Type 4) messages from the platform are silently dropped and acknowledged on error.
+> - [Medium] Positive ACPI status codes are leaked into the mailbox framework as error codes.
+> --
+>
+> commit 02ebdabd8b273de3b908d80f12b3a4d373284736
+> Author: Adam Young <admiyo@os.amperecomputing.com>
+>
+> mailbox: pcc: report errors for PCC clients
+>
+> The commit modifies the PCC mailbox IRQ handler to read the error status
+> and pass it to the tx_done callback. It also skips the receive callback if
+> an error occurred.
+>
+>> diff --git a/drivers/mailbox/pcc.c b/drivers/mailbox/pcc.c
+>> index 636879ae1db76..16b9ce087b9ec 100644
+>> --- a/drivers/mailbox/pcc.c
+>> +++ b/drivers/mailbox/pcc.c
+> [ ... ]
+>> @@ -327,8 +328,7 @@ static irqreturn_t pcc_mbox_irq(int irq, void *p)
+>>   	if (!pcc_mbox_cmd_complete_check(pchan))
+>>   		return IRQ_NONE;
+>>   
+>> -	if (pcc_mbox_error_check_and_clear(pchan))
+>> -		return IRQ_NONE;
+>> +	rc = pcc_mbox_error_check_and_clear(pchan);
+> Can pcc_mbox_error_check_and_clear() return a positive acpi_status value
+> (like AE_ERROR) if pcc_chan_reg_read() fails?
+>
+> If so, this positive value would be passed to mbox_chan_txdone(), which
+> might cause issues for clients that check if the returned error is less
+> than zero.
 
->=20
-> If a subsequent initialization step like enetc_setup_mac_addresses() fail=
-s,
-> the probe function jumps to the err_setup_mac_addresses label and directl=
-y
-> frees the array:
->=20
-> err_setup_mac_addresses:
-> 	kfree(pf->vf_state);
->=20
-> This leaves the initialized mutexes without a matching mutex_destroy() ca=
-ll.
->=20
-> While the memory for the locks is freed alongside the array, missing the
-> destroy call bypasses lock debugging validations when kernel mutex debugg=
-ing
-> is enabled.
->=20
-> Would it make sense to iterate and destroy these locks before freeing the
-> array on the error path, and also ensure they are destroyed in
-> enetc_pf_remove() during normal device teardown?
+Anything is possible. It depends on what the PCC endpoint put in the 
+register.  Right now, the value is ignored, and only used for error 
+reporting, which never happens.
 
-In enetc_pf_remove(), pf->vf_state is freed after SR-IOV is disabled and th=
-e
-PF's network device is deregistered. So the mutex is not held when freeing
-pf->vf_state.
 
-It's pointless or unnecessary to add muxtex_destroy() in the teardown path.
+>
+>>   
+>>   	/*
+>>   	 * Clear this flag after updating interrupt ack register and just
+>> @@ -337,8 +337,9 @@ static irqreturn_t pcc_mbox_irq(int irq, void *p)
+>>   	 * required to avoid any possible race in updatation of this flag.
+>>   	 */
+>>   	pchan->chan_in_use = false;
+>> -	mbox_chan_received_data(chan, NULL);
+>> -	mbox_chan_txdone(chan, 0);
+>> +	if (!rc)
+>> +		mbox_chan_received_data(chan, NULL);
+> Since clients like drivers/acpi/cppc_acpi.c and
+> drivers/soc/hisilicon/kunpeng_hccs.c rely on rx_callback (invoked by
+> mbox_chan_received_data()) to signal their completions, will skipping it
+> here cause them to block until their timeout expires instead of processing
+> the error?
 
+It is the same path as what happened before the change.  So they would 
+not have gotten the error passed to them.
+
+
+>
+> For ACPI_PCCT_TYPE_EXT_PCC_SLAVE_SUBSPACE channels used by the platform to
+> send notifications to the OS, does skipping mbox_chan_received_data() cause
+> the OS to silently drop the platform's notification?
+
+That is what happens now.
+
+
+>
+>> +	mbox_chan_txdone(chan, rc);
+>>   
+>>   	pcc_chan_acknowledge(pchan);
+> If a slave subspace notification is dropped due to an error, does calling
+> pcc_chan_acknowledge() falsely indicate to the platform that the
+> notification was successfully handled?
+
+All it says is that the error was processed. If this is not returned to 
+the caller, the caller will never send another message.
+
+
+>
