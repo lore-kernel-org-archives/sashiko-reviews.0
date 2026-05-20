@@ -1,184 +1,276 @@
-Received: from AM0PR83CU005.outbound.protection.outlook.com (mail-westeuropeazon11010015.outbound.protection.outlook.com [52.101.69.15])
+Received: from PH0PR06CU001.outbound.protection.outlook.com (mail-westus3azolkn19011068.outbound.protection.outlook.com [52.103.23.68])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4315137DE8A;
-	Wed, 20 May 2026 18:37:08 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=fail smtp.client-ip=52.101.69.15
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9B82B2E7657
+	for <sashiko-reviews@lists.linux.dev>; Wed, 20 May 2026 19:01:53 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=fail smtp.client-ip=52.103.23.68
 ARC-Seal:i=2; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1779302229; cv=fail; b=GxLNn9Jb5k8EBagaKoMqzz64Q6YSYNUI97yPcpZzsNLi53UoKt0XH1HgWThPThDRnvKcfThCW/e8i9CmqtWvXj1iG7qEzIKvdukh5Lwg+ArAB3gGa9+VizjyEySD8RokfpJu1STSOp/uGcw2uiYBpEPyQ77RCrTXJbmLwlQQQsY=
+	t=1779303715; cv=fail; b=dkSDL1AjYKu+BBuHBkp4Rton8mbwGW1UleA5N4XeSAcrL7NbkA7WKigwtfPwft80M20wz/inJGWmt9ILPZl8YDqHrJN3Vfz3mvJyAQORDsFlo0oXuWQbE24XKkFcpKKohYK0dmHLov+mRkUpwkqk5mqrYxrw7QLoRVUGf6f8Rxs=
 ARC-Message-Signature:i=2; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1779302229; c=relaxed/simple;
-	bh=pq6S6wOaIH4gDL1zcV8e1TbcReU31Sfs91il9aj/3lE=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:Content-Type:
-	 Content-Disposition:In-Reply-To:MIME-Version; b=cFekfhwpYOonhbCuc+8Py4d5+ESF6olX9WrA5fZpENbKsmZKXVoEzPjAFYseeeE7YC4G7Ftaahclt4noxedgN8BNNdDxAj6lsbbEf+2tR5GeKitmYd/zuEXJ/Nad/5x2nbgTWzWi7hTSY0LgfzOf9YtKVBDjcmOxMB2l5t3z7Rc=
-ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=nxp.com; spf=pass smtp.mailfrom=nxp.com; dkim=fail (2048-bit key) header.d=nxp.com header.i=@nxp.com header.b=GoOxpvDZ reason="signature verification failed"; arc=fail smtp.client-ip=52.101.69.15
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=nxp.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=nxp.com
+	s=arc-20240116; t=1779303715; c=relaxed/simple;
+	bh=vO5TO02kSvKgW7XRNGiUJqgJyqr2vT9Uc+6xmGAkULc=;
+	h=From:To:CC:Subject:Date:Message-ID:References:In-Reply-To:
+	 Content-Type:MIME-Version; b=Y9NONVyQX7jp7SU8W630ISmwYQinOTMh7PkQE/wcaapHhz479knzZKBanRtoExggTeuzvE/Q7zANv6PpHzfdrBpboiwCAj/rRS6FfaO+gKD9PM2vIL1WAlgmqLjcQy0oH0H+Ai7afhd68SM+AiewJVtbQNMhVF3lR0qloXVVItk=
+ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=outlook.com; spf=pass smtp.mailfrom=outlook.com; dkim=pass (2048-bit key) header.d=outlook.com header.i=@outlook.com header.b=SKelTBRQ; arc=fail smtp.client-ip=52.103.23.68
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=outlook.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=outlook.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=fail reason="signature verification failed" (2048-bit key) header.d=nxp.com header.i=@nxp.com header.b="GoOxpvDZ"
+	dkim=pass (2048-bit key) header.d=outlook.com header.i=@outlook.com header.b="SKelTBRQ"
 ARC-Seal: i=1; a=rsa-sha256; s=arcselector10001; d=microsoft.com; cv=none;
- b=leCKBAkD/iFQ+7v7qit5rO3MXJO+ak5y5g3OeZQkQ/wIlBil549QA834OZo+hkN2YDPhIz+lufUpWJaW6xQUtD2fSgTm7QtTY9GQOZf3q9R8odCR06PnbP6UXOuAnNQ1JWRJid1+REym1X/CdxPCh3AgYUv17GtaZ5D7SSW8w5m/1aWn6j5tIPBcTia8yTdsoTs/QopoO5/aoHTsaY4YSrbjl+VdvNyfcuDJOHinFh48nrIBxPtq3+v9AxT9k5eoMgtN0AX3MDWlJ+oS0bDovFvdx9dW8etN4iMelxR+d3eQM0SnHipHz6CUmckZzenWERL3pZCeMMQP2a/RwwwG0Q==
+ b=g8gDB7zH9LKrZ6bp164ynzIR/Dy1BFONXTD2t8JSiSelhfc4ynsIrVOJ3h+2QvH3D5FbFYDu77vROPfIZ0LUk7O3+CYaLdwrP1HEGZWntfHfe8eQ91T+qZQwVT/o77oJiw2qKuKOOGtxqLFK2jDs4FRKsXY2H5wBVkBaMqusLaEJImxBpurNONfB1fcFxXEyul7nF4fa0wmMUbsZRlR+knb584KQvXHs+CwRR7z9cL1xuyDWbtjMlNGSkJ/xhSd4IEzdBGlLVTdcguoG0Dxal3Yph3qRfvAg6xrxhkCI2ta6IL+ToIew6iIHOrdVmKKHXyywK1bgdU7stVk2LjmTNw==
 ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com;
  s=arcselector10001;
  h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
- bh=4IMX6c8dJSkEcmBok5f8xSux72we50Qc4er9R+Vv9vE=;
- b=Eon1Czwl3xf8SZru1uREOqPhEkfy0FAumSv1rtgfDfvym4QbDo8yyUNl1tc4QRpyMB6peO+FG/03xNZ9RlOyqNSzusXGP5qvO2vfJYFCGRWfRxlWPgKTfLWT3BXLo1F9tf6Q/AERTsYxJh4LIWuJpWy3oXYYRlbJvSKg05JTTXrZAb1HLOd20l69/qSr6e+pStzjBMKbbClinFXi9DZGMe2VcEsJrnwnWa6SWH3pLO3pH64vijRD+4/346wMVZ6FMy8cfB6QhWWqGKQx29Kfn1F3gS2XNnd1zH0MGxI0chuq6FvGhlonD6HaoX7U+HISLQnwkNvp5FO4e4rVJ9LvBA==
-ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
- smtp.mailfrom=nxp.com; dmarc=pass action=none header.from=nxp.com; dkim=pass
- header.d=nxp.com; arc=none
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=nxp.com; s=selector1;
+ bh=tXS+Cz92sRyQ8jpIB5cCztgedqG20wOeAppdTezy6Ms=;
+ b=e7xKDzkMNuuv2do1t75+QtHit1wTW3y0y3CdUek16oZefMGh0PwGbzi9U2af0ciGP3yEZmfefcIsNTJtb+f2mbqnvFccMCGMyqAnl6jbDs6SpuJtfffCkHvbdZmlK4hvGsToHAVm0+9BAge14E4jNyAp6wMQjZ3DwVEJYMzh2wms4zQXIYgXQQIer16bzkJT5ubS39bN5/vKJ4WfOzmW9KpnPmgKI/4D2h9ieoDUqFEAy3b2O/MegoAKwI7TYlyKNW+qF5j2h3CQw1gA9yREnbKe6U4d+eYMBR0PrfKZuiG7IVb1GDG6rqvf0YE3APw4RrOi65qajQMsLzkf2NIBdw==
+ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=none; dmarc=none;
+ dkim=none; arc=none
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=outlook.com;
+ s=selector1;
  h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
- bh=4IMX6c8dJSkEcmBok5f8xSux72we50Qc4er9R+Vv9vE=;
- b=GoOxpvDZOJXbkV1b9WNr6OGoCexiNF42Z0T2ERH4MghBxdSWgGImrWJumY25baa+I/D+fQ16LNJhtKU7YTjLviufLNwPKhv+y+gUtuli83Yx0UkA2BJbJc00B2ON1RKn4gDINi7K3fZs+Fs/7DXKhktjSziKiGYDmESaE93HeMT6ldBIo5oH8cCAo2QUET/3kpQR4Svrrvlqp/qFXN7Kf0e6w7jTswDN8k4eH90ezBcLSwOQlPWjt/qs0xldMTHZ4roEr/9HD5PhLu5/nzTvtuWLs6XLm5nsknNuEYjezQE6m1i1zyzQ5mOWK9voYB0srQMNHq8AR2uwGdsH2223ww==
-Authentication-Results: dkim=none (message not signed)
- header.d=none;dmarc=none action=none header.from=nxp.com;
-Received: from PA4PR04MB9366.eurprd04.prod.outlook.com (2603:10a6:102:2a9::8)
- by AMBPR04MB12312.eurprd04.prod.outlook.com (2603:10a6:20b:723::21) with
+ bh=tXS+Cz92sRyQ8jpIB5cCztgedqG20wOeAppdTezy6Ms=;
+ b=SKelTBRQN32eX1X34BHv2E9pdrKSQG66tpyHlhQFnfH2iY9+eRvDXAzGTb7pxnTVVcT/j5k0L8rxR5dPAZc1G6jbs6Bh87oWG3x8gpkj0NCB4c5WpIJSydjX+NiZ641sHeHgTIpq7rFAoKgmSXTdM+iRdX4uAYAJhx7A8zSaUOrZ1CT9K1kRi5Qi7kExpxqTpS2kl4YQyCZRWlYRntaSjQ5/Iq9niJHDPeKw3FebAMLzpMWouobVk0J4LKVaph5YTQhT3HlPAZsPyPxcgOQs65xOuCsQpGpVcR8ChLm6Zlpj6Nfel7ekMZyN7aDi6ZZzjmjjPV93Kq8ztpcEhZvcBA==
+Received: from SN6PR02MB4157.namprd02.prod.outlook.com (2603:10b6:805:33::23)
+ by MN2PR02MB6927.namprd02.prod.outlook.com (2603:10b6:208:203::16) with
  Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.21.25.21; Wed, 20 May
- 2026 18:37:05 +0000
-Received: from PA4PR04MB9366.eurprd04.prod.outlook.com
- ([fe80::75e4:8143:ddbc:6588]) by PA4PR04MB9366.eurprd04.prod.outlook.com
- ([fe80::75e4:8143:ddbc:6588%3]) with mapi id 15.21.0048.013; Wed, 20 May 2026
- 18:37:05 +0000
-Date: Wed, 20 May 2026 14:36:59 -0400
-From: Frank Li <Frank.li@nxp.com>
-To: sashiko-reviews@lists.linux.dev
-Cc: Franz Schnyder <fra.schnyder@gmail.com>, devicetree@vger.kernel.org,
-	imx@lists.linux.dev, robh@kernel.org, Frank.Li@kernel.org,
-	conor+dt@kernel.org
-Subject: Re: [PATCH v2 3/3] arm64: dts: freescale: imx95-aquila: Add Clover
- carrier board
-Message-ID: <ag3_S6vQ_8mmVfKD@lizhi-Precision-Tower-5810>
-References: <20260520-add-aquila-imx95-v2-3-06424a51e33a@toradex.com>
- <20260520121639.97C711F000E9@smtp.kernel.org>
-Content-Type: text/plain; charset=iso-8859-1
-Content-Disposition: inline
-Content-Transfer-Encoding: 8bit
-In-Reply-To: <20260520121639.97C711F000E9@smtp.kernel.org>
-X-ClientProxiedBy: SN1PR12CA0066.namprd12.prod.outlook.com
- (2603:10b6:802:20::37) To PA4PR04MB9366.eurprd04.prod.outlook.com
- (2603:10a6:102:2a9::8)
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.21.48.16; Wed, 20 May
+ 2026 19:01:49 +0000
+Received: from SN6PR02MB4157.namprd02.prod.outlook.com
+ ([fe80::900:1ccf:2b1e:52b6]) by SN6PR02MB4157.namprd02.prod.outlook.com
+ ([fe80::900:1ccf:2b1e:52b6%5]) with mapi id 15.21.0048.013; Wed, 20 May 2026
+ 19:01:48 +0000
+From: Michael Kelley <mhklinux@outlook.com>
+To: Sean Christopherson <seanjc@google.com>
+CC: "sashiko-reviews@lists.linux.dev" <sashiko-reviews@lists.linux.dev>,
+	"linux-hyperv@vger.kernel.org" <linux-hyperv@vger.kernel.org>
+Subject: RE: [PATCH v3 31/41] x86/tsc: Pass KNOWN_FREQ and RELIABLE as params
+ to registration
+Thread-Topic: [PATCH v3 31/41] x86/tsc: Pass KNOWN_FREQ and RELIABLE as params
+ to registration
+Thread-Index: AQHc5J/+S6zzZLK3PkGQwXsR4aATVbYUXy+BgABF6OCAAoCBgIAAJeQQ
+Date: Wed, 20 May 2026 19:01:48 +0000
+Message-ID:
+ <SN6PR02MB4157E07574E2F045A8A1DF59D4012@SN6PR02MB4157.namprd02.prod.outlook.com>
+References: <20260515191942.1892718-32-seanjc@google.com>
+ <20260515194535.56B84C2BCB0@smtp.kernel.org> <aguQIJQYsarMScnl@google.com>
+ <SN6PR02MB4157D50A944A2794475E32FED4002@SN6PR02MB4157.namprd02.prod.outlook.com>
+ <ag3kFYLrypsBnlkY@google.com>
+In-Reply-To: <ag3kFYLrypsBnlkY@google.com>
+Accept-Language: en-US
+Content-Language: en-US
+X-MS-Has-Attach:
+X-MS-TNEF-Correlator:
+x-ms-publictraffictype: Email
+x-ms-traffictypediagnostic: SN6PR02MB4157:EE_|MN2PR02MB6927:EE_
+x-ms-office365-filtering-correlation-id: a4db66da-1cb8-4956-9dee-08deb6a23eb0
+x-ms-exchange-slblob-mailprops:
+ AlkLxVwsndmv0iZj3buVhxZxpTBtM8DuHpYWM/vyKpcifZtG5GDhcvr5mUt8fVmZuk+0s0koeOIkauPlgTBOmt6sTBciT4WrqV0JUCuxTr5ARNq+FLaWF81s5RPgT8OnZIar0Nx4cZ5uR9+wrVBgdGlUJFRC88Oyt4K1maome47IhSA+/Uji+UrxDKN39/lo/Vqt8ycR0tK6kacNQlRFUzedjEv3NfvG+nDiXPx8+QBZDPajSCFjYHkX+jooM2jktL/hXH7/hy18dUitg0j031CNtfzMTWzF0GsOES/QqE8q8Rt5p4nxeCHZHNkxJ7m0Eu69h4edGoDfQKaJHouUnxwqhSD63CWzFhRqpfb65FYWyj4EKwE3LBAwa+wM04bK9kbLk/6SqpZUGEWwTBJG0VVyiEEnbHRBOU2QB/rJxE4EsDWIyIWQv9yUq6JKFD5J8FXssRr0lwi+HfrVYKFR7jNZbWZPEbuxIt77Pdxs3SoKwsy/TAJWVC/OrnsDbIRMAAc1U4/DmLq1QmkmYAh0xAzrywCLg/Gp23O6Ul2upUbRQbltSD1t79eFs7gR6kgQ8rCUfK4LFW1m0mxu7ww9WxAn7seo8/+RDWgzhsJkBBZXpME2Mjyzq5eteNefDJVQc2Tf72+ZvXeSy6gx9lQdveZqVwjZvDPesmatdmKDX95kz2fXcja84k83mZ1Tg1WHx+tyet9Cq1i6HuU246uVbIkcduypzwnhy8Y/SEojgDLvyenDymtq2VtmsS896G1x8r8qEzj/z6WoLYyvkb13RspZw2uW7x+o
+x-microsoft-antispam:
+ BCL:0;ARA:14566002|31061999003|13091999003|15080799012|37011999003|8060799015|51005399006|8062599012|19101099003|19110799012|3412199025|440099028|102099032|19061999003|40105399003;
+x-microsoft-antispam-message-info:
+ =?us-ascii?Q?PTcnSfMlv6rPPYSpUS1U426AOol2Cm9hkMe1SM73H2F6ZDOocvIRpzwCDwxF?=
+ =?us-ascii?Q?4OZyF3XgYH/hd0edwl+m92wj7KSNpnDte6c0SSfDKiZI7fB3IhJPNq265LX8?=
+ =?us-ascii?Q?qhjhAI7v+xcHVinxIV9INKiE3ltspaUvOnlPXi7Ly8PbCy2VjxyzMO1YI8qh?=
+ =?us-ascii?Q?NZ6S9TFR1I2eWM4nP1ZZnVkehleEqYQAbFNW2f75q1wkMmwc+LIJ9JlWfo87?=
+ =?us-ascii?Q?PJ9u44uLQQlIsT6rz/bhDdGgVFJuz5+B4iRho6EMwCcUE7YmRFQoM6XtwaGo?=
+ =?us-ascii?Q?HlxVSGS+bZY3UeDQ3aUR6YF21C/7C+x1TUaTOt4aOa2NjOhERkrV0OiktbaX?=
+ =?us-ascii?Q?H0ExSc//HxClWrIDc4t1m95GwZ1deU5qSrl338w79qA8VtQBIqNRkV4+huRw?=
+ =?us-ascii?Q?D3TRxbzOkYviVCz3zoGMe6PJBxEGqmOpt1dPJdSRpj11+ztVTWCe6MHDvD+U?=
+ =?us-ascii?Q?DHFhkVV+IiPwlV0WqIbVYRa7ZjnwhH+8YJUiN6kq5vNR5KgqovH4y/EtmeBB?=
+ =?us-ascii?Q?6QSt40yYZ0EF/TKx2S3X2NaVChz1mNwzSmHHATlsoEHz8e2UN/LQSL0dWmwg?=
+ =?us-ascii?Q?ahj6wwEjyatBZAp1xxELFMASHjOrf2MinyAFBd3EmlAkRG5+0n97GbLhx0N1?=
+ =?us-ascii?Q?/mfWmVZfSX7byGWd9p0Sy5XixYM4sGZtEL4kpap/7CfV1tLgr0BL6RvorKBF?=
+ =?us-ascii?Q?x0UNUfyHWd+ZOa3SnFf7V82NE5Gy4mcefJ5EOuMkV4lvGv/1ftEDSPknuU2N?=
+ =?us-ascii?Q?jvLrVos0iAgX0H1NI+TrHawUFyf5SeM4InUJZ43R0D49Yd9owXCSOwB2kmWd?=
+ =?us-ascii?Q?/qLmWeGH6PS19oxV321uigpJbG6NyMZFuDQZD2AD+vt+JLJz/1ZjUkl9zNQV?=
+ =?us-ascii?Q?yxrPBTTpKLgTLEyxnEic6LQ2CHDjLNmrZTaovrPoFDqOaIjbsM/rCHzS8IqA?=
+ =?us-ascii?Q?1QcgHTqnlrWMdqFl9HfM10NElIgIm2LQodGZ7lmjw9+rOcU4QQ/pd7iEELCo?=
+ =?us-ascii?Q?tPe9qffzUUHRUoWk82Qhe02kC6nRTUU4Q2fiusoXcD3bX9Q=3D?=
+x-ms-exchange-antispam-messagedata-chunkcount: 1
+x-ms-exchange-antispam-messagedata-0:
+ =?us-ascii?Q?CItn/0nGfcHU6bm4bQYwtOxPhOV8+5diAyIUFhNdJ/Mf0MyZcIxNVgm0DyP3?=
+ =?us-ascii?Q?gv3soHHi1MkTo2J+MlHpqrTOZdYHWoeVOnTDYHZhD5KIa8tQPMJhtnyU7e/Y?=
+ =?us-ascii?Q?mL1fmIZvdRbFIPr5AMfHugrrUNdDSlFzQ/PxbKi7grc0qKw85CMalYLOeeoK?=
+ =?us-ascii?Q?wDlW/oaf7SIryUJ9szNcVkhcoL3l5MiT/cJkVcqNyGbtHCkyCmpoTPF/WtIn?=
+ =?us-ascii?Q?a9U91nNFS4tZzDblYRx++o+MdxybQMjTUKH5BnWg5gmjPELb1YLEnHaluSiF?=
+ =?us-ascii?Q?JnjayGI0BfL3sSSKptrmxwv23sxYI6iryxeRzRtf7NT4VNSX8dvxgUDQdFRY?=
+ =?us-ascii?Q?/2FZrh79xIMW4+m9RqbXkHcEFrGLf5xvdPGhLiEcXmc3DEm2QI55vhvifWl/?=
+ =?us-ascii?Q?V+/76gWVYK3XSTPkM+XT71XNCwvSMBcma+9OGXacgGxT5k8rVFCvbJhzbFwt?=
+ =?us-ascii?Q?n66UziQ+gd51tCh4x2uuqKwx9D0PUY3TkOgmvFOC+TIzI3xi3R3jzyjrBcd2?=
+ =?us-ascii?Q?rUo/uV+NnVXpXehphE5luRXf7ZJQA0yHv3etDGnc5EO+XdE+8GXDrm1QtLVr?=
+ =?us-ascii?Q?uX6Z3KQsjW1Cq9A0EPVy4siDXlhlsg36SImfxDDNkSzW/E/qY5ESvhEeXOZY?=
+ =?us-ascii?Q?ZUTTnxKjyqcNGnVU+dt4F06qc4i4+L4M7k+TDOklY7mN84zTghR4cvSsGjO/?=
+ =?us-ascii?Q?5ticy1NmA/2AQNMePXvgz3rbMqjA3xTodDJtEMXpREh+fMr8QBUJaIG5lPAT?=
+ =?us-ascii?Q?h5LxcLrOXRUeZ1U01z3sTfh6R5dkic7nzwDSpaDnsch/uwua71c+fSP63D0q?=
+ =?us-ascii?Q?kFcsJVZNee6F7lnLOS0urhmxzGx+bZ6c37bkO0JTVDHypxLqNmKBDgqFrY+h?=
+ =?us-ascii?Q?Y9y80lWobpwjSgqexeis1Okb+KzNDGdneZw1ZZeTwAVATQfJLGn7bAP0ei59?=
+ =?us-ascii?Q?E1bADMNp4+cqlZytbbB3QBui7NI9db5enCz+nGlwVLL5S+ZGmFjQl43xIuMa?=
+ =?us-ascii?Q?e8oupmPZz8RHXSx8X15McM8qKbhpgudf3p1HRMgDXuYImvvIim+S2UBE0F8f?=
+ =?us-ascii?Q?++v2vVrI4i4jTpEJy+2P7RHzb+a22y5Eso2E9Cy9WbS2NnLJtSgBVupGj2Qg?=
+ =?us-ascii?Q?0FAh+cq8holkm3olyoZUXkMZIk9+GtsDtpkamWgYp+jf8kkZ90lvpKyT73v1?=
+ =?us-ascii?Q?sZ3qBBymanjm2FQ+nQvUAxh1az1nek42nLRdOyvSQ86YeVNUMf8X5IP8kOmZ?=
+ =?us-ascii?Q?zunbQvmlVb8wMjASkzwJ2fSfCcyKXTn1prtSLVbQrf4fHIKJVsbdHA2qerki?=
+ =?us-ascii?Q?0LwM5bB2b2T9z3rQIzq7ncx83f8ojZZeXEcwaA9DnSFbML1QNL/8cfD6Uk8J?=
+ =?us-ascii?Q?E0jpeC8=3D?=
+Content-Type: text/plain; charset="us-ascii"
+Content-Transfer-Encoding: quoted-printable
 Precedence: bulk
 X-Mailing-List: sashiko-reviews@lists.linux.dev
 List-Id: <sashiko-reviews.lists.linux.dev>
 List-Subscribe: <mailto:sashiko-reviews+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:sashiko-reviews+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-X-MS-PublicTrafficType: Email
-X-MS-TrafficTypeDiagnostic: PA4PR04MB9366:EE_|AMBPR04MB12312:EE_
-X-MS-Office365-Filtering-Correlation-Id: 7fa59e4e-5d0c-44d7-bf5a-08deb69ecaa7
-X-MS-Exchange-SenderADCheck: 1
-X-MS-Exchange-AntiSpam-Relay: 0
-X-Microsoft-Antispam:
-	BCL:0;ARA:13230040|19092799006|366016|376014|52116014|1800799024|11063799006|22082099003|56012099003|6133799003|18002099003|38350700014|4143699003;
-X-Microsoft-Antispam-Message-Info:
-	wIu6zYby0WSjA3FgiT1hawgxkywrhBbi4wvTs0wjwNgyl2Aw+Io2bxuMl5z/+SkIr5clRlCZnd/gBeEa1cwTju2bu40MYc57TwlER/C9fMIczXXOHAyYQlM/szU7Br+Da9JPewWuzezWt4FQmFPWrkSewBezwVwFRZpji9cjlaREz3BX0Ubfjf1C3jALGASo3NL6s0D7T3OIOVRsOz+tAmEHTxvTVZ1VAiDjufUjOwUzWxxjNLsV7mTPDDmqHbq9ZBqVC3crIFyF7f0sKO8VoUw8MUfOcDTle2YLLHhjIqjtw5oIMfGZ2RmZ7Zqn1zSdkzb8/jplvp+8Gey4THiq/521iBhwuALkyVBKwWcAAy1GwO3ZjQ2A10dsxzoFMdnGubxQR0E7gtzE69ABL0Axm0L4/hIwpAp35HWTWXZ9oXSkp9jBwjE8KAODFRkT58kHvv0k00plK4gC41Dy0JyJzrc7Bbyagk7+6DcpCqIrRHwLlthB2V++L9I/5Hm6tneWfBny/OuG6YbEbgVd+w18UzSQxWOtrrg0sLS+Fk+YqffcuMC6XwflFt7EApx9CW6T/1ZzLQ1XbPP2o68Coq9J/WnyMMcwlggUOS4Y2afCBK4AAcb3Kub0AY2oNOI5EZGYdVBuil8CPTkSfniid9VHd4OO0auZaWeuhMXyZjVFhDt1OMZ7YTdXP823NBnmHs7F
-X-Forefront-Antispam-Report:
-	CIP:255.255.255.255;CTRY:;LANG:en;SCL:1;SRV:;IPV:NLI;SFV:NSPM;H:PA4PR04MB9366.eurprd04.prod.outlook.com;PTR:;CAT:NONE;SFS:(13230040)(19092799006)(366016)(376014)(52116014)(1800799024)(11063799006)(22082099003)(56012099003)(6133799003)(18002099003)(38350700014)(4143699003);DIR:OUT;SFP:1101;
-X-MS-Exchange-AntiSpam-MessageData-ChunkCount: 1
-X-MS-Exchange-AntiSpam-MessageData-0:
-	=?iso-8859-1?Q?l0lbZNOkMqrqhCH16rvQeKo0TxAhHwBTm1ro11hLfWG/1q1Ce8toOCc2wG?=
- =?iso-8859-1?Q?+fwozucUc8MXxUdA2gvng2+F4I7zdzDquL4vEUVYETwn3NyAl/rAsq651k?=
- =?iso-8859-1?Q?FC4WSZe4kHZyJcr4sQOk9IMx/I8/9IEFeqAPCnjd+PIXtHYbXhC2c6RJ4I?=
- =?iso-8859-1?Q?piopbaLfwI6X5LsLAodX3doUjg3EkXAtt3zvhQ56eYZ3pwJ59D8QncpJ23?=
- =?iso-8859-1?Q?92bNzCa80EmeXSTerIjgU2LN/AhW7ITKANlsRwy6apZAirRDnJR0fvlYpf?=
- =?iso-8859-1?Q?QOer8unWja7f1bFyrQqZZR1CEnHE29Qi0SiB8ge5ybp0CY3DMSjJ5Dq96G?=
- =?iso-8859-1?Q?J/gNIZwdVTOCFUHf+RYxOA5pjYb6+l2W1Ew2h88l2RgCUO83SiKr2E2PhD?=
- =?iso-8859-1?Q?QabN2nem2qxVXRhtTFYMQ6zIu5rsn9QrO+a8+uu26KArqrC766pXPGtC21?=
- =?iso-8859-1?Q?Ga8yZ0cljtzNJFvXXPo70+jKuq763RA7BMcxwzoWh2wIe2V6lQffg+5W5n?=
- =?iso-8859-1?Q?98w85qI5gidDvbqpuEuOChr/OcOAqtU9MTrRsAK3EHAPAuFtFNPkdQHeWA?=
- =?iso-8859-1?Q?VfgtrEM1aJVVo22FMbcoxNgGW4TbFfe87ofbM+5soBuPgZP6J5gBqDS+QZ?=
- =?iso-8859-1?Q?WiF/N6LXi8JvtNYQ/+lSF5J/B560RcXLJA1NscmxQPTPPQK8+p/DTwDYdF?=
- =?iso-8859-1?Q?QZl9WEHuep0yp2/T9cP1sigjLxW3K8HAgc0Qc8m4Va/TD61epvHSC+seQw?=
- =?iso-8859-1?Q?lYXR5fcV0uA81qzymdujkXVAaPDO5neuK9AgZ6onOoMEy11LFHpfYPbxPh?=
- =?iso-8859-1?Q?lya946tEEyD1rGHcwNs7EkTztVMk7cc9rJd2xJThDNtSN3IOGIqGoISfdT?=
- =?iso-8859-1?Q?ocBluNvTQYjS46AEWIJw15WuvB5FS0FroOWFPtpbUPpOI/02JB+vhmQ5I7?=
- =?iso-8859-1?Q?IoTv2Pd77hbhL+FI2AtfP7IzBciYQJ+Jm1VDAcleavu94DJPgKeZoUKuCM?=
- =?iso-8859-1?Q?UAu+ymyCqkdogEn0AHxIRDC5XgWG6GY1zFNz9PDgym8b7KsNhruL98RL1t?=
- =?iso-8859-1?Q?FQ5Zu4Fp76uDibRbh/1M9FZEyaU82FcUj26yEJAVonhVYYvqAm00O9FWX8?=
- =?iso-8859-1?Q?CvczCQAll3wqIw4n3D20rxIF+8FPSDNz0NRSqKslTalmi1x/D0TvwxveuS?=
- =?iso-8859-1?Q?kPCfmS6EfacWsZRpvYAzIzQ2pFyk4bAGa8J69okm+Wb9TQ42gH2EQJ/9vd?=
- =?iso-8859-1?Q?l/lgjxU4C74Gw3oulFzWBge0lg4QKDEj74/UIcQ62kgsOITPH9UvIbbdfD?=
- =?iso-8859-1?Q?94q0GUoSoh7MkVN9f9JAFBybgXCQPmQSbj0BaIOjzvJc7NPWVkTvvsSp3n?=
- =?iso-8859-1?Q?V5rwOX6W7W1g2N1Dxe6qhFCVNdtSFycNPgNkYJHA2e+USFEZYugWcH5RZb?=
- =?iso-8859-1?Q?qLcYp6FcosCdMPYBEGKj/u0K5RrLAMep3SiP4/KqCamJgX0iToylYCUOmd?=
- =?iso-8859-1?Q?8NzXF1aUVN9f3IMqnH13csM9UFQ9r7nHRniBtxQjR7uff245wedJ1WxkHK?=
- =?iso-8859-1?Q?EJEzrl49TykLWgXNnxkrBrJHPh8t3tqe6mPHyNKPFo5dmKRoEMIjIMQV9m?=
- =?iso-8859-1?Q?7NDr71Wsp9YP72aSaaCOxAwrtD3GYNU3FTZlX3NBQtk5yZ907LMGAoFKyY?=
- =?iso-8859-1?Q?Q1SReVs/nWC/kaHET0itRGgClHvjPaOHzyokw+qw9PMz/6CU/vQix5i4By?=
- =?iso-8859-1?Q?+OhR/024zpcvSaRsxD/dus/C/z4ulLjl3SnZPUZMhZWN/3?=
-X-OriginatorOrg: nxp.com
-X-MS-Exchange-CrossTenant-Network-Message-Id: 7fa59e4e-5d0c-44d7-bf5a-08deb69ecaa7
-X-MS-Exchange-CrossTenant-AuthSource: PA4PR04MB9366.eurprd04.prod.outlook.com
+X-OriginatorOrg: outlook.com
 X-MS-Exchange-CrossTenant-AuthAs: Internal
-X-MS-Exchange-CrossTenant-OriginalArrivalTime: 20 May 2026 18:37:05.5621
+X-MS-Exchange-CrossTenant-AuthSource: SN6PR02MB4157.namprd02.prod.outlook.com
+X-MS-Exchange-CrossTenant-RMS-PersistedConsumerOrg: 00000000-0000-0000-0000-000000000000
+X-MS-Exchange-CrossTenant-Network-Message-Id: a4db66da-1cb8-4956-9dee-08deb6a23eb0
+X-MS-Exchange-CrossTenant-originalarrivaltime: 20 May 2026 19:01:48.5649
  (UTC)
-X-MS-Exchange-CrossTenant-FromEntityHeader: Hosted
-X-MS-Exchange-CrossTenant-Id: 686ea1d3-bc2b-4c6f-a92c-d99c5c301635
-X-MS-Exchange-CrossTenant-MailboxType: HOSTED
-X-MS-Exchange-CrossTenant-UserPrincipalName: R0dZPjL3ypvUnRO6vhiejN1WH9ZEdvNA10RfyQ2qjjmpuAW4NcmEaxXEj1GOsz8J3+mngGPqaYHgW5F6ndK5Zw==
-X-MS-Exchange-Transport-CrossTenantHeadersStamped: AMBPR04MB12312
+X-MS-Exchange-CrossTenant-fromentityheader: Hosted
+X-MS-Exchange-CrossTenant-id: 84df9e7f-e9f6-40af-b435-aaaaaaaaaaaa
+X-MS-Exchange-CrossTenant-rms-persistedconsumerorg: 00000000-0000-0000-0000-000000000000
+X-MS-Exchange-Transport-CrossTenantHeadersStamped: MN2PR02MB6927
 
-On Wed, May 20, 2026 at 12:16:38PM +0000, sashiko-bot@kernel.org wrote:
-> Thank you for your contribution! Sashiko AI review found 1 potential issue(s) to consider:
-> - [Low] The flexspi1 flash node incorrectly uses Cadence QSPI specific properties (cdns,*) with an NXP FlexSPI controller.
-> --
->
-> commit 58fa26ce8327e303e6d4b9e4915178ba8d66e5b7
-> Author: Antoine Gouby <antoine.gouby@toradex.com>
->
-> arm64: dts: freescale: imx95-aquila: Add Clover carrier board
->
-> This commit adds device tree support for the Aquila i.MX95 SoM mated with
-> the Clover carrier board. It configures basic interfaces including DP,
-> Ethernet, CAN, and the FlexSPI controller.
->
-> Link: https://www.toradex.com/computer-on-modules/aquila-arm-family/nxp-imx95
-> Link: https://www.toradex.com/products/carrier-board/clover
->
-> > diff --git a/arch/arm64/boot/dts/freescale/imx95-aquila-clover.dts b/arch/arm64/boot/dts/freescale/imx95-aquila-clover.dts
-> > new file mode 100644
-> > index 0000000000000..021d437763412
-> > --- /dev/null
-> > +++ b/arch/arm64/boot/dts/freescale/imx95-aquila-clover.dts
->
-> [ ... ]
->
-> > +/* Aquila QSPI_1 */
-> > +&flexspi1 {
-> > +	pinctrl-0 = <&pinctrl_flexspi1_4bit>,
-> > +		    <&pinctrl_qspi_cs1>;
-> > +
-> > +	status = "okay";
-> > +
-> > +	flash@0 {
-> > +		compatible = "jedec,spi-nor";
-> > +		reg = <0x0>;
-> > +		spi-max-frequency = <66000000>;
-> > +		spi-rx-bus-width = <4>;
-> > +		spi-tx-bus-width = <4>;
-> > +		cdns,read-delay = <0>;
-> > +		cdns,tchsh-ns = <3>;
-> > +		cdns,tsd2d-ns = <10>;
-> > +		cdns,tshsl-ns = <30>;
-> > +		cdns,tslch-ns = <8>;
->
-> [Severity: Low]
-> Are these cdns,* properties intended for the NXP FlexSPI controller?
+From: Sean Christopherson <seanjc@google.com> Sent: Wednesday, May 20, 2026=
+ 9:41 AM
+>=20
+> On Tue, May 19, 2026, Michael Kelley wrote:
+> > From: Sean Christopherson <seanjc@google.com> Sent: Monday, May 18, 202=
+6 3:18 PM
+> > > > > diff --git a/arch/x86/kernel/cpu/mshyperv.c b/arch/x86/kernel/cpu=
+/mshyperv.c
+> > > > > --- a/arch/x86/kernel/cpu/mshyperv.c
+> > > > > +++ b/arch/x86/kernel/cpu/mshyperv.c
+> > > > > @@ -516,8 +516,13 @@ static void __init ms_hyperv_init_platform(v=
+oid)
+> > > > >
+> > > > >  	if (ms_hyperv.features & HV_ACCESS_FREQUENCY_MSRS &&
+> > > > >  	    ms_hyperv.misc_features & HV_FEATURE_FREQUENCY_MSRS_AVAILAB=
+LE) {
+> > > > > -		tsc_register_calibration_routines(hv_get_tsc_khz, hv_get_tsc_k=
+hz);
+> > > > > -		setup_force_cpu_cap(X86_FEATURE_TSC_KNOWN_FREQ);
+> > > > > +		enum tsc_properties tsc_properties =3D TSC_FREQUENCY_KNOWN;
+> > > > > +
+> > > > > +		if (ms_hyperv.features & HV_ACCESS_TSC_INVARIANT)
+> > > > > +			tsc_properties =3D TSC_FREQ_KNOWN_AND_RELIABLE;
+> > > > > +
+> > > > > +		tsc_register_calibration_routines(hv_get_tsc_khz, hv_get_tsc_k=
+hz,
+> > > > > +						  tsc_properties);
+> > > > >  	}
+> > > >
+> > > > [ ... ]
+> > > >
+> > > > > @@ -629,7 +634,6 @@ static void __init ms_hyperv_init_platform(vo=
+id)
+> > > > >  		 * is called.
+> > > > >  		 */
+> > > > >  		wrmsrq(HV_X64_MSR_TSC_INVARIANT_CONTROL, HV_EXPOSE_INVARIANT_T=
+SC);
+> > > > > -		setup_force_cpu_cap(X86_FEATURE_TSC_RELIABLE);
+> > > > >  	}
+> > > >
+> > > > If a Hyper-V VM exposes an invariant TSC but lacks the frequency MS=
+Rs,
+> > > > does it bypass the tsc_register_calibration_routines() block entire=
+ly?
+> > >
+> > > Yes.
+> > >
+> > > > Without the standalone setup_force_cpu_cap(X86_FEATURE_TSC_RELIABLE=
+) call
+> > > > here, it looks like these VMs will lose the reliable flag.
+> > > >
+> > > > Will this inadvertently enable the TSC watchdog, potentially causin=
+g a
+> > > > performance regression if the system falsely marks the TSC as unsta=
+ble due
+> > > > to virtualization scheduling delays?
+> > >
+> > > Hmm, I was going to say that the change was intentional and desriable=
+, but looking
+> > > at this yet again, I don't think that's true.  Enabling HV_EXPOSE_INV=
+ARIANT_TSC
+> > > just means the kernel will (probably) set X86_FEATURE_CONSTANT_TSC an=
+d
+> > > X86_FEATURE_NONSTOP_TSC during early_init_intel(), AFAICT it doesn't =
+lead to
+> > > X86_FEATURE_TSC_RELIABLE being set.  And I think in this case, markin=
+g the TSC
+> > > as reliable makes sense; even if the kernel doesn't user Hyper-V's ca=
+libration
+> > > info, the host is still clearly telling the guest that the TSC is rel=
+iable.
+> >
+> > Yes, I agree. But I'm doubtful that such a combination ever occurs in p=
+ractice.
+> > I've never seen an occurrence of a Hyper-V (even really old versions) g=
+uest
+> > where the frequency MSRs are not available or are not accessible. The
+> > Hyper-V spec allows for either condition, so we have the code to test t=
+he
+> > flags. I've thought of the flags as always set, though I suppose one ne=
+ver
+> > knows what the future holds.
+> >
+> > >
+> > > Michael, does keeping the
+> > >
+> > > 		setup_force_cpu_cap(X86_FEATURE_TSC_RELIABLE);
+> > >
+> > > but also passing TSC_FREQ_KNOWN_AND_RELIABLE to the calibration routi=
+ne make
+> > > sense?
+> >
+> > I don't see that it would break anything. But it seems a bit disjointed=
+ in
+> > that HV_ACCESS_TSC_INVARIANT is tested in two places in
+> > ms_hyperv_init_platform(). Does TSC_RELIABLE *need* to be passed to
+> > tsc_register_calibration_routines() if later code in ms_hyperv_init_pla=
+tform()
+> > does setup_force_cpu_cap(X86_FEATURE_TSC_RELIABLE)?
+>=20
+> Sort of?  It's not strictly necessary, but passing in TSC_RELIABLE allows
+> tsc_register_calibration_routines() to ensure it doesn't clobber a more r=
+obust
+> calibration routine with a "lesser" routine.  I.e. not passing TSC_RELIAB=
+LE in
+> this case would trigger a false positive (and break Hyper-V).
+>=20
+> In other words, invoking setup_force_cpu_cap() is a (happy, desirable) si=
+de effect,
+> not the primary goal.
+>=20
+> > In other words, I'm suggesting let tsc_register_calibration_routines() =
+handle
+> > the TSC_FREQ_KNOWN case since that's what the calibration routines are =
+all
+> > about. Leave the setting of X86_FEATURE_TSC_RELIABLE to the later code =
+that
+> > tests HV_ACCESS_TSC_INVARIANT, instead of duplicating the
+> > setup_force_cpu_cap() operation.
+> >
+> > While combining FREQUENCY_KNOWN and RELIABLE into
+> > tsc_register_calibration_routines() is convenient, the two
+> > concepts turn out to be independent when looking strictly at
+> > the Hyper-V spec and code written to follow that spec.
+> > Combining them into the same function ends up being clumsy
+>=20
+> Yeah, it's a bit awkward for Hyper-V, but Hyper-V is definitely the odd o=
+ne out
+> here, in that it has an "out-of-band" feature that marks the TSC as relia=
+ble.
+> All other PV features that trigger overrides of the calibration routines =
+bundle
+> the RELIABLE aspect with the feature itself.
 
-It makes sense. Can you remove it even AI mark it as low
+Indeed, Hyper-V is definitely the odd one here. Keeping the
+"setup_force_cpu_cap(X86_FEATURE_TSC_RELIABLE)" in the later code
+block where HV_ACCESS_TSC_INVARIANT is tested works well enough.
+In the real world, the frequency MSRs are available and accessible,
+so the additional "setup_force_cpu_cap()" is duplicative, but doesn't
+hurt anything.
 
-Frank
-
->
-> The imx95 SoC utilizes the NXP FlexSPI controller, but these cdns properties
-> are specific to the Cadence QSPI driver. The NXP FlexSPI driver does not
-> parse or support any cdns,* properties, so these timing configurations will
-> be silently ignored by the kernel.
->
-> > +	};
-> > +};
->
-> --
-> Sashiko AI review · https://sashiko.dev/#/patchset/20260520-add-aquila-imx95-v2-0-06424a51e33a@toradex.com?part=3
+Michael
