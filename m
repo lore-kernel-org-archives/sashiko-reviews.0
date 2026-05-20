@@ -1,210 +1,177 @@
-Received: from mgamail.intel.com (mgamail.intel.com [192.198.163.11])
+Received: from relay.hostedemail.com (smtprelay0015.hostedemail.com [216.40.44.15])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4ACF23603E9
-	for <sashiko-reviews@lists.linux.dev>; Wed, 20 May 2026 19:59:52 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=192.198.163.11
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9419F371CE2
+	for <sashiko-reviews@lists.linux.dev>; Wed, 20 May 2026 20:28:01 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=216.40.44.15
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1779307194; cv=none; b=r108HYzJnSLj7qqo90C2/F5RVsaVwj48CElThFwdhT1NbK7fpDi+sr7g1rL4aIDhha9WEyFQp0Y99jzoZz37BmRR8kglHkOy27CkI+NIcuFcvI1ldSol6oqQuGp3ZJEcWLyW+/vYEzvA2LpMfZT3kvcImUgYoJTMRrhn1kPd++w=
+	t=1779308883; cv=none; b=a0Zup9EhlaRDMsJicYqiqs9OLzAhXYkV2RANgsCpmX35GH3tNgrFYfkngbqDKUS9yejqOw1d1h3khJOr60y8OZx69aMrIFLkdBFc4RRu+ozZh35zHhu20wwOJWO08sxUOEErQnD2T+zpgMfXl5uLBn23Pk9oU7gyP3GhQ/Wr5JY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1779307194; c=relaxed/simple;
-	bh=hD5Dr5eqzKey7AKxPUWEaRtLcPVqQpTHkkibqELo2tA=;
-	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
-	 MIME-Version:Content-Type; b=EjQWPR/7GpkxQGCDBYIAxkjQ3fyHCE12Wqt+iClh00wovwsKQrH0d+AQMDqZNmhuD5X2kEaHFrEkPk6KMAhdmKkzNraMx15udFr4sPBjdFQzAMVw4iyyd0d+Ei0MHZ7stcS+b0EwOUPOe4z3zLZKMeQ3cu98O7L3MhznkI131oE=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=intel.com; spf=pass smtp.mailfrom=intel.com; dkim=pass (2048-bit key) header.d=intel.com header.i=@intel.com header.b=lBlHVFgt; arc=none smtp.client-ip=192.198.163.11
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=intel.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=intel.com
-Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=intel.com header.i=@intel.com header.b="lBlHVFgt"
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
-  d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
-  t=1779307192; x=1810843192;
-  h=from:to:cc:subject:in-reply-to:references:date:
-   message-id:mime-version:content-transfer-encoding;
-  bh=hD5Dr5eqzKey7AKxPUWEaRtLcPVqQpTHkkibqELo2tA=;
-  b=lBlHVFgtxwTjfCfidlxYgCUsNJIGvdzEifjh6E5hxP2hHE3eL5CERmNV
-   A0H/T1nw6aqXy4tNe3MRmd2WH1Jz2OlOaEWRRoUk74Fm6MgiF8aPKizCP
-   XK899NthKP5a3pa1yEQYX1XUxsCBkwx5ZkdMhuymLe48w+AJBnZcNUNkW
-   t3eMy2ywNPcU1hLJHvJGdBokT0yLE/rILyr3/1EsOXOIbi5RkCrf2oRD8
-   TuftOYuVwNM57fDMgQMlU3T5g0TZnN+K3I5z5ewvXssxr+9Q3cKNmgRc3
-   9MMw7sVCO6Wddz+JZoxWTVOqRMKoazKWqb026kCsNF6pApern0ZQOc2/r
-   A==;
-X-CSE-ConnectionGUID: SNh0QSq3Sx2i85xVy2wBIg==
-X-CSE-MsgGUID: ZdL6Kr5TScOOSOi05TjrGQ==
-X-IronPort-AV: E=McAfee;i="6800,10657,11792"; a="90795425"
-X-IronPort-AV: E=Sophos;i="6.23,244,1770624000"; 
-   d="scan'208";a="90795425"
-Received: from orviesa007.jf.intel.com ([10.64.159.147])
-  by fmvoesa105.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 20 May 2026 12:59:48 -0700
-X-CSE-ConnectionGUID: xDbbpzKqTvecgnBpyYzrvQ==
-X-CSE-MsgGUID: q+z53QS0S3uFWqnsmnLuSg==
-X-ExtLoop1: 1
-X-IronPort-AV: E=Sophos;i="6.23,244,1770624000"; 
-   d="scan'208";a="240534803"
-Received: from vcostago-desk1.jf.intel.com (HELO vcostago-desk1) ([10.88.27.144])
-  by orviesa007-auth.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 20 May 2026 12:59:46 -0700
-From: Vinicius Costa Gomes <vinicius.gomes@intel.com>
-To: sashiko-reviews@lists.linux.dev, Steve Wahl <steve.wahl@hpe.com>
-Cc: vkoul@kernel.org, Frank.Li@kernel.org, dmaengine@vger.kernel.org
-Subject: Re: [PATCH] dmaengine: idxd: fix problems on initialization error
- path.
-In-Reply-To: <20260520152050.8BFA01F000E9@smtp.kernel.org>
-References: <20260520143732.119407-1-steve.wahl@hpe.com>
- <20260520152050.8BFA01F000E9@smtp.kernel.org>
-Date: Wed, 20 May 2026 12:59:45 -0700
-Message-ID: <87h5o1ua1a.fsf@intel.com>
+	s=arc-20240116; t=1779308883; c=relaxed/simple;
+	bh=m83fV44PE5AQzrXp1fABP39gZAo6a+ut5rx0vItetZQ=;
+	h=Date:From:To:Cc:Subject:Message-ID:In-Reply-To:References:
+	 MIME-Version:Content-Type; b=qA0aCysgNtwMuy/2bx6z+5x43j2BU0PctQ5NKZO9nGqbcAPf8XMtQ4imzDxx9Cp0tGpgEdmOtW2GXZEJr9VJUVzIKb82qIQz/FthNlQqQN/1GbOl9aWJZ7HAdfnSzbmtoAc4Z1lPYeMbOestAE0O+/lZbdZt0U4UGAPZ+qL8zd8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=goodmis.org; spf=pass smtp.mailfrom=goodmis.org; arc=none smtp.client-ip=216.40.44.15
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=goodmis.org
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=goodmis.org
+Received: from omf08.hostedemail.com (lb01a-stub [10.200.18.249])
+	by unirelay01.hostedemail.com (Postfix) with ESMTP id 727AE1C1251;
+	Wed, 20 May 2026 20:27:54 +0000 (UTC)
+Received: from [HIDDEN] (Authenticated sender: rostedt@goodmis.org) by omf08.hostedemail.com (Postfix) with ESMTPA id 7E08520025;
+	Wed, 20 May 2026 20:27:51 +0000 (UTC)
+Date: Wed, 20 May 2026 16:28:10 -0400
+From: Steven Rostedt <rostedt@goodmis.org>
+To: Crystal Wood <crwood@redhat.com>
+Cc: linux-trace-kernel@vger.kernel.org, John Kacur <jkacur@redhat.com>,
+ Tomas Glozar <tglozar@redhat.com>, Costa Shulyupin <costa.shul@redhat.com>,
+ Wander Lairson Costa <wander@redhat.com>, sashiko-bot@kernel.org,
+ sashiko-reviews@lists.linux.dev
+Subject: Re: [PATCH v2] tracing/osnoise: Array printk init and cleanup
+Message-ID: <20260520162810.3112a9d6@gandalf.local.home>
+In-Reply-To: <20260511223035.1475676-1-crwood@redhat.com>
+References: <20260511223035.1475676-1-crwood@redhat.com>
+X-Mailer: Claws Mail 3.20.0git84 (GTK+ 2.24.33; x86_64-pc-linux-gnu)
 Precedence: bulk
 X-Mailing-List: sashiko-reviews@lists.linux.dev
 List-Id: <sashiko-reviews.lists.linux.dev>
 List-Subscribe: <mailto:sashiko-reviews+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:sashiko-reviews+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: quoted-printable
+Content-Type: text/plain; charset=US-ASCII
+Content-Transfer-Encoding: 7bit
+X-Stat-Signature: pj8fyrwg5tntqjrf78cb5c91u6mmtpy4
+X-Rspamd-Server: rspamout04
+X-Rspamd-Queue-Id: 7E08520025
+X-Session-Marker: 726F737465647440676F6F646D69732E6F7267
+X-Session-ID: U2FsdGVkX1/ZEJSX/ozQlAg+w+NVgjJB/34YL8FPzk0=
+X-HE-Tag: 1779308871-93409
+X-HE-Meta: U2FsdGVkX1+KONntJ3OhdvTFfviCO09iljXKPwPtjnINQCWU0Jt/9uChU9JK8hnoNgHiYgpATkEC7/BZGuwZFwnPO1sA7VfpbC73IbNf14CN8LbTWOalYJgWYkoxTKKxwXa/Sivl/4yw1J/lTiOblHXdTTP02zoOsjxOFBKX6dxioAmzjLgZpygplub8fSQRFFle98F0nLqtE/LfR2zq1ycd0R+CJDutGcgn8pXccNjf3OgMi2Aqyh2pnN/hF4Hjql7frxV3HAhSrSfkwbvI+QrvguHYKdjXQU6coSLeDSxFoLj9rEG7fn97jbob0+h5I7NkDbrAVk5MvMt7ch72CG9dMOeU51pjC0nBPVUFZFoAXeeEiRMVAqyyAHh6KcEqgcW91OhcMvkUe/I9tQYG7Q==
 
-sashiko-bot@kernel.org writes:
 
-> Thank you for your contribution! Sashiko AI review found 3 potential issu=
-e(s) to consider:
->
-> Pre-existing issues:
-> - [High] Incomplete Fix / Double Free & Double Destroy
-> - [High] Immediate Double Free in child device cleanup functions
-> - [High] Use-After-Free and Double Free due to dangling pointers in regis=
-tration rollback
-> --
->
-> commit 36d73f2b6ed131031e13332b322a76ce56830ad7
-> Author: Steve Wahl <steve.wahl@hpe.com>
-> Subject: dmaengine: idxd: fix problems on initialization error path.
->
-> This patch fixes double frees and NULL pointer dereferences in the IDXD
-> initialization error paths by ensuring allocations are freed only once
-> during the device release callback, and checking if the workqueue exists
-> before destroying it.
->
->> diff --git a/drivers/dma/idxd/init.c b/drivers/dma/idxd/init.c
->> index f1cfc7790d950..227e323cc5a0b 100644
->> --- a/drivers/dma/idxd/init.c
->> +++ b/drivers/dma/idxd/init.c
->
+[ Replying to Sashiko: https://sashiko.dev/?list=org.kernel.vger.linux-trace-kernel#/patchset/20260511223035.1475676-1-crwood%40redhat.com ]
+
+> commit 859dc1eded9e36304f27e72643f28f30f327f078
+> Author: Crystal Wood <crwood@redhat.com>
+> tracing/osnoise: Array printk init and cleanup
+> This commit initializes the trace array buffer for osnoise instances on
+> creation. It also introduces the osnoise_print() helper function and switches
+> the tracer to use trace_array_printk() instead of trace_array_printk_buf().
+> > Use trace_array_printk() instead of trace_array_printk_buf(), as we're
+> > only writing to the main buffer (of a non-main instance) anyway -- and
+
+> Is this description accurate? Can the osnoise tracer also be enabled on the
+> global trace array, for example by writing to current_tracer?
+> If it is used on the global instance, trace_array_init_printk() explicitly
+> returns -EINVAL and refuses to allocate a buffer, and trace_array_printk()
+> will return 0 without printing.
+
+Hmm, I guess it would drop any of these prints if it's using the top level
+trace array. But I believe this is for use with RTLA which always creates a
+trace instance.
+
+> > diff --git a/kernel/trace/trace_osnoise.c b/kernel/trace/trace_osnoise.c
+> > index 75678053b21c5..2be188768ab42 100644
+> > --- a/kernel/trace/trace_osnoise.c
+> > +++ b/kernel/trace/trace_osnoise.c
+> > @@ -83,6 +83,22 @@ struct osnoise_instance {
+> >  
+> >  static struct list_head osnoise_instances;
+> >  
+> > +static void osnoise_print(const char *fmt, ...)
+> > +{
+> > +	struct osnoise_instance *inst;
+> > +	struct trace_array *tr;
+> > +	va_list ap;
+> > +
+> > +	rcu_read_lock();
+> > +	list_for_each_entry_rcu(inst, &osnoise_instances, list) {
+> > +		tr = inst->tr;
+> > +		va_start(ap, fmt);
+> > +		trace_array_vprintk(tr, _RET_IP_, fmt, ap);
+
+> Does this code create a use-after-free on the trace array if an instance is
+> removed concurrently?
+> When a user deletes a trace instance via rmdir, the unregister function
+> removes the instance from the list using list_del_rcu(). However, the removal
+> routine does not appear to wait for an RCU grace period before freeing the
+> trace array itself.
+> Could a concurrent execution of this loop inside the rcu_read_lock() section
+> still access the unlinked instance, read the freed inst->tr, and pass it to
+> trace_array_vprintk()? This appears to be an existing issue, but it still
+> affects the loop here.
+
+Hmm, this is interesting. osnoise keeps track of its own instances via a
+osnoise_instances list. But it only use kfree_rcu() to free the list
+descriptor but doesn't take care of the tr being freed before hand!
+
+Something like this could work [not even compiled]
+
+diff --git a/kernel/trace/trace_osnoise.c b/kernel/trace/trace_osnoise.c
+index 75678053b21c..bda1e0e0d2e1 100644
+--- a/kernel/trace/trace_osnoise.c
++++ b/kernel/trace/trace_osnoise.c
+@@ -476,8 +476,11 @@ static void print_osnoise_headers(struct seq_file *s)
+ 										\
+ 	rcu_read_lock();							\
+ 	list_for_each_entry_rcu(inst, &osnoise_instances, list) {		\
++		if (trace_array_get(inst->tr) < 0)				\
++			continue;						\
+ 		buffer = inst->tr->array_buffer.buffer;				\
+ 		trace_array_printk_buf(buffer, _THIS_IP_, msg);			\
++		trace_array_put(inst->tr);					\
+ 	}									\
+ 	rcu_read_unlock();							\
+ 	osnoise_data.tainted = true;						\
+
+
+> > +		va_end(ap);
+> > +	}
+> > +	rcu_read_unlock();
+> > +}
 > [ ... ]
->
->> @@ -649,8 +646,13 @@ static struct idxd_device *idxd_alloc(struct pci_de=
-v *pdev, struct idxd_driver_d
->>  	return idxd;
->>=20=20
->>  err_name:
->> +	/*
->> +	 * once device_initialize(conf_dev) is called,
->> +	 * put_device(conf_dev) will end up calling
->> +	 * idxd_conf_device_release() which will free the rest.
->> +	 */
->>  	put_device(conf_dev);
->
-> [Severity: High]
-> This is a pre-existing issue, but does a similar pattern cause immediate =
-double
-> frees in the child device cleanup functions?
->
-> In functions like idxd_clean_wqs(), idxd_clean_groups(), and
-> idxd_clean_engines() (as well as their setup error paths), cleanup is per=
-formed
-> by calling put_device() on the child kobjects.
->
-> This drops the reference count to 0 and synchronously invokes the sysfs r=
-elease
-> callback (e.g., idxd_conf_wq_release(), idxd_conf_group_release()), which=
- safely
-> frees the structure (kfree(wq)) and its internal allocations.
->
-> However, immediately after put_device() returns, these cleanup functions
-> explicitly call kfree() on the exact same device structure (and inner poi=
-nters
-> like wq->wqcfg). Will this result in immediate double frees when unloadin=
-g the
-> driver or failing initialization?
->
+> > @@ -123,6 +139,7 @@ static int osnoise_register_instance(struct trace_array *tr)
+> >  	 * trace_types_lock.
+> >  	 */
+> >  	lockdep_assert_held(&trace_types_lock);
+> > +	trace_array_init_printk(tr);
 
-I believe this patch already solves this issue:
+> Could this leave the per-CPU buffer unallocated when running on the global
+> instance?
+> If the tracer is used on the global trace array, trace_array_init_printk()
+> returns -EINVAL. Because this return value is ignored here, the buffer
+> remains unallocated, causing trace_array_vprintk() to fail internally.
 
-https://lore.kernel.org/dmaengine/20260415205452.67155-1-dbgh9129@gmail.com/
+Well, it will fail anyway because it is the top level trace buffer.
 
->
-> [Severity: High]
-> This isn't a bug introduced by this patch, but are there dangling pointer=
-s in
-> the registration rollback that cause a use-after-free?
->
-> If idxd_register_wq_devices() (or equivalent engine/group registration
-> functions) fails, its error rollback drops references to all child device=
-s via
-> put_device() or device_unregister(), which invokes their release callback=
-s and
-> frees them.
->
-> It does not remove the dangling pointers from the idxd->wqs (or groups/en=
-gines)
-> arrays.
->
-> The error then bubbles up to idxd_pci_probe_alloc(), which jumps to
-> err_dev_register and calls idxd_cleanup(). This eventually calls
-> idxd_clean_wqs(), which iterates over the full idxd->wqs array and
-> unconditionally calls put_device() and kfree() on the already-freed point=
-ers.
->
-
-That patch from Yuho Choi may also fix this.
-
->> +	return NULL;
->>  err_opcap:
->>  	ida_free(&idxd_ida, idxd->id);
->>  err_ida:
->
 > [ ... ]
->
->> diff --git a/drivers/dma/idxd/sysfs.c b/drivers/dma/idxd/sysfs.c
->> index 6d251095c350f..d5ffc641c8567 100644
->> --- a/drivers/dma/idxd/sysfs.c
->> +++ b/drivers/dma/idxd/sysfs.c
->> @@ -1836,7 +1836,8 @@ static void idxd_conf_device_release(struct device=
- *dev)
->>  {
->>  	struct idxd_device *idxd =3D confdev_to_idxd(dev);
->>=20=20
->> -	destroy_workqueue(idxd->wq);
->> +	if (idxd->wq)
->> +		destroy_workqueue(idxd->wq);
->
-> [Severity: High]
-> This isn't a bug introduced by this patch, but do the error paths from
-> idxd_probe() still cause a double free and double destroy?
->
-> If an error occurs in idxd_probe() (e.g., idxd_device_load_config() fails=
-),
-> idxd_cleanup_internals() or idxd_setup_internals() error paths are invoke=
-d.
-> These functions manually free arrays (idxd->groups, idxd->wqs, idxd->engi=
-nes)
-> and destroy the workqueue (destroy_workqueue(idxd->wq)) but leave the poi=
-nters
-> non-NULL.
->
-> When the error propagates up to idxd_pci_probe_alloc(), it calls idxd_fre=
-e()
-> which calls put_device(). This triggers idxd_conf_device_release().
->
-> Because the pointers are still non-NULL, idxd_conf_device_release()
-> unconditionally calls kfree() on the arrays a second time and executes
-> destroy_workqueue(idxd->wq) again on the already-destroyed workqueue.
->
->>  	kfree(idxd->groups);
->>  	bitmap_free(idxd->wq_enable_map);
->>  	kfree(idxd->wqs);
->
-> --=20
-> Sashiko AI review =C2=B7 https://sashiko.dev/#/patchset/20260520143732.11=
-9407-1-steve.wahl@hpe.com?part=3D1
 
---=20
-Vinicius
+> > @@ -1189,10 +1198,10 @@ static __always_inline void osnoise_stop_exception(char *msg, int cpu)
+> >  	rcu_read_lock();
+> >  	list_for_each_entry_rcu(inst, &osnoise_instances, list) {
+> >  		tr = inst->tr;
+> > -		trace_array_printk_buf(tr->array_buffer.buffer, _THIS_IP_,
+> > -				       "stop tracing hit on cpu %d due to exception: %s\n",
+> > -				       smp_processor_id(),
+> > -				       msg);
+> > +		trace_array_printk(tr, _THIS_IP_,
+> > +				   "stop tracing hit on cpu %d due to exception: %s\n",
+> > +				   smp_processor_id(),
+> > +				   msg);
+
+> Does this switch to trace_array_printk() silently drop messages when tracing
+> on the global instance?
+> Looking at trace_array_printk(), it explicitly returns 0 if the
+> TRACE_ARRAY_FL_GLOBAL flag is set on the trace array:
+> kernel/trace/trace_printk.c:trace_array_printk() {
+>     ...
+> 	if (tr->flags & TRACE_ARRAY_FL_GLOBAL)
+> 		return 0;
+>     ...
+> }
+> This means stop and exception logs would be discarded if the tracer is
+> running on the global instance.
+
+Yep. But maybe that's not an issue?
+
+-- Steve
+
