@@ -1,35 +1,36 @@
 Received: from relay.hostedemail.com (smtprelay0015.hostedemail.com [216.40.44.15])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9419F371CE2
-	for <sashiko-reviews@lists.linux.dev>; Wed, 20 May 2026 20:28:01 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 537DF3446CE
+	for <sashiko-reviews@lists.linux.dev>; Wed, 20 May 2026 20:41:01 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=216.40.44.15
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1779308883; cv=none; b=a0Zup9EhlaRDMsJicYqiqs9OLzAhXYkV2RANgsCpmX35GH3tNgrFYfkngbqDKUS9yejqOw1d1h3khJOr60y8OZx69aMrIFLkdBFc4RRu+ozZh35zHhu20wwOJWO08sxUOEErQnD2T+zpgMfXl5uLBn23Pk9oU7gyP3GhQ/Wr5JY=
+	t=1779309662; cv=none; b=VtUvm3RGL5NK+fgB9u/NfcLb5IuDtb+ous1b9hOEqTey/vYOVXUHo+EO+yvqSLydgL1G5oYauWpKfd2qJLXiRBtg0OAROGwleORChKP9DNip6ABVAclDsga9NY0+f0UHN7+n1aNkx2kWE/MdvZS9AidVmBK4xBveUXOrQw94AiM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1779308883; c=relaxed/simple;
-	bh=m83fV44PE5AQzrXp1fABP39gZAo6a+ut5rx0vItetZQ=;
+	s=arc-20240116; t=1779309662; c=relaxed/simple;
+	bh=e8hBwUdu6IUIkQnM53luWZUskzWpx2vPNF31m2ELzm8=;
 	h=Date:From:To:Cc:Subject:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=qA0aCysgNtwMuy/2bx6z+5x43j2BU0PctQ5NKZO9nGqbcAPf8XMtQ4imzDxx9Cp0tGpgEdmOtW2GXZEJr9VJUVzIKb82qIQz/FthNlQqQN/1GbOl9aWJZ7HAdfnSzbmtoAc4Z1lPYeMbOestAE0O+/lZbdZt0U4UGAPZ+qL8zd8=
+	 MIME-Version:Content-Type; b=pYuVtoS7MmVn4ymYZwew1DaJrURKabeGoAWHlKOQFvdC4LchcDZGIaDeIFUpQ45cPYAi0nZb8iPOEBvnxkFr1ZlOOBCGQ081Z3Uji5R4aUerO9pxJeW/BC3I/lxZDscUL248WkdLtA26dvWeqWDTvSKhwbWlysHAECgzds+AHgE=
 ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=goodmis.org; spf=pass smtp.mailfrom=goodmis.org; arc=none smtp.client-ip=216.40.44.15
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=goodmis.org
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=goodmis.org
-Received: from omf08.hostedemail.com (lb01a-stub [10.200.18.249])
-	by unirelay01.hostedemail.com (Postfix) with ESMTP id 727AE1C1251;
-	Wed, 20 May 2026 20:27:54 +0000 (UTC)
-Received: from [HIDDEN] (Authenticated sender: rostedt@goodmis.org) by omf08.hostedemail.com (Postfix) with ESMTPA id 7E08520025;
-	Wed, 20 May 2026 20:27:51 +0000 (UTC)
-Date: Wed, 20 May 2026 16:28:10 -0400
+Received: from omf05.hostedemail.com (lb01a-stub [10.200.18.249])
+	by unirelay09.hostedemail.com (Postfix) with ESMTP id 1B1738B2A3;
+	Wed, 20 May 2026 20:41:00 +0000 (UTC)
+Received: from [HIDDEN] (Authenticated sender: rostedt@goodmis.org) by omf05.hostedemail.com (Postfix) with ESMTPA id 162152000E;
+	Wed, 20 May 2026 20:40:58 +0000 (UTC)
+Date: Wed, 20 May 2026 16:41:17 -0400
 From: Steven Rostedt <rostedt@goodmis.org>
-To: Crystal Wood <crwood@redhat.com>
-Cc: linux-trace-kernel@vger.kernel.org, John Kacur <jkacur@redhat.com>,
- Tomas Glozar <tglozar@redhat.com>, Costa Shulyupin <costa.shul@redhat.com>,
- Wander Lairson Costa <wander@redhat.com>, sashiko-bot@kernel.org,
- sashiko-reviews@lists.linux.dev
-Subject: Re: [PATCH v2] tracing/osnoise: Array printk init and cleanup
-Message-ID: <20260520162810.3112a9d6@gandalf.local.home>
-In-Reply-To: <20260511223035.1475676-1-crwood@redhat.com>
-References: <20260511223035.1475676-1-crwood@redhat.com>
+To: Rik van Riel <riel@surriel.com>
+Cc: Masami Hiramatsu <mhiramat@kernel.org>, Mathieu Desnoyers
+ <mathieu.desnoyers@efficios.com>, linux-kernel@vger.kernel.org,
+ linux-trace-kernel@vger.kernel.org, kernel-team@meta.com,
+ sashiko-bot@kernel.org, sashiko-reviews@lists.linux.dev
+Subject: Re: [PATCH v2] perf/ftrace: Fix WARNING in
+ __unregister_ftrace_function
+Message-ID: <20260520164117.528d02fd@gandalf.local.home>
+In-Reply-To: <20260513161916.04151502@fangorn>
+References: <20260513161916.04151502@fangorn>
 X-Mailer: Claws Mail 3.20.0git84 (GTK+ 2.24.33; x86_64-pc-linux-gnu)
 Precedence: bulk
 X-Mailing-List: sashiko-reviews@lists.linux.dev
@@ -39,139 +40,74 @@ List-Unsubscribe: <mailto:sashiko-reviews+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=US-ASCII
 Content-Transfer-Encoding: 7bit
-X-Stat-Signature: pj8fyrwg5tntqjrf78cb5c91u6mmtpy4
-X-Rspamd-Server: rspamout04
-X-Rspamd-Queue-Id: 7E08520025
+X-Rspamd-Server: rspamout07
+X-Rspamd-Queue-Id: 162152000E
+X-Stat-Signature: cw1yu3hkzrqgrj5o9ugqcoyiq7oc4h3g
 X-Session-Marker: 726F737465647440676F6F646D69732E6F7267
-X-Session-ID: U2FsdGVkX1/ZEJSX/ozQlAg+w+NVgjJB/34YL8FPzk0=
-X-HE-Tag: 1779308871-93409
-X-HE-Meta: U2FsdGVkX1+KONntJ3OhdvTFfviCO09iljXKPwPtjnINQCWU0Jt/9uChU9JK8hnoNgHiYgpATkEC7/BZGuwZFwnPO1sA7VfpbC73IbNf14CN8LbTWOalYJgWYkoxTKKxwXa/Sivl/4yw1J/lTiOblHXdTTP02zoOsjxOFBKX6dxioAmzjLgZpygplub8fSQRFFle98F0nLqtE/LfR2zq1ycd0R+CJDutGcgn8pXccNjf3OgMi2Aqyh2pnN/hF4Hjql7frxV3HAhSrSfkwbvI+QrvguHYKdjXQU6coSLeDSxFoLj9rEG7fn97jbob0+h5I7NkDbrAVk5MvMt7ch72CG9dMOeU51pjC0nBPVUFZFoAXeeEiRMVAqyyAHh6KcEqgcW91OhcMvkUe/I9tQYG7Q==
+X-Session-ID: U2FsdGVkX1+i+mG5U4QYO7VLONAOmDKyL25xgdLB6Ks=
+X-HE-Tag: 1779309658-783929
+X-HE-Meta: U2FsdGVkX193eHLBnNiiJKN3W1z0UcutCxScYbrJlhOQcJaAasmFkoI5jpMbdmgdxt84uj/wHoAQ/Dpn/HTdnGbWUrMhlqG/v7F0HOInZ8kA0dFQntexGZcNBEY/ZVEbzPo/O7gOg15BNFq8OMdmSfJoOOuPSbIy4oyKeEIQVe6bXKTA9lUFk19EKL2X1b2LuiVyfCa6+9y2GObNLPMxZpszuaXDiGdFLhRJC2tET+lDuJ2Eg9n9aSDgbhAwhfn/BdmeRT3QiB/ukuCCPPmm5muYW2pFQUR7u1oTjRJ1Df6HdC4jcPRa4y/JJ1SBEUY1jw2SwPzxjCJTOal6UZdLJtaGKlgX86yItoN0wdwBEF8822b/Z1LLmYVl6LsOv+X+zgaZYWhoOdMLuevNC7TUwG7DgXpgVORjcZ/pEBTX6sw0vh22uoN9pIBKnbdZuFgS3o0ul1GXKLvTGviu93f3oA==
 
 
-[ Replying to Sashiko: https://sashiko.dev/?list=org.kernel.vger.linux-trace-kernel#/patchset/20260511223035.1475676-1-crwood%40redhat.com ]
+Rik,
 
-> commit 859dc1eded9e36304f27e72643f28f30f327f078
-> Author: Crystal Wood <crwood@redhat.com>
-> tracing/osnoise: Array printk init and cleanup
-> This commit initializes the trace array buffer for osnoise instances on
-> creation. It also introduces the osnoise_print() helper function and switches
-> the tracer to use trace_array_printk() instead of trace_array_printk_buf().
-> > Use trace_array_printk() instead of trace_array_printk_buf(), as we're
-> > only writing to the main buffer (of a non-main instance) anyway -- and
+Can you reply to Sashiko here?
 
-> Is this description accurate? Can the osnoise tracer also be enabled on the
-> global trace array, for example by writing to current_tracer?
-> If it is used on the global instance, trace_array_init_printk() explicitly
-> returns -EINVAL and refuses to allocate a buffer, and trace_array_printk()
-> will return 0 without printing.
+The below comes from Sashiko: https://sashiko.dev/?list=org.kernel.vger.linux-trace-kernel#/patchset/20260513161916.04151502%40fangorn
 
-Hmm, I guess it would drop any of these prints if it's using the top level
-trace array. But I believe this is for use with RTLA which always creates a
-trace instance.
-
-> > diff --git a/kernel/trace/trace_osnoise.c b/kernel/trace/trace_osnoise.c
-> > index 75678053b21c5..2be188768ab42 100644
-> > --- a/kernel/trace/trace_osnoise.c
-> > +++ b/kernel/trace/trace_osnoise.c
-> > @@ -83,6 +83,22 @@ struct osnoise_instance {
-> >  
-> >  static struct list_head osnoise_instances;
-> >  
-> > +static void osnoise_print(const char *fmt, ...)
-> > +{
-> > +	struct osnoise_instance *inst;
-> > +	struct trace_array *tr;
-> > +	va_list ap;
-> > +
-> > +	rcu_read_lock();
-> > +	list_for_each_entry_rcu(inst, &osnoise_instances, list) {
-> > +		tr = inst->tr;
-> > +		va_start(ap, fmt);
-> > +		trace_array_vprintk(tr, _RET_IP_, fmt, ap);
-
-> Does this code create a use-after-free on the trace array if an instance is
-> removed concurrently?
-> When a user deletes a trace instance via rmdir, the unregister function
-> removes the instance from the list using list_del_rcu(). However, the removal
-> routine does not appear to wait for an RCU grace period before freeing the
-> trace array itself.
-> Could a concurrent execution of this loop inside the rcu_read_lock() section
-> still access the unlinked instance, read the freed inst->tr, and pass it to
-> trace_array_vprintk()? This appears to be an existing issue, but it still
-> affects the loop here.
-
-Hmm, this is interesting. osnoise keeps track of its own instances via a
-osnoise_instances list. But it only use kfree_rcu() to free the list
-descriptor but doesn't take care of the tr being freed before hand!
-
-Something like this could work [not even compiled]
-
-diff --git a/kernel/trace/trace_osnoise.c b/kernel/trace/trace_osnoise.c
-index 75678053b21c..bda1e0e0d2e1 100644
---- a/kernel/trace/trace_osnoise.c
-+++ b/kernel/trace/trace_osnoise.c
-@@ -476,8 +476,11 @@ static void print_osnoise_headers(struct seq_file *s)
- 										\
- 	rcu_read_lock();							\
- 	list_for_each_entry_rcu(inst, &osnoise_instances, list) {		\
-+		if (trace_array_get(inst->tr) < 0)				\
-+			continue;						\
- 		buffer = inst->tr->array_buffer.buffer;				\
- 		trace_array_printk_buf(buffer, _THIS_IP_, msg);			\
-+		trace_array_put(inst->tr);					\
- 	}									\
- 	rcu_read_unlock();							\
- 	osnoise_data.tainted = true;						\
-
-
-> > +		va_end(ap);
-> > +	}
-> > +	rcu_read_unlock();
-> > +}
-> [ ... ]
-> > @@ -123,6 +139,7 @@ static int osnoise_register_instance(struct trace_array *tr)
-> >  	 * trace_types_lock.
-> >  	 */
-> >  	lockdep_assert_held(&trace_types_lock);
-> > +	trace_array_init_printk(tr);
-
-> Could this leave the per-CPU buffer unallocated when running on the global
-> instance?
-> If the tracer is used on the global trace array, trace_array_init_printk()
-> returns -EINVAL. Because this return value is ignored here, the buffer
-> remains unallocated, causing trace_array_vprintk() to fail internally.
-
-Well, it will fail anyway because it is the top level trace buffer.
-
-> [ ... ]
-
-> > @@ -1189,10 +1198,10 @@ static __always_inline void osnoise_stop_exception(char *msg, int cpu)
-> >  	rcu_read_lock();
-> >  	list_for_each_entry_rcu(inst, &osnoise_instances, list) {
-> >  		tr = inst->tr;
-> > -		trace_array_printk_buf(tr->array_buffer.buffer, _THIS_IP_,
-> > -				       "stop tracing hit on cpu %d due to exception: %s\n",
-> > -				       smp_processor_id(),
-> > -				       msg);
-> > +		trace_array_printk(tr, _THIS_IP_,
-> > +				   "stop tracing hit on cpu %d due to exception: %s\n",
-> > +				   smp_processor_id(),
-> > +				   msg);
-
-> Does this switch to trace_array_printk() silently drop messages when tracing
-> on the global instance?
-> Looking at trace_array_printk(), it explicitly returns 0 if the
-> TRACE_ARRAY_FL_GLOBAL flag is set on the trace array:
-> kernel/trace/trace_printk.c:trace_array_printk() {
->     ...
-> 	if (tr->flags & TRACE_ARRAY_FL_GLOBAL)
-> 		return 0;
->     ...
-> }
-> This means stop and exception logs would be discarded if the tracer is
-> running on the global instance.
-
-Yep. But maybe that's not an issue?
+Thanks,
 
 -- Steve
+
+
+> commit f90ac36f39b79a19c015522bb1caf7ef903caf02
+> Author: Rik van Riel <riel@surriel.com>
+> perf/ftrace: Fix WARNING in __unregister_ftrace_function
+> This commit attempts to fix a WARN_ON triggered during perf_event_alloc() error
+> cleanup by checking FTRACE_OPS_FL_ENABLED before unregistering the ftrace
+> function. The warning occurs because the ftrace_ops registration failed or was
+> torn down by perf_try_init_event() earlier, but the event->destroy callback is
+> executed again during the error path.
+> > diff --git a/kernel/trace/trace_event_perf.c b/kernel/trace/trace_event_perf.c
+> > index 61e3a2620fa3c..8d64f17135e8f 100644
+> > --- a/kernel/trace/trace_event_perf.c
+> > +++ b/kernel/trace/trace_event_perf.c
+> > @@ -495,7 +495,11 @@ static int perf_ftrace_function_register(struct perf_event *event)
+> >  static int perf_ftrace_function_unregister(struct perf_event *event)
+> >  {
+> >  	struct ftrace_ops *ops = &event->ftrace_ops;
+> > -	int ret = unregister_ftrace_function(ops);
+> > +	int ret = 0;
+> > +
+> > +	if (ops->flags & FTRACE_OPS_FL_ENABLED)
+> > +		ret = unregister_ftrace_function(ops);
+> > +
+> >  	ftrace_free_filter(ops);
+
+> Does calling ftrace_free_filter() unconditionally here mask a double-teardown
+> regression while leaving the underlying double-free active?
+> In perf_try_init_event(), if a PMU event_init() succeeds but a subsequent
+> capability check fails, it explicitly calls event->destroy(event) to roll back:
+> kernel/events/core.c:perf_try_init_event() {
+>     ...
+> 		if (ret && event->destroy)
+> 			event->destroy(event);
+>     ...
+> }
+> However, it does not set event->destroy to NULL.
+> When the event is later freed in error paths, the stale event->destroy callback
+> executes a second time.
+> If ftrace_free_filter() is called twice, won't it result in a direct
+> double-free of ops->func_hash->filter_hash, since ftrace_free_filter() frees
+> the hash but does not nullify the pointers?
+> Additionally, for regular tracepoint events, wouldn't the second teardown
+> execute perf_trace_event_unreg() again?
+> This could double-decrement total_ref_count, potentially freeing the shared
+> perf_trace_buf while other events are active, and trigger an unbalanced
+> module_put() leading to module refcount underflows.
+> Should the root cause be addressed by setting event->destroy = NULL in
+> perf_try_init_event() immediately after invoking it?
+
+> >  	return ret;
+> >  }
 
