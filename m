@@ -1,113 +1,210 @@
-Received: from relay.hostedemail.com (smtprelay0017.hostedemail.com [216.40.44.17])
+Received: from mgamail.intel.com (mgamail.intel.com [192.198.163.11])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AC842352026
-	for <sashiko-reviews@lists.linux.dev>; Wed, 20 May 2026 19:55:37 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=216.40.44.17
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4ACF23603E9
+	for <sashiko-reviews@lists.linux.dev>; Wed, 20 May 2026 19:59:52 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=192.198.163.11
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1779306939; cv=none; b=Tj//I8XVgXbohpQI4NELIExMM86S5laaagGsG40eCF5J353O5DfgQIFp2g7wZTIAHtawRxumafaph2eDA97CAyY6yL+UVwYQ9j9GsresX9Ook2pefpSCgq9alBKbQ/Jlra2waR22tzt1w3f/Cm5gXKs2TCnsMBOCcdPjqdwEh64=
+	t=1779307194; cv=none; b=r108HYzJnSLj7qqo90C2/F5RVsaVwj48CElThFwdhT1NbK7fpDi+sr7g1rL4aIDhha9WEyFQp0Y99jzoZz37BmRR8kglHkOy27CkI+NIcuFcvI1ldSol6oqQuGp3ZJEcWLyW+/vYEzvA2LpMfZT3kvcImUgYoJTMRrhn1kPd++w=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1779306939; c=relaxed/simple;
-	bh=1jGlu3swlgsIMp2Uq0RhncQ8qEYI7ZzTgl0X1KmQypE=;
-	h=Date:From:To:Cc:Subject:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=M0Lw/q9Az7PK92T3bxCKUQ1KhpyJHxsj5APU8qgDWM50WWxbgN69162VkYWO5Sz8tBy91itK2+MbTRtE0+/1aOvjpEAP3JAu2wKPD1SHi6jOikJPeD0xexx9Q+dpdl5H6PN+DopWbQn6DrrvFIDTbmZu+eObt1ZBVonUTmB+mO8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=goodmis.org; spf=pass smtp.mailfrom=goodmis.org; arc=none smtp.client-ip=216.40.44.17
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=goodmis.org
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=goodmis.org
-Received: from omf20.hostedemail.com (lb01a-stub [10.200.18.249])
-	by unirelay06.hostedemail.com (Postfix) with ESMTP id 5192E1C0355;
-	Wed, 20 May 2026 19:55:34 +0000 (UTC)
-Received: from [HIDDEN] (Authenticated sender: rostedt@goodmis.org) by omf20.hostedemail.com (Postfix) with ESMTPA id 0D0102002A;
-	Wed, 20 May 2026 19:55:31 +0000 (UTC)
-Date: Wed, 20 May 2026 15:55:50 -0400
-From: Steven Rostedt <rostedt@goodmis.org>
-To: David Carlier <devnexen@gmail.com>
-Cc: linux-trace-kernel@vger.kernel.org, linux-kernel@vger.kernel.org,
- mhiramat@kernel.org, mathieu.desnoyers@efficios.com, peterz@infradead.org,
- vineeth@bitbyteword.org, sashiko-bot@kernel.org,
- sashiko-reviews@lists.linux.dev
-Subject: Re: [PATCH v2] tracepoint: add lockdep rcu_is_watching() check to
- trace_##name##_enabled()
-Message-ID: <20260520155550.0ef0b0f5@gandalf.local.home>
-In-Reply-To: <20260430144159.10985-1-devnexen@gmail.com>
-References: <20260430053511.8767-1-devnexen@gmail.com>
-	<20260430144159.10985-1-devnexen@gmail.com>
-X-Mailer: Claws Mail 3.20.0git84 (GTK+ 2.24.33; x86_64-pc-linux-gnu)
+	s=arc-20240116; t=1779307194; c=relaxed/simple;
+	bh=hD5Dr5eqzKey7AKxPUWEaRtLcPVqQpTHkkibqELo2tA=;
+	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
+	 MIME-Version:Content-Type; b=EjQWPR/7GpkxQGCDBYIAxkjQ3fyHCE12Wqt+iClh00wovwsKQrH0d+AQMDqZNmhuD5X2kEaHFrEkPk6KMAhdmKkzNraMx15udFr4sPBjdFQzAMVw4iyyd0d+Ei0MHZ7stcS+b0EwOUPOe4z3zLZKMeQ3cu98O7L3MhznkI131oE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=intel.com; spf=pass smtp.mailfrom=intel.com; dkim=pass (2048-bit key) header.d=intel.com header.i=@intel.com header.b=lBlHVFgt; arc=none smtp.client-ip=192.198.163.11
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=intel.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=intel.com
+Authentication-Results: smtp.subspace.kernel.org;
+	dkim=pass (2048-bit key) header.d=intel.com header.i=@intel.com header.b="lBlHVFgt"
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
+  d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
+  t=1779307192; x=1810843192;
+  h=from:to:cc:subject:in-reply-to:references:date:
+   message-id:mime-version:content-transfer-encoding;
+  bh=hD5Dr5eqzKey7AKxPUWEaRtLcPVqQpTHkkibqELo2tA=;
+  b=lBlHVFgtxwTjfCfidlxYgCUsNJIGvdzEifjh6E5hxP2hHE3eL5CERmNV
+   A0H/T1nw6aqXy4tNe3MRmd2WH1Jz2OlOaEWRRoUk74Fm6MgiF8aPKizCP
+   XK899NthKP5a3pa1yEQYX1XUxsCBkwx5ZkdMhuymLe48w+AJBnZcNUNkW
+   t3eMy2ywNPcU1hLJHvJGdBokT0yLE/rILyr3/1EsOXOIbi5RkCrf2oRD8
+   TuftOYuVwNM57fDMgQMlU3T5g0TZnN+K3I5z5ewvXssxr+9Q3cKNmgRc3
+   9MMw7sVCO6Wddz+JZoxWTVOqRMKoazKWqb026kCsNF6pApern0ZQOc2/r
+   A==;
+X-CSE-ConnectionGUID: SNh0QSq3Sx2i85xVy2wBIg==
+X-CSE-MsgGUID: ZdL6Kr5TScOOSOi05TjrGQ==
+X-IronPort-AV: E=McAfee;i="6800,10657,11792"; a="90795425"
+X-IronPort-AV: E=Sophos;i="6.23,244,1770624000"; 
+   d="scan'208";a="90795425"
+Received: from orviesa007.jf.intel.com ([10.64.159.147])
+  by fmvoesa105.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 20 May 2026 12:59:48 -0700
+X-CSE-ConnectionGUID: xDbbpzKqTvecgnBpyYzrvQ==
+X-CSE-MsgGUID: q+z53QS0S3uFWqnsmnLuSg==
+X-ExtLoop1: 1
+X-IronPort-AV: E=Sophos;i="6.23,244,1770624000"; 
+   d="scan'208";a="240534803"
+Received: from vcostago-desk1.jf.intel.com (HELO vcostago-desk1) ([10.88.27.144])
+  by orviesa007-auth.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 20 May 2026 12:59:46 -0700
+From: Vinicius Costa Gomes <vinicius.gomes@intel.com>
+To: sashiko-reviews@lists.linux.dev, Steve Wahl <steve.wahl@hpe.com>
+Cc: vkoul@kernel.org, Frank.Li@kernel.org, dmaengine@vger.kernel.org
+Subject: Re: [PATCH] dmaengine: idxd: fix problems on initialization error
+ path.
+In-Reply-To: <20260520152050.8BFA01F000E9@smtp.kernel.org>
+References: <20260520143732.119407-1-steve.wahl@hpe.com>
+ <20260520152050.8BFA01F000E9@smtp.kernel.org>
+Date: Wed, 20 May 2026 12:59:45 -0700
+Message-ID: <87h5o1ua1a.fsf@intel.com>
 Precedence: bulk
 X-Mailing-List: sashiko-reviews@lists.linux.dev
 List-Id: <sashiko-reviews.lists.linux.dev>
 List-Subscribe: <mailto:sashiko-reviews+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:sashiko-reviews+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=US-ASCII
-Content-Transfer-Encoding: 7bit
-X-Rspamd-Queue-Id: 0D0102002A
-X-Stat-Signature: bhhoteuhkfmwgpmtb65qi57pzziyqnni
-X-Rspamd-Server: rspamout01
-X-Session-Marker: 726F737465647440676F6F646D69732E6F7267
-X-Session-ID: U2FsdGVkX1/6vPKcmI83BUi6uAbeZriErnTmbXkDfKo=
-X-HE-Tag: 1779306931-517759
-X-HE-Meta: U2FsdGVkX1+cog7GiBvw4MxhAzjiQt9RB0VYKpPXrS7xXcTQbBv8PoGAJ3qKuz9yizua2iYpmVBPGP5OlVDKFEqjwcLeNVX2gkqoXaMei4kJQ3uCnDwT82zdgVuQUg+A/kDkhDT9FhqYvItwamIUiEYIgO1V4WrCeVEy2wB9zdmC91dYHTO7e2dmSCX1iJh6JaOLXLbiREW4cypGTWOXMa7MQJQB92f3J96v3ibUNQi9PGYs11293DqXxDkRIjNrXQwf/Ihex7YNJ3RLp3BsbyrCWafcCP/pJvs2wabk0634BiTFrqEZOJlBVS2KT/Ly6uuiGmz29Mmh9DhCyipgv3L8P9IVwU8R
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: quoted-printable
 
+sashiko-bot@kernel.org writes:
 
-[ Replying to Sashiko ]
+> Thank you for your contribution! Sashiko AI review found 3 potential issu=
+e(s) to consider:
+>
+> Pre-existing issues:
+> - [High] Incomplete Fix / Double Free & Double Destroy
+> - [High] Immediate Double Free in child device cleanup functions
+> - [High] Use-After-Free and Double Free due to dangling pointers in regis=
+tration rollback
+> --
+>
+> commit 36d73f2b6ed131031e13332b322a76ce56830ad7
+> Author: Steve Wahl <steve.wahl@hpe.com>
+> Subject: dmaengine: idxd: fix problems on initialization error path.
+>
+> This patch fixes double frees and NULL pointer dereferences in the IDXD
+> initialization error paths by ensuring allocations are freed only once
+> during the device release callback, and checking if the workqueue exists
+> before destroying it.
+>
+>> diff --git a/drivers/dma/idxd/init.c b/drivers/dma/idxd/init.c
+>> index f1cfc7790d950..227e323cc5a0b 100644
+>> --- a/drivers/dma/idxd/init.c
+>> +++ b/drivers/dma/idxd/init.c
+>
+> [ ... ]
+>
+>> @@ -649,8 +646,13 @@ static struct idxd_device *idxd_alloc(struct pci_de=
+v *pdev, struct idxd_driver_d
+>>  	return idxd;
+>>=20=20
+>>  err_name:
+>> +	/*
+>> +	 * once device_initialize(conf_dev) is called,
+>> +	 * put_device(conf_dev) will end up calling
+>> +	 * idxd_conf_device_release() which will free the rest.
+>> +	 */
+>>  	put_device(conf_dev);
+>
+> [Severity: High]
+> This is a pre-existing issue, but does a similar pattern cause immediate =
+double
+> frees in the child device cleanup functions?
+>
+> In functions like idxd_clean_wqs(), idxd_clean_groups(), and
+> idxd_clean_engines() (as well as their setup error paths), cleanup is per=
+formed
+> by calling put_device() on the child kobjects.
+>
+> This drops the reference count to 0 and synchronously invokes the sysfs r=
+elease
+> callback (e.g., idxd_conf_wq_release(), idxd_conf_group_release()), which=
+ safely
+> frees the structure (kfree(wq)) and its internal allocations.
+>
+> However, immediately after put_device() returns, these cleanup functions
+> explicitly call kfree() on the exact same device structure (and inner poi=
+nters
+> like wq->wqcfg). Will this result in immediate double frees when unloadin=
+g the
+> driver or failing initialization?
+>
 
-> commit 7596bdcd9abf9a26b3964f10b5d5de3249e731e9
-> Author: David Carlier <devnexen@gmail.com>
-> tracepoint: add lockdep rcu_is_watching() check to trace_##name##_enabled()
-> This commit attempts to restore RCU lockdep coverage for trace_call__##name()
-> callers by adding a warning directly to the trace_##name##_enabled() static
-> branch check.
-> > When the tracepoint is enabled, the rcu_dereference inside
-> > __DO_TRACE_CALL() already trips under PROVE_RCU, so the warning is
-> > only needed on the !enabled path.
-> Is this description accurate regarding __DO_TRACE_CALL()?
-> Looking at the implementation, it uses rcu_dereference_raw() which
-> intentionally bypasses lockdep checking. This means trace_call__##name()
-> lacks lockdep coverage on both the enabled and disabled paths.
-> > diff --git a/include/linux/tracepoint.h b/include/linux/tracepoint.h
-> > --- a/include/linux/tracepoint.h
-> > +++ b/include/linux/tracepoint.h
-> > @@ -293,6 +293,10 @@ static inline struct tracepoint *tracepoint_ptr_deref(tracepoint_ptr_t *p)
-> >  	static inline bool						\
-> >  	trace_##name##_enabled(void)					\
-> >  	{								\
-> > +		if (IS_ENABLED(CONFIG_LOCKDEP)) {			\
-> > +			WARN_ONCE(!rcu_is_watching(),			\
-> > +				  "RCU not watching for tracepoint");	\
-> > +		}							\
-> >  		return static_branch_unlikely(&__tracepoint_##name.key);\
-> >  	}
+I believe this patch already solves this issue:
 
-> Does this unconditional check cause spurious lockdep splats?
-> Unlike the original trace_##name() macro, trace_##name##_enabled() takes no
-> arguments and cannot evaluate the tracepoint's condition, such as
-> cpu_online(raw_smp_processor_id()). If a subsystem queries
-> trace_##name##_enabled() on an offline CPU where RCU is not watching, won't
-> this trigger a false positive warning, even if the tracepoint itself would
-> have been safely skipped by its condition?
+https://lore.kernel.org/dmaengine/20260415205452.67155-1-dbgh9129@gmail.com/
 
-If the CPU is offline, you shouldn't be using trace_##name##_enabled() to
-begin with.
+>
+> [Severity: High]
+> This isn't a bug introduced by this patch, but are there dangling pointer=
+s in
+> the registration rollback that cause a use-after-free?
+>
+> If idxd_register_wq_devices() (or equivalent engine/group registration
+> functions) fails, its error rollback drops references to all child device=
+s via
+> put_device() or device_unregister(), which invokes their release callback=
+s and
+> frees them.
+>
+> It does not remove the dangling pointers from the idxd->wqs (or groups/en=
+gines)
+> arrays.
+>
+> The error then bubbles up to idxd_pci_probe_alloc(), which jumps to
+> err_dev_register and calls idxd_cleanup(). This eventually calls
+> idxd_clean_wqs(), which iterates over the full idxd->wqs array and
+> unconditionally calls put_device() and kfree() on the already-freed point=
+ers.
+>
 
+That patch from Yuho Choi may also fix this.
 
-> Furthermore, is it already safe to query a static branch outside of an RCU
-> watch window? Subsystems sometimes use this boolean query in RCU-idle
-> contexts simply to skip data gathering without ever intending to execute
-> the tracepoint.
+>> +	return NULL;
+>>  err_opcap:
+>>  	ida_free(&idxd_ida, idxd->id);
+>>  err_ida:
+>
+> [ ... ]
+>
+>> diff --git a/drivers/dma/idxd/sysfs.c b/drivers/dma/idxd/sysfs.c
+>> index 6d251095c350f..d5ffc641c8567 100644
+>> --- a/drivers/dma/idxd/sysfs.c
+>> +++ b/drivers/dma/idxd/sysfs.c
+>> @@ -1836,7 +1836,8 @@ static void idxd_conf_device_release(struct device=
+ *dev)
+>>  {
+>>  	struct idxd_device *idxd =3D confdev_to_idxd(dev);
+>>=20=20
+>> -	destroy_workqueue(idxd->wq);
+>> +	if (idxd->wq)
+>> +		destroy_workqueue(idxd->wq);
+>
+> [Severity: High]
+> This isn't a bug introduced by this patch, but do the error paths from
+> idxd_probe() still cause a double free and double destroy?
+>
+> If an error occurs in idxd_probe() (e.g., idxd_device_load_config() fails=
+),
+> idxd_cleanup_internals() or idxd_setup_internals() error paths are invoke=
+d.
+> These functions manually free arrays (idxd->groups, idxd->wqs, idxd->engi=
+nes)
+> and destroy the workqueue (destroy_workqueue(idxd->wq)) but leave the poi=
+nters
+> non-NULL.
+>
+> When the error propagates up to idxd_pci_probe_alloc(), it calls idxd_fre=
+e()
+> which calls put_device(). This triggers idxd_conf_device_release().
+>
+> Because the pointers are still non-NULL, idxd_conf_device_release()
+> unconditionally calls kfree() on the arrays a second time and executes
+> destroy_workqueue(idxd->wq) again on the already-destroyed workqueue.
+>
+>>  	kfree(idxd->groups);
+>>  	bitmap_free(idxd->wq_enable_map);
+>>  	kfree(idxd->wqs);
+>
+> --=20
+> Sashiko AI review =C2=B7 https://sashiko.dev/#/patchset/20260520143732.11=
+9407-1-steve.wahl@hpe.com?part=3D1
 
-The entire point of this patch is to make sure lockdep *always* checks that
-"RCU is watching" at every trace_##name##_enabled() location regardless if
-the tracepoint is active or not. It's not about the static branch, but the
-tracepoint that is hidden behind it.
-
-
-> Would it be more reliable to add the WARN_ONCE check, guarded by its cond
-> parameter, directly to trace_call__##name() to appropriately mirror how
-> trace_##name() behaves?
-
-Hmm, if this does become an issue, that may be worth doing. But currently,
-I do not believe the enabled() code is used by anything with conditional
-tracepoints.
-
--- Steve
+--=20
+Vinicius
