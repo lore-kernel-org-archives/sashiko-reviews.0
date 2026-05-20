@@ -1,101 +1,113 @@
-Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
+Received: from relay.hostedemail.com (smtprelay0017.hostedemail.com [216.40.44.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5868E352026;
-	Wed, 20 May 2026 19:50:44 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AC842352026
+	for <sashiko-reviews@lists.linux.dev>; Wed, 20 May 2026 19:55:37 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=216.40.44.17
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1779306645; cv=none; b=EMgFt6QhgKOaNE2Ek+1YHIAVQwUQDU4d/JyIYvY8cLx64wVAC46/bTQzaL5+oLAGullVmwJ5aTFJhJRfj6zadC99OVXcLku0Nj+S9EnXPENhoTnxvNFcR9Wym2wO6dzoMdLqLlZNNBHoe/RjnT64/Ydkkq7zHw34pL+taoz5fac=
+	t=1779306939; cv=none; b=Tj//I8XVgXbohpQI4NELIExMM86S5laaagGsG40eCF5J353O5DfgQIFp2g7wZTIAHtawRxumafaph2eDA97CAyY6yL+UVwYQ9j9GsresX9Ook2pefpSCgq9alBKbQ/Jlra2waR22tzt1w3f/Cm5gXKs2TCnsMBOCcdPjqdwEh64=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1779306645; c=relaxed/simple;
-	bh=AXZ8xJNsowxaTzVYTmh1M/5dnlbzZ3GKUtBHTtJxfjg=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=HsIUF01/zQNP374AA2D64BI149W+xAEIRF+ebzk6lOG6Ru14yEOOxmVchki1ggMbenhMTIXw9abH59xP88iW9loHaVw6kt5HJxM8YjLvoGYHGsr2z+5pVzRg7fWdSIjHzUC6AUfNqJPgb2OwIALTuTIzLKjQK81jfx5fO7SInSA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=UKeZglcT; arc=none smtp.client-ip=100.103.45.18
-Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="UKeZglcT"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 558171F000E9;
-	Wed, 20 May 2026 19:50:43 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=kernel.org;
-	s=k20260515; t=1779306644;
-	bh=Qx1idctS2JaBxqH1vrfL+qgfWIMqAd6ofslwgR2FEk0=;
-	h=Date:From:To:Cc:Subject:References:In-Reply-To;
-	b=UKeZglcTfQStNMMp3vMx60u285iChBAdXJ1UtKfS/4K9gl+3MKaXxNOzsjDE3YHPb
-	 jcnAYOe0s5m/ldJNUqn6QsD1z3ZOuM+VZpVZhITwshn4QoNKv5cUdRkbvLhwZWZibU
-	 IsLt5CoWxgj0miuV2KN3cCtclBuutESD5nbXuwfRhFZnifiN4p6hKAQPMSqxHy28AH
-	 AN1N3hszJfSDKkclIToVUgU5uqDYpp0mV/MMyagEuIqblw/fRsgjQgxW1fZme7WM+F
-	 0b3ZT0/9XWVR3w7NIlEaBdT+vRMykbz+MW9AbCGAyTiWfR171uKZG8eWGv+deCX8EC
-	 ihmv9xrRizTsQ==
-Date: Wed, 20 May 2026 16:50:40 -0300
-From: Arnaldo Carvalho de Melo <acme@kernel.org>
-To: James Clark <james.clark@linaro.org>
-Cc: sashiko-reviews@lists.linux.dev, dmitry.torokhov@gmail.com,
-	linux-perf-users@vger.kernel.org, bpf@vger.kernel.org,
-	linux-input@vger.kernel.org
-Subject: Re: [PATCH v2 5/6] tools/build: selftests: Allow versioning LLVM lld
-Message-ID: <ag4QkPOCQ5LWy-U3@x1>
-References: <20260518-james-perf-llvm-version-v2-5-f12cc4f031d8@linaro.org>
- <20260518093237.90640C2BCC6@smtp.kernel.org>
- <ef5688a7-3e1d-47be-aca7-cc6e564e059c@linaro.org>
+	s=arc-20240116; t=1779306939; c=relaxed/simple;
+	bh=1jGlu3swlgsIMp2Uq0RhncQ8qEYI7ZzTgl0X1KmQypE=;
+	h=Date:From:To:Cc:Subject:Message-ID:In-Reply-To:References:
+	 MIME-Version:Content-Type; b=M0Lw/q9Az7PK92T3bxCKUQ1KhpyJHxsj5APU8qgDWM50WWxbgN69162VkYWO5Sz8tBy91itK2+MbTRtE0+/1aOvjpEAP3JAu2wKPD1SHi6jOikJPeD0xexx9Q+dpdl5H6PN+DopWbQn6DrrvFIDTbmZu+eObt1ZBVonUTmB+mO8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=goodmis.org; spf=pass smtp.mailfrom=goodmis.org; arc=none smtp.client-ip=216.40.44.17
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=goodmis.org
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=goodmis.org
+Received: from omf20.hostedemail.com (lb01a-stub [10.200.18.249])
+	by unirelay06.hostedemail.com (Postfix) with ESMTP id 5192E1C0355;
+	Wed, 20 May 2026 19:55:34 +0000 (UTC)
+Received: from [HIDDEN] (Authenticated sender: rostedt@goodmis.org) by omf20.hostedemail.com (Postfix) with ESMTPA id 0D0102002A;
+	Wed, 20 May 2026 19:55:31 +0000 (UTC)
+Date: Wed, 20 May 2026 15:55:50 -0400
+From: Steven Rostedt <rostedt@goodmis.org>
+To: David Carlier <devnexen@gmail.com>
+Cc: linux-trace-kernel@vger.kernel.org, linux-kernel@vger.kernel.org,
+ mhiramat@kernel.org, mathieu.desnoyers@efficios.com, peterz@infradead.org,
+ vineeth@bitbyteword.org, sashiko-bot@kernel.org,
+ sashiko-reviews@lists.linux.dev
+Subject: Re: [PATCH v2] tracepoint: add lockdep rcu_is_watching() check to
+ trace_##name##_enabled()
+Message-ID: <20260520155550.0ef0b0f5@gandalf.local.home>
+In-Reply-To: <20260430144159.10985-1-devnexen@gmail.com>
+References: <20260430053511.8767-1-devnexen@gmail.com>
+	<20260430144159.10985-1-devnexen@gmail.com>
+X-Mailer: Claws Mail 3.20.0git84 (GTK+ 2.24.33; x86_64-pc-linux-gnu)
 Precedence: bulk
 X-Mailing-List: sashiko-reviews@lists.linux.dev
 List-Id: <sashiko-reviews.lists.linux.dev>
 List-Subscribe: <mailto:sashiko-reviews+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:sashiko-reviews+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <ef5688a7-3e1d-47be-aca7-cc6e564e059c@linaro.org>
+Content-Type: text/plain; charset=US-ASCII
+Content-Transfer-Encoding: 7bit
+X-Rspamd-Queue-Id: 0D0102002A
+X-Stat-Signature: bhhoteuhkfmwgpmtb65qi57pzziyqnni
+X-Rspamd-Server: rspamout01
+X-Session-Marker: 726F737465647440676F6F646D69732E6F7267
+X-Session-ID: U2FsdGVkX1/6vPKcmI83BUi6uAbeZriErnTmbXkDfKo=
+X-HE-Tag: 1779306931-517759
+X-HE-Meta: U2FsdGVkX1+cog7GiBvw4MxhAzjiQt9RB0VYKpPXrS7xXcTQbBv8PoGAJ3qKuz9yizua2iYpmVBPGP5OlVDKFEqjwcLeNVX2gkqoXaMei4kJQ3uCnDwT82zdgVuQUg+A/kDkhDT9FhqYvItwamIUiEYIgO1V4WrCeVEy2wB9zdmC91dYHTO7e2dmSCX1iJh6JaOLXLbiREW4cypGTWOXMa7MQJQB92f3J96v3ibUNQi9PGYs11293DqXxDkRIjNrXQwf/Ihex7YNJ3RLp3BsbyrCWafcCP/pJvs2wabk0634BiTFrqEZOJlBVS2KT/Ly6uuiGmz29Mmh9DhCyipgv3L8P9IVwU8R
 
-On Mon, May 18, 2026 at 10:47:53AM +0100, James Clark wrote:
-> 
-> 
-> On 18/05/2026 10:32 am, sashiko-bot@kernel.org wrote:
-> > Thank you for your contribution! Sashiko AI review found 1 potential issue(s) to consider:
-> > - [Medium] Empty USE_LD variable causes clang build failure in selftests when ld.lld is not in PATH.
-> > --
-> > 
-> > commit 371ca22c55bb0fa6502ac06f7b33d63418ad16ff
-> > Author: James Clark <james.clark@linaro.org>
-> > 
-> > tools/build: selftests: Allow versioning LLVM lld
-> > 
-> > This commit adds an LLD variable to Makefile.include to allow versioning of
-> > LLVM's linker, keeping it consistent with the rest of the LLVM toolchain. It
-> > modifies the BPF selftests Makefile to resolve the full path of the linker
-> > using the command -v shell utility.
-> > 
-> > > diff --git a/tools/testing/selftests/bpf/Makefile b/tools/testing/selftests/bpf/Makefile
-> > > index 6ef6872adbc3e..836e783f0170e 100644
-> > > --- a/tools/testing/selftests/bpf/Makefile
-> > > +++ b/tools/testing/selftests/bpf/Makefile
-> > 
-> > [ ... ]
-> > 
-> > > @@ -245,9 +245,9 @@ $(OUTPUT)/%:%.c
-> > >   # LLVM's ld.lld doesn't support all the architectures, so use it only on x86
-> > >   ifeq ($(SRCARCH),$(filter $(SRCARCH),x86 riscv))
-> > > -LLD := lld
-> > > +USE_LD := $(shell command -v $(LLD))
-> > 
-> > Does this cause the build to fail if the toolchain directory is not in the
-> > system PATH?
-> > 
-> > If a user explicitly specifies the compiler using an absolute path like
-> > CLANG=/path/to/clang, but does not add the toolchain directory to their PATH,
-> > the command -v utility will return an empty string.
-> 
-> If they don't use LLVM= and use CLANG= with an absolute path then they need
-> to set all the tools with an absolute path. That's the problem that setting
-> the path with a prefix for all tools with LLVM= solved.
-> 
-> I suppose this could _technically_ be a regression, but so could adding any
-> new build rule that added a new tool that wouldn't be set in someones
-> existing build command. Being that strict would mean we can't ever add new
-> tools so I don't think this is an issue. And I don't think there's a way to
-> solve this and also respect the documented rules of LLVM=
 
-Hey, this touches several tools and libs, did you get acks besides the
-one from Ian?
+[ Replying to Sashiko ]
 
-- Arnaldo
+> commit 7596bdcd9abf9a26b3964f10b5d5de3249e731e9
+> Author: David Carlier <devnexen@gmail.com>
+> tracepoint: add lockdep rcu_is_watching() check to trace_##name##_enabled()
+> This commit attempts to restore RCU lockdep coverage for trace_call__##name()
+> callers by adding a warning directly to the trace_##name##_enabled() static
+> branch check.
+> > When the tracepoint is enabled, the rcu_dereference inside
+> > __DO_TRACE_CALL() already trips under PROVE_RCU, so the warning is
+> > only needed on the !enabled path.
+> Is this description accurate regarding __DO_TRACE_CALL()?
+> Looking at the implementation, it uses rcu_dereference_raw() which
+> intentionally bypasses lockdep checking. This means trace_call__##name()
+> lacks lockdep coverage on both the enabled and disabled paths.
+> > diff --git a/include/linux/tracepoint.h b/include/linux/tracepoint.h
+> > --- a/include/linux/tracepoint.h
+> > +++ b/include/linux/tracepoint.h
+> > @@ -293,6 +293,10 @@ static inline struct tracepoint *tracepoint_ptr_deref(tracepoint_ptr_t *p)
+> >  	static inline bool						\
+> >  	trace_##name##_enabled(void)					\
+> >  	{								\
+> > +		if (IS_ENABLED(CONFIG_LOCKDEP)) {			\
+> > +			WARN_ONCE(!rcu_is_watching(),			\
+> > +				  "RCU not watching for tracepoint");	\
+> > +		}							\
+> >  		return static_branch_unlikely(&__tracepoint_##name.key);\
+> >  	}
+
+> Does this unconditional check cause spurious lockdep splats?
+> Unlike the original trace_##name() macro, trace_##name##_enabled() takes no
+> arguments and cannot evaluate the tracepoint's condition, such as
+> cpu_online(raw_smp_processor_id()). If a subsystem queries
+> trace_##name##_enabled() on an offline CPU where RCU is not watching, won't
+> this trigger a false positive warning, even if the tracepoint itself would
+> have been safely skipped by its condition?
+
+If the CPU is offline, you shouldn't be using trace_##name##_enabled() to
+begin with.
+
+
+> Furthermore, is it already safe to query a static branch outside of an RCU
+> watch window? Subsystems sometimes use this boolean query in RCU-idle
+> contexts simply to skip data gathering without ever intending to execute
+> the tracepoint.
+
+The entire point of this patch is to make sure lockdep *always* checks that
+"RCU is watching" at every trace_##name##_enabled() location regardless if
+the tracepoint is active or not. It's not about the static branch, but the
+tracepoint that is hidden behind it.
+
+
+> Would it be more reliable to add the WARN_ONCE check, guarded by its cond
+> parameter, directly to trace_call__##name() to appropriately mirror how
+> trace_##name() behaves?
+
+Hmm, if this does become an issue, that may be worth doing. But currently,
+I do not believe the enabled() code is used by anything with conditional
+tracepoints.
+
+-- Steve
