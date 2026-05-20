@@ -1,41 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 323653D6CDA;
-	Wed, 20 May 2026 12:33:38 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 676E62E3397;
+	Wed, 20 May 2026 12:46:39 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1779280420; cv=none; b=q1OoGLJKIbsoeb1gzXpaJIDwvD5V+5e2xl0Ugi4ICfl0+eE9fugpMgnsEMqcLTKVLnkXnZGxpAkkYfx9EI+G45DIwUtuAn42mIbse8jiuZD8XoNG1rSRP12qHhTtK1tETQ6VSI42eOvTdvjQhwxQIfdA36wIkSpbSboGdg2XHis=
+	t=1779281200; cv=none; b=J7YYQ90HY3esLfL6MlemifnzT+hr0hVtf0xZXBJGK5lTvjbRDnw1P8uduCkA3jTMoUFuIhdjlh1sO204gK+etpIC2FNE0NtRXsMDhK3DAdmqr6nDwInAEdW4z/S7U3fRC6AuauPBJ24FF9p9P3GD2rTIl3JFgyee5EXfjbqk8zM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1779280420; c=relaxed/simple;
-	bh=0wH35MlgvbCcBrEwZtIsYCL1Mcy4Xom8xZ1IVm/3NG0=;
+	s=arc-20240116; t=1779281200; c=relaxed/simple;
+	bh=Oj8acMtU2G9Hnr5h1H8D/0eXrcjQ+7flWUVC72yYfbI=;
 	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=I+HEVZ20dPmGdz5vjER7DD7aHl6I7kig/ClEaDcwUeOWrZdnxZ0hgZIri8NHS2vhuukRv7MyjJc9GTXdP4eA7CImJ0Y+y1KaNDXCMcxTgo1Oy/Xh0hHGPo7QW0QpXB9qx51UsLQpNryAIA3Z5j3hgdAMj/BIp1kBjSb6L1ikoNM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=KN/NpN+5; arc=none smtp.client-ip=100.103.45.18
+	 Content-Type:Content-Disposition:In-Reply-To; b=pI5us3bPC931Mw/hwIKKEb4DNi6ZyEv9G050gApqtj+uYqiL7gJxT3rONHtM2Cb4KqeUC1ehaYzK+ngIugSkzlROe8TVK41W1QHIvK8szS1TEe67Z+8FtkBWMkm1XLAMOnEtdjyxSbVeK/2kez7LlNDRBue+S68kn2XuDU6p8Do=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=c+QefKMA; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="KN/NpN+5"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 516E21F000E9;
-	Wed, 20 May 2026 12:33:38 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="c+QefKMA"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 95D031F000E9;
+	Wed, 20 May 2026 12:46:38 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=kernel.org;
-	s=k20260515; t=1779280418;
-	bh=VyaEOjHP1hqTYE60zgia3ekAoMflkGlYADHxZdY2o5Q=;
+	s=k20260515; t=1779281199;
+	bh=HA5J7j3Eq/ArC7Y7uw56ulwYKzG7952DMvsvOBRob3o=;
 	h=Date:From:To:Cc:Subject:References:In-Reply-To;
-	b=KN/NpN+5q7A9+ajbzYERRwkgEOwsIbWd4PRPoV4bo4BMGD0EEc8TJzxGjeVXu5SVJ
-	 HscKeIqtpFhxImkX9UldTuoLsJeZhGBri47P87/vbspqawn82ZrS1uWKeHah2XO1HY
-	 u8pc2EnzFeL0BM6q6TDGf3L77AfFzLOL13TbV+mLqQ/zdzIyU+6rONWRuTL6/T8253
-	 XmlB+Bi9lTiVOMtj1KGt8ruAThlT1Jb+S3DhHWaVAT6RRe31iNaefZEnx22OpLcPDi
-	 vAJdW62RBdjq+fyQVMRJBQHlqh16Qn3BlybAW4EVvlvd0lOu39Pgen2IDgxNjM7jdt
-	 +633Fgu153EdQ==
-Date: Wed, 20 May 2026 14:33:36 +0200
+	b=c+QefKMAKzne3Mn1HFG8sfm1Z3y4hPEnQ8ELclV5VI7KM22VA9XLkzzUhIjarjDSc
+	 LKETPW3khf6THLBZaT36f9sXsxB7cCfUILoDC2L8Xf80T1vRH2gugYWUZstK/6OI77
+	 je1FR7UvZadmKoRlgV5Gt8US3JIjr/k+C6TMVr2x/Qeit2ZhQTJiT1oufSiu4Vr1zO
+	 giq5Nhz4UDyAq83Djie7WTdqew4MSvGO9WmPr4Y28BhvyFwN2Op9NVp+1hzfFja2nC
+	 Yzr99ZXTYXDI68ORc8IWqpfAgYrTydaCR9E1UUGez6nOY/uf0rb/am+tP4IMSydDNl
+	 N/FeLLP2r9LfA==
+Date: Wed, 20 May 2026 14:46:36 +0200
 From: Lorenzo Bianconi <lorenzo@kernel.org>
 To: sashiko-reviews@lists.linux.dev
-Cc: robh@kernel.org, conor+dt@kernel.org, devicetree@vger.kernel.org,
+Cc: conor+dt@kernel.org, robh@kernel.org, devicetree@vger.kernel.org,
 	netdev@vger.kernel.org
-Subject: Re: [PATCH net-next v8 07/10] net: airoha: Support multiple
- net_devices for a single FE GDM port
-Message-ID: <ag2qINUrMh7e3FJr@lore-desk>
-References: <20260519-airoha-eth-multi-serdes-v8-7-6bd70e329df6@kernel.org>
- <20260520085933.35D171F00897@smtp.kernel.org>
+Subject: Re: [PATCH net-next v8 09/10] net: airoha: Introduce WAN device flag
+Message-ID: <ag2tLKJfVLV82o7t@lore-desk>
+References: <20260519-airoha-eth-multi-serdes-v8-9-6bd70e329df6@kernel.org>
+ <20260520085933.C009F1F00893@smtp.kernel.org>
 Precedence: bulk
 X-Mailing-List: sashiko-reviews@lists.linux.dev
 List-Id: <sashiko-reviews.lists.linux.dev>
@@ -43,153 +42,108 @@ List-Subscribe: <mailto:sashiko-reviews+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:sashiko-reviews+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Type: multipart/signed; micalg=pgp-sha512;
-	protocol="application/pgp-signature"; boundary="UWr99hrsTAdlrk3r"
+	protocol="application/pgp-signature"; boundary="aIJq2R5uZPRpkgYw"
 Content-Disposition: inline
-In-Reply-To: <20260520085933.35D171F00897@smtp.kernel.org>
+In-Reply-To: <20260520085933.C009F1F00893@smtp.kernel.org>
 
 
---UWr99hrsTAdlrk3r
+--aIJq2R5uZPRpkgYw
 Content-Type: text/plain; charset=iso-8859-1
 Content-Disposition: inline
 Content-Transfer-Encoding: quoted-printable
 
-On May 20, sashiko-bot@kernel.org wrote:
-> Thank you for your contribution! Sashiko AI review found 2 potential issu=
-e(s) to consider:
-> - [High] Port-wide hardware configuration is improperly modified via per-=
-net_device callbacks, breaking the newly introduced 1:N relationship.
-> - [High] Sequential initialization of multiple net_devices sharing a GDM =
-port silently overwrites singleton hardware loopback and WAN configuration =
-registers.
-> --
+[...]
 >=20
-> commit d922e17d3b113696fc139ac4b2b3ef81e2b9ad50
-> Author: Lorenzo Bianconi <lorenzo@kernel.org>
->=20
-> net: airoha: Support multiple net_devices for a single FE GDM port
->=20
-> This commit introduces support for multiple net_devices connected to the
-> same Frame Engine (FE) GDM port (GDM3 or GDM4) via an external hw arbiter.
-> It updates the airoha_gdm_port structure to hold an array of devices inst=
-ead
-> of a single device.
->=20
-> > diff --git a/drivers/net/ethernet/airoha/airoha_eth.h b/drivers/net/eth=
-ernet/airoha/airoha_eth.h
-> > index fbb50dc73af84..fc49f0049983e 100644
-> > --- a/drivers/net/ethernet/airoha/airoha_eth.h
-> > +++ b/drivers/net/ethernet/airoha/airoha_eth.h
 > [ ... ]
-> > @@ -540,19 +541,20 @@ struct airoha_qdma {
-> >  struct airoha_gdm_dev {
-> >  	struct airoha_gdm_port *port;
-> >  	struct airoha_qdma *qdma;
-> > -	struct net_device *dev;
-> >  	struct airoha_eth *eth;
-> > +	struct net_device *dev;
+> > +static int airoha_dev_init(struct net_device *netdev)
+> > +{
+> > +	struct airoha_gdm_dev *dev =3D netdev_priv(netdev);
+> > +	struct airoha_gdm_port *port =3D dev->port;
 > > =20
-> >  	DECLARE_BITMAP(qos_sq_bmap, AIROHA_NUM_QOS_CHANNELS);
-> >  	/* qos stats counters */
-> >  	u64 cpu_tx_packets;
-> >  	u64 fwd_tx_packets;
-> > +
-> > +	int nbq;
-> >  };
+> >  	switch (port->id) {
+> >  	case AIROHA_GDM3_IDX:
+> > +	case AIROHA_GDM4_IDX: {
+> > +		struct airoha_eth *eth =3D dev->eth;
 > > =20
-> >  struct airoha_gdm_port {
-> > -	struct airoha_gdm_dev *dev;
-> > +	struct airoha_gdm_dev *devs[AIROHA_MAX_NUM_GDM_DEVS];
-> >  	int id;
-> > -	int nbq;
+> > +		/* GDM2 supports a single net_device */
+> > +		if (eth->ports[1] && eth->ports[1]->devs[0])
+> > +			break;
 >=20
-> This introduces a 1:N relationship between a GDM port and net_devices, but
-> are the net_device lifecycle and MTU callbacks updated to account for sha=
-red
-> ports?
+> Is there a strict probe-order dependency for these interfaces?
 >=20
-> Looking at airoha_dev_stop(), the driver unconditionally drops all traffic
-> for the port:
+> If GDM3 or GDM4 is probed before GDM2, eth->ports[1]->devs[0] will be NUL=
+L.
+> This leads GDM3/GDM4 to assume GDM2 is inactive, take the WAN role, and f=
+orce
+> GDM2 into loopback mode.
 >=20
-> airoha_dev_stop()
->     airoha_set_gdm_port_fwd_cfg(qdma->eth, REG_GDM_FWD_CFG(port->id), FE_=
-PSE_PORT_DROP);
->    =20
-> Since this modifies the forwarding configuration for the entire GDM port,
-> does stopping just one net_device silently drop all traffic for the port,
-> breaking any other active net_devices sharing it?
+> Later, when GDM2 initializes:
 >=20
-> Similarly, airoha_dev_change_mtu() overwrites port-wide hardware registers
-> such as REG_GDM_LEN_CFG. Could this lower the port MTU while another devi=
-ce
-> still requires a larger MTU?
+> > +	case AIROHA_GDM2_IDX:
+> > +		/* GDM2 is always used as wan */
+> > +		dev->flags |=3D AIROHA_PRIV_F_WAN;
+> >  		break;
 >=20
-> I note this regression is addressed later in the series by commit
-> 646f1e7bb6021 (net: airoha: Do not stop GDM port if it is shared).
+> It unconditionally assigns itself the WAN role.
 >=20
-> > diff --git a/drivers/net/ethernet/airoha/airoha_eth.c b/drivers/net/eth=
-ernet/airoha/airoha_eth.c
-> > index 27b214ce2a4ed..8d36ab6cd7854 100644
-> > --- a/drivers/net/ethernet/airoha/airoha_eth.c
-> > +++ b/drivers/net/ethernet/airoha/airoha_eth.c
-> [ ... ]
-> > @@ -1830,7 +1831,7 @@ static int airoha_set_gdm2_loopback(struct airoha=
-_gdm_dev *dev)
-> >  	airoha_fe_clear(eth, REG_FE_VIP_PORT_EN, BIT(AIROHA_GDM2_IDX));
-> >  	airoha_fe_clear(eth, REG_FE_IFC_PORT_EN, BIT(AIROHA_GDM2_IDX));
-> > =20
-> > -	src_port =3D eth->soc->ops.get_sport(port, port->nbq);
-> > +	src_port =3D eth->soc->ops.get_sport(port, dev->nbq);
-> >  	if (src_port < 0)
-> >  		return src_port;
-> > =20
->=20
-> When multiple net_devices sharing a GDM port are sequentially initialized
-> via ndo_init (airoha_dev_init()), they unconditionally call
-> airoha_set_gdm2_loopback().
->=20
-> Inside this function, global singleton hardware registers are modified:
->=20
-> airoha_set_gdm2_loopback()
->     airoha_fe_rmw(eth, REG_FE_WAN_PORT,
->                   WAN1_EN_MASK | WAN1_MASK | WAN0_MASK,
->                   FIELD_PREP(WAN0_MASK, src_port));
->=20
-> Does initializing the second device on the same port silently overwrite
-> the hardware loopback and WAN configuration of the previously initialized
-> device?
->=20
-> I see this regression is resolved later in the series by commit
-> 8a565b44990bb (net: airoha: Introduce WAN device flag).
->=20
-> --=20
-> Sashiko AI review =B7 https://sashiko.dev/#/patchset/20260519-airoha-eth-=
-multi-serdes-v8-0-6bd70e329df6@kernel.org?part=3D7
+> Does this probe ordering create multiple WAN devices and leave GDM2's
+> hardware silently misconfigured since its routing capabilities were disab=
+led
+> by GDM3's loopback configuration?
 
-Commenting on sashiko's report:
-https://netdev-ai.bots.linux.dev/sashiko/#/patchset/20260519-airoha-eth-mul=
-ti-serdes-v8-0-6bd70e329df6%40kernel.org
+This is not a real issue since GDM2 is always registered before GDM3/GDM4.
 
-- The per-port hardware MIB counters live on the GDM port, but
-  airoha_dev_get_stats64() returns dev->port->stats and
-  airoha_update_hw_stats() reads REG_FE_GDM_*_CNT_*(port->id) into that
-  shared structure followed by REG_FE_GDM_MIB_CLEAR.  With two netdevs now
-  sharing a single GDM3 or GDM4 port, would both siblings report identical
-  combined byte/packet counters via ip -s link show, since there is no
-  per-dev SW counter to disambiguate the shared HW MIB?
-  - This issue will be fixed with a dedicated patch not in the series.
+>=20
+> >  	default:
+> >  		break;
+> >  	}
+> > =20
+> > +	airoha_dev_set_qdma(dev);
+> > +	airoha_set_macaddr(dev, netdev->dev_addr);
+>=20
+> When setting the MAC address, airoha_set_macaddr() does the following:
+>=20
+> static void airoha_set_macaddr(struct airoha_gdm_dev *dev, const u8 *addr)
+> {
+> 	...
+> 	reg =3D airoha_is_lan_gdm_dev(dev) ? REG_FE_LAN_MAC_H : REG_FE_WAN_MAC_H;
+> 	...
+> 	airoha_fe_wr(eth, reg, val);
+> }
+>=20
+> Since REG_FE_LAN_MAC_H is a global forwarding engine register rather than
+> per-port, will initializing subsequent LAN devices overwrite the hardware
+> MAC filter configured by the first LAN device?
+>=20
+> Might this cause the hardware to drop packets for LAN interfaces that do =
+not
+> match the single overwritten MAC address?
+>=20
+> (Note: This was observed to be fixed later in the series by commit "net:
+> airoha: Support multiple LAN/WAN interfaces for hw MAC address configurat=
+ion",
+> but is mentioned here as it appears to introduce a regression in this com=
+mit.)
+
+As pointed out here, this is resolved in a subsequent patch in the series.
 
 Regards,
 Lorenzo
 
---UWr99hrsTAdlrk3r
+>=20
+> --=20
+> Sashiko AI review =B7 https://sashiko.dev/#/patchset/20260519-airoha-eth-=
+multi-serdes-v8-0-6bd70e329df6@kernel.org?part=3D9
+
+--aIJq2R5uZPRpkgYw
 Content-Type: application/pgp-signature; name=signature.asc
 
 -----BEGIN PGP SIGNATURE-----
 
-iHQEABYKAB0WIQTquNwa3Txd3rGGn7Y6cBh0uS2trAUCag2qIAAKCRA6cBh0uS2t
-rLASAP9qOxiZFoU4XNPIrr/i/6XoSHz60uQNVvhZvhW3zx8QQgD2PLhU8vp3N6hG
-/CQWMan0EGJxQksiQleinr3mg+6fBA==
-=hYxz
+iHUEABYKAB0WIQTquNwa3Txd3rGGn7Y6cBh0uS2trAUCag2tLAAKCRA6cBh0uS2t
+rCJ4AQDOp+QE+KOzGLeo06yV7X68jypkI6k1608m+Gw8zmz3ewD/Wa7eJ5k9/V09
+hqlXwG29615S1lPJYE8PZp/HISn3iwA=
+=9rTp
 -----END PGP SIGNATURE-----
 
---UWr99hrsTAdlrk3r--
+--aIJq2R5uZPRpkgYw--
