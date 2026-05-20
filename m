@@ -1,271 +1,198 @@
-Received: from mgamail.intel.com (mgamail.intel.com [192.198.163.12])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-wm1-f45.google.com (mail-wm1-f45.google.com [209.85.128.45])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 27C5D37BE87
-	for <sashiko-reviews@lists.linux.dev>; Wed, 20 May 2026 21:54:59 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=192.198.163.12
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 53E903B4EA2
+	for <sashiko-reviews@lists.linux.dev>; Wed, 20 May 2026 22:01:36 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.45
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1779314101; cv=none; b=iHckZ3+tdnhtH+10aK+R/TXfq4wKkuvuDEEbRcNSjuIOGRIgfjmWc8u6UQ7EqHXsXZTUGheJyQbIdLxzVT2sp5nQERDEJNw4dGgKj6wVGTGsNf9dUVf08A3/wG4i1ob/whU4xg962wDebTKA3WdvY5qzjcm1405dOSBCusHG0xw=
+	t=1779314499; cv=none; b=mf0/hqU2RsP5zN9PuEnEWzjkBRvDe7Yo2+tZM6Bc/W5MxQQK8yYySFnFAdqZxi6ixddJ/G/EwSz+SjZXH0dc6haEwp6GHajbMVQ2Uwc1vMXJTzpYdSf+m83oKRX9cQeKXVHPIWpDuLEbfAmsXnNtihX5CnTz+6q/1YQnJF4scCM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1779314101; c=relaxed/simple;
-	bh=+CXFZOD+Y2b+42FoTEHtxtoiXw+q957/TpCFaUNzM+g=;
-	h=Date:From:To:Cc:Subject:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=fPL28TgnmTq/uh0LKpMdPSmUHViritUNRKIVv2c7OvaXfYU73+gOPY/ZYax3OFNw0MAr09bNFHOtWpPAap4wKZ251ZU6xGFGpoHtx9q9wqOnTnsm92CvukmKVxMXaWmxkpiF/eUVh+S1lNMwy8+oL2G6JnVafwwcjA0gP0NZQNY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linux.intel.com; spf=pass smtp.mailfrom=linux.intel.com; dkim=pass (2048-bit key) header.d=intel.com header.i=@intel.com header.b=PPeJXJRn; arc=none smtp.client-ip=192.198.163.12
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linux.intel.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linux.intel.com
+	s=arc-20240116; t=1779314499; c=relaxed/simple;
+	bh=RzpB14xk/2UzIGRN+1SLXmzPCeS1XLfL9h4CLr+vXao=;
+	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
+	 In-Reply-To:Content-Type; b=S6/agDykWNA93gyHL8KOZxq/Kk9UGp2ffhDuR4AsNaUQ1xHY/w/zFfmsnr+NIsH/PSv3qs3Q+FjL16peZt38AcT9DU828AQH+XoxHHvdgmROm8ldXP8Aee3bM0r096Bv1r6bTs4h6BJzVvpRK4SZrMrjhCoc7WNN5iigvwtAdqE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=A+QF90vF; arc=none smtp.client-ip=209.85.128.45
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=intel.com header.i=@intel.com header.b="PPeJXJRn"
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
-  d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
-  t=1779314100; x=1810850100;
-  h=date:from:to:cc:subject:message-id:in-reply-to:
-   references:mime-version:content-transfer-encoding;
-  bh=+CXFZOD+Y2b+42FoTEHtxtoiXw+q957/TpCFaUNzM+g=;
-  b=PPeJXJRnpkQhOkUkeEMXakKZoQnEJzlaxbrx/b3DB2bMmhYdkTb2Tmz3
-   nF4GcuTMcKEHEv3kdQ/rT225QWo2eHBsZbEkOGNlaT53Ba1f6F+dXotq0
-   cTLNPtPMJP87L1VoJcr1ByzxjoPvU05rl3LFPSWIyq39oB+DM5C3mmVaU
-   UONqT/yhFvyOGamzsJTF5WcicHQ/ikxP0tCBNTk7FDJ4MnF/pnvpIGxM1
-   yvv6/rh0X3i0iHKeNcObKnDK0hWNbtLYMlfiZocfMXCvdB+XQtJJJuZ4s
-   WAWrl5Tlthy8fMewM1av/ra17Vd3eWup1iBO/OfeUTXQdvVosrbotK0D2
-   w==;
-X-CSE-ConnectionGUID: ByaV5drkR+y5J4eCcQqVxw==
-X-CSE-MsgGUID: RpqglYGGTLiHBCdH140wgA==
-X-IronPort-AV: E=McAfee;i="6800,10657,11792"; a="84083785"
-X-IronPort-AV: E=Sophos;i="6.23,245,1770624000"; 
-   d="scan'208";a="84083785"
-Received: from orviesa001.jf.intel.com ([10.64.159.141])
-  by fmvoesa106.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 20 May 2026 14:55:00 -0700
-X-CSE-ConnectionGUID: RcbajyMHTneVP/oXLqfwUQ==
-X-CSE-MsgGUID: pf9+jegwTkayTED+WuejjA==
-X-ExtLoop1: 1
-X-IronPort-AV: E=Sophos;i="6.23,245,1770624000"; 
-   d="scan'208";a="278446858"
-Received: from patelni-desk.amr.corp.intel.com (HELO localhost) ([10.2.248.44])
-  by smtpauth.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 20 May 2026 14:54:59 -0700
-Date: Wed, 20 May 2026 14:54:57 -0700
-From: Nirmal Patel <nirmal.patel@linux.intel.com>
-To: sashiko-bot@kernel.org
-Cc: sashiko-reviews@lists.linux.dev, linux-pci@vger.kernel.org
-Subject: Re: [PATCH v2] PCI: vmd: Add feature to scan BIOS enumerated
- devices.
-Message-ID: <20260520145457.00001f52@linux.intel.com>
-In-Reply-To: <20260519160505.704F2C2BCB3@smtp.kernel.org>
-References: <20260519151832.9005-1-nirmal.patel@linux.intel.com>
-	<20260519160505.704F2C2BCB3@smtp.kernel.org>
-X-Mailer: Claws Mail 4.2.0 (GTK 3.24.41; x86_64-w64-mingw32)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="A+QF90vF"
+Received: by mail-wm1-f45.google.com with SMTP id 5b1f17b1804b1-48e82c23840so43970085e9.3
+        for <sashiko-reviews@lists.linux.dev>; Wed, 20 May 2026 15:01:35 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20251104; t=1779314494; x=1779919294; darn=lists.linux.dev;
+        h=content-transfer-encoding:in-reply-to:from:content-language
+         :references:cc:to:subject:user-agent:mime-version:date:message-id
+         :from:to:cc:subject:date:message-id:reply-to;
+        bh=29/pt5xtdIfWUNP2HMoH7lMK3K2QTJTzmuk9CehWO9A=;
+        b=A+QF90vFOe8gjmYMvOkC4iTkoUf3tZtgLIkU3/vHmBWmLbxa27HxyBgNhZobhvq5Qa
+         5Wvs3oBxJMBvB4dvuuzeuabegILZbX9QoRDSO5x73J3E24WTGU+P1cXGxS8U0YvM4AJj
+         cy2SxR+Kdpb6iHhSHQigRf9iPt+zyNfaUtoFBawFJEZd592K7/XNr2IXNZbO5eVazqQ5
+         EYt1xCoGMxhWKMT+q00fig05OcmdE7SRSF5B+fgiAgZBz7NJJzYZgXSVWTGlvNo37sVW
+         G+Je6tjrfjzt5TY+Tezzw/sDaT5yuFIyVTzVAgDCXJuJN8dOo2xuywhi6E2koWUTkCFb
+         Xv5g==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20251104; t=1779314494; x=1779919294;
+        h=content-transfer-encoding:in-reply-to:from:content-language
+         :references:cc:to:subject:user-agent:mime-version:date:message-id
+         :x-gm-gg:x-gm-message-state:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=29/pt5xtdIfWUNP2HMoH7lMK3K2QTJTzmuk9CehWO9A=;
+        b=TqNGVXuH3JNDPmTD2/pF833yNm8+wQq1f78Lbr+li0aC3nlrq0gBudNYDbFo9IxApU
+         sQAwA/Yinl9cK0Q4r5dyvbPvxgyS5B0KvC1qO0+DVPak7nFRp+tZSYylNPWRMbtT4CYp
+         2a1F3DNqYvvDojBuysHnJOfYXjFVTHQRYtto6aPcrWBr4Htl8jKSzmlLJSjZjvlr40QF
+         +XYNlbiqYI4tY3rFA1S8Jo09MFNZhYFSOZbE+ol8L9A1AkjYhJ92OiIQxeEk99yfPqHx
+         KR9XssY7pf31mnd3qdVxP8p4eioRGHDoZG09ZQSQ++Ts/aGGnD9ZstxfaVpBq2j0hOvA
+         giiA==
+X-Gm-Message-State: AOJu0Yx6bhe6nAelTeP3wIFTNSLU7EKWw8lTuBELjsvyyyBbqduldRL4
+	+FCETQ0HwK6D9gSqOlKue7uq+lcwFbXqhB6V+begMQ3JB/+WPQ5Z9g5fRklk4OY=
+X-Gm-Gg: Acq92OERwIUIBBnTuln7ZgMZzdL+LDnIaWcS7+x0Le+EItv5qyi6emXMB2ybAn/1ONY
+	I1uvpI/YgUIDM1DZ7mBhkKByn63ENQLC7ZL1ZV1p0WD1KhBAdJaXzIT+qOKVOziM85ht7MWt1ag
+	50wK4H4L7318oE8ERrj2Xd67jtfzOgzzheUtvsx8PmH12H2WzKBVOn2++9MRqgY7bjWn1EpunMG
+	xr7HXNqMa6TnukC3M6KxTKwDInax2qn1gWuapO6imPtJU4tZKHalNkc3KzKdAU4bSSCt1XQU67o
+	Jg5gBSxHNHtEvjAW43lss0WKr47DxFr3wq8YgYl+II8u4sXiqqUkuiMX1sNi9KA2cXpok9FIUVo
+	7nIq0BiUy/Dhwq05lHB+fbSVzBYH6ZruOka5TPN0FmiEE0pfFLttLWNJRvWhXGcducuKfAHYs2M
+	7TBHpqOp1qWO6FlnQ8MbYWK2e7+itbT/kdrmyHYrxEQFRD/TCoP37gky1bL45QuuiJubSpj1ASF
+	U8211lc/aHrN7vCViouPbSMPQmVk9M5H7BeLY8BDmzxJ59StSf9khHBhIfHBDI6+zscIA==
+X-Received: by 2002:a05:600c:4688:b0:48e:8345:6f8f with SMTP id 5b1f17b1804b1-490360a8789mr2218195e9.18.1779314492259;
+        Wed, 20 May 2026 15:01:32 -0700 (PDT)
+Received: from ?IPV6:2a01:cb08:52d:7400:bbd7:ca83:de4a:f625? (2a01cb08052d7400bbd7ca83de4af625.ipv6.abo.wanadoo.fr. [2a01:cb08:52d:7400:bbd7:ca83:de4a:f625])
+        by smtp.gmail.com with ESMTPSA id 5b1f17b1804b1-49035c22bd1sm1823845e9.2.2026.05.20.15.01.31
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Wed, 20 May 2026 15:01:32 -0700 (PDT)
+Message-ID: <ec232a52-795b-4f32-bcb4-2b6e5f8fc928@gmail.com>
+Date: Thu, 21 May 2026 00:01:31 +0200
 Precedence: bulk
 X-Mailing-List: sashiko-reviews@lists.linux.dev
 List-Id: <sashiko-reviews.lists.linux.dev>
 List-Subscribe: <mailto:sashiko-reviews+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:sashiko-reviews+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=US-ASCII
-Content-Transfer-Encoding: 7bit
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH 02/11] arm64: dts: qcom: sc8280xp-arcata: Enable backlight
+To: sashiko-reviews@lists.linux.dev
+Cc: conor+dt@kernel.org, robh@kernel.org, devicetree@vger.kernel.org,
+ Johan Hovold <johan@kernel.org>
+References: <20260520-surface-sp9-5g-for-next-v1-2-9df52552bf87@gmail.com>
+ <20260520165709.E485C1F00893@smtp.kernel.org>
+Content-Language: en-US
+From: =?UTF-8?Q?J=C3=A9r=C3=B4me_de_Bretagne?= <jerome.debretagne@gmail.com>
+In-Reply-To: <20260520165709.E485C1F00893@smtp.kernel.org>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 8bit
 
-On Tue, 19 May 2026 16:05:04 +0000
-sashiko-bot@kernel.org wrote:
-
-> Thank you for your contribution! Sashiko AI review found 4 potential
-> issue(s) to consider:
+On 5/20/26 18:57, sashiko-bot@kernel.org wrote:
+> Thank you for your contribution! Sashiko AI review found 1 potential issue(s) to consider:
+> - [High] The eDP backlight regulator (`vreg_edp_bl`) is mapped to the wrong PMIC for its enable GPIO, directly contradicting the hardware findings documented in the commit message.
+> --
 > 
-> New issues:
-> - [High] Invalid VMD CFGBAR resource range calculated for older
-> hardware with restricted bus ranges.
-> - [High] VMD shadow register exposed to the child device resource
-> pool, risking memory corruption.
-> - [Medium] Silent failure and continued execution with uninitialized
-> variables if BAR4 is not an IORESOURCE_MEM.
+> commit 5bb21a2e354ddc1fbe2cb4a72c610f631fc3961f
+> Author: Jérôme de Bretagne <jerome.debretagne@gmail.com>
 > 
-> Pre-existing issues:
-> - [High] Missing pci_free_irq_vectors() calls on error paths leaks
-> IRQ resources. --
+> arm64: dts: qcom: sc8280xp-arcata: Enable backlight
 > 
-> commit fb1f4c20650569f7ba38772b55e3d4757083bcf4
-> Author: Nirmal Patel <nirmal.patel@linux.intel.com>
+> This commit adds backlight nodes and enables the backlight so that it can be
+> controlled with the buttons on Surface Pro Type Cover keyboards. The nodes
+> are similar to the ThinkPad X13s but use a different enable GPIO for the
+> vreg_edp_bl node.
 > 
-> PCI: vmd: Add feature to scan BIOS enumerated devices.
-> 
-> Newer VMD with device ID 0x28c1 has unique settings compared to its
-> predecessor where BIOS enumerates the entire VMD device tree and
-> assigns respective configurations. This patch adds support to obtain
-> the bus hide range and shadow registers set by BIOS.
-> 
-> > diff --git a/drivers/pci/controller/vmd.c
-> > b/drivers/pci/controller/vmd.c index d4ae250d4bc6d..ca8738285659a
-> > 100644 --- a/drivers/pci/controller/vmd.c
-> > +++ b/drivers/pci/controller/vmd.c  
+>> diff --git a/arch/arm64/boot/dts/qcom/sc8280xp-microsoft-arcata.dts b/arch/arm64/boot/dts/qcom/sc8280xp-microsoft-arcata.dts
+>> index f2b4470d4407f..14287092fb07e 100644
+>> --- a/arch/arm64/boot/dts/qcom/sc8280xp-microsoft-arcata.dts
+>> +++ b/arch/arm64/boot/dts/qcom/sc8280xp-microsoft-arcata.dts
 > [ ... ]
-> > @@ -711,6 +773,55 @@ static int vmd_alloc_irqs(struct vmd_dev *vmd)
-> >  	return 0;
-> >  }
-> >  
-> > +static int vmd_prepare_offsets_and_bus(struct vmd_dev *vmd,
-> > +					unsigned long features,
-> > +					resource_size_t
-> > *membar2_offset,
-> > +					resource_size_t *offset1,
-> > +					resource_size_t *offset2)
-> > +{
-> > +	int ret;  
-> [ ... ]
-> > +	if (features & VMD_FEAT_USE_BIOS_INFO) {
-> > +		if (resource_type(&vmd->dev->resource[4]) ==
-> > IORESOURCE_MEM) {
-> > +			*membar2_offset = SHADOW_MEMBAR1_28C1 +
-> > MB2_SHADOW_SIZE;  
+>> @@ -127,6 +137,22 @@ pmic_glink_con1_sbu: endpoint {
+>>   		};
+>>   	};
+>>   
+>> +	vreg_edp_bl: regulator-edp-bl {
+>> +		compatible = "regulator-fixed";
+>> +
+>> +		regulator-name = "VREG_EDP_BL";
+>> +		regulator-min-microvolt = <3600000>;
+>> +		regulator-max-microvolt = <3600000>;
+>> +
+>> +		gpio = <&pmc8280c_gpios 6 GPIO_ACTIVE_HIGH>;
 > 
 > [Severity: High]
-> Does this offset calculation expose VMD configuration registers to
-> child devices?
-No. This is for vmd driver to read and assign bus start range and
-location of shadow registers.
+> Does this map to the correct PMIC for the enable GPIO?
 > 
-> The calculation SHADOW_MEMBAR1_28C1 + MB2_SHADOW_SIZE resolves to
-> 0x2828. However, the BASE_ID_REG_28C1 register is at offset 0x2840,
-> which falls after 0x2828.
+> The commit message explicitly states that the hardware match for the backlight
+> enable GPIO was found at platform/c440000.spmi:pmic@3:gpio@8800 (which is
+> gpio6).
 > 
-
-These two hardware registers don't have dependency. BASE_ID_REG_28C1
-holds bus start value. Since the hardware register is named as Base ID,
-I kept the name as it is.
-
-> If a child device maps a BAR over this region, could it overwrite the
-> VMD shadow register at 0x2840 and cause hardware misbehavior?
+> According to sc8280xp-pmics.dtsi, pmic@3 corresponds to the pmc8280_2 PMIC and
+> its pmc8280_2_gpios controller.
 > 
-> Should the offset be set large enough to protect all internal VMD
-> registers, such as >= 0x2848?
-There is no overlap. All of the these registers are separate.
-64-bit SHADOW_MEMBAR1_28C1 and SHADOW_MEMBAR2_28C1 are located at
-0x2818 and 0x2820. So the 16 byte size MB2_SHADOW_SIZE includes both of
-these registers.
-The BASE_ID_REG_28C1 is located at 0x2840, much farther from shadow
-registers.
+> However, the patch configures the regulator and pinctrl to use pmc8280c_gpios,
+> which is physically mapped to pmic@2.
 > 
-> > +			ret = vmd_get_bus_info_from_bar4(vmd,
-> > offset1, offset2);
-> > +			if (ret)
-> > +				return ret;
-> > +		}  
+> Will this result in toggling the wrong physical pin on pmic@2 instead of
+> enabling the eDP backlight?
 > 
-> [Severity: Medium]
-> What happens if VMD_FEAT_USE_BIOS_INFO is set, but resource 4 is not
-> of type IORESOURCE_MEM?
-> 
-> Because the subsequent fallback checks use else if, they are bypassed
-> entirely. The function will silently return 0 without retrieving valid
-> offsets.
-> 
-> Will this cause the driver to probe with uninitialized offset values,
-> failing to handle broken hardware or firmware configurations?
-
-resource 4 is needed to obtain required information for bus scan. So
-unassigned resource 4 should return an error and stop the enumeration/
-probe. I can return an error in else part.
-
-> 
-> > +	} else if (features & VMD_FEAT_HAS_MEMBAR_SHADOW) {
-> > +		*membar2_offset = MB2_SHADOW_OFFSET +
-> > MB2_SHADOW_SIZE;
-> > +		ret = vmd_get_phys_offsets(vmd, true, offset1,
-> > offset2);  
-> [ ... ]
-> > @@ -784,38 +895,16 @@ static int vmd_enable_domain(struct vmd_dev
-> > *vmd, unsigned long features) struct pci_dev *dev;
-> >  	int ret;  
-> [ ... ]
-> > -	if (features & VMD_FEAT_HAS_BUS_RESTRICTIONS) {
-> > -		ret = vmd_get_bus_number_start(vmd);
-> > -		if (ret)
-> > -			return ret;
-> > -	}
-> > +	ret = vmd_prepare_offsets_and_bus(vmd, features,
-> > &membar2_offset,
-> > +					  &offset[0], &offset[1]);
-> > +	if (ret)
-> > +		return ret;
-> >  
-> >  	res = &vmd->dev->resource[VMD_CFGBAR];
-> >  	vmd->resources[0] = (struct resource) {
-> >  		.name  = "VMD CFGBAR",
-> >  		.start = vmd->busn_start,
-> > -		.end   = vmd->busn_start + (resource_size(res) >>
-> > 20) - 1,
-> > +		.end   = (resource_size(res) >> 20) - 1,  
-> 
-> [Severity: High]
-> Does this change break bus enumeration for older hardware with
-> restricted bus ranges?
-> 
-> By unconditionally dropping vmd->busn_start from the .end calculation,
-> it works for the new 28C1 device with a busn_start of 0.
-> 
-> However, for an older device with busn_start = 128 and a 32 MB CFGBAR
-> size, .start would be 128, but .end would calculate to 31.
-> 
-> Could this create a malformed resource where .start > .end?
-
-This is a good point. But in my v1 patch, I kept vmd->busn_start +
-(resource_size(res) >> 20) - 1. it was flagged as an issue.
-If the busn_start is 128 and ConfigBar is 256 MB, then .end will be set
-to out of bound value. I can set hard coded value of 0xff same as
-pci/probe.c
-
-> 
-> >  		.flags = IORESOURCE_BUS | IORESOURCE_PCI_FIXED,
-> >  	};  
-> [ ... ]
-> > @@ -868,19 +957,21 @@ static int vmd_enable_domain(struct vmd_dev
-> > *vmd, unsigned long features)
-> >  	 * acceptable because the guest is usually CPU-limited and
-> > MSI
-> >  	 * remapping doesn't become a performance bottleneck.
-> >  	 */
-> > -	if (!(features & VMD_FEAT_CAN_BYPASS_MSI_REMAP) ||
-> > -	    offset[0] || offset[1]) {
-> > -		ret = vmd_alloc_irqs(vmd);
-> > -		if (ret)
-> > -			return ret;
-> > +	if (!(features & VMD_FEAT_USE_BIOS_INFO)) {
-> > +		if (!(features & VMD_FEAT_CAN_BYPASS_MSI_REMAP) ||
-> > +		    offset[0] || offset[1]) {
-> > +			ret = vmd_alloc_irqs(vmd);
-> > +			if (ret)
-> > +				return ret;  
-> 
-> [Severity: High]
-> This is a pre-existing issue, but does this error path leak IRQ
-> resources?
-> 
-> According to PCI subsystem guidelines, every error path after a
-> successful pci_alloc_irq_vectors() must call pci_free_irq_vectors()
-> before returning.
-> 
-> If vmd_enable_domain() fails after allocating IRQs, or if
-> vmd_alloc_irqs() fails internally (e.g., during devm_kcalloc(),
-> init_srcu_struct(), or devm_request_irq()), it appears to return
-> directly without freeing the allocated MSI-X vectors.
-> 
-> Could this eventually exhaust system IRQ capacity?
-
-I can address this issue in another patch series as a bug fix or
-improvement. 
-
-> 
-> > +			vmd_set_msi_remapping(vmd, true);
-> >  
-> > -		ret = vmd_create_irq_domain(vmd);
-> > -		if (ret)
-> > -			return ret;
-> > -	} else {
-> > -		vmd_set_msi_remapping(vmd, false);
-> > +			ret = vmd_create_irq_domain(vmd);
-> > +			if (ret)
-> > +				return ret;
-> > +		} else {
-> > +			vmd_set_msi_remapping(vmd, false);
-> > +		}
-> >  	}
-> >  
+>> +		enable-active-high;
+>> +
+>> +		pinctrl-0 = <&edp_bl_reg_en>;
+>> +		pinctrl-names = "default";
+>> +
+>> +		regulator-boot-on;
+>> +	};
 > 
 
+I was skeptical at first but upon review I've tried the following patch:
+
+
+diff --git a/arch/arm64/boot/dts/qcom/sc8280xp-microsoft-arcata.dts 
+b/arch/arm64/boot/dts/qcom/sc8280xp-microsoft-arcata.dts
+index f938e68c69ea..82e0a01276a8 100644
+--- a/arch/arm64/boot/dts/qcom/sc8280xp-microsoft-arcata.dts
++++ b/arch/arm64/boot/dts/qcom/sc8280xp-microsoft-arcata.dts
+@@ -198,7 +198,7 @@ vreg_edp_bl: regulator-edp-bl {
+                 regulator-min-microvolt = <3600000>;
+                 regulator-max-microvolt = <3600000>;
+
+-               gpio = <&pmc8280c_gpios 6 GPIO_ACTIVE_HIGH>;
++               gpio = <&pmc8280_2_gpios 6 GPIO_ACTIVE_HIGH>;
+                 enable-active-high;
+
+                 pinctrl-0 = <&edp_bl_reg_en>;
+@@ -1050,6 +1050,11 @@ vol_up_n: vol-up-n-state {
+  };
+
+  &pmc8280_2_gpios {
++       edp_bl_reg_en: edp-bl-reg-en-state {
++               pins = "gpio6";
++               function = "normal";
++       };
++
+         wwan_sw_en: wwan-sw-en-state {
+                 pins = "gpio1";
+                 function = "normal";
+@@ -1061,11 +1066,6 @@ edp_bl_pwm: edp-bl-pwm-state {
+                 pins = "gpio8";
+                 function = "func1";
+         };
+-
+-       edp_bl_reg_en: edp-bl-reg-en-state {
+-               pins = "gpio6";
+-               function = "normal";
+-       };
+  };
+
+  &pmr735a_gpios {
+
+
+
+and ... backlight still works! It can also be enabled/disabled with:
+    /sys/class/backlight/backlight/bl_power
+as expected.
+
+I have no clue why both gpio6 on pmc8280_2 and gpio6 on pmc8280c can 
+enable and disable the backlight. Is it a common scenario, Johan?
+
+Anyway, if I follow my own investigation fully based on the X13s 
+reference and the properties of its backlight enable GPIO, I should 
+switch to pmc8280_2 to use the better match.
+
+I will update this patch in v2.
+
+Jérôme
