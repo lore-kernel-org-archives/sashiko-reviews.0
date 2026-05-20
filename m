@@ -1,188 +1,146 @@
 Received: from out-179.mta1.migadu.com (out-179.mta1.migadu.com [95.215.58.179])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E588B3A382A
-	for <sashiko-reviews@lists.linux.dev>; Tue, 19 May 2026 23:56:45 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 87ED934389B
+	for <sashiko-reviews@lists.linux.dev>; Wed, 20 May 2026 00:26:16 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=95.215.58.179
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1779235008; cv=none; b=AVaNwRgBG39pa78CTY9p2qHcNDKLPo+/v9bs63tzsNy1zwF+VGPp3uW8a22W6Ok2mDZz6X7qlVXb0HWjHV5yXDtmFjYlnGYO/Ob350z2eCxFuaSiPxKtUkvTQ3GuZm/k6gyL39ijg36NanNVL2Cs/67gatMEUt4fbx4MbpcIqKU=
+	t=1779236778; cv=none; b=ATgKgdBRtd4L81hAZo9fBU2oLUMLeXIrXW5jVFp1v1Gwr3igJ5Hphdn+JRIhSiBsgn2ObOzb5eYcmdSjOYrHZOVC1ofOS09dPL2K6telXbUpodxO5VftLNIJZPrvF9DASKCaxCtl5JM97k/MVycQPQ2pMuhSxQj9f8T7zuW7QkI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1779235008; c=relaxed/simple;
-	bh=clhLouqYW5aBjVaVbgARr7kElklBo3818qBkVUJ96pc=;
+	s=arc-20240116; t=1779236778; c=relaxed/simple;
+	bh=Q+peTABWxM1cV1Eu78eIvumQeHvhw0on1PjZ2G8dQGI=;
 	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=KRF7IUACZOfNzolpI7C1cbg5/s4UgYwGUgpdfyCdVPWLtbOiUz0Bkkz5iyC9AcBGbzPdYGQSnI79MN3z85Cygk+3SKlykiV1kcwMkumn/jmioo/+ie2XZjh5iZiSXebnxAN36lL66JX3pB/toj5OyelGQtcatEYH+5tvzSBojgs=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linux.dev; spf=pass smtp.mailfrom=linux.dev; dkim=pass (1024-bit key) header.d=linux.dev header.i=@linux.dev header.b=TvUowGGh; arc=none smtp.client-ip=95.215.58.179
+	 Content-Type:Content-Disposition:In-Reply-To; b=VFb5NFehp0g9RYwu6f3B24QUFpCjh39tWti40sAD1f1O4Lh/KSMTW+KtQbKuFdtBv8N+tctiKNUNpp7nNtCDhiy/A/95Fz4NRONYeiWdIsuiHm2Xzgse6S1qByvzoWCd/QcRQqFVzpjdZvFI91zQEMC1u3zW2Squ2F6YFHmn5wY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linux.dev; spf=pass smtp.mailfrom=linux.dev; dkim=pass (1024-bit key) header.d=linux.dev header.i=@linux.dev header.b=OLrF7KMt; arc=none smtp.client-ip=95.215.58.179
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linux.dev
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linux.dev
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linux.dev header.i=@linux.dev header.b="TvUowGGh"
-Date: Tue, 19 May 2026 16:56:16 -0700
+	dkim=pass (1024-bit key) header.d=linux.dev header.i=@linux.dev header.b="OLrF7KMt"
+Date: Tue, 19 May 2026 17:25:53 -0700
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linux.dev; s=key1;
-	t=1779235004;
+	t=1779236775;
 	h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
 	 to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+	 content-transfer-encoding:content-transfer-encoding:
 	 in-reply-to:in-reply-to:references:references;
-	bh=DPEFO7kdxsh8SS4pTtrYEyGh/V9vDuaXz5keX2/Kf6s=;
-	b=TvUowGGhwT0UEM3xRszwSTPbxDZvvYWNsYS9nU/IYFew6GiGEme8L5X/IeEXCKAA12nhyh
-	PmhgTmBbDNyBRGvbSIGvxCxufl+kOpA1OKAz0Ov2lijGeD+mYASLuVVsXkSqHlNOj/HETp
-	ma6pGD2BR/FaQy8Hz1reTEK92Ii04CQ=
+	bh=xXDU6B2AA3RB0txN0ki89n2lvFpNNO8zaLnzqeinUg8=;
+	b=OLrF7KMtj50veG643eNyr2lzRQOg7JsIG8srMCf4tY455E1OmvwlHpXzWONg5v+uH5B5R2
+	OZBnFJoQtWCvlneEjfR+SUadvDufF+4pVfEsj4EElQQLmX/M+1R/AXRynCAKxJC1G/FR+I
+	ltMpMacaE/nar2QGE8P1wkSG8GovLQQ=
 X-Report-Abuse: Please report any abuse attempt to abuse@migadu.com and include these headers.
 From: Martin KaFai Lau <martin.lau@linux.dev>
 To: sashiko-reviews@lists.linux.dev
-Cc: bpf@vger.kernel.org
-Subject: Re: [RFC PATCH bpf-next 09/12] bpf: Add infrastructure to support
- attaching struct_ops to cgroups
-Message-ID: <2026519225454.By6y.martin.lau@linux.dev>
-References: <20260519215841.2984970-10-martin.lau@linux.dev>
- <20260519225002.986EB1F00893@smtp.kernel.org>
+Cc: bpf@vger.kernel.org, Amery Hung <ameryhung@gmail.com>
+Subject: Re: [RFC PATCH bpf-next 02/12] bpf: Make struct_ops tasks_rcu grace
+ period optional
+Message-ID: <2026520006.6Mm9.martin.lau@linux.dev>
+References: <20260519215841.2984970-3-martin.lau@linux.dev>
+ <20260519225421.3CBCC1F000E9@smtp.kernel.org>
 Precedence: bulk
 X-Mailing-List: sashiko-reviews@lists.linux.dev
 List-Id: <sashiko-reviews.lists.linux.dev>
 List-Subscribe: <mailto:sashiko-reviews+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:sashiko-reviews+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
+Content-Type: text/plain; charset=iso-8859-1
 Content-Disposition: inline
-In-Reply-To: <20260519225002.986EB1F00893@smtp.kernel.org>
+Content-Transfer-Encoding: 8bit
+In-Reply-To: <20260519225421.3CBCC1F000E9@smtp.kernel.org>
 X-Migadu-Flow: FLOW_OUT
 
-On Tue, May 19, 2026 at 10:50:02PM +0000, sashiko-bot@kernel.org wrote:
-> Thank you for your contribution! Sashiko AI review found 4 potential issue(s) to consider:
-> - [High] bpf_cgroup_struct_ops_foreach does not skip dummy items, leading to unintended execution of cfi_stubs.
-> - [High] Using a loadable module's cfi_stubs as a dummy sentinel causes a Use-After-Free when the module is unloaded and reloaded.
-> - [Medium] The macro bpf_cgroup_struct_ops_foreach uses rcu_dereference(), which is incompatible with sleepable struct_ops programs.
-> - [Medium] cgroup_bpf_struct_ops_register() lacks concurrency protection and global uniqueness enforcement.
+On Tue, May 19, 2026 at 10:54:20PM +0000, sashiko-bot@kernel.org wrote:
+> Thank you for your contribution! Sashiko AI review found 2 potential issue(s) to consider:
+> - [Critical] The patch incorrectly skips the Tasks RCU grace period (`synchronize_rcu_tasks()`) before freeing executable trampoline memory for all `struct_ops` except `tcp_congestion_ops`, leading to Use-After-Free of executable memory.
+> - [High] RCU-001 violation: `bpf_struct_ops_map_dissoc_progs()` removes the map from `prog->aux->st_ops_assoc` after the regular RCU grace period has already completed, leading to a Use-After-Free.
 > --
 > 
-> commit bad29e4e0d1357905491993ee45063766d0f7705
+> commit 85a451ad8aefbb364a1840344e08d2f34596b96c
 > Author: Martin KaFai Lau <martin.lau@kernel.org>
 > 
-> bpf: Add infrastructure to support attaching struct_ops to cgroups
+> bpf: Make struct_ops tasks_rcu grace period optional
 > 
-> This patch adds necessary infrastructure to attach a struct_ops
-> map to a cgroup. The initial need was to support migrating
-> the legacy BPF_PROG_TYPE_SOCK_OPS to a struct_ops.
+> This commit makes the tasks RCU grace period optional during struct_ops map
+> freeing. It introduces a map_free_pre_rcu callback to remove ksyms before the
+> regular RCU grace period. The tasks RCU grace period is now only explicitly
+> requested by tcp_congestion_ops.
 > 
-> > diff --git a/include/linux/bpf-cgroup.h b/include/linux/bpf-cgroup.h
-> > index b2e79c2b41d51..8080f4a5c14b6 100644
-> > --- a/include/linux/bpf-cgroup.h
-> > +++ b/include/linux/bpf-cgroup.h
-> 
-> [ ... ]
-> 
-> > @@ -110,6 +112,18 @@ struct bpf_prog_list {
-> >  	u32 flags;
-> >  };
+> > diff --git a/kernel/bpf/bpf_struct_ops.c b/kernel/bpf/bpf_struct_ops.c
+> > index 08791180d71d9..28eab24ef0ed0 100644
+> > --- a/kernel/bpf/bpf_struct_ops.c
+> > +++ b/kernel/bpf/bpf_struct_ops.c
+> > @@ -996,24 +1005,8 @@ static void bpf_struct_ops_map_free(struct bpf_map *map)
 > >  
-> > +#define bpf_cgroup_struct_ops_foreach(var, item, cgrp, atype)		\
-> > +	for (item = rcu_dereference((cgrp)->bpf.effective[atype])->items;\
-> > +	     ((var) = READ_ONCE(item->kdata));				\
-> > +	     item++)
+> >  	bpf_struct_ops_map_dissoc_progs(st_map);
 > 
 > [Severity: High]
-> Does this macro need to skip dummy sentinel items?
+> Does this violate the RCU remove-before-reclaim rule?
 > 
-> In cgroups with BPF_F_ALLOW_MULTI, compute_effective_progs() inserts dummy
-> sentinel items at the boundaries between cgroup levels. For struct_ops, this
-> dummy is the cfi_stubs pointer.
-> 
-> This macro appears to iterate over all non-NULL items and fails to skip the
-> dummy sentinel, which could cause the subsystem to repeatedly yield the
-> cfi_stubs pointer as a valid attached struct_ops instance.
+> Because map->free_after_rcu_gp is set to true in bpf_struct_ops_map_alloc(),
+> the regular RCU grace period occurs before bpf_struct_ops_map_free() is called.
+> Leaving bpf_struct_ops_map_dissoc_progs() here means the map is removed
+> from prog->aux->st_ops_assoc after the grace period has already finished.
 
-The ops in the cfi_stubs is safe to be called. It intentionally skips
-checking for dummy in the fast path.
+After the grace period finished, all struct_ops's bpf prog has
+finished running
 
 > 
-> [Severity: Medium]
-> Will this rcu_dereference() trigger Lockdep warnings for sleepable struct_ops
-> programs?
-> 
-> The commit message mentions adding free_after_mult_rcu_gp to support a mix of
-> sleepable and non-sleepable struct_ops, but plain rcu_dereference() enforces
-> rcu_read_lock_held().
-> 
-> If a subsystem iterates the array while holding rcu_read_lock_trace()
-> (required for sleepable execution), this might trigger a 'suspicious
-> rcu_dereference_check() usage' warning. Conversely, if it holds
-> rcu_read_lock(), the struct_ops program cannot sleep without causing a panic.
+> Could a concurrent execution of the BPF program acquire the RCU read lock, read
+> the still-valid aux->st_ops_assoc pointer, and then access the map after it is
+> freed?
 
-The proposed bpf_tcp_ops only has non-sleepable programs.
+so this cannot happen.
 
-The future sleepable callsite will need another version of foreach or
-rcu_dereference_check can be used here also. I think rcu_dereference_check
-is better.
+afaik, for non struct_ops's prog, the st_ops_assoc has a refcnt.
+[I could be wrong here. CC Amery.]
+
+Overall, moving bpf_struct_ops_map_dissoc_progs to map_free_pre_rcu
+could be a simpler read but don't think it is needed.
 
 > 
-> > +
-> > +static inline bool cgroup_bpf_is_struct_ops_atype(enum cgroup_bpf_attach_type atype)
-> > +{
+> Should bpf_struct_ops_map_dissoc_progs() be moved to the new
+> bpf_struct_ops_map_free_pre_rcu() callback instead?
 > 
-> [ ... ]
-> 
-> > diff --git a/kernel/bpf/cgroup.c b/kernel/bpf/cgroup.c
-> > index a033aa479ab6e..d496db48d2b86 100644
-> > --- a/kernel/bpf/cgroup.c
-> > +++ b/kernel/bpf/cgroup.c
-> > @@ -24,6 +24,29 @@
-> >  DEFINE_STATIC_KEY_ARRAY_FALSE(cgroup_bpf_enabled_key, MAX_CGROUP_BPF_ATTACH_TYPE);
-> >  EXPORT_SYMBOL(cgroup_bpf_enabled_key);
+> > -	/* The struct_ops's function may switch to another struct_ops.
+> > -	 *
+> > -	 * For example, bpf_tcp_cc_x->init() may switch to
+> > -	 * another tcp_cc_y by calling
+> > -	 * setsockopt(TCP_CONGESTION, "tcp_cc_y").
+> > -	 * During the switch,  bpf_struct_ops_put(tcp_cc_x) is called
+> > -	 * and its refcount may reach 0 which then free its
+> > -	 * trampoline image while tcp_cc_x is still running.
+> > -	 *
+> > -	 * A vanilla rcu gp is to wait for all bpf-tcp-cc prog
+> > -	 * to finish. bpf-tcp-cc prog is non sleepable.
+> > -	 * A rcu_tasks gp is to wait for the last few insn
+> > -	 * in the tramopline image to finish before releasing
+> > -	 * the trampoline image.
+> > -	 */
+> > -	synchronize_rcu_mult(call_rcu, call_rcu_tasks);
+> > +	if (tasks_rcu && IS_ENABLED(CONFIG_TASKS_RCU))
+> > +		synchronize_rcu_tasks();
 > >  
-> > +static u32 struct_ops_type_id[MAX_CGROUP_BPF_ATTACH_TYPE];
-> > +static void *struct_ops_cfi_stubs[MAX_CGROUP_BPF_ATTACH_TYPE];
-> > +static bool struct_ops_mult_rcu[MAX_CGROUP_BPF_ATTACH_TYPE];
-> > +
-> > +void cgroup_bpf_struct_ops_register(int atype, u32 type_id, void *cfi_stubs, bool mult_rcu)
-> > +{
-> > +	struct_ops_type_id[atype] = type_id;
-> > +	struct_ops_cfi_stubs[atype] = cfi_stubs;
-> > +	struct_ops_mult_rcu[atype] = mult_rcu;
-> > +}
-> 
-> [Severity: Medium]
-> Does this registration function need concurrency protection to prevent global
-> array corruption?
-> 
-> If two modules are loaded concurrently and declare the same cgroup_atype, it
-> seems this could cause a data race or silently overwrite the registered type_id
-> and cfi_stubs of a legitimate module.
-
-This will be a bug in the subsystems having the same cgroup_atype
-
-but (the next one)...
-
-> 
-> > +
-> > +static enum cgroup_bpf_attach_type find_atype_by_struct_ops_id(u32 type_id)
-> 
-> [ ... ]
-> 
-> >  static void *bpf_cgroup_array_dummy(enum cgroup_bpf_attach_type atype)
-> >  {
-> > +	if (cgroup_bpf_is_struct_ops_atype(atype))
-> > +		return struct_ops_cfi_stubs[atype];
-> >  	return bpf_prog_dummy();
+> >  	__bpf_struct_ops_map_free(map);
 > >  }
 > 
-> [Severity: High]
-> Can using a loadable module's cfi_stubs as a dummy sentinel cause a
-> use-after-free when the module is unloaded and reloaded?
-> 
-> If all maps are detached, the module providing the struct_ops can be unloaded,
-> and its cfi_stubs memory freed. However, the cgroup's effective array might
-> still retain the dangling pointer to the freed cfi_stubs if BPF_F_ALLOW_MULTI
-> was set.
-> 
-> If the module is reloaded, cgroup_bpf_struct_ops_register() updates
-> struct_ops_cfi_stubs[atype] with a new pointer. If a user then queries the
-> cgroup via BPF_PROG_QUERY, the loop checks
-> item->prog == bpf_cgroup_array_dummy(atype) to skip the dummy. Since the
-> array contains the old freed pointer, it won't match the new cfi_stubs
-> pointer, and the query loop might mistakenly treat the old dummy as a valid
-> map, causing a use-after-free when calling bpf_struct_ops_kdata_map_id().
+> [Severity: Critical]
+> Does skipping the Tasks RCU grace period for other struct_ops cause a
+> use-after-free of executable trampoline memory?
 
-Agree. This will be an issue on BPF_PROG_QUERY when the module reload.
-I did think about the module reload case but I have only considered the
-rcu-reader in bpf_cgroup_struct_ops_foreach.
-BPF_PROG_QUERY does not use rcu_read_lock and depends on cgroup_lock.
-This will need to be addressed.
+I don't think so. Other subsystems using struct_ops wait for
+the bpf prog finished running in unreg().
+
+Note that in general this should only matter to the bpf-tcp-cc's struct_ops prog
+that does a bpf_setsockopt(TCP_CONGESTION) which triggers a bpf_map_put() on
+its own running struct_ops's map refcnt.
+
+> 
+> All struct_ops programs are executed via dynamically generated trampolines. When
+> the program returns, the RCU read lock is dropped and preemption is re-enabled.
+> If a task is preempted while still executing the trampoline epilogue, the
+> regular RCU grace period will not wait for it.
+> 
+> Without the Tasks RCU wait, could the executable trampoline image be freed
+> prematurely, causing preempted tasks to execute freed memory when they resume?
+> 
+> -- 
+> Sashiko AI review · https://sashiko.dev/#/patchset/20260519215841.2984970-1-martin.lau@linux.dev?part=2
