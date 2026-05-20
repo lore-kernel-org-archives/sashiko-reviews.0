@@ -1,174 +1,187 @@
-Received: from BN1PR04CU002.outbound.protection.outlook.com (mail-eastus2azon11010011.outbound.protection.outlook.com [52.101.56.11])
+Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AD90A3DE43A
-	for <sashiko-reviews@lists.linux.dev>; Wed, 20 May 2026 12:28:41 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=fail smtp.client-ip=52.101.56.11
-ARC-Seal:i=2; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1779280123; cv=fail; b=dxyU/JuKjuP9YeJwhmrKzbRlTh1Wal7iz2Z2kSySgF1hTD35PkDZotkzDqHYynMq+Vv+H1Oy81WES0spBWzJqVcQldqKWT0TZ5LT6qXtJe9LQQ1Ycw879q5+VyAqglYg6hpM1yDhjAkCHbvOw6fSYrmFpdF8+v7ErQOdP6ux6Ks=
-ARC-Message-Signature:i=2; a=rsa-sha256; d=subspace.kernel.org;
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 483C33DE427;
+	Wed, 20 May 2026 12:28:41 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
+ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
+	t=1779280123; cv=none; b=FuCxnQE3kdBWh8pvPA8e+GqPM4mF0TyKM+0liRJq7DcnN+Pr6GNcVQdBkcRlGhfgP54cHrOqF33ElEFO0txwIgvHFBky0mYBluZDzdQlc4Pxd/x2x3QAbOr7B+RQ5iA0zDVWrZJUkQoli87LReEGn/U5p96eIKyo0hTYilXPob0=
+ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
 	s=arc-20240116; t=1779280123; c=relaxed/simple;
-	bh=V6FueqW8OtgafjcxadfCQ5bZsBMnYPoNSN+z49fbL0c=;
-	h=Message-ID:Date:MIME-Version:Subject:To:CC:References:From:
-	 In-Reply-To:Content-Type; b=tboea7/XhGM4iYmsBCcy5eI19BXgtpk6huzTSBm2Z+i7Y4dbOAYeM4+DAku+Ky2Q1+94yNf6nizXfwaanpB554YhC0FcP/7/BvDdeEojLv11N2eCeA6DmiXxdVCnRMFzOZXoeE4tyUrc0yvQ92vGmJzm3C6wqRlpwWoAjHunTvQ=
-ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=ti.com; spf=pass smtp.mailfrom=ti.com; dkim=pass (1024-bit key) header.d=ti.com header.i=@ti.com header.b=rY3YLaK0; arc=fail smtp.client-ip=52.101.56.11
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=ti.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=ti.com
+	bh=u0M4354NcRaRw6UV2ZqR75Z7RSZiD8Qk15kGhL8vtIw=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=kVSEUBKwy6SfLnbyStr/226n+FQgReUpT3FnPGetdjO4dDqiHmORMTgJ8BRYZkH43MWOTJT9clAuQSHBadCwxplu4ouo5huNg/vktLlqRq5dDM3OBKExqXqBhtSHSb1Nnix199KqUE1LgXr5Q6Lj2uLcVnELmobDzK3QOV9h9B0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=RL3me7op; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=ti.com header.i=@ti.com header.b="rY3YLaK0"
-ARC-Seal: i=1; a=rsa-sha256; s=arcselector10001; d=microsoft.com; cv=none;
- b=h8+qOKc7zVPs6N0Flc8kaEwZJGY7x/HRnKt5UowsAJ0II0+60kWIN1SQ8Bg+Wf8WYRus47WBA6nT+CI6KHIvhaupQrRBX9QMYv01ruaiqyftjwvqPFCX2BSBJNXfz/ecgDX5fV+166IUmwv+EKI2lzunwPON06jC0AGJaE2E9P6GE8IWhhNEGWIW+F1gU92bWINUnIfULSwSJ2ZIrKpzj7r5rfhLb6evBxK23m74G8+U2ueh3M4kkCIedZbA6ML8shvylQ0ekahbM2Pc1Y19hqOgmhBInQfeFXlvkhKQU1QFe1mZawqOSiabY3BKe4yoaGIh1JkD8uBAs3fLSWhhlA==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com;
- s=arcselector10001;
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
- bh=E+wpWGDK4TRuCMJLhlIvlW1sgWDD20ATgBps5X334J0=;
- b=A/PQjqToMXL/o6Vp7X9vTqjrMSbarqXgBjCgp+3uD4FNvuOocRrTG8b1ashmMKYLvNImEvRWk4unKBpLlgOZHGRglAeX6OZQCQZkjUZrE2Inw1rkxl+ZHIJsjbSmu/ofU9uJytgoWp+l2otSI6GuOUd8+Dp5h6hM0W0CzYkAHa3TvSpFjkyHPkf+T4WADVP5Wt+TQKskOLGg5EeE5I+7hHpauX1Rgro+ddV6/FEj60PuVPJkTd3cIhfDFxfe/OIZOnrFDJhImQYEcGOgdkC3rSt10+fYDRCCUU+zso7Ia1V0rSUxTPw6kE6DOUUJdxng5CJSsq5zutl51KfWxA30Yg==
-ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass (sender ip is
- 198.47.23.194) smtp.rcpttodomain=kernel.org smtp.mailfrom=ti.com; dmarc=pass
- (p=quarantine sp=none pct=100) action=none header.from=ti.com; dkim=none
- (message not signed); arc=none (0)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=ti.com; s=selector1;
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
- bh=E+wpWGDK4TRuCMJLhlIvlW1sgWDD20ATgBps5X334J0=;
- b=rY3YLaK081a4MBVtGyF7NX7/pvyc36DqX5UVt6ieyFb+05SKAaDcXqWGdfCwA+utwVflW/7WTHgOTu2Yp5JzmyBXtQf2Xl4Tyn56xGpMD6mgznFpB0u/86cSahCEjmmHQ3rUKU3u03X20icWuFUSLcNLBvrWcVmq/0HCMYA1Vr4=
-Received: from BN9P221CA0013.NAMP221.PROD.OUTLOOK.COM (2603:10b6:408:10a::6)
- by MW5PR10MB5805.namprd10.prod.outlook.com (2603:10b6:303:192::10) with
- Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.21.48.14; Wed, 20 May
- 2026 12:28:39 +0000
-Received: from BN2PEPF00004FBF.namprd04.prod.outlook.com
- (2603:10b6:408:10a:cafe::8d) by BN9P221CA0013.outlook.office365.com
- (2603:10b6:408:10a::6) with Microsoft SMTP Server (version=TLS1_3,
- cipher=TLS_AES_256_GCM_SHA384) id 15.21.48.14 via Frontend Transport; Wed, 20
- May 2026 12:28:38 +0000
-X-MS-Exchange-Authentication-Results: spf=pass (sender IP is 198.47.23.194)
- smtp.mailfrom=ti.com; dkim=none (message not signed) header.d=none;dmarc=pass
- action=none header.from=ti.com;
-Received-SPF: Pass (protection.outlook.com: domain of ti.com designates
- 198.47.23.194 as permitted sender) receiver=protection.outlook.com;
- client-ip=198.47.23.194; helo=lewvzet200.ext.ti.com; pr=C
-Received: from lewvzet200.ext.ti.com (198.47.23.194) by
- BN2PEPF00004FBF.mail.protection.outlook.com (10.167.243.185) with Microsoft
- SMTP Server (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
- 15.21.48.11 via Frontend Transport; Wed, 20 May 2026 12:28:38 +0000
-Received: from DLEE214.ent.ti.com (157.170.170.117) by lewvzet200.ext.ti.com
- (10.4.14.103) with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.2562.37; Wed, 20 May
- 2026 07:28:38 -0500
-Received: from DLEE213.ent.ti.com (157.170.170.116) by DLEE214.ent.ti.com
- (157.170.170.117) with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.2562.37; Wed, 20 May
- 2026 07:28:37 -0500
-Received: from lelvem-mr06.itg.ti.com (10.180.75.8) by DLEE213.ent.ti.com
- (157.170.170.116) with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.2562.37 via Frontend
- Transport; Wed, 20 May 2026 07:28:37 -0500
-Received: from [10.24.50.20] (moteen-ubuntu-desk.dhcp.ti.com [10.24.50.20])
-	by lelvem-mr06.itg.ti.com (8.18.1/8.18.1) with ESMTP id 64KCSYYN1433561;
-	Wed, 20 May 2026 07:28:36 -0500
-Message-ID: <bc1ad2af-ee4b-4513-a3d2-4d30c91d7278@ti.com>
-Date: Wed, 20 May 2026 17:58:33 +0530
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="RL3me7op"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 630B41F000E9;
+	Wed, 20 May 2026 12:28:40 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=kernel.org;
+	s=k20260515; t=1779280120;
+	bh=9QGGlk3LDXhixnD+kizSU53+b+n8Av5GKm/+8vIIvWg=;
+	h=Date:From:To:Cc:Subject:References:In-Reply-To;
+	b=RL3me7op5+Ne284qNANnRtEVsnHsTWjWIztw4vNU3VsQ2GOxCYonftnAgUARHgGOo
+	 ySQpBay1EpB6b4guqnOMA4uatrGwNyYmAd5DHgpW79Qrg+58hsdoTJtOPWRkR2TSnl
+	 GNtZG2YwTWfjeEvYave3oE8OWSoH4tnvQTtc8s1tEE6t+lTIYbbhmflEiVPZmdE19b
+	 Vuv5CRlatIzI3GldO2Fdz2qq/TwBc9HXoXpYw9UJ8CUuD5EZs2pzcdNZ9so2658oXA
+	 DpGlXxziOQV8WF0nn9HWcBkVgbDTTPoWPh/7b/0KQ1iLrK76aFUe5wRga606fKzy0H
+	 V0GR+Ce39u1tw==
+Date: Wed, 20 May 2026 14:28:38 +0200
+From: Lorenzo Bianconi <lorenzo@kernel.org>
+To: sashiko-reviews@lists.linux.dev
+Cc: robh@kernel.org, conor+dt@kernel.org, devicetree@vger.kernel.org,
+	netdev@vger.kernel.org
+Subject: Re: [PATCH net-next v8 07/10] net: airoha: Support multiple
+ net_devices for a single FE GDM port
+Message-ID: <ag2o9qLAa2HXN5es@lore-desk>
+References: <20260519-airoha-eth-multi-serdes-v8-7-6bd70e329df6@kernel.org>
+ <20260520085933.35D171F00897@smtp.kernel.org>
 Precedence: bulk
 X-Mailing-List: sashiko-reviews@lists.linux.dev
 List-Id: <sashiko-reviews.lists.linux.dev>
 List-Subscribe: <mailto:sashiko-reviews+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:sashiko-reviews+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v5 1/2] dt-bindings: ti: Update audio-refclk binding and
- j721e system controller
-To: <sashiko-reviews@lists.linux.dev>
-CC: <robh@kernel.org>, <devicetree@vger.kernel.org>, <conor+dt@kernel.org>
-References: <20260520115603.2662930-2-m-shah@ti.com>
- <20260520121900.50EDB1F000E9@smtp.kernel.org>
-Content-Language: en-US
-From: Moteen Shah <m-shah@ti.com>
-In-Reply-To: <20260520121900.50EDB1F000E9@smtp.kernel.org>
-Content-Type: text/plain; charset="UTF-8"; format=flowed
-Content-Transfer-Encoding: 8bit
-X-C2ProcessedOrg: 333ef613-75bf-4e12-a4b1-8e3623f5dcea
-X-EOPAttributedMessage: 0
-X-MS-PublicTrafficType: Email
-X-MS-TrafficTypeDiagnostic: BN2PEPF00004FBF:EE_|MW5PR10MB5805:EE_
-X-MS-Office365-Filtering-Correlation-Id: 58523e48-4368-4cb4-9d80-08deb66b51f8
-X-MS-Exchange-SenderADCheck: 1
-X-MS-Exchange-AntiSpam-Relay: 0
-X-Microsoft-Antispam:
-	BCL:0;ARA:13230040|36860700016|82310400026|376014|1800799024|4143699003|3023799007|56012099003|22082099003|18002099003;
-X-Microsoft-Antispam-Message-Info:
-	zScHeGereOA5CB62nGnVXWX/n4PX420Z0hInjMMfHbIZbFdqH7EESv4i4548QhfNNYhJa7QuIHEooskJVcIJ0K7nmucSK/G6l1y3X7rCz1QX6nH5tBUFPoCUOuX98UxpiMsy2HIs3OvQeiGrYyiUjgkIH8E8RkKKJ4TKfTzfgBqMyVO4Hio/JeyMukFBn1VMTMzsUNbI6nzNR2/wajpbC1zxIrvi/eAZgGoIC0B3ijrYZl+YmPKLmWSG7sfIToRWyi9XEKt+3n4ZzPvQUniBmlwLX1/YwfrCgxwjTFEr15lVknnJIXlxhWsexAF5Jk3x4nmZNS3vej109UON4+UiAm2NgR9lr+g+UXLotRJkGG9eEiqYHAoOsnMozOwi7wVadadN9Cowgx2ZgEu1QBwwLyT5DrzeGy/I0i1dh0y6s4wJMgoQ9ZCqKToJM+nB28+8I2iQS6tPXtVLsDm7NUVxa0HmWVxhBaxTBak8KDsP7xgak5ImpfT9q0+rScugTAGpUBxl6pfZ7JTVrR52S/5K+44xC9g+rw70AVo406dmPWdNsSul256ZyVVe8rQ8haIstNluOxD8oGRWSm9sLA5T9Knv87wltvRDIzInLcM8S0dJiBjf7Lx2jhzN+SOBjtown38+dv8aj+dwXJ+RiehVsJvWZc+e+Lhj6/A6zHkgvUwfLQRIXLYo3EShhExQzpovopyhDpXNTrbdAwylL6eM22OLRaRyUYUBpKhfG7PEC9k=
-X-Forefront-Antispam-Report:
-	CIP:198.47.23.194;CTRY:US;LANG:en;SCL:1;SRV:;IPV:NLI;SFV:NSPM;H:lewvzet200.ext.ti.com;PTR:InfoDomainNonexistent;CAT:NONE;SFS:(13230040)(36860700016)(82310400026)(376014)(1800799024)(4143699003)(3023799007)(56012099003)(22082099003)(18002099003);DIR:OUT;SFP:1101;
-X-MS-Exchange-AntiSpam-MessageData-ChunkCount: 1
-X-MS-Exchange-AntiSpam-MessageData-0:
-	II8S0aJKipuaGNHbsMqpC4UADdM9gmeH8yg5ljnUqn+PzYVQe3hd8oDceznLcYGbKrgjde45JGz9mLluGWXfDqszfBhjnzkUTLvSUKf27jaytG08qlSmPZT5YdWoc7aZDhk2SEP0AJnIOEy9nYdVv36srPZd5WjHJ32K0r9B6LnZoQymBos8kfugJhqG12hdw+9y7HQna3iFzMq+bk6ImCn617w1OhC9XnsavVuWCpKmIG+sR0h35u18lylCBqeQp8aFOihO0/Z6AZc0hqfkxMexjAhviPJSyX13+Mfxq/nAnoOByV2W+O9DIX0wt9Fhpc4e8ouDJS3c3BWitrdoJvaU086qhshvu9WZ1QdVlPo0eTmetl+qBPXECm9IYaK6GhIzrwq3tJBilJ8Cp7NhF/fUXeIprgZdDBnFqYvN4SopqkuLEBGE0D0iK/ZVQxnv
-X-OriginatorOrg: ti.com
-X-MS-Exchange-CrossTenant-OriginalArrivalTime: 20 May 2026 12:28:38.4953
- (UTC)
-X-MS-Exchange-CrossTenant-Network-Message-Id: 58523e48-4368-4cb4-9d80-08deb66b51f8
-X-MS-Exchange-CrossTenant-Id: e5b49634-450b-4709-8abb-1e2b19b982b7
-X-MS-Exchange-CrossTenant-OriginalAttributedTenantConnectingIp: TenantId=e5b49634-450b-4709-8abb-1e2b19b982b7;Ip=[198.47.23.194];Helo=[lewvzet200.ext.ti.com]
-X-MS-Exchange-CrossTenant-AuthSource:
-	BN2PEPF00004FBF.namprd04.prod.outlook.com
-X-MS-Exchange-CrossTenant-AuthAs: Anonymous
-X-MS-Exchange-CrossTenant-FromEntityHeader: HybridOnPrem
-X-MS-Exchange-Transport-CrossTenantHeadersStamped: MW5PR10MB5805
+Content-Type: multipart/signed; micalg=pgp-sha512;
+	protocol="application/pgp-signature"; boundary="hdgogd+ttgvpRBQT"
+Content-Disposition: inline
+In-Reply-To: <20260520085933.35D171F00897@smtp.kernel.org>
 
 
-On 20/05/26 17:48, sashiko-bot@kernel.org wrote:
-> Thank you for your contribution! Sashiko AI review found 1 potential issue(s) to consider:
-> - [Medium] Standard `clock@...` node names for the audio reference clock will fail validation because they will match the existing SERDES control pattern in `ti,j721e-system-controller.yaml`.
+--hdgogd+ttgvpRBQT
+Content-Type: text/plain; charset=iso-8859-1
+Content-Disposition: inline
+Content-Transfer-Encoding: quoted-printable
+
+> Thank you for your contribution! Sashiko AI review found 2 potential issu=
+e(s) to consider:
+> - [High] Port-wide hardware configuration is improperly modified via per-=
+net_device callbacks, breaking the newly introduced 1:N relationship.
+> - [High] Sequential initialization of multiple net_devices sharing a GDM =
+port silently overwrites singleton hardware loopback and WAN configuration =
+registers.
 > --
->
-> commit e99145dc81945477b02ec4f36bbd799351ed4236
-> Author: Moteen Shah <m-shah@ti.com>
->
-> dt-bindings: ti: Update audio-refclk binding and j721e system controller
->
-> This commit adds ti,j721s2-audio-refclk as a supported compatible string
-> in the ti,am62-audio-refclk binding. It also extends the
-> ti,j721e-system-controller clock-controller@ child pattern to accept
-> audio-refclk schemas alongside ehrpwm-tbclk.
->
->> diff --git a/Documentation/devicetree/bindings/soc/ti/ti,j721e-system-controller.yaml b/Documentation/devicetree/bindings/soc/ti/ti,j721e-system-controller.yaml
->> index f3bd0be3b279f..364be49f8c7c7 100644
->> --- a/Documentation/devicetree/bindings/soc/ti/ti,j721e-system-controller.yaml
->> +++ b/Documentation/devicetree/bindings/soc/ti/ti,j721e-system-controller.yaml
+>=20
+> commit d922e17d3b113696fc139ac4b2b3ef81e2b9ad50
+> Author: Lorenzo Bianconi <lorenzo@kernel.org>
+>=20
+> net: airoha: Support multiple net_devices for a single FE GDM port
+>=20
+> This commit introduces support for multiple net_devices connected to the
+> same Frame Engine (FE) GDM port (GDM3 or GDM4) via an external hw arbiter.
+> It updates the airoha_gdm_port structure to hold an array of devices inst=
+ead
+> of a single device.
+>=20
+> > diff --git a/drivers/net/ethernet/airoha/airoha_eth.h b/drivers/net/eth=
+ernet/airoha/airoha_eth.h
+> > index fbb50dc73af84..fc49f0049983e 100644
+> > --- a/drivers/net/ethernet/airoha/airoha_eth.h
+> > +++ b/drivers/net/ethernet/airoha/airoha_eth.h
 > [ ... ]
->
->> @@ -53,9 +53,11 @@ patternProperties:
->>   
->>     "^clock-controller@[0-9a-f]+$":
->>       type: object
->> -    $ref: /schemas/clock/ti,am654-ehrpwm-tbclk.yaml#
->> +    oneOf:
->> +      - $ref: /schemas/clock/ti,am62-audio-refclk.yaml#
->> +      - $ref: /schemas/clock/ti,am654-ehrpwm-tbclk.yaml#
->>       description:
->> -      Clock provider for TI EHRPWM nodes.
->> +      Clock provider for TI EHRPWM or Audio Reference Clock nodes.
-> [Severity: Medium]
-> Does placing the audio reference clock schema under the
-> clock-controller@... pattern force device tree authors to use that specific
-> node name to pass validation?
->
-> In ti,j721e-system-controller.yaml, the ^clock@[0-9a-f]+$ pattern is strictly
-> bound to the SerDes control schema (ti,am654-serdes-ctrl.yaml).
->
-> If an author attempts to use the standard clock@... naming as demonstrated in
-> the ti,am62-audio-refclk.yaml example, does the node mistakenly trigger the
-> SerDes schema validation and fail, forcing an inconsistency in generic node
-> naming conventions?
+> > @@ -540,19 +541,20 @@ struct airoha_qdma {
+> >  struct airoha_gdm_dev {
+> >  	struct airoha_gdm_port *port;
+> >  	struct airoha_qdma *qdma;
+> > -	struct net_device *dev;
+> >  	struct airoha_eth *eth;
+> > +	struct net_device *dev;
+> > =20
+> >  	DECLARE_BITMAP(qos_sq_bmap, AIROHA_NUM_QOS_CHANNELS);
+> >  	/* qos stats counters */
+> >  	u64 cpu_tx_packets;
+> >  	u64 fwd_tx_packets;
+> > +
+> > +	int nbq;
+> >  };
+> > =20
+> >  struct airoha_gdm_port {
+> > -	struct airoha_gdm_dev *dev;
+> > +	struct airoha_gdm_dev *devs[AIROHA_MAX_NUM_GDM_DEVS];
+> >  	int id;
+> > -	int nbq;
+>=20
+> This introduces a 1:N relationship between a GDM port and net_devices, but
+> are the net_device lifecycle and MTU callbacks updated to account for sha=
+red
+> ports?
+>=20
+> Looking at airoha_dev_stop(), the driver unconditionally drops all traffic
+> for the port:
+>=20
+> airoha_dev_stop()
+>     airoha_set_gdm_port_fwd_cfg(qdma->eth, REG_GDM_FWD_CFG(port->id), FE_=
+PSE_PORT_DROP);
+>    =20
+> Since this modifies the forwarding configuration for the entire GDM port,
+> does stopping just one net_device silently drop all traffic for the port,
+> breaking any other active net_devices sharing it?
+>=20
+> Similarly, airoha_dev_change_mtu() overwrites port-wide hardware registers
+> such as REG_GDM_LEN_CFG. Could this lower the port MTU while another devi=
+ce
+> still requires a larger MTU?
+>=20
+> I note this regression is addressed later in the series by commit
+> 646f1e7bb6021 (net: airoha: Do not stop GDM port if it is shared).
 
-The clock-controller@ naming in J721S2's scm_conf is intentional — it 
-follows the existing ti,am62-audio-refclk.yaml example uses clock@ 
-because AM62 and J784S4 are validated by different parent schemas that 
-do not have a conflicting ^clock@ = SerDes pattern. In 
-j721e-system-controller.yaml, ^clock@ is already taken by SerDes, so 
-clock-controller@ is the correct naming for both ehrpwm-tbclk and 
-audio-refclk in this context.
+as pointed out here, this is resolved from a patch in the same series.
+
+>=20
+> > diff --git a/drivers/net/ethernet/airoha/airoha_eth.c b/drivers/net/eth=
+ernet/airoha/airoha_eth.c
+> > index 27b214ce2a4ed..8d36ab6cd7854 100644
+> > --- a/drivers/net/ethernet/airoha/airoha_eth.c
+> > +++ b/drivers/net/ethernet/airoha/airoha_eth.c
+> [ ... ]
+> > @@ -1830,7 +1831,7 @@ static int airoha_set_gdm2_loopback(struct airoha=
+_gdm_dev *dev)
+> >  	airoha_fe_clear(eth, REG_FE_VIP_PORT_EN, BIT(AIROHA_GDM2_IDX));
+> >  	airoha_fe_clear(eth, REG_FE_IFC_PORT_EN, BIT(AIROHA_GDM2_IDX));
+> > =20
+> > -	src_port =3D eth->soc->ops.get_sport(port, port->nbq);
+> > +	src_port =3D eth->soc->ops.get_sport(port, dev->nbq);
+> >  	if (src_port < 0)
+> >  		return src_port;
+> > =20
+>=20
+> When multiple net_devices sharing a GDM port are sequentially initialized
+> via ndo_init (airoha_dev_init()), they unconditionally call
+> airoha_set_gdm2_loopback().
+>=20
+> Inside this function, global singleton hardware registers are modified:
+>=20
+> airoha_set_gdm2_loopback()
+>     airoha_fe_rmw(eth, REG_FE_WAN_PORT,
+>                   WAN1_EN_MASK | WAN1_MASK | WAN0_MASK,
+>                   FIELD_PREP(WAN0_MASK, src_port));
+>=20
+> Does initializing the second device on the same port silently overwrite
+> the hardware loopback and WAN configuration of the previously initialized
+> device?
+>=20
+> I see this regression is resolved later in the series by commit
+> 8a565b44990bb (net: airoha: Introduce WAN device flag).
+
+as pointed out here, this is resolved from a patch in the same series.
 
 Regards,
-Moteen
+Lorenzo
 
->
+>=20
+> --=20
+> Sashiko AI review =B7 https://sashiko.dev/#/patchset/20260519-airoha-eth-=
+multi-serdes-v8-0-6bd70e329df6@kernel.org?part=3D7
+
+--hdgogd+ttgvpRBQT
+Content-Type: application/pgp-signature; name=signature.asc
+
+-----BEGIN PGP SIGNATURE-----
+
+iHUEABYKAB0WIQTquNwa3Txd3rGGn7Y6cBh0uS2trAUCag2o9gAKCRA6cBh0uS2t
+rKsLAQCTKSY91GpYjO0OdC90ZCeNmsb/wVXSqWIzNa6HMKz23gD/X3yJnMzsvJgg
+vTiV8EEIEjiuSBUZ3pzo0yDDhflWiwA=
+=6JIv
+-----END PGP SIGNATURE-----
+
+--hdgogd+ttgvpRBQT--
