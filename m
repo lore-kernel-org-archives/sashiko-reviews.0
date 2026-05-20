@@ -1,207 +1,190 @@
-Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-dy1-f178.google.com (mail-dy1-f178.google.com [74.125.82.178])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5ACAF32B10F
-	for <sashiko-reviews@lists.linux.dev>; Wed, 20 May 2026 03:00:52 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 95F0833CE80
+	for <sashiko-reviews@lists.linux.dev>; Wed, 20 May 2026 05:03:51 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=74.125.82.178
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1779246053; cv=none; b=ZUZQ167mF6DYNbvas6Jjfm+qK4O9F6N50fY1hEG5feVeQ5AjXX/jf3vCJiyuX7lPyvj2J45WzcdxP0ARgcJO7qECB/YIr4N60pk3+AtFkvAvfM4f/0XBZIVHR+0vexjxgDoohiC1uuIuZBzQas14rnhMmrT0oB/5AmfcBb1Q6kg=
+	t=1779253433; cv=none; b=Vog2qDwx7lYN9InNxaNUUqDtcMNWYQi/eE02LqoKXWZ9eptkQ8NwPwFplSTzULusdtpngnG55jjt7mbT1NUe2yX9+UO7QMbfNncFRROYIbGSakzfJGB2xigPmrPntug1iUeeoshVZZq6PGg0wJeIORrPaFTubShc7/0MJrDanBY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1779246053; c=relaxed/simple;
-	bh=2R05xtp6oSNCG45xxuw3C565pij5UvJwaEmjTDTytgY=;
-	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
-	 To:Cc:Content-Type; b=YOm2jHaMpexRjACxLVQ8r8b8PuoYGYB8y6DbRdw5IqzSfMk/jrPUAwqCsfGtArO89F3MFNB5Qdb6QTKBDwWFu7utW1aSRxlD1Yco/j4m3slSsZQMgTL8wRIOvKNuVIpU7f1RTPxAEnYk+Kj5CtCJS75GQw3GzCltN/9BMWLU4aE=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=W18TpoQQ; arc=none smtp.client-ip=100.103.45.18
+	s=arc-20240116; t=1779253433; c=relaxed/simple;
+	bh=XY3uf602Ba/C4DeV0TBm7ywPL/0eDoa92sLY3bgPT5s=;
+	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
+	 In-Reply-To:Content-Type; b=riBGpa3Mqs+k4bBuZxXiTq68fr4ZkBH5uY/a+x2M7qx1J6qG+Unxcn1TxAXtNf9pI3yTvePXuPnWhOHSiNPxr7mTLmvUEnKMaK9h0IEag92pG9vFxZ1VPG5xIl7pNInEIZxW3xPvMXcZvtHuRp6fodS8P3YJjSh4Mf9m22z58x8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=roeck-us.net; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=jHREHdX+; arc=none smtp.client-ip=74.125.82.178
+Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=roeck-us.net
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="W18TpoQQ"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 368AC1F00893
-	for <sashiko-reviews@lists.linux.dev>; Wed, 20 May 2026 03:00:52 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=kernel.org;
-	s=k20260515; t=1779246052;
-	bh=YjH9+CxNm3i91NMc9o3j22DzhplX1a1RU/pc4F3hRTY=;
-	h=References:In-Reply-To:From:Date:Subject:To:Cc;
-	b=W18TpoQQ6k0YBcxRGIxzwPIAdk4VrVGC3tVdOxEnaY09A+4BNNplQre7+YWal/1oP
-	 rg/Ex8qUkNMiA5RfCUtp4VCrGVbuZweWiXe3g/Kj35+PLFDNCD0EH4yjTFhI9KDoIB
-	 4SeRmU6KLQImTvyXWLL/p9yY+3ZDnkKWnayFlpJ32kbZEQ+8+5odOSdSceTcpQg/lR
-	 CfKP2gUTvmF5fiF7Nt0UvpR9wAAC6ejs3MIBU4z5AQHp7k16funp1tXzbHs21rZQYz
-	 tnex7QDYLqrOYZnTNFfzxHOzF6GKTweStXjp0YiwJqiTfdZchmIys3g6F15X5pSYWA
-	 XZ+wdZfjgLTtg==
-Received: by mail-wm1-f44.google.com with SMTP id 5b1f17b1804b1-488b0e1b870so63434025e9.2
-        for <sashiko-reviews@lists.linux.dev>; Tue, 19 May 2026 20:00:52 -0700 (PDT)
-X-Gm-Message-State: AOJu0Yy9udEO02qrLes9RN/wk3zQBU6VmrordYINZY+rkxcmU0cnMdew
-	a9fsNeqtBJnnvfSnn241J8tM4jg0d0NYxua/kVXyas+ZyqwR02Cn4vruDo2pLBzZieIqkvLUzPJ
-	cgGq6wRYztfnwc+oJ10+aIqOj6oxHSA4smeF8esRw
-X-Received: by 2002:a05:600c:1f94:b0:489:1d23:4524 with SMTP id
- 5b1f17b1804b1-48fe60de736mr323896625e9.5.1779246050743; Tue, 19 May 2026
- 20:00:50 -0700 (PDT)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="jHREHdX+"
+Received: by mail-dy1-f178.google.com with SMTP id 5a478bee46e88-303dbfbec77so4255003eec.0
+        for <sashiko-reviews@lists.linux.dev>; Tue, 19 May 2026 22:03:51 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20251104; t=1779253431; x=1779858231; darn=lists.linux.dev;
+        h=content-transfer-encoding:in-reply-to:autocrypt:from
+         :content-language:references:cc:to:subject:user-agent:mime-version
+         :date:message-id:sender:from:to:cc:subject:date:message-id:reply-to;
+        bh=owrf94ddYwaqYEgNfgCjoUKkkvN+uo9vnxJR4lLBfXQ=;
+        b=jHREHdX+W8OR1DBBwakTPLagZiIWDiF7O413XeQOzQ//5PRAQRVzm08LLMGfHN4cU7
+         4+mqOtcmOTgxuAGXYexLmB2fQT/FV/Bzp0+nbMEXKC93rYkSm2JPrCOQWi1l+7N0uYPV
+         HWA/qnJZXZL+fTtStHvaQYRpxdjFpr1iuv1t5TcHhw1LNPC3z54GJhEBMYx2DmgXGlBe
+         cX3re7zJeBeYSKfPZM73QqgWCtdUA9MaF9rLYkSVTF6ni945j5gPrkg2WMAlZ2BGSZK/
+         0BdHlD3pJ8YAmxhyqHzevMl7K7FAuGDg/yzCextV1SEh2w8gXca5sW0QaUTgEAzlLfq7
+         W7uQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20251104; t=1779253431; x=1779858231;
+        h=content-transfer-encoding:in-reply-to:autocrypt:from
+         :content-language:references:cc:to:subject:user-agent:mime-version
+         :date:message-id:sender:x-gm-gg:x-gm-message-state:from:to:cc
+         :subject:date:message-id:reply-to;
+        bh=owrf94ddYwaqYEgNfgCjoUKkkvN+uo9vnxJR4lLBfXQ=;
+        b=SzBGYIIpiammbsn90TsyJu3dQfQGK2jwQK+o0miGOJmqQOVvHZT/Z6JIuNrZJi/vgc
+         DrBIFh/xgSkKaIYsN01/nINZDzymW6C83gYe/jXt4tT5/JILOBc4LQP5YcayQ4IPfSf1
+         L9psKhvc1swEzl2MD0UAmKjOH5+aTQ8zzwILeZBvGev4+J8cHnBr5T0Eh+Bk1OxUFl4J
+         3Ltf2x2QI28NqXVE425VoRuCUvecesz+gxWxnXxKoPY92u5SyTdl62pCtXYoit74w+ya
+         0asK5Giu4f1ua2G6gLfRByZVOwzAicENe/XP3TynU/pVwTNxB28jXScu6ECRcBuUL6dy
+         p00w==
+X-Gm-Message-State: AOJu0Yxg93xIlqHo0UjX+rehR6oPhFTKI966b3909CaOL6k9yghzuca9
+	MbhDGGkX6ruijG4T0tGhMYxAAGQ2b8qhgSkPylhHlOApbRlbGMKs5A8DSamagEv9
+X-Gm-Gg: Acq92OFEhKzArl9gYPNrE8iTaFB3U4Xdhu91hL3xtFXePPwiVoUGHhWDgCVw7C0g2pK
+	QEK/Qnm4Db4SzsV79sZaYhJnjRBVYzsH/F6z21uq6NngIFDHs3fqxCBn8l8BVXtZA9rEXgnPwGw
+	TmdisbXDRBPSiC0B33QWNxbGROErIfk23oT0kAuHAnw8A1n1FjdvQlVRuitbxlBEfHcc4vQamtZ
+	B9jCNT96QhMEhdWgInCybxflJTuuCsQ+i6kFcaN/lBzNzAjCo8HqPD/3jHVhKKGSJ+TISJVimtx
+	5rlPevP8IDW6QVw37eTbUILTorprxrcefSct5xnzjoAKPRha+U/Rup/82L5IVuFR1fHU9Y34juU
+	h6sWaS4LGIfShPmnTzJgDa6/Jxzcqm+mvPndERMpo6J9fkq5Bxg9GTaXjnrOyg+ufjFGctljx9S
+	rh4C/F24IjQSZNVdPDxJXASIgNRMTWsJZsmkxh87F8r+RwWhQ4ZnRe5f2T9tEYSnIErQMlw8RN
+X-Received: by 2002:a05:7300:d08f:b0:303:f2fc:c483 with SMTP id 5a478bee46e88-303f2fd1799mr2990674eec.1.1779253430519;
+        Tue, 19 May 2026 22:03:50 -0700 (PDT)
+Received: from ?IPV6:2600:1700:e321:62f0:da43:aeff:fecc:bfd5? ([2600:1700:e321:62f0:da43:aeff:fecc:bfd5])
+        by smtp.gmail.com with ESMTPSA id 5a478bee46e88-302973bc9d4sm17552282eec.23.2026.05.19.22.03.49
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Tue, 19 May 2026 22:03:50 -0700 (PDT)
+Sender: Guenter Roeck <groeck7@gmail.com>
+Message-ID: <58352b37-a87a-49f0-ac89-da226f2266dc@roeck-us.net>
+Date: Tue, 19 May 2026 22:03:48 -0700
 Precedence: bulk
 X-Mailing-List: sashiko-reviews@lists.linux.dev
 List-Id: <sashiko-reviews.lists.linux.dev>
 List-Subscribe: <mailto:sashiko-reviews+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:sashiko-reviews+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-References: <20260519215358.126364-1-kpsingh@kernel.org> <20260519231709.3D4561F000E9@smtp.kernel.org>
-In-Reply-To: <20260519231709.3D4561F000E9@smtp.kernel.org>
-From: KP Singh <kpsingh@kernel.org>
-Date: Wed, 20 May 2026 05:00:37 +0200
-X-Gmail-Original-Message-ID: <CACYkzJ6rxGSrixr9sChFyXyu3JcjG3JmZGR5YgA0vV0WNJPs0g@mail.gmail.com>
-X-Gm-Features: AVHnY4KogdrLN5rYE7c2YdjnAPa-dmFVVlDhSLQc_3WxQgUARPMySW9BEeeIhMk
-Message-ID: <CACYkzJ6rxGSrixr9sChFyXyu3JcjG3JmZGR5YgA0vV0WNJPs0g@mail.gmail.com>
-Subject: Re: [PATCH] bpf, libbpf: reject non-exclusive metadata maps in the
- signed loader
-To: sashiko-reviews@lists.linux.dev
-Cc: bpf@vger.kernel.org
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH v2 1/2] hwmon: (lenovo-ec-sensors): Convert to
+ devm_request_region()
+To: sashiko-reviews@lists.linux.dev, Kean Ren <rh_king@163.com>
+Cc: linux-hwmon@vger.kernel.org
+References: <20260520022946.17335-2-rh_king@163.com>
+ <20260520025130.DB45A1F000E9@smtp.kernel.org>
+Content-Language: en-US
+From: Guenter Roeck <linux@roeck-us.net>
+Autocrypt: addr=linux@roeck-us.net; keydata=
+ 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
+ np3900V20aS7eD9K8GTU0TGC1pyz6IVJwIE=
+In-Reply-To: <20260520025130.DB45A1F000E9@smtp.kernel.org>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
 
-On Wed, May 20, 2026 at 1:17=E2=80=AFAM <sashiko-bot@kernel.org> wrote:
->
-> Thank you for your contribution! Sashiko AI review found 2 potential issu=
-e(s) to consider:
-> - [High] The generated BPF loader program uses a hardcoded 8-byte read (B=
-PF_DW) to access the `excl_prog_sha` pointer field, which causes the BPF ve=
-rifier to reject the loader on 32-bit architectures and silently bypasses t=
-he exclusivity check.
-
-I plan to move this to the kernel with a kfunc anyways. Any
-suggestions for the 32 bit fix (apart from an ugly union in bpf_map).
-
-> - [High] Branch target offset calculation is off-by-one, causing the jump=
- target to land past the beginning of the cleanup block.
+On 5/19/26 19:51, sashiko-bot@kernel.org wrote:
+> Thank you for your contribution! Sashiko AI review found 1 potential issue(s) to consider:
+> - [Medium] The commit message inaccurately claims to remove five `release_region()` calls and drop unnecessary braces, but only four calls were removed and the braces were left intact.
 > --
+> 
+> commit e8c1e48be4d237988380d2577325024d4865618f
+> Author: Kean Ren <rh_king@163.com>
+> 
+> hwmon: (lenovo-ec-sensors): Convert to devm_request_region()
+> 
+> This commit replaces manual request_region() and release_region() calls
+> with devm_request_region() to allow the device-managed framework to
+> handle the I/O region lifetime automatically.
+> 
+>> Remove all five manual release_region() calls that are now handled
+>> automatically, and drop the unnecessary braces on the single-statement
+>> blocks that previously contained them.
+> 
+> [Severity: Medium]
+> Is this description accurate? The patch diff shows that only four
+> release_region() calls were removed.
+> 
 
-Yeah this is valid:
+As far as I can see there are only four calls in the code. Description
+problem ?
 
- Compute the cleanup-label offset after emitting the MOV that sets the
-  error code in R7. Otherwise the JMP lands one insn past cleanup_label
-  and skips the first FD-close, matching the emit_check_err() pattern.
+>> diff --git a/drivers/hwmon/lenovo-ec-sensors.c b/drivers/hwmon/lenovo-ec-sensors.c
+>> index 8681bbf6665b1..45db49e189d3d 100644
+>> --- a/drivers/hwmon/lenovo-ec-sensors.c
+>> +++ b/drivers/hwmon/lenovo-ec-sensors.c
+>> @@ -541,7 +541,6 @@ static int lenovo_ec_probe(struct platform_device *pdev)
+>>   	    (inb_p(MCHP_EMI0_EC_DATA_BYTE1) != 'C') &&
+>>   	    (inb_p(MCHP_EMI0_EC_DATA_BYTE2) != 'H') &&
+>>   	    (inb_p(MCHP_EMI0_EC_DATA_BYTE3) != 'P')) {
+>> -		release_region(IO_REGION_START, IO_REGION_LENGTH);
+>>   		return -ENODEV;
+>>   	}
+> 
+> [Severity: Medium]
+> This isn't a bug, but could these curly braces be removed? The commit
+> message mentions dropping the unnecessary braces on the single-statement
+> blocks, but they appear to have been left intact here.
+> 
 
-diff --git a/tools/lib/bpf/gen_loader.c b/tools/lib/bpf/gen_loader.c
-index becfda5b9025..6950443ba698 100644
---- a/tools/lib/bpf/gen_loader.c
-+++ b/tools/lib/bpf/gen_loader.c
-@@ -592,9 +592,9 @@ static void emit_signature_match(struct bpf_gen *gen)
-                gen->hash_insn_offset[i] =3D gen->insn_cur - gen->insn_star=
-t;
-                emit2(gen, BPF_LD_IMM64_RAW_FULL(BPF_REG_3, 0, 0, 0, 0, 0))=
-;
+Hmm, yes, the description does not match the code changes. Please drop
+the now unnecessary {}.
 
--               off =3D  -(gen->insn_cur - gen->insn_start -
-gen->cleanup_label) / 8 - 1;
-+               emit(gen, BPF_MOV64_IMM(BPF_REG_7, -EINVAL));
-+               off =3D -(gen->insn_cur - gen->insn_start -
-gen->cleanup_label) / 8 - 1;
-                if (is_simm16(off)) {
--                       emit(gen, BPF_MOV64_IMM(BPF_REG_7, -EINVAL));
-                        emit(gen, BPF_JMP_REG(BPF_JNE, BPF_REG_2,
-BPF_REG_3, off));
-                } else {
-                        gen->error =3D -ERANGE;
-@@ -610,9 +610,9 @@ static void emit_signature_match(struct bpf_gen *gen)
-        emit2(gen, BPF_LD_IMM64_RAW_FULL(BPF_REG_1, BPF_PSEUDO_MAP_IDX,
-                                         0, 0, 0, 0));
-        emit(gen, BPF_LDX_MEM(BPF_DW, BPF_REG_2, BPF_REG_1,
-SHA256_DWORD_SIZE * sizeof(__u64)));
-+       emit(gen, BPF_MOV64_IMM(BPF_REG_7, -EINVAL));
-        off =3D -(gen->insn_cur - gen->insn_start - gen->cleanup_label) / 8=
- - 1;
-        if (is_simm16(off)) {
--               emit(gen, BPF_MOV64_IMM(BPF_REG_7, -EINVAL));
-                emit(gen, BPF_JMP_IMM(BPF_JEQ, BPF_REG_2, 0, off));
-        } else {
-                gen->error =3D -ERANGE;
+Thanks,
+Guenter
 
->
-> commit 51df41105aded76b418cec093cbbaaad09c03147
-> Author: KP Singh <kpsingh@kernel.org>
->
-> bpf, libbpf: reject non-exclusive metadata maps in the signed loader
->
-> This patch updates the BPF loader to verify that metadata maps are exclus=
-ive
-> while they are frozen. It places excl_prog_sha in struct bpf_map and emit=
-s a
-> check in gen_loader to reject the map with -EINVAL if excl_prog_sha is NU=
-LL.
->
-> > diff --git a/tools/lib/bpf/gen_loader.c b/tools/lib/bpf/gen_loader.c
-> > index cd5c2543f54d8..becfda5b90253 100644
-> > --- a/tools/lib/bpf/gen_loader.c
-> > +++ b/tools/lib/bpf/gen_loader.c
 > [ ... ]
-> > @@ -601,6 +601,23 @@ static void emit_signature_match(struct bpf_gen *g=
-en)
-> >                       emit(gen, BPF_JMP_IMM(BPF_JA, 0, 0, -1));
-> >               }
-> >       }
-> > +
-> > +     /* Reject if the metadata map is not exclusive. Without exclusivi=
-ty
-> > +      * the cached map->sha[] verified above can be stale: another BPF
-> > +      * program with map access could have mutated the contents betwee=
-n
-> > +      * BPF_OBJ_GET_INFO_BY_FD and loader execution.
-> > +      */
-> > +     emit2(gen, BPF_LD_IMM64_RAW_FULL(BPF_REG_1, BPF_PSEUDO_MAP_IDX,
-> > +                                      0, 0, 0, 0));
-> > +     emit(gen, BPF_LDX_MEM(BPF_DW, BPF_REG_2, BPF_REG_1, SHA256_DWORD_=
-SIZE * sizeof(__u64)));
->
-> [Severity: High]
-> Does this 8-byte read (BPF_DW) cause issues on 32-bit architectures?
->
-> Since pointers are 4 bytes long on 32-bit systems, the verifier will reje=
-ct
-> the loader program with an access size mismatch error (-EACCES) because i=
-t
-> expects the memory access size to exactly match the BTF-defined pointer
-> size.
->
-> Also, if the verifier check were bypassed, wouldn't an 8-byte read stradd=
-le
-> both the 4-byte excl_prog_sha and the adjacent 4-byte ops pointer? Since
-> ops is always non-zero, the resulting 64-bit value would never be 0,
-> causing the BPF_JEQ check below to silently fall through and bypass the
-> exclusivity check.
->
-> > +     off =3D -(gen->insn_cur - gen->insn_start - gen->cleanup_label) /=
- 8 - 1;
-> > +     if (is_simm16(off)) {
-> > +             emit(gen, BPF_MOV64_IMM(BPF_REG_7, -EINVAL));
-> > +             emit(gen, BPF_JMP_IMM(BPF_JEQ, BPF_REG_2, 0, off));
->
-> [Severity: High]
-> Is the branch target offset calculation off by one?
->
-> The offset off is computed based on insn_cur before emitting the
-> BPF_MOV64_IMM instruction. Since emitting the BPF_MOV64_IMM instruction
-> advances insn_cur by 8 bytes, and BPF branch offsets are evaluated relati=
-ve
-> to the instruction immediately following the branch itself, the actual ju=
-mp
-> target evaluates to cleanup_label + 8 bytes (1 instruction) instead of th=
-e
-> cleanup_label itself.
->
-> This skips the first instruction of the cleanup block. If nr_progs > 0, i=
-t
-> skips loading the first FD into BPF_REG_1 and calls sys_close() with an
-> uninitialized or stale register (e.g., a map pointer), potentially closin=
-g a
-> random/incorrect file descriptor in the system. If nr_progs =3D=3D 0 and
-> nr_maps > 0, it may jump into the middle of a 16-byte BPF_LD_IMM64
-> instruction, causing verifier rejection.
->
-> Does this need to be adjusted, even though it appears to be a pattern cop=
-ied
-> from the loop above it?
->
-> > +     } else {
-> > +             gen->error =3D -ERANGE;
-> > +             emit(gen, BPF_JMP_IMM(BPF_JA, 0, 0, -1));
-> > +     }
-> >  }
->
-> --
-> Sashiko AI review =C2=B7 https://sashiko.dev/#/patchset/20260519215358.12=
-6364-1-kpsingh@kernel.org?part=3D1
+> 
+>> @@ -607,7 +605,6 @@ static int __init lenovo_ec_init(void)
+>>   				       lenovo_ec_probe, NULL, 0, NULL, 0);
+>>   
+>>   	if (IS_ERR(lenovo_ec_sensors_platform_device)) {
+>> -		release_region(IO_REGION_START, IO_REGION_LENGTH);
+>>   		return PTR_ERR(lenovo_ec_sensors_platform_device);
+>>   	}
+> 
+> [Severity: Medium]
+> Could the braces be removed from this block as well, to match the
+> description in the commit message?
+> 
+
