@@ -1,250 +1,287 @@
-Received: from CY7PR03CU001.outbound.protection.outlook.com (mail-westcentralusazon11010059.outbound.protection.outlook.com [40.93.198.59])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
-	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3B9C027B32C
-	for <sashiko-reviews@lists.linux.dev>; Wed, 20 May 2026 06:21:00 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=fail smtp.client-ip=40.93.198.59
-ARC-Seal:i=2; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1779258061; cv=fail; b=hHqex1DKwZcFXkQ/gWsm/NNwqZIRfROWUKjf/MbadUHuQwFnVvr5Nk8ha5zTD/l19bMNJrBvYdVSFU70xd0BP1WBN7eqMyjB605/z+hXK14iXHhyzwz1h8Y4vOS6TabfQNochPJaaNhV2uxfpulbkzue+8ZEVmfsw3WDQSvHk3g=
-ARC-Message-Signature:i=2; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1779258061; c=relaxed/simple;
-	bh=RjkWeqtG5tb+BZ9K4Ka0a9YLCG4sv4LWXjpEso3G2xU=;
-	h=Content-Type:Message-ID:Date:Subject:To:Cc:References:From:
-	 In-Reply-To:MIME-Version; b=rmILLx10JZLF5r7WWUtdU6jRDWZ5GK5G+uCUW6uzQ4vJYS4NnJlwB82aRIc6IzSzS9nMNgsCQ5ta5TtLYaPu6l1Zzu32fQ1lqo/AeG3fX5PJFjm7mB9wvHy9HPOsChyJAveKNhYt55fVjzy+PZtyBf8KnnjLSdhFD1sWZSOjrlA=
-ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=amd.com; spf=fail smtp.mailfrom=amd.com; dkim=pass (1024-bit key) header.d=amd.com header.i=@amd.com header.b=v9zG3vuk; arc=fail smtp.client-ip=40.93.198.59
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=amd.com
-Authentication-Results: smtp.subspace.kernel.org; spf=fail smtp.mailfrom=amd.com
+Received: from ultrarisc.com (unknown [218.76.62.146])
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 01B5E34A79D
+	for <sashiko-reviews@lists.linux.dev>; Wed, 20 May 2026 07:15:35 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=218.76.62.146
+ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
+	t=1779261339; cv=none; b=WB0GDyoBKLXINBR3i6k/zLrSeYoHCkZP3QGxzqAFsVT6ykuJTNyyVXLchUbySJRDloZ2iNJCgMJ/iFL4QZhRAmOim2u5FGdXf9CqN6yiAOWNV9cJi6F/jjHlFNR7+CpUtORk6YAG5PlS1bc9zxKjm2MSL7JfI63C8ztVqvohUsc=
+ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
+	s=arc-20240116; t=1779261339; c=relaxed/simple;
+	bh=5v0bBklZMAI11axTsyPo+y6JTU4aEE2dE3vxU2Rr3sM=;
+	h=MIME-Version:Content-Type:Subject:From:To:Cc:In-Reply-To:
+	 References:Date:Message-Id; b=hEur26EzH1P/EcTGufbYK+1gX963ouS7kHMfEMT0b0Q5WbQ8uL861Z7XE40juj7JRRuGn0SW8ArmyEKJVNAJNcSyZ3FrxMXCrYYg6pvNlAqmNGhEe1qFGy+C6WvKe50jdLHmdg8WeXpVLE3MIh8ZOm8IdWMGLxxdUNe6d99NIeU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=ultrarisc.com; spf=pass smtp.mailfrom=ultrarisc.com; dkim=pass (1024-bit key) header.d=ultrarisc.com header.i=@ultrarisc.com header.b=MKI5592d; arc=none smtp.client-ip=218.76.62.146
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=ultrarisc.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=ultrarisc.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=amd.com header.i=@amd.com header.b="v9zG3vuk"
-ARC-Seal: i=1; a=rsa-sha256; s=arcselector10001; d=microsoft.com; cv=none;
- b=exFuLsJqsY+mTOF92KBmr8sGVRxzAVSKORkdCTr4OMIHTo6QlZ/dzfVo3Iy5PfrC+e5RLEU84d9QHLRzVFEN838aQfEQ9/14aWJn9gQFLk5YY4aQn7Zj/TEJ29w5jF89z4yq6ZnKafzj3P9xT+U/diDKG4LiP+/JP3EafTgluUSROaY3BrtJuA9xOxoIFjwsEiStdW7FJc1H8kHauLAqhHITfBn8VQuRGjTUf7s5dq5z9QU2S94WilfbctG3U3eGHv8W+6AjCx5Wvs19Qoq7FyPVD2OjiDwRTzJJQpP1Z9zaYFc6SbU+J2VuFzvu0bp45Hp8USyScgM/e+xDBxSE6w==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com;
- s=arcselector10001;
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
- bh=EwLYNMRHErWydzCVXyJyE/x1MioqrY5z+25SUHd/b2A=;
- b=lAGApat8PDIQME2zTe+8cLFZOTUTDpbEyPssRIYzKKk/PZ/Z2Nz1RNKRnbN47t10u/bT/MiqhAa4fq0amD5xuXL0wk+Hj3odpPjZNvlst9Hh4rnA/PNDfIrHc+RTIdjgXxuwAjiTTvrD0IO9T0vZCCzmu/fpfGNjAJUsJ2lSgpU6IS6ioAB9hmN78TDb0Kz3UOpFMr0kMEv9ZEe0s/RWokaKRcNFKr7avRbUqWMKlBScO9DEy/l7vdqov/G8e/rD2OqsP4N5A2lspS6Xdp19I+mRwOy6efNropWsNKukUc0iQmGbTdP6XIhckGPnMCZD2hNDJMqFpNdlvU+vMlSXKQ==
-ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
- smtp.mailfrom=amd.com; dmarc=pass action=none header.from=amd.com; dkim=pass
- header.d=amd.com; arc=none
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=amd.com; s=selector1;
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
- bh=EwLYNMRHErWydzCVXyJyE/x1MioqrY5z+25SUHd/b2A=;
- b=v9zG3vukQgR6pliBDk5rfMSpSli6xVcV8xAdQaLsoqYl+uLYd3O6Xv8Bur6FRshqGg90yEPJcMR1d8Y19SGs2ceX1HQjjV3OpY+pj4sa0sX3m2E0Iyc86iZ7NNN2/quywmgBBDHxUG3qGKTaascvCB8lbEnoP2115izPsuHnuLg=
-Authentication-Results: dkim=none (message not signed)
- header.d=none;dmarc=none action=none header.from=amd.com;
-Received: from DM4PR12MB5263.namprd12.prod.outlook.com (2603:10b6:5:39b::23)
- by DM6PR12MB4219.namprd12.prod.outlook.com (2603:10b6:5:217::14) with
- Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.21.48.14; Wed, 20 May
- 2026 06:20:57 +0000
-Received: from DM4PR12MB5263.namprd12.prod.outlook.com
- ([fe80::d735:a4dd:992b:2886]) by DM4PR12MB5263.namprd12.prod.outlook.com
- ([fe80::d735:a4dd:992b:2886%3]) with mapi id 15.21.0048.013; Wed, 20 May 2026
- 06:20:57 +0000
-Content-Type: multipart/mixed; boundary="------------QCgfrrxZq2hwwzY2uh3O6ktk"
-Message-ID: <fab85d17-e893-4907-81fa-7f339b872883@amd.com>
-Date: Wed, 20 May 2026 11:50:33 +0530
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH] dmaengine: Fix device kref underflow in dma_chan_put()
-To: sashiko-reviews@lists.linux.dev
-Cc: vkoul@kernel.org, Frank.Li@kernel.org, dmaengine@vger.kernel.org,
- logang@deltatee.com
-References: <20260518-dmaengine-kref-fix-v1-1-4d6125048fb7@amd.com>
- <20260518082920.B9BB1C2BCB7@smtp.kernel.org>
-Content-Language: en-US
-From: "Garg, Shivank" <shivankg@amd.com>
-In-Reply-To: <20260518082920.B9BB1C2BCB7@smtp.kernel.org>
-X-ClientProxiedBy: PN5P287CA0023.INDP287.PROD.OUTLOOK.COM
- (2603:1096:c01:265::7) To BN9PR12MB5259.namprd12.prod.outlook.com
- (2603:10b6:408:100::17)
+	dkim=pass (1024-bit key) header.d=ultrarisc.com header.i=@ultrarisc.com header.b="MKI5592d"
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+	d=ultrarisc.com; s=dkim; h=Received:MIME-Version:Content-Type:
+	Content-Transfer-Encoding:Subject:From:To:Cc:In-Reply-To:
+	References:Date:Message-Id; bh=J3YrheZdqW+duFn409E1je+nPJyCNsond
+	JsbSI32P1k=; b=MKI5592dDqeZC78qO7kw4nmMFreuTuNMelKcS1RZMly8V8E+C
+	k1ANN2SMGYoccRahzELFoDBz+5WjL4fcLzKF2orsD8YyeKYYZsN+4ECzc+UAevMR
+	/Tgj3XU3xQSGZ2xBn+/sEWr6mSmOyAEiZ7hQ6J4yDykH87IsGc7xfcgxzo=
+Received: from [127.0.0.1] (unknown [192.168.100.1])
+	by localhost.localdomain (Coremail) with SMTP id AQAAfwAnYUKuXw1qQO0EAA--.6649S2;
+	Wed, 20 May 2026 15:15:58 +0800 (CST)
 Precedence: bulk
 X-Mailing-List: sashiko-reviews@lists.linux.dev
 List-Id: <sashiko-reviews.lists.linux.dev>
 List-Subscribe: <mailto:sashiko-reviews+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:sashiko-reviews+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-X-MS-PublicTrafficType: Email
-X-MS-TrafficTypeDiagnostic: DM4PR12MB5263:EE_|DM6PR12MB4219:EE_
-X-MS-Office365-Filtering-Correlation-Id: fbc04df3-52cc-400c-a67e-08deb637eb4a
-X-MS-Exchange-SenderADCheck: 1
-X-MS-Exchange-AntiSpam-Relay: 0
-X-Microsoft-Antispam:
-	BCL:0;ARA:13230040|1800799024|376014|6049299003|366016|4053099003|22082099003|56012099003|4143699003|18002099003|11063799006;
-X-Microsoft-Antispam-Message-Info:
-	XGZmFo1gzKcHYNZce2rzxDMYP3GUpOZ4/Q7/4E3f6QLTPPLnftBZ3YN0FA1gxjjNw2LJC3Dq8haRghN50uDZBzJ0zsbpjPP7gIInTV1FwWJhrh0o+IeqXHsE86Ca/CLo+rQNDVDlwd0pIi6X8gIkzddK3Gd9cgJaPrVdNVZuPWeys8HEL4fL8vGfrDVk5ROjl3KC3LJa0ppsVwLyCerTR7hL55gAeWs+jY+BAE2NXNlsMKo+9j/a6IAp1HxbwLMt3fvTOX+YlVWMp8w39XRamGyZYdPBjOcL4bIn/y9cPoUDLmho6gWHiGT7879D7ptuPi9sEdMvV7303/Dttn+1ZJdM7jC4bMVuFcqxVpJ8RmPEHgcRSL/JFp5IyJ618OjEKQHgjeaf6rJ3yC7L1915xOKQer/qn0l7BpuuMCh218P9EYKxyphrvJJQGE4xR9ttwZmwtbA9rPjAvnyopPiTCb8B0BnwbZ83lES9CuYg6EGvMi42s5JPOHVXDsvRL0RMuPPOogmHnNWsQOxrvvesb2RJ0n7bV29wnGaSIjKzqL3huU4wQmC+o33QojoK690Cp0aXLRWdOlP/YEB7rchi3ur+rGtDXhhhf71Pcsh2wMBrhyEwvIHJ1NxQQSeT//rH1zoLSfsWqiN0Zxa8UkdeDA==
-X-Forefront-Antispam-Report:
-	CIP:255.255.255.255;CTRY:;LANG:en;SCL:1;SRV:;IPV:NLI;SFV:NSPM;H:DM4PR12MB5263.namprd12.prod.outlook.com;PTR:;CAT:NONE;SFS:(13230040)(1800799024)(376014)(6049299003)(366016)(4053099003)(22082099003)(56012099003)(4143699003)(18002099003)(11063799006);DIR:OUT;SFP:1101;
-X-MS-Exchange-AntiSpam-MessageData-ChunkCount: 1
-X-MS-Exchange-AntiSpam-MessageData-0:
-	=?utf-8?B?VkZ0SFJ4WUIrSG1wdmxiSkpibFMrdDM2bnkxM2ExZXpkNEp6bWZpVEk2M1ZN?=
- =?utf-8?B?K29NOFRsYTA4c1QvMExHUzVKRUtzUTBuMjVaenZ0ZU5uR3cxYitYSnFoMyt3?=
- =?utf-8?B?K1dtMnFMREFOalMvcmIvT1VxRm5TajZQU2tjdXJ4VkRBOHA3dE04c1kxNmdT?=
- =?utf-8?B?emFwK3lPRDRqdkYzWmFiMFJORHhaa2RZNGowVmRCOG9JRFdsMkcrQ3lrY2kx?=
- =?utf-8?B?Y1JpT2taa0xVc3BIN0NZUG5qYnpVMUlKVkcxMTZ6a0FhMkU2ZW5oNHBiK2Rw?=
- =?utf-8?B?R0xiRFg3NlFsNlpRM0svc0NvckZzZzNtcWNCWERZcmpRMEFSc0RWUFc2cnhs?=
- =?utf-8?B?ZGtyMUU2aUZwZDVOZVZRS2h1MmdnQ3p3dGI2WDZaSUxrRFVxU2Rxc2VnOXhv?=
- =?utf-8?B?c2hSeVJ3L2dGRFZxeENkYjVuamszRXpqeW9xV0tsNmsrMVdTZjhtcCtrRzlX?=
- =?utf-8?B?Y1NKODhIRUVMSVVQL0MwRGg3ZDdESklpU3BrZCtrdlpCRi9RVnJXVjV6Nysx?=
- =?utf-8?B?bXY0SVF3Y0xWM0Fmd0hqZEFEdlM5cDBSQk9UV3UwOXVNVWExeVVFbmpzNUVE?=
- =?utf-8?B?ZFRuakgvTVYyRkswdnNMSEpGc05vK2VuQlBwaW5VWDk5VmJFWXJjRlU0OXBt?=
- =?utf-8?B?MzRFN0RmZWdFMHFmSGNPT2I5YkJZdUk1NnZpWDA3eGR0RDhSUUpXSWRlOFgw?=
- =?utf-8?B?OG12bjN3Z3hyUWQwM0RpdnErdEhiQ1FaVVczb092U2Q2WjI4UmZWcGIyUDIw?=
- =?utf-8?B?SlE2a2pyL0h4RXBQNEdzbWVkbGViaU5sV2o2THBXMEFST25ETDdPcEJrZTI5?=
- =?utf-8?B?UWJQVW4zQ3NzU1FEaGlmRnRtVkdVSXZwTjBFcWgyL3ZyUDlWSTR2ajdNbDhD?=
- =?utf-8?B?TWtibUZSVGlkTUQ0eFRBdFZKdlVFOFJyWjNzT1hUSDg1Z2crTVJYN2pyelNj?=
- =?utf-8?B?eTR4a1BzbXEzYWE0SWJGcjY1OEdTQWxpaEpZeFB4UVp1UjJoRHFFQ3hyVTBx?=
- =?utf-8?B?Y2ZKMElOR2dQcnFmc1VWNmhJYVFOYjFjZDZ1WEE0eXUrYlMwMDg4QW5SMzky?=
- =?utf-8?B?N2RzV2ZSbGU2YjlQZ09MSk9MZlBEWGpYOTZOV3FXZHY0TXFDaUU0NWFKYmF5?=
- =?utf-8?B?citoNHk3VkliM3FacHNNd0NaNVpnUnB6cHhqTzZoQndEb2QvZHY1SVVQYXhy?=
- =?utf-8?B?dk1XUXRmNnovS0x4ODdJd0psajFVRTJ4aEFLTjFjTWZnZkV1L0YzNHF3SUF0?=
- =?utf-8?B?eW5rQkxzc0RCSldIT3kwV1pGelE4ei9TVVhzckRlRHNML3pjcTVVR3NtdjBU?=
- =?utf-8?B?Q1pvQXRSUFBXQWNySlcyRHdHTW5vYkFaV2JtNGUzMnpmUlRBSE5wRFEvdHBi?=
- =?utf-8?B?bUNrTWxjQlFtRjgxU0VBSXpDQ0lrMGZxZWF0VnpRd080WXBBSUNMcjhFbEll?=
- =?utf-8?B?WEZXTjR1VDg2ZU1id1Q4Si9kODlIMU1zd1d3emRiOEdFTXZYaUhBZnR5alli?=
- =?utf-8?B?WitZcEwyaWxTQXVPUk1xWFZuYmpvUlA4Ky9NbHcxcUtRRHpza1AxaUNNZzla?=
- =?utf-8?B?SmlPa1JRYlRvcG5kQlpwSUJmUVBFMXlVZHR3WUpHUU5pekxkV2pQOVBGQ2Rn?=
- =?utf-8?B?N0Y1d1dvbWdzSXpmYkNyYUFDVktBSjBBL3N2TkxCTkpJM0pHdElOb0J4ZDZv?=
- =?utf-8?B?eWZ3elZWV2FxSDJGTlEwZWpGY3pvN1hBLy8xdytWWnozdmp3REFnUjVJVUly?=
- =?utf-8?B?SWhjQVRZMDVRSjFQb2J3RTQzb1NUbEJQLzJIbmFCbmp0QktZclNhL1gxY3Jl?=
- =?utf-8?B?ZmVhVkhuVEt6ZnBzYnVIVUNTM2MrTVgzNW5CMTNab0Y1eDhFSEwzT0hEc3or?=
- =?utf-8?B?R3hyMEFHU3pHMTJ2NlJ0VDBuYmwxWG1wcENKTThoTFlCME94WE43S1Ztc1g5?=
- =?utf-8?B?N0JzbzZQR0pjVVYyMGdSc3ZhdHNUdWVsN1ZtV24wTVYzcnZOV1dVMGNwbXhC?=
- =?utf-8?B?Yzd0dUpKM1dBVGtRWTRvTHczK3ZBazdHVEMvc1RWanV2SytmWFdkdW9BWGhQ?=
- =?utf-8?B?YktCNFhBMXE2VllHOUlhaDNwQmE2S1F5Y1krczJZY2ZaMDkxZ05OM2VYaURJ?=
- =?utf-8?B?MVZ5ZEJWN3BXM3haMGZIOXJuSmhwejhzYkZhczErQklNNG9jaUFyNFRoNVdP?=
- =?utf-8?B?RXZ0R3pSbVQ5d1NObCs1a2N3MTJ5QzlKaTVoYWdDQVpBdWhVUGd1RWgyRHpz?=
- =?utf-8?B?a2ZXL0txZ2h5UFYzNnQyV21yc0pBcEJDL3AwVTZDdUdYN0RNcVRiUlBFY1gr?=
- =?utf-8?B?b3VjMHp0bk84ZEtvMFpzaXdDTXNLQ3FROGNCR2FBazV4UEVKTUwrZz09?=
-X-OriginatorOrg: amd.com
-X-MS-Exchange-CrossTenant-Network-Message-Id: fbc04df3-52cc-400c-a67e-08deb637eb4a
-X-MS-Exchange-CrossTenant-AuthSource: BN9PR12MB5259.namprd12.prod.outlook.com
-X-MS-Exchange-CrossTenant-AuthAs: Internal
-X-MS-Exchange-CrossTenant-OriginalArrivalTime: 20 May 2026 06:20:57.0258
- (UTC)
-X-MS-Exchange-CrossTenant-FromEntityHeader: Hosted
-X-MS-Exchange-CrossTenant-Id: 3dd8961f-e488-4e60-8e11-a82d994e183d
-X-MS-Exchange-CrossTenant-MailboxType: HOSTED
-X-MS-Exchange-CrossTenant-UserPrincipalName: sW7bmW1kfExUp3vP9qX2G8BT4bLuBRHKYO7KpBKhoBKkCSho9TfFxyFmEI3mxgeObGFwuAYtSIqLQA1T27ex+Q==
-X-MS-Exchange-Transport-CrossTenantHeadersStamped: DM6PR12MB4219
-
---------------QCgfrrxZq2hwwzY2uh3O6ktk
-Content-Type: text/plain; charset=UTF-8
+Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 8bit
+Subject: Re: [PATCH 6/9] pinctrl: ultrarisc: Add UltraRISC DP1000 pinctrl
+ driver
+From: Jia Wang <wangjia@ultrarisc.com>
+To: sashiko-reviews@lists.linux.dev
+Cc: Jia Wang via B4 Relay <devnull+wangjia.ultrarisc.com@kernel.org>, 
+ conor+dt@kernel.org, robh@kernel.org, devicetree@vger.kernel.org, 
+ krzk+dt@kernel.org
+In-Reply-To: <20260515022854.5CCECC2BCB3@smtp.kernel.org>
+References: <20260515-ultrarisc-pinctrl-v1-6-bf559589ea8a@ultrarisc.com>
+ <20260515022854.5CCECC2BCB3@smtp.kernel.org>
+Date: Wed, 20 May 2026 15:15:17 +0800
+Message-Id: <177926131756.943957.13034250409955560370.b4-reply@b4>
+X-Mailer: b4 0.15-dev
+X-Developer-Signature: v=1; a=ed25519-sha256; t=1779261317; l=7643;
+ i=wangjia@ultrarisc.com; s=20260515; h=from:subject:message-id;
+ bh=5v0bBklZMAI11axTsyPo+y6JTU4aEE2dE3vxU2Rr3sM=;
+ b=1SHdhTa7/XXqBvBO5si7ZJ1yZWKItKf+teEf19t+50ZV52xGugqg6YcBypmRUfrsV4FE8tP07
+ V5mdeaxcNyRATDdPVrPObe1M/73HA72rTGZ56dM/HB147QaYDd0y3jH
+X-Developer-Key: i=wangjia@ultrarisc.com; a=ed25519;
+ pk=wGVm18siRScehKOkOz0WKxgxDy7IezHEszhnN4/TUCY=
+X-CM-TRANSID:AQAAfwAnYUKuXw1qQO0EAA--.6649S2
+X-Coremail-Antispam: 1UD129KBjvJXoWxKr1xKF4kCr4kAF4xZw4fKrg_yoW3GF4fpF
+	Z5Ga13tFW8JFWaqr40q3ykGF1rX3Z7AFWUGrZ8try2yFnIyrykXrW5K3yYvayDCr4qkr4a
+	va15X3sI9ws8Ja7anT9S1TB71UUUUU7qnTZGkaVYY2UrUUUUjbIjqfuFe4nvWSU5nxnvy2
+	9KBjDU0xBIdaVrnRJUUUv0b7Iv0xC_Kw4lb4IE77IF4wAFF20E14v26r1j6r4UM7CY07I2
+	0VC2zVCF04k26cxKx2IYs7xG6rWj6s0DM7CIcVAFz4kK6r1j6r18M28lY4IEw2IIxxk0rw
+	A2F7IY1VAKz4vEj48ve4kI8wA2z4x0Y4vE2Ix0cI8IcVAFwI0_Jr0_JF4l84ACjcxK6xII
+	jxv20xvEc7CjxVAFwI0_Jr0_Gr1l84ACjcxK6I8E87Iv67AKxVW8JVWxJwA2z4x0Y4vEx4
+	A2jsIEc7CjxVAFwI0_Gr0_Gr1UM2AIxVAIcxkEcVAq07x20xvEncxIr21l5I8CrVACY4xI
+	64kE6c02F40Ex7xfMcIj6xIIjxv20xvE14v26r1j6r18McIj6I8E87Iv67AKxVW8JVWxJw
+	Am72CE4IkC6x0Yz7v_Jr0_Gr1lF7xvr2IYc2Ij64vIr41lc7CjxVAaw2AFwI0_JF0_Jw1l
+	c2xSY4AK6svPMxAIw28IcxkI7VAKI48JMxC20s026xCaFVCjc4AY6r1j6r4UMI8I3I0E5I
+	8CrVAFwI0_Jr0_Jr4lx2IqxVCjr7xvwVAFwI0_JrI_JrWlx4CE17CEb7AF67AKxVWUAVWU
+	twCIc40Y0x0EwIxGrwCI42IY6xIIjxv20xvE14v26r1j6r1xMIIF0xvE2Ix0cI8IcVCY1x
+	0267AKxVWUJVW8JwCI42IY6xAIw20EY4v20xvaj40_Jr0_JF4lIxAIcVC2z280aVAFwI0_
+	Jr0_Gr1lIxAIcVC2z280aVCY1x0267AKxVW8JVW8JrUvcSsGvfC2KfnxnUUI43ZEXa7IU5
+	Ksj5UUUUU==
+X-CM-SenderInfo: pzdqwylld63zxwud2x1vfou0bp/1tbiAQANEWoL3kQAGQADs8
 
-
-
-On 5/18/2026 1:59 PM, sashiko-bot@kernel.org wrote:
-> Thank you for your contribution! Sashiko AI review found 1 potential issue(s) to consider:
-> - [High] Pre-existing Use-After-Free vulnerabilities in dma_chan_put() and dma_release_channel() due to device memory release before teardown completes.
+On 2026-05-15 02:28 +0000, sashiko-bot@kernel.org wrote:
+> Thank you for your contribution! Sashiko AI review found 5 potential issue(s) to consider:
+> - [High] Memory leak of temporary DT parsing arrays on consumer probe paths
+> - [Medium] Silent ignoring of unsupported pin configurations
+> - [Low] Build failure due to dynamic mask in `field_prep()`
+> - [Low] Signed integer overflow during pin mux configuration
+> - [Low] Unnecessary Kconfig dependencies selected
 > --
 > 
-> commit dcce1cbcc027c7a50b03bed56fe875a7390be677
-> Author: Shivank Garg <shivankg@amd.com>
+> commit 03445610d24a54757505c7f2def35cc4894dd19f
+> Author: Jia Wang <wangjia@ultrarisc.com>
 > 
-> dmaengine: Fix device kref underflow in dma_chan_put()
+> pinctrl: ultrarisc: Add UltraRISC DP1000 pinctrl driver
 > 
-> This commit addresses a device kref underflow by ensuring the device reference
-> is only dropped when the client count reaches zero, matching the slow-path get.
+> This commit adds the pinctrl driver for the UltraRISC DP1000 pinctrl
+> controller.
 > 
->> diff --git a/drivers/dma/dmaengine.c b/drivers/dma/dmaengine.c
->> --- a/drivers/dma/dmaengine.c
->> +++ b/drivers/dma/dmaengine.c
->> @@ -515,7 +515,9 @@ static void dma_chan_put(struct dma_chan *chan)
->>               chan->route_data = NULL;
->>       }
->>
->> -     dma_device_put(chan->device);
->> +     /* This channel is not in use anymore, drop the device ref */
->> +     if (!chan->client_count)
->> +             dma_device_put(chan->device);
->>       module_put(dma_chan_to_owner(chan));
->>  }
+> > diff --git a/drivers/pinctrl/ultrarisc/Kconfig b/drivers/pinctrl/ultrarisc/Kconfig
+> > new file mode 100644
+> > index 0000000000000..ba8747b90127d
+> > --- /dev/null
+> > +++ b/drivers/pinctrl/ultrarisc/Kconfig
+> > @@ -0,0 +1,23 @@
+> > +# SPDX-License-Identifier: GPL-2.0-only
+> > +
+> > +config PINCTRL_ULTRARISC
+> > +	tristate
+> > +	depends on OF
+> > +	select PINMUX
+> > +	select GENERIC_PINCTRL_GROUPS
+> > +	select GENERIC_PINCONF
+> > +	select GENERIC_PINMUX_FUNCTIONS
+> > +	select GPIOLIB
+> > +	select IRQ_DOMAIN_HIERARCHY
+> > +	select MFD_SYSCON
 > 
-> This isn't a bug introduced by this patch, but does this sequence present
-> a use-after-free risk?
-> 
-> If dma_device_put() drops the final reference to the device (for example,
-> if the provider module previously unregistered the DMA device), it can
-> trigger the device release callback and free the dma_device and dma_chan
-> memory.
-> 
-> If that happens, module_put(dma_chan_to_owner(chan)) will dereference the
-> freed memory, as dma_chan_to_owner() accesses chan->device->owner.
-> 
-> Additionally, when dma_chan_put() is called from dma_release_channel(),
-> returning from this function leads to further accesses of the freed memory.
-> dma_release_channel() continues to access chan->device->privatecnt,
-> chan->device->cap_mask, chan->slave, and chan->name, which could cause a
-> series of use-after-free issues during teardown or hot-unplug.
-> 
-> --
-> Sashiko AI review · https://sashiko.dev/#/patchset/20260518-dmaengine-kref-fix-v1-1-4d6125048fb7@amd.com?part=1
+> This isn't a bug, but is it necessary to select IRQ_DOMAIN_HIERARCHY and
+> MFD_SYSCON here? The driver code doesn't seem to include the corresponding
+> headers or use their APIs.
+>
 
-Attached the patch addressing the Sashiko reported issues for additional review
-comments before sending out v2.
+I’ll drop them in v2, thanks.
+ 
+> [ ... ]
+> > diff --git a/drivers/pinctrl/ultrarisc/pinctrl-ultrarisc.c b/drivers/pinctrl/ultrarisc/pinctrl-ultrarisc.c
+> > new file mode 100644
+> > index 0000000000000..774746943e283
+> > --- /dev/null
+> > +++ b/drivers/pinctrl/ultrarisc/pinctrl-ultrarisc.c
+> [ ... ]
+> > @@ -0,0 +1,746 @@
+> [ ... ]
+> > +static int ur_write_pin_conf(struct ur_pinctrl *pctldata, unsigned int pin, u32 conf)
+> > +{
+> > +	const struct ur_port_desc *port_desc;
+> > +	struct ur_pin_val pin_val;
+> > +	unsigned long flags;
+> > +	void __iomem *reg;
+> > +	u32 reg_offset;
+> > +	u32 val;
+> > +	u32 shift;
+> > +	u32 mask;
+> > +
+> > +	if (ur_pin_num_to_port_pin(pctldata->match_data, &pin_val, pin))
+> > +		return -EINVAL;
+> > +
+> > +	port_desc = &pctldata->match_data->ports[pin_val.port];
+> > +	reg_offset = ur_get_pin_conf_offset(port_desc, pin_val.pin);
+> > +	reg = pctldata->base + reg_offset;
+> > +	shift = (pin_val.pin % UR_CONF_PIN_PER_REG) * UR_CONF_BIT_PER_PIN;
+> > +	mask = GENMASK(UR_CONF_BIT_PER_PIN - 1, 0) << shift;
+> > +
+> > +	raw_spin_lock_irqsave(&pctldata->lock, flags);
+> > +	val = readl_relaxed(reg);
+> > +	val = (val & ~mask) | field_prep(mask, conf);
+> 
+> Does this cause a build failure? The field_prep() macro strictly enforces
+> that its mask argument must be a compile-time constant. Because mask is
+> calculated dynamically based on pin_val.pin, the driver will fail to compile.
+> 
 
-Thanks,
-Shivank
---------------QCgfrrxZq2hwwzY2uh3O6ktk
-Content-Type: text/plain; charset=UTF-8;
- name="0001-dmaengine-fix-use-after-free-in-dma_chan_put-and-dma.patch"
-Content-Disposition: attachment;
- filename*0="0001-dmaengine-fix-use-after-free-in-dma_chan_put-and-dma.pa";
- filename*1="tch"
-Content-Transfer-Encoding: base64
+No. This code uses `field_prep()`, not `FIELD_PREP()`. The lowercase helper
+allows runtime-computed masks, so using a dynamically calculated `mask` here
+is valid and does not cause a build failure.
 
-RnJvbSBjMDJjZThjNjFhY2M0YTJmNGUyYzlmMDliZDE2ODFjNzJhOThjNGExIE1vbiBTZXAgMTcg
-MDA6MDA6MDAgMjAwMQpGcm9tOiBTaGl2YW5rIEdhcmcgPHNoaXZhbmtnQGFtZC5jb20+CkRhdGU6
-IE1vbiwgMTggTWF5IDIwMjYgMTE6NDk6MDkgKzAwMDAKU3ViamVjdDogW1BBVENIXSBkbWFlbmdp
-bmU6IGZpeCB1c2UtYWZ0ZXItZnJlZSBpbiBkbWFfY2hhbl9wdXQoKSBhbmQKIGRtYV9yZWxlYXNl
-X2NoYW5uZWwoKQoKV2hlbiBkbWFfZGV2aWNlX3B1dCgpIGRyb3BzIHRoZSBsYXN0IHJlZmVyZW5j
-ZSBvbiBjaGFuLT5kZXZpY2UtPnJlZiwKZG1hX2RldmljZV9yZWxlYXNlKCkgcnVucyBhbmQgbWF5
-IGZyZWUgdGhlIGRtYV9kZXZpY2UgYWxvbmcgd2l0aCBpdHMKY2hhbm5lbHMuCgpUd28gcGF0aHMg
-c3RpbGwgcmVhZCB0aGF0IG1lbW9yeSBhZnRlciB0aGUgcHV0OgogLSBkbWFfY2hhbl9wdXQoKSBy
-ZWFkcyBjaGFuLT5kZXZpY2UtPm93bmVyIHZpYSBkbWFfY2hhbl90b19vd25lcigpCiAgIGZvciB0
-aGUgdHJhaWxpbmcgbW9kdWxlX3B1dCgpLgogLSBkbWFfcmVsZWFzZV9jaGFubmVsKCkgY2FsbHMg
-ZG1hX2NoYW5fcHV0KCkgZmlyc3QsIHRoZW4gcmVhZHMKICAgY2hhbi0+ZGV2aWNlLT5wcml2YXRl
-Y250LCBjaGFuLT5zbGF2ZSwgY2hhbi0+bmFtZSBhbmQKICAgY2hhbi0+ZGJnX2NsaWVudF9uYW1l
-LgoKS0FTQU4gY2F0Y2hlcyB0aGUgZmlyc3Qgb25lOgoKCXNsYWItdXNlLWFmdGVyLWZyZWUgaW4g
-ZG1hX2NoYW5fcHV0KzB4M2U2LzB4NGMwCglSZWFkIG9mIHNpemUgOCBieSB0YXNrIGluc21vZC82
-MzE5CglGcmVlZCBieSB0YXNrIDYzMTk6CgkgIGtmcmVlKzB4MjI1LzB4NDcwCgkgIGRtYV9jaGFu
-X3B1dCsweDM5NS8weDRjMAoJICBkbWFlbmdpbmVfcHV0KzB4ZjgvMHgxNjAKCkNhY2hlIHRoZSBt
-b2R1bGUgb3duZXIgaW4gZG1hX2NoYW5fcHV0KCkgYmVmb3JlIHRoZSBwdXQgc28gdGhlIHRyYWls
-aW5nCm1vZHVsZV9wdXQoKSBkb2VzIG5vdCBuZWVkIGNoYW4tPmRldmljZS4gSW4gZG1hX3JlbGVh
-c2VfY2hhbm5lbCgpLCBtb3ZlCmRtYV9jaGFuX3B1dCgpIHRvIHRoZSBlbmQsIGFmdGVyIGV2ZXJ5
-IGNoYW4vZGV2aWNlIHJlYWQuCgpGaXhlczogOGFkMzQyYTg2MzU5ICgiZG1hZW5naW5lOiBBZGQg
-cmVmZXJlbmNlIGNvdW50aW5nIHRvIGRtYV9kZXZpY2Ugc3RydWN0IikKU3VnZ2VzdGVkLWJ5OiBT
-YXNoaWtvIDxzYXNoaWtvLWJvdEBrZXJuZWwub3JnPgpMaW5rOiBodHRwczovL3Nhc2hpa28uZGV2
-LyMvcGF0Y2hzZXQvMjAyNjA1MTgtZG1hZW5naW5lLWtyZWYtZml4LXYxLTEtNGQ2MTI1MDQ4ZmI3
-QGFtZC5jb20KU2lnbmVkLW9mZi1ieTogU2hpdmFuayBHYXJnIDxzaGl2YW5rZ0BhbWQuY29tPgot
-LS0KIGRyaXZlcnMvZG1hL2RtYWVuZ2luZS5jIHwgNyArKysrKy0tCiAxIGZpbGUgY2hhbmdlZCwg
-NSBpbnNlcnRpb25zKCspLCAyIGRlbGV0aW9ucygtKQoKZGlmZiAtLWdpdCBhL2RyaXZlcnMvZG1h
-L2RtYWVuZ2luZS5jIGIvZHJpdmVycy9kbWEvZG1hZW5naW5lLmMKaW5kZXggNjA1YmZhNDc3YTAw
-Li45YzRlMjA2ZjI0NjggMTAwNjQ0Ci0tLSBhL2RyaXZlcnMvZG1hL2RtYWVuZ2luZS5jCisrKyBi
-L2RyaXZlcnMvZG1hL2RtYWVuZ2luZS5jCkBAIC00OTUsMTAgKzQ5NSwxMyBAQCBzdGF0aWMgaW50
-IGRtYV9jaGFuX2dldChzdHJ1Y3QgZG1hX2NoYW4gKmNoYW4pCiAgKi8KIHN0YXRpYyB2b2lkIGRt
-YV9jaGFuX3B1dChzdHJ1Y3QgZG1hX2NoYW4gKmNoYW4pCiB7CisJc3RydWN0IG1vZHVsZSAqb3du
-ZXI7CisKIAkvKiBUaGlzIGNoYW5uZWwgaXMgbm90IGluIHVzZSwgYmFpbCBvdXQgKi8KIAlpZiAo
-IWNoYW4tPmNsaWVudF9jb3VudCkKIAkJcmV0dXJuOwogCisJb3duZXIgPSBkbWFfY2hhbl90b19v
-d25lcihjaGFuKTsKIAljaGFuLT5jbGllbnRfY291bnQtLTsKIAogCS8qIFRoaXMgY2hhbm5lbCBp
-cyBub3QgaW4gdXNlIGFueW1vcmUsIGZyZWUgaXQgKi8KQEAgLTUxOCw3ICs1MjEsNyBAQCBzdGF0
-aWMgdm9pZCBkbWFfY2hhbl9wdXQoc3RydWN0IGRtYV9jaGFuICpjaGFuKQogCS8qIFRoaXMgY2hh
-bm5lbCBpcyBub3QgaW4gdXNlIGFueW1vcmUsIGRyb3AgdGhlIGRldmljZSByZWYgKi8KIAlpZiAo
-IWNoYW4tPmNsaWVudF9jb3VudCkKIAkJZG1hX2RldmljZV9wdXQoY2hhbi0+ZGV2aWNlKTsKLQlt
-b2R1bGVfcHV0KGRtYV9jaGFuX3RvX293bmVyKGNoYW4pKTsKKwltb2R1bGVfcHV0KG93bmVyKTsK
-IH0KIAogZW51bSBkbWFfc3RhdHVzIGRtYV9zeW5jX3dhaXQoc3RydWN0IGRtYV9jaGFuICpjaGFu
-LCBkbWFfY29va2llX3QgY29va2llKQpAQCAtOTA3LDcgKzkxMCw2IEBAIHZvaWQgZG1hX3JlbGVh
-c2VfY2hhbm5lbChzdHJ1Y3QgZG1hX2NoYW4gKmNoYW4pCiAJbXV0ZXhfbG9jaygmZG1hX2xpc3Rf
-bXV0ZXgpOwogCVdBUk5fT05DRShjaGFuLT5jbGllbnRfY291bnQgIT0gMSwKIAkJICAiY2hhbiBy
-ZWZlcmVuY2UgY291bnQgJWQgIT0gMVxuIiwgY2hhbi0+Y2xpZW50X2NvdW50KTsKLQlkbWFfY2hh
-bl9wdXQoY2hhbik7CiAJLyogZHJvcCBQUklWQVRFIGNhcCBlbmFibGVkIGJ5IF9fZG1hX3JlcXVl
-c3RfY2hhbm5lbCgpICovCiAJaWYgKC0tY2hhbi0+ZGV2aWNlLT5wcml2YXRlY250ID09IDApCiAJ
-CWRtYV9jYXBfY2xlYXIoRE1BX1BSSVZBVEUsIGNoYW4tPmRldmljZS0+Y2FwX21hc2spOwpAQCAt
-OTI0LDYgKzkyNiw3IEBAIHZvaWQgZG1hX3JlbGVhc2VfY2hhbm5lbChzdHJ1Y3QgZG1hX2NoYW4g
-KmNoYW4pCiAJa2ZyZWUoY2hhbi0+ZGJnX2NsaWVudF9uYW1lKTsKIAljaGFuLT5kYmdfY2xpZW50
-X25hbWUgPSBOVUxMOwogI2VuZGlmCisJZG1hX2NoYW5fcHV0KGNoYW4pOwogCW11dGV4X3VubG9j
-aygmZG1hX2xpc3RfbXV0ZXgpOwogfQogRVhQT1JUX1NZTUJPTF9HUEwoZG1hX3JlbGVhc2VfY2hh
-bm5lbCk7CgpiYXNlLWNvbW1pdDogMDc1MDcyYjhmMDRlZDg5N2RkYzA3OWYwMDA1ZjE1ZmQ1Nzk3
-ZWRmOAotLSAKMi40My4wCgo=
+> > +	writel_relaxed(val, reg);
+> > +	raw_spin_unlock_irqrestore(&pctldata->lock, flags);
+> > +
+> > +	return 0;
+> > +}
+> > +
+> > +static int ur_set_pin_mux(struct ur_pinctrl *pctldata, struct ur_pin_val *pin_val)
+> > +{
+> > +	const struct ur_port_desc *port_desc = &pctldata->match_data->ports[pin_val->port];
+> > +	void __iomem *reg = pctldata->base + port_desc->func_offset;
+> > +	unsigned long flags;
+> > +	u32 val;
+> > +
+> > +	raw_spin_lock_irqsave(&pctldata->lock, flags);
+> > +	val = readl_relaxed(reg);
+> > +	val &= ~((UR_FUNC0 | UR_FUNC1) << pin_val->pin);
+> 
+> Could this shift result in a signed integer overflow?
+> 
+> UR_FUNC0 is 1 and UR_FUNC1 is 0x10000, so their bitwise OR is 0x10001. If
+> pin_val->pin is 15, left-shifting 0x10001 by 15 results in 0x80008000.
+> This shifts a bit into the sign bit of a 32-bit signed integer.
+> 
+> Should these macros be defined with unsigned literals, such as 1U and
+> 0x10000U?
+>
 
---------------QCgfrrxZq2hwwzY2uh3O6ktk--
+Yes, good point. I’ll update these mode macros to use unsigned literals so
+the mask calculation is done in an unsigned type.
+ 
+> > +	val |= pin_val->mode << pin_val->pin;
+> > +	writel_relaxed(val, reg);
+> > +	raw_spin_unlock_irqrestore(&pctldata->lock, flags);
+> > +
+> > +	return 0;
+> > +}
+> [ ... ]
+> > +static int ur_config_to_hw(unsigned long config, u32 *conf)
+> > +{
+> > +	enum pin_config_param param = pinconf_to_config_param(config);
+> > +	u32 arg = pinconf_to_config_argument(config);
+> > +
+> > +	switch (param) {
+> > +	case PIN_CONFIG_BIAS_DISABLE:
+> > +	case PIN_CONFIG_BIAS_HIGH_IMPEDANCE:
+> > +		FIELD_MODIFY(UR_PULL_MASK, conf, UR_PULL_DIS);
+> > +		return 0;
+> > +	case PIN_CONFIG_BIAS_PULL_UP:
+> > +		FIELD_MODIFY(UR_PULL_MASK, conf, UR_PULL_UP);
+> > +		return 0;
+> > +	case PIN_CONFIG_BIAS_PULL_DOWN:
+> > +	case PIN_CONFIG_BIAS_PULL_PIN_DEFAULT:
+> > +		FIELD_MODIFY(UR_PULL_MASK, conf, UR_PULL_DOWN);
+> > +		return 0;
+> > +	case PIN_CONFIG_DRIVE_STRENGTH:
+> > +		for (u32 i = 0; i < ARRAY_SIZE(ur_drive_strengths); i++) {
+> > +			if (ur_drive_strengths[i] != arg)
+> > +				continue;
+> > +			FIELD_MODIFY(UR_DRIVE_MASK, conf, i);
+> > +			return 0;
+> > +		}
+> > +		return -EINVAL;
+> > +	case PIN_CONFIG_DRIVE_PUSH_PULL:
+> > +	case PIN_CONFIG_INPUT_ENABLE:
+> > +	case PIN_CONFIG_OUTPUT_ENABLE:
+> > +	case PIN_CONFIG_PERSIST_STATE:
+> > +		return 0;
+> 
+> Does this code silently ignore unsupported configurations?
+> 
+> Returning 0 here tells the pinctrl framework that the configurations were
+> successfully applied, even though no hardware state was modified. Should
+> this return -ENOTSUPP for configurations the hardware doesn't support?
+>
+
+Agreed, returning 0 is misleading for unsupported options. I'll change these
+cases to return -EOPNOTSUPP in v2.
+ 
+> > +	default:
+> > +		return -EOPNOTSUPP;
+> > +	}
+> > +}
+> [ ... ]
+> > +static int ur_legacy_parse_prop(struct pinctrl_dev *pctldev,
+> > +				struct device_node *np,
+> > +				const char *propname,
+> > +				struct ur_legacy_prop_data *prop)
+> > +{
+> > +	struct ur_pinctrl *pctldata = pinctrl_dev_get_drvdata(pctldev);
+> > +	int rows;
+> > +
+> > +	rows = pinctrl_count_index_with_args(np, propname);
+> > +	if (rows < 0)
+> > +		return dev_err_probe(pctldev->dev, rows, "%pOF: invalid %s count\n",
+> > +				     np, propname);
+> > +
+> > +	prop->pin_vals = devm_kcalloc(pctldev->dev, rows, sizeof(*prop->pin_vals),
+> > +				      GFP_KERNEL);
+> > +	if (!prop->pin_vals)
+> > +		return -ENOMEM;
+> > +
+> > +	prop->group_pins = devm_kcalloc(pctldev->dev, rows, sizeof(*prop->group_pins),
+> > +					GFP_KERNEL);
+> 
+> Will this leak memory when consumer devices defer probe?
+> 
+> The devm_kcalloc() allocations are tied to pctldev->dev, which is the pinctrl
+> provider device. Since ur_legacy_parse_prop() is called from dt_node_to_map
+> during the consumer's probe sequence, these allocations will remain on the
+> provider's devres list and accumulate each time the consumer defers probe.
+> 
+> Should standard kcalloc() be used here instead and explicitly freed at the
+> end of ur_legacy_dt_node_to_map()?
+>
+
+Good catch. I'll switch these to kcalloc() and free them explicitly in
+ur_legacy_dt_node_to_map() to avoid leaks during probe deferral in v2.
+ 
+> > +	if (!prop->group_pins)
+> > +		return -ENOMEM;
+> 
+> -- 
+> Sashiko AI review · https://sashiko.dev/#/patchset/20260515-ultrarisc-pinctrl-v1-0-bf559589ea8a@ultrarisc.com?part=6
+> 
+
+Best Regards,
+Jia Wang
+
+
