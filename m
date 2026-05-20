@@ -1,40 +1,41 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 676E62E3397;
-	Wed, 20 May 2026 12:46:39 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 62A623E0239;
+	Wed, 20 May 2026 12:49:41 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1779281200; cv=none; b=J7YYQ90HY3esLfL6MlemifnzT+hr0hVtf0xZXBJGK5lTvjbRDnw1P8uduCkA3jTMoUFuIhdjlh1sO204gK+etpIC2FNE0NtRXsMDhK3DAdmqr6nDwInAEdW4z/S7U3fRC6AuauPBJ24FF9p9P3GD2rTIl3JFgyee5EXfjbqk8zM=
+	t=1779281383; cv=none; b=UfYnHZKzQQi17r5V+WiUE746phIDOKlu9BkjjQzVZRxTDVgsfhHHewHZH8J/uKDytjvj3/rCYXSeqUE1x7XkFTSoaTtPVFYLGbUmytI7H3qslmNxdyyhq+XI0Pq0FCEcuGHZ5g1I5tOf8JneoZGgLGpeZsiDGs0SnT35/INaITQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1779281200; c=relaxed/simple;
-	bh=Oj8acMtU2G9Hnr5h1H8D/0eXrcjQ+7flWUVC72yYfbI=;
+	s=arc-20240116; t=1779281383; c=relaxed/simple;
+	bh=KmVd/ihzkGCoBUrH7xogZ5bUXVvBCR9g1gzy0Vzrm5I=;
 	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=pI5us3bPC931Mw/hwIKKEb4DNi6ZyEv9G050gApqtj+uYqiL7gJxT3rONHtM2Cb4KqeUC1ehaYzK+ngIugSkzlROe8TVK41W1QHIvK8szS1TEe67Z+8FtkBWMkm1XLAMOnEtdjyxSbVeK/2kez7LlNDRBue+S68kn2XuDU6p8Do=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=c+QefKMA; arc=none smtp.client-ip=100.103.45.18
+	 Content-Type:Content-Disposition:In-Reply-To; b=IClKradrx96akUw4MiZ2AaEu3lNO3Lr+8RtsqxykVuBME9JwyzpOWvP9X8LR69wwnrnfuorwuKEeH1fSRGlIXgtTd4iiCaq48qRbFQ4m51K4x7bnjnQdsRyfJiapHcY2KryRBxM1UXm9UslEsDta59I30RB+PDhNieAG3LmdvR0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=XMjw0EAH; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="c+QefKMA"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 95D031F000E9;
-	Wed, 20 May 2026 12:46:38 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="XMjw0EAH"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 353CB1F000E9;
+	Wed, 20 May 2026 12:49:39 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=kernel.org;
-	s=k20260515; t=1779281199;
-	bh=HA5J7j3Eq/ArC7Y7uw56ulwYKzG7952DMvsvOBRob3o=;
+	s=k20260515; t=1779281379;
+	bh=XrCDaCldiYBERJ3Kig82Xmfaf3LKcNTJ3g7KcWrZZwo=;
 	h=Date:From:To:Cc:Subject:References:In-Reply-To;
-	b=c+QefKMAKzne3Mn1HFG8sfm1Z3y4hPEnQ8ELclV5VI7KM22VA9XLkzzUhIjarjDSc
-	 LKETPW3khf6THLBZaT36f9sXsxB7cCfUILoDC2L8Xf80T1vRH2gugYWUZstK/6OI77
-	 je1FR7UvZadmKoRlgV5Gt8US3JIjr/k+C6TMVr2x/Qeit2ZhQTJiT1oufSiu4Vr1zO
-	 giq5Nhz4UDyAq83Djie7WTdqew4MSvGO9WmPr4Y28BhvyFwN2Op9NVp+1hzfFja2nC
-	 Yzr99ZXTYXDI68ORc8IWqpfAgYrTydaCR9E1UUGez6nOY/uf0rb/am+tP4IMSydDNl
-	 N/FeLLP2r9LfA==
-Date: Wed, 20 May 2026 14:46:36 +0200
+	b=XMjw0EAHZuXkZ1bGrSUt5nh8GPVHRaJr22LqFqJwgh3fA70Z+h7IWqrubdEuqwBYn
+	 OlFbIoXHbpvBKoQlXie2/ANi7m5qkvshPYJrUh7Obqm1I+1yzyN/MUnlRPffbCIADB
+	 X8o2jnr17TrGJtXYSsKPTkKdGQdoTM4CMzyBvqqw7KARkRrkf+cr+WSENzaYzzPGsU
+	 Qx9uokjV4W2fhD9eedLbC2yeslfts8AhtoEhw8Eyg7aMshk9lBi5Q3lz+EIaI53yGs
+	 o9mAxEI/rcoaZsdDb4CCeaa8QtzfAunCxw1oPmRjh7XxrLzPH73ffaDQoUtjFzNbZK
+	 AsRVlu5uiV08Q==
+Date: Wed, 20 May 2026 14:49:37 +0200
 From: Lorenzo Bianconi <lorenzo@kernel.org>
 To: sashiko-reviews@lists.linux.dev
-Cc: conor+dt@kernel.org, robh@kernel.org, devicetree@vger.kernel.org,
+Cc: robh@kernel.org, devicetree@vger.kernel.org, conor+dt@kernel.org,
 	netdev@vger.kernel.org
-Subject: Re: [PATCH net-next v8 09/10] net: airoha: Introduce WAN device flag
-Message-ID: <ag2tLKJfVLV82o7t@lore-desk>
-References: <20260519-airoha-eth-multi-serdes-v8-9-6bd70e329df6@kernel.org>
- <20260520085933.C009F1F00893@smtp.kernel.org>
+Subject: Re: [PATCH net-next v8 10/10] net: airoha: Support multiple LAN/WAN
+ interfaces for hw MAC address configuration
+Message-ID: <ag2t4eVe4DcfU2yZ@lore-desk>
+References: <20260519-airoha-eth-multi-serdes-v8-10-6bd70e329df6@kernel.org>
+ <20260520085934.54AD01F00894@smtp.kernel.org>
 Precedence: bulk
 X-Mailing-List: sashiko-reviews@lists.linux.dev
 List-Id: <sashiko-reviews.lists.linux.dev>
@@ -42,108 +43,132 @@ List-Subscribe: <mailto:sashiko-reviews+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:sashiko-reviews+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Type: multipart/signed; micalg=pgp-sha512;
-	protocol="application/pgp-signature"; boundary="aIJq2R5uZPRpkgYw"
+	protocol="application/pgp-signature"; boundary="SVpQXylfY/87TD/I"
 Content-Disposition: inline
-In-Reply-To: <20260520085933.C009F1F00893@smtp.kernel.org>
+In-Reply-To: <20260520085934.54AD01F00894@smtp.kernel.org>
 
 
---aIJq2R5uZPRpkgYw
+--SVpQXylfY/87TD/I
 Content-Type: text/plain; charset=iso-8859-1
 Content-Disposition: inline
 Content-Transfer-Encoding: quoted-printable
 
-[...]
+> Thank you for your contribution! Sashiko AI review found 2 potential issu=
+e(s) to consider:
+> - [High] Driver probe fails on systems where MAC addresses are randomly g=
+enerated.
+> - [High] Configuration deadlock prevents users from changing the MAC addr=
+ess OUI.
+> --
+>=20
+> commit dbc4f298ffd475d67c32eeea98f201059b73194a
+> Author: Lorenzo Bianconi <lorenzo@kernel.org>
+>=20
+> net: airoha: Support multiple LAN/WAN interfaces for hw MAC address confi=
+guration
+>=20
+> The EN7581 and AN7583 SoCs provide registers to configure hardware LAN/WAN
+> MAC addresses. The hardware design assumes all interfaces configured as L=
+AN
+> (or WAN) share a common upper MAC address. This patch extends the logic to
+> derive the correct minimum and maximum values when two or more interfaces
+> are configured.
+>=20
+> > diff --git a/drivers/net/ethernet/airoha/airoha_eth.c b/drivers/net/eth=
+ernet/airoha/airoha_eth.c
+> > index 328f94fef2e28..9ae1ba4333097 100644
+> > --- a/drivers/net/ethernet/airoha/airoha_eth.c
+> > +++ b/drivers/net/ethernet/airoha/airoha_eth.c
+> > @@ -71,20 +71,69 @@ static void airoha_qdma_irq_disable(struct airoha_i=
+rq_bank *irq_bank,
+> >  	airoha_qdma_set_irqmask(irq_bank, index, mask, 0);
+> >  }
+> > =20
+> > -static void airoha_set_macaddr(struct airoha_gdm_dev *dev, const u8 *a=
+ddr)
+> > +static int airoha_set_macaddr(struct airoha_gdm_dev *dev, const u8 *ad=
+dr)
+> >  {
 >=20
 > [ ... ]
-> > +static int airoha_dev_init(struct net_device *netdev)
-> > +{
-> > +	struct airoha_gdm_dev *dev =3D netdev_priv(netdev);
-> > +	struct airoha_gdm_port *port =3D dev->port;
-> > =20
-> >  	switch (port->id) {
-> >  	case AIROHA_GDM3_IDX:
-> > +	case AIROHA_GDM4_IDX: {
-> > +		struct airoha_eth *eth =3D dev->eth;
-> > =20
-> > +		/* GDM2 supports a single net_device */
-> > +		if (eth->ports[1] && eth->ports[1]->devs[0])
-> > +			break;
 >=20
-> Is there a strict probe-order dependency for these interfaces?
+> > +			if (netdev->reg_state !=3D NETREG_REGISTERED)
+> > +				continue;
+> > +
+> > +			ether_addr_copy(ref_addr, netdev->dev_addr);
+> > +			val =3D (netdev->dev_addr[3] << 16) |
+> > +			      (netdev->dev_addr[4] << 8) | netdev->dev_addr[5];
+> > +			if (val < lmin)
+> > +				lmin =3D val;
+> > +			if (val > lmax)
+> > +				lmax =3D val;
+> > +		}
+> > +	}
+> > +
+> > +	if (!is_zero_ether_addr(ref_addr) && memcmp(ref_addr, addr, 3)) {
 >=20
-> If GDM3 or GDM4 is probed before GDM2, eth->ports[1]->devs[0] will be NUL=
-L.
-> This leads GDM3/GDM4 to assume GDM2 is inactive, take the WAN role, and f=
-orce
-> GDM2 into loopback mode.
+> Does this strict OUI validation cause the driver probe to fail when MAC a=
+ddresses
+> are randomly generated?
 >=20
-> Later, when GDM2 initializes:
+> If a MAC address is not provided in the device tree, the driver generates=
+ a random
+> one via eth_hw_addr_random(). For multi-port configurations, each port re=
+ceives an
+> independently generated random MAC address.
 >=20
-> > +	case AIROHA_GDM2_IDX:
-> > +		/* GDM2 is always used as wan */
-> > +		dev->flags |=3D AIROHA_PRIV_F_WAN;
-> >  		break;
+> Since the upper 3 bytes of these random addresses will almost certainly d=
+iffer,
+> when register_netdev() is called for the second port, its ndo_init callba=
+ck
+> (airoha_dev_init) will invoke airoha_set_macaddr() and hit this check. Re=
+turning
+> -EINVAL will fail register_netdev() and abort the entire driver probe, le=
+aving
+> the system without networking.
 >=20
-> It unconditionally assigns itself the WAN role.
+> Does this also prevent users from changing the MAC address OUI?
 >=20
-> Does this probe ordering create multiple WAN devices and leave GDM2's
-> hardware silently misconfigured since its routing capabilities were disab=
-led
-> by GDM3's loopback configuration?
+> When an administrator attempts to change the MAC address via standard use=
+rspace
+> tools, only one interface can be modified at a time. The driver will comp=
+are the
+> new MAC against the existing MAC of the other port.
+>=20
+> If the MSBs differ, the change is rejected. This makes it impossible to a=
+tomically
+> change the OUI of both interfaces simultaneously, locking the MAC address=
+ OUI
+> to its initial probe-time value.
 
-This is not a real issue since GDM2 is always registered before GDM3/GDM4.
-
->=20
-> >  	default:
-> >  		break;
-> >  	}
-> > =20
-> > +	airoha_dev_set_qdma(dev);
-> > +	airoha_set_macaddr(dev, netdev->dev_addr);
->=20
-> When setting the MAC address, airoha_set_macaddr() does the following:
->=20
-> static void airoha_set_macaddr(struct airoha_gdm_dev *dev, const u8 *addr)
-> {
-> 	...
-> 	reg =3D airoha_is_lan_gdm_dev(dev) ? REG_FE_LAN_MAC_H : REG_FE_WAN_MAC_H;
-> 	...
-> 	airoha_fe_wr(eth, reg, val);
-> }
->=20
-> Since REG_FE_LAN_MAC_H is a global forwarding engine register rather than
-> per-port, will initializing subsequent LAN devices overwrite the hardware
-> MAC filter configured by the first LAN device?
->=20
-> Might this cause the hardware to drop packets for LAN interfaces that do =
-not
-> match the single overwritten MAC address?
->=20
-> (Note: This was observed to be fixed later in the series by commit "net:
-> airoha: Support multiple LAN/WAN interfaces for hw MAC address configurat=
-ion",
-> but is mentioned here as it appears to introduce a regression in this com=
-mit.)
-
-As pointed out here, this is resolved in a subsequent patch in the series.
+As pointed out before, this is a hw design requirement when multiple
+net_devices are configured as LAN.
 
 Regards,
 Lorenzo
 
 >=20
+> > +		/* According to the HW design, hw mac address MS bits
+> > +		 * must be the same for each net_device with the same
+> > +		 * LAN/WAN configuration.
+> > +		 */
+> > +		netdev_err(dev->dev, "wrong mac addr for shared GDM port\n");
+> > +		return -EINVAL;
+> > +	}
+>=20
 > --=20
 > Sashiko AI review =B7 https://sashiko.dev/#/patchset/20260519-airoha-eth-=
-multi-serdes-v8-0-6bd70e329df6@kernel.org?part=3D9
+multi-serdes-v8-0-6bd70e329df6@kernel.org?part=3D10
 
---aIJq2R5uZPRpkgYw
+--SVpQXylfY/87TD/I
 Content-Type: application/pgp-signature; name=signature.asc
 
 -----BEGIN PGP SIGNATURE-----
 
-iHUEABYKAB0WIQTquNwa3Txd3rGGn7Y6cBh0uS2trAUCag2tLAAKCRA6cBh0uS2t
-rCJ4AQDOp+QE+KOzGLeo06yV7X68jypkI6k1608m+Gw8zmz3ewD/Wa7eJ5k9/V09
-hqlXwG29615S1lPJYE8PZp/HISn3iwA=
-=9rTp
+iHUEABYKAB0WIQTquNwa3Txd3rGGn7Y6cBh0uS2trAUCag2t4QAKCRA6cBh0uS2t
+rOw7AQDAteCh5QGqHibuAWWH5Xf4kDNJ+crj2BTAHUViHGV2UgD7B1jGas3OqoLT
+2ug1VU7b+Ii+UhVxr021yHiAKUDsFQE=
+=/2zb
 -----END PGP SIGNATURE-----
 
---aIJq2R5uZPRpkgYw--
+--SVpQXylfY/87TD/I--
