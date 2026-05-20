@@ -1,39 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 483C33DE427;
-	Wed, 20 May 2026 12:28:41 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 323653D6CDA;
+	Wed, 20 May 2026 12:33:38 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1779280123; cv=none; b=FuCxnQE3kdBWh8pvPA8e+GqPM4mF0TyKM+0liRJq7DcnN+Pr6GNcVQdBkcRlGhfgP54cHrOqF33ElEFO0txwIgvHFBky0mYBluZDzdQlc4Pxd/x2x3QAbOr7B+RQ5iA0zDVWrZJUkQoli87LReEGn/U5p96eIKyo0hTYilXPob0=
+	t=1779280420; cv=none; b=q1OoGLJKIbsoeb1gzXpaJIDwvD5V+5e2xl0Ugi4ICfl0+eE9fugpMgnsEMqcLTKVLnkXnZGxpAkkYfx9EI+G45DIwUtuAn42mIbse8jiuZD8XoNG1rSRP12qHhTtK1tETQ6VSI42eOvTdvjQhwxQIfdA36wIkSpbSboGdg2XHis=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1779280123; c=relaxed/simple;
-	bh=u0M4354NcRaRw6UV2ZqR75Z7RSZiD8Qk15kGhL8vtIw=;
+	s=arc-20240116; t=1779280420; c=relaxed/simple;
+	bh=0wH35MlgvbCcBrEwZtIsYCL1Mcy4Xom8xZ1IVm/3NG0=;
 	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=kVSEUBKwy6SfLnbyStr/226n+FQgReUpT3FnPGetdjO4dDqiHmORMTgJ8BRYZkH43MWOTJT9clAuQSHBadCwxplu4ouo5huNg/vktLlqRq5dDM3OBKExqXqBhtSHSb1Nnix199KqUE1LgXr5Q6Lj2uLcVnELmobDzK3QOV9h9B0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=RL3me7op; arc=none smtp.client-ip=100.103.45.18
+	 Content-Type:Content-Disposition:In-Reply-To; b=I+HEVZ20dPmGdz5vjER7DD7aHl6I7kig/ClEaDcwUeOWrZdnxZ0hgZIri8NHS2vhuukRv7MyjJc9GTXdP4eA7CImJ0Y+y1KaNDXCMcxTgo1Oy/Xh0hHGPo7QW0QpXB9qx51UsLQpNryAIA3Z5j3hgdAMj/BIp1kBjSb6L1ikoNM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=KN/NpN+5; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="RL3me7op"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 630B41F000E9;
-	Wed, 20 May 2026 12:28:40 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="KN/NpN+5"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 516E21F000E9;
+	Wed, 20 May 2026 12:33:38 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=kernel.org;
-	s=k20260515; t=1779280120;
-	bh=9QGGlk3LDXhixnD+kizSU53+b+n8Av5GKm/+8vIIvWg=;
+	s=k20260515; t=1779280418;
+	bh=VyaEOjHP1hqTYE60zgia3ekAoMflkGlYADHxZdY2o5Q=;
 	h=Date:From:To:Cc:Subject:References:In-Reply-To;
-	b=RL3me7op5+Ne284qNANnRtEVsnHsTWjWIztw4vNU3VsQ2GOxCYonftnAgUARHgGOo
-	 ySQpBay1EpB6b4guqnOMA4uatrGwNyYmAd5DHgpW79Qrg+58hsdoTJtOPWRkR2TSnl
-	 GNtZG2YwTWfjeEvYave3oE8OWSoH4tnvQTtc8s1tEE6t+lTIYbbhmflEiVPZmdE19b
-	 Vuv5CRlatIzI3GldO2Fdz2qq/TwBc9HXoXpYw9UJ8CUuD5EZs2pzcdNZ9so2658oXA
-	 DpGlXxziOQV8WF0nn9HWcBkVgbDTTPoWPh/7b/0KQ1iLrK76aFUe5wRga606fKzy0H
-	 V0GR+Ce39u1tw==
-Date: Wed, 20 May 2026 14:28:38 +0200
+	b=KN/NpN+5q7A9+ajbzYERRwkgEOwsIbWd4PRPoV4bo4BMGD0EEc8TJzxGjeVXu5SVJ
+	 HscKeIqtpFhxImkX9UldTuoLsJeZhGBri47P87/vbspqawn82ZrS1uWKeHah2XO1HY
+	 u8pc2EnzFeL0BM6q6TDGf3L77AfFzLOL13TbV+mLqQ/zdzIyU+6rONWRuTL6/T8253
+	 XmlB+Bi9lTiVOMtj1KGt8ruAThlT1Jb+S3DhHWaVAT6RRe31iNaefZEnx22OpLcPDi
+	 vAJdW62RBdjq+fyQVMRJBQHlqh16Qn3BlybAW4EVvlvd0lOu39Pgen2IDgxNjM7jdt
+	 +633Fgu153EdQ==
+Date: Wed, 20 May 2026 14:33:36 +0200
 From: Lorenzo Bianconi <lorenzo@kernel.org>
 To: sashiko-reviews@lists.linux.dev
 Cc: robh@kernel.org, conor+dt@kernel.org, devicetree@vger.kernel.org,
 	netdev@vger.kernel.org
 Subject: Re: [PATCH net-next v8 07/10] net: airoha: Support multiple
  net_devices for a single FE GDM port
-Message-ID: <ag2o9qLAa2HXN5es@lore-desk>
+Message-ID: <ag2qINUrMh7e3FJr@lore-desk>
 References: <20260519-airoha-eth-multi-serdes-v8-7-6bd70e329df6@kernel.org>
  <20260520085933.35D171F00897@smtp.kernel.org>
 Precedence: bulk
@@ -43,16 +43,17 @@ List-Subscribe: <mailto:sashiko-reviews+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:sashiko-reviews+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Type: multipart/signed; micalg=pgp-sha512;
-	protocol="application/pgp-signature"; boundary="hdgogd+ttgvpRBQT"
+	protocol="application/pgp-signature"; boundary="UWr99hrsTAdlrk3r"
 Content-Disposition: inline
 In-Reply-To: <20260520085933.35D171F00897@smtp.kernel.org>
 
 
---hdgogd+ttgvpRBQT
+--UWr99hrsTAdlrk3r
 Content-Type: text/plain; charset=iso-8859-1
 Content-Disposition: inline
 Content-Transfer-Encoding: quoted-printable
 
+On May 20, sashiko-bot@kernel.org wrote:
 > Thank you for your contribution! Sashiko AI review found 2 potential issu=
 e(s) to consider:
 > - [High] Port-wide hardware configuration is improperly modified via per-=
@@ -124,9 +125,6 @@ ce
 >=20
 > I note this regression is addressed later in the series by commit
 > 646f1e7bb6021 (net: airoha: Do not stop GDM port if it is shared).
-
-as pointed out here, this is resolved from a patch in the same series.
-
 >=20
 > > diff --git a/drivers/net/ethernet/airoha/airoha_eth.c b/drivers/net/eth=
 ernet/airoha/airoha_eth.c
@@ -162,26 +160,36 @@ _gdm_dev *dev)
 >=20
 > I see this regression is resolved later in the series by commit
 > 8a565b44990bb (net: airoha: Introduce WAN device flag).
-
-as pointed out here, this is resolved from a patch in the same series.
-
-Regards,
-Lorenzo
-
 >=20
 > --=20
 > Sashiko AI review =B7 https://sashiko.dev/#/patchset/20260519-airoha-eth-=
 multi-serdes-v8-0-6bd70e329df6@kernel.org?part=3D7
 
---hdgogd+ttgvpRBQT
+Commenting on sashiko's report:
+https://netdev-ai.bots.linux.dev/sashiko/#/patchset/20260519-airoha-eth-mul=
+ti-serdes-v8-0-6bd70e329df6%40kernel.org
+
+- The per-port hardware MIB counters live on the GDM port, but
+  airoha_dev_get_stats64() returns dev->port->stats and
+  airoha_update_hw_stats() reads REG_FE_GDM_*_CNT_*(port->id) into that
+  shared structure followed by REG_FE_GDM_MIB_CLEAR.  With two netdevs now
+  sharing a single GDM3 or GDM4 port, would both siblings report identical
+  combined byte/packet counters via ip -s link show, since there is no
+  per-dev SW counter to disambiguate the shared HW MIB?
+  - This issue will be fixed with a dedicated patch not in the series.
+
+Regards,
+Lorenzo
+
+--UWr99hrsTAdlrk3r
 Content-Type: application/pgp-signature; name=signature.asc
 
 -----BEGIN PGP SIGNATURE-----
 
-iHUEABYKAB0WIQTquNwa3Txd3rGGn7Y6cBh0uS2trAUCag2o9gAKCRA6cBh0uS2t
-rKsLAQCTKSY91GpYjO0OdC90ZCeNmsb/wVXSqWIzNa6HMKz23gD/X3yJnMzsvJgg
-vTiV8EEIEjiuSBUZ3pzo0yDDhflWiwA=
-=6JIv
+iHQEABYKAB0WIQTquNwa3Txd3rGGn7Y6cBh0uS2trAUCag2qIAAKCRA6cBh0uS2t
+rLASAP9qOxiZFoU4XNPIrr/i/6XoSHz60uQNVvhZvhW3zx8QQgD2PLhU8vp3N6hG
+/CQWMan0EGJxQksiQleinr3mg+6fBA==
+=hYxz
 -----END PGP SIGNATURE-----
 
---hdgogd+ttgvpRBQT--
+--UWr99hrsTAdlrk3r--
