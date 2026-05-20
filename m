@@ -1,287 +1,273 @@
-Received: from ultrarisc.com (unknown [218.76.62.146])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 01B5E34A79D
-	for <sashiko-reviews@lists.linux.dev>; Wed, 20 May 2026 07:15:35 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=218.76.62.146
-ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1779261339; cv=none; b=WB0GDyoBKLXINBR3i6k/zLrSeYoHCkZP3QGxzqAFsVT6ykuJTNyyVXLchUbySJRDloZ2iNJCgMJ/iFL4QZhRAmOim2u5FGdXf9CqN6yiAOWNV9cJi6F/jjHlFNR7+CpUtORk6YAG5PlS1bc9zxKjm2MSL7JfI63C8ztVqvohUsc=
-ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1779261339; c=relaxed/simple;
-	bh=5v0bBklZMAI11axTsyPo+y6JTU4aEE2dE3vxU2Rr3sM=;
-	h=MIME-Version:Content-Type:Subject:From:To:Cc:In-Reply-To:
-	 References:Date:Message-Id; b=hEur26EzH1P/EcTGufbYK+1gX963ouS7kHMfEMT0b0Q5WbQ8uL861Z7XE40juj7JRRuGn0SW8ArmyEKJVNAJNcSyZ3FrxMXCrYYg6pvNlAqmNGhEe1qFGy+C6WvKe50jdLHmdg8WeXpVLE3MIh8ZOm8IdWMGLxxdUNe6d99NIeU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=ultrarisc.com; spf=pass smtp.mailfrom=ultrarisc.com; dkim=pass (1024-bit key) header.d=ultrarisc.com header.i=@ultrarisc.com header.b=MKI5592d; arc=none smtp.client-ip=218.76.62.146
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=ultrarisc.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=ultrarisc.com
+Received: from PA4PR04CU001.outbound.protection.outlook.com (mail-francecentralazon11013070.outbound.protection.outlook.com [40.107.162.70])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+	(No client certificate requested)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 71BDF2C158A;
+	Wed, 20 May 2026 07:17:48 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=fail smtp.client-ip=40.107.162.70
+ARC-Seal:i=2; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
+	t=1779261471; cv=fail; b=ZH0kYrc3jpmJJ92k4lJdLEDZnfzIkYs5+juu1tGERZXFmK7mEPOs9ppV8e251eTpoS5XI85JYRuXXKGfI1z1pgUMPc0Y7s+gsH8THB2AkbJ7eDIKnPjwlNl2thQIfFb5jW6SmJrOYIvudhGr/GSEtH7N3XCoSdCCXopccUAkVxI=
+ARC-Message-Signature:i=2; a=rsa-sha256; d=subspace.kernel.org;
+	s=arc-20240116; t=1779261471; c=relaxed/simple;
+	bh=/U0wqx9Zuty8lsfyXpCC6FIwP/jt4dSruhamyTAvYLA=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:Content-Type:
+	 Content-Disposition:In-Reply-To:MIME-Version; b=MsJubQ8KFs3yGi9DxUGsP86jY35OtHikedyaGfv1GOvkYD4Kpzr+OVk/k2DYtxFw/AzYBgcqRYB5F/iChSS2oJgerxui3GpTtjjrPkn4LfwVvXLB94k2/hbxPUd2xJJcXGUUtmNgYAeRDDg1qAitzdWA21NUvLfc7NARUTcvhcs=
+ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=nxp.com; spf=pass smtp.mailfrom=nxp.com; dkim=pass (2048-bit key) header.d=nxp.com header.i=@nxp.com header.b=Y5QMAoY3; arc=fail smtp.client-ip=40.107.162.70
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=nxp.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=nxp.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=ultrarisc.com header.i=@ultrarisc.com header.b="MKI5592d"
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-	d=ultrarisc.com; s=dkim; h=Received:MIME-Version:Content-Type:
-	Content-Transfer-Encoding:Subject:From:To:Cc:In-Reply-To:
-	References:Date:Message-Id; bh=J3YrheZdqW+duFn409E1je+nPJyCNsond
-	JsbSI32P1k=; b=MKI5592dDqeZC78qO7kw4nmMFreuTuNMelKcS1RZMly8V8E+C
-	k1ANN2SMGYoccRahzELFoDBz+5WjL4fcLzKF2orsD8YyeKYYZsN+4ECzc+UAevMR
-	/Tgj3XU3xQSGZ2xBn+/sEWr6mSmOyAEiZ7hQ6J4yDykH87IsGc7xfcgxzo=
-Received: from [127.0.0.1] (unknown [192.168.100.1])
-	by localhost.localdomain (Coremail) with SMTP id AQAAfwAnYUKuXw1qQO0EAA--.6649S2;
-	Wed, 20 May 2026 15:15:58 +0800 (CST)
+	dkim=pass (2048-bit key) header.d=nxp.com header.i=@nxp.com header.b="Y5QMAoY3"
+ARC-Seal: i=1; a=rsa-sha256; s=arcselector10001; d=microsoft.com; cv=none;
+ b=ZDvUmaPbBE8r96tr8Jd4OiavFG5Edvw6rnrY30poBxDKXBICrtA5HrLetwRRoj4elOe6UzJDC4xr+Gq4UmFkna1e4vdKd1Dbfa/EmCZSEe1yRl7z00noojjcQCG4bxnjwyV6Q2AX9BqdFSTXb91AfS0JDcHZTYfSFAzEL1LkJK+bSWKW2dpQF3xfirpaTGn4xvUbZPupJotwe9n/uluOQ0eI4w+I4wykQNN/wwiFXkK77LRtd8k5zwxTet5iGRXZ5GIOJSOM36O8JslcKTyH1kQpOarQNh8umykgGcRBiPuJ1DJm0C5GvOtywepuJQVhK0kQP10CfltB8TlFvj9ZoQ==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com;
+ s=arcselector10001;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
+ bh=/0A28/LUc0SG6U8S6xppJEDn75y60wX6wRXE8nqim0M=;
+ b=DSzaUaTqXWdcv/5SAu+9+UzIKsTJHR3lhIU7QWRxp+kdWThPRaWpg4bbu+S0/f2G/6Dhn5o+nFDTVaXs1ohkEP6LiFa00OlVod7Uhh2365Fe5yEMyOsB3CPmQX+dT291V5sKgCs8AEfhgkNAeGKP68QQlgcPoZNngtcox83BXEt6VWfPLb0f5/JsziIp7Hop1AIJEk0YfgLEszg+XsxXkr4z4vnTd4fFPD0DF6LU8UPcFQNAs+xvEwftl/uU9sfkWJu/YitY66qniN7eAbIqzbhgd2vZJy6opyRZHonRVU1+rgjFyr2jJq4x4UlGURdZ5NDh2Ws6XGqVsoIxqizl4Q==
+ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
+ smtp.mailfrom=nxp.com; dmarc=pass action=none header.from=nxp.com; dkim=pass
+ header.d=nxp.com; arc=none
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=nxp.com; s=selector1;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
+ bh=/0A28/LUc0SG6U8S6xppJEDn75y60wX6wRXE8nqim0M=;
+ b=Y5QMAoY3iqlvN1dzRe44wzB2filbyNwXhz+eD8aw36MFk95kWG1IBUvSydasRk+n2JdRhUiwxQZPBA/nLUSeIjxU5ShCzaTujHJdCpK4sPZdLrc4i8MXdls0xMidZxU5/EfW1H0FZWrdvC3DwydMDtWOL6jTZ2QpafbC8zmeMdrtSxvXqXZuTC/ejctr1nWO7wfpuXaJJPAvh1QTAJdtWkR//qQc8cus3sAR8nDhvMCKOHKeiYlyduhAaKH94diLD5FKqsi7pOX2I76uGy6I5vJzp96QL6UWMeBB2Hm8XIwlSLqPg4vUA8HAje8GrdHFxsbxsLtooiCoUvG9jiGATA==
+Authentication-Results: dkim=none (message not signed)
+ header.d=none;dmarc=none action=none header.from=nxp.com;
+Received: from PA4PR04MB7821.eurprd04.prod.outlook.com (2603:10a6:102:c5::5)
+ by GV2PR04MB12137.eurprd04.prod.outlook.com (2603:10a6:150:304::15) with
+ Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.21.25.23; Wed, 20 May
+ 2026 07:17:43 +0000
+Received: from PA4PR04MB7821.eurprd04.prod.outlook.com
+ ([fe80::67dc:4bd2:8552:9b50]) by PA4PR04MB7821.eurprd04.prod.outlook.com
+ ([fe80::67dc:4bd2:8552:9b50%6]) with mapi id 15.21.0048.013; Wed, 20 May 2026
+ 07:17:43 +0000
+Date: Wed, 20 May 2026 15:20:06 +0800
+From: Robby Cai <robby.cai@nxp.com>
+To: sashiko-reviews@lists.linux.dev
+Cc: imx@lists.linux.dev, conor+dt@kernel.org, robh@kernel.org,
+	krzk+dt@kernel.org, devicetree@vger.kernel.org, Frank.Li@kernel.org
+Subject: Re: [PATCH v2 1/1] arm64: dts: imx8mq-evk: Enable MIPI CSI and dual
+ OV5640 cameras
+Message-ID: <20260520072006.GB2269979@shlinux88>
+References: <20260515111143.2980956-1-robby.cai@nxp.com>
+ <20260515113318.2A02EC2BCB0@smtp.kernel.org>
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <20260515113318.2A02EC2BCB0@smtp.kernel.org>
+X-ClientProxiedBy: SG2P153CA0025.APCP153.PROD.OUTLOOK.COM (2603:1096:4:c7::12)
+ To PA4PR04MB7821.eurprd04.prod.outlook.com (2603:10a6:102:c5::5)
 Precedence: bulk
 X-Mailing-List: sashiko-reviews@lists.linux.dev
 List-Id: <sashiko-reviews.lists.linux.dev>
 List-Subscribe: <mailto:sashiko-reviews+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:sashiko-reviews+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset="utf-8"
-Content-Transfer-Encoding: 8bit
-Subject: Re: [PATCH 6/9] pinctrl: ultrarisc: Add UltraRISC DP1000 pinctrl
- driver
-From: Jia Wang <wangjia@ultrarisc.com>
-To: sashiko-reviews@lists.linux.dev
-Cc: Jia Wang via B4 Relay <devnull+wangjia.ultrarisc.com@kernel.org>, 
- conor+dt@kernel.org, robh@kernel.org, devicetree@vger.kernel.org, 
- krzk+dt@kernel.org
-In-Reply-To: <20260515022854.5CCECC2BCB3@smtp.kernel.org>
-References: <20260515-ultrarisc-pinctrl-v1-6-bf559589ea8a@ultrarisc.com>
- <20260515022854.5CCECC2BCB3@smtp.kernel.org>
-Date: Wed, 20 May 2026 15:15:17 +0800
-Message-Id: <177926131756.943957.13034250409955560370.b4-reply@b4>
-X-Mailer: b4 0.15-dev
-X-Developer-Signature: v=1; a=ed25519-sha256; t=1779261317; l=7643;
- i=wangjia@ultrarisc.com; s=20260515; h=from:subject:message-id;
- bh=5v0bBklZMAI11axTsyPo+y6JTU4aEE2dE3vxU2Rr3sM=;
- b=1SHdhTa7/XXqBvBO5si7ZJ1yZWKItKf+teEf19t+50ZV52xGugqg6YcBypmRUfrsV4FE8tP07
- V5mdeaxcNyRATDdPVrPObe1M/73HA72rTGZ56dM/HB147QaYDd0y3jH
-X-Developer-Key: i=wangjia@ultrarisc.com; a=ed25519;
- pk=wGVm18siRScehKOkOz0WKxgxDy7IezHEszhnN4/TUCY=
-X-CM-TRANSID:AQAAfwAnYUKuXw1qQO0EAA--.6649S2
-X-Coremail-Antispam: 1UD129KBjvJXoWxKr1xKF4kCr4kAF4xZw4fKrg_yoW3GF4fpF
-	Z5Ga13tFW8JFWaqr40q3ykGF1rX3Z7AFWUGrZ8try2yFnIyrykXrW5K3yYvayDCr4qkr4a
-	va15X3sI9ws8Ja7anT9S1TB71UUUUU7qnTZGkaVYY2UrUUUUjbIjqfuFe4nvWSU5nxnvy2
-	9KBjDU0xBIdaVrnRJUUUv0b7Iv0xC_Kw4lb4IE77IF4wAFF20E14v26r1j6r4UM7CY07I2
-	0VC2zVCF04k26cxKx2IYs7xG6rWj6s0DM7CIcVAFz4kK6r1j6r18M28lY4IEw2IIxxk0rw
-	A2F7IY1VAKz4vEj48ve4kI8wA2z4x0Y4vE2Ix0cI8IcVAFwI0_Jr0_JF4l84ACjcxK6xII
-	jxv20xvEc7CjxVAFwI0_Jr0_Gr1l84ACjcxK6I8E87Iv67AKxVW8JVWxJwA2z4x0Y4vEx4
-	A2jsIEc7CjxVAFwI0_Gr0_Gr1UM2AIxVAIcxkEcVAq07x20xvEncxIr21l5I8CrVACY4xI
-	64kE6c02F40Ex7xfMcIj6xIIjxv20xvE14v26r1j6r18McIj6I8E87Iv67AKxVW8JVWxJw
-	Am72CE4IkC6x0Yz7v_Jr0_Gr1lF7xvr2IYc2Ij64vIr41lc7CjxVAaw2AFwI0_JF0_Jw1l
-	c2xSY4AK6svPMxAIw28IcxkI7VAKI48JMxC20s026xCaFVCjc4AY6r1j6r4UMI8I3I0E5I
-	8CrVAFwI0_Jr0_Jr4lx2IqxVCjr7xvwVAFwI0_JrI_JrWlx4CE17CEb7AF67AKxVWUAVWU
-	twCIc40Y0x0EwIxGrwCI42IY6xIIjxv20xvE14v26r1j6r1xMIIF0xvE2Ix0cI8IcVCY1x
-	0267AKxVWUJVW8JwCI42IY6xAIw20EY4v20xvaj40_Jr0_JF4lIxAIcVC2z280aVAFwI0_
-	Jr0_Gr1lIxAIcVC2z280aVCY1x0267AKxVW8JVW8JrUvcSsGvfC2KfnxnUUI43ZEXa7IU5
-	Ksj5UUUUU==
-X-CM-SenderInfo: pzdqwylld63zxwud2x1vfou0bp/1tbiAQANEWoL3kQAGQADs8
+X-MS-PublicTrafficType: Email
+X-MS-TrafficTypeDiagnostic: PA4PR04MB7821:EE_|GV2PR04MB12137:EE_
+X-MS-Office365-Filtering-Correlation-Id: 908f08a7-640d-43f2-4a14-08deb63fe29b
+X-MS-Exchange-SenderADCheck: 1
+X-MS-Exchange-AntiSpam-Relay: 0
+X-Microsoft-Antispam:
+	BCL:0;ARA:13230040|1800799024|376014|52116014|19092799006|366016|38350700014|4143699003|22082099003|56012099003|18002099003|11063799006;
+X-Microsoft-Antispam-Message-Info:
+	tAZx1UVsOeVn9hb+in99XZbEYb0zO+3QPDDHhni4rwyJi8LjFZVBueTL8cw04Q2cte5F13/ROoctOuNYFhBwViXqfx0IX8FDi6oNKJGDoOUxGsUbEOpfOcvMcoKIu4XuBZ3u6DzZZIJmG0F7L0EZ7cJ3cvoXgVPRnhjWrEp0RyuoKC5RMmD3g7Dqo+J1chtFBKBJRbU+MWbam5oWTsSgeQga6WzCiliAyyYmWUZL3Z2yMxl4ObaKNOqF9yXscbbl+aCFG5z4w22miYaeLsr5ANtqI1CVfG5zk8yzP3j6ygOwLG6BMJJ/hzwYyb/tKx39L61mfzsdqwtrDWPdnf5wnlzxKTbrbvNRrM7qpAEU7HXnDAcRp39adkNJ6BNP2COizFI3CpJoyuVy9/+0JVFRKir1UkyEm3EbTyazHIdUcO7ofYG6hKV+LTvC44Gayo5/mtiH9t6JrKaqI6QN7NNnO7LTY3SbXpj1OQsIkv0UYbpRF5Wf49M5RmHBtZzvZoq7yuaZ6uhwLre640CI5WO49jjncWHAOMrjwkOkrGTgN4nzmz4Jpsf4aeWkpsWyVsbHwsgv96nYuKL/cOig4dw8ySBglqjRG20iooT3yOmhYmlcgfXZee63D3toqaWB49TL+VAmWqhNIuCdFHcqP74G8fZxGRqTGigLEQatiZth1MN8dV+2d8L7z3G3l/8wiHRj
+X-Forefront-Antispam-Report:
+	CIP:255.255.255.255;CTRY:;LANG:en;SCL:1;SRV:;IPV:NLI;SFV:NSPM;H:PA4PR04MB7821.eurprd04.prod.outlook.com;PTR:;CAT:NONE;SFS:(13230040)(1800799024)(376014)(52116014)(19092799006)(366016)(38350700014)(4143699003)(22082099003)(56012099003)(18002099003)(11063799006);DIR:OUT;SFP:1101;
+X-MS-Exchange-AntiSpam-MessageData-ChunkCount: 1
+X-MS-Exchange-AntiSpam-MessageData-0:
+	=?us-ascii?Q?ni9jbpoUE8wZnwRzxQZABmmLpd2Asx+ae/LDmV4LHBz/5bzpc6lSUSGwhAKj?=
+ =?us-ascii?Q?is0UXlJQHAgRsfMLUs4ie4rL1z6Xg9Nrk82n3Nnn6KSLMTYEtEBl/w/MT7hu?=
+ =?us-ascii?Q?LWciZpNSH6ir4jH5ohbvVpsNEQMrZHrcrzCUd37dbDqJSj3fM29C/MSCZVh2?=
+ =?us-ascii?Q?bw+7jS984/wutfiL0OHL0r+VnPwnioKvIACOiG4orQ5PSayV/sfqs/NLhb94?=
+ =?us-ascii?Q?Wtl509N1IxtlTmEJNfCk83gkLP50nG8wTVFZ0eqRuAaL3F2AOJ1LO6k56Dlp?=
+ =?us-ascii?Q?/0Ie0H1J3P/BFpTucTgRxExZIi2p2ol+DUNvb/RrIbgVXHIvp7gNoRV6Gqml?=
+ =?us-ascii?Q?1IwP9goP2DvAzoiU1fROkO/n/QmmuqWs4Im2CVW117JlWm8tFquQLIpwLhT0?=
+ =?us-ascii?Q?363YGcGexuhkON1hyPdS+Bve0+IXwqUmW+Zx0zWT+FT79zCuOvSqm3RXsXUT?=
+ =?us-ascii?Q?x7/KlWqRncA39xKW2ln0r+v/MqoZk8+5T/0Hptg5SEozL7NLwN2ne/AgP8Cp?=
+ =?us-ascii?Q?JWt56u7FwSqZyshvdIVH+ta7q2T7RuIVowyX48RYYvMIRfZKMae585ixPIIy?=
+ =?us-ascii?Q?39TvcY3oEdwApeOZ2sJvsZeg1ujrrIg+7N0j+naf6//41xD/u2+yparVab9n?=
+ =?us-ascii?Q?qxlR4Y2OTN6CB9SbMNnbbSWzQzti9GIym52SUojDwYV9PRUZFe0ahOU/u1DE?=
+ =?us-ascii?Q?SOQDSFuXD8QtI7eQnJjkpMpviTR05bi6zDgiU7tZV11bhAEKkwsuTf8/tPsP?=
+ =?us-ascii?Q?lfQNIzoEKV5x+X6+mLMcHKUcFuZY7bmJgMiAHAAK2HYt0pvQNxu6MfydZy/E?=
+ =?us-ascii?Q?+YVil3IjDkMf6r0QqHv1MSVOg1btFJnvJdWDgIbui2EezpYSv81IYQ0zc/tH?=
+ =?us-ascii?Q?vYAlkV2QNm50TKL0XkPYFdH+DnMrCnSlvm2SH2/ojjsJRhbCum6u/CeHy2VT?=
+ =?us-ascii?Q?y+xUnkJQAeIf3T6k6vCTx/Uy68OP8s1Ln3Kf5x5p5PlJQM5tgkehIf1JrmYh?=
+ =?us-ascii?Q?n4FKIRaHcBEgilkSfsCYmYOXrPa3gAeToMT0m099L++44cN1GcC61e+VKa5s?=
+ =?us-ascii?Q?/jwixzSDytQLlEz4/t+smOGj96usNZQD/DmmrJaakalNXs+r8nPxIyB4//3O?=
+ =?us-ascii?Q?/Fz6B5ojwrPhoGQhwqmSxWqkzU+kdIjXlN2P5/sJcds1rDuT/OuGgvf5PVMH?=
+ =?us-ascii?Q?g3z0zcbB7s5XFWnCpOV4AdsDf+9YCJnPiXChjVoMTG/R2myRYl1rhuKEZXkp?=
+ =?us-ascii?Q?sW6nS7KWqE5f2dKBNElawX2SF4CyGe88ffYTUEyvU+O3X1ayTTM0sCc8gioI?=
+ =?us-ascii?Q?aR6O1SHBX1oYHjmsZnABh5UiDZaAGMCbDG6YGOgdlLYPmY3k5gPizv0ZjDk0?=
+ =?us-ascii?Q?03WhM925msxJeXlUqeru3didfSQn8+l+K2g+Cxlp6koQAy0qrCH5MFOIdsji?=
+ =?us-ascii?Q?ByjiHJZX48iMWc2VO30Q8xhvJJdgnfaavStSI5aubQibGlbjpZx/4E/SdVTs?=
+ =?us-ascii?Q?Q85FprqTNTjBba4L7yD+luK1xqK7XBTnXMFgY5uzIWuYuzyDT8THMCG+aVUo?=
+ =?us-ascii?Q?3987oWj3hu+0qs5ywafvEj6r7WwSJxOBR7ZmmBPV6Yjl/SY4Azr8rEs4vs6I?=
+ =?us-ascii?Q?JDISzTfhtJ27fsWpfp3U9soDMjKaF2Hg1dlUm9jeR0xsTFqJmlj2jHRo3JjB?=
+ =?us-ascii?Q?Io0Aah09Ihk8TvUMMoKyAzJw4ISWjNh/P4qj1U6fX6NaOVMfpwhEa4csf0XP?=
+ =?us-ascii?Q?9fU1/mX0vg=3D=3D?=
+X-OriginatorOrg: nxp.com
+X-MS-Exchange-CrossTenant-Network-Message-Id: 908f08a7-640d-43f2-4a14-08deb63fe29b
+X-MS-Exchange-CrossTenant-AuthSource: PA4PR04MB7821.eurprd04.prod.outlook.com
+X-MS-Exchange-CrossTenant-AuthAs: Internal
+X-MS-Exchange-CrossTenant-OriginalArrivalTime: 20 May 2026 07:17:43.6494
+ (UTC)
+X-MS-Exchange-CrossTenant-FromEntityHeader: Hosted
+X-MS-Exchange-CrossTenant-Id: 686ea1d3-bc2b-4c6f-a92c-d99c5c301635
+X-MS-Exchange-CrossTenant-MailboxType: HOSTED
+X-MS-Exchange-CrossTenant-UserPrincipalName: IupZo3jDaFQZFLAnmJZAqYrynXvy65XQR5pcFjLFwynzjqwj39nW15JXniOhvj/k7LUSWhKudIiDcGwbioutHQ==
+X-MS-Exchange-Transport-CrossTenantHeadersStamped: GV2PR04MB12137
 
-On 2026-05-15 02:28 +0000, sashiko-bot@kernel.org wrote:
-> Thank you for your contribution! Sashiko AI review found 5 potential issue(s) to consider:
-> - [High] Memory leak of temporary DT parsing arrays on consumer probe paths
-> - [Medium] Silent ignoring of unsupported pin configurations
-> - [Low] Build failure due to dynamic mask in `field_prep()`
-> - [Low] Signed integer overflow during pin mux configuration
-> - [Low] Unnecessary Kconfig dependencies selected
+On Fri, May 15, 2026 at 11:33:17AM +0000, sashiko-bot@kernel.org wrote:
+> Thank you for your contribution! Sashiko AI review found 1 potential issue(s) to consider:
+> - [High] The proposed device tree configuration intends to use software reset by omitting `reset-gpios`, but the upstream OV5640 driver skips the software reset sequence if `powerdown-gpios` is present.
 > --
 > 
-> commit 03445610d24a54757505c7f2def35cc4894dd19f
-> Author: Jia Wang <wangjia@ultrarisc.com>
+> commit d18d0c4c95f98f3312c777b828bf09c413169ce3
+> Author: Robby Cai <robby.cai@nxp.com>
 > 
-> pinctrl: ultrarisc: Add UltraRISC DP1000 pinctrl driver
+> arm64: dts: imx8mq-evk: Enable MIPI CSI and dual OV5640 cameras
 > 
-> This commit adds the pinctrl driver for the UltraRISC DP1000 pinctrl
-> controller.
+> Enable the MIPI CSI bridges and corresponding CSI-2 host interfaces
+> on the i.MX8MQ EVK, and add two OV5640 camera sensors.
 > 
-> > diff --git a/drivers/pinctrl/ultrarisc/Kconfig b/drivers/pinctrl/ultrarisc/Kconfig
-> > new file mode 100644
-> > index 0000000000000..ba8747b90127d
-> > --- /dev/null
-> > +++ b/drivers/pinctrl/ultrarisc/Kconfig
-> > @@ -0,0 +1,23 @@
-> > +# SPDX-License-Identifier: GPL-2.0-only
-> > +
-> > +config PINCTRL_ULTRARISC
-> > +	tristate
-> > +	depends on OF
-> > +	select PINMUX
-> > +	select GENERIC_PINCTRL_GROUPS
-> > +	select GENERIC_PINCONF
-> > +	select GENERIC_PINMUX_FUNCTIONS
-> > +	select GPIOLIB
-> > +	select IRQ_DOMAIN_HIERARCHY
-> > +	select MFD_SYSCON
+> > Both OV5640 sensors share a single reset GPIO on this board,
+> > which prevents independent hardware reset when both cameras
+> > are enabled. As a result, the reset line is kept deasserted
+> > via a GPIO hog, and sensor reset is performed via software.
 > 
-> This isn't a bug, but is it necessary to select IRQ_DOMAIN_HIERARCHY and
-> MFD_SYSCON here? The driver code doesn't seem to include the corresponding
-> headers or use their APIs.
->
+> Will the software reset actually occur if powerdown-gpios is provided?
+> 
+> Looking at the ov5640 driver's power up sequence, the software reset is
+> skipped if the powerdown gpio is present:
+> 
+> drivers/media/i2c/ov5640.c:ov5640_powerup_sequence() {
+> 	if (sensor->pwdn_gpio) {
+> 		gpiod_set_value_cansleep(sensor->reset_gpio, 1);
+> 		...
+> 		gpiod_set_value_cansleep(sensor->reset_gpio, 0);
+> 	} else {
+> 		/* software reset */
+> 		ov5640_write_reg(sensor, OV5640_REG_SYS_CTRL0,
+> 				 OV5640_REG_SYS_CTRL0_SW_RST);
+> 		...
+> 	}
+> }
+> 
+> Since the device tree nodes define powerdown-gpios, does this mean the
+> driver will skip the software reset branch entirely?
+> 
 
-I’ll drop them in v2, thanks.
- 
+Yes, that's correct.
+
+When `powerdown-gpios` is present, the OV5640 driver follows the
+PWDN-controlled power cycle path and skips the explicit software reset.
+
+This is intentional for this board, where both sensors share a single
+reset line and cannot be reset independently. To avoid interference,
+the reset line is kept deasserted (via a GPIO hog), and initialization
+relies on the powerdown GPIO and power cycling instead.
+
+This matches setups described in the driver where a single control
+signal effectively drives both reset and power sequencing (e.g. PWUP-
+style designs), making a separate software reset unnecessary. [1]
+
+Additionally, using the powerdown path preserves the intended hardware
+integration: PWDN is the only per-device control signal, while reset
+is shared. This allows independent control of each sensor and avoids
+introducing artificial dependencies on the shared reset line.
+
+For these reasons, the design intentionally relies on powerdown-based
+sequencing rather than the software reset path.
+
+I will update the commit message to make this behavior explicit.
+
+
+[1] https://github.com/torvalds/linux/blob/master/drivers/media/i2c/ov5640.c#L2449-L2464
+
+> > diff --git a/arch/arm64/boot/dts/freescale/imx8mq-evk.dts b/arch/arm64/boot/dts/freescale/imx8mq-evk.dts
+> > index d48f901487d49..2311a05b88c50 100644
+> > --- a/arch/arm64/boot/dts/freescale/imx8mq-evk.dts
+> > +++ b/arch/arm64/boot/dts/freescale/imx8mq-evk.dts
+> 
 > [ ... ]
-> > diff --git a/drivers/pinctrl/ultrarisc/pinctrl-ultrarisc.c b/drivers/pinctrl/ultrarisc/pinctrl-ultrarisc.c
-> > new file mode 100644
-> > index 0000000000000..774746943e283
-> > --- /dev/null
-> > +++ b/drivers/pinctrl/ultrarisc/pinctrl-ultrarisc.c
-> [ ... ]
-> > @@ -0,0 +1,746 @@
-> [ ... ]
-> > +static int ur_write_pin_conf(struct ur_pinctrl *pctldata, unsigned int pin, u32 conf)
-> > +{
-> > +	const struct ur_port_desc *port_desc;
-> > +	struct ur_pin_val pin_val;
-> > +	unsigned long flags;
-> > +	void __iomem *reg;
-> > +	u32 reg_offset;
-> > +	u32 val;
-> > +	u32 shift;
-> > +	u32 mask;
-> > +
-> > +	if (ur_pin_num_to_port_pin(pctldata->match_data, &pin_val, pin))
-> > +		return -EINVAL;
-> > +
-> > +	port_desc = &pctldata->match_data->ports[pin_val.port];
-> > +	reg_offset = ur_get_pin_conf_offset(port_desc, pin_val.pin);
-> > +	reg = pctldata->base + reg_offset;
-> > +	shift = (pin_val.pin % UR_CONF_PIN_PER_REG) * UR_CONF_BIT_PER_PIN;
-> > +	mask = GENMASK(UR_CONF_BIT_PER_PIN - 1, 0) << shift;
-> > +
-> > +	raw_spin_lock_irqsave(&pctldata->lock, flags);
-> > +	val = readl_relaxed(reg);
-> > +	val = (val & ~mask) | field_prep(mask, conf);
 > 
-> Does this cause a build failure? The field_prep() macro strictly enforces
-> that its mask argument must be a compile-time constant. Because mask is
-> calculated dynamically based on pin_val.pin, the driver will fail to compile.
+> > @@ -330,12 +367,101 @@ vgen6_reg: vgen6 {
+> >  			};
+> >  		};
+> >  	};
+> > +
+> > +	camera@3c {
+> > +		compatible = "ovti,ov5640";
+> > +		reg = <0x3c>;
+> > +		pinctrl-names = "default";
+> > +		pinctrl-0 = <&pinctrl_camera2_pwdn>;
+> > +		clocks = <&clk IMX8MQ_CLK_CLKO2>;
+> > +		clock-names = "xclk";
+> > +		assigned-clocks = <&clk IMX8MQ_CLK_CLKO2>;
+> > +		assigned-clock-parents = <&clk IMX8MQ_SYS2_PLL_200M>;
+> > +		assigned-clock-rates = <20000000>;
+> > +		powerdown-gpios = <&gpio1 5 GPIO_ACTIVE_HIGH>;
+> 
+> Since the reset gpio is omitted here and is kept deasserted by a hog
+> elsewhere, does providing powerdown-gpios result in both hardware
+> and software resets being bypassed?
+
+Not exactly.
+
+The software reset is skipped, but the sensor is still reset
+via the power-cycle sequence using the PWDN GPIO.
+
+The hardware reset line is intentionally not used since it is
+shared between both sensors.
+
+> 
+> > +		DOVDD-supply = <&sw4_reg>;
+> > +		AVDD-supply = <&reg_2v8>;
+> > +		DVDD-supply = <&reg_1v5>;
+> > +
+> > +		port {
+> > +			camera2_ep: endpoint {
+> > +				remote-endpoint = <&mipi_csi2_in_ep>;
+> > +				clock-lanes = <0>;
+> > +				data-lanes = <1 2>;
+> > +			};
+> > +		};
+> > +	};
+> > +};
+> > +
+> > +&i2c2 {
+> > +	clock-frequency = <100000>;
+> > +	pinctrl-names = "default";
+> > +	pinctrl-0 = <&pinctrl_i2c2>;
+> > +	status = "okay";
+> > +
+> > +	camera@3c {
+> > +		compatible = "ovti,ov5640";
+> > +		reg = <0x3c>;
+> > +		pinctrl-names = "default";
+> > +		pinctrl-0 = <&pinctrl_camera1_pwdn>;
+> > +		clocks = <&clk IMX8MQ_CLK_CLKO2>;
+> > +		clock-names = "xclk";
+> > +		assigned-clocks = <&clk IMX8MQ_CLK_CLKO2>;
+> > +		assigned-clock-parents = <&clk IMX8MQ_SYS2_PLL_200M>;
+> > +		assigned-clock-rates = <20000000>;
+> > +		powerdown-gpios = <&gpio1 3 GPIO_ACTIVE_HIGH>;
+> 
+> Could this regression also prevent initialization on the second camera
+> for the same reason?
 > 
 
-No. This code uses `field_prep()`, not `FIELD_PREP()`. The lowercase helper
-allows runtime-computed masks, so using a dynamically calculated `mask` here
-is valid and does not cause a build failure.
+No, it should not.
 
-> > +	writel_relaxed(val, reg);
-> > +	raw_spin_unlock_irqrestore(&pctldata->lock, flags);
-> > +
-> > +	return 0;
-> > +}
-> > +
-> > +static int ur_set_pin_mux(struct ur_pinctrl *pctldata, struct ur_pin_val *pin_val)
-> > +{
-> > +	const struct ur_port_desc *port_desc = &pctldata->match_data->ports[pin_val->port];
-> > +	void __iomem *reg = pctldata->base + port_desc->func_offset;
-> > +	unsigned long flags;
-> > +	u32 val;
-> > +
-> > +	raw_spin_lock_irqsave(&pctldata->lock, flags);
-> > +	val = readl_relaxed(reg);
-> > +	val &= ~((UR_FUNC0 | UR_FUNC1) << pin_val->pin);
-> 
-> Could this shift result in a signed integer overflow?
-> 
-> UR_FUNC0 is 1 and UR_FUNC1 is 0x10000, so their bitwise OR is 0x10001. If
-> pin_val->pin is 15, left-shifting 0x10001 by 15 results in 0x80008000.
-> This shifts a bit into the sign bit of a 32-bit signed integer.
-> 
-> Should these macros be defined with unsigned literals, such as 1U and
-> 0x10000U?
->
+Each sensor has its own powerdown GPIO, so initialization is handled
+independently via the PWDN-controlled power cycle.
 
-Yes, good point. I’ll update these mode macros to use unsigned literals so
-the mask calculation is done in an unsigned type.
- 
-> > +	val |= pin_val->mode << pin_val->pin;
-> > +	writel_relaxed(val, reg);
-> > +	raw_spin_unlock_irqrestore(&pctldata->lock, flags);
-> > +
-> > +	return 0;
-> > +}
-> [ ... ]
-> > +static int ur_config_to_hw(unsigned long config, u32 *conf)
-> > +{
-> > +	enum pin_config_param param = pinconf_to_config_param(config);
-> > +	u32 arg = pinconf_to_config_argument(config);
-> > +
-> > +	switch (param) {
-> > +	case PIN_CONFIG_BIAS_DISABLE:
-> > +	case PIN_CONFIG_BIAS_HIGH_IMPEDANCE:
-> > +		FIELD_MODIFY(UR_PULL_MASK, conf, UR_PULL_DIS);
-> > +		return 0;
-> > +	case PIN_CONFIG_BIAS_PULL_UP:
-> > +		FIELD_MODIFY(UR_PULL_MASK, conf, UR_PULL_UP);
-> > +		return 0;
-> > +	case PIN_CONFIG_BIAS_PULL_DOWN:
-> > +	case PIN_CONFIG_BIAS_PULL_PIN_DEFAULT:
-> > +		FIELD_MODIFY(UR_PULL_MASK, conf, UR_PULL_DOWN);
-> > +		return 0;
-> > +	case PIN_CONFIG_DRIVE_STRENGTH:
-> > +		for (u32 i = 0; i < ARRAY_SIZE(ur_drive_strengths); i++) {
-> > +			if (ur_drive_strengths[i] != arg)
-> > +				continue;
-> > +			FIELD_MODIFY(UR_DRIVE_MASK, conf, i);
-> > +			return 0;
-> > +		}
-> > +		return -EINVAL;
-> > +	case PIN_CONFIG_DRIVE_PUSH_PULL:
-> > +	case PIN_CONFIG_INPUT_ENABLE:
-> > +	case PIN_CONFIG_OUTPUT_ENABLE:
-> > +	case PIN_CONFIG_PERSIST_STATE:
-> > +		return 0;
-> 
-> Does this code silently ignore unsupported configurations?
-> 
-> Returning 0 here tells the pinctrl framework that the configurations were
-> successfully applied, even though no hardware state was modified. Should
-> this return -ENOTSUPP for configurations the hardware doesn't support?
->
+The shared reset line is not used, so there is no cross-impact between
+the two cameras during initialization.
 
-Agreed, returning 0 is misleading for unsupported options. I'll change these
-cases to return -EOPNOTSUPP in v2.
- 
-> > +	default:
-> > +		return -EOPNOTSUPP;
-> > +	}
-> > +}
-> [ ... ]
-> > +static int ur_legacy_parse_prop(struct pinctrl_dev *pctldev,
-> > +				struct device_node *np,
-> > +				const char *propname,
-> > +				struct ur_legacy_prop_data *prop)
-> > +{
-> > +	struct ur_pinctrl *pctldata = pinctrl_dev_get_drvdata(pctldev);
-> > +	int rows;
-> > +
-> > +	rows = pinctrl_count_index_with_args(np, propname);
-> > +	if (rows < 0)
-> > +		return dev_err_probe(pctldev->dev, rows, "%pOF: invalid %s count\n",
-> > +				     np, propname);
-> > +
-> > +	prop->pin_vals = devm_kcalloc(pctldev->dev, rows, sizeof(*prop->pin_vals),
-> > +				      GFP_KERNEL);
-> > +	if (!prop->pin_vals)
-> > +		return -ENOMEM;
-> > +
-> > +	prop->group_pins = devm_kcalloc(pctldev->dev, rows, sizeof(*prop->group_pins),
-> > +					GFP_KERNEL);
-> 
-> Will this leak memory when consumer devices defer probe?
-> 
-> The devm_kcalloc() allocations are tied to pctldev->dev, which is the pinctrl
-> provider device. Since ur_legacy_parse_prop() is called from dt_node_to_map
-> during the consumer's probe sequence, these allocations will remain on the
-> provider's devres list and accumulate each time the consumer defers probe.
-> 
-> Should standard kcalloc() be used here instead and explicitly freed at the
-> end of ur_legacy_dt_node_to_map()?
->
-
-Good catch. I'll switch these to kcalloc() and free them explicitly in
-ur_legacy_dt_node_to_map() to avoid leaks during probe deferral in v2.
- 
-> > +	if (!prop->group_pins)
-> > +		return -ENOMEM;
+> > +		DOVDD-supply = <&sw4_reg>;
+> > +		AVDD-supply = <&reg_2v8>;
+> > +		DVDD-supply = <&reg_1v5>;
 > 
 > -- 
-> Sashiko AI review · https://sashiko.dev/#/patchset/20260515-ultrarisc-pinctrl-v1-0-bf559589ea8a@ultrarisc.com?part=6
-> 
-
-Best Regards,
-Jia Wang
-
-
+> Sashiko AI review  https://sashiko.dev/#/patchset/20260515111143.2980956-1-robby.cai@nxp.com?part=1
