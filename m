@@ -1,107 +1,162 @@
-Received: from stravinsky.debian.org (stravinsky.debian.org [82.195.75.108])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-pl1-f202.google.com (mail-pl1-f202.google.com [209.85.214.202])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3E6961A6836;
-	Wed, 20 May 2026 16:14:20 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=82.195.75.108
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A2FA93164C3
+	for <sashiko-reviews@lists.linux.dev>; Wed, 20 May 2026 16:40:54 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.214.202
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1779293662; cv=none; b=WjONBA/1sl+4jiQ0l7RqKXn83gcYD+dOJr+tBojaE1vYH0CQrVYdsRZohmDUr7jop/Ez8Gv7IRAZON6VFz7TOo4poyaJ1J7yWT0sFWLoi349t0jdI1KdCBQlqtd0TcrhMcjH4nFMkxcqKrDuOQEun8HGRHhdwp9O7O9m/Qtehtc=
+	t=1779295256; cv=none; b=Vw4kJDqB7ts6ozExaRYmoKbda63CfoKQmTcjr92KoLxI/oIwGRlT1RqdL3uFJQaOrJsHIHTzZ9xycG1WHpmlE/WW5jqHrNDWd4IyhTKEjw0e3mq1dP0/nd7f952F8rF7iv/r33K01XZqNhTWS2697Pmc3w5hyZlNn7fkViV3rY0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1779293662; c=relaxed/simple;
-	bh=206Do778AhQOt1mOHVPBEMipIY28Q+yNhRY4+maBCoI=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=BuDJuH51KfrtkMO0b01odxKV13IwFFaTadu4gaaFzY0MEi1itrTkvnw5OGpA99KlhxsdD4OmRg6q4i62NATxGxGYOXqDpgVJg+pF7pDRsL3B+rHBX5k66beEX/DZcz0s6M7MrdnRsHsmaeYdavL/RpzRpKASx8WxIR3D70xbES4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=debian.org; spf=pass smtp.mailfrom=debian.org; dkim=pass (2048-bit key) header.d=debian.org header.i=@debian.org header.b=JaMF8kB9; arc=none smtp.client-ip=82.195.75.108
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=debian.org
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=debian.org
+	s=arc-20240116; t=1779295256; c=relaxed/simple;
+	bh=1jQGC7ilYK/8IRxbbHHrlHletOjw4xmsDBVkivTwitc=;
+	h=Date:In-Reply-To:Mime-Version:References:Message-ID:Subject:From:
+	 To:Cc:Content-Type; b=bQsLGEtVTUiX83tXOLgnn6wtmc8ZpZC+QipTQZLIYk2mqUoDEvjSxZ3Y92wC68AM1R+PSFhp7IAfiGbziFa9LxOZahM41bWZlUR4NSKkheIP8vI7xY98Ieb5ZX8tE2SxM968G/xFhTSWM/e73SSHQfnfpltJmtTAEbiL3Oh+hXI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=google.com; spf=pass smtp.mailfrom=flex--seanjc.bounces.google.com; dkim=pass (2048-bit key) header.d=google.com header.i=@google.com header.b=vYiXon8i; arc=none smtp.client-ip=209.85.214.202
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=google.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=flex--seanjc.bounces.google.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=debian.org header.i=@debian.org header.b="JaMF8kB9"
-DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed; d=debian.org;
-	s=smtpauto.stravinsky; h=X-Debian-User:In-Reply-To:Content-Type:MIME-Version:
-	References:Message-ID:Subject:Cc:To:From:Date:Reply-To:
-	Content-Transfer-Encoding:Content-ID:Content-Description;
-	bh=kCIUogO0mQs44DTJh/wxinjbQek0km84DbYAsM4WUd8=; b=JaMF8kB9trMMmNNO6sA6lOpJ49
-	UDS/B7BvEXzI5J/9tDb3jdf5G/DZ3SqO4d9syGpBYK73sJz3d9YYdwV8XWjiY7fEVMwOHklrZVDPa
-	gAdrd0EMR4Aq9Pcgm2cIBndpHnorLnni2ybVwGXg+7Kj1dFqcznFVxILDcDmoMbOblxoEPqtjIqv1
-	UH9WwMWq1LPSp2iQsDFhYvfd62JzsmK34l/Qcd6hiTo8edlnO4PAvFyczmK2ZvXozy68w/nFxWkId
-	eUpSY/sjWG2c6BBwOrI5ZLUVA7eks9Bv9jl7jkJJSR24SVTRcDVZiyeN7LoXxJAGqpLRJKZaaBo9/
-	Xxn+bj7g==;
-Received: from authenticated user
-	by stravinsky.debian.org with esmtpsa (TLS1.3:ECDHE_X25519__RSA_PSS_RSAE_SHA256__AES_256_GCM:256)
-	(Exim 4.96)
-	(envelope-from <leitao@debian.org>)
-	id 1wPjYo-003EE7-0v;
-	Wed, 20 May 2026 16:14:18 +0000
-Date: Wed, 20 May 2026 09:14:13 -0700
-From: Breno Leitao <leitao@debian.org>
-To: sashiko-reviews@lists.linux.dev
-Cc: bpf@vger.kernel.org
-Subject: Re: [PATCH net-next v2 1/7] af_iucv: take socket lock around
- SO_MSGSIZE getsockopt
-Message-ID: <ag3dctqXsRO-1akg@gmail.com>
-References: <20260515-getsock_four-v2-1-0d8eed952627@debian.org>
- <20260516083434.6FC23C19425@smtp.kernel.org>
+	dkim=pass (2048-bit key) header.d=google.com header.i=@google.com header.b="vYiXon8i"
+Received: by mail-pl1-f202.google.com with SMTP id d9443c01a7336-2babbeff9e4so55188885ad.0
+        for <sashiko-reviews@lists.linux.dev>; Wed, 20 May 2026 09:40:54 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=google.com; s=20251104; t=1779295254; x=1779900054; darn=lists.linux.dev;
+        h=cc:to:from:subject:message-id:references:mime-version:in-reply-to
+         :date:from:to:cc:subject:date:message-id:reply-to;
+        bh=uOL4cOFcmIbqPzPir4tND7dtGvw5bh7PCiQarNYoOOk=;
+        b=vYiXon8iiO2NXU3Rym6bQLA3j6S37W+hayX74lwdcPY+nVYToJW9YfbSFQyl/F1BWM
+         kicvlC4IkOTZTmnYhWQKKRKFfQ00NirzR8+OY8WAyc328lLCAdeBmwa9j7w9dSAej5Ix
+         aN2Fwxn9EYz5Ekm03slbq+v9vLBvhSYI6zdwTfKCf3oAhb9E13ifwSfOHxqyWxwAc5HJ
+         xY55IuzOw6Vl7qnJWc9SoSUyiVCrKOeAbfv8kCth11W+y2EEjyhWqpLajr3UgySnQI3P
+         OHrfSrC2HOom7ra1RpvHwIhRhCEiT6pOiyMoL9jMemRs6wtiWByfCY2a474ViE/AREiB
+         e9aA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20251104; t=1779295254; x=1779900054;
+        h=cc:to:from:subject:message-id:references:mime-version:in-reply-to
+         :date:x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+        bh=uOL4cOFcmIbqPzPir4tND7dtGvw5bh7PCiQarNYoOOk=;
+        b=oG69fjwuzJq8gKuawJ4Siq19uZlRSTeBWfXYiyDL+Ro88YZRcA6KXJF7js8uEEERgF
+         GITaQc1AopXx2yhLMX80UI5/PB0L+9gMjk5SAzSS47JFRIjCIc1R4mhbnIu2VHGO7HS3
+         Fa2e2/RrjHopeqfmTYpXHJi/M8n8uHfvhUdESEE7K39yMr5KADn75ney69ExDbfihh7S
+         E026Vir3YT7ilw+77OSYD5FK3Xn8CMOK6YhrSnN5KzUjxxmkIaWHCU08RggsdOKGp1Op
+         L7Ld/ztvCdBS2IGA8bAr1QrAQ6dJTCWW0CCXLb3luEWmFVdR3CJ/X0FjDB+JPGc4hiFv
+         gZMg==
+X-Gm-Message-State: AOJu0Yyk6/FaDWjIdKPIsdgFM/ApZGm5e6PPcZmoX2alyDeW0uo5HY/l
+	ht44UkRBoKLWy1/ltA3OKZ6C0OG1gaurRJsXpX/48dxRBfETK5zdms5nk4ZcJ7NyYf3Tx7DhRrH
+	FtgkpCA==
+X-Received: from pllx16.prod.google.com ([2002:a17:902:7c10:b0:2b4:58ed:55d2])
+ (user=seanjc job=prod-delivery.src-stubby-dispatcher) by 2002:a17:903:2ac3:b0:2ba:bab2:a867
+ with SMTP id d9443c01a7336-2be9d414296mr1888365ad.12.1779295253753; Wed, 20
+ May 2026 09:40:53 -0700 (PDT)
+Date: Wed, 20 May 2026 09:40:53 -0700
+In-Reply-To: <SN6PR02MB4157D50A944A2794475E32FED4002@SN6PR02MB4157.namprd02.prod.outlook.com>
 Precedence: bulk
 X-Mailing-List: sashiko-reviews@lists.linux.dev
 List-Id: <sashiko-reviews.lists.linux.dev>
 List-Subscribe: <mailto:sashiko-reviews+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:sashiko-reviews+unsubscribe@lists.linux.dev>
-MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <20260516083434.6FC23C19425@smtp.kernel.org>
-X-Debian-User: leitao
+Mime-Version: 1.0
+References: <20260515191942.1892718-32-seanjc@google.com> <20260515194535.56B84C2BCB0@smtp.kernel.org>
+ <aguQIJQYsarMScnl@google.com> <SN6PR02MB4157D50A944A2794475E32FED4002@SN6PR02MB4157.namprd02.prod.outlook.com>
+Message-ID: <ag3kFYLrypsBnlkY@google.com>
+Subject: Re: [PATCH v3 31/41] x86/tsc: Pass KNOWN_FREQ and RELIABLE as params
+ to registration
+From: Sean Christopherson <seanjc@google.com>
+To: Michael Kelley <mhklinux@outlook.com>
+Cc: "sashiko-reviews@lists.linux.dev" <sashiko-reviews@lists.linux.dev>, 
+	"linux-hyperv@vger.kernel.org" <linux-hyperv@vger.kernel.org>
+Content-Type: text/plain; charset="us-ascii"
 
-On Sat, May 16, 2026 at 08:34:33AM +0000, sashiko-bot@kernel.org wrote:
-> Thank you for your contribution! Sashiko AI review found 1 potential issue(s) to consider:
-> - [High] The commit message incorrectly claims the bug is unexploitable and targets the patch to `net-next` without a `Fixes` tag, bypassing stable backports for a reachable NULL pointer dereference or use-after-free.
-> --
+On Tue, May 19, 2026, Michael Kelley wrote:
+> From: Sean Christopherson <seanjc@google.com> Sent: Monday, May 18, 2026 3:18 PM
+> > > > diff --git a/arch/x86/kernel/cpu/mshyperv.c b/arch/x86/kernel/cpu/mshyperv.c
+> > > > --- a/arch/x86/kernel/cpu/mshyperv.c
+> > > > +++ b/arch/x86/kernel/cpu/mshyperv.c
+> > > > @@ -516,8 +516,13 @@ static void __init ms_hyperv_init_platform(void)
+> > > >
+> > > >  	if (ms_hyperv.features & HV_ACCESS_FREQUENCY_MSRS &&
+> > > >  	    ms_hyperv.misc_features & HV_FEATURE_FREQUENCY_MSRS_AVAILABLE) {
+> > > > -		tsc_register_calibration_routines(hv_get_tsc_khz, hv_get_tsc_khz);
+> > > > -		setup_force_cpu_cap(X86_FEATURE_TSC_KNOWN_FREQ);
+> > > > +		enum tsc_properties tsc_properties = TSC_FREQUENCY_KNOWN;
+> > > > +
+> > > > +		if (ms_hyperv.features & HV_ACCESS_TSC_INVARIANT)
+> > > > +			tsc_properties = TSC_FREQ_KNOWN_AND_RELIABLE;
+> > > > +
+> > > > +		tsc_register_calibration_routines(hv_get_tsc_khz, hv_get_tsc_khz,
+> > > > +						  tsc_properties);
+> > > >  	}
+> > >
+> > > [ ... ]
+> > >
+> > > > @@ -629,7 +634,6 @@ static void __init ms_hyperv_init_platform(void)
+> > > >  		 * is called.
+> > > >  		 */
+> > > >  		wrmsrq(HV_X64_MSR_TSC_INVARIANT_CONTROL, HV_EXPOSE_INVARIANT_TSC);
+> > > > -		setup_force_cpu_cap(X86_FEATURE_TSC_RELIABLE);
+> > > >  	}
+> > >
+> > > If a Hyper-V VM exposes an invariant TSC but lacks the frequency MSRs,
+> > > does it bypass the tsc_register_calibration_routines() block entirely?
+> > 
+> > Yes.
+> > 
+> > > Without the standalone setup_force_cpu_cap(X86_FEATURE_TSC_RELIABLE) call
+> > > here, it looks like these VMs will lose the reliable flag.
+> > >
+> > > Will this inadvertently enable the TSC watchdog, potentially causing a
+> > > performance regression if the system falsely marks the TSC as unstable due
+> > > to virtualization scheduling delays?
+> > 
+> > Hmm, I was going to say that the change was intentional and desriable, but looking
+> > at this yet again, I don't think that's true.  Enabling HV_EXPOSE_INVARIANT_TSC
+> > just means the kernel will (probably) set X86_FEATURE_CONSTANT_TSC and
+> > X86_FEATURE_NONSTOP_TSC during early_init_intel(), AFAICT it doesn't lead to
+> > X86_FEATURE_TSC_RELIABLE being set.  And I think in this case, marking the TSC
+> > as reliable makes sense; even if the kernel doesn't user Hyper-V's calibration
+> > info, the host is still clearly telling the guest that the TSC is reliable.
 > 
-> commit 2d366eacb5715c7a757195706a39c7382bd391e0
-> Author: Breno Leitao <leitao@debian.org>
-> af_iucv: take socket lock around SO_MSGSIZE getsockopt
+> Yes, I agree. But I'm doubtful that such a combination ever occurs in practice.
+> I've never seen an occurrence of a Hyper-V (even really old versions) guest
+> where the frequency MSRs are not available or are not accessible. The
+> Hyper-V spec allows for either condition, so we have the code to test the
+> flags. I've thought of the flags as always set, though I suppose one never
+> knows what the future holds.
 > 
-> This commit adds socket locking around the SO_MSGSIZE case in
-> iucv_sock_getsockopt() to prevent concurrent modifications to hs_dev.
-> The commit message states this is purely defensive and targets net-next.
+> > 
+> > Michael, does keeping the
+> > 
+> > 		setup_force_cpu_cap(X86_FEATURE_TSC_RELIABLE);
+> > 
+> > but also passing TSC_FREQ_KNOWN_AND_RELIABLE to the calibration routine make
+> > sense?
 > 
-> > This is not an exploitable bug. iucv_sock_close() is the only writer
-> > of iucv->hs_dev and only runs from the protocol release callback,
-> > which the socket layer invokes after the last file reference drops.
-> > The getsockopt() syscall holds an fd reference for its entire
-> > duration via fdget()/fdput(), so iucv_sock_close() cannot run
-> > concurrently with the SO_MSGSIZE read on the same socket.
-> 
-> Is it strictly true that iucv_sock_close() only runs from the release
-> callback?
-> 
-> Looking at iucv_sock_recvmsg(), it appears to directly invoke
-> iucv_sock_close() when the message limit is exceeded:
-> 
-> net/iucv/af_iucv.c:iucv_sock_recvmsg() {
->         ...
->         if (atomic_read(&iucv->msg_recv) > iucv->msglimit) {
->                 ...
->                 iucv_sock_close(sk);
->                 ...
->         }
->         ...
-> }
-> 
-> Since recvmsg() executes with an active file descriptor reference, could
-> this path be triggered concurrently with a getsockopt() call evaluating
-> SO_MSGSIZE on the same socket?
-> 
-> If so, evaluating iucv->hs_dev and then dereferencing iucv->hs_dev->mtu
-> in getsockopt() before this patch could be vulnerable to a race with
-> iucv_sock_close(), potentially leading to a null pointer dereference or
-> use-after-free.
+> I don't see that it would break anything. But it seems a bit disjointed in
+> that HV_ACCESS_TSC_INVARIANT is tested in two places in
+> ms_hyperv_init_platform(). Does TSC_RELIABLE *need* to be passed to
+> tsc_register_calibration_routines() if later code in ms_hyperv_init_platform()
+> does setup_force_cpu_cap(X86_FEATURE_TSC_RELIABLE)?
 
-You are right. iucv_sock_recvmsg() does call iucv_sock_close() directly
-on the AF_IUCV_TRANS_HIPER msglimit-exceeded branch, in syscall context
-on a live fd. Two threads sharing an fd (or two fds for the same struct
-sock after dup/fork) can then run recvmsg() and getsockopt(SO_MSGSIZE)
-concurrently, if the dev_put() drops the last reference, A can be left
-dereferencing a freed netdev.
+Sort of?  It's not strictly necessary, but passing in TSC_RELIABLE allows
+tsc_register_calibration_routines() to ensure it doesn't clobber a more robust
+calibration routine with a "lesser" routine.  I.e. not passing TSC_RELIABLE in
+this case would trigger a false positive (and break Hyper-V).
 
-That said, I will separate this patch and send it to 'net'.
+In other words, invoking setup_force_cpu_cap() is a (happy, desirable) side effect,
+not the primary goal.
+ 
+> In other words, I'm suggesting let tsc_register_calibration_routines() handle
+> the TSC_FREQ_KNOWN case since that's what the calibration routines are all
+> about. Leave the setting of X86_FEATURE_TSC_RELIABLE to the later code that
+> tests HV_ACCESS_TSC_INVARIANT, instead of duplicating the
+> setup_force_cpu_cap() operation.
+>
+> While combining FREQUENCY_KNOWN and RELIABLE into
+> tsc_register_calibration_routines() is convenient, the two
+> concepts turn out to be independent when looking strictly at
+> the Hyper-V spec and code written to follow that spec.
+> Combining them into the same function ends up being clumsy
+
+Yeah, it's a bit awkward for Hyper-V, but Hyper-V is definitely the odd one out
+here, in that it has an "out-of-band" feature that marks the TSC as reliable.
+All other PV features that trigger overrides of the calibration routines bundle
+the RELIABLE aspect with the feature itself.
