@@ -1,106 +1,94 @@
-Received: from mail-01.1984.is (mail-01.1984.is [185.112.145.69])
+Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 77B4A3A0E8B;
-	Wed, 20 May 2026 13:23:55 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=185.112.145.69
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2CCC63D3480;
+	Wed, 20 May 2026 13:44:30 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1779283438; cv=none; b=ZJrP7/EosTK9MEzfi4Tsu/ThhDMZfnqsGPKpr0reOheFkLI8pnwRsXeRqOmJWZZLQxUinsVV+Hk03BIUzfSEmzxAeqO520Yu9zhd9xdYzhl2YRJyEx/wdbGdS3WxNQjZUho/r8Rdr4vB15QW7EPmYIXXlV+mLYi37/HfCya6HE4=
+	t=1779284672; cv=none; b=SwtRLcRkOfTYlzAqM0r+nRP4VGhpFeqRjiVERoWB2zAZ5GaK/LoDxfnAE5zu5RcVDZePOPbt31ftQPZfWd0JIYTadNmFN+OQBqsllKdUtxwYwXfjopPgmTt/u0e0QI9fc7Mt1o2dNfiq5hjXtWDURGkAMZlpyBUcv7tcPzitGfQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1779283438; c=relaxed/simple;
-	bh=JvBQ7rPkNMv7B3vcdnRtgIQCanNIdp7WeKtGYiMP2Fo=;
-	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=G4ZHKwBIh1cH+DpegdSCephoKDC8aK3sWCP6vxJXoCzuyEeCb7D/pZIuODbA6oF7Y4oz3KugayRmxzBpeuM1VjsoYYzdXxyfsRG1ueD7MncpMAty5FoacKLCMk4SWvsI9y5wHdKfDfDofWowexDp+eUP5jJ5Zz4FAz4Ri9kcwMM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=berkoc.com; spf=pass smtp.mailfrom=berkoc.com; dkim=pass (2048-bit key) header.d=berkoc.com header.i=@berkoc.com header.b=bm2qlhQQ; dkim=pass (2048-bit key) header.d=berkoc.com header.i=@berkoc.com header.b=hQroMKRY; arc=none smtp.client-ip=185.112.145.69
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=berkoc.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=berkoc.com
+	s=arc-20240116; t=1779284672; c=relaxed/simple;
+	bh=WhVLiyFbSisphM4PD/VGde9vUBA4+k2rbmvQtguhV74=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=crIZ2+yslSrnCgoXg5YI8WKA7qU0ZYVMUqELdaGn5VXlQBpAtmFgILIBWmmwEScBO45UFN6R1VFgsCZFZ10Lc8xzL6NyGqgcb/zy9NDaBl43zRD0yl4Jqi5nbpRXREjlDhMWsNL1eBPmxsDFB+Mb8wuSkyc9B8ITh15qB5GvxzQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=ChJCnh43; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=berkoc.com header.i=@berkoc.com header.b="bm2qlhQQ";
-	dkim=pass (2048-bit key) header.d=berkoc.com header.i=@berkoc.com header.b="hQroMKRY"
-DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed; d=berkoc.com;
-	s=1984; h=Content-Transfer-Encoding:Content-Type:MIME-Version:References:
-	In-Reply-To:Message-ID:Date:Subject:Cc:To:From:Sender:Reply-To:Content-ID:
-	Content-Description:Resent-Date:Resent-From:Resent-Sender:Resent-To:Resent-Cc
-	:Resent-Message-ID:List-Id:List-Help:List-Unsubscribe:List-Subscribe:
-	List-Post:List-Owner:List-Archive;
-	bh=TpHuoAiInQYxT4YJJ3nssWVAmB6TOOeSDac13iJxzn0=; b=bm2qlhQQTMezAyjtR8gRC95HTt
-	IRnRWM4RblahYeWhH28JMXRi5XNstVjAyfmAw1tC1vA2U/yOtCHA31AtXzXVrYva4y9Zu6/JCW4fX
-	XV6tZsLO7z0/esu9bWRoYAhJnNQo+NzGGqEA3STGv9Hlmgo6J/6URUAI0lA6pqUxLdT5fU8cVauy6
-	xPxK0xEDMp2ozYGG7nMrxGuC6Y32blEha3jy8r9UhAinYw1GxaFCCg6bEMXc1fNVREXqc9ji+z8b8
-	9DCihz3QL1MOfejh83wxVL5mg7NWVq0/w6jMSJCUF0tqpUVOAYSRWcibumaVnDgBmcK7D4MuGo2Cq
-	NxOHsOBg==;
-Received: from localhost
-	by mail-01.1984.is with utf8esmtp (Exim 4.96)
-	(envelope-from <me@berkoc.com>)
-	id 1wPgto-008r7y-0r;
-	Wed, 20 May 2026 13:23:49 +0000
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=berkoc.com;
- i=@berkoc.com; q=dns/txt; s=me; t=1779283418; h=message-id : date :
- subject : cc : to : from : sender : reply-to;
- bh=TpHuoAiInQYxT4YJJ3nssWVAmB6TOOeSDac13iJxzn0=;
- b=hQroMKRYqDHDZIIhVsEmRbGcCbeW8eX/4NKZvhEfOt7XTPQ76sQcek/kK6SZGYj+p3sUz
- j2ljWPFCDbD2NzTYNMmWBZZtYs3Pa652otjW2D0E07Z1cwWnG7B+Jz1S2lbFAGUMEzCeztX
- +jtI49ZhLTcq0QLlErVthy0ojs73rtHBV1RZGWEUosd+zh/ft0pXeD0F1rZmOqVL3R902tT
- qpxoXvRt+Dlp+8DSgfLBRHvd7yA3XmcEF/Q2JiI+HlMeNu5NGUQZ/orka2PrGRn8nko0gLv
- /++lnTEpxw5yj80V8Axh/l56wR2LOtLGMB803YxaEg/0razwgaAH8trU1rnQ==
-From: Berkant Koc <me@berkoc.com>
-To: Saurabh Sengar <ssengar@linux.microsoft.com>, Dexuan Cui <decui@microsoft.com>, Long Li <longli@microsoft.com>
-Cc: linux-hyperv@vger.kernel.org, dri-devel@lists.freedesktop.org, linux-kernel@vger.kernel.org, K. Y. Srinivasan <kys@microsoft.com>, Haiyang Zhang <haiyangz@microsoft.com>, Wei Liu <wei.liu@kernel.org>, Michael Kelley <mhklinux@outlook.com>, Thomas Zimmermann <tzimmermann@suse.de>, Maarten Lankhorst <maarten.lankhorst@linux.intel.com>, Maxime Ripard <mripard@kernel.org>, Deepak Rawat <drawat.floss@gmail.com>, sashiko-reviews@lists.linux.dev
-Subject: Re: [PATCH v3 2/2] drm/hyperv: validate VMBus packet size in receive callback
-Date: Wed, 20 May 2026 15:23:38 +0200
-Message-ID: <177928341826.371979.14701698047864220449@berkoc.com>
-In-Reply-To: <20260519213450.50E611F000E9@smtp.kernel.org>
-References: <e6e63276cca2901641ab39029e4fd3d621b1ee92.1779221799.git.me@berkoc.com> <20260519213450.50E611F000E9@smtp.kernel.org>
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="ChJCnh43"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8D4861F000E9;
+	Wed, 20 May 2026 13:44:29 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=kernel.org;
+	s=k20260515; t=1779284670;
+	bh=PXnQVnAPUdSBXCTo335Tp8Fkg90EJxjD3I5y+H4hvLs=;
+	h=Date:From:To:Cc:Subject:References:In-Reply-To;
+	b=ChJCnh432P9qK792VV0RtF9NEZWFvYG0Doqw+9YwI6rLPgxXWJAE0I2h9LX1YJTm6
+	 OprxP3U5jdFgXopQSQysw/x/clzbMYj2/u9Z3Je3lBtF/YSVkO2REj5UKLLohNDXXy
+	 J+sCZZ97c3CBL6KLD9XylQu7yo/yBDMB1H+dJDK9HsduV3QltqfE0b1YauI2ta2RVu
+	 ZaGnBrlww6lApQfRotldZDDHCosN8T4A0/q1Royz2brb1ByQEUnnjulEpiaCv/cBZm
+	 weZ0rpWr4WxJHadMUsO0ylxDdqyEOl8TDPddBpy4txP6zr388agb7ZK+oEXM3Mke5q
+	 nUr7zDcKdb35Q==
+Date: Wed, 20 May 2026 14:44:26 +0100
+From: Lee Jones <lee@kernel.org>
+To: "Escala, Edelweise" <Edelweise.Escala@analog.com>
+Cc: "sashiko-reviews@lists.linux.dev" <sashiko-reviews@lists.linux.dev>,
+	"robh@kernel.org" <robh@kernel.org>,
+	"devicetree@vger.kernel.org" <devicetree@vger.kernel.org>,
+	"conor+dt@kernel.org" <conor+dt@kernel.org>
+Subject: Re: [PATCH v8 2/2] leds: ltc3220: Add Support for LTC3220 18 channel
+ LED Driver
+Message-ID: <20260520134426.GB2767592@google.com>
+References: <20260519-ltc3220-driver-v8-2-e1771c1733f7@analog.com>
+ <20260519015003.866FDC2BCB7@smtp.kernel.org>
+ <DS0PR03MB722893FF4942A436AAF69175ED012@DS0PR03MB7228.namprd03.prod.outlook.com>
 Precedence: bulk
 X-Mailing-List: sashiko-reviews@lists.linux.dev
 List-Id: <sashiko-reviews.lists.linux.dev>
 List-Subscribe: <mailto:sashiko-reviews+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:sashiko-reviews+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8bit
-X-Spam-Score: -0.2 (/)
-X-Authenticated-User: me@berkoc.com
-X-Sender-Address: me@berkoc.com
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <DS0PR03MB722893FF4942A436AAF69175ED012@DS0PR03MB7228.namprd03.prod.outlook.com>
 
-sashiko-bot@kernel.org wrote:
-> - [Critical] Using `bytes_recvd` for `memcpy()` without checking
->   `vmbus_recvpacket()` return value leads to a massive heap buffer
->   overflow.
+On Wed, 20 May 2026, Escala, Edelweise wrote:
 
-This one is bounded on this channel. hyperv_connect_vsp() calls
-vmbus_open() without setting max_pkt_size, so the inbound ring uses
-VMBUS_DEFAULT_MAX_PKT_SIZE (4096) and hv_pkt_iter_first() clamps the
-packet length to pkt_buffer_size. bytes_recvd therefore cannot exceed
-4096, well under the 16 KiB recv_buf and init_buf, and
-vmbus_recvpacket() does not return -ENOBUFS here, so the memcpy length
-stays bounded.
+> 
+> > -----Original Message-----
+> > From: sashiko-bot@kernel.org <sashiko-bot@kernel.org>
 
-I will still gate the dispatch on a successful vmbus_recvpacket()
-return in the next revision, as defense in depth, so the bound is
-local instead of relying on the ring clamp.
+Do I need to sign-up to receive these?
 
-> - [High] Strict sizeof() validation incorrectly rejects
->   dynamically-sized SYNTHVID_RESOLUTION_RESPONSE packets.
+> > Sent: Tuesday, May 19, 2026 9:50 AM
+> > To: Escala, Edelweise <Edelweise.Escala@analog.com>
+> > Cc: robh@kernel.org; devicetree@vger.kernel.org; conor+dt@kernel.org
 
-Agreed. The response carries resolution_count entries, not the full
-SYNTHVID_MAX_RESOLUTION_COUNT array, so checking against
-sizeof(struct synthvid_supported_resolution_resp) is too strict. The
-next revision validates the fixed prefix, reads and bounds
-resolution_count, then requires only the count-sized array.
+Working why only these email addresses were Cc:ed.
 
-> - [High] Concurrent lockless write to `hv->init_buf` from VMBus
->   callback allows a malicious host to overwrite data while the guest
->   is validating it.
-> - [High] Missing `reinit_completion()` before reusing the shared
->   `hv->wait` completion object.
+> > Subject: Re: [PATCH v8 2/2] leds: ltc3220: Add Support for LTC3220 18 channel
+> > LED Driver
+> > 
+> > [External]
+> > 
+> > Thank you for your contribution! Sashiko AI review found 7 potential issue(s) to
+> > consider:
+> > - [High] The driver abuses the `brightness` attribute to multiplex hardware modes,
+> > violating standard LED UAPI.
+> > - [High] The `blink_mode` value is not shifted before being written via
+> > `regmap_update_bits()`, causing blink timing to fail.
+> > - [High] `ltc3220_blink_set()` fails to enable blink mode on the target LED's
+> > control register.
+> > - [High] `ltc3220_pattern_clear()` incorrectly halts the global gradation timer and
+> > fails to reset the individual LED mode.
+> > - [High] Duplicate `reg` values in the device tree cause double-registration and list
+> > corruption.
+> > - [High] Missing `select REGMAP_I2C` in Kconfig leads to silent build failures.
+> > - [Medium] Missing `led_classdev_suspend()` and `led_classdev_resume()` calls
+> > during power management.
+> > --
+> > 
+> > commit 0ef3ccbe351040b28172d9e382676a039d0118d4
+> > Author: Edelweise Escala <edelweise.escala@analog.com>
 
-Both pre-existing. On v2 Michael Kelley suggested splitting the
-completion reinit into a separate patch on the resume path. The
-init_buf reuse sits in the same area, so I plan to send the reinit and
-the related response-type handling as a separate follow-up rather than
-fold them into this size-validation change.
 
-Thanks for the review.
 
-Berkant
+-- 
+Lee Jones
