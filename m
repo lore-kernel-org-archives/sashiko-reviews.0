@@ -1,264 +1,207 @@
-Received: from SN4PR2101CU001.outbound.protection.outlook.com (mail-southcentralusazon11012066.outbound.protection.outlook.com [40.93.195.66])
+Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2B8381EE01A
-	for <sashiko-reviews@lists.linux.dev>; Wed, 20 May 2026 02:58:12 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=fail smtp.client-ip=40.93.195.66
-ARC-Seal:i=2; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1779245894; cv=fail; b=loSk+VLUigpl9PLpK3wVf2tZlnDb1LC4mlCqcY5wbHQWuwjOwe54z7L7Qk09kXxj5TfkfiWqWzm665Rf6EijDhV1njTUh6bih0oLNaVcg0FRQIi0sCjf9OQPBFIyjsibriccDcyJoOpM3j/VRtDzBf7FzZVp8w8IP+jUvS/XD90=
-ARC-Message-Signature:i=2; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1779245894; c=relaxed/simple;
-	bh=Y5JTOfDSCAWTAEktGEjoVaKtyW0J0cc1owRAR8ziK/8=;
-	h=From:To:CC:Subject:Date:Message-ID:References:In-Reply-To:
-	 Content-Type:MIME-Version; b=EG4QsNanz3A4+mNqEp/Tpfkfgk+vVZZj9yEvJ4jFVzhNQVExd9r6wAbolYiIyh5oI1NiMFK6QlPSxE8kPaIAu12yicmFjJnkab9YT0aLc35z6zt14mGVrSeoTCpNgKyxFoLVKfuNzXYFLt2LDbu8yB5QZgK9RI3ycZHbmjxKqIE=
-ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=altera.com; spf=pass smtp.mailfrom=altera.com; dkim=pass (2048-bit key) header.d=altera.com header.i=@altera.com header.b=j6uOScl6; arc=fail smtp.client-ip=40.93.195.66
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=altera.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=altera.com
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5ACAF32B10F
+	for <sashiko-reviews@lists.linux.dev>; Wed, 20 May 2026 03:00:52 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
+ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
+	t=1779246053; cv=none; b=ZUZQ167mF6DYNbvas6Jjfm+qK4O9F6N50fY1hEG5feVeQ5AjXX/jf3vCJiyuX7lPyvj2J45WzcdxP0ARgcJO7qECB/YIr4N60pk3+AtFkvAvfM4f/0XBZIVHR+0vexjxgDoohiC1uuIuZBzQas14rnhMmrT0oB/5AmfcBb1Q6kg=
+ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
+	s=arc-20240116; t=1779246053; c=relaxed/simple;
+	bh=2R05xtp6oSNCG45xxuw3C565pij5UvJwaEmjTDTytgY=;
+	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
+	 To:Cc:Content-Type; b=YOm2jHaMpexRjACxLVQ8r8b8PuoYGYB8y6DbRdw5IqzSfMk/jrPUAwqCsfGtArO89F3MFNB5Qdb6QTKBDwWFu7utW1aSRxlD1Yco/j4m3slSsZQMgTL8wRIOvKNuVIpU7f1RTPxAEnYk+Kj5CtCJS75GQw3GzCltN/9BMWLU4aE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=W18TpoQQ; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=altera.com header.i=@altera.com header.b="j6uOScl6"
-ARC-Seal: i=1; a=rsa-sha256; s=arcselector10001; d=microsoft.com; cv=none;
- b=OKvL2QLacf0cxRDmg2CFxcoCUynkUu3efSgvBaJeC3xa/vimE/WNSQrl1uvy5lkNWPAHIlXPqwCsfQLWZcq+qqvPhSF+DpF0WcJh1OtFEYWl6r/OziY9H7h3bOjw7eCGe5kuiR2LhNl6ghej/+wNdLSEyFOdbRgHaAUUR10KW5LKFP+uVVWUhjcRTaXdBHjM2phEroUYy0nPXhFzYCYh/Bfarfue0iJmUW9rlw+YEimUi1rgNDlgy0AEnarQL6UWfGWuMdr/3uGR10ReqA5DQwc67QNSi0zQeKx38CS9kJjOIhGADlgjCHvwhqsyGpOWoBjU/kuzMNp0Uka1StJ2Gw==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com;
- s=arcselector10001;
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
- bh=Y5JTOfDSCAWTAEktGEjoVaKtyW0J0cc1owRAR8ziK/8=;
- b=FNEdHdpCzIiv4cMrX29fTAFSLavxQAEf1cjfMCAsAr9NOqCWjdh/BdAH/D/f60fkoKswC1sgGhDnsIsW+qOQ5P2itGFwSf4XLX9HIQrkyLJMYSPaHBpCGf7MQ9sHKxoqvOCnRqJKyFjYLfBkElMO4YpOWn8CAnj1iK7h/XwU+wJTDMUbHmfSKyR28qJ5NDtEciE+r08QKfWBnzjnqzfAwnNDQKvjfDojZwVHpoV8YM+8hCgxY1t7nGydTuVEFW4jepy+JHztYuUatTvKJGzEN8FGW+gVFV5kTbxkTMwb1Ssl9mE8xp/AEg5l9GxymFbTN4eg7ARXhFdPbm4YJ2urXw==
-ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
- smtp.mailfrom=altera.com; dmarc=pass action=none header.from=altera.com;
- dkim=pass header.d=altera.com; arc=none
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=altera.com;
- s=selector2;
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
- bh=Y5JTOfDSCAWTAEktGEjoVaKtyW0J0cc1owRAR8ziK/8=;
- b=j6uOScl6mc3EIKD3mWifMpmebcdtWR30iPFGCy2pCtd9aZ5KTpvmDPd0E8InORYCb0h726BoTODhlZWt5n1XASRAYwzxVN2J2PR/m9/CU+f4FPyh+8gMhAvvWauU8iE5rHmV5h4OeWLN6ikMGUUPMQtgyaX6UJYcpHbTUZCVQnCtMRN2Qvk7j5t7SsI9vYRHwCWwoQboNJg52Ue829yuOdr3tam79/r/8w8D09C1kAIGpdAIpNQtCFIILAAqOEhZxfYrKMoSZRdasbLEtztR46JKqkaFBLlNFRpdA2udkpdUyyyr51sJ5G+uKpGlvhVnJxiYch4qrbo7B/sbu4I0oA==
-Received: from SJ0PR03MB5950.namprd03.prod.outlook.com (2603:10b6:a03:2d3::20)
- by DS0PR03MB8318.namprd03.prod.outlook.com (2603:10b6:8:28c::13) with
- Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.21.48.16; Wed, 20 May
- 2026 02:58:10 +0000
-Received: from SJ0PR03MB5950.namprd03.prod.outlook.com
- ([fe80::53a0:bf93:6b6b:de01]) by SJ0PR03MB5950.namprd03.prod.outlook.com
- ([fe80::53a0:bf93:6b6b:de01%4]) with mapi id 15.21.0048.013; Wed, 20 May 2026
- 02:58:10 +0000
-From: "NG, TZE YEE" <tze.yee.ng@altera.com>
-To: "sashiko-reviews@lists.linux.dev" <sashiko-reviews@lists.linux.dev>
-CC: "Frank.Li@kernel.org" <Frank.Li@kernel.org>, "dmaengine@vger.kernel.org"
-	<dmaengine@vger.kernel.org>, "vkoul@kernel.org" <vkoul@kernel.org>
-Subject: Re: [PATCH] dma: altera-msgdma: Replace memcpy with io32write in
- msgdma_copy_one
-Thread-Topic: [PATCH] dma: altera-msgdma: Replace memcpy with io32write in
- msgdma_copy_one
-Thread-Index: AQHc51tYFSPJSHId1UCxmI2LBqJobbYU8JqAgAFJqYA=
-Date: Wed, 20 May 2026 02:58:10 +0000
-Message-ID: <b3f1ad76-9575-4dde-815e-636eb8ba1c91@altera.com>
-References:
- <4586c39b43aa3b9480989940fe905dac40c8cefc.1779173156.git.tze.yee.ng@altera.com>
- <20260519071815.EC443C2BCC6@smtp.kernel.org>
-In-Reply-To: <20260519071815.EC443C2BCC6@smtp.kernel.org>
-Accept-Language: en-US
-Content-Language: en-US
-X-MS-Has-Attach:
-X-MS-TNEF-Correlator:
-authentication-results: dkim=none (message not signed)
- header.d=none;dmarc=none action=none header.from=altera.com;
-x-ms-publictraffictype: Email
-x-ms-traffictypediagnostic: SJ0PR03MB5950:EE_|DS0PR03MB8318:EE_
-x-ms-office365-filtering-correlation-id: d63ca9de-7c3d-44d8-6313-08deb61ba084
-x-ms-exchange-atpmessageproperties: SA
-x-ms-exchange-senderadcheck: 1
-x-ms-exchange-antispam-relay: 0
-x-microsoft-antispam:
- BCL:0;ARA:13230040|366016|1800799024|376014|56012099003|18002099003|22082099003|38070700021|55112099003|11063799006|3023799007|4133799003|4143699003;
-x-microsoft-antispam-message-info:
- Edslp2pS8l+L0RVEPqxWamTUOSRJNaWrop8U0SoNf7n/6DbYR+Gu5pBicphdcs9thKnTNrAABwC+DeD8EKHyNPe8WIeVSRGJmZtkvZS0jEdQXtwxAcSOHz6XecCsyYRvGrAO1vqbsGJpagAhMBWmq4AbgdJiniZDPSqvBRzGGa4GVPlNfJuc+qWi5c62kbvS8w+wMSV16H3RSLWa8FIIPEd3AHd83AQAMfaPgLOTsIkO6CkrBvUx82fynoFmstfEa3S/QyjSUqmVPEjAjcJUCiK5whuLES+XtsD9tmDoXgTOqNVKgpLh3PsQ4tEa74RemQDkq07f5QVlfqZ+QiY3K1VEI3GMPNlzA7nXCspy3aJxGdWpyUfOupKfphsiA6EhfRGXrQXCzN3Ym/CSNg2M6uZ0MTbAdkNZorW0HFHn12IRRYd0wsa59KUtbjKky4RieRt4dQbLWa1HZCqVYWSwfc2eoUDcGkgVKiq7EROKEyKYctEVn348hpxHanXk81lUc0GWJqi++HYrOo3wnM7IBa9aC3P693ksgqQZFcQKd8WB3RhSnQRQPrMwJ1oHdQKYPDHTLVfIO4ggFUSxnjwmYfSQsW5FRTMfhAAgzWRCkBDv9kkLH79dKxICMBkrqXQGEyErTmBNGMVCgtQ95juq0+xxPgnzydrUvW3kSOQr3SeFBZsufFvz78VX9H+MBSvk
-x-forefront-antispam-report:
- CIP:255.255.255.255;CTRY:;LANG:en;SCL:1;SRV:;IPV:NLI;SFV:NSPM;H:SJ0PR03MB5950.namprd03.prod.outlook.com;PTR:;CAT:NONE;SFS:(13230040)(366016)(1800799024)(376014)(56012099003)(18002099003)(22082099003)(38070700021)(55112099003)(11063799006)(3023799007)(4133799003)(4143699003);DIR:OUT;SFP:1101;
-x-ms-exchange-antispam-messagedata-chunkcount: 1
-x-ms-exchange-antispam-messagedata-0:
- =?utf-8?B?MmdKZ2xtOUZyN2FWVkpab3h5c3lxMGxFZDlsbUs4bmsvMk0wL2JmNVFtSmZ5?=
- =?utf-8?B?c0dzNGwzNDRqUUFYR1kvRXM0R3V6eEN5bmFYSGx5djFmSGNub1FWdldYSGJO?=
- =?utf-8?B?emlnSDU4a01ndlFuQVpHa1RJa2pnY0pRTXlTSGc2SW1GN01YZkwrUVVJSzBw?=
- =?utf-8?B?YmovQXN6UzRvWHZmRXJJejUrYTRmNEJWb05aMEhRdnFvLzI0cnpqL0ZJT1hR?=
- =?utf-8?B?eTVQeitNNXd2dVVPT3kraTlERlcxbGlhK1pYYXhta2xwSnA3dC9yWVE3aVhx?=
- =?utf-8?B?MnpJTFJkQTVKcXNYWWp1S2NsampJNGJKa1JUTVJ0UDZvMUhYUmpWdXplbEFZ?=
- =?utf-8?B?RVpOZGpMSXlhdTlRaVhaSGw2SjZGTzVoMHY1RDJpR1pnSHNiUE9DTUxYMTYr?=
- =?utf-8?B?dWtmYjgzYXAxc1hFQUpsYkhNbXRZUThqSXpQMjdscW91SUVTRDBnUGtNNzZj?=
- =?utf-8?B?VFhxVFJGNHRWcDRpN01PaDM2MGlQQUZsb1RWeHByb2dFWnE0eWZhRFlOdEVl?=
- =?utf-8?B?dVdKYnVRMzVBZjFPTnY5T1dSUW5oY2VPUCtlNUVmY09XODV4bGtFZ04xR0Rk?=
- =?utf-8?B?MWtqSDN1dzlvRWg3aWR0d29yQi9hMGZxclZJM2JmMDZJaWVlTXgvc1FOcE85?=
- =?utf-8?B?cWpwUWRLUGJuQnlleEp3dXJ6OXhKK0hwaWs5NHUxeUN3SkRCL1VTY3RlaXZH?=
- =?utf-8?B?dUhhWEUyakdDazRjeUovWkNUc1lzeUNnTEYzUE8yZDZtbjZ5MDVkOXdjMGRN?=
- =?utf-8?B?T21FZW8wc2hHeklFYjYxNVdlbDh5QVlGRjB5bzFmMllrVlZuQTQvR25YZ3RB?=
- =?utf-8?B?eU5vRFROcmhIcGlCbHJRdzRrZDBSQklFY0VQVDNyR0oxS3dQRHpuQnBjb1RI?=
- =?utf-8?B?RHRYcjRDNCtvSndjbHhaUDBtNkhOK0ZiNWorRkw2VmQxZHhVVFZ5Q3Rqa3hG?=
- =?utf-8?B?MFlBYWd6aWFSeUVuQVlteXNEV2twanJEbSt3TmZLbHVJa25mVFMvaVlsZGo0?=
- =?utf-8?B?enZNUGZ1VnlZYW9CV3E0bUh1QVcyWTdtK1dGWi9wbzZrTjl4SHN0Q1pzTGwy?=
- =?utf-8?B?U3R1My8ybURwWlhhdHV2eGY4R1A3bFJkSlRWb3dFUGppdDBCeHZCaERKa2NI?=
- =?utf-8?B?ZjE1cGlSZDhZV1FNZWdCN0kwb3lmVUZYK2hEMlBjeVZsSFRRclVkeVVwRnpm?=
- =?utf-8?B?c3Y1ajJmL3dOVEt5NXp6c1YwRGlYdFJsVUNBeFl3dzZwVEZtVTZkcnM4dkJ6?=
- =?utf-8?B?NE53WE4vNENmOThSM3Z1Q0VlZ2I2cmNVVVNpZ2x4RkdjVkROSEtCa1BvdXdl?=
- =?utf-8?B?SGhlVDZ1NGxGaTgzdTNIeGtyWXFJbVN2bHVJYisvMWxmSHI0VFdFSW9wdmhk?=
- =?utf-8?B?dzcybHJYWkkrYzdUWHE1bDlBdnhPSTVMMTJHbGJ5L25mUFl0dXhoM2JzMDU5?=
- =?utf-8?B?YldabHNHVXc3Y3RHSy9tQW5LZzgwKzVWaU9MWWM5QkhGcjI1V0pXditEY3dG?=
- =?utf-8?B?OWU4NGNFSTM4Q2owV2RENllQWDhnaUxJdlYxTGZ2dTdsUFpIL2U3VC9JdVpo?=
- =?utf-8?B?YUVmbk1oQzdPVDNValphYUxvc21OSkJtdXZaZ3lqeG83YlVsNlNpbzZOb0F2?=
- =?utf-8?B?bUhmMFFnYUdXaU9SVzRsUWEyR0tnbWJoaVhkOFZERFBGTFNkbEFXTGZ2VUpY?=
- =?utf-8?B?bjhLSm1KOWwvTGt2cVpld3pNTVhLMHR2QjhvaFlZNWNqN01yTnJ1VG5sdG0z?=
- =?utf-8?B?K2I0NXRFckdwcGhpam9WRTUvMkY5WWVFYUl2VmpsbFNxTkQ3KzNEVTdqTXky?=
- =?utf-8?B?elZucnJ6eThlTndVV1doQUpkVFVCZ0E1ZE1uejN4bEtQSDh4M0QzcnJZWEo0?=
- =?utf-8?B?eTVaQVNhSU9TM3VndE9mOVlWVlhHZlVCblNXcTVIS3A2VmVvQXdZRDRpNm15?=
- =?utf-8?B?dG1GcVc4MEVKdjdYb2RSUGtKNVhnMjUwN1pTQUVPYWt3SXhyMjFYaGVmQnhv?=
- =?utf-8?B?bktsUzRSS3RPTVd1SzQ0MDhXbkduVHVNcGh6dUJYSnhnS2UwZ29EclJwdlFY?=
- =?utf-8?B?WmxNV3JibWtYOFZLMTdqWWlrZStuSDdvbUZmY0lpQzlINGRMeUpld0hQRUpG?=
- =?utf-8?B?dXp4SExaODIrM2dtQWl4MGllSmFlb2ljNmVXcWdlOC9oRXFyMjM3eGNwYzla?=
- =?utf-8?B?ODhoaE16WkRNMmtFbnNld3MwM3IvZU9OcXBNTE9pVU1Dank1c0JMdGlRaERO?=
- =?utf-8?B?ZGtCZTJUQWU1MmlveXNqdk84MG9GWG90M2V1Zkx0LzBaamIyU0wwQnFnRjVl?=
- =?utf-8?B?cURnWkEwcUFST3pQbFhiSmtTSFRJTWMydk1XYkdVM1lZblVEc0RBZUd5aTMy?=
- =?utf-8?Q?/f9Yj/nivaZDYvsM=3D?=
-Content-Type: text/plain; charset="utf-8"
-Content-ID: <5F54B0EFD88D7F45A575A319113B968E@namprd03.prod.outlook.com>
-Content-Transfer-Encoding: base64
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="W18TpoQQ"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 368AC1F00893
+	for <sashiko-reviews@lists.linux.dev>; Wed, 20 May 2026 03:00:52 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=kernel.org;
+	s=k20260515; t=1779246052;
+	bh=YjH9+CxNm3i91NMc9o3j22DzhplX1a1RU/pc4F3hRTY=;
+	h=References:In-Reply-To:From:Date:Subject:To:Cc;
+	b=W18TpoQQ6k0YBcxRGIxzwPIAdk4VrVGC3tVdOxEnaY09A+4BNNplQre7+YWal/1oP
+	 rg/Ex8qUkNMiA5RfCUtp4VCrGVbuZweWiXe3g/Kj35+PLFDNCD0EH4yjTFhI9KDoIB
+	 4SeRmU6KLQImTvyXWLL/p9yY+3ZDnkKWnayFlpJ32kbZEQ+8+5odOSdSceTcpQg/lR
+	 CfKP2gUTvmF5fiF7Nt0UvpR9wAAC6ejs3MIBU4z5AQHp7k16funp1tXzbHs21rZQYz
+	 tnex7QDYLqrOYZnTNFfzxHOzF6GKTweStXjp0YiwJqiTfdZchmIys3g6F15X5pSYWA
+	 XZ+wdZfjgLTtg==
+Received: by mail-wm1-f44.google.com with SMTP id 5b1f17b1804b1-488b0e1b870so63434025e9.2
+        for <sashiko-reviews@lists.linux.dev>; Tue, 19 May 2026 20:00:52 -0700 (PDT)
+X-Gm-Message-State: AOJu0Yy9udEO02qrLes9RN/wk3zQBU6VmrordYINZY+rkxcmU0cnMdew
+	a9fsNeqtBJnnvfSnn241J8tM4jg0d0NYxua/kVXyas+ZyqwR02Cn4vruDo2pLBzZieIqkvLUzPJ
+	cgGq6wRYztfnwc+oJ10+aIqOj6oxHSA4smeF8esRw
+X-Received: by 2002:a05:600c:1f94:b0:489:1d23:4524 with SMTP id
+ 5b1f17b1804b1-48fe60de736mr323896625e9.5.1779246050743; Tue, 19 May 2026
+ 20:00:50 -0700 (PDT)
 Precedence: bulk
 X-Mailing-List: sashiko-reviews@lists.linux.dev
 List-Id: <sashiko-reviews.lists.linux.dev>
 List-Subscribe: <mailto:sashiko-reviews+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:sashiko-reviews+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-X-OriginatorOrg: altera.com
-X-MS-Exchange-CrossTenant-AuthAs: Internal
-X-MS-Exchange-CrossTenant-AuthSource: SJ0PR03MB5950.namprd03.prod.outlook.com
-X-MS-Exchange-CrossTenant-Network-Message-Id: d63ca9de-7c3d-44d8-6313-08deb61ba084
-X-MS-Exchange-CrossTenant-originalarrivaltime: 20 May 2026 02:58:10.6383
- (UTC)
-X-MS-Exchange-CrossTenant-fromentityheader: Hosted
-X-MS-Exchange-CrossTenant-id: fbd72e03-d4a5-4110-adce-614d51f2077a
-X-MS-Exchange-CrossTenant-mailboxtype: HOSTED
-X-MS-Exchange-CrossTenant-userprincipalname: O3CfBZcZJKgouquP5LbMfu5kbJ2z7ClG7A/8/54QFEVoOa0aDHcIbldJYrlzWloimieNPBMOS8nPcPdMB47X4Q==
-X-MS-Exchange-Transport-CrossTenantHeadersStamped: DS0PR03MB8318
+References: <20260519215358.126364-1-kpsingh@kernel.org> <20260519231709.3D4561F000E9@smtp.kernel.org>
+In-Reply-To: <20260519231709.3D4561F000E9@smtp.kernel.org>
+From: KP Singh <kpsingh@kernel.org>
+Date: Wed, 20 May 2026 05:00:37 +0200
+X-Gmail-Original-Message-ID: <CACYkzJ6rxGSrixr9sChFyXyu3JcjG3JmZGR5YgA0vV0WNJPs0g@mail.gmail.com>
+X-Gm-Features: AVHnY4KogdrLN5rYE7c2YdjnAPa-dmFVVlDhSLQc_3WxQgUARPMySW9BEeeIhMk
+Message-ID: <CACYkzJ6rxGSrixr9sChFyXyu3JcjG3JmZGR5YgA0vV0WNJPs0g@mail.gmail.com>
+Subject: Re: [PATCH] bpf, libbpf: reject non-exclusive metadata maps in the
+ signed loader
+To: sashiko-reviews@lists.linux.dev
+Cc: bpf@vger.kernel.org
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 
-T24gMTkvNS8yMDI2IDM6MTggcG0sIHNhc2hpa28tYm90QGtlcm5lbC5vcmcgd3JvdGU6DQo+IFtZ
-b3UgZG9uJ3Qgb2Z0ZW4gZ2V0IGVtYWlsIGZyb20gc2FzaGlrby1ib3RAa2VybmVsLm9yZy4gTGVh
-cm4gd2h5IHRoaXMgaXMgaW1wb3J0YW50IGF0IGh0dHBzOi8vYWthLm1zL0xlYXJuQWJvdXRTZW5k
-ZXJJZGVudGlmaWNhdGlvbiBdDQo+DQo+IFRoYW5rIHlvdSBmb3IgeW91ciBjb250cmlidXRpb24h
-IFNhc2hpa28gQUkgcmV2aWV3IGZvdW5kIDMgcG90ZW50aWFsIGlzc3VlKHMpIHRvIGNvbnNpZGVy
-Og0KPiAtIFtIaWdoXSBVbmJvdW5kZWQgYnVzeS13YWl0aW5nIHdpdGggbWRlbGF5KDEpIGluc2lk
-ZSBhIGhhcmQgSVJRIGhhbmRsZXIgY2F1c2VzIHNldmVyZSBsYXRlbmN5IHNwaWtlcyBhbmQgaGFy
-ZCBsb2NrdXBzLiAoUHJlLWV4aXN0aW5nIGlzc3VlKQ0KPiAtIFtIaWdoXSBDbGVhcmluZyB0aGUg
-aW50ZXJydXB0IHN0YXR1cyBhZnRlciBzdGFydGluZyBhIG5ldyB0cmFuc2ZlciBjcmVhdGVzIGEg
-cmFjZSBjb25kaXRpb24gbGVhZGluZyB0byBsb3N0IGludGVycnVwdHMgYW5kIGEgaHVuZyBETUEg
-cGlwZWxpbmUuIChQcmUtZXhpc3RpbmcgaXNzdWUpDQo+IC0gW01lZGl1bV0gVGhlIHBhdGNoIGlu
-dHJvZHVjZXMgZXhjZXNzaXZlIGhlYXZ5IG1lbW9yeSBiYXJyaWVycyBvbiB0aGUgRE1BIGZhc3Qg
-cGF0aCBieSB1c2luZyBpb3dyaXRlMzIoKSBpbiBhIGxvb3AuDQo+IC0tDQo+DQo+IGNvbW1pdCA2
-NGY0ZDI0Njk3NDRiNTdkMmNhNjRlNzhmOGNlZjIyOWRlMmM1ZWFlDQo+IEF1dGhvcjogQWRyaWFu
-IE5nIEhvIFlpbiA8YWRyaWFuaG95aW4ubmdAYWx0ZXJhLmNvbT4NCj4NCj4gZG1hOiBhbHRlcmEt
-bXNnZG1hOiBSZXBsYWNlIG1lbWNweSB3aXRoIGlvMzJ3cml0ZSBpbiBtc2dkbWFfY29weV9vbmUN
-Cj4NCj4gVGhpcyBjb21taXQgcmVwbGFjZXMgbWVtY3B5KCkgd2l0aCBhbiBleHBsaWNpdCBpb3dy
-aXRlMzIoKSBsb29wIHdoZW4NCj4gd3JpdGluZyBkZXNjcmlwdG9ycyBpbnRvIHRoZSBETUEgY29u
-dHJvbGxlcidzIEZJRk8uIFRoaXMgZW5zdXJlcyB0aGF0DQo+IE1NSU8gd3JpdGVzIGFyZSBub3Qg
-cmVvcmRlcmVkIGJ5IHRoZSBjb21waWxlciBvciBhcmNoaXRlY3R1cmUsIGd1YXJhbnRlZWluZw0K
-PiB0aGF0IHRoZSBjb250cm9sIHdvcmQgaXMgYWx3YXlzIHdyaXR0ZW4gbGFzdC4NCj4NCj4+IGRp
-ZmYgLS1naXQgYS9kcml2ZXJzL2RtYS9hbHRlcmEtbXNnZG1hLmMgYi9kcml2ZXJzL2RtYS9hbHRl
-cmEtbXNnZG1hLmMNCj4+IGluZGV4IGI0Njk5OWM4MWRmMDAuLjU4MTY5NzNkMmM3MGEgMTAwNjQ0
-DQo+PiAtLS0gYS9kcml2ZXJzL2RtYS9hbHRlcmEtbXNnZG1hLmMNCj4+ICsrKyBiL2RyaXZlcnMv
-ZG1hL2FsdGVyYS1tc2dkbWEuYw0KPj4gQEAgLTQ5NSw2ICs0OTUsOSBAQCBzdGF0aWMgdm9pZCBt
-c2dkbWFfY29weV9vbmUoc3RydWN0IG1zZ2RtYV9kZXZpY2UgKm1kZXYsDQo+PiAgICAgICAgICAg
-ICAgICAgICAgICAgICAgICBzdHJ1Y3QgbXNnZG1hX3N3X2Rlc2MgKmRlc2MpDQo+PiAgIHsNCj4+
-ICAgICAgICB2b2lkIF9faW9tZW0gKmh3X2Rlc2MgPSBtZGV2LT5kZXNjOw0KPj4gKyAgICAgY29u
-c3QgdTMyICpzcmMgPSAoY29uc3QgdTMyICopJmRlc2MtPmh3X2Rlc2M7DQo+PiArICAgICB1bnNp
-Z25lZCBpbnQgaSwgbndvcmRzID0gb2Zmc2V0b2Yoc3RydWN0IG1zZ2RtYV9leHRlbmRlZF9kZXNj
-LCBjb250cm9sKSAvDQo+PiArICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgc2l6ZW9mKHUz
-Mik7DQo+Pg0KPj4gICAgICAgIC8qDQo+PiAgICAgICAgICogQ2hlY2sgaWYgdGhlIERFU0MgRklG
-TyBpdCBub3QgZnVsbC4gSWYgaXRzIGZ1bGwsIHdlIG5lZWQgdG8gd2FpdA0KPj4gQEAgLTUwNSwx
-NiArNTA4LDE2IEBAIHN0YXRpYyB2b2lkIG1zZ2RtYV9jb3B5X29uZShzdHJ1Y3QgbXNnZG1hX2Rl
-dmljZSAqbWRldiwNCj4+ICAgICAgICAgICAgICAgIG1kZWxheSgxKTsNCj4NCj4gVGhpcyBpc24n
-dCBhIHJlZ3Jlc3Npb24gZnJvbSB0aGlzIHBhdGNoLCBidXQgY2FuIHRoaXMgdW5ib3VuZGVkIGJ1
-c3ktd2FpdA0KPiBpbnNpZGUgYSBoYXJkIElSUSBoYW5kbGVyIGNhdXNlIHNldmVyZSBsYXRlbmN5
-IHNwaWtlcyBhbmQgaGFyZCBsb2NrdXBzPw0KPg0KPiBJZiBhIGxhcmdlIHNjYXR0ZXItZ2F0aGVy
-IGxpc3QgaXMgc3VibWl0dGVkIHRoYXQgZXhjZWVkcyB0aGUgaGFyZHdhcmUgRklGTw0KPiBzaXpl
-LCBtc2dkbWFfc3RhcnRfdHJhbnNmZXIoKSB3aWxsIGF0dGVtcHQgdG8gcHVzaCBhbGwgb2YgdGhl
-bSBhdCBvbmNlLg0KPiBUaGUgQ1BVIHdpbGwgc3BpbiBpbiBtZGVsYXkoMSkgZm9yIGVhY2ggc3Vi
-c2VxdWVudCBkZXNjcmlwdG9yIHdoaWxlIHRoZSBETUENCj4gZW5naW5lIHByb2Nlc3NlcyB0aGUg
-dHJhbnNmZXJzLg0KPg0KPiBXYWl0aW5nIGZvciBodW5kcmVkcyBvZiBtaWxsaXNlY29uZHMgd2l0
-aCBJUlFzIGRpc2FibGVkIGNvdWxkIHRyaWdnZXIgYSBrZXJuZWwNCj4gaGFyZCBsb2NrdXAgd2F0
-Y2hkb2cgcGFuaWMuIEZ1cnRoZXJtb3JlLCBpZiB0aGUgaGFyZHdhcmUgc3RhbGxzIGR1ZSB0byBh
-IGJ1cw0KPiBlcnJvciwgdGhlIENQVSB3aWxsIHNwaW4gZm9yZXZlci4NCj4NCj4gV291bGQgaXQg
-YmUgcG9zc2libGUgdG8gaW1wbGVtZW50IGEgcHJvcGVyIHRpbWVvdXQgbWVjaGFuaXNtIGFuZCBz
-b2Z0d2FyZQ0KPiBxdWV1aW5nIGhlcmUgaW5zdGVhZD8NCj4NCj4gWyAuLi4gXQ0KPg0KPj4gLSAg
-ICAgICogVGhlIGRlc2NyaXB0b3IgbmVlZHMgdG8gZ2V0IGNvcGllZCBpbnRvIHRoZSBkZXNjcmlw
-dG9yIEZJRk8NCj4+IC0gICAgICAqIG9mIHRoZSBETUEgY29udHJvbGxlci4gVGhlIGRlc2NyaXB0
-b3Igd2lsbCBnZXQgZmx1c2hlZCB0byB0aGUNCj4+IC0gICAgICAqIEZJRk8sIG9uY2UgdGhlIGxh
-c3Qgd29yZCAoY29udHJvbCB3b3JkKSBpcyB3cml0dGVuLiBTaW5jZSB3ZQ0KPj4gLSAgICAgICog
-YXJlIG5vdCAxMDAlIHN1cmUgdGhhdCBtZW1jcHkoKSB3cml0ZXMgYWxsIHdvcmQgaW4gdGhlICJj
-b3JyZWN0Ig0KPj4gLSAgICAgICogb3JkZXIgKGFkZHJlc3MgZnJvbSBsb3cgdG8gaGlnaCkgb24g
-YWxsIGFyY2hpdGVjdHVyZXMsIHdlIG1ha2UNCj4+IC0gICAgICAqIHN1cmUgdGhpcyBjb250cm9s
-IHdvcmQgaXMgd3JpdHRlbiBsYXN0IGJ5IHNpbmdsZSBjb2RpbmcgaXQgYW5kDQo+PiAtICAgICAg
-KiBhZGRpbmcgc29tZSB3cml0ZS1iYXJyaWVycyBoZXJlLg0KPj4gKyAgICAgICogVGhlIGRlc2Ny
-aXB0b3IgbXVzdCBiZSB3cml0dGVuIGludG8gdGhlIGRlc2NyaXB0b3IgRklGTyBvZiB0aGUgRE1B
-DQo+PiArICAgICAgKiBjb250cm9sbGVyLiBUaGUgRklGTyBpcyBmbHVzaGVkIGFuZCB0aGUgZGVz
-Y3JpcHRvciBiZWNvbWVzIHZhbGlkIG9uY2UNCj4+ICsgICAgICAqIHRoZSBsYXN0IHdvcmQgKHRo
-ZSBjb250cm9sIHdvcmQpIGlzIHdyaXR0ZW4uIFRvIGd1YXJhbnRlZSB0aGUgb3JkZXJpbmcNCj4+
-ICsgICAgICAqIG9mIE1NSU8gd3JpdGVzIGFjcm9zcyBhbGwgYXJjaGl0ZWN0dXJlcywgd2Ugd3Jp
-dGUgZWFjaCAzMi1iaXQgd29yZA0KPj4gKyAgICAgICogaW5kaXZpZHVhbGx5IHVzaW5nIGlvd3Jp
-dGUzMigpLCBhbmQgaGFuZGxlIHRoZSBjb250cm9sIHdvcmQgc2VwYXJhdGVseQ0KPj4gKyAgICAg
-ICogYXQgdGhlIGVuZC4gVGhpcyBlbnN1cmVzIHRoZSBjb250cm9sIHdvcmQgaXMgYWx3YXlzIHdy
-aXR0ZW4gbGFzdCBhbmQNCj4+ICsgICAgICAqIHByZXZlbnRzIG1lbWNweSgpIG9yIHRoZSBjb21w
-aWxlciBmcm9tIHJlb3JkZXJpbmcgYWNjZXNzZXMuDQo+PiAgICAgICAgICovDQo+PiAtICAgICBt
-ZW1jcHkoKHZvaWQgX19mb3JjZSAqKWh3X2Rlc2MsICZkZXNjLT5od19kZXNjLA0KPj4gLSAgICAg
-ICAgICAgIHNpemVvZihkZXNjLT5od19kZXNjKSAtIHNpemVvZih1MzIpKTsNCj4+ICsgICAgIGZv
-ciAoaSA9IDA7IGkgPCBud29yZHM7IGkrKykNCj4+ICsgICAgICAgICAgICAgaW93cml0ZTMyKHNy
-Y1tpXSwgaHdfZGVzYyArIGkgKiBzaXplb2YodTMyKSk7DQo+DQo+IERvZXMgdGhpcyBpbnRyb2R1
-Y2UgZXhjZXNzaXZlIGhlYXZ5IG1lbW9yeSBiYXJyaWVycyBvbiB0aGUgRE1BIGZhc3QgcGF0aD8N
-Cj4NCj4gVGhlIGlvd3JpdGUzMigpIG1hY3JvIG1hcHMgdG8gd3JpdGVsKCksIHdoaWNoIGluY2x1
-ZGVzIGFuIGltcGxpY2l0IGhlYXZ5DQo+IG1lbW9yeSBiYXJyaWVyIGJlZm9yZSB0aGUgd3JpdGUg
-dG8gZW5zdXJlIG1lbW9yeSBhY2Nlc3NlcyBhcmUgdmlzaWJsZSB0byB0aGUNCj4gZGV2aWNlLg0K
-Pg0KPiBFeGVjdXRpbmcgdGhpcyBiYXJyaWVyIGluIGEgdGlnaHQgbG9vcCBmb3IgZXZlcnkgd29y
-ZCBvZiB0aGUgRE1BIGRlc2NyaXB0b3INCj4gY291bGQgc2lnbmlmaWNhbnRseSBkZWdyYWRlIHBl
-cmZvcm1hbmNlIG9uIHRoZSBzdWJtaXNzaW9uIGhvdCBwYXRoLg0KPg0KPiBTaW5jZSB0aGUgaGFy
-ZHdhcmUgbWVyZWx5IHJlcXVpcmVzIHRoZSBkZXNjcmlwdG9yIHdvcmRzIHRvIGJlIHdyaXR0ZW4N
-Cj4gc2VxdWVudGlhbGx5IGJlZm9yZSB3cml0aW5nIHRoZSBmaW5hbCBjb250cm9sIHdvcmQsIGNv
-dWxkIHdyaXRlbF9yZWxheGVkKCkNCj4gYmUgdXNlZCBpbnN0ZWFkIHRvIGF2b2lkIHRoZSBwZXIt
-d29yZCBiYXJyaWVyIG92ZXJoZWFkPyBBbiBleHBsaWNpdCB3bWIoKQ0KPiBpcyBhbHJlYWR5IHBy
-ZXNlbnQgYmVmb3JlIHRoZSBmaW5hbCBjb250cm9sIHdvcmQgd3JpdGUgdG8gZW5zdXJlIGNvcnJl
-Y3QNCj4gb3JkZXJpbmcuDQo+DQo+IFRoaXMgaXNuJ3QgYSByZWdyZXNzaW9uIGZyb20gdGhpcyBw
-YXRjaCwgYnV0IGNvdWxkIGNsZWFyaW5nIHRoZSBpbnRlcnJ1cHQNCj4gc3RhdHVzIGFmdGVyIHN0
-YXJ0aW5nIGEgbmV3IHRyYW5zZmVyIGNyZWF0ZSBhIHJhY2UgY29uZGl0aW9uIGxlYWRpbmcgdG8N
-Cj4gbG9zdCBpbnRlcnJ1cHRzIGFuZCBhIGh1bmcgRE1BIHBpcGVsaW5lPw0KPg0KPiBkcml2ZXJz
-L2RtYS9hbHRlcmEtbXNnZG1hLmM6bXNnZG1hX2lycV9oYW5kbGVyKCkgew0KPiAgICAgICAgICBp
-ZiAoKHN0YXR1cyAmIE1TR0RNQV9DU1JfU1RBVF9CVVNZKSA9PSAwKSB7DQo+ICAgICAgICAgICAg
-ICAgICAgLyogU3RhcnQgbmV4dCB0cmFuc2ZlciBpZiB0aGUgRE1BIGNvbnRyb2xsZXIgaXMgaWRs
-ZSAqLw0KPiAgICAgICAgICAgICAgICAgIHNwaW5fbG9jaygmbWRldi0+bG9jayk7DQo+ICAgICAg
-ICAgICAgICAgICAgbWRldi0+aWRsZSA9IHRydWU7DQo+ICAgICAgICAgICAgICAgICAgbXNnZG1h
-X3N0YXJ0X3RyYW5zZmVyKG1kZXYpOw0KPiAgICAgICAgICAgICAgICAgIHNwaW5fdW5sb2NrKCZt
-ZGV2LT5sb2NrKTsNCj4gICAgICAgICAgfQ0KPg0KPiAgICAgICAgICB0YXNrbGV0X3NjaGVkdWxl
-KCZtZGV2LT5pcnFfdGFza2xldCk7DQo+DQo+ICAgICAgICAgIC8qIENsZWFyIGludGVycnVwdCBp
-biBtU0dETUEgY29udHJvbGxlciAqLw0KPiAgICAgICAgICBpb3dyaXRlMzIoTVNHRE1BX0NTUl9T
-VEFUX0lSUSwgbWRldi0+Y3NyICsgTVNHRE1BX0NTUl9TVEFUVVMpOw0KPiB9DQo+DQo+IElmIHRo
-ZSBuZXdseSBzdGFydGVkIERNQSB0cmFuc2ZlciBjb21wbGV0ZXMgZXh0cmVtZWx5IHF1aWNrbHks
-IGJlZm9yZSB0aGUNCj4gQ1BVIHJlYWNoZXMgdGhlIGlvd3JpdGUzMigpIGluc3RydWN0aW9uLCB0
-aGUgaGFyZHdhcmUgd2lsbCBhc3NlcnQgdGhlIElSUQ0KPiBiaXQgYWdhaW4uDQo+DQo+IFRoZSB1
-bmNvbmRpdGlvbmFsIGNsZWFyIHdpbGwgdGhlbiBjbGVhciB0aGlzIG5ldyBpbnRlcnJ1cHQgZXZl
-bnQsIGFuZCBiZWNhdXNlDQo+IHRoZSBldmVudCBpcyBsb3N0LCB0aGUgdGFza2xldCB3aWxsIG5v
-dCBiZSBzY2hlZHVsZWQgZm9yIHRoZSBzZWNvbmQgdHJhbnNmZXIuDQo+DQo+IE9uIHN5c3RlbXMg
-d2l0aG91dCBhIHJlc3BvbnNlIEZJRk8sIHRoZSB0YXNrbGV0IGNvbXBsZXRlcyBleGFjdGx5IG9u
-ZQ0KPiBkZXNjcmlwdG9yIHBlciBydW4sIHNvIGxvc2luZyB0aGUgaW50ZXJydXB0IGNvdWxkIHN0
-cmFuZCB0aGUgc2Vjb25kIGRlc2NyaXB0b3INCj4gaW4gdGhlIGFjdGl2ZV9saXN0IHBlcm1hbmVu
-dGx5Lg0KPg0KPiBTaG91bGQgdGhlIGludGVycnVwdCBzdGF0dXMgYmUgY2xlYXJlZCBiZWZvcmUg
-aW5pdGlhdGluZyB0aGUgbmV4dCB0cmFuc2Zlcj8NCj4NCj4gLS0NCj4gU2FzaGlrbyBBSSByZXZp
-ZXcgwrcgaHR0cHM6Ly9zYXNoaWtvLmRldi8jL3BhdGNoc2V0LzQ1ODZjMzliNDNhYTNiOTQ4MDk4
-OTk0MGZlOTA1ZGFjNDBjOGNlZmMuMTc3OTE3MzE1Ni5naXQudHplLnllZS5uZ0BhbHRlcmEuY29t
-P3BhcnQ9MQ0KDQpIaSBtYWludGFpbmVycywNCg0KVGhhbmtzIGZvciB0aGUgcmV2aWV3Lg0KDQpU
-aGlzIHBhdGNoIG9ubHkgcmVwbGFjZXMgbWVtY3B5KCkgd2l0aCBvcmRlcmVkIHBlci13b3JkIE1N
-SU8gd3JpdGVzIGZvcg0KdGhlIGRlc2NyaXB0b3IgRklGTzsgaXQgZG9lcyBub3QgY2hhbmdlIHRo
-ZSBtZGVsYXkoKSBGSUZPIGJhY2stcHJlc3N1cmUNCmxvb3Agb3IgbXNnZG1hX2lycV9oYW5kbGVy
-KCkgKGFjayBvcmRlcmluZyAvIG1zZ2RtYV9zdGFydF90cmFuc2ZlcigpIGluDQpoYXJkaXJxKS4g
-VGhvc2UgaXNzdWVzIHByZWRhdGUgdGhpcyBzZXJpZXPigJRJIGNhbiBzZW5kIHNlcGFyYXRlIGZp
-eGVzIGlmDQp5b3Ugd2FudCB0aGVtLCBidXQgSSdkIHByZWZlciBub3QgdG8gbWl4IHRoZW0gaW50
-byB0aGlzIGNvcnJlY3RuZXNzIHBhdGNoLg0KDQpPbiBpb3dyaXRlMzIoKSB2cyB3cml0ZWxfcmVs
-YXhlZCgpOiB0aGUgd2hvbGUgZHJpdmVyIHVzZXMNCmlvcmVhZDMyL2lvd3JpdGUzMiB0b2RheSAo
-bm8gX3JlbGF4ZWQgYW55d2hlcmUpLiBJIHVzZWQgaW93cml0ZTMyKCkgdG8NCm1hdGNoIHRoYXQg
-YW5kIHRvIGJlIGNvbnNlcnZhdGl2ZSBvbiBvcmRlcmluZy4gSWYgeW91IHByZWZlcg0Kd3JpdGVs
-X3JlbGF4ZWQoKSBmb3IgdGhlIGJvZHkgd29yZHMgcGx1cyB3bWIoKSBiZWZvcmUgdGhlIGNvbnRy
-b2wgd29yZCwNCkknbSBoYXBweSB0byBkbyB0aGF0IGhlcmUgb3IgaW4gYSBxdWljayBmb2xsb3ct
-dXAgb25jZSB5b3UgY29uZmlybQ0KdGhhdCdzIHNhZmUgZm9yIHRoaXMgSVAuDQoNClBsZWFzZSBs
-ZXQgbWUga25vdyB3aGljaCBhcHByb2FjaCB5b3UgcHJlZmVyLg0KDQpUaGFua3MsDQpUemUgWWVl
-DQo=
+On Wed, May 20, 2026 at 1:17=E2=80=AFAM <sashiko-bot@kernel.org> wrote:
+>
+> Thank you for your contribution! Sashiko AI review found 2 potential issu=
+e(s) to consider:
+> - [High] The generated BPF loader program uses a hardcoded 8-byte read (B=
+PF_DW) to access the `excl_prog_sha` pointer field, which causes the BPF ve=
+rifier to reject the loader on 32-bit architectures and silently bypasses t=
+he exclusivity check.
+
+I plan to move this to the kernel with a kfunc anyways. Any
+suggestions for the 32 bit fix (apart from an ugly union in bpf_map).
+
+> - [High] Branch target offset calculation is off-by-one, causing the jump=
+ target to land past the beginning of the cleanup block.
+> --
+
+Yeah this is valid:
+
+ Compute the cleanup-label offset after emitting the MOV that sets the
+  error code in R7. Otherwise the JMP lands one insn past cleanup_label
+  and skips the first FD-close, matching the emit_check_err() pattern.
+
+diff --git a/tools/lib/bpf/gen_loader.c b/tools/lib/bpf/gen_loader.c
+index becfda5b9025..6950443ba698 100644
+--- a/tools/lib/bpf/gen_loader.c
++++ b/tools/lib/bpf/gen_loader.c
+@@ -592,9 +592,9 @@ static void emit_signature_match(struct bpf_gen *gen)
+                gen->hash_insn_offset[i] =3D gen->insn_cur - gen->insn_star=
+t;
+                emit2(gen, BPF_LD_IMM64_RAW_FULL(BPF_REG_3, 0, 0, 0, 0, 0))=
+;
+
+-               off =3D  -(gen->insn_cur - gen->insn_start -
+gen->cleanup_label) / 8 - 1;
++               emit(gen, BPF_MOV64_IMM(BPF_REG_7, -EINVAL));
++               off =3D -(gen->insn_cur - gen->insn_start -
+gen->cleanup_label) / 8 - 1;
+                if (is_simm16(off)) {
+-                       emit(gen, BPF_MOV64_IMM(BPF_REG_7, -EINVAL));
+                        emit(gen, BPF_JMP_REG(BPF_JNE, BPF_REG_2,
+BPF_REG_3, off));
+                } else {
+                        gen->error =3D -ERANGE;
+@@ -610,9 +610,9 @@ static void emit_signature_match(struct bpf_gen *gen)
+        emit2(gen, BPF_LD_IMM64_RAW_FULL(BPF_REG_1, BPF_PSEUDO_MAP_IDX,
+                                         0, 0, 0, 0));
+        emit(gen, BPF_LDX_MEM(BPF_DW, BPF_REG_2, BPF_REG_1,
+SHA256_DWORD_SIZE * sizeof(__u64)));
++       emit(gen, BPF_MOV64_IMM(BPF_REG_7, -EINVAL));
+        off =3D -(gen->insn_cur - gen->insn_start - gen->cleanup_label) / 8=
+ - 1;
+        if (is_simm16(off)) {
+-               emit(gen, BPF_MOV64_IMM(BPF_REG_7, -EINVAL));
+                emit(gen, BPF_JMP_IMM(BPF_JEQ, BPF_REG_2, 0, off));
+        } else {
+                gen->error =3D -ERANGE;
+
+>
+> commit 51df41105aded76b418cec093cbbaaad09c03147
+> Author: KP Singh <kpsingh@kernel.org>
+>
+> bpf, libbpf: reject non-exclusive metadata maps in the signed loader
+>
+> This patch updates the BPF loader to verify that metadata maps are exclus=
+ive
+> while they are frozen. It places excl_prog_sha in struct bpf_map and emit=
+s a
+> check in gen_loader to reject the map with -EINVAL if excl_prog_sha is NU=
+LL.
+>
+> > diff --git a/tools/lib/bpf/gen_loader.c b/tools/lib/bpf/gen_loader.c
+> > index cd5c2543f54d8..becfda5b90253 100644
+> > --- a/tools/lib/bpf/gen_loader.c
+> > +++ b/tools/lib/bpf/gen_loader.c
+> [ ... ]
+> > @@ -601,6 +601,23 @@ static void emit_signature_match(struct bpf_gen *g=
+en)
+> >                       emit(gen, BPF_JMP_IMM(BPF_JA, 0, 0, -1));
+> >               }
+> >       }
+> > +
+> > +     /* Reject if the metadata map is not exclusive. Without exclusivi=
+ty
+> > +      * the cached map->sha[] verified above can be stale: another BPF
+> > +      * program with map access could have mutated the contents betwee=
+n
+> > +      * BPF_OBJ_GET_INFO_BY_FD and loader execution.
+> > +      */
+> > +     emit2(gen, BPF_LD_IMM64_RAW_FULL(BPF_REG_1, BPF_PSEUDO_MAP_IDX,
+> > +                                      0, 0, 0, 0));
+> > +     emit(gen, BPF_LDX_MEM(BPF_DW, BPF_REG_2, BPF_REG_1, SHA256_DWORD_=
+SIZE * sizeof(__u64)));
+>
+> [Severity: High]
+> Does this 8-byte read (BPF_DW) cause issues on 32-bit architectures?
+>
+> Since pointers are 4 bytes long on 32-bit systems, the verifier will reje=
+ct
+> the loader program with an access size mismatch error (-EACCES) because i=
+t
+> expects the memory access size to exactly match the BTF-defined pointer
+> size.
+>
+> Also, if the verifier check were bypassed, wouldn't an 8-byte read stradd=
+le
+> both the 4-byte excl_prog_sha and the adjacent 4-byte ops pointer? Since
+> ops is always non-zero, the resulting 64-bit value would never be 0,
+> causing the BPF_JEQ check below to silently fall through and bypass the
+> exclusivity check.
+>
+> > +     off =3D -(gen->insn_cur - gen->insn_start - gen->cleanup_label) /=
+ 8 - 1;
+> > +     if (is_simm16(off)) {
+> > +             emit(gen, BPF_MOV64_IMM(BPF_REG_7, -EINVAL));
+> > +             emit(gen, BPF_JMP_IMM(BPF_JEQ, BPF_REG_2, 0, off));
+>
+> [Severity: High]
+> Is the branch target offset calculation off by one?
+>
+> The offset off is computed based on insn_cur before emitting the
+> BPF_MOV64_IMM instruction. Since emitting the BPF_MOV64_IMM instruction
+> advances insn_cur by 8 bytes, and BPF branch offsets are evaluated relati=
+ve
+> to the instruction immediately following the branch itself, the actual ju=
+mp
+> target evaluates to cleanup_label + 8 bytes (1 instruction) instead of th=
+e
+> cleanup_label itself.
+>
+> This skips the first instruction of the cleanup block. If nr_progs > 0, i=
+t
+> skips loading the first FD into BPF_REG_1 and calls sys_close() with an
+> uninitialized or stale register (e.g., a map pointer), potentially closin=
+g a
+> random/incorrect file descriptor in the system. If nr_progs =3D=3D 0 and
+> nr_maps > 0, it may jump into the middle of a 16-byte BPF_LD_IMM64
+> instruction, causing verifier rejection.
+>
+> Does this need to be adjusted, even though it appears to be a pattern cop=
+ied
+> from the loop above it?
+>
+> > +     } else {
+> > +             gen->error =3D -ERANGE;
+> > +             emit(gen, BPF_JMP_IMM(BPF_JA, 0, 0, -1));
+> > +     }
+> >  }
+>
+> --
+> Sashiko AI review =C2=B7 https://sashiko.dev/#/patchset/20260519215358.12=
+6364-1-kpsingh@kernel.org?part=3D1
