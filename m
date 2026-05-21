@@ -1,124 +1,120 @@
-Received: from mail-ed1-f52.google.com (mail-ed1-f52.google.com [209.85.208.52])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from mx0b-001b2d01.pphosted.com (mx0b-001b2d01.pphosted.com [148.163.158.5])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9DEA6386443
-	for <sashiko-reviews@lists.linux.dev>; Thu, 21 May 2026 07:38:35 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=pass smtp.client-ip=209.85.208.52
-ARC-Seal:i=2; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1779349117; cv=pass; b=Kj1mVlO+uKNA84kLi3OIzxnqh56nTLHAE2jdAxLZwul3otPKidQsB7ihen4x24Do+iCG/NNpSBporRpYe3uPDqYB+4IK+7pc0QxZGw2OtEooK+8iB7OiyIUUJBZ0ZesPAWv8uSrvKm8RXAvzoUBy+l7siaFKv1Dj6fWuswNzHp0=
-ARC-Message-Signature:i=2; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1779349117; c=relaxed/simple;
-	bh=NYE6AwotSwk91GJo45vtKZgWH8fG+L9aVrfxpVFSg40=;
-	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
-	 To:Cc:Content-Type; b=BeAJ26KtRx1Wo8NUshWEV9/95YWesXTEiNw5EAyqxrLt19gEshTWIOFPvxRLWM0qSDUbaXNM1g8wyyF4gf6pqdCGQ9Zxvf88MC5UIxXACmwNWiQifq0Pil8R7ZWuRVi1owAVrJ4XPMQmwJ3P9JPB6szSNG7KQL6ncqitEvv/LBg=
-ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=m45/kiCi; arc=pass smtp.client-ip=209.85.208.52
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 374A1328B4B;
+	Thu, 21 May 2026 07:58:14 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=148.163.158.5
+ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
+	t=1779350295; cv=none; b=aLHRsxmH2rP/ZnFNJU032V4eyowNMJrEY2gM6Ia3jACeS+M7DRby8wYE2S8/LMhfyQM0CnGIA3g8XVj+bW1lZSsijD6rndzVoeshBHSTGjBVEkQQ+vMqS8fTcmpdMG3tfOl/1jH5hI77GLEV8aFnHqwCNLHqJsTsz+7QSu7MIAk=
+ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
+	s=arc-20240116; t=1779350295; c=relaxed/simple;
+	bh=Ov6jxIKewKd1ARWTUVnl8Cw1QCOSgHih4O4Lmu+c84Q=;
+	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
+	 In-Reply-To:Content-Type; b=h7mMpVF6O74eVmlAKdbPEo/1hRN4pTS9TKSsZgRBYRyuvKbIknQcZYPL1HnDG0K383oUvi0+FL2yIPFmyagvORKU3FwIhBRS6F9KHGERJ5km45uSdOEaoIUo2MAAHC2lGV9BPyWVrXdTXDSEVPaUXD+Q3QdqSzrxgMuc6wYC5hs=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linux.ibm.com; spf=pass smtp.mailfrom=linux.ibm.com; dkim=pass (2048-bit key) header.d=ibm.com header.i=@ibm.com header.b=r3meDvHM; arc=none smtp.client-ip=148.163.158.5
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linux.ibm.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linux.ibm.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="m45/kiCi"
-Received: by mail-ed1-f52.google.com with SMTP id 4fb4d7f45d1cf-67b8d9c26bbso12548168a12.2
-        for <sashiko-reviews@lists.linux.dev>; Thu, 21 May 2026 00:38:35 -0700 (PDT)
-ARC-Seal: i=1; a=rsa-sha256; t=1779349114; cv=none;
-        d=google.com; s=arc-20240605;
-        b=GABIbcXpbg/rzjat234Rd5mi75HSyl6SEeJ9dHvyA5Y3c4dAfNO8xOXKPi0zqqIAqG
-         8OPTNxFzjeTUZ6Rm6wDyUX+uggG3y0qkDdKlv5DCqcwY4pVQRyQjocTqZGAr+QsinAxO
-         NhUHmqWn7KrLp79Rl+XwCRV3K/KqLakcWTqk/orZxYgB3/DX5SZPf2uSenDn6hOzoFHG
-         Ny7KQ5V6t2RztDy2SJmRjPrmYt5KeRCccwk5xxLMmcLAT5q4y8sVKCveku/qVO/5AgIa
-         QdmG5E08ZqrPKLSv56F4pg98GoqcS2sWbJUvE5LOjyViRoYTLUp+YdLbYdNwBDn8iUaq
-         lpqQ==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com; s=arc-20240605;
-        h=cc:to:subject:message-id:date:from:in-reply-to:references
-         :mime-version:dkim-signature;
-        bh=NYE6AwotSwk91GJo45vtKZgWH8fG+L9aVrfxpVFSg40=;
-        fh=AeKY19gMLQSz0DLAsIMuWcRjlV2JFnlpDHB2v0fV59U=;
-        b=PLfBU/bw5luUS7cyJaP5KbKySfQRVK/idAqFllG2aCpCeSnOCU9T9tUMJY6nbv0yOT
-         llHZ/91nM0CqU5xx2oFATRrAE1Ov2Ou6V7daGhZDGzaaHVP7yzk/Cm29eZe0wQmNb2DA
-         jzx+Y82QLGNqg5/albioZtmDzsE+xW0ZVf/eIF4Ps48JUgj/q0WmB0u51KxvjoelFx15
-         zx1pC0TBQT3Ofs6bFEIncutXa1jxhvK3RauLkqeRKdcXF4wCgyeTec1UC6fMntACSppX
-         RzkNrcJtaEdfLJB7pVLj1yayuid5oNmUyrsZXe9FJniqeRfC6w8yToOM0ufIWWvstu6R
-         Shfg==;
-        darn=lists.linux.dev
-ARC-Authentication-Results: i=1; mx.google.com; arc=none
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1779349114; x=1779953914; darn=lists.linux.dev;
-        h=cc:to:subject:message-id:date:from:in-reply-to:references
-         :mime-version:from:to:cc:subject:date:message-id:reply-to;
-        bh=NYE6AwotSwk91GJo45vtKZgWH8fG+L9aVrfxpVFSg40=;
-        b=m45/kiCiAYCTT4zYxO85m7N6bssPGJkPKhvjgp5i4FnGOoZ+JDhvkzn5MxJRCbnfrH
-         r39jQLp+MKUGbgFXdypffcueKob21LIl2T2Tp3VMXOqdxWt6R++zbGMBoof0e0ef0/4T
-         Kt2G7U4xVjaGKS/YoTo3tdcGTxzpTsxd3xZeoE5/xfOL+vCGp/S7BEC4yaHy2ySWKhpC
-         SZNWhfA2XA3J2L4KcYdnxE16ELTV5h6hqhEkdyYQdVXBx0jB7J7y5ulXnH4MIBAh507x
-         a48dTHeL/hJj/oEJC2NwH8c5uC8KLrxnvCMFagYrjHDdkXypbOU7vZWZLCk9PMbzSKAa
-         Rwkw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20251104; t=1779349114; x=1779953914;
-        h=cc:to:subject:message-id:date:from:in-reply-to:references
-         :mime-version:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=NYE6AwotSwk91GJo45vtKZgWH8fG+L9aVrfxpVFSg40=;
-        b=OK1DhD82BbBVxNh1PngWgXcdjvJZi1zYtuICqHL9/Zy637MllZ3WWOmxbthIOYIVs4
-         fbpAc8VbaS1k4YgBCRB8vTj24RUmVEQUMzcGNF+R7DfnG4QFh1vkg12jmEW1dNlIWzXN
-         l715E1FOWe6NtF1e+qY2HDZSIOBweHPMs5jYp9xL4379HWwEEkj6If5eJFiZ8Fk384YQ
-         9yDMs0RcsmB7yaAuWxj349bbVwcYucxgnK1hhiGB+/vXr51aj+kjKX/bm1j+KGVXZPZW
-         lRELRE2zYj1gfcMYEuLfPvvtT8Vu81zW+fz/YVXoyiMwjsV8KUT8s4SWWwR/vuLN4qUO
-         ZcCQ==
-X-Forwarded-Encrypted: i=1; AFNElJ+ZEe8TmrcGkrDOGRdeSyr8pA8t3mfEdzkBKWWxDlQH07aa1HMmx07SlMU/UtXYLxr1yqIRpc1SpYLfIZpAuFs=@lists.linux.dev
-X-Gm-Message-State: AOJu0YxIuydAQ/o7zDBsEVB61fjiv0FbE+/bemnLpxQWHhrhGbQiznWf
-	GzfsH3iyder4hchc6QcfMc0t3x6rN/CB5YgpgzAtLkMmLQzwzpl5AuFynZ9C8tNRpyuDykjvdct
-	UzoA7QVKQ4si5HFvMYOBmzVMil7h6B8qMViKRwBrd/A==
-X-Gm-Gg: Acq92OE6yzWLsMEV+/NX87VMIVF0bQ5718rIDYD7X1T1y3LpcB1EFGgviAIuoVw8+U5
-	mZQsdMY2C/r2IMFebdnXHPoRYr/2RhDWPNxBNl/qsaQe71be32WpJDLtTEmMxEanBjUBuVkKSlK
-	BJTvZ1tOGG3OL3WSPZUpocYCuJ/d7bPt/WzfA0DBwWij28C4cux63ZXWvb+Y2yxYyxT+i4a+4Z2
-	wfs3iZhIo/9kssSL/PKZqoWgjuzwKOBov+Om2C890AY/BnOp4AhrqYhE6Qq9bZfqNxoUBszjGrt
-	2WTd8ghRyTrqDUJa2LA3CNg/OApXSNpxbK9L17oZ2Q==
-X-Received: by 2002:a05:6402:34c3:b0:686:d801:96c9 with SMTP id
- 4fb4d7f45d1cf-688367cfeb0mr797381a12.14.1779349113964; Thu, 21 May 2026
- 00:38:33 -0700 (PDT)
+	dkim=pass (2048-bit key) header.d=ibm.com header.i=@ibm.com header.b="r3meDvHM"
+Received: from pps.filterd (m0356516.ppops.net [127.0.0.1])
+	by mx0a-001b2d01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id 64L4higT4142334;
+	Thu, 21 May 2026 07:58:13 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=ibm.com; h=cc
+	:content-transfer-encoding:content-type:date:from:in-reply-to
+	:message-id:mime-version:references:subject:to; s=pp1; bh=bKA3Kc
+	mR/JR0FYYPWUumU6DSfuPXtBJ9xCavUXYBK/w=; b=r3meDvHM0a/tkLzh9FR+yT
+	XtQuPG1GC13h1Pl9o1dAR/R12fCSPPo+qby6X5tV8tXOcqJTUIxdkiQNlPGsF4IL
+	cZ7gtqRxk7FY3gWDr75V6qymwXXXLUCxgB6MlYkmijER7gLfANjq7D8BZRBZZHW+
+	0SmQjEX3l8+6V1FmA9wfQ3HHSIXCSu+hheDVBSshSrcRP1ZkmyGGjrACB5YcdfLk
+	m+9hCbu/G2/ciqwlFKmuWjeo5HU+nOlSoLvKAqOKxFQtUJSr+MYjmRSErn8b8PC2
+	yxZHlMK8TbWNUZF8TYXTRW3bojJFjKuCVBK+HzS1Zs89UgYHSWVPTpBbkgz7WAmA
+	==
+Received: from ppma21.wdc07v.mail.ibm.com (5b.69.3da9.ip4.static.sl-reverse.com [169.61.105.91])
+	by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 4e6hb8mkxk-1
+	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+	Thu, 21 May 2026 07:58:13 +0000 (GMT)
+Received: from pps.filterd (ppma21.wdc07v.mail.ibm.com [127.0.0.1])
+	by ppma21.wdc07v.mail.ibm.com (8.18.1.7/8.18.1.7) with ESMTP id 64L7sSkZ004569;
+	Thu, 21 May 2026 07:58:12 GMT
+Received: from smtprelay06.fra02v.mail.ibm.com ([9.218.2.230])
+	by ppma21.wdc07v.mail.ibm.com (PPS) with ESMTPS id 4e73wkb2v6-1
+	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+	Thu, 21 May 2026 07:58:12 +0000 (GMT)
+Received: from smtpav07.fra02v.mail.ibm.com (smtpav07.fra02v.mail.ibm.com [10.20.54.106])
+	by smtprelay06.fra02v.mail.ibm.com (8.14.9/8.14.9/NCO v10.0) with ESMTP id 64L7w9Z817760720
+	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
+	Thu, 21 May 2026 07:58:10 GMT
+Received: from smtpav07.fra02v.mail.ibm.com (unknown [127.0.0.1])
+	by IMSVA (Postfix) with ESMTP id CE7DA2004B;
+	Thu, 21 May 2026 07:58:09 +0000 (GMT)
+Received: from smtpav07.fra02v.mail.ibm.com (unknown [127.0.0.1])
+	by IMSVA (Postfix) with ESMTP id B6E2B20043;
+	Thu, 21 May 2026 07:58:09 +0000 (GMT)
+Received: from [9.52.200.195] (unknown [9.52.200.195])
+	by smtpav07.fra02v.mail.ibm.com (Postfix) with ESMTP;
+	Thu, 21 May 2026 07:58:09 +0000 (GMT)
+Message-ID: <23bd6a43-47c9-469f-92e7-2ecec47de428@linux.ibm.com>
+Date: Thu, 21 May 2026 09:58:09 +0200
 Precedence: bulk
 X-Mailing-List: sashiko-reviews@lists.linux.dev
 List-Id: <sashiko-reviews.lists.linux.dev>
 List-Subscribe: <mailto:sashiko-reviews+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:sashiko-reviews+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-References: <20260513-exynos850-cpuhotplug-v4-3-54fec5f65362@linaro.org>
- <20260514053037.BB9A1C2BCB7@smtp.kernel.org> <DINMSL1LPPCF.1U0AO6MYUFTN2@linaro.org>
-In-Reply-To: <DINMSL1LPPCF.1U0AO6MYUFTN2@linaro.org>
-From: Peter Griffin <peter.griffin@linaro.org>
-Date: Thu, 21 May 2026 08:38:22 +0100
-X-Gm-Features: AVHnY4IWx-1LpMYkHNMVlV5-A-NXDPnKWwrYcqsb3AhsVZOrTUQ92kJoyqXmTRQ
-Message-ID: <CADrjBPpBJ6cZYnGRkSVDA4BVKC_rh=KKvSWq2VjCTDMo5nMmPw@mail.gmail.com>
-Subject: Re: [PATCH v4 3/6] soc: samsung: exynos-pmu: generalise
- gs101-specific cpu{idle,hotplug} for Exynos SoCs
-To: Alexey Klimov <alexey.klimov@linaro.org>
-Cc: krzk@kernel.org, alim.akhtar@samsung.com, 
-	linux-samsung-soc@vger.kernel.org, sashiko-reviews@lists.linux.dev, 
-	conor+dt@kernel.org, robh@kernel.org, krzk+dt@kernel.org, 
-	devicetree@vger.kernel.org
-Content-Type: text/plain; charset="UTF-8"
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH v15 02/20] unwind_user/sframe: Add support for reading
+ .sframe headers
+To: sashiko-reviews@lists.linux.dev
+Cc: bpf@vger.kernel.org
+References: <20260520154004.3845823-3-jremus@linux.ibm.com>
+ <20260520160253.C01E91F000E9@smtp.kernel.org>
+Content-Language: en-US
+From: Jens Remus <jremus@linux.ibm.com>
+Organization: IBM Deutschland Research & Development GmbH
+In-Reply-To: <20260520160253.C01E91F000E9@smtp.kernel.org>
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
+X-TM-AS-GCONF: 00
+X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwNTIxMDA3MyBTYWx0ZWRfX2LFp9HXb06Al
+ pSMlBNB1DQFukqgh4Vhxzywt4N671/c6VDZkzJCX/DAQDsBUBNuDMqmrN5qd0QHa4UOIDtwUy1U
+ NZ4dbxEC2VzZJmRPH86JVN+BOqmX+qiVrusgosfWmFWX7RnLUfbsG+IMb73nVFBgbOdz8oP62oR
+ zuumc99/Axr2XbfpvyucbxePJiTK1lbfrLsXsrOMa3z7QftNepn2JAqOIGD7oPcw00k/IGDCblv
+ Zi9W/LwxsoosxOS8Q9NnpI3iR7UnEIdEkaq2+3DlN2szmca+EjVvA8JgQPeReClxpc7jTzoyieZ
+ am9JAYKDHO3x45Nt7Y0lnlfMoXUDv7I0W1RutMU7rzMkaQS7a4kffMcEnX9txbP7e3Xr1v/0Om3
+ u3kLsPgaHhsFDvE+2L/YD1KgdQbJAQIVJd0BVpBIQ7aqf0J9odu6fjevHOzNWlT6Y4R5K2jQp8O
+ VGQr4DKiJqZ0MWLPD8g==
+X-Proofpoint-GUID: VbffM5TLOyH9juS58VqyvfcdV_m7q2rR
+X-Proofpoint-ORIG-GUID: VbffM5TLOyH9juS58VqyvfcdV_m7q2rR
+X-Authority-Analysis: v=2.4 cv=aYBRWxot c=1 sm=1 tr=0 ts=6a0ebb15 cx=c_pps
+ a=GFwsV6G8L6GxiO2Y/PsHdQ==:117 a=GFwsV6G8L6GxiO2Y/PsHdQ==:17
+ a=IkcTkHD0fZMA:10 a=NGcC8JguVDcA:10 a=VkNPw1HP01LnGYTKEx00:22
+ a=RnoormkPH1_aCDwRdu11:22 a=Y2IxJ9c9Rs8Kov3niI8_:22 a=VnNF1IyMAAAA:8
+ a=VwQbUJbxAAAA:8 a=Zg_fgM-7fzLk7_7bOdYA:9 a=3ZKOabzyN94A:10 a=QEXdDO2ut3YA:10
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.293,Aquarius:18.0.1143,Hydra:6.1.51,FMLib:17.12.100.49
+ definitions=2026-05-20_03,2026-05-18_01,2025-10-01_01
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
+ impostorscore=0 adultscore=0 bulkscore=0 suspectscore=0 lowpriorityscore=0
+ clxscore=1011 spamscore=0 phishscore=0 priorityscore=1501 malwarescore=0
+ classifier=typeunknown authscore=0 authtc= authcc= route=outbound adjust=0
+ reason=mlx scancount=1 engine=8.22.0-2605130000 definitions=main-2605210073
 
-Hi Alexey,
+On 5/20/2026 6:02 PM, sashiko-bot@kernel.org wrote:
+> Thank you for your contribution! Sashiko AI review found 1 potential issue(s) to consider:
+> - [Medium] Integer overflow in SFrame section offset and size calculations allows malformed headers to bypass bounds checks on 32-bit architectures.
+Can be ignored.  SFrame only supports 64-bit architectures.  "[PATCH v15
+05/20] unwind_user/sframe: Add support for reading .sframe contents"
+therefore adds the following safeguard:
 
-On Wed, 20 May 2026 at 17:06, Alexey Klimov <alexey.klimov@linaro.org> wrote:
->
-> (adding samsung list and other folks back in c/c)
->
-> On Thu May 14, 2026 at 6:30 AM BST, sashiko-bot wrote:
-> > Thank you for your contribution! Sashiko AI review found 4 potential issue(s) to consider:
-> > - [High] Hardware register misprogramming due to incorrect CPU index from smp_processor_id().
-> > - [High] Use-After-Free of device node intr_gen_node.
-> > - [High] Missing teardown of global notifiers on probe failure causes Use-After-Free.
-> > - [Medium] Missing of_node_put() on error path causes a device node reference leak.
-> > --
->
-> Sashiko reported quite good findings. I'd say that most of them were
-> present in the code one way or another before my series.
-> They look fixable.
-> I'd rather need then two series: first one with fixes and then
-> generalisation of cpuhp for Exynos but first one will be listed as a
-> dependency (but dependency will indicate order of how series should
-> be applied). Is that okay with you to proceed this way?
+	BUILD_BUG_ON(!IS_ENABLED(CONFIG_64BIT));
 
-That sounds like a good approach to me; then you can use Fixes tag so
-it gets into stable for gs101.
+Regards,
+Jens
+-- 
+Jens Remus
+Linux on Z Development (D3303)
+jremus@de.ibm.com / jremus@linux.ibm.com
 
-Peter
+IBM Deutschland Research & Development GmbH; Vorsitzender des Aufsichtsrats: Wolfgang Wendt; Geschäftsführung: David Faller; Sitz der Gesellschaft: Ehningen; Registergericht: Amtsgericht Stuttgart, HRB 243294
+IBM Data Privacy Statement: https://www.ibm.com/privacy/
+
