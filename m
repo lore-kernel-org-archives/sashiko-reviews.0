@@ -1,182 +1,145 @@
-Received: from mx0a-0031df01.pphosted.com (mx0a-0031df01.pphosted.com [205.220.168.131])
+Received: from relay.hostedemail.com (smtprelay0015.hostedemail.com [216.40.44.15])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9116D402444
-	for <sashiko-reviews@lists.linux.dev>; Thu, 21 May 2026 13:33:34 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.168.131
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 19F2E30675C
+	for <sashiko-reviews@lists.linux.dev>; Thu, 21 May 2026 14:17:24 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=216.40.44.15
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1779370416; cv=none; b=IFobgrKdQGiPrR3M5uG0UXeDzGw+tf27xG3Su+8aKuw8HFaXpBciar+9REbnOAqzFLKOfRe4d6miGdPrlRsBH1+D30mNmefpzEGezGBrcebIv/RmJG08gIGn+3ADjhNfF2v04i8z2XqnmTEX6hzWCfvgDBPRvUNRpBsoe01Y5rE=
+	t=1779373046; cv=none; b=MXNGbYh7HNyYPUMxBw+d1Xq2wUBOa4zWACGcXT7fMdbvZD6Qaf/CZG7ZstKB4/+aIbi4RzoAbWTQah13ShdOMuL7IsCqSeoltcbEOqamZh4FKDOBcTFJML/XTYo31NDQePvz1FVVHQTfbR1zDmhXgAGHoY05yxO6R3uU7KAajXg=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1779370416; c=relaxed/simple;
-	bh=omTSRI5QDbAE48o5gj/pF9REcCIQsYOtUUvqIJycswY=;
-	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=NHHyOb+QCDvYkp3+dXVhlnrKXexzFcC9KTSC1oxG7vVnXN0KUvbyy0v/nRQbnMq/NMfOJbbgKdMcRJ8/w11VlySYWqMYogIIzlIKEX7o/pZ8GSkHc9gHQX+Qyd52k7fsjmkopZbeB9iUXZd08IAFFMKH4X1Gezsy8/waDoXvXpI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com; spf=pass smtp.mailfrom=oss.qualcomm.com; dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b=N1tjIUmd; dkim=pass (2048-bit key) header.d=oss.qualcomm.com header.i=@oss.qualcomm.com header.b=GoTbVFnf; arc=none smtp.client-ip=205.220.168.131
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=oss.qualcomm.com
-Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b="N1tjIUmd";
-	dkim=pass (2048-bit key) header.d=oss.qualcomm.com header.i=@oss.qualcomm.com header.b="GoTbVFnf"
-Received: from pps.filterd (m0279864.ppops.net [127.0.0.1])
-	by mx0a-0031df01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id 64L99uJh3772914
-	for <sashiko-reviews@lists.linux.dev>; Thu, 21 May 2026 13:33:33 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=qualcomm.com; h=
-	cc:content-transfer-encoding:content-type:date:from:in-reply-to
-	:message-id:mime-version:references:subject:to; s=qcppdkim1; bh=
-	IdH3GzdWYwa8Q9g94MkFFyBEguHq6S6gLpwxGL6T8Lk=; b=N1tjIUmdoMUeArtK
-	wv16fhVTlZgeOgT64/QAU0TQmUtrNWAI7InzUUnlZegw71TxbGXHq7q7pcJAVJic
-	K+uivRbB0JV3lwhVzgEMIVAhMpIHP/yc0ZxCdMlQyn5WxSRwNdA2jyGpTixiRF6i
-	cFC4rqskn3u+LNMH/lA5F9W82UlvMVtOgzMoj7jJARaIWd6nCX4wZ7LrWIjVKmOF
-	BEMuY7k6XugMo0me3LP4lZMIAdMH5lnMGkQFCeO8bNesQgQ2uMX894t8qxqXYUvW
-	14kiG+bSmYr0GgzzS1+c18Xw3CWKjK7KFzuaXV9G3c29Tbsu4wR0GhUA56CM6No0
-	9xSHBw==
-Received: from mail-pl1-f197.google.com (mail-pl1-f197.google.com [209.85.214.197])
-	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 4e9ma43dmw-1
-	(version=TLSv1.3 cipher=TLS_AES_128_GCM_SHA256 bits=128 verify=NOT)
-	for <sashiko-reviews@lists.linux.dev>; Thu, 21 May 2026 13:33:33 +0000 (GMT)
-Received: by mail-pl1-f197.google.com with SMTP id d9443c01a7336-2ba224c3ffdso148809355ad.0
-        for <sashiko-reviews@lists.linux.dev>; Thu, 21 May 2026 06:33:33 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=oss.qualcomm.com; s=google; t=1779370412; x=1779975212; darn=lists.linux.dev;
-        h=content-transfer-encoding:in-reply-to:from:content-language
-         :references:cc:to:subject:user-agent:mime-version:date:message-id
-         :from:to:cc:subject:date:message-id:reply-to;
-        bh=IdH3GzdWYwa8Q9g94MkFFyBEguHq6S6gLpwxGL6T8Lk=;
-        b=GoTbVFnfKHYdd2MI+5N/cdjlFusXQILO9w8KBzNbI2MMROEkgiOt7i+nOwE01KcV3X
-         rCKTDb1XTgxtOnT7FCFzIIngwQa7nr6M3CAEjDRpnhQlK1eAKVCR33uY+r14z7MwvjwD
-         RngSy6yf6zlMPB9wbBB02+6K1SGPhnnp7hpoNPQjRmJfYwedJ/tsBfgTCTXzUCsztXGp
-         mMLtGNbmM/6pmBNMiCiL1eOJEdvPB+ttAzPWK8K2/dwS9MgyCGTFun00kygU8ym32QTH
-         ghHY+e2cnhWaetwNId3eZWML4uf0xooTKiw6gLE8vMNZOJjeePUN09CzCMYGGB4fgIOx
-         pu2Q==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20251104; t=1779370412; x=1779975212;
-        h=content-transfer-encoding:in-reply-to:from:content-language
-         :references:cc:to:subject:user-agent:mime-version:date:message-id
-         :x-gm-gg:x-gm-message-state:from:to:cc:subject:date:message-id
-         :reply-to;
-        bh=IdH3GzdWYwa8Q9g94MkFFyBEguHq6S6gLpwxGL6T8Lk=;
-        b=WYAXc9UrIPRlsv/f3PD8OxSPt2Q8ZzKQEHvFmQMxf4ADRJvi4jLDxL9KcyZHzZExmN
-         WLBDQOH3zlNS28xOYs/C5191Na/RfoosfymvNcyDh6B/qj+1o16LM2ieKB84l2EQAR9w
-         JUhZvz6DpTtbk7514QFmFLTeVaWh7F8BjMnhcFFL8o9MmU5ig2HDW/Dml8jmZwf3h+Ur
-         BgKdl7bZAlcqyKMjqJzxoWbYrIOtzNGPVDwhiCBbFS3I95fXRGDsD2yHjTxjnhpjvieC
-         M8PhfrHkV0tUP8JT+YFOHXTExbabH2aqOAWOqFc52eHVWwuQw9RI0Etw2nu64R/Im3va
-         cEdQ==
-X-Gm-Message-State: AOJu0Yx2P4qfjWe2s3HrAd7FiH0t8B+6WuL1aKDOJ7EitOpCWsHslxv0
-	kSIxB2wrJAh3mS4f0u+ZqNJxnh65RniYPHNVWXpFL9Oe7vplCt9PMmzwZLUiMwKrWVfmoqtulo+
-	3srKoJsEc8Mumrm/wX/DCXWjlyBRC1Y7JaZo3pSuhmRVR5poWYUIZQY1IA6v11TXb7CwLzwpjDV
-	vvX6U=
-X-Gm-Gg: Acq92OEJTmsBrgVDg4B0909POzkqC/6gM70w0grTAGrlaG3fgvHE1JGBmqT/OmYk1lX
-	C21e1bZolwEj+uE7DZcdPkh+Xd15f7t/UxXqwTHcXHugJD+N7d5KQrSY3etOa5oO0Yxm588U1Li
-	94IJpK/ag0R66agzqa3qm/rcgQru1q6LBDclfksD+LbGpPq0svcIkKoqtU5LXJvw5Oa7VcAmMil
-	F/xGVTYjt7XdZgxlU8whc8wKCT2Gv1Bu0cgjF5c92n8vhtL+2wWXY3JDZorpXus52p/TkLhvuFz
-	0CarpXLzEMYOaFhuJh/zJCB0vQO47GHbcvZFtHL1WxHFjVDiup+rGBMkw8SWVN0Ek22SbvyXvOg
-	H4Z44h6IjVyd/WjrLqBT/DVnKaO+ziU2ZSQaPvoDBYBwerPoy
-X-Received: by 2002:a17:902:da89:b0:2ae:ce35:2686 with SMTP id d9443c01a7336-2bea32d02c6mr33845115ad.5.1779370411827;
-        Thu, 21 May 2026 06:33:31 -0700 (PDT)
-X-Received: by 2002:a17:902:da89:b0:2ae:ce35:2686 with SMTP id d9443c01a7336-2bea32d02c6mr33844565ad.5.1779370411223;
-        Thu, 21 May 2026 06:33:31 -0700 (PDT)
-Received: from [10.219.57.29] ([202.46.23.19])
-        by smtp.gmail.com with ESMTPSA id d9443c01a7336-2bea9172520sm13349495ad.6.2026.05.21.06.33.28
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Thu, 21 May 2026 06:33:30 -0700 (PDT)
-Message-ID: <1712f500-d4a9-4387-947b-b02853484d21@oss.qualcomm.com>
-Date: Thu, 21 May 2026 19:03:26 +0530
+	s=arc-20240116; t=1779373046; c=relaxed/simple;
+	bh=7HdOynnfZ41Glz7tPCn9q1ES2n5mZ4rCGHb6hX2+lzI=;
+	h=Date:From:To:Cc:Subject:Message-ID:In-Reply-To:References:
+	 MIME-Version:Content-Type; b=KcUe9xIX0H6Sv3E6iYQek7H+dKAmPHSsrTEkLKGLFDrgyeLpFXvFqD1xGGSNCeeYU4eIpxK2kpbsvmoyirXK+4BxwWN6eHZJGqsnt2qA60eOOswuYIDzTWvAUcxmAEq0eAe8eDIM7yT4UrrlSs1Ud6ATH4SXAZnhDPdd4yqCsvc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=goodmis.org; spf=pass smtp.mailfrom=goodmis.org; arc=none smtp.client-ip=216.40.44.15
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=goodmis.org
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=goodmis.org
+Received: from omf13.hostedemail.com (lb01a-stub [10.200.18.249])
+	by unirelay04.hostedemail.com (Postfix) with ESMTP id 6518F1A05C4;
+	Thu, 21 May 2026 14:17:23 +0000 (UTC)
+Received: from [HIDDEN] (Authenticated sender: rostedt@goodmis.org) by omf13.hostedemail.com (Postfix) with ESMTPA id 5C15B2001E;
+	Thu, 21 May 2026 14:17:21 +0000 (UTC)
+Date: Thu, 21 May 2026 10:17:42 -0400
+From: Steven Rostedt <rostedt@goodmis.org>
+To: linux-kernel@vger.kernel.org, linux-trace-kernel@vger.kernel.org
+Cc: Masami Hiramatsu <mhiramat@kernel.org>, Mathieu Desnoyers
+ <mathieu.desnoyers@efficios.com>, Catalin Marinas
+ <catalin.marinas@arm.com>, Will Deacon <will@kernel.org>, Ian Rogers
+ <irogers@google.com>, "sashiko-bot@kernel.org" <sashiko-bot@kernel.org>,
+ "sashiko-reviews@lists.linux.dev" <sashiko-reviews@lists.linux.dev>
+Subject: Re: [PATCH v20 02/10] ring-buffer: Skip invalid sub-buffers when
+ rewinding persistent ring buffer
+Message-ID: <20260521101742.2dd92bad@gandalf.local.home>
+In-Reply-To: <20260520185017.219342323@kernel.org>
+References: <20260520184938.749337513@kernel.org>
+	<20260520185017.219342323@kernel.org>
+X-Mailer: Claws Mail 3.20.0git84 (GTK+ 2.24.33; x86_64-pc-linux-gnu)
 Precedence: bulk
 X-Mailing-List: sashiko-reviews@lists.linux.dev
 List-Id: <sashiko-reviews.lists.linux.dev>
 List-Subscribe: <mailto:sashiko-reviews+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:sashiko-reviews+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v2 1/5] dt-bindings: arm: qcom: Document Shikra and its
- EVK boards
-To: sashiko-reviews@lists.linux.dev
-Cc: robh@kernel.org, conor+dt@kernel.org, olteanv@gmail.com,
-        devicetree@vger.kernel.org, linux-phy@lists.infradead.org,
-        neil.armstrong@linaro.org, vkoul@kernel.org
-References: <20260519-shikra-dt-v2-1-c01b90fb4395@oss.qualcomm.com>
- <20260519113234.BA75FC2BCB3@smtp.kernel.org>
-Content-Language: en-US
-From: Komal Bajaj <komal.bajaj@oss.qualcomm.com>
-In-Reply-To: <20260519113234.BA75FC2BCB3@smtp.kernel.org>
-Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Type: text/plain; charset=US-ASCII
 Content-Transfer-Encoding: 7bit
-X-Authority-Analysis: v=2.4 cv=K9kS2SWI c=1 sm=1 tr=0 ts=6a0f09ad cx=c_pps
- a=cmESyDAEBpBGqyK7t0alAg==:117 a=j4ogTh8yFefVWWEFDRgCtg==:17
- a=IkcTkHD0fZMA:10 a=NGcC8JguVDcA:10 a=s4-Qcg_JpJYA:10
- a=VkNPw1HP01LnGYTKEx00:22 a=u7WPNUs3qKkmUXheDGA7:22 a=DJpcGTmdVt4CTyJn9g5Z:22
- a=VwQbUJbxAAAA:8 a=EUspDBNiAAAA:8 a=2bXR4lxtNcP_XfbIfakA:9 a=QEXdDO2ut3YA:10
- a=1OuFwYUASf3TG4hYMiVC:22
-X-Proofpoint-GUID: m0-IjfPYVhgyvjIQnfXuxLp8PMaZjxqJ
-X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwNTIxMDEzNiBTYWx0ZWRfX0g2HFbfK1t3a
- rTxhNU7CZTHuvHtfdSb8yTxY80y2Pc+NfhsMIV3fBmdhf4l1ltDKSbhcI4aGANcrMwtg7IMrlJS
- JBtVT/YByclFTpZiCPcsJTT6uDz9jKYxC6MCqEOfxd7jNtPyEY2BY1SOovRY3XvFqYueGr8YYP8
- ywdopLUwqH4ShcwGSJk8M/73WWrdeyhkmm/0cryIxmrI++wvDvsB/1VeEj6P3/hJUrdvOVShDkH
- C2OLR5HIUKAFeRJRiruAZ+NedcTSHLfX+lfKwLzBw80+UtCt56tXuwYEAY4o5LSvCBcXp6iPtLl
- v01pU0X/X/1UXdal+gqYJJiD1xRKEP5rDLHE9d5y1shM1zoGRqt0T78KUZiRJHPulav3JLj93ID
- TZC25lcwqtOivdQXWceIuv21es+ax1Q+t3OeAr++WYaIOESmametulTkf9UNr+Zbvlk2tMf6v/Y
- degQ6aSATu66urMSP8g==
-X-Proofpoint-ORIG-GUID: m0-IjfPYVhgyvjIQnfXuxLp8PMaZjxqJ
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.293,Aquarius:18.0.1143,Hydra:6.1.51,FMLib:17.12.100.49
- definitions=2026-05-21_02,2026-05-18_01,2025-10-01_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
- suspectscore=0 phishscore=0 bulkscore=0 adultscore=0 priorityscore=1501
- impostorscore=0 malwarescore=0 spamscore=0 clxscore=1015 lowpriorityscore=0
- classifier=typeunknown authscore=0 authtc= authcc= route=outbound adjust=0
- reason=mlx scancount=1 engine=8.22.0-2605130000 definitions=main-2605210136
+X-Rspamd-Server: rspamout07
+X-Rspamd-Queue-Id: 5C15B2001E
+X-Stat-Signature: 7o9tunghr1knfbedsgoqsjqs8qwujopk
+X-Session-Marker: 726F737465647440676F6F646D69732E6F7267
+X-Session-ID: U2FsdGVkX1/jB70Aj1+aKXxZf7o3qaRT1vzTsQfM0jI=
+X-HE-Tag: 1779373041-833705
+X-HE-Meta: U2FsdGVkX18T/5bsBGe5xy7whlSHfiILJqOGCo84zOl5rJOCyTV2qSuspBNGiwwO9JkdKw4L12Ky13QNekLkBrQJ+hEX+5IHql7u3J9yVaAV9vVRRJ8due+rgj0bozKctYU0tZB2VeN9RrQYjT8LwIYZVzFtGK1TxtH/5/GsmpCACx+BeiraqJyJCFk7sWIqCFc16OJlaoBhTmk1luxTSAF0pN2fdKwQiQ+scCQvgzza4VX3/XSgZOMu0GZHcR/VxYWCwthbRF80SKN4mQW0W8NNDZgj7PQfqfm3zXGf0Q5Q0aADZPb3761RqYWOLuaKYzuwj3HxE4sd/bw8uDNUy7qm0XrtvDCRZdW18kcwqs/UjwsxjE0EYmjOoB6Y5ncSZY4Q1eAXF9RSV77HJ0+Zyw==
 
-On 5/19/2026 5:02 PM, sashiko-bot@kernel.org wrote:
-> Thank you for your contribution! Sashiko AI review found 2 potential issue(s) to consider:
-> - [Medium] Device tree compatible strings use generic abbreviations instead of specific hardware part numbers.
-> - [Low] Alphabetical sorting violation in qcom.yaml.
-> --
->
-> commit d5de85f1dcdd73430dd4bed54ebebe0837ba7f5e
-> Author: Komal Bajaj <komal.bajaj@oss.qualcomm.com>
->
-> dt-bindings: arm: qcom: Document Shikra and its EVK boards
->
-> This commit introduces compatible strings for the Qualcomm Shikra SoC in
-> System-on-Module (SoM) form factors and their corresponding EVK carrier
-> boards.
->
->>      Add compatible strings for the CQ2390M, CQ2390S, IQ2390S SoM variant and its
->>      corresponding EVK boards.
-> Should these compatible strings use the specific hardware part numbers
-> (CQ2390M, CQ2390S, IQ2390S) instead of generic abbreviations like
-> qcom,shikra-cqm-som?
->
-> If the generic abbreviations are kept, can the schema map these
-> abbreviations to the specific part numbers to document the ABI?
 
-SoC number 2390 corresponds to Shikra, so using shikra-cqm-som style 
-compatibles looks appropriate. Same applies to shikra-cqs-som and 
-shikra-iqs-som.
+[
+  Replying to Sashiko from v19: https://sashiko.dev/?list=org.kernel.vger.linux-trace-kernel#/patchset/177751968499.2136606.17388366710182662849.stgit%40mhiramat.tok.corp.google.com
+]
 
->
->> diff --git a/Documentation/devicetree/bindings/arm/qcom.yaml b/Documentation/devicetree/bindings/arm/qcom.yaml
->> index af266d584fae6..7c5c5f4fc30f7 100644
->> --- a/Documentation/devicetree/bindings/arm/qcom.yaml
->> +++ b/Documentation/devicetree/bindings/arm/qcom.yaml
->> @@ -968,6 +968,24 @@ properties:
->>             - const: qcom,qcs9100
->>             - const: qcom,sa8775p
->>   
->> +      - items:
->> +          - enum:
->> +              - qcom,shikra-cqm-evk
->> +          - const: qcom,shikra-cqm-som
->> +          - const: qcom,shikra
-> This isn't a bug, but should these new blocks be sorted alphabetically
-> based on the root SoC compatible string?
->
-> Since 'h' comes after 'd', could qcom,shikra be placed after qcom,sdm845
-> instead of after qcom,sa8775p?
+> > @@ -1892,9 +1895,27 @@ static int rb_validate_buffer(struct buffer_data_page *dpage, int cpu,
+> >  	 * subbuf_size is considered invalid.
+> >  	 */
+> >  	tail = local_read(&dpage->commit) & ~RB_MISSED_MASK;
+> > -	if (tail > meta->subbuf_size - BUF_PAGE_HDR_SIZE)
+> > -		return -1;
+> > -	return rb_read_data_buffer(dpage, tail, cpu, &ts, &delta);
+> > +	if (tail <= meta->subbuf_size - BUF_PAGE_HDR_SIZE)
+> > +		ret = rb_read_data_buffer(dpage, tail, cpu, &ts, &delta);
 
-Yeah, I missed it, will correct in next series.
+> Since tail is read from untrusted persistent memory, does this call evaluating
 
-Thanks
-Komal
->
+The persistent memory is not untrusted.
 
+> event headers verify enough bytes remain in the sub-buffer?
+> If tail is set to the maximum allowed value, and preceding events are crafted
+> so that the last event starts at tail - 1, the event pointer inside
+> rb_read_data_buffer() will point to the very last byte.
+> Calling rb_event_length(event) will evaluate event->type_len via a 32-bit
+> read which could read past the page boundary and cause a regression if the
+> adjacent page is unmapped.
+> Should the parsing loop verify tail - e >= sizeof(struct ring_buffer_event)
+> before evaluating the event?
+
+> > +	else
+> > +		ret = -1;
+> > +
+> > +	/*
+> > +	 * The timestamp must be greater than @prev_ts and smaller than @next_ts.
+> > +	 * Since this function works in both forward (verify) and reverse (unwind)
+> > +	 * loop, we don't know both @prev_ts and @next_ts at the same time.
+> > +	 * So use the known boundary as the boundary.
+> > +	 */
+> > +	if (ret < 0 || (prev_ts && prev_ts > ts) || (next_ts && ts > next_ts)) {
+
+> Does this timestamp validation properly enforce strictly monotonic page ordering?
+> Inside rb_validate_buffer(), ts is updated by rb_read_data_buffer() to
+> the timestamp of the last event in the current page. The condition
+> (prev_ts && prev_ts > ts) only checks that the previous page's start time
+> is not greater than the current page's end time.
+> Could a corrupted page with a start timestamp earlier than the previous
+> page incorrectly pass validation if its final event timestamp is large enough?
+> Would it prevent this regression to enforce that the current page starts after
+> the previous page by checking prev_ts > dpage->time_stamp?
+
+This may be an enhancement but shouldn't be critical for what is happening now.
+
+> > +		local_set(&bpage->entries, 0);
+> [ ... ]
+> > @@ -1915,25 +1936,29 @@ static void rb_meta_validate_events(struct ring_buffer_per_cpu *cpu_buffer)
+> >  	orig_head = head_page = cpu_buffer->head_page;
+> >  	orig_reader = cpu_buffer->reader_page;
+> >  
+> > -	/* Do the reader page first */
+> > -	ret = rb_validate_buffer(orig_reader->page, cpu_buffer->cpu, meta);
+> > +	/* Do the head page first */
+> > +	ret = rb_validate_buffer(head_page, cpu_buffer->cpu, meta, 0, 0);
+> > +	if (ret < 0) {
+> > +		pr_info("Ring buffer meta [%d] invalid head page detected\n",
+> > +			cpu_buffer->cpu);
+> > +		goto skip_rewind;
+> > +	}
+> > +	ts = head_page->page->time_stamp;
+> > +
+> > +	/* Do the reader page - reader must be previous to head. */
+> > +	ret = rb_validate_buffer(orig_reader, cpu_buffer->cpu, meta, 0, ts);
+
+> If rb_validate_buffer() for the head page fails, we take the goto skip_rewind
+> path. Since skip_rewind jumps past this orig_reader validation, and the
+> iteration loop explicitly skips orig_reader:
+>     /* Iterate until finding the commit page */
+>     for (i = 0; i < meta->nr_subbufs + 1; i++, rb_inc_page(&head_page)) {
+>         /* The original reader page has already been checked/counted. */
+>         if (head_page == orig_reader)
+>             continue;
+> does this mean the reader page escapes validation entirely, introducing a
+> regression?
+
+This is a bug and needs to be fixed. If the head page is invalid it
+shouldn't skip the rewind but instead jump to the "invalid:" label.
+
+> If an attacker provides a corrupted persistent ring buffer with an invalid
+> head page, would the kernel blindly trust the unvalidated commit length
+> and event data of the reader page?
+
+Not worried about attackers but I am worried about corrupted memory.
+
+-- Steve
