@@ -1,377 +1,167 @@
-Received: from mail-wm1-f49.google.com (mail-wm1-f49.google.com [209.85.128.49])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from mx0a-001b2d01.pphosted.com (mx0a-001b2d01.pphosted.com [148.163.156.1])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 589EF367F26
-	for <sashiko-reviews@lists.linux.dev>; Thu, 21 May 2026 15:58:33 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.49
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B5F0217555
+	for <sashiko-reviews@lists.linux.dev>; Thu, 21 May 2026 16:04:27 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=148.163.156.1
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1779379115; cv=none; b=G640WPzqn8kZZDH4CAUF/BXX+xZmmlOqpLe3uAztJzKZK4N7dJ75f+rueBiyRa1RWLGhqj1OCoDGzME4yDXj+wyCu/Qf4jB7cir6SCpEox4WqdSRC3P3fkoCfPFdhCYQY57dudvdNTvq+oYX6vaWesv+jhyShmtLXl7UEQr4XB4=
+	t=1779379469; cv=none; b=XGKWscWhqAJ3E5wnQEhHsOPWuwHFd8/Atm5OmKduNpU4ukEDiGICnBp9bb8NS+5nHoSOBAverJCUqWSoyo4jC2DW7cFLL8ZhFe7p+woF8LaQx5mh1uvO8hfnxHT8B4xjjyBNqwACh8XzN1ZEwuKGAP2fXoO2cKMZkqpZ5zU109s=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1779379115; c=relaxed/simple;
-	bh=gwbzpMqoyauJv6ZRU25YlHFTPtZLY5Bw/4JWn1pxOLE=;
-	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=p3iNkyjfvlwsJNybmReLhWHVKtD96du0RHLZCc149Yk9FJ+5qjEQ8a5fNkcwqRWh8VhnkF05sM1DzYlDTI4HXej4q0vieToYw4lM0/rWUcqDMW28OCArjUnE6ooy67mDlsnBzaGSVYp0loCh4sOTYTeScM+Sbli/mVoRP6cp01k=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=A8/IES48; arc=none smtp.client-ip=209.85.128.49
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
+	s=arc-20240116; t=1779379469; c=relaxed/simple;
+	bh=NRJcXY86apRILZfSdeoZv9menX2f8HUxgi6kjZHl1gk=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=QHsyrGYKH50QEtOKoY46abPKXlos3ZUAGlvvkWo5UOPZpdXtMCU9G8l3H7tQB2lrFsLKviQd17U3WPh3QnW9RrU4ZIvVaptat+lDn+ghN3CzCdR/j9uV1CHWzKXnxZZLAQV8Fl6uJi1Me6nPd04bNvR+xv9uzOWgxEU2MmGNQNw=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linux.ibm.com; spf=pass smtp.mailfrom=linux.ibm.com; dkim=pass (2048-bit key) header.d=ibm.com header.i=@ibm.com header.b=Qgt6oWtZ; arc=none smtp.client-ip=148.163.156.1
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linux.ibm.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linux.ibm.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="A8/IES48"
-Received: by mail-wm1-f49.google.com with SMTP id 5b1f17b1804b1-4891e86fabeso82511605e9.1
-        for <sashiko-reviews@lists.linux.dev>; Thu, 21 May 2026 08:58:33 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1779379112; x=1779983912; darn=lists.linux.dev;
-        h=content-transfer-encoding:in-reply-to:from:content-language
-         :references:cc:to:subject:user-agent:mime-version:date:message-id
-         :from:to:cc:subject:date:message-id:reply-to;
-        bh=g1j9UgJds853Zv46e1xGjbShW1UJNiQmjpR76/hPVDE=;
-        b=A8/IES485H2irupoFKCkYvzyMrCP7DuZP4jUw9L/UOkhv6iJGilWgdlKBkQE7pblOb
-         qS0yNznQ+U0O1UfcI936TdfUi2RnafobcBpRePoM906P45pi0HUVbQEyNz2jj2FYb4Jy
-         9g2Qw/LJwnxnGAelx2cOTC36yZag/7uWlPq0S4UeBigwVn3xRAKJbFgWk4DSwtlHb8SA
-         0iKNg3NotKYx0H2Jdiu3G+rm/UU0SKB6h3F0tqnOs7/F3nNhukrfV8yZMrLajhobieGg
-         ya8rvjykZJQYPiK/PeflCjh2rLJVMYsoU3yUY4rjgEA1n4JZMuQFxxv5qyiaysw/KhZD
-         A1Xg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20251104; t=1779379112; x=1779983912;
-        h=content-transfer-encoding:in-reply-to:from:content-language
-         :references:cc:to:subject:user-agent:mime-version:date:message-id
-         :x-gm-gg:x-gm-message-state:from:to:cc:subject:date:message-id
-         :reply-to;
-        bh=g1j9UgJds853Zv46e1xGjbShW1UJNiQmjpR76/hPVDE=;
-        b=JJ/pvxWz4jPYkFKyy1iQ/TvJOkCICJw+zCzYFjpvLIczgbjy/xCYuAEdPPO9YOotXS
-         f9kn++eDqcxFNnwbsSvIR/NN49K+z35FKLlHcp/KVT5XQruUVXfJcqzMBvNdW9KUtmmr
-         wHELyA9DDdqEUx1wi4VPqeifU10PECoz5/uljaP+N2dq8pxDyWw6ve4qnXV1x6NkHEC2
-         VakYvBdch0uh1a+5nPsD971ojudtyLvBzexIpvlMXeM3Aqj6CvMFCy4cX8L/V3JSx/9o
-         cC5My+FHEG8r1XthoCSfuBgvbSMHYhh5eLb/t8mtB6s8WRjp7nPbcYafIVp43ZAwIqfP
-         ITHA==
-X-Gm-Message-State: AOJu0Yyk/U9s+cL5cTSn4zyi8fnlXMbfWxu4ITfuwUN/K+nJJR63zHtk
-	egyCejs0zfOZiR0gznc8Nntb0QafEMCEjOiubJ0FXjN9G7JC9E4A6AAVkvQB8rB8gryl6aHzPgF
-	ZYkbRlZs=
-X-Gm-Gg: Acq92OGSy3syKe70gmwthu+DsWw+c55p7FqH/bwSPNrzVlyX0eFpoRmruBeB1tAPhuk
-	Hlhg2vzRRq3F0XKDH/Dx1ubUs2jK1aPTQnQ4TR+uJmiUtQ4Ea3Wc0h2HC3yGMa4wnB5SpPizIOE
-	vAu3vGE1hbpxBXzASJBwyABPfGFFosW4TffFT658EV2hHHHJdx9ckOzRxY8yNzBOSB50a7D+l5t
-	S1cCEPhj4XK8CrGd7eeAquBtNKVBgiYIRS9U4NoI/wYS5HYjP6KTlW9IBV+Ec2VxP/xwWp3pKPo
-	gY+PCSFvCpu2vgLf1eJGkU3GbkeuSSK528EL2MkZqDH+eTkGbZVdv3hUDeqTyf/7MeHnObFOWPs
-	C3t2OkU80lN8Noza9N5hhSrdxj7Bavv4UWrkZK+Gp4k/aYl/tK6fgN1uOjIOUJJqbEXeVhVUHV5
-	cB+OhWmhn8irDEbHqRCogyL31n+4nVcxebcQ==
-X-Received: by 2002:a05:600c:444e:b0:489:c57:7836 with SMTP id 5b1f17b1804b1-490360dbb9emr47602385e9.27.1779379111491;
-        Thu, 21 May 2026 08:58:31 -0700 (PDT)
-Received: from [192.168.0.35] ([109.76.55.220])
-        by smtp.gmail.com with ESMTPSA id 5b1f17b1804b1-49035eec6casm18452345e9.33.2026.05.21.08.58.29
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Thu, 21 May 2026 08:58:30 -0700 (PDT)
-Message-ID: <06964d8d-10a4-4dfc-b0e0-a66eb12f8978@linaro.org>
-Date: Thu, 21 May 2026 16:58:29 +0100
+	dkim=pass (2048-bit key) header.d=ibm.com header.i=@ibm.com header.b="Qgt6oWtZ"
+Received: from pps.filterd (m0356517.ppops.net [127.0.0.1])
+	by mx0a-001b2d01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id 64LE0Iwp793884;
+	Thu, 21 May 2026 16:04:25 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=ibm.com; h=cc
+	:content-transfer-encoding:content-type:date:from:in-reply-to
+	:message-id:mime-version:references:subject:to; s=pp1; bh=Rt02DN
+	tnCK8S13JyxgzUofS7glE2x0N3HItQKoJdGaE=; b=Qgt6oWtZbE9mVNqJnJ4NLW
+	rVKPESxeFvUUmWuxr/FJ4V+FxFLUjU7sXsfDJzT+B78z2NohRBGOkDkecGH5W8P5
+	SDte/7moQCkwvv5E2bDGQP6TC5WjJuU5Fjlux92GCJV11PpoBATc1B141SJjZ3sq
+	biIGWPFnYgV6uMADUGt9XeRP2AAtklILfv+O++Q0ygZaw9ZBvFn1IfByKvWHfSfB
+	JE+3LZSib74cPm8VhRtKyzfG0z/zWyOkrh6CGS1XuZ2nBJS3iEGn0GDAQDTS9K3T
+	Ex4iac0YV21y7RsVrA64iVjFtskQYxMLjpGk7KemHvt35msWqSb+CwbgIow3wPrQ
+	==
+Received: from ppma23.wdc07v.mail.ibm.com (5d.69.3da9.ip4.static.sl-reverse.com [169.61.105.93])
+	by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 4e6h757xyq-1
+	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+	Thu, 21 May 2026 16:04:25 +0000 (GMT)
+Received: from pps.filterd (ppma23.wdc07v.mail.ibm.com [127.0.0.1])
+	by ppma23.wdc07v.mail.ibm.com (8.18.1.7/8.18.1.7) with ESMTP id 64LFs8T3010774;
+	Thu, 21 May 2026 16:04:24 GMT
+Received: from smtprelay01.fra02v.mail.ibm.com ([9.218.2.227])
+	by ppma23.wdc07v.mail.ibm.com (PPS) with ESMTPS id 4e74dhw049-1
+	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+	Thu, 21 May 2026 16:04:24 +0000 (GMT)
+Received: from smtpav01.fra02v.mail.ibm.com (smtpav01.fra02v.mail.ibm.com [10.20.54.100])
+	by smtprelay01.fra02v.mail.ibm.com (8.14.9/8.14.9/NCO v10.0) with ESMTP id 64LG4Mcj60817860
+	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
+	Thu, 21 May 2026 16:04:22 GMT
+Received: from smtpav01.fra02v.mail.ibm.com (unknown [127.0.0.1])
+	by IMSVA (Postfix) with ESMTP id 6A7962004B;
+	Thu, 21 May 2026 16:04:22 +0000 (GMT)
+Received: from smtpav01.fra02v.mail.ibm.com (unknown [127.0.0.1])
+	by IMSVA (Postfix) with ESMTP id 30FC320043;
+	Thu, 21 May 2026 16:04:22 +0000 (GMT)
+Received: from li-276bd24c-2dcc-11b2-a85c-945b6f05615c.ibm.com (unknown [9.111.26.175])
+	by smtpav01.fra02v.mail.ibm.com (Postfix) with ESMTPS;
+	Thu, 21 May 2026 16:04:22 +0000 (GMT)
+Date: Thu, 21 May 2026 18:04:20 +0200
+From: Jan Polensky <japo@linux.ibm.com>
+To: sashiko-reviews@lists.linux.dev
+Cc: ojeda@kernel.org
+Subject: Re: [PATCH v2 1/4] s390/bug: Provide ARCH_WARN_ASM for Rust WARN/BUG
+ support
+Message-ID: <ag8tBIylibjbxFxo@li-276bd24c-2dcc-11b2-a85c-945b6f05615c.ibm.com>
+References: <20260519151215.1611802-2-japo@linux.ibm.com>
+ <20260519160011.D8D5AC2BCB3@smtp.kernel.org>
 Precedence: bulk
 X-Mailing-List: sashiko-reviews@lists.linux.dev
 List-Id: <sashiko-reviews.lists.linux.dev>
 List-Subscribe: <mailto:sashiko-reviews+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:sashiko-reviews+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v6 2/2] phy: qcom-mipi-csi2: Add a CSI2 MIPI DPHY driver
-To: sashiko-reviews@lists.linux.dev
-Cc: devicetree@vger.kernel.org, vkoul@kernel.org, robh@kernel.org,
- olteanv@gmail.com, linux-phy@lists.infradead.org, neil.armstrong@linaro.org,
- conor+dt@kernel.org
-References: <20260521-x1e-csi2-phy-v6-2-9d73d9bd7d20@linaro.org>
- <20260521124947.4BE4B1F000E9@smtp.kernel.org>
-Content-Language: en-US
-From: Bryan O'Donoghue <bryan.odonoghue@linaro.org>
-In-Reply-To: <20260521124947.4BE4B1F000E9@smtp.kernel.org>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+Content-Transfer-Encoding: 8bit
+In-Reply-To: <20260519160011.D8D5AC2BCB3@smtp.kernel.org>
+X-TM-AS-GCONF: 00
+X-Authority-Analysis: v=2.4 cv=ffCdDUQF c=1 sm=1 tr=0 ts=6a0f2d09 cx=c_pps
+ a=3Bg1Hr4SwmMryq2xdFQyZA==:117 a=3Bg1Hr4SwmMryq2xdFQyZA==:17
+ a=IkcTkHD0fZMA:10 a=NGcC8JguVDcA:10 a=VkNPw1HP01LnGYTKEx00:22
+ a=RnoormkPH1_aCDwRdu11:22 a=U7nrCbtTmkRpXpFmAIza:22 a=c92rfblmAAAA:8
+ a=VnNF1IyMAAAA:8 a=VwQbUJbxAAAA:8 a=qO9SUeAwehQocwJphKcA:9 a=3ZKOabzyN94A:10
+ a=QEXdDO2ut3YA:10 a=GvGzcOZaWPEFPQC_NcjD:22
+X-Proofpoint-ORIG-GUID: ZQlbc9SjluRVs9_PWz1BVFQa7aW0Yjqn
+X-Proofpoint-GUID: ZQlbc9SjluRVs9_PWz1BVFQa7aW0Yjqn
+X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwNTIxMDE1NyBTYWx0ZWRfXxw4bSKl2Vg91
+ zN25R6qDFsMi1h0PCRqHe2C/GCVWk4enm6Um/GTYHu8G7PQWSWk7kAC/8/YajE0kFM1hxXZF3AF
+ TGS0TdZS5uoUmQvw/8CfAewQ6qIm+eUpaA5ptPyiPZ0Ne4aZ0fSIhs7jylFVT1iXBeQgZOSLfN2
+ NMK39dGZFUWfWRyqeYnzQq70nOn/VD7EFu3hh0kpEEnJ7x8JiBHh35hURL9BpWfLMNwb//J1BHh
+ 9LqsLqWS9ke74e82zT1Oqd2AgdjAZYmUytDCvFc867kowpBx81KcwcwZOmdGcsbxu4WKUB5MazY
+ 8qXQEGS+JTsf+Pn8ERw5dKJUtHbwJV334QCzyqIzozni4qKVmOdt1qQxDajwYvW2retsXU1Jtw5
+ uj5+CC/kjF0BiLSnSf3VOxQimPW/OppyIUlQav4xNQANma3ju6jq2V93LjAYcXkD8rKSuxS9BNx
+ ZleZfAIhUP2U/qZkMGw==
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.293,Aquarius:18.0.1143,Hydra:6.1.51,FMLib:17.12.100.49
+ definitions=2026-05-21_03,2026-05-18_01,2025-10-01_01
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
+ priorityscore=1501 spamscore=0 phishscore=0 suspectscore=0 adultscore=0
+ clxscore=1011 impostorscore=0 lowpriorityscore=0 bulkscore=0 malwarescore=0
+ classifier=typeunknown authscore=0 authtc= authcc= route=outbound adjust=0
+ reason=mlx scancount=1 engine=8.22.0-2605130000 definitions=main-2605210157
 
-On 21/05/2026 13:49, sashiko-bot@kernel.org wrote:
-> Thank you for your contribution! Sashiko AI review found 10 potential issue(s) to consider:
-> - [High] Extensive resource leaks on error paths in power_on and set_clock_rates, and missing OPP rate reset in power_off.
-> - [High] phy_qcom_mipi_csi2_configure overrides the DT-parsed lane count without bounds checking against the physical layout.
-> - [High] Unconditional dereference of pd_list leads to a NULL pointer dereference panic.
-> - [High] Division by zero occurs if the timer clock rate resolves to 0.
-> - [High] Settle count calculation can underflow to a very large positive value.
-> - [Medium] The ops->lanes_disable callback is omitted in phy_qcom_mipi_csi2_power_off.
-> - [Medium] Clock lane positioning and lane polarities are parsed but entirely ignored.
-> - [Medium] The probe function allows the absence of an OPP table, but power_on strictly requires it.
-> - [Medium] qcom_csi2_phy_xlate accesses PHY arguments without checking args_count.
-> - [Medium] Unvalidated data-lanes integer from DT can cause an out-of-bounds bitwise shift.
+On Tue, May 19, 2026 at 04:00:10PM +0000, sashiko-bot@kernel.org wrote:
+> Thank you for your contribution! Sashiko AI review found 1 potential issue(s) to consider:
+>
+> Pre-existing issues:
+> - [High] Struct layout mismatch in `struct bug_entry` on s390 when `CONFIG_DEBUG_BUGVERBOSE` is disabled leads to corrupted bug reports or kernel crashes.
 > --
-> 
-> commit 3c373b3ab7783a677ec4c98f344d8b1c57e2e110
-> Author: Bryan O'Donoghue <bryan.odonoghue@linaro.org>
-> 
-> phy: qcom-mipi-csi2: Add a CSI2 MIPI DPHY driver
-> 
-> Add a new MIPI CSI2 driver in DPHY mode initially. The entire set of
-> existing CAMSS CSI PHY init sequences are imported in order to save time
-> and effort in later patches.
-> 
->> diff --git a/drivers/phy/qualcomm/phy-qcom-mipi-csi2-3ph-dphy.c b/drivers/phy/qualcomm/phy-qcom-mipi-csi2-3ph-dphy.c
->> index 0000000000000..8cdff35be2da9
->> --- /dev/null
->> +++ b/drivers/phy/qualcomm/phy-qcom-mipi-csi2-3ph-dphy.c
+>
+> commit 36be8811df57aa4ea062f437812266dad27b490e
+> Author: Jan Polensky <japo@linux.ibm.com>
+>
+> s390/bug: Provide ARCH_WARN_ASM for Rust WARN/BUG support
+>
+> This commit provides the ARCH_WARN_ASM and ARCH_WARN_REACHABLE macros
+> to enable Rust WARN and BUG support on s390. It defines ARCH_WARN_ASM
+> to produce the same assembly sequence and __bug_table entry format as
+> the existing s390 BUG handling.
+>
+> > diff --git a/arch/s390/include/asm/bug.h b/arch/s390/include/asm/bug.h
+> > index 59017fd3d9358..a72439370f625 100644
+> > --- a/arch/s390/include/asm/bug.h
+> > +++ b/arch/s390/include/asm/bug.h
+>
 > [ ... ]
->> +static u8 phy_qcom_mipi_csi2_settle_cnt_calc(s64 link_freq, u32 timer_clk_rate)
->> +{
-> [ ... ]
->> +	timer_period_ps = div_u64(PSEC_PER_SEC, timer_clk_rate);
->> +	settle_cnt = t_hs_settle_ps / timer_period_ps - 6;
-> 
+>
+> > @@ -121,6 +122,17 @@ do {									\
+> >  #define HAVE_ARCH_BUG_FORMAT
+> >  #define HAVE_ARCH_BUG_FORMAT_ARGS
+> >
+> > +#define ARCH_WARN_ASM(file, line, flags, size)				\
+> > +	".section .rodata.str,\"aMS\",@progbits,1\n"			\
+> > +	"9:\n"								\
+> > +	".asciz \"\"\n"		/* Empty string for compatibility */	\
+> > +	".previous\n"							\
+> > +	"0:\n"								\
+> > +	__stringify(mc 0(%r0),0) "\n"				\
+> > +	__BUG_ENTRY("9b", file, line, flags, size)
+>
 > [Severity: High]
-> Can this subtraction underflow to a very large positive value?
-> 
-> If the system has a low timer clock rate resulting in a high
-> timer_period_ps, the division could yield a value less than 6. Since
-> settle_cnt is an unsigned 8-bit integer, wrapping around to a large
-> value could severely misconfigure the PHY hardware timings.
-
-I'm not sure it is really worthwhile writing defensive code for this case.
-
-We audit every DT binding for clock frequency sanity so you have to 
-input junk into a device tree and upstream it and we aren't generally in 
-the habit of verifying those inputs.
-
-> 
->> +
->> +	return settle_cnt;
->> +}
-> [ ... ]
->> +static int phy_qcom_mipi_csi2_lanes_enable(struct mipi_csi2phy_device *csi2phy,
->> +					   struct mipi_csi2phy_stream_cfg *cfg)
->> +{
-> [ ... ]
->> +	settle_cnt = phy_qcom_mipi_csi2_settle_cnt_calc(cfg->link_freq, csi2phy->timer_clk_rate);
->> +
->> +	val = CSIPHY_3PH_CMN_CSI_COMMON_CTRL5_CLK_ENABLE;
-> 
-> [Severity: Medium]
-> The commit message states that data-lane and clock lane positioning and
-> polarity selection are supported. Are the polarity fields ignored here?
-
-Exactly the same situation as we already have for this PHY in CAMSS 
-since forever.
-
-We parse but don't program the various fields.
-
-> It appears the clock lane enable bit is hardcoded and the polarity fields
-> parsed from the DT are not programmed into the PHY registers.
-
->> +	for (i = 0; i < cfg->num_data_lanes; i++)
->> +		val |= BIT(lane_cfg->data[i].pos * 2);
-
-Yeah this is longstanding behaviour but, its probably worthwhile to 
-update it since we consume the data from DT anyway.
-> [Severity: Medium]
-> Can this result in an out-of-bounds shift?
-> 
-> The pos value is read from the device tree as an unvalidated 32-bit
-> integer. A malformed DT with large lane positions (e.g. > 15) could
-> result in a shift value >= 32, which is undefined behavior and might
-> truncate the hardware configuration mask.
-
-Still no - not going to spend time picking through what goes into DT in 
-the driver.
-
-For example we don't sanity check register values or IRQ vector numbers.
-> 
->> +
->> +	writel(val, csi2phy->base +
->> +	       CSIPHY_3PH_CMN_CSI_COMMON_CTRLn(regs->common_regs_offset, 5));
-> [ ... ]
->> diff --git a/drivers/phy/qualcomm/phy-qcom-mipi-csi2-core.c b/drivers/phy/qualcomm/phy-qcom-mipi-csi2-core.c
->> index 0000000000000..d8bdb2dd3c2ac
->> --- /dev/null
->> +++ b/drivers/phy/qualcomm/phy-qcom-mipi-csi2-core.c
-> [ ... ]
->> +static int
->> +phy_qcom_mipi_csi2_set_clock_rates(struct mipi_csi2phy_device *csi2phy,
->> +				   s64 link_freq)
->> +{
-> [ ... ]
->> +	opp = dev_pm_opp_find_freq_ceil(dev, &opp_rate);
->> +	if (IS_ERR(opp)) {
-> 
-> [Severity: Medium]
-> Since the probe function tolerates -ENODEV for the OPP table, won't
-> power_on unconditionally fail here if the table is actually missing?
-> 
->> +		dev_err(csi2phy->dev, "Couldn't find ceiling for %lld Hz\n",
->> +			link_freq);
->> +		return PTR_ERR(opp);
->> +	}
->> +
->> +	for (int i = 0; i < csi2phy->pd_list->num_pds; i++) {
-> 
-> [Severity: High]
-> What happens to pd_list if CONFIG_PM is disabled?
-> 
-> devm_pm_domain_attach_list() returns 0 when CONFIG_PM is disabled, but
-> pd_list will remain NULL. This would cause a NULL pointer dereference
-> here and in phy_qcom_mipi_csi2_power_off().
-
-No idea, lets find out.
-
->> +		unsigned int perf = dev_pm_opp_get_required_pstate(opp, i);
->> +
->> +		ret = dev_pm_genpd_set_performance_state(csi2phy->pd_list->pd_devs[i], perf);
->> +		if (ret) {
->> +			dev_err(csi2phy->dev, "Couldn't set perf state %u\n",
->> +				perf);
->> +			dev_pm_opp_put(opp);
->> +			return ret;
-> 
-> [Severity: High]
-> Does this leak the performance state for previously set domains?
-> 
-> If the loop fails on a later iteration, it appears to return without resetting
-> the domains that were already successfully configured.
-
-True we need to unwind.
-
->> +		}
->> +	}
->> +	dev_pm_opp_put(opp);
->> +
->> +	ret = dev_pm_opp_set_rate(dev, opp_rate);
->> +	if (ret) {
->> +		dev_err(csi2phy->dev, "dev_pm_opp_set_rate() fail\n");
->> +		return ret;
->> +	}
->> +
->> +	timer_rate = clk_round_rate(csi2phy->timer_clk, link_freq / 4);
->> +	if (timer_rate < 0)
->> +		return timer_rate;
->> +
->> +	ret = clk_set_rate(csi2phy->timer_clk, timer_rate);
->> +	if (ret)
->> +		return ret;
->> +
->> +	csi2phy->timer_clk_rate = timer_rate;
-> 
-> [Severity: High]
-> What if clk_round_rate() returns 0?
-> 
-> If the clock is disabled or misconfigured, timer_rate could be 0. Later,
-> phy_qcom_mipi_csi2_settle_cnt_calc() calls
-> div_u64(PSEC_PER_SEC, timer_clk_rate), which would result in a division
-> by zero and a kernel panic.
-
-An esoteric ask since you again have to have bugs in your DT but, for 
-the sake of not being spammed by a static analysis tool, sure lets check 
-for zero.
-
->> +
->> +	return 0;
->> +}
->> +
->> +static int phy_qcom_mipi_csi2_configure(struct phy *phy,
->> +					union phy_configure_opts *opts)
->> +{
-> [ ... ]
->> +	stream_cfg->link_freq = dphy_cfg->hs_clk_rate;
->> +	stream_cfg->num_data_lanes = dphy_cfg->lanes;
-> 
-> [Severity: High]
-> Does this blindly overwrite the DT-parsed lane count without bounds
-> checking against the physical layout?
-
-It takes the lanes_count from the controller DT field.
-
-> If a consumer requests more lanes than are physically mapped in the
-> device tree, the hardware configuration could iterate out-of-bounds of
-> the initialized array elements, repeatedly applying bitmasks for physical
-> position 0.
-
-No the value comes from the controller DT data-lanes field but since we 
-are consuming data-lanes from the PHY its actually a worthwhile test to 
-validate what the controller says to what we have an -EINVAL if they 
-don't agree.
-
-> 
->> +
->> +	return 0;
->> +}
->> +
->> +static int phy_qcom_mipi_csi2_power_on(struct phy *phy)
->> +{
-> [ ... ]
->> +	ret = clk_bulk_prepare_enable(csi2phy->soc_cfg->num_clk,
->> +				      csi2phy->clks);
->> +	if (ret) {
->> +		dev_err(dev, "failed to enable clocks, %d\n", ret);
->> +		goto poweroff_phy;
->> +	}
->> +
-> [ ... ]
->> +poweroff_phy:
->> +	regulator_bulk_disable(csi2phy->soc_cfg->num_supplies,
->> +			       csi2phy->supplies);
->> +
->> +	return ret;
-> 
-> [Severity: High]
-> Does this error path leak the performance state and OPP rate?
-> 
-> It seems to only disable regulators, completely missing the cleanup for
-> dev_pm_genpd_set_performance_state() and dev_pm_opp_set_rate().
-> 
-
-When the clocks disable the perf state _should_ drop back but, I will check.
-
->> +}
->> +
->> +static int phy_qcom_mipi_csi2_power_off(struct phy *phy)
->> +{
->> +	struct mipi_csi2phy_device *csi2phy = phy_get_drvdata(phy);
->> +	int i;
->> +
->> +	for (i = 0; i < csi2phy->pd_list->num_pds; i++)
->> +		dev_pm_genpd_set_performance_state(csi2phy->pd_list->pd_devs[i], 0);
-> 
-> [Severity: High]
-> Does this leave the OPP frequency vote elevated?
-> 
-> It doesn't look like dev_pm_opp_set_rate(dev, 0) is called to release
-> the OPP frequency vote.
-> 
-> [Severity: Medium]
-> Is the ops->lanes_disable() callback intentionally omitted here?
-> 
-> Disabling the clocks and regulators without invoking the callback
-> bypasses the hardware-specific teardown sequence (like clearing
-> CLK_ENABLE and COMMON_PWRDN_B). Could this leave the PHY in an invalid
-> logical state for the next power-on cycle?
-
-I mean, when power goes off you loose the state in the regs ... but for 
-the sake of completeness sure, I will add this.
-
->> +
->> +	clk_bulk_disable_unprepare(csi2phy->soc_cfg->num_clk,
->> +				   csi2phy->clks);
->> +	regulator_bulk_disable(csi2phy->soc_cfg->num_supplies,
->> +			       csi2phy->supplies);
->> +
->> +	return 0;
->> +}
-> [ ... ]
->> +static struct phy *qcom_csi2_phy_xlate(struct device *dev,
->> +				       const struct of_phandle_args *args)
->> +{
->> +	struct mipi_csi2phy_device *csi2phy = dev_get_drvdata(dev);
->> +
->> +	if (args->args[0] != PHY_TYPE_DPHY) {
-> 
-> [Severity: Medium]
-> Can this access uninitialized stack memory?
-> 
-> If the device tree node has #phy-cells = <0>, args_count will be 0, and
-> reading args->args[0] might yield uninitialized memory, leading to
-> unpredictable behavior or the incorrect rejection of valid PHY bindings.
-> Should args->args_count be checked first?
-
-I feel the answer is "no" but I'm not averse to checking.
-
-> 
->> +		dev_err(csi2phy->dev, "mode %d -EOPNOTSUPP\n", args->args[0]);
->> +		return ERR_PTR(-EOPNOTSUPP);
->> +	}
-> 
-
+> This is a pre-existing issue, but does the struct layout for bug_entry
+> mismatch between C and assembly when CONFIG_DEBUG_BUGVERBOSE is disabled?
+>
+> HAVE_ARCH_BUG_FORMAT is defined unconditionally in this file, which means
+> the C definition of struct bug_entry always includes the format relative
+> pointer at offset 4.
+>
+> However, the assembly macro __BUG_ENTRY_VERBOSE only emits the format pointer
+> if CONFIG_DEBUG_BUGVERBOSE is enabled. When disabled, the assembler skips it
+> and directly emits the flags immediately after bug_addr.
+>
+> This causes C code to read the flags (plus zero padding) when accessing the
+> format pointer, resulting in a garbage pointer. It also reads zeros when
+> accessing the flags field at offset 8.
+>
+> Can this lead to corrupted bug reports or kernel crashes if the garbage
+> format pointer is dereferenced during exception handling?
+>
+> > +
+> > +#define ARCH_WARN_REACHABLE
+> > +
+> >  #endif /* CONFIG_BUG && CONFIG_CC_HAS_ASM_IMMEDIATE_STRINGS */
+> >  #endif /* __ASSEMBLER__ */
+>
+> --
+> Sashiko AI review · https://sashiko.dev/#/patchset/20260519151215.1611802-1-japo@linux.ibm.com?part=1
+FYI this is fixed in the s390 tree by
+“s390/bug: Always emit format word in __BUG_ENTRY” and should land with
+the next merge.
