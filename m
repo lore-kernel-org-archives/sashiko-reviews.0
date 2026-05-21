@@ -1,129 +1,196 @@
-Received: from mail.loongson.cn (mail.loongson.cn [114.242.206.163])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 476743C4B8E
-	for <sashiko-reviews@lists.linux.dev>; Thu, 21 May 2026 11:40:02 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=114.242.206.163
+Received: from mx0b-001b2d01.pphosted.com (mx0b-001b2d01.pphosted.com [148.163.158.5])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+	(No client certificate requested)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6C5D93859C9;
+	Thu, 21 May 2026 11:59:04 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=148.163.158.5
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1779363608; cv=none; b=JsqBLoAVWV9ljj1u+S2SeVREnlydm/8Ps/nlaK/RTPrp/0AWx506mKCaNCyDOTUWkW25CazYSwz+N4Srt6iQwX8oVEvomOggU1hq/ZoZ4Iu1gYhk+AQkgvessQ790X8NETOr57or5daWdhaoDdrQB4lBcEq95u3aEsmHU2481YU=
+	t=1779364745; cv=none; b=EvmUe1VFc8eDRslaP4Kra/xgDyKOWi1xfV3n3EJsvxhnyYfajEudWdpet/oE9ojj+PXNaN0KbXoNpDcUzHTymOl3QSnJE5D3nNIljwSCr7Uoi2jif4DeM8CIiQleaUswa8fSqd4EEWij9xfZJJVOjYb5hsUTMmro7mz5nhCAzu4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1779363608; c=relaxed/simple;
-	bh=4XhC/zvHXU/cXg/PTJkovdG5QCBCacxU2LkJHH9Ymv8=;
-	h=Subject:To:Cc:References:From:Message-ID:Date:MIME-Version:
-	 In-Reply-To:Content-Type; b=APsuYB+nv49YT3XP3psJT/W2CejnRpOK7OKmQFOI27PSOT8F1fuAmDnIlCX3c0skqYHqFNCr2VX+GMR0KioJr5pFqKuyaV/9Ilml41zeBKO/qDiielijcyfF75zJgMFLyIiDXrmTuqCHDERniE6Ae66mI0YJyZKD8m8xMO01vIA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=loongson.cn; spf=pass smtp.mailfrom=loongson.cn; arc=none smtp.client-ip=114.242.206.163
-Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=loongson.cn
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=loongson.cn
-Received: from loongson.cn (unknown [113.200.148.30])
-	by gateway (Coremail) with SMTP id _____8BxDuoP7w5qwPkLAA--.34296S3;
-	Thu, 21 May 2026 19:39:59 +0800 (CST)
-Received: from [10.130.40.83] (unknown [113.200.148.30])
-	by front1 (Coremail) with SMTP id qMiowJDxjcIO7w5qWwSLAA--.64865S3;
-	Thu, 21 May 2026 19:39:58 +0800 (CST)
-Subject: Re: [PATCH v1 1/3] LoongArch: BPF: Fix tail call prologue alignment
-To: sashiko-reviews@lists.linux.dev
-Cc: bpf@vger.kernel.org
-References: <20260521070128.28086-2-yangtiezhu@loongson.cn>
- <20260521080021.AD9EE1F000E9@smtp.kernel.org>
-From: Tiezhu Yang <yangtiezhu@loongson.cn>
-Message-ID: <202feb71-403f-2e09-c3cd-c933754b8ea9@loongson.cn>
-Date: Thu, 21 May 2026 19:39:57 +0800
-User-Agent: Mozilla/5.0 (X11; Linux loongarch64; rv:68.0) Gecko/20100101
- Thunderbird/68.7.0
+	s=arc-20240116; t=1779364745; c=relaxed/simple;
+	bh=6R55RaKU35cthWSmstgvsGVH8FT4aEmvq9iWOB0k8Oo=;
+	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
+	 In-Reply-To:Content-Type; b=rX0+Pm6YzOKNIXZbpb+yzg+V18TrVwJ3APQ7R/UvTOvQkYAZ+lk4rkemXBj0XtpTmV4KnFjEtWb51h+fdGzHK1vGEKNUS+LFm5mfRyOq4b1icFAhk1lAO9/8aQVETdz66lbFw+AZjOaNS2ewRUYdXPuhiPS7EoAi/tD8sADjtSo=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linux.ibm.com; spf=pass smtp.mailfrom=linux.ibm.com; dkim=pass (2048-bit key) header.d=ibm.com header.i=@ibm.com header.b=pSz9nYys; arc=none smtp.client-ip=148.163.158.5
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linux.ibm.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linux.ibm.com
+Authentication-Results: smtp.subspace.kernel.org;
+	dkim=pass (2048-bit key) header.d=ibm.com header.i=@ibm.com header.b="pSz9nYys"
+Received: from pps.filterd (m0353725.ppops.net [127.0.0.1])
+	by mx0a-001b2d01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id 64KLK9N52070048;
+	Thu, 21 May 2026 11:59:01 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=ibm.com; h=cc
+	:content-transfer-encoding:content-type:date:from:in-reply-to
+	:message-id:mime-version:references:subject:to; s=pp1; bh=P3agUU
+	pYlk1cV/jDW3hG/Eq3qsa8YD+bMuWoEsaUdEs=; b=pSz9nYysVFzq7+3ransRpv
+	D6hW/NCY55/OeWaDjBogHrRsk2KB81NnS+CR6NeJRVHRnmNMI1/KvGgc0ICDdR8y
+	5omeMr0v1yw0lPMluBb8jAfiA8bKL6cauOE9beTw0D/RD1yY9dvXqP9qPU8reXSi
+	AFx1dfKfcx7FJ/ZDKzBWZdx9pHoWDajwIEoqfPuTjK/XSWNo0s4tA6Zps6fTwPwN
+	HJi1IB8AQHMI3f9TYnJ/vBDx+zeaULSvqS70HsVACdcDPmUZaxPm4LtZai9+c+mO
+	mUyHAAQm2XV8yeReiEZezO0tG53mYSSDqqD7cT3zYOddRapvRyjgnPJfP6ko1wtQ
+	==
+Received: from ppma23.wdc07v.mail.ibm.com (5d.69.3da9.ip4.static.sl-reverse.com [169.61.105.93])
+	by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 4e6h88nfcd-1
+	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+	Thu, 21 May 2026 11:59:01 +0000 (GMT)
+Received: from pps.filterd (ppma23.wdc07v.mail.ibm.com [127.0.0.1])
+	by ppma23.wdc07v.mail.ibm.com (8.18.1.7/8.18.1.7) with ESMTP id 64LBs98c021038;
+	Thu, 21 May 2026 11:59:00 GMT
+Received: from smtprelay07.fra02v.mail.ibm.com ([9.218.2.229])
+	by ppma23.wdc07v.mail.ibm.com (PPS) with ESMTPS id 4e74dhutss-1
+	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+	Thu, 21 May 2026 11:59:00 +0000 (GMT)
+Received: from smtpav04.fra02v.mail.ibm.com (smtpav04.fra02v.mail.ibm.com [10.20.54.103])
+	by smtprelay07.fra02v.mail.ibm.com (8.14.9/8.14.9/NCO v10.0) with ESMTP id 64LBwwTc47644994
+	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
+	Thu, 21 May 2026 11:58:58 GMT
+Received: from smtpav04.fra02v.mail.ibm.com (unknown [127.0.0.1])
+	by IMSVA (Postfix) with ESMTP id 5DB5920043;
+	Thu, 21 May 2026 11:58:58 +0000 (GMT)
+Received: from smtpav04.fra02v.mail.ibm.com (unknown [127.0.0.1])
+	by IMSVA (Postfix) with ESMTP id 4270C20040;
+	Thu, 21 May 2026 11:58:58 +0000 (GMT)
+Received: from [9.52.200.195] (unknown [9.52.200.195])
+	by smtpav04.fra02v.mail.ibm.com (Postfix) with ESMTP;
+	Thu, 21 May 2026 11:58:58 +0000 (GMT)
+Message-ID: <d11481c2-201a-4a02-b9e0-80af52ce061d@linux.ibm.com>
+Date: Thu, 21 May 2026 13:58:56 +0200
 Precedence: bulk
 X-Mailing-List: sashiko-reviews@lists.linux.dev
 List-Id: <sashiko-reviews.lists.linux.dev>
 List-Subscribe: <mailto:sashiko-reviews+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:sashiko-reviews+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-In-Reply-To: <20260521080021.AD9EE1F000E9@smtp.kernel.org>
-Content-Type: text/plain; charset=utf-8; format=flowed
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH v15 16/20] unwind_user/sframe: Add support for SFrame V3
+ flexible FDEs
+To: sashiko-reviews@lists.linux.dev, Steven Rostedt <rostedt@kernel.org>,
+        Josh Poimboeuf <jpoimboe@kernel.org>,
+        Indu Bhagat <ibhagatgnu@gmail.com>
+Cc: bpf@vger.kernel.org
+References: <20260520154004.3845823-17-jremus@linux.ibm.com>
+ <20260520170420.335441F00894@smtp.kernel.org>
 Content-Language: en-US
+From: Jens Remus <jremus@linux.ibm.com>
+Organization: IBM Deutschland Research & Development GmbH
+In-Reply-To: <20260520170420.335441F00894@smtp.kernel.org>
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-X-CM-TRANSID:qMiowJDxjcIO7w5qWwSLAA--.64865S3
-X-CM-SenderInfo: p1dqw3xlh2x3gn0dqz5rrqw2lrqou0/
-X-Coremail-Antispam: 1Uk129KBj93XoWxurykCrWkGF4fZw1xWF4kGrX_yoW5AFWxpF
-	Wxu3yrCFWkXrn2kFs7Kay8u39IvFZ5Gry7Jr1Yqry5Aw43urn3KF1fKrWfuas8Ar48Gr10
-	qrs0vwn8Jan8ArXCm3ZEXasCq-sJn29KB7ZKAUJUUUUU529EdanIXcx71UUUUU7KY7ZEXa
-	sCq-sGcSsGvfJ3Ic02F40EFcxC0VAKzVAqx4xG6I80ebIjqfuFe4nvWSU5nxnvy29KBjDU
-	0xBIdaVrnRJUUUvIb4IE77IF4wAFF20E14v26r1j6r4UM7CY07I20VC2zVCF04k26cxKx2
-	IYs7xG6rWj6s0DM7CIcVAFz4kK6r106r15M28lY4IEw2IIxxk0rwA2F7IY1VAKz4vEj48v
-	e4kI8wA2z4x0Y4vE2Ix0cI8IcVAFwI0_Jr0_JF4l84ACjcxK6xIIjxv20xvEc7CjxVAFwI
-	0_Jr0_Gr1l84ACjcxK6I8E87Iv67AKxVW8Jr0_Cr1UM28EF7xvwVC2z280aVCY1x0267AK
-	xVW8Jr0_Cr1UM2AIxVAIcxkEcVAq07x20xvEncxIr21l57IF6xkI12xvs2x26I8E6xACxx
-	1l5I8CrVACY4xI64kE6c02F40Ex7xfMcIj6xIIjxv20xvE14v26r1j6r18McIj6I8E87Iv
-	67AKxVW8JVWxJwAm72CE4IkC6x0Yz7v_Jr0_Gr1lF7xvr2IY64vIr41lc7I2V7IY0VAS07
-	AlzVAYIcxG8wCF04k20xvY0x0EwIxGrwCFx2IqxVCFs4IE7xkEbVWUJVW8JwC20s026c02
-	F40E14v26r1j6r18MI8I3I0E7480Y4vE14v26r106r1rMI8E67AF67kF1VAFwI0_Jrv_JF
-	1lIxkGc2Ij64vIr41lIxAIcVC0I7IYx2IY67AKxVWUJVWUCwCI42IY6xIIjxv20xvEc7Cj
-	xVAFwI0_Jr0_Gr1lIxAIcVCF04k26cxKx2IYs7xG6r1j6r1xMIIF0xvEx4A2jsIE14v26r
-	4j6F4UMIIF0xvEx4A2jsIEc7CjxVAFwI0_Gr0_Gr1UYxBIdaVFxhVjvjDU0xZFpf9x07jO
-	F4_UUUUU=
+X-TM-AS-GCONF: 00
+X-Proofpoint-Reinject: loops=2 maxloops=12
+X-Proofpoint-ORIG-GUID: EP2FJ1NwsaXIrII2a50CXL4b4finnB9V
+X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwNTIxMDExNiBTYWx0ZWRfX81SKShdQ4aqs
+ sm33WYocDv85E8+YaDtb5X/yKLQ5JeTJE4tDugdcCnP67PXLxFgL4mO9ZMOjXEkZvaG1rpKFiGh
+ rlW1lQHnnQbJM03IL0DguFU2K+mt8ZsqtouRxYGjPtqUiEUq5l+RW19PCqh/O84N20T3UJhWv4Z
+ T5ePLy7Z6oq0O4w2N9dnVnPIy3wfcT0QtV9bBLXsx9KPwsnHGsKtaXKyhpn9BY2X4q69s8+Vc35
+ 6pVJJu/gi8n4OO5TdaO5zyLds+2M0BaTx01cRbS4u58Djjyn/qc+SBSyqNcynVzcUO4WFTUjSXr
+ bctXL57Zwyn1/8UVlyvfvqU3gJs1EqOUWI1G3isRzOxu1EEV/v56kOpEXrBUiqtcxze/QTyqXd/
+ IjJmcMZeuc/NTI6bkJA4GlQm0DM8+zzUUOZJ8bDqDt2lXYKFCElKsWwnz13SH2HDHj0rQx2BMio
+ 2oQmQ19wIfAXTcVjpSA==
+X-Proofpoint-GUID: Ag4nZrPvk01RNSS70-HHND7aTNKgGJLb
+X-Authority-Analysis: v=2.4 cv=apyCzyZV c=1 sm=1 tr=0 ts=6a0ef385 cx=c_pps
+ a=3Bg1Hr4SwmMryq2xdFQyZA==:117 a=3Bg1Hr4SwmMryq2xdFQyZA==:17
+ a=IkcTkHD0fZMA:10 a=NGcC8JguVDcA:10 a=VkNPw1HP01LnGYTKEx00:22
+ a=RnoormkPH1_aCDwRdu11:22 a=V8glGbnc2Ofi9Qvn3v5h:22 a=VnNF1IyMAAAA:8
+ a=VwQbUJbxAAAA:8 a=njC-hnyFwTIKUP6h0CMA:9 a=3ZKOabzyN94A:10 a=QEXdDO2ut3YA:10
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.293,Aquarius:18.0.1143,Hydra:6.1.51,FMLib:17.12.100.49
+ definitions=2026-05-21_02,2026-05-18_01,2025-10-01_01
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
+ malwarescore=0 lowpriorityscore=0 priorityscore=1501 impostorscore=0
+ bulkscore=0 suspectscore=0 adultscore=0 spamscore=0 phishscore=0
+ clxscore=1015 classifier=typeunknown authscore=0 authtc= authcc=
+ route=outbound adjust=0 reason=mlx scancount=1 engine=8.22.0-2605130000
+ definitions=main-2605210116
 
-On 2026/5/21 下午4:00, sashiko-bot@kernel.org wrote:
-> Thank you for your contribution! Sashiko AI review found 1 potential issue(s) to consider:
-> - [Low] The patch adds a `nop` to the subprogram prologue to fix a non-existent tail call jump offset issue, as BPF tail calls can never target subprograms.
+On 5/20/2026 7:04 PM, sashiko-bot@kernel.org wrote:
+> Thank you for your contribution! Sashiko AI review found 2 potential issue(s) to consider:
+> - [Low] The patch references undefined macros `SFRAME_REG_SP` and `SFRAME_REG_FP` and includes a nonexistent architecture-specific header `<asm/unwind_user_sframe.h>`, resulting in a build failure.
+> - [Low] The variable `ret` is used outside of its declared scope in `__find_fre()`, resulting in a compilation error.
 > --
 > 
-> commit d9b7854227e065cad33918647040161cb3ceac6c
-> Author: Tiezhu Yang <yangtiezhu@loongson.cn>
+> commit 725751526853387385ad4dffd9fdbe24d42e98d3
+> Author: Jens Remus <jremus@linux.ibm.com>
 > 
-> LoongArch: BPF: Fix tail call prologue alignment
+> unwind_user/sframe: Add support for SFrame V3 flexible FDEs
 > 
-> This commit adds a NOP instruction to the subprogram prologue in the LoongArch
-> BPF JIT. The goal is to align the prologue size between main programs and
-> subprograms so that tail calls skip the correct number of instructions.
+> SFrame V3 introduces flexible FDEs in addition to the regular FDEs.
+> The key difference is that flexible FDEs encode the CFA, RA, and FP
+> tracking information using two FRE data words, a control word and an
+> offset, or a single padding data word of zero.
 > 
->> diff --git a/arch/loongarch/net/bpf_jit.c b/arch/loongarch/net/bpf_jit.c
->> index 24913dc7f4e83..aefe5fa1c5840 100644
->> --- a/arch/loongarch/net/bpf_jit.c
->> +++ b/arch/loongarch/net/bpf_jit.c
->> @@ -149,12 +149,15 @@ static void build_prologue(struct jit_ctx *ctx)
->>   		emit_insn(ctx, nop);
->>   
->>   	/*
->> -	 * First instruction initializes the tail call count (TCC)
->> -	 * register to zero. On tail call we skip this instruction,
->> -	 * and the TCC is passed in REG_TCC from the caller.
->> +	 * Initialize or align the TCC register slot.
->> +	 * For main programs, TCC is zeroed. For subprograms, a nop is emitted
->> +	 * to keep the prologue size consistent, ensuring tail calls skip the
->> +	 * correct number of instructions.
->>   	 */
->>   	if (is_main_prog)
->>   		emit_insn(ctx, addid, REG_TCC, LOONGARCH_GPR_ZERO, 0);
->> +	else
->> +		emit_insn(ctx, nop);
+>> diff --git a/kernel/unwind/sframe.c b/kernel/unwind/sframe.c
+>> index 6187379750db5..48709f0bafc78 100644
+>> --- a/kernel/unwind/sframe.c
+>> +++ b/kernel/unwind/sframe.c
+>> @@ -12,6 +12,7 @@
+>>  #include <linux/mm.h>
+>>  #include <linux/string_helpers.h>
+>>  #include <linux/sframe.h>
+>> +#include <asm/unwind_user_sframe.h>
 > 
 > [Severity: Low]
-> Is this nop instruction and alignment actually necessary for tail calls?
+> Does this new architecture-specific header exist in the tree at this point?
 > 
-> BPF tail calls resolve their target programs exclusively from a
-> BPF_MAP_TYPE_PROG_ARRAY map. Because subprograms do not have file descriptors,
-> the verifier ensures that only main programs can be inserted into program
-> array maps.
+> It appears this include, along with macros like SFRAME_REG_SP and
+> SFRAME_REG_FP used later in the patch, causes a build failure because they
+> aren't introduced until a later commit (bfea14fc9b480 "unwind_user/sframe/x86:
+> Enable sframe unwinding on x86").
 > 
-> Since a tail call can never target a subprogram, it seems it will always
-> unconditionally target a main program (which includes the TCC initialization
-> instruction). Does this mean the existing JIT implementation already safely
-> skips the main program's prologue, and this added nop provides no functional
-> benefit?
+> Each patch in a series should be self-contained and compile successfully on
+> its own.
 
-Hi,
+This is intended.  kernel/unwind/sframe.o is only built if an arch
+enables HAVE_UNWIND_USER_SFRAME and provides an arch-specific
+asm/unwind_user_sframe.h header that defines at least SFRAME_REG_SP and
+SFRAME_REG_FP.
 
-Thanks for the question. While it is true that a subprogram can never
-be the destination (target) of a tail call, a subprogram can indeed
-act as the originator (caller) of a tail call in combined bpf2bpf and
-tail call scenarios.
+> 
+> [ ... ]
+> 
+>> @@ -356,9 +528,15 @@ static __always_inline int __find_fre(struct sframe_section *sec,
+>>  		return -EINVAL;
+>>  	fre = prev_fre;
+>>  
+>> -	sframe_init_cfa_rule_data(&frame->cfa, fre->info, fre->cfa_off);
+>> -	sframe_init_rule_data(&frame->ra, fre->ra_off);
+>> -	sframe_init_rule_data(&frame->fp, fre->fp_off);
+>> +	ret = sframe_init_cfa_rule_data(&frame->cfa, fre->cfa_ctl, fre->cfa_off);
+>         ^^^
+> 
+> [Severity: Low]
+> Is the variable ret in scope here?
+> 
+> It looks like int ret is declared inside the for loop in __find_fre(), so
+> accessing it outside the loop results in a compilation error.
+> 
+> This is fixed in a later commit (9c045164b82cb "unwind_user/sframe: Separate
+> reading of FRE from reading of FRE data words") which moves the declaration to
+> the function scope, but it breaks the build on this commit.
 
-In such complex mixed hierarchies, maintaining a strictly consistent
-prologue structure and size between main programs and subprograms is
-crucial. It ensures that the JIT compiler can deterministically
-calculate stack frame offsets, TCC slot distances, and relative
-entry-point jumps without generating misaligned or broken code
-across different function frames.
+Will fix in next version.
 
-Therefore, emitting this NOP is necessary to preserve text symmetry
-and layout consistency in mixed call chains.
+> 
+>> +	if (ret)
+>> +		return ret;
+>> +	ret = sframe_init_rule_data(&frame->ra, fre->ra_ctl, fre->ra_off);
+>> +	if (ret)
+>> +		return ret;
+>> +	ret = sframe_init_rule_data(&frame->fp, fre->fp_ctl, fre->fp_off);
+>> +	if (ret)
+>> +		return ret;
+>>  	frame->outermost = SFRAME_V3_FRE_RA_UNDEFINED_P(fre->info);
+>>  
+>>  	return 0;
+> 
 
-Thanks,
-Tiezhu
+Regards,
+Jens
+-- 
+Jens Remus
+Linux on Z Development (D3303)
+jremus@de.ibm.com / jremus@linux.ibm.com
+
+IBM Deutschland Research & Development GmbH; Vorsitzender des Aufsichtsrats: Wolfgang Wendt; Geschäftsführung: David Faller; Sitz der Gesellschaft: Ehningen; Registergericht: Amtsgericht Stuttgart, HRB 243294
+IBM Data Privacy Statement: https://www.ibm.com/privacy/
 
