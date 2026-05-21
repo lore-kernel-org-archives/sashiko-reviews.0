@@ -1,121 +1,150 @@
-Received: from azure-sdnproxy.icoremail.net (azure-sdnproxy.icoremail.net [13.76.78.106])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id DC3A73911AA
-	for <sashiko-reviews@lists.linux.dev>; Thu, 21 May 2026 05:54:04 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=13.76.78.106
+Received: from out-172.mta1.migadu.com (out-172.mta1.migadu.com [95.215.58.172])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+	(No client certificate requested)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F09F5367B82
+	for <sashiko-reviews@lists.linux.dev>; Thu, 21 May 2026 06:12:04 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=95.215.58.172
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1779342848; cv=none; b=mnDCTOYuSGiiga/f7dSmOC4jOu4/GyDtJ2L5LH6JoxKkFoM/KWtZj/vvLlpwfWZwpIU+uOUbRnj4lSaOmIOV1V1Mifpxut7lJZKncZTn4TVUkKFeX2OJfOCXGdyL70ZPNX8yVamXTbQ2aOedtzyMVpx5tMftfCdYklDiWWY4Eo0=
+	t=1779343927; cv=none; b=GuuxjtdA908njA2E/K0mJY4/ACPVOV6Y2G7y0c2INJOPpw9qB9XgF6smck+b/dBJpfuveh/+lgQ8krlO9qTld26fFv46zCxavf5pHmosMMyKwqQBdEd0VqAQypo5s2BNbj67hgwMqiIinyFX/pRIwxsHmz5xvQyxWMSjMsvMYAE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1779342848; c=relaxed/simple;
-	bh=PrzEVPE1NVt2zWq2dEmP0J7icRRx6uEnNKXegrCkRkM=;
-	h=Date:From:To:Cc:Subject:In-Reply-To:References:Content-Type:
-	 MIME-Version:Message-ID; b=NxHmcTprzGmtkY80et5XHSFx5MC0+eg6eG1fU0iSplzfCw0ghsvHWt5nZFkd9IfGaFOQL8AFZ5EdUQM6je0LL4oY1if2wHLraCPVEzcdXq8ORP9vypp/s7DjQ7dZIKQAfZCWFoe1DG0217LwBMGGiTzDx35sSh049+7asa0Yp2U=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=eswincomputing.com; spf=pass smtp.mailfrom=eswincomputing.com; arc=none smtp.client-ip=13.76.78.106
-Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=eswincomputing.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=eswincomputing.com
-Received: from lizhi2$eswincomputing.com ( [10.11.96.26] ) by
- ajax-webmail-app1 (Coremail) ; Thu, 21 May 2026 13:53:55 +0800 (GMT+08:00)
-Date: Thu, 21 May 2026 13:53:55 +0800 (GMT+08:00)
-X-CM-HeaderCharset: UTF-8
-From: =?UTF-8?B?5p2O5b+X?= <lizhi2@eswincomputing.com>
-To: sashiko-reviews@lists.linux.dev
-Cc: conor+dt@kernel.org, devicetree@vger.kernel.org, robh@kernel.org
-Subject: Re: Re: Re: [PATCH net v2 2/5] net: stmmac: eswin: fix HSP CSR init
- ordering after clock enable
-X-Priority: 3
-X-Mailer: Coremail Webmail Server Version 2024.2-cmXT6 build
- 20241203(6b039d88) Copyright (c) 2002-2026 www.mailtech.cn
- mispb-72143050-eaf5-4703-89e0-86624513b4ce-eswincomputing.com
-In-Reply-To: <1b6c329a.8507.19e3fac06f0.Coremail.lizhi2@eswincomputing.com>
-References: <20260518022055.444-1-lizhi2@eswincomputing.com>
- <20260519022335.931D6C2BCB7@smtp.kernel.org>
- <1b6c329a.8507.19e3fac06f0.Coremail.lizhi2@eswincomputing.com>
-Content-Transfer-Encoding: base64
-Content-Type: text/plain; charset=UTF-8
+	s=arc-20240116; t=1779343927; c=relaxed/simple;
+	bh=raJPW6sw8ZqcjtVnpcCSp1V1gkoDLFL4/+bdI3yisUs=;
+	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
+	 In-Reply-To:Content-Type; b=r35IYekqRPyiDl3B0Os6GW8wWhbKwTfaz6lj3D5Oc3Zina0cXlyqsbw1e1TYQcGM4j7nYONp3yVzCEr7x7UV/VUnZFlo7nv+tqmx7YlOyCIgOyP7hgVsYTUPoX1f1V13a2vwO0BTDO64pGVNo/OBgi00lFTCMp8TYVdUJ4OY/fA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linux.dev; spf=pass smtp.mailfrom=linux.dev; dkim=pass (1024-bit key) header.d=linux.dev header.i=@linux.dev header.b=DIrSViX/; arc=none smtp.client-ip=95.215.58.172
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linux.dev
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linux.dev
+Authentication-Results: smtp.subspace.kernel.org;
+	dkim=pass (1024-bit key) header.d=linux.dev header.i=@linux.dev header.b="DIrSViX/"
+Message-ID: <23c93af8-c025-4c39-b0df-b84562756c30@linux.dev>
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linux.dev; s=key1;
+	t=1779343921;
+	h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+	 to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+	 content-transfer-encoding:content-transfer-encoding:
+	 in-reply-to:in-reply-to:references:references;
+	bh=255yUP+COzLOATJHIQiHzRErI8DeSF7IuKku14LXU6E=;
+	b=DIrSViX/rFnHdNbP/64T9lzCRyQNNW2cqY+H2hzDLr/ejTGDKR+eC/zWIPIBwEGj2cGDl2
+	2Jt5AqcCgcg9sdaVLXAm/SPVucWyuJNH2eAQWIBBCbZRwVQRFc0LcoDNl5zqOi1wqqDRbi
+	/FctbRwZdBcZjSnRncfTkBV0GWuXxz0=
+Date: Thu, 21 May 2026 14:11:11 +0800
 Precedence: bulk
 X-Mailing-List: sashiko-reviews@lists.linux.dev
 List-Id: <sashiko-reviews.lists.linux.dev>
 List-Subscribe: <mailto:sashiko-reviews+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:sashiko-reviews+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Message-ID: <60a49202.8674.19e4918fd5c.Coremail.lizhi2@eswincomputing.com>
-X-Coremail-Locale: en_US
-X-CM-TRANSID:TAJkCgDHaXP0nQ5qtSwbAA--.7961W
-X-CM-SenderInfo: xol2xx2s6h245lqf0zpsxwx03jof0z/1tbiAgEODGoN4pMQMAABs2
-X-Coremail-Antispam: 1Ur529EdanIXcx71UUUUU7IcSsGvfJ3iIAIbVAYjsxI4VWxJw
-	CS07vEb4IE77IF4wCS07vE1I0E4x80FVAKz4kxMIAIbVAFxVCaYxvI4VCIwcAKzIAtYxBI
-	daVFxhVjvjDU=
+Subject: Re: [PATCH bpf-next v11 2/8] bpf: clear list node owner and unlink
+ before drop
+To: sashiko-reviews@lists.linux.dev
+Cc: bpf@vger.kernel.org
+References: <20260521032306.97118-3-kaitao.cheng@linux.dev>
+ <20260521043023.A0BD71F000E9@smtp.kernel.org>
+X-Report-Abuse: Please report any abuse attempt to abuse@migadu.com and include these headers.
+From: Kaitao Cheng <kaitao.cheng@linux.dev>
+In-Reply-To: <20260521043023.A0BD71F000E9@smtp.kernel.org>
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
+X-Migadu-Flow: FLOW_OUT
 
-CgoKPiAtLS0tLU9yaWdpbmFsIE1lc3NhZ2VzLS0tLS0KPiBGcm9tOiDmnY7lv5cgPGxpemhpMkBl
-c3dpbmNvbXB1dGluZy5jb20+Cj4gU2VuZCB0aW1lOlR1ZXNkYXksIDE5LzA1LzIwMjYgMTc6NTg6
-MTkKPiBUbzogc2FzaGlrby1yZXZpZXdzQGxpc3RzLmxpbnV4LmRldgo+IENjOiBjb25vcitkdEBr
-ZXJuZWwub3JnLCBkZXZpY2V0cmVlQHZnZXIua2VybmVsLm9yZywgcm9iaEBrZXJuZWwub3JnCj4g
-U3ViamVjdDogUmU6IFJlOiBbUEFUQ0ggbmV0IHYyIDIvNV0gbmV0OiBzdG1tYWM6IGVzd2luOiBm
-aXggSFNQIENTUiBpbml0IG9yZGVyaW5nIGFmdGVyIGNsb2NrIGVuYWJsZQo+IAo+IAo+IAo+IAo+
-ID4gLS0tLS1PcmlnaW5hbCBNZXNzYWdlcy0tLS0tCj4gPiBGcm9tOiBzYXNoaWtvLWJvdEBrZXJu
-ZWwub3JnCj4gPiBTZW5kIHRpbWU6VHVlc2RheSwgMTkvMDUvMjAyNiAxMDoyMzozNQo+ID4gVG86
-IGxpemhpMkBlc3dpbmNvbXB1dGluZy5jb20KPiA+IENjOiBjb25vcitkdEBrZXJuZWwub3JnLCBk
-ZXZpY2V0cmVlQHZnZXIua2VybmVsLm9yZywgcm9iaEBrZXJuZWwub3JnCj4gPiBTdWJqZWN0OiBS
-ZTogW1BBVENIIG5ldCB2MiAyLzVdIG5ldDogc3RtbWFjOiBlc3dpbjogZml4IEhTUCBDU1IgaW5p
-dCBvcmRlcmluZyBhZnRlciBjbG9jayBlbmFibGUKPiA+IAo+ID4gVGhhbmsgeW91IGZvciB5b3Vy
-IGNvbnRyaWJ1dGlvbiEgU2FzaGlrbyBBSSByZXZpZXcgZm91bmQgMSBwb3RlbnRpYWwgaXNzdWUo
-cykgdG8gY29uc2lkZXI6Cj4gPiAtIFtIaWdoXSBIYXJkd2FyZSBTdGF0ZSBMb3NzIG9uIFJlc3Vt
-ZTogVGhlIEhTUCBDU1IgcmVnaXN0ZXJzIGFyZSBub3QgcmVzdG9yZWQgZHVyaW5nIHN5c3RlbSBy
-ZXN1bWUsIGNvbnRyYWRpY3RpbmcgdGhlIGNvbW1pdCBtZXNzYWdlLgo+ID4gLS0KPiA+IAo+ID4g
-Y29tbWl0IDYyN2Y1MTBlZTU1NmZmNDMyMmUwZjRlZDBiNjBmZGQyNzMzNzA4MGYKPiA+IEF1dGhv
-cjogWmhpIExpIDxsaXpoaTJAZXN3aW5jb21wdXRpbmcuY29tPgo+ID4gCj4gPiBuZXQ6IHN0bW1h
-YzogZXN3aW46IGZpeCBIU1AgQ1NSIGluaXQgb3JkZXJpbmcgYWZ0ZXIgY2xvY2sgZW5hYmxlCj4g
-PiAKPiA+IFRoaXMgY29tbWl0IG1vdmVzIHRoZSBIU1AgQ1NSIGNvbmZpZ3VyYXRpb24gaW4gdGhl
-IEVJQzc3MDAgRFdNQUMgZ2x1ZSBkcml2ZXIKPiA+IGludG8gdGhlIHBvc3QtY2xvY2stZW5hYmxl
-IGluaXRpYWxpemF0aW9uIHBhdGggdG8gZW5zdXJlIHByb3BlciBvcmRlcmluZy4KPiA+IFRoZSBp
-bnRlbnQgaXMgdG8gcHJldmVudCByZWdpc3RlciBhY2Nlc3MgYmVmb3JlIGNsb2NrIGVuYWJsZW1l
-bnQgYW5kIGVuc3VyZQo+ID4gZGV0ZXJtaW5pc3RpYyBpbml0aWFsaXphdGlvbiBkdXJpbmcgcHJv
-YmUgb3IgcmVzdW1lLgo+ID4gCj4gPiA+ICAgICBUaGlzIGNoYW5nZSBlbnN1cmVzIGRldGVybWlu
-aXN0aWMgaW5pdGlhbGl6YXRpb24gYW5kIHByZXZlbnRzCj4gPiA+ICAgICBjbG9jay1kZXBlbmRl
-bnQgcmVnaXN0ZXIgYWNjZXNzIGZhaWx1cmVzIGR1cmluZyBwcm9iZSBvciByZXN1bWUuCj4gPiAK
-PiA+IEFyZSB0aGUgSFNQIENTUiByZWdpc3RlcnMgYWN0dWFsbHkgcmVzdG9yZWQgZHVyaW5nIHN5
-c3RlbSByZXN1bWU/CgpOby4gVGhpcyB3YXMgc2ltcGx5IGEgbWlzdGFrZSBpbiB0aGUgY29tbWl0
-IG1lc3NhZ2UuIFRoZSBwYXRjaCBvbmx5CmFmZmVjdHMgdGhlIHByb2JlIHBhdGggd2hlcmUgZWlj
-NzcwMF9kd21hY19pbml0KCkgaXMgY2FsbGVkLgoKPiA+IAo+ID4gVGhlIGRyaXZlciBvdmVycmlk
-ZXMgdGhlIGNvcmUgcmVzdW1lIGNhbGxiYWNrIGJ5IHNldHRpbmcKPiA+IHBsYXRfZGF0LT5yZXN1
-bWUgPSBlaWM3NzAwX2R3bWFjX3Jlc3VtZS4gQmVjYXVzZSBhIGN1c3RvbSByZXN1bWUgY2FsbGJh
-Y2sgaXMKPiA+IHByb3ZpZGVkLCB0aGUgU1RNTUFDIGNvcmUgaW52b2tlcyB0aGlzIGluc3RlYWQg
-b2YgdGhlIGRlZmF1bHQKPiA+IHN0bW1hY19wbGF0X3Jlc3VtZSgpICh3aGljaCB3b3VsZCBoYXZl
-IGNhbGxlZCBwbGF0LT5pbml0KCkpLgo+ID4gCj4gPiA+IGRpZmYgLS1naXQgYS9kcml2ZXJzL25l
-dC9ldGhlcm5ldC9zdG1pY3JvL3N0bW1hYy9kd21hYy1laWM3NzAwLmMgYi9kcml2ZXJzL25ldC9l
-dGhlcm5ldC9zdG1pY3JvL3N0bW1hYy9kd21hYy1laWM3NzAwLmMKPiA+ID4gaW5kZXggYmNiOGUw
-MDBlNzIwYi4uNjMwMDFjNGFjZGI3YSAxMDA2NDQKPiA+ID4gLS0tIGEvZHJpdmVycy9uZXQvZXRo
-ZXJuZXQvc3RtaWNyby9zdG1tYWMvZHdtYWMtZWljNzcwMC5jCj4gPiA+ICsrKyBiL2RyaXZlcnMv
-bmV0L2V0aGVybmV0L3N0bWljcm8vc3RtbWFjL2R3bWFjLWVpYzc3MDAuYwo+ID4gCj4gPiBbIC4u
-LiBdCj4gPiAKPiA+ID4gQEAgLTYxLDggKzY2LDI4IEBAIHN0YXRpYyBpbnQgZWljNzcwMF9jbGtz
-X2NvbmZpZyh2b2lkICpwcml2LCBib29sIGVuYWJsZWQpCj4gPiA+ICBzdGF0aWMgaW50IGVpYzc3
-MDBfZHdtYWNfaW5pdChzdHJ1Y3QgZGV2aWNlICpkZXYsIHZvaWQgKnByaXYpCj4gPiA+ICB7Cj4g
-PiA+ICAJc3RydWN0IGVpYzc3MDBfcW9zX3ByaXYgKmR3YyA9IHByaXY7Cj4gPiA+ICsJaW50IHJl
-dDsKPiA+ID4gKwo+ID4gPiArCXJldCA9IGVpYzc3MDBfY2xrc19jb25maWcoZHdjLCB0cnVlKTsK
-PiA+ID4gKwlpZiAocmV0KQo+ID4gPiArCQlyZXR1cm4gcmV0Owo+ID4gPiArCj4gPiA+ICsJcmV0
-ID0gcmVnbWFwX3NldF9iaXRzKGR3Yy0+ZWljNzcwMF9oc3BfcmVnbWFwLAo+ID4gPiArCQkJICAg
-ICAgZHdjLT5ldGhfcGh5X2N0cmxfb2Zmc2V0LAo+ID4gPiArCQkJICAgICAgRUlDNzcwMF9FVEhf
-VFhfQ0xLX1NFTCB8Cj4gPiA+ICsJCQkgICAgICBFSUM3NzAwX0VUSF9QSFlfSU5URl9TRUxJKTsK
-PiA+ID4gKwlpZiAocmV0KSB7Cj4gPiA+ICsJCWVpYzc3MDBfY2xrc19jb25maWcoZHdjLCBmYWxz
-ZSk7Cj4gPiA+ICsJCXJldHVybiByZXQ7Cj4gPiA+ICsJfQo+ID4gPiArCj4gPiA+ICsJcmVnbWFw
-X3dyaXRlKGR3Yy0+ZWljNzcwMF9oc3BfcmVnbWFwLCBkd2MtPmV0aF9heGlfbHBfY3RybF9vZmZz
-ZXQsCj4gPiA+ICsJCSAgICAgRUlDNzcwMF9FVEhfQ1NZU1JFUV9WQUwpOwo+ID4gPiAgCj4gPiA+
-IC0JcmV0dXJuIGVpYzc3MDBfY2xrc19jb25maWcoZHdjLCB0cnVlKTsKPiA+ID4gKwlyZWdtYXBf
-d3JpdGUoZHdjLT5laWM3NzAwX2hzcF9yZWdtYXAsIGR3Yy0+ZXRoX2Nsa19vZmZzZXQsCj4gPiA+
-ICsJCSAgICAgZHdjLT5ldGhfY2xrX2RseV9wYXJhbSk7Cj4gPiA+ICsKPiA+ID4gKwlyZXR1cm4g
-MDsKPiA+ID4gIH0KPiA+IAo+ID4gU2luY2UgZWljNzcwMF9kd21hY19yZXN1bWUoKSBvbmx5IGNh
-bGxzIHBtX3J1bnRpbWVfZm9yY2VfcmVzdW1lKGRldikgYW5kCj4gPiBkb2Vzbid0IGludm9rZSBl
-aWM3NzAwX2R3bWFjX2luaXQoKSwgdGhlIEhTUCBDU1IgY29uZmlndXJhdGlvbiB3b24ndCBiZQo+
-ID4gcmUtYXBwbGllZCB1cG9uIHN5c3RlbSByZXN1bWUuIElmIHRoZSBoYXJkd2FyZSBsb3NlcyBz
-dGF0ZSBkdXJpbmcgc3VzcGVuZCwKPiA+IHdpbGwgdGhlIFJHTUlJIGRlbGF5cyBiZSBwZXJtYW5l
-bnRseSBsb3N0LCBsZWFkaW5nIHRvIGEgTUFDIGhhbmcgb3Igc2lsZW50Cj4gPiBuZXR3b3JrIGZh
-aWx1cmU/Cj4gPiAKCk5vLiBUaGUgSFNQIENTUiByZWdpc3RlcnMgcmVzaWRlIGluIGEgcmV0ZW50
-aW9uIGRvbWFpbiBhbmQgcmV0YWluIHRoZWlyCnZhbHVlcyBhY3Jvc3Mgc3VzcGVuZC9yZXN1bWUu
-Cgo+ID4gQWxzbywgaWYgd2UgdHJ5IHRvIGZpeCB0aGlzIGJ5IG5haXZlbHkgY2FsbGluZyBpbml0
-KCkgZnJvbSByZXN1bWUoKSwgd291bGQKPiA+IGl0IGNhdXNlIGEgY2xvY2sgcmVmZXJlbmNlIGxl
-YWs/IHBtX3J1bnRpbWVfZm9yY2VfcmVzdW1lKCkgYWxyZWFkeQo+ID4gcmUtZW5hYmxlcyB0aGUg
-Y2xvY2tzIHZpYSB0aGUgcnVudGltZSBQTSBjYWxsYmFja3MsIHNvIHRoZSBDU1IgY29uZmlndXJh
-dGlvbgo+ID4gbWlnaHQgbmVlZCB0byBiZSBmYWN0b3JlZCBvdXQgaW50byBhIHNlcGFyYXRlIGhl
-bHBlciBmdW5jdGlvbi4KPiA+IAoKVGhlcmUgaXMgbm8gbmVlZCB0byBjYWxsIGVpYzc3MDBfZHdt
-YWNfaW5pdCgpIGZyb20gdGhlIHJlc3VtZSBwYXRoLApzaW5jZSB0aGUgcGF0Y2ggb25seSBjaGFu
-Z2VzIHRoZSBwcm9iZS10aW1lIGluaXRpYWxpemF0aW9uIG9yZGVyaW5nLgoKVGhhbmtzIGZvciB0
-aGUgcmV2aWV3LgoK
+
+
+在 2026/5/21 12:30, sashiko-bot@kernel.org 写道:
+> Thank you for your contribution! Sashiko AI review found 2 potential issue(s) to consider:
+> 
+> New issues:
+> - [High] Potentially unbounded O(N) list traversal with interrupts disabled in `bpf_list_head_free()`.
+> 
+> Pre-existing issues:
+> - [High] The patch fixes the stale `node->owner` issue for `bpf_list_head_free()` but fails to apply the equivalent fix for `bpf_rb_root_free()`, leaving `bpf_rbtree_remove()` vulnerable to the same memory corruption.
+> --
+> 
+> commit 59439e3ee3f8d57af8635b521393d245d26bbdf4
+> Author: Kaitao Cheng <chengkaitao@kylinos.cn>
+> 
+> bpf: clear list node owner and unlink before drop
+> 
+> This commit fixes an issue where refcounted BPF list nodes can outlive their
+> list head and retain a stale owner pointer. To prevent memory corruption if a
+> new list is allocated at the same address, it moves nodes to a private drain
+> list under the spinlock, poisons their owner pointers, and unlinks them
+> before dropping the objects.
+> 
+>> diff --git a/kernel/bpf/helpers.c b/kernel/bpf/helpers.c
+>> index 094457c3e6d37..59855b434f0b2 100644
+>> --- a/kernel/bpf/helpers.c
+>> +++ b/kernel/bpf/helpers.c
+> 
+> [ ... ]
+> 
+>> @@ -2261,20 +2262,30 @@ void bpf_list_head_free(const struct btf_field *field, void *list_head,
+>>  	__bpf_spin_lock_irqsave(spin_lock);
+>>  	if (!head->next || list_empty(head))
+>>  		goto unlock;
+>> -	head = head->next;
+>> +	list_for_each_safe(pos, n, head) {
+>> +		struct bpf_list_node_kern *node;
+>> +
+>> +		node = container_of(pos, struct bpf_list_node_kern, list_head);
+>> +		WRITE_ONCE(node->owner, BPF_PTR_POISON);
+>> +		list_move_tail(pos, &drain);
+>> +	}
+> 
+> [Severity: High]
+> Could this new loop potentially cause a long CPU stall?
+> 
+> Since __bpf_spin_lock_irqsave() disables local interrupts, this O(N) list
+> traversal executes with interrupts disabled.
+> 
+> BPF lists do not have a hard size limit, so if a program accumulates a
+> very large number of elements in a single list, could iterating over them
+> here trigger the NMI watchdog or cause severe latency spikes?
+
+This is merely address-taking and assignment, so it is almost negligible
+in cost, and the likelihood of causing a soft lockup is very low.
+
+>>  unlock:
+>> -	INIT_LIST_HEAD(orig_head);
+>> +	INIT_LIST_HEAD(head);
+>>  	__bpf_spin_unlock_irqrestore(spin_lock);
+>>  
+>> -	while (head != orig_head) {
+>> -		void *obj = head;
+>> +	while (!list_empty(&drain)) {
+>> +		struct bpf_list_node_kern *node;
+>>  
+>> -		obj -= field->graph_root.node_offset;
+>> -		head = head->next;
+>> +		pos = drain.next;
+>> +		node = container_of(pos, struct bpf_list_node_kern, list_head);
+>> +		list_del_init(pos);
+>> +		/* Ensure __bpf_list_add() sees the node as unlinked. */
+>> +		smp_store_release(&node->owner, NULL);
+>>  		/* The contained type can also have resources, including a
+>>  		 * bpf_list_head which needs to be freed.
+>>  		 */
+>> -		__bpf_obj_drop_impl(obj, field->graph_root.value_rec, false);
+>> +		__bpf_obj_drop_impl((char *)pos - field->graph_root.node_offset,
+>> +				    field->graph_root.value_rec, false);
+>>  	}
+>>  }
+> 
+> [Severity: High]
+> This isn't a bug introduced by this patch, but does bpf_rb_root_free() need
+> the exact same fix?
+> 
+> When draining an rbtree, bpf_rb_root_free() calls __bpf_obj_drop_impl() on
+> each node without clearing the node_internal->owner or unlinking the nodes.
+> 
+> If a surviving refcounted rb-node retains a pointer to the freed rb_root,
+> and a new bpf_rb_root is allocated at the old address, wouldn't a call to
+> bpf_rbtree_remove(new_root, stale_node) erroneously bypass the ownership
+> check and invoke rb_erase_cached() with stale tree pointers?
+
+I will probably send a separate fix patch later; this issue does not need
+to be addressed in this patch series.
+
+-- 
+Thanks
+Kaitao Cheng
+
