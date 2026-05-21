@@ -1,125 +1,170 @@
-Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
+Received: from DU2PR03CU002.outbound.protection.outlook.com (mail-northeuropeazon11011017.outbound.protection.outlook.com [52.101.65.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B3B41379C20;
-	Thu, 21 May 2026 16:20:13 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
-ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1779380414; cv=none; b=Nnyo+7J+d0FLdA87XnKN8/pQ7v2UwMDcOWtUJZvP+lYvgJJw+ZYEgMMts7lbjpootEzmjUP7DyLElNFRI14MMLAINiN7BHrRVa8tn17Z6Y7Jmo6uLtvRyvDZctkYWASQy4mDKHfZIiF7SZtIbh+9OhC1N489tNSYgqYpjj+A6cg=
-ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1779380414; c=relaxed/simple;
-	bh=CZGNxW4c5rvD2a9Ms341KGzTyHeSf+CH9ZvJXzcqWJE=;
-	h=Date:From:To:Cc:Subject:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=Zq3XjPvAl5i1OQxuYu5lvg2E/WMvCKip2akZOf+o6PuZ539ONxlRLNs+pfXHQxbzFwCOlB1DJCVOIfvSowUALaIBLaXI6Kh6v9vzi+b6UVCHfpW0b1jrT2gQMQfPRea0+rEUP+1uKwVyWcGDDuWua0lXyk5I4af/jei285Ij12A=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=VB1qvmg8; arc=none smtp.client-ip=100.103.45.18
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2EC3A379C4E;
+	Thu, 21 May 2026 16:38:51 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=fail smtp.client-ip=52.101.65.17
+ARC-Seal:i=2; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
+	t=1779381533; cv=fail; b=orVsnVxgYqrgfanJoNeSnVtAeTaaebPB9OpZjZF98JN+7ND97EC0ik/2wiV+RqDdYSWjkgN5NA7bG6TG+aT9tGPJgFRXuCUsJSPVKIwPzk4W8Mq2GTqUCaOuUSntH6DYG+FTSGJ30VbU9UC/1r7pPNWn8001c9f2LXxwDOXQSTg=
+ARC-Message-Signature:i=2; a=rsa-sha256; d=subspace.kernel.org;
+	s=arc-20240116; t=1779381533; c=relaxed/simple;
+	bh=QD7nju/7HQbr+8oDecBbqrNydJLdRU8smdgCqhC2FzE=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:Content-Type:
+	 Content-Disposition:In-Reply-To:MIME-Version; b=EIjJesQkKIPGv1q1rVpHeRbhgzVo9p6bzudR0AugEvv4zv4hiVlI+4D0IV+QFqvsYhfRscXnYD7QoryD6nNkY9LwZnQvjkpk7SDzLK2cwtMEc9yyQzuu2ie2A3w33fixEdlOyxqEN3lZhLdxdzhbw9pKQD7doeze0MGTBUgsjmQ=
+ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=nxp.com; spf=pass smtp.mailfrom=nxp.com; dkim=fail (2048-bit key) header.d=nxp.com header.i=@nxp.com header.b=fVi8EFFb reason="signature verification failed"; arc=fail smtp.client-ip=52.101.65.17
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=nxp.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=nxp.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="VB1qvmg8"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id B38701F000E9;
-	Thu, 21 May 2026 16:20:12 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=kernel.org;
-	s=k20260515; t=1779380413;
-	bh=JSaieM4EdAi9F9FDJSXysY+oN61h6IMYagfLi8JvNpg=;
-	h=Date:From:To:Cc:Subject:In-Reply-To:References;
-	b=VB1qvmg8GhLpR4YDJMuDzZ1ESIAzYu0wje3R7Wl7jmgVg3JTKNaykOIn7vmvEubo+
-	 GJ1NkZ29OXvIVMPYVfqb4CgWVjGHTlHGad7ud96bQfFQJWb5GKKbOcgmXy13TPlL4t
-	 0WSrRd9uuRZXr2Z9RjIVPBZD7pLqHlVyHQO6K4RcVE6wWtytIsw2SKJq7t9tMM/MzN
-	 hipdWlyJPEaFt1a1tqeokd8JQ6+9PiwK4YWkupQSpg3k31H626kwWoWHlzKkmrIGBq
-	 +dhPUJaMqYsair+G0H6hk6EX/9FsxZzV6sC7ueq4Y4GImKtRKlVnMLOTG84z1x7hCT
-	 Vzn3RtroXaGiA==
-Date: Thu, 21 May 2026 12:20:33 -0400
-From: Steven Rostedt <rostedt@kernel.org>
-To: Jens Remus <jremus@linux.ibm.com>
-Cc: sashiko-reviews@lists.linux.dev, Josh Poimboeuf <jpoimboe@kernel.org>,
- bpf@vger.kernel.org, Indu Bhagat <ibhagatgnu@gmail.com>, Dylan Hatch
- <dylanbhatch@google.com>
-Subject: Re: [PATCH v15 11/20] unwind_user/sframe: Show file name in debug
- output
-Message-ID: <20260521122033.4648359e@gandalf.local.home>
-In-Reply-To: <17ef3fa5-d378-43da-9407-62fd1bba5d96@linux.ibm.com>
-References: <20260520154004.3845823-12-jremus@linux.ibm.com>
-	<20260520161405.AE1C31F00893@smtp.kernel.org>
-	<17ef3fa5-d378-43da-9407-62fd1bba5d96@linux.ibm.com>
-X-Mailer: Claws Mail 3.20.0git84 (GTK+ 2.24.33; x86_64-pc-linux-gnu)
+	dkim=fail reason="signature verification failed" (2048-bit key) header.d=nxp.com header.i=@nxp.com header.b="fVi8EFFb"
+ARC-Seal: i=1; a=rsa-sha256; s=arcselector10001; d=microsoft.com; cv=none;
+ b=j8pGBJllNCVdaH0TL/8VH+JlpfpbfyV8plU9/bQEkMTkmF8SevWkWeuoYL1lvsO9Dgz0mYpL7E7DJQrFx6MgUHOZTxLZADLm9Ii5csZ2lxdoqDFHUAO0YxCsEhHuehHxLmxGxiAcYjR9woN7xoFib1vke7y5i99UHOQNwTfqwBQ+EUW6ti0kZ4SrSC+1hfhHyXWvZEj/lP97UwPpltCfWYUVM9Ks6PQBo/fkmzDgYD+SfpuQDH6xG5ibPDqT+f/CNJkGeE/j4darST+FAvRKsSDEc+/URw0sSAUbTIlGV7UF4D44LLUGFZhy4MhML8pG5aDcADlYySYKvzsZeRmvyQ==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com;
+ s=arcselector10001;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
+ bh=kSYKlVcnUoqmr60X5ozG8fV843C4VkHLGzRKx1cdENQ=;
+ b=VgtPr//mUhkxzD75AS5t9taHdNSR2OiztaEhKd4pTLMEhgIAp067reJDffiwHU/evu/xUH2lfJZ4BbnrnFcIHGtT26ZfClDMKsx21aLRsV3ePGY87dAhOH43RkDFQB99zxzH3OjYzCrdl/Troqgz3EwcnQEpDuC+chJUl4eIwOY4JX9Y7YRHz7CWC846Z3wI6xyQJsuMTQ2Rmmnw0WyoS4D07RcUTDpfMWwJGXC6Kfxp9mMPaGew0n0cODZPWkncLfI+5eWkz6N1BBNQ5DMOkxyp1NQLOvEal+b0AzE6MPSNaiIpeVkXIJVFHfw+rVHZ5D8pgA/VZD4s0TKPheX1GA==
+ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
+ smtp.mailfrom=nxp.com; dmarc=pass action=none header.from=nxp.com; dkim=pass
+ header.d=nxp.com; arc=none
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=nxp.com; s=selector1;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
+ bh=kSYKlVcnUoqmr60X5ozG8fV843C4VkHLGzRKx1cdENQ=;
+ b=fVi8EFFbPYsS042BdSymi6JsTv9+b8CWSq4Ln+1Ek3/vO3iWbaciBfO/FwJphbab/XyIYZhQLSAfA42/YPb54PXbYBhRUfAbI8SBq42fFf6FgvjgIJ+93dsbuVUhAnh+vg70rqaZ6rsfNFuMnJmEwXbP/1okjyZ1ja3guXke43HJh3AWFttiKc4Ey4f0M3W5Xtjpx/wgLsaqhTCIzoMnSM9TngMq7/3klk8XXFgoyOLAFceI4bpTD+cCQYkHRjq1nRgtv70FSjuhSI+PH26XWV/hYQcx6QrW2nNQ1+AEdujjBHHg2YzgmwMaEXWwKURBuNbBu/FQ/OqnI525OvHukw==
+Authentication-Results: dkim=none (message not signed)
+ header.d=none;dmarc=none action=none header.from=nxp.com;
+Received: from PA4PR04MB9366.eurprd04.prod.outlook.com (2603:10a6:102:2a9::8)
+ by AS1PR04MB9407.eurprd04.prod.outlook.com (2603:10a6:20b:4d9::15) with
+ Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.21.48.14; Thu, 21 May
+ 2026 16:38:49 +0000
+Received: from PA4PR04MB9366.eurprd04.prod.outlook.com
+ ([fe80::75e4:8143:ddbc:6588]) by PA4PR04MB9366.eurprd04.prod.outlook.com
+ ([fe80::75e4:8143:ddbc:6588%3]) with mapi id 15.21.0048.013; Thu, 21 May 2026
+ 16:38:49 +0000
+Date: Thu, 21 May 2026 12:38:43 -0400
+From: Frank Li <Frank.li@nxp.com>
+To: Franz Schnyder <fra.schnyder@gmail.com>
+Cc: sashiko-reviews@lists.linux.dev, robh@kernel.org, Frank.Li@kernel.org,
+	imx@lists.linux.dev, conor+dt@kernel.org,
+	devicetree@vger.kernel.org
+Subject: Re: [PATCH v3 2/3] arm64: dts: freescale: add Aquila iMX95 support
+Message-ID: <ag81ExSYKmx_WEJ1@lizhi-Precision-Tower-5810>
+References: <20260521-add-aquila-imx95-v3-2-621843807def@toradex.com>
+ <20260521093854.14DAB1F000E9@smtp.kernel.org>
+ <3pcmepn2kr2b2gku33mriosmnim4xd7e75pt2j7i7vnt4awhgg@3cptbxl5u4x5>
+Content-Type: text/plain; charset=iso-8859-1
+Content-Disposition: inline
+Content-Transfer-Encoding: 8bit
+In-Reply-To: <3pcmepn2kr2b2gku33mriosmnim4xd7e75pt2j7i7vnt4awhgg@3cptbxl5u4x5>
+X-ClientProxiedBy: SA9PR13CA0130.namprd13.prod.outlook.com
+ (2603:10b6:806:27::15) To PA4PR04MB9366.eurprd04.prod.outlook.com
+ (2603:10a6:102:2a9::8)
 Precedence: bulk
 X-Mailing-List: sashiko-reviews@lists.linux.dev
 List-Id: <sashiko-reviews.lists.linux.dev>
 List-Subscribe: <mailto:sashiko-reviews+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:sashiko-reviews+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=US-ASCII
-Content-Transfer-Encoding: 7bit
+X-MS-PublicTrafficType: Email
+X-MS-TrafficTypeDiagnostic: PA4PR04MB9366:EE_|AS1PR04MB9407:EE_
+X-MS-Office365-Filtering-Correlation-Id: b6040644-37f0-4cf5-fc26-08deb7576f2b
+X-MS-Exchange-SenderADCheck: 1
+X-MS-Exchange-AntiSpam-Relay: 0
+X-Microsoft-Antispam:
+	BCL:0;ARA:13230040|366016|376014|19092799006|52116014|1800799024|11063799006|5023799004|4143699003|18002099003|56012099003|22082099003|38350700014;
+X-Microsoft-Antispam-Message-Info:
+	ruq6bQdpG0VkswGLCZTfuFv9pg6ojLvO+ySIvAvz9Mv/TSJEZ+F2Rt6rOi9EwDrjRwNQct3v4cvF1CUWdoWTYNsJ67NymcI7OG8XMlFe/Z3sL+qAgyI3yJcPMgfVG+A2cOtJLYBJDOZLF3NpuY0yHhSZxLr2UFoks+6T5lgE6lF2qmL8jYiwTPm9c4+5dP3BBD28XUrZaPKiz14btNpMF2vTFGI49980oUm6iaRAqobjmOxgVyBWvwdxQjn/vO/fwOG/5mSeV4wicaKS9YaXgcb6cpsgcNRVtasbjFXOQ0eHiliacn11XhfSsXlYL29lGDsmLU5kJ2Y1riX2Gdpnfyw+5LbyRMvbjN2JdisAie9bAQjIUTgtqJTLb8/fdmSRNgWn3yVfTW/aTKIOvGBM4UA+pGEKDepEZ+tU+8CBlQROkeNwx5N9PIGu/+Y6QR3RK+miOHAXqJ7we6IdqUe7H2DyBecyGHejCrOGXT57eGuwhSwvAjmIWbirfi+5MVd6XyliDe4MOhBK3kSOGzmZk2VIdc/V2Bh+6lEXCBBDhU7KL4bPxDMA5UFsLycW3Dl2GrEeYgB4jGAWaL24cHDnqKe999JMdrX/C3EnZ4/d54Giqb/k5d0xC0w+nKLyM/0HaGKtvwRbUwDjP0wAm8pHT7ublc0tgYvtlCjIdsPfwmmSC6syuHG0mJZAaxrI8KSD
+X-Forefront-Antispam-Report:
+	CIP:255.255.255.255;CTRY:;LANG:en;SCL:1;SRV:;IPV:NLI;SFV:NSPM;H:PA4PR04MB9366.eurprd04.prod.outlook.com;PTR:;CAT:NONE;SFS:(13230040)(366016)(376014)(19092799006)(52116014)(1800799024)(11063799006)(5023799004)(4143699003)(18002099003)(56012099003)(22082099003)(38350700014);DIR:OUT;SFP:1101;
+X-MS-Exchange-AntiSpam-MessageData-ChunkCount: 1
+X-MS-Exchange-AntiSpam-MessageData-0:
+	=?iso-8859-1?Q?mLTN9DX4vn2xI3u24cCvf+5eqfM9Gfq7pZWEmMsjrGVlSeFlFJtCkgRBlj?=
+ =?iso-8859-1?Q?nCzcRhoYDmDkqx6qL57SFuZMRp5dV8uoFKLNpL4Gkga34Akv9GLGZUoqaH?=
+ =?iso-8859-1?Q?PAcqt92cwWO6wpD6jBx2DW0Vr77WzgLAYq190VMbI7GTwqC/hZWNQn+2vP?=
+ =?iso-8859-1?Q?Qud5y8q0XI8KgiBFRyc3DhBesbZe9qeEHXyajDOqM+z0b1Gz1iSCMI+ZYh?=
+ =?iso-8859-1?Q?mw3f8JSHmxNCBUdlCuvjtY/oSwZKb34Ve+NRYeOLKtcIiILfK5iYuAITBa?=
+ =?iso-8859-1?Q?Ng2AdrfXEwTeeOiwtiQhxIm+zICKojZ1ELBlVzfJD0fml1VajDDXwf1mlI?=
+ =?iso-8859-1?Q?DpOc0MCRy0jYOChzxwf/jFOaIr1hcRztM4inKLS0KmqJI2I4DQpkYWFAF2?=
+ =?iso-8859-1?Q?IRCTo62guhnsKX440rnfpjAbdN0+unN9IvdO3dQgeyMp3hakdtQAkpJCld?=
+ =?iso-8859-1?Q?kJru0sLA7eOfXJbjLvrUIB9fqpdJNRyKUca8hANE5iGKlK+WkYbhJl678D?=
+ =?iso-8859-1?Q?rz885ARcOfulybzZgazyI58dbOkBW4rR4oGxYntstFHF/AucZR2+ZRCIne?=
+ =?iso-8859-1?Q?IJBGANMl0z28BMFRzOmbitjCfWybYx85Dc4N6xpnC2Gwdj3ZR09GbuKJtc?=
+ =?iso-8859-1?Q?EwXTOGz5/96HbcWOyev5adFVJsMpM+F19CYmX7MLWFPDCqBytCZbFFrbDy?=
+ =?iso-8859-1?Q?gM0enhDl7bSzh++WHiChBkRCZ8bTUkSeD0kW6BaLY7hZ7BeLMr5kFFHGSC?=
+ =?iso-8859-1?Q?8yEy+MZBFE7S2oqN/zj/Rty/0i6VxmC1prCcVmLPSt0N3lDH8uDSTm5atY?=
+ =?iso-8859-1?Q?Uhnk2Tqiyi5ziGaD3j9ZKniX9t1M15QCMa9yAfRvN+CPAXszaK8AUy19su?=
+ =?iso-8859-1?Q?vVNqVqrx+3XcOa0p1DPG9XfJPcoqST1mO/slrRSFZUXsnj7Up7997J/XIF?=
+ =?iso-8859-1?Q?j2gUiyj7TrxBa1NhJlIXaHLs+O/w6WWmIYlMfKlAnzhK8AswKklZuuxd5U?=
+ =?iso-8859-1?Q?BkILFJQgI5qP75OkumjkkfQP+VnCVNGbEp1JmYU7qoRX/mnrZG3cqa37Y8?=
+ =?iso-8859-1?Q?7mwcHap6LepmjTxSSOeox536t2zJZdW8jXtpjA4fSqp/KwJf0JMgpQ1+nx?=
+ =?iso-8859-1?Q?FDwwrVo5w6/CjsMGD1AdaBqE5QkQZGWhg0t3Zf9KN0xjTkH30gCryuDwxl?=
+ =?iso-8859-1?Q?AogxthHqe3AXI9KmJDIGZvCnffgN7yBagOTwI+xJ3dpzXi9w5kw5XXXYbp?=
+ =?iso-8859-1?Q?b+zb22+K6n+Fn2LRjgL7dfHelXlmSsQ7ChjSHwZorDDIfsuzqJUOlMi+lO?=
+ =?iso-8859-1?Q?IInyMV8dbQvsyv3nQAoL7DUJkuYP5wM+Nr8D7KfSZFox8GoCZaytofzkbQ?=
+ =?iso-8859-1?Q?kO/ql0EARdVgF9f3XknHP9Kp8zDp6B/WGlRcvNRGNC39doA6wALzCpiJOT?=
+ =?iso-8859-1?Q?BH5c3FgO1FVFDJbT/rzBWFeQhQh9EyBDJAFf0kWeKrfzMlIFmX66n/9kV5?=
+ =?iso-8859-1?Q?pijS6uYgW7oh5fm+QjC7pTFs48YGBn991YI435D0G1+qxDxGT30qH8ycDw?=
+ =?iso-8859-1?Q?2Fuxsj54aTRhIIHkuZCILkq3nfOWmK9mEpupq933/Yh46JpsP5pf2VgqqQ?=
+ =?iso-8859-1?Q?nHUL3C8qZBthLl7LbWsFbh+xjn3UGtWDjFFr8DYnPLuqsHrssWotnc19ZQ?=
+ =?iso-8859-1?Q?LdTgWA/ikuLAKcpX2Jf56QErqUxhm0yKmiFCrbDgKgmzDVmMiempUmP3LN?=
+ =?iso-8859-1?Q?kHuBOUsWgqh9mzxb00Xp2v1sPhrzxI82CjU/8C4hzkJWXK?=
+X-OriginatorOrg: nxp.com
+X-MS-Exchange-CrossTenant-Network-Message-Id: b6040644-37f0-4cf5-fc26-08deb7576f2b
+X-MS-Exchange-CrossTenant-AuthSource: PA4PR04MB9366.eurprd04.prod.outlook.com
+X-MS-Exchange-CrossTenant-AuthAs: Internal
+X-MS-Exchange-CrossTenant-OriginalArrivalTime: 21 May 2026 16:38:49.0650
+ (UTC)
+X-MS-Exchange-CrossTenant-FromEntityHeader: Hosted
+X-MS-Exchange-CrossTenant-Id: 686ea1d3-bc2b-4c6f-a92c-d99c5c301635
+X-MS-Exchange-CrossTenant-MailboxType: HOSTED
+X-MS-Exchange-CrossTenant-UserPrincipalName: e7UDapA1HJsrhlq/x3h48sGQNugOZNIm/wBXMNRAZRLsKtfSiH0XBE9w5ao70LUsPy2Bmxpd7hn/Umt/lDeeyQ==
+X-MS-Exchange-Transport-CrossTenantHeadersStamped: AS1PR04MB9407
 
-On Thu, 21 May 2026 12:55:50 +0200
-Jens Remus <jremus@linux.ibm.com> wrote:
+On Thu, May 21, 2026 at 12:18:41PM +0200, Franz Schnyder wrote:
+> > > diff --git a/arch/arm64/boot/dts/freescale/imx95-aquila-dev.dts b/arch/arm64/boot/dts/freescale/imx95-aquila-dev.dts
+> > > new file mode 100644
+> > > index 0000000000000..bb4a3631af9ba
+> > > --- /dev/null
+> > > +++ b/arch/arm64/boot/dts/freescale/imx95-aquila-dev.dts
+> >
+> > [ ... ]
+> >
+> > > +/* Aquila I2S_1 */
+> > > +&sai2 {
+> > > +	status = "okay";
+> > > +};
+> > > +
+> > > +&som_dsi2dp_bridge {
+> > > +	status = "okay";
+> > > +};
+> >
+> > [Severity: Medium]
+> > Will this bridge fail to probe since the DSI input connection is missing?
+> >
+> > Looking at the ti-sn65dsi86 driver in ti_sn_bridge_parse_dsi_host(), it uses
+> > of_graph_get_remote_node(np, 0, 0) and unconditionally returns -ENODEV if the
+> > remote node is missing.
+> >
+> > Since the upstream i.MX95 SoC DSI controller doesn't appear to be implemented
+> > and linked to the dsi2dp_in endpoint yet, should this node remain disabled
+> > until the controller is available?
+> > --
+> > Sashiko AI review · https://sashiko.dev/#/patchset/20260521-add-aquila-imx95-v3-0-621843807def@toradex.com?part=2
+>
+> Hi Frank,
+>
+> This is valid point from the bot.
+> If there is nothing else, I'll send a v4 that removes '&som_dsi2dp_bridge'
+> from the Dev and Clover board, since the node is disabled in the SoM dtsi.
 
-> >> +static inline void dbg_init(struct sframe_section *sec)
-> >> +{
-> >> +	struct mm_struct *mm = current->mm;
-> >> +	struct vm_area_struct *vma;
-> >> +
-> >> +	guard(mmap_read_lock)(mm);
-> >> +	vma = vma_lookup(mm, sec->sframe_start);
-> >> +	if (!vma)
-> >> +		sec->filename = kstrdup("(vma gone???)", GFP_KERNEL_ACCOUNT);  
-> 
-> Should vma_is_anonymous() be explicitly tested?  Currently an anonymous
-> VMA is assumed as last resort (in the final else clause).
+You can post v4 anyway to let sashika check again. It is always quicker then
+my manual check.
 
-Yeah, perhaps it should be first.
+Frank
 
-> 
-> 	else if (vma_is_anonymous(vma))
-> 		sec->filename = kstrdup("(anonymous)", GFP_KERNEL_ACCOUNT);
-> 
-> >> +	else if (vma->vm_file)
-> >> +		sec->filename = kstrdup_quotable_file(vma->vm_file, GFP_KERNEL_ACCOUNT);  
-> > 
-> > [Severity: Low]
-> > Does this code accurately classify file-backed VMAs?
-> > 
-> > Anonymous mappings, such as private mappings of /dev/zero, can also have
-> > vm_file populated. Relying only on vm_file might misclassify these mappings
-> > for the debug output.
-> > 
-> > Would it be more reliable to use !vma_is_anonymous(vma) to check if the
-> > VMA is file-backed before accessing vm_file?
-
-As stated above, we should probably test it first. Maybe even vma->vm_mm too?
-
-	if (!vma->vm_mm)
-		sec->filename = kstrdup("(vdso)", GFP_KERNEL_ACCOUNT);
-	else if (vma_is_anonymous(vma))
-		sec->filename = kstrdup("(anonymous)", GFP_KERNEL_ACCOUNT);
-	else if (vm->vm_file)
-		[..]
-
-
-> >   
-> >> +	else if (vma->vm_ops && vma->vm_ops->name)  
-> 
-> Shashiko AI review of v14 brought up that vma->vm_ops->name(vma) may
-> return NULL.  Should this be explicitly handled as follows?
-> 
-> 	else if (vma->vm_ops && vma->vm_ops->name && vma->vm_ops->name(vma))
-
-Maybe we could even shortcut it with:
-
-	const char *name;
-	[..]
- 	else if (vma->vm_ops && vma->vm_ops->name && (name = vma->vm_ops->name(vma)))
-		sec->filename = kstrdup(name, GFP_KERNEL_ACCOUNT);  
-
-
-> 
-> >> +		sec->filename = kstrdup(vma->vm_ops->name(vma), GFP_KERNEL_ACCOUNT);  
-> > [ ... ]  
-> 
-> If explicitly testing for vma_is_anonymous() above, then the last resort
-> would be something unknown?
-> 
-> 	else
-> 		sec->filename = kstrdup("(unknown vma???)", GFP_KERNEL);
-
-Sure.
-
--- Steve
+>
+> Thanks,
+>
+> Franz
+>
+>
