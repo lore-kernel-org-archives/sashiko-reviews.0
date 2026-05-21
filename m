@@ -1,218 +1,124 @@
-Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-ed1-f52.google.com (mail-ed1-f52.google.com [209.85.208.52])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B028729B228;
-	Thu, 21 May 2026 07:34:01 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
-ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1779348843; cv=none; b=VuecPM65slcXkfLxNiQvjyOx6eKwA4D/EzNUvSZEH5Zk/8Valfo5aBLpyHTIHYBkDjwkC04QllwmzFJK1T/+9RtyU69CBYvjZrGFP+Xih1Ec+GrUlltDLZsMS1evlx5lqd1+I8mIjQBxUJe0+t3u10773qeKXMXnPIL3gMz8eNw=
-ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1779348843; c=relaxed/simple;
-	bh=+57qmBqsfH2yB6VQDWcel9jtXkQ6YV/XF17EdDqHT1U=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=E5ovjhjM4dEL4nTU19azEhZYl891lqkeC5n/A65PTTbwdaifBI2fbeKdMwRktCt1W68me1fiC4HAHdLYDb2hbhG6Ei6vCZr7MrA59FbR3YbsL217xI9O3XI0FGv+arqc8EOeQUuGzPM4BmMPUJKovgjwqnSsitdNXCLHcMtKCH8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=AJaTb0BT; arc=none smtp.client-ip=100.103.45.18
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9DEA6386443
+	for <sashiko-reviews@lists.linux.dev>; Thu, 21 May 2026 07:38:35 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=pass smtp.client-ip=209.85.208.52
+ARC-Seal:i=2; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
+	t=1779349117; cv=pass; b=Kj1mVlO+uKNA84kLi3OIzxnqh56nTLHAE2jdAxLZwul3otPKidQsB7ihen4x24Do+iCG/NNpSBporRpYe3uPDqYB+4IK+7pc0QxZGw2OtEooK+8iB7OiyIUUJBZ0ZesPAWv8uSrvKm8RXAvzoUBy+l7siaFKv1Dj6fWuswNzHp0=
+ARC-Message-Signature:i=2; a=rsa-sha256; d=subspace.kernel.org;
+	s=arc-20240116; t=1779349117; c=relaxed/simple;
+	bh=NYE6AwotSwk91GJo45vtKZgWH8fG+L9aVrfxpVFSg40=;
+	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
+	 To:Cc:Content-Type; b=BeAJ26KtRx1Wo8NUshWEV9/95YWesXTEiNw5EAyqxrLt19gEshTWIOFPvxRLWM0qSDUbaXNM1g8wyyF4gf6pqdCGQ9Zxvf88MC5UIxXACmwNWiQifq0Pil8R7ZWuRVi1owAVrJ4XPMQmwJ3P9JPB6szSNG7KQL6ncqitEvv/LBg=
+ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=m45/kiCi; arc=pass smtp.client-ip=209.85.208.52
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="AJaTb0BT"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id CE3261F000E9;
-	Thu, 21 May 2026 07:33:58 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=kernel.org;
-	s=k20260515; t=1779348841;
-	bh=XDptwRg4xKg27amdn8Wlm2h1aOyMSzRy1QjpV2/Ikhk=;
-	h=Date:From:To:Cc:Subject:References:In-Reply-To;
-	b=AJaTb0BT/WYnEY5NIICQVRSb10hhMfUGcUj/VlVtQ6tQg4RUk3YSt7HwYz6/2RV3K
-	 M9eh854AoOF88iE/k03Q5CbrKGEw2+Z9PeU50YpJNVppiVQIRx1XBxybXqOv1y8rmU
-	 KCreEYXxRf5z1FtJXcpZqEaCMRjQn3OTA2Bvmmmy0iDGl9TWagcGxLPWjfVnkXjGxD
-	 3AYA2pOjo8oSAKa9FoC1zkYiunNGJAjbGVVIYOh7TdJsVENOqVQCjart6SA3OKmlEz
-	 Lj8i/VD/GODloD0gwSfUwwX5jgw0pzm9/cV4/hVVlgfSOFq+HGeFbD50bKjrk+znlc
-	 xwTH2HfQNS21w==
-Date: Thu, 21 May 2026 13:03:44 +0530
-From: Manivannan Sadhasivam <mani@kernel.org>
-To: sashiko-reviews@lists.linux.dev
-Cc: Caleb James DeLisle <cjd@cjdns.fr>, linux-pci@vger.kernel.org, 
-	devicetree@vger.kernel.org, robh@kernel.org, conor+dt@kernel.org
-Subject: Re: [PATCH v8 3/3] PCI: mediatek: Add support for EcoNet EN7528 SoC
-Message-ID: <r2l6c665a3feivxabhlkqx5hghvg4s6spxz7xmqvlxawqijkub@qz3gcdxuavf7>
-References: <20260520183827.908243-4-cjd@cjdns.fr>
- <20260520195806.4726A1F000E9@smtp.kernel.org>
+	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="m45/kiCi"
+Received: by mail-ed1-f52.google.com with SMTP id 4fb4d7f45d1cf-67b8d9c26bbso12548168a12.2
+        for <sashiko-reviews@lists.linux.dev>; Thu, 21 May 2026 00:38:35 -0700 (PDT)
+ARC-Seal: i=1; a=rsa-sha256; t=1779349114; cv=none;
+        d=google.com; s=arc-20240605;
+        b=GABIbcXpbg/rzjat234Rd5mi75HSyl6SEeJ9dHvyA5Y3c4dAfNO8xOXKPi0zqqIAqG
+         8OPTNxFzjeTUZ6Rm6wDyUX+uggG3y0qkDdKlv5DCqcwY4pVQRyQjocTqZGAr+QsinAxO
+         NhUHmqWn7KrLp79Rl+XwCRV3K/KqLakcWTqk/orZxYgB3/DX5SZPf2uSenDn6hOzoFHG
+         Ny7KQ5V6t2RztDy2SJmRjPrmYt5KeRCccwk5xxLMmcLAT5q4y8sVKCveku/qVO/5AgIa
+         QdmG5E08ZqrPKLSv56F4pg98GoqcS2sWbJUvE5LOjyViRoYTLUp+YdLbYdNwBDn8iUaq
+         lpqQ==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com; s=arc-20240605;
+        h=cc:to:subject:message-id:date:from:in-reply-to:references
+         :mime-version:dkim-signature;
+        bh=NYE6AwotSwk91GJo45vtKZgWH8fG+L9aVrfxpVFSg40=;
+        fh=AeKY19gMLQSz0DLAsIMuWcRjlV2JFnlpDHB2v0fV59U=;
+        b=PLfBU/bw5luUS7cyJaP5KbKySfQRVK/idAqFllG2aCpCeSnOCU9T9tUMJY6nbv0yOT
+         llHZ/91nM0CqU5xx2oFATRrAE1Ov2Ou6V7daGhZDGzaaHVP7yzk/Cm29eZe0wQmNb2DA
+         jzx+Y82QLGNqg5/albioZtmDzsE+xW0ZVf/eIF4Ps48JUgj/q0WmB0u51KxvjoelFx15
+         zx1pC0TBQT3Ofs6bFEIncutXa1jxhvK3RauLkqeRKdcXF4wCgyeTec1UC6fMntACSppX
+         RzkNrcJtaEdfLJB7pVLj1yayuid5oNmUyrsZXe9FJniqeRfC6w8yToOM0ufIWWvstu6R
+         Shfg==;
+        darn=lists.linux.dev
+ARC-Authentication-Results: i=1; mx.google.com; arc=none
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linaro.org; s=google; t=1779349114; x=1779953914; darn=lists.linux.dev;
+        h=cc:to:subject:message-id:date:from:in-reply-to:references
+         :mime-version:from:to:cc:subject:date:message-id:reply-to;
+        bh=NYE6AwotSwk91GJo45vtKZgWH8fG+L9aVrfxpVFSg40=;
+        b=m45/kiCiAYCTT4zYxO85m7N6bssPGJkPKhvjgp5i4FnGOoZ+JDhvkzn5MxJRCbnfrH
+         r39jQLp+MKUGbgFXdypffcueKob21LIl2T2Tp3VMXOqdxWt6R++zbGMBoof0e0ef0/4T
+         Kt2G7U4xVjaGKS/YoTo3tdcGTxzpTsxd3xZeoE5/xfOL+vCGp/S7BEC4yaHy2ySWKhpC
+         SZNWhfA2XA3J2L4KcYdnxE16ELTV5h6hqhEkdyYQdVXBx0jB7J7y5ulXnH4MIBAh507x
+         a48dTHeL/hJj/oEJC2NwH8c5uC8KLrxnvCMFagYrjHDdkXypbOU7vZWZLCk9PMbzSKAa
+         Rwkw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20251104; t=1779349114; x=1779953914;
+        h=cc:to:subject:message-id:date:from:in-reply-to:references
+         :mime-version:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=NYE6AwotSwk91GJo45vtKZgWH8fG+L9aVrfxpVFSg40=;
+        b=OK1DhD82BbBVxNh1PngWgXcdjvJZi1zYtuICqHL9/Zy637MllZ3WWOmxbthIOYIVs4
+         fbpAc8VbaS1k4YgBCRB8vTj24RUmVEQUMzcGNF+R7DfnG4QFh1vkg12jmEW1dNlIWzXN
+         l715E1FOWe6NtF1e+qY2HDZSIOBweHPMs5jYp9xL4379HWwEEkj6If5eJFiZ8Fk384YQ
+         9yDMs0RcsmB7yaAuWxj349bbVwcYucxgnK1hhiGB+/vXr51aj+kjKX/bm1j+KGVXZPZW
+         lRELRE2zYj1gfcMYEuLfPvvtT8Vu81zW+fz/YVXoyiMwjsV8KUT8s4SWWwR/vuLN4qUO
+         ZcCQ==
+X-Forwarded-Encrypted: i=1; AFNElJ+ZEe8TmrcGkrDOGRdeSyr8pA8t3mfEdzkBKWWxDlQH07aa1HMmx07SlMU/UtXYLxr1yqIRpc1SpYLfIZpAuFs=@lists.linux.dev
+X-Gm-Message-State: AOJu0YxIuydAQ/o7zDBsEVB61fjiv0FbE+/bemnLpxQWHhrhGbQiznWf
+	GzfsH3iyder4hchc6QcfMc0t3x6rN/CB5YgpgzAtLkMmLQzwzpl5AuFynZ9C8tNRpyuDykjvdct
+	UzoA7QVKQ4si5HFvMYOBmzVMil7h6B8qMViKRwBrd/A==
+X-Gm-Gg: Acq92OE6yzWLsMEV+/NX87VMIVF0bQ5718rIDYD7X1T1y3LpcB1EFGgviAIuoVw8+U5
+	mZQsdMY2C/r2IMFebdnXHPoRYr/2RhDWPNxBNl/qsaQe71be32WpJDLtTEmMxEanBjUBuVkKSlK
+	BJTvZ1tOGG3OL3WSPZUpocYCuJ/d7bPt/WzfA0DBwWij28C4cux63ZXWvb+Y2yxYyxT+i4a+4Z2
+	wfs3iZhIo/9kssSL/PKZqoWgjuzwKOBov+Om2C890AY/BnOp4AhrqYhE6Qq9bZfqNxoUBszjGrt
+	2WTd8ghRyTrqDUJa2LA3CNg/OApXSNpxbK9L17oZ2Q==
+X-Received: by 2002:a05:6402:34c3:b0:686:d801:96c9 with SMTP id
+ 4fb4d7f45d1cf-688367cfeb0mr797381a12.14.1779349113964; Thu, 21 May 2026
+ 00:38:33 -0700 (PDT)
 Precedence: bulk
 X-Mailing-List: sashiko-reviews@lists.linux.dev
 List-Id: <sashiko-reviews.lists.linux.dev>
 List-Subscribe: <mailto:sashiko-reviews+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:sashiko-reviews+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-Content-Transfer-Encoding: 8bit
-In-Reply-To: <20260520195806.4726A1F000E9@smtp.kernel.org>
+References: <20260513-exynos850-cpuhotplug-v4-3-54fec5f65362@linaro.org>
+ <20260514053037.BB9A1C2BCB7@smtp.kernel.org> <DINMSL1LPPCF.1U0AO6MYUFTN2@linaro.org>
+In-Reply-To: <DINMSL1LPPCF.1U0AO6MYUFTN2@linaro.org>
+From: Peter Griffin <peter.griffin@linaro.org>
+Date: Thu, 21 May 2026 08:38:22 +0100
+X-Gm-Features: AVHnY4IWx-1LpMYkHNMVlV5-A-NXDPnKWwrYcqsb3AhsVZOrTUQ92kJoyqXmTRQ
+Message-ID: <CADrjBPpBJ6cZYnGRkSVDA4BVKC_rh=KKvSWq2VjCTDMo5nMmPw@mail.gmail.com>
+Subject: Re: [PATCH v4 3/6] soc: samsung: exynos-pmu: generalise
+ gs101-specific cpu{idle,hotplug} for Exynos SoCs
+To: Alexey Klimov <alexey.klimov@linaro.org>
+Cc: krzk@kernel.org, alim.akhtar@samsung.com, 
+	linux-samsung-soc@vger.kernel.org, sashiko-reviews@lists.linux.dev, 
+	conor+dt@kernel.org, robh@kernel.org, krzk+dt@kernel.org, 
+	devicetree@vger.kernel.org
+Content-Type: text/plain; charset="UTF-8"
 
-On Wed, May 20, 2026 at 07:58:05PM +0000, sashiko-bot@kernel.org wrote:
-> Thank you for your contribution! Sashiko AI review found 4 potential issue(s) to consider:
-> 
-> New issues:
-> - [High] Link retraining is performed after device enumeration and driver binding, causing a severe race condition.
-> - [High] Iterating the PCI bus devices list without holding the pci_bus_sem read lock.
-> - [Medium] Early return in mtk_pcie_retrain() aborts retraining of all remaining root ports if a single port fails.
-> 
-> Pre-existing issues:
-> - [High] Freeing port in error paths causes a Use-After-Free because the active IRQ domain's host_data still points to it.
-> --
-> 
-> commit c1c3bb9bcba6bb8a070037578912a2f02c381591
-> Author: Caleb James DeLisle <cjd@cjdns.fr>
-> Subject: PCI: mediatek: Add support for EcoNet EN7528 SoC
-> 
-> This commit adds support for the PCIe controller present on the EcoNet
-> EN7528 (and EN751221) SoCs. These SoCs feature a mix of Gen1 and Gen2 ports,
-> and require a manual link retraining after startup for Gen2 ports to function.
-> 
-> > diff --git a/drivers/pci/controller/pcie-mediatek.c b/drivers/pci/controller/pcie-mediatek.c
-> > index c503fbd774d09..4e4d4b1559f71 100644
-> > --- a/drivers/pci/controller/pcie-mediatek.c
-> > +++ b/drivers/pci/controller/pcie-mediatek.c
-> 
-> [ ... ]
-> 
-> > @@ -755,6 +766,132 @@ static int mtk_pcie_startup_port_v2(struct mtk_pcie_port *port)
-> >  	return 0;
-> >  }
-> >  
-> > +static int mtk_pcie_startup_port_en7528(struct mtk_pcie_port *port)
-> > +{
-> 
-> [ ... ]
-> 
-> > +	/* 100ms timeout value should be enough for Gen1/2 training */
-> > +	err = regmap_read_poll_timeout(pcie->cfg, EN7528_LINKUP_REG, val,
-> > +				       !!(val & link_mask), 20,
-> > +				       PCI_PM_D3COLD_WAIT * USEC_PER_MSEC);
-> > +	if (err) {
-> > +		dev_err(pcie->dev, "EN7528: port%d link timeout\n", port->slot);
-> > +		return -ETIMEDOUT;
-> > +	}
-> 
-> [Severity: High]
-> This is a pre-existing issue, but returning an error here can cause a
-> use-after-free crash.
-> 
-> When a port fails to start up (for example, if the slot is empty and link
-> training times out), the caller frees the port structure by calling
-> mtk_pcie_port_free(). However, mtk_pcie_port_free() does not call
-> irq_domain_remove().
-> 
-> Since mtk_pcie_init_irq_domain() sets the newly allocated port structure
-> as the IRQ domain's host_data, the domain remains registered with a
-> dangling pointer.
-> 
-> Could we make sure the IRQ domain is properly cleaned up in error paths?
-> 
-> [ ... ]
-> 
+Hi Alexey,
 
-This is a valid concern. I've sent the fix for it:
-https://lore.kernel.org/linux-pci/20260521071907.13614-1-manivannan.sadhasivam@oss.qualcomm.com/
+On Wed, 20 May 2026 at 17:06, Alexey Klimov <alexey.klimov@linaro.org> wrote:
+>
+> (adding samsung list and other folks back in c/c)
+>
+> On Thu May 14, 2026 at 6:30 AM BST, sashiko-bot wrote:
+> > Thank you for your contribution! Sashiko AI review found 4 potential issue(s) to consider:
+> > - [High] Hardware register misprogramming due to incorrect CPU index from smp_processor_id().
+> > - [High] Use-After-Free of device node intr_gen_node.
+> > - [High] Missing teardown of global notifiers on probe failure causes Use-After-Free.
+> > - [Medium] Missing of_node_put() on error path causes a device node reference leak.
+> > --
+>
+> Sashiko reported quite good findings. I'd say that most of them were
+> present in the code one way or another before my series.
+> They look fixable.
+> I'd rather need then two series: first one with fixes and then
+> generalisation of cpuhp for Exynos but first one will be listed as a
+> dependency (but dependency will indicate order of how series should
+> be applied). Is that okay with you to proceed this way?
 
-> > +static int mtk_pcie_retrain(struct device *dev, struct pci_host_bridge *host)
-> > +{
-> > +	struct pci_dev *rp;
-> > +	int ret = -ENOENT;
-> > +	u16 lnksta = 0;
-> > +	u32 speed;
-> > +
-> > +	/* Should already have been warned about during startup_port */
-> > +	if (!IS_BUILTIN(CONFIG_PCIE_MEDIATEK))
-> > +		return 0;
-> > +
-> > +	for_each_pci_bridge(rp, host->bus) {
-> 
-> [Severity: High]
-> Does iterating the PCI bus devices list here require holding the pci_bus_sem
-> read lock?
-> 
-> Since mtk_pcie_retrain() is called after pci_host_probe() completes, the PCI
-> bus is live and devices are exposed to the system. Concurrent operations like
-> sysfs hotplug events could modify the host->bus->devices list during traversal.
-> 
-> Should we hold down_read(&pci_bus_sem) or use pci_walk_bus() to avoid a race
-> condition?
-> 
+That sounds like a good approach to me; then you can use Fixes tag so
+it gets into stable for gs101.
 
-This is also a valid concern. You should wrap the loop with 'pci_bus_sem'. I see
-a few other drivers are also doing the same, but I'll fix them separately.
-
-> > +		if (pci_pcie_type(rp) != PCI_EXP_TYPE_ROOT_PORT)
-> > +			continue;
-> > +
-> > +#if IS_BUILTIN(CONFIG_PCIE_MEDIATEK)
-> > +		ret = pcie_retrain_link(rp, true);
-> > +#endif
-> > +
-> > +		if (ret)
-> > +			return dev_err_probe(&rp->dev, ret,
-> > +					     "failed to retrain port\n");
-> 
-> [Severity: Medium]
-> Will this early return abort the retraining process for all remaining root
-> ports?
-> 
-> If pcie_retrain_link() fails on the first port, we immediately break out of
-> the loop.
-> 
-> Should this log the error and use continue instead, so that a failure on one
-> independent slot does not prevent the others from retraining successfully?
-> 
-
-This you can ignore as we should treat retrain failure for a single Root Port as
-a hard failure.
-
-> > +
-> > +		pcie_capability_read_word(rp, PCI_EXP_LNKSTA, &lnksta);
-> > +		speed = lnksta & PCI_EXP_LNKSTA_CLS;
-> > +
-> > +		pci_info(rp, "link retrained, speed %s\n",
-> > +			 pci_speed_string(pcie_link_speed[speed]));
-> > +
-> > +	}
-> > +
-> > +	return 0;
-> > +}
-> 
-> [ ... ]
-> 
-> > @@ -1159,6 +1296,13 @@ static int mtk_pcie_probe(struct platform_device *pdev)
-> >  	if (err)
-> >  		goto put_resources;
-> >  
-> > +	/*
-> > +	 * Ignore error because pci_host_probe() was already called, and in any
-> > +	 * case it is possible that the port will still work as Gen1.
-> > +	 */
-> > +	if (pcie->soc->quirks & MTK_PCIE_RETRAIN)
-> > +		mtk_pcie_retrain(dev, host);
-> > +
-> 
-> [Severity: High]
-> Can retraining the link at this stage cause issues with actively bound endpoint
-> drivers?
-> 
-> By the time pci_host_probe() returns, devices have already been discovered,
-> exposed to the system, and their drivers bound. Retraining the PCIe link forces
-> it into recovery, which could stall transactions or temporarily drop the link.
-> 
-> If an endpoint driver (like NVMe or Wi-Fi) is actively performing MMIO or DMA,
-> could this cause unhandled exceptions, AER errors, or initialization failures?
-> 
-> Would it be safer to retrain before devices are added to the system (e.g.,
-> before pci_bus_add_devices())?
-> 
-
-This can also be ignored as you don't have much choice here. Once the driver is
-bound to the device, doing any link level activity without quiescing the device
-warrants trouble. But since it happens right after the pci_host_probe(), most
-likely the client drivers wouldn't have started functioning i.e., initiating DMA
-transfers etc... So the chances of failure are very less.
-
-- Mani
-
--- 
-மணிவண்ணன் சதாசிவம்
+Peter
