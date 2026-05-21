@@ -1,50 +1,48 @@
-Received: from mgamail.intel.com (mgamail.intel.com [192.198.163.7])
+Received: from 011.lax.mailroute.net (011.lax.mailroute.net [199.89.1.14])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6FD544219FC
-	for <sashiko-reviews@lists.linux.dev>; Thu, 21 May 2026 20:30:40 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=192.198.163.7
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F144172617
+	for <sashiko-reviews@lists.linux.dev>; Thu, 21 May 2026 20:31:46 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=199.89.1.14
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1779395441; cv=none; b=mhUdCp+tqvXzavzj6m7YFgpm9IHvi967CXg1MFfAssAbt974Jga+kwXv4hFQvNnojgntOdSJGSpA7KfJ/ME55fN60wLEgiNAoAruZ85H3q8aVMlF9/Kf3PSnsfxUSTZwkb9aG47BYwiXTcTvqpw/hxUe3X85/jFnm8mcAvV2MfQ=
+	t=1779395508; cv=none; b=nW4tNJAtrB1o1X+iY+07KBO5AsL3fkhuQPQHfCBOX1jZsAy+zP2UAYPJ8HgQoXunvzSeduoBcBatb7hs7giK8Js79bda4h8dqHr7N//9CQR3rFdEdT4BCTdvjKfvJ64Y2erDAuGVGLSh6o1ZSkw7LMUEDuom1/sBpbS3/WlcF1A=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1779395441; c=relaxed/simple;
-	bh=/f/DZWyR3jpTWe9voYXRG1i/YRupvHo463AvYQhmpiI=;
+	s=arc-20240116; t=1779395508; c=relaxed/simple;
+	bh=Cj/YJTXnbsT6qNQsO/hL4N6W9867XSxsE7HnP9b/xdg=;
 	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=krlG7CsnSqsOOLCrDdptsvGUpTQVq2vD7WEcw5Qe9Tw3kZoKCg6X9ibuUoAzsMWlYzfF+28uz3EevRjkPHnSxmUJKXPfL5CjqWk8Mw8uyddwxBy2u/+ZE6XFRgHFpG8TQGv+5DwAE8XitEjbVbVi3w6itFV5okAcmXMCyLcS/24=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=intel.com; spf=pass smtp.mailfrom=intel.com; dkim=pass (2048-bit key) header.d=intel.com header.i=@intel.com header.b=DZPGQqbT; arc=none smtp.client-ip=192.198.163.7
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=intel.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=intel.com
+	 In-Reply-To:Content-Type; b=GqmBAIpkWmUs34AgDTdvWhB4bNDvnRvbEYz87LLH/qZqeVXdeeS9yq+1PZHEshXrLM4cg9B6veBivQwCsiieqZVQ+Ac7PvzDxlzyLN/fkGTrvgW1r90nIhJq5KWqZqSdPZjwdXMShpGqbeVKdANRFobPGv5XnjfdaEYG/X1PfIY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=acm.org; spf=pass smtp.mailfrom=acm.org; dkim=pass (2048-bit key) header.d=acm.org header.i=@acm.org header.b=P02KjUKA; arc=none smtp.client-ip=199.89.1.14
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=acm.org
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=acm.org
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=intel.com header.i=@intel.com header.b="DZPGQqbT"
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
-  d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
-  t=1779395441; x=1810931441;
-  h=message-id:date:mime-version:subject:to:cc:references:
-   from:in-reply-to:content-transfer-encoding;
-  bh=/f/DZWyR3jpTWe9voYXRG1i/YRupvHo463AvYQhmpiI=;
-  b=DZPGQqbTnZ4S8iPu547ksyFHV5wTXT69KnDQhuSFO5f9N//LHiHNPp6e
-   PDNsns4kGUi+ys4l+YEbOtzAJYPvDONsu5hkNflVqd8FenFceaER/eROI
-   buqmYTxMW1KAG18Gfm5lPkSgTAuY2IQKP87Ml44HrmQwzX7TiPDZpBrAP
-   o6l/W0VY6Y/EcjA/xkroTS7hMCPVH3AGtSeAXqI0DiQeIxU5ez0/y5FEu
-   1qDh7espJxg51L9CUoGfh7+aARoHPKXMY9lAqXnYQU39+9W12yuXb3ruM
-   EDcjKFdxz3H19SbjrpO3q8CxR9DyAyE7oyuE6JSBqASq8GCtBE1q7ZiV4
-   Q==;
-X-CSE-ConnectionGUID: cvTeftoGTyyqT+kweI1lXQ==
-X-CSE-MsgGUID: E0SOf8AuR4GgJcw3onj3DA==
-X-IronPort-AV: E=McAfee;i="6800,10657,11793"; a="105786622"
-X-IronPort-AV: E=Sophos;i="6.24,161,1774335600"; 
-   d="scan'208";a="105786622"
-Received: from orviesa006.jf.intel.com ([10.64.159.146])
-  by fmvoesa101.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 21 May 2026 13:29:29 -0700
-X-CSE-ConnectionGUID: tRDb45jJQJuE0T2Fhq+LDw==
-X-CSE-MsgGUID: GFldvvZnR4qf1lkyJwfJbg==
-X-ExtLoop1: 1
-X-IronPort-AV: E=Sophos;i="6.24,161,1774335600"; 
-   d="scan'208";a="239626178"
-Received: from soc-cp83kr3.clients.intel.com (HELO [10.122.185.5]) ([10.122.185.5])
-  by orviesa006-auth.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 21 May 2026 13:29:29 -0700
-Message-ID: <b71ad1df-775c-47a8-9390-738c31a4cf72@intel.com>
-Date: Thu, 21 May 2026 15:29:27 -0500
+	dkim=pass (2048-bit key) header.d=acm.org header.i=@acm.org header.b="P02KjUKA"
+Received: from localhost (localhost [127.0.0.1])
+	by 011.lax.mailroute.net (Postfix) with ESMTP id 4gM0SL4RhPz1XM0p8;
+	Thu, 21 May 2026 20:31:46 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=acm.org; h=
+	content-transfer-encoding:content-type:content-type:in-reply-to
+	:from:from:content-language:references:subject:subject
+	:user-agent:mime-version:date:date:message-id:received:received;
+	 s=mr01; t=1779395504; x=1781987505; bh=Cj/YJTXnbsT6qNQsO/hL4N6W
+	9867XSxsE7HnP9b/xdg=; b=P02KjUKAfyFSjXEtX+XMJjMijIzEdaqkMCIVOpC3
+	I8CMckGiMGa80n6BHZdmUGMul2uPxyH4RAxmYd8vRqYoxpDPJM7/TH6ksOOA3hdN
+	8IWfA7Xu371NaT2HmZBLvdaJqVJkz0W4ngINotfuShYnqhZv5CNg8WQq8AL+FAnD
+	fHNtfKrKiFBfWstcfXfNtghsQbwXqUgyrNXmBxWcuKOajI569eJc5UuTA+iQStZk
+	b9+MYS4j8CJfwvQQo9v1qaXfen2PaPSRgHiGyzj2AdLV56cJCHBXAHzMaDX2h5NI
+	bc9dWiUGTlLDvzfcQZ6mWfCYi+zCSRMWQ/vRLjwPldanMQ==
+X-Virus-Scanned: by MailRoute
+Received: from 011.lax.mailroute.net ([127.0.0.1])
+ by localhost (011.lax [127.0.0.1]) (mroute_mailscanner, port 10029) with LMTP
+ id uyoUX0Fq1f_N; Thu, 21 May 2026 20:31:44 +0000 (UTC)
+Received: from [100.118.237.20] (unknown [104.135.180.216])
+	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+	 key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
+	(No client certificate requested)
+	(Authenticated sender: bvanassche@acm.org)
+	by 011.lax.mailroute.net (Postfix) with ESMTPSA id 4gM0SH413Kz1XM0p0;
+	Thu, 21 May 2026 20:31:43 +0000 (UTC)
+Message-ID: <6c9f5d36-3daa-4eb7-8c1f-3fb81f62dbd7@acm.org>
+Date: Thu, 21 May 2026 13:31:40 -0700
 Precedence: bulk
 X-Mailing-List: sashiko-reviews@lists.linux.dev
 List-Id: <sashiko-reviews.lists.linux.dev>
@@ -52,77 +50,26 @@ List-Subscribe: <mailto:sashiko-reviews+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:sashiko-reviews+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 2/7] perf/x86/intel/uncore: Let init_box() callback report
- failures
+Subject: Re: [PATCH v2 8/9] ata: libata: Enable context analysis
 To: sashiko-reviews@lists.linux.dev
-Cc: linux-perf-users@vger.kernel.org
-References: <20260512233048.9577-3-zide.chen@intel.com>
- <20260514021424.821EEC19425@smtp.kernel.org>
+Cc: dlemoal@kernel.org, linux-ide@vger.kernel.org, cassel@kernel.org
+References: <20260521173347.2079560-9-bvanassche@acm.org>
+ <20260521201706.5EBC71F000E9@smtp.kernel.org>
 Content-Language: en-US
-From: "Chen, Zide" <zide.chen@intel.com>
-In-Reply-To: <20260514021424.821EEC19425@smtp.kernel.org>
-Content-Type: text/plain; charset=UTF-8
+From: Bart Van Assche <bvanassche@acm.org>
+In-Reply-To: <20260521201706.5EBC71F000E9@smtp.kernel.org>
+Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 7bit
 
+On 5/21/26 1:17 PM, sashiko-bot@kernel.org wrote:
+> New issues:
+> - [High] The patch introduces incomplete or mismatched thread safety annotations, which will cause compilation failures under Clang Context Analysis.
 
+This is on purpose and is fine.
 
-On 5/13/2026 9:14 PM, sashiko-bot@kernel.org wrote:
-> Thank you for your contribution! Sashiko AI review found 1 potential issue(s) to consider:
-> - [High] The adl_uncore_msr_init_box callback was missed during the return type conversion and still returns void, causing a build failure and a runtime functional regression.
-> --
-> 
-> commit 9d842c01126a1db0940fbdd8cefa558fa67a3758
-> Author: Zide Chen <zide.chen@intel.com>
-> 
-> perf/x86/intel/uncore: Let init_box() callback report failures
-> 
-> The init_box() callback currently returns void, so initialization
-> failures are silently ignored and the box is still marked initialized.
-> Change the callback to return int so platform code can report errors
-> back to the common uncore layer.
-> 
->> diff --git a/arch/x86/events/intel/uncore.h b/arch/x86/events/intel/uncore.h
->> index 2e41a66f00551..25a44d3de6e7d 100644
->> --- a/arch/x86/events/intel/uncore.h
->> +++ b/arch/x86/events/intel/uncore.h
->> @@ -129,7 +129,7 @@ struct intel_uncore_type {
->>  #define events_group attr_groups[2]
->>  
->>  struct intel_uncore_ops {
->> -	void (*init_box)(struct intel_uncore_box *);
->> +	int (*init_box)(struct intel_uncore_box *);
-> 
-> It appears the return type for the init_box callback was changed here, but
-> adl_uncore_msr_init_box() in arch/x86/events/intel/uncore_snb.c was missed
-> and still returns void:
+> - [High] Adding `__assume_ctx_lock` inside a loop causes a lockset mismatch compilation error.
 
-This callback will be removed in another patch set:
-https://lore.kernel.org/lkml/20260511230527.26096-1-zide.chen@intel.com/
+No, the __assume_ctx_lock() statements added by this patch do not cause
+a compilation error.
 
-Updating the signature here would cause a merge conflict with that
-series, so it was intentionally left as-is.
-
-> static void adl_uncore_msr_init_box(struct intel_uncore_box *box)
-> {
-> 	if (box->pmu->pmu_idx == 0)
-> 		wrmsrq(ADL_UNC_PERF_GLOBAL_CTL, SNB_UNC_GLOBAL_CTL_EN);
-> }
-> 
-> Could this cause a build warning or failure (e.g., incompatible pointer
-> type)?
-> 
-> Also, at runtime, uncore_box_init() expects an int return value. Would it
-> end up reading an uninitialized return value from the eax register?
-> 
-> If the last operation in adl_uncore_msr_init_box() is wrmsrq(), which
-> loads SNB_UNC_GLOBAL_CTL_EN into eax, could this residual non-zero value
-> cause uncore_box_init() to incorrectly treat the initialization as a failure?
-> 
-> If the initialization failure marks the PMU as broken, would this render the
-> Alder Lake (ADL) MSR uncore PMU inaccessible to userspace?
-> 
->>  	void (*exit_box)(struct intel_uncore_box *);
->>  	void (*disable_box)(struct intel_uncore_box *);
->>  	void (*enable_box)(struct intel_uncore_box *);
-> 
-
+Bart.
