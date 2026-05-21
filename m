@@ -1,168 +1,139 @@
-Received: from mail-ed1-f53.google.com (mail-ed1-f53.google.com [209.85.208.53])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B6F913E171C
-	for <sashiko-reviews@lists.linux.dev>; Thu, 21 May 2026 17:43:18 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=pass smtp.client-ip=209.85.208.53
-ARC-Seal:i=2; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1779385401; cv=pass; b=Ckkny8Ayy4zVCSQ+2e1r0LbSjPBA2V00JZYrKPuxg0BozSPZ1SoPEUjyEoxu9epdto8mjCB41RLpXDAardZvnd0tQqRai8pYJ4ggfEB0TFFSXjfcU+xXziWDASw7Rf9a/IkebR4hYLTFYP6IdZR48I2yW9sHWWKka9XJB4lzUow=
-ARC-Message-Signature:i=2; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1779385401; c=relaxed/simple;
-	bh=9JasEh+59Sn6HERSNyTX4ibLaL8+DZ71S/xAwz6qm40=;
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8A6531BBBE5
+	for <sashiko-reviews@lists.linux.dev>; Thu, 21 May 2026 18:59:35 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
+ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
+	t=1779389976; cv=none; b=bBVasssyVyNbYhZta1TyC0JjovKwCwtDr4Jy5/HCV6xLBtUAm1d1kAowRf2Rj1iRvNq29VC2Yr8vQCyMdOq46z/A42bFnLXDIMDB2eDxOsBI0s26aeKE9BFpCWnnkLWfuK/UGXKmhnAVesXiJlXJW6ZZjjgbDaEZFmLHmjNm6NM=
+ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
+	s=arc-20240116; t=1779389976; c=relaxed/simple;
+	bh=R6FEUBYA06hsDYNSLr7aWIvbxPxEeCt1RxhTBBrf+nw=;
 	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
-	 To:Cc:Content-Type; b=jSJYh1PruSka2RTN6Svd44sylvfZ0cCi3lb9UAqyt3FVGIa1cffcAinlLwCBij0v8r1M4xBu8rRXTcL0ukgTkv1t/1yBw6+6Sq9Ra9atSKaRP3kV8QE4oFUOus7SGHabOhWFmcHHzj1slLnv5GzBPqahXNleeFC4IdqxVvWMRGw=
-ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=h9Jp9yPK; arc=pass smtp.client-ip=209.85.208.53
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+	 To:Cc:Content-Type; b=lgoymi+xBKfs8dDjyQl/eKw39MUynT6G6NiOyVSnHY2ICHGtiSoXsVhSvmcKFU6hHMe6PeOQ8cjGmrbUbXIRAc0w6TQsDttPsQ7h/Vyo38JLOkE9WmG5NMPYV3iYl8vMfXKYD3HXc8mVSHmLpqS13tY3pvI12L44UmXH+XZd7rY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=Iv4AR2BX; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="h9Jp9yPK"
-Received: by mail-ed1-f53.google.com with SMTP id 4fb4d7f45d1cf-6886be3d39bso939093a12.3
-        for <sashiko-reviews@lists.linux.dev>; Thu, 21 May 2026 10:43:18 -0700 (PDT)
-ARC-Seal: i=1; a=rsa-sha256; t=1779385396; cv=none;
-        d=google.com; s=arc-20240605;
-        b=lKShCh/W8X3S0HmzpIeHALaaktGdejps/vhvtKO8wPuyBTfNeLbUwMWq5/whmtPnvs
-         ZIMRtb6dIZGWVzZAo/1z3w52oBxh7yexSZvI/mRQhOUdLFve70B81/PNWlg+g2Y7hLih
-         6GypTEOmUpwTo+jwD0Ka23nRwSCA8qFgi3XJGcsuQYbPOUJeNczHWNG23cCdqelp6Bd7
-         0Kyd25/x0SyrXBa2AwwR4BQA8yGi9IA9gjl3Q01kG/pBRYtvU7Eh+BzPfL5FxeFn9sVl
-         vLR0MGXWJ28MdpF8loz8SnEuM4Zp842u7G7idZIQhds26Dc0tGZxvRVODoiBs4B1YUns
-         r9ow==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com; s=arc-20240605;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:dkim-signature;
-        bh=e3rDSUe7KLZOmgAp60b5SR5E4yTJDtktblrOBb74mtU=;
-        fh=WJ81iVv7VVNN3XcmqLwfLU/KtKhWcyunKbGcwKiNOFI=;
-        b=eoipfKuFekzyCVT277XrFM2R0OgOI57JP66Iw0h+/EIq5StBbNQ2brNiJLX8TiMvhM
-         spg9515WRr05SvyY+Zk4Ln2ZsRWOEEya/aO7fN/HgtHwfouIwc1ATMEnNHOLvecxqVtz
-         yzpdTmS5VTD0XKNt422KRmB4NHdVnANDqOT9QWdXvNmLTRyzTUYRgli8OqjHIym9nVjx
-         Mka6trw4CDT1LIMxeOhG9Slcl1lOq9qbUrtzBx7HyrXAoDS5Yk2wXSqGNbr0bX0fWjBa
-         Zvsglff5bfj2aPO7lFjyWwsSnB0sDdK4syP8U7MfGlV7zsxHXm6d6pc9SZcm1az9EB5R
-         a45Q==;
-        darn=lists.linux.dev
-ARC-Authentication-Results: i=1; mx.google.com; arc=none
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20251104; t=1779385396; x=1779990196; darn=lists.linux.dev;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=e3rDSUe7KLZOmgAp60b5SR5E4yTJDtktblrOBb74mtU=;
-        b=h9Jp9yPKUwNWg4XRCWnuv799QyNSoQ3ZDqooIiXc8ciZMWtUmRhHgUDayjR6uYBUXa
-         cpQSDvV+l5Yy9fKKQxB/eSI2V9D4yWJ4TFMaVeyhmZrkAdWD9/kwnxJsoQHPjUSKYyPQ
-         tz7RFnUhb9mosF5vO/tLBGG6hyEEyYzva5fEUcOT6qtMq8ImylEwpcFC4sahmNG/a5v5
-         8D+75gRFWPgVD8hc3ePot3rW8O+mTtM1sEbA5Y588wbs/S0R4rdEWM8Z/6g67sK3ab0s
-         zeszuGYtrKnt1So48c3T3udAcJPFNgct+YO7PpawM1XRG1i6BjD1ieP59PpEnSFkdZwG
-         taJQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20251104; t=1779385396; x=1779990196;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:x-gm-gg:x-gm-message-state:from
-         :to:cc:subject:date:message-id:reply-to;
-        bh=e3rDSUe7KLZOmgAp60b5SR5E4yTJDtktblrOBb74mtU=;
-        b=Geso7hobJEfLWqgAOgfvupFg8sxLR2oDQeXGvFM6dXYrC4hiy8h6efcq2/O+A7zJ1+
-         6TURIyHATKIYV62HCTp9SzvgdP2rgBqrkaAkhTotyR96IzsxBDdOaasGkN/DylMjbxH0
-         GcoVlDCa4wMtk8KKbNci0lr2hRhorQteef5ru5L2slghVpBc3kGTzP3RCo/pVHp/C7r3
-         v9lbApmOLKc0uXNqx0WCdltm26EnxFnJdpbnKVreOtc9twij+RWRVL0KGaB5qquZYE+a
-         H6SAVcXnYa7ScQhseaGDWmKUr6Fepoum1TS3mNqx2gOgT9FLByscsKZWHsOjf1470aoY
-         ikUA==
-X-Gm-Message-State: AOJu0YwcIIDhMZMqXfmidQl89TPty6HdpVsseZrk6Na74GGjwHm1da+C
-	a32HOufXDDFogQRya0By9pFl8dLNUgIpW8k7KKCpppZ7dPHHMg4C1tqWb8yi7VKpK5za2JJiFU/
-	AbPxGqK6f0a/1OxBUWi5lbuNw3UYF68QvS1sx
-X-Gm-Gg: Acq92OGSo0hMdUhTHJ1PaICsVX9/I/ZFZuTyp6O4VwChp62beawbRfdCzr9xrc7S46t
-	YsWDGFClmTlBdp4LNxs9KXRDjHGUSq4vxX2LcRB+VRLbECkC5r2E85+keT7F2CpTJ6aSkVdAsXz
-	AZkWagU6ndZww5GDajHvMfx166ULdoUW/rF5FI0uLVeo6HjjtVGOWHYbgie/nxM29lO7TBRTYm1
-	5R+4PfhkFokENsrGJQVtTG+A8HHqaGencY91yzo23AQZNUB16f6b1WPMGQluihqsaGNEgZKm8H/
-	m3PrLw==
-X-Received: by 2002:a05:6402:2792:b0:677:1ce0:c08d with SMTP id
- 4fb4d7f45d1cf-68836bca5afmr2159034a12.18.1779385396210; Thu, 21 May 2026
- 10:43:16 -0700 (PDT)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="Iv4AR2BX"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 38C2D1F00A3B
+	for <sashiko-reviews@lists.linux.dev>; Thu, 21 May 2026 18:59:35 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=kernel.org;
+	s=k20260515; t=1779389975;
+	bh=7cfoEJcpP//Ki/e2IAwslnxZGdOe1dNTVmUeaTGI3vg=;
+	h=References:In-Reply-To:From:Date:Subject:To:Cc;
+	b=Iv4AR2BXcTwg136CdO/IVh2OJ9+79oK72d5VpVk345GYAxUkTBts2A7j9nAogUSH3
+	 +qVCEadYtYvj2msX0zzDB6E8bvr/rHhtBVABWBrSOTNaodROzTzqZmqfeiTwL2EYzx
+	 NEGzLF2COskUonnDWZuMcQbiIr5NYfgQgoNeNAOyeVOVjAk/+fVxkPNzkwzfY3QGdm
+	 KoSHQg8neiRBCYmgsDSlm3q9+u6iYij85luXPWy8lG4q62dX+wGy/HL5Noi1ZV7nLB
+	 QXM7/BYWHBsfT3i416Zzo22xTtyVIG2yT6QafUoxq0elh98VYr826kfXA+AsuTWeyB
+	 p7WwMHo8wjoSQ==
+Received: by mail-wm1-f51.google.com with SMTP id 5b1f17b1804b1-4903f7a90d1so4249725e9.2
+        for <sashiko-reviews@lists.linux.dev>; Thu, 21 May 2026 11:59:35 -0700 (PDT)
+X-Gm-Message-State: AOJu0YzFEnrn40C6EdrPMdGjNm6BI3AfJzj/jSpAMt0WMObILaapocCK
+	dhf9gEYYULVpy/m++skMty7R/qUwcoHveGrhfGdMlgcHGRx2rxoP5ZnhDYZ0YqBjvaBc4AHywyq
+	XnBvBdHWEgjl6uqLW3UQ/zD3nTTVNBQdu7TSI0gYV
+X-Received: by 2002:a05:600d:840c:20b0:490:41b6:4d87 with SMTP id
+ 5b1f17b1804b1-4904248b0b8mr695815e9.4.1779389973789; Thu, 21 May 2026
+ 11:59:33 -0700 (PDT)
 Precedence: bulk
 X-Mailing-List: sashiko-reviews@lists.linux.dev
 List-Id: <sashiko-reviews.lists.linux.dev>
 List-Subscribe: <mailto:sashiko-reviews+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:sashiko-reviews+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-References: <20260521073449.10057-2-linux.amoon@gmail.com> <20260521080928.26A3E1F000E9@smtp.kernel.org>
-In-Reply-To: <20260521080928.26A3E1F000E9@smtp.kernel.org>
-From: Anand Moon <linux.amoon@gmail.com>
-Date: Thu, 21 May 2026 23:12:59 +0530
-X-Gm-Features: AVHnY4LceKynZbX-6PIn7iaMcEhtfr9doxs8GOVQDJzeHmTmfj9sZJSWkEDiNEs
-Message-ID: <CANAwSgQxxpDfwKQo0DNjYbTQhY-hHGL-BAndU3dTOTUxsg2PGA@mail.gmail.com>
-Subject: Re: [PATCH v4 1/3] media: meson: vdec: Fix memory leak in error path
- of vdec_open
+References: <20260521152217.2345235-3-kpsingh@kernel.org> <20260521165240.D95EA1F000E9@smtp.kernel.org>
+In-Reply-To: <20260521165240.D95EA1F000E9@smtp.kernel.org>
+From: KP Singh <kpsingh@kernel.org>
+Date: Thu, 21 May 2026 20:59:22 +0200
+X-Gmail-Original-Message-ID: <CACYkzJ47rASFZLZPz2VU9FE7J2-hGdw2f-5LQYmXoB9urVwRqQ@mail.gmail.com>
+X-Gm-Features: AVHnY4K6PUI1V_NLphdY9s4xZy1tPcZtTPOJWQxZpCfCIEqiUoCkQTUlhfRmuOI
+Message-ID: <CACYkzJ47rASFZLZPz2VU9FE7J2-hGdw2f-5LQYmXoB9urVwRqQ@mail.gmail.com>
+Subject: Re: [PATCH v2 2/2] bpf, libbpf: reject non-exclusive metadata maps in
+ the signed loader
 To: sashiko-reviews@lists.linux.dev
-Cc: neil.armstrong@linaro.org, linux-amlogic@lists.infradead.org
+Cc: bpf@vger.kernel.org
 Content-Type: text/plain; charset="UTF-8"
 Content-Transfer-Encoding: quoted-printable
 
-Hi Sashiko,
-
-Thanks for your  review comment,
-On Thu, 21 May 2026 at 13:39, <sashiko-bot@kernel.org> wrote:
+On Thu, May 21, 2026 at 6:52=E2=80=AFPM <sashiko-bot@kernel.org> wrote:
 >
-> Thank you for your contribution! Sashiko AI review found 1 potential issu=
+> Thank you for your contribution! Sashiko AI review found 2 potential issu=
 e(s) to consider:
-> - [High] Incorrect teardown order in `vdec_close()` causes use-after-dest=
-roy of the V4L2 control handler's mutex.
+> - [High] The BPF verifier will reject the `gen_loader` program on 32-bit =
+architectures because it accesses a 4-byte pointer using an 8-byte read.
+> - [Low] Multi-line comments do not follow the mandatory BPF subsystem sta=
+ndard.
 > --
 >
-> commit 82e916771a779b02500f97d58e344bb93ca8e9ca
-> Author: Anand Moon <linux.amoon@gmail.com>
+> commit 878a81f0d9571d5734eccfbe01c3dfe58050f954
+> Author: KP Singh <kpsingh@kernel.org>
 >
-> media: meson: vdec: Fix memory leak in error path of vdec_open
+> bpf, libbpf: reject non-exclusive metadata maps in the signed loader
+
+[...]
+
+> > +     /* Reject if the metadata map is not exclusive. Without exclusivi=
+ty
+> > +      * the cached map->sha[] verified above can be stale: another BPF
+> > +      * program with map access could have mutated the contents betwee=
+n
+> > +      * BPF_OBJ_GET_INFO_BY_FD and loader execution.
+> > +      */
 >
-> This commit introduces a proper err_m2m_ctx_release label in the error pa=
-th
-> of vdec_open() to ensure the m2m context is released before releasing the=
- m2m
-> device. It also attempts to free the V4L2 control handler memory in
-> vdec_close() to fix a resource leak.
+> [Severity: Low]
+> This isn't a bug, but does this multi-line comment follow the BPF
+> subsystem style guidelines? It looks like the opening /* should be on its
+> own line.
+
+Sashiko, this is how we comment in BPF.
+
 >
-> Closes: https://lore.kernel.org/all/20260520045905.6ACBA1F000E9@smtp.kern=
-el.org/#t
->
-> > diff --git a/drivers/staging/media/meson/vdec/vdec.c b/drivers/staging/=
-media/meson/vdec/vdec.c
-> > --- a/drivers/staging/media/meson/vdec/vdec.c
-> > +++ b/drivers/staging/media/meson/vdec/vdec.c
->
-> [ ... ]
->
-> > @@ -926,6 +928,7 @@ static int vdec_close(struct file *file)
-> >
-> >       v4l2_m2m_ctx_release(sess->m2m_ctx);
-> >       v4l2_m2m_release(sess->m2m_dev);
-> > +     v4l2_ctrl_handler_free(&sess->ctrl_handler);
+> > +     emit2(gen, BPF_LD_IMM64_RAW_FULL(BPF_REG_1, BPF_PSEUDO_MAP_IDX,
+> > +                                      0, 0, 0, 0));
+> > +     emit(gen, BPF_LDX_MEM(BPF_DW, BPF_REG_2, BPF_REG_1, SHA256_DWORD_=
+SIZE * sizeof(__u64)));
 >
 > [Severity: High]
-> Could this specific ordering cause a use-after-destroy of the V4L2 contro=
-l
-> handler's mutex?
+> Will this 8-byte read pass the verifier on 32-bit architectures?
 >
-> If an application has subscribed to a V4L2 control event, v4l2_fh_exit()
-> unconditionally calls v4l2_event_unsubscribe_all(). This unsubscribe logi=
-c
-> eventually invokes v4l2_ctrl_del_event(), which attempts to lock the
-> control handler's mutex.
+> While __bpf_md_ptr pads the C struct field to 8 bytes, unnamed bitfields
+> are not emitted in BTF. The kernel's BTF will represent the pointer membe=
+r
+> with a size of 4 bytes on 32-bit systems.
 >
-> Since v4l2_ctrl_handler_free() destroys the mutex:
+> Since btf_struct_walk() enforces that the memory access size exactly matc=
+hes
+> the BTF pointer size, it seems the verifier will reject this BPF_DW acces=
+s
+> with a cannot access ptr member error on 32-bit architectures.
 >
-> v4l2_ctrl_handler_free()
->     mutex_destroy(&hdl->_lock);
->
-> Calling it before v4l2_fh_exit() could lead to operating on a destroyed m=
-utex
-> and potentially cause a kernel panic if mutex debugging is enabled.
->
-> Should v4l2_ctrl_handler_free() be called after v4l2_fh_del() and
-> v4l2_fh_exit() instead?
->
-> >       v4l2_fh_del(&sess->fh, file);
-> >       v4l2_fh_exit(&sess->fh);
-> >
-I will try to study and update in the next version.
->
-> --
-> Sashiko AI review =C2=B7 https://sashiko.dev/#/patchset/20260521073449.10=
-057-1-linux.amoon@gmail.com?part=3D1
 
-Thanks
--Anand
+Good find Sashiko!
+
+__bpf_md_ptr doesn't help =E2=80=94 unnamed bitfields are stripped
+  from BTF:
+
+    $ bpftool btf dump file vmlinux | grep -A1 '^\[1462\]'
+    [1462] UNION '(anon)' size=3D8 vlen=3D1
+            'excl_prog_sha' type_id=3D17 bits_offset=3D0
+
+vlen=3D1, no padding. On 32-bit the pointer is 4 bytes, BPF_DW is 8,
+btf_struct_walk rejects (msize !=3D size). BPF_W doesn't work on
+64-bit either (4 !=3D 8).
+
+gen_loader needs target pointer size tracking (like swapped_endian)
+to emit the right sized read. Will revert __bpf_md_ptr and do that
+As a follow-up, I need to re-spin anyway since I messed up PATCH "bpf"
+and probably confused the CI.
+
+- KP
+
+> > diff --git a/tools/testing/selftests/bpf/progs/verifier_map_ptr.c b/too=
+ls/testing/selftests/bpf/progs/verifier_map_ptr.c
+> > index e2767d27d8aaf..baef2e93cb414 100644
+> > --- a/tools/testing/selftests/bpf/progs/verifier_map_ptr.c
+
+[...]
+
+> --
+> Sashiko AI review =C2=B7 https://sashiko.dev/#/patchset/20260521152217.23=
+45235-1-kpsingh@kernel.org?part=3D2
