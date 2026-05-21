@@ -1,332 +1,138 @@
-Received: from mx0a-001b2d01.pphosted.com (mx0a-001b2d01.pphosted.com [148.163.156.1])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-oi1-f169.google.com (mail-oi1-f169.google.com [209.85.167.169])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 535873783AA;
-	Thu, 21 May 2026 09:40:13 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=148.163.156.1
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B13542FD1DA
+	for <sashiko-reviews@lists.linux.dev>; Thu, 21 May 2026 10:17:06 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.167.169
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1779356414; cv=none; b=doaSVyHqgIxZn+KuZJ0f0oC1bq6EGYfhFzGYzdgi+Rc28A+f279CurWfRfRy1ONnsFDMipfae+IySxdffPcQrtw7AzqqG7hbmanZnPcdKW4/Yr1JZUI8o9m68h7t0R6uEs0xHbFPk6kV8jagNCdWIrMyonQenp2eI8ICZGTyst8=
+	t=1779358628; cv=none; b=E+WGQjBrtSLnP12I2BpPc2L2jQDFMAW0HICMjwxRHdCf7AIeP2KgRaTyRDXu2xtODT/u0GwmZiW+qFuhFVmU9UOM55FdRYsk85kbsQC5BJOeRHX1TBwtnE2xiew28jt2GkDT9FOId1hGNxg4yMHzFQ0TsbxulvWRbjESAma+Jgo=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1779356414; c=relaxed/simple;
-	bh=XwFOYjid+p4rAmVEIj3LMOGGAQRysx1kgot4A3Qxp34=;
-	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=socS85gSOmEhcxN8sbgw20ccjjjL8rTJUa9mpHeWj8x3SKWAvcNOdp2tj9W6RNrMC8AmHx4WVD26PTlbfERRfcv47ohJK2IJ5sHLwfMkdDPqxG+2bOTdtYavoUFA6PxN4WunsVwqkPUu1w75K3UgeurN9sl9YIGJqb6tdlCLK0Y=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linux.ibm.com; spf=pass smtp.mailfrom=linux.ibm.com; dkim=pass (2048-bit key) header.d=ibm.com header.i=@ibm.com header.b=nRpOa8kO; arc=none smtp.client-ip=148.163.156.1
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linux.ibm.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linux.ibm.com
+	s=arc-20240116; t=1779358628; c=relaxed/simple;
+	bh=gTVwqpZagZa5mCYibePx2zbeiV2CRsJsiELTP61LUSM=;
+	h=Mime-Version:Content-Type:Date:Message-Id:Cc:Subject:From:To:
+	 References:In-Reply-To; b=OaI2ggKJNsyE9dq7rAi7FBzF4Ayfo8AS6bOBO2ZsmiVZSoYvkDp6fG3w5EecfKG8B5NHCO01DWW7A40kmjnRyvBu6cmveknSTv8tBTKF9XbDn53VQEc3lGdh7ZVxTzQLApHpMt76uhc7CCSptc40PIzPz0BLwPtt8QrHir9bOMA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=b7+4wMLG; arc=none smtp.client-ip=209.85.167.169
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=ibm.com header.i=@ibm.com header.b="nRpOa8kO"
-Received: from pps.filterd (m0360083.ppops.net [127.0.0.1])
-	by mx0a-001b2d01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id 64L1HppF3935189;
-	Thu, 21 May 2026 09:40:09 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=ibm.com; h=cc
-	:content-transfer-encoding:content-type:date:from:in-reply-to
-	:message-id:mime-version:references:subject:to; s=pp1; bh=3RhtfJ
-	/o0OCJTI4zRmSUxOfORPP4+Y0vOxtAvzn6oOM=; b=nRpOa8kOKYouUncHiq9N83
-	RpR7j9em8R5stKkl34GLyHUtg0jlDt7KStsNN7LK0huLl+Qt4vskQsLHJUwzd/Gf
-	QhIT4f9XASnBTvRAa0JGJ0PdukXjPIXqwMPJyjmItaFgJAAvsrBFjBvHnK4TY8lP
-	+niikH/R8RdMj9jsNDKIUHdIu3lWb8odsJkuGx1JkrtqsLLlsbDp9hopIfc7NrSG
-	KTOQxZThgfg6XwffPaZZf/U6bNDuiiqZJk84hW/8C9iOkM0o10LVF1LZLM8VJf5R
-	C6TiZ1X7QHkFNNb7Qc077WsxI/qymDSCX4iQx/GuJC0VBn8PosPMF8leUQ1XaGIQ
-	==
-Received: from ppma21.wdc07v.mail.ibm.com (5b.69.3da9.ip4.static.sl-reverse.com [169.61.105.91])
-	by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 4e6h9y68c4-1
-	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Thu, 21 May 2026 09:40:09 +0000 (GMT)
-Received: from pps.filterd (ppma21.wdc07v.mail.ibm.com [127.0.0.1])
-	by ppma21.wdc07v.mail.ibm.com (8.18.1.7/8.18.1.7) with ESMTP id 64L9d7sE020959;
-	Thu, 21 May 2026 09:40:08 GMT
-Received: from smtprelay01.fra02v.mail.ibm.com ([9.218.2.227])
-	by ppma21.wdc07v.mail.ibm.com (PPS) with ESMTPS id 4e73wkbe6k-1
-	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Thu, 21 May 2026 09:40:07 +0000 (GMT)
-Received: from smtpav07.fra02v.mail.ibm.com (smtpav07.fra02v.mail.ibm.com [10.20.54.106])
-	by smtprelay01.fra02v.mail.ibm.com (8.14.9/8.14.9/NCO v10.0) with ESMTP id 64L9e4ol61342120
-	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
-	Thu, 21 May 2026 09:40:06 GMT
-Received: from smtpav07.fra02v.mail.ibm.com (unknown [127.0.0.1])
-	by IMSVA (Postfix) with ESMTP id AB5B620043;
-	Thu, 21 May 2026 09:40:04 +0000 (GMT)
-Received: from smtpav07.fra02v.mail.ibm.com (unknown [127.0.0.1])
-	by IMSVA (Postfix) with ESMTP id 870D620040;
-	Thu, 21 May 2026 09:40:04 +0000 (GMT)
-Received: from [9.52.200.195] (unknown [9.52.200.195])
-	by smtpav07.fra02v.mail.ibm.com (Postfix) with ESMTP;
-	Thu, 21 May 2026 09:40:04 +0000 (GMT)
-Message-ID: <c3dee21e-1b37-46eb-91fd-828557f6dc8b@linux.ibm.com>
-Date: Thu, 21 May 2026 11:40:04 +0200
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="b7+4wMLG"
+Received: by mail-oi1-f169.google.com with SMTP id 5614622812f47-47c7b282e21so2414559b6e.1
+        for <sashiko-reviews@lists.linux.dev>; Thu, 21 May 2026 03:17:06 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20251104; t=1779358626; x=1779963426; darn=lists.linux.dev;
+        h=in-reply-to:references:to:from:subject:cc:message-id:date
+         :content-transfer-encoding:mime-version:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=76R8gX0FEqbjjjAZsnw+EspUsb2+PAhzM0rQupZXg5c=;
+        b=b7+4wMLGNaqKd6B8uKUiorKR00hJjIhVygmhOKQYyQgZgcZFgpRVclo2VSK4SKvVI1
+         gi+ls1w9Cnyc4DStD1MQdIhGtfx4vcCzRqVHt0ybLBrVL9lDWhBDMsv4KIrC1cSyMT1Y
+         4EfbHV4ZM57/eLGgCsguuV2QtQ4rjQY5LBI/XW5/FtxpGJnCJTJYL5I1ubkqBpay5nj/
+         tsSPXulktnlIiuR/AU6a1OJbd2ZYLCWMI6Utwce7hDEiHVS2NRb0TblC4lwyTOLXGLpW
+         W+H1ysLUslmZyCd7VSInbvYmtyxG9Bw1TRyG/uTHL5qZDAcn3oWhwf3iXBwWKbBVLZAD
+         h5Rg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20251104; t=1779358626; x=1779963426;
+        h=in-reply-to:references:to:from:subject:cc:message-id:date
+         :content-transfer-encoding:mime-version:x-gm-gg:x-gm-message-state
+         :from:to:cc:subject:date:message-id:reply-to;
+        bh=76R8gX0FEqbjjjAZsnw+EspUsb2+PAhzM0rQupZXg5c=;
+        b=LmROxhDgQxuvjz5v5g8gnp5mSKxYijT/LCc/569cZ1z1/hqnyYbjW1GGWenr5tgAA9
+         Ib8nLgehsUiY85lSl7iyXuQPlt0F54dBuDh0pyhe95rdI2M6fjwFUfxHkeM8uN25gOyn
+         PI8iWD/PnHZjERPh9u65ggS7Um9GUw/Pwkyj7v73Npatw4lsCAue46fSyiaCdaZtkYZ2
+         laYvfjaaOwUQW+icTLS57F9vLU37CJyFhJn02E600ipfUbKkeLz5YvpOKigCjlL5ayvi
+         fp+76vAfxIYtZsWKIGCRXJdjtrnOymUoTGwWNC4BvcM8vnL1MD6EMomvr/01qC7dxgSM
+         Lrjg==
+X-Forwarded-Encrypted: i=1; AFNElJ+z+xuab8ZRFxHwRiDRXfNsqCHp9gAUsNWmXfi35t4g85rnWOshE9dZwojIImc9Ae6j0SKiRt41Czkxed+VT+o=@lists.linux.dev
+X-Gm-Message-State: AOJu0YzOUc+ZMNR8tjn4laleRiP5MmQfGPng83xpSv/UsGgY8PhsHXMB
+	6BtxgvCYOSnxVzAFqZxeYu7ySEdX84jje1gepfec+78v93SnPiOBHLwk
+X-Gm-Gg: Acq92OFycXdaB/AJ/vR3R705rD5si4T1AMPubqGDXZFAfkRwrsIKt24Iu6xuebIH/yk
+	c5Mc2jd9kG8FyDDhzFwHIikrMLuQ6dRhkNS4bX8YlDNMOu1EDYzcA2B4TcTa2kIyJKBL1dgubOq
+	0kc75eYYzOM5Wvm5keCE2xCQ85sPYvYcQa+6bGqVzI59iqbJeIjqmWVfBeVck8yx2kFyx9blD6W
+	VliZ/Wg/ZYXrvp0CxKPDGOA2W0/wo5UCpbY2te3AZTNk/od1AqMI1tflw7vwHyqFeF+E0p+BqFN
+	+R87pfBCZJjdQv2/JqvxOl6Ck/jvspMUCsf8CG7vlGQXA/h3XcL51ophu3LG4/TuE6QEEqDzj+c
+	d9bnyPod5A0+csZ9ArMJBhOkL9VFYM4y7FU7y/GTM3Qsg4fyBmS6hHh+EDAePC2yym6a4wql++l
+	IZSy16/EzCDtrt4R5pjwh8R1zxm2SV9vnfoGWZKzZkOXfZtIJtiNhmZiRXQrviSTiTj9VX1ZgAX
+	dL11mAFZFVEsGKKKg==
+X-Received: by 2002:a05:6820:6ac6:b0:694:914a:ebe1 with SMTP id 006d021491bc7-69d6ef1f6efmr792231eaf.47.1779358625454;
+        Thu, 21 May 2026 03:17:05 -0700 (PDT)
+Received: from localhost ([2a03:2880:10ff:4e::])
+        by smtp.gmail.com with ESMTPSA id 006d021491bc7-69d771c3801sm252630eaf.7.2026.05.21.03.17.03
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Thu, 21 May 2026 03:17:04 -0700 (PDT)
 Precedence: bulk
 X-Mailing-List: sashiko-reviews@lists.linux.dev
 List-Id: <sashiko-reviews.lists.linux.dev>
 List-Subscribe: <mailto:sashiko-reviews+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:sashiko-reviews+unsubscribe@lists.linux.dev>
-MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v15 05/20] unwind_user/sframe: Add support for reading
- .sframe contents
-To: sashiko-reviews@lists.linux.dev, Steven Rostedt <rostedt@kernel.org>,
-        Josh Poimboeuf <jpoimboe@kernel.org>
-Cc: bpf@vger.kernel.org, Indu Bhagat <ibhagatgnu@gmail.com>
-References: <20260520154004.3845823-6-jremus@linux.ibm.com>
- <20260520163348.11FD21F00893@smtp.kernel.org>
-Content-Language: en-US
-From: Jens Remus <jremus@linux.ibm.com>
-Organization: IBM Deutschland Research & Development GmbH
-In-Reply-To: <20260520163348.11FD21F00893@smtp.kernel.org>
+Mime-Version: 1.0
+Content-Transfer-Encoding: quoted-printable
 Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8bit
-X-TM-AS-GCONF: 00
-X-Proofpoint-Reinject: loops=2 maxloops=12
-X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwNTIxMDA5NSBTYWx0ZWRfX7+97ak2/cEyi
- x8cNyt7X0WtvAPLZSIEJr2H402J7Gr+u2N0SS32OPfD1B2+rdXQokYXONuGTrlC87X+LPku/7nQ
- jkAN6eB9mz7U0gPWVO+VTzTisPVvDkXD8kkPCGsVgRhMOB8krcyldB7gFIh4JYr37C5Advb5ZSS
- PC/v4eb2aDHPeblLLKF8nHMgfN2GBTbEYJ/BlTO5BSnngfstQ6YMrG38j37xdK2VuvsAIkmejpw
- vpjuZAumIqre92gJXhN47IapHhKu1MDD2MNG4PcVm0dqtwMLcxKltWbtIJ2xW32MPdKdOvXtZOb
- TGr/FiIlIDE8hTy8CULr9BF5XYXJ5LAH/CMXwd9O35B+jwlZ46ZuiAi6oTbnHX74RKd1rMFN1pF
- jAa9N1J+WdevbSQ3Ajm3+aK3OfbVmXC5zhcJuogX7mcSAzQij9nbi/KySWu2kJyfkkj6ttf7QeA
- 8G7zsBENvd0OZmtz+4A==
-X-Authority-Analysis: v=2.4 cv=BNuDalQG c=1 sm=1 tr=0 ts=6a0ed2f9 cx=c_pps
- a=GFwsV6G8L6GxiO2Y/PsHdQ==:117 a=GFwsV6G8L6GxiO2Y/PsHdQ==:17
- a=IkcTkHD0fZMA:10 a=NGcC8JguVDcA:10 a=VkNPw1HP01LnGYTKEx00:22
- a=RnoormkPH1_aCDwRdu11:22 a=iQ6ETzBq9ecOQQE5vZCe:22 a=VwQbUJbxAAAA:8
- a=VnNF1IyMAAAA:8 a=f8iy6pEWjRDl6Rsn33oA:9 a=3ZKOabzyN94A:10 a=QEXdDO2ut3YA:10
-X-Proofpoint-ORIG-GUID: UEocYtCrjg9Opm3Ve-e968CylSPGxrpy
-X-Proofpoint-GUID: 3E3vlqiN9lasgm9hDTem1RJU5tjaw_PB
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.293,Aquarius:18.0.1143,Hydra:6.1.51,FMLib:17.12.100.49
- definitions=2026-05-21_01,2026-05-18_01,2025-10-01_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
- adultscore=0 priorityscore=1501 malwarescore=0 impostorscore=0 suspectscore=0
- lowpriorityscore=0 phishscore=0 bulkscore=0 spamscore=0 clxscore=1015
- classifier=typeunknown authscore=0 authtc= authcc= route=outbound adjust=0
- reason=mlx scancount=1 engine=8.22.0-2605130000 definitions=main-2605210095
+Date: Thu, 21 May 2026 03:17:03 -0700
+Message-Id: <DIO9ZMXP4AP8.2U06P4YWLPFV@gmail.com>
+Cc: <bpf@vger.kernel.org>
+Subject: Re: [PATCH] bpf, libbpf: reject non-exclusive metadata maps in the
+ signed loader
+From: "Alexei Starovoitov" <alexei.starovoitov@gmail.com>
+To: "KP Singh" <kpsingh@kernel.org>, <sashiko-reviews@lists.linux.dev>
+X-Mailer: aerc
+References: <20260519215358.126364-1-kpsingh@kernel.org>
+ <20260519231709.3D4561F000E9@smtp.kernel.org>
+ <CACYkzJ6rxGSrixr9sChFyXyu3JcjG3JmZGR5YgA0vV0WNJPs0g@mail.gmail.com>
+In-Reply-To: <CACYkzJ6rxGSrixr9sChFyXyu3JcjG3JmZGR5YgA0vV0WNJPs0g@mail.gmail.com>
 
-On 5/20/2026 6:33 PM, sashiko-bot@kernel.org wrote:
-> Thank you for your contribution! Sashiko AI review found 5 potential issue(s) to consider:
-> - [High] Incorrect FRE size calculation due to using a mutated `dataword_count`.
-> - [High] Binary search incorrectly reads 64 bits for a 32-bit PC-relative offset, corrupting the function address calculation.
-> - [High] Unbounded linear scan of user-controlled SFrame FREs can cause a kernel hard lockup.
-> - [High] Usage of `guard(srcu)` invokes `srcu_read_lock()`, which is not NMI-safe and can corrupt the SRCU lock counter.
-> - [Medium] Mixing goto-based error handling with scope-based `guard()` cleanup.
-> --
-> 
-> commit 12c453957aeaea0a5733d7ed09d97cf7dfd380a5
-> Author: Josh Poimboeuf <jpoimboe@kernel.org>
-> 
-> unwind_user/sframe: Add support for reading .sframe contents
-> 
-> In preparation for using sframe to unwind user space stacks, add an
-> sframe_find() interface for finding the sframe information associated
-> with a given text address.
-> 
-> Link: https://lore.kernel.org/all/77c0d1ec143bf2a53d66c4ecb190e7e0a576fbfd.1737511963.git.jpoimboe@kernel.org/
-> Link: https://lore.kernel.org/all/b35ca3a3-8de5-4d32-8d30-d4e562f6b0de@linux.ibm.com/
-> 
->> diff --git a/kernel/unwind/sframe.c b/kernel/unwind/sframe.c
->> index 6b3ce3f8966d0..a38f50a363633 100644
->> --- a/kernel/unwind/sframe.c
->> +++ b/kernel/unwind/sframe.c
-> 
-> [ ... ]
-> 
->> @@ -15,9 +15,350 @@
-> [ ... ]
->> +static __always_inline int __find_fde(struct sframe_section *sec,
->> +				      unsigned long ip,
->> +				      struct sframe_fde_internal *fde)
->> +{
-> [ ... ]
->> +	while (low <= high) {
->> +		struct sframe_fde_v3 __user *mid;
->> +		s64 func_off;
->> +		unsigned long func_addr;
->> +
->> +		mid = low + ((high - low) / 2);
->> +
->> +		unsafe_get_user(func_off, (s64 __user *)mid, Efault);
-> 
-> [Severity: High]
-> Does this read 64 bits for a 32-bit PC-relative offset? Since SFrame V3
-> specifies a 32-bit signed integer for the PC-relative offset followed by
-> a 32-bit function size, won't reading 8 bytes merge both fields into
-> func_off and corrupt the function address calculation?
+On Tue May 19, 2026 at 8:00 PM PDT, KP Singh wrote:
+> On Wed, May 20, 2026 at 1:17=E2=80=AFAM <sashiko-bot@kernel.org> wrote:
+>>
+>> Thank you for your contribution! Sashiko AI review found 2 potential iss=
+ue(s) to consider:
+>> - [High] The generated BPF loader program uses a hardcoded 8-byte read (=
+BPF_DW) to access the `excl_prog_sha` pointer field, which causes the BPF v=
+erifier to reject the loader on 32-bit architectures and silently bypasses =
+the exclusivity check.
+>
+> I plan to move this to the kernel with a kfunc anyways. Any
+> suggestions for the 32 bit fix (apart from an ugly union in bpf_map).
 
-Ignore.  Sashiko AI is hallucinating that the SFrame FDE function start
-offset would be signed 32-bit in SFrame V3, as it had been in SFrame V2.
-With SFrame V3 it is always signed 64-bit.
+Use _bpf_md_ptr(). It's a normal pattern.
 
-> 
->> +		func_addr = (unsigned long)mid + func_off;
-> 
-> [ ... ]
-> 
->> +static __always_inline int __read_fre(struct sframe_section *sec,
->> +				      struct sframe_fde_internal *fde,
->> +				      unsigned long fre_addr,
->> +				      struct sframe_fre_internal *fre)
->> +{
-> [ ... ]
->> +	UNSAFE_GET_USER_INC(cfa_off, cur, dataword_size, Efault);
->> +	dataword_count--;
->> +
->> +	ra_off = sec->ra_off;
->> +	if (!ra_off) {
->> +		if (!dataword_count--)
->> +			return -EINVAL;
->> +
->> +		UNSAFE_GET_USER_INC(ra_off, cur, dataword_size, Efault);
->> +	}
->> +
->> +	fp_off = sec->fp_off;
->> +	if (!fp_off && dataword_count) {
->> +		dataword_count--;
->> +		UNSAFE_GET_USER_INC(fp_off, cur, dataword_size, Efault);
->> +	}
->> +
->> +	if (dataword_count)
->> +		return -EINVAL;
->> +
->> +	fre->size	= addr_size + 1 + (dataword_count * dataword_size);
-> 
-> [Severity: High]
-> Is the FRE size calculation correct here? Since dataword_count is decremented
-> as datawords are read, and the previous line ensures it is exactly 0, doesn't
-> this entirely omit the size of the read datawords from the total FRE size?
-> When __find_fre() advances to the next FRE, this might cause it to point to
-> the middle of the current FRE's datawords and read garbage.
+>> - [High] Branch target offset calculation is off-by-one, causing the jum=
+p target to land past the beginning of the cleanup block.
+>> --
+>
+> Yeah this is valid:
+>
+>  Compute the cleanup-label offset after emitting the MOV that sets the
+>   error code in R7. Otherwise the JMP lands one insn past cleanup_label
+>   and skips the first FD-close, matching the emit_check_err() pattern.
+>
+> diff --git a/tools/lib/bpf/gen_loader.c b/tools/lib/bpf/gen_loader.c
+> index becfda5b9025..6950443ba698 100644
+> --- a/tools/lib/bpf/gen_loader.c
+> +++ b/tools/lib/bpf/gen_loader.c
+> @@ -592,9 +592,9 @@ static void emit_signature_match(struct bpf_gen *gen)
+>                 gen->hash_insn_offset[i] =3D gen->insn_cur - gen->insn_st=
+art;
+>                 emit2(gen, BPF_LD_IMM64_RAW_FULL(BPF_REG_3, 0, 0, 0, 0, 0=
+));
+>
+> -               off =3D  -(gen->insn_cur - gen->insn_start -
+> gen->cleanup_label) / 8 - 1;
+> +               emit(gen, BPF_MOV64_IMM(BPF_REG_7, -EINVAL));
+> +               off =3D -(gen->insn_cur - gen->insn_start -
+> gen->cleanup_label) / 8 - 1;
+>                 if (is_simm16(off)) {
+> -                       emit(gen, BPF_MOV64_IMM(BPF_REG_7, -EINVAL));
 
-Valid, but resolved by subsequent "[PATCH v15 16/20] unwind_user/sframe:
-Add support for SFrame V3 flexible FDEs".  Will nevertheless fix in next
-version.
+maybe fix the math instead of moving this emit ?
+Also split the fix into pre-patch.
 
-> 
->> +	fre->ip_off	= ip_off;
-> 
-> [ ... ]
-> 
->> +static __always_inline int __find_fre(struct sframe_section *sec,
->> +				      struct sframe_fde_internal *fde,
->> +				      unsigned long ip,
->> +				      struct unwind_user_frame *frame)
->> +{
-> [ ... ]
->> +	fre_addr = sec->fres_start + fde->fres_off;
->> +
->> +	for (i = 0; i < fde->fres_num; i++) {
->> +		int ret;
-> 
-> [Severity: High]
-> Could this loop cause a kernel hard lockup? fde->fres_num is read from user
-> space and can be large. Since this performs a linear scan reading each FRE
-> sequentially from user memory, and unwinding often runs in NMI context (like
-> perf PMU interrupts), could a maliciously large SFrame section force the
-> kernel to loop without yielding and trigger the NMI watchdog?
+>                         emit(gen, BPF_JMP_REG(BPF_JNE, BPF_REG_2,
+> BPF_REG_3, off));
+>                 } else {
+>                         gen->error =3D -ERANGE;
 
-Ignore.  Stacktracing using SFrame is only performed deferred and thus
-not in NMI context.
+and while at it remove redundant 'emit(gen, BPF_JMP_IMM(BPF_JA, 0, 0, -1));=
+'
 
-> 
->> +
->> +		/*
->> +		 * Alternate between the two fre_addr[] entries for 'fre' and
->> +		 * 'prev_fre'.
->> +		 */
-> 
-> [ ... ]
-> 
->> +int sframe_find(unsigned long ip, struct unwind_user_frame *frame)
->> +{
->> +	struct mm_struct *mm = current->mm;
->> +	struct sframe_section *sec;
->> +	struct sframe_fde_internal fde;
->> +	int ret;
->> +
->> +	if (!mm)
->> +		return -EINVAL;
->> +
->> +	guard(srcu)(&sframe_srcu);
-> 
-> [Severity: High]
-> Is this safe to use from NMI context? Stack unwinding is frequently invoked
-> from NMIs (like perf PMU interrupts), but srcu_read_lock() is not NMI-safe
-> on all architectures (like arm64, where the non-atomic read-modify-write
-> could corrupt the SRCU lock counter). Should this use srcu_read_lock_nmisafe()
-> or standard RCU instead?
-
-Ignore.  See above.
-
-> 
-> [Severity: Medium]
-> Does this mix goto-based error handling with scope-based cleanup? The
-> function declares a scope-based guard here, but uses a goto-based cleanup
-> label (end:) below. This goes against the cleanup subsystem guidelines
-> which recommend either converting all resources to scope-based cleanup or
-> none at all, to avoid confusing ownership semantics.
-
-The scope-based cleanup is used to guard the read-access to the struct
-sframe_section.  The goto-based error handling is used to guard the
-user read access.
-
-> 
->> +
->> +	sec = mtree_load(&mm->sframe_mt, ip);
->> +	if (!sec)
->> +		return -ENOENT;
->> +
->> +	if (!user_read_access_begin((void __user *)sec->sframe_start,
->> +				    sec->sframe_end - sec->sframe_start))
->> +		return -EFAULT;
->> +
->> +	ret = __find_fde(sec, ip, &fde);
->> +	if (ret)
->> +		goto end;
->> +
->> +	ret = __find_fre(sec, &fde, ip, frame);
->> +end:
->> +	user_read_access_end();
->> +	return ret;
->> +}
-
-Will convert to scoped_user_read_access_size() as follows:
-
-diff --git a/kernel/unwind/sframe.c b/kernel/unwind/sframe.c
-@@ -348,18 +348,18 @@ int sframe_find(unsigned long ip, struct unwind_user_frame *frame)
-        if (!sec)
-                return -ENOENT;
-
--       if (!user_read_access_begin((void __user *)sec->sframe_start,
--                                   sec->sframe_end - sec->sframe_start))
--               return -EFAULT;
--
--       ret = __find_fde(sec, ip, &fde);
--       if (ret)
--               goto end;
-+       scoped_user_read_access_size((void __user *)sec->sframe_start,
-+                                    sec->sframe_end - sec->sframe_start,
-+                                    Efault) {
-+               ret = __find_fde(sec, ip, &fde);
-+               if (!ret)
-+                       ret = __find_fre(sec, &fde, ip, frame);
-+       }
-
--       ret = __find_fre(sec, &fde, ip, frame);
--end:
--       user_read_access_end();
-        return ret;
-+
-+Efault:
-+       return Efault;
- }
-
- static void free_section(struct sframe_section *sec)
-
-Regards,
-Jens
--- 
-Jens Remus
-Linux on Z Development (D3303)
-jremus@de.ibm.com / jremus@linux.ibm.com
-
-IBM Deutschland Research & Development GmbH; Vorsitzender des Aufsichtsrats: Wolfgang Wendt; Geschäftsführung: David Faller; Sitz der Gesellschaft: Ehningen; Registergericht: Amtsgericht Stuttgart, HRB 243294
-IBM Data Privacy Statement: https://www.ibm.com/privacy/
+pw-bot: cr
 
