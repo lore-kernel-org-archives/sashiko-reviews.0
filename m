@@ -1,123 +1,120 @@
-Received: from mail-wr1-f52.google.com (mail-wr1-f52.google.com [209.85.221.52])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from mx0b-001b2d01.pphosted.com (mx0b-001b2d01.pphosted.com [148.163.158.5])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6DBF239B976
-	for <sashiko-reviews@lists.linux.dev>; Thu, 21 May 2026 10:18:44 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.221.52
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AA1723A6400;
+	Thu, 21 May 2026 10:44:05 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=148.163.158.5
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1779358726; cv=none; b=XznsQPlk2oak7UZUQYoMvPp3EOmLuoGO8Chhlon1NJFKosfS50f2WO0I7VCkeyQFUDi/5s6+icjfWLaEa/evC0PmQVrCG+ZnJ1bnxbtJ6RlqHto43PUK9hg/+QTCh8q5oC8tSUcccDfW8LCb9zlffOo+YrQnw+EUYj4OlhNSnRg=
+	t=1779360247; cv=none; b=lhVd0R0OKfTcJlGRqSPeEXwTj0X34/CX4VAdRHABUcHjG5IMayyz5aoG2ltX/p5ODK3PPpaoCQKeUbwmpt4z/g4/4bSqf0dguNfLKymOxvfadZ511yFDR3lo9pNo73RwwOpjRYYPvcXUlJWd5GHgi8IhYkftbVWYqUaRhIE1QHw=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1779358726; c=relaxed/simple;
-	bh=2bYB1xx2/Hr8LzyFvSIy2n94i1GOiw43zEZhsMOD62E=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=X/+r5alshEkcxYK8chQeZ3cp2htsJSpdBsmEd+BMAXdohcJADX52qI5DxCSB+LMHzfMvDLrhQcq1Grx1/hfSLeq5e/fzeeE6EfhJ0CuTMNCxp51uY8sRqPOPiZBrOkYWdwk30yFM72QlQ1roy0T6v3qTs8GLoclIhGr1lQH6dU0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=JN1dxdeX; arc=none smtp.client-ip=209.85.221.52
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+	s=arc-20240116; t=1779360247; c=relaxed/simple;
+	bh=RqNDtK2HZUbaVX0H9gAZGEMe8F1uRt7cXQW3woaDx7c=;
+	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
+	 In-Reply-To:Content-Type; b=LKeGZNyF1agupDGwhAl5LkwKVLJuj9BDJmhj1MWqEiuLsW+I7sjV18Mu87vX+YV6P9Ez36npKVDudhOOV4gE7WCUnFTZZ/UssId1PrCdTS516JFLd4UGxKt5AQ6b3AoPBSBiRMLKyauAg1P9Tig0C85v4hDKG1CVVBV8w94I8EU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linux.ibm.com; spf=pass smtp.mailfrom=linux.ibm.com; dkim=pass (2048-bit key) header.d=ibm.com header.i=@ibm.com header.b=Zl105t8f; arc=none smtp.client-ip=148.163.158.5
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linux.ibm.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linux.ibm.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="JN1dxdeX"
-Received: by mail-wr1-f52.google.com with SMTP id ffacd0b85a97d-45297094718so4716963f8f.3
-        for <sashiko-reviews@lists.linux.dev>; Thu, 21 May 2026 03:18:44 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20251104; t=1779358723; x=1779963523; darn=lists.linux.dev;
-        h=in-reply-to:content-transfer-encoding:content-disposition
-         :mime-version:references:message-id:subject:cc:to:from:date:from:to
-         :cc:subject:date:message-id:reply-to;
-        bh=a+yLXkw2GT7LxR1Ajc513/uXxkuEC8xR05slvUKTHbU=;
-        b=JN1dxdeX3D/dIaUMSbp2wrHw18IltzOTHWotPIyQcK4/6EtaDxE0pXznOdRZ/w8LOX
-         IMDsAORhVfpz+IjD6869UhxGQZBFYGW85WObWyMNVPEPwixgpP+XA8F2+hphLdHHhtN7
-         J7iTbSWDCS3BuINXVYaCuuaoa3KBMU7fB1yHXpfcNOFVXNRGkGOr92R1eQJ/SOagAtgU
-         vsKXM3L4tmnua5/m32kAyYVc0HBaPYUoYzn7f2T7mbiNLn5MsP/4O47TW/bTAieHPRVS
-         T8Sv0bTnlzfAhl1XYJhKXssPB39RuovHtzemIArPQUgqmTikUU5WjFP1lHVv/mlmUzP4
-         2W5w==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20251104; t=1779358723; x=1779963523;
-        h=in-reply-to:content-transfer-encoding:content-disposition
-         :mime-version:references:message-id:subject:cc:to:from:date:x-gm-gg
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=a+yLXkw2GT7LxR1Ajc513/uXxkuEC8xR05slvUKTHbU=;
-        b=MEid0QhBw3ZySbRl2nJfaCDInUG9v4Qb7YZahcLXqdaYdsUqqh5buc5QK13AIfbqIY
-         fj6r2ahj7HL5rkRxe55qeiXKnEyYnh8TVusulM/T4AYwk6KhQISM1MBo/vEurVKvBQ/k
-         Zpmz20oVk2yOWwOEq9pNxMDAHdaw0Sak+v+mCkmo9Y0O6hSBtu+RMuP8d7ZyVtpTnh74
-         Rgqu7cEyOUYJaRsM0nJFN6Z/TVjVTHGtoYVZHqFwdEzHbx5WCdEjNUTtXUB4T+a7INpI
-         odPkfYcVZXdzY4E2bTxrK7lTuxLs8HvCVpqoauXiN53Co4CEhgMA33EEhicErt0T5vMJ
-         9wJA==
-X-Forwarded-Encrypted: i=1; AFNElJ8Lx9Ut59avuWieY2U9U5LJUvRoA/A5dR+JAkqtJ7o8MQ0n3RoxwKIuxrXycXZYEoZJ5l0wVUhuLy+qNOBW3iM=@lists.linux.dev
-X-Gm-Message-State: AOJu0YwPpFfd6MbcnlijXY+SXcULlFVAzAz2jPZLCYGTXoLlUTDP/lxl
-	V2lPjOFrZw52JK4yEcrrKGLuHgJDxXG6ogBtUEvzXaiDxBourVcBarww
-X-Gm-Gg: Acq92OGCkCbEaWNoXTN0BKqTiOoYBf9GxHmmOzB0GD9yb8HfGv668fktkGAOx3G4c9v
-	Ed28WTin4NAdxbt3845Ka594yGE4P06QNKSLAF9m81557tVzyj4Z4GdheLJJt3ehK1U7Bnd6ccA
-	HoD8CYfdysJoynt8VnlW4b5btq3w2LujTyymUq2YszIEDHbBbOL41+gf3499ltMng7UxFwAglsl
-	itRTYhoYISGlgkx6rylXWdnSr7wTPUTi9OhJmZSaV0ZmnDWnJ0c/2XwKIqNAo0axHgpi76A7lSD
-	3m42SvIVUGENIWJT2D3Uc9uDoaizyWn4+fXjTMXqctmcfdVbCcACxoVy4MbmmPoeL8J4fbs49Ab
-	OC2LEmwsdn1XgIjxqdXy4f3OmS3+b9u1F4rpYHZWQy82DxB35PSiD3LqLswX/rcQn+aGRIO0j9G
-	HW1X8zOY45uzh9bEPHZGownQ3u3Ssc1IPrNPLcdYJQZYgxfLwpepxpzM9Ux5xnMM6quATmu+cCC
-	qgK7CWLP2iPLm5F1iXG8qMzjDseglKTJ0jUfwbebZqOa/JqD8/0HDvjWfkbtEGv8DWo0mVK4MZu
-	LTMrtbPogw==
-X-Received: by 2002:a05:6000:4284:b0:43d:dd:8ca4 with SMTP id ffacd0b85a97d-45ea36b88ebmr3980111f8f.14.1779358722497;
-        Thu, 21 May 2026 03:18:42 -0700 (PDT)
-Received: from franzs-nb (248.201.173.83.static.wline.lns.sme.cust.swisscom.ch. [83.173.201.248])
-        by smtp.gmail.com with ESMTPSA id ffacd0b85a97d-45eaa7d9daasm1980702f8f.11.2026.05.21.03.18.41
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Thu, 21 May 2026 03:18:42 -0700 (PDT)
-Date: Thu, 21 May 2026 12:18:41 +0200
-From: Franz Schnyder <fra.schnyder@gmail.com>
-To: Frank.Li@nxp.com, sashiko-reviews@lists.linux.dev
-Cc: robh@kernel.org, Frank.Li@kernel.org, imx@lists.linux.dev, 
-	conor+dt@kernel.org, devicetree@vger.kernel.org
-Subject: Re: [PATCH v3 2/3] arm64: dts: freescale: add Aquila iMX95 support
-Message-ID: <3pcmepn2kr2b2gku33mriosmnim4xd7e75pt2j7i7vnt4awhgg@3cptbxl5u4x5>
-References: <20260521-add-aquila-imx95-v3-2-621843807def@toradex.com>
- <20260521093854.14DAB1F000E9@smtp.kernel.org>
+	dkim=pass (2048-bit key) header.d=ibm.com header.i=@ibm.com header.b="Zl105t8f"
+Received: from pps.filterd (m0360072.ppops.net [127.0.0.1])
+	by mx0a-001b2d01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id 64L5oYe33690499;
+	Thu, 21 May 2026 10:44:04 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=ibm.com; h=cc
+	:content-transfer-encoding:content-type:date:from:in-reply-to
+	:message-id:mime-version:references:subject:to; s=pp1; bh=gQKAQo
+	vVj5KvebYkeyee2JaZmc1n25RbL8Ihz6ExJ1s=; b=Zl105t8fUfpJWPgPuqT5jv
+	sAxQ+WPTV1uUx8x1nZEp7llcHOlxjZsjCYPlmpN0JTI0kRs0ffiUy2y3/C3Xqfp1
+	a5JW3U33VbywZ8vC4wAcC4XUPWePi1s64hDAIMYlxz4Bu4Zscedenk25dS9u9zKY
+	QpmdGQFeqnePfjo9Ak3ouXFJcPAOuT/OeMSV3cIbTJQRS6Gr+KTntxz6hgLnyfDB
+	YhndmEmP7UMhKuVYuh/soApcxg1k7SLyp9xiexxNfV0nOnjQ5RSsuih55xCpjWHW
+	8Hr8q0EZyZWZ+nUTfKtvp1RI2d/W3itw7FyGfbDF3XoU1eANFFzD6bMIh9+qQIIg
+	==
+Received: from ppma11.dal12v.mail.ibm.com (db.9e.1632.ip4.static.sl-reverse.com [50.22.158.219])
+	by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 4e6hawd8ds-1
+	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+	Thu, 21 May 2026 10:44:04 +0000 (GMT)
+Received: from pps.filterd (ppma11.dal12v.mail.ibm.com [127.0.0.1])
+	by ppma11.dal12v.mail.ibm.com (8.18.1.7/8.18.1.7) with ESMTP id 64LAdBvx012570;
+	Thu, 21 May 2026 10:44:03 GMT
+Received: from smtprelay04.fra02v.mail.ibm.com ([9.218.2.228])
+	by ppma11.dal12v.mail.ibm.com (PPS) with ESMTPS id 4e75kybcht-1
+	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+	Thu, 21 May 2026 10:44:03 +0000 (GMT)
+Received: from smtpav04.fra02v.mail.ibm.com (smtpav04.fra02v.mail.ibm.com [10.20.54.103])
+	by smtprelay04.fra02v.mail.ibm.com (8.14.9/8.14.9/NCO v10.0) with ESMTP id 64LAi1h914025166
+	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
+	Thu, 21 May 2026 10:44:01 GMT
+Received: from smtpav04.fra02v.mail.ibm.com (unknown [127.0.0.1])
+	by IMSVA (Postfix) with ESMTP id AE83220043;
+	Thu, 21 May 2026 10:44:01 +0000 (GMT)
+Received: from smtpav04.fra02v.mail.ibm.com (unknown [127.0.0.1])
+	by IMSVA (Postfix) with ESMTP id 9B12120040;
+	Thu, 21 May 2026 10:44:01 +0000 (GMT)
+Received: from [9.52.200.195] (unknown [9.52.200.195])
+	by smtpav04.fra02v.mail.ibm.com (Postfix) with ESMTP;
+	Thu, 21 May 2026 10:44:01 +0000 (GMT)
+Message-ID: <cab20a39-6102-4e4d-b9d8-2daa79740f4c@linux.ibm.com>
+Date: Thu, 21 May 2026 12:44:00 +0200
 Precedence: bulk
 X-Mailing-List: sashiko-reviews@lists.linux.dev
 List-Id: <sashiko-reviews.lists.linux.dev>
 List-Subscribe: <mailto:sashiko-reviews+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:sashiko-reviews+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH v15 07/20] unwind_user/sframe: Wire up unwind_user to
+ sframe
+To: sashiko-reviews@lists.linux.dev
+Cc: bpf@vger.kernel.org
+References: <20260520154004.3845823-8-jremus@linux.ibm.com>
+ <20260520162345.F13D61F000E9@smtp.kernel.org>
+Content-Language: en-US
+From: Jens Remus <jremus@linux.ibm.com>
+Organization: IBM Deutschland Research & Development GmbH
+In-Reply-To: <20260520162345.F13D61F000E9@smtp.kernel.org>
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-In-Reply-To: <20260521093854.14DAB1F000E9@smtp.kernel.org>
+X-TM-AS-GCONF: 00
+X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwNTIxMDEwNSBTYWx0ZWRfX0jRx3K49UQ5+
+ 4fH21LO94AxV3oqjL06bU41zaPOkaXI16aJ4mq6iNYmwe3DOZOIvNMKCq5jdYI2ogdBExvRiMQC
+ /Inea1zPnKGuLMCXFxK2DBr1fZYsuF3DCyz9OtzWaZ+LrGbnBMiMtRMZb3Kp3N5BqGon4MpH6Zp
+ Dv/smxc0n53yI0/2alkeRIPqMyBBtgsoYAdWmL3MVxxNOmmj11hv947TcFQml/xG2vPBOQ1uiFI
+ IOVpPLnTjQ/fg/mmVPjuOCFA4ISgYVLGp74f2rvRHEm7UZNOPLSNrnEunvA/XAQEOPXO67e/JM8
+ yjv9VLkNSC5k5ZKUUQNzFcpuz2s3b0d6L2GlsAdWZ5KlyOfRtzS/z2laUjk44iVCRccXfHfZArS
+ 4yvV1Kt0/2sB5WeFUxlTbG6ahpNFsA5D8kFpN87KKbTdSJ07Vwjxw4471iQ+HHk9y7r5dXoYKty
+ Xw3fJU3idxS4j2+XUvA==
+X-Authority-Analysis: v=2.4 cv=Np/htcdJ c=1 sm=1 tr=0 ts=6a0ee1f4 cx=c_pps
+ a=aDMHemPKRhS1OARIsFnwRA==:117 a=aDMHemPKRhS1OARIsFnwRA==:17
+ a=IkcTkHD0fZMA:10 a=NGcC8JguVDcA:10 a=VkNPw1HP01LnGYTKEx00:22
+ a=RnoormkPH1_aCDwRdu11:22 a=RzCfie-kr_QcCd8fBx8p:22 a=VnNF1IyMAAAA:8
+ a=VwQbUJbxAAAA:8 a=Zg_fgM-7fzLk7_7bOdYA:9 a=3ZKOabzyN94A:10 a=QEXdDO2ut3YA:10
+X-Proofpoint-ORIG-GUID: qs5oOQeeBM0gd5hmpCAwXu4HbvN_lzLs
+X-Proofpoint-GUID: qs5oOQeeBM0gd5hmpCAwXu4HbvN_lzLs
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.293,Aquarius:18.0.1143,Hydra:6.1.51,FMLib:17.12.100.49
+ definitions=2026-05-21_01,2026-05-18_01,2025-10-01_01
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
+ bulkscore=0 spamscore=0 clxscore=1015 priorityscore=1501 impostorscore=0
+ lowpriorityscore=0 suspectscore=0 adultscore=0 phishscore=0 malwarescore=0
+ classifier=typeunknown authscore=0 authtc= authcc= route=outbound adjust=0
+ reason=mlx scancount=1 engine=8.22.0-2605130000 definitions=main-2605210105
 
-> > diff --git a/arch/arm64/boot/dts/freescale/imx95-aquila-dev.dts b/arch/arm64/boot/dts/freescale/imx95-aquila-dev.dts
-> > new file mode 100644
-> > index 0000000000000..bb4a3631af9ba
-> > --- /dev/null
-> > +++ b/arch/arm64/boot/dts/freescale/imx95-aquila-dev.dts
+On 5/20/2026 6:23 PM, sashiko-bot@kernel.org wrote:
+> Thank you for your contribution! Sashiko AI review found 1 potential issue(s) to consider:
 > 
-> [ ... ]
-> 
-> > +/* Aquila I2S_1 */
-> > +&sai2 {
-> > +	status = "okay";
-> > +};
-> > +
-> > +&som_dsi2dp_bridge {
-> > +	status = "okay";
-> > +};
-> 
-> [Severity: Medium]
-> Will this bridge fail to probe since the DSI input connection is missing?
-> 
-> Looking at the ti-sn65dsi86 driver in ti_sn_bridge_parse_dsi_host(), it uses
-> of_graph_get_remote_node(np, 0, 0) and unconditionally returns -ENODEV if the
-> remote node is missing.
-> 
-> Since the upstream i.MX95 SoC DSI controller doesn't appear to be implemented
-> and linked to the dsi2dp_in endpoint yet, should this node remain disabled
-> until the controller is available?
-> -- 
-> Sashiko AI review · https://sashiko.dev/#/patchset/20260521-add-aquila-imx95-v3-0-621843807def@toradex.com?part=2
+> Pre-existing issues:
+> - [High] Incorrect FRE size calculation completely breaks SFrame parsing for functions with multiple FREs.
 
-Hi Frank,
+Fixed in next version of "[PATCH v15 05/20] unwind_user/sframe: Add
+support for reading .sframe contents".
 
-This is valid point from the bot.
-If there is nothing else, I'll send a v4 that removes '&som_dsi2dp_bridge' 
-from the Dev and Clover board, since the node is disabled in the SoM dtsi.
+Regards,
+Jens
+-- 
+Jens Remus
+Linux on Z Development (D3303)
+jremus@de.ibm.com / jremus@linux.ibm.com
 
-Thanks,
-
-Franz
-
+IBM Deutschland Research & Development GmbH; Vorsitzender des Aufsichtsrats: Wolfgang Wendt; Geschäftsführung: David Faller; Sitz der Gesellschaft: Ehningen; Registergericht: Amtsgericht Stuttgart, HRB 243294
+IBM Data Privacy Statement: https://www.ibm.com/privacy/
 
