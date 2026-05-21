@@ -1,229 +1,242 @@
-Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
+Received: from mx0b-0031df01.pphosted.com (mx0b-0031df01.pphosted.com [205.220.180.131])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F2EC83D9041
-	for <sashiko-reviews@lists.linux.dev>; Thu, 21 May 2026 13:07:01 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 205DE3D9699
+	for <sashiko-reviews@lists.linux.dev>; Thu, 21 May 2026 13:10:33 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.180.131
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1779368823; cv=none; b=dzJ22oKXlWgFYdV+lmlneWw8eadclePp3gkB7I3jjOUmaHVDVW4SqZDfkivumw8Os08e8kFAF3yRzEUia2RkMyi67XorgjYhvVRVS61g+wop1FlKk/RMKfk/yJ+CTfsTITePdjQIXPTgrD4T6oh1ISsASt8+WgdScElsnSuFWGQ=
+	t=1779369035; cv=none; b=u1p1mVM/zChuDBZyZGH0tvGoubaDW/aNcR+GnpAYWEA0wgIB6K3DYH4sQQN71+B8rzNeCM6sbbXWgMGXE+WSiuNXnjtCuvDbkyqGeAAcavrk6T/g8TvaJ4qszxdl6tUs+qUBWzDMKtHg9fabxQBGHuxRcq6K39VC3N2tcP+bq+8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1779368823; c=relaxed/simple;
-	bh=iL7+aVGLvzEsqkiwYezshrb4BL0XF8IKjGXwqvngx6k=;
-	h=Message-ID:Subject:From:To:Cc:Date:In-Reply-To:References:
-	 Content-Type:MIME-Version; b=lTeUnZ8E3IxuLmks8Pc+Q+Dwrcy7DN9hgxa+o6PfNRv0KcCckXv4WkLwpEZexqyo5AqeN63b/NdE31UffBrxV3lQCB0UhrjIwSTjNEWm4Lmy61Xv8bn2r8FIXoU0fJbl63PLBEYHxRnE1BXTzaTNGMalFF05UI+oNq5IBzHhjys=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=C9DSJC4k; arc=none smtp.client-ip=100.103.45.18
+	s=arc-20240116; t=1779369035; c=relaxed/simple;
+	bh=2GSnzV9ciCdURTUIeb8cFpTdA8HTh0lpn3BPxfOouaI=;
+	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
+	 In-Reply-To:Content-Type; b=HbneZ7aTWAJed2VIId7DEjc+l7jH61//9Lc9uZ09MM/djkjJue2IWy4DXPuT5HdAggCoSo/x+FVZhGwPc5DcS9tEugwl3HZclOsgW8IuPwy9F0YmEmSpGIlnMM7xH96JpYP+t61dIPCABrJDSw2JDSvalV8c8GEh2NfB5V6alZo=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com; spf=pass smtp.mailfrom=oss.qualcomm.com; dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b=AZ756s19; dkim=pass (2048-bit key) header.d=oss.qualcomm.com header.i=@oss.qualcomm.com header.b=cV4tKqqR; arc=none smtp.client-ip=205.220.180.131
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=oss.qualcomm.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="C9DSJC4k"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7B4201F000E9;
-	Thu, 21 May 2026 13:07:01 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=kernel.org;
-	s=k20260515; t=1779368821;
-	bh=nF+SyD7nRLQizcgTMztXBN3Q7UMNgTSioZOfH7Z8E1M=;
-	h=Subject:From:To:Cc:Date:In-Reply-To:References;
-	b=C9DSJC4kAjr9o7bHyybZ4MgxmH2SQ/10poNF+b8ozXGziuBye6Hk5WWKVctRXvw0r
-	 vS2o2q6URu1l1iNmCJfheMA9ayzQ+a8yyPF+dQvcVIPnpCZTXRQ6Vsw1SAY7RT8J8A
-	 cHDdLpmdeI2F15C1Y8PyKmspi8DTx6FjrPZjLw+OnpbR14phsbHmumZ5isUS5KoFOJ
-	 gAu9SHm7vxKy8eu4im4NwEg+2WwJUyWpxnGSGE498n3FOnL6FgWGkoW2QObU0okSOr
-	 Ioibc1ZKWmvUe+iZZh2pcUcWHaKSXa8w8pr5b5+NQUFrGw5thY7u8AoID9acxdB7yJ
-	 E1uxa9aQpE8fg==
-Message-ID: <f68e7ae9e2c868990030f5ec94524983dfacb5fd.camel@kernel.org>
-Subject: Re: [PATCH] nfsd: fix dead ACL conflict guard in nfsd4_create
-From: Jeff Layton <jlayton@kernel.org>
-To: sashiko-reviews@lists.linux.dev
-Cc: Chuck Lever <cel@kernel.org>, Anna Schumaker <anna@kernel.org>
-Date: Thu, 21 May 2026 09:06:58 -0400
-In-Reply-To: <20260521124251.6C13E1F000E9@smtp.kernel.org>
-References: 
-	<20260521-nfsd4_create_acl_posix_acl_overwrite_leak-v1-1-850fc0a7157e@kernel.org>
-	 <20260521124251.6C13E1F000E9@smtp.kernel.org>
-Autocrypt: addr=jlayton@kernel.org; prefer-encrypt=mutual;
- keydata=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
- QZIQXVeAA+smfTT0tDrisj1U5x6ZB9b3nBg65kc=
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
-User-Agent: Evolution 3.60.1 (3.60.1-1.fc44) 
+	dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b="AZ756s19";
+	dkim=pass (2048-bit key) header.d=oss.qualcomm.com header.i=@oss.qualcomm.com header.b="cV4tKqqR"
+Received: from pps.filterd (m0279868.ppops.net [127.0.0.1])
+	by mx0a-0031df01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id 64L99ks63343477
+	for <sashiko-reviews@lists.linux.dev>; Thu, 21 May 2026 13:10:33 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=qualcomm.com; h=
+	cc:content-transfer-encoding:content-type:date:from:in-reply-to
+	:message-id:mime-version:references:subject:to; s=qcppdkim1; bh=
+	0+u39I4+waHFNk0WDdpK3zNnsyjAzm42aKp+xFiWAMI=; b=AZ756s19SuH7Zxx8
+	eZnLorFYVrulqy+ULK57h3tw4swbpVyHyxLX8S9zypcRtDhvvrKzwZLxsTWUZita
+	7SpK/XCi+QjWTMfiGKhb+9rZV/U710BoIhUMH7bVASKC7G2QyEAM06SlMLLi0+Iz
+	+HobBO01uh9TC1j06Pfa1PcvbAtiazo0L8IRK1NcS1Z3cPFACMFk2dPigjyXdnSP
+	zKGFCUtcwijpvsGoUNFGkC9XSEqyTLe+/THVBCXxewhWQGSqgr28GiEhhkeDDD28
+	3hwJNcBS5+SKvyPZIig57ap0NZFPRi4lV1d+q+quaxSuAYm6cmKuIgEQAEv3VEDR
+	ono+IA==
+Received: from mail-pl1-f200.google.com (mail-pl1-f200.google.com [209.85.214.200])
+	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 4e9wahse2j-1
+	(version=TLSv1.3 cipher=TLS_AES_128_GCM_SHA256 bits=128 verify=NOT)
+	for <sashiko-reviews@lists.linux.dev>; Thu, 21 May 2026 13:10:32 +0000 (GMT)
+Received: by mail-pl1-f200.google.com with SMTP id d9443c01a7336-2bc763c7256so141588775ad.3
+        for <sashiko-reviews@lists.linux.dev>; Thu, 21 May 2026 06:10:32 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=oss.qualcomm.com; s=google; t=1779369032; x=1779973832; darn=lists.linux.dev;
+        h=content-transfer-encoding:in-reply-to:from:content-language
+         :references:cc:to:subject:user-agent:mime-version:date:message-id
+         :from:to:cc:subject:date:message-id:reply-to;
+        bh=0+u39I4+waHFNk0WDdpK3zNnsyjAzm42aKp+xFiWAMI=;
+        b=cV4tKqqRSzD3lNHGRd6dyG5vUJeSDpa5uXr1QJtPhJLRtTlzYhOKUX+E8Vesyhm2iL
+         +vwJvo5T+/sfqM9QeeNKBLLtLu2LSEFx6VhHxMbFYNkboOeUaOPnJIZ+EXhyeDOVcyWP
+         V/JXlOFCLelCsQN6Ilbxn01uEYg0j/Kg6v2o04LnRxYZ2hcr9aHChDNTP49ypQEF7do5
+         XYEgCwAn+314MpdcoWyRhmENmnt5OvfskfHtWV61GnWp4obovdFdcIf541y4pUKG7nHK
+         sa4/dVWXHzAW7z50K1f+5ZN9oabV+BNeeGXvJ7Vg67DbnGsJ8kqUcaxoXVqi+i47x6rv
+         dS7A==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20251104; t=1779369032; x=1779973832;
+        h=content-transfer-encoding:in-reply-to:from:content-language
+         :references:cc:to:subject:user-agent:mime-version:date:message-id
+         :x-gm-gg:x-gm-message-state:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=0+u39I4+waHFNk0WDdpK3zNnsyjAzm42aKp+xFiWAMI=;
+        b=AwvMceshtljrdccHqiOyK/LgOq55ftdw9c07FfXv6qe16ymRtUaPIfH20oMRqcEjKs
+         EFxD7OwCoMNn9WlyBRBfXegRbMOS1TMp2IaevycLYZn8y1XP45bGAAukX59lXSXX09mO
+         azaCYD3AUsIniypkBYQaHb3TDdKJyItzLesclnfWXTFsx7B0k6x95XJNVm9+Q/mvbFV+
+         WTcYkUp/cfhBSfkLvjuMGFwu+13LLiHDBW5DPQwv3OXrBoSf88qw4SOPJkq2glBeAv3I
+         Vy8mNd0lJrPbJwgAL5i1kWa+QPJAcYOI7WNN5xt4PkUfByFdC615f6ffoUNjq3X45wJ+
+         XnVQ==
+X-Gm-Message-State: AOJu0YxSWgJOXnVkmXRQleWDdlgLbpSKDJhVo0sncSC+KG/wuQX2D7XV
+	CAljVK01z8bfaxeqhQigZEAeUuVYSvE4fE6WDYp/DMn7l5qtWi0aeHSGoNhnWg8CJxZf/861nxD
+	BglhTFj9znWg3+sq+yrnms/KyrQN7L3GFr8Llig0sIC5digukbRR83VHhwMJ1T1VL9KDTLIK1n1
+	w7vXM=
+X-Gm-Gg: Acq92OGSLpKyfXQhDS41vdb2JvCZHZFdk5xY54lAmtkekJo2D1O+g8EIcINCM7AiMCT
+	kYmoS0da/JESDhEym6kO7TcsddgtS2FxKI8X5ak8Vj6aqSNr80Fnq3/9Dad8klIQscq0UmGA2vq
+	TJrW06SfVGdD5wblcWqtthslezsdAOtbVopSY+JsGYXI9iykAM3txG57/qvouowCc725eisXWx5
+	aGJ337euvzSHxT8gdLHTLE8Dm274bx+L0pLJq5DypXq+aiQ3uEcTN0Nk9/wDsc2Gr98wTK1UhWh
+	PMnfd7cezIv8wIYiaMkd7ve2t0MFkllTmAn5Z5XctQZAvVhGWffniRofQ0ZtQhiTFpemV8rErwc
+	JgXam04BDJMKeC1SW22y4WjHiA4ITsjM6ciJKhsUU3vmbfY2s7f7q+TNWsA==
+X-Received: by 2002:a17:903:245:b0:2b2:4d36:7aa with SMTP id d9443c01a7336-2bea33c2013mr29525025ad.35.1779369031974;
+        Thu, 21 May 2026 06:10:31 -0700 (PDT)
+X-Received: by 2002:a17:903:245:b0:2b2:4d36:7aa with SMTP id d9443c01a7336-2bea33c2013mr29524355ad.35.1779369031315;
+        Thu, 21 May 2026 06:10:31 -0700 (PDT)
+Received: from [192.168.1.9] ([205.254.168.165])
+        by smtp.gmail.com with ESMTPSA id d9443c01a7336-2bea9a3c89csm10065165ad.83.2026.05.21.06.10.28
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Thu, 21 May 2026 06:10:31 -0700 (PDT)
+Message-ID: <57ad7943-ab05-4b7d-b55f-3a7da7457137@oss.qualcomm.com>
+Date: Thu, 21 May 2026 18:40:26 +0530
 Precedence: bulk
 X-Mailing-List: sashiko-reviews@lists.linux.dev
 List-Id: <sashiko-reviews.lists.linux.dev>
 List-Subscribe: <mailto:sashiko-reviews+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:sashiko-reviews+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH v15 2/3] of: Factor arguments passed to of_map_id() into a
+ struct
+To: sashiko-reviews@lists.linux.dev
+Cc: Frank.Li@kernel.org, devicetree@vger.kernel.org, imx@lists.linux.dev,
+        linux-pci@vger.kernel.org, robh@kernel.org, conor+dt@kernel.org
+References: <20260520-parse_iommu_cells-v15-2-b5f99ad4e7e8@oss.qualcomm.com>
+ <20260520085613.9052F1F000E9@smtp.kernel.org>
+Content-Language: en-US
+From: Vijayanand Jitta <vijayanand.jitta@oss.qualcomm.com>
+In-Reply-To: <20260520085613.9052F1F000E9@smtp.kernel.org>
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
+X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwNTIxMDEzMSBTYWx0ZWRfX8An+5IkLv95n
+ RwrZb2G40mj5v7YnHXmkYmIbTPDdINayGAKgc1jcA9LONAEky0aA1piY3f/GrL0NVeOtl6+N22o
+ b7+WX7qeO00+w9ts5hdZfZp2I9aBx8ZbK4Ax9zdDmfQnuxVvymUHIoXQ2Ie/IziWh9i/lFj/AUL
+ yMrAhDqc1StuQURwkR15va48RUG+K8X0rOMkpioxs1SHisUkHJ+JrXPFH2Xl0eWc1CUd8DssUbB
+ bJuA/IhziYpiQ3/y13kZSWHp/JYgueqlaF3sya0h+lA0UVCHLSXzrxErxieQIKQ1hwt50K8Jd5G
+ 2H2QTLxuo+oViCzJZgsg+dwDbUi5Q+h1/KT3Twr8g0AoqZNxl8m2AXDMsqMPb/lQeD/iwf1PEuu
+ O6edxq/0Pwe5OD6UX+Wok8abrkx/QV0ADopzTZYWVBYBex4zbSKLyTouK1wmAISFLic1iCT9b1s
+ BpZ7wigCmDBFU54FFIg==
+X-Proofpoint-ORIG-GUID: -JB2SDOwJKXxbcEFnfIYyOPqiNG8Akmz
+X-Proofpoint-GUID: -JB2SDOwJKXxbcEFnfIYyOPqiNG8Akmz
+X-Authority-Analysis: v=2.4 cv=H8LrBeYi c=1 sm=1 tr=0 ts=6a0f0448 cx=c_pps
+ a=IZJwPbhc+fLeJZngyXXI0A==:117 a=49gMqqAeKCh39Y98CdGbvA==:17
+ a=IkcTkHD0fZMA:10 a=NGcC8JguVDcA:10 a=s4-Qcg_JpJYA:10
+ a=VkNPw1HP01LnGYTKEx00:22 a=u7WPNUs3qKkmUXheDGA7:22 a=ZpdpYltYx_vBUK5n70dp:22
+ a=VwQbUJbxAAAA:8 a=EUspDBNiAAAA:8 a=ysTZoyIZg4-46AWNULEA:9 a=3ZKOabzyN94A:10
+ a=QEXdDO2ut3YA:10 a=uG9DUKGECoFWVXl0Dc02:22
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.293,Aquarius:18.0.1143,Hydra:6.1.51,FMLib:17.12.100.49
+ definitions=2026-05-21_02,2026-05-18_01,2025-10-01_01
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
+ priorityscore=1501 phishscore=0 adultscore=0 suspectscore=0
+ lowpriorityscore=0 spamscore=0 impostorscore=0 malwarescore=0 bulkscore=0
+ clxscore=1011 classifier=typeunknown authscore=0 authtc= authcc=
+ route=outbound adjust=0 reason=mlx scancount=1 engine=8.22.0-2605130000
+ definitions=main-2605210131
 
-On Thu, 2026-05-21 at 12:42 +0000, sashiko-bot@kernel.org wrote:
-> Thank you for your contribution! Sashiko AI review found 3 potential issu=
-e(s) to consider:
->=20
+
+
+On 5/20/2026 2:26 PM, sashiko-bot@kernel.org wrote:
+> Thank you for your contribution! Sashiko AI review found 1 potential issue(s) to consider:
+> 
 > Pre-existing issues:
-> - [High] The return value of `nfsd4_acl_to_attr()` is ignored in both `nf=
-sd4_create()` and `do_open_lookup()`, causing files to be silently created =
-without the requested ACLs when conversion fails.
-> - [High] POSIX ACLs allocated during XDR decode for `OP_CREATE`, `OP_OPEN=
-`, and `OP_SETATTR` will permanently leak if the operation is aborted befor=
-e execution or if a previous operation in the compound fails.
-> - [High] Missing bounds check on the client-supplied `count` in `nfsd4_de=
-code_posixacl()` allows unprivileged clients to trigger massive memory allo=
-cations and page allocation warnings.
+> - [High] Unconditional dereference of `msi_node` in `of_check_msi_parent` when it can be NULL.
 > --
->=20
-> commit 626991554786706615df7c52291b5b951e9ebae8
-> Author: Jeff Layton <jlayton@kernel.org>
->=20
-> nfsd: fix dead ACL conflict guard in nfsd4_create
->=20
-> This commit fixes a bug in nfsd4_create where the conflict guard tests
-> already-nilled source pointers, causing it to be permanently dead code. B=
-y
-> checking the stolen values in attrs instead, it prevents leaking posix_ac=
-l
-> slab objects when multiple acl attributes are present.
->=20
-> > diff --git a/fs/nfsd/nfs4proc.c b/fs/nfsd/nfs4proc.c
-> > index ab39ec8854405..71bb2489e5a65 100644
-> > --- a/fs/nfsd/nfs4proc.c
-> > +++ b/fs/nfsd/nfs4proc.c
-> > @@ -837,7 +837,7 @@ nfsd4_create(struct svc_rqst *rqstp, struct nfsd4_c=
-ompound_state *cstate,
-> > =C2=A0=C2=A0		goto out_aftermask;
-> > =C2=A0=20
-> > =C2=A0=C2=A0	if (create->cr_acl) {
-> > -		if (create->cr_dpacl || create->cr_pacl) {
-> > +		if (attrs.na_dpacl || attrs.na_pacl) {
-> > =C2=A0=C2=A0			status =3D nfserr_inval;
-> > =C2=A0=C2=A0			goto out_aftermask;
-> > =C2=A0=C2=A0		}
->=20
+> 
+> commit d17879206927f3ee695759bc3559fd04a6a551ab
+> Author: Charan Teja Kalla <charan.kalla@oss.qualcomm.com>
+> Subject: of: Factor arguments passed to of_map_id() into a struct
+> 
+> This patch updates of_map_id() to take a struct of_phandle_args instead of
+> passing the target device node and translated IDs separately. It explicitly
+> separates the input filter node from the output arguments and transfers
+> ownership of the matched node reference to the caller.
+> 
+>> diff --git a/drivers/of/irq.c b/drivers/of/irq.c
+>> index e37c1b3f87362..e63a43be6c4a3 100644
+>> --- a/drivers/of/irq.c
+>> +++ b/drivers/of/irq.c
+>> @@ -796,14 +796,15 @@ static int of_check_msi_parent(struct device_node *dev_node, struct device_node
+>>  /**
+>>   * of_msi_xlate - map a MSI ID and find relevant MSI controller node
+>>   * @dev: device for which the mapping is to be done.
+>> - * @msi_np: Pointer to target MSI controller node
+>> + * @msi_np: Pointer to target MSI controller node, or NULL if the caller
+>> + *           only needs the translated ID without receiving the controller node.
+>> + *           If non-NULL and pointing to a non-NULL node, only entries targeting
+>> + *           that node will be matched. If non-NULL and pointing to NULL, it will
+>> + *           receive the first matching target node with a reference held.
+>>   * @id_in: Device ID.
+>>   *
+>>   * Walk up the device hierarchy looking for devices with a "msi-map"
+>>   * or "msi-parent" property. If found, apply the mapping to @id_in.
+>> - * If @msi_np points to a non-NULL device node pointer, only entries targeting
+>> - * that node will be matched; if it points to a NULL value, it will receive the
+>> - * device node of the first matching target phandle, with a reference held.
+>>   *
+>>   * Returns: The mapped MSI id.
+>>   */
+>> @@ -817,8 +818,21 @@ u32 of_msi_xlate(struct device *dev, struct device_node **msi_np, u32 id_in)
+>>  	 * "msi-map" or an "msi-parent" property.
+>>  	 */
+>>  	for (parent_dev = dev; parent_dev; parent_dev = parent_dev->parent) {
+>> -		if (!of_map_msi_id(parent_dev->of_node, id_in, msi_np, &id_out))
+>> +		struct of_phandle_args msi_spec = {};
+>> +
+>> +		if (!of_map_msi_id(parent_dev->of_node, id_in, msi_np, &msi_spec)) {
+>> +			if (msi_spec.np) {
+>> +				/* msi-map matched: use the translated ID and target node */
+>> +				if (msi_spec.args_count > 0)
+>> +					id_out = msi_spec.args[0];
+>> +				if (msi_np && !*msi_np)
+>> +					*msi_np = of_node_get(msi_spec.np);
+>> +				of_node_put(msi_spec.np);
+>> +			}
+>> +			/* msi-map present but no match → stop walking */
+>>  			break;
+>> +		}
+>> +		/* -ENODEV: msi-map absent → check for msi-parent */
+>>  		if (!of_check_msi_parent(parent_dev->of_node, msi_np))
+> 
 > [Severity: High]
-> This is a pre-existing issue, but does the return value of nfsd4_acl_to_a=
-ttr()
-> get silently ignored right after this block?
->=20
-> Just below this hunk in nfsd4_create(), status is assigned the return val=
-ue
-> of nfsd4_acl_to_attr(), but it does not appear to be checked before being
-> overwritten in the subsequent switch statement:
->=20
-> 	status =3D nfsd4_acl_to_attr(create->cr_type, create->cr_acl,
-> 							&attrs);
-> }
-> current->fs->umask =3D create->cr_umask;
-> switch (create->cr_type) {
->=20
-> If acl conversion fails due to unsupported access control entries or ID
-> mapping errors, does the server silently ignore the error, create the fil=
-e
-> with default permissions, and incorrectly return success to the client?
->=20
-> This same pattern appears to be present in do_open_lookup() as well.
->=20
-> [Severity: High]
-> This isn't a bug introduced by this patch, but is there a risk of memory
-> exhaustion related to posix acl allocations for operations like op_create=
-?
->=20
-> If posix acls are allocated using posix_acl_alloc() during xdr decoding
-> instead of using svcxdr_tmpalloc(), and operations like op_create lack an
-> .op_release callback in the nfsd4_procedures array, what happens if the
-> compound fails early before execution?
->=20
-> For example, if a client sends a compound designed to fail early (like
-> op_putfh(bad_fh) followed by op_create), do the pre-decoded acls get
-> permanently leaked?
->=20
-> [Severity: High]
-> This is also a pre-existing issue, but does nfsd4_decode_posixacl() lack
-> bounds checking on the client-supplied count?
->=20
-> If the xdr decoder reads a 32-bit count and passes it directly to
-> posix_acl_alloc() without checking it against the remaining xdr stream le=
-ngth,
-> could an unprivileged client supply an artificially large count to trigge=
-r
-> massive memory allocations and page allocation warnings?
->=20
-> Furthermore, if the subsequent decode loop fails (because the packet actu=
-ally
-> lacks the access control entries), does nfsd4_decode_posixacl() return th=
-e
-> error without freeing the freshly allocated acl, leading to a memory leak=
- on
-> malformed requests?
->=20
-> --
-> Sashiko AI review =C2=B7 https://sashiko.dev/#/patchset/20260521-nfsd4_cr=
-eate_acl_posix_acl_overwrite_leak-v1-1-850fc0a7157e@kernel.org?part=3D1
+> This is a pre-existing issue, but does of_check_msi_parent() handle a NULL
+> msi_np pointer correctly here?
+> 
+> The documentation added above explicitly states that msi_np can be NULL if
+> the caller only needs the translated ID without receiving the controller node.
+> However, if msi-map is absent, execution falls through to
+> of_check_msi_parent() with that potentially NULL pointer.
+> 
+> Looking at drivers/of/irq.c:of_check_msi_parent(), if the msi-parent
+> property is found, it evaluates:
+> 
+> 	if ((*msi_node && *msi_node != msi_spec.np) || msi_spec.args_count != 0)
+> 		ret = -EINVAL;
+> 
+> 	if (!ret) {
+> 		/* Return with a node reference held */
+> 		*msi_node = msi_spec.np;
+> 		return 0;
+> 	}
+> 
+> If msi_np is NULL, wouldn't dereferencing it via *msi_node trigger a NULL
+> pointer dereference? Should this be fixed to safely handle a NULL pointer?
+> 
 
-FWIW, these bugs have already been caught are being tracked, but they
-are lower on the list.
---=20
-Jeff Layton <jlayton@kernel.org>
+I see this is indeed a pre-existing latent bug .
+
+fsl_mc_get_msi_id() in drivers/bus/fsl-mc/fsl-mc-msi.c already passes NULL for msi_np:
+
+return (root_dprc_dev->parent->of_node ?
+    of_msi_xlate(dev, NULL, mc_dev->icid) :
+    iort_msi_map_id(dev, mc_dev->icid));
+
+In practice it never triggered because FSL MC devices use msi-map, so of_map_msi_id()
+succeeds and of_check_msi_parent() is never reached.
+
+I'll will fix this in v16 by checking for msi_np aswell before calling 
+of_check_msi_parent() in of_msi_xlate().
+
+if (msi_np && !of_check_msi_parent(parent_dev->of_node, msi_np))
+    break;
+
+
+Thanks,
+Vijay
+
+>>  			break;
+>>  	}
+> 
+
