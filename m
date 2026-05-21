@@ -1,86 +1,65 @@
-Received: from mx0b-0031df01.pphosted.com (mx0b-0031df01.pphosted.com [205.220.180.131])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-ej1-f47.google.com (mail-ej1-f47.google.com [209.85.218.47])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 205DE3D9699
-	for <sashiko-reviews@lists.linux.dev>; Thu, 21 May 2026 13:10:33 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.180.131
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 45FB73D811E
+	for <sashiko-reviews@lists.linux.dev>; Thu, 21 May 2026 13:16:26 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.218.47
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1779369035; cv=none; b=u1p1mVM/zChuDBZyZGH0tvGoubaDW/aNcR+GnpAYWEA0wgIB6K3DYH4sQQN71+B8rzNeCM6sbbXWgMGXE+WSiuNXnjtCuvDbkyqGeAAcavrk6T/g8TvaJ4qszxdl6tUs+qUBWzDMKtHg9fabxQBGHuxRcq6K39VC3N2tcP+bq+8=
+	t=1779369387; cv=none; b=Xw3ij5lAM5u+4kag7jrmVV/fg+eSGg/nVB8xR/aQOKFD2mzXu83/XWfk3O/zvmCgwHiSFgPik8XcDL4uWj9TGQxatipt83qMuUcPwLKIzmfylV+CsbZDd1k1dDHu4SKvmCWEAuqBBTNAMIZXe1pV+uLEAk5QtceS7z/eYj+AnGM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1779369035; c=relaxed/simple;
-	bh=2GSnzV9ciCdURTUIeb8cFpTdA8HTh0lpn3BPxfOouaI=;
+	s=arc-20240116; t=1779369387; c=relaxed/simple;
+	bh=SaPZiPenwdTzqGiHu7Uj+sL3JfcCMs0SGRnnVz4i/yQ=;
 	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=HbneZ7aTWAJed2VIId7DEjc+l7jH61//9Lc9uZ09MM/djkjJue2IWy4DXPuT5HdAggCoSo/x+FVZhGwPc5DcS9tEugwl3HZclOsgW8IuPwy9F0YmEmSpGIlnMM7xH96JpYP+t61dIPCABrJDSw2JDSvalV8c8GEh2NfB5V6alZo=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com; spf=pass smtp.mailfrom=oss.qualcomm.com; dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b=AZ756s19; dkim=pass (2048-bit key) header.d=oss.qualcomm.com header.i=@oss.qualcomm.com header.b=cV4tKqqR; arc=none smtp.client-ip=205.220.180.131
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=oss.qualcomm.com
+	 In-Reply-To:Content-Type; b=HIY9GPuoDU7F2I4seThRSiGAORETuRoIrBEQeDWRpfHeOxxUIyD5QkR9zfP/KRT/fCxtwyyCG+l7OeZ1uUGFMV6DnLHjuHV/0BFnLX0lZ29+2IbFIlATOP0NlTB5fsueh5AlAk+L7yfteM+l4YtaS238hA4hJ2h14vMonGDgw4s=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=U1odnHxZ; arc=none smtp.client-ip=209.85.218.47
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b="AZ756s19";
-	dkim=pass (2048-bit key) header.d=oss.qualcomm.com header.i=@oss.qualcomm.com header.b="cV4tKqqR"
-Received: from pps.filterd (m0279868.ppops.net [127.0.0.1])
-	by mx0a-0031df01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id 64L99ks63343477
-	for <sashiko-reviews@lists.linux.dev>; Thu, 21 May 2026 13:10:33 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=qualcomm.com; h=
-	cc:content-transfer-encoding:content-type:date:from:in-reply-to
-	:message-id:mime-version:references:subject:to; s=qcppdkim1; bh=
-	0+u39I4+waHFNk0WDdpK3zNnsyjAzm42aKp+xFiWAMI=; b=AZ756s19SuH7Zxx8
-	eZnLorFYVrulqy+ULK57h3tw4swbpVyHyxLX8S9zypcRtDhvvrKzwZLxsTWUZita
-	7SpK/XCi+QjWTMfiGKhb+9rZV/U710BoIhUMH7bVASKC7G2QyEAM06SlMLLi0+Iz
-	+HobBO01uh9TC1j06Pfa1PcvbAtiazo0L8IRK1NcS1Z3cPFACMFk2dPigjyXdnSP
-	zKGFCUtcwijpvsGoUNFGkC9XSEqyTLe+/THVBCXxewhWQGSqgr28GiEhhkeDDD28
-	3hwJNcBS5+SKvyPZIig57ap0NZFPRi4lV1d+q+quaxSuAYm6cmKuIgEQAEv3VEDR
-	ono+IA==
-Received: from mail-pl1-f200.google.com (mail-pl1-f200.google.com [209.85.214.200])
-	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 4e9wahse2j-1
-	(version=TLSv1.3 cipher=TLS_AES_128_GCM_SHA256 bits=128 verify=NOT)
-	for <sashiko-reviews@lists.linux.dev>; Thu, 21 May 2026 13:10:32 +0000 (GMT)
-Received: by mail-pl1-f200.google.com with SMTP id d9443c01a7336-2bc763c7256so141588775ad.3
-        for <sashiko-reviews@lists.linux.dev>; Thu, 21 May 2026 06:10:32 -0700 (PDT)
+	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="U1odnHxZ"
+Received: by mail-ej1-f47.google.com with SMTP id a640c23a62f3a-bd8f9889a8cso667451666b.1
+        for <sashiko-reviews@lists.linux.dev>; Thu, 21 May 2026 06:16:26 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=oss.qualcomm.com; s=google; t=1779369032; x=1779973832; darn=lists.linux.dev;
+        d=linaro.org; s=google; t=1779369385; x=1779974185; darn=lists.linux.dev;
         h=content-transfer-encoding:in-reply-to:from:content-language
          :references:cc:to:subject:user-agent:mime-version:date:message-id
          :from:to:cc:subject:date:message-id:reply-to;
-        bh=0+u39I4+waHFNk0WDdpK3zNnsyjAzm42aKp+xFiWAMI=;
-        b=cV4tKqqRSzD3lNHGRd6dyG5vUJeSDpa5uXr1QJtPhJLRtTlzYhOKUX+E8Vesyhm2iL
-         +vwJvo5T+/sfqM9QeeNKBLLtLu2LSEFx6VhHxMbFYNkboOeUaOPnJIZ+EXhyeDOVcyWP
-         V/JXlOFCLelCsQN6Ilbxn01uEYg0j/Kg6v2o04LnRxYZ2hcr9aHChDNTP49ypQEF7do5
-         XYEgCwAn+314MpdcoWyRhmENmnt5OvfskfHtWV61GnWp4obovdFdcIf541y4pUKG7nHK
-         sa4/dVWXHzAW7z50K1f+5ZN9oabV+BNeeGXvJ7Vg67DbnGsJ8kqUcaxoXVqi+i47x6rv
-         dS7A==
+        bh=RqVGYnj73pC8tzdaFr6gsyXtunlM26AM6XUG51yicB0=;
+        b=U1odnHxZvPtUPAUgmXKkrbK7/QJ322cXn1vit5fsLtOKlVz+Hgo5XWVtmE+UA6EDzk
+         ry+9FC9MhBBgNmXz5R4zSJ3V3xpos9NWM0GS126F08mfBGwZEAUE8lCzFr/zKUx45U0o
+         G3czo/AXkMpebr8Q/jFswv+DndOqjKD4Zp42DdloCENsFGwrWNPyBpfBDlyA+95LTUcT
+         nA8NmLG6g0zCp+bQEI8nMBlMrkNZjEJazl4f1ZFg3I7aHqZ2wfk49MA1PuqJSDxHperj
+         B3tD5qOcPWn440WNy4w1e+wJYpprd5izPIBgnOxilYFfo5T81G9cP5FV7tWU6tmSO5lb
+         a8Aw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20251104; t=1779369032; x=1779973832;
+        d=1e100.net; s=20251104; t=1779369385; x=1779974185;
         h=content-transfer-encoding:in-reply-to:from:content-language
          :references:cc:to:subject:user-agent:mime-version:date:message-id
          :x-gm-gg:x-gm-message-state:from:to:cc:subject:date:message-id
          :reply-to;
-        bh=0+u39I4+waHFNk0WDdpK3zNnsyjAzm42aKp+xFiWAMI=;
-        b=AwvMceshtljrdccHqiOyK/LgOq55ftdw9c07FfXv6qe16ymRtUaPIfH20oMRqcEjKs
-         EFxD7OwCoMNn9WlyBRBfXegRbMOS1TMp2IaevycLYZn8y1XP45bGAAukX59lXSXX09mO
-         azaCYD3AUsIniypkBYQaHb3TDdKJyItzLesclnfWXTFsx7B0k6x95XJNVm9+Q/mvbFV+
-         WTcYkUp/cfhBSfkLvjuMGFwu+13LLiHDBW5DPQwv3OXrBoSf88qw4SOPJkq2glBeAv3I
-         Vy8mNd0lJrPbJwgAL5i1kWa+QPJAcYOI7WNN5xt4PkUfByFdC615f6ffoUNjq3X45wJ+
-         XnVQ==
-X-Gm-Message-State: AOJu0YxSWgJOXnVkmXRQleWDdlgLbpSKDJhVo0sncSC+KG/wuQX2D7XV
-	CAljVK01z8bfaxeqhQigZEAeUuVYSvE4fE6WDYp/DMn7l5qtWi0aeHSGoNhnWg8CJxZf/861nxD
-	BglhTFj9znWg3+sq+yrnms/KyrQN7L3GFr8Llig0sIC5digukbRR83VHhwMJ1T1VL9KDTLIK1n1
-	w7vXM=
-X-Gm-Gg: Acq92OGSLpKyfXQhDS41vdb2JvCZHZFdk5xY54lAmtkekJo2D1O+g8EIcINCM7AiMCT
-	kYmoS0da/JESDhEym6kO7TcsddgtS2FxKI8X5ak8Vj6aqSNr80Fnq3/9Dad8klIQscq0UmGA2vq
-	TJrW06SfVGdD5wblcWqtthslezsdAOtbVopSY+JsGYXI9iykAM3txG57/qvouowCc725eisXWx5
-	aGJ337euvzSHxT8gdLHTLE8Dm274bx+L0pLJq5DypXq+aiQ3uEcTN0Nk9/wDsc2Gr98wTK1UhWh
-	PMnfd7cezIv8wIYiaMkd7ve2t0MFkllTmAn5Z5XctQZAvVhGWffniRofQ0ZtQhiTFpemV8rErwc
-	JgXam04BDJMKeC1SW22y4WjHiA4ITsjM6ciJKhsUU3vmbfY2s7f7q+TNWsA==
-X-Received: by 2002:a17:903:245:b0:2b2:4d36:7aa with SMTP id d9443c01a7336-2bea33c2013mr29525025ad.35.1779369031974;
-        Thu, 21 May 2026 06:10:31 -0700 (PDT)
-X-Received: by 2002:a17:903:245:b0:2b2:4d36:7aa with SMTP id d9443c01a7336-2bea33c2013mr29524355ad.35.1779369031315;
-        Thu, 21 May 2026 06:10:31 -0700 (PDT)
-Received: from [192.168.1.9] ([205.254.168.165])
-        by smtp.gmail.com with ESMTPSA id d9443c01a7336-2bea9a3c89csm10065165ad.83.2026.05.21.06.10.28
+        bh=RqVGYnj73pC8tzdaFr6gsyXtunlM26AM6XUG51yicB0=;
+        b=bsZTrPn2rRwR044DjYPjjimhMeEvnS9MhTWXtOaxfHVyi8VaRGnv0UEUXsrpfoMUod
+         qm/zElKmIoQ8lUfW/OF2JES5BNE7Esb/1YDzPyqg4LFUP4SOzxg5tjyoljT20GW9YSt9
+         /oWhrK7YyfErhHLorN+PsHC3qLLMqCqHYiWd9qXoMZKiaBcvGWECOkZMPoi2wW0KTKpy
+         9t75FWBAU16Q7JTN05Jd5RuZ1IhWLDjrA+wlYZDl7Nj4Yum8crNW4l0G8DM1rgTkv1vP
+         Sah8H2m5nR2JsjxUEfjuSCB0ngUHW+gccNfNgmI5k5kN2zwHNZndwWjqVmKPOHFTfn+t
+         255g==
+X-Gm-Message-State: AOJu0YzxGHPxZ0gkoLfP13hvyvuNPkXQcoBhIWh+X+CXKFTeF3Cw7h6+
+	GJKbykng1O5mYOu6UO45idt83MAeVt1E95s0PyjT+UVjUdPFatdyoFTvkOVPo8Wxxxg=
+X-Gm-Gg: Acq92OEZ2rUbyWaDRVG3CQ8QrlBhgNQnbqIkv4dydIrnJvrfQYisBkgMswXGsmRwwDf
+	hjQWbNh0T/FbBrJOm8vFjb72LdMYxXT9xKrSZDtn9Xa5wHpt1rNGj9I6YVph9usQTDv+tS5uRpN
+	1ZY8ebbHSqFAWwuVFFHdgWEW+OeT9OyR33STs+utfKVlhHaxc9czAjEbcc1RAaNX5R6OIndjRKC
+	+laCgLR8iV1/orpSdwCuWkWg2huWCofdkf7Xrvdc9KXcAf32CJq85IW3rfKbl4HZOoEoUCJCZe0
+	PN+BPJymB1XmWcnqJB03I8aE1eN4xaX2lJZ+DF+ibSgn97e0Z/pnL7d6cOgrlp19tzsrFxa95M+
+	Bipb6VpVFVQgFfAbYnlUM16TY1EJNpunfmlBMcvkoBa94mIjKn8inRpapebqwR3u2VP7zBaJTl4
+	cnqd21QQFwTAkIDLXAiBHLAM2LujRYjYhJGJakCtE=
+X-Received: by 2002:a17:906:5a41:b0:bd0:6dbe:22b1 with SMTP id a640c23a62f3a-bdc121ba82amr126088266b.12.1779369384498;
+        Thu, 21 May 2026 06:16:24 -0700 (PDT)
+Received: from [192.168.1.3] ([185.48.77.170])
+        by smtp.gmail.com with ESMTPSA id ffacd0b85a97d-45eaa92de9asm2799089f8f.17.2026.05.21.06.16.23
         (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Thu, 21 May 2026 06:10:31 -0700 (PDT)
-Message-ID: <57ad7943-ab05-4b7d-b55f-3a7da7457137@oss.qualcomm.com>
-Date: Thu, 21 May 2026 18:40:26 +0530
+        Thu, 21 May 2026 06:16:24 -0700 (PDT)
+Message-ID: <e060c4cf-59fe-42f0-bb05-adb520a6c80a@linaro.org>
+Date: Thu, 21 May 2026 14:16:23 +0100
 Precedence: bulk
 X-Mailing-List: sashiko-reviews@lists.linux.dev
 List-Id: <sashiko-reviews.lists.linux.dev>
@@ -88,155 +67,80 @@ List-Subscribe: <mailto:sashiko-reviews+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:sashiko-reviews+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v15 2/3] of: Factor arguments passed to of_map_id() into a
- struct
-To: sashiko-reviews@lists.linux.dev
-Cc: Frank.Li@kernel.org, devicetree@vger.kernel.org, imx@lists.linux.dev,
-        linux-pci@vger.kernel.org, robh@kernel.org, conor+dt@kernel.org
-References: <20260520-parse_iommu_cells-v15-2-b5f99ad4e7e8@oss.qualcomm.com>
- <20260520085613.9052F1F000E9@smtp.kernel.org>
+Subject: Re: [PATCH v2 5/6] tools/build: selftests: Allow versioning LLVM lld
+To: Arnaldo Carvalho de Melo <acme@kernel.org>,
+ Ihor Solodrai <ihor.solodrai@linux.dev>
+Cc: sashiko-reviews@lists.linux.dev, dmitry.torokhov@gmail.com,
+ linux-perf-users@vger.kernel.org, bpf@vger.kernel.org,
+ linux-input@vger.kernel.org
+References: <20260518-james-perf-llvm-version-v2-5-f12cc4f031d8@linaro.org>
+ <20260518093237.90640C2BCC6@smtp.kernel.org>
+ <ef5688a7-3e1d-47be-aca7-cc6e564e059c@linaro.org> <ag4QkPOCQ5LWy-U3@x1>
 Content-Language: en-US
-From: Vijayanand Jitta <vijayanand.jitta@oss.qualcomm.com>
-In-Reply-To: <20260520085613.9052F1F000E9@smtp.kernel.org>
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8bit
-X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwNTIxMDEzMSBTYWx0ZWRfX8An+5IkLv95n
- RwrZb2G40mj5v7YnHXmkYmIbTPDdINayGAKgc1jcA9LONAEky0aA1piY3f/GrL0NVeOtl6+N22o
- b7+WX7qeO00+w9ts5hdZfZp2I9aBx8ZbK4Ax9zdDmfQnuxVvymUHIoXQ2Ie/IziWh9i/lFj/AUL
- yMrAhDqc1StuQURwkR15va48RUG+K8X0rOMkpioxs1SHisUkHJ+JrXPFH2Xl0eWc1CUd8DssUbB
- bJuA/IhziYpiQ3/y13kZSWHp/JYgueqlaF3sya0h+lA0UVCHLSXzrxErxieQIKQ1hwt50K8Jd5G
- 2H2QTLxuo+oViCzJZgsg+dwDbUi5Q+h1/KT3Twr8g0AoqZNxl8m2AXDMsqMPb/lQeD/iwf1PEuu
- O6edxq/0Pwe5OD6UX+Wok8abrkx/QV0ADopzTZYWVBYBex4zbSKLyTouK1wmAISFLic1iCT9b1s
- BpZ7wigCmDBFU54FFIg==
-X-Proofpoint-ORIG-GUID: -JB2SDOwJKXxbcEFnfIYyOPqiNG8Akmz
-X-Proofpoint-GUID: -JB2SDOwJKXxbcEFnfIYyOPqiNG8Akmz
-X-Authority-Analysis: v=2.4 cv=H8LrBeYi c=1 sm=1 tr=0 ts=6a0f0448 cx=c_pps
- a=IZJwPbhc+fLeJZngyXXI0A==:117 a=49gMqqAeKCh39Y98CdGbvA==:17
- a=IkcTkHD0fZMA:10 a=NGcC8JguVDcA:10 a=s4-Qcg_JpJYA:10
- a=VkNPw1HP01LnGYTKEx00:22 a=u7WPNUs3qKkmUXheDGA7:22 a=ZpdpYltYx_vBUK5n70dp:22
- a=VwQbUJbxAAAA:8 a=EUspDBNiAAAA:8 a=ysTZoyIZg4-46AWNULEA:9 a=3ZKOabzyN94A:10
- a=QEXdDO2ut3YA:10 a=uG9DUKGECoFWVXl0Dc02:22
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.293,Aquarius:18.0.1143,Hydra:6.1.51,FMLib:17.12.100.49
- definitions=2026-05-21_02,2026-05-18_01,2025-10-01_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
- priorityscore=1501 phishscore=0 adultscore=0 suspectscore=0
- lowpriorityscore=0 spamscore=0 impostorscore=0 malwarescore=0 bulkscore=0
- clxscore=1011 classifier=typeunknown authscore=0 authtc= authcc=
- route=outbound adjust=0 reason=mlx scancount=1 engine=8.22.0-2605130000
- definitions=main-2605210131
+From: James Clark <james.clark@linaro.org>
+In-Reply-To: <ag4QkPOCQ5LWy-U3@x1>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
 
 
 
-On 5/20/2026 2:26 PM, sashiko-bot@kernel.org wrote:
-> Thank you for your contribution! Sashiko AI review found 1 potential issue(s) to consider:
+On 20/05/2026 8:50 pm, Arnaldo Carvalho de Melo wrote:
+> On Mon, May 18, 2026 at 10:47:53AM +0100, James Clark wrote:
+>>
+>>
+>> On 18/05/2026 10:32 am, sashiko-bot@kernel.org wrote:
+>>> Thank you for your contribution! Sashiko AI review found 1 potential issue(s) to consider:
+>>> - [Medium] Empty USE_LD variable causes clang build failure in selftests when ld.lld is not in PATH.
+>>> --
+>>>
+>>> commit 371ca22c55bb0fa6502ac06f7b33d63418ad16ff
+>>> Author: James Clark <james.clark@linaro.org>
+>>>
+>>> tools/build: selftests: Allow versioning LLVM lld
+>>>
+>>> This commit adds an LLD variable to Makefile.include to allow versioning of
+>>> LLVM's linker, keeping it consistent with the rest of the LLVM toolchain. It
+>>> modifies the BPF selftests Makefile to resolve the full path of the linker
+>>> using the command -v shell utility.
+>>>
+>>>> diff --git a/tools/testing/selftests/bpf/Makefile b/tools/testing/selftests/bpf/Makefile
+>>>> index 6ef6872adbc3e..836e783f0170e 100644
+>>>> --- a/tools/testing/selftests/bpf/Makefile
+>>>> +++ b/tools/testing/selftests/bpf/Makefile
+>>>
+>>> [ ... ]
+>>>
+>>>> @@ -245,9 +245,9 @@ $(OUTPUT)/%:%.c
+>>>>    # LLVM's ld.lld doesn't support all the architectures, so use it only on x86
+>>>>    ifeq ($(SRCARCH),$(filter $(SRCARCH),x86 riscv))
+>>>> -LLD := lld
+>>>> +USE_LD := $(shell command -v $(LLD))
+>>>
+>>> Does this cause the build to fail if the toolchain directory is not in the
+>>> system PATH?
+>>>
+>>> If a user explicitly specifies the compiler using an absolute path like
+>>> CLANG=/path/to/clang, but does not add the toolchain directory to their PATH,
+>>> the command -v utility will return an empty string.
+>>
+>> If they don't use LLVM= and use CLANG= with an absolute path then they need
+>> to set all the tools with an absolute path. That's the problem that setting
+>> the path with a prefix for all tools with LLVM= solved.
+>>
+>> I suppose this could _technically_ be a regression, but so could adding any
+>> new build rule that added a new tool that wouldn't be set in someones
+>> existing build command. Being that strict would mean we can't ever add new
+>> tools so I don't think this is an issue. And I don't think there's a way to
+>> solve this and also respect the documented rules of LLVM=
 > 
-> Pre-existing issues:
-> - [High] Unconditional dereference of `msi_node` in `of_check_msi_parent` when it can be NULL.
-> --
+> Hey, this touches several tools and libs, did you get acks besides the
+> one from Ian?
 > 
-> commit d17879206927f3ee695759bc3559fd04a6a551ab
-> Author: Charan Teja Kalla <charan.kalla@oss.qualcomm.com>
-> Subject: of: Factor arguments passed to of_map_id() into a struct
-> 
-> This patch updates of_map_id() to take a struct of_phandle_args instead of
-> passing the target device node and translated IDs separately. It explicitly
-> separates the input filter node from the output arguments and transfers
-> ownership of the matched node reference to the caller.
-> 
->> diff --git a/drivers/of/irq.c b/drivers/of/irq.c
->> index e37c1b3f87362..e63a43be6c4a3 100644
->> --- a/drivers/of/irq.c
->> +++ b/drivers/of/irq.c
->> @@ -796,14 +796,15 @@ static int of_check_msi_parent(struct device_node *dev_node, struct device_node
->>  /**
->>   * of_msi_xlate - map a MSI ID and find relevant MSI controller node
->>   * @dev: device for which the mapping is to be done.
->> - * @msi_np: Pointer to target MSI controller node
->> + * @msi_np: Pointer to target MSI controller node, or NULL if the caller
->> + *           only needs the translated ID without receiving the controller node.
->> + *           If non-NULL and pointing to a non-NULL node, only entries targeting
->> + *           that node will be matched. If non-NULL and pointing to NULL, it will
->> + *           receive the first matching target node with a reference held.
->>   * @id_in: Device ID.
->>   *
->>   * Walk up the device hierarchy looking for devices with a "msi-map"
->>   * or "msi-parent" property. If found, apply the mapping to @id_in.
->> - * If @msi_np points to a non-NULL device node pointer, only entries targeting
->> - * that node will be matched; if it points to a NULL value, it will receive the
->> - * device node of the first matching target phandle, with a reference held.
->>   *
->>   * Returns: The mapped MSI id.
->>   */
->> @@ -817,8 +818,21 @@ u32 of_msi_xlate(struct device *dev, struct device_node **msi_np, u32 id_in)
->>  	 * "msi-map" or an "msi-parent" property.
->>  	 */
->>  	for (parent_dev = dev; parent_dev; parent_dev = parent_dev->parent) {
->> -		if (!of_map_msi_id(parent_dev->of_node, id_in, msi_np, &id_out))
->> +		struct of_phandle_args msi_spec = {};
->> +
->> +		if (!of_map_msi_id(parent_dev->of_node, id_in, msi_np, &msi_spec)) {
->> +			if (msi_spec.np) {
->> +				/* msi-map matched: use the translated ID and target node */
->> +				if (msi_spec.args_count > 0)
->> +					id_out = msi_spec.args[0];
->> +				if (msi_np && !*msi_np)
->> +					*msi_np = of_node_get(msi_spec.np);
->> +				of_node_put(msi_spec.np);
->> +			}
->> +			/* msi-map present but no match → stop walking */
->>  			break;
->> +		}
->> +		/* -ENODEV: msi-map absent → check for msi-parent */
->>  		if (!of_check_msi_parent(parent_dev->of_node, msi_np))
-> 
-> [Severity: High]
-> This is a pre-existing issue, but does of_check_msi_parent() handle a NULL
-> msi_np pointer correctly here?
-> 
-> The documentation added above explicitly states that msi_np can be NULL if
-> the caller only needs the translated ID without receiving the controller node.
-> However, if msi-map is absent, execution falls through to
-> of_check_msi_parent() with that potentially NULL pointer.
-> 
-> Looking at drivers/of/irq.c:of_check_msi_parent(), if the msi-parent
-> property is found, it evaluates:
-> 
-> 	if ((*msi_node && *msi_node != msi_spec.np) || msi_spec.args_count != 0)
-> 		ret = -EINVAL;
-> 
-> 	if (!ret) {
-> 		/* Return with a node reference held */
-> 		*msi_node = msi_spec.np;
-> 		return 0;
-> 	}
-> 
-> If msi_np is NULL, wouldn't dereferencing it via *msi_node trigger a NULL
-> pointer dereference? Should this be fixed to safely handle a NULL pointer?
-> 
+> - Arnaldo
 
-I see this is indeed a pre-existing latent bug .
+Only the build bpf failure report from Ihor on V1 but nothing from 
+anyone on V2. Ihor did you get a chance to look at this version?
 
-fsl_mc_get_msi_id() in drivers/bus/fsl-mc/fsl-mc-msi.c already passes NULL for msi_np:
-
-return (root_dprc_dev->parent->of_node ?
-    of_msi_xlate(dev, NULL, mc_dev->icid) :
-    iort_msi_map_id(dev, mc_dev->icid));
-
-In practice it never triggered because FSL MC devices use msi-map, so of_map_msi_id()
-succeeds and of_check_msi_parent() is never reached.
-
-I'll will fix this in v16 by checking for msi_np aswell before calling 
-of_check_msi_parent() in of_msi_xlate().
-
-if (msi_np && !of_check_msi_parent(parent_dev->of_node, msi_np))
-    break;
-
-
-Thanks,
-Vijay
-
->>  			break;
->>  	}
-> 
+Thanks
+James
 
