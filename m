@@ -1,66 +1,66 @@
-Received: from mail-wm1-f43.google.com (mail-wm1-f43.google.com [209.85.128.43])
+Received: from mail-wm1-f49.google.com (mail-wm1-f49.google.com [209.85.128.49])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E1155366067
-	for <sashiko-reviews@lists.linux.dev>; Thu, 21 May 2026 15:52:44 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.43
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 589EF367F26
+	for <sashiko-reviews@lists.linux.dev>; Thu, 21 May 2026 15:58:33 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.49
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1779378766; cv=none; b=SZz3qbTcqrFlyVLfdQUmblkBxSka935gXln7sDwHg9O8FBVgPa0HCHP51rxOPPuakoY9W3hmkmhnKU7mQgAAhZAirnFxp46HMqkNC+khO/8KzufFv6krpt59z/Y/uEFR7THtfLPFGSWXSg1rdYyRq6keYRYBP0EkLe0NgjkbQnc=
+	t=1779379115; cv=none; b=G640WPzqn8kZZDH4CAUF/BXX+xZmmlOqpLe3uAztJzKZK4N7dJ75f+rueBiyRa1RWLGhqj1OCoDGzME4yDXj+wyCu/Qf4jB7cir6SCpEox4WqdSRC3P3fkoCfPFdhCYQY57dudvdNTvq+oYX6vaWesv+jhyShmtLXl7UEQr4XB4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1779378766; c=relaxed/simple;
-	bh=IAHbP6eW63FYnPMlo/beAXyk3SY1/tCIJIPwYDUTOf0=;
+	s=arc-20240116; t=1779379115; c=relaxed/simple;
+	bh=gwbzpMqoyauJv6ZRU25YlHFTPtZLY5Bw/4JWn1pxOLE=;
 	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=df5ayBMA0ja7Fl4BHT7ANAsGcqnakfibvga0dECshkgIwjJYirbnfUthlkeMl0gr4uC8aImh2Ml2KDnwEjVElmwo/WDICgD2XseGAEsfJTelm0FF9BWYOS5yEPjbGUm3XUlRWja81f4YldeINR85SFoKyNn3PJvmerYmdOsAIAg=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=baylibre.com; spf=pass smtp.mailfrom=baylibre.com; dkim=pass (2048-bit key) header.d=baylibre.com header.i=@baylibre.com header.b=f6poZJcn; arc=none smtp.client-ip=209.85.128.43
-Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=baylibre.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=baylibre.com
+	 In-Reply-To:Content-Type; b=p3iNkyjfvlwsJNybmReLhWHVKtD96du0RHLZCc149Yk9FJ+5qjEQ8a5fNkcwqRWh8VhnkF05sM1DzYlDTI4HXej4q0vieToYw4lM0/rWUcqDMW28OCArjUnE6ooy67mDlsnBzaGSVYp0loCh4sOTYTeScM+Sbli/mVoRP6cp01k=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=A8/IES48; arc=none smtp.client-ip=209.85.128.49
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=baylibre.com header.i=@baylibre.com header.b="f6poZJcn"
-Received: by mail-wm1-f43.google.com with SMTP id 5b1f17b1804b1-488b3f8fa2bso56911195e9.1
-        for <sashiko-reviews@lists.linux.dev>; Thu, 21 May 2026 08:52:44 -0700 (PDT)
+	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="A8/IES48"
+Received: by mail-wm1-f49.google.com with SMTP id 5b1f17b1804b1-4891e86fabeso82511605e9.1
+        for <sashiko-reviews@lists.linux.dev>; Thu, 21 May 2026 08:58:33 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=baylibre.com; s=google; t=1779378763; x=1779983563; darn=lists.linux.dev;
-        h=content-transfer-encoding:in-reply-to:from:references:cc:to
-         :content-language:subject:user-agent:mime-version:date:message-id
+        d=linaro.org; s=google; t=1779379112; x=1779983912; darn=lists.linux.dev;
+        h=content-transfer-encoding:in-reply-to:from:content-language
+         :references:cc:to:subject:user-agent:mime-version:date:message-id
          :from:to:cc:subject:date:message-id:reply-to;
-        bh=VkuwrL+8sdByToUa06iwqboK6E1NO0C0KpcSpGWRRog=;
-        b=f6poZJcnVhVfZUmkWbuqEIIVXXEwF34GUm0OKjmBE60fN8iQu+ApIUfDyQd1Aq6Smz
-         TveY/rXTexPR4dPrJjQbjtfpZM4kveShoSVh6dxYvIhpEmQCl4lomA82PsRNaXeNJX1W
-         pcjVmssZLU367UcAmpdPoSgK73X08FU6V9KBOePWkUKjlQGFf9AxkzRvyAAIiD/9jJWd
-         Zmp0ZYWXYfdsYUe/c7C4cEXDo0xW9WXpPoa6m1ACJwQSLbyuJst0XiuVipITclQCnTCX
-         2HDD8e3PU5MIt9e8jqDPpEyL1Od5HuQsqvwyFguo4xKvSkD265aGNoMzXJt5uNNoOTeO
-         9xmg==
+        bh=g1j9UgJds853Zv46e1xGjbShW1UJNiQmjpR76/hPVDE=;
+        b=A8/IES485H2irupoFKCkYvzyMrCP7DuZP4jUw9L/UOkhv6iJGilWgdlKBkQE7pblOb
+         qS0yNznQ+U0O1UfcI936TdfUi2RnafobcBpRePoM906P45pi0HUVbQEyNz2jj2FYb4Jy
+         9g2Qw/LJwnxnGAelx2cOTC36yZag/7uWlPq0S4UeBigwVn3xRAKJbFgWk4DSwtlHb8SA
+         0iKNg3NotKYx0H2Jdiu3G+rm/UU0SKB6h3F0tqnOs7/F3nNhukrfV8yZMrLajhobieGg
+         ya8rvjykZJQYPiK/PeflCjh2rLJVMYsoU3yUY4rjgEA1n4JZMuQFxxv5qyiaysw/KhZD
+         A1Xg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20251104; t=1779378763; x=1779983563;
-        h=content-transfer-encoding:in-reply-to:from:references:cc:to
-         :content-language:subject:user-agent:mime-version:date:message-id
+        d=1e100.net; s=20251104; t=1779379112; x=1779983912;
+        h=content-transfer-encoding:in-reply-to:from:content-language
+         :references:cc:to:subject:user-agent:mime-version:date:message-id
          :x-gm-gg:x-gm-message-state:from:to:cc:subject:date:message-id
          :reply-to;
-        bh=VkuwrL+8sdByToUa06iwqboK6E1NO0C0KpcSpGWRRog=;
-        b=PMeMfxSvFFwKA+k0eFxqjmeuOBq0h1JJMxHuOARSVNCLnTba2ia7q8+DzMaXPyJJ76
-         xwHANkofmKxd0ne0Abk2Exa56SfiTL1DaiDGIvws6n5YFwfID1Gd9yvokT9kPYcDd9Ue
-         zhmpBbsdC4X7kroIO1UEhYvFDyu4HsAiCEdb10oznCXo7MberhhBrcOpMNNcsIhts4Fu
-         HZPAcSKw2Mv9V6Wj3378M+yMlpvNHvlvJxATfp7HbYtHfBRO0TvUt3qSccW8epSyzB73
-         9xohYtayilxKm/cfjZhDLNeJSvQ6NI5CoT/5y8PvlBR5LsXI5XEUAK8wkQNQcbzAKJ5P
-         lrhA==
-X-Gm-Message-State: AOJu0YwKAti3+JeL0YmYB+d2GL6JaMqhV1BfL+3o2XrPoAryb1WKKkrE
-	BROiPav3HNIhNSo3kE8S5UfMhKkgiUz/a7MybRCiphb4LqidxexVgHlOLGw2EKsRQ6y4b1Iieda
-	kZsVD
-X-Gm-Gg: Acq92OF7d2oxNauUuuJfK5eCdufEV01eF8Od4s7ONf2lKnRGxgvB/OgJq5qa/4Oln+/
-	poikyqF0gJiy04K9sDYmS6PwN7sWfQfIyNS8fBdLbLq9bTvdovJoP18qVtBnKHlkMXsL4haR9MB
-	QTbU1FNvlVIRCud26yOVGPpHXdyclVeUUkD49qkhmH740yIIiMNXL2xr+OgL5iDw80b50Bd0pGX
-	tU2aUxtdkTAmqB6olKYX24Z2NpEvWOONXBRGTj5L3SjKer+eo5CXV16RQtLAniQN7mitzZasWyi
-	N5MnpBfkrUrWroOAGwf8V/42k8Q1ppSxPtFze0CXQnkVUP5YImN+Ds5K3qQaH3b9NdoEQK7njgl
-	Zp6+B0c5fOC2ZBgGGd2jOntRefZXB9FZE324VSE6egjwyMg8mQ+9HYj+qMDc+d/77k94lCCWjIN
-	O2R48ZNS8SWW1kkO7nbWEoXhSHGQ==
-X-Received: by 2002:a05:600c:621a:b0:48d:50a:6ef4 with SMTP id 5b1f17b1804b1-490360ae7e3mr40140425e9.11.1779378763182;
-        Thu, 21 May 2026 08:52:43 -0700 (PDT)
-Received: from [192.168.3.100] ([151.41.223.93])
-        by smtp.gmail.com with ESMTPSA id 5b1f17b1804b1-4903c99cb43sm34383775e9.4.2026.05.21.08.52.42
+        bh=g1j9UgJds853Zv46e1xGjbShW1UJNiQmjpR76/hPVDE=;
+        b=JJ/pvxWz4jPYkFKyy1iQ/TvJOkCICJw+zCzYFjpvLIczgbjy/xCYuAEdPPO9YOotXS
+         f9kn++eDqcxFNnwbsSvIR/NN49K+z35FKLlHcp/KVT5XQruUVXfJcqzMBvNdW9KUtmmr
+         wHELyA9DDdqEUx1wi4VPqeifU10PECoz5/uljaP+N2dq8pxDyWw6ve4qnXV1x6NkHEC2
+         VakYvBdch0uh1a+5nPsD971ojudtyLvBzexIpvlMXeM3Aqj6CvMFCy4cX8L/V3JSx/9o
+         cC5My+FHEG8r1XthoCSfuBgvbSMHYhh5eLb/t8mtB6s8WRjp7nPbcYafIVp43ZAwIqfP
+         ITHA==
+X-Gm-Message-State: AOJu0Yyk/U9s+cL5cTSn4zyi8fnlXMbfWxu4ITfuwUN/K+nJJR63zHtk
+	egyCejs0zfOZiR0gznc8Nntb0QafEMCEjOiubJ0FXjN9G7JC9E4A6AAVkvQB8rB8gryl6aHzPgF
+	ZYkbRlZs=
+X-Gm-Gg: Acq92OGSy3syKe70gmwthu+DsWw+c55p7FqH/bwSPNrzVlyX0eFpoRmruBeB1tAPhuk
+	Hlhg2vzRRq3F0XKDH/Dx1ubUs2jK1aPTQnQ4TR+uJmiUtQ4Ea3Wc0h2HC3yGMa4wnB5SpPizIOE
+	vAu3vGE1hbpxBXzASJBwyABPfGFFosW4TffFT658EV2hHHHJdx9ckOzRxY8yNzBOSB50a7D+l5t
+	S1cCEPhj4XK8CrGd7eeAquBtNKVBgiYIRS9U4NoI/wYS5HYjP6KTlW9IBV+Ec2VxP/xwWp3pKPo
+	gY+PCSFvCpu2vgLf1eJGkU3GbkeuSSK528EL2MkZqDH+eTkGbZVdv3hUDeqTyf/7MeHnObFOWPs
+	C3t2OkU80lN8Noza9N5hhSrdxj7Bavv4UWrkZK+Gp4k/aYl/tK6fgN1uOjIOUJJqbEXeVhVUHV5
+	cB+OhWmhn8irDEbHqRCogyL31n+4nVcxebcQ==
+X-Received: by 2002:a05:600c:444e:b0:489:c57:7836 with SMTP id 5b1f17b1804b1-490360dbb9emr47602385e9.27.1779379111491;
+        Thu, 21 May 2026 08:58:31 -0700 (PDT)
+Received: from [192.168.0.35] ([109.76.55.220])
+        by smtp.gmail.com with ESMTPSA id 5b1f17b1804b1-49035eec6casm18452345e9.33.2026.05.21.08.58.29
         (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Thu, 21 May 2026 08:52:42 -0700 (PDT)
-Message-ID: <b274a43d-de3a-420d-911d-6b233b4294ed@baylibre.com>
-Date: Thu, 21 May 2026 16:59:12 +0200
+        Thu, 21 May 2026 08:58:30 -0700 (PDT)
+Message-ID: <06964d8d-10a4-4dfc-b0e0-a66eb12f8978@linaro.org>
+Date: Thu, 21 May 2026 16:58:29 +0100
 Precedence: bulk
 X-Mailing-List: sashiko-reviews@lists.linux.dev
 List-Id: <sashiko-reviews.lists.linux.dev>
@@ -68,85 +68,310 @@ List-Subscribe: <mailto:sashiko-reviews+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:sashiko-reviews+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 2/4] ASoC: meson: aiu-encoder-i2s: use gx_iface and
- gx_stream structures
-Content-Language: en-US
+Subject: Re: [PATCH v6 2/2] phy: qcom-mipi-csi2: Add a CSI2 MIPI DPHY driver
 To: sashiko-reviews@lists.linux.dev
-Cc: neil.armstrong@linaro.org, linux-amlogic@lists.infradead.org
-References: <20260515-reshape-aiu-as-axg-v1-2-53b457784ff3@baylibre.com>
- <20260515161047.C0701C2BCF7@smtp.kernel.org>
-From: Valerio Setti <vsetti@baylibre.com>
-In-Reply-To: <20260515161047.C0701C2BCF7@smtp.kernel.org>
+Cc: devicetree@vger.kernel.org, vkoul@kernel.org, robh@kernel.org,
+ olteanv@gmail.com, linux-phy@lists.infradead.org, neil.armstrong@linaro.org,
+ conor+dt@kernel.org
+References: <20260521-x1e-csi2-phy-v6-2-9d73d9bd7d20@linaro.org>
+ <20260521124947.4BE4B1F000E9@smtp.kernel.org>
+Content-Language: en-US
+From: Bryan O'Donoghue <bryan.odonoghue@linaro.org>
+In-Reply-To: <20260521124947.4BE4B1F000E9@smtp.kernel.org>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 7bit
 
-
->>   static void aiu_encoder_i2s_shutdown(struct snd_pcm_substream *substream,
->>   				     struct snd_soc_dai *dai)
->>   {
->>   	struct aiu *aiu = snd_soc_component_get_drvdata(dai->component);
->> +	struct gx_stream *ts = snd_soc_dai_get_dma_data(dai, substream);
->> +	struct gx_iface *iface = ts->iface;
->> +
->> +	if (!snd_soc_dai_active(dai))
->> +		iface->rate = 0;
+On 21/05/2026 13:49, sashiko-bot@kernel.org wrote:
+> Thank you for your contribution! Sashiko AI review found 10 potential issue(s) to consider:
+> - [High] Extensive resource leaks on error paths in power_on and set_clock_rates, and missing OPP rate reset in power_off.
+> - [High] phy_qcom_mipi_csi2_configure overrides the DT-parsed lane count without bounds checking against the physical layout.
+> - [High] Unconditional dereference of pd_list leads to a NULL pointer dereference panic.
+> - [High] Division by zero occurs if the timer clock rate resolves to 0.
+> - [High] Settle count calculation can underflow to a very large positive value.
+> - [Medium] The ops->lanes_disable callback is omitted in phy_qcom_mipi_csi2_power_off.
+> - [Medium] Clock lane positioning and lane polarities are parsed but entirely ignored.
+> - [Medium] The probe function allows the absence of an OPP table, but power_on strictly requires it.
+> - [Medium] qcom_csi2_phy_xlate accesses PHY arguments without checking args_count.
+> - [Medium] Unvalidated data-lanes integer from DT can cause an out-of-bounds bitwise shift.
+> --
 > 
-> The ASoC core invokes the shutdown callback before decrementing the stream's
-> active count.
+> commit 3c373b3ab7783a677ec4c98f344d8b1c57e2e110
+> Author: Bryan O'Donoghue <bryan.odonoghue@linaro.org>
 > 
-> Because of this, does snd_soc_dai_active(dai) always evaluate to at least 1
-> during the shutdown of the final stream?
+> phy: qcom-mipi-csi2: Add a CSI2 MIPI DPHY driver
 > 
-> If so, iface->rate will never be reset to 0, which would cause subsequent
-> streams with different sample rates to permanently fail with -EINVAL until
-> the driver is reloaded.
+> Add a new MIPI CSI2 driver in DPHY mode initially. The entire set of
+> existing CAMSS CSI PHY init sequences are imported in order to save time
+> and effort in later patches.
 > 
-
-I might be missing something also here, but I don't think this is 
-correct. It seems to me that when 'aiu_encoder_i2s_shutdown' is called 
-the number of active streams have already been decreased so everything 
-works as expected.
-In support of my hypothesis I have tried this patch series together with 
-the upcoming one adding also capture stream and I didn't experience 
-problems, so I think that 'iface->date' is correctly reset when expected.
-
->> +static int aiu_encoder_i2s_trigger(struct snd_pcm_substream *substream,
->> +				   int cmd,
->> +				   struct snd_soc_dai *dai)
+>> diff --git a/drivers/phy/qualcomm/phy-qcom-mipi-csi2-3ph-dphy.c b/drivers/phy/qualcomm/phy-qcom-mipi-csi2-3ph-dphy.c
+>> index 0000000000000..8cdff35be2da9
+>> --- /dev/null
+>> +++ b/drivers/phy/qualcomm/phy-qcom-mipi-csi2-3ph-dphy.c
+> [ ... ]
+>> +static u8 phy_qcom_mipi_csi2_settle_cnt_calc(s64 link_freq, u32 timer_clk_rate)
 >> +{
->> +	struct gx_stream *ts = snd_soc_dai_get_dma_data(dai, substream);
->> +	int ret;
+> [ ... ]
+>> +	timer_period_ps = div_u64(PSEC_PER_SEC, timer_clk_rate);
+>> +	settle_cnt = t_hs_settle_ps / timer_period_ps - 6;
+> 
+> [Severity: High]
+> Can this subtraction underflow to a very large positive value?
+> 
+> If the system has a low timer clock rate resulting in a high
+> timer_period_ps, the division could yield a value less than 6. Since
+> settle_cnt is an unsigned 8-bit integer, wrapping around to a large
+> value could severely misconfigure the PHY hardware timings.
+
+I'm not sure it is really worthwhile writing defensive code for this case.
+
+We audit every DT binding for clock frequency sanity so you have to 
+input junk into a device tree and upstream it and we aren't generally in 
+the habit of verifying those inputs.
+
+> 
 >> +
->> +	switch (cmd) {
->> +	case SNDRV_PCM_TRIGGER_START:
->> +	case SNDRV_PCM_TRIGGER_RESUME:
->> +	case SNDRV_PCM_TRIGGER_PAUSE_RELEASE:
->> +		ret = gx_stream_start(ts);
->> +		break;
->> +	case SNDRV_PCM_TRIGGER_SUSPEND:
->> +	case SNDRV_PCM_TRIGGER_PAUSE_PUSH:
->> +	case SNDRV_PCM_TRIGGER_STOP:
->> +		gx_stream_stop(ts);
->> +		ret = 0;
->> +		break;
+>> +	return settle_cnt;
+>> +}
+> [ ... ]
+>> +static int phy_qcom_mipi_csi2_lanes_enable(struct mipi_csi2phy_device *csi2phy,
+>> +					   struct mipi_csi2phy_stream_cfg *cfg)
+>> +{
+> [ ... ]
+>> +	settle_cnt = phy_qcom_mipi_csi2_settle_cnt_calc(cfg->link_freq, csi2phy->timer_clk_rate);
+>> +
+>> +	val = CSIPHY_3PH_CMN_CSI_COMMON_CTRL5_CLK_ENABLE;
 > 
-> The PCM trigger callback typically executes in an atomic context with the
-> PCM stream spinlock held and hardware interrupts disabled, unless the DAI
-> is explicitly marked with nonatomic = 1.
+> [Severity: Medium]
+> The commit message states that data-lane and clock lane positioning and
+> polarity selection are supported. Are the polarity fields ignored here?
+
+Exactly the same situation as we already have for this PHY in CAMSS 
+since forever.
+
+We parse but don't program the various fields.
+
+> It appears the clock lane enable bit is hardcoded and the polarity fields
+> parsed from the DT are not programmed into the PHY registers.
+
+>> +	for (i = 0; i < cfg->num_data_lanes; i++)
+>> +		val |= BIT(lane_cfg->data[i].pos * 2);
+
+Yeah this is longstanding behaviour but, its probably worthwhile to 
+update it since we consume the data from DT anyway.
+> [Severity: Medium]
+> Can this result in an out-of-bounds shift?
 > 
-> Looking at gx_stream_start() and gx_stream_stop(), they both unconditionally
-> acquire a sleeping lock via mutex_lock(&ts->lock).
+> The pos value is read from the device tree as an unvalidated 32-bit
+> integer. A malformed DT with large lane positions (e.g. > 15) could
+> result in a shift value >= 32, which is undefined behavior and might
+> truncate the hardware configuration mask.
+
+Still no - not going to spend time picking through what goes into DT in 
+the driver.
+
+For example we don't sanity check register values or IRQ vector numbers.
 > 
-> Does acquiring a mutex in this atomic context trigger a scheduling while
-> atomic kernel panic?
+>> +
+>> +	writel(val, csi2phy->base +
+>> +	       CSIPHY_3PH_CMN_CSI_COMMON_CTRLn(regs->common_regs_offset, 5));
+> [ ... ]
+>> diff --git a/drivers/phy/qualcomm/phy-qcom-mipi-csi2-core.c b/drivers/phy/qualcomm/phy-qcom-mipi-csi2-core.c
+>> index 0000000000000..d8bdb2dd3c2ac
+>> --- /dev/null
+>> +++ b/drivers/phy/qualcomm/phy-qcom-mipi-csi2-core.c
+> [ ... ]
+>> +static int
+>> +phy_qcom_mipi_csi2_set_clock_rates(struct mipi_csi2phy_device *csi2phy,
+>> +				   s64 link_freq)
+>> +{
+> [ ... ]
+>> +	opp = dev_pm_opp_find_freq_ceil(dev, &opp_rate);
+>> +	if (IS_ERR(opp)) {
+> 
+> [Severity: Medium]
+> Since the probe function tolerates -ENODEV for the OPP table, won't
+> power_on unconditionally fail here if the table is actually missing?
+> 
+>> +		dev_err(csi2phy->dev, "Couldn't find ceiling for %lld Hz\n",
+>> +			link_freq);
+>> +		return PTR_ERR(opp);
+>> +	}
+>> +
+>> +	for (int i = 0; i < csi2phy->pd_list->num_pds; i++) {
+> 
+> [Severity: High]
+> What happens to pd_list if CONFIG_PM is disabled?
+> 
+> devm_pm_domain_attach_list() returns 0 when CONFIG_PM is disabled, but
+> pd_list will remain NULL. This would cause a NULL pointer dereference
+> here and in phy_qcom_mipi_csi2_power_off().
+
+No idea, lets find out.
+
+>> +		unsigned int perf = dev_pm_opp_get_required_pstate(opp, i);
+>> +
+>> +		ret = dev_pm_genpd_set_performance_state(csi2phy->pd_list->pd_devs[i], perf);
+>> +		if (ret) {
+>> +			dev_err(csi2phy->dev, "Couldn't set perf state %u\n",
+>> +				perf);
+>> +			dev_pm_opp_put(opp);
+>> +			return ret;
+> 
+> [Severity: High]
+> Does this leak the performance state for previously set domains?
+> 
+> If the loop fails on a later iteration, it appears to return without resetting
+> the domains that were already successfully configured.
+
+True we need to unwind.
+
+>> +		}
+>> +	}
+>> +	dev_pm_opp_put(opp);
+>> +
+>> +	ret = dev_pm_opp_set_rate(dev, opp_rate);
+>> +	if (ret) {
+>> +		dev_err(csi2phy->dev, "dev_pm_opp_set_rate() fail\n");
+>> +		return ret;
+>> +	}
+>> +
+>> +	timer_rate = clk_round_rate(csi2phy->timer_clk, link_freq / 4);
+>> +	if (timer_rate < 0)
+>> +		return timer_rate;
+>> +
+>> +	ret = clk_set_rate(csi2phy->timer_clk, timer_rate);
+>> +	if (ret)
+>> +		return ret;
+>> +
+>> +	csi2phy->timer_clk_rate = timer_rate;
+> 
+> [Severity: High]
+> What if clk_round_rate() returns 0?
+> 
+> If the clock is disabled or misconfigured, timer_rate could be 0. Later,
+> phy_qcom_mipi_csi2_settle_cnt_calc() calls
+> div_u64(PSEC_PER_SEC, timer_clk_rate), which would result in a division
+> by zero and a kernel panic.
+
+An esoteric ask since you again have to have bugs in your DT but, for 
+the sake of not being spammed by a static analysis tool, sure lets check 
+for zero.
+
+>> +
+>> +	return 0;
+>> +}
+>> +
+>> +static int phy_qcom_mipi_csi2_configure(struct phy *phy,
+>> +					union phy_configure_opts *opts)
+>> +{
+> [ ... ]
+>> +	stream_cfg->link_freq = dphy_cfg->hs_clk_rate;
+>> +	stream_cfg->num_data_lanes = dphy_cfg->lanes;
+> 
+> [Severity: High]
+> Does this blindly overwrite the DT-parsed lane count without bounds
+> checking against the physical layout?
+
+It takes the lanes_count from the controller DT field.
+
+> If a consumer requests more lanes than are physically mapped in the
+> device tree, the hardware configuration could iterate out-of-bounds of
+> the initialized array elements, repeatedly applying bitmasks for physical
+> position 0.
+
+No the value comes from the controller DT data-lanes field but since we 
+are consuming data-lanes from the PHY its actually a worthwhile test to 
+validate what the controller says to what we have an -EINVAL if they 
+don't agree.
+
+> 
+>> +
+>> +	return 0;
+>> +}
+>> +
+>> +static int phy_qcom_mipi_csi2_power_on(struct phy *phy)
+>> +{
+> [ ... ]
+>> +	ret = clk_bulk_prepare_enable(csi2phy->soc_cfg->num_clk,
+>> +				      csi2phy->clks);
+>> +	if (ret) {
+>> +		dev_err(dev, "failed to enable clocks, %d\n", ret);
+>> +		goto poweroff_phy;
+>> +	}
+>> +
+> [ ... ]
+>> +poweroff_phy:
+>> +	regulator_bulk_disable(csi2phy->soc_cfg->num_supplies,
+>> +			       csi2phy->supplies);
+>> +
+>> +	return ret;
+> 
+> [Severity: High]
+> Does this error path leak the performance state and OPP rate?
+> 
+> It seems to only disable regulators, completely missing the cleanup for
+> dev_pm_genpd_set_performance_state() and dev_pm_opp_set_rate().
 > 
 
-This is one of the parts that has been copied from AXG. I would say that 
-the problem highlighted here would only appear in case two formatters 
-are started/stopped on same stream concurrently. If that's the case then 
-this is not a problem for GX because we're going to have 1 single 
-formatter per stream.
+When the clocks disable the perf state _should_ drop back but, I will check.
 
--- 
-Valerio
+>> +}
+>> +
+>> +static int phy_qcom_mipi_csi2_power_off(struct phy *phy)
+>> +{
+>> +	struct mipi_csi2phy_device *csi2phy = phy_get_drvdata(phy);
+>> +	int i;
+>> +
+>> +	for (i = 0; i < csi2phy->pd_list->num_pds; i++)
+>> +		dev_pm_genpd_set_performance_state(csi2phy->pd_list->pd_devs[i], 0);
+> 
+> [Severity: High]
+> Does this leave the OPP frequency vote elevated?
+> 
+> It doesn't look like dev_pm_opp_set_rate(dev, 0) is called to release
+> the OPP frequency vote.
+> 
+> [Severity: Medium]
+> Is the ops->lanes_disable() callback intentionally omitted here?
+> 
+> Disabling the clocks and regulators without invoking the callback
+> bypasses the hardware-specific teardown sequence (like clearing
+> CLK_ENABLE and COMMON_PWRDN_B). Could this leave the PHY in an invalid
+> logical state for the next power-on cycle?
+
+I mean, when power goes off you loose the state in the regs ... but for 
+the sake of completeness sure, I will add this.
+
+>> +
+>> +	clk_bulk_disable_unprepare(csi2phy->soc_cfg->num_clk,
+>> +				   csi2phy->clks);
+>> +	regulator_bulk_disable(csi2phy->soc_cfg->num_supplies,
+>> +			       csi2phy->supplies);
+>> +
+>> +	return 0;
+>> +}
+> [ ... ]
+>> +static struct phy *qcom_csi2_phy_xlate(struct device *dev,
+>> +				       const struct of_phandle_args *args)
+>> +{
+>> +	struct mipi_csi2phy_device *csi2phy = dev_get_drvdata(dev);
+>> +
+>> +	if (args->args[0] != PHY_TYPE_DPHY) {
+> 
+> [Severity: Medium]
+> Can this access uninitialized stack memory?
+> 
+> If the device tree node has #phy-cells = <0>, args_count will be 0, and
+> reading args->args[0] might yield uninitialized memory, leading to
+> unpredictable behavior or the incorrect rejection of valid PHY bindings.
+> Should args->args_count be checked first?
+
+I feel the answer is "no" but I'm not averse to checking.
+
+> 
+>> +		dev_err(csi2phy->dev, "mode %d -EOPNOTSUPP\n", args->args[0]);
+>> +		return ERR_PTR(-EOPNOTSUPP);
+>> +	}
+> 
 
