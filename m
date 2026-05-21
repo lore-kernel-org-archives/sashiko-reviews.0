@@ -1,145 +1,183 @@
-Received: from relay.hostedemail.com (smtprelay0015.hostedemail.com [216.40.44.15])
+Received: from DU2PR03CU002.outbound.protection.outlook.com (mail-northeuropeazon11011053.outbound.protection.outlook.com [52.101.65.53])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 19F2E30675C
-	for <sashiko-reviews@lists.linux.dev>; Thu, 21 May 2026 14:17:24 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=216.40.44.15
-ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1779373046; cv=none; b=MXNGbYh7HNyYPUMxBw+d1Xq2wUBOa4zWACGcXT7fMdbvZD6Qaf/CZG7ZstKB4/+aIbi4RzoAbWTQah13ShdOMuL7IsCqSeoltcbEOqamZh4FKDOBcTFJML/XTYo31NDQePvz1FVVHQTfbR1zDmhXgAGHoY05yxO6R3uU7KAajXg=
-ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1779373046; c=relaxed/simple;
-	bh=7HdOynnfZ41Glz7tPCn9q1ES2n5mZ4rCGHb6hX2+lzI=;
-	h=Date:From:To:Cc:Subject:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=KcUe9xIX0H6Sv3E6iYQek7H+dKAmPHSsrTEkLKGLFDrgyeLpFXvFqD1xGGSNCeeYU4eIpxK2kpbsvmoyirXK+4BxwWN6eHZJGqsnt2qA60eOOswuYIDzTWvAUcxmAEq0eAe8eDIM7yT4UrrlSs1Ud6ATH4SXAZnhDPdd4yqCsvc=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=goodmis.org; spf=pass smtp.mailfrom=goodmis.org; arc=none smtp.client-ip=216.40.44.15
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=goodmis.org
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=goodmis.org
-Received: from omf13.hostedemail.com (lb01a-stub [10.200.18.249])
-	by unirelay04.hostedemail.com (Postfix) with ESMTP id 6518F1A05C4;
-	Thu, 21 May 2026 14:17:23 +0000 (UTC)
-Received: from [HIDDEN] (Authenticated sender: rostedt@goodmis.org) by omf13.hostedemail.com (Postfix) with ESMTPA id 5C15B2001E;
-	Thu, 21 May 2026 14:17:21 +0000 (UTC)
-Date: Thu, 21 May 2026 10:17:42 -0400
-From: Steven Rostedt <rostedt@goodmis.org>
-To: linux-kernel@vger.kernel.org, linux-trace-kernel@vger.kernel.org
-Cc: Masami Hiramatsu <mhiramat@kernel.org>, Mathieu Desnoyers
- <mathieu.desnoyers@efficios.com>, Catalin Marinas
- <catalin.marinas@arm.com>, Will Deacon <will@kernel.org>, Ian Rogers
- <irogers@google.com>, "sashiko-bot@kernel.org" <sashiko-bot@kernel.org>,
- "sashiko-reviews@lists.linux.dev" <sashiko-reviews@lists.linux.dev>
-Subject: Re: [PATCH v20 02/10] ring-buffer: Skip invalid sub-buffers when
- rewinding persistent ring buffer
-Message-ID: <20260521101742.2dd92bad@gandalf.local.home>
-In-Reply-To: <20260520185017.219342323@kernel.org>
-References: <20260520184938.749337513@kernel.org>
-	<20260520185017.219342323@kernel.org>
-X-Mailer: Claws Mail 3.20.0git84 (GTK+ 2.24.33; x86_64-pc-linux-gnu)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0E09D30B508;
+	Thu, 21 May 2026 14:56:42 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=fail smtp.client-ip=52.101.65.53
+ARC-Seal:i=2; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
+	t=1779375404; cv=fail; b=ZMPUUKJOpK0hU7P0YUNm++LX2MIM1wYuC7duqA193lxu8jHwjcsBikmvG8Oj4JU7S9G1fLe53OsB+oXVkkP2Dn/3OdyJ24ojvZdm0zk0y2MbIpoHWYxyCRyzWGsDxNbaU8jYUsIzrI/RH9hieNO0n8V7xYG6VzJAjc1cYcfe4hE=
+ARC-Message-Signature:i=2; a=rsa-sha256; d=subspace.kernel.org;
+	s=arc-20240116; t=1779375404; c=relaxed/simple;
+	bh=QZc2rtnJ/CuNw1MYCwZJndqZ/Jroc2AEY3Vd4ymRYsE=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:Content-Type:
+	 Content-Disposition:In-Reply-To:MIME-Version; b=SnaSNCx+P8eYLYcsReMxrEXnhQYMfqffRDtfAMsAjwsqmKWvrE6otc4jevoms4vsZtHuse7TakWm6YTHpJPepG4iKVGKq9pcya0PGBQaFstDYtufZzkp+kAu4ytRCkRL0LMgwkFO9zSF+QFtokVpyvma0UQle2awfyi3VRWthZA=
+ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=nxp.com; spf=pass smtp.mailfrom=nxp.com; dkim=fail (2048-bit key) header.d=nxp.com header.i=@nxp.com header.b=IKZCsEuq reason="signature verification failed"; arc=fail smtp.client-ip=52.101.65.53
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=nxp.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=nxp.com
+Authentication-Results: smtp.subspace.kernel.org;
+	dkim=fail reason="signature verification failed" (2048-bit key) header.d=nxp.com header.i=@nxp.com header.b="IKZCsEuq"
+ARC-Seal: i=1; a=rsa-sha256; s=arcselector10001; d=microsoft.com; cv=none;
+ b=xrSm6Hx99iov48EEgZaRwLhR1oiFuQocwGGiVGZnuO7edz7ERAjdpBRkoG3ZsYfx8QgXd755V39LQaoGU8rS80ao+Q7RXWlFTsYAZVurvMyTQkEh/agxUUjrooozSPZ1tJQn0easAJZqoE+FbUmI/nqlaqV587dCUh7MVUtVm8qH9/TTh08ZjSnRS49jZRyW9UfZ9TYWPvcTJ7Ku62xHCD3vopcG+F+snuI7ONcqbCK0lx5OPV0ppzp6cz/ewYnBH3wC/WW/OGShOpDz3mW7LYLsl9oIPqhso9+nftBor2jK7cfvnB980PYYw8oQtHxFaChKIpzYHa/1j4NbcDdHOw==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com;
+ s=arcselector10001;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
+ bh=NpNIW/QFUPI5g7rAiix1KfJgYEkyrnXDMF9m2z8qhnM=;
+ b=cqsAHoTP6gpCLJ4s+gjk10fOyqn+tM8cTVkWdDrGXWS6zYBQaixQFDkcjnNPs70QMcM8AbrLdxmYoEm/kVaXEZSR/xMDxm7D/UJJqCN62o9pr4xxeft4unFmzRDUBP3NbgBNkuMT2cVCeSYUZXpYRaGtLdXw48o+ekli73Fp0GaoLJmUG1Ige/O6ydacXVc02Q4cCn0d5Bv71kemzpiD86bjHvGjbKiVBC63og9jI7JA/W2TFyuCX64iLTy7IEbWc6iUUrUQGkMphfxGYcr0LJ63hMvy0KEx8W/TlbvIJ/Usx4j0+GONlSe7g3EE+JSLr1pqAXY2Lm+SOB4BtzcTgQ==
+ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
+ smtp.mailfrom=nxp.com; dmarc=pass action=none header.from=nxp.com; dkim=pass
+ header.d=nxp.com; arc=none
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=nxp.com; s=selector1;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
+ bh=NpNIW/QFUPI5g7rAiix1KfJgYEkyrnXDMF9m2z8qhnM=;
+ b=IKZCsEuqfYt3L8982B3wB7SE/kTx4wYpmPuQ1OZjqkbftgxTZZqH8lOKrNVFqgjuDc7myincZgZtsR2KPtnM7UdNnF6MgkFPDKTXM035X5Ju5nvg1oeonOycYGMpW7xHaRkMBVrq4e/gVbfH1vfXB3Uq6oN0RJnf4/vChjbQcJdnitTQqQWmcjGkoLyRmCQtaP2ggnW0kHTU26SNYUhcyF9SK/ixhuYg/TMLFw3vDfoHnPWzgl6n7ErcBmBsBOedkGMiZKlrZE/RUbaeLcSbLmXyCllL2hJhpk0Xd62JOzXWNOhbrPDOgDjWpHYyPRuN7kDLS2KWj9z4GD8uxSYL5A==
+Authentication-Results: dkim=none (message not signed)
+ header.d=none;dmarc=none action=none header.from=nxp.com;
+Received: from PA4PR04MB9366.eurprd04.prod.outlook.com (2603:10a6:102:2a9::8)
+ by AM9PR04MB8761.eurprd04.prod.outlook.com (2603:10a6:20b:408::17) with
+ Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.9870.25; Thu, 21 May
+ 2026 14:56:35 +0000
+Received: from PA4PR04MB9366.eurprd04.prod.outlook.com
+ ([fe80::75e4:8143:ddbc:6588]) by PA4PR04MB9366.eurprd04.prod.outlook.com
+ ([fe80::75e4:8143:ddbc:6588%3]) with mapi id 15.21.0048.013; Thu, 21 May 2026
+ 14:56:35 +0000
+Date: Thu, 21 May 2026 10:56:29 -0400
+From: Frank Li <Frank.li@nxp.com>
+To: sashiko-reviews@lists.linux.dev
+Cc: Frank.Li@oss.nxp.com, dmaengine@vger.kernel.org,
+	linux-pci@vger.kernel.org, Frank.Li@kernel.org, vkoul@kernel.org,
+	imx@lists.linux.dev
+Subject: Re: [PATCH v6 2/9] dmaengine: Add safe API to combine configuration
+ and preparation
+Message-ID: <ag8dHUPZpE1q3V_S@lizhi-Precision-Tower-5810>
+References: <20260520-dma_prep_config-v6-2-06e49b7acb38@nxp.com>
+ <20260521000104.CC1891F000E9@smtp.kernel.org>
+Content-Type: text/plain; charset=iso-8859-1
+Content-Disposition: inline
+Content-Transfer-Encoding: 8bit
+In-Reply-To: <20260521000104.CC1891F000E9@smtp.kernel.org>
+X-ClientProxiedBy: PH7P220CA0166.NAMP220.PROD.OUTLOOK.COM
+ (2603:10b6:510:33b::13) To PA4PR04MB9366.eurprd04.prod.outlook.com
+ (2603:10a6:102:2a9::8)
 Precedence: bulk
 X-Mailing-List: sashiko-reviews@lists.linux.dev
 List-Id: <sashiko-reviews.lists.linux.dev>
 List-Subscribe: <mailto:sashiko-reviews+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:sashiko-reviews+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=US-ASCII
-Content-Transfer-Encoding: 7bit
-X-Rspamd-Server: rspamout07
-X-Rspamd-Queue-Id: 5C15B2001E
-X-Stat-Signature: 7o9tunghr1knfbedsgoqsjqs8qwujopk
-X-Session-Marker: 726F737465647440676F6F646D69732E6F7267
-X-Session-ID: U2FsdGVkX1/jB70Aj1+aKXxZf7o3qaRT1vzTsQfM0jI=
-X-HE-Tag: 1779373041-833705
-X-HE-Meta: U2FsdGVkX18T/5bsBGe5xy7whlSHfiILJqOGCo84zOl5rJOCyTV2qSuspBNGiwwO9JkdKw4L12Ky13QNekLkBrQJ+hEX+5IHql7u3J9yVaAV9vVRRJ8due+rgj0bozKctYU0tZB2VeN9RrQYjT8LwIYZVzFtGK1TxtH/5/GsmpCACx+BeiraqJyJCFk7sWIqCFc16OJlaoBhTmk1luxTSAF0pN2fdKwQiQ+scCQvgzza4VX3/XSgZOMu0GZHcR/VxYWCwthbRF80SKN4mQW0W8NNDZgj7PQfqfm3zXGf0Q5Q0aADZPb3761RqYWOLuaKYzuwj3HxE4sd/bw8uDNUy7qm0XrtvDCRZdW18kcwqs/UjwsxjE0EYmjOoB6Y5ncSZY4Q1eAXF9RSV77HJ0+Zyw==
+X-MS-PublicTrafficType: Email
+X-MS-TrafficTypeDiagnostic: PA4PR04MB9366:EE_|AM9PR04MB8761:EE_
+X-MS-Office365-Filtering-Correlation-Id: 6d0d50c4-4543-4cae-78ad-08deb7492767
+X-MS-Exchange-SenderADCheck: 1
+X-MS-Exchange-AntiSpam-Relay: 0
+X-Microsoft-Antispam:
+	BCL:0;ARA:13230040|376014|1800799024|366016|19092799006|52116014|38350700014|4143699003|22082099003|56012099003|11063799006|18002099003|6133799003;
+X-Microsoft-Antispam-Message-Info:
+	iX15HFQXmvgulBVjPoY2FwnNBK1AWzeV6ta+YR21O/QzrkxWwSLNYwiKKA3Q7sYYZXhSsjZhhl8a/X+1L+okh/mWO/v9JU43McdNxnXKBasIhERbZwNx+EKxN6PTaPeJITq79UEKwigRMgiYbcIczqR/Frb2Ne2Oyj0DU5jqFiOWPijAdkzaDyzh2lnlWWjRdgFgTTmHteTMl7zjFrpcCPLGllISG5wbuUOCBuzeZMJn14Qr/EwJRifu6WAQS1pnNDtVFr6ZFNNMHvlkv2VAyds0Ehlx9FhUDkcQXkc32WpUvm+WxzhE++wYbn+rW3z63q2gMLnhUd8aVRBFiIcAsQMWHhMfrjLbKdznKJ6v6TE96zv6WqmE0nEjcemX83YIjdK2AiHdEt8CvW6gPU30ltL4ZtuxtrhBAiYEkFi9L3TqQ8/jD73PHk2MiJeoK54cmHQzg5ccS+vF4gNQirv7YGycsTuNyyos5Lm5JTwDSgYWUktZOv4p3PB5vHMMAvoIq1gupBtji0yQZnj/YQUFFsCLinrmB+K/Yo4rbJ9YE4xnvYZb7ZTOvg/L1rgqDDUXhqXp5MdWzLdkjUPVjQEeiM74d1/w35QAUz087vbv0im67wnROiVd23J0ow98MTonMgsf+6VcIpo6+487Q3Clfv/2Dhpl3rFHShry0O1YngDF6UpBhIKyWY8/PBml+Ah7
+X-Forefront-Antispam-Report:
+	CIP:255.255.255.255;CTRY:;LANG:en;SCL:1;SRV:;IPV:NLI;SFV:NSPM;H:PA4PR04MB9366.eurprd04.prod.outlook.com;PTR:;CAT:NONE;SFS:(13230040)(376014)(1800799024)(366016)(19092799006)(52116014)(38350700014)(4143699003)(22082099003)(56012099003)(11063799006)(18002099003)(6133799003);DIR:OUT;SFP:1101;
+X-MS-Exchange-AntiSpam-MessageData-ChunkCount: 1
+X-MS-Exchange-AntiSpam-MessageData-0:
+	=?iso-8859-1?Q?8+MqUdCbffMlC7tCc+zaLwecMRmJz2Y1kASI9YXjQzlVlN8RMOdYBKSZGb?=
+ =?iso-8859-1?Q?1LO6WaUZyYqSVko4Bx8g0SlFjnrwiu1CIwSSHcmwJ+exuJVy0hUNItrZ7/?=
+ =?iso-8859-1?Q?Rpokdyb4AVQy6gGXC7ro1jEf0kKc/+IT0L9vwiMd5EnC6DtoxQcjYKgDmA?=
+ =?iso-8859-1?Q?bfHYAb5J9Xl+rViuVbmpBsouhb5tCHhlz1j+UZhczuGWsiRXrJB7XVYjKx?=
+ =?iso-8859-1?Q?aiC56dfjdascqmr4qy+EXcVgv6bKObpOG5DAL1BsnaeJw8cRxL8Rrjj1Qw?=
+ =?iso-8859-1?Q?0I1Jm4u4lq6ZPjbaBE3sfty1e5kYjBZ9GX0BabUnZcU6C4TBYKj/04vo7T?=
+ =?iso-8859-1?Q?spJxAN5beLuTXzZhWXMydJuug3PgUjtDu/FB8GVhEeRDODLi1E7Wzl/DkP?=
+ =?iso-8859-1?Q?1lBmMj5uJWNQqwgH4e5sDY1wWQV2n515YptzDydS7z979AVtdPXMOQ6Bhk?=
+ =?iso-8859-1?Q?t8fSpjFVRjfyrpp1TyJJ4VPJ+01Gl+9Wo5/TAQl2NSFdDWWmb6rN3wO41a?=
+ =?iso-8859-1?Q?jY2EgIkUwSnN1bF4A4wlvTmRSn/g4Cz2+68nYasUDoucS+TjNmStivfbBz?=
+ =?iso-8859-1?Q?gBRLuF+SRBaY8CKAz0QX9xrnQFWwQK4npyX0I7hdAsthupDi5tG3SnMG43?=
+ =?iso-8859-1?Q?4KTEWqVbN2DN5Y/HFZHoKOkC3KA4DcHpRnekp0px/4TqZ3r9RsIZLE6ZW1?=
+ =?iso-8859-1?Q?lTNAyfJBPaHzBcPjshcH6mwSqGLm0MTYy3Xeme3vMQhh3kD2xwU7+ej0Yk?=
+ =?iso-8859-1?Q?vk2P9cycdlDCUtHFGjiEkxgl6fEUCvdXKhSJFmRGSYdehkHwcK2+RPzoR2?=
+ =?iso-8859-1?Q?gFwWm6I2gNQ6G9CXZySbUY6VFeAD6QewOo8waljKzNxb7nWg1JziPKNtCC?=
+ =?iso-8859-1?Q?JWRWNggfaEnOW/u7JoW690XhnCfgZ2rn6d7xfNFFE2Ya1TIiWpcPrBkdLv?=
+ =?iso-8859-1?Q?OjVzdU/qU8VymfMNxpIGq9qU1+fL87SNTPjvRARVEWeZefOen4J1nH9ERO?=
+ =?iso-8859-1?Q?EZRgxpxlj1zUby1UT6x9kFO4eShnV8o/8+ug1YTZghRKkr6bR5U8EEcvB2?=
+ =?iso-8859-1?Q?UBXmroppayEI5IeSxhSXQqFjvRYCspE096new3q2RFZ7P+7Zgt+XQDBOsB?=
+ =?iso-8859-1?Q?ELZXc0+nWkdV+mx0hcH2Pk29859BhjCr7e0gOv3a31rEAJspxfhznVsNvA?=
+ =?iso-8859-1?Q?Rpv+lDLYMqU8T3s7dSySILAngAiOKN5EjoRj0XBuB+w577Wdy+sH4RWlJe?=
+ =?iso-8859-1?Q?mcLpuSqDm50KO6pKzEIIa65P/aD4Bb0rwgA2CiuJ+dHp1yynmLsgZsaYjs?=
+ =?iso-8859-1?Q?KdiLLxp0IhIkNnCloIM/vPGAlwUj1inm92COiCjL69JGcc9di8PtkUIHEy?=
+ =?iso-8859-1?Q?hZ+JVbgFhNHiL7St8bDzRZ85qNoSEXF7kqT/OWHJnMN5cLDCol26xiQsBd?=
+ =?iso-8859-1?Q?xgriY2BEY4N+yGjlC19SBy2tM1dmIYRJyTzhUVsMKQUPsBmz5MAujXxn/3?=
+ =?iso-8859-1?Q?MnGuSVszAPYQScH6+IhU7xk/vMAwgGBF5rkWGOJcHieC/U98PvASMCumEN?=
+ =?iso-8859-1?Q?J9JMEO6KGe6dBk/hyHp8/O4bdTjSXIhcA8kHSC6jRih0CrsUJF+yohm2KX?=
+ =?iso-8859-1?Q?Y6/WXsyper4FMLx62A8qezEFTNw8bx0hd+5fHUdVe0kFWBNkr6ijgCF4GA?=
+ =?iso-8859-1?Q?4Oj0CCOAg2GpEvshz+IT+qsBXGkr3eLXlIPl0OYva9DhCKBm9hzT8/8v6H?=
+ =?iso-8859-1?Q?bmcmuxKW0c6HhkKXQlZ0nvU7eX8Idaw7dHUNPK6SIEb+Pi?=
+X-OriginatorOrg: nxp.com
+X-MS-Exchange-CrossTenant-Network-Message-Id: 6d0d50c4-4543-4cae-78ad-08deb7492767
+X-MS-Exchange-CrossTenant-AuthSource: PA4PR04MB9366.eurprd04.prod.outlook.com
+X-MS-Exchange-CrossTenant-AuthAs: Internal
+X-MS-Exchange-CrossTenant-OriginalArrivalTime: 21 May 2026 14:56:35.5649
+ (UTC)
+X-MS-Exchange-CrossTenant-FromEntityHeader: Hosted
+X-MS-Exchange-CrossTenant-Id: 686ea1d3-bc2b-4c6f-a92c-d99c5c301635
+X-MS-Exchange-CrossTenant-MailboxType: HOSTED
+X-MS-Exchange-CrossTenant-UserPrincipalName: UdhOT6r2BJvMjKFi+zYJHA3qYB/iJkwIsd9SVopKUQGUKuwL0y2um87TUSfiqAZawupdwBYfYhEvYkW3MAd9+A==
+X-MS-Exchange-Transport-CrossTenantHeadersStamped: AM9PR04MB8761
 
-
-[
-  Replying to Sashiko from v19: https://sashiko.dev/?list=org.kernel.vger.linux-trace-kernel#/patchset/177751968499.2136606.17388366710182662849.stgit%40mhiramat.tok.corp.google.com
-]
-
-> > @@ -1892,9 +1895,27 @@ static int rb_validate_buffer(struct buffer_data_page *dpage, int cpu,
-> >  	 * subbuf_size is considered invalid.
-> >  	 */
-> >  	tail = local_read(&dpage->commit) & ~RB_MISSED_MASK;
-> > -	if (tail > meta->subbuf_size - BUF_PAGE_HDR_SIZE)
-> > -		return -1;
-> > -	return rb_read_data_buffer(dpage, tail, cpu, &ts, &delta);
-> > +	if (tail <= meta->subbuf_size - BUF_PAGE_HDR_SIZE)
-> > +		ret = rb_read_data_buffer(dpage, tail, cpu, &ts, &delta);
-
-> Since tail is read from untrusted persistent memory, does this call evaluating
-
-The persistent memory is not untrusted.
-
-> event headers verify enough bytes remain in the sub-buffer?
-> If tail is set to the maximum allowed value, and preceding events are crafted
-> so that the last event starts at tail - 1, the event pointer inside
-> rb_read_data_buffer() will point to the very last byte.
-> Calling rb_event_length(event) will evaluate event->type_len via a 32-bit
-> read which could read past the page boundary and cause a regression if the
-> adjacent page is unmapped.
-> Should the parsing loop verify tail - e >= sizeof(struct ring_buffer_event)
-> before evaluating the event?
-
-> > +	else
-> > +		ret = -1;
-> > +
-> > +	/*
-> > +	 * The timestamp must be greater than @prev_ts and smaller than @next_ts.
-> > +	 * Since this function works in both forward (verify) and reverse (unwind)
-> > +	 * loop, we don't know both @prev_ts and @next_ts at the same time.
-> > +	 * So use the known boundary as the boundary.
-> > +	 */
-> > +	if (ret < 0 || (prev_ts && prev_ts > ts) || (next_ts && ts > next_ts)) {
-
-> Does this timestamp validation properly enforce strictly monotonic page ordering?
-> Inside rb_validate_buffer(), ts is updated by rb_read_data_buffer() to
-> the timestamp of the last event in the current page. The condition
-> (prev_ts && prev_ts > ts) only checks that the previous page's start time
-> is not greater than the current page's end time.
-> Could a corrupted page with a start timestamp earlier than the previous
-> page incorrectly pass validation if its final event timestamp is large enough?
-> Would it prevent this regression to enforce that the current page starts after
-> the previous page by checking prev_ts > dpage->time_stamp?
-
-This may be an enhancement but shouldn't be critical for what is happening now.
-
-> > +		local_set(&bpage->entries, 0);
+On Thu, May 21, 2026 at 12:01:04AM +0000, sashiko-bot@kernel.org wrote:
+> Thank you for your contribution! Sashiko AI review found 1 potential issue(s) to consider:
+> - [Critical] Stack-allocated scatterlist in dmaengine_prep_config_single_safe() leads to use-after-free when consumed asynchronously by DMA drivers.
+> --
+>
+> commit 7f280444e5ae16961e6f77cb674cd3ac061779a0
+> Author: Frank Li <Frank.Li@nxp.com>
+>
+> dmaengine: Add safe API to combine configuration and preparation
+>
+> This commit introduces two helpers to combine DMA slave configuration and
+> transfer preparation atomically. Drivers can either provide a new callback
+> or the helpers will serialize the operations using a per-channel spinlock.
+>
+> > diff --git a/include/linux/dmaengine.h b/include/linux/dmaengine.h
+> > index defa377d2ef54..6fe46c0c94527 100644
+> > --- a/include/linux/dmaengine.h
+> > +++ b/include/linux/dmaengine.h
 > [ ... ]
-> > @@ -1915,25 +1936,29 @@ static void rb_meta_validate_events(struct ring_buffer_per_cpu *cpu_buffer)
-> >  	orig_head = head_page = cpu_buffer->head_page;
-> >  	orig_reader = cpu_buffer->reader_page;
-> >  
-> > -	/* Do the reader page first */
-> > -	ret = rb_validate_buffer(orig_reader->page, cpu_buffer->cpu, meta);
-> > +	/* Do the head page first */
-> > +	ret = rb_validate_buffer(head_page, cpu_buffer->cpu, meta, 0, 0);
-> > +	if (ret < 0) {
-> > +		pr_info("Ring buffer meta [%d] invalid head page detected\n",
-> > +			cpu_buffer->cpu);
-> > +		goto skip_rewind;
-> > +	}
-> > +	ts = head_page->page->time_stamp;
+> > +static inline struct dma_async_tx_descriptor *
+> > +dmaengine_prep_config_single_safe(struct dma_chan *chan, dma_addr_t buf,
+> > +				  size_t len, enum dma_transfer_direction dir,
+> > +				  unsigned long flags,
+> > +				  struct dma_slave_config *config)
+> > +{
+> > +	struct scatterlist sg;
 > > +
-> > +	/* Do the reader page - reader must be previous to head. */
-> > +	ret = rb_validate_buffer(orig_reader, cpu_buffer->cpu, meta, 0, ts);
+> > +	sg_init_table(&sg, 1);
+> > +	sg_dma_address(&sg) = buf;
+> > +	sg_dma_len(&sg) = len;
+> > +
+> > +	return dmaengine_prep_config_sg_safe(chan, &sg, 1, dir, flags, config);
+>
+> [Severity: Critical]
+> Can this lead to a use-after-free if the DMA driver consumes the scatterlist
+> asynchronously?
+>
+> The scatterlist sg is allocated on the stack here. While some drivers might
+> process the scatterlist synchronously during the device_prep_slave_sg or
+> device_prep_config_sg callbacks, others (such as qdma) may save the sgl
+> pointer internally to process later during tx_submit or hardware enqueue.
+>
+> By the time the driver accesses the saved sgl pointer, this function will
+> have returned and the stack frame will be destroyed.
 
-> If rb_validate_buffer() for the head page fails, we take the goto skip_rewind
-> path. Since skip_rewind jumps past this orig_reader validation, and the
-> iteration loop explicitly skips orig_reader:
->     /* Iterate until finding the commit page */
->     for (i = 0; i < meta->nr_subbufs + 1; i++, rb_inc_page(&head_page)) {
->         /* The original reader page has already been checked/counted. */
->         if (head_page == orig_reader)
->             continue;
-> does this mean the reader page escapes validation entirely, introducing a
-> regression?
+This is NOT this patch's problem. exiting prep_single() use the same method.
+dmaengine callback implement should save these informaiton into their
+dma_async_tx_descriptor, can't direct use caller's memory.
 
-This is a bug and needs to be fixed. If the head page is invalid it
-shouldn't skip the rewind but instead jump to the "invalid:" label.
+But this point is also important and easy to be missed. suggest add it to
+dmaegine documentation.
 
-> If an attacker provides a corrupted persistent ring buffer with an invalid
-> head page, would the kernel blindly trust the unvalidated commit length
-> and event data of the reader page?
+Frank
 
-Not worried about attackers but I am worried about corrupted memory.
-
--- Steve
+>
+> > +}
+> > +
+> >  #ifdef CONFIG_RAPIDIO_DMA_ENGINE
+>
+> --
+> Sashiko AI review · https://sashiko.dev/#/patchset/20260520-dma_prep_config-v6-0-06e49b7acb38@nxp.com?part=2
