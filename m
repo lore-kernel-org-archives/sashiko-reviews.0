@@ -1,228 +1,238 @@
-Received: from mail.cjdns.fr (mail.cjdns.fr [5.135.140.105])
+Received: from mx0a-001b2d01.pphosted.com (mx0a-001b2d01.pphosted.com [148.163.156.1])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9CCF635E944
-	for <sashiko-reviews@lists.linux.dev>; Thu, 21 May 2026 08:52:37 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=5.135.140.105
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1E196379EFE;
+	Thu, 21 May 2026 09:39:50 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=148.163.156.1
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1779353559; cv=none; b=iP71K4p/2aXJLjvioaVRmW6s7TRwlAa0BG46X0hM1vobgpjtv81TmgAlvtA9sNWQZS6xWXSvktEHZ2UMUN1Mq5/g8THXSYb2J1Yd0aJZpw6Pqrn/Z/tI6HbYwSvofM6lU55r6MnR5M1IOEMGhwQVpj182ioflPpmZdCUetv7R/w=
+	t=1779356392; cv=none; b=SccbVxnWhNzMT1MnIpI0Y/ASwSmt5juPSb6WqNzNxWdWi2YqfGvRhondMGkFX16KXU4lz77IwxOvDFPLrMpIrZjH2KxmRvqlBI3y58ALi5QphQya3z2uj/FDFMH/CxvjaGW7ilNeuSVmmjFgFijmTz63dA8oEiKWxOkLY7sMjbg=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1779353559; c=relaxed/simple;
-	bh=Z0l6n+8KPWLfEXEGyF2doqbUOXPnz/AqIuOLLkx1gMA=;
+	s=arc-20240116; t=1779356392; c=relaxed/simple;
+	bh=15A3VWWQXsGIYx8QmQbRs7H515mURE5odsjRfEydyxI=;
 	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=mEPCg4GAm6NaJzjtr+3es2wBidoTjem/BuvbcpSHsRQ8r0XX7c73Afytnggfk66rWI6engeXtTPQC/qjgsR/bYvRAQBlwdarX/7nVTGWyUfrlvBvltT9cUlotLCwWuo14JFEd6Gt1ktXgRYkGggapM04pm04BCwIwkyXbTU36dA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=cjdns.fr; spf=none smtp.mailfrom=cjdns.fr; dkim=pass (2048-bit key) header.d=cjdns.fr header.i=@cjdns.fr header.b=a5ZGiPtb; arc=none smtp.client-ip=5.135.140.105
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=cjdns.fr
-Authentication-Results: smtp.subspace.kernel.org; spf=none smtp.mailfrom=cjdns.fr
+	 In-Reply-To:Content-Type; b=RRvpOygRtgU06+Y+neC77zhsQNEPxrU+7VTraJsIIDsM80NicRppsMxM3APX3yrNPUxsC7NJ84j22pPCEzJD0yhiRjYA7cnzhXT/MkOsx+LNOosMUuq3lrIuuk6ObgKTbOby1OmjMX3iK8zLwetVlbTFezALKv0wxyFk28L5lHg=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linux.ibm.com; spf=pass smtp.mailfrom=linux.ibm.com; dkim=pass (2048-bit key) header.d=ibm.com header.i=@ibm.com header.b=OsI4oKz8; arc=none smtp.client-ip=148.163.156.1
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linux.ibm.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linux.ibm.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=cjdns.fr header.i=@cjdns.fr header.b="a5ZGiPtb"
-Received: from [127.0.0.1] (localhost [127.0.0.1]) by localhost (Mailerdaemon) with ESMTPSA id DA9EC447707;
-	Thu, 21 May 2026 10:52:33 +0200 (CEST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=cjdns.fr; s=dkim;
-	t=1779353554; h=from:subject:date:message-id:to:cc:mime-version:content-type:
-	 content-transfer-encoding:content-language:in-reply-to:references;
-	bh=CcYqCiCTpSF2c1/Tx3uk0iXJngFvjxCHybS5Uhc3c/4=;
-	b=a5ZGiPtbPgU8pPdwVoufxmAErYMUVdxuBNs3rB9CwpeCVzqrs3NhjnOpYP6XBOBt6EdHH8
-	bQqthAyafa3D6Tw0dzhAKdD1pow1T/JhVwsUCbPKUfC0iuzJZqoNv8bPeturebtYhsR4ml
-	tuGL7mKlK9G24quzCdMjR3NmbPovw7a82H2/DC1I/JM/PX8y0+PuoF2hT53iY6lnUfPTjX
-	u8C62wyY7IxNFszJvlNvQflaaMxZgMhbzsTqdoNu5Ht3u6bjtLU0M1fUlS8ahSbtAeUUX5
-	Tkm+E1D+hBXkEq0+UO+kRBKU/Tv2aGKR7dz3hz+VNRPBfR9NzGXV/a5G84WWQw==
-Message-ID: <6ee00f5a-627e-4d1f-b73a-276cc3252042@cjdns.fr>
-Date: Thu, 21 May 2026 10:52:33 +0200
+	dkim=pass (2048-bit key) header.d=ibm.com header.i=@ibm.com header.b="OsI4oKz8"
+Received: from pps.filterd (m0360083.ppops.net [127.0.0.1])
+	by mx0a-001b2d01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id 64L5YUik220135;
+	Thu, 21 May 2026 09:39:49 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=ibm.com; h=cc
+	:content-transfer-encoding:content-type:date:from:in-reply-to
+	:message-id:mime-version:references:subject:to; s=pp1; bh=ymCmBR
+	MPL5uDMTJVIazU6HwkEwv/JxhGRxmChYRcOeE=; b=OsI4oKz8gxgqSztjdP0qI6
+	OpIOyLGYZLbWFT4gvqFOxFj2Tvvv53YWaoE1D+itNLHCVbUgbBbIggenFVpIgPej
+	fQMhwmg54owas4vf7QL0lNdIVhz0D+WQ3t0E3TQiqrZ+hEueGihp+Z/2ywlABxos
+	1MrVZUZP0NXLMw4wdUV38dBPeHy8UOsgKiM0Cw2MzPDNruQhFSsAIvsBAAwLSwxW
+	9GBtkD3QJH3gJ37/A+PPecldmO17sjb3HeTRQMvGHA7nDaQzk5EsykQ62HeM400A
+	Tkk8yjnVkldh4KO6R4j03bfjwwlP8OWxtR+nBw8lPd/XzwyayADYgE4Fpr28meoQ
+	==
+Received: from ppma23.wdc07v.mail.ibm.com (5d.69.3da9.ip4.static.sl-reverse.com [169.61.105.93])
+	by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 4e6h9y68aj-1
+	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+	Thu, 21 May 2026 09:39:48 +0000 (GMT)
+Received: from pps.filterd (ppma23.wdc07v.mail.ibm.com [127.0.0.1])
+	by ppma23.wdc07v.mail.ibm.com (8.18.1.7/8.18.1.7) with ESMTP id 64L9dCeg007999;
+	Thu, 21 May 2026 09:39:47 GMT
+Received: from smtprelay05.fra02v.mail.ibm.com ([9.218.2.225])
+	by ppma23.wdc07v.mail.ibm.com (PPS) with ESMTPS id 4e74dhubvv-1
+	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+	Thu, 21 May 2026 09:39:47 +0000 (GMT)
+Received: from smtpav07.fra02v.mail.ibm.com (smtpav07.fra02v.mail.ibm.com [10.20.54.106])
+	by smtprelay05.fra02v.mail.ibm.com (8.14.9/8.14.9/NCO v10.0) with ESMTP id 64L9djLm47972790
+	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
+	Thu, 21 May 2026 09:39:45 GMT
+Received: from smtpav07.fra02v.mail.ibm.com (unknown [127.0.0.1])
+	by IMSVA (Postfix) with ESMTP id 657DB20043;
+	Thu, 21 May 2026 09:39:45 +0000 (GMT)
+Received: from smtpav07.fra02v.mail.ibm.com (unknown [127.0.0.1])
+	by IMSVA (Postfix) with ESMTP id 4735D20040;
+	Thu, 21 May 2026 09:39:45 +0000 (GMT)
+Received: from [9.52.200.195] (unknown [9.52.200.195])
+	by smtpav07.fra02v.mail.ibm.com (Postfix) with ESMTP;
+	Thu, 21 May 2026 09:39:45 +0000 (GMT)
+Message-ID: <cd3beb08-cc63-47bc-b877-9f43112ef51d@linux.ibm.com>
+Date: Thu, 21 May 2026 11:39:44 +0200
 Precedence: bulk
 X-Mailing-List: sashiko-reviews@lists.linux.dev
 List-Id: <sashiko-reviews.lists.linux.dev>
 List-Subscribe: <mailto:sashiko-reviews+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:sashiko-reviews+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird Beta
-Subject: Re: [PATCH v8 3/3] PCI: mediatek: Add support for EcoNet EN7528 SoC
-To: Manivannan Sadhasivam <mani@kernel.org>, sashiko-reviews@lists.linux.dev
-Cc: linux-pci@vger.kernel.org, devicetree@vger.kernel.org, robh@kernel.org,
- conor+dt@kernel.org
-References: <20260520183827.908243-4-cjd@cjdns.fr>
- <20260520195806.4726A1F000E9@smtp.kernel.org>
- <r2l6c665a3feivxabhlkqx5hghvg4s6spxz7xmqvlxawqijkub@qz3gcdxuavf7>
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH v15 03/20] unwind_user/sframe: Store .sframe section data
+ in per-mm maple tree
+To: sashiko-reviews@lists.linux.dev, Steven Rostedt <rostedt@kernel.org>
+Cc: bpf@vger.kernel.org, Josh Poimboeuf <jpoimboe@kernel.org>,
+        Indu Bhagat <ibhagatgnu@gmail.com>
+References: <20260520154004.3845823-4-jremus@linux.ibm.com>
+ <20260520162914.13A0F1F000E9@smtp.kernel.org>
 Content-Language: en-US
-From: Caleb James DeLisle <cjd@cjdns.fr>
-In-Reply-To: <r2l6c665a3feivxabhlkqx5hghvg4s6spxz7xmqvlxawqijkub@qz3gcdxuavf7>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
-X-Last-TLS-Session-Version: TLSv1.3
+From: Jens Remus <jremus@linux.ibm.com>
+Organization: IBM Deutschland Research & Development GmbH
+In-Reply-To: <20260520162914.13A0F1F000E9@smtp.kernel.org>
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
+X-TM-AS-GCONF: 00
+X-Proofpoint-Reinject: loops=2 maxloops=12
+X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwNTIxMDA5NSBTYWx0ZWRfX42IXDi+exWNH
+ IDJFrrU7Ei336C0NBSMqkcKWeYs98e2d2NV2SbnA9ckR5Aa05XegtSSqctisbkPXtitq/swGucC
+ A0gG3dekYrK+2qNwWJg5PrIVo3I92W3VylSRCHYNb/CJF3nee5JfWaL0J6wcvQY29v07K6n5BXa
+ aGUBS+DFb72wLts85TTHe3RTf9Kv0vQ89F9gw3USfOVi2/XI/bhN228cvgd2OzJY/DO4jGx8+ny
+ VtqT/HZPrcnSQXJKyPO6lmzKRAbNhtwc+cTdp2OTbgjoCg8+G+FTTssubbVrCnqVujjZLagw7+b
+ 6ZRQIr0kW3eLKsPals21lCg33HMtncll8tlgUpQ2qOkHaI3+i0sTHxqHll2Yqr4NDkMOXErZ9/t
+ +cpwVTUsHSksEPeGilWWDWUOSUuxi3/4sbb2EDYyVJFzXa6d82SCTziP1ufwmbYRbS+p3CwJYFJ
+ MaTISogD68jTwiXuuEg==
+X-Authority-Analysis: v=2.4 cv=BNuDalQG c=1 sm=1 tr=0 ts=6a0ed2e5 cx=c_pps
+ a=3Bg1Hr4SwmMryq2xdFQyZA==:117 a=3Bg1Hr4SwmMryq2xdFQyZA==:17
+ a=IkcTkHD0fZMA:10 a=NGcC8JguVDcA:10 a=VkNPw1HP01LnGYTKEx00:22
+ a=RnoormkPH1_aCDwRdu11:22 a=iQ6ETzBq9ecOQQE5vZCe:22 a=VnNF1IyMAAAA:8
+ a=VwQbUJbxAAAA:8 a=UoO_1Pgrh8XTa-HTx5YA:9 a=3ZKOabzyN94A:10 a=QEXdDO2ut3YA:10
+X-Proofpoint-ORIG-GUID: kbhAMpKvgjMmMg7SoQpEqlgUz3qHanOH
+X-Proofpoint-GUID: 6m1fg_Nsus_rltrLTI8A0qN7X5o3bceY
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.293,Aquarius:18.0.1143,Hydra:6.1.51,FMLib:17.12.100.49
+ definitions=2026-05-21_01,2026-05-18_01,2025-10-01_01
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
+ adultscore=0 priorityscore=1501 malwarescore=0 impostorscore=0 suspectscore=0
+ lowpriorityscore=0 phishscore=0 bulkscore=0 spamscore=0 clxscore=1015
+ classifier=typeunknown authscore=0 authtc= authcc= route=outbound adjust=0
+ reason=mlx scancount=1 engine=8.22.0-2605130000 definitions=main-2605210095
 
+On 5/20/2026 6:29 PM, sashiko-bot@kernel.org wrote:
+> Thank you for your contribution! Sashiko AI review found 4 potential issue(s) to consider:
+> - [High] Missing `MT_FLAGS_USE_RCU` during maple tree initialization causes Use-After-Free of tree internal nodes.
+> - [High] Synchronous `kfree()` of `sframe_section` bypasses SRCU/RCU grace periods, causing Use-After-Free for concurrent readers.
+> - [Low] Undeclared identifier `sframe_srcu` causes build failure.
+> - [Low] Macro expansion of `INIT_MM_SFRAME` breaks compilation on non-x86 architectures.
+> --
+> 
+> commit ce5ec4616b79b2c0aa851c150b33143b5d3876af
+> Author: Josh Poimboeuf <jpoimboe@kernel.org>
+> 
+> unwind_user/sframe: Store .sframe section data in per-mm maple tree
+> 
+> Associate an .sframe section with its mm by adding it to a per-mm maple
+> tree which is indexed by the corresponding text address range. A single
+> .sframe section can be associated with multiple text ranges.
+> 
+>> diff --git a/include/linux/sframe.h b/include/linux/sframe.h
+> [ ... ]
+>> @@ -19,18 +21,31 @@ struct sframe_section {
+>>  	signed char	fp_off;
+>>  };
+>>  
+>> +#define INIT_MM_SFRAME .sframe_mt = MTREE_INIT(sframe_mt, 0),
+> 
+> [Severity: High]
+> Does this maple tree need to be initialized with MT_FLAGS_USE_RCU?
+> 
+> Without it, the tree operates in non-RCU mode, so lockless iterations
+> might race with in-place node modifications and synchronous node frees,
+> potentially causing use-after-free of the internal nodes.
 
-On 21/05/2026 09:33, Manivannan Sadhasivam wrote:
-> On Wed, May 20, 2026 at 07:58:05PM +0000, sashiko-bot@kernel.org wrote:
->> Thank you for your contribution! Sashiko AI review found 4 potential issue(s) to consider:
->>
->> New issues:
->> - [High] Link retraining is performed after device enumeration and driver binding, causing a severe race condition.
->> - [High] Iterating the PCI bus devices list without holding the pci_bus_sem read lock.
->> - [Medium] Early return in mtk_pcie_retrain() aborts retraining of all remaining root ports if a single port fails.
->>
->> Pre-existing issues:
->> - [High] Freeing port in error paths causes a Use-After-Free because the active IRQ domain's host_data still points to it.
->> --
->>
->> commit c1c3bb9bcba6bb8a070037578912a2f02c381591
->> Author: Caleb James DeLisle <cjd@cjdns.fr>
->> Subject: PCI: mediatek: Add support for EcoNet EN7528 SoC
->>
->> This commit adds support for the PCIe controller present on the EcoNet
->> EN7528 (and EN751221) SoCs. These SoCs feature a mix of Gen1 and Gen2 ports,
->> and require a manual link retraining after startup for Gen2 ports to function.
->>
->>> diff --git a/drivers/pci/controller/pcie-mediatek.c b/drivers/pci/controller/pcie-mediatek.c
->>> index c503fbd774d09..4e4d4b1559f71 100644
->>> --- a/drivers/pci/controller/pcie-mediatek.c
->>> +++ b/drivers/pci/controller/pcie-mediatek.c
->> [ ... ]
->>
->>> @@ -755,6 +766,132 @@ static int mtk_pcie_startup_port_v2(struct mtk_pcie_port *port)
->>>   	return 0;
->>>   }
->>>   
->>> +static int mtk_pcie_startup_port_en7528(struct mtk_pcie_port *port)
->>> +{
->> [ ... ]
->>
->>> +	/* 100ms timeout value should be enough for Gen1/2 training */
->>> +	err = regmap_read_poll_timeout(pcie->cfg, EN7528_LINKUP_REG, val,
->>> +				       !!(val & link_mask), 20,
->>> +				       PCI_PM_D3COLD_WAIT * USEC_PER_MSEC);
->>> +	if (err) {
->>> +		dev_err(pcie->dev, "EN7528: port%d link timeout\n", port->slot);
->>> +		return -ETIMEDOUT;
->>> +	}
->> [Severity: High]
->> This is a pre-existing issue, but returning an error here can cause a
->> use-after-free crash.
->>
->> When a port fails to start up (for example, if the slot is empty and link
->> training times out), the caller frees the port structure by calling
->> mtk_pcie_port_free(). However, mtk_pcie_port_free() does not call
->> irq_domain_remove().
->>
->> Since mtk_pcie_init_irq_domain() sets the newly allocated port structure
->> as the IRQ domain's host_data, the domain remains registered with a
->> dangling pointer.
->>
->> Could we make sure the IRQ domain is properly cleaned up in error paths?
->>
->> [ ... ]
->>
-> This is a valid concern. I've sent the fix for it:
-> https://lore.kernel.org/linux-pci/20260521071907.13614-1-manivannan.sadhasivam@oss.qualcomm.com/
-Would you like me to integrate that in my patchset or is it sufficiently 
-decoupled that it should be handled separately ?
->>> +static int mtk_pcie_retrain(struct device *dev, struct pci_host_bridge *host)
->>> +{
->>> +	struct pci_dev *rp;
->>> +	int ret = -ENOENT;
->>> +	u16 lnksta = 0;
->>> +	u32 speed;
->>> +
->>> +	/* Should already have been warned about during startup_port */
->>> +	if (!IS_BUILTIN(CONFIG_PCIE_MEDIATEK))
->>> +		return 0;
->>> +
->>> +	for_each_pci_bridge(rp, host->bus) {
->> [Severity: High]
->> Does iterating the PCI bus devices list here require holding the pci_bus_sem
->> read lock?
->>
->> Since mtk_pcie_retrain() is called after pci_host_probe() completes, the PCI
->> bus is live and devices are exposed to the system. Concurrent operations like
->> sysfs hotplug events could modify the host->bus->devices list during traversal.
->>
->> Should we hold down_read(&pci_bus_sem) or use pci_walk_bus() to avoid a race
->> condition?
->>
-> This is also a valid concern. You should wrap the loop with 'pci_bus_sem'. I see
-> a few other drivers are also doing the same, but I'll fix them separately.
-OK
->>> +		if (pci_pcie_type(rp) != PCI_EXP_TYPE_ROOT_PORT)
->>> +			continue;
->>> +
->>> +#if IS_BUILTIN(CONFIG_PCIE_MEDIATEK)
->>> +		ret = pcie_retrain_link(rp, true);
->>> +#endif
->>> +
->>> +		if (ret)
->>> +			return dev_err_probe(&rp->dev, ret,
->>> +					     "failed to retrain port\n");
->> [Severity: Medium]
->> Will this early return abort the retraining process for all remaining root
->> ports?
->>
->> If pcie_retrain_link() fails on the first port, we immediately break out of
->> the loop.
->>
->> Should this log the error and use continue instead, so that a failure on one
->> independent slot does not prevent the others from retraining successfully?
->>
-> This you can ignore as we should treat retrain failure for a single Root Port as
-> a hard failure.
-Agreed
->>> +
->>> +		pcie_capability_read_word(rp, PCI_EXP_LNKSTA, &lnksta);
->>> +		speed = lnksta & PCI_EXP_LNKSTA_CLS;
->>> +
->>> +		pci_info(rp, "link retrained, speed %s\n",
->>> +			 pci_speed_string(pcie_link_speed[speed]));
->>> +
->>> +	}
->>> +
->>> +	return 0;
->>> +}
->> [ ... ]
->>
->>> @@ -1159,6 +1296,13 @@ static int mtk_pcie_probe(struct platform_device *pdev)
->>>   	if (err)
->>>   		goto put_resources;
->>>   
->>> +	/*
->>> +	 * Ignore error because pci_host_probe() was already called, and in any
->>> +	 * case it is possible that the port will still work as Gen1.
->>> +	 */
->>> +	if (pcie->soc->quirks & MTK_PCIE_RETRAIN)
->>> +		mtk_pcie_retrain(dev, host);
->>> +
->> [Severity: High]
->> Can retraining the link at this stage cause issues with actively bound endpoint
->> drivers?
->>
->> By the time pci_host_probe() returns, devices have already been discovered,
->> exposed to the system, and their drivers bound. Retraining the PCIe link forces
->> it into recovery, which could stall transactions or temporarily drop the link.
->>
->> If an endpoint driver (like NVMe or Wi-Fi) is actively performing MMIO or DMA,
->> could this cause unhandled exceptions, AER errors, or initialization failures?
->>
->> Would it be safer to retrain before devices are added to the system (e.g.,
->> before pci_bus_add_devices())?
->>
-> This can also be ignored as you don't have much choice here. Once the driver is
-> bound to the device, doing any link level activity without quiescing the device
-> warrants trouble. But since it happens right after the pci_host_probe(), most
-> likely the client drivers wouldn't have started functioning i.e., initiating DMA
-> transfers etc... So the chances of failure are very less.
+Steven, please advise.
 
+> 
+>> diff --git a/kernel/fork.c b/kernel/fork.c
+> [ ... ]
+>> @@ -1073,6 +1075,13 @@ static void mmap_init_lock(struct mm_struct *mm)
+>>  #endif
+>>  }
+>>  
+>> +static void mm_init_sframe(struct mm_struct *mm)
+>> +{
+>> +#ifdef CONFIG_HAVE_UNWIND_USER_SFRAME
+>> +	mt_init(&mm->sframe_mt);
+> 
+> [Severity: High]
+> Similar to MTREE_INIT above, does mt_init() need to use mt_init_flags()
+> with MT_FLAGS_USE_RCU here to prevent use-after-free during lockless reads?
 
-I was just looking though the initialization process, and I notice that 
-pcie_failed_link_retrain() is called unconditionally and it LOOKS like 
-it ought to be solving our problem. So I'm going to throw a bunch of 
-logs in there and see what's going on, and whether it seems like we can 
-safely piggyback on that for EcoNet, and I'll come back with a v9 which 
-either switches to that, or else adds the pci_bus_sem and continues with 
-the mtk_pcie_retrain solution.
+Likewise.
 
+> 
+>> diff --git a/kernel/unwind/sframe.c b/kernel/unwind/sframe.c
+> [ ... ]
+>> +static int __sframe_remove_section(struct mm_struct *mm,
+>> +				   struct sframe_section *sec)
+>> +{
+>> +	if (!mtree_erase(&mm->sframe_mt, sec->text_start)) {
+>> +		dbg("mtree_erase failed: text=%lx\n", sec->text_start);
+>> +		return -EINVAL;
+>> +	}
+>> +
+>> +	free_section(sec);
 
-Thanks,
+I'll move the SRCU logic from patch "[PATCH v15 05/20] unwind_user/
+sframe: Add support for reading .sframe contents" here:
 
-Caleb
+	call_srcu(&sframe_srcu, &sec->rcu, sframe_free_srcu);
 
+> 
+> [Severity: High]
+> Can this synchronous free cause a use-after-free for concurrent readers?
+> 
+> If an unwinder or other thread is iterating the tree locklessly and has
+> already obtained the section pointer before it is erased, freeing it
+> immediately here without waiting for an RCU or SRCU grace period would
+> pull the structure out from under them.
 
->
-> - Mani
->
+This will be resolved by above and below.
+
+> 
+>> +
+>> +	return 0;
+>> +}
+>> +
+>>  int sframe_remove_section(unsigned long sframe_start)
+>>  {
+> [ ... ]
+>> +	struct mm_struct *mm = current->mm;
+>> +	struct sframe_section *sec;
+>> +	unsigned long index = 0;
+>> +	bool found = false;
+>> +	int ret = 0;
+>> +
+>> +	guard(srcu)(&sframe_srcu);
+> 
+> [Severity: Low]
+> Is sframe_srcu defined anywhere? It doesn't appear to be declared in this
+> file or its headers, which would cause a build failure.
+
+My bad!  I'll move the definition of sframe_srcu and sframe_free_srcu()
+from "[PATCH v15 05/20] unwind_user/sframe: Add support for reading
+.sframe contents" to this patch.
+
+> 
+>> diff --git a/mm/init-mm.c b/mm/init-mm.c
+> [ ... ]
+>> @@ -49,6 +50,7 @@ struct mm_struct init_mm = {
+>>  #endif
+>>  	.flexible_array	= MM_STRUCT_FLEXIBLE_ARRAY_INIT,
+>>  	INIT_MM_CONTEXT(init_mm)
+>> +	INIT_MM_SFRAME
+>>  };
+> 
+> [Severity: Low]
+> Can this cause compilation failures on non-x86 architectures?
+> 
+> If architectures like PowerPC or UML define INIT_MM_CONTEXT without a
+> trailing comma, placing INIT_MM_SFRAME (which expands to .sframe_mt = ...)
+> immediately after it might result in a missing-comma syntax error.
+Possibly.  This has not changed inbetween versions of this patch.  So if
+that happens it will need fixing in the affected arch's definition of
+INIT_MM_CONTEXT.
+
+Thanks and regards,
+Jens
+-- 
+Jens Remus
+Linux on Z Development (D3303)
+jremus@de.ibm.com / jremus@linux.ibm.com
+
+IBM Deutschland Research & Development GmbH; Vorsitzender des Aufsichtsrats: Wolfgang Wendt; Geschäftsführung: David Faller; Sitz der Gesellschaft: Ehningen; Registergericht: Amtsgericht Stuttgart, HRB 243294
+IBM Data Privacy Statement: https://www.ibm.com/privacy/
+
