@@ -1,135 +1,259 @@
-Received: from rtits2.realtek.com.tw (rtits2.realtek.com [211.75.126.72])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 861C028C84A;
-	Fri, 22 May 2026 03:30:37 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=211.75.126.72
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 857D6352015
+	for <sashiko-reviews@lists.linux.dev>; Fri, 22 May 2026 03:47:37 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1779420639; cv=none; b=bmhK+4cs/5JNkmAcGYoroAmSzBwi+WTppFonNSTuVQ0j6t+u2s8S5VJQD4CayKy7lkVyrQ7JrQPcIkHQsiwP5H++wquy6q3wmwl8Uv5xegYjApyVAlqWLIcVDREvjKORlGsrmRF3bai6GTsww6dyY/XTPSmYMBDYHgBSAd5BoLE=
+	t=1779421660; cv=none; b=bKaK2g0pi1qWjxHwaL74PYhlHiMvR8AYr83OytQooQdqmXDfLayB5HqnsR761hfz8+dqJY/dU9/Iu8W0q24GMgS7WJTHGcTp+0SpZOrLY9uFiMRufFkC1WjFPFHEf9GMX9zI8A6P5Td133Ou7RnbAiat6LpTueoBQlxIkbDlpD0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1779420639; c=relaxed/simple;
-	bh=F8RX98jKX6EWZaxc/gTBAnZXa1YRN9/hJQnHWYekS+s=;
-	h=From:To:CC:Subject:Date:Message-ID:References:In-Reply-To:
-	 Content-Type:MIME-Version; b=XlApSyZREJiaISOUlVxMIhP0OLXjHvP5Xv/glSI1aFN1U4xZTLXB3jLIVrv7e52dOQJLka+In0SxGGSiMU4RO6z0cskHO85QJFqvAGKhxaB0nDUZOA42mMW0fPMu9JYX2lXWOnu1Jm3iXM2PmdNg/QCUpAjGdIvnbgdPIu/OCU0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=realtek.com; spf=pass smtp.mailfrom=realtek.com; dkim=pass (2048-bit key) header.d=realtek.com header.i=@realtek.com header.b=bmajDI0L; arc=none smtp.client-ip=211.75.126.72
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=realtek.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=realtek.com
+	s=arc-20240116; t=1779421660; c=relaxed/simple;
+	bh=OFqf0NxWu3KtmR+ESvy9OHWBqQSWHuppEU0lJJAii7g=;
+	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
+	 To:Cc:Content-Type; b=UMfmc/Bu8pVt9ZfCEH4aacoK62+AvDKdSgdm8a2kxf3Ne3HIdTPvHcwXgDAuh+ELAJBP3nNw8mAWh8MXeJsmRdLets+0wd1MmvZ801LLADFJ7zzRy8qhB+JqOQTL7R7FrBJjvnxZP9f79FT+Ct34jpbO2jjR9Io4lYZoDjQpkY8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=OiF1p7BX; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=realtek.com header.i=@realtek.com header.b="bmajDI0L"
-X-SpamFilter-By: ArmorX SpamTrap 5.80 with qID 64M3UG6201981315, This message is accepted by code: ctloc85258
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=realtek.com; s=dkim;
-	t=1779420616; bh=F8RX98jKX6EWZaxc/gTBAnZXa1YRN9/hJQnHWYekS+s=;
-	h=From:To:CC:Subject:Date:Message-ID:References:In-Reply-To:
-	 Content-Type:Content-Transfer-Encoding:MIME-Version;
-	b=bmajDI0LmCvg807PoJ6bUPKwaQQGDN+gOSvaz7kOdDkIEmynziFoAeALHtIL66ObM
-	 4jc18+LKe6ZYZ1cQ4eGtpPjflAYYzFVa91EXbObEFVR86Z/Duahz3QtUHHoLmgRNpJ
-	 DACYVhvI3mTFgYrhcetb6W7iRxIi1jq/cZaWbasFQQjeN/GlX09uGL+2fHMO9vTmt5
-	 r8XCiZ9qj476Z9yutCHYNdT6MjuElDg4lNNzviwtMyb1pvbz+9GwEwlLLDeePEfa4+
-	 eyV4lrEAjodFnPW4QY2BgffUX1/Z8OBqdPMqF8KI6QyqkltWDo3tTKLH66jXAqEnvB
-	 B+4NNvC1isEJw==
-Received: from mail.realtek.com (rtkexhmbs04.realtek.com.tw[10.21.1.54])
-	by rtits2.realtek.com.tw (8.15.2/3.28/5.94) with ESMTPS id 64M3UG6201981315
-	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
-	Fri, 22 May 2026 11:30:16 +0800
-Received: from RTKEXHMBS06.realtek.com.tw (10.21.1.56) by
- RTKEXHMBS04.realtek.com.tw (10.21.1.54) with Microsoft SMTP Server
- (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
- 15.2.2562.17; Fri, 22 May 2026 11:30:16 +0800
-Received: from RTKEXHMBS06.realtek.com.tw (10.21.1.56) by
- RTKEXHMBS06.realtek.com.tw (10.21.1.56) with Microsoft SMTP Server
- (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
- 15.2.2562.17; Fri, 22 May 2026 11:30:15 +0800
-Received: from RTKEXHMBS06.realtek.com.tw ([::1]) by
- RTKEXHMBS06.realtek.com.tw ([fe80::e6fd:5a3f:8946:92c4%10]) with mapi id
- 15.02.2562.017; Fri, 22 May 2026 11:30:15 +0800
-From: =?utf-8?B?WXUtQ2h1biBMaW4gW+ael+elkOWQm10=?= <eleanor.lin@realtek.com>
-To: Marc Zyngier <maz@kernel.org>,
-        "sashiko-reviews@lists.linux.dev"
-	<sashiko-reviews@lists.linux.dev>
-CC: "robh@kernel.org" <robh@kernel.org>,
-        "devicetree@vger.kernel.org"
-	<devicetree@vger.kernel.org>,
-        "krzk+dt@kernel.org" <krzk+dt@kernel.org>,
-        "conor+dt@kernel.org" <conor+dt@kernel.org>,
-        =?utf-8?B?IkFuZHJlYXMgRsOkcmJlciI=?= <afaerber@suse.de>,
-        =?utf-8?B?SmFtZXMgVGFpIFvmiLTlv5fls7Bd?= <james.tai@realtek.com>
-Subject: RE: [PATCH v2 14/17] arm64: dts: realtek: Add EL2 virtual timer
- interrupt
-Thread-Topic: [PATCH v2 14/17] arm64: dts: realtek: Add EL2 virtual timer
- interrupt
-Thread-Index: AQHc5EOhlk6NhsNODUCpXhfSQwD6+LYZa8bQ
-Date: Fri, 22 May 2026 03:30:15 +0000
-Message-ID: <c5157b3d333b4fd0838bf5c4e1e6beec@realtek.com>
-References: <20260514150945.3917510-15-maz@kernel.org>
-	<20260514231804.000CCC2BCB3@smtp.kernel.org> <87tss99j4j.wl-maz@kernel.org>
-In-Reply-To: <87tss99j4j.wl-maz@kernel.org>
-Accept-Language: zh-TW, en-US
-Content-Language: zh-TW
-Content-Type: text/plain; charset="utf-8"
-Content-Transfer-Encoding: base64
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="OiF1p7BX"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 105BB1F00A3D
+	for <sashiko-reviews@lists.linux.dev>; Fri, 22 May 2026 03:47:36 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=kernel.org;
+	s=k20260515; t=1779421656;
+	bh=aRUrjq6UmND7bgt05ehxJpaJzPVYrNGQ+mv6AME8wXY=;
+	h=References:In-Reply-To:From:Date:Subject:To:Cc;
+	b=OiF1p7BXODXAz8GG60+ZAqA2UTxaJvcwK+0RYG3xOzoHE5Elq+0B/vKaUuG5Ramio
+	 2BnrRSymr2L5y+GFzK2h9MRC7y/8ADKY5Rldp29F5Q179qryTGWpCp0Hy1+6bcqkEK
+	 e/pbJuKygQFMun1sUg3twjklQlulVuqy9ucZKeK8JpWB4ZixbQwvM7/KYB28HEDd34
+	 MLcg6JcE3vxHO0juOaTUiHxM1KFQ+GwchrSZMub7UfPP9oHFtc1W8iTeV6uVzSZUJs
+	 MXRJrUMK9HAVGJBfnYvduFOKNU5OWsLG+anuINNIZuBhX1uT3aME1PPpG26tRg0zK9
+	 liBU/yK8ONgFg==
+Received: by mail-wm1-f51.google.com with SMTP id 5b1f17b1804b1-4891e5b9c1fso60189495e9.2
+        for <sashiko-reviews@lists.linux.dev>; Thu, 21 May 2026 20:47:35 -0700 (PDT)
+X-Gm-Message-State: AOJu0Yzei9CYB6m0xBATAAOicKkdbfEMMMH1VrItOwhD6merVaNoWxgG
+	mJiLuHNOENQL5YbbkPzD7ndFPXqvMvdRTwfoYR3mon9ok6OHn5ePKEfZHRU2NZooL8xkelxo99Z
+	hQrxMRDmJ6nqYD5VmH8lBEM9DzcW6vXHmi0mWuRgb
+X-Received: by 2002:a05:600c:5298:b0:48e:7854:1608 with SMTP id
+ 5b1f17b1804b1-490428dd523mr18183585e9.25.1779421654672; Thu, 21 May 2026
+ 20:47:34 -0700 (PDT)
 Precedence: bulk
 X-Mailing-List: sashiko-reviews@lists.linux.dev
 List-Id: <sashiko-reviews.lists.linux.dev>
 List-Subscribe: <mailto:sashiko-reviews+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:sashiko-reviews+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
+References: <20260521152217.2345235-3-kpsingh@kernel.org> <20260521165240.D95EA1F000E9@smtp.kernel.org>
+ <CACYkzJ47rASFZLZPz2VU9FE7J2-hGdw2f-5LQYmXoB9urVwRqQ@mail.gmail.com> <CAADnVQLJw=Dk=VjWmot4O1WLm2TxLH+-mX3G8AuPd9f_5rAJCA@mail.gmail.com>
+In-Reply-To: <CAADnVQLJw=Dk=VjWmot4O1WLm2TxLH+-mX3G8AuPd9f_5rAJCA@mail.gmail.com>
+From: KP Singh <kpsingh@kernel.org>
+Date: Fri, 22 May 2026 05:47:23 +0200
+X-Gmail-Original-Message-ID: <CACYkzJ4LO2tAdarpKAO3Nz-XjCiJ3+tNkBp_kXEr-2YqOnCwMQ@mail.gmail.com>
+X-Gm-Features: AVHnY4ITCxFUj4A9fbyPW-DCeoQ91orAkt2w-7HK3bZX5vWHDue-rH6ETxuxd1w
+Message-ID: <CACYkzJ4LO2tAdarpKAO3Nz-XjCiJ3+tNkBp_kXEr-2YqOnCwMQ@mail.gmail.com>
+Subject: Re: [PATCH v2 2/2] bpf, libbpf: reject non-exclusive metadata maps in
+ the signed loader
+To: Alexei Starovoitov <alexei.starovoitov@gmail.com>
+Cc: sashiko-reviews@lists.linux.dev, bpf <bpf@vger.kernel.org>
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 
-PiBPbiBGcmksIDE1IE1heSAyMDI2IDAwOjE4OjAzICswMTAwLA0KPiBzYXNoaWtvLWJvdEBrZXJu
-ZWwub3JnIHdyb3RlOg0KPiA+DQo+ID4gVGhhbmsgeW91IGZvciB5b3VyIGNvbnRyaWJ1dGlvbiEg
-U2FzaGlrbyBBSSByZXZpZXcgZm91bmQgMSBwb3RlbnRpYWwgaXNzdWUocykNCj4gdG8gY29uc2lk
-ZXI6DQo+ID4gLSBbSGlnaF0gSW5jb21wbGV0ZSBpbXBsZW1lbnRhdGlvbjogbWlzc2luZyB1cGRh
-dGUgZm9yIFJlYWx0ZWsgS2VudCBTb0MNCj4gZmFtaWx5IHdoaWNoIHNwZWNpZmllcyBhbiBpbmNv
-cnJlY3QgRUwyIHZpcnR1YWwgdGltZXIgaW50ZXJydXB0Lg0KPiA+IC0tDQo+ID4NCj4gPiBjb21t
-aXQgM2I3MzYzODk1MGEyOGVjYzMyNGUxYzI4ZmE0ZmI5ZmNiMTNkNTU2Nw0KPiA+IEF1dGhvcjog
-TWFyYyBaeW5naWVyIDxtYXpAa2VybmVsLm9yZz4NCj4gPg0KPiA+IGFybTY0OiBkdHM6IHJlYWx0
-ZWs6IEFkZCBFTDIgdmlydHVhbCB0aW1lciBpbnRlcnJ1cHQNCj4gPg0KPiA+IFRoaXMgY29tbWl0
-IGFkZHMgdGhlIG1pc3NpbmcgRUwyIHZpcnR1YWwgdGltZXIgaW50ZXJydXB0IHRvDQo+ID4gQVJN
-djguMi1iYXNlZCBSZWFsdGVrIFNvQ3MuIEl0IHVwZGF0ZXMgcnRkMTZ4eC5kdHNpIGJ5IGFkZGlu
-ZyB0aGUNCj4gPiBmaWZ0aCB0aW1lciBpbnRlcnJ1cHQgd2l0aCBHSUNfUFBJIDEyLg0KPiA+DQo+
-ID4gPiBkaWZmIC0tZ2l0IGEvYXJjaC9hcm02NC9ib290L2R0cy9yZWFsdGVrL3J0ZDE2eHguZHRz
-aQ0KPiA+ID4gYi9hcmNoL2FybTY0L2Jvb3QvZHRzL3JlYWx0ZWsvcnRkMTZ4eC5kdHNpDQo+ID4g
-PiBpbmRleCAzYTdmNmUzNWI3Zjc0Li40M2IxM2QxMzNjMzI0IDEwMDY0NA0KPiA+ID4gLS0tIGEv
-YXJjaC9hcm02NC9ib290L2R0cy9yZWFsdGVrL3J0ZDE2eHguZHRzaQ0KPiA+ID4gKysrIGIvYXJj
-aC9hcm02NC9ib290L2R0cy9yZWFsdGVrL3J0ZDE2eHguZHRzaQ0KPiA+ID4gQEAgLTEwNSw3ICsx
-MDUsOCBAQCB0aW1lciB7DQo+ID4gPiAgICAgICAgICAgICBpbnRlcnJ1cHRzID0gPEdJQ19QUEkg
-MTMgSVJRX1RZUEVfTEVWRUxfTE9XPiwNCj4gPiA+ICAgICAgICAgICAgICAgICAgICAgICAgICA8
-R0lDX1BQSSAxNCBJUlFfVFlQRV9MRVZFTF9MT1c+LA0KPiA+ID4gICAgICAgICAgICAgICAgICAg
-ICAgICAgIDxHSUNfUFBJIDExIElSUV9UWVBFX0xFVkVMX0xPVz4sDQo+ID4gPiAtICAgICAgICAg
-ICAgICAgICAgICAgICAgPEdJQ19QUEkgMTAgSVJRX1RZUEVfTEVWRUxfTE9XPjsNCj4gPiA+ICsg
-ICAgICAgICAgICAgICAgICAgICAgICA8R0lDX1BQSSAxMCBJUlFfVFlQRV9MRVZFTF9MT1c+LA0K
-PiA+ID4gKyAgICAgICAgICAgICAgICAgICAgICAgIDxHSUNfUFBJIDEyIElSUV9UWVBFX0xFVkVM
-X0xPVz47DQo+ID4gPiAgICAgfTsNCj4gPg0KPiA+IERvZXMgdGhpcyB1cGRhdGUgbWlzcyBhbm90
-aGVyIFJlYWx0ZWsgQVJNdjguMisgU29DIGZpbGU/DQo+ID4NCj4gPiBMb29raW5nIGF0IGFyY2gv
-YXJtNjQvYm9vdC9kdHMvcmVhbHRlay9rZW50LmR0c2kgKHVzZWQgYnkgUlREMTUwMSwNCj4gPiBS
-VEQxODYxLCBhbmQgUlREMTkyMCksIHRoZSBmaWZ0aCB0aW1lciBpbnRlcnJ1cHQgaXMgY3VycmVu
-dGx5IGRlZmluZWQNCj4gPiBhcyA8R0lDX1BQSSA5IElSUV9UWVBFX0xFVkVMX0hJR0g+Lg0KPiA+
-DQo+ID4gUFBJIDkgaXMgdGhlIEdJQyB2Q1BVIG1haW50ZW5hbmNlIGludGVycnVwdCwgcmF0aGVy
-IHRoYW4gdGhlIEVMMg0KPiA+IHZpcnR1YWwgdGltZXIgaW50ZXJydXB0IHdoaWNoIHNob3VsZCBi
-ZSBQUEkgMTI6DQo+ID4NCj4gPiBhcmNoL2FybTY0L2Jvb3QvZHRzL3JlYWx0ZWsva2VudC5kdHNp
-Og0KPiA+ICAgICAgIHRpbWVyIHsNCj4gPiAgICAgICAgICAgICAgIGNvbXBhdGlibGUgPSAiYXJt
-LGFybXY4LXRpbWVyIjsNCj4gPiAgICAgICAgICAgICAgIGludGVycnVwdHMgPSA8R0lDX1BQSSAx
-MyBJUlFfVFlQRV9MRVZFTF9MT1c+LA0KPiA+ICAgICAgICAgICAgICAgICAgICAgICAgICAgIDxH
-SUNfUFBJIDE0IElSUV9UWVBFX0xFVkVMX0xPVz4sDQo+ID4gICAgICAgICAgICAgICAgICAgICAg
-ICAgICAgPEdJQ19QUEkgMTEgSVJRX1RZUEVfTEVWRUxfTE9XPiwNCj4gPiAgICAgICAgICAgICAg
-ICAgICAgICAgICAgICA8R0lDX1BQSSAxMCBJUlFfVFlQRV9MRVZFTF9MT1c+LA0KPiA+ICAgICAg
-ICAgICAgICAgICAgICAgICAgICAgIDxHSUNfUFBJICA5IElSUV9UWVBFX0xFVkVMX0hJR0g+Ow0K
-PiA+ICAgICAgIH07DQo+ID4NCj4gPiBBbm90aGVyIHBhdGNoIGluIHRoaXMgc2VyaWVzIChjbG9j
-a3NvdXJjZS9kcml2ZXJzL2FybV9hcmNoX3RpbWVyOg0KPiA+IERlZmF1bHQgdG8gRUwyIHZpcnR1
-YWwgdGltZXIgd2hlbiBydW5uaW5nIFZIRSkgY2hhbmdlcyB0aGUgZHJpdmVyIHRvDQo+ID4gdXNl
-IHRoZSBFTDIgdmlydHVhbCB0aW1lciBieSBkZWZhdWx0IG9uIFZIRSBzeXN0ZW1zLg0KPiA+DQo+
-ID4gSWYgdGhlIGtlcm5lbCB1c2VzIHRoZSBFTDIgdmlydHVhbCB0aW1lciBvbiB0aGVzZSBSZWFs
-dGVrIFNvQ3MsIGNvdWxkDQo+ID4gaXQgcmVxdWVzdCB0aGUgd3JvbmcgaW50ZXJydXB0IChQUEkg
-OSBpbnN0ZWFkIG9mIFBQSSAxMiksIGNhdXNpbmcNCj4gPiB0aW1lciBpbnRlcnJ1cHRzIHRvIG5v
-dCBiZSBkZWxpdmVyZWQgYW5kIHJlc3VsdGluZyBpbiBhIGJvb3QgaGFuZyByZWdyZXNzaW9uPw0K
-PiANCj4gVGhhdCdzIGRlZmluaXRlbHkgb2RkLCBhcyBQUEk5IGlzIHByZXNlbnQgaW4gdHdvIGlu
-dGVycnVwdCBzcGVjaWZpZXJzICh0aW1lciBhbmQNCj4gR0lDKS4gT2J2aW91c2x5LCB0aGF0J3Mg
-bm90IHBvc3NpYmxlLg0KPiANCj4gSSdsbCBhZGQgYSB0ZW50YXRpdmUgZml4IGZvciB0aGF0IGlu
-IHRoZSBuZXh0IHJvdW5kLiBNYXliZSBBbmRyZWFzIG9yIFl1LUNodW4NCj4gY2FuIGNoZWNrIGlu
-IHRoZSBtZWFudGltZT8NCj4gDQo+ICAgICAgICAgTS4NCj4gDQo+IC0tDQo+IEphenogaXNuJ3Qg
-ZGVhZC4gSXQganVzdCBzbWVsbHMgZnVubnkuDQoNCkhpIE1hcmMsDQoNCkkgY2hlY2tlZCB3aXRo
-IG15IGNvbGxlYWd1ZXMgYW5kIGNvbmZpcm1lZCB0aGF0IHRoaXMgaXMgaW5kZWVkIGEgdHlwbyBp
-biBrZW50LmR0c2kuDQpUaGUgZmlmdGggaW50ZXJydXB0IGVudHJ5IHNob3VsZCBiZSBjb3JyZWN0
-ZWQgdG86DQoNCjxHSUNfUFBJIDEyIElSUV9UWVBFX0xFVkVMX0xPVz47DQoNCkl0IHdvdWxkIGJl
-IGdyZWF0IGlmIHlvdSBjb3VsZCBpbmNsdWRlIHRoZSBmaXggaW4geW91ciBuZXh0IHJvdW5kLiBP
-dGhlcndpc2UsIGp1c3QNCmxldCBtZSBrbm93IGFuZCBJJ2xsIHNlbmQgYSBzZXBhcmF0ZSBwYXRj
-aC4NCg0KVGhhbmtzLA0KWXUtQ2h1bg0K
+On Thu, May 21, 2026 at 11:30=E2=80=AFPM Alexei Starovoitov
+<alexei.starovoitov@gmail.com> wrote:
+>
+> On Thu, May 21, 2026 at 9:09=E2=80=AFPM KP Singh <kpsingh@kernel.org> wro=
+te:
+> >
+> > On Thu, May 21, 2026 at 6:52=E2=80=AFPM <sashiko-bot@kernel.org> wrote:
+> > >
+> > > Thank you for your contribution! Sashiko AI review found 2 potential =
+issue(s) to consider:
+> > > - [High] The BPF verifier will reject the `gen_loader` program on 32-=
+bit architectures because it accesses a 4-byte pointer using an 8-byte read=
+.
+> > > - [Low] Multi-line comments do not follow the mandatory BPF subsystem=
+ standard.
+> > > --
+> > >
+> > > commit 878a81f0d9571d5734eccfbe01c3dfe58050f954
+> > > Author: KP Singh <kpsingh@kernel.org>
+> > >
+> > > bpf, libbpf: reject non-exclusive metadata maps in the signed loader
+> >
+> > [...]
+> >
+> > > > +     /* Reject if the metadata map is not exclusive. Without exclu=
+sivity
+> > > > +      * the cached map->sha[] verified above can be stale: another=
+ BPF
+> > > > +      * program with map access could have mutated the contents be=
+tween
+> > > > +      * BPF_OBJ_GET_INFO_BY_FD and loader execution.
+> > > > +      */
+> > >
+> > > [Severity: Low]
+> > > This isn't a bug, but does this multi-line comment follow the BPF
+> > > subsystem style guidelines? It looks like the opening /* should be on=
+ its
+> > > own line.
+> >
+> > Sashiko, this is how we comment in BPF.
+>
+> No. Sashiko is correct. bpf doesn't use the old networking style anymore.
+>
+> > >
+> > > > +     emit2(gen, BPF_LD_IMM64_RAW_FULL(BPF_REG_1, BPF_PSEUDO_MAP_ID=
+X,
+> > > > +                                      0, 0, 0, 0));
+> > > > +     emit(gen, BPF_LDX_MEM(BPF_DW, BPF_REG_2, BPF_REG_1, SHA256_DW=
+ORD_SIZE * sizeof(__u64)));
+> > >
+> > > [Severity: High]
+> > > Will this 8-byte read pass the verifier on 32-bit architectures?
+> > >
+> > > While __bpf_md_ptr pads the C struct field to 8 bytes, unnamed bitfie=
+lds
+> > > are not emitted in BTF. The kernel's BTF will represent the pointer m=
+ember
+> > > with a size of 4 bytes on 32-bit systems.
+> > >
+> > > Since btf_struct_walk() enforces that the memory access size exactly =
+matches
+> > > the BTF pointer size, it seems the verifier will reject this BPF_DW a=
+ccess
+> > > with a cannot access ptr member error on 32-bit architectures.
+> > >
+> >
+> > Good find Sashiko!
+> >
+> > __bpf_md_ptr doesn't help =E2=80=94 unnamed bitfields are stripped
+> >   from BTF:
+> >
+> >     $ bpftool btf dump file vmlinux | grep -A1 '^\[1462\]'
+> >     [1462] UNION '(anon)' size=3D8 vlen=3D1
+> >             'excl_prog_sha' type_id=3D17 bits_offset=3D0
+> >
+> > vlen=3D1, no padding. On 32-bit the pointer is 4 bytes, BPF_DW is 8,
+> > btf_struct_walk rejects (msize !=3D size). BPF_W doesn't work on
+> > 64-bit either (4 !=3D 8).
+> >
+> > gen_loader needs target pointer size tracking (like swapped_endian)
+> > to emit the right sized read. Will revert __bpf_md_ptr and do that
+> > As a follow-up, I need to re-spin anyway since I messed up PATCH "bpf"
+> > and probably confused the CI.
+>
+> hmm. I think AI is wrong here. size=3D8 is all we need.
+> I think BPF_DW should work. Pls double check. Don't rely on AI guesses.
+
+I wrestled with the AI to create some test code, it still does seem to
+fail, anything missing in this diff?
+
+https://raw.githubusercontent.com/sinkap/linux/bpf-md-ptr-32bit-test/test_b=
+pf_32bit.sh
+
+commit 13fa71a6e16b6f024da481bb7a733c312974ed32 (HEAD)
+Author: KP Singh <kpsingh@kernel.org>
+Date:   Fri May 22 05:18:32 2026 +0200
+
+    bpf: use __bpf_md_ptr for excl_prog_sha in struct bpf_map
+
+ include/linux/bpf.h | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
+
+commit 13fa71a6e16b6f024da481bb7a733c312974ed32 (HEAD)
+Author: KP Singh <kpsingh@kernel.org>
+Date:   Fri May 22 05:18:32 2026 +0200
+
+    bpf: use __bpf_md_ptr for excl_prog_sha in struct bpf_map
+
+diff --git a/include/linux/bpf.h b/include/linux/bpf.h
+index 11bec73db199..ea9bd24f82c0 100644
+--- a/include/linux/bpf.h
++++ b/include/linux/bpf.h
+@@ -295,7 +295,7 @@ struct bpf_map_owner {
+
+ struct bpf_map {
+        u8 sha[SHA256_DIGEST_SIZE];
+-       char *excl_prog_sha;
++       __bpf_md_ptr(char *, excl_prog_sha);
+        const struct bpf_map_ops *ops;
+        struct bpf_map *inner_map_meta;
+ #ifdef CONFIG_SECURITY
+
+Building (deps, selftests, 32-bit kernel, rootfs)...
+Full log: /tmp/bpf32-build.log
+done.
+
+=3D=3D=3D 32-bit BTF =3D=3D=3D
+[79128] STRUCT 'bpf_map' size=3D224 vlen=3D33
+'sha' type_id=3D70 bits_offset=3D0
+'(anon)' type_id=3D1349 bits_offset=3D256
+'ops' type_id=3D1351 bits_offset=3D320
+'inner_map_meta' type_id=3D1265 bits_offset=3D352
+'security' type_id=3D30 bits_offset=3D384
+'map_type' type_id=3D79193 bits_offset=3D416
+'key_size' type_id=3D139067 bits_offset=3D448
+'value_size' type_id=3D139067 bits_offset=3D480
+--
+
+=3D=3D=3D Boot 32-bit QEMU =3D=3D=3D
+qemu-system-i386: terminating on signal 15 from pid 4116468 (/bin/bash)
+
+=3D=3D=3D QEMU serial output =3D=3D=3D
+[    0.000000] Linux version 7.1.0-rc3-g13fa71a6e16b
+(kpsingh@kpsingh-genoa) (gcc (Ubuntu 15.2.0-16ubuntu1) 15.2.0, GNU ld
+(GNU Binutils for Ubuntu) 2.46) #3 SMP PREEMPT_DYNAMIC Fri May 22
+05:25:14 CEST 2026
+[    0.000000] x86/CPU: Model not found in latest microcode list
+[    0.000000] BIOS-provided physical RAM map:
+[    0.000000] BIOS-e820: [mem 0x0000000000000000-0x000000000009fbff]  Sys
+
+[...]
+
+=3D=3D=3D Running atomics signed lskel on 32-bit =3D=3D=3D
+REJECTED: load: Permission denied (errno 13)
+LOG: 0: R1=3Dctx() R10=3Dfp0
+0: (bf) r6 =3D r1                       ; R1=3Dctx() R6=3Dctx()
+1: (bf) r1 =3D r10                      ; R1=3Dfp0 R10=3Dfp0
+2: (07) r1 +=3D -136                    ; R1=3Dfp-136
+3: (b7) r2 =3D 136                      ; R2=3D136
+4: (b7) r3 =3D 0                        ; R3=3D0
+5: (85) call bpf_probe_read_kernel#113        ; fp-104=3Dppppmmmm
+fp-112=3Dmmmmmmmm fp-120=3Dmmmmmmmm fp-128=3Dmmmmmmmm fp-136=3Dmmmmmmmm
+6: (05) goto pc+41
+48: (18) r1 =3D 0xc1258000              ;
+R1=3Dmap_ptr(map=3D__loader.map,ks=3D4,vs=3D9976)
+50: (79) r2 =3D *(u64 *)(r1 +0)         ;
+R1=3Dmap_ptr(map=3D__loader.map,ks=3D4,vs=3D9976) R2=3Dscalar()
+51: (18) r3 =3D 0x687c37c5f0d1a81f      ; R3=3D0x687c37c5f0d1a81f
+53: (b7) r7 =3D -22                     ; R7=3D-22
+54: (5d) if r2 !=3D r3 goto pc-48       ; R2=3D0x687c37c5f0d1a81f
+R3=3D0x687c37c5f0d1a81f
+55: (18) r1 =3D 0xc1258000              ;
+R1=3Dmap_ptr(map=3D__loader.map,ks=3D4,vs=3D9976)
+57: (79) r2 =3D *(u64 *)(r1 +8)         ;
+R1=3Dmap_ptr(map=3D__loader.map,ks=3D4,vs=3D9976) R2=3Dscalar()
+58: (18) r3 =3D 0x50bbf46171f6280f      ; R3=3D0x50bbf46171f6280f
+60: (b7) r7 =3D -22                     ; R7=3D-22
+61: (5d) if r2 !=3D r3 goto pc-55       ; R2=3D0x50bbf46171f6280f
+R3=3D0x50bbf46171f6280f
+62: (18) r1 =3D 0xc1258000              ;
+R1=3Dmap_ptr(map=3D__loader.map,ks=3D4,vs=3D9976)
+64: (79) r2 =3D *(u64 *)(r1 +16)        ;
+R1=3Dmap_ptr(map=3D__loader.map,ks=3D4,vs=3D9976) R2=3Dscalar()
+65: (18) r3 =3D 0x62d310438c86b5f6      ; R3=3D0x62d310438c86b5f6
+67: (b7) r7 =3D -22                     ; R7=3D-22
+68: (5d) if r2 !=3D r3 goto pc-62       ; R2=3D0x62d310438c86b5f6
+R3=3D0x62d310438c86b5f6
+69: (18) r1 =3D 0xc1258000              ;
+R1=3Dmap_ptr(map=3D__loader.map,ks=3D4,vs=3D9976)
+71: (79) r2 =3D *(u64 *)(r1 +24)        ;
+R1=3Dmap_ptr(map=3D__loader.map,ks=3D4,vs=3D9976) R2=3Dscalar()
+72: (18) r3 =3D 0xc5a92d04886f9627      ; R3=3D0xc5a92d04886f9627
+74: (b7) r7 =3D -22                     ; R7=3D-22
+75: (5d) if r2 !=3D r3 goto pc-69       ; R2=3D0xc5a92d04886f9627
+R3=3D0xc5a92d04886f9627
+76: (18) r1 =3D 0xc1258000              ;
+R1=3Dmap_ptr(map=3D__loader.map,ks=3D4,vs=3D9976)
+78: (79) r2 =3D *(u64 *)(r1 +32)
+cannot access ptr member excl_prog_sha with moff 0 in struct (anon)
+with off 0 size 8
+processed 29 insns (limit 1000000) max_states_per_insn 0 total_states
+2 peak_states 2 mark_read 0
