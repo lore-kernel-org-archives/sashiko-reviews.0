@@ -1,131 +1,119 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C7028379C5B;
-	Fri, 22 May 2026 07:28:06 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6CBF13A6403;
+	Fri, 22 May 2026 08:00:07 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1779434887; cv=none; b=nb5+SJCs1k/mK8VaM7nhoV3penWIk3ypIZ9fT3I+j0f/0ecEIk2Hf7goaBmcE4vN+uPXrQi2G8xah2UBTKNbkjef/mScMltvBrT464y3Pz8xlKdsLg8ZnzlbA8KFuTY4rNPx4zyOGjlX1jeNny2BX0jOd8V5+qDHKngecbirQas=
+	t=1779436808; cv=none; b=CH2XX/omqBttRAPLth4xJqDUPEpDi/Rfs40Q0BhexixzR/PA8ihoCJMxt9diWf4h/Em6Yx66SJ6jlMKf90TVMw94lEB28OmlSD8c0ZeG7pp4wA0ljgHUWRK3aiVtSqwIJgLGr46FbUOHjUB/e1t5VDPAjAU/fJcmREaH5CT0H0E=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1779434887; c=relaxed/simple;
-	bh=+77LvOWDdeSbTPbSZ9lUzDrqyRoZjp55R3iOoQkJv8A=;
+	s=arc-20240116; t=1779436808; c=relaxed/simple;
+	bh=xsK3pQZpCJohLKM7UrVU8BbY2NcQEAdCx73J93y16N0=;
 	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=nCXLnpJ7HbniyRjgkr465YPZfM1D5LzYubD3nJ4N3ZjfNMhJDdStonX2HOOYKpAoxBOs4hSPWp3x5kieUceKwtPn2bP4Zvocwbi9pnEH+K6dsksGJg+hdkXa1OD870jmbeFbM1hkcCP1+XPW0FZqkstzNNLCSrryQWePKrtDEd8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=NGNZls72; arc=none smtp.client-ip=100.103.45.18
+	 Content-Type:Content-Disposition:In-Reply-To; b=SdfxViqluAwG6qHFjL6VnTZOzrVBPU4GTekgZElvIM0Ll5YuBXhwEUKZMIK1T/Ss7UDA0Ddm+Nx7cXUkElOihIKVeXDPhieHYuqIUMPxX/fbZqnL4f7kE+BIkDHo8s3oPVv5M9ZsGyw4PhHKn8Ommvsc3Pcf5MUXs2O8UD+RlKQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=Idj8V45Z; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="NGNZls72"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id B2B3E1F000E9;
-	Fri, 22 May 2026 07:28:04 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="Idj8V45Z"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 70F611F00A3D;
+	Fri, 22 May 2026 08:00:05 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=kernel.org;
-	s=k20260515; t=1779434886;
-	bh=av9yNE3ImDMAQMh1tsV8AmERb3Shty+qungZiC7M8c0=;
+	s=k20260515; t=1779436807;
+	bh=clPR+E9zimijMLfBFReBsxul5gYIW1YxjQhlTfLOb9A=;
 	h=Date:From:To:Cc:Subject:References:In-Reply-To;
-	b=NGNZls72AzBoFeDGpvmNlsuGDt8s6LGjRQdtcXjhBBbbJT0247j9hmoPQb/TcYbAF
-	 6mJfBQ6H2oVgemoXzk/Bek5+6tnokpCstZ8YTekHZgX3KejL3QjV75kzql1sBIIevE
-	 /o/Yn9sOy8w3J9K+g8wuzl313fG0wJKGcSBqUIsWjlJlX6alATva4VeL82aJoz7JrT
-	 frm+LJpzwGU4t2uCdaCH1qs9/JDe1QwU4EDcmPTlIFgJmTUad9x53LF2FZP3Nl4kUA
-	 s7/g5JOBBgmPVlD7dOvKfETE97c5NQ3YSoZHHqhuZFHMu5quyG9EblAp2ERJ75VO5m
-	 11CqPhodUD+8Q==
-Date: Fri, 22 May 2026 12:58:01 +0530
+	b=Idj8V45ZuU4mHBQSPARWKsyNzpZMN20Gl2j6bXORXdekPP1MSmP3FtBcJoi9DiOSi
+	 B8/dOJjOR+5NxmXU31FmCsBE5cTO7IATs21tYs+lVn2XBNFvauKYYzrMIGvUrPSnAr
+	 6bYd0fdslabm7laJEkDVXQQyJKTSHqyaxYw1NVg1nkS/PvL2x8meBQE66DbEVmW71n
+	 RYLqdkQSsUMXu0+OUEpeQtNIZmoCvMIyaU9FoKyMXJ1ZEkV//tEqzKjRgnKfvEeYb1
+	 aEFyCy3ANb77Bj5SA4ulrYmeIibIs9zqGA0LrfihxiGzK4KuJCZf1B3A7HoqIRwlBJ
+	 CYiRzWHcb/1IQ==
+Date: Fri, 22 May 2026 13:30:02 +0530
 From: Sumit Garg <sumit.garg@kernel.org>
 To: sashiko-reviews@lists.linux.dev
-Cc: conor+dt@kernel.org, robh@kernel.org, devicetree@vger.kernel.org
-Subject: Re: [PATCH v6 12/16] media: qcom: Pass proper PAS ID to
- set_remote_state API
-Message-ID: <ahAFgc7WpadmRdOW@sumit-xelite>
-References: <20260518072856.22790-13-sumit.garg@kernel.org>
- <20260519073408.19739C2BCB3@smtp.kernel.org>
+Cc: devicetree@vger.kernel.org, robh@kernel.org, conor+dt@kernel.org
+Subject: Re: [PATCH v6 01/16] arm64: dts: qcom: kodiak: Add EL2 overlay
+Message-ID: <ahANAhccTR_zhY1c@sumit-xelite>
+References: <20260518072856.22790-2-sumit.garg@kernel.org>
+ <20260519073346.21BE9C2BCB3@smtp.kernel.org>
 Precedence: bulk
 X-Mailing-List: sashiko-reviews@lists.linux.dev
 List-Id: <sashiko-reviews.lists.linux.dev>
 List-Subscribe: <mailto:sashiko-reviews+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:sashiko-reviews+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=iso-8859-1
+Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-Content-Transfer-Encoding: 8bit
-In-Reply-To: <20260519073408.19739C2BCB3@smtp.kernel.org>
+In-Reply-To: <20260519073346.21BE9C2BCB3@smtp.kernel.org>
 
-On Tue, May 19, 2026 at 07:34:07AM +0000, sashiko-bot@kernel.org wrote:
+On Tue, May 19, 2026 at 07:33:45AM +0000, sashiko-bot@kernel.org wrote:
 > Thank you for your contribution! Sashiko AI review found 2 potential issue(s) to consider:
-> - [Critical] Missing cancellation of the `sys_error_handler` delayed work in `iris_remove` leads to Use-After-Free and locking a destroyed mutex.
-> - [High] Missing memory barrier (`smp_load_acquire` or `READ_ONCE`) when reading `ops_ptr` in PAS API wrappers creates a TOCTOU race and potential NULL pointer dereference or uninitialized memory access.
+> - [High] The `kodiak-el2.dtso` overlay omits the `iommus` configuration for the `remoteproc_mpss` (modem) node.
+> - [Medium] The commit message fails to explain why `gpu_zap_shader` and `venus` are disabled, and why `watchdog` is enabled in the EL2 overlay.
 > --
 > 
-> commit dc3a6dd9cf1f9278b9e5d984b574b26cf894a4e9
-> Author: Sumit Garg <sumit.garg@oss.qualcomm.com>
+> commit b4ab2188dfbc3caab6111f1ec38bf830bc7a5ef3
+> Author: Mukesh Ojha <mukesh.ojha@oss.qualcomm.com>
 > 
-> media: qcom: Pass proper PAS ID to set_remote_state API
+> arm64: dts: qcom: kodiak: Add EL2 overlay
 > 
-> This commit modifies the set_hw_state functions for both iris and venus
-> drivers to pass a specific PAS ID instead of 0 to qcom_pas_set_remote_state.
-> This change allows the OP-TEE backend to utilize the PAS ID for proper
-> bookkeeping.
+> This commit adds an EL2-specific DT overlay for Kodiak devices to boot
+> without the Gunyah hypervisor. It configures the remote processor firmware
+> IOMMU streams to be managed by the consumer rather than the hypervisor.
 > 
-> > diff --git a/drivers/media/platform/qcom/iris/iris_firmware.c b/drivers/media/platform/qcom/iris/iris_firmware.c
-> > index b3c5281aea919..856fa6a79064c 100644
-> > --- a/drivers/media/platform/qcom/iris/iris_firmware.c
-> > +++ b/drivers/media/platform/qcom/iris/iris_firmware.c
-> > @@ -109,5 +109,5 @@ int iris_fw_unload(struct iris_core *core)
-> >  
-> >  int iris_set_hw_state(struct iris_core *core, bool resume)
-> >  {
-> > -	return qcom_pas_set_remote_state(resume, 0);
-> > +	return qcom_pas_set_remote_state(resume, core->iris_platform_data->pas_id);
+> Link: https://docs.qualcomm.com/bundle/publicresource/topics/80-70020-4/boot-developer-touchpoints.html#uefi
 > 
-> This isn't a bug in this commit, but since we are modifying the state
-> management for iris_core, there is a pre-existing issue with the
-> sys_error_handler delayed work.
+> > When running under Gunyah, the remote processor firmware IOMMU
+> > streams are controlled by Gunyah. However, without Gunyah, the IOMMU is
+> > managed by the consumer of this DeviceTree. Therefore, describe the
+> > firmware streams for each remote processor.
+> >
+> > Add a EL2-specific DT overlay and apply it to Kodiak IOT variant
+> > devices to create -el2.dtb for each of them alongside "normal" dtb.
+> >
+> > [1]
+> > https://docs.qualcomm.com/bundle/publicresource/topics/80-70020-4/boot-developer-touchpoints.html#uefi
+> >
+> > Signed-off-by: Mukesh Ojha <mukesh.ojha@oss.qualcomm.com>
+> > [SG: watchdog fixup]
+> > Signed-off-by: Sumit Garg <sumit.garg@oss.qualcomm.com>
 > 
-> Looking at iris_remove(), we explicitly destroy the core->lock and allow
-> the core memory to be freed via devres:
+> This isn't a bug, but the commit message focuses solely on the IOMMU
+> stream configurations. Could the message be updated to explain the
+> rationale behind disabling the gpu_zap_shader and venus nodes, as well
+> as enabling the watchdog?
 > 
-> drivers/media/platform/qcom/iris/iris_probe.c:iris_remove() {
-> 	...
-> 	mutex_destroy(&core->lock);
-> }
-> 
-> Could the delayed work execute after the module is unloaded or the device
-> unbinds? If so, would iris_sys_error_handler() attempt to acquire the
-> destroyed core->lock and access the freed core memory?
-> 
-> Should we add cancel_delayed_work_sync(&core->sys_error_handler) before
-> destroying the lock?
-
-Not in scope of the current patch-set.
-
-> 
-> 
-> This isn't a bug in this commit either, but since this function calls
-> qcom_pas_set_remote_state(), I noticed a potential race condition in how
-> the global ops_ptr is read in the API wrapper.
-> 
-> Looking at qcom_pas_set_remote_state(), it performs lockless plain reads:
-> 
-> drivers/firmware/qcom/qcom_pas.c:qcom_pas_set_remote_state() {
-> 	if (!ops_ptr)
-> 		return -ENODEV;
-> 
-> 	return ops_ptr->set_remote_state(ops_ptr->dev, state, pas_id);
-> }
-> 
-> Because ops_ptr is read without READ_ONCE() or smp_load_acquire(), could
-> the compiler reload the pointer?
-> 
-> If qcom_pas_ops_unregister() clears ops_ptr concurrently, could the second
-> read evaluate to NULL, causing a NULL pointer dereference? Furthermore,
-> without a barrier, could the CPU reorder reads and observe uninitialized
-> contents of the qcom_pas_ops structure?
-
-The PAS backend isn't expected to unregister during the boot power
-cycle.
-
--Sumit
-
-> 
-> >  }
+> > diff --git a/arch/arm64/boot/dts/qcom/kodiak-el2.dtso b/arch/arm64/boot/dts/qcom/kodiak-el2.dtso
+> > new file mode 100644
+> > index 0000000000000..0b3a69a0d7654
+> > --- /dev/null
+> > +++ b/arch/arm64/boot/dts/qcom/kodiak-el2.dtso
+> > @@ -0,0 +1,35 @@
+> > +// SPDX-License-Identifier: BSD-3-Clause
 > 
 > [ ... ]
 > 
-> -- 
-> Sashiko AI review · https://sashiko.dev/#/patchset/20260518072856.22790-1-sumit.garg@kernel.org?part=12
+> > +&remoteproc_adsp {
+> > +	iommus = <&apps_smmu 0x1800 0x0>;
+> > +};
+> > +
+> > +&remoteproc_cdsp {
+> > +	iommus = <&apps_smmu 0x11a0 0x0400>;
+> > +};
+> > +
+> > +&remoteproc_wpss {
+> > +	iommus = <&apps_smmu 0x1c03 0x1>,
+> > +		 <&apps_smmu 0x1c83 0x1>;
+> > +};
+> 
+> Is there a missing remoteproc_mpss node here?
+> 
+> The qcs6490-rb3gen2.dts board file enables remoteproc_mpss and
+> configures it to load modem.mbn.
+> 
+> Since the MPSS streams are routed through the APPS SMMU on Kodiak devices,
+> will the omission of the iommus property for the modem cause SMMU context
+> translation faults and prevent the peripheral from booting?
+
+Nice catch, I will disable remoteproc_mpss for the next revision since
+it's currently not tested in EL2 mode.
+
+-Sumit
