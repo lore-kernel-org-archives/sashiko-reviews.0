@@ -1,153 +1,179 @@
-Received: from mail-dl1-f43.google.com (mail-dl1-f43.google.com [74.125.82.43])
+Received: from mail-dl1-f50.google.com (mail-dl1-f50.google.com [74.125.82.50])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D7F90383C76
-	for <sashiko-reviews@lists.linux.dev>; Fri, 22 May 2026 21:29:12 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=pass smtp.client-ip=74.125.82.43
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DFA8B38C2B8
+	for <sashiko-reviews@lists.linux.dev>; Fri, 22 May 2026 21:31:48 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=pass smtp.client-ip=74.125.82.50
 ARC-Seal:i=2; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1779485354; cv=pass; b=aoSXyrMQksvhqEfa5UWzoYWQUJfHzczfLIAsALZ7yl+IhCPPvu8ub2MNDL4u/eGTzGOigJH9wIS0WIrIouEOQqxR3Vwom0/Bgrjigo/mzu902ssSSwyc509G4aGWDuS8Fc13a43umNSSN+Uo790AZSlEaF90Jkcn1PWcQctAHk8=
+	t=1779485511; cv=pass; b=g/bDr7fN2/UpymKwQOrd3oYdwvWgtoTqX8udzs6PHMc/I4T8kY/bev/9s0H7qdNHWu+wDfloBiPvMnaRGSnu/agbTzFEpZU2Hn3dE6ZjIUam8zNu2Z5H85d4QAVNdgvM3XpkbcJEqnU0xpBFZTd+ZWxiuN7zowH7LKY5val6D9Y=
 ARC-Message-Signature:i=2; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1779485354; c=relaxed/simple;
-	bh=GI3ksNffcgu0gYhPpqaOoDcdU1m2F3Yiyb09sVMjOvU=;
+	s=arc-20240116; t=1779485511; c=relaxed/simple;
+	bh=lhUCrdS8AzT6YiUpPvI6mNn4LsPzkSoFmcLVaCCgCIQ=;
 	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
-	 To:Cc:Content-Type; b=H0nMDYq8YbzPzXAkfXtfdn+aImnuJa0nZGKFIbEfiwgVxamSWWpHGyTTGpX1hF50gyT4z5AB8PIePQ4wfgDHNB1qBIAmyIqJm6VdPqfLLwqNcvZgrOJUgCmLP7U8vaUB3rRqSczhhYSnvcLbbp2epbgoNkvSE9VhVO5O0WJBwD0=
-ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=google.com; spf=pass smtp.mailfrom=google.com; dkim=pass (2048-bit key) header.d=google.com header.i=@google.com header.b=grbTWdBU; arc=pass smtp.client-ip=74.125.82.43
+	 To:Cc:Content-Type; b=EZUlfWy3/P8ogh/lWMgS7SQ3r401okoWq4k/BJ8VjNF67s8UXEexdL/XXUEs7DcYTwsWeE2wn90ORCm5I8Tx3pbiVrtiUJdvFWtTZFOTl+T2JA357pqkNA15UfKENVEdVjKDgML+zDwwypDgjfp/gA24bDmOUdNUimDxVH/o+NM=
+ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=google.com; spf=pass smtp.mailfrom=google.com; dkim=pass (2048-bit key) header.d=google.com header.i=@google.com header.b=cYDPo63a; arc=pass smtp.client-ip=74.125.82.50
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=google.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=google.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=google.com header.i=@google.com header.b="grbTWdBU"
-Received: by mail-dl1-f43.google.com with SMTP id a92af1059eb24-1357c851a48so9930144c88.1
-        for <sashiko-reviews@lists.linux.dev>; Fri, 22 May 2026 14:29:12 -0700 (PDT)
-ARC-Seal: i=1; a=rsa-sha256; t=1779485352; cv=none;
+	dkim=pass (2048-bit key) header.d=google.com header.i=@google.com header.b="cYDPo63a"
+Received: by mail-dl1-f50.google.com with SMTP id a92af1059eb24-1331e851faaso4131006c88.1
+        for <sashiko-reviews@lists.linux.dev>; Fri, 22 May 2026 14:31:48 -0700 (PDT)
+ARC-Seal: i=1; a=rsa-sha256; t=1779485507; cv=none;
         d=google.com; s=arc-20240605;
-        b=Q1viu7GucdrjMIkT3JQwI64l3fmxN5A7CpX3+BV3wh7lsL/JKC/U0+2lSuS9jF4te2
-         1TMBhJZFqdL77PJqKnjdMLWC4qlWBxiFbdwj1fuPhhpqn0Fi07Ykl/xDrg9yyzLrp3GC
-         73iNJFNu1qGuHUowtjqNjsAXtIpcfjlJLvWzrHznbXvC4tWeocqe9awDa1/ZDZYkLsl0
-         jqFIpCinK9B75ivteSnUNB9PUfT4o9Nbl1E1QY6VEr87u5yj+DG87rjEHPQdApNOdlFg
-         YgmV+8K8Vt+APkzj2GmFN7G7qbZ3a21BSRBv2Gf/l/OYlBwSR4jppJ71fbFO1oWlWtZQ
-         vdUg==
+        b=S+WdvJkszHT2Ir/fxxxrOzdsuG8YIYU/DFyCPJiiw7rnR+WRDB670Bxx4sHO9pHt/T
+         nrPjyyhR7VmuLKI2qn1NovjRsltl5RnRjCJLB6id6r+as6Ow4Qipfrrjq1HyzrUoOIxc
+         aClbxIL5fQnhEdJlzvLavUjyedl9KWUHwvetRvmFtz7N2L7/tOY9Ef2zLXvH7HNGkDIH
+         GkFQqBWzBnD6ajOpwNVgvJNBgUR0blkz5nUVQj2ZGOqQ+W2+JuQsBOvfN3aiZvgJJfCh
+         /xVhb9Ph/RfxgrjNg/K4vm3RDWOKAQE/tjJN2JU5oF/1EHvM3f9UCxc2O1up0ubJkHbV
+         MMPQ==
 ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com; s=arc-20240605;
         h=content-transfer-encoding:cc:to:subject:message-id:date:from
          :in-reply-to:references:mime-version:dkim-signature;
-        bh=6K2ANhvmgyd4o7NGx/ivPgd7PtVVhTtattoThaE0WQc=;
+        bh=gH4ZOzGCp/1wUSJI9UajBWmDDn0DBrPYAfdLSalBmfg=;
         fh=2E8G5L5HRIhYv0SLHRh0bmuG4bK/RxhrEd6+zC1U6gY=;
-        b=KFi2j0gHSGAvJ9lEems73CiB1zw7mGaE8wOy3NKRxY4IXjhZHVmcVZgn1yWm99sbKg
-         XOWC/RydWPlB0oIe25LkEZoaOOJPVM/nm04PhAOhOc6oIMWumc5vRrYCG54c738oncr/
-         cs0ByhJXr/6zAURL61LbVUI2SVWFel8lYbZM4HrEuwTYkbjGRM7/lVHQP/MXQ7jDOHo4
-         ORuMm2hqulNWSfbNoVpLCErYFoDmgxlGS6ueihLY2VRgFzkSj0J5LyjM/DXHwTdHQyz2
-         9pEcSGE8EcAGRyp4e1nyauy93qs0j2bcoGgLNGOdJDIotWgU+SMNEk7n34gjkw9MRqxE
-         0tCw==;
+        b=b5+6SBxHbKfQ8b+J5hIxHgPR/s3+oyH/Jl0F/uIQp0OLrjk0T7ySPBDb6llPr6JCua
+         EHan5LvGA5kJG7uwKRo1Ci9g0A249QHi2qKGL/U9habIA300qe2WQ6r1pLl7d6RabIVo
+         D++T83qMjW5P9TA7jLhlmhOJl9wVFKDIeU8hmUrR/xvi+kEiiBq7EOtYalOy7uMbRKRX
+         GWRw4uRNdqquRjLVvPejh7YNEVzDzcuaMp6lWlupYzIwthM1tkS4DOKS8PgabhbqGJPD
+         tjABoLN9e5mNDFI8GTOHQiycokxy/maeaNgxiQNebXaWXEQqq4x6h/+iOLGq9owLvUJy
+         f5FQ==;
         darn=lists.linux.dev
 ARC-Authentication-Results: i=1; mx.google.com; arc=none
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=google.com; s=20251104; t=1779485352; x=1780090152; darn=lists.linux.dev;
+        d=google.com; s=20251104; t=1779485507; x=1780090307; darn=lists.linux.dev;
         h=content-transfer-encoding:cc:to:subject:message-id:date:from
          :in-reply-to:references:mime-version:from:to:cc:subject:date
          :message-id:reply-to;
-        bh=6K2ANhvmgyd4o7NGx/ivPgd7PtVVhTtattoThaE0WQc=;
-        b=grbTWdBUDZuUwF0puKT4YbSZai9SIaZwgYYgGgpo+UWlg8YNIxpEDg+cEVNB336yJs
-         WzH3DH/hwXwm00GPKtZSCd1vJe2GS304KlMr2Ob1SERRyyuFDj1MYUZl2sCFAWwZx3kW
-         6yyJ/WmiC3uNrmuoURP1ibqbPGBxv+dLRMFQCK9P+WhN9R7SDuQuE6zLyEeoyyNpRJxh
-         o4dtBv6N3/YlxJqr7C4DRSUhd/dzJ43Gfst+2HSZ+yIZA3HKlzqh8x1TRGT7LMgF7/ww
-         BFOAGQfJycGHNLlzgFzC939qW4PF6wp3EzjWa0/czWkFxIsLfTxxVdESAIZ1h0pQdEPF
-         wo3w==
+        bh=gH4ZOzGCp/1wUSJI9UajBWmDDn0DBrPYAfdLSalBmfg=;
+        b=cYDPo63aREkwP4K9fA+P0jVHZP5/m9/DorIjMft/yuxET6isrzhzgBiXk+tgceR35o
+         UhKx94WDMjybhF+DISHQpeISrIDswkFG9+ueNBzIDcr7SoUDS41Wn6LjzSGAB4CkMuiI
+         VvDB/6rJyGc+YnoPwF+E5XwEqazp2wjd4i3Db+/hWKb7807xGjCjR8KPhgHwpNbev0JR
+         3gJEmZD1mKVKU1wl3BFXdQsMt76L7ObT8Pj7Qn0gQXGmKvy3h0LmiI2f6EVa1rooKvol
+         yXeuBXAzrJBVt/jPl4SyQ+q3ZPGr3pzpAIvu+zYLdmbYrhyIkcGsJrQmpOn9f4GvKC5w
+         8Wtg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20251104; t=1779485352; x=1780090152;
+        d=1e100.net; s=20251104; t=1779485507; x=1780090307;
         h=content-transfer-encoding:cc:to:subject:message-id:date:from
          :in-reply-to:references:mime-version:x-gm-gg:x-gm-message-state:from
          :to:cc:subject:date:message-id:reply-to;
-        bh=6K2ANhvmgyd4o7NGx/ivPgd7PtVVhTtattoThaE0WQc=;
-        b=PgXyKeE8zFz4XK27Y/xT58sdsJ1IN5It7QZ9rE0i98YRAtXtRC6g0OEuCthAS+TFTz
-         ZcyajV5Jpy95iNGGlkqzXRmQxLnDfyzHXD443BARApoStLdfHYmGW4VvsxNIJNxJfsKw
-         cY5XOsVxVOMYEK4dMPaIQFAQNDx+hKkr4YfCD3cjYMs7ssAsH3P9ByZ9fycri2NaROUO
-         oL0lKJ4L3kMgU7b7E5dZv8892/g2uoKG+4W2rYT2DVgCUT5T96Mei+F8jSS+Z92Gax54
-         MMAiZBGy68Dbi+Yk6m988v60zmbT8UjuKoLZZCwYOuzivVvcowVdcdsvjj7TYHBHyCfL
-         8m7w==
-X-Gm-Message-State: AOJu0Yy2D0l+dD9ylqXMHOMCwpHpSsF5dWOYeNUYfbNS+/bWlfa0rozS
-	/WuuuMdYDCrqElWAn0UREzCM3wg9Fg3Zd5dLb/7ZKXJ08WsuxOk2Vjt+7tCLOFyQ0MdLBlQxbXp
-	a9skAMGo6hUaNl0db+cZxu4VDTXiDV6LaEwt0K5UW9+hi3KLxS3tP9jxs
-X-Gm-Gg: Acq92OGcPF3grmxnCNK8FTeii7Cl+5ENaCoonxaeC/HrhQH0lCNhThQPVbos3P0DvM7
-	GoOfe62SECk0mYPaarkT2ggt6UgsyE2cuci6d2r3fd+hsfb5SchWQgYmy7TtO40kej5T5L9iNWf
-	l+xI1gzgWIYA7ove8bezFkDc0GuidRfS47cW2t1zenYxXuZOXGXdcueVzis6C7js+FN48uQVWus
-	0bmL0w+p4ttNVdYvbWR337a/KbrJjIwpLsS9FxC3x7VizdEM7z5Nu4GjW1Pwy1ZCBaEF1/IMC7O
-	vc2kLkJr89LzTUB77w==
-X-Received: by 2002:a05:701b:2905:b0:12d:ce60:cb52 with SMTP id
- a92af1059eb24-1365f81b447mr1254036c88.18.1779485351351; Fri, 22 May 2026
- 14:29:11 -0700 (PDT)
+        bh=gH4ZOzGCp/1wUSJI9UajBWmDDn0DBrPYAfdLSalBmfg=;
+        b=Mg2iMVI6Cx4dohDHaCYvAQ5B45fkuzSAUsYG6u2S3MuR1Cm7dJtwVcNTTSnASmv0h2
+         lkCXk6T0nE9P539VoevzKTP2E0Ql7/pZnse/3n1i2+mdlFWyD/eYEaYlcuT7SvFxZ1jc
+         60R3UGfPiom9K+uNrEB9hl2vEKCywA1g/O+yo+D46s+6LbyjcKvJUCmW+ndHm45nrJf4
+         AKGEM82RAx5qkRpdwj9nj/LLkGHb86PgLP0ALgC42ubewGy90ICGwKRJHv2rPYYjM/LM
+         La4k7F60IqS9DQFQFLrFQTED5VONhsSe5A/PK49XXvHHWXEPqxDjh1VAnb00S+zdWOax
+         Opzg==
+X-Gm-Message-State: AOJu0Yz54dn9HFGBMWkwRPitZ8SdJS3sej672xW9raWoNzjJUEKZNkIA
+	IhwHqtTG/nyYPR68J9j6blTcyX9DJlZ/brBc+5wfwIOFW4PGM9nQM5E98pqjvz2yiBLfpRQywPl
+	n6lC9wlsG5Tlw/Gvsw3bF/E7NsWuJyIWyQ+KxCmnvEw12atIZirL6Pg==
+X-Gm-Gg: Acq92OEiqgg8y9OAcj5RSM4xW4prnsGpj6kpSPIx+NvrKbwJYZD+5pcr4Y4Sfoel3po
+	LjzDjfUZpwm1uk/a1o2xY/Xe/EfIZBIQmZwc0qFtAnCxCGjDzP+YROSdLKTdgkSsLfFThkzaMms
+	91yBFElvfuhb63EPHcf2q8lN+n2u02+pND+dTkyyh1UUfCOReT/F4Pf87k3BBgaD/MwWQlz0+s9
+	eAZlQddzGHcZIPw0Uslr/Wx1B+IEC1LiVtC5UrQG831mgE6ZckHt9pJ+iin2mb37bOaRhzf7TQO
+	+LzJFwiOEhkB4Y4Edg==
+X-Received: by 2002:a05:7022:61a3:b0:136:8b76:14eb with SMTP id
+ a92af1059eb24-1368b761676mr393791c88.14.1779485506467; Fri, 22 May 2026
+ 14:31:46 -0700 (PDT)
 Precedence: bulk
 X-Mailing-List: sashiko-reviews@lists.linux.dev
 List-Id: <sashiko-reviews.lists.linux.dev>
 List-Subscribe: <mailto:sashiko-reviews+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:sashiko-reviews+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-References: <20260522202410.3104264-3-dmatlack@google.com> <20260522205453.F34021F000E9@smtp.kernel.org>
-In-Reply-To: <20260522205453.F34021F000E9@smtp.kernel.org>
+References: <20260522202410.3104264-6-dmatlack@google.com> <20260522210848.6E4071F000E9@smtp.kernel.org>
+In-Reply-To: <20260522210848.6E4071F000E9@smtp.kernel.org>
 From: David Matlack <dmatlack@google.com>
-Date: Fri, 22 May 2026 14:28:44 -0700
-X-Gm-Features: AVHnY4KamDj--aV3AykLsYOKZZoEGo-UbptTXXYbt8naapMG4RPx0patVsAYs7U
-Message-ID: <CALzav=fgi_ezr7JV3to=RM-RC7sF_XsEcash_+vp65J-jXnkWQ@mail.gmail.com>
-Subject: Re: [PATCH v6 02/12] PCI: liveupdate: Track outgoing preserved PCI devices
+Date: Fri, 22 May 2026 14:31:19 -0700
+X-Gm-Features: AVHnY4KtUaRLVMOD-NXvStODJghFVTqbdFSmxbdst0oS_AQ4Epk4q_B3c0DtFks
+Message-ID: <CALzav=dzAa9nxQ4ucGe1Y+Vo16qaJgN54vhyMtgzutXKp_s80w@mail.gmail.com>
+Subject: Re: [PATCH v6 05/12] PCI: liveupdate: Keep bus numbers constant
+ during Live Update
 To: sashiko-reviews@lists.linux.dev
 Cc: linux-pci@vger.kernel.org
 Content-Type: text/plain; charset="UTF-8"
 Content-Transfer-Encoding: quoted-printable
 
-On Fri, May 22, 2026 at 1:54=E2=80=AFPM <sashiko-bot@kernel.org> wrote:
+On Fri, May 22, 2026 at 2:08=E2=80=AFPM <sashiko-bot@kernel.org> wrote:
 >
 > Thank you for your contribution! Sashiko AI review found 1 potential issu=
 e(s) to consider:
-> - [High] Acquiring a sleepable rw_semaphore (rwsem_write) during PCI devi=
-ce release, which can occur in atomic contexts.
+> - [Low] Mixing goto-based control flow with scope-based cleanup helpers (=
+`scoped_guard`) in the function `pci_liveupdate_scan_bridge_begin`.
 > --
-
-> > +void pci_liveupdate_cleanup_device(struct pci_dev *dev)
+>
+> commit 12ae1f010eb68b0654e38ce2800545f03bf1b835
+> Author: David Matlack <dmatlack@google.com>
+>
+> PCI: liveupdate: Keep bus numbers constant during Live Update
+>
+> During a Live Update, preserved devices must be allowed to continue
+> performing memory transactions so the kernel cannot change the fabric
+> topology. To keep bus numbers constant, this patch makes the PCI core
+> inherit the secondary and subordinate bus numbers assigned to bridges
+> during scanning if any PCI devices are being preserved.
+>
+> > --- a/drivers/pci/liveupdate.c
+> > +++ b/drivers/pci/liveupdate.c
+> [ ... ]
+> > +bool pci_liveupdate_scan_bridge_begin(struct pci_bus *bus, struct pci_=
+dev *dev,
+> > +                                   int pass)
 > > +{
+> > +     struct pci_dev *parent =3D bus->self;
+> > +
 > > +     /*
-> > +      * It should be safe to READ_ONCE() outside of the rwsem during c=
-leanup
-> > +      * since there should no longer be any references to @dev on the =
-system.
+> > +      * On the second pass, reuse the value that was set on the first =
+pass
+> > +      * so that the passes are consistent with one another.
 > > +      */
-> > +     if (READ_ONCE(dev->liveupdate.outgoing)) {
-> > +             pci_WARN(dev, 1, "Destroying outgoing-preserved device!\n=
-");
-> > +             pci_liveupdate_unpreserve(dev);
+> > +     if (pass)
+> > +             return dev->liveupdate.inherit_buses;
+> > +
+> > +     /*
+> > +      * If the parent bridge is being forced to inherit its bus number=
+s
+> > +      * during this scan then this bridge must as well, otherwise the =
+PCI
+> > +      * core could expand this bridge's reservation beyond its parent =
+(which
+> > +      * cannot expand).
+> > +      */
+> > +     if (parent && parent->liveupdate.inherit_buses) {
+> > +             dev->liveupdate.inherit_buses =3D true;
+> > +             goto out;
+> > +     }
+> > +
+> > +     /*
+> > +      * Otherwise, if there are any incoming preserved devices, force =
+the
+> > +      * bus numbers to be inherited to avoid changing the bus numbers
+> > +      * assigned to those devices during enumeration.
+> > +      *
+> > +      * To keep things simple, inherit bus numbers on all bridges if a=
+ny PCI
+> > +      * devices are incoming, to ensure that no bridge's reservation i=
+s
+> > +      * expanded to overlap with a preserved device downstream of a di=
+fferent
+> > +      * bridge.
+> > +      */
+> > +     scoped_guard(rwsem_read, &pci_liveupdate.rwsem) {
+> > +             struct pci_flb_incoming *incoming;
+> > +
+> > +             incoming =3D pci_liveupdate_flb_get_incoming();
+> > +             if (!incoming) {
+> > +                     dev->liveupdate.inherit_buses =3D false;
+> > +                     goto out;
 >
-> [Severity: High]
-> Can calling pci_liveupdate_unpreserve() here cause a sleep-in-atomic bug?
+> [Severity: Low]
+> Does this mix goto-based control flow with scope-based cleanup helpers?
 >
-> pci_liveupdate_unpreserve() unconditionally acquires a sleepable rw_semap=
-hore:
-> guard(rwsem_write)(&pci_liveupdate.rwsem).
->
-> Since pci_liveupdate_cleanup_device() is called from pci_release_dev(), t=
-his
-> runs when the last reference to a struct pci_dev is dropped via pci_dev_p=
-ut().
->
-> Because pci_dev_put() can be called from atomic contexts (such as hardwar=
+> According to the cleanup subsystem guidelines, functions should either us=
 e
-> interrupt handlers or while holding spinlocks) to drop references acquire=
-d
-> during lookups, acquiring a sleepable lock here could trigger a
-> scheduling-while-atomic BUG or deadlock.
+> scope-based cleanups or goto-based cleanups, but never both in the same
+> function.
+>
+> Could these goto statements be replaced by directly returning the boolean
+> value instead?
 
-> > @@ -2490,6 +2491,7 @@ static void pci_release_dev(struct device *dev)
-> >
-> >       pci_dev =3D to_pci_dev(dev);
-> >       pci_release_capabilities(pci_dev);
-> > +     pci_liveupdate_cleanup_device(pci_dev);
-> >       pci_release_of_node(pci_dev);
-> >       pcibios_release_device(pci_dev);
-> >       pci_bus_put(pci_dev->bus);
-
-Gemini found 3 files where pci_dev_put() is called under a spinlock:
-
- - drivers/net/ethernet/microsoft/mana/gdma_main.c (mana_driver_exit())
- - arch/x86/pci/i386.c (pcibios_fw_addr_list_del())
- - arch/powerpc/platforms/pasemi/dma_lib.c (pasemi_dma_init())
-
-OTOH, pci_release_dev() does not seem atomic-safe. On s390, it can
-take the zpci_add_remove_lock mutex via pcibios_release_device(). And
-on all architectures it can call kernfs_remove() via pci_bus_put(),
-which takes multiple semaphores.
+That seems reasonable enough, will fix in v7..
