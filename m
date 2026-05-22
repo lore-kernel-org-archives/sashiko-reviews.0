@@ -1,203 +1,212 @@
-Received: from mgamail.intel.com (mgamail.intel.com [192.198.163.11])
+Received: from www62.your-server.de (www62.your-server.de [213.133.104.62])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D7D8D2EA731
-	for <sashiko-reviews@lists.linux.dev>; Fri, 22 May 2026 15:01:34 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=192.198.163.11
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F1E2337F736;
+	Fri, 22 May 2026 15:09:08 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=213.133.104.62
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1779462097; cv=none; b=qqjUblTCZroe3FABGMg1AFUwH5Up17gZJZqgqw+v3hwmxwW8w7p15GOXAqbhQ6gH05xVSYF3NBCB1KX1jX3HAm0L72H1gCYeFeXNlvujFmPSSti/Ht10uLJFFKWWOeppANNgmjQIQFY23UQuB1ceHqoPvcKvX5g2F5ppstx6Pf4=
+	t=1779462552; cv=none; b=R/tfloTJR6jBV5CWldKNHySci01T+MC8oVVe6S55VUE/T8i0UmsPkyQU24KjUO90wOlTvkcdgC5k/J6r+4xSydsM+FIf08keEa/wrHRp/CMQddhs56OvCxMQdIlKl6kUdBb6tDQXrc4SNyx3mJXSRt9CgwyD9mGeAoPlQODOiRs=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1779462097; c=relaxed/simple;
-	bh=rvhovx0txOwzkh6+B1PDB5ZwinKv64O5O09u7YKfj/4=;
-	h=Date:From:To:Cc:Subject:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=a/eTGFKkb7WrnQxJLSdWSGWQ/gIEiNC2cWS6t+zE3JPalaoqB+YaHBJNUMXbKYkEyuXC9tAEWvh0izPOS+Z4eXROzg6LDokNeBOFMTKdbSuH1UQsZ8ZKKxXwPRtWPPM7/SF9h5a1I7NP94bXD97kE5PmSHG10Gw0pRRWS7H7tHw=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linux.intel.com; spf=pass smtp.mailfrom=linux.intel.com; dkim=pass (2048-bit key) header.d=intel.com header.i=@intel.com header.b=nbv/M0ds; arc=none smtp.client-ip=192.198.163.11
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linux.intel.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linux.intel.com
+	s=arc-20240116; t=1779462552; c=relaxed/simple;
+	bh=1Gi+X3nKQB7uXZwsvfUnK3q8KPcY4vrJ9t/1Eql0DJY=;
+	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
+	 In-Reply-To:Content-Type; b=BuSj/YAidhiME/pdGiRL1F7Bg1t4/J9gkkENkRSNG3ma/DglY18norxLdjesCVeM+s1m2zc7nsqsAKDTNscbi+wHRg6ZfNQxdEp+fmKXKiubij/3QTbEPcRLsMlFueivUeclkoJ5wuLaYokL36J18GDFv32z9M5AYbIsP+/c9CY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=iogearbox.net; spf=pass smtp.mailfrom=iogearbox.net; dkim=pass (2048-bit key) header.d=iogearbox.net header.i=@iogearbox.net header.b=QURClF8+; arc=none smtp.client-ip=213.133.104.62
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=iogearbox.net
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=iogearbox.net
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=intel.com header.i=@intel.com header.b="nbv/M0ds"
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
-  d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
-  t=1779462095; x=1810998095;
-  h=date:from:to:cc:subject:message-id:in-reply-to:
-   references:mime-version:content-transfer-encoding;
-  bh=rvhovx0txOwzkh6+B1PDB5ZwinKv64O5O09u7YKfj/4=;
-  b=nbv/M0dsmKjhtyHFPmL29do0eNyO1/01NjTNSJdgYCdtLUVJzt3O5QEU
-   g8kkbmOunAkqPWMCXq5Tpari12Ly3Z7rl9N00yqZ+lSspK1vcWWKueKvR
-   WdvfcU6DZBBePUV6dFZOMy0MN5nx3z9FuMgyuGRkadb/1kKu65wPmDKuX
-   E+PP8bjbVwxo4ls8zbTNRu/RhIKwJRzZ8QpdUaEbYcQkba9TGyYnFB56c
-   9jB3QmLEuw+XQjfEflXXiYTe1HV1INHCsyN+iNv0kWdeY6KH/sWQkUZRz
-   f2LfLgau9NPtAwJUdX6u/h9djjlxK5n60ZdNdelyGP9m+69hewLTtIIdv
-   g==;
-X-CSE-ConnectionGUID: vbcGmADTShCboYxO9Q8GmA==
-X-CSE-MsgGUID: +3LE1PbDSE+ELk3ejTiZoA==
-X-IronPort-AV: E=McAfee;i="6800,10657,11794"; a="90966710"
-X-IronPort-AV: E=Sophos;i="6.24,162,1774335600"; 
-   d="scan'208";a="90966710"
-Received: from fmviesa003.fm.intel.com ([10.60.135.143])
-  by fmvoesa105.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 22 May 2026 08:01:26 -0700
-X-CSE-ConnectionGUID: vHwd5iudRSeKXiXvqXwtYw==
-X-CSE-MsgGUID: ucbJCYWdSAuggtHKQIc0Kw==
-X-ExtLoop1: 1
-Received: from patelni-desk.amr.corp.intel.com (HELO localhost) ([10.2.248.44])
-  by fmviesa003-auth.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 22 May 2026 08:01:25 -0700
-Date: Fri, 22 May 2026 08:01:24 -0700
-From: Nirmal Patel <nirmal.patel@linux.intel.com>
-To: sashiko-bot@kernel.org
-Cc: sashiko-reviews@lists.linux.dev, linux-pci@vger.kernel.org
-Subject: Re: [PATCH v3] PCI: vmd: Add feature to scan BIOS enumerated
- devices.
-Message-ID: <20260522080124.00005752@linux.intel.com>
-In-Reply-To: <20260521235257.3745B1F000E9@smtp.kernel.org>
-References: <20260521232019.2562-1-nirmal.patel@linux.intel.com>
-	<20260521235257.3745B1F000E9@smtp.kernel.org>
-X-Mailer: Claws Mail 4.2.0 (GTK 3.24.41; x86_64-w64-mingw32)
+	dkim=pass (2048-bit key) header.d=iogearbox.net header.i=@iogearbox.net header.b="QURClF8+"
+DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed;
+	d=iogearbox.net; s=default2302; h=Content-Transfer-Encoding:Content-Type:
+	In-Reply-To:From:References:Cc:To:Subject:MIME-Version:Date:Message-ID:Sender
+	:Reply-To:Content-ID:Content-Description:Resent-Date:Resent-From:
+	Resent-Sender:Resent-To:Resent-Cc:Resent-Message-ID;
+	bh=YNX0HLhlWV61z0zqHSdioFpQe9lQsX0gcyT2y1GLi8g=; b=QURClF8+nZC5YtOzXgxwjqusUd
+	6zorQWNzYhfF/LQVyPzsvzXvVxc955IxFnt2dhORxVzGkptZ3D3MPm3ni+IilrWCiHhwiWjTPdd7D
+	nWtZz7M7Vpd5TyE43yWl6WjsuLy3q7X7IsSsb9wqRah2BME5OZTkOmtStIizCAivCgwWacfkvkR/F
+	rDVDBQfQs3O3yUdu/e9mIgG2SdYhjYuIeoZYeOO39SDEYZDFbW6d9d90+2bATb2bIl0JuNDVd9b9m
+	LKM6r+wqJ/n5lOqQ1EY0/BZR0497JA4giQpuSMh7eykNoFglChvnGVSh3ncng/TDwW9H3Iis+5kgK
+	0ckJwFww==;
+Received: from sslproxy04.your-server.de ([78.46.152.42])
+	by www62.your-server.de with esmtpsa  (TLS1.3) tls TLS_AES_256_GCM_SHA384
+	(Exim 4.96.2)
+	(envelope-from <daniel@iogearbox.net>)
+	id 1wQRUp-00040S-0a;
+	Fri, 22 May 2026 17:09:07 +0200
+Received: from localhost ([127.0.0.1])
+	by sslproxy04.your-server.de with esmtpsa  (TLS1.3) tls TLS_AES_256_GCM_SHA384
+	(Exim 4.96)
+	(envelope-from <daniel@iogearbox.net>)
+	id 1wQRUq-000Osy-2D;
+	Fri, 22 May 2026 17:09:08 +0200
+Message-ID: <3cc241a3-eaac-4395-a9a2-2b405eb0ca42@iogearbox.net>
+Date: Fri, 22 May 2026 17:09:06 +0200
 Precedence: bulk
 X-Mailing-List: sashiko-reviews@lists.linux.dev
 List-Id: <sashiko-reviews.lists.linux.dev>
 List-Subscribe: <mailto:sashiko-reviews+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:sashiko-reviews+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=US-ASCII
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH bpf-next 1/3] bpf: Add simple xattr support to bpffs
+To: sashiko-reviews@lists.linux.dev
+Cc: bpf@vger.kernel.org
+References: <20260522135626.120732-1-daniel@iogearbox.net>
+ <20260522144818.DD7EB1F000E9@smtp.kernel.org>
+Content-Language: en-US
+From: Daniel Borkmann <daniel@iogearbox.net>
+Autocrypt: addr=daniel@iogearbox.net; keydata=
+ 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
+In-Reply-To: <20260522144818.DD7EB1F000E9@smtp.kernel.org>
+Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 7bit
+X-Virus-Scanned: Clear (ClamAV 1.4.3/28008/Fri May 22 08:24:46 2026)
 
-On Thu, 21 May 2026 23:52:56 +0000
-sashiko-bot@kernel.org wrote:
-
-> Thank you for your contribution! Sashiko AI review found 4 potential
-> issue(s) to consider:
+On 5/22/26 4:48 PM, sashiko-bot@kernel.org wrote:
+> Thank you for your contribution! Sashiko AI review found 2 potential issue(s) to consider:
+> - [High] Unprivileged users can exhaust kernel memory via unbounded user.* extended attributes on bpffs.
+> - [High] NULL pointer dereference in bpf_fs_initxattrs() if an LSM returns a NULL xattr value.
+> --
 > 
-> New issues:
-> - [High] vmd_resume() unconditionally modifies legacy MSI remapping
-> configuration on unsupported hardware.
-Ack.
+> commit 57543eec66ace3d4d002256a01cff4f1797f61e2
+> Author: Daniel Borkmann <daniel@iogearbox.net>
 > 
-> Pre-existing issues:
-> - [High] SRCU structures are permanently leaked on probe error paths.
-> - [High] SRCU structs are destroyed while the managed IRQ handler is
-> still registered, leading to a Use-After-Free.
-> - [High] Truncation of 64-bit physical addresses on 32-bit systems
-> due to incorrect use of PCI_BASE_ADDRESS_MEM_MASK. --
-
-Proposing to fix these issues in separate patches to keep the patch
-size more manageable.
+> bpf: Add simple xattr support to bpffs
 > 
-> commit f05a884975712ad2dc4d55677318e1620e041df9
-> Author: Nirmal Patel <nirmal.patel@linux.intel.com>
+> This commit adds support for extended attributes on bpffs inodes, allowing user
+> space and BPF LSM programs to attach metadata to pinned objects or directories.
+> The xattr store is in-memory and lives only for the lifetime of the mount.
 > 
-> PCI: vmd: Add feature to scan BIOS enumerated devices.
-> 
-> Newer VMD with device ID 0x28c1 has unique settings compared to its
-> predecessor where BIOS enumerates the entire VMD device tree and
-> assigns respective configurations.
-> 
-> > diff --git a/drivers/pci/controller/vmd.c
-> > b/drivers/pci/controller/vmd.c index d4ae250d4bc6d..15a3f6a357889
-> > 100644 --- a/drivers/pci/controller/vmd.c
-> > +++ b/drivers/pci/controller/vmd.c  
-> [ ... ]
-> > @@ -661,6 +684,46 @@ static int vmd_get_bus_number_start(struct
-> > vmd_dev *vmd) return 0;
-> >  }
-> >  
-> > +static int vmd_get_bus_info_from_bar4(struct vmd_dev *vmd,
-> > +				       resource_size_t *offset1,
-> > +				       resource_size_t *offset2)
-> > +{  
-> [ ... ]
-> > +	/* Calculate offsets like vmd_get_phys_offsets() does. */
-> > +	if (phys1)
-> > +		*offset1 = vmd->dev->resource[VMD_MEMBAR1].start -
-> > +			(phys1 & PCI_BASE_ADDRESS_MEM_MASK);
-> > +	if (phys2)
-> > +		*offset2 = vmd->dev->resource[VMD_MEMBAR2].start -
-> > +			(phys2 & PCI_BASE_ADDRESS_MEM_MASK);  
-> 
-> [Severity: High]
-> Will this truncate the 64-bit physical addresses on 32-bit systems?
-> 
-> Since PCI_BASE_ADDRESS_MEM_MASK is ~0x0fUL, on 32-bit systems it
-> evaluates to a 32-bit 0xFFFFFFF0. When bitwise ANDed with a 64-bit
-> u64 like phys1 or phys2, the mask is zero-extended to
-> 0x00000000FFFFFFF0ULL, clearing the upper 32 bits of the address.
-> 
-> Could this result in entirely incorrect memory mapping offsets for
-> VMD devices mapped above 4GB?
-> 
-> This is a pre-existing issue in vmd_get_phys_offsets() as well, but
-> it seems to be repeated here.
-> 
-> > +
-> > +	pci_iounmap(vmd->dev, bar4);
-> > +	return 0;
-> > +}
-> > +
-> >  static irqreturn_t vmd_irq(int irq, void *data)
-> >  {
-> >  	struct vmd_irq_list *irqs = data;
-> > @@ -711,6 +774,53 @@ static int vmd_alloc_irqs(struct vmd_dev *vmd)
-> >  	return 0;
-> >  }  
-> 
-> [Severity: High]
-> This isn't a bug introduced by this patch, but does the driver leak
-> srcu_struct structures on the probe error paths?
-> 
-> Looking at vmd_alloc_irqs(), it initializes srcu_struct structures in
-> a loop. If a subsequent step fails (such as init_srcu_struct or
-> vmd_create_irq_domain later in probe), vmd_probe() jumps to
-> out_release_instance and returns an error without calling
-> cleanup_srcu_struct() for the already initialized structures.
-> 
-> While IRQ vectors are automatically freed via devres, the srcu_struct
-> allocations inside the per-CPU memory appear to be permanently leaked.
-> 
-> [Severity: High]
-> This is also a pre-existing issue, but does vmd_remove() introduce a
-> use-after-free by manually destroying srcu_struct structures while
-> the managed IRQ handler is still registered?
-> 
-> The driver registers its interrupt handlers using devm_request_irq().
-> Because devres handlers run only after vmd_remove() returns, the IRQ
-> remains active and can fire during or after the srcu_struct
-> structures are manually destroyed.
-> 
-> If vmd_irq() fires during this window, it calls srcu_read_lock() on a
-> destroyed srcu_struct. Can this sequence trigger a use-after-free?
+>> diff --git a/kernel/bpf/inode.c b/kernel/bpf/inode.c
+>> index 25c06a0118258..638aa996cbaf4 100644
+>> --- a/kernel/bpf/inode.c
+>> +++ b/kernel/bpf/inode.c
 > 
 > [ ... ]
-> > @@ -868,19 +956,21 @@ static int vmd_enable_domain(struct vmd_dev
-> > *vmd, unsigned long features)
-> >  	 * acceptable because the guest is usually CPU-limited and
-> > MSI
-> >  	 * remapping doesn't become a performance bottleneck.
-> >  	 */
-> > -	if (!(features & VMD_FEAT_CAN_BYPASS_MSI_REMAP) ||
-> > -	    offset[0] || offset[1]) {
-> > -		ret = vmd_alloc_irqs(vmd);
-> > -		if (ret)
-> > -			return ret;
-> > +	if (!(features & VMD_FEAT_USE_BIOS_INFO)) {
-> > +		if (!(features & VMD_FEAT_CAN_BYPASS_MSI_REMAP) ||
-> > +		    offset[0] || offset[1]) {
-> > +			ret = vmd_alloc_irqs(vmd);
-> > +			if (ret)
-> > +				return ret;
-> >  
-> > -		vmd_set_msi_remapping(vmd, true);
-> > +			vmd_set_msi_remapping(vmd, true);  
+> 
+>> @@ -762,22 +821,151 @@ static int bpf_show_options(struct seq_file *m, struct dentry *root)
+>>   	return 0;
+>>   }
+> 
+> [ ... ]
+> 
+>> +static int bpf_fs_xattr_set(const struct xattr_handler *handler,
+>> +			    struct mnt_idmap *idmap, struct dentry *unused,
+>> +			    struct inode *inode, const char *name,
+>> +			    const void *value, size_t size, int flags)
+>> +{
+>> +	struct bpf_fs_inode *bi = BPF_FS_I(inode);
+>> +	struct simple_xattrs *xattrs;
+>> +	struct simple_xattr *old;
+>> +
+>> +	name = xattr_full_name(handler, name);
+>> +	xattrs = simple_xattrs_lazy_alloc(&bi->xattrs, value, flags);
+>> +	if (IS_ERR_OR_NULL(xattrs))
+>> +		return PTR_ERR(xattrs);
+>> +	old = simple_xattr_set(xattrs, name, value, size, flags);
 > 
 > [Severity: High]
-> This patch bypasses MSI remapping initialization for
-> VMD_FEAT_USE_BIOS_INFO in vmd_enable_domain(), but is it also
-> necessary to update vmd_resume()?
+> Does this code allow an unprivileged user to exhaust kernel memory?
 > 
-> vmd_resume() unconditionally calls vmd_set_msi_remapping(), which
-> will read and write the legacy PCI_REG_VMCONFIG register during
-> system resume. Could this cause undefined behavior or PCI aborts on
-> the new hardware?
+> Because bpffs can be mounted in an unprivileged user namespace
+> (FS_USERNS_MOUNT), a user could create directories and repeatedly set user.*
+> extended attributes.
 > 
+> Since simple_xattr_set() does not enforce per-inode limits like
+> simple_xattr_set_limited() does, couldn't this lead to an unbounded memory
+> allocation and soft lockups during rhashtable traversals?
 
- I will address this issue. We dont want vmd_resume to ser msi for
- unsupported devices.
+Ok, for user.* simple_xattr_set_limited should be the choice then, will
+fix in a v2.
+
+>> +	if (IS_ERR(old))
+>> +		return PTR_ERR(old);
+>> +	simple_xattr_free_rcu(old);
+>> +	inode_set_ctime_current(inode);
+>> +	return 0;
+>> +}
+> 
+> [ ... ]
+> 
+>> +static int bpf_fs_initxattrs(struct inode *inode,
+>> +			     const struct xattr *xattr_array, void *fs_info)
+>> +{
+>> +	struct bpf_fs_inode *bi = BPF_FS_I(inode);
+>> +	const struct xattr *xattr;
+>> +	size_t len;
+>> +
+>> +	CLASS(simple_xattrs, xattrs)();
+>> +	if (IS_ERR(xattrs))
+>> +		return PTR_ERR(xattrs);
+>> +
+>> +	for (xattr = xattr_array; xattr->name != NULL; xattr++) {
+>> +		CLASS(simple_xattr, new_xattr)(xattr->value, xattr->value_len);
+>> +		if (IS_ERR(new_xattr))
+>> +			break;
+>> +
+>> +		len = strlen(xattr->name) + 1;
+>> +		new_xattr->name = kmalloc(XATTR_SECURITY_PREFIX_LEN + len,
+> 
+> [Severity: High]
+> Can this cause a NULL pointer dereference?
+> 
+> If an LSM program returns a NULL xattr value, the simple_xattr class
+> constructor will call simple_xattr_alloc() which can return NULL.
+> 
+> The IS_ERR(new_xattr) check evaluates to false for a NULL pointer, leading
+> to a NULL pointer dereference when accessing new_xattr->name here.
+
+(false positive: security_inode_init_security() array always have non-NULL
+value paired with non-NULL name.. also in line with shmem_initxattrs)
+
+>> +					  GFP_KERNEL_ACCOUNT);
+>> +		if (!new_xattr->name)
+>> +			break;
+>> +
+>> +		memcpy(new_xattr->name, XATTR_SECURITY_PREFIX,
+>> +		       XATTR_SECURITY_PREFIX_LEN);
+> 
+> [ ... ]
+> 
 
