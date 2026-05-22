@@ -1,65 +1,65 @@
-Received: from mail-pg1-f194.google.com (mail-pg1-f194.google.com [209.85.215.194])
+Received: from mail-pj1-f66.google.com (mail-pj1-f66.google.com [209.85.216.66])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 30E0972617
-	for <sashiko-reviews@lists.linux.dev>; Fri, 22 May 2026 07:19:36 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.215.194
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C5A88226D18
+	for <sashiko-reviews@lists.linux.dev>; Fri, 22 May 2026 07:22:23 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.216.66
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1779434377; cv=none; b=FcySm+clR9djJxoGy7+rXIJnhDNIGGnRROpObC4rK5V7ikZ7DSXmy/EDc/UaIkc61txf5WzjhFDszezuHvDkul4aWgrDcJrdKOXMpGBDbxssZZYD7DngjKtSFewjrvb0/CBJeQY1qc/8PkWVWgMEJbcaC/tNNixxWx91P20gUE8=
+	t=1779434545; cv=none; b=Pgo73oUdMljw/SiGVnqmSJ1YmOpBuAYsPwrnl6MjWBpagw2pVA8oLTU81AsUToDx6LEGAI9nTqdZy8yo3xll6H63VCdIVij5zEMxVStuNIJuspGxb3vQoeAVnBHq+GbslOkn5PpOx2lTk5ZUxx4/PUalMy1RCkUXCwe3mTaKER8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1779434377; c=relaxed/simple;
-	bh=vB8ncglXsDL+G3GQLuAvTKjMpZQbsil0GJXiBoS1ZPY=;
+	s=arc-20240116; t=1779434545; c=relaxed/simple;
+	bh=obSvKijC4ntlSrQugmV7SoKTfCT7iU/AFtXLZwPmzqI=;
 	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=bpgqNm/NfbGSwhMKRucWmVJVqSspE8bEz9gn9RW3CQuXtP3V9U9aYKvJkUzFDMatFjtwls0f8iS4CAMc8aVEd1zESC9EDelrEakKGpASBVTPAtCVTBLjiWHb04XFMIsBJ5WwEUp0770BW7vtHR+cj0V0yNN6G1nm0iLkP84vfUU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=ILl1+PMr; arc=none smtp.client-ip=209.85.215.194
+	 In-Reply-To:Content-Type; b=FVSfmF6uH7n75mCyS63Gp5J/TBABxVuGnI8Mt1L9haVYeDr3QGZbcSBoG06/mLQ47tLmClvIfwh8ff3bIIkITt057cowmqYuTyxQDZP9i7YNvhvIKg6xUpajcOJjDw3XTT0DxPF37PG43ruj6xbXEFnLFngI4ajfhTSnYm2fxNo=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=CKvrCGa0; arc=none smtp.client-ip=209.85.216.66
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="ILl1+PMr"
-Received: by mail-pg1-f194.google.com with SMTP id 41be03b00d2f7-c801b30188dso3269415a12.3
-        for <sashiko-reviews@lists.linux.dev>; Fri, 22 May 2026 00:19:36 -0700 (PDT)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="CKvrCGa0"
+Received: by mail-pj1-f66.google.com with SMTP id 98e67ed59e1d1-3664df32e91so7676706a91.3
+        for <sashiko-reviews@lists.linux.dev>; Fri, 22 May 2026 00:22:23 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20251104; t=1779434375; x=1780039175; darn=lists.linux.dev;
+        d=gmail.com; s=20251104; t=1779434543; x=1780039343; darn=lists.linux.dev;
         h=content-transfer-encoding:in-reply-to:from:content-language
          :references:cc:to:subject:user-agent:mime-version:date:message-id
          :from:to:cc:subject:date:message-id:reply-to;
-        bh=SxeTpMAFFvPJj1oPmHKERDLVM0KYa/xZKuY/auNrHes=;
-        b=ILl1+PMrLbwnyMsKwYqoIHYpZbHh2GC7A6Tnu3qDMxKb2U2meQCjrSZ+f5Yd66yFcw
-         NIlqLE409eVHkd0nTbggNrHMq7p50vMMV/BxxSvIOOlRq3lH8qWzoRnAFQ9KbCptZUpr
-         lBT5FU7rKrb20HlC3f4gXwOlCAKT4Jfxx6xjVO/tcUXkyD+0fvZZStCOmbrXqsBvde4T
-         aOG65ZKAylXfEsy8EOwyj0UHvXEHBsVWsAPyjOUePxsZEwLI8+g7YL+MquWiZ374Uudc
-         7ZJGloN7/1quJ9wypPCPB504zCm6lO12/57AJiQM5Qz5HxTM/EecY3o6WC+jw2fa8jpm
-         GGeA==
+        bh=PJiioyKQ/ca5477xLRXKGF7zLaHoUf7g0GkFbnSC7ww=;
+        b=CKvrCGa0FcCGoycaqGCnkQJX3lw2dDevklc7QsfoTCp8+7ZGwrkwV8PIsbdoTBW5Hn
+         zo48NlVM9DolgK7u/zPVC9g3GV29TKjHlh14SvbAlV1tMNdQv0pu+v1g1NkMD+luAEt4
+         m2UOEoUdbKOUB0MvFzsHEYRmO55Di2Km6eSOxwZM5/RpXldaRBLhVX1U0QmJDcweLomO
+         oEQKNbndFSF8sbRMf7cAFZmgNEE/dKkwdv486+Dfcp/iL5CpPxWpskYvdGgj/DnlD5dR
+         jvMbi50bN14q3qhuBWAlZNCqeeQx9G8v1dxxUEPyupjBFqZJegGL4kw5Mg3nVRbPXjT7
+         hqYQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20251104; t=1779434375; x=1780039175;
+        d=1e100.net; s=20251104; t=1779434543; x=1780039343;
         h=content-transfer-encoding:in-reply-to:from:content-language
          :references:cc:to:subject:user-agent:mime-version:date:message-id
          :x-gm-gg:x-gm-message-state:from:to:cc:subject:date:message-id
          :reply-to;
-        bh=SxeTpMAFFvPJj1oPmHKERDLVM0KYa/xZKuY/auNrHes=;
-        b=Kg/Ofx04y6ChVefqU/32t7feLchN/eP+lhpCFqWbHKCgu+sQm03utFXUeGlgd5654S
-         ByLp9bPeGo6pgLs3J47Yj9aXsIR2iVOiKiJq/4sIReaMbRztSZjJW/jXHhPSaC8Nq4gG
-         D7mtM/pv0cAJmYuEhiFyaxTrXlZQhhyVVJM06wRcU86bTYccbLF1umilozKMmrPz+nt/
-         fhtu5OTPPtk0RYVRdf60MDCIYsrnu8YjBnmAlh0KNRqEkyfZudzUSNopR5s8pIEkDFnx
-         1Km62TAtgJa4CvEplFyAxltI6taYwgcszSeTHYI3imE6ycFCGfdYzUXC7K1zyycn2c1H
-         Ta0A==
-X-Gm-Message-State: AOJu0YzhGHP+XlIWdy/74jZAt4ECWDTXb+K4EGFoCxhzkJ4wJoxWZNft
-	gmQpLkHFX4Avw2lv2kEgnPRU/p1YI0mHiobcYBq0XOIcuR7x32912r3oQtWXAU7EEGRzEKHQ
-X-Gm-Gg: Acq92OE+UmeXeMfgylv7T+6ZS3C4UX+2BHU848sq0RlPh7GmYHIsTgKQlfdvo099O7r
-	+w+YcPg1p/vLBWD+xjdTA26IZlYDIhapKuHRA2HrRpOFcYxDBO6mumJFs0zPV0A7b06jgfP2VY1
-	WKN0BdkIUiE8XYO8TI5/QCc2MsYD/8ZaDTYWrJLSAOYjzTfcXcb4nf6hImisnUL9GhWACHFADhp
-	UiiIrsuIaydpJfMuUeiYWkPrT3FFaAlkA4s765c8Yw9gonfvcQ7w6WeQTLb6V3+2bMmW/5nOJHq
-	PWvI458+dm65cZNdrH3QRa3jRVX2v1Eyx0yBgEVdqc9FineVz76gPglYP+XceVUKkjk7k8AGe96
-	sfJBtOyxvx6khLJWwpx6jzC4Pv7MYQY+ul71dQot2S8ZnmVNvaoSfJOqLJTiHG/3+yrGSL4Lj9R
-	ALlotqDt3MmLbxAQp2mw2wWjRCeFUarqM=
-X-Received: by 2002:a05:6a21:d86:b0:3b3:2703:117 with SMTP id adf61e73a8af0-3b3293ba4b1mr2450063637.41.1779434375371;
-        Fri, 22 May 2026 00:19:35 -0700 (PDT)
+        bh=PJiioyKQ/ca5477xLRXKGF7zLaHoUf7g0GkFbnSC7ww=;
+        b=mbbE/C4EG5UbymTE8pEvilsHGiSUQOJKFknVbWMdnRBh/A9WSFBHnvgXCTtyZ2M1jk
+         fn0ggCOl3mvNJGethB8VFjPSeRdfQKoObYKKWZKw2xz4bCzxfMEWv1QuaVtDMvbZzR5M
+         6T6R3I+TXwXCAuIgwzOEXtVXJpr2sWdq9oMkb9E49Yt3fKIfY7sMQRjh5ovl8FoJFtDf
+         C6PS9/wzglTVNkMSGragiXBX3TKzrDyk4R6lvnqEsdYaGTpqrVB2a5apHgD/uu4qGMBV
+         FQZUOpKdu88/K5EkLiE3SXsdkX+AZGjoEcHIfVrR77hFYFaWRezugYTefzSh93Sm6UzE
+         /WVg==
+X-Gm-Message-State: AOJu0Yy5ujwSXue9wE4DwVq8wfgjaGYCm/fQWoSuTIveP8FpFf9Zu94r
+	cJKSzOWN9ae1QjyWR9LhZ4sR8hpj8rzyv7ADB+0wLSNspDBNIOchZWEMKY6FpggFn9doVFEK
+X-Gm-Gg: Acq92OE+ytxF5ejHB3XkSnCyYQ+guxH6gQ9EDsd4P6GUtxkzMG0dTDH2vmzlJ+725rf
+	pgjWEiI/YUKzD75uGz4cg16oF6q2fwG9mfMXEzoP1560ZK7vbb6jF79y1uQ2nf31Pgcc5h1z0/d
+	KMRliLp/9oxTEGGIRtkhkUowPJekjFDXgm1IL4qieUubuk2r5/kMOaPxDW7KkjLuACvwIwyUVQO
+	hOfRRue/0ffMf97pJrW0JnocfOhwVIegsdkwCQi18ZQwDPGw3q6S70coybGXSI7/WHGzubGmeI3
+	ThWIbyxh2hZuZeXjah1aBbIMw0BCDJ5GrddabGk4s7K/OhyvXlpx6HU5DCa2/zJQWRXJYGfvHw+
+	zaSNvFTjSbS4MISRPaVxb3+MJ4iLwNZ8xaofQc+P1LgKHkX35JTfKE9bVq5DmfVsmEyEgJq1RDQ
+	oEkwuNjkty4oKAZo35+Q67E4VN6g3TxaGeCPyET8SgsQ==
+X-Received: by 2002:a17:90b:224e:b0:368:b917:79b9 with SMTP id 98e67ed59e1d1-36a67658122mr2644126a91.25.1779434543012;
+        Fri, 22 May 2026 00:22:23 -0700 (PDT)
 Received: from [10.125.112.20] ([210.184.73.204])
-        by smtp.gmail.com with ESMTPSA id 41be03b00d2f7-c852054e0cbsm654054a12.20.2026.05.22.00.19.32
+        by smtp.gmail.com with ESMTPSA id 98e67ed59e1d1-36a678d384fsm585491a91.4.2026.05.22.00.22.20
         (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Fri, 22 May 2026 00:19:34 -0700 (PDT)
-Message-ID: <cc70c1af-2276-4d73-bd55-612995ec6cae@gmail.com>
-Date: Fri, 22 May 2026 15:19:31 +0800
+        Fri, 22 May 2026 00:22:22 -0700 (PDT)
+Message-ID: <8833da24-9484-4081-a93c-cf91d86faaeb@gmail.com>
+Date: Fri, 22 May 2026 15:22:17 +0800
 Precedence: bulk
 X-Mailing-List: sashiko-reviews@lists.linux.dev
 List-Id: <sashiko-reviews.lists.linux.dev>
@@ -67,111 +67,77 @@ List-Subscribe: <mailto:sashiko-reviews+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:sashiko-reviews+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v2 4/8] of: reserved_mem: save /memreserve/ entries into
- the reserved_mem array
+Subject: Re: [PATCH v2 5/8] of: reserved_mem: add kdump helpers to exclude
+ non-dumpable regions
 To: sashiko-reviews@lists.linux.dev
 Cc: robh@kernel.org, devicetree@vger.kernel.org, conor+dt@kernel.org
-References: <20260520091844.592753-5-chenwandun@lixiang.com>
- <20260520103734.2CDFA1F000E9@smtp.kernel.org>
+References: <20260520091844.592753-6-chenwandun@lixiang.com>
+ <20260520110321.2A23C1F000E9@smtp.kernel.org>
 Content-Language: en-US
 From: Wandun <chenwandun1@gmail.com>
-In-Reply-To: <20260520103734.2CDFA1F000E9@smtp.kernel.org>
+In-Reply-To: <20260520110321.2A23C1F000E9@smtp.kernel.org>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 7bit
 
 
 
-On 5/20/26 18:37, sashiko-bot@kernel.org wrote:
+On 5/20/26 19:03, sashiko-bot@kernel.org wrote:
 > Thank you for your contribution! Sashiko AI review found 1 potential issue(s) to consider:
-> - [High] Out-of-bounds write to the statically allocated `reserved_mem_array` due to inflated `total_reserved_mem_cnt` without guaranteed array reallocation.
+> - [High] Use-After-Free when accessing `reserved_mem` during kexec load on systems with `/memreserve/` but no `/reserved-memory` node.
 > --
 >
-> commit cac834a48f61205ebaa2a6eaf1bc2f735c0a6c46
+> commit f3d66a3fdb2eb02781d662efcbf6e92d5a51228e
 > Author: Wandun Chen <chenwandun1@gmail.com>
 >
-> of: reserved_mem: save /memreserve/ entries into the reserved_mem array
+> of: reserved_mem: add kdump helpers to exclude non-dumpable regions
 >
-> This commit saves /memreserve/ entries into the reserved_mem array so they
-> can be excluded from kdump vmcores. Overlapping entries are marked as dumpable
-> to ensure useful crash analysis data is retained.
+> This commit adds two helpers to exclude non-dumpable reserved memory
+> regions during kdump. These helpers calculate the number of excluded
+> ranges and perform the actual exclusion by iterating over the
+> reserved_mem array.
 >
->> diff --git a/drivers/of/fdt.c b/drivers/of/fdt.c
->> index 82f7327c59ea9..d2bcaf149fe81 100644
->> --- a/drivers/of/fdt.c
->> +++ b/drivers/of/fdt.c
-> [ ... ]
->> @@ -516,7 +517,9 @@ void __init early_init_fdt_scan_reserved_mem(void)
->>   		if (!size)
->>   			break;
->>   		memblock_reserve(base, size);
->> +		nr_memreserve++;
->>   	}
->> +	fdt_reserved_mem_account_memreserve(nr_memreserve);
->>   }
-> [ ... ]
 >> diff --git a/drivers/of/of_reserved_mem.c b/drivers/of/of_reserved_mem.c
->> index 313cbc57aa453..6dfe9e03c535d 100644
 >> --- a/drivers/of/of_reserved_mem.c
 >> +++ b/drivers/of/of_reserved_mem.c
 > [ ... ]
->> @@ -241,6 +241,43 @@ static void __init __rmem_check_for_overlap(void)
->>   	}
->>   }
->>   
->> +static void __init fdt_reserved_mem_add_memreserve(phys_addr_t base,
->> +						   phys_addr_t size)
+>
+>> +/* Exclude non-dumpable reserved regions from @cmem. */
+>> +int of_reserved_mem_kdump_exclude(struct crash_mem *cmem)
 >> +{
->> +	struct reserved_mem *rmem;
->> +	bool dumpable = false;
->> +	int i;
->> +
->> +	if (reserved_mem_count == total_reserved_mem_cnt) {
->> +		pr_err("not enough space for memreserve regions.\n");
->> +		return;
->> +	}
-> [Severity: High]
-> Could this lead to an out-of-bounds write to the statically allocated
-> reserved_mem_array during early boot?
->
-> fdt_reserved_mem_account_memreserve() increments total_reserved_mem_cnt
-> by the number of /memreserve/ entries. However, if the device tree lacks
-> a /reserved-memory node, fdt_scan_reserved_mem_late() returns early and
-> alloc_reserved_mem_array() is bypassed.
-Yes, there is indeed an out-of-bounds issue if the device tree lacks a
-/reserved-memory node.
-
-At the same time, it will also cause inaccurate counting for
-total_reserved_mem_cnt.
-
-Will fix both in v3.
->
-> If this happens, the reserved_mem pointer continues to point to the
-> statically allocated array with a fixed capacity of MAX_RESERVED_REGIONS.
->
-> Since the check above compares against the inflated total_reserved_mem_cnt, it
-> appears we could write past the end of the static array if the device tree
-> contains 64 or more /memreserve/ entries?
->
+>> +	unsigned int i;
+>> +	int ret;
 >> +
 >> +	for (i = 0; i < reserved_mem_count; i++) {
->> +		rmem = &reserved_mem[i];
->> +
->> +		if (!rmem->dumpable)
->> +			continue;
->> +
->> +		if (base < rmem->base + rmem->size && rmem->base < base + size) {
->> +			dumpable = true;
->> +			break;
->> +		}
->> +	}
->> +
->> +	rmem = &reserved_mem[reserved_mem_count];
->> +	rmem->base = base;
->> +	rmem->size = size;
->> +	rmem->dumpable = dumpable;
->> +
->> +	reserved_mem_count++;
->> +}
-> [ ... ]
+>> +		struct reserved_mem *r = &reserved_mem[i];
+> [Severity: High]
+> Can accessing reserved_mem here cause a use-after-free on systems that have
+> /memreserve/ entries but no /reserved-memory node?
 >
+> The global pointer reserved_mem initially points to reserved_mem_array,
+> which is marked with __initdata. During early boot, if there is no
+> /reserved-memory node, fdt_scan_reserved_mem_late() returns early without
+> dynamically allocating a permanent array.
+>
+> However, fdt_reserved_mem_save_memreserve_entries() unconditionally
+> populates /memreserve/ entries into this __initdata array and increments
+> reserved_mem_count.
+>
+> After boot completes, the __initdata section is freed.
+>
+> When a kexec image is later loaded, won't these helpers iterate over
+> reserved_mem_count and read fields like size, dumpable, and base from
+> the freed init memory?
+Yes, it is indeed a UAF issue if no /reserved-memory node.
+Will fix in v3
+>
+>> +
+>> +		if (!r->size || r->dumpable)
+>> +			continue;
+>> +		ret = crash_exclude_mem_range(cmem, r->base,
+>> +					      r->base + r->size - 1);
+>> +		if (ret)
+>> +			return ret;
+>> +	}
+>> +	return 0;
+>> +}
 
