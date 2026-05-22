@@ -1,212 +1,179 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id ABD283438A2;
-	Fri, 22 May 2026 10:40:04 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id ED5573233ED;
+	Fri, 22 May 2026 10:44:49 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1779446405; cv=none; b=fOl4JD/npyD1ovGYDmp5muvWq3v0LghoTqGC0vhCH1ahAKlzP7REnv0G0Zk6VL3F5iqS+JCtX7Mgnp0sPRxC6/GPlHhJLBiDCNXBQW+mdY4mZRCWfheHDwDv5cQxo7cysXy8WrE6bZNW0dOp3ek82nfNtUq4rcmN2L8zCYhocqI=
+	t=1779446691; cv=none; b=PyhnY7XyR7S0aGXeTWGmI6w124Ce8SRChh9scs8sjLC0c2vbRCstWMOb7XA3egOtQOgId3WKUTr7VTU6STSD6GZy5ZsBpNCIINWJ2B3Pikf+v+aWitGNlza1Ib4rANoD9HlZWIW234M33avPzcyCi7mw0PSrUM03Mp7PZ4ld+Fw=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1779446405; c=relaxed/simple;
-	bh=c0BeStXdY1FuuRgE12pPYKk+yXdU62dLQ+ab1L+PruA=;
+	s=arc-20240116; t=1779446691; c=relaxed/simple;
+	bh=qu97kFPigUJFnfn0oMzF0ND0GUMl25D3w22C5QA2TQM=;
 	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=Qk50JbhN6YJh//H5ebgcr3uyQ7IsVPIeOdWRzW+4L0ygIPKPOIfxXU44h+i9IXOgUsmO4fsnsz0l9I9qfh16OMsIrcMtYbUWqmh89vqLcCC8dt+TUl5GqRnI6INwuvKlHW1mBTyEm4dOyl+mQyPi15CC+Biql3Oxvtv+yuPhVzA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=C0uKlOyt; arc=none smtp.client-ip=100.103.45.18
+	 Content-Type:Content-Disposition:In-Reply-To; b=u2LPRTlfAKG6b3SyaWwJRqA++dOdCU8TpE+hJx8P891eRRxLt1qyOOV3OmV5QVZ2Y3nrvAPP+lWmerKQYlXd5P/rgMtfbDls/LXwihNeqUWywjniFIUMh3BOMjWnnFfPIZoP8Iux5H67m84lGRnLcgS5+Zxq55byS1DlsVojio4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=OBlcQfpX; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="C0uKlOyt"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id AF4581F000E9;
-	Fri, 22 May 2026 10:40:02 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="OBlcQfpX"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 245901F000E9;
+	Fri, 22 May 2026 10:44:47 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=kernel.org;
-	s=k20260515; t=1779446404;
-	bh=TOeENsJONCm8A8ptsypYNFAVXXJmb30h97nu7b0oPA4=;
+	s=k20260515; t=1779446689;
+	bh=D7blBQmroDeTnVftbWiUElk5r8f+qUupeB7df97/Pak=;
 	h=Date:From:To:Cc:Subject:References:In-Reply-To;
-	b=C0uKlOyt9wx1ZuV5BLASb/MIxwa+P55xZoZrWACqPyhWcqOPbkRP0imyt9YwbsFV7
-	 1GROqPhdzZTtqWlEcoktRpKpS970YtozTVF2KqaywwjfG2+l+Zjs2eKR559hdcb/iY
-	 jljzyjV1EuFbSLkXsdCxuDOCU4yxB8o13643wsUjuOWsCoZhvXqtbqkEw0XNUxQuA0
-	 C8FO7dfhh6Rfi6ECodZYCELW0Tvozqf+Zzvs7OGejUKRz9MK2+v9Ary1OHqNTd7y7u
-	 hG2VNtUNmpgQPz5LdzpNQYfY2amEusjavnlfAp3rwcnLygojJplV5FUGRCGWFfI7MW
-	 pdqLCxd9/Dmyw==
-Date: Fri, 22 May 2026 16:09:59 +0530
+	b=OBlcQfpXr05HcYteALrtvl3TiDkfEF7iLSZvxfvGimKS2I+jUOVHagLExOEpqy8ws
+	 lSrLPp88pWHJsAkztozNs+3SwczZDJ8PrBWZsdiTNPD10o1WaZ0dC69mWK0BdK0aCH
+	 Mblf4WUMa6QUchPR3PWGFFgabLStFeQ13v/NxBRjLjoeauyOuHSwKW+5bH+eMU3lhP
+	 aN3p8o/Adp3s+pYk+4gnLVG/THNuKpTW82ZBSOAlG6chEoUm+rhF/g38g12qjLcgQc
+	 FLHiL9+mEABkwUIzXtaQgA7fALmMt4eQPT1ZzW35K1CwR4sl1J2DDWUSliCx+LMLfd
+	 DAesSiTuoV6oA==
+Date: Fri, 22 May 2026 16:14:45 +0530
 From: Sumit Garg <sumit.garg@kernel.org>
 To: sashiko-reviews@lists.linux.dev
 Cc: robh@kernel.org, conor+dt@kernel.org, devicetree@vger.kernel.org
-Subject: Re: [PATCH v6 04/16] firmware: qcom: Add a PAS TEE service
-Message-ID: <ahAyf4i7ZZrJETG9@sumit-xelite>
-References: <20260518072856.22790-5-sumit.garg@kernel.org>
- <20260519073354.03927C2BCB3@smtp.kernel.org>
+Subject: Re: [PATCH v6 05/16] remoteproc: qcom_q6v5_pas: Switch over to
+ generic PAS TZ APIs
+Message-ID: <ahAznR7z3rYZCbwX@sumit-xelite>
+References: <20260518072856.22790-6-sumit.garg@kernel.org>
+ <20260519073355.98831C2BCB3@smtp.kernel.org>
 Precedence: bulk
 X-Mailing-List: sashiko-reviews@lists.linux.dev
 List-Id: <sashiko-reviews.lists.linux.dev>
 List-Subscribe: <mailto:sashiko-reviews+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:sashiko-reviews+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=iso-8859-1
+Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-Content-Transfer-Encoding: 8bit
-In-Reply-To: <20260519073354.03927C2BCB3@smtp.kernel.org>
+In-Reply-To: <20260519073355.98831C2BCB3@smtp.kernel.org>
 
-On Tue, May 19, 2026 at 07:33:53AM +0000, sashiko-bot@kernel.org wrote:
-> Thank you for your contribution! Sashiko AI review found 3 potential issue(s) to consider:
-> - [Critical] Unvalidated buffer sizes from TEE lead to heap buffer overflow and out-of-bounds read.
-> - [High] The `shm_free` cleanup wrapper fails to handle `ERR_PTR`, causing a kernel crash on allocation failure.
-> - [High] Unconditional unregistration and global static ops structure corruption in probe/remove.
+On Tue, May 19, 2026 at 07:33:55AM +0000, sashiko-bot@kernel.org wrote:
+> Thank you for your contribution! Sashiko AI review found 4 potential issue(s) to consider:
+> - [Critical] Unconditionally calling `qcom_scm_assign_mem()` without checking SCM availability causes a NULL pointer dereference on non-SCM platforms.
+> - [High] MDT firmware loading is not abstracted and continues to hardcode SCM APIs, causing both a build warning and functional failure on non-SCM backends.
+> - [High] The DTB subsystem (dtb_pas_id) is authenticated but never shut down in the error paths of qcom_pas_start().
+> - [High] The firmware object pas->dtb_firmware is leaked on the success path of qcom_pas_load().
 > --
 > 
-> commit 117a287c92ded04ad43f9ed963b43a8069a13f94
+> commit e21bc74de5d7e3215e46e9baa1c3a6b26f353409
 > Author: Sumit Garg <sumit.garg@oss.qualcomm.com>
 > 
-> firmware: qcom: Add a PAS TEE service
+> remoteproc: qcom_q6v5_pas: Switch over to generic PAS TZ APIs
 > 
-> Add support for Peripheral Authentication Service (PAS) driver based
-> on TEE bus with OP-TEE providing the backend PAS service implementation.
+> This patch switches the qcom_q6v5_pas client driver over to generic PAS TZ
+> APIs. This allows supporting multiple TrustZone implementation backends
+> such as QTEE and OP-TEE.
 > 
-> > diff --git a/drivers/firmware/qcom/qcom_pas_tee.c b/drivers/firmware/qcom/qcom_pas_tee.c
-> > new file mode 100644
-> > index 0000000000000..2067a43c44c37
-> > --- /dev/null
-> > +++ b/drivers/firmware/qcom/qcom_pas_tee.c
-> > @@ -0,0 +1,476 @@
+> > diff --git a/drivers/remoteproc/qcom_q6v5_pas.c b/drivers/remoteproc/qcom_q6v5_pas.c
+> > index da27d1d3c9da6..847249c28c1be 100644
+> > --- a/drivers/remoteproc/qcom_q6v5_pas.c
+> > +++ b/drivers/remoteproc/qcom_q6v5_pas.c
 > [ ... ]
-> > +DEFINE_FREE(shm_free, struct tee_shm *, tee_shm_free(_T))
+> > @@ -118,8 +119,8 @@ struct qcom_pas {
+> >  	struct qcom_rproc_ssr ssr_subdev;
+> >  	struct qcom_sysmon *sysmon;
+> >  
+> > -	struct qcom_scm_pas_context *pas_ctx;
+> > -	struct qcom_scm_pas_context *dtb_pas_ctx;
+> > +	struct qcom_pas_context *pas_ctx;
+> > +	struct qcom_pas_context *dtb_pas_ctx;
+> >  };
 > 
-> Will this crash if an allocation failure occurs? By default, DEFINE_FREE
-> only guards against NULL pointers. However, tee_shm_alloc_kernel_buf() can
-> return an ERR_PTR, which evaluates to true.
+> Does changing this struct cause a compiler warning and functional regression
+> for non-SCM backends?
 > 
-> > +
-> > +static void *qcom_pas_tee_get_rsc_table(struct device *dev,
-> > +					struct qcom_pas_context *ctx,
-> > +					void *input_rt, size_t input_rt_size,
-> > +					size_t *output_rt_size)
-> > +{
+> Since this patch changes the context type to struct qcom_pas_context * but
+> still passes it to qcom_mdt_pas_load(), it appears to cause an incompatible
+> pointer type warning.
+> 
+> Furthermore, qcom_mdt_pas_load() internally hardcodes calls to SCM-specific
+> APIs like qcom_scm_pas_init_image(), bypassing the generic PAS backend
+> entirely. This seems to prevent the driver from working on non-SCM backends
+> like OP-TEE.
+> 
+> I notice this is fixed later in the series in the commit "soc: qcom:
+> mdtloader: Switch to generic PAS TZ APIs", but I am pointing it out here as
+> it breaks the build and functionality at this step.
+
+Ack, will rather merge the mdtloader patch into this one instead to
+enable git bisection.
+
+> 
 > [ ... ]
-> > +	if (param[1].u.memref.size) {
-> > +		struct tee_shm *rt_shm __free(shm_free) =
-> > +			tee_shm_alloc_kernel_buf(data->ctx,
-> > +						 param[1].u.memref.size);
+> > @@ -250,7 +251,7 @@ static int qcom_pas_load(struct rproc *rproc, const struct firmware *fw)
+> >  	return 0;
+> >  
+> >  release_dtb_metadata:
+> > -	qcom_scm_pas_metadata_release(pas->dtb_pas_ctx);
+> > +	qcom_pas_metadata_release(pas->dtb_pas_ctx);
+> >  	release_firmware(pas->dtb_firmware);
+> >  
+> >  	return ret;
 > 
-> If this allocation fails, rt_shm will be an ERR_PTR. When the function
-> returns early, shm_free will pass the ERR_PTR to tee_shm_free(), triggering
-> a kernel panic.
-
-Ack, will fix it.
-
+> Is there a pre-existing resource leak here?
 > 
-> > +		void *rt_shm_va;
-> > +
-> > +		if (IS_ERR(rt_shm)) {
-> > +			dev_err(dev, "rt_shm allocation failed\n");
-> > +			return rt_shm;
-> > +		}
-> > +
-> > +		rt_shm_va = tee_shm_get_va(rt_shm, 0);
-> > +		if (IS_ERR(rt_shm_va)) {
-> > +			dev_err(dev, "rt_shm get VA failed\n");
-> > +			return ERR_CAST(rt_shm_va);
-> > +		}
-> > +		memcpy(rt_shm_va, input_rt, input_rt_size);
+> When request_firmware() allocates the DTB firmware and qcom_mdt_pas_load()
+> succeeds, the function returns 0 and skips the release_dtb_metadata label
+> where release_firmware() is called.
 > 
-> Can this cause a heap buffer overflow? The buffer is allocated using
-> param[1].u.memref.size, but the code unconditionally copies input_rt_size
-> bytes into it.
+> The pas->dtb_firmware pointer appears to be retained but never freed in any
+> teardown function like qcom_pas_unprepare() or qcom_pas_stop(). Could this
+> permanently leak the firmware object and its backing buffer on every
+> successful start?
 
-Nope, param[1].u.memref.size is always more or equal to input_rt_size
-based on OP-TEE ABI.
+Out of scope for this patch-set.
 
 > 
-> > +
-> > +		param[1].u.memref.shm = rt_shm;
-> > +		ret = tee_client_invoke_func(data->ctx, &inv_arg, param);
-> > +		if (ret < 0 || inv_arg.ret != 0) {
-> > +			dev_err(dev, "PAS get RT failed, pas_id: %d, ret: %d, err: 0x%x\n",
-> > +				ctx->pas_id, ret, inv_arg.ret);
-> > +			return ret ? ERR_PTR(ret) : ERR_PTR(-EINVAL);
-> > +		}
-> > +
-> > +		if (param[1].u.memref.size) {
-> > +			*output_rt_size = param[1].u.memref.size;
-> > +			rt_buf = kmemdup(rt_shm_va, *output_rt_size, GFP_KERNEL);
-> 
-> Does this kmemdup() introduce an out-of-bounds read? The size returned by
-> the TEE in param[1].u.memref.size could potentially be larger than the
-> originally allocated size.
-
-Nope, this won't happen as it's part of OP-TEE ABI.
-
-> 
-> > +			if (!rt_buf)
-> > +				return ERR_PTR(-ENOMEM);
-> > +		}
-> > +	}
-> > +
-> > +	return rt_buf;
-> > +}
 > [ ... ]
-> > +static struct qcom_pas_ops qcom_pas_ops_tee = {
-> > +	.drv_name		= "qcom-pas-tee",
-> > +	.supported		= qcom_pas_tee_supported,
-> > +	.init_image		= qcom_pas_tee_init_image,
-> > +	.mem_setup		= qcom_pas_tee_mem_setup,
-> > +	.get_rsc_table		= qcom_pas_tee_get_rsc_table,
-> > +	.auth_and_reset		= qcom_pas_tee_auth_and_reset,
-> > +	.prepare_and_auth_reset	= qcom_pas_tee_prepare_and_auth_reset,
-> > +	.set_remote_state	= qcom_pas_tee_set_remote_state,
-> > +	.shutdown		= qcom_pas_tee_shutdown,
-> > +	.metadata_release	= qcom_pas_tee_metadata_release,
-> > +};
-> > +
-> > +static int optee_ctx_match(struct tee_ioctl_version_data *ver, const void *data)
-> > +{
-> > +	return ver->impl_id == TEE_IMPL_ID_OPTEE;
-> > +}
-> > +
-> > +static int qcom_pas_tee_probe(struct tee_client_device *pas_dev)
-> > +{
-> > +	struct device *dev = &pas_dev->dev;
-> > +	struct qcom_pas_tee_private *data;
+> > @@ -339,13 +340,13 @@ static int qcom_pas_start(struct rproc *rproc)
+> >  	ret = qcom_q6v5_wait_for_start(&pas->q6v5, msecs_to_jiffies(5000));
+> >  	if (ret == -ETIMEDOUT) {
+> >  		dev_err(pas->dev, "start timed out\n");
+> > -		qcom_scm_pas_shutdown(pas->pas_id);
+> > +		qcom_pas_shutdown(pas->pas_id);
+> >  		goto unmap_carveout;
+> >  	}
+> 
+> Does this error path miss shutting down the DTB subsystem?
+> 
+> While this was not introduced by this patch, if the DTB authentication
+> step earlier in this function succeeds, but a subsequent step like
+> qcom_q6v5_wait_for_start() fails, the error path shuts down the main PAS but
+> misses calling qcom_pas_shutdown(pas->dtb_pas_id).
+> 
+> The code then jumps to unmap_dtb_carveout and unmaps the Linux-side memory,
+> leaving the DTB subsystem active in TrustZone while its backing memory is
+> unmapped.
+> 
+
+Out of scope for this patch-set.
+
 > [ ... ]
-> > +	data->session_id = sess_arg.session;
-> > +	dev_set_drvdata(dev, data);
-> > +	qcom_pas_ops_tee.dev = dev;
+> > @@ -746,7 +747,7 @@ static int qcom_pas_probe(struct platform_device *pdev)
+> >  	if (!desc)
+> >  		return -EINVAL;
+> >  
+> > -	if (!qcom_scm_is_available())
+> > +	if (!qcom_pas_is_available())
+> >  		return -EPROBE_DEFER;
+> >  
+> >  	fw_name = desc->firmware_name;
 > 
-> Could concurrent probes overwrite this shared static structure? Since the ops
-> structure is global, multiple devices probing at the same time could clobber
-> the dev pointer.
-
-Only single device is supported on TEE bus here.
-
+> Could this change lead to a NULL pointer dereference on non-SCM platforms?
 > 
-> > +	qcom_pas_ops_register(&qcom_pas_ops_tee);
+> By replacing the qcom_scm_is_available() check with qcom_pas_is_available(),
+> the probe function can now continue on platforms using non-SCM backends like
+> OP-TEE.
 > 
-> Should this check for a return value or register failure? If another backend
-> like SCM is already registered, this operation will fail, but the probe
-> routine proceeds as if it was successful.
-
-Only one PAS backend is expected to be present at a time.
-
+> However, further down in probe, qcom_pas_assign_memory_region() is still
+> unconditionally called if pas->region_assign_idx is set:
 > 
-> > +
-> > +	return ret;
-> > +}
-> > +
-> > +static void qcom_pas_tee_remove(struct tee_client_device *pas_dev)
-> > +{
-> > +	struct device *dev = &pas_dev->dev;
-> > +	struct qcom_pas_tee_private *data = dev_get_drvdata(dev);
-> > +
-> > +	qcom_pas_ops_unregister();
+> qcom_pas_assign_memory_region()
+>    qcom_scm_assign_mem()
 > 
-> If the registration failed in probe, will this unconditionally unregister the
-> active SCM backend and break PAS functionality system-wide?
+> qcom_scm_assign_mem() accesses __scm->mempool without checking if __scm is
+> NULL. On non-SCM platforms, __scm will be NULL, which seems like it would
+> cause a kernel panic during probe for devices requiring memory region
+> assignment.
 
-Concurrent PAS backends aren't supported.
+qcom_scm_assign_mem() is still supported with an OP-TEE PAS backend too.
 
 -Sumit
-
-> 
-> > +	tee_client_close_session(data->ctx, data->session_id);
-> > +	tee_client_close_context(data->ctx);
-> > +}
-> 
-> -- 
-> Sashiko AI review · https://sashiko.dev/#/patchset/20260518072856.22790-1-sumit.garg@kernel.org?part=4
