@@ -1,229 +1,236 @@
-Received: from mail-dl1-f47.google.com (mail-dl1-f47.google.com [74.125.82.47])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from AM0PR02CU008.outbound.protection.outlook.com (mail-westeuropeazon11013061.outbound.protection.outlook.com [52.101.72.61])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 607C4255F2C
-	for <sashiko-reviews@lists.linux.dev>; Fri, 22 May 2026 21:35:10 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=pass smtp.client-ip=74.125.82.47
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AE9522F28E3;
+	Fri, 22 May 2026 21:36:20 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=fail smtp.client-ip=52.101.72.61
 ARC-Seal:i=2; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1779485712; cv=pass; b=jFEjNeE27CVg1pfG0qBJ0xCA1aL0Pb5w5tThs6t15UfZx4kC6AjDgzFWgdgzEightqV/pGtARGYf+yeO1Zxu3dICYgDIQUrEz5T4Fq3E8WeE24dtxXVXf5ORV9INnpATH4n5m6eu5bHCxgCoYjGcEQNVmCwvsl4R32AQqbkZMR0=
+	t=1779485782; cv=fail; b=DK/+qwNPEv9XiseRNkCLw1qbvXbd1QdjGAfe/AHG/a/OHTmiwgeR0CEN4wI6+TTOyTf2B7FIWNCtevVagWp3n+OTxCqevMGXqaio/MXzrxbvrLL77mhYO6PqbP6iaGEQQvZCTXtbOA4PrATn3UQQQUSUN2BoIhfwgFtE0bJx8RE=
 ARC-Message-Signature:i=2; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1779485712; c=relaxed/simple;
-	bh=IrCbpRqZ79TSnNZHPbrCyoMMlKKTtlqCPS9dngunr+E=;
-	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
-	 To:Cc:Content-Type; b=HXQrwMIATuxKXMRRYXMfB0mSUcFEGgjZeQTUX8RxNmmwSkMk/LhQgsWnL3Rus+9CvldoZUcy7T8RjtncDAaW/QnjMZPSpwrmebczyUNqqoNJMt20yaTgX9jQtk8Ue5qgX1AJG20eVNR14MFQdOpfXiSf56RVkgV2BTjLRhOig2w=
-ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=google.com; spf=pass smtp.mailfrom=google.com; dkim=pass (2048-bit key) header.d=google.com header.i=@google.com header.b=C53iJKdL; arc=pass smtp.client-ip=74.125.82.47
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=google.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=google.com
+	s=arc-20240116; t=1779485782; c=relaxed/simple;
+	bh=FwglYdd/g5J+z+fBACw/v/jxothA63RVuWbR8qLay6g=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:Content-Type:
+	 Content-Disposition:In-Reply-To:MIME-Version; b=Zd4hIpSxKBfhBbTTNth4j2UhzuSUSyGHXYTLEGDXNeNUH6vYverANneOh29Ien4Mmqyaq3aMR+dYy3wFtClLyObQWz2XPBRFraOwRLIYiwRarEGLzq1VV4XaOrWMFm17JkuSKv63F46tFG0yvuuGlyVKDh9NARt8YsXjXP+dmAc=
+ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=nxp.com; spf=pass smtp.mailfrom=nxp.com; dkim=fail (2048-bit key) header.d=nxp.com header.i=@nxp.com header.b=Z+z4997w reason="signature verification failed"; arc=fail smtp.client-ip=52.101.72.61
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=nxp.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=nxp.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=google.com header.i=@google.com header.b="C53iJKdL"
-Received: by mail-dl1-f47.google.com with SMTP id a92af1059eb24-133466cf955so23207799c88.0
-        for <sashiko-reviews@lists.linux.dev>; Fri, 22 May 2026 14:35:10 -0700 (PDT)
-ARC-Seal: i=1; a=rsa-sha256; t=1779485709; cv=none;
-        d=google.com; s=arc-20240605;
-        b=lq5CN2el6iNvY8DQ54pgOFbq5DcFjNLw6JRKb3rILkoJUtOXltVUe5th8TJvbi84HW
-         6mv0txVE5JIwP/jrRKA9Dz119pfjq0kw5+6Oxu2XVDdj85fLGhICJjho+EFZ+9lDzcA9
-         XbDnCl7zyB2jM8OiF+DXS0W5e/o497q+ZJaTD7wijGQ578rIAZ6sciDy8dYyxsllbx+f
-         lUUJ5MCIvy0lTuLS3Fd/RVakaFAcJzKmK/amfEkJAStlWAw24g8AjDKO+PAx5sO3J8Uf
-         Z59ZJ0a2MJXW+1bwiBl/7nG9SefEly2qJwIsoPu9xt1odppvBVZzoybI4g5gKKNUfB4Y
-         u6eg==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com; s=arc-20240605;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:dkim-signature;
-        bh=8h6W9a2RrHRkCjSZUakkIOZj2QLkrMpaYUdZtjDG85o=;
-        fh=91QGYt6IqY2tEFAID6ZWJ6dSC++M38hEZvyjjHwosNY=;
-        b=X+RUAXOSJkqd2MJjMP0WZ428NYseJUORFsdSIz3rOeFE+YClESrDqF/9ho4Itaa2Dv
-         iccAYaa9LDB9ASNN7tsyC/CXw55VTbCEvbZ/0pUWtFZmycIh3PPX6WR2aAoi9C34RwPb
-         yikUU/BruV9U4x+wVd2gTRd30QVJAGt0BwM1GX6VneCgxoVZ4+l3tJLe/E+lhruZkwzg
-         lGPKhbsjTUN0hsm1qLrYrpGjzf6YatES7DnhgWjZrZpZsc+qdljjNJ/KnLXPBQ37I0k3
-         LeVFwZojbZqbsOKWXt091Q7SHHlndfD4Zr4yHW4xIZATMdBwnAsFjkeYnlQuTi4kjQ79
-         bU9w==;
-        darn=lists.linux.dev
-ARC-Authentication-Results: i=1; mx.google.com; arc=none
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=google.com; s=20251104; t=1779485709; x=1780090509; darn=lists.linux.dev;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=8h6W9a2RrHRkCjSZUakkIOZj2QLkrMpaYUdZtjDG85o=;
-        b=C53iJKdLCBxpc3FPW7FlgDysFE5Ay7pgRYPHWN+/eXCBRu9AGfjzxX40u+Y1XkvsAE
-         MEsi0NTKAxrhJjOGxjvTHh/a9rzi5Voy6Le2EBF/wND3ok5mCmeDAocZfg3eBLifqKYW
-         Ij6VilkVVuvL3YGcPSgdIBVo/2m+Z15qQnxbbmwHDlmwjwxknr045VgGjX0nNqirKj+8
-         aUlFmipRk7L7e0DhtRYTGLZLYHH97KDNaWqFJwwiYcC+2rN6kt9AKB+mXyQUdaCSVzHI
-         52/cWs4QGzAVJ3qfxxCE79IMMLzJfSbU8iYP58Q4jmbBd8BaaS5RSRl/I/6nA53Ad/YM
-         wuDA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20251104; t=1779485709; x=1780090509;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:x-gm-gg:x-gm-message-state:from
-         :to:cc:subject:date:message-id:reply-to;
-        bh=8h6W9a2RrHRkCjSZUakkIOZj2QLkrMpaYUdZtjDG85o=;
-        b=DBq6WlIAqf2f3Q/h3Cb7a7R8LwIC6qTKl8G7qwzJe7AxKfLMpr5wGCajEMdMCFG3dM
-         zSJoALNvspLf4hmz+hsPXPE7gO26KuGbBLTDdzRUlWh5+CgZ/ZTnpI5CCra9aX0hTq0/
-         VwvMRjpl92t7+hpXCQwfqD4/gErqXOTswNcV4pm57Y9xMv3bOsHiPCapIbi6ZUR5d03z
-         zhp0icGgI19xPu1rp3JA8eDs4Ml0qkpps+eoakGrIU+b9vtNdJlt1eo8uEUQ6Wmz5o0N
-         z9n2MPpWbFK/PHbDSmlCjBICTMFL/coIiBdbyqDAVTcrW6JUyGKsV45EhonOEr8tVAoV
-         w1cQ==
-X-Gm-Message-State: AOJu0YwzI5NRm2fEGVlsWfKYtb8MyDieG/kF3oBRoNX2hOaUxfPunUgS
-	MczBHmLKUyTyFSkLmsMQnKYA0Llq9iUF7+IuFdjXu/HlNx33rpV8XvGWug22gDD9D4gVCK5H+AQ
-	E3RSDZhZwgcTgpKNOgyXj220JiadZxuB+gjwjnV71uyembewdvZQk9w==
-X-Gm-Gg: Acq92OHOTuKeb3MrpI4kd+5jnlh2J6Icl3xy8tpnL2PiklK2TUM27BTRJ7amtCH1S1s
-	dBHGJT2ZLito7xIJzh/st7a4AZbbpdTSBTZAj08vk95J5xxL2KliwIjYl3YX9yano4bnyeCk0dz
-	loP4NksCRHam3FBcKxop4Xd3AAvjPqwqfdBmR2NJlOqQOB3E0+nVUn9nWvfdA+i6TkqxmwxJHu9
-	gS6GpbS3kZXmNI7xrCrS8JfbDmjWEeX8KwkMSnrimz10kiWDgxIPPxM07q+DmeBx+B8eABWJI6+
-	uapdrJt4jDgBf9K8tw==
-X-Received: by 2002:a05:7022:100a:b0:135:fdeb:4776 with SMTP id
- a92af1059eb24-1365fc779e3mr1949222c88.34.1779485708931; Fri, 22 May 2026
- 14:35:08 -0700 (PDT)
+	dkim=fail reason="signature verification failed" (2048-bit key) header.d=nxp.com header.i=@nxp.com header.b="Z+z4997w"
+ARC-Seal: i=1; a=rsa-sha256; s=arcselector10001; d=microsoft.com; cv=none;
+ b=iyhkRTNIUXYRluqq2Vnvft3mEwJSn/gZK0Y7+lXY3t4ZLa0grMC+CjnBpCKmgSFG2oofo2vFH1IcAtyhpl3Q0NI6TvN8E4tBBDgBrBTrLurRnOZNJEFRdep3UX+8nIslyeTlHMC3hax3IQyJtjOtLTZ6w5j1I9Q6e8YBJj4gbw8TLtdYY6yG5cjQ0M9aaACQjCkYKCeN7GVYcqN/NoMarwn/SlIM7JMh0uiKuFIL3uLo0EiP44o8MjbViGMhTGxJknus24ldxFg6S+O9jN17GSyIytX+BuTMYA4TLI5u/aJY5Z50JVqhSI+6f32/9jvWYdb6peFHeCBhqQALL5640Q==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com;
+ s=arcselector10001;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
+ bh=A2VUOBw/npbhDfJdHo0Ul3MpvY30ApjYuj3OrBtMLao=;
+ b=MqP34K2LbZRCs6lSNmnD2makzSGijvFgTfkFtUC8Ldluekuz24x9GGWceuDrt+DcZwMOZKmJTMgPJBI0yBhI11Fj003QDGnOVUHn7evf+5DIRChT/ZlC5JWtZ5aG+YlP864ykGocDRRn7uChhEvH0G1fpdu0ToXiUQGGqo0e+0RmYqYlAr6iYREJEMgDY+AtixlHTrF61O4MV3314ECxvYUsb+8CCfizq8DbGkkQiHUQeXXuRJk+Ofihe3SsPYvBilZpUrO9NPxTZfdBEf0QCMXqgh6joAR/QL9bAQetkAW815fpc5jh206ftasxUlT0qdpvSxu9QgXNTRHNNAS58A==
+ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
+ smtp.mailfrom=nxp.com; dmarc=pass action=none header.from=nxp.com; dkim=pass
+ header.d=nxp.com; arc=none
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=nxp.com; s=selector1;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
+ bh=A2VUOBw/npbhDfJdHo0Ul3MpvY30ApjYuj3OrBtMLao=;
+ b=Z+z4997wzpe2VkOgyZPTfABdaonb9iTAGZWX6vzs5XZJpiU0IODbr8TLE7NxBzjWCuIuplGfhHOOq2ERhoWsJce1IQTzL+ZcsNB0PvGZztF+UuOCEkt9l7Uu5r6qUl8Uws7gpstXMs5oRZx+urM0Hn5Q9qprIcvhPsjZ7ltqUk87+7u4KeaW0v7v6hj9q8hGSF8LJE1eJUzCVm78Zfjs+Dfd+jnPpFa374N5eRAeKwF1WCgDOCnrBOP5om7z2Gme+7GYpbiMvdr59OYKqMc89zDFolZHWzH3ou4UPxZKlA9t0Ur0MmOy1lWkuXb8j/YplmBADCIyXWcnXrBTOurI1A==
+Authentication-Results: dkim=none (message not signed)
+ header.d=none;dmarc=none action=none header.from=nxp.com;
+Received: from PA4PR04MB9366.eurprd04.prod.outlook.com (2603:10a6:102:2a9::8)
+ by DUZPR04MB9968.eurprd04.prod.outlook.com (2603:10a6:10:4d8::22) with
+ Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.21.48.17; Fri, 22 May
+ 2026 21:36:16 +0000
+Received: from PA4PR04MB9366.eurprd04.prod.outlook.com
+ ([fe80::75e4:8143:ddbc:6588]) by PA4PR04MB9366.eurprd04.prod.outlook.com
+ ([fe80::75e4:8143:ddbc:6588%3]) with mapi id 15.21.0048.016; Fri, 22 May 2026
+ 21:36:16 +0000
+Date: Fri, 22 May 2026 17:36:10 -0400
+From: Frank Li <Frank.li@nxp.com>
+To: sashiko-reviews@lists.linux.dev
+Cc: Frank.Li@oss.nxp.com, vkoul@kernel.org, Frank.Li@kernel.org,
+	dmaengine@vger.kernel.org, imx@lists.linux.dev
+Subject: Re: [PATCH v2 1/2] dmaengine: Add helper
+ dmaengine_prep_submit_slave_single()
+Message-ID: <ahDMSo9-_b0A8HWH@lizhi-Precision-Tower-5810>
+References: <20260522-dma_prep_submit-v2-1-7a87a5a29525@nxp.com>
+ <20260522204538.EFE9C1F000E9@smtp.kernel.org>
+Content-Type: text/plain; charset=iso-8859-1
+Content-Disposition: inline
+Content-Transfer-Encoding: 8bit
+In-Reply-To: <20260522204538.EFE9C1F000E9@smtp.kernel.org>
+X-ClientProxiedBy: SA1P222CA0180.NAMP222.PROD.OUTLOOK.COM
+ (2603:10b6:806:3c4::17) To PA4PR04MB9366.eurprd04.prod.outlook.com
+ (2603:10a6:102:2a9::8)
 Precedence: bulk
 X-Mailing-List: sashiko-reviews@lists.linux.dev
 List-Id: <sashiko-reviews.lists.linux.dev>
 List-Subscribe: <mailto:sashiko-reviews+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:sashiko-reviews+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-References: <20260522202410.3104264-4-dmatlack@google.com> <20260522211333.D56A21F000E9@smtp.kernel.org>
-In-Reply-To: <20260522211333.D56A21F000E9@smtp.kernel.org>
-From: David Matlack <dmatlack@google.com>
-Date: Fri, 22 May 2026 14:34:42 -0700
-X-Gm-Features: AVHnY4JpuIbwi96KtUWFH2D1iE7-iC6vCxFKsYXwS1gOK1ets8Nv2GgQxQFJCJM
-Message-ID: <CALzav=cYxfUDBbWf=a3GM15f=2HZF8CJ7Ax5G2vg1VjrnC7w-w@mail.gmail.com>
-Subject: Re: [PATCH v6 03/12] PCI: liveupdate: Track incoming preserved PCI devices
-To: sashiko-reviews@lists.linux.dev
-Cc: linux-pci@vger.kernel.org, Pratyush Yadav <prty@google.com>, 
-	Pasha Tatashin <pasha.tatashin@soleen.com>
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
+X-MS-PublicTrafficType: Email
+X-MS-TrafficTypeDiagnostic: PA4PR04MB9366:EE_|DUZPR04MB9968:EE_
+X-MS-Office365-Filtering-Correlation-Id: f061a4f0-7d2f-41ee-eb06-08deb84a273f
+X-MS-Exchange-SenderADCheck: 1
+X-MS-Exchange-AntiSpam-Relay: 0
+X-Microsoft-Antispam:
+	BCL:0;ARA:13230040|1800799024|366016|376014|52116014|19092799006|22082099003|56012099003|18002099003|11063799006|4143699003|38350700014;
+X-Microsoft-Antispam-Message-Info:
+	lGO0KBdtwb06V1Hw9idoItP0Q9Hv/6rRwNTunBniCak7N9WcWxyEiG8PcYnNQzw66yE4a7TOw+ljZrJoy2GYpO+LE6avQKkfpGGhVDIW9kIUjhTVQQ0U575p/4oPTivZGO9A67pXRoTuXN8Bbkcq/UyiicfZEvYEbH65dhD2HGrGrekkksOm7YKS5Vssr+EDyPHwMq7yQWg4XsXdOxsyYvtp1l10iS25qyFuw+Ct1pCyeqvX1fbVqDriVxVH8VkiH9iphTLMNh3eg5f/uZkaR8dAEQwzN4WASfffOpa96CMtlceiWjCsOxu+zLUtODdKh+Jdc39sRd92O61XX0CXxXl6kKuh/Qtor0jP+/HdH+HJoSCogfn53blpadZXpF01qmnW6WjVkhYBS7QuP8hkkKXqVuUMe1ytkoToi5ZuYOjGzVNqZlDBvIB99vENK1vypNg/Uqs+QFRsvlvlO9Q9JNbGsVs6deSCAgE6TF+0tjfJZbo5bIIhqbH9SSn9UKeyMkR9ShtGQDeS2/EedG3xC0Fg7kFsHvzeGAUmlPQmNi3xSpNgkGb39Yx8ufHN4SNhYDH8HxMGmudD0pngzitc3n7ltS3E7009tBtlQK2I1TjnUyjnxBt+/n3idqB/Y0DMjzozRCMumqvmFs+D0o78ws8E2mkqpQtt47F6DN+NvKn8rcwQUZrLuJlfZDVGGBrF
+X-Forefront-Antispam-Report:
+	CIP:255.255.255.255;CTRY:;LANG:en;SCL:1;SRV:;IPV:NLI;SFV:NSPM;H:PA4PR04MB9366.eurprd04.prod.outlook.com;PTR:;CAT:NONE;SFS:(13230040)(1800799024)(366016)(376014)(52116014)(19092799006)(22082099003)(56012099003)(18002099003)(11063799006)(4143699003)(38350700014);DIR:OUT;SFP:1101;
+X-MS-Exchange-AntiSpam-MessageData-ChunkCount: 1
+X-MS-Exchange-AntiSpam-MessageData-0:
+	=?iso-8859-1?Q?2+WXv7hwzeJXU6xCAwEwJ+fnS82sSqlRoYyfNuym8IdQA5AHzWwA6hTw1R?=
+ =?iso-8859-1?Q?bl6jxTDwqiEGc603ThXQM+QV07Cl3mAOLC20Ejgrzgft0JX8xXnjfC9LwZ?=
+ =?iso-8859-1?Q?pguDDZB5YMtxNiUxc01v4LmpCOTahOSAscgxVYu5oxTwhNYgyPbYkafT83?=
+ =?iso-8859-1?Q?DRZTvnkMxxCPdNCghX/hXpHju7pjItKwCKvBTabCnLgXfkduPacuN531Ja?=
+ =?iso-8859-1?Q?mWx0kGA67g08X3K47Cr4U1E2tEr2xNrb0DBil2SPxw/eq7b0LUipKq/vy1?=
+ =?iso-8859-1?Q?oGNYJoXxwTQjBdHEjQ4MDhb4Mf2yGOSDQuWX7LAovlqM04kyV5/RgGlxd3?=
+ =?iso-8859-1?Q?Ti12iBkUQ/zJiEk4bAQlXMuoxO6dUTXZQbuT1J3IO/9QtZdy12mxKrCbKr?=
+ =?iso-8859-1?Q?VzspdvtLJoIXbRotS2+4bkbCzwBJQkijzt8mrYUqA3/YKz7CXrEEIr8QOK?=
+ =?iso-8859-1?Q?lIoA/1AoOlfK0sAuOOrlpEpkmCS6NqaPB1kpzppRfVgnMG2VFdZtYb1/SK?=
+ =?iso-8859-1?Q?jS2rtXjWjWtjncRNjxt7LGRiia4Ji27t43qq4dEMIXy1N2juSbfzMZJKZm?=
+ =?iso-8859-1?Q?GZMQPZ0oahv7vzLnXkImkyaC5+g0XRKmzlgnynEEiuys5IEWi9nXfphcGA?=
+ =?iso-8859-1?Q?X6cJuMJ9UIe18i3WoZEEs19UcHerboayRtoDbxOi+IkLciR0g5EJf1ycCA?=
+ =?iso-8859-1?Q?YIqnBt0mcrw7ZqMB0mbzwu3HQiGksDNnTZ+tkfw4qEImWmp8qQEpJuhW+Q?=
+ =?iso-8859-1?Q?wG8JeAyCxVuWdhWuUAq3ncKf27q8UCyB7Jw/FnXFc2LlhNuYKmmJ7N0sXm?=
+ =?iso-8859-1?Q?kd0Xj+844WWqM4V7AOP6l4kQo8NMXnl6fsLHtMfTBh6QBkiYUIl25x5ek+?=
+ =?iso-8859-1?Q?jPYpJGkj6qvM7qj9Xh5fr4UtBQqFkTM0V3Ja3pcp0/NoMRMnhX2p+fEkll?=
+ =?iso-8859-1?Q?UFp1ErmtVo47UFvmDXC2bSA/pZA+bzUxQbX9AtIIOUT8/eOHiW5LqTWOQg?=
+ =?iso-8859-1?Q?2/XaO53N4hIOtKbm5P20Yin3HbwJffQmi/fbhQzeARkYKZTrkr1uYcgf1Y?=
+ =?iso-8859-1?Q?vOqVtyLYBSQ1rePmiNvS6iyUAfv1RwLh7x0JGgwPdcJC81xDLP7igLoE80?=
+ =?iso-8859-1?Q?PJYdr5FgHE+WzjYZg57/BZmVlnGamT2zG8WgktePnDWlJbXlIIg7CGwhpz?=
+ =?iso-8859-1?Q?MXUU+WhfHyRkK4u5OUA2WPGrW167TDjQPwlzhQOYJ/Var98U8kiSMecxgO?=
+ =?iso-8859-1?Q?/k+8zvv1X5TBZ5bPkAk3TtgoVcXbyBPmUgNWubOujrTeTJhe41PJMlaksR?=
+ =?iso-8859-1?Q?amP8gbrs5f+ck6AuZ2Et/Ok/sPvgM19F0XeYsAmz8aCV53wW6h1mJXOf95?=
+ =?iso-8859-1?Q?gyzE4KXkdqv1iyC/UTmd0YJLJ+FtbBDOUu8fuwL6pTNQT9aVNxBpgU0SHJ?=
+ =?iso-8859-1?Q?6uz01fXhCOW3hRMJzeHaQhmbRfRY6CZpFrPQ3xEpboixKtLE0kyW/3hQxo?=
+ =?iso-8859-1?Q?egQxPSVCp1Udlr1ywjBK/pX5dnFE7e2KPSdQjtnIYhRFYl0eJVfGc4w47P?=
+ =?iso-8859-1?Q?5JKsRrYbW7QFaKSxTVYduDte5Vm+a4EXfK9cJeR97Ovy4wQ3rsnQXZoQcw?=
+ =?iso-8859-1?Q?8qv12zOvaZQhJoAj40Wv6lzD3bGGE4vNPd9APS4NG3Wdsrn5JznBA2OE+d?=
+ =?iso-8859-1?Q?WDcDDFpy2lrwpKIZO/L/BxxlHvaRcf8tuKbsG22S/eQ99/VnSNhtKlTVPo?=
+ =?iso-8859-1?Q?A38HfLzNoFlLHaMB1kBoPlQiz7s0Ty7UKousEbW15QDXG9?=
+X-OriginatorOrg: nxp.com
+X-MS-Exchange-CrossTenant-Network-Message-Id: f061a4f0-7d2f-41ee-eb06-08deb84a273f
+X-MS-Exchange-CrossTenant-AuthSource: PA4PR04MB9366.eurprd04.prod.outlook.com
+X-MS-Exchange-CrossTenant-AuthAs: Internal
+X-MS-Exchange-CrossTenant-OriginalArrivalTime: 22 May 2026 21:36:16.0434
+ (UTC)
+X-MS-Exchange-CrossTenant-FromEntityHeader: Hosted
+X-MS-Exchange-CrossTenant-Id: 686ea1d3-bc2b-4c6f-a92c-d99c5c301635
+X-MS-Exchange-CrossTenant-MailboxType: HOSTED
+X-MS-Exchange-CrossTenant-UserPrincipalName: Cl1Df6fLZtZcj4HNfyFvj3idzJmgLm7wOLqYfgePjM/kKKyn524z/88+YBm8/9prL5prxVQhhX2Fkttk6hwwxA==
+X-MS-Exchange-Transport-CrossTenantHeadersStamped: DUZPR04MB9968
 
-On Fri, May 22, 2026 at 2:13=E2=80=AFPM <sashiko-bot@kernel.org> wrote:
->
-> Thank you for your contribution! Sashiko AI review found 2 potential issu=
-e(s) to consider:
-> - [Critical] pci_flb_retrieve() frees the incoming preserved memory (ser)=
- on failure, causing a Use-After-Free when the core retries.
-> - [Medium] Leaked reference to the incoming FLB when a device's preserved=
- refcount is corrupted.
+On Fri, May 22, 2026 at 08:45:38PM +0000, sashiko-bot@kernel.org wrote:
+> Thank you for your contribution! Sashiko AI review found 3 potential issue(s) to consider:
+> - [Critical] The macro accesses the descriptor after calling `dmaengine_submit()`, violating the DMA Engine API contract and causing a Use-After-Free.
+> - [Medium] Calling `dmaengine_desc_free()` fails to prevent memory leaks for standard, non-reusable DMA descriptors, defeating the primary goal of the patch.
+> - [Low] The fallback implementation of `dmaengine_prep_submit_slave_single` contains severe syntax errors that break compilation when `CONFIG_DMA_ENGINE` is disabled.
 > --
 >
-> commit 5af02c95c00f317cc5c4fa203b8b79373f2759a5
-> Author: David Matlack <dmatlack@google.com>
+> commit c731d16a7ec5a6fed71b17234ae1bc2184ad8818
+> Author: Frank Li <Frank.Li@nxp.com>
 >
-> PCI: liveupdate: Track incoming preserved PCI devices
+> dmaengine: Add helper dmaengine_prep_submit_slave_single()
 >
-> During PCI enumeration, the PCI core fetches serialized state from the
-> Live Update Orchestrator to identify incoming preserved devices. This
-> patch adds tracking and lifecycle management APIs for these devices.
+> This commit introduces a helper macro and function to combine the preparation
+> and submission of a DMA slave single transfer into a single step. It also
+> aims to automatically free the descriptor if the submission fails.
 >
-> > diff --git a/drivers/pci/liveupdate.c b/drivers/pci/liveupdate.c
-> > index 065d5af822f74..96c43b84532cc 100644
-> > --- a/drivers/pci/liveupdate.c
-> > +++ b/drivers/pci/liveupdate.c
+> > diff --git a/drivers/dma/dmaengine.c b/drivers/dma/dmaengine.c
+> > index ca13cd39330ba..1e25be78a22a5 100644
+> > --- a/drivers/dma/dmaengine.c
+> > +++ b/drivers/dma/dmaengine.c
 > [ ... ]
-> > @@ -128,13 +157,49 @@ static void pci_flb_unpreserve(struct liveupdate_=
-flb_op_args *args)
+> > @@ -1619,6 +1619,34 @@ void dma_run_dependencies(struct dma_async_tx_descriptor *tx)
+> >  }
+> >  EXPORT_SYMBOL_GPL(dma_run_dependencies);
 > >
-> >  static int pci_flb_retrieve(struct liveupdate_flb_op_args *args)
-> >  {
-> > -     args->obj =3D phys_to_virt(args->data);
-> > +     struct pci_ser *ser =3D phys_to_virt(args->data);
-> > +     struct pci_flb_incoming *incoming;
-> > +     int ret =3D -ENOMEM;
-> > +     u32 i;
-> > +
-> > +     incoming =3D kmalloc_obj(*incoming);
-> > +     if (!incoming)
-> > +             goto err_restore_free;
-> > +
-> > +     incoming->ser =3D ser;
-> > +     xa_init(&incoming->xa);
-> > +
-> > +     for (i =3D 0; i < incoming->ser->max_nr_devices; i++) {
-> > +             struct pci_dev_ser *dev_ser =3D &incoming->ser->devices[i=
-];
-> > +             unsigned long key;
-> > +
-> > +             if (!dev_ser->refcount)
-> > +                     continue;
-> > +
-> > +             key =3D pci_ser_xa_key(dev_ser->domain, dev_ser->bdf);
-> > +             ret =3D xa_insert(&incoming->xa, key, dev_ser, GFP_KERNEL=
-);
-> > +             if (ret)
-> > +                     goto err_xa_destroy;
-> > +     }
-> > +
-> > +     args->obj =3D incoming;
-> >       return 0;
-> > +
-> > +err_xa_destroy:
-> > +     xa_destroy(&incoming->xa);
-> > +     kfree(incoming);
-> > +err_restore_free:
-> > +     kho_restore_free(ser);
+> > +#define dmaengine_prep_submit(chan, cb, cb_param, func, ...)	\
+> > +({	struct dma_async_tx_descriptor *tx =			\
+> > +		dmaengine_prep_##func(chan, __VA_ARGS__);	\
+> > +		dma_cookie_t cookie = -ENOMEM;			\
+> > +								\
+> > +	if (tx) {						\
+> > +		tx->callback = cb;				\
+> > +		tx->callback_param = cb_param;			\
+> > +		cookie = dmaengine_submit(tx);			\
+> > +								\
+> > +		if (dma_submit_error(cookie))			\
+> > +			dmaengine_desc_free(tx);		\
 >
 > [Severity: Critical]
-> Does this error path create a use-after-free if the retrieval is retried?
+> Does this access the descriptor after ownership has been transferred?
 >
-> If pci_flb_retrieve() fails here (e.g. from -ENOMEM), kho_restore_free()
-> frees the preserved physical memory for the incoming state. However, the
-> Live Update Orchestrator propagates this error without marking the FLB
-> as retrieved or finished.
+> The DMA Engine API contract specifies that once dmaengine_submit is called,
+> the client must consider the descriptor pointer invalid. If submission fails,
+> some DMA providers (like the idxd driver in idxd_dma_tx_submit) internally
+> free the descriptor before returning an error.
+
+Not sure if it is defined beheavor or just idxd implement as it. If it is
+defined beheavor, suggest update Document.
+
+From API document:
+
+ "Once a descriptor has been obtained, the callback information can be
+  added and the descriptor must then be submitted. Some DMA engine
+  drivers may hold a spinlock between a successful preparation and
+  submission so it is important that these two operations are closely
+  paired."
+
+prep_submit() API should be provide to align document. but not sure
+if dmaengine_desc_free() call for reusable descriptors, Or providor should
+consider this like idxd_dma_tx_submit()?
+
+Frank
 >
-> When the next PCI device is enumerated, pci_liveupdate_setup_device()
-> calls pci_liveupdate_flb_get_incoming() again, which invokes
-> pci_flb_retrieve() a second time with the exact same data address. The
-> function will then attempt to read incoming->ser->max_nr_devices from
-> memory that was already freed.
-
-Yes but that is a bug in LUO. It should not be attempting FLB
-retrieve() multiple times.
-
-(Pasha and Pratyush FYI)
-
->
-> > +     return ret;
-> >  }
-> [ ... ]
-> > @@ -280,7 +430,83 @@ void pci_liveupdate_cleanup_device(struct pci_dev =
-*dev)
-> >               pci_WARN(dev, 1, "Destroying outgoing-preserved device!\n=
-");
-> >               pci_liveupdate_unpreserve(dev);
-> >       }
-> > +
-> > +     if (READ_ONCE(dev->liveupdate.incoming)) {
-> > +             pci_WARN(dev, 1, "Destroying incoming-preserved device!\n=
-");
-> > +             pci_liveupdate_finish(dev);
-> > +     }
-> > +}
-> > +
-> > +static void pci_liveupdate_finish_device(struct pci_ser *ser, struct p=
-ci_dev *dev)
-> > +{
-> > +     if (!dev->liveupdate.incoming) {
-> > +             pci_warn(dev, "Cannot finish preserving an unpreserved de=
-vice\n");
-> > +             return;
-> > +     }
-> > +
-> > +     if (dev->liveupdate.incoming->refcount !=3D 1) {
-> > +             pci_WARN(dev, 1, "Preserved device has a corrupted refcou=
-nt!\n");
-> > +             return;
+> Calling dmaengine_desc_free here would read tx->flags on an already-freed
+> pointer on the error path, resulting in a use-after-free.
 >
 > [Severity: Medium]
-> Can this early return leak a reference to the incoming FLB?
+> Will this actually free standard, non-reusable descriptors?
 >
-> In pci_liveupdate_setup_device(), a reference is held to protect
-> dev->liveupdate.incoming. This reference is expected to be released via
-> pci_liveupdate_flb_put_incoming() at the end of this function.
+> The dmaengine_desc_free function is explicitly designed for reusable
+> descriptors. It internally calls dmaengine_desc_test_reuse, which checks
+> the DMA_CTRL_REUSE flag and returns -EPERM immediately if it is not set.
 >
-> By returning early here when the refcount is corrupted, we skip the put
-> call, leaking the reference. Furthermore, dev->liveupdate.incoming is lef=
-t
-> non-NULL, which means pci_liveupdate_cleanup_device() might later try to
-> finish it again and hit this same leak. Should this error path drop the
-> reference and clear the incoming pointer?
-
-Yes but dropping a reference to the incoming FLB when the refcount is
-corrupted could lead to use-after-free. Logging a warning and leaking
-FLB seems like the safer approach, aside from panicking.
+> Since standard descriptors created via dmaengine_prep_slave_single don't
+> have this flag set by default, it seems this call acts as a no-op and might
+> not resolve the resource leak mentioned in the commit message.
+>
+> > +	}							\
+> > +	cookie;							\
+> > +})
+> > +
+> [ ... ]
+> > diff --git a/include/linux/dmaengine.h b/include/linux/dmaengine.h
+> > index 99efe2b9b4ea9..0f789fac7e91a 100644
+> > --- a/include/linux/dmaengine.h
+> > +++ b/include/linux/dmaengine.h
+> [ ... ]
+> > @@ -1575,6 +1582,16 @@ static inline int dma_get_slave_caps(struct dma_chan *chan,
+> >  {
+> >  	return -ENXIO;
+> >  }
+> > +
+> > +static inline dma_cookie_t
+> > +dmaengine_prep_submit_slave_single(struct dma_chan *chan,
+> > +				   dma_async_tx_callback cb, void *cb_param;
+> > +				   dma_addr_t buf, size_t len,
+> > +				   enum dma_transfer_direction dir,
+> > +				   unsigned long flags);
+> > +{
+>
+> [Severity: Low]
+> Are there syntax errors in this fallback implementation?
+>
+> The parameter list uses a semicolon instead of a comma after cb_param, and
+> there is a stray semicolon immediately preceding the function body. This will
+> cause a build failure when CONFIG_DMA_ENGINE is disabled.
+>
+> > +	return -ENODEV;
+> > +}
+> >  #endif
+> >
+> >  static inline int dmaengine_desc_set_reuse(struct dma_async_tx_descriptor *tx)
+>
+> --
+> Sashiko AI review · https://sashiko.dev/#/patchset/20260522-dma_prep_submit-v2-0-7a87a5a29525@nxp.com?part=1
