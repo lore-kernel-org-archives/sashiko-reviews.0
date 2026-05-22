@@ -1,179 +1,229 @@
-Received: from mail-dl1-f50.google.com (mail-dl1-f50.google.com [74.125.82.50])
+Received: from mail-dl1-f47.google.com (mail-dl1-f47.google.com [74.125.82.47])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DFA8B38C2B8
-	for <sashiko-reviews@lists.linux.dev>; Fri, 22 May 2026 21:31:48 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=pass smtp.client-ip=74.125.82.50
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 607C4255F2C
+	for <sashiko-reviews@lists.linux.dev>; Fri, 22 May 2026 21:35:10 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=pass smtp.client-ip=74.125.82.47
 ARC-Seal:i=2; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1779485511; cv=pass; b=g/bDr7fN2/UpymKwQOrd3oYdwvWgtoTqX8udzs6PHMc/I4T8kY/bev/9s0H7qdNHWu+wDfloBiPvMnaRGSnu/agbTzFEpZU2Hn3dE6ZjIUam8zNu2Z5H85d4QAVNdgvM3XpkbcJEqnU0xpBFZTd+ZWxiuN7zowH7LKY5val6D9Y=
+	t=1779485712; cv=pass; b=jFEjNeE27CVg1pfG0qBJ0xCA1aL0Pb5w5tThs6t15UfZx4kC6AjDgzFWgdgzEightqV/pGtARGYf+yeO1Zxu3dICYgDIQUrEz5T4Fq3E8WeE24dtxXVXf5ORV9INnpATH4n5m6eu5bHCxgCoYjGcEQNVmCwvsl4R32AQqbkZMR0=
 ARC-Message-Signature:i=2; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1779485511; c=relaxed/simple;
-	bh=lhUCrdS8AzT6YiUpPvI6mNn4LsPzkSoFmcLVaCCgCIQ=;
+	s=arc-20240116; t=1779485712; c=relaxed/simple;
+	bh=IrCbpRqZ79TSnNZHPbrCyoMMlKKTtlqCPS9dngunr+E=;
 	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
-	 To:Cc:Content-Type; b=EZUlfWy3/P8ogh/lWMgS7SQ3r401okoWq4k/BJ8VjNF67s8UXEexdL/XXUEs7DcYTwsWeE2wn90ORCm5I8Tx3pbiVrtiUJdvFWtTZFOTl+T2JA357pqkNA15UfKENVEdVjKDgML+zDwwypDgjfp/gA24bDmOUdNUimDxVH/o+NM=
-ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=google.com; spf=pass smtp.mailfrom=google.com; dkim=pass (2048-bit key) header.d=google.com header.i=@google.com header.b=cYDPo63a; arc=pass smtp.client-ip=74.125.82.50
+	 To:Cc:Content-Type; b=HXQrwMIATuxKXMRRYXMfB0mSUcFEGgjZeQTUX8RxNmmwSkMk/LhQgsWnL3Rus+9CvldoZUcy7T8RjtncDAaW/QnjMZPSpwrmebczyUNqqoNJMt20yaTgX9jQtk8Ue5qgX1AJG20eVNR14MFQdOpfXiSf56RVkgV2BTjLRhOig2w=
+ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=google.com; spf=pass smtp.mailfrom=google.com; dkim=pass (2048-bit key) header.d=google.com header.i=@google.com header.b=C53iJKdL; arc=pass smtp.client-ip=74.125.82.47
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=google.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=google.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=google.com header.i=@google.com header.b="cYDPo63a"
-Received: by mail-dl1-f50.google.com with SMTP id a92af1059eb24-1331e851faaso4131006c88.1
-        for <sashiko-reviews@lists.linux.dev>; Fri, 22 May 2026 14:31:48 -0700 (PDT)
-ARC-Seal: i=1; a=rsa-sha256; t=1779485507; cv=none;
+	dkim=pass (2048-bit key) header.d=google.com header.i=@google.com header.b="C53iJKdL"
+Received: by mail-dl1-f47.google.com with SMTP id a92af1059eb24-133466cf955so23207799c88.0
+        for <sashiko-reviews@lists.linux.dev>; Fri, 22 May 2026 14:35:10 -0700 (PDT)
+ARC-Seal: i=1; a=rsa-sha256; t=1779485709; cv=none;
         d=google.com; s=arc-20240605;
-        b=S+WdvJkszHT2Ir/fxxxrOzdsuG8YIYU/DFyCPJiiw7rnR+WRDB670Bxx4sHO9pHt/T
-         nrPjyyhR7VmuLKI2qn1NovjRsltl5RnRjCJLB6id6r+as6Ow4Qipfrrjq1HyzrUoOIxc
-         aClbxIL5fQnhEdJlzvLavUjyedl9KWUHwvetRvmFtz7N2L7/tOY9Ef2zLXvH7HNGkDIH
-         GkFQqBWzBnD6ajOpwNVgvJNBgUR0blkz5nUVQj2ZGOqQ+W2+JuQsBOvfN3aiZvgJJfCh
-         /xVhb9Ph/RfxgrjNg/K4vm3RDWOKAQE/tjJN2JU5oF/1EHvM3f9UCxc2O1up0ubJkHbV
-         MMPQ==
+        b=lq5CN2el6iNvY8DQ54pgOFbq5DcFjNLw6JRKb3rILkoJUtOXltVUe5th8TJvbi84HW
+         6mv0txVE5JIwP/jrRKA9Dz119pfjq0kw5+6Oxu2XVDdj85fLGhICJjho+EFZ+9lDzcA9
+         XbDnCl7zyB2jM8OiF+DXS0W5e/o497q+ZJaTD7wijGQ578rIAZ6sciDy8dYyxsllbx+f
+         lUUJ5MCIvy0lTuLS3Fd/RVakaFAcJzKmK/amfEkJAStlWAw24g8AjDKO+PAx5sO3J8Uf
+         Z59ZJ0a2MJXW+1bwiBl/7nG9SefEly2qJwIsoPu9xt1odppvBVZzoybI4g5gKKNUfB4Y
+         u6eg==
 ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com; s=arc-20240605;
         h=content-transfer-encoding:cc:to:subject:message-id:date:from
          :in-reply-to:references:mime-version:dkim-signature;
-        bh=gH4ZOzGCp/1wUSJI9UajBWmDDn0DBrPYAfdLSalBmfg=;
-        fh=2E8G5L5HRIhYv0SLHRh0bmuG4bK/RxhrEd6+zC1U6gY=;
-        b=b5+6SBxHbKfQ8b+J5hIxHgPR/s3+oyH/Jl0F/uIQp0OLrjk0T7ySPBDb6llPr6JCua
-         EHan5LvGA5kJG7uwKRo1Ci9g0A249QHi2qKGL/U9habIA300qe2WQ6r1pLl7d6RabIVo
-         D++T83qMjW5P9TA7jLhlmhOJl9wVFKDIeU8hmUrR/xvi+kEiiBq7EOtYalOy7uMbRKRX
-         GWRw4uRNdqquRjLVvPejh7YNEVzDzcuaMp6lWlupYzIwthM1tkS4DOKS8PgabhbqGJPD
-         tjABoLN9e5mNDFI8GTOHQiycokxy/maeaNgxiQNebXaWXEQqq4x6h/+iOLGq9owLvUJy
-         f5FQ==;
+        bh=8h6W9a2RrHRkCjSZUakkIOZj2QLkrMpaYUdZtjDG85o=;
+        fh=91QGYt6IqY2tEFAID6ZWJ6dSC++M38hEZvyjjHwosNY=;
+        b=X+RUAXOSJkqd2MJjMP0WZ428NYseJUORFsdSIz3rOeFE+YClESrDqF/9ho4Itaa2Dv
+         iccAYaa9LDB9ASNN7tsyC/CXw55VTbCEvbZ/0pUWtFZmycIh3PPX6WR2aAoi9C34RwPb
+         yikUU/BruV9U4x+wVd2gTRd30QVJAGt0BwM1GX6VneCgxoVZ4+l3tJLe/E+lhruZkwzg
+         lGPKhbsjTUN0hsm1qLrYrpGjzf6YatES7DnhgWjZrZpZsc+qdljjNJ/KnLXPBQ37I0k3
+         LeVFwZojbZqbsOKWXt091Q7SHHlndfD4Zr4yHW4xIZATMdBwnAsFjkeYnlQuTi4kjQ79
+         bU9w==;
         darn=lists.linux.dev
 ARC-Authentication-Results: i=1; mx.google.com; arc=none
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=google.com; s=20251104; t=1779485507; x=1780090307; darn=lists.linux.dev;
+        d=google.com; s=20251104; t=1779485709; x=1780090509; darn=lists.linux.dev;
         h=content-transfer-encoding:cc:to:subject:message-id:date:from
          :in-reply-to:references:mime-version:from:to:cc:subject:date
          :message-id:reply-to;
-        bh=gH4ZOzGCp/1wUSJI9UajBWmDDn0DBrPYAfdLSalBmfg=;
-        b=cYDPo63aREkwP4K9fA+P0jVHZP5/m9/DorIjMft/yuxET6isrzhzgBiXk+tgceR35o
-         UhKx94WDMjybhF+DISHQpeISrIDswkFG9+ueNBzIDcr7SoUDS41Wn6LjzSGAB4CkMuiI
-         VvDB/6rJyGc+YnoPwF+E5XwEqazp2wjd4i3Db+/hWKb7807xGjCjR8KPhgHwpNbev0JR
-         3gJEmZD1mKVKU1wl3BFXdQsMt76L7ObT8Pj7Qn0gQXGmKvy3h0LmiI2f6EVa1rooKvol
-         yXeuBXAzrJBVt/jPl4SyQ+q3ZPGr3pzpAIvu+zYLdmbYrhyIkcGsJrQmpOn9f4GvKC5w
-         8Wtg==
+        bh=8h6W9a2RrHRkCjSZUakkIOZj2QLkrMpaYUdZtjDG85o=;
+        b=C53iJKdLCBxpc3FPW7FlgDysFE5Ay7pgRYPHWN+/eXCBRu9AGfjzxX40u+Y1XkvsAE
+         MEsi0NTKAxrhJjOGxjvTHh/a9rzi5Voy6Le2EBF/wND3ok5mCmeDAocZfg3eBLifqKYW
+         Ij6VilkVVuvL3YGcPSgdIBVo/2m+Z15qQnxbbmwHDlmwjwxknr045VgGjX0nNqirKj+8
+         aUlFmipRk7L7e0DhtRYTGLZLYHH97KDNaWqFJwwiYcC+2rN6kt9AKB+mXyQUdaCSVzHI
+         52/cWs4QGzAVJ3qfxxCE79IMMLzJfSbU8iYP58Q4jmbBd8BaaS5RSRl/I/6nA53Ad/YM
+         wuDA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20251104; t=1779485507; x=1780090307;
+        d=1e100.net; s=20251104; t=1779485709; x=1780090509;
         h=content-transfer-encoding:cc:to:subject:message-id:date:from
          :in-reply-to:references:mime-version:x-gm-gg:x-gm-message-state:from
          :to:cc:subject:date:message-id:reply-to;
-        bh=gH4ZOzGCp/1wUSJI9UajBWmDDn0DBrPYAfdLSalBmfg=;
-        b=Mg2iMVI6Cx4dohDHaCYvAQ5B45fkuzSAUsYG6u2S3MuR1Cm7dJtwVcNTTSnASmv0h2
-         lkCXk6T0nE9P539VoevzKTP2E0Ql7/pZnse/3n1i2+mdlFWyD/eYEaYlcuT7SvFxZ1jc
-         60R3UGfPiom9K+uNrEB9hl2vEKCywA1g/O+yo+D46s+6LbyjcKvJUCmW+ndHm45nrJf4
-         AKGEM82RAx5qkRpdwj9nj/LLkGHb86PgLP0ALgC42ubewGy90ICGwKRJHv2rPYYjM/LM
-         La4k7F60IqS9DQFQFLrFQTED5VONhsSe5A/PK49XXvHHWXEPqxDjh1VAnb00S+zdWOax
-         Opzg==
-X-Gm-Message-State: AOJu0Yz54dn9HFGBMWkwRPitZ8SdJS3sej672xW9raWoNzjJUEKZNkIA
-	IhwHqtTG/nyYPR68J9j6blTcyX9DJlZ/brBc+5wfwIOFW4PGM9nQM5E98pqjvz2yiBLfpRQywPl
-	n6lC9wlsG5Tlw/Gvsw3bF/E7NsWuJyIWyQ+KxCmnvEw12atIZirL6Pg==
-X-Gm-Gg: Acq92OEiqgg8y9OAcj5RSM4xW4prnsGpj6kpSPIx+NvrKbwJYZD+5pcr4Y4Sfoel3po
-	LjzDjfUZpwm1uk/a1o2xY/Xe/EfIZBIQmZwc0qFtAnCxCGjDzP+YROSdLKTdgkSsLfFThkzaMms
-	91yBFElvfuhb63EPHcf2q8lN+n2u02+pND+dTkyyh1UUfCOReT/F4Pf87k3BBgaD/MwWQlz0+s9
-	eAZlQddzGHcZIPw0Uslr/Wx1B+IEC1LiVtC5UrQG831mgE6ZckHt9pJ+iin2mb37bOaRhzf7TQO
-	+LzJFwiOEhkB4Y4Edg==
-X-Received: by 2002:a05:7022:61a3:b0:136:8b76:14eb with SMTP id
- a92af1059eb24-1368b761676mr393791c88.14.1779485506467; Fri, 22 May 2026
- 14:31:46 -0700 (PDT)
+        bh=8h6W9a2RrHRkCjSZUakkIOZj2QLkrMpaYUdZtjDG85o=;
+        b=DBq6WlIAqf2f3Q/h3Cb7a7R8LwIC6qTKl8G7qwzJe7AxKfLMpr5wGCajEMdMCFG3dM
+         zSJoALNvspLf4hmz+hsPXPE7gO26KuGbBLTDdzRUlWh5+CgZ/ZTnpI5CCra9aX0hTq0/
+         VwvMRjpl92t7+hpXCQwfqD4/gErqXOTswNcV4pm57Y9xMv3bOsHiPCapIbi6ZUR5d03z
+         zhp0icGgI19xPu1rp3JA8eDs4Ml0qkpps+eoakGrIU+b9vtNdJlt1eo8uEUQ6Wmz5o0N
+         z9n2MPpWbFK/PHbDSmlCjBICTMFL/coIiBdbyqDAVTcrW6JUyGKsV45EhonOEr8tVAoV
+         w1cQ==
+X-Gm-Message-State: AOJu0YwzI5NRm2fEGVlsWfKYtb8MyDieG/kF3oBRoNX2hOaUxfPunUgS
+	MczBHmLKUyTyFSkLmsMQnKYA0Llq9iUF7+IuFdjXu/HlNx33rpV8XvGWug22gDD9D4gVCK5H+AQ
+	E3RSDZhZwgcTgpKNOgyXj220JiadZxuB+gjwjnV71uyembewdvZQk9w==
+X-Gm-Gg: Acq92OHOTuKeb3MrpI4kd+5jnlh2J6Icl3xy8tpnL2PiklK2TUM27BTRJ7amtCH1S1s
+	dBHGJT2ZLito7xIJzh/st7a4AZbbpdTSBTZAj08vk95J5xxL2KliwIjYl3YX9yano4bnyeCk0dz
+	loP4NksCRHam3FBcKxop4Xd3AAvjPqwqfdBmR2NJlOqQOB3E0+nVUn9nWvfdA+i6TkqxmwxJHu9
+	gS6GpbS3kZXmNI7xrCrS8JfbDmjWEeX8KwkMSnrimz10kiWDgxIPPxM07q+DmeBx+B8eABWJI6+
+	uapdrJt4jDgBf9K8tw==
+X-Received: by 2002:a05:7022:100a:b0:135:fdeb:4776 with SMTP id
+ a92af1059eb24-1365fc779e3mr1949222c88.34.1779485708931; Fri, 22 May 2026
+ 14:35:08 -0700 (PDT)
 Precedence: bulk
 X-Mailing-List: sashiko-reviews@lists.linux.dev
 List-Id: <sashiko-reviews.lists.linux.dev>
 List-Subscribe: <mailto:sashiko-reviews+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:sashiko-reviews+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-References: <20260522202410.3104264-6-dmatlack@google.com> <20260522210848.6E4071F000E9@smtp.kernel.org>
-In-Reply-To: <20260522210848.6E4071F000E9@smtp.kernel.org>
+References: <20260522202410.3104264-4-dmatlack@google.com> <20260522211333.D56A21F000E9@smtp.kernel.org>
+In-Reply-To: <20260522211333.D56A21F000E9@smtp.kernel.org>
 From: David Matlack <dmatlack@google.com>
-Date: Fri, 22 May 2026 14:31:19 -0700
-X-Gm-Features: AVHnY4KtUaRLVMOD-NXvStODJghFVTqbdFSmxbdst0oS_AQ4Epk4q_B3c0DtFks
-Message-ID: <CALzav=dzAa9nxQ4ucGe1Y+Vo16qaJgN54vhyMtgzutXKp_s80w@mail.gmail.com>
-Subject: Re: [PATCH v6 05/12] PCI: liveupdate: Keep bus numbers constant
- during Live Update
+Date: Fri, 22 May 2026 14:34:42 -0700
+X-Gm-Features: AVHnY4JpuIbwi96KtUWFH2D1iE7-iC6vCxFKsYXwS1gOK1ets8Nv2GgQxQFJCJM
+Message-ID: <CALzav=cYxfUDBbWf=a3GM15f=2HZF8CJ7Ax5G2vg1VjrnC7w-w@mail.gmail.com>
+Subject: Re: [PATCH v6 03/12] PCI: liveupdate: Track incoming preserved PCI devices
 To: sashiko-reviews@lists.linux.dev
-Cc: linux-pci@vger.kernel.org
+Cc: linux-pci@vger.kernel.org, Pratyush Yadav <prty@google.com>, 
+	Pasha Tatashin <pasha.tatashin@soleen.com>
 Content-Type: text/plain; charset="UTF-8"
 Content-Transfer-Encoding: quoted-printable
 
-On Fri, May 22, 2026 at 2:08=E2=80=AFPM <sashiko-bot@kernel.org> wrote:
+On Fri, May 22, 2026 at 2:13=E2=80=AFPM <sashiko-bot@kernel.org> wrote:
 >
-> Thank you for your contribution! Sashiko AI review found 1 potential issu=
+> Thank you for your contribution! Sashiko AI review found 2 potential issu=
 e(s) to consider:
-> - [Low] Mixing goto-based control flow with scope-based cleanup helpers (=
-`scoped_guard`) in the function `pci_liveupdate_scan_bridge_begin`.
+> - [Critical] pci_flb_retrieve() frees the incoming preserved memory (ser)=
+ on failure, causing a Use-After-Free when the core retries.
+> - [Medium] Leaked reference to the incoming FLB when a device's preserved=
+ refcount is corrupted.
 > --
 >
-> commit 12ae1f010eb68b0654e38ce2800545f03bf1b835
+> commit 5af02c95c00f317cc5c4fa203b8b79373f2759a5
 > Author: David Matlack <dmatlack@google.com>
 >
-> PCI: liveupdate: Keep bus numbers constant during Live Update
+> PCI: liveupdate: Track incoming preserved PCI devices
 >
-> During a Live Update, preserved devices must be allowed to continue
-> performing memory transactions so the kernel cannot change the fabric
-> topology. To keep bus numbers constant, this patch makes the PCI core
-> inherit the secondary and subordinate bus numbers assigned to bridges
-> during scanning if any PCI devices are being preserved.
+> During PCI enumeration, the PCI core fetches serialized state from the
+> Live Update Orchestrator to identify incoming preserved devices. This
+> patch adds tracking and lifecycle management APIs for these devices.
 >
+> > diff --git a/drivers/pci/liveupdate.c b/drivers/pci/liveupdate.c
+> > index 065d5af822f74..96c43b84532cc 100644
 > > --- a/drivers/pci/liveupdate.c
 > > +++ b/drivers/pci/liveupdate.c
 > [ ... ]
-> > +bool pci_liveupdate_scan_bridge_begin(struct pci_bus *bus, struct pci_=
-dev *dev,
-> > +                                   int pass)
-> > +{
-> > +     struct pci_dev *parent =3D bus->self;
+> > @@ -128,13 +157,49 @@ static void pci_flb_unpreserve(struct liveupdate_=
+flb_op_args *args)
+> >
+> >  static int pci_flb_retrieve(struct liveupdate_flb_op_args *args)
+> >  {
+> > -     args->obj =3D phys_to_virt(args->data);
+> > +     struct pci_ser *ser =3D phys_to_virt(args->data);
+> > +     struct pci_flb_incoming *incoming;
+> > +     int ret =3D -ENOMEM;
+> > +     u32 i;
 > > +
-> > +     /*
-> > +      * On the second pass, reuse the value that was set on the first =
-pass
-> > +      * so that the passes are consistent with one another.
-> > +      */
-> > +     if (pass)
-> > +             return dev->liveupdate.inherit_buses;
+> > +     incoming =3D kmalloc_obj(*incoming);
+> > +     if (!incoming)
+> > +             goto err_restore_free;
 > > +
-> > +     /*
-> > +      * If the parent bridge is being forced to inherit its bus number=
-s
-> > +      * during this scan then this bridge must as well, otherwise the =
-PCI
-> > +      * core could expand this bridge's reservation beyond its parent =
-(which
-> > +      * cannot expand).
-> > +      */
-> > +     if (parent && parent->liveupdate.inherit_buses) {
-> > +             dev->liveupdate.inherit_buses =3D true;
-> > +             goto out;
+> > +     incoming->ser =3D ser;
+> > +     xa_init(&incoming->xa);
+> > +
+> > +     for (i =3D 0; i < incoming->ser->max_nr_devices; i++) {
+> > +             struct pci_dev_ser *dev_ser =3D &incoming->ser->devices[i=
+];
+> > +             unsigned long key;
+> > +
+> > +             if (!dev_ser->refcount)
+> > +                     continue;
+> > +
+> > +             key =3D pci_ser_xa_key(dev_ser->domain, dev_ser->bdf);
+> > +             ret =3D xa_insert(&incoming->xa, key, dev_ser, GFP_KERNEL=
+);
+> > +             if (ret)
+> > +                     goto err_xa_destroy;
 > > +     }
 > > +
-> > +     /*
-> > +      * Otherwise, if there are any incoming preserved devices, force =
-the
-> > +      * bus numbers to be inherited to avoid changing the bus numbers
-> > +      * assigned to those devices during enumeration.
-> > +      *
-> > +      * To keep things simple, inherit bus numbers on all bridges if a=
-ny PCI
-> > +      * devices are incoming, to ensure that no bridge's reservation i=
-s
-> > +      * expanded to overlap with a preserved device downstream of a di=
-fferent
-> > +      * bridge.
-> > +      */
-> > +     scoped_guard(rwsem_read, &pci_liveupdate.rwsem) {
-> > +             struct pci_flb_incoming *incoming;
+> > +     args->obj =3D incoming;
+> >       return 0;
 > > +
-> > +             incoming =3D pci_liveupdate_flb_get_incoming();
-> > +             if (!incoming) {
-> > +                     dev->liveupdate.inherit_buses =3D false;
-> > +                     goto out;
+> > +err_xa_destroy:
+> > +     xa_destroy(&incoming->xa);
+> > +     kfree(incoming);
+> > +err_restore_free:
+> > +     kho_restore_free(ser);
 >
-> [Severity: Low]
-> Does this mix goto-based control flow with scope-based cleanup helpers?
+> [Severity: Critical]
+> Does this error path create a use-after-free if the retrieval is retried?
 >
-> According to the cleanup subsystem guidelines, functions should either us=
-e
-> scope-based cleanups or goto-based cleanups, but never both in the same
-> function.
+> If pci_flb_retrieve() fails here (e.g. from -ENOMEM), kho_restore_free()
+> frees the preserved physical memory for the incoming state. However, the
+> Live Update Orchestrator propagates this error without marking the FLB
+> as retrieved or finished.
 >
-> Could these goto statements be replaced by directly returning the boolean
-> value instead?
+> When the next PCI device is enumerated, pci_liveupdate_setup_device()
+> calls pci_liveupdate_flb_get_incoming() again, which invokes
+> pci_flb_retrieve() a second time with the exact same data address. The
+> function will then attempt to read incoming->ser->max_nr_devices from
+> memory that was already freed.
 
-That seems reasonable enough, will fix in v7..
+Yes but that is a bug in LUO. It should not be attempting FLB
+retrieve() multiple times.
+
+(Pasha and Pratyush FYI)
+
+>
+> > +     return ret;
+> >  }
+> [ ... ]
+> > @@ -280,7 +430,83 @@ void pci_liveupdate_cleanup_device(struct pci_dev =
+*dev)
+> >               pci_WARN(dev, 1, "Destroying outgoing-preserved device!\n=
+");
+> >               pci_liveupdate_unpreserve(dev);
+> >       }
+> > +
+> > +     if (READ_ONCE(dev->liveupdate.incoming)) {
+> > +             pci_WARN(dev, 1, "Destroying incoming-preserved device!\n=
+");
+> > +             pci_liveupdate_finish(dev);
+> > +     }
+> > +}
+> > +
+> > +static void pci_liveupdate_finish_device(struct pci_ser *ser, struct p=
+ci_dev *dev)
+> > +{
+> > +     if (!dev->liveupdate.incoming) {
+> > +             pci_warn(dev, "Cannot finish preserving an unpreserved de=
+vice\n");
+> > +             return;
+> > +     }
+> > +
+> > +     if (dev->liveupdate.incoming->refcount !=3D 1) {
+> > +             pci_WARN(dev, 1, "Preserved device has a corrupted refcou=
+nt!\n");
+> > +             return;
+>
+> [Severity: Medium]
+> Can this early return leak a reference to the incoming FLB?
+>
+> In pci_liveupdate_setup_device(), a reference is held to protect
+> dev->liveupdate.incoming. This reference is expected to be released via
+> pci_liveupdate_flb_put_incoming() at the end of this function.
+>
+> By returning early here when the refcount is corrupted, we skip the put
+> call, leaking the reference. Furthermore, dev->liveupdate.incoming is lef=
+t
+> non-NULL, which means pci_liveupdate_cleanup_device() might later try to
+> finish it again and hit this same leak. Should this error path drop the
+> reference and clear the incoming pointer?
+
+Yes but dropping a reference to the incoming FLB when the refcount is
+corrupted could lead to use-after-free. Logging a warning and leaking
+FLB seems like the safer approach, aside from panicking.
