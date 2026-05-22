@@ -1,167 +1,139 @@
-Received: from mail-dl1-f49.google.com (mail-dl1-f49.google.com [74.125.82.49])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from www62.your-server.de (www62.your-server.de [213.133.104.62])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0E856386424
-	for <sashiko-reviews@lists.linux.dev>; Fri, 22 May 2026 21:37:55 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=pass smtp.client-ip=74.125.82.49
-ARC-Seal:i=2; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1779485877; cv=pass; b=sP7m91HblyiDCQXh1RjqodoltNRQNEaFPBOdZxNIPcx0Ei44ZLZYl6EvMjiCM3qqbtN7qcFZVlDQXQAiKKaJ+/2tydUCfO73PdhjomQkcfI6+J6k2ccVeZ0bwRpt08BcwZeqVCy5BuTzJGHHtj+MI8l6AHORBLPsHnZnXOtmXbk=
-ARC-Message-Signature:i=2; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1779485877; c=relaxed/simple;
-	bh=1TyT37xR7LChang2oHJC0H7cE1jVc5Im3FbgnD3myWg=;
-	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
-	 To:Cc:Content-Type; b=sJUP9jRVW3uXfl9KkaT+1CHa0EN6izgGawYWxBuy+YVBtzLhu/xIBtk65+u0A2bodYLGTy9sSt9eX+n7lH+nEOPquYf1H0EwyjMCNFnFCKN43W1YCAOBc7+Aa0kjz6DqUJGNjFXxaBeSeZYvsKTp3tq8mtssTpTE9wmCuIDE5aE=
-ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=google.com; spf=pass smtp.mailfrom=google.com; dkim=pass (2048-bit key) header.d=google.com header.i=@google.com header.b=dMQASQMe; arc=pass smtp.client-ip=74.125.82.49
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=google.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=google.com
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C258919E839;
+	Fri, 22 May 2026 22:21:09 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=213.133.104.62
+ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
+	t=1779488471; cv=none; b=H8idMrDy/JmgYPPLf++o/4EvVZRb8b9LiPHpnE+J0ufb8iXMYaU6Eo/EiFHqIsqDqQqGJ4mhZb6FYscSd14eqNB6B+1/tKjxxay0/zMf39id1DM2HtQRIAPoeo/TDxVtln0Gg/mEV/KKh+6cmQ2B2dL3ulCJMMvVQXlTJ3Tqmrs=
+ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
+	s=arc-20240116; t=1779488471; c=relaxed/simple;
+	bh=+dw30CvAFnTQMInH/KXCCfsY1Il+tu8LL0E8B3qBX8w=;
+	h=Message-ID:Date:MIME-Version:Subject:From:To:Cc:References:
+	 In-Reply-To:Content-Type; b=Hs4LrXvC9XitsR0BLbotu2+8Iu/Sxbw0enqe5j/qRidj8rxr/IbQbV7rcS3lKVIAQTWuDOvVGaLmrbPhGUJ7YmiSesCmspnbvAUdNi+tgVTYYadzWiQLo29lgPeGL6Z3lXOWJymHLrKQfc4GdkDN3W/VRyg15pND6pdBTKkK1Sw=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=iogearbox.net; spf=pass smtp.mailfrom=iogearbox.net; dkim=pass (2048-bit key) header.d=iogearbox.net header.i=@iogearbox.net header.b=YtguuOGi; arc=none smtp.client-ip=213.133.104.62
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=iogearbox.net
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=iogearbox.net
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=google.com header.i=@google.com header.b="dMQASQMe"
-Received: by mail-dl1-f49.google.com with SMTP id a92af1059eb24-132d1b2519eso230131c88.0
-        for <sashiko-reviews@lists.linux.dev>; Fri, 22 May 2026 14:37:55 -0700 (PDT)
-ARC-Seal: i=1; a=rsa-sha256; t=1779485875; cv=none;
-        d=google.com; s=arc-20240605;
-        b=H0e9DHORhK6/1zxSr7RFbgDSDZx1H4irwIo6Dqbt/ffiJDGVJlOadcjnFPWnxZ3zi6
-         j3BfGib2VQjF29PAU6UEFfTPU7W4hk7u8H1peq8/1WEKH1389jbbO7u8vgxxLQdhTQOr
-         6LHs0E9TnNxBZd/WIgXGwhTXYXuUP89sjIcfMqW7WVIeYasU0C5UHoWIoSaAUCEubmQO
-         VHJkW8gbBxxPKyaQep45UHAphNnHN74hbQHhi2CeKdXzIKXlJxzwDhP/aCACiHNSB7tp
-         Q9tPPR3eh7taqWeIter+brTXgVTH/4NK/Psl3igocHYeU36/k3CKqj5RFqQf20O6aFxj
-         sXTw==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com; s=arc-20240605;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:dkim-signature;
-        bh=zSm7l63uLGYvmvNDjzx7U0ucFLWNLmiIMJFYAIeXl4s=;
-        fh=kcRmEvKuUr56T29pmcj1pltt3w0eGbocMmUdu3r/3OM=;
-        b=G8qpz+ffgZjblUk75I7b0BOcifJAAr/6P0OAudlyY8acqy8JzakrM3y9Zf5vHnv8TS
-         IBlxkO3xrrgwIS6iV2QerRQAE21+62U8t3wZJMAs1QORPNKbDZdM3EWZU8mWJqq05kvs
-         6x2vcx23BOeom1qYWBEHrhoIHCZWGqlvppWmc0xSXmn+J3vp9eqRICqxESckG7YUqqKD
-         DKpFTGLIZaCye6rfHhDBvRUegoN7RilkKiG1Zvl3ZtpVddZOc4X1mIGFJe4LMix7rnId
-         Pnn95Zyx2i00Ru45exRxpUjuFcjYFbyyKjuOqxQIhu5jiJhRMPYwXUvNTZp/eMl6FmBw
-         GhmA==;
-        darn=lists.linux.dev
-ARC-Authentication-Results: i=1; mx.google.com; arc=none
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=google.com; s=20251104; t=1779485875; x=1780090675; darn=lists.linux.dev;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=zSm7l63uLGYvmvNDjzx7U0ucFLWNLmiIMJFYAIeXl4s=;
-        b=dMQASQMeS8K2YtjRJOzKABIboaIQKy2YJ4WbUr/OLwTyN/kCZ9o5cmc/Mk3G7tTr8C
-         uNA5wwAwm/YGDDJmGSqHSbPjOocrdLsVQJ7dt7OE0Zz+3dhQzDf8A0dMmr2/PcsJ04BV
-         +9gpE2FDd8T5YNIeQMdj7paoV4cV+4rJhIvGUuz1yHYk/xg21rMieYpMsLeercfrb7hX
-         wI3vi0ko8xi0CHDhIPvxTyz3HTcBvybX13U1qKGwcXLjmRXhWNJPknhtZujfCPmz3kqR
-         1Q1SIUH/OnXF0b6xxdtKOEq3+T7UIFRQ2PoPCw7PbG5w3axdmr+0+JKT3Nk8d5MWDp9E
-         wkSA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20251104; t=1779485875; x=1780090675;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:x-gm-gg:x-gm-message-state:from
-         :to:cc:subject:date:message-id:reply-to;
-        bh=zSm7l63uLGYvmvNDjzx7U0ucFLWNLmiIMJFYAIeXl4s=;
-        b=KMRhqgKR9gv6j2j1DlIH6D4tjLUafgaKaX6mvMHGA6g1J19nOtj6hHFHtXuPy1+xGe
-         pxuN5EqZHU0Q0omkd+vRgkaYJc/pfUPPsBvJhMnwrgakS2GmC9C7XHRE2iYiliEHKp4K
-         s1AswglHMfG7FuqEg+KUBYrXl30WbUOtpHKkn7/04h6+4QndRgU7Jq5uAa7Ei9Y22giJ
-         xbmISshBPy0K6jwNtVLQc5ZnYIq3NE9Asn6H1bXW4oQRXNschNyBlVKAbQH2/U14HhrJ
-         xRWG2ApPqguGGPICpbDdjbN8eYS1duCg+qhPErre5OZoDxCwFZJZg6WrThcMism9lxDT
-         wkJQ==
-X-Gm-Message-State: AOJu0Yzs8sw7/UhbvXiOZiPYeHJJ5hcu1mJrawy49mrRTHeRuXU4+lCr
-	JrF0mwfYw/huHe3K+Hi+jGJv6QTybtmkAAD2DOJkNvZCIRUPchQ7AiLCIBD2exYQcRF95D/zLce
-	lk9sQGY0TKhulHUyTvrMlH7SoMCLN7xBzraCGjAD2e0AoWA0sUnT2Qg==
-X-Gm-Gg: Acq92OF/dN53xfqyZGOhjiVZ6aMX7jSbBmzuNJyZp/5Yn+y2uHvhGc10aoCq+Bxv0He
-	hGCV+GiXXPgzrrh37I3zCnQ/v3gxE2gipJFqURxcfpijey2JYNSAhwGVWp29Lfi+v0qfkUQUwwP
-	+9DlQO4RlgJm0PzoctT3i1D8NxD8p7SC9YKl3xlJw+p0k/YzrBkFSv5QfnPa2X+KlvNO+WRcEcB
-	a+RuK3DG1qzgD3oFgycVcmzkvSInzuSFM1I13SrOBe37lP5kolpHUDrQbAfIW06VhpekiOC00QO
-	hjdguI5I0dLel6P0rA==
-X-Received: by 2002:a05:7022:613:b0:134:feba:3fd with SMTP id
- a92af1059eb24-1365fd7ccb7mr2727225c88.37.1779485874567; Fri, 22 May 2026
- 14:37:54 -0700 (PDT)
+	dkim=pass (2048-bit key) header.d=iogearbox.net header.i=@iogearbox.net header.b="YtguuOGi"
+DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed;
+	d=iogearbox.net; s=default2302; h=Content-Transfer-Encoding:Content-Type:
+	In-Reply-To:References:Cc:To:From:Subject:MIME-Version:Date:Message-ID:Sender
+	:Reply-To:Content-ID:Content-Description:Resent-Date:Resent-From:
+	Resent-Sender:Resent-To:Resent-Cc:Resent-Message-ID;
+	bh=R9Tg+O0XJv00mZQlpo+ln03A95BJwA3ImFWPzCjhERg=; b=YtguuOGi8Ko9dMH/U/oNsqrW7u
+	ekPcg+SNX3ZC86OHjTV2svZYr12iuz+cOnY0qKEs6lyg1XSIYTLP2JufBYJo0lUBtDCrokvUlFFz9
+	1OsBMSBDUhR6IK9mC+9ePcrQmgIe14wfxk3KDiYIJnY2yNmnfiwUJr/QfO38rrNJz3fs3+yfDoL63
+	C3hoB7apB3r+iE781XseFehqPqcF+Jm9R8MwtcSscWQ1FZo0NTTDu3fr/Y9Eb8WW/2t+iHVJCO+H8
+	0zlI4sjklWKvafcBgkDjkTjvSfCncehHEwYfCFnWZfidzN4eT3pb7hE5SXaztrRAtHdXXcUnIScwW
+	jqsew4aQ==;
+Received: from sslproxy05.your-server.de ([78.46.172.2])
+	by www62.your-server.de with esmtpsa  (TLS1.3) tls TLS_AES_256_GCM_SHA384
+	(Exim 4.96.2)
+	(envelope-from <daniel@iogearbox.net>)
+	id 1wQYEt-0000vj-34;
+	Sat, 23 May 2026 00:21:07 +0200
+Received: from localhost ([127.0.0.1])
+	by sslproxy05.your-server.de with esmtpsa  (TLS1.3) tls TLS_AES_256_GCM_SHA384
+	(Exim 4.96)
+	(envelope-from <daniel@iogearbox.net>)
+	id 1wQYEt-000ELW-0A;
+	Sat, 23 May 2026 00:21:07 +0200
+Message-ID: <0df1ad7c-badb-4ddd-bf4f-9a5fc1b06f07@iogearbox.net>
+Date: Sat, 23 May 2026 00:21:07 +0200
 Precedence: bulk
 X-Mailing-List: sashiko-reviews@lists.linux.dev
 List-Id: <sashiko-reviews.lists.linux.dev>
 List-Subscribe: <mailto:sashiko-reviews+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:sashiko-reviews+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-References: <20260522202410.3104264-2-dmatlack@google.com> <20260522204400.4C7E51F000E9@smtp.kernel.org>
-In-Reply-To: <20260522204400.4C7E51F000E9@smtp.kernel.org>
-From: David Matlack <dmatlack@google.com>
-Date: Fri, 22 May 2026 14:37:28 -0700
-X-Gm-Features: AVHnY4IjqQqs870qR0-ohQ72DF2PWotw1xJ6wHuzXsXUHRQz5rQ4D18AzHyAyvs
-Message-ID: <CALzav=cZsFx5dpbELx1cMHUa1+4+uv7cYEWAWAtZkXeB2d9mMw@mail.gmail.com>
-Subject: Re: [PATCH v6 01/12] PCI: liveupdate: Set up FLB handler for the PCI core
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH bpf-next 1/3] bpf: Add simple xattr support to bpffs
+From: Daniel Borkmann <daniel@iogearbox.net>
 To: sashiko-reviews@lists.linux.dev
-Cc: linux-pci@vger.kernel.org, Mike Rapoport <rppt@kernel.org>, 
-	Pasha Tatashin <tatashin@google.com>, Pratyush Yadav <prty@google.com>, Alexander Graf <graf@amazon.com>
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
+Cc: bpf@vger.kernel.org
+References: <20260522135626.120732-1-daniel@iogearbox.net>
+ <20260522144818.DD7EB1F000E9@smtp.kernel.org>
+ <3cc241a3-eaac-4395-a9a2-2b405eb0ca42@iogearbox.net>
+Content-Language: en-US
+Autocrypt: addr=daniel@iogearbox.net; keydata=
+ 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
+In-Reply-To: <3cc241a3-eaac-4395-a9a2-2b405eb0ca42@iogearbox.net>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 8bit
+X-Virus-Scanned: Clear (ClamAV 1.4.3/28008/Fri May 22 08:24:46 2026)
 
-On Fri, May 22, 2026 at 1:44=E2=80=AFPM <sashiko-bot@kernel.org> wrote:
->
-> Thank you for your contribution! Sashiko AI review found 1 potential issu=
-e(s) to consider:
-> - [Medium] Missing `kho_is_enabled()` check before calling KHO preservati=
-on APIs in PCI Live Update FLB operations.
-> --
->
-> commit b0cb2fb154fba1aa85d63570fe0186e243353fb7
-> Author: David Matlack <dmatlack@google.com>
->
-> PCI: liveupdate: Set up FLB handler for the PCI core
->
-> This commit sets up a File-Lifecycle-Bound (FLB) handler for the PCI core
-> to participate in the preservation of PCI devices across Live Update. It
-> allocates and preserves a pci_ser structure using KHO when the first PCI
-> device file is preserved.
->
-> > diff --git a/drivers/pci/liveupdate.c b/drivers/pci/liveupdate.c
-> > new file mode 100644
-> > --- /dev/null
-> > +++ b/drivers/pci/liveupdate.c
->
-> [ ... ]
->
-> > +static int pci_flb_preserve(struct liveupdate_flb_op_args *args)
-> > +{
-> > +     struct pci_dev *dev =3D NULL;
-> > +     u32 max_nr_devices =3D 0;
-> > +     struct pci_ser *ser;
-> > +     unsigned long size;
-> > +
-> > +     /*
-> > +      * Allocate enough space to preserve all devices that are current=
-ly
-> > +      * present on the system. Extra padding can be added to this in t=
-he
-> > +      * future to increase the chances that there is enough room to pr=
-eserve
-> > +      * devices that are not yet present on the system (e.g. VFs, hot-=
-plugged
-> > +      * devices).
-> > +      */
-> > +     for_each_pci_dev(dev)
-> > +             max_nr_devices++;
-> > +
-> > +     size =3D struct_size_t(struct pci_ser, devices, max_nr_devices);
-> > +
-> > +     ser =3D kho_alloc_preserve(size);
->
-> [Severity: Medium]
-> Should this code verify kho_is_enabled() before calling kho_alloc_preserv=
-e()?
->
-> The commit message states:
-> "Note: There is no reason to check for kho_is_enabled() since it can be
-> assumed to return true. If KHO was not enabled then Live Update would
-> not be enabled and these routines would never run."
->
-> Does this assumption conflict with the Kexec Handover subsystem guideline=
-s?
->
-> The guidelines mandate that all callers of serialization APIs must explic=
-itly
-> gate their usage with kho_is_enabled().
->
-> Calling preservation APIs like kho_alloc_preserve() without the check can
-> silently add tracking state that will never be used if the subsystem is
-> unexpectedly inactive.
-
-Sashiko keeps leaving this comment. It seems like a false positive to
-me. KHO maintainers, perhaps the KHO documentation needs adjustment?
+On 5/22/26 5:09 PM, Daniel Borkmann wrote:
+> On 5/22/26 4:48 PM, sashiko-bot@kernel.org wrote:
+[...]
+>>> +static int bpf_fs_xattr_set(const struct xattr_handler *handler,
+>>> +                struct mnt_idmap *idmap, struct dentry *unused,
+>>> +                struct inode *inode, const char *name,
+>>> +                const void *value, size_t size, int flags)
+>>> +{
+>>> +    struct bpf_fs_inode *bi = BPF_FS_I(inode);
+>>> +    struct simple_xattrs *xattrs;
+>>> +    struct simple_xattr *old;
+>>> +
+>>> +    name = xattr_full_name(handler, name);
+>>> +    xattrs = simple_xattrs_lazy_alloc(&bi->xattrs, value, flags);
+>>> +    if (IS_ERR_OR_NULL(xattrs))
+>>> +        return PTR_ERR(xattrs);
+>>> +    old = simple_xattr_set(xattrs, name, value, size, flags);
+>>
+>> [Severity: High]
+>> Does this code allow an unprivileged user to exhaust kernel memory?
+>>
+>> Because bpffs can be mounted in an unprivileged user namespace
+>> (FS_USERNS_MOUNT), a user could create directories and repeatedly set user.*
+>> extended attributes.
+>>
+>> Since simple_xattr_set() does not enforce per-inode limits like
+>> simple_xattr_set_limited() does, couldn't this lead to an unbounded memory
+>> allocation and soft lockups during rhashtable traversals?
+> 
+> Ok, for user.* simple_xattr_set_limited should be the choice then, will
+> fix in a v2.
+Looked some more into this, my plan is to drop the user.* as unsupported
+and have the security.* ones accounted via simple_xattr_limits (given userns).
