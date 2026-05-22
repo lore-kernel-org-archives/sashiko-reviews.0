@@ -1,183 +1,212 @@
-Received: from mx0b-001b2d01.pphosted.com (mx0b-001b2d01.pphosted.com [148.163.158.5])
+Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C39D73C8C7F;
-	Fri, 22 May 2026 10:15:58 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=148.163.158.5
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id ABD283438A2;
+	Fri, 22 May 2026 10:40:04 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1779444960; cv=none; b=EvV/dJnIwctCBdsSvu2HCSXAofyHGJ994/YezhwUcaYOb54vTPS2reJD5AAVzATyANgOVsYL6J6rzluNNg0U8ok6y3WRss0XQuvsOsZWuZWlDfIWnR1/ZoTpuOoKTOAUuY7VHTpsSdwc6gGqVrlazLoDXDXVZxh+AByjMYh/PMI=
+	t=1779446405; cv=none; b=fOl4JD/npyD1ovGYDmp5muvWq3v0LghoTqGC0vhCH1ahAKlzP7REnv0G0Zk6VL3F5iqS+JCtX7Mgnp0sPRxC6/GPlHhJLBiDCNXBQW+mdY4mZRCWfheHDwDv5cQxo7cysXy8WrE6bZNW0dOp3ek82nfNtUq4rcmN2L8zCYhocqI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1779444960; c=relaxed/simple;
-	bh=dIAS9SeTDL0lghEqQji6iwi+vJPmBPoDvlKD4q+EYzI=;
-	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=WNwi7Tkx8oRBvGtp5zYcsQwhj8yR28jG/nuh4Vdn2jBadBQ81g4cnVzYqthcmr5Poc1KRkRWrRGiarsTMNZMUd/FgF13Ghr7/h+hPR1UYxJLgWAlnIoGXTRvIirwqkIE48/hRejbmt4NgNQ/rSx8hKcdnKN0yd+zxaZTSL6TDB8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linux.ibm.com; spf=pass smtp.mailfrom=linux.ibm.com; dkim=pass (2048-bit key) header.d=ibm.com header.i=@ibm.com header.b=Gg8TXE4U; arc=none smtp.client-ip=148.163.158.5
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linux.ibm.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linux.ibm.com
+	s=arc-20240116; t=1779446405; c=relaxed/simple;
+	bh=c0BeStXdY1FuuRgE12pPYKk+yXdU62dLQ+ab1L+PruA=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=Qk50JbhN6YJh//H5ebgcr3uyQ7IsVPIeOdWRzW+4L0ygIPKPOIfxXU44h+i9IXOgUsmO4fsnsz0l9I9qfh16OMsIrcMtYbUWqmh89vqLcCC8dt+TUl5GqRnI6INwuvKlHW1mBTyEm4dOyl+mQyPi15CC+Biql3Oxvtv+yuPhVzA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=C0uKlOyt; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=ibm.com header.i=@ibm.com header.b="Gg8TXE4U"
-Received: from pps.filterd (m0353725.ppops.net [127.0.0.1])
-	by mx0a-001b2d01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id 64M8Wf0o1249248;
-	Fri, 22 May 2026 10:15:56 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=ibm.com; h=cc
-	:content-transfer-encoding:content-type:date:from:in-reply-to
-	:message-id:mime-version:references:subject:to; s=pp1; bh=rQeEFc
-	Oe/7zQSmQvZLP9idwRPZ6kN+gWKgmFkmN6dZc=; b=Gg8TXE4UbBz5IHIOQDSQEJ
-	BpxADXSoPlodC1r59WkEbAa0CaXDsuYZ3/gBCcf0i/6qxeNtFNi0ir7oyf1g0KgJ
-	PNAHWNhdIweocXF/qBtknHNISNDzKBvyMlCVzhP/of/ho2EkKM/dGuYuvRuLHIuy
-	lYialc5clkM+0Xw/mKgmVfx8l1CeJ/Y6X0Lqn8joUPgpb9w7awoLIiCrGTL1q1xW
-	Vcxtf59tEsWtL2AGH4iHvhuXhrEFTfFQNC78XEDIyLRy17Q5rdyM8Om5l4BUFNJG
-	wm0DTtj3i6ivUHxy9xEqqPqDxDTmJ0kENxZghx3UebVfxojHePHNGCTAuAs7PKRg
-	==
-Received: from ppma23.wdc07v.mail.ibm.com (5d.69.3da9.ip4.static.sl-reverse.com [169.61.105.93])
-	by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 4e6h88sy64-1
-	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Fri, 22 May 2026 10:15:55 +0000 (GMT)
-Received: from pps.filterd (ppma23.wdc07v.mail.ibm.com [127.0.0.1])
-	by ppma23.wdc07v.mail.ibm.com (8.18.1.7/8.18.1.7) with ESMTP id 64MA95FR007136;
-	Fri, 22 May 2026 10:15:55 GMT
-Received: from smtprelay02.fra02v.mail.ibm.com ([9.218.2.226])
-	by ppma23.wdc07v.mail.ibm.com (PPS) with ESMTPS id 4e74dj0bty-1
-	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Fri, 22 May 2026 10:15:54 +0000 (GMT)
-Received: from smtpav03.fra02v.mail.ibm.com (smtpav03.fra02v.mail.ibm.com [10.20.54.102])
-	by smtprelay02.fra02v.mail.ibm.com (8.14.9/8.14.9/NCO v10.0) with ESMTP id 64MAFrYk53608832
-	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
-	Fri, 22 May 2026 10:15:53 GMT
-Received: from smtpav03.fra02v.mail.ibm.com (unknown [127.0.0.1])
-	by IMSVA (Postfix) with ESMTP id 041CA2004F;
-	Fri, 22 May 2026 10:15:53 +0000 (GMT)
-Received: from smtpav03.fra02v.mail.ibm.com (unknown [127.0.0.1])
-	by IMSVA (Postfix) with ESMTP id 8B92D2004E;
-	Fri, 22 May 2026 10:15:52 +0000 (GMT)
-Received: from [9.111.153.207] (unknown [9.111.153.207])
-	by smtpav03.fra02v.mail.ibm.com (Postfix) with ESMTP;
-	Fri, 22 May 2026 10:15:52 +0000 (GMT)
-Message-ID: <40e049af-83c5-4d97-8e26-2da069693184@linux.ibm.com>
-Date: Fri, 22 May 2026 12:15:51 +0200
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="C0uKlOyt"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id AF4581F000E9;
+	Fri, 22 May 2026 10:40:02 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=kernel.org;
+	s=k20260515; t=1779446404;
+	bh=TOeENsJONCm8A8ptsypYNFAVXXJmb30h97nu7b0oPA4=;
+	h=Date:From:To:Cc:Subject:References:In-Reply-To;
+	b=C0uKlOyt9wx1ZuV5BLASb/MIxwa+P55xZoZrWACqPyhWcqOPbkRP0imyt9YwbsFV7
+	 1GROqPhdzZTtqWlEcoktRpKpS970YtozTVF2KqaywwjfG2+l+Zjs2eKR559hdcb/iY
+	 jljzyjV1EuFbSLkXsdCxuDOCU4yxB8o13643wsUjuOWsCoZhvXqtbqkEw0XNUxQuA0
+	 C8FO7dfhh6Rfi6ECodZYCELW0Tvozqf+Zzvs7OGejUKRz9MK2+v9Ary1OHqNTd7y7u
+	 hG2VNtUNmpgQPz5LdzpNQYfY2amEusjavnlfAp3rwcnLygojJplV5FUGRCGWFfI7MW
+	 pdqLCxd9/Dmyw==
+Date: Fri, 22 May 2026 16:09:59 +0530
+From: Sumit Garg <sumit.garg@kernel.org>
+To: sashiko-reviews@lists.linux.dev
+Cc: robh@kernel.org, conor+dt@kernel.org, devicetree@vger.kernel.org
+Subject: Re: [PATCH v6 04/16] firmware: qcom: Add a PAS TEE service
+Message-ID: <ahAyf4i7ZZrJETG9@sumit-xelite>
+References: <20260518072856.22790-5-sumit.garg@kernel.org>
+ <20260519073354.03927C2BCB3@smtp.kernel.org>
 Precedence: bulk
 X-Mailing-List: sashiko-reviews@lists.linux.dev
 List-Id: <sashiko-reviews.lists.linux.dev>
 List-Subscribe: <mailto:sashiko-reviews+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:sashiko-reviews+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v16 16/20] unwind_user/sframe: Add support for SFrame V3
- flexible FDEs
-To: sashiko-reviews@lists.linux.dev
-Cc: bpf@vger.kernel.org, Steven Rostedt <rostedt@kernel.org>,
-        Indu Bhagat <ibhagatgnu@gmail.com>
-References: <20260521142546.3908498-17-jremus@linux.ibm.com>
- <20260521151406.E1BA21F000E9@smtp.kernel.org>
-Content-Language: en-US
-From: Jens Remus <jremus@linux.ibm.com>
-Organization: IBM Deutschland Research & Development GmbH
-In-Reply-To: <20260521151406.E1BA21F000E9@smtp.kernel.org>
-Content-Type: text/plain; charset=UTF-8
+Content-Type: text/plain; charset=iso-8859-1
+Content-Disposition: inline
 Content-Transfer-Encoding: 8bit
-X-TM-AS-GCONF: 00
-X-Proofpoint-Reinject: loops=2 maxloops=12
-X-Proofpoint-ORIG-GUID: E5UkUMCCKcPq6iSR-sxIzEqmck8lv6GW
-X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwNTIyMDEwMCBTYWx0ZWRfX/9H2SzFDUYmD
- nx8IEoQyp9z+Vi1p4yseOQbrsprgFsAWPYb32h/Ks4SwOi2SDDR32EkU+2Td6JlSXqONYqw6m12
- gASWzSKrfVuiCJBgZdnCZiHYJWo9KbLSBj0sP67AxZhfZYz6wRwe7M3sxLtesyrGayv5CHfVctp
- WKU+d73z+S4WtqcGWcdzkMHs3SzHCH/WrYUS/QbhNwtJErfGwIC5MvYD7mMaaHu/2b6dlOoESgo
- 8rVe050KFnx3iS1nbbNmdgt4q4Rjby+MkAd7Gegkid6RI35YPpEZ86EWPc/ok57oaEwGVyVfvSK
- XYAisa7wyUKgKI3CW1y1G2pmoxlPL3KrcW8sSKbkKmuN7btZdu63KbBbr3k7Tr5hGpvkla7cCEA
- ufBb6EHrIrwbf/Ws+uj7BV8Tws5JSWDN4iFuKyVxjZUUa2NSpRfFsr8jENDdEG5fbQ6wH0+jJtC
- HnOQusIxmKbzjSzg7BQ==
-X-Proofpoint-GUID: bZC9kYJwhQAxjAcMfA3IfjDO-fWdrYz8
-X-Authority-Analysis: v=2.4 cv=apyCzyZV c=1 sm=1 tr=0 ts=6a102cdb cx=c_pps
- a=3Bg1Hr4SwmMryq2xdFQyZA==:117 a=3Bg1Hr4SwmMryq2xdFQyZA==:17
- a=IkcTkHD0fZMA:10 a=NGcC8JguVDcA:10 a=VkNPw1HP01LnGYTKEx00:22
- a=RnoormkPH1_aCDwRdu11:22 a=V8glGbnc2Ofi9Qvn3v5h:22 a=VnNF1IyMAAAA:8
- a=VwQbUJbxAAAA:8 a=9Kn7GfD3tJpvV5knKXkA:9 a=3ZKOabzyN94A:10 a=QEXdDO2ut3YA:10
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.293,Aquarius:18.0.1143,Hydra:6.1.51,FMLib:17.12.100.49
- definitions=2026-05-22_02,2026-05-18_01,2025-10-01_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
- malwarescore=0 lowpriorityscore=0 priorityscore=1501 impostorscore=0
- bulkscore=0 suspectscore=0 adultscore=0 spamscore=0 phishscore=0
- clxscore=1015 classifier=typeunknown authscore=0 authtc= authcc=
- route=outbound adjust=0 reason=mlx scancount=1 engine=8.22.0-2605130000
- definitions=main-2605220100
+In-Reply-To: <20260519073354.03927C2BCB3@smtp.kernel.org>
 
-On 5/21/2026 5:14 PM, sashiko-bot@kernel.org wrote:
-> Thank you for your contribution! Sashiko AI review found 2 potential issue(s) to consider:
-> - [Medium] Mismatch between SFrame V3 flexible FDE control word specification in the commit message and the actual implementation.
-> - [Low] The patch uses undefined macros `SFRAME_REG_SP` and `SFRAME_REG_FP` and includes a missing architecture header, breaking the build.
+On Tue, May 19, 2026 at 07:33:53AM +0000, sashiko-bot@kernel.org wrote:
+> Thank you for your contribution! Sashiko AI review found 3 potential issue(s) to consider:
+> - [Critical] Unvalidated buffer sizes from TEE lead to heap buffer overflow and out-of-bounds read.
+> - [High] The `shm_free` cleanup wrapper fails to handle `ERR_PTR`, causing a kernel crash on allocation failure.
+> - [High] Unconditional unregistration and global static ops structure corruption in probe/remove.
 > --
 > 
-> commit 82ce04f2a50a8ff116e0ca155714efff95332739
-> Author: Jens Remus <jremus@linux.ibm.com>
+> commit 117a287c92ded04ad43f9ed963b43a8069a13f94
+> Author: Sumit Garg <sumit.garg@oss.qualcomm.com>
 > 
-> unwind_user/sframe: Add support for SFrame V3 flexible FDEs
+> firmware: qcom: Add a PAS TEE service
 > 
-> This commit introduces support for SFrame V3 flexible FDEs, which encode CFA,
-> RA, and FP tracking information using FRE data words or padding words. It
-> adds logic to read flexible FDE control words and initialize the appropriate
-> CFA and rule data structures.
+> Add support for Peripheral Authentication Service (PAS) driver based
+> on TEE bus with OP-TEE providing the backend PAS service implementation.
 > 
->>     This enables the following flexible CFA and FP/RA recovery rules:
->>     - CFA = register + offset       // reg_p=1, deref_p=0
->>     - CFA = *(register + offset)    // reg_p=1, deref_p=1
->>     - FP/RA = *(CFA + offset)       // reg_p=0, deref_p=0
+> > diff --git a/drivers/firmware/qcom/qcom_pas_tee.c b/drivers/firmware/qcom/qcom_pas_tee.c
+> > new file mode 100644
+> > index 0000000000000..2067a43c44c37
+> > --- /dev/null
+> > +++ b/drivers/firmware/qcom/qcom_pas_tee.c
+> > @@ -0,0 +1,476 @@
+> [ ... ]
+> > +DEFINE_FREE(shm_free, struct tee_shm *, tee_shm_free(_T))
 > 
-> [Severity: Medium]
-> Is this description in the commit message accurate?
+> Will this crash if an allocation failure occurs? By default, DEFINE_FREE
+> only guards against NULL pointers. However, tee_shm_alloc_kernel_buf() can
+> return an ERR_PTR, which evaluates to true.
 > 
-> The commit message states that the FP/RA rule uses reg_p=0, deref_p=0.
-> However, the implementation for this rule in __read_flex_fde_fre_datawords()
-> uses ra_ctl = 2, which corresponds to deref_p=1. 
+> > +
+> > +static void *qcom_pas_tee_get_rsc_table(struct device *dev,
+> > +					struct qcom_pas_context *ctx,
+> > +					void *input_rt, size_t input_rt_size,
+> > +					size_t *output_rt_size)
+> > +{
+> [ ... ]
+> > +	if (param[1].u.memref.size) {
+> > +		struct tee_shm *rt_shm __free(shm_free) =
+> > +			tee_shm_alloc_kernel_buf(data->ctx,
+> > +						 param[1].u.memref.size);
+> 
+> If this allocation fails, rt_shm will be an ERR_PTR. When the function
+> returns early, shm_free will pass the ERR_PTR to tee_shm_free(), triggering
+> a kernel panic.
 
-My bad!  Will correct the commit message in the next version.
-
-> 
-> Also, the commit message later notes that reg_p=0 and deref_p=0 is actually
-> an invalid padding word.
-> 
-> Could the commit message be updated to match the code's behavior to avoid
-> confusing future maintainers debugging the SFrame unwinder?
-> 
->> diff --git a/kernel/unwind/sframe.c b/kernel/unwind/sframe.c
->> index daa97d8b02316..b623dca072daa 100644
->> --- a/kernel/unwind/sframe.c
->> +++ b/kernel/unwind/sframe.c
->> @@ -12,6 +12,7 @@
->>  #include <linux/mm.h>
->>  #include <linux/string_helpers.h>
->>  #include <linux/sframe.h>
->> +#include <asm/unwind_user_sframe.h>
->>  #include <linux/unwind_user_types.h>
-> 
-> [Severity: Low]
-> Does this include break the build for intermediate commits?
-> 
-> This architecture header, along with the SFRAME_REG_SP and SFRAME_REG_FP
-> macros used later in this patch, do not appear to exist in the tree at this
-> commit.
-
-This is intended.  kernel/unwind/sframe.o is only built if an arch
-enables HAVE_UNWIND_USER_SFRAME and provides an arch-specific
-asm/unwind_user_sframe.h header that defines at least SFRAME_REG_SP and
-SFRAME_REG_FP.
+Ack, will fix it.
 
 > 
-> Although this is fixed later in the patch series by the commit that enables
-> sframe unwinding on x86, missing headers and undefined macros break git
-> bisectability. 
+> > +		void *rt_shm_va;
+> > +
+> > +		if (IS_ERR(rt_shm)) {
+> > +			dev_err(dev, "rt_shm allocation failed\n");
+> > +			return rt_shm;
+> > +		}
+> > +
+> > +		rt_shm_va = tee_shm_get_va(rt_shm, 0);
+> > +		if (IS_ERR(rt_shm_va)) {
+> > +			dev_err(dev, "rt_shm get VA failed\n");
+> > +			return ERR_CAST(rt_shm_va);
+> > +		}
+> > +		memcpy(rt_shm_va, input_rt, input_rt_size);
 > 
-> Should these definitions be introduced in an earlier patch or within this
-> one so that this patch compiles cleanly?
+> Can this cause a heap buffer overflow? The buffer is allocated using
+> param[1].u.memref.size, but the code unconditionally copies input_rt_size
+> bytes into it.
+
+Nope, param[1].u.memref.size is always more or equal to input_rt_size
+based on OP-TEE ABI.
+
 > 
+> > +
+> > +		param[1].u.memref.shm = rt_shm;
+> > +		ret = tee_client_invoke_func(data->ctx, &inv_arg, param);
+> > +		if (ret < 0 || inv_arg.ret != 0) {
+> > +			dev_err(dev, "PAS get RT failed, pas_id: %d, ret: %d, err: 0x%x\n",
+> > +				ctx->pas_id, ret, inv_arg.ret);
+> > +			return ret ? ERR_PTR(ret) : ERR_PTR(-EINVAL);
+> > +		}
+> > +
+> > +		if (param[1].u.memref.size) {
+> > +			*output_rt_size = param[1].u.memref.size;
+> > +			rt_buf = kmemdup(rt_shm_va, *output_rt_size, GFP_KERNEL);
+> 
+> Does this kmemdup() introduce an out-of-bounds read? The size returned by
+> the TEE in param[1].u.memref.size could potentially be larger than the
+> originally allocated size.
 
-Regards,
-Jens
--- 
-Jens Remus
-Linux on Z Development (D3303)
-jremus@de.ibm.com / jremus@linux.ibm.com
+Nope, this won't happen as it's part of OP-TEE ABI.
 
-IBM Deutschland Research & Development GmbH; Vorsitzender des Aufsichtsrats: Wolfgang Wendt; Geschäftsführung: David Faller; Sitz der Gesellschaft: Ehningen; Registergericht: Amtsgericht Stuttgart, HRB 243294
-IBM Data Privacy Statement: https://www.ibm.com/privacy/
+> 
+> > +			if (!rt_buf)
+> > +				return ERR_PTR(-ENOMEM);
+> > +		}
+> > +	}
+> > +
+> > +	return rt_buf;
+> > +}
+> [ ... ]
+> > +static struct qcom_pas_ops qcom_pas_ops_tee = {
+> > +	.drv_name		= "qcom-pas-tee",
+> > +	.supported		= qcom_pas_tee_supported,
+> > +	.init_image		= qcom_pas_tee_init_image,
+> > +	.mem_setup		= qcom_pas_tee_mem_setup,
+> > +	.get_rsc_table		= qcom_pas_tee_get_rsc_table,
+> > +	.auth_and_reset		= qcom_pas_tee_auth_and_reset,
+> > +	.prepare_and_auth_reset	= qcom_pas_tee_prepare_and_auth_reset,
+> > +	.set_remote_state	= qcom_pas_tee_set_remote_state,
+> > +	.shutdown		= qcom_pas_tee_shutdown,
+> > +	.metadata_release	= qcom_pas_tee_metadata_release,
+> > +};
+> > +
+> > +static int optee_ctx_match(struct tee_ioctl_version_data *ver, const void *data)
+> > +{
+> > +	return ver->impl_id == TEE_IMPL_ID_OPTEE;
+> > +}
+> > +
+> > +static int qcom_pas_tee_probe(struct tee_client_device *pas_dev)
+> > +{
+> > +	struct device *dev = &pas_dev->dev;
+> > +	struct qcom_pas_tee_private *data;
+> [ ... ]
+> > +	data->session_id = sess_arg.session;
+> > +	dev_set_drvdata(dev, data);
+> > +	qcom_pas_ops_tee.dev = dev;
+> 
+> Could concurrent probes overwrite this shared static structure? Since the ops
+> structure is global, multiple devices probing at the same time could clobber
+> the dev pointer.
 
+Only single device is supported on TEE bus here.
+
+> 
+> > +	qcom_pas_ops_register(&qcom_pas_ops_tee);
+> 
+> Should this check for a return value or register failure? If another backend
+> like SCM is already registered, this operation will fail, but the probe
+> routine proceeds as if it was successful.
+
+Only one PAS backend is expected to be present at a time.
+
+> 
+> > +
+> > +	return ret;
+> > +}
+> > +
+> > +static void qcom_pas_tee_remove(struct tee_client_device *pas_dev)
+> > +{
+> > +	struct device *dev = &pas_dev->dev;
+> > +	struct qcom_pas_tee_private *data = dev_get_drvdata(dev);
+> > +
+> > +	qcom_pas_ops_unregister();
+> 
+> If the registration failed in probe, will this unconditionally unregister the
+> active SCM backend and break PAS functionality system-wide?
+
+Concurrent PAS backends aren't supported.
+
+-Sumit
+
+> 
+> > +	tee_client_close_session(data->ctx, data->session_id);
+> > +	tee_client_close_context(data->ctx);
+> > +}
+> 
+> -- 
+> Sashiko AI review � https://sashiko.dev/#/patchset/20260518072856.22790-1-sumit.garg@kernel.org?part=4
