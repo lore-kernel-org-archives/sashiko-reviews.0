@@ -1,285 +1,149 @@
-Received: from mgamail.intel.com (mgamail.intel.com [192.198.163.11])
+Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AA18D356744
-	for <sashiko-reviews@lists.linux.dev>; Fri, 22 May 2026 19:24:07 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=192.198.163.11
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F166B3563C7;
+	Fri, 22 May 2026 19:25:40 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1779477851; cv=none; b=a3OeIDPmDpghzws/UW4SH5EOa9qyOJ3kuvvjDWq84SsCGiVPxuoHA3Ll83GNP9CbHB2W+KWautM+Sy25G2ONGDFRHCSlDSU83jFaPb/Fa2zZWpX88y/Pr5x223vMjsX5nAXgaZl2LQZ5B9wr7SiMkK0HOnxddZWU5FHuhw3Q/cw=
+	t=1779477942; cv=none; b=NJdb+XFNkszDxmTsaifV0XAZ531T8K1fr5EdMv/tQw4SOG82p8dYv9tgKtN7e6C4JfmCefzMHrEhQnE5QOCkLYEq8smzGAVxaaZ+8n8qcNnDb6TN092R44uug4n4jyYFYd409d7CYxoEbu9/FRDP7dyeHfDjah4u8Z539TulLJM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1779477851; c=relaxed/simple;
-	bh=khCS3e0FIVXeWeiydzcP28dKqZxmhf0J+NFuMZl6HnI=;
-	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=WtHfpMhkhR8J0R37xaXvsFwoY2vagCmhQfxNTZdLd9iTuQrfaYqXy2SQaoj1vvvtKn6LXzrI/enUY6Q26Xg1Co0qYqHqwdVqmVEVOE/plZOz0PooPPaG7wFQdj50EQVlU8NVojXeL8aG6rPKjJ+nAJgsYThdhXiVxEl2E8NnATM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=intel.com; spf=pass smtp.mailfrom=intel.com; dkim=pass (2048-bit key) header.d=intel.com header.i=@intel.com header.b=A0HWrf5I; arc=none smtp.client-ip=192.198.163.11
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=intel.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=intel.com
+	s=arc-20240116; t=1779477942; c=relaxed/simple;
+	bh=Or5fQ1YCPE+2AHxAOKBFXorPm++H3+m8dRzh+3qm7fc=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=Wui6DQlLU3j3BZ3unWP3tfglKRIIgr6KU5uOx6h9LgouqSQ0OLbAbaw4HM5pHsGhuomj4rI9oI6JkDhlU5tNKTRWwYZxwywQM40PL+17JlvXX470H1pZFUaiIaPKG3oLtztHE3TvUREt2WggbgyStHkgy2F7xtccb+q7gJs9ji8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=W5e/dvoX; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=intel.com header.i=@intel.com header.b="A0HWrf5I"
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
-  d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
-  t=1779477848; x=1811013848;
-  h=message-id:date:mime-version:subject:to:cc:references:
-   from:in-reply-to:content-transfer-encoding;
-  bh=khCS3e0FIVXeWeiydzcP28dKqZxmhf0J+NFuMZl6HnI=;
-  b=A0HWrf5IqN6kr0aRdTMGlr3GeH2tjthD4MKIeXxJWEqWva4NUp0nlFAz
-   rpwu/WrxmnQgOe/FoWoIcn+L3sg0DrRYvAGr21IKQa6I54vr5MHdzxylS
-   eaSGo6ehjrcEXohi92bUonqBNUR+lQTK1K2Vbr3UFb7DJYxgVbhuv6AFO
-   P/+ZK+eped4NnLs9SEksgZ3RLBSm9nKeLS9IjvAKNUP54qOdIUgcaArbt
-   0jptIioWTtkaSD2tWbHg9lNmevs1x8mnVfpj+2uJpYQqnBy9cc4y/Ufac
-   E24y00EiHUwJoFU7tGXbwCpMBoMRURqAY2sT6ZanOINjLc5HBhVQMmeOA
-   A==;
-X-CSE-ConnectionGUID: SSLYWOqtR7ibKvptIy/meA==
-X-CSE-MsgGUID: pDct0/MGTxGaG2HSFnEjSQ==
-X-IronPort-AV: E=McAfee;i="6800,10657,11794"; a="90986134"
-X-IronPort-AV: E=Sophos;i="6.24,162,1774335600"; 
-   d="scan'208";a="90986134"
-Received: from orviesa004.jf.intel.com ([10.64.159.144])
-  by fmvoesa105.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 22 May 2026 12:24:07 -0700
-X-CSE-ConnectionGUID: pxJrCQwTSUaWyGlrFWxOTw==
-X-CSE-MsgGUID: VjhZ37uKSy+T0mXxMYFL1A==
-X-ExtLoop1: 1
-X-IronPort-AV: E=Sophos;i="6.24,162,1774335600"; 
-   d="scan'208";a="245284085"
-Received: from soc-cp83kr3.clients.intel.com (HELO [10.122.185.5]) ([10.122.185.5])
-  by orviesa004-auth.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 22 May 2026 12:24:06 -0700
-Message-ID: <abd37e83-82f3-4d39-a3df-3ce76406fdbe@intel.com>
-Date: Fri, 22 May 2026 14:24:05 -0500
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="W5e/dvoX"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0873A1F000E9;
+	Fri, 22 May 2026 19:25:39 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=kernel.org;
+	s=k20260515; t=1779477940;
+	bh=RojEkkbyfvmtTftKGHnFUwJgtWSamSkZZu/jQFeaWSc=;
+	h=Date:From:To:Cc:Subject:References:In-Reply-To;
+	b=W5e/dvoXBpz2FofolimiQYP+RaRBPpqcZjGq1ebug4W41tbnF9zi7GkVRIDtLVw+s
+	 iqMvWvp9vTm3lqR0yCO4fJYZBeG9aI/sGngE+Mi/fBIE0KJ9ORB73zkdmBDc73AObG
+	 KXXMsf0zRcRa3AaiIxPdL+6d5mAHiy6VzbmpakfIurGwOrkSvxGO83W/u/7GaEVxOH
+	 cQ2MStyqhRn2XKeCH2zhh3sYQnr1jXWaGT3EWWvekpGWy92kSStx9VVvqgPb88QCh/
+	 DFLGz3eFjYrBqsn7Rs2kea6GIvZhgf1/IlCYNfp8giQlCxJbPENSSzv8uu6UjvrRgR
+	 RJjy5X/OMKc9Q==
+Date: Fri, 22 May 2026 21:25:37 +0200
+From: Lorenzo Bianconi <lorenzo@kernel.org>
+To: Jakub Kicinski <kuba@kernel.org>
+Cc: sashiko-reviews@lists.linux.dev, robh@kernel.org,
+	devicetree@vger.kernel.org, conor+dt@kernel.org,
+	netdev@vger.kernel.org
+Subject: Re: [PATCH net-next v8 10/10] net: airoha: Support multiple LAN/WAN
+ interfaces for hw MAC address configuration
+Message-ID: <ahCtsVA1VhYmhZq-@lore-desk>
+References: <20260519-airoha-eth-multi-serdes-v8-10-6bd70e329df6@kernel.org>
+ <20260520085934.54AD01F00894@smtp.kernel.org>
+ <ag2t4eVe4DcfU2yZ@lore-desk>
+ <20260522112514.1ad6e947@kicinski-fedora-PF5CM1Y0>
 Precedence: bulk
 X-Mailing-List: sashiko-reviews@lists.linux.dev
 List-Id: <sashiko-reviews.lists.linux.dev>
 List-Subscribe: <mailto:sashiko-reviews+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:sashiko-reviews+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 5/7] perf/x86/intel/uncore: Introduce PMU flags and broken
- state
-To: sashiko-reviews@lists.linux.dev
-Cc: linux-perf-users@vger.kernel.org
-References: <20260512233048.9577-6-zide.chen@intel.com>
- <20260514042738.80B40C2BCB7@smtp.kernel.org>
-Content-Language: en-US
-From: "Chen, Zide" <zide.chen@intel.com>
-In-Reply-To: <20260514042738.80B40C2BCB7@smtp.kernel.org>
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8bit
+Content-Type: multipart/signed; micalg=pgp-sha512;
+	protocol="application/pgp-signature"; boundary="jukOReBCAgX4Obp/"
+Content-Disposition: inline
+In-Reply-To: <20260522112514.1ad6e947@kicinski-fedora-PF5CM1Y0>
 
 
+--jukOReBCAgX4Obp/
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+Content-Transfer-Encoding: quoted-printable
 
-On 5/13/2026 11:27 PM, sashiko-bot@kernel.org wrote:
-> Thank you for your contribution! Sashiko AI review found 4 potential issue(s) to consider:
-> - [Critical] Intentionally leaking `die_refcnt` on PCI box setup failure prevents PMU unregistration, leading to a Use-After-Free.
-> - [High] Global `PMU_BROKEN` state disables new event creation and breaks CPU context migration for fully functional dies.
-> - [Medium] Confused lifecycle assumptions lead to contradictory error handling and dead code between PCI and MSR/MMIO PMUs.
-> - [Medium] Data race between plain store and atomic bitwise operation on `pmu->flags`.
-> --
-> 
-> commit 553c891e098baf8dc3f2b474849cc4642dfe9be6
-> Author: Zide Chen <zide.chen@intel.com>
-> 
-> perf/x86/intel/uncore: Introduce PMU flags and broken state
-> 
-> This commit replaces the 'registered' field in intel_uncore_pmu with a
-> 'flags' field, introducing a PMU_BROKEN flag to track box setup failures.
-> If a box fails to initialize, the PMU is marked broken, which rejects new
-> event assignments and skips future box setup attempts.
-> 
->> diff --git a/arch/x86/events/intel/uncore.c b/arch/x86/events/intel/uncore.c
->> index 617a68c1d76c3..4d31dcaf5405b 100644
->> --- a/arch/x86/events/intel/uncore.c
->> +++ b/arch/x86/events/intel/uncore.c
-> 
-> [ ... ]
-> 
->> @@ -738,7 +738,7 @@ static int uncore_pmu_event_init(struct perf_event *event)
->>  
->>  	pmu = uncore_event_to_pmu(event);
->>  	/* no device found for this pmu */
->> -	if (!pmu->registered)
->> +	if (!uncore_pmu_available(pmu))
->>  		return -ENOENT;
-> 
-> Since PMU_BROKEN is a global flag across all dies and packages, if one die
-> fails initialization, the entire PMU is marked broken. Does this cause
-> uncore_pmu_event_init() to incorrectly reject new event assignments on fully
-> functional packages?
+On May 22, Jakub Kicinski wrote:
+> On Wed, 20 May 2026 14:49:37 +0200 Lorenzo Bianconi wrote:
+> > > Does this strict OUI validation cause the driver probe to fail when M=
+AC addresses
+> > > are randomly generated?
+> > >=20
+> > > If a MAC address is not provided in the device tree, the driver gener=
+ates a random
+> > > one via eth_hw_addr_random(). For multi-port configurations, each por=
+t receives an
+> > > independently generated random MAC address.
+> > >=20
+> > > Since the upper 3 bytes of these random addresses will almost certain=
+ly differ,
+> > > when register_netdev() is called for the second port, its ndo_init ca=
+llback
+> > > (airoha_dev_init) will invoke airoha_set_macaddr() and hit this check=
+=2E Returning
+> > > -EINVAL will fail register_netdev() and abort the entire driver probe=
+, leaving
+> > > the system without networking.
+> > >=20
+> > > Does this also prevent users from changing the MAC address OUI?
+> > >=20
+> > > When an administrator attempts to change the MAC address via standard=
+ userspace
+> > > tools, only one interface can be modified at a time. The driver will =
+compare the
+> > > new MAC against the existing MAC of the other port.
+> > >=20
+> > > If the MSBs differ, the change is rejected. This makes it impossible =
+to atomically
+> > > change the OUI of both interfaces simultaneously, locking the MAC add=
+ress OUI
+> > > to its initial probe-time value. =20
+> >=20
+> > As pointed out before, this is a hw design requirement when multiple
+> > net_devices are configured as LAN.
+>=20
+> What about Clashiko report about the MAC address?
 
-This is by design. The PMU represents a single logical device spanning
-all dies, so if any box fails initialization, the entire PMU is marked
-broken to avoid partial and potentially inconsistent monitoring state.
-Allowing some dies to remain active while others are broken could lead
-to misleading perf data.
+Do you the following one?
+https://netdev-ai.bots.linux.dev/sashiko/#/patchset/20260519-airoha-eth-mul=
+ti-serdes-v8-0-6bd70e329df6%40kernel.org
 
-> 
-> [ ... ]
-> 
->> @@ -934,16 +934,16 @@ static int uncore_pmu_register(struct intel_uncore_pmu *pmu)
->>  
->>  	ret = perf_pmu_register(&pmu->pmu, pmu->name, -1);
->>  	if (!ret)
->> -		pmu->registered = true;
->> +		uncore_pmu_set_registered(pmu);
->>  	return ret;
->>  }
->>  
->>  static void uncore_pmu_unregister(struct intel_uncore_pmu *pmu)
->>  {
->> -	if (!pmu->registered)
->> +	if (!uncore_pmu_registered(pmu))
->>  		return;
->>  	perf_pmu_unregister(&pmu->pmu);
->> -	pmu->registered = false;
->> +	WRITE_ONCE(pmu->flags, 0);
-> 
-> Can this plain store data race with concurrent atomic bitwise operations?
-> 
-> If uncore_box_setup() executes on another CPU (e.g., probing a new failing
-> die while removing a successful die), it uses the atomic read-modify-write
-> instruction set_bit(PMU_BROKEN_BIT, &(pmu)->flags). Mixing plain stores and
-> atomic bitwise operations on the same memory location could lead to
-> clobbered updates.
+- What happens when device tree does not provide MAC addresses for two or
+  more same-side GDM interfaces?
+  - This is the same comment reported in [0].
+    Since the hw exposes just a single register (REG_FE_LAN_MAC_H or
+    REG_FE_WAN_MAC_H) for the LAN/WAN mac address MSBs, we need to
+    require all the interfaces configured as LAN or WAN to share the
+    mac address MSBs and the user needs to select the new mac address
+    observing this limitation.
+    Please note this limitation is only valid if multiple net_devices
+    are configured as LAN (or WAN). Since in the current codebase we
+    do not support multiple interfaces configured as LAN or WAN, we are
+    not introducing any regression.
+    I do not think selecting a "base" for the mac address is helpful
+    if the user does not provide the mac address via the DTS or NVME
+    (as suggested by sashiko) since it will not help us if the mac
+    addresses configured via DTS are "wrong" (if they do not respect
+    the limitation described above).  What do you think?
+=20
+- If airoha_set_macaddr() succeeds (and has just widened the shared
+  [lmin, lmax] range to include this dev) and airoha_set_gdm2_loopback()
+  then fails, airoha_dev_init() returns the error but there is no=20
+  airoha_dev_uninit / ndo_uninit to roll the LMIN/LMAX update back.=20
+  The shared range is then wider than the set of currently-registered peers.
+  - I guess it is not harmful to keep the already configured mac address
+    range if airoha_set_gdm2_loopback() fails and I decided to not unwind
+    the changes to keep the code simple.  Moreover, in the current codebase,
+    if ndo_init() fails, the airoha_probe() will fail.
 
-Actually, I'm thinking the atomic operations are not needed at all. On
-the MSR/MMIO side, CPU hotplug callbacks are serialized, so plain bit
-operations are safe. For PCI PMUs, the PCI device is per-die, so there
-is no way that box_setup() and pmu_unregister() will happen concurrently.
+Regards,
+Lorenzo
 
-> [ ... ]
-> 
->> @@ -1136,7 +1136,13 @@ static int uncore_box_setup(struct intel_uncore_pmu *pmu,
->>  
->>  	/* die_refcnt tracks online dies, not only functioning boxes. */
->>  	dies = atomic_inc_return(&pmu->die_refcnt);
->> -	uncore_box_init(box);
->> +
->> +	if (uncore_pmu_broken(pmu))
->> +		return -ENODEV;
->> +
->> +	ret = uncore_box_init(box);
->> +	if (ret)
->> +		goto err;
->>  
->>  	/* First active box registers the pmu. */
->>  	if (dies > 1)
->> @@ -1148,6 +1154,19 @@ static int uncore_box_setup(struct intel_uncore_pmu *pmu,
->>  
->>  	return 0;
->>  err:
->> +	/*
->> +	 * On failure on any box, mark the per-package PMU as broken regardless
->> +	 * of whether it was registered or not.
->> +	 *
->> +	 * Don't decrement die_refcnt to prevent any future CPU online
->> +	 * event or PCI probe, from retrying the failed PMU registration.
->> +	 *
->> +	 * Don't decrement cpu_refcnt to avoid other in-die CPUs from
->> +	 * trying to set up the PMU box again.
->> +	 *
->> +	 * Don't kfree box; MSR and MMIO boxes are freed at module exit only.
->> +	 */
-> 
-> Is there a risk of a use-after-free resulting from intentionally leaking
-> die_refcnt here?
-> 
-> For PCI PMUs, the caller uncore_pci_pmu_register() executes kfree(box) on error
-> and fails the PCI probe, meaning uncore_pci_remove() is never called to clean
-> up this leaked reference.
+[0] https://sashiko.dev/#/patchset/20260519-airoha-eth-multi-serdes-v8-0-6b=
+d70e329df6%40kernel.org
 
-You are right — in that case, uncore_pci_pmu_unregister() may not be
-called if the box is NULL in uncore_pci_remove(). That said, die_refcnt
-should be incremented only when pmu->boxes[die] is not NULL, for both
-the PCI and MSR/MMIO cases.
+--jukOReBCAgX4Obp/
+Content-Type: application/pgp-signature; name=signature.asc
 
-In this patch, die_refcnt should be decremented if uncore_box_setup()
-fails in the PCI case. There is also a pre-existing bug where die_refcnt
-could be unexpectedly decremented via the uncore_bus_notify() path.
+-----BEGIN PGP SIGNATURE-----
 
+iHUEABYKAB0WIQTquNwa3Txd3rGGn7Y6cBh0uS2trAUCahCtsQAKCRA6cBh0uS2t
+rN/wAQCIS+axnhlXTKcfCUsWDcOYLeS/TGc95axOtNeEY9ZKrgEAyXH5klwWATaf
+0r/GIfveXTyaKFrvvGF7YTBMOsdbOgE=
+=UJ1t
+-----END PGP SIGNATURE-----
 
-> If another successfully probed PCI box for this PMU is later removed,
-> uncore_pci_pmu_unregister() decrements die_refcnt, but it will not reach 0 due
-> to the earlier leak. Consequently, uncore_pmu_unregister(pmu) is skipped,
-> leaving the PMU and its associated perf events active.
-> 
-> When uncore_pci_pmu_unregister() then frees the successful box, active
-> perf_event instances could still hold event->pmu_private pointing to this freed
-> box, potentially triggering a use-after-free on subsequent event reads or
-> context switches.
-> 
-> Additionally, this comment claims MSR and MMIO boxes are freed at module exit
-> only. Does this conflict with PCI PMUs which unconditionally execute kfree(box)
-> on error, immediately destroying the box?
-
-There is no conflicts here.
->> +	uncore_pmu_set_broken(pmu);
->>  	uncore_box_exit(box);
->>  	return ret;
->>  }
-> 
-> [ ... ]
-> 
->> @@ -1483,7 +1502,8 @@ static void uncore_change_type_ctx(struct intel_uncore_type *type, int old_cpu,
->>  
->>  		if (old_cpu < 0) {
->>  			WARN_ON_ONCE(box->cpu != -1);
->> -			if (uncore_die_has_box(type, die, pmu->pmu_idx)) {
->> +			if (uncore_die_has_box(type, die, pmu->pmu_idx) &&
->> +			    !uncore_pmu_broken(pmu)) {
->>  				box->cpu = new_cpu;
->>  				cpumask_set_cpu(new_cpu, &pmu->cpu_mask);
->>  			}
->> @@ -1493,7 +1513,7 @@ static void uncore_change_type_ctx(struct intel_uncore_type *type, int old_cpu,
->>  		WARN_ON_ONCE(box->cpu != -1 && box->cpu != old_cpu);
->>  		box->cpu = -1;
->>  		cpumask_clear_cpu(old_cpu, &pmu->cpu_mask);
->> -		if (new_cpu < 0)
->> +		if (new_cpu < 0 || uncore_pmu_broken(pmu))
->>  			continue;
-> 
-> If uncore_pmu_broken(pmu) causes this to skip, does this strand active hardware
-> events on offlined CPUs for fully functional dies?
-> 
-> The commit message states the goal is to avoid disrupting in-flight events on
-> other boxes, but skipping uncore_pmu_cancel_hrtimer() and
-> perf_pmu_migrate_context() here seems to break CPU context migration for those
-> events.
-
-You are right, checking the broken flag here could disrupt in-flight
-events. Instead, checking box->cpu == -1 is appropriate to skip broken
-boxes.
-
-@@ -1522,9 +1522,15 @@ static void uncore_change_type_ctx(struct
-intel_uncore_type *type, int old_cpu,
-                }
-
-                WARN_ON_ONCE(box->cpu != -1 && box->cpu != old_cpu);
-
-+               if (box->cpu == -1)
-+                       continue;
-+
-                box->cpu = -1;
-                cpumask_clear_cpu(old_cpu, &pmu->cpu_mask);
--               if (new_cpu < 0 || uncore_pmu_broken(pmu))
-+               if (new_cpu < 0)
-                        continue;
-
->>  
->>  		if (!uncore_die_has_box(type, die, pmu->pmu_idx))
-> 
-> [ ... ]
-> 
->> @@ -1573,7 +1593,7 @@ static int allocate_boxes(struct intel_uncore_type **types,
->>  		type = *types;
->>  		pmu = type->pmus;
->>  		for (i = 0; i < type->num_boxes; i++, pmu++) {
->> -			if (pmu->boxes[die])
->> +			if (pmu->boxes[die] || uncore_pmu_broken(pmu))
->>  				continue;
-> 
-> Is this check dead code? allocate_boxes() is exclusively used by MSR/MMIO
-> PMUs, but those PMUs ignore hardware initialization failures and never call
-> uncore_pmu_set_broken(pmu).
-
-Not quite true. MSR/MMIO PMUs do not ignore hardware initialization
-failures — they call uncore_pmu_set_broken() in uncore_box_setup() when
-setup fails.
-
+--jukOReBCAgX4Obp/--
