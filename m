@@ -1,193 +1,285 @@
-Received: from mail-vs1-f49.google.com (mail-vs1-f49.google.com [209.85.217.49])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from mgamail.intel.com (mgamail.intel.com [192.198.163.11])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2FC1B1F7916
-	for <sashiko-reviews@lists.linux.dev>; Fri, 22 May 2026 19:04:09 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=pass smtp.client-ip=209.85.217.49
-ARC-Seal:i=2; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1779476651; cv=pass; b=omI6NJadvhaZ/VRryJOBhBew/nem53lVQhPruRs1G24tRNbnD5G6eNmZOxC7yAd5KJSSnXLwfnDqZPg2josLeRomnQ2WQczezk3W5zlD/mekIsX1iNjUrIKVe82Nh10OInRCVWVwwzZH9j6v/b93i4MSBpG8O/S1uOlOhx20iIc=
-ARC-Message-Signature:i=2; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1779476651; c=relaxed/simple;
-	bh=8girElLKDDbdH3u3t1ra9Bb+bSVC/vxxK1ijFpwESFU=;
-	h=From:In-Reply-To:References:MIME-Version:Date:Message-ID:Subject:
-	 To:Cc:Content-Type; b=GYQtp0GpVVhcO9YdZ0SW3jeh48n9490UN/yohok6Obs+qpxaiy1vAxMkEkMtO5ZAWWARTszG0wKsCvYFt+z3RLSampN+Jcebr7qZVDF4fo/XhBBSaw++FtUhKsSY5grctQgEN+ETuE03P+o9/rH56KfnQe9N9VkYsn9fKvE36HU=
-ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=google.com; spf=pass smtp.mailfrom=google.com; dkim=pass (2048-bit key) header.d=google.com header.i=@google.com header.b=g9hNM6e2; arc=pass smtp.client-ip=209.85.217.49
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=google.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=google.com
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AA18D356744
+	for <sashiko-reviews@lists.linux.dev>; Fri, 22 May 2026 19:24:07 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=192.198.163.11
+ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
+	t=1779477851; cv=none; b=a3OeIDPmDpghzws/UW4SH5EOa9qyOJ3kuvvjDWq84SsCGiVPxuoHA3Ll83GNP9CbHB2W+KWautM+Sy25G2ONGDFRHCSlDSU83jFaPb/Fa2zZWpX88y/Pr5x223vMjsX5nAXgaZl2LQZ5B9wr7SiMkK0HOnxddZWU5FHuhw3Q/cw=
+ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
+	s=arc-20240116; t=1779477851; c=relaxed/simple;
+	bh=khCS3e0FIVXeWeiydzcP28dKqZxmhf0J+NFuMZl6HnI=;
+	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
+	 In-Reply-To:Content-Type; b=WtHfpMhkhR8J0R37xaXvsFwoY2vagCmhQfxNTZdLd9iTuQrfaYqXy2SQaoj1vvvtKn6LXzrI/enUY6Q26Xg1Co0qYqHqwdVqmVEVOE/plZOz0PooPPaG7wFQdj50EQVlU8NVojXeL8aG6rPKjJ+nAJgsYThdhXiVxEl2E8NnATM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=intel.com; spf=pass smtp.mailfrom=intel.com; dkim=pass (2048-bit key) header.d=intel.com header.i=@intel.com header.b=A0HWrf5I; arc=none smtp.client-ip=192.198.163.11
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=intel.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=intel.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=google.com header.i=@google.com header.b="g9hNM6e2"
-Received: by mail-vs1-f49.google.com with SMTP id ada2fe7eead31-6314a0eefb1so2431998137.2
-        for <sashiko-reviews@lists.linux.dev>; Fri, 22 May 2026 12:04:09 -0700 (PDT)
-ARC-Seal: i=1; a=rsa-sha256; t=1779476649; cv=none;
-        d=google.com; s=arc-20240605;
-        b=MRWEmd6a+BKeTq9D+pO+PEJCYoHNUYkmeJyl9cqGDffBYvP/qvkgbniRBaDtIPH2Lr
-         M0YQTareJGRfgSzzkWhoPRrILObyYQEmp9CTfIQPst3A04LfqIOSGPsuPaEMBnwLQugP
-         zDn8ezcF8LA406ztr5VTMR3C6bJfpbWYdlbYU8pqR3HvW7dJTVNzQ3qaofvG0Zrg+K/6
-         gN0lcJpONzdIRGrWvydRReqodDDNljV9bmJLVSGwEpKPtGag8v3kDTgTzR8QdDO8gSDO
-         hyrPY9jud8ARvp7Qeux14PNdCW4gT2qjTPRGD/VKfcsCl4oyudIAxBTYf67PRHD34Cvv
-         paAQ==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com; s=arc-20240605;
-        h=content-transfer-encoding:cc:to:subject:message-id:date
-         :mime-version:references:in-reply-to:from:dkim-signature;
-        bh=brW7UeKFZ/7/NrcHA0OD14WL8ph3oRlKy3KH21ODKrQ=;
-        fh=n/xVjRsPLSx48DK0mlLV8S98n4Bay9rv1xBpMnS6M6Y=;
-        b=FT8wJ4uH/hTVxBZf+a26cBiqd1lqJdkpQNPmuihh7+IChmoLfk/K25nGD1sH/TbTKv
-         I8yVO08CKj9QPcfFVH6gOBD7f57bQhXDeQL716an25pHKBBqNhZeyypGsR+4FU6NoMku
-         ktS13sjr088hcbo9Gw+fJtadOcsUVJa/2WX+1rHIwGKxRttTnIhuR5j5i4RyHyfR8qI5
-         tXY0/9ocVvpPn7PP5cVmICuKGhkW63jlF2FEiYjGEx/xYU/8ARNq+AWDvzpmfUClIZiu
-         tZNnn57QKxyEiLHxiuC0HNI2sYsDJCitOywTDzzNkPj6K5cdnGyLyMCoTpJikpzNGBAO
-         YeaQ==;
-        darn=lists.linux.dev
-ARC-Authentication-Results: i=1; mx.google.com; arc=none
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=google.com; s=20251104; t=1779476649; x=1780081449; darn=lists.linux.dev;
-        h=content-transfer-encoding:cc:to:subject:message-id:date
-         :mime-version:references:in-reply-to:from:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=brW7UeKFZ/7/NrcHA0OD14WL8ph3oRlKy3KH21ODKrQ=;
-        b=g9hNM6e246cdMQGMCTgw7Rharx2NaHdZ0e9wmLSSwDwF4j9IQKBQYOioUQ599JSezZ
-         X08sK1V//ZKC8xDcKush4jY3ONVLbNykfYxtAQOQmeCbypOjKBL+UyCFG5ZTJvhS6P0r
-         p3BKqxUsQqlaZUrqiGKH9gWXjSTSjQ2y11h/6yC2Jbcyxl5lSQ9bNBU+yruDVLyeUfpB
-         rSxuhBCy8hMJgfmRr3eM2yD4DQ6cpfuOLIa5xL/lYF5B/GaUf7i31pvSic8bYjJryQOj
-         N9Z0S4pfsecS5ceIUntWDB2XvN4gnCrNH32k+OQGBSOGdhS3dr0PcOdq7d5+2q4p/rwZ
-         wpZw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20251104; t=1779476649; x=1780081449;
-        h=content-transfer-encoding:cc:to:subject:message-id:date
-         :mime-version:references:in-reply-to:from:x-gm-gg:x-gm-message-state
-         :from:to:cc:subject:date:message-id:reply-to;
-        bh=brW7UeKFZ/7/NrcHA0OD14WL8ph3oRlKy3KH21ODKrQ=;
-        b=CouYSCnN2nSIL39tgOiOZYwLiZGOcuteshY7NZ282AMtm1n/rrZ3jjhSaOvJAAe9pm
-         zYtuiPry7xNH4Mw6eXmJFqZX/P89JxsmeDfbL+qVxI4B+A5kQni+sszGODkWYJKHs1yQ
-         gBRvOjT91RGtdeES2Y14QXeCEGZ7QQnWDwecbSp5DPeW7D5CfBcd0LMTuul0dxvpmyua
-         piNqvEbc2mfiuFi0A+wgTF1RhK4HuweGPiOJ+o3ISgJGjro+pEvj/w0ekunSkBQh13ZE
-         8Lieoo6/CEm76ZP5AbeKEAofWVenPoqubjosg/+zQEZTQKAlAN7/KA+zI/AviY/R2s+J
-         j8Zw==
-X-Gm-Message-State: AOJu0YxztKMTizOmnNWckiT/sTi9huqCJB4Dh7y4rVAsTOHMyeMP/eLJ
-	rfz4LY1NNa/91ORf/XU2ErnIxBHIRImBt5grnrb2pN0jihI8rs9IJKyxkUHr/UEoCq1eY633xcy
-	JayqRZuR5BkiP6T/D8nk6DcgJeX6o06R3PSbzDc1XV/KYrafLY9ORCb0gjJw=
-X-Gm-Gg: Acq92OHmf5VYOdqe3AIq4lsjz//2o5CVb+Bee89gQ0WLrkTkBXb2c7Q3gP10gfzdyh5
-	fFjDx1WtUj/DcRW12W2x06Qbr4UMMDMbStiLrwxQRykfdBJjFAJM6W/SDggf3QVeiqUdE/J4Tjk
-	Q41ge1bxa5AnArX6U1rSdqDPVynkYFr2vYqvooVq2gkRJ8Ln1jQKiba08kS2CaNQgE8ngZM6lxK
-	NQJ3cJ0vNGMCxUqXANDY3XjfjGbNaWZoskvefBcMyhJTTs6CZ6Pw65CsK8Wo6yKYf0b/y0+6Jo1
-	AkGYDWLb+8St5n/me1MJHMGezScGiFJSV2qYmfT72vrXBbLWFfORTmE8gbcmuhDzioXUQpzve/x
-	TMSyt
-X-Received: by 2002:a05:6102:3f08:b0:631:4d87:ba5f with SMTP id
- ada2fe7eead31-67c7490af39mr2616867137.3.1779476648412; Fri, 22 May 2026
- 12:04:08 -0700 (PDT)
-Received: from 176938342045 named unknown by gmailapi.google.com with
- HTTPREST; Fri, 22 May 2026 12:04:07 -0700
-Received: from 176938342045 named unknown by gmailapi.google.com with
- HTTPREST; Fri, 22 May 2026 12:04:07 -0700
-From: Ackerley Tng <ackerleytng@google.com>
-In-Reply-To: <20260522180530.EE9101F00A3E@smtp.kernel.org>
-References: <20260522172151.3530267-2-seanjc@google.com> <20260522180530.EE9101F00A3E@smtp.kernel.org>
+	dkim=pass (2048-bit key) header.d=intel.com header.i=@intel.com header.b="A0HWrf5I"
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
+  d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
+  t=1779477848; x=1811013848;
+  h=message-id:date:mime-version:subject:to:cc:references:
+   from:in-reply-to:content-transfer-encoding;
+  bh=khCS3e0FIVXeWeiydzcP28dKqZxmhf0J+NFuMZl6HnI=;
+  b=A0HWrf5IqN6kr0aRdTMGlr3GeH2tjthD4MKIeXxJWEqWva4NUp0nlFAz
+   rpwu/WrxmnQgOe/FoWoIcn+L3sg0DrRYvAGr21IKQa6I54vr5MHdzxylS
+   eaSGo6ehjrcEXohi92bUonqBNUR+lQTK1K2Vbr3UFb7DJYxgVbhuv6AFO
+   P/+ZK+eped4NnLs9SEksgZ3RLBSm9nKeLS9IjvAKNUP54qOdIUgcaArbt
+   0jptIioWTtkaSD2tWbHg9lNmevs1x8mnVfpj+2uJpYQqnBy9cc4y/Ufac
+   E24y00EiHUwJoFU7tGXbwCpMBoMRURqAY2sT6ZanOINjLc5HBhVQMmeOA
+   A==;
+X-CSE-ConnectionGUID: SSLYWOqtR7ibKvptIy/meA==
+X-CSE-MsgGUID: pDct0/MGTxGaG2HSFnEjSQ==
+X-IronPort-AV: E=McAfee;i="6800,10657,11794"; a="90986134"
+X-IronPort-AV: E=Sophos;i="6.24,162,1774335600"; 
+   d="scan'208";a="90986134"
+Received: from orviesa004.jf.intel.com ([10.64.159.144])
+  by fmvoesa105.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 22 May 2026 12:24:07 -0700
+X-CSE-ConnectionGUID: pxJrCQwTSUaWyGlrFWxOTw==
+X-CSE-MsgGUID: VjhZ37uKSy+T0mXxMYFL1A==
+X-ExtLoop1: 1
+X-IronPort-AV: E=Sophos;i="6.24,162,1774335600"; 
+   d="scan'208";a="245284085"
+Received: from soc-cp83kr3.clients.intel.com (HELO [10.122.185.5]) ([10.122.185.5])
+  by orviesa004-auth.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 22 May 2026 12:24:06 -0700
+Message-ID: <abd37e83-82f3-4d39-a3df-3ce76406fdbe@intel.com>
+Date: Fri, 22 May 2026 14:24:05 -0500
 Precedence: bulk
 X-Mailing-List: sashiko-reviews@lists.linux.dev
 List-Id: <sashiko-reviews.lists.linux.dev>
 List-Subscribe: <mailto:sashiko-reviews+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:sashiko-reviews+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Date: Fri, 22 May 2026 12:04:07 -0700
-X-Gm-Features: AVHnY4Lmf_9WM9qkGgAhMkcUeOb04XWn-O2dClUcD1FrCa5bUWoqHcEIUbU0eT0
-Message-ID: <CAEvNRgGZBrTjgVg1Xk-5mhxMnUWbS79FjdGc+O6NTQyJeEVtyg@mail.gmail.com>
-Subject: Re: [PATCH v2 1/3] KVM: guest_memfd: Return -EEXIST for overlapping bindings
-To: sashiko-reviews@lists.linux.dev, Sean Christopherson <seanjc@google.com>
-Cc: kvm@vger.kernel.org
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH 5/7] perf/x86/intel/uncore: Introduce PMU flags and broken
+ state
+To: sashiko-reviews@lists.linux.dev
+Cc: linux-perf-users@vger.kernel.org
+References: <20260512233048.9577-6-zide.chen@intel.com>
+ <20260514042738.80B40C2BCB7@smtp.kernel.org>
+Content-Language: en-US
+From: "Chen, Zide" <zide.chen@intel.com>
+In-Reply-To: <20260514042738.80B40C2BCB7@smtp.kernel.org>
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
 
-sashiko-bot@kernel.org writes:
 
-> Thank you for your contribution! Sashiko AI review found 2 potential issu=
-e(s) to consider:
->
-> Pre-existing issues:
-> - [High] The return value of xa_store_range() is ignored in kvm_gmem_bind=
-(), masking memory allocation failures and leading to a Use-After-Free vuln=
-erability.
-> - [High] A signed integer overflow in the file size bounds check inside k=
-vm_gmem_bind() allows userspace to map memslots beyond the allocated size o=
-f the guest_memfd.
+
+On 5/13/2026 11:27 PM, sashiko-bot@kernel.org wrote:
+> Thank you for your contribution! Sashiko AI review found 4 potential issue(s) to consider:
+> - [Critical] Intentionally leaking `die_refcnt` on PCI box setup failure prevents PMU unregistration, leading to a Use-After-Free.
+> - [High] Global `PMU_BROKEN` state disables new event creation and breaks CPU context migration for fully functional dies.
+> - [Medium] Confused lifecycle assumptions lead to contradictory error handling and dead code between PCI and MSR/MMIO PMUs.
+> - [Medium] Data race between plain store and atomic bitwise operation on `pmu->flags`.
 > --
->
-> commit 7edaac3f2255cc17c741557ce1e44f51d4cece29
-> Author: Zongyao Chen <ZongYao.Chen@linux.alibaba.com>
->
-> KVM: guest_memfd: Return -EEXIST for overlapping bindings
->
-> This patch updates the KVM_SET_USER_MEMORY_REGION2 ioctl to return -EEXIS=
-T
-> instead of -EINVAL when a guest_memfd range overlaps an existing binding.
-> This aligns the error reporting with overlapping GPA memslots.
->
->> diff --git a/virt/kvm/guest_memfd.c b/virt/kvm/guest_memfd.c
->> index 69c9d6d546b28..46727539d08ac 100644
->> --- a/virt/kvm/guest_memfd.c
->> +++ b/virt/kvm/guest_memfd.c
->> @@ -675,6 +675,7 @@ int kvm_gmem_bind(struct kvm *kvm, struct kvm_memory=
-_slot *slot,
->>
->>  	if (!xa_empty(&f->bindings) &&
->>  	    xa_find(&f->bindings, &start, end - 1, XA_PRESENT)) {
->> +		r =3D -EEXIST;
->
-> [Severity: High]
-> This isn't a bug introduced by this patch, but looking at the bounds chec=
-k
-> earlier in kvm_gmem_bind():
->
->     if (offset < 0 || !PAGE_ALIGNED(offset) ||
->         offset + size > i_size_read(inode))
->         goto err;
->
-> Are these variables susceptible to a signed integer overflow?
->
-> Both offset and size are evaluated as loff_t values. If userspace provide=
-s an
-> offset close to the signed 64-bit maximum, adding size could wrap around =
-to a
-> negative value.
->
-> Would this cause the offset + size > i_size_read(inode) condition to bypa=
-ss
-> the file size limits and allow the guest to map memslots beyond the alloc=
-ated
-> size?
->
+> 
+> commit 553c891e098baf8dc3f2b474849cc4642dfe9be6
+> Author: Zide Chen <zide.chen@intel.com>
+> 
+> perf/x86/intel/uncore: Introduce PMU flags and broken state
+> 
+> This commit replaces the 'registered' field in intel_uncore_pmu with a
+> 'flags' field, introducing a PMU_BROKEN flag to track box setup failures.
+> If a box fails to initialize, the PMU is marked broken, which rejects new
+> event assignments and skips future box setup attempts.
+> 
+>> diff --git a/arch/x86/events/intel/uncore.c b/arch/x86/events/intel/uncore.c
+>> index 617a68c1d76c3..4d31dcaf5405b 100644
+>> --- a/arch/x86/events/intel/uncore.c
+>> +++ b/arch/x86/events/intel/uncore.c
+> 
+> [ ... ]
+> 
+>> @@ -738,7 +738,7 @@ static int uncore_pmu_event_init(struct perf_event *event)
+>>  
+>>  	pmu = uncore_event_to_pmu(event);
+>>  	/* no device found for this pmu */
+>> -	if (!pmu->registered)
+>> +	if (!uncore_pmu_available(pmu))
+>>  		return -ENOENT;
+> 
+> Since PMU_BROKEN is a global flag across all dies and packages, if one die
+> fails initialization, the entire PMU is marked broken. Does this cause
+> uncore_pmu_event_init() to incorrectly reject new event assignments on fully
+> functional packages?
 
-This was also discussed in [1]. I'll send Sean's suggested fix for this.
+This is by design. The PMU represents a single logical device spanning
+all dies, so if any box fails initialization, the entire PMU is marked
+broken to avoid partial and potentially inconsistent monitoring state.
+Allowing some dies to remain active while others are broken could lead
+to misleading perf data.
 
-[1] https://lore.kernel.org/all/ag8BmtzxTlcuA_zy@google.com/
+> 
+> [ ... ]
+> 
+>> @@ -934,16 +934,16 @@ static int uncore_pmu_register(struct intel_uncore_pmu *pmu)
+>>  
+>>  	ret = perf_pmu_register(&pmu->pmu, pmu->name, -1);
+>>  	if (!ret)
+>> -		pmu->registered = true;
+>> +		uncore_pmu_set_registered(pmu);
+>>  	return ret;
+>>  }
+>>  
+>>  static void uncore_pmu_unregister(struct intel_uncore_pmu *pmu)
+>>  {
+>> -	if (!pmu->registered)
+>> +	if (!uncore_pmu_registered(pmu))
+>>  		return;
+>>  	perf_pmu_unregister(&pmu->pmu);
+>> -	pmu->registered = false;
+>> +	WRITE_ONCE(pmu->flags, 0);
+> 
+> Can this plain store data race with concurrent atomic bitwise operations?
+> 
+> If uncore_box_setup() executes on another CPU (e.g., probing a new failing
+> die while removing a successful die), it uses the atomic read-modify-write
+> instruction set_bit(PMU_BROKEN_BIT, &(pmu)->flags). Mixing plain stores and
+> atomic bitwise operations on the same memory location could lead to
+> clobbered updates.
 
->
-> [Severity: High]
-> This is also a pre-existing issue, but I noticed the return value of
-> xa_store_range() isn't checked later in kvm_gmem_bind():
->
->     xa_store_range(&f->bindings, start, end - 1, slot, GFP_KERNEL);
->     filemap_invalidate_unlock(inode->i_mapping);
->
-> If memory allocation fails and xa_store_range() returns an error pointer,
-> does the memslot get omitted from f->bindings while kvm_gmem_bind() still
-> proceeds as if it was successful?
->
+Actually, I'm thinking the atomic operations are not needed at all. On
+the MSR/MMIO side, CPU hotplug callbacks are serialized, so plain bit
+operations are safe. For PCI PMUs, the PCI device is per-die, so there
+is no way that box_setup() and pmu_unregister() will happen concurrently.
 
-Will send a fix for this too.
+> [ ... ]
+> 
+>> @@ -1136,7 +1136,13 @@ static int uncore_box_setup(struct intel_uncore_pmu *pmu,
+>>  
+>>  	/* die_refcnt tracks online dies, not only functioning boxes. */
+>>  	dies = atomic_inc_return(&pmu->die_refcnt);
+>> -	uncore_box_init(box);
+>> +
+>> +	if (uncore_pmu_broken(pmu))
+>> +		return -ENODEV;
+>> +
+>> +	ret = uncore_box_init(box);
+>> +	if (ret)
+>> +		goto err;
+>>  
+>>  	/* First active box registers the pmu. */
+>>  	if (dies > 1)
+>> @@ -1148,6 +1154,19 @@ static int uncore_box_setup(struct intel_uncore_pmu *pmu,
+>>  
+>>  	return 0;
+>>  err:
+>> +	/*
+>> +	 * On failure on any box, mark the per-package PMU as broken regardless
+>> +	 * of whether it was registered or not.
+>> +	 *
+>> +	 * Don't decrement die_refcnt to prevent any future CPU online
+>> +	 * event or PCI probe, from retrying the failed PMU registration.
+>> +	 *
+>> +	 * Don't decrement cpu_refcnt to avoid other in-die CPUs from
+>> +	 * trying to set up the PMU box again.
+>> +	 *
+>> +	 * Don't kfree box; MSR and MMIO boxes are freed at module exit only.
+>> +	 */
+> 
+> Is there a risk of a use-after-free resulting from intentionally leaking
+> die_refcnt here?
+> 
+> For PCI PMUs, the caller uncore_pci_pmu_register() executes kfree(box) on error
+> and fails the PCI probe, meaning uncore_pci_remove() is never called to clean
+> up this leaked reference.
 
-> When the guest_memfd is closed, kvm_gmem_release() nullifies active bindi=
-ngs
-> but would miss this omitted slot, leaving slot->gmem.file set while the V=
-FS
-> frees the underlying file.
->
-> Later, when the VM is destroyed, could kvm_gmem_unbind() attempting to
-> access the memslot's file via get_file_active() trigger a use-after-free?
->
->>  		filemap_invalidate_unlock(inode->i_mapping);
->>  		goto err;
->>  	}
->
-> --
-> Sashiko AI review =C2=B7 https://sashiko.dev/#/patchset/20260522172151.35=
-30267-1-seanjc@google.com?part=3D1
+You are right — in that case, uncore_pci_pmu_unregister() may not be
+called if the box is NULL in uncore_pci_remove(). That said, die_refcnt
+should be incremented only when pmu->boxes[die] is not NULL, for both
+the PCI and MSR/MMIO cases.
+
+In this patch, die_refcnt should be decremented if uncore_box_setup()
+fails in the PCI case. There is also a pre-existing bug where die_refcnt
+could be unexpectedly decremented via the uncore_bus_notify() path.
+
+
+> If another successfully probed PCI box for this PMU is later removed,
+> uncore_pci_pmu_unregister() decrements die_refcnt, but it will not reach 0 due
+> to the earlier leak. Consequently, uncore_pmu_unregister(pmu) is skipped,
+> leaving the PMU and its associated perf events active.
+> 
+> When uncore_pci_pmu_unregister() then frees the successful box, active
+> perf_event instances could still hold event->pmu_private pointing to this freed
+> box, potentially triggering a use-after-free on subsequent event reads or
+> context switches.
+> 
+> Additionally, this comment claims MSR and MMIO boxes are freed at module exit
+> only. Does this conflict with PCI PMUs which unconditionally execute kfree(box)
+> on error, immediately destroying the box?
+
+There is no conflicts here.
+>> +	uncore_pmu_set_broken(pmu);
+>>  	uncore_box_exit(box);
+>>  	return ret;
+>>  }
+> 
+> [ ... ]
+> 
+>> @@ -1483,7 +1502,8 @@ static void uncore_change_type_ctx(struct intel_uncore_type *type, int old_cpu,
+>>  
+>>  		if (old_cpu < 0) {
+>>  			WARN_ON_ONCE(box->cpu != -1);
+>> -			if (uncore_die_has_box(type, die, pmu->pmu_idx)) {
+>> +			if (uncore_die_has_box(type, die, pmu->pmu_idx) &&
+>> +			    !uncore_pmu_broken(pmu)) {
+>>  				box->cpu = new_cpu;
+>>  				cpumask_set_cpu(new_cpu, &pmu->cpu_mask);
+>>  			}
+>> @@ -1493,7 +1513,7 @@ static void uncore_change_type_ctx(struct intel_uncore_type *type, int old_cpu,
+>>  		WARN_ON_ONCE(box->cpu != -1 && box->cpu != old_cpu);
+>>  		box->cpu = -1;
+>>  		cpumask_clear_cpu(old_cpu, &pmu->cpu_mask);
+>> -		if (new_cpu < 0)
+>> +		if (new_cpu < 0 || uncore_pmu_broken(pmu))
+>>  			continue;
+> 
+> If uncore_pmu_broken(pmu) causes this to skip, does this strand active hardware
+> events on offlined CPUs for fully functional dies?
+> 
+> The commit message states the goal is to avoid disrupting in-flight events on
+> other boxes, but skipping uncore_pmu_cancel_hrtimer() and
+> perf_pmu_migrate_context() here seems to break CPU context migration for those
+> events.
+
+You are right, checking the broken flag here could disrupt in-flight
+events. Instead, checking box->cpu == -1 is appropriate to skip broken
+boxes.
+
+@@ -1522,9 +1522,15 @@ static void uncore_change_type_ctx(struct
+intel_uncore_type *type, int old_cpu,
+                }
+
+                WARN_ON_ONCE(box->cpu != -1 && box->cpu != old_cpu);
+
++               if (box->cpu == -1)
++                       continue;
++
+                box->cpu = -1;
+                cpumask_clear_cpu(old_cpu, &pmu->cpu_mask);
+-               if (new_cpu < 0 || uncore_pmu_broken(pmu))
++               if (new_cpu < 0)
+                        continue;
+
+>>  
+>>  		if (!uncore_die_has_box(type, die, pmu->pmu_idx))
+> 
+> [ ... ]
+> 
+>> @@ -1573,7 +1593,7 @@ static int allocate_boxes(struct intel_uncore_type **types,
+>>  		type = *types;
+>>  		pmu = type->pmus;
+>>  		for (i = 0; i < type->num_boxes; i++, pmu++) {
+>> -			if (pmu->boxes[die])
+>> +			if (pmu->boxes[die] || uncore_pmu_broken(pmu))
+>>  				continue;
+> 
+> Is this check dead code? allocate_boxes() is exclusively used by MSR/MMIO
+> PMUs, but those PMUs ignore hardware initialization failures and never call
+> uncore_pmu_set_broken(pmu).
+
+Not quite true. MSR/MMIO PMUs do not ignore hardware initialization
+failures — they call uncore_pmu_set_broken() in uncore_box_setup() when
+setup fails.
+
