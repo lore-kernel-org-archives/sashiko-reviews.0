@@ -1,149 +1,144 @@
-Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-dy1-f180.google.com (mail-dy1-f180.google.com [74.125.82.180])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F166B3563C7;
-	Fri, 22 May 2026 19:25:40 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 18E05360EE2
+	for <sashiko-reviews@lists.linux.dev>; Fri, 22 May 2026 19:34:32 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=74.125.82.180
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1779477942; cv=none; b=NJdb+XFNkszDxmTsaifV0XAZ531T8K1fr5EdMv/tQw4SOG82p8dYv9tgKtN7e6C4JfmCefzMHrEhQnE5QOCkLYEq8smzGAVxaaZ+8n8qcNnDb6TN092R44uug4n4jyYFYd409d7CYxoEbu9/FRDP7dyeHfDjah4u8Z539TulLJM=
+	t=1779478474; cv=none; b=V5fPsd06x/MoFZOxD1DukF9EEV0m5+OURorNdbHYgEL02WT4CJRYASepqcZHug4cIGb/Tu2FNE4JLNWTlznWDu4Wd9HiaigrzDGqLzxo5Nsso3MPf2nl8Te24vlwwWn6TTXlQl5zD6yxCcyhMNRM5LhfVs1dsSIaTHGEGph24GY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1779477942; c=relaxed/simple;
-	bh=Or5fQ1YCPE+2AHxAOKBFXorPm++H3+m8dRzh+3qm7fc=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=Wui6DQlLU3j3BZ3unWP3tfglKRIIgr6KU5uOx6h9LgouqSQ0OLbAbaw4HM5pHsGhuomj4rI9oI6JkDhlU5tNKTRWwYZxwywQM40PL+17JlvXX470H1pZFUaiIaPKG3oLtztHE3TvUREt2WggbgyStHkgy2F7xtccb+q7gJs9ji8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=W5e/dvoX; arc=none smtp.client-ip=100.103.45.18
+	s=arc-20240116; t=1779478474; c=relaxed/simple;
+	bh=sksmWQrpcwrgOdWpAjFOtLfESA7gjmbL2+oXyHXtHM0=;
+	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
+	 In-Reply-To:Content-Type; b=CilTygm5kEhuBddWTAIjtIkv4UNQfrp+ONh5iTX5A37noqGuD3O+GPX0SSUMjM+V6eMKwRqpqdWt/ne1FzMnsfdFMTo834cSsrZKGOqUiyeDEAoT4KA/+W5zDWMn7XrCZ6RvrWiH/E9nhPrifv8d+RTyT2xFcI3fhIF//+VNlRQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=roeck-us.net; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=YUCmCQjE; arc=none smtp.client-ip=74.125.82.180
+Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=roeck-us.net
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="W5e/dvoX"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0873A1F000E9;
-	Fri, 22 May 2026 19:25:39 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=kernel.org;
-	s=k20260515; t=1779477940;
-	bh=RojEkkbyfvmtTftKGHnFUwJgtWSamSkZZu/jQFeaWSc=;
-	h=Date:From:To:Cc:Subject:References:In-Reply-To;
-	b=W5e/dvoXBpz2FofolimiQYP+RaRBPpqcZjGq1ebug4W41tbnF9zi7GkVRIDtLVw+s
-	 iqMvWvp9vTm3lqR0yCO4fJYZBeG9aI/sGngE+Mi/fBIE0KJ9ORB73zkdmBDc73AObG
-	 KXXMsf0zRcRa3AaiIxPdL+6d5mAHiy6VzbmpakfIurGwOrkSvxGO83W/u/7GaEVxOH
-	 cQ2MStyqhRn2XKeCH2zhh3sYQnr1jXWaGT3EWWvekpGWy92kSStx9VVvqgPb88QCh/
-	 DFLGz3eFjYrBqsn7Rs2kea6GIvZhgf1/IlCYNfp8giQlCxJbPENSSzv8uu6UjvrRgR
-	 RJjy5X/OMKc9Q==
-Date: Fri, 22 May 2026 21:25:37 +0200
-From: Lorenzo Bianconi <lorenzo@kernel.org>
-To: Jakub Kicinski <kuba@kernel.org>
-Cc: sashiko-reviews@lists.linux.dev, robh@kernel.org,
-	devicetree@vger.kernel.org, conor+dt@kernel.org,
-	netdev@vger.kernel.org
-Subject: Re: [PATCH net-next v8 10/10] net: airoha: Support multiple LAN/WAN
- interfaces for hw MAC address configuration
-Message-ID: <ahCtsVA1VhYmhZq-@lore-desk>
-References: <20260519-airoha-eth-multi-serdes-v8-10-6bd70e329df6@kernel.org>
- <20260520085934.54AD01F00894@smtp.kernel.org>
- <ag2t4eVe4DcfU2yZ@lore-desk>
- <20260522112514.1ad6e947@kicinski-fedora-PF5CM1Y0>
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="YUCmCQjE"
+Received: by mail-dy1-f180.google.com with SMTP id 5a478bee46e88-3044857f09aso2332600eec.1
+        for <sashiko-reviews@lists.linux.dev>; Fri, 22 May 2026 12:34:32 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20251104; t=1779478472; x=1780083272; darn=lists.linux.dev;
+        h=content-transfer-encoding:in-reply-to:autocrypt:from
+         :content-language:references:cc:to:subject:user-agent:mime-version
+         :date:message-id:sender:from:to:cc:subject:date:message-id:reply-to;
+        bh=7tuHeWFtSMqYg328BZf6n26qFVk0vX/eoLKUIGqEIUM=;
+        b=YUCmCQjEHNPAJ90EJK7n6bmqOwExuOY2sA01fcrtzeHpje1O+0L6heMvtjpm84LPQd
+         AkTHP/Gzajo6PZb9iQhlojuxtbbojEPv5lWZ2tFtSdydhMuR7phtxlcPxWvw4gJh+jTM
+         /XujmDimpNUh06iOOgYUaAGoq/RMfSyKB72juBXsbERSmAXBU3Job3WFyJ3aUCQpJA/N
+         h62nsEMBsBfaMEp1mugic0GY7rtBkky+YYZAOFyUDd3viuf0N/FbZ+Us9FGW7Or0U8v/
+         oHnu1Zx4VTaYiG2smyfVyxwLfvt7VaqeVgXJYYpG1coZsRBQVUyw9u4BjlDaZj3cIgTR
+         0mvw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20251104; t=1779478472; x=1780083272;
+        h=content-transfer-encoding:in-reply-to:autocrypt:from
+         :content-language:references:cc:to:subject:user-agent:mime-version
+         :date:message-id:sender:x-gm-gg:x-gm-message-state:from:to:cc
+         :subject:date:message-id:reply-to;
+        bh=7tuHeWFtSMqYg328BZf6n26qFVk0vX/eoLKUIGqEIUM=;
+        b=kIQTn3peSYa4klmQSCjWbmIu1T6FivmkYqNBxqicljlTjer5RcA8XbD4Xu+y/qEtvR
+         iesG6+YLgZ8fWItqnYzkPlkqEeBFWzeRwiofG9tnkpd5lCpdk3ExH4cisjFRxLIIP0BF
+         K7wfPvIs4m9CAAC7or7U1ndMDdGFCYNTLp/ZT4Scm66k3T5tlxtvIbprAYjysnoqJNeR
+         UgxF0Hvq1psypktc0CqW3kQwLP1tiDV+Qp/g78y+dZx5j13zlaYBl7hDwbdZUQMlhkLz
+         YmIae/Kc+UVKIhyxhOUOj32MMoF0p/i9hCExHhutmq+XQxAfW2fMwOUKOfdw+l5q0Szp
+         ddjA==
+X-Forwarded-Encrypted: i=1; AFNElJ9HVnJbeT/LXUUonj98/wgf146JSF7UMuXRtglaiNI3z1dihIuVUlAGhF1QgPQenZvlC8ukS8W37ElEVxyaNQY=@lists.linux.dev
+X-Gm-Message-State: AOJu0YwCPHaZDEZ6Q5EiplNs8bJmT36xvdhEymSX41gL4o4jzBQNytPI
+	CFkrQ0YbjlSF3nQia4oEKrCbpJ7hQYW2HdOEASVAKVqzEGR8DNJz+GFy
+X-Gm-Gg: Acq92OFCkxd6mzcYZAqUDX3vPon8auA9K8dllKOd5KikpwpSg76CT0mGqxqN3u6HwqS
+	LoqeGlP3FM3yGqi4PsSwSgdZFLeOFuxDvAWp3twujMHPFxCxPQ8lXss3wSmEDGqGPwyNuosGNyi
+	uMQEeERglyA5Pxty/QmwUygafaUuK9WnzfKQMwXbT9/wUCsNDFSqARMeYt4JSTLsPL+H9qnlEaG
+	CZW0HQIKtXps8JMWnoYaje4viRh9618ER92ol7rZAvclu2dfyJf6Uc7oR2N6TcsX/3kNQ65Fvrr
+	q1Ql0+8HJynhJki8WDqw8a8Ouzb4eJsIehrSXE+f4+jRho2X9KIfDjsBc+UiDDn/UseUZE1uQkP
+	BVI/7dlvSklW3wCI/0zJ6SSeQK38Ds7G97E6ge838HOxE0eBXqIjQwnpIFjwbw9H5XyGBfWSu2q
+	XwQRPXSD/9Rx254hTdUihKVKYQ3+b0KzIIDTmfvZrY2flGu0vYQZnOezjUYR5aFIOD9Rxf/9dc
+X-Received: by 2002:a05:7300:bb04:b0:2f2:c336:7736 with SMTP id 5a478bee46e88-304490d8aebmr2636799eec.29.1779478472088;
+        Fri, 22 May 2026 12:34:32 -0700 (PDT)
+Received: from ?IPV6:2600:1700:e321:62f0:da43:aeff:fecc:bfd5? ([2600:1700:e321:62f0:da43:aeff:fecc:bfd5])
+        by smtp.gmail.com with ESMTPSA id 5a478bee46e88-304535ae870sm1596207eec.19.2026.05.22.12.34.31
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Fri, 22 May 2026 12:34:31 -0700 (PDT)
+Sender: Guenter Roeck <groeck7@gmail.com>
+Message-ID: <07e1194f-4935-4713-a4c1-6b587e9aaf75@roeck-us.net>
+Date: Fri, 22 May 2026 12:34:30 -0700
 Precedence: bulk
 X-Mailing-List: sashiko-reviews@lists.linux.dev
 List-Id: <sashiko-reviews.lists.linux.dev>
 List-Subscribe: <mailto:sashiko-reviews+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:sashiko-reviews+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: multipart/signed; micalg=pgp-sha512;
-	protocol="application/pgp-signature"; boundary="jukOReBCAgX4Obp/"
-Content-Disposition: inline
-In-Reply-To: <20260522112514.1ad6e947@kicinski-fedora-PF5CM1Y0>
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH] hwmon: (lm63) expose PWM frequency and LUT hysteresis as
+ writable
+To: Jan-Henrik Bruhn <kernel@jhbruhn.de>, sashiko-bot@kernel.org
+Cc: linux-hwmon@vger.kernel.org, sashiko-reviews@lists.linux.dev
+References: <20260522142850.E67A01F000E9@smtp.kernel.org>
+ <20260522184748.3104415-1-kernel@jhbruhn.de>
+Content-Language: en-US
+From: Guenter Roeck <linux@roeck-us.net>
+Autocrypt: addr=linux@roeck-us.net; keydata=
+ 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
+ np3900V20aS7eD9K8GTU0TGC1pyz6IVJwIE=
+In-Reply-To: <20260522184748.3104415-1-kernel@jhbruhn.de>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
 
+On 5/22/26 11:47, Jan-Henrik Bruhn wrote:
+>> Does this code handle I2C read failures correctly?
+> 
+> It does not, but none of the code in this driver does.
+>   
+>> Can this read also fail and silently truncate a negative error code to an
+>> 8-bit unsigned variable?
+> 
+> Same here - judging on the existing code, hardware failure cases are out of
+> scope for this driver if it has already successfully initialized.
+> 
 
---jukOReBCAgX4Obp/
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-Content-Transfer-Encoding: quoted-printable
+Interesting declaration. This isn't about accepting your patch as-is or not,
+but please explain why you think that fixing bugs would be out of scope for
+this (or any other) driver.
 
-On May 22, Jakub Kicinski wrote:
-> On Wed, 20 May 2026 14:49:37 +0200 Lorenzo Bianconi wrote:
-> > > Does this strict OUI validation cause the driver probe to fail when M=
-AC addresses
-> > > are randomly generated?
-> > >=20
-> > > If a MAC address is not provided in the device tree, the driver gener=
-ates a random
-> > > one via eth_hw_addr_random(). For multi-port configurations, each por=
-t receives an
-> > > independently generated random MAC address.
-> > >=20
-> > > Since the upper 3 bytes of these random addresses will almost certain=
-ly differ,
-> > > when register_netdev() is called for the second port, its ndo_init ca=
-llback
-> > > (airoha_dev_init) will invoke airoha_set_macaddr() and hit this check=
-=2E Returning
-> > > -EINVAL will fail register_netdev() and abort the entire driver probe=
-, leaving
-> > > the system without networking.
-> > >=20
-> > > Does this also prevent users from changing the MAC address OUI?
-> > >=20
-> > > When an administrator attempts to change the MAC address via standard=
- userspace
-> > > tools, only one interface can be modified at a time. The driver will =
-compare the
-> > > new MAC against the existing MAC of the other port.
-> > >=20
-> > > If the MSBs differ, the change is rejected. This makes it impossible =
-to atomically
-> > > change the OUI of both interfaces simultaneously, locking the MAC add=
-ress OUI
-> > > to its initial probe-time value. =20
-> >=20
-> > As pointed out before, this is a hw design requirement when multiple
-> > net_devices are configured as LAN.
->=20
-> What about Clashiko report about the MAC address?
+Guenter
 
-Do you the following one?
-https://netdev-ai.bots.linux.dev/sashiko/#/patchset/20260519-airoha-eth-mul=
-ti-serdes-v8-0-6bd70e329df6%40kernel.org
-
-- What happens when device tree does not provide MAC addresses for two or
-  more same-side GDM interfaces?
-  - This is the same comment reported in [0].
-    Since the hw exposes just a single register (REG_FE_LAN_MAC_H or
-    REG_FE_WAN_MAC_H) for the LAN/WAN mac address MSBs, we need to
-    require all the interfaces configured as LAN or WAN to share the
-    mac address MSBs and the user needs to select the new mac address
-    observing this limitation.
-    Please note this limitation is only valid if multiple net_devices
-    are configured as LAN (or WAN). Since in the current codebase we
-    do not support multiple interfaces configured as LAN or WAN, we are
-    not introducing any regression.
-    I do not think selecting a "base" for the mac address is helpful
-    if the user does not provide the mac address via the DTS or NVME
-    (as suggested by sashiko) since it will not help us if the mac
-    addresses configured via DTS are "wrong" (if they do not respect
-    the limitation described above).  What do you think?
-=20
-- If airoha_set_macaddr() succeeds (and has just widened the shared
-  [lmin, lmax] range to include this dev) and airoha_set_gdm2_loopback()
-  then fails, airoha_dev_init() returns the error but there is no=20
-  airoha_dev_uninit / ndo_uninit to roll the LMIN/LMAX update back.=20
-  The shared range is then wider than the set of currently-registered peers.
-  - I guess it is not harmful to keep the already configured mac address
-    range if airoha_set_gdm2_loopback() fails and I decided to not unwind
-    the changes to keep the code simple.  Moreover, in the current codebase,
-    if ndo_init() fails, the airoha_probe() will fail.
-
-Regards,
-Lorenzo
-
-[0] https://sashiko.dev/#/patchset/20260519-airoha-eth-multi-serdes-v8-0-6b=
-d70e329df6%40kernel.org
-
---jukOReBCAgX4Obp/
-Content-Type: application/pgp-signature; name=signature.asc
-
------BEGIN PGP SIGNATURE-----
-
-iHUEABYKAB0WIQTquNwa3Txd3rGGn7Y6cBh0uS2trAUCahCtsQAKCRA6cBh0uS2t
-rN/wAQCIS+axnhlXTKcfCUsWDcOYLeS/TGc95axOtNeEY9ZKrgEAyXH5klwWATaf
-0r/GIfveXTyaKFrvvGF7YTBMOsdbOgE=
-=UJ1t
------END PGP SIGNATURE-----
-
---jukOReBCAgX4Obp/--
