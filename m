@@ -1,252 +1,188 @@
-Received: from mailgate02.uberspace.is (mailgate02.uberspace.is [185.26.156.114])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from shelob.surriel.com (shelob.surriel.com [96.67.55.147])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7B1AF3803D3
-	for <sashiko-reviews@lists.linux.dev>; Fri, 22 May 2026 20:23:07 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=185.26.156.114
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AD80B387361;
+	Fri, 22 May 2026 20:40:19 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=96.67.55.147
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1779481389; cv=none; b=Bto6+oEV/RMYrqyKa3D1i6jMZXen1FHWh+chZX0+UIHr8q0PunLroEQS/zWpb13Psqa9D2qkEE2rmIzjvfm3w1NMtqmDLtLmnUwWIOfI13e1hWdFp59cpl9nQzfTVqLoUKMj8C18pxK0y30A34qAwdd9XBRGEIXeA+rNjJgBUp8=
+	t=1779482422; cv=none; b=T0w0Hnev/SHLFkQ6HHm2fEIS/XCyDl1V1rUwwsmJC2sebnl3Cxz15xT5tuqqUw/RoOuyp6RNqhNyKIk9PlE5ESa2GGu+9xolUMNg3VJ0ZmQVu9XVB5bYQAWlriMGYJHtkzvfX3MiSMLTL5nudZllXdEu+mnTn/vYoKlUhkMRsNc=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1779481389; c=relaxed/simple;
-	bh=unGO10XG9DaXA1ZEIWSV+Nc6CIrok0ryqeA/OOtIME0=;
-	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=R7ZS4fVViqKuGeo3OtJk4JbrZ9ptzJIIDQvAdfUJs8TaVC+P8a874kKsbiQG4B3raEgt9PgktOXiiBBcujMWEtVv82/JxyHbQdp0Rt9Hlhk+EwKrH5nKINwO76Nyre2oh/3aZ3tqb+HftPcyNCxVlOPn7X10LbcbemsKo3aArng=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=jhbruhn.de; spf=pass smtp.mailfrom=jhbruhn.de; dkim=pass (4096-bit key) header.d=jhbruhn.de header.i=@jhbruhn.de header.b=s2Mz4sGA; arc=none smtp.client-ip=185.26.156.114
-Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=jhbruhn.de
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=jhbruhn.de
+	s=arc-20240116; t=1779482422; c=relaxed/simple;
+	bh=TVsEWQ31RPj5yQtFgXMNMChTXhUUt5tba93wTAZNj8Y=;
+	h=Message-ID:Subject:From:To:Cc:Date:In-Reply-To:References:
+	 Content-Type:MIME-Version; b=AflMRCAeuhtp2wcn9iapUkmy+i6EBd/oVQVzTWIOanTTA3AyfeuVbAA8TmpCtQLq9GeRn8dQBVdZDdpOzVeJ9R8/+h5QN4yQB9winGeC1yV5jr/wZMlQfChxjnXtx6+bScm+/GULrhzJjSWqWyz4L5RdL35/CM4VIuwdKltGEZ0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=surriel.com; spf=pass smtp.mailfrom=surriel.com; dkim=pass (2048-bit key) header.d=surriel.com header.i=@surriel.com header.b=Fb2AiEin; arc=none smtp.client-ip=96.67.55.147
+Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=surriel.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=surriel.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (4096-bit key) header.d=jhbruhn.de header.i=@jhbruhn.de header.b="s2Mz4sGA"
-Received: from boethin.uberspace.de (boethin.uberspace.de [185.26.156.96])
-	by mailgate02.uberspace.is (Postfix) with ESMTPS id 0267317F973
-	for <sashiko-reviews@lists.linux.dev>; Fri, 22 May 2026 22:23:06 +0200 (CEST)
-Received: (qmail 9489 invoked by uid 990); 22 May 2026 20:23:05 -0000
-Authentication-Results: boethin.uberspace.de;
-	auth=pass (plain)
-Received: from unknown (HELO unknown) (::1)
-	by boethin.uberspace.de (Haraka/3.1.1) with ESMTPSA; Fri, 22 May 2026 22:23:05 +0200
-From: Jan-Henrik Bruhn <kernel@jhbruhn.de>
-To: sashiko-bot@kernel.org
-Cc: kernel@jhbruhn.de,
-	linux-hwmon@vger.kernel.org,
-	sashiko-reviews@lists.linux.dev
-Subject: [PATCH v2] hwmon: (lm63) expose PWM frequency and LUT hysteresis as writable
-Date: Fri, 22 May 2026 22:22:50 +0200
-Message-ID: <20260522202250.3184791-1-kernel@jhbruhn.de>
-X-Mailer: git-send-email 2.48.1
-In-Reply-To: <20260522142850.E67A01F000E9@smtp.kernel.org>
-References: <20260522142850.E67A01F000E9@smtp.kernel.org>
+	dkim=pass (2048-bit key) header.d=surriel.com header.i=@surriel.com header.b="Fb2AiEin"
+DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed; d=surriel.com
+	; s=mail; h=MIME-Version:Content-Transfer-Encoding:Content-Type:References:
+	In-Reply-To:Date:Cc:To:From:Subject:Message-ID:Sender:Reply-To:Content-ID:
+	Content-Description:Resent-Date:Resent-From:Resent-Sender:Resent-To:Resent-Cc
+	:Resent-Message-ID:List-Id:List-Help:List-Unsubscribe:List-Subscribe:
+	List-Post:List-Owner:List-Archive;
+	bh=iJPMhZ20VwhSDg5wfXMne49M7TO5GoUJ/84XYNmFdfs=; b=Fb2AiEinp2jX1m9VpD2kbthn+g
+	mFCm3S6iJ6TH2B4bfR81qkhlzgbdyUqrdgHtZTzNT5duNsC5ihjcv7afjS4vy9WmeRfLLGKDWXHi9
+	0lOXVpA4XqVobMQ64Ax0txXwCbKrQjQokuV8kS/L8PiD9lB3atvcvVHooxaJ3enHMQ120wlqteddd
+	94ergDojrSZs6tR5pFFTM7o0GyJWAb437KDp5APi/VmzaJ/jVloMB20MaODXbk/wFVgPj5r7rKpQ9
+	/hRDhXzO6Kh5nGc7LZ59IvIjiF4Z5uRBw0cxNb6PbO3otHw6mKuR7TX7AA5qO0FkmQ6QM/JBSnx4o
+	+j+2lWMA==;
+Received: from fangorn.home.surriel.com ([10.0.13.7])
+	by shelob.surriel.com with esmtpsa  (TLS1.2) tls TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384
+	(Exim 4.97.1)
+	(envelope-from <riel@surriel.com>)
+	id 1wQWej-0000000029b-25Gf;
+	Fri, 22 May 2026 16:39:41 -0400
+Message-ID: <8f8d0cd380f40b84557304d110f38ecefc994a35.camel@surriel.com>
+Subject: Re: [PATCH v2] perf/ftrace: Fix WARNING in
+ __unregister_ftrace_function
+From: Rik van Riel <riel@surriel.com>
+To: Steven Rostedt <rostedt@goodmis.org>
+Cc: Masami Hiramatsu <mhiramat@kernel.org>, Mathieu Desnoyers	
+ <mathieu.desnoyers@efficios.com>, linux-kernel@vger.kernel.org, 
+	linux-trace-kernel@vger.kernel.org, kernel-team@meta.com,
+ sashiko-bot@kernel.org, 	sashiko-reviews@lists.linux.dev
+Date: Fri, 22 May 2026 16:39:41 -0400
+In-Reply-To: <20260520164117.528d02fd@gandalf.local.home>
+References: <20260513161916.04151502@fangorn>
+	 <20260520164117.528d02fd@gandalf.local.home>
+Autocrypt: addr=riel@surriel.com; prefer-encrypt=mutual;
+ keydata=mQENBFIt3aUBCADCK0LicyCYyMa0E1lodCDUBf6G+6C5UXKG1jEYwQu49cc/gUBTTk33A
+ eo2hjn4JinVaPF3zfZprnKMEGGv4dHvEOCPWiNhlz5RtqH3SKJllq2dpeMS9RqbMvDA36rlJIIo47
+ Z/nl6IA8MDhSqyqdnTY8z7LnQHqq16jAqwo7Ll9qALXz4yG1ZdSCmo80VPetBZZPw7WMjo+1hByv/
+ lvdFnLfiQ52tayuuC1r9x2qZ/SYWd2M4p/f5CLmvG9UcnkbYFsKWz8bwOBWKg1PQcaYHLx06sHGdY
+ dIDaeVvkIfMFwAprSo5EFU+aes2VB2ZjugOTbkkW2aPSWTRsBhPHhV6dABEBAAG0HlJpayB2YW4gU
+ mllbCA8cmllbEByZWRoYXQuY29tPokBHwQwAQIACQUCW5LcVgIdIAAKCRDOed6ShMTeg05SB/986o
+ gEgdq4byrtaBQKFg5LWfd8e+h+QzLOg/T8mSS3dJzFXe5JBOfvYg7Bj47xXi9I5sM+I9Lu9+1XVb/
+ r2rGJrU1DwA09TnmyFtK76bgMF0sBEh1ECILYNQTEIemzNFwOWLZZlEhZFRJsZyX+mtEp/WQIygHV
+ WjwuP69VJw+fPQvLOGn4j8W9QXuvhha7u1QJ7mYx4dLGHrZlHdwDsqpvWsW+3rsIqs1BBe5/Itz9o
+ 6y9gLNtQzwmSDioV8KhF85VmYInslhv5tUtMEppfdTLyX4SUKh8ftNIVmH9mXyRCZclSoa6IMd635
+ Jq1Pj2/Lp64tOzSvN5Y9zaiCc5FucXtB9SaWsgdmFuIFJpZWwgPHJpZWxAc3VycmllbC5jb20+iQE
+ +BBMBAgAoBQJSLd2lAhsjBQkSzAMABgsJCAcDAgYVCAIJCgsEFgIDAQIeAQIXgAAKCRDOed6ShMTe
+ g4PpB/0ZivKYFt0LaB22ssWUrBoeNWCP1NY/lkq2QbPhR3agLB7ZXI97PF2z/5QD9Fuy/FD/jddPx
+ KRTvFCtHcEzTOcFjBmf52uqgt3U40H9GM++0IM0yHusd9EzlaWsbp09vsAV2DwdqS69x9RPbvE/Ne
+ fO5subhocH76okcF/aQiQ+oj2j6LJZGBJBVigOHg+4zyzdDgKM+jp0bvDI51KQ4XfxV593OhvkS3z
+ 3FPx0CE7l62WhWrieHyBblqvkTYgJ6dq4bsYpqxxGJOkQ47WpEUx6onH+rImWmPJbSYGhwBzTo0Mm
+ G1Nb1qGPG+mTrSmJjDRxrwf1zjmYqQreWVSFEt26tBpSaWsgdmFuIFJpZWwgPHJpZWxAZmIuY29tP
+ okBPgQTAQIAKAUCW5LbiAIbIwUJEswDAAYLCQgHAwIGFQgCCQoLBBYCAwECHgECF4AACgkQznneko
+ TE3oOUEQgAsrGxjTC1bGtZyuvyQPcXclap11Ogib6rQywGYu6/Mnkbd6hbyY3wpdyQii/cas2S44N
+ cQj8HkGv91JLVE24/Wt0gITPCH3rLVJJDGQxprHTVDs1t1RAbsbp0XTksZPCNWDGYIBo2aHDwErhI
+ omYQ0Xluo1WBtH/UmHgirHvclsou1Ks9jyTxiPyUKRfae7GNOFiX99+ZlB27P3t8CjtSO831Ij0Ip
+ QrfooZ21YVlUKw0Wy6Ll8EyefyrEYSh8KTm8dQj4O7xxvdg865TLeLpho5PwDRF+/mR3qi8CdGbkE
+ c4pYZQO8UDXUN4S+pe0aTeTqlYw8rRHWF9TnvtpcNzZw==
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
+User-Agent: Evolution 3.56.2 (3.56.2-2.fc42) 
 Precedence: bulk
 X-Mailing-List: sashiko-reviews@lists.linux.dev
 List-Id: <sashiko-reviews.lists.linux.dev>
 List-Subscribe: <mailto:sashiko-reviews+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:sashiko-reviews+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
-X-Rspamd-Bar: /
-X-Rspamd-Report: MID_CONTAINS_FROM(1) BAYES_HAM(-0.903743) MIME_GOOD(-0.1) R_MISSING_CHARSET(0.5)
-X-Rspamd-Score: 0.496256
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
-	d=jhbruhn.de; s=uberspace;
-	h=from:to:cc:subject:date;
-	bh=unGO10XG9DaXA1ZEIWSV+Nc6CIrok0ryqeA/OOtIME0=;
-	b=s2Mz4sGAw7OUgd+JctBpxVPTFsQb0JAYXL6jnzlleof95hRngxeE6Bn8ji5LMg9n2R8Y2WLWm6
-	vQlEAlRvBXT+eUPIRq/zUFPThrHfRwGuHvGk8KOjzEbJ0UIgxyHm/nYPOWadr1fk7LdOHHsYhJvn
-	FnHMa4CYb93HifMOizQ+kw1NH6wr0CRZXh26a0BDkLx6NH07VwXpaszGo2XL1x+jiFqVw4N1lIZ+
-	13Wupv7xJPue+5AHm5489Sq5QSorMuChdJSb63rj5XK06YAmIMzYbtJRESLHUpsqH33+S9Uc8Gm1
-	tRNQbDZ6zLVhGhLjAQM1DuCLgASkDSGD9iw1f+qlc0SzpRPG8eHiABV9Y7qpCBlk4NGlqlQX7zSV
-	GG1L4ffhquKRH1Q4elM8GQglnRM+cTQ8pKeLKwRwdHLIkDSHjamqzoyAE2PChlJwSQrAx+ogXwPc
-	oU6HBfoURMNru9GpeWxLFO5KyWG7g/EVkCXqKiedGOHUsBiSShqU0P1TZLEoF6cVgzWBZERusBd6
-	uEq7oaY2SyCzc2E24kHUL95WIFZLEbudYiTsYFTHA0WTtBRfM+f5sVDbHLaRBsI2SHLwSuq2N2Oc
-	DqKIiBTGH7rxmFfZ/wlc2hmdhpl+3YLqrQmQbptbW494/gmKRejebEApuW3DrharJDYbUgcDy/M3
-	c=
 
-The driver caches the PWM frequency register and the CONFIG_FAN slow-clock
-select bit, but never lets userspace pick a different output frequency.
-Add a pwm1_freq sysfs attribute that selects the closest SCS + PFR
-combination for the requested value in Hz, gated by manual mode like
-set_pwm1(). PFR is clamped to 31 so that 2*PFR fits in the chip's 6-bit
-PWM register (matching the existing scaling assumption in show_pwm1).
+On Wed, 2026-05-20 at 16:41 -0400, Steven Rostedt wrote:
+>=20
+> Rik,
+>=20
+> Can you reply to Sashiko here?
+>=20
+> The below comes from Sashiko:
+> https://sashiko.dev/?list=3Dorg.kernel.vger.linux-trace-kernel#/patchset/=
+20260513161916.04151502%40fangorn
+>=20
+> Thanks,
+>=20
+> -- Steve
+>=20
+>=20
+> > commit f90ac36f39b79a19c015522bb1caf7ef903caf02
+> > Author: Rik van Riel <riel@surriel.com>
+> > perf/ftrace: Fix WARNING in __unregister_ftrace_function
+> > This commit attempts to fix a WARN_ON triggered during
+> > perf_event_alloc() error
+> > cleanup by checking FTRACE_OPS_FL_ENABLED before unregistering the
+> > ftrace
+> > function. The warning occurs because the ftrace_ops registration
+> > failed or was
+> > torn down by perf_try_init_event() earlier, but the event->destroy
+> > callback is
+> > executed again during the error path.
+> > > diff --git a/kernel/trace/trace_event_perf.c
+> > > b/kernel/trace/trace_event_perf.c
+> > > index 61e3a2620fa3c..8d64f17135e8f 100644
+> > > --- a/kernel/trace/trace_event_perf.c
+> > > +++ b/kernel/trace/trace_event_perf.c
+> > > @@ -495,7 +495,11 @@ static int
+> > > perf_ftrace_function_register(struct perf_event *event)
+> > > =C2=A0static int perf_ftrace_function_unregister(struct perf_event
+> > > *event)
+> > > =C2=A0{
+> > > =C2=A0	struct ftrace_ops *ops =3D &event->ftrace_ops;
+> > > -	int ret =3D unregister_ftrace_function(ops);
+> > > +	int ret =3D 0;
+> > > +
+> > > +	if (ops->flags & FTRACE_OPS_FL_ENABLED)
+> > > +		ret =3D unregister_ftrace_function(ops);
+> > > +
+> > > =C2=A0	ftrace_free_filter(ops);
+>=20
+> > Does calling ftrace_free_filter() unconditionally here mask a
+> > double-teardown
+> > regression while leaving the underlying double-free active?
 
-The hardware LUT hysteresis register is shared by all LUT entries, so
-the per-point pwm1_auto_pointN_temp_hyst attributes can't be made RW
-without N-to-1 cross-attribute side effects. Following the max31760
-precedent, expose a single chip-wide pwm1_auto_point_temp_hyst attribute
-holding the hysteresis amount in millidegrees; the per-point attributes
-stay RO and continue to show the resulting absolute trip-down
-temperature for each entry.
+I don't see how calling ftrace_free_filter() twice would
+call issues, given that it sets the ->*_hash values to
+EMPTY_HASH:
 
-This was tested on a Linksys LGS328MPC switch hardware where the fan
-would not spin with the default PWM Frequency, which is why this change
-is required.
+void ftrace_free_filter(struct ftrace_ops *ops)
+{
+        ftrace_ops_init(ops);
+        if (WARN_ON(ops->flags & FTRACE_OPS_FL_ENABLED))
+                return;
+        free_ftrace_hash(ops->func_hash->filter_hash);
+        free_ftrace_hash(ops->func_hash->notrace_hash);
+        ops->func_hash->filter_hash =3D EMPTY_HASH;
+        ops->func_hash->notrace_hash =3D EMPTY_HASH;
+}
 
-Signed-off-by: Jan-Henrik Bruhn <kernel@jhbruhn.de>
----
-v2:
- - check return value of i2c_smbus_read_byte_data() in pwm1_freq_store()
-   and propagate the error instead of silently using truncated values.
----
- drivers/hwmon/lm63.c | 120 +++++++++++++++++++++++++++++++++++++++++++
- 1 file changed, 120 insertions(+)
+void free_ftrace_hash(struct ftrace_hash *hash)
+{
+        if (!hash || hash =3D=3D EMPTY_HASH)
+                return;
+..
 
-diff --git a/drivers/hwmon/lm63.c b/drivers/hwmon/lm63.c
-index a0d77a7386a9..586661880db7 100644
---- a/drivers/hwmon/lm63.c
-+++ b/drivers/hwmon/lm63.c
-@@ -92,6 +92,9 @@ static const unsigned short normal_i2c[] = { 0x18, 0x4c, 0x4e, I2C_CLIENT_END };
- #define LM96163_REG_REMOTE_TEMP_U_LSB	0x32
- #define LM96163_REG_CONFIG_ENHANCED	0x45
- 
-+#define LM63_PWM_BASE_FAST_HZ		180000
-+#define LM63_PWM_BASE_SLOW_HZ		700
-+
- #define LM63_MAX_CONVRATE		9
- 
- #define LM63_MAX_CONVRATE_HZ		32
-@@ -455,6 +458,83 @@ static ssize_t pwm1_enable_store(struct device *dev,
- 	return count;
- }
- 
-+static ssize_t pwm1_freq_show(struct device *dev,
-+			      struct device_attribute *dummy, char *buf)
-+{
-+	struct lm63_data *data = lm63_update_device(dev);
-+	unsigned int base = (data->config_fan & 0x08) ?
-+			    LM63_PWM_BASE_SLOW_HZ : LM63_PWM_BASE_FAST_HZ;
-+
-+	return sprintf(buf, "%u\n", base / data->pwm1_freq);
-+}
-+
-+/*
-+ * Pick the closest CONFIG_FAN.SCS + PFR for the requested frequency.
-+ * PWM_FREQ writes need the LUT unlocked, same as set_pwm1(). LUT PWM
-+ * bytes are register-relative; rewrite them after a frequency change
-+ * if duty cycles must be preserved.
-+ */
-+static ssize_t pwm1_freq_store(struct device *dev,
-+			       struct device_attribute *dummy,
-+			       const char *buf, size_t count)
-+{
-+	struct lm63_data *data = dev_get_drvdata(dev);
-+	struct i2c_client *client = data->client;
-+	unsigned long val, pfr_fast, pfr_slow, err_fast, err_slow, pfr;
-+	bool slow_clock;
-+	int ret;
-+
-+	if (!(data->config_fan & 0x20)) /* register is read-only */
-+		return -EPERM;
-+
-+	ret = kstrtoul(buf, 10, &val);
-+	if (ret)
-+		return ret;
-+	if (val == 0)
-+		return -EINVAL;
-+
-+	pfr_fast = clamp_val(DIV_ROUND_CLOSEST((unsigned long)LM63_PWM_BASE_FAST_HZ, val),
-+			     1UL, 31UL);
-+	pfr_slow = clamp_val(DIV_ROUND_CLOSEST((unsigned long)LM63_PWM_BASE_SLOW_HZ, val),
-+			     1UL, 31UL);
-+	err_fast = abs_diff(LM63_PWM_BASE_FAST_HZ / pfr_fast, val);
-+	err_slow = abs_diff(LM63_PWM_BASE_SLOW_HZ / pfr_slow, val);
-+
-+	if (err_slow < err_fast) {
-+		slow_clock = true;
-+		pfr = pfr_slow;
-+	} else {
-+		slow_clock = false;
-+		pfr = pfr_fast;
-+	}
-+
-+	mutex_lock(&data->update_lock);
-+	ret = i2c_smbus_read_byte_data(client, LM63_REG_CONFIG_FAN);
-+	if (ret < 0) {
-+		mutex_unlock(&data->update_lock);
-+		return ret;
-+	}
-+	data->config_fan = ret;
-+	if (slow_clock)
-+		data->config_fan |= 0x08;
-+	else
-+		data->config_fan &= ~0x08;
-+	i2c_smbus_write_byte_data(client, LM63_REG_CONFIG_FAN, data->config_fan);
-+	i2c_smbus_write_byte_data(client, LM63_REG_PWM_FREQ, pfr);
-+	data->pwm1_freq = pfr;
-+
-+	if (data->kind == lm96163) {
-+		ret = i2c_smbus_read_byte_data(client, LM96163_REG_CONFIG_ENHANCED);
-+		if (ret < 0) {
-+			mutex_unlock(&data->update_lock);
-+			return ret;
-+		}
-+		data->pwm_highres = !slow_clock && pfr == 8 && (ret & 0x10);
-+	}
-+	mutex_unlock(&data->update_lock);
-+	return count;
-+}
-+
- /*
-  * There are 8bit registers for both local(temp1) and remote(temp2) sensor.
-  * For remote sensor registers temp2_offset has to be considered,
-@@ -629,6 +709,42 @@ static ssize_t show_lut_temp_hyst(struct device *dev,
- 	return sprintf(buf, "%d\n", temp);
- }
- 
-+/*
-+ * The LM63 has a single hysteresis register shared by all LUT entries.
-+ * Expose it as a chip-wide hysteresis amount in millidegrees; the
-+ * per-point pwm1_auto_pointN_temp_hyst attributes remain read-only and
-+ * show the resulting absolute trip-down temperature for each entry.
-+ */
-+static ssize_t pwm1_auto_point_temp_hyst_show(struct device *dev,
-+					      struct device_attribute *dummy,
-+					      char *buf)
-+{
-+	struct lm63_data *data = lm63_update_device(dev);
-+
-+	return sprintf(buf, "%d\n", TEMP8_FROM_REG(data->lut_temp_hyst));
-+}
-+
-+static ssize_t pwm1_auto_point_temp_hyst_store(struct device *dev,
-+					       struct device_attribute *dummy,
-+					       const char *buf, size_t count)
-+{
-+	struct lm63_data *data = dev_get_drvdata(dev);
-+	struct i2c_client *client = data->client;
-+	unsigned long val;
-+	int err;
-+
-+	err = kstrtoul(buf, 10, &val);
-+	if (err)
-+		return err;
-+
-+	mutex_lock(&data->update_lock);
-+	data->lut_temp_hyst = HYST_TO_REG(val);
-+	i2c_smbus_write_byte_data(client, LM63_REG_LUT_TEMP_HYST,
-+				  data->lut_temp_hyst);
-+	mutex_unlock(&data->update_lock);
-+	return count;
-+}
-+
- /*
-  * And now the other way around, user-space provides an absolute
-  * hysteresis value and we have to store a relative one
-@@ -764,6 +880,8 @@ static SENSOR_DEVICE_ATTR(fan1_min, S_IWUSR | S_IRUGO, show_fan,
- 
- static SENSOR_DEVICE_ATTR(pwm1, S_IWUSR | S_IRUGO, show_pwm1, set_pwm1, 0);
- static DEVICE_ATTR_RW(pwm1_enable);
-+static DEVICE_ATTR_RW(pwm1_freq);
-+static DEVICE_ATTR_RW(pwm1_auto_point_temp_hyst);
- static SENSOR_DEVICE_ATTR(pwm1_auto_point1_pwm, S_IWUSR | S_IRUGO,
- 	show_pwm1, set_pwm1, 1);
- static SENSOR_DEVICE_ATTR(pwm1_auto_point1_temp, S_IWUSR | S_IRUGO,
-@@ -869,6 +987,8 @@ static DEVICE_ATTR_RW(update_interval);
- static struct attribute *lm63_attributes[] = {
- 	&sensor_dev_attr_pwm1.dev_attr.attr,
- 	&dev_attr_pwm1_enable.attr,
-+	&dev_attr_pwm1_freq.attr,
-+	&dev_attr_pwm1_auto_point_temp_hyst.attr,
- 	&sensor_dev_attr_pwm1_auto_point1_pwm.dev_attr.attr,
- 	&sensor_dev_attr_pwm1_auto_point1_temp.dev_attr.attr,
- 	&sensor_dev_attr_pwm1_auto_point1_temp_hyst.dev_attr.attr,
--- 
-2.48.1
 
+> > In perf_try_init_event(), if a PMU event_init() succeeds but a
+> > subsequent
+> > capability check fails, it explicitly calls event->destroy(event)
+> > to roll back:
+> > kernel/events/core.c:perf_try_init_event() {
+> > =C2=A0=C2=A0=C2=A0 ...
+> > 		if (ret && event->destroy)
+> > 			event->destroy(event);
+> > =C2=A0=C2=A0=C2=A0 ...
+> > }
+
+The error handling there all seems to "goto err_destroy"
+
+err_destroy:
+        if (event->destroy) {
+                event->destroy(event);
+                event->destroy =3D NULL;
+        }
+
+
+> > However, it does not set event->destroy to NULL.
+
+... but it does?
+
+I am not sure what code Sashiko is looking at,
+but it does not look like the code I just pulled.
+
+Is there a different tree I should be looking at
+than upstream Linus?
+
+
+--=20
+All Rights Reversed.
