@@ -1,363 +1,435 @@
-Received: from AS8PR04CU009.outbound.protection.outlook.com (mail-westeuropeazon11011060.outbound.protection.outlook.com [52.101.70.60])
+Received: from mail-m32117.qiye.163.com (mail-m32117.qiye.163.com [220.197.32.117])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 610AD305E32;
-	Fri, 22 May 2026 02:41:27 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=fail smtp.client-ip=52.101.70.60
-ARC-Seal:i=2; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1779417690; cv=fail; b=Lp/ZU6FrWgBAfce+9ked65e3WB9GRzx0qIkzgqHU8G8uX7Blm3d6W1ixIa2JcHZGdxBtpUlM/tfkR2/abKYw+29RQxReJW6Mo0EBUSQnn4tDXQylUDgfsl2eQ7oFOx6Wxhw02MKxIXDnfnPcG4+eofCZo9jER6JdWCycrglcTYM=
-ARC-Message-Signature:i=2; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1779417690; c=relaxed/simple;
-	bh=2S2jkXN68H3gKAUR1e1EixSAFwDTIGa+yTau/6qJhU4=;
-	h=From:To:CC:Subject:Date:Message-ID:References:In-Reply-To:
-	 Content-Type:MIME-Version; b=i/b3AQHM32wwWE+JXlEHVZqYZXBl4IktBKrDwsgIsAIivhQatv4evffJo7KBZGR2be1hVuTrEH0dc+QQJjYCmUJgniSeKxz5BQGZ66XtRswnkyUeZJ08JO4Lox4a7G3puK/e1R0YJKwx0pkhHlHVliEYasQHPoSM2V0kdUQHLsM=
-ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=nxp.com; spf=pass smtp.mailfrom=nxp.com; dkim=pass (2048-bit key) header.d=nxp.com header.i=@nxp.com header.b=Ylv7Y6P4; arc=fail smtp.client-ip=52.101.70.60
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=nxp.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=nxp.com
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 825F9221FB6
+	for <sashiko-reviews@lists.linux.dev>; Fri, 22 May 2026 02:43:15 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=220.197.32.117
+ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
+	t=1779417800; cv=none; b=T1XyV5jVrGnLHd2yp80ycngwUfQk4I/ScwSZ8PWzjz+3+1FZHK27xNPhpakomlV+IcBR3POXFfm9jiXYCbZ+eaN0RSfDaSqBTUtn0ww3M1ROJVB5QIewK3Kk3Hvk8hkpSSCTwdJcXQF+2B0QzLhyf+x4vxRt3I1kFF2iVQo0zO8=
+ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
+	s=arc-20240116; t=1779417800; c=relaxed/simple;
+	bh=8ZhuWj1aSq3I7cHYWm7u1lPbQrRDI40Ey14IF2Www3Y=;
+	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
+	 In-Reply-To:Content-Type; b=LNimHEUftRxdUA7+ptsLbl6wIU0F1hVgj9z0bsBH3yd6uOUgQqmLVrxmp8bn+JkWxW8n/jGWlMwVZPjvAm5KrhU6SWmD4hrGf/Ww+GmwwXesKtBuZhxrVjAECFzQQQzjV2LOfxhCrWr9PaTvfraLt1X68LoWcMdDXE4ETpyJQkI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=rock-chips.com; spf=pass smtp.mailfrom=rock-chips.com; dkim=pass (1024-bit key) header.d=rock-chips.com header.i=@rock-chips.com header.b=VxhoZe2C; arc=none smtp.client-ip=220.197.32.117
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=rock-chips.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=rock-chips.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=nxp.com header.i=@nxp.com header.b="Ylv7Y6P4"
-ARC-Seal: i=1; a=rsa-sha256; s=arcselector10001; d=microsoft.com; cv=none;
- b=myswI/VAjxaxvfNNtjLgPEanBoCIbwlMFX/Fg5q3vmrSU5TVDUIKO4U56fz0OKbAZHtAu++09Sm5fmVswhGgPExgKhwHh/I1Z6A2Kc6XCbR225aZkBU1o9d8/xlkEK897iCW8Jbjm5b9+fXRnwhxk7HPiKMMrNowZ5Cc5GOdsfqGNC2E3afwjEOiLAZEgZf5SjwjD+rphMszsilCvCdC2DKA+vR5hEPp6t5wxCflBQHUH6E5OiBsKyhxzjLUe3tRC3z4DwPfyDwnPBgmckdYd/1pkJcFxgHcUOBlFej1dCl5im65qMrm//HacLX92FgSkoOEm8P9Z/CEvOoHjITSJA==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com;
- s=arcselector10001;
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
- bh=Fmjkfwpdzafb38ROYmKpKN+LXamcb6hmOMFyL90HSJw=;
- b=f5xIvviRcSP3a4+0yOFmK8EyV4QmKBBhrFoQeypWyCzCailZxefFWH0CewNyTT6DaY3ST4ts+2ZIsgTDRYkGsMCGSfdTjEfXDYWzqWSqAIrsXgmtA+TXArrUAY1kGnBS26csuRNZSwIZTKTCsq+yNY9WeLBoOYGCrGb6cy7kmxRDMoUyYLaB4PGDfO406Rz5Wx7AttkA5x6M+6yw6l4SEsacl+wIYzwdC55bSXwd4xvqvw6RUTLO5rMJR7ZzXZyCiQ7Fz3Q3Fp7WOXc6Pybsu/ktKqnlyHHcVbAvenTrQ9seGYVTXMKdytcoGbDyojJnqVptI94eyZnjpRLWJkHdaw==
-ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
- smtp.mailfrom=nxp.com; dmarc=pass action=none header.from=nxp.com; dkim=pass
- header.d=nxp.com; arc=none
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=nxp.com; s=selector1;
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
- bh=Fmjkfwpdzafb38ROYmKpKN+LXamcb6hmOMFyL90HSJw=;
- b=Ylv7Y6P4+qwZHdr+u7xxI6efpHElSB109IkAz/RGBn4HNne6qVTeW9lzmOcUTCjiy2hdjQ0Hwe7ZH2va9iHRflRmcEF30/9wOTUHaLt/oWY/HFuQO9NcY7hyrgzY4Y8EjjG+giJSjlaGGYdIqG3oSqs7Jn3//gKyQzkbRoQGAvTM7b6OpuUPVgLkRSjKqin1OnotzWOMClWcP6pUVE9HLkNp3St1oU+hffDYpxQ/19+HZhOEhriiKkmeNYzDJNIQUy3j4vMCfc8A/xf3vqKkYqFipl8w9VGb8Nt7euDT1e7zqeM95gutQQUQ37dtW7Gft4XnXk2qDo5Rm7yfplwCbg==
-Received: from GV2PR04MB12019.eurprd04.prod.outlook.com
- (2603:10a6:150:30c::14) by PA6PR04MB11871.eurprd04.prod.outlook.com
- (2603:10a6:102:518::17) with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.21.48.17; Fri, 22 May
- 2026 02:41:23 +0000
-Received: from GV2PR04MB12019.eurprd04.prod.outlook.com
- ([fe80::ed75:bac1:2554:5cbe]) by GV2PR04MB12019.eurprd04.prod.outlook.com
- ([fe80::ed75:bac1:2554:5cbe%4]) with mapi id 15.21.0048.016; Fri, 22 May 2026
- 02:41:23 +0000
-From: Hongxing Zhu <hongxing.zhu@nxp.com>
-To: "sashiko-reviews@lists.linux.dev" <sashiko-reviews@lists.linux.dev>
-CC: "devicetree@vger.kernel.org" <devicetree@vger.kernel.org>,
-	"robh@kernel.org" <robh@kernel.org>, "Frank.Li@kernel.org"
-	<Frank.Li@kernel.org>, "linux-pci@vger.kernel.org"
-	<linux-pci@vger.kernel.org>, "conor+dt@kernel.org" <conor+dt@kernel.org>,
-	"imx@lists.linux.dev" <imx@lists.linux.dev>
-Subject: RE: [PATCH v5 3/3] PCI: imx6: Add root port reset to support link
- recovery
-Thread-Topic: [PATCH v5 3/3] PCI: imx6: Add root port reset to support link
- recovery
-Thread-Index: AQHc6QSKk304yivb60Sq6eissATpprYYVd4AgAD5HOA=
-Date: Fri, 22 May 2026 02:41:22 +0000
-Message-ID:
- <GV2PR04MB12019D35A0E5244491CD7FA988C0F2@GV2PR04MB12019.eurprd04.prod.outlook.com>
-References: <20260521093255.61585-4-hongxing.zhu@nxp.com>
- <20260521112122.F334C1F000E9@smtp.kernel.org>
-In-Reply-To: <20260521112122.F334C1F000E9@smtp.kernel.org>
-Accept-Language: en-US
-Content-Language: en-US
-X-MS-Has-Attach:
-X-MS-TNEF-Correlator:
-authentication-results: dkim=none (message not signed)
- header.d=none;dmarc=none action=none header.from=nxp.com;
-x-ms-publictraffictype: Email
-x-ms-traffictypediagnostic: GV2PR04MB12019:EE_|PA6PR04MB11871:EE_
-x-ms-office365-filtering-correlation-id: f95a0f45-f5e6-4902-6857-08deb7ab9cbd
-x-ms-exchange-senderadcheck: 1
-x-ms-exchange-antispam-relay: 0
-x-microsoft-antispam:
- BCL:0;ARA:13230040|366016|376014|19092799006|1800799024|18002099003|38070700021|56012099003|4143699003|22082099003|4133799003|6133799003|5023799004|11063799006;
-x-microsoft-antispam-message-info:
- d6QSbwKFwcR191cmkDJpmN8SJGberh8FFkhDOojdJpRNhOBgOqlIK6AgAdds+7fJZUAc/q7W1NBkKv/C9AuJGj4dfyw9MtHLUz9FPpPPJ4vMh2HuQLttBGCq5SpismWvJnwj6LxjN4/B5dQmkq+sB0lC+jt75IyUhc2dm8Lu4ntziz3wgUcPjPU+3DhtHcWk+KzoEXDsnZfxQ1TF0qTHhuH1T1IaStBadyC/jvjlP35fNIBGBxAKNC35KvoTnlo0Paq8cFRfivZ/nGnEsxaUdt0b9rdH0JYm+yR8tLE7abgA9NLo8WDvXvC8V68QY/tK/iYIY5R3OhGgYlADSrXtZ0qiOT1A/ZLzqASXQr99xwGzKNlfQe9OnpWjsxlYVy3EifMomjrX4AQrk2NffVAmxImXqjWlNeToR6tsfc2dnRhwX4+uhBdN93DOqx9IwQDWjbLe9P4KJRoiXmTEKGPM6hw8FzQslXIvfJkwdQNVu3HpjcWX2dOz5Jfw43HGFh4bj+gOqsWLP1jEec+VZiv121vIO62SIw0rVjT5RmSgqJYYTqJNMNVpeFmd+6lWrZGqVPhhVtugTe61WJsxjiBkFatka3VlBoZqJz8OCzKOVjIqdSwsnXGpHjE6Kuk3JvTFbvzqTBdC9pn3ounUCY9OUHY/g++Cjq4wzjE+f8mjSWMfjE20a9wxhq/31gYmo9enReY/yG2mBk5Fx02lc9h4x0Apz2Bk9W+AAHu7k+PzZgUVf8vMtFQaeq3UjRepc6kt
-x-forefront-antispam-report:
- CIP:255.255.255.255;CTRY:;LANG:en;SCL:1;SRV:;IPV:NLI;SFV:NSPM;H:GV2PR04MB12019.eurprd04.prod.outlook.com;PTR:;CAT:NONE;SFS:(13230040)(366016)(376014)(19092799006)(1800799024)(18002099003)(38070700021)(56012099003)(4143699003)(22082099003)(4133799003)(6133799003)(5023799004)(11063799006);DIR:OUT;SFP:1101;
-x-ms-exchange-antispam-messagedata-chunkcount: 1
-x-ms-exchange-antispam-messagedata-0:
- =?us-ascii?Q?6NP83SGNIuXTsWrOeQ+N0qjqSxk6ij1RNB3P1cm0R1L79rvyQAd9ZBWGxxJE?=
- =?us-ascii?Q?XR+bqbcSRcXzJKGHuATV9i2pF7SeypIhsiEIsbSh3Gk8/SC1rpYeIXr7E/CL?=
- =?us-ascii?Q?zx8Xi7jWbHlAyjR/Z2A52MYt7/m9oX8Gw1FAwRjpBGma61+30s5p0aLnOwxb?=
- =?us-ascii?Q?AnTobC+f+cbC/fGW1OCAyQ8fqRpN/l7K0/b7e5AKCibYPEZT7DwPWvxhRLcQ?=
- =?us-ascii?Q?fL3517Hs91CgH3/JmOBK8cRiWzIlAncPEvXofku2o5mqHKRU+f0qQA775bx5?=
- =?us-ascii?Q?5uL0NN9ZkHLTEIIpkwekgb8uqVd6OOZlun+3LxGaBfFPib+Brf39sHqKNBEM?=
- =?us-ascii?Q?YbibGO9ewlQWYdfDjEpQY5USz4XuZKJFHGthqZ/k5iUF2sb7nR6FgxFpH+Il?=
- =?us-ascii?Q?EbTXl2xIygIcRULx76xuI9ZXkJi7iZhcu72zAkMd1NYnXDEyRKNMvT2Tq/d9?=
- =?us-ascii?Q?8MEUkueaeQOjfpsPmkuWa7tWP6gbthTkfMlImkRM2EWpX6hhD7IQ725yP24L?=
- =?us-ascii?Q?F6tca57dViQH3xgvSoIJrfKDuusNWiJIabuSpN/fLeBd3psqK6K5NjpDlhqu?=
- =?us-ascii?Q?csfyWXkK6sdx+JVa62sNc9iJ3v75auKW2LupZNLvPDhBXgF+gKnSGd4vUyOO?=
- =?us-ascii?Q?1Es3ecjYlAvUHRxTytQSMuHYuM3b6GAe8ubMi4LcKgWKRxddAaOfSPiZsuaP?=
- =?us-ascii?Q?IPuATFkgzHmvjVVJesnIKqp8OmBlqqAhdSqJrxKZoxKKLkm1Odb8ooXsLs9W?=
- =?us-ascii?Q?MZrQ7In0yAZ1m0e4bu3s7z1zuq3gePLlxrP4fLeoqqpk7NCGjCSceoxhDugE?=
- =?us-ascii?Q?yMmurFlrEaw+/cCFDJt/jZlYWcRmNkBK/hcqH7oBL+//+Nvs91m8O+ciyP4E?=
- =?us-ascii?Q?GOar55Cy1bDkJOqdAzf+MEzw8vqZXgnVEfW9uqJqSDAXlJSnhVuEPnd1RQjQ?=
- =?us-ascii?Q?8l9Buiw5/tjuzkLtemECbrbwQqCRW5QEtqxo4gg6F7TUBpH9f7xyjDIvOEXh?=
- =?us-ascii?Q?PDN7pT/SWT3DY9NeYUED2ATzGZxYhAjt6NTKAeedA7ZNdmsDXHLvcBK3dEw6?=
- =?us-ascii?Q?UV1jQv+uEchKVxET4FDMlyeX1+ICknBTkG9SKF5wuRxRmJhj5U26ICDUvTeQ?=
- =?us-ascii?Q?kJ9J6+5B9bt//cTyu3Pcn6JuRjEwfk0C+UZjpOk/NO7hu0Hs/qJ/KAyqoVr2?=
- =?us-ascii?Q?q/DSfFk0oatsH6+ijEFyFXHNwJd7lIFud0PdkGh4HhJL4ZylDnwLQW8v5sIV?=
- =?us-ascii?Q?0Z04qlR6LSOMFqkCkDqr7ZwWOlea1PoPMBFdiLIpUvq4EcHeRBfVUCXi88dx?=
- =?us-ascii?Q?Ihkm1/WwLUG/sF+mPJ1APLp1/XdjRrtNUqJ01a35HoYoc5AlQq5+k5iVeil2?=
- =?us-ascii?Q?3RYfHhn6rA+5DyymmuXaXQb7DpreKQ+/2sPDrr3l8WZa8r5Y712TU98Hfi2C?=
- =?us-ascii?Q?G9zGFY7doxdh91H+ehE+aVcVgP0p2s3+NNyUjvZbb1D+O60LX7AP63LAxL8k?=
- =?us-ascii?Q?HHfKpUs6HCPTtOix1F22dbPc1LGCNXu7eUGyg717YMLId0PnP5p6nNV14ab4?=
- =?us-ascii?Q?nvopk3dGb4JAYihgU8PhNLxNlBAAt1dVxr9i2l18kTHuGaEEh6f1rbw7yCCM?=
- =?us-ascii?Q?o6ZahfuSoqbD32CBkvnIN8E18MEqFi4S+T4WbchD1u7st0fCvHMlx9ASLo4n?=
- =?us-ascii?Q?j3eX5z1DNKfSFhTobyGUCL5Nn9YwVxdMJCEmBPYVq4XSdE8a?=
-Content-Type: text/plain; charset="us-ascii"
-Content-Transfer-Encoding: quoted-printable
+	dkim=pass (1024-bit key) header.d=rock-chips.com header.i=@rock-chips.com header.b="VxhoZe2C"
+Received: from [172.16.12.51] (unknown [58.22.7.114])
+	by smtp.qiye.163.com (Hmail) with ESMTP id 3f62c0fdb;
+	Fri, 22 May 2026 10:37:53 +0800 (GMT+08:00)
+Message-ID: <f689af63-f438-492e-8e80-bea3cdbbc700@rock-chips.com>
+Date: Fri, 22 May 2026 10:37:50 +0800
 Precedence: bulk
 X-Mailing-List: sashiko-reviews@lists.linux.dev
 List-Id: <sashiko-reviews.lists.linux.dev>
 List-Subscribe: <mailto:sashiko-reviews+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:sashiko-reviews+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-X-OriginatorOrg: nxp.com
-X-MS-Exchange-CrossTenant-AuthAs: Internal
-X-MS-Exchange-CrossTenant-AuthSource: GV2PR04MB12019.eurprd04.prod.outlook.com
-X-MS-Exchange-CrossTenant-Network-Message-Id: f95a0f45-f5e6-4902-6857-08deb7ab9cbd
-X-MS-Exchange-CrossTenant-originalarrivaltime: 22 May 2026 02:41:23.0044
- (UTC)
-X-MS-Exchange-CrossTenant-fromentityheader: Hosted
-X-MS-Exchange-CrossTenant-id: 686ea1d3-bc2b-4c6f-a92c-d99c5c301635
-X-MS-Exchange-CrossTenant-mailboxtype: HOSTED
-X-MS-Exchange-CrossTenant-userprincipalname: Eqi7hjA6q2sAsgLkEznhr04+E+TXhgVOHE47VG3T3AT1PgXuakT6GnIyHT4tQZNDEo+BRwONrA7PP28aiKVdjA==
-X-MS-Exchange-Transport-CrossTenantHeadersStamped: PA6PR04MB11871
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH 5/5] drm/rockchip: cdn-dp: Add multiple bridges to support
+ PHY port selection
+To: sashiko-reviews@lists.linux.dev
+Cc: vkoul@kernel.org, linux-phy@lists.infradead.org,
+ neil.armstrong@linaro.org, olteanv@gmail.com,
+ Heiko Stuebner <heiko@sntech.de>
+References: <20260521032854.103-6-kernel@airkyi.com>
+ <20260521062223.913FB1F000E9@smtp.kernel.org>
+Content-Language: en-US
+From: Chaoyi Chen <chaoyi.chen@rock-chips.com>
+In-Reply-To: <20260521062223.913FB1F000E9@smtp.kernel.org>
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 7bit
+X-HM-Tid: 0a9e4d8be1f203abkunm6f37287ad7698
+X-HM-MType: 1
+X-HM-Spam-Status: e1kfGhgUHx5ZQUpXWQgPGg8OCBgUHx5ZQUlOS1dZFg8aDwILHllBWSg2Ly
+	tZV1koWUFDSUNOT01LS0k3V1kYFggdWUFKV1ktWUFJV1kPCRoVCBIfWUFZQx0dQlZDHUhDQhhDHx
+	0fTUJWFRQJFhoXVRMBExYaEhckFA4PWVdZGBILWUFZTkNVSUlVTFVKSk9ZV1kWGg8SFR0UWUFZT0
+	tIVUpLSU9PT0tVSktLVUtZBg++
+DKIM-Signature: a=rsa-sha256;
+	b=VxhoZe2CRRNAKZw+uIws9B2CvF2ZmiSCNvGG4tqFgS5omibZZNlGWQdunzj8YFq8MjlV8UiA4OQWGM4f3dRzKqSUtBQgKWWjEHeMFN0jW3AnvlBJ4GfBjw8P67WoF4650grp7NfcT6l6W4hZN2ypWGOMAcdZJwq1wIcg6GpAR+E=; s=default; c=relaxed/relaxed; d=rock-chips.com; v=1;
+	bh=0eeInbuY3d/9JgEtpw0Rxtt7tF0qmwV2KEd8Yiw46CM=;
+	h=date:mime-version:subject:message-id:from;
 
-> -----Original Message-----
-> From: sashiko-bot@kernel.org <sashiko-bot@kernel.org>
-> Sent: Thursday, May 21, 2026 7:21 PM
-> To: Hongxing Zhu <hongxing.zhu@nxp.com>
-> Cc: devicetree@vger.kernel.org; robh@kernel.org; Frank.Li@kernel.org; lin=
-ux-
-> pci@vger.kernel.org; conor+dt@kernel.org; imx@lists.linux.dev
-> Subject: Re: [PATCH v5 3/3] PCI: imx6: Add root port reset to support lin=
-k recovery
->=20
-> Thank you for your contribution! Sashiko AI review found 7 potential issu=
-e(s) to
-> consider:
-> - [High] The `lnk_intr` member is defined as `u32`, which wraps negative =
-error
-> codes from `platform_get_irq_byname` to large positive integers, breaking=
- driver
-> probe.
-> - [High] Read-modify-write (RMW) operations via `regmap_clear_bits` and
-> `regmap_set_bits` unintentionally clear Write-1-to-Clear (W1C) status bit=
-s.
-> - [High] Iterating over the PCI bus device list without holding the `pci_=
-bus_sem`
-> read lock causes a race condition.
-> - [High] The patch references `reset_root_port` and calls
-> `pci_host_handle_link_down()`, neither of which exist in the mainline ker=
-nel tree.
-> - [High] Hardware LUT state is accessed in `imx_pcie_reset_root_port` wit=
-hout
-> acquiring the protective `imx_pcie->lock` mutex.
-> - [Medium] The shared interrupt handler claims the interrupt without veri=
-fying
-> that its specific interrupt source is actually enabled, leading to spurio=
-us wakeups.
-> - [Low] Using `platform_get_irq_byname` instead of
-> `platform_get_irq_byname_optional` for an optional interrupt will cause
-> unnecessary kernel error logs.
+Oh! Interesting AI. It really did uncover some issues.
+
+On 5/21/2026 2:22 PM, sashiko-bot@kernel.org wrote:
+> Thank you for your contribution! Sashiko AI review found 11 potential issue(s) to consider:
+> - [High] Prematurely dropping the reference count of the last bridge in `cdn_bridge_add()` will cause a use-after-free.
+> - [High] The `prev_port` pointer is used uninitialized in `cdn_dp_bridge_edid_read()`, leading to a kernel crash.
+> - [High] `cdn_dp_connected_port()` ignores connection status for extcon configurations, breaking hotplug detection.
+> - [High] Missing bounds check in `cdn_dp_parse_next_bridge_dt()` allows an out-of-bounds write to the `next_bridge_list` array.
+> - [High] The `lanes` stack array is read out-of-bounds or uninitialized in `cdn_dp_connected_port()`.
+> - [High] DRM bridge references are leaked on error paths during DT parsing and driver binding.
+> - [High] If link training fails in `cdn_dp_switch_port()`, it returns an error but leaves the DP controller erroneously marked as active.
+> - [High] `cdn_dp_switch_port()` incorrectly aborts hardware switching when the DP controller is active, causing EDID reads from the wrong port.
+> - [High] Disabling an inactive bridge erroneously disables the active DP controller for another bridge.
+> - [Medium] Overwriting `connector->fwnode` in `cdn_bridge_add()` causes a memory leak.
+> - [Medium] Incorrect check for the active port treats valid index 0 as invalid.
 > --
->=20
-> commit c3df91626a3cc2df53cc4e1da0e0b1aeb4d5d8cd
-> Author: Richard Zhu <hongxing.zhu@nxp.com>
->=20
-> PCI: imx6: Add root port reset to support link recovery
->=20
-> The PCIe link can go down due to various unexpected circumstances. Add ro=
-ot
-> port reset support to enable link recovery for the i.MX PCIe controller w=
-hen the
-> optional "intr" interrupt is present.
->=20
-> > diff --git a/drivers/pci/controller/dwc/pci-imx6.c
-> > b/drivers/pci/controller/dwc/pci-imx6.c
-> > --- a/drivers/pci/controller/dwc/pci-imx6.c
-> > +++ b/drivers/pci/controller/dwc/pci-imx6.c
->=20
-> [ ... ]
->=20
-> > @@ -158,6 +165,7 @@ struct imx_pcie {
-> >  	bool			supports_clkreq;
-> >  	bool			enable_ext_refclk;
-> >  	struct regmap		*iomuxc_gpr;
-> > +	u32			lnk_intr;
->=20
+> 
+> Hi,
+> 
+> I have reviewed the patch and found some potential issues to share.
+> 
+> commit 082c705aa7547b521ad9df20ac76e0592b41864f
+> Author: Chaoyi Chen <chaoyi.chen@rock-chips.com>
+> 
+>     drm/rockchip: cdn-dp: Add multiple bridges to support PHY port selection
+> 
+> This commit adds support for multiple bridges to the Rockchip cdn-dp driver
+> to allow switching between two USB/DP combo PHYs. It changes the driver to
+> use the DRM AUX HPD bridge and adds DT parsing logic to register multiple
+> bridges.
+> 
+>> @@ -192,14 +193,27 @@ static int cdn_dp_get_sink_count(struct cdn_dp_device *dp, u8 *sink_count)
+>>  static struct cdn_dp_port *cdn_dp_connected_port(struct cdn_dp_device *dp)
+>>  {
+>>  	struct cdn_dp_port *port;
+>> -	int i, lanes;
+>> +	int i, lanes[MAX_PHY];
+>>  
+>>  	for (i = 0; i < dp->ports; i++) {
+>>  		port = dp->port[i];
+>> -		lanes = cdn_dp_get_port_lanes(port);
+>> -		if (lanes)
+>> +		lanes[i] = cdn_dp_get_port_lanes(port);
+>> +		if (!dp->next_bridge_valid)
+>>  			return port;
+> 
 > [Severity: High]
-> Will platform_get_irq_byname returning a negative error code (like -ENXIO=
-) wrap
-> to a large positive integer here, causing the later if (imx_pcie->lnk_int=
-r > 0) check
-> to pass and break driver probe on systems without the optional interrupt?=
- Should
-> this be an int instead?
->=20
-Good catch! will update it later.
-> [ ... ]
->=20
-> > @@ -1306,6 +1314,13 @@ static int imx_pcie_host_init(struct dw_pcie_rp
-> > *pp)
-> >
-> >  	imx_setup_phy_mpll(imx_pcie);
-> >
-> > +	/*
-> > +	 * Callback invoked by PCI core when link down is detected and
-> > +	 * recovery is needed.
-> > +	 */
-> > +	if (pp->bridge)
-> > +		pp->bridge->reset_root_port =3D imx_pcie_reset_root_port;
->=20
-> [Severity: High]
-> Does struct pci_host_bridge have a reset_root_port member? It appears thi=
-s
-> patch relies on out-of-tree or unmerged prerequisites and will cause buil=
-d
-> failures.
-No worries, the dependency had been specified.
->=20
-> [ ... ]
->=20
-> > @@ -1573,6 +1588,9 @@ static int imx_pcie_suspend_noirq(struct device
-> *dev)
-> >  	if (!(imx_pcie->drvdata->flags & IMX_PCIE_FLAG_SUPPORTS_SUSPEND))
-> >  		return 0;
-> >
-> > +	if (imx_pcie->lnk_intr)
-> > +		regmap_clear_bits(imx_pcie->iomuxc_gpr,
-> IMX95_LINK_INT_CTRL_STS,
-> > +				  IMX95_LINK_DOWN_INT_EN);
->=20
-> [Severity: High]
-> Does this read-modify-write operation accidentally clear Write-1-to-Clear=
- status
-> bits?
->=20
-> IMX95_LINK_INT_CTRL_STS contains W1C bits like
-> IMX95_LINK_DOWN_INT_STS.
-> When regmap_clear_bits reads the register, any pending W1C bits will be r=
-ead as
-> 1. Writing them back during the modify phase will inadvertently clear the=
- status
-> bits without handling the interrupt.
->=20
-Okay, would clear the W1C bit firstly, then do the regmap_clear_bits().
-> [ ... ]
->=20
-> > @@ -1632,6 +1653,85 @@ static const struct dev_pm_ops imx_pcie_pm_ops =
-=3D
-> {
-> >  				  imx_pcie_resume_noirq)
-> >  };
-> >
-> > +static irqreturn_t imx_pcie_lnk_irq_isr(int irq, void *priv) {
-> > +	struct imx_pcie *imx_pcie =3D priv;
-> > +	struct dw_pcie *pci =3D imx_pcie->pci;
-> > +	struct device *dev =3D pci->dev;
-> > +	u32 val;
-> > +
-> > +	regmap_read(imx_pcie->iomuxc_gpr, IMX95_LINK_INT_CTRL_STS, &val);
-> > +	if (val & IMX95_LINK_DOWN_INT_STS) {
->=20
+> Does this unconditionally return the first port without checking if it is
+> actually connected? If dp->next_bridge_valid is false (which is the case for
+> extcon setups), it appears to return port on the first iteration regardless
+> of lanes[i], completely breaking hotplug detection.
+> 
+>>  	}
+
+No.
+
+>> +
+>> +	if (dp->next_bridge_valid) {
+>> +		/* If more than one port is available, pick the last active port */
+>> +		if (dp->active_port > 0 && lanes[dp->active_port])
+> 
 > [Severity: Medium]
-> Should this check verify that the interrupt is actually enabled?
->=20
-> Since this is an IRQF_SHARED handler sharing a line with the PME driver, =
-if the
-> hardware status bit is asserted but IMX95_LINK_DOWN_INT_EN is masked, a
-> subsequent interrupt triggered by the PME driver could cause this ISR to
-> incorrectly claim the interrupt and return IRQ_WAKE_THREAD.
-IRQ_WAKE_THREAD only be returned when IMX95_LINK_DOWN_INT_STS is asserted.
->=20
-> [ ... ]
->=20
-> > +static irqreturn_t imx_pcie_lnk_irq_thread(int irq, void *priv) {
-> > +	struct imx_pcie *imx_pcie =3D priv;
-> > +	struct dw_pcie *pci =3D imx_pcie->pci;
-> > +	struct dw_pcie_rp *pp =3D &pci->pp;
-> > +	struct pci_dev *port;
-> > +
-> > +	for_each_pci_bridge(port, pp->bridge->bus)
->=20
-> [Severity: High]
-> Is it safe to iterate over the PCI bus device list without holding the pc=
-i_bus_sem
-> read lock? Traversing the bus->devices list asynchronously risks list cor=
-ruption and
-> use-after-free vulnerabilities if PCI devices are concurrently hot-added =
-or
-> removed. Should pci_walk_bus() or
-> down_read(&pci_bus_sem) be used here?
->=20
-> > +		if (pci_pcie_type(port) =3D=3D PCI_EXP_TYPE_ROOT_PORT)
-> > +			pci_host_handle_link_down(port);
->=20
-> [Severity: High]
-> Is pci_host_handle_link_down() available in the mainline kernel tree?
-> This function appears to be undefined, which will cause a build failure.
->=20
-No worries, the dependency had been specified.
-> [ ... ]
->=20
-> > +static int imx_pcie_reset_root_port(struct pci_host_bridge *bridge,
-> > +				    struct pci_dev *pdev)
-> > +{
-> > +	struct pci_bus *bus =3D bridge->bus;
-> > +	struct dw_pcie_rp *pp =3D bus->sysdata;
-> > +	struct dw_pcie *pci =3D to_dw_pcie_from_pp(pp);
-> > +	struct imx_pcie *imx_pcie =3D to_imx_pcie(pci);
-> > +	int ret;
-> > +
-> > +	imx_pcie_msi_save_restore(imx_pcie, true);
-> > +	if (imx_check_flag(imx_pcie, IMX_PCIE_FLAG_HAS_LUT))
-> > +		imx_pcie_lut_save(imx_pcie);
->=20
-> [Severity: High]
-> Does this access the hardware LUT state without acquiring the protective
-> imx_pcie->lock mutex?
->=20
-> Since imx_pcie_reset_root_port can be invoked asynchronously from the lin=
-k
-> down interrupt handler, concurrent accesses to the LUT configuration from=
- other
-> execution paths (which do use the lock) could lead to a race condition an=
-d corrupt
-> the hardware LUT configuration.
-No worries, there are no race when do the lut save/restore.
->=20
-> [ ... ]
->=20
-> > @@ -1834,9 +1934,33 @@ static int imx_pcie_probe(struct platform_device
-> *pdev)
-> >  			val |=3D PCI_MSI_FLAGS_ENABLE;
-> >  			dw_pcie_writew_dbi(pci, offset + PCI_MSI_FLAGS, val);
-> >  		}
-> > +
-> > +		/* Get link event irq if it is present */
-> > +		imx_pcie->lnk_intr =3D platform_get_irq_byname(pdev, "intr");
->=20
-> [Severity: Low]
-> Since this interrupt is optional, should this use
-> platform_get_irq_byname_optional() to avoid printing unnecessary error
-> messages to the kernel log when it is absent?
-Okay, would update it later.
+> Since dp->active_port is initialized to -1, valid port indices are 0 and 1.
+> Does the check dp->active_port > 0 incorrectly evaluate to false when the
+> active port is 0, skipping the active port?
+> 
 
-Best Regards
-Richard Zhu
+That's right. Will fix in v2.
 
->=20
-> --
-> Sashiko AI
-> review * https://eur01.safelinks.protection.outlook.com/?url=3Dhttps%3A%2=
-F%2Fsa
-> shiko.dev%2F%23%2Fpatchset%2F20260521093255.61585-1-
-> hongxing.zhu%40nxp.com%3Fpart%3D3&data=3D05%7C02%7Chongxing.zhu%40nx
-> p.com%7Ce831884f29d14575cb8408deb72b1830%7C686ea1d3bc2b4c6fa92cd9
-> 9c5c301635%7C0%7C0%7C639149592897765731%7CUnknown%7CTWFpbGZsb
-> 3d8eyJFbXB0eU1hcGkiOnRydWUsIlYiOiIwLjAuMDAwMCIsIlAiOiJXaW4zMiIsIkFOIj
-> oiTWFpbCIsIldUIjoyfQ%3D%3D%7C0%7C%7C%7C&sdata=3DUi0aRHNXO9FFLrgBoH
-> ClFZFn6eYvAj1gwXiWD45uNlc%3D&reserved=3D0
+>> +			return dp->port[dp->active_port];
+>> +
+>> +		/* If the last active port is not available, pick an available port in order */
+>> +		for (i = 0; i < dp->bridge_count; i++) {
+>> +			if (lanes[i])
+> 
+> [Severity: High]
+> Can this read uninitialized stack memory? The lanes stack array is populated
+> in a loop bounded by dp->ports, but accessed here in a loop bounded by
+> dp->bridge_count.
+> 
+> If dp->bridge_count > dp->ports, this will read uninitialized values.
+> Furthermore, since lanes is sized to MAX_PHY, if dp->bridge_count > MAX_PHY,
+> it will perform an out-of-bounds stack read.
+> 
+
+No.
+
+>> +				return dp->port[i];
+>> +		}
+>> +	}
+>> +
+>>  	return NULL;
+>>  }
+> 
+> [ ... ]
+> 
+>> @@ -254,12 +268,45 @@ static const struct drm_edid *
+>>  cdn_dp_bridge_edid_read(struct drm_bridge *bridge, struct drm_connector *connector)
+>>  {
+>>  	struct cdn_dp_device *dp = bridge_to_dp(bridge);
+>> -	const struct drm_edid *drm_edid;
+>> +	struct cdn_dp_bridge *dp_bridge = bridge_to_dp_bridge(bridge);
+>> +	struct cdn_dp_port *port = dp->port[dp_bridge->id];
+>> +	struct cdn_dp_port *prev_port;
+>> +	const struct drm_edid *drm_edid = NULL;
+>>  	int i, ret;
+>>  
+>>  	mutex_lock(&dp->lock);
+>> +
+>> +	/* More than one port is available */
+>> +	if (dp->bridge_count > 1 && !port->phy_enabled) {
+>> +		for (i = 0; i < dp->bridge_count; i++) {
+>> +			/* Another port already enable */
+>> +			if (dp->bridge_list[i] != dp_bridge && dp->bridge_list[i]->enabled)
+>> +				goto get_cache;
+>> +			/* Find already enabled port */
+>> +			if (dp->port[i]->phy_enabled)
+>> +				prev_port = dp->port[i];
+>> +		}
+>> +
+>> +		/* Switch to current port */
+>> +		if (prev_port) {
+> 
+> [Severity: High]
+> Can this lead to a kernel crash by dereferencing an uninitialized pointer?
+> The prev_port variable is not initialized. If no ports are currently enabled
+> (which is common at boot), the for loop will complete without assigning
+> anything to prev_port.
+> 
+> Then if (prev_port) evaluates garbage memory, and calling cdn_dp_switch_port
+> with it will cause a kernel panic.
+>
+
+No.
+
+>> +			ret = cdn_dp_switch_port(dp, prev_port, port);
+>> +			if (ret)
+>> +				goto get_cache;
+>> +		}
+>> +	}
+> 
+> [ ... ]
+> 
+>> @@ -551,6 +599,54 @@ static bool cdn_dp_check_link_status(struct cdn_dp_device *dp)
+>>  	return drm_dp_channel_eq_ok(link_status, min(port->lanes, sink_lanes));
+>>  }
+>>  
+>> +static int cdn_dp_switch_port(struct cdn_dp_device *dp, struct cdn_dp_port *prev_port,
+>> +			      struct cdn_dp_port *port)
+>> +{
+>> +	int ret;
+>> +
+>> +	if (dp->active)
+>> +		return 0;
+> 
+> [Severity: High]
+> Does this incorrectly abort hardware switching? If the DP controller is
+> already active but currently on a different port, returning 0 skips the
+> actual port switch. The caller cdn_dp_bridge_edid_read() will proceed with
+> reading EDID from the wrong (already-active) port and caching it for the
+> new port.
+>
+
+Actually, this is a redundant check. When dp->active is true, 
+this function is never called at all.
+
+>> +
+>> +	ret = cdn_dp_disable_phy(dp, prev_port);
+>> +	if (ret)
+>> +		goto out;
+>> +	ret = cdn_dp_enable_phy(dp, port);
+>> +	if (ret)
+>> +		goto out;
+>> +
+>> +	ret = cdn_dp_get_sink_capability(dp);
+>> +	if (ret) {
+>> +		cdn_dp_disable_phy(dp, port);
+>> +		goto out;
+>> +	}
+>> +
+>> +	dp->active = true;
+>> +	dp->lanes = port->lanes;
+>> +
+>> +	if (!cdn_dp_check_link_status(dp)) {
+>> +		dev_info(dp->dev, "Connected with sink; re-train link\n");
+>> +
+>> +		ret = cdn_dp_train_link(dp);
+>> +		if (ret) {
+>> +			dev_err(dp->dev, "Training link failed: %d\n", ret);
+>> +			goto out;
+> 
+> [Severity: High]
+> If link training fails, this jumps to out and returns the error code, but
+> leaves dp->active = true. Does this trap the port in a permanently broken,
+> untrained state since subsequent calls to cdn_dp_switch_port() will
+> immediately return 0?
+>
+
+The redundant assignment, as mentioned above, should be removed.
+
+>> +		}
+> 
+> [ ... ]
+> 
+>> @@ -639,9 +740,11 @@ static void cdn_dp_bridge_atomic_enable(struct drm_bridge *bridge, struct drm_at
+>>  static void cdn_dp_bridge_atomic_disable(struct drm_bridge *bridge, struct drm_atomic_state *state)
+>>  {
+>>  	struct cdn_dp_device *dp = bridge_to_dp(bridge);
+>> +	struct cdn_dp_bridge *dp_bridge = bridge_to_dp_bridge(bridge);
+>>  	int ret;
+>>  
+>>  	mutex_lock(&dp->lock);
+>> +	dp_bridge->enabled = false;
+>>  
+>>  	if (dp->active) {
+>>  		ret = cdn_dp_disable(dp);
+> 
+> [Severity: High]
+> Does this accidentally disable the active DP controller when another inactive
+> bridge is disabled? If dp->active is true, the entire DP controller is
+> disabled, without checking if the bridge being disabled (dp_bridge) is
+> actually the one driving the active DP port. This would break an active
+> Bridge A if userspace disables an inactive Bridge B.
+> 
+> [ ... ]
+>
+
+No.
+
+>> @@ -967,28 +1085,16 @@ static int cdn_dp_pd_event(struct notifier_block *nb,
+>>  	return NOTIFY_DONE;
+>>  }
+>>  
+>> -static int cdn_dp_bind(struct device *dev, struct device *master, void *data)
+>> +static int cdn_bridge_add(struct device *dev,
+>> +			  struct drm_bridge *bridge,
+>> +			  struct drm_bridge *next_bridge,
+>> +			  struct drm_encoder *encoder)
+>>  {
+>>  	struct cdn_dp_device *dp = dev_get_drvdata(dev);
+>> -	struct drm_encoder *encoder;
+>> +	struct drm_device *drm_dev = dp->drm_dev;
+>> +	struct drm_bridge *last_bridge __free(drm_bridge_put) = NULL;
+> 
+> [Severity: High]
+> Will this cause a reference count underflow and a use-after-free
+> vulnerability? The last_bridge pointer is populated by
+> drm_bridge_chain_get_last_bridge(), which returns a raw pointer without
+> incrementing the bridge's reference count. When last_bridge goes out of
+> scope, the automatic drm_bridge_put() will prematurely decrement the
+> refcount.
+> 
+
+No.
+
+>>  	struct drm_connector *connector;
+>> -	struct cdn_dp_port *port;
+>> -	struct drm_device *drm_dev = data;
+>> -	int ret, i;
+>> -
+> 
+> [ ... ]
+> 
+>> +	if (next_bridge) {
+>> +		ret = drm_bridge_attach(encoder, next_bridge, bridge,
+>> +					DRM_BRIDGE_ATTACH_NO_CONNECTOR);
+>> +		if (ret)
+>> +			return ret;
+>> +
+>> +		last_bridge = drm_bridge_chain_get_last_bridge(bridge->encoder);
+>> +	}
+>> +
+>>  	connector = drm_bridge_connector_init(drm_dev, encoder);
+>>  	if (IS_ERR(connector)) {
+>>  		ret = PTR_ERR(connector);
+>> @@ -1030,8 +1145,99 @@ static int cdn_dp_bind(struct device *dev, struct device *master, void *data)
+>>  		return ret;
+>>  	}
+>>  
+>> +	if (last_bridge)
+>> +		connector->fwnode = fwnode_handle_get(of_fwnode_handle(last_bridge->of_node));
+> 
+> [Severity: Medium]
+> Is this assignment leaking an fwnode reference? drm_bridge_connector_init()
+> automatically sets connector->fwnode using the of_node of the last bridge
+> and acquires a reference via fwnode_handle_get(). Overwriting it here without
+> dropping the original reference will cause a memory leak.
+>
+
+Yes, the old fwnode should be put.
+
+>> +
+>>  	drm_connector_attach_encoder(connector, encoder);
+>>  
+>> +	return 0;
+>> +}
+>> +
+>> +static int cdn_dp_parse_next_bridge_dt(struct cdn_dp_device *dp)
+>> +{
+>> +	struct device_node *np = dp->dev->of_node;
+>> +	struct device_node *port __free(device_node) = of_graph_get_port_by_id(np, 1);
+>> +	struct drm_bridge *bridge;
+>> +	int count = 0;
+>> +	int ret = 0;
+>> +	int i;
+>> +
+>> +	/* If device use extcon, do not use hpd bridge */
+>> +	for (i = 0; i < dp->ports; i++) {
+>> +		if (dp->port[i]->extcon) {
+>> +			dp->bridge_count = 1;
+>> +			return 0;
+>> +		}
+>> +	}
+>> +
+>> +	/* One endpoint may correspond to one next bridge. */
+>> +	for_each_of_graph_port_endpoint(port, dp_ep) {
+>> +		struct device_node *next_bridge_node __free(device_node) =
+>> +			of_graph_get_remote_port_parent(dp_ep);
+>> +
+>> +		bridge = of_drm_find_bridge(next_bridge_node);
+>> +		if (!bridge) {
+>> +			ret = -EPROBE_DEFER;
+>> +			goto out;
+> 
+> [Severity: High]
+> Does this leak the DRM bridge references acquired in earlier loop iterations?
+> If of_drm_find_bridge() returns NULL on a subsequent iteration, it jumps to
+> out and returns -EPROBE_DEFER without releasing the references previously
+> obtained with drm_bridge_get().
+>
+
+Yes, it should be put.
+
+>> +		}
+>> +
+>> +		dp->next_bridge_valid = true;
+>> +		dp->next_bridge_list[count] = drm_bridge_get(bridge);
+>> +		count++;
+> 
+> [Severity: High]
+> Could this overflow the next_bridge_list array? next_bridge_list is sized to
+> MAX_PHY (2). If a device tree specifies more than two endpoints, count will
+> exceed the array bounds and corrupt adjacent fields in the cdn_dp_device
+> struct.
+>
+
+No.
+
+>> +	}
+>> +
+>> +out:
+>> +	dp->bridge_count = count ? count : 1;
+>> +	return ret;
+>> +}
+>> +
+>> +static int cdn_dp_bind(struct device *dev, struct device *master, void *data)
+>> +{
+> 
+> [ ... ]
+> 
+>> +	for (i = 0; i < dp->bridge_count; i++) {
+>> +		encoder = &dp->bridge_list[i]->encoder.encoder;
+>> +		bridge = &dp->bridge_list[i]->bridge;
+>> +		next_bridge = dp->next_bridge_list[i];
+>> +		ret = cdn_bridge_add(dev, bridge, next_bridge, encoder);
+>> +		if (ret)
+>> +			return ret;
+> 
+> [Severity: High]
+> Does this leak the bridge references acquired in cdn_dp_parse_next_bridge_dt
+> if cdn_bridge_add() fails? Returning directly without a cleanup path means
+> drm_bridge_put() is never called for dp->next_bridge_list.
+> 
+>> +	}
+> 
+
+Yes, it should be put.
+
+-- 
+Best, 
+Chaoyi
