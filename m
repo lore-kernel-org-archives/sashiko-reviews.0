@@ -1,115 +1,172 @@
-Received: from va-2-111.ptr.blmpb.com (va-2-111.ptr.blmpb.com [209.127.231.111])
+Received: from mail-pf1-f195.google.com (mail-pf1-f195.google.com [209.85.210.195])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6D5F5360EC2
-	for <sashiko-reviews@lists.linux.dev>; Fri, 22 May 2026 06:35:43 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.127.231.111
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C23F030567F
+	for <sashiko-reviews@lists.linux.dev>; Fri, 22 May 2026 07:13:47 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.210.195
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1779431747; cv=none; b=s1qrTQlsxWeIwoymIl0JAl/ZaCfjywhAs5iG3zM4zXk3fcdQYA+wpFVwMy0GRnkCLTWNgi6gRvOQ8V1AMb82GMv0pzFrPn+ZEptENenKgr+GnHN8yWFutHMcj+oB/RqcIEPBynAd+aQUzYVqy7t8aaP20WsLq24iJcVo/XDjIrw=
+	t=1779434029; cv=none; b=koS/O6d9CFlkSkojWf2fn5Ikc9lRCSZxqlFmquteRK4llZgnPOnZzo5bP2zjdqDhlVWrXB37hGxXH3U51cEkxwh4fEmT9SPEJzHVx+w91+4z38ShqD2XKcZ+D0XlrRiL25kk5mvTVKK8WfBdyjKkxw4tUoSUF/F09Wy2BUWiriU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1779431747; c=relaxed/simple;
-	bh=oY+ecSYSgPgc7pCEUfW4cdaij9bLn1rZAQE6HCOPSTg=;
-	h=In-Reply-To:To:Message-Id:Mime-Version:Cc:From:Subject:Date:
-	 Content-Type:References; b=hT6tZMcrxL2QCuJIPSems2dwiqzelLvY6XQQhGzSEIhrFdMGo/6mfBmdw81cO33ZJHvqXKZsW3js1BmJClrHzqUlFR+CepCXsyW56mPFzCwBu7x7dkGQKTZajpvPRGluNvz/OYqjqagK+5lgT1qy4Hu5QrUF+8PRLrLvtYJNKQw=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=bytedance.com; spf=pass smtp.mailfrom=bytedance.com; dkim=pass (2048-bit key) header.d=bytedance.com header.i=@bytedance.com header.b=p0ALeNKz; arc=none smtp.client-ip=209.127.231.111
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=bytedance.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=bytedance.com
+	s=arc-20240116; t=1779434029; c=relaxed/simple;
+	bh=9Fa/UB4HkPYCNyGFgozf00j+m/SdWP845EBaSOPQEOw=;
+	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
+	 In-Reply-To:Content-Type; b=Gf+4BNpNf7geauUrzSHAXdDiQmLEArm/oesZjazYPTktqxOylzIzkiNuSiNLN5Q7OEHMjAyj3roxZ6TjBNhy7OHESkO9pf7VZ2sMdmTwaeXUqjEfmTiO5GmIsrZyBFdA7KT2tLHcrrBFPpG5zhjq1uJCGzv7NfX3Rpm0RxsXL0U=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=FTaRdiXi; arc=none smtp.client-ip=209.85.210.195
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=bytedance.com header.i=@bytedance.com header.b="p0ALeNKz"
-DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed;
- s=2212171451; d=bytedance.com; t=1779431732; h=from:subject:
- mime-version:from:date:message-id:subject:to:cc:reply-to:content-type:
- mime-version:in-reply-to:message-id;
- bh=C1vQRP1D3NY632F8UPmb0CyLB1qMSem5wwX2O1TVSL4=;
- b=p0ALeNKzcr2HZf6FBV510jawDfkMkJZYsnNLlMTCYMnPepbQkicBuPQG6qnjL8Sc7VXx9M
- 04l506R5XoY78PESqOvlV3uNXyJcT9NorG6smSglMWaC82LPIK5f4fjdenFXu1MQHi0+uS
- y3okbDVkIsuT1hvVXMTSbqQR/GW4ruddA1LxbSTOTr04ZypzDQAvt4rs05RrDtAHXpuNNd
- +DK9AdpvFea2x+Pt05sQYIL3q0K36bKQ5GE7n2fThoDmldlz4S2K2PB0iQXhsEflsgdwCT
- vzMuzr5RohsUnz1ibhFJ/71PQ+jWFuYqO7aBCSV4RzrOxzHCzl7gaIxhrBYiaw==
-Content-Transfer-Encoding: quoted-printable
-In-Reply-To: <20260521113810.A5BAB1F000E9@smtp.kernel.org>
-X-Lms-Return-Path: <lba+26a0ff932+a930c1+lists.linux.dev+qirui.001@bytedance.com>
-User-Agent: Mozilla Thunderbird
-To: <sashiko-reviews@lists.linux.dev>
-Message-Id: <621ff628-e3a0-489b-8730-e07153d0c0e0@bytedance.com>
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="FTaRdiXi"
+Received: by mail-pf1-f195.google.com with SMTP id d2e1a72fcca58-83f674f978fso2458099b3a.3
+        for <sashiko-reviews@lists.linux.dev>; Fri, 22 May 2026 00:13:47 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20251104; t=1779434027; x=1780038827; darn=lists.linux.dev;
+        h=content-transfer-encoding:in-reply-to:from:content-language
+         :references:cc:to:subject:user-agent:mime-version:date:message-id
+         :from:to:cc:subject:date:message-id:reply-to;
+        bh=/ZUvJ6eFcygxv78l6IC5YA/pTb85t8JqQtZJgDAjKvE=;
+        b=FTaRdiXiOlyTWOKyHONFeu+2iTPMNHfYHjCoAcIe2vqM4il+08frBelkQllzMhsTra
+         icp6ezGtEhiJ3eCfCFgHzs+OQ3XcFeCJoidF4FU2G0unluyxQbLEP1X1dAjz4MX+fkv0
+         c0tNt99uwU2VL9K/ECEzasIqeudJqxzo8Wi0BWDmHKk2nN06NaU0tOoQ0MeIbDiQ1/62
+         UlNZib9nhoCVri1d7hHDVPZlWhBdkNCxgYiafZ1icSA4oMFDYXi9G6I/8FXHjki803+8
+         pFS0ROH6ViVCrnFVMxTatfgMvmN/8N77RHcB0DlIlp0qcddtvWcpqUzljuQ+0elP9U3y
+         TTTg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20251104; t=1779434027; x=1780038827;
+        h=content-transfer-encoding:in-reply-to:from:content-language
+         :references:cc:to:subject:user-agent:mime-version:date:message-id
+         :x-gm-gg:x-gm-message-state:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=/ZUvJ6eFcygxv78l6IC5YA/pTb85t8JqQtZJgDAjKvE=;
+        b=lubVhIGbOUybgc9FgYzQByFkSVzj3ihZK3NRg0FwpddLKXKcAJuMLdMABpKoFkQJe3
+         5Hs1oPjLXD8qBaOhqvZxhbUFAakqk0rThW9u4tx2E1/H/+bdVXRUM4hZvBNvDf6aUhG7
+         3OaDXXn1Hq8lqdj8ht/eCNPLbAaf7ZaQ4hEOWsxEk9lWmoLsXxvMZ5HdcNmWKjnYYtA+
+         XNgdSkGWl7OB0lo/s8LXwGfL9/Okua4ReZAlKMQNpPiHyLhXpBOzpvliaJc+TqY/yPpd
+         yKn25SN83rafzxV1LCscC4lXxfd+JpvLacSEgXJNC9rZgScfDENC3M1ATsGutmFxeUYk
+         Z47g==
+X-Gm-Message-State: AOJu0YxE2+Yio3qq74YSSo/E2cG7sWEKG2dC4DOHgan9iDqOD147Ok4D
+	Om6qY0WtxqA24BmsvZE7DwsHAG/ha5GgXZ4GR9EoqD8Esp8ixDAKPkoYA79kd7OGzKWJXLx9
+X-Gm-Gg: Acq92OEA8AS4NxQQK1BPYN/bdKkBeDAkPjIV67o8Q58BYho4A0ffQ6iwY59FhtsuWZb
+	Mu0uzPZz7Iaf0/3DXCPgLS/m16IIhfoUVFR9Ajf6EfrQT2e+TwUhtIhHSFiM6ymax1M41oXzIzc
+	/o58yIrBbjkcnq1rkRDM+zXCtVRSgK9650kHUK+exFBeWURakrflfiQlNnYBJnTrd57R0d8Haab
+	5NrH87sZI6N+2L4GJFrG9lKnlAF/+6l3lsJFGypKZeA38vZvUDHMZomjdx7hNB9hEhnvrx2VbIb
+	42qp9RPxCDKlKdHPgs65MjS7JR+pqXSXGZdMf+/jUifJtXLxSW8kAqPeGWx6z96D9705rPU0O4C
+	3EufxF7d+25Vp9sxLc1Ik/93DzKTWYte9a0x6Zru0vrWedc8mKP2JAXnU4LgVBW4fzciNuHSWzl
+	7BKysd79TnG8eROutQODCla7tBQntBKGY=
+X-Received: by 2002:a05:6a00:1147:b0:82f:38df:681c with SMTP id d2e1a72fcca58-8415f2d6cccmr2485881b3a.6.1779434026785;
+        Fri, 22 May 2026 00:13:46 -0700 (PDT)
+Received: from [10.125.112.20] ([210.184.73.204])
+        by smtp.gmail.com with ESMTPSA id d2e1a72fcca58-84164ff3e00sm1184421b3a.54.2026.05.22.00.13.42
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Fri, 22 May 2026 00:13:46 -0700 (PDT)
+Message-ID: <90a37efa-8d01-47f5-bf9b-dd008e4bbb65@gmail.com>
+Date: Fri, 22 May 2026 15:13:39 +0800
 Precedence: bulk
 X-Mailing-List: sashiko-reviews@lists.linux.dev
 List-Id: <sashiko-reviews.lists.linux.dev>
 List-Subscribe: <mailto:sashiko-reviews+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:sashiko-reviews+unsubscribe@lists.linux.dev>
-Mime-Version: 1.0
-X-Original-From: Rui Qi <qirui.001@bytedance.com>
-Cc: <linux-perf-users@vger.kernel.org>
-From: "Rui Qi" <qirui.001@bytedance.com>
-Subject: Re: [PATCH] perf: Fix off-by-one stack buffer overflow in kallsyms__parse()
-Date: Fri, 22 May 2026 14:35:19 +0800
-Content-Type: text/plain; charset=UTF-8
-References: <20260521111429.4042238-1-qirui.001@bytedance.com> <20260521113810.A5BAB1F000E9@smtp.kernel.org>
+MIME-Version: 1.0
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH v2 3/3] of: reserved_mem: only support one <base size>
+ entry in reg property
+To: sashiko-reviews@lists.linux.dev
+Cc: robh@kernel.org, conor+dt@kernel.org, devicetree@vger.kernel.org
+References: <20260519082427.4181476-4-chenwandun@lixiang.com>
+ <20260519092404.0969FC2BCC9@smtp.kernel.org>
+Content-Language: en-US
+From: Wandun <chenwandun1@gmail.com>
+In-Reply-To: <20260519092404.0969FC2BCC9@smtp.kernel.org>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
 
-On 5/21/26 7:38 PM, sashiko-bot@kernel.org wrote:
-> Thank you for your contribution! Sashiko AI review found 1 potential issu=
-e(s) to consider:
-> - [Medium] Parser desynchronization causing valid symbols to be skipped w=
-hen encountering symbols of exactly KSYM_NAME_LEN length.
+
+
+On 5/19/26 17:24, sashiko-bot@kernel.org wrote:
+> Thank you for your contribution! Sashiko AI review found 1 potential issue(s) to consider:
+> - [High] Unconditional read of the first `reg` property entry without verifying that `len > 0` leads to an out-of-bounds FDT read for empty `reg` properties.
 > --
->=20
-> commit 6a5c6924aa13657b35988b3648db68dd1a6e6f83
-> Author: Rui Qi <qirui.001@bytedance.com>
->=20
-> perf: Fix off-by-one stack buffer overflow in kallsyms__parse()
->=20
-> This commit changes the loop bound in kallsyms__parse() to prevent a stac=
-k
-> buffer overflow when reading long symbol names. It ensures the null
-> terminator always fits within the symbol_name array bounds.
->=20
->> diff --git a/tools/lib/symbol/kallsyms.c b/tools/lib/symbol/kallsyms.c
->> index e335ac2b9e197..f7100d43ecf49 100644
->> --- a/tools/lib/symbol/kallsyms.c
->> +++ b/tools/lib/symbol/kallsyms.c
->> @@ -60,7 +60,7 @@ int kallsyms__parse(const char *filename, void *arg,
->>  			read_to_eol(&io);
->>  			continue;
->>  		}
->> -		for (i =3D 0; i < sizeof(symbol_name); i++) {
->> +		for (i =3D 0; i < sizeof(symbol_name) - 1; i++) {
->=20
-> [Severity: Medium]
-> Will this change leave a trailing newline in the stream for symbols that
-> are exactly KSYM_NAME_LEN characters long?
->=20
-> If a symbol name is exactly 128 characters, the loop terminates without
-> reading the newline character since the bound is now restricted to 128
-> iterations.
->=20
-> When the outer loop continues to the next symbol entry, io__get_hex()
-> would encounter this leftover newline and fail. This triggers the error
-> recovery path which calls read_to_eol(), skipping over the entire next
-> valid symbol entry.
->=20
-> Could this cause the parser to silently drop valid kernel symbols when
-> it encounters symbols of exactly this length?
->=20
->>  			ch =3D io__get_char(&io);
->>  			if (ch < 0 || ch =3D=3D '\n')
->>  				break;
->=20
+>
+> commit def0743ccda5f4a97f9b1275e989c8ea559363b4
+> Author: Wandun Chen <chenwandun1@gmail.com>
+>
+> of: reserved_mem: only support one <base size> entry in reg property
+>
+> This commit simplifies reserved memory parsing by restricting support
+> to a single base/size entry in the reg property. It removes the loop
+> in the early pass and warns if multiple entries are present,
+> unconditionally reading only the first entry.
+>
+> Link: https://lore.kernel.org/all/20260506014752.GA280279-robh@kernel.org/
+>
+>> diff --git a/drivers/of/of_reserved_mem.c b/drivers/of/of_reserved_mem.c
+>> index 462e7c3078a3a..0e91c4a71d89d 100644
+>> --- a/drivers/of/of_reserved_mem.c
+>> +++ b/drivers/of/of_reserved_mem.c
+>> @@ -134,37 +134,38 @@ static int __init __reserved_mem_reserve_reg(unsigned long node,
+> [ ... ]
+>>   	prop = of_flat_dt_get_addr_size_prop(node, "reg", &len);
+>>   	if (!prop)
+>>   		return -ENOENT;
+>>   
+>> +	if (len > 1)
+>> +		pr_warn("Reserved memory: node '%s' has %d <base size> entries, only the first is used\n",
+>> +			uname, len);
+>> +
+>>   	nomap = of_get_flat_dt_prop(node, "no-map", NULL) != NULL;
+>>   
+>>   	err = fdt_validate_reserved_mem_node(node, NULL);
+>>   	if (err && err != -ENODEV)
+>>   		return err;
+>>   
+>> -	for (i = 0; i < len; i++) {
+>> -		u64 b, s;
+>> -
+>> -		of_flat_dt_read_addr_size(prop, i, &b, &s);
+>> -
+>> -		base = b;
+>> -		size = s;
+>> +	of_flat_dt_read_addr_size(prop, 0, &b, &s);
+> If a device tree node contains an empty reg property,
+> of_flat_dt_get_addr_size_prop() returns a valid pointer to the empty
+> property data and sets len to 0.
+>
+> Since the loop was removed, is there a risk of an out-of-bounds read here
+> because the code unconditionally calls of_flat_dt_read_addr_size()?
+Yes, there is indeed an out-of-bounds read issue here, which will be
+fixed in v3.
+>
+> This could fetch garbage values for the physical base and size. If the
+> parsed garbage size happens to be non-zero, could the kernel attempt
+> to reserve unintended physical memory regions via
+> early_init_dt_reserve_memory()?
+>
+> Would it be safer to verify len > 0 before reading the first entry?
+>
+>> +	base = b;
+>> +	size = s;
+> [ ... ]
+>> @@ -277,20 +278,24 @@ void __init fdt_scan_reserved_mem_late(void)
+>>   	alloc_reserved_mem_array();
+>>   
+>>   	fdt_for_each_subnode(child, fdt, node) {
+>> +		const __be32 *prop;
+> [ ... ]
+>> -		if (!of_flat_dt_get_addr_size(child, "reg", &b, &s))
+>> +		prop = of_flat_dt_get_addr_size_prop(child, "reg", &len);
+>> +		if (!prop)
+>>   			continue;
+>>   
+>>   		ret = fdt_validate_reserved_mem_node(child, NULL);
+>>   		if (ret && ret != -ENODEV)
+>>   			continue;
+>>   
+>> +		of_flat_dt_read_addr_size(prop, 0, &b, &s);
+> Does this have the same out-of-bounds read potential when len == 0?
+>
+> The previous of_flat_dt_get_addr_size() wrapper explicitly checked that
+> entries != 1, which inherently skipped empty reg properties.
+>
+>>   		base = b;
+>>   		size = s;
+>>
 
-Good catch, thank you for the review.
-
-You're right =E2=80=94 the change does leave unread characters in the strea=
-m
-when the symbol name is >=3D KSYM_NAME_LEN. As you described, the next
-outer-loop iteration's io__get_hex() would fail on the leftovers, and
-the resulting read_to_eol() would skip the subsequent valid entry.
-
-I agree that explicitly draining the remaining line is the right fix.
-I'll address this in v2 by adding read_to_eol() when the loop exits at
-the length limit without seeing '\n' or EOF.
-
-
-Note: in practice, the kernel's own kallsyms output is truncated to
-KSYM_NAME_LEN - 1 (511) characters, so this path is unlikely to be hit
-with current /proc/kallsyms input. But the defensive drain is necessary
-for correctness, especially if the function is ever used with input that
-doesn't come from the kernel's kallsyms.
