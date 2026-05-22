@@ -1,172 +1,147 @@
-Received: from mail-pf1-f195.google.com (mail-pf1-f195.google.com [209.85.210.195])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C23F030567F
-	for <sashiko-reviews@lists.linux.dev>; Fri, 22 May 2026 07:13:47 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.210.195
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 075C138734D;
+	Fri, 22 May 2026 07:14:26 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1779434029; cv=none; b=koS/O6d9CFlkSkojWf2fn5Ikc9lRCSZxqlFmquteRK4llZgnPOnZzo5bP2zjdqDhlVWrXB37hGxXH3U51cEkxwh4fEmT9SPEJzHVx+w91+4z38ShqD2XKcZ+D0XlrRiL25kk5mvTVKK8WfBdyjKkxw4tUoSUF/F09Wy2BUWiriU=
+	t=1779434068; cv=none; b=H14iFhmb+n1T53u8Q56VnsJvYfBr37KS9HRr4HFICUa2JJpOmxSfL7tVyLiQJ9z7tKxHAzuH9Dv4D0qmwSnT8+e3U2l0sXI73HfBnyz0EVqMZvjcF/3IWES89mo/f7bbGatTkuV/nmYKGdCSEubDoxaQoC5LP1TKlF5ZycQh8iE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1779434029; c=relaxed/simple;
-	bh=9Fa/UB4HkPYCNyGFgozf00j+m/SdWP845EBaSOPQEOw=;
-	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=Gf+4BNpNf7geauUrzSHAXdDiQmLEArm/oesZjazYPTktqxOylzIzkiNuSiNLN5Q7OEHMjAyj3roxZ6TjBNhy7OHESkO9pf7VZ2sMdmTwaeXUqjEfmTiO5GmIsrZyBFdA7KT2tLHcrrBFPpG5zhjq1uJCGzv7NfX3Rpm0RxsXL0U=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=FTaRdiXi; arc=none smtp.client-ip=209.85.210.195
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+	s=arc-20240116; t=1779434068; c=relaxed/simple;
+	bh=N2eC+F106R16cw9I1D9Z/sdNXXNwnsFRgJfJRD/S6Tg=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=NVXQnjRb1A5F4hBEOKV6eHccL4JMHbBHPhpSRHgYkGdsQ4rtOCWmHfdPAPA5ZggoLVltYHlGp61UNUr7j1bP4xQMUWlFg6q38bRqCfphtTiadwgo5Km/UWwxGL0D4sX+CakwfL+avOfBTriz/gNtTehuogslBIN7EBVxTwnqNug=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=X18AaBwD; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="FTaRdiXi"
-Received: by mail-pf1-f195.google.com with SMTP id d2e1a72fcca58-83f674f978fso2458099b3a.3
-        for <sashiko-reviews@lists.linux.dev>; Fri, 22 May 2026 00:13:47 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20251104; t=1779434027; x=1780038827; darn=lists.linux.dev;
-        h=content-transfer-encoding:in-reply-to:from:content-language
-         :references:cc:to:subject:user-agent:mime-version:date:message-id
-         :from:to:cc:subject:date:message-id:reply-to;
-        bh=/ZUvJ6eFcygxv78l6IC5YA/pTb85t8JqQtZJgDAjKvE=;
-        b=FTaRdiXiOlyTWOKyHONFeu+2iTPMNHfYHjCoAcIe2vqM4il+08frBelkQllzMhsTra
-         icp6ezGtEhiJ3eCfCFgHzs+OQ3XcFeCJoidF4FU2G0unluyxQbLEP1X1dAjz4MX+fkv0
-         c0tNt99uwU2VL9K/ECEzasIqeudJqxzo8Wi0BWDmHKk2nN06NaU0tOoQ0MeIbDiQ1/62
-         UlNZib9nhoCVri1d7hHDVPZlWhBdkNCxgYiafZ1icSA4oMFDYXi9G6I/8FXHjki803+8
-         pFS0ROH6ViVCrnFVMxTatfgMvmN/8N77RHcB0DlIlp0qcddtvWcpqUzljuQ+0elP9U3y
-         TTTg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20251104; t=1779434027; x=1780038827;
-        h=content-transfer-encoding:in-reply-to:from:content-language
-         :references:cc:to:subject:user-agent:mime-version:date:message-id
-         :x-gm-gg:x-gm-message-state:from:to:cc:subject:date:message-id
-         :reply-to;
-        bh=/ZUvJ6eFcygxv78l6IC5YA/pTb85t8JqQtZJgDAjKvE=;
-        b=lubVhIGbOUybgc9FgYzQByFkSVzj3ihZK3NRg0FwpddLKXKcAJuMLdMABpKoFkQJe3
-         5Hs1oPjLXD8qBaOhqvZxhbUFAakqk0rThW9u4tx2E1/H/+bdVXRUM4hZvBNvDf6aUhG7
-         3OaDXXn1Hq8lqdj8ht/eCNPLbAaf7ZaQ4hEOWsxEk9lWmoLsXxvMZ5HdcNmWKjnYYtA+
-         XNgdSkGWl7OB0lo/s8LXwGfL9/Okua4ReZAlKMQNpPiHyLhXpBOzpvliaJc+TqY/yPpd
-         yKn25SN83rafzxV1LCscC4lXxfd+JpvLacSEgXJNC9rZgScfDENC3M1ATsGutmFxeUYk
-         Z47g==
-X-Gm-Message-State: AOJu0YxE2+Yio3qq74YSSo/E2cG7sWEKG2dC4DOHgan9iDqOD147Ok4D
-	Om6qY0WtxqA24BmsvZE7DwsHAG/ha5GgXZ4GR9EoqD8Esp8ixDAKPkoYA79kd7OGzKWJXLx9
-X-Gm-Gg: Acq92OEA8AS4NxQQK1BPYN/bdKkBeDAkPjIV67o8Q58BYho4A0ffQ6iwY59FhtsuWZb
-	Mu0uzPZz7Iaf0/3DXCPgLS/m16IIhfoUVFR9Ajf6EfrQT2e+TwUhtIhHSFiM6ymax1M41oXzIzc
-	/o58yIrBbjkcnq1rkRDM+zXCtVRSgK9650kHUK+exFBeWURakrflfiQlNnYBJnTrd57R0d8Haab
-	5NrH87sZI6N+2L4GJFrG9lKnlAF/+6l3lsJFGypKZeA38vZvUDHMZomjdx7hNB9hEhnvrx2VbIb
-	42qp9RPxCDKlKdHPgs65MjS7JR+pqXSXGZdMf+/jUifJtXLxSW8kAqPeGWx6z96D9705rPU0O4C
-	3EufxF7d+25Vp9sxLc1Ik/93DzKTWYte9a0x6Zru0vrWedc8mKP2JAXnU4LgVBW4fzciNuHSWzl
-	7BKysd79TnG8eROutQODCla7tBQntBKGY=
-X-Received: by 2002:a05:6a00:1147:b0:82f:38df:681c with SMTP id d2e1a72fcca58-8415f2d6cccmr2485881b3a.6.1779434026785;
-        Fri, 22 May 2026 00:13:46 -0700 (PDT)
-Received: from [10.125.112.20] ([210.184.73.204])
-        by smtp.gmail.com with ESMTPSA id d2e1a72fcca58-84164ff3e00sm1184421b3a.54.2026.05.22.00.13.42
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Fri, 22 May 2026 00:13:46 -0700 (PDT)
-Message-ID: <90a37efa-8d01-47f5-bf9b-dd008e4bbb65@gmail.com>
-Date: Fri, 22 May 2026 15:13:39 +0800
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="X18AaBwD"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8EB381F000E9;
+	Fri, 22 May 2026 07:14:24 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=kernel.org;
+	s=k20260515; t=1779434066;
+	bh=H5I4rla2ixebbTUw5P2XP85clOxOmqop1k79UpZsBrQ=;
+	h=Date:From:To:Cc:Subject:References:In-Reply-To;
+	b=X18AaBwDpQf8SQefbUiA2qIAmgl56jjGlqo8g2DAoF6MEPSvrlokA9/O5qpvPawwc
+	 9zPeGCNGur0mUzj2D+eM77ZDLnoa7NvdEe+dTQ4Wp0QuA8QZ4npfqQ+yxbwbvS9ZEB
+	 hxwIDXPhOCK4LrH/+dCyfCVtihiBCBRFIXouHmphbRL92GzG4I9QZjqEwk7ZGxIFIq
+	 kD688rkAK28s6OT3stlCasmHUkSYpJheVPzg3APkzfN18YwXdri8YJ/AfAw3SFt2ol
+	 9S5/neBgbs1hhMa0doOWn6eXgy3DBhO3uj5cvoBqO/jwff7Ieo2Hu1xeKnojg3pBJF
+	 Ga85/z+A2Z6mw==
+Date: Fri, 22 May 2026 12:44:21 +0530
+From: Sumit Garg <sumit.garg@kernel.org>
+To: sashiko-reviews@lists.linux.dev
+Cc: conor+dt@kernel.org, robh@kernel.org, devicetree@vger.kernel.org
+Subject: Re: [PATCH v6 11/16] media: qcom: Switch to generic PAS TZ APIs
+Message-ID: <ahACTS0kHee98ODd@sumit-xelite>
+References: <20260518072856.22790-12-sumit.garg@kernel.org>
+ <20260519073406.4CA28C2BCB3@smtp.kernel.org>
 Precedence: bulk
 X-Mailing-List: sashiko-reviews@lists.linux.dev
 List-Id: <sashiko-reviews.lists.linux.dev>
 List-Subscribe: <mailto:sashiko-reviews+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:sashiko-reviews+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v2 3/3] of: reserved_mem: only support one <base size>
- entry in reg property
-To: sashiko-reviews@lists.linux.dev
-Cc: robh@kernel.org, conor+dt@kernel.org, devicetree@vger.kernel.org
-References: <20260519082427.4181476-4-chenwandun@lixiang.com>
- <20260519092404.0969FC2BCC9@smtp.kernel.org>
-Content-Language: en-US
-From: Wandun <chenwandun1@gmail.com>
-In-Reply-To: <20260519092404.0969FC2BCC9@smtp.kernel.org>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
+Content-Type: text/plain; charset=iso-8859-1
+Content-Disposition: inline
+Content-Transfer-Encoding: 8bit
+In-Reply-To: <20260519073406.4CA28C2BCB3@smtp.kernel.org>
 
-
-
-On 5/19/26 17:24, sashiko-bot@kernel.org wrote:
-> Thank you for your contribution! Sashiko AI review found 1 potential issue(s) to consider:
-> - [High] Unconditional read of the first `reg` property entry without verifying that `len > 0` leads to an out-of-bounds FDT read for empty `reg` properties.
+On Tue, May 19, 2026 at 07:34:04AM +0000, sashiko-bot@kernel.org wrote:
+> Thank you for your contribution! Sashiko AI review found 2 potential issue(s) to consider:
+> - [High] Unconditional use of SCM-specific API (qcom_scm_mem_protect_video_var) will cause a NULL pointer dereference when using a non-SCM TrustZone backend.
+> - [High] Migrating to the generic PAS API exposes a TOCTOU race and Use-After-Free due to a lack of backend provider lifetime management.
 > --
->
-> commit def0743ccda5f4a97f9b1275e989c8ea559363b4
-> Author: Wandun Chen <chenwandun1@gmail.com>
->
-> of: reserved_mem: only support one <base size> entry in reg property
->
-> This commit simplifies reserved memory parsing by restricting support
-> to a single base/size entry in the reg property. It removes the loop
-> in the early pass and warns if multiple entries are present,
-> unconditionally reading only the first entry.
->
-> Link: https://lore.kernel.org/all/20260506014752.GA280279-robh@kernel.org/
->
->> diff --git a/drivers/of/of_reserved_mem.c b/drivers/of/of_reserved_mem.c
->> index 462e7c3078a3a..0e91c4a71d89d 100644
->> --- a/drivers/of/of_reserved_mem.c
->> +++ b/drivers/of/of_reserved_mem.c
->> @@ -134,37 +134,38 @@ static int __init __reserved_mem_reserve_reg(unsigned long node,
+> 
+> commit 2d2fe5038803b9390438e02f3c0f53b945cc9bdc
+> Author: Sumit Garg <sumit.garg@oss.qualcomm.com>
+> 
+> media: qcom: Switch to generic PAS TZ APIs
+> 
+> This commit switches the Qualcomm media client drivers to use the generic
+> PAS TZ APIs instead of the SCM-specific ones. This allows the drivers to
+> support multiple TrustZone backend implementations such as QTEE and OP-TEE.
+> 
+> > diff --git a/drivers/media/platform/qcom/iris/iris_firmware.c b/drivers/media/platform/qcom/iris/iris_firmware.c
+> > index 5f408024e967f..b3c5281aea919 100644
+> > --- a/drivers/media/platform/qcom/iris/iris_firmware.c
+> > +++ b/drivers/media/platform/qcom/iris/iris_firmware.c
 > [ ... ]
->>   	prop = of_flat_dt_get_addr_size_prop(node, "reg", &len);
->>   	if (!prop)
->>   		return -ENOENT;
->>   
->> +	if (len > 1)
->> +		pr_warn("Reserved memory: node '%s' has %d <base size> entries, only the first is used\n",
->> +			uname, len);
->> +
->>   	nomap = of_get_flat_dt_prop(node, "no-map", NULL) != NULL;
->>   
->>   	err = fdt_validate_reserved_mem_node(node, NULL);
->>   	if (err && err != -ENODEV)
->>   		return err;
->>   
->> -	for (i = 0; i < len; i++) {
->> -		u64 b, s;
->> -
->> -		of_flat_dt_read_addr_size(prop, i, &b, &s);
->> -
->> -		base = b;
->> -		size = s;
->> +	of_flat_dt_read_addr_size(prop, 0, &b, &s);
-> If a device tree node contains an empty reg property,
-> of_flat_dt_get_addr_size_prop() returns a valid pointer to the empty
-> property data and sets len to 0.
->
-> Since the loop was removed, is there a risk of an out-of-bounds read here
-> because the code unconditionally calls of_flat_dt_read_addr_size()?
-Yes, there is indeed an out-of-bounds read issue here, which will be
-fixed in v3.
->
-> This could fetch garbage values for the physical base and size. If the
-> parsed garbage size happens to be non-zero, could the kernel attempt
-> to reserve unintended physical memory regions via
-> early_init_dt_reserve_memory()?
->
-> Would it be safer to verify len > 0 before reading the first entry?
->
->> +	base = b;
->> +	size = s;
-> [ ... ]
->> @@ -277,20 +278,24 @@ void __init fdt_scan_reserved_mem_late(void)
->>   	alloc_reserved_mem_array();
->>   
->>   	fdt_for_each_subnode(child, fdt, node) {
->> +		const __be32 *prop;
-> [ ... ]
->> -		if (!of_flat_dt_get_addr_size(child, "reg", &b, &s))
->> +		prop = of_flat_dt_get_addr_size_prop(child, "reg", &len);
->> +		if (!prop)
->>   			continue;
->>   
->>   		ret = fdt_validate_reserved_mem_node(child, NULL);
->>   		if (ret && ret != -ENODEV)
->>   			continue;
->>   
->> +		of_flat_dt_read_addr_size(prop, 0, &b, &s);
-> Does this have the same out-of-bounds read potential when len == 0?
->
-> The previous of_flat_dt_get_addr_size() wrapper explicitly checked that
-> entries != 1, which inherently skipped empty reg properties.
->
->>   		base = b;
->>   		size = s;
->>
+> > @@ -79,7 +80,7 @@ int iris_fw_load(struct iris_core *core)
+> >  		return -ENOMEM;
+> >  	}
+> >  
+> > -	ret = qcom_scm_pas_auth_and_reset(core->iris_platform_data->pas_id);
+> > +	ret = qcom_pas_auth_and_reset(core->iris_platform_data->pas_id);
+> 
+> Does moving to the generic PAS API introduce a race condition with module
+> unloading?
+> 
+> Looking at the generic PAS wrapper qcom_pas_auth_and_reset() in
+> drivers/firmware/qcom/qcom_pas.c:
+> 
+> int qcom_pas_auth_and_reset(u32 pas_id)
+> {
+> 	if (!ops_ptr)
+> 		return -ENODEV;
+> 
+> 	return ops_ptr->auth_and_reset(ops_ptr->dev, pas_id);
+> }
+> 
+> If the PAS backend module is unloaded concurrently, ops_ptr could be set to
+> null after the check but before the function pointer is invoked. Do the
+> client drivers need to hold a reference count to pin the backend provider
+> in memory before calling these APIs to avoid a use-after-free?
 
+The PAS backend is not expected to be unloaded for the entire boot power
+cycle. This is the same behavior as the existing SCM backend, so not an
+issue.
+
+> 
+> [ ... ]
+> > diff --git a/drivers/media/platform/qcom/venus/firmware.c b/drivers/media/platform/qcom/venus/firmware.c
+> > index 1de7436713ed9..3a38ff985822f 100644
+> > --- a/drivers/media/platform/qcom/venus/firmware.c
+> > +++ b/drivers/media/platform/qcom/venus/firmware.c
+> [ ... ]
+> > @@ -218,7 +219,7 @@ int venus_boot(struct venus_core *core)
+> >  	int ret;
+> >  
+> >  	if (!IS_ENABLED(CONFIG_QCOM_MDT_LOADER) ||
+> > -	    (core->use_tz && !qcom_scm_is_available()))
+> > +	    (core->use_tz && !qcom_pas_is_available()))
+> >  		return -EPROBE_DEFER;
+> 
+> If the platform uses a non-SCM TrustZone backend like OP-TEE,
+> qcom_pas_is_available() will return true, but the qcom_scm subsystem
+> might not be probed.
+
+qcom_scm is also probed based on DT alongside OP-TEE to support the
+other SCM calls which are compliant to SiP SMC specification. So not an
+issue.
+
+> 
+> Will this lead to a null pointer dereference later in venus_boot() when
+> it calls the SCM-specific API?
+> 
+> venus_boot() {
+>     ...
+> 	if (core->use_tz && res->cp_size) {
+> 		ret = qcom_scm_mem_protect_video_var(res->cp_start,
+> 						     res->cp_size,
+> 						     res->cp_nonpixel_start,
+> 						     res->cp_nonpixel_size);
+> 	}
+>     ...
+> }
+> 
+> Looking at qcom_scm_mem_protect_video_var(), it executes
+> qcom_scm_call(__scm->dev, ...). If __scm is null because the SCM
+> subsystem is absent, this dereference might cause a panic.
+
+SCM subsystem is always present, it's only the PAS calls being handled
+by this OP-TEE backend now. So, no case of a panic.
+
+-Sumit
+
+> 
+> -- 
+> Sashiko AI review · https://sashiko.dev/#/patchset/20260518072856.22790-1-sumit.garg@kernel.org?part=11
