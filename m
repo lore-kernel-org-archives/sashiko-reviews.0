@@ -1,62 +1,62 @@
-Received: from TY3P286CU002.outbound.protection.outlook.com (mail-japaneastazon11020120.outbound.protection.outlook.com [52.101.229.120])
+Received: from OS0P286CU011.outbound.protection.outlook.com (mail-japanwestazon11020089.outbound.protection.outlook.com [52.101.228.89])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B01553A7F75
-	for <sashiko-reviews@lists.linux.dev>; Fri, 22 May 2026 08:22:16 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=fail smtp.client-ip=52.101.229.120
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F40DB3A8721
+	for <sashiko-reviews@lists.linux.dev>; Fri, 22 May 2026 08:49:01 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=fail smtp.client-ip=52.101.228.89
 ARC-Seal:i=2; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1779438138; cv=fail; b=L280rz+KmGPypthdRW6Uue/f1Q2JNCFZK85w0AMtD53U0Dt7Iz8VXJSHzHQnvEQlHz0l6A2l4HIXqxoRnFPcdM7gvnOJV/dcmbuKZIDO/r1sOk1YwyjMyaAqBt7BUf6PN+v398wuPzgVMM5/VdmZN0c+lbu998S948K4lJF4//8=
+	t=1779439744; cv=fail; b=jU6TDvNjlHPg/wjkc6FU+ue1dTyLDyPp9UC3Clf2DHXrDre9Jb3SZcLLNCvITzmi0ub7z8G9aD17Yy4tbtRVpNDO9ecAExqzpxmXJYZCvvmUdwqJf+hAu26xXWe1RIFcN18XYlfGdPgaIXMlmOE89XBUTJQ59JINSRaWcE4nuyA=
 ARC-Message-Signature:i=2; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1779438138; c=relaxed/simple;
-	bh=lRbeg0WMBJyJd2wG6V1cr4Q9QSBy1l+zeATije2HgTM=;
+	s=arc-20240116; t=1779439744; c=relaxed/simple;
+	bh=rG6R5m3LNFOa+RLbnl4naWwbL7SfhWBUpewEykulS1Q=;
 	h=Date:From:To:Cc:Subject:Message-ID:References:Content-Type:
-	 Content-Disposition:In-Reply-To:MIME-Version; b=d0aKR9Qz9hawe3vkoA3tVJNRS0s6xXO728CXo9zP3DuQQMICRq1lbXU06ARzVulUEeb2YQHXLIcQTkaV4TioDVhlfwjwbs2+s4m8eT35DoebRDOkK6pHbtbm7tk3NIZgI4o3HTHChLudw/pthzwZIz7mQO+FCvZfTo01hOeceXI=
-ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=valinux.co.jp; spf=pass smtp.mailfrom=valinux.co.jp; dkim=fail (1024-bit key) header.d=valinux.co.jp header.i=@valinux.co.jp header.b=i6qDLOHz reason="signature verification failed"; arc=fail smtp.client-ip=52.101.229.120
+	 Content-Disposition:In-Reply-To:MIME-Version; b=rr/th++nCOyI4H+OoPfDjQr56B68ApXn/ZYt+1tAnhKsG7OFhYWWgieDo64xKFja72GRALGP/D+Y+FlaJbkQUhqOpp5iSQu/uyzbOhcpPWYshHE9Hmnk7kW+/3UrT+QVCRC7byY/pP/2jQJKVcpDQlPtaZVWrlremonYd3ZeEw0=
+ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=valinux.co.jp; spf=pass smtp.mailfrom=valinux.co.jp; dkim=fail (1024-bit key) header.d=valinux.co.jp header.i=@valinux.co.jp header.b=HNeEnmg5 reason="signature verification failed"; arc=fail smtp.client-ip=52.101.228.89
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=valinux.co.jp
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=valinux.co.jp
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=fail reason="signature verification failed" (1024-bit key) header.d=valinux.co.jp header.i=@valinux.co.jp header.b="i6qDLOHz"
+	dkim=fail reason="signature verification failed" (1024-bit key) header.d=valinux.co.jp header.i=@valinux.co.jp header.b="HNeEnmg5"
 ARC-Seal: i=1; a=rsa-sha256; s=arcselector10001; d=microsoft.com; cv=none;
- b=Zv0nvv8yeeqyCEGHSpTIfEaSIRd7cMhk+/N7mG1inVWCtEn3UWVKAaNHpvF/FVErYXS0+6wTQcLiRLMASneQ2BOTqa7jMPcPj2UWK56T3xbrdtp8GPj2rax6NiOJSBCCeGNVx19q+D1SnbCvTkVckqnfGGXuvkLjpYbrBP7gYyA/Pue/tPepAx7oLbGgOPRzEWjZUZmfKKfGtMkBz/AHQJ9Os1QWBSQzWCBfh5DT8iFq8joQuXDj7VabPDhCcDiHOsOqa2lATZNTPOGXW0KuP9kun8eYJC8pQEjs0QUJs6k/NeIQs491spm7R2G+TALB4hDf2b0D3QA24fohi6A5Wg==
+ b=kuuer6NA2QB/dqjT5OuKyda6I2s7k/tFvqtsxtqBZ6LElEVGEIFXeu4kluoBHqiDkJHaJCz50WIq2x6Wai8yqNz5kUKdAoyMf0L/yypT/E/qiKywpFyRqqW6RClQXPbtotrz9OZJX1/jpz8QgZr6poCY2gGgErkJ0I58ZahDcBVQvArcOmVGRDQvbIOqa2aKVMuOiYddxjblcuniRIUSow0BSDc2N2zAnddY36PONCepQXHz3cdIcTd/itT4nHXpxqisru4SVGvhT87kH2iwpOhbUyOzPn8lCPpICi6N7kIi9YhHoxDQu+Nu3XHkb8EWrXFGZwpSgp/FeEH/dK18GA==
 ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com;
  s=arcselector10001;
  h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
- bh=AkSGeuRjehz4cppAr6uhod6+Bdxhj2v0KNmCOcR2YSM=;
- b=UBCSlqpIVRDcZs68T6v/C3PAn9HI7t9zxPUx3D82r65jBQM4eWjFUea2YAdqtYxWQ780BlOMjMGm1G2ieB5dKwn4RavVRMCkGp0Se1A6LZdvnUE6CE9ghjwE8YuODZkiGXTbM8g2LvfnBMtQbgq32NDZTPp7KlOTvvucrvCrihKWn9PMtKwsvQNRnRpZqr1YVzUybZCFog104M5ljSjTncsrLBvj2c/5dqrp5G3XplmJzHF3H5NeHUd5GGhqNcqdz9dGCDqwndqPv0OTn4MYRuJEEMT1+zCGj5sVqgIOUFpxUmbmw5i+S5DJzsfKmdYtctZv6lnKGGBVEZzSrN+Lwg==
+ bh=hRqpOCbaZxf/wbF7AwZYG2cmyDppWqwIw2WB6XvyMmU=;
+ b=nx67pJ9nZZxi7BZVU/Oeu2LO4r26iTTV75irFK+X3pRUYgUkD54BMSG/Iwh0FjIY3VG5PeqXrUJH3dHxA2jnMh8ossbsbOWUTwNtX9Z8OZFbF5eroxGWdgaAG1dBIMc3PyxXdbi03G99KeyPTqGlzRwOabgrigNyUWPk8xgbdVUL8qO9HzffGJ8tCViGW88FtBGn62BpoFG9ws/feGeCHBj9VAeJjwg5aPJfym9Xzd0DG1Lree4C0DTOq/bXWkeAeWwQGk9h8QBI855EbgsWnB2kNsxmVFjVxHeAgkdrqX9yKV6GA8l5IQ2WjtQf2Il3ZnDcU3STCx/9ZDinf2jd0g==
 ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
  smtp.mailfrom=valinux.co.jp; dmarc=pass action=none
  header.from=valinux.co.jp; dkim=pass header.d=valinux.co.jp; arc=none
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=valinux.co.jp;
  s=selector1;
  h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
- bh=AkSGeuRjehz4cppAr6uhod6+Bdxhj2v0KNmCOcR2YSM=;
- b=i6qDLOHz5zg9n8Yk4QgG1atpbgmG6JPHLcRAAwKf4v/TdvFEv+MDwAnc9fypATMnpFYenzJkvoO92kXWcR4L39CD+Ad2cnmcR+1CXW8o/RcrHUVMYdbpWlBLAoxNEmRzhy/iJQXkrNp2qk2dh91rHnhwPyM3W9SDF9j4wFpXKOk=
+ bh=hRqpOCbaZxf/wbF7AwZYG2cmyDppWqwIw2WB6XvyMmU=;
+ b=HNeEnmg5pLXBTBy/FNd0vulL6KlTvgdcuhq/73KMfpL85bHv6d41fsQLf4+q9eNwele2Ug6fN41atlIQMONlV3gQf30WoFtYIsKSNne2VWpUB9FlMBKGFgANZLZjNVAUYlyrRO84QCLNj6nKf722AIDDGFf81CVOYQnzliMo00c=
 Authentication-Results: dkim=none (message not signed)
  header.d=none;dmarc=none action=none header.from=valinux.co.jp;
 Received: from TY7P286MB7722.JPNP286.PROD.OUTLOOK.COM (2603:1096:405:38f::10)
- by OS3P286MB2540.JPNP286.PROD.OUTLOOK.COM (2603:1096:604:1ea::10) with
+ by TYWP286MB3272.JPNP286.PROD.OUTLOOK.COM (2603:1096:400:2d1::14) with
  Microsoft SMTP Server (version=TLS1_2,
  cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.21.48.17; Fri, 22 May
- 2026 08:22:13 +0000
+ 2026 08:48:58 +0000
 Received: from TY7P286MB7722.JPNP286.PROD.OUTLOOK.COM
  ([fe80::2305:327c:28ec:9b32]) by TY7P286MB7722.JPNP286.PROD.OUTLOOK.COM
  ([fe80::2305:327c:28ec:9b32%5]) with mapi id 15.21.0048.016; Fri, 22 May 2026
- 08:22:13 +0000
-Date: Fri, 22 May 2026 17:22:11 +0900
+ 08:48:58 +0000
+Date: Fri, 22 May 2026 17:48:56 +0900
 From: Koichiro Den <den@valinux.co.jp>
 To: sashiko-reviews@lists.linux.dev
-Cc: Frank.Li@kernel.org, dmaengine@vger.kernel.org, vkoul@kernel.org
-Subject: Re: [PATCH 4/4] dmaengine: dw-edma: Add spinlock to protect
- DONE_INT_MASK and ABORT_INT_MASK
-Message-ID: <ne76elxedfnngi7dilpyvpzwm7tghyj6kpg4ninwxecxsajkkx@zkarppyurl2s>
-References: <20260521142153.2957432-5-den@valinux.co.jp>
- <20260521165650.534061F00A3B@smtp.kernel.org>
+Cc: vkoul@kernel.org, dmaengine@vger.kernel.org, Frank.Li@kernel.org
+Subject: Re: [PATCH 2/4] dmaengine: dw-edma-pcie: Reject devices without
+ driver data
+Message-ID: <a6gnzihfbl6ai4f3xzykx3ppidkihzicofp7flyh27lgsjepom@p5mjzhy7atq6>
+References: <20260521142153.2957432-3-den@valinux.co.jp>
+ <20260521151504.69BA61F00A3D@smtp.kernel.org>
 Content-Type: text/plain; charset=iso-8859-1
 Content-Disposition: inline
 Content-Transfer-Encoding: 8bit
-In-Reply-To: <20260521165650.534061F00A3B@smtp.kernel.org>
-X-ClientProxiedBy: TY4PR01CA0045.jpnprd01.prod.outlook.com
- (2603:1096:405:372::16) To TY7P286MB7722.JPNP286.PROD.OUTLOOK.COM
+In-Reply-To: <20260521151504.69BA61F00A3D@smtp.kernel.org>
+X-ClientProxiedBy: TY4PR01CA0015.jpnprd01.prod.outlook.com
+ (2603:1096:405:2bf::10) To TY7P286MB7722.JPNP286.PROD.OUTLOOK.COM
  (2603:1096:405:38f::10)
 Precedence: bulk
 X-Mailing-List: sashiko-reviews@lists.linux.dev
@@ -65,183 +65,147 @@ List-Subscribe: <mailto:sashiko-reviews+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:sashiko-reviews+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 X-MS-PublicTrafficType: Email
-X-MS-TrafficTypeDiagnostic: TY7P286MB7722:EE_|OS3P286MB2540:EE_
-X-MS-Office365-Filtering-Correlation-Id: d8fd0825-d1af-4869-7564-08deb7db39f3
+X-MS-TrafficTypeDiagnostic: TY7P286MB7722:EE_|TYWP286MB3272:EE_
+X-MS-Office365-Filtering-Correlation-Id: 8e842e32-c422-48cc-d1ec-08deb7def6bf
 X-MS-Exchange-SenderADCheck: 1
 X-MS-Exchange-AntiSpam-Relay: 0
 X-Microsoft-Antispam:
-	BCL:0;ARA:13230040|376014|366016|10070799003|1800799024|22082099003|18002099003|4143699003|3023799007|56012099003;
+	BCL:0;ARA:13230040|10070799003|1800799024|366016|376014|18002099003|22082099003|56012099003|5023799004|6133799003|4143699003;
 X-Microsoft-Antispam-Message-Info:
-	E1c8qm38ONKZthWbn+KXs6kTs8nK2+CgbDFmoPX29GWcDM9Z3goTZ1maalhHiRFes3Vv81eFsM9v9GSSP0kefWplWWHVjmKFyTVpbI8jrOC6DG1uxp91IJT1X+CQJ//yUxqUMqTL7QTWp3AziWlKyHtSORiizDxdZ2ySKi5HvVG+ylf4fC9O5o9t2I3mqobCvt/1o4wesOaYKIamDxRw/ka1Z3bTtFWWTKjInpHgasQQWp8zwuvRfSklJur6FExj7uPmXo9t9zz13mtjQWUh1Mxq19J1jlpMsT0bf+JhcRiBC7zCmyc/s6Vp4rKChiuPeQZKnbvFG7CFrLN9Au/vThOQ5lhQxryl14eYd6eZ+Su1SH8LtB/GcJZihFViA3yPPynaLMqNBW66CKIyxVSo3aLb8PukHpxalEdIwmv5GLNU0AtTmU5yF50tUsHciIAuZvRX5S6OY/H6i8McD5vKTfkrDXEuXPKEf6Kjq631JiCiyzKVhm86T8hf9zfRkZ0rL9sB0WUgL1Bku5e3V2vL+dM8ITrgiaI+Iqiwp6Z+A6+rxWk85MbUw7x1u+OkqOuG8oXXiLfXgc+yxE2k7lQwWOh72vloSZTImvfAcK32Zh03TBZWDZp23UykmQG+RJawgmVbWE22rJ7zzrIzQzh5Qg==
+	flelqY7MuqN7dh4kcMNJ4WcxLZ8iJmupFLOzBHJKFYRAwIE5a63WiJEduaedZ8JSHf4pphdYS6dqSGhrKEhATKmCJQqKRQhnQwC8epPf3DiokhAoeRQR5zKXY9IbCCCG8ykVREEhlK3hcF0jAinFvELCaAX9ttI7dkc7XQL2CmjevUav22n52mkHgSyv/E8uYBRqIpcTxFsMEkdJs4KZP9Amz2wZ6Wb8bQjfYcwb7b0Vc5cU2YIqc1ym+kImxWGaBtZRWm2Bh74mFYSA/vNkCxdyVYFGgl2TklFyawLFVMP2VLzZcRfpV5xwNtaM813ZhobaV9L6Sqsu0eVGBUD5apqwbMbIjKYeQsUOOf0vLPcX91FbVcXocByU8W74xcGam/2V0ztNlyVaTwU5W2kzbYEx8vO2Kt9On1Mv2tycncWrIwBfZbXGR5J+3PmhDgr6OAzUFylALWEVXigYp8gWqczmpIcqckcL8/gQmLVQs6Ddku+xUHLPHU4QVzOYoeQgkdYrIP0B7uGBK1HmQa09+x1NhlvFJwHUcTpoDo4Ov3QnCaFew4Itd22SRctW4nZcl/3Ctc6tD3pA57qr63/SZa+yqvHawNKKw6aWAyYnnm11dx2zT16MhYDMrZtdnWp55l7iQmvaFBk2uNBcWcrhsg==
 X-Forefront-Antispam-Report:
-	CIP:255.255.255.255;CTRY:;LANG:en;SCL:1;SRV:;IPV:NLI;SFV:NSPM;H:TY7P286MB7722.JPNP286.PROD.OUTLOOK.COM;PTR:;CAT:NONE;SFS:(13230040)(376014)(366016)(10070799003)(1800799024)(22082099003)(18002099003)(4143699003)(3023799007)(56012099003);DIR:OUT;SFP:1102;
+	CIP:255.255.255.255;CTRY:;LANG:en;SCL:1;SRV:;IPV:NLI;SFV:NSPM;H:TY7P286MB7722.JPNP286.PROD.OUTLOOK.COM;PTR:;CAT:NONE;SFS:(13230040)(10070799003)(1800799024)(366016)(376014)(18002099003)(22082099003)(56012099003)(5023799004)(6133799003)(4143699003);DIR:OUT;SFP:1102;
 X-MS-Exchange-AntiSpam-MessageData-ChunkCount: 1
 X-MS-Exchange-AntiSpam-MessageData-0:
-	=?iso-8859-1?Q?tcrAZ5i7hcTj9mCkFifJ5wkGyZkdkl3x6jue/PWreWQ+hWj3E1vLTkKVGl?=
- =?iso-8859-1?Q?a3VLhsGE7Lpjdwh6AN1x2SnNJTZjgNVhPHNENrqT9oQV5YkOgm1k1ve0kM?=
- =?iso-8859-1?Q?4v91G+W1sQd6zLfTtEpLVX5KH48YW60X7A5tpQN6u1XpiCooQ8vsMxW1ZV?=
- =?iso-8859-1?Q?tmScD7t8xWuIlXl1YsnGDwy6Vv3gBw6q7X3F+edEWFNCbDl2F++mXLLo/F?=
- =?iso-8859-1?Q?Le4oEqUt18ScMWx79e1YAXUR8qJ9itjkj+Or9h7yk1FIpeUuRYdTDerQPV?=
- =?iso-8859-1?Q?pPkW34X7O03MBHGUFXj0yHHKb3oNiYe3oRtNH8zsJ1G/kiCf1cXg+Ew9+g?=
- =?iso-8859-1?Q?rm876/s0RPwlpP9cLLlwrNrNfR8LO69KT2XMWDfOw1ht5QvPyNKOIQYMqp?=
- =?iso-8859-1?Q?85CMOHq+ejUp4Ch9wpsD4B2fiU9C1LR2j0Jm8CzGHV6Ea4MH6INwtyrnOj?=
- =?iso-8859-1?Q?e7xvvSSVZqpJIolYlFYN6y2GIDrJ1vM+L6YS4VMDlVtEPsjzzKwF2BbrVr?=
- =?iso-8859-1?Q?Z8NnQhlqXU2d5Uni/TLFf8XEWR26AHFwfkkclGGAHvJ56XlvN9KXuUpPdf?=
- =?iso-8859-1?Q?Ht8B88iVOjaKXk4B45821jssqRMkVhs+SLyU7VYc3uGjask9KdpmSbCkZy?=
- =?iso-8859-1?Q?y9yCAuVs/yNmN00Kw+F4ayXb0WwiYahYnRMX3sdtkKzgjURB99mjQoLGQM?=
- =?iso-8859-1?Q?pyxBSHrcjOQPW2RrH8QtDoFK4S3iLzvJ3n+sn4fE7POreq7xHg9C1eCwO6?=
- =?iso-8859-1?Q?s/KQXq7Z6uTfNPzTM6Hd+v/XLk2cEkqAgo9ix+5uUwJHuiPWECuIa3y54K?=
- =?iso-8859-1?Q?SnkzLi6oxn0d2eRIe+iQyuks1TlgEOTjPbHpmdyMod2kuOXZxr3bgHiXXT?=
- =?iso-8859-1?Q?kIiVABtaKCX3MCwtyI/jYxo5zMaeYuGclSD5wzTeFW2+rsbKKw2JgKLQRo?=
- =?iso-8859-1?Q?bbjUedtzBGZ86ealMJxfNzqvQDkKyEghOnYwYq4kiJZ064JmMuUsuI8fBK?=
- =?iso-8859-1?Q?wBuykQ6cuYmM0miVhUXRfUPGznh3jRa6OVMnyLV7HCcXvnZDjL1pzVAjNs?=
- =?iso-8859-1?Q?CT/8KurIqDLMKfG50oFOC/ppo08JUajVwJJquO9la7Ms4TXJEY69EMBwxe?=
- =?iso-8859-1?Q?t++erjfLmyIgUcMGmRCVxPX3DINbxy6kdg7eSZKF3wqe3jWa2dH9iZoD20?=
- =?iso-8859-1?Q?ny5JI7pSz1Z5sgQBTiQBJbvCfa5ASKfPduQAqBBV0siBHqO5o80IihZI4K?=
- =?iso-8859-1?Q?vBDd4MGqT13VE0oLUSdTrf+mTjF3N+SDGxd/chPcyR44kAG/BIiMltTOHx?=
- =?iso-8859-1?Q?WgipdjFUb00KzRHsKq8cKiZ6jSi55gpWWLNYSfbZjY4Twny2UZMrOQDlNX?=
- =?iso-8859-1?Q?7yBmLVO/U/igCgRCs6cJ519yJYkSul+i1LUWOWpyEim5u1PdsVz8uc7NBK?=
- =?iso-8859-1?Q?rKRo2e/sjBGgdyssdEACWoGeulEd2rI7DrRF/Ie1QLsLbefCbTN8IMzToo?=
- =?iso-8859-1?Q?tofADmDz1oUFYI2BzCozDHM01YNrrPH64cRAOwKGavmzHR6TM4Ji28/dlJ?=
- =?iso-8859-1?Q?7HjHTP7xEOhpC3gfoKV0cF9vzYxjsUTRGmchS201UALIvcGQl45/caI97I?=
- =?iso-8859-1?Q?wRmAWGa+h+SnjknGWqlsTgtOf6IU36tGNRjIlknhV8YEDZCgJLlPcfi7Ab?=
- =?iso-8859-1?Q?/5gNa6yXYGRfMIpo1V4I9u7gW+lwHWhGElWQxm8gCvYxu0XoXgmWb0p+fS?=
- =?iso-8859-1?Q?u67NGI3Av5PO1q5HP7wacZyj5gT9a4vyEBvVUQyFDD8sQm/bOmodXx9wz2?=
- =?iso-8859-1?Q?pwCy30unkq6DM52vSNNgm7aCX3eKIF6smL66newqLMTuD/ZBH/2D?=
+	=?iso-8859-1?Q?TvRovMc48cW+Lq/Cj89E34znFxj6ixYXus+RqtYMg0Ez2U0oFGD8Wti3ru?=
+ =?iso-8859-1?Q?hLnoHqJ/+Bb07Apclq6CVq0OEA/m6kVoH15p64mCVJB8SxCYLM9cAlUX1u?=
+ =?iso-8859-1?Q?9FlmmPBzvu9hq7ZtczoA5dD0PeB7auuyTHTxg0sp9ePvxff6MVpKPtUv2K?=
+ =?iso-8859-1?Q?guvRVTB/ifNNv/KXWNm5hNc0xGudvPXfQh8duahD/tP2q8POpiXjSzJyfQ?=
+ =?iso-8859-1?Q?Hk47STbMbqD7m6gfJdrbxJRrcgWedVHYBehnzoPaixLM9njKVxNOPT6vRl?=
+ =?iso-8859-1?Q?nAsMENBt4WzGW+PbwtOk/ut5qtvfpUL0byiHmXvMLTL+cgQGHMhXabX3eX?=
+ =?iso-8859-1?Q?x5sYUMzCok+YheXC1bzot0Y8OLc2KWAyLg4mwadbjy3v+kfRHaNDPqfcm8?=
+ =?iso-8859-1?Q?oJy4itIuZViBp4ATCbcQDe47Z8pIc8LhleBsUyBKakDstlKDHShNUAQcEt?=
+ =?iso-8859-1?Q?f2UBs/CC06YlkmCzD3BK6f3aEUoh3hCBL4nPo0t5fHyafv4KAABpa02Yxe?=
+ =?iso-8859-1?Q?B2bkUy2yESkQ1UNyYx+szmYgIYSNSR+jKuWJDszu3jPuFoZ/22AMe2nwim?=
+ =?iso-8859-1?Q?VTc5xlHU7Dqnare5aT29QDVuld6EeXUMYvRdpTreJA/fYVhoaSLd05+d7z?=
+ =?iso-8859-1?Q?hPZYgpJS4kcKjFpnRsbFTmuyKckSZGFtwbDz0W2DiRAamXP+KKYUMBdYAx?=
+ =?iso-8859-1?Q?WvewPCjCndZHV3L2PglYjHGMFk9R+TJYIAiOD4+bkj0f5pXfoxFmVROp/g?=
+ =?iso-8859-1?Q?aSFr0kZwHIKlbZI3Aq11/l2Uuf9KHc7FZUMFyMZPbs30uwZ9RnaDIMcD8B?=
+ =?iso-8859-1?Q?Sx9EhRje29gy1Jze+bXySvkmwhFF1a4yF23nUTDFr6KeifEPQAirGkO6zL?=
+ =?iso-8859-1?Q?bLffKBC1vh8UESE9m4NKVoAiMipRbtRsTtM/dSzaSbIVMcYxw6k6cNywIV?=
+ =?iso-8859-1?Q?G9JpgvcyCaX8+3KVECZBoDFn6cI/sFFkGIYqwHBAZm0xPLpHxsOe8l6S4A?=
+ =?iso-8859-1?Q?lKcV+sl4FdyTrwdTC36v/+BbXiNASUzjVyNu2Kr+J6is4vjnvfl7JX/opf?=
+ =?iso-8859-1?Q?oE5yWwLZ+tym7iluzBqUt+5nVJlveTs3TntANPLknx9i3awYzGnnd94IF3?=
+ =?iso-8859-1?Q?8FhJaDkJ+FpCT4ssqtMKsS+FSf3U1gSq1/v1sNjhiUCJqvxiP1kbgnDa78?=
+ =?iso-8859-1?Q?mUEWYz11+mBfSTaU4xwtDAeTu5DELD+OFwVnKyqjj8polnSBVAOBBkcWeE?=
+ =?iso-8859-1?Q?d0Rb5Nz6rkuVI/bg2iYhSscLt23Ude57ymLBf9Q4mqVCE+SUGvkpEfgr0T?=
+ =?iso-8859-1?Q?pW6ge2FxG460PZ5sdK+RzEprfpomZAl7a6Q5XemTp6ESKafRIWNG85738f?=
+ =?iso-8859-1?Q?rjws2x1Lu1Rle+bxKsdAS9ZGQhFxcSD3v0DkNtaiLMMiUhaGT/aTBLZiOZ?=
+ =?iso-8859-1?Q?itA2uT8ZS8ON1zvK5ClmhvWYJ+9ADZCPPIEV7ItjHoKy25y3nKN4uBfK2Z?=
+ =?iso-8859-1?Q?hzyF0UHotaxmqAdCrNYmpUC1ot3Mnu6fl62D7j/Q/A0Lz8KiBr+dTwk7UA?=
+ =?iso-8859-1?Q?bmFkNDnElcf8mlnOUXS0a7cGfTFpLFJQ8/dKOSL/KT29EgTgEHCcu/zoAQ?=
+ =?iso-8859-1?Q?ZYeC19ykvKDnS7i9yhKbsa5edy+O5y6JS6Sj5rjHKknlJFFNAoZWZmANLK?=
+ =?iso-8859-1?Q?f7RGQyhwhJwfenXfMcCuaTAHVdV6hfzH8Z2aP6pt1zrsaoDG8No7zvDBLj?=
+ =?iso-8859-1?Q?ktt+wmZ9kIzZdgqNlbFVd93hKazJRkJWRr0KNrzIfGqQ0uu8j/nvBidnlu?=
+ =?iso-8859-1?Q?5Diz9WjINRNqQh4NPDu4fxXtIcutZudhwEyagCH77l6gZwaPDQeh?=
 X-OriginatorOrg: valinux.co.jp
-X-MS-Exchange-CrossTenant-Network-Message-Id: d8fd0825-d1af-4869-7564-08deb7db39f3
+X-MS-Exchange-CrossTenant-Network-Message-Id: 8e842e32-c422-48cc-d1ec-08deb7def6bf
 X-MS-Exchange-CrossTenant-AuthSource: TY7P286MB7722.JPNP286.PROD.OUTLOOK.COM
 X-MS-Exchange-CrossTenant-AuthAs: Internal
-X-MS-Exchange-CrossTenant-OriginalArrivalTime: 22 May 2026 08:22:13.1954
+X-MS-Exchange-CrossTenant-OriginalArrivalTime: 22 May 2026 08:48:58.4258
  (UTC)
 X-MS-Exchange-CrossTenant-FromEntityHeader: Hosted
 X-MS-Exchange-CrossTenant-Id: 7a57bee8-f73d-4c5f-a4f7-d72c91c8c111
 X-MS-Exchange-CrossTenant-MailboxType: HOSTED
-X-MS-Exchange-CrossTenant-UserPrincipalName: q331M7HCIgxqChN/qk1HZ9Bf+Dk8uvfl5U+B5wRSu4sfhUIzL/gNNaJ+sjUTwE8VF6WoxqNBs/PnzyZhNR48Ng==
-X-MS-Exchange-Transport-CrossTenantHeadersStamped: OS3P286MB2540
+X-MS-Exchange-CrossTenant-UserPrincipalName: KOc8wip0iZ2Rt7iHi3gqYFvtDPDPAmiSWnUs7sM4Z5X8l9RbwYUUUqrlzc5QG4RrtvTU9yl55ItXKlIxXFHvcA==
+X-MS-Exchange-Transport-CrossTenantHeadersStamped: TYWP286MB3272
 
-On Thu, May 21, 2026 at 04:56:49PM +0000, sashiko-bot@kernel.org wrote:
-> Thank you for your contribution! Sashiko AI review found 1 potential issue(s) to consider:
+On Thu, May 21, 2026 at 03:15:03PM +0000, sashiko-bot@kernel.org wrote:
+> Thank you for your contribution! Sashiko AI review found 2 potential issue(s) to consider:
+> 
+> New issues:
+> - [Medium] Mixing goto-based error handling with scope-based cleanup (__free) in the same function.
+
+This should be gone after dropping patch 1.
+
+See:
+https://lore.kernel.org/dmaengine/xcrbweipase44isv6lfrgqos4mrfhc7o3v4f3lzlovekvsubim@yoz4kfxhka33/
+
 > 
 > Pre-existing issues:
-> - [High] The teardown sequence in `dw_edma_remove` incorrectly powers off the hardware and frees interrupts before unregistering the DMA device, exposing a race window.
+> - [High] Missing bounds check for the hardware-provided BAR index when accessing the `pcim_iomap_table()` array.
 
-I looked into this a bit. I agree the race described here can happen in the
-current code, but I think the problem is broader than the ordering between
-free_irq() and dma_async_device_unregister().
-
-While trying to reproduce the window with the following debug delay:
-
-  @@ -1177,6 +1178,8 @@ int dw_edma_remove(struct dw_edma_chip *chip)
-                  free_irq(chip->ops->irq_vector(dev, i), &dw->irq[i]);
-          dw_edma_emul_irq_free(dw);
-   
-  +       msleep(10000);
-  +
-          /* Deregister eDMA device */
-          dma_async_device_unregister(&dw->dma);
-          list_for_each_entry_safe(chan, _chan, &dw->dma.channels,
-
-I hit a more fundamental problem: unsupported in-use unbind can lead to a UAF
-and kernel panic. I suspect that the teardown ordering issue Sashiko pointed
-out is part of that larger in-use unbind problem.
-
-A better fix may be to support in-use unbind in a similar manner to e.g. commit
-bf453a0a18b2 ("dmaengine: ioat: Support in-use unbind"). I'm not sure whether we
-want to do that now, so I would like to hear maintainers' thoughts.
-
-If we do, I think the fix should include at least:
-
-  (a). Stop using devm for dma_device backing objects and add a device_release
-       callback, so the objects stay alive until the last dmaengine reference
-       is dropped.
-
-  (b). Add a removing flag and serialize it with the transfer start path.
-       For example, dw_edma_device_issue_pending() should check the flag and call
-       dw_edma_start_transfer() under chan->vc.lock, while the remove path
-       should set the flag under the same lock at the start of dw_edma_remove().
+I do not think the exact OOB concern (See (A) below) is correct since commit
+f09d3937d400 ("PCI: Fix wrong length of devres array") (v6.15+). But I agree
+that the VSEC-provided BAR fields might be worth validating against
+PCI_STD_NUM_BARS.
 
 > --
 > 
-> commit 3dac310797da8c464a27d4656c26826f3d2a7401
-> Author: Frank Li <Frank.Li@nxp.com>
+> commit 451669b3f83e6d7ef131e591fd15b9e144ab9005
+> Author: Koichiro Den <den@valinux.co.jp>
+> Subject: dmaengine: dw-edma-pcie: Reject devices without driver data
 > 
-> dmaengine: dw-edma: Add spinlock to protect DONE_INT_MASK and ABORT_INT_MASK
+> This commit adds a check to reject devices without driver data during
+> dw_edma_pcie_probe. This prevents a NULL pointer dereference when a device
+> bound dynamically via sysfs matches the driver without that data.
 > 
-> This commit adds a spinlock to dw_edma_v0_core_start() to serialize access
-> to the shared DONE_INT_MASK and ABORT_INT_MASK registers. This prevents
-> race conditions from concurrent updates across multiple channels.
-> 
-> Link: https://lore.kernel.org/dmaengine/20260109-edma_ll-v2-1-5c0b27b2c664@nxp.com/
-> 
-> > diff --git a/drivers/dma/dw-edma/dw-edma-v0-core.c b/drivers/dma/dw-edma/dw-edma-v0-core.c
-> > index 69e8279adec81..cfdd6463252e6 100644
-> > --- a/drivers/dma/dw-edma/dw-edma-v0-core.c
-> > +++ b/drivers/dma/dw-edma/dw-edma-v0-core.c
-> [ ... ]
-> > @@ -408,6 +409,8 @@ static void dw_edma_v0_core_start(struct dw_edma_chunk *chunk, bool first)
-> >  			}
-> >  		}
-> >  		/* Interrupt unmask - done, abort */
-> > +		raw_spin_lock_irqsave(&dw->lock, flags);
+> > diff --git a/drivers/dma/dw-edma/dw-edma-pcie.c b/drivers/dma/dw-edma/dw-edma-pcie.c
+> > index 87c31d01fb102..c2024fa824e03 100644
+> > --- a/drivers/dma/dw-edma/dw-edma-pcie.c
+> > +++ b/drivers/dma/dw-edma/dw-edma-pcie.c
+> > @@ -314,6 +314,9 @@ static int dw_edma_pcie_probe(struct pci_dev *pdev,
+> >  	int i, mask;
+> >  	bool non_ll = false;
+> >  
+> > +	if (!pdata)
+> > +		return -ENODEV;
 > > +
+> >  	struct dw_edma_pcie_data *vsec_data __free(kfree) =
+> >  		kmalloc_obj(*vsec_data);
+> 
+> [Severity: Medium]
+> The kernel's cleanup subsystem guidelines state that goto-based error
+> handling and scope-based cleanup should not be mixed in the same function.
+> 
+> Since dw_edma_pcie_probe() uses goto-based cleanup labels on failure paths
+> like goto err_free_irq_vectors, could mixing them with the __free attribute
+> here lead to confusing ownership semantics or resource tracking bugs?
+> 
+> Would it be better to either convert all cleanups in this function to
+> scope-based guards, or avoid using the __free attribute entirely?
+> 
+> [ ... ]
+> 
+> >  	chip->ll_wr_cnt = vsec_data->wr_ch_cnt;
+> >  	chip->ll_rd_cnt = vsec_data->rd_ch_cnt;
+> >  
+> >  	chip->reg_base = pcim_iomap_table(pdev)[vsec_data->rg.bar];
 > 
 > [Severity: High]
-> This is a pre-existing issue, but I noticed a potential race window related to
-> how dw_edma_remove() interacts with this code.
+> This is a pre-existing issue, but does this code properly validate the
+> hardware-provided BAR index before using it as an array index?
 > 
-> In dw_edma_remove(), the driver teardown sequence calls dw_edma_core_off() to
-> disable the engine and mask interrupts, then frees the IRQs, and only
-> subsequently calls dma_async_device_unregister().
+> The value for vsec_data->rg.bar is extracted from the PCIe VSEC
+> capabilities, which can yield values up to 7. However,
+> pcim_iomap_table(pdev) returns a pointer to an array of size
+> PCI_STD_NUM_BARS, which is 6.
+  ^^^^^^^^^^^^^^^^
+          '--- (A)
 > 
-> Since the DMA device remains registered in the dmaengine framework during this
-> window, can concurrent DMA clients still issue new transfers?
-
-Yes, they can in the current code. I think (b) would close that path.
-
-> 
-> If a client calls dmaengine_submit() and dma_async_issue_pending(), the
-> execution traces down to dw_edma_v0_core_start().
-> 
-> Could this write to the engine_en register and unmask interrupts here,
-> unexpectedly re-enabling the hardware?
-
-Yes. That is the path I think should be blocked by serializing the removing flag
-with the transfer start path, by using chan->vc.lock.
-
-> Since the IRQs have already been freed,
-> would this result in the transfer completion never being signaled, leading to
-> a hung task?
-
-Yes, that looks possible if a transfer is started after IRQs are freed. And I
-think (b) would prevent that new-start case. (An already in-flight transfer is a
-separate case.)
-
-> 
-> Should the teardown sequence call dma_async_device_unregister() first to
-> safely quiesce the subsystem and prevent new requests before stopping the
-> hardware and freeing IRQs?
-
-I do not think unregister-before-free_irq can be the real fix by itself. It only
-narrows the window. It does not protect clients that already hold DMA channels,
-and those clients can still reach the driver callbacks after unregister.
-
-If I'm missing something, please let me know.
+> If a misconfigured or malicious device provides a BAR index of 6 or 7,
+> could accessing this array result in an out-of-bounds memory read and
+                                          ^^^^^^^^^^^^^^^^^^^^^^^^^
+                                                      '--- (A)
 
 Best regards,
 Koichiro
 
+> crash the kernel when the resulting invalid pointer is dereferenced?
 > 
-> >  		tmp = GET_RW_32(dw, chan->dir, int_mask);
-> >  		tmp &= ~FIELD_PREP(EDMA_V0_DONE_INT_MASK, BIT(chan->id));
-> >  		tmp &= ~FIELD_PREP(EDMA_V0_ABORT_INT_MASK, BIT(chan->id));
-> > @@ -416,6 +419,9 @@ static void dw_edma_v0_core_start(struct dw_edma_chunk *chunk, bool first)
-> >  		tmp = GET_RW_32(dw, chan->dir, linked_list_err_en);
-> >  		tmp |= FIELD_PREP(EDMA_V0_LINKED_LIST_ERR_MASK, BIT(chan->id));
-> >  		SET_RW_32(dw, chan->dir, linked_list_err_en, tmp);
-> > +
-> > +		raw_spin_unlock_irqrestore(&dw->lock, flags);
-> > +
+> >  	if (!chip->reg_base) {
+> >  		err = -ENOMEM;
+> >  		goto err_free_irq_vectors;
 > 
 > -- 
-> Sashiko AI review · https://sashiko.dev/#/patchset/20260521142153.2957432-1-den@valinux.co.jp?part=4
+> Sashiko AI review · https://sashiko.dev/#/patchset/20260521142153.2957432-1-den@valinux.co.jp?part=2
