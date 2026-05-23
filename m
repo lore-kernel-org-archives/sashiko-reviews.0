@@ -1,255 +1,478 @@
-Received: from mx0a-0031df01.pphosted.com (mx0a-0031df01.pphosted.com [205.220.168.131])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-wr1-f48.google.com (mail-wr1-f48.google.com [209.85.221.48])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 028542DC32E
-	for <sashiko-reviews@lists.linux.dev>; Sat, 23 May 2026 14:41:21 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.168.131
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 35DD32D94B5
+	for <sashiko-reviews@lists.linux.dev>; Sat, 23 May 2026 19:22:02 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.221.48
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1779547284; cv=none; b=rIWlkQl2S2HJUDql6pdm1t98rcnWYBY1ymA7BrvHbLMjYJM5pNkPPVzEvahhfY/UVLDEONUiUT8tldoL3goQ4owOW0bpIZC/OggaW/V6HRwZVIDdHRtxm3x05mVcW2gcmcOwSSUtOHwtWj9QkkpkjsqIKNZd024Eg7LSy6byRGU=
+	t=1779564124; cv=none; b=Jp1ttuhpB7+t2gnrCfHVj8nHgah9pp3a5VY3GThbhChBOaDFtOIgA0IpTnNrucalWVAjlU5h87psf7cVgpy00+nXix2VrSQdB7LOJz/V4q2RrL51MR/zG/idae0gIGqsw0J/iutcIm9cSuQ7HClCEffZnQe1ehkpuFXuGbCQOq4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1779547284; c=relaxed/simple;
-	bh=+BkeoBaipQBBJt0lJ/JSFDjPNnCrS3L369h22Ot3r6k=;
-	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=qSa6E4lilXavGrjvJYfCcLGa6ZImN5YpU3TnFnUNbLJCsl/NyD3AzS8zXtU6skUOufaUa4jsmTVdGTfGLAwrd22WQ5b0C998pC3g1hx6EV1ga+xK6IbtFtqluFaIdNPw8aDDwuQo8othbzvRN/u2QGM4u5tH+bLgUrhZIdlv7RU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com; spf=pass smtp.mailfrom=oss.qualcomm.com; dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b=lS33Uu+E; dkim=pass (2048-bit key) header.d=oss.qualcomm.com header.i=@oss.qualcomm.com header.b=ZBcwnQ4k; arc=none smtp.client-ip=205.220.168.131
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=oss.qualcomm.com
+	s=arc-20240116; t=1779564124; c=relaxed/simple;
+	bh=Qi1cKD48gCY2y8NURF+96CXY7Rx4S2C30Nzcs3+wm8M=;
+	h=Date:To:Cc:Subject:From:References:In-Reply-To:Message-Id:
+	 MIME-Version:Content-Type; b=hCTiB54EEEDEz8V8Xzi76JLxAkwQHdLV2raROkWhCi+LRaCWAN3k0OMSZOAVQLkOrnTd5SGCD2hvnBiUf6l/2p8RD3vj6Ea9w89dVcKpzVGAY4B9PYyfjNvqIH3/utuw8SOf6jxUUW37eTZRXubpVvR330mHsyVKEmdE56nOxhY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=fov9EKWc; arc=none smtp.client-ip=209.85.221.48
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b="lS33Uu+E";
-	dkim=pass (2048-bit key) header.d=oss.qualcomm.com header.i=@oss.qualcomm.com header.b="ZBcwnQ4k"
-Received: from pps.filterd (m0279867.ppops.net [127.0.0.1])
-	by mx0a-0031df01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id 64N7sY1u1280558
-	for <sashiko-reviews@lists.linux.dev>; Sat, 23 May 2026 14:41:21 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=qualcomm.com; h=
-	cc:content-transfer-encoding:content-type:date:from:in-reply-to
-	:message-id:mime-version:references:subject:to; s=qcppdkim1; bh=
-	fnO/sXJdMaQSW5DY5kS69t8JL5v3+00rHQWHLmqTJoE=; b=lS33Uu+ENsVwRNYM
-	HKrwa6Zvau5jrFUjwIACV7fSrHWnqEwLvrakANH8LAW14gJXIRWn8VGiIGaHvKyM
-	bbi1khbb5lUkoT5AvSMwMtvbvjJ+jc7lGasqt6sMNopyGHd5LjG/Cde+Yn/n8liB
-	Xjj0Gb9K77pwdWVsLjcWYgo/ZigQ8a5szXea4SVg4LyHQB4dmuosbDwqcVr0hQi2
-	VQEO8QpV5CA9u3MDsI4Mj8p3P8nNHwhCQji5taOk4+1sOgIafwYRHfhR9wTOeNnB
-	oMRo+Q3nvLGuxyZrw/uTvMzwWNMsniyP6NjCV1TPWIfPZXFGDIBvpUPKnNxHOs/V
-	5d+SaQ==
-Received: from mail-pf1-f197.google.com (mail-pf1-f197.google.com [209.85.210.197])
-	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 4eb88w0pmx-1
-	(version=TLSv1.3 cipher=TLS_AES_128_GCM_SHA256 bits=128 verify=NOT)
-	for <sashiko-reviews@lists.linux.dev>; Sat, 23 May 2026 14:41:21 +0000 (GMT)
-Received: by mail-pf1-f197.google.com with SMTP id d2e1a72fcca58-82fa7c6699fso12546130b3a.1
-        for <sashiko-reviews@lists.linux.dev>; Sat, 23 May 2026 07:41:21 -0700 (PDT)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="fov9EKWc"
+Received: by mail-wr1-f48.google.com with SMTP id ffacd0b85a97d-44b330c5cc6so6403168f8f.1
+        for <sashiko-reviews@lists.linux.dev>; Sat, 23 May 2026 12:22:02 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=oss.qualcomm.com; s=google; t=1779547280; x=1780152080; darn=lists.linux.dev;
-        h=content-transfer-encoding:in-reply-to:from:content-language
-         :references:cc:to:subject:user-agent:mime-version:date:message-id
-         :from:to:cc:subject:date:message-id:reply-to;
-        bh=fnO/sXJdMaQSW5DY5kS69t8JL5v3+00rHQWHLmqTJoE=;
-        b=ZBcwnQ4k1xjT6jexY3beya6PfUtbke2rZF7px60Zi21gMETYdvZCbZ7f/+IfIglfH3
-         peHqXp3kaxneN/QH8ULXMhpWBqfwrMMuroEIqrniGBHWXKklyBW6fNl1ubpqdMqI+7Qr
-         TV02UC3GAM3M6l0Je7bnsirA9nqZZzUCKc6kYWcmJxJI2/u78IraSzsk8gtZOA1zHyD5
-         /nNuiAUtc5zwbD9CfPh8jxjE5QYvUjzS+gWGXADJEvXK7XfnP1hfV99vHGYtAKGNIkHy
-         JO1bflVq19MuQJSyJ8/VvOZGeUe+l3Q3Bv/SFHuDKhVSRgnTojb2FVWEnBQqrh0tFchA
-         gJUw==
+        d=gmail.com; s=20251104; t=1779564121; x=1780168921; darn=lists.linux.dev;
+        h=content-transfer-encoding:mime-version:user-agent:message-id
+         :in-reply-to:references:from:subject:cc:to:date:from:to:cc:subject
+         :date:message-id:reply-to;
+        bh=1nyil2UrybGod099ae7Fu+qN7s7Wzz/PUhg4kbNilFU=;
+        b=fov9EKWcn2Pan+pAnZXvW5xiyADOIk40PleX1lMOI09OQ/MQ6qQI0yqD1z1EW/MYme
+         kcG+W5Xk8+V09vyh1oQgu/VyFITOL+QvwVqm9Oh7/kTyACGp9f63twGMcVIASbjSazu0
+         98eUgyZAZyfYhfhfFasH15QhT778n15VENdBOZIXWMjnnsy49Xfvsm3EvSs2Wzy6qJo1
+         eUmgoNlVqCoSY/bvAJgB4svUHqdAupD3LiElxr4ZUdvPT3kWtnM2JtpEkntCf1Ntz8ze
+         5i8uT21qRk/FoR7MdxpzI4oK63sRoW/Q4yYuVPhz/jwhPqonckD5dPKwO5jxmYnvjFOe
+         Ff8g==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20251104; t=1779547280; x=1780152080;
-        h=content-transfer-encoding:in-reply-to:from:content-language
-         :references:cc:to:subject:user-agent:mime-version:date:message-id
-         :x-gm-gg:x-gm-message-state:from:to:cc:subject:date:message-id
-         :reply-to;
-        bh=fnO/sXJdMaQSW5DY5kS69t8JL5v3+00rHQWHLmqTJoE=;
-        b=fkyaEG465P0d4NAFvZKalPsmpeFPvVznyTMEtnyWhRA88uWIMgB9iArXRMajhftaf4
-         Y4Rj5LYZFyyjhZfp5wV4dtIFjM8O9U9FznurYPgZndXfBlHrWuxabpgDeUTqqS+KCYr6
-         VowpFsL6CzMtKbZ4XjHVGB4rsECzBsAifEeLC+YlMCdHN+JgLqu/1LrdKoeAC34lqY6V
-         8/vNNOR9iRhHaoxJ4RyFEfa2llAGPMl2blnlSmz1TuHmTT2XXndRgc3v2E+tvoU3Ba+w
-         t7cbnJ0SAFqlUHAd7RZQUTWk3TINcByMXgE3PAdtnxaTypP1jUGJpb/Wnu63w3chq6G9
-         pOoA==
-X-Gm-Message-State: AOJu0YxYG7GINyoBcy3okWFi3dmpAbVdIQx10Hmg+L5t3QjFsbLhUcGw
-	dgfXXtFYthBk5CVNIYJnuFGDMmeow/rHDIdFqZs+o1ICAyRL/p2dpsxiXo2ol1pbXWVGYBaHU7H
-	QwVFk5iM23mDK7ibL+DM2DwFDmV096wl2Byl8ExZJUKMRXi8NCfjL2QtlQqWpwS0F3Kp5nZRj5V
-	VZljVEuw==
-X-Gm-Gg: Acq92OGtdYf79SFp+/uPDxFG5A+GB9Wd+nxx8/dG+i5hIx/1pE7FI5DVfhRtqLd0kHp
-	Zca3NeMXtoAqtz4fWlf2L9kocb8NwK+7gy2rlnN5T7JTfSa/5KneL0je57lnodM/Jr5nKcu3UCB
-	lJQAxqL50aemawtTb8u0X2HI8jxcmBIaxdyyeHuGYZsgUA4zd22JvERlURQdu9Pb3TyNZ87FJqQ
-	6TJAnH/M+4rhWbCE8qu7WP9TzUkFBYKlvLAiuF6ARD+Fq+nL+3040LMRxvTA4ojx97nGZKXU+df
-	OEmcPaRSOagYJu4tcRYDY803d0Sq5by1tr2TZGxnmoD6dsrMF9rR2iWRhFI+G5xFZ3WrUICCQmK
-	tQ1Dbx4JrZLHAhS+uuIZ1/I4YqcmTCpC9r7AebreaCuhbVM3n
-X-Received: by 2002:a05:6a00:2daa:b0:82f:42bc:3386 with SMTP id d2e1a72fcca58-8415f1a5318mr8015922b3a.21.1779547280488;
-        Sat, 23 May 2026 07:41:20 -0700 (PDT)
-X-Received: by 2002:a05:6a00:2daa:b0:82f:42bc:3386 with SMTP id d2e1a72fcca58-8415f1a5318mr8015902b3a.21.1779547279948;
-        Sat, 23 May 2026 07:41:19 -0700 (PDT)
-Received: from [10.219.56.98] ([202.46.23.19])
-        by smtp.gmail.com with ESMTPSA id d2e1a72fcca58-84164af0506sm4845416b3a.16.2026.05.23.07.41.17
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Sat, 23 May 2026 07:41:19 -0700 (PDT)
-Message-ID: <72a2dc38-bfaa-4027-9871-0fb387242de2@oss.qualcomm.com>
-Date: Sat, 23 May 2026 20:11:14 +0530
+        d=1e100.net; s=20251104; t=1779564121; x=1780168921;
+        h=content-transfer-encoding:mime-version:user-agent:message-id
+         :in-reply-to:references:from:subject:cc:to:date:x-gm-gg
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+        bh=1nyil2UrybGod099ae7Fu+qN7s7Wzz/PUhg4kbNilFU=;
+        b=W39SlJzQ5LxoNCnPDaimwIGqrqafnjIQMhxIpx8BYu8KDCryQBYMlvRbWxF7QvK5l2
+         ZJTQA3dR3fkKxAcpDR4x01crvdHIh5faNulT7kI0I1shjOT6p5kbhNGSoy5JX/v0LQuP
+         OJ7i8doCg/Qhp+HZYXeTSBDEF7YsC35phhrPF42ZRHzPguIxrQcfir7nRdw7ojiGo2Py
+         xq3CCww2jUI9tgavXemFk5PW1TvfSgjPezMXKaEm2LrhSDcRYj0CwJclK+SGo1cfbJIN
+         KwxeWC7CzN8HMnhvTCm6wbh4GioeSYkXa2DyywtwYJ0RC1r0trFQmdsBOz/xYNB6EIaQ
+         hqzg==
+X-Gm-Message-State: AOJu0YyofNO4SI0DBw867da6dlDQ8nfIK0x7ZGJl3+M3hP40q8ENp1C4
+	XQIGDwys+1kVKe/DrgjAOx6VyYoX/lbzBDET5MbSD69i54cwFuXIu5JpwHGasg==
+X-Gm-Gg: Acq92OG53dvnYF5jpQMtrUTGShks+pTIQa2cbf9x1tEDdyPf5LImsxdkpMwGyt6sRPI
+	mjY+reOtdQmq6W3VcYH4eH1M3xvKwI6hor/68E/6G+OEbqOHfG+WreD8m/yu7Bs5GvkII7MTOlG
+	zhDc/uLTFSOEAl/dNABabcRKAFcqINO/Z9ojCdcPin57DsAmuvbLzH8i7Fh/6dpG64fQkHLzvfO
+	bQtmYRO3RciFrBnmqToMXb/0XViYiNb3voCrO7jaAZeG55Kihi2uZa0Oz6OvF/pDHT07J3uc1m9
+	iN/4fqsgEGho8PMEssiKrb3VIo5JEtl0h3ccL1MhC4++9xu0JxpX6ONX8rYasp42TJJIP8Yh1d0
+	Ejr0s6KemgZjRpp0IhGb5dDktkoICRmRMrEe93p316JED8t/xgkIPlv597y+cyvvMNYf9YffxH5
+	hPpHaQEMw7yZk6pWbFIR94tnYk
+X-Received: by 2002:a05:6000:4283:b0:44d:261:54c5 with SMTP id ffacd0b85a97d-45eb38b7934mr13481139f8f.30.1779564120271;
+        Sat, 23 May 2026 12:22:00 -0700 (PDT)
+Received: from localhost ([81.6.39.218])
+        by smtp.gmail.com with ESMTPSA id ffacd0b85a97d-45eb6ccd211sm18661289f8f.10.2026.05.23.12.21.59
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Sat, 23 May 2026 12:21:59 -0700 (PDT)
+Date: Sat, 23 May 2026 10:57:55 +0200
+To: sashiko-reviews@lists.linux.dev
+Cc: Vicki Pfau <vi@endrift.com>, linux-input@vger.kernel.org,
+ dmitry.torokhov@gmail.com
+Subject: Re: [PATCH v5 1/3] HID: nintendo: Add preliminary Switch 2
+ controller driver
+From: "Silvan Jegen" <s.jegen@gmail.com>
+References: <20260512200051.2534081-2-vi@endrift.com>
+ <20260514001510.964E7C19425@smtp.kernel.org>
+In-Reply-To: <20260514001510.964E7C19425@smtp.kernel.org>
+Message-Id: <25DJXAMCCCNLA.234CWZVQ8IOM4@homearch.localdomain>
+User-Agent: mblaze/1.4-1-g5a69507 (2026-01-24)
 Precedence: bulk
 X-Mailing-List: sashiko-reviews@lists.linux.dev
 List-Id: <sashiko-reviews.lists.linux.dev>
 List-Subscribe: <mailto:sashiko-reviews+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:sashiko-reviews+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 2/2] iommu/arm-smmu: Add interconnect bandwidth voting
- support
-To: sashiko-reviews@lists.linux.dev
-Cc: conor+dt@kernel.org, robh@kernel.org, krzk+dt@kernel.org,
-        devicetree@vger.kernel.org
-References: <20260516-smmu_interconnect_addition-v1-2-f889d933f5c1@oss.qualcomm.com>
- <20260516130251.DED6AC2BCB3@smtp.kernel.org>
-Content-Language: en-US
-From: Bibek Kumar Patro <bibek.patro@oss.qualcomm.com>
-In-Reply-To: <20260516130251.DED6AC2BCB3@smtp.kernel.org>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
-X-Authority-Analysis: v=2.4 cv=S/jpBosP c=1 sm=1 tr=0 ts=6a11bc91 cx=c_pps
- a=rEQLjTOiSrHUhVqRoksmgQ==:117 a=j4ogTh8yFefVWWEFDRgCtg==:17
- a=IkcTkHD0fZMA:10 a=NGcC8JguVDcA:10 a=s4-Qcg_JpJYA:10
- a=VkNPw1HP01LnGYTKEx00:22 a=u7WPNUs3qKkmUXheDGA7:22 a=eoimf2acIAo5FJnRuUoq:22
- a=VwQbUJbxAAAA:8 a=EUspDBNiAAAA:8 a=SlpPlKqkm7dTB969m5wA:9 a=QEXdDO2ut3YA:10
- a=2VI0MkxyNR6bbpdq8BZq:22
-X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwNTIzMDE1MCBTYWx0ZWRfX93GFU3OuKJ5m
- fa8bU4bt+8os7vAgTDQV4Wgt/jBPmW+wSZ2gnL1C2S68GFYje3/wo/ck9+T6uj26DF/0Z3+mMhu
- rJ5h3BG19sc2+lHZ7SDBCZxmg+1q8WNgDUh6eOPL7HaXJ0b2M/uIrMiJHbOc8fjSrzeI2HHNxh3
- yA7MMlBphtZWtGYMqhB/qLppPhgpz4LhPYqlg7SEH8TJTZyVjhSB6qCdffX6UOwkcX38YjWeVVq
- vQw9mfMrOAOs/zDUTbsgDdBqBfP63NRZZWJvFL/6FrKPBBJm6ksQZjz6qUUQ1QRZLHOpLC9TVKp
- aiZ+Iswy5RXY7v47yNvDYRwAK/BW3cGQjzAa1UYPYG7xzLFlBmIovCZjWcmISU/xPOqwgB0JeBj
- cz+QiWvTPgx9c2OzS/yG/lJhLQTZ3wB7KLsGFPk33awSRrTJ4pw1B3tAWERM0uwo2a+ZK7Gynxm
- XmEI8MN7mjYGlQdp7/A==
-X-Proofpoint-ORIG-GUID: nBD9E3SKf81AR3SIPTZggWn4FHAIAGog
-X-Proofpoint-GUID: nBD9E3SKf81AR3SIPTZggWn4FHAIAGog
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.293,Aquarius:18.0.1143,Hydra:6.1.51,FMLib:17.12.100.49
- definitions=2026-05-23_04,2026-05-18_01,2025-10-01_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
- suspectscore=0 lowpriorityscore=0 malwarescore=0 clxscore=1011
- priorityscore=1501 impostorscore=0 adultscore=0 phishscore=0 spamscore=0
- bulkscore=0 classifier=typeunknown authscore=0 authtc= authcc= route=outbound
- adjust=0 reason=mlx scancount=1 engine=8.22.0-2605130000
- definitions=main-2605230150
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: quoted-printable
 
+Heyhey!
 
+Below some comments regarding the findings (note that I am not an expert
+on neither Linux kernel drivers in general nor USB HID specifically).
 
-On 5/16/2026 6:32 PM, sashiko-bot@kernel.org wrote:
-> Thank you for your contribution! Sashiko AI review found 3 potential issue(s) to consider:
-> - [High] Dead code `-ENODATA` check in `arm_smmu_icc_get()` causes probe failure on platforms without interconnects.
-> - [High] Shared IRQ handlers access SMMU hardware registers while the device might be runtime suspended.
-> - [Medium] Interconnect bandwidth vote is not released during system shutdown if Runtime PM is disabled.
+sashiko-bot@kernel.org wrote:
+> Thank you for your contribution! Sashiko AI review found 11 potential iss=
+ue(s) to consider:
+> - [High] Sleeping in atomic context and AB-BA deadlock in `switch2_usb_di=
+sconnect`
+> - [High] Race condition in IN URB tracking causes permanent starvation
+> - [High] Dangling pointers and use-after-free on probe failure
+> - [High] Memory corruption and double free due to incorrect devm input li=
+fecycle management
+> - [High] NULL pointer dereference in USB probe error path
+> - [High] Division by zero crash from unvalidated trigger calibration data=
+
+> - [High] BUG_ON kernel panic when `ida_free` is called with U32_MAX
+> - [High] Out-of-bounds read when parsing NS2_CMD_FW_INFO response
+> - [High] Race condition due to URB submission before initialization of sy=
+nchronization primitives
+> - [Medium] Infinite USB retry storm on protocol errors
+> - [Medium] Unaligned memory access on byte array casts
 > --
-> 
-> commit efe802bf0c93309aa584a5eb41c34c9788a6e837
-> Author: Bibek Kumar Patro <bibek.patro@oss.qualcomm.com>
-> 
-> iommu/arm-smmu: Add interconnect bandwidth voting support
-> 
-> This commit adds support for an optional interconnect path to the arm-smmu
-> driver. It votes for bandwidth while the SMMU is active to prevent register
-> access failures during transitions. The bandwidth vote is enabled during
-> probe and runtime resume, and released during runtime suspend and errors.
-> 
->> diff --git a/drivers/iommu/arm/arm-smmu/arm-smmu.c b/drivers/iommu/arm/arm-smmu/arm-smmu.c
->> index 0bd21d206eb3e..aedf5edf8f9b2 100644
->> --- a/drivers/iommu/arm/arm-smmu/arm-smmu.c
->> +++ b/drivers/iommu/arm/arm-smmu/arm-smmu.c
+>=20
+> commit 00cb7265ad5983144c6923702e2ee2c3c047d29e
+> Author: Vicki Pfau <vi@endrift.com>
+> Subject: HID: nintendo: Add preliminary Switch 2 controller driver
+>=20
+> This adds a new driver for the Switch 2 controllers. The Switch 2 uses an=
+
+> unusual split-interface design such that input and rumble occur on the ma=
+in
+> HID interface, but all other communication occurs over a "configuration"
+> interface.
+>=20
+> > diff --git a/drivers/hid/hid-nintendo.c b/drivers/hid/hid-nintendo.c
+> > index 29008c2cc5304..2193afcdefabc 100644
+> > --- a/drivers/hid/hid-nintendo.c
+> > +++ b/drivers/hid/hid-nintendo.c
 > [ ... ]
->> @@ -86,6 +91,36 @@ static inline void arm_smmu_rpm_put(struct arm_smmu_device *smmu)
->>   	}
->>   }
->>   
->> +static int arm_smmu_icc_get(struct arm_smmu_device *smmu)
->> +{
->> +	smmu->icc_path = devm_of_icc_get(smmu->dev, NULL);
->> +	if (IS_ERR(smmu->icc_path)) {
->> +		int err = PTR_ERR(smmu->icc_path);
->> +
->> +		if (err == -ENODATA) {
-> 
-> Is this -ENODATA check correct for handling missing interconnects?
-> 
-> Looking at devm_of_icc_get(), it relies on of_icc_get(), which returns
-> -ENOENT when the interconnects DT property is missing, or -ENODEV on ACPI
-> platforms where dev->of_node is NULL. It appears it never returns -ENODATA.
-> 
-> Will this cause the driver to unconditionally call dev_err_probe() and fail
-> to probe on all ACPI platforms and DT platforms that do not define
-> interconnect properties?
-> 
-
-ACK, good catch.
-I will fix this in the next revision. Instead of checking for -ENODATA, 
-the code should handle -ENODEV to correctly cover the case where the 
-interconnect path is not available, and emit a non-fatal warning 
-accordingly.
-
->> +			smmu->icc_path = NULL;
->> +			return 0;
->> +		}
->> +		return dev_err_probe(smmu->dev, err,
->> +				     "failed to get interconnect path\n");
->> +	}
->> +	return 0;
->> +}
->> +
->> +static void arm_smmu_icc_enable(struct arm_smmu_device *smmu)
->> +{
->> +	if (smmu->icc_path)
->> +		WARN_ON(icc_set_bw(smmu->icc_path, ARM_SMMU_ICC_AVG_BW,
->> +				   ARM_SMMU_ICC_PEAK_BW_HIGH));
->> +}
->> +
->> +static void arm_smmu_icc_disable(struct arm_smmu_device *smmu)
->> +{
->> +	if (smmu->icc_path)
->> +		WARN_ON(icc_set_bw(smmu->icc_path, ARM_SMMU_ICC_AVG_BW,
->> +				   ARM_SMMU_ICC_PEAK_BW_LOW));
->> +}
-> 
-> Should arm_smmu_icc_disable() also be called during system shutdown?
-> 
-> In arm_smmu_device_shutdown(), if pm_runtime_enabled(smmu->dev) is false,
-> the driver manually disables the SMMU clocks via clk_bulk_disable().
-> However, a corresponding call to drop the interconnect vote doesn't appear
-> to be added to that branch.
-> 
-> Could this leave the bandwidth vote permanently held at
-> ARM_SMMU_ICC_PEAK_BW_HIGH during system halt or kexec?
-> 
-
-ACK, adding this in the shutdown path would be safer.
-It should also be includes alongside clk_bulk_disable() in the "non-RPM" 
-else {} path of arm_smmu_device_shutdown().
-
+> > +static int switch2_init_input(struct switch2_controller *ns2)
+> > +{
 > [ ... ]
->> @@ -2308,6 +2358,7 @@ static int __maybe_unused arm_smmu_runtime_suspend(struct device *dev)
->>   	struct arm_smmu_device *smmu = dev_get_drvdata(dev);
->>   
->>   	clk_bulk_disable(smmu->num_clks, smmu->clks);
->> +	arm_smmu_icc_disable(smmu);
->>   
->>   	return 0;
->>   }
-> 
-> With the clocks disabled and the interconnect vote dropped here, is there a
-> risk of a bus hang if a shared IRQ fires while the device is suspended?
-> 
-> The driver registers its global_fault and context_fault handlers as
-> IRQF_SHARED. If another device on the same IRQ line triggers an interrupt
-> while the SMMU is in RPM_SUSPENDED, the handler might attempt to read
-> hardware registers (such as calling arm_smmu_gr0_read()) while the SMMU is
-> powered down without an active clock or interconnect vote.
-> 
-> Should the interrupt handlers use pm_runtime_get_if_active() before
-> accessing registers, and should this suspend callback use synchronize_irq()?
-> 
+> > +	input =3D devm_input_allocate_device(&hdev->dev);
+> > +	if (!input)
+> > +		return -ENOMEM;
+> [ ... ]
+> > +	ret =3D input_register_device(input);
+> > +	if (ret < 0) {
+> > +		hid_err(ns2->hdev, "Failed to register input; ret=3D%d\n", ret);
+> > +		input_free_device(input);
+>=20
+> Calling input_free_device or input_unregister_device on a devm-managed
+> input device can cause double frees when devres cleanup fires. Can this
+> lead to memory corruption?
 
-Seems like this issue predates the interconnect voting patch and is not 
-introduced by this series.
+I think sashiko is actually correct here, unfortunately. The documentation
+for devm_input_allocate_device states that
 
-The clk_bulk_disable() call in arm_smmu_runtime_suspend() was already 
-present prior to this change. Introducing arm_smmu_icc_disable() does 
-not alter the risk of the race condition mentioned above.
+  Managed input devices do not need to be explicitly unregistered or
+  freed as it will be done automatically when owner device unbinds from
+  its driver (or binding fails). ...
 
-So as per my understanding this comment can be ignored for the series,
-Will raise a separate patch with the proposed fix on this suspected race 
-condition.
+Looks like we can remove all the input_unregister_device and
+input_free_device calls here.
 
-Thanks & regards,
-Bibek
+>=20
+> > +		return ret;
+> > +	}
+> [ ... ]
+> > +static void switch2_controller_put(struct switch2_controller *ns2)
+> > +{
+> > +	struct input_dev *input;
+> > +	bool do_free;
+> [ ... ]
+> > +	if (input)
+> > +		input_unregister_device(input);
+>=20
+> Calling input_unregister_device on a devm-managed input device can cause
+> issues. If the input device remains alive (tied to the HID device devres)=
+
+> and its child LEDs are not released, will reconnecting the USB cable
+> allocate a new input device and corrupt the LED lists by re-registering
+> the exact same ns2->leds structures?
+
+This input_unregister_device can also be removed.
+
+>=20
+> > +
+> > +	if (do_free) {
+> [ ... ]
+> > +static void switch2_report_trigger(struct input_dev *input, uint8_t ze=
+ro, int abs, uint8_t data)
+> > +{
+> > +	int value =3D (NS2_TRIGGER_RANGE + 1) * (data - zero) / (232 - zero);=
+
+>=20
+> The zero variable is loaded directly from the controller's factory calibr=
+ation
+> flash. If a device reports a zero point of exactly 232, will this trigger=
+ a
+> division by zero exception and crash the kernel?
+
+Not sure this is an issue in practice, but we might want to protect the
+code in any case by doing something like the below perhaps (untested).
+
+int value =3D (NS2_TRIGGER_RANGE + 1) * (data - zero) / max_t(int, (232 - z=
+ero), 1);
+
+
+>=20
+> > +
+> > +	input_report_abs(input, abs, clamp(value, 0, NS2_TRIGGER_RANGE));
+> > +}
+> [ ... ]
+> > +static int switch2_read_flash(struct switch2_controller *ns2, uint32_t=
+ address,
+> > +	uint8_t size)
+> > +{
+> > +	uint8_t message[8] =3D { size, 0x7e };
+> > +
+> > +	if (!ns2->cfg)
+> > +		return -ENOTCONN;
+> > +	*(__le32 *)&message[4] =3D __cpu_to_le32(address);
+>=20
+> The driver directly casts &message[4] to __le32. Since message is a uint8=
+_t
+> array, it is only guaranteed to be 1-byte aligned. On strict architecture=
+s,
+> will this unaligned memory write trigger a hardware alignment fault?
+
+I assume this could be an issue and we should just use something like
+the below (only compile-tested).
+
+put_unaligned_le32(__cpu_to_le32(address), &message[4]);
+
+
+>=20
+> > +	return ns2->cfg->send_command(NS2_CMD_FLASH, NS2_SUBCMD_FLASH_READ, m=
+essage,
+> > +		sizeof(message), ns2->cfg);
+> > +}
+> [ ... ]
+> > +int switch2_receive_command(struct switch2_controller *ns2,
+> > +	const uint8_t *message, size_t length)
+> > +{
+> [ ... ]
+> > +	header =3D (const struct switch2_cmd_header *)message;
+> > +	if (!(header->flags & NS2_FLAG_OK)) {
+> > +		ret =3D -EIO;
+> > +		goto exit;
+> > +	}
+> > +	message =3D &message[8];
+> > +	switch (header->command) {
+> [ ... ]
+> > +	case NS2_CMD_FW_INFO:
+> > +		if (header->subcommand =3D=3D NS2_SUBCMD_FW_INFO_GET) {
+> > +			if (length < sizeof(ns2->version)) {
+> > +				ret =3D -EINVAL;
+> > +				goto exit;
+> > +			}
+> > +			memcpy(&ns2->version, message, sizeof(ns2->version));
+>=20
+> The message pointer is advanced by 8 bytes to skip the header, but length=
+
+> is not decremented. The bounds check compares length against
+> sizeof(ns2->version). If length is exactly sizeof(ns2->version), the chec=
+k
+> passes, but the advanced message pointer only has length - 8 valid bytes
+> remaining. Will the memcpy over-read into uninitialized memory?
+
+Sounds like something that we should fix by either decreasing length or
+increasing the size in the check.
+
+>=20
+> > +			ns2->ctlr_type =3D ns2->version.ctlr_type;
+> > +			switch2_init_step_done(ns2, NS2_INIT_GET_FIRMWARE_INFO);
+> > +		}
+> > +		break;
+> > +	default:
+> > +		break;
+> > +	}
+> > +
+> > +exit:
+> > +	if (ns2->init_step < NS2_INIT_DONE)
+> > +		switch2_init_controller(ns2);
+>=20
+> If a command response has the NACK flag set or encounters another error,
+> the code jumps to exit and invokes switch2_init_controller. Since
+> ns2->init_step has not advanced, the state machine will immediately re-se=
+nd
+> the exact same command. Can this cause an infinite tight feedback loop of=
+
+> failures and retries, flooding the USB bus?
+
+We have discussed this before and it doesn't seem to be an issue in
+practice.
+
+If we want to be on the safe side, we could pass a retry count and abort
+on too many error retries, perhaps?
+
+
+> > +
+> > +	return ret;
+> > +}
+> [ ... ]
+> > +int switch2_controller_attach_cfg(const char *phys, struct switch2_cfg=
+_intf *cfg)
+> > +{
+> [ ... ]
+> > +	guard(mutex)(&ns2->lock);
+> > +	WARN_ON(ns2->cfg);
+> > +	ns2->cfg =3D cfg;
+> > +
+> > +	if (ns2->hdev)
+> > +		return switch2_init_controller(ns2);
+>=20
+> If switch2_init_controller fails here or in switch2_probe, the error is
+> returned immediately without unrolling the state. Will ns2->cfg or ns2->h=
+dev
+> remain set, potentially leading to a use-after-free when subsequent devic=
+e
+> events occur?
+
+AFAICT, since we are always checking for both ns2->cfg and ns2->hdev
+before doing any processing in switch2_init_controller, there should
+never be a use-after-free
+
+It *is* true that we don't call hid_hw_{close,stop} in switch2_probe,
+if the switch2_init_controller call fails though. It might make sense
+to return a specific error and use it to check whether we want to give
+up and call these?
+
+>=20
+> > +	return 0;
+> > +}
+> [ ... ]
+> > +static void switch2_remove(struct hid_device *hdev)
+> > +{
+> > +	struct switch2_controller *ns2 =3D hid_get_drvdata(hdev);
+> > +
+> > +	hid_hw_close(hdev);
+> > +	mutex_lock(&ns2->lock);
+> > +	WARN_ON(ns2->hdev !=3D hdev);
+> > +	ns2->hdev =3D NULL;
+> > +	mutex_unlock(&ns2->lock);
+> > +	ida_free(&nintendo_player_id_allocator, ns2->player_id);
+>=20
+> If ida_alloc fails during probe, ns2->player_id remains at its default
+> value of U32_MAX. When ida_free is called, the IDA framework enforces a
+> check on the ID. Casting U32_MAX to a signed integer yields -1. Will this=
+
+> trigger the BUG_ON and cause a kernel panic?
+
+ida_free seems to return early on
+
+if ((int)id < 0)
+	return;
+
+so that should be fine as is.
+
+>=20
+> > +	switch2_controller_put(ns2);
+> > +	hid_hw_stop(hdev);
+> > +}
+> [ ... ]
+> > diff --git a/drivers/input/joystick/nintendo-switch2-usb.c b/drivers/in=
+put/joystick/nintendo-switch2-usb.c
+> > new file mode 100644
+> > index 0000000000000..ebd89d852e21a
+> > --- /dev/null
+> > +++ b/drivers/input/joystick/nintendo-switch2-usb.c
+> [ ... ]
+> > +static void switch2_bulk_in(struct urb *urb)
+> > +{
+> [ ... ]
+> > +	spin_lock_irqsave(&ns2_usb->bulk_in_lock, flags);
+> > +	for (i =3D 0; i < NS2_IN_URBS; i++) {
+> > +		int err;
+> > +		struct switch2_urb *ns2_urb;
+> > +
+> > +		if (ns2_usb->bulk_in[i].urb =3D=3D urb) {
+> > +			ns2_usb->message_in =3D i;
+>=20
+> If multiple URBs complete in quick succession before the work item execut=
+es,
+> the message_in index is overwritten. Will this cause the work item to onl=
+y
+> process the last completed URB, leaving earlier URBs indefinitely active
+> and leading to starvation of the URB pool?
+>=20
+> > +			continue;
+> > +		}
+> [ ... ]
+> > +static int switch2_usb_probe(struct usb_interface *intf, const struct =
+usb_device_id *id)
+> > +{
+> [ ... ]
+> > +	ns2_usb->bulk_in[0].active =3D true;
+> > +	ret =3D usb_submit_urb(ns2_usb->bulk_in[0].urb, GFP_ATOMIC);
+> > +	if (ret < 0)
+> > +		goto err_free_out;
+> > +
+> > +	init_usb_anchor(&ns2_usb->bulk_out_anchor);
+> > +	spin_lock_init(&ns2_usb->bulk_out_lock);
+> > +	init_usb_anchor(&ns2_usb->bulk_in_anchor);
+> > +	spin_lock_init(&ns2_usb->bulk_in_lock);
+> > +	INIT_WORK(&ns2_usb->message_in_work, switch2_usb_message_in_work);
+>=20
+> usb_submit_urb is invoked for bulk_in[0] before the initialization of the=
+
+> spinlocks, anchors, and work struct. If the URB completes immediately, th=
+e
+> completion handler will execute and attempt to use uninitialized
+> synchronization primitives. Can this cause a crash?
+
+As the documentation for usb_submit_urb mentions that the call is async,
+I assume that this is indeed a theoretical possibility.
+
+>=20
+> > +
+> > +	usb_set_intfdata(intf, ns2_usb);
+> [ ... ]
+> > +err_kill_urb:
+> > +	usb_kill_urb(ns2_usb->bulk_in[0].urb);
+> > +err_free_out:
+> > +	for (i =3D 0; i < NS2_OUT_URBS; i++) {
+> > +		usb_free_coherent(ns2_usb->udev, NS2_BULK_SIZE, ns2_usb->bulk_out[i]=
+.data,
+> > +			ns2_usb->bulk_out[i].urb->transfer_dma);
+> > +		usb_free_urb(ns2_usb->bulk_out[i].urb);
+> > +	}
+> > +err_free_in:
+> > +	for (i =3D 0; i < NS2_IN_URBS; i++) {
+> > +		usb_free_coherent(ns2_usb->udev, NS2_BULK_SIZE, ns2_usb->bulk_in[i].=
+data,
+> > +			ns2_usb->bulk_in[i].urb->transfer_dma);
+>=20
+> If usb_alloc_urb fails during the loop, it jumps to err_free_in. During
+> cleanup, it accesses ns2_usb->bulk_in[i].urb->transfer_dma. Since urb is
+> NULL for the failed index, will this trigger a NULL pointer dereference?
+
+Yes, most likely we would need a new label for this case.
+
+>=20
+> > +		usb_free_urb(ns2_usb->bulk_in[i].urb);
+> > +	}
+> > +	devm_kfree(&intf->dev, ns2_usb);
+> > +
+> > +	return ret;
+> > +}
+> > +
+> > +static void switch2_usb_disconnect(struct usb_interface *intf)
+> > +{
+> > +	struct switch2_usb *ns2_usb =3D usb_get_intfdata(intf);
+> > +	unsigned long flags;
+> > +	int i;
+> > +
+> > +	spin_lock_irqsave(&ns2_usb->bulk_out_lock, flags);
+> > +	usb_kill_anchored_urbs(&ns2_usb->bulk_out_anchor);
+>=20
+> Both usb_kill_anchored_urbs and cancel_work_sync can sleep. Is it safe to=
+
+> call them while holding a spinlock?
+
+According to some googling, this indeed seems to be an isuse. The
+non-sleeping way to cancel transfer requests would be to use
+https://www.kernel.org/doc/html/v6.1/driver-api/usb/usb.html#c.usb_unlink_a=
+nchored_urbs
+
+
+>=20
+> > +	for (i =3D 0; i < NS2_OUT_URBS; i++) {
+> > +		usb_free_coherent(ns2_usb->udev, NS2_BULK_SIZE, ns2_usb->bulk_out[i]=
+.data,
+> > +			ns2_usb->bulk_out[i].urb->transfer_dma);
+> > +		usb_free_urb(ns2_usb->bulk_out[i].urb);
+> > +	}
+> > +	spin_unlock_irqrestore(&ns2_usb->bulk_out_lock, flags);
+> > +
+> > +	spin_lock_irqsave(&ns2_usb->bulk_in_lock, flags);
+> > +	usb_kill_anchored_urbs(&ns2_usb->bulk_in_anchor);
+> > +	cancel_work_sync(&ns2_usb->message_in_work);
+>=20
+> Furthermore, cancel_work_sync waits for message_in_work which attempts to=
+
+> acquire bulk_in_lock. Does this cause a deadlock since the lock is alread=
+y
+> held by the disconnecting thread?
+
+Yes, this looks like a real concern as well.
+
+Cheers,
+Silvan
+
+>=20
+> > +	for (i =3D 0; i < NS2_IN_URBS; i++) {
