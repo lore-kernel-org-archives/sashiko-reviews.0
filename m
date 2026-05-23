@@ -1,249 +1,162 @@
-Received: from mail-dl1-f52.google.com (mail-dl1-f52.google.com [74.125.82.52])
+Received: from mail-dl1-f43.google.com (mail-dl1-f43.google.com [74.125.82.43])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8D77A175A98
-	for <sashiko-reviews@lists.linux.dev>; Sat, 23 May 2026 00:42:02 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=pass smtp.client-ip=74.125.82.52
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F22F0823DD
+	for <sashiko-reviews@lists.linux.dev>; Sat, 23 May 2026 00:43:32 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=pass smtp.client-ip=74.125.82.43
 ARC-Seal:i=2; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1779496924; cv=pass; b=uQ8+qXH1gIxEoXqbvhhmypnBAuR2oSQcwQQPKluKv82ON53OxTpm/sgILK0GjMelAiz9ef5Tvm5AtV2gHtwNoZlERGPpqeKezwkXKG50k49/HIRTYVE9Hn9psMVKAgDDlZXC/cLE5vsYYaEc/8VHDv4JcTqoELzAXsg7VRCSyYM=
+	t=1779497014; cv=pass; b=iGLaiPkhy5Tb2p70NCzlN+OJhq67z7Ai8Ipc8j5exCdAIMlwhnPkIot/6v6MZ58rEV60ihNxEMWqBvinMrpyP+PgCskP5HMXrWJ9xrdUZqpIR1rUwG9E9V8AJePtfqYAVJCXYpWAKk3RJCdIZnd1CoEGftWdshUIOA35IJMP+qk=
 ARC-Message-Signature:i=2; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1779496924; c=relaxed/simple;
-	bh=oLJfdMAe+v7hyzd6eHHmnfwAbB1cGlc0CxsWfS4//I4=;
+	s=arc-20240116; t=1779497014; c=relaxed/simple;
+	bh=fRvAKgto27u5Qw0YVnZl37234t9t9ZLTyQoH4JF6iOg=;
 	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
-	 To:Cc:Content-Type; b=JsR/Q6JC/DsFxZyMTjHhjf6EjUma4kmgJMdKd6wu7XapgD/48Qip0BpoUoHmB0gjITZX+iijSy27Ec/DfZrQZ+64JGsIBkNp7osjq1ifexzjJtRqLxFpKvIZPd1oDHD+TZZFO3ZMmz5Neq3fuoyh6on3SgHwlnAtgBk6jARoIPY=
-ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=google.com; spf=pass smtp.mailfrom=google.com; dkim=pass (2048-bit key) header.d=google.com header.i=@google.com header.b=k1aZXjv/; arc=pass smtp.client-ip=74.125.82.52
+	 To:Cc:Content-Type; b=EPgX7spexrFLBZPq2bO+N+owPofewuSIahC40EHRKk+URqwAsRYBYSE6pdmo39itwitDwX8Ww7pulMUEGvlnEb+ky2QuqD4zBQx1ERAmrumwdEmiqsMaBiUyQSlH5OlFX+9UZ7X8r83ANdS5g791skXj7lSJd3yhVxvaVrVUDvY=
+ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=google.com; spf=pass smtp.mailfrom=google.com; dkim=pass (2048-bit key) header.d=google.com header.i=@google.com header.b=bAOMqeMi; arc=pass smtp.client-ip=74.125.82.43
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=google.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=google.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=google.com header.i=@google.com header.b="k1aZXjv/"
-Received: by mail-dl1-f52.google.com with SMTP id a92af1059eb24-1357c851a48so10093052c88.1
-        for <sashiko-reviews@lists.linux.dev>; Fri, 22 May 2026 17:42:02 -0700 (PDT)
-ARC-Seal: i=1; a=rsa-sha256; t=1779496922; cv=none;
+	dkim=pass (2048-bit key) header.d=google.com header.i=@google.com header.b="bAOMqeMi"
+Received: by mail-dl1-f43.google.com with SMTP id a92af1059eb24-1363fe80fe8so2660507c88.0
+        for <sashiko-reviews@lists.linux.dev>; Fri, 22 May 2026 17:43:32 -0700 (PDT)
+ARC-Seal: i=1; a=rsa-sha256; t=1779497012; cv=none;
         d=google.com; s=arc-20240605;
-        b=ZO9XrUTCXgpWvB2YBQpb+EncKRwojJsjZ2htuEu0KBGjijZqHy2u+SNnJWXxgLLXef
-         VzASIUlyKh8pxyB2KNdJxZ1+mmcnXEheMFkG120eOQ6e1WDugnkw87X34Vg7QkISZFc2
-         TqTeptMAiudYM8NDryX1rrbiUvm4slffjxkjIuM1gkUvXgFyEK3LaJpZfZigOEzGURF2
-         KHKECQFKVAjIOPlABrbErABwE09jyk4kgOhV99Y/l2CE96Ocjf3o6ZXhbBGj1pFwXOci
-         +fEadbLm9f6UkhIjy4KIiyFPL0/Wt4XngxfaB0/IRT1yMCSAMFC+rLh/719oAKMYjUZ1
-         WFDQ==
+        b=foEzhxSS5TqqtVovP6ChhqGuEmtRcDdSj6FS2d9jtVJgCG+ezD4D6qkHCfOTA4E1HE
+         vKB7WZNr9sz9tyKSQwsRbLIXWBmQ3sIogtI6M4+ysvKvddYF6FbEpO0oKLzKE2O6aF2j
+         jxzsHry8UQ//Za/e2xqgtAWrhb8K4ElPMZYwwCoc10/ExS/J/ff7SXvprk3VviACzOBV
+         9rEJCVhvTXXQDbAI4F2q7kb0zC4XsH5ThsWtm5oJeY/KjvKyE9/g2iCVGMiZY+ssetAA
+         FV1jbHCZtDlm3yjGFfWXrWbzZYg+cFNde+n4VxdtXsCnlGxGEqthKHNCRmyz+2H9fQK5
+         /goA==
 ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com; s=arc-20240605;
         h=content-transfer-encoding:cc:to:subject:message-id:date:from
          :in-reply-to:references:mime-version:dkim-signature;
-        bh=af+VkUquvxRk1a32iTVzsOEkTiwhLgx64pdwoW9F56w=;
+        bh=q/GUzFl9apaO95CDtIhr40JrpKgtUpGRXRASP5KVz0c=;
         fh=uA360uvxR9S0K/Y4Lovo7aIaGlBwzVBnnb2BKWupr/4=;
-        b=hsoEXI8yWE/c41lwHVaGyzXGabjegUe89j2RxcN3w1YRZFPOCiV6Flz0f/WICCCg8S
-         NAPCeqkYhTuN4LXu7k6eo9eBv2YoLvJtBou+UKNBgMVyvlFTvx8fer026TKm88YoBScd
-         gQ3iGi1g6ka5HkZqodyMDuI+pmOv/fK16sF3LW8cLFZCZGiwENO0/4FryyOVvo15tUDX
-         cHRIaVkgr7DXae9advgzyuQrk8l26BpW6PIEAjQRw8xALwTYvh6Hg86r5VMFrt5FTMXZ
-         gBMEJzRtTTNq57VQhHqhxTfWm1I4j+zyKrDWFeA+uDlmM1I3oZ8VDAz9CZNUTmchZzln
-         FBlw==;
+        b=TD2NbIkluNsOW5j+AlcioIG9hy0OTZlX41H+24fIK5RBX8C7TodXdHTGkQPokx2pV/
+         2pQvASgEIS77u7vfHpNTxX5W+ElUxJvqyHKIvJaUOFIcOj5/mDzdtrmkMSetKnGPcKdE
+         agsTE7RhQKYgRNyFPFzZAjKpBnh3QG1S7en7IVb9PrLfG90AYadtVh1rEIQIN7V1+cqX
+         fTvyva1W8n/rge89uu9PvvrMz8Sajc7nSUjWP+LXIZ30ol7zoC63/0sFoWvKewZ/ZLBa
+         BU6KuvBjZtEaYpF8rEONg6M2wtROu0wfqwleYMF6jEgFiPEHJIOKNA53uhaFe+FvOvov
+         nH0A==;
         darn=lists.linux.dev
 ARC-Authentication-Results: i=1; mx.google.com; arc=none
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=google.com; s=20251104; t=1779496922; x=1780101722; darn=lists.linux.dev;
+        d=google.com; s=20251104; t=1779497012; x=1780101812; darn=lists.linux.dev;
         h=content-transfer-encoding:cc:to:subject:message-id:date:from
          :in-reply-to:references:mime-version:from:to:cc:subject:date
          :message-id:reply-to;
-        bh=af+VkUquvxRk1a32iTVzsOEkTiwhLgx64pdwoW9F56w=;
-        b=k1aZXjv/0UF4jJe7ktHNKezAAGRsAmxhx+05fuAEXajqRBL9Z41xNWqJ6RUML4Icp2
-         GbORu77LVGMflaCCUd1XVdZIGyooTRFlykUZPN38KGJm/DmowbciCSAs7X0qJzHZrOEh
-         v1TObbH1Lfa1UHCXqT7Lz7n6HbcyX8y9KHvKlyzCnCv11VSKuGK5nNQy5hIKWae/zM9p
-         dGfBXJg2S0c25zZBhdNZfUnDLSfIaEyC7O1IcmFWFfVjxzfDPsZPzUlpTny4GOJTb1bw
-         gsnwJ1cRK3BceL8O8m0Kc754oZvMwZsY7txBndRckSl1tY09jCAPsEX+uJUeP6P1wdf+
-         nzUw==
+        bh=q/GUzFl9apaO95CDtIhr40JrpKgtUpGRXRASP5KVz0c=;
+        b=bAOMqeMibG7Jia/+WKoOrUC/cZRgRe9uS+Cq4yD+2vf2HUTEIIXyJ2mSPEHBAxyEz8
+         aWpYpy3B80CyJBeBfG8hT77pCxiApBi991P+l4v/OnmZTtHdeztm7LnD1BbI9hSh/SXX
+         XMyWFvwnYO4l8BEpXKFJ9eIhDXoUCQEkHyqKcj/G07GYy3LuZZxc5hRYTZFc/CXAtGyG
+         vNn69hyjp6rSqNdcEZtuw97Q46vUUpGe5pbLMNlXZPFOvO0/m7vsV5NjWLack2nJNA8R
+         DvCalN4MiWkYhzLcMdmSbCjZmns+613OmX5a6a/q6AzxOy62U4i0b2oFG06L+iVHxyno
+         9DpQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20251104; t=1779496922; x=1780101722;
+        d=1e100.net; s=20251104; t=1779497012; x=1780101812;
         h=content-transfer-encoding:cc:to:subject:message-id:date:from
          :in-reply-to:references:mime-version:x-gm-gg:x-gm-message-state:from
          :to:cc:subject:date:message-id:reply-to;
-        bh=af+VkUquvxRk1a32iTVzsOEkTiwhLgx64pdwoW9F56w=;
-        b=JuAPXNXu8dMgan4IX375fFN/QMFSRFxE13eXMF2bQTAuRyezVBdjiJHrKCE1ugcsMt
-         OvOL5nZzA1v5RkY2TVE0pDkBZiteL+AmazmNL/lZBwep08C2GlG3aUhLuTp5b04bYiT9
-         tBGajbR8+hosgD9/35xhhc+VTOwqx+KeUvEWKdj5WYT32zW/GhrhY3ipX8nMjiPuuOGg
-         jGhFzqKdgINbGEY0wV2R4rT1UF+HzUGI6Tfd0Aspgum280rUFLNUZvyjC/X9Fi6aPeAg
-         xWRPunVtczrEP5ema4r03jxaWag71FMXQErVvoBAOrCWn4uB9heXAXVzFmJ4QljWqEj5
-         dsog==
-X-Gm-Message-State: AOJu0YytX9qYjtEMRrxgQFODk9YZhyL/asPymGhx6qXzFn7YMiSUMSKT
-	+3sdZ9ivD46yF78Ax0xDqWjOykYuW0sSPEPxPyFfB9A3ifapbW941Q9TKj9MkexnvaF2FTyvvvs
-	6iHnHP5TRf2JpNNRROmgnItNf6o3UNsu7Yu0uevNwkGiq0F5qrF8F4f9tYUU=
-X-Gm-Gg: Acq92OF/S1LL1g65NZi/fg0fVr+oFZEwFqnIYrlsfGCUXKg/U65qUrLBsV4fR1KgdjD
-	gxBXfoqp93EhaXyb5eur0gvWw4b+8lX+Jiph7n2d3hXclDP06dx0rBtkJD6JW8iarWpKM1NO9rb
-	g3iUG3AfKo4iLxQW8QwWNn04eSbT7SxkthsEOAbFrFK+Xv1mn+9Ln+Sj2vxpvCqwTidqSfVfKJ2
-	2wvFTc6nuK3MGoLNE5LnweAxYgzoUAmxr/wp4qSkUzi53iClhaXY1Th47nx4UEB2wj5YuzPF1eB
-	ec5O8oA4WELMF4Ta/hoeadnEFWHdReHiSSz4KzBS0NIY4iY/0u0FAmsiBePfu0xaE+HhgB8NX1Y
-	Oh/UYElSOeW/hzf9DNcyvZ4PvvdaB2uZi6k4KhW+n6Rs+O/kaMzJfMQlRmo6KMRo=
-X-Received: by 2002:a05:7022:68a4:b0:132:7ab5:6cb8 with SMTP id
- a92af1059eb24-1365f6fd8ecmr2066179c88.2.1779496920838; Fri, 22 May 2026
- 17:42:00 -0700 (PDT)
+        bh=q/GUzFl9apaO95CDtIhr40JrpKgtUpGRXRASP5KVz0c=;
+        b=kCM1wxrTG7whS5x7dPNDtOt8RezqOw8TkQbPKcjjGQAXVMQmBNrKlSc36X7HB8cZIa
+         lhscDmXRnI2jkAkywrztcBe3MvXsjF4u6NvNTRv9rpvxZR3ehDY2Mt5zunNkS5CM4dTN
+         /WNfQhC1cL/6mmg+JkfY+aOljlOTrdMbCHtZK8MYlM6GHOva5q3Wqgy86wMm1R59+7tn
+         lSJgnlJWZAR1JS5npTuuoWEk+b6Ui5LJmZNc4cg7vR9waIbbQ5i4pRPheaVjJ124fwZo
+         7YdT40VQvahnU/LCdjcdrwNJZTsJVT1Dq76MgKBzZIjTtHhpJX2D3UosjtcqB2+1PQW1
+         hoyA==
+X-Gm-Message-State: AOJu0YyoXC4iAeglg5LW88ACHItzKEbchJ4VwTdCSL/wmrk13/AXG36w
+	2EXZ7MCySPT9l4ldWgcfpq/MblSHY+U68+HZn3gKIun7ruEcjHoTtTHkPUblRGMQYU4PTbxxHiz
+	8nhLTB3OpGKAcQR9cKa2mrPUzIfN6mGBS4FMKN6TNlyeYzkAunShamrUAhos=
+X-Gm-Gg: Acq92OFqSOAhIfLK81hk43U/okxRKATDd24cxfb2LYHI78U/eNFSXSm6HrFfTr1pvjD
+	m6DttYmnyLjqsEsnFlK9mrYA+OYaD0IfjD8vffBpg7PP+6MxIQ46qm/4DXw8oDloJHmhp/r3Sg0
+	sR/O0XwJsPY+9Y3RaU5sHzqsqJ+R718Zj1JTdhfHD77wS76oyy9Ljeuth03vqlFr6TWuAt0ajOS
+	rXYAqkfywtZ3tF/bZQrckdON9rKIOOF/A/TASG6jR6VqCfpXFg+J6tulxPhWtJhoEjpLFtbPX3R
+	V8q80G2i5y9X0xE8q1GQwJoQ5szuCxwRBF/aAvzFa7+rP5Ki1E0NQqZ6yfrUOwxKaWOWCKs/02m
+	Ybi1fQ0yORjAkqysVOVDAyhgUi7ZdfLX2nPhyRvni5lkM18hN3QlCcIpBZmnTS6Q=
+X-Received: by 2002:a05:701b:428b:20b0:136:959a:abf2 with SMTP id
+ a92af1059eb24-136959aadfdmr149356c88.2.1779497011492; Fri, 22 May 2026
+ 17:43:31 -0700 (PDT)
 Precedence: bulk
 X-Mailing-List: sashiko-reviews@lists.linux.dev
 List-Id: <sashiko-reviews.lists.linux.dev>
 List-Subscribe: <mailto:sashiko-reviews+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:sashiko-reviews+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-References: <20260522074601.1658705-7-kuniyu@google.com> <20260522084614.05FC71F00A3E@smtp.kernel.org>
-In-Reply-To: <20260522084614.05FC71F00A3E@smtp.kernel.org>
+References: <20260522074601.1658705-9-kuniyu@google.com> <20260522091815.AA2361F000E9@smtp.kernel.org>
+In-Reply-To: <20260522091815.AA2361F000E9@smtp.kernel.org>
 From: Kuniyuki Iwashima <kuniyu@google.com>
-Date: Fri, 22 May 2026 17:41:49 -0700
-X-Gm-Features: AVHnY4JQUJ2C2KHQsCPBeUSA5XtylFgRWRvtNJRwOZUkM1N3p4jA5dJ25jSBM78
-Message-ID: <CAAVpQUAFrEMtPoprus7K9j1ZueE+zGM21M=3j8Zd00OMFBXmhg@mail.gmail.com>
-Subject: Re: [PATCH v2 bpf-next 06/11] bpf: tcp: Make BPF_SOCK_OPS_RCVQ_CB and
- SOCKMAP mutually exclusive.
+Date: Fri, 22 May 2026 17:43:19 -0700
+X-Gm-Features: AVHnY4LJwF3JrCpIIbZ495-ZcWE3wxzxjfEsOwI0EDi7fN5JnQdCe20DSmvA31o
+Message-ID: <CAAVpQUD47Ga7=UPfSHk4VZ9mASDHKGbAMfaDGVQa0ZZATpKU3A@mail.gmail.com>
+Subject: Re: [PATCH v2 bpf-next 08/11] bpf: tcp: Reject BPF_SOCK_OPS_RCVQ_CB
+ if receive queue is not empty.
 To: sashiko-reviews@lists.linux.dev
 Cc: bpf@vger.kernel.org
 Content-Type: text/plain; charset="UTF-8"
 Content-Transfer-Encoding: quoted-printable
 
-On Fri, May 22, 2026 at 1:46=E2=80=AFAM <sashiko-bot@kernel.org> wrote:
+On Fri, May 22, 2026 at 2:18=E2=80=AFAM <sashiko-bot@kernel.org> wrote:
 >
-> Thank you for your contribution! Sashiko AI review found 4 potential issu=
+> Thank you for your contribution! Sashiko AI review found 1 potential issu=
 e(s) to consider:
->
-> New issues:
-> - [High] Using `sk->sk_prot !=3D &tcp_prot` to detect SOCKMAP incorrectly=
- blocks other features (like KTLS and MPTCP) and introduces an order-of-ope=
-rations bypass.
-> - [High] The mutual exclusion check is broken due to a TOCTOU race becaus=
-e `setsockopt` and SOCKMAP map updates use different synchronization primit=
-ives.
-> - [Medium] Lockless double read of `sk->sk_prot` without `READ_ONCE()` le=
-ads to a data race.
->
-> Pre-existing issues:
-> - [High] A failed map update for an existing `psock` leaves newly attache=
-d BPF programs active in `psock->progs`.
+> - [High] bpf_sock_ops_check_rcvq_cb incorrectly prevents orthogonal flag =
+updates if BPF_SOCK_OPS_RCVQ_CB_FLAG is already enabled.
 > --
 >
-> commit 5e984d100188fbad217fad5406d80666b989f1b9
+> commit 684ea4455b7f13af338937adb28643e76ddccaac
 > Author: Kuniyuki Iwashima <kuniyu@google.com>
 >
-> bpf: tcp: Make BPF_SOCK_OPS_RCVQ_CB and SOCKMAP mutually exclusive.
+> bpf: tcp: Reject BPF_SOCK_OPS_RCVQ_CB if receive queue is not empty.
 >
-> Both BPF_SOCK_OPS_RCVQ_CB and SOCKMAP can intercept and handle
-> socket receive queues, leading to overlapping use cases.
->
-> While BPF_SOCK_OPS_RCVQ_CB focuses on optimizing single-socket
-> performance by reducing EPOLLIN wakeups and fully preserves TCP
-> zerocopy support, SOCKMAP is designed to facilitate multi-socket
-> routing at the cost of higher overhead and no zerocopy support.
+> This commit modifies BPF_SOCK_OPS_RCVQ_CB flag initialization to explicit=
+ly
+> reject enabling it if the socket's receive queue is not empty. It returns
+> -EUCLEAN to indicate that the queue must be cleared before the feature ca=
+n
+> be enabled.
 >
 > > diff --git a/net/core/filter.c b/net/core/filter.c
-> > index 3608036632a81..ff7fd415486a6 100644
+> > index 5913b3be9f1d3..883e4aaed49e5 100644
 > > --- a/net/core/filter.c
 > > +++ b/net/core/filter.c
-> > @@ -5382,12 +5382,27 @@ static int bpf_sol_tcp_getsockopt(struct sock *=
-sk, int optname,
-> >       return 0;
-> >  }
+> > @@ -5395,6 +5395,9 @@ static int bpf_sock_ops_check_rcvq_cb(struct sock=
+ *sk, int val)
 > >
-> > +static int bpf_sock_ops_check_rcvq_cb(struct sock *sk, int val)
-> > +{
-> > +     if (val & BPF_SOCK_OPS_RCVQ_CB_FLAG) {
-> > +             bool not_tcp_prot =3D sk->sk_prot !=3D &tcp_prot;
+> >               if (unlikely(sk_is_mptcp(sk)))
+> >                       return -EOPNOTSUPP;
 > > +
-> > +#if IS_ENABLED(CONFIG_IPV6)
-> > +             not_tcp_prot &=3D sk->sk_prot !=3D &tcpv6_prot;
+> > +             if (!skb_queue_empty(&sk->sk_receive_queue))
+> > +                     return -EUCLEAN;
 >
 > [Severity: High]
-> Does this check falsely block other features like KTLS and MPTCP?
+> Does this check prevent orthogonal flag updates if BPF_SOCK_OPS_RCVQ_CB_F=
+LAG
+> is already enabled?
 >
-> Since features like KTLS also override sk->sk_prot, if KTLS is attached
-> first, the check would falsely reject enabling BPF_SOCK_OPS_RCVQ_CB_FLAG
-> with -EBUSY. Conversely, if the BPF flag is set first, the check passes,
-> and a subsequent KTLS attachment would blindly overwrite sk->sk_prot,
-> allowing both features to operate simultaneously and bypassing the mutual
-> exclusion.
-
-Disabling ktls is okay, but I'll check if sk->sk_prot is in tcp_bpf_prots.
-
-tcp_bpf_prots < sk->sk_prot <
-&tcp_bpf_prots[TCP_BPF_NUM_PROTS][TCP_BPF_NUM_CFGS]
-
-
-> > @@ -5424,6 +5439,11 @@ static int bpf_sol_tcp_setsockopt(struct sock *s=
-k, int optname,
-> >       case TCP_BPF_SOCK_OPS_CB_FLAGS:
-> >               if (val & ~(BPF_SOCK_OPS_ALL_CB_FLAGS))
-> >                       return -EINVAL;
-> > +
-> > +             err =3D bpf_sock_ops_check_rcvq_cb(sk, val);
-> > +             if (err)
-> > +                     return err;
-> > +
+> Because the val parameter represents the new absolute bitmask for
+> bpf_sock_ops_cb_flags, any update to orthogonal flags (such as adding
+> BPF_SOCK_OPS_STATE_CB_FLAG) must include BPF_SOCK_OPS_RCVQ_CB_FLAG in val
+> to keep it enabled.
 >
-> [Severity: High]
-> The commit message asserts that checks in setsockopt and SOCKMAP map upda=
-tes
-> are performed under lock_sock(), but can a TOCTOU race occur here because
-> they use different synchronization primitives?
+> If such an update occurs while data is in the receive queue, it seems thi=
+s
+> will unconditionally fail with -EUCLEAN. This might break the ability to
+> dynamically update socket flags, especially from within the
+> BPF_SOCK_OPS_RCVQ_CB hook itself, where the receive queue is inherently
+> non-empty.
 >
-> While bpf_sol_tcp_setsockopt() uses lock_sock(sk), BPF helpers updating
-> SOCKMAP (like bpf_map_update_elem called from BPF_PROG_TYPE_XDP or generi=
-c
-> map updates via sock_map_update_elem()) only acquire the spinlock
-> bh_lock_sock(sk) and disable bottom halves.
+> Could we verify if the flag is actually being newly enabled before return=
+ing
+> the error?
 
-Hmm.. I'll protect bpf_sock_ops_cb_flags with sk_callback_lock.
+Makes sense.  I'll apply this check only when BPF_SOCK_OPS_RCVQ_CB_FLAG
+is not flagged yet.
 
 
-> Because bh_lock_sock() does not
-> wait for lock_sock()'s sk_lock.owned flag, these operations can run
-> concurrently.
 >
-> A concurrent SOCKMAP update could check tp->bpf_sock_ops_cb_flags (seeing=
- 0)
-> and override sk->sk_prot while the user's setsockopt is validating
-> sk->sk_prot and subsequently setting tp->bpf_sock_ops_cb_flags. This allo=
-ws
-> both features to be successfully attached to the same socket.
->
-> >               tp->bpf_sock_ops_cb_flags =3D val;
-> >               break;
-> >       default:
->
-> [ ... ]
->
-> > diff --git a/net/ipv4/tcp_bpf.c b/net/ipv4/tcp_bpf.c
-> > index cc0bd73f36b6d..5c5c67080740a 100644
-> > --- a/net/ipv4/tcp_bpf.c
-> > +++ b/net/ipv4/tcp_bpf.c
-> > @@ -729,6 +729,8 @@ int tcp_bpf_update_proto(struct sock *sk, struct sk=
-_psock *psock, bool restore)
-> >                       sock_replace_proto(sk, psock->sk_proto);
-> >               }
-> >               return 0;
-> > +     } else if (BPF_SOCK_OPS_TEST_FLAG(tcp_sk(sk), BPF_SOCK_OPS_RCVQ_C=
-B_FLAG)) {
-> > +             return -EBUSY;
 > >       }
->
-> [Severity: High]
-> This is a pre-existing issue, but does a failed map update for an existin=
-g
-> psock leave newly attached BPF programs active in psock->progs?
-
-Orthogonal to this series.
-
-
->
-> When adding new programs (e.g., stream_parser) to a socket that already h=
-as
-> a psock in sock_map_link(), the program pointers are updated immediately =
-via
-> psock_set_prog(). If a subsequent initialization step like
-> sk_psock_init_strp() fails, the function aborts and calls sk_psock_put().
->
-> However, sk_psock_put() only drops the temporary refcount acquired earlie=
-r in
-> the function and does not revert the psock->progs changes. As a result, t=
-he
-> newly attached BPF programs remain permanently active on the socket despi=
-te
-> the map update failing.
->
 > >
-> >       if (sk->sk_family =3D=3D AF_INET6) {
+> >       return 0;
 >
 > --
 > Sashiko AI review =C2=B7 https://sashiko.dev/#/patchset/20260522074601.16=
-58705-1-kuniyu@google.com?part=3D6
+58705-1-kuniyu@google.com?part=3D8
