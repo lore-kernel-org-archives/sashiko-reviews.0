@@ -1,187 +1,210 @@
-Received: from mail-ed1-f48.google.com (mail-ed1-f48.google.com [209.85.208.48])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from PA4PR04CU001.outbound.protection.outlook.com (mail-francecentralazon11023082.outbound.protection.outlook.com [40.107.162.82])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6E00B4317D
-	for <sashiko-reviews@lists.linux.dev>; Sun, 24 May 2026 16:35:47 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=pass smtp.client-ip=209.85.208.48
-ARC-Seal:i=2; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1779640549; cv=pass; b=pD5wbwH+Rn1mXdtySMUg5FAzZ764Bk0koAjaAzBeN4zfUyyWKvBjVCT/Fj2V+YehHUxscGIY7fvwiWSX4K0/5IgFJLLU4OgmlnMmnU7tRjGP/EYN/OtmGo5N2bL3fGQmGVwNgtemrW0SplxSMQOzqgkbXHJwhaKYD5/HadnDGW0=
-ARC-Message-Signature:i=2; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1779640549; c=relaxed/simple;
-	bh=5bRJgQeHU/yV/jJPRU6lHE/H7v2WtXNv1HQdony0bU8=;
-	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
-	 To:Cc:Content-Type; b=OP9HWVKinXxe6pj33fdVWnsLlNWEe+YhWz1mLHdIO5PSpGvceUuK+gPL5N+wfy+mvNcZarexviSalVts7XaFlwhfh30Tsb16bnk6Uopl/XN1Q1jy+s+XB+Bzssv+Bj6flvzFquEvmJoJuBGsiOxCPyCe254toBXsSDr3WLpYhQw=
-ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=UKT2hZb3; arc=pass smtp.client-ip=209.85.208.48
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CAEA2249E5;
+	Sun, 24 May 2026 17:11:06 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=fail smtp.client-ip=40.107.162.82
+ARC-Seal:i=3; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
+	t=1779642668; cv=fail; b=OhJ2daE8ASblmda7DELGhnD5FfKYAorgUhAa+x1GFZIZzMtK3lGXAsN5Jubf0HD7DdbLNukouMQgXChGdtropMOgIDU8EgmUsi1OEpeQFA3NrEKKHuQ3z/WsuofD7mymfb2O5HHz+x3JOexF67X7Hgd7W8t4iFCJ/xJKfQ89Gwo=
+ARC-Message-Signature:i=3; a=rsa-sha256; d=subspace.kernel.org;
+	s=arc-20240116; t=1779642668; c=relaxed/simple;
+	bh=pi+ygmg16Mnvo/AQk8yxZzNcvUpcCaPH1JBVl/0Wic0=;
+	h=From:To:CC:Subject:Date:Message-ID:References:In-Reply-To:
+	 Content-Type:MIME-Version; b=SJT9RkU+hy9ivNHhbUJ1nJZmxTr3Gv/D1qhvKq+1vHT/4K5hIjrNQJS+Xkakg3NUUFc8rI4N4HgEOTnP1CMC4xVfaF1bHvjr4Z4sNU76/x0k89DAIDf356fkmpF3FTU7b4GoCDOd7ANKJt84WcaN22vhDE8z7xF9EhuLqFICdSc=
+ARC-Authentication-Results:i=3; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=solid-run.com; spf=pass smtp.mailfrom=solid-run.com; dkim=pass (2048-bit key) header.d=solid-run.com header.i=@solid-run.com header.b=tyTXjMM8; dkim=pass (2048-bit key) header.d=solid-run.com header.i=@solid-run.com header.b=tyTXjMM8; arc=fail smtp.client-ip=40.107.162.82
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=solid-run.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=solid-run.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="UKT2hZb3"
-Received: by mail-ed1-f48.google.com with SMTP id 4fb4d7f45d1cf-6877c719cb0so6392554a12.2
-        for <sashiko-reviews@lists.linux.dev>; Sun, 24 May 2026 09:35:47 -0700 (PDT)
-ARC-Seal: i=1; a=rsa-sha256; t=1779640545; cv=none;
-        d=google.com; s=arc-20240605;
-        b=Uh/CUJFiPbpEeDQPweXJLj1aJz+Ot0YKtt/8D2t4cKSNDiUA5VW0Oh3WObyTfS4y3G
-         8hYOxMAtNAVI4ZmLR7oi4X2A4W2Ik/9lf272S2I3Q9FmNM6Aj2vqXlg44bK2ebr7FxJw
-         7hD06AlfXRO/orc9ovSScc+D/JOJsBbstZTDitnAQRtVA74iKIRM8p5g1+afHQ/Pmp4Z
-         5F1R7/ByvZIXW6iihsLs/7wGYMnT/kcOYGNCgKEgiVbYPlkh5iEdB/lWCzQb8ftBo7hn
-         rLsqpo9m7/XdDNLJoiGfLNPEmNPcBxt+vjpeH6aAVnnSNU5zW0oZOyARCOaHYHd5zPFH
-         K38Q==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com; s=arc-20240605;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:dkim-signature;
-        bh=O1HLcn//nYjl34kU/2TQC8I6ZR+db2Ttx6Cx3u1ROgY=;
-        fh=ouXvSjf5SmEmNeimx6xyG+CKjdQvC3UxbsGBNR8v92o=;
-        b=NVdDTddcKyqd6b6bftlduMSkK1rdhPyEC4/jPp0huTIWRNe3y/+9wYSyaQSSvBRVCG
-         LnqNELHblNco5V+W5dqr8ochQbY+7DY/uy6SMvm4OU5YuOudcnR9cbdaORdmpGTb0ya8
-         w36YQLyZZFtl7xDHtn5O41RrQIK3Q8ISQPZs7ys7URkMdDJNcL8V2Wun1RawWu/e72ip
-         bduFNIrjsC1a8GwUAAi1GEttJh+6wYZAM6G1LgJQOH+UL74QQDQjapMxKT1jh7HKmwp/
-         mgOyrm9+U8+UVa56sMOCM2mJ5OqtG+Kl1J3GwU7WXWiqXULU5FFkZCTHpSq7tkjQC1hK
-         PMYg==;
-        darn=lists.linux.dev
-ARC-Authentication-Results: i=1; mx.google.com; arc=none
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20251104; t=1779640545; x=1780245345; darn=lists.linux.dev;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=O1HLcn//nYjl34kU/2TQC8I6ZR+db2Ttx6Cx3u1ROgY=;
-        b=UKT2hZb3VtviYrpY2oOZKAlD6kPywdITf2Tt5H4WCGO1be7+U1j8JGQ6Lzs31gdzLx
-         +qIfZrlrR92GgGHRcrH/q0A1xtGU2ZXYHVT1g/RefmngtSpbce6TqJz/MWtUYpB/KZ4N
-         IkoiDhavVzFnX3Ifnd0REhoqyYHXZH0u9ynoL3Pcblhlcq0FryIjEQc/cAOX3vEIp5BO
-         5W9z8hX3O/3w5RPrTMD/0xdwDbMPBa12OAwiEM3GKzSk2wtvQb9r5OWLCkVBMy9rtzqL
-         7nvsLhQAVLho0YgBoCDrxEFrpZyUVNKlRK6769B0S2Mj4Rj5tzvqzAgk+tKhXAp9Jzih
-         nV+A==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20251104; t=1779640545; x=1780245345;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:x-gm-gg:x-gm-message-state:from
-         :to:cc:subject:date:message-id:reply-to;
-        bh=O1HLcn//nYjl34kU/2TQC8I6ZR+db2Ttx6Cx3u1ROgY=;
-        b=SmDSFeZLETRnSG80JWQdvzl4ymRYeDr3J2nsA9d1EBWQtGn91z5cBygRFs1KF/LdcP
-         nNOKEHYQoEt80BykW9vkNsi6EeAhCunUa1qIZn7sCYv2b6bVAL3gSaDpcJ/g/8LcoASz
-         OSELWzQOK33n2qvZAP9E27RPMXossDnwyoEEQ1HXCp81Kx8albHF04I/gdEfdWs9cTxq
-         nhUTpoboHdpf7Rd5elOx0lk5Lp0dJFT5GdRZ+BXF7D4Zu+ukF6VGVxxt9QUF1klEBA68
-         ujy49yvA4uOYM6imUqsr4ZnTzDQlaRP6F3QDSxQYfBzvjBgpNdOB1ZMkQRWyiIysfJhc
-         W+9g==
-X-Gm-Message-State: AOJu0YzHKz0NbGOaodEoRQvSd4TeGfmcr/W5zGDpDJAPYjUHa809jtAo
-	G7VO/w+kID+o7wWlbEwE7kHg0JyTWdYYpI5LfWqk9Tviqe334lYjJc/m70jMnkTzoCdXLSCRKiq
-	DxLhQ5Df2jaBla+S0Fj90aUvAgiSHivnO/uYHAg==
-X-Gm-Gg: Acq92OHq4UlQFv+ULi5r4tCVwdL0hxS2V7pH61y7iamRhCVEOkMU2FsKDbyCTNP4REZ
-	kySZBYTVXxXiaQxcwYhbKoGHDnX/RnvTJvXgYmKRPZA5YZawsSWUPKFAr01ahFlumhOq8oHQSqO
-	EGnh1Cz9w9R0Jv0HiOAvQmNd09sJNxV7FLOS+1lVDga9p6RsjGtBGGm3bvKznmldCIUDeO+EG8y
-	LSzY0hGhyk7XPXDHGC2Vl7dLe/mklW33vJIPBG0mWZx9u+yoY4+Sq+cKvowe9REpHf4X9Gil2A8
-	P0kjHIVCsleR/yjPqVCccnG9GU6FG4x9A6Or
-X-Received: by 2002:a05:6402:350c:b0:677:75e5:a1b3 with SMTP id
- 4fb4d7f45d1cf-6889c465f79mr5819047a12.18.1779640545136; Sun, 24 May 2026
- 09:35:45 -0700 (PDT)
+	dkim=pass (2048-bit key) header.d=solid-run.com header.i=@solid-run.com header.b="tyTXjMM8";
+	dkim=pass (2048-bit key) header.d=solid-run.com header.i=@solid-run.com header.b="tyTXjMM8"
+ARC-Seal: i=2; a=rsa-sha256; s=arcselector10001; d=microsoft.com; cv=fail;
+ b=Esge5vZy7Y48sRVoQ3THa28bfKCS+zcOueWe84XM2jFlCWGvNFw+aVI/8d67/1Ndn7VHMss5LYiE8qQKZ373urNezie8k4VsYOcGlC1vsJ3n4QfajgsHbTm33BxCU/4Ufw4XJ36Hwq9edN8uEBicqduViZQJ7oTqd1Y86sazutgW+xuT+k765egtejB3EiDarXk+ZcGMOjhxJSTpad09WJJbvU15Eq+wp8MTpYDuV5AL0NPPypJkymQiTVArrSUHpiKetY7WVTjjtPjD4dGZhLUshuxetX3FuxEXmJA+drR1uiPkDBS585dxrhiLWJ2N6mCBEWp89SsUWBibLTmqPg==
+ARC-Message-Signature: i=2; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com;
+ s=arcselector10001;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
+ bh=pi+ygmg16Mnvo/AQk8yxZzNcvUpcCaPH1JBVl/0Wic0=;
+ b=O0Gnx/jNQ1gqzvMczuTqGRWLmqOaFFlnKFGWojMaeP6bwvKVkIH+FVJ56v+casKtXk6BWLStcopFiA/zj/KjDw6eIkfSZPdlfdT2fpq/8n2MJJtW0zCiD4lMQEyXUvglIIbLblBdM0sSeRrNdWEhZ7jljcV1Ei5okAar2kIxdsbQHLwG7dqN0t93y7LDWRW7z7db+CjX9izpCu+YjUgP7oKQYjy04EUrGGEUUDUfKy65lATHVVbdVBZ/V+KYlJob/kAx3gHCQTNKG32P9OM73DbF8Smu/kn6kSPIxFqrQSpHYuyJreJiHNq8AKvhyOW9uBXg7383oroIziAISGoTiw==
+ARC-Authentication-Results: i=2; mx.microsoft.com 1; spf=fail (sender ip is
+ 52.17.62.50) smtp.rcpttodomain=kernel.org smtp.mailfrom=solid-run.com;
+ dmarc=pass (p=reject sp=reject pct=100) action=none
+ header.from=solid-run.com; dkim=pass (signature was verified)
+ header.d=solid-run.com; arc=fail (48)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=solid-run.com;
+ s=selector1;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
+ bh=pi+ygmg16Mnvo/AQk8yxZzNcvUpcCaPH1JBVl/0Wic0=;
+ b=tyTXjMM8Wj0GV82hYFbs3FvQAIv6lNXvO2b8gGk8G4kg1Af9lqBCKvQf12uWGzWMXsHLWqpBpKCS0GhM2Cp6Ovm87oqK8L15HxH0g4ulNevLl7ewRaSEbIPYxXA49B7FYq694PEHxjSsrx218Zqos42spClfCwKKKHBowkDiOYXxgNGD7V6OiGb05GIRgpIPxlwMGqxiPVkLbW+lS8VytOTH0q9ATOKyPoeXEhBfJkOwUT+3vW0oYsO0y/Cq5ktibAwhEv0Pa/jofFv+J2mWdizgdHDGbp2Wr4ZaVqC+N38PZyX0TeqkFM3jXPDH7G/xht7pJwqrGEe3b26xmVheJg==
+Received: from AS9P194CA0005.EURP194.PROD.OUTLOOK.COM (2603:10a6:20b:46d::13)
+ by VI2PR04MB11049.eurprd04.prod.outlook.com (2603:10a6:800:26d::17) with
+ Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.21.48.19; Sun, 24 May
+ 2026 17:11:02 +0000
+Received: from AMS0EPF000001A6.eurprd05.prod.outlook.com
+ (2603:10a6:20b:46d:cafe::96) by AS9P194CA0005.outlook.office365.com
+ (2603:10a6:20b:46d::13) with Microsoft SMTP Server (version=TLS1_3,
+ cipher=TLS_AES_256_GCM_SHA384) id 15.21.48.19 via Frontend Transport; Sun, 24
+ May 2026 17:11:02 +0000
+X-MS-Exchange-Authentication-Results: spf=fail (sender IP is 52.17.62.50)
+ smtp.mailfrom=solid-run.com; dkim=pass (signature was verified)
+ header.d=solid-run.com;dmarc=pass action=none header.from=solid-run.com;
+Received-SPF: Fail (protection.outlook.com: domain of solid-run.com does not
+ designate 52.17.62.50 as permitted sender) receiver=protection.outlook.com;
+ client-ip=52.17.62.50; helo=eu-dlp.cloud-sec-av.com;
+Received: from eu-dlp.cloud-sec-av.com (52.17.62.50) by
+ AMS0EPF000001A6.mail.protection.outlook.com (10.167.16.233) with Microsoft
+ SMTP Server (version=TLS1_3, cipher=TLS_AES_256_GCM_SHA384) id 15.21.71.7 via
+ Frontend Transport; Sun, 24 May 2026 17:11:01 +0000
+Received: from emails-2478096-12-mt-prod-cp-eu-2.checkpointcloudsec.com (ip-10-20-6-83.eu-west-1.compute.internal [10.20.6.83])
+	by mta-outgoing-dlp-588-mt-prod-cp-eu-2.checkpointcloudsec.com (Postfix) with ESMTPS id 823B97FD73;
+	Sun, 24 May 2026 17:11:01 +0000 (UTC)
+X-Mailbox-Line: From b'josua@solid-run.com' Sun May 24 17:10:53 2026
+ARC-Seal: i=1; a=rsa-sha256; s=arcselector10001; d=microsoft.com; cv=none;
+ b=YzxbRqEgfdNOaTELFFf2Pfvb5Tq5GQXttt3IrTSRrPkwhStZL4j+Ac1vWz+DbTNt6WE3cPf6R15oOBYZYqZij/iCbvuDxWer8xMx2ws5CbDm5LBOq3mRGReV0Q/cbwNo00sCkZ7OLT7w5IkKnkuY3lqUexyaPWdogsRFHyFKOqSx1NXI+fj8S5OG5W/5hf7nLDscDEPU8YpuTjT4HvlSzE2I9MTVgH17HV4soO5xwZYRW9gLgm/mSQEXntoPRibBFL0lviKUHEx6HKbfysPmtq8n9xKLYVxhvgAsaBKYzUudWmuaqGiEnihmDGw/oJWbQHb/I+8sOOHwc3ZKFjl/DA==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com;
+ s=arcselector10001;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
+ bh=pi+ygmg16Mnvo/AQk8yxZzNcvUpcCaPH1JBVl/0Wic0=;
+ b=a5qRZR5w/tNqJG7E32yanF6hLYNhxg+5M6jk5npme93/fHNdHx0iMfftxloQCZZMecwAv4DHOnvsWU9aaKQ6fmj5sDbGYokplFsr+AQS2BJQK2SLfJ7gqUTtJ6EUBo3fmjrWDlWVKwS+Q+5Y4NMPqAHB2S6XXjekdWrplUa87XLPHFA6neveP2vAQ5Adx+Jz5VnU8mTLNhc9E0X0fAchFXw2KlFWlIpdhK9OGD7FJvm9EX0mcdPf65/DSCPTbdSnwDxKtWN49N+55ESuXiN5wLu6iVRwekiwlRCpSgtfSzyX5NzvJscZ7Gy7V1bEmBb1/1KUloAorbYmc1Rp4dIEJQ==
+ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
+ smtp.mailfrom=solid-run.com; dmarc=pass action=none
+ header.from=solid-run.com; dkim=pass header.d=solid-run.com; arc=none
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=solid-run.com;
+ s=selector1;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
+ bh=pi+ygmg16Mnvo/AQk8yxZzNcvUpcCaPH1JBVl/0Wic0=;
+ b=tyTXjMM8Wj0GV82hYFbs3FvQAIv6lNXvO2b8gGk8G4kg1Af9lqBCKvQf12uWGzWMXsHLWqpBpKCS0GhM2Cp6Ovm87oqK8L15HxH0g4ulNevLl7ewRaSEbIPYxXA49B7FYq694PEHxjSsrx218Zqos42spClfCwKKKHBowkDiOYXxgNGD7V6OiGb05GIRgpIPxlwMGqxiPVkLbW+lS8VytOTH0q9ATOKyPoeXEhBfJkOwUT+3vW0oYsO0y/Cq5ktibAwhEv0Pa/jofFv+J2mWdizgdHDGbp2Wr4ZaVqC+N38PZyX0TeqkFM3jXPDH7G/xht7pJwqrGEe3b26xmVheJg==
+Received: from DB8PR04MB6859.eurprd04.prod.outlook.com (2603:10a6:10:119::14)
+ by GVUPR04MB12217.eurprd04.prod.outlook.com (2603:10a6:150:33d::14) with
+ Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.21.48.14; Sun, 24 May
+ 2026 17:10:49 +0000
+Received: from DB8PR04MB6859.eurprd04.prod.outlook.com
+ ([fe80::65f7:a733:64c6:60f9]) by DB8PR04MB6859.eurprd04.prod.outlook.com
+ ([fe80::65f7:a733:64c6:60f9%5]) with mapi id 15.21.0048.016; Sun, 24 May 2026
+ 17:10:49 +0000
+From: Josua Mayer <josua@solid-run.com>
+To: "sashiko-reviews@lists.linux.dev" <sashiko-reviews@lists.linux.dev>
+CC: "robh@kernel.org" <robh@kernel.org>, "devicetree@vger.kernel.org"
+	<devicetree@vger.kernel.org>, "Frank.Li@kernel.org" <Frank.Li@kernel.org>,
+	"imx@lists.linux.dev" <imx@lists.linux.dev>, "conor+dt@kernel.org"
+	<conor+dt@kernel.org>
+Subject: Re: [PATCH v7 9/9] arm64: dts: Add support for LX2160 Twins board in
+ single configuration
+Thread-Topic: [PATCH v7 9/9] arm64: dts: Add support for LX2160 Twins board in
+ single configuration
+Thread-Index: AQHc641FDjqhGsMoSEinbMza18CHC7YdWziAgAAONoA=
+Date: Sun, 24 May 2026 17:10:49 +0000
+Message-ID: <b2245626-7686-4179-8282-3a4780949cb0@solid-run.com>
+References: <20260524-lx2160-pci-v7-9-09370c23b952@solid-run.com>
+ <20260524161958.342981F000E9@smtp.kernel.org>
+In-Reply-To: <20260524161958.342981F000E9@smtp.kernel.org>
+Accept-Language: de-DE, en-US
+Content-Language: en-US
+X-MS-Has-Attach:
+X-MS-TNEF-Correlator:
+Authentication-Results-Original: dkim=none (message not signed)
+ header.d=none;dmarc=none action=none header.from=solid-run.com;
+x-ms-traffictypediagnostic:
+	DB8PR04MB6859:EE_|GVUPR04MB12217:EE_|AMS0EPF000001A6:EE_|VI2PR04MB11049:EE_
+X-MS-Office365-Filtering-Correlation-Id: 84962239-8c42-4db4-709f-08deb9b76e9a
+x-cloud-sec-av-info: solidrun,office365_emails,sent,inline
+X-MS-Exchange-SenderADCheck: 1
+X-MS-Exchange-AntiSpam-Relay: 0
+X-Microsoft-Antispam-Untrusted:
+ BCL:0;ARA:13230040|376014|1800799024|366016|38070700021|4143699003|18002099003|22082099003|56012099003|6133799003;
+X-Microsoft-Antispam-Message-Info-Original:
+ 4pxwJ2yH2IAL0kkjnaJcev531R7wD76JEdtsnky6JTQrwNimael2jBX6tAHCzLTbYlbaKdPb/28QHspGAUADMvklP1IhjDYhV+qTQOYv8YRXhRsfJTXNDpSLyIltHbMHIQKi/Bf3fq0nAvwu1nIoZOzuQeoA+0QxKT49HzRYoeTW/LugDyduY4p467noYX2q/LDs2VVyasMdB/fvqKzQkS05fjcPSJvNtIe6Y+M3ODzyaf4mODEMpWdmem+H5x02YIu+GWwbszLw9FoaWF8oZR/MweSfhbrPbVDWPcKvu2NnQpr2h+Q+4qqhqdSG2M69DOR2tT6H48I1TPSYBS3r0Q9VDLaWAlh6TDAE2hzLxx029P5sX041UxfASTytdqkFuoEaRiP6beiUUUvaWYIfZgBe1ni2NMLBqExhOgg14u613Hl1qx+MHizdpxIMJqQULh1HUpIoPlczq6FdnImiPy+kWjvFrGI9NsbV0smHSHVqL4KlHahWwU9fCEK7LqYnvp/BykN667bYHwzQcSjk1cFaFEGuaQP7WyT/istH0I4ZHbJPVoiGdnzkHB0I63HYzZmQcfLqM4AkcXQIXaRsOXl4X1rQvYggL+BHu4iiSsIE0tnIf5dr7mMKyaGM0uwg50tuHPv3CF2hDUUMqEiM8C8BJLhyIb4qO+dKOIxxiR8CsLPs0vvCPzpU7nKA4DQViJ5sh+7PTKPFk124jKRmz5886CuyB4nXbL25ApMZC741pKTRe6bPhB54zJKkz+H/
+X-Forefront-Antispam-Report-Untrusted:
+ CIP:255.255.255.255;CTRY:;LANG:en;SCL:1;SRV:;IPV:NLI;SFV:NSPM;H:DB8PR04MB6859.eurprd04.prod.outlook.com;PTR:;CAT:NONE;SFS:(13230040)(376014)(1800799024)(366016)(38070700021)(4143699003)(18002099003)(22082099003)(56012099003)(6133799003);DIR:OUT;SFP:1102;
+Content-Type: text/plain; charset="utf-8"
+Content-ID: <EC6333B7945FA2458E5178B04166C725@eurprd04.prod.outlook.com>
+Content-Transfer-Encoding: base64
 Precedence: bulk
 X-Mailing-List: sashiko-reviews@lists.linux.dev
 List-Id: <sashiko-reviews.lists.linux.dev>
 List-Subscribe: <mailto:sashiko-reviews+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:sashiko-reviews+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-References: <20260524160657.17802-1-mhun512@gmail.com> <20260524162533.A98601F000E9@smtp.kernel.org>
-In-Reply-To: <20260524162533.A98601F000E9@smtp.kernel.org>
-From: Myeonghun Pak <mhun512@gmail.com>
-Date: Mon, 25 May 2026 01:35:31 +0900
-X-Gm-Features: AVHnY4LHk1AV0u1q-ffKndmXPDLMXPr4_aduMj0oer5MdAfLPHViFp_2Gmo8zUA
-Message-ID: <CAGEsz8GaGhRwAPvOdiBYxho0GyCe__mVwPtT3xfhpK_mWioO=w@mail.gmail.com>
-Subject: Re: [PATCH] drm/meson: clean up KMS polling on register failure
-To: sashiko-reviews@lists.linux.dev
-Cc: linux-amlogic@lists.infradead.org, neil.armstrong@linaro.org
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
+X-Exchange-RoutingPolicyChecked:
+ WbEePkKJhQsQhUUbFJn0F1B51tvmCdAtVC0YSsN8qGOqu2qq3ZNIRM7KcRcvp+pM/pFRDA+hihfDhuA8CQNrA+85dR5QPUtDeltXdGBoUFOzbMCKp7tFIl+2XbqTnd7TKQcsT3jlIpgJsxgj1Yo1uXpSXceHnSYQGXIH8tsA+9gEP1rWLJ8Jdj02koKFlaCc2ES6APfFtLrQgU+OFjZsZI9iBJQd3MB+xio4leGbKu7y5yv0W7EEmyACk3larZol+1P6DCMvJkIR2uDynGvDU0qP7qXzW+uqGCAWTOJ/EJ+cO+StBj+CTPlGOvWS/E7aXQP6e4afyf4F/PeNokT01w==
+X-MS-Exchange-Transport-CrossTenantHeadersStamped: GVUPR04MB12217
+X-CLOUD-SEC-AV-INT-Relay: sent<mta-outgoing-dlp-mt-prod-cp-eu-2-7.checkpointcloudsec.com>
+X-CLOUD-SEC-AV-UUID: b584dcdc972744d9b92037f3c69817e9:solidrun,office365_emails,sent,inline:f6b2c820d9f369e5fb82506a4e5466cf
+X-EOPAttributedMessage: 0
+X-MS-Exchange-Transport-CrossTenantHeadersStripped:
+ AMS0EPF000001A6.eurprd05.prod.outlook.com
+X-MS-PublicTrafficType: Email
+X-MS-Office365-Filtering-Correlation-Id-Prvs:
+	f9446725-4bec-4f80-ecdc-08deb9b76758
+X-Microsoft-Antispam:
+	BCL:0;ARA:13230040|36860700016|376014|14060799003|1800799024|82310400026|35042699022|22082099003|56012099003|18002099003|4143699003|6133799003;
+X-Microsoft-Antispam-Message-Info:
+	IInc5SoRkNxvLeqT1vpg2/x5Hn169wbipVbyH2YAM5Xo/qEBBf33wud7ajgvxRWPMA0Gc8Ke87ZcnkWeST8FBHiIxKLFype6cUDAfS2g+KUBFjL++2sXxppkLtjHKV1W0K9+BH0/ECG82OOkUSxKJEMMmbt0jQuo0kFwI3y2ncYNi81+AnNOYSUHAfHU7o7gk5MkRXbtwa76SPgWxMnrDuxeoCFes5zOgv4ifa8D913Y6iP25MGjeFjAZoWhnb+MSO3MoSq0LnQedVRJuBhl3xcVlq8Pkz70ckagk1j/P85ZNgunT34ISG0fmk52g6ZrLPhy5nbDkqRLol1bxOcqxjeSLIN8XBIA6CKmJdyq/KQuIMHL9UGa9Ok3j+ld3KUnbvuExqYusrbw0yQuwp6iWhKdNP+sBKO2m3ODW//JFjj4aWoRW//amQCqKF5k9ojttJM7Azmb+QFFy+2rssQYyiqu/ltAoT3XbOyCh9WPqfNGcqRX3WBUcRXizrm+BIjV/dMDVxrBeXPL1nXepGXh85x0KurltRK+cB2aDAoSK5xNBps1QlHSBf/ARguU/MNoIFO4RxWShwsMoL3GR2SG0Q/+6eAJvAXafswMLA0XsTuyvepKiecE32janaKXmNTVVIfyX60asPiSiLWpftdIVeGKUo91VaVWR6q8lhKgGXnTb9vq1EzL96t5UGUXlcqWto6qqncSnY+0D27EntQQ0ZTtZGsWoNTwS0tq3/ddkP0=
+X-Forefront-Antispam-Report:
+	CIP:52.17.62.50;CTRY:IE;LANG:en;SCL:1;SRV:;IPV:CAL;SFV:NSPM;H:eu-dlp.cloud-sec-av.com;PTR:eu-dlp.cloud-sec-av.com;CAT:NONE;SFS:(13230040)(36860700016)(376014)(14060799003)(1800799024)(82310400026)(35042699022)(22082099003)(56012099003)(18002099003)(4143699003)(6133799003);DIR:OUT;SFP:1102;
+X-MS-Exchange-AntiSpam-MessageData-ChunkCount: 1
+X-MS-Exchange-AntiSpam-MessageData-0:
+	Vow8YJtyrbC2/8nSU14FS7cXcFwvYiS70KJv6JtXQzFRJN+lNSq0E6Yhq6klZjTJzDSZEjuvi8AMkFQbX8eg1dMgTS0MCFqApmPDgiqtSs8aA69t5owbCQeVbZZL8jxJgEp/VNauSsA42JfocWNtLLXP62Jld6PyhWPZlRsLOz0duxLZuOq+H2apx5KvJnMwdMvDU4zvYAIm2KmZvYgKq00WVObexgm/wOnWl0n/WA6zmzOZj6wWhT/SxriHC4aS1PsYRy4dESFR2EdJaUXZrBYxGPZtBfygChCT+l8n0j/ticCEd2m+/sjpIaWU2C9OzE+XX3oFfCCkzpC1Jjry+I2mQM4J3H8o8iMqgYFlfUvp7k0sgzxHtYeAh10mSeIaexhaD6wNZKG56q+fOccLZNz1dtkSsRu9ChxLLOd+Py45ye+3WwADCWIe2p+UehQ/
+X-OriginatorOrg: solid-run.com
+X-MS-Exchange-CrossTenant-OriginalArrivalTime: 24 May 2026 17:11:01.7963
+ (UTC)
+X-MS-Exchange-CrossTenant-Network-Message-Id: 84962239-8c42-4db4-709f-08deb9b76e9a
+X-MS-Exchange-CrossTenant-Id: a4a8aaf3-fd27-4e27-add2-604707ce5b82
+X-MS-Exchange-CrossTenant-OriginalAttributedTenantConnectingIp: TenantId=a4a8aaf3-fd27-4e27-add2-604707ce5b82;Ip=[52.17.62.50];Helo=[eu-dlp.cloud-sec-av.com]
+X-MS-Exchange-CrossTenant-AuthSource:
+	AMS0EPF000001A6.eurprd05.prod.outlook.com
+X-MS-Exchange-CrossTenant-AuthAs: Anonymous
+X-MS-Exchange-CrossTenant-FromEntityHeader: HybridOnPrem
+X-MS-Exchange-Transport-CrossTenantHeadersStamped: VI2PR04MB11049
 
-Thanks for the review.
-
-Both points look pre-existing and unrelated to this patch. This change only
-adds the missing drm_kms_helper_poll_fini() on the drm_dev_register() failu=
-re
-path after drm_kms_helper_poll_init(). It does not change the
-drm_dev_put()/component_unbind_all() ordering or the component bind devm
-resource lifetime.
-
-I would prefer to keep this patch scoped to the KMS polling unwind fix.
-
-
-2026=EB=85=84 5=EC=9B=94 25=EC=9D=BC (=EC=9B=94) =EC=98=A4=EC=A0=84 1:25, <=
-sashiko-bot@kernel.org>=EB=8B=98=EC=9D=B4 =EC=9E=91=EC=84=B1:
->
-> Thank you for your contribution! Sashiko AI review found 2 potential issu=
-e(s) to consider:
->
-> Pre-existing issues:
-> - [High] Use-after-free of the `drm` pointer in the `free_drm` error path=
- of `meson_drv_bind_master()`.
-> - [High] Memory leak of `devm_*` allocated resources during component bin=
-d failures or unbind operations.
-> --
->
-> commit 0a1b882dff3689e80c5546f7c0bf38c6930a1652
-> Author: Myeonghun Pak <mhun512@gmail.com>
-> drm/meson: clean up KMS polling on register failure
->
-> This commit fixes an issue in meson_drv_bind_master() where the KMS
-> polling helper is left running if drm_dev_register() fails. It introduces
-> a new uninstall_poll error path to call drm_kms_helper_poll_fini() before
-> freeing the IRQ.
->
-> > diff --git a/drivers/gpu/drm/meson/meson_drv.c b/drivers/gpu/drm/meson/=
-meson_drv.c
-> > index 49ff9f1f16d32..e49de5df73867 100644
-> > --- a/drivers/gpu/drm/meson/meson_drv.c
-> > +++ b/drivers/gpu/drm/meson/meson_drv.c
-> > @@ -352,12 +352,14 @@ static int meson_drv_bind_master(struct device *d=
-ev, bool has_components)
-> >
-> >       ret =3D drm_dev_register(drm, 0);
-> >       if (ret)
-> > -             goto uninstall_irq;
-> > +             goto uninstall_poll;
-> >
-> >       drm_client_setup(drm, NULL);
-> >
-> >       return 0;
-> >
-> > +uninstall_poll:
-> > +     drm_kms_helper_poll_fini(drm);
-> >  uninstall_irq:
-> >       free_irq(priv->vsync_irq, drm);
-> >  exit_afbcd:
->
-> [Severity: High]
-> This isn't a bug introduced by this patch, but does the error unwinding p=
-ath
-> have a use-after-free?
->
-> Looking further down in this function at the free_drm label:
->
-> free_drm:
->         drm_dev_put(drm);
->
->         meson_encoder_dsi_remove(priv);
->         meson_encoder_hdmi_remove(priv);
->         meson_encoder_cvbs_remove(priv);
->
->         if (has_components)
->                 component_unbind_all(dev, drm);
->
-> Since drm_dev_put() drops the final reference and frees the drm structure=
-,
-> won't component_unbind_all() trigger a use-after-free when unbind callbac=
-ks
-> dereference the freed pointer?
->
-> [Severity: High]
-> This is also a pre-existing issue, but are we leaking devm_* resources
-> during component bind failures or unbind operations?
->
-> Because devm allocations are scoped to the device probe lifecycle, they
-> are not implicitly released during bind failure paths or unbind calls.
->
-> Could this result in permanent memory leaks across retries if component
-> binding fails and is later retried?
->
-> --
-> Sashiko AI review =C2=B7 https://sashiko.dev/#/patchset/20260524160657.17=
-802-1-mhun512@gmail.com?part=3D1
+QW0gMjQuMDUuMjYgdW0gMTg6MTkgc2NocmllYiBzYXNoaWtvLWJvdEBrZXJuZWwub3JnOg0KPiBU
+aGFuayB5b3UgZm9yIHlvdXIgY29udHJpYnV0aW9uISBTYXNoaWtvIEFJIHJldmlldyBmb3VuZCAx
+IHBvdGVudGlhbCBpc3N1ZShzKSB0byBjb25zaWRlcjoNCj4gLSBbTWVkaXVtXSBUaGUgYGdwaW8t
+bXV4YCBub2RlIGZvciB0aGUgZmFuIHRhY2hvbWV0ZXIgbXVsdGlwbGV4ZXIgbGFja3MgYW4gaW4t
+a2VybmVsIGNvbnN1bWVyLCB3aGljaCBwZXJtYW5lbnRseSBsb2NrcyB0aGUgR1BJT3MgYW5kIHBy
+ZXZlbnRzIHRoZSBtdXggZnJvbSBiZWluZyBzd2l0Y2hlZC4NCj4gLS0NCj4NCj4gY29tbWl0IDNj
+MjhmODBkMTNhMTFiNGJhMDEyZmE5MzMzNjJmM2QyZmZlZWM2M2MNCj4gQXV0aG9yOiBKb3N1YSBN
+YXllciA8am9zdWFAc29saWQtcnVuLmNvbT4NCj4NCj4gYXJtNjQ6IGR0czogQWRkIHN1cHBvcnQg
+Zm9yIExYMjE2MCBUd2lucyBib2FyZCBpbiBzaW5nbGUgY29uZmlndXJhdGlvbg0KPg0KPiBUaGlz
+IGNvbW1pdCBhZGRzIGRldmljZSB0cmVlIHN1cHBvcnQgZm9yIHRoZSBTb2xpZFJ1biBMWDIxNjBB
+IFR3aW5zIGJvYXJkDQo+IGluIGEgc2luZ2xlIENQVSBjb25maWd1cmF0aW9uLiBJdCBhZGRzIGhh
+cmR3YXJlIHN1cHBvcnQgZm9yIHZhcmlvdXMNCj4gaW50ZXJmYWNlcyBpbmNsdWRpbmcgU0ZQIHBv
+cnRzLCBPQ1AsIFVTQiwgbWljcm9TRCwgYW5kIHBvd2VyIHN1cHBsaWVzLg0KPg0KPj4gZGlmZiAt
+LWdpdCBhL2FyY2gvYXJtNjQvYm9vdC9kdHMvZnJlZXNjYWxlL2ZzbC1seDIxNjBhLWhhbGYtdHdp
+bnMuZHRzIGIvYXJjaC9hcm02NC9ib290L2R0cy9mcmVlc2NhbGUvZnNsLWx4MjE2MGEtaGFsZi10
+d2lucy5kdHMNCj4+IG5ldyBmaWxlIG1vZGUgMTAwNjQ0DQo+PiBpbmRleCAwMDAwMDAwMDAwMDAw
+Li5kMTZlMjczMDcyNzU0DQo+PiAtLS0gL2Rldi9udWxsDQo+PiArKysgYi9hcmNoL2FybTY0L2Jv
+b3QvZHRzL2ZyZWVzY2FsZS9mc2wtbHgyMTYwYS1oYWxmLXR3aW5zLmR0cw0KPiBbIC4uLiBdDQo+
+DQo+PiArCW11eC1jb250cm9sbGVyIHsNCj4+ICsJCWNvbXBhdGlibGUgPSAiZ3Bpby1tdXgiOw0K
+Pj4gKwkJI211eC1jb250cm9sLWNlbGxzID0gPDA+Ow0KPj4gKwkJLyoNCj4+ICsJCSAqIFRoaXMg
+Z3BpbyBjb250cm9sbGVkIG11eCBjYW4gcm91dGUgdGhlIHRhY2hvIHNpZ25hbHMgb2YgNiBQV00g
+RkFOIGNvbm5lY3RvcnMNCj4+ICsJCSAqIHRvIHRoZSB0YWNobyBpbnB1dHMgb2YgYm90aCBDRVgt
+NyBtb2R1bGVzICh0d2lucykuDQo+PiArCQkgKg0KPj4gKwkJICogVGhlIGZpcnN0IHR3aW4gY29u
+dHJvbHMgdGhpcyBtdXggYW5kIG1vbml0b3JzIGZvdXIgZmFuIGNvbm5lY3RvcnMsIHR3byBpbnRl
+bmRlZA0KPj4gKwkJICogZm9yIGl0c2VsZiwgYW5kIHR3byBmb3IgdGhlIE9DUCBjYXJkLg0KPj4g
+KwkJICoNCj4+ICsJCSAqIFRoZSBzZWNvbmQgdHdpbiBtb25pdG9ycyBvbmx5IHR3byBmYW4gY29u
+bmVjdG9ycyBpbnRlbmRlZCBmb3IgaXRzZWxmLg0KPj4gKwkJICoNCj4+ICsJCSAqIFRoZSB0YWJs
+ZSBiZWxvdyBtYXBzIHNlbGVjdG9yIEdQSU8gc3RhdGVzIHRvIG1vbml0b3JlZCBmYW4gY29ubmVj
+dG9yIHBlciB0d2luOg0KPj4gKwkJICoNCj4+ICsJCSAqIHwgU0VMMSB8IFNFTDAgfCBUd2luIDEg
+fCBUd2luIDIgfA0KPj4gKwkJICogfCAtLS06IHwgLS0tOiB8IDotLS0tLS18IC0tLS0tLSB8DQo+
+PiArCQkgKiB8ICAgIDAgfCAgICAwIHwgSjEwICAgIHwgIEo1MDI0IHwNCj4+ICsJCSAqIHwgICAg
+MCB8ICAgIDEgfCBKNTAxNiAgfCAgSjUwMjQgfA0KPj4gKwkJICogfCAgICAxIHwgICAgMCB8IEo1
+MDI2ICB8ICBKNTAyNSB8DQo+PiArCQkgKiB8ICAgIDEgfCAgICAxIHwgSjUwMTMgIHwgIEo1MDI1
+IHwNCj4+ICsJCSAqLw0KPj4gKwkJbXV4LWdwaW9zID0gPCZleHBhbmRlcjAgOCBHUElPX0FDVElW
+RV9ISUdIPiwgLyogU0VMMCAqLw0KPj4gKwkJCSAgICA8JmV4cGFuZGVyMCAxNSBHUElPX0FDVElW
+RV9ISUdIPjsgLyogU0VMMSAqLw0KPj4gKwl9Ow0KPiBbU2V2ZXJpdHk6IE1lZGl1bV0NCj4gRG9l
+cyB0aGlzIG11eC1jb250cm9sbGVyIGxhY2sgYW4gaW4ta2VybmVsIGNvbnN1bWVyPw0KPg0KPiBX
+aGVuIHRoZSBncGlvLW11eCBkcml2ZXIgcHJvYmVzLCBpdCBleGNsdXNpdmVseSByZXF1ZXN0cyBh
+bmQgbG9ja3MgdGhlc2UgR1BJT3MuDQo+IEhvd2V2ZXIsIHRoZXJlIGFwcGVhcnMgdG8gYmUgbm8g
+Y29uc3VtZXIgbm9kZSBpbiB0aGUgZGV2aWNlIHRyZWUgcmVmZXJlbmNpbmcNCj4gdGhpcyBtdWx0
+aXBsZXhlciB0byBhY3R1YWxseSBzd2l0Y2ggaXQuDQo+DQo+IFNpbmNlIHRoZSBMaW51eCBtdXgg
+c3Vic3lzdGVtIGRvZXNuJ3QgcHJvdmlkZSBhIHVzZXJzcGFjZSBpbnRlcmZhY2UgZm9yDQo+IHN3
+aXRjaGluZywgYW5kIHRoZSBHUElPIHN1YnN5c3RlbSBkZW5pZXMgdXNlcnNwYWNlIGFjY2VzcyB0
+byBsb2NrZWQgcGlucywgZG9lcw0KPiB0aGlzIGNvbXBsZXRlbHkgcHJldmVudCBib3RoIHRoZSBr
+ZXJuZWwgYW5kIHVzZXJzcGFjZSBmcm9tIHN3aXRjaGluZyB0aGUgZmFuDQo+IHRhY2hvbWV0ZXIg
+bXVsdGlwbGV4ZXI/DQo+DQo+IElmIHNvLCBkb2Vzbid0IHRoaXMgcGVybWFuZW50bHkgbG9jayB0
+aGUgZmFuIG1vbml0b3JpbmcgZnVuY3Rpb25hbGl0eSBpbiBpdHMNCj4gZGVmYXVsdCBzdGF0ZT8N
+Cj4NCkFzIHN0YXRlZCBpbiBwcmV2aW91cyB2ZXJzaW9uLCB0aGUgdG9wb2xvZ3kgaXMgdG9vIGNv
+bXBsZXggZm9yIGh3bW9uDQpmcmFtZXdvcmsgdG8gdXRpbGl6ZSwgc28gdGhlcmUgaXMgbm8gaW4t
+a2VybmVsIGNvbnN1bWVyLg0KDQpUaGUgbXV4IGV4aXN0cyBob3dldmVyIGFuZCBzaG91bGQgYmUg
+ZGVzY3JpYmVkLg0K
