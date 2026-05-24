@@ -1,164 +1,154 @@
-Received: from mail-ot1-f43.google.com (mail-ot1-f43.google.com [209.85.210.43])
+Received: from mail-dl1-f47.google.com (mail-dl1-f47.google.com [74.125.82.47])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E302F242D97
-	for <sashiko-reviews@lists.linux.dev>; Sun, 24 May 2026 03:48:34 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=pass smtp.client-ip=209.85.210.43
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B3AF71DDC38
+	for <sashiko-reviews@lists.linux.dev>; Sun, 24 May 2026 03:52:11 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=pass smtp.client-ip=74.125.82.47
 ARC-Seal:i=2; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1779594516; cv=pass; b=ZRWR4Wuvl1BWjJPi3+vm646hkPXbwD1QnDQgxH4pFe0kdQVdLaxDZZealpwF5i2j2ishe3d7JMtcxMqxeXW+mxucrxIldsFpWogBMcUy+VmLnBad6DBf4l9+Fty4NH9BcgBp6e3f2ug9x+2cGeSB+YrKKmOhXRPloRpuC6iwP9g=
+	t=1779594733; cv=pass; b=TMbQupvzERjmhPygbgZqS0w35vwssONfJRHKvoFzajw/CnK/Pr4bRQxu6GyWVB6+SLJUli/B9rbxsi0DyRBKkNZ0ljqMlD80zxnTgIq/9YZ1FnQtK2tZPXZuEzO3HlHgkTKGAojD0sagc/uNeEDb6yhyzyU6H5E9ajYjBiiXkIc=
 ARC-Message-Signature:i=2; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1779594516; c=relaxed/simple;
-	bh=AtZ2MaZHaoO9EKMTNvZUyn4h95EmBDbv5Lrlyy6W5DQ=;
+	s=arc-20240116; t=1779594733; c=relaxed/simple;
+	bh=uV1E8iHkG/G3zQNseFTbJjQByr54VkxJaRdd/6skFgQ=;
 	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
-	 To:Cc:Content-Type; b=jmjvM0XPhUFVNVUFASatotlJdKOTClspK0E0s74meZXOGScSM+4tkC6tLuSRSuumQUAkpT9aXnvoxy2y92lEJkpKvO3x1BNh8M9Z6B16Akywox9IH+7CgJ8Qg7K029LBfpVoBxIe1SwNTQb4tQDeKBt7DxcXMOJ02e49EEtaO+0=
-ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=LuVH1kJj; arc=pass smtp.client-ip=209.85.210.43
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+	 To:Cc:Content-Type; b=QLACeU/MonqjlYj5Aq/CizJTS8S87crup1Rzg9bd3JI0Nyk8TLdX3G99F1Lk7REFOm0vfgax796Xz59GmTsUWM6hwhwbMYjE4tUGGPNydc2wMbBhi3SxMlQ6yTUDzxil+KxmIaoEaX/pMwuR83a8r8zcuf2O+0SjrGQ/qcfRO3s=
+ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=google.com; spf=pass smtp.mailfrom=google.com; dkim=pass (2048-bit key) header.d=google.com header.i=@google.com header.b=dAXJ0Sb9; arc=pass smtp.client-ip=74.125.82.47
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=google.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=google.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="LuVH1kJj"
-Received: by mail-ot1-f43.google.com with SMTP id 46e09a7af769-7e636d1bedbso63594a34.0
-        for <sashiko-reviews@lists.linux.dev>; Sat, 23 May 2026 20:48:34 -0700 (PDT)
-ARC-Seal: i=1; a=rsa-sha256; t=1779594514; cv=none;
+	dkim=pass (2048-bit key) header.d=google.com header.i=@google.com header.b="dAXJ0Sb9"
+Received: by mail-dl1-f47.google.com with SMTP id a92af1059eb24-136a89595c3so614005c88.1
+        for <sashiko-reviews@lists.linux.dev>; Sat, 23 May 2026 20:52:11 -0700 (PDT)
+ARC-Seal: i=1; a=rsa-sha256; t=1779594731; cv=none;
         d=google.com; s=arc-20240605;
-        b=LcxDXSZvYhU7Yq8B9LBHfjqe8cT189jpG1paq85BtTvW4VFZJGLdQbcBId9WwJiDiO
-         SCUZ9r2vPgTP65mdIxavcXRpY5XiJfHnsZ18+TV29UVlcqOkFtox59quNJFKMWa8+5cO
-         t6JA49IdbyMwCCxDzYESsanUbnR/CzUiQNEIQLK6cOiZvER+YFZm29JYKzJFDefe26rr
-         hJoHiCGe1t4KOS5f+638O/Ysp6Xnsm9b/o+TEeQibsK6xdfMDzYRgZrmpY21lzzP/DJx
-         CFw6ZzERsiTdHMN/aER83PETAgFfuKW8uu+VIczBnkcxkieMvEqn0hiWfDvW0o2bylEU
-         Icnw==
+        b=icm46v9Za/G8M4ulycc1O6eoUZyQAEAaHrbreUY6VHZJByvkLwa1TyzdWvE9q+G/KQ
+         fCGsWz43re+oAZr7ZKSMWNIdcxJXnlWcapwtWfFDufOVWV0KHh9YbApy9m63deJsExhR
+         fWf6KvatzvtYQdMpfT5HJcMlXgicYZFr/bwvvkNNg8U207VO8RV2dWryg/neeD4UnvvL
+         UD0jJntr8vzdZXqr6hFGGpaTsHCU4u1LIXEGXK5BuYhM9LoaVsIBjNfEzBuwsqUNvSMG
+         IQ5mB8wdeLfzvqNkCGPZsbnGB8P+5JcWZljGPw61hylsMDZCGS102zml5G45b7csfqeK
+         R4tA==
 ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com; s=arc-20240605;
         h=content-transfer-encoding:cc:to:subject:message-id:date:from
          :in-reply-to:references:mime-version:dkim-signature;
-        bh=4po9w5TOulpuknOUfePNahpl/Kq8KqTYSA25XKFO99A=;
+        bh=dGy8YHOGuSh2N3eIcWlk7IPH/bQpL0e0bWKETQzWtaM=;
         fh=uA360uvxR9S0K/Y4Lovo7aIaGlBwzVBnnb2BKWupr/4=;
-        b=ZQaqC4v7SocHdgbctOmqwpCF2oNoxMwkjBdOVvSgEHVWFsm/3V4sjQAeRCBYffGh7q
-         GJm2RsfNBNIcjBEXLqzWD1rrthZnjtZKhHpnBI/foUUaH4l+D47JwhJCXwfqxLan0KGq
-         YIsEcnmKtPNoN3TUVvWYzEFFUVYaAX/sihKdlMaD+2PQYX0cNkdjpczPmBypduE4mqET
-         QRR9o5tKnBR2POlLJWeGDsQnE1kLHCxpyxwnhS/zydjPFKGs1l8vE2am0c5qizSkCjaR
-         dwcCu6A4vsqxoHCCmX7lKTy2JrWXTbI9MJ6tWfMUC0KP4jKgo+AsthXzED+YEyqSQMzb
-         1FMw==;
+        b=Vi3pCGiauPddatB2HtcB601mU/+JkKOlQpE09WUp4lNXUv0InjAoiG+3nxB2RYEs8K
+         dZV4JzpuDMwtOq7qg0+atGbw9RsVNqlkARBP6J7GenqSbChlJyw9f/5R+/PDw1UCEmm7
+         UOt+vJDlOEJfGsa9oBMsfCPgIeAufDzLjGsZDyrYf78hoj2fseRMZwWePax+ESJ7DFfj
+         WrTHxkPqLB++0FY8+C/nWx5MyhxApGOWoZ3WCPnB1ptVADosr022k4OuzumT9TIRExUa
+         boDGsV35rfc4LMBOTeP9vweZkgWfANVGfaT3sfDUyexiCq+d1CrQXXE2WlefqigBdJhb
+         XZmg==;
         darn=lists.linux.dev
 ARC-Authentication-Results: i=1; mx.google.com; arc=none
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20251104; t=1779594514; x=1780199314; darn=lists.linux.dev;
+        d=google.com; s=20251104; t=1779594731; x=1780199531; darn=lists.linux.dev;
         h=content-transfer-encoding:cc:to:subject:message-id:date:from
          :in-reply-to:references:mime-version:from:to:cc:subject:date
          :message-id:reply-to;
-        bh=4po9w5TOulpuknOUfePNahpl/Kq8KqTYSA25XKFO99A=;
-        b=LuVH1kJjtj62rSB1mm/3a7zzhtmCYgkoRIaVcIqmKQMUiJutz8P/KxXC0yD9DVo3fw
-         q6Bxlcye7FXPrZ6z28CMQ5YswGgHKfZfP1KxqJzvx7F/iVsGMtA8p9kaCQGYqwf6/j2k
-         ORjxAyiLPjhBwjc5UYEb8ISPOQeTbf/CAX7AOKmfes+jLv9c/2HbJQXO6g7Blg1uPOlz
-         42LwERKTfMOR1+qZfLOelvorcWeDPj5orq5sPVJxuVRywy5rCKozmsbiORn8t+hfWEqk
-         otzITgaa9stYTQM06j21aFcBYrjh2XoaPRt4ek07tpp4XKi7vN9PXvxnpIzAb0JrMKSH
-         GAqw==
+        bh=dGy8YHOGuSh2N3eIcWlk7IPH/bQpL0e0bWKETQzWtaM=;
+        b=dAXJ0Sb9v8bZG1rA/zmBFP+1B6jSfUzHS413/3MfnfZ3xZ0BYNIejD1BwlFd8gfRXZ
+         pvsDgwJrFCa13OAPGj9ZaJH2DafE58o4bcsTsOc/ZhDRY6SvjN8MrChQoxmv3L0EUxRQ
+         f36mrIDHW0w6C3gSbFbh/E1nhmYOEkkToo8chHMmY14JEuHiwuQFalClerC9AaCgYGtV
+         cVY+vcmmyqsfjMhQHfojAspme/RqzvyOxU9sYjcqLe033T5T4mYtOqsdEGdjuSCoHPwS
+         BPI2cUjL5ulcpMv2sSo87yOw/oWReviJ/LMNjnS+n9OhObsQeSrbbnHgtlrP8YOb3k56
+         h7ww==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20251104; t=1779594514; x=1780199314;
+        d=1e100.net; s=20251104; t=1779594731; x=1780199531;
         h=content-transfer-encoding:cc:to:subject:message-id:date:from
          :in-reply-to:references:mime-version:x-gm-gg:x-gm-message-state:from
          :to:cc:subject:date:message-id:reply-to;
-        bh=4po9w5TOulpuknOUfePNahpl/Kq8KqTYSA25XKFO99A=;
-        b=U19bRm/rZ78wDaDxPG7GjDPggDn8xtlBiJWI82hpUBmVSBmjZnM286wj8K8UCLewH1
-         JVqU0X2IGkHAr5ZQ7iGCj+r4A3tfqb5vPaRoPBjM/jPmI5/h9zvR4GOZPRv/GfiUd8fE
-         I9y0MI9rWY6242DNYlN/xxA3bDZFdjyQsikqUlwXRHgDZ49+S2mngCWC9MR391AUdyQp
-         S5JEU+MTiTU68U7L5XwFabzERwJ3A3OwJ2dvevnn4vc1MHfEsv0O7nNrahMjFzHwkDpt
-         91mG1NRE2ztvhY+r/uFShLQhOqqpWgEDjPOw/xsEp9Jl9AQ2kP9UvBAytT6jHLgw6o4L
-         3DXA==
-X-Gm-Message-State: AOJu0YxEceidJcXHVO7+6tTqQUrmeYtxAY5dJgh8JzZzbsoK7ASU5Zty
-	wdmIqTItBLPjXHekTWxJfs6Q4aJAZvCAPsUKq5J6kL1Enz36+jXNSFKxMwibxhmlg0wQyVcqLDY
-	1YqvPLpP/Kn7VS4puIkZqC3jeCPNDlY3zoBzG
-X-Gm-Gg: Acq92OFWwxiGE9uWX3gprWvRmQGbMLldUaw0kVMeLGDtKuSIxWkQN5OysfJ3GhcU37r
-	xn/mg1zfxjVwNWYgPFHznzHTSs29EDyCgcL8mPoemkcONx2Q+yI09Mwsi5mJSsR3Hd6wo+pl0n1
-	dVKGnyVApNhEXouZQbzo7rEa7jE4S2roKRYz+6g4XOSiS6QKGeDVyjZqhESxEkGkg0XexMXPrHe
-	vGkN23CM8URSoC8nlylmYf+1xBJCMkCmuvm2fVb4n2Ans5g2C/pU8qCYL+q0x3CVNdmbrOM32AP
-	epcN6FzZ
-X-Received: by 2002:a05:6820:c95:b0:695:a638:c6ba with SMTP id
- 006d021491bc7-69d7eafdf79mr5207259eaf.7.1779594513698; Sat, 23 May 2026
- 20:48:33 -0700 (PDT)
+        bh=dGy8YHOGuSh2N3eIcWlk7IPH/bQpL0e0bWKETQzWtaM=;
+        b=m3975yXGZd6RDojhQrTpHRwieltIZ2yynW1jYJkEbjprwrqYerxng8zF/fQEia4GY9
+         Adt3ybMScdoWDzc5YjMzEsyZsCSpLEiKB5JFEpVeepNBFSz0gTC4Vw0IZlZybOLLb9E3
+         PUqbV+YXshtMOGTswN3QDD9wI2UQ5JJ4jvIqq19361DC4kwDHxdWjVaTHhQvaMix4TcX
+         L9X5l8s9K3dAkIk7YIVCS8cg+tG5umGCip7/+ekxIPDm9sYOtikp+SPoNTZz+CjsruPo
+         /TZC54Pz4sVzOT4qfOZOgu4zXxbv2xGm53BeRsbvPkZWH4E5bHhcDGQEGwCnj/FOaeqX
+         wLnw==
+X-Gm-Message-State: AOJu0Yw3QJX9h6TwJ7I4moEUZfTpFc/L5IJRSjizozqjuJwOZLx4/3G4
+	ywwpQ956Zb9fFIzHB/A3TzopwXEzVn6eTqZBh3f+FKJSZoMo+VwLgGIDwlCLbr9RJM8qKwMp1oN
+	ZVVor6pZmmQLfP2NUbro1jQ0BFKagBD/CDJ57l1qI7x2rvhcyijbji1TC51g=
+X-Gm-Gg: Acq92OHIjnIO3pNuUnB0/XC8SvvjX4xiVpNdhZp5lKuT0YLWR3CFXCZuxgP9UEi1afj
+	BenfJ2cTQmGMq7/AgwNycqF6I0LiWR+DMadqsCpMob3oFggYArYqUHbuUpH2CKRjc0hKirejRFz
+	yFlb8Vb8MVCj9B6uNoJ9Pxf3uvXJ5eQWjXNMOU6InEJQa1oeVIUdLK8swLee65tWUgHmmrGluGK
+	VQqmKIkEmFZX2EryTDQldHVzPH4t3w9/g4ARrrXLrpinTJ9sqiWzSO1LB/NLQbkpvoJFK+5d3GY
+	oxz3FNfp4lRWhbk7QpxyytAD2vTpteyJ9+RwqvFezOz75gfP+2FeV3PsodaBhqZC/pmVkGhO9S8
+	jjKhQsiST5JuvwKIhinGepFkR1qU4nb95z1xXJpF6UL/NSUFxn72lzNG6gXhqHp0G2PyrMTVcBw
+	==
+X-Received: by 2002:a05:7022:e98d:b0:130:9bbd:47ec with SMTP id
+ a92af1059eb24-1365f6fe11cmr3076626c88.9.1779594730148; Sat, 23 May 2026
+ 20:52:10 -0700 (PDT)
 Precedence: bulk
 X-Mailing-List: sashiko-reviews@lists.linux.dev
 List-Id: <sashiko-reviews.lists.linux.dev>
 List-Subscribe: <mailto:sashiko-reviews+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:sashiko-reviews+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-References: <20260524025853.13786-1-suchitkarunakaran@gmail.com> <20260524033039.963AE1F000E9@smtp.kernel.org>
-In-Reply-To: <20260524033039.963AE1F000E9@smtp.kernel.org>
-From: Suchit Karunakaran <suchitkarunakaran@gmail.com>
-Date: Sun, 24 May 2026 09:18:22 +0530
-X-Gm-Features: AVHnY4IjCNkEPTXrJZAeO7hZb87dCg501XN800sFjeXZaLpJSsD8-beFNxmuwjk
-Message-ID: <CAO9wTFhix-Qgpm4EW7Eh9GxPgHnqoQ0bN5_v+GCmHbF0VSXK3g@mail.gmail.com>
-Subject: Re: [PATCH v2] bpf: replace pop/push emptiness check with bpf_list_empty()
+References: <20260523083001.2911931-9-kuniyu@google.com> <20260523094252.99DAA1F000E9@smtp.kernel.org>
+In-Reply-To: <20260523094252.99DAA1F000E9@smtp.kernel.org>
+From: Kuniyuki Iwashima <kuniyu@google.com>
+Date: Sat, 23 May 2026 20:51:58 -0700
+X-Gm-Features: AVHnY4LBikqAQlB4TMDabsQ3-7UpeagswaGMzjUl3CfqnJQs9wfnmdWVOYkG5AE
+Message-ID: <CAAVpQUCw2i_XtBSrU9t_6gDsus2X0=cwjg_27CHH400ryQo_ew@mail.gmail.com>
+Subject: Re: [PATCH v3 bpf-next 08/11] bpf: tcp: Reject BPF_SOCK_OPS_RCVQ_CB
+ if receive queue is not empty.
 To: sashiko-reviews@lists.linux.dev
 Cc: bpf@vger.kernel.org
 Content-Type: text/plain; charset="UTF-8"
 Content-Transfer-Encoding: quoted-printable
 
-On Sun, 24 May 2026 at 09:00, <sashiko-bot@kernel.org> wrote:
+On Sat, May 23, 2026 at 2:42=E2=80=AFAM <sashiko-bot@kernel.org> wrote:
 >
 > Thank you for your contribution! Sashiko AI review found 1 potential issu=
 e(s) to consider:
-> - [Low] The patch introduces a call to `bpf_list_empty()`, which is an un=
-declared function, resulting in a build failure.
+> - [Low] Lockless call to `skb_queue_empty()` on `sk_receive_queue` causes=
+ a data race.
 > --
 >
-> commit 9fb6024323da084c2713bff3f8a0e6018dc6bd72
-> Author: Suchit Karunakaran <suchitkarunakaran@gmail.com>
+> commit 928b34616ed5f1b766d25ef2fd83e4165fe1e903
+> Author: Kuniyuki Iwashima <kuniyu@google.com>
 >
-> bpf: replace pop/push emptiness check with bpf_list_empty()
+> bpf: tcp: Reject BPF_SOCK_OPS_RCVQ_CB if receive queue is not empty.
 >
-> This commit simplifies fq_flows_is_empty() by replacing a pop/push check =
-with
-> a direct call to bpf_list_empty(). The intention is to avoid unnecessary =
-list
-> mutation and simplify the code.
+> This commit modifies the behavior of BPF_SOCK_OPS_RCVQ_CB to explicitly f=
+ail
+> if it is enabled while the receive queue is not empty. It returns -EUCLEA=
+N
+> to signal that the caller must drain the queue first.
 >
-> > diff --git a/tools/testing/selftests/bpf/progs/bpf_qdisc_fq.c b/tools/t=
-esting/selftests/bpf/progs/bpf_qdisc_fq.c
-> > index 1a3233a275c7e..8107f5934d2d7 100644
-> > --- a/tools/testing/selftests/bpf/progs/bpf_qdisc_fq.c
-> > +++ b/tools/testing/selftests/bpf/progs/bpf_qdisc_fq.c
-> > @@ -196,18 +196,13 @@ fq_flows_remove_front(struct bpf_list_head *head,=
- struct bpf_spin_lock *lock,
-> >  static bool
-> >  fq_flows_is_empty(struct bpf_list_head *head, struct bpf_spin_lock *lo=
-ck)
-> >  {
-> > -     struct bpf_list_node *node;
-> > +     bool empty;
+> > diff --git a/net/core/filter.c b/net/core/filter.c
+> > index 82ec2291d6f00..4041b9fc1c741 100644
+> > --- a/net/core/filter.c
+> > +++ b/net/core/filter.c
+> > @@ -5390,6 +5390,9 @@ static int __bpf_sock_ops_cb_flags_set(struct soc=
+k *sk, int val)
+> >               return 0;
+> >       }
 > >
-> >       bpf_spin_lock(lock);
-> > -     node =3D bpf_list_pop_front(head);
-> > -     if (node) {
-> > -             bpf_list_push_front(head, node);
-> > -             bpf_spin_unlock(lock);
-> > -             return false;
-> > -     }
-> > +     empty =3D bpf_list_empty(head);
+> > +     if (!skb_queue_empty(&sk->sk_receive_queue))
+> > +             return -EUCLEAN;
 >
 > [Severity: Low]
-> Does bpf_list_empty() exist? A search of the codebase doesn't show this
-> function being defined as a BPF helper, kfunc, or macro anywhere in the k=
-ernel
-> source or BPF headers.
+> Does this lockless call to skb_queue_empty() cause a data race?
+
+No, the socket is under lock_sock() here.
+
+
 >
-> Since BPF list structures are opaque, their access must be mediated by
-> verifier-recognized kfuncs. Will this cause a build failure due to an imp=
-licit
-> declaration?
+> The __bpf_sock_ops_cb_flags_set() function can be executed without the so=
+cket
+> lock via the bpf_unlocked_sk_setsockopt() helper. At the same time, TCP
+> softirq processing like tcp_queue_rcv() may enqueue packets and modify
+> the receive queue.
 >
-> Could the existing bpf_list_front() kfunc be used instead to check list
-> emptiness without mutation?
+> Since skb_queue_empty() performs a plain read of list->next without
+> READ_ONCE(), this concurrent access can trigger KCSAN splats. Would it be
+> better to use skb_queue_empty_lockless() here to safely check the queue
+> state from potentially unlocked contexts?
 >
-> >       bpf_spin_unlock(lock);
+> > +
+> >       if (unlikely(sk_is_mptcp(sk)))
+> >               return -EOPNOTSUPP;
 > >
-> > -     return true;
-> > +     return empty;
-> >  }
 >
 > --
-> Sashiko AI review =C2=B7 https://sashiko.dev/#/patchset/20260524025853.13=
-786-1-suchitkarunakaran@gmail.com?part=3D1
-
-
-bpf_list_empty() is available in the current bpf-next and linux-next
-trees, which is what this patch was based on. It has not yet been
-merged into mainline or the current rc tree.
+> Sashiko AI review =C2=B7 https://sashiko.dev/#/patchset/20260523083001.29=
+11931-1-kuniyu@google.com?part=3D8
