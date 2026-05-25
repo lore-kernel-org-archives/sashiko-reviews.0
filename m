@@ -1,44 +1,88 @@
-Received: from smtp5-g21.free.fr (smtp5-g21.free.fr [212.27.42.5])
+Received: from flow-b8-smtp.messagingengine.com (flow-b8-smtp.messagingengine.com [202.12.124.143])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 93FA53859D2;
-	Mon, 25 May 2026 15:18:05 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=212.27.42.5
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E8CEE3859D2
+	for <sashiko-reviews@lists.linux.dev>; Mon, 25 May 2026 15:18:10 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=202.12.124.143
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1779722287; cv=none; b=aIwX8FqKf9hfKlwxDb3NW28CDJoDbdnl8KjwGadGk4/fP9xmYjE1qkdvhEf3zNtZ/mDMq8eglhKyMjsZeVQPuizGWhcBiSgCLLr3S5CWBe9381g74gLCoZPXxP0rEEPJkcwCq1pb2bgp+uMvj8Xjs8AdDIKZaof3+jUD+Seq3+s=
+	t=1779722292; cv=none; b=d2F/X5f6LreODMmtLX0Uz3uqattdHve+2Tq94USediHJ4YyRaejf/iRjpP8v/mACJqGx07pjE66dWaqggtwJef+2d8Wlr/YmnyMbDKzu80zt32ipAH8JtxD2SvmMWOx3S5dqwo4tOVryb598EYhl/UFxKI88VuixmM1GFz4RfFw=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1779722287; c=relaxed/simple;
-	bh=/gsg9VEkmwpYVz19wHXrRUDXZtFVuQIr1WfOaguO164=;
+	s=arc-20240116; t=1779722292; c=relaxed/simple;
+	bh=4QkRt+iKr11Jp/pucEfsueGPTjgQKpWewnCGgXJfwGE=;
 	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=PlZn+l80iPhVMD3+n8YHAXrjaAr5VWTTZMFEIuczmbqooCffNCpl0LX814FwxxiNLt14ADtDldUlGorBwW2Dlrc3BFC9xFuspd46+WbSocRgSZbLpLr5ePxfEFqucXJqKLQdvy8O/5gQLxGCmcg2k3uC9EeQwTNiBlj9RZ8RJyY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=free.fr; spf=pass smtp.mailfrom=free.fr; dkim=pass (2048-bit key) header.d=free.fr header.i=@free.fr header.b=NrrDeBdB; arc=none smtp.client-ip=212.27.42.5
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=free.fr
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=free.fr
+	 Content-Type:Content-Disposition:In-Reply-To; b=R/LcfckSnr2VroLW12r3vASgQf8MwafrQ/qP8zbKx7VXJo1qr0ZtgDOb0LgnvUZ/0vFdWaxOe2jr2w62BbwYD/D3vUOfDf4jc4fU9K4FazmHBMVt1zgktC/IlZ2UYgVw4pOOi8daxq6AeTkvRyOQhVOEbeyuT4pECAGMDVppZVM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=shutemov.name; spf=pass smtp.mailfrom=shutemov.name; dkim=pass (2048-bit key) header.d=shutemov.name header.i=@shutemov.name header.b=ZgwucYs3; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=pe7X97JB; arc=none smtp.client-ip=202.12.124.143
+Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=shutemov.name
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=shutemov.name
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=free.fr header.i=@free.fr header.b="NrrDeBdB"
-Received: from L30177.local (unknown [IPv6:2a01:e0a:ac2:22b0:f12d:c647:56ab:8d5d])
-	(Authenticated sender: vjardin@free.fr)
-	by smtp5-g21.free.fr (Postfix) with ESMTPSA id 1487360137;
-	Mon, 25 May 2026 17:18:02 +0200 (CEST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=free.fr;
-	s=smtp-20201208; t=1779722284;
-	bh=/gsg9VEkmwpYVz19wHXrRUDXZtFVuQIr1WfOaguO164=;
-	h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
-	b=NrrDeBdB1UmtXWUT/inB9ecz+J168AI410nGONl/afiCXteG8nyisVCvDPWDSvWql
-	 mFvdpsOV88LJRRXyJbSufit/vwFe9f0XEmyTmmvsYGvy+UVzxEaC/64rXjvxXcUCAe
-	 ZrHi72Vm8a1e41WB37dnY9G+DrvhG8lasOIz9EmNYwIyWelcVOmKjLgKr1CSAvfFgS
-	 JG/1oDyi1CYCC/rnFumO/n4mE/HcrrrB4kdyrvlpIundFLCC54uD3tgfcC6xdCKXnO
-	 gVg8+TvaqWR2yBjssyhXb3mRj7JUa1rAJwIqdPjQbY72TPQ5sL0ypz1ZHJxYwHV2jb
-	 VXYGQAetQLL3g==
-Date: Mon, 25 May 2026 17:18:00 +0200
-From: Vincent Jardin <vjardin@free.fr>
+	dkim=pass (2048-bit key) header.d=shutemov.name header.i=@shutemov.name header.b="ZgwucYs3";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="pe7X97JB"
+Received: from phl-compute-04.internal (phl-compute-04.internal [10.202.2.44])
+	by mailflow.stl.internal (Postfix) with ESMTP id C4F2D130008E;
+	Mon, 25 May 2026 11:18:08 -0400 (EDT)
+Received: from phl-frontend-03 ([10.202.2.162])
+  by phl-compute-04.internal (MEProxy); Mon, 25 May 2026 11:18:10 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=shutemov.name;
+	 h=cc:cc:content-transfer-encoding:content-type:content-type
+	:date:date:from:from:in-reply-to:in-reply-to:message-id
+	:mime-version:references:reply-to:subject:subject:to:to; s=fm2;
+	 t=1779722288; x=1779729488; bh=XNbeMvEzyPh7sPx47CH3WFhZNyDg4LG8
+	isuSFxUw54Y=; b=ZgwucYs3+R/6nBszPKkbyaaLOw1OxtR1O2hV7axbTFh568Sz
+	yqsraJGeP9Mh55L1umBu45pVfGjtQ/yY2072ude/j+VUiLp0wKnBKnBzffmQTJjW
+	/o6y8NhmakYY7QpVtA3+0UuERBM+v3/1jaJZBBFSMC1KzrWelj74dRlwGcnhe+2Q
+	GN2vBFdJcoZAEObvxQ0cpPwUMtznPUF15RUOW6bBsvNRbXOw3NWrGeu1rUdtfPCP
+	KRtZ7RMKVOisgrU2X5VinS6AX0Bw9rksA6Pq35tp4IqGtwAUEZ8SXNVzxRdItopa
+	fE1xING4NpeXknYeXNIL73nPKFDhfUVaaBm1PA==
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
+	messagingengine.com; h=cc:cc:content-transfer-encoding
+	:content-type:content-type:date:date:feedback-id:feedback-id
+	:from:from:in-reply-to:in-reply-to:message-id:mime-version
+	:references:reply-to:subject:subject:to:to:x-me-proxy
+	:x-me-sender:x-me-sender:x-sasl-enc; s=fm3; t=1779722288; x=
+	1779729488; bh=XNbeMvEzyPh7sPx47CH3WFhZNyDg4LG8isuSFxUw54Y=; b=p
+	e7X97JBh31Sh07ScqRqkEf2YOrHHOUgWC5br+p5O05641zAF/bw1oOiSl51scTkL
+	TTBmGNhHqGdy1A4ZQphhKCWRfADUQ+t/4v2R/7gCyxE8VyFGZqB0BFfxYiMZECt5
+	GrrCcw+pm3XCSta6tGdeiTs3s9gf3/hHzzWt+SNV6NpvKTfyuiGTduzK9uFAXt3U
+	b4qeVuqbEhqzu1xePnxNMt8BNrrh90Z5XxK7fgL1BZ1WU0+Hni8lr9GeW3viOxc1
+	33a5yXoApOcudml5GCuNo7lCtONMBZT5XBC8Ium0/KFoFE6btbuQ20GO+4kbrrMD
+	ncG4YKOPipnNo3bmpJtjA==
+X-ME-Sender: <xms:MGgUajFAUiJsfhbMD8cHUarZn4-DaghF1cg8HubDqerjMlMmmi53vA>
+    <xme:MGgUaovjOjPg9H37IzVGtvI4xGytU93RUdUMWdKYS2mPACUQWau6wj9cV7-ZDTeZI
+    AJkFJg2Yw9BVgjFiCOO2xbNDWiiCX9AFjI0jxlnxjn67DMoSi92tQ>
+X-ME-Received: <xmr:MGgUavYJ3acQQt61YkqqwotH0qSNFWkOLpKjD2k7SjiKN9gyPnPRBQWuhJJJoA>
+X-ME-Proxy-Cause: dmFkZTEQSsA+CxVWFlgQbg+iDCxnTUddRJf1SNUTKP4UbEAr+U7uFdm1L5+NkcBqlGZsgL
+    pWKCoEhxBJTNaYSbHSylQV/0lm3jZelxuBNryUEz7SwVEtnBFzslpWQY8GJQqg2vsw0Zz0
+    QbZjSZzpKFySn6GqmOLPPlHhCcbMIJ4g8t5wjZhUIw3xERy2MPRsEDG+tKN/NHyTPLO7qG
+    MNuhuxsRfncOHiTNXvffzzZm0c3vhnS8L84qdlFXa8gN4MF4U+SuBZ8q2TZuKc3/FG/FpB
+    PVSHHPoh/Er5NdABQbI2y8OVtNjciY+F6ctFbe2E3mJ1Jli9xJbNK2RTsh9eF1N7wmLMer
+    +EdWIphgvjcbs5d2AJ59P1kblBevKKM+MdC/ufRfH/YKB+uf3079AfvZnMPv9gPK+9Ntfn
+    PpICwq40BKLb/d8mAa73XLYvg6gtbWHshle5RMxYTC8df9j0imwSTBIiiZNqtI+TjNBtKT
+    ZQIQqfOSRANa7gCD8G8tiOC6+LZ7tar2QHfd/1bAJDIQ5U/MJrqJP2t9drRITdX5TOGnp0
+    moO9d+bPUiX8QPtzfu+FHjuFZlLwUePpENrh+Up+d4tRLtnf7kdtSthSxLCCd1z+swEhAZ
+    ZOGkGRExuVavjoQAIPsmxZtMQE+r1r2JvHWnywL01pE1anfn209CZp5q3vKw
+X-ME-Proxy: <xmx:MGgUalpLt6qUWtQKAom-JJcSBYEe2hkrM3mIBsKUp29hEwzNSK0J6A>
+    <xmx:MGgUampwvba2qMEc1z2qQ2iA9ZydNO8pumW3dVf9aCb-ZN0PGE_usw>
+    <xmx:MGgUaiX5uzhzrMtUHH5JFosvi4v9Lml4r-i00G28693pIcTmAs2S-g>
+    <xmx:MGgUajQ6izxbSlGL9PDntG4Qj4XsHDLOT-cm5F5mV6PSR5rDB5YKig>
+    <xmx:MGgUamW0W6QRvvpVR2BPEw06UwSETR2oy1kuoY2zLWaGSnhCceUiuVyP>
+Feedback-ID: ie3994620:Fastmail
+Received: by mail.messagingengine.com (Postfix) with ESMTPA; Mon,
+ 25 May 2026 11:18:07 -0400 (EDT)
+Date: Mon, 25 May 2026 16:18:06 +0100
+From: Kiryl Shutsemau <kirill@shutemov.name>
 To: sashiko-reviews@lists.linux.dev
-Cc: Frank.Li@kernel.org, imx@lists.linux.dev
-Subject: Re: [PATCH 2/2] i2c: imx: fix locked bus on SMBus block-read of 0
- (IRQ)
-Message-ID: <ahRoKMLtrirbowbj@L30177.local>
-References: <20260525-for-upstream-i2c-lx2160-fix-v1-v1-2-f30ab53dd97c@free.fr>
- <20260525133332.0E2291F000E9@smtp.kernel.org>
+Cc: kvm@vger.kernel.org, akpm@linux-foundation.org, rppt@kernel.org, 
+	peterx@redhat.com, david@kernel.org, ljs@kernel.org, surenb@google.com, 
+	vbabka@kernel.org, Liam.Howlett@oracle.com, ziy@nvidia.com, corbet@lwn.net, 
+	skhan@linuxfoundation.org, seanjc@google.com, pbonzini@redhat.com, jthoughton@google.com, 
+	aarcange@redhat.com, sj@kernel.org, usama.arif@linux.dev, linux-mm@kvack.org, 
+	linux-kernel@vger.kernel.org, linux-doc@vger.kernel.org, linux-kselftest@vger.kernel.org, 
+	kernel-team@meta.com
+Subject: Re: [PATCH v4 07/14] mm: handle VM_UFFD_RWP in khugepaged, rmap, and
+ GUP
+Message-ID: <ahRmty2nebDOvgpt@thinkstation>
+References: <20260525113737.1942478-8-kas@kernel.org>
+ <20260525131923.11A1B1F000E9@smtp.kernel.org>
 Precedence: bulk
 X-Mailing-List: sashiko-reviews@lists.linux.dev
 List-Id: <sashiko-reviews.lists.linux.dev>
@@ -48,92 +92,23 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=iso-8859-1
 Content-Disposition: inline
 Content-Transfer-Encoding: 8bit
-In-Reply-To: <20260525133332.0E2291F000E9@smtp.kernel.org>
+In-Reply-To: <20260525131923.11A1B1F000E9@smtp.kernel.org>
 
-Hi again bot,
+On Mon, May 25, 2026 at 01:19:22PM +0000, sashiko-bot@kernel.org wrote:
+> Thank you for your contribution! Sashiko AI review found 1 potential issue(s) to consider:
+> - [High] GUP enters an infinite loop when using FOLL_FORCE on an
+> inaccessible (PROT_NONE) VMA that has VM_UFFD_RWP enabled.
 
-Le 25/05/26 13:33, sashiko-bot@kernel.org a écrit :
-> [Severity: High]
-> This isn't a bug introduced by this patch, but does the error path for an
-> oversized length need to set the TXAK bit before aborting the transaction?
-> 
-> Because reading I2DR automatically initiates the reception of the next byte
-> with ACK enabled, returning early without setting I2CR_TXAK causes the
-> controller to ACK the in-flight byte.
-> 
-> If the target device drives SDA low, could the subsequent cleanup via
-> i2c_imx_stop() fail to emit a STOP condition and leave the bus permanently
-> locked, similar to the zero-length case this patch addresses?
+Confirmed. RWP resolution restores vm_page_prot, which is PAGE_NONE on
+a PROT_NONE VMA -- the page never becomes accessible and FOLL_FORCE
+loops. Will fix in v5 by rejecting the registration up front in
+vma_can_userfault():
 
-Yes, same as the former email on 1/2: the len > I2C_SMBUS_BLOCK_MAX path
-sets STATE_FAILED and returns without a NACK+STOP, while reading I2DR has
-already started the next byte.
+      +       if ((vm_flags & VM_UFFD_RWP) && !vma_is_accessible(vma))
+      +               return false;
 
-I'll fix it in v2 by NACKing the in-flight byte and letting the normal
-last-byte STOP sequence run before failing, matching the count=0 handling.
-
-> 
-> > +
-> > +	if (len == 0) {
-> > +		/*
-> > +		 * SMBus 3.1 6.5.7 "Block Write/Read": byte count can be 0
-> > +		 */
-> > +		temp = imx_i2c_read_reg(i2c_imx, IMX_I2C_I2CR);
-> > +		temp |= I2CR_TXAK;
-> > +		imx_i2c_write_reg(temp, i2c_imx, IMX_I2C_I2CR);
-> 
-> [Severity: High]
-> This is a pre-existing issue, but is there a potential read-modify-write
-> race condition on the IMX_I2C_I2CR register here?
-> 
-> If an I2C transaction times out, the process context calls i2c_imx_stop(),
-> which locklessly clears the I2CR_MSTA bit.
-> 
-> If the hardware interrupt fires concurrently and the ISR reads the register
-> before i2c_imx_stop() clears MSTA, then writes it back afterward, could the
-> ISR overwrite the register with MSTA=1? Would this transition from 0 back to
-> 1 cause the controller to erroneously generate a new START condition?
-
-The count=0 branch uses the same read/modify/write of I2CR than every other
-ISR path in this driver already does. If there is a real ISR-vs-i2c_imx_stop()
-race on MSTA it should be fixed across the driver in its own patch; it is out of
-scope here and it is not introduced by this code.
-
-> 
-> > +
-> > +		i2c_imx->msg->buf[i2c_imx->msg_buf_idx++] = 0;
-> > +		i2c_imx->msg->len = 2;
-> > +		return;
-> >  	}
-> >  	i2c_imx->msg->len += len;
-> >  	i2c_imx->msg->buf[i2c_imx->msg_buf_idx++] = len;
-> 
-> [Severity: High]
-> This is a pre-existing issue, but does the master fail to NACK the final data
-> byte when performing an SMBus block read with exactly 1 byte of data?
-> 
-> Reading the length byte from I2DR triggers the reception of the single data
-> byte, but the code does not appear to set I2CR_TXAK when the length is exactly
-> 1.
-> 
-> During the next interrupt, when i2c_imx_isr_read_continue() attempts to issue
-> a STOP condition, could the target still be expecting to send more data and
-> drive SDA low, preventing the STOP condition from being generated?
-
-This looks like a genuine pre-existing bug, but it is independent of the
-block-read-of-0 fix:
-for count == 1, msg->len becomes 2 and i2c_imx_isr_read_continue() enters
-at msg_buf_idx == len - 1, taking the STOP branch and skipping the
-(len - 2) TXAK branch,
-so the single data byte is ACK'd rather than NACK'd.
-
-It is a topic for another thread/serie.
-
-A v2 will be sent.
-
-thanks,
-  Vincent
-
-> 
 > -- 
-> Sashiko AI review · https://sashiko.dev/#/patchset/20260525-for-upstream-i2c-lx2160-fix-v1-v1-0-f30ab53dd97c@free.fr?part=2
+> Sashiko AI review · https://sashiko.dev/#/patchset/20260525113737.1942478-1-kas@kernel.org?part=7
+
+-- 
+  Kiryl Shutsemau / Kirill A. Shutemov
