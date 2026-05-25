@@ -1,71 +1,114 @@
-Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
+Received: from flow-b8-smtp.messagingengine.com (flow-b8-smtp.messagingengine.com [202.12.124.143])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 370FE384231
-	for <sashiko-reviews@lists.linux.dev>; Mon, 25 May 2026 13:19:08 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CEFC220D4FC
+	for <sashiko-reviews@lists.linux.dev>; Mon, 25 May 2026 14:41:58 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=202.12.124.143
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1779715149; cv=none; b=Bp/uJ4C63QEIRkd6HbEnBg5JVEu5fNb1Npo3dpJKj64NxC3NrhB+PKzzxh4UJwgJabLuyYMtKgVuAyd01L+8tPaDhuOn+wbzKKfddrrEJFthe+HIo/ziTuImgZ5mYP21Cox7FTa6TvvhQOq6HKn2dNYiiCjjKkDCFhndZPyFSCw=
+	t=1779720120; cv=none; b=p6dXeKPS/GqgMDT6sV4iHtcjDrTAbdlLD4825q3lucY15jvE5XO6RIirqrLye09nKldk4bFPKL6cuXS1p/DE+QdDBS9Uk9zTbTDN//auPwNbVlgk6rVJxBRRaSGAL+9F3Q9ZN/WjJEyGvahF0hjiw6Lcdcn1BdSi8eU1xjQwylY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1779715149; c=relaxed/simple;
-	bh=IY21/DJtmN/RO8GaSEndVkQHdffOG1zGVaOrIEDP1cY=;
-	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
-	 To:Cc:Content-Type; b=r0KmcT9rncJ77+hfg7XzfB8sZDLPG4BXx2XwJSyPQray5yAHrMM6x2PIA2iqyXl7hcJpmGpMrIFxBrLII+UDpPsaTA5XFYAyaWRmcjtY4wbILzyXDfkHr+VMWKE2TWzrCU/drTyBL/dkozXfqgbyv4ERaU6B5hKS7Di/YvsJDOw=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=LxX618MB; arc=none smtp.client-ip=100.103.45.18
+	s=arc-20240116; t=1779720120; c=relaxed/simple;
+	bh=g1yljOn+I0uX5WJ7Da+AVF7I3bwZLJKvL/He1hKzbQI=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=LvzSsPCyIsqc7UiDqhIaChwsNyFx2jxzH9qDcUrgHTAsCPR7XLsuWSoJvfj5gthV9PHZl4Gyztbz2hCKUaHnGsLDueF5OcdPR1aoiJWKV9ayysTiZY9OJPdVi3sUZ7M1ZGnPkGBn2IgEmp2PDhUp+0qKahonI/NKRujkQ7HuUfo=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=shutemov.name; spf=pass smtp.mailfrom=shutemov.name; dkim=pass (2048-bit key) header.d=shutemov.name header.i=@shutemov.name header.b=Qe0PHr11; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=E4IUI8S5; arc=none smtp.client-ip=202.12.124.143
+Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=shutemov.name
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=shutemov.name
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="LxX618MB"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id E34D81F00A3E
-	for <sashiko-reviews@lists.linux.dev>; Mon, 25 May 2026 13:19:07 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=kernel.org;
-	s=k20260515; t=1779715147;
-	bh=IY21/DJtmN/RO8GaSEndVkQHdffOG1zGVaOrIEDP1cY=;
-	h=References:In-Reply-To:From:Date:Subject:To:Cc;
-	b=LxX618MBWXXWkk9+r2DC0bEGdlpJhEjoRYQwjWxuJhQNVZPWB0Xsw7rvpTO+5K6Dv
-	 POysXlTl6jMEkcNbISbL7Wx1YMg/KvQSWHeUr2bJcihz20DAKekVzV/27pqLdqPU5L
-	 yEdH8LHC2vBSFOXX7x2q87kpJQ4fipusdYFAg2h8pDIzK1i46FxU9jtq2qEzvAVEH1
-	 QYMKbR8CCESDSIcGrzjBOpJAt8hYQxgZIIASWnZJFIjuP1Hu/SGYe2tIwE0/E6OMdB
-	 9qSjphBu/O3Zhy8q+JNTzHT4+ji+D29JgFAdMiUmn1X/67+T4Xx61aK5D71sCguD+I
-	 dEmQ5Z1WG+hFg==
-Received: by mail-lf1-f49.google.com with SMTP id 2adb3069b0e04-5a858881ad2so12075988e87.3
-        for <sashiko-reviews@lists.linux.dev>; Mon, 25 May 2026 06:19:07 -0700 (PDT)
-X-Gm-Message-State: AOJu0Yy6FekHvx/QzPcPFmUF0q1uI+HJKpjFNcy6DWIHnYRfWb/ptyNF
-	yEh2fxIrqF0U6aeFYvIBFuIJOXHhwN2MBw8+ArJImxAZNyb4aXGd3KHmucbuLl1w7hfq/bQ3x6X
-	eswnqpnNmEhGUtT02008L8zNDUP+vpJA=
-X-Received: by 2002:a05:6512:2303:b0:5a1:b83:c7cf with SMTP id
- 2adb3069b0e04-5aa323713f1mr5620188e87.25.1779715146655; Mon, 25 May 2026
- 06:19:06 -0700 (PDT)
+	dkim=pass (2048-bit key) header.d=shutemov.name header.i=@shutemov.name header.b="Qe0PHr11";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="E4IUI8S5"
+Received: from phl-compute-05.internal (phl-compute-05.internal [10.202.2.45])
+	by mailflow.stl.internal (Postfix) with ESMTP id 7CC34130038D;
+	Mon, 25 May 2026 10:41:56 -0400 (EDT)
+Received: from phl-frontend-03 ([10.202.2.162])
+  by phl-compute-05.internal (MEProxy); Mon, 25 May 2026 10:41:58 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=shutemov.name;
+	 h=cc:cc:content-transfer-encoding:content-type:content-type
+	:date:date:from:from:in-reply-to:in-reply-to:message-id
+	:mime-version:references:reply-to:subject:subject:to:to; s=fm2;
+	 t=1779720116; x=1779727316; bh=PnS5+hXg8zM/uBnkqtNnKx0lfH+fdAFq
+	qZps+s+LYiU=; b=Qe0PHr11cnnci+E7a8ArJ949nEn6XQaRRTNfJ+pbk+qmsXbq
+	OkXqr7WFi4J5MkKlNv/jH1A8IIPyCZ2bR85a0tLbhaFwWburtTzjjwHP7Kc0yObN
+	Nl6P5VB87zOaDDMnNjKw80jJ3fTP+KOGVLlgBIXC/mGZh5VSrvWlKJX3iRj1nUXp
+	1VWy4P6FC83ZjlBLLlcoImMGgxZP9iQLIP37OrnhuSbrgwtDS1BJ+7Zax4CEInyU
+	gSXm8Ui4w71NVEoaWIrzV2i+yqQh9SuRyYsZFL+4j6HQPu8qOJQZ1xQY52lgjsbS
+	MD9uWjxfRPYWGmZqDd5rjCCngbpvFwBfveSiGw==
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
+	messagingengine.com; h=cc:cc:content-transfer-encoding
+	:content-type:content-type:date:date:feedback-id:feedback-id
+	:from:from:in-reply-to:in-reply-to:message-id:mime-version
+	:references:reply-to:subject:subject:to:to:x-me-proxy
+	:x-me-sender:x-me-sender:x-sasl-enc; s=fm3; t=1779720116; x=
+	1779727316; bh=PnS5+hXg8zM/uBnkqtNnKx0lfH+fdAFqqZps+s+LYiU=; b=E
+	4IUI8S5Nh3vDp4XXiwdQRaMdqy51ZUdd2568cGLJ5WsAf48WDXBOHyUWRhWWsuH9
+	2ohgZomUnOBHrb6hF2inIBHXySB5I9PyVNSzDHHzTmae5dDEYiq3UG1XcZ0PyuQA
+	MpQT2alGPx4O9PKfhLcW33Xovn/TGUPwrOVf3sFu92RbsyvfqDgDLfSKIPgHxqmw
+	T4PRDeG70r4Jun5zZH2IEoI8X/JzaCrhU/O/zpDVpXVGWXYINciNL7yGobhEtPE6
+	EE7mpW4GKH6zSWOfwESsQTnd58W5aAA9rwAXyx13xpNLmNA92jG9rkHLjEwRHwID
+	Qp/9pyPG7TIIS0hm0u5hA==
+X-ME-Sender: <xms:s18UalRHDNFeOe3OTBQrFotPD66VN2u2Ly4GPFB6QarTbGtKrgXF2A>
+    <xme:s18UamDgnrsESAku88fIMRB5G-1vL4ISJPgekl2VsLyCx4yy_gyKuab9cacA3ftjD
+    0nVp8lMdxSY-9FwglNyKMoiIzrUgK9lMFaJWnNOr4RdH3b-FlJc0g>
+X-ME-Received: <xmr:s18UavhHw47OsCkjPL2rGtIolMQGuALs1a-RxsVw0BEu25uYsPtoygDaBOom8A>
+X-ME-Proxy-Cause: dmFkZTGHZHLMjCHc643dxRklLh2oL/Fj1m4IuOELcM7KtVw32eoEW7vO/KG/cKBnN9WuTW
+    xcg2IQePNYL331E/+iFrg9l3Q/0DfWc/pfzb7vWOi1Q3A9a5dIAx/Ip8sizV43jID8qi2T
+    lPu7yzYYlC4jDwy9+0KEeh9FZYrc3IDuLVpMqBcYmpa2tVNF4MKCjt0kSOcetEMay+qG0j
+    wZaWuQuIE2LusEhaCt/KcTuXfzwWNSSA/a6+c4ZC+utd7D9qUqXsnLmKd9bKV8qtvZC2fr
+    pc8OG7aEFZFvhoMbEdIROsQzF6nr7BIT6NX92DQHbwsijQVdrSxa73C0r4i4pngBeREvjN
+    hL3/kqYaofWdis6FczySG/sGGaRFcfuWQN4L5qMxnm2Rr+zzf1FxksyzGoiJv0k2FZ/K8/
+    zQBu704Uw0qC1WUVP+hCihCOAHiH6XNmcc/jpi1zpZFBnIg72Dyz47nrLXF3IwkjFIzAto
+    YjL4fW9iAb2sW+Vn4xEM8f0jhP7AufVvaz81ReUOMH23fd86Y6b3vy0foQkS+jXxDI7Xny
+    xnj8rwQQ/qESJ5ItTQryqChWVlS6qj45d6PwWMc8Nqfhxik/XtigjZ0Xh8wk2D2pyhkRHq
+    iaa7VTA7vbSK+AN0OtxxIDzz0O6aYvtMB9kSNLQR8XH4TbtRD8yizHSZz3eA
+X-ME-Proxy: <xmx:s18UaptUyk2cm1cS1S8PkaMgt-0ey829YeBygKC3HG5-gC2y9DobOg>
+    <xmx:s18UanIvnL4SOXBk1EY3C36P7GanH2j4vG4-ybdXMhlgG0ABKCiTGA>
+    <xmx:s18UakqCqU_oct1qD2WFqCZZwTzcuIALl3fEMd3RtFvxNl0BWgg_PQ>
+    <xmx:s18Uaj8iJrHBe0GLgbxMB_gpLlKD9k24wOQ2Wgc40b1dzLHj4cAZ7A>
+    <xmx:tF8UakHpVxht5wWYv810BB8EPx5PKQBvAYDCYdMW3VylUs3AjsxKlXZW>
+Feedback-ID: ie3994620:Fastmail
+Received: by mail.messagingengine.com (Postfix) with ESMTPA; Mon,
+ 25 May 2026 10:41:55 -0400 (EDT)
+Date: Mon, 25 May 2026 15:41:54 +0100
+From: Kiryl Shutsemau <kirill@shutemov.name>
+To: sashiko-reviews@lists.linux.dev
+Cc: kvm@vger.kernel.org, akpm@linux-foundation.org, rppt@kernel.org, 
+	peterx@redhat.com, david@kernel.org, ljs@kernel.org, surenb@google.com, 
+	vbabka@kernel.org, Liam.Howlett@oracle.com, ziy@nvidia.com, corbet@lwn.net, 
+	skhan@linuxfoundation.org, seanjc@google.com, pbonzini@redhat.com, jthoughton@google.com, 
+	aarcange@redhat.com, sj@kernel.org, usama.arif@linux.dev, linux-mm@kvack.org, 
+	linux-kernel@vger.kernel.org, linux-doc@vger.kernel.org, linux-kselftest@vger.kernel.org, 
+	kernel-team@meta.com
+Subject: Re: [PATCH v4 01/14] mm: decouple protnone helpers from
+ CONFIG_NUMA_BALANCING
+Message-ID: <ahRfP026tvXw8gI6@thinkstation>
+References: <20260525113737.1942478-2-kas@kernel.org>
+ <20260525120640.328441F000E9@smtp.kernel.org>
 Precedence: bulk
 X-Mailing-List: sashiko-reviews@lists.linux.dev
 List-Id: <sashiko-reviews.lists.linux.dev>
 List-Subscribe: <mailto:sashiko-reviews+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:sashiko-reviews+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-References: <20260522044855.1772639-4-o.rempel@pengutronix.de> <20260522055524.C86311F000E9@smtp.kernel.org>
-In-Reply-To: <20260522055524.C86311F000E9@smtp.kernel.org>
-From: Linus Walleij <linusw@kernel.org>
-Date: Mon, 25 May 2026 15:18:53 +0200
-X-Gmail-Original-Message-ID: <CAD++jLmGLWGSJ0pdYhYQMzMFZeKT_+Pd6iQgHLeVY1dfZpe6hA@mail.gmail.com>
-X-Gm-Features: AVHnY4JwmVskF7xv3RdUZ3nSURmC-AFu1N5B1VE_RAAGudnabmcZImFY0JWnWkk
-Message-ID: <CAD++jLmGLWGSJ0pdYhYQMzMFZeKT_+Pd6iQgHLeVY1dfZpe6hA@mail.gmail.com>
-Subject: Re: [PATCH v14 3/6] pinctrl: core: Make pin group callbacks optional
- for pin-only drivers
-To: sashiko-reviews@lists.linux.dev
-Cc: Oleksij Rempel <o.rempel@pengutronix.de>, devicetree@vger.kernel.org, 
-	linux-hwmon@vger.kernel.org, robh@kernel.org, conor+dt@kernel.org
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
+Content-Type: text/plain; charset=iso-8859-1
+Content-Disposition: inline
+Content-Transfer-Encoding: 8bit
+In-Reply-To: <20260525120640.328441F000E9@smtp.kernel.org>
 
-On Fri, May 22, 2026 at 7:55=E2=80=AFAM <sashiko-bot@kernel.org> wrote:
+On Mon, May 25, 2026 at 12:06:39PM +0000, sashiko-bot@kernel.org wrote:
+> Thank you for your contribution! Sashiko AI review found 1 potential issue(s) to consider:
+> - [High] Unconditional selection of ARCH_HAS_PTE_PROTNONE on LoongArch
+> causes boot-time warnings/panics in debug_vm_pgtable on 32-bit
+> configurations.
 
-> [Severity: High]
-> This is a pre-existing issue, but does pinconf_groups_show() need to hold
-> pctldev->mutex while iterating through pin groups?
+Confirmed. Will fix in v5 with:
 
-It is inappropriate to mark bugs pertaining to pinconf_groups_show()
-as "Severity: High", this function is only called from debug code
-and requires CONFIG_DEBUGFS to be enabled which is something
-a production system should not do nor expect to work in all cases,
-so adjust your training weights accordingly.
+      -       select ARCH_HAS_PTE_PROTNONE
+      +       select ARCH_HAS_PTE_PROTNONE if 64BIT
 
-Yours,
-Linus Walleij
+matching the x86 ("if X86_64") and riscv ("if MMU") patterns.
+
+> -- 
+> Sashiko AI review · https://sashiko.dev/#/patchset/20260525113737.1942478-1-kas@kernel.org?part=1
+
+-- 
+  Kiryl Shutsemau / Kirill A. Shutemov
