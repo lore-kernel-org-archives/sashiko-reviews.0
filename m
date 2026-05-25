@@ -1,162 +1,129 @@
-Received: from mail-wm1-f42.google.com (mail-wm1-f42.google.com [209.85.128.42])
+Received: from mail-wm1-f51.google.com (mail-wm1-f51.google.com [209.85.128.51])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 895303370E4
-	for <sashiko-reviews@lists.linux.dev>; Mon, 25 May 2026 11:49:21 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.42
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 12DC719F12D
+	for <sashiko-reviews@lists.linux.dev>; Mon, 25 May 2026 13:06:45 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.51
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1779709763; cv=none; b=iF0yjjKgyQuOKVG0f1vEnxziE4Zpw5/SQH77yNCf7ehoax8kSCjuDG/V7vuPdv99mViAKhF9t02LIrNIBABMNYZOvkgeZWiLk5CrktZh5yquO9FWnwgQrkv4ChHwlBxFDGtNGnwjkK/HJsM4XW/1shSU2cUvkp/SU6mBX2Se/pE=
+	t=1779714407; cv=none; b=YdhTVP8LNpz43kza7lyyLEjuHKlQf17qIvXk3E5ztgYEj2GL/G1dSX/My/9dzzPOb73OFibMvioj+LuKxetJzrN1ceS97eyLag2+YefdUdvkeEskYLsAA/LhanWMyhoL2NDeV+6EHBwQdqPXaNRwVnYxcEvlbVJ2ClyRkInc1G0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1779709763; c=relaxed/simple;
-	bh=KrxdAeLUhOdbTOeg6AjThXmoxH0Kuzb7+z3TySKZ5Ek=;
-	h=Message-ID:Subject:From:To:Cc:Date:In-Reply-To:References:
-	 Content-Type:MIME-Version; b=cM5EuAcrWYqCWSyj7eTK8SubxfPRVzwvR4cf2tBy26SnGE3YGK+Hmc2u9SCWW7NV8obWdCBH5c91oIS9IXXS9QUY/vuajKBNTfoOGxbkDypmh9zdRojC1ckAKDfKYf8PZIbs8oW5xot+0SU50id5tOJpW9V3RLdtSsvRUgMLxdY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=suse.com; spf=pass smtp.mailfrom=suse.com; dkim=pass (2048-bit key) header.d=suse.com header.i=@suse.com header.b=ExhOknZ0; arc=none smtp.client-ip=209.85.128.42
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=suse.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=suse.com
+	s=arc-20240116; t=1779714407; c=relaxed/simple;
+	bh=H2MbsPdJu3INCwzshjzohU01IaykhjDPO9vTUKTefd0=;
+	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
+	 In-Reply-To:Content-Type; b=lDnSmd5MCE55l8oXi1Exwou5n1k6OPcfMdesaIUjNG8oyAYZla8+9DH8nbjCJw/7Du0TEWcPmFpLLo6TRoIM4+SuEldKUauvgY3ZmpGoDZdUA2hAHotrUKsDskBccjSAxn1w5OJxy9gffRRT6ruSEBK86FksU23uS9vgedt60pE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=RvYx0pIS; arc=none smtp.client-ip=209.85.128.51
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=suse.com header.i=@suse.com header.b="ExhOknZ0"
-Received: by mail-wm1-f42.google.com with SMTP id 5b1f17b1804b1-49041fb8c23so24627675e9.0
-        for <sashiko-reviews@lists.linux.dev>; Mon, 25 May 2026 04:49:21 -0700 (PDT)
+	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="RvYx0pIS"
+Received: by mail-wm1-f51.google.com with SMTP id 5b1f17b1804b1-49041e84237so25533225e9.1
+        for <sashiko-reviews@lists.linux.dev>; Mon, 25 May 2026 06:06:45 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=suse.com; s=google; t=1779709760; x=1780314560; darn=lists.linux.dev;
-        h=mime-version:user-agent:content-transfer-encoding:autocrypt
-         :references:in-reply-to:date:cc:to:from:subject:message-id:from:to
-         :cc:subject:date:message-id:reply-to;
-        bh=kdsBBlxH/fBT0qTKbx/OGQlMNoMysgVbWBk3JCaqZ+U=;
-        b=ExhOknZ0MWuPo0fl9g1gCsWE4GtwHuBpHhKFApwyEdR/+cub8+ct1QV+UpXe3TYe66
-         Npe0NNN/XpUYn/Evj7gk5aDQTImgCy2Zm/Xu6n2YwrtmRUamWMd1biw/XnrN1wf47ZHt
-         LrdGfmHL3XSgnv+X/yuoowvgrxQzXLGHDOKW2Or1yTXcpR1vmXBGcrYAvChbcgbU2DcQ
-         BSZW9GR6XOEt1+CtWgue0yqaHMcIjiPydsh/6XSfgzxt1ThkUW7t/Q1CjbcfBWxbp4Vw
-         /X+3DK5U+DPtpLZz8/HPiQ1YqxKgXg49rbunkA6x4Yv3ccT9AxPdpBn9gh0s66MYk/Ia
-         sYrA==
+        d=linaro.org; s=google; t=1779714404; x=1780319204; darn=lists.linux.dev;
+        h=content-transfer-encoding:in-reply-to:from:content-language
+         :references:cc:to:subject:user-agent:mime-version:date:message-id
+         :from:to:cc:subject:date:message-id:reply-to;
+        bh=3NsFAHbbgOzCLPcPVPAC9RtB2/tgqNqDMLkDlsW/0Z8=;
+        b=RvYx0pISRKkPIInOQqs4T17PydXVtiwaX/zSCYFrwZjoXXzGnPBd5SpeSybOfVZPeW
+         H4J+qtL62Vfy2cyznccEfl8On33DdfXZcxA3+A40E6sLnZLq1FTP1dewXn6RvO7dayGs
+         AVwweZTUIdhAalFQqnyzpIYJ0+ao2xr15p2w73XIh/u2KQykDr8k0KsjZ7YSVpWeB4Wg
+         hIiJWhtTb9hpUSaYcb3JDmMlMs5u9t+ebACvWz5Za4nH/7CCCJ7aDckCgFyaZ+urQ0I7
+         Ij7NMFvumZ1PK/ORsNUNyA0PnTpgXXnL6B62/IRpr0N+eZQ1QDCUlFynMLYiGZain6Kh
+         rPDw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20251104; t=1779709760; x=1780314560;
-        h=mime-version:user-agent:content-transfer-encoding:autocrypt
-         :references:in-reply-to:date:cc:to:from:subject:message-id:x-gm-gg
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=kdsBBlxH/fBT0qTKbx/OGQlMNoMysgVbWBk3JCaqZ+U=;
-        b=JxjVrbb2thbgJBzif+UyfNOif/UhYpAf2Z092dX6wV7kCrk1ggmOLJRKahaBpmovWa
-         UWFPsB+NnvqIrJuJLoQEbYm52WdkVBN0jINKJpB1xuXKfiSFIgp1iUZpZEub98IjX999
-         3GyPXcAItukRfsRevRXAlezwu8m/2llNO0mQPln66ly0v3FVFPR22mbJ+SOT94kR7GSM
-         jkkgYBt2o4oE3ltrjjTfIb4yHsEl3oSyayCgso0HhMYhsYQIGrTKEk7Z5Be/KqJ5bJza
-         EGs81qzPDGrvYWwVWpcZGXSI/rpVqAy7WEGxwsSgYrcfVZt+7y+7MvtgTZsSWTFAszcX
-         1OLA==
-X-Gm-Message-State: AOJu0YwcdNoYU57LiekfrPUotfudi6HKKFRi1RG9rHxli9BpjQ25xuDd
-	t+W509Q9ncYWmtN7y83g5YvVrurpRZHTJX2JaCoGvhbmS93yYqnzSSHvGsagZ4bPijfUOa5W9zn
-	AapZdCLU=
-X-Gm-Gg: Acq92OESC8POELJQs4kX7mS6jGU1XhxoPak962BLWbxVZno/4Bg+U0i3uuwaNhlvPI2
-	BywXVe2fsVJQdj8VjDNIsuM+X96ASWs7nZ2ka7eXzsTxqMAPp0JB7SkcGVbNZnkrU7GqG2DP+sP
-	Ufak9LTThe2HpKW9x3z/eVXNDQwBPUNWWMQi8Nny2V1R2X+OuGxrqyGwd0DSLf8Cnhaipqqv2ky
-	FzUYA9536e3dFX/zX1Jx9TQrau3v/uvLGN9bTN5S5J+ra+zKELm7dYNyl4Qq6WOsjIthYe3/gGW
-	l7MRwVsqxQ2PG3RU7tv/iG3bMG+nyyYrsy/Ld3cnZ7wfSQ8jque/IIDd1P+m8GW9RmSZof7r7zL
-	b3zcEhq5xWpR1cJ0p7D6SJ1dRB3eP4pA/xHe6lbku2y67JWobo3XHmGzxvtazcx6/KWB+LSF7sj
-	i4+aXb2+0uf+5FlhXUXtdOCMT659wmbj7apgNGGgvpWMbqWt8OkVKENl08OqKFUZ63m5E=
-X-Received: by 2002:a05:600c:1c21:b0:490:44eb:c1ea with SMTP id 5b1f17b1804b1-49044ebc2edmr234633755e9.24.1779709759832;
-        Mon, 25 May 2026 04:49:19 -0700 (PDT)
-Received: from ?IPv6:2804:1bc4:224:7800:585c:db3a:fcb:e21f? ([2804:1bc4:224:7800:585c:db3a:fcb:e21f])
-        by smtp.gmail.com with ESMTPSA id 5b1f17b1804b1-49041781fc4sm120310185e9.1.2026.05.25.04.49.14
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Mon, 25 May 2026 04:49:19 -0700 (PDT)
-Message-ID: <d329f22e75fd01f2250490e4cba87f064a726f52.camel@suse.com>
-Subject: Re: [PATCH 1/4] selftests: livepatch: Introduce _remove_mod function
-From: Marcos Paulo de Souza <mpdesouza@suse.com>
-To: sashiko-reviews@lists.linux.dev, Jiri Kosina <jikos@kernel.org>, Petr
- Mladek <pmladek@suse.com>, Joe Lawrence <joe.lawrence@redhat.com>, Shuah
- Khan <shuah@kernel.org>,  Miroslav Benes	 <mbenes@suse.cz>, Josh Poimboeuf
- <jpoimboe@kernel.org>
-Cc: linux-kernel@vger.kernel.org, linux-kselftest@vger.kernel.org, 
-	live-patching@vger.kernel.org
-Date: Mon, 25 May 2026 08:49:10 -0300
-In-Reply-To: <20260524235906.267EF1F000E9@smtp.kernel.org>
-References: <20260524-livepatch-unload-on-fail-v1-1-7465de7f741d@suse.com>
-	 <20260524235906.267EF1F000E9@smtp.kernel.org>
-Autocrypt: addr=mpdesouza@suse.com; prefer-encrypt=mutual;
- keydata=mDMEZ/0YqhYJKwYBBAHaRw8BAQdA4JZz0FED+JD5eKlhkNyjDrp6lAGmgR3LPTduPYGPT
- Km0Kk1hcmNvcyBQYXVsbyBkZSBTb3V6YSA8bXBkZXNvdXphQHN1c2UuY29tPoiTBBMWCgA7FiEE2g
- gC66iLbhUsCBoBemssEuRpLLUFAmf9GKoCGwMFCwkIBwICIgIGFQoJCAsCBBYCAwECHgcCF4AACgk
- QemssEuRpLLWGxwD/S1I0bjp462FlKb81DikrOfWbeJ0FOJP44eRzmn20HmEBALBZIMrfIH2dJ5eM
- GO8seNG8sYiP6JfRjl7Hyqca6YsE
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
-User-Agent: Evolution 3.60.1 (by Flathub.org) 
+        d=1e100.net; s=20251104; t=1779714404; x=1780319204;
+        h=content-transfer-encoding:in-reply-to:from:content-language
+         :references:cc:to:subject:user-agent:mime-version:date:message-id
+         :x-gm-gg:x-gm-message-state:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=3NsFAHbbgOzCLPcPVPAC9RtB2/tgqNqDMLkDlsW/0Z8=;
+        b=Z7ZypYfjyzfumDOldSUaxEVjlm877PmyfhFvS2qZCZBIbFSnhlDN4LmPTSwUUgmg5n
+         arGienkHpxnz1pwtYIKU5x/IfJRZBl5uvOcOKoBG9Tek/8AtLarI5B12HFt5FfKg2iJA
+         8CzhK7pj7YmqN9dju8Hl2CudggPjr+bRYn76fbtrWTneGXhT+H8EM7LIsvGTnsC2BjIL
+         OtmA3wqrgswM6H4KNFEKS0Rtvb5fv2IiJbt3wTJyupvxe7p6WuRypvIslyIDdHIj+XTy
+         r+iJbC41xKvzW+D9+Ggv9cK4ftJhhWLeXUSEJt1xM9QgJOU1YTw5eyrsEaj1ZL2Zlwlk
+         jNxg==
+X-Gm-Message-State: AOJu0YymGvluvbgHKFyq+UxXGhBZ++c+lwfGKNblMShaG4o9ygZvGBUy
+	DP4L8AdZmxXAdBTpmCsuYsjUq/IPPcYCIxSYoAIeP1NtujWqBVFKSuNMtwR+aAsX96Uh4avMHTR
+	2e+v5AfTHvg==
+X-Gm-Gg: Acq92OHbgU0MFbCJ6Hvx9kWCiETQGQ9pAxNMoUHn64C4KFybR3nUi5UGR0BALK6+Bg9
+	P8oTXkanK97NK8yWUdOv9uIQMn4Vwj6EB7kq7kL/3n3rLe/G/8astQCmn6w/R7gJx6hkho9QTG/
+	iEBit2fXxLKiIiJrpMq29rwiU70LZTlN+y3gaQMeXbRsPiQOwarbqtGz6T1KrVlLM/bVSLIAtzg
+	8+l6mMxcvsOKQURe7qo+ptMVz4QPGP+tFOWyXV5u5dlmc88GAUFvno3qLup+tzEYFm4LqsqUuJ0
+	vJgrw9AUVSbNeLEZ/5QKe1KrthMOvOGtH9/6RFjdjSjtSKF/m27D4SMyiXJKbjEwLQxBx93hlXH
+	ajyDap3BDlWBrJs4QEmOSEZsHFPZLh6gDEE67gX82U91wzUZHYOimYahVbmMJH1Gc2Bf7leo0o1
+	33A4xxIz/1VgzzXGhFXdLWEuEnwu/Jvvis8NcbHooibg==
+X-Received: by 2002:a05:600c:2a8b:b0:489:1abb:5559 with SMTP id 5b1f17b1804b1-4904226d9camr124435635e9.5.1779714404415;
+        Mon, 25 May 2026 06:06:44 -0700 (PDT)
+Received: from [10.11.12.110] ([82.76.215.73])
+        by smtp.gmail.com with ESMTPSA id 5b1f17b1804b1-490428ec538sm84251795e9.23.2026.05.25.06.06.43
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Mon, 25 May 2026 06:06:44 -0700 (PDT)
+Message-ID: <4832a220-ace5-40ba-b85b-7c69b3aed869@linaro.org>
+Date: Mon, 25 May 2026 16:06:40 +0300
 Precedence: bulk
 X-Mailing-List: sashiko-reviews@lists.linux.dev
 List-Id: <sashiko-reviews.lists.linux.dev>
 List-Subscribe: <mailto:sashiko-reviews+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:sashiko-reviews+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH v5 1/5] dt-bindings: thermal: Add Google GS101 TMU
+To: sashiko-reviews@lists.linux.dev
+Cc: conor+dt@kernel.org, robh@kernel.org, devicetree@vger.kernel.org
+References: <20260525-acpm-tmu-v5-1-85fde739752e@linaro.org>
+ <20260525125455.AF31A1F000E9@smtp.kernel.org>
+Content-Language: en-US
+From: Tudor Ambarus <tudor.ambarus@linaro.org>
+In-Reply-To: <20260525125455.AF31A1F000E9@smtp.kernel.org>
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 7bit
 
-On Sun, 2026-05-24 at 23:59 +0000, sashiko-bot@kernel.org wrote:
-> Thank you for your contribution! Sashiko AI review found 1 potential
-> issue(s) to consider:
-> - [Medium] `_remove_mod` uses `die()` which will terminate the script
-> during cleanup operations.
+Not sure if I shall reply to this, but giving it a try.
+
+On 5/25/26 3:54 PM, sashiko-bot@kernel.org wrote:
+> Thank you for your contribution! Sashiko AI review found 1 potential issue(s) to consider:
+> - [Medium] The `samsung,acpm-ipc` property is missing from the `required` list despite being functionally mandatory for device operation.
 > --
->=20
-> commit 7b1591f4e5c3b351136e7fe2821eb2e15ae59ad0
-> Author: Marcos Paulo de Souza <mpdesouza@suse.com>
->=20
-> selftests: livepatch: Introduce _remove_mod function
->=20
-> This commit introduces the _remove_mod internal function to remove a
-> loaded
-> module, intended to be used during cleanup when a testcase fails. It
-> also
-> refactors unload_mod to use this new helper function.
->=20
-> > diff --git a/tools/testing/selftests/livepatch/functions.sh
-> > b/tools/testing/selftests/livepatch/functions.sh
-> > index 2bc50271729c6..3ec0b7962fc5c 100644
-> > --- a/tools/testing/selftests/livepatch/functions.sh
-> > +++ b/tools/testing/selftests/livepatch/functions.sh
->=20
+> 
+> commit f4129715b1366153f8c291ba713ab0836fdf5768
+> Author: Tudor Ambarus <tudor.ambarus@linaro.org>
+> 
+> dt-bindings: thermal: Add Google GS101 TMU
+> 
+> Document the Thermal Management Unit found on the Google GS101 SoC.
+> This hardware uses a hybrid control model where the Application Processor
+> delegates high-level functional tasks to the ACPM firmware via IPC.
+> 
+>> diff --git a/Documentation/devicetree/bindings/thermal/google,gs101-tmu-top.yaml b/Documentation/devicetree/bindings/thermal/google,gs101-tmu-top.yaml
+>> new file mode 100644
+>> --- /dev/null
+>> +++ b/Documentation/devicetree/bindings/thermal/google,gs101-tmu-top.yaml
+> 
 > [ ... ]
->=20
-> > @@ -241,9 +241,10 @@ function load_failing_mod() {
-> > =C2=A0	log "$ret"
-> > =C2=A0}
-> > =C2=A0
-> > -# unload_mod(modname) - unload a kernel module
-> > +# _remove_mod(modname) - Internal function to remove a loaded
-> > module.
-> > +#=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=
-=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 Use u=
-nload_mod() instead, which also
-> > updates TEST_MODS tracking.
-> > =C2=A0#	modname - module name to unload
-> > -function unload_mod() {
-> > +function _remove_mod() {
-> > =C2=A0	local mod=3D"$1"
-> > =C2=A0
-> > =C2=A0	# Wait for module reference count to clear ...
-> > @@ -261,6 +262,14 @@ function unload_mod() {
-> > =C2=A0		die "failed to unload module $mod (/sys/module)"
->=20
+> 
+>> +  samsung,acpm-ipc:
+>> +    $ref: /schemas/types.yaml#/definitions/phandle
+>> +    description: Phandle to the ACPM IPC node.
+>> +
+>> +required:
+>> +  - compatible
+>> +  - reg
+>> +  - clocks
+>> +  - interrupts
+>> +  - "#thermal-sensor-cells"
+> 
 > [Severity: Medium]
-> The commit message notes this function will be used to remove loaded
-> modules
-> when a testcase fails. If used in a cleanup path (such as a bash EXIT
-> trap),
-> will calling die() here terminate the script prematurely?
->=20
-> If a module fails to unload (for example, if its refcount doesn't
-> drop),
-> die() executes exit 1. Inside a trap, this aborts the rest of the
-> cleanup process. This could skip unloading any remaining modules and
-> prevent final cleanup operations like pop_config() from running,
-> potentially
-> leaving kernel tracing persistently enabled and polluting the system
-> state
-> for subsequent tests.
+> Since the commit message and binding description indicate that the
+> Application Processor relies entirely on the ACPM firmware for all
+> functional TMU tasks, shouldn't samsung,acpm-ipc be included in this
+> required list?
+> 
 
-The system is already polluted when a testcase fails nowadays, since a
-module is kept loaded either way, making the next tests to fail if they
-also try to lead the same modules.
+I disagree. The property remains optional because the ACPM firmware
+can be bypassed entirely. The TMU IP is capable of handling thermal
+management directly without IPC intervention, so the phandle is not
+a strict hardware requirement.
 
-The current approach is trying to make it more reliable.
-
->=20
-> > =C2=A0}
->=20
-> [ ... ]
+Cheers,
+ta
