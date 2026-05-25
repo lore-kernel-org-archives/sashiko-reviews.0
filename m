@@ -1,42 +1,41 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5B2EA2D592D;
-	Mon, 25 May 2026 16:37:35 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 821F63F4135;
+	Mon, 25 May 2026 16:41:44 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1779727056; cv=none; b=HatxhBm5+PCxC4gipDQ9lNrR2HGAxxAHj+1VXiZdbZ+nzeLQakoDHV6XfRSC/cFGFYxW3+k+Nk1RkFPdYuh7FA+cGdIz0sW+Zf3CzGCLN3xZSEzdbkNZ3bQW2w4NveojCOnyXE+oFyyXVWGcoPVKAM9ziSN4/A7Yd5sMwTlmGyA=
+	t=1779727305; cv=none; b=kRGToo3FNKWsfFacAcVK6D3uVLItOwV+P8UXxoVxJkDKqHxBwhqxjowGJKYI5DrX7B2UoDofjjhgiVzCb5iMjqHzgjOHTizxJnEetnlZLG7Lb4nIzZGTiyY6NyHfptGSBCOls8Rf5S8KxfXNzS2fwzCRi2Qlj3G/lRnayehyaY0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1779727056; c=relaxed/simple;
-	bh=AHi7rNNpn/yTAAbk276BCOHZ69vvOQJTiWrJaKnuwvw=;
+	s=arc-20240116; t=1779727305; c=relaxed/simple;
+	bh=kLDyj8Q66/bPiLXCiftTL+cptht+gtf6AS8vrPXTl9I=;
 	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=J813ZnVeco2HekdWC9xj8lp7j6TOqBFY36xWbkuML/UUn+SYZT3Qu5feWEjIlaWGQChqkwerOFdb8dsrvknE5Xb3Dodcv46Ao0tc3a0HFKLE4pJZurVEu2JlXwvQSvNnRpaNvQZecqGXMqiLTInvQs2KiFqEe3bYrHBNqETDSGE=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=AVKURIBT; arc=none smtp.client-ip=100.103.45.18
+	 Content-Type:Content-Disposition:In-Reply-To; b=QQNG/mKnsq6vPQOV6Y8Hs7QKye/QSr/K2O+hgNP7UNliV+nlfDhm9q/3AfAFI2YfOGz0dgC6/LMzeBglJrttCxoXAHg22s8TkMDVcn3IeOc/4IkmxITPzqaQKTV46ldUmenHY233IerOx6jF9UKldOlkNq89qV39CjIgOY+vIOc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=FaYYP1Hv; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="AVKURIBT"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9FC741F000E9;
-	Mon, 25 May 2026 16:37:33 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="FaYYP1Hv"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 150E31F000E9;
+	Mon, 25 May 2026 16:41:42 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=kernel.org;
-	s=k20260515; t=1779727054;
-	bh=OAXtG9eZJMx69Khid3reGVm+fhOBTP5LDIu/QiAbPyM=;
+	s=k20260515; t=1779727304;
+	bh=Ub3un0HwrZIgXb4W43Ub12pPYxU2IUC0+Qd8HSzysC4=;
 	h=Date:From:To:Cc:Subject:References:In-Reply-To;
-	b=AVKURIBTKW2rhJOBiGcgIuKGFWaPzoF/XIwaoHYWGyAsAAKvzwRb13i6TuU53KX9F
-	 ofJR+9vl8rQ6U5LQmr5vyyyaF2X1Ou+Q7NwJRG8kWYX0qVcMVdZpqQYGyQgyO/VBhA
-	 z+pN79QRVCqlLVHU1cFq38iFqCbipwsx75BHhl+PEKEriLdXFwQoF1CIkC4R8K33/n
-	 kL2PQZSceA3Gcig3AUkCUeFpyFWf1pKp/yUXNTxdwdqjEtJNpBCzhMfZ8/ckXKv2vz
-	 +2m2HOI4fevRxM2W5e5ok+pow2Mu/h0qo3MdzXJsjNqvR7Z4VuZF6GxbDj09u1mNyY
-	 HI5QF5W1S0LLg==
-Date: Mon, 25 May 2026 17:37:31 +0100
+	b=FaYYP1HvvgnergOAsD/6NMZr2lemID4MtTM1pEK0/pCUuiZnyDxZe8k5t2YYvZzk2
+	 amlDrwyhZID7DH9mrNWpliXXr6NA6Hrfq5iP1L5b6DECY/4skH5cO4LL4Hnn0PopMF
+	 e7+3K56eIBzyX1h6mSQY3TXYx6SC4r/qLAh9LX6JKNXOyvM+9MSV57LFw7S5gp/KAy
+	 W/tpAF8aVX//z21t/jbgB30GjL+AnbuMTFHpSrys3+5LtJUC2Ai+6GbTBnuX1cjZBW
+	 rB7UVuEX5tX015PQvr+v7g6GBFOb8vNnW4qFrYAWgAI4ikCxL1svm8aXdjU/e3upYt
+	 ycJyAEJwp36qg==
+Date: Mon, 25 May 2026 17:41:41 +0100
 From: Conor Dooley <conor@kernel.org>
 To: sashiko-reviews@lists.linux.dev
-Cc: Marek Vasut <marek.vasut+renesas@mailbox.org>, robh@kernel.org,
-	wsa+renesas@sang-engineering.com, devicetree@vger.kernel.org,
-	conor+dt@kernel.org
-Subject: Re: [PATCH] dt-bindings: clock: renesas: div6: Use ZT/ZTR trace
- clock in R-Mobile APE6 example
-Message-ID: <20260525-myth-flanking-667fa0a706ac@spud>
-References: <20260523192622.56605-1-marek.vasut+renesas@mailbox.org>
- <20260523194047.AB7CA1F00A3A@smtp.kernel.org>
+Cc: Manish Baing <manishbaing2789@gmail.com>, devicetree@vger.kernel.org,
+	robh@kernel.org, conor+dt@kernel.org
+Subject: Re: [PATCH] dt-bindings: mmc: mellanox,bluefield-dw-mshc: Convert DT
+ schema
+Message-ID: <20260525-radio-ungodly-9725b95ed67a@spud>
+References: <20260524094616.106660-1-manishbaing2789@gmail.com>
+ <20260524101513.A76711F000E9@smtp.kernel.org>
 Precedence: bulk
 X-Mailing-List: sashiko-reviews@lists.linux.dev
 List-Id: <sashiko-reviews.lists.linux.dev>
@@ -44,73 +43,83 @@ List-Subscribe: <mailto:sashiko-reviews+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:sashiko-reviews+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Type: multipart/signed; micalg=pgp-sha512;
-	protocol="application/pgp-signature"; boundary="PHtn3q++te5nap0r"
+	protocol="application/pgp-signature"; boundary="CWN4pHQhd76h/Vhu"
 Content-Disposition: inline
-In-Reply-To: <20260523194047.AB7CA1F00A3A@smtp.kernel.org>
+In-Reply-To: <20260524101513.A76711F000E9@smtp.kernel.org>
 
 
---PHtn3q++te5nap0r
-Content-Type: text/plain; charset=us-ascii
+--CWN4pHQhd76h/Vhu
+Content-Type: text/plain; charset=iso-8859-1
 Content-Disposition: inline
 Content-Transfer-Encoding: quoted-printable
 
-On Sat, May 23, 2026 at 07:40:47PM +0000, sashiko-bot@kernel.org wrote:
+On Sun, May 24, 2026 at 10:15:13AM +0000, sashiko-bot@kernel.org wrote:
 > Thank you for your contribution! Sashiko AI review found 1 potential issu=
 e(s) to consider:
-> - [Low] Adding 18 items to `clock-output-names` in the example triggers a=
- `dt_binding_check` schema validation error due to an un-updated top-level =
-constraint in `renesas,cpg-clocks.yaml`.
+> - [Low] Mismatch between node unit-address and `reg` property base addres=
+s in the YAML example.
 > --
 >=20
-> commit aaa0ff6ae07f5974071a547fef4a5b41bc484428
-> Author: Marek Vasut <marek.vasut+renesas@mailbox.org>
+> commit cdc4e472d6093984a0a6b661575b015b013ec9d6
+> Author: Manish Baing <manishbaing2789@gmail.com>
 >=20
-> dt-bindings: clock: renesas: div6: Use ZT/ZTR trace clock in R-Mobile APE=
-6 example
+> dt-bindings: mmc: mellanox,bluefield-dw-mshc: Convert DT schema
 >=20
-> This commit updates the R-Mobile APE6 clock node example to include
-> the "zt" and "ztr" clock-output-names entries. This aligns the example
-> with the expectations documented in a previous commit.
+> This commit converts the Mellanox BlueField SoC extensions for the Synops=
+ys
+> Designware Mobile Storage Host Controller from text format to YAML schema.
 >=20
-> > diff --git a/Documentation/devicetree/bindings/clock/renesas,cpg-div6-c=
-lock.yaml b/Documentation/devicetree/bindings/clock/renesas,cpg-div6-clock.=
+> > diff --git a/Documentation/devicetree/bindings/mmc/mellanox,bluefield-d=
+w-mshc.yaml b/Documentation/devicetree/bindings/mmc/mellanox,bluefield-dw-m=
+shc.yaml
+> > new file mode 100644
+> > index 0000000000000..32d50e45ddb86
+> > --- /dev/null
+> > +++ b/Documentation/devicetree/bindings/mmc/mellanox,bluefield-dw-mshc.=
 yaml
-> > index 2197c952e21df..b6ee8c8efd46d 100644
-> > --- a/Documentation/devicetree/bindings/clock/renesas,cpg-div6-clock.ya=
-ml
-> > +++ b/Documentation/devicetree/bindings/clock/renesas,cpg-div6-clock.ya=
-ml
-> > @@ -60,7 +60,7 @@ examples:
-> >              clock-output-names =3D "main", "pll0", "pll1", "pll2",
-> >                                    "pll2s", "pll2h", "z", "z2",
-> >                                    "i", "m3", "b", "m1", "m2",
-> > -                                  "zx", "zs", "hp";
-> > +                                  "zx", "zs", "hp", "ztr", "zt";
+>=20
+> [ ... ]
+>=20
+> > +examples:
+> > +  - |
+> > +    /* Mellanox BlueField SoC MMC */
+> > +    mmc@2804000 {
+> > +        compatible =3D "mellanox,bluefield-dw-mshc";
+> > +        reg =3D <0x6008000 0x400>;
 >=20
 > [Severity: Low]
-> Does adding these two items cause a schema validation failure during
-> dt_binding_check?
->=20
-> The top-level clock-output-names property in renesas,cpg-clocks.yaml has a
-> maxItems constraint of 17. Adding "ztr" and "zt" here brings the total
-> item count to 18.
->=20
-> While the underlying limit omission occurred in the earlier commit
-> 2abdc3dcf978, modifying this example to 18 items will now directly
-> trigger the overarching validation limit error.
+> Should the node unit-address match the first address in the reg property
+> here?
 
-What does renesas,cpg-clocks.yaml have to do with this?
-This is just complete crap, right?
+Of course it should.
+pw-bot: changes-requested
 
---PHtn3q++te5nap0r
+>=20
+> The converted YAML example uses mmc@2804000 as the node name, but retains
+> reg =3D <0x6008000 0x400>. This mismatch typically causes a unit_address_=
+vs_reg
+> warning during dt_binding_check validation.
+>=20
+> > +        interrupts =3D <32>;
+> > +        fifo-depth =3D <0x100>;
+> > +        clock-frequency =3D <24000000>;
+> > +        bus-width =3D <8>;
+> > +        cap-mmc-highspeed;
+> > +    };
+>=20
+> --=20
+> Sashiko AI review =B7 https://sashiko.dev/#/patchset/20260524094616.10666=
+0-1-manishbaing2789@gmail.com?part=3D1
+
+--CWN4pHQhd76h/Vhu
 Content-Type: application/pgp-signature; name="signature.asc"
 
 -----BEGIN PGP SIGNATURE-----
 
-iHUEABYKAB0WIQRh246EGq/8RLhDjO14tDGHoIJi0gUCahR6ywAKCRB4tDGHoIJi
-0s4LAQCN4ZclgsCmp6W9ngXCxKJuTscAuGKFvTYvKJmWuLoMuQEA3zpykWl3tyyA
-+l4vJl3u926PXHJjSRIKT/yR++YsPww=
-=1z7V
+iHQEABYKAB0WIQRh246EGq/8RLhDjO14tDGHoIJi0gUCahR7xQAKCRB4tDGHoIJi
+0lsmAQDGcj3Q1+XAdIFwOTVlh4Pe301Y9pxqquqDqCAGVi3zCAD43ahUEcOZdLMc
++NKQ2WXYtcUTno7bdKEjZoB9tL9yAA==
+=HIIh
 -----END PGP SIGNATURE-----
 
---PHtn3q++te5nap0r--
+--CWN4pHQhd76h/Vhu--
