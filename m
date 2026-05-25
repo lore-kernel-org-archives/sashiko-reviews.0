@@ -1,42 +1,41 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BF5A826738D;
-	Mon, 25 May 2026 16:56:41 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8EF18277C81;
+	Mon, 25 May 2026 17:01:45 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1779728202; cv=none; b=koggc8KoIFbxI5wRPgCDjfkjeRQQ2yRcQi8LaJGx75ptEs2WFy2UciSqEl+5MIx8l3A1ckliIeJb1TBnkNH/yW3/JlUsBgGm9KDCC36trqpCZ9a31b1l5pcQsBw3HphrJjdjiN+7fhMJZec5LlTLWu5eReVkOpxV5iKQvYkodxI=
+	t=1779728506; cv=none; b=QI44scHz8WIkehQsyrJDl+glt/RPghvZBWYqEOOtYURvn8QkX1cNEDc+JQvfiwORCTNS5jQRkGhpIQEd3fR0jsz0i4LBXPXocmUU3Z+npXZ2PlXjQIPcGX9VHDbnnF4ZlTdVf09H6TeKSUmqHFHgYctXL7aA/++GUwPmqIEhksM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1779728202; c=relaxed/simple;
-	bh=GArPRsREuNZr1yR4ENQ3MYt68HLFzHW9R10+lZrlnxk=;
+	s=arc-20240116; t=1779728506; c=relaxed/simple;
+	bh=K0AA2EI0slxXdzuBYYSN2xZQfdcHB0CpKkDc+CvBQNQ=;
 	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=k68rAbCqBmMzYVrEPJkYJsoJNlUjWKSKvRvt0lw5Hjp7leTLzDkaPvgG0GngzBngAhVUE3seLpqPxD9VEMdIkWz7iqwUY+cJGphnhBP95KsNT18994k3TuvpOiys87m9nLUI6vXbCjL8oTVch70tZwZrdXdoRuAjKI28g15IWMQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=H+wjh3BL; arc=none smtp.client-ip=100.103.45.18
+	 Content-Type:Content-Disposition:In-Reply-To; b=B0kFxVnmZ+APbzr2xc8uMnHnxDx9ZpXJVLC605U8ijqGpQoyKYrNPXCziuz7IE/62yfU9sS1NIwJmx+hjlPKi0kYvHscnvgmTjxtEpFSOmwv2SVZwk/7H6aFoDykWFv6GBPs3ifT6ziETGHQptniZ6cxXBhs3ut5pFkjLKIwXcE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=At03eXB3; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="H+wjh3BL"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1BAE41F000E9;
-	Mon, 25 May 2026 16:56:39 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="At03eXB3"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id D29901F00A3A;
+	Mon, 25 May 2026 17:01:43 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=kernel.org;
-	s=k20260515; t=1779728201;
-	bh=tCDCfEDWhIap0JffiNMerwlm/HNbTpZ6KbNrccX+3po=;
+	s=k20260515; t=1779728505;
+	bh=4bUnj5wRWm9BaLpg6JIfnPPofho7KdNy5EHDHEzsego=;
 	h=Date:From:To:Cc:Subject:References:In-Reply-To;
-	b=H+wjh3BL+R/PsCgogKFUcGMZbb+4c801iB8yRR+7KtVAqflDu5jqIFRgjpbCu/rne
-	 1gQsYWzNW+5kJ/medxzBGIYB7Z6ybZp4ibJ6L61NHykmc/CHS01OrMxfBVgPN8T/aT
-	 NNzrhEv6ivbyFidbbFT2hVbSuUhPKJCgxCqgXsZQ8xyd0XqLbL0CopNcjzaiyZlLME
-	 prZDqz1j3cryqk1oadiN4QH6GTGMtrl2uJUWKyF7wwRKdDOMCY+Gz9QJCkM6UXePMf
-	 EOThHJGoXpk28MLmzLspCsLAywmuOT+ASMGkmruzS8XpkhZzjOw+JdVCLwa7YKnak1
-	 AsTVzmB99KI0w==
-Date: Mon, 25 May 2026 17:56:38 +0100
+	b=At03eXB3CJ5WaIbM461vq+h/0MGHP+1j2ebW9zkT3j1CLxsSw1ZBQWChbxWMd+fj2
+	 zH/gFVOsvf8DAGL8nMJgd4XXz+YzCat0FzZKYPaiOlT0rRfIODEkyDl/qYQdLHlLSO
+	 SWMgB+7JjM7se0CWrHuFX/L2twNnj1MmnEHU8HweiFix3arLkf+HRI1dVPlr2kmKAN
+	 KlQbSKKX/Rc4rZmcVf32u24QKbRtl7siGer+2T/8fwxQJlW+dRBkAZy2eUayXRHPCZ
+	 IoF+FwZ1sFFNNjFfMcw9Jvys2gWuWglN9ph4coK6JH5B+nK9dIltu9xvumVJ+EWOZI
+	 3p2/78VgCUi2A==
+Date: Mon, 25 May 2026 18:01:41 +0100
 From: Conor Dooley <conor@kernel.org>
-To: sashiko-reviews@lists.linux.dev
-Cc: John Madieu <john.madieu.xa@bp.renesas.com>, conor+dt@kernel.org,
-	wsa+renesas@sang-engineering.com, devicetree@vger.kernel.org,
-	robh@kernel.org
-Subject: Re: [PATCH v4 1/8] dt-bindings: clock: renesas: Add audio clock
- inputs for RZ/V2H family
-Message-ID: <20260525-gaining-unaired-c96367a78c9b@spud>
-References: <20260525110603.4018170-2-john.madieu.xa@bp.renesas.com>
- <20260525111920.15F771F000E9@smtp.kernel.org>
+To: sashiko-reviews@lists.linux.dev, jic23@kernel.org
+Cc: Piyush Patle <piyushpatle228@gmail.com>, robh@kernel.org,
+	conor+dt@kernel.org, devicetree@vger.kernel.org
+Subject: Re: [PATCH v10 04/11] dt-bindings: iio: adc: hx711: add HX710B
+ support
+Message-ID: <20260525-clanking-possum-4ba58b466854@spud>
+References: <20260525105127.180156-5-piyushpatle228@gmail.com>
+ <20260525111144.CA7E71F000E9@smtp.kernel.org>
 Precedence: bulk
 X-Mailing-List: sashiko-reviews@lists.linux.dev
 List-Id: <sashiko-reviews.lists.linux.dev>
@@ -44,93 +43,103 @@ List-Subscribe: <mailto:sashiko-reviews+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:sashiko-reviews+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Type: multipart/signed; micalg=pgp-sha512;
-	protocol="application/pgp-signature"; boundary="5MiZYj8duF5qWx0T"
+	protocol="application/pgp-signature"; boundary="fw+eNqhMXX3s6SuY"
 Content-Disposition: inline
-In-Reply-To: <20260525111920.15F771F000E9@smtp.kernel.org>
+In-Reply-To: <20260525111144.CA7E71F000E9@smtp.kernel.org>
 
 
---5MiZYj8duF5qWx0T
-Content-Type: text/plain; charset=us-ascii
+--fw+eNqhMXX3s6SuY
+Content-Type: text/plain; charset=iso-8859-1
 Content-Disposition: inline
 Content-Transfer-Encoding: quoted-printable
 
-On Mon, May 25, 2026 at 11:19:19AM +0000, sashiko-bot@kernel.org wrote:
-> Thank you for your contribution! Sashiko AI review found 1 potential issu=
+Jonathan,
+
+Here's an example of the sort of stuff it complains about on every
+iteration.
+
+On Mon, May 25, 2026 at 11:11:44AM +0000, sashiko-bot@kernel.org wrote:
+> Thank you for your contribution! Sashiko AI review found 2 potential issu=
 e(s) to consider:
-> - [Medium] Strict array ordering prevents the independent use of newly ad=
-ded optional clocks.
+> - [Medium] The `dvdd-supply` property is utilized by the HX710B and menti=
+oned in the commit message, but it is not enforced as a required property f=
+or the new compatible or included in the example.
+> - [Low] The `if` condition for the `avia,hx710b` compatible incorrectly u=
+ses `const` instead of `contains: const`, causing schema validation to alwa=
+ys fail for HX710B nodes.
 > --
 >=20
-> commit 3723d06ba80fe72a3e7492af52e5e54aa0f36b03
-> Author: John Madieu <john.madieu.xa@bp.renesas.com>
+> commit 006ef740da7a1ce47e48ea34371f93f0e9dd9a9a
+> Author: Piyush Patle <piyushpatle228@gmail.com>
 >=20
-> dt-bindings: clock: renesas: Add audio clock inputs for RZ/V2H family
+> dt-bindings: iio: adc: hx711: add HX710B support
+>    =20
+> Add the avia,hx710b compatible and document the HX710B-specific
+> DVDD and VREF supplies. Add constraints that forbid HX711-only
+> properties on HX710B nodes and require vref-supply for HX710B,
+> then add a separate HX710B example.
 >=20
-> This commit updates the clock bindings for the RZ/V2H family SoCs to incl=
-ude
-> the optional external audio clock inputs AUDIO_CLKB and AUDIO_CLKC. The
-> AUDIO_CLKA input is fed internally and thus does not require a binding en=
-try.
->=20
-> > diff --git a/Documentation/devicetree/bindings/clock/renesas,rzv2h-cpg.=
-yaml b/Documentation/devicetree/bindings/clock/renesas,rzv2h-cpg.yaml
-> > --- a/Documentation/devicetree/bindings/clock/renesas,rzv2h-cpg.yaml
-> > +++ b/Documentation/devicetree/bindings/clock/renesas,rzv2h-cpg.yaml
-> > @@ -26,16 +26,22 @@ properties:
-> >      maxItems: 1
-> > =20
-> >    clocks:
-> > +    minItems: 3
-> >      items:
-> >        - description: AUDIO_EXTAL clock input
-> >        - description: RTXIN clock input
-> >        - description: QEXTAL clock input
-> > +      - description: AUDIO_CLKB clock input
-> > +      - description: AUDIO_CLKC clock input
-> > =20
-> >    clock-names:
-> > +    minItems: 3
-> >      items:
-> >        - const: audio_extal
-> >        - const: rtxin
-> >        - const: qextal
-> > +      - const: audio_clkb
-> > +      - const: audio_clkc
+> >     Add the avia,hx710b compatible and document the HX710B-specific
+> >     DVDD and VREF supplies.
 >=20
 > [Severity: Medium]
-> Will this strict array ordering prevent the independent use of the newly
-> added optional clocks?
+> The commit message mentions documenting the DVDD supply, and the binding
+> description notes the HX710B measures the DVDD-AVDD supply voltage differ=
+ence.
+> However, dvdd-supply is not enforced as a required property for the new
+> compatible, nor is it included in the new example node.
 >=20
-> Because JSON schema validates arrays strictly by position based on the it=
-ems
-> list, if a hardware board connects AUDIO_CLKC but does not connect AUDIO_=
-CLKB,
-> the device tree node would provide an array of 4 clocks where the 4th name
-> is audio_clkc.
+> Should dvdd-supply be added to the required properties and the example to
+> ensure complete schema constraints?
 >=20
-> When dt_binding_check evaluates this, won't it check the 4th element agai=
-nst
-> the schema's expectation of audio_clkb and fail, incorrectly rejecting a =
-valid
-> hardware configuration?
+> [ ... ]
 >=20
-> Should this use an anyOf block enumerating the valid permutations of opti=
-onal
-> clocks to avoid forcing users to write incorrect device trees to pass
-> validation?
+> > diff --git a/Documentation/devicetree/bindings/iio/adc/avia-hx711.yaml =
+b/Documentation/devicetree/bindings/iio/adc/avia-hx711.yaml
+> > index 099235b5fd548..f0aeb15e9eb9e 100644
+> > --- a/Documentation/devicetree/bindings/iio/adc/avia-hx711.yaml
+> > +++ b/Documentation/devicetree/bindings/iio/adc/avia-hx711.yaml
+> [ ... ]
+> > @@ -62,6 +71,21 @@ properties:
+> >      maximum: 2500000
+> >      default: 400000
+> > =20
+> > +allOf:
+> > +  - if:
+> > +      properties:
+> > +        compatible:
+> > +          const: avia,hx710b
+>=20
+> [Severity: Low]
+> Is this the correct way to match the compatible string? Since the compati=
+ble
+> property is evaluated as a string array, using a strict scalar comparison=
+ here
+> evaluates to false, causing the schema to always fall through to the else=
+ block.
+>=20
+> Would it be better to use contains: const: avia,hx710b instead so that it
+> properly evaluates the array and enforces the constraints in the then blo=
+ck?
+>=20
+> > +    then:
+> > +      properties:
+> > +        vsup-supply: false
+> > +        rate-gpios: false
+>=20
+> --=20
+> Sashiko AI review =B7 https://sashiko.dev/#/patchset/20260525105127.18015=
+6-1-piyushpatle228@gmail.com?part=3D4
 
-Seems like a valid question to me. Can be solved by making the second
-last clock an enum.
-
---5MiZYj8duF5qWx0T
+--fw+eNqhMXX3s6SuY
 Content-Type: application/pgp-signature; name="signature.asc"
 
 -----BEGIN PGP SIGNATURE-----
 
-iHUEABYKAB0WIQRh246EGq/8RLhDjO14tDGHoIJi0gUCahR/RgAKCRB4tDGHoIJi
-0n9kAQDsStUdMG63NktGAGyVEeqMPNGIHk48TxjiU/9PjRitEgD+I93bIzYJH41l
-PZ6fx5aqG+PnR1w0UZTj1qrGs6XPywA=
-=WWPc
+iHUEABYKAB0WIQRh246EGq/8RLhDjO14tDGHoIJi0gUCahSAdQAKCRB4tDGHoIJi
+0tATAQCP0e0slpD8B11L81rxuxKuqmfI2uzcanhjUdk5MnjkFwD/azGoNFRf5GnB
+LKSAZ6UNf50qLMt+rmsPTikVR14O2QQ=
+=ZuTe
 -----END PGP SIGNATURE-----
 
---5MiZYj8duF5qWx0T--
+--fw+eNqhMXX3s6SuY--
