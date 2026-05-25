@@ -1,179 +1,116 @@
-Received: from mail-ed1-f49.google.com (mail-ed1-f49.google.com [209.85.208.49])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 59BF3212566
-	for <sashiko-reviews@lists.linux.dev>; Mon, 25 May 2026 16:16:17 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=pass smtp.client-ip=209.85.208.49
-ARC-Seal:i=2; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1779725779; cv=pass; b=Q5shivPv4ksILRTJ2hQjntJ8Dur4NUwMMfsrAtwpc5F53ADOinE2TUFw4s4A82LXHKvNVf4bLB4OomMq3hcUrKar58VNXcXzKvYEGwn+r1fN6HtB/bnJ75eM0TzOuim067gcQfcWQDw+OwFKCXn24LU2SEIN5URLPq7pZGqh81Q=
-ARC-Message-Signature:i=2; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1779725779; c=relaxed/simple;
-	bh=vk+6eDvwIl07903w3YMl6z5OxqgLvPImTgb/9qmFn54=;
-	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
-	 To:Cc:Content-Type; b=dLSsOeYKkwezX0tVCg5xuCT1MXXomueTxcbhJLcZw4wJNbMtfHsu80EtAh5RLpg+ixuSKG8pokfgZmnBAc/Xsuw/MLN8DYgXeSbkNrDjK+bTkfo8G8+eMoXO59yyA6X4RKBYMXMlQwd0NTqqyQjLwCeRcV889FZglZpmd91K9Us=
-ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=nmN3wIj0; arc=pass smtp.client-ip=209.85.208.49
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5B2EA2D592D;
+	Mon, 25 May 2026 16:37:35 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
+ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
+	t=1779727056; cv=none; b=HatxhBm5+PCxC4gipDQ9lNrR2HGAxxAHj+1VXiZdbZ+nzeLQakoDHV6XfRSC/cFGFYxW3+k+Nk1RkFPdYuh7FA+cGdIz0sW+Zf3CzGCLN3xZSEzdbkNZ3bQW2w4NveojCOnyXE+oFyyXVWGcoPVKAM9ziSN4/A7Yd5sMwTlmGyA=
+ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
+	s=arc-20240116; t=1779727056; c=relaxed/simple;
+	bh=AHi7rNNpn/yTAAbk276BCOHZ69vvOQJTiWrJaKnuwvw=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=J813ZnVeco2HekdWC9xj8lp7j6TOqBFY36xWbkuML/UUn+SYZT3Qu5feWEjIlaWGQChqkwerOFdb8dsrvknE5Xb3Dodcv46Ao0tc3a0HFKLE4pJZurVEu2JlXwvQSvNnRpaNvQZecqGXMqiLTInvQs2KiFqEe3bYrHBNqETDSGE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=AVKURIBT; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="nmN3wIj0"
-Received: by mail-ed1-f49.google.com with SMTP id 4fb4d7f45d1cf-67cac5ece75so17686317a12.2
-        for <sashiko-reviews@lists.linux.dev>; Mon, 25 May 2026 09:16:17 -0700 (PDT)
-ARC-Seal: i=1; a=rsa-sha256; t=1779725776; cv=none;
-        d=google.com; s=arc-20240605;
-        b=jBPgucbmrSFgcoLZ5AuOlYHHHjav6RTFu9vzXeD4U2RCy/FqK0vtOPpa/AQD1RTXHT
-         HIg2TDXLeNidUbpkWWrKisXwKY0bqWRuuDr+idYKfxExvCG2UmUvb42ic0uxyiN5Qk60
-         UZOSXkCTqGC33wb28I8Xn2KucyX8Km73fHolAx8NYdvdsghxpMWJ6zig1kheHVqWYZ/r
-         BRKeBEhw08VV1gvSNRof4j/h5XJ3ZteerfhP63wMEZ3BGCnyft+Z+TT4MKJLnj4A5tnM
-         TGhc8qdHtBfmyirHKIqtkr6XiBIAGMYsva13Y+08HTHU7Ixn3Rqe7uRr3o5xaJK9+JkA
-         xdVg==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com; s=arc-20240605;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:dkim-signature;
-        bh=8/SOUgIW+PBGWqgmJXDGl03TtxW7cgumZ0tCc+7Z14k=;
-        fh=ouXvSjf5SmEmNeimx6xyG+CKjdQvC3UxbsGBNR8v92o=;
-        b=lqXG27vmWXA62hbvprYcbP94JFFsI/h3JHd3LIRnxVb5zLLWT9pN2hruaff5V8MhAk
-         sC0G5qPR2N1NoMwdAoebaRo2NeTunLd+Ft2jATsf5pCCGrvZgE9UOUQt1KUh0IqSUClf
-         WYe0vbBWrh+8Y9aJgX9QNL8QAlFheOKXQPU7N0V3sGmkiC4enatFdsIMdaU9uaxYccer
-         uXWzli9V2MZEXtB2h2wt5WVdMwb8J7SdTIJwjX+SJytzikEdXUvepZ/vd3OBzgqNNQ/4
-         wg4v1BxCXx7JklGqPbloQQ5WUtsb29OGgm6b2oAQxJCeqYAthSeSNg4Ks/kJYH5nRDEo
-         AfYw==;
-        darn=lists.linux.dev
-ARC-Authentication-Results: i=1; mx.google.com; arc=none
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20251104; t=1779725776; x=1780330576; darn=lists.linux.dev;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=8/SOUgIW+PBGWqgmJXDGl03TtxW7cgumZ0tCc+7Z14k=;
-        b=nmN3wIj0jePbVhV3L7ySlL0oa3D7yi9IzPRXUZemQcwjflI7578kk5u1WTWGM/8FI5
-         tZXHFQMrmSZIeyPDXbaPSAnTWbJQKec+ysqLolgnemRvyfpM95AmTTJvXt0hSpcR9cEX
-         G5tISIUazfaqTb+0Lgk6H7CHyxH10fL5WEJpis4bm2fYyFTN8iVn+I6RpqLplN6dvEJv
-         DSmtXbEQQO8f2kalVfpDWWIGpA9PExBsIC0FnfhlHf/TvjFje0l3AiAkewD115ObtMIh
-         Q/f8bbpyNtBi3DD6cKI7SyiM+fw0sfH5B+hfKR5d8393WJ8fOvWBgMoO4dEME6LKU9Ed
-         UQvA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20251104; t=1779725776; x=1780330576;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:x-gm-gg:x-gm-message-state:from
-         :to:cc:subject:date:message-id:reply-to;
-        bh=8/SOUgIW+PBGWqgmJXDGl03TtxW7cgumZ0tCc+7Z14k=;
-        b=e8Nti8wDRupOI5WzUApcoQWvPZliYn4pGY+fYSb6/I2sB9vXGZBK1xfFl6LoOw6ZQt
-         EZ9XQE2sGKRiXmDuatH8BMi+YynsbBcHeZPLSRNDP4EC+kIg1GEQ7xcMCxL8F+eiZztQ
-         hceo8FEmi6sqqooFyk7N4ML+A7RdvT/6c+gGoyVYi4+pCNpkGBwrrw+eOqU6ex++94df
-         0+UDckqsJ/NZS5eNeSoLYJEh9KJJzwdFj9f7kh/oG9wGVKu4qrPLu9uT4WRSv+UWpGez
-         m8WxrpI6LbDIQnvfw2+OoCM/J1Ag3+zvLw+X0Lf1YQvhzPDwFlHFngjW7QpYGmvUhU/h
-         dsnA==
-X-Gm-Message-State: AOJu0YzW83+y43zT6YD0MCSwopLdbFD9JUZvo2thbY+bnoM3aXzObBk9
-	jVfOf9BSsrxH245ZdsJOKrS7GSi0ttDI+IPiYxIGw+z0F9tADpS7jB0VNYzb0bJjTBljDzXXXG/
-	RzHzKlzQRuN2kDI6Rt4l4CNlQAN+Kqzys7Far
-X-Gm-Gg: Acq92OFtfSzEnCU036gIi+r4t4HYm3wo3HUw3Jjk+tChIQNpEDa8cmpLpscHNFtFvVR
-	AVvQUFI99ApOm/2FsCFuRQqET23eTL10ZojZ4NLKMWjYw1NhfBT9t7O/SGrQTLKRprU6pN+7deF
-	ZCIRnDwqMi2Fn6EHFym3dmLLQRTMJxy/jg7iRhUwyr4+fTnD0cddaN5JN2mhC0i4GkrFgcCozhV
-	+sTFCYyNY2TNWqHNl+jznfpN5T9wi7A3KumvSX+KnqQ8jmG/AQxgQeqRTB+OzP0ncH+GrUFJGSb
-	thRfKw==
-X-Received: by 2002:a05:6402:43c5:b0:677:270f:6f4b with SMTP id
- 4fb4d7f45d1cf-6889c42ccb8mr7409311a12.1.1779725775469; Mon, 25 May 2026
- 09:16:15 -0700 (PDT)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="AVKURIBT"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9FC741F000E9;
+	Mon, 25 May 2026 16:37:33 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=kernel.org;
+	s=k20260515; t=1779727054;
+	bh=OAXtG9eZJMx69Khid3reGVm+fhOBTP5LDIu/QiAbPyM=;
+	h=Date:From:To:Cc:Subject:References:In-Reply-To;
+	b=AVKURIBTKW2rhJOBiGcgIuKGFWaPzoF/XIwaoHYWGyAsAAKvzwRb13i6TuU53KX9F
+	 ofJR+9vl8rQ6U5LQmr5vyyyaF2X1Ou+Q7NwJRG8kWYX0qVcMVdZpqQYGyQgyO/VBhA
+	 z+pN79QRVCqlLVHU1cFq38iFqCbipwsx75BHhl+PEKEriLdXFwQoF1CIkC4R8K33/n
+	 kL2PQZSceA3Gcig3AUkCUeFpyFWf1pKp/yUXNTxdwdqjEtJNpBCzhMfZ8/ckXKv2vz
+	 +2m2HOI4fevRxM2W5e5ok+pow2Mu/h0qo3MdzXJsjNqvR7Z4VuZF6GxbDj09u1mNyY
+	 HI5QF5W1S0LLg==
+Date: Mon, 25 May 2026 17:37:31 +0100
+From: Conor Dooley <conor@kernel.org>
+To: sashiko-reviews@lists.linux.dev
+Cc: Marek Vasut <marek.vasut+renesas@mailbox.org>, robh@kernel.org,
+	wsa+renesas@sang-engineering.com, devicetree@vger.kernel.org,
+	conor+dt@kernel.org
+Subject: Re: [PATCH] dt-bindings: clock: renesas: div6: Use ZT/ZTR trace
+ clock in R-Mobile APE6 example
+Message-ID: <20260525-myth-flanking-667fa0a706ac@spud>
+References: <20260523192622.56605-1-marek.vasut+renesas@mailbox.org>
+ <20260523194047.AB7CA1F00A3A@smtp.kernel.org>
 Precedence: bulk
 X-Mailing-List: sashiko-reviews@lists.linux.dev
 List-Id: <sashiko-reviews.lists.linux.dev>
 List-Subscribe: <mailto:sashiko-reviews+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:sashiko-reviews+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-References: <20260525095216.12078-2-linux.amoon@gmail.com> <20260525102746.B58861F00A3D@smtp.kernel.org>
-In-Reply-To: <20260525102746.B58861F00A3D@smtp.kernel.org>
-From: Anand Moon <linux.amoon@gmail.com>
-Date: Mon, 25 May 2026 21:45:57 +0530
-X-Gm-Features: AVHnY4JnD3B5friicBByosla9N5iCWds37tvjlupqHMwJjZjvEE5EbdckMdNRm4
-Message-ID: <CANAwSgTQQPDQjc1S4o1g9F+Uc2Fr6SYM6fm9DHB=mMR7eD6WFw@mail.gmail.com>
-Subject: Re: [PATCH v5 1/6] media: meson: vdec: Fix memory leak in error path
- of vdec_open
-To: sashiko-reviews@lists.linux.dev
-Cc: linux-amlogic@lists.infradead.org, neil.armstrong@linaro.org
-Content-Type: text/plain; charset="UTF-8"
+Content-Type: multipart/signed; micalg=pgp-sha512;
+	protocol="application/pgp-signature"; boundary="PHtn3q++te5nap0r"
+Content-Disposition: inline
+In-Reply-To: <20260523194047.AB7CA1F00A3A@smtp.kernel.org>
+
+
+--PHtn3q++te5nap0r
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
 Content-Transfer-Encoding: quoted-printable
 
-Hi Sashiko,
-
-Thanks for your review comments
-
-On Mon, 25 May 2026 at 15:57, <sashiko-bot@kernel.org> wrote:
->
-> Thank you for your contribution! Sashiko AI review found 2 potential issu=
+On Sat, May 23, 2026 at 07:40:47PM +0000, sashiko-bot@kernel.org wrote:
+> Thank you for your contribution! Sashiko AI review found 1 potential issu=
 e(s) to consider:
->
-> Pre-existing issues:
-> - [Critical] Allocating and destroying a V4L2 m2m_dev on every session op=
-en/close causes a Use-After-Free within the V4L2 M2M core.
-> - [High] The hardware interrupt handler vdec_isr() dereferences core->cur=
-_sess without checking if it is NULL.
+> - [Low] Adding 18 items to `clock-output-names` in the example triggers a=
+ `dt_binding_check` schema validation error due to an un-updated top-level =
+constraint in `renesas,cpg-clocks.yaml`.
 > --
->
-> commit bde68706fa632effa876c30cef33b3528cd917da
-> Author: Anand Moon <linux.amoon@gmail.com>
->
-> media: meson: vdec: Fix memory leak in error path of vdec_open
->
-> This commit introduces an err_m2m_ctx_release label in vdec_open() to
-> prevent a resource leak when vdec_init_ctrls() fails. It also frees the
-> v4l2 control handler memory in vdec_close().
->
-> Closes: https://lore.kernel.org/all/20260520045905.6ACBA1F000E9@smtp.kern=
-el.org/#t
->
-> > diff --git a/drivers/staging/media/meson/vdec/vdec.c b/drivers/staging/=
-media/meson/vdec/vdec.c
-> > index 4b77ec1af5a76..18a22b79e835e 100644
-> > --- a/drivers/staging/media/meson/vdec/vdec.c
-> > +++ b/drivers/staging/media/meson/vdec/vdec.c
-> [ ... ]
-> > @@ -913,6 +913,8 @@ static int vdec_open(struct file *file)
-> >
-> >       return 0;
-> >
-> > +err_m2m_ctx_release:
-> > +     v4l2_m2m_ctx_release(sess->m2m_ctx);
-> >  err_m2m_release:
-> >       v4l2_m2m_release(sess->m2m_dev);
->
-> [Severity: Critical]
-> This is a pre-existing issue, but does allocating and destroying the m2m_=
-dev
-> on every session open and close cause a use-after-free?
->
-> Since the v4l2 m2m core schedules jobs via a work struct, if a job is
-> scheduled just before the file descriptor is closed:
->
-> vdec_close()
->     v4l2_m2m_release(sess->m2m_dev);
->         kfree(m2m_dev);
->
-> Could the system worker later execute v4l2_m2m_device_run_work() on the
-> freed m2m_dev, as pending background work isn't cancelled during release?
->
-> Should m2m_dev be allocated globally once in probe() instead?
->
-> [ ... ]
->
-> [Severity: High]
-> This is a pre-existing issue, but looking at vdec_isr(), sess is initiali=
-zed
-> from core->cur_sess and immediately dereferenced:
->
-> vdec_isr()
->     sess =3D core->cur_sess;
->     sess->last_irq_jiffies =3D get_jiffies_64();
->
-> If a spurious interrupt fires while the device is idle or immediately aft=
-er
-> streaming stops, could core->cur_sess be NULL here?
->
-> Should there be a check before dereferencing sess?
-Apologies, let me check. Every time I try to fix a bug, I seem to
-create a new one.
->
-Thanks
--Anand
-> --
-> Sashiko AI review =C2=B7 https://sashiko.dev/#/patchset/20260525095216.12=
-078-1-linux.amoon@gmail.com?part=3D1
+>=20
+> commit aaa0ff6ae07f5974071a547fef4a5b41bc484428
+> Author: Marek Vasut <marek.vasut+renesas@mailbox.org>
+>=20
+> dt-bindings: clock: renesas: div6: Use ZT/ZTR trace clock in R-Mobile APE=
+6 example
+>=20
+> This commit updates the R-Mobile APE6 clock node example to include
+> the "zt" and "ztr" clock-output-names entries. This aligns the example
+> with the expectations documented in a previous commit.
+>=20
+> > diff --git a/Documentation/devicetree/bindings/clock/renesas,cpg-div6-c=
+lock.yaml b/Documentation/devicetree/bindings/clock/renesas,cpg-div6-clock.=
+yaml
+> > index 2197c952e21df..b6ee8c8efd46d 100644
+> > --- a/Documentation/devicetree/bindings/clock/renesas,cpg-div6-clock.ya=
+ml
+> > +++ b/Documentation/devicetree/bindings/clock/renesas,cpg-div6-clock.ya=
+ml
+> > @@ -60,7 +60,7 @@ examples:
+> >              clock-output-names =3D "main", "pll0", "pll1", "pll2",
+> >                                    "pll2s", "pll2h", "z", "z2",
+> >                                    "i", "m3", "b", "m1", "m2",
+> > -                                  "zx", "zs", "hp";
+> > +                                  "zx", "zs", "hp", "ztr", "zt";
+>=20
+> [Severity: Low]
+> Does adding these two items cause a schema validation failure during
+> dt_binding_check?
+>=20
+> The top-level clock-output-names property in renesas,cpg-clocks.yaml has a
+> maxItems constraint of 17. Adding "ztr" and "zt" here brings the total
+> item count to 18.
+>=20
+> While the underlying limit omission occurred in the earlier commit
+> 2abdc3dcf978, modifying this example to 18 items will now directly
+> trigger the overarching validation limit error.
+
+What does renesas,cpg-clocks.yaml have to do with this?
+This is just complete crap, right?
+
+--PHtn3q++te5nap0r
+Content-Type: application/pgp-signature; name="signature.asc"
+
+-----BEGIN PGP SIGNATURE-----
+
+iHUEABYKAB0WIQRh246EGq/8RLhDjO14tDGHoIJi0gUCahR6ywAKCRB4tDGHoIJi
+0s4LAQCN4ZclgsCmp6W9ngXCxKJuTscAuGKFvTYvKJmWuLoMuQEA3zpykWl3tyyA
++l4vJl3u926PXHJjSRIKT/yR++YsPww=
+=1z7V
+-----END PGP SIGNATURE-----
+
+--PHtn3q++te5nap0r--
