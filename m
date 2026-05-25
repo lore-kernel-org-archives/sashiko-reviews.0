@@ -1,171 +1,146 @@
-Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
+Received: from sender-pp-o92.zoho.in (sender-pp-o92.zoho.in [103.117.158.92])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EBE3D2772D;
-	Mon, 25 May 2026 04:16:28 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
-ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1779682590; cv=none; b=itocrHay9y7STO+Dk+jHolD9mkKWYeUxP8yMeoPkJGSyPXeufpCCqQ5qMQo/98FVMm2iKkdTaDU65ndWQ38lo4sxxFaVhPocecj7B9h9drKB3zjtCgVrMk2+Sg9+ItaXJbj4nJKgTaiqWNh+QEGu+etVyPK8DZdXqezPPiyNlj4=
-ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1779682590; c=relaxed/simple;
-	bh=m9mXfcPLwWTr6NRf0JAkrVb+sk5502JTMmJyfJZ58VQ=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=IiqdCJ4C+DK6FThsEO4D+do1Fq/nTmrsWGSkn7LEm13z7gH26Kj6t2XRdQv1pQN8qWTQKhGVd3aJzdL3UZg9pF+Dk/KEgZFMTyHS8hZYUVfR7M2s2IbyiQqUf8RMkjIctX1FfuTDeN5bXGO3olU21z0oMgTRLLRoAfca6pDFvDM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=RbAwWRhF; arc=none smtp.client-ip=100.103.45.18
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DF74219992C
+	for <sashiko-reviews@lists.linux.dev>; Mon, 25 May 2026 05:26:03 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=pass smtp.client-ip=103.117.158.92
+ARC-Seal:i=2; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
+	t=1779686766; cv=pass; b=LOsnkeXTD5n1F9p1R2BgD/A8FkrWXUqByXk/ETX28PS4BRSIe4wzTsg6J/B3NGlwONYB2D6+zKy6tbOiYP1SJTotzPv44eYX0huEaJcIB3xPXav16UOxCKVoO5e0ctnvahiDGI/zNZ6o1L32F87JAWrOBjmny956ouhdwegD9ec=
+ARC-Message-Signature:i=2; a=rsa-sha256; d=subspace.kernel.org;
+	s=arc-20240116; t=1779686766; c=relaxed/simple;
+	bh=yR68xaD4R1qEP77CR6tAT3cjzzNR5feCDfa7tJ5rD/U=;
+	h=Date:From:To:Cc:Message-ID:In-Reply-To:References:Subject:
+	 MIME-Version:Content-Type; b=ce6zVvYjYVzpG59A//+yOi84aU2BLg3SmGWCq8+gQIIUPYU/SxzEgSl7xoPA12JkwpfJ0tySmxiyr158Xsp/t/FfXqBsA1MI+yk4GWDtlJYqGd1lhtGcejw6AkgG5c3MxTTRpPfksh9KiQRXvnwa4Bt8XbK1GlbKajXLndGXb/U=
+ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=zohomail.in; spf=pass smtp.mailfrom=zohomail.in; dkim=pass (1024-bit key) header.d=zohomail.in header.i=linuxuser509@zohomail.in header.b=Kh+2wWFo; arc=pass smtp.client-ip=103.117.158.92
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=zohomail.in
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=zohomail.in
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="RbAwWRhF"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id B8E641F000E9;
-	Mon, 25 May 2026 04:16:28 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=kernel.org;
-	s=k20260515; t=1779682588;
-	bh=gGfq/JJ5JkvvL8OY5Ff7IIVAT94dPf64MnyTjmKEFxA=;
-	h=Date:From:To:Cc:Subject:References:In-Reply-To;
-	b=RbAwWRhFWSS0Rs/Ch80b4y/ni7BUkk9AD76ebP7MfSYEmFpJlpM5VaZbDCMnScj54
-	 s6bEPbg3FtzLTmpollQZX4GdLgSKBjFlGyQwYZ5SQRKto1969RNyjKSA0b5rUsn876
-	 +l6Buwbl9SxTw5+M85rPVdjC1onC7/xV2XwKsEO8EsDiwfpiQ7fifJHYO5LK3KAUbT
-	 vkDNuUB9PzhMlvsa1ZibffGc5JqaakkBfchHqMCKiQ67KlnN6ngI4Gaz+f3Qsp49y2
-	 qe/i7/lFx7cgo9fnIJOP7tvF6zy3dMLadiMbqopA7OuEjdjelwLtpDc9TdgJsCTgZX
-	 57cV0g3jLfLeQ==
-Date: Sun, 24 May 2026 21:16:27 -0700
-From: Drew Fustini <fustini@kernel.org>
-To: sashiko-reviews@lists.linux.dev
-Cc: linux-kernel@vger.kernel.org
-Subject: Re: [PATCH RFC v5 07/18] riscv_cbqri: Add capacity controller probe
- and allocation device ops
-Message-ID: <ahPNG3exEMp694V_@gen8>
-References: <20260524-ssqosid-cbqri-rqsc-v7-0-v5-7-78d3a7ba9dbe@kernel.org>
- <20260525003019.5597A1F000E9@smtp.kernel.org>
+	dkim=pass (1024-bit key) header.d=zohomail.in header.i=linuxuser509@zohomail.in header.b="Kh+2wWFo"
+ARC-Seal: i=1; a=rsa-sha256; t=1779686759; cv=none; 
+	d=zohomail.in; s=zohoarc; 
+	b=OcmQyl12GAXA8omj8XuHMi0UQEkv7klLX8KrROll4c3h4FYyGrNuCy6ZriBPqEyl15Jfl6WOJViS0HsqiH6lsFDuPk03d4Dvws8+fQYrDw3hwcZgVsdJ4hgkhR5R6am/gjZ9KGMG+tDi+4bJROW2FNlnytQclFZJXk21j+XUCII=
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=zohomail.in; s=zohoarc; 
+	t=1779686759; h=Content-Type:Content-Transfer-Encoding:Cc:Cc:Date:Date:From:From:In-Reply-To:MIME-Version:Message-ID:References:Subject:Subject:To:To:Message-Id:Reply-To; 
+	bh=pnpOZffCRtxdSobaLK908rgAg4Hr78/cAjduiZWFy70=; 
+	b=Umyk3x/SZ8PAZolRfuIvi13n1UsaR81RVKogGQsTJMo+zLQXhQduN0BEs82pRxILExQM2OtTqBpMYCO3tS9V5Wmox92RiRv06Ayrp2aHQqkbBlcY/ozobREg58nkOqqDJ8Lf7o1TGfs5W+jPSH8ZmmhyCkedMkjsq3GTWtLZeyw=
+ARC-Authentication-Results: i=1; mx.zohomail.in;
+	dkim=pass  header.i=zohomail.in;
+	spf=pass  smtp.mailfrom=linuxuser509@zohomail.in;
+	dmarc=pass header.from=<linuxuser509@zohomail.in>
+DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed; t=1779686759;
+	s=zoho; d=zohomail.in; i=linuxuser509@zohomail.in;
+	h=Date:Date:From:From:To:To:Cc:Cc:Message-ID:In-Reply-To:References:Subject:Subject:MIME-Version:Content-Type:Content-Transfer-Encoding:Message-Id:Reply-To;
+	bh=pnpOZffCRtxdSobaLK908rgAg4Hr78/cAjduiZWFy70=;
+	b=Kh+2wWFoqbVuXq6+wNfGmSOQCDvOeqmTaJRIXjfHd9AnNOtpGguRNp0SAcOVru0y
+	4YpMwRF70JQ8ehietyPiyitA7zzLkLFRD9Zd3tO0U8S9b4wYGGRBw/bA+vMQOcAplXh
+	X9WGYvOvT3QGTjFWDPZrKNoEmdpqmfhRzWvcwpGw=
+Received: from mail.zoho.in by mx.zoho.in
+	with SMTP id 1779686752808367.8177718722824; Mon, 25 May 2026 10:55:52 +0530 (IST)
+Received: from  [106.192.20.149] by mail.zoho.in
+	with HTTP;Mon, 25 May 2026 10:55:52 +0530 (IST)
+Date: Mon, 25 May 2026 10:55:52 +0530
+From: Ashwin Gundarapu <linuxuser509@zohomail.in>
+To: "sashiko-reviews" <sashiko-reviews@lists.linux.dev>
+Cc: "tytso" <tytso@mit.edu>
+Message-ID: <19e5d98c220.1087e34d63772.3217846254094913053@zohomail.in>
+In-Reply-To: <20260524155518.DE2BA1F000E9@smtp.kernel.org>
+References: <19e5aa07c9b.3a2e576d130187.5289857983023045470@zohomail.in> <20260524155518.DE2BA1F000E9@smtp.kernel.org>
+Subject: Re: [PATCH v4] ext2: Remove deprecated DAX support
 Precedence: bulk
 X-Mailing-List: sashiko-reviews@lists.linux.dev
 List-Id: <sashiko-reviews.lists.linux.dev>
 List-Subscribe: <mailto:sashiko-reviews+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:sashiko-reviews+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <20260525003019.5597A1F000E9@smtp.kernel.org>
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
+Importance: Medium
+User-Agent: Zoho Mail
+X-Mailer: Zoho Mail
 
-On Mon, May 25, 2026 at 12:30:07AM +0000, sashiko-bot@kernel.org wrote:
-> > +static int cbqri_cc_alloc_op(struct cbqri_controller *ctrl, int operation,
-> > +			     int rcid, enum cbqri_at at)
-> > +{
-> > +	int reg_offset = CBQRI_CC_ALLOC_CTL_OFF;
-> > +	int status;
-> > +	u64 reg;
-> > +
-> > +	lockdep_assert_held(&ctrl->lock);
-> > +
-> > +	if (cbqri_wait_busy_flag(ctrl, reg_offset, &reg) < 0) {
-> > +		pr_err_ratelimited("BUSY timeout before starting operation\n");
-> > +		return -EIO;
-> > +	}
-> > +	FIELD_MODIFY(CBQRI_CONTROL_REGISTERS_OP_MASK, &reg, operation);
-> > +	FIELD_MODIFY(CBQRI_CONTROL_REGISTERS_RCID_MASK, &reg, rcid);
-> > +
-> > +	/*
-> > +	 * CBQRI Table 1: AT 0=Data, 1=Code. Program AT on controllers
-> > +	 * that report supports_alloc_at_code. On controllers that don't,
-> > +	 * AT is reserved-zero and the op acts on both halves.
-> > +	 */
-> > +	reg &= ~CBQRI_CONTROL_REGISTERS_AT_MASK;
-> 
-> [Severity: High]
-> On 32-bit architectures, does bitwise inversion of a GENMASK macro (which
-> evaluates to unsigned long) silently zero the upper 32 bits of the 64-bit
-> register variable?
-> 
-> If the 32-bit inverted mask is zero-extended to 64 bits, this would truncate
-> bits 63:32, potentially clearing the STATUS and BUSY fields. Should
-> GENMASK_ULL be used for these masks instead?
+The remaining IOMAP_F_DIRTY issue is pre-existing and was present in the
+code before this patch. It is outside the scope of this DAX removal.
 
-I will convert everything to GENMASK_ULL.
+This v4 patch only removes deprecated DAX code and does not introduce
+any new issues. The pre-existing IOMAP_F_DIRTY flag overwrite can be
+addressed in a separate patch.
 
-> > +static int cbqri_probe_feature(struct cbqri_controller *ctrl, int reg_offset,
-> > +			       int operation, int *status, bool *access_type_supported)
-> > +{
-> > +	const u64 active_mask = CBQRI_CONTROL_REGISTERS_OP_MASK |
-> > +				CBQRI_CONTROL_REGISTERS_AT_MASK |
-> > +				CBQRI_CONTROL_REGISTERS_RCID_MASK |
-> > +				CBQRI_MON_CTL_EVT_ID_MASK;
-> 
-> [Severity: High]
-> Is CBQRI_MON_CTL_EVT_ID_MASK defined in this patch? It seems to be missing,
-> which might cause a build failure due to an undeclared identifier.
+Thanks,
+Ashwin
 
-This is a bisectability bug that I missed. I will fix this.
 
-> > +	/*
-> > +	 * Resolve cache_size via cacheinfo. cpus_read_lock satisfies
-> > +	 * lockdep_assert_cpus_held() inside get_cpu_cacheinfo_level(). If
-> > +	 * every cpu_mask member is offline, cache_size stays 0 and the
-> > +	 * controller cannot back occupancy monitoring.
-> > +	 */
-> > +	cpus_read_lock();
-> > +	if (!ctrl->cache.cache_size) {
-> > +		int cpu = cpumask_first_and(&ctrl->cache.cpu_mask, cpu_online_mask);
-> > +
-> > +		if (cpu < nr_cpu_ids) {
-> > +			struct cacheinfo *ci;
-> > +
-> > +			ci = get_cpu_cacheinfo_level(cpu, ctrl->cache.cache_level);
-> > +			if (ci)
-> > +				ctrl->cache.cache_size = ci->size;
-> 
-> [Severity: High]
-> Is this resolution actually lazy? cbqri_probe_cc() is called immediately
-> during registration by cbqri_probe_controller(), which happens at
-> acpi_arch_init time.
-> 
-> Since cacheinfo is unpopulated during early boot, won't
-> get_cpu_cacheinfo_level() return NULL and leave cache_size as 0 permanently,
-> disabling occupancy monitoring?
+From:  <sashiko-bot@kernel.org>
+To: "Ashwin Gundarapu"<linuxuser509@zohomail.in>
+Cc: <tytso@mit.edu>
+Date: Sun, 24 May 2026 21:25:18 +0530
+Subject: Re: [PATCH v4] ext2: Remove deprecated DAX support
 
-ACPI parsing for RQSC runs at subsys_initcall. Every CPU in cpu_mask is
-online and cacheinfo-populated by the time cbqri_probe_cc() runs. The
-edge case is maxcpus= but I would rather wait until the usecase arises.
+ > Thank you for your contribution! Sashiko AI review found 1 potential iss=
+ue(s) to consider:=20
+ > =20
+ > Pre-existing issues:=20
+ > - [High] The IOMAP_F_DIRTY flag is overwritten and lost in ext2_iomap_be=
+gin.=20
+ > --=20
+ > =20
+ > commit 8c79c2b11b7034bbd0ac9adde5c15bf2fea9def8=20
+ > Author: Ashwin Gundarapu <linuxuser509@zohomail.in>=20
+ > =20
+ > ext2: Remove deprecated DAX support=20
+ > =20
+ > This commit removes all DAX code from ext2, following the deprecation=20
+ > deadline at the end of 2025. It strips out the DAX mount option, IOMAP=
+=20
+ > DAX support, and DAX-specific file and address_space operations.=20
+ > =20
+ > > diff --git a/fs/ext2/inode.c b/fs/ext2/inode.c=20
+ > > index 74aca5eb572d9..e2aa6152fa1f0 100644=20
+ > > --- a/fs/ext2/inode.c=20
+ > > +++ b/fs/ext2/inode.c=20
+ > [ ... ]=20
+ > > @@ -841,10 +818,7 @@ static int ext2_iomap_begin(struct inode *inode, =
+loff_t offset, loff_t length,=20
+ > >=20
+ > >      iomap->flags =3D 0;=20
+ > =20
+ > [Severity: High]=20
+ > This is a pre-existing issue, but does this line overwrite the IOMAP_F_D=
+IRTY=20
+ > flag set earlier in this function?=20
+ > =20
+ > Looking at the code just above this hunk, the flag is set for extending=
+=20
+ > writes:=20
+ > =20
+ >     if ((flags & IOMAP_WRITE) && offset + length > i_size_read(inode))=
+=20
+ >         iomap->flags |=3D IOMAP_F_DIRTY;=20
+ > =20
+ > But then it is unconditionally cleared here by iomap->flags =3D 0.=20
+ > =20
+ > The iomap direct I/O infrastructure relies on this flag to trigger O_DSY=
+NC=20
+ > metadata syncs upon I/O completion.=20
+ > =20
+ > Does losing this flag mean that extending O_DSYNC direct I/O writes migh=
+t=20
+ > not correctly sync the updated file size to disk, potentially leading to=
+=20
+ > a stale file size if a crash occurs?=20
+ > =20
+ > >      iomap->offset =3D (u64)first_block << blkbits;=20
+ > > -    if (flags & IOMAP_DAX)=20
+ > > -        iomap->dax_dev =3D sbi->s_daxdev;=20
+ > > -    else=20
+ > > -        iomap->bdev =3D inode->i_sb->s_bdev;=20
+ > > +    iomap->bdev =3D inode->i_sb->s_bdev;=20
+ > >=20
+ > >      if (ret =3D=3D 0) {=20
+ > >          /*=20
+ > [ ... ]=20
+ > =20
+ > --=20
+ > Sashiko AI review =C2=B7 https://sashiko.dev/#/patchset/19e5aa07c9b.3a2e=
+576d130187.5289857983023045470@zohomail.in?part=3D1=20
+ >=20
 
-> > +	/*
-> > +	 * SRMCFG encodes RCID in 12 bits.  ACPI's acpi_parse_rqsc() already
-> > +	 * caps info->rcid_count at CBQRI_MAX_RCID (1024) so this is unreachable
-> > +	 * today, but a future DT discovery path or a malformed firmware table
-> > +	 * routed through a different validator could bypass that ceiling.
-> > +	 * Catch the violation here rather than silently truncating in every
-> > +	 * FIELD_PREP(SRMCFG_RCID_MASK, closid) on the schedule-in fast path.
-> > +	 */
-> > +	if (WARN_ON_ONCE(ctrl->rcid_count > SRMCFG_RCID_MASK)) {
-> 
-> [Severity: Medium]
-> Does this correctly validate the count limit? If SRMCFG_RCID_MASK is a
-> register bitmask (like 0xFFF), won't a hardware limit of 4096 IDs be
-> incorrectly rejected because 4096 is greater than 4095?
-> 
-> Also, should there be a similar bounds check for mcid_count?
-
-I'll fix the off-by-one in v6. However, acpi_parse_rqsc() already caps
-both counts at CBQRI_MAX_RCID/MCID = 1024 so the off-by-one is
-unreachable today,
-
-> > +		cbqri_controller_destroy(ctrl);
-> > +		return -EINVAL;
-> > +	}
-> > +
-> > +	switch (info->type) {
-> > +	case CBQRI_CONTROLLER_TYPE_CAPACITY: {
-> > +		int level;
-> > +
-> > +		ctrl->cache.cache_id = info->cache_id;
-> > +
-> > +		level = find_acpi_cache_level_from_id(info->cache_id);
-> 
-> [Severity: High]
-> Does this unconditional call to ACPI-specific functions break Device Tree
-> support?
-> 
-> If CONFIG_ACPI is disabled, these stubs return -ENOENT. For DT-based
-> platforms, these functions might fail to resolve DT cache IDs, potentially
-> causing registration to fail entirely.
-
-Device tree discovery path can be created once there is a platform
-driver that needs it.
-
--Drew
