@@ -1,81 +1,109 @@
-Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
+Received: from flow-b8-smtp.messagingengine.com (flow-b8-smtp.messagingengine.com [202.12.124.143])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CA2513F0773;
-	Mon, 25 May 2026 15:41:07 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B0A0A3F167C
+	for <sashiko-reviews@lists.linux.dev>; Mon, 25 May 2026 15:43:26 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=202.12.124.143
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1779723669; cv=none; b=eOUnKB9yW18bNdctel99sJgRuMu9MqnlIA45qkZV8WXUauRJC7gmDE+fvdlA7wDClaY4IdkLVDDWLsQmDzY5PVUTVHAHy/wyM4IGFez//ZNLeomk6CCEVZGjyeXx2leMcvoP3HxzMK/+PTCdIpOCuiyOizK7Wx8uYOa2MUIbaFI=
+	t=1779723808; cv=none; b=de9hgDobWMwMO/vMf2ANN9kardrLJSMIZMxaoy8LL8G/xfR9m09IkjQwE+T3rv2x1Ar3kFn9rPl447i2C+PbaUKN5EuaroPu2SMv7LZpCNudaitIHKW7CsK51dkZormjjeW24KrmhCAjlJAdK7N2WBqzHKVTbYWlpNeJuCZl9Q4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1779723669; c=relaxed/simple;
-	bh=aRDUkzDvPosd0hc9HVo8AihmClV6bMYls1nTE38u3+U=;
+	s=arc-20240116; t=1779723808; c=relaxed/simple;
+	bh=+hS2HN6YJ9VAQ7+Ng1UB2i57HLuWml/ZMlX5ObpwjyA=;
 	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=txQjmsek5Zt8HOYSzAGyA6xNSmjdrmDJQPUq9krXVbLtqut9DxgIpM67n+7FUrE/oVJn9BuiNeLVw07et+nQpRCYpABrBC3wC23bdqgfe9tD4zqI05GH3LO4ZCmiou16F/Dd/lzjTW51AkC/aNmSjIa/zC6XowptXu7bly1ZI9A=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=iHi9Qs7T; arc=none smtp.client-ip=100.103.45.18
+	 Content-Type:Content-Disposition:In-Reply-To; b=LNvX4c9ibH6J6Zczry5j4vDXHSKGTbWbElTfvzdsxD7gKuoJiC69danXsIUYYTNvcTkeH8uO9aSctTyccZjZjuGXhM2LvfWI5NKbml6J2kMxkzVuQEtvFrk0jALI6dRUSMAj/RcK1WG2yGmiRrGg1STLvt2HstETDfpxitTis20=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=shutemov.name; spf=pass smtp.mailfrom=shutemov.name; dkim=pass (2048-bit key) header.d=shutemov.name header.i=@shutemov.name header.b=kxdTxxZK; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=bohjmZYO; arc=none smtp.client-ip=202.12.124.143
+Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=shutemov.name
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=shutemov.name
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="iHi9Qs7T"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id CD00D1F000E9;
-	Mon, 25 May 2026 15:41:06 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=kernel.org;
-	s=k20260515; t=1779723667;
-	bh=VrQ0Fau464UE87C8hBjXNZ+GXwezIWrTThVUCQ39xMw=;
-	h=Date:From:To:Cc:Subject:References:In-Reply-To;
-	b=iHi9Qs7Tf1enK+/ke6fo3jtIGgati51Awm0uBd952pP7kdWRGdmByTcEIle9OVZCu
-	 Qt9TcDN+SUB0RWtDNMj8QiKOXNdt/9NqWKu13fqAc7M0tJGYpRDCrGv+7T7yIRtSzZ
-	 Hevz6falnToHmRdEfrRiuJlKixXOrBCMYmxVt9A8hnyxZxuvAAlrua0Yr2YA25cwOM
-	 gYznr+fN3OEze/H/p+dedc4TAw6L/vf/0aSV566IwkIy3OURH8bLDKHVraripLwGfX
-	 VdfyVj2i5dnaH2fuTxyueiYACRwuAzU+Zc9iaAkHc9aRwdWnhkRHEEw7ycd7Vqm/Xu
-	 ndKCQpPNCTziw==
-Date: Mon, 25 May 2026 12:41:04 -0300
-From: Arnaldo Carvalho de Melo <acme@kernel.org>
+	dkim=pass (2048-bit key) header.d=shutemov.name header.i=@shutemov.name header.b="kxdTxxZK";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="bohjmZYO"
+Received: from phl-compute-04.internal (phl-compute-04.internal [10.202.2.44])
+	by mailflow.stl.internal (Postfix) with ESMTP id D1AB5130096F;
+	Mon, 25 May 2026 11:43:24 -0400 (EDT)
+Received: from phl-frontend-03 ([10.202.2.162])
+  by phl-compute-04.internal (MEProxy); Mon, 25 May 2026 11:43:26 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=shutemov.name;
+	 h=cc:cc:content-transfer-encoding:content-type:content-type
+	:date:date:from:from:in-reply-to:in-reply-to:message-id
+	:mime-version:references:reply-to:subject:subject:to:to; s=fm2;
+	 t=1779723804; x=1779731004; bh=88Nud1y/YibNrOB0gSUwBPRtOkXj2T+J
+	62GpPbYHumI=; b=kxdTxxZKNlyYEJaEjhzIlxV333uuHLj9CP4dASUuDqRAqbuJ
+	aJKq8l6iZqZcYxYLI/khLFcAP7jxQHszUuoYEIDLJp6RVnYnpukWOl/mACh0njF3
+	izlfzrGG1M0snv9Avqx3GCfuneMMOtmDX5tFY+r0wo9UJDWS1k75UUv1pWnxzZ1j
+	X3QequtZaImnR/rW6htjHovgC5a/kpvor97SCuducSKyfRtSiI54sigsnKaPYbf0
+	J3fSwf+P2Fo+vfV0vn+Am4xjyEqWPkKWin8VyBpJwsDWSB6B0z13ecc0eF4tSL/i
+	lCoO+ZnuPE/1T9Kxg2LBba42AAKNKD81CP/Q7Q==
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
+	messagingengine.com; h=cc:cc:content-transfer-encoding
+	:content-type:content-type:date:date:feedback-id:feedback-id
+	:from:from:in-reply-to:in-reply-to:message-id:mime-version
+	:references:reply-to:subject:subject:to:to:x-me-proxy
+	:x-me-sender:x-me-sender:x-sasl-enc; s=fm3; t=1779723804; x=
+	1779731004; bh=88Nud1y/YibNrOB0gSUwBPRtOkXj2T+J62GpPbYHumI=; b=b
+	ohjmZYOVb8Dbt/nAmgSjrg6JAJpecC91nyLAbriwhpE5fNp+s6uJXIH/e34R07bz
+	qABASIsnFTkG5Xwsyuqoz/luOvvKSdnESLmEi7Fb8AcPnx4QJo7AhFISgNixunbV
+	DdjYFiimoKH0C8d/cjNxVg06CBKxZPHAPmu35yRI7ZvQvBni09i+EYv+KvtxhgAV
+	eLmQ4yi/dGS+4OgGUBSq2PO3CzlL1vAFmjJqTbTUBR8DUSH7vD7r1WbCRBo0PbAm
+	Hes37uye5BNiFmJb8AeSrohmjHDpP3w1w7YAnAzwjUtHJxHh1BEpmkxijslqHlB/
+	csMTM21XfaF/kxTOXc7ZA==
+X-ME-Sender: <xms:HG4UakRvkJgOWbODwyYK3Dd9p9S5pJRxlHQD6tL5ZwqbhcasRDr-XA>
+    <xme:HG4Uaru9XeWfkc1jBBcQMW-5J3LdGyHmwo4EGg21kgsmwiwGu0sOi8-Q0PxRsHpnQ
+    R6BN1f0k2caSb_q3ypL7LzhzfOK183Nzfylk3E3oGe6n2npk7jDAq8>
+X-ME-Received: <xmr:HG4UajvUogtrdRx4c4zHT6RO4dkTRtgRQ8HnJIVPWdhaKuq-T7FLhGKcy-tzYQ>
+X-ME-Proxy-Cause: dmFkZTGEPse4hV1yBwsDDEa7O6Lryon99uUXj/XLpI0tprakm/YTBddT7aRX8pCTW2DPLE
+    wxqIym+YUtlhKLJDWeGlCptVUlFMjgS9D7yuWlBIwCAwtYKi6zo0j4CAVYn/vgyZJPXLOG
+    BYtH9Nh6HPuNoLdp1/VdWgbOADAvtxmistcJnr4qLuoaufELcanxBkRVcKH65VViIUzn34
+    Kp2QKpFHEZKdG/bhngq9fPozMAPTXZBBmDnTHHXvVQgDsw5EQro4ZLXcqB86Oyr85j+lYE
+    v7bqRum/AgTZ/4ycaOAngfI42jEaiRD9E5AlmyGSKpkOU4sWKlAkCcvM1cGoh+03YQwAY8
+    X9aQ1CIpVnLo3jflOe17bGQnRrxaoDobvUAKBnTzfWMmK1Ps8kX5fFimm2/1yY9k153gDe
+    0gVknUi+LyLfDIOhAsTGivf8ANnZQ+iv5gVIQSdF81jTeFCwUCwsU8gCs5KEUc8yWpm7nf
+    9m2+Z3W/bH9zYhrJzBs4Xc0UrEMn8ULjNTnMtxrXNt3Y5TRdc4jQxK7EBfKOoGmhysKzrV
+    N2+QIqxlriwwcjeCt30SI9i8qmYFvFLB9Xf7GwwlKXD/f3rl83QxDO0z8RoyRJYz2Yr1oA
+    M6Z4BMDhTarpoc0aPlljBl6npKQx/IAG2YN6iEl/6bJhwg8Usffad3Bc+lgg
+X-ME-Proxy: <xmx:HG4UajfebOWqTwI3QYTwwOd16SRNaJkd3Lld7d6QpmbSdW-PRFsSYg>
+    <xmx:HG4Uam7nD7XuK2hhgmZfcDob--JLud8cy65K5QCCMu1t7QRiJQpTaQ>
+    <xmx:HG4UaklFqY1dRGooxRdCzWkMortxZHcVr8udzWqIOdITllfPaiVm9g>
+    <xmx:HG4UatX4Ds76lcLwxTeWTlz9ak0Wjt9Syd28k8IZklMpMJfvVl6NTw>
+    <xmx:HG4UatmOHtsROuC8_xCfV0vW8C06WenfPA9EBab_FcJZMQbyxqXHCaoA>
+Feedback-ID: ie3994620:Fastmail
+Received: by mail.messagingengine.com (Postfix) with ESMTPA; Mon,
+ 25 May 2026 11:43:23 -0400 (EDT)
+Date: Mon, 25 May 2026 16:43:22 +0100
+From: Kiryl Shutsemau <kirill@shutemov.name>
 To: sashiko-reviews@lists.linux.dev
-Cc: linux-perf-users@vger.kernel.org
-Subject: Re: [PATCH 29/29] perf test: Add truncated perf.data robustness test
-Message-ID: <ahRtkPbduiIsj0Z-@x1>
-References: <20260525010550.1100375-30-acme@kernel.org>
- <20260525020422.EAE1C1F000E9@smtp.kernel.org>
+Cc: kvm@vger.kernel.org, akpm@linux-foundation.org, rppt@kernel.org, 
+	peterx@redhat.com, david@kernel.org, ljs@kernel.org, surenb@google.com, 
+	vbabka@kernel.org, Liam.Howlett@oracle.com, ziy@nvidia.com, corbet@lwn.net, 
+	skhan@linuxfoundation.org, seanjc@google.com, pbonzini@redhat.com, jthoughton@google.com, 
+	aarcange@redhat.com, sj@kernel.org, usama.arif@linux.dev, linux-mm@kvack.org, 
+	linux-kernel@vger.kernel.org, linux-doc@vger.kernel.org, linux-kselftest@vger.kernel.org, 
+	kernel-team@meta.com
+Subject: Re: [PATCH v4 13/14] selftests/mm: add userfaultfd RWP tests
+Message-ID: <ahRtlPsrj31R-rek@thinkstation>
+References: <20260525113737.1942478-14-kas@kernel.org>
+ <20260525123904.0A31F1F00A3A@smtp.kernel.org>
 Precedence: bulk
 X-Mailing-List: sashiko-reviews@lists.linux.dev
 List-Id: <sashiko-reviews.lists.linux.dev>
 List-Subscribe: <mailto:sashiko-reviews+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:sashiko-reviews+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
+Content-Type: text/plain; charset=iso-8859-1
 Content-Disposition: inline
-In-Reply-To: <20260525020422.EAE1C1F000E9@smtp.kernel.org>
+Content-Transfer-Encoding: 8bit
+In-Reply-To: <20260525123904.0A31F1F00A3A@smtp.kernel.org>
 
-On Mon, May 25, 2026 at 02:04:22AM +0000, sashiko-bot@kernel.org wrote:
-> Thank you for your contribution! Sashiko AI review found 2 potential issue(s) to consider:
-> - [Medium] Unchecked `mktemp` failures lead to unintended file deletions and false positive test results.
-> - [Low] The use of `dd bs=1` forces an excessive number of 1-byte system calls, causing unnecessary performance degradation.
+On Mon, May 25, 2026 at 12:39:03PM +0000, sashiko-bot@kernel.org wrote:
+> Thank you for your contribution! Sashiko AI review found 1 potential issue(s) to consider:
+> - [Medium] Hardcoding _UFFDIO_SET_MODE in the unconditionally checked
+> expected_ioctls breaks the userfaultfd selftests on older kernels.
 
-Addressed with:
+Will be fixed in v5 -- dropped _UFFDIO_SET_MODE from expected_ioctls in
+test_uffd_api(). The dedicated RWP tests already exercise the ioctl
+directly and err if it's not supported, so SET_MODE coverage isn't lost.
 
-diff --git a/tools/perf/tests/shell/data_validation.sh b/tools/perf/tests/shell/data_validation.sh
-index 36b3ba508e4f2753..5c3e6fced6fce0cb 100755
---- a/tools/perf/tests/shell/data_validation.sh
-+++ b/tools/perf/tests/shell/data_validation.sh
-@@ -14,9 +14,9 @@ cleanup() {
- trap 'cleanup; exit 1' TERM INT
- trap cleanup EXIT
- 
--perfdata=$(mktemp /tmp/__perf_test.perf.data.XXXXX)
--truncated=$(mktemp /tmp/__perf_test.perf.data.XXXXX)
--stderrfile=$(mktemp /tmp/__perf_test.perf.data.XXXXX)
-+perfdata=$(mktemp /tmp/__perf_test.perf.data.XXXXX) || exit 2
-+truncated=$(mktemp /tmp/__perf_test.perf.data.XXXXX) || exit 2
-+stderrfile=$(mktemp /tmp/__perf_test.perf.data.XXXXX) || exit 2
- 
- # Record a simple workload
- if ! perf record -o "${perfdata}" -- perf test -w noploop 2>/dev/null; then
-@@ -42,7 +42,7 @@ for cut_at in 8 64 256 $((file_size * 3 / 4)); do
-        if [ "${cut_at}" -ge "${file_size}" ]; then
-                continue
-        fi
--       dd if="${perfdata}" of="${truncated}" bs=1 count="${cut_at}" 2>/dev/null
-+       dd if="${perfdata}" of="${truncated}" bs="${cut_at}" count=1 2>/dev/null
- 
-        # perf report should exit with an error, not crash.
-        # Capture stderr to detect sanitizer violations.
-diff --git a/tools/perf/util/header.c b/tools/perf/util/header.c
-index 351369ac4dc2c0a2..5b1fa1653d2a48cc 100644
+> -- 
+> Sashiko AI review · https://sashiko.dev/#/patchset/20260525113737.1942478-1-kas@kernel.org?part=13
+
+-- 
+  Kiryl Shutsemau / Kirill A. Shutemov
