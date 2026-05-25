@@ -1,117 +1,179 @@
-Received: from flow-b8-smtp.messagingengine.com (flow-b8-smtp.messagingengine.com [202.12.124.143])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-ed1-f49.google.com (mail-ed1-f49.google.com [209.85.208.49])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A5FEB3ED5A6
-	for <sashiko-reviews@lists.linux.dev>; Mon, 25 May 2026 15:45:58 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=202.12.124.143
-ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1779723959; cv=none; b=n59fCAkaZP3ybymh5eFbTdldMMwSPQC2qQjn07FbqvgdpOeTxIyNU8IDxBPa+/02vgZxNQeHDQ4vjHv6GUsshFzi9zTfFDKrqCRelhpKf2LhXRP4u+0Zdfn7mRqzer85bltWBJf8wEfkiiuBKXQa8vM9eWqWf8PXXMheMJ3SHUg=
-ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1779723959; c=relaxed/simple;
-	bh=KOqZhAzjtJtBwHSaXyz2h38NN0MODiw5DcLCHfbDSvw=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=dgij2gbeE7mH6SRfG9qsEGYQkgUSO7yHx962JsOBOhRyn2FKFUnlaAwnS7HvWaD/HBlZwM+6ZnCavSwwmCAXGhmOJfCEXSFRExnMiKFMhQDg8Ufr3rRf6tuxCF3ebe4RDLwwtj2LHYkOm/aUXflkOmpdX6Euh/dzYQ51Jg0g4gw=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=shutemov.name; spf=pass smtp.mailfrom=shutemov.name; dkim=pass (2048-bit key) header.d=shutemov.name header.i=@shutemov.name header.b=ma5UQJ+1; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=g8Lqc5Od; arc=none smtp.client-ip=202.12.124.143
-Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=shutemov.name
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=shutemov.name
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 59BF3212566
+	for <sashiko-reviews@lists.linux.dev>; Mon, 25 May 2026 16:16:17 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=pass smtp.client-ip=209.85.208.49
+ARC-Seal:i=2; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
+	t=1779725779; cv=pass; b=Q5shivPv4ksILRTJ2hQjntJ8Dur4NUwMMfsrAtwpc5F53ADOinE2TUFw4s4A82LXHKvNVf4bLB4OomMq3hcUrKar58VNXcXzKvYEGwn+r1fN6HtB/bnJ75eM0TzOuim067gcQfcWQDw+OwFKCXn24LU2SEIN5URLPq7pZGqh81Q=
+ARC-Message-Signature:i=2; a=rsa-sha256; d=subspace.kernel.org;
+	s=arc-20240116; t=1779725779; c=relaxed/simple;
+	bh=vk+6eDvwIl07903w3YMl6z5OxqgLvPImTgb/9qmFn54=;
+	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
+	 To:Cc:Content-Type; b=dLSsOeYKkwezX0tVCg5xuCT1MXXomueTxcbhJLcZw4wJNbMtfHsu80EtAh5RLpg+ixuSKG8pokfgZmnBAc/Xsuw/MLN8DYgXeSbkNrDjK+bTkfo8G8+eMoXO59yyA6X4RKBYMXMlQwd0NTqqyQjLwCeRcV889FZglZpmd91K9Us=
+ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=nmN3wIj0; arc=pass smtp.client-ip=209.85.208.49
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=shutemov.name header.i=@shutemov.name header.b="ma5UQJ+1";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="g8Lqc5Od"
-Received: from phl-compute-02.internal (phl-compute-02.internal [10.202.2.42])
-	by mailflow.stl.internal (Postfix) with ESMTP id ECF191300B16;
-	Mon, 25 May 2026 11:45:56 -0400 (EDT)
-Received: from phl-frontend-03 ([10.202.2.162])
-  by phl-compute-02.internal (MEProxy); Mon, 25 May 2026 11:45:58 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=shutemov.name;
-	 h=cc:cc:content-transfer-encoding:content-type:content-type
-	:date:date:from:from:in-reply-to:in-reply-to:message-id
-	:mime-version:references:reply-to:subject:subject:to:to; s=fm2;
-	 t=1779723956; x=1779731156; bh=ip/pTMIAjVbVqPVjzKxY0lQR6jtS4rsH
-	p7ki00Fhc8E=; b=ma5UQJ+1HxHUqPl6eHviAS4IqTxG5x6lwemNJutSnqkYZRX/
-	GrdAnincetnbUBfJEo8Uf9Binwnevi5D4brGSTYGKFHZx8Ue8QQkh1DnoSkcyGdM
-	yy1TETa0hxKnlrul3pD1urd+txEbmG4Qw5wSFQTBC7dTc5G117PVjc+xvraMA9gQ
-	RWi5/4BVzH+rAcj6Xj3cnLaQOwWcIVCRN1esUqwHUImlTZJEM501TdqVlWVspD46
-	OigfDKo2IQBKN0H1rH9+oRWkdkNedX8EgaTmZ7qRusm5KYNEvuFt7o6J2nzZlFkM
-	t1sdgRkAjfDx9m7/J0nq0c7L7W5ZQbx3S/tP1A==
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
-	messagingengine.com; h=cc:cc:content-transfer-encoding
-	:content-type:content-type:date:date:feedback-id:feedback-id
-	:from:from:in-reply-to:in-reply-to:message-id:mime-version
-	:references:reply-to:subject:subject:to:to:x-me-proxy
-	:x-me-sender:x-me-sender:x-sasl-enc; s=fm3; t=1779723956; x=
-	1779731156; bh=ip/pTMIAjVbVqPVjzKxY0lQR6jtS4rsHp7ki00Fhc8E=; b=g
-	8Lqc5OdqrG8KVcqLc8hSs3+dCflbvacl4qMZJzpBWtPKrhu7Nls17fjYc5GgdklZ
-	3FylA5Ip2wfIWi297udqMADlhkwE4YJZsPDBS96a8I77PxVIHpnDgJ5FdwySPq6F
-	kMhFSF1AhetLYQkfr9mCoIQW6e+2GGAhUarETgqw/PBIdr6MFLu72sKsdwyFoTTG
-	9YVl8rliT7CZ7xqzW3nEV1VgyXWRxqZlfqUKNq6Up3q+5g2lL4KqYrHcJK2fUr6j
-	oL57I0klUS3XZ6jWsXiv72ffBnKVj5RTnJnCJZ93khR2gapAAewwAn74/AGKlong
-	1cHReWprQ6eNXAQI04Qpw==
-X-ME-Sender: <xms:tG4UarufJ1pS8yJHvq3sQ3JXMSH_JXx9wHgKsymToNChwnvicHSaGw>
-    <xme:tG4UamZK_AcXR1gdbk3xJTXGRm8Jo77KCsDFsF27kYDMSM-I3X2Dn1Tk2tOtqqUPl
-    a24ggKC06zWm_-AO1Q76pCaeDowOwBFit2qjKqDFcuFcMjqtZGjuw>
-X-ME-Received: <xmr:tG4UagpbKjNo4e8gkm7IcjMvFY77VTJfiHdvrZaTfCCUi_sgRsCeSn9RlewQ_g>
-X-ME-Proxy-Cause: dmFkZTGEPse4hV1yBwsDDEa7O6Lryon99uUXj/XLpI0tprakm/YTBddT7aRX8pCTW2DPLE
-    wxqIym+YUtlhKLJDWeGlCptVUlFMjgS9D7yuWlBIwCAwtYKi6zo0j4CAVYn/vgyZJPXLOG
-    BYtH9Nh6HPuNoLdp1/VdWgbOADAvtxmistcJnr4qLuoaufELcanxBkRVcKH65VViIUzn34
-    Kp2QKpFHEZKdG/bhngq9fPozMAPTXZBBmDnTHHXvVQgDsw5EQro4ZLXcqB86Oyr85j+lYE
-    v7bqRum/AgTZ/4ycaOAngfI42jEaiRD9E5AlmyGSKpkOU4sWKlAkCcvM1cGoh+03YQwAYe
-    nnqsVq+rVRt2NiwU2dBhlRF+qv7z8pqhrS5UI8bpuZZYV89Oi0hU0tgBFN1ZodV98iQb0E
-    FW1DNGZ+w4zVPM0JtWFEgSKr7nkVvPN5dUHjpiTnHp72Jx2gxSPmoOiQ4ExnD8Ho0wZGBv
-    4Mo136PpNq+Y6iIKKzJEDv8ioeUm4SjoHpF1WO9zK3BypyNss/gYi5SPOF7uqt/DdxE0WR
-    PfNDy2+C2sdDdvfW8ZiSawPoYsGLAzWgsFqsuVZgFGXSF841JEkijnhp/52hP8runr/iWK
-    jocfd7vA1jz/2HIV430lby+kADDjRfF97P22PEia4BdeDrDOS4HrV5bcbX6A
-X-ME-Proxy: <xmx:tG4Ualo-E0bSbpj-R0K6c2ezKX7CskI6h1zweC2OSrwJERA8gtMaGQ>
-    <xmx:tG4UalVIilCojT34Ve5jLdX1XGuXRxW_3nkk8kcIahh2npAT5u-SIw>
-    <xmx:tG4UaqQRyFruY-TSYfH-QTZ4lgxDQ_51ZEacU3HVAbLyNx-AKvdwmQ>
-    <xmx:tG4UapS9qR3zwCfHUz3ENlJXAmPB87qOe8UVK2Ix1mq_e9aQgW9ymA>
-    <xmx:tG4UahyIrtMsYnxHF8yfapyuetGoRw0HB2E_MHPr0x8_ESmqG8oq--x->
-Feedback-ID: ie3994620:Fastmail
-Received: by mail.messagingengine.com (Postfix) with ESMTPA; Mon,
- 25 May 2026 11:45:54 -0400 (EDT)
-Date: Mon, 25 May 2026 16:45:48 +0100
-From: Kiryl Shutsemau <kirill@shutemov.name>
-To: sashiko-reviews@lists.linux.dev
-Cc: kvm@vger.kernel.org, akpm@linux-foundation.org, rppt@kernel.org, 
-	peterx@redhat.com, david@kernel.org, ljs@kernel.org, surenb@google.com, 
-	vbabka@kernel.org, Liam.Howlett@oracle.com, ziy@nvidia.com, corbet@lwn.net, 
-	skhan@linuxfoundation.org, seanjc@google.com, pbonzini@redhat.com, jthoughton@google.com, 
-	aarcange@redhat.com, sj@kernel.org, usama.arif@linux.dev, linux-mm@kvack.org, 
-	linux-kernel@vger.kernel.org, linux-doc@vger.kernel.org, linux-kselftest@vger.kernel.org, 
-	kernel-team@meta.com
-Subject: Re: [PATCH v4 14/14] Documentation/userfaultfd: document RWP working
- set tracking
-Message-ID: <ahRuaePllG4Xo_Si@thinkstation>
-References: <20260525113737.1942478-15-kas@kernel.org>
- <20260525122408.B74CB1F000E9@smtp.kernel.org>
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="nmN3wIj0"
+Received: by mail-ed1-f49.google.com with SMTP id 4fb4d7f45d1cf-67cac5ece75so17686317a12.2
+        for <sashiko-reviews@lists.linux.dev>; Mon, 25 May 2026 09:16:17 -0700 (PDT)
+ARC-Seal: i=1; a=rsa-sha256; t=1779725776; cv=none;
+        d=google.com; s=arc-20240605;
+        b=jBPgucbmrSFgcoLZ5AuOlYHHHjav6RTFu9vzXeD4U2RCy/FqK0vtOPpa/AQD1RTXHT
+         HIg2TDXLeNidUbpkWWrKisXwKY0bqWRuuDr+idYKfxExvCG2UmUvb42ic0uxyiN5Qk60
+         UZOSXkCTqGC33wb28I8Xn2KucyX8Km73fHolAx8NYdvdsghxpMWJ6zig1kheHVqWYZ/r
+         BRKeBEhw08VV1gvSNRof4j/h5XJ3ZteerfhP63wMEZ3BGCnyft+Z+TT4MKJLnj4A5tnM
+         TGhc8qdHtBfmyirHKIqtkr6XiBIAGMYsva13Y+08HTHU7Ixn3Rqe7uRr3o5xaJK9+JkA
+         xdVg==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com; s=arc-20240605;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:dkim-signature;
+        bh=8/SOUgIW+PBGWqgmJXDGl03TtxW7cgumZ0tCc+7Z14k=;
+        fh=ouXvSjf5SmEmNeimx6xyG+CKjdQvC3UxbsGBNR8v92o=;
+        b=lqXG27vmWXA62hbvprYcbP94JFFsI/h3JHd3LIRnxVb5zLLWT9pN2hruaff5V8MhAk
+         sC0G5qPR2N1NoMwdAoebaRo2NeTunLd+Ft2jATsf5pCCGrvZgE9UOUQt1KUh0IqSUClf
+         WYe0vbBWrh+8Y9aJgX9QNL8QAlFheOKXQPU7N0V3sGmkiC4enatFdsIMdaU9uaxYccer
+         uXWzli9V2MZEXtB2h2wt5WVdMwb8J7SdTIJwjX+SJytzikEdXUvepZ/vd3OBzgqNNQ/4
+         wg4v1BxCXx7JklGqPbloQQ5WUtsb29OGgm6b2oAQxJCeqYAthSeSNg4Ks/kJYH5nRDEo
+         AfYw==;
+        darn=lists.linux.dev
+ARC-Authentication-Results: i=1; mx.google.com; arc=none
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20251104; t=1779725776; x=1780330576; darn=lists.linux.dev;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=8/SOUgIW+PBGWqgmJXDGl03TtxW7cgumZ0tCc+7Z14k=;
+        b=nmN3wIj0jePbVhV3L7ySlL0oa3D7yi9IzPRXUZemQcwjflI7578kk5u1WTWGM/8FI5
+         tZXHFQMrmSZIeyPDXbaPSAnTWbJQKec+ysqLolgnemRvyfpM95AmTTJvXt0hSpcR9cEX
+         G5tISIUazfaqTb+0Lgk6H7CHyxH10fL5WEJpis4bm2fYyFTN8iVn+I6RpqLplN6dvEJv
+         DSmtXbEQQO8f2kalVfpDWWIGpA9PExBsIC0FnfhlHf/TvjFje0l3AiAkewD115ObtMIh
+         Q/f8bbpyNtBi3DD6cKI7SyiM+fw0sfH5B+hfKR5d8393WJ8fOvWBgMoO4dEME6LKU9Ed
+         UQvA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20251104; t=1779725776; x=1780330576;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:x-gm-gg:x-gm-message-state:from
+         :to:cc:subject:date:message-id:reply-to;
+        bh=8/SOUgIW+PBGWqgmJXDGl03TtxW7cgumZ0tCc+7Z14k=;
+        b=e8Nti8wDRupOI5WzUApcoQWvPZliYn4pGY+fYSb6/I2sB9vXGZBK1xfFl6LoOw6ZQt
+         EZ9XQE2sGKRiXmDuatH8BMi+YynsbBcHeZPLSRNDP4EC+kIg1GEQ7xcMCxL8F+eiZztQ
+         hceo8FEmi6sqqooFyk7N4ML+A7RdvT/6c+gGoyVYi4+pCNpkGBwrrw+eOqU6ex++94df
+         0+UDckqsJ/NZS5eNeSoLYJEh9KJJzwdFj9f7kh/oG9wGVKu4qrPLu9uT4WRSv+UWpGez
+         m8WxrpI6LbDIQnvfw2+OoCM/J1Ag3+zvLw+X0Lf1YQvhzPDwFlHFngjW7QpYGmvUhU/h
+         dsnA==
+X-Gm-Message-State: AOJu0YzW83+y43zT6YD0MCSwopLdbFD9JUZvo2thbY+bnoM3aXzObBk9
+	jVfOf9BSsrxH245ZdsJOKrS7GSi0ttDI+IPiYxIGw+z0F9tADpS7jB0VNYzb0bJjTBljDzXXXG/
+	RzHzKlzQRuN2kDI6Rt4l4CNlQAN+Kqzys7Far
+X-Gm-Gg: Acq92OFtfSzEnCU036gIi+r4t4HYm3wo3HUw3Jjk+tChIQNpEDa8cmpLpscHNFtFvVR
+	AVvQUFI99ApOm/2FsCFuRQqET23eTL10ZojZ4NLKMWjYw1NhfBT9t7O/SGrQTLKRprU6pN+7deF
+	ZCIRnDwqMi2Fn6EHFym3dmLLQRTMJxy/jg7iRhUwyr4+fTnD0cddaN5JN2mhC0i4GkrFgcCozhV
+	+sTFCYyNY2TNWqHNl+jznfpN5T9wi7A3KumvSX+KnqQ8jmG/AQxgQeqRTB+OzP0ncH+GrUFJGSb
+	thRfKw==
+X-Received: by 2002:a05:6402:43c5:b0:677:270f:6f4b with SMTP id
+ 4fb4d7f45d1cf-6889c42ccb8mr7409311a12.1.1779725775469; Mon, 25 May 2026
+ 09:16:15 -0700 (PDT)
 Precedence: bulk
 X-Mailing-List: sashiko-reviews@lists.linux.dev
 List-Id: <sashiko-reviews.lists.linux.dev>
 List-Subscribe: <mailto:sashiko-reviews+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:sashiko-reviews+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=iso-8859-1
-Content-Disposition: inline
-Content-Transfer-Encoding: 8bit
-In-Reply-To: <20260525122408.B74CB1F000E9@smtp.kernel.org>
+References: <20260525095216.12078-2-linux.amoon@gmail.com> <20260525102746.B58861F00A3D@smtp.kernel.org>
+In-Reply-To: <20260525102746.B58861F00A3D@smtp.kernel.org>
+From: Anand Moon <linux.amoon@gmail.com>
+Date: Mon, 25 May 2026 21:45:57 +0530
+X-Gm-Features: AVHnY4JnD3B5friicBByosla9N5iCWds37tvjlupqHMwJjZjvEE5EbdckMdNRm4
+Message-ID: <CANAwSgTQQPDQjc1S4o1g9F+Uc2Fr6SYM6fm9DHB=mMR7eD6WFw@mail.gmail.com>
+Subject: Re: [PATCH v5 1/6] media: meson: vdec: Fix memory leak in error path
+ of vdec_open
+To: sashiko-reviews@lists.linux.dev
+Cc: linux-amlogic@lists.infradead.org, neil.armstrong@linaro.org
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 
-On Mon, May 25, 2026 at 12:24:08PM +0000, sashiko-bot@kernel.org wrote:
-> Thank you for your contribution! Sashiko AI review found 4 potential issue(s) to consider:
-> - [Critical] The documented VMM working set tracking workflow disables
-> async mode AFTER performing PAGEMAP_SCAN, creating a TOCTOU data loss
-> race condition.
-> - [High] UFFDIO_SET_MODE relies solely on mmap_write_lock() to
-> synchronize with in-flight faults, failing to exclude or drain per-VMA
-> locked faults.
-> - [Medium] The example code uses an anonymous compound literal for the
-> UFFDIO_API ioctl argument, making it impossible to inspect returned
-> features.
-> - [Low] The example C code contains standard C compliance issues and
-> an undefined variable in the `pwrite` call.
+Hi Sashiko,
 
-All valid. Will address in v5.
+Thanks for your review comments
 
-> -- 
-> Sashiko AI review · https://sashiko.dev/#/patchset/20260525113737.1942478-1-kas@kernel.org?part=14
-
--- 
-  Kiryl Shutsemau / Kirill A. Shutemov
+On Mon, 25 May 2026 at 15:57, <sashiko-bot@kernel.org> wrote:
+>
+> Thank you for your contribution! Sashiko AI review found 2 potential issu=
+e(s) to consider:
+>
+> Pre-existing issues:
+> - [Critical] Allocating and destroying a V4L2 m2m_dev on every session op=
+en/close causes a Use-After-Free within the V4L2 M2M core.
+> - [High] The hardware interrupt handler vdec_isr() dereferences core->cur=
+_sess without checking if it is NULL.
+> --
+>
+> commit bde68706fa632effa876c30cef33b3528cd917da
+> Author: Anand Moon <linux.amoon@gmail.com>
+>
+> media: meson: vdec: Fix memory leak in error path of vdec_open
+>
+> This commit introduces an err_m2m_ctx_release label in vdec_open() to
+> prevent a resource leak when vdec_init_ctrls() fails. It also frees the
+> v4l2 control handler memory in vdec_close().
+>
+> Closes: https://lore.kernel.org/all/20260520045905.6ACBA1F000E9@smtp.kern=
+el.org/#t
+>
+> > diff --git a/drivers/staging/media/meson/vdec/vdec.c b/drivers/staging/=
+media/meson/vdec/vdec.c
+> > index 4b77ec1af5a76..18a22b79e835e 100644
+> > --- a/drivers/staging/media/meson/vdec/vdec.c
+> > +++ b/drivers/staging/media/meson/vdec/vdec.c
+> [ ... ]
+> > @@ -913,6 +913,8 @@ static int vdec_open(struct file *file)
+> >
+> >       return 0;
+> >
+> > +err_m2m_ctx_release:
+> > +     v4l2_m2m_ctx_release(sess->m2m_ctx);
+> >  err_m2m_release:
+> >       v4l2_m2m_release(sess->m2m_dev);
+>
+> [Severity: Critical]
+> This is a pre-existing issue, but does allocating and destroying the m2m_=
+dev
+> on every session open and close cause a use-after-free?
+>
+> Since the v4l2 m2m core schedules jobs via a work struct, if a job is
+> scheduled just before the file descriptor is closed:
+>
+> vdec_close()
+>     v4l2_m2m_release(sess->m2m_dev);
+>         kfree(m2m_dev);
+>
+> Could the system worker later execute v4l2_m2m_device_run_work() on the
+> freed m2m_dev, as pending background work isn't cancelled during release?
+>
+> Should m2m_dev be allocated globally once in probe() instead?
+>
+> [ ... ]
+>
+> [Severity: High]
+> This is a pre-existing issue, but looking at vdec_isr(), sess is initiali=
+zed
+> from core->cur_sess and immediately dereferenced:
+>
+> vdec_isr()
+>     sess =3D core->cur_sess;
+>     sess->last_irq_jiffies =3D get_jiffies_64();
+>
+> If a spurious interrupt fires while the device is idle or immediately aft=
+er
+> streaming stops, could core->cur_sess be NULL here?
+>
+> Should there be a check before dereferencing sess?
+Apologies, let me check. Every time I try to fix a bug, I seem to
+create a new one.
+>
+Thanks
+-Anand
+> --
+> Sashiko AI review =C2=B7 https://sashiko.dev/#/patchset/20260525095216.12=
+078-1-linux.amoon@gmail.com?part=3D1
