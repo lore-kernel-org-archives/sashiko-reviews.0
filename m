@@ -1,172 +1,300 @@
-Received: from mail-qk1-f179.google.com (mail-qk1-f179.google.com [209.85.222.179])
+Received: from mail-qv1-f42.google.com (mail-qv1-f42.google.com [209.85.219.42])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8C71A27B35F
-	for <sashiko-reviews@lists.linux.dev>; Mon, 25 May 2026 03:11:11 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.222.179
-ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1779678672; cv=none; b=q/hHsbeHxd48PNPoR0H4x+ddU7ozbUt+TJRgD3KWanSMUzjzy/g5r3YiDdkdbgEKSBBVHasZzuRIPUdKfEh6USy7En4yo4L6jzCu9cZXLtuUwmXKHULY7eabwdiJyYEuiA1JpKhkRhUKNETRwFQOegkc2C1zwgHGT5LgZ/VBE0M=
-ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1779678672; c=relaxed/simple;
-	bh=S7TAaCBfyT6PJkGCZ2CQT3rHLdQWi+Op3g84ncear9M=;
-	h=Date:From:To:CC:Subject:In-Reply-To:References:Message-ID:
-	 MIME-Version:Content-Type; b=swCp5KzsFSHsvQyfPuQMwcTfnfcgNSG1Nc0B8WM1XpIw/T5oWmjd3zitnjGdOCOu772AwDCNZRkomlWhtDm4D9XC2Th89YXH5hQa4ogCGh+rpixcEJQrcBWfxT5Eb+NXrNd6l8akdYAv+mEOnC6GFP1XiKabFdfOthfUoT7JzB4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=KxvCv8pW; arc=none smtp.client-ip=209.85.222.179
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F2B0423C503
+	for <sashiko-reviews@lists.linux.dev>; Mon, 25 May 2026 03:39:13 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=pass smtp.client-ip=209.85.219.42
+ARC-Seal:i=2; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
+	t=1779680355; cv=pass; b=FC9D+pi93nZttEdx1wXU4fskrQ1rsno4AuLoNoWpSAQnl52I+kGYeuVAtXKAiX+RUWOXxd8VmSzbrBXamvJOiwpwatWt/IVBbeEavPRAjH2rszpRIKQO27qcAZMYdSP+GjMD1X+VULopeykqdmJViX1oWWRACVwsU/9Y4IEoTJQ=
+ARC-Message-Signature:i=2; a=rsa-sha256; d=subspace.kernel.org;
+	s=arc-20240116; t=1779680355; c=relaxed/simple;
+	bh=z6cIIRV9zGTa+jtuvPQ/j2H/8Y/1y7aaysy9OHxuTIM=;
+	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
+	 To:Cc:Content-Type; b=YUvHljPgY0n8VyDfeIWqpVbJyrtbJN8XDRNQt2gC71FnNo0x9SFa7cP1r6+7Fqxcqup2VNIviAwIqg4nBN8H2/f+WHLkzV6eAMrMK4s3/24N1ZMNIxOjtZ63LWfRyyEwMRvZWTjE6TytSWqHh96Y9hHt2TBIk8RmGWz8zapjTmQ=
+ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=WACGA9+D; arc=pass smtp.client-ip=209.85.219.42
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="KxvCv8pW"
-Received: by mail-qk1-f179.google.com with SMTP id af79cd13be357-914c1ced558so97351885a.3
-        for <sashiko-reviews@lists.linux.dev>; Sun, 24 May 2026 20:11:11 -0700 (PDT)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="WACGA9+D"
+Received: by mail-qv1-f42.google.com with SMTP id 6a1803df08f44-8b6dd874471so139853416d6.0
+        for <sashiko-reviews@lists.linux.dev>; Sun, 24 May 2026 20:39:13 -0700 (PDT)
+ARC-Seal: i=1; a=rsa-sha256; t=1779680353; cv=none;
+        d=google.com; s=arc-20240605;
+        b=PfQJPYIz6e0Wdoh7Ko/NDm7zrjDFw8W2aX4k2orYaJ9p9HWi3/h6SSA3Hke3URJNkz
+         y0WWW78mByda5qHBeyioynsALyS+GWZ7Eypc5pD4GH6fk6zZKwyadFmvmXEYhwp4fiTB
+         N7gl42MG07dggZlTqDj74GJYyYI+Fl1PzTQA9cjZyDk8rmlQTKNI9bdcAzpuwzVu3m8+
+         fJbkeuNcD0FQFfNv6ixjK9aloP0nHtElEOZXIClB0jORpE8O16sgL9ZZl6OAbkUGK9Jl
+         AWaNJadIvP+r7ZvPQVgTiOmkDgc2DGWFZzQGOZVRb9xNGs84N3o5Uol1MYNZJ0gf5UYT
+         akAQ==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com; s=arc-20240605;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:dkim-signature;
+        bh=7LAITZFVNXe1IqWBb+mpAAhUQyr1/OI7LF6K9KvFcO4=;
+        fh=2xfOhBJyN5MrDXDnqEqgkqZlEOPXo6XBQo6m99gnAL4=;
+        b=ZU5ubk2RF3/HhCnmZKsMiZIhkRlNJLtihAY+x+XhxUzHKKZKaZwRDwjA2DZDl81CHY
+         I2mLK29yvsHPfglX8Y0mr3c0mIy7PeDNKJKoka9cxZHExboMdt6Lr8peKDEsBu3nx+Mg
+         LaCFvznbSglYqqKEp0y+t8yPkBh6OsdKeTcjXVM+WrJ9d30KBpwb/nXQhFNzdf96B+qC
+         cWG284ZVaD8vz/7RyhHqhLHA+l6mXC92+mJ6XBa4z3aPQiYNcVZ3rGa7e+2kIcWnb8P+
+         zSrHwum/qQmVhbD9PPm/V7YZrrLv/iTpPrK4xYN7NNCHn+hNrANQDCRkEkW+PxKlPAmh
+         WKhQ==;
+        darn=lists.linux.dev
+ARC-Authentication-Results: i=1; mx.google.com; arc=none
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20251104; t=1779678670; x=1780283470; darn=lists.linux.dev;
-        h=content-transfer-encoding:mime-version:message-id:references
-         :in-reply-to:user-agent:subject:cc:to:from:date:from:to:cc:subject
-         :date:message-id:reply-to;
-        bh=L1ewu1BojhJLfgZiR0UNvxEti+UmNvL3WdI7IiOYK30=;
-        b=KxvCv8pWZY+/pRgnJOdNen2NdOdpgnMFI0I6HOqLxqRwXRsN+sG5wbMs5e4++Ln1YT
-         wPGPNJ+cnH8l7qgwyio4Jj6ZxvKHub1q63iFXgBEF6o2kCNpV2U0IzexHvQ3WEdkb2br
-         EUQ6h6cTr700YjzQtIxChw20HRkFEJFbYroPh4F2upg/8brUN3hDYqFCHP18Skhcc0Gb
-         gngumTOAq/8n0nHdBIlfDwxvNI4xVylwCf14l10Ftzr/3jj+hfbbuH1sSJL0yUP+hKVo
-         6TqD5bBN/H2Zs0LfDRwY5g0SQAwvQPj9MdUqLQNoNp2ud1yjA/cCmdKjqDYAk/K7f/Nt
-         wFqA==
+        d=gmail.com; s=20251104; t=1779680353; x=1780285153; darn=lists.linux.dev;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=7LAITZFVNXe1IqWBb+mpAAhUQyr1/OI7LF6K9KvFcO4=;
+        b=WACGA9+DYtGQSFzWPY+l9KPZk0NvaswP9NewR+Qz4NAm+FhaYQAmrmWKkcmh6MFr/Y
+         nG5k7myLjwIUAB40cfu7jnzJRLTwq73zS+tmI7eVYM66DYvU+ayucQMmiIRCzfpI04rJ
+         KF2kuVjn7SfkvTFKMr1Veq6WDerNHIKE2LFI+G1n+/N0VpS9QqymZRKmKHMbQnFw7ZSU
+         OiHv9VuXMjyaM/DBEkIRPc4tg5V84ZzSp3U4D5KcXzncYJJCGwIPErk6UY9Qezu3CEsr
+         iXQW4gI4tTU12AhS1IIg47GaGfGiQZdTR2Qnd7mHSE1m+jOjguYxUPYLXYT8+VGVYz2M
+         oJJg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20251104; t=1779678670; x=1780283470;
-        h=content-transfer-encoding:mime-version:message-id:references
-         :in-reply-to:user-agent:subject:cc:to:from:date:x-gm-gg
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=L1ewu1BojhJLfgZiR0UNvxEti+UmNvL3WdI7IiOYK30=;
-        b=s++8vaMgMN6RKzo5RGSN4F/hG3nabVr0AGUw9JUP4IqAThsn5G998gXuUdqB9WkU4f
-         nvezhpui8mxy1gtFR1M74pTjPhUwYsB0Qb0eOyD+ZfeOXnpqRs2bp3Uyiq9mO3ofM6FP
-         uFLT1iLCXjT3pRC6FmZ2n0N+7mXPvtiuAJLiEkE7JVWU1gMAVwBiDAu8qDRNgSw3lwgH
-         IGMmjD/mjH2DTDvEfui4KQAl4xJ8g/G/qv1ksyQfyLT4SBh6bZ6AU9TIqJyr/zMEP/Vq
-         hNdpFrgVq4q+cKBm++GJ+bAxeBspcCTzTbAk01OOaHxvBZgvTxK5YToFBIX0OQ1N8pSr
-         f2KA==
-X-Gm-Message-State: AOJu0Yz9lH6C2k6/NKKkMYOULJZVb4C1ULeceZRW3QYXqD6HDvpBNYmI
-	jKS+D6x9/cvT3bNNitF0rP/rbZk5/oST5V/XbLwrZuWT9WIvAqvNCiWMh3B3SHn9
-X-Gm-Gg: Acq92OH1Ux1JZc1mnZHX3YSB4MOxWkM+BCJzSjiw3bJTDHEC3dX69JcA4aIAiN1YUVn
-	QdtHOESdV1tLkYmQ29kuwdRNm06LTppr3zl8fw3wV2fp7I4JoCsg4ZOZf6oFfp4G6F45hHrBEV7
-	wXVChHWmq5DD8b++HQJw3VhfS/ZvmLqvP25zNIarBsewxBj2QlZYeqQM0EujsrhFHAiJcYAhrdc
-	AtSG3fBEzGkXF45fJ5fl7Sr48PjxsyRMOywA6yhCYakYVDV5yh2kAW6E3H3g5/0rI7UsfM6caBf
-	z3E2BNKYI1odZPNJYYWJ+qX/rOnjG37hmh0Q5aGOuPmLiT2kMrcdl190jwrPsHtRIQBkQrB7i8/
-	WLNvqVmh+T7Gq+rWocfjJmPK26M3paVa09CHG12DKP7UjHpxK954+kVhys+wvcXgTZTjltn5evD
-	jF/WE/wpnqohEr9rbTM6ML0ixS0EyzTfah2Qq+Or1zFuNZRS9GA/KjWADuNnMEfpxfzeiVorlL3
-	Ag6N5I5YHkHLN2efS4HGw==
-X-Received: by 2002:a05:620a:31a6:b0:914:e3dd:17fd with SMTP id af79cd13be357-914e3dd293dmr218181585a.6.1779678670493;
-        Sun, 24 May 2026 20:11:10 -0700 (PDT)
-Received: from ehlo.thunderbird.net ([172.59.187.228])
-        by smtp.gmail.com with ESMTPSA id af79cd13be357-914c217cf69sm786921985a.24.2026.05.24.20.11.09
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Sun, 24 May 2026 20:11:10 -0700 (PDT)
-Date: Mon, 25 May 2026 12:11:08 +0900
-From: "Derek J. Clark" <derekjohn.clark@gmail.com>
-To: sashiko-reviews@lists.linux.dev, sashiko-bot@kernel.org
-CC: dmitry.torokhov@gmail.com, linux-input@vger.kernel.org, bentiss@kernel.org,
- jikos@kernel.org
-Subject: Re: [PATCH v9 1/4] HID: hid-msi: Add MSI Claw configuration driver
-User-Agent: Thunderbird for Android
-In-Reply-To: <20260525023712.E1C131F000E9@smtp.kernel.org>
-References: <20260525020543.519082-2-derekjohn.clark@gmail.com> <20260525023712.E1C131F000E9@smtp.kernel.org>
-Message-ID: <96119A63-AD73-44F3-9E24-904093EFB8AF@gmail.com>
+        d=1e100.net; s=20251104; t=1779680353; x=1780285153;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:x-gm-gg:x-gm-message-state:from
+         :to:cc:subject:date:message-id:reply-to;
+        bh=7LAITZFVNXe1IqWBb+mpAAhUQyr1/OI7LF6K9KvFcO4=;
+        b=SbZG5eVfkLGJohUyLFA8zCJvuj7tt/9MblhykHuQqQpfjoG1rT+bnPVv2ylbDVO9Uz
+         NNt1BYolfrJBrX4jXXnT+BLl1UIxq6TF1hqrNFpacqDRb2Ut2DTx2FkLFCY88+XrNVg+
+         JmFKjv7PVGTnlYY8qqYXSj8PfjsiHs2YWg9BlqaMBiSqXdzZaaqP6DAY1Sy/HmWSkto6
+         LqARv7mmXOeLMj07ncBDKa2/DkSol4aQNKD1DZY+RHENR7X1KVFZssRIpr4uhbJ5Yd5z
+         JIwikz+euw7uX9mbefzA6YyYVdutDyq3G9kiuOkH/HFshWHuVNvlYmcVv5hAKpmHLOTV
+         ZcDg==
+X-Gm-Message-State: AOJu0YxA6f3hjHL+pqgazvenDomHTkdYAfFswTPjR2jeOW2qioEmWE8G
+	0Gy9UM63w8FO2hfz/zg6K468ojG3gXdNseNdfCNNY/L+ysbmXG3GOlPK/IqT8llgTSDxY7v9dqg
+	hJyAmBonQO7LZ9SX1I9DqEuXGpCcJpmk81ikg
+X-Gm-Gg: Acq92OH70ume0mRL8gMrU7zEBrdLDpvxSH9+fKQiQepNSZ0dxdmhSx5wAhBNoEFvVP8
+	Z2NuYmm1riA2sFfOkNuEFRWQHKvUwK+fNB8pKRvjrDmEyEj22HyIebV+EtF0gEKTqedqg3sikKz
+	xaflyNWr4UoLgs805Z+iUhsej+YlxC6ozA/MhRyXad4vY19NstYbEpx5c2AWdGMOkbZ+lPMcKtw
+	aam8FkRPHVxdM5j8hkm4yPb//WHXdUM8W0bO5Pv/ov6bO3Lq2y03860dOrNOm8u/p6oCuu5uxcr
+	yrjdrFUW4MV1a7AM0Q==
+X-Received: by 2002:ad4:5bce:0:b0:8cc:d41:ba14 with SMTP id
+ 6a1803df08f44-8cc7b628b68mr239101266d6.44.1779680352862; Sun, 24 May 2026
+ 20:39:12 -0700 (PDT)
 Precedence: bulk
 X-Mailing-List: sashiko-reviews@lists.linux.dev
 List-Id: <sashiko-reviews.lists.linux.dev>
 List-Subscribe: <mailto:sashiko-reviews+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:sashiko-reviews+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain;
- charset=utf-8
+References: <20260525020543.519082-3-derekjohn.clark@gmail.com> <20260525031507.088AC1F000E9@smtp.kernel.org>
+In-Reply-To: <20260525031507.088AC1F000E9@smtp.kernel.org>
+From: Derek John Clark <derekjohn.clark@gmail.com>
+Date: Sun, 24 May 2026 20:39:01 -0700
+X-Gm-Features: AVHnY4Jkg14EBH81qkvmp6MNtputIjbMMV1eI_YJztpyOEWe6LAzE8V4hKQar8w
+Message-ID: <CAFqHKTmTVnOivNMvTVBD+-n_pCMknQyUf+D=KqM_Um4Y+gW5=g@mail.gmail.com>
+Subject: Re: [PATCH v9 2/4] HID: hid-msi: Add M-key mapping attributes
+To: sashiko-reviews@lists.linux.dev
+Cc: dmitry.torokhov@gmail.com, linux-input@vger.kernel.org
+Content-Type: text/plain; charset="UTF-8"
 Content-Transfer-Encoding: quoted-printable
 
-On May 25, 2026 11:37:12 AM GMT+09:00, sashiko-bot@kernel=2Eorg wrote:
->Thank you for your contribution! Sashiko AI review found 1 potential issu=
+On Sun, May 24, 2026 at 8:15=E2=80=AFPM <sashiko-bot@kernel.org> wrote:
+>
+> Thank you for your contribution! Sashiko AI review found 4 potential issu=
 e(s) to consider:
->- [Medium] Mixing goto-based error handling with scope-based cleanups (__=
-free, guard) in claw_hw_output_report=2E
->--
+> - [High] Typographical error checking `gamepad_registered` instead of `gp=
+_registered` causes newly added sysfs attributes to unconditionally return =
+`-ENODEV`.
+> - [High] Dangling asynchronous ACK from `SYNC_TO_ROM` can prematurely com=
+plete subsequent commands, corrupting the device state machine.
+> - [Medium] Spurious or late `READ_PROFILE_ACK` packets incorrectly abort =
+subsequent profile reads with `-EINVAL`.
+> - [Medium] If `claw_hw_output_report()` fails in `claw_mkey_show()`, the =
+function exits without clearing the `profile_pending` state.
+> --
 >
->commit 279964e3a8cf0a3835903d6bad7357f0ca42f523
->Author: Derek J=2E Clark <derekjohn=2Eclark@gmail=2Ecom>
+> commit fe7de95a59af02c44e638aba1fcc1763f3b5354f
+> Author: Derek J. Clark <derekjohn.clark@gmail.com>
 >
->HID: hid-msi: Add MSI Claw configuration driver
+>     HID: hid-msi: Add M-key mapping attributes
 >
->This commit adds a configuration HID driver for the MSI Claw series of
->handheld PCs=2E It introduces the initial driver outline and attributes f=
-or
->changing gamepad mode, M-key behavior, and resetting the device=2E It als=
-o
->adds a completion bypass when the timeout is 0 to handle USB disconnects
->gracefully=2E
+> Adds attributes that allow for remapping the M-keys with up to 5 values w=
+hen in
+> macro mode. Mapped events will fire from gamepad, keyboard, or mouse evde=
+vs.
 >
->> diff --git a/drivers/hid/hid-msi=2Ec b/drivers/hid/hid-msi=2Ec
->> new file mode 100644
->> index 0000000000000=2E=2E3a176f44f2c43
->> --- /dev/null
->> +++ b/drivers/hid/hid-msi=2Ec
+> > diff --git a/drivers/hid/hid-msi.c b/drivers/hid/hid-msi.c
+> > index 3a176f44f2c43..5f20102eae69d 100644
+> > --- a/drivers/hid/hid-msi.c
+> > +++ b/drivers/hid/hid-msi.c
+> [ ... ]
+> > @@ -87,24 +249,47 @@ struct claw_command_report {
+> >       u8 data[59];
+> >  } __packed;
+> >
+> [ ... ]
+> >  struct claw_drvdata {
+> >       /* MCU General Variables */
+> > +     enum claw_profile_ack_pending profile_pending;
+> >       struct completion send_cmd_complete;
+> [ ... ]
+> >       /* Gamepad Variables */
+> >       enum claw_mkeys_function_index mkeys_function;
+> >       enum claw_gamepad_mode_index gamepad_mode;
+> > +     u8 m1_codes[CLAW_KEYS_MAX];
+> > +     u8 m2_codes[CLAW_KEYS_MAX];
+> > +     bool gamepad_registered;
+> >       spinlock_t mode_lock; /* Lock for mode data read/write */
+> > +     const u16 *bmap_addr;
+> > +     bool bmap_support;
+> >       bool gp_registered;
+> >  };
+> [ ... ]
+> > @@ -165,9 +383,20 @@ static int claw_raw_event(struct claw_drvdata *drv=
+data, struct hid_report *repor
+> >                       complete(&drvdata->send_cmd_complete);
+> >               }
+> >
+> > +             break;
+> > +     case CLAW_COMMAND_TYPE_READ_PROFILE_ACK:
+> > +             ret =3D claw_profile_event(drvdata, cmd_rep);
+> > +             if (drvdata->waiting_for_ack &&
+> > +                 drvdata->waiting_cmd =3D=3D CLAW_COMMAND_TYPE_READ_PR=
+OFILE) {
+> > +                     drvdata->cmd_status =3D ret;
+> > +                     drvdata->waiting_for_ack =3D false;
+> > +                     complete(&drvdata->send_cmd_complete);
+> > +             }
 >
->[ =2E=2E=2E ]
->
->> +static int claw_hw_output_report(struct hid_device *hdev, u8 index, u8=
- *data,
->> +				 size_t len, unsigned int timeout)
->> +{
->> +	unsigned char *dmabuf __free(kfree) =3D NULL;
->
->[ =2E=2E=2E ]
->
->> +	guard(mutex)(&drvdata->cfg_mutex);
->
->[ =2E=2E=2E ]
->
->> +	ret =3D hid_hw_output_report(hdev, dmabuf, CLAW_PACKET_SIZE);
->> +	if (ret < 0)
->> +		goto err_clear_state;
->
->[Severity: Medium]
-Hi robot,
+> [Severity: Medium]
+> If a spurious or late READ_PROFILE_ACK packet arrives, claw_profile_event=
+()
+> will return -EINVAL. Does this unconditionally pass the error to cmd_stat=
+us
+> and prematurely complete the wait for a valid, currently pending READ_PRO=
+FILE
+> command?
 
-Interesting that this same issue was Severity: Low in v8=2E=2E=2E
+This is a limitation of the hardware. In real life usage this issue is
+unlikely to occur, and if it does it will just cause a timeout of the
+next command which can be re-sent.
 
->Is it intended to mix scope-based cleanups with goto statements in this
->function? The subsystem guidelines recommend either converting all resour=
-ces
->that need a goto cleanup to scope-based cleanups, or converting none of t=
-hem=2E
->Mixing __free() and guard() declarations with goto-based error handling i=
-n the
->same function can create confusing ownership semantics=2E
+> > +
+> > +             break;
+> >       case CLAW_COMMAND_TYPE_ACK:
+> [ ... ]
+> > @@ -442,6 +671,177 @@ static ssize_t reset_store(struct device *dev, st=
+ruct device_attribute *attr,
+> [ ... ]
+> > +static int claw_mkey_store(struct device *dev, const char *buf, u8 mke=
+y)
+> > +{
+> > +     struct hid_device *hdev =3D to_hid_device(dev);
+> > +     struct claw_drvdata *drvdata =3D hid_get_drvdata(hdev);
+> > +     struct claw_mkey_report report =3D { {0x01, cpu_to_be16(drvdata->=
+bmap_addr[mkey])},
+> > +                                0x07, 0x04, 0x00, {0xff, 0xff, 0xff, 0=
+xff, 0xff} };
+> > +     char **raw_keys __free(argv_free) =3D NULL;
+> > +     int ret, key_count, i;
+> > +
+> > +     scoped_guard(spinlock_irqsave, &drvdata->registration_lock) {
+> > +             /* Pairs with smp_store_release from cfg_setup_fn in syst=
+em_wq context */
+> > +             if (!smp_load_acquire(&drvdata->gamepad_registered))
+> > +                     return -ENODEV;
+> > +     }
 >
+> [Severity: High]
+> Does this check the newly added gamepad_registered field instead of the
+> already existing gp_registered field?
 
-The goto's don't return early or break in/out of guarded sections=2E It si=
-mply skips waiting for the completion if there was an error sending the pay=
-load=2E Using this goto removes the need for 8 lines of duplicated code and=
- the use of cmd_lock in 2 additional places=2E Unless Jiri or Benjamin spec=
-ifically ask for it I don't intend to change this=2E
-
+Mistake in rebase, will fix.
+> Since gamepad_registered is never set to true, it looks like this will
+> unconditionally return -ENODEV, rendering the sysfs attributes inaccessib=
+le.
+>
+> > +
+> > +     raw_keys =3D argv_split(GFP_KERNEL, buf, &key_count);
+> [ ... ]
+> > +set_buttons:
+> > +     scoped_guard(mutex, &drvdata->rom_mutex) {
+> > +             ret =3D claw_hw_output_report(hdev, CLAW_COMMAND_TYPE_WRI=
+TE_PROFILE_DATA,
+> > +                                         (u8 *)&report, sizeof(report)=
+, 25);
+> > +             if (ret)
+> > +                     return ret;
+> > +             /* MCU will not send ACK until the USB transaction comple=
+tes. ACK is sent
+> > +              * immediately after and will hit the stale state machine=
+, before the next
+> > +              * command re-arms the state machine. Timeout 0 ensures n=
+o deadlock waiting
+> > +              * for ACK that ill never come.
+> > +              */
+> > +             ret =3D claw_hw_output_report(hdev, CLAW_COMMAND_TYPE_SYN=
+C_TO_ROM, NULL, 0, 0);
+>
+> [Severity: High]
+> Since this command uses a timeout of 0, could the asynchronous ACK from
+> SYNC_TO_ROM arrive while the driver is waiting for a subsequent command
+> (like another WRITE_PROFILE_DATA)?
+>
+This is also a limitation of the hardware and unlikely to occur.
+> If the generic ACK arrives after the driver starts waiting for the next
+> command, it seems it could falsely complete the next command prematurely
+> and break the lock-step protocol between host and MCU.
+>
+> > +     }
+> > +
+> > +     return ret;
+> > +}
+> > +
+> > +static int claw_mkey_show(struct device *dev, char *buf, enum claw_key=
+_index m_key)
+> > +{
+> > +     struct hid_device *hdev =3D to_hid_device(dev);
+> > +     struct claw_drvdata *drvdata =3D hid_get_drvdata(hdev);
+> > +     struct claw_mkey_report report =3D { {0x01, cpu_to_be16(drvdata->=
+bmap_addr[m_key])}, 0x07 };
+> > +     int i, ret, count =3D 0;
+> > +     const char *name;
+> > +     u8 *codes;
+> > +
+> > +     scoped_guard(spinlock_irqsave, &drvdata->registration_lock) {
+> > +             /* Pairs with smp_store_release from cfg_setup_fn in syst=
+em_wq context */
+> > +             if (!smp_load_acquire(&drvdata->gamepad_registered))
+> > +                     return -ENODEV;
+> > +     }
+> > +
+> > +     codes =3D (m_key =3D=3D CLAW_KEY_M1) ? drvdata->m1_codes : drvdat=
+a->m2_codes;
+> > +
+> > +     guard(mutex)(&drvdata->profile_mutex);
+> > +     scoped_guard(spinlock_irqsave, &drvdata->profile_lock)
+> > +             drvdata->profile_pending =3D (m_key =3D=3D CLAW_KEY_M1) ?=
+ CLAW_M1_PENDING
+> > +                                                               : CLAW_=
+M2_PENDING;
+> > +
+> > +     ret =3D claw_hw_output_report(hdev, CLAW_COMMAND_TYPE_READ_PROFIL=
+E,
+> > +                                 (u8 *)&report, sizeof(report), 25);
+> > +     if (ret)
+> > +             return ret;
+>
+> [Severity: Medium]
+> If claw_hw_output_report() fails or times out, this returns immediately.
+> Does this leave drvdata->profile_pending set to a pending state?
+>
+> If the state is left dangling after the mutex is released, could a subseq=
+uent
+> late or spurious profile packet be incorrectly accepted and parsed into t=
+he
+> local codes arrays?
+>
+Subsequent profile events will overwrite profile_pending before
+sending their data. This isn't a problem.
 - Derek
-
->> +
->> +	ret =3D ret =3D=3D CLAW_PACKET_SIZE ? 0 : -EIO;
->> +	if (ret)
->> +		goto err_clear_state;
->> +
->> +	if (timeout) {
->> +		ret =3D wait_for_completion_interruptible_timeout(&drvdata->send_cmd=
-_complete,
->> +								msecs_to_jiffies(timeout));
->> +
->> +		dev_dbg(&hdev->dev, "Remaining timeout: %u\n", ret);
->> +		ret =3D ret > 0 ? drvdata->cmd_status : ret ?: -EBUSY;
->> +	}
->> +
->> +err_clear_state:
->> +	if (timeout) {
->> +		guard(spinlock_irqsave)(&drvdata->cmd_lock);
->> +		drvdata->waiting_cmd =3D CLAW_COMMAND_TYPE_NONE;
->> +		drvdata->waiting_for_ack =3D false;
->> +	}
->> +
->> +	return ret;
->> +}
+> > +
+> > +     for (i =3D 0; i < CLAW_KEYS_MAX; i++) {
 >
-
+> --
+> Sashiko AI review =C2=B7 https://sashiko.dev/#/patchset/20260525020543.51=
+9082-1-derekjohn.clark@gmail.com?part=3D2
