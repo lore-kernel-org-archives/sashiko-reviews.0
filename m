@@ -1,157 +1,77 @@
-Received: from mail-08.mail-europe.com (mail-08.mail-europe.com [57.129.93.249])
+Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 438B133ADA2
-	for <sashiko-reviews@lists.linux.dev>; Mon, 25 May 2026 18:29:30 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=57.129.93.249
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 97D83305684;
+	Mon, 25 May 2026 19:08:54 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1779733773; cv=none; b=im8oaCLCEnmtlh0Ot2Pa0Yn3y8e6KH81osOdsHiB/DPyz4YNbtsQwERQ920UHAt4LVwJ7QcuRIXBDMFWmNoDqSpV8XvqbmdzGatdyFZeZhf2CtU8+uoAQLzrwdKFd2rK7kyrr2joCiTHiqfwIoo8igCEL41Q80SbqtkYYzOVwU0=
+	t=1779736135; cv=none; b=YbI/EFsQ0yV9YpmoNO9RwLWKWiB4G9IYUWAXgMgkK7FFN9uMu3bkGtppsjXEmROZGG5sFPrT6Trt/RRhkNw83vVLIgsVvjiKBPmbS2Wj/fRLxwYMMwKhjKcuEIyR4JgLHdzmonnCsFnTqN+jEojW+h3kGoldqsuGmhnFlYzl3Rg=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1779733773; c=relaxed/simple;
-	bh=y0uyQCEAM9V0NPk0kt6vbk5LGCMoiCyFoi4mUCkwdRw=;
-	h=Date:To:From:Cc:Subject:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=nmj2MUhsFmarb0cDPx4H3luX6G5HL0LhfyIpFum31ejqBSnW9dVKf/fHo4Fg/Xy2WC/6m/hyKalcD5qRTumY1QiCHQ9xOSP3RFpu8zIvthgYSBw5EVJ7fcPJiXKWu4aW1rZ26JlHcm2Pauc6nuY1OB1Amd1fa0AH3BL9IrdqcJ4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=saurla.com; spf=pass smtp.mailfrom=saurla.com; dkim=pass (2048-bit key) header.d=saurla.com header.i=@saurla.com header.b=kEo+qCjd; arc=none smtp.client-ip=57.129.93.249
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=saurla.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=saurla.com
+	s=arc-20240116; t=1779736135; c=relaxed/simple;
+	bh=psWr5Ra3S1+T0qmP+j1ZT22j2o4RvkP48ItcuQ1y11c=;
+	h=Date:From:To:Cc:Subject:Message-ID:In-Reply-To:References:
+	 MIME-Version:Content-Type; b=dWuFyL8O9BhQrEWltbLeQTMLZh9ecFmiY8i4mt5K4ElPdB0Pok7iqVqpvqZpemu4XBO7KPQ97EXtlURCa4hBK0KjI+fgzzuXVol9NYR6BV0LlTrSHUxxkqRNq3Cy6QhIaLZZvHe7NbuVxjlMlSNHWIEVClUHYRLiDiWB96nWLSg=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=CPDpUGdU; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=saurla.com header.i=@saurla.com header.b="kEo+qCjd"
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=saurla.com;
-	s=protonmail; t=1779733761; x=1779992961;
-	bh=3wlGHaJL+WtUODhc4EGv3mI8bJluO2hh4xX6ySWx0pw=;
-	h=Date:To:From:Cc:Subject:Message-ID:In-Reply-To:References:
-	 Feedback-ID:From:To:Cc:Date:Subject:Reply-To:Feedback-ID:
-	 Message-ID:BIMI-Selector;
-	b=kEo+qCjdnf2iSJi8OJvG4JjaN/2uyUSJUwy+Pc6xNz+alP79VhKI5Wvb1D1RIzLcp
-	 xXYETNRwVU87rVVzV42Woo+OvoOcB2U+L7NpTOdUkDRVBKsCfsqpWHCuh1lpJvGrNR
-	 StAJ9nWvLFQkVDbdUVGCv4JjWxNyxpKoroj/eE2z5IGP7osOfguWKWa9Ji6GvWsegR
-	 9hUaIt+iQX/QKHcR0VCIHbqFBv5DaYaws87mQs5MSDv4OyAzIm5yofXZv9zmqUhnrN
-	 6cIZXxdV0QoUxJpwr8b6vVworlh3BJidPQqfXtbVjkjaoc2U06C9Ly/URGyx87c9ej
-	 VgfrITHiOZwLQ==
-Date: Mon, 25 May 2026 18:29:15 +0000
-To: sashiko-reviews@lists.linux.dev
-From: Lauri Saurus <saurla@saurla.com>
-Cc: dmitry.torokhov@gmail.com, linux-input@vger.kernel.org
-Subject: Re: [PATCH] HID: logitech-hidpp: sync wheel multiplier on wheel mode changes
-Message-ID: <2soHS09EjxVmxoRVKFjk3JBN0u9OZD6kpOQvO2D16jhPHL79xzUNJR-BMLlBTIg2KE4EDSpPJUGLO6e1Cvivzq-mEJTFjZAzRmac-kLaQAY=@saurla.com>
-In-Reply-To: <20260518201000.BBD71C2BCB7@smtp.kernel.org>
-References: <20260518192649.245691-1-saurla@saurla.com> <20260518201000.BBD71C2BCB7@smtp.kernel.org>
-Feedback-ID: 198286868:user:proton
-X-Pm-Message-ID: c86d264a5324a657c7f4efc03cba756abbcbbb0a
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="CPDpUGdU"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id F40DE1F000E9;
+	Mon, 25 May 2026 19:08:53 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=kernel.org;
+	s=k20260515; t=1779736134;
+	bh=JlLnJwu/Ox/kDjl4MFqofOdgURhg0UQ3j5uHccDwMdw=;
+	h=Date:From:To:Cc:Subject:In-Reply-To:References;
+	b=CPDpUGdUVo1EqJVpz2hEmNSYUdaSvaWO2zvPWStcPpL39GG03nTZcv5xCGI+FC7rw
+	 DzxG63QDQUk5SFBXUiZkUeaf/8zi7oX38mNeMYpWkVzns6X5kMPDEQQP6P4TBRIldQ
+	 In1Df2uTawaeIVy/J5+JVHGyYK2ia+lQtfkwkKIpvnulCPV3wqsBe3Byh0AlFYfvud
+	 cbmkFm7HrUn9CVmXcHm7OOR2hlu2la3tTsitWxo+IaLqBPXdtQZcbuNaenCnBDLI1d
+	 Tl1On7HBVtouGSmsiyUlfeMYTYyPQFgdeaE4JwP4cn/RDsUzEIjyyiOeaMUjUGH0vC
+	 jZIYFf/RtWxZQ==
+Date: Mon, 25 May 2026 12:08:53 -0700
+From: Jakub Kicinski <kuba@kernel.org>
+To: Lorenzo Bianconi <lorenzo@kernel.org>
+Cc: sashiko-reviews@lists.linux.dev, robh@kernel.org,
+ devicetree@vger.kernel.org, conor+dt@kernel.org, netdev@vger.kernel.org
+Subject: Re: [PATCH net-next v8 10/10] net: airoha: Support multiple LAN/WAN
+ interfaces for hw MAC address configuration
+Message-ID: <20260525120853.7157bc9a@kernel.org>
+In-Reply-To: <ahFkG32jFRJ7W_cv@lore-desk>
+References: <20260519-airoha-eth-multi-serdes-v8-10-6bd70e329df6@kernel.org>
+	<20260520085934.54AD01F00894@smtp.kernel.org>
+	<ag2t4eVe4DcfU2yZ@lore-desk>
+	<20260522112514.1ad6e947@kicinski-fedora-PF5CM1Y0>
+	<ahCtsVA1VhYmhZq-@lore-desk>
+	<20260522165820.04839729@kernel.org>
+	<ahFkG32jFRJ7W_cv@lore-desk>
 Precedence: bulk
 X-Mailing-List: sashiko-reviews@lists.linux.dev
 List-Id: <sashiko-reviews.lists.linux.dev>
 List-Subscribe: <mailto:sashiko-reviews+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:sashiko-reviews+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: quoted-printable
+Content-Type: text/plain; charset=US-ASCII
+Content-Transfer-Encoding: 7bit
 
-> > +static int hidpp20_hires_wheel_raw_event(struct hidpp_device *hidpp,
-> > +=09=09=09=09=09=09u8 *data, int size)
-> > +{
-> > +=09if (hidpp->hires_wheel_feature_index =3D=3D 0xff)
-> > +=09=09return 0;
-> > +
-> > +=09if (size < 5)
-> > +=09=09return 0;
-> > +
-> > +=09if (data[0] !=3D REPORT_ID_HIDPP_LONG ||
-> > +=09    data[2] !=3D hidpp->hires_wheel_feature_index)
-> > +=09=09return 0;
->
-> Does this code need to handle VERY_LONG reports as well?
->
-> Userspace tools or newer devices might transmit FAP commands using
-> REPORT_ID_HIDPP_VERY_LONG (0x12). If the request is a VERY_LONG report, t=
-he
-> response will also be VERY_LONG, and this check would drop it, failing to
-> update the multiplier.
+On Sat, 23 May 2026 10:23:55 +0200 Lorenzo Bianconi wrote:
+> > If the MACs are not provided something is obviously wrong with the
+> > device. We should try to provide enough functionality for the user
+> > to be able to troubleshoot. For an AP perhaps that means SSH / remote
+> > logs? So switching/routing doesn't have to work, I'd think. 
+> > 
+> > Will the user be able to log in when REG_FE_LAN_MAC_H does not match
+> > the MAC of a port?  
+> 
+> REG_FE_LAN_MAC_H and REG_FE_WAN_MAC_H regs are used by the FE module to
+> hw accelerate forwarded traffic and does not prevent the user to log into
+> the device even if they are set to a different values with respect to the
+> configured mac addresses (just hw acceleration will not work properly).
+> To prove it, I set to 0 REG_FE_WAN_MAC_H, REG_FE_WAN_MAC_LMIN and
+> REG_FE_WAN_MAC_LMAX and I still able to ping the device via the WAN
+> interface.
+> I guess the easiest solution is to neglect errors from airoha_set_macaddr()
+> in airoha_dev_init() (as it is in the current codebase) in order to allow
+> the device to probe successfully and provide a warning message to the user
+> regarding the mac address misconfiguration. What do you think?
 
-I agree, it could be possible some hosts could send the command as VERY_LON=
-G report for newer devices which support that. I will change this to suppor=
-t VERY_LONG reports also.
-
->
-> > +
-> > +=09if ((data[3] & 0xf0) =3D=3D CMD_HIRES_WHEEL_SET_WHEEL_MODE) {
-> > +=09=09u8 mode =3D data[4];
-> > +=09=09bool hires =3D (mode & 0x02) !=3D 0;
->
-> Does the HID++ 2.0 protocol guarantee that SET command responses will ech=
-o
-> the requested mode in the payload?
->
-> In the FAP protocol, responses to SET commands often return an empty
-> (zero-filled) payload. If the device returns a zero payload, data[4] woul=
-d
-> be 0x00. The code would then evaluate hires =3D false and forcefully set =
-the
-> multiplier to 1, even if high-resolution mode was successfully requested.
-
-As per the "Protocol HID++2.0 essential features" section in https://lekens=
-teyn.nl/files/logitech/logitech_hidpp_2.0_specification_draft_2012-06-04.pd=
-f:
-"
-All functions must respect the following rule:
-  All parameters in a request must always be repeated in the response:
-    Any parameter that is fully supported must be repeated "as is".
-    Any parameter that is only "partially supported", must be returned as s=
-upported.
-
-The following examples should help to better understand these requirement:
-  A read command where an address (i.e., memory address, register address, =
-etc.) is given as parameter must return the address and the data in the res=
-ponse (and not just the address).
-  A write command which sets a collection of bits or bit fields, should ret=
-urn the same value where all unsupported bits and bit fields have been mask=
-ed to their default values (usually 0).
-  A command such as open-lock, erase-memory, etc. should return its paramet=
-ers unchanged.
-
-Note that there is no requirement to implement partial support. Each featur=
-e designer is free to decide if "partially correct" parameters
-should return and error or be "partially supported." However, if partial su=
-pport is implemented, then the parameters must be returned
-as supported.
-"
-
-Based on the aforementioned specification, all parameters must be echoed in=
- the response. If the SetWheelMode would not support setting hires paramete=
-r (partial support), then hires parameter would be returned as default valu=
-e 0 (low res) in the response. In that case, it is correct to set the multi=
-plier to 1, since setting hires was not supported.
-
-Unless there are verified cases of HID++ capable mouses behaving as describ=
-ed in the review comment, or knowledge of newer version of the specificatio=
-n to have changed aforementioned rule, I would assume all devices to work a=
-ccording to the specification.
-
->
-> > +=09=09int new_multiplier =3D (hires && hidpp->hires_wheel_multiplier >=
- 0)
-> > +=09=09=09? hidpp->hires_wheel_multiplier : 1;
-> > +=09=09hidpp->vertical_wheel_counter.wheel_multiplier =3D new_multiplie=
-r;
->
-> Is there a potential data race on wheel_multiplier and
-> hires_wheel_multiplier here?
->
-> Looking at hi_res_scroll_enable(), it writes to these variables from
-> process context via the workqueue. Concurrently, this event handler reads
-> and writes to them from the HID raw event delivery path in interrupt cont=
-ext.
-> There does not appear to be any synchronization protecting these shared
-> variables across contexts.
->
-> > +=09=09return 1;
-> > +=09}
-> > +
-> > +=09return 0;
-> > +}
->
-
-I agree that in theory there is a possible race condition. However, wheel_m=
-ultiplier was already written to from hi_res_scroll_enable, and read from t=
-he HID event handler before this patch. Not sure if this patch should addre=
-ss this issue or not.
+Maybe we should also enter some sort of error mode where bridging and
+forwarding offloads are rejected? Either way, sounds orthogonal enough
+to this series.
