@@ -1,157 +1,361 @@
-Received: from dggsgout11.his.huawei.com (dggsgout11.his.huawei.com [45.249.212.51])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-wm1-f53.google.com (mail-wm1-f53.google.com [209.85.128.53])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1076C3E51EE
-	for <sashiko-reviews@lists.linux.dev>; Mon, 25 May 2026 08:57:17 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=45.249.212.51
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 313383E1CF5
+	for <sashiko-reviews@lists.linux.dev>; Mon, 25 May 2026 08:59:46 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.53
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1779699441; cv=none; b=SKx+7jqzu6dIc2f7EW/oGzmwzR0M9i4uEFxA/q2U6IZbiloQOultlhY9r91j+Ecdgq2Em384Ltb4BqHdKIFb3RYkc0Ab0/6BcSVlGv01ih+woI8d7gkccDpRQvpzP6V8pv/jNkiK8/eVC18Sf+7mpg/F94L3JR3YEevBl1xdnwU=
+	t=1779699588; cv=none; b=koVPY9NHkwDk6Uoi1VLEoe4TqjK7fcctuTCPiS71/+QIEanjig8Nm9iPzAILW+e6OOCB1VkmJ8MeSBOSfAZeI5UoF7Qh9veoPkHmYV57TgrTgSeUJa4fHvV2HfFp44nTVUBUrv0iAgLLOTuDPqfWm2U+kWTKClbIatN1u1NNovg=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1779699441; c=relaxed/simple;
-	bh=f3qr2WAjwbp+8HoJQLYnFKf5OJ7xyLwrZfLvH+wZhg8=;
-	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=poZxn5RKRbNwVDt/Ez2HOVsSVd1AFUrAbghfY+U+mwFvvuH9QYbYxeaYjmfkvkq8EWM7Ayoi6nThxyaWvF+tCCVCAumi9nmynZX2wG3tdSFmjXSu7V6x6m/ciOjiSknyLtX+rt6P0yaRDfBYzxiOeXfFNIY57HQDoMlHSsLPNBk=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=huaweicloud.com; spf=pass smtp.mailfrom=huaweicloud.com; arc=none smtp.client-ip=45.249.212.51
-Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=huaweicloud.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=huaweicloud.com
-Received: from mail.maildlp.com (unknown [172.19.163.170])
-	by dggsgout11.his.huawei.com (SkyGuard) with ESMTPS id 4gP8r53lHDzYQthf
-	for <sashiko-reviews@lists.linux.dev>; Mon, 25 May 2026 16:56:21 +0800 (CST)
-Received: from mail02.huawei.com (unknown [10.116.40.252])
-	by mail.maildlp.com (Postfix) with ESMTP id 2F92C4056D
-	for <sashiko-reviews@lists.linux.dev>; Mon, 25 May 2026 16:57:14 +0800 (CST)
-Received: from [10.67.111.192] (unknown [10.67.111.192])
-	by APP3 (Coremail) with SMTP id _Ch0CgDnRS7oDhRqpvsNDg--.36805S2;
-	Mon, 25 May 2026 16:57:14 +0800 (CST)
-Message-ID: <e116eaee-b911-4ddd-a8e6-2054083af03d@huaweicloud.com>
-Date: Mon, 25 May 2026 16:57:12 +0800
+	s=arc-20240116; t=1779699588; c=relaxed/simple;
+	bh=P0iPoUrCX0i2z81+BjaUOb6jBhK7FXHYkARN9CouXzg=;
+	h=Mime-Version:Content-Type:Date:Message-Id:Cc:To:From:Subject:
+	 References:In-Reply-To; b=KKmtLv4UOsC9+DOi8FXTJXuQsjDvdRLKR+SnPP+AX0wuy36/ZvkbnO7Sp+tfwqgz/WwweUWnHGYAwFiqt30naNoICxsIo6ckcxSgLdmoBSAMphDB3OkAE9xWyYuKWaSaTW9TE+fBNliVVtKfsMLpuOoha/gxfnIMOrniaeZaA14=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=Ch71tKFK; arc=none smtp.client-ip=209.85.128.53
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+Authentication-Results: smtp.subspace.kernel.org;
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="Ch71tKFK"
+Received: by mail-wm1-f53.google.com with SMTP id 5b1f17b1804b1-49050ff7cbdso16961555e9.2
+        for <sashiko-reviews@lists.linux.dev>; Mon, 25 May 2026 01:59:45 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20251104; t=1779699584; x=1780304384; darn=lists.linux.dev;
+        h=in-reply-to:references:subject:from:to:cc:message-id:date
+         :content-transfer-encoding:mime-version:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=nvvat9B5X9G8HfxiqwKVComVcnJ0sI0Jsr4rM8U1Hx4=;
+        b=Ch71tKFKKixaT0VcckCo8XCzFjBktpBHirezo6RqF/PbCII/R4b/MCoEz1kUlYrMh7
+         2nxTTb9QJMT7jf38lUm4Bc80E71A6eRaIeIJUkKUi9oqAPOiltSiu/+rZlH2H/9S6hm5
+         HI6N6Ns356v0aWqE6vN+N4sg6hoEx2LN48ZoX/TL6sGMQQHrrLCwX/dE9ZIwZl4nTTMQ
+         Dzq3JeNuN7MZXi4VbebXjFwT93jK6qv5HulbP/L7BYt6nzAGXqLplfbNpPE5eUQjPRdm
+         j1g09amAMNMj9uBHIihRvTsl9zPYNgi5ORdrpv+S9k9pDlD0ZKrFT8EBVNrhWTnkucfn
+         tNsg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20251104; t=1779699584; x=1780304384;
+        h=in-reply-to:references:subject:from:to:cc:message-id:date
+         :content-transfer-encoding:mime-version:x-gm-gg:x-gm-message-state
+         :from:to:cc:subject:date:message-id:reply-to;
+        bh=nvvat9B5X9G8HfxiqwKVComVcnJ0sI0Jsr4rM8U1Hx4=;
+        b=gBC+qieXHcRxPgo3s0hKIarU+ABqdR8XsKSzNRGIoKzr6TDiMaLhhicIEIEVxAG6pt
+         Abj0hDtVLVBD12jaqB8lTvt7wC2T+FNPROyuK80B4MjLehxA7790rtnAgYQjWs2ZL/Zn
+         gG2kq6AE9zVaSix1yCpRFXr7F55TiYfznpdkKUrhlSKCRMzFNdOOI3o0qYgJfa1yxkQ3
+         E8vI90bvh988tSNK89vc2YeDEFWrO5Edl4D2G4S8DZcd3CP4V48Y4wH+Zn15myZCS8YE
+         s5JhqMlTXWPznsOOXXSThD/ZUm9bPRbrTy4YXFpFnNiwUa3JG76rcjnSexwu8kJVgNcU
+         VoUw==
+X-Gm-Message-State: AOJu0YwB39NbJBL0jy/Zc3p5yxbc+N1BOk63ilrDxWt8yTwezESW7UJU
+	5qtct6E6Kh1Lp4TPR+gcCk5WOjTfkYfXvQijXt0p+EshbsXpke6lnBn1ts8Pig==
+X-Gm-Gg: Acq92OFQ7WNVesbzLkfQL20mWNokwqgmcet+nI8mBoofELjUnaLyJQQskD03PJI2xgQ
+	ep0C0XnsQj9Y8xP8xNjXVn6g3YZ3ZO0eC58s9URBgAV4QlOPcyxWZb3em9az9n2/iqopbxyGfzs
+	4N5Bhf7ip0CNGW3i56ecQXU0V3b1ZitMfBYJhJNgupBJV9LuBI6rcqguM8QQtCePK4jdTsAkP4O
+	70/EA1x7RQc5L52KD6974xx2n+wNEaDBsEKkEALapbDo+vGKgeOn5hWTGJjUQ4jqEnTROUygaHq
+	d7LMndxNwlDAbNLzBXfnDvpTxOJMUYu4y1/fhWdfof589FC+qKmSKy//pIi8IEY1H1EqLGCbVqf
+	3W3ovo3KUIPj4oByna7gBLUm9PNUlAXO84bPex7ufp2asrkarABRzRWIiobzoWl9cqTT56EvVqS
+	YXiUjsj1kw/kCfITLoXxhl00I3l8H5CRVT6Um+
+X-Received: by 2002:a05:600c:3581:b0:490:482c:4391 with SMTP id 5b1f17b1804b1-490482c4586mr226623815e9.23.1779699584332;
+        Mon, 25 May 2026 01:59:44 -0700 (PDT)
+Received: from localhost ([2001:4bb8:19a:6947:df80:1d3b:cdac:de73])
+        by smtp.gmail.com with ESMTPSA id ffacd0b85a97d-45eb6d4850dsm24145680f8f.17.2026.05.25.01.59.42
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Mon, 25 May 2026 01:59:43 -0700 (PDT)
 Precedence: bulk
 X-Mailing-List: sashiko-reviews@lists.linux.dev
 List-Id: <sashiko-reviews.lists.linux.dev>
 List-Subscribe: <mailto:sashiko-reviews+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:sashiko-reviews+unsubscribe@lists.linux.dev>
-MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH bpf 1/2] bpf: Add return value check for BPF_LSM_CGROUP
-Content-Language: en-US
-To: sashiko-reviews@lists.linux.dev
-Cc: bpf@vger.kernel.org
-References: <20260523085806.417723-2-xukuohai@huaweicloud.com>
- <20260523094804.AE9DD1F000E9@smtp.kernel.org>
-From: Xu Kuohai <xukuohai@huaweicloud.com>
-In-Reply-To: <20260523094804.AE9DD1F000E9@smtp.kernel.org>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
-X-CM-TRANSID:_Ch0CgDnRS7oDhRqpvsNDg--.36805S2
-X-Coremail-Antispam: 1UD129KBjvJXoWxurykZF43Xry7Jr1xCw1Utrb_yoWrGF4Dpr
-	Z3G390yr1DJFZFgwnrta1kZF1Fyr4UX3yrGr98Jr90van0qrWxJFyYgrWa934ayr48Cw1I
-	qF4jva9Fva4UAaDanT9S1TB71UUUUU7qnTZGkaVYY2UrUUUUjbIjqfuFe4nvWSU5nxnvy2
-	9KBjDU0xBIdaVrnRJUUUgqb4IE77IF4wAFF20E14v26r1j6r4UM7CY07I20VC2zVCF04k2
-	6cxKx2IYs7xG6rWj6s0DM7CIcVAFz4kK6r1j6r18M28lY4IEw2IIxxk0rwA2F7IY1VAKz4
-	vEj48ve4kI8wA2z4x0Y4vE2Ix0cI8IcVAFwI0_tr0E3s1l84ACjcxK6xIIjxv20xvEc7Cj
-	xVAFwI0_Cr0_Gr1UM28EF7xvwVC2z280aVAFwI0_GcCE3s1l84ACjcxK6I8E87Iv6xkF7I
-	0E14v26rxl6s0DM2AIxVAIcxkEcVAq07x20xvEncxIr21l5I8CrVACY4xI64kE6c02F40E
-	x7xfMcIj6xIIjxv20xvE14v26r1j6r18McIj6I8E87Iv67AKxVWUJVW8JwAm72CE4IkC6x
-	0Yz7v_Jr0_Gr1lF7xvr2IY64vIr41l42xK82IYc2Ij64vIr41l4I8I3I0E4IkC6x0Yz7v_
-	Jr0_Gr1lx2IqxVAqx4xG67AKxVWUJVWUGwC20s026x8GjcxK67AKxVWUGVWUWwC2zVAF1V
-	AY17CE14v26r1Y6r17MIIYrxkI7VAKI48JMIIF0xvE2Ix0cI8IcVAFwI0_Jr0_JF4lIxAI
-	cVC0I7IYx2IY6xkF7I0E14v26r1j6r4UMIIF0xvE42xK8VAvwI8IcIk0rVWUJVWUCwCI42
-	IY6I8E87Iv67AKxVWUJVW8JwCI42IY6I8E87Iv6xkF7I0E14v26r1j6r4UYxBIdaVFxhVj
-	vjDU0xZFpf9x07UE-erUUUUU=
-X-CM-SenderInfo: 50xn30hkdlqx5xdzvxpfor3voofrz/
+Mime-Version: 1.0
+Content-Transfer-Encoding: quoted-printable
+Content-Type: text/plain; charset=UTF-8
+Date: Mon, 25 May 2026 10:59:42 +0200
+Message-Id: <DIRMUL7WL5RF.SP42SSV27C8K@gmail.com>
+Cc: <robh@kernel.org>, <conor+dt@kernel.org>, <devicetree@vger.kernel.org>
+To: <sashiko-reviews@lists.linux.dev>, "Javier Carrasco"
+ <javier.carrasco.cruz@gmail.com>
+From: "Javier Carrasco" <javier.carrasco.cruz@gmail.com>
+Subject: Re: [PATCH v3 4/4] iio: light: veml6031x00: add support for events
+ and trigger
+X-Mailer: aerc 0.21.0-143-g2f3a2e260c09
+References: <20260524-veml6031x00-v3-4-29165609b2b5@gmail.com>
+ <20260525001350.987641F000E9@smtp.kernel.org>
+In-Reply-To: <20260525001350.987641F000E9@smtp.kernel.org>
 
-On 5/23/2026 5:48 PM, sashiko-bot@kernel.org wrote:
-> Thank you for your contribution! Sashiko AI review found 2 potential issue(s) to consider:
-> 
+On Mon May 25, 2026 at 2:13 AM CEST, sashiko-bot wrote:
+> Thank you for your contribution! Sashiko AI review found 8 potential issu=
+e(s) to consider:
+>
 > New issues:
-> - [High] The bounds validation for bpf_set_retval() can be bypassed by passing a pointer instead of a scalar, leading to the exact kernel panic the patch attempts to fix.
-> 
+> - [High] Cache pollution of AF_TRIG causes unintended conversions and unn=
+ecessary I2C reads.
+> - [High] The trigger reference acquired via iio_trigger_get() is leaked o=
+n probe error paths and driver unbind.
+> - [High] PM runtime usage counter leaks if the driver unbinds while an ev=
+ent is enabled.
+> - [High] Sysfs read/write functions and trigger operations access hardwar=
+e without acquiring a PM runtime reference.
+> - [High] Out-of-bounds array write in veml6031x00_trig_handler when the t=
+imestamp channel is enabled.
+> - [Medium] Dead event sysfs attributes are exposed when no IRQ is present=
+.
+>
 > Pre-existing issues:
-> - [High] Bounds enforcement is strictly restricted to BPF_PROG_TYPE_LSM, completely neglecting other vulnerable cgroup program types like BPF_PROG_TYPE_CGROUP_DEVICE.
+> - [High] Unbalanced double-put of the runtime PM usage counter on driver =
+unbind.
+> - [High] The shutdown action accesses I2C registers after PM runtime has =
+been disabled.
 > --
-> 
-> commit db7ea535b43831ef01a0cbacc405e0287e5dd010
-> Author: Xu Kuohai <xukuohai@huawei.com>
-> 
-> bpf: Add return value check for BPF_LSM_CGROUP
-> 
-> This commit adds validation for the return value set by the bpf_set_retval()
-> helper in BPF_LSM_CGROUP programs. It verifies that the provided argument
-> falls within the valid return value range for the target hook to prevent
-> kernel panics.
-> 
->> diff --git a/kernel/bpf/verifier.c b/kernel/bpf/verifier.c
->> index 7fb88e1cd7c4d..fe60a695de558 100644
->> --- a/kernel/bpf/verifier.c
->> +++ b/kernel/bpf/verifier.c
->> @@ -10462,6 +10462,9 @@ static int check_helper_call(struct bpf_verifier_env *env, struct bpf_insn *insn
->>   	case BPF_FUNC_set_retval:
->>   		if (prog_type == BPF_PROG_TYPE_LSM &&
->>   		    env->prog->expected_attach_type == BPF_LSM_CGROUP) {
-> 
+>
+> commit cbdd69d1454af4788d5d18a23d3fb6854c9981e9
+> Author: Javier Carrasco <javier.carrasco.cruz@gmail.com>
+>
+> iio: light: veml6031x00: add support for events and trigger
+>
+> The device provides a shared interrupt line for to notify events and
+> data ready, which can be used as a trigger. The interrupt line is not a
+> requirement for the device to work. Implement variants for the cases
+> whether the interrupt line is provided or not.
+>
+>> diff --git a/drivers/iio/light/veml6031x00.c b/drivers/iio/light/veml603=
+1x00.c
+>> index 9968d4414dc96..c57aaa29abf30 100644
+>> --- a/drivers/iio/light/veml6031x00.c
+>> +++ b/drivers/iio/light/veml6031x00.c
+>
+> [ ... ]
+>
+>> @@ -136,6 +189,8 @@ static const struct iio_chan_spec veml6031x00_channe=
+ls[] =3D {
+>>  		.info_mask_shared_by_all =3D BIT(IIO_CHAN_INFO_INT_TIME),
+>>  		.info_mask_shared_by_all_available =3D BIT(IIO_CHAN_INFO_INT_TIME),
+>>  		.info_mask_separate_available =3D BIT(IIO_CHAN_INFO_SCALE),
+>> +		.event_spec =3D veml6031x00_event_spec,
+>> +		.num_event_specs =3D ARRAY_SIZE(veml6031x00_event_spec),
+>
+> [Severity: Medium]
+> Will this expose dead event sysfs attributes when no IRQ is present?
+>
+> When i2c->irq is 0, the driver registers veml6031x00_info_no_irq which la=
+cks
+> event callbacks. However, this channel array unconditionally defines
+> event_spec and num_event_specs. The IIO core will parse these and expose
+> event sysfs files. Reading or writing these files will fail with -EINVAL
+> because the callbacks are NULL, which violates the sysfs API contract.
+>
+> [ ... ]
+>
+
+@Jonathan: is this how it really works? How can I then dynamically
+define even_spec to account for it?
+
+>> +static int veml6031x00_read_event_val(struct iio_dev *iio,
+>> +				      const struct iio_chan_spec *chan,
+>> +				      enum iio_event_type type,
+>> +				      enum iio_event_direction dir,
+>> +				      enum iio_event_info info,
+>> +				      int *val, int *val2)
+>> +{
+>
 > [Severity: High]
-> This is a pre-existing issue, but does restricting this check to
-> BPF_PROG_TYPE_LSM leave other cgroup program types vulnerable?
-> 
-> Programs like BPF_PROG_TYPE_CGROUP_DEVICE can also call bpf_set_retval()
-> with arbitrary positive values. If such a program returns 1 (allow)
-> after setting a positive return value like 1234, the value propagates
-> through __cgroup_bpf_check_dev_permission() and bdev_permission(), causing
-> bdev_file_open_by_dev() to return ERR_PTR(1234).
+> Are PM runtime references needed here before accessing hardware?
 >
-> Since 1234 is not a valid negative error code, IS_ERR() would return false,
-> potentially leading to a kernel panic when the caller attempts to
-> dereference 1234 as a file pointer.
+> This function, as well as veml6031x00_write_event_val() and
+> veml6031x00_set_trigger_state(), performs I2C accesses via regmap without
+> first calling pm_runtime_resume_and_get(). If the device is
+> runtime-suspended and its PM domain has powered it off, will these I2C
+> accesses fail or time out?
+>
+> [ ... ]
 >
 
-Good catch! Confirmed with a PoC.
+As I said for [2/4], reading registers in shutdown mode is absolutely
+fine.
 
-> Should we extend this validation to all cgroup program types?
-> 
-
-I think so, will do.
-
->> +			struct bpf_retval_range range;
->> +			struct bpf_reg_state *r1 = &regs[BPF_REG_1];
+>> +static int veml6031x00_write_event_config(struct iio_dev *iio,
+>> +					  const struct iio_chan_spec *chan,
+>> +					  enum iio_event_type type,
+>> +					  enum iio_event_direction dir,
+>> +					  bool state)
+>> +{
+>> +	struct veml6031x00_data *data =3D iio_priv(iio);
+>> +	int ret;
 >> +
->>   			if (!env->prog->aux->attach_func_proto->type) {
->>   				/* Make sure programs that attach to void
->>   				 * hooks don't try to modify return value.
->> @@ -10469,6 +10472,13 @@ static int check_helper_call(struct bpf_verifier_env *env, struct bpf_insn *insn
->>   				verbose(env, "BPF_LSM_CGROUP that attach to void LSM hooks can't modify return value!\n");
->>   				return -EINVAL;
->>   			}
+>> +	guard(mutex)(&data->lock);
 >> +
->> +			bpf_lsm_get_retval_range(env->prog, &range);
->> +			range.return_32bit = true;
->> +			if (!retval_range_within(range, r1)) {
-> 
+>> +	/* avoid multiple increments/decrements from one source */
+>> +	if (state =3D=3D data->ev_en)
+>> +		return 0;
+>> +
+>> +	if (state) {
+>> +		ret =3D pm_runtime_resume_and_get(data->dev);
+>
 > [Severity: High]
-> Can this bounds check be bypassed if a pointer is passed instead of a scalar?
-> 
-> Because bpf_set_retval_proto uses ARG_ANYTHING, check_func_arg() allows
-> pointer registers when env->allow_ptr_leaks is true (which is the case
-> with CAP_BPF).
-> 
-> If a pointer like PTR_TO_STACK is passed without a variable offset,
-> its s32_min_value and s32_max_value are both 0. Since 0 falls within the
-> valid [-MAX_ERRNO, 0] range, retval_range_within() will allow it.
-> 
-> At runtime, the 64-bit pointer address would be truncated to a 32-bit integer,
-> potentially yielding an arbitrary positive return value and causing the exact
-> kernel panic this patch intends to fix.
-> 
-> Should the verifier explicitly ensure that R1 is a SCALAR_VALUE before
-> validating its range?
+> Could this leak the PM runtime usage counter if the driver unbinds?
+>
+> Enabling an event increments the PM runtime usage counter here. If the
+> driver is unbound via sysfs while an event is enabled, the IIO core does
+> not automatically disable the event. Since there is no unbind cleanup
+> mechanism to release the pending PM reference when data->ev_en is true,
+> does this keep the device powered on indefinitely?
+>
+> [ ... ]
 >
 
-Yes, will check if R1 is SCALAR in next version
+@Jonathan: Does the IIO core let the event enabled? What is the
+approach to clear it then?
 
->> +				verbose_invalid_scalar(env, r1, range, "At bpf_set_retval", "R1");
->> +				return -EINVAL;
->> +			}
->>   		}
->>   		break;
->>   	case BPF_FUNC_dynptr_data:
-> 
+>> +/* AF_TRIG is reset by hardware, but the rest of the fields are persist=
+ent */
+>> +static int veml6031x00_set_af_trig(struct veml6031x00_data *data, bool =
+state)
+>> +{
+>> +	regcache_drop_region(data->regmap, VEML6031X00_REG_CONF0,
+>> +			     VEML6031X00_REG_CONF0);
+>> +
+>> +	return regmap_update_bits(data->regmap, VEML6031X00_REG_CONF0,
+>> +				  VEML6031X00_CONF0_AF_TRIG,
+>> +				  FIELD_PREP(VEML6031X00_CONF0_AF_TRIG, state));
+>> +}
+>
+> [Severity: High]
+> Can this cause unintentional active force conversions due to cache pollut=
+ion?
+>
+> This sets the self-clearing AF_TRIG bit using regmap_update_bits().
+> Because CONF0 is not marked as a volatile register, regmap_update_bits()
+> writes AF_TRIG=3D1 and caches it. Any subsequent read-modify-write on CON=
+F0
+> (e.g., toggling the interrupt or changing integration time) will read the
+> cached AF_TRIG=3D1 and write it back to hardware, unintentionally trigger=
+ing
+> an active force conversion and causing hardware state corruption.
+>
+> [ ... ]
+>
 
+I will define the CONF0 register as volatile to account for this.
+
+>>  static irqreturn_t veml6031x00_trig_handler(int irq, void *p)
+>>  {
+>>  	struct iio_poll_func *pf =3D p;
+>>  	struct iio_dev *iio =3D pf->indio_dev;
+>>  	struct veml6031x00_data *data =3D iio_priv(iio);
+>>  	int ch, ret, i =3D 0;
+>>  	struct {
+>>  		__le16 chans[2];
+>>  		aligned_s64 timestamp;
+>>  	} scan =3D { };
+>>
+>>  	if (*iio->active_scan_mask =3D=3D (BIT(VEML6031X00_SCAN_ALS) |
+>>  				       BIT(VEML6031X00_SCAN_IR))) {
+>>  		ret =3D regmap_bulk_read(data->regmap,
+>>  				       VEML6031X00_REG_ALS_L,
+>>  				       &scan.chans, sizeof(scan.chans));
+>>  		if (ret)
+>>  			goto done;
+>>  	} else {
+>>  		iio_for_each_active_channel(iio, ch) {
+>>  			ret =3D regmap_bulk_read(data->regmap,
+>>  					       iio->channels[ch].address,
+>>  					       &scan.chans[i++],
+>
+> [Severity: High]
+> Does this loop cause an out-of-bounds array write if the timestamp
+> channel is enabled?
+>
+> The iio_for_each_active_channel() loop does not exclude the soft timestam=
+p
+> channel. If the user enables ALS, IR, and TIMESTAMP channels, the loop
+> iterates 3 times. However, the scan.chans array is declared as
+> __le16 chans[2]. Processing the timestamp channel increments the index i
+> to 2 and writes to scan.chans[2], causing an out-of-bounds memory write.
+>
+> Furthermore, because the timestamp channel's address is 0, this incorrect=
+ly
+> attempts a bogus I2C read from VEML6031X00_REG_CONF0.
+>
+> [ ... ]
+>
+
+Not sure if this is a real issue, and the address for channel 0 is not
+CONF0 because it is defined in iio_chan_spec
+veml6031x00_channels.address.
+
+>> +static int veml6031x00_setup_irq(struct i2c_client *i2c, struct iio_dev=
+ *iio)
+>> +{
+>> +	struct veml6031x00_data *data =3D iio_priv(iio);
+>> +	struct device *dev =3D data->dev;
+>> +	int ret;
+>> +
+>> +	data->trig =3D devm_iio_trigger_alloc(dev, "%s-drdy%d", iio->name,
+>> +					    iio_device_id(iio));
+>> +	if (!data->trig)
+>> +		return -ENOMEM;
+>> +
+>> +	data->trig->ops =3D &veml6031x00_trigger_ops;
+>> +	iio_trigger_set_drvdata(data->trig, iio);
+>> +
+>> +	ret =3D devm_iio_trigger_register(dev, data->trig);
+>> +	if (ret)
+>> +		return ret;
+>> +
+>> +	iio->trig =3D iio_trigger_get(data->trig);
+>
+> [Severity: High]
+> Is the trigger reference acquired here leaked on driver unbind?
+>
+> Calling iio_trigger_get() increments the trigger device's refcount and th=
+e
+> driver module's refcount. If the driver fails probe afterwards or is unbo=
+und
+> later, iio_trigger_put() is never called because there is no devres actio=
+n
+> registered for it and no custom remove callback. Does this permanently le=
+ak
+> the trigger device reference and prevent the module from being unloaded?
+>
+> [ ... ]
+>
+
+Same here. I believe that only industrialio-trigger.c makes use of
+iio_trigger_put().
+
+>> @@ -618,6 +1039,10 @@ static int veml6031x00_probe(struct i2c_client *i2=
+c)
+>
+> [ ... ]
+>
+>>  	ret =3D devm_add_action_or_reset(dev, veml6031x00_als_shutdown_action,=
+ data);
+>
+> [Severity: High]
+> This is a pre-existing issue, but does this shutdown action access I2C
+> registers after PM runtime has been disabled?
+>
+> This action is registered via devm_add_action_or_reset() before PM runtim=
+e
+> is enabled. On teardown, devm actions run in reverse, meaning PM runtime =
+is
+> disabled before the shutdown action runs. The shutdown action then attemp=
+ts
+> I2C writes while PM runtime is disabled. If the device was suspended, it
+> cannot be resumed, potentially causing I2C transfer failures.
+>
+> [ ... ]
+>
+>>  	pm_runtime_put_autosuspend(dev);
+>
+> [Severity: High]
+> This is a pre-existing issue, but is there an unbalanced double-put of th=
+e
+> runtime PM usage counter on driver unbind?
+>
+> The probe function registers a cleanup action to drop the PM reference vi=
+a
+> devm_pm_runtime_get_noresume(dev). However, this explicit put at the end
+> of probe means the devm action will drop the reference a second time on
+> unbind, causing a PM usage counter underflow that breaks the PM runtime
+> state machine.
+
+As I said for [2/4], there won't be any counter underflow that way.
+
+Best,
+Javier
