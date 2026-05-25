@@ -1,77 +1,65 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 97D83305684;
-	Mon, 25 May 2026 19:08:54 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D2E0D7E0E8;
+	Mon, 25 May 2026 19:31:09 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1779736135; cv=none; b=YbI/EFsQ0yV9YpmoNO9RwLWKWiB4G9IYUWAXgMgkK7FFN9uMu3bkGtppsjXEmROZGG5sFPrT6Trt/RRhkNw83vVLIgsVvjiKBPmbS2Wj/fRLxwYMMwKhjKcuEIyR4JgLHdzmonnCsFnTqN+jEojW+h3kGoldqsuGmhnFlYzl3Rg=
+	t=1779737471; cv=none; b=Dd9+ZmX+pcuICMpNZb19OjipsDr/ylnk2bX+ZVQWCW0to7BioIPI6B3aOSP4LeRlV8Ukf8q2gjaXckYb2ksMWuzWQ7jOS7Ptzs1NYMWBZIu50XuhqHKFWYnf5QRCBT30e9xzO4JXscqsggKAJxaBgNRPKgOaIW2P0sHBQJ2BkiA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1779736135; c=relaxed/simple;
-	bh=psWr5Ra3S1+T0qmP+j1ZT22j2o4RvkP48ItcuQ1y11c=;
-	h=Date:From:To:Cc:Subject:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=dWuFyL8O9BhQrEWltbLeQTMLZh9ecFmiY8i4mt5K4ElPdB0Pok7iqVqpvqZpemu4XBO7KPQ97EXtlURCa4hBK0KjI+fgzzuXVol9NYR6BV0LlTrSHUxxkqRNq3Cy6QhIaLZZvHe7NbuVxjlMlSNHWIEVClUHYRLiDiWB96nWLSg=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=CPDpUGdU; arc=none smtp.client-ip=100.103.45.18
+	s=arc-20240116; t=1779737471; c=relaxed/simple;
+	bh=N8gKdsAi0eTXOEj0ow9BrIHwETIymwpVPAEdei5eMLk=;
+	h=Date:From:To:Cc:Subject:Message-Id:In-Reply-To:References:
+	 Mime-Version:Content-Type; b=uAhCVusHDDiJP7RMvPmycIn+BuTjYhoMtJnbciKo1KnOCk5OVMydNsT80rbFVIlufBoTU38E7zLechmd3M0mniZ9EDQf29qUfBPXUzVHPya2r8QgmR42WLJvmx5vg4NXSPGNEYYK/BbS5DpUy3LuShrxivryRxrxyRrrgvYWFfg=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linux-foundation.org header.i=@linux-foundation.org header.b=CiwsqtlS; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="CPDpUGdU"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id F40DE1F000E9;
-	Mon, 25 May 2026 19:08:53 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=kernel.org;
-	s=k20260515; t=1779736134;
-	bh=JlLnJwu/Ox/kDjl4MFqofOdgURhg0UQ3j5uHccDwMdw=;
+	dkim=pass (1024-bit key) header.d=linux-foundation.org header.i=@linux-foundation.org header.b="CiwsqtlS"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id AC72C1F000E9;
+	Mon, 25 May 2026 19:31:08 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+	d=linux-foundation.org; s=korg; t=1779737469;
+	bh=QvrEoRjjhq9hE4z0e/L8Y7gfSYwRsEYYg3744tOFPOs=;
 	h=Date:From:To:Cc:Subject:In-Reply-To:References;
-	b=CPDpUGdUVo1EqJVpz2hEmNSYUdaSvaWO2zvPWStcPpL39GG03nTZcv5xCGI+FC7rw
-	 DzxG63QDQUk5SFBXUiZkUeaf/8zi7oX38mNeMYpWkVzns6X5kMPDEQQP6P4TBRIldQ
-	 In1Df2uTawaeIVy/J5+JVHGyYK2ia+lQtfkwkKIpvnulCPV3wqsBe3Byh0AlFYfvud
-	 cbmkFm7HrUn9CVmXcHm7OOR2hlu2la3tTsitWxo+IaLqBPXdtQZcbuNaenCnBDLI1d
-	 Tl1On7HBVtouGSmsiyUlfeMYTYyPQFgdeaE4JwP4cn/RDsUzEIjyyiOeaMUjUGH0vC
-	 jZIYFf/RtWxZQ==
-Date: Mon, 25 May 2026 12:08:53 -0700
-From: Jakub Kicinski <kuba@kernel.org>
-To: Lorenzo Bianconi <lorenzo@kernel.org>
-Cc: sashiko-reviews@lists.linux.dev, robh@kernel.org,
- devicetree@vger.kernel.org, conor+dt@kernel.org, netdev@vger.kernel.org
-Subject: Re: [PATCH net-next v8 10/10] net: airoha: Support multiple LAN/WAN
- interfaces for hw MAC address configuration
-Message-ID: <20260525120853.7157bc9a@kernel.org>
-In-Reply-To: <ahFkG32jFRJ7W_cv@lore-desk>
-References: <20260519-airoha-eth-multi-serdes-v8-10-6bd70e329df6@kernel.org>
-	<20260520085934.54AD01F00894@smtp.kernel.org>
-	<ag2t4eVe4DcfU2yZ@lore-desk>
-	<20260522112514.1ad6e947@kicinski-fedora-PF5CM1Y0>
-	<ahCtsVA1VhYmhZq-@lore-desk>
-	<20260522165820.04839729@kernel.org>
-	<ahFkG32jFRJ7W_cv@lore-desk>
+	b=CiwsqtlSv5tLtltiP4np3cPPoXXu+ECJba3j5uIoAsOrZwr1PKr2Io2fOFRsFVGbj
+	 sNOM6allwT3Ub4CpsT3bHF7ez01xQ60dt2dY7DIdIZU+YashBqk0aLBV2JXYaT1SJo
+	 AVofEgKXf7njpIj9jFN0NIytr2OWDcVqwi99jS/E=
+Date: Mon, 25 May 2026 12:31:08 -0700
+From: Andrew Morton <akpm@linux-foundation.org>
+To: Kiryl Shutsemau <kirill@shutemov.name>
+Cc: sashiko-reviews@lists.linux.dev, kvm@vger.kernel.org, rppt@kernel.org,
+ peterx@redhat.com, david@kernel.org, ljs@kernel.org, surenb@google.com,
+ vbabka@kernel.org, Liam.Howlett@oracle.com, ziy@nvidia.com, corbet@lwn.net,
+ skhan@linuxfoundation.org, seanjc@google.com, pbonzini@redhat.com,
+ jthoughton@google.com, aarcange@redhat.com, sj@kernel.org,
+ usama.arif@linux.dev, linux-mm@kvack.org, linux-kernel@vger.kernel.org,
+ linux-doc@vger.kernel.org, linux-kselftest@vger.kernel.org,
+ kernel-team@meta.com
+Subject: Re: [PATCH v4 03/14] mm: rename uffd-wp PTE accessors to uffd
+Message-Id: <20260525123108.0b66d07c4be97dab3536dfde@linux-foundation.org>
+In-Reply-To: <ahRf00RTI4_0Puux@thinkstation>
+References: <20260525113737.1942478-4-kas@kernel.org>
+	<20260525120513.C51E91F00A3A@smtp.kernel.org>
+	<ahRf00RTI4_0Puux@thinkstation>
+X-Mailer: Sylpheed 3.8.0beta1 (GTK+ 2.24.33; x86_64-pc-linux-gnu)
 Precedence: bulk
 X-Mailing-List: sashiko-reviews@lists.linux.dev
 List-Id: <sashiko-reviews.lists.linux.dev>
 List-Subscribe: <mailto:sashiko-reviews+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:sashiko-reviews+unsubscribe@lists.linux.dev>
-MIME-Version: 1.0
+Mime-Version: 1.0
 Content-Type: text/plain; charset=US-ASCII
 Content-Transfer-Encoding: 7bit
 
-On Sat, 23 May 2026 10:23:55 +0200 Lorenzo Bianconi wrote:
-> > If the MACs are not provided something is obviously wrong with the
-> > device. We should try to provide enough functionality for the user
-> > to be able to troubleshoot. For an AP perhaps that means SSH / remote
-> > logs? So switching/routing doesn't have to work, I'd think. 
-> > 
-> > Will the user be able to log in when REG_FE_LAN_MAC_H does not match
-> > the MAC of a port?  
-> 
-> REG_FE_LAN_MAC_H and REG_FE_WAN_MAC_H regs are used by the FE module to
-> hw accelerate forwarded traffic and does not prevent the user to log into
-> the device even if they are set to a different values with respect to the
-> configured mac addresses (just hw acceleration will not work properly).
-> To prove it, I set to 0 REG_FE_WAN_MAC_H, REG_FE_WAN_MAC_LMIN and
-> REG_FE_WAN_MAC_LMAX and I still able to ping the device via the WAN
-> interface.
-> I guess the easiest solution is to neglect errors from airoha_set_macaddr()
-> in airoha_dev_init() (as it is in the current codebase) in order to allow
-> the device to probe successfully and provide a warning message to the user
-> regarding the mac address misconfiguration. What do you think?
+On Mon, 25 May 2026 15:43:32 +0100 Kiryl Shutsemau <kirill@shutemov.name> wrote:
 
-Maybe we should also enter some sort of error mode where bridging and
-forwarding offloads are rejected? Either way, sounds orthogonal enough
-to this series.
+> To: sashiko-reviews@lists.linux.dev
+
+hm.  What's this.
+
+Sashiko seems to have been useful this time around.
+
+> Confirmed and pre-existing ... Will address in a separate
+> patch on top of this series.
+
+There are quite a few like this.  Would it be better to address these
+existing issues immediately then base the new feature-add on top?
