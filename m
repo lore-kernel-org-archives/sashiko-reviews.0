@@ -1,72 +1,71 @@
-Received: from mail-wr1-f44.google.com (mail-wr1-f44.google.com [209.85.221.44])
+Received: from mail-wm1-f44.google.com (mail-wm1-f44.google.com [209.85.128.44])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 692EB3ED5D9
-	for <sashiko-reviews@lists.linux.dev>; Mon, 25 May 2026 15:43:59 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.221.44
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 404F93F0773
+	for <sashiko-reviews@lists.linux.dev>; Mon, 25 May 2026 15:44:16 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.44
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1779723841; cv=none; b=P7mOuJIYzrNJJbqlMNqhBQg2dX8FbFa68buqDNqePSEhTSUql+TB9ehQUOM7CJc47/Z6LhjTEPc1NXX5NL9U4DrespPxZm9R+wF9B618eecs3FecQfAdFW/ZVAWt0W3Choyq6clgmc3WUzI4+QUXADiOUVXYRyboPQYxsur9Jt0=
+	t=1779723857; cv=none; b=QbcLAZrkP7crmjZg33GCkkmdzeju5C/OI3kqVedcuJp9fRG+NL9TNsZNf3Ed/GOf3iTGOQRFzykcEgzydD4D+OOs9vbjEewBpD0FHEdAlpcZ+IBZGCtMgdWosDAxeRx+9fu9KOV5Q4bSwTBGXysgrGPpW009T5aTrqeQUuXig9Q=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1779723841; c=relaxed/simple;
-	bh=aMZRjOFT5FjzGfTu9MbE+34/GXhCUK+r+60ybmg16ps=;
+	s=arc-20240116; t=1779723857; c=relaxed/simple;
+	bh=6yr/TZL+jG3AO0/J4h5aLvKtPOiLQW4800CcvJ5a7mI=;
 	h=From:Date:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=Qp6TiBZXXj6nLz4JV3FiZRyh+sKMPB8WXmju4bj+F3NPszVJ9BRAYA+CQGkUhww2MFyb76VzAMenxo6M5mbYOnzYl252ZW9PkEu53738GvCyXHyy03HqRClUbfysHf47vVY9LsQ58hj2xZP9J0SIruHbPt6dx8BvXvlAVO9PWi4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=AbTI9idH; arc=none smtp.client-ip=209.85.221.44
+	 Content-Type:Content-Disposition:In-Reply-To; b=cfsokyyXeYYnTOZF0oYmjP7mfu+B9W1g6T69FZInMPNJcIQDGJu32IuDNNW6nTnfMhE2YLW6Ra4hu8XoEMGttOK1KqzdBwFM/YHnyytl/DM3NXt7SOiBIK4ArVSf8bx2hfCZVSpan1ysQZq93letapLDkgJiLccUU4aSuGkCJwo=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=ZbIL5kdz; arc=none smtp.client-ip=209.85.128.44
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="AbTI9idH"
-Received: by mail-wr1-f44.google.com with SMTP id ffacd0b85a97d-44b330c5cc6so7425036f8f.1
-        for <sashiko-reviews@lists.linux.dev>; Mon, 25 May 2026 08:43:59 -0700 (PDT)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="ZbIL5kdz"
+Received: by mail-wm1-f44.google.com with SMTP id 5b1f17b1804b1-4906869f0cbso8407675e9.1
+        for <sashiko-reviews@lists.linux.dev>; Mon, 25 May 2026 08:44:16 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20251104; t=1779723838; x=1780328638; darn=lists.linux.dev;
+        d=gmail.com; s=20251104; t=1779723855; x=1780328655; darn=lists.linux.dev;
         h=in-reply-to:content-transfer-encoding:content-disposition
          :mime-version:references:message-id:subject:cc:to:date:from:from:to
          :cc:subject:date:message-id:reply-to;
-        bh=abZqFBSzztWZdpGscSRSKYjWVyMSes28s0s+iKg65LE=;
-        b=AbTI9idHKXyA+XP1ZapjPSmsipF5MqnkTbug3q38LvvNpupupHOWwlSwE42L+tMo1x
-         BgL/3UbCJbRQFYlRSDV3wFEFG36lQYMZ9N9pbl1G10lELF0rHzcNRMGP0MkyYqZUMvt8
-         JKP8FnkNdwz3cGZzlpeoTiVs54wOWGoYVjD++fJUBRQHp8ubMITVr49pFX4JTxp5vcg0
-         ddKPYmZTX+nENkPOsrZO3NmUNDjt92uX6NqxUIIgms25IOTVjG/48Ihmm6FkCEfVPMSh
-         kZ0FbQv/vDmKh8wGp7/MyktingD+1AyUKuP6DW20weXP2bo1VauyLSjwM5LKLLp+DQjw
-         OtQg==
+        bh=9mYRg0yKJiJYKF/BL7N7a/URtWVcgMPdn6a6SoBoPV4=;
+        b=ZbIL5kdzaxRlwKX8QxYhIMiQQrlT1hMCAEkcGUpyMRTMw0NBSvg7dmryghroGQEC7c
+         PNtHda9cI8Eigz6QQKg12zoOI3C7Rmq/xd1DKh2ziwbHMqN4vmvaTg0Te3/AwLfQHnx8
+         MBly7Lt+yDEa+SZrwSKH7KSeRBfJNcKEKx5I7HFZgKOyLtXv9Nw41WD2cWGZrxYDGfra
+         aQMhU0WT/WbKkohA8vi//9nUYHoU0UzsrcHlDyfAM8azCSLXD+lh6u/Sf8bhro/bb3Dr
+         xrYc7rkyLuELfi4u+mLx7xxu+sEa6PPGnxkGd3IJ2PF2e7mpY7g/n+mLdxPAaKfXYW5E
+         ufJg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20251104; t=1779723838; x=1780328638;
+        d=1e100.net; s=20251104; t=1779723855; x=1780328655;
         h=in-reply-to:content-transfer-encoding:content-disposition
          :mime-version:references:message-id:subject:cc:to:date:from:x-gm-gg
          :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=abZqFBSzztWZdpGscSRSKYjWVyMSes28s0s+iKg65LE=;
-        b=HMcEoixLi9P3TUiAxAydicd9ZDDbtTrb9ARU8q1eEjCH6xyi4/k7GTk5WdAeOFnQA6
-         oKL6eKLjTFPoGNSvfDuz+4wh8jTmKpbMCyeQb/n8r1FwQryBkbByceaEVGEG/iTafscH
-         GzyR4IIkXd+yvztlIETIR0aU73Czt7m/Z77dVPEBVHMY8rEwIzu2TA1dNjp9VfjPgakW
-         qtvuWGdqjJYjxiL+/DwSKtjJtqeBVq1M9s6VdQP2YXh4Qt2MP0n9GIUio3mAtfN+ucWL
-         4wFtqHcV0NMYTI9Azzr0loXOwQPIPduK0IUSXWKyDMNW1JQcTJfW/d+WmoN4FLYA5aId
-         jNqA==
-X-Gm-Message-State: AOJu0YxuC/sXOpqxwTvw0zsPbJc3lKNk99qAXtugHdeLfjFyTB8fGii8
-	xU2mvQeKpUcTzpRnNru+r/U2OiiyUL2syYt4py8BVVauPpXiv1Mx4D/acOpAnuVC
-X-Gm-Gg: Acq92OHK1BNoNuqZbvV41kESMUHxY6ryPAx1T7pSC2PVrDOscSyaGa86g8VBEMZEoOo
-	o+vwDmk4oMH1dO5lGdZvKKsQOSgRc77NnpXKi1TvAovituI4c0WIEAlrqAOTjarnvXwMXdVriIm
-	kXd5htLxW+i1Voc4ecWrtF/aw8Ml24BYirj4uUgO5W465zLQken3zd4pFAn+2Ia96zSmjMpvRZm
-	vlnxU/yLyLFGVr7qkj3XJHkN0PsdQ1bHFLFuNgNFb1l9GGKlCFSIT3D6WybUYCYIVz6VU83dtAk
-	VeDMApYnMipjC4TL3HVf6STkV1fcY2SXW7nHq3eop1pE9R43HpnugQ/D1GlDrH4ustact6mBMqk
-	Q0S0RvY62uDchUHI3gF+hclwG2VS0Fq/Y81DS2Z2qY+x9XLHr04HD6zql4oX+Zwl+sW15819ynH
-	OXHyQYslcyEAE=
-X-Received: by 2002:a05:6000:4283:b0:44d:261:54c5 with SMTP id ffacd0b85a97d-45eb38b7934mr24032618f8f.30.1779723837463;
-        Mon, 25 May 2026 08:43:57 -0700 (PDT)
+        bh=9mYRg0yKJiJYKF/BL7N7a/URtWVcgMPdn6a6SoBoPV4=;
+        b=dM9udTO5BCm3X4Fxmh0HR+qF/xqFV3oh8y6aKQD8jUu5jfa6Ls9sBS7FyCVPKGRmfn
+         1uAMGTim1e9cz+Bq20yNKAFyHuwDCsVCBxa2rL+1Oq5GtF6O9HIGA6fJHq6e+tvKYxFr
+         GADH4UcCnAN6iAAB/ImrZS8MQI+yNwzqlt0YQLiN/4irD3GrSD0gTxa9VPcgPeXP3rvH
+         XVAB+3g0aGubf0sW+KvYM0a5Ny9HwtqT8/Sl9nzFPV3NVClS6VKS/gdw49hRs+cYTV2c
+         Yrt31ocBeG9gyCbKZTCdChJBnhROpgSuz3aIf48dqBGChPo281SUG4FmR57k0LERQnEP
+         LFHw==
+X-Gm-Message-State: AOJu0Yy3YUiH3TLz2TYkA0BwGZO0HoRM+thXIF9fs+nkoDvKEVdqIrEs
+	gi2YbA5uLcEbPZ/9sd9Ovn7IJN7Ue7l8IZQAP2/smuxDL22cqzJ3LnDnPOFq2Kcc
+X-Gm-Gg: Acq92OEfo7fPH5WHlTVg1FPrKDPTe9q9Im4EYxDBYQJF/6KEPDP3kdR97qeTPoYH9wh
+	e66HkmnktjYqxWJuvHqjv60OCg6u+wbf6KEzVWLnCpUdZTQh/LLZvS9reXLF/5wNf+e6+jUoZpc
+	YoQC+SNtSfq0gYb6mJqpg1GJmFcB9tHSmz4+8ca0mxi4EgyoJV3N2iZrDNHzbBQxANTF76U4dwB
+	zQV7rtCSp6Y16FfeAmGFBFYHaj1XckFYayE4WE+KgLZfGUrz82b1o4GkfwuBrCUSVMasP3qhBEO
+	suF47qrrX5qp4/X4yKjGoM7a/RtxAimq0VA0xecf2GPRkPka4vZ26IGhd3sXGUHixnbAdO41b6O
+	SoZcJx7fIOmQBAvFgLW7ktvzolJo0vRtxW6Kqdg7GWf5ovDxGaCUtcEQBvHhj4MoFXJpJmUFr3P
+	G0DSGTc8eE4Ps=
+X-Received: by 2002:a05:600c:4510:b0:48f:d5a0:284e with SMTP id 5b1f17b1804b1-490428e03b8mr238487825e9.28.1779723854249;
+        Mon, 25 May 2026 08:44:14 -0700 (PDT)
 Received: from krava ([176.74.159.170])
-        by smtp.gmail.com with ESMTPSA id ffacd0b85a97d-45eb6d5e484sm27025259f8f.30.2026.05.25.08.43.56
+        by smtp.gmail.com with ESMTPSA id 5b1f17b1804b1-4904179826dsm116003335e9.2.2026.05.25.08.44.13
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Mon, 25 May 2026 08:43:57 -0700 (PDT)
+        Mon, 25 May 2026 08:44:13 -0700 (PDT)
 From: Jiri Olsa <olsajiri@gmail.com>
 X-Google-Original-From: Jiri Olsa <jolsa@kernel.org>
-Date: Mon, 25 May 2026 17:43:55 +0200
+Date: Mon, 25 May 2026 17:44:12 +0200
 To: sashiko-reviews@lists.linux.dev
 Cc: bpf@vger.kernel.org
-Subject: Re: [PATCHv3 07/12] selftests/bpf: Emit nop,nop10 instructions combo
- for x86_64 arch
-Message-ID: <ahRuO6X_Kox3tVXH@krava>
-References: <20260521124411.31133-8-jolsa@kernel.org>
- <20260521132121.EEB4E1F000E9@smtp.kernel.org>
+Subject: Re: [PATCHv3 06/12] libbpf: Detect uprobe syscall with new error
+Message-ID: <ahRuTKNgJ8UmguT7@krava>
+References: <20260521124411.31133-7-jolsa@kernel.org>
+ <20260521132920.227EB1F000E9@smtp.kernel.org>
 Precedence: bulk
 X-Mailing-List: sashiko-reviews@lists.linux.dev
 List-Id: <sashiko-reviews.lists.linux.dev>
@@ -76,70 +75,70 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=iso-8859-1
 Content-Disposition: inline
 Content-Transfer-Encoding: 8bit
-In-Reply-To: <20260521132121.EEB4E1F000E9@smtp.kernel.org>
+In-Reply-To: <20260521132920.227EB1F000E9@smtp.kernel.org>
 
-On Thu, May 21, 2026 at 01:21:21PM +0000, sashiko-bot@kernel.org wrote:
+On Thu, May 21, 2026 at 01:29:19PM +0000, sashiko-bot@kernel.org wrote:
 > Thank you for your contribution! Sashiko AI review found 1 potential issue(s) to consider:
-> - [Medium] Changing the USDT_NOP macro to emit a 10-byte NOP breaks libbpf discovery, disables kernel uprobe optimizations, and relies on an architecturally unsafe patching concept.
-> --
+> - [High] Missing kernel-side dependency causes selftest failure and feature detection breakage
 
-all the other changes are in other commits, I keep the changes separated
-for now, we can squash them later if we think it's good idea
+replied in the previous post:
+https://lore.kernel.org/bpf/agzJtkZuSRVK3YR_@krava/
 
 jirka
 
+> --
 > 
-> commit 963f950434fd00b2b52a00da58d5968fea9d4ebc
+> commit 2bfbf90e3446befa63868457a72590c57c20d562
 > Author: Jiri Olsa <jolsa@kernel.org>
 > 
-> selftests/bpf: Emit nop,nop10 instructions combo for x86_64 arch
+> libbpf: Detect uprobe syscall with new error
 > 
-> This commit updates the USDT_NOP macro for x86_64 to emit a 1-byte nop
-> followed by a 10-byte nop. This is intended to test new uprobe
-> optimization support in the kernel.
+> This commit updates libbpf feature detection and selftests to expect
+> EPROTO instead of ENXIO when the uprobe syscall is called outside a
+> kernel-generated uprobe trampoline.
 > 
-> > diff --git a/tools/testing/selftests/bpf/usdt.h b/tools/testing/selftests/bpf/usdt.h
-> > --- a/tools/testing/selftests/bpf/usdt.h
-> > +++ b/tools/testing/selftests/bpf/usdt.h
+> > diff --git a/tools/lib/bpf/features.c b/tools/lib/bpf/features.c
+> > index 4f19a0d79b0cf..a37aaea5253e5 100644
+> > --- a/tools/lib/bpf/features.c
+> > +++ b/tools/lib/bpf/features.c
+> > @@ -577,10 +577,10 @@ static int probe_ldimm64_full_range_off(int token_fd)
+> >  static int probe_uprobe_syscall(int token_fd)
+> >  {
+> >  	/*
+> > -	 * If kernel supports uprobe() syscall, it will return -ENXIO when called
+> > +	 * If kernel supports uprobe() syscall, it will return -EPROTO when called
+> >  	 * from the outside of a kernel-generated uprobe trampoline.
+> >  	 */
+> > -	return syscall(__NR_uprobe) < 0 && errno == ENXIO;
+> > +	return syscall(__NR_uprobe) < 0 && errno == EPROTO;
+> 
+> [Severity: High]
+> Is this patch missing a kernel-side dependency? Looking at the current kernel
+> tree in arch/x86/kernel/uprobes.c, SYSCALL_DEFINE0(uprobe) still explicitly
+> returns -ENXIO:
+> 
+> if (!in_uprobe_trampoline(regs->ip))
+>         return -ENXIO;
+> 
+> Without the corresponding kernel patch to change this to -EPROTO, will
+> this cause libbpf to incorrectly conclude that the uprobe syscall is
+> unsupported, and cause the updated selftests below to fail?
+> 
+> >  }
+> 
 > [ ... ]
-> > @@ -313,7 +313,7 @@ struct usdt_sema { volatile unsigned short active; };
-> >  #if defined(__ia64__) || defined(__s390__) || defined(__s390x__)
-> >  #define USDT_NOP			nop 0
-> >  #elif defined(__x86_64__)
-> > -#define USDT_NOP                       .byte 0x90, 0x0f, 0x1f, 0x44, 0x00, 0x0 /* nop, nop5 */
-> > +#define USDT_NOP                       .byte 0x90, 0x66, 0x2e, 0x0f, 0x1f, 0x84, 0x00, 0x00, 0x00, 0x00, 0x00 /* nop, nop10 */
 > 
-> [Severity: Medium]
-> Does this change to a 10-byte nop break the libbpf discovery logic?
-> 
-> Looking at has_nop_combo() in tools/lib/bpf/usdt.c, it seems to
-> explicitly check for the 6-byte sequence (0x90, 0x0f, 0x1f, 0x44, 0x00, 0x00).
-> 
-> If has_nop_combo() returns false, the target IP won't advance to the
-> multi-byte nop, leaving the probe at the 1-byte instruction.
-> 
-> Since the kernel's can_optimize() in arch/x86/kernel/uprobes.c requires
-> an instruction length of 5, does this cause the selftest to silently
-> degrade to the slower int3 breakpoint path rather than testing the
-> intended optimization?
-> 
-> Additionally, is it safe to replace a 10-byte nop with a 5-byte call on
-> x86_64?
-> 
-> The 5-byte call pushes IP + 5 to the stack. When the uprobe trampoline
-> returns, execution would resume at IP + 5, which lands exactly in the
-> middle of the 10-byte nop sequence.
-> 
-> Could those remaining 5 bytes (0x00, 0x00, 0x00, 0x00, 0x00) be
-> incorrectly decoded, leading to unexpected behavior like memory
-> corruption or application crashes?
-> 
-> Would using two consecutive 5-byte nops instead of a single 10-byte
-> nop safely provide the padding needed for a 5-byte patch?
-> 
-> >  #else
-> >  #define USDT_NOP			nop
-> >  #endif
+> > diff --git a/tools/testing/selftests/bpf/prog_tests/uprobe_syscall.c b/tools/testing/selftests/bpf/prog_tests/uprobe_syscall.c
+> > index 955a37751b52d..c944136252c6d 100644
+> > --- a/tools/testing/selftests/bpf/prog_tests/uprobe_syscall.c
+> > +++ b/tools/testing/selftests/bpf/prog_tests/uprobe_syscall.c
+> > @@ -762,7 +762,7 @@ static void test_uprobe_error(void)
+> >  	long err = syscall(__NR_uprobe);
+> >  
+> >  	ASSERT_EQ(err, -1, "error");
+> > -	ASSERT_EQ(errno, ENXIO, "errno");
+> > +	ASSERT_EQ(errno, EPROTO, "errno");
+> >  }
 > 
 > -- 
-> Sashiko AI review · https://sashiko.dev/#/patchset/20260521124411.31133-8-jolsa@kernel.org?part=1
+> Sashiko AI review · https://sashiko.dev/#/patchset/20260521124411.31133-7-jolsa@kernel.org?part=1
