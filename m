@@ -1,148 +1,148 @@
-Received: from mx0a-0031df01.pphosted.com (mx0a-0031df01.pphosted.com [205.220.168.131])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-ed1-f48.google.com (mail-ed1-f48.google.com [209.85.208.48])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1FF92324B22;
-	Mon, 25 May 2026 09:35:08 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.168.131
-ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1779701710; cv=none; b=Otvab/C7qq2clkZ8wkjotDP3qyzn7AfzvPCaI7eEjN25TL/ZHHyrkKi1mbHCEP4qiJjRYtpuv6PIalHGfvw/OHx81m20ZX/jPanPr1nmsW/mLXF1yTtvHOcjp+qFQH9IZLHf1IExXoI6yvMt8wXd+QyBlQ7/FeDvcpRU+pct2eI=
-ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1779701710; c=relaxed/simple;
-	bh=1cwSj+wuJx/itv+ZmJHrAzksMm7TwoHLYvxftVkfKcc=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=RNoW/QTJ0X9Fk0LSqpnpLmuf3CdsP2vda4Bae1VLHvHpngIuZGVJguhjuse5CQxefjwjEk3PvFJ3Tj9obI3+K5Fm/8mqo/+5GwJ8QLcjpRtu7qIw044YiqlQoD1+GzS6jBx/fAdar11yJBQ57xinhnWwJXty41/o55/mYcIBNSA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com; spf=pass smtp.mailfrom=qualcomm.com; dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b=ireRREY2; arc=none smtp.client-ip=205.220.168.131
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=qualcomm.com
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3CBE03E5EE2
+	for <sashiko-reviews@lists.linux.dev>; Mon, 25 May 2026 09:53:56 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=pass smtp.client-ip=209.85.208.48
+ARC-Seal:i=2; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
+	t=1779702839; cv=pass; b=m5MOSiv+obeCj9QF7ZWKKaidxzCruTZWyyCwfdTKMU76Rf5ipBs6JIQs/LXpNsY//FGLkubizdhk88NqkstEyQoruUzBpfaq9xNcTITB42bcYYqWTj2VBe1jU3CAe3BFBru9MmAYx7oKqmHolWPso2dwstipY70x2Z+suannibU=
+ARC-Message-Signature:i=2; a=rsa-sha256; d=subspace.kernel.org;
+	s=arc-20240116; t=1779702839; c=relaxed/simple;
+	bh=9TUVUM631fkXgOeQauKTVy1Pir25s4xdaUauD1SJh94=;
+	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
+	 To:Cc:Content-Type; b=lBHijOweALaDETs2+SExyE/f9bG26NcjGAvsXQqKWHPpxgSu20arY0o1MsNOPXbxLiep0TQuyxei2IWSDFTZ2CF32UuCdDy5FbG7/WPDjzm8nGJySUFEf09Zb1MN7uTZuLd68tewQhJhq6ql4dIYSWnGQbsZSsbPiVFrnZeQs7c=
+ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=flipper.net; spf=pass smtp.mailfrom=flipper.net; dkim=pass (2048-bit key) header.d=flipper.net header.i=@flipper.net header.b=pOG1ktfB; arc=pass smtp.client-ip=209.85.208.48
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=flipper.net
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=flipper.net
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b="ireRREY2"
-Received: from pps.filterd (m0279862.ppops.net [127.0.0.1])
-	by mx0a-0031df01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id 64P9EJ60079191;
-	Mon, 25 May 2026 09:34:58 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=qualcomm.com; h=
-	cc:content-transfer-encoding:content-type:date:from:in-reply-to
-	:message-id:mime-version:references:subject:to; s=qcppdkim1; bh=
-	aERorl8PN3gDoNsxGdbl0MdT5E8Sf4bdoBmoK0Ydoe0=; b=ireRREY2UtyHqXP1
-	3p+cmJx/4cYlxX2t2Zwxp30+M17MrGubqOP8uf/eStALGvi5Ol37rQ/ESsqc3kML
-	OKg7NlGxxFmCplDFbEAePb1usqo9Ol++No4uzJvfiCYzGaVSvZdaCuDgnpTd77Yr
-	zxeN69LwZC5yZdF6wG34gpiJ90HL+9ALnKZR/lyIBj4msq6UHjHCUdGclC77zwuF
-	GljtJ63aUfoMlN+0ZuPswS0mvp5vmatN2lpKQvj5NEXVL8jmGh/+PG0U0AzEv/jT
-	uzhJBMosPmdM4QDP25qwE94KmFiNqG7nxrPmIHioWmeWIgHxJDOy2EiNRZSgLN1G
-	RwPqdg==
-Received: from apblrppmta01.qualcomm.com (blr-bdr-fw-01_GlobalNAT_AllZones-Outside.qualcomm.com [103.229.18.19])
-	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 4eckma82ss-1
-	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Mon, 25 May 2026 09:34:58 +0000 (GMT)
-Received: from pps.filterd (APBLRPPMTA01.qualcomm.com [127.0.0.1])
-	by APBLRPPMTA01.qualcomm.com (8.18.1.7/8.18.1.7) with ESMTP id 64P9Ys8t006777;
-	Mon, 25 May 2026 09:34:54 GMT
-Received: from pps.reinject (localhost [127.0.0.1])
-	by APBLRPPMTA01.qualcomm.com (PPS) with ESMTPS id 4eb5ahteuj-1
-	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Mon, 25 May 2026 09:34:54 +0000 (GMT)
-Received: from APBLRPPMTA01.qualcomm.com (APBLRPPMTA01.qualcomm.com [127.0.0.1])
-	by pps.reinject (8.18.1.12/8.18.1.12) with ESMTP id 64P9YshP006772;
-	Mon, 25 May 2026 09:34:54 GMT
-Received: from hu-devc-hyd-u22-c.qualcomm.com (hu-kotarake-hyd.qualcomm.com [10.213.97.140])
-	by APBLRPPMTA01.qualcomm.com (PPS) with ESMTPS id 64P9YsOd006770
-	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Mon, 25 May 2026 09:34:54 +0000 (GMT)
-Received: by hu-devc-hyd-u22-c.qualcomm.com (Postfix, from userid 2389607)
-	id 4C35CB2D; Mon, 25 May 2026 15:04:53 +0530 (+0530)
-Date: Mon, 25 May 2026 15:04:53 +0530
-From: Rakesh Kota <rakesh.kota@oss.qualcomm.com>
-To: sashiko-reviews@lists.linux.dev
-Cc: Komal Bajaj <komal.bajaj@oss.qualcomm.com>, devicetree@vger.kernel.org,
-        linux-phy@lists.infradead.org, neil.armstrong@linaro.org,
-        conor+dt@kernel.org, olteanv@gmail.com, vkoul@kernel.org,
-        robh@kernel.org, kamal.wadhwa@oss.qualcomm.com,
-        jishnu.prakash@oss.qualcomm.com
-Subject: Re: [PATCH v3 3/5] arm64: dts: qcom: Add Shikra CQ2390M SoM platform
-Message-ID: <20260525093453.edmqryggp5kcqxxy@hu-kotarake-hyd.qualcomm.com>
-References: <20260522-shikra-dt-v3-3-80ffde8a3dc4@oss.qualcomm.com>
- <20260522191013.23B0C1F000E9@smtp.kernel.org>
+	dkim=pass (2048-bit key) header.d=flipper.net header.i=@flipper.net header.b="pOG1ktfB"
+Received: by mail-ed1-f48.google.com with SMTP id 4fb4d7f45d1cf-68852a4fc68so3823138a12.3
+        for <sashiko-reviews@lists.linux.dev>; Mon, 25 May 2026 02:53:55 -0700 (PDT)
+ARC-Seal: i=1; a=rsa-sha256; t=1779702834; cv=none;
+        d=google.com; s=arc-20240605;
+        b=hD4TSxeKgb8KDTs/ltFee/H1N5XwIpVC599vgba8Vx9Lf9ezWbL/njOVGszLkQVidq
+         GlTaZSvDPUDUonzEQsqXFhGFg7Bni3GoLfYg719oi+St8A4ii6VyFdMk9WfqwTk7HOAJ
+         s32NXFjDYV5Wi1Ud5s7HRKBx1psSyBAP5cv+xVa6hjYyPtWmdUmbJe7a1t19oYnWiEm2
+         +J+wNVvvV5uU3bWE0p1aUA1ZMcxPUpJC9Hz5oT3twjr4ZVD4sclvh9xdgFI0XKEWw2P+
+         TvV6c57RXBoe5ygO7G7m95eh7cFb+kUJnbx//Acvxz7pXuy6utDCiAI0MjA5E/CNysEz
+         eoJA==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com; s=arc-20240605;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:dkim-signature;
+        bh=e0mRTzemrrXVivpXOaPKIL2ignRf6ovf+dcZAtCU0OY=;
+        fh=vz3pN3PK/bu+NRXdfIvIk2p5+cHuimYs4qHOOK8kDks=;
+        b=KwN+AOxOVAKz+N7WjTL/Iog9yNEMzxBKJMDjhZo863SvnayJO09rrsYOj+Q5q1Ohcw
+         jI/FojUKrew6sL99pzUhtvVVV+aM/Qg/oTwrepAXXINzQxVlO+hREbegDVaYVDDq2CCg
+         soET6VIlhu7ElAa+sAsU6GD/N4UEz/93UisqWjbXJJsq3bBIld6wUyABkiF0aUW4W3JR
+         4ARKxXgzpROzxFRTcCt/ajTltOS/YFqk1u8bXk6paF0U1mqHmn1nB6T5d+NJleSew/uC
+         XVYagGkB9f9E41dmI26Uyk6MMrd05DIjEIEIdxGgiA0ZAnvCoFK9SpFYcB2r5iqEEynY
+         HsZw==;
+        darn=lists.linux.dev
+ARC-Authentication-Results: i=1; mx.google.com; arc=none
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=flipper.net; s=google; t=1779702834; x=1780307634; darn=lists.linux.dev;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=e0mRTzemrrXVivpXOaPKIL2ignRf6ovf+dcZAtCU0OY=;
+        b=pOG1ktfBPFmVUia6IyfdXyHiLi3oA6ta66XmLgRZ8G5F3cFEatklcaeJo2U1JzrD++
+         gsEbS/Hw6RAvE8eGJQcOtU59GZVLBIemhX/qlRm8Q5mw4jzly/FWvFRX3+DmqkomSUPn
+         nKeNJiMYo2ZD09nF2r6MNjEE7faFkknyp5vxqDpYlJ3KOv/QZxFAnlNSB5YjVINTWm1X
+         5yRaMJg3IW0ymd6GA354xMjl3Neh817N8ALbXR1wxqnXjC97uRsqwseQN5puSt2WxboW
+         5Qv3ycQY6QG9qX5KzKeueuC1AXp4YEJggVW6llCTxuFiwJdLbB/SlUw1xsOTjBHEwequ
+         4pDg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20251104; t=1779702834; x=1780307634;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:x-gm-gg:x-gm-message-state:from
+         :to:cc:subject:date:message-id:reply-to;
+        bh=e0mRTzemrrXVivpXOaPKIL2ignRf6ovf+dcZAtCU0OY=;
+        b=Sm5HSZbxl4RPkW1G0tL7ORTZiyIE/Az/PJe41fLEiRSv1P2pTTO2vPegQg7aKicOIM
+         rnFmEyx2R9TGfEa4KGSK6bJGglPrsKZBIvI9y5GbthvgQ+JiCCp0jaHCAGdRltVUpxx0
+         iYY19ENtqW9gpc6M6KHHVr/qvmLhYno7DH+oyC02ntcHK4pl32Mei4zvwe0xXK99Kbck
+         BSsEFY9H1kyVf8sYSvcC8LxE+lkHGN+SwQmux6M8DicfzHouf5SKtSN5E8hooUZFX8UK
+         4JnY443h+GUpU97jyW7xATdhVkzs97Fg5fp2WygIbfxm+RWk4pwxUjUmj5rIUEltWUaO
+         KWUg==
+X-Gm-Message-State: AOJu0YyXvwETK06tP6v9tAQQB9ZaEudUfiiKX4CTitNL+FJqXnmTHbtg
+	F752nqNSqu2uPULoLntfGh/yNTtRoElBPm+6NQrhccX7fqKO2S6wzNhJXNr04xKj4NCInZjm01y
+	U75pnm1KljaCs0/QP09DwR0pwpmU8rW7HKIHn1Fw+XHdwoVLKKTN2g0+g6log
+X-Gm-Gg: Acq92OE5JEb4NCuIY0Km6pgeweUYn3gRzerrOgiXLl7La6IWfQ9oIesVd2eoaVeOxEG
+	wp24O0aRVDH+Y6kDfx0AFOKpXmV93lj0flmbN98qjLNWH5ZrwrD1yGOGEQ7gcbp5Vep3hZQlQTG
+	ovJ/LgL3p4xSDb6kF+UPcj3UaeLSzmEN7o5SRXCzaaep63SjBrFwBAwpOvOLlZBZFUr55RGlBw+
+	KFL0gkzcfNt6+47Mo+mITC8u76oztmygX5RllU/01DIm7VgytBpRZ7ZdXMk/sKEGuvBLeV/5Z3m
+	jAHqdoK9LsylGWTxH991ai6dMB1UOBE+NqVkcHQrkpBOXHIJ66A=
+X-Received: by 2002:a17:907:7703:b0:be2:11d7:8b05 with SMTP id
+ a640c23a62f3a-be211d79063mr44830266b.24.1779702834376; Mon, 25 May 2026
+ 02:53:54 -0700 (PDT)
 Precedence: bulk
 X-Mailing-List: sashiko-reviews@lists.linux.dev
 List-Id: <sashiko-reviews.lists.linux.dev>
 List-Subscribe: <mailto:sashiko-reviews+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:sashiko-reviews+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-Content-Transfer-Encoding: 8bit
-In-Reply-To: <20260522191013.23B0C1F000E9@smtp.kernel.org>
-X-QCInternal: smtphost
-X-QCInternal: smtphost
-X-Authority-Analysis: v=2.4 cv=cL3QdFeN c=1 sm=1 tr=0 ts=6a1417c2 cx=c_pps
- a=Ou0eQOY4+eZoSc0qltEV5Q==:117 a=Ou0eQOY4+eZoSc0qltEV5Q==:17
- a=IkcTkHD0fZMA:10 a=NGcC8JguVDcA:10 a=VkNPw1HP01LnGYTKEx00:22
- a=u7WPNUs3qKkmUXheDGA7:22 a=_K5XuSEh1TEqbUxoQ0s3:22 a=VwQbUJbxAAAA:8
- a=EUspDBNiAAAA:8 a=1FUQUpU6QHfrpmvLx8oA:9 a=3ZKOabzyN94A:10 a=QEXdDO2ut3YA:10
-X-Proofpoint-ORIG-GUID: ExxfN7E2PfhBIgUHJ5awJWAt2ht5vaJv
-X-Proofpoint-GUID: ExxfN7E2PfhBIgUHJ5awJWAt2ht5vaJv
-X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwNTI1MDA5NyBTYWx0ZWRfXwCYTS+ICWKTx
- HOOP85wwTbqkawMl7xtzzultOLy24p5xJuBoNrcsjRihKN/GQFepOLIZYrTR4KrPEdcwGir1q3T
- 7U0jKtiXIcSwYR/rS+iFl4NX/0PuxOMa3L4rSMKqEJCLapdZI8YLEFiMjJBJENs6zNgoy4MvwRB
- oOS4Oz5ODqhzw/qEZ5OXIvQ8twwhOL8uFA+lZEPETTFd23pL/MPwCi59vOHfQ44QCBtt2QQLJev
- 3Opsz72uoSDp24OesO7Fy0HKVly14lBe6aTBSZx+zF0Tq2/D+j7A94zliZikIoEDF4kEc7CyJhY
- 1pz2BfeGQN4kHavB2GIuZqc9dIlGb1/D7M7lq+RYHdsXMXfjNwpLcR4P3frcrXgw0s9aawVI4su
- v9yXk9F1uuDcbBY6iebX9uFEnTISy9ydj4BiVhS/90Xn57hfHo0CziE8uV3Yk1H7VMp5c07I/yR
- qbxPtRqNGwWh0LMIcag==
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.293,Aquarius:18.0.1143,Hydra:6.1.51,FMLib:17.12.100.49
- definitions=2026-05-25_02,2026-05-18_01,2025-10-01_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
- malwarescore=0 bulkscore=0 priorityscore=1501 phishscore=0 adultscore=0
- lowpriorityscore=0 spamscore=0 suspectscore=0 clxscore=1015 impostorscore=0
- classifier=typeunknown authscore=0 authtc= authcc= route=outbound adjust=0
- reason=mlx scancount=1 engine=8.22.0-2605130000 definitions=main-2605250097
+References: <20260525-nau8822-reg-v2-1-7d37ae393e46@flipper.net> <20260525092932.711941F000E9@smtp.kernel.org>
+In-Reply-To: <20260525092932.711941F000E9@smtp.kernel.org>
+From: Alexey Charkov <alchark@flipper.net>
+Date: Mon, 25 May 2026 13:53:48 +0400
+X-Gm-Features: AVHnY4Li0Dn-doAlVFWhwDaAildAQH7ofwuLtWPuB8AVZZnwi6l94z_pEObcXw8
+Message-ID: <CAKTNdwFhkwxzqqzMqT8cXqtOCZBdYZKa7A=ajowxZx5gW4gCfg@mail.gmail.com>
+Subject: Re: [PATCH v2 1/2] ASoC: dt-bindings: nau8822: Add supply regulators
+To: sashiko-reviews@lists.linux.dev
+Cc: conor+dt@kernel.org, robh@kernel.org, devicetree@vger.kernel.org
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 
-On Fri, May 22, 2026 at 07:10:12PM +0000, sashiko-bot@kernel.org wrote:
-> Thank you for your contribution! Sashiko AI review found 1 potential issue(s) to consider:
-> - [Medium] The commit message claims to add PM8005 PMIC regulator definitions, but the patch explicitly disables the PM8005 regulators and provides no configuration.
-> --
-> 
-> commit b8207cdfd80924e291ee52448a105708aa7b6a09
-> Author: Komal Bajaj <komal.bajaj@oss.qualcomm.com>
-> 
-> arm64: dts: qcom: Add Shikra CQ2390M SoM platform
-> 
-> This commit adds the device tree include for the CQ2390M variant of the
-> Shikra System-on-Module. It integrates the Shikra SoC and includes PMIC
-> regulator configurations for the retail SoM.
-> 
-> > The DTSI includes the common shikra.dtsi, adds PM4125 and PM8005 PMIC
-> > regulator definitions specific to this variant.
-> 
-> [ ... ]
-> 
-> > diff --git a/arch/arm64/boot/dts/qcom/shikra-cqm-som.dtsi b/arch/arm64/boot/dts/qcom/shikra-cqm-som.dtsi
-> > new file mode 100644
-> > --- /dev/null
-> > +++ b/arch/arm64/boot/dts/qcom/shikra-cqm-som.dtsi
-> 
-> [ ... ]
-> 
-> > +&pm8005_regulators {
-> > +	status = "disabled";
-> > +};
-> 
-> [Severity: Medium]
-> Is the commit message inaccurate, or are the definitions for the PM8005
-> regulators missing from this patch?
-> 
-> The commit message states that PM8005 PMIC regulator definitions are
-> added, but the code explicitly disables them without providing any
-> configuration. If the SoM variant requires the PM8005 regulators to power
-> hardware components, will leaving them disabled result in runtime failures?
+On Mon, May 25, 2026 at 1:29=E2=80=AFPM <sashiko-bot@kernel.org> wrote:
 >
-Yes, you are right — we will update the commit message to reflect this
-more clearly.
+> Thank you for your contribution! Sashiko AI review found 1 potential issu=
+e(s) to consider:
+> - [Low] Typo in the description for `vddspk-supply`.
+> --
+>
+> commit 2a0698dd10cf90a92b31e252ae2cfd2a236cf2d9
+> Author: Alexey Charkov <alchark@flipper.net>
+> ASoC: dt-bindings: nau8822: Add supply regulators
+>
+> This commit adds optional power supply pins (VDDA, VDDB, VDDC, and VDDSPK=
+)
+> to the NAU8822 device tree binding. This allows device tree users to ensu=
+re
+> correct power sequencing before communicating with the device.
+>
+> > diff --git a/Documentation/devicetree/bindings/sound/nuvoton,nau8822.ya=
+ml b/Documentation/devicetree/bindings/sound/nuvoton,nau8822.yaml
+> > index cb8182bbc491f..cf4c130382411 100644
+> > --- a/Documentation/devicetree/bindings/sound/nuvoton,nau8822.yaml
+> > +++ b/Documentation/devicetree/bindings/sound/nuvoton,nau8822.yaml
+>
+> [ ... ]
+>
+> > @@ -30,6 +30,20 @@ properties:
+> >    clock-names:
+> >      const: mclk
+> >
+> > +  vdda-supply:
+> > +    description: Analog power supply
+> > +
+> > +  vddb-supply:
+> > +    description: Digital buffer (input/output) supply
+> > +
+> > +  vddc-supply:
+> > +    description: Digital core supply
+> > +
+> > +  vddspk-supply:
+> > +    description:
+> > +      Speaker supply (power supply pin for RSPKOUT, LSPKOUT, AUXOUT2 a=
+nd
+> > +      AUXTOUT1 output drivers)
+>
+> [Severity: Low]
+> This isn't a bug, but there appears to be a typo here. Should this be
+> AUXOUT1 instead of AUXTOUT1 to match the actual pin and driver definition=
+?
 
-The reason for disabling pm8005_regulators here is that the PM8005
-regulators are controlled by rpmpd and are not expected to be enabled
-from this patch. They are already enabled in pm8005.dtsi, so this change
-does not affect runtime failures.
+Indeed, it's a typo in the datasheet text which I copied and hadn't
+noticed (NAU8822 Datasheet Rev 3.3 page 3).
 
-regards
-Rakesh
+Best regards,
+Alexey
