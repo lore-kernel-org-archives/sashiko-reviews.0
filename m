@@ -1,188 +1,127 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D9B451DB95E;
-	Mon, 25 May 2026 05:39:52 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 032743A7F52;
+	Mon, 25 May 2026 06:58:10 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1779687594; cv=none; b=AMCaTXMJzaY5w7IZNNvSuNoq25ReByQ3soKSx6YXWNR7n7JVrsrfmkJ3VLyURj/dD4gydsdpAOEQYyoV2wVhp9T1cYA5bmnypBeoMFhwMaSoidFz92rX279qwFGIooN6e5LbWWdBMA76dEGTKftEn27DDWkVR57QT8NxUBqstbA=
+	t=1779692295; cv=none; b=MLkjnOUUMRdrdK4fm3lp3nRi5pVGtmK+3v8rpjBvopBjG3rNq6Jd5hE+BQ5mRHn40iwp4swWnZ8zFYro0P1AafQm0hKU79xqHZvjXhezmDxy2T7DmNlH2Opj30l4xLNfYvu3kaU0oxmk2mn6Wf9yTYseXxk3E7bxeKMcuU+wIW8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1779687594; c=relaxed/simple;
-	bh=BoqwVIwbfKG6qRBUp1zat90ce/lbL2YJQuhRJf89MYI=;
-	h=Date:From:To:Cc:Subject:Message-Id:In-Reply-To:References:
-	 Mime-Version:Content-Type; b=RDQPK18gAefg6twMSkj5wshQClAUcfWX3v9UocKjjwUpjtVTfPJCcuWg/mopv7yL6p27caFw8FcjOnjWds1oblSBH1bWU8AwOwqdA/xdJ62n/zkpHfSdT/7Puq03Cn++UDuL0nVIFKHRT8FiIZHtVNdheflw6O/4LDEZoNjqUKc=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=gVTskoiu; arc=none smtp.client-ip=100.103.45.18
+	s=arc-20240116; t=1779692295; c=relaxed/simple;
+	bh=+Gr3bo/4b6bslzWH5OQc0A7oXbghh7OsNlaAnkLPC64=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=FsnmiEixlk8vb2R+F0NQdhIEfzQ0Tdb2FYiG9IHxMWLaQ0pn3Lmp53yPoAuNlattM3/spRGSMbl6pyZThDF8WWpqMbFLEJneLGXeIgayzSDB6lhlPNzzgr2wuHD6uKgwn26XbrImOCSDevuhKD8sbeMKrbS2HC1Nez6tNJqvAk8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=RzhSYObS; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="gVTskoiu"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 29B0A1F000E9;
-	Mon, 25 May 2026 05:39:49 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="RzhSYObS"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7E3F61F000E9;
+	Mon, 25 May 2026 06:58:10 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=kernel.org;
-	s=k20260515; t=1779687592;
-	bh=MZaQM1CIJb5tYUUWFqF9iRavZPbaMyVkrb1OWsctPgg=;
-	h=Date:From:To:Cc:Subject:In-Reply-To:References;
-	b=gVTskoiudeMEtTDZow+oGtOHkkXNFHc3FTd1Y38WmGR+97pExD9MpScPG1mRlr1jP
-	 Padw9L0KJKZMC89hBqBRVexRzCSuu3i8KSvenHJflbaNprqVQqCjuZcdkYP69ysl4P
-	 AN70DWTVPKWC4bzW9kbrevY1GfFU9nI0WCC2rwWaWZp89zcJCTd8lkSO/GD4tkaPVC
-	 nVsBEuZtiB9l+5dP5YyUTJJtkMhXe3xnQISF15pjW0RLYxK2NehB2mNpIZtvz7AOJK
-	 6AB9owBfqIhSkpojc8eyweAk3jdhej9H4cfWKGeskCEYrLEm2IdfPpXDw2Gutrc/59
-	 slHM1jvRCZrkQ==
-Date: Mon, 25 May 2026 14:39:47 +0900
-From: Masami Hiramatsu (Google) <mhiramat@kernel.org>
-To: Rik van Riel <riel@surriel.com>
-Cc: Steven Rostedt <rostedt@goodmis.org>, Masami Hiramatsu
- <mhiramat@kernel.org>, Mathieu Desnoyers <mathieu.desnoyers@efficios.com>,
- linux-kernel@vger.kernel.org, linux-trace-kernel@vger.kernel.org,
- kernel-team@meta.com, sashiko-bot@kernel.org,
- sashiko-reviews@lists.linux.dev
-Subject: Re: [PATCH v2] perf/ftrace: Fix WARNING in
- __unregister_ftrace_function
-Message-Id: <20260525143947.ea1c0a7b29146d22faa5feda@kernel.org>
-In-Reply-To: <8f8d0cd380f40b84557304d110f38ecefc994a35.camel@surriel.com>
-References: <20260513161916.04151502@fangorn>
-	<20260520164117.528d02fd@gandalf.local.home>
-	<8f8d0cd380f40b84557304d110f38ecefc994a35.camel@surriel.com>
-X-Mailer: Sylpheed 3.8.0beta1 (GTK+ 2.24.33; x86_64-pc-linux-gnu)
+	s=k20260515; t=1779692290;
+	bh=9GMsuVITApWCiCWjCPt+wl5oC/ya7MXvk1NcNbZ+Loc=;
+	h=Date:From:To:Cc:Subject:References:In-Reply-To;
+	b=RzhSYObSOslRMXDdFHSY3I9529tqzP3MbZ+XBOZRZ80wJoo7/vadxT0I/6bi9ZmeP
+	 zBYuVHVU9hjypuMSut6ohuK/BKm309XY2AC0mkiqJSqbZBU/zh9Pb5r6s5FtbKeFep
+	 GsRuA8fgMLpw1dt4xEBdj9IfWJt5YvoLCByYAsysUN+/AMX5QVNYKJAnY4WKc1Nw43
+	 aXXqzq+jxlrdWB5R+RI3tHYxGwgx8F0oeNLYOLGlrHdHqUlifsdtBONP8EO0yBKEyB
+	 ltzUvp45xZe8+eUCRx8do05mA/ZKVdvzdYOSQ3BbLoANwDFTNA/woiG3xu3PJ0IDFW
+	 tDnxsGVi/Eglg==
+Date: Sun, 24 May 2026 23:58:09 -0700
+From: Drew Fustini <fustini@kernel.org>
+To: sashiko-reviews@lists.linux.dev
+Cc: devicetree@vger.kernel.org, robh@kernel.org, conor+dt@kernel.org
+Subject: Re: [PATCH RFC v5 08/18] riscv_cbqri: Add capacity controller
+ monitoring device ops
+Message-ID: <ahPzAaVon3TLSq8W@gen8>
+References: <20260524-ssqosid-cbqri-rqsc-v7-0-v5-8-78d3a7ba9dbe@kernel.org>
+ <20260525002922.B257D1F000E9@smtp.kernel.org>
 Precedence: bulk
 X-Mailing-List: sashiko-reviews@lists.linux.dev
 List-Id: <sashiko-reviews.lists.linux.dev>
 List-Subscribe: <mailto:sashiko-reviews+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:sashiko-reviews+unsubscribe@lists.linux.dev>
-Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8bit
+MIME-Version: 1.0
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <20260525002922.B257D1F000E9@smtp.kernel.org>
 
-On Fri, 22 May 2026 16:39:41 -0400
-Rik van Riel <riel@surriel.com> wrote:
-
-> On Wed, 2026-05-20 at 16:41 -0400, Steven Rostedt wrote:
-> > 
-> > Rik,
-> > 
-> > Can you reply to Sashiko here?
-> > 
-> > The below comes from Sashiko:
-> > https://sashiko.dev/?list=org.kernel.vger.linux-trace-kernel#/patchset/20260513161916.04151502%40fangorn
-> > 
-> > Thanks,
-> > 
-> > -- Steve
-> > 
-> > 
-> > > commit f90ac36f39b79a19c015522bb1caf7ef903caf02
-> > > Author: Rik van Riel <riel@surriel.com>
-> > > perf/ftrace: Fix WARNING in __unregister_ftrace_function
-> > > This commit attempts to fix a WARN_ON triggered during
-> > > perf_event_alloc() error
-> > > cleanup by checking FTRACE_OPS_FL_ENABLED before unregistering the
-> > > ftrace
-> > > function. The warning occurs because the ftrace_ops registration
-> > > failed or was
-> > > torn down by perf_try_init_event() earlier, but the event->destroy
-> > > callback is
-> > > executed again during the error path.
-> > > > diff --git a/kernel/trace/trace_event_perf.c
-> > > > b/kernel/trace/trace_event_perf.c
-> > > > index 61e3a2620fa3c..8d64f17135e8f 100644
-> > > > --- a/kernel/trace/trace_event_perf.c
-> > > > +++ b/kernel/trace/trace_event_perf.c
-> > > > @@ -495,7 +495,11 @@ static int
-> > > > perf_ftrace_function_register(struct perf_event *event)
-> > > >  static int perf_ftrace_function_unregister(struct perf_event
-> > > > *event)
-> > > >  {
-> > > >  	struct ftrace_ops *ops = &event->ftrace_ops;
-> > > > -	int ret = unregister_ftrace_function(ops);
-> > > > +	int ret = 0;
-> > > > +
-> > > > +	if (ops->flags & FTRACE_OPS_FL_ENABLED)
-> > > > +		ret = unregister_ftrace_function(ops);
-> > > > +
-> > > >  	ftrace_free_filter(ops);
-> > 
-> > > Does calling ftrace_free_filter() unconditionally here mask a
-> > > double-teardown
-> > > regression while leaving the underlying double-free active?
+On Mon, May 25, 2026 at 12:29:22AM +0000, sashiko-bot@kernel.org wrote:
+> > +	/* Probe monitoring features */
+> > +	err = cbqri_probe_feature(ctrl, CBQRI_CC_MON_CTL_OFF,
+> > +				  CBQRI_CC_MON_CTL_OP_READ_COUNTER, &status,
+> > +				  &has_mon_at_code);
 > 
-> I don't see how calling ftrace_free_filter() twice would
-> call issues, given that it sets the ->*_hash values to
-> EMPTY_HASH:
+> [Severity: Medium]
+> Is it safe to reuse cbqri_probe_feature() for the MON_CTL register here?
 > 
-> void ftrace_free_filter(struct ftrace_ops *ops)
-> {
->         ftrace_ops_init(ops);
->         if (WARN_ON(ops->flags & FTRACE_OPS_FL_ENABLED))
->                 return;
->         free_ftrace_hash(ops->func_hash->filter_hash);
->         free_ftrace_hash(ops->func_hash->notrace_hash);
->         ops->func_hash->filter_hash = EMPTY_HASH;
->         ops->func_hash->notrace_hash = EMPTY_HASH;
-> }
+> cbqri_probe_feature() attempts to verify Access Type (AT) support by writing
+> to the AT field bits. However, the MON_CTL register does not define an AT
+> field, which means this implicitly writes to reserved (WPRI) bits. Could
+> this helper be updated to conditionally skip the AT probe sequence for
+> monitoring registers?
+
+WPRI tolerates the write so this is not a correctness issue today. But
+to avoid confusion, I will split cbqri_probe_feature() so the AT probe
+sequence is only run for alloc_ctl registers.
+
+> Will this probe sequence falsely disable monitoring on hardware?
 > 
-> void free_ftrace_hash(struct ftrace_hash *hash)
-> {
->         if (!hash || hash == EMPTY_HASH)
->                 return;
-> ..
+> This invokes cbqri_probe_feature() using the READ_COUNTER operation, which
+> zeroes out all other fields including EVT_ID. This sends a read command for
+> the NONE event (EVT_ID=0) to an unconfigured slot, which the hardware may
+> reject with an error status. If the hardware returns an error, this check
+> will fail and disable monitoring. Could this probe instead use
+> CONFIG_EVENT or handle expected failure codes?
+
+The NONE event as is a valid configured state. But I will switch the
+probe operation to CONFIG_EVENT with a probe-safe EVT_ID to remove the
+ambiguity.
+
+> > +/*
+> > + * Pre-arm every MCID with the Occupancy event so a subsequent READ_COUNTER
+> > + * just snapshots the live counter rather than re-configuring the slot.
+> > + * Called once per CC during resctrl-side cpuhp online for the L3 monitoring
+> > + * domain.
+> > + */
+> > +int cbqri_init_mon_counters(struct cbqri_controller *ctrl)
+> > +{
+> > +	int i, err;
+> > +
+> > +	for (i = 0; i < ctrl->mcid_count; i++) {
+> > +		mutex_lock(&ctrl->lock);
+> > +		err = cbqri_mon_op(ctrl, CBQRI_CC_MON_CTL_OFF,
+> > +				   CBQRI_CC_MON_CTL_OP_CONFIG_EVENT,
+> > +				   i, CBQRI_CC_EVT_ID_OCCUPANCY, NULL);
 > 
-
-Yeah, confirmed.
-
+> [Severity: Medium]
+> Does mcid_count need bounds checking against the physical hardware limit?
 > 
-> > > In perf_try_init_event(), if a PMU event_init() succeeds but a
-> > > subsequent
-> > > capability check fails, it explicitly calls event->destroy(event)
-> > > to roll back:
-> > > kernel/events/core.c:perf_try_init_event() {
-> > >     ...
-> > > 		if (ret && event->destroy)
-> > > 			event->destroy(event);
-> > >     ...
-> > > }
+> The ctrl->mcid_count value is used as the loop boundary, but if firmware
+> supplies an erroneously large value, this loop could block the CPU for an
+> extended period during hotplug. 
 > 
-> The error handling there all seems to "goto err_destroy"
+> Additionally, because the MCID field mask is 12 bits, any mcid_count larger
+> than 4096 will be truncated in cbqri_mon_op(), causing logical MCIDs to
+> incorrectly alias to the same physical hardware slot. Should an upper bound be
+> enforced on mcid_count?
+
+I'll add a check in v6.
+
+> > +/* mon_ctl field masks (CC and BC share an identical OP/MCID/EVT_ID/STATUS layout) */
+> > +#define CBQRI_MON_CTL_OP_MASK        GENMASK(4, 0)
+> > +#define CBQRI_MON_CTL_MCID_MASK      GENMASK(19, 8)
+> > +#define CBQRI_MON_CTL_EVT_ID_MASK    GENMASK(27, 20)
 > 
-> err_destroy:
->         if (event->destroy) {
->                 event->destroy(event);
->                 event->destroy = NULL;
->         }
+> [Severity: High]
+> Will using GENMASK() here inadvertently clear the upper 32 bits of the 64-bit
+> control register on 32-bit architectures?
 > 
-> 
-> > > However, it does not set event->destroy to NULL.
-> 
-> ... but it does?
-> 
-> I am not sure what code Sashiko is looking at,
-> but it does not look like the code I just pulled.
+> When used with FIELD_MODIFY(), ~(_mask) will evaluate to a 32-bit unsigned
+> value which gets zero-extended to 64 bits. When this is bitwise ANDed with
+> the 64-bit register variable, it will wipe out the upper 32 bits, corrupting
+> the STATUS field before the register is written back. Should these 64-bit
+> field masks be defined with GENMASK_ULL() instead?
 
-Indeed.
+Yes, I will chnage to GENMASK_ULL.
 
-> 
-> Is there a different tree I should be looking at
-> than upstream Linus?
-
-You can see the baseline info if you expand the collapsed triangle.
-Anyway, it said:
-
-linux-trace/HEAD (70575e77839f4c5337ce2653b39b86bb365a870e)
-
-So that is linux-trace/master.
-
-commit 70575e77839f4c5337ce2653b39b86bb365a870e (linux-trace/master)
-Merge: 7bc6e90d7aa4 a43ae8057cc1
-Author: Linus Torvalds <torvalds@linux-foundation.org>
-Date:   Fri Sep 30 09:41:34 2022 -0700
-
-    Merge tag 'for_linus' of git://git.kernel.org/pub/scm/linux/kernel/git/mst/vhost
-
-
-Hmm, this is too old. And linux-trace/master is not used anymore.
-
-Reported to Sashiko.
-
-https://github.com/sashiko-dev/sashiko/issues/218
-
-Thank you,
-
--- 
-Masami Hiramatsu (Google) <mhiramat@kernel.org>
+-Drew
