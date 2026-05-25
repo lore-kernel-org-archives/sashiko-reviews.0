@@ -1,127 +1,95 @@
-Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from va-1-112.ptr.blmpb.com (va-1-112.ptr.blmpb.com [209.127.230.112])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 032743A7F52;
-	Mon, 25 May 2026 06:58:10 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CFA823ACF0F
+	for <sashiko-reviews@lists.linux.dev>; Mon, 25 May 2026 07:02:20 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.127.230.112
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1779692295; cv=none; b=MLkjnOUUMRdrdK4fm3lp3nRi5pVGtmK+3v8rpjBvopBjG3rNq6Jd5hE+BQ5mRHn40iwp4swWnZ8zFYro0P1AafQm0hKU79xqHZvjXhezmDxy2T7DmNlH2Opj30l4xLNfYvu3kaU0oxmk2mn6Wf9yTYseXxk3E7bxeKMcuU+wIW8=
+	t=1779692544; cv=none; b=edL/MyJ/54tIC6cyhgFm3RI8b4phQMZ3gqzvfARtHMEKaK/mGCCkVfqAKZJwEHbIhPDw+uDnvOi0O3LgvcuJwKaHqmonilF03XEPNPApXkQMqdLwRHo7Y3ytK9hYJbSc8FQ+Iqyk9DiTReyoXR9nuXjTs/plTjNychvTh+SPbEU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1779692295; c=relaxed/simple;
-	bh=+Gr3bo/4b6bslzWH5OQc0A7oXbghh7OsNlaAnkLPC64=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=FsnmiEixlk8vb2R+F0NQdhIEfzQ0Tdb2FYiG9IHxMWLaQ0pn3Lmp53yPoAuNlattM3/spRGSMbl6pyZThDF8WWpqMbFLEJneLGXeIgayzSDB6lhlPNzzgr2wuHD6uKgwn26XbrImOCSDevuhKD8sbeMKrbS2HC1Nez6tNJqvAk8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=RzhSYObS; arc=none smtp.client-ip=100.103.45.18
+	s=arc-20240116; t=1779692544; c=relaxed/simple;
+	bh=nVeNCtCxeDva7j1QDt54ZLI4KVS3DgJyxkKmXByYEAw=;
+	h=Subject:Message-Id:Mime-Version:Content-Type:From:Cc:Date:To; b=RSwc/Mj40+mT1tJS66vlML9/wqVXaNU1bBI7oaMODVz6h1Ig30glg+ZRwEjAfRroPclK3TlXl5ZLEDY8cUXegVr22yqHSEsNPCvk/W6qkWSb6u8NO9svT9a1yTGGI2VyE3o6Ez9fPhD6Gw/HV+olSTOAll6IyKvc9uZxuykx8/s=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=bytedance.com; spf=pass smtp.mailfrom=bytedance.com; dkim=pass (2048-bit key) header.d=bytedance.com header.i=@bytedance.com header.b=n8KD4sOS; arc=none smtp.client-ip=209.127.230.112
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=bytedance.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=bytedance.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="RzhSYObS"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7E3F61F000E9;
-	Mon, 25 May 2026 06:58:10 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=kernel.org;
-	s=k20260515; t=1779692290;
-	bh=9GMsuVITApWCiCWjCPt+wl5oC/ya7MXvk1NcNbZ+Loc=;
-	h=Date:From:To:Cc:Subject:References:In-Reply-To;
-	b=RzhSYObSOslRMXDdFHSY3I9529tqzP3MbZ+XBOZRZ80wJoo7/vadxT0I/6bi9ZmeP
-	 zBYuVHVU9hjypuMSut6ohuK/BKm309XY2AC0mkiqJSqbZBU/zh9Pb5r6s5FtbKeFep
-	 GsRuA8fgMLpw1dt4xEBdj9IfWJt5YvoLCByYAsysUN+/AMX5QVNYKJAnY4WKc1Nw43
-	 aXXqzq+jxlrdWB5R+RI3tHYxGwgx8F0oeNLYOLGlrHdHqUlifsdtBONP8EO0yBKEyB
-	 ltzUvp45xZe8+eUCRx8do05mA/ZKVdvzdYOSQ3BbLoANwDFTNA/woiG3xu3PJ0IDFW
-	 tDnxsGVi/Eglg==
-Date: Sun, 24 May 2026 23:58:09 -0700
-From: Drew Fustini <fustini@kernel.org>
-To: sashiko-reviews@lists.linux.dev
-Cc: devicetree@vger.kernel.org, robh@kernel.org, conor+dt@kernel.org
-Subject: Re: [PATCH RFC v5 08/18] riscv_cbqri: Add capacity controller
- monitoring device ops
-Message-ID: <ahPzAaVon3TLSq8W@gen8>
-References: <20260524-ssqosid-cbqri-rqsc-v7-0-v5-8-78d3a7ba9dbe@kernel.org>
- <20260525002922.B257D1F000E9@smtp.kernel.org>
+	dkim=pass (2048-bit key) header.d=bytedance.com header.i=@bytedance.com header.b="n8KD4sOS"
+DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed;
+ s=2212171451; d=bytedance.com; t=1779692535; h=from:subject:
+ mime-version:from:date:message-id:subject:to:cc:reply-to:content-type:
+ mime-version:in-reply-to:message-id;
+ bh=FSPlzs2arfc5IQb4eW/8WkmdON8YANDuE11YBYOEbL8=;
+ b=n8KD4sOSLz78RhwV62EDGGMUc8UtaywsjsAopjIbOMsrDioHdfebXQzG4eMWm5X1OfNVbi
+ xqhSA4KL8Kt3OGmJVWVm7EqTAmmtXMRPNRx3NeY4vgPas14jlUsF6wUpIkplDNiwoWNG9r
+ CpXHnKOWAD6jLY1NYqasdwQMjclfamR3tUCQ8OrnAbcuSOR9gWvuhZNtnniucOHp7sU0eo
+ x2afAQ6huL+oBF6zq8lKPh+mKvINo9pYQa/mRwrDfQ4xA7auJPZaX3XoIpJwXrb7KFX179
+ lL0Qy+4Dj7TSmINrtt6BOCQbvoMiqXzYy9MM04W7WwOl2G+AKAzF1Or7gtJikQ==
+Subject: [PATCH] KVM: Validate irqchip index for LoongArch and PowerPC
+Message-Id: <20260525070154.495455-1-yanfei.xu@bytedance.com>
 Precedence: bulk
 X-Mailing-List: sashiko-reviews@lists.linux.dev
 List-Id: <sashiko-reviews.lists.linux.dev>
 List-Subscribe: <mailto:sashiko-reviews+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:sashiko-reviews+unsubscribe@lists.linux.dev>
-MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <20260525002922.B257D1F000E9@smtp.kernel.org>
+Mime-Version: 1.0
+Content-Transfer-Encoding: 7bit
+X-Original-From: Yanfei Xu <yanfei.xu@bytedance.com>
+Content-Type: text/plain; charset=UTF-8
+From: "Yanfei Xu" <yanfei.xu@bytedance.com>
+X-Mailer: git-send-email 2.20.1
+Cc: <kvm@vger.kernel.org>, <loongarch@lists.linux.dev>, 
+	<linuxppc-dev@lists.ozlabs.org>, <caixiangfeng@bytedance.com>, 
+	<fangying.tommy@bytedance.com>, <yanfei.xu@bytedance.com>, 
+	<isyanfei.xu@gmail.com>, "Sashiko" <sashiko-bot@kernel.org>
+Date: Mon, 25 May 2026 15:01:54 +0800
+X-Lms-Return-Path: <lba+26a13f3f5+64fe3c+lists.linux.dev+yanfei.xu@bytedance.com>
+To: <zhaotianrui@loongson.cn>, <maobibo@loongson.cn>, 
+	<chenhuacai@kernel.org>, <maddy@linux.ibm.com>, <npiggin@gmail.com>, 
+	<sashiko-reviews@lists.linux.dev>, <seanjc@google.com>, 
+	<pbonzini@redhat.com>
 
-On Mon, May 25, 2026 at 12:29:22AM +0000, sashiko-bot@kernel.org wrote:
-> > +	/* Probe monitoring features */
-> > +	err = cbqri_probe_feature(ctrl, CBQRI_CC_MON_CTL_OFF,
-> > +				  CBQRI_CC_MON_CTL_OP_READ_COUNTER, &status,
-> > +				  &has_mon_at_code);
-> 
-> [Severity: Medium]
-> Is it safe to reuse cbqri_probe_feature() for the MON_CTL register here?
-> 
-> cbqri_probe_feature() attempts to verify Access Type (AT) support by writing
-> to the AT field bits. However, the MON_CTL register does not define an AT
-> field, which means this implicitly writes to reserved (WPRI) bits. Could
-> this helper be updated to conditionally skip the AT probe sequence for
-> monitoring registers?
+Sashiko reported that irqchip index is not validated for LoongArch and
+PowerPC. Add validation and reject out-of-range irqchip indexes to avoid
+indexing past the routing table's chip array.
 
-WPRI tolerates the write so this is not a correctness issue today. But
-to avoid confusion, I will split cbqri_probe_feature() so the AT probe
-sequence is only run for alloc_ctl registers.
+Fixes: de9ba2f36368 ("KVM: PPC: Support irq routing and irqfd for in-kernel MPIC")
+Fixes: 1928254c5ccb ("LoongArch: KVM: Add irqfd support")
+Reported-by: Sashiko <sashiko-bot@kernel.org>
+Closes: https://lore.kernel.org/kvm/20260525051714.485D51F000E9@smtp.kernel.org/
+Signed-off-by: Yanfei Xu <yanfei.xu@bytedance.com>
+---
+ arch/loongarch/kvm/irqfd.c | 3 ++-
+ arch/powerpc/kvm/mpic.c    | 3 ++-
+ 2 files changed, 4 insertions(+), 2 deletions(-)
 
-> Will this probe sequence falsely disable monitoring on hardware?
-> 
-> This invokes cbqri_probe_feature() using the READ_COUNTER operation, which
-> zeroes out all other fields including EVT_ID. This sends a read command for
-> the NONE event (EVT_ID=0) to an unconfigured slot, which the hardware may
-> reject with an error status. If the hardware returns an error, this check
-> will fail and disable monitoring. Could this probe instead use
-> CONFIG_EVENT or handle expected failure codes?
-
-The NONE event as is a valid configured state. But I will switch the
-probe operation to CONFIG_EVENT with a probe-safe EVT_ID to remove the
-ambiguity.
-
-> > +/*
-> > + * Pre-arm every MCID with the Occupancy event so a subsequent READ_COUNTER
-> > + * just snapshots the live counter rather than re-configuring the slot.
-> > + * Called once per CC during resctrl-side cpuhp online for the L3 monitoring
-> > + * domain.
-> > + */
-> > +int cbqri_init_mon_counters(struct cbqri_controller *ctrl)
-> > +{
-> > +	int i, err;
-> > +
-> > +	for (i = 0; i < ctrl->mcid_count; i++) {
-> > +		mutex_lock(&ctrl->lock);
-> > +		err = cbqri_mon_op(ctrl, CBQRI_CC_MON_CTL_OFF,
-> > +				   CBQRI_CC_MON_CTL_OP_CONFIG_EVENT,
-> > +				   i, CBQRI_CC_EVT_ID_OCCUPANCY, NULL);
-> 
-> [Severity: Medium]
-> Does mcid_count need bounds checking against the physical hardware limit?
-> 
-> The ctrl->mcid_count value is used as the loop boundary, but if firmware
-> supplies an erroneously large value, this loop could block the CPU for an
-> extended period during hotplug. 
-> 
-> Additionally, because the MCID field mask is 12 bits, any mcid_count larger
-> than 4096 will be truncated in cbqri_mon_op(), causing logical MCIDs to
-> incorrectly alias to the same physical hardware slot. Should an upper bound be
-> enforced on mcid_count?
-
-I'll add a check in v6.
-
-> > +/* mon_ctl field masks (CC and BC share an identical OP/MCID/EVT_ID/STATUS layout) */
-> > +#define CBQRI_MON_CTL_OP_MASK        GENMASK(4, 0)
-> > +#define CBQRI_MON_CTL_MCID_MASK      GENMASK(19, 8)
-> > +#define CBQRI_MON_CTL_EVT_ID_MASK    GENMASK(27, 20)
-> 
-> [Severity: High]
-> Will using GENMASK() here inadvertently clear the upper 32 bits of the 64-bit
-> control register on 32-bit architectures?
-> 
-> When used with FIELD_MODIFY(), ~(_mask) will evaluate to a 32-bit unsigned
-> value which gets zero-extended to 64 bits. When this is bitwise ANDed with
-> the 64-bit register variable, it will wipe out the upper 32 bits, corrupting
-> the STATUS field before the register is written back. Should these 64-bit
-> field masks be defined with GENMASK_ULL() instead?
-
-Yes, I will chnage to GENMASK_ULL.
-
--Drew
+diff --git a/arch/loongarch/kvm/irqfd.c b/arch/loongarch/kvm/irqfd.c
+index f4f953b22419..40ed1081c4b6 100644
+--- a/arch/loongarch/kvm/irqfd.c
++++ b/arch/loongarch/kvm/irqfd.c
+@@ -51,7 +51,8 @@ int kvm_set_routing_entry(struct kvm *kvm,
+ 		e->irqchip.irqchip = ue->u.irqchip.irqchip;
+ 		e->irqchip.pin = ue->u.irqchip.pin;
+ 
+-		if (e->irqchip.pin >= KVM_IRQCHIP_NUM_PINS)
++		if (e->irqchip.pin >= KVM_IRQCHIP_NUM_PINS ||
++		    e->irqchip.irqchip >= KVM_NR_IRQCHIPS)
+ 			return -EINVAL;
+ 
+ 		return 0;
+diff --git a/arch/powerpc/kvm/mpic.c b/arch/powerpc/kvm/mpic.c
+index 3070f36d9fb8..fb5f9e65e02e 100644
+--- a/arch/powerpc/kvm/mpic.c
++++ b/arch/powerpc/kvm/mpic.c
+@@ -1833,7 +1833,8 @@ int kvm_set_routing_entry(struct kvm *kvm,
+ 		e->set = mpic_set_irq;
+ 		e->irqchip.irqchip = ue->u.irqchip.irqchip;
+ 		e->irqchip.pin = ue->u.irqchip.pin;
+-		if (e->irqchip.pin >= KVM_IRQCHIP_NUM_PINS)
++		if (e->irqchip.pin >= KVM_IRQCHIP_NUM_PINS ||
++		    e->irqchip.irqchip >= KVM_NR_IRQCHIPS)
+ 			goto out;
+ 		break;
+ 	case KVM_IRQ_ROUTING_MSI:
+-- 
+2.20.1
