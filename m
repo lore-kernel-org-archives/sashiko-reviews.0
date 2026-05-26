@@ -1,117 +1,134 @@
-Received: from mail.loongson.cn (mail.loongson.cn [114.242.206.163])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 5B3E93A8737;
-	Tue, 26 May 2026 07:07:15 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=114.242.206.163
+Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+	(No client certificate requested)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5E32B3B637E;
+	Tue, 26 May 2026 08:11:13 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1779779240; cv=none; b=awExp1rSZrhvPlt2TVwQdIQIokvFd3icXDrroVTdxfy2yDjgAQoejFzfC0BG/+dvGzvd+meY9+xW2dl5rm4RRiOxlrkzs1ZASIzTCkHMASlhy7uRY7hTb/ZXlOKwXzkZBMs6RnfTEkog+t7oJYzYfaMDePWjyHkjsGGLVNQVVyI=
+	t=1779783074; cv=none; b=QaeEfXoCEcr1qC9T1quIqe8nMQxnU5FxDtX6YhIi6D8bD2KTGA57wf8yIrLFl+TTJhVk62EhkUSK80OJ+/5ml1fIexks/uWVfa/aMZOg4lVc6kqeEip8dDq1xT27oK49He1Ema5+zMT6qf3XhXEP0vtDxBOYfsa7ZVEJfOXSY58=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1779779240; c=relaxed/simple;
-	bh=lYwkBMemXUrvueOPcEvuH5kwhJIeWrLfaOpvqggAayM=;
-	h=Subject:To:Cc:References:From:Message-ID:Date:MIME-Version:
-	 In-Reply-To:Content-Type; b=Phmef35gYrXzGHAsA7hZrn8Rj5K9bRQYiEeNghiZT6Xb28e+zn3RCnaHJ0xC3fKNCpfNtIIZX6DmLuC2sKTD5GMygBTOGzgGz7PxVvNL0rL7MvAGuNuaQo47CiBwzUudymaFpQMhFNkMV8ZXlKT3DvAwf5xGvRgb3YE5NLB/9SQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=loongson.cn; spf=pass smtp.mailfrom=loongson.cn; arc=none smtp.client-ip=114.242.206.163
-Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=loongson.cn
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=loongson.cn
-Received: from loongson.cn (unknown [10.20.42.62])
-	by gateway (Coremail) with SMTP id _____8BxDuqhRhVq7k0NAA--.37390S3;
-	Tue, 26 May 2026 15:07:13 +0800 (CST)
-Received: from [10.20.42.62] (unknown [10.20.42.62])
-	by front1 (Coremail) with SMTP id qMiowJDxaeCdRhVqLmCRAA--.14119S3;
-	Tue, 26 May 2026 15:07:09 +0800 (CST)
-Subject: Re: [PATCH] KVM: Validate irqchip index for LoongArch and PowerPC
-To: Yanfei Xu <yanfei.xu@bytedance.com>, zhaotianrui@loongson.cn,
- chenhuacai@kernel.org, maddy@linux.ibm.com, npiggin@gmail.com,
- sashiko-reviews@lists.linux.dev, seanjc@google.com, pbonzini@redhat.com
-Cc: kvm@vger.kernel.org, loongarch@lists.linux.dev,
- linuxppc-dev@lists.ozlabs.org, caixiangfeng@bytedance.com,
- fangying.tommy@bytedance.com, isyanfei.xu@gmail.com,
- Sashiko <sashiko-bot@kernel.org>
-References: <20260525070154.495455-1-yanfei.xu@bytedance.com>
-From: Bibo Mao <maobibo@loongson.cn>
-Message-ID: <875c4486-2d88-f5c7-b921-7d33639f2e88@loongson.cn>
-Date: Tue, 26 May 2026 15:04:06 +0800
-User-Agent: Mozilla/5.0 (X11; Linux loongarch64; rv:68.0) Gecko/20100101
- Thunderbird/68.7.0
+	s=arc-20240116; t=1779783074; c=relaxed/simple;
+	bh=boKZYP1wQthbsrfFdGDPZ0BmEPFmYpiL0JoBB6o4sNU=;
+	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
+	 MIME-Version:Content-Type; b=q71kX+MuLq/NS84PxwHrTqfUCK/T3DA/x8qw+PMqX9RvD4t8LFNY2N/s55JRXzyKdvu8FJIZodHaZqAuRsGlflrAXxBK+kDqxLiFcphzZaqSghdj1UoXcv5f+YmAbl9j/IhPSXw09t5XGahgUr9bACSLVpLAvzo2eF3vNFND3sA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=IqrIMNq9; arc=none smtp.client-ip=100.103.45.18
+Authentication-Results: smtp.subspace.kernel.org;
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="IqrIMNq9"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1423B1F000E9;
+	Tue, 26 May 2026 08:11:11 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=kernel.org;
+	s=k20260515; t=1779783073;
+	bh=C0fyZ+lCgP2C/Zw159lCZ1rwik135C6Ord0Wk7x0k6A=;
+	h=From:To:Cc:Subject:In-Reply-To:References:Date;
+	b=IqrIMNq9LAEsE+JYrsYK3ws/CfDvEDoMwl3jxl3dIfjc0/yiamJO/UBBlVoLV0uO8
+	 aGiJbJlbFnrBri1LPf/zWvY263sHbRdpTUZT08ju8MlFpjqADv7b9K01CEgZHPnxHW
+	 88m0IoS2NtHbV4InghHtwd308R0N1gZDKunGZ/l+wdujIyuZoGbShZ46/HgeqRWzHZ
+	 Btf/txSKt6FyjqdKntgRzV7rM2352xMhJ/G/qmGKoPQ0pF2VMshSZjIJyh0/hrIn88
+	 cq7l2uUwAVDQhFlIE3XecA8QiBhhAOKUP58yxn8Q7aothEwPD9wYz+WNPMyP28IV6X
+	 maIzFq2mLfTvg==
+X-Mailer: emacs 30.2 (via feedmail 11-beta-1 I)
+From: Aneesh Kumar K.V <aneesh.kumar@kernel.org>
+To: sashiko-reviews@lists.linux.dev
+Cc: kvm@vger.kernel.org
+Subject: Re: [PATCH v5 1/5] vfio: cache KVM VM file references instead of
+ raw struct kvm pointers
+In-Reply-To: <20260525164753.E54191F000E9@smtp.kernel.org>
+References: <20260525154816.1029642-2-aneesh.kumar@kernel.org>
+ <20260525164753.E54191F000E9@smtp.kernel.org>
+Date: Tue, 26 May 2026 13:41:08 +0530
+Message-ID: <yq5ay0h6si8z.fsf@kernel.org>
 Precedence: bulk
 X-Mailing-List: sashiko-reviews@lists.linux.dev
 List-Id: <sashiko-reviews.lists.linux.dev>
 List-Subscribe: <mailto:sashiko-reviews+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:sashiko-reviews+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-In-Reply-To: <20260525070154.495455-1-yanfei.xu@bytedance.com>
-Content-Type: text/plain; charset=utf-8; format=flowed
-Content-Language: en-US
-Content-Transfer-Encoding: 8bit
-X-CM-TRANSID:qMiowJDxaeCdRhVqLmCRAA--.14119S3
-X-CM-SenderInfo: xpdruxter6z05rqj20fqof0/
-X-Coremail-Antispam: 1Uk129KBj93XoW7Ar1xuF47GrWUWFyUJw4rXrc_yoW8ZrW5pF
-	WUAa909rn5Grykt3Z0vw4kWr4jq3WkGr42g3WkWrZ2yry0qFn5K3W8ZrnrXr18t3yrGF40
-	9F4IgF9IqF45CacCm3ZEXasCq-sJn29KB7ZKAUJUUUU3529EdanIXcx71UUUUU7KY7ZEXa
-	sCq-sGcSsGvfJ3Ic02F40EFcxC0VAKzVAqx4xG6I80ebIjqfuFe4nvWSU5nxnvy29KBjDU
-	0xBIdaVrnRJUUUPIb4IE77IF4wAFF20E14v26r1j6r4UM7CY07I20VC2zVCF04k26cxKx2
-	IYs7xG6rWj6s0DM7CIcVAFz4kK6r1Y6r17M28lY4IEw2IIxxk0rwA2F7IY1VAKz4vEj48v
-	e4kI8wA2z4x0Y4vE2Ix0cI8IcVAFwI0_Gr0_Xr1l84ACjcxK6xIIjxv20xvEc7CjxVAFwI
-	0_Gr0_Cr1l84ACjcxK6I8E87Iv67AKxVWxJVW8Jr1l84ACjcxK6I8E87Iv6xkF7I0E14v2
-	6r4UJVWxJr1ln4kS14v26r126r1DM2AIxVAIcxkEcVAq07x20xvEncxIr21l57IF6xkI12
-	xvs2x26I8E6xACxx1l5I8CrVACY4xI64kE6c02F40Ex7xfMcIj6xIIjxv20xvE14v26r1Y
-	6r17McIj6I8E87Iv67AKxVW8JVWxJwAm72CE4IkC6x0Yz7v_Jr0_Gr1lF7xvr2IY64vIr4
-	1lc7I2V7IY0VAS07AlzVAYIcxG8wCY1x0262kKe7AKxVWUAVWUtwCF04k20xvY0x0EwIxG
-	rwCFx2IqxVCFs4IE7xkEbVWUJVW8JwCFI7km07C267AKxVWUtVW8ZwC20s026c02F40E14
-	v26r1j6r18MI8I3I0E7480Y4vE14v26r106r1rMI8E67AF67kF1VAFwI0_Jw0_GFylIxkG
-	c2Ij64vIr41lIxAIcVC0I7IYx2IY67AKxVWUJVWUCwCI42IY6xIIjxv20xvEc7CjxVAFwI
-	0_Jr0_Gr1lIxAIcVCF04k26cxKx2IYs7xG6r1j6r1xMIIF0xvEx4A2jsIE14v26r4j6F4U
-	MIIF0xvEx4A2jsIEc7CjxVAFwI0_Gr0_Gr1UYxBIdaVFxhVjvjDU0xZFpf9x07jFzuXUUU
-	UU=
+Content-Type: text/plain
 
+sashiko-bot@kernel.org writes:
 
+> Thank you for your contribution! Sashiko AI review found 1 potential issue(s) to consider:
+>
+> Pre-existing issues:
+> - [High] Concurrent BIND_IOMMUFD ioctls on multiple cdev file descriptors for the same device unconditionally overwrite device->kvm_file, leading to reference leaks and Use-After-Free.
+> --
+>
+> commit 9a5907f1fb1069cc250703cfb404e5a7be33bf23
+> Author: Aneesh Kumar K.V (Arm) <aneesh.kumar@kernel.org>
+>
+> vfio: cache KVM VM file references instead of raw struct kvm pointers
+>
+> This commit switches VFIO to track the VM's struct file instead of raw
+> struct kvm pointers to manage the KVM VM lifetime. This change allows
+> VFIO and iommufd to use normal file references for VM lifetime rather
+> than relying on KVM's internal refcounting.
+>
+>> diff --git a/drivers/vfio/device_cdev.c b/drivers/vfio/device_cdev.c
+>> index 54abf312cf049..ca75ab8eb7bd7 100644
+>> --- a/drivers/vfio/device_cdev.c
+>> +++ b/drivers/vfio/device_cdev.c
+>
+> [ ... ]
+>
+>> @@ -133,10 +133,10 @@ long vfio_df_ioctl_bind_iommufd(struct vfio_device_file *df,
+>>  	}
+>>  
+>>  	/*
+>> -	 * Before the device open, get the KVM pointer currently
+>> -	 * associated with the device file (if there is) and obtain
+>> -	 * a reference.  This reference is held until device closed.
+>> -	 * Save the pointer in the device for use by drivers.
+>> +	 * Before the device open, get the VM struct file currently
+>> +	 * associated with the device file (if there is one) and obtain a
+>> +	 * reference. This reference is held until the device is closed.
+>> +	 * Save the file in the device for use by drivers.
+>>  	 */
+>>  	vfio_df_get_kvm_safe(df);
+>>  
+>
+> [Severity: High]
+> This isn't a bug introduced by this patch, but does this unconditionally
+> overwrite device->kvm_file if concurrent BIND_IOMMUFD ioctls are called on
+> multiple cdev file descriptors for the same device?
+>
+> If a user opens a VFIO device cdev twice, getting two distinct file
+> descriptors (df1 and df2) for the same device, and successfully binds df1
+> to IOMMUFD:
+>
+> - device->kvm_file is set (with an extra refcount)
+> - device->open_count increments to 1
+>
+> When the user attempts to bind df2, the check for df->access_granted only
+> checks df2, so execution proceeds.
+>
+> Calling vfio_df_get_kvm_safe(df2) will overwrite device->kvm_file with
+> df2's KVM file. Could the previous file reference from df1 be leaked because
+> no fput() is called?
+>
+> If vfio_df_open(df2) then returns an error (because device->open_count is 1),
+> the error path jumps to out_put_kvm and calls vfio_device_put_kvm(device).
+> This drops the new reference and clears device->kvm_file to NULL.
+>
+> This leaves df1 bound and functional, but its KVM association is destroyed.
+> When df1 is eventually closed, hardware drivers like vfio_pci_zdev that check
+> vfio_device_get_kvm() will see a NULL pointer and skip their KVM
+> unregistration hooks. Can this leave KVM hooked to a closed device,
+> potentially leading to a use-after-free when KVM accesses it?
+>
 
-On 2026/5/25 下午3:01, Yanfei Xu wrote:
-> Sashiko reported that irqchip index is not validated for LoongArch and
-> PowerPC. Add validation and reject out-of-range irqchip indexes to avoid
-> indexing past the routing table's chip array.
-> 
-> Fixes: de9ba2f36368 ("KVM: PPC: Support irq routing and irqfd for in-kernel MPIC")
-> Fixes: 1928254c5ccb ("LoongArch: KVM: Add irqfd support")
-> Reported-by: Sashiko <sashiko-bot@kernel.org>
-> Closes: https://lore.kernel.org/kvm/20260525051714.485D51F000E9@smtp.kernel.org/
-> Signed-off-by: Yanfei Xu <yanfei.xu@bytedance.com>
-> ---
->   arch/loongarch/kvm/irqfd.c | 3 ++-
->   arch/powerpc/kvm/mpic.c    | 3 ++-
->   2 files changed, 4 insertions(+), 2 deletions(-)
-> 
-> diff --git a/arch/loongarch/kvm/irqfd.c b/arch/loongarch/kvm/irqfd.c
-> index f4f953b22419..40ed1081c4b6 100644
-> --- a/arch/loongarch/kvm/irqfd.c
-> +++ b/arch/loongarch/kvm/irqfd.c
-> @@ -51,7 +51,8 @@ int kvm_set_routing_entry(struct kvm *kvm,
->   		e->irqchip.irqchip = ue->u.irqchip.irqchip;
->   		e->irqchip.pin = ue->u.irqchip.pin;
->   
-> -		if (e->irqchip.pin >= KVM_IRQCHIP_NUM_PINS)
-> +		if (e->irqchip.pin >= KVM_IRQCHIP_NUM_PINS ||
-> +		    e->irqchip.irqchip >= KVM_NR_IRQCHIPS)
->   			return -EINVAL;
->   
->   		return 0;
-> diff --git a/arch/powerpc/kvm/mpic.c b/arch/powerpc/kvm/mpic.c
-> index 3070f36d9fb8..fb5f9e65e02e 100644
-> --- a/arch/powerpc/kvm/mpic.c
-> +++ b/arch/powerpc/kvm/mpic.c
-> @@ -1833,7 +1833,8 @@ int kvm_set_routing_entry(struct kvm *kvm,
->   		e->set = mpic_set_irq;
->   		e->irqchip.irqchip = ue->u.irqchip.irqchip;
->   		e->irqchip.pin = ue->u.irqchip.pin;
-> -		if (e->irqchip.pin >= KVM_IRQCHIP_NUM_PINS)
-> +		if (e->irqchip.pin >= KVM_IRQCHIP_NUM_PINS ||
-> +		    e->irqchip.irqchip >= KVM_NR_IRQCHIPS)
->   			goto out;
->   		break;
->   	case KVM_IRQ_ROUTING_MSI:
-> 
-Hi Yanfei,
+I guess we can fix this by
 
-That is important fixes, thanking for your efforts.
+modified   drivers/vfio/device_cdev.c
+@@ -115,8 +115,8 @@ long vfio_df_ioctl_bind_iommufd(struct vfio_device_file *df,
+ 		return ret;
+ 
+ 	mutex_lock(&device->dev_set->lock);
+-	/* one device cannot be bound twice */
+-	if (df->access_granted) {
++	/* The cdev path only supports one bound/open device fd. */
++	if (df->access_granted || device->open_count) {
+ 		ret = -EINVAL;
+ 		goto out_unlock;
+ 	}
 
-Reviewed-by: Bibo Mao <maobibo@loongson.cn>
 
