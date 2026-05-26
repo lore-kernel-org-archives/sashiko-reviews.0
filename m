@@ -1,225 +1,186 @@
-Received: from mail-pl1-f169.google.com (mail-pl1-f169.google.com [209.85.214.169])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from CY7PR03CU001.outbound.protection.outlook.com (mail-westcentralusazon11010058.outbound.protection.outlook.com [40.93.198.58])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 897992264D6
-	for <sashiko-reviews@lists.linux.dev>; Tue, 26 May 2026 23:24:21 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.214.169
-ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1779837862; cv=none; b=ZBZmrXKiL+p1TUsZ2hWkQ7GA3JDz7SA/mbHQ1xq3cx0sWNj/gI9dYFJSwE82gUcskvtjS6R73SosGHEcKC2iKe/wp8oJaoyRDsgF7G6Pq+SBVtZiswMKftznpd8KyGT39CIgrjXzpeHHvhP096ORLvliohIQdoF5jIT/7lRSHWA=
-ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1779837862; c=relaxed/simple;
-	bh=3YXe4tKqtYF0/XbcvHavmTsJL4yATn8Ji+zo9UMpqWc=;
-	h=Message-ID:Subject:From:To:Cc:Date:In-Reply-To:References:
-	 Content-Type:MIME-Version; b=tnEOnjvT8AuV1FF11irkeMq3RTbRWX6s9/tPAzUl2ffnzVANKUjXp0J+pkEsYWArteq9iIkroJmcSLqVUBrcZOY8Jto5/Luo/AKLb+FWgO0NJs0Gm1YwcSQzez6HrJJaX5FoR7M/mHDumq0CNs59P5kWC7R77wiiVrgheWPcta0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=Jx85ruUH; arc=none smtp.client-ip=209.85.214.169
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 540993AB274
+	for <sashiko-reviews@lists.linux.dev>; Tue, 26 May 2026 23:28:36 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=fail smtp.client-ip=40.93.198.58
+ARC-Seal:i=2; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
+	t=1779838117; cv=fail; b=erY61i+3YJxNd3on+EnSSw9HUkKsMLdlpBCAegAzJTagRcQfzcE2YgnrKORTBbIogenK7Jo/WAc7OxYCQntqU8ayJ77FZ4G2x1Qav8R0MQAQBE/yV54SqUJ9pxRHPNme+wjeUjwenR1FGrs6quuU208A1Wz5dVYjRolBPRsEXDA=
+ARC-Message-Signature:i=2; a=rsa-sha256; d=subspace.kernel.org;
+	s=arc-20240116; t=1779838117; c=relaxed/simple;
+	bh=cXkOYu/LtRo+n5w6aOhtMKCbnh9f9UvHPYeAq1VOSZc=;
+	h=From:To:CC:Subject:In-Reply-To:References:Date:Message-ID:
+	 MIME-Version:Content-Type; b=Wye5oBol+JRyNtPXfMLWI8nK8wntm15Yxn8tnWfqopOlLc9/AGKUacvztXiSwtw4eB+vw6oFJg4+IzgL0xWYJZ421ciZX4qi+sLR8/B6BVARjzYc+9b7/Ry+P21h0R+Lwo7d2fu65fPZmTFyVRLsaXZQSaua/f/lLzyGNABEPPk=
+ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=amd.com; spf=fail smtp.mailfrom=amd.com; dkim=pass (1024-bit key) header.d=amd.com header.i=@amd.com header.b=nCbGpq9M; arc=fail smtp.client-ip=40.93.198.58
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=amd.com
+Authentication-Results: smtp.subspace.kernel.org; spf=fail smtp.mailfrom=amd.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="Jx85ruUH"
-Received: by mail-pl1-f169.google.com with SMTP id d9443c01a7336-2ba3e3c4f87so116121205ad.3
-        for <sashiko-reviews@lists.linux.dev>; Tue, 26 May 2026 16:24:21 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20251104; t=1779837861; x=1780442661; darn=lists.linux.dev;
-        h=mime-version:user-agent:content-transfer-encoding:references
-         :in-reply-to:date:cc:to:from:subject:message-id:from:to:cc:subject
-         :date:message-id:reply-to;
-        bh=un0ID1tpd6t3gsza6ApAmJVWeKkWeohw9H58j4ribhI=;
-        b=Jx85ruUH2/msVchTToUu2FnMaj3zk3rYJZqTusCO7/o+1+PAZvuUr7Y86u4mRdIa1o
-         NSix52BRZqPe0zhA58blmJ9oBuzFQbrTUJR5b8u0rWMM3DL7TIEXuqbRFEO2W+2gbqm8
-         tyLvUCJ4IhIR9/LYztNhEYZ1/6S6Mkap4bpqWHjsi2BHNIsSDOEaq9m1vATTTmU8aazH
-         C+T9A2XjlMz5KplwkAf/xM3RjFZYNgZvOoYqZvr+zLneOxyYPSUDHlpFUY/ENUVZBnqd
-         /3W4X1XgMF3c955adtofK1XRvPPZylQPsRor7/M3+cDXgrE8gUplOJ3W9BX5h8OpDs7R
-         /J9g==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20251104; t=1779837861; x=1780442661;
-        h=mime-version:user-agent:content-transfer-encoding:references
-         :in-reply-to:date:cc:to:from:subject:message-id:x-gm-gg
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=un0ID1tpd6t3gsza6ApAmJVWeKkWeohw9H58j4ribhI=;
-        b=MJc1U8Ku4/rwl4DMzGE7cy06Sh6Xq919S7AulptdItTq/scKThreVizPhscqTcwsCn
-         Nwbtcd6d7Gx3gQhns5jPs2TkA6Es5mOKsqQSMWm0EtFOGRQDLNtJF8f1Xsb2gmBnprE3
-         /ndYCOxZqoWBosf1iAXqyNyPcGUfAfuaVYJDAdLP8J1UkeUojOyWuq2PTCbf32A4laZd
-         I1iklLpXBJm3fG+f3HqCjn6m7mTa50DtILOuagTyMzrltQbp2lApaJ4oxjp1/2596ovF
-         ty8buja8ZLNmX9JkKIMXy58vc8xKxZxrCqy+OExpkrNQpfZPf83Jj0WbL9nM5K9yoEo5
-         Bj7g==
-X-Gm-Message-State: AOJu0YwW9b+6jhQz9FoAqWcuP06Uzt87u7Z+/sVd3l7WWouFmSPrIPfj
-	rI270uclGRKx5yrdDRl3cB09QP3fdUqi6jV9yE0Y3W7YPvDKhcB2R7JbZw8pYuSv4/0=
-X-Gm-Gg: Acq92OG6WtmJsIwkDou9pw9TlWX+ilbyA2+TVrgl9oZgiRZkdwzcGNIJvPrNvQQwOyg
-	iLm98NdxX0DUfjhwmrAUN0Kjcxod9UQ7KT/l75hRAvFjTaFsF+n55mBQofAcptz8bhjuFC6N/Sv
-	/YtBolkBg6N7Tf2rPABnMNd2FjgFfGjwv9hAArYeesuN1voLoNnavPetgB7zFUYhi4SkQ5Bbk2/
-	75ImrHE2Xxzf/HOTaTDxu3qxXfKvNVCyi0pe87quN3LuOd0H34Ci2KY/LzZp5Xek9iz3gaNDyL0
-	JzlcECyFeoNkMmaK0KX7dGSGSDcJJkV25/j/sa2g8vW3fn8QNLTa7Y8A9d8fDW5rzCzKG/7+W6s
-	ZK3mKAGYoCJjwxOcqY2TWANGtlaig5bz4IUw3NZIPkqp4nUhlXyuczHiHbB4H0vxkzsG/ws+8r9
-	Y9Vsfmb6DwM1YKuCADjcgj066qMdYJpLBpbV1pz/MLuda6JFE27CrDC1RUhbIAwA==
-X-Received: by 2002:a17:903:3b87:b0:2ba:3e2f:6883 with SMTP id d9443c01a7336-2beb05d9f8cmr230667045ad.19.1779837860825;
-        Tue, 26 May 2026 16:24:20 -0700 (PDT)
-Received: from [192.168.0.13] ([38.34.87.7])
-        by smtp.gmail.com with ESMTPSA id d9443c01a7336-2beb58fa422sm142133355ad.72.2026.05.26.16.24.20
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Tue, 26 May 2026 16:24:20 -0700 (PDT)
-Message-ID: <8a5b6bb66a6e2011fcba82f29a8d4eac03f2d191.camel@gmail.com>
-Subject: Re: [PATCH RFC bpf-next v2 5/6] bpf: report register diff summary
- for hot callchains
-From: Eduard Zingerman <eddyz87@gmail.com>
-To: sashiko-reviews@lists.linux.dev
-Cc: bpf@vger.kernel.org
-Date: Tue, 26 May 2026 16:24:17 -0700
-In-Reply-To: <20260526213137.382441F000E9@smtp.kernel.org>
-References: <20260526-better-1m-reporting-v2-5-e7ec61c45d41@gmail.com>
-	 <20260526213137.382441F000E9@smtp.kernel.org>
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
-User-Agent: Evolution 3.56.2-9 
+	dkim=pass (1024-bit key) header.d=amd.com header.i=@amd.com header.b="nCbGpq9M"
+ARC-Seal: i=1; a=rsa-sha256; s=arcselector10001; d=microsoft.com; cv=none;
+ b=Y3D+Qt97FSwVflhf9m0k0Yq02FvHgP40/gnXNb/0ccPtivWwRcGGDvasxcTLxliBS0mizMuUdnBJlJNGifiMZcg0Sb9uz9rUMZGRCHuHQD6SMpZdDgZV9t+RHudQgbWL9yOnsFbzi/w+5vb1zrH9WMX6/m1djjy+rLXZWP9izhaVjDZsYjY4iJNmjoPryLxhxAB4/32dahhmNPt6nqWdMWydLm/zAauBMGNYcxfaC/iLbp/YJkR22KL5afO6qNXqQ4dqRhEWVYAOANgnetv0QlKaag+oI/d4vibp4Mqo8Kb8DRtbtSG2pVtU5sbezz3QlsIUA4zEa6UPmPZYjDLaHw==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com;
+ s=arcselector10001;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
+ bh=vmACQlURVVDKDCmjQ8l+K+JckICa9Ag3uOUEUEyQMbw=;
+ b=Ofb2nfkpAbWzxpt5U+FxXxC4PLyhAA/4ZYnxwq7SMnZORMujjAw3ttUCON3Nem5BprvH3uROppaQdRkEim+8E30hB23CPz6ypLAEwFnfzM+VZJmotXr5d7+kebjdva5St8t86Gvedyqudy6k4g7WCaXyUrGEzAKt+xRXdsQiHufgVQadS7zCY3KU50N8j8tXxDIMgCzpBXadEQbAmpLUmosJ/bNPO015DxW/wID8KWRk0ShmpzIUb+ZU+gt96PldbVVTqoaVhdb0jE9OfwsD10qZtGw8K3zMf9O+yU+Z6SpScR8Jgw7aO5LygqEg0LRSOep/6oW52/hwe6mNK/SvGQ==
+ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass (sender ip is
+ 165.204.84.17) smtp.rcpttodomain=lists.linux.dev smtp.mailfrom=amd.com;
+ dmarc=pass (p=quarantine sp=quarantine pct=100) action=none
+ header.from=amd.com; dkim=none (message not signed); arc=none (0)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=amd.com; s=selector1;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
+ bh=vmACQlURVVDKDCmjQ8l+K+JckICa9Ag3uOUEUEyQMbw=;
+ b=nCbGpq9MvIQQ6C7Q23vG9RMiNdFM3Zmat1GIbsaEtJViv5rv9PglylAlUcwftn8S/hh8ErTe+dhJfUbKUKovjLo7C6reiAFRupyNQHI3pZ7P/LcJSQRxcX9FHCJS7bWmB1hu9Fw5QmF5PFU3sTejgSc0hYjWr9OT4D4OteLdH+Y=
+Received: from PH8P221CA0022.NAMP221.PROD.OUTLOOK.COM (2603:10b6:510:2d8::7)
+ by CH2PR12MB9495.namprd12.prod.outlook.com (2603:10b6:610:27d::12) with
+ Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.21.48.20; Tue, 26 May
+ 2026 23:28:31 +0000
+Received: from SJ1PEPF000023D9.namprd21.prod.outlook.com
+ (2603:10b6:510:2d8:cafe::ae) by PH8P221CA0022.outlook.office365.com
+ (2603:10b6:510:2d8::7) with Microsoft SMTP Server (version=TLS1_3,
+ cipher=TLS_AES_256_GCM_SHA384) id 15.21.71.11 via Frontend Transport; Tue, 26
+ May 2026 23:28:30 +0000
+X-MS-Exchange-Authentication-Results: spf=pass (sender IP is 165.204.84.17)
+ smtp.mailfrom=amd.com; dkim=none (message not signed)
+ header.d=none;dmarc=pass action=none header.from=amd.com;
+Received-SPF: Pass (protection.outlook.com: domain of amd.com designates
+ 165.204.84.17 as permitted sender) receiver=protection.outlook.com;
+ client-ip=165.204.84.17; helo=satlexmb07.amd.com; pr=C
+Received: from satlexmb07.amd.com (165.204.84.17) by
+ SJ1PEPF000023D9.mail.protection.outlook.com (10.167.244.74) with Microsoft
+ SMTP Server (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
+ 15.21.92.0 via Frontend Transport; Tue, 26 May 2026 23:28:30 +0000
+Received: from localhost (10.180.168.240) by satlexmb07.amd.com
+ (10.181.42.216) with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.2562.41; Tue, 26 May
+ 2026 18:28:29 -0500
+From: Nathan Lynch <nathan.lynch@amd.com>
+To: <sashiko-reviews@lists.linux.dev>, Nathan Lynch via B4 Relay
+	<devnull+nathan.lynch.amd.com@kernel.org>
+CC: <linux-pci@vger.kernel.org>, <vkoul@kernel.org>,
+	<dmaengine@vger.kernel.org>, <Frank.Li@kernel.org>
+Subject: Re: [PATCH v2 03/23] dmaengine: sdxi: Add PCI initialization
+In-Reply-To: <20260513000526.55647C2BCB0@smtp.kernel.org>
+References: <20260511-sdxi-base-v2-3-889cfed17e3f@amd.com>
+ <20260513000526.55647C2BCB0@smtp.kernel.org>
+Date: Tue, 26 May 2026 18:28:28 -0500
+Message-ID: <87cxyh92eb.fsf@amd.com>
 Precedence: bulk
 X-Mailing-List: sashiko-reviews@lists.linux.dev
 List-Id: <sashiko-reviews.lists.linux.dev>
 List-Subscribe: <mailto:sashiko-reviews+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:sashiko-reviews+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
+Content-Type: text/plain
+X-ClientProxiedBy: satlexmb08.amd.com (10.181.42.217) To satlexmb07.amd.com
+ (10.181.42.216)
+X-EOPAttributedMessage: 0
+X-MS-PublicTrafficType: Email
+X-MS-TrafficTypeDiagnostic: SJ1PEPF000023D9:EE_|CH2PR12MB9495:EE_
+X-MS-Office365-Filtering-Correlation-Id: 1d0c9dcb-cf80-462c-f85f-08debb7e7f25
+X-MS-Exchange-SenderADCheck: 1
+X-MS-Exchange-AntiSpam-Relay: 0
+X-Microsoft-Antispam:
+	BCL:0;ARA:13230040|1800799024|82310400026|376014|36860700016|13003099007|22082099003|18002099003|6133799003|56012099006|11063799006|4143699003;
+X-Microsoft-Antispam-Message-Info:
+	+fLh040c3f5YgK3xE/EfIq72mURe0FDy5tc9rJ3NgoQrSiv8jZajmvmRRavg61jucG/V+0IkNaEL7Kf1ih+xedbphPfHrUOKK60z65I8i6Dts5Tn3N9jmS7Y+Dw4vMfH/1hMgpRZIVTpdhPBGKIUa6cXTy4WaZciBTbCgahzvTld4JaWCZ7JJ1WJ+exRJugk3PA769wgBXRKRlStp1fDH8dZ26oJwXrJ6oUURjOk3JWsKLzPcVYTfPmNVnESazTs7o/jsvkKu9+fAVE/e74CUCYS/qd0P+cH28p0Iu/9ZqUUhs1e1+oarlv4fV06d3FIgZEWJZRzHLrrfLjUbe5HZLlL1j9ZVJDeIqAS+tk6eAyB5/ufPWSwa3WZyLa4rGkQObviX/LrH76+0qYaKkUHDWGsq7QeEOvN9IuDFvYQfedIS3tNTJt5Q66Nt/r+XGT+EZzZxen1b1fwGe8x1YfpIqLtHwkTvL7cOBP+2Z33rXooGktUbn+SXOhRkwgNLsw4lQqT74UTLzAqPM1OJGrhG7l5isf+Z63+Ls9uZUG+Ji9vwX1o5xA/3Sr4cS85pq9x4J7HxisCaIr/Ze7/DnsNCpGsFWEJ2ysxSRyJg6C2tEz8qGIcmcAsKbC1JwZTxLNUCmRQA2L5xHHgKRo8zOwPOy5+YR8A9YYudiPHQBEjct8qdhhVSpTaoSRKAdLSCeJi1eLnEILuFjOem3H8IkEC4TvtGmZB30DGxcycb2k3MvE=
+X-Forefront-Antispam-Report:
+	CIP:165.204.84.17;CTRY:US;LANG:en;SCL:1;SRV:;IPV:NLI;SFV:NSPM;H:satlexmb07.amd.com;PTR:InfoDomainNonexistent;CAT:NONE;SFS:(13230040)(1800799024)(82310400026)(376014)(36860700016)(13003099007)(22082099003)(18002099003)(6133799003)(56012099006)(11063799006)(4143699003);DIR:OUT;SFP:1101;
+X-MS-Exchange-AntiSpam-MessageData-ChunkCount: 1
+X-MS-Exchange-AntiSpam-MessageData-0:
+	KO/6LdTqflZ6QiAnF/EgGPNta7ijYY0veadxM0rkcFKoTU9/NrZemN63JtFtNB4N7HUw8LlTtTv0f9/4ysbmlRiHzvQv9hiiCUtS8AGZwJ47UMXSbHyx0uK/Plgk0p6pBHkBuYfFJIsSTZD3uf8llgrXVCmAZV5i8CJkPgwILzjH0KZsB0sfn9k4heGIrCjSBSNtE8AOVraOFkNLc+ayct1KbDhCMD2sgKoGYF/39QwQChks03TTzdWNPY7LD9KfglpK5ceoAaeHaH9mKZnX2RS0wQridum7tdwOGBsyv2Rn+fQQ5+qcmNcBAzXp+t1WBKMYiyZWRf0EiWF0mDNg/odZtiUhDiWQtSj7k3v5Udqj9FqfNxgxVuP5vLTsFU0FPfhLuYAZUcyMoUycdZLMbS4JL889bh3iDeKn01k5xjCS2ddjcD2btb77LhvcyAmb
+X-OriginatorOrg: amd.com
+X-MS-Exchange-CrossTenant-OriginalArrivalTime: 26 May 2026 23:28:30.5387
+ (UTC)
+X-MS-Exchange-CrossTenant-Network-Message-Id: 1d0c9dcb-cf80-462c-f85f-08debb7e7f25
+X-MS-Exchange-CrossTenant-Id: 3dd8961f-e488-4e60-8e11-a82d994e183d
+X-MS-Exchange-CrossTenant-OriginalAttributedTenantConnectingIp: TenantId=3dd8961f-e488-4e60-8e11-a82d994e183d;Ip=[165.204.84.17];Helo=[satlexmb07.amd.com]
+X-MS-Exchange-CrossTenant-AuthSource:
+	SJ1PEPF000023D9.namprd21.prod.outlook.com
+X-MS-Exchange-CrossTenant-AuthAs: Anonymous
+X-MS-Exchange-CrossTenant-FromEntityHeader: HybridOnPrem
+X-MS-Exchange-Transport-CrossTenantHeadersStamped: CH2PR12MB9495
 
-On Tue, 2026-05-26 at 21:31 +0000, sashiko-bot@kernel.org wrote:
+sashiko-bot@kernel.org writes:
+> Thank you for your contribution! Sashiko AI review found 2 potential issue(s) to consider:
+> - [High] The Kconfig symbol `CONFIG_SDXI` lacks a dependency on `PCI` or `PCI_MSI`, and the Makefile conditionally links `pci.o` using `sdxi-$(CONFIG_PCI_MSI) += pci.o`.
+> - [Low] The return value of `dma_set_mask_and_coherent()` is ignored in `sdxi_pci_init()`.
+> --
+>
+> commit bdb690a4c497e7a353f0143e03e32ba75daa6013
+> Author: Nathan Lynch <nathan.lynch@amd.com>
+>
+> dmaengine: sdxi: Add PCI initialization
+>
+> This commit adds PCI initialization to bind an SDXI device via the class
+> code. It maps the control registers and doorbell region, managing resources
+> with devres and registering the device with the generic SDXI core.
+>
+>> diff --git a/drivers/dma/sdxi/Makefile b/drivers/dma/sdxi/Makefile
+>> new file mode 100644
+>> --- /dev/null
+>> +++ b/drivers/dma/sdxi/Makefile
+>> @@ -0,0 +1,6 @@
+>> +# SPDX-License-Identifier: GPL-2.0
+>> +obj-$(CONFIG_SDXI) += sdxi.o
+>> +
+>> +sdxi-objs += device.o
+>> +
+>> +sdxi-$(CONFIG_PCI_MSI) += pci.o
+>
+> If CONFIG_SDXI is enabled but CONFIG_PCI_MSI is disabled, pci.o is omitted
+> from the build. Because pci.c is the only file containing the driver
+> registration macro (module_pci_driver) and the module license declaration,
+> would this result in a module that lacks an initialization entry point and
+> fails to load properly while also tainting the kernel?
 
-[...]
+I guess so. This is just to allow build coverage without PCI since SDXI
+doesn't strictly require it. Maybe there should be two modules: one for
+the PCI driver, which depends on another containing the bus-agnostic
+code.
 
-> > diff --git a/kernel/bpf/states.c b/kernel/bpf/states.c
-> > index 8773381360095..79e76bc2d1712 100644
-> > --- a/kernel/bpf/states.c
-> > +++ b/kernel/bpf/states.c
+>
 > [ ... ]
-> > @@ -1588,3 +1629,98 @@ int bpf_is_state_visited(struct bpf_verifier_env=
- *env, int insn_idx)
-> > =C2=A0	list_add(&new_sl->node, head);
-> > =C2=A0	return 0;
-> > =C2=A0}
-> > +
-> > +static bool callchain_matches_state(struct bpf_callchain *cc,
-> > +				=C2=A0=C2=A0=C2=A0 struct bpf_verifier_state *st)
-> > +{
-> > +	int i;
-> > +
-> > +	if (st->curframe !=3D cc->curframe)
-> > +		return false;
-> > +	for (i =3D 0; i < (int)cc->curframe; i++)
-> > +		if (st->frame[i + 1]->callsite !=3D cc->insn_idx[i])
-> > +			return false;
-> > +	return true;
-> > +}
->=20
-> [Severity: Medium]
-> Does this function need to verify the leaf instruction index=20
-> (st->insn_idx =3D=3D cc->insn_idx[cc->curframe])?=20
->=20
-> States for different instructions can hash to the same bucket via=20
-> (insn_idx ^ callsite) % env->prog->len. Without checking the leaf
-> instruction, a hash collision could cause states from different instructi=
-ons
-> to be incorrectly matched, violating assumptions in func_states_equal()
-> which relies on live_regs_before for a specific instruction.
-
-This should be fixed.
-
-> > +
-> > +struct state_diff_cnt {
-> > +	struct bpf_state_diff diff;
-> > +	u32 cnt;
-> > +};
-> > +
-> > +static int state_diff_cmp(const void *a, const void *b)
-> > +{
-> > +	return ((struct state_diff_cnt *)b)->cnt - ((struct state_diff_cnt *)=
-a)->cnt;
-> > +}
->=20
-> [Severity: Low]
-> Can this subtraction overflow?=20
->=20
-> The cnt fields are unsigned 32-bit integers, and the function returns a
-> signed 32-bit integer. If the difference exceeds INT_MAX, the subtraction
-> will overflow into a negative value, resulting in an inverted sort order.
-
-I don't think overflow can happen here.
-But I'll rewrite to make the robot happy.
-
-> > +
-> > +static bool state_diff_eq(struct bpf_state_diff *a, struct bpf_state_d=
-iff *b)
-> > +{
-> > +	return a->frame =3D=3D b->frame && a->slot =3D=3D b->slot && a->kind =
-=3D=3D b->kind;
-> > +}
-> > +
-> > +int bpf_sample_state_diffs(struct bpf_verifier_env *env,
-> > +			=C2=A0=C2=A0 struct bpf_callchain *cc,
-> > +			=C2=A0=C2=A0 struct bpf_state_diff *top_diffs,
-> > +			=C2=A0=C2=A0 int *nr_diffs)
-> > +{
-> > +	struct bpf_verifier_state_list *sl_i, *sl_j;
-> > +	struct state_diff_cnt *diff_cnts =3D NULL;
-> > +	struct list_head *pos_i, *pos_j, *head;
-> > +	u32 leaf_insn, callsite, hash_idx;
-> > +	int i, cap =3D 0, nr_locs =3D 0;
-> > +
-> > +	leaf_insn =3D cc->insn_idx[cc->curframe];
-> > +	callsite =3D cc->curframe > 0 ? cc->insn_idx[cc->curframe - 1] : BPF_=
-MAIN_FUNC;
-> > +	hash_idx =3D (leaf_insn ^ callsite) % env->prog->len;
-> > +	head =3D &env->explored_states[hash_idx];
-> > +
-> > +	list_for_each(pos_i, head) {
-> > +		sl_i =3D container_of(pos_i, struct bpf_verifier_state_list, node);
-> > +		if (!callchain_matches_state(cc, &sl_i->state))
-> > +			continue;
-> > +		list_for_each(pos_j, head) {
-> > +			struct bpf_state_diff diff =3D {};
-> > +
-> > +			if (pos_i =3D=3D pos_j)
-> > +				continue;
-> > +			sl_j =3D container_of(pos_j, struct bpf_verifier_state_list, node);
-> > +			if (!callchain_matches_state(cc, &sl_j->state))
-> > +				continue;
-> > +			if (states_equal(env, &sl_i->state, &sl_j->state, NOT_EXACT, &diff)=
-)
->=20
-> [Severity: High]
-> Can these nested list_for_each loops cause a CPU soft lockup?=20
->=20
-> A single hash bucket can accumulate tens to hundreds of thousands of cach=
-ed
-> states for a single instruction in complex programs. Without cond_resched=
-()
-> calls within these O(N^2) loops, billions of states_equal() comparisons
-> could execute, monopolizing the CPU and leading to a local DoS.
-
-I'll add cond_resched().
-
+>
+>> diff --git a/drivers/dma/sdxi/pci.c b/drivers/dma/sdxi/pci.c
+>> new file mode 100644
+>> --- /dev/null
+>> +++ b/drivers/dma/sdxi/pci.c
 > [ ... ]
-> > diff --git a/kernel/bpf/verifier.c b/kernel/bpf/verifier.c
-> > index 54b7ad65b7fc1..d09c014462f13 100644
-> > --- a/kernel/bpf/verifier.c
-> > +++ b/kernel/bpf/verifier.c
-> [ ... ]
-> > @@ -17527,7 +17564,9 @@ static int do_check(struct bpf_verifier_env *en=
-v)
-> > =C2=A0		insn_aux =3D &env->insn_aux_data[env->insn_idx];
-> > =C2=A0
-> > =C2=A0		if (++env->insn_processed > BPF_COMPLEXITY_LIMIT_INSNS) {
-> > -			print_hotspots(env);
-> > +			err =3D print_hotspots(env);
-> > +			if (err)
-> > +				return err;
->=20
-> [Severity: Medium]
-> If print_hotspots() returns an error (like -ENOMEM from kvrealloc()), doe=
-s
-> this mask the primary -E2BIG complexity limit error?=20
->=20
-> Returning err directly will skip logging "BPF program is too large" and
-> return a misleading error code to the user, who might attribute it to sys=
-tem
-> memory exhaustion instead of hitting the verifier complexity limit.
->=20
-> > =C2=A0			verbose(env,
-> > =C2=A0				"BPF program is too large. Processed %d insn\n",
-> > =C2=A0				env->insn_processed);
+>> +static int sdxi_pci_init(struct sdxi_dev *sdxi)
+>> +{
+>> +	struct pci_dev *pdev = sdxi_to_pci_dev(sdxi);
+>> +	struct device *dev = &pdev->dev;
+>> +	int ret;
+>> +
+>> +	ret = pcim_enable_device(pdev);
+>> +	if (ret)
+>> +		return dev_err_probe(dev, ret, "failed to enable device\n");
+>> +
+>> +	dma_set_mask_and_coherent(dev, DMA_BIT_MASK(64));
+>
+> The return value of dma_set_mask_and_coherent() is ignored here. If the
+> platform or IOMMU does not support 64-bit DMA, this function returns an error
+> code and leaves the device's DMA mask at its default 32-bit value.
+>
+> Is it expected to proceed without handling the fallback or logging a
+> warning?
 
-Replied already.
+Review comments on v1 indicated the check isn't needed when the mask
+argument is >=32:
+
+https://lore.kernel.org/dmaengine/aeXJhhPgfGjGZa__@lizhi-Precision-Tower-5810/
+
+And the DMA-API documentation appears to agree, although I find it a
+little hard to follow:
+
+https://docs.kernel.org/7.0/core-api/dma-api-howto.html#dma-addressing-capabilities
+
+Generally I think it's bad to ignore the return value of an API that's
+known to be fallible for some inputs/circumstances, even when using an
+input known to render it infallible. Ideally there would be a separate
+API (dma_upgrade_mask_* or something) with void return type that could
+be used instead.
+
+Anyway, I don't plan to add the error checking back.
