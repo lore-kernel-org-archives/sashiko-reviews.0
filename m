@@ -1,104 +1,91 @@
-Received: from mout-p-201.mailbox.org (mout-p-201.mailbox.org [80.241.56.171])
+Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F330B25776
-	for <sashiko-reviews@lists.linux.dev>; Mon, 25 May 2026 19:45:28 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=80.241.56.171
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 924858F7D;
+	Tue, 26 May 2026 00:38:04 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1779738333; cv=none; b=otlrI8mKi8STMGTRgtn0NETscWi6E1VFeOBga3X1M4Pwv9Dg2rPRGHz55Rk1LQO3q/fFg75z2wgG86Jm1WKy3zEcDc1Yi8OcGWbm5mpxYUHIH7lhtp3LSfGd9DTpDCNP3rfcVmtHjVOqEtYcJJVQ+++y+C8hI70PJn9FKKH2sNM=
+	t=1779755885; cv=none; b=aOT5sz8oYY1Xal06Tpgw4ezNIq4BjdKOzmnFRtfwzDgXTkVMBhUS5pugvvyhDBt15oI1xVbbqWn9mZoECSLQWCaKoFUmvqz3RC8sZNwfpS53dGdGQ8IPGNs56KMHlai47avlDmJHMTX/7w90ClcDRN+bm652WgaZ9FZEHBwcmY0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1779738333; c=relaxed/simple;
-	bh=YrSjkm1pVvbbbAOZLBsdsaX1UWYNBbU/q4pxoxbJebc=;
-	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=nn1hstXVsRWp/IGn4gCabN0KEuFNOyctW+1GhKY563If7R82SKjuE5+FTwn97pLr/91SzFTjyPT7xdmLuXKz/qvAtCUXYP55gcE39YmCyBdLUX/5s0Jq8qSnw0wa1QJkm1Tau59KPXug3vszCLrsq4y35l+W/Z+vZez6cmUiDrU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=mailbox.org; spf=pass smtp.mailfrom=mailbox.org; dkim=pass (2048-bit key) header.d=mailbox.org header.i=@mailbox.org header.b=nlgncCXG; arc=none smtp.client-ip=80.241.56.171
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=mailbox.org
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=mailbox.org
+	s=arc-20240116; t=1779755885; c=relaxed/simple;
+	bh=7b9WUA6Oon073MXqg3OXf9hN5UxNB0RyTY4LvxBeBzo=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=REjHaU3en6w7asaEQOy2+ua1EgofGW18lGYbpIPiSDum/HmGbA0of4lCaJsC32VbhrvKmmxZyHRujKycwBHr1VEHd28/CyPe+clKzBPmMF4YfxMW1q1vZnVgZhQTpRukBruI3bso09+6lNk1tDbMW8huYXmNkHmvHol8l3WrfG8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=WfyACkcb; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=mailbox.org header.i=@mailbox.org header.b="nlgncCXG"
-Received: from smtp1.mailbox.org (smtp1.mailbox.org [10.196.197.1])
-	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
-	 key-exchange X25519 server-signature RSA-PSS (4096 bits) server-digest SHA256)
-	(No client certificate requested)
-	by mout-p-201.mailbox.org (Postfix) with ESMTPS id 4gPRF20XWSz9tKc;
-	Mon, 25 May 2026 21:45:26 +0200 (CEST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=mailbox.org; s=mail20150812;
-	t=1779738326;
-	h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
-	 to:to:cc:cc:mime-version:mime-version:content-type:content-type:
-	 content-transfer-encoding:content-transfer-encoding:
-	 in-reply-to:in-reply-to:references:references;
-	bh=dMHLpJaQFOsrnBC8AP7rRNUnoEDnBXORgAku0499nKM=;
-	b=nlgncCXG2/zkn8y8yhkMdcUDBMeMLg7tgH8EdFqNa338iyUHl41G6hWFd4LNAn286FwSLS
-	PEVeF9sYp11ZcRC2lgBGbQnidP96hbArFNY/3s8YheqaXEo1RA0tvM40VGqWkWK3H21lfY
-	9ifh8nae0Sw9+ZXyVSI5RV67MJRHSBQ4GwN7xbAIHQPniTFvl+Jb0nqL9Kp+wWiQyApPJf
-	EVbzgppk6BYmyXWo+aguvb+yodqYN/9NMvu+sKueP3AwXUtJYIGrjaLtF3422zAepSax3x
-	1D0+SqL1wyfMY9NiDgQQQxy54oahy1G30uuzF61kcQBZdeGfR+leO50twpAvig==
-Message-ID: <e5153d48-a566-427e-b288-b335cc9b0f6d@mailbox.org>
-Date: Mon, 25 May 2026 21:45:22 +0200
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="WfyACkcb"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id CAEEF1F000E9;
+	Tue, 26 May 2026 00:38:03 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=kernel.org;
+	s=k20260515; t=1779755884;
+	bh=J+l//ukBHDQhg9StbUnckzWIkb3cLxIvbJtICtk6JWY=;
+	h=Date:From:To:Cc:Subject:References:In-Reply-To;
+	b=WfyACkcbDyzemRP2TKut34NN6NcERlFmal2l2A+zYUrWnqHo5kQm8s3ZT4BWavcVA
+	 YV5vJ4srj8SwoTgcsLJanP2JjNotU5WwHpTJGY7QPhqMDhfyczGdERTaIwO/xMEraC
+	 LRPJNpvM85aKv7/BIMweGS1lc6t9vE3ECYBtE5QCSSXqGjkEHHfpTjtxHVtA3IAOnx
+	 ocbIQ4BH+u534lmP3Js9hdbdkjztrx/khsnmCNm3t4psqKYkWAgUz/hDHXZsC2Xi0u
+	 koQgkrv534gQ6kLz9qDoPVuo5cdaA4S//OsePM74cPQj0amdE90+jpmgAEa3mx+oqC
+	 M/gcyKSzg/sCQ==
+Date: Mon, 25 May 2026 19:38:01 -0500
+From: Namhyung Kim <namhyung@kernel.org>
+To: sashiko-reviews@lists.linux.dev
+Cc: Ian Rogers <irogers@google.com>, linux-perf-users@vger.kernel.org
+Subject: Re: [PATCH v9 06/23] perf python: Add missed explicit dependencies
+Message-ID: <ahTraRGMGowOJ4II@google.com>
+References: <20260522220435.2378363-7-irogers@google.com>
+ <20260522221338.039751F000E9@smtp.kernel.org>
 Precedence: bulk
 X-Mailing-List: sashiko-reviews@lists.linux.dev
 List-Id: <sashiko-reviews.lists.linux.dev>
 List-Subscribe: <mailto:sashiko-reviews+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:sashiko-reviews+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Subject: Re: [PATCH] dt-bindings: clock: renesas: div6: Use ZT/ZTR trace clock
- in R-Mobile APE6 example
-To: Conor Dooley <conor@kernel.org>, sashiko-reviews@lists.linux.dev
-Cc: robh@kernel.org, wsa+renesas@sang-engineering.com,
- devicetree@vger.kernel.org, conor+dt@kernel.org
-References: <20260523192622.56605-1-marek.vasut+renesas@mailbox.org>
- <20260523194047.AB7CA1F00A3A@smtp.kernel.org>
- <20260525-myth-flanking-667fa0a706ac@spud>
-Content-Language: en-US
-From: Marek Vasut <marek.vasut@mailbox.org>
-In-Reply-To: <20260525-myth-flanking-667fa0a706ac@spud>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
-X-MBO-RS-META: oqxx5dum3snyrfo5ff9eabjgpji6fmrr
-X-MBO-RS-ID: e6bbf6c40b0beb3432c
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+In-Reply-To: <20260522221338.039751F000E9@smtp.kernel.org>
 
-On 5/25/26 6:37 PM, Conor Dooley wrote:
-> On Sat, May 23, 2026 at 07:40:47PM +0000, sashiko-bot@kernel.org wrote:
->> Thank you for your contribution! Sashiko AI review found 1 potential issue(s) to consider:
->> - [Low] Adding 18 items to `clock-output-names` in the example triggers a `dt_binding_check` schema validation error due to an un-updated top-level constraint in `renesas,cpg-clocks.yaml`.
->> --
->>
->> commit aaa0ff6ae07f5974071a547fef4a5b41bc484428
->> Author: Marek Vasut <marek.vasut+renesas@mailbox.org>
->>
->> dt-bindings: clock: renesas: div6: Use ZT/ZTR trace clock in R-Mobile APE6 example
->>
->> This commit updates the R-Mobile APE6 clock node example to include
->> the "zt" and "ztr" clock-output-names entries. This aligns the example
->> with the expectations documented in a previous commit.
->>
->>> diff --git a/Documentation/devicetree/bindings/clock/renesas,cpg-div6-clock.yaml b/Documentation/devicetree/bindings/clock/renesas,cpg-div6-clock.yaml
->>> index 2197c952e21df..b6ee8c8efd46d 100644
->>> --- a/Documentation/devicetree/bindings/clock/renesas,cpg-div6-clock.yaml
->>> +++ b/Documentation/devicetree/bindings/clock/renesas,cpg-div6-clock.yaml
->>> @@ -60,7 +60,7 @@ examples:
->>>               clock-output-names = "main", "pll0", "pll1", "pll2",
->>>                                     "pll2s", "pll2h", "z", "z2",
->>>                                     "i", "m3", "b", "m1", "m2",
->>> -                                  "zx", "zs", "hp";
->>> +                                  "zx", "zs", "hp", "ztr", "zt";
->>
->> [Severity: Low]
->> Does adding these two items cause a schema validation failure during
->> dt_binding_check?
->>
->> The top-level clock-output-names property in renesas,cpg-clocks.yaml has a
->> maxItems constraint of 17. Adding "ztr" and "zt" here brings the total
->> item count to 18.
->>
->> While the underlying limit omission occurred in the earlier commit
->> 2abdc3dcf978, modifying this example to 18 items will now directly
->> trigger the overarching validation limit error.
+On Fri, May 22, 2026 at 10:13:37PM +0000, sashiko-bot@kernel.org wrote:
+> Thank you for your contribution! Sashiko AI review found 1 potential issue(s) to consider:
+> - [Medium] Including `<Python.h>` after standard system headers violates the Python C-API contract and can lead to macro redefinition warnings, build failures, or ABI mismatches.
+> --
 > 
-> What does renesas,cpg-clocks.yaml have to do with this?
-> This is just complete crap, right?
+> commit 37ded89f453597ef269f0bcb73c5907738b8e5d9
+> Author: Ian Rogers <irogers@google.com>
+> 
+> perf python: Add missed explicit dependencies
+> 
+> This commit fixes a missing include of pmus.h that was discovered
+> while cleaning up the evsel and evlist header files. It also sorts
+> the include directives alphabetically.
+> 
+> > diff --git a/tools/perf/util/python.c b/tools/perf/util/python.c
+> > index cc1019d29a5d0..dd937d714e991 100644
+> > --- a/tools/perf/util/python.c
+> > +++ b/tools/perf/util/python.c
+> > @@ -1,30 +1,35 @@
+> >  // SPDX-License-Identifier: GPL-2.0
+> > -#include <Python.h>
+> > -#include <structmember.h>
+> >  #include <inttypes.h>
+> > -#include <poll.h>
+> > +
+> >  #include <linux/err.h>
+> > +#include <poll.h>
+> > +
+> > +#include <Python.h>
+> 
+> [Severity: Medium]
+> Could moving Python.h here cause build warnings or ABI mismatches?
+> 
+> The Python C API requires that Python.h must be included before any
+> standard system headers. Python.h defines preprocessor macros that
+> alter the behavior of standard headers. Because this alphabetizes the
+> list, standard headers like inttypes.h and poll.h are now included
+> before Python.h.
 
-The example in renesas,cpg-div6-clock.yaml references a binding in 
-renesas,cpg-clocks.yaml , but the both ingested some nonsensical version 
-of the later and produced nonsense based on that.
+I think it's worth following the suggestion.  I'm not sure if it's
+possible to add an exception for the python headers to clang format.
+
+Thanks,
+Namhyung
+
