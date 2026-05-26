@@ -1,383 +1,280 @@
-Received: from mail-pl1-f170.google.com (mail-pl1-f170.google.com [209.85.214.170])
+Received: from mail-yw1-f173.google.com (mail-yw1-f173.google.com [209.85.128.173])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C8DBF402B87
-	for <sashiko-reviews@lists.linux.dev>; Tue, 26 May 2026 16:59:53 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=pass smtp.client-ip=209.85.214.170
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 75E72421896
+	for <sashiko-reviews@lists.linux.dev>; Tue, 26 May 2026 17:54:12 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=pass smtp.client-ip=209.85.128.173
 ARC-Seal:i=2; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1779814797; cv=pass; b=onjVw4Dr4NwH4fn1MXhix5X81lIfNhdOsjMA9S3hn67RIeXOV63AuoUVaa7nWmtJYYIj3UNbZrQ8cJBvIRvwKFb0AsTjjyRYFq2JFUSLnJnd08jwvbgA5aFIDYCoXWFn+dQ2oTToVFzSsykY50qRIKHcH31a+T4NaXa2B4vmn/4=
+	t=1779818054; cv=pass; b=AjrMGWkvxbEo6pBJ/3WzJG5IELYXLURf10pVITZaJv6TMB5s7Eb3AjhcSOjJgIp0J2PLy53s+qBtBHS8fvcR+O/Jv03NhYxNPeFPcmlfTnf5MA7tHvrKKIr5i5KLuAInF8/GE+aRaK36yfFipdgB1XoUTaee5mORunAR3FurU8o=
 ARC-Message-Signature:i=2; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1779814797; c=relaxed/simple;
-	bh=WZkvs3bev0qC/nipB5HxUTgW5bQClI/7XG/939lcsKg=;
+	s=arc-20240116; t=1779818054; c=relaxed/simple;
+	bh=mo51nLE6P1wJoADFxd9GxwL23mh9JvgaYmz4OryT76M=;
 	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
-	 To:Cc:Content-Type; b=hiETw0i9dp7xAbMNBFb2kHpuGpI7tDaFqkQcmtaIfZe1GTn7sXG3/ZuI1eXf0YA/4t61ETZaP+F9FrwsUNfUSPfPfoU+6sqP/XWqj0D6VkBvRSYmplS/yCMEqUy1uf6PEFwjwfJj8kDLMukcJE6UpdbKnL/kqB94uBHobnFFZ5E=
-ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=google.com; spf=pass smtp.mailfrom=google.com; dkim=pass (2048-bit key) header.d=google.com header.i=@google.com header.b=O/Yk3lY+; arc=pass smtp.client-ip=209.85.214.170
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=google.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=google.com
+	 To:Cc:Content-Type; b=DDxvzDqYAteghVjeP5vys+zfg2xOYOR1KoMH3aWGnGp6yBO6VOz9eBD/K6pXGVXOmyRD6a6cR4SHhLjUHJ1pjRqS1gHaV7/QYVI4sXtDQMZxxePz0GCFKKO4aTnwwNN7ctDh4kcTkO0QjqB8aW7jkNCwftfGMPqrWHkZ11xKi6I=
+ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=l2MA4qNH; arc=pass smtp.client-ip=209.85.128.173
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=google.com header.i=@google.com header.b="O/Yk3lY+"
-Received: by mail-pl1-f170.google.com with SMTP id d9443c01a7336-2ba180a022dso1605ad.1
-        for <sashiko-reviews@lists.linux.dev>; Tue, 26 May 2026 09:59:53 -0700 (PDT)
-ARC-Seal: i=1; a=rsa-sha256; t=1779814793; cv=none;
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="l2MA4qNH"
+Received: by mail-yw1-f173.google.com with SMTP id 00721157ae682-7c0de780bf1so92939397b3.2
+        for <sashiko-reviews@lists.linux.dev>; Tue, 26 May 2026 10:54:12 -0700 (PDT)
+ARC-Seal: i=1; a=rsa-sha256; t=1779818051; cv=none;
         d=google.com; s=arc-20240605;
-        b=hBaydQU5slBizSkhx6rIKTuwhzFK+kJcqTFKoT4FdL0bsWlYean3F3XF6Quu8xxINP
-         GwTsZQvtYBNSatYGCzVgSvRhEN8RIqPwLoBNH4Wcq6zq/oCuYJZE+FuJxRfQ0BpHn8RK
-         yFkalTgnN+69VP3akG3sxv9a5Ge8XcG0oWNry31G+SthxAmDP3eOMgkNebg0JATEMBMO
-         20ysdiFBtK3uFnreHX7P/zbr2c6hySqz2uML3ohJXn5WdBKJXasvTEkfRmusQjI/Fq3V
-         B/OFaMnBuc0haShLebNqBj4gyw1GAnx/yFR3mUK2t5X8+QV7eEEsY1LBAmpKV/cOVKQr
-         2D4g==
+        b=fDkrWnAwWomv8jE2AoI4M0ZgMK8q3YZsRuDiQic03IzBLdGLFeYH9erA1Mzj8MB+5i
+         febCkGLiy1bD2tZVhoPJFH18rgh7k1HnqyX3F+gsAWpcKs09pnXcKoj6nHvjdfcYkGE8
+         kXYQs4hDtgsEOnTGlW20VZxWFLKYu9Kr6Ae7teD9SNp1JNAQ350IdPMunZve3cvlgGzj
+         PByR5vCwfgZZ07hg8ZrfhvJlUsbgrPi4IxjYINJ9+W6/WFmqKfCHXnSO93OraJweSvq0
+         EFHSLLhSlv1EPoeRpU+KufA71EvsbcptsAjSYTtbPHKZsnouislR4jnxmcgFXbxvZDkW
+         f2sA==
 ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com; s=arc-20240605;
         h=content-transfer-encoding:cc:to:subject:message-id:date:from
          :in-reply-to:references:mime-version:dkim-signature;
-        bh=vWiWq0NulcgqvDrKIIYI7AeTVlxrlXpp7vc3dk6gWPs=;
-        fh=3UIqcPI3A5QYlO3aG+yc52giqhQtxqkLWSuxcF+0bF8=;
-        b=jYRaHlTXaou2DyVzQvpwVcXemdhdu3oziN6yljLntLwJ+prUO5mtmsRLfMJWiTRAYw
-         Pu18afL95s6mCaE1W0cl6am6wX2Zup0GI81mn0MrBaq1Q1YbaPJ1uP52if4EKZBK3Ut3
-         v1vykSSHrl6Rx5DjEr62iJyGhJoNRdGatAh2EmuhV3WgcsPokYGPVJz+vfHCE4VP7BeS
-         Yqnj46qbQkinqBFJ1r00Dw3M67UIgKiaY5cBV1VCQXz0Rrzk7iBYUUa1RfMGM2/ugS1l
-         DAPuDcnLDXGFavYYGMNEcsoJn7p5VtjhkapaxBddEI/uB/PuXzqL4Mx9jWu+S/27HLBZ
-         ayHw==;
+        bh=aLSY4XkeDLqds8/zCxtUpFNC/XRt0rRFn6Ll8whM7pc=;
+        fh=IHoi2ePnp3QxbSquT4jfrj4BvruY2jAvEeD9KGDE+lE=;
+        b=XpoFkFr3UkJNPXsKkU+rQuAV9OTg5ZGjLoIXp4rwY/al1UglrCJRNUbtO2g3Tzb+tm
+         +TXznnYk1z12QqtpSNrHyUhVQQg55jmE47QX1gOIUyWyJqmhzG5kS5lcfQsdJrUPi9sq
+         tFrM+ndgopwtsHi9Wd9leNQ3P+dm21G7LhsDxFvBHTn2N1h5lHoP2KFDgKqd7c+0stvQ
+         US2w+ZPGP2r6sm46ZFIaBW87YzlupA69PrV5d0Xp4S2lg/nDJQ2kR29udIcVoh27EInQ
+         bXDM5DctxK4rVYqmXDTWXho46+wrUQU+14fwtIkRiLkZWBwWf1bTooGdvzDEVMD0dVeA
+         XDtQ==;
         darn=lists.linux.dev
 ARC-Authentication-Results: i=1; mx.google.com; arc=none
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=google.com; s=20251104; t=1779814793; x=1780419593; darn=lists.linux.dev;
+        d=gmail.com; s=20251104; t=1779818051; x=1780422851; darn=lists.linux.dev;
         h=content-transfer-encoding:cc:to:subject:message-id:date:from
          :in-reply-to:references:mime-version:from:to:cc:subject:date
          :message-id:reply-to;
-        bh=vWiWq0NulcgqvDrKIIYI7AeTVlxrlXpp7vc3dk6gWPs=;
-        b=O/Yk3lY+ipqdqDJF0+TkZzx2nD/8b1t4nwLyzz1seZiydQymwB6ll9dt9G5wYGVAu9
-         +BUmcSInd3OkOWlCjqzzsIsxMSWZi830r6fF9cbGZ+nY+JHNnWLjSaUmQQiPyjIO63Tg
-         LEeVN5orPCO+N1E7g0A/dNwYBD4nZpWWVRCum/iL02ko8oT9ZD0S8f6kZdCQfJuLktnQ
-         ISCiGwU9M2kmz8eFXHjpUptloDhYf47eT2wixOLhToYLN/sDGo+SOJGJJLA+G6F5CBHi
-         69ID2H7lg9T8YvqLPWYh0kq13qTmmKyztALWN2mZzNSRLJuGF+wU6KMC4qRpDqbkC1wY
-         AK0Q==
+        bh=aLSY4XkeDLqds8/zCxtUpFNC/XRt0rRFn6Ll8whM7pc=;
+        b=l2MA4qNHJrfjbsJ03T0BeEZLs9qXDRsiANHRZ0kLG8P8whROhj6DsJ7mRWdrw3O94r
+         o9P8dCUrSrEu5HpepKhpb4D6p6zRjkVIhQaIt8W7d8ydAXfCNUktZk+G5clDT9I3ANPN
+         K0/kdKx0YEBAG9HmSq8mx9iNeCnjvAIJirhpaL3x+boGCqRivwaJratNSmWbSO1inqP1
+         WJXhg0qkQgNOezSQ4nmZSAbaYGFQl1Q6Cm1qGO6+DwxxLDcOwuM0CvdOzzghsiDao9p+
+         yC63WhPT4Ckjm7XUNzUlqn9yVQvSlDxs0hieKphm/Kdvq3i4Tb77x+HzhK1VCgy2ZxuB
+         9LFg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20251104; t=1779814793; x=1780419593;
+        d=1e100.net; s=20251104; t=1779818051; x=1780422851;
         h=content-transfer-encoding:cc:to:subject:message-id:date:from
          :in-reply-to:references:mime-version:x-gm-gg:x-gm-message-state:from
          :to:cc:subject:date:message-id:reply-to;
-        bh=vWiWq0NulcgqvDrKIIYI7AeTVlxrlXpp7vc3dk6gWPs=;
-        b=jSevAXAS8zgioM/Xv8bq8P0xKsU8owWGPfAGDOv3Ppib4KN1fqFMmYNeKFqWE637Yx
-         i65lbrN3JadO7fyn/7teudiNhE6wnc6OPoU0vIUe92VQ1nMnFLJnysvcK3KaS7gyxm8G
-         EnxOZtiHsJ/SqC1945zZu3hteCGG2oNG9iq4TF1t6cNyz4kFOLlB/pgHk5057HII2ftT
-         Q8SmTpDjhgyOIO2k+giR5nCakZUKjeuID5X0kI1zyH68gYTVs1fBdtZk4WZ2s8d43B+e
-         maD4gBqi3yvgTN+wV5Ssc+lWB/aob/aXNWWmf6SdUTSZtl0wwMlguPeyGfgwVHDIVIhh
-         d6oA==
-X-Forwarded-Encrypted: i=1; AFNElJ8A2801fIHEdAJHxDezdDqsQyV4lW+sNdvTkGxOo88rl7XKeD02WVHkgkqOJpZLA6CTsXV4IwzCGoVqCODbSWM=@lists.linux.dev
-X-Gm-Message-State: AOJu0Yw1DUQNAgkP/RSX9IUq7fcR1q1dWfMhQD411BnMF1WYq584Htig
-	zVegLvbKCZ1C8pxs/KqD99zrQXkb19GtfbJD+yU9LgeB/+5nbMGMsFOT4oBxl+CWlMxc5THEWpI
-	6gLA9EUnJx136C9OH4D+xJhNaFVF0lUWws1Q+/o4H
-X-Gm-Gg: Acq92OHinoOIII+sdyH/FoFzaV+YkvF8gxG6qqN8O+abE5FOd215VYwm/qlZMXEEMyP
-	B9qGnv2exV6zFhg/MkelXpkUm/r6+eKN2hwELhVVMgvYf3Y8NMboG3RhVvKrb0YTJlqpFXlAF5G
-	r3Z8x3DvV/fvbLVLTos4/qQk4s0JII6SsspGkj0zpQ2XfrklwNJcv/hBmZ/aumunwmTWeOmIQeM
-	cyYLxsnbBMUbsLy3tvVMafIHK1W3oUtZGH7+70VzQKBWhCRlaR6N0xL6y1HDG8Y/2MnkVYV+7h8
-	tPOvu/OjdOmesb94/y7ibR3r0ItSW2IaGb+WZeUTgnompziF
-X-Received: by 2002:a17:902:f706:b0:2bd:a61:8536 with SMTP id
- d9443c01a7336-2bebe9e94d5mr6474175ad.6.1779814792610; Tue, 26 May 2026
- 09:59:52 -0700 (PDT)
+        bh=aLSY4XkeDLqds8/zCxtUpFNC/XRt0rRFn6Ll8whM7pc=;
+        b=JnXSnRsnyFmU58RoxFmrEeGx16AzS69ZCi+SqD2A0yCXwc4Mzzjfqap9WghVL4ZQmu
+         K2gApiJBh2SLPHxbRMa6fJSW2Af8sgeuYdXKMdNsrk7KR4D03tpU/V/MjOn1X7VBS+n4
+         X0CGEGdgt0FVwFnv+TmYD2cR07z0PLkLG5etrEkQnj87dn1ZmWfw0iEefLzJ1M9B6Ox9
+         clDEa4NL7B0uJTtxoMUOedHxGYe/UIVVO8CI0Tj+rh1v6dWTW+rfpd1ML6uUVM7vzTvN
+         KjR8QFF97LbRXVeGH1ShoYV0epxno8S6nhhH2W81PtH3BUOUVap9tbXUXa5MGrqRV0nh
+         Trvg==
+X-Gm-Message-State: AOJu0YzRVusyRP78O0/foXroM8w8AAGiPiJFBbTLoGd+zj0z+qdtnAZt
+	mpzBId+ix52UbNkydvJxlwfNeKrCNXs8+Yl3R+uHk/0bMKLTN86Zr9jP4nFs3LX0yN3fpS5UecO
+	umlxrXmjTqPf5uw58LS+r5GM2MrufZWs=
+X-Gm-Gg: Acq92OH0tPF07yKn5Eg8TDY71G7moJXFXcT6Nvk7moalVgOTu1F9JCurT/1INBcl1e2
+	z3JOkr3zbb7XsKtq70582LVGKQNNEkMzEE664CGSmGEov559ZIioMQ+nhfkgaz68Qc3IwkalOCa
+	Ym+x14lEUDKIVjjBvCqH6adh+9x5r9nd91rUmolwOat+4PUy7wdk+JgAO84nAJMa4GY7GFjrCeE
+	JuDQ75zhBdLXAqQ1SxhB5jHjaN2LTuKc0TAGEL4Lcwlu0N6b7xL/CogbWnDYpG4QAkcZV3aH0lH
+	LKUapTdkHGI7wmoM7dmz7jnxSLg+LEzuhw==
+X-Received: by 2002:a05:690c:2608:b0:79f:b903:88c4 with SMTP id
+ 00721157ae682-7d33b348725mr203522267b3.46.1779818051399; Tue, 26 May 2026
+ 10:54:11 -0700 (PDT)
 Precedence: bulk
 X-Mailing-List: sashiko-reviews@lists.linux.dev
 List-Id: <sashiko-reviews.lists.linux.dev>
 List-Subscribe: <mailto:sashiko-reviews+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:sashiko-reviews+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-References: <20260520125637.105681-1-japo@linux.ibm.com> <20260520130905.9C85D1F000E9@smtp.kernel.org>
- <ahJnMnOr4i9urrRk@x1> <ahV2XGx_6h7upuc3@li-276bd24c-2dcc-11b2-a85c-945b6f05615c.ibm.com>
- <CAP-5=fXGG5PR8neTkozvOUOH83m8_EyZXZ_A7Zyrsock5EqAiQ@mail.gmail.com> <ahXITNt0Z-n4NCaj@li-276bd24c-2dcc-11b2-a85c-945b6f05615c.ibm.com>
-In-Reply-To: <ahXITNt0Z-n4NCaj@li-276bd24c-2dcc-11b2-a85c-945b6f05615c.ibm.com>
-From: Ian Rogers <irogers@google.com>
-Date: Tue, 26 May 2026 09:59:41 -0700
-X-Gm-Features: AVHnY4LmLJBzV1k9Go06SgxSrWFmnXJjBWXm4pXUs6_yao5GukFZwF_YTa1b5iI
-Message-ID: <CAP-5=fXcpoXMsezy1FNBX7mhKmRgw+97QmKTg5Fr6G-cY+wGpg@mail.gmail.com>
-Subject: Re: [PATCH 1/1] perf build: Fix Python extension build with GCC 16 hardening
-To: Jan Polensky <japo@linux.ibm.com>
-Cc: Arnaldo Carvalho de Melo <acme@kernel.org>, Jens Remus <jremus@linux.ibm.com>, 
-	sashiko-reviews@lists.linux.dev, linux-perf-users@vger.kernel.org
+References: <20260519215841.2984970-10-martin.lau@linux.dev>
+ <20260519225002.986EB1F00893@smtp.kernel.org> <2026519225454.By6y.martin.lau@linux.dev>
+In-Reply-To: <2026519225454.By6y.martin.lau@linux.dev>
+From: Amery Hung <ameryhung@gmail.com>
+Date: Tue, 26 May 2026 10:54:00 -0700
+X-Gm-Features: AVHnY4KQI0xvn76Ojfwqn5BJzEfVnS3IaHKSZ2mEix5eW3t_R7baX6yhDJhmSvc
+Message-ID: <CAMB2axPDDom8sD7u+2Fgo9dZO1ereX-unai8EW1SmsiDrnzzwQ@mail.gmail.com>
+Subject: Re: [RFC PATCH bpf-next 09/12] bpf: Add infrastructure to support
+ attaching struct_ops to cgroups
+To: Martin KaFai Lau <martin.lau@linux.dev>
+Cc: sashiko-reviews@lists.linux.dev, bpf@vger.kernel.org
 Content-Type: text/plain; charset="UTF-8"
 Content-Transfer-Encoding: quoted-printable
 
-On Tue, May 26, 2026 at 9:20=E2=80=AFAM Jan Polensky <japo@linux.ibm.com> w=
-rote:
+On Tue, May 19, 2026 at 4:58=E2=80=AFPM Martin KaFai Lau <martin.lau@linux.=
+dev> wrote:
 >
-> On Tue, May 26, 2026 at 08:23:28AM -0700, Ian Rogers wrote:
-> > On Tue, May 26, 2026 at 3:35=E2=80=AFAM Jan Polensky <japo@linux.ibm.co=
-m> wrote:
+> On Tue, May 19, 2026 at 10:50:02PM +0000, sashiko-bot@kernel.org wrote:
+> > Thank you for your contribution! Sashiko AI review found 4 potential is=
+sue(s) to consider:
+> > - [High] bpf_cgroup_struct_ops_foreach does not skip dummy items, leadi=
+ng to unintended execution of cfi_stubs.
+> > - [High] Using a loadable module's cfi_stubs as a dummy sentinel causes=
+ a Use-After-Free when the module is unloaded and reloaded.
+> > - [Medium] The macro bpf_cgroup_struct_ops_foreach uses rcu_dereference=
+(), which is incompatible with sleepable struct_ops programs.
+> > - [Medium] cgroup_bpf_struct_ops_register() lacks concurrency protectio=
+n and global uniqueness enforcement.
+> > --
+> >
+> > commit bad29e4e0d1357905491993ee45063766d0f7705
+> > Author: Martin KaFai Lau <martin.lau@kernel.org>
+> >
+> > bpf: Add infrastructure to support attaching struct_ops to cgroups
+> >
+> > This patch adds necessary infrastructure to attach a struct_ops
+> > map to a cgroup. The initial need was to support migrating
+> > the legacy BPF_PROG_TYPE_SOCK_OPS to a struct_ops.
+> >
+> > > diff --git a/include/linux/bpf-cgroup.h b/include/linux/bpf-cgroup.h
+> > > index b2e79c2b41d51..8080f4a5c14b6 100644
+> > > --- a/include/linux/bpf-cgroup.h
+> > > +++ b/include/linux/bpf-cgroup.h
+> >
+> > [ ... ]
+> >
+> > > @@ -110,6 +112,18 @@ struct bpf_prog_list {
+> > >     u32 flags;
+> > >  };
 > > >
-> > > On Sat, May 23, 2026 at 11:49:22PM -0300, Arnaldo Carvalho de Melo wr=
-ote:
-> > > > On Wed, May 20, 2026 at 01:09:05PM +0000, sashiko-bot@kernel.org wr=
-ote:
-> > > > > Thank you for your contribution! Sashiko AI review found 1 potent=
-ial issue(s) to consider:
-> > > > > - [Medium] The patch explicitly allows text relocations in the Py=
-thon extension shared object (`perf.so`) by adding `-Wl,-z,notext`, masking=
- the root cause of missing `-fPIC` flags and breaking W^X (Write XOR Execut=
-e) security protections.
-> > > > > --
-> > > > >
-> > > > > commit f3832fb0ad0d1f9c2e69039b2a5110f77d220d5e
-> > > > > Author: Jan Polensky <japo@linux.ibm.com>
-> > > > >
-> > > > > perf build: Fix Python extension build with GCC 16 hardening
-> > > > >
-> > > > > This commit addresses a build failure in the Python extension cau=
-sed by GCC 16
-> > > > > stricter security policies regarding dynamic relocations in read-=
-only segments.
-> > > > > It adds the -Wl,-z,notext flag to the linker to explicitly allow =
-text
-> > > > > relocations in the Python extension shared object.
-> > > > >
-> > > > > > diff --git a/tools/perf/Makefile.perf b/tools/perf/Makefile.per=
-f
-> > > > > > index 76b35ac19acbf..eea170d6576db 100644
-> > > > > > --- a/tools/perf/Makefile.perf
-> > > > > > +++ b/tools/perf/Makefile.perf
-> > > > > > @@ -749,7 +749,7 @@ all: shell_compatibility_test $(ALL_PROGRAM=
-S) $(LANG_BINDINGS) $(OTHER_PROGRAMS)
-> > > > > >  $(shell [ -d '$(OUTPUT)python' ] || mkdir -p '$(OUTPUT)python'=
-)
-> > > > > >
-> > > > > >  $(OUTPUT)python/perf$(PYTHON_EXTENSION_SUFFIX): util/python.c =
-util/setup.py $(PERFLIBS_PY)
-> > > > > > - $(QUIET_GEN)LDSHARED=3D"$(CC) -pthread -shared" \
-> > > > > > + $(QUIET_GEN)LDSHARED=3D"$(CC) -pthread -shared -Wl,-z,notext"=
+> > > +#define bpf_cgroup_struct_ops_foreach(var, item, cgrp, atype)       =
+       \
+> > > +   for (item =3D rcu_dereference((cgrp)->bpf.effective[atype])->item=
+s;\
+> > > +        ((var) =3D READ_ONCE(item->kdata));                         =
  \
-> > > > >
-> > > > > [Severity: Medium]
-> > > > > Does adding -Wl,-z,notext mask the root cause of the GCC 16 linke=
-r error?
-> > > > >
-> > > > > The error regarding dynamic relocations in a read-only segment us=
-ually
-> > > > > indicates that non-position-independent code from the static libr=
-aries
-> > > > > is being linked into the shared library.
-> > > > >
-> > > > > Using -Wl,-z,notext suppresses this error by allowing text reloca=
-tions, which
-> > > > > forces the dynamic linker to map the executable text segment as w=
-ritable at
-> > > > > load time. This breaks W^X security protections and weakens the s=
-ecurity of
-> > > > > any Python process loading the extension.
-> > > > >
-> > > > > Should the required object files be compiled with -fPIC instead t=
-o properly
-> > > > > resolve the linker error without compromising security?
-> > > >
-> > > > So I asked Claude about this and he suggests doing like other parts=
- of
-> > > > perf and using -fPIC, can you try to do that?
-> > > >
-> > > > ---------------------------------------
-> > > >
-> > > > =E2=97=8F Sashiko is right. -Wl,-z,notext is a band-aid that weaken=
-s security =E2=80=94
-> > > >   it makes the text segment writable at load time, defeating W^X.
-> > > >
-> > > >   The root cause is that PERFLIBS_PY (the static libraries linked i=
-nto
-> > > >   the Python .so) are compiled without -fPIC. When you link non-PIC=
- .a
-> > > >   archives into a shared library, the linker needs text relocations=
-. GCC
-> > > >   16 correctly rejects this by default.
-> > > >
-> > > >   The proper fix is to build the static libraries that go into the
-> > > >   Python extension with -fPIC. The perf build system already has
-> > > >   precedent for this =E2=80=94 look for how libperf and libsubcmd h=
-andle PIC
-> > > >   builds. The Python extension's dependencies need a parallel -fPIC
-> > > >   build, or the existing objects need to be compiled with -fPIC whe=
-n the
-> > > >   Python binding is enabled.
-> > > >
-> > > >   The -Wl,-z,notext approach would also cause issues on distros tha=
-t
-> > > >   enforce RELRO + BIND_NOW hardening, and some package builders wou=
-ld
-> > > >   reject the resulting .so outright.
-> > > >
-> > > > - Arnaldo
-> > >
-> > > Hi Arnaldo,
-> > >
-> > > thanks for the pointer. I double-checked this on s390x and did some r=
-educed-link
-> > > testing for the ET_DYN / Python-extension case.
-> > >
-> > > The failure is not triggered by the perf Python binding object alone.
-> > >
-> > > A reduced reproducer succeeds when linking:
-> > >   python.o
-> > >   + libapi.a
-> > >   + libperf.a
-> > >   + libsubcmd.a
-> > >   + libsymbol.a
-> > >   + libbpf.a
-> > >   + libperf-ui.a
-> > >
-> > > The link starts to fail with:
-> > >   /usr/bin/ld.bfd: error: read-only segment has dynamic relocations
-> > >
-> > > as soon as libperf-util.a is added.
-> > >
-> > > In my tree, libperf-util.a currently contains only perf-util-in.o, an=
-d replacing
-> > > the archive with that single object still reproduces the same failure=
-.
-> > >
-> > > Reduced reproducer:
-> > >
-> > >   gcc -pthread -shared \
-> > >     -Wl,-z,noexecstack \
-> > >     -o /tmp/try-perf-util-only.so \
-> > >     /root/linux/tools/perf/python_ext_build/tmp/root/linux/tools/perf=
-/util/python.o \
-> > >     -Wl,--whole-archive \
-> > >       /root/linux/tools/perf/libapi/libapi.a \
-> > >       /root/linux/tools/perf/libperf/libperf.a \
-> > >       /root/linux/tools/perf/libsubcmd/libsubcmd.a \
-> > >       /root/linux/tools/perf/libsymbol/libsymbol.a \
-> > >       /root/linux/tools/perf/libbpf/libbpf.a \
-> > >       /root/linux/tools/perf/libperf-ui.a \
-> > >     -Wl,--no-whole-archive \
-> > >     /root/perf-util-one/perf-util-in.o \
-> > >     -lpython3.14 -lpthread -ldl -lm -lutil
-> > >
-> > > Inspection of perf-util-in.o on s390x shows many direct R_390_PC32DBL
-> > > relocations from .text against .data.rel.ro, .data.rel.ro.local,
-> > > .data.rel.local, .bss, and .rodata.
-> > >
-> > > Representative examples include:
-> > >
-> > >   arm64__associate_instruction_ops:
-> > >     larl %r6  -> R_390_PC32DBL .data.rel.ro+0x2
-> > >
-> > >   loongarch__associate_ins_ops:
-> > >     larl %r9  -> R_390_PC32DBL .data.rel.ro+0x22
-> > >     larl %r9  -> R_390_PC32DBL .data.rel.ro+0x42
-> > >
-> > >   check_ppc_insn:
-> > >     larl %r4  -> R_390_PC32DBL .data.rel.local+0x4c2
-> > >     larl %r2  -> R_390_PC32DBL .data.rel.ro.local+0x22
-> > >     larl %r1  -> R_390_PC32DBL .data.rel.local+0x2
-> > >     larl %r2  -> R_390_PC32DBL .data.rel.ro.local+0x2
-> > >
-> > >   s390__associate_ins_ops:
-> > >     larl %r10 -> R_390_PC32DBL .data.rel.ro+0x732
-> > >     larl %r10 -> R_390_PC32DBL .data.rel.ro+0x752
-> > >
-> > > So from my reproducer, I don't think we can describe this simply as
-> > > "all Python-extension dependency archives are missing -fPIC".
-> > >
-> > > The issue narrows down much more specifically to perf-util-in.o in th=
-e ET_DYN
-> > > link of the Python extension, and the direct text-to-data section rel=
-ocations
-> > > above look like the most relevant candidates.
-> > >
-> > > So I agree that -Wl,-z,notext is only a workaround. I'd prefer to und=
-erstand
-> > > and fix the underlying relocation pattern in perf-util-in.o rather th=
-an merge
-> > > that as-is.
-> > >
-> > > If useful, I can send the relevant readelf/objdump snippets in a foll=
-ow-up.
+> > > +        item++)
 > >
-> > Hi Jan,
+> > [Severity: High]
+> > Does this macro need to skip dummy sentinel items?
 > >
-> > I wonder about two tests:
-> > 1) adding V=3D1 JOBS=3D1 to your make command to switch on single
-> > threading and build verbosity. This may make it possible to identify
-> > the gcc command that is missing -fPIC. For example, I see -fPIC on
-> > x86:
-> >   gcc -Wp,-MD,/tmp/perf4/util/annotate-arch/.annotate-arm64.o.d
-> > -Wp,-MT,/tmp/perf4/util/annotate-arch/annotate -arm64.o
-> > -Wbad-function-cast -Wdeclaration-after-statement -Wformat-security
-> > -Wformat-y2k -Winit-self -Wmissin g-declarations -Wmissing-prototypes
-> > -Wno-system-headers -Wold-style-definition -Wpacked -Wredundant-decls
-> > -Wst rict-prototypes -Wswitch-default -Wswitch-enum -Wundef
-> > -Wwrite-strings -Wformat -Wno-type-limits -Wstrict-alia sing=3D3
-> > -Wshadow -fno-strict-aliasing -I/tmp/perf4/arch/x86/include/generated
-> > -DHAVE_ARCH_X86_64_SUPPORT -Werro r -g -fno-omit-frame-pointer -Wall
-> > -Wextra -std=3Dgnu11 -funsigned-char -fstack-protector-all
-> > -D_LARGEFILE64_SOU RCE -D_FILE_OFFSET_BITS=3D64 -D_GNU_SOURCE
-> > -I~/linux/tools/perf/util/include
-> > -I~/linux/tools/perf/arch/x86/include
-> > -I/usr/local/google/home/irogers/re pos/linux4/tools/include/
-> > -I~/linux/tools/arch/x86/include/uapi -I/usr/loc
-> > al/google/home/irogers/repos/linux4/tools/include/uapi
-> > -I~/linux/tools/arc h/x86/include/ -I~/linux/tools/arch/x86/
-> > -I/tmp/perf4//util -I/tmp/perf4/ -I~/linux/tools/perf/util
-> > -I~/linux/to ols/perf -DHAVE_PTHREAD_ATTR_SETAFFINITY_NP
-> > -DHAVE_PTHREAD_BARRIER -DHAVE_EVENTFD_SUPPORT -DHAVE_GETTID -DHAVE
-> > _FILE_HANDLE -DHAVE_AIO_SUPPORT -DHAVE_SCANDIRAT_SUPPORT
-> > -DHAVE_SCHED_GETCPU_SUPPORT -DHAVE_SETNS_SUPPORT -DHA VE_ZLIB_SUPPORT
-> > -DHAVE_LIBELF_SUPPORT -DHAVE_ELF_GETPHDRNUM_SUPPORT
-> > -DHAVE_GELF_GETNOTE_SUPPORT -DHAVE_ELF_GET SHDRSTRNDX_SUPPORT
-> > -DHAVE_DEBUGINFOD_SUPPORT -DHAVE_LIBDW_SUPPORT -DHAVE_LIBBPF_SUPPORT
-> > -DHAVE_SDT_EVENT -DHAV E_JITDUMP -DHAVE_LIBOPENSSL_SUPPORT
-> > -DHAVE_BPF_SKEL -DHAVE_DWARF_UNWIND_SUPPORT -DHAVE_SLANG_SUPPORT
-> > -DHAVE_TI MERFD_SUPPORT -fPIC -DHAVE_LIBLLVM_SUPPORT
-> > -I/usr/lib/llvm-19/include -D_GNU_SOURCE -D__STDC_CONSTANT_MACROS
-> > -D__STDC_FORMAT_MACROS -D__STDC_LIMIT_MACROS
-> > -DHAVE_CXA_DEMANGLE_SUPPORT -DHAVE_LZMA_SUPPORT -DHAVE_ZSTD_SUPPORT
-> > -DHAVE_BACKTRACE_SUPPORT -DHAVE_LIBNUMA_SUPPORT
-> > -DHAVE_PERF_READ_VDSO32 -DHAVE_LIBBABELTRACE_SUPPORT -DHAVE_
-> > LIBCAPSTONE_SUPPORT -DHAVE_JVMTI_CMLR -DHAVE_LIBPFM
-> > -DHAVE_LIBTRACEEVENT -I/usr/include/traceevent -DLIBTRACEE
-> > VENT_VERSION=3D67072 -DHAVE_RUST_SUPPORT -I/tmp/perf4/libapi/include
-> > -I/tmp/perf4/libbpf/include -I/tmp/perf4/li bsubcmd/include
-> > -I/tmp/perf4/libsymbol/include -I/tmp/perf4/libperf/include
-> > -I/tmp/perf4/ -D"BUILD_STR(s)=3D#s" -c -o
-> > /tmp/perf4/util/annotate-arch/annotate-arm64.o
-> > util/annotate-arch/annotate-arm64.c
+> > In cgroups with BPF_F_ALLOW_MULTI, compute_effective_progs() inserts du=
+mmy
+> > sentinel items at the boundaries between cgroup levels. For struct_ops,=
+ this
+> > dummy is the cfi_stubs pointer.
 > >
-> > 2) adding EXTRA_CFLAGS=3D"-fPIC" to your make command. This should forc=
-e
-> > this option wherever it might be missing.
+> > This macro appears to iterate over all non-NULL items and fails to skip=
+ the
+> > dummy sentinel, which could cause the subsystem to repeatedly yield the
+> > cfi_stubs pointer as a valid attached struct_ops instance.
+>
+> The ops in the cfi_stubs is safe to be called. It intentionally skips
+> checking for dummy in the fast path.
+>
 > >
-> > Thanks,
-> > Ian
+> > [Severity: Medium]
+> > Will this rcu_dereference() trigger Lockdep warnings for sleepable stru=
+ct_ops
+> > programs?
 > >
-> > > Best regards,
-> > > Jan
+> > The commit message mentions adding free_after_mult_rcu_gp to support a =
+mix of
+> > sleepable and non-sleepable struct_ops, but plain rcu_dereference() enf=
+orces
+> > rcu_read_lock_held().
+> >
+> > If a subsystem iterates the array while holding rcu_read_lock_trace()
+> > (required for sleepable execution), this might trigger a 'suspicious
+> > rcu_dereference_check() usage' warning. Conversely, if it holds
+> > rcu_read_lock(), the struct_ops program cannot sleep without causing a =
+panic.
+>
+> The proposed bpf_tcp_ops only has non-sleepable programs.
+>
+> The future sleepable callsite will need another version of foreach or
+> rcu_dereference_check can be used here also. I think rcu_dereference_chec=
+k
+> is better.
+>
+> >
+> > > +
+> > > +static inline bool cgroup_bpf_is_struct_ops_atype(enum cgroup_bpf_at=
+tach_type atype)
+> > > +{
+> >
+> > [ ... ]
+> >
+> > > diff --git a/kernel/bpf/cgroup.c b/kernel/bpf/cgroup.c
+> > > index a033aa479ab6e..d496db48d2b86 100644
+> > > --- a/kernel/bpf/cgroup.c
+> > > +++ b/kernel/bpf/cgroup.c
+> > > @@ -24,6 +24,29 @@
+> > >  DEFINE_STATIC_KEY_ARRAY_FALSE(cgroup_bpf_enabled_key, MAX_CGROUP_BPF=
+_ATTACH_TYPE);
+> > >  EXPORT_SYMBOL(cgroup_bpf_enabled_key);
 > > >
-> Hi Ian,
+> > > +static u32 struct_ops_type_id[MAX_CGROUP_BPF_ATTACH_TYPE];
+> > > +static void *struct_ops_cfi_stubs[MAX_CGROUP_BPF_ATTACH_TYPE];
+> > > +static bool struct_ops_mult_rcu[MAX_CGROUP_BPF_ATTACH_TYPE];
+> > > +
+> > > +void cgroup_bpf_struct_ops_register(int atype, u32 type_id, void *cf=
+i_stubs, bool mult_rcu)
+> > > +{
+> > > +   struct_ops_type_id[atype] =3D type_id;
+> > > +   struct_ops_cfi_stubs[atype] =3D cfi_stubs;
+> > > +   struct_ops_mult_rcu[atype] =3D mult_rcu;
+> > > +}
+> >
+> > [Severity: Medium]
+> > Does this registration function need concurrency protection to prevent =
+global
+> > array corruption?
+> >
+> > If two modules are loaded concurrently and declare the same cgroup_atyp=
+e, it
+> > seems this could cause a data race or silently overwrite the registered=
+ type_id
+> > and cfi_stubs of a legitimate module.
 >
-> I tested both suggestions the second in the beginning of my research:
+> This will be a bug in the subsystems having the same cgroup_atype
 >
-> EXTRA_CFLAGS=3D"-fPIC" - Does NOT work. Same error:
+> but (the next one)...
 >
-> /usr/bin/ld.bfd: error: read-only segment has dynamic relocations
-> collect2: error: ld returned 1 exit status
+> >
+> > > +
+> > > +static enum cgroup_bpf_attach_type find_atype_by_struct_ops_id(u32 t=
+ype_id)
+> >
+> > [ ... ]
+> >
+> > >  static void *bpf_cgroup_array_dummy(enum cgroup_bpf_attach_type atyp=
+e)
+> > >  {
+> > > +   if (cgroup_bpf_is_struct_ops_atype(atype))
+> > > +           return struct_ops_cfi_stubs[atype];
+> > >     return bpf_prog_dummy();
+> > >  }
+> >
+> > [Severity: High]
+> > Can using a loadable module's cfi_stubs as a dummy sentinel cause a
+> > use-after-free when the module is unloaded and reloaded?
+> >
+> > If all maps are detached, the module providing the struct_ops can be un=
+loaded,
+> > and its cfi_stubs memory freed. However, the cgroup's effective array m=
+ight
+> > still retain the dangling pointer to the freed cfi_stubs if BPF_F_ALLOW=
+_MULTI
+> > was set.
+> >
+> > If the module is reloaded, cgroup_bpf_struct_ops_register() updates
+> > struct_ops_cfi_stubs[atype] with a new pointer. If a user then queries =
+the
+> > cgroup via BPF_PROG_QUERY, the loop checks
+> > item->prog =3D=3D bpf_cgroup_array_dummy(atype) to skip the dummy. Sinc=
+e the
+> > array contains the old freed pointer, it won't match the new cfi_stubs
+> > pointer, and the query loop might mistakenly treat the old dummy as a v=
+alid
+> > map, causing a use-after-free when calling bpf_struct_ops_kdata_map_id(=
+).
 >
-> The issue is s390x-specific R_390_PC32DBL relocations in perf-util-in.o
-> (from `larl` instructions) that persist even with -fPIC.
+> Agree. This will be an issue on BPF_PROG_QUERY when the module reload.
+> I did think about the module reload case but I have only considered the
+> rcu-reader in bpf_cgroup_struct_ops_foreach.
+> BPF_PROG_QUERY does not use rcu_read_lock and depends on cgroup_lock.
+> This will need to be addressed.
 >
-> Current options:
-> 1. Use -Wl,-z,notext (security issue)
-> 2. Refactor code to avoid these relocations
-> 3. Disable Python extension on s390x (not an option)
->
-> Thoughts?
 
-So it appears that part of the problem is declaring arrays and structs
-to be const. Making things non-const I think is also not an option.
-Would  EXTRA_CFLAGS=3D"-fvisibility=3Dhidden" help?
+Also thinking of the potential problems of leaving dangling cfi_stubs,
+but I don't see any other cases.
 
-It would we interesting to build with -Wl,-z,notext and then look for
-the symbol the linker is fighting with:
-  eu-findtextrel perf.cpython....so
-or
-  readelf -d perf.so | grep TEXTREL
-  readelf -r perf.so
-
-Thanks,
-Ian
-
-> Best regards,
-> Jan
+In this instance, it seems adding a cgroup_bpf_enabled() guard in
+__cgroup_bpf_query should be enough. The dangling cfi_stubs will not
+be cleared until update_effective_progs(), which happens during the
+first struct_ops map attachment. cgroup_bpf_enabled() will be false
+until a struct_ops map is attached.
