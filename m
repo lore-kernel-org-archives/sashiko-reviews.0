@@ -1,153 +1,146 @@
-Received: from mail-pl1-f177.google.com (mail-pl1-f177.google.com [209.85.214.177])
+Received: from mail-ed1-f42.google.com (mail-ed1-f42.google.com [209.85.208.42])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 399783AEF2A
-	for <sashiko-reviews@lists.linux.dev>; Tue, 26 May 2026 03:28:29 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=pass smtp.client-ip=209.85.214.177
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5C9542868B4
+	for <sashiko-reviews@lists.linux.dev>; Tue, 26 May 2026 04:43:53 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=pass smtp.client-ip=209.85.208.42
 ARC-Seal:i=2; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1779766110; cv=pass; b=PHQyvfNVJGdxXn7qJ2CMW43Cbdddi6sX8IrvsLa3OJSRudYkRThVliUcOJfqHqYsnabmO/UTIimnCgL0oZMZnIUS4uG/86F+HHAijD40tl5Jry4ROV5kaLEuqHFPEeuzfgdbNVCW5uy1T9WxNW+5UmuJJaTDh9Mt3kirsx2cky4=
+	t=1779770634; cv=pass; b=gVn+zvXhbsmQeMMOZ18FRsmL49IfOdcxCfjxS2MWTVxS/aw4U0tAzcwd3fzLZlV/L+hv7zzPrOilkctQWhwNJPrUEYJFSn82PwpDMW9zNbjYNpUPxLqKNMB00AXixmnLrgYUpZdAPAiq8k+btXx/Ndzl/O3xdPFvbPrDIM5DQOI=
 ARC-Message-Signature:i=2; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1779766110; c=relaxed/simple;
-	bh=rRu/0iaWsJif1xb7hh/aBKf9EfrFCNCKKgFYn26sXOk=;
+	s=arc-20240116; t=1779770634; c=relaxed/simple;
+	bh=if1b69KHATq0gJwTrfVpPLJ5q1oj3I/Hy53zknCCbWA=;
 	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
-	 To:Cc:Content-Type; b=iLCxs/HGO5/ed8q02L2E2n7c2Ko5hOoNyazB3cLxEY88WtQzavFY4eEHHWR/Z2eYY0xc72goYZZcQ/E2oZTL87g/d/dqh1493bX69n9kSfTz9zyp9MWRQmHuKEFamAN2Leox7XFrHoEZXJgF9N/8cWQjhdsTs6r5GsFgqpWsGw4=
-ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=google.com; spf=pass smtp.mailfrom=google.com; dkim=pass (2048-bit key) header.d=google.com header.i=@google.com header.b=DXCC5zfQ; arc=pass smtp.client-ip=209.85.214.177
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=google.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=google.com
+	 To:Cc:Content-Type; b=lUpNntS5pkxs57dXsaD+tyspHlQtzwB3dIMNOU+iM5qv4tTLn9NqoUbPQXtwz89EhJGfQA28UhAzkGI658QZhOSBkNYFIGRLBBf6nkzOCSLIaaFox2tjmCoyPcT1F6Nm63D+FtcxTvffN3TZBe5hjosswG7JrMxN85E8MSd9Fhk=
+ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=Gb2K0x18; arc=pass smtp.client-ip=209.85.208.42
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=google.com header.i=@google.com header.b="DXCC5zfQ"
-Received: by mail-pl1-f177.google.com with SMTP id d9443c01a7336-2ba3b9bcf69so275ad.0
-        for <sashiko-reviews@lists.linux.dev>; Mon, 25 May 2026 20:28:29 -0700 (PDT)
-ARC-Seal: i=1; a=rsa-sha256; t=1779766108; cv=none;
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="Gb2K0x18"
+Received: by mail-ed1-f42.google.com with SMTP id 4fb4d7f45d1cf-6896c54a7easo3070936a12.3
+        for <sashiko-reviews@lists.linux.dev>; Mon, 25 May 2026 21:43:53 -0700 (PDT)
+ARC-Seal: i=1; a=rsa-sha256; t=1779770632; cv=none;
         d=google.com; s=arc-20240605;
-        b=DxZKDgzTWLCZkHc+k93th/oncy/yFn4XCGhXnC37nhjyhrmVEo8yXbnpk7pQxZOPKM
-         FE7DkLaMsLn3B1BzwS25muCzcn3gV2pLRKRoopEb4XdZ+6XfTRAHDBokJOYdg6dt9Tbv
-         kUqzftDp5FP5nUT6A6fJN2XV9hbGdbZee62H96trQN2N0d3+p9EwReGgH7t/2Z6IPyQ2
-         hliHh+YmaEA1eLO1//ZXeiWTeudMFe9+74t/LyMR3gI7yME2xNuWyZX6GhUjphW354fk
-         hz1HOkAn1mKTbnPo3QY8aj8el9DlEq+qZJVGvjPSVE44pMI49zYpuLsW7xp0C4xkuNTn
-         6WXg==
+        b=WKmcOmLGsQZIamiIEV1st/e5X6d6Dckw6SZ0AkxS5CK8Ro38pk6AwT+t9/6a3RhHzb
+         nfmfqA53+85arhk3LZlJJJpIFWL6z/lCPZW5kHwskojgg80hP8vEyiVUgjnohUFHnmeh
+         LN5d1fN+EcNZ7El84UhpjJOAsSinSK/dxF/U8AN4X1h5toYWZvVmKKw5taVNR3SWEQnv
+         Dw1gJgUY/BhBDXXXhvIDzqvKPuu4Bv+YOshGHl6VKgK0DHnjL0sw92pzSOipLT4+CPBK
+         ezL9VWXXKdZpx7k7GBGNNBfMp4nGaRyAw11AiWj2Gju8RRWJ9AopIYjLowYWVQ7kolwI
+         p6FQ==
 ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com; s=arc-20240605;
         h=content-transfer-encoding:cc:to:subject:message-id:date:from
          :in-reply-to:references:mime-version:dkim-signature;
-        bh=bCIgfrQN2ixgyY5Hi0sknw40cEjtfKKbdudOPWJQGso=;
-        fh=5WRQmWey/eNyRfI5g/sWfeAyOoN5rwo1UMEZgJHZ3hQ=;
-        b=U4dLlZwpYW2DWSNgjd1NuuFGIp4BYL3TB/l7O4FASOuRkIkhgswOorxdmf60OsD7Mk
-         PhzR2rMIlpKNkYJLeqLVPliG/yxmmj4DqX9Ac3y49yHLuCn3oYxMp1BmXF7irRinjaop
-         JxLgnx6r2FIXj8g17gOqfz1zU/3JwEgZdVyIT73bqRZuGe5L+/PFuFh2+g7kdNCmiKds
-         rBGGmpvs/XGdD30JtvVefq4soN8N3YBmR1xu21N4VSDGCs1TGHUbnn8wy0cSOLNb3Dtk
-         kduJ62xXLMhm1oMQ1H1gezI+C1A01bz2PzNhIM+RrJzW5HpVhU36hSq51kIIrg9YLqvJ
-         GQJA==;
+        bh=M/shEe3xqBpt5QuLR5/kC78Z1EP7DMk/aIHBbFQF1Fg=;
+        fh=2E8G5L5HRIhYv0SLHRh0bmuG4bK/RxhrEd6+zC1U6gY=;
+        b=fxvNmyIdyXgXrQkTVabmUXa/papEWm2YkgKgIJk3ehDZ6724MpDdRJElPodRP6oxd2
+         euVpuAhE7HZ2k9a4su3/I+Rk+bNx0TpJhd++YFeV+qyqZb84jkCTr0baUIuPL8htlc7o
+         Y5AtHqlYbXT8NuLhoKQm5FoQgLEQgf/Jem9ykYXF/6tzn9GGO7L2tNraDpvQQzba8Q0G
+         kQfVBZ3cMWdR4V/GN76yxalUHS6wnSU6DA0psyLysiUUrxgqEznahxdAX4i/vqRdu5aO
+         DsoYgZKRkhRkmBGIgtsEUa3iM0zvzdDsU7UDX5VeiCqXXEgKEZZhdyou3+KYFZj2S6+O
+         zt0A==;
         darn=lists.linux.dev
 ARC-Authentication-Results: i=1; mx.google.com; arc=none
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=google.com; s=20251104; t=1779766108; x=1780370908; darn=lists.linux.dev;
+        d=gmail.com; s=20251104; t=1779770632; x=1780375432; darn=lists.linux.dev;
         h=content-transfer-encoding:cc:to:subject:message-id:date:from
          :in-reply-to:references:mime-version:from:to:cc:subject:date
          :message-id:reply-to;
-        bh=bCIgfrQN2ixgyY5Hi0sknw40cEjtfKKbdudOPWJQGso=;
-        b=DXCC5zfQVO5osjx2nyZBvstcnhFfdsM9wrWC/9uudw7QlPi9jsOqrExmVZWkYk7ubN
-         POZfZdDC7vcctUO+wYqQcgXOf6hjXmQE2VgJUG5ORTahMtXfLNe/ADanGHfjl4QYRZbQ
-         R+eAbBcZ7laxGWIzIAFGyiCoeY08Fo6fcLZ1ScxuCQvatzEU6kl4lVRChAWX3fO+fm2w
-         XYUJ+heYpwew5tuavYwFdGHkzUWeAP+MmILcdT4lj5Jqyo0GXR/grib1y1AEYM3fI18t
-         YTTBTIwFzJW6mzOxJnfPa8IfFpDd66zD+YXSzyGYPk3DPelZQkvyiYkbZjIJz/kPU739
-         +jPg==
+        bh=M/shEe3xqBpt5QuLR5/kC78Z1EP7DMk/aIHBbFQF1Fg=;
+        b=Gb2K0x18DaWtfcq5/2FZRpG/s7Yvs5Ikfr8/jkzhnJx0kng8EuqUizm8yayjy0k1zH
+         FfJewAfiOrw+Z3TB3/qmgTqO/A4XDBTPEMYBqp+zzmI2BT1SZ1uDXUI/xmski2B/duSo
+         G/qpGu4hd+GYZctKtgomfU/E27Kikl3hXQm4Tc9Vy9zUZWxjC0Uj+2BJaAR4XZAIfJZE
+         Eifq6P2xbfipo/nk362DluJm4ZQ0bOzz+oS2lqY2gqNPmjs4j4gf/opkOn0MNr5Rb+Pu
+         SOINBb+06pQL2BhOwr1yfJB72hLXaKH1vpRXHyDw9BBUNf+16XObKtCBujfUJHiW2/S5
+         klXw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20251104; t=1779766108; x=1780370908;
+        d=1e100.net; s=20251104; t=1779770632; x=1780375432;
         h=content-transfer-encoding:cc:to:subject:message-id:date:from
          :in-reply-to:references:mime-version:x-gm-gg:x-gm-message-state:from
          :to:cc:subject:date:message-id:reply-to;
-        bh=bCIgfrQN2ixgyY5Hi0sknw40cEjtfKKbdudOPWJQGso=;
-        b=lkTvnLU9bTEugeXoowrDslxqjjvv3WSIFYY21Cm7CGAvZjEVR+ucnTsbIH/HCTxCOo
-         U3rNBSKew0ApQLjntRFx8EVdwPrhiX/7lQZiuVmP+CCyJy5eSHBfTxc2QJLLRCsd9Nvt
-         +EM53gZXO1q/7Hxk8LSIy2+U0OAJWSMuUu4ckvaliKyhb0am/yiNiiA7DtL0I7qF5VMV
-         xuLMT+DXYZplTWYHzyD21kaPAXjtf2lo59WS10AmMwMrqow0g/xcTuFWCQEByKIdwviR
-         33+drE7/TwoQpJDSUPkimSWuuSDiFaqpMSuv1o/cOJLKkBfu6zfLW0+vhXFP5hX2DjxZ
-         vKaQ==
-X-Gm-Message-State: AOJu0YyDV1MxYUI0bejOyDoO8z/ikrWzuHBxFBXzxZA+xg8iZ9SW3jIb
-	fkMbeh9aHGpeEYphwmOS0/6UC7O3bkdrh8pI1/+qTCKRlRqeA8mGknto17smd5iljzQ4bBiJvo7
-	AB7B7j5n448vT+B6ujIumMPespjbwfJRGzDuuRw8o6p+P9sXAtLoJkQIg
-X-Gm-Gg: Acq92OEMNuMxgZu9ubTTGRcT+9ToL/tECXufFln8FjfH10y886AVhiTUgdssTIcI09J
-	ReM2S00CP9tBNLqAN0S7J9EdcC7NXf/Fvsv6O/G43gk591vmzsusM3AZmIYjsLVn4XA8QFGrncw
-	YE4vHc/r4/Etmy8GRHNA/NVOYa5rJxM63AwTG7yqZ+1mcB/z48RQ+/HZ0XNjbgn7JmTnF6nBsTu
-	LhTek9hl0Iq3zCLVQQXHLkDnJbIqONbNge5dM0wh9Yy2a2dx5R3vEXQTguJ/gnhuxvdL4UVZDiF
-	rgweQAX2dflT/hBmDDg=
-X-Received: by 2002:a17:903:41c2:b0:2bd:6dad:3df8 with SMTP id
- d9443c01a7336-2bebf442ccbmr4086065ad.22.1779766107809; Mon, 25 May 2026
- 20:28:27 -0700 (PDT)
+        bh=M/shEe3xqBpt5QuLR5/kC78Z1EP7DMk/aIHBbFQF1Fg=;
+        b=rC7+mZBfSxvHf2cEvj0BIHkHR214ZXaMKh/ZS+cQ8BBAl4w3tsL/5B+NbKmf9DNxju
+         6mZPdXu1BvLFLfUTGuC5BFyKXib7tB9wrWYKjHCOgRWXU3WSsC61/GMM5itylN8Rwe7t
+         sUzDKezO1+B7zwTz9x207V2Cv5j350bNElFoiBy9hajfv8hWOkUH/532ADzaGaqxDJKA
+         Z/H0tQ67NmoNgmzpIU1cROjU7uNgRGnphDRVhTuJLE2mQZcYWmZ9MH8lNCTqgRB+1wLU
+         Tkg6oIieBNJjgpaifn2c2ar7u++OzW8JR2ZHpAHMAQl05umY1COfH8EIW0DRy94jls8C
+         /iRA==
+X-Gm-Message-State: AOJu0Yx4QYn5bcf3ZQdcfvBYj8NihkVRfe+D8fhke6woLg5wHi0AtXRa
+	z81678EkoeWKQ9TfyCRj736rrdNincEqBHl8j3Cul9mm/B/n4y4cWKzZPfsU83TXQRBu1nIcMWP
+	HYCa8WJB0rsTwVQhJ/+fdnbbWOdEKh0dnTQ==
+X-Gm-Gg: Acq92OFMLk7FoefTI3Jyhm2gOMM2cu3IELATcNYPiQc/Pp1M1bQ5ap5SdSeEhoKmujd
+	NOBC3xoCZGP7Uk6uWwXQvO3Y9fkFM0rvOejcbVzgyQ+2rAi9E7Sb/LQEAuwi2WHXPV9TKFFnuso
+	wQ+a/+Q5Xu0p2jrAMJHZzcrUtYDPfiZQTjwNZ6sxFCGZ0JdIi7h9TMEXG1a/cDcfWa5c1G9NE7c
+	RaIDvQmQvosynGFkTCB+vyxjFAVOhuzdVMw5XywXcd1vMHLfN8lWOChp4Fmzc4nMAgNxuSqT65J
+	98+KPtz6JsDAOSk6McJGS49+EwasQYJg8ythLItiNQt0X7gLYel/nAobzlNcKfbTJLeKESXYmRG
+	nf6DaDCTc0KRTRrkguEqNrVfooepImSjXz1m/RxLAZGScnWummGGIQjzx7w==
+X-Received: by 2002:a05:6402:4348:b0:67f:9124:8815 with SMTP id
+ 4fb4d7f45d1cf-6889cc4857emr8386542a12.17.1779770631555; Mon, 25 May 2026
+ 21:43:51 -0700 (PDT)
 Precedence: bulk
 X-Mailing-List: sashiko-reviews@lists.linux.dev
 List-Id: <sashiko-reviews.lists.linux.dev>
 List-Subscribe: <mailto:sashiko-reviews+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:sashiko-reviews+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-References: <20260522220435.2378363-7-irogers@google.com> <20260522221338.039751F000E9@smtp.kernel.org>
- <ahTraRGMGowOJ4II@google.com>
-In-Reply-To: <ahTraRGMGowOJ4II@google.com>
-From: Ian Rogers <irogers@google.com>
-Date: Mon, 25 May 2026 20:28:16 -0700
-X-Gm-Features: AVHnY4KuArnCnt7mY6XU0OGJU2WK8KdEGLopxP7iwwk64vnlxEPfo1VFnUdES1k
-Message-ID: <CAP-5=fUFKEdLQEjfW7aiwpO0fEeumcJ-djDuibsd4sr5NLW9Ug@mail.gmail.com>
-Subject: Re: [PATCH v9 06/23] perf python: Add missed explicit dependencies
-To: Namhyung Kim <namhyung@kernel.org>
-Cc: sashiko-reviews@lists.linux.dev, linux-perf-users@vger.kernel.org
+References: <20260526042614.1013867-1-rosenp@gmail.com> <20260526044110.29B821F000E9@smtp.kernel.org>
+In-Reply-To: <20260526044110.29B821F000E9@smtp.kernel.org>
+From: Rosen Penev <rosenp@gmail.com>
+Date: Mon, 25 May 2026 21:43:40 -0700
+X-Gm-Features: AVHnY4ITFCqWA77JZlqnmYcLNceVp4DKffune1OQTdWsfPcNqSegblQoB11lwv0
+Message-ID: <CAKxU2N82jB9F_rArLtE5-xRVVZ8F5jYmbih=8cB9dsJUXuorZA@mail.gmail.com>
+Subject: Re: [PATCHv2] PCI: hotplug: compaq: fix X86 dependency
+To: sashiko-reviews@lists.linux.dev
+Cc: linux-pci@vger.kernel.org
 Content-Type: text/plain; charset="UTF-8"
 Content-Transfer-Encoding: quoted-printable
 
-On Mon, May 25, 2026 at 5:38=E2=80=AFPM Namhyung Kim <namhyung@kernel.org> =
-wrote:
+On Mon, May 25, 2026 at 9:41=E2=80=AFPM <sashiko-bot@kernel.org> wrote:
 >
-> On Fri, May 22, 2026 at 10:13:37PM +0000, sashiko-bot@kernel.org wrote:
-> > Thank you for your contribution! Sashiko AI review found 1 potential is=
-sue(s) to consider:
-> > - [Medium] Including `<Python.h>` after standard system headers violate=
-s the Python C-API contract and can lead to macro redefinition warnings, bu=
-ild failures, or ABI mismatches.
-> > --
-> >
-> > commit 37ded89f453597ef269f0bcb73c5907738b8e5d9
-> > Author: Ian Rogers <irogers@google.com>
-> >
-> > perf python: Add missed explicit dependencies
-> >
-> > This commit fixes a missing include of pmus.h that was discovered
-> > while cleaning up the evsel and evlist header files. It also sorts
-> > the include directives alphabetically.
-> >
-> > > diff --git a/tools/perf/util/python.c b/tools/perf/util/python.c
-> > > index cc1019d29a5d0..dd937d714e991 100644
-> > > --- a/tools/perf/util/python.c
-> > > +++ b/tools/perf/util/python.c
-> > > @@ -1,30 +1,35 @@
-> > >  // SPDX-License-Identifier: GPL-2.0
-> > > -#include <Python.h>
-> > > -#include <structmember.h>
-> > >  #include <inttypes.h>
-> > > -#include <poll.h>
-> > > +
-> > >  #include <linux/err.h>
-> > > +#include <poll.h>
-> > > +
-> > > +#include <Python.h>
-> >
-> > [Severity: Medium]
-> > Could moving Python.h here cause build warnings or ABI mismatches?
-> >
-> > The Python C API requires that Python.h must be included before any
-> > standard system headers. Python.h defines preprocessor macros that
-> > alter the behavior of standard headers. Because this alphabetizes the
-> > list, standard headers like inttypes.h and poll.h are now included
-> > before Python.h.
+> Thank you for your contribution! Sashiko AI review found 1 potential issu=
+e(s) to consider:
+> - [Medium] The commit introduces a redundant X86_32 dependency and the co=
+mmit message falsely claims it fixes an x86_64 compilation failure.
+Which is accurate. This should not build on x86_64.
+> --
 >
-> I think it's worth following the suggestion.  I'm not sure if it's
-> possible to add an exception for the python headers to clang format.
-
-I believe we can set Python.h as having the highest priority and
-always including it first. I want to make sure the Sashiko is advice
-is accurate first :-)
-
-Thanks,
-Ian
-
-> Thanks,
-> Namhyung
+> commit 2f32c0aa3739414d8be655780c2734e155b45ea8
+> Author: Rosen Penev <rosenp@gmail.com>
+> PCI: hotplug: compaq: fix X86 dependency
 >
+> This commit restricts the HOTPLUG_PCI_COMPAQ Kconfig dependency from X86
+> to X86_32. The commit message indicates this is to prevent x86_64 build
+> failures caused by invalid assembly.
+>
+> > This driver needs X86_32, not X86. It does not compile on x86_64 becaus=
+e
+> > of invalid assembly there.
+>
+> [Severity: Medium]
+> Is this description accurate?
+>
+> HOTPLUG_PCI_COMPAQ already depends on PCI_BIOS. In arch/x86/Kconfig,
+> config PCI_BIOS is defined with depends on X86_32.
+>
+> Because of this dependency, the driver could not be selected or compiled
+> on x86_64 even before this patch. Could the commit message be updated to
+> reflect this?
+>
+> > diff --git a/drivers/pci/hotplug/Kconfig b/drivers/pci/hotplug/Kconfig
+> > index 3207860b52e42..5074c0ac4ce18 100644
+> > --- a/drivers/pci/hotplug/Kconfig
+> > +++ b/drivers/pci/hotplug/Kconfig
+> > @@ -20,7 +20,7 @@ if HOTPLUG_PCI
+> >
+> >  config HOTPLUG_PCI_COMPAQ
+> >       tristate "Compaq PCI Hotplug driver"
+> > -     depends on X86 && PCI_BIOS
+> > +     depends on X86_32 && PCI_BIOS
+>
+> [Severity: Medium]
+> Does this introduce a redundant check?
+>
+> Since PCI_BIOS already restricts the build to X86_32, changing X86 to
+> X86_32 appears to provide no functional difference.
+>
+> --
+> Sashiko AI review =C2=B7 https://sashiko.dev/#/patchset/20260526042614.10=
+13867-1-rosenp@gmail.com?part=3D1
