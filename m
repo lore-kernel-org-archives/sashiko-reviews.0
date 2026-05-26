@@ -1,79 +1,118 @@
-Received: from smtp1-g21.free.fr (smtp1-g21.free.fr [212.27.42.1])
+Received: from out30-133.freemail.mail.aliyun.com (out30-133.freemail.mail.aliyun.com [115.124.30.133])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 439D52139C9;
-	Tue, 26 May 2026 08:26:41 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=212.27.42.1
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EE26F3D79F1
+	for <sashiko-reviews@lists.linux.dev>; Tue, 26 May 2026 09:27:08 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=115.124.30.133
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1779784002; cv=none; b=DQZCVtcqQ/g34CeMHJFxiJ/4A1xJj5OZO1/ClMfKOu2P7F7xMc8TKdml+IU1MP8zMwgYfHBUDp3Mfoevh61PUnWxwFS/GTZCFxfWK27zQyZ5MyvJphiV8uq/ZOd5hvkujdCx7P/BuQe1ogZ29XKJ3vCf/GQ3iWVguqYbC4y+FKY=
+	t=1779787631; cv=none; b=S5JFVlOG3Ir7Eai+FVlQa/w4kkXZw5XtETqsczgF91bDTOEbbaotI5BVP10ajY+8yGLfQ888UPJr/y3IKLMrSG45PY+MxOkR+LjQyGW1CrRXtu14wtsz/SuO6oTcYvgvxxK5kUEMI5UKcxNGoD7RXBV1SAa9fYqeY9+9b5ThlS8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1779784002; c=relaxed/simple;
-	bh=oSA/IT5um6LVlHgyL+zO+y5tvOE5NRiq02LWFFW2Uqc=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=j59ONd1KT1FmdIThWsWBbcgztGk5IeTqPG9d8Br0WSPdKgWknfEBvwUGfZ3a1SkijM7ROnFyd+xEhO7H3yqhl9ClE8C2qBy3ItRsD2bfRw+P6SD8uNqLZJFtlSPqKWvsMU/jzeaJxnq+v/35fX+AaOvsSUJ7OMrVvg1XUFG3d/I=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=free.fr; spf=pass smtp.mailfrom=free.fr; dkim=pass (2048-bit key) header.d=free.fr header.i=@free.fr header.b=nU2guSM3; arc=none smtp.client-ip=212.27.42.1
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=free.fr
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=free.fr
+	s=arc-20240116; t=1779787631; c=relaxed/simple;
+	bh=Nbw2L11H8OeSwwL79pkT/i8CWBtxF5CaIRrjz2ju7FA=;
+	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
+	 MIME-Version:Content-Type; b=JifPcMBvKMu3CeVcs0s49AxG3q6iG1rZHx+sgTxOkhFCjLftcOWcLlwc3y3tH8knG4R3Tc/BWvkR+qsCHEFKsh3MkZgnO20+DyG+IbZlJ5HRyYnzFhmlxHXLFJ2LhpCWmS7/A4Yt9jKH1xPiVlyCKqMjyijE0kFv0knww9CvjuY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linux.alibaba.com; spf=pass smtp.mailfrom=linux.alibaba.com; dkim=pass (1024-bit key) header.d=linux.alibaba.com header.i=@linux.alibaba.com header.b=atq0jLW5; arc=none smtp.client-ip=115.124.30.133
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linux.alibaba.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linux.alibaba.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=free.fr header.i=@free.fr header.b="nU2guSM3"
-Received: from L30177.local (unknown [213.36.132.10])
-	(Authenticated sender: vjardin@free.fr)
-	by smtp1-g21.free.fr (Postfix) with ESMTPSA id 5A600B00579;
-	Tue, 26 May 2026 10:26:37 +0200 (CEST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=free.fr;
-	s=smtp-20201208; t=1779783999;
-	bh=oSA/IT5um6LVlHgyL+zO+y5tvOE5NRiq02LWFFW2Uqc=;
-	h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
-	b=nU2guSM38EBcVF/0gJ6so3SJp+0PfC8kVC+pDU2WoYQrhAcdtlm8uA8zDwfSxNzf4
-	 3en/bSV86rYeUR8UhT2bOGF9eeMuX74BNavGqzqp39c9kDEobtWC7/i7pW28hGPGEN
-	 N2EGlKrf6NLuJlfntGPCQFA3RNAbXX+8VgTLvTl14+rgTj3pqKUjvJWVpYErimY/lN
-	 qikSX5ewB9avneSiSVqJPsJoxcyRVFlETJQ2atjoEeZftDe7vmE0ViWxZuayf0nWPV
-	 D401aFRYoD8+/lzpoWxiAIagH4y8yffeA/V4JISz+b14xfLO+Q2i2zN+aKJsUKDbWI
-	 c1NkUsOgUzyJA==
-Date: Tue, 26 May 2026 10:26:36 +0200
-From: Vincent Jardin <vjardin@free.fr>
-To: sashiko-reviews@lists.linux.dev
-Cc: Frank.Li@kernel.org, imx@lists.linux.dev
-Subject: Re: [PATCH v2 2/2] i2c: imx: fix locked bus on SMBus block-read of 0
- (IRQ)
-Message-ID: <ahVZPLHymdsZtgg5@L30177.local>
-References: <20260525-for-upstream-i2c-lx2160-fix-v1-v2-2-26a3cc8cd055@free.fr>
- <20260525182420.05AA01F000E9@smtp.kernel.org>
+	dkim=pass (1024-bit key) header.d=linux.alibaba.com header.i=@linux.alibaba.com header.b="atq0jLW5"
+DKIM-Signature:v=1; a=rsa-sha256; c=relaxed/relaxed;
+	d=linux.alibaba.com; s=default;
+	t=1779787626; h=From:To:Subject:Date:Message-ID:MIME-Version:Content-Type;
+	bh=RR4lUZdYoL3Vw06ZGP2CnNvK2bEQNqhFe15x28HIaWg=;
+	b=atq0jLW5F3Uybh2NGzp3Dwkqi24MgDfhP2Ro6Up6yZEfXKG8RR5Kz/A5IrPcuigT+qE0Prpvfz8hSAP2xxuR6CYjtwe03JZdr+USj/GZzvfOElcITUFzoUmaiUA22JI0JZXRA/SQQO0RLCJjddkvKwiJHlb+ObOt6wJ8UmPUO9M=
+X-Alimail-AntiSpam:AC=PASS;BC=-1|-1;BR=01201311R111e4;CH=green;DM=||false|;DS=||;FP=0|-1|-1|-1|0|-1|-1|-1;HT=maildocker-contentspam033045098064;MF=cp0613@linux.alibaba.com;NM=1;PH=DS;RN=4;SR=0;TI=SMTPD_---0X3fq5Z7_1779787612;
+Received: from DESKTOP-S9E58SO.localdomain(mailfrom:cp0613@linux.alibaba.com fp:SMTPD_---0X3fq5Z7_1779787612 cluster:ay36)
+          by smtp.aliyun-inc.com;
+          Tue, 26 May 2026 17:27:04 +0800
+From: Chen Pei <cp0613@linux.alibaba.com>
+To: sashiko-bot@kernel.org
+Cc: cp0613@linux.alibaba.com,
+	linux-pci@vger.kernel.org,
+	sashiko-reviews@lists.linux.dev
+Subject: Re: [PATCH] cxl/acpi: Defer probe when ACPI0016 PCI root bridge is not ready
+Date: Tue, 26 May 2026 17:26:46 +0800
+Message-ID: <20260526092652.171319-1-cp0613@linux.alibaba.com>
+X-Mailer: git-send-email 2.43.0
+In-Reply-To: <20260526031200.C19341F000E9@smtp.kernel.org>
+References: <20260526031200.C19341F000E9@smtp.kernel.org>
 Precedence: bulk
 X-Mailing-List: sashiko-reviews@lists.linux.dev
 List-Id: <sashiko-reviews.lists.linux.dev>
 List-Subscribe: <mailto:sashiko-reviews+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:sashiko-reviews+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <20260525182420.05AA01F000E9@smtp.kernel.org>
+Content-Type: text/plain; charset=y
+Content-Transfer-Encoding: 8bit
 
-Hi bot,
+On Tue, 26 May 2026 03:12:00 +0000, sashiko-bot@kernel.org wrote:
 
-
-> i2c: imx: fix locked bus on SMBus block-read of 0 (IRQ)
+> > +
+> > +	/* Clear _DEP dependencies to allow consumers to enumerate */
+> > +	acpi_dev_clear_dependencies(device);
+> > +
+> >  	return 1;
+> >  
+> >  remove_dmar:
+> >  	if (hotadd)
+> >  		dmar_device_remove(handle);
+> >  end:
+> >  	kfree(root);
+> 
 > [Severity: High]
-> This is a pre-existing issue, but does this function also need to set the
-> TXAK bit when len is exactly 1?
+> This is a pre-existing issue, but does the dmar_device_add() error path
+> leave a dangling pointer in device->driver_data?
 > 
-> When the length byte is read here, the hardware immediately starts clocking
-> in the next byte, which is the first data byte. If the block read length is
-> exactly 1, this first data byte is also the last byte of the transfer.
+> Earlier in acpi_pci_root_add(), the allocated root object is assigned to
+> device->driver_data:
 > 
-> Because TXAK is explicitly cleared earlier in i2c_imx_isr_read for length
-> transfers, the controller will ACK this final data byte if TXAK is not set
-> at this point.
+> 	root->device = device;
+> 	root->segment = segment & 0xFFFF;
+> 	device->driver_data = root;
 > 
-> If the slave holds SDA low as a result of receiving an ACK instead of a NACK
-> on its final byte, would the subsequent attempt to generate a STOP condition
-> in i2c_imx_isr_read_continue fail and permanently hang the bus?
+> If dmar_device_add() fails during a hot-add, the code jumps to the end
+> label and frees the root pointer via kfree().
 > 
-> The atomic path in i2c_imx_atomic_read appears to handle this safely by
-> setting TXAK when reading the second-to-last byte.
+> However, it doesn't explicitly reset device->driver_data to NULL, unlike
+> the later pci_acpi_scan_root() error path. Since the ACPI core does not
+> automatically clear driver_data on an attach failure, could subsequent calls
+> to acpi_pci_find_root() by other subsystems fetch and dereference this freed
+> pointer?
 
-once again, see the answers on v1:
-  https://lore.kernel.org/all/ahRoKMLtrirbowbj@L30177.local/
+Good catch — you're right. On the dmar_device_add() failure path, the
+code jumps to end: and frees root via kfree(), but
+device->driver_data is left pointing at the freed memory. The later
+pci_acpi_scan_root() failure path explicitly clears it to NULL, which
+makes the omission on the dmar path look like an oversight rather than
+intentional.
 
-regards,
-  Vincent
+Since this is unrelated to the _DEP clearing change in this patch, I'd
+prefer to keep it out of this patch and send a separate fix on top. Both
+failure paths converge at end: and need the same cleanup, so I plan to
+consolidate the NULL assignment there:
+
+@@ -724,7 +724,6 @@ static int acpi_pci_root_add(struct acpi_device *device,
+		if (!root->bus) {
+				dev_err(&device->dev,
+						"Bus %04x:%02x not present in PCI namespace\n",
+						root->segment, (unsigned int)root->secondary.start);
+-				device->driver_data = NULL;
+				result = -ENODEV;
+				goto remove_dmar;
+		}
+@@ -764,6 +763,7 @@ static int acpi_pci_root_add(struct acpi_device *device,
+remove_dmar:
+		if (hotadd)
+				dmar_device_remove(handle);
+end:
++		device->driver_data = NULL;
+		kfree(root);
+		return result;
+}
+
+This way every path reaching end: clears driver_data before freeing
+root, and any future error path that does goto end; is automatically
+correct. Does that split sound OK to you?
+
+Thanks,
+Pei
