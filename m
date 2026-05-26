@@ -1,125 +1,136 @@
-Received: from mail-wm1-f47.google.com (mail-wm1-f47.google.com [209.85.128.47])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from smtpout-02.galae.net (smtpout-02.galae.net [185.246.84.56])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2B9023BB66C
-	for <sashiko-reviews@lists.linux.dev>; Tue, 26 May 2026 14:36:58 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.47
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EBC193DA7EE
+	for <sashiko-reviews@lists.linux.dev>; Tue, 26 May 2026 14:38:59 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=185.246.84.56
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1779806219; cv=none; b=P8kiec8y91Hs7/dlT6hZDAmP9sMDIgK2h5w4+jj4tVCBACanRqeV1UOv6abM8mU9rQdVJk8KdWLS+zio3lgigxzWKRKrD/TS/Trtn5vHKANC/KlE+JPBMmOVPMeYh6m+szQraa5XbkeKLhUosHluN2WGUBsSalQ+ZAsSAyYIdwg=
+	t=1779806342; cv=none; b=FQm8sBdO+hTDvN5g1ypMG6z/q9X4Gyny6Jkc72uRi1rwLPkIgwi16xm/E1VNoAGjc0g1SU1d+4G75eMgr1c87fk+N0dos/aV26lXmuUiZ6Z17IkAN4NZTqi8tm8sxTEjJUQwbxDTDQ7s6Tb9MTtT3ih011ue9oMy7kkXQ2fSndA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1779806219; c=relaxed/simple;
-	bh=bddmPLdlh8k4/CdvGhfjRlpoA8phjbaXLF3xZh98BOk=;
-	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=Puj7JPjjwRMAmXkoRwYCDNHMtGEaWiVnDOIlAyyZ4QqwF5tmUCQU7sIKqZjw3+Z2rJyQMC48wR1b4L5Om99gd702oglNjtv7xGVlBrAxTvtbeFWSoLL9Hx+pUP1k9J0piACttCO/yDT97aWlTfWo6/no0HXrxTgnBPs1423jKhQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=r6lboW4k; arc=none smtp.client-ip=209.85.128.47
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
+	s=arc-20240116; t=1779806342; c=relaxed/simple;
+	bh=Za9tESbH37YJVoRwyLVYJJewm4lACsnvMy69bZH1pKA=;
+	h=Date:From:To:Cc:Subject:Message-ID:In-Reply-To:References:
+	 MIME-Version:Content-Type; b=q85NocBYk+GO+Gz+2p0MvBkZ3jcJsn6mdryR3JoBOWVhJb6XcF/ltlI7Id5UOpwsAGPWlvgJ1EOGJlh5NM1mCyXf8RPgRQ9Jtv5+PfZXn847b+qCCwHEKee/7kj/4hxoR0u9KZtYCMKsTbE1JQB9PBctZLGHSw8EaiP+BotSpJg=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=bootlin.com; spf=pass smtp.mailfrom=bootlin.com; dkim=pass (2048-bit key) header.d=bootlin.com header.i=@bootlin.com header.b=yTp4u7TI; arc=none smtp.client-ip=185.246.84.56
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=bootlin.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=bootlin.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="r6lboW4k"
-Received: by mail-wm1-f47.google.com with SMTP id 5b1f17b1804b1-4891b0786beso71772915e9.1
-        for <sashiko-reviews@lists.linux.dev>; Tue, 26 May 2026 07:36:57 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1779806216; x=1780411016; darn=lists.linux.dev;
-        h=content-transfer-encoding:in-reply-to:from:content-language
-         :references:cc:to:subject:user-agent:mime-version:date:message-id
-         :from:to:cc:subject:date:message-id:reply-to;
-        bh=X/6TPmhMOXzTepD6L2/v/4s1TFOwJFHZZXVYfuiMLr8=;
-        b=r6lboW4kkRCjXn4fQ/FGjZC1e4IKdD4RqXLQsMhPrrJ1Cc6fHt1DXHajhqhBbDxOyW
-         8TcIqJpdSCQIKqPP98p2RKU3ztz1ASjAthxUCbb0u3KvNvSpFaq5naBT1GaO0b0kLpEV
-         AXB/aNL7DAWwNt9FE58hLC3XFp21COc/0DwDk+i+Gw47DM6V5LULcpjyjwaNO0m23H/q
-         0twFFui3/72jvnLI0f0Q/PxjxXFai4+Ezg8C5IrvSVBQLMn5d0xv7rhhi+xb/BOt7wdE
-         Kb8zL2fi5ZLZnQfdXz2ZA21rAudeIGqaWcc7MxddWEhR+PPVvJ2O+IGVWkVMVF3P1plo
-         xJog==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20251104; t=1779806216; x=1780411016;
-        h=content-transfer-encoding:in-reply-to:from:content-language
-         :references:cc:to:subject:user-agent:mime-version:date:message-id
-         :x-gm-gg:x-gm-message-state:from:to:cc:subject:date:message-id
-         :reply-to;
-        bh=X/6TPmhMOXzTepD6L2/v/4s1TFOwJFHZZXVYfuiMLr8=;
-        b=m9O/ugOOE+CUfivs3mB35zzqCJXkbrJ4VPRyHvKfCq66H00j6WoVOBNhAB1pIMV/+r
-         a1ovT2r2yj8VkXNf4NMvYxkOy4qSSEp5/vHqEgTG1jJVaugf0bv+N3bStHeYHtBYEmga
-         dDYxNRYrhsepLAyc+rz6Vmp27cbj6thkl5868PufajJOjCxpYb+0hbf5cL6NnBqWg8WE
-         CBc/Pbi0IdQEbI6ET9oa7WDszAqIPpd0uj34lHW3ergRkMl6xclmTqleeicEqF+pWNgF
-         0v22/ktm3gihuxLDoHzv/2E1Jim/kfnecyuozeU6alQA2m/YcbHv3xfQ7Q8ZkHehjo7g
-         9xaw==
-X-Gm-Message-State: AOJu0YwdDD2QHgKzZQ9LFlN8iuggX0ZQUZSXA/hoFlOjKqZsVgIOOsCq
-	svNIyrigDq6+QoDOcRuYyMDc6LzXUZ9HJUf2znJLRhDFR6gSXxE0R59PlKnVhAFupao=
-X-Gm-Gg: Acq92OFPgqvxtsr4VNRf7KEC2iVwwf7i23vB8aFtPIfqV9xK2SY+F6MJnJGfBRw0LC8
-	FZcw1OPd5BcruIZfUvGfmfA1DqpvLriquJI6iMF/8FJVFbHdzPOSpFBN4IqCVDBLXLuxTTYec2z
-	/V5WUh6ouaxnVkZrTCaP2IGDCzLNQAKFZrgCOSZ1OzGbg7BZhu9ed13Kjk84lUHvMqxSNn6a8ek
-	fmsD8yYKgFPa4+oloMgljMyhy4jcKCuverAxcrDhgLV8ta8O+QHjdgcG+snw93uo6c4jutqHmh0
-	Bj0PpUn2lw23YEOf10qABdUV3gWK5A5mtfoz84dCyhFSNBBL5pKLIOFwx34AKtxTdQpXWhJuNgy
-	tpEF8PymZMc1bgSLHLwziaS9T5VuGmSPHfqBD5MNzRKXOV+Lvq2kFkTdiqm855TyDZdyU+cHaaC
-	MfVJOmYr0a4iQOhrca8ytTjVS2VKObjPU=
-X-Received: by 2002:a05:600d:6413:20b0:48a:9540:1a3a with SMTP id 5b1f17b1804b1-49042495183mr238402265e9.8.1779806216533;
-        Tue, 26 May 2026 07:36:56 -0700 (PDT)
-Received: from [10.11.12.110] ([82.76.215.73])
-        by smtp.gmail.com with ESMTPSA id ffacd0b85a97d-45eb6cce01asm37274935f8f.11.2026.05.26.07.36.55
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Tue, 26 May 2026 07:36:55 -0700 (PDT)
-Message-ID: <d8539fc8-d2ed-4b27-aa1c-ee92d7c8ff8e@linaro.org>
-Date: Tue, 26 May 2026 17:36:54 +0300
+	dkim=pass (2048-bit key) header.d=bootlin.com header.i=@bootlin.com header.b="yTp4u7TI"
+Received: from smtpout-01.galae.net (smtpout-01.galae.net [212.83.139.233])
+	by smtpout-02.galae.net (Postfix) with ESMTPS id 3B2A01A36C7;
+	Tue, 26 May 2026 14:38:58 +0000 (UTC)
+Received: from mail.galae.net (mail.galae.net [212.83.136.155])
+	by smtpout-01.galae.net (Postfix) with ESMTPS id 1023E6011D;
+	Tue, 26 May 2026 14:38:58 +0000 (UTC)
+Received: from [127.0.0.1] (localhost [127.0.0.1]) by localhost (Mailerdaemon) with ESMTPSA id DAD7610888874;
+	Tue, 26 May 2026 16:38:56 +0200 (CEST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=bootlin.com; s=dkim;
+	t=1779806337; h=from:subject:date:message-id:to:cc:mime-version:content-type:
+	 content-transfer-encoding:in-reply-to:references;
+	bh=TQ/sj9DlS/tDCpRj6ZObP+xQle+iacZdBbJGKCWhr/U=;
+	b=yTp4u7TI5DcBACFynE4Nv3rz+HtVM8dsNthrmNoP1xx5P97sSyIZJDhKyzUU/Nlrj2/S7q
+	K41GCkiDIFH7NzsTPCpE0QzqzqcfY1/3P66ZDq5PtxRVm6r4ilgGj55+C/cVvlh44tdpFy
+	MkrxdckMxiSTOhwdT5KQjA87pAfpQPGtduFlKPl1PWckm9CQPlZJ5XhAgBagANH/6eOe7G
+	NQhlr0AClRew6nDeccHxGeJmd58TB/9UwVe6LMiLcyGUZfnF0Hu9wAcRORQKPVoaNXRXla
+	aD/vFs4JfNLgPhFyIQ6KwgP192xKB0A8oE9mK9YVEWbgJksmUvzzaqLE0S2z+A==
+Date: Tue, 26 May 2026 16:38:54 +0200
+From: Herve Codina <herve.codina@bootlin.com>
+To: sashiko-bot@kernel.org
+Cc: sashiko-reviews@lists.linux.dev, linux-pci@vger.kernel.org
+Subject: Re: [PATCH v7 8/8] PCI: of: Remove fwnode_dev_initialized() call
+ for a PCI root bridge node
+Message-ID: <20260526163854.6cb05dae@bootlin.com>
+In-Reply-To: <20260512233518.0B0F8C2BCB0@smtp.kernel.org>
+References: <20260511155930.34604-9-herve.codina@bootlin.com>
+ <20260512233518.0B0F8C2BCB0@smtp.kernel.org>
+Organization: Bootlin
+X-Mailer: Claws Mail 4.4.0 (GTK 3.24.52; x86_64-redhat-linux-gnu)
 Precedence: bulk
 X-Mailing-List: sashiko-reviews@lists.linux.dev
 List-Id: <sashiko-reviews.lists.linux.dev>
 List-Subscribe: <mailto:sashiko-reviews+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:sashiko-reviews+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v5 1/5] dt-bindings: thermal: Add Google GS101 TMU
-To: Krzysztof Kozlowski <krzk@kernel.org>
-Cc: sashiko-reviews@lists.linux.dev, conor+dt@kernel.org, robh@kernel.org,
- devicetree@vger.kernel.org
-References: <20260525-acpm-tmu-v5-1-85fde739752e@linaro.org>
- <20260525125455.AF31A1F000E9@smtp.kernel.org>
- <4832a220-ace5-40ba-b85b-7c69b3aed869@linaro.org>
- <20260526-uptight-bustard-from-jupiter-291e59@quoll>
- <08eba1cf-2df8-4f2f-a527-ee03ee792920@linaro.org>
- <20260526-nocturnal-dragon-from-lemuria-c517a4@quoll>
-Content-Language: en-US
-From: Tudor Ambarus <tudor.ambarus@linaro.org>
-In-Reply-To: <20260526-nocturnal-dragon-from-lemuria-c517a4@quoll>
 Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 7bit
+Content-Transfer-Encoding: 8bit
+X-Last-TLS-Session-Version: TLSv1.3
 
+Hi all,
 
+On Tue, 12 May 2026 23:35:17 +0000
+sashiko-bot@kernel.org wrote:
 
-On 5/26/26 5:34 PM, Krzysztof Kozlowski wrote:
-> On Tue, May 26, 2026 at 01:02:37PM +0300, Tudor Ambarus wrote:
->>
->>
->> On 5/26/26 12:39 PM, Krzysztof Kozlowski wrote:
->>> On Mon, May 25, 2026 at 04:06:40PM +0300, Tudor Ambarus wrote:
->>>>>
->>>>> [Severity: Medium]
->>>>> Since the commit message and binding description indicate that the
->>>>> Application Processor relies entirely on the ACPM firmware for all
->>>>> functional TMU tasks, shouldn't samsung,acpm-ipc be included in this
->>>>> required list?
->>>>>
->>>>
->>>> I disagree. The property remains optional because the ACPM firmware
->>>> can be bypassed entirely. The TMU IP is capable of handling thermal
->>>> management directly without IPC intervention, so the phandle is not
->>>> a strict hardware requirement.
->>>
->>> I see your driver will fail probe without it, so something is not
->>> matching here.
->>>
->>
->>
->> Yes, that's because plain TMU register access, without the ACPM, is not
->> currently implemented in the driver. The ACPM can be bypassed in theory,
->> which is why I left the phandle optional in the binding to reflect the
->> hardware.
+> Thank you for your contribution! Sashiko AI review found 1 potential issue(s) to consider:
+> - [High] Removing `fwnode_dev_initialized()` causes consumers of the PCI host bridge to indefinitely defer probe or suffer a 30-second boot delay.
+> --
 > 
-> The point is that phandle is not optional currently. Binding must
-> accurately describe the interface implemented by SW, so either SW does
-> not fail the probe on missing property or the property is mandatory.
+> commit 77e0afe5e647b8f57bcce68df03d0b7040fbfe25
+> Author: Herve Codina <herve.codina@bootlin.com>
+> 
+> PCI: of: Remove fwnode_dev_initialized() call for a PCI root bridge node
+> 
+> This commit removes the fwnode_dev_initialized() call during the creation of
+> the PCI host bridge node to allow devlink to correctly create links for
+> devices in device-tree overlays.
+> 
+> > diff --git a/drivers/pci/of.c b/drivers/pci/of.c
+> > index 25fb02c3dc720..53a8a4f30eb66 100644
+> > --- a/drivers/pci/of.c
+> > +++ b/drivers/pci/of.c
+> > @@ -811,7 +811,6 @@ void of_pci_make_host_bridge_node(struct pci_host_bridge *bridge)
+> >  	 */
+> >  	of_node_set_flag(np, OF_POPULATED);
+> >  	fw_devlink_set_device(&np->fwnode, &bridge->dev);
+> > -	fwnode_dev_initialized(&np->fwnode, true);  
+> 
+> Will removing this cause consumers of the PCI host bridge to indefinitely
+> defer probe or suffer a 30-second boot delay?
+
+No, nothing of this kind has been observed.
+
+> 
+> The commit message indicates that the device related to this firmware node
+> is handled using driver core mechanisms and is fully compliant with devlink
+> expectations. However, isn't bridge->dev a structural device with no bus
+> (dev->bus == NULL)? If so, it would never undergo driver matching or
+> probing.
+> 
+> If fwnode_dev_initialized() is removed, FWNODE_FLAG_INITIALIZED is cleared.
+> When consumer devices are parsed, fw_devlink creates a managed device link
+> from the consumer to bridge->dev, expecting it to eventually probe. Since
+> the bridge device never probes, its status remains DL_DEV_NO_DRIVER.
+> 
+> When the consumer device attempts to probe, device_links_check_suppliers()
+> might see a dormant supplier and return -EPROBE_DEFER.
+> 
+> Additionally, because device_add(&bridge->dev) executes before
+> of_pci_make_host_bridge_node() attaches the fwnode, device_add() would see a
+> NULL fwnode and skip the fallback fw_devlink_unblock_consumers() call.
+> 
+> >  
+> >  	ret = of_changeset_apply(cset);
+> >  	if (ret)  
 > 
 
-Got it, thanks. I'll make it mandatory.
+No devlink should be created with a consumer/supplier relationship between
+a device and the host bridge.
 
-Cheers,
-ta
+The traditional parent/child relationship between the host bridge and
+devices behind the bridge is sufficient and fully handled without devlink.
+
+With the flag set, the trace 'Not linking xxxx - might never become dev' [1]
+is present for devlink creation where chidren of the host bridge are involved.
+
+Don't confuse devlink setting this flag while all devices are created using
+driver core mechanism.
+
+Maybe Sashiko is confused also by the way things are done. Usually, fwnodes
+are created first and devices are instantiated based on those fwnodes. Here,
+devices already exist and OF nodes (fwnodes) are created and attached to
+those devices. Indeed, we are on the PCI enumeration and missing OF nodes are
+dynamically created.
+
+[1] https://elixir.bootlin.com/linux/v7.1-rc4/source/drivers/base/core.c#L2167
+
+Best regards,
+Hervé
