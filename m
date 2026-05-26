@@ -1,174 +1,189 @@
-Received: from smtpbgsg1.qq.com (smtpbgsg1.qq.com [54.254.200.92])
+Received: from leonov.paulk.fr (leonov.paulk.fr [185.233.101.22])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3D9B32147E6
-	for <sashiko-reviews@lists.linux.dev>; Tue, 26 May 2026 13:31:38 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=54.254.200.92
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8038426B764;
+	Tue, 26 May 2026 14:13:25 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=185.233.101.22
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1779802309; cv=none; b=Cm+fmYl+iWsoNUw6Bp7iKjkun+F1TFOiKCMvBG2Y5cFr1HIQEK97iOZMCdwVXmLXeqYEgh5JjTza1jMYe+7d5zdLeqTiVrXjkXuaA16M8yrfQsXsK94+m6Fbt4Z6Sai5kR1SL4bmiqjPfE5VwrXROX2d6y4hr/PCpwa1u62FGgg=
+	t=1779804808; cv=none; b=T+TlOBqIqsJQFR6lLRaHbkDQOAyKZptgUku+eMH5+aTL3NiiDmk/2yi3xHCIX8ck1fDhpMZyDO+B5mcY0Tf0nU6iHH3MLnO9BbdXWyUIjTPsyrXlVR7b+fwKbzC5O//v049sija0f+sbk0aSv98o2Y6ssCYyi8Wzrpg+e2gcXBw=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1779802309; c=relaxed/simple;
-	bh=er5WhZuT8iO54WLetLLXi+bUQ6Pjir8+uPBvqHnWrCs=;
-	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=Y0AruAuxVzVH6tTxEa7KI86tSbG2eVbpD4ziuSsX3kvvuJxZnDMWrK87Ej+5SSwzHjtMlj8coO7ya6uJ6Fi0hK+XbtIuTHqg1Gn7SVbHyYfxC0NeGyEy4JKNw4668OMs5aZD84p8Q1RtzYD+CcuDMqIAZL+bqDmoVAhL58K8P+g=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=uniontech.com; spf=pass smtp.mailfrom=uniontech.com; dkim=pass (1024-bit key) header.d=uniontech.com header.i=@uniontech.com header.b=oMfIbfF/; arc=none smtp.client-ip=54.254.200.92
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=uniontech.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=uniontech.com
-Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=uniontech.com header.i=@uniontech.com header.b="oMfIbfF/"
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=uniontech.com;
-	s=onoh2408; t=1779802296;
-	bh=PXZ61ZSDxPqDDY3NM1tN66z6vDr+ymWgRX7JCP/SJpQ=;
-	h=Message-ID:Date:MIME-Version:Subject:To:From;
-	b=oMfIbfF/rdGTSWa3cMOWyHXDuDzfAv2bcnpLR05HKFMuA5Jt+5YPKlqwGlD1xO8AB
-	 Jzl5Dp0g7zUGQVTJQs34NyjkJMAym7Xcq8rzMqxvL4iACYaucOrsegOO4VoFYxiAly
-	 KTGgindeVD/pYgNBMDgl0aHbA1Qvuu2H4f48xlYA=
-X-QQ-mid: esmtpsz16t1779802293te1af78ca
-X-QQ-Originating-IP: yANNd3rtLdTsBYfmF1Qq1EDeLz854fT+sDaygQIvVKc=
-Received: from [10.10.73.115] ( [123.114.60.34])
-	by bizesmtp.qq.com (ESMTP) with 
-	id ; Tue, 26 May 2026 21:31:31 +0800 (CST)
-X-QQ-SSF: 0000000000000000000000000000000
-X-QQ-GoodBg: 1
-X-BIZMAIL-ID: 1454614997282183531
-Message-ID: <093E9E6366684579+e5297caf-5b6c-470d-8465-9cf5099fb3fc@uniontech.com>
-Date: Tue, 26 May 2026 21:31:31 +0800
+	s=arc-20240116; t=1779804808; c=relaxed/simple;
+	bh=0ExaLqZz8H/scaF4ESGOgbBXyDPgoURUWi3f4cwnXos=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=EoB1x81Zpj1A7PR57UaLu1R2UjLT1dSt1YCe+kgU199DAizYWxmBdDigQ70AfzmizVJiabHZiixxHnYaLwhSQVbkwa0f4tInblUxiKMNa//rO8t8q3katHzgGmX+JK+z9Ey3V856lNHlT3OqOfZi8Paq5+0sD9TKf2MjXIFeL8Q=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=sys-base.io; spf=pass smtp.mailfrom=sys-base.io; arc=none smtp.client-ip=185.233.101.22
+Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=sys-base.io
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=sys-base.io
+Received: from laika.paulk.fr (12.234.24.109.rev.sfr.net [109.24.234.12])
+	by leonov.paulk.fr (Postfix) with ESMTPS id 1A5F43700271;
+	Tue, 26 May 2026 14:13:17 +0000 (UTC)
+Received: by laika.paulk.fr (Postfix, from userid 65534)
+	id 2690FB408F5; Tue, 26 May 2026 14:13:16 +0000 (UTC)
+X-Spam-Level: 
+Received: from shepard (unknown [37.167.72.125])
+	by laika.paulk.fr (Postfix) with ESMTPSA id E42EAB408F4;
+	Tue, 26 May 2026 14:13:14 +0000 (UTC)
+Date: Tue, 26 May 2026 16:13:05 +0200
+From: Paul Kocialkowski <paulk@sys-base.io>
+To: Chen-Yu Tsai <wens@kernel.org>
+Cc: linux-sunxi@lists.linux.dev, conor+dt@kernel.org, robh@kernel.org,
+	devicetree@vger.kernel.org, sashiko-reviews@lists.linux.dev
+Subject: Re: [PATCH v9 5/9] ARM: dts: sun8i: v3s: Add nodes for MIPI CSI-2
+ support
+Message-ID: <ahWqcWy_6QuNIOi-@shepard>
+References: <20260518153339.619947-6-paulk@sys-base.io>
+ <20260518161130.F0A4CC2BCB7@smtp.kernel.org>
+ <CAGb2v65+JwwU2p5TQ6hrqonYNUgVgZQMPY6D=ROqWJu=xy=drQ@mail.gmail.com>
 Precedence: bulk
 X-Mailing-List: sashiko-reviews@lists.linux.dev
 List-Id: <sashiko-reviews.lists.linux.dev>
 List-Subscribe: <mailto:sashiko-reviews+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:sashiko-reviews+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH] RISC-V: KVM: Fix timer state restore
-To: sashiko-reviews@lists.linux.dev
-Cc: kvm@vger.kernel.org
-References: <20260526075544.796396-1-maqianga@uniontech.com>
- <20260526082339.101271F000E9@smtp.kernel.org>
-Content-Language: en-US
-From: Qiang Ma <maqianga@uniontech.com>
-In-Reply-To: <20260526082339.101271F000E9@smtp.kernel.org>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 8bit
-X-QQ-SENDSIZE: 520
-Feedback-ID: esmtpsz:uniontech.com:qybglogicsvrsz:qybglogicsvrsz3b-0
-X-QQ-XMAILINFO: N6p5qtJwZog+YaZQeiTVhGp6byNI0055FlidDohmHrYJD4Bl0wPk3jgD
-	MrYUfXK10o42olXHRl5y9lEn87Yp3MbUyGRtqDH0MEhdEbO3ASq7wDDS2Md1Z1JjRlOTuKw
-	qIX6JYZRjZZPoTp9E4c2a/Fj7r0xefxGBPJLyQXhOET5Q2p1lWncQdTZ2gq8qBhgmWYrIK8
-	OINCdDSOj37DD+bkOFFBsJUgJlEswpI0KMbl6OgmafLfygOXKEjJJ1YDSKKsLgEJ/OgDRW0
-	ONvwArIol9gznRTF+tC5i5b8YPm9oyI3t0cAOUhOpVQC/GK3AaCBTxXkYcRtM3r/ZTKFWc5
-	ndBUh9Cd1y63ri6brdORXx/IDYvRwa1oFgZbGBWaTMBiYTgEYPq1FClIDbLpbmdtzKbnDmZ
-	zofCF4NC7cqfLZz+0S5ZGAWCLev2H55nZp4SabnGztjEXbvIVwlyVmYM/09n/T1DgQX5p4e
-	2H32silMNZcFiDnjahqHKsIVilZMB6lNYG5Z2JW7akypzTNRDtpgaf+1lSRb1i7l98Vmgot
-	v+fhV4R6Ux0Y7nqI1FCdED+4xmOx4ARLnEBCbWID7TpxQqhKuUc1tXGagamMAFh7hBJzemf
-	pdesgcFQtM90k65pJ5pfpU7pUdKAt9h8N+zKeyFaSKue8CRySkL49X1fly/VHdCwxHKre97
-	fTAVb4eptT/MB+U18mEzDpelX0RRyqO8EivKOEGiAjafmmKLu/FcBj23wQGEjohvpl8506u
-	mlkGvPEOM+9qlexE1FeqoF2Serj3h2iukKnUt6NGSH7Yq4aZLsy5+tAYb1SuAfPvhGAfOO3
-	GBQdNQXyU4tcCMuOO7uYeHf2zu8tymkM1Gd1wxNTGjB8w6x42ffuuVl9FwYZ/gHD1u8FY6z
-	6jw1WsoaBw13z8/MkxCoVdRztk7g892a7It9KEFJXEohVhd+hmo77pHD+hw4MbC0wWSoiiM
-	HOkAD+CJKeaKuCS+bpZuOGdOJAwTPbtZ+rbOphx3gWsWN8gQyPttvIWTCFx91nlVmYx6IA/
-	AoMNuKMcAlmClant7kuwJIrVZXpRHP7TcJNUXJlA==
-X-QQ-XMRINFO: OWPUhxQsoeAV8xKf2v2O9PdriWjoSou4mA==
-X-QQ-RECHKSPAM: 0
+Content-Type: multipart/signed; micalg=pgp-sha512;
+	protocol="application/pgp-signature"; boundary="3/yyHngUfyzKNMrH"
+Content-Disposition: inline
+In-Reply-To: <CAGb2v65+JwwU2p5TQ6hrqonYNUgVgZQMPY6D=ROqWJu=xy=drQ@mail.gmail.com>
 
 
-在 2026/5/26 16:23, sashiko-bot@kernel.org 写道:
-> Thank you for your contribution! Sashiko AI review found 3 potential issue(s) to consider:
->
-> New issues:
-> - [High] The patch introduces a strict UAPI register restoration ordering dependency, causing the timer to permanently stall if `state` is restored before `compare`.
->
-> Pre-existing issues:
-> - [Critical] Timer teardown uses a state flag for synchronization instead of unconditionally canceling the hrtimer, leading to a use-after-free on VCPU destruction.
-> - [High] Restoring the timer state to OFF fails with `-EINVAL` if the timer is already OFF, aborting live migration. This is exacerbated by SSTC incorrectly reporting its state.
-> --
->
-> commit 12ffaa755d54118c3c86ae260e5df5a3b6b59454
-> Author: Qiang Ma <maqianga@uniontech.com>
->
-> RISC-V: KVM: Fix timer state restore
->
-> This commit changes the timer state restoration logic in the one-reg interface
-> to re-arm the timer using the restored compare value (t->next_cycles) instead
-> of using the state value itself.
->
->> diff --git a/arch/riscv/kvm/vcpu_timer.c b/arch/riscv/kvm/vcpu_timer.c
->> --- a/arch/riscv/kvm/vcpu_timer.c
->> +++ b/arch/riscv/kvm/vcpu_timer.c
->> @@ -229,7 +229,7 @@ int kvm_riscv_vcpu_set_reg_timer(struct kvm_vcpu *vcpu,
->>   		break;
->>   	case KVM_REG_RISCV_TIMER_REG(state):
->>   		if (reg_val == KVM_RISCV_TIMER_STATE_ON)
->> -			ret = kvm_riscv_vcpu_timer_next_event(vcpu, reg_val);
->> +			ret = kvm_riscv_vcpu_timer_next_event(vcpu, t->next_cycles);
-> [Severity: High]
-> Does this change introduce a strict ordering dependency for userspace register
-> restoration?
-In qemu, in the kvm_riscv_put_regs_time(), the values were originally 
-set in the order of time, compare, and state.
->
-> If a VMM restores the state register to ON before restoring the compare
-> register, it appears this will arm the timer using an uninitialized or stale
-> t->next_cycles value.
->
-> If the compare register is restored later via KVM_SET_ONE_REG:
->
-> 	case KVM_REG_RISCV_TIMER_REG(compare):
-> 		t->next_cycles = reg_val;
-> 		break;
->
-> This only updates memory and doesn't seem to re-arm the running hrtimer. Will
-> this cause the virtual timer to stall indefinitely?
-Currently, such a situation does not occur in qemu.
->
-> Before this patch, using 1 armed the timer for immediate expiration, and the
-> subsequent callback would asynchronously pick up the restored compare value.
->
->>   		else
->>   			ret = kvm_riscv_vcpu_timer_cancel(t);
-> [Severity: High]
-> This isn't a bug introduced by this patch, but does restoring the timer state
-> to OFF fail and abort live migration if the timer is already OFF?
->
-> If kvm_riscv_vcpu_timer_cancel() is called when restoring an OFF state:
->
-> static int kvm_riscv_vcpu_timer_cancel(struct kvm_vcpu_timer *t)
-> {
-> 	if (!t->init_done || !t->next_set)
-> 		return -EINVAL;
->          ...
-> }
->
-> On the migration destination, a newly created VCPU has t->next_set == false, so
-> restoring an OFF state returns -EINVAL.
->
-> Additionally, when the SSTC extension is enabled, the timer is programmed
-> directly via CSRs and t->next_set is not set to true for a running timer. Will
-> this cause KVM_GET_ONE_REG to incorrectly report the state as OFF for active
-> VMs, which then fails during restoration on the destination?
-In QEMU, the VM is running normally and does not call the 
-kvm_riscv_get_regs_timer().
->
-> [Severity: Critical]
-> This is a pre-existing issue, but does using the t->next_set flag for
-> synchronization during teardown lead to a use-after-free?
->
-> Looking at kvm_riscv_vcpu_timer_cancel(), it skips canceling the hrtimer if
-> the flag is false:
->
-> static int kvm_riscv_vcpu_timer_cancel(struct kvm_vcpu_timer *t)
-> {
-> 	if (!t->init_done || !t->next_set)
-> 		return -EINVAL;
->
-> 	hrtimer_cancel(&t->hrt);
-> 	t->next_set = false;
-> ...
->
-> If the hrtimer callback clears t->next_set before it finishes executing, and
-> the VCPU is destroyed concurrently, the teardown path will see
-> t->next_set == false and skip hrtimer_cancel().
->
-> Will the still-executing callback then dereference the freed VCPU memory?
->
->>   		break;
+--3/yyHngUfyzKNMrH
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+Content-Transfer-Encoding: quoted-printable
+
+Hi Chen-Yu,
+
+On Sun 24 May 26, 20:49, Chen-Yu Tsai wrote:
+> On Mon, May 18, 2026 at 6:12=E2=80=AFPM <sashiko-bot@kernel.org> wrote:
+> >
+> > Thank you for your contribution! Sashiko AI review found 1 potential is=
+sue(s) to consider:
+> > - [Medium] The `dphy` node is missing the required `interrupts` propert=
+y and a SoC-specific compatible string.
+> > --
+> >
+> > commit ceae1b5da24380c4a30d9a8b480a23eaee3c0814
+> > Author: Paul Kocialkowski <paul.kocialkowski@bootlin.com>
+> >
+> > ARM: dts: sun8i: v3s: Add nodes for MIPI CSI-2 support
+> >
+> > This commit adds MIPI CSI-2 support to the Allwinner V3s SoC. It introd=
+uces
+> > the device tree nodes for the CSI0 controller, the MIPI CSI-2 bridge, a=
+nd
+> > the D-PHY block.
+> >
+> > > diff --git a/arch/arm/boot/dts/allwinner/sun8i-v3s.dtsi b/arch/arm/bo=
+ot/dts/allwinner/sun8i-v3s.dtsi
+> > > --- a/arch/arm/boot/dts/allwinner/sun8i-v3s.dtsi
+> > > +++ b/arch/arm/boot/dts/allwinner/sun8i-v3s.dtsi
+> > [ ... ]
+> > > +             dphy: d-phy@1cb2000 {
+> > > +                     compatible =3D "allwinner,sun6i-a31-mipi-dphy";
+> >
+> > Should a SoC-specific compatible string like "allwinner,sun8i-v3s-mipi-=
+dphy"
+> > be included here alongside the generic a31 fallback?
+>=20
+> Following our general guideline, I believe it should.
+
+Yes I guess it makes sense. I don't think we've been doing that in every ca=
+se
+but it doesn't hurt.
+
+> > > +                     reg =3D <0x01cb2000 0x1000>;
+> > > +                     clocks =3D <&ccu CLK_BUS_CSI>,
+> > > +                              <&ccu CLK_MIPI_CSI>;
+> > > +                     clock-names =3D "bus", "mod";
+> > > +                     resets =3D <&ccu RST_BUS_CSI>;
+> >
+> > Will this node fail dtbs_check schema validation? The existing device t=
+ree
+> > binding schema for "allwinner,sun6i-a31-mipi-dphy" requires an interrup=
+ts
+> > property, which appears to be missing here.
+>=20
+> Yeah, this is definitely going to fail validation.
+
+To be very clear about this, the interrupt is absolutely not required for
+proper operation of the unit and there's a chance we might eventually see
+a SoC that doesn't have it wired.
+
+I could just hook the interrupt for now and we could make it optional if ev=
+er
+needed, but I could also mark is as optional now if you prefer.
+
+> > If the V3s hardware physically lacks a D-PHY interrupt, would it be bet=
+ter
+> > to add the V3s-specific compatible string and update the binding schema
+> > to make the interrupts property conditionally optional for the V3s?
+>=20
+> FWIW the vendor kernel has some code for the D-PHY's interrupt bits [1].
+> Could you add the interrupt (I'm guessing the MIPI-CSI interrupt?) and
+> give it a quick test?
+
+Thanks for digging this up! It really looks like it's just used for debug
+purposes.
+
+I have previously used the mipi csi-2 interrupt for the mipi csi-2 controll=
+er
+and never for the d-phy. There's a chance it's the same interrupt that is w=
+ired
+to both units (like it is for isp/csi).
+
+I'll give it a try when I get back home. If it doesn't trigger, it probbaly
+means it's not wired to the d-phy and should really be made optional.
+
+All the best,
+
+Paul
+
+>=20
+>=20
+> Thanks
+> ChenYu
+>=20
+> [1] https://github.com/gediz/v3s-linux-sdk/blob/master/linux-3.4/drivers/=
+media/video/sunxi-vfe/mipi_csi/dphy/dphy_reg.c
+>=20
+>=20
+> > > +                     allwinner,direction =3D "rx";
+> > > +                     status =3D "disabled";
+> > > +                     #phy-cells =3D <0>;
+> > > +             };
+> > > +
+> >
+> > --
+> > Sashiko AI review =C2=B7 https://sashiko.dev/#/patchset/20260518153339.=
+619947-1-paulk@sys-base.io?part=3D5
+> >
+
+--=20
+Paul Kocialkowski,
+
+Independent contractor - sys-base - https://www.sys-base.io/
+Free software developer - https://www.paulk.fr/
+
+Expert in multimedia, graphics and embedded hardware support with Linux.
+
+--3/yyHngUfyzKNMrH
+Content-Type: application/pgp-signature; name=signature.asc
+
+-----BEGIN PGP SIGNATURE-----
+
+iQIzBAEBCgAdFiEEAbcMXZQMtj1fphLChP3B6o/ulQwFAmoVqnEACgkQhP3B6o/u
+lQyVBxAAkmBbJfWH/Zap2m4SELdLqBWc4TbBFrxkvapEAEVhEDEjPt43XnjnVTGB
+RlS4WMVVEdLi1WtYEYPA7VkcGsYZQsuwySF5q0DoNkUbumm7qu0c2oewxahvd8i4
+iC1xUQHV+tgcIOd3KzRWgb6r+PoEASdHP1ND+Nn5ifZtA4qQODLtIK92cQfx2qXR
+zKvub/V2rDx9U6wHaoDcDkY5WTDh27Yb95Pwv9EuublD1RovX4zhNyDRFSTol3pB
+APuNJoQZAEhL7YLOK+myTEnZgQTSsYCrALKJyIpj++9wtBUfaCQvzZVhTBQJrq0H
+v4WHw/vc0M0FcULjEU4kQhpqpkDKx44rhny8yXxiI+9DpNWrJ5o8neoVUiEn+Yzi
+omFq3SSeGGbw9r5A57Y6COhERx5IFkIJ0p+0oz5ANwFwKSADL7/JTk35Fu/cg6Hn
+zJ+SMjLHJJFl4P5AunKhxed1M4w1QGev8kkkmp5FXcdwNU/qDVKEqiBXTgCdr6mA
+f0JT8pmhSCp3esUbvYrNS+thKgR3s5B+YEUikO9pLhIMvBnfAsmp8RTbRmFyIK78
+Lw1Diz6iGKBR+6rsxZlTySZ5nAPEeKIXScdnJFsQPGCBudGhIUEIv82ev7uESu3x
+xKIO6SYIio+eUZgeA8QXVqGWVDCvJYUDC5yQ8nS4TqjfI8diJAs=
+=sw0R
+-----END PGP SIGNATURE-----
+
+--3/yyHngUfyzKNMrH--
