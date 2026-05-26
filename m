@@ -1,146 +1,155 @@
-Received: from mail-ed1-f42.google.com (mail-ed1-f42.google.com [209.85.208.42])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from mx0b-001b2d01.pphosted.com (mx0b-001b2d01.pphosted.com [148.163.158.5])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5C9542868B4
-	for <sashiko-reviews@lists.linux.dev>; Tue, 26 May 2026 04:43:53 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=pass smtp.client-ip=209.85.208.42
-ARC-Seal:i=2; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1779770634; cv=pass; b=gVn+zvXhbsmQeMMOZ18FRsmL49IfOdcxCfjxS2MWTVxS/aw4U0tAzcwd3fzLZlV/L+hv7zzPrOilkctQWhwNJPrUEYJFSn82PwpDMW9zNbjYNpUPxLqKNMB00AXixmnLrgYUpZdAPAiq8k+btXx/Ndzl/O3xdPFvbPrDIM5DQOI=
-ARC-Message-Signature:i=2; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1779770634; c=relaxed/simple;
-	bh=if1b69KHATq0gJwTrfVpPLJ5q1oj3I/Hy53zknCCbWA=;
-	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
-	 To:Cc:Content-Type; b=lUpNntS5pkxs57dXsaD+tyspHlQtzwB3dIMNOU+iM5qv4tTLn9NqoUbPQXtwz89EhJGfQA28UhAzkGI658QZhOSBkNYFIGRLBBf6nkzOCSLIaaFox2tjmCoyPcT1F6Nm63D+FtcxTvffN3TZBe5hjosswG7JrMxN85E8MSd9Fhk=
-ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=Gb2K0x18; arc=pass smtp.client-ip=209.85.208.42
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A21C12139C9;
+	Tue, 26 May 2026 06:33:23 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=148.163.158.5
+ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
+	t=1779777204; cv=none; b=fK5q73vqFhxqFFXArDFSx6cy0Bvxbars+VHf8iHl82LwBA8bhV/krxWzfUzM6vWFPev8TmOC2pJ5hyuaJc+rlr7L0pgcBKVjIm/7HRpkU9jP2M8+udoL592KDgTi+Vq4SNTLiSrE3odVoH4OaVTmgD5x64aH5S7bWeOuZLGHv40=
+ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
+	s=arc-20240116; t=1779777204; c=relaxed/simple;
+	bh=HKAO9maESbKI4Exfss2i7RDbJyHWmkSIKxamB9uJhLA=;
+	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
+	 In-Reply-To:Content-Type; b=V6CkiSEPUyAbYJG1LKO5uxEwqwvBcWvxDN1yiudP49AFF6+kRKHs+qbFwsnz2NhjrD3MiyrZNRu2bDNCtJcDOx0tSnwk/DsE+vOCC0pbp/m2E8xuPOHWuPvYHGHWBLLkRSdv4lihJwk0tfLQu0NTLRfav0tqO9o0Zls911qcYSg=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linux.ibm.com; spf=pass smtp.mailfrom=linux.ibm.com; dkim=pass (2048-bit key) header.d=ibm.com header.i=@ibm.com header.b=cpfdUPE5; arc=none smtp.client-ip=148.163.158.5
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linux.ibm.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linux.ibm.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="Gb2K0x18"
-Received: by mail-ed1-f42.google.com with SMTP id 4fb4d7f45d1cf-6896c54a7easo3070936a12.3
-        for <sashiko-reviews@lists.linux.dev>; Mon, 25 May 2026 21:43:53 -0700 (PDT)
-ARC-Seal: i=1; a=rsa-sha256; t=1779770632; cv=none;
-        d=google.com; s=arc-20240605;
-        b=WKmcOmLGsQZIamiIEV1st/e5X6d6Dckw6SZ0AkxS5CK8Ro38pk6AwT+t9/6a3RhHzb
-         nfmfqA53+85arhk3LZlJJJpIFWL6z/lCPZW5kHwskojgg80hP8vEyiVUgjnohUFHnmeh
-         LN5d1fN+EcNZ7El84UhpjJOAsSinSK/dxF/U8AN4X1h5toYWZvVmKKw5taVNR3SWEQnv
-         Dw1gJgUY/BhBDXXXhvIDzqvKPuu4Bv+YOshGHl6VKgK0DHnjL0sw92pzSOipLT4+CPBK
-         ezL9VWXXKdZpx7k7GBGNNBfMp4nGaRyAw11AiWj2Gju8RRWJ9AopIYjLowYWVQ7kolwI
-         p6FQ==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com; s=arc-20240605;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:dkim-signature;
-        bh=M/shEe3xqBpt5QuLR5/kC78Z1EP7DMk/aIHBbFQF1Fg=;
-        fh=2E8G5L5HRIhYv0SLHRh0bmuG4bK/RxhrEd6+zC1U6gY=;
-        b=fxvNmyIdyXgXrQkTVabmUXa/papEWm2YkgKgIJk3ehDZ6724MpDdRJElPodRP6oxd2
-         euVpuAhE7HZ2k9a4su3/I+Rk+bNx0TpJhd++YFeV+qyqZb84jkCTr0baUIuPL8htlc7o
-         Y5AtHqlYbXT8NuLhoKQm5FoQgLEQgf/Jem9ykYXF/6tzn9GGO7L2tNraDpvQQzba8Q0G
-         kQfVBZ3cMWdR4V/GN76yxalUHS6wnSU6DA0psyLysiUUrxgqEznahxdAX4i/vqRdu5aO
-         DsoYgZKRkhRkmBGIgtsEUa3iM0zvzdDsU7UDX5VeiCqXXEgKEZZhdyou3+KYFZj2S6+O
-         zt0A==;
-        darn=lists.linux.dev
-ARC-Authentication-Results: i=1; mx.google.com; arc=none
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20251104; t=1779770632; x=1780375432; darn=lists.linux.dev;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=M/shEe3xqBpt5QuLR5/kC78Z1EP7DMk/aIHBbFQF1Fg=;
-        b=Gb2K0x18DaWtfcq5/2FZRpG/s7Yvs5Ikfr8/jkzhnJx0kng8EuqUizm8yayjy0k1zH
-         FfJewAfiOrw+Z3TB3/qmgTqO/A4XDBTPEMYBqp+zzmI2BT1SZ1uDXUI/xmski2B/duSo
-         G/qpGu4hd+GYZctKtgomfU/E27Kikl3hXQm4Tc9Vy9zUZWxjC0Uj+2BJaAR4XZAIfJZE
-         Eifq6P2xbfipo/nk362DluJm4ZQ0bOzz+oS2lqY2gqNPmjs4j4gf/opkOn0MNr5Rb+Pu
-         SOINBb+06pQL2BhOwr1yfJB72hLXaKH1vpRXHyDw9BBUNf+16XObKtCBujfUJHiW2/S5
-         klXw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20251104; t=1779770632; x=1780375432;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:x-gm-gg:x-gm-message-state:from
-         :to:cc:subject:date:message-id:reply-to;
-        bh=M/shEe3xqBpt5QuLR5/kC78Z1EP7DMk/aIHBbFQF1Fg=;
-        b=rC7+mZBfSxvHf2cEvj0BIHkHR214ZXaMKh/ZS+cQ8BBAl4w3tsL/5B+NbKmf9DNxju
-         6mZPdXu1BvLFLfUTGuC5BFyKXib7tB9wrWYKjHCOgRWXU3WSsC61/GMM5itylN8Rwe7t
-         sUzDKezO1+B7zwTz9x207V2Cv5j350bNElFoiBy9hajfv8hWOkUH/532ADzaGaqxDJKA
-         Z/H0tQ67NmoNgmzpIU1cROjU7uNgRGnphDRVhTuJLE2mQZcYWmZ9MH8lNCTqgRB+1wLU
-         Tkg6oIieBNJjgpaifn2c2ar7u++OzW8JR2ZHpAHMAQl05umY1COfH8EIW0DRy94jls8C
-         /iRA==
-X-Gm-Message-State: AOJu0Yx4QYn5bcf3ZQdcfvBYj8NihkVRfe+D8fhke6woLg5wHi0AtXRa
-	z81678EkoeWKQ9TfyCRj736rrdNincEqBHl8j3Cul9mm/B/n4y4cWKzZPfsU83TXQRBu1nIcMWP
-	HYCa8WJB0rsTwVQhJ/+fdnbbWOdEKh0dnTQ==
-X-Gm-Gg: Acq92OFMLk7FoefTI3Jyhm2gOMM2cu3IELATcNYPiQc/Pp1M1bQ5ap5SdSeEhoKmujd
-	NOBC3xoCZGP7Uk6uWwXQvO3Y9fkFM0rvOejcbVzgyQ+2rAi9E7Sb/LQEAuwi2WHXPV9TKFFnuso
-	wQ+a/+Q5Xu0p2jrAMJHZzcrUtYDPfiZQTjwNZ6sxFCGZ0JdIi7h9TMEXG1a/cDcfWa5c1G9NE7c
-	RaIDvQmQvosynGFkTCB+vyxjFAVOhuzdVMw5XywXcd1vMHLfN8lWOChp4Fmzc4nMAgNxuSqT65J
-	98+KPtz6JsDAOSk6McJGS49+EwasQYJg8ythLItiNQt0X7gLYel/nAobzlNcKfbTJLeKESXYmRG
-	nf6DaDCTc0KRTRrkguEqNrVfooepImSjXz1m/RxLAZGScnWummGGIQjzx7w==
-X-Received: by 2002:a05:6402:4348:b0:67f:9124:8815 with SMTP id
- 4fb4d7f45d1cf-6889cc4857emr8386542a12.17.1779770631555; Mon, 25 May 2026
- 21:43:51 -0700 (PDT)
+	dkim=pass (2048-bit key) header.d=ibm.com header.i=@ibm.com header.b="cpfdUPE5"
+Received: from pps.filterd (m0360072.ppops.net [127.0.0.1])
+	by mx0a-001b2d01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id 64PN5oCG4112531;
+	Tue, 26 May 2026 06:33:07 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=ibm.com; h=cc
+	:content-transfer-encoding:content-type:date:from:in-reply-to
+	:message-id:mime-version:references:subject:to; s=pp1; bh=lSSTgI
+	JxElpRPZXCwCiqCKzOkrKn0h4qZngFuiv7DgQ=; b=cpfdUPE5GXZtk7jlSz6ZR/
+	9gZW04DexbKzX0Ao2CT9354Iq2VdPZ2LkuXTN020t0l+7B4S649D87v25jlxY+Z1
+	fptQYAGSz4U5aA71XLqZ1+H3eQpa7MDV5OebBvNT3zPJqwCxtO8XZwiyvCKZW5MP
+	vNjZ7GOVmQmOFsP4ubf8V4Him10gnMSvo6Q7A6UvS6mY/vhC/3AqKH1kb7LNpw7O
+	kK7Yapbyl/J5v1llS2nr+NsDqecbtAf9nkMrdYO9JZUk5E+sQenhTiu3kVQOb9oN
+	vN+A7y4ar4YBnHSMpgpwI4Ob/Cor1Wx5MmfeegXRaDOVBfx0sRlOjBwPGHH/R2DA
+	==
+Received: from ppma21.wdc07v.mail.ibm.com (5b.69.3da9.ip4.static.sl-reverse.com [169.61.105.91])
+	by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 4eb4pd9t75-1
+	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+	Tue, 26 May 2026 06:33:06 +0000 (GMT)
+Received: from pps.filterd (ppma21.wdc07v.mail.ibm.com [127.0.0.1])
+	by ppma21.wdc07v.mail.ibm.com (8.18.1.7/8.18.1.7) with ESMTP id 64Q6O35j009870;
+	Tue, 26 May 2026 06:33:06 GMT
+Received: from smtprelay05.dal12v.mail.ibm.com ([172.16.1.7])
+	by ppma21.wdc07v.mail.ibm.com (PPS) with ESMTPS id 4ebqjjr3xx-1
+	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+	Tue, 26 May 2026 06:33:06 +0000 (GMT)
+Received: from smtpav06.dal12v.mail.ibm.com (smtpav06.dal12v.mail.ibm.com [10.241.53.105])
+	by smtprelay05.dal12v.mail.ibm.com (8.14.9/8.14.9/NCO v10.0) with ESMTP id 64Q6X5mr30147200
+	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
+	Tue, 26 May 2026 06:33:05 GMT
+Received: from smtpav06.dal12v.mail.ibm.com (unknown [127.0.0.1])
+	by IMSVA (Postfix) with ESMTP id 6C7D958055;
+	Tue, 26 May 2026 06:33:05 +0000 (GMT)
+Received: from smtpav06.dal12v.mail.ibm.com (unknown [127.0.0.1])
+	by IMSVA (Postfix) with ESMTP id 1FE0558043;
+	Tue, 26 May 2026 06:33:00 +0000 (GMT)
+Received: from [9.123.0.169] (unknown [9.123.0.169])
+	by smtpav06.dal12v.mail.ibm.com (Postfix) with ESMTP;
+	Tue, 26 May 2026 06:32:59 +0000 (GMT)
+Message-ID: <76f82194-9afb-4dfe-ad96-ae338c7db61d@linux.ibm.com>
+Date: Tue, 26 May 2026 12:02:58 +0530
 Precedence: bulk
 X-Mailing-List: sashiko-reviews@lists.linux.dev
 List-Id: <sashiko-reviews.lists.linux.dev>
 List-Subscribe: <mailto:sashiko-reviews+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:sashiko-reviews+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-References: <20260526042614.1013867-1-rosenp@gmail.com> <20260526044110.29B821F000E9@smtp.kernel.org>
-In-Reply-To: <20260526044110.29B821F000E9@smtp.kernel.org>
-From: Rosen Penev <rosenp@gmail.com>
-Date: Mon, 25 May 2026 21:43:40 -0700
-X-Gm-Features: AVHnY4ITFCqWA77JZlqnmYcLNceVp4DKffune1OQTdWsfPcNqSegblQoB11lwv0
-Message-ID: <CAKxU2N82jB9F_rArLtE5-xRVVZ8F5jYmbih=8cB9dsJUXuorZA@mail.gmail.com>
-Subject: Re: [PATCHv2] PCI: hotplug: compaq: fix X86 dependency
-To: sashiko-reviews@lists.linux.dev
-Cc: linux-pci@vger.kernel.org
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH] KVM: Validate irqchip index for LoongArch and PowerPC
+Content-Language: en-GB
+To: Yanfei Xu <yanfei.xu@bytedance.com>, zhaotianrui@loongson.cn,
+        maobibo@loongson.cn, chenhuacai@kernel.org, maddy@linux.ibm.com,
+        npiggin@gmail.com, sashiko-reviews@lists.linux.dev, seanjc@google.com,
+        pbonzini@redhat.com
+Cc: kvm@vger.kernel.org, loongarch@lists.linux.dev,
+        linuxppc-dev@lists.ozlabs.org, caixiangfeng@bytedance.com,
+        fangying.tommy@bytedance.com, isyanfei.xu@gmail.com,
+        Sashiko <sashiko-bot@kernel.org>, stable@vger.kernel.org
+References: <20260525070154.495455-1-yanfei.xu@bytedance.com>
+From: Harsh Prateek Bora <harshpb@linux.ibm.com>
+In-Reply-To: <20260525070154.495455-1-yanfei.xu@bytedance.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
+X-TM-AS-GCONF: 00
+X-Proofpoint-Reinject: loops=2 maxloops=12
+X-Authority-Analysis: v=2.4 cv=OdqoyBTY c=1 sm=1 tr=0 ts=6a153ea3 cx=c_pps
+ a=GFwsV6G8L6GxiO2Y/PsHdQ==:117 a=GFwsV6G8L6GxiO2Y/PsHdQ==:17
+ a=IkcTkHD0fZMA:10 a=NGcC8JguVDcA:10 a=f7IdgyKtn90A:10
+ a=VkNPw1HP01LnGYTKEx00:22 a=RnoormkPH1_aCDwRdu11:22 a=RzCfie-kr_QcCd8fBx8p:22
+ a=VwQbUJbxAAAA:8 a=968KyxNXAAAA:8 a=VnNF1IyMAAAA:8 a=VhF_hiyGZBDqKw0Zxd0A:9
+ a=QEXdDO2ut3YA:10
+X-Proofpoint-GUID: LRBMiiFu8R_IMzxWSnnQX7_Q9AYoCXuw
+X-Proofpoint-ORIG-GUID: 5_W0oqDVcmHgDExfvwT3FxNm3zkLR1hH
+X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwNTI2MDA1MSBTYWx0ZWRfX90z2vKmC0yAk
+ CWSucWXg+h4/Q/KVFzuUyOVTM3Ffn5pOF70e9b6dUfaJEKlTKVS5FhR0ih3lCU5NshKV2HubsWL
+ SLfOz2KgQyFTWyDyk2c5VFMWK1WwrBK2V9He1yI9qH2vWFfu8CbOiIp2svrl8Uq45ssuZG3u1Ui
+ cuswYiUbKsINKddCpffjDXQZri/svJx49y8R9X0UXJ5QeIaEer68I3nADevAk7o7ZS6KHC7DBh7
+ MG28r5i57DGfw6xEXwCLKnf0V7ak8mqhnXdEfVg1oz1XtuJKej7DUYpLPsxWAu1QchEvUJRRzOU
+ iv4n2vwDpREmpc8NxtC0O7SgemcbY5bh0qeZ95hhSCXTfhTLcwq9eHdse9QCZxpX66x3iCn1oei
+ xB1qrl0z7NgLSMif/uc2QI9feykHP1Y9tJixKyB/lftuVZyDsUVJxUFB8gmLDmtZlH8qNq8mrER
+ 2NZy1yKpnBXTVaXu5PQ==
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.293,Aquarius:18.0.1143,Hydra:6.1.51,FMLib:17.12.100.49
+ definitions=2026-05-26_01,2026-05-18_01,2025-10-01_01
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
+ priorityscore=1501 impostorscore=0 clxscore=1011 malwarescore=0
+ lowpriorityscore=0 bulkscore=0 suspectscore=0 adultscore=0 spamscore=0
+ phishscore=0 classifier=typeunknown authscore=0 authtc= authcc=
+ route=outbound adjust=0 reason=mlx scancount=1 engine=8.22.0-2605130000
+ definitions=main-2605260051
 
-On Mon, May 25, 2026 at 9:41=E2=80=AFPM <sashiko-bot@kernel.org> wrote:
->
-> Thank you for your contribution! Sashiko AI review found 1 potential issu=
-e(s) to consider:
-> - [Medium] The commit introduces a redundant X86_32 dependency and the co=
-mmit message falsely claims it fixes an x86_64 compilation failure.
-Which is accurate. This should not build on x86_64.
-> --
->
-> commit 2f32c0aa3739414d8be655780c2734e155b45ea8
-> Author: Rosen Penev <rosenp@gmail.com>
-> PCI: hotplug: compaq: fix X86 dependency
->
-> This commit restricts the HOTPLUG_PCI_COMPAQ Kconfig dependency from X86
-> to X86_32. The commit message indicates this is to prevent x86_64 build
-> failures caused by invalid assembly.
->
-> > This driver needs X86_32, not X86. It does not compile on x86_64 becaus=
-e
-> > of invalid assembly there.
->
-> [Severity: Medium]
-> Is this description accurate?
->
-> HOTPLUG_PCI_COMPAQ already depends on PCI_BIOS. In arch/x86/Kconfig,
-> config PCI_BIOS is defined with depends on X86_32.
->
-> Because of this dependency, the driver could not be selected or compiled
-> on x86_64 even before this patch. Could the commit message be updated to
-> reflect this?
->
-> > diff --git a/drivers/pci/hotplug/Kconfig b/drivers/pci/hotplug/Kconfig
-> > index 3207860b52e42..5074c0ac4ce18 100644
-> > --- a/drivers/pci/hotplug/Kconfig
-> > +++ b/drivers/pci/hotplug/Kconfig
-> > @@ -20,7 +20,7 @@ if HOTPLUG_PCI
-> >
-> >  config HOTPLUG_PCI_COMPAQ
-> >       tristate "Compaq PCI Hotplug driver"
-> > -     depends on X86 && PCI_BIOS
-> > +     depends on X86_32 && PCI_BIOS
->
-> [Severity: Medium]
-> Does this introduce a redundant check?
->
-> Since PCI_BIOS already restricts the build to X86_32, changing X86 to
-> X86_32 appears to provide no functional difference.
->
-> --
-> Sashiko AI review =C2=B7 https://sashiko.dev/#/patchset/20260526042614.10=
-13867-1-rosenp@gmail.com?part=3D1
++ cc: stable@vger.kernel.org
+
+On 25/05/26 12:31 pm, Yanfei Xu wrote:
+> Sashiko reported that irqchip index is not validated for LoongArch and
+> PowerPC. Add validation and reject out-of-range irqchip indexes to avoid
+> indexing past the routing table's chip array.
+> 
+> Fixes: de9ba2f36368 ("KVM: PPC: Support irq routing and irqfd for in-kernel MPIC")
+> Fixes: 1928254c5ccb ("LoongArch: KVM: Add irqfd support")
+> Reported-by: Sashiko <sashiko-bot@kernel.org>
+> Closes: https://lore.kernel.org/kvm/20260525051714.485D51F000E9@smtp.kernel.org/
+> Signed-off-by: Yanfei Xu <yanfei.xu@bytedance.com>
+> ---
+>   arch/loongarch/kvm/irqfd.c | 3 ++-
+>   arch/powerpc/kvm/mpic.c    | 3 ++-
+>   2 files changed, 4 insertions(+), 2 deletions(-)
+> 
+> diff --git a/arch/loongarch/kvm/irqfd.c b/arch/loongarch/kvm/irqfd.c
+> index f4f953b22419..40ed1081c4b6 100644
+> --- a/arch/loongarch/kvm/irqfd.c
+> +++ b/arch/loongarch/kvm/irqfd.c
+> @@ -51,7 +51,8 @@ int kvm_set_routing_entry(struct kvm *kvm,
+>   		e->irqchip.irqchip = ue->u.irqchip.irqchip;
+>   		e->irqchip.pin = ue->u.irqchip.pin;
+>   
+> -		if (e->irqchip.pin >= KVM_IRQCHIP_NUM_PINS)
+> +		if (e->irqchip.pin >= KVM_IRQCHIP_NUM_PINS ||
+> +		    e->irqchip.irqchip >= KVM_NR_IRQCHIPS)
+>   			return -EINVAL;
+>   
+>   		return 0;
+> diff --git a/arch/powerpc/kvm/mpic.c b/arch/powerpc/kvm/mpic.c
+> index 3070f36d9fb8..fb5f9e65e02e 100644
+> --- a/arch/powerpc/kvm/mpic.c
+> +++ b/arch/powerpc/kvm/mpic.c
+> @@ -1833,7 +1833,8 @@ int kvm_set_routing_entry(struct kvm *kvm,
+>   		e->set = mpic_set_irq;
+>   		e->irqchip.irqchip = ue->u.irqchip.irqchip;
+>   		e->irqchip.pin = ue->u.irqchip.pin;
+> -		if (e->irqchip.pin >= KVM_IRQCHIP_NUM_PINS)
+> +		if (e->irqchip.pin >= KVM_IRQCHIP_NUM_PINS ||
+> +		    e->irqchip.irqchip >= KVM_NR_IRQCHIPS)
+
+Reviewed-by: Harsh Prateek Bora <harshpb@linux.ibm.com> # PPC KVM
+>   			goto out;
+>   		break;
+>   	case KVM_IRQ_ROUTING_MSI:
+
