@@ -1,318 +1,160 @@
-Received: from mgamail.intel.com (mgamail.intel.com [192.198.163.13])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-pj1-f42.google.com (mail-pj1-f42.google.com [209.85.216.42])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 56DF9175A67
-	for <sashiko-reviews@lists.linux.dev>; Tue, 26 May 2026 19:43:09 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=192.198.163.13
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E193C38C43A
+	for <sashiko-reviews@lists.linux.dev>; Tue, 26 May 2026 20:33:11 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.216.42
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1779824592; cv=none; b=qeZp8hui45PKuO1oYrNYi4LGzgRs0lE6d0i4pzveAS/TMm8JLONXMA+4ZsBUTFZCASx2b8Z4SIdCTtiSsmjZT7CloVPx0XJ5URlIMTC6Q6CNbG+XVzVmuUm4LuhGfC14r088nh3WJNXwoqSyRepLo6IvLIwiV9CySPBrCY+Hm7I=
+	t=1779827593; cv=none; b=u3kzPh9eABXkM8DYNIQJRZjQdX0lRQSqWH+kFFplfQKpciB43cGfMd/4sWp2YxNYZrWYLLVRmNTPWgtrXazVfywFg2474cbJkZqoXRJJUAWz45eCmfvdkrl19FxlJAQ15LbN5glD7y0zw95SGzhA4HvB9vNRA8ZM5NLfjneB24c=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1779824592; c=relaxed/simple;
-	bh=vUbl+l65vaCC+fQwq6eNcgFFZmtt5ylGpmr3NGrXO90=;
-	h=Date:From:To:Cc:Subject:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=qIL17OQq0lUbQCycURs7eNsz0TxpWRwZd9MMptNn1BLDt2NcZHm6DNha80Z7Q4BvDb1AziuKyyxIgNMs+C8V7rvkXlZNRu6M77usVSNCum0sOoBpblrRrQ3xavZCzHDNlRbxBLcK6GzFGs66tRbXDWcQW/Z5Z8yKeCg7454FSxI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linux.intel.com; spf=pass smtp.mailfrom=linux.intel.com; dkim=pass (2048-bit key) header.d=intel.com header.i=@intel.com header.b=T5V43k+p; arc=none smtp.client-ip=192.198.163.13
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linux.intel.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linux.intel.com
+	s=arc-20240116; t=1779827593; c=relaxed/simple;
+	bh=Bnz/9cuwUbinKEmevDoJPNbz8nZ/7/TM4Z+qkzwCzM8=;
+	h=Message-ID:Subject:From:To:Cc:Date:In-Reply-To:References:
+	 Content-Type:MIME-Version; b=UtHqD7sMJzXkwoeyPfdsk9iuW9EGb4tHu5KveCse1gEKYWMRzffeumqX4LzJLXRnssSo42MeA4vff8+fDDhsAinyy7FNp31B7ZUtET7honI7U6qKCwv4+DYaX39o+Smj6altYtxEn0zWnEchULaHWbAtE9AJkuSCAeH9YL29Cgg=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=YnppUkm4; arc=none smtp.client-ip=209.85.216.42
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=intel.com header.i=@intel.com header.b="T5V43k+p"
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
-  d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
-  t=1779824589; x=1811360589;
-  h=date:from:to:cc:subject:message-id:in-reply-to:
-   references:mime-version:content-transfer-encoding;
-  bh=vUbl+l65vaCC+fQwq6eNcgFFZmtt5ylGpmr3NGrXO90=;
-  b=T5V43k+pnLHWRGPenT7fYsclBQ90KiwmSdmB6TWd3RqjOS6oa+Ono+rG
-   b1LfhbHNnbyYK1XcE18LkUFHeyiReG9u0fC/bMLYlBgcMh0J0Co4cNHRk
-   c1A3mURFJVMgVRpO/bnUJxJna9flIfWbd0EvGijd6tBeKSB0LlbZGxF8j
-   6odYxWDZB/D3MqqfdMl5W5rSxdFjJokgi2JitkcNNBhqPBLGumtgcGdLb
-   rHqmiUasEhKBkZ3TAjr44KAAitvReAbIZR5mgfCV94yBC/o7H8t+I3Wd4
-   ZMsrvYZUMPdqPYFE+HqaBFgdvLbLRnUIEBTVzxH4/1BPEEs3qrh9uM7vl
-   w==;
-X-CSE-ConnectionGUID: zAF4d7O1RfW1fdV5z17cAw==
-X-CSE-MsgGUID: 7ltj8LnLRO+fJT9h0dquLg==
-X-IronPort-AV: E=McAfee;i="6800,10657,11798"; a="83228436"
-X-IronPort-AV: E=Sophos;i="6.24,170,1774335600"; 
-   d="scan'208";a="83228436"
-Received: from fmviesa003.fm.intel.com ([10.60.135.143])
-  by fmvoesa107.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 26 May 2026 12:43:09 -0700
-X-CSE-ConnectionGUID: si8NqsnERIi4TkKCwI7zTg==
-X-CSE-MsgGUID: SuT22OihRx2sjXz7Tuxsrw==
-X-ExtLoop1: 1
-Received: from patelni-desk.amr.corp.intel.com (HELO localhost) ([10.2.248.44])
-  by fmviesa003-auth.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 26 May 2026 12:43:08 -0700
-Date: Tue, 26 May 2026 12:43:07 -0700
-From: Nirmal Patel <nirmal.patel@linux.intel.com>
-To: sashiko-bot@kernel.org
-Cc: sashiko-reviews@lists.linux.dev, linux-pci@vger.kernel.org
-Subject: Re: [PATCH v4] PCI: vmd: Add feature to scan BIOS enumerated
- devices.
-Message-ID: <20260526124307.00005a70@linux.intel.com>
-In-Reply-To: <20260522154216.AA0D61F000E9@smtp.kernel.org>
-References: <20260522150829.5246-1-nirmal.patel@linux.intel.com>
-	<20260522154216.AA0D61F000E9@smtp.kernel.org>
-X-Mailer: Claws Mail 4.2.0 (GTK 3.24.41; x86_64-w64-mingw32)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="YnppUkm4"
+Received: by mail-pj1-f42.google.com with SMTP id 98e67ed59e1d1-365d8e43759so5569026a91.0
+        for <sashiko-reviews@lists.linux.dev>; Tue, 26 May 2026 13:33:11 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20251104; t=1779827591; x=1780432391; darn=lists.linux.dev;
+        h=mime-version:user-agent:content-transfer-encoding:references
+         :in-reply-to:date:cc:to:from:subject:message-id:from:to:cc:subject
+         :date:message-id:reply-to;
+        bh=cv9bHQTyuADxNVgBJ3k2ar2bjjFr5T1pZrUy6kLd1tM=;
+        b=YnppUkm4XakuWcJFMVEnc49UuS+Wr16YhUiaHliRE06v9YMJHmojgOZUGsWEcRPYWK
+         rWizWKO3kFgGciw7OfQFJO9c3f9MLwdtJIFghWUxr+1sFVy3eFUWWGjacjdx7OsKni6R
+         XsoWXp0Lguvrwf4+I04hHrjDBacZRVAiqDXFpeC1r7CeNeuFETky7zTI6yd3TMBUqIpp
+         Edw7FpiVzim3hM6NtxTjRjW41DhoSrhdyR15BPbpIXk7qvBVeaJIOY0/YDboH6Yvaam3
+         /p43gef2s/dljnKRH6F2j5fBLxiUF5Ea8LVusUWHNtL9tUqPXYULOkLShL7HgKlPmC6i
+         xsFg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20251104; t=1779827591; x=1780432391;
+        h=mime-version:user-agent:content-transfer-encoding:references
+         :in-reply-to:date:cc:to:from:subject:message-id:x-gm-gg
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+        bh=cv9bHQTyuADxNVgBJ3k2ar2bjjFr5T1pZrUy6kLd1tM=;
+        b=TmI/oNdY+7VZXjiUdOCxcWwm26u3RGz3gtniSWCCWCZ1tYviq8WdT8tsgNmfQbtycz
+         04RTcbWMPcRUdQRGhQibStf25kWJj0LBQ0K3yUW/FXA9zyHI+WVPbuGj5XcGsUhBkpdm
+         Fy1W0jcaTOBx92RtR++w//9B4s9AilP1XTorXqgIYiFIvxMPjD5IUpWiB2MpsWOEDQQL
+         df1TJkir+b+pygFnx0zC5IR0DIcztfTvJeyFCjPE9Lj6dTYrfnWSENimc9d/pzxtXx8v
+         DjkiyhLf8od/U6HH18I1q103b/u1B08Ol+uulR00znKDGCqw4ZnyBf59wkx1UAkx+Ya1
+         eHXw==
+X-Gm-Message-State: AOJu0Yye0arZZRnHCkF+UK4bpAo7JsJ6MxXODQOtVWHdPwzJbsRcSnCy
+	pC2yMuQb+uWq3iMqEVJSZ5QELh0Geh1DIHd03YBKIcSqdbQJDWRIPUSlnffQJtDTZig=
+X-Gm-Gg: Acq92OFf/uq9pnl80wYdBKxZKuulfJ5NkDzXZ1Xhlu34IudKuDotcbDQQHM8ODAbyOQ
+	xQgBVcKPHtYiHs9jgweIQ8O81PCo9sR6vPP9CCfHbpUvVkpFaneGADyfaPXOX4GNX/odw0X/Y+S
+	CqGFw7tLSD0MAad4MH4z35Y1pfwnGRWJtLfPtbccEslHP+WWRbdBrjwTaVmVxIVhZhlETJSWIWW
+	pZoz/jVa4jKZdQ/aZMsiS+cP2G5Y5rvBoIaOz8ERLthanqdJOhiASWE56itLNxwd7uvvcKTepcv
+	/T0W01tWHxOk/dle9N2aH8ETQg9TdI0W5mscCU9Ljj4lgnX5qQRl5qk/WGnr9JHOq2ZSQY9oz7z
+	+Lqa0LxkeC6Yi4Q/DRLNE5RwxsxENeqJL1wYwiYIad54X37m02YoZD8HZl6+W6MoC3Wz7u8OXo4
+	yZMnCVVuY2/XepNSLDrsQyoSAI5k81jVhk2EIGYK0fk4mTQCNg91lY
+X-Received: by 2002:a17:90b:54c6:b0:35f:c5b8:ef6d with SMTP id 98e67ed59e1d1-36a6ba28e46mr13920506a91.3.1779827591114;
+        Tue, 26 May 2026 13:33:11 -0700 (PDT)
+Received: from [192.168.0.226] ([38.34.87.7])
+        by smtp.gmail.com with ESMTPSA id 98e67ed59e1d1-36a71dbc38fsm13684297a91.5.2026.05.26.13.33.10
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Tue, 26 May 2026 13:33:10 -0700 (PDT)
+Message-ID: <7e1941bb9ad328ffdd417764d1d97bf9168e2ef5.camel@gmail.com>
+Subject: Re: [PATCH RFC bpf-next v2 2/6] bpf: compute loops hierarchy
+From: Eduard Zingerman <eddyz87@gmail.com>
+To: sashiko-reviews@lists.linux.dev
+Cc: bpf@vger.kernel.org
+Date: Tue, 26 May 2026 13:33:07 -0700
+In-Reply-To: <20260526202635.6FBC91F000E9@smtp.kernel.org>
+References: <20260526-better-1m-reporting-v2-2-e7ec61c45d41@gmail.com>
+	 <20260526202635.6FBC91F000E9@smtp.kernel.org>
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
+User-Agent: Evolution 3.60.1 (3.60.1-1.fc44) 
 Precedence: bulk
 X-Mailing-List: sashiko-reviews@lists.linux.dev
 List-Id: <sashiko-reviews.lists.linux.dev>
 List-Subscribe: <mailto:sashiko-reviews+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:sashiko-reviews+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=US-ASCII
-Content-Transfer-Encoding: 7bit
 
-On Fri, 22 May 2026 15:42:16 +0000
-sashiko-bot@kernel.org wrote:
-
-> Thank you for your contribution! Sashiko AI review found 6 potential
-> issue(s) to consider:
-> 
-> New issues:
-> - [High] The driver unconditionally reads from fixed offsets in BAR4
-> without verifying that the BAR size is sufficiently large.
-> - [High] The PCI bus resource `.end` is unconditionally hardcoded to
-> `0xff`, breaking legacy devices with smaller configuration BARs.
-> 
-> Pre-existing issues:
-> - [High] Allocated IRQ vectors are leaked in multiple error paths and
-> during device teardown.
-> - [High] Per-CPU memory allocated for SRCU structures is leaked on
-> error paths.
-> - [High] SRCU lock structures are destroyed before the IRQ handlers
-> are unregistered, allowing a use-after-free.
-> - [High] Subtracting a fixed offset from the resource bounds of
-> MEMBAR2 without verifying the actual BAR length causes an integer
-> underflow. --
-> 
-Pre-existing issues are not in scope of the feature in this patch
-series.
-
-> commit 0653c66e9c93e9c62213a329c19bf93e4499969f
-> Author: Nirmal Patel <nirmal.patel@linux.intel.com>
-> Subject: PCI: vmd: Add feature to scan BIOS enumerated devices.
-> 
-> This commit introduces the VMD_FEAT_USE_BIOS_INFO feature flag for
-> device 0x28c1. It parses configuration parameters, bus start ranges,
-> and shadow registers directly from the BIOS-populated BAR4/BAR5 MMIO
-> space rather than enumerating the tree dynamically.
-> 
-> > diff --git a/drivers/pci/controller/vmd.c
-> > b/drivers/pci/controller/vmd.c index d4ae250d4bc6d..7c90243b5ff0c
-> > 100644 --- a/drivers/pci/controller/vmd.c
-> > +++ b/drivers/pci/controller/vmd.c  
+On Tue, 2026-05-26 at 20:26 +0000, sashiko-bot@kernel.org wrote:
+> Thank you for your contribution! Sashiko AI review found 1 potential issu=
+e(s) to consider:
+> - [High] Worst-case O(N^2) algorithmic complexity in assign_header() lack=
+ing cond_resched() leads to soft lockup.
+> --
+>=20
+> commit 5ba437ec70f22b36c162a26467753448539086e8
+> Author: Eduard Zingerman <eddyz87@gmail.com>
+>=20
+> bpf: compute loops hierarchy
+>=20
+> This commit introduces an analysis phase to the bpf verifier that compute=
+s
+> the loops hierarchy using a non-recursive adaptation of the Wei et al.
+> algorithm. It records the innermost loop header per instruction to be use=
+d
+> as sampling points for callchain profiling.
+>=20
+> > diff --git a/kernel/bpf/loops.c b/kernel/bpf/loops.c
+> > new file mode 100644
+> > index 0000000000000..1f0b10c57957a
+> > --- /dev/null
+> > +++ b/kernel/bpf/loops.c
+>=20
 > [ ... ]
-> > @@ -661,6 +686,46 @@ static int vmd_get_bus_number_start(struct
-> > vmd_dev *vmd) return 0;
-> >  }
-> >  
-> > +static int vmd_get_bus_info_from_bar4(struct vmd_dev *vmd,
-> > +				       resource_size_t *offset1,
-> > +				       resource_size_t *offset2)
+>=20
+> > +static int assign_header(struct bpf_verifier_env *env, struct loops_df=
+s *dfs, int n, int h)
 > > +{
-> > +	u64 phys1, phys2, bar4_2840;
-> > +	void __iomem *bar4;
-> > +	u32 base_id;
-> > +	u8 base_bus;
+> > +	struct bpf_insn_aux_data *aux =3D env->insn_aux_data;
+> > +	int *dfs_pos =3D dfs->dfs_pos;
+> > +	int err, nh;
 > > +
+> > +	err =3D mark_header(env, h);
+> > +	if (err)
+> > +		return err;
 > > +
-> > +	bar4 = pci_ioremap_bar(vmd->dev, 4);
-> > +	if (!bar4)
-> > +		return -ENOMEM;
+> > +	/* Don't encode self-loops, otherwise can't reflect loops nesting str=
+ucture. */
+> > +	if (n =3D=3D h)
+> > +		return 0;
 > > +
-> > +	/* Read shadow registers for MEMBAR1 and MEMBAR2 physical
-> > addresses. */
-> > +	phys1 = readq(bar4 + SHADOW_MEMBAR1_28C1);  
-> 
-> [Severity: High]
-> Does this code read out-of-bounds if the hardware presents a smaller
-> BAR4?
-> 
-> pci_ioremap_bar() maps the available resource, but there doesn't
-> appear to be a check verifying that the BAR length is at least large
-> enough to cover the fixed offsets being read, such as 0x2840
-> (BASE_ID_REG_28C1).
-> 
-> Could a misconfigured or malicious device trigger an out-of-bounds
-> MMIO read here?
-I dont think so. vmd_get_bus_info_from_bar4 gets called for only device
-ID specific flag  VMD_FEAT_USE_BIOS_INFO. BASE_ID_REG_28C is set to
-0x2840 which is just 10KB of space and is much lesser than standard
-membar2 resource size 2MB. Besides we are doing the same thing in
-vmd_get_phys_offsets.
-> 
-> > +	phys2 = readq(bar4 + SHADOW_MEMBAR2_28C1);  
-> [ ... ]
-> > @@ -711,6 +776,53 @@ static int vmd_alloc_irqs(struct vmd_dev *vmd)
-> >  	return 0;
-> >  }
-> >  
-> > +static int vmd_prepare_offsets_and_bus(struct vmd_dev *vmd,
-> > +					unsigned long features,
-> > +					resource_size_t
-> > *membar2_offset,
-> > +					resource_size_t *offset1,
-> > +					resource_size_t *offset2)
-> > +{
-> > +	int ret;
-> > +
-> > +	/*
-> > +	 * Shadow registers may exist in certain VMD device ids
-> > which allow
-> > +	 * guests to correctly assign host physical addresses to
-> > the root ports
-> > +	 * and child devices. These registers will either return
-> > the host value
-> > +	 * or 0, depending on an enable bit in the VMD device.
-> > +	 */
-> > +	/*
-> > +	 * For certain VMD devices (i.e. 0x28C1), BIOS places
-> > device info
-> > +	 * in BAR4 shadow registers to determine the base bus
-> > number and memory
-> > +	 * offsets.
-> > +	 */
-> > +	if (features & VMD_FEAT_USE_BIOS_INFO) {
-> > +		*membar2_offset = MEMBAR2_OFFSET_28C1;  
-> 
-> [Severity: High]
-> This is a pre-existing issue, but can setting this offset cause an
-> integer underflow later?
-> 
-> In vmd_enable_domain(), the resource start is calculated as:
-> 
-> 	vmd->resources[2] = (struct resource) {
-> 		.name  = "VMD MEMBAR2",
-> 		.start = res->start + membar2_offset,
-> 		.end   = res->end,
-> 		...
-> 	};
-> 
-> If the physical MEMBAR2 length provided by the hardware is smaller
-> than membar2_offset, start becomes greater than end, which could cause
-> resource_size() to underflow and yield a massively inflated memory
-> window.
-membar2_offset is 0x2000 and it is required to leave such space to
-successfully map other VMD hardware registers including MSI-X. So
-resource_size() will never be less than 0x2000 for any vmd device since
-the minimum possible membar2 size is 2MB set in BIOS.
-> 
-> > +		ret = vmd_get_bus_info_from_bar4(vmd, offset1,
-> > offset2);
-> > +		if (ret)
-> > +			return ret;
-> > +	} else if (features & VMD_FEAT_HAS_MEMBAR_SHADOW) {  
-> [ ... ]
-> > @@ -784,38 +896,16 @@ static int vmd_enable_domain(struct vmd_dev
-> > *vmd, unsigned long features) struct pci_dev *dev;
-> >  	int ret;
-> >  
-> > -	/*
-> > -	 * Shadow registers may exist in certain VMD device ids
-> > which allow  
-> [ ... ]
-> > -	if (features & VMD_FEAT_HAS_BUS_RESTRICTIONS) {
-> > -		ret = vmd_get_bus_number_start(vmd);
-> > -		if (ret)
-> > -			return ret;
-> > -	}
-> > +	ret = vmd_prepare_offsets_and_bus(vmd, features,
-> > &membar2_offset,
-> > +					  &offset[0], &offset[1]);
-> > +	if (ret)
-> > +		return ret;
-> >  
-> >  	res = &vmd->dev->resource[VMD_CFGBAR];
-> >  	vmd->resources[0] = (struct resource) {
-> >  		.name  = "VMD CFGBAR",
-> >  		.start = vmd->busn_start,
-> > -		.end   = vmd->busn_start + (resource_size(res) >>
-> > 20) - 1,
-> > +		.end   = 0xff,  
-> 
-> [Severity: High]
-> Does unconditionally setting the end to 0xff cause a regression for
-> legacy VMD devices with smaller configuration BARs?
-> 
-> Older devices on client platforms might have smaller CFGBARs.
-> Claiming buses up to 255 might cause the PCI subsystem to erroneously
-> assign bus numbers that fall outside the hardware's actual ECAM
-> capabilities.
-If i keep existing implementation (like v1), the .end value can go
-out-of-bound (i.e. 478).
-Keeping just .end = (resource_size(res) >> 20) - 1 will result in a
-crash when busn_start is a high value like 128 and .end is set to 32.
-So like other places in pci code-base (i.e. pci/probe.c), it is better
-to hard code it to 0xff.
-> 
-> >  		.flags = IORESOURCE_BUS | IORESOURCE_PCI_FIXED,
-> >  	};
-> >  
-> > @@ -868,19 +958,21 @@ static int vmd_enable_domain(struct vmd_dev
-> > *vmd, unsigned long features)
-> >  	 * acceptable because the guest is usually CPU-limited and
-> > MSI
-> >  	 * remapping doesn't become a performance bottleneck.
-> >  	 */
-> > -	if (!(features & VMD_FEAT_CAN_BYPASS_MSI_REMAP) ||
-> > -	    offset[0] || offset[1]) {
-> > -		ret = vmd_alloc_irqs(vmd);
-> > -		if (ret)
-> > -			return ret;
-> > +	if (!(features & VMD_FEAT_USE_BIOS_INFO)) {
-> > +		if (!(features & VMD_FEAT_CAN_BYPASS_MSI_REMAP) ||
-> > +		    offset[0] || offset[1]) {
-> > +			ret = vmd_alloc_irqs(vmd);
-> > +			if (ret)
-> > +				return ret;
-> >  
-> > -		vmd_set_msi_remapping(vmd, true);
-> > +			vmd_set_msi_remapping(vmd, true);
-> >  
-> > -		ret = vmd_create_irq_domain(vmd);
-> > -		if (ret)
-> > -			return ret;
-> > +			ret = vmd_create_irq_domain(vmd);
-> > +			if (ret)
-> > +				return ret;  
-> 
-> [Severity: High]
-> This is a pre-existing issue, but are IRQ vectors leaked when errors
-> occur here?
-No changes are being done here as part of this feature patch series.
-The existing issue needs to be reproduced and if needed, then to be
-fixed in separate patches.
-> 
-> The PCI subsystem guidelines mandate calling pci_free_irq_vectors()
-> in error paths after a successful pci_alloc_irq_vectors(). If
-> vmd_create_irq_domain() fails, we return directly without freeing the
-> vectors allocated in vmd_alloc_irqs(). This same cleanup omission
-> appears to exist in vmd_remove() as well, potentially leading to
-> system IRQ capacity exhaustion.
-> 
-> Additionally, if vmd_alloc_irqs() fails midway through
-> devm_request_irq(), does it return without cleaning up the
-> successfully initialized SRCU structures from previous loop
-> iterations? The per-CPU memory allocated by init_srcu_struct() might
-> be leaked.
-> 
-> [Severity: High]
-> Also a pre-existing issue, but does using devm_request_irq() for the
-> handlers cause a use-after-free during device teardown?
-The issue has not be reported or seen in any vmd generations.
-No changes are being done here as part of this feature patch series.
-The existing issue needs to be reproduced and if needed, then to be
-fixed in separate patches.
-> 
-> In vmd_remove(), the driver calls vmd_cleanup_srcu() which destroys
-> the SRCU structures. However, since the IRQs are managed by devres,
-> they aren't deregistered until after vmd_remove() returns.
-> 
-> If an interrupt fires in this window, vmd_irq() would call
-> srcu_read_lock() on an already-destroyed SRCU structure.
-> 
+> > +	/* Make sure that loop headers up the chain are sorted by dfs_pos. */
+> > +	while (aux[n].loop_header !=3D -1) {
+> > +		nh =3D aux[n].loop_header;
+> > +		if (nh =3D=3D h)
+> > +			return 0;
+> > +		if (dfs_pos[nh] < dfs_pos[h]) {
+> > +			aux[n].loop_header =3D h;
+> > +			n =3D h;
+> > +			h =3D nh;
 > > +		} else {
-> > +			vmd_set_msi_remapping(vmd, false);
+> > +			n =3D nh;
 > > +		}
-> >  	}  
-> 
+> > +	}
+>=20
+> [Severity: High]
+> Could this while loop lead to a cpu soft lockup under specific pathologic=
+al
+> conditions?
+>=20
+> With deeply nested loops and cross-edges, it appears possible to force
+> repeated O(n) traversals of this header chain for O(n) nodes without
+> actually modifying the chain. Given the 1 million bpf instruction limit,
+> this worst-case O(n^2) algorithmic complexity might result in a massive
+> number of iterations.
+>=20
+> Because neither this chain traversal nor the surrounding search algorithm=
+ in
+> compute_loops_in_subprog() seem to call cond_resched(), does this risk
+> stalling the cpu core long enough to trigger a system soft lockup or a
+> local denial of service?
 
+This is a known algorithmic trade off, favoring implementation simplicity.
+Neither paper authors nor me hit the pathological case why testing
+with real-life programs. Some safeguard counter can be added if people
+feel paranoid.
+
+> > +	aux[n].loop_header =3D h;
+> > +	return 0;
+> > +}
