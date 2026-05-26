@@ -1,189 +1,96 @@
-Received: from leonov.paulk.fr (leonov.paulk.fr [185.233.101.22])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-wm1-f46.google.com (mail-wm1-f46.google.com [209.85.128.46])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8038426B764;
-	Tue, 26 May 2026 14:13:25 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=185.233.101.22
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 941583FF1C5
+	for <sashiko-reviews@lists.linux.dev>; Tue, 26 May 2026 14:30:20 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.46
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1779804808; cv=none; b=T+TlOBqIqsJQFR6lLRaHbkDQOAyKZptgUku+eMH5+aTL3NiiDmk/2yi3xHCIX8ck1fDhpMZyDO+B5mcY0Tf0nU6iHH3MLnO9BbdXWyUIjTPsyrXlVR7b+fwKbzC5O//v049sija0f+sbk0aSv98o2Y6ssCYyi8Wzrpg+e2gcXBw=
+	t=1779805821; cv=none; b=VKPoX6O8bhDJmwfnZR9B3/7ZOd0vSgAPa1FXRfivfIdMfgte/hsK/U5wZgwLne4lx+M5OHuOAldiz+cKtG7No5lCtk8m5q3dsuEItl4YaWgWomcFKN9OsSQ2mrADR5EzchogSnrHxtquLBm9zr4igBilJwGLEMa8w1/H3fS1/YA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1779804808; c=relaxed/simple;
-	bh=0ExaLqZz8H/scaF4ESGOgbBXyDPgoURUWi3f4cwnXos=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=EoB1x81Zpj1A7PR57UaLu1R2UjLT1dSt1YCe+kgU199DAizYWxmBdDigQ70AfzmizVJiabHZiixxHnYaLwhSQVbkwa0f4tInblUxiKMNa//rO8t8q3katHzgGmX+JK+z9Ey3V856lNHlT3OqOfZi8Paq5+0sD9TKf2MjXIFeL8Q=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=sys-base.io; spf=pass smtp.mailfrom=sys-base.io; arc=none smtp.client-ip=185.233.101.22
-Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=sys-base.io
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=sys-base.io
-Received: from laika.paulk.fr (12.234.24.109.rev.sfr.net [109.24.234.12])
-	by leonov.paulk.fr (Postfix) with ESMTPS id 1A5F43700271;
-	Tue, 26 May 2026 14:13:17 +0000 (UTC)
-Received: by laika.paulk.fr (Postfix, from userid 65534)
-	id 2690FB408F5; Tue, 26 May 2026 14:13:16 +0000 (UTC)
-X-Spam-Level: 
-Received: from shepard (unknown [37.167.72.125])
-	by laika.paulk.fr (Postfix) with ESMTPSA id E42EAB408F4;
-	Tue, 26 May 2026 14:13:14 +0000 (UTC)
-Date: Tue, 26 May 2026 16:13:05 +0200
-From: Paul Kocialkowski <paulk@sys-base.io>
-To: Chen-Yu Tsai <wens@kernel.org>
-Cc: linux-sunxi@lists.linux.dev, conor+dt@kernel.org, robh@kernel.org,
-	devicetree@vger.kernel.org, sashiko-reviews@lists.linux.dev
-Subject: Re: [PATCH v9 5/9] ARM: dts: sun8i: v3s: Add nodes for MIPI CSI-2
- support
-Message-ID: <ahWqcWy_6QuNIOi-@shepard>
-References: <20260518153339.619947-6-paulk@sys-base.io>
- <20260518161130.F0A4CC2BCB7@smtp.kernel.org>
- <CAGb2v65+JwwU2p5TQ6hrqonYNUgVgZQMPY6D=ROqWJu=xy=drQ@mail.gmail.com>
+	s=arc-20240116; t=1779805821; c=relaxed/simple;
+	bh=lG0SD9cXN/5Qk4VXl7q4UfDEDkoq1CrJuW/0BYgMDBI=;
+	h=From:Date:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=TgwPPrAKgkt7lGNFg1A+kcCIG7gLQIPmvUDJ0my5xw9/LPERdVCFzftbCxFB2FZNzEdjZqAF9g1GR5i0shrjTjFUG6PG7DkxxD4zt+4HwtKk2HjY/5fo67yzQu0HGahPvt52wBCTLSbGsXwArhXAyiWwVcO3+8M1zC7X+2+C6GA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=OTra6H1s; arc=none smtp.client-ip=209.85.128.46
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+Authentication-Results: smtp.subspace.kernel.org;
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="OTra6H1s"
+Received: by mail-wm1-f46.google.com with SMTP id 5b1f17b1804b1-4891e5b9c1fso92141315e9.2
+        for <sashiko-reviews@lists.linux.dev>; Tue, 26 May 2026 07:30:20 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20251104; t=1779805819; x=1780410619; darn=lists.linux.dev;
+        h=in-reply-to:content-disposition:mime-version:references:message-id
+         :subject:cc:to:date:from:from:to:cc:subject:date:message-id:reply-to;
+        bh=T45Ou7ZWfmCD8W0zzIfAADcxBltvQlyL9M3hYTeHQiQ=;
+        b=OTra6H1s7tVIJhHq9WCpFAmReRHjT3CViQd8M+iyG4XU6UeYptJ/MubWQst0LqaXKH
+         q92OllukLNM03ikLXITOAQZeFZSUJgR1upnc2hxFXfMdjUkn72ookZFqGHkekbx3mBCy
+         K0KB8BfwNrbNxxjKzOWNd1vtCLtekPNd5rt4E4zXiDgC6mPfsL5ZzByuSiTR3HxyO9Pg
+         YaEq12rFHMTBlwS5pebfc8kRgjUs9f/9XKruWm/sDyVb34ocwLgLlRTJA7EpQy2oDs/B
+         M+pP2lNAai7ki67vBPLhKTL19JbsECXY+Q7+bvMQMx5XcC/uPYBR6d3U+p9djN6nLp8k
+         G/Tw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20251104; t=1779805819; x=1780410619;
+        h=in-reply-to:content-disposition:mime-version:references:message-id
+         :subject:cc:to:date:from:x-gm-gg:x-gm-message-state:from:to:cc
+         :subject:date:message-id:reply-to;
+        bh=T45Ou7ZWfmCD8W0zzIfAADcxBltvQlyL9M3hYTeHQiQ=;
+        b=neWJ9H2WD6OP0avuot59ovxL3Yw5PzNh8MNTwPAXcW7ca9oqjMro/zUhHSUCsQEGl4
+         h5oaG9Jfaf2tFfZ1B/zOKjwdT+gsS02QnPBwwxLbTheUKeF8lIGVd7rHG9OhJc+V5l6L
+         CQImr/Dl8H6HhJIO/gzu2W/ogHKH9X4x3XG9yJs25yHw73b9lhUYlgKh0AsKAFfNVFgF
+         J+UeFMPrx8jNBC0nlfkScDTSgfDRAMyuz4S801hmSHd0DMRUY04zgBeTSYmE9jWXR9yw
+         5jWRN3COr60YH5/Z5NreahlfveRO7ywwW6valevz56qrraElQl1zMLeTfM5Dxi/55abt
+         qnYA==
+X-Forwarded-Encrypted: i=1; AFNElJ/4u/6CM+X8wy266iP5QFKX2Uf5a2Ev03VUonFF83NlCWOauQ3xthdFaeAf07vKZU5ZBXlvXewc0t22p94aWIE=@lists.linux.dev
+X-Gm-Message-State: AOJu0YzNp2VpoW2dWQpFqsED588GtxIAXW5dkwgS/HBHSKe6PYXSna8x
+	iBok6VYYPXJ64AgfcL1Oe0a8ueFuUlHJwidTMLHhL9HAV5OKr8E6ngVe
+X-Gm-Gg: Acq92OE1vFpQP7Okqz5OjJf9T+HTzT6xGU11q7a4+6tW0R7pqxRjU06VdAWuNRn9BPH
+	GFhpfV/2xLJ7sAewJeZ7wYx3yzvFbUfCpJHwUsJ59y4uZ0TZBQYtf1O2HCaT1/lkIDii6vq9qjf
+	NcUppqREa67Gbiye77Kh5MCmriRJAhd+ZhUouhqMNa7qw8equ6yktfkiqZjQFeAL+PvqFsOKtvZ
+	JP6iqZhZ49NiQfjwYvXxhMIfsINZTNLmfswcJFhyqvXm+FC0bjZfq0QGPYjBVmIRAXGP1IDQQHx
+	qK3ivJ2Qf7R6hByur6GTpo88wBNbapTpyZsjJdgMIkibAziXIxuYAoHlh2MKyeJFzIYWpa2mDoJ
+	VeK4FbF/qaoJkZd+WDhY+PJavPrz/xrapWx7hWgzc4H8q37UgkZnOo/iTlG5Hr8LfULTkJAZBPc
+	P67EakSY3cUSLNd/EwTTfVPK/o8FQ=
+X-Received: by 2002:a05:600d:6451:10b0:48a:563c:c8c0 with SMTP id 5b1f17b1804b1-4904249d11amr228458775e9.7.1779805818565;
+        Tue, 26 May 2026 07:30:18 -0700 (PDT)
+Received: from krava ([2a00:102a:403b:6530:533a:f167:d705:6aca])
+        by smtp.gmail.com with ESMTPSA id 5b1f17b1804b1-490428e5adcsm124007855e9.21.2026.05.26.07.30.16
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Tue, 26 May 2026 07:30:18 -0700 (PDT)
+From: Jiri Olsa <olsajiri@gmail.com>
+X-Google-Original-From: Jiri Olsa <jolsa@kernel.org>
+Date: Tue, 26 May 2026 16:30:14 +0200
+To: Jakub Sitnicki <jakub@cloudflare.com>
+Cc: sashiko-bot@kernel.org, sashiko-reviews@lists.linux.dev,
+	bpf@vger.kernel.org
+Subject: Re: [PATCHv3 07/12] selftests/bpf: Emit nop,nop10 instructions combo
+ for x86_64 arch
+Message-ID: <ahWudlB0zTRvfBE6@krava>
+References: <20260521124411.31133-8-jolsa@kernel.org>
+ <20260521132121.EEB4E1F000E9@smtp.kernel.org>
+ <87bje277zf.fsf@cloudflare.com>
 Precedence: bulk
 X-Mailing-List: sashiko-reviews@lists.linux.dev
 List-Id: <sashiko-reviews.lists.linux.dev>
 List-Subscribe: <mailto:sashiko-reviews+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:sashiko-reviews+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: multipart/signed; micalg=pgp-sha512;
-	protocol="application/pgp-signature"; boundary="3/yyHngUfyzKNMrH"
+Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-In-Reply-To: <CAGb2v65+JwwU2p5TQ6hrqonYNUgVgZQMPY6D=ROqWJu=xy=drQ@mail.gmail.com>
+In-Reply-To: <87bje277zf.fsf@cloudflare.com>
 
+On Tue, May 26, 2026 at 12:58:28PM +0200, Jakub Sitnicki wrote:
+> On Thu, May 21, 2026 at 01:21 PM GMT, sashiko-bot@kernel.org wrote:
+> 
+> [...]
+> 
+> > Would using two consecutive 5-byte nops instead of a single 10-byte
+> > nop safely provide the padding needed for a 5-byte patch?
+> 
+> Perhaps worth clarifying that nop5,nop5 wouldn't allow us to leave the
+> CALL in nop10 tail after the optimize/unoptimize cycle.
 
---3/yyHngUfyzKNMrH
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-Content-Transfer-Encoding: quoted-printable
+right, also we need to have single instruction for that
+to have some assurance the app won't jump in the middle
 
-Hi Chen-Yu,
-
-On Sun 24 May 26, 20:49, Chen-Yu Tsai wrote:
-> On Mon, May 18, 2026 at 6:12=E2=80=AFPM <sashiko-bot@kernel.org> wrote:
-> >
-> > Thank you for your contribution! Sashiko AI review found 1 potential is=
-sue(s) to consider:
-> > - [Medium] The `dphy` node is missing the required `interrupts` propert=
-y and a SoC-specific compatible string.
-> > --
-> >
-> > commit ceae1b5da24380c4a30d9a8b480a23eaee3c0814
-> > Author: Paul Kocialkowski <paul.kocialkowski@bootlin.com>
-> >
-> > ARM: dts: sun8i: v3s: Add nodes for MIPI CSI-2 support
-> >
-> > This commit adds MIPI CSI-2 support to the Allwinner V3s SoC. It introd=
-uces
-> > the device tree nodes for the CSI0 controller, the MIPI CSI-2 bridge, a=
-nd
-> > the D-PHY block.
-> >
-> > > diff --git a/arch/arm/boot/dts/allwinner/sun8i-v3s.dtsi b/arch/arm/bo=
-ot/dts/allwinner/sun8i-v3s.dtsi
-> > > --- a/arch/arm/boot/dts/allwinner/sun8i-v3s.dtsi
-> > > +++ b/arch/arm/boot/dts/allwinner/sun8i-v3s.dtsi
-> > [ ... ]
-> > > +             dphy: d-phy@1cb2000 {
-> > > +                     compatible =3D "allwinner,sun6i-a31-mipi-dphy";
-> >
-> > Should a SoC-specific compatible string like "allwinner,sun8i-v3s-mipi-=
-dphy"
-> > be included here alongside the generic a31 fallback?
->=20
-> Following our general guideline, I believe it should.
-
-Yes I guess it makes sense. I don't think we've been doing that in every ca=
-se
-but it doesn't hurt.
-
-> > > +                     reg =3D <0x01cb2000 0x1000>;
-> > > +                     clocks =3D <&ccu CLK_BUS_CSI>,
-> > > +                              <&ccu CLK_MIPI_CSI>;
-> > > +                     clock-names =3D "bus", "mod";
-> > > +                     resets =3D <&ccu RST_BUS_CSI>;
-> >
-> > Will this node fail dtbs_check schema validation? The existing device t=
-ree
-> > binding schema for "allwinner,sun6i-a31-mipi-dphy" requires an interrup=
-ts
-> > property, which appears to be missing here.
->=20
-> Yeah, this is definitely going to fail validation.
-
-To be very clear about this, the interrupt is absolutely not required for
-proper operation of the unit and there's a chance we might eventually see
-a SoC that doesn't have it wired.
-
-I could just hook the interrupt for now and we could make it optional if ev=
-er
-needed, but I could also mark is as optional now if you prefer.
-
-> > If the V3s hardware physically lacks a D-PHY interrupt, would it be bet=
-ter
-> > to add the V3s-specific compatible string and update the binding schema
-> > to make the interrupts property conditionally optional for the V3s?
->=20
-> FWIW the vendor kernel has some code for the D-PHY's interrupt bits [1].
-> Could you add the interrupt (I'm guessing the MIPI-CSI interrupt?) and
-> give it a quick test?
-
-Thanks for digging this up! It really looks like it's just used for debug
-purposes.
-
-I have previously used the mipi csi-2 interrupt for the mipi csi-2 controll=
-er
-and never for the d-phy. There's a chance it's the same interrupt that is w=
-ired
-to both units (like it is for isp/csi).
-
-I'll give it a try when I get back home. If it doesn't trigger, it probbaly
-means it's not wired to the d-phy and should really be made optional.
-
-All the best,
-
-Paul
-
->=20
->=20
-> Thanks
-> ChenYu
->=20
-> [1] https://github.com/gediz/v3s-linux-sdk/blob/master/linux-3.4/drivers/=
-media/video/sunxi-vfe/mipi_csi/dphy/dphy_reg.c
->=20
->=20
-> > > +                     allwinner,direction =3D "rx";
-> > > +                     status =3D "disabled";
-> > > +                     #phy-cells =3D <0>;
-> > > +             };
-> > > +
-> >
-> > --
-> > Sashiko AI review =C2=B7 https://sashiko.dev/#/patchset/20260518153339.=
-619947-1-paulk@sys-base.io?part=3D5
-> >
-
---=20
-Paul Kocialkowski,
-
-Independent contractor - sys-base - https://www.sys-base.io/
-Free software developer - https://www.paulk.fr/
-
-Expert in multimedia, graphics and embedded hardware support with Linux.
-
---3/yyHngUfyzKNMrH
-Content-Type: application/pgp-signature; name=signature.asc
-
------BEGIN PGP SIGNATURE-----
-
-iQIzBAEBCgAdFiEEAbcMXZQMtj1fphLChP3B6o/ulQwFAmoVqnEACgkQhP3B6o/u
-lQyVBxAAkmBbJfWH/Zap2m4SELdLqBWc4TbBFrxkvapEAEVhEDEjPt43XnjnVTGB
-RlS4WMVVEdLi1WtYEYPA7VkcGsYZQsuwySF5q0DoNkUbumm7qu0c2oewxahvd8i4
-iC1xUQHV+tgcIOd3KzRWgb6r+PoEASdHP1ND+Nn5ifZtA4qQODLtIK92cQfx2qXR
-zKvub/V2rDx9U6wHaoDcDkY5WTDh27Yb95Pwv9EuublD1RovX4zhNyDRFSTol3pB
-APuNJoQZAEhL7YLOK+myTEnZgQTSsYCrALKJyIpj++9wtBUfaCQvzZVhTBQJrq0H
-v4WHw/vc0M0FcULjEU4kQhpqpkDKx44rhny8yXxiI+9DpNWrJ5o8neoVUiEn+Yzi
-omFq3SSeGGbw9r5A57Y6COhERx5IFkIJ0p+0oz5ANwFwKSADL7/JTk35Fu/cg6Hn
-zJ+SMjLHJJFl4P5AunKhxed1M4w1QGev8kkkmp5FXcdwNU/qDVKEqiBXTgCdr6mA
-f0JT8pmhSCp3esUbvYrNS+thKgR3s5B+YEUikO9pLhIMvBnfAsmp8RTbRmFyIK78
-Lw1Diz6iGKBR+6rsxZlTySZ5nAPEeKIXScdnJFsQPGCBudGhIUEIv82ev7uESu3x
-xKIO6SYIio+eUZgeA8QXVqGWVDCvJYUDC5yQ8nS4TqjfI8diJAs=
-=sw0R
------END PGP SIGNATURE-----
-
---3/yyHngUfyzKNMrH--
+jirka
