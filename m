@@ -1,96 +1,85 @@
-Received: from mail-wm1-f46.google.com (mail-wm1-f46.google.com [209.85.128.46])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 941583FF1C5
-	for <sashiko-reviews@lists.linux.dev>; Tue, 26 May 2026 14:30:20 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.46
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 483132F691F;
+	Tue, 26 May 2026 14:34:41 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1779805821; cv=none; b=VKPoX6O8bhDJmwfnZR9B3/7ZOd0vSgAPa1FXRfivfIdMfgte/hsK/U5wZgwLne4lx+M5OHuOAldiz+cKtG7No5lCtk8m5q3dsuEItl4YaWgWomcFKN9OsSQ2mrADR5EzchogSnrHxtquLBm9zr4igBilJwGLEMa8w1/H3fS1/YA=
+	t=1779806082; cv=none; b=VTrQ6G/ys75u79rbSFj7waPOU8DRh+nQ0SImadilIYjCYMsJQgiG37AbXK6zNgdKTb6x8iyABjWuNxR8cla+qIxUiXcsKojiHy/BspUDpSCQbYcqV/9119zNO7PXHkRHw8EhBo14ukfYxFNAAOy5S1r8YG6WtUj0lNPY4fJts6o=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1779805821; c=relaxed/simple;
-	bh=lG0SD9cXN/5Qk4VXl7q4UfDEDkoq1CrJuW/0BYgMDBI=;
-	h=From:Date:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=TgwPPrAKgkt7lGNFg1A+kcCIG7gLQIPmvUDJ0my5xw9/LPERdVCFzftbCxFB2FZNzEdjZqAF9g1GR5i0shrjTjFUG6PG7DkxxD4zt+4HwtKk2HjY/5fo67yzQu0HGahPvt52wBCTLSbGsXwArhXAyiWwVcO3+8M1zC7X+2+C6GA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=OTra6H1s; arc=none smtp.client-ip=209.85.128.46
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+	s=arc-20240116; t=1779806082; c=relaxed/simple;
+	bh=mDzX9CdYP640nxuSpX4i4TSvETI3+PkI7fFzmV7MiT4=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=eqo4jVIM/0RkgtMgjN4cg/woTPhdn7v00OoQ5+uLosNNuG0WUQYK3YCj6qeCi+pdBeLi7mjYBA2WWpC+CYIEpGPzooyfTbrCKSRZno6jEHgJOeRe2zBdRQO5G2LWT6hbezjK4FbbsP0i4LtufCOPYg+1KE1vAC8XePjBQn92zVI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=LBZyNc0u; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="OTra6H1s"
-Received: by mail-wm1-f46.google.com with SMTP id 5b1f17b1804b1-4891e5b9c1fso92141315e9.2
-        for <sashiko-reviews@lists.linux.dev>; Tue, 26 May 2026 07:30:20 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20251104; t=1779805819; x=1780410619; darn=lists.linux.dev;
-        h=in-reply-to:content-disposition:mime-version:references:message-id
-         :subject:cc:to:date:from:from:to:cc:subject:date:message-id:reply-to;
-        bh=T45Ou7ZWfmCD8W0zzIfAADcxBltvQlyL9M3hYTeHQiQ=;
-        b=OTra6H1s7tVIJhHq9WCpFAmReRHjT3CViQd8M+iyG4XU6UeYptJ/MubWQst0LqaXKH
-         q92OllukLNM03ikLXITOAQZeFZSUJgR1upnc2hxFXfMdjUkn72ookZFqGHkekbx3mBCy
-         K0KB8BfwNrbNxxjKzOWNd1vtCLtekPNd5rt4E4zXiDgC6mPfsL5ZzByuSiTR3HxyO9Pg
-         YaEq12rFHMTBlwS5pebfc8kRgjUs9f/9XKruWm/sDyVb34ocwLgLlRTJA7EpQy2oDs/B
-         M+pP2lNAai7ki67vBPLhKTL19JbsECXY+Q7+bvMQMx5XcC/uPYBR6d3U+p9djN6nLp8k
-         G/Tw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20251104; t=1779805819; x=1780410619;
-        h=in-reply-to:content-disposition:mime-version:references:message-id
-         :subject:cc:to:date:from:x-gm-gg:x-gm-message-state:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=T45Ou7ZWfmCD8W0zzIfAADcxBltvQlyL9M3hYTeHQiQ=;
-        b=neWJ9H2WD6OP0avuot59ovxL3Yw5PzNh8MNTwPAXcW7ca9oqjMro/zUhHSUCsQEGl4
-         h5oaG9Jfaf2tFfZ1B/zOKjwdT+gsS02QnPBwwxLbTheUKeF8lIGVd7rHG9OhJc+V5l6L
-         CQImr/Dl8H6HhJIO/gzu2W/ogHKH9X4x3XG9yJs25yHw73b9lhUYlgKh0AsKAFfNVFgF
-         J+UeFMPrx8jNBC0nlfkScDTSgfDRAMyuz4S801hmSHd0DMRUY04zgBeTSYmE9jWXR9yw
-         5jWRN3COr60YH5/Z5NreahlfveRO7ywwW6valevz56qrraElQl1zMLeTfM5Dxi/55abt
-         qnYA==
-X-Forwarded-Encrypted: i=1; AFNElJ/4u/6CM+X8wy266iP5QFKX2Uf5a2Ev03VUonFF83NlCWOauQ3xthdFaeAf07vKZU5ZBXlvXewc0t22p94aWIE=@lists.linux.dev
-X-Gm-Message-State: AOJu0YzNp2VpoW2dWQpFqsED588GtxIAXW5dkwgS/HBHSKe6PYXSna8x
-	iBok6VYYPXJ64AgfcL1Oe0a8ueFuUlHJwidTMLHhL9HAV5OKr8E6ngVe
-X-Gm-Gg: Acq92OE1vFpQP7Okqz5OjJf9T+HTzT6xGU11q7a4+6tW0R7pqxRjU06VdAWuNRn9BPH
-	GFhpfV/2xLJ7sAewJeZ7wYx3yzvFbUfCpJHwUsJ59y4uZ0TZBQYtf1O2HCaT1/lkIDii6vq9qjf
-	NcUppqREa67Gbiye77Kh5MCmriRJAhd+ZhUouhqMNa7qw8equ6yktfkiqZjQFeAL+PvqFsOKtvZ
-	JP6iqZhZ49NiQfjwYvXxhMIfsINZTNLmfswcJFhyqvXm+FC0bjZfq0QGPYjBVmIRAXGP1IDQQHx
-	qK3ivJ2Qf7R6hByur6GTpo88wBNbapTpyZsjJdgMIkibAziXIxuYAoHlh2MKyeJFzIYWpa2mDoJ
-	VeK4FbF/qaoJkZd+WDhY+PJavPrz/xrapWx7hWgzc4H8q37UgkZnOo/iTlG5Hr8LfULTkJAZBPc
-	P67EakSY3cUSLNd/EwTTfVPK/o8FQ=
-X-Received: by 2002:a05:600d:6451:10b0:48a:563c:c8c0 with SMTP id 5b1f17b1804b1-4904249d11amr228458775e9.7.1779805818565;
-        Tue, 26 May 2026 07:30:18 -0700 (PDT)
-Received: from krava ([2a00:102a:403b:6530:533a:f167:d705:6aca])
-        by smtp.gmail.com with ESMTPSA id 5b1f17b1804b1-490428e5adcsm124007855e9.21.2026.05.26.07.30.16
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Tue, 26 May 2026 07:30:18 -0700 (PDT)
-From: Jiri Olsa <olsajiri@gmail.com>
-X-Google-Original-From: Jiri Olsa <jolsa@kernel.org>
-Date: Tue, 26 May 2026 16:30:14 +0200
-To: Jakub Sitnicki <jakub@cloudflare.com>
-Cc: sashiko-bot@kernel.org, sashiko-reviews@lists.linux.dev,
-	bpf@vger.kernel.org
-Subject: Re: [PATCHv3 07/12] selftests/bpf: Emit nop,nop10 instructions combo
- for x86_64 arch
-Message-ID: <ahWudlB0zTRvfBE6@krava>
-References: <20260521124411.31133-8-jolsa@kernel.org>
- <20260521132121.EEB4E1F000E9@smtp.kernel.org>
- <87bje277zf.fsf@cloudflare.com>
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="LBZyNc0u"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7A0271F000E9;
+	Tue, 26 May 2026 14:34:40 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=kernel.org;
+	s=k20260515; t=1779806081;
+	bh=Ek5lrBzczU2aR62gMDENtWcjQ/WBpYlAIGjf7K7K2dw=;
+	h=Date:From:To:Cc:Subject:References:In-Reply-To;
+	b=LBZyNc0uVf+MpCe4+Hr9THXbdTyK0ESJ0a5W5iuD4M/0kUY69afClvjM8+Fp4eypN
+	 BpCa2sjPiK4FpN4efpD795tZmoaHfl7zAQWJsVEZSxvHsxTVWIhN7r0i2MXVxG3Ith
+	 4RgUZGNdufUEHQpmU5SEEgDa9fY0toJHG0G86HZJBlZTWM8wbAuWsDKsJj+UoqyOxu
+	 Sl6TwVaEFvMDgrmK3gz/u1yyUn/8vlAXBk2Wu7PPiqznWqYtmZ0B5Ug0NIlaDUakBw
+	 AkIVeD3q6mc/4MnXKO5PtjeHXx4fpy/Q1yYTSO4GuIn4raGKBEHMsjg0DGqa+qe+Mh
+	 dN2K4coa+rNSw==
+Date: Tue, 26 May 2026 16:34:38 +0200
+From: Krzysztof Kozlowski <krzk@kernel.org>
+To: Tudor Ambarus <tudor.ambarus@linaro.org>
+Cc: sashiko-reviews@lists.linux.dev, conor+dt@kernel.org, robh@kernel.org, 
+	devicetree@vger.kernel.org
+Subject: Re: [PATCH v5 1/5] dt-bindings: thermal: Add Google GS101 TMU
+Message-ID: <20260526-nocturnal-dragon-from-lemuria-c517a4@quoll>
+References: <20260525-acpm-tmu-v5-1-85fde739752e@linaro.org>
+ <20260525125455.AF31A1F000E9@smtp.kernel.org>
+ <4832a220-ace5-40ba-b85b-7c69b3aed869@linaro.org>
+ <20260526-uptight-bustard-from-jupiter-291e59@quoll>
+ <08eba1cf-2df8-4f2f-a527-ee03ee792920@linaro.org>
 Precedence: bulk
 X-Mailing-List: sashiko-reviews@lists.linux.dev
 List-Id: <sashiko-reviews.lists.linux.dev>
 List-Subscribe: <mailto:sashiko-reviews+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:sashiko-reviews+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
+Content-Type: text/plain; charset=utf-8
 Content-Disposition: inline
-In-Reply-To: <87bje277zf.fsf@cloudflare.com>
+In-Reply-To: <08eba1cf-2df8-4f2f-a527-ee03ee792920@linaro.org>
 
-On Tue, May 26, 2026 at 12:58:28PM +0200, Jakub Sitnicki wrote:
-> On Thu, May 21, 2026 at 01:21 PM GMT, sashiko-bot@kernel.org wrote:
+On Tue, May 26, 2026 at 01:02:37PM +0300, Tudor Ambarus wrote:
 > 
-> [...]
 > 
-> > Would using two consecutive 5-byte nops instead of a single 10-byte
-> > nop safely provide the padding needed for a 5-byte patch?
+> On 5/26/26 12:39 PM, Krzysztof Kozlowski wrote:
+> > On Mon, May 25, 2026 at 04:06:40PM +0300, Tudor Ambarus wrote:
+> >>>
+> >>> [Severity: Medium]
+> >>> Since the commit message and binding description indicate that the
+> >>> Application Processor relies entirely on the ACPM firmware for all
+> >>> functional TMU tasks, shouldn't samsung,acpm-ipc be included in this
+> >>> required list?
+> >>>
+> >>
+> >> I disagree. The property remains optional because the ACPM firmware
+> >> can be bypassed entirely. The TMU IP is capable of handling thermal
+> >> management directly without IPC intervention, so the phandle is not
+> >> a strict hardware requirement.
+> > 
+> > I see your driver will fail probe without it, so something is not
+> > matching here.
+> > 
 > 
-> Perhaps worth clarifying that nop5,nop5 wouldn't allow us to leave the
-> CALL in nop10 tail after the optimize/unoptimize cycle.
+> 
+> Yes, that's because plain TMU register access, without the ACPM, is not
+> currently implemented in the driver. The ACPM can be bypassed in theory,
+> which is why I left the phandle optional in the binding to reflect the
+> hardware.
 
-right, also we need to have single instruction for that
-to have some assurance the app won't jump in the middle
+The point is that phandle is not optional currently. Binding must
+accurately describe the interface implemented by SW, so either SW does
+not fail the probe on missing property or the property is mandatory.
 
-jirka
+Best regards,
+Krzysztof
+
