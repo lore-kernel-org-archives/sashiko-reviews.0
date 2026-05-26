@@ -1,118 +1,68 @@
-Received: from out30-133.freemail.mail.aliyun.com (out30-133.freemail.mail.aliyun.com [115.124.30.133])
+Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EE26F3D79F1
-	for <sashiko-reviews@lists.linux.dev>; Tue, 26 May 2026 09:27:08 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=115.124.30.133
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 46BAC3D9038;
+	Tue, 26 May 2026 09:39:58 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1779787631; cv=none; b=S5JFVlOG3Ir7Eai+FVlQa/w4kkXZw5XtETqsczgF91bDTOEbbaotI5BVP10ajY+8yGLfQ888UPJr/y3IKLMrSG45PY+MxOkR+LjQyGW1CrRXtu14wtsz/SuO6oTcYvgvxxK5kUEMI5UKcxNGoD7RXBV1SAa9fYqeY9+9b5ThlS8=
+	t=1779788399; cv=none; b=YFm8dMKE+EP0ommLO1g9PTviFyIwMIh/e1n3sYLBga5vALetv4tdm4NJowVLNcYvXgWgio2yDDfNaMV0EatSO5mxpInSYI05QKgACoCJ4tIIUL2OiAhQJYEJ7UkmESK+chhId7T9K2slIqD5hA43m3G52RVoc0nbxX2d+XQt6RA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1779787631; c=relaxed/simple;
-	bh=Nbw2L11H8OeSwwL79pkT/i8CWBtxF5CaIRrjz2ju7FA=;
-	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=JifPcMBvKMu3CeVcs0s49AxG3q6iG1rZHx+sgTxOkhFCjLftcOWcLlwc3y3tH8knG4R3Tc/BWvkR+qsCHEFKsh3MkZgnO20+DyG+IbZlJ5HRyYnzFhmlxHXLFJ2LhpCWmS7/A4Yt9jKH1xPiVlyCKqMjyijE0kFv0knww9CvjuY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linux.alibaba.com; spf=pass smtp.mailfrom=linux.alibaba.com; dkim=pass (1024-bit key) header.d=linux.alibaba.com header.i=@linux.alibaba.com header.b=atq0jLW5; arc=none smtp.client-ip=115.124.30.133
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linux.alibaba.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linux.alibaba.com
+	s=arc-20240116; t=1779788399; c=relaxed/simple;
+	bh=UXbdSYzqrPIL8fR9OYJJ8ftg6yrA2mzucyXTW6JX2vQ=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=hn2Te5dl7RJhXaihfNiCNg6QOFFo1XtoPUmLQVLNTuIw+DO5toSHEsHxA4Gyuo2gJtq9ASuC6Gnv9Eld9FJzRicMlgnA3psY0TCm8oSLDKxEzPH6dH3rVxAdYPQ6SYUW/OouN9VT4r4DXCuZ+o1imMkZ8YRP5nCPmm8rRiJ/mCA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=CWTfIFkO; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linux.alibaba.com header.i=@linux.alibaba.com header.b="atq0jLW5"
-DKIM-Signature:v=1; a=rsa-sha256; c=relaxed/relaxed;
-	d=linux.alibaba.com; s=default;
-	t=1779787626; h=From:To:Subject:Date:Message-ID:MIME-Version:Content-Type;
-	bh=RR4lUZdYoL3Vw06ZGP2CnNvK2bEQNqhFe15x28HIaWg=;
-	b=atq0jLW5F3Uybh2NGzp3Dwkqi24MgDfhP2Ro6Up6yZEfXKG8RR5Kz/A5IrPcuigT+qE0Prpvfz8hSAP2xxuR6CYjtwe03JZdr+USj/GZzvfOElcITUFzoUmaiUA22JI0JZXRA/SQQO0RLCJjddkvKwiJHlb+ObOt6wJ8UmPUO9M=
-X-Alimail-AntiSpam:AC=PASS;BC=-1|-1;BR=01201311R111e4;CH=green;DM=||false|;DS=||;FP=0|-1|-1|-1|0|-1|-1|-1;HT=maildocker-contentspam033045098064;MF=cp0613@linux.alibaba.com;NM=1;PH=DS;RN=4;SR=0;TI=SMTPD_---0X3fq5Z7_1779787612;
-Received: from DESKTOP-S9E58SO.localdomain(mailfrom:cp0613@linux.alibaba.com fp:SMTPD_---0X3fq5Z7_1779787612 cluster:ay36)
-          by smtp.aliyun-inc.com;
-          Tue, 26 May 2026 17:27:04 +0800
-From: Chen Pei <cp0613@linux.alibaba.com>
-To: sashiko-bot@kernel.org
-Cc: cp0613@linux.alibaba.com,
-	linux-pci@vger.kernel.org,
-	sashiko-reviews@lists.linux.dev
-Subject: Re: [PATCH] cxl/acpi: Defer probe when ACPI0016 PCI root bridge is not ready
-Date: Tue, 26 May 2026 17:26:46 +0800
-Message-ID: <20260526092652.171319-1-cp0613@linux.alibaba.com>
-X-Mailer: git-send-email 2.43.0
-In-Reply-To: <20260526031200.C19341F000E9@smtp.kernel.org>
-References: <20260526031200.C19341F000E9@smtp.kernel.org>
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="CWTfIFkO"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 44FAE1F00A3A;
+	Tue, 26 May 2026 09:39:57 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=kernel.org;
+	s=k20260515; t=1779788397;
+	bh=ylZe4wIhoLq4ovPy5L8iqxxTFZIH9aKPjWByP79AvDw=;
+	h=Date:From:To:Cc:Subject:References:In-Reply-To;
+	b=CWTfIFkOTK/auAr0j6DSph+9n2ex8p35F7gAV1pUZ2x5oDcPM/wdE6gepD2xQrDlj
+	 AHo5pIh0Whm/l8P/PwRXpc8QcDsTNtdT2vklcbgd08uTM++CEzQqs727ib3KpiLfec
+	 7E0A/i3bjEb6KKTITUx+wbyKxz0nP4GM4+QV20MyAcimEiaaAA1oanV8biRgxPg23Q
+	 WVtT4nYVkCTIJdZqzY1jRXZjq3c91ptXX0Oi/4lnrnyt8+kz0Lz/vz/tDMdC6Yo+cv
+	 qbwAQlBZ9CN3llJ4N8DUd0AMAYRsZkldn8MZNQ1hAQh4FCTOZfGr+3syReZqgdYkRT
+	 Ukd67vPu+YUuQ==
+Date: Tue, 26 May 2026 11:39:55 +0200
+From: Krzysztof Kozlowski <krzk@kernel.org>
+To: Tudor Ambarus <tudor.ambarus@linaro.org>
+Cc: sashiko-reviews@lists.linux.dev, conor+dt@kernel.org, robh@kernel.org, 
+	devicetree@vger.kernel.org
+Subject: Re: [PATCH v5 1/5] dt-bindings: thermal: Add Google GS101 TMU
+Message-ID: <20260526-uptight-bustard-from-jupiter-291e59@quoll>
+References: <20260525-acpm-tmu-v5-1-85fde739752e@linaro.org>
+ <20260525125455.AF31A1F000E9@smtp.kernel.org>
+ <4832a220-ace5-40ba-b85b-7c69b3aed869@linaro.org>
 Precedence: bulk
 X-Mailing-List: sashiko-reviews@lists.linux.dev
 List-Id: <sashiko-reviews.lists.linux.dev>
 List-Subscribe: <mailto:sashiko-reviews+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:sashiko-reviews+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=y
-Content-Transfer-Encoding: 8bit
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+In-Reply-To: <4832a220-ace5-40ba-b85b-7c69b3aed869@linaro.org>
 
-On Tue, 26 May 2026 03:12:00 +0000, sashiko-bot@kernel.org wrote:
-
-> > +
-> > +	/* Clear _DEP dependencies to allow consumers to enumerate */
-> > +	acpi_dev_clear_dependencies(device);
-> > +
-> >  	return 1;
-> >  
-> >  remove_dmar:
-> >  	if (hotadd)
-> >  		dmar_device_remove(handle);
-> >  end:
-> >  	kfree(root);
+On Mon, May 25, 2026 at 04:06:40PM +0300, Tudor Ambarus wrote:
+> > 
+> > [Severity: Medium]
+> > Since the commit message and binding description indicate that the
+> > Application Processor relies entirely on the ACPM firmware for all
+> > functional TMU tasks, shouldn't samsung,acpm-ipc be included in this
+> > required list?
+> > 
 > 
-> [Severity: High]
-> This is a pre-existing issue, but does the dmar_device_add() error path
-> leave a dangling pointer in device->driver_data?
-> 
-> Earlier in acpi_pci_root_add(), the allocated root object is assigned to
-> device->driver_data:
-> 
-> 	root->device = device;
-> 	root->segment = segment & 0xFFFF;
-> 	device->driver_data = root;
-> 
-> If dmar_device_add() fails during a hot-add, the code jumps to the end
-> label and frees the root pointer via kfree().
-> 
-> However, it doesn't explicitly reset device->driver_data to NULL, unlike
-> the later pci_acpi_scan_root() error path. Since the ACPI core does not
-> automatically clear driver_data on an attach failure, could subsequent calls
-> to acpi_pci_find_root() by other subsystems fetch and dereference this freed
-> pointer?
+> I disagree. The property remains optional because the ACPM firmware
+> can be bypassed entirely. The TMU IP is capable of handling thermal
+> management directly without IPC intervention, so the phandle is not
+> a strict hardware requirement.
 
-Good catch — you're right. On the dmar_device_add() failure path, the
-code jumps to end: and frees root via kfree(), but
-device->driver_data is left pointing at the freed memory. The later
-pci_acpi_scan_root() failure path explicitly clears it to NULL, which
-makes the omission on the dmar path look like an oversight rather than
-intentional.
+I see your driver will fail probe without it, so something is not
+matching here.
 
-Since this is unrelated to the _DEP clearing change in this patch, I'd
-prefer to keep it out of this patch and send a separate fix on top. Both
-failure paths converge at end: and need the same cleanup, so I plan to
-consolidate the NULL assignment there:
+Best regards,
+Krzysztof
 
-@@ -724,7 +724,6 @@ static int acpi_pci_root_add(struct acpi_device *device,
-		if (!root->bus) {
-				dev_err(&device->dev,
-						"Bus %04x:%02x not present in PCI namespace\n",
-						root->segment, (unsigned int)root->secondary.start);
--				device->driver_data = NULL;
-				result = -ENODEV;
-				goto remove_dmar;
-		}
-@@ -764,6 +763,7 @@ static int acpi_pci_root_add(struct acpi_device *device,
-remove_dmar:
-		if (hotadd)
-				dmar_device_remove(handle);
-end:
-+		device->driver_data = NULL;
-		kfree(root);
-		return result;
-}
-
-This way every path reaching end: clears driver_data before freeing
-root, and any future error path that does goto end; is automatically
-correct. Does that split sound OK to you?
-
-Thanks,
-Pei
