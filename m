@@ -1,159 +1,98 @@
-Received: from SJ2PR03CU001.outbound.protection.outlook.com (mail-westusazon11012018.outbound.protection.outlook.com [52.101.43.18])
+Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C53CB1E376C
-	for <sashiko-reviews@lists.linux.dev>; Wed, 27 May 2026 00:08:11 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=fail smtp.client-ip=52.101.43.18
-ARC-Seal:i=2; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1779840499; cv=fail; b=efTljNvIwHlOsExVc1nfpAVYrlejL64h993yt+l5D+1tMgM5th0dkjGxGp1l7FQuIO70hgUVe+x+qOgTVcg56qKf/DaqtO3Yq6Hz1FBI7MURNSTVlbdjTrGa15Lwv9ZRIwYf9TjDGUSGfyq/Su5//qLHkVJwrHAaSU/T1ZiSd14=
-ARC-Message-Signature:i=2; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1779840499; c=relaxed/simple;
-	bh=xAkmQM4vEPRTjJHmQhC0+STEUO7jufuPuYgHx/B62p4=;
-	h=From:To:CC:Subject:In-Reply-To:References:Date:Message-ID:
-	 MIME-Version:Content-Type; b=NpE9Gc02ceshqHT3Vf5lOLLelU2GB2eRFwNWwwfL1QiUk1u7rKI+thelgbJVDuNK7hOKV1xV3HOCUMlhvny6SSaZu2g+aj0mq2AQ2sJLGd9GoHNo4zQjZnKh+JG1KWzBmU7tr2aWLB+fsAhfpWVeFIde9foClFfM5/ABn6enAIM=
-ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=amd.com; spf=fail smtp.mailfrom=amd.com; dkim=pass (1024-bit key) header.d=amd.com header.i=@amd.com header.b=bFQJZ9D+; arc=fail smtp.client-ip=52.101.43.18
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=amd.com
-Authentication-Results: smtp.subspace.kernel.org; spf=fail smtp.mailfrom=amd.com
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6C32F1A683A;
+	Wed, 27 May 2026 00:50:16 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
+ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
+	t=1779843017; cv=none; b=pQqXGpACpgMY6GKl/IQPvRB/driODfvyo/BCL3iGrtrFHm8kWWvKxn6Bl2heItDGvsky6zblN52cTLYWqnZd6vmsAED/LzGOekVgfeb0sRsGa3GFcpf7X2vBGqs5IxmOnJkUSfnbQeU8+/BoOVA78tj49nvHqzL3w+jNZi74eJU=
+ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
+	s=arc-20240116; t=1779843017; c=relaxed/simple;
+	bh=KP4eZR4aMzEyXVRm91xOOTNia3o1zlwLIb8aPYPItyE=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=mZGgNZlpUztoeYUTt6ECxLzXIQJQrRKqloRQKAFeDPtgTt/JUmyKczgdVUsvJeZM1nF+KpxW2pq86s7/sknD5J/YYnhc+7P7MBC/eSQcKe9FjP7Mlw/mueu0hzicpilX7chusF/Px4rSavlbUqTe5fgEor2eni94jxdXwTYU/xo=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=ksJzaw23; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=amd.com header.i=@amd.com header.b="bFQJZ9D+"
-ARC-Seal: i=1; a=rsa-sha256; s=arcselector10001; d=microsoft.com; cv=none;
- b=TvnJhlt0qblvhBg200I46N0xQwxD2v0R8Qzi5L1lIxgUE/UuSqqepZRSWbolNWCqCm//NaQMeCBuVJxQ2j4FthyO3t9x52odnX5bete225nYguWv3G+iLc5VzX1ltq8ncfAOwCXAilDeZqoLs3ii+OYZ2bkXFH77A3xugc1hHN5clVcglwlb6u85EJD5rzOSO14Os0aBIcuSyr5eFcGwE353zGQ0cvvENJV6/jiaNImXl6yuzhtNx+P2EDbOaMUpEHrWSvIxdP5VCzks1IXLI5wc03Ey4Pqpu4G8tS8XS/XmMDOQRrj4HYV1N5bZf8W+RJMTHVQy751ZPxVTFidwOg==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com;
- s=arcselector10001;
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
- bh=5785gYNiNXKc4yZTEnKc/KUeIkEu1/HCMcfPzjKnhDw=;
- b=Smmzih13dZWqN7zztkT9Flcwu8uKn4WmDf8fYpxzxeNLPGDHbR3rewNFqIacoAgv0S5JBdWPtIT1t9BTYn+rSLj6HEV+Cs0ufua2h36lgERr/y0oQIiYlmuN7kyUufwTTy7vWnXWLyavwsg8oqxZvWKh5TVRp8pQIOh0JPPEyAjY/syNlahYr7Pwll7N4Gk2r8sGUAGCYsLTSeSNTpD24NoG/X/Nlbt4QkQlaVQGSysR9CYN9Rq6kLSt95gyPeu1R9zajiI62QHWEFIeZ/GDLwFxSvuZe3VPr6/0gJXVV6mqPKTwz7DECzUAIK44qId2GHKG18tpvJqBRWZWrwPGig==
-ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass (sender ip is
- 165.204.84.17) smtp.rcpttodomain=lists.linux.dev smtp.mailfrom=amd.com;
- dmarc=pass (p=quarantine sp=quarantine pct=100) action=none
- header.from=amd.com; dkim=none (message not signed); arc=none (0)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=amd.com; s=selector1;
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
- bh=5785gYNiNXKc4yZTEnKc/KUeIkEu1/HCMcfPzjKnhDw=;
- b=bFQJZ9D+DsyB1s4ayz225P3pKCxUHqLzFes3YhgoVuh4gaelNrqrrxD3TWm4Qz50iT/CE9N3NCPqqnQBCbnHMtRfz4u3jpSy95GwLJEJqPyx25fDwmyXglO9LWzjogOjN1NVPjivOK8t2901CjqS4+47VwDljggHXUAxchl9L9s=
-Received: from SJ0PR03CA0096.namprd03.prod.outlook.com (2603:10b6:a03:333::11)
- by DM4PR12MB6640.namprd12.prod.outlook.com (2603:10b6:8:8f::15) with
- Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.21.48.20; Wed, 27 May
- 2026 00:08:04 +0000
-Received: from SJ5PEPF00000209.namprd05.prod.outlook.com
- (2603:10b6:a03:333:cafe::84) by SJ0PR03CA0096.outlook.office365.com
- (2603:10b6:a03:333::11) with Microsoft SMTP Server (version=TLS1_3,
- cipher=TLS_AES_256_GCM_SHA384) id 15.21.71.11 via Frontend Transport; Wed, 27
- May 2026 00:08:03 +0000
-X-MS-Exchange-Authentication-Results: spf=pass (sender IP is 165.204.84.17)
- smtp.mailfrom=amd.com; dkim=none (message not signed)
- header.d=none;dmarc=pass action=none header.from=amd.com;
-Received-SPF: Pass (protection.outlook.com: domain of amd.com designates
- 165.204.84.17 as permitted sender) receiver=protection.outlook.com;
- client-ip=165.204.84.17; helo=satlexmb07.amd.com; pr=C
-Received: from satlexmb07.amd.com (165.204.84.17) by
- SJ5PEPF00000209.mail.protection.outlook.com (10.167.244.42) with Microsoft
- SMTP Server (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
- 15.21.71.7 via Frontend Transport; Wed, 27 May 2026 00:08:03 +0000
-Received: from localhost (10.180.168.240) by satlexmb07.amd.com
- (10.181.42.216) with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.2562.41; Tue, 26 May
- 2026 19:08:03 -0500
-From: Nathan Lynch <nathan.lynch@amd.com>
-To: <sashiko-reviews@lists.linux.dev>, Nathan Lynch via B4 Relay
-	<devnull+nathan.lynch.amd.com@kernel.org>
-CC: <vkoul@kernel.org>, <linux-pci@vger.kernel.org>,
-	<dmaengine@vger.kernel.org>, <Frank.Li@kernel.org>
-Subject: Re: [PATCH v2 07/23] dmaengine: sdxi: Allocate administrative context
-In-Reply-To: <20260513022009.22A3EC2BCB0@smtp.kernel.org>
-References: <20260511-sdxi-base-v2-7-889cfed17e3f@amd.com>
- <20260513022009.22A3EC2BCB0@smtp.kernel.org>
-Date: Tue, 26 May 2026 19:07:57 -0500
-Message-ID: <874ijt90ki.fsf@amd.com>
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="ksJzaw23"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 706F81F000E9;
+	Wed, 27 May 2026 00:50:15 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=kernel.org;
+	s=k20260515; t=1779843016;
+	bh=KPrWi2VMdrVIKBDKSVmaf8ckz+OwWS2ppmMbkUG1Z4Q=;
+	h=Date:From:To:Cc:Subject:References:In-Reply-To;
+	b=ksJzaw23fAGyTM18l15nUfq6RW6kXrCZy3+ZzXjCCFYo/YL4Lccx6a9HmzubhwZ29
+	 Rkq5oXNYAXKyrJ+Mj8oVaWrDehv3jyXC/Og28k4zQ7NQKodN4FxQ0zLv3jzhetAEku
+	 mZknKEIg78ALv3eMM3gDURQLJxv6hMKQD+4+DymlZGIGJi4SEBh80basPXtuCRyohw
+	 OSSDJIC+4Ajz8BBnXshANYuTFw9mccRkQcE5MKrEm7RfYKNWt8etQG88/V3NXWJQEj
+	 FkJiXOOFTQAnxdB8PdvTaurpnv0FGaYEc4zuZpp71tiwSsbHeTKfbvwjwYyv7jPLyZ
+	 XgUvPnHr2PDVQ==
+Date: Tue, 26 May 2026 21:50:12 -0300
+From: Arnaldo Carvalho de Melo <acme@kernel.org>
+To: sashiko-reviews@lists.linux.dev
+Cc: linux-perf-users@vger.kernel.org
+Subject: Re: [PATCH 29/29] perf test: Add truncated perf.data robustness test
+Message-ID: <ahY_xHU9rLRP6M6X@x1>
+References: <20260526211806.1193848-30-acme@kernel.org>
+ <20260526221941.5806C1F000E9@smtp.kernel.org>
 Precedence: bulk
 X-Mailing-List: sashiko-reviews@lists.linux.dev
 List-Id: <sashiko-reviews.lists.linux.dev>
 List-Subscribe: <mailto:sashiko-reviews+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:sashiko-reviews+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset="utf-8"
-Content-Transfer-Encoding: quoted-printable
-X-ClientProxiedBy: satlexmb08.amd.com (10.181.42.217) To satlexmb07.amd.com
- (10.181.42.216)
-X-EOPAttributedMessage: 0
-X-MS-PublicTrafficType: Email
-X-MS-TrafficTypeDiagnostic: SJ5PEPF00000209:EE_|DM4PR12MB6640:EE_
-X-MS-Office365-Filtering-Correlation-Id: 6bccc2d3-563d-437a-957d-08debb840567
-X-MS-Exchange-SenderADCheck: 1
-X-MS-Exchange-AntiSpam-Relay: 0
-X-Microsoft-Antispam:
-	BCL:0;ARA:13230040|1800799024|82310400026|36860700016|376014|6133799003|11063799006|4143699003|56012099006|22082099003|18002099003;
-X-Microsoft-Antispam-Message-Info:
-	BaK8UhjFkXDvN9xyraX7TKFwsZa1JWwtvVoFv4dpqIVtsgAe6BN+qznpg4T33xPnecG/Ou3bmPXXBNFQDcpzHFfIkxG3KbR4i1rB6bWDuRdmGAILPf9uLYMCauXjE0o9Czh8W/nko9j9AWafsPYuAs2mIxNd5+TysTrlstyWXd8+JXYHk9uavzg7rcoUdP7AZ9EdjCf2MVf/FKtZ+j32k5iIhAI9jHkTrzrVyxAYCUkn0pJfT/kzJ7PD58kIs8Wn8fQz7gI0OWO9InKIMmSfY8bSkrBXPVj+RUgEFvFWnEHrqmFm15Z71eCvg/Y/bH640Fzk41p3vxdZ1vHqKXO1oyo7GHjlWWVrSZpXEkfTMJiYryKm8CNyL8i+k0MI55n3MABK6AWRMYiVhHVgQSsVc9YVl0bKilmXN0onCJx8dXOGzAoUMu3362f5qsRRNajxQM0YzPElLz8ZxV4RPtTOzO7tDaFcr3xyzhMcynilAwc3IPPOF2k4M8f4n1v55+9C1445Y7oKSeIolVtQlzXlk6DGVx4Vmi64yydeuYHL6nrNELyiVv5UFXVi9LLOGvG26qHkRFtdKH/6iVFpbnDqNIyCe+gGJUI23hcxxRrTDpCLB9WDxV4CkB57zCvyjLbEez+0ikMz08N+G59xe6rMD4nZcHr5d1RTUpaMQrOlTzw=
-X-Forefront-Antispam-Report:
-	CIP:165.204.84.17;CTRY:US;LANG:en;SCL:1;SRV:;IPV:NLI;SFV:NSPM;H:satlexmb07.amd.com;PTR:InfoDomainNonexistent;CAT:NONE;SFS:(13230040)(1800799024)(82310400026)(36860700016)(376014)(6133799003)(11063799006)(4143699003)(56012099006)(22082099003)(18002099003);DIR:OUT;SFP:1101;
-X-MS-Exchange-AntiSpam-MessageData-ChunkCount: 1
-X-MS-Exchange-AntiSpam-MessageData-0:
-	PRa/6NkCu7iMS/zAZxJTSVYs2laDNCvrZbcFWGPcAvLWuHO1wTowkRIPhy+wU7qqKN+IYoW6tTsABhkKb9A5Euq78gi2jP0zY25oRaYQmhFzO05Z7gKv5blFyeFGM99bnChKVLj2kzMOx7Mcw0ZGkZzR7i2cLIIobre/0W4/uWaeuEwvLuDiawU0FFO7VzWn1Kznh86ZGkRx9Awj5HSvE6GZS8jJVozlRKrSHZduSR2woKPt5XxsH+5ZhxWvNjZU/CNFT3rWzx8ezz1B4P2sGrO8JQ6cyuc+Y6A6tO04yjpuGQtBFTtzYTjC7ajfEVTwu72SLr2TW0oOdmf/x6dSPeTP3RUStlxaaf/XPDRT/UQbVe3pBe4atAOCcgDg4WC38OB+0yNY1LuvniOnnah+73tkpmCJ+VgnlndYnS4EwJYOVHUWVWh7bB7gY+HRK4Fz
-X-OriginatorOrg: amd.com
-X-MS-Exchange-CrossTenant-OriginalArrivalTime: 27 May 2026 00:08:03.3286
- (UTC)
-X-MS-Exchange-CrossTenant-Network-Message-Id: 6bccc2d3-563d-437a-957d-08debb840567
-X-MS-Exchange-CrossTenant-Id: 3dd8961f-e488-4e60-8e11-a82d994e183d
-X-MS-Exchange-CrossTenant-OriginalAttributedTenantConnectingIp: TenantId=3dd8961f-e488-4e60-8e11-a82d994e183d;Ip=[165.204.84.17];Helo=[satlexmb07.amd.com]
-X-MS-Exchange-CrossTenant-AuthSource:
-	SJ5PEPF00000209.namprd05.prod.outlook.com
-X-MS-Exchange-CrossTenant-AuthAs: Anonymous
-X-MS-Exchange-CrossTenant-FromEntityHeader: HybridOnPrem
-X-MS-Exchange-Transport-CrossTenantHeadersStamped: DM4PR12MB6640
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <20260526221941.5806C1F000E9@smtp.kernel.org>
 
-sashiko-bot@kernel.org writes:
-
-> Thank you for your contribution! Sashiko AI review found 1 potential issu=
-e(s) to consider:
-> - [High] Incorrect error check for `dma_pool_zalloc()` allocation using t=
-he DMA handle instead of the virtual address.
+On Tue, May 26, 2026 at 10:19:40PM +0000, sashiko-bot@kernel.org wrote:
+> Thank you for your contribution! Sashiko AI review found 1 potential issue(s) to consider:
+> - [Medium] The cleanup routine may delete a file named '.old' in the current working directory if temporary file creation fails.
 > --
->
-> commit 67ceee55512586a3fbe30b9f642ed7c90819e736
-> Author: Nathan Lynch <nathan.lynch@amd.com>
->
-> dmaengine: sdxi: Allocate administrative context
->
-> This commit creates the control structure hierarchy in memory for the
-> per-function administrative context. It uses devres to queue the cleanup
-> since the admin context is a device-scope resource.
->
->> diff --git a/drivers/dma/sdxi/context.c b/drivers/dma/sdxi/context.c
->> new file mode 100644
->> index 0000000000000..27821cfaf0311
->> --- /dev/null
->> +++ b/drivers/dma/sdxi/context.c
->
+> 
+> commit 6d5a7740cf583f089ba666236f38032085207496
+> Author: Arnaldo Carvalho de Melo <acme@redhat.com>
+> 
+> perf test: Add truncated perf.data robustness test
+> 
+> This commit adds a shell test to verify that perf report gracefully handles
+> truncated perf.data files. It records a simple workload, truncates the file
+> at various offsets, and checks that perf report exits cleanly with an error
+> rather than crashing.
+> 
+> > diff --git a/tools/perf/tests/shell/data_validation.sh b/tools/perf/tests/shell/data_validation.sh
+> > new file mode 100755
+> > index 0000000000000..5c3e6fced6fce
+> > --- /dev/null
+> > +++ b/tools/perf/tests/shell/data_validation.sh
+> > @@ -0,0 +1,85 @@
 > [ ... ]
->
->> +/* Allocate a context and its control structure hierarchy in memory. */
->> +static struct sdxi_cxt *sdxi_alloc_cxt(struct sdxi_dev *sdxi)
->> +{
->
-> [ ... ]
->
->> +	cxt->cxt_ctl =3D dma_pool_zalloc(sdxi->cxt_ctl_pool, GFP_KERNEL,
->> +				       &cxt->cxt_ctl_dma);
->> +	if (!cxt->cxt_ctl_dma)
->> +		return NULL;
->
-> Could this incorrectly treat a valid allocation as a failure?
->
-> A DMA handle of 0 is a valid DMA address on many hardware platforms and
-> IOMMU configurations. If dma_pool_zalloc() succeeds and returns a DMA
-> address of 0, checking the DMA handle might falsely trigger this error
-> path and return NULL.
->
-> Should this check the returned virtual address (!cxt->cxt_ctl) instead,
-> similar to how the subsequent cxt_sts and write_index allocations are
-> validated?
+> > +err=0
+> > +
+> > +cleanup() {
+> > +	rm -f "${perfdata}" "${perfdata}.old" "${truncated}" "${stderrfile}"
+> > +	trap - EXIT TERM INT
+> > +}
+> > +trap 'cleanup; exit 1' TERM INT
+> > +trap cleanup EXIT
+> > +
+> > +perfdata=$(mktemp /tmp/__perf_test.perf.data.XXXXX) || exit 2
+> 
+> [Severity: Medium]
+> If mktemp fails (for example, if /tmp is out of space), the perfdata
+> variable will be empty and the script will exit, triggering the EXIT trap.
+> 
+> Will the cleanup function then expand the command to rm -f "" ".old" and
+> silently delete a file named .old in the current working directory?
 
-Yes, this is a legit bug likely caused by a code completion error on my
-part.
+Good catch, added the following patch to it:
 
->
-> --=20
-> Sashiko AI review =C2=B7 https://sashiko.dev/#/patchset/20260511-sdxi-bas=
-e-v2-0-889cfed17e3f@amd.com?part=3D7
+   err=0
+ 
+   cleanup() {
+  -  rm -f "${perfdata}" "${perfdata}.old" "${truncated}" "${stderrfile}"
+  +  [ -n "${perfdata}" ] && rm -f "${perfdata}" "${perfdata}.old"
+  +  rm -f "${truncated}" "${stderrfile}"
+     trap - EXIT TERM INT
+   }
+   trap 'cleanup; exit 1' TERM INT
+
