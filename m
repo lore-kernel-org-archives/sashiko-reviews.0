@@ -1,170 +1,128 @@
-Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-pf1-f175.google.com (mail-pf1-f175.google.com [209.85.210.175])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D5F6E33FE26;
-	Wed, 27 May 2026 10:49:59 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 481DB3F7AAB
+	for <sashiko-reviews@lists.linux.dev>; Wed, 27 May 2026 11:30:52 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.210.175
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1779879001; cv=none; b=t2AO5qcg9Dl0aiENirahpREthp0T+KYs/i2e/q3eUfKOPBRhqxFZHaxx485yQXkkPaZ3f5twB2uHZXnN+fuYyH/ClngjI7Dk7j+/i4Cmli3sTKQwYZpwZHTigZ/iY8BVUUN0R+vZKiJgJyVY17bJVlE2KXZpTX37E7XnB8WltlY=
+	t=1779881460; cv=none; b=q5b3mGu5S38MGxBCeZZOG2HDFZp1DGFe/JFy/c3a1k6B5RYApArVgouQdIc3TV0EXM4i2hJo9/+GK0gP6nbXvOKbY7Zpp2JKs3guOwIrSf5zWoVjRoUf4RKOwg94e1I4PryXJskVsPmgT7gek3vl5afZFps+cxRRA7cnpZrupyA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1779879001; c=relaxed/simple;
-	bh=qkXguhw9Lj7KxUlDUZrKpnoM4gew1szbHrWB0Da8rCM=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=AZWLLiFwN7qXpVBuIFKli1OjBvPjcg9IdBWDJyCZ4WiFpNLLPcnuEFtNb5KlIBtTUun8FeMIaJI4LqprWGCw/kZfV8tyd/Fa9S3CVC/TPo+y6qh1uCo8FXLA8LeUlZiX8fggNhdV0iABumOlM+V/Q8NAkdnYT9X2vEOR1WQY4EA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=Q3Go9fQe; arc=none smtp.client-ip=100.103.45.18
+	s=arc-20240116; t=1779881460; c=relaxed/simple;
+	bh=r3p0gSNrpDh+6wnNLHisMohXJjlIuMXp1tbrE5pgqz0=;
+	h=From:To:Cc:Subject:In-Reply-To:Date:Message-ID:References; b=oaDVQUvSWOcbjnlJu4HplJcnhVg42A6A45jo1i4NQociDnviHMIYGAGrPHKfL2S6JK6hOY2nUrPx5bEFlGNGtqzLDQhS0QsgT8pHNCLEuN88byNuUqKKZKruzCboBD8xz3WUSEeJFQaEH0tBJPmPF2XFYZ5HXKjL7Bw5XQ9CQSM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=g0WW4QSC; arc=none smtp.client-ip=209.85.210.175
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="Q3Go9fQe"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 713B61F000E9;
-	Wed, 27 May 2026 10:49:58 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=kernel.org;
-	s=k20260515; t=1779878999;
-	bh=jM/2pFJ9+Fn1zigNI4bh/4GwIdduylqLEmHeVHkx+X8=;
-	h=Date:From:To:Cc:Subject:References:In-Reply-To;
-	b=Q3Go9fQeeQEMdUsBCFXbE3EfTsSScyGZInAAMtERM65YW0BBz7i2/aDjE1JZ5a+5/
-	 av10PZtRRUT1U0JPrFZJvSn5KxJ2B+Nw6Imu+RXE4wczJFxSlwJBNArhBCtyhMuDtQ
-	 T9mxNXcXze0w5XxrMhT1TS/3X6IRhY/Zgpm5QKoAzsIEnmstBfEV+DkJQIyB7Z5+gA
-	 cLnf6oIrrxlSTbz7CWbgNLsvkVGXn8x/LKKcrrl0fGCAISo97S03Pb6IA4UV0vyTRv
-	 ipYRMPb3y6Av0wWdQCTkAAzUiwEVQl4gxjNVdxpoZY8vaugvPi9Js2QhQeIlMy0CBF
-	 9/Ag2paxR/ZXQ==
-Date: Wed, 27 May 2026 12:49:55 +0200
-From: Christian Brauner <brauner@kernel.org>
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="g0WW4QSC"
+Received: by mail-pf1-f175.google.com with SMTP id d2e1a72fcca58-841513664bbso3268697b3a.1
+        for <sashiko-reviews@lists.linux.dev>; Wed, 27 May 2026 04:30:51 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20251104; t=1779881449; x=1780486249; darn=lists.linux.dev;
+        h=references:message-id:date:in-reply-to:subject:cc:to:from:from:to
+         :cc:subject:date:message-id:reply-to;
+        bh=QZ5qiaV6o/rT83Qlu2laa+IgIwU5V8Xgt69ba/3cprk=;
+        b=g0WW4QSCqjPNKoITU9MfhrGPoMeUGkmrOqjyhlkXuNlAxp48jk5zfh/pdIK5auv/bj
+         KSdKEQrYbBeNiRVYc1ESyFc2RyNM5+OkuKqABgDbz5j2vllmiFiWAnrnaRIT3Q1QmaQm
+         I5HFwmFjTJdj0PoyWqEGZSj+CLZkg5l1EJRcbWoxIlqGMgcTsmdecf7t2stDKzVEGn+N
+         HGXwofAP33ulyn+y4mqw07xIsja+ZfFovx0aIK7+/fWWhQTvMvvdGXz4XYx7hF/ZsnQ2
+         Mjy16eQyGWVxbgi3L20AA5VHq8e1+rx5Y4BDPPFgYpsk7gd0hxGcy9nPdW4FOI3R1gEM
+         F1HQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20251104; t=1779881449; x=1780486249;
+        h=references:message-id:date:in-reply-to:subject:cc:to:from:x-gm-gg
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+        bh=QZ5qiaV6o/rT83Qlu2laa+IgIwU5V8Xgt69ba/3cprk=;
+        b=XkG/VTpZjuNsaOnOxXXTWYnF9JAqdI/YVL6812NGVV9Jb9t0OibOKdUtRDxVcZJe6+
+         /24yQLIWKBFgtwaG2hSuv82VQf8FcraU12UQbqIwTUhikkHmm4DBFOJHQ/hkpBYS1uwf
+         /42CdffCLuAUgXKPiNMqOKjURPktv2jFdjhcSgaWq1rsEFXCqn+Vcli0/rUa3Wg99QH+
+         2eEOwmFTL38KggYswdqePtuMpZjxzko3J+TdBNwDQTkM6s6V+YN0iumrp1V8/3skiNMw
+         2haCLF/IRJXgpaasmibsREoFKckBBcwXRBU1ANtRWC1FBLS3PkC25mKtGPj5mtuUMJvY
+         fYjQ==
+X-Gm-Message-State: AOJu0YwZEPuAAR5avM+Z3ARgeqAiMmZwxnrVDHyZckZkAVS1bne6qPCk
+	UcR5t1RZr2z7cpcT2Bd5R5YV34fs6IT+rctQ9TYDFD65l3LtA1bMJAxO
+X-Gm-Gg: Acq92OG9x/wVhLnD31e0G3roefWMJV+eEvcLlHGKUbEb/Cs4sO0I56sOQpBaeFtRgAj
+	CVg9S7QeOl8CxKLHXv1dWnzo09P5vbKq8jsMwjb1oS+r1CQyP6jH6h3ofjS7nTRkXtIhPvsoVjf
+	7VpcD1IOQpifpl2FI2ZQ8wdfrekqALnVMU6E5QMCvulsVpq96/rRB5DtgNVQOgXqWod8kpjf/yj
+	OZMUGV+NFugmPyYrX0RCf1HD1N2lgjcpFgAGwthZSIZtNyRJQ71J3JYYLuSerjxeYnjUXlQjbH2
+	1uT4Dbb+HxHUiq8BSmc4KOq7pp8os+kiGwk7vvcbaTcNHomAtaZZBvX5e6NSg7MKNgPuK+52oR6
+	YWTkOeSaaem2si/EfYePWpKu5SDV7Fx1y04QaFwzBa5mbbMF6VxnFndpI6jOAXU4pn11O3W7mJx
+	OrLYrrVgqFUySmWR5Wf1T5Rw==
+X-Received: by 2002:a05:6a00:1bc4:b0:829:7a62:6a with SMTP id d2e1a72fcca58-841611e3202mr16669715b3a.22.1779881449287;
+        Wed, 27 May 2026 04:30:49 -0700 (PDT)
+Received: from pve-server ([49.205.216.49])
+        by smtp.gmail.com with ESMTPSA id d2e1a72fcca58-841d6d60d07sm3209200b3a.0.2026.05.27.04.30.47
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Wed, 27 May 2026 04:30:48 -0700 (PDT)
+From: Ritesh Harjani (IBM) <ritesh.list@gmail.com>
 To: sashiko-reviews@lists.linux.dev
-Cc: bpf@vger.kernel.org
-Subject: Re: [PATCH v2] bpf: add bpf_real_inode() kfunc
-Message-ID: <20260527-seenplatte-flecken-gekettet-af97aff1186e@brauner>
-References: <20260526-work-bpf-verity-v2-1-cd0b1850d31b@kernel.org>
- <20260526130517.DE6A01F00A3A@smtp.kernel.org>
+Cc: kvm@vger.kernel.org
+Subject: Re: [RFC v2 3/5] KVM: PPC: selftests: add support for powerpc
+In-Reply-To: <20260523123023.64A321F000E9@smtp.kernel.org>
+Date: Wed, 27 May 2026 16:46:04 +0530
+Message-ID: <se7d6r2j.ritesh.list@gmail.com>
+References: <6e0c74f1273a4baf652d84820ae83696e77263d9.1779524962.git.ritesh.list@gmail.com> <20260523123023.64A321F000E9@smtp.kernel.org>
 Precedence: bulk
 X-Mailing-List: sashiko-reviews@lists.linux.dev
 List-Id: <sashiko-reviews.lists.linux.dev>
 List-Subscribe: <mailto:sashiko-reviews+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:sashiko-reviews+unsubscribe@lists.linux.dev>
-MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-In-Reply-To: <20260526130517.DE6A01F00A3A@smtp.kernel.org>
 
-On Tue, May 26, 2026 at 01:05:17PM +0000, sashiko-bot@kernel.org wrote:
-> Thank you for your contribution! Sashiko AI review found 3 potential issue(s) to consider:
-> - [High] bpf_real_inode() fails to resolve the real underlying inode for directories and non-regular files on overlayfs.
-> - [High] bpf_real_inode() can be exploited to trigger a kernel warning (DoS) and bypass security policies via pending signals.
-> - [High] bpf_real_inode() exposes overlayfs internal locks to BPF, allowing trivial self-deadlocks.
-> --
-> 
-> commit ea7b29442723e30589a55df64a725a8aaaaeddd8
-> Author: Christian Brauner <brauner@kernel.org>
-> 
-> bpf: add bpf_real_inode() kfunc
->     
-> Add a sleepable BPF kfunc that resolves the real inode backing a dentry
-> via d_real_inode(). On overlay/union filesystems the inode attached to
-> the dentry is the overlay inode which does not carry the underlying
-> device information. d_real_inode() resolves through the overlay and
-> returns the inode from the lower, real filesystem.
->     
-> Link: https://github.com/systemd/systemd/pull/41340 [1]
-> 
-> > diff --git a/fs/bpf_fs_kfuncs.c b/fs/bpf_fs_kfuncs.c
-> > index e4e51a1d0de28..761fbe0fec5d5 100644
-> > --- a/fs/bpf_fs_kfuncs.c
-> > +++ b/fs/bpf_fs_kfuncs.c
-> > @@ -353,6 +353,21 @@ __bpf_kfunc int bpf_cgroup_read_xattr(struct cgroup *cgroup, const char *name__s
-> >  }
-> >  #endif /* CONFIG_CGROUPS */
-> >  
-> > +/**
-> > + * bpf_real_inode - get the real inode backing a dentry
-> > + * @dentry: dentry to resolve
-> > + *
-> > + * If the dentry is on a union/overlay filesystem, return the underlying, real
-> > + * inode that hosts the data.  Otherwise return the inode attached to the
-> > + * dentry itself.
-> > + *
-> > + * Return: The real inode backing the dentry, or NULL for a negative dentry.
-> > + */
-> > +__bpf_kfunc struct inode *bpf_real_inode(struct dentry *dentry)
-> > +{
-> > +	return d_real_inode(dentry);
->         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-> 
-> [Severity: High]
-> Does this code fail to resolve the real underlying inode for directories and
-> non-regular files on overlayfs?
-> 
-> When d_real_inode() is called, it invokes d_real(dentry, D_REAL_DATA), which
-> maps to ovl_d_real() in overlayfs. However, ovl_d_real() contains an explicit
-> short-circuit check:
-> 
->     if (!d_is_reg(dentry))
->         return dentry;
-> 
-> This means it will return the overlayfs dentry (and therefore the overlayfs
-> inode) for directories, sockets, and symlinks.
-> 
-> Since BPF LSM policies using bpf_real_inode() to restrict access based on the
-> underlying real filesystem will receive the overlayfs inode for directories,
-> could this cause inconsistent policy enforcement and allow security bypasses
-> for non-regular files?
+sashiko-bot@kernel.org writes:
 
-No, this is expected.
+>> diff --git a/tools/testing/selftests/kvm/lib/powerpc/handlers.S b/tools/testing/selftests/kvm/lib/powerpc/handlers.S
+>> new file mode 100644
+>> --- /dev/null
+>> +++ b/tools/testing/selftests/kvm/lib/powerpc/handlers.S
+> [ ... ]
+>> +virt_handle_interrupt:
+>> +	stdu	%r1,-INT_FRAME_SIZE(%r1)
+>> +	mr	%r3,%r31
+>> +	bl	route_interrupt
+>> +	ld	%r4,(32*8)(%r31) /* NIA */
+>> +	ld	%r5,(33*8)(%r31) /* MSR */
+>> +	ld	%r6,(35*8)(%r31) /* LR */
+>> +	ld	%r7,(36*8)(%r31) /* CTR */
+>> +	ld	%r8,(37*8)(%r31) /* XER */
+>> +	lwz	%r9,(38*8)(%r31) /* CR */
+>> +	mtspr	SPR_SRR0,%r4
+>> +	mtspr	SPR_SRR1,%r5
+>> +	mtlr	%r6
+>> +	mtctr	%r7
+>> +	mtxer	%r8
+>> +	mtcr	%r9
+>> +reg=4
+>> +	ld	%r0,(0*8)(%r31)
+>> +	ld	%r3,(3*8)(%r31)
+>> +.rept 28
+>> +	ld	reg,(reg*8)(%r31)
+>> +	reg=reg+1
+>> +.endr
+>
+> [Severity: Medium]
+> Are r1 (stack pointer) and r2 (TOC pointer) missing from the restore sequence?
+>
+> Since they aren't restored here, tests cannot modify the stack pointer during
+> exception handling.
+>
 
-> [Severity: High]
-> Can this implementation be exploited to trigger a kernel warning and bypass
-> security policies via pending signals?
-> 
-> When bpf_real_inode() is called on an overlayfs regular file, it delegates
-> to ovl_d_real() which calls ovl_verify_lowerdata(). This attempts a lazy
-> lookup using ovl_maybe_lookup_lowerdata(), which then calls
-> ovl_inode_lock_interruptible(inode) to acquire a mutex.
-> 
-> If the user process triggering the BPF hook has a pending signal, the lock
-> acquisition fails and returns -EINTR.
-> 
-> Because ovl_d_real() treats any failure from ovl_verify_lowerdata() as a
-> critical bug, it will trigger a WARN(1, ...) and fall back to returning the
-> overlayfs dentry.
+The guest exception handling carefully create and destroy the stack
+frame during exception handling for running C code.
+Also LIBKVM is directly linked in as object files directly into each test
+binary, so the call to rout_interrupt() is the same TOC call.
 
-This is at least strange behavior on overlayfs. But it wouldn't be an
-issue. The overlayfs indoe would be returned and execution would be
-denied. So it would prevent execution, it wouldn't escalate privileges.
+So it's not missing, but we really don't need save/restore of r1 & r2 here.
 
-> 
-> Does this allow an unprivileged user to intentionally trigger this path with
-> a pending signal, reliably spamming kernel warnings, and returning the
-> overlayfs inode instead of the real one to bypass BPF LSM restrictions?
-> 
-> 
-> [Severity: High]
-> Does exposing these internal overlayfs locks to BPF allow for trivial
-> self-deadlocks?
-> 
-> Because bpf_real_inode() is marked as KF_SLEEPABLE, it can be called from
-> sleepable BPF programs such as LSM hooks or fentry.s tracing programs.
-> 
-> When operating on an overlayfs dentry, this attempts to acquire the
-> non-recursive mutex OVL_I(inode)->lock via ovl_inode_lock_interruptible()
-> during the lazy lowerdata lookup.
-> 
-> If a sleepable BPF program attaches to a kernel function or LSM hook that
-> executes while OVL_I(inode)->lock is already held by the current thread
-> (for example, an fentry.s trace on ovl_do_setattr or ovl_do_copy_up), calling
+>
+> [Severity: Medium]
+> Is it possible for tests to map memory without write or execute permissions
+> (e.g., read-only or non-executable pages)?
+>
+> If so, this assertion will falsely trigger and abort the test during virtual
+> to physical address translation. Should this check only verify PTE_VALID and
+> PTE_LEAF to support testing diverse page permissions?
+>
 
-Fwiw, ovl_do_setattr() doesn't exist iirc.
+Yup, that is something which can be relaxed I guess. Will do that in v3.
 
-> bpf_real_inode() on the same dentry will cause the thread to wait on the
-> non-recursive mutex it already holds.
-> 
-> Could this result in a self-deadlock, completely freezing the thread and
-> breaking the verifier's safety guarantees?
-
-Does the verifier protect against calling
-
-bpf_set_dentry_xattr() from:
-
-security_inode_setxattr()?
-
-Because that's a trivial deadlock right there already.
-
-I have not idea what promises the verifier gives but if it's supposed to
-extend to avoiding deadlocks then we probably have quite a few issues
-right now.
+-ritesh
