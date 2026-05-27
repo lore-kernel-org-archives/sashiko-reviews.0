@@ -1,183 +1,158 @@
-Received: from mx0b-001b2d01.pphosted.com (mx0b-001b2d01.pphosted.com [148.163.158.5])
+Received: from us-smtp-delivery-124.mimecast.com (us-smtp-delivery-124.mimecast.com [170.10.133.124])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 014ED37CD50;
-	Wed, 27 May 2026 18:02:45 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=148.163.158.5
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 35E73283C83
+	for <sashiko-reviews@lists.linux.dev>; Wed, 27 May 2026 18:22:30 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=170.10.133.124
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1779904967; cv=none; b=fnFlJ8eJ/SdWu4BAf5YrqSCHh1lSxmXXmAgjDwQu84GTpkDjA/CNAvicmNCpXbZ8a/6/Vy6rf77i6mIlFqCHbIr7FUhygss9HgBPRSZ3NIcGVxirg1hN2CkEkf1bh5DLS4SVJf3aaJxPQcpsN9W+rQvJX0gysbnazAvBgp1BmWI=
+	t=1779906151; cv=none; b=Mmi4g3kXwvnxy3xQ7Que8QuMTAOKK0JPiKElkqp3jPdqi61XBTloU+GpbeDY9uPvyMPqc3BQcRk2gs93oW/vJ7el2QV5foj47qLevI475fMM/Jle7kn4Oos4kwkW7o8cjyfhj8xZ7oHjTMs+xjEHXvDifcfr8GbKAscLYpYHU0g=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1779904967; c=relaxed/simple;
-	bh=98Pw/5u6ZbgkepYxlFi/qWRy3v74+mCS/3SL6fDtBXs=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=QLWv7nUKqIIPZHadqrCvvjz0/IfAbREUXK8SRtxuhRbMKHtQXspV4aZzuO0NEhd2fTveLz8yb9hEpfRO7T6Tw9rKllLawkHkub1BFETjpQDRCe9haz537nKvI4/tNLChNSpfZ+rc7hcF3AqUiYDEJ8aZDYNy/5WoirJHP7LbWzc=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linux.ibm.com; spf=pass smtp.mailfrom=linux.ibm.com; dkim=pass (2048-bit key) header.d=ibm.com header.i=@ibm.com header.b=pIS4pgHw; arc=none smtp.client-ip=148.163.158.5
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linux.ibm.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linux.ibm.com
+	s=arc-20240116; t=1779906151; c=relaxed/simple;
+	bh=2lF6x5aGSA/zyYnPnnfiGqWHtad080oa2myoaKcWEuo=;
+	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
+	 In-Reply-To:Content-Type; b=XE84pyJiingq0Hd45Ve2FZVjtqQJ2+pXszPJpJh2nGUryVNSu5Se5fuzFESxCooTsRvsWP4J3AMPzmlPuPj4y8kg+hzF/x7dhrarCMBBQ3RGgi+bdJyLwVr/5ADAAiqKj/7H01AuJCJYr52t11rzNTltg4+VikiqeGGRIGuo/G8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=redhat.com; spf=pass smtp.mailfrom=redhat.com; dkim=pass (1024-bit key) header.d=redhat.com header.i=@redhat.com header.b=fPrjxr7f; arc=none smtp.client-ip=170.10.133.124
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=redhat.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=redhat.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=ibm.com header.i=@ibm.com header.b="pIS4pgHw"
-Received: from pps.filterd (m0360072.ppops.net [127.0.0.1])
-	by mx0a-001b2d01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id 64RCBNlJ3851596;
-	Wed, 27 May 2026 18:02:43 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=ibm.com; h=cc
-	:content-transfer-encoding:content-type:date:from:in-reply-to
-	:message-id:mime-version:references:subject:to; s=pp1; bh=/YXJ2W
-	vCKe2QKakQFQN4K3c0i/TmxW114l4mK6md3T8=; b=pIS4pgHwnMaY+03hWelXLf
-	EQcWlEgcOhX3tj+fmSsLcVwrhf175srdMSl6HuYcttaF8/Orc7C8yw4dQi93ooKO
-	4WqsqaRIG/eGzhtO6X7D7jsNUxSvjztISQWbtgBERVB1BGFHQ33AqiKXxqfpcwLO
-	fwlNtxzbJ2ne6Rg9pxAJAcqwKmnid98DqIKZpiDOUpBzKxGhUYHD7YW9LTbnsis/
-	uhow7OR4i11eLsutiOy5KhFVf1H6y0UFDHBH/fxIyoihmSQsG6gqloiwCGEljjMU
-	MmlaYrwrptkMZ2qNEeBYbIr7Im/JfWqJzeGYxLpAdqjHBmwWqh2LaSotU/+e/yyg
-	==
-Received: from ppma22.wdc07v.mail.ibm.com (5c.69.3da9.ip4.static.sl-reverse.com [169.61.105.92])
-	by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 4eb4pdhhbv-1
-	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Wed, 27 May 2026 18:02:42 +0000 (GMT)
-Received: from pps.filterd (ppma22.wdc07v.mail.ibm.com [127.0.0.1])
-	by ppma22.wdc07v.mail.ibm.com (8.18.1.7/8.18.1.7) with ESMTP id 64RHs6O4012622;
-	Wed, 27 May 2026 18:02:42 GMT
-Received: from smtprelay02.fra02v.mail.ibm.com ([9.218.2.226])
-	by ppma22.wdc07v.mail.ibm.com (PPS) with ESMTPS id 4edjrbm9yw-1
-	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Wed, 27 May 2026 18:02:42 +0000 (GMT)
-Received: from smtpav05.fra02v.mail.ibm.com (smtpav05.fra02v.mail.ibm.com [10.20.54.104])
-	by smtprelay02.fra02v.mail.ibm.com (8.14.9/8.14.9/NCO v10.0) with ESMTP id 64RI2cKc34210084
-	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
-	Wed, 27 May 2026 18:02:38 GMT
-Received: from smtpav05.fra02v.mail.ibm.com (unknown [127.0.0.1])
-	by IMSVA (Postfix) with ESMTP id 3EF2920040;
-	Wed, 27 May 2026 18:02:38 +0000 (GMT)
-Received: from smtpav05.fra02v.mail.ibm.com (unknown [127.0.0.1])
-	by IMSVA (Postfix) with ESMTP id C514720043;
-	Wed, 27 May 2026 18:02:37 +0000 (GMT)
-Received: from li-276bd24c-2dcc-11b2-a85c-945b6f05615c.ibm.com (unknown [9.111.1.41])
-	by smtpav05.fra02v.mail.ibm.com (Postfix) with ESMTPS;
-	Wed, 27 May 2026 18:02:37 +0000 (GMT)
-Date: Wed, 27 May 2026 20:02:36 +0200
-From: Jan Polensky <japo@linux.ibm.com>
-To: Ian Rogers <irogers@google.com>
-Cc: Arnaldo Carvalho de Melo <acme@kernel.org>,
-        Jens Remus <jremus@linux.ibm.com>, sashiko-reviews@lists.linux.dev,
-        linux-perf-users@vger.kernel.org, Heiko Carens <hca@linux.ibm.com>
-Subject: Re: [PATCH 1/1] perf build: Fix Python extension build with GCC 16
- hardening
-Message-ID: <ahcxvFmVrTUArV40@li-276bd24c-2dcc-11b2-a85c-945b6f05615c.ibm.com>
-References: <20260520125637.105681-1-japo@linux.ibm.com>
- <20260520130905.9C85D1F000E9@smtp.kernel.org>
- <ahJnMnOr4i9urrRk@x1>
- <ahV2XGx_6h7upuc3@li-276bd24c-2dcc-11b2-a85c-945b6f05615c.ibm.com>
- <CAP-5=fXGG5PR8neTkozvOUOH83m8_EyZXZ_A7Zyrsock5EqAiQ@mail.gmail.com>
- <ahXITNt0Z-n4NCaj@li-276bd24c-2dcc-11b2-a85c-945b6f05615c.ibm.com>
- <CAP-5=fXcpoXMsezy1FNBX7mhKmRgw+97QmKTg5Fr6G-cY+wGpg@mail.gmail.com>
+	dkim=pass (1024-bit key) header.d=redhat.com header.i=@redhat.com header.b="fPrjxr7f"
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+	s=mimecast20190719; t=1779906149;
+	h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+	 to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+	 content-transfer-encoding:content-transfer-encoding:
+	 in-reply-to:in-reply-to:references:references;
+	bh=5Z5H3i0ekKZ4zygLGsN1LrIQlP8mW9wGpW1Z8yoNTvA=;
+	b=fPrjxr7fgnobReu1zZcFvWTiMcFn9p/DslZ3LsLt4TwILqkns0v8HXzrPEvQv0UbRQ5FhS
+	0Y4NPQSyJiZd8qYMcOHBiEYNUD2VO4z6b1njll94lIKjEfOQjNbxVjSfqZoSA5nM9uP7gn
+	IHZiOL4+LdTCpGhY8x4AmvX2MVlZFHg=
+Received: from mx-prod-mc-06.mail-002.prod.us-west-2.aws.redhat.com
+ (ec2-35-165-154-97.us-west-2.compute.amazonaws.com [35.165.154.97]) by
+ relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-558-rIsPxvpPMgylYJ0EdzaWtg-1; Wed,
+ 27 May 2026 14:22:24 -0400
+X-MC-Unique: rIsPxvpPMgylYJ0EdzaWtg-1
+X-Mimecast-MFC-AGG-ID: rIsPxvpPMgylYJ0EdzaWtg_1779906143
+Received: from mx-prod-int-05.mail-002.prod.us-west-2.aws.redhat.com (mx-prod-int-05.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.17])
+	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+	 key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
+	(No client certificate requested)
+	by mx-prod-mc-06.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS id 3FAD718005B6;
+	Wed, 27 May 2026 18:22:23 +0000 (UTC)
+Received: from [10.22.81.53] (unknown [10.22.81.53])
+	by mx-prod-int-05.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP id 5074519560AB;
+	Wed, 27 May 2026 18:22:22 +0000 (UTC)
+Message-ID: <3a5cc723-2ce0-4416-a405-a6d159beb7d4@redhat.com>
+Date: Wed, 27 May 2026 14:22:21 -0400
 Precedence: bulk
 X-Mailing-List: sashiko-reviews@lists.linux.dev
 List-Id: <sashiko-reviews.lists.linux.dev>
 List-Subscribe: <mailto:sashiko-reviews+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:sashiko-reviews+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-Content-Transfer-Encoding: 8bit
-In-Reply-To: <CAP-5=fXcpoXMsezy1FNBX7mhKmRgw+97QmKTg5Fr6G-cY+wGpg@mail.gmail.com>
-X-TM-AS-GCONF: 00
-X-Proofpoint-Reinject: loops=2 maxloops=12
-X-Authority-Analysis: v=2.4 cv=OdqoyBTY c=1 sm=1 tr=0 ts=6a1731c3 cx=c_pps
- a=5BHTudwdYE3Te8bg5FgnPg==:117 a=5BHTudwdYE3Te8bg5FgnPg==:17
- a=IkcTkHD0fZMA:10 a=NGcC8JguVDcA:10 a=VkNPw1HP01LnGYTKEx00:22
- a=RnoormkPH1_aCDwRdu11:22 a=RzCfie-kr_QcCd8fBx8p:22 a=VnNF1IyMAAAA:8
- a=VwQbUJbxAAAA:8 a=y9RuvpZcgqoqoFVp2LMA:9 a=3ZKOabzyN94A:10 a=QEXdDO2ut3YA:10
-X-Proofpoint-GUID: q2PLkj4NMDilKPWz6wKotmczUU7kaVmP
-X-Proofpoint-ORIG-GUID: Ku5qAJPtYpVOFFlhHJlwh1qub-gXJeVi
-X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwNTI3MDE3NiBTYWx0ZWRfX08NYR7QZnAV8
- sPzk0eALyTOpuKrgwyb4Q9cn6al5k3m01yQrZE8lK2ELd0mhSHYdG50jVFSZ2u1dxtqQ10QLqS3
- UvIjAz3W5MbvFjjet6zVBjCh8MzaE+ikn7LIlvnTlZesbjfluCiNth65V6tnhTHNIYYdduxYw1E
- poVeoCXIy7F930DcuJfGPhNVSB1E2hvxMQvvhltOGnUe4VrlHgWAmGPEA43dXI8WjMavl8dVTqA
- SbUXlL+HDXnMt2gMDng+lL0jPRmYLTMDiSqIC/y+vW7UWf1KS3kT4ddkJyyySqKEqYo1heYz4sl
- bTCuFbhlkE78ydmv4SW8MgJu0+sToFF97kFu9WDGloyYp2Mfg3VbyKjHma1DFK5+RB0Jt25ShlX
- eZ7QDyV+4hIoQ5leF6+wvivEc/POfYBEyDv7NA+KuwEMq3mxmmylgV3rLxn7iefAIFyg64thBMx
- TxIh/d+tv2dxswVGz2Q==
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.293,Aquarius:18.0.1143,Hydra:6.1.125,FMLib:17.12.100.49
- definitions=2026-05-27_03,2026-05-26_03,2025-10-01_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
- priorityscore=1501 impostorscore=0 clxscore=1015 malwarescore=0
- lowpriorityscore=0 bulkscore=0 suspectscore=0 adultscore=0 spamscore=0
- phishscore=0 classifier=typeunknown authscore=0 authtc= authcc=
- route=outbound adjust=0 reason=mlx scancount=1 engine=8.22.0-2605130000
- definitions=main-2605270176
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH-next v3 2/5] cgroup/cpuset: Expand the scope of
+ cpuset_can_attach_check()
+To: sashiko-reviews@lists.linux.dev
+Cc: mkoutny@suse.com, tj@kernel.org, hannes@cmpxchg.org
+References: <20260527153800.1557449-3-longman@redhat.com>
+ <20260527163318.3B1741F000E9@smtp.kernel.org>
+From: Waiman Long <longman@redhat.com>
+In-Reply-To: <20260527163318.3B1741F000E9@smtp.kernel.org>
+X-Scanned-By: MIMEDefang 3.0 on 10.30.177.17
+X-Mimecast-Spam-Score: 0
+X-Mimecast-MFC-PROC-ID: DDqhyNws10cSRO2I8yqN1PjNZtU9-GzwURhr6Bh1XyY_1779906143
+X-Mimecast-Originator: redhat.com
+Content-Language: en-US
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
 
-On Tue, May 26, 2026 at 09:59:41AM -0700, Ian Rogers wrote:
-> On Tue, May 26, 2026 at 9:20 AM Jan Polensky <japo@linux.ibm.com> wrote:
-> >
-> > On Tue, May 26, 2026 at 08:23:28AM -0700, Ian Rogers wrote:
-> > > On Tue, May 26, 2026 at 3:35 AM Jan Polensky <japo@linux.ibm.com> wrote:
-> > > >
-> > > > On Sat, May 23, 2026 at 11:49:22PM -0300, Arnaldo Carvalho de Melo wrote:
-> > > > > On Wed, May 20, 2026 at 01:09:05PM +0000, sashiko-bot@kernel.org wrote:
-> > > > > > Thank you for your contribution! Sashiko AI review found 1 potential issue(s) to consider:
-[snip]
+On 5/27/26 12:33 PM, sashiko-bot@kernel.org wrote:
+> Thank you for your contribution! Sashiko AI review found 1 potential issue(s) to consider:
+> - [High] Caching `attach_cpus_updated` and `attach_mems_updated` in global variables during `can_attach` introduces a Time-Of-Check to Time-Of-Use (TOCTOU) race condition that can allow tasks to escape CPU/memory isolation boundaries.
+> --
 >
-> So it appears that part of the problem is declaring arrays and structs
-> to be const. Making things non-const I think is also not an option.
-> Would  EXTRA_CFLAGS="-fvisibility=hidden" help?
+> commit 3fc8c4e50c216b4d34d25e7c56636a5ec10e50a6
+> Author: Waiman Long <longman@redhat.com>
 >
-> It would we interesting to build with -Wl,-z,notext and then look for
-> the symbol the linker is fighting with:
->   eu-findtextrel perf.cpython....so
-> or
->   readelf -d perf.so | grep TEXTREL
->   readelf -r perf.so
+> cgroup/cpuset: Expand the scope of cpuset_can_attach_check()
 >
-> Thanks,
-> Ian
+> This commit expands cpuset_can_attach_check() to include setsched flag calculations. It also caches the source and destination mask update results in static variables to avoid recomputing them in cpuset_attach().
 >
+>> diff --git a/kernel/cgroup/cpuset.c b/kernel/cgroup/cpuset.c
+>> index d720bcc7ef83c..4457c4f11fcea 100644
+>> --- a/kernel/cgroup/cpuset.c
+>> +++ b/kernel/cgroup/cpuset.c
+>> @@ -2964,19 +2964,56 @@ static int update_prstate(struct cpuset *cs, int new_prs)
+>>   	return 0;
+>>   }
+>>   
+>> +/*
+>> + * cpuset_can_attach() and cpuset_attach() specific internal data
+>> + * Protected by cpuset_mutex
+>> + */
+>>   static struct cpuset *cpuset_attach_old_cs;
+>> +static bool attach_cpus_updated;
+>> +static bool attach_mems_updated;
+> [ ... ]
+>
+>> @@ -3140,7 +3158,6 @@ static void cpuset_attach(struct cgroup_taskset *tset)
+>>   	struct cgroup_subsys_state *css;
+>>   	struct cpuset *cs;
+>>   	struct cpuset *oldcs = cpuset_attach_old_cs;
+>> -	bool cpus_updated, mems_updated;
+>>   	bool queue_task_work = false;
+>>   
+>>   	cgroup_taskset_first(tset, &css);
+>> @@ -3148,9 +3165,6 @@ static void cpuset_attach(struct cgroup_taskset *tset)
+>>   
+>>   	lockdep_assert_cpus_held();	/* see cgroup_attach_lock() */
+>>   	mutex_lock(&cpuset_mutex);
+>> -	cpus_updated = !cpumask_equal(cs->effective_cpus,
+>> -				      oldcs->effective_cpus);
+>> -	mems_updated = !nodes_equal(cs->effective_mems, oldcs->effective_mems);
+>>   
+>>   	/*
+>>   	 * In the default hierarchy, enabling cpuset in the child cgroups
+>> @@ -3158,7 +3172,7 @@ static void cpuset_attach(struct cgroup_taskset *tset)
+>>   	 * in effective cpus and mems. In that case, we can optimize out
+>>   	 * by skipping the task iteration and update.
+>>   	 */
+>> -	if (cpuset_v2() && !cpus_updated && !mems_updated) {
+>> +	if (cpuset_v2() && !attach_cpus_updated && !attach_mems_updated) {
+> [Severity: High]
+> Does caching the attach_cpus_updated and attach_mems_updated flags during
+> cpuset_can_attach() introduce a Time-Of-Check to Time-Of-Use race condition?
+>
+> The cgroup migration process separates the can_attach and attach phases,
+> dropping locks like cpuset_mutex between them. If a concurrent update to
+> the destination cpuset's masks (e.g., via a CPU hotplug event or writing to
+> cpuset.cpus) occurs while the lock is dropped:
+>
+> 1. The destination's effective_cpus are modified, updating tasks already
+> in the cpuset.
+>
+> 2. The migrating task is not yet in the new cpuset's task list, so it isn't
+> updated.
+>
+> 3. When cpuset_attach() re-acquires cpuset_mutex, it evaluates the stale
+> cached flags instead of rechecking the masks.
+>
+> If the masks were identical during can_attach, the flags remain false,
+> causing cpuset_attach() to take the fast path and entirely skip
+> cpuset_attach_task(). Could this leave the migrating task with its old,
+> incorrect masks, allowing it to escape its designated isolation boundary?
 
-Hi,
+Yes, it can be a valid concern. One workaround is to check the 
+attach_in_progress flag in the cpuset. If it is set, we just have to 
+clear the corresponding global flag when either the memory nodes or CPUs 
+are changed.
 
-building the Python perf extension on s390x shows GCC version-dependent behavior.
+Cheers,
+Longman
 
-Build command:
-make NO_LIBTRACEEVENT=1 python-perf
-
-Verified build results:
-
-GCC 15.2.0 (Ubuntu 15.2.0-4ubuntu4)
-GNU ld (GNU Binutils for Ubuntu) 2.45
-Build succeeds and creates python/perf.cpython-313-s390x-linux-gnu.so
-Verification:
-readelf -d python/perf.cpython-313-s390x-linux-gnu.so | grep TEXTREL
-Output:
-0x0000000000000016 (TEXTREL)            0x0
-
-GCC 16.1.0 (cross-compiler)
-GNU ld (GNU Binutils) 2.46
-Build succeeds and creates python/perf.cpython-313-s390x-linux-gnu.so
-Verification:
-readelf -d python/perf.cpython-313-s390x-linux-gnu.so | grep TEXTREL
-No output
-
-GCC 16.1.1 20260515 (Red Hat 16.1.1-2)
-GNU ld version 2.46-3.fc44
-Build fails with:
- /usr/bin/ld.bfd: error: read-only segment has dynamic relocations
-
-Analysis:
-
-Base libraries libapi, libperf, libsubcmd, and libsymbol compiled with -g/-ggdb3 create DWARF debug sections with absolute relocations (R_390_64). When statically linked into the Python shared library, these become TEXTREL entries.
-
-Observed behavior:
-
-GCC 15.2.0 generates TEXTREL.
-GCC 16.1.0 does not generate TEXTREL.
-GCC 16.1.1 generates TEXTREL.
-
-Binutils 2.45 accepts shared libraries with TEXTREL.
-Binutils 2.46 rejects them.
-
-Question to clarify:
-
-What changed between GCC 16.1.0 and 16.1.1 on s390x that reintroduced TEXTREL generation here?
-
-Best regards,
-Jan
+>
+>>   		cpuset_attach_nodemask_to = cs->effective_mems;
+>>   		goto out;
+>>   	}
 
