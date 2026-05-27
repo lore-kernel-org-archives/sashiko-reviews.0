@@ -1,132 +1,148 @@
-Received: from mail-pj1-f49.google.com (mail-pj1-f49.google.com [209.85.216.49])
+Received: from mail-vs1-f49.google.com (mail-vs1-f49.google.com [209.85.217.49])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 902A93F86FA
-	for <sashiko-reviews@lists.linux.dev>; Wed, 27 May 2026 11:36:20 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.216.49
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8460C37AA7F
+	for <sashiko-reviews@lists.linux.dev>; Wed, 27 May 2026 12:45:05 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.217.49
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1779881784; cv=none; b=iAY3BMLTxF6Uo7RPDV9XzmJh3Q07SdtPSw9hbRQTnQBAhVFz9zveshcrF1Dg/BL9EnSUVDB/+Y2rZ+8xO2yr9tXIxbsXGQ1Y1klt6uPUB2fLsUJkUbwxzeiV0+TIVGXNRa+hrQG2xCc51aHeHRSocdouaR9ww2D56fnn7QOBUBk=
+	t=1779885907; cv=none; b=QughF4plRDqFrycdW2+1RhgMg0bDCL4fcxrYRAI6A1pXm9npl06ujTjKlP/YN6O/MStb0EA4ujw7Ook0PjUCqexkelvnDB6zUb1iFVHrODYT4Yx88iM9zYwy2pWZWuglvItlCvDPJ0YAS5qI0g6O6OfIcsFV4fvJHXQ0Z0zR4VY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1779881784; c=relaxed/simple;
-	bh=Ox1/u8ETRmBP8fbh96OnHd4k0Ijf3t81yA3eK1b17q0=;
-	h=From:To:Cc:Subject:In-Reply-To:Date:Message-ID:References; b=XV8oMb5CAsZROpLCpKn47vmrpy19L79fMJFjbHOeeViJEAbivEAQVAIG/mTEgfXTwojmEL+6gEpY7U8tlKFQ9e3oxluLQAB0OTVBzSXiLT0GK/+XWPS6E3CyugEq2EBu7piA+xJqCR6/dgCrFWMuHJIZbD1WUGxrizpZzWO+mc8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=K0eRlfuj; arc=none smtp.client-ip=209.85.216.49
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+	s=arc-20240116; t=1779885907; c=relaxed/simple;
+	bh=CHmi2tzKRp9iEkWNt7hiYl4WAuhMTowdb6VPQfNs0nc=;
+	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
+	 To:Cc:Content-Type; b=CIbyae5qMOG5c3AgUdssEDSKOGwz3MmM39dqL+nTGJhvAFwxr48/mN5+ijvysQfiPPit9m0Ac+EaOatHVZexy+SzA1HhHXIKkOuIyqwfBJAT4AobU5sreZiYLDOvG+PCnyVs2IOvRx40LvGY+Uqw2TEufGEXaQuU6W1L5ceemIM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=linux-m68k.org; spf=pass smtp.mailfrom=gmail.com; arc=none smtp.client-ip=209.85.217.49
+Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=linux-m68k.org
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
-Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="K0eRlfuj"
-Received: by mail-pj1-f49.google.com with SMTP id 98e67ed59e1d1-36a7bbb9698so2876252a91.2
-        for <sashiko-reviews@lists.linux.dev>; Wed, 27 May 2026 04:36:20 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20251104; t=1779881778; x=1780486578; darn=lists.linux.dev;
-        h=references:message-id:date:in-reply-to:subject:cc:to:from:from:to
-         :cc:subject:date:message-id:reply-to;
-        bh=OBwJckIjnNMjSafxeOFpVmfknD9YcolFfX87IwoV4Hs=;
-        b=K0eRlfujLepI50susRgT+7I4UwtThYnCGCc0EURqYGsstgrSFeaGd7IWzEAoxi6S3L
-         4GVZ28jZQi+o6yHE0QS9vx08BMKXzQNpaRpNnIVzbdJ+2y3wji4nE/3ws0GlEfgj9Dtt
-         bTSnubpuHAZPzlFj460j7eQ6l9zavgzqjH2helTDbN4I7vSGrNAxyRsPhAm8sMwhsNoW
-         vbggJu7ONLihLi2U/TJPeHZ6CNFNeZTebkkZ5/xK2Xr4HWK8i2YrVnYwF+ZIb5xLfeln
-         r02bUMRILle3UEvDB4RS7rNKnQHCkU5kf665Bmao7dGqkqBzWusdiy760XQKecHbzjli
-         KWFA==
+Received: by mail-vs1-f49.google.com with SMTP id ada2fe7eead31-631a7868228so7720162137.0
+        for <sashiko-reviews@lists.linux.dev>; Wed, 27 May 2026 05:45:05 -0700 (PDT)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20251104; t=1779881778; x=1780486578;
-        h=references:message-id:date:in-reply-to:subject:cc:to:from:x-gm-gg
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=OBwJckIjnNMjSafxeOFpVmfknD9YcolFfX87IwoV4Hs=;
-        b=I01g1PWPtN6BQCa5LcumfY/T1Tza5PG9ncj6F8ZzY+HK0XGX5iL2SCSle5jpKBi+H8
-         JEpLoBWC+lRc1OCeZssflXz0GKLUYCorDv74QfR7JxTu0x5m2W24uvanHnTK8QkLkUG5
-         IojXQBE+HUXrNbVuGwyIIOel17ddZv4cfFvb9o2doyOtZ9sxTfxD7r/729XgalpiGval
-         Bd6o/0KtqygjE7cbKbd8UlA2spHEpwJZUpr/B2xjpSm+SiODu+mxB5cOk3xSZ7K+0OBu
-         QAuyBDulv6ly3EEaXr+Ak1Py5H9gIMdW36nRdct72goJQwgcoiSp4HxWCPrARyFo12s1
-         OgeA==
-X-Gm-Message-State: AOJu0YzsSRJzMjifR8FIPFB1iBFmDYlDl7ci+N/xvffKmdY2/9NFnvmZ
-	P0TDsG2QgmSTs+9ut/ze8FzqUVsL67RaALnS8scpKy10Lb29B/cg0GEd
-X-Gm-Gg: Acq92OGVyZOK9qKVSiT/FBJp0neTLpE8Rnpc5uHUBZ6taJWevMl98LQocsdGzTakAxm
-	AJvvKF8B98oKFvuMYgTUkGNldh5rmXNEhzySI4Ho93w7I0Jn4WLJltZLsEOtUinX//QFIu2Hq7p
-	G8nXkCOjVFdnwiFZomdek9gXw3VqbmUAr7S6c3+eZPDPsHukfLH4WnHGgeBZ+Wt9xrtrJx4qH+o
-	fSPd8T8vas483TJKWeoul5ATW3eIHPpoWfc6XognvagB4t52rxF/JCa8KqNwPcK7BrDVuoHC5/2
-	7YPyhEkFb3QEpMFOWNB1+LtqKK1v+mW8wQMinvlcBV5OclPsnko1HXQpIMmLjl6xDYmW5bSjYEE
-	QYvSN1HWq+M88FpLUnrAtYrgaM68zf0TrioiXUT0Irg8FhwJYStRy67k7ZFrNglb8B3dDEKBMFd
-	vJ5GNDWRLSXdqZZv2ETuvGDw==
-X-Received: by 2002:a17:90b:38cc:b0:361:45df:102 with SMTP id 98e67ed59e1d1-36a6765b589mr21645367a91.17.1779881778307;
-        Wed, 27 May 2026 04:36:18 -0700 (PDT)
-Received: from pve-server ([49.205.216.49])
-        by smtp.gmail.com with ESMTPSA id 98e67ed59e1d1-36b24d9c5edsm798906a91.3.2026.05.27.04.36.16
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Wed, 27 May 2026 04:36:17 -0700 (PDT)
-From: Ritesh Harjani (IBM) <ritesh.list@gmail.com>
-To: sashiko-reviews@lists.linux.dev
-Cc: kvm@vger.kernel.org
-Subject: Re: [RFC v2 5/5] KVM: selftests: Print the vcpu_id when KVM_CREATE_VCPU ioctl fails
-In-Reply-To: <20260523124853.102E61F000E9@smtp.kernel.org>
-Date: Wed, 27 May 2026 17:00:56 +0530
-Message-ID: <qzmx6qdr.ritesh.list@gmail.com>
-References: <12184d5eda089814659d5a861b3ebc30d42733a3.1779524962.git.ritesh.list@gmail.com> <20260523124853.102E61F000E9@smtp.kernel.org>
+        d=1e100.net; s=20251104; t=1779885904; x=1780490704;
+        h=cc:to:subject:message-id:date:from:in-reply-to:references
+         :mime-version:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=QfMIenARBAqpHOVTmcafwSvjzdDvSTCw5oC80BE5U+Y=;
+        b=VLzzlWr7HJ14uAfovw5Co4mXs/k2UwFCUTbXxZpPRLP+H8ajipTEgsg/ChhDAxNTc4
+         QIxlr3MsstCpKuq4tuqegBOacBKU7ZW8cYDLErIOSAlKZVDbuAEalkTVfSky+sY+krP0
+         WOWzDWRyuLBBNzS38o8KG3wOjNDvlE7PtSZrVy5KwysW0C7+lf37PGNSzxfXWTQ3+HUQ
+         SYvHBjX/eZPTDmVXseHvQB47azdwHv8KYushXic1cnFAVMcjSzZ+CemGrXyxFqMlRgJ7
+         RTsIv7YJuXdrJdZlwv7FpJtKkL4+PzTWnNcXqKjKhJaMsR16D2256rpaERuwi8A5SLHu
+         +w4Q==
+X-Gm-Message-State: AOJu0YzjRcFm6QgdRY0Ia8iRVyorYzgFyJ2iVLHZtI3dpfnBdW8Jb6Yo
+	P7LSoozoxMz5wThAIdBDRvU4EPMwmMkvfDtFJU2RtrIlxvA8zedCsT228tiC4g1mgy4=
+X-Gm-Gg: Acq92OF74n0oa+G+oDxUIxvmxRxBg70Oyp07uEjKMD5iimWOvrCyRCVKm1C/pFL70tP
+	Iuf5tRRhy055BBEHssl2Zc9oBbebZZTYRH8svo5WVm/aj6eKAXHOmdwqnvZJj8/gZZFXRHSUtxm
+	pcEROUH2jHFkL98MfgN/loJpmR26OLr8TiwEy0sZXcWC7U0JnRgP6nZZaLymm4AjL5vxfvi0BYg
+	H9GWRTvWYCbHogRfDHdZNlOUMGG2DJ8RjeFM0Grplq5VFJK3G6wFJmZ+58blPo0PQk/PzzYkl+W
+	cRFuhac+ZP8IFVhduFiX518T7AAc7F8l7+m5zoxi/ZWijQQi1Dq9KrvKequd32IPkLAskyCUWgq
+	aRWAELY1AyofNxcCgjdWf4nQgKU7PsqTJ+bG5jvKYHELStbXblFla90TzeWIJv+P2S582faaqyv
+	xEMKke1ULUtXNq+oZP4JKRfQuJoWaCovGWRCXnZ8t47Focl9HEIiOpFl42L9tf
+X-Received: by 2002:a05:6102:32d5:b0:633:84c1:7c83 with SMTP id ada2fe7eead31-67c805b4f3dmr11661250137.9.1779885904364;
+        Wed, 27 May 2026 05:45:04 -0700 (PDT)
+Received: from mail-vs1-f49.google.com (mail-vs1-f49.google.com. [209.85.217.49])
+        by smtp.gmail.com with ESMTPSA id a1e0cc1a2514c-961cc2b70e5sm3878574241.0.2026.05.27.05.45.03
+        for <sashiko-reviews@lists.linux.dev>
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Wed, 27 May 2026 05:45:03 -0700 (PDT)
+Received: by mail-vs1-f49.google.com with SMTP id ada2fe7eead31-6314287380bso8588559137.3
+        for <sashiko-reviews@lists.linux.dev>; Wed, 27 May 2026 05:45:03 -0700 (PDT)
+X-Received: by 2002:a05:6102:5a89:b0:631:5ef5:8324 with SMTP id
+ ada2fe7eead31-67c8d07131cmr12162490137.23.1779885903418; Wed, 27 May 2026
+ 05:45:03 -0700 (PDT)
 Precedence: bulk
 X-Mailing-List: sashiko-reviews@lists.linux.dev
 List-Id: <sashiko-reviews.lists.linux.dev>
 List-Subscribe: <mailto:sashiko-reviews+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:sashiko-reviews+unsubscribe@lists.linux.dev>
+MIME-Version: 1.0
+References: <20260525110603.4018170-2-john.madieu.xa@bp.renesas.com>
+ <20260525111920.15F771F000E9@smtp.kernel.org> <20260525-gaining-unaired-c96367a78c9b@spud>
+In-Reply-To: <20260525-gaining-unaired-c96367a78c9b@spud>
+From: Geert Uytterhoeven <geert@linux-m68k.org>
+Date: Wed, 27 May 2026 14:44:51 +0200
+X-Gmail-Original-Message-ID: <CAMuHMdWUeExOnKm1=kRSr0=HVJhgyLDBAK3VqTP-LK1q0-f9gA@mail.gmail.com>
+X-Gm-Features: AVHnY4JCGT6L93dKt-0-T45Be15psMBpt17wMGNiRfpFy-lZ2xPXFXW2IFtgjsk
+Message-ID: <CAMuHMdWUeExOnKm1=kRSr0=HVJhgyLDBAK3VqTP-LK1q0-f9gA@mail.gmail.com>
+Subject: Re: [PATCH v4 1/8] dt-bindings: clock: renesas: Add audio clock
+ inputs for RZ/V2H family
+To: Conor Dooley <conor@kernel.org>
+Cc: sashiko-reviews@lists.linux.dev, 
+	John Madieu <john.madieu.xa@bp.renesas.com>, conor+dt@kernel.org, 
+	wsa+renesas@sang-engineering.com, devicetree@vger.kernel.org, robh@kernel.org
+Content-Type: text/plain; charset="UTF-8"
 
-sashiko-bot@kernel.org writes:
+Hi Conor,
 
-> Thank you for your contribution! Sashiko AI review found 1 potential issue(s) to consider:
-> - [Medium] The added `pr_info()` call clobbers the global `errno` variable before it can be read by the `TEST_ASSERT_VM_VCPU_IOCTL()` macro.
-> --
+On Mon, 25 May 2026 at 18:57, Conor Dooley <conor@kernel.org> wrote:
+> On Mon, May 25, 2026 at 11:19:19AM +0000, sashiko-bot@kernel.org wrote:
+> > Thank you for your contribution! Sashiko AI review found 1 potential issue(s) to consider:
+> > - [Medium] Strict array ordering prevents the independent use of newly added optional clocks.
+> > --
+> >
+> > commit 3723d06ba80fe72a3e7492af52e5e54aa0f36b03
+> > Author: John Madieu <john.madieu.xa@bp.renesas.com>
+> >
+> > dt-bindings: clock: renesas: Add audio clock inputs for RZ/V2H family
+> >
+> > This commit updates the clock bindings for the RZ/V2H family SoCs to include
+> > the optional external audio clock inputs AUDIO_CLKB and AUDIO_CLKC. The
+> > AUDIO_CLKA input is fed internally and thus does not require a binding entry.
+> >
+> > > diff --git a/Documentation/devicetree/bindings/clock/renesas,rzv2h-cpg.yaml b/Documentation/devicetree/bindings/clock/renesas,rzv2h-cpg.yaml
+> > > --- a/Documentation/devicetree/bindings/clock/renesas,rzv2h-cpg.yaml
+> > > +++ b/Documentation/devicetree/bindings/clock/renesas,rzv2h-cpg.yaml
+> > > @@ -26,16 +26,22 @@ properties:
+> > >      maxItems: 1
+> > >
+> > >    clocks:
+> > > +    minItems: 3
+> > >      items:
+> > >        - description: AUDIO_EXTAL clock input
+> > >        - description: RTXIN clock input
+> > >        - description: QEXTAL clock input
+> > > +      - description: AUDIO_CLKB clock input
+> > > +      - description: AUDIO_CLKC clock input
+> > >
+> > >    clock-names:
+> > > +    minItems: 3
+> > >      items:
+> > >        - const: audio_extal
+> > >        - const: rtxin
+> > >        - const: qextal
+> > > +      - const: audio_clkb
+> > > +      - const: audio_clkc
+> >
+> > [Severity: Medium]
+> > Will this strict array ordering prevent the independent use of the newly
+> > added optional clocks?
+> >
+> > Because JSON schema validates arrays strictly by position based on the items
+> > list, if a hardware board connects AUDIO_CLKC but does not connect AUDIO_CLKB,
+> > the device tree node would provide an array of 4 clocks where the 4th name
+> > is audio_clkc.
+> >
+> > When dt_binding_check evaluates this, won't it check the 4th element against
+> > the schema's expectation of audio_clkb and fail, incorrectly rejecting a valid
+> > hardware configuration?
+> >
+> > Should this use an anyOf block enumerating the valid permutations of optional
+> > clocks to avoid forcing users to write incorrect device trees to pass
+> > validation?
 >
-> commit 9022e7c111e4121ff5a4ed4a90dcbfd2df0a62cd
-> Author: Ritesh Harjani (IBM) <ritesh.list@gmail.com>
->
-> KVM: selftests: Print the vcpu_id when KVM_CREATE_VCPU ioctl fails
->
-> This commit adds a debug print statement to display the vcpu_id and errno
-> when the KVM_CREATE_VCPU ioctl fails.
->
->> diff --git a/tools/testing/selftests/kvm/lib/kvm_util.c b/tools/testing/selftests/kvm/lib/kvm_util.c
->> index 0dc67c1502cfb..6a0ee68036236 100644
->> --- a/tools/testing/selftests/kvm/lib/kvm_util.c
->> +++ b/tools/testing/selftests/kvm/lib/kvm_util.c
->> @@ -1354,6 +1354,9 @@ struct kvm_vcpu *__vm_vcpu_add(struct kvm_vm *vm, u32 vcpu_id)
->>  	vcpu->vm = vm;
->>  	vcpu->id = vcpu_id;
->>  	vcpu->fd = __vm_ioctl(vm, KVM_CREATE_VCPU, (void *)(unsigned long)vcpu_id);
->> +	if (vcpu->fd < 0)
->> +		pr_info("Failed KVM_CREATE_VCPU for vcpu_id %u with errno %d\n",
->> +			vcpu_id, errno);
->>  	TEST_ASSERT_VM_VCPU_IOCTL(vcpu->fd >= 0, KVM_CREATE_VCPU, vcpu->fd, vm);
->
-> [Severity: Medium]
-> Does this pr_info() call clobber errno before it can be evaluated by
-> TEST_ASSERT_VM_VCPU_IOCTL()?
->
-> Since pr_info() uses standard C library print functions, it can modify errno
-> internally even on success. TEST_ASSERT_VM_VCPU_IOCTL() captures errno
-> to detect specific failure modes and to format the assertion error message.
->
-> Could this cause the test framework to print an incorrect error code or
-> bypass checks like dead VM detection when KVM_CREATE_VCPU fails?
->
+> Seems like a valid question to me. Can be solved by making the second
+> last clock an enum.
 
-yup, I will fix this in v3.. Something like this -
+Calling them optional may be a misnomer: these pins are present.
+Typically we provide zero rate fixed clocks for such clocks in the
+SoC .dtsi, to be filled in or replaced by the board .dts.
 
-+       if (vcpu->fd < 0) {
-+               int saved_errno = errno;
-+               pr_info("Failed KVM_CREATE_VCPU for vcpu_id %u with errno %d\n",
-+                       vcpu_id, saved_errno);
-+               errno = saved_errno;
-+       }
+Gr{oetje,eeting}s,
 
-Also I noticed that all other KVM selftests have moved from
+                        Geert
 
-uint64_t -> u64
-uint32_t -> u32
-uint8_t -> u8
-int64_t -> s64
-...
+-- 
+Geert Uytterhoeven -- There's lots of Linux beyond ia32 -- geert@linux-m68k.org
 
-So, I will add separate patches on top of the current patch similar to
-how it was done earlier to convert powerpc kvm selftests as well - to
-keep the review simpler w/o mixing too many changes in v3.
-
--ritesh
-
+In personal conversations with technical people, I call myself a hacker. But
+when I'm talking to journalists I just say "programmer" or something like that.
+                                -- Linus Torvalds
