@@ -1,154 +1,138 @@
-Received: from mail-pg1-f202.google.com (mail-pg1-f202.google.com [209.85.215.202])
+Received: from mail-wm1-f46.google.com (mail-wm1-f46.google.com [209.85.128.46])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EBE6D1E1DE5
-	for <sashiko-reviews@lists.linux.dev>; Wed, 27 May 2026 01:24:31 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.215.202
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C4B953C872B
+	for <sashiko-reviews@lists.linux.dev>; Wed, 27 May 2026 07:36:18 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.46
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1779845073; cv=none; b=VdnN6bqCp0rwpOj0rkzyfu8dgF9jc5xBndNI2jYS50KTCBQcXHwSqC038J5AnvwBzDB9JFCtLeP3xCyqNuZfm2HprA744uFQWw6FVtQQ/delM47vLVKfQX1J4ZRn5UUw7PIc1bpZxlX+BLsxJ4QkTVOkbIjcvH/O5j7XsQpTcZY=
+	t=1779867380; cv=none; b=rhTL2aQMOIKqlhUb3bO3eI5h0Y3dF/9k/1iCaTgsLZwKDsUbSIpLk7PF7Kt5AhCqK9ouN4By9x7f3NVMw/yJxtLStGQBfQTSn6fBglt7gp6i8EPIfIqs4DSxRkPN0XMvTY1Rvyp41w61f9cr62vvG9oLaUblJPx6s6zv1E1dSyw=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1779845073; c=relaxed/simple;
-	bh=Yz8iskg8XrvH8zht98Z9Xue2l61E2u+0pLn94aBTjCs=;
-	h=Date:In-Reply-To:Mime-Version:References:Message-ID:Subject:From:
-	 To:Cc:Content-Type; b=Fpxfr5jYSmkkWjIXYxuOh1XlPpuQErq2NGSiSH+SB0myom1kvfsXUi/OSKqlF7BXCZ/rhYxdiq2dsqC7QF0iQ/U8SciXA0psjgrnPvs8PDDViTGJRzyXe3QQ4zWfsI4KDfRx07q9eZotJ4lQghxs712nFYzOhH1PJ3P1WskB1xk=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=google.com; spf=pass smtp.mailfrom=flex--seanjc.bounces.google.com; dkim=pass (2048-bit key) header.d=google.com header.i=@google.com header.b=IRoKBbYN; arc=none smtp.client-ip=209.85.215.202
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=google.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=flex--seanjc.bounces.google.com
+	s=arc-20240116; t=1779867380; c=relaxed/simple;
+	bh=/E6yxZN1iL1sEOvhzLQbCR2BoEGv7qUOen6dJLFQWqE=;
+	h=From:Date:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=YnQ6HSfxka5oLnPlYhNY7eASLM7tGhSgu79RncSRKvS4tSGeTJzbSPO4hP276M/wyoL38pTWkFsMdEOn2l+0hyhLmK0DlTTALflVG7KPuOPIxH+ew5LvZjslSRq0GvIkGscK5i9FEtQpsHMnrS5Vf0eA3lHfPrJPS7fX5/Fcn4c=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=fXctnJrv; arc=none smtp.client-ip=209.85.128.46
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=google.com header.i=@google.com header.b="IRoKBbYN"
-Received: by mail-pg1-f202.google.com with SMTP id 41be03b00d2f7-c82c4772950so5638512a12.1
-        for <sashiko-reviews@lists.linux.dev>; Tue, 26 May 2026 18:24:31 -0700 (PDT)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="fXctnJrv"
+Received: by mail-wm1-f46.google.com with SMTP id 5b1f17b1804b1-4891e5b9c1fso97895295e9.2
+        for <sashiko-reviews@lists.linux.dev>; Wed, 27 May 2026 00:36:18 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=google.com; s=20251104; t=1779845071; x=1780449871; darn=lists.linux.dev;
-        h=cc:to:from:subject:message-id:references:mime-version:in-reply-to
-         :date:from:to:cc:subject:date:message-id:reply-to;
-        bh=JFIl8jD03qcpfdb58Bma0Y2iIu1xFf/+T8XEkiPDXfI=;
-        b=IRoKBbYN8aOL3cT2qHI1NNa0sBVp5SDUfKLlKwGOiHRv4aX8RMiVHtl8hAefQmnKzj
-         puFImZGV74WwiPv7P3YPofz6IJOtyNxRYLsjfh0/VT1TV7O9MbjAl4/ivCxfexP5r6K6
-         mflba+BNOiqVr6JX9hg2mIw+PkFfv4jzdd5WFQYE7SsIv9pb9+3YIrioWqQg5gaYH4Z8
-         bi6h9H5eSS0REYwE0dPy5lWwoXi3WhTVfMzlYs34MWB6gHaiRdCwHsfZAEHNiqJPRe03
-         0NvJy03EI02pcys1nO8aVPr4Q0oRalCq+1dWQp6WtXytl9Lx9+Cs92/lNhmx921AMsBC
-         xr5g==
+        d=gmail.com; s=20251104; t=1779867377; x=1780472177; darn=lists.linux.dev;
+        h=in-reply-to:content-disposition:mime-version:references:message-id
+         :subject:cc:to:date:from:from:to:cc:subject:date:message-id:reply-to;
+        bh=UIF0+8LpPnndTQYvbVkGYrOCYND9z39MVrZ8YaX2YH8=;
+        b=fXctnJrvmRqMUNnQ1QH23yX2m/W/2bt0zEEbgPQ6vumnvZPcDn8H0KpTY4SckJGLeW
+         emxvJUlLrrKpil4B+03rqOaj+iBWkisNQVb9+6BWTyAbL3dDxKRUMjuAMfeod7PLKTvt
+         jcntwqXN0cyeqoqbONkm6/5n7Nd2mu8gzR8AI0GUphQv6mo1xo36mvbsIOSeuG8ujVA7
+         BGgPDKEIkMlpiMy9DAlK3TD2mJ+lIW09Ac1htkhnL/8RfllrzEHk/0ry5KPGCA3IB5I7
+         1V34wXsCwdVSm0gtZMal/Jh+fSlLBtAPZJ0itLhYdjnX5I24lXB5C9omf+sd7J0Z8TcK
+         q0YQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20251104; t=1779845071; x=1780449871;
-        h=cc:to:from:subject:message-id:references:mime-version:in-reply-to
-         :date:x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=JFIl8jD03qcpfdb58Bma0Y2iIu1xFf/+T8XEkiPDXfI=;
-        b=gvzk6ofYGoAX7ykt0GzTM7p9h4qeVz69h+RJtDvIcdTCzRHFDcbjKoshSaS9tQfjN9
-         +THDERb3bBJsYnsYnG11/GSBHFVDxmyRL83f7+H9ZEoixhIq7V76cOeTTMa+sAHcSW0n
-         M6uaQavRpcGdf09ilaYUvGTDpRwKfv8ruNw907soGa/mmyIgfC+JAIxba9i90Ijc3Zli
-         dp2dVPkYs8qXAPlmBHoBCKZ5aiIs6KECrw44OBSOaE0mIO85ZJ7FWges91V8Qm0t7izX
-         M6zp1Jqe+GR1j4LkiSbBx8nC9/EoPexDSNCT/n/Glz83XzjcZsdhlIr1cLDYluOVUmqg
-         W+sw==
-X-Gm-Message-State: AOJu0YxOlbfUa1FVwJX7sKVgANseqUeROwZhN+YMcQwZhs16B9RtucZV
-	vbhRUXNwnzkoFtsCrXdlwDJqxNsnlMpgoHmOrBlUrv6V4YwUjYRsheXLnv5TEC5cU1kI9Loaumg
-	gCp5vDk3xCoq/G1oezICoYeQyxTNYD0W8+1tWcprFA7yn/6eaOBjSjox8wwyX4/H4AzDS89w3wM
-	bIhY5v0wenmsk6jtGkM1l6XCQ/BkTGp+n2QhQBdl7ee8pWyfep
-X-Received: from pgbbk8.prod.google.com ([2002:a05:6a02:288:b0:c82:cd84:79d])
- (user=seanjc job=prod-delivery.src-stubby-dispatcher) by 2002:a05:6a21:1518:b0:3a2:edff:2975
- with SMTP id adf61e73a8af0-3b3297b0e28mr15979655637.25.1779845071015; Tue, 26
- May 2026 18:24:31 -0700 (PDT)
-Date: Tue, 26 May 2026 18:24:30 -0700
-In-Reply-To: <20260527004457.3F0B81F000E9@smtp.kernel.org>
+        d=1e100.net; s=20251104; t=1779867377; x=1780472177;
+        h=in-reply-to:content-disposition:mime-version:references:message-id
+         :subject:cc:to:date:from:x-gm-gg:x-gm-message-state:from:to:cc
+         :subject:date:message-id:reply-to;
+        bh=UIF0+8LpPnndTQYvbVkGYrOCYND9z39MVrZ8YaX2YH8=;
+        b=qEro65gSJHPxhbgMBn0Kpbl7ezOOm2Je1l5GQuu9Ik+3RnlUsz9WDcF33QxxksONGV
+         f5kTWZEL/vQNjBozS8iFLWYNbKcw0UABFuMXiYGluTkrBYOYtTMRf+aIU1j7zIO9rwID
+         fg8Cp9ghLmhVO1ixe4MdnhgSB05KPzl9Sj42rCA/VvDziko9Uxv7L2sDsdrA4qdNTXE/
+         ciDG3Hc62/6lMaW/zsCq5jPOEFAB8d3YoYSvS+RTwDHCDSiCGV0K6v/nQOMBlh4Wp0D8
+         g+9ffbqaBZLktgmGiAsLif0/QdvxCeN1FbOuT3EHlCfh58wDDprI2zrG/U4Myu8VXkfG
+         zJbw==
+X-Gm-Message-State: AOJu0YymdX53J04VDs9AQmFCeNN5vAztMxWwf8schVxWFAnt5fBw7Njd
+	aLlSF+pY42gMW5XKAgFegoCTCQYuay0zxyCZE9XgxGdFJLhDOBQs0XPVVTleGQ==
+X-Gm-Gg: Acq92OEIC9sejQYFWUgMmwcn8Tbo1+TOT7vk+NAxPgeTnZl/V5jzHVeP1DS34ATD2y6
+	g6PAzUQwni/QFUyarwmdA/h0HhZ5TJpE4a9kgZnQL7mdZcdHMzOvr36keQ7+4/myipfqDm66YQJ
+	vZHz5EfmRLa+OwOrvnSfeXmp3mnDv1d/BhDjqXSqjaNkpRkqHLzKdUwdXvftV0LYhrxq69gLrLE
+	9RU6POmq7SbQZ/TbdEvTrpFc3Viw+aENGAV6VkeTN0Mi7IV7K2eukDUMx0R/oFTMoYKPmHrVz20
+	usRyFtLFYH3BI2iWbAKZzzP2GcKYkIFbUyyt7as/07A3x8sgOXbcfZQP6uiDoVKGfWx0AU80vNc
+	lPYUVkrY3SKv9Otr4U/1IKRLP6phYJYq4RhwGCyyhWfYrxxU02RfNkWi6rpPlcOQP4DRrxR9gWs
+	CbaImNkguf/9H+xDk=
+X-Received: by 2002:a05:600c:8b84:b0:490:5466:8576 with SMTP id 5b1f17b1804b1-490546689a7mr333011325e9.1.1779867376895;
+        Wed, 27 May 2026 00:36:16 -0700 (PDT)
+Received: from krava ([2a02:8308:a00c:e200:b655:ff13:e355:16a3])
+        by smtp.gmail.com with ESMTPSA id 5b1f17b1804b1-4904526ca21sm369643295e9.3.2026.05.27.00.36.16
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Wed, 27 May 2026 00:36:16 -0700 (PDT)
+From: Jiri Olsa <olsajiri@gmail.com>
+X-Google-Original-From: Jiri Olsa <jolsa@kernel.org>
+Date: Wed, 27 May 2026 09:36:14 +0200
+To: sashiko-reviews@lists.linux.dev
+Cc: Gyokhan Kochmarla <gyokhan@amazon.de>, bpf@vger.kernel.org,
+	Masami Hiramatsu <mhiramat@kernel.org>,
+	Steven Rostedt <rostedt@kernel.org>
+Subject: Re: [PATCH 6.12] x86/fgraph: Fix return_to_handler regs.rsp value
+Message-ID: <ahae7nkLYjXinDRZ@krava>
+References: <20260526192324.79459-1-gyokhan@amazon.de>
+ <20260526195008.897721F000E9@smtp.kernel.org>
 Precedence: bulk
 X-Mailing-List: sashiko-reviews@lists.linux.dev
 List-Id: <sashiko-reviews.lists.linux.dev>
 List-Subscribe: <mailto:sashiko-reviews+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:sashiko-reviews+unsubscribe@lists.linux.dev>
-Mime-Version: 1.0
-References: <20260527002910.3931382-1-seanjc@google.com> <20260527004457.3F0B81F000E9@smtp.kernel.org>
-Message-ID: <ahZHzqfVJmwV8wzY@google.com>
-Subject: Re: [PATCH] KVM: Delete guest-triggerable (in theory) BUG_ON() in
- ioeventfd datamatch
-From: Sean Christopherson <seanjc@google.com>
-To: sashiko-reviews@lists.linux.dev
-Cc: kvm@vger.kernel.org
-Content-Type: text/plain; charset="us-ascii"
+MIME-Version: 1.0
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <20260526195008.897721F000E9@smtp.kernel.org>
 
-On Wed, May 27, 2026, sashiko-bot@kernel.org wrote:
+On Tue, May 26, 2026 at 07:50:07PM +0000, sashiko-bot@kernel.org wrote:
 > Thank you for your contribution! Sashiko AI review found 1 potential issue(s) to consider:
-> > diff --git a/virt/kvm/eventfd.c b/virt/kvm/eventfd.c
-> > --- a/virt/kvm/eventfd.c
-> > +++ b/virt/kvm/eventfd.c
-> > @@ -779,9 +779,6 @@ ioeventfd_in_range(struct _ioeventfd *p, gpa_t addr, int len, const void *val)
-> >  		return true;
+> 
+> Pre-existing issues:
+> - [High] The `return_to_handler` assembly routine creates a `pt_regs` (or `ftrace_regs`) structure on the kernel stack but only initializes four registers (`rax`, `rdx`, `rbp`, `rsp`), leaving the rest of the structure uninitialized. This partially initialized structure is passed to BPF kretprobe programs, leading to an information leak of kernel stack memory.
+> --
+> 
+> commit ff6f1024b92860971d84c833c6dac53501145715
+> Author: Jiri Olsa <jolsa@kernel.org>
+> 
+> x86/fgraph: Fix return_to_handler regs.rsp value
+> 
+> This commit fixes the unwinding rsp register value in return_to_handler. It 
+> saves the original rsp before the FRAME_SIZE adjustment, replacing the 
+> previous incorrect value. This ensures fprobe and direct unwinders see the 
+> right stack pointer.
+> 
+> Link: https://lore.kernel.org/bpf/20260126211837.472802-2-jolsa@kernel.org
+> 
+> > diff --git a/arch/x86/kernel/ftrace_64.S b/arch/x86/kernel/ftrace_64.S
+> > --- a/arch/x86/kernel/ftrace_64.S
+> > +++ b/arch/x86/kernel/ftrace_64.S
+> > @@ -364,6 +364,9 @@ SYM_CODE_START(return_to_handler)
+> >  	UNWIND_HINT_UNDEFINED
+> >  	ANNOTATE_NOENDBR
 > >  
-> >  	/* otherwise, we have to actually compare the data */
-> > -
-> > -	BUG_ON(!IS_ALIGNED((unsigned long)val, len));
-> > -
-> >  	switch (len) {
-> >  	case 1:
-> >  		_val = *(u8 *)val;
-> >  	case 2:
-> >  		_val = *(u16 *)val;
-> >  	case 4:
-> >  		_val = *(u32 *)val;
-> >  	case 8:
-> >  		_val = *(u64 *)val;
+> > +	/* Store original rsp for pt_regs.sp value. */
+> > +	movq %rsp, %rdi
+> > +
+> >  	/* Restore return_to_handler value that got eaten by previous ret instruction. */
+> >  	subq $8, %rsp
+> >  	UNWIND_HINT_FUNC
+> > @@ -374,7 +377,7 @@ SYM_CODE_START(return_to_handler)
+> >  	movq %rax, RAX(%rsp)
+> >  	movq %rdx, RDX(%rsp)
+> >  	movq %rbp, RBP(%rsp)
+> > -	movq %rsp, RSP(%rsp)
+> > +	movq %rdi, RSP(%rsp)
 > 
 > [Severity: High]
-> With the alignment check removed, can val now be an unaligned pointer when
-> it reaches these casts?
-
-Obviously.
-
-> Because dereferencing an unaligned pointer directly is undefined behavior
-> in C,
-
-Ugh, C99 ruins all the fun.
-
-> could this lead to alignment faults on architectures with strict
-> alignment requirements, given that this is in architecture-independent code?
+> This is a pre-existing issue, but could this code leak kernel stack memory
+> to BPF programs?
 > 
-> If a system is configured with CONFIG_UBSAN_ALIGNMENT=y and panic_on_warn,
-> wouldn't an unaligned access still allow a guest to trigger a host panic,
-> leaving the original issue partially unresolved?
+> This assembly creates a pt_regs structure on the stack by allocating
+> FRAME_SIZE bytes, but only explicitly saves rax, rdx, rbp, and rsp. Later in
+> ftrace_return_to_handler and arch_ftrace_partial_regs, only a few additional
+> fields are populated.
+> 
+> The remaining fields (like rdi, rsi, rbx, and r12-r15) remain uninitialized.
+> 
+> Because this partially initialized pt_regs structure is passed to BPF
+> kprobe_multi return programs via kprobe_multi_link_exit_handler(), and the
+> BPF verifier allows reading any field of the pt_regs context, does this
+> allow BPF programs to extract residual kernel stack data?
 
-LOL, good luck booting with CONFIG_UBSAN_ALIGNMENT=y and panic_on_warn=1.
+I think because kprobe/bpf is root only, it's not really an issue,
+cc-ing Steven and Masami
 
-> Does it make sense to use the get_unaligned() helpers here instead of direct
-> casts?
-
-That does seem like the easiest solution, as this generates identical code
-before and after, at least on x86.  The other easy fix would be to use memcmp(),
-but I like not actually changing the functionality in any meaningful way.
-
-diff --git virt/kvm/eventfd.c virt/kvm/eventfd.c
-index 0e8b8a2c5b79..93ad2ebc963f 100644
---- virt/kvm/eventfd.c
-+++ virt/kvm/eventfd.c
-@@ -24,6 +24,7 @@
- #include <linux/slab.h>
- #include <linux/seqlock.h>
- #include <linux/irqbypass.h>
-+#include <linux/unaligned.h>
- #include <trace/events/kvm.h>
- 
- #include <kvm/iodev.h>
-@@ -779,21 +780,18 @@ ioeventfd_in_range(struct _ioeventfd *p, gpa_t addr, int len, const void *val)
-                return true;
- 
-        /* otherwise, we have to actually compare the data */
--
--       BUG_ON(!IS_ALIGNED((unsigned long)val, len));
--
-        switch (len) {
-        case 1:
--               _val = *(u8 *)val;
-+               _val = get_unaligned((u8 *)val);
-                break;
-        case 2:
--               _val = *(u16 *)val;
-+               _val = get_unaligned((u16 *)val);
-                break;
-        case 4:
--               _val = *(u32 *)val;
-+               _val = get_unaligned((u32 *)val);
-                break;
-        case 8:
--               _val = *(u64 *)val;
-+               _val = get_unaligned((u64 *)val);
-                break;
-        default:
-                return false;
+jirka
