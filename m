@@ -1,169 +1,174 @@
-Received: from mail-dl1-f41.google.com (mail-dl1-f41.google.com [74.125.82.41])
+Received: from mail-ed1-f53.google.com (mail-ed1-f53.google.com [209.85.208.53])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7071F221723
-	for <sashiko-reviews@lists.linux.dev>; Wed, 27 May 2026 21:28:18 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=pass smtp.client-ip=74.125.82.41
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0152B3C8196
+	for <sashiko-reviews@lists.linux.dev>; Wed, 27 May 2026 22:07:18 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=pass smtp.client-ip=209.85.208.53
 ARC-Seal:i=2; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1779917299; cv=pass; b=UFrSJLTfHMRCW/cZMS5mj6NvnHmF3CyOfUIUgR8mabhLI/tmAYp3j3NnQQAi56Ko4jI0bsZ/1IU5gmQMRZQFJq8l2eeu/gxvoo99PI5VgFDWX79aIMcA//3nFXfZWVHjy5OrB6iK/EhlRM+PvT4JSO4p+klm+vLXgtZJaU85m2I=
+	t=1779919643; cv=pass; b=P/bIh7k4wE00PisggG353eFu1YaFj7EFuibvwqi/1gq5GK/Ze9CQ0rMuh8bR1HXONArlS3JBa/lCzKDa5rwF/vWBoHmk8q37FYHAGcsva22B9gDydqhPM9pfdNZ5IY8d9CUlHzyeOvHLY+2RE4L0fKcaeDw6pPDn3t6MX0kvoWk=
 ARC-Message-Signature:i=2; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1779917299; c=relaxed/simple;
-	bh=a0SzG0MQbS2sQaqX/jQVnOmluG6OP++OsMAFA5gVs9c=;
-	h=From:In-Reply-To:References:MIME-Version:Date:Message-ID:Subject:
-	 To:Cc:Content-Type; b=pWoWBHuRDpIIcM5OA9e+MpjAok1ZqHSiiUU8zawvfiPJnYLLt/62TD264izVi+igNJxAnXIp1V6A26xTB33Z1KALAB9LDqlulRO0hjfHObGP5iz3NYQ6zioXE5LT5RdCnz/BCjpGWFaA8zHS8HhDrgJDw2Y0hrixYPN+zP68ycY=
-ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=google.com; spf=pass smtp.mailfrom=google.com; dkim=pass (2048-bit key) header.d=google.com header.i=@google.com header.b=ei+YZyCR; arc=pass smtp.client-ip=74.125.82.41
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=google.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=google.com
+	s=arc-20240116; t=1779919643; c=relaxed/simple;
+	bh=k3lLIpJDgggp3+QrM7CLsNzjAUmjklCE7a6Nrbi/gVI=;
+	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
+	 To:Cc:Content-Type; b=ClhG7tPIDfi3n/f267R0FipRWDSCQXS+IFaxMvMxLj+Qp0/cjSno5DS/NMpDWq3F/yEu0kOOTPJtDSYz/l0qNVci6/8euAnjs5ryvZS/KU2QLxXowYSSsDjBfBQ6+T95XLSbQYCKHIwUzHlXTBOOv22eXmGqYTzCU7FlnrivY0g=
+ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=fFyz3xU5; arc=pass smtp.client-ip=209.85.208.53
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=google.com header.i=@google.com header.b="ei+YZyCR"
-Received: by mail-dl1-f41.google.com with SMTP id a92af1059eb24-132d1b2519eso7097791c88.0
-        for <sashiko-reviews@lists.linux.dev>; Wed, 27 May 2026 14:28:18 -0700 (PDT)
-ARC-Seal: i=1; a=rsa-sha256; t=1779917298; cv=none;
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="fFyz3xU5"
+Received: by mail-ed1-f53.google.com with SMTP id 4fb4d7f45d1cf-67e9e343b22so16717430a12.0
+        for <sashiko-reviews@lists.linux.dev>; Wed, 27 May 2026 15:07:18 -0700 (PDT)
+ARC-Seal: i=1; a=rsa-sha256; t=1779919636; cv=none;
         d=google.com; s=arc-20240605;
-        b=JJ8VcAytPjXkTIYlQOd2zVmKJcVXc/mOfPiPpJxcpUng1HYSR96oG7V5xOY4CfBhKa
-         EPtdzukuQpiKEgIW+Yl2S1ZXVueN750Y22ZOpwGMaSNKwGN8NdeJeVLqPofzaHeKukd7
-         MoIiTSmf2l+Col03XozLJoflWd4rpIlZBDJylgxEMXH7xjsXt8zqevonSmEaiCWRwhY1
-         OP3LFq/XzMa3z4bc1Ys9KjL1yySHPjAV7uys+YASl/tM46GN403TQT8uwdyfz95FxpH/
-         ETCdX+8Cw6Nvp2EI8feBFPGy24N85mcDcry20N+k13VroO2Z670gsKYQvCuby9rAgo39
-         Nzag==
+        b=f60MofzHycpPdGX2lZ5RX91tSUWofKzCNQuYlRnovg+lRcjKVB5d7ACMan89U5MzOJ
+         wTKVXvKjMYxIScU5HV0DB8GTzqaHXBKTHBLuo/akWlKM61GiYOIggdnSgUFePgkdwKAy
+         RjYJ7pV3aLaqeWusB60DLes3uAMoAlf6Izydwk2zo8190AX3VsVBMAkoBbdfmLmfShJ5
+         OhYQNz0GhH39/yyiq6x0BratY+mw3fw9zc9OodN8Gn+Vboko0qfdJCOydQf2SQ5iqOJj
+         aha7NlAqgfoylDT538htKcwy2cBvZ5Qpf95gkj+0L2Oq0cfXd6iT2OgAyhlyiegQ40qz
+         o+2w==
 ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com; s=arc-20240605;
-        h=content-transfer-encoding:cc:to:subject:message-id:date
-         :mime-version:references:in-reply-to:from:dkim-signature;
-        bh=zdx5eXL6qL7cVTt6BBf4BlAi4V8PYwGAQ+sz/s4x+AQ=;
-        fh=KVy4+j+TE0qJlGnL1oxDtQvAs+ZlkPteDJwxhHS2piY=;
-        b=E6K9cb4Mxc60zcUIln9nsWrO1smbHxhvBvl0TsEBWlgH6XgaK/72muS3RYeAMw8Rbn
-         JpMyGD9FiJRMeZQPzaFlV3nV+ZxkbNBG/uk8Y7fyq5OMGIcYUQgzOhqks7Pu/WsrxVys
-         9ZGxtBBB4HF2B4x5bqnO/1eewdFywnhVFQhkr6U+MfVtuClxEGfzCokJFyEFLBkH+W5K
-         JizjD5SXWbqEL8EspC2Ujp/Qgi7NqPnXiFf4iL49Y6p4Kwoe+gqDQwGHR/ySq6s8+vO1
-         MDnX7HxV28f4pXRNhu1rWj6bNAhtgHTA1Jyi8adwQvpDLR6KDydEpbWu8rio9fjE36Bl
-         VzSw==;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:dkim-signature;
+        bh=4OVBPp4ttbsthyZCZjKgIEqVwXCG0MyY9CEWH9wwh9Q=;
+        fh=dJY95gReQek3pwETf80y9u1FlYsSzi23+f1M+1FTglw=;
+        b=G0tZZnQHsFUB+5vhfSenj1nKkzh/hYyffsjeLeqG0PXCcuxtE6HesDtS2/H42kYYNZ
+         UH9qvI6s86ADRr5yXjY0t9v8rLrCtdh7ZAT4HHZrTqsx2jRyYBsPm0xcobY01DJ7uFp3
+         YgxGhtsRiKbhv06lxOShvVlMp/UF6+qxXTzrnQdHb8d/fogJrJZwKTlCURf5VT5lcxw7
+         Cl9u9lafEKuq2O8dhI/EXGCVIk/BLDX3KCON7hLUEG6Gucv7cPDWVx87gGQCy452Sgux
+         8uLtlWRy2rBd975CZQskrtzJ+g2Qya+CLlPunayU5U4NBOy8P9Ttuo7K3qA8FdrxxqPj
+         m3IA==;
         darn=lists.linux.dev
 ARC-Authentication-Results: i=1; mx.google.com; arc=none
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=google.com; s=20251104; t=1779917298; x=1780522098; darn=lists.linux.dev;
-        h=content-transfer-encoding:cc:to:subject:message-id:date
-         :mime-version:references:in-reply-to:from:from:to:cc:subject:date
+        d=gmail.com; s=20251104; t=1779919636; x=1780524436; darn=lists.linux.dev;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:from:to:cc:subject:date
          :message-id:reply-to;
-        bh=zdx5eXL6qL7cVTt6BBf4BlAi4V8PYwGAQ+sz/s4x+AQ=;
-        b=ei+YZyCR4BR9ouhFlh+lkBXOS44SD+OfTLIhaQLvKYNGP1oR2Hfmwn3k86PBN23bFj
-         s2oVGEfwAOd7aA1H5cZdYk4Q8KikeLk7puWwF9eX/PEKz/Xog9pY7LJ9oykFkguS0Jb1
-         ie4P+mT6e0ted02P0iS5wtpT9mT+QOcdHR8GakT8EKi6SL8AsUYO7U3pBXcqAlpHr/0c
-         dXzDZ0d9YnlRw0K/serCYe1mZDq7JNR2fus0856XFJkHDNR+0l9kW2epkqZH1+dSBzpS
-         znYoksv415RWg6RZpUn3WKEgVQ1oMBtWEJvrl3YkJisilwWES8H7NEkiPjbB8Y+S8mmY
-         Cnjw==
+        bh=4OVBPp4ttbsthyZCZjKgIEqVwXCG0MyY9CEWH9wwh9Q=;
+        b=fFyz3xU57hFnDwzKgCQPUdxQ6Y618v92Ctjf/GV9oqH7/fDOLZqF5MtNMazi4pfJY5
+         zlY/nw2NrrXVgNZdFSWFM5CtYWMOhfIJdo3gLYVBOd+mgJ/I4Op0G3NTGfVspVlezOG9
+         j2g9BnL+KMSm1f3evIqXj/T4B2jfnKbzg7Mnh9teFmKBqQ1GV/is7sk8+Z7x0YTiA9Ih
+         c5MRdUYSurq1Jnok1/PJZH5TOUsl88HkzBAfubNr63k0/ZURMRmcmEnWKS3055rORT1g
+         THhPfq1vV72C/CQKI5Ay/CX2VXdGvVTpjoOJvzqtgPUmaTDfyYi9zql/9mmvUMto+en/
+         gF1A==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20251104; t=1779917298; x=1780522098;
-        h=content-transfer-encoding:cc:to:subject:message-id:date
-         :mime-version:references:in-reply-to:from:x-gm-gg:x-gm-message-state
-         :from:to:cc:subject:date:message-id:reply-to;
-        bh=zdx5eXL6qL7cVTt6BBf4BlAi4V8PYwGAQ+sz/s4x+AQ=;
-        b=egYOrky59Bt+C2+MXpKO+wb5EWCyqIhXjN3fUVVCeRh+xcXEuC+o73l8QF0WL51a+6
-         WIkaJHmqhq5VoteDJ+B1Ct/fDbsmc1ry2vMbKwRdQb/8vKc4StsoO2RAbpkgYXhePy24
-         xQBAwLWVJZTz4LEKg7QR3vITRxKfJn3xrZe6z73a7StZNRkGTQ0Ho4nn9lJ+jNRxHAF1
-         QT+0aBWS38WittTPdOU1FMujip8c+QubV2e7b6BeX/jY+r94Ct1d/hpXKTEQGBtODORB
-         Tj1h5VR/je4OMtPOtGEmyj2d0PO8pG/TZo2lTajATmnqF9mPdCj+X2A8HOd1QtQ6akRW
-         j4HQ==
-X-Gm-Message-State: AOJu0YwR6P0Z6Be13kfTcvAgqGZzQjQhDTjifNBGoZoAphnBSsCfwB4E
-	0P3FOZ6RfXpt7ecYT2b3zdtCn8/vutuUUs6QlkDp97O6vbHKelPvw51ugAo4HneCshbd69GmJYh
-	CSNgn70eZLZbTm0Dy1R0Kzaa+eoDmx+LV/iGKd/a2i+x83RNI2e0Bj8ThBfY=
-X-Gm-Gg: Acq92OGeo22YV5B1aHJtqV0UWYd3QU0hYmrAtfZ7kRxSMXI8cLSF2X9YrLi1V3q1XeF
-	lTCGKaSYzinYnbnA/QppVXYryd1LILyVQRnABuHLOSomt/JigQVvwZN2SETeU3ZtZsTsv0wOEh9
-	WynbyrSund5t9kzm6AlsrrJwhGAzMtHaOkmTMp+TW2Jll3R9WG4fZcVKSSezIAxQdLwG1dV2e45
-	+x/b/O7ZEsfXAtH4Lfxk6V3ynD1i3h9pEzYPL4t7HFXCjE31WNTxmH+sH6Zt26Z5ilXY0LQAubv
-	UN+GinAIwgLmKzfurcu6n2cQxhvEuLyt+5cX44hLQKrlVRbH7y6J3bfN65/1PrTPKIMJCLeAXPv
-	0cag=
-X-Received: by 2002:a05:7022:6629:b0:136:b8ca:e58a with SMTP id
- a92af1059eb24-136b8cae77emr6842627c88.20.1779917296897; Wed, 27 May 2026
- 14:28:16 -0700 (PDT)
-Received: from 176938342045 named unknown by gmailapi.google.com with
- HTTPREST; Wed, 27 May 2026 14:28:16 -0700
-Received: from 176938342045 named unknown by gmailapi.google.com with
- HTTPREST; Wed, 27 May 2026 14:28:16 -0700
-From: Ackerley Tng <ackerleytng@google.com>
-In-Reply-To: <20260523005558.BF1581F000E9@smtp.kernel.org>
-References: <20260522-gmem-inplace-conversion-v7-10-2f0fae496530@google.com> <20260523005558.BF1581F000E9@smtp.kernel.org>
+        d=1e100.net; s=20251104; t=1779919636; x=1780524436;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:x-gm-gg:x-gm-message-state:from
+         :to:cc:subject:date:message-id:reply-to;
+        bh=4OVBPp4ttbsthyZCZjKgIEqVwXCG0MyY9CEWH9wwh9Q=;
+        b=TnHBIdVWpcLJNxLoBQ86xf/uQwkFNIKnh9iBLjbVcHWO3OpDti1kLL9OUqpmoDXAmb
+         mfAAgCb14ig3LXYmIbqg1MIObhpbjRC9r9Sfne9JS7tEqGfEaoiafa00VTxWoffaE/hX
+         azCpfSMztc7GjO4TfbwudPprIY++EbCpVpEY3kVMkbIiRAfLE8HTkS91KoCrKwSaUqqD
+         IcB58ueiBYa6jH4U9DoMALj+BenQEYOe3VKtEQS7v9MhEN6L9AXqX7Km3Gbm0AVeGHZT
+         uOIPVrs0tm9NcmfhguuERfh3J4oKbQwL9VqfA7slLY6IwyGy/j03rLinQ8wPg8KCQOlT
+         Zljw==
+X-Gm-Message-State: AOJu0YyIWzY1ZvdhDB94qmG6U/qERD2P3LH2W7kh0vq3IxHz56MvpLYy
+	8VkNVn5rnPr+flMe4ZEUO/s9+Lxm2SbRMxl1HvPSm0/8pxa8NsjmZF5fzyvd1uyYxEvogo3njSz
+	QeUD8W2RtfH/W8RU+64e1AA5crLzIWISpHQ==
+X-Gm-Gg: Acq92OEYrlcehRVnhfW7b+A/tDGBQxXjv9VzhoB2njNJ09c0J0WxA1L6gUG5t9h6Pu9
+	bVrW9jYQV1/mMNIa7w8J5Pw+fdO8aDvtTkUiNhcmkAK7h4zeoJqX+Q0JJ229VygBpp+EdplJLl2
+	24HvMiVJh7oSoyf7gilRFM/Kl3KgFdqOSVvyoWvRcUd4Mvnsk29Mn5GLARglkoruPsM3pnW48dD
+	wkDB0bFWvP3/p2NcqB7LEV0dsmcifSjR2z31jf/g70bbm3DHAcomo8mMeUUqkHWHDwrwN+9bWAT
+	WAttCPwoVNsMo5NVqSSWq7MCGjQhbaVm7PJFgflL3miITTlYQrIfy6/NdS81msHLvnlfmGltPHf
+	amZpH3G8LiBR6R0F1tZjYxUW8VZMJ1YMR8AYp6XFKn1MdTjWfKOmg43WkvfrAWRN+8W8ZVGldSK
+	JbCHA=
+X-Received: by 2002:a05:6402:4147:b0:67c:5745:ba00 with SMTP id
+ 4fb4d7f45d1cf-6889c2a3792mr12387039a12.0.1779919636018; Wed, 27 May 2026
+ 15:07:16 -0700 (PDT)
 Precedence: bulk
 X-Mailing-List: sashiko-reviews@lists.linux.dev
 List-Id: <sashiko-reviews.lists.linux.dev>
 List-Subscribe: <mailto:sashiko-reviews+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:sashiko-reviews+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Date: Wed, 27 May 2026 14:28:16 -0700
-X-Gm-Features: AVHnY4LLV5lPMeiEw2ty46ZWdsqSl4F90gDfEAfF0EGpnWud9wi7tfH7Cpi9rfo
-Message-ID: <CAEvNRgHXWewsjA+y=4sT11rq27TNVFm82zoszwyBa8AMrs-tHA@mail.gmail.com>
-Subject: Re: [PATCH v7 10/42] KVM: guest_memfd: Ensure pages are not in use
- before conversion
-To: sashiko-reviews@lists.linux.dev, 
-	Ackerley Tng via B4 Relay <devnull+ackerleytng.google.com@kernel.org>
-Cc: kvm@vger.kernel.org
+References: <20260527203126.7053-1-rosenp@gmail.com> <20260527204806.1DDBC1F000E9@smtp.kernel.org>
+In-Reply-To: <20260527204806.1DDBC1F000E9@smtp.kernel.org>
+From: Rosen Penev <rosenp@gmail.com>
+Date: Wed, 27 May 2026 15:07:04 -0700
+X-Gm-Features: AVHnY4JJw3-pkbMOdUPeLxDinjlUUnntxistMEnXZFRIYvGlrPP2EONxnjVRRXw
+Message-ID: <CAKxU2N_+aSN3L5KXs3bi4sdKmVW-JF4FzuFV50yae_Ha4Aw7CQ@mail.gmail.com>
+Subject: Re: [PATCHv2] dmaengine: ste_dma40: turn d40_base phy_chans into a
+ flexible array
+To: sashiko-reviews@lists.linux.dev
+Cc: Frank.Li@kernel.org, dmaengine@vger.kernel.org, vkoul@kernel.org
 Content-Type: text/plain; charset="UTF-8"
 Content-Transfer-Encoding: quoted-printable
 
-sashiko-bot@kernel.org writes:
-
+On Wed, May 27, 2026 at 1:48=E2=80=AFPM <sashiko-bot@kernel.org> wrote:
 >
-> [...snip...]
+> Thank you for your contribution! Sashiko AI review found 1 potential issu=
+e(s) to consider:
+> - [High] Defeating struct_size() saturation arithmetic with unchecked add=
+ition can lead to a heap buffer overflow.
+> --
 >
->> +static bool kvm_gmem_is_safe_for_conversion(struct inode *inode, pgoff_=
-t start,
->> +					    size_t nr_pages, pgoff_t *err_index)
->> +{
->> +	struct address_space *mapping =3D inode->i_mapping;
->> +	const int filemap_get_folios_refcount =3D 1;
->> +	pgoff_t last =3D start + nr_pages - 1;
->> +	struct folio_batch fbatch;
->> +	bool safe =3D true;
->> +	pgoff_t next;
->> +	int i;
->> +
->> +	folio_batch_init(&fbatch);
->> +
->> +	next =3D start;
->> +	while (safe && filemap_get_folios(mapping, &next, last, &fbatch)) {
->> +
->> +		for (i =3D 0; i < folio_batch_count(&fbatch); ++i) {
->> +			struct folio *folio =3D fbatch.folios[i];
->> +
->> +			if (folio_ref_count(folio) !=3D
->> +			    folio_nr_pages(folio) + filemap_get_folios_refcount) {
+> commit e3bf7e1250eb198cd9bf4617a8f0c3d6cc4d796b
+> Author: Rosen Penev <rosenp@gmail.com>
 >
-> [Severity: Medium]
-> When folios are allocated and added to the page cache, they are also plac=
-ed
-> into a per-CPU LRU batch, which holds a transient reference on the folio.
+> dmaengine: ste_dma40: turn d40_base phy_chans into a flexible array
 >
-> Since this code doesn't drain these LRU batches via lru_add_drain_all()
-> before checking folio_ref_count(), could this cause spurious -EAGAIN
-> failures?
+> This commit converts the separately-offset phy_chans pointer to a C99 fle=
+xible
+> array member at the end of struct d40_base, switching the allocation to
+> struct_size(). The log_chans and memcpy_chans slots continue to live in t=
+he
+> same allocation immediately after phy_chans.
 >
-> If userspace retries the ioctl in a tight loop on the same CPU, is there =
-a
-> risk that the LRU batch might never be preempted or drained, resulting in=
- an
-> infinite livelock?
+> > diff --git a/drivers/dma/ste_dma40.c b/drivers/dma/ste_dma40.c
+> > index 9b803c0aec254..d3e3c4cd43f17 100644
+> > --- a/drivers/dma/ste_dma40.c
+> > +++ b/drivers/dma/ste_dma40.c
 >
-> Note that this issue is explicitly fixed later in the patch series by com=
-mit
-> "KVM: guest_memfd: Handle lru_add fbatch refcounts during conversion safe=
-ty
-> check".
+> [ ... ]
 >
-
-Yup, it's fixed later.
-
->> +				safe =3D false;
->> +				*err_index =3D max(start, folio->index);
->> +				break;
->> +			}
->> +		}
->> +
->> +		folio_batch_release(&fbatch);
->> +		cond_resched();
->> +	}
->> +
->> +	return safe;
->> +}
+> > @@ -3197,10 +3198,9 @@ static int __init d40_hw_detect_init(struct plat=
+form_device *pdev,
+> >                "hardware rev: %d with %d physical and %d logical channe=
+ls\n",
+> >                rev, num_phy_chans, num_log_chans);
+> >
+> > -     base =3D devm_kzalloc(dev,
+> > -             ALIGN(sizeof(struct d40_base), 4) +
+> > -             (num_phy_chans + num_log_chans + num_memcpy_chans) *
+> > -             sizeof(struct d40_chan), GFP_KERNEL);
+> > +     alloc_size =3D struct_size(base, phy_chans, num_phy_chans);
+> > +     alloc_size +=3D sizeof(*base->log_chans) * (num_log_chans + num_m=
+emcpy_chans);
+>
+> [Severity: High]
+> Can this unchecked addition defeat the saturation arithmetic of struct_si=
+ze()
+> and lead to a heap buffer overflow?
+>
+> If struct_size() detects an overflow and saturates to SIZE_MAX, this
+> unconditional addition will wrap alloc_size around to a small integer val=
+ue.
+>
+> As a result, devm_kzalloc() might succeed in allocating an undersized buf=
+fer,
+> causing an out-of-bounds write when the channels are later initialized or
+> accessed.
+>
+> Since phy_chans, log_chans, and memcpy_chans all use the same type and ar=
+e
+> allocated contiguously, should the counts be summed inside a single
+> struct_size() call like this:
+>
+>     alloc_size =3D struct_size(base, phy_chans,
+>                              num_phy_chans + num_log_chans + num_memcpy_c=
+hans);
+>
+> Alternatively, the size_add() and size_mul() macros could be used to pres=
+erve
+> the saturation protection.
+This is completely unreachable. I can add min() calls if needed.
+>
+> > +     base =3D devm_kzalloc(dev, alloc_size, GFP_KERNEL);
+> >
+> >       if (!base)
+> >               return -ENOMEM;
 >
 > --
-> Sashiko AI review =C2=B7 https://sashiko.dev/#/patchset/20260522-gmem-inp=
-lace-conversion-v7-0-2f0fae496530@google.com?part=3D10
+> Sashiko AI review =C2=B7 https://sashiko.dev/#/patchset/20260527203126.70=
+53-1-rosenp@gmail.com?part=3D1
