@@ -1,293 +1,65 @@
-Received: from smtp-out2.suse.de (smtp-out2.suse.de [195.135.223.131])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 955A1331222
-	for <sashiko-reviews@lists.linux.dev>; Thu, 28 May 2026 06:26:57 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=195.135.223.131
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6A88F30FF1D;
+	Thu, 28 May 2026 06:57:44 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1779949622; cv=none; b=PUrsKYocVJ448h2OEoD4ttvPkEoNaLwMUKphGGJ71SrPfW5c7YtpKJLSzvX/Qa0Njijs/3vISIYAmht4+zdVPSufwsH+iBrU7X0ASiISvO5omkzJDj2KnGgvt5z+gqHcRh6Fp+rvTvwbmOi4oioAxLrLJ+xOc3TrLztyspmNv5U=
+	t=1779951465; cv=none; b=Eerkt1fxGw1TGRmZanlN9kRixJF0ooCUSc/EiCMdeP0PbOUFV037Zx+0gBq7m4/bnoTYKM4O7YyJtccXxCYDnRtR/wqhtrRLnl/brlE+tizRZcKAL21WM14Kye7qs1Is3qyUrDjqGGApgs5JHFQEnDxpbapd5uejJ74H1N3isgA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1779949622; c=relaxed/simple;
-	bh=RkB8zVS4nRXyHYj7g/gRXe5bdl9fvscMxla7Qghq11A=;
-	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=QZ44Vz7jja9Rk1quQtFV2PR1ezvdjpMrafb3fwj4YrzRApM/2CHux90dG/WRVMjYDfBFk01DC/BVsWPdye7/fTOGjF1CzUPfgPxB6TAp1o7TrpL6QRze0xjieDiJ665dQO0EPBTvpR0HNKxoC1pLo8hSoiZfjFOwNbBdjFnW8aY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=suse.de; spf=pass smtp.mailfrom=suse.de; dkim=pass (1024-bit key) header.d=suse.de header.i=@suse.de header.b=d8pBGsQu; dkim=permerror (0-bit key) header.d=suse.de header.i=@suse.de header.b=nwK/O7MD; dkim=pass (1024-bit key) header.d=suse.de header.i=@suse.de header.b=V2CnhzN+; dkim=permerror (0-bit key) header.d=suse.de header.i=@suse.de header.b=HUdrrIFV; arc=none smtp.client-ip=195.135.223.131
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=suse.de
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=suse.de
+	s=arc-20240116; t=1779951465; c=relaxed/simple;
+	bh=A8C3UMIgHMxEX/9c+ehe/2ZefuBOI610ml9IrQ7cxyo=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=Yto/mYMfNxa5WX63OKLyyAYLYxMVWQGiBZX5DIeTQxGacgNIH/LFJImKT8e04WVpjXmBAwnXGhDuI290t5Cxe/Pr5GiQH+MuUnOT66MZfX1vGoqQnjFUL8EYAT+xURIbE/c5NH6ODygRWU7s1V77En8Q8HX9JFhWZvPIPIqCjWs=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=Ucw5o2MV; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=suse.de header.i=@suse.de header.b="d8pBGsQu";
-	dkim=permerror (0-bit key) header.d=suse.de header.i=@suse.de header.b="nwK/O7MD";
-	dkim=pass (1024-bit key) header.d=suse.de header.i=@suse.de header.b="V2CnhzN+";
-	dkim=permerror (0-bit key) header.d=suse.de header.i=@suse.de header.b="HUdrrIFV"
-Received: from imap1.dmz-prg2.suse.org (imap1.dmz-prg2.suse.org [IPv6:2a07:de40:b281:104:10:150:64:97])
-	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
-	 key-exchange X25519 server-signature RSA-PSS (4096 bits) server-digest SHA256)
-	(No client certificate requested)
-	by smtp-out2.suse.de (Postfix) with ESMTPS id E5A8A672AF;
-	Thu, 28 May 2026 06:26:54 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=suse.de; s=susede2_rsa;
-	t=1779949615; h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
-	 mime-version:mime-version:content-type:content-type:
-	 content-transfer-encoding:content-transfer-encoding:
-	 in-reply-to:in-reply-to:references:references:autocrypt:autocrypt;
-	bh=ekO+IfVzmyu3akfxeO+hwC59c6WXPcfrFrNRtYEq/+U=;
-	b=d8pBGsQuwe5x4IMuk4uZPTfZ0F10GJ4vSON7cLzpJ6F/97c8OL94pDDLwzHuNQ8fgXawCn
-	WkRUiMXNvbHhnAyYWAUNolgjaQ9rDK/Jvu/OXuX0z7WitLkKAsN7FJerdsybve2QDBwTPy
-	r59EFtG+ED2pso85bC/MsdWUKqoEt9Y=
-DKIM-Signature: v=1; a=ed25519-sha256; c=relaxed/relaxed; d=suse.de;
-	s=susede2_ed25519; t=1779949615;
-	h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
-	 mime-version:mime-version:content-type:content-type:
-	 content-transfer-encoding:content-transfer-encoding:
-	 in-reply-to:in-reply-to:references:references:autocrypt:autocrypt;
-	bh=ekO+IfVzmyu3akfxeO+hwC59c6WXPcfrFrNRtYEq/+U=;
-	b=nwK/O7MDlSW5yT+pjQ8L9HumZKjGI4Ky8xzTIeM455jIHUqxy1EijpMs1Mf5EoNnH4WWPh
-	yMQlLaY+BBMyUbAQ==
-Authentication-Results: smtp-out2.suse.de;
-	dkim=pass header.d=suse.de header.s=susede2_rsa header.b=V2CnhzN+;
-	dkim=pass header.d=suse.de header.s=susede2_ed25519 header.b=HUdrrIFV
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=suse.de; s=susede2_rsa;
-	t=1779949614; h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
-	 mime-version:mime-version:content-type:content-type:
-	 content-transfer-encoding:content-transfer-encoding:
-	 in-reply-to:in-reply-to:references:references:autocrypt:autocrypt;
-	bh=ekO+IfVzmyu3akfxeO+hwC59c6WXPcfrFrNRtYEq/+U=;
-	b=V2CnhzN+/j1njcALid/BiqKatsEKHd5UEJCMh1eFecz6/MLFJjvD7ch/3vMSWZdE52AaNt
-	RkfaIEGHYuV257iD/TlCiTD9roC5TQud5DNAimjHOktZeCfy8cnyBvA0n5bBXpkSz2IePN
-	AqqOcUpXbImTFoFZDAByleRmszBL5Jw=
-DKIM-Signature: v=1; a=ed25519-sha256; c=relaxed/relaxed; d=suse.de;
-	s=susede2_ed25519; t=1779949614;
-	h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
-	 mime-version:mime-version:content-type:content-type:
-	 content-transfer-encoding:content-transfer-encoding:
-	 in-reply-to:in-reply-to:references:references:autocrypt:autocrypt;
-	bh=ekO+IfVzmyu3akfxeO+hwC59c6WXPcfrFrNRtYEq/+U=;
-	b=HUdrrIFVUNXmp1ulXzKVeF85CUbmlaNneOEclNqP8DHhny/FhiosJLU2OEZnWdcyU3JBvQ
-	iWvV+02Opmze88AA==
-Received: from imap1.dmz-prg2.suse.org (localhost [127.0.0.1])
-	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
-	 key-exchange X25519 server-signature RSA-PSS (4096 bits) server-digest SHA256)
-	(No client certificate requested)
-	by imap1.dmz-prg2.suse.org (Postfix) with ESMTPS id 71D455AC42;
-	Thu, 28 May 2026 06:26:54 +0000 (UTC)
-Received: from dovecot-director2.suse.de ([2a07:de40:b281:106:10:150:64:167])
-	by imap1.dmz-prg2.suse.org with ESMTPSA
-	id dBYdGi7gF2pPEAAAD6G6ig
-	(envelope-from <tzimmermann@suse.de>); Thu, 28 May 2026 06:26:54 +0000
-Message-ID: <9a97aec6-a9b3-466b-bd28-57d5d19bfcc1@suse.de>
-Date: Thu, 28 May 2026 08:26:53 +0200
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="Ucw5o2MV"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 10EA01F000E9;
+	Thu, 28 May 2026 06:57:42 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=kernel.org;
+	s=k20260515; t=1779951464;
+	bh=mcM91zgkiLLHFJCISSdRHIbYxsIV1FUrrFnYMwKcaaw=;
+	h=Date:From:To:Cc:Subject:References:In-Reply-To;
+	b=Ucw5o2MVD8DSAej/MUlmEXoCBonBjWMHEM/sLV7sOB2+IBri8VtD4TxSSnNG+q4VC
+	 9NfAYjtenFUPVHsZWC8brPOy1h6+42X+apdCOtteFD70MPE/MtRBs8X+u4cblXc912
+	 JiIJeEHqwADizgACLIGRQqMpQyJ6mnX8Du8vuIzQ/a8wjWl6KxoEV5RnwWN7purX3B
+	 pMjdMNQ4wr74zvccVF5l8jxNrsnmdGUcJDIUlhOnLyl3MxCOz9TGKirnykSkvNKzAW
+	 XPolz4SGjnigII52/aJrrHHqEGd0+tZIQpc6Hht61oH5VVUwVKWI5hjjuClFKzWYKT
+	 aoyf8npDQpWYg==
+Date: Thu, 28 May 2026 08:57:40 +0200
+From: Niklas Cassel <cassel@kernel.org>
+To: sashiko-reviews@lists.linux.dev
+Cc: Bart Van Assche <bvanassche@acm.org>, linux-ide@vger.kernel.org,
+	dlemoal@kernel.org
+Subject: Re: [PATCH v3] ata: libata: Document when host->eh_mutex should be
+ held
+Message-ID: <ahfnZEfc1zASNzZI@ryzen>
+References: <e95c0eb43a8297c9ab5e220341512882f8648512.1779913278.git.bvanassche@acm.org>
+ <20260527205711.BCA141F000E9@smtp.kernel.org>
 Precedence: bulk
 X-Mailing-List: sashiko-reviews@lists.linux.dev
 List-Id: <sashiko-reviews.lists.linux.dev>
 List-Subscribe: <mailto:sashiko-reviews+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:sashiko-reviews+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v3 05/10] drm/appletbdrm: Allocate request/response
- buffers in begin_fb_access
-To: sashiko-reviews@lists.linux.dev
-Cc: linux-hyperv@vger.kernel.org, Aditya Garg <gargaditya08@proton.me>,
- Aun-Ali Zaidi <admin@kodeit.net>
-References: <20260527145113.241595-6-tzimmermann@suse.de>
- <20260527154205.140101F000E9@smtp.kernel.org>
-Content-Language: en-US
-From: Thomas Zimmermann <tzimmermann@suse.de>
-Autocrypt: addr=tzimmermann@suse.de; keydata=
- xsBNBFs50uABCADEHPidWt974CaxBVbrIBwqcq/WURinJ3+2WlIrKWspiP83vfZKaXhFYsdg
- XH47fDVbPPj+d6tQrw5lPQCyqjwrCPYnq3WlIBnGPJ4/jreTL6V+qfKRDlGLWFjZcsrPJGE0
- BeB5BbqP5erN1qylK9i3gPoQjXGhpBpQYwRrEyQyjuvk+Ev0K1Jc5tVDeJAuau3TGNgah4Yc
- hdHm3bkPjz9EErV85RwvImQ1dptvx6s7xzwXTgGAsaYZsL8WCwDaTuqFa1d1jjlaxg6+tZsB
- 9GluwvIhSezPgnEmimZDkGnZRRSFiGP8yjqTjjWuf0bSj5rUnTGiyLyRZRNGcXmu6hjlABEB
- AAHNJ1Rob21hcyBaaW1tZXJtYW5uIDx0emltbWVybWFubkBzdXNlLmRlPsLAjgQTAQgAOAIb
- AwULCQgHAgYVCgkICwIEFgIDAQIeAQIXgBYhBHIX+6yM6c9jRKFo5WgNwR1TC3ojBQJftODH
- AAoJEGgNwR1TC3ojx1wH/0hKGWugiqDgLNXLRD/4TfHBEKmxIrmfu9Z5t7vwUKfwhFL6hqvo
- lXPJJKQpQ2z8+X2vZm/slsLn7J1yjrOsoJhKABDi+3QWWSGkaGwRJAdPVVyJMfJRNNNIKwVb
- U6B1BkX2XDKDGffF4TxlOpSQzdtNI/9gleOoUA8+jy8knnDYzjBNOZqLG2FuTdicBXblz0Mf
- vg41gd9kCwYXDnD91rJU8tzylXv03E75NCaTxTM+FBXPmsAVYQ4GYhhgFt8S2UWMoaaABLDe
- 7l5FdnLdDEcbmd8uLU2CaG4W2cLrUaI4jz2XbkcPQkqTQ3EB67hYkjiEE6Zy3ggOitiQGcqp
- j//OwE0EWznS4AEIAMYmP4M/V+T5RY5at/g7rUdNsLhWv1APYrh9RQefODYHrNRHUE9eosYb
- T6XMryR9hT8XlGOYRwKWwiQBoWSDiTMo/Xi29jUnn4BXfI2px2DTXwc22LKtLAgTRjP+qbU6
- 3Y0xnQN29UGDbYgyyK51DW3H0If2a3JNsheAAK+Xc9baj0LGIc8T9uiEWHBnCH+RdhgATnWW
- GKdDegUR5BkDfDg5O/FISymJBHx2Dyoklv5g4BzkgqTqwmaYzsl8UxZKvbaxq0zbehDda8lv
- hFXodNFMAgTLJlLuDYOGLK2AwbrS3Sp0AEbkpdJBb44qVlGm5bApZouHeJ/+n+7r12+lqdsA
- EQEAAcLAdgQYAQgAIAIbDBYhBHIX+6yM6c9jRKFo5WgNwR1TC3ojBQJftOH6AAoJEGgNwR1T
- C3ojVSkIALpAPkIJPQoURPb1VWjh34l0HlglmYHvZszJWTXYwavHR8+k6Baa6H7ufXNQtThR
- yIxJrQLW6rV5lm7TjhffEhxVCn37+cg0zZ3j7zIsSS0rx/aMwi6VhFJA5hfn3T0TtrijKP4A
- SAQO9xD1Zk9/61JWk8OysuIh7MXkl0fxbRKWE93XeQBhIJHQfnc+YBLprdnxR446Sh8Wn/2D
- Ya8cavuWf2zrB6cZurs048xe0UbSW5AOSo4V9M0jzYI4nZqTmPxYyXbm30Kvmz0rYVRaitYJ
- 4kyYYMhuULvrJDMjZRvaNe52tkKAvMevcGdt38H4KSVXAylqyQOW5zvPc4/sq9c=
-In-Reply-To: <20260527154205.140101F000E9@smtp.kernel.org>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 8bit
-X-Rspamd-Server: rspamd1.dmz-prg2.suse.org
-X-Rspamd-Action: no action
-X-Rspamd-Queue-Id: E5A8A672AF
-X-Spam-Flag: NO
-X-Spam-Score: -4.51
-X-Spam-Level: 
-X-Spamd-Result: default: False [-4.51 / 50.00];
-	BAYES_HAM(-3.00)[100.00%];
-	NEURAL_HAM_LONG(-1.00)[-1.000];
-	R_DKIM_ALLOW(-0.20)[suse.de:s=susede2_rsa,suse.de:s=susede2_ed25519];
-	NEURAL_HAM_SHORT(-0.20)[-1.000];
-	MIME_GOOD(-0.10)[text/plain];
-	MX_GOOD(-0.01)[];
-	ARC_NA(0.00)[];
-	RCVD_VIA_SMTP_AUTH(0.00)[];
-	FUZZY_RATELIMITED(0.00)[rspamd.com];
-	SPAMHAUS_XBL(0.00)[2a07:de40:b281:104:10:150:64:97:from];
-	TO_DN_SOME(0.00)[];
-	MIME_TRACE(0.00)[0:+];
-	RCVD_TLS_ALL(0.00)[];
-	RCPT_COUNT_THREE(0.00)[4];
-	FROM_EQ_ENVFROM(0.00)[];
-	FROM_HAS_DN(0.00)[];
-	MID_RHS_MATCH_FROM(0.00)[];
-	RCVD_COUNT_TWO(0.00)[2];
-	TO_MATCH_ENVRCPT_ALL(0.00)[];
-	DBL_BLOCKED_OPENRESOLVER(0.00)[suse.de:dkim,suse.de:email,suse.de:mid,suse.com:url,imap1.dmz-prg2.suse.org:rdns,imap1.dmz-prg2.suse.org:helo];
-	DKIM_SIGNED(0.00)[suse.de:s=susede2_rsa,suse.de:s=susede2_ed25519];
-	DKIM_TRACE(0.00)[suse.de:+]
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <20260527205711.BCA141F000E9@smtp.kernel.org>
 
-(cc'ing Aditya, Aun-Ali)
+Hello Bart,
 
-Am 27.05.26 um 17:42 schrieb sashiko-bot@kernel.org:
-> Thank you for your contribution! Sashiko AI review found 3 potential issue(s) to consider:
->
-> Pre-existing issues:
-> - [Critical] Unbounded accumulation of damage clip sizes causes an integer overflow, resulting in an undersized buffer allocation and subsequent out-of-bounds heap write.
-> - [High] The plane `atomic_update` callback incorrectly calls sleeping functions, violating DRM atomic context guidelines.
-> - [High] Mismatched coordinate space intersection and inconsistent calculation ordering lead to uninitialized memory gaps and malformed hardware payloads.
-> --
->
-> commit fc37b98d4bfc3183056fa690c4e2e659894c67e7
-> Author: Thomas Zimmermann <tzimmermann@suse.de>
-> Date:   Wed May 27 14:46:24 2026 +0000
->
-> drm/appletbdrm: Allocate request/response buffers in begin_fb_access
->
-> In atomic_check, damage handling is not fully evaluated. Another
-> atomic_check helper could trigger a full modeset and thus invalidate
-> damage clips.
->
-> Allocation of the request/response buffers in appletbdrm depends on
-> correct damage information. Otherwise it might allocate incorrectly
-> sized buffers. Allocate the buffers in the driver's begin_fb_access
-> helper. It runs early during the commit when damage clipping has been
-> fully evaluated.
->
->> diff --git a/drivers/gpu/drm/tiny/appletbdrm.c b/drivers/gpu/drm/tiny/appletbdrm.c
->> index cdd35af498920..b683dcb35b0be 100644
->> --- a/drivers/gpu/drm/tiny/appletbdrm.c
->> +++ b/drivers/gpu/drm/tiny/appletbdrm.c
->> @@ -315,33 +315,16 @@ static const u32 appletbdrm_primary_plane_formats[] = {
->>   	DRM_FORMAT_XRGB8888, /* emulated */
->>   };
->>   
->> -static int appletbdrm_primary_plane_helper_atomic_check(struct drm_plane *plane,
->> -						   struct drm_atomic_commit *state)
->> +static int appletbdrm_primary_plane_helper_begin_fb_access(struct drm_plane *plane,
->> +							   struct drm_plane_state *new_plane_state)
->>   {
->>   	struct appletbdrm_plane_state *appletbdrm_state = to_appletbdrm_plane_state(new_plane_state);
->> +	size_t frames_size = 0;
->>   	struct drm_atomic_helper_damage_iter iter;
->>   	struct drm_rect damage;
->>   	size_t request_size;
->>   
->> -	drm_atomic_helper_damage_iter_init(&iter, old_plane_state, new_plane_state);
->> +	drm_atomic_helper_damage_iter_init(&iter, NULL, new_plane_state);
->>   	drm_atomic_for_each_plane_damage(&iter, &damage) {
->>   		frames_size += struct_size((struct appletbdrm_frame *)0, buf, rect_size(&damage));
->>   	}
-> [Severity: Critical]
-> This is a pre-existing issue, but could the unbounded accumulation of damage
-> clip sizes cause an integer overflow?
+On Wed, May 27, 2026 at 08:57:11PM +0000, sashiko-bot@kernel.org wrote:
+> Thank you for your contribution! Sashiko AI review found 4 potential issue(s) to consider:
+> 
+> New issues:
+> - [Low] Missing '&' operator in lock capability expression for `__acquires` and `__releases` annotations on `ata_eh_acquire` and `ata_eh_release`.
 
-Pre-existing issues should be fixed separately.
+Is this review comment are valid?
 
->
-> The FB_DAMAGE_CLIPS property allows userspace to pass an unbounded number of
-> damage clips, limited only by the maximum DRM property blob size.
->
-> If millions of clips are provided, accumulating the sizes with:
->
->      frames_size += struct_size(...)
->
-> could wrap around size_t on 32-bit systems. Even if frames_size doesn't wrap,
-> the subsequent calculation:
->
->      request_size = ALIGN(sizeof(...) + frames_size + sizeof(...), 16)
->
-> might easily wrap around to a small value, causing kvzalloc() to successfully
-> allocate an undersized buffer.
->
-> When appletbdrm_flush_damage() iteratively processes the exact same clips,
-> could it trust the per-clip buf_size and copy pixel data into the undersized
-> buffer via drm_fb_memcpy(), resulting in an out-of-bounds heap write?
->
-> [Severity: High]
-> This is also a pre-existing issue, but does this allocation properly account
-> for the intersection calculations that happen later?
->
-> In appletbdrm_flush_damage(), buf_size is calculated before the intersection:
->
->      buf_size = rect_size(&damage);
->      if (!drm_rect_intersect(&dst_clip, &damage))
->          continue;
->
-> If the intersection shrinks the damage rectangle, drm_fb_memcpy() copies fewer
-> bytes than buf_size, leaving zeroed memory at the end of the frame buffer.
-> Since frame->buf_size was already set to the original size, the hardware will
-> read these zeroes as pixel data.
->
-> Furthermore, dst_clip is in CRTC coordinates while damage is in Framebuffer
-> (SRC) coordinates. If userspace utilizes a framebuffer larger than the CRTC
-> and applies a source offset, the coordinate spaces will not overlap properly.
-> This causes valid damage clips to be skipped entirely.
->
-> Since the begin_fb_access() helper factored these skipped clips into the total
-> frames_size allocation without performing the intersection, skipping them later
-> fails to advance the frame pointer.
->
-> Could this leave uninitialized gaps before the footer, corrupting the packed
-> payload structure sent to the hardware?
->
-> [ ... ]
->
->> @@ -468,7 +474,7 @@ static int appletbdrm_flush_damage(struct appletbdrm_device *adev,
->>   }
->>   
->>   static void appletbdrm_primary_plane_helper_atomic_update(struct drm_plane *plane,
->> -						     struct drm_atomic_commit *old_state)
->> +							  struct drm_atomic_commit *old_state)
->>   {
->>   	struct appletbdrm_device *adev = drm_to_adev(plane->dev);
->>   	struct drm_device *drm = plane->dev;
-> [Severity: High]
-> This is a pre-existing issue, but does this code execute sleeping functions
-> from an atomic context?
->
-> According to DRM atomic context guidelines, plane atomic update callbacks
-> execute in an atomic context where sleeping is forbidden.
->
-> The appletbdrm_primary_plane_helper_atomic_update() callback invokes
-> appletbdrm_flush_damage(), which subsequently calls:
->
->      drm_gem_fb_begin_cpu_access(fb, DMA_FROM_DEVICE);
->
-> This function takes locks and can wait on fences. The flush function then
-> performs synchronous USB bulk transfers, which also sleep.
->
-> Could this break atomic context rules and cause system instability?
->
+> - [Low] The `ata_dummy_error_handler` function is missing the `__must_hold(&ap->host->eh_mutex)` annotation.
 
--- 
---
-Thomas Zimmermann
-Graphics Driver Developer
-SUSE Software Solutions Germany GmbH
-Frankenstr. 146, 90461 Nürnberg, Germany, www.suse.com
-GF: Jochen Jaser, Andrew McDonald, Werner Knoblich, (HRB 36809, AG Nürnberg)
+I don't see any downside of also just annotating ata_dummy_error_handler().
 
 
+Kind regards,
+Niklas
