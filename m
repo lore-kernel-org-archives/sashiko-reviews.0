@@ -1,146 +1,196 @@
-Received: from mail-pl1-f180.google.com (mail-pl1-f180.google.com [209.85.214.180])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from AS8PR04CU009.outbound.protection.outlook.com (mail-westeuropeazon11011002.outbound.protection.outlook.com [52.101.70.2])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 83EA03B6BFE
-	for <sashiko-reviews@lists.linux.dev>; Thu, 28 May 2026 17:37:03 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.214.180
-ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1779989825; cv=none; b=Iu4Kqe4uF1Dny530cIRrQJKestKjgJ6Jush16yk5v+cURy7UWbpHTnVXeB6blhv4NBwg5VlCCyNabFIXWDqrtop1iCBvqs3wM21wmdd96a6rDFJ+QuEst83LEDucOYftbxwU4CaRL5WMG0vN98zzalE0uexCvdu00XR2UcA8MqQ=
-ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1779989825; c=relaxed/simple;
-	bh=ODRFnjIkUAQww/q3dLtAxcGbYW1BaTBmjW2k6uhC1K8=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=cF9bQSqMcdB14EQWy0FsLDRwj/qxsUY/2GeNutEwvehDmaHOr8Ef9GpTIFEQ9Ls/VSEVw1MTZ3TiSdY69qfS2lRmJ1rcRsmSmfCdierq/SaRptWqyGXFuipq3y856lEqhMeEIMrrPAqihvO2qIQ4zzuLtktRKCiC4PjjqSQoPpk=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=google.com; spf=pass smtp.mailfrom=google.com; dkim=pass (2048-bit key) header.d=google.com header.i=@google.com header.b=X3crl19h; arc=none smtp.client-ip=209.85.214.180
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=google.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=google.com
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8A09C3191C8
+	for <sashiko-reviews@lists.linux.dev>; Thu, 28 May 2026 17:45:15 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=fail smtp.client-ip=52.101.70.2
+ARC-Seal:i=2; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
+	t=1779990317; cv=fail; b=lwOf6TABlOK0Fe09kT08lVxYNHnt6yyyLkPvwOrtSjdqkPSvGi5y5EdpcS1Mn9m5tz/oChIz2wriSEt9IP2ex1oawJKGXDWCMW9oKU8aqskbNfHS0Pr6yXnYao8nKbbd5Jhkzg4cp05TFibLuVUifu2TcXZbgIVhppPfzXr2+Us=
+ARC-Message-Signature:i=2; a=rsa-sha256; d=subspace.kernel.org;
+	s=arc-20240116; t=1779990317; c=relaxed/simple;
+	bh=iIYa8J0XkmoeyNISXbpmciHstzXmlViOeZB8e0/Uk4w=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:Content-Type:
+	 Content-Disposition:In-Reply-To:MIME-Version; b=GRxKC/l89iRAH519mBPsr8YtKVXe1GJmCqYdzYjSZ7YIsNMWTAVvtzUXXOpRNoRkmJP+o0xK5pXbqrKijO6UOLqGDyzTMorouIQwTGxh2DjftyHTD6H4O/KAnqpf18VgZQFLFktLCq0sE1qdXmJJHXEsuSocZyCXilcmvzHq/WM=
+ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=nxp.com; spf=pass smtp.mailfrom=nxp.com; dkim=pass (2048-bit key) header.d=nxp.com header.i=@nxp.com header.b=eIMVTmJC; arc=fail smtp.client-ip=52.101.70.2
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=nxp.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=nxp.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=google.com header.i=@google.com header.b="X3crl19h"
-Received: by mail-pl1-f180.google.com with SMTP id d9443c01a7336-2b46da8c48eso1565ad.1
-        for <sashiko-reviews@lists.linux.dev>; Thu, 28 May 2026 10:37:03 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=google.com; s=20251104; t=1779989823; x=1780594623; darn=lists.linux.dev;
-        h=in-reply-to:content-disposition:mime-version:references:message-id
-         :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
-        bh=Qk/MAQeMcth0WKh9OHkZ/HSNe18bg7+51E9FEIaNkro=;
-        b=X3crl19hK/WIhZn10bTdJu3RpZWaBo6lwk/Xf51qWt3rsGiWl9jThRd+F7KRRqneRm
-         tEunqViaSpbk2fjBM9I5Ml786E0hQ1ldBPheAY/TTLjlGxEetReVWDO6t85oat0rffcB
-         gCi1JJUBfWfc3hxXi43W9z9Uad7lBUcVaochu7cqPKT+KL40mobOLD9Gh3+DQjDUnEDi
-         NsD2NGyoe5eO2tJ4xZ28jSJuX8m4G7k7JHejwzQuTdzdVo90UU4gC9ilFKsDUcmm4RpF
-         FNiyX92eaz6wbqKFYpcDoQ4ZOx0pkITW8EKDtl9WE/7U2/VODznpk+LE+gQqZdA7HAS4
-         O2TQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20251104; t=1779989823; x=1780594623;
-        h=in-reply-to:content-disposition:mime-version:references:message-id
-         :subject:cc:to:from:date:x-gm-gg:x-gm-message-state:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=Qk/MAQeMcth0WKh9OHkZ/HSNe18bg7+51E9FEIaNkro=;
-        b=FZPIdPlc64JVehP/OrZhHnYxkp2NqV0Tp3odODS6vFmVP0e+GvDnPnEMX1L1PUvvyp
-         dS0oSoFEJn6OlPerWIGGiXsRqRZ3INQmbm3xV+innLJnMs1oY6GAeZ7wgjdV5e2R575Z
-         KUC6gmka1ixLlt0hjDkf0G7WzUL3mZWCqMgvLYwrhjFEj17fgl2n9+j6X6kj1mKzFTY1
-         tAgzxtHAdMODaRUMVlUWZ2KfxbUMsBMbmfV5gWv2KWccivZ84yT9++l9vtV/VuKC+4c5
-         cmA/UtwLl8N8iy5PWRpYlFumiAH2+DssM6zW1VkqkeIThsS9ieN8rIIlXvhxwUjgOKoe
-         qlhQ==
-X-Gm-Message-State: AOJu0YyjcgKqgFvvZw/Q5V10VNKof8i/A1IGZtvG3XmHfI6wUFzT9UAX
-	zMO1wINDCRreQxogXZMrpb9atNwsAS/HGM5tf3sjAYe30QTw71fddy2cu0Z/Rype3czLWBGSPM0
-	jtcZ4Gg==
-X-Gm-Gg: Acq92OFuDrTlLBFZxZglhtyGOzS1t42bCQ6QLk99coHrrnR6qfvxJSrG5IIKS+70LRc
-	p4LwNnUNz25p0cWmFwj3TTh1DvEOiRtxhOrplOAVef1iTyyl0wehC2Qd19bacKw/KGRdp6RapUt
-	Ss+OAXSi1f/Ccg+M3VulGabp0L/7J6kuuMqmqzV1thy6st4kHGn/EE7ws8GDJGqxBXW5GWG901N
-	fzL6Gcu0W/+IpXymJVYvuHnjatiIBT3sOXsserWo/pEd1dfnCritjDJEGyDMJeoDMSr/GLNryFR
-	lOTcS52Rz6L2RTqAK1yKDpUWXd563nfuR8+SJZ2WUsohIoOIm92GEzu2KPHv7+8u81sfLiJjV9z
-	C8k8xXshJiFNMaaQG4h/2g5Cso6m3Z+2Bio9cUJbjkNsquBjgvtrCrgmihWHPs2ZBKPqtCw4c7g
-	hGFq9D0DjDtAvVtOcmkNsGsggpWvT91X3Jpxh0okqCcdPA9uEgiAhW6+tudooPRlgv7Xqu
-X-Received: by 2002:a17:903:2b05:b0:2bf:749:55c with SMTP id d9443c01a7336-2bf1dea9685mr19605ad.21.1779989822247;
-        Thu, 28 May 2026 10:37:02 -0700 (PDT)
-Received: from google.com (44.234.124.34.bc.googleusercontent.com. [34.124.234.44])
-        by smtp.gmail.com with ESMTPSA id 41be03b00d2f7-c852056db34sm15614699a12.27.2026.05.28.10.37.00
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Thu, 28 May 2026 10:37:01 -0700 (PDT)
-Date: Thu, 28 May 2026 17:36:57 +0000
-From: Pranjal Shrivastava <praan@google.com>
-To: Baolu Lu <baolu.lu@linux.intel.com>
-Cc: sashiko-reviews@lists.linux.dev, linux-pci@vger.kernel.org
-Subject: Re: [PATCH v4 4/5] iommu/vt-d: Fail probe on ATS configuration
- failure
-Message-ID: <ahh9ORDm6EcQ7aKS@google.com>
-References: <20260525184347.4059549-5-praan@google.com>
- <20260525205628.CD4431F000E9@smtp.kernel.org>
- <17ab0d76-6df7-48f6-a7fd-387934f95c0f@linux.intel.com>
+	dkim=pass (2048-bit key) header.d=nxp.com header.i=@nxp.com header.b="eIMVTmJC"
+ARC-Seal: i=1; a=rsa-sha256; s=arcselector10001; d=microsoft.com; cv=none;
+ b=SFTMwgByKfmo2zwyvKYNfcrCyhkjdw54kmvrHu8GUyZt15f7yKnbc22ppwfHJaDsWa1fkjD8o+uusaPsBFxWxL9Ty2lOagaf793FiVRj4uDAqZHVsoBZrkzSF/mIxlj6B4nOitJ39WJDT6h380s/QDW73oCsRk3OMCyLDkRyiZuPGAEYiydGPjtux2Kbv+lcPa0T9F2it/wUB54EZs4EKWPou6sh4G/IdXek/8g6vcpR1YRBZc6kS6ukCnrD0FtyB7QnfhIwYRmilo6xdk2ZwNmadXBtNwYQvpxFRfIQr4qYcDfnBxKI+9pzdlPM1ttOaRweHGCuKGSdfu8CDeNfng==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com;
+ s=arcselector10001;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
+ bh=tu5OS5PXi4MWBspkj/k5ojnWr8etTeWcSlCsQ03Kd0o=;
+ b=dAbaQXBhqT/3gbSofkr2iux5UjE5j4G25JhSFFtRillkABpaEXR4MMgDDMI4UnxAS5kgMu7onOPy2tr+EoeQEPlV4XC/+iDAWkBb3Ih8dN8iyGCA5/KtCPW/tRucm0aKMNodf/xeWY3jg0j0B4I/p1v4Q7XSg3ZwykPgzuRldeSG+efoVz912lcCVv0ECDdJMpqqSQQIKkUaXlTmkQ+mksWvtgbNSet8hU9NWKdmkzvB9d38bdERxCq+sM/y2Ab2YKXJj4popzYmeCusGIi/YmIc/Ywg4z0dfqTyAwUakMrA6+ff8rgUVNUsuyBErTrvBEJvjuMYWnbKKmcHNYohvw==
+ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
+ smtp.mailfrom=nxp.com; dmarc=pass action=none header.from=nxp.com; dkim=pass
+ header.d=nxp.com; arc=none
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=nxp.com; s=selector1;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
+ bh=tu5OS5PXi4MWBspkj/k5ojnWr8etTeWcSlCsQ03Kd0o=;
+ b=eIMVTmJCrc2fIVmGn9c5d3D32633w/MZOxDolyXgcxvuirufzRI7O7QGu4f4nwUVERFPprJjIQuHdHvYJKZRHwuHHBOnYssNvcIntJs71a/7TUmoKUo0I4+AECgw5k37UW9d4HATJRxD9qSbpff2w4ODlocYvMUT/lV+PLAMM1FGpZDlXb9zZGlbm7/dBMjvgZ/pqXgoazCatmd8QTmIm03CaWoh+oZBqCz7OYeHNG84nOo548lvg5YfJ/mzpS9Uu8Nfh2Y6HXsoCNrc7WIVL89+KuZYuAMkvlo7eE5hLZvzKHNnSK0XQVFhFip2VAcsNnPNwuNvU1Z/bFoxOeWl/w==
+Authentication-Results: dkim=none (message not signed)
+ header.d=none;dmarc=none action=none header.from=nxp.com;
+Received: from AM0PR04MB6900.eurprd04.prod.outlook.com (2603:10a6:208:17d::10)
+ by PAXPR04MB9374.eurprd04.prod.outlook.com (2603:10a6:102:2b4::11) with
+ Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.21.71.14; Thu, 28 May
+ 2026 17:45:11 +0000
+Received: from AM0PR04MB6900.eurprd04.prod.outlook.com
+ ([fe80::7fda:8431:ca1b:b023]) by AM0PR04MB6900.eurprd04.prod.outlook.com
+ ([fe80::7fda:8431:ca1b:b023%5]) with mapi id 15.21.0071.011; Thu, 28 May 2026
+ 17:45:11 +0000
+Date: Thu, 28 May 2026 20:45:08 +0300
+From: Vladimir Oltean <vladimir.oltean@nxp.com>
+To: sashiko-reviews@lists.linux.dev
+Cc: robh@kernel.org, devicetree@vger.kernel.org, conor+dt@kernel.org,
+	neil.armstrong@linaro.org, linux-phy@lists.infradead.org,
+	olteanv@gmail.com, vkoul@kernel.org
+Subject: Re: [PATCH phy-next 01/13] dt-bindings: phy: lynx-10g: initial
+ document
+Message-ID: <20260528174508.bqu6ks4rgkysvgdg@skbuf>
+References: <20260528172404.733196-2-vladimir.oltean@nxp.com>
+ <20260528174044.EBE8A1F000E9@smtp.kernel.org>
+Content-Type: text/plain; charset=iso-8859-1
+Content-Disposition: inline
+Content-Transfer-Encoding: 8bit
+In-Reply-To: <20260528174044.EBE8A1F000E9@smtp.kernel.org>
+X-ClientProxiedBy: VI6PEPF000001FB.AUTP296.PROD.OUTLOOK.COM
+ (2603:10a6:808:1::909) To AM0PR04MB6900.eurprd04.prod.outlook.com
+ (2603:10a6:208:17d::10)
 Precedence: bulk
 X-Mailing-List: sashiko-reviews@lists.linux.dev
 List-Id: <sashiko-reviews.lists.linux.dev>
 List-Subscribe: <mailto:sashiko-reviews+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:sashiko-reviews+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <17ab0d76-6df7-48f6-a7fd-387934f95c0f@linux.intel.com>
+X-MS-PublicTrafficType: Email
+X-MS-TrafficTypeDiagnostic: AM0PR04MB6900:EE_|PAXPR04MB9374:EE_
+X-MS-Office365-Filtering-Correlation-Id: 2d24f0ec-63b6-4606-c6ae-08debce0dde9
+X-MS-Exchange-SenderADCheck: 1
+X-MS-Exchange-AntiSpam-Relay: 0
+X-Microsoft-Antispam:
+	BCL:0;ARA:13230040|376014|366016|10070799003|1800799024|19092799006|3023799007|11063799006|56012099006|4143699003|22082099003|18002099003;
+X-Microsoft-Antispam-Message-Info:
+	mwcXF0Ofg/tKbUwj3lqi6z3Hd/QdF7hUi8slHKK43U10z/mpIow9RgK2qwkXELETcTBTv/Ffdjrxg5bpAw1+GYo73c46nhXsvRgBWm8AwjWCBlA57xxv9/41Pnrk7hEDxtCaOu1YV4b5L6PpVtLw7RGa9ndOJrufXJXzq/wSqBEoggitGd318zvE0QXGSpR/00woIxuWPFQ0kkBnM4AF2612LXOEEgmCfkX38o60FzITEj74LnL1mKeQYmmYZqhrVdXHhuAokbVhxtEiQYWeVSIS/FBsNv+PDioWpyg14Qqe5utoMMprgi4bcNhOmkXX2uHDgeYlKXZqEqrH12u4QWdTutTMu+4usscKGBD2FLuLFcXjD861ozY9WKEY7S2jO8voUH/RIKL5AfaKYWAoVq0gDqDOR3nO3YJ3JgUSPIyEypYxap12glIYEM2g9OMiVdp5NgqcaMWlCExfTfprOxG4nxQw3qLBz9NXSaGDITQv2sgvp6zQAJiCr1IXmPaulAKORGQGQ415GMGzx5WhWmsvlOo0HaxJAw9NU0bG2H9ssKwx0HqYA2QKsh/zUqPIzJVOSmu3oO3Ky0eGhRlwx0Fze423Eb/bYsqD+qjiNYmhcGjhPKjYWur9bEY5aZQ+FTwXaskSWm9s/nZBKNrLbA==
+X-Forefront-Antispam-Report:
+	CIP:255.255.255.255;CTRY:;LANG:en;SCL:1;SRV:;IPV:NLI;SFV:NSPM;H:AM0PR04MB6900.eurprd04.prod.outlook.com;PTR:;CAT:NONE;SFS:(13230040)(376014)(366016)(10070799003)(1800799024)(19092799006)(3023799007)(11063799006)(56012099006)(4143699003)(22082099003)(18002099003);DIR:OUT;SFP:1101;
+X-MS-Exchange-AntiSpam-MessageData-ChunkCount: 2
+X-MS-Exchange-AntiSpam-MessageData-0:
+	=?iso-8859-1?Q?zeSFYrJVO/1oys7g5q+11aRfW70mPouVQCjB8YHNJH9UZzp/4IrWFpz3iy?=
+ =?iso-8859-1?Q?BEDeOQEipUBWu024njCt+pl0o4adsCWr01WOrVh1gUZ6KBam5gsKYXX+Vp?=
+ =?iso-8859-1?Q?Uk2JqVVpXHiKpeQx+Otd4crSh7oS8zRgn83xnWZZwjAThZAXXXv0T6no+B?=
+ =?iso-8859-1?Q?cA9YVZUyAhE6pJ6G+94SZIXWqbaOO4u3MboZf9hr5iP7dARPDRlrI8mNH6?=
+ =?iso-8859-1?Q?kG4wz1arp6vNHWAQB9U8Q7vPdNJXrw9WogTeoo/KhoQ/KbNfaa3kyh6LGT?=
+ =?iso-8859-1?Q?muOTF+upDYblPRnNRKPYVG779fxGPCpFps1El/pCERtf6BvGROdxZyVrKS?=
+ =?iso-8859-1?Q?GYUD/LpA9Fe1fg9HBiGqQlvqKuyC9toYXV5tBEgoPukbv1QqXg/nJz55KU?=
+ =?iso-8859-1?Q?cslwMpUnHsrfm1uzXQZrHw45Eov5TVuocQ5yOEDRaxxcxthbjBxAYlxBDg?=
+ =?iso-8859-1?Q?nedxX1qhY+gLGr8D0yz1zvrGmIwYFqNZzDkZn+2miZ8n6Y0lPtE5Z2rLXk?=
+ =?iso-8859-1?Q?CZT8PDxmrcvfb6ElzxmW4my6zQa8B/0Pe57Dy/5aIIyLhLEWJqr/rYQ6HV?=
+ =?iso-8859-1?Q?9mdF4PEZpUT6lOrWvZh3uN5KG8Yv+ghaWakZoUV74RmQwMbE/N6zfpRMzL?=
+ =?iso-8859-1?Q?9UjuTjFMGpgRjsiGmu8VO/zbcTKbojtzEsL+p6ml/xWzrUDfuBBq7Rx5+5?=
+ =?iso-8859-1?Q?GRp7O+z/jsm71qpPW82T0ibLFVNeF7Rt51DeK9W4HPFN/TuffEyXK9oqfk?=
+ =?iso-8859-1?Q?10TMZRgtgrm30xJ1ROm5Rlu8CtHckps60PcBFfElJzv5kMFIxGCL0ND1gu?=
+ =?iso-8859-1?Q?Q10ZEzhnflas1vIYpIjzP/Lyc3UubuPXyOhNLxTH/GLiMfwVhXNQOwt4Ke?=
+ =?iso-8859-1?Q?B6zdJHhSGMtgZjPbdGlHbgxaHqaRuTbD+7hNK+PxLGomGW+OZ6N0IF022J?=
+ =?iso-8859-1?Q?k2Ji0ZHT7LZ4A07J70cPT634ggC/z8/Ixwu+GJA9WY9tx0tETBV0wts5sg?=
+ =?iso-8859-1?Q?PviBjwTbvM0u5XYxpzCa44pbm/d724QLE/jJ+A4UrhF0qND4rGUKI46Xf/?=
+ =?iso-8859-1?Q?+tv0/L2+nmzxCINbxPBlL4w3uoTzcusD/NCT9s7HuO5O2zYtUGJ8JQLEJ8?=
+ =?iso-8859-1?Q?SzBGrz0LoDSRKch3B6b6vbZA/MRnGAS+6+vFy+tZUKZcifCcQv81e6QBKy?=
+ =?iso-8859-1?Q?LXd1PF9s17S1++qQ+EpCbbu2YFJBRbaH4PZuhnUBskadnu9tLWXw8Vo1iv?=
+ =?iso-8859-1?Q?1iw774jYJx6MYW0srspEWb8DMCfeqr9ZxfGITohSkTBmNSCQAQsyHtI2me?=
+ =?iso-8859-1?Q?PY/7TrtIIl48wRFerpfOdIolXtwLjIO/JTEIu5fvaJ1uwy3l15NKoPK+3K?=
+ =?iso-8859-1?Q?F/DYNDbZLByPzUn+1ptORKtpe4zmmOD6GivufoRrngC2OWif3rUSJxCNTV?=
+ =?iso-8859-1?Q?NqMxR1D1qHlypXjR7rE5VCrtfS/afyh2I9XOdTR+0qD/JFOSOs2dBwZUC4?=
+ =?iso-8859-1?Q?jIdCi51+pCObiSFRGxZMyBo56Z7oSl+jT0bxUK1/CWQkh9mj1jDvX78/XX?=
+ =?iso-8859-1?Q?uVRqpOdbs5vp1pM2fkLsYPSuJQtHbtbFxUB98WhP63YDPIA2o4c36X5KaL?=
+ =?iso-8859-1?Q?nMNvjhp2slve/h7gBP5Kb/EeiWkAnaGq1k7sLWIOeC8AI+9u6JeO4UYIz3?=
+ =?iso-8859-1?Q?V9EqUSB4i4RHE1TRGJwZJL/jc5hAaQBNFYjnl9vd75rqDK0sM7hkXMXba9?=
+ =?iso-8859-1?Q?yMhBsvyR9zrb2GwRjbHnYTlMzerAemh7ctl9nOqoPxLPsL6BZBP1JwfeBM?=
+ =?iso-8859-1?Q?n4eOV1ICAMRowd7eFrYHSwFn00CsEp82J4adXG2lEswV3ndrYJ2MUzcBkW?=
+ =?iso-8859-1?Q?vD?=
+X-MS-Exchange-AntiSpam-MessageData-1: +FHPc31bpiBV+escswbv1MO4wfqbfBCLAEg=
+X-OriginatorOrg: nxp.com
+X-MS-Exchange-CrossTenant-Network-Message-Id: 2d24f0ec-63b6-4606-c6ae-08debce0dde9
+X-MS-Exchange-CrossTenant-AuthSource: AM0PR04MB6900.eurprd04.prod.outlook.com
+X-MS-Exchange-CrossTenant-AuthAs: Internal
+X-MS-Exchange-CrossTenant-OriginalArrivalTime: 28 May 2026 17:45:11.6016
+ (UTC)
+X-MS-Exchange-CrossTenant-FromEntityHeader: Hosted
+X-MS-Exchange-CrossTenant-Id: 686ea1d3-bc2b-4c6f-a92c-d99c5c301635
+X-MS-Exchange-CrossTenant-MailboxType: HOSTED
+X-MS-Exchange-CrossTenant-UserPrincipalName: sb0mCzeIWXCPLgmfXgp+4INSQy8u0AoXHvzCa569zCYs4fWYX0bF7gVTZD6iFE/j0/ut9cHN5YOczHy4Zg/A8w==
+X-MS-Exchange-Transport-CrossTenantHeadersStamped: PAXPR04MB9374
 
-On Thu, May 28, 2026 at 01:19:13PM +0800, Baolu Lu wrote:
-> On 5/26/26 04:56, sashiko-bot@kernel.org wrote:
-> > > @@ -3288,7 +3294,10 @@ static struct iommu_device *intel_iommu_probe_device(struct device *dev)
-> > >   	dev_iommu_priv_set(dev, info);
-> > >   	if (pdev && pci_ats_supported(pdev)) {
-> > > -		pci_prepare_ats(pdev, VTD_PAGE_SHIFT);
-> > > +		ret = pci_prepare_ats(pdev, VTD_PAGE_SHIFT);
-> > > +		if (ret)
-> > > +			goto free;
-> > > +
-> > >   		ret = device_rbtree_insert(iommu, info);
-> > >   		if (ret)
-> > >   			goto free;
-> > [Severity: High]
-> > This is a pre-existing issue, but does unconditional removal of the rb-node
-> > on the error path cause tree corruption for non-ats devices?
+On Thu, May 28, 2026 at 05:40:44PM +0000, sashiko-bot@kernel.org wrote:
+> Thank you for your contribution! Sashiko AI review found 1 potential issue(s) to consider:
+> - [Low] Invalid JSON Schema syntax for the `reg` property constraint.
+> --
+> 
+> commit e219405276839837989c30627d109ff39c15e361
+> Author: Vladimir Oltean <vladimir.oltean@nxp.com>
+> 
+> dt-bindings: phy: lynx-10g: initial document
+> 
+> This commit adds a new device tree binding schema for the 10G Lynx SerDes.
+> It defines the register map constraints and allows flexibility for the
+> #phy-cells property.
+> 
+> > diff --git a/Documentation/devicetree/bindings/phy/fsl,lynx-10g.yaml b/Documentation/devicetree/bindings/phy/fsl,lynx-10g.yaml
+> > new file mode 100644
+> > index 0000000000000..993f076bba4e6
+> > --- /dev/null
+> > +++ b/Documentation/devicetree/bindings/phy/fsl,lynx-10g.yaml
+> [ ... ]
+> > patternProperties:
+> >   "^phy@[0-7]$":
+> >     type: object
+> >     description: SerDes lane (single RX/TX differential pair)
 > > 
-> > If a device does not support ats, the info structure skips the
-> > device_rbtree_insert() call here, leaving info->node zero-initialized.
-> > 
-> > However, if a subsequent operation like intel_pasid_alloc_table() fails,
-> > the error path jumps to clear_rbtree:
-> > 
-> > intel_iommu_probe_device()
-> >      ...
-> >      clear_rbtree:
-> >              device_rbtree_remove(info);
-> >      free:
-> >              kfree(info);
-> > 
-> > Calling device_rbtree_remove() on this zero-initialized node causes the
-> > rb-tree logic to treat it as a root node with no parent, ultimately
-> > overwriting the actual tree root with null and corrupting the device_rbtree.
+> >     properties:
+> >       reg:
+> >         minimum: 0
+> >         maximum: 7
 > 
-> Perhaps we can fix it like this?
+> [Severity: Low]
+> Will this cause a meta-schema validation error during make dt_binding_check?
 > 
-> diff --git a/drivers/iommu/intel/iommu.c b/drivers/iommu/intel/iommu.c
-> index 4d0e65bc131d..849d06dfe1ae 100644
-> --- a/drivers/iommu/intel/iommu.c
-> +++ b/drivers/iommu/intel/iommu.c
-> @@ -157,7 +157,10 @@ static void device_rbtree_remove(struct
-> device_domain_info *info)
->         unsigned long flags;
+> The reg property is parsed as an array type by dt-schema. Applying minimum
+> and maximum directly to an array property is invalid in JSON Schema, as those
+> keywords are only applicable to numeric types.
 > 
->         spin_lock_irqsave(&iommu->device_rbtree_lock, flags);
-> -       rb_erase(&info->node, &iommu->device_rbtree);
-> +       if (!RB_EMPTY_NODE(&info->node)) {
-> +               rb_erase(&info->node, &iommu->device_rbtree);
-> +               RB_CLEAR_NODE(&info->node);
-> +       }
->         spin_unlock_irqrestore(&iommu->device_rbtree_lock, flags);
->  }
+> Should these constraints be wrapped inside an items list?
 > 
-> @@ -3254,6 +3257,7 @@ static struct iommu_device
-> *intel_iommu_probe_device(struct device *dev)
+> [ ... ]
+> > allOf:
+> >   - if:
+> >       properties:
+> >         compatible:
+> >           contains:
+> >             enum:
+> >               - fsl,ls1028a-serdes
+> >               - fsl,ls1046a-serdes1
+> >               - fsl,ls1046a-serdes2
+> >               - fsl,ls1088a-serdes1
+> >               - fsl,ls1088a-serdes2
+> >     then:
+> >       patternProperties:
+> >         "^phy@[0-7]$":
+> >           properties:
+> >             reg:
+> >               minimum: 0
+> >               maximum: 3
 > 
->         info->dev = dev;
->         info->iommu = iommu;
-> +       RB_CLEAR_NODE(&info->node);
->         if (dev_is_pci(dev)) {
->                 if (ecap_dev_iotlb_support(iommu->ecap) &&
->                     pci_ats_supported(pdev) &&
+> [Severity: Low]
+> Could the same meta-schema validation issue occur here? 
+> 
+> Since reg is an array, perhaps this constraint would be better enforced by
+> rejecting invalid unit addresses in the then clause entirely, for example,
+> by setting "^phy@[4-7]$": false?
+> 
+> -- 
+> Sashiko AI review · https://sashiko.dev/#/patchset/20260528172404.733196-1-vladimir.oltean@nxp.com?part=1
 
-Ack. Yes. I'll add it to the next version.
-
-Thanks,
-Praan
+We have the same pattern in fsl,lynx-28g.yaml and it didn't cause schema
+validation failures there.
