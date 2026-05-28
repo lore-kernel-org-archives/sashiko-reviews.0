@@ -1,174 +1,453 @@
-Received: from mail-dl1-f53.google.com (mail-dl1-f53.google.com [74.125.82.53])
+Received: from mail-pl1-f174.google.com (mail-pl1-f174.google.com [209.85.214.174])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 67BD513DDA4
-	for <sashiko-reviews@lists.linux.dev>; Thu, 28 May 2026 21:31:56 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=pass smtp.client-ip=74.125.82.53
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3F0FF364022
+	for <sashiko-reviews@lists.linux.dev>; Thu, 28 May 2026 21:55:16 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=pass smtp.client-ip=209.85.214.174
 ARC-Seal:i=2; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1780003917; cv=pass; b=IzB1iccxJYC/0JLoYCFzPBuXuFfn4/YOEFJXR6rkEgvWr4X8wPoattx1rNqFyxbf7qXyHfZUhSyy3lCMKgk1Q3TZq0jaezfxeVhlNi4KAxYoKCLmI381erUnYTV8rEJYiP8xrj65cknSo64kexhcebJQtjMkzPJL8rEQvBOS7YU=
+	t=1780005317; cv=pass; b=JAQl+IxXcJHNF5jdGtdBYCd7B/VfGmmsQzwpHHtkkjZ1byHYbNpaKOErLkcjey1t+kveB7r8JvE7I+oQ8p4OcEYP3/87CLDMRK0uLxLqj33DdwQwOcgJhctNbEhtToLNxNSB+/QR+0/IGAiRKEgpfMkgSYC+kMw/SSZ/KUrR6lQ=
 ARC-Message-Signature:i=2; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1780003917; c=relaxed/simple;
-	bh=6B3DiZENPJKZU35Mh1YH01Eo/iEF+k7/1+GyXwN5yRU=;
+	s=arc-20240116; t=1780005317; c=relaxed/simple;
+	bh=6C1SkucgxIRgh8lt1DRB1Efmc3TWLp5H9wprnYVDIXY=;
 	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
-	 To:Cc:Content-Type; b=aUVjnORYvLhK6+b0jv95XJcEjiA0t3mpwR8tgzAbC06HfhXGls1NZhq3JSnyL1wgO2BOmJjgPMmAVZxfR+ZisLyDnQ1kCuHbjIUbu3k1GZYpXfdwPWPsJpGiiW6G8PluMaCpdift1lf3eNiOsrEdSPXxlngBCxZbrLf1OHGd5Uc=
-ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=google.com; spf=pass smtp.mailfrom=google.com; dkim=pass (2048-bit key) header.d=google.com header.i=@google.com header.b=NZmt57kv; arc=pass smtp.client-ip=74.125.82.53
+	 To:Cc:Content-Type; b=rJi2nAa89RttkitLt7EDrE544NLFubAbp5jDLdPNP1d1S9xbgvNE2o/UJ0Pykn3L+2DqSb2mnPqBqrUvfarCKXXpQGK0AMLOzO57MdD13WBbxI/Mtq+tmZ45Ycw+GolnDwf+GIL4C7QeQHbk/ZArw/9oUtHT+760NowA9+8KBgY=
+ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=google.com; spf=pass smtp.mailfrom=google.com; dkim=pass (2048-bit key) header.d=google.com header.i=@google.com header.b=q60ByvIn; arc=pass smtp.client-ip=209.85.214.174
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=google.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=google.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=google.com header.i=@google.com header.b="NZmt57kv"
-Received: by mail-dl1-f53.google.com with SMTP id a92af1059eb24-1370417c01cso5851094c88.1
-        for <sashiko-reviews@lists.linux.dev>; Thu, 28 May 2026 14:31:56 -0700 (PDT)
-ARC-Seal: i=1; a=rsa-sha256; t=1780003915; cv=none;
+	dkim=pass (2048-bit key) header.d=google.com header.i=@google.com header.b="q60ByvIn"
+Received: by mail-pl1-f174.google.com with SMTP id d9443c01a7336-2ba180a022dso735ad.1
+        for <sashiko-reviews@lists.linux.dev>; Thu, 28 May 2026 14:55:16 -0700 (PDT)
+ARC-Seal: i=1; a=rsa-sha256; t=1780005315; cv=none;
         d=google.com; s=arc-20240605;
-        b=NApNfyNgDAJGv9iRbJ8/S+0ZPJcCAU621Y4XtUGQ/RRTG4lfsDi7wj9kd4ZuUdzor+
-         4H+XPvmoPAj3Hl9uCIGBX8BRlgvVdar2i7osJKsgv9SceqLhFpzchBda/qgJC21Lu6D/
-         r8+7YMTBHtuENw0KWmoP9A9xslxWmhXVx4+T16n1ewQhsBqMn/Uv05QMHSPbynwSrS6L
-         ZA3WEB9Iq1mpO8qOoGR1UoCCQ1psrpw35+4qCmcu4KMhvJi2miI5fbul3+gQfYhFmNON
-         lMRr/XT2uJ1hg8xQOkeN75pP1Ikr/Y8hlARY+JxcniuKTfNC4nZp2U/QQ6igYkoagmzQ
-         lR5A==
+        b=PXSt70zRldWCGbmNmxW3dMxkftQYs7GUHUSniswGo5QDdvHYH2elHTPqrVQIkTUkey
+         kkrGzfkwdhldYOkYwtH88fp6wyUCzCr7KJm7/xah88F/Wamajj4gq6LaOuRKwxIYT9ph
+         fZ/EZZH9RkazCusJiHVLrENIY03EwjCd04W6zRCdGguOG5pp4aUMn9DTJuoPRdi720Gc
+         BD8T9v6cgX8694nzE8ojzEYyQZczGrbO1tzhpCDTLhSLiT8o85NBeT0Ljngdi5GeEKBy
+         UOutVA3/rXbVpHqM+v594pH8/Ag+J8eM8sJUq8jBUDFzNmCerVvOvSLOAriaa8GpvzCn
+         dAog==
 ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com; s=arc-20240605;
         h=content-transfer-encoding:cc:to:subject:message-id:date:from
          :in-reply-to:references:mime-version:dkim-signature;
-        bh=/RhTlmb6yp6u74xKfUUPWy3UF0l67fTPbFlglmRNEoM=;
-        fh=0zVHGC//SC94CWFKHtFt4lnskmkXkJNNy7lE0FDd3Ck=;
-        b=T5azhyxPwoxVz+zWjgDFv041rmyJ2r7JsxkXWWFVWGZJ9KUrhUgOZ370BRxndp2aqC
-         DNiJ+IsnEWI4QtEKqLEm3BbbyTDAbG0qftwRQncq8skdWn+fCD7xX1LOrxVyfBOKdY3Y
-         ZdIzg4Ls703TGpJgI5Ob+GWG9EOA5kwZ19J0L54PoLMcG/dqFOuWvh5js4HwA4eWj6c/
-         yOZvyOhexwFhl9fak9eBYjiUXsmN4IxOYLPmM1TUqa6HMOsW1qfcrauTDLX/h1Yz5sHD
-         0H4gUldMDQArpVZEvz5itJnGlTVWiwv7qr8+xR2MVaGIONIIdxznM1qZ+F/k5NB5Jf0I
-         q18w==;
+        bh=ws7d69lMtPQ91m6dq3P8VaFiaUHwV7Nm0Cg3pImGu8Y=;
+        fh=tsHcKVrpnpAKnyYkrc+XKQaIxDpyCOkiv4Xh71YW6rk=;
+        b=cLWc76oCMacpc0LiJHXKrZsau88sLTTI83XVJSaXJIQ+aa4aIWtHMb2z4Y/bYA5uHr
+         4PnWAAR+OPmdzyUvtkC20qsz6GD0p5OwFMiegLJLRQuKcLLRbzNMHPsMfTohPqkm+A6Z
+         BVZ10lmZQTwHomrgjpfBBKtqjyMWjBxTHcyLOf1JQHBHw0KtjlleistL+47enAz3WUa0
+         DbSuuXnbuWyKUH60w+WlkRfNHmD0nrYLHqKfjjEdwaPDdMmD2oorMX/l4O1KSFVedyno
+         q+FQj9H6J/0PNHS7yD3KEr+uqpxqDSBlCUB+LoZJpFBC2XvG03SBnnmoJ/RgBiINF68u
+         70AQ==;
         darn=lists.linux.dev
 ARC-Authentication-Results: i=1; mx.google.com; arc=none
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=google.com; s=20251104; t=1780003915; x=1780608715; darn=lists.linux.dev;
+        d=google.com; s=20251104; t=1780005315; x=1780610115; darn=lists.linux.dev;
         h=content-transfer-encoding:cc:to:subject:message-id:date:from
          :in-reply-to:references:mime-version:from:to:cc:subject:date
          :message-id:reply-to;
-        bh=/RhTlmb6yp6u74xKfUUPWy3UF0l67fTPbFlglmRNEoM=;
-        b=NZmt57kv0UcaDjxyBHRlXgRRmrqoAZaFvBPeh4bght5Oz6msy2xSCdpH8teKhFV0hS
-         mBt69sdYxr6XyetCmjOC1eIs2UUxKH3pWuKvN+bgWBZroBkAOhy7lv+B62mertD4QUyB
-         kEThbWp4fDpnYwQw6flLnUp1yZykWGJuNfvmuIhKx3dA3+mgThjdw4agpuAcVLLE8vJW
-         EcIKmwUfr8lY93UwUfz6xqocKC3OAnURLtPxaLB3Hl4J1KVIfLiQwB3bHa3mwOVdK47z
-         Rii0Bn1rPnRyRiK1I5esb4UxMUcbsBqaDFiSjBhPgPxa+iKjMi8IOnvEyjU8SYrGkAMP
-         52wA==
+        bh=ws7d69lMtPQ91m6dq3P8VaFiaUHwV7Nm0Cg3pImGu8Y=;
+        b=q60ByvInEgQpuf3zz4ldM8wvyZClZwxvAHeuZxT2Jtb27u+LSLybpT0PLFqueIx0zN
+         1x5SFjRIiZ/ukunW+rZ2G1NBUD3wwgNgFjUafiHpGK57iiZqKWeNiy07XvKc2rvgI7+f
+         4wrWa81lfadiguZa5t3glDytqQ8ICtihxCZdS2D/wFddKnVVfcDBCFItyjz8pqFpObm3
+         s42ZNN6PhzlgXwK6l2bPimFOukVz1r6B5y2yYa42sAcHNEegEyJhY16bhnGYLh1UdPAh
+         P+tipmtwKFBSvJj4v7nslXDntTp+hvteQpo50XERW6B0Pg1p+EhPYSMvSu0le0wuwsWJ
+         plIA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20251104; t=1780003915; x=1780608715;
+        d=1e100.net; s=20251104; t=1780005315; x=1780610115;
         h=content-transfer-encoding:cc:to:subject:message-id:date:from
          :in-reply-to:references:mime-version:x-gm-gg:x-gm-message-state:from
          :to:cc:subject:date:message-id:reply-to;
-        bh=/RhTlmb6yp6u74xKfUUPWy3UF0l67fTPbFlglmRNEoM=;
-        b=Z7ssgUW8ycFnrvBr6Wa7C1XZV48tlBMbZNnT56S2IGIwhc/Pzo/S2oJbu+ex4xkwMT
-         Geyciurp7owdrhoLzP+5V1cCZ9N8MEbuDBjuTrWvTe1ns8uEGJ1OTG30HwLPLQzegIW7
-         r4E8Thi5K5fID6rmnFijnoM0BfhLcY71j2nzgGhA4tJmOVvHC2KKbgB6za2ZvQIQ/1AG
-         qPTwM4Gd3gmqNGybmSzEWyFI4buqu3UFlFoSW5Lgihrn0MvgkyGFBdWpf7dNEpnTp+6Y
-         R3CRf/fZCjqOiG2+POkX6oYk3/+LgMR5STnCFAs8bdoXuo2S0NU80neOZTPDWStgi4Wm
-         B9lg==
-X-Gm-Message-State: AOJu0YznreMJO7b92WZ7t1Xc61i3aLd1NDbIF2CEHijqMKD1sncWKgs6
-	wVsDrf/znk88TAQuA55kbgPwoCjZIOTkGuD+qznxX8HEa2UDqAsEI7xas90GgImoMia8RwMarXc
-	DHKeYeQESBoHE3gz4eyhkgmsYdsy7fK5JIU+YK62pjljO5cRKhv0V1tZs
-X-Gm-Gg: Acq92OE62rzGnZ+c5VoNdiXd/cOVkD46kZ9kUnMgFHqkJConRP76HL3szwsoCPHxgTi
-	BzF97kUjBN6pmvN5GPtaZCbydNxiu6gul45Nqy+cRngfqrDAEckDE80KcAOPj9ojcXlAH6HKlzk
-	PrCz+Hc+9FH2Kp9r1jYFMU0t1RR+BzoY6mKI2Pi/1+oZ+yB6ES4BWlGQKwrI+E4facqdrUgBnqI
-	y7FJb67VeYqNjDH8nGdlU2StzLmeVpZIcrvmSXq1TnGFpGMVI4E/SH0ZisQm+E0bY+txYOcB4W/
-	HEA92YXe7XtPBJhQ
-X-Received: by 2002:a05:7022:226:b0:133:3bb1:8d40 with SMTP id
- a92af1059eb24-137aecb4d6dmr73964c88.15.1780003914784; Thu, 28 May 2026
- 14:31:54 -0700 (PDT)
+        bh=ws7d69lMtPQ91m6dq3P8VaFiaUHwV7Nm0Cg3pImGu8Y=;
+        b=P43YZ3+t6bOxDV2dZislWhmOamTkb6cZz9XqAP4Uo/dT1lU27xuY83NqzsnzixkGs2
+         x9ZPN7Ln2YumXdELdonRPR0QCNxI3qyxcqZDcBjlxgMlM0DNKduNiRl1e9GatZAlm8Y1
+         lkDz9PCz9Rm5chUuZZEfMXKIoOzL2pVZvXhc8Ow6kd+A2byt9u0RcfPSnR4JHV/dBDlH
+         y4sdQtYFRbxYy3S52D9fLUDb8VDIN3CLViVq8m2xoEzVE8Ut4blKwnsq1rtAzkMRCSl2
+         m4o446/7stvioUy/Mrg9MYHKnbg/NYiZd8W8wzz2Ic2QhV7hm7tk0WyETMkN8YsRKKQW
+         HNyA==
+X-Forwarded-Encrypted: i=1; AFNElJ8YTOrIB5Uh1XpUc1Ew50M82GQPjiRH2zauaG+unE0w35+jHDiv8xotyA4nTCN0/e2xjMY6w2BaR6XNOEgN6j0=@lists.linux.dev
+X-Gm-Message-State: AOJu0YyDTi4ITn8foFOQx1EVTNqxhEd5LNqCSLE89u992hvUYPN3fvj7
+	W+hUysHPOvm1H6jaziBpJBv5s0aBXugIvkmlme27hyByjlbnznc6iCw3LUb/tZ7/6gGIopWu/8Q
+	QKThcrszgBsIR4BiwCN5f0vQwslXxXnqA2k9Gblqj
+X-Gm-Gg: Acq92OF3rpDuaucETbD6J08kjZwvQHin1uFK9aGnQG9+/IUEXnWzR2i3t86TRqs3v12
+	04ffJkKFt9le/ULhtpyjGg6TABstAUCm4N7ALYT2oQi7UV2Zpr9d3PHaD+Xmv4vUVUZ7TkSeEA0
+	ag87o7o4pUbPWZUH3gQDlzAmm50oWMDTXphSgvdZYGahKVGZDmaGweifdspyCTiJuzvy7Kdeo3S
+	JgbrCAQrzT5sYyYdRhRL8gWd+mk5pymj8o+6oyZY7MxSQnypFZeZQyQ25uYPW9Vy/H0PRxeMyaF
+	eTCjoKer5C+bfEDUM3c=
+X-Received: by 2002:a17:902:e741:b0:2b9:a39a:e5db with SMTP id
+ d9443c01a7336-2bf20d0caa8mr210575ad.7.1780005314900; Thu, 28 May 2026
+ 14:55:14 -0700 (PDT)
 Precedence: bulk
 X-Mailing-List: sashiko-reviews@lists.linux.dev
 List-Id: <sashiko-reviews.lists.linux.dev>
 List-Subscribe: <mailto:sashiko-reviews+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:sashiko-reviews+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-References: <20260527221934.3830896-1-ctshao@google.com> <20260528001117.3BBF11F00A3A@smtp.kernel.org>
-In-Reply-To: <20260528001117.3BBF11F00A3A@smtp.kernel.org>
-From: Chun-Tse Shao <ctshao@google.com>
-Date: Thu, 28 May 2026 14:31:42 -0700
-X-Gm-Features: AVHnY4IwiF5Pg_HQ1EZNPYq3-_irgF0d3bl9E1urKgBMTUCG97CRDlKg4dpcn-8
-Message-ID: <CAJpZYjUiNdN3a6y+8rs=YP2Mgtj6EQJnkiB9TN_suWd8fGkoEg@mail.gmail.com>
-Subject: Re: [PATCH RESEND v7 1/2] perf pmu intel: Generalize SNC cpumask
- adjustment for multiple platforms
-To: sashiko-reviews@lists.linux.dev
-Cc: linux-perf-users@vger.kernel.org
+References: <20260520125637.105681-1-japo@linux.ibm.com> <20260520130905.9C85D1F000E9@smtp.kernel.org>
+ <ahJnMnOr4i9urrRk@x1> <ahV2XGx_6h7upuc3@li-276bd24c-2dcc-11b2-a85c-945b6f05615c.ibm.com>
+ <CAP-5=fXGG5PR8neTkozvOUOH83m8_EyZXZ_A7Zyrsock5EqAiQ@mail.gmail.com>
+ <ahXITNt0Z-n4NCaj@li-276bd24c-2dcc-11b2-a85c-945b6f05615c.ibm.com>
+ <CAP-5=fXcpoXMsezy1FNBX7mhKmRgw+97QmKTg5Fr6G-cY+wGpg@mail.gmail.com> <ahddRWPBk46HiR6x@google.com>
+In-Reply-To: <ahddRWPBk46HiR6x@google.com>
+From: Ian Rogers <irogers@google.com>
+Date: Thu, 28 May 2026 14:55:02 -0700
+X-Gm-Features: AVHnY4IA1udd9CKlt7OwwwKYErhkcRNEplR1SwPtHxf_eYO0aLv-Kyup0y7a4b8
+Message-ID: <CAP-5=fU8HLj73_FJJfzAF2pVnu8KentCWe4cLWbrjJa5ihRGfg@mail.gmail.com>
+Subject: Re: [PATCH 1/1] perf build: Fix Python extension build with GCC 16 hardening
+To: Namhyung Kim <namhyung@kernel.org>
+Cc: Jan Polensky <japo@linux.ibm.com>, Arnaldo Carvalho de Melo <acme@kernel.org>, 
+	Jens Remus <jremus@linux.ibm.com>, sashiko-reviews@lists.linux.dev, 
+	linux-perf-users@vger.kernel.org
 Content-Type: text/plain; charset="UTF-8"
 Content-Transfer-Encoding: quoted-printable
 
-On Wed, May 27, 2026 at 5:11=E2=80=AFPM <sashiko-bot@kernel.org> wrote:
+On Wed, May 27, 2026 at 2:08=E2=80=AFPM Namhyung Kim <namhyung@kernel.org> =
+wrote:
 >
-> Thank you for your contribution! Sashiko AI review found 1 potential issu=
-e(s) to consider:
->
-> Pre-existing issues:
-> - [Critical] An integer overflow in `uncore_cha_snc()` can result in a ne=
-gative Sub-NUMA Clustering (SNC) node index. This bypasses the upper-bound =
-check against `MAX_SNCS` and causes subsequent out-of-bounds array accesses=
-.
-> --
->
-> commit be394e8b7ddbe730c3fc40fb608337fe19c7b33b
-> Author: Chun-Tse Shao <ctshao@google.com>
->
-> perf pmu intel: Generalize SNC cpumask adjustment for multiple platforms
->
-> This commit generalizes the Sub-NUMA Clustering (SNC) logic previously
-> specific to Granite Rapids to support multiple Intel platforms. It uses
-> CPUID to determine SNC support and caches various PMU configurations
-> to improve thread safety.
->
-> > diff --git a/tools/perf/arch/x86/util/pmu.c b/tools/perf/arch/x86/util/=
-pmu.c
-> > index 7c9d238922a6c..9b00d5720fb7a 100644
-> > --- a/tools/perf/arch/x86/util/pmu.c
-> > +++ b/tools/perf/arch/x86/util/pmu.c
->
-> [ ... ]
->
-> > @@ -121,46 +142,73 @@ static int uncore_cha_snc(struct perf_pmu *pmu)
-> >               return 0;
-> >       }
-> >       chas_per_node =3D num_cha / snc_nodes;
-> > +     if (chas_per_node =3D=3D 0) {
-> > +             pr_warning("Unexpected: chas_per_node is 0 (num_cha=3D%d,=
- snc_nodes=3D%d)\n",
-> > +                        num_cha, snc_nodes);
-> > +             return 0;
-> > +     }
-> >       cha_snc =3D cha_num / chas_per_node;
-> >
-> >       /* Range check cha_snc. for unexpected out of bounds. */
-> >       return cha_snc >=3D MAX_SNCS ? 0 : cha_snc;
->
-> [Severity: Critical]
-> This is a pre-existing issue, but does this range check safely handle ver=
+> On Tue, May 26, 2026 at 09:59:41AM -0700, Ian Rogers wrote:
+> > On Tue, May 26, 2026 at 9:20=E2=80=AFAM Jan Polensky <japo@linux.ibm.co=
+m> wrote:
+> > >
+> > > On Tue, May 26, 2026 at 08:23:28AM -0700, Ian Rogers wrote:
+> > > > On Tue, May 26, 2026 at 3:35=E2=80=AFAM Jan Polensky <japo@linux.ib=
+m.com> wrote:
+> > > > >
+> > > > > On Sat, May 23, 2026 at 11:49:22PM -0300, Arnaldo Carvalho de Mel=
+o wrote:
+> > > > > > On Wed, May 20, 2026 at 01:09:05PM +0000, sashiko-bot@kernel.or=
+g wrote:
+> > > > > > > Thank you for your contribution! Sashiko AI review found 1 po=
+tential issue(s) to consider:
+> > > > > > > - [Medium] The patch explicitly allows text relocations in th=
+e Python extension shared object (`perf.so`) by adding `-Wl,-z,notext`, mas=
+king the root cause of missing `-fPIC` flags and breaking W^X (Write XOR Ex=
+ecute) security protections.
+> > > > > > > --
+> > > > > > >
+> > > > > > > commit f3832fb0ad0d1f9c2e69039b2a5110f77d220d5e
+> > > > > > > Author: Jan Polensky <japo@linux.ibm.com>
+> > > > > > >
+> > > > > > > perf build: Fix Python extension build with GCC 16 hardening
+> > > > > > >
+> > > > > > > This commit addresses a build failure in the Python extension=
+ caused by GCC 16
+> > > > > > > stricter security policies regarding dynamic relocations in r=
+ead-only segments.
+> > > > > > > It adds the -Wl,-z,notext flag to the linker to explicitly al=
+low text
+> > > > > > > relocations in the Python extension shared object.
+> > > > > > >
+> > > > > > > > diff --git a/tools/perf/Makefile.perf b/tools/perf/Makefile=
+.perf
+> > > > > > > > index 76b35ac19acbf..eea170d6576db 100644
+> > > > > > > > --- a/tools/perf/Makefile.perf
+> > > > > > > > +++ b/tools/perf/Makefile.perf
+> > > > > > > > @@ -749,7 +749,7 @@ all: shell_compatibility_test $(ALL_PRO=
+GRAMS) $(LANG_BINDINGS) $(OTHER_PROGRAMS)
+> > > > > > > >  $(shell [ -d '$(OUTPUT)python' ] || mkdir -p '$(OUTPUT)pyt=
+hon')
+> > > > > > > >
+> > > > > > > >  $(OUTPUT)python/perf$(PYTHON_EXTENSION_SUFFIX): util/pytho=
+n.c util/setup.py $(PERFLIBS_PY)
+> > > > > > > > - $(QUIET_GEN)LDSHARED=3D"$(CC) -pthread -shared" \
+> > > > > > > > + $(QUIET_GEN)LDSHARED=3D"$(CC) -pthread -shared -Wl,-z,not=
+ext" \
+> > > > > > >
+> > > > > > > [Severity: Medium]
+> > > > > > > Does adding -Wl,-z,notext mask the root cause of the GCC 16 l=
+inker error?
+> > > > > > >
+> > > > > > > The error regarding dynamic relocations in a read-only segmen=
+t usually
+> > > > > > > indicates that non-position-independent code from the static =
+libraries
+> > > > > > > is being linked into the shared library.
+> > > > > > >
+> > > > > > > Using -Wl,-z,notext suppresses this error by allowing text re=
+locations, which
+> > > > > > > forces the dynamic linker to map the executable text segment =
+as writable at
+> > > > > > > load time. This breaks W^X security protections and weakens t=
+he security of
+> > > > > > > any Python process loading the extension.
+> > > > > > >
+> > > > > > > Should the required object files be compiled with -fPIC inste=
+ad to properly
+> > > > > > > resolve the linker error without compromising security?
+> > > > > >
+> > > > > > So I asked Claude about this and he suggests doing like other p=
+arts of
+> > > > > > perf and using -fPIC, can you try to do that?
+> > > > > >
+> > > > > > ---------------------------------------
+> > > > > >
+> > > > > > =E2=97=8F Sashiko is right. -Wl,-z,notext is a band-aid that we=
+akens security =E2=80=94
+> > > > > >   it makes the text segment writable at load time, defeating W^=
+X.
+> > > > > >
+> > > > > >   The root cause is that PERFLIBS_PY (the static libraries link=
+ed into
+> > > > > >   the Python .so) are compiled without -fPIC. When you link non=
+-PIC .a
+> > > > > >   archives into a shared library, the linker needs text relocat=
+ions. GCC
+> > > > > >   16 correctly rejects this by default.
+> > > > > >
+> > > > > >   The proper fix is to build the static libraries that go into =
+the
+> > > > > >   Python extension with -fPIC. The perf build system already ha=
+s
+> > > > > >   precedent for this =E2=80=94 look for how libperf and libsubc=
+md handle PIC
+> > > > > >   builds. The Python extension's dependencies need a parallel -=
+fPIC
+> > > > > >   build, or the existing objects need to be compiled with -fPIC=
+ when the
+> > > > > >   Python binding is enabled.
+> > > > > >
+> > > > > >   The -Wl,-z,notext approach would also cause issues on distros=
+ that
+> > > > > >   enforce RELRO + BIND_NOW hardening, and some package builders=
+ would
+> > > > > >   reject the resulting .so outright.
+> > > > > >
+> > > > > > - Arnaldo
+> > > > >
+> > > > > Hi Arnaldo,
+> > > > >
+> > > > > thanks for the pointer. I double-checked this on s390x and did so=
+me reduced-link
+> > > > > testing for the ET_DYN / Python-extension case.
+> > > > >
+> > > > > The failure is not triggered by the perf Python binding object al=
+one.
+> > > > >
+> > > > > A reduced reproducer succeeds when linking:
+> > > > >   python.o
+> > > > >   + libapi.a
+> > > > >   + libperf.a
+> > > > >   + libsubcmd.a
+> > > > >   + libsymbol.a
+> > > > >   + libbpf.a
+> > > > >   + libperf-ui.a
+> > > > >
+> > > > > The link starts to fail with:
+> > > > >   /usr/bin/ld.bfd: error: read-only segment has dynamic relocatio=
+ns
+> > > > >
+> > > > > as soon as libperf-util.a is added.
+> > > > >
+> > > > > In my tree, libperf-util.a currently contains only perf-util-in.o=
+, and replacing
+> > > > > the archive with that single object still reproduces the same fai=
+lure.
+> > > > >
+> > > > > Reduced reproducer:
+> > > > >
+> > > > >   gcc -pthread -shared \
+> > > > >     -Wl,-z,noexecstack \
+> > > > >     -o /tmp/try-perf-util-only.so \
+> > > > >     /root/linux/tools/perf/python_ext_build/tmp/root/linux/tools/=
+perf/util/python.o \
+> > > > >     -Wl,--whole-archive \
+> > > > >       /root/linux/tools/perf/libapi/libapi.a \
+> > > > >       /root/linux/tools/perf/libperf/libperf.a \
+> > > > >       /root/linux/tools/perf/libsubcmd/libsubcmd.a \
+> > > > >       /root/linux/tools/perf/libsymbol/libsymbol.a \
+> > > > >       /root/linux/tools/perf/libbpf/libbpf.a \
+> > > > >       /root/linux/tools/perf/libperf-ui.a \
+> > > > >     -Wl,--no-whole-archive \
+> > > > >     /root/perf-util-one/perf-util-in.o \
+> > > > >     -lpython3.14 -lpthread -ldl -lm -lutil
+> > > > >
+> > > > > Inspection of perf-util-in.o on s390x shows many direct R_390_PC3=
+2DBL
+> > > > > relocations from .text against .data.rel.ro, .data.rel.ro.local,
+> > > > > .data.rel.local, .bss, and .rodata.
+> > > > >
+> > > > > Representative examples include:
+> > > > >
+> > > > >   arm64__associate_instruction_ops:
+> > > > >     larl %r6  -> R_390_PC32DBL .data.rel.ro+0x2
+> > > > >
+> > > > >   loongarch__associate_ins_ops:
+> > > > >     larl %r9  -> R_390_PC32DBL .data.rel.ro+0x22
+> > > > >     larl %r9  -> R_390_PC32DBL .data.rel.ro+0x42
+> > > > >
+> > > > >   check_ppc_insn:
+> > > > >     larl %r4  -> R_390_PC32DBL .data.rel.local+0x4c2
+> > > > >     larl %r2  -> R_390_PC32DBL .data.rel.ro.local+0x22
+> > > > >     larl %r1  -> R_390_PC32DBL .data.rel.local+0x2
+> > > > >     larl %r2  -> R_390_PC32DBL .data.rel.ro.local+0x2
+> > > > >
+> > > > >   s390__associate_ins_ops:
+> > > > >     larl %r10 -> R_390_PC32DBL .data.rel.ro+0x732
+> > > > >     larl %r10 -> R_390_PC32DBL .data.rel.ro+0x752
+> > > > >
+> > > > > So from my reproducer, I don't think we can describe this simply =
+as
+> > > > > "all Python-extension dependency archives are missing -fPIC".
+> > > > >
+> > > > > The issue narrows down much more specifically to perf-util-in.o i=
+n the ET_DYN
+> > > > > link of the Python extension, and the direct text-to-data section=
+ relocations
+> > > > > above look like the most relevant candidates.
+> > > > >
+> > > > > So I agree that -Wl,-z,notext is only a workaround. I'd prefer to=
+ understand
+> > > > > and fix the underlying relocation pattern in perf-util-in.o rathe=
+r than merge
+> > > > > that as-is.
+> > > > >
+> > > > > If useful, I can send the relevant readelf/objdump snippets in a =
+follow-up.
+> > > >
+> > > > Hi Jan,
+> > > >
+> > > > I wonder about two tests:
+> > > > 1) adding V=3D1 JOBS=3D1 to your make command to switch on single
+> > > > threading and build verbosity. This may make it possible to identif=
 y
-> large values for cha_num?
+> > > > the gcc command that is missing -fPIC. For example, I see -fPIC on
+> > > > x86:
+> > > >   gcc -Wp,-MD,/tmp/perf4/util/annotate-arch/.annotate-arm64.o.d
+> > > > -Wp,-MT,/tmp/perf4/util/annotate-arch/annotate -arm64.o
+> > > > -Wbad-function-cast -Wdeclaration-after-statement -Wformat-security
+> > > > -Wformat-y2k -Winit-self -Wmissin g-declarations -Wmissing-prototyp=
+es
+> > > > -Wno-system-headers -Wold-style-definition -Wpacked -Wredundant-dec=
+ls
+> > > > -Wst rict-prototypes -Wswitch-default -Wswitch-enum -Wundef
+> > > > -Wwrite-strings -Wformat -Wno-type-limits -Wstrict-alia sing=3D3
+> > > > -Wshadow -fno-strict-aliasing -I/tmp/perf4/arch/x86/include/generat=
+ed
+> > > > -DHAVE_ARCH_X86_64_SUPPORT -Werro r -g -fno-omit-frame-pointer -Wal=
+l
+> > > > -Wextra -std=3Dgnu11 -funsigned-char -fstack-protector-all
+> > > > -D_LARGEFILE64_SOU RCE -D_FILE_OFFSET_BITS=3D64 -D_GNU_SOURCE
+> > > > -I~/linux/tools/perf/util/include
+> > > > -I~/linux/tools/perf/arch/x86/include
+> > > > -I/usr/local/google/home/irogers/re pos/linux4/tools/include/
+> > > > -I~/linux/tools/arch/x86/include/uapi -I/usr/loc
+> > > > al/google/home/irogers/repos/linux4/tools/include/uapi
+> > > > -I~/linux/tools/arc h/x86/include/ -I~/linux/tools/arch/x86/
+> > > > -I/tmp/perf4//util -I/tmp/perf4/ -I~/linux/tools/perf/util
+> > > > -I~/linux/to ols/perf -DHAVE_PTHREAD_ATTR_SETAFFINITY_NP
+> > > > -DHAVE_PTHREAD_BARRIER -DHAVE_EVENTFD_SUPPORT -DHAVE_GETTID -DHAVE
+> > > > _FILE_HANDLE -DHAVE_AIO_SUPPORT -DHAVE_SCANDIRAT_SUPPORT
+> > > > -DHAVE_SCHED_GETCPU_SUPPORT -DHAVE_SETNS_SUPPORT -DHA VE_ZLIB_SUPPO=
+RT
+> > > > -DHAVE_LIBELF_SUPPORT -DHAVE_ELF_GETPHDRNUM_SUPPORT
+> > > > -DHAVE_GELF_GETNOTE_SUPPORT -DHAVE_ELF_GET SHDRSTRNDX_SUPPORT
+> > > > -DHAVE_DEBUGINFOD_SUPPORT -DHAVE_LIBDW_SUPPORT -DHAVE_LIBBPF_SUPPOR=
+T
+> > > > -DHAVE_SDT_EVENT -DHAV E_JITDUMP -DHAVE_LIBOPENSSL_SUPPORT
+> > > > -DHAVE_BPF_SKEL -DHAVE_DWARF_UNWIND_SUPPORT -DHAVE_SLANG_SUPPORT
+> > > > -DHAVE_TI MERFD_SUPPORT -fPIC -DHAVE_LIBLLVM_SUPPORT
+> > > > -I/usr/lib/llvm-19/include -D_GNU_SOURCE -D__STDC_CONSTANT_MACROS
+> > > > -D__STDC_FORMAT_MACROS -D__STDC_LIMIT_MACROS
+> > > > -DHAVE_CXA_DEMANGLE_SUPPORT -DHAVE_LZMA_SUPPORT -DHAVE_ZSTD_SUPPORT
+> > > > -DHAVE_BACKTRACE_SUPPORT -DHAVE_LIBNUMA_SUPPORT
+> > > > -DHAVE_PERF_READ_VDSO32 -DHAVE_LIBBABELTRACE_SUPPORT -DHAVE_
+> > > > LIBCAPSTONE_SUPPORT -DHAVE_JVMTI_CMLR -DHAVE_LIBPFM
+> > > > -DHAVE_LIBTRACEEVENT -I/usr/include/traceevent -DLIBTRACEE
+> > > > VENT_VERSION=3D67072 -DHAVE_RUST_SUPPORT -I/tmp/perf4/libapi/includ=
+e
+> > > > -I/tmp/perf4/libbpf/include -I/tmp/perf4/li bsubcmd/include
+> > > > -I/tmp/perf4/libsymbol/include -I/tmp/perf4/libperf/include
+> > > > -I/tmp/perf4/ -D"BUILD_STR(s)=3D#s" -c -o
+> > > > /tmp/perf4/util/annotate-arch/annotate-arm64.o
+> > > > util/annotate-arch/annotate-arm64.c
+> > > >
+> > > > 2) adding EXTRA_CFLAGS=3D"-fPIC" to your make command. This should =
+force
+> > > > this option wherever it might be missing.
+> > > >
+> > > > Thanks,
+> > > > Ian
+> > > >
+> > > > > Best regards,
+> > > > > Jan
+> > > > >
+> > > Hi Ian,
+> > >
+> > > I tested both suggestions the second in the beginning of my research:
+> > >
+> > > EXTRA_CFLAGS=3D"-fPIC" - Does NOT work. Same error:
+> > >
+> > > /usr/bin/ld.bfd: error: read-only segment has dynamic relocations
+> > > collect2: error: ld returned 1 exit status
+> > >
+> > > The issue is s390x-specific R_390_PC32DBL relocations in perf-util-in=
+.o
+> > > (from `larl` instructions) that persist even with -fPIC.
+> > >
+> > > Current options:
+> > > 1. Use -Wl,-z,notext (security issue)
+> > > 2. Refactor code to avoid these relocations
+> > > 3. Disable Python extension on s390x (not an option)
+> > >
+> > > Thoughts?
+> >
+> > So it appears that part of the problem is declaring arrays and structs
+> > to be const. Making things non-const I think is also not an option.
+> > Would  EXTRA_CFLAGS=3D"-fvisibility=3Dhidden" help?
+> >
+> > It would we interesting to build with -Wl,-z,notext and then look for
+> > the symbol the linker is fighting with:
+> >   eu-findtextrel perf.cpython....so
+> > or
+> >   readelf -d perf.so | grep TEXTREL
+> >   readelf -r perf.so
 >
-> Since cha_num is parsed as an unsigned int via sscanf() from the PMU name=
-,
-> and cha_snc is a signed int, a sufficiently large cha_num could cause the
-> division result to overflow into a negative value.
+> I'm curious if it's s390 specific.  I don't know what code patterns make
+> it relocatable.  Is taking an address of struct ins_ops variable a
+> problem?  Does it matter being a static variable?
 
-I think it is very unlikely we would see cha_num > INT_MAX.
-Since that is a pre-existing issue, I prefer to fix it separately.
+So what I think the problem is that:
+
+  arm64__associate_instruction_ops:
+    larl %r6  -> R_390_PC32DBL .data.rel.ro+0x2
+
+points at the arm64__associate_instruction_ops code:
+https://web.git.kernel.org/pub/scm/linux/kernel/git/perf/perf-tools-next.gi=
+t/tree/tools/perf/util/annotate-arch/annotate-arm64.c?h=3Dperf-tools-next#n=
+79
+```c
+static const struct ins_ops *arm64__associate_instruction_ops(struct
+arch *arch, const char *name)
+{
+struct arch_arm64 *arm =3D container_of(arch, struct arch_arm64, arch);
+const struct ins_ops *ops;
+regmatch_t match[2];
+
+if (!regexec(&arm->jump_insn, name, 2, match, 0))
+ops =3D &jump_ops;
+```
+
+jump_ops is declared extern in disasm.h:
+https://web.git.kernel.org/pub/scm/linux/kernel/git/perf/perf-tools-next.gi=
+t/tree/tools/perf/util/disasm.h?h=3Dperf-tools-next#n117
+```c
+tools/perf/util/disasm.h:extern const struct ins_ops jump_ops;
+```
+
+Since `jump_ops` is declared `extern` and would be patchable in a
+shared DSO (i.e., the Python module), GCC is creating relocations
+within .text that fails W^X checking in the linker. To prevent
+jump_ops from being patchable in this situation we can change its
+declaration to:
+```c
+__attribute__((visibility("hidden"))) extern const struct ins_ops jump_ops;
+```
+
+but it is probably easier and more generic to add -fvisibility=3Dhidden
+to the CFLAGS in Makefile.config. I asked about this behavior as an
+EXTRA_CFLAGS option, but I'm not sure if Jan has tested it yet?
 
 Thanks,
-CT
+Ian
 
+> Thanks,
+> Namhyung
 >
-> If cha_snc becomes negative, the cha_snc >=3D MAX_SNCS check evaluates to
-> false, allowing the function to return a negative index.
->
-> Could this negative index then cause out-of-bounds array accesses when us=
-ed
-> later in uncore_cha_imc_compute_cpu_adjust()?
->
-> uncore_cha_imc_compute_cpu_adjust() {
->     static bool checked_cpu_adjust[MAX_SNCS];
->     ...
->     if (checked_cpu_adjust[pmu_snc])
->     ...
-> }
->
-> --
-> Sashiko AI review =C2=B7 https://sashiko.dev/#/patchset/20260527221934.38=
-30896-1-ctshao@google.com?part=3D1
