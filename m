@@ -1,116 +1,176 @@
-Received: from mail-pl1-f202.google.com (mail-pl1-f202.google.com [209.85.214.202])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from mx0b-001b2d01.pphosted.com (mx0b-001b2d01.pphosted.com [148.163.158.5])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E1D4C3DA7F5
-	for <sashiko-reviews@lists.linux.dev>; Fri, 29 May 2026 16:23:29 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.214.202
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3B0783DA7F5
+	for <sashiko-reviews@lists.linux.dev>; Fri, 29 May 2026 16:25:39 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=148.163.158.5
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1780071812; cv=none; b=mwwU9K/8Z71eR5ln+WzgHKPc8P6BKuYcCN2nhJ2Djl6Lk+01yZ6+x9bfcoJd5N2GYK75hXqHLfVSWlP3IaFJAdRIuoEqa5Vz8HZeXss8DpRM6r/SLPkqPa8lTndvpKOv6kJwJeOQIs4c/Enenth7dcKv+2E1AQowJ5Cdp6+aRVg=
+	t=1780071940; cv=none; b=m1+O0soH4o01NZxam5ET42hIXqHfYgL3KF1Iy60DXFBT55Sa0bRMvGBzij9ufiKirS491ym80SgzN3Z6SO7srSk9Eb3GJO2PixZR1mYYu9xPJyqG0/VUK3k+kH5LJkC/ytwWiexshISjWILBag/p/zCmnPC3JLE9EF0otUvOVvc=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1780071812; c=relaxed/simple;
-	bh=pSxoxMhbYF7BHHLDnIxxdXcvcxE9JP52g/U+97KRZUI=;
-	h=Date:In-Reply-To:Mime-Version:References:Message-ID:Subject:From:
-	 To:Cc:Content-Type; b=GoanLh6rw21VxUBD8pz1ZcyffGrosrb+cIZ/k0btc7gFVAXZVWgI4M8gPWU5us2v9eA+Rmdf0kFWUithKqGn5adCFX9ZjxQbPGms5IWXF8bCz4aZu/vnPu5LxbJSAgD9ICHX4+EuwnCAC6eZQhvNT3KV8P8Z//v5fvVEuoMWo+Q=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=google.com; spf=pass smtp.mailfrom=flex--seanjc.bounces.google.com; dkim=pass (2048-bit key) header.d=google.com header.i=@google.com header.b=GxBAvcJd; arc=none smtp.client-ip=209.85.214.202
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=google.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=flex--seanjc.bounces.google.com
+	s=arc-20240116; t=1780071940; c=relaxed/simple;
+	bh=wa/o6Wi5wk8IbgjeKtm6gBey3h1CaXtKWWjDqKE/4ac=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=HhZc+2tdfSeJP4ab+NWL3yDJw7ZG5ehg9SloTEhB+zxm9fYb+45dja6Ri2BfhoAvLleQR/0s9e5rUhiN9vKm1JU6h4wNQrd4l+wNWFuhWM5PQsxOiXdSY9rPiVf+7Z5gWE9RDDXeNkBgPDg7/axLs0H/kFG8LC3lbNoTNpOimds=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linux.ibm.com; spf=pass smtp.mailfrom=linux.ibm.com; dkim=pass (2048-bit key) header.d=ibm.com header.i=@ibm.com header.b=YsdxUg4+; arc=none smtp.client-ip=148.163.158.5
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linux.ibm.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linux.ibm.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=google.com header.i=@google.com header.b="GxBAvcJd"
-Received: by mail-pl1-f202.google.com with SMTP id d9443c01a7336-2b9a3c3c4eeso145806445ad.3
-        for <sashiko-reviews@lists.linux.dev>; Fri, 29 May 2026 09:23:29 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=google.com; s=20251104; t=1780071809; x=1780676609; darn=lists.linux.dev;
-        h=cc:to:from:subject:message-id:references:mime-version:in-reply-to
-         :date:from:to:cc:subject:date:message-id:reply-to;
-        bh=Scb9q7Vc7fjy0mJZyLF9pe8pDeFrn1cuBRV6rD40tUE=;
-        b=GxBAvcJdD9c1R+V1PUHTTXEA4B7rbzHACBSiJjK4FI4TfYARRFvviO+K3oIfSpHjvb
-         l42KRT67kG99qjfG0yozV3Saj3MRXLfBPq5v+slYxXRqmRwlH9p+FgT2fM+6Oc6e/3bv
-         PxJLk7fb8qv2OzMVRI8PZvbAr3UtthDhzUb9mdiKiV0lLjflGPSNpxqshTf77qaH3Pkx
-         Er1Hf99M/0CAf4yey4YqF9WS7mX2RxcmmHdW14x49D5ZYGRT7L3/EqiKtgrIg5D/OGhI
-         DQG1HdJDpc+PWrkQaJWdARuftpG22TZXrnJZuzFSX/SRGgeUla+aBK+6/OtKDniXJosb
-         SsPA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20251104; t=1780071809; x=1780676609;
-        h=cc:to:from:subject:message-id:references:mime-version:in-reply-to
-         :date:x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=Scb9q7Vc7fjy0mJZyLF9pe8pDeFrn1cuBRV6rD40tUE=;
-        b=PqPJ7cap7CUgGNzeNB6Tiki6G4w/H2v1ObGiTzkUmAXdFU0vkL+NJwM8xIzQRzPaCw
-         L3b2t4s7PqbPMegGoHYj4aKbaczZoRC6k4qLi8fr1H/0lVZt+aGU0/wJhci1ySJ5rgGG
-         ZIhE9rMltNRWicskr1md5lZ5NCyxtEy2Z/9WfOz8NoCAh7jCoDYfa2DoPQtHEAQ0hrN4
-         XJT31dopFssyeYQDzGhw9rLdKA9LpKslK0txzq79bYwoi1z5YT/cOnE2Jd+fMipcEzDa
-         u+dDdQPDbx7GNmXvrngYxJTwJ3D+auXn0U0Z6/CjsJOVBU1Ym0RR31Q/YGom03ffbW8H
-         syDg==
-X-Gm-Message-State: AOJu0YwWdYD9Kfrcs8uoGIoF1cNQwCwf8dZEQw0mxxN/v9Na9M3kIQ9R
-	Jlkb8lLQcUMVBwgMsum3lvpIYfN3zclZgUSqrO7HlzJBNrsNPYpe3cDIR9Q8BUFD9bSFPpgu20c
-	bw63PCIQNyi6m+atMCTBx83vMtrMbSx3mHDiPjnGfMHhz577y+WnOWHns3CW/xanWupzsVdBsFd
-	aqZ1pC5sYxojN1l+8NX58IKzLr98zeSY1hMJlPe6vSO3I6gopC
-X-Received: from pgct19.prod.google.com ([2002:a05:6a02:5293:b0:c85:746c:1066])
- (user=seanjc job=prod-delivery.src-stubby-dispatcher) by 2002:a17:903:1c6:b0:2bd:9c0a:32c
- with SMTP id d9443c01a7336-2bf3683b78dmr6175505ad.19.1780071808895; Fri, 29
- May 2026 09:23:28 -0700 (PDT)
-Date: Fri, 29 May 2026 09:23:27 -0700
-In-Reply-To: <20260529161442.754A41F00893@smtp.kernel.org>
+	dkim=pass (2048-bit key) header.d=ibm.com header.i=@ibm.com header.b="YsdxUg4+"
+Received: from pps.filterd (m0353725.ppops.net [127.0.0.1])
+	by mx0a-001b2d01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id 64TGJTBK3215918;
+	Fri, 29 May 2026 16:25:36 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=ibm.com; h=cc
+	:content-transfer-encoding:content-type:date:from:in-reply-to
+	:message-id:mime-version:references:subject:to; s=pp1; bh=ASf09m
+	TeWrKjK8BDRiLhfhpWObufv4X4Ud5kvoN0jjE=; b=YsdxUg4+WabrGEUxc7VVGi
+	9p8TemETvoYAtlX+9o6iNKOtuZh0gUQaTvc62t4NH/jPy6Wq0QCwh7tS3WfotS3a
+	qXsrmPLKl2pYE+8C/w9zOCaB/6rlkf1rHAAseewRDXA2//YQ1qXi6fyhL0y6yxkC
+	EFSfEx9ZNQCg0pGw+HclXkkO5RVnR5tgTOmG0PRjqt6uTo5f/TX7vy+yk+x26kxR
+	tM02eaYxJE9yD2ttSe9ji1JbC62QHKU0BjfeYZYnuug13km6EBIMaGmU6BN1TLrX
+	x/zWj5C9c8QtyGvEBy2gDSAJw7znGYg9MkDdZFKJiFIZRMkBIC0AKBLZNuHHFYHg
+	==
+Received: from ppma22.wdc07v.mail.ibm.com (5c.69.3da9.ip4.static.sl-reverse.com [169.61.105.92])
+	by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 4ee88bn0we-1
+	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+	Fri, 29 May 2026 16:25:36 +0000 (GMT)
+Received: from pps.filterd (ppma22.wdc07v.mail.ibm.com [127.0.0.1])
+	by ppma22.wdc07v.mail.ibm.com (8.18.1.7/8.18.1.7) with ESMTP id 64TGO5vF029184;
+	Fri, 29 May 2026 16:25:35 GMT
+Received: from smtprelay07.fra02v.mail.ibm.com ([9.218.2.229])
+	by ppma22.wdc07v.mail.ibm.com (PPS) with ESMTPS id 4edjrc18rb-1
+	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+	Fri, 29 May 2026 16:25:35 +0000 (GMT)
+Received: from smtpav01.fra02v.mail.ibm.com (smtpav01.fra02v.mail.ibm.com [10.20.54.100])
+	by smtprelay07.fra02v.mail.ibm.com (8.14.9/8.14.9/NCO v10.0) with ESMTP id 64TGPXqt47120886
+	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
+	Fri, 29 May 2026 16:25:33 GMT
+Received: from smtpav01.fra02v.mail.ibm.com (unknown [127.0.0.1])
+	by IMSVA (Postfix) with ESMTP id C4D6D20040;
+	Fri, 29 May 2026 16:25:33 +0000 (GMT)
+Received: from smtpav01.fra02v.mail.ibm.com (unknown [127.0.0.1])
+	by IMSVA (Postfix) with ESMTP id 8F87920043;
+	Fri, 29 May 2026 16:25:33 +0000 (GMT)
+Received: from li-276bd24c-2dcc-11b2-a85c-945b6f05615c.ibm.com (unknown [9.111.19.18])
+	by smtpav01.fra02v.mail.ibm.com (Postfix) with ESMTPS;
+	Fri, 29 May 2026 16:25:33 +0000 (GMT)
+Date: Fri, 29 May 2026 18:25:32 +0200
+From: Jan Polensky <japo@linux.ibm.com>
+To: sashiko-reviews@lists.linux.dev
+Cc: ojeda@kernel.org
+Subject: Re: [PATCH v4 1/6] s390/bug: Provide ARCH_WARN_ASM for Rust WARN/BUG
+ support
+Message-ID: <ahm9_FvOhggcMBF-@li-276bd24c-2dcc-11b2-a85c-945b6f05615c.ibm.com>
+References: <20260529145752.1209016-2-japo@linux.ibm.com>
+ <20260529153011.E0DF11F00893@smtp.kernel.org>
 Precedence: bulk
 X-Mailing-List: sashiko-reviews@lists.linux.dev
 List-Id: <sashiko-reviews.lists.linux.dev>
 List-Subscribe: <mailto:sashiko-reviews+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:sashiko-reviews+unsubscribe@lists.linux.dev>
-Mime-Version: 1.0
-References: <20260529144435.704127-7-seanjc@google.com> <20260529161442.754A41F00893@smtp.kernel.org>
-Message-ID: <ahm9fwLDnnby9q0k@google.com>
-Subject: Re: [PATCH v4 06/47] x86/sev: Shove SNP's secure/trusted TSC
- frequency directly into "calibration"
-From: Sean Christopherson <seanjc@google.com>
-To: sashiko-reviews@lists.linux.dev
-Cc: kvm@vger.kernel.org, linux-hyperv@vger.kernel.org
-Content-Type: text/plain; charset="us-ascii"
+MIME-Version: 1.0
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+Content-Transfer-Encoding: 8bit
+In-Reply-To: <20260529153011.E0DF11F00893@smtp.kernel.org>
+X-TM-AS-GCONF: 00
+X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwNTI5MDE2MSBTYWx0ZWRfXwr8EwwmebQKl
+ KJ+Cz7ZhTsWnI9eCKGepG7BFfK1H7ZXtTOVo8TrxaskjuDJ9yVP0hpapW2DNYrpp6OiZRI3pmiY
+ G6xvac0D0EKCG0pKGrnq0DXyKs7rOpbehip95G0/N9OM+k0jzKMMjjsd55ziDZ4Z/f1BYhgxv40
+ v1oO3HRunnkO37EHVyp7x55Ee3wheiZbIwjQePHlPC8+dQaoT0+8vmOzCJ0A0pwXuWqjJm4CyVT
+ OgeIbfpI1EuT1jmY5J9BOPwce/YuT5rYBmMMLoHRtOr3L3S27Z0XKjeLEq4CpDvvFCm/rls+h//
+ ibG7bJ2xu8r14MuEDujnpeeyEvz1WneiV5FjSwM8V/NA/blP8H7+wmRPDbUgB/AVFP1tdho3ERa
+ FefVjwqiyL9vxvrP6zMxmMacXBEb+ns/imP0UEfcr750onqFCHuWT09ow6COmwk3S4n0mScpbvx
+ 8oAE6ozeqbTIYEn4zfA==
+X-Proofpoint-ORIG-GUID: B9UXqUGLEuySySCgLOl8Q_HZa7mE9pRo
+X-Authority-Analysis: v=2.4 cv=IJEyzAvG c=1 sm=1 tr=0 ts=6a19be00 cx=c_pps
+ a=5BHTudwdYE3Te8bg5FgnPg==:117 a=5BHTudwdYE3Te8bg5FgnPg==:17
+ a=IkcTkHD0fZMA:10 a=NGcC8JguVDcA:10 a=VkNPw1HP01LnGYTKEx00:22
+ a=RnoormkPH1_aCDwRdu11:22 a=V8glGbnc2Ofi9Qvn3v5h:22 a=c92rfblmAAAA:8
+ a=VnNF1IyMAAAA:8 a=VwQbUJbxAAAA:8 a=HjgG6N0uyAa9hyylWDgA:9 a=3ZKOabzyN94A:10
+ a=QEXdDO2ut3YA:10 a=GvGzcOZaWPEFPQC_NcjD:22
+X-Proofpoint-GUID: B9UXqUGLEuySySCgLOl8Q_HZa7mE9pRo
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.293,Aquarius:18.0.1143,Hydra:6.1.125,FMLib:17.12.100.49
+ definitions=2026-05-29_04,2026-05-28_03,2025-10-01_01
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
+ suspectscore=0 phishscore=0 clxscore=1015 spamscore=0 bulkscore=0
+ adultscore=0 priorityscore=1501 malwarescore=0 lowpriorityscore=0
+ impostorscore=0 classifier=typeunknown authscore=0 authtc= authcc=
+ route=outbound adjust=0 reason=mlx scancount=1 engine=8.22.0-2605210000
+ definitions=main-2605290161
 
-On Fri, May 29, 2026, sashiko-bot@kernel.org wrote:
-> > diff --git a/arch/x86/kernel/tsc.c b/arch/x86/kernel/tsc.c
-> > index 833eed5c048a9..2b8f94c3fcc7f 100644
-> > --- a/arch/x86/kernel/tsc.c
-> > +++ b/arch/x86/kernel/tsc.c
+On Fri, May 29, 2026 at 03:30:11PM +0000, sashiko-bot@kernel.org wrote:
+> Thank you for your contribution! Sashiko AI review found 1 potential issue(s) to consider:
+>
+> Pre-existing issues:
+> - [High] Struct layout mismatch in `__bug_table` on s390 when `CONFIG_DEBUG_BUGVERBOSE` is disabled causes all warnings to become fatal kernel crashes, which is inherited by the new Rust `ARCH_WARN_ASM` implementation.
+> --
+>
+> commit 9d32da95322678b9fef8564a347432ce7d33be9f
+> Author: Jan Polensky <japo@linux.ibm.com>
+> s390/bug: Provide ARCH_WARN_ASM for Rust WARN/BUG support
+>
+> This patch defines ARCH_WARN_ASM and ARCH_WARN_REACHABLE for s390 to
+> enable Rust WARN and BUG support. It uses the existing s390 __BUG_ENTRY
+> macro to emit entries in the __bug_table section.
+>
+> > diff --git a/arch/s390/include/asm/bug.h b/arch/s390/include/asm/bug.h
+> > index 59017fd3d9358..a72439370f625 100644
+> > --- a/arch/s390/include/asm/bug.h
+> > +++ b/arch/s390/include/asm/bug.h
 > [ ... ]
-> > @@ -1537,16 +1538,20 @@ static void __init tsc_enable_sched_clock(void)
-> >  
-> >  void __init tsc_early_init(void)
-> >  {
-> > +	unsigned int known_tsc_khz = 0;
-> > +
-> >  	if (!boot_cpu_has(X86_FEATURE_TSC))
-> >  		return;
-> >  	/* Don't change UV TSC multi-chassis synchronization */
-> >  	if (is_early_uv_system())
-> >  		return;
-> >  
-> > -	if (cc_platform_has(CC_ATTR_GUEST_SNP_SECURE_TSC))
-> > -		snp_secure_tsc_init();
-> > +	if (tsc_early_khz)
-> > +		known_tsc_khz = tsc_early_khz;
-> > +	else if (cc_platform_has(CC_ATTR_GUEST_SNP_SECURE_TSC))
-> > +		known_tsc_khz = snp_secure_tsc_init();
-> 
+> > @@ -121,6 +122,17 @@ do {									\
+> >  #define HAVE_ARCH_BUG_FORMAT
+> >  #define HAVE_ARCH_BUG_FORMAT_ARGS
+> >
+> > +#define ARCH_WARN_ASM(file, line, flags, size)				\
+> > +	".section .rodata.str,\"aMS\",@progbits,1\n"			\
+> > +	"9:\n"								\
+> > +	".asciz \"\"\n"		/* Empty string for compatibility */	\
+> > +	".previous\n"							\
+> > +	"0:\n"								\
+> > +	__stringify(mc 0(%r0),0) "\n"				\
+> > +	__BUG_ENTRY("9b", file, line, flags, size)
+>
 > [Severity: High]
-> Does skipping snp_secure_tsc_init() when tsc_early_khz is provided omit
-> critical CPU capabilities?
-> 
-> In the pre-patch code, snp_secure_tsc_init() was called unconditionally to
-> set up hardware capabilities before determining frequencies:
-> 
-> arch/x86/coco/sev/core.c:snp_secure_tsc_init() {
-> 	...
-> 	setup_force_cpu_cap(X86_FEATURE_TSC_KNOWN_FREQ);
-> 	setup_force_cpu_cap(X86_FEATURE_TSC_RELIABLE);
-> 	...
-> }
-> 
-> By chaining this into an else-if block, if tsc_early_khz is provided
-> (e.g., via the kernel command line), snp_secure_tsc_init() is bypassed.
+> This isn't a bug introduced by this patch, but does relying on __BUG_ENTRY
+> here cause all Rust warnings to become fatal crashes when
+> CONFIG_DEBUG_BUGVERBOSE is disabled?
+>
+> Because HAVE_ARCH_BUG_FORMAT is defined unconditionally on s390, the C struct
+> bug_entry expects the 4-byte format pointer unconditionally, placing flags at
+> offset 8.
+>
+> However, in the assembly macro __BUG_ENTRY, the format field is omitted
+> entirely when CONFIG_DEBUG_BUGVERBOSE is disabled:
+>
+> arch/s390/include/asm/bug.h:
+> #ifdef CONFIG_DEBUG_BUGVERBOSE
+> #define __BUG_ENTRY_VERBOSE(format, file, line) \
+>     "   .long   " format " - .  # bug_entry::format\n" \
+>     ...
+> #else
+> #define __BUG_ENTRY_VERBOSE(format, file, line)
+> #endif
+>
+> This places the 2-byte flags field at offset 4 in the assembly output, and
+> then pads the remaining bytes up to sizeof(struct bug_entry) with zeros.
+>
+> When report_bug() reads the C struct, it expects bug->flags to be at offset 8.
+> Because this falls into the region padded with zeros, it misses the
+> BUGFLAG_WARNING bit, treats it as a fatal BUG, and crashes the kernel.
+>
+> > +
+> > +#define ARCH_WARN_REACHABLE
+> > +
+> >  #endif /* CONFIG_BUG && CONFIG_CC_HAS_ASM_IMMEDIATE_STRINGS */
+> >  #endif /* __ASSEMBLER__ */
+>
+> --
+> Sashiko AI review · https://sashiko.dev/#/patchset/20260529145752.1209016-1-japo@linux.ibm.com?part=1
+Hi,
 
-Which is bizarre and awful, but in practice is effectively what was already
-happening, because the kernel would simply never invoke x86_platform.calibrate_tsc().
+it's already in the s390 tree, thanks.
 
-I have no objection to ignoring tsc_early_khz when running as a CoCo guest with
-a secure/trusted TSC, but if we want to go that route, I'd like to do it as a
-patch on top of everything else, so that it can be easily reverted if it turns
-out someone is somehow depending on that combination.
+Best Regards
+Jan
