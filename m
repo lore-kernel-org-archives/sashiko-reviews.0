@@ -1,172 +1,239 @@
-Received: from www62.your-server.de (www62.your-server.de [213.133.104.62])
+Received: from mx0b-001b2d01.pphosted.com (mx0b-001b2d01.pphosted.com [148.163.158.5])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 90E353438A4;
-	Fri, 29 May 2026 13:49:30 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=213.133.104.62
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 577BC348C4E;
+	Fri, 29 May 2026 13:53:03 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=148.163.158.5
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1780062572; cv=none; b=hNqMl35+UGrCzReKzPbLoLRc0qS4sfOwfNJbiO7SLvg7V9jayxx2ebY3nSQNuJnWZ5grSRfEMXilJIFtvNpYG0m2ZSLuAKYHcM6BxLJsfBNTP5aS0jTv9d9REk8FmOpaMbXN5v/ApEIDg/PdchfuYaanfk+Ep4A/SEFdbrC9FBw=
+	t=1780062787; cv=none; b=S3/sXvpLsW4BLPXidq/GBLz51cjqpVOwyD1y/hGlmu2hb+g7iXmXjCvDbVHLo8MbrhSg7bS9Y9ZgnAwZq0u9pPIw1yAb/zuStRd4BdfBrCrt3OkGTU+fh/dG1TjUa4yS1dBbUtiGN2aXLHhvwtERXQnCCndrUTgSbYGpN8whaYo=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1780062572; c=relaxed/simple;
-	bh=hoct2HFDnKC5DFYG81ttwcBpclC7KqAPBuewW2arKgI=;
-	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=Sh5jS+68cEALidFZ5sHSXTLK/8JyPWjy5zER1thskjjBtYeAxKC39zTiBRP84v6NDKZgeym3icQs+6cKK3+JJtfjo74AlSJDzc5U0eH0ZJytdRZ+pvFo6dcecU9IZWpqdKt3VUKx+/o5o/iRY1aCJdL9RQvI9Qnx39qJ/c3d5WY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=iogearbox.net; spf=pass smtp.mailfrom=iogearbox.net; dkim=pass (2048-bit key) header.d=iogearbox.net header.i=@iogearbox.net header.b=U4gr08R0; arc=none smtp.client-ip=213.133.104.62
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=iogearbox.net
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=iogearbox.net
+	s=arc-20240116; t=1780062787; c=relaxed/simple;
+	bh=jN6q13cCMdBqCnZ0YJPf2rSqYL4pTXX09THl5R00o/c=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=JlVEku2aaGNqNmrzE7BJBq38MoyhyP1F/c9s4egBYL7xkRKQLDCr2NbefeQmkm847TeXyfVX8ia+zCKxzxQFzO1aCguRRWf7WcAJLs2IWF1c91CzV/p0S6BJelXzMHx82aBia88cEz58LHL1Dgqwdc8qIVJ9TTlT2xi53ebDtfI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linux.ibm.com; spf=pass smtp.mailfrom=linux.ibm.com; dkim=pass (2048-bit key) header.d=ibm.com header.i=@ibm.com header.b=HHmWY+bh; arc=none smtp.client-ip=148.163.158.5
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linux.ibm.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linux.ibm.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=iogearbox.net header.i=@iogearbox.net header.b="U4gr08R0"
-DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed;
-	d=iogearbox.net; s=default2302; h=Content-Transfer-Encoding:Content-Type:
-	In-Reply-To:From:References:Cc:To:Subject:MIME-Version:Date:Message-ID:Sender
-	:Reply-To:Content-ID:Content-Description:Resent-Date:Resent-From:
-	Resent-Sender:Resent-To:Resent-Cc:Resent-Message-ID;
-	bh=ZiCGWHoXJTR9rObZHum3TfWvVxF5kf2yiGZZntOQnJw=; b=U4gr08R0nZdfzaHsiNhe1a2tdp
-	4Y/wlDzcruRLyoMZoc75eVEeybXMoGyJsYsoLYHoDO9qUNoa6/UpM0UX3T2OeWHL1zluRwd1Cqmsx
-	j+Qyw9pwGyzUNUU7Fd49PXxLoq0GlgscBv8RKZxKnabUJ7HP5mQZE1Gt5gaU796pU5EBnAXzxis/c
-	I1lrEiOkxqCWeMPUPL4fLAJ77vgEWfO+PwOsHGyszifPX15CfLj+qZ8uyH178Xmqm3I39O7VRYOG4
-	jKIYw+ddibEaIKcqzxkMhZb6f8v1xMQ5v+Wt7rfXmvabIvNPXF2+2t0tgHe8CNsY7CYecd6qT17j3
-	HS0xytWg==;
-Received: from sslproxy01.your-server.de ([78.46.139.224])
-	by www62.your-server.de with esmtpsa  (TLS1.3) tls TLS_AES_256_GCM_SHA384
-	(Exim 4.96.2)
-	(envelope-from <daniel@iogearbox.net>)
-	id 1wSxaa-000PFE-1U;
-	Fri, 29 May 2026 15:49:28 +0200
-Received: from localhost ([127.0.0.1])
-	by sslproxy01.your-server.de with esmtpsa  (TLS1.3) tls TLS_AES_256_GCM_SHA384
-	(Exim 4.96)
-	(envelope-from <daniel@iogearbox.net>)
-	id 1wSxaa-000GjK-0o;
-	Fri, 29 May 2026 15:49:28 +0200
-Message-ID: <030307d2-f065-4434-b746-4ef5349f6190@iogearbox.net>
-Date: Fri, 29 May 2026 15:49:27 +0200
+	dkim=pass (2048-bit key) header.d=ibm.com header.i=@ibm.com header.b="HHmWY+bh"
+Received: from pps.filterd (m0356516.ppops.net [127.0.0.1])
+	by mx0a-001b2d01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id 64TB1SGk2776290;
+	Fri, 29 May 2026 13:53:03 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=ibm.com; h=cc
+	:content-transfer-encoding:content-type:date:from:in-reply-to
+	:message-id:mime-version:references:subject:to; s=pp1; bh=9sxXUl
+	X0Sw+lvi00afE77OBjTvC27VlMXkRJdze7KW0=; b=HHmWY+bhdDdTHTVznOdd0m
+	ZidPJ0b/jszsu3BNXU9NB78ZgNilOUm0h4XqjU5KTH5wAJoNjhwq+EltKcE4JlXC
+	5qry5nRuftvCVq2ehlPR0mdDy6LtoqePLcUHSVJP3vV9MN58fydfiKpOsAuRY4h8
+	IGSF9o4A/E7vAct0RIsJ6cSnGuDLxeiRd8ImVDaR7XzsOgshIJ7KE/ZMqmlfPtwp
+	izrFRlnPSzdV1bo0RTf8EWEeHICVaiRd2GHH5KTvybqFqHmValhKfqKzB6avR8R7
+	eIB9SuREtjCImflkZf5+o5430gTectB7KpKG34KOdbmUPDs2hhEJmORIv1ksxGQg
+	==
+Received: from ppma21.wdc07v.mail.ibm.com (5b.69.3da9.ip4.static.sl-reverse.com [169.61.105.91])
+	by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 4ee889gjyd-1
+	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+	Fri, 29 May 2026 13:53:02 +0000 (GMT)
+Received: from pps.filterd (ppma21.wdc07v.mail.ibm.com [127.0.0.1])
+	by ppma21.wdc07v.mail.ibm.com (8.18.1.7/8.18.1.7) with ESMTP id 64TDdCJQ020572;
+	Fri, 29 May 2026 13:53:02 GMT
+Received: from smtprelay05.fra02v.mail.ibm.com ([9.218.2.225])
+	by ppma21.wdc07v.mail.ibm.com (PPS) with ESMTPS id 4edjrbduck-1
+	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+	Fri, 29 May 2026 13:53:02 +0000 (GMT)
+Received: from smtpav02.fra02v.mail.ibm.com (smtpav02.fra02v.mail.ibm.com [10.20.54.101])
+	by smtprelay05.fra02v.mail.ibm.com (8.14.9/8.14.9/NCO v10.0) with ESMTP id 64TDqwIw49742140
+	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
+	Fri, 29 May 2026 13:52:58 GMT
+Received: from smtpav02.fra02v.mail.ibm.com (unknown [127.0.0.1])
+	by IMSVA (Postfix) with ESMTP id 3061320043;
+	Fri, 29 May 2026 13:52:58 +0000 (GMT)
+Received: from smtpav02.fra02v.mail.ibm.com (unknown [127.0.0.1])
+	by IMSVA (Postfix) with ESMTP id 315B720040;
+	Fri, 29 May 2026 13:52:57 +0000 (GMT)
+Received: from Amits-MacBook-Pro.local (unknown [9.123.0.51])
+	by smtpav02.fra02v.mail.ibm.com (Postfix) with ESMTPS;
+	Fri, 29 May 2026 13:52:56 +0000 (GMT)
+Date: Fri, 29 May 2026 19:22:53 +0530
+From: Amit Machhiwal <amachhiw@linux.ibm.com>
+To: sashiko-reviews@lists.linux.dev
+Cc: Amit Machhiwal <amachhiw@linux.ibm.com>, kvm@vger.kernel.org
+Subject: Re: [PATCH v3 5/5] KVM: PPC: Document KVM_PPC_GET_COMPAT_CAPS ioctl
+Message-ID: <20260529190750.69cc6577-e6-amachhiw@linux.ibm.com>
+Mail-Followup-To: sashiko-reviews@lists.linux.dev, kvm@vger.kernel.org
+References: <20260522152744.55251-6-amachhiw@linux.ibm.com>
+ <20260522175602.9064B1F000E9@smtp.kernel.org>
 Precedence: bulk
 X-Mailing-List: sashiko-reviews@lists.linux.dev
 List-Id: <sashiko-reviews.lists.linux.dev>
 List-Subscribe: <mailto:sashiko-reviews+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:sashiko-reviews+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH bpf-next 2/3] libbpf: Skip hash computation when loader
- generation failed
-To: sashiko-reviews@lists.linux.dev
-Cc: bpf@vger.kernel.org
-References: <20260529094119.307264-2-daniel@iogearbox.net>
- <20260529102131.B66FC1F00898@smtp.kernel.org>
-Content-Language: en-US
-From: Daniel Borkmann <daniel@iogearbox.net>
-Autocrypt: addr=daniel@iogearbox.net; keydata=
- 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
-In-Reply-To: <20260529102131.B66FC1F00898@smtp.kernel.org>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
-X-Virus-Scanned: Clear (ClamAV 1.4.3/28015/Fri May 29 08:24:51 2026)
+Content-Type: text/plain; charset=iso-8859-1
+Content-Disposition: inline
+Content-Transfer-Encoding: 8bit
+In-Reply-To: <20260522175602.9064B1F000E9@smtp.kernel.org>
+X-TM-AS-GCONF: 00
+X-Proofpoint-ORIG-GUID: hOV5HFNlCPRNs4OAqiw3vXFk_uZSG17q
+X-Proofpoint-GUID: hOV5HFNlCPRNs4OAqiw3vXFk_uZSG17q
+X-Authority-Analysis: v=2.4 cv=XqfK/1F9 c=1 sm=1 tr=0 ts=6a199a3e cx=c_pps
+ a=GFwsV6G8L6GxiO2Y/PsHdQ==:117 a=GFwsV6G8L6GxiO2Y/PsHdQ==:17
+ a=8nJEP1OIZ-IA:10 a=NGcC8JguVDcA:10 a=VkNPw1HP01LnGYTKEx00:22
+ a=RnoormkPH1_aCDwRdu11:22 a=Y2IxJ9c9Rs8Kov3niI8_:22 a=VwQbUJbxAAAA:8
+ a=QyXUC8HyAAAA:8 a=VnNF1IyMAAAA:8 a=c92rfblmAAAA:8 a=FPN5NLQJRj0HrcRoAXcA:9
+ a=3ZKOabzyN94A:10 a=wPNLvfGTeEIA:10 a=GvGzcOZaWPEFPQC_NcjD:22
+X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwNTI5MDEzNiBTYWx0ZWRfX9penM0XgimCY
+ /KIackb0ODnHbWVkLC+kDsXAh0OYs247/8r62NXlnUO63rZ1fjMmDZuDf/n8K87Rb6YvOoEnSck
+ fnoH2tpGAVLkusWfLvlzVRapTjOO5sg5r5Z3qALmpkZ+qQHDnDPE3jyrL5joDHrimEr4kPHj9KK
+ DXAuY1Q7jiPj3FAEE36BTbpTL2sPU8o4m3egZWX1Re5vuR7tIw6a/AidppWe+FAJ8eTASbZ/E2r
+ XJNGV3SYpN1ySjOcaB1Ulis/hwFy1nlVjqu+ANFSecnkHiBFQEIBkXPTRweh46+dQ+jVxfjK1Nz
+ ZRmVixvCe9ilxYkZKmGRlriJs4kuSs5UWLHAo8hM6UnTea6u2ZKQcZLy4h/T1QohnX0kAJZD9GP
+ DJ9znTOf8v+vkLZ8VITRuV2l3LTgGJJr7FzKz/kx/qyNLWa7h9aZU3jQ5xBVNCADEbFwGxzDlNK
+ 7U4FhdqXksVpi0yOfnA==
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.293,Aquarius:18.0.1143,Hydra:6.1.125,FMLib:17.12.100.49
+ definitions=2026-05-29_03,2026-05-28_03,2025-10-01_01
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
+ malwarescore=0 spamscore=0 impostorscore=0 adultscore=0 phishscore=0
+ priorityscore=1501 lowpriorityscore=0 bulkscore=0 suspectscore=0
+ clxscore=1011 classifier=typeunknown authscore=0 authtc= authcc=
+ route=outbound adjust=0 reason=mlx scancount=1 engine=8.22.0-2605210000
+ definitions=main-2605290136
 
-On 5/29/26 12:21 PM, sashiko-bot@kernel.org wrote:
-[...]
-> [Severity: Critical]
-> This isn't a regression introduced by this patch, but while reviewing this
-> file I noticed a pre-existing issue with how generation errors are handled in
-> bpf_gen__prog_load() and info_blob_bswap().
+On 2026/05/22 05:56 PM, sashiko-bot@kernel.org wrote:
+> Thank you for your contribution! Sashiko AI review found 5 potential issue(s) to consider:
 > 
-> If realloc_data_buf() fails inside add_data(), it frees gen->data_start,
-> sets it to NULL, sets gen->error, and add_data() returns 0.
+> New issues:
+> - [Medium] Macros referenced in the user-facing API documentation are missing from UAPI headers.
+> - [Medium] The documentation uses ambiguous and non-standard bit numbering (MSB-0), likely causing userspace to check the wrong bits.
+> - [Low] The new documentation section breaks the existing `.. _kvm_run:` reStructuredText anchor target.
+> - [Low] The documented return values omit multiple valid error codes natively returned by the ioctl (-EINVAL, -ENOTTY).
 > 
-> However, bpf_gen__prog_load() doesn't check gen->error before swapping
-> endianness:
+> Pre-existing issues:
+> - [High] kvmppc_map_compat_capabilities under-reports supported compatibility modes on APIv1 platforms.
+> --
 > 
-> tools/lib/bpf/gen_loader.c:bpf_gen__prog_load() {
->      ...
->      insns_off = add_data(gen, insns, insn_cnt * sizeof(struct bpf_insn));
->      ...
->      if (gen->swapped_endian) {
->          struct bpf_insn *insn = gen->data_start + insns_off;
->          int i;
+> commit 72ed781761ff2f69a81eff7405946f0c54c590e0
+> Author: Amit Machhiwal <amachhiw@linux.ibm.com>
+> KVM: PPC: Document KVM_PPC_GET_COMPAT_CAPS ioctl
 > 
->          for (i = 0; i < insn_cnt; i++, insn++)
->              bpf_insn_bswap(insn);
->      }
->      ...
-> }
+> This commit adds documentation for the KVM_PPC_GET_COMPAT_CAPS ioctl to the
+> KVM API documentation. It describes the compatibility modes supported for
+> nested KVM guests on PowerPC systems.
 > 
-> If add_data() failed, this evaluates to insn = NULL + 0. Can this cause a
-> NULL pointer dereference when accessing insn inside bpf_insn_bswap()?
+> Link: https://lore.kernel.org/oe-kbuild-all/202605140717.W1StD3Ke-lkp@intel.com/
 > 
-> Furthermore, if gen->error was previously set (e.g., from a failed
-> realloc_insn_buf) while gen->data_start is non-NULL, add_data() still returns
-> 0.
+> > diff --git a/Documentation/virt/kvm/api.rst b/Documentation/virt/kvm/api.rst
+> > index 52bbbb553ce10..d11e054e6665c 100644
+> > --- a/Documentation/virt/kvm/api.rst
+> > +++ b/Documentation/virt/kvm/api.rst
+> > @@ -6555,6 +6555,41 @@ KVM_S390_KEYOP_SSKE
+> >  
+> >  .. _kvm_run:
+> >  
+> > +4.145 KVM_PPC_GET_COMPAT_CAPS
+> > +-----------------------------
 > 
-> Since the loop evaluates insn = gen->data_start + 0, can this overwrite the
-> beginning of gen->data_start and write past the end of the buffer if it is
-> smaller than insn_cnt * sizeof(struct bpf_insn)?
+> [Severity: Low]
+> Does inserting the new section here break the rST anchor target?
 > 
-> Could we add a check for gen->error before proceeding with the endianness
-> swapping?
-Yeap, for the endianess we would need something like the below ... will cook
-a patch for it to address :
+> By placing the new section directly after the .. _kvm_run: anchor, cross
+> references to the kvm_run anchor throughout the documentation will jump
+> to this new 4.145 section instead of section 5.
 
-diff --git a/tools/lib/bpf/gen_loader.c b/tools/lib/bpf/gen_loader.c
-index 19f9c05f8388..501508e5affa 100644
---- a/tools/lib/bpf/gen_loader.c
-+++ b/tools/lib/bpf/gen_loader.c
-@@ -1071,7 +1071,7 @@ void bpf_gen__prog_load(struct bpf_gen *gen,
-                  prog_idx, prog_type, insns_off, insn_cnt, license_off);
-  
-         /* convert blob insns to target endianness */
--       if (gen->swapped_endian) {
-+       if (gen->swapped_endian && !gen->error) {
-                 struct bpf_insn *insn = gen->data_start + insns_off;
-                 int i;
-  
-@@ -1109,7 +1109,7 @@ void bpf_gen__prog_load(struct bpf_gen *gen,
-                  sizeof(struct bpf_core_relo));
-  
-         /* convert all info blobs to target endianness */
--       if (gen->swapped_endian)
-+       if (gen->swapped_endian && !gen->error)
-                 info_blob_bswap(gen, func_info, line_info, core_relos, load_attr);
-  
-         libbpf_strlcpy(attr.prog_name, prog_name, sizeof(attr.prog_name));
+Yes, it got overlooked. I'll fix this is next version.
 
+> 
+> > +:Capability: KVM_CAP_PPC_COMPAT_CAPS
+> > +:Architectures: powerpc
+> > +:Type: vm ioctl
+> > +:Parameters: struct kvm_ppc_compat_caps (out)
+> > +:Returns:
+> > +	0 on successful completion,
+> > +	-EFAULT if ``struct kvm_ppc_compat_caps`` cannot be written
+> 
+> [Severity: Low]
+> Should this documentation also include -EINVAL and -ENOTTY?
+
+Yes, I missed to include -ENOTTY from the change in my previous version. Looked
+more closely and we do return -EINVAL from one path. I'll document that too in
+the next version.
+
+> The kernel implementation explicitly returns -ENOTTY if the underlying
+> architecture callback is unsupported, and returns -EINVAL if capabilities
+> cannot be mapped or the CPU version cannot be parsed.
+> 
+> > +
+> > +IBM POWER system server-based processors provide a compatibility mode feature
+> > +where an Nth generation processor can operate in modes consistent with earlier
+> > +generations such as (N-1) and (N-2).
+> > +
+> > +This ioctl provides userspace with information about the CPU compatibility modes
+> > +supported by the current host processor for booting the nested KVM guests on
+> > +PowerNV (KVM nested APIv1) and PowerVM (KVM nested APIv2) platforms.
+> 
+> [Severity: High]
+> This isn't a bug introduced by this patch, but does the APIv1 implementation
+> of kvmppc_map_compat_capabilities under-report supported compatibility modes?
+> 
+> The underlying implementation for APIv1 nested KVM uses a switch statement
+> with breaks that only sets a single bit matching the host's native generation.
+> 
+> Because backward compatibility modes are missed, QEMU might erroneously
+> conclude the host does not support older guests.
+
+No, its currenlty intentionally done for APIv1. I had responded to a similar
+query here:
+
+  https://lore.kernel.org/all/20260507202740.96fb259f-22-amachhiw@linux.ibm.com/
+
+> 
+> > +
+> > +::
+> > +
+> > +  struct kvm_ppc_compat_caps {
+> > +	__u64	flags;			/* Reserved for future use */
+> > +	__u64	compat_capabilities;	/* Capabilities supported by the host */
+> > +  };
+> > +
+> > +The ``compat_capabilities`` bit field describes the processor compatibility
+> > +modes supported by the host. For example, the following bits indicate support
+> > +for specific processor modes.
+> > +
+> > +::
+> > +
+> > +  H_GUEST_CAP_POWER9  (bit 1): KVM guests can run in Power9 processor mode
+> > +  H_GUEST_CAP_POWER10 (bit 2): KVM guests can run in Power10 processor mode
+> > +  H_GUEST_CAP_POWER11 (bit 3): KVM guests can run in Power11 processor mode
+> 
+> [Severity: Medium]
+> Are these macros exported to include/uapi/linux/kvm.h?
+> 
+> The documentation directs userspace to interpret the bitmask using macros
+> like H_GUEST_CAP_POWER9. However, these are defined exclusively in the
+> kernel-internal header arch/powerpc/include/asm/hvcall.h. This forces
+> userspace to hardcode internal kernel values.
+
+These macro names (H_GUEST_CAP_*) are for documentation clarity only. Userspace
+should use the bit numbers directly as these macros are not exported to UAPI
+headers.
+
+> 
+> [Severity: Medium]
+> Will the bit numbering here mislead userspace developers?
+> 
+> The documentation specifies capabilities as (bit 1), (bit 2), etc., which
+> implies standard LSB-0 numbering. However, the KVM implementation uses IBM's
+> MSB-0 bit numbering, where H_GUEST_CAP_POWER9 is defined as (1UL << (63 - 1)).
+
+I'll add a note clarifying that IBM PowerPC uses MSB-0 bit numbering (bit 0 =
+most significant), so bit 1 corresponds to (1UL << (63 -1 )).
+
+Thanks,
+Amit
+
+> >  5. The kvm_run structure
+> >  ========================
+> >
+> 
+> -- 
+> Sashiko AI review · https://sashiko.dev/#/patchset/20260522152744.55251-1-amachhiw@linux.ibm.com?part=5
