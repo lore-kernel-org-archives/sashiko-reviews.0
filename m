@@ -1,102 +1,201 @@
-Received: from mail-pg1-f201.google.com (mail-pg1-f201.google.com [209.85.215.201])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from mgamail.intel.com (mgamail.intel.com [198.175.65.13])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 91B17400E18
-	for <sashiko-reviews@lists.linux.dev>; Fri, 29 May 2026 18:24:52 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.215.201
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9BA53409E14
+	for <sashiko-reviews@lists.linux.dev>; Fri, 29 May 2026 18:30:38 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=198.175.65.13
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1780079093; cv=none; b=lkLjMTTEGtrNVN4Z/xBETQbEjQRVHd9MhYZWv9oVRINh+e5qbZw8r1fIJ0RwekRTeOuw5GdSMxBewsRMtTi3yNYFRkb0HoxQ2adlDWs4Y+R9vNygubQih/NC9AWByfSHMmL0GNDeSvbl0cmWzpOPTqeSRExq+a+P0OzVTt8ZFxM=
+	t=1780079442; cv=none; b=mUg0z074x9nHXwORysatPIocBcHL3vDMBhAWAEwmup9rnhF92RgFV5Xnps8NFan3RIJC61JJudhkFV9dq4pfd2iNy9yC67A+u25fMD0DHJ3xXgjqwBEL8P5+9WCXKF5FxdCeVcHTsclb1qguewEmdj4WLL2LqMl3Cia5g+IKDUE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1780079093; c=relaxed/simple;
-	bh=UeHE8FngsFzOqtRt38sTx5XiaHaRF+B7JZgy2Sp2ZT8=;
-	h=Date:In-Reply-To:Mime-Version:References:Message-ID:Subject:From:
-	 To:Cc:Content-Type; b=HkoXE+jLVchdxDqxGHL32UsE44xPh+V2dkBB+V6TyTWFIr57d6IaB/vqY3lgKAGvPvX/EL2gleWHYJhFgvCO/xFbubyEps3vJVL3vtOzIjFAXVYTf7WFE9sik3i5WTL/Icdu5fH8CM31R62IciHFMvhCNq5wCsj8Rl2eUSG2nUI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=google.com; spf=pass smtp.mailfrom=flex--seanjc.bounces.google.com; dkim=pass (2048-bit key) header.d=google.com header.i=@google.com header.b=gDVuH4tq; arc=none smtp.client-ip=209.85.215.201
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=google.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=flex--seanjc.bounces.google.com
+	s=arc-20240116; t=1780079442; c=relaxed/simple;
+	bh=xdgNo0HQSOKicPxZ1UPYy/3PVWgTvlDD31XlefDemk4=;
+	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
+	 In-Reply-To:Content-Type; b=OElNfjawk9tjU2OhWaWAsN52MW3K7c17EpstMpfL7N/ZOzcnTeiYONVkxLKUXARjqitm0XQJRPiCudqnffldY46pYHvKL1Ix3rPMQoldsLDy9tD45NcVNDmbApCOq9DypDtTfH+krupJuW8eOJ8fukkPehASeYALeEMSw93xj9g=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=intel.com; spf=pass smtp.mailfrom=intel.com; dkim=pass (2048-bit key) header.d=intel.com header.i=@intel.com header.b=C/fO9i/z; arc=none smtp.client-ip=198.175.65.13
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=intel.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=intel.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=google.com header.i=@google.com header.b="gDVuH4tq"
-Received: by mail-pg1-f201.google.com with SMTP id 41be03b00d2f7-c82ac893940so7210704a12.1
-        for <sashiko-reviews@lists.linux.dev>; Fri, 29 May 2026 11:24:52 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=google.com; s=20251104; t=1780079092; x=1780683892; darn=lists.linux.dev;
-        h=cc:to:from:subject:message-id:references:mime-version:in-reply-to
-         :date:from:to:cc:subject:date:message-id:reply-to;
-        bh=7KC7JwfT5evfbnVHlmq0f2yFu9P+G1LslL1SBdd7A1I=;
-        b=gDVuH4tqhMvoGlKKGOACG/Oe65zGb0xOMvWkaSG06azfGrO0bAv9+Yzk5HLNi8LdsT
-         ncKjJegGnEc7/fpup4HO6T7TqLx5OnYkjO5eHNS76YMJppne5P3mOzG6EEu9fO1zHpXs
-         VXBMhDYa1/eOtDumL/K2T0298KgQNrCziv0vT8mmxmJgMVlmCuCh+Mr1t6UD+cm09qPE
-         roE3Nypx2ULzRqeYH7q6Fy+lZZTcMxeUz5So4SSk0+9UmMnX4u/EwbdOa9XBfuMHWnN6
-         WQAvNR2VsbO2nc5zXPY6/nljuPTgvowtdRCudJ9vqTLQch4EnY2tyysXMfy7d0qMSmhn
-         fJRg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20251104; t=1780079092; x=1780683892;
-        h=cc:to:from:subject:message-id:references:mime-version:in-reply-to
-         :date:x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=7KC7JwfT5evfbnVHlmq0f2yFu9P+G1LslL1SBdd7A1I=;
-        b=cROiir+DyOCs0mHPNfGM2kNQTlI+VEPSQmrr7kCQlz42vE37GTjJ69l8uIx4ftk/G0
-         /J0J1k0Ur9A7IeS/3y6cCFcosc6smQgr5z1yi5GfuKWScFci73XoMrhWvx46Qurgee6K
-         OaN1WHPLkxm4aDAL8/+6/LlkGECBtDI7VUNG5aRPSxZ9sXJak0Kg/v1vJ+ld7/KcWhtM
-         qe0Bm6t4Z3lvgRN99uEHQ24B/Gmm/hLnh7XapF/dS3oagGD5P/ew6HZPgSYlgp7lv5Ny
-         LP9ZLetstTrgDK9yWxnr1/M+Lhw7DaBb6PiS4J04n1gFJNM6r67sfEzhJEVK/pY7Gv2k
-         qoKQ==
-X-Gm-Message-State: AOJu0YxI8vf0tlu0picenCKgkcuBtrvNhX7/tkMYHjz62EAn+3xMcoSQ
-	WW3C+x7M/dQCVcofov2Y3CLH4gIjQf3l1fEBkHp8DTXiuH1t7dCnX1JV5yb0z9VJFxpiIIZLXo2
-	dOM+15XzbBDsIJTr8+RkMtu9q+NRdmy/v+0yOYq7DRlenu4QQFrdZesuSvb8guzioK5DhKH9lxn
-	A/SF+BM/GgX4cJYHi/D2s1hdoj+aEkm4PpG727tulsJYKZpzCe
-X-Received: from pgnb26.prod.google.com ([2002:a63:715a:0:b0:c85:71af:a857])
- (user=seanjc job=prod-delivery.src-stubby-dispatcher) by 2002:a05:6300:189:b0:3a2:c683:fa84
- with SMTP id adf61e73a8af0-3b427f6d141mr406494637.27.1780079091312; Fri, 29
- May 2026 11:24:51 -0700 (PDT)
-Date: Fri, 29 May 2026 11:24:50 -0700
-In-Reply-To: <20260529181207.5E7D81F00898@smtp.kernel.org>
+	dkim=pass (2048-bit key) header.d=intel.com header.i=@intel.com header.b="C/fO9i/z"
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
+  d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
+  t=1780079438; x=1811615438;
+  h=message-id:date:mime-version:subject:to:cc:references:
+   from:in-reply-to:content-transfer-encoding;
+  bh=xdgNo0HQSOKicPxZ1UPYy/3PVWgTvlDD31XlefDemk4=;
+  b=C/fO9i/zKOHizQEI4KMiZtMNqbWeilmXlK6mQi1YHWjZbzKOHs0M3b/O
+   EiXTIaO6PMaq8Kz9rJKkwlq8dnFph5iFQhQmOHDCVgfTmK4EK2aGlian6
+   F8PojGBaHLMENCL7adn0XjWtKeBrFbC0ZEf5nFEoKBFXd2+/aN4QdssWX
+   rdjIH3L9HVZjXSd5x5HLkuP4nFoxU076NMsJ7k8qZntmMKIXXkP+6DBiV
+   JuYTQpE/TrywUcMn6dfuiq2CrGOHnAiowbCbkcdr+4DNli+G9IAVUzCNx
+   nhb5GlHaTwTDwPgYO50UlyVneuq+6rekibuHgcas9vcXD5WPrC0O3/pZ1
+   A==;
+X-CSE-ConnectionGUID: jwjfv5PTTn2aZfZNQTmFiQ==
+X-CSE-MsgGUID: wVcFiVKDSb61D9TgupGcdQ==
+X-IronPort-AV: E=McAfee;i="6800,10657,11801"; a="92053356"
+X-IronPort-AV: E=Sophos;i="6.24,175,1774335600"; 
+   d="scan'208";a="92053356"
+Received: from fmviesa007.fm.intel.com ([10.60.135.147])
+  by orvoesa105.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 29 May 2026 11:30:38 -0700
+X-CSE-ConnectionGUID: /WBZGfffR3Ovjw5wspLNLw==
+X-CSE-MsgGUID: cylIfI2vTgem8KryQoHmOQ==
+X-ExtLoop1: 1
+X-IronPort-AV: E=Sophos;i="6.24,175,1774335600"; 
+   d="scan'208";a="239917748"
+Received: from soc-cp83kr3.clients.intel.com (HELO [10.122.185.5]) ([10.122.185.5])
+  by fmviesa007-auth.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 29 May 2026 11:30:37 -0700
+Message-ID: <8037384e-e3d5-4479-a3f1-00ec7f943272@intel.com>
+Date: Fri, 29 May 2026 13:30:36 -0500
 Precedence: bulk
 X-Mailing-List: sashiko-reviews@lists.linux.dev
 List-Id: <sashiko-reviews.lists.linux.dev>
 List-Subscribe: <mailto:sashiko-reviews+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:sashiko-reviews+unsubscribe@lists.linux.dev>
-Mime-Version: 1.0
-References: <20260529144435.704127-19-seanjc@google.com> <20260529181207.5E7D81F00898@smtp.kernel.org>
-Message-ID: <ahnZ8tuHFVFTeofW@google.com>
-Subject: Re: [PATCH v4 18/47] x86/kvm: Get local APIC bus frequency from PV
- CPUID Timing Info
-From: Sean Christopherson <seanjc@google.com>
+MIME-Version: 1.0
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH V2 7/7] perf/x86/intel/uncore: Implement global init
+ callback for GNR uncore
 To: sashiko-reviews@lists.linux.dev
-Cc: linux-hyperv@vger.kernel.org, kvm@vger.kernel.org
-Content-Type: text/plain; charset="us-ascii"
+Cc: linux-perf-users@vger.kernel.org
+References: <20260527151154.130505-7-zide.chen@intel.com>
+ <20260527204547.2E3D11F000E9@smtp.kernel.org>
+Content-Language: en-US
+From: "Chen, Zide" <zide.chen@intel.com>
+In-Reply-To: <20260527204547.2E3D11F000E9@smtp.kernel.org>
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 7bit
 
-On Fri, May 29, 2026, sashiko-bot@kernel.org wrote:
-> > diff --git a/arch/x86/kernel/kvm.c b/arch/x86/kernel/kvm.c
-> > index 4fe9c69bf40b3..c1139182121d5 100644
-> > --- a/arch/x86/kernel/kvm.c
-> > +++ b/arch/x86/kernel/kvm.c
+
+
+On 5/27/2026 3:45 PM, sashiko-bot@kernel.org wrote:
+> Thank you for your contribution! Sashiko AI review found 4 potential issue(s) to consider:
+> - [High] Calling `uncore_die_to_cpu()` without holding `cpus_read_lock()` introduces a race condition with CPU hotplug, potentially aborting PMU discovery.
+> - [High] Use of the unsafe `wrmsrq_on_cpu()` function with an unvalidated MSR index can trigger a General Protection Fault (#GP) and crash the kernel.
+> - [High] The required global initialization write is only performed during discovery and is missed upon system resume, leaving PMON units uninitialized after sleep.
+> - [Medium] PMU discovery permanently fails for a die if all of its CPUs are offline during module initialization.
+> --
 > 
+> commit d885055ecaea97356a710a83b6d4de7ee7d6ba76
+> Author: Zide Chen <zide.chen@intel.com>
+> Subject: perf/x86/intel/uncore: Implement global init callback for GNR uncore
+> 
+> This commit implements a global initialization callback for GNR uncore to
+> explicitly write 0 to the global control register at boot. This triggers
+> hardware initialization properly for UBOX PMON units on Sierra Forest and
+> Clearwater Forest.
+> 
+>> diff --git a/arch/x86/events/intel/uncore.c b/arch/x86/events/intel/uncore.c
+>> index 4b3a1fa5b41b7..7857959c6e823 100644
+>> --- a/arch/x86/events/intel/uncore.c
+>> +++ b/arch/x86/events/intel/uncore.c
 > [ ... ]
+>> @@ -1731,6 +1731,16 @@ static int uncore_mmio_global_init(u64 ctl)
+>>  	return 0;
+>>  }
+>>  
+>> +static int uncore_msr_global_init(int die, u64 msr)
+>> +{
+>> +	int cpu = uncore_die_to_cpu(die);
+>> +
+>> +	if (cpu == -1)
+>> +		return -ENODEV;
 > 
-> > @@ -1039,6 +1040,13 @@ static void __init kvm_init_platform(void)
-> >  			x86_init.hyper.get_tsc_khz = kvm_get_tsc_khz;
-> >  			x86_init.hyper.get_cpu_khz = kvm_get_tsc_khz;
-> >  		}
-> > +
-> > +#ifdef CONFIG_X86_LOCAL_APIC
-> > +		/* The leaf also includes the local APIC bus/timer frequency.*/
-> > +		apic_khz = cpuid_ebx(timing_info_leaf);
-> > +		if (apic_khz)
-> > +	               lapic_timer_period = apic_khz * 1000 / HZ;
+> [Severity: Medium]
+> If a die has no online CPUs during module load or boot, this will return
+> -ENODEV and abort parsing the discovery table for that die. Since there
+> is no mechanism to re-trigger discovery when a CPU on that die is later
+> brought online via hotplug, will the uncore PMUs for that die remain
+> permanently unavailable?
+
+Yes, this is expected.
+
+
+> [Severity: High]
+> Is this safe against CPU hotplug? uncore_discovery_pci() invokes
+> __parse_discovery_table() without holding cpus_read_lock(). If the
+> selected CPU goes offline in the narrow window between uncore_die_to_cpu()
+> and the subsequent wrmsrq_on_cpu() call, smp_call_function_single() will
+> return -ENXIO and silently abort PMU discovery for the entire die.
+
+You are right, it's better to hold the cpus_read_lock() in the
+uncore_discovery_pci() path as well.
+
+diff --git a/arch/x86/events/intel/uncore_discovery.c
+b/arch/x86/events/intel/uncore_discovery.c
+index 77fc26fc6e9e..fd74da91c12b 100644
+--- a/arch/x86/events/intel/uncore_discovery.c
++++ b/arch/x86/events/intel/uncore_discovery.c
+@@ -399,7 +399,6 @@ static bool uncore_discovery_msr(struct
+uncore_discovery_domain *domain)
+        if (!die_mask)
+                return false;
+
+-       cpus_read_lock();
+        for_each_online_cpu(cpu) {
+                die = topology_logical_die_id(cpu);
+                if (__test_and_set_bit(die, die_mask))
+@@ -414,8 +413,6 @@ static bool uncore_discovery_msr(struct
+uncore_discovery_domain *domain)
+                __parse_discovery_table(domain, base, die, &parsed);
+        }
+
+-       cpus_read_unlock();
+-
+        kfree(die_mask);
+        return parsed;
+ }
+@@ -429,10 +426,15 @@ bool uncore_discovery(struct uncore_plat_init *init)
+        for (i = 0; i < UNCORE_DISCOVERY_DOMAINS; i++) {
+                domain = &init->domain[i];
+                if (domain->discovery_base) {
++
++                       cpus_read_lock();
++
+                        if (!domain->base_is_pci)
+                                ret |= uncore_discovery_msr(domain);
+                        else
+                                ret |= uncore_discovery_pci(domain);
++
++                       cpus_read_unlock();
+                }
+        }
+
+> 
+>> +
+>> +	return wrmsrq_on_cpu(cpu, msr, 0);
+>> +}
 > 
 > [Severity: High]
-> Could the intermediate multiplication of apic_khz * 1000 overflow here?
+> Can this trigger a General Protection Fault (#GP)? The msr parameter is
+> derived from a 64-bit value dynamically read from the hardware/firmware
+> discovery table. If the firmware provides an invalid value, an MMIO physical
+> address, or if the table is corrupted, wrmsrq_on_cpu() will execute a bare
+> wrmsr instruction. Should this use wrmsrq_safe_on_cpu() to gracefully handle
+> invalid MSR indices?
 > 
-> Since apic_khz is a u32, the multiplication is evaluated in 32-bit unsigned
-> arithmetic. If the hypervisor reports an APIC timer frequency greater than
-> ~4.29 GHz (apic_khz > 4294967), this calculation will silently overflow.
+> [Severity: High]
+> Since domain->global_init() is only called once during initial uncore
+> discovery, what happens during S3 suspend or hibernation? The hardware drops
+> power and loses its state, reverting the FRZ_ALL bit back to the default.
+> Without a suspend/resume callback to re-trigger this explicit global
+> initialization write, will the UBOX PMON units silently fail to work after
+> the system resumes from sleep?
 
-Hmm, easy enough to use mul_u64_u32_div() (I think that's the write helper for
-this?).
+It's supposed not be impacted by S3.
+> 
+> [ ... ]
+>> diff --git a/arch/x86/events/intel/uncore_discovery.c b/arch/x86/events/intel/uncore_discovery.c
+>> index af2217b44a814..e36613d934b1f 100644
+>> --- a/arch/x86/events/intel/uncore_discovery.c
+>> +++ b/arch/x86/events/intel/uncore_discovery.c
+> [ ... ]
+>> @@ -287,7 +287,7 @@ static int __parse_discovery_table(struct uncore_discovery_domain *domain,
+>>  	if (!io_addr)
+>>  		return -ENOMEM;
+>>  
+>> -	if (domain->global_init && domain->global_init(global.ctl)) {
+>> +	if (domain->global_init && domain->global_init(die, global.ctl)) {
+>>  		ret = -ENODEV;
+>>  		goto out;
+>>  	}
+> 
 
-But this problem pre-exits in almost every other path that sets lapic_timer_period.
-So while I tried to avoid doing yet more tangentially related cleanup, it seems
-like adding a helper to set lapic_timer_period is the way to go.  That would also
-allow making lapic_timer_period local to arch/x86/kernel/apic/apic.c.
-
-*sigh*
