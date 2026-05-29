@@ -1,181 +1,193 @@
-Received: from mx0a-001b2d01.pphosted.com (mx0a-001b2d01.pphosted.com [148.163.156.1])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-dy1-f181.google.com (mail-dy1-f181.google.com [74.125.82.181])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 600A3392C4B
-	for <sashiko-reviews@lists.linux.dev>; Fri, 29 May 2026 17:58:36 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=148.163.156.1
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 335E437A488
+	for <sashiko-reviews@lists.linux.dev>; Fri, 29 May 2026 18:23:59 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=74.125.82.181
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1780077520; cv=none; b=Ng98I+Qf0kclIC5OiRIoAJHw2rJ8sSlH5UEBozR5rCoj8MdfxKxwREMxk8YXC6vDFxTe87nzP/Sep/HQ3AKclFhgCa32hrJJkbavB5uQE4d19iOIKM8Ba57+SVBg3wxqGE6KGg87JCgRrclIKxHYDucmBYg12ZmoUHVMMrL8R7c=
+	t=1780079040; cv=none; b=cBKlYM5YSkDCitOSM0clo7X9MLz6i3n+LH7ee7nDZF0TLFM5aSIiqwZwyHLzEQCLES7Q28WENySIU2WtI0qR1S3iLOuveghmbLimbDP/thGUdQn0n9MVxV5WoXvLqfnkZFZXNkj+PiOTQUkCZhIhRc3/9O+m1XGf00KipeIsgYs=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1780077520; c=relaxed/simple;
-	bh=DfK09CFR2aqZOgvAcChRMsru4L9ZPV0hljybfT1qh70=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=ImLuPGaD4/LNtQr0srjmItDRoF2brS+VFcHp/oTJ0A+NTucMtaziLY6EEmoUGvqmQrwQaqzMOLdkmMMjfJ4XiURRSK8MmGJGdUN1HH9Qf1tz34YMLZKaZMRu5/KwUm5eMe9ntWO4Z61FXcsdYoEOxZkFM/udGwJ2MUzRhLHqqKU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linux.ibm.com; spf=pass smtp.mailfrom=linux.ibm.com; dkim=pass (2048-bit key) header.d=ibm.com header.i=@ibm.com header.b=Vzy1Dd7y; arc=none smtp.client-ip=148.163.156.1
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linux.ibm.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linux.ibm.com
+	s=arc-20240116; t=1780079040; c=relaxed/simple;
+	bh=G0zmhU1iLu794HmVyNXLwX+Mb88CKrpHGaPhKOFmix0=;
+	h=Message-ID:Subject:From:To:Cc:Date:In-Reply-To:References:
+	 Content-Type:MIME-Version; b=T5T7ee3DgmWqIv2eEVFwxsplVTFeKFKpqrZ/k/XUef4VLMO9GzFrJHeP+rELlhuMfqfFm4sY7e9h3LztmxU4rPKcWLxCO1RRV7FKcIw9Imprj4M6lSPPGc5D7TzkgCOHcVJS11eXhy+KIfTnBvRFEyaTu7L5rHbzkUM+kIyDljg=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=SkuOgYqz; arc=none smtp.client-ip=74.125.82.181
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=ibm.com header.i=@ibm.com header.b="Vzy1Dd7y"
-Received: from pps.filterd (m0360083.ppops.net [127.0.0.1])
-	by mx0a-001b2d01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id 64TH1C8T2419225;
-	Fri, 29 May 2026 17:58:34 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=ibm.com; h=cc
-	:content-transfer-encoding:content-type:date:from:in-reply-to
-	:message-id:mime-version:references:subject:to; s=pp1; bh=2sFc99
-	fyPwa+RvXKShdgaE6DRvYhurpgmVemXJWbkIY=; b=Vzy1Dd7ytt0E502ZEHXYB3
-	EZ4JqWIDbcqgNEmKRuA2cUfdqptTBHoppaXb79PoSxE4+4qdg0yCLxZq2hHDtgVx
-	97e0FuL/vLvhFiNC4AC+IAmH5WkGg0Ofj2fjcvackRE+etL1yRR7+hpwNiViEWsU
-	bqt9tViOrHxf0gQLgXExnQIu8XNYZVwYN4UQ9CSz81bSY/hu7BLTUijh5N0oQMjq
-	bJp2aMA9dR1fB43SWTjVKQ8YimahW4pyy1LxpDL7CgBA5d41uO74tiYjtQRAxpvq
-	qtjAE+MvNGEUmzgw+TVsrIoWiKmk3z+euBB5w111dcLAfcUDjs3cZecuXs2J4nIg
-	==
-Received: from ppma22.wdc07v.mail.ibm.com (5c.69.3da9.ip4.static.sl-reverse.com [169.61.105.92])
-	by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 4ee884xv5r-1
-	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Fri, 29 May 2026 17:58:33 +0000 (GMT)
-Received: from pps.filterd (ppma22.wdc07v.mail.ibm.com [127.0.0.1])
-	by ppma22.wdc07v.mail.ibm.com (8.18.1.7/8.18.1.7) with ESMTP id 64THs8BU012533;
-	Fri, 29 May 2026 17:58:32 GMT
-Received: from smtprelay05.fra02v.mail.ibm.com ([9.218.2.225])
-	by ppma22.wdc07v.mail.ibm.com (PPS) with ESMTPS id 4edjrc1tb3-1
-	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Fri, 29 May 2026 17:58:32 +0000 (GMT)
-Received: from smtpav01.fra02v.mail.ibm.com (smtpav01.fra02v.mail.ibm.com [10.20.54.100])
-	by smtprelay05.fra02v.mail.ibm.com (8.14.9/8.14.9/NCO v10.0) with ESMTP id 64THwUrT41746934
-	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
-	Fri, 29 May 2026 17:58:30 GMT
-Received: from smtpav01.fra02v.mail.ibm.com (unknown [127.0.0.1])
-	by IMSVA (Postfix) with ESMTP id 9027320043;
-	Fri, 29 May 2026 17:58:30 +0000 (GMT)
-Received: from smtpav01.fra02v.mail.ibm.com (unknown [127.0.0.1])
-	by IMSVA (Postfix) with ESMTP id 5A7A020040;
-	Fri, 29 May 2026 17:58:30 +0000 (GMT)
-Received: from li-276bd24c-2dcc-11b2-a85c-945b6f05615c.ibm.com (unknown [9.111.19.18])
-	by smtpav01.fra02v.mail.ibm.com (Postfix) with ESMTPS;
-	Fri, 29 May 2026 17:58:30 +0000 (GMT)
-Date: Fri, 29 May 2026 19:58:28 +0200
-From: Jan Polensky <japo@linux.ibm.com>
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="SkuOgYqz"
+Received: by mail-dy1-f181.google.com with SMTP id 5a478bee46e88-304df7ff4c2so1151643eec.0
+        for <sashiko-reviews@lists.linux.dev>; Fri, 29 May 2026 11:23:59 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20251104; t=1780079038; x=1780683838; darn=lists.linux.dev;
+        h=mime-version:user-agent:content-transfer-encoding:references
+         :in-reply-to:date:cc:to:from:subject:message-id:from:to:cc:subject
+         :date:message-id:reply-to;
+        bh=DRS8HG/oHO794H+uRGaokOiUrHw90s1jfosUOUrSAkY=;
+        b=SkuOgYqzPuh356A3yJFCHQdPb2Ldq0k738t1I6r1y3zA8dir6itQ4awV0+j5qqScHW
+         0xgdBICy5uU31agnHzuZipQsjv13aHpUGNWo0MjohvnMBmgZjkgwAMwtiP8l4lqR/Rn8
+         rF1CqEhzDgvIX/rCnBbYtiZ6G7bikTc3i1n6myP/HfqBB0k4B7UxphK3/Wu8xNQCj7St
+         kALIJbM1RULChtIw1J78FZnZ/UYfYBbKH1AuEtVN5aTKad9ZLOn0c1DMym7L2w6V58p2
+         pVYVM8ZdcMryyUqul/U6UBOU80hfkRgRaAlZA9v0vZqTphXr5cXCjpGVq1/xP0nDR5Kl
+         Fy7A==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20251104; t=1780079038; x=1780683838;
+        h=mime-version:user-agent:content-transfer-encoding:references
+         :in-reply-to:date:cc:to:from:subject:message-id:x-gm-gg
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+        bh=DRS8HG/oHO794H+uRGaokOiUrHw90s1jfosUOUrSAkY=;
+        b=Kt7hXUKVqOXrmxQjbeowWTzgBeti7aQN5+T+k765tk5Jl5A+jPp/8jpJQJl4fQPtl5
+         QiETCRMqLhMUI/O2cp5EkEqUvyo2w0pFkewVGSsKbKGrjWk8o5hkoK1Ee50dQWaF8Z6g
+         50q9ja7oE3b8Zx6UwNYtcOT7pQ4431nYExpZDXFrvstnKBaDTa8brfYZ9qBCX4Iz0RaF
+         lzk4oNYFbRCLigbYtRGjhJ6+d+rHBrIqVgENFlEiJL06ijDtk9aMTni+86dqjs8zvJC6
+         ltR7PwwdSJ5cLvZRfyEs45NsFXbB4PAGoojWx6rpOWcg+AFJoliEbAok6U/fo0XYqUY5
+         1Z3A==
+X-Gm-Message-State: AOJu0YyFCg2+sZNuNc2Sdo5xELjbALY1ksU7wv7YkNv6MwT+XMwC3aK8
+	TDQLeVBemV/1NtCUshp0iXMkuPsIhGZQDWVoVqA+68ZJjiQNProMjJMXa+qbfD7L
+X-Gm-Gg: Acq92OFpCnqGChHzypcsaO2B7lbH1UhB7UftK/pMNemPkgVNgaH09/F95SMb3twHO/2
+	4gwcXPgLkIFQfOHWyyWYsxSeOHGSiQpf83m4LDLiYsXrg17Jjqauk8Idj7KGZarfOkG1pcFv8r8
+	wIv+YaMSJEywILv2jQNnt7CR+fSPm+B+fJG6F6dEXNWoLnRV5lgi96jPGoQ83kC9Cx9v5HnVBKe
+	9KkYAA8rZA4DS6U9HEkv7d3wSfOhk0ru1t07ruA1OnM5OkCgbes0pgbJQJl7sk7Kw6CQ/WAY1lx
+	oMEtRzIOTW5Hth9bCLE+MkyMn6vZtvANjDNI6aLCWxQCCLryvJTqjCdCbg9difuTEWQgqBaKh5z
+	zIY+3hl2l7SRd2Hj9F51cuxW8smHsWpBACFrUkAZ3ZvgyewSvPDUE5O94eaZwnpOudR1g55uyfp
+	OeEZQW/9oc2HJDrNHROecfqb3A5rt7ZyrZ/SlZ+oVwZNci9+Gx0HG4z+67Vhn9ecgyMWwjcSWz+
+	yP9REY09kzhVMPEfTg=
+X-Received: by 2002:a05:7300:2388:b0:2f4:d190:37bf with SMTP id 5a478bee46e88-304eb1f59aamr1948101eec.16.1780079038106;
+        Fri, 29 May 2026 11:23:58 -0700 (PDT)
+Received: from ?IPv6:2a03:83e0:115c:1:cc2c:f0b5:a02d:c0fb? ([2620:10d:c090:500::2:a9e5])
+        by smtp.gmail.com with ESMTPSA id 5a478bee46e88-304ed30a012sm2155845eec.10.2026.05.29.11.23.57
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Fri, 29 May 2026 11:23:57 -0700 (PDT)
+Message-ID: <ac73ed389e823187e972df061e8cfe9627fc11f1.camel@gmail.com>
+Subject: Re: [PATCH bpf 1/2] bpf: fork state when comparing sign crossing
+ ranges with zero
+From: Eduard Zingerman <eddyz87@gmail.com>
 To: sashiko-reviews@lists.linux.dev
-Cc: ojeda@kernel.org
-Subject: Re: [PATCH v4 4/6] rust: helpers: Use __builtin_memchr directly on
- s390
-Message-ID: <ahnTxJVPxljUDVmf@li-276bd24c-2dcc-11b2-a85c-945b6f05615c.ibm.com>
-References: <20260529145752.1209016-5-japo@linux.ibm.com>
- <20260529161748.0DFB91F00893@smtp.kernel.org>
+Cc: bpf@vger.kernel.org
+Date: Fri, 29 May 2026 11:23:56 -0700
+In-Reply-To: <20260529085933.A3B101F00893@smtp.kernel.org>
+References: <20260529-cnum-split-at-zero-v1-1-986c03752226@gmail.com>
+	 <20260529085933.A3B101F00893@smtp.kernel.org>
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
+User-Agent: Evolution 3.60.1 (3.60.1-1.fc44) 
 Precedence: bulk
 X-Mailing-List: sashiko-reviews@lists.linux.dev
 List-Id: <sashiko-reviews.lists.linux.dev>
 List-Subscribe: <mailto:sashiko-reviews+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:sashiko-reviews+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-Content-Transfer-Encoding: 8bit
-In-Reply-To: <20260529161748.0DFB91F00893@smtp.kernel.org>
-X-TM-AS-GCONF: 00
-X-Authority-Analysis: v=2.4 cv=L4MtheT8 c=1 sm=1 tr=0 ts=6a19d3ca cx=c_pps
- a=5BHTudwdYE3Te8bg5FgnPg==:117 a=5BHTudwdYE3Te8bg5FgnPg==:17
- a=IkcTkHD0fZMA:10 a=NGcC8JguVDcA:10 a=VkNPw1HP01LnGYTKEx00:22
- a=RnoormkPH1_aCDwRdu11:22 a=iQ6ETzBq9ecOQQE5vZCe:22 a=c92rfblmAAAA:8
- a=VnNF1IyMAAAA:8 a=VwQbUJbxAAAA:8 a=_cFRgl7zeDfO8rknsJMA:9 a=3ZKOabzyN94A:10
- a=QEXdDO2ut3YA:10 a=GvGzcOZaWPEFPQC_NcjD:22
-X-Proofpoint-ORIG-GUID: 5XWvuPj-bBBLy5A0S301KJY4gjsiu_G7
-X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwNTI5MDE3NiBTYWx0ZWRfX7y6+BHCPPv7y
- P3jyDcUac88dQ2sNkwK6zIHc8wbODKQcVSL4ddaEVRsWMFLY6lF+RkQnJVtPDcTvVk5UkXzyBxU
- djOF3UJl3lSqBE59bxXMN8pRhBRTk23oBmw50sEr0x4nJdxnAzacotCsHyGweHCDLf3Q1PeB14M
- cE7x0wMl5y68XUGa94COeTPxerwBRRG/HgzG607Fgzg+cUM67dB4MoMRDJiXg7pwvcnAYUXTIPh
- w75rlK4dTorxVuw1iCpqfTypBJFFLRqkTtg8Y5zwzJ2dv3Jjvhq8uyNgLiUQO8KFtMDHx8VfZts
- IND8LvQDhqwgBaVhDlQsOZou9nEPpg5Tfh5zx3lHQd/nrzy/w08WPyuZsKVKYe1JdPEcy2DBFd8
- l5vhq4XhdHOnJxt2s1Yc2YmGjN810pfU4YaXzJr4Pp0DNu36IDdnWLS99OExyHEvL4Q+PKRcy0A
- QoGP/mUpLpkL+nQYvOQ==
-X-Proofpoint-GUID: 5XWvuPj-bBBLy5A0S301KJY4gjsiu_G7
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.293,Aquarius:18.0.1143,Hydra:6.1.125,FMLib:17.12.100.49
- definitions=2026-05-29_05,2026-05-28_03,2025-10-01_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
- phishscore=0 lowpriorityscore=0 suspectscore=0 clxscore=1015 malwarescore=0
- bulkscore=0 impostorscore=0 adultscore=0 priorityscore=1501 spamscore=0
- classifier=typeunknown authscore=0 authtc= authcc= route=outbound adjust=0
- reason=mlx scancount=1 engine=8.22.0-2605210000 definitions=main-2605290176
 
-On Fri, May 29, 2026 at 04:17:47PM +0000, sashiko-bot@kernel.org wrote:
-> Thank you for your contribution! Sashiko AI review found 2 potential issue(s) to consider:
-> - [High] Using `__builtin_memchr` directly bypasses KASAN and FORTIFY_SOURCE protections.
-> - [Low] The string helper `rust_helper_memchr` is misplaced in `uaccess.c`.
+On Fri, 2026-05-29 at 08:59 +0000, sashiko-bot@kernel.org wrote:
+> Thank you for your contribution! Sashiko AI review found 2 potential issu=
+e(s) to consider:
+> - [Medium] Inconsistent verifier state and bypassed linked register synch=
+ronization.
+> - [Medium] Missing scalar type check applies zero-comparison workaround t=
+o pointer offsets.
 > --
->
-> commit f9c3292d90fac0677f3db0961507b79ecd8d9bf7
-> Author: Jan Polensky <japo@linux.ibm.com>
->
-> rust: helpers: Use __builtin_memchr directly on s390
->
-> This commit replaces the implicit __underlying_memchr macro expansion with a
-> direct call to __builtin_memchr in the Rust helper. This is intended to fix a
-> build failure on the s390x architecture.
->
-> > diff --git a/rust/helpers/uaccess.c b/rust/helpers/uaccess.c
-> > index d9625b9ee0466..d4107426003e2 100644
-> > --- a/rust/helpers/uaccess.c
-> > +++ b/rust/helpers/uaccess.c
->
-> [Severity: Low]
-> Could this string manipulation helper be placed in a different file? The
-> uaccess.c file is logically designated for user-space memory access functions
-> like copy_from_user. Moving this to a more generic string helper file might
-> better maintain subsystem separation.
->
+>=20
+> commit dc22ab232b73a45e1aacc8d291fb5640c3a0d950
+> Author: Eduard Zingerman <eddyz87@gmail.com>
+>=20
+> bpf: fork state when comparing sign crossing ranges with zero
+>=20
+> This commit introduces a workaround for the verifier when evaluating a
+> comparison of a sign-crossing scalar against zero. It forks the verifier =
+state
+> to process negative and non-negative branches separately, restoring preci=
+sion
+> lost in the cnum-based scalar representation.
+>=20
+> Link: https://lore.kernel.org/bpf/96c4a1aa4333d10b882a9b5093d2d982f9f106e=
+3.camel@gmail.com/T/
+>=20
+> > diff --git a/kernel/bpf/verifier.c b/kernel/bpf/verifier.c
+> > index c8d980fdd7099..7998e8da5e554 100644
+> > --- a/kernel/bpf/verifier.c
+> > +++ b/kernel/bpf/verifier.c
 > [ ... ]
->
-> > @@ -27,3 +28,9 @@ unsigned long rust_helper__copy_to_user(void __user *to, const void *from, unsig
-> >  	return _inline_copy_to_user(to, from, n);
-> >  }
-> >  #endif
-> > +
-> > +__rust_helper
-> > +void *rust_helper_memchr(const void *s, int c, size_t n)
+> > @@ -15965,6 +15965,73 @@ static void sync_linked_regs(struct bpf_verifi=
+er_env *env, struct bpf_verifier_s
+> > +static int maybe_fork_cmp_with_zero(struct bpf_verifier_env *env,
+> > +				    struct bpf_insn *insn,
+> > +				    struct bpf_reg_state *src_reg,
+> > +				    struct bpf_reg_state *dst_reg)
 > > +{
-> > +	return __builtin_memchr(s, c, n);
->
-> [Severity: High]
-> Will hardcoding the builtin bypass KASAN and FORTIFY_SOURCE protections?
-> The kernel provides a safe, instrumented version of memchr that includes
-> bounds checking and memory safety sanitizers. By using the builtin directly,
-> the compiler may emit uninstrumented inline string instructions instead of
-> calling the instrumented C function, bypassing these security mechanisms
-> for Rust code. Would it be safer to use return memchr(s, c, n); instead?
->
+> [ ... ]
+> > +	if (!is_reg_const(src_reg, is_jmp32) || reg_const_value(src_reg, is_j=
+mp32) !=3D 0)
+> > +		return 0;
+> > +
+>=20
+> [Severity: Medium]
+> Does this code apply the scalar workaround to pointer types?
+>=20
+> It appears that dst_reg is not checked for SCALAR_VALUE. If dst_reg is a=
+=20
+> valid pointer with a variable offset (e.g., PTR_TO_MAP_VALUE) that happen=
+s=20
+> to cross zero, and the program compares it against zero (if (ptr =3D=3D 0=
+)),=20
+> the verifier might artificially restrict the pointer's offset and fork th=
+e state.
+>=20
+> Since valid pointers are not zero, both forks will follow the fall-throug=
+h=20
+> path, meaning this doesn't create a safety vulnerability but could lead t=
+o=20
+> unnecessary state exploration and semantically incorrect behavior. Should=
+ we=20
+> verify dst_reg->type =3D=3D SCALAR_VALUE here?
+
+Should probably restrict to SCALAR_VALUE.
+
+> > +	bool cross_sign32 =3D is_jmp32 &&
+> > +		dst_reg->r32.size < S32_MAX &&
+> > +		cnum32_smin(dst_reg->r32) < 0 && cnum32_smax(dst_reg->r32) > 0;
+> > +	bool cross_sign64 =3D !is_jmp32 &&
+> > +		dst_reg->r64.size < S64_MAX &&
+> > +		cnum64_smin(dst_reg->r64) < 0 && cnum64_smax(dst_reg->r64) > 0;
+> > +	if (!cross_sign32 && !cross_sign64)
+> > +		return 0;
+> > +
+> > +	fork =3D push_stack(env, env->insn_idx, env->insn_idx, cur->speculati=
+ve);
+> > +	if (!fork)
+> > +		return -ENOMEM;
+> > +
+> > +	fork_dst_regno =3D swapped ? insn->src_reg : insn->dst_reg;
+> > +	fork_dst_reg =3D &fork->frame[fork->curframe]->regs[fork_dst_regno];
+> > +	if (is_jmp32) {
+> > +		cnum32_intersect_with_srange(&dst_reg->r32, S32_MIN, -1);
+> > +		cnum32_intersect_with_srange(&fork_dst_reg->r32, 0, S32_MAX);
+> > +	} else {
+> > +		cnum64_intersect_with_srange(&dst_reg->r64, S64_MIN, -1);
+> > +		cnum64_intersect_with_srange(&fork_dst_reg->r64, 0, S64_MAX);
+> > +	}
+>=20
+> [Severity: Medium]
+> Are we leaving dst_reg and fork_dst_reg in an inconsistent state by not
+> calling reg_bounds_sync()?
+>=20
+> Because dst_reg->r32 or r64 are modified directly here without syncing,=
+=20
+> the bounds are narrowed but var_off and the other bounds remain wide.
+>=20
+> Additionally, because the dst_reg bounds are forced to be strictly negati=
+ve=20
+> here, is_branch_taken() later in check_cond_jmp_op() might evaluate=20
+> the branch statically (pred =3D=3D 0). If it does, check_cond_jmp_op() wi=
+ll=20
+> return early and completely bypass sync_linked_regs() for the current bra=
+nch.
+>=20
+> While this makes the verifier strictly more conservative for the linked
+> registers (since wider bounds fail faster), it could cause linked registe=
+rs
+> to lose precision and lead to potential spurious rejections.
+
+Missing reg_bounds_sync() is a good point.
+
+> > +	return 0;
 > > +}
->
-> --
-> Sashiko AI review · https://sashiko.dev/#/patchset/20260529145752.1209016-1-japo@linux.ibm.com?part=4
-
-This might be a better solution:
-
-diff --git a/rust/helpers/helpers.c b/rust/helpers/helpers.c
-index 625921e27dfb..592b9bdb4e4a 100644
---- a/rust/helpers/helpers.c
-+++ b/rust/helpers/helpers.c
-@@ -88,6 +88,7 @@
- #include "signal.c"
- #include "slab.c"
- #include "spinlock.c"
-+#include "string.c"
- #include "sync.c"
- #include "task.c"
- #include "time.c"
-diff --git a/rust/helpers/string.c b/rust/helpers/string.c
-new file mode 100644
-index 000000000000..d04340dc9139
---- /dev/null
-+++ b/rust/helpers/string.c
-@@ -0,0 +1,8 @@
-+// SPDX-License-Identifier: GPL-2.0
-+
-+#include <linux/string.h>
-+
-+void *rust_helper_memchr(const void *s, int c, size_t n)
-+{
-+       return memchr(s, c, n);
-+}
-\ No newline at end of file
-
