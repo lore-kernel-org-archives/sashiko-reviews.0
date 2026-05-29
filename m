@@ -1,124 +1,161 @@
-Received: from out-188.mta0.migadu.com (out-188.mta0.migadu.com [91.218.175.188])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-pl1-f202.google.com (mail-pl1-f202.google.com [209.85.214.202])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4F1E4423A97
-	for <sashiko-reviews@lists.linux.dev>; Fri, 29 May 2026 20:41:59 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=91.218.175.188
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id ADDE7405C44
+	for <sashiko-reviews@lists.linux.dev>; Fri, 29 May 2026 20:44:28 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.214.202
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1780087320; cv=none; b=KjfcJ8ZvmO7bFPjIU+4rm4yX4gSnVgXd+oFM6xUH2CK2Q4pJF2oxrkRmewvQtuLoNfDeIxe154IlQbCIvEUiIKF1xeIOjQVrSVRgIaQNeNwciynJRW+akeORZNfFZ0An6rU2O6JvVrxJ2ZMliK/uLoeUKd646DGgJfSZ4oV9h8s=
+	t=1780087469; cv=none; b=iJJVvYDgjD87KDFlou+HgdRm2WnEyBcO3JMky+pBqYpCIa8JoRP20Eb6kfnnLdiyIq/CtswpsFpcu2bA9IzLoSF8rEU0HmMnK7aqw+MhGg5vDkVBCtMsuDd5WJntq5HDlSif6/8xNB264oyCiw+akWjLYdeO/4fJKORVR51RIwo=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1780087320; c=relaxed/simple;
-	bh=xVlGx7BnI4wMU/2Q6xG3jF0JlbSupkhhC8wNthWGtNo=;
-	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=tdiNf94L+2eZ3f/V1MPWpwQcQ7hHa9m7ZpIEd/oIUPLgPlPlsbgBv8U+cI6e1J8uB9a9Z+AgwCayJqrZ8s2+4y2/Vv1W5zhqPY1y9HtKUxmrFIDxCN0T1AZ8Vj1BOlGKDhI5TWsGy87qjiKWbVjNT6T7XU0gl0DdRNzxu7C0Rlc=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linux.dev; spf=pass smtp.mailfrom=linux.dev; dkim=pass (1024-bit key) header.d=linux.dev header.i=@linux.dev header.b=gxSvWXkd; arc=none smtp.client-ip=91.218.175.188
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linux.dev
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linux.dev
+	s=arc-20240116; t=1780087469; c=relaxed/simple;
+	bh=X7ToM56irJtg2Jolki+zcIFTD4EePOgDnNseuPDjuBI=;
+	h=Date:In-Reply-To:Mime-Version:References:Message-ID:Subject:From:
+	 To:Cc:Content-Type; b=taRGpDvEnaqyt+/u5tDsSPWD0vAQGxnjITYnUnlypIxqdekebaOni2eDx/5Si4SDBD0Nw3jRNvwkx0NOG21KRQixvZHxAml9Gxz8534UJzyM7L11YqQFghtIQBa4y0aHIY/fnBFz5/uACi8DP5Zbb2qJhMi4T75xDtkZRlAYdD4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=google.com; spf=pass smtp.mailfrom=flex--seanjc.bounces.google.com; dkim=pass (2048-bit key) header.d=google.com header.i=@google.com header.b=oQz36UhM; arc=none smtp.client-ip=209.85.214.202
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=google.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=flex--seanjc.bounces.google.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linux.dev header.i=@linux.dev header.b="gxSvWXkd"
-Message-ID: <709d9ca6-59bb-4f82-b48a-0aa67a4d6ba2@linux.dev>
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linux.dev; s=key1;
-	t=1780087317;
-	h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
-	 to:to:cc:cc:mime-version:mime-version:content-type:content-type:
-	 content-transfer-encoding:content-transfer-encoding:
-	 in-reply-to:in-reply-to:references:references;
-	bh=mN1kaQhx15pvliWs0iho9JsWSVFb7ezXOOYPm7dDvCs=;
-	b=gxSvWXkdmFx5M85phRk/GPwI+8chDSsq+n57rADdsc1rwascRrSf8S3czlALuQImAQ8t7v
-	rkzAaCOQGgFSdl9pOnQsehE+crgbRd7UGxXM7eS4qMkkzOemAZLymmJ8+VlpcpqXfgz1qm
-	MBtiCEqG3IqjXfLBkVGoQHdCciUGkn0=
-Date: Fri, 29 May 2026 13:41:53 -0700
+	dkim=pass (2048-bit key) header.d=google.com header.i=@google.com header.b="oQz36UhM"
+Received: by mail-pl1-f202.google.com with SMTP id d9443c01a7336-2bf32fb7cb2so3850915ad.2
+        for <sashiko-reviews@lists.linux.dev>; Fri, 29 May 2026 13:44:28 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=google.com; s=20251104; t=1780087468; x=1780692268; darn=lists.linux.dev;
+        h=cc:to:from:subject:message-id:references:mime-version:in-reply-to
+         :date:from:to:cc:subject:date:message-id:reply-to;
+        bh=WQS7YMdO6nDpRo3dtOS7KCTUy9/WLmbNeezECkxyxIU=;
+        b=oQz36UhMDxsDqyQacuWx3vjr7pywOZPyzxf7GqZNPHcKI9liPAifHxEet2zhp+xf1C
+         YN0FvBLWB4VX52qpGMoFdaYHyVUkEIsLVOw1J1APkjm9dSHg8hkQaIpU6XRQECWeTcSi
+         SVynibLXpaGf9ASrTMdTn023cR+wAh3RwDlN5WI0WJjr7ekonM1Y5wcfEL+hszbXSIxA
+         8W5KpzvR4f3Zs9WKHWycilqnrLffk5gUTiUmGf3m1euo+TKZCVKULTVDhJE77srwtYkQ
+         LcGvViW9u8J+ho2vxW8BeB2u70bztaqnQa6z9kII227vmyMP4YgW+Z+IO8b0hnAQ/UQw
+         D+xQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20251104; t=1780087468; x=1780692268;
+        h=cc:to:from:subject:message-id:references:mime-version:in-reply-to
+         :date:x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+        bh=WQS7YMdO6nDpRo3dtOS7KCTUy9/WLmbNeezECkxyxIU=;
+        b=EPl5Jj6JkXj2w/X70yGrL0vyLy6SIFIXGyG3Q2vyiR0KpBMjvLurMuDhzq8ThQnjeC
+         U21n6E1UbG4MhBtls8rOpPHLtwBFBqpZr1ya8ycfd8O6vOOzBRt1Ko2Zds/lpporrLva
+         fR0Btx0d5/RkxBCL5MBVAK+kkno/OOefvyKS4DMqW2/qU05NTAae4eQ6y+0+tonvL75d
+         IsKoT/60I19r+Xnp7JpAcG0G2cqHkPOB/0ZAy2Czu13s1bB1WFLIIxq3yLiGwtEkgRTl
+         8Ak+LpEA+K/3+kbp2HGm9LVYP7ohIIaCbuG5syp1dXMecVXz/sT1KF1NPElPLYv7e/ts
+         /3jA==
+X-Gm-Message-State: AOJu0YyvpubVLNqKF1aSsvGDGaRp6Gor4xCy+AviSP+VhInqY5iorf18
+	IrHAr9qlqApQlttPIra/hFcKCai8LuJ/hGMAzuqGBUPbv2RfmoR0AYRrqW5yPBTnrOQtaw6PIAj
+	TXIriQQ==
+X-Received: from plbmv7.prod.google.com ([2002:a17:903:b87:b0:2be:f9c0:8cd4])
+ (user=seanjc job=prod-delivery.src-stubby-dispatcher) by 2002:a17:903:986:b0:2b0:608d:d8a8
+ with SMTP id d9443c01a7336-2bf36795211mr16688475ad.1.1780087467675; Fri, 29
+ May 2026 13:44:27 -0700 (PDT)
+Date: Fri, 29 May 2026 13:44:27 -0700
+In-Reply-To: <CAEvNRgH21BoKT1mOQzgmKHKpDi4xbwtbMuenGv5U1ZUSENrJmg@mail.gmail.com>
 Precedence: bulk
 X-Mailing-List: sashiko-reviews@lists.linux.dev
 List-Id: <sashiko-reviews.lists.linux.dev>
 List-Subscribe: <mailto:sashiko-reviews+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:sashiko-reviews+unsubscribe@lists.linux.dev>
-MIME-Version: 1.0
-Subject: Re: [PATCH 1/2] KVM: SEV: Do not allow SEV-SNP VMs from intra-host
- migration
-To: sashiko-reviews@lists.linux.dev
-Cc: kvm@vger.kernel.org
-References: <20260528-sev_snp_fixes-v1-1-d67a08151779@meta.com>
- <20260528235151.9E59E1F000E9@smtp.kernel.org>
-Content-Language: en-US
-X-Report-Abuse: Please report any abuse attempt to abuse@migadu.com and include these headers.
-From: Atish Patra <atish.patra@linux.dev>
-In-Reply-To: <20260528235151.9E59E1F000E9@smtp.kernel.org>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
-X-Migadu-Flow: FLOW_OUT
+Mime-Version: 1.0
+References: <20260522-gmem-inplace-conversion-v7-16-2f0fae496530@google.com>
+ <20260523010607.CCABC1F000E9@smtp.kernel.org> <CAEvNRgH21BoKT1mOQzgmKHKpDi4xbwtbMuenGv5U1ZUSENrJmg@mail.gmail.com>
+Message-ID: <ahn6qysOGfa74A2E@google.com>
+Subject: Re: [PATCH v7 16/42] KVM: guest_memfd: Determine invalidation filter
+ from memory attributes
+From: Sean Christopherson <seanjc@google.com>
+To: Ackerley Tng <ackerleytng@google.com>
+Cc: sashiko-reviews@lists.linux.dev, 
+	Ackerley Tng via B4 Relay <devnull+ackerleytng.google.com@kernel.org>, kvm@vger.kernel.org
+Content-Type: text/plain; charset="us-ascii"
 
+On Wed, May 27, 2026, Ackerley Tng wrote:
+> > In __kvm_gmem_invalidate_begin(), the code iterates over f->bindings using
+> > xa_for_each_range(). The retrieved slot pointers are protected by the kvm
+> > srcu, but the read lock doesn't appear to be held during the iteration:
+> >
+> > static void __kvm_gmem_invalidate_begin(...)
+> > {
+> > 	...
+> > 	xa_for_each_range(&f->bindings, index, slot, start, end - 1) {
+> > 		pgoff_t pgoff = slot->gmem.pgoff;
+> > 	...
+> >
+> > When a memory slot is deleted, the code calls kvm_gmem_unbind() and
+> > kfree(slot) after synchronize_srcu(&kvm->srcu). If the read lock isn't held,
+> > could a concurrent memslot deletion free the slot while it is still being
+> > accessed in this loop?
+> >
+> 
+> The issue here is between __kvm_gmem_unbind() and
+> __kvm_gmem_invalidate_begin(). Since f->bindings is protected by
+> filemap_invalidate_lock(), I'm dividing the analysis into two cases
+> where accessing slot through f->bindings with and without holding
+> filemap_invalidate_lock().
+> 
+> ## Holding filemap_invalidate_lock()
+> 
+> If unbind happens before invalidate, we have
+> 
+>     filemap_invalidate_lock()
+>     __kvm_gmem_unbind(), would have removed slot from f->bindings.
+>     filemap_invalidate_unlock()
+> 
+>     After this, slot can be freed.
+> 
+>     filemap_invalidate_lock()
+>     __kvm_gmem_invalidate_begin(), which iterates f->bindings and doesn't
+>        see bound slot.
+>     filemap_invalidate_unlock()
+> 
+> ## Not holding filemap_invalidate_lock()
+> 
+> In kvm_gmem_unbind(), __kvm_gmem_unbind() can be called without taking
+> the filemap_invalidate_lock() if !file. The only places where NULL is
+> written to slot->gmem.file is kvm_gmem_release() and __kvm_gmem_unbind()
+> itself.
+> 
+> kvm_gmem_release() is prevented from racing with kvm_gmem_unbind() since
+> kvm_gmem_release() holds slots_lock, so since kvm_gmem_unbind() is
+> called while holding slots_lock, it should either see a guest_memfd
+> memslot with a file or no slot at all? Perhaps I'm missing something
+> about get_file_active().
 
-On 5/28/26 4:51 PM, sashiko-bot@kernel.org wrote:
-> Thank you for your contribution! Sashiko AI review found 1 potential issue(s) to consider:
->
-> Pre-existing issues:
-> - [High] Incomplete protection against SEV-SNP VM state duplication in `sev_vm_copy_enc_context_from`.
-> --
->
-> commit 6c07753da8cad5a8ac0223da06cf2b84411e6fbf
-> Author: Atish Patra <atishp@meta.com>
->
->      KVM: SEV: Do not allow SEV-SNP VMs from intra-host migration
->      
->      The intra-host migration feature is not fully implemented for SEV-SNP
->      VMs which require additional SNP-specific state such as guest_req_mutex,
->      guest_req_buf, and guest_resp_buf to be transferred or initialized on
->      the destination.
->
->> diff --git a/arch/x86/kvm/svm/sev.c b/arch/x86/kvm/svm/sev.c
->> index c2126b3c30724..aff6a0cf5bfe8 100644
->> --- a/arch/x86/kvm/svm/sev.c
->> +++ b/arch/x86/kvm/svm/sev.c
->> @@ -2142,7 +2142,8 @@ int sev_vm_move_enc_context_from(struct kvm *kvm, unsigned int source_fd)
->>   		return ret;
->>   
->>   	if (kvm->arch.vm_type != source_kvm->arch.vm_type ||
->> -	    sev_guest(kvm) || !sev_guest(source_kvm)) {
->> +	    sev_guest(kvm) || !sev_guest(source_kvm) ||
->> +	    sev_snp_guest(source_kvm)) {
-> [Severity: High]
-> This isn't a bug introduced by this patch, but does
-> sev_vm_copy_enc_context_from() also need a similar check to block SEV-SNP
-> VMs from VM mirroring?
->
-> If userspace creates a mirror of an SNP VM, sev_vm_copy_enc_context_from()
-> copies its encryption context but fails to copy vmsa_features:
->
-> arch/x86/kvm/svm/sev.c:sev_vm_copy_enc_context_from() {
->      ...
->      mirror_sev->enc_context_owner = source_kvm;
->      mirror_sev->active = true;
->      mirror_sev->asid = source_sev->asid;
->      mirror_sev->fd = source_sev->fd;
->      mirror_sev->es_active = source_sev->es_active;
->      mirror_sev->need_init = false;
->      mirror_sev->handle = source_sev->handle;
->      ...
-> }
->
-> Because the mirror's vmsa_features is zero, KVM treats the mirror VM as a
-> standard SEV-ES VM (since ____sev_snp_guest() will evaluate to false).
->
-> When vCPUs are created for the mirror VM, KVM allocates standard SEV-ES
-> VMSAs and fails to perform SNP-specific initialization, such as registering
-> the VMSA pages in the RMP via SEV_CMD_SNP_LAUNCH_UPDATE.
->
-> When KVM executes VMRUN for the mirror VM's vCPU, the hardware evaluates an
-> ASID bound to SNP execution using an invalid, non-RMP-registered VMSA page.
-> Will this trigger an RMP #NPF (Nested Page Fault) on the host hypervisor,
-> leading to an unhandled hypervisor crash and denial of service?
+The comments in the code pretty much say it all:
 
-Nice catch! I don't think it will lead to hypervisor crash though. As 
-per my understanding, the fault on VMSA
-page would be sent to user space and just a VM instance will crash which 
-is not that critical.
+kvm_gmem_release():
 
-Having said that, we should close the gap for such mistakes from VMM 
-side though by rejecting mirroring
-of sev-snp VMs. I will add a patch and update the migration kselftest as 
-well for sanity checking.
+	/*
+	 * Prevent concurrent attempts to *unbind* a memslot.  This is the last
+	 * reference to the file and thus no new bindings can be created, but
+	 * dereferencing the slot for existing bindings needs to be protected
+	 * against memslot updates, specifically so that unbind doesn't race
+	 * and free the memslot (kvm_gmem_get_file() will return NULL).
+	 *
+	 * Since .release is called only when the reference count is zero,
+	 * after which file_ref_get() and get_file_active() fail,
+	 * kvm_gmem_get_pfn() cannot be using the file concurrently.
+	 * file_ref_put() provides a full barrier, and get_file_active() the
+	 * matching acquire barrier.
+	 */
 
->>   		ret = -EINVAL;
->>   		goto out_unlock;
->>   	}
+kvm_gmem_unbind():
+
+	/*
+	 * However, if the file is _being_ closed, then the bindings need to be
+	 * removed as kvm_gmem_release() might not run until after the memslot
+	 * is freed.  Note, modifying the bindings is safe even though the file
+	 * is dying as kvm_gmem_release() nullifies slot->gmem.file under
+	 * slots_lock, and only puts its reference to KVM after destroying all
+	 * bindings.  I.e. reaching this point means kvm_gmem_release() hasn't
+	 * yet destroyed the bindings or freed the gmem_file, and can't do so
+	 * until the caller drops slots_lock.
+	 */
+
+On a related topic, I posted a patch a while back to clarify exactly why the
+release() code is safe.  I need to get back to that, but in the meantime, more
+eyeballs would be appreciated.
+
+https://lore.kernel.org/all/20251113232229.1698886-1-seanjc@google.com
+
+> Would like Sean to check my understanding.
+
+You're not missing anything, Sashiko struggles with scenarios where thing X
+makes thing Y impossible.
