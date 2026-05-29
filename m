@@ -1,106 +1,125 @@
 Received: from mail-pj1-f73.google.com (mail-pj1-f73.google.com [209.85.216.73])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 70448343893
-	for <sashiko-reviews@lists.linux.dev>; Fri, 29 May 2026 18:57:36 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E7D753D7A01
+	for <sashiko-reviews@lists.linux.dev>; Fri, 29 May 2026 19:11:38 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.216.73
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1780081057; cv=none; b=EFz1wi9Wr6/BSgLW1ZBTzpkQaIjXR/TRXgOPaHnv5RahRo40xogpyzvnvh92AjpZ1CKwPAVeCsNm9me8Gwlo0Zyxqq0iecmX5mUjHjPvENCfXQkd11YN+c3mXARX7z19AQDkUZLJ+0g651ijKv4h33q7kJGGFK3UmP/ZblZvT6c=
+	t=1780081900; cv=none; b=iw81nu3CkAPWHUJNCxJPvsqKgWHksJS+RJza3Fz1R9GqBAHr25Gu5bzyDV6l5AirHxErasYgwvX8R7l0kj82n1aVlKW2PR2qIlzLBcKq3OBW9vb0UXRhx8psxSCyD616eLIwLeODLOuy7wOObYlfVOo1c0/sd6BstxtMxbvSnt0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1780081057; c=relaxed/simple;
-	bh=0Ac6Y0XbIulsI8e3BoESoWqp4Ms/oUKG/jhOEdJSmhA=;
+	s=arc-20240116; t=1780081900; c=relaxed/simple;
+	bh=XCL6pT4c5JkNAYjAORu/J34rp3vl95jPcLX6SPbsxQE=;
 	h=Date:In-Reply-To:Mime-Version:References:Message-ID:Subject:From:
-	 To:Cc:Content-Type; b=eqhxkz7+H5nS9qp1FFUwoB0iWdW5q92+sh/cHo2uGzJpeiXlT/j6HYYn3c4+D6dE0atmNtn/MjQeK7p0QyajEjnYZwLxhDkUHYKTS1fIdMQ8qgy6Wf1XELYxI7J7zTa9QRzd0yXG+2kLz9n5zNuzZYuv9fBzgBq4c71Vn5o1XuM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=google.com; spf=pass smtp.mailfrom=flex--seanjc.bounces.google.com; dkim=pass (2048-bit key) header.d=google.com header.i=@google.com header.b=D2gapskp; arc=none smtp.client-ip=209.85.216.73
+	 To:Cc:Content-Type; b=Z9D3SuCIg8J8hL5ZcYHZz26j1CM6GVNB8z+GhmerLaljH1GAmreFVFgkem6OFnjklZ0okr0j7UUABxnIK/abwiFdueq0a1XsfsjZ1AZH+2XKHJPxTWlNTl9BviyDbRTPH1HM3W4cee0nh1GkS7E7HY4HXMb1+X+3vSBLBT9nvvk=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=google.com; spf=pass smtp.mailfrom=flex--seanjc.bounces.google.com; dkim=pass (2048-bit key) header.d=google.com header.i=@google.com header.b=BB/RQtiZ; arc=none smtp.client-ip=209.85.216.73
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=google.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=flex--seanjc.bounces.google.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=google.com header.i=@google.com header.b="D2gapskp"
-Received: by mail-pj1-f73.google.com with SMTP id 98e67ed59e1d1-36bba9b849dso1202772a91.1
-        for <sashiko-reviews@lists.linux.dev>; Fri, 29 May 2026 11:57:36 -0700 (PDT)
+	dkim=pass (2048-bit key) header.d=google.com header.i=@google.com header.b="BB/RQtiZ"
+Received: by mail-pj1-f73.google.com with SMTP id 98e67ed59e1d1-36bbcd40642so872636a91.0
+        for <sashiko-reviews@lists.linux.dev>; Fri, 29 May 2026 12:11:38 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=google.com; s=20251104; t=1780081056; x=1780685856; darn=lists.linux.dev;
+        d=google.com; s=20251104; t=1780081898; x=1780686698; darn=lists.linux.dev;
         h=cc:to:from:subject:message-id:references:mime-version:in-reply-to
          :date:from:to:cc:subject:date:message-id:reply-to;
-        bh=trcaqpaPheQ9pegSLrZ7Icm7wT70eldJiw4H2do/7sU=;
-        b=D2gapskpEovhWXC6fo1A1c5mXB+U1vJHqjiR/aSbY3NOhTFxY5BblnYnQPmhiiIhv3
-         LZTGBqcM0l1PaWnWa+heK0f/YNE0wV4EMfwhtBmsDn2yXLuAPm6AGSA/K2CSI3lF/XSL
-         mqUXxSLyNtxXYEdGmHfX++jitzpagdLnHP97tbbCOI+rGcziTdfkvHqQuf4ZLlaXoXs5
-         r5KS+6AD2h8gE/3vLKR3+3gm3iemT6pgubsukUVlSFEykm83RlOSpwl43x1dJkFx8Vy8
-         9Bgstzp8h72jbXTPfNKF2sDW8FtAlWQD2U09cbA3ixOIikvYMBaqp53p5TYX1PHIY0cM
-         4u8g==
+        bh=JGf2b0zl7KNF02Ny2sf9L7d/ZekySQCYKyXImr4he1Y=;
+        b=BB/RQtiZGXTHiSNIqcVzcbJLnHPGrsyN3YQ3zVXu4eemg/o9zpyR7XLH8tE9SS2ivY
+         1qrf9eUoLctUSQmxNPSbiD6eZNfI3acBV1TPNlSVyAe23G1nPcW5lkuXu+kfnEJapJC5
+         SOQDygbamAJkYx+JZ8C9i5N4MRmQeLrpv066g5LJy3aJl0ImPYF6MgmxnlnTvCQ+jCnJ
+         hzT8QbuFfQcRhyqLmVEFXqAJHyTDWzfQKTOOssru0jXQftOFSAlz5bCSyUYH4uMpVgCC
+         VYQeC6MnvqyXPVhR/WpdkjZM4QfqWyGi3drh5pkZWh2g+shzzvsO8B6yVf4y47NCT+UU
+         EP1g==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20251104; t=1780081056; x=1780685856;
+        d=1e100.net; s=20251104; t=1780081898; x=1780686698;
         h=cc:to:from:subject:message-id:references:mime-version:in-reply-to
          :date:x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=trcaqpaPheQ9pegSLrZ7Icm7wT70eldJiw4H2do/7sU=;
-        b=syg7ThuVb7b6dXUm3u7ZaiVKlvIQgvIwDE5c/dvE+zR/Ss7m9xnZFujo94gvJmXScK
-         X2423AJ9NRZhScnpzlPZpbqfSCN4dno5hEruHDClhGwkOeokTx0S+y8I61rsYu5lMIp4
-         aw9KUeiw+Zls1eQgHHY9JhSPx3Bktjt5wfoc1+ZNS5jT0Y2XtIoWH14CBOund08cg4+I
-         EPHCH7Rig8C89uZ6Wxyowzj+KhFV92rojYl2QCMjlVTvcPEyIuMOWANKGjmunSbE8RQp
-         jbI8Q1mYHuSFFrxMDNav1reWrhyGfcq8nKZec4fT1eLlrX0CpvRC2UpQqgkCNHEZbJ3G
-         ToOw==
-X-Gm-Message-State: AOJu0Yy07LF8ZApsbERCpveg5BDLp1EfpPvnYg5aHWaYLBUde8i9s/ss
-	IeItZ2QfuW73MHIWZPlkdXNkZjH8RD9MkF8EcPWLSLta/C+G3mPgJzhFpXFI3SprgvrhTVUZQl0
-	sC+EklusWzjT4Q/bwyaq+OVl5xsPshZfwrqVstFPD8IQKtPdKr/2qnTZutvo9lNHN6qm+ldsND0
-	S1pWoq1K50451QpVg5OnsnxOduJr0/z4k4kCn7jAg8E2mFNjyr
-X-Received: from pgc24.prod.google.com ([2002:a05:6a02:2f98:b0:c80:192c:51ff])
- (user=seanjc job=prod-delivery.src-stubby-dispatcher) by 2002:a17:902:ce85:b0:2bd:4d4b:9143
- with SMTP id d9443c01a7336-2bf36795110mr12953405ad.8.1780081055498; Fri, 29
- May 2026 11:57:35 -0700 (PDT)
-Date: Fri, 29 May 2026 11:57:34 -0700
-In-Reply-To: <20260529181213.0B27A1F00893@smtp.kernel.org>
+        bh=JGf2b0zl7KNF02Ny2sf9L7d/ZekySQCYKyXImr4he1Y=;
+        b=So5KwBvLqCJpYEBKbao0SSygWNzdRWwHnRLTnYhFES4leueJdguNIoaey86ukigUaa
+         BXpgpweWd7CG43vLx1d7TwmztqOnbhCFa92ldNdUi1Z1CXlUO8DZP8T1WyG+xdkbejdn
+         hoSahvjmE17raS2a2kerjmWKejdQiTR2xMlf5EFqeBrefCiF/FVWjLb6LAGslueZ+rQI
+         p1WR/J8XEbjjJllZhGcthwRMLYthPdMOZtYy0Ymd/HvDTKA9JfyDRKS7tK4fGybYzOqZ
+         r+j7OT/TxALT704VlObXTLuXrvjZAY+dP4xPMIY+9z6q8GYpts/pZi+jCVBVt0RYo9xI
+         3DJA==
+X-Gm-Message-State: AOJu0YxkLqr7H6FYZ5BVFUq5JlDDo47nKFQNvxKdrn4rUatZnoGacw4/
+	8sLpkbO4Tc/wL1EsNZQkB3HVvHLrY2ENMqBzyL2gOlpPGTRuKWtV7LnmgAJXoXen+EjMheDE8/8
+	l7kkrk0zonFypUZCqvdEIsZQb3BMTEW3cYAy9bwuM1VZwbNUl8e9f7+kRyyhhMwsmWkBqqT+cIM
+	ihuKeyu6ijElaRmUsUt1kC/MDQYSXWDwq2smHgrsK5NDRARxRH
+X-Received: from pjpo14.prod.google.com ([2002:a17:90a:9f8e:b0:36b:28fe:916f])
+ (user=seanjc job=prod-delivery.src-stubby-dispatcher) by 2002:a17:90b:17c1:b0:36a:aeaf:ab2f
+ with SMTP id 98e67ed59e1d1-36c501c6616mr410441a91.17.1780081897950; Fri, 29
+ May 2026 12:11:37 -0700 (PDT)
+Date: Fri, 29 May 2026 12:11:37 -0700
+In-Reply-To: <20260529190158.D597A1F00898@smtp.kernel.org>
 Precedence: bulk
 X-Mailing-List: sashiko-reviews@lists.linux.dev
 List-Id: <sashiko-reviews.lists.linux.dev>
 List-Subscribe: <mailto:sashiko-reviews+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:sashiko-reviews+unsubscribe@lists.linux.dev>
 Mime-Version: 1.0
-References: <20260529144435.704127-18-seanjc@google.com> <20260529181213.0B27A1F00893@smtp.kernel.org>
-Message-ID: <ahnhnjvfIblFxTFX@google.com>
-Subject: Re: [PATCH v4 17/47] x86/kvm: Mark TSC as reliable when it's constant
- and nonstop
+References: <20260529165114.748639-16-seanjc@google.com> <20260529190158.D597A1F00898@smtp.kernel.org>
+Message-ID: <ahnk6cBLuuPIAwmA@google.com>
+Subject: Re: [PATCH v2 15/20] KVM: x86/xen: Convert kvm_xen_set_evtchn_fast()
+ to gpc's CLASS() APIs
 From: Sean Christopherson <seanjc@google.com>
 To: sashiko-reviews@lists.linux.dev
-Cc: linux-hyperv@vger.kernel.org, kvm@vger.kernel.org
+Cc: kvm@vger.kernel.org
 Content-Type: text/plain; charset="us-ascii"
 
 On Fri, May 29, 2026, sashiko-bot@kernel.org wrote:
-> > diff --git a/arch/x86/kernel/kvm.c b/arch/x86/kernel/kvm.c
-> > index 909d3e5e5bcd5..4fe9c69bf40b3 100644
-> > --- a/arch/x86/kernel/kvm.c
-> > +++ b/arch/x86/kernel/kvm.c
+> > diff --git a/arch/x86/kvm/xen.c b/arch/x86/kvm/xen.c
+> > index 8f822acb11a46..47750316f1322 100644
+> > --- a/arch/x86/kvm/xen.c
+> > +++ b/arch/x86/kvm/xen.c
 > [ ... ]
-> > @@ -1040,7 +1041,20 @@ static void __init kvm_init_platform(void)
-> [ ... ]
-> > -	kvmclock_init();
-> > +        /*
-> > +         * If the TSC counts at a constant frequency across P/T states, counts
-> > +         * in deep C-states, and the TSC hasn't been marked unstable, treat the
-> > +         * TSC reliable, as guaranteed by KVM.  Note, the TSC unstable check
-> > +         * exists purely to honor the TSC being marked unstable via command
-> > +         * line, any runtime detection of an unstable will happen after this.
-> > +         */
-> > +	tsc_is_reliable = boot_cpu_has(X86_FEATURE_CONSTANT_TSC) &&
-> > +			  boot_cpu_has(X86_FEATURE_NONSTOP_TSC) &&
-> > +			  !check_tsc_unstable();
+> > @@ -1810,8 +1809,6 @@ static void __kvm_xen_set_evtchn_fast(struct kvm_vcpu *vcpu, int port_word_bit)
+> >  		kick_vcpu = false;
+> >  	}
+> >  
+> > -out_unlock:
+> > -	read_unlock(&gpc->lock);
+> >  out_kick:
+> >  	if (kick_vcpu) {
+> >  		kvm_make_request(KVM_REQ_UNBLOCK, vcpu);
 > 
 > [Severity: High]
-> Does this evaluate check_tsc_unstable() too early to catch the command line
-> parameter?
+> Does this unintentionally hold the gpc lock across the IPI kick?
 
-Huh, it does indeed.
+No, it intentionally holds the gpc lock across _sending_ the IPI kick.
 
-> It looks like kvm_init_platform() is called from setup_arch(), but the
-> tsc=unstable kernel parameter is parsed via __setup() later during
-> parse_args() in start_kernel().
+> By replacing the explicit unlock with a function-scoped CLASS() variable, the
+> vcpu_info_map destructor won't run until the end of the function. This means
+> the lock is now held while calling kvm_vcpu_kick(), whereas the original
+> code explicitly dropped it first.
 > 
-> If check_tsc_unstable() evaluates to 0 here because the parameter hasn't
-> been parsed yet, wouldn't it incorrectly force X86_FEATURE_TSC_RELIABLE
-> and set prefer_tsc to true?
+> [ ... ]
+> > @@ -1888,9 +1881,6 @@ int kvm_xen_set_evtchn_fast(struct kvm_xen_evtchn *xe, struct kvm *kvm)
+> >  		rc = 1; /* Delivered to the bitmap in shared_info. */
+> >  	}
+> >  
+> > -out_unlock:
+> > -	read_unlock(&gpc->lock);
+> > -
+> >  	if (rc == 1)
+> >  		__kvm_xen_set_evtchn_fast(vcpu, port_word_bit);
+> >  	return rc;
+> 
+> [Severity: High]
+> Does this now hold the VM-wide shinfo_cache lock while calling
+> __kvm_xen_set_evtchn_fast() and kicking the vCPU?
+> 
+> Since shinfo_map is a function-scoped CLASS() variable, its destructor
+> won't release the lock until after __kvm_xen_set_evtchn_fast() returns.
+> This creates a nested locking dependency and holds locks over expensive
+> cross-vCPU operations, potentially serializing event channel deliveries
+> across the entire VM on the fast path.
 
-Yep, but this is a pre-existing problem that goes all the way back to the original
-commit 7539b174aef4 ("x86: kvmguest: use TSC clocksource if invariant TSC is exposed").
+__kvm_vcpu_kick() is neither expensive nor cross-vCPU.  In the wait=false case,
+which is the behavior of kvm_vcpu_kick(), it sends IPIs via smp_send_reschedule(),
+i.e. it's more or less just __apic_send_IPI(cpu, RESCHEDULE_VECTOR), which is a
+single WRMSR on modern harware.
 
-We could try to fix that, but I'm _very_ strongly inclined to add (yet another)
-patch to simply drop the check_tsc_unstable() since it has always been dead code.
+> Would it make sense to constrain the mapping to an explicit scope block
+> to match the original release points and maintain the "No functional change
+> intended" guarantee?
+
+I'll just drop that claim.
