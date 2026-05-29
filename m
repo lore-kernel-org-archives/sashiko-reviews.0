@@ -1,145 +1,99 @@
-Received: from us-smtp-delivery-124.mimecast.com (us-smtp-delivery-124.mimecast.com [170.10.133.124])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-wm1-f42.google.com (mail-wm1-f42.google.com [209.85.128.42])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1B2DB376A1C
-	for <sashiko-reviews@lists.linux.dev>; Fri, 29 May 2026 17:12:39 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=170.10.133.124
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5F25437DE99
+	for <sashiko-reviews@lists.linux.dev>; Fri, 29 May 2026 17:18:13 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.42
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1780074762; cv=none; b=aNBjV1nJGfqJVqN5twyUX/mQ68RA9AgnlHcGGvv4MWcC2VdwKgT57UfJMrqhKRnkFkiCItahHVR0GZ5CklVr8yBhmWo6yV4QXQhDI4jeYYhPZEDeMFjNStd3nIh/nzHUvJVGJaYseAwnkdud3PRXgq2ZzXUCoa3WpvegtK+xdek=
+	t=1780075094; cv=none; b=DSYycWCIjiYVZFWnXO+ejOpXWIr9WHOguxWPmc06uHcPPOo/9kncSmW+JCn9n9lMunKWUJ694z7f6pg9RAE1lUsLJitjRUPf0z2HWVVCdz4rD2nj0+dfppIOMVa+0HHTl8yY00QFdZrUPCNEGRj+YAawu4DSgYNcDz3yJIVCTI8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1780074762; c=relaxed/simple;
-	bh=hu9rilpODm2vGdWT5kVDFY41+4vjGePuCD0jV/yOP8M=;
-	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=a6LtJ09XevDCjyvuNpXi3KMi44EWk/0jqOiOSLo/Ur9r8Zzp5+63jtUj5YP3+1yvdrgGvxnJwUYzQBxnfo2Dq4FHUhp+JUBSkb2ILcDzGVIISEt6xaJC2e+zlt3v8GX1Zp8vb8M4SivumjW818gzodYW+XX3VH4FegMrP/UD5OU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=redhat.com; spf=pass smtp.mailfrom=redhat.com; dkim=pass (1024-bit key) header.d=redhat.com header.i=@redhat.com header.b=P6vQW3yy; arc=none smtp.client-ip=170.10.133.124
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=redhat.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=redhat.com
+	s=arc-20240116; t=1780075094; c=relaxed/simple;
+	bh=G7ryrgviagLdWI47pka+w5Aab5kBW1+gue5Vh006rpM=;
+	h=Message-ID:Subject:From:To:Cc:Date:In-Reply-To:References:
+	 Content-Type:MIME-Version; b=eBbp5vSODIMA4EznG3Gtk6sgi7G/93KS84b2Jq+xxwJXgybAJwsF1SLLmpdZibSRHz3vIdvx1Zeri1aDVNj/7eOviZIZs70BOaRgilGccIl517oX8wqHu20X+lS/PIqeg6r/A6OlhWkTBqXl1nosHP8dTdqA5r6fkjv1xxOe0a0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=RpcTXoTX; arc=none smtp.client-ip=209.85.128.42
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=redhat.com header.i=@redhat.com header.b="P6vQW3yy"
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
-	s=mimecast20190719; t=1780074758;
-	h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
-	 to:to:cc:cc:mime-version:mime-version:content-type:content-type:
-	 content-transfer-encoding:content-transfer-encoding:
-	 in-reply-to:in-reply-to:references:references;
-	bh=eFGZUTKCaxqUxCNiXhfCwE9bkdgHU3OUo33m1t7fF0Q=;
-	b=P6vQW3yyavACQF6ts/MwRMq7tliL3r39KxPfQ09ETT1Ll3yT+o4iny8xgBrYg3KGz4Wcke
-	9ttMbYvtWNsoyX0vR3nkMJb4qnqzeWqOmCE7ziimmTvFbdUkYdg4rEYM/MPiODF7WJnBG6
-	J5fQ06DSurvuVreMe31NvGNSm08M8oc=
-Received: from mx-prod-mc-06.mail-002.prod.us-west-2.aws.redhat.com
- (ec2-35-165-154-97.us-west-2.compute.amazonaws.com [35.165.154.97]) by
- relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-568-l4ZsQDICO-iCGLBvN3oYcQ-1; Fri,
- 29 May 2026 13:12:27 -0400
-X-MC-Unique: l4ZsQDICO-iCGLBvN3oYcQ-1
-X-Mimecast-MFC-AGG-ID: l4ZsQDICO-iCGLBvN3oYcQ_1780074744
-Received: from mx-prod-int-10.mail-002.prod.us-west-2.aws.redhat.com (mx-prod-int-10.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.95])
-	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
-	 key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
-	(No client certificate requested)
-	by mx-prod-mc-06.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS id A95FC18005BE;
-	Fri, 29 May 2026 17:12:23 +0000 (UTC)
-Received: from [10.22.64.54] (unknown [10.22.64.54])
-	by mx-prod-int-10.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP id C96541686;
-	Fri, 29 May 2026 17:12:22 +0000 (UTC)
-Message-ID: <25952b7c-4c9d-4a01-ad27-2dbe6243dad9@redhat.com>
-Date: Fri, 29 May 2026 13:12:22 -0400
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="RpcTXoTX"
+Received: by mail-wm1-f42.google.com with SMTP id 5b1f17b1804b1-48e8132c6d0so90658465e9.1
+        for <sashiko-reviews@lists.linux.dev>; Fri, 29 May 2026 10:18:13 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20251104; t=1780075092; x=1780679892; darn=lists.linux.dev;
+        h=mime-version:user-agent:content-transfer-encoding:references
+         :in-reply-to:date:cc:to:from:subject:message-id:from:to:cc:subject
+         :date:message-id:reply-to;
+        bh=G7ryrgviagLdWI47pka+w5Aab5kBW1+gue5Vh006rpM=;
+        b=RpcTXoTXsvO4LdV0y2vNAf+sG2BaRteM5UIY2T3BC2CXte8Uz5VYpAUNwKmvVaLQ4u
+         OCYvBebCW6r6gCaODoIndc9n/l7itPyj+bI+FYA98t6Gp2gVz7Hb7bN3sE3VlRHOVOC+
+         sahpEierntqpJQ07YLOycTv+QDT+ngymAgmuEM48JBiK55Nu0ZoQTDaEsJpvxmv5Fq7g
+         WtJPNh3uPXFYNptoI3eKFmHc10FPikkqM0HIi0mcVnNnuEt1svjy6tv/NHeifyID4JxU
+         VZGh+/fdMsq6s1TnhukY7qbD4UD1uDzmdqs2ocsANDtSaUVt9qLFGJ4PVxmm+DMo14HP
+         dPSg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20251104; t=1780075092; x=1780679892;
+        h=mime-version:user-agent:content-transfer-encoding:references
+         :in-reply-to:date:cc:to:from:subject:message-id:x-gm-gg
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+        bh=G7ryrgviagLdWI47pka+w5Aab5kBW1+gue5Vh006rpM=;
+        b=szDnisx/xPxjkbiptalpgL8/arViJz3G+6Tingnswb58fKPa6icIlH0HeVSGlNB5Dx
+         TqR8J9x7bdAhEjND4G2KWslH0OUUMkJb7kR+4xUCBR6esJUIeefrSNENNpOeHABFj3Jw
+         1OaZZh0Uz/0UI2wsqE6zBuGvZej1Ia+fzn+fwt4YEWfStHjkp3pmTLTld3ag2NGYJdBo
+         z1bjbmTUrjJaxlGzUSVEam1bqN6zpaGIVYLBWAwv6J9sXc+PnoKFbAr3+CYDyjmpUR2b
+         7HlxrnMj4jV8hnT9gEVUGElWq/eFgif4D9UjvENpiZ8psYhE64PIBr4nk315m5WN59uq
+         To1w==
+X-Gm-Message-State: AOJu0Yzt2O31GZEBxlB6AgcB0ryb2OeKzUlW8tj6c2r+hPAzdRd8aD3g
+	aK9WN8LmkujPV66jzgu/cMhL+6MJHWhsVs3jxUx/wEd11BRCRUMIpL5BE7O7Ww==
+X-Gm-Gg: Acq92OEmVtWrSONYsGegix3EyTjLKQy6ZDCZLN7KlO2dojUk/4cuEXqC4TufEp6eavI
+	Omggb6JC+p/dwekZ48L+1CAS4uTZ4uTAV0S+R+5KQIVv7TzuHORZx0OmA+4n5GP1JNJjGyD0+6z
+	moxkKKpNUwHPTSL632LQN2D/n9s66U82IB7h0SZtIESxpGqBE3aHrq0F+DcMzmLSpRP5UxAriMw
+	rVYd7Z0tUjKQUrRFfErZLn1KR5GF5vCuM2X61O3jpyuUxn9g8go2jcc/+P4ZT3Nw2fbEpNadNs9
+	W1FEVJvXV9TfDzCJgZCeuikhtfzegG6cro2OEbxITbI4R6UON8IgRcUYEl3zakXrBp8XX2thWDx
+	FdBvM++yOg1qGNm67fh2zeiqW/wWGQTYaZuFub/FzvJw6elQ/5A7+IH7oBhKlkd+Vw4FRXTBsnP
+	sGYfLDESpENpZX6peIW4pfWsbcBDQ85XDdAzCyQ/UsyoXj5/LPXdnCSCggD8EjD/w6HRG0Lrj7v
+	3AHBTqEcQWK
+X-Received: by 2002:a05:600c:348f:b0:48f:e230:c3fb with SMTP id 5b1f17b1804b1-490a2988e6dmr8288595e9.33.1780075091492;
+        Fri, 29 May 2026 10:18:11 -0700 (PDT)
+Received: from ?IPv6:2001:8a0:c4c6:f00:cd10:fbeb:4293:8ef3? ([2001:8a0:c4c6:f00:cd10:fbeb:4293:8ef3])
+        by smtp.gmail.com with ESMTPSA id 5b1f17b1804b1-4909c116e2bsm19033365e9.28.2026.05.29.10.18.10
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Fri, 29 May 2026 10:18:11 -0700 (PDT)
+Message-ID: <60651f3210a5195f1ecbfc98e77c339ae0c74c2f.camel@gmail.com>
+Subject: Re: [PATCH v1 6/7] arm64: dts: ti: k3-am69-aquila: Add Toradex
+ Capacitive Touch Display 7" DSI
+From: Vitor Soares <ivitro@gmail.com>
+To: sashiko-reviews@lists.linux.dev
+Cc: conor+dt@kernel.org, robh@kernel.org, devicetree@vger.kernel.org
+Date: Fri, 29 May 2026 18:18:09 +0100
+In-Reply-To: <20260529152410.BF5DD1F00893@smtp.kernel.org>
+References: <20260529120853.636015-15-ivitro@gmail.com>
+	 <20260529152410.BF5DD1F00893@smtp.kernel.org>
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: base64
+User-Agent: Evolution 3.44.4-0ubuntu2.1 
 Precedence: bulk
 X-Mailing-List: sashiko-reviews@lists.linux.dev
 List-Id: <sashiko-reviews.lists.linux.dev>
 List-Subscribe: <mailto:sashiko-reviews+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:sashiko-reviews+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH-next v3 4/5] cgroup/cpuset: Move
- mpol_rebind_mm/cpuset_migrate_mm() calls inside cpuset_attach_task()
-To: sashiko-reviews@lists.linux.dev
-Cc: mkoutny@suse.com, hannes@cmpxchg.org, tj@kernel.org
-References: <20260527153800.1557449-5-longman@redhat.com>
- <20260527175454.161D51F000E9@smtp.kernel.org>
-From: Waiman Long <longman@redhat.com>
-In-Reply-To: <20260527175454.161D51F000E9@smtp.kernel.org>
-X-Scanned-By: MIMEDefang 3.6 on 10.30.177.95
-X-Mimecast-Spam-Score: 0
-X-Mimecast-MFC-PROC-ID: OVHwygN3KyQtOjTGBXn2iI9vOChsTKt6DePkiAT4ygQ_1780074744
-X-Mimecast-Originator: redhat.com
-Content-Language: en-US
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
 
-On 5/27/26 1:54 PM, sashiko-bot@kernel.org wrote:
-> Thank you for your contribution! Sashiko AI review found 2 potential issue(s) to consider:
-> - [Medium] `cpuset_fork()` misses the required task work flush for memory migration and leaks the static `queue_task_work` flag.
-> - [Low] `cpuset_fork()` improperly mutates the parent cpuset's internal state (`old_mems_allowed`) to satisfy the migration API.
-> --
->
-> commit f676d612fb8888338177a57d117e451242f1ee60
-> Author: Waiman Long <longman@redhat.com>
->
-> cgroup/cpuset: Move mpol_rebind_mm/cpuset_migrate_mm() calls inside cpuset_attach_task()
->
-> This commit moves the mpol_rebind_mm() and cpuset_migrate_mm() calls for
-> the group leader into cpuset_attach_task(). This makes the CLONE_INTO_CGROUP
-> flag of clone(2) behave more like moving a task from one cpuset into another
-> when used without CLONE_THREAD.
->
->> diff --git a/kernel/cgroup/cpuset.c b/kernel/cgroup/cpuset.c
->> index b233a71f9b7c2..7100575927f6a 100644
->> --- a/kernel/cgroup/cpuset.c
->> +++ b/kernel/cgroup/cpuset.c
-> [ ... ]
->> @@ -3149,9 +3149,12 @@ static void cpuset_cancel_attach(struct cgroup_taskset *tset)
->>    */
->>   static cpumask_var_t cpus_attach;
->>   static nodemask_t cpuset_attach_nodemask_to;
->> +static bool queue_task_work;
->>   
->>   static void cpuset_attach_task(struct cpuset *cs, struct task_struct *task)
->>   {
-> [ ... ]
->> +		if (is_memory_migrate(cs)) {
->> +			cpuset_migrate_mm(mm, &oldcs->old_mems_allowed,
->> +					  &cs->effective_mems);
->> +			queue_task_work = true;
->> +		} else {
->> +			mmput(mm);
->> +		}
->> +	}
->>   }
-> [ ... ]
->> @@ -3686,7 +3685,12 @@ static void cpuset_fork(struct task_struct *task)
->>   	/* CLONE_INTO_CGROUP */
->>   	mutex_lock(&cpuset_mutex);
->>   	guarantee_online_mems(cs, &cpuset_attach_nodemask_to);
->> +	/* Assume CPUs and memory nodes are updated */
->> +	attach_cpus_updated = attach_mems_updated = true;
->> +	cpuset_attach_old_cs = oldcs;
->> +	oldcs->old_mems_allowed = oldcs->effective_mems;
-> [Severity: Low]
-> Does this code improperly mutate the parent cpuset's internal state?
->
-> By setting oldcs->old_mems_allowed to oldcs->effective_mems, we are modifying
-> a shared cpuset's configuration state simply to accommodate the migration API
-> parameters for the child's fork operation. Could this pollute the cpuset
-> abstraction by manipulating the parent's state instead of keeping it isolated?
-On second thought, we don't really need to touch old_mems_allowed which 
-should be change in the last node mask modification operation. So I will 
-remove it from the next version.
->>   	cpuset_attach_task(cs, task);
-> [Severity: Medium]
-> Is it possible that we miss the task work flush for memory migration here?
->
-> Since cpuset_attach_task() can set the global static flag queue_task_work to
-> true, does cpuset_fork() need to check queue_task_work and call
-> schedule_flush_migrate_mm() before returning?
->
-> If this is missed, it seems the static flag could be leaked as true, and
-> memory migration might execute asynchronously in the background instead of
-> completing synchronously before returning to userspace.
-
-Yes, cpuset_fork() should check should check queue_task_work and call 
-schedule_flush_migrate_mm() before returning if set.
-
-Cheers,
-Longman
+T24gRnJpLCAyMDI2LTA1LTI5IGF0IDE1OjI0ICswMDAwLCBzYXNoaWtvLWJvdEBrZXJuZWwub3Jn
+IHdyb3RlOgo+ID4gKyZ7L30gewo+ID4gK8KgwqDCoMKgwqDCoMKgYmFja2xpZ2h0X3B3bTM6IGJh
+Y2tsaWdodC1wd20zIHsKPiA+ICvCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqBjb21wYXRp
+YmxlID0gInB3bS1iYWNrbGlnaHQiOwo+ID4gK8KgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDC
+oGJyaWdodG5lc3MtbGV2ZWxzID0gPDAgNDUgNjMgODggMTE5IDE1OCAyMDMgMjU1PjsKPiA+ICvC
+oMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqBkZWZhdWx0LWJyaWdodG5lc3MtbGV2ZWwgPSA8
+ND47Cj4gPiArwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgLyogQXF1aWxhIFBXTV8zX0RT
+SSAoQVFVSUxBIEI0NikgKi8KPiA+ICvCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqBwd21z
+ID0gPCZtYWluX2VocnB3bTUgMCA2NjY2NjY3IDA+Owo+ID4gK8KgwqDCoMKgwqDCoMKgfTsKPiAK
+PiBbU2V2ZXJpdHk6IEhpZ2hdCj4gVGhlIG1haW5fZWhycHdtNSBub2RlIGFwcGVhcnMgdG8gYmUg
+ZGlzYWJsZWQgYnkgZGVmYXVsdCBpbiB0aGUgYmFzZSBTb0MKPiBkZXZpY2UgdHJlZSBhbmQgaXMg
+bm90IGVuYWJsZWQgaW4gdGhlIGNsb3ZlciBiYXNlIGJvYXJkIGZpbGUuCj4gCj4gRG9lcyB0aGlz
+IG92ZXJsYXkgbmVlZCB0byBpbmNsdWRlIGEgc3RhdHVzID0gIm9rYXkiIG92ZXJyaWRlIGZvcgo+
+IG1haW5fZWhycHdtNT8gV2l0aG91dCBpdCwgdGhlIHB3bS1iYWNrbGlnaHQgZHJpdmVyIG1heSBm
+YWlsIHRvIGFjcXVpcmUgdGhlCj4gUFdNIGNoYW5uZWwsIGxlYXZpbmcgdGhlIGRpc3BsYXkgYmFj
+a2xpZ2h0IG5vbi1mdW5jdGlvbmFsLgoKWWVzLCBJIG1pc3NlZCB0byBlbmFibGUgaXQgdG8gY2xv
+dmVyIGNhcnJpZXIgYm9hcmQuIEkgd2lsbCBzZW5kIGEgdjIgd2l0aCB0aGlzCmFkZHJlc3NlZC4K
+ClRoYW5rcywKVml0b3IgU29hcmVzCg==
 
