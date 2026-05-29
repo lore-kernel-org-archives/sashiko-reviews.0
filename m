@@ -1,200 +1,121 @@
-Received: from mail-wr1-f43.google.com (mail-wr1-f43.google.com [209.85.221.43])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from out-183.mta1.migadu.com (out-183.mta1.migadu.com [95.215.58.183])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6D0483672AC
-	for <sashiko-reviews@lists.linux.dev>; Thu, 28 May 2026 23:15:22 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=pass smtp.client-ip=209.85.221.43
-ARC-Seal:i=2; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1780010124; cv=pass; b=bZssqba3TGdsUUTljnbK3Ac+DvFOfiJDqE4eOqBnvhjMXvCY9jLrj6jDZe8czkphOnxYI51Jq5UmzmYxIJIZKnaZ+I6VtL5XcsxL0g9vg2K7BhtnVAO10IAqSS2XGBqPigsYJXVmeNUQfywIFhlH8KXd5PHwoED1flfbQBe8ubg=
-ARC-Message-Signature:i=2; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1780010124; c=relaxed/simple;
-	bh=HhiJsNw8Tg/fmiYQa8OT8z3WQuG6J3j5or6u/0F7c0g=;
-	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
-	 To:Cc:Content-Type; b=l8Vz4NvkHTuTDyw7NIFHpSGs01k2+w8c03rQoHVK8g5Ggs/DwEHbcIHkxOE6EDuojh1PoW5e6x/5NgRQFBj7njoA4pCm3E2KxW6ItCn8qpe/dNSWG8lHHJx+6dKxPUkgUHcJMV9oYpbESLw6xZqHxJt+CehrNNFoM37fNtGq26U=
-ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=Vw0fLGrU; arc=pass smtp.client-ip=209.85.221.43
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D272331E82A
+	for <sashiko-reviews@lists.linux.dev>; Fri, 29 May 2026 03:03:25 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=95.215.58.183
+ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
+	t=1780023807; cv=none; b=GG9iV4aM125Y3GAJw2GaOvfv644WWZ/XPzUyRFscXpIagbArnvoMnoeRm8A4auo9QKxSnGamByGDmMLBf3Rgt8KuwipEdxjmBOfP1CqKgOMuEtYG3LorI9ObLqUIv3ASqHk+OpDhnmrc7v4RJwSgpZVT3qOxoR0d+Q13v28+kX8=
+ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
+	s=arc-20240116; t=1780023807; c=relaxed/simple;
+	bh=ZyG3iarvfxDi19gDrVOpHiiV16WRr+S7b+solJm1jXc=;
+	h=MIME-Version:Date:Content-Type:From:Message-ID:Subject:To:Cc:
+	 In-Reply-To:References; b=kSBLoR71mamxZCWURBWHhS6H3PKe7R+KR1ex5Hg4006vG8pJA1G0kUMY2bb+/XmKIkqfNU/PRuBIBwG40Zai7cykndf+/iC3fTX2AZiwwaGwvGD2FAZN+Cdsh0W+TLELvIw2wRN6i2mvBKadjl9IXcOIRENGzrFGv5B97QfGql4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linux.dev; spf=pass smtp.mailfrom=linux.dev; dkim=pass (1024-bit key) header.d=linux.dev header.i=@linux.dev header.b=ohF37VDP; arc=none smtp.client-ip=95.215.58.183
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linux.dev
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linux.dev
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="Vw0fLGrU"
-Received: by mail-wr1-f43.google.com with SMTP id ffacd0b85a97d-45eeba68948so741592f8f.1
-        for <sashiko-reviews@lists.linux.dev>; Thu, 28 May 2026 16:15:22 -0700 (PDT)
-ARC-Seal: i=1; a=rsa-sha256; t=1780010121; cv=none;
-        d=google.com; s=arc-20240605;
-        b=dRbLiG4O7dh4BtMJTmVRQTJaJTKXNIHdjxBafmwEU92872KkUb0rRieJ9IaYt1xMKM
-         2iyYPC2WQ7YN9ex+kcJk5O6ngr0K1Uv2YGYhYiuUUJ2ncnuD3p4CRksG2ANHOGyspJoA
-         nEEQ2YBgzoZ6LDL/vGA13nNIVonqod1p+km3u9qKOkzXpRApinaiWj/7eUq/WKy5mFtS
-         LlQ491Kzn0WYDt9K1lnt1lcQzPuQWEC67l/kzI6gXeYzNq9fkRMDXxQa6xhFAiE1terk
-         sgJdLfBSYHoor2a6VpQQUuIAW6+TGrYJT/9LZVvS3ID0/VsIvvGKwooRBKtAIPQrKLMK
-         hH0g==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com; s=arc-20240605;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:dkim-signature;
-        bh=1DnjhO1WrJ4e/oacKLLvKINV2+Bru6BjXY46NXvZIVQ=;
-        fh=6PQFRWLd/QrmVu5yLvO0f3Twx/3OnPEU9esnxEZ6q28=;
-        b=es5bHfzoHvXbJsd1KTxcIr2LX8iGMETknEB1bSzCp3GRZu2a4k5ujvRaMR2gMk9boC
-         WjZOQ2FknoYeKHO77CbRivrU+khkxTYAq4b6KihKFrQ/iNommBDNnSmp0+6wnDYu4lie
-         5Dm1fbdcaS+k0nGs8ctcTmzm/lbnwcMIcln15Tvl6jVvANU0gkg2IaXgnCDWnOs1HMey
-         A4SkzMdR3L+GUJ9KLbUKOVNi1mU8bsviTPswVUg8+Jdjj467h6DfWpF3ylZsIb75dqrl
-         r07RsDaKMV+6SINGuNwdaXYNRZTE5nobgvUC4ZR5FcljH+mXjo7r8Nf0LWnCE7bF1oWw
-         Szfg==;
-        darn=lists.linux.dev
-ARC-Authentication-Results: i=1; mx.google.com; arc=none
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20251104; t=1780010121; x=1780614921; darn=lists.linux.dev;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=1DnjhO1WrJ4e/oacKLLvKINV2+Bru6BjXY46NXvZIVQ=;
-        b=Vw0fLGrUWj0AS7aozJ9pdFA5jgZKooZbwHGaHCmh3/uON8eSEi4FdNR/eZnsyx6rVb
-         1FGdbW2U0h+/q23FVYtWe9GkL8Eq8egRYmPJMzlHA7bCUTGaX86B+MynZgttXutMtR/L
-         Yf6runisTTnfpE3ADrUEtzfuUGDoRPHWfGb5CVjgbafjdy3aFwflisEKpNLlj0Ood96D
-         +k3r12aPVJfGyavnmMPMVrLyC7/i6RTT/UHY61t8v/tW5xp4EREIwHNcQ7eL0DGMtxV1
-         HDW18bnFncuVxr7t8ZlQzJydHQa6ttJZqRWVKz5WZkVv80guDvgqA6WlCxuOsoEZDP4Y
-         3lLw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20251104; t=1780010121; x=1780614921;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:x-gm-gg:x-gm-message-state:from
-         :to:cc:subject:date:message-id:reply-to;
-        bh=1DnjhO1WrJ4e/oacKLLvKINV2+Bru6BjXY46NXvZIVQ=;
-        b=ViCFRXhX1WrUMUsH8prE7gLFOCaw0Wr60wetyjkDYkezZGWiXa8LiRbpEanPLtzOyQ
-         lBblgb0OrrCd2YRZDX4CmpH0BkhPtnAl1fu+TQgijtYY4XUv0ec+p4TI5FaocIFcDbQZ
-         2ifyj94VUXzZw45xgBWxpuHSlkWuZgeKJbYwWP3gavyxMSFuc7Qslwt45Pf5X+nbyCTx
-         MA7veHFKkuE6XTrXdmmzOUdmbaIDVXaPokwGRB74XWcVkMhLAZm4sOYPEo22Qyg5S1f9
-         62IS58bvpDaAVgb20zqXgQfk8Z4jpRjMnjdxwu9dG5wyg2tVGbVVHLuf7oNa/QfYJq/i
-         gniw==
-X-Gm-Message-State: AOJu0YxD3NUO3nukXoZ7qF1zzV9l87bxWYhHe5A5alQwjemGokTVUH+y
-	8030X3Zec4Ih/LPfAIHcr2rIbaeAjzZOZLJujRFEDxPStv7ctbltEF0sfdAQayBCRK4xj81akFY
-	DDpkBX2CNuzJBodE5xx3j4pKmGLEf1bDQiQ==
-X-Gm-Gg: Acq92OFoYooFGLUxKN/F6CB4Rai5kJiZZI2BfKyza0Ey1sjQSXZWT5H6RRwUqs0SWhw
-	VFt+A445W9q685ubXNXaD7ME9sWn/6YLBstWKk2HD5yHe+T5BMqDCGcadK/gC095srBPRUxrrVQ
-	EfuBL0jq49YRrPao1WbxZM5PWHVK927ZGBxGgs3dRfsdRCzIivihyNi/KRQkCtsxJ82oFwWLSE/
-	VFF+ptcfMc/8DjZVHcvsihafTZxgH5JIUVnlratkvTN1CyX8nLpL0Z+KrsUfjevUGDSz7Aj4oFG
-	BnbQ73jm9A2Uk3hkZJ0cd52sZ6xs1aiK63Avuf4E3U0iU72BJLvLcVDIPt6f8eMRrrf31ProxPh
-	17gG8teCp5NrMYhCO43nLw4ES1xi4tYmcOSwc
-X-Received: by 2002:adf:fd85:0:b0:45e:a0ab:8bcb with SMTP id
- ffacd0b85a97d-45ef1413aa3mr441938f8f.15.1780010120552; Thu, 28 May 2026
- 16:15:20 -0700 (PDT)
+	dkim=pass (1024-bit key) header.d=linux.dev header.i=@linux.dev header.b="ohF37VDP"
 Precedence: bulk
 X-Mailing-List: sashiko-reviews@lists.linux.dev
 List-Id: <sashiko-reviews.lists.linux.dev>
 List-Subscribe: <mailto:sashiko-reviews+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:sashiko-reviews+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-References: <20260528222014.38980-1-alexei.starovoitov@gmail.com> <20260528231103.DEC921F000E9@smtp.kernel.org>
-In-Reply-To: <20260528231103.DEC921F000E9@smtp.kernel.org>
-From: Alexei Starovoitov <alexei.starovoitov@gmail.com>
-Date: Thu, 28 May 2026 16:15:08 -0700
-X-Gm-Features: AVHnY4KKEn7Km14qgoNoivEwWCS96fFsKwers_Sh2Z0A-5YreWU2m-zEZ_aWNPk
-Message-ID: <CAADnVQJMuaFYVkYEGnsR43Bp=J0yvkaz_pd8+tCG=-zgnqOiVA@mail.gmail.com>
-Subject: Re: [PATCH bpf-next] bpf: Take mmap_lock in zap_pages()
-To: sashiko-reviews@lists.linux.dev
-Cc: bpf <bpf@vger.kernel.org>
-Content-Type: text/plain; charset="UTF-8"
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linux.dev; s=key1;
+	t=1780023803;
+	h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+	 to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+	 content-transfer-encoding:content-transfer-encoding:
+	 in-reply-to:in-reply-to:references:references;
+	bh=stXZw48zHRacyCnzcy8bp2JWC73MTFpkHjGYRFxJNjE=;
+	b=ohF37VDPSdfYzpR5uGiEvBMID+9imjxTh1zyu1cfJl24RB8TDl+t4E/GrSX/hGNcR/8lRt
+	RchVXf85mmI4oYVCZEcfv6vgf1BHuaaQKqrPa/Qi6wtUEPRsFFfocUJyUNehNfYyg6XJ43
+	bcWPEp7qmDyKtZwlpyFdV/5igJ104Uc=
+Date: Fri, 29 May 2026 03:03:21 +0000
+Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: quoted-printable
+X-Report-Abuse: Please report any abuse attempt to abuse@migadu.com and include these headers.
+From: "Tianchu Chen" <tianchu.chen@linux.dev>
+Message-ID: <bae676bd29a955ceb6b224190904bbbab8a23a3a@linux.dev>
+TLS-Required: No
+Subject: Re: [PATCH] crypto: sun4i-ss: restrict PRNG seed length to prevent
+ heap overflow
+To: sashiko-reviews@lists.linux.dev
+Cc: linux-sunxi@lists.linux.dev
+In-Reply-To: <20260528152939.0C45B1F000E9@smtp.kernel.org>
+References: <af749a8447bd7f0e9dd26ca6c87e9c6afecb09d9@linux.dev>
+ <20260528152939.0C45B1F000E9@smtp.kernel.org>
+X-Migadu-Flow: FLOW_OUT
 
-On Thu, May 28, 2026 at 4:11=E2=80=AFPM <sashiko-bot@kernel.org> wrote:
->
-> Thank you for your contribution! Sashiko AI review found 2 potential issu=
-e(s) to consider:
->
-> New issues:
-> - [High] zap_pages() can enter an infinite loop if userspace continuously=
- mmaps and munmaps the arena, stalling the thread indefinitely.
->
-> Pre-existing issues:
-> - [Critical] zap_pages() can pass an address range to zap_vma_range() tha=
-t exceeds the boundaries of the VMA, causing the kernel to unmap memory bel=
-onging to adjacent mappings.
+May 28, 2026 at 11:29 PM, sashiko-bot@kernel.org mailto:sashiko-bot@kerne=
+l.org  wrote:
+
+
+>=20
+>=20Thank you for your contribution! Sashiko AI review found 5 potential =
+issue(s) to consider:
+>=20
+>=20New issues:
+> - [Critical] The newly added bounds check unconditionally rejects valid=
+ seeds and completely breaks PRNG initialization on 64-bit architectures.
+>=20
+>=20Pre-existing issues:
+> - [Critical] This problem wasn't introduced by this patch, but the PRNG=
+ generation function silently truncates unaligned requested lengths, fail=
+ing to generate random bytes for the remainder of the buffer while still =
+returning success.
+> - [High] This problem wasn't introduced by this patch, but the patch si=
+lently permits undersized seeds, leading to partial seed updates.
+> - [High] This problem wasn't introduced by this patch, but the PRNG see=
+d is copied into the shared device state without any locking, creating a =
+data race with concurrent PRNG generations.
+> - [High] This problem wasn't introduced by this patch, but there is a b=
+lind read from TXFIFO in PRNG generation without checking if data is avai=
+lable.
 > --
->
-> commit 5e7dd96eaa4e65e290f989d52d5ebe8450def72a
-> Author: Alexei Starovoitov <ast@kernel.org>
->
-> bpf: Take mmap_lock in zap_pages()
->
-> This commit addresses an AB-BA deadlock between arena->lock and mmap_lock
-> in zap_pages() by dropping arena->lock before acquiring mmap_read_lock().
-> It introduces a zap_gen counter and a zap_mutex to track processed VMAs a=
-nd
-> serialize callers while the lock is dropped.
->
-> > diff --git a/kernel/bpf/arena.c b/kernel/bpf/arena.c
-> > index 1727503b25d84..9b2dea229b385 100644
-> > --- a/kernel/bpf/arena.c
-> > +++ b/kernel/bpf/arena.c
->
-> [ ... ]
->
-> > @@ -746,12 +751,60 @@ static long arena_alloc_pages(struct bpf_arena *a=
-rena, long uaddr, long page_cnt
-> >  static void zap_pages(struct bpf_arena *arena, long uaddr, long page_c=
-nt)
-> >  {
->
-> [ ... ]
->
-> > +     mutex_lock(&arena->zap_mutex);
-> > +     mutex_lock(&arena->lock);
-> > +     my_gen =3D ++arena->zap_gen;
-> > +     for (;;) {
-> > +             mm =3D NULL;
-> > +             list_for_each_entry(vml, &arena->vma_list, head) {
-> > +                     if (vml->zap_gen >=3D my_gen)
-> > +                             continue;
-> > +                     vml->zap_gen =3D my_gen;
-> > +                     if (!mmget_not_zero(vml->vma->vm_mm))
-> > +                             continue;
-> > +                     mm =3D vml->vma->vm_mm;
-> > +                     vm_start =3D vml->vma->vm_start;
-> > +                     break;
-> > +             }
-> > +             if (!mm)
-> > +                     break;
-> > +             mutex_unlock(&arena->lock);
->
-> [Severity: High]
-> Can this loop run indefinitely if userspace continuously mmaps and munmap=
-s
-> the arena?
->
-> Since remember_vma() unconditionally sets vml->zap_gen =3D 0 and adds the=
- new
-> VMA to the vma_list, concurrent mmap() and munmap() calls could repeatedl=
-y
-> inject new VMAs with a zap_gen of 0 while the lock is dropped. This might
-> cause the loop to repeatedly process these new VMAs and stall the thread.
+>=20
+>=20commit ce68b95827dcfbd778d1a5a3d2de5fd10e821954
+> Author: Tianchu Chen <flynnnchen@tencent.com>
+> crypto: sun4i-ss: restrict PRNG seed length to prevent heap overflow
+>=20
+>=20This commit restricts the PRNG seed length in sun4i_ss_prng_seed() to=
+ prevent
+> a heap overflow. Without bounds checking, user-supplied seeds via AF_AL=
+G could
+> exceed the fixed-size buffer and corrupt adjacent memory.
+>=20
+>=20Fixes: 6298e948215f ("crypto: sunxi-ss - Add Allwinner Security Syste=
+m crypto accelerator")
+> Cc: stable@vger.kernel.org
+>=20
+>=20>=20
+>=20> diff --git a/drivers/crypto/allwinner/sun4i-ss/sun4i-ss-prng.c b/dr=
+ivers/crypto/allwinner/sun4i-ss/sun4i-ss-prng.c
+> >  index 491fcb7b81b40..010fa891c1056 100644
+> >  --- a/drivers/crypto/allwinner/sun4i-ss/sun4i-ss-prng.c
+> >  +++ b/drivers/crypto/allwinner/sun4i-ss/sun4i-ss-prng.c
+> >  @@ -8,6 +8,8 @@ int sun4i_ss_prng_seed(struct crypto_rng *tfm, const=
+ u8 *seed,
+> >  struct rng_alg *alg =3D crypto_rng_alg(tfm);
+> >=20=20
+>=20>  algt =3D container_of(alg, struct sun4i_ss_alg_template, alg.rng);
+> >  + if (slen > sizeof(algt->ss->seed))
+> >  + return -EINVAL;
+> >=20
+>=20[Severity: Critical]
+> Does sizeof(algt->ss->seed) unconditionally reject valid seeds?
+>=20
+>=20On 64-bit architectures, BITS_PER_LONG is 64, which makes the evaluat=
+ion of
+> SS_SEED_LEN / BITS_PER_LONG result in 3. The seed array becomes u32 see=
+d[3],
+> yielding a total size of 12 bytes. This would trigger the EINVAL branch=
+ for
+> standard 24-byte seeds and completely break PRNG initialization.
+>=20
 
-Nope. Cannot happen.
 
-> > +
-> > +             mmap_read_lock(mm);
-> > +             /*
-> > +              * Re-resolve: while we waited the VMA could have been un=
-mapped
-> > +              * and a different mapping installed at the same address.
-> > +              */
-> > +             vma =3D find_vma(mm, vm_start);
-> > +             if (vma && vma->vm_start =3D=3D vm_start &&
-> > +                 vma->vm_file && vma->vm_file->private_data =3D=3D &ar=
-ena->map)
-> > +                     zap_vma_range(vma, uaddr, size);
->
-> [Severity: Critical]
-> This is a pre-existing issue, but could this unmap memory belonging to
-> adjacent mappings if the VMA was partially unmapped?
->
-> The uaddr and size variables appear to be bounded by the global
-> arena->user_vm_start and arena->user_vm_end. If userspace partially unmap=
-s
-> the arena using munmap(), the vma->vm_start or vma->vm_end shrinks, but t=
-he
-> global arena bounds remain unchanged.
->
-> Since zap_vma_range() relies on the caller to provide a range fully
-> contained within the VMA, passing an un-shrunk uaddr and size could excee=
-d
-> the current bounds of the VMA and inadvertently unmap adjacent userspace
-> mappings.
-
-Nope. Not an issue.
+sun4i-ss=20is designed for 32-bit ARM only (A10/A13/A20/A33). It's behind
+ARCH_SUNXI in Kconfig so it never builds on 64-bit. On the real hardware
+sizeof(ss->seed) is always 24, same as .seedsize.
