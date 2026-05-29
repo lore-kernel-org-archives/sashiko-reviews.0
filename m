@@ -1,121 +1,125 @@
-Received: from out-183.mta1.migadu.com (out-183.mta1.migadu.com [95.215.58.183])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-pf1-f175.google.com (mail-pf1-f175.google.com [209.85.210.175])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D272331E82A
-	for <sashiko-reviews@lists.linux.dev>; Fri, 29 May 2026 03:03:25 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=95.215.58.183
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 96AA3370AFD
+	for <sashiko-reviews@lists.linux.dev>; Fri, 29 May 2026 04:22:01 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.210.175
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1780023807; cv=none; b=GG9iV4aM125Y3GAJw2GaOvfv644WWZ/XPzUyRFscXpIagbArnvoMnoeRm8A4auo9QKxSnGamByGDmMLBf3Rgt8KuwipEdxjmBOfP1CqKgOMuEtYG3LorI9ObLqUIv3ASqHk+OpDhnmrc7v4RJwSgpZVT3qOxoR0d+Q13v28+kX8=
+	t=1780028523; cv=none; b=TP8TUgTlaMVJOqGkBEMCleL4i4HftdjkNGDuIlsUm74cDz63jSL2Pfv7QeyWVT5UCF5vGqpG4miJE9h7YUrbhcPDluNUwk494mkK4d/9Wm8xR003X5lPqUgQKw8TXLbKsaPCJ91E4WxQX4beXFcjZL89MrZNmXY6xHeFBe2OpeQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1780023807; c=relaxed/simple;
-	bh=ZyG3iarvfxDi19gDrVOpHiiV16WRr+S7b+solJm1jXc=;
-	h=MIME-Version:Date:Content-Type:From:Message-ID:Subject:To:Cc:
-	 In-Reply-To:References; b=kSBLoR71mamxZCWURBWHhS6H3PKe7R+KR1ex5Hg4006vG8pJA1G0kUMY2bb+/XmKIkqfNU/PRuBIBwG40Zai7cykndf+/iC3fTX2AZiwwaGwvGD2FAZN+Cdsh0W+TLELvIw2wRN6i2mvBKadjl9IXcOIRENGzrFGv5B97QfGql4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linux.dev; spf=pass smtp.mailfrom=linux.dev; dkim=pass (1024-bit key) header.d=linux.dev header.i=@linux.dev header.b=ohF37VDP; arc=none smtp.client-ip=95.215.58.183
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linux.dev
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linux.dev
+	s=arc-20240116; t=1780028523; c=relaxed/simple;
+	bh=xzW5x9iAB6Eb/h1LY4YMe654q9jJ4E6QneGu6cWFWss=;
+	h=From:To:Cc:Subject:In-Reply-To:Date:Message-ID:References; b=s2UXkpXhDk830yX++3hm8WmxMrMS5EakSxbrnb0AMMzD4SEr0T+5+f5fRt+ORUeJHp+zOTurh6znKH0ouuWkDtX3BqKkYXshrbe65Z5BBpCVGaIh9f3c3Lk19O9N6HO1O55h+5wLloCK6EMiZSGVpHgSLBLFt7aJipoAEwulIdo=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=PFdNfI4M; arc=none smtp.client-ip=209.85.210.175
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linux.dev header.i=@linux.dev header.b="ohF37VDP"
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="PFdNfI4M"
+Received: by mail-pf1-f175.google.com with SMTP id d2e1a72fcca58-8367df48711so5934729b3a.1
+        for <sashiko-reviews@lists.linux.dev>; Thu, 28 May 2026 21:22:01 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20251104; t=1780028521; x=1780633321; darn=lists.linux.dev;
+        h=references:message-id:date:in-reply-to:subject:cc:to:from:from:to
+         :cc:subject:date:message-id:reply-to;
+        bh=RhdO/AEgSTmHjiBbCMxjzej2oiy/N5MjAHVUgamYaBs=;
+        b=PFdNfI4MBvVOtopwYHM+8ipcDCdGv0m1kcWOfJhzyQPxyy4tLU3zjXWfLCWsBOrazN
+         Rqu8Z/4GGXNmuM6+RJhvfp2yVnavTUFxtswt+cpTNpPLT+HQpUttRu65Jt+iAs0NPJOv
+         9T1Ux7VnncSaNgbo2f1hEIea/eNUGGzJVLrhm8Tk7tZKjYmjyS3uzLS+Y4Z8TYdiF9mK
+         USfLBGkY3FC2EpPEUCuSsqjB9UJBn6fAIvCbNo4DqF4rpa+exm8stTn+X9hPf6aJ8+46
+         EePN6OacXTfzifY8Rro/sav0gyrlfkAAcyQqACiWImZjlHihn28T8ru98pNvpbwvHWe+
+         D5jA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20251104; t=1780028521; x=1780633321;
+        h=references:message-id:date:in-reply-to:subject:cc:to:from:x-gm-gg
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+        bh=RhdO/AEgSTmHjiBbCMxjzej2oiy/N5MjAHVUgamYaBs=;
+        b=jMHKPG1P8IEPPZNQm8KtdgakTa7C4YaqSknfZwv9aAWNn7U7ZjMDMJxgjIKikxWR/v
+         SB0Y19ex+UNyRDI/1GBS9wMK97NWAqhNVPQV2L8hdUwJexUoxVdnjAyXVYgtxNYnhDX7
+         O9TQJswz4DpF3pexTPJ9O9HVF7IZTMmouFqNUWGisHD11ZuR/akzMAuTuheg6XSDZzQ7
+         GGscBi9kw0Fj6XghQXKIb5H/8gGQFSHVvsbw89oXehsxINOTrX41cuPmGrOW9i0qYTIG
+         4B8/+qkTxhGejbw7gIGwkIUwtms6t4hHGHThaaKmUVPuN9r8aequwvCU+8jkyZ1soKnd
+         VGfQ==
+X-Gm-Message-State: AOJu0YwcZw9t71xU9FxDi/OWT0/jfE+ax36tScEqwC4vHze17jFUGIfC
+	L+tlQVAkeHIA1UZe8go/wYVPD0oRW6IdsUBu1Kp3R0vzkz3wIZjw3BQK
+X-Gm-Gg: Acq92OELBCgheWRzjZiiQkVBsysVPRnzUFo3oNqQVmcI7/sy7hPeue1MQbM1sa9w9k8
+	xBwz53V3xQVtc82zwXF8Nrxeuh6thusdgo+uwpdHcUZyk88GdtYw6SmiHvstMAcFCHJvjbtA+/n
+	nb7/XNQ4sMJDgWwEvw8sbGxjo/aMFa9KBicjv8labNKE61nk0oOVLZb12d9/jmCZA/8/uKJSDF5
+	ipKge5g4aVv7tor8RwWwAqhI6DE6xPG9WQskUNeexqJXcYQuRSv2/Tb2wKZqovWVUqsUcuD3uch
+	Eyj7eUfSyqqpZtm0V9wPnu7FiiQ54ixjjaIyTml06ZtsxEANkvlJR3EEitUVpTApl6uzUw3xlvT
+	Q/f2kQvVZjE/JPH9HVxs3Ty5mJVkVgoi8Im+Tc2O3EPRfD+mdvN+WwVoKl6kTUMWUkkJPiwLzgC
+	9PsuzE8WlIRcfXfthup84sY4mz/G8W1+Fl
+X-Received: by 2002:a05:6a00:bd82:b0:837:e9cc:d470 with SMTP id d2e1a72fcca58-84212c5b1a6mr1241630b3a.20.1780028520687;
+        Thu, 28 May 2026 21:22:00 -0700 (PDT)
+Received: from pve-server ([49.205.216.49])
+        by smtp.gmail.com with ESMTPSA id d2e1a72fcca58-84214cc35a2sm352288b3a.46.2026.05.28.21.21.58
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Thu, 28 May 2026 21:21:59 -0700 (PDT)
+From: Ritesh Harjani (IBM) <ritesh.list@gmail.com>
+To: sashiko-reviews@lists.linux.dev
+Cc: kvm@vger.kernel.org
+Subject: Re: [RFC v3 03/10] KVM: PPC: selftests: add support for powerpc
+In-Reply-To: <20260527133246.26D501F000E9@smtp.kernel.org>
+Date: Fri, 29 May 2026 09:42:28 +0530
+Message-ID: <eciux39v.ritesh.list@gmail.com>
+References: <99818a9e1c8954ba74e1861dfa2bd5eee19f4f86.1779885589.git.ritesh.list@gmail.com> <20260527133246.26D501F000E9@smtp.kernel.org>
 Precedence: bulk
 X-Mailing-List: sashiko-reviews@lists.linux.dev
 List-Id: <sashiko-reviews.lists.linux.dev>
 List-Subscribe: <mailto:sashiko-reviews+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:sashiko-reviews+unsubscribe@lists.linux.dev>
-MIME-Version: 1.0
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linux.dev; s=key1;
-	t=1780023803;
-	h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
-	 to:to:cc:cc:mime-version:mime-version:content-type:content-type:
-	 content-transfer-encoding:content-transfer-encoding:
-	 in-reply-to:in-reply-to:references:references;
-	bh=stXZw48zHRacyCnzcy8bp2JWC73MTFpkHjGYRFxJNjE=;
-	b=ohF37VDPSdfYzpR5uGiEvBMID+9imjxTh1zyu1cfJl24RB8TDl+t4E/GrSX/hGNcR/8lRt
-	RchVXf85mmI4oYVCZEcfv6vgf1BHuaaQKqrPa/Qi6wtUEPRsFFfocUJyUNehNfYyg6XJ43
-	bcWPEp7qmDyKtZwlpyFdV/5igJ104Uc=
-Date: Fri, 29 May 2026 03:03:21 +0000
-Content-Type: text/plain; charset="utf-8"
-Content-Transfer-Encoding: quoted-printable
-X-Report-Abuse: Please report any abuse attempt to abuse@migadu.com and include these headers.
-From: "Tianchu Chen" <tianchu.chen@linux.dev>
-Message-ID: <bae676bd29a955ceb6b224190904bbbab8a23a3a@linux.dev>
-TLS-Required: No
-Subject: Re: [PATCH] crypto: sun4i-ss: restrict PRNG seed length to prevent
- heap overflow
-To: sashiko-reviews@lists.linux.dev
-Cc: linux-sunxi@lists.linux.dev
-In-Reply-To: <20260528152939.0C45B1F000E9@smtp.kernel.org>
-References: <af749a8447bd7f0e9dd26ca6c87e9c6afecb09d9@linux.dev>
- <20260528152939.0C45B1F000E9@smtp.kernel.org>
-X-Migadu-Flow: FLOW_OUT
 
-May 28, 2026 at 11:29 PM, sashiko-bot@kernel.org mailto:sashiko-bot@kerne=
-l.org  wrote:
+sashiko-bot@kernel.org writes:
 
 
->=20
->=20Thank you for your contribution! Sashiko AI review found 5 potential =
-issue(s) to consider:
->=20
->=20New issues:
-> - [Critical] The newly added bounds check unconditionally rejects valid=
- seeds and completely breaks PRNG initialization on 64-bit architectures.
->=20
->=20Pre-existing issues:
-> - [Critical] This problem wasn't introduced by this patch, but the PRNG=
- generation function silently truncates unaligned requested lengths, fail=
-ing to generate random bytes for the remainder of the buffer while still =
-returning success.
-> - [High] This problem wasn't introduced by this patch, but the patch si=
-lently permits undersized seeds, leading to partial seed updates.
-> - [High] This problem wasn't introduced by this patch, but the PRNG see=
-d is copied into the shared device state without any locking, creating a =
-data race with concurrent PRNG generations.
-> - [High] This problem wasn't introduced by this patch, but there is a b=
-lind read from TXFIFO in PRNG generation without checking if data is avai=
-lable.
-> --
->=20
->=20commit ce68b95827dcfbd778d1a5a3d2de5fd10e821954
-> Author: Tianchu Chen <flynnnchen@tencent.com>
-> crypto: sun4i-ss: restrict PRNG seed length to prevent heap overflow
->=20
->=20This commit restricts the PRNG seed length in sun4i_ss_prng_seed() to=
- prevent
-> a heap overflow. Without bounds checking, user-supplied seeds via AF_AL=
-G could
-> exceed the fixed-size buffer and corrupt adjacent memory.
->=20
->=20Fixes: 6298e948215f ("crypto: sunxi-ss - Add Allwinner Security Syste=
-m crypto accelerator")
-> Cc: stable@vger.kernel.org
->=20
->=20>=20
->=20> diff --git a/drivers/crypto/allwinner/sun4i-ss/sun4i-ss-prng.c b/dr=
-ivers/crypto/allwinner/sun4i-ss/sun4i-ss-prng.c
-> >  index 491fcb7b81b40..010fa891c1056 100644
-> >  --- a/drivers/crypto/allwinner/sun4i-ss/sun4i-ss-prng.c
-> >  +++ b/drivers/crypto/allwinner/sun4i-ss/sun4i-ss-prng.c
-> >  @@ -8,6 +8,8 @@ int sun4i_ss_prng_seed(struct crypto_rng *tfm, const=
- u8 *seed,
-> >  struct rng_alg *alg =3D crypto_rng_alg(tfm);
-> >=20=20
->=20>  algt =3D container_of(alg, struct sun4i_ss_alg_template, alg.rng);
-> >  + if (slen > sizeof(algt->ss->seed))
-> >  + return -EINVAL;
-> >=20
->=20[Severity: Critical]
-> Does sizeof(algt->ss->seed) unconditionally reject valid seeds?
->=20
->=20On 64-bit architectures, BITS_PER_LONG is 64, which makes the evaluat=
-ion of
-> SS_SEED_LEN / BITS_PER_LONG result in 3. The seed array becomes u32 see=
-d[3],
-> yielding a total size of 12 bytes. This would trigger the EINVAL branch=
- for
-> standard 24-byte seeds and completely break PRNG initialization.
->=20
+> commit 4362b48fc35809ad7a74045c726f7ffae0c70ccd
+> Author: Nicholas Piggin <npiggin@gmail.com>
+>
+> KVM: PPC: selftests: add support for powerpc
+>
+> This commit implements KVM selftests support for powerpc (Book3S-64),
+> including ucalls and virtual memory for the radix MMU.
+>
+>> diff --git a/tools/testing/selftests/kvm/lib/powerpc/processor.c b/tools/testing/selftests/kvm/lib/powerpc/processor.c
+>> new file mode 100644
+>> index 0000000000000..9846ec26a32aa
+>> --- /dev/null
+>> +++ b/tools/testing/selftests/kvm/lib/powerpc/processor.c
+>
+> [ ... ]
+>
+>> +struct handler {
+>> +	void (*fn)(struct ex_regs *regs);
+>> +	int trap;
+>> +};
+>> +
+>> +#define NR_HANDLERS	10
+>> +static struct handler handlers[NR_HANDLERS];
+>
+> [Severity: Medium]
+> Could this static global array cause state leakage across VMs or race
+> conditions in multi-threaded tests?
+>
+> Since this is defined as a static global on the host rather than a per-VM
+> allocation, a new VM will start with a zeroed guest handlers array (from ELF
+> loading), but the host's handlers array will retain entries from previous VMs.
+>
+> This appears to limit the total number of unique handlers that can be installed
+> sequentially across all VMs in the entire test process to 10, which would
+> eventually result in the "Out of exception handlers" failure below.
+>
+> Additionally, if multiple threads concurrently create VMs and install exception
+> handlers, would they race on this shared host array and sync corrupted state to
+> their respective guests?
+>
 
+As of now there are no multi-VM tests which creates VMs in parallel.
+Also the powerpc exception handler is not used today. It is deferred for
+later use when more powerpc specific tests will get added.
 
-sun4i-ss=20is designed for 32-bit ARM only (A10/A13/A20/A33). It's behind
-ARCH_SUNXI in Kconfig so it never builds on 64-bit. On the real hardware
-sizeof(ss->seed) is always 24, same as .seedsize.
+If there's ever a need for parallel multi-VM creation, then we can clean
+this up.  Even otherwise, I think making it consistent with the other
+architectures makes sense (once PowerPC-specific tests get added), so
+that too can be deferred until after this base PowerPC KVM selftests
+infrastructure lands.
+
+-ritesh
