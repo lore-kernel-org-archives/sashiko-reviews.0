@@ -1,169 +1,196 @@
-Received: from mail-yw1-f177.google.com (mail-yw1-f177.google.com [209.85.128.177])
+Received: from mail-yw1-f175.google.com (mail-yw1-f175.google.com [209.85.128.175])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7102C3BBA04
-	for <sashiko-reviews@lists.linux.dev>; Fri, 29 May 2026 09:13:31 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=pass smtp.client-ip=209.85.128.177
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EABB83B8BB6
+	for <sashiko-reviews@lists.linux.dev>; Fri, 29 May 2026 09:14:07 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=pass smtp.client-ip=209.85.128.175
 ARC-Seal:i=2; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1780046012; cv=pass; b=fWIlyqjJUNQWeFwMNLX1cULGuXcwXIq7+CPqZ2jvzunDxs8rV23rIeYmrSib98t+0e46Px/TZKNFLfkNEsq8NsgTT+VuyeR+wfzlBUFOeO+B4ufm4IuvFMJjLNrzrcokWQpSZiPouXDMsq7N5zKxvZOFENLfGGhZx+5HFyxQMNY=
+	t=1780046049; cv=pass; b=fENPHkvS58OCRwGlvCUDGchh96GzTk7P/NTxsqTdl/Yc2G8/3HtlnpDRkm5c5bWQKFHdqLFeUYd1br0qde4Q6OpQG6ZSiW8XfbT55sZZirqIQq1U8blpu/Up9sRNJUnbT16cAk2LuG9dn1Vr0ezNDq4wzMe+3lxxh61aj5xe6qI=
 ARC-Message-Signature:i=2; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1780046012; c=relaxed/simple;
-	bh=mFgyW51XJtXmhibZbBxCoAPVtlMwzEjgouicA3QDCvg=;
+	s=arc-20240116; t=1780046049; c=relaxed/simple;
+	bh=UkkTEUlMTHOynzs2J8K6m027MEI5I4/ej3CDloGm6K4=;
 	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
-	 To:Cc:Content-Type; b=pgyYHVTjsZXx2DyQBHhdDdZzMuwE+zSrEJklfp4zX2xqEHJWRnRWjoEhXd4Xbd0EIqMDNgRlm6o7+tFKHvt3p9KBza8jfi+54OgMQPPD6kITZbti5k/JuvgaysySWPTPf5oMEBy4zCj40p1UlXebOAaRlRlJnGAuQjUzpcFDUx0=
-ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=Gt/megbR; arc=pass smtp.client-ip=209.85.128.177
+	 To:Cc:Content-Type; b=FZmc68cR/QLKWPsm5VYjajRTn9h4BJNdwU9AV96vgSEaqVmOdMzr2mrzKxNYOAnp0hv6CeEr4S4WO3YYiL5N+omWQsBSBrzhyzm8MRaWA4On+IDF1q6TFzlzuAoi6awz64lXYHN1Kuf+2XFbz1NFcVBZYk9Z3ArONa4j7wCxdMI=
+ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=olW0twAO; arc=pass smtp.client-ip=209.85.128.175
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="Gt/megbR"
-Received: by mail-yw1-f177.google.com with SMTP id 00721157ae682-7dc93d02916so15988457b3.3
-        for <sashiko-reviews@lists.linux.dev>; Fri, 29 May 2026 02:13:31 -0700 (PDT)
-ARC-Seal: i=1; a=rsa-sha256; t=1780046010; cv=none;
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="olW0twAO"
+Received: by mail-yw1-f175.google.com with SMTP id 00721157ae682-7ddd3d67084so6920327b3.3
+        for <sashiko-reviews@lists.linux.dev>; Fri, 29 May 2026 02:14:07 -0700 (PDT)
+ARC-Seal: i=1; a=rsa-sha256; t=1780046047; cv=none;
         d=google.com; s=arc-20240605;
-        b=Ho1NBipmzdH4s/K3XLtxXnqeWMoGerR950niUhQWxbozeg69zbrD8ldIGLMvG0bqH2
-         x0YfGZnflHq4zT1SvHFL3m+8IQ2cmKmjZINvXU6HlBmZ3qVp8T0mDh32I1Ua00es9asC
-         yYvyibEjyYTQmunTXcU5Yg+7fMe3p91nPtWTlO6Y3vmu2chrjA/OE26Rt8QSneqTNOjy
-         u63vKLGJwd1+Y0cu3PgJE/zMnAuDS7WX7klrcthsDnMctAeRHCmH4QeoOizT9sGyJEEf
-         aTjwV882L+LiGTrvAy6mQSq6gGEhIdMx9v7ABWJ/GAAiShFG4LpCY0DQ2UMpI4xZ7Uvs
-         ieTQ==
+        b=IMX8Fh9Z0LstWTX3pl/XcpzB6w9b2Fof1a5E7lr7YTP/u3K77Q6CTN6U+ryTJbv2rW
+         tvkZQFehREp1fltSc70P+WRzYs5BEEgWqgKDGZgZxLfNjWZhU7DXJpIpgZGyZLveu93C
+         EaR/5e2ktKVD18SkhewKzNJaL329BSiDUFEdRA4C7EJCZqVCIxxv7tmu8fM/ebBaj4p0
+         NY4FbxzeccsUszN7NPox1/vGGmRVyX/131zcQ9u89Jsw0P5ucRbSlLIJFQywieZq8Xl0
+         LDXuAj2m0NU1AyW6FSjaQo8oRYD8RlKrD2sXlgYhRS0YAv4pMapb7L9g8pMgmrvTxHx6
+         vwFQ==
 ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com; s=arc-20240605;
         h=content-transfer-encoding:cc:to:subject:message-id:date:from
          :in-reply-to:references:mime-version:dkim-signature;
-        bh=H6S6E6qC/OtWWeTZr1Pvf9wjq3ql7UjQmU9GicaWAcg=;
-        fh=sJynpV5H0JMsix/etTn2ztlp7pkM+QzKYSPuQj+erEQ=;
-        b=dlGte5af43GjXCkp1Vt8h7Ul0H3ExO/wSmR1lskStJtikvOXaSs0nMTMQ80FXnug42
-         llVAMh/Y15dmvur8fPGrBzRupiiaAvHmu9q7I1oTcHk3if7f2os70T42+cbFR+5a5lgd
-         1xW9164L6/o2qzayCwhUcLo872yhKkc456l/JjDcUgncvJSyT9yuMke2OAgNwzAS37pk
-         gulf4GthXkGuFvWj38lnf642bnNoC/gjS7EOgp3m+R7zMI/FMGzpVqfIseDSiht7z0ET
-         0tq7FhJLi+2UkDDr9BBJlo010qaY7wj6HAhy28sYMGcOH9UwVwlKqE8n52MjradKJS14
-         LveA==;
+        bh=KgioJfiSLQsHNHryEgZJ3KiprT6RmzRs4G29o8NwBLM=;
+        fh=Jr6AY6a7enjsWBanX+asmWGR655WAKm5wv/lzU741Zw=;
+        b=YpUHuwzJKknoquTpDz0ACWowJx1NVhjpWTJwL+WGrzb75X23HVwqS+RoLDt6rLif0w
+         DooJfMM4VF3APphwGRC1DwXxRrxVof7Os/O4BaH5iiDNtszYkL1kdbwVaopeceZo7vM7
+         37QDK/odt/hOxicmPUtSFyu9hh1IMLkRqif5HrnO4oUc4cpaNRVTfqkPw1g4LKdYHLNB
+         JOUFLj/0ELEk2pIw5dFCUy5DsDzzHbavEse9SkOjVyiIkAzaT9rR8iLB7BHdHdEo0hgD
+         uWqcNJhCSeyQQn+TPrA73WM97KPitxOxRNSueeXbhJkiIEFBIrbIAQEM8pBGn/CqQTKz
+         fJPA==;
         darn=lists.linux.dev
 ARC-Authentication-Results: i=1; mx.google.com; arc=none
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20251104; t=1780046010; x=1780650810; darn=lists.linux.dev;
+        d=gmail.com; s=20251104; t=1780046047; x=1780650847; darn=lists.linux.dev;
         h=content-transfer-encoding:cc:to:subject:message-id:date:from
          :in-reply-to:references:mime-version:from:to:cc:subject:date
          :message-id:reply-to;
-        bh=H6S6E6qC/OtWWeTZr1Pvf9wjq3ql7UjQmU9GicaWAcg=;
-        b=Gt/megbRpDiIhZ7SXttn1h/sHYB4rRmKO0zQufl6fvGHsjGbfAcxR90gZT235pUDKd
-         bEYqyuWsp6exlhfhEugDy1tTDPnjrKagUZSQaYrDmnKCzNtcYwNmjoQMg5Bm4hYF/RVu
-         eN2SIBMPskcPvaFRmodKJ3VJSLuz5Tf0CnDBo+1RRAQYxAFVpD9zSoUvJrz+hG2sMxNB
-         yIi65rwsuaphO02y4fNrbFD/hV3yLyLw28xZ1trDKKLuTlzUIUTxFQVRqKnoq0xVJauR
-         eAtvwsuZk6F9HShRTT7m9q6shGZxXb1JLmhly9RFGfDLgxQDQE7PIEkJ/gf8DXvOzyHz
-         clhA==
+        bh=KgioJfiSLQsHNHryEgZJ3KiprT6RmzRs4G29o8NwBLM=;
+        b=olW0twAOlXYLZYuJbrfqsEauNqe+smLnlXSE19Zpo5kCcITa1H//STdp1uzoclmwwB
+         6pfWpNzWNN1L6GBuDLjFK+KQJ7SXmt5XqY5A7d8odc8sK4iRJRhBulfC9mVwJNseUGrH
+         q2ivMeA4+47nvonb7fOaw7Au4Mlb3twGvaH6L5X4KWcfxH7STvCv3Dga6Jrt/LJsT2JG
+         5bj/m+fhzSWrmuqHZpjkQ0rqGMDn0e98rTj0W1Mi35oNU74ccgUf90V56sU5gU0oLmru
+         xBwI+i9WPgFVIKC+cPdSyXfnXIUureq0WW7JGrkn8Ti41xyncb9RJcWWoDVWDRcksiRK
+         eilQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20251104; t=1780046010; x=1780650810;
+        d=1e100.net; s=20251104; t=1780046047; x=1780650847;
         h=content-transfer-encoding:cc:to:subject:message-id:date:from
          :in-reply-to:references:mime-version:x-gm-gg:x-gm-message-state:from
          :to:cc:subject:date:message-id:reply-to;
-        bh=H6S6E6qC/OtWWeTZr1Pvf9wjq3ql7UjQmU9GicaWAcg=;
-        b=qVhxLmM7evEUv11Q4IWsy8FZgo8thGd6tb9oBRygiNLn3i6LtGBR02oL7qk9Khopol
-         WsYrbA/BKvExKKKILJeYDX4m1Wc9YxYPfFVzGaBJNF+lX86F0OI8wdrjtefNEAxgk8mz
-         otT6gf/BcoFWCBtfy+s3AaBHJi+/naMFNkfq+pX/135N9qoIno92ik4cq+E7H0LHuoJl
-         tM45k8wPSXqjMsbcVRiLu1/5VXJpra4rRCkItbNvIJIahHqUZX9uRcu0AbTybJTmMWUA
-         fafSryM0j9OVlMpgIAEHcccpeFE9I7AdPDCSdgbdAKBw8C+t+DtuMwbgcHgROLXmrUNG
-         DdTw==
-X-Gm-Message-State: AOJu0Yyw6c8KuoujR0hpDG4lYH6C7xDmFs1kWwIw+YlsZDbUTFdC+BZA
-	wXvIAE8bh6ZwFlqqTgKDIyOth2+X/Wl9e8y/Y7LL3FnGw2C2yPd1cLUmVMr6h/MX9pNWm9rNEUp
-	DLolZfBajFQDrYFYtxEZAD+yy0L0u733AxFkrzFM4ew==
-X-Gm-Gg: Acq92OGqGYy5SX1zeHBPstAHCRcGQ1YwHBppYFxtXQmA1zVMonYsQ/cWyhpy84P2zTp
-	rNVdUmyzi0XBTk5yvFh4gbhm1c6Vybp0PPSM5agL0uh2GpoHYZ8LcT+wPIYbIY59IBLJuzmqYxb
-	jHM/BKSekpx/ViE6TzsuMZ6UatXUz/wIrpjLiOP9kmUG12Co3zLze8PgTH6oK/XhPhuW7mJV19V
-	psb8Lk+aLIyJhCxdXksfpbuNy7R+W/D19MQ8TYvXoUVy/2OK2so9QiBIyCawsCN8cVEcK6EUCXS
-	xSCO68tVBx0xGkUJAnw6XM9++cgoAiRn/zTYcZIfxfHPeHQ81w==
-X-Received: by 2002:a05:690c:610a:b0:7a4:80ce:8275 with SMTP id
- 00721157ae682-7de4ba34f6cmr13666347b3.35.1780046010439; Fri, 29 May 2026
- 02:13:30 -0700 (PDT)
+        bh=KgioJfiSLQsHNHryEgZJ3KiprT6RmzRs4G29o8NwBLM=;
+        b=YuHpHFRsypw5m/Ov5DGARbHDdAUOJBCh4o3aKrSITDzmNafTAP2S3/aTHCeXLnZB1f
+         OSxltP53llnKoS31D5MOJJZoA8A0cZMiEmo25JTAnoHmAz779yBuPmokKvmmW4TQwD6U
+         wGeV84OXYEvm0Tf53GutyA0cFE7DMqVf8LOLqLT86AGnmSwu5eaciStrIKVDnszAg3x6
+         QASvF8hqe0LufAPcO1bkh6tKKb12NS3wIf47Y2mIinXhXeTKV3x7gaKqOLA6O+LiBHKL
+         NHCu94Zka6cg4ayEAsg//DAsPMRn/XqILmyCzXtOsxeS3aeHCHWVyxjfLsSDwe+TVa++
+         OCIw==
+X-Gm-Message-State: AOJu0YzLKqtB8LsGa8D6RTcOtENymE2xbgH6NSAtJ/EayGaf3pStTjJ3
+	ISjwWzbpuAGV+/bgXIKFhgibGd6a+MCRHM578f+yZKUwnwutTf6rgoEPwwMvQE7zBrS9ZTHFLgZ
+	x+R+ntihND0fs8xLRUC38MWeuj9TaVoH4bWY+8hug2w==
+X-Gm-Gg: Acq92OElhciT7QQagiwiOmXW5GuGoYq6Fwoog8e/1YllykLAKG7hHkpnwHPl4OcgqC+
+	VO0NwyFppb/OnYUH8vJf1Exv3aiP3QCC3gUgfnq2NlbP+T85sC8BaNLtwxekXXxBREtns1vw9DQ
+	WgLDP+D8kNy2nWWT/gYZFDwRonFeml2UFGqAQKn7M3tFF+WMCjQJnH/zDUBfnVpjgYLpiFP20vk
+	NWLkVuKWzjOXqxCBuxB5z7y1YHFKhTu9dST6Scj69XaWotM2tmaRfdf3b1xaf31n/Cs46z3ypWn
+	s+HkJ+N6e1uXt1aZY4Wf1s5O5W/RIqd6bcRjMg9YFWvDeclll37V+fZBSCjV
+X-Received: by 2002:a05:690c:e361:b0:7d4:3090:f0b with SMTP id
+ 00721157ae682-7de4de08415mr14916817b3.49.1780046047004; Fri, 29 May 2026
+ 02:14:07 -0700 (PDT)
 Precedence: bulk
 X-Mailing-List: sashiko-reviews@lists.linux.dev
 List-Id: <sashiko-reviews.lists.linux.dev>
 List-Subscribe: <mailto:sashiko-reviews+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:sashiko-reviews+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-References: <20260529034542.68766-5-laoar.shao@gmail.com> <20260529051659.BEA391F00893@smtp.kernel.org>
-In-Reply-To: <20260529051659.BEA391F00893@smtp.kernel.org>
+References: <20260529034542.68766-4-laoar.shao@gmail.com> <20260529045446.B22791F00893@smtp.kernel.org>
+In-Reply-To: <20260529045446.B22791F00893@smtp.kernel.org>
 From: Yafang Shao <laoar.shao@gmail.com>
-Date: Fri, 29 May 2026 17:12:53 +0800
-X-Gm-Features: AVHnY4ICwHysqK3ued6uXyRS3cOpRunwhARwEIjxHUzL-4Ob9NoMLNSbAzL8Ba8
-Message-ID: <CALOAHbAbz6BFMj+T5QSj672+kxig5FCx13OWth4BHZVhQXLB-w@mail.gmail.com>
-Subject: Re: [PATCH v2 4/4] selftests/livepatch: Update tests for replace_set
+Date: Fri, 29 May 2026 17:13:30 +0800
+X-Gm-Features: AVHnY4LCHaX_DNeP5KxXiVz7TX4bzbxuMHGIc8uMzprngzO3bgJFK_d57-n2_DE
+Message-ID: <CALOAHbBGUkK+LnVy8236kje275LD43qoMRAKBgevzUnBGByiHw@mail.gmail.com>
+Subject: Re: [PATCH v2 3/4] livepatch: deprecate stack_order
 To: sashiko-reviews@lists.linux.dev
-Cc: jikos@kernel.org, mbenes@suse.cz, song@kernel.org, joe.lawrence@redhat.com, 
-	pmladek@suse.com, jpoimboe@kernel.org, live-patching@vger.kernel.org
+Cc: song@kernel.org, jpoimboe@kernel.org, joe.lawrence@redhat.com, 
+	jikos@kernel.org, mbenes@suse.cz, pmladek@suse.com, 
+	live-patching@vger.kernel.org
 Content-Type: text/plain; charset="UTF-8"
 Content-Transfer-Encoding: quoted-printable
 
-On Fri, May 29, 2026 at 1:17=E2=80=AFPM <sashiko-bot@kernel.org> wrote:
+On Fri, May 29, 2026 at 12:54=E2=80=AFPM <sashiko-bot@kernel.org> wrote:
 >
 > Thank you for your contribution! Sashiko AI review found 1 potential issu=
 e(s) to consider:
-> - [Medium] The 'atomic replace livepatch' test case in test-livepatch.sh =
-was completely removed instead of being updated, resulting in lost test cov=
-erage and leaving behind dead variables.
+> - [Critical] The commit entirely removes the `stack_order` sysfs attribut=
+e while only marking it as `<deprecated>` in the ABI documentation, causing=
+ immediate backwards compatibility breakage and contradicting documentation=
+ guidelines.
 > --
 >
-> commit 99bb60c2ba8319ec21289c482f1ea304e282396c
+> commit 041b2dbba1a7397626104dd773fc1f37228d382c
 > Author: Yafang Shao <laoar.shao@gmail.com>
 >
-> selftests/livepatch: Update tests for replace_set
+> livepatch: deprecate stack_order
 >
-> This commit updates the livepatch selftests to use "replace_set" instead
-> of "replace". It configures different livepatches to share or have differ=
-ent
-> replace_sets to test atomic and non-atomic replace behaviors.
+> This commit deprecates the stack_order sysfs attribute for atomic-replace
+> livepatches, since a single function can only be modified by a unique
+> replace_set.
 >
-> > diff --git a/tools/testing/selftests/livepatch/test-livepatch.sh b/tool=
-s/testing/selftests/livepatch/test-livepatch.sh
-> > index c44c5341a2f1e..042999856267f 100755
-> > --- a/tools/testing/selftests/livepatch/test-livepatch.sh
-> > +++ b/tools/testing/selftests/livepatch/test-livepatch.sh
+> > diff --git a/Documentation/ABI/testing/sysfs-kernel-livepatch b/Documen=
+tation/ABI/testing/sysfs-kernel-livepatch
+> > index 6d75235a6a2e4..fddad93dba797 100644
+> > --- a/Documentation/ABI/testing/sysfs-kernel-livepatch
+> > +++ b/Documentation/ABI/testing/sysfs-kernel-livepatch
+> > @@ -62,6 +62,7 @@ Description:
+> >               are applied to the system. If multiple live patches modif=
+y the same
+> >               function, the implementation with the biggest 'stack_orde=
+r' number
+> >               is used, unless a transition is currently in progress.
+> > +             <deprecated>
+>
 > [ ... ]
-> > @@ -108,96 +108,6 @@ livepatch: '$MOD_LIVEPATCH1': completing unpatchin=
-g transition
-> >  livepatch: '$MOD_LIVEPATCH1': unpatching complete
-> >  % rmmod $MOD_LIVEPATCH1"
+>
+> > diff --git a/kernel/livepatch/core.c b/kernel/livepatch/core.c
+> > index 969fea2a92631..6d65f839f4420 100644
+> > --- a/kernel/livepatch/core.c
+> > +++ b/kernel/livepatch/core.c
+> [ ... ]
+> > @@ -457,38 +456,15 @@ static ssize_t replace_set_show(struct kobject *k=
+obj,
+> >       return sysfs_emit(buf, "%u\n", patch->replace_set);
+> >  }
 > >
+> > -static ssize_t stack_order_show(struct kobject *kobj,
+> > -                             struct kobj_attribute *attr, char *buf)
+> > -{
+> > -     struct klp_patch *patch, *this_patch;
+> > -     int stack_order =3D 0;
 > > -
-> > -# - load a livepatch that modifies the output from /proc/cmdline and
-> > -#   verify correct behavior
-> > -# - load two additional livepatches and check the number of livepatch =
-modules
-> > -#   applied
-> > -# - load an atomic replace livepatch and check that the other three mo=
-dules were
-> > -#   disabled
-> > -# - remove all livepatches besides the atomic replace one and verify t=
-hat the
-> > -#   atomic replace livepatch is still active
-> > -# - remove the atomic replace livepatch and verify that none are activ=
-e
+> > -     this_patch =3D container_of(kobj, struct klp_patch, kobj);
 > > -
-> > -start_test "atomic replace livepatch"
+> > -     mutex_lock(&klp_mutex);
 > > -
-> > -load_lp $MOD_LIVEPATCH1
+> > -     klp_for_each_patch(patch) {
+> > -             stack_order++;
+> > -             if (patch =3D=3D this_patch)
+> > -                     break;
+> > -     }
+> > -
+> > -     mutex_unlock(&klp_mutex);
+> > -
+> > -     return sysfs_emit(buf, "%d\n", stack_order);
+> > -}
+> > -
+> >  static struct kobj_attribute enabled_kobj_attr =3D __ATTR_RW(enabled);
+> >  static struct kobj_attribute transition_kobj_attr =3D __ATTR_RO(transi=
+tion);
+> >  static struct kobj_attribute force_kobj_attr =3D __ATTR_WO(force);
+> >  static struct kobj_attribute replace_set_kobj_attr =3D __ATTR_RO(repla=
+ce_set);
+> > -static struct kobj_attribute stack_order_kobj_attr =3D __ATTR_RO(stack=
+_order);
+> >  static struct attribute *klp_patch_attrs[] =3D {
+> >       &enabled_kobj_attr.attr,
+> >       &transition_kobj_attr.attr,
+> >       &force_kobj_attr.attr,
+> >       &replace_set_kobj_attr.attr,
+> > -     &stack_order_kobj_attr.attr,
+> >       NULL
+> >  };
 >
-> [Severity: Medium]
-> Was this test case intentionally removed completely instead of being upda=
-ted for
-> the new replace_set semantics?
+> [Severity: Critical]
+> The commit message and documentation state that the stack_order attribute
+> is being deprecated, but this code completely removes the attribute. Does
+> this abruptly break ABI compatibility for userspace tools that expect thi=
+s
+> sysfs file to exist?
 >
-> The commit message does not mention removing this test. This removal caus=
-es a
-> loss of test coverage that previously verified an atomic replace successf=
-ully
-> disables multiple existing livepatches.
+> Normally, deprecating an interface requires keeping it around for a
+> transition period (perhaps returning a dummy value) rather than deleting
+> it immediately. Also, if it were actually removed, shouldn't the ABI
+> documentation be moved to the removed/ directory instead of just appendin=
+g
+> <deprecated> to the existing entry?
 
-This test case is invalid for the replace_set, since only one
-livepatch will be replaced.
-
->
-> Additionally, removing this test leaves the script variables MOD_LIVEPATC=
-H2
-> and MOD_LIVEPATCH3 unused in test-livepatch.sh. Could this test be adapte=
-d
-> to use replace_set instead?
-
-I will update it.
+I will wait for the feedback from the maintainers.
 
 --=20
 Regards
