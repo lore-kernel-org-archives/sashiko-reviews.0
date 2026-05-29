@@ -1,143 +1,102 @@
-Received: from mail-pl1-f201.google.com (mail-pl1-f201.google.com [209.85.214.201])
+Received: from mail-pg1-f202.google.com (mail-pg1-f202.google.com [209.85.215.202])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CEFDB3F7AA9
-	for <sashiko-reviews@lists.linux.dev>; Fri, 29 May 2026 16:59:37 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.214.201
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 492FD36CE14
+	for <sashiko-reviews@lists.linux.dev>; Fri, 29 May 2026 17:01:02 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.215.202
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1780073979; cv=none; b=RnQudH4syH5hMa/wn7HreQDrDBE2FMm9RjO0LKe1jTFzteRT/HEjD4YiweOhRdPO00INr/k27RTq5k3B0JhBPL4cstXYUaSoTI+fumIFrIJAuX0iAaRot+pQQf2kYNXE5rwTegU8fUYUmz7gy6tYMsjxBm9kjIaQLL8DrKkpSnk=
+	t=1780074064; cv=none; b=DZr0O+y8w3A2qQTCCl6Xtj1vPZhnWzlQDNO/3iZHN790VuDGFHtIaP4jokW2R6Dm9ryX/iuz+BXpa93BCb/+bb511l14sjhSsCW/TFwJhqBWjs6rPGdtuHtp2g5uN4BIGo8+zTVQXvCDOOKafoMVl0snezoQHE02e+C+N4FZO+0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1780073979; c=relaxed/simple;
-	bh=QxzH5176QV1Z3ehduHKIGQu/MHoL+J9s1KmhHLaMQYY=;
+	s=arc-20240116; t=1780074064; c=relaxed/simple;
+	bh=7H128GGtnqbG/RSkM/gC5mRXamm7xUEcaHyboBL1r7g=;
 	h=Date:In-Reply-To:Mime-Version:References:Message-ID:Subject:From:
-	 To:Cc:Content-Type; b=GfUaPGKG9joBFNnJDE9BT0a1Itv4CtaygJicN8PU7NHHRrRpMfSdQtJqOmbZP+qomQ7v8+v+Yd67fxJ1f28w7trVjwHW9+W9sdGcFyt90ZN1dloD55Mc6+FayWwWSy5F3WQw/f4bBup5vCkTd4WzHAnzyukTn+kenRfQgsd1XYI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=google.com; spf=pass smtp.mailfrom=flex--seanjc.bounces.google.com; dkim=pass (2048-bit key) header.d=google.com header.i=@google.com header.b=G8LuaciX; arc=none smtp.client-ip=209.85.214.201
+	 To:Cc:Content-Type; b=ds0yNy7Ojq3KrllWMyDMyWaN0uJrpPj2WDNffb1u1dAjrl72ZzNVjBF7H/qjbpAIQMtIGc4JdGFJZOo0CJz5PABUWnWQCoHRmeCKX4bysfRFL1NmblH5C6Iwfs7zatCNcTDgLseYP7T1veRnB33F9GkIVGiSRw991qR6hifs8gs=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=google.com; spf=pass smtp.mailfrom=flex--seanjc.bounces.google.com; dkim=pass (2048-bit key) header.d=google.com header.i=@google.com header.b=YEB+Klth; arc=none smtp.client-ip=209.85.215.202
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=google.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=flex--seanjc.bounces.google.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=google.com header.i=@google.com header.b="G8LuaciX"
-Received: by mail-pl1-f201.google.com with SMTP id d9443c01a7336-2bd6aeb3637so314756045ad.2
-        for <sashiko-reviews@lists.linux.dev>; Fri, 29 May 2026 09:59:37 -0700 (PDT)
+	dkim=pass (2048-bit key) header.d=google.com header.i=@google.com header.b="YEB+Klth"
+Received: by mail-pg1-f202.google.com with SMTP id 41be03b00d2f7-c85798977dcso478434a12.0
+        for <sashiko-reviews@lists.linux.dev>; Fri, 29 May 2026 10:01:02 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=google.com; s=20251104; t=1780073977; x=1780678777; darn=lists.linux.dev;
+        d=google.com; s=20251104; t=1780074062; x=1780678862; darn=lists.linux.dev;
         h=cc:to:from:subject:message-id:references:mime-version:in-reply-to
          :date:from:to:cc:subject:date:message-id:reply-to;
-        bh=EIfZI+15eXnt1VS1ntObygvWhZxyllpwUaeyj935Nek=;
-        b=G8LuaciXq6DweKEo7RoXQEZm4dGfRNWlN6u8P48p38A6V+PmkU6GORv1mFQs/Nex5F
-         8+NBhLSRSTyf4Mv7KqWZP6WCanimIUDz+iRAMVCsNjykkWnKHuTXNUbHqz51GuiuQIPc
-         wNKCBL6ka4VcCtOpAzSTUu3G+EF4ge1dF3HI2RxVJ3/IUcwON3MOCvsTYEsNgEdSnAbQ
-         8+4a1fbJ0TUtI03g2mfimYcLQpPG/L6YYCbsEGSpUH42FWpj9yg3cAgCficUcwkBli0j
-         s32jAfpTwHv15dT0YSf10oUIGt5OB1w5kX92uqMyCm1PmithQNF5g7fsnn5hUj9ICrgF
-         VENQ==
+        bh=Z8OtpbJnY1tjWi0GBlc3JoUE3xbaP0GTQHvl5kMixoc=;
+        b=YEB+KlthKriHRlHeEPyyQjlp43MEGSEi8FmgkWZI46Js+OURMpxCyPmOvXEgV+G/0M
+         1MwOihi87su22pGuzBd1Fuzdg03ZVrTcmUklNYq8f2Gt2Q5ZjzyV8pJIJy5dXYEaGuyl
+         hrQMSfB87noByhN5r5CueNcz9fZ+LKkcDk6zNGfq01zI1M80XphwqbVh+v+hOW/ttcqy
+         2L3rbOvXG/J2vqNscn4J3aoAwuUhSiAcg4ot4LI1F3jyI5eLmJETHjIH4FdUk9i64Ubf
+         u7t3xG9ZqZBg4AGhbdPN7C+TvJYUtIsvvtG/uKQ8TlV3hS+nPkAweB+Yw2/aURgJnXWW
+         AR5A==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20251104; t=1780073977; x=1780678777;
+        d=1e100.net; s=20251104; t=1780074062; x=1780678862;
         h=cc:to:from:subject:message-id:references:mime-version:in-reply-to
          :date:x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=EIfZI+15eXnt1VS1ntObygvWhZxyllpwUaeyj935Nek=;
-        b=GOaJt4tSRM9PZ7RaLYwasVKVmlwu3LFWqB5ohjw2dz+b1nhySg4t9QTH2u+N1VcN9A
-         3ZGq0yaBY+/TU1mHBdH695S7tTfO41WvAAwPXZO9mKHszPD6cp6d5uIDXu1URjvqHq13
-         DdhiEn8tycDzrFLpHaIgSgQBlSbyTLGLQx7qCH6iQQ/frhGaCfVTOU/PVWyfZcymPIp5
-         1R4HBXiNLwgRBdVH2keOwRurciZbEn0yIfgRt2jJX4ELq4WpXwVbAx5MKJDkUKFm8akw
-         5whe9WY7/B5kkCwBD31ZXe6C8yKJIL8DbdfFeEG+F4H23rkd5BxXsjlpYMPIthgsMyHJ
-         dUww==
-X-Gm-Message-State: AOJu0YxR8NLht+6wUjE+NT2JdXp/2Q5eOQFONQTuW/dZLA7UOwKWvldK
-	nL5VwxrfWU3jRCE1tdW0ctA94HyMMiCs1nnZTNVnGmAICEvzbirG8kSq7KOB9p2PtCr0L3/8mgC
-	TQlH59COpMqJ6ayoJdLa4aeTQ2OY9aHplsyDoqG3Eo2tkULG6zGYjD3NrJf2HiC5xCRJ2WLT974
-	jVzrc/z6Cps/kPEG+oSjGqfBXFsqSFOgrW1TZaR+7qn6SbBPQ9
-X-Received: from plry22.prod.google.com ([2002:a17:902:b496:b0:2bd:9e64:2df1])
- (user=seanjc job=prod-delivery.src-stubby-dispatcher) by 2002:a17:902:e78e:b0:2b4:5cea:f61c
- with SMTP id d9443c01a7336-2bf3679355bmr9901385ad.4.1780073976883; Fri, 29
- May 2026 09:59:36 -0700 (PDT)
-Date: Fri, 29 May 2026 09:59:36 -0700
-In-Reply-To: <20260529162111.990441F00893@smtp.kernel.org>
+        bh=Z8OtpbJnY1tjWi0GBlc3JoUE3xbaP0GTQHvl5kMixoc=;
+        b=tKAOPb8rwKrIceUi8PTirzPbOJPdjSPfcDQbBXekuiEl5h4eH36eK4VHhR0uuf5mSG
+         YUYr8ZhNAFKMoTzOzJPR/H9Yt9UYveCObFsto3UWQYIuGOmgu8Ak6ybB8HkptXH09KJH
+         E4wvqlruJXJ1TtE7bMdCo3KCd+yAiooEOTyB1P7F9lC2wGlPn/PHSi3gwN47RiLHFTOC
+         2bGQ8x7yNGarXqjNDuoSX9uqV5xjJUKC++RjOKXWoD8O4X5kD2DDTsS3N3Tz2eRP8BTB
+         cq9oTRn8HX+k1U3Q0wl9EV4r7nztcH4F1l6QF+A1HQg0AhzVqGOSXqeCDPucUlXC3XlY
+         x6SA==
+X-Gm-Message-State: AOJu0Ywvu01eVcVeuq8Dr3/K+ulKCtklNC6Mn0EesQBtCeD46GefiHdc
+	LsTBcWGpMtD2tOQsbW+1YsqqY0DMzlnLcTgSfYWClfhaO3lOkaxnT3mkaHGlbCF+bjhfmcIM5OI
+	s0izt8HJVGLD7oK5CGPzTd+gK24kK/2U+o4c/tUO5V4aARZ2z+sGaTlvt1IAHdXJC0fyINUnch8
+	o5ToE+cqlF9nKbp/Vu/64roGUB0tISRUpnkBTZiDGXQNvTYQoG
+X-Received: from pglr17.prod.google.com ([2002:a63:5151:0:b0:c80:2656:4e70])
+ (user=seanjc job=prod-delivery.src-stubby-dispatcher) by 2002:a05:6300:14c:b0:3aa:f9cb:d435
+ with SMTP id adf61e73a8af0-3b4280140a1mr64540637.11.1780074061246; Fri, 29
+ May 2026 10:01:01 -0700 (PDT)
+Date: Fri, 29 May 2026 10:01:00 -0700
+In-Reply-To: <20260529164019.519101F00899@smtp.kernel.org>
 Precedence: bulk
 X-Mailing-List: sashiko-reviews@lists.linux.dev
 List-Id: <sashiko-reviews.lists.linux.dev>
 List-Subscribe: <mailto:sashiko-reviews+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:sashiko-reviews+unsubscribe@lists.linux.dev>
 Mime-Version: 1.0
-References: <20260529144435.704127-8-seanjc@google.com> <20260529162111.990441F00893@smtp.kernel.org>
-Message-ID: <ahnF-FehodVd474X@google.com>
-Subject: Re: [PATCH v4 07/47] x86/tdx: Force TSC frequency with CPUID-based
- info provided by the TDX-Module
+References: <20260529144435.704127-10-seanjc@google.com> <20260529164019.519101F00899@smtp.kernel.org>
+Message-ID: <ahnGTF5uoihLfk1p@google.com>
+Subject: Re: [PATCH v4 09/47] x86/acrn: Mark TSC frequency as known when using
+ ACRN for calibration
 From: Sean Christopherson <seanjc@google.com>
 To: sashiko-reviews@lists.linux.dev
-Cc: linux-hyperv@vger.kernel.org, kvm@vger.kernel.org
+Cc: kvm@vger.kernel.org, linux-hyperv@vger.kernel.org
 Content-Type: text/plain; charset="us-ascii"
 
 On Fri, May 29, 2026, sashiko-bot@kernel.org wrote:
-> > diff --git a/arch/x86/kernel/tsc.c b/arch/x86/kernel/tsc.c
-> > index 2b8f94c3fcc7f..2603f136e29bd 100644
-> > --- a/arch/x86/kernel/tsc.c
-> > +++ b/arch/x86/kernel/tsc.c
-> 
-> [ ... ]
-> 
-> > @@ -1550,6 +1551,8 @@ void __init tsc_early_init(void)
-> >  		known_tsc_khz = tsc_early_khz;
-> >  	else if (cc_platform_has(CC_ATTR_GUEST_SNP_SECURE_TSC))
-> >  		known_tsc_khz = snp_secure_tsc_init();
-> > +	else if (boot_cpu_has(X86_FEATURE_TDX_GUEST))
-> > +		known_tsc_khz = tdx_tsc_init();
+> > diff --git a/arch/x86/kernel/cpu/acrn.c b/arch/x86/kernel/cpu/acrn.c
+> > index ad8f2da8003b3..0303fe6a2efa7 100644
+> > --- a/arch/x86/kernel/cpu/acrn.c
+> > +++ b/arch/x86/kernel/cpu/acrn.c
+> > @@ -33,6 +33,8 @@ static void __init acrn_init_platform(void)
+> >  {
+> >  	/* Install system interrupt handler for ACRN hypervisor callback */
+> >  	sysvec_install(HYPERVISOR_CALLBACK_VECTOR, sysvec_acrn_hv_callback);
+> > +
+> > +	setup_force_cpu_cap(X86_FEATURE_TSC_KNOWN_FREQ);
 > 
 > [Severity: Medium]
-> Does this structure accidentally bypass the TDX APIC timer and TSC capability
-> initializations if the user provides the tsc_early_khz boot parameter?
+> Does this unconditionally skip TSC refinement even if the hypervisor fails
+> to provide a valid TSC frequency?
+
+Gotta love Sashiko's passive aggressive "questions".
+
+> ACRN TSC frequency is obtained via acrn_get_tsc_khz(), which queries
+> cpuid_eax(ACRN_CPUID_TIMING_INFO). If the hypervisor does not support this
+> leaf or returns 0, the kernel falls back to early hardware calibration
+> (e.g., PIT/HPET via x86_platform.calibrate_tsc()).
 > 
-> Previously, setup_force_cpu_cap(X86_FEATURE_TSC_RELIABLE) was executed
-> unconditionally in tdx_early_init() for TDX guests. With this change, 
-> tdx_tsc_init() is skipped entirely when tsc_early_khz is provided due to
-> the if/else if chain.
+> Because X86_FEATURE_TSC_KNOWN_FREQ is unconditionally forced here,
+> init_tsc_clocksource() will assume the frequency is known and skip the
+> refined calibration phase. This regression locks in the imprecise early
+> calibration and could cause time drift.
+> 
+> I see this regression was addressed in a later commit b0e7d8e1edd52
+> ("x86/tsc: Consolidate forcing of X86_FEATURE_TSC_KNOWN_FREQ for PV code")
+> which correctly gates the capability setting on known_tsc_khz != 0.
 
-Drat.  But this isn't benign.  I don't see a better option than biting the bullet
-and ignoring tsc_early_khz for Coco guests, e.g. in the SNP patch do:
-
-	if (cc_platform_has(CC_ATTR_GUEST_SNP_SECURE_TSC))
-		known_tsc_khz = snp_secure_tsc_init();
-
-	if (!known_tsc_khz)
-		known_tsc_khz = tsc_early_khz;
-	else if (tsc_early_khz)
-		pr_err("Ignoring 'tsc_early_khz' in favor of trusted firmware\n");
-
-and then this becomes:
-
-	if (cc_platform_has(CC_ATTR_GUEST_SNP_SECURE_TSC))
-		known_tsc_khz = snp_secure_tsc_init();
-	else if (boot_cpu_has(X86_FEATURE_TDX_GUEST))
-		known_tsc_khz = tdx_tsc_init();
-
-	if (!known_tsc_khz)
-		known_tsc_khz = tsc_early_khz;
-	else if (tsc_early_khz)
-		pr_err("Ignoring 'tsc_early_khz' in favor of trusted firmware\n");
-
-At that point, I think it makes sense to double down and ignore tsc_early_khz if
-the hypervisor provides the frequency.  It'll yield cleaner code overall, and
-will be easy enough to document, e.g. to end up with:
-
-	if (cc_platform_has(CC_ATTR_GUEST_SNP_SECURE_TSC))
-		known_tsc_khz = snp_secure_tsc_init();
-	else if (boot_cpu_has(X86_FEATURE_TDX_GUEST))
-		known_tsc_khz = tdx_tsc_init();
-
-	/*
-	 * If the TSC frequency wasn't provided by trusted firmware, try to get
-	 * it from the hypervisor (which is untrusted when running as a CoCo guest).
-	 */
-	if (!known_tsc_khz && x86_init.hyper.get_tsc_khz)
-		known_tsc_khz = x86_init.hyper.get_tsc_khz();
-
-	/*
-	 * Mark the TSC frequency as known if it was obtained from a hypervisor
-	 * or trusted firmware.  Don't mark the frequency as known if the user
-	 * specified the frequency, as the user-provided frequency is intended
-	 * as a "starting point", not a known, guaranteed frequency.
-	 */
-	if (known_tsc_khz)
-		setup_force_cpu_cap(X86_FEATURE_TSC_KNOWN_FREQ);
-
-	if (!known_tsc_khz)
-		known_tsc_khz = tsc_early_khz;
-	else if (tsc_early_khz)
-		pr_err("Ignoring 'tsc_early_khz' in favor of trusted firmware or hypervisor\n");
+Blech, so many twists and turns.  I'll fix this by adding a prep patch to cache
+the CPUID result locally and only register the hooks if it's non-zero, e.g. as
+is done by VMware and KVM (later in the series).
