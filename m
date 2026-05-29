@@ -1,102 +1,106 @@
-Received: from mgamail.intel.com (mgamail.intel.com [198.175.65.13])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-pj1-f73.google.com (mail-pj1-f73.google.com [209.85.216.73])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D6BAC40963C
-	for <sashiko-reviews@lists.linux.dev>; Fri, 29 May 2026 18:31:28 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=198.175.65.13
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 70448343893
+	for <sashiko-reviews@lists.linux.dev>; Fri, 29 May 2026 18:57:36 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.216.73
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1780079490; cv=none; b=krV/BKdR4fz6mtjaZP9MAQgeS3LUNvOYIbu+zmifjjQkYEtpkEnk2fTkHt85pmsRM5Rt5ntLeFdaRoUzNplHFxtTyIOZRT2w2HsKDAsbZvvphYv/ZudFFUPWwBdvq1ERoqmra14UMgzhPHnrShcWluJpFOkybKtqkEyfssoDRmk=
+	t=1780081057; cv=none; b=EFz1wi9Wr6/BSgLW1ZBTzpkQaIjXR/TRXgOPaHnv5RahRo40xogpyzvnvh92AjpZ1CKwPAVeCsNm9me8Gwlo0Zyxqq0iecmX5mUjHjPvENCfXQkd11YN+c3mXARX7z19AQDkUZLJ+0g651ijKv4h33q7kJGGFK3UmP/ZblZvT6c=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1780079490; c=relaxed/simple;
-	bh=aOpV+WHwjbYXZcQYmtA5ng/AE6qGHgqNNihA1wvQi9o=;
-	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=jwzkHzVSQEkX0BOCcUYGAwMAanXjqqpsRInYrMhcZ9d/i04/ukCES8zhq0uBBLGTW4doDo2wcmFPc2NTzl6RrsL0iPJunopiHpg7m2pu8vA5awCTJbYPP3EDPZ6dlfEhLEp7CEsnT6/TljQ+rgk7ZZPI6Ap76eKlzKFByY7WtCI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=intel.com; spf=pass smtp.mailfrom=intel.com; dkim=pass (2048-bit key) header.d=intel.com header.i=@intel.com header.b=DS0Nwaov; arc=none smtp.client-ip=198.175.65.13
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=intel.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=intel.com
+	s=arc-20240116; t=1780081057; c=relaxed/simple;
+	bh=0Ac6Y0XbIulsI8e3BoESoWqp4Ms/oUKG/jhOEdJSmhA=;
+	h=Date:In-Reply-To:Mime-Version:References:Message-ID:Subject:From:
+	 To:Cc:Content-Type; b=eqhxkz7+H5nS9qp1FFUwoB0iWdW5q92+sh/cHo2uGzJpeiXlT/j6HYYn3c4+D6dE0atmNtn/MjQeK7p0QyajEjnYZwLxhDkUHYKTS1fIdMQ8qgy6Wf1XELYxI7J7zTa9QRzd0yXG+2kLz9n5zNuzZYuv9fBzgBq4c71Vn5o1XuM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=google.com; spf=pass smtp.mailfrom=flex--seanjc.bounces.google.com; dkim=pass (2048-bit key) header.d=google.com header.i=@google.com header.b=D2gapskp; arc=none smtp.client-ip=209.85.216.73
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=google.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=flex--seanjc.bounces.google.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=intel.com header.i=@intel.com header.b="DS0Nwaov"
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
-  d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
-  t=1780079489; x=1811615489;
-  h=message-id:date:mime-version:subject:to:cc:references:
-   from:in-reply-to:content-transfer-encoding;
-  bh=aOpV+WHwjbYXZcQYmtA5ng/AE6qGHgqNNihA1wvQi9o=;
-  b=DS0NwaovGmHZoPCbXpFHDPCXA8nLngQTbllxuXEkmiEL66Pdl7hLyvBg
-   YhaZ6N7ybEkTjsH6n4UQ6AjMbYIXNFFD9sMsbLzdRK/Eycl1WhCYNFQaV
-   mdL8rv7X+x/Y/cytzAxnJGu7W/m/WdhB4uQPgSGsToFGsiJX+xXM588dk
-   lOd7PgiuoPeRp6zzVRddp8xStO/xeBtW5gSRPaNRO5FiHxmcvugTWwfVU
-   B8K7CwVrdNFnxpuAe++bfMAqOyU5C/F3NgErfdO6gejAzbP9ULGDK0Ixv
-   Ea00cMs4cg6Ch0cB4FSjyGdA+112WKycgEBSZ9pp2gGpxGiFeaZrhnW2Q
-   Q==;
-X-CSE-ConnectionGUID: LOf3hkXzRfCFpLPqWzijNg==
-X-CSE-MsgGUID: uuJCllLRTmaAOK/ZPEkR4g==
-X-IronPort-AV: E=McAfee;i="6800,10657,11801"; a="92053418"
-X-IronPort-AV: E=Sophos;i="6.24,175,1774335600"; 
-   d="scan'208";a="92053418"
-Received: from fmviesa007.fm.intel.com ([10.60.135.147])
-  by orvoesa105.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 29 May 2026 11:31:28 -0700
-X-CSE-ConnectionGUID: 58ahwfUDSIanbpVAPatT6Q==
-X-CSE-MsgGUID: v9/0BumMS82ZMTmjbz0wPA==
-X-ExtLoop1: 1
-X-IronPort-AV: E=Sophos;i="6.24,175,1774335600"; 
-   d="scan'208";a="239917954"
-Received: from soc-cp83kr3.clients.intel.com (HELO [10.122.185.5]) ([10.122.185.5])
-  by fmviesa007-auth.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 29 May 2026 11:31:28 -0700
-Message-ID: <08c10ac8-1d24-4659-afd7-dd55f6dd3ec8@intel.com>
-Date: Fri, 29 May 2026 13:31:27 -0500
+	dkim=pass (2048-bit key) header.d=google.com header.i=@google.com header.b="D2gapskp"
+Received: by mail-pj1-f73.google.com with SMTP id 98e67ed59e1d1-36bba9b849dso1202772a91.1
+        for <sashiko-reviews@lists.linux.dev>; Fri, 29 May 2026 11:57:36 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=google.com; s=20251104; t=1780081056; x=1780685856; darn=lists.linux.dev;
+        h=cc:to:from:subject:message-id:references:mime-version:in-reply-to
+         :date:from:to:cc:subject:date:message-id:reply-to;
+        bh=trcaqpaPheQ9pegSLrZ7Icm7wT70eldJiw4H2do/7sU=;
+        b=D2gapskpEovhWXC6fo1A1c5mXB+U1vJHqjiR/aSbY3NOhTFxY5BblnYnQPmhiiIhv3
+         LZTGBqcM0l1PaWnWa+heK0f/YNE0wV4EMfwhtBmsDn2yXLuAPm6AGSA/K2CSI3lF/XSL
+         mqUXxSLyNtxXYEdGmHfX++jitzpagdLnHP97tbbCOI+rGcziTdfkvHqQuf4ZLlaXoXs5
+         r5KS+6AD2h8gE/3vLKR3+3gm3iemT6pgubsukUVlSFEykm83RlOSpwl43x1dJkFx8Vy8
+         9Bgstzp8h72jbXTPfNKF2sDW8FtAlWQD2U09cbA3ixOIikvYMBaqp53p5TYX1PHIY0cM
+         4u8g==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20251104; t=1780081056; x=1780685856;
+        h=cc:to:from:subject:message-id:references:mime-version:in-reply-to
+         :date:x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+        bh=trcaqpaPheQ9pegSLrZ7Icm7wT70eldJiw4H2do/7sU=;
+        b=syg7ThuVb7b6dXUm3u7ZaiVKlvIQgvIwDE5c/dvE+zR/Ss7m9xnZFujo94gvJmXScK
+         X2423AJ9NRZhScnpzlPZpbqfSCN4dno5hEruHDClhGwkOeokTx0S+y8I61rsYu5lMIp4
+         aw9KUeiw+Zls1eQgHHY9JhSPx3Bktjt5wfoc1+ZNS5jT0Y2XtIoWH14CBOund08cg4+I
+         EPHCH7Rig8C89uZ6Wxyowzj+KhFV92rojYl2QCMjlVTvcPEyIuMOWANKGjmunSbE8RQp
+         jbI8Q1mYHuSFFrxMDNav1reWrhyGfcq8nKZec4fT1eLlrX0CpvRC2UpQqgkCNHEZbJ3G
+         ToOw==
+X-Gm-Message-State: AOJu0Yy07LF8ZApsbERCpveg5BDLp1EfpPvnYg5aHWaYLBUde8i9s/ss
+	IeItZ2QfuW73MHIWZPlkdXNkZjH8RD9MkF8EcPWLSLta/C+G3mPgJzhFpXFI3SprgvrhTVUZQl0
+	sC+EklusWzjT4Q/bwyaq+OVl5xsPshZfwrqVstFPD8IQKtPdKr/2qnTZutvo9lNHN6qm+ldsND0
+	S1pWoq1K50451QpVg5OnsnxOduJr0/z4k4kCn7jAg8E2mFNjyr
+X-Received: from pgc24.prod.google.com ([2002:a05:6a02:2f98:b0:c80:192c:51ff])
+ (user=seanjc job=prod-delivery.src-stubby-dispatcher) by 2002:a17:902:ce85:b0:2bd:4d4b:9143
+ with SMTP id d9443c01a7336-2bf36795110mr12953405ad.8.1780081055498; Fri, 29
+ May 2026 11:57:35 -0700 (PDT)
+Date: Fri, 29 May 2026 11:57:34 -0700
+In-Reply-To: <20260529181213.0B27A1F00893@smtp.kernel.org>
 Precedence: bulk
 X-Mailing-List: sashiko-reviews@lists.linux.dev
 List-Id: <sashiko-reviews.lists.linux.dev>
 List-Subscribe: <mailto:sashiko-reviews+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:sashiko-reviews+unsubscribe@lists.linux.dev>
-MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH V2 1/7] perf/x86/intel/uncore: Fix discovery unit lookup
- for multi-die systems
+Mime-Version: 1.0
+References: <20260529144435.704127-18-seanjc@google.com> <20260529181213.0B27A1F00893@smtp.kernel.org>
+Message-ID: <ahnhnjvfIblFxTFX@google.com>
+Subject: Re: [PATCH v4 17/47] x86/kvm: Mark TSC as reliable when it's constant
+ and nonstop
+From: Sean Christopherson <seanjc@google.com>
 To: sashiko-reviews@lists.linux.dev
-Cc: linux-perf-users@vger.kernel.org
-References: <20260527151154.130505-1-zide.chen@intel.com>
- <20260527154508.329CA1F000E9@smtp.kernel.org>
-Content-Language: en-US
-From: "Chen, Zide" <zide.chen@intel.com>
-In-Reply-To: <20260527154508.329CA1F000E9@smtp.kernel.org>
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 7bit
+Cc: linux-hyperv@vger.kernel.org, kvm@vger.kernel.org
+Content-Type: text/plain; charset="us-ascii"
 
+On Fri, May 29, 2026, sashiko-bot@kernel.org wrote:
+> > diff --git a/arch/x86/kernel/kvm.c b/arch/x86/kernel/kvm.c
+> > index 909d3e5e5bcd5..4fe9c69bf40b3 100644
+> > --- a/arch/x86/kernel/kvm.c
+> > +++ b/arch/x86/kernel/kvm.c
+> [ ... ]
+> > @@ -1040,7 +1041,20 @@ static void __init kvm_init_platform(void)
+> [ ... ]
+> > -	kvmclock_init();
+> > +        /*
+> > +         * If the TSC counts at a constant frequency across P/T states, counts
+> > +         * in deep C-states, and the TSC hasn't been marked unstable, treat the
+> > +         * TSC reliable, as guaranteed by KVM.  Note, the TSC unstable check
+> > +         * exists purely to honor the TSC being marked unstable via command
+> > +         * line, any runtime detection of an unstable will happen after this.
+> > +         */
+> > +	tsc_is_reliable = boot_cpu_has(X86_FEATURE_CONSTANT_TSC) &&
+> > +			  boot_cpu_has(X86_FEATURE_NONSTOP_TSC) &&
+> > +			  !check_tsc_unstable();
+> 
+> [Severity: High]
+> Does this evaluate check_tsc_unstable() too early to catch the command line
+> parameter?
 
+Huh, it does indeed.
 
-On 5/27/2026 10:45 AM, sashiko-bot@kernel.org wrote:
-> Thank you for your contribution! Sashiko AI review found 1 potential issue(s) to consider:
-> - [Critical] Unhandled return value of 0 from `intel_generic_uncore_box_ctl()` causes fatal writes to MSR 0 or PCI offset 0.
-> --
+> It looks like kvm_init_platform() is called from setup_arch(), but the
+> tsc=unstable kernel parameter is parsed via __setup() later during
+> parse_args() in start_kernel().
 > 
-> Note: The format of this report has been altered to provide a free-form summary without directly quoting the original patch code, due to automated recitation restrictions.
-> 
-> commit e9069bffe8688f6e4044b8f15ff7ac27dcdbb094
-> Author: Zide Chen <zide.chen@intel.com>
-> Subject: perf/x86/intel/uncore: Fix discovery unit lookup for multi-die systems
-> 
-> This commit fixes a unit lookup issue on multi-die systems by using the box's
-> die ID instead of a hardcoded -1. It also removes a warning when a discovery
-> unit is not found, as offline CPU dies will now rightfully return a NULL unit.
-> 
-> [Severity: Critical]
-> In the updated intel_generic_uncore_box_ctl(), returning 0 when the unit is
-> not found (such as for offline dies) appears to introduce a regression in
-> its callers.
+> If check_tsc_unstable() evaluates to 0 here because the parameter hasn't
+> been parsed yet, wouldn't it incorrectly force X86_FEATURE_TSC_RELIABLE
+> and set prefer_tsc to true?
 
-This is fixed in patch 2/7. It's better to move this patch after 2/7.
-> Looking at callers like intel_generic_uncore_msr_init_box() and
-> intel_generic_uncore_pci_init_box(), they seem to use the returned control
-> address blindly. If 0 is returned, MSR-based uncores would attempt to write
-> to MSR 0x0 (IA32_P5_MC_ADDR), which triggers a general protection fault and
-> panics the kernel on modern CPUs. For PCI uncores, writing to offset 0
-> targets the read-only vendor and device ID, which could trigger AER NMIs.
-> 
-> Is it safe to return 0 here without adding validation to the callers? I
-> note that this is fixed later in the patch series by a commit named
-> "perf/x86/intel/uncore: Guard against invalid box control address", but
-> does leaving it unhandled in this commit break git bisectability?
-> 
+Yep, but this is a pre-existing problem that goes all the way back to the original
+commit 7539b174aef4 ("x86: kvmguest: use TSC clocksource if invariant TSC is exposed").
 
+We could try to fix that, but I'm _very_ strongly inclined to add (yet another)
+patch to simply drop the check_tsc_unstable() since it has always been dead code.
