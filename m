@@ -1,66 +1,46 @@
-Received: from mail-pj1-f53.google.com (mail-pj1-f53.google.com [209.85.216.53])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from www62.your-server.de (www62.your-server.de [213.133.104.62])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9FDA92C2360
-	for <sashiko-reviews@lists.linux.dev>; Fri, 29 May 2026 13:04:41 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.216.53
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 90E353438A4;
+	Fri, 29 May 2026 13:49:30 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=213.133.104.62
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1780059882; cv=none; b=kzqgYkt3RdXvj/uYz9KDkxRBxgkct8VFF5qBHe31Yv7ZyDf2sDkFWzuZfq3fQMx11cm2Xc6Vvc8E1hynxfkhcDl7vPW0HU7WNPWgo94JMZax8WDRiYNd4vzYhGTaYUuze8Ca4/efuGdWuxw3pM6h6/c57+xuur4k2qme8jdUdpM=
+	t=1780062572; cv=none; b=hNqMl35+UGrCzReKzPbLoLRc0qS4sfOwfNJbiO7SLvg7V9jayxx2ebY3nSQNuJnWZ5grSRfEMXilJIFtvNpYG0m2ZSLuAKYHcM6BxLJsfBNTP5aS0jTv9d9REk8FmOpaMbXN5v/ApEIDg/PdchfuYaanfk+Ep4A/SEFdbrC9FBw=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1780059882; c=relaxed/simple;
-	bh=H1B+xAqwXLNNuThmDhrS/L/FvBoP1ll4glIpB83aMlo=;
-	h=Message-ID:Date:MIME-Version:To:Cc:References:Subject:From:
-	 In-Reply-To:Content-Type; b=JMHQWrvUjk1VzDmsWEoT62pkJzGHd6ytqQH+jQudhcFXBmPb30oH2rwnZ52XwC1QLpn+TNLQA+lyLSuNdLHRCJYr0b5RodJ084ItEUjCTeeVwX5WnjzDyutmhKEwOWC04+2DNquNrk2lkXsLPlo4gufHh8xi+aEzCRW+KSBsQRE=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=enTgqrIl; arc=none smtp.client-ip=209.85.216.53
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+	s=arc-20240116; t=1780062572; c=relaxed/simple;
+	bh=hoct2HFDnKC5DFYG81ttwcBpclC7KqAPBuewW2arKgI=;
+	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
+	 In-Reply-To:Content-Type; b=Sh5jS+68cEALidFZ5sHSXTLK/8JyPWjy5zER1thskjjBtYeAxKC39zTiBRP84v6NDKZgeym3icQs+6cKK3+JJtfjo74AlSJDzc5U0eH0ZJytdRZ+pvFo6dcecU9IZWpqdKt3VUKx+/o5o/iRY1aCJdL9RQvI9Qnx39qJ/c3d5WY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=iogearbox.net; spf=pass smtp.mailfrom=iogearbox.net; dkim=pass (2048-bit key) header.d=iogearbox.net header.i=@iogearbox.net header.b=U4gr08R0; arc=none smtp.client-ip=213.133.104.62
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=iogearbox.net
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=iogearbox.net
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="enTgqrIl"
-Received: by mail-pj1-f53.google.com with SMTP id 98e67ed59e1d1-36bb3551f6eso963776a91.1
-        for <sashiko-reviews@lists.linux.dev>; Fri, 29 May 2026 06:04:41 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20251104; t=1780059881; x=1780664681; darn=lists.linux.dev;
-        h=content-transfer-encoding:in-reply-to:from:content-language:subject
-         :references:cc:to:user-agent:mime-version:date:message-id:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=cSA8t19jfeD/ffTmYuzFt48kJrYE+ahUE1aM38C/r4M=;
-        b=enTgqrIlAnFLM/Gh/QNrz12epTXybW9u+elfnMolTfOwTSi+Y7CqLoxRWMi3aCfNyH
-         KSu6xq2XScmKkgPDW/DonEC1sWooUmNV69YF1LILSuwL4DAIPPTY9RXl42UzaGEqN97h
-         0LmiVjdamvBYijqQjZHmgD93TVwBZkcGlGU5V7MUI6qtqRnWYkSdpKgt0GlQUihrPwyF
-         meIpWFsBOjRVeQazr1pUXVgDF+a3f6dfj4SWOHwya0P8zPfPwvaZriqMmPVCsWFhKQ0o
-         +qaIqFca9y+ZP1iGiW1hQPQmyA7/75SRS0QaUoi4kL54k3RwbbJMqFEAxPJBiiAmKsqq
-         MLuQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20251104; t=1780059881; x=1780664681;
-        h=content-transfer-encoding:in-reply-to:from:content-language:subject
-         :references:cc:to:user-agent:mime-version:date:message-id:x-gm-gg
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=cSA8t19jfeD/ffTmYuzFt48kJrYE+ahUE1aM38C/r4M=;
-        b=KNoRB+JM/Y29bxHx0iWLSggU0bs23EUQT2+hZVuwyQl1sSOffRW37Xg+tjZYrCdvOj
-         sO7cBpZ8h6SEIWKB3XqelkGl8r8R0TeqOGpdDbe8qpA7uyuvsN99PAZjgRSpWz2cu/9O
-         HPyyIEwGgBvUrbtsnwLACD2qu+mb5up3Y0DxZpurLMk0AuIXkCKEtbivAQeQkaPbO5iW
-         QSnNoLidW8ilEYQSkVL0NuTLbnlcZ+OtxGMx5WzmwE3KtJdyjVKceOgdml4eGH3cP+J8
-         ZVZ4QFmQ+2em/mUQxNZMXl33OM4Sxvu2A9uEf135NiRgaSR8+YBXdo9+8rTcMHBdpUEF
-         /1LA==
-X-Forwarded-Encrypted: i=1; AFNElJ/2XhkJYA6GCDq8p6prEG9UMy/4oVBBxrbtwkbHS4LMRDn/mwxHPC2KfyzKok0dot5Vq1JTXlqqd9p8kc1bGoI=@lists.linux.dev
-X-Gm-Message-State: AOJu0YyxdTPhzPt4DyoJaM6oLPNUGDa2xZNNhxVEGkbWih0B8mSyJJHa
-	IktoLYsd2DbDk251NO02D58DVK7KaWbrBEMe6QJ2C55bLN5lpgxzxfq0
-X-Gm-Gg: Acq92OGT8WCieXAoSSdFl6UbrOHSH30J0FMKPK5fPYYEvyqH3inyOP7Ie8z6iM4QK+C
-	VMyKwGcA/weDVOf6joqDbbu0eUnE9SSl6VgMtmYHoCWH472b0bOkrpvWCrNQCkyGmENRNcC3SNy
-	IFM9m/GYnsxJVq4Fjeke861FXdzitIfsONTRcuCe4tId8DjES7+2+Zn3Q4lOq555Qi9c9EjC3Kb
-	0SCCjAi5ZSO5NoEvDJ/Wz0AoINAj+J1Esa51pOFSc8QbKn5rgJEcWnG815j8NgooSg/92dk+Ljp
-	o1F7e1QeCyeKW215Xv7KXvVxnjIsEhVson7kwNE9GCtySawapraibjN7lzGkWt1dpE660K7wedQ
-	i5QhdV7RMcG9ZxHyqnVrvn/ANxLKNpA7dJTKCpirW/O74NyhfCvAkQjH+LmNsMdhdMZeMSkI74L
-	CJP+6LMrxKlBmcHdH8PCsNFUJQK145X74cHnX0HMVLmGbxSnShUjqZ+577M5iSEa+Vt0qOYRtzp
-	p2u
-X-Received: by 2002:a17:90b:2c8d:b0:36b:afa0:c675 with SMTP id 98e67ed59e1d1-36bbcfdbf27mr3443848a91.26.1780059880841;
-        Fri, 29 May 2026 06:04:40 -0700 (PDT)
-Received: from ?IPV6:240e:39b:ee1:f550:8519:8be4:eab7:7536? ([240e:39b:ee1:f550:8519:8be4:eab7:7536])
-        by smtp.gmail.com with ESMTPSA id 98e67ed59e1d1-36bc0c341dasm2283157a91.15.2026.05.29.06.04.38
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Fri, 29 May 2026 06:04:40 -0700 (PDT)
-Message-ID: <1329d626-01ac-4de6-a4ae-51432d7bdc93@gmail.com>
-Date: Fri, 29 May 2026 21:04:36 +0800
+	dkim=pass (2048-bit key) header.d=iogearbox.net header.i=@iogearbox.net header.b="U4gr08R0"
+DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed;
+	d=iogearbox.net; s=default2302; h=Content-Transfer-Encoding:Content-Type:
+	In-Reply-To:From:References:Cc:To:Subject:MIME-Version:Date:Message-ID:Sender
+	:Reply-To:Content-ID:Content-Description:Resent-Date:Resent-From:
+	Resent-Sender:Resent-To:Resent-Cc:Resent-Message-ID;
+	bh=ZiCGWHoXJTR9rObZHum3TfWvVxF5kf2yiGZZntOQnJw=; b=U4gr08R0nZdfzaHsiNhe1a2tdp
+	4Y/wlDzcruRLyoMZoc75eVEeybXMoGyJsYsoLYHoDO9qUNoa6/UpM0UX3T2OeWHL1zluRwd1Cqmsx
+	j+Qyw9pwGyzUNUU7Fd49PXxLoq0GlgscBv8RKZxKnabUJ7HP5mQZE1Gt5gaU796pU5EBnAXzxis/c
+	I1lrEiOkxqCWeMPUPL4fLAJ77vgEWfO+PwOsHGyszifPX15CfLj+qZ8uyH178Xmqm3I39O7VRYOG4
+	jKIYw+ddibEaIKcqzxkMhZb6f8v1xMQ5v+Wt7rfXmvabIvNPXF2+2t0tgHe8CNsY7CYecd6qT17j3
+	HS0xytWg==;
+Received: from sslproxy01.your-server.de ([78.46.139.224])
+	by www62.your-server.de with esmtpsa  (TLS1.3) tls TLS_AES_256_GCM_SHA384
+	(Exim 4.96.2)
+	(envelope-from <daniel@iogearbox.net>)
+	id 1wSxaa-000PFE-1U;
+	Fri, 29 May 2026 15:49:28 +0200
+Received: from localhost ([127.0.0.1])
+	by sslproxy01.your-server.de with esmtpsa  (TLS1.3) tls TLS_AES_256_GCM_SHA384
+	(Exim 4.96)
+	(envelope-from <daniel@iogearbox.net>)
+	id 1wSxaa-000GjK-0o;
+	Fri, 29 May 2026 15:49:28 +0200
+Message-ID: <030307d2-f065-4434-b746-4ef5349f6190@iogearbox.net>
+Date: Fri, 29 May 2026 15:49:27 +0200
 Precedence: bulk
 X-Mailing-List: sashiko-reviews@lists.linux.dev
 List-Id: <sashiko-reviews.lists.linux.dev>
@@ -68,35 +48,125 @@ List-Subscribe: <mailto:sashiko-reviews+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:sashiko-reviews+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-To: sashiko-bot@kernel.org
-Cc: Frank.Li@kernel.org, imx@lists.linux.dev, liem16213@gmail.com,
- sashiko-reviews@lists.linux.dev
-References: <20260527172255.443CE1F000E9@smtp.kernel.org>
-Subject: Re: [PATCH] i2c: imx: Switch to new reg_target/unreg_target callbacks
+Subject: Re: [PATCH bpf-next 2/3] libbpf: Skip hash computation when loader
+ generation failed
+To: sashiko-reviews@lists.linux.dev
+Cc: bpf@vger.kernel.org
+References: <20260529094119.307264-2-daniel@iogearbox.net>
+ <20260529102131.B66FC1F00898@smtp.kernel.org>
 Content-Language: en-US
-From: Liem <liem16213@gmail.com>
-In-Reply-To: <20260527172255.443CE1F000E9@smtp.kernel.org>
+From: Daniel Borkmann <daniel@iogearbox.net>
+Autocrypt: addr=daniel@iogearbox.net; keydata=
+ xsFNBGNAkI0BEADiPFmKwpD3+vG5nsOznvJgrxUPJhFE46hARXWYbCxLxpbf2nehmtgnYpAN
+ 2HY+OJmdspBntWzGX8lnXF6eFUYLOoQpugoJHbehn9c0Dcictj8tc28MGMzxh4aK02H99KA8
+ VaRBIDhmR7NJxLWAg9PgneTFzl2lRnycv8vSzj35L+W6XT7wDKoV4KtMr3Szu3g68OBbp1TV
+ HbJH8qe2rl2QKOkysTFRXgpu/haWGs1BPpzKH/ua59+lVQt3ZupePpmzBEkevJK3iwR95TYF
+ 06Ltpw9ArW/g3KF0kFUQkGXYXe/icyzHrH1Yxqar/hsJhYImqoGRSKs1VLA5WkRI6KebfpJ+
+ RK7Jxrt02AxZkivjAdIifFvarPPu0ydxxDAmgCq5mYJ5I/+BY0DdCAaZezKQvKw+RUEvXmbL
+ 94IfAwTFA1RAAuZw3Rz5SNVz7p4FzD54G4pWr3mUv7l6dV7W5DnnuohG1x6qCp+/3O619R26
+ 1a7Zh2HlrcNZfUmUUcpaRPP7sPkBBLhJfqjUzc2oHRNpK/1mQ/+mD9CjVFNz9OAGD0xFzNUo
+ yOFu/N8EQfYD9lwntxM0dl+QPjYsH81H6zw6ofq+jVKcEMI/JAgFMU0EnxrtQKH7WXxhO4hx
+ 3DFM7Ui90hbExlFrXELyl/ahlll8gfrXY2cevtQsoJDvQLbv7QARAQABzSZEYW5pZWwgQm9y
+ a21hbm4gPGRhbmllbEBpb2dlYXJib3gubmV0PsLBkQQTAQoAOxYhBCrUdtCTcZyapV2h+93z
+ cY/jfzlXBQJjQJCNAhsDBQkHhM4ACAsJCAcNDAsKBRUKCQgLAh4BAheAAAoJEN3zcY/jfzlX
+ dkUQAIFayRgjML1jnwKs7kvfbRxf11VI57EAG8a0IvxDlNKDcz74mH66HMyhMhPqCPBqphB5
+ ZUjN4N5I7iMYB/oWUeohbuudH4+v6ebzzmgx/EO+jWksP3gBPmBeeaPv7xOvN/pPDSe/0Ywp
+ dHpl3Np2dS6uVOMnyIsvmUGyclqWpJgPoVaXrVGgyuer5RpE/a3HJWlCBvFUnk19pwDMMZ8t
+ 0fk9O47HmGh9Ts3O8pGibfdREcPYeGGqRKRbaXvcRO1g5n5x8cmTm0sQYr2xhB01RJqWrgcj
+ ve1TxcBG/eVMmBJefgCCkSs1suriihfjjLmJDCp9XI/FpXGiVoDS54TTQiKQinqtzP0jv+TH
+ 1Ku+6x7EjLoLH24ISGyHRmtXJrR/1Ou22t0qhCbtcT1gKmDbTj5TcqbnNMGWhRRTxgOCYvG0
+ 0P2U6+wNj3HFZ7DePRNQ08bM38t8MUpQw4Z2SkM+jdqrPC4f/5S8JzodCu4x80YHfcYSt+Jj
+ ipu1Ve5/ftGlrSECvy80ZTKinwxj6lC3tei1bkI8RgWZClRnr06pirlvimJ4R0IghnvifGQb
+ M1HwVbht8oyUEkOtUR0i0DMjk3M2NoZ0A3tTWAlAH8Y3y2H8yzRrKOsIuiyKye9pWZQbCDu4
+ ZDKELR2+8LUh+ja1RVLMvtFxfh07w9Ha46LmRhpCzsFNBGNAkI0BEADJh65bNBGNPLM7cFVS
+ nYG8tqT+hIxtR4Z8HQEGseAbqNDjCpKA8wsxQIp0dpaLyvrx4TAb/vWIlLCxNu8Wv4W1JOST
+ wI+PIUCbO/UFxRy3hTNlb3zzmeKpd0detH49bP/Ag6F7iHTwQQRwEOECKKaOH52tiJeNvvyJ
+ pPKSKRhmUuFKMhyRVK57ryUDgowlG/SPgxK9/Jto1SHS1VfQYKhzMn4pWFu0ILEQ5x8a0RoX
+ k9p9XkwmXRYcENhC1P3nW4q1xHHlCkiqvrjmWSbSVFYRHHkbeUbh6GYuCuhqLe6SEJtqJW2l
+ EVhf5AOp7eguba23h82M8PC4cYFl5moLAaNcPHsdBaQZznZ6NndTtmUENPiQc2EHjHrrZI5l
+ kRx9hvDcV3Xnk7ie0eAZDmDEbMLvI13AvjqoabONZxra5YcPqxV2Biv0OYp+OiqavBwmk48Z
+ P63kTxLddd7qSWbAArBoOd0wxZGZ6mV8Ci/ob8tV4rLSR/UOUi+9QnkxnJor14OfYkJKxot5
+ hWdJ3MYXjmcHjImBWplOyRiB81JbVf567MQlanforHd1r0ITzMHYONmRghrQvzlaMQrs0V0H
+ 5/sIufaiDh7rLeZSimeVyoFvwvQPx5sXhjViaHa+zHZExP9jhS/WWfFE881fNK9qqV8pi+li
+ 2uov8g5yD6hh+EPH6wARAQABwsF8BBgBCgAmFiEEKtR20JNxnJqlXaH73fNxj+N/OVcFAmNA
+ kI0CGwwFCQeEzgAACgkQ3fNxj+N/OVfFMhAA2zXBUzMLWgTm6iHKAPfz3xEmjtwCF2Qv/TT3
+ KqNUfU3/0VN2HjMABNZR+q3apm+jq76y0iWroTun8Lxo7g89/VDPLSCT0Nb7+VSuVR/nXfk8
+ R+OoXQgXFRimYMqtP+LmyYM5V0VsuSsJTSnLbJTyCJVu8lvk3T9B0BywVmSFddumv3/pLZGn
+ 17EoKEWg4lraXjPXnV/zaaLdV5c3Olmnj8vh+14HnU5Cnw/dLS8/e8DHozkhcEftOf+puCIl
+ Awo8txxtLq3H7KtA0c9kbSDpS+z/oT2S+WtRfucI+WN9XhvKmHkDV6+zNSH1FrZbP9FbLtoE
+ T8qBdyk//d0GrGnOrPA3Yyka8epd/bXA0js9EuNknyNsHwaFrW4jpGAaIl62iYgb0jCtmoK/
+ rCsv2dqS6Hi8w0s23IGjz51cdhdHzkFwuc8/WxI1ewacNNtfGnorXMh6N0g7E/r21pPeMDFs
+ rUD9YI1Je/WifL/HbIubHCCdK8/N7rblgUrZJMG3W+7vAvZsOh/6VTZeP4wCe7Gs/cJhE2gI
+ DmGcR+7rQvbFQC4zQxEjo8fNaTwjpzLM9NIp4vG9SDIqAm20MXzLBAeVkofixCsosUWUODxP
+ owLbpg7pFRJGL9YyEHpS7MGPb3jSLzucMAFXgoI8rVqoq6si2sxr2l0VsNH5o3NgoAgJNIg=
+In-Reply-To: <20260529102131.B66FC1F00898@smtp.kernel.org>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 7bit
+X-Virus-Scanned: Clear (ClamAV 1.4.3/28015/Fri May 29 08:24:51 2026)
 
-Subject: Re: [PATCH] i2c: imx: Switch to new reg_target/unreg_target 
-callbacks
+On 5/29/26 12:21 PM, sashiko-bot@kernel.org wrote:
+[...]
+> [Severity: Critical]
+> This isn't a regression introduced by this patch, but while reviewing this
+> file I noticed a pre-existing issue with how generation errors are handled in
+> bpf_gen__prog_load() and info_blob_bswap().
+> 
+> If realloc_data_buf() fails inside add_data(), it frees gen->data_start,
+> sets it to NULL, sets gen->error, and add_data() returns 0.
+> 
+> However, bpf_gen__prog_load() doesn't check gen->error before swapping
+> endianness:
+> 
+> tools/lib/bpf/gen_loader.c:bpf_gen__prog_load() {
+>      ...
+>      insns_off = add_data(gen, insns, insn_cnt * sizeof(struct bpf_insn));
+>      ...
+>      if (gen->swapped_endian) {
+>          struct bpf_insn *insn = gen->data_start + insns_off;
+>          int i;
+> 
+>          for (i = 0; i < insn_cnt; i++, insn++)
+>              bpf_insn_bswap(insn);
+>      }
+>      ...
+> }
+> 
+> If add_data() failed, this evaluates to insn = NULL + 0. Can this cause a
+> NULL pointer dereference when accessing insn inside bpf_insn_bswap()?
+> 
+> Furthermore, if gen->error was previously set (e.g., from a failed
+> realloc_insn_buf) while gen->data_start is non-NULL, add_data() still returns
+> 0.
+> 
+> Since the loop evaluates insn = gen->data_start + 0, can this overwrite the
+> beginning of gen->data_start and write past the end of the buffer if it is
+> smaller than insn_cnt * sizeof(struct bpf_insn)?
+> 
+> Could we add a check for gen->error before proceeding with the endianness
+> swapping?
+Yeap, for the endianess we would need something like the below ... will cook
+a patch for it to address :
 
-Hi Sashiko AI and all,
-
-Thank you for the thorough review and for catching these issues.
-
-Both the dangling pointer on pm_runtime_resume_and_get() failure in
-i2c_imx_reg_target() and the missing lock/timer cancellation in
-i2c_imx_unreg_target() are pre-existing problems that were already
-present before this patch. My commit only renames the deprecated
-function pointers and their implementations, without modifying any
-of the underlying logic.
-
-I agree these are real issues that should be fixed. I'll prepare a
-separate follow-up patch to address them, keeping this first patch
-focused solely on the terminology migration.
-
-Thanks again,
-Liem
+diff --git a/tools/lib/bpf/gen_loader.c b/tools/lib/bpf/gen_loader.c
+index 19f9c05f8388..501508e5affa 100644
+--- a/tools/lib/bpf/gen_loader.c
++++ b/tools/lib/bpf/gen_loader.c
+@@ -1071,7 +1071,7 @@ void bpf_gen__prog_load(struct bpf_gen *gen,
+                  prog_idx, prog_type, insns_off, insn_cnt, license_off);
+  
+         /* convert blob insns to target endianness */
+-       if (gen->swapped_endian) {
++       if (gen->swapped_endian && !gen->error) {
+                 struct bpf_insn *insn = gen->data_start + insns_off;
+                 int i;
+  
+@@ -1109,7 +1109,7 @@ void bpf_gen__prog_load(struct bpf_gen *gen,
+                  sizeof(struct bpf_core_relo));
+  
+         /* convert all info blobs to target endianness */
+-       if (gen->swapped_endian)
++       if (gen->swapped_endian && !gen->error)
+                 info_blob_bswap(gen, func_info, line_info, core_relos, load_attr);
+  
+         libbpf_strlcpy(attr.prog_name, prog_name, sizeof(attr.prog_name));
 
