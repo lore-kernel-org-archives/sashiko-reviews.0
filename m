@@ -1,241 +1,202 @@
-Received: from mail-pl1-f173.google.com (mail-pl1-f173.google.com [209.85.214.173])
+Received: from mail-pl1-f180.google.com (mail-pl1-f180.google.com [209.85.214.180])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8CF8A39023B
-	for <sashiko-reviews@lists.linux.dev>; Fri, 29 May 2026 17:42:03 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=pass smtp.client-ip=209.85.214.173
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 776AE332EC1
+	for <sashiko-reviews@lists.linux.dev>; Fri, 29 May 2026 17:45:38 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=pass smtp.client-ip=209.85.214.180
 ARC-Seal:i=2; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1780076525; cv=pass; b=XP3dKMKkV1Uuei9E4pSdJPbBnQ8ypK+Zi96ZmstfzWfyvMm3VidxGEG7FB1AwXGry/1h9rP47U8D+CVti6akLnNaFiCpdQTeplyfWjokVdLWQhIEdtGNMMa55xwoG7hwLVwbUbbeKG869IMs4raUs5vZF/Ve54wWiMnUjtdBwps=
+	t=1780076739; cv=pass; b=YII/5HMwNK6D0QqRL/9u2SiIa5A8YByEKoaL9BsJJ4lWtgXV/8iRnwTRmIMnnXRKSWL/VamXTGgh13IcxJUIFL2R3Ijkt+42bZUg/f4ZSZ17iXJtCUKtjgWwlMGDfMV1Qes37JLHaBMaKCzGrQIQCbZsQ9eAjOUUv7hAgoGXbrc=
 ARC-Message-Signature:i=2; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1780076525; c=relaxed/simple;
-	bh=BJeonEZdoXwxXmmMK/D3NNQiRAFWb0eigy/nlt5BihE=;
+	s=arc-20240116; t=1780076739; c=relaxed/simple;
+	bh=fQswMPrU/Rn/WAapiKJ6CbEylbnL8bQEKzUreQSEJog=;
 	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
-	 To:Cc:Content-Type; b=qRudPRz/KDCudPs0xgxZPXn/U+gvgAaog6mkdT1856PjCyC4KEqGMKJcqs39dc+xj5KBcgSoYQhsDNnNvjFtARJOXb8rB+JoWL6UandeNMDlvgHN2WseLjCvcymypn01S1tyok9a6yG249IQoG0kiwSZKmPMp8Go0gsjC662MrY=
-ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=google.com; spf=pass smtp.mailfrom=google.com; dkim=pass (2048-bit key) header.d=google.com header.i=@google.com header.b=fM1/o+1O; arc=pass smtp.client-ip=209.85.214.173
+	 To:Cc:Content-Type; b=TiZAXf4lt/b+02Iw3xjH8ru9qft8CL8oEkBRO48Uy5vfrBnAN0n8QTr5ugMHZtkKd0+nBDiV+cX/7CUZIIC9enLMzAmZPh3gKPAc4cHz3DlYTTNTPop+9R3jHdF5s4ZED3gwulgUStU//SaGN/EMhmFXOAq2xkENcVWDuJlCIA0=
+ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=google.com; spf=pass smtp.mailfrom=google.com; dkim=pass (2048-bit key) header.d=google.com header.i=@google.com header.b=csYJwumy; arc=pass smtp.client-ip=209.85.214.180
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=google.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=google.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=google.com header.i=@google.com header.b="fM1/o+1O"
-Received: by mail-pl1-f173.google.com with SMTP id d9443c01a7336-2b2e8b95bdbso1275ad.0
-        for <sashiko-reviews@lists.linux.dev>; Fri, 29 May 2026 10:42:03 -0700 (PDT)
-ARC-Seal: i=1; a=rsa-sha256; t=1780076523; cv=none;
+	dkim=pass (2048-bit key) header.d=google.com header.i=@google.com header.b="csYJwumy"
+Received: by mail-pl1-f180.google.com with SMTP id d9443c01a7336-2bf22c18ad3so165ad.0
+        for <sashiko-reviews@lists.linux.dev>; Fri, 29 May 2026 10:45:38 -0700 (PDT)
+ARC-Seal: i=1; a=rsa-sha256; t=1780076738; cv=none;
         d=google.com; s=arc-20240605;
-        b=QMTPM6w9wRj+Bvz64cklgZANE/N0TZfbu+Kc3+PrvuZxoXSnve1nrivRrUK6b0Rap2
-         rddbQNZMOjH8EaQkNCtT82UKDBkxXXdGGIYxg9j/+28Ea1w9ZC4fyQnRzju3zwzhJkiC
-         dHS80wFr5LiqgP+wlB7aa18y2Q7wMdSGoX9k8Igjflm80AQZXPT6tdwq6D6Rf6/PyBcK
-         ojNUIkHYS81t658WzX/lUDBKrASm5iSoXhe7xV8eM+/wum8MmBXkXrPGLMHEh5bv8btY
-         yfGWxjGmfU6x6ymzhnSTwVAYH4YgzAE8kjqoBYVI0CXe4yJ3qI0UdI6VmQBbdsqzOHJT
-         Jdhw==
+        b=DGkq6BHFxsfa58kmJlCg0DFpSoero/Q+Mzq7rywFPh0iMaQPf5VJvwg0CEmEWfp4Iv
+         389F793Z9+fG1xeREW1nl2OvFyaARIuxtMFJGn1PLPnc8UTgD2pBlOB0h3+EFaV9+dcJ
+         9EwY7fb+l0jxAm6KorNDDklwfct0iGiDNI0BcBLtLqwv9L9ztw4EJ0BEYBsLXCrRV5W3
+         zqK0pqEhXe+b3Xr7NOE/NkR1qOoGrF6P9FqKdvybfG4N8td1g/9z29v9p213tAuPVDQi
+         a2UCIqA9TLv3//hh/Wu/Ckh7Wot3kX4jIkOVa/NjeCyYDuU5bwwYGPRuNOhM9bbgHFG8
+         e4pw==
 ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com; s=arc-20240605;
         h=content-transfer-encoding:cc:to:subject:message-id:date:from
          :in-reply-to:references:mime-version:dkim-signature;
-        bh=YX4oF6pCObKTl0kBgsQiOjoOSc/kNJefAsPyHQO56tQ=;
+        bh=r+MpgGplHrYx6awYXebTwFhUJcPlo+AhzCegKXoq6tg=;
         fh=6K1Zilol94e47/JGg4U6QaVXTQrpxPQTuLBo9pfKiHc=;
-        b=IW7PUIxSEJkzhyAfMc0VWVTO0huR5PhfXF1rJNvu2otTSldmwRW/1kOHZ1H6qFkXNC
-         7nc0NhGkn1Q883ASQoOEaHsy8puU35w7rXsoP4l1226hE5RfJGjKHqGWcdkDXZF3XrNp
-         VjDUvQ3xlNuuafZzIW9pJlj4GednAC0/qD/2pr2Z9BnbKl4CZt446daJK8DVEYq+3Nwt
-         whV7J0N1sjHS+uQDbezP/iehyxqWEa/jn9m2KKVsWRHjMGIZLZtfkPT5V2NQ9Svi3TrL
-         0NHoBSaAW4aoOiCx49o6CZ+oxd4X2gxLjzichuSZEE4comkiI+jo9c7fymrixkXwBQjy
-         SFxQ==;
+        b=T5vDm8irNwEwGY3QZ3OrQ2uRFCX56p5bpGdbELftvHcVUXEhqH7iI7eyzKlGI9i4wI
+         teuewntXJwRVrapgz9Q8XcO15p06wp+qfSZLPGEBmwANAN1Co/3vXqTb2arpP4uYHVv7
+         VQqYORDGi4GR5x4ZSI7XRgfswg4myqmmRcRVSNe25/xH9ENW8VnE6ljxTVsxL66AJHqd
+         MntQV2ej4T37VQ16xnae90Gpe2QNUX5buWkSE+UhvKgWwHGEG9ETsno7MVnKtfL+MP92
+         PPZNEWsY5e45K8Ss8GflARX1GODZ4FEb91aSwJb0H0XdtU735T3Y9Kv6xlZuPi1nEkHJ
+         Zn6w==;
         darn=lists.linux.dev
 ARC-Authentication-Results: i=1; mx.google.com; arc=none
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=google.com; s=20251104; t=1780076523; x=1780681323; darn=lists.linux.dev;
+        d=google.com; s=20251104; t=1780076738; x=1780681538; darn=lists.linux.dev;
         h=content-transfer-encoding:cc:to:subject:message-id:date:from
          :in-reply-to:references:mime-version:from:to:cc:subject:date
          :message-id:reply-to;
-        bh=YX4oF6pCObKTl0kBgsQiOjoOSc/kNJefAsPyHQO56tQ=;
-        b=fM1/o+1OH8F0xcmzgNn8cvXvEK5TTc83vOtPDBx62LIx+jvQv1ixekuzotUUvzRd1i
-         uPelXvfQF/glBHMmpzyykcMsw8QajyvKZzn1ImS2DRNAVqEfuTKTUf16/f0q/mkqiq2M
-         T8Cfl3So26ISloU9bVhreiOGMXSVqGxo76c8hO+6Pi3xbh1xJBuT888JtuF9FDsVsTi0
-         /1DPvKltk00VTuWiqEPtT2VvGgxFIq1F8NMYbb/jRiqCqSPl9MQFrxjdKvxTGzxIv9/b
-         8472qzp1rMLHwZVT3xFsF5tV5wG2Und5n5UIPDe1iWI1CLhm24wyRdv9FYstFBXK1n9d
-         dyYQ==
+        bh=r+MpgGplHrYx6awYXebTwFhUJcPlo+AhzCegKXoq6tg=;
+        b=csYJwumyAgMLDZxXjno0rWVw4F+5QWgHqpNnxf4ZrEWMKvunDlKgqR0Sc1NXzYpCc8
+         j2zrvj5DCgCuLb3j0QlaDRZXlZL6fvjsLtnX4+Q7CT3hW1ONxMUm0d8zg29eU1EmRmBJ
+         ysyU9IqMQVs+3r//wwDYLyOPR0lDebXP6k1V3KoPE4xErHbS6gJ8FJ7AMm5ixIfVwAc4
+         eILPXd94YMl0xQwD0x8mZPFJizp1MnusHytoOYuc2vJiBvFBG8afdM7sv7N2clwbtVmR
+         1HWd1fPhMyKJ5dlQ1/lD7Me6p1pQj8pYXIErh9cMk13U/XIUVjd0KWNXl3edz76Y7NHT
+         13ow==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20251104; t=1780076523; x=1780681323;
+        d=1e100.net; s=20251104; t=1780076738; x=1780681538;
         h=content-transfer-encoding:cc:to:subject:message-id:date:from
          :in-reply-to:references:mime-version:x-gm-gg:x-gm-message-state:from
          :to:cc:subject:date:message-id:reply-to;
-        bh=YX4oF6pCObKTl0kBgsQiOjoOSc/kNJefAsPyHQO56tQ=;
-        b=AMDAgi10Lgg7wYHYXHZ4cO0pucn471VYpX/ZYKxilM3d26eQOhqxSMWYJEv6ZlutoT
-         HTrpqmOoiTKe0g0Un/9PRBSdPZifD/vcVvgbWhM0Dw3Pjs8QNfvBry1Mnlf3swOS7Fmw
-         Ca+97OrQFC7qBlUuKztAu73NSsTwnoSPKZLl0Hxm6+SDPTk/QgfpwyoB3a2CzAlxJGXw
-         B40Xe9C9CTSoE01MLMHJAzdZ6MDLSNRucdvEySlwdYn/F5tYlcDe98CQJbRGgDdpCuSH
-         GOtrfkzpayL99ct2N2rNhHwpwW2VF4CohJZK8PUusnPInV1fmdAXvJI3k/2pX8gUdkaY
-         oWkw==
-X-Gm-Message-State: AOJu0YxKiD+4/boZi7HGW6fbOvnL9G16BPF5/Nj9MjB/p8vQp4zH6LT1
-	G5G6da6MGwA6xJn9yRk0HA9W8Ga5StUCFz/1BKkge05PnNSxMA959Vsvkujjc4mh6jZ6vXAfGOD
-	H7KTfUZ1gmXxcJMEHIftjc8wXgFguE5iT3KT2meReM1ddJfFJeWpeTxrnOgUjng==
-X-Gm-Gg: Acq92OG86y77QqR8kFNWpSdEstDuOSvuUnQbT79X1lw2nBarGhXLm5Smh4xon4Rq9GF
-	rJkUNA7bmm5ygyGt4fJmy5D6bjbp7a3fJjW5Ufue9ezexFoQ1nHp4zWzcMLLwEkKz+xuMgOwaQu
-	xmB6CeDxxQxXC9148R8kH1ZRrk+oLiTkoZHAYp8RI+ooEbI2+MQihgjmmmIz0qHr7Hy2okSjUvH
-	86YzMyToBnwEWgZ/r+czOWY6RSpwZQwrK1kD1+G2w2q2Z+zyHHfDmVWQzMRg4J+x1vgnL6LH5TL
-	qOYER/+Ny7M4kyIcFnBMEVVTuU0z1/9iXkOV2KEqgfmfJ3dZ
-X-Received: by 2002:a17:902:ce91:b0:2bf:1000:d3ac with SMTP id
- d9443c01a7336-2bfa9eeb1b6mr146515ad.11.1780076521979; Fri, 29 May 2026
- 10:42:01 -0700 (PDT)
+        bh=r+MpgGplHrYx6awYXebTwFhUJcPlo+AhzCegKXoq6tg=;
+        b=HnGr5EY9G4cgV9WWqIP4Xl0A691C1GyoxCO2pJ4F/SMBteLNLWMta6FUjtfz9SN8pT
+         9Tsj2IVzgPlserQEzXhqadie/ah66cdCerx7rsQzyave442pNDdMxjbYcdrJ3aCav/lw
+         2Gtr6EzCavJtdWNpJI/K2w5/gU39jnihoGXKnVwHV7KhXK7LUIElNIhLujgltWxOjd5r
+         RDWMGx/Y5+FriyV5TINGsU5yoQmXeaWPwwHbnobp3E6+Xs+ok9KBrbe7ZxQePcm0jLph
+         tnHNoPsbkbLS+y7GtSsjs8gpqm4RiKJvPBNrpc0nhbq0NmptgMVHatkubPkyGC6hN/z6
+         OQcg==
+X-Gm-Message-State: AOJu0Yz5sSQxGGqh7HrphQ5eQJ8u66DIAnC15Td4KEa8Sc1H9rkuc58Q
+	NvPyelpExEO9g+liW8LLeGIJijdhSXPeshweMuqVGIp9xDGZ9DPBglk1vFZehEqcS4vkmYyaiN4
+	2tZboo8E8CXYSUek9r0MIWrupx7ENsvOz1LQJS8h1jVeJ5BRLDd3yZ0bSIak=
+X-Gm-Gg: Acq92OFO3p6pf/wxTvHADKg/7BFE/O+SWYHMFudQOeziHwsntrDIltaHD4EsjNAwffC
+	ysYN91AbFYUKF0qhE2mzk235zQfbewVYkqjZIGHk/66k9q6HDFXFJv3rPfxqJPe1WFPTMRsmT+Y
+	HyklAPRo5Mjzs3LxpX3wHlwjA3xl/TUcrEiRZa56QGlwNKnV5Jl9eo+67GTfY2MvQMcvbxO+Iif
+	c0/4XkHb9ujKGfMWuyxnzi+L4uLEFo9c2/whKLsgTh2Z6fCwMzZIVeqLxT7cBJV5hkXrjrDyneU
+	OKRN9fubVx2HPSWNE0Z7yF5fSWRfhCpZ/cgSPs+uZmVQxDNK9GWIOZQurKY=
+X-Received: by 2002:a17:902:ebcd:b0:2bd:6dad:3dfb with SMTP id
+ d9443c01a7336-2bfa9f0da37mr148655ad.25.1780076737154; Fri, 29 May 2026
+ 10:45:37 -0700 (PDT)
 Precedence: bulk
 X-Mailing-List: sashiko-reviews@lists.linux.dev
 List-Id: <sashiko-reviews.lists.linux.dev>
 List-Subscribe: <mailto:sashiko-reviews+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:sashiko-reviews+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-References: <20260529082451.591783-4-dapeng1.mi@linux.intel.com> <20260529104532.CE9D11F00893@smtp.kernel.org>
-In-Reply-To: <20260529104532.CE9D11F00893@smtp.kernel.org>
+References: <20260529082451.591783-5-dapeng1.mi@linux.intel.com> <20260529112332.140E61F00893@smtp.kernel.org>
+In-Reply-To: <20260529112332.140E61F00893@smtp.kernel.org>
 From: Ian Rogers <irogers@google.com>
-Date: Fri, 29 May 2026 10:41:50 -0700
-X-Gm-Features: AVHnY4KId2WIOWc59UNbxLiWYFjUfTHpQJ1A2Zgn0kOfsiHu3-A63PsEB_1ZH3I
-Message-ID: <CAP-5=fV0wY_B22Zma06JjWaMSWnChwFwk28c1uMfEGBBWA5-Xg@mail.gmail.com>
-Subject: Re: [Patch v8 3/5] perf regs: Support x86 SIMD registers sampling
+Date: Fri, 29 May 2026 10:45:25 -0700
+X-Gm-Features: AVHnY4IvKd19TeYoJtgBEdRWldpmFvC1WDoPSHx7TM7k5DWVNsGaY7u2fT2RBuE
+Message-ID: <CAP-5=fXrjHohqOkq+gnxT2DwKMZ=aiEh0rT4FH6bnXFP5hrnhw@mail.gmail.com>
+Subject: Re: [Patch v8 4/5] perf regs: Enable dumping of SIMD registers
 To: sashiko-reviews@lists.linux.dev
 Cc: Dapeng Mi <dapeng1.mi@linux.intel.com>, linux-perf-users@vger.kernel.org
 Content-Type: text/plain; charset="UTF-8"
 Content-Transfer-Encoding: quoted-printable
 
-On Fri, May 29, 2026 at 3:51=E2=80=AFAM <sashiko-bot@kernel.org> wrote:
+On Fri, May 29, 2026 at 4:23=E2=80=AFAM <sashiko-bot@kernel.org> wrote:
 >
-> Thank you for your contribution! Sashiko AI review found 3 potential issu=
+> Thank you for your contribution! Sashiko AI review found 2 potential issu=
 e(s) to consider:
-> - [Medium] Parsing of `--intr-regs` and `--user-regs` with multiple optio=
-ns is order-dependent, preventing intended combination of General Purpose (=
-GP) and SIMD registers.
-> - [Medium] Specifying only SIMD registers (e.g., `--intr-regs=3Dxmm` with=
-out GP registers) leaves the general-purpose register mask as 0, causing th=
-e kernel to reject the event configuration with `-EINVAL`.
-> - [Low] The `sample_simd_regs_enabled` field is omitted from `perf_event_=
-attr__fprintf()`.
+>
+> New issues:
+> - [Low] Misleading post-increment of `idx` in `simd_regs_dump__printf` in=
+ner loop.
+>
+> Pre-existing issues:
+> - [High] Integer underflow in manual `sample_size` calculation in `perf_e=
+vent__convert_sample_callchain` corrupts the event stream if registers are =
+missing.
 > --
 >
-> commit 03a81994cf381ee1d67a41deb452833fc73a023e
+> commit 7e4b22be95dca28326d1271ce91f25c99e231f74
 > Author: Dapeng Mi <dapeng1.mi@linux.intel.com>
 >
-> perf regs: Support x86 SIMD registers sampling
+> perf regs: Enable dumping of SIMD registers
 >
-> This patch adds support for the newly introduced SIMD register sampling
-> format by adding functions to support parsing and sampling x86 SIMD/PRED
-> registers.
+> This patch adds support for dumping SIMD registers using the new
+> PERF_SAMPLE_REGS_ABI_SIMD ABI.
 >
-> > diff --git a/tools/perf/util/evsel.c b/tools/perf/util/evsel.c
-> > index 1c856a2ecc6ec..cd62af14a4f54 100644
-> > --- a/tools/perf/util/evsel.c
-> > +++ b/tools/perf/util/evsel.c
+> > diff --git a/tools/perf/builtin-inject.c b/tools/perf/builtin-inject.c
+> > --- a/tools/perf/builtin-inject.c
+> > +++ b/tools/perf/builtin-inject.c
+> > @@ -457,8 +457,13 @@ static int perf_event__convert_sample_callchain(co=
+nst struct perf_tool *tool,
+> >       /* adjust sample size for stack and regs */
+> >       sample_size -=3D sample->user_stack.size;
+> >       sample_size -=3D (hweight64(evsel->core.attr.sample_regs_user) + =
+1) * sizeof(u64);
 >
-> [ ... ]
+> [Severity: High]
+> This is a pre-existing issue, but does unconditionally subtracting the fu=
+ll
+> expected size of the register mask cause an integer underflow if the perf
+> sample didn't capture user registers?
 >
-> > @@ -1594,6 +1595,16 @@ void evsel__config(struct evsel *evsel, const st=
-ruct record_opts *opts,
-> >               evsel__set_sample_bit(evsel, REGS_INTR);
-> >       }
-> >
-> > +     if ((opts->sample_intr_vec_regs || opts->sample_intr_pred_regs) &=
-&
-> > +         !evsel->no_aux_samples && !evsel__is_dummy_event(evsel)) {
-> > +             attr->sample_simd_regs_enabled =3D !!opts->sample_simd_re=
-gs_enabled;
-> > +             attr->sample_simd_vec_reg_intr =3D opts->sample_intr_vec_=
-regs;
-> > +             attr->sample_simd_vec_reg_qwords =3D opts->sample_vec_reg=
-_qwords;
-> > +             attr->sample_simd_pred_reg_intr =3D opts->sample_intr_pre=
-d_regs;
-> > +             attr->sample_simd_pred_reg_qwords =3D opts->sample_pred_r=
-eg_qwords;
-> > +             evsel__set_sample_bit(evsel, REGS_INTR);
-> > +     }
->
-> [Severity: Medium]
-> Will specifying only SIMD registers (e.g., perf record --intr-regs=3Dxmm)
-> leave the general-purpose register mask as 0?
->
-> If opts->sample_intr_regs is 0, attr->sample_regs_intr remains 0. However=
-,
-> setting the REGS_INTR bit here causes the kernel validation function
-> (perf_reg_validate()) to unconditionally return -EINVAL because the sampl=
+> If the sample didn't capture user registers (e.g., when sampling a kernel
+> thread), the ABI is PERF_SAMPLE_REGS_ABI_NONE (0). It seems subtracting t=
+he
+> full mask size would underflow sample_size (a u32), resulting in a massiv=
 e
-> type bit is set but the corresponding GP register mask is 0.
+> size being written to event_copy->header.size.
+>
+> Could this corrupt the event stream or cause out-of-bounds reads when
+> perf_event__repipe_synth writes to the pipe?
 
-It is an interesting corner case, we could extend this test to cover it:
-https://web.git.kernel.org/pub/scm/linux/kernel/git/perf/perf-tools-next.gi=
-t/tree/tools/perf/tests/shell/record.sh?h=3Dperf-tools-next#n106
+So this should never happen, because if we don't sample the stack
+pointer how are we going to unwind through memory? It may be worth
+adding an assert with a comment to capture this though.
 
-> > diff --git a/tools/perf/util/parse-regs-options.c b/tools/perf/util/par=
-se-regs-options.c
-> > index 70a1cc90b2c13..26d560a486c85 100644
-> > --- a/tools/perf/util/parse-regs-options.c
-> > +++ b/tools/perf/util/parse-regs-options.c
+> > -     if (sample->user_regs && sample->user_regs->abi & PERF_SAMPLE_REG=
+S_ABI_SIMD)
+> > -             sample_size -=3D 4 * sizeof(u64); /* Reduce SIMD regs hea=
+der size */
+> > +     if (sample->user_regs && sample->user_regs->abi & PERF_SAMPLE_REG=
+S_ABI_SIMD) {
+> > +             sample_size -=3D 4 * sizeof(u64);
+> > +             sample_size -=3D (sample->user_regs->nr_vectors *
+> > +                             sample->user_regs->vector_qwords +
+> > +                             sample->user_regs->nr_pred *
+> > +                             sample->user_regs->pred_qwords) * sizeof(=
+u64);
+> > +     }
+> >       sample_size +=3D (sample->callchain->nr + 1) * sizeof(u64);
 >
 > [ ... ]
 >
-> > @@ -53,22 +106,96 @@ name_to_perf_reg_mask(const char *to_match, uint64=
-_t mask, int abi)
+> > diff --git a/tools/perf/util/session.c b/tools/perf/util/session.c
+> > --- a/tools/perf/util/session.c
+> > +++ b/tools/perf/util/session.c
 >
 > [ ... ]
 >
-> >       /*
-> > -      * cannot set it twice
-> > +      * Non-SIMD registers cannot be set twice.
-> > +      * SIMD registers can be set multiple times, but only the registe=
-r
-> > +      * class with largest length (qwords) is sampled.
-> >        */
-> >       if (*mode)
-> >               return -1;
->
-> [Severity: Medium]
-> Does the order of options affect whether they are parsed successfully?
->
-> If SIMD registers are parsed first (e.g., -I xmm), *mode is left as 0,
-> which allows a subsequent GP register option like -I ax to be parsed
-> successfully.
->
-> However, if GP registers are parsed first (e.g., -I ax), *mode is set to
-> a non-zero value, which triggers this failure check when -I xmm is
-> evaluated. Does this prevent intended combinations of GP and SIMD registe=
-rs
-> from working consistently?
-
-It's probably worth adding coverage for this too. In this case having
-a C unit test may make most sense.
-
-> > diff --git a/tools/perf/util/perf_event_attr_fprintf.c b/tools/perf/uti=
-l/perf_event_attr_fprintf.c
-> > index 741c3d657a8b6..c6b8e53e06fd1 100644
-> > --- a/tools/perf/util/perf_event_attr_fprintf.c
-> > +++ b/tools/perf/util/perf_event_attr_fprintf.c
-> > @@ -362,6 +362,12 @@ int perf_event_attr__fprintf(FILE *fp, struct perf=
-_event_attr *attr,
-> >       PRINT_ATTRf(aux_start_paused, p_unsigned);
-> >       PRINT_ATTRf(aux_pause, p_unsigned);
-> >       PRINT_ATTRf(aux_resume, p_unsigned);
-> > +     PRINT_ATTRf(sample_simd_pred_reg_qwords, p_unsigned);
-> > +     PRINT_ATTRf(sample_simd_pred_reg_intr, p_hex);
-> > +     PRINT_ATTRf(sample_simd_pred_reg_user, p_hex);
-> > +     PRINT_ATTRf(sample_simd_vec_reg_qwords, p_unsigned);
-> > +     PRINT_ATTRf(sample_simd_vec_reg_intr, p_hex);
-> > +     PRINT_ATTRf(sample_simd_vec_reg_user, p_hex);
-> >
-> >       return ret;
-> >  }
+> > +     for (i =3D 0; i < regs->nr_vectors; i++) {
+> > +             for (j =3D 0; j < regs->vector_qwords; j++) {
+> > +                     idx =3D i * regs->vector_qwords + j;
+> > +                     if (regs->vector_qwords > 1) {
+> > +                             printf(".... %3s[%d][%d] 0x%016" PRIx64 "=
+\n",
+> > +                                    name, i, j, regs->simd_data[idx++]=
+);
 >
 > [Severity: Low]
-> Does this also need to print the sample_simd_regs_enabled field?
+> Is the post-increment of idx necessary here?
 >
-> This patch adds several new SIMD-related fields to struct perf_event_attr=
-,
-> but sample_simd_regs_enabled is missing here. Could this prevent develope=
-rs
-> from verifying whether the tool correctly enabled SIMD sampling when insp=
-ecting
-> configurations via debug commands like perf record -vvv?
+> Since idx is re-initialized at the start of each inner loop iteration
+> (idx =3D i * regs->vector_qwords + j), the incremented value seems to be
+> discarded on the next iteration.
 
-It looks like this uncovers some technical debt. I don't see config3
-or config4 being printed either :-( Could you help to address, if not
-remind me :-)
+Yeah, we can drop the dead "++" I think.
 
 Thanks,
 Ian
 
+> > +                     } else {
+> > +                             printf(".... %3s[%d] 0x%016" PRIx64 "\n",
+> > +                                    name, i, regs->simd_data[idx++]);
+> > +                     }
+> > +             }
+> > +     }
+>
 > --
 > Sashiko AI review =C2=B7 https://sashiko.dev/#/patchset/20260529082451.59=
-1783-1-dapeng1.mi@linux.intel.com?part=3D3
+1783-1-dapeng1.mi@linux.intel.com?part=3D4
 >
