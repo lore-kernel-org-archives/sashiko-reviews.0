@@ -1,232 +1,255 @@
-Received: from sender4-pp-o94.zoho.com (sender4-pp-o94.zoho.com [136.143.188.94])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-qv1-f49.google.com (mail-qv1-f49.google.com [209.85.219.49])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 578E02F7F19
-	for <sashiko-reviews@lists.linux.dev>; Sat, 30 May 2026 14:54:41 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=pass smtp.client-ip=136.143.188.94
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 47DC133F8A2
+	for <sashiko-reviews@lists.linux.dev>; Sat, 30 May 2026 17:14:14 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=pass smtp.client-ip=209.85.219.49
 ARC-Seal:i=2; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1780152882; cv=pass; b=bhdgKa0Cg6XmGV8HStgWHZNQv3Y18hEv++gAWzvZJ1/PhMK1NEl7RKacFGWublKh7muDMcdWUB/reHwkXTa+qDmshoj8QsF9j2ZtRaa9dP9c8UncR9SPW8TX115zWBSCq7CeExPTwcRtucVS4wyf8kRcFhDenCzdF9PNxu7COZI=
+	t=1780161255; cv=pass; b=d+8yhTuXH1r3HxYAHz2/2dzN+tPcDf1UuuCxl3wxH0aP4+CPfHpewxkbjc50hu1lcxQtckGPq0bxQKqV/xuRAcz9is8pKxNLSRPxBGsbxgiKHx2y8/GA+UdbaTnK1PRewweZKwn36q3MuczspX4nVhG/TCMsGRN2VYUVDgENAio=
 ARC-Message-Signature:i=2; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1780152882; c=relaxed/simple;
-	bh=NEWOlMAu410uV1hUmN0g180JTqrHYGhQLVPTbISijB4=;
-	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=NJlwTMK5OWYKn3yPnRh4JyYiapbaSWsndoVOQvWZKXaj/u3tWeZII52q+MrpSU+5c2p5w227yGpWfK+aVXUhYdtjbPz3KqikojLSp+fhCo9DlLa9FyzdvMIrHyDhkaHWZpcrGvuOFsMg6qNV59cqLeeUc3+pJUIT2miG3zif3F8=
-ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=zohomail.com; spf=pass smtp.mailfrom=zohomail.com; dkim=pass (1024-bit key) header.d=zohomail.com header.i=ming.li@zohomail.com header.b=AyZTCWKC; arc=pass smtp.client-ip=136.143.188.94
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=zohomail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=zohomail.com
+	s=arc-20240116; t=1780161255; c=relaxed/simple;
+	bh=2o+/rs9TndTp+GvavIomFayvai/SOzGUDWkHVGgdyzk=;
+	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
+	 To:Cc:Content-Type; b=rrXxXaV+vzoSY2GkE/53v6zxtNGWEl1JkokHCTqBpnYYGdVyB2C6KFuzagy+h9Cxk/VH7Sp6gsgBxBaDm7L2k17N8pG+pdg5PIYGOhW6nfig2BE8nZKgr7PmdtOlKvA3Z9UPT7zuvd6vfMV8iwEFu8L9hVLy3J92PkKVuY8VG+0=
+ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=iqP4dm34; arc=pass smtp.client-ip=209.85.219.49
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=zohomail.com header.i=ming.li@zohomail.com header.b="AyZTCWKC"
-ARC-Seal: i=1; a=rsa-sha256; t=1780152878; cv=none; 
-	d=zohomail.com; s=zohoarc; 
-	b=B4OlXL4fkxx9ufpJOKroumUR6W/gqi4R7ULff0OO8HYCwdW070LccWTpNX3IK+FCtjHgclKERDnvQgpWRhC5PWXgDepMI8Zgd95JYDDbE+gJco6TUAwMUXQw59c56dpZMFwQSCGcYBXhqn+hFyZDtwoHxOAaKgQM96q8ENC4dLs=
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=zohomail.com; s=zohoarc; 
-	t=1780152878; h=Content-Type:Content-Transfer-Encoding:Cc:Cc:Date:Date:From:From:In-Reply-To:MIME-Version:Message-ID:References:Subject:Subject:To:To:Message-Id:Reply-To; 
-	bh=Ynwi3+7XRbORpJmPigiF/fOJS108lYUUrR2cq2JUGsg=; 
-	b=RL7VbQpCzKPIwnVCbxrTcJ4agH6s/TlFkLGMmxCvZ+5mTbHGwUJsLGsqmPpazUZdwp2HAof/nJQyUsjQjwTKZN7wj3hvi9bTQGyXJs/BRVbrVwygIg6OxvzT5WV/WATZXCN1v4DRQ0ymk6JBz/3Ngeyupa0nxcmXGHh9gW9FeIc=
-ARC-Authentication-Results: i=1; mx.zohomail.com;
-	dkim=pass  header.i=zohomail.com;
-	spf=pass  smtp.mailfrom=ming.li@zohomail.com;
-	dmarc=pass header.from=<ming.li@zohomail.com>
-DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed; t=1780152878;
-	s=zm2022; d=zohomail.com; i=ming.li@zohomail.com;
-	h=Message-ID:Date:Date:MIME-Version:Subject:Subject:To:To:Cc:Cc:References:From:From:In-Reply-To:Content-Type:Content-Transfer-Encoding:Feedback-ID:Message-Id:Reply-To;
-	bh=Ynwi3+7XRbORpJmPigiF/fOJS108lYUUrR2cq2JUGsg=;
-	b=AyZTCWKCU6lg0lH0EvgrW/5UqjYcAYmMY0XnKAVAConwgby5PCUQtrsdCe4wDjUC
-	lIqXmcZNmf9Wg3okuwS1TZ9Fi2d3uNQa4RMOOftz7bC31mcuyiWPYlVSag4dqdpyzue
-	yrU5t4KXblNCqg+WP/zmWjxmvhD8nc926fP7M8Hs=
-Received: by mx.zohomail.com with SMTPS id 1780152876273530.2144817260835;
-	Sat, 30 May 2026 07:54:36 -0700 (PDT)
-Message-ID: <42e1dbc3-58f2-434d-b83e-388855160369@zohomail.com>
-Date: Sat, 30 May 2026 22:54:31 +0800
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="iqP4dm34"
+Received: by mail-qv1-f49.google.com with SMTP id 6a1803df08f44-8cce20d2cbaso3425476d6.2
+        for <sashiko-reviews@lists.linux.dev>; Sat, 30 May 2026 10:14:14 -0700 (PDT)
+ARC-Seal: i=1; a=rsa-sha256; t=1780161253; cv=none;
+        d=google.com; s=arc-20240605;
+        b=JXCv/RN/4dnUaKQg8ou4pzact2IV9szZ6cXv5ogQwFtVLxDKYkAswBltm068lPg6Zm
+         rHqF2iXWZg5dt9ncYaaqaJY+OWogOpf1w9qn0z+qJP0rM13x4lV7tXKilCdPPl5bIu5q
+         jX20Cmi/rtMSPnZszhVFazgo5zD9cP9hwhW8mv+DzA49WJmaJLDlu8WLXWMX8G/C4mVr
+         ZKdjvKIZWXbLsOebW/Rb87GzqKOMS9/rudHGM2E+kq3OkyOQdhvzdUN8pChgt6Jlbvlm
+         M1QLsgtj+u1VnqSpr3kyst4lI5iLQ/T3kVgbNidsZlpdPQyo5H0peT9traJ/ZK8G4KzS
+         W0Bw==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com; s=arc-20240605;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:dkim-signature;
+        bh=ucTKT40VHRqUFLaRWPKDOED9BuLxH40CLDEbL6yUlMg=;
+        fh=+Kn94FVzl6rE7mDhn4pFvEHlRshbQ57dQ5o19v04Oyg=;
+        b=kDN8EsBc0ks+1BmA4YOs+lNa2SL9X4NKC2k1ULmfhSjb9vSTjUiDN5X6vmYnXBjJAY
+         p+QvuHM21R2o3oiDfiD9KtJWAUxMXpvumS3pWCPZeN7r1CvF77P3tM1sPucKqRwNA4/I
+         OQz1Pg+JlSsFEtBuSJKfHLdul6SZaL6sSbnme8zo+0Zz1HeajW0IWYqShChpYMAVicB+
+         y3jK8cTmjpVXTGB1LyxtSJRaSWPQ+6hhWPNVsAk5Xx+rtDg/ud3W/sP88JrF/gH2jL3j
+         suga/9gOy8TWcYRklZ31QRbHiH92j9WFJQNVDKQFLoOYQUF+tkjOrwsBNJUVEsEoxeOV
+         ZIEg==;
+        darn=lists.linux.dev
+ARC-Authentication-Results: i=1; mx.google.com; arc=none
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20251104; t=1780161253; x=1780766053; darn=lists.linux.dev;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=ucTKT40VHRqUFLaRWPKDOED9BuLxH40CLDEbL6yUlMg=;
+        b=iqP4dm34KMKtnE40dBLSoO1iQ6MdklWyNwV53RvZ/hqLCZxKKDrNZUDitH5Tlu1pKh
+         HPB6wXOUaOKDyBE5OxwXroBS7diErf0JtIWfHU1CFZQtW0TcTiMyaDqZPg5/H3tS5Yzd
+         2HRxRT7Qi73tR/eE43WZkc0uJSuxgDyYQRQaEFjDcLBuNM0iA6hpJdADbhVBdCmRi39a
+         uEhXgRoNPPM+pKx/yp0aL1x6SqjmuPRybrWxc47U8GTcuOy6Pb9ZODLilOPw7TXQs4WV
+         KlOD/78GQGrqmrZIcNENWx6zsK/NuuhPcu9WK9Spg4AI64/aBoY3yH8DtedJ8yCjev6I
+         LP0g==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20251104; t=1780161253; x=1780766053;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:x-gm-gg:x-gm-message-state:from
+         :to:cc:subject:date:message-id:reply-to;
+        bh=ucTKT40VHRqUFLaRWPKDOED9BuLxH40CLDEbL6yUlMg=;
+        b=NNFGxH+H/UYGK8Ac6lud1Iqbg/19ook2Uvpyo5jRoc2vnSgQ8QPGFsOdXV5yhCp6CR
+         mzC5k8lYB1G0kHp07PgahmQHQYemOGtBer35xI9XSRHbuI2Tgf0SaUuB8n045VUMaVVv
+         6VZIlxdaWs+k6T4Hq1KG9dzBjVzIYyNz2SuVdxzhXEHofJdn43915qkMH2J3+/rZApJE
+         3vRlCq48sNlVV7pjqhLOHvxR4sAWfyEFWC3TiaBUXMnAu+ISFtIA23g0SvtgpxovAi7g
+         fIPdxHhCo79R4FPa3vX7Gjr1HEmR2CHlqI6z0qY5+lOO3BltmyJCogjUlhOMuZDpuvP4
+         Fwjg==
+X-Gm-Message-State: AOJu0Yy51H7/1mkplRvjMXCYr7WJc3uCHlSj/ETnmhI5k0jI8j1cRnN0
+	iDbqDLX4ejs6GeOAkGgpPkOlBQG0tbWQEzGrf/Lvn9+y9xwjPlEhQ0kTpnyR5ZTICMK/scj5MUd
+	jOSpqPl8ex5LUbR5GWqMgVGBdy0UG6NafQ2apaDVUL/Lv
+X-Gm-Gg: Acq92OHrbgq5WxRERMNGktCTmVktASeEHUj235IsQwIaz0d8VP8nSK0cBKSsHNs2Xs+
+	p2b7l0C814UFJ48ViGwHA2dATfvQOi1RXC8r39/ygKmEpmkS1YYKKwB6NSBViJ9WHzmpNCaOorz
+	/T2aUceyULynIn91JQa/20tPVEHg5Fu36QXZQrVZ91OeGTklMi2pacPriVBQ5MVc2ks0rfy8UhV
+	khG/inOist3wFJz2T3kHyLD5gZPsZRN9hxQ2jPjTHG/TSmc4wEuImBDrle6XBBnQZGNqbVXzi4j
+	XmvrrJbDNNT4GqeaDA==
+X-Received: by 2002:a05:622a:59cc:b0:50f:e5a1:29c4 with SMTP id
+ d75a77b69052e-5173a95c0eamr37977631cf.4.1780161253242; Sat, 30 May 2026
+ 10:14:13 -0700 (PDT)
 Precedence: bulk
 X-Mailing-List: sashiko-reviews@lists.linux.dev
 List-Id: <sashiko-reviews.lists.linux.dev>
 List-Subscribe: <mailto:sashiko-reviews+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:sashiko-reviews+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH] cxl/region: Fix NULL pointer within p->targets[]
-To: "alison.schofield" <alison.schofield@intel.com>,
- "dave.jiang" <dave.jiang@intel.com>, Dan Williams <djbw@kernel.org>,
- Jonathan Cameron <jic23@kernel.org>, dave <dave@stgolabs.net>,
- "vishal.l.verma" <vishal.l.verma@intel.com>, "ira.weiny"
- <ira.weiny@intel.com>
-Cc: linux-cxl@vger.kernel.org, sashiko-reviews@lists.linux.dev
-References: <20260530-fix_null_in_targets_array-v1-1-312c3bf1fe0f@zohomail.com>
- <20260530050649.EBFCD1F00893@smtp.kernel.org>
-From: Li Ming <ming.li@zohomail.com>
-In-Reply-To: <20260530050649.EBFCD1F00893@smtp.kernel.org>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 8bit
-Feedback-ID: zu08011227b91e9adc0f72173a6bfc15cd0000ee3c728238e0f88fc7e76f733379c11a76a825e238468692ca:ZohoMail
-X-Zoho-CM-AccountID: abd763e7b9fa23acf4f42a44f9876d2d993e05abdb9290f9ccb1008c977bf7f0
-X-ZohoMailClient: External
+References: <20260530165917.55767-1-tahanarimani3443@gmail.com> <20260530170952.48D6B1F00899@smtp.kernel.org>
+In-Reply-To: <20260530170952.48D6B1F00899@smtp.kernel.org>
+From: Taha Narimani <tahanarimani3443@gmail.com>
+Date: Sat, 30 May 2026 20:43:59 +0330
+X-Gm-Features: AVHnY4Lv7zRXmQDf7gVKxPLn3hSGxb_gIFECi3xtDNCRDrvy6R5rVMjA-vfcYpI
+Message-ID: <CAEsNvj-LoH11fWgt2d4cQsFm72+MTVNrVa6oJqsQD41Cen-zdQ@mail.gmail.com>
+Subject: Re: [PATCH v3 RFC v3] dt-bindings: iio: adc: add ad7816/7/8 digital
+ temperature sensor / ADC
+To: sashiko-reviews@lists.linux.dev
+Cc: devicetree@vger.kernel.org, robh@kernel.org, conor+dt@kernel.org
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 
+Hi Sashiko AI (and reviewers),
 
-在 2026/5/30 13:06, sashiko-bot@kernel.org 写道:
-> Thank you for your contribution! Sashiko AI review found 2 potential issue(s) to consider:
+Thank you for the review.
+
+Regarding the hardware pinouts mentioned in the review, there seem to
+be some inaccuracies based on the AD7816/7/8 datasheet:
+
+The AD7816 DOES have a REFIN pin (Pin 4).
+
+Both AD7816 and AD7818 DO have dedicated RD/WR pins (Pin 8) and CONVST
+pins (Pin 1).
+
+The AD7818 DOES feature an OTI pin (Pin 2) alongside its VIN (Pin 4).
+Therefore, the properties vref-supply, rdwr-gpios, convert-gpios, and
+interrupts are physically accurate and correctly represented in this
+binding.
+
+However, the review is absolutely correct regarding busy-gpios
+breaking the staging driver probe. The existing driver erroneously
+requires a BUSY GPIO for the AD7816, which doesn't physically exist on
+the chip.
+
+Since DT bindings must describe the hardware rather than accommodate
+legacy software bugs, I believe the YAML should strictly disallow
+busy-gpios for the AD7816 as proposed. I will send a subsequent patch
+to fix drivers/staging/iio/adc/ad7816.c so it no longer enforces the
+busy pin requirement on the AD7816.
+
+Best regards, Taha Narimani
+
+On Sat, May 30, 2026 at 8:39=E2=80=AFPM <sashiko-bot@kernel.org> wrote:
 >
-> Pre-existing issues:
-> - [High] __cxl_decoder_detach() suffers from the exact same p->targets hole vulnerability for fully assembled auto-discovered regions, which will cause a NULL pointer dereference upon re-attachment.
-
-I can reproduce it by the following sequence.
-
-Environment: CFMWS lock flag is set, interleave_ways of an 
-auto-discovery region is 4.
-
-1. echo -n {one of cxl device} > /sys/bus/pci/drivers/cxl_pci/unbind
-
-2. echo -n {same device} > /sys/bus/pci/drivers/cxl_pci/bind
-
-Will see something like
-
-[  113.444191] Oops: general protection fault, probably for 
-non-canonical address 0xdffffc0000000008: 0000 [#1] SMP KASAN PTI
-[  113.444506] KASAN: null-ptr-deref in range 
-[0x0000000000000040-0x0000000000000047]
-[  113.444506] RIP: 0010:cxl_calc_interleave_pos+0x26/0x810 [cxl_core]
-[  113.444506] Call Trace:
-[  113.444506]  <TASK>
-[  113.444506]  cxl_region_attach+0xc50/0x2140 [cxl_core]
-[  113.444506]  cxl_add_to_region+0x321/0x2310 [cxl_core]
-[  113.444506]  discover_region+0x92/0x150 [cxl_port]
-
-
-Seems like we also need to compact p->targets array in that case, but I 
-believe it will trigger below warning aftaer compacting.
-
-__cxl_decoder_detach():
-
-   ...
-
-   if (cxled->pos < 0 || cxled->pos >= p->interleave_ways ||
-       p->targets[cxled->pos] != cxled) {
-     struct cxl_memdev *cxlmd = cxled_to_memdev(cxled);
-
-     dev_WARN_ONCE(&cxlr->dev, 1, "expected %s:%s at position %d\n",
-                                dev_name(&cxlmd->dev), 
-dev_name(&cxled->cxld.dev),
-                                cxled->pos);
-     return NULL;
-   }
-
-   ...
-
-I think maybe we can also walk p->targets array to confirm if the given 
-cxled belongs to the region?
-
-
-> - [High] Failed auto-discovery decoders are left in the region targets array if failure occurs after endpoint port attachment, leading to a Use-After-Free (UAF).
-
-For this issue, my understanding is that we need a separate patch to 
-reset cxled->state to CXL_DECODER_STATE_AUTO in cxl_rr_free_decoder(). 
-like that
-
-@@ -1068,6 +1068,12 @@ static void cxl_rr_free_decoder(struct 
-cxl_region_ref *cxl_rr)
-
-         dev_WARN_ONCE(&cxlr->dev, cxld->region != cxlr, "region 
-mismatch\n");
-         if (cxld->region == cxlr) {
-+               if (is_endpoint_decoder(&cxld->dev)) {
-+                       struct cxl_endpoint_decoder *cxled = 
-to_cxl_endpoint_decoder(&cxld->dev);
-+
-+                       if (cxled->state == CXL_DECODER_STATE_AUTO_STAGED)
-+                               cxled->state = CXL_DECODER_STATE_AUTO;
-+               }
-                 cxld->region = NULL;
-                 put_device(&cxlr->dev);
-         }
-
-
-Ming
-
+> Thank you for your contribution! Sashiko AI review found 4 potential issu=
+e(s) to consider:
+> - [High] Strictly disallowing `busy-gpios` for `adi,ad7816` breaks the ex=
+isting driver probe.
+> - [Medium] `rdwr-gpios` and `convert-gpios` are unconditionally required =
+for all variants, forcing dummy GPIOs for 8-pin devices.
+> - [Medium] The `vref-supply` property is incorrectly allowed for AD7816 a=
+nd lacks a schema restriction.
+> - [Medium] The `interrupts` property is incorrectly permitted for the 8-p=
+in AD7818.
 > --
 >
-> commit 8beb15c55def2c0ba7cda46a708f6b3d2ab5e643
-> Author: Li Ming <ming.li@zohomail.com>
+> commit c95479a0b55dc8599b178909579f060bf75eb282
+> Author: Taha Narimani <tahanarimani3443@gmail.com>
 >
-> cxl/region: Fix NULL pointer within p->targets[]
+> dt-bindings: iio: adc: add ad7816/7/8 digital temperature sensor / ADC
 >
-> This patch fixes a NULL pointer issue in p->targets[] during endpoint
-> decoder removal. It ensures the last valid endpoint decoder pointer is
-> swapped into the removed slot, avoiding gaps in the valid targets array.
+> This commit introduces YAML device tree bindings for the Analog Devices
+> AD7816, AD7817, and AD7818. It formally documents the required properties
+> and uses conditionals to restrict busy-gpios to the AD7817 variant based
+> on hardware capabilities.
 >
->> diff --git a/drivers/cxl/core/region.c b/drivers/cxl/core/region.c
->> index e90c024c80365..54018db87a4c9 100644
->> --- a/drivers/cxl/core/region.c
->> +++ b/drivers/cxl/core/region.c
->> @@ -2220,7 +2220,15 @@ static int cxl_region_remove_target(struct device *dev, void *data)
->>   			p->nr_targets--;
->>   			cxled->state = CXL_DECODER_STATE_AUTO;
->>   			cxled->pos = -1;
->> -			p->targets[i] = NULL;
->> +
->> +			/*
->> +			 * Swap the last valid target into the slot to
->> +			 * ensure no invalid target in p->nr_targets range.
->> +			 * The targets array will be re-sorted during the
->> +			 * last endpoint decoder attaching again.
->> +			 */
->> +			p->targets[i] = p->targets[p->nr_targets];
->> +			p->targets[p->nr_targets] = NULL;
+> > diff --git a/Documentation/devicetree/bindings/iio/adc/adi,ad7816.yaml =
+b/Documentation/devicetree/bindings/iio/adc/adi,ad7816.yaml
+> > new file mode 100644
+> > index 0000000000000..48563e4eab446
+> > --- /dev/null
+> > +++ b/Documentation/devicetree/bindings/iio/adc/adi,ad7816.yaml
+>
+> [ ... ]
+>
+> > +  vref-supply:
+> > +    description: |
+> > +      Optional external reference voltage supply. If not provided, the
+> > +      internal reference is used. Applicable for AD7816 and AD7817.
+>
+> [Severity: Medium]
+> Does the AD7816 actually have a VREF pin?
+>
+> The 8-pin AD7816 lacks an external reference voltage pin due to physical
+> pinout constraints (power, SPI, CONVST, OTI), and relies entirely on its
+> internal reference. Should the description limit this to only the AD7817?
+>
+> [ ... ]
+>
+> > +required:
+> > +  - compatible
+> > +  - reg
+> > +  - vdd-supply
+> > +  - rdwr-gpios
+> > +  - convert-gpios
+>
+> [Severity: Medium]
+> Are rdwr-gpios and convert-gpios present on all these devices?
+>
+> The AD7816 and AD7818 are 8-pin devices whose pins are fully consumed by
+> SPI bus communication, power, and their specific analog or interrupt
+> functions.
+>
+> Since they physically lack dedicated RD/WR pins, does making these global=
+ly
+> required force device tree authors to invent dummy GPIOs to pass validati=
+on?
+> Should these be conditionally required instead?
+>
+> > +allOf:
+> > +  - $ref: /schemas/spi/spi-peripheral-props.yaml#
+> > +  - if:
+> > +      properties:
+> > +        compatible:
+> > +          contains:
+> > +            const: adi,ad7817
+> > +    then:
+> > +      required:
+> > +        - busy-gpios
+> > +    else:
+> > +      properties:
+> > +        busy-gpios: false
+>
 > [Severity: High]
-> This isn't a bug introduced by this patch, but does __cxl_decoder_detach()
-> suffer from the exact same p->targets hole vulnerability for fully assembled
-> auto-discovered regions?
+> Will this break the existing staging driver probe for the AD7816?
 >
-> When a target is detached from an auto-discovered region:
+> While the hardware lacks a BUSY pin, the driver unconditionally requires =
+this
+> GPIO for both AD7816 and AD7817 during probe:
 >
-> drivers/cxl/core/region.c:__cxl_decoder_detach() {
->      ...
-> 	p->targets[cxled->pos] = NULL;
-> 	p->nr_targets--;
->      ...
+> drivers/staging/iio/adc/ad7816.c:ad7816_probe() {
+>     ...
+>     chip->busy_pin =3D devm_gpiod_get(&spi_dev->dev, "busy", GPIOD_IN);
+>     ...
 > }
 >
-> For auto-discovered regions, new targets are appended at
-> p->targets[p->nr_targets] by cxl_region_attach_auto(). This leaves the NULL
-> hole intact while overwriting a valid endpoint pointer that was previously
-> positioned at the end of the array. Once p->nr_targets reaches
-> p->interleave_ways again, cxl_region_sort_targets() iterates through the
-> array and attempts to dereference the NULL pointer, which could cause a
-> kernel panic.
+> If a device tree complies with this new binding by omitting busy-gpios fo=
+r
+> the AD7816, devm_gpiod_get() will return -ENOENT and the driver will abor=
+t
+> probing.
 >
+> Can we address the driver dependency before strictly enforcing this in th=
+e
+> binding?
 >
-> [Severity: High]
-> This isn't a bug introduced by this patch, but are failed auto-discovery
-> decoders left in the region targets array if failure occurs after endpoint
-> port attachment, leading to a Use-After-Free?
+> > +  - if:
+> > +      properties:
+> > +        compatible:
+> > +          contains:
+> > +            const: adi,ad7818
+> > +    then:
+> > +      properties:
+> > +        vref-supply: false
 >
-> cxl_rr_ep_add() correctly upgrades an endpoint's staging state to
-> CXL_DECODER_STATE_AUTO:
+> [Severity: Medium]
+> Should vref-supply: false also be enforced for the AD7816?
 >
-> drivers/cxl/core/region.c:cxl_rr_ep_add() {
->      ...
-> 		if (cxld == &cxled->cxld &&
-> 		    cxled->state == CXL_DECODER_STATE_AUTO_STAGED)
-> 			cxled->state = CXL_DECODER_STATE_AUTO;
->      ...
-> }
+> Since the AD7816 is an 8-pin device like the AD7818, it seems to rely
+> entirely on its internal reference without an external pin.
 >
-> However, if subsequent topology validation fails, the error path calls
-> cxl_port_detach_region(), which clears the region pointer but neglects to
-> restore the endpoint's state back to CXL_DECODER_STATE_AUTO_STAGED. Because
-> of this, when __cxl_decoder_detach() invokes cxl_cancel_auto_attach(), it
-> silently skips removal due to the state mismatch:
+> Additionally, does the AD7818 physically support the OTI interrupt?
 >
-> drivers/cxl/core/region.c:cxl_cancel_auto_attach() {
->      ...
-> 	if (cxled->state != CXL_DECODER_STATE_AUTO_STAGED)
-> 		return;
->      ...
-> }
+> The AD7818 sacrifices the OTI pin to accommodate its Analog Input (AIN) p=
+in.
+> Should this conditional block also enforce interrupts: false for the
+> adi,ad7818 compatible string to prevent physically impossible device tree
+> configurations?
 >
-> The endpoint decoder remains in the p->targets array and is subsequently
-> freed upon removal, resulting in a persistent Use-After-Free vulnerability
-> when the sysfs region targets are read or the array is otherwise accessed.
->
->>   
->>   			return 1;
->>   		}
+> --
+> Sashiko AI review =C2=B7 https://sashiko.dev/#/patchset/20260530165917.55=
+767-1-tahanarimani3443@gmail.com?part=3D1
