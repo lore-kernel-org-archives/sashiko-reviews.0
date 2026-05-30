@@ -1,206 +1,174 @@
-Received: from us-smtp-delivery-124.mimecast.com (us-smtp-delivery-124.mimecast.com [170.10.129.124])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-ed1-f46.google.com (mail-ed1-f46.google.com [209.85.208.46])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CEF6D30E85C
-	for <sashiko-reviews@lists.linux.dev>; Sat, 30 May 2026 03:33:42 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=170.10.129.124
-ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1780112024; cv=none; b=nusZwB+qCjhR5vyo6zmASxC/MRlG4J2yY2cvY/fj1SBM+ovaRFLcrFR/R2a6AI8kXrMJbMYjZiwHLugkqnrmszDULvvmJJ9ey+SCuWopM38GQ7Nis9tRpmnt/CIEC7wJygezQVv+yaJ5lmlQNJUagF+qxsxs5vJXJdUTc9MDrHg=
-ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1780112024; c=relaxed/simple;
-	bh=IFI6sYcPQmKNmOqrHpONlcmdhOLZeCJw8xQLxIxD9CU=;
-	h=Message-ID:Subject:From:To:Cc:Date:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=TA9v8NusQqkpR5p6JJBC8VzUoPFiMZA/hpK5Y2M0g7TbDD9+WhY/WbRNOJAgvpJphpnSpk/FiyS0dtaj4tOhq4YryMNzXNmIZzH/xwW9mLSBWwbLeqYY9Fv5pSEsHriasdD88it0SsyCzszmcpJvXWdT8O3/8NHmatFp+i4deho=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=redhat.com; spf=pass smtp.mailfrom=redhat.com; dkim=pass (1024-bit key) header.d=redhat.com header.i=@redhat.com header.b=dGAYvHOD; arc=none smtp.client-ip=170.10.129.124
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=redhat.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=redhat.com
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5A1D433859A
+	for <sashiko-reviews@lists.linux.dev>; Sat, 30 May 2026 04:18:37 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=pass smtp.client-ip=209.85.208.46
+ARC-Seal:i=2; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
+	t=1780114719; cv=pass; b=SlfQSDrgLZij3Qfce1B/9KdXm3y1dUSYr/oXQVZGwqb2if0SVqS0A0Fd/R1FeNDaBonS7GnPZxfB0r67OdUYJGw5a/6rxG5jL6CCcnL8Us9aK7RkPf72NwIuyhYTQDmrj4WQHMbdBjG518VTdMTr4ii7zUiSKCeyYnxkjXzoTcY=
+ARC-Message-Signature:i=2; a=rsa-sha256; d=subspace.kernel.org;
+	s=arc-20240116; t=1780114719; c=relaxed/simple;
+	bh=wt7vymfuvb00mlogfJIV49ibnO1dnFDAFSRvrqXEuRA=;
+	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
+	 To:Cc:Content-Type; b=gOBw535404zXk8TIwUWqXUgI3vJgTOgEEaFirpMmwwl/xLoXVL7eX133eI9imupYv0CCl3bjq9yafNpdVtsx+YAZ30CVAO2abcUrskKxO3CeaZcMxEgr5MT+aQLVxRm6O9HeAibQ7nHHVAD7saj6/FJyvvo5z95FVDZzAb7Bn64=
+ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=frTqE4Zr; arc=pass smtp.client-ip=209.85.208.46
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=redhat.com header.i=@redhat.com header.b="dGAYvHOD"
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
-	s=mimecast20190719; t=1780112021;
-	h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
-	 to:to:cc:cc:mime-version:mime-version:content-type:content-type:
-	 content-transfer-encoding:content-transfer-encoding:
-	 in-reply-to:in-reply-to:references:references;
-	bh=fKshsE34Ej54G52qKAdqYDsrsfQi3PDZovluj+ciTtY=;
-	b=dGAYvHODCsxuPDm7/svCU8szG8hxKq6HF8oPVXOJgrzDfYm2kBZs56cAH7kSlZIYUUjkFv
-	e934sG+Y8zmrLEhoDBNmW/NNAkdXw8NVbesWbA6eOAg4tLlyxiC+0bfHqjUyvo767NaoV6
-	t4zrtwFSAo9j/a/zWDW3EHu9ofQ7jos=
-Received: from mail-qv1-f69.google.com (mail-qv1-f69.google.com
- [209.85.219.69]) by relay.mimecast.com with ESMTP with STARTTLS
- (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-163-NfWM7Zn2NIq5NE_M1dZBLQ-1; Fri, 29 May 2026 23:33:40 -0400
-X-MC-Unique: NfWM7Zn2NIq5NE_M1dZBLQ-1
-X-Mimecast-MFC-AGG-ID: NfWM7Zn2NIq5NE_M1dZBLQ_1780112020
-Received: by mail-qv1-f69.google.com with SMTP id 6a1803df08f44-8cce1cc8cb2so30252486d6.1
-        for <sashiko-reviews@lists.linux.dev>; Fri, 29 May 2026 20:33:40 -0700 (PDT)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="frTqE4Zr"
+Received: by mail-ed1-f46.google.com with SMTP id 4fb4d7f45d1cf-68c1653ea0cso1885535a12.2
+        for <sashiko-reviews@lists.linux.dev>; Fri, 29 May 2026 21:18:37 -0700 (PDT)
+ARC-Seal: i=1; a=rsa-sha256; t=1780114716; cv=none;
+        d=google.com; s=arc-20240605;
+        b=JkhbyKbNu7Cu3CFRejPCMU3XsPCj2CPlB5HBnsul23xekwOQgRoRGL459dwltDGZwn
+         D6JqZwRFYwmKr4J+VDj8p7bN6GaBboRbBistI1EDkC7bcEIxUlDl/LoXQFOOmhM17nsE
+         DIYghLsGCHFwpSECnxmVkgsA/2NglD9DMHX/9MVh22ZX8sYmVzk8C/mfZy953NOzvbOw
+         SVYUUaMDCHWzzWiEtUJc+wfAgwvYJM1Af7aL2R9a/BPE75oNATDWSyDn/4soDGrP0wq7
+         eoj08bDyHrmDuFhdtkW4+Mp/3CV5CofiXU76DEilNDrQ2syjLfbpuj8lpptMRlK14wSu
+         kukQ==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com; s=arc-20240605;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:dkim-signature;
+        bh=hErNnC1lMlzvaZQ75VA5piTpzFVvISuyV2i8pxTk4yY=;
+        fh=dZD3NgG1X7s6kpr5hZ2U8f/WHSVkfsXTB6YiQT1XEfs=;
+        b=GoTtknz1BMfYqptcJrcRbw/JHpiuAuW8uMmj1kqQXyb3dMHiG4aIA9wpw2TrkH074v
+         WQmBaMODWiPlVvGjr+2j2gkTBfFaTNXiUiC23Dy7ItbEkQh3396USBgpCa4pl7gPWaJN
+         2T1Rvalc4MuvGMGr17J2odm0/b2n7oFWcOyErXxvYYPVNEOqzgkJaJN00O8ejf0PHB6y
+         J5HNeZwruuU+qMPAlccKaj27z+rqwU0FN8spohpBHgSr//8lyyfc3d928xaA2zuaxxOa
+         GBDH4Ze218FGnD/cJ3T0kVoFmQUAIxGWcd7l4RlFI9Phek9qzESKZOeT1U8bxbE4Vt+Y
+         2VSg==;
+        darn=lists.linux.dev
+ARC-Authentication-Results: i=1; mx.google.com; arc=none
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20251104; t=1780114716; x=1780719516; darn=lists.linux.dev;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=hErNnC1lMlzvaZQ75VA5piTpzFVvISuyV2i8pxTk4yY=;
+        b=frTqE4ZrSoGL1OxO4Btu8c7F+zHZgdUZeTQeZ+3HRk+Qp4mERJX749RJKeR/3jUm8B
+         IYet491q5dr/bIatTHMAzJbEkhng/IRvEYR9+JD6c3H35Ik5RXq47f6tA6N1ov5h8otL
+         YNGYHZxh1mTi5UWGnylT14G9YHXIS4C97kI6dMHY/uz+FLSK/fPpOaxjCf4T37CGmgG8
+         JoVbJI+lshKkbOCynvskXLrx1AFfpzQLcJ6RPDkdD5Qn52cnL9FE0qhAUyi3ST0CakUc
+         mxGzJlr7PsT5Ya25fVVpWjyAz0U7Zg1NNaNoeQjVOxC3CwHuyk3A/xzlC1O0UJF7AYJ8
+         7I4g==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20251104; t=1780112020; x=1780716820;
-        h=mime-version:user-agent:content-transfer-encoding:references
-         :in-reply-to:date:cc:to:from:subject:message-id:x-gm-gg
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=iYMTrWIEGWTyvJqxHpESzH/Gg6triQriDVNWiwI0tqE=;
-        b=ozkvGiIRAMXnJ/yjqfMipPQnSYctK1NHKYixT2CEKy2ezxHaQmjKOyGXUzf2vZp4Az
-         Z8FyJo5RzEcq8WDZQwfjk9bp8kp6K/B8CsKgQrKDiw0Y2blN9dhIccGRbjG8M4ScYeuo
-         LRcBdl5ggiLxWzh73sS8Fk8vqRCgNmTqcuFuwkB3MxRwBEPOiqWQhMVHgL91g7tjcm62
-         6G0WZ1VGoxwd2shsOqKxsgl5xxC8q7e9+84uzRKPlbZyMG2SYP9rC7oK5pb9nKXve2cQ
-         cTp+KBOSTVtsk8+KrEjtXZ6oiLJf1rMlwzVVg2IXZ1gv9pGu0/XFUlusEN/8uuUOekJC
-         C17w==
-X-Forwarded-Encrypted: i=1; AFNElJ8LThG2iQ6vgp1gAz7yZd4aaIzyKUr77rnmvlREAzZUexMlVMioi/o2LMaT60IIEWDfKoHpvY7j/HHiHWAmxJc=@lists.linux.dev
-X-Gm-Message-State: AOJu0YyHKTBxTcY7QBTGMOSOxnIHP/e569I47IsEY7mxwvyixylY20Hr
-	h+QRemzNK0gumJZXtgqcZWpzE8Xz5CuW6bokZ9ozlc5D8tOOcfGnwSyKZxunpwaE6iIh3TnnFPu
-	ZCsCJiNP/VJ5FB7GLLIV9gKkvL/yEoF9aMhnb61jDfM2VhwDzMRRW2d58PUrbuYNDPaIZFA==
-X-Gm-Gg: Acq92OEOKvrZbi4+KG+ilc3Me/sTnQfCi6f91Yxs+T4B/X9RXKimu7qmIzhmT50mLB3
-	96+RQvsVZIZrJ9YcupAA0Jfcg6c1ROP9Pawoqko/ZMmYfTSbpWpnmCTmTU4GugcdwZZGhHajSgk
-	oobiCmNVeekHhJtlhn+RwU0YhiBZ1fq+APUahfnuCT8MgsEkLwagMV4vb2wkgdTMkTXT6xB99fW
-	+SprAa8NvXmqZn8ulwnLqFKA9nh+3tl/zZ0FhVRbZX8I+Nr3w9mO0eaArJuVhewBa5JIKwlACQC
-	g6DBhtN6ifW1Tmrb9X2jo/+BZxR+G61CVRneDTZY/ZZ/2DT83d5RidXMMcOVDpcagBslQs+ykB6
-	t2d+PRHANPc4Wyoyd7DFc+qoYwMyguj3x4tCd9bcK6d84yaX/u738Ry4Uenh1/FBO
-X-Received: by 2002:a05:620a:4005:b0:914:afb8:795e with SMTP id af79cd13be357-9153d975eaamr373794985a.19.1780112019931;
-        Fri, 29 May 2026 20:33:39 -0700 (PDT)
-X-Received: by 2002:a05:620a:4005:b0:914:afb8:795e with SMTP id af79cd13be357-9153d975eaamr373792085a.19.1780112019462;
-        Fri, 29 May 2026 20:33:39 -0700 (PDT)
-Received: from crwood-thinkpadp16vgen1.minnmso.csb ([2601:447:cc81:56d0:ab94:b2cb:29a6:7ac0])
-        by smtp.gmail.com with ESMTPSA id af79cd13be357-915326503d2sm391982685a.44.2026.05.29.20.33.38
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Fri, 29 May 2026 20:33:38 -0700 (PDT)
-Message-ID: <b555e6ba6f723c244edc88afbc6383022d51ed3c.camel@redhat.com>
-Subject: Re: [PATCH v2] tracing/osnoise: Array printk init and cleanup
-From: Crystal Wood <crwood@redhat.com>
-To: Steven Rostedt <rostedt@goodmis.org>
-Cc: linux-trace-kernel@vger.kernel.org, John Kacur <jkacur@redhat.com>, 
- Tomas Glozar <tglozar@redhat.com>, Costa Shulyupin <costa.shul@redhat.com>,
- Wander Lairson Costa	 <wander@redhat.com>, sashiko-bot@kernel.org,
- sashiko-reviews@lists.linux.dev
-Date: Fri, 29 May 2026 22:33:37 -0500
-In-Reply-To: <0c6606c49ab912904f00663f113289f546084925.camel@redhat.com>
-References: <20260511223035.1475676-1-crwood@redhat.com>
-		 <20260520162810.3112a9d6@gandalf.local.home>
-	 <0c6606c49ab912904f00663f113289f546084925.camel@redhat.com>
-User-Agent: Evolution 3.60.1 (3.60.1-1.fc44)
+        d=1e100.net; s=20251104; t=1780114716; x=1780719516;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:x-gm-gg:x-gm-message-state:from
+         :to:cc:subject:date:message-id:reply-to;
+        bh=hErNnC1lMlzvaZQ75VA5piTpzFVvISuyV2i8pxTk4yY=;
+        b=XvQVHr4lLqoRDxZMVRNJrxXtZYGO7X8+/2xuXxIDCr2kUb17v4m0DFiXxAJJmIWmbm
+         snCf8sJKY7ImZZ8QnToBcsy39dy++4PO7E/DKgj+14SkwH41v/68taiC0hDUWulj1cPa
+         BycKOLy5Y1uY1nbftDOxvkgvI2RrIBrOXrw4AYWA9SChBeDA+DcrkXbjCa3eyI/3nBPO
+         MjHmrS3RNJoWuJDqUIhosDYK+qe23fuogWKvCGJ+pFVd+iaByK2mLBBXO2Lo0wjTRGRB
+         p5X4KkSXXlms0bgU1nVC2n93zhRHeTj8nSP/e/KSopj/ArU9D1qLCb+dJMmqmTJwkXhj
+         alLw==
+X-Gm-Message-State: AOJu0YyyOkJQ4IK+fSPWkRR+qCABPsHTLOvwLScNF3DoRlgQdAqglJ4k
+	WkMRtg1oyMaXTJzzXCjUNQr8/eZuRAcn1eF+STbkulUE+fKoebg2JbgNSASmOsse8vCTSCLV7EF
+	a8MBm7rTDaxxFrIIZfVXsDZ5WUYMThFXxeQsf
+X-Gm-Gg: Acq92OF19wgpLB2KvynXv/kxWcL0deiLwMfNQkzwKgqFInsEZCazyhgO8OEIi16lEcq
+	O1P+cNONM5YPPDWqJ2CpbZPaP6hpuw43Rs441+4FEsPj1B1sDBTdSm1HRo8ZA11qrb2YhC/Ztk+
+	rXCF/YcIVqQcVvyD5NSIPPA+mK8tJd5IfbCSkrQZJ714x7IDAfh+2gjfDttW72/rT0Uq3BUbwwy
+	E3+cSNur2CGn1RyvWBioN33AS7aFMJV3KFdlCUAzE+K/qMvSoACudtQhKFkfFiHAxdOC8AgyNwQ
+	v+JXQtCABQ9IHDoKgBJocdeW5AL4IILSve5b0jtUI3q26Y5TaS4FA74CvT9P37t+POZa6VkhCxb
+	ySqSwmXyqYrKlRaXyRzi3ww4N1Hc7BQhHuODvSz6IKJ7b0CEpVwZA8tHlIOBdGWOFj/LTMrQJLz
+	XJl+Y=
+X-Received: by 2002:a50:cc4b:0:b0:687:7fc4:1ea5 with SMTP id
+ 4fb4d7f45d1cf-68c8d0076fbmr934151a12.23.1780114715584; Fri, 29 May 2026
+ 21:18:35 -0700 (PDT)
 Precedence: bulk
 X-Mailing-List: sashiko-reviews@lists.linux.dev
 List-Id: <sashiko-reviews.lists.linux.dev>
 List-Subscribe: <mailto:sashiko-reviews+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:sashiko-reviews+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-X-Mimecast-Spam-Score: 0
-X-Mimecast-MFC-PROC-ID: Z3b16qKaE57N0STJuiCp-hctb_q1vI-PqB0fuEFpoJY_1780112020
-X-Mimecast-Originator: redhat.com
+References: <20260530030152.49759-1-rosenp@gmail.com> <20260530031259.A630B1F00893@smtp.kernel.org>
+In-Reply-To: <20260530031259.A630B1F00893@smtp.kernel.org>
+From: Rosen Penev <rosenp@gmail.com>
+Date: Fri, 29 May 2026 21:18:23 -0700
+X-Gm-Features: AVHnY4LE4rbusb4FylXC6QnjDFW8i-P8aeafMpSxzTJ-JOOmjN1LqDrPgB91-lM
+Message-ID: <CAKxU2N_Vc1CuONb0gwi-3afzLoEfo0+d0M9w9R9GtO-q6GpgRg@mail.gmail.com>
+Subject: Re: [PATCH] bestcomm/gen_bd: fix out-of-bounds access in PSC
+ parameter lookup
+To: sashiko-reviews@lists.linux.dev
+Cc: vkoul@kernel.org, dmaengine@vger.kernel.org, Frank.Li@kernel.org
 Content-Type: text/plain; charset="UTF-8"
 Content-Transfer-Encoding: quoted-printable
 
-On Thu, 2026-05-21 at 18:48 -0500, Crystal Wood wrote:
-> On Wed, 2026-05-20 at 16:28 -0400, Steven Rostedt wrote:
-> > [ Replying to Sashiko: https://sashiko.dev/?list=3Dorg.kernel.vger.linu=
-x-trace-kernel#/patchset/20260511223035.1475676-1-crwood%40redhat.com ]
-> >=20
-> > > > diff --git a/kernel/trace/trace_osnoise.c b/kernel/trace/trace_osno=
-ise.c
-> > > > index 75678053b21c5..2be188768ab42 100644
-> > > > --- a/kernel/trace/trace_osnoise.c
-> > > > +++ b/kernel/trace/trace_osnoise.c
-> > > > @@ -83,6 +83,22 @@ struct osnoise_instance {
-> > > > =20
-> > > >  static struct list_head osnoise_instances;
-> > > > =20
-> > > > +static void osnoise_print(const char *fmt, ...)
-> > > > +{
-> > > > +=09struct osnoise_instance *inst;
-> > > > +=09struct trace_array *tr;
-> > > > +=09va_list ap;
-> > > > +
-> > > > +=09rcu_read_lock();
-> > > > +=09list_for_each_entry_rcu(inst, &osnoise_instances, list) {
-> > > > +=09=09tr =3D inst->tr;
-> > > > +=09=09va_start(ap, fmt);
-> > > > +=09=09trace_array_vprintk(tr, _RET_IP_, fmt, ap);
-> >=20
-> > > Does this code create a use-after-free on the trace array if an insta=
-nce is
-> > > removed concurrently?
->=20
-> If so, it was already an issue with osnoise_taint(),
-> osnoise_stop_tracing(), osnoise_stop_exception(), etc.  Wouldn't be
-> surprising, as this file has a number of other synchronization issues as
-> well.
-
-It looks like it's actually also an issue in a bunch more places such as
-record_osnoise_sample(), timerlat_dump_stack(), etc.
-
-> > > When a user deletes a trace instance via rmdir, the unregister functi=
-on
-> > > removes the instance from the list using list_del_rcu(). However, the=
- removal
-> > > routine does not appear to wait for an RCU grace period before freein=
-g the
-> > > trace array itself.
-> > > Could a concurrent execution of this loop inside the rcu_read_lock() =
-section
-> > > still access the unlinked instance, read the freed inst->tr, and pass=
- it to
-> > > trace_array_vprintk()? This appears to be an existing issue, but it s=
-till
-> > > affects the loop here.
-> >=20
-> > Hmm, this is interesting. osnoise keeps track of its own instances via =
-a
-> > osnoise_instances list. But it only use kfree_rcu() to free the list
-> > descriptor but doesn't take care of the tr being freed before hand!
-> >=20
-> > Something like this could work [not even compiled]
-> >=20
-> > diff --git a/kernel/trace/trace_osnoise.c b/kernel/trace/trace_osnoise.=
-c
-> > index 75678053b21c..bda1e0e0d2e1 100644
-> > --- a/kernel/trace/trace_osnoise.c
-> > +++ b/kernel/trace/trace_osnoise.c
-> > @@ -476,8 +476,11 @@ static void print_osnoise_headers(struct seq_file =
-*s)
-> >  =09=09=09=09=09=09=09=09=09=09\
-> >  =09rcu_read_lock();=09=09=09=09=09=09=09\
-> >  =09list_for_each_entry_rcu(inst, &osnoise_instances, list) {=09=09\
-> > +=09=09if (trace_array_get(inst->tr) < 0)=09=09=09=09\
-> > +=09=09=09continue;=09=09=09=09=09=09\
-> >  =09=09buffer =3D inst->tr->array_buffer.buffer;=09=09=09=09\
-> >  =09=09trace_array_printk_buf(buffer, _THIS_IP_, msg);=09=09=09\
-> > +=09=09trace_array_put(inst->tr);=09=09=09=09=09\
-> >  =09}=09=09=09=09=09=09=09=09=09\
-> >  =09rcu_read_unlock();=09=09=09=09=09=09=09\
-> >  =09osnoise_data.tainted =3D true;=09=09=09=09=09=09\
->=20
-> OK, I'll prepare a v3.
-
-Many osnoise_taint() callers, as well as timerlat_dump_stack(), can have
-preemption disabled, so the mutex in trace_array_get() won't work.
-
-What is the intended way for a tracer to record to all of its
-instances?  I tried looking at other tracers that allow instances, but
-it seems that most of them only allow one instance, apart from
-trace_function/trace_function_graph that are driven by a callback
-mechanism that doesn't fit here, and that made my brain hurt when I
-dove into the code to try to figure out how it ensures a valid tr.
-
-We could have osnoise_unregister_instance() set inst->tr =3D NULL
-under a raw lock, and then require users to hold the raw lock when
-manipulating inst->tr (which can't go away until ->stop() completes),
-skipping any that are NULL.
-
-It's not great that we lose the ability to do things with tr that are
-incompatible with a raw lock, but I don't know how to fix that without
-something like changing the tr refcount mechanism to allow an atomic
-refcount increase on a known-valid-for-now tr.  It looks like all the
-current users of this list are OK with a raw lock.
-
-We could go even further and simplify by un-RCUing the list, requiring
-that the raw lock be held over traversal -- I'm not thrilled at the
-idea of letting userspace create unbounded instances that are traversed
-with preemption disabled, but as noted, we already do that in some places.
-
-In any case, this patch is just moving the code around, not introducing
-the problem, so I hope that whatever synchronization overhaul this file
-requires (which goes well beyond this one issue) can wait for followup
-patches.
-
--Crystal
-
+On Fri, May 29, 2026 at 8:13=E2=80=AFPM <sashiko-bot@kernel.org> wrote:
+>
+> Thank you for your contribution! Sashiko AI review found 1 potential issu=
+e(s) to consider:
+>
+> Pre-existing issues:
+> - [Critical] Unchecked array access in `mpc512x_psc_alloc_clock` and rela=
+ted clock functions where `psc_num` derived from device tree is used to ind=
+ex arrays, causing out-of-bounds reads and writes.
+> --
+>
+> commit 7a3c433b5cd814a1fd0d2b57113cd41cb03279a5
+> Author: Rosen Penev <rosenp@gmail.com>
+>
+> bestcomm/gen_bd: fix out-of-bounds access in PSC parameter lookup
+>
+> This commit fixes an out-of-bounds access issue in bcom_psc_gen_bd_rx_ini=
+t()
+> and bcom_psc_gen_bd_tx_init() by properly using ARRAY_SIZE() for bounds
+> checking on psc_num. It also removes an unused forward declaration in
+> bcom_psc_gen_bd_tx_init().
+>
+> > diff --git a/drivers/dma/bestcomm/gen_bd.c b/drivers/dma/bestcomm/gen_b=
+d.c
+> > index 8a24a5cbc2633..75d1a6f543df9 100644
+> > --- a/drivers/dma/bestcomm/gen_bd.c
+> > +++ b/drivers/dma/bestcomm/gen_bd.c
+> > @@ -315,7 +315,7 @@ static struct bcom_psc_params {
+> >  struct bcom_task * bcom_psc_gen_bd_rx_init(unsigned psc_num, int queue=
+_len,
+> >                                          phys_addr_t fifo, int maxbufsi=
+ze)
+> >  {
+> > -     if (psc_num >=3D MPC52xx_PSC_MAXNUM)
+> > +     if (psc_num >=3D ARRAY_SIZE(bcom_psc_params))
+>
+> [Severity: Critical]
+> This is a pre-existing issue, but while looking at this fix for the psc_n=
+um
+> bounds checking, I noticed a similar unchecked array access regression ve=
+ctor
+> using psc_num in drivers/tty/serial/mpc52xx_uart.c.
+cross driver review. Impressive. How is anyone supposed to get anything mer=
+ged?
+>
+> In mpc512x_psc_alloc_clock(), psc_num is calculated directly from
+> port->mapbase:
+>
+> drivers/tty/serial/mpc52xx_uart.c:mpc512x_psc_alloc_clock() {
+>         ...
+>         psc_num =3D (port->mapbase & 0xf00) >> 8;
+>         ...
+>         psc_mclk_clk[psc_num] =3D clk;
+>         ...
+> }
+>
+> Because port->mapbase comes from the device tree via
+> of_address_to_resource(), a malformed device tree could supply an address
+> like 0x11F00, allowing psc_num to evaluate up to 15.
+>
+> Since psc_mclk_clk and psc_ipg_clk are arrays sized to MPC52xx_PSC_MAXNUM
+> (which is 12 when CONFIG_PPC_MPC512x is defined), wouldn't this allow an
+> out-of-bounds write of a pointer to the BSS section?
+>
+> The exact same unchecked psc_num calculation also appears in
+> mpc512x_psc_relse_clock() and mpc512x_psc_endis_clock(), leading to simil=
+ar
+> out-of-bounds reads and writes.
+>
+> >               return NULL;
+> >
+> >       return bcom_gen_bd_rx_init(queue_len, fifo,
+> [ ... ]
+>
+> --
+> Sashiko AI review =C2=B7 https://sashiko.dev/#/patchset/20260530030152.49=
+759-1-rosenp@gmail.com?part=3D1
