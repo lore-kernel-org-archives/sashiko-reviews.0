@@ -1,128 +1,197 @@
-Received: from mail-ot1-f46.google.com (mail-ot1-f46.google.com [209.85.210.46])
+Received: from mail-pl1-f202.google.com (mail-pl1-f202.google.com [209.85.214.202])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0D73618027
-	for <sashiko-reviews@lists.linux.dev>; Sat, 30 May 2026 00:13:04 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.210.46
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D13861A5BAE
+	for <sashiko-reviews@lists.linux.dev>; Sat, 30 May 2026 00:35:01 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.214.202
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1780099987; cv=none; b=FgRjtGtGfo7+dexprOvINkQvRE4oznpXtCs8XlUBkxV3u4PC/TwTAoQ66RXGYtnALMkT81YBsNhvAwEDnax9F8K24RUMdeJoxBsQq5fWsqM+QelJO3YXYZS++nWdam6OvtjgTkepjmEpCyT555aR53/36H2AgISIw09i7DlH46U=
+	t=1780101303; cv=none; b=UaJEwRm9Xg0p8Ul1TxOJJT14mcNRSj0bI9U3HBekfNhwuBeJtrU3T+pKubB+SuaddcTh5TwpW9BKTPcEWVdvt4XB02IP556llijBSCDVMxviOFDxgq9Kz1F8Feng0hgjd50ulbU98vY5l57gki5AgLsFOjMaddofxSO0jUjjrIs=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1780099987; c=relaxed/simple;
-	bh=XAUz9a0Ev13ANpCwyiM/41BpLX2Hzwcg0J37u/ESs0c=;
-	h=Mime-Version:Content-Type:Date:Message-Id:Subject:From:To:Cc:
-	 References:In-Reply-To; b=NIqSTzsVvBFCVujoZAwmrzDnNLmR8lgQkSDUe05fo37g82F7z9bxLKgWOK1u/zlHhAQkUHTPdaEjigNKPWs9NCODaLyIhduNMb3bBOzE9bzS2AyECvLzc+qX3mIf7WHrdBN/Yul0a7bB7s7X+Zc6m2zs4df7ODId2ttR84SVwDU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=I5HART+O; arc=none smtp.client-ip=209.85.210.46
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+	s=arc-20240116; t=1780101303; c=relaxed/simple;
+	bh=LXrbqgGHJ5TCns2d/WLysB14JNxmqc26djxAVUrnz0c=;
+	h=Date:In-Reply-To:Mime-Version:References:Message-ID:Subject:From:
+	 To:Cc:Content-Type; b=D2Lsm4gRnDZoWvXXFPxId7EUb6TrlJYnI4YjyAyuS2MCE94Mg2PxVin7AUFA8dmzZa0QVM3FifVTj2Za9juaS75VHOzYWphqRKmXTWrI+bVvIGDFBjF6dSl1/B3OqHfWzjFEvZn82QjgJD3wAxPnkxrFxccz2FYWnfbgGfic6lE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=google.com; spf=pass smtp.mailfrom=flex--seanjc.bounces.google.com; dkim=pass (2048-bit key) header.d=google.com header.i=@google.com header.b=vxAv+HnV; arc=none smtp.client-ip=209.85.214.202
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=google.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=flex--seanjc.bounces.google.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="I5HART+O"
-Received: by mail-ot1-f46.google.com with SMTP id 46e09a7af769-7e61d8d9a21so3387653a34.0
-        for <sashiko-reviews@lists.linux.dev>; Fri, 29 May 2026 17:13:04 -0700 (PDT)
+	dkim=pass (2048-bit key) header.d=google.com header.i=@google.com header.b="vxAv+HnV"
+Received: by mail-pl1-f202.google.com with SMTP id d9443c01a7336-2bf281d523eso5229405ad.0
+        for <sashiko-reviews@lists.linux.dev>; Fri, 29 May 2026 17:35:01 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20251104; t=1780099984; x=1780704784; darn=lists.linux.dev;
-        h=in-reply-to:references:cc:to:from:subject:message-id:date
-         :content-transfer-encoding:mime-version:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=uZEFV3xqmXJ7mDew0+WqBqGT5npYefXJtsev5wJWkXs=;
-        b=I5HART+Omzn/1q1GxfNXDDt1Cygh9D8szySfaHyZMvjoM/lG0adhj84VI1qSSFKlRk
-         5PxrxYXM9uQobWgYBPoxdwWvsHrERHoA/RuUEG2tIdFnt75fEycODqQ9A8YK061HDKMw
-         JdCYh1WisIXsrgpvWCDaTPKj/mbdcNoBNrFMKvFrn3/thzkKjWkDlhOGzjHS0WixwGKp
-         jV2HcGdGv56CojcnrqssMYQDq6AAk2hge90XH8x3qoo8p7WXvIxV20/9dlwr0W/Qvj2p
-         X5go4cgMR3Mb9N/XX53NmVyG5TiuVFVfCnh1NOE4klNmn36Be2g1eHbonF5ZbXUumbs5
-         u0Qg==
+        d=google.com; s=20251104; t=1780101301; x=1780706101; darn=lists.linux.dev;
+        h=cc:to:from:subject:message-id:references:mime-version:in-reply-to
+         :date:from:to:cc:subject:date:message-id:reply-to;
+        bh=nNBaqn7MVJGrLWJWnaVdqprmzYHk2rkmEwyyXy4tIQU=;
+        b=vxAv+HnVyMOe8P4+d3wWmsLELH056U0DMc8oLs8ikXiXrJz+m2qy0TjonZlWdIKWDi
+         OUibeEojSZpgqBCebOkA3gREKsLaH1/OhWgnWnlVkLc4qZqnrBGYi096MbJI8yX4RNyW
+         uMxTmNNbRr0ox+zpykZ/UrsGJINfNqbiDjc3JiImp/OySsZ69r5dvH1HOZL3jja86DXh
+         RJveXNWlnEXGN5pYvht5oV9842SDlmuqVGA22tSB5HbZbZBszs8reh25/4orJHYRoezz
+         2P/LtQl7JFsMVXtiucTMTCMnCUdacaX+bJIQcxEKV0Zp1ElKkB3SSta8kMoin3WpeeCz
+         c2lQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20251104; t=1780099984; x=1780704784;
-        h=in-reply-to:references:cc:to:from:subject:message-id:date
-         :content-transfer-encoding:mime-version:x-gm-gg:x-gm-message-state
-         :from:to:cc:subject:date:message-id:reply-to;
-        bh=uZEFV3xqmXJ7mDew0+WqBqGT5npYefXJtsev5wJWkXs=;
-        b=YmpFa/DPIk3JoCnEQD+oDWdKYJx06EjQx+M/1jisqtBvOms6hV1NPT484vMJV91Jce
-         +X/NWpIApCsrAl3evgVo5Ye2wb1ndWy2+xNaHdLm5jSeUV2JxqX4SZHLqTb9BJBDFmmK
-         4wB1J+40hZ1pQ0r35iSYsC6n74I3yktAwCN2dkGFF2x+Q9StyJY+iAJQe/+WsXlgInhY
-         MGNOEFBD81KSQO97RCuu3X1f/j2IEWQ2v5KgFTaq/B47u3X1DDGcwUjnF56e/+qw5OZn
-         yKz6p60xkQUBSAYpakt5jAr4B3AANslKBvIw5odiK0bMO8Lzsn9dCbe2Bg+Vl6Am6mkY
-         IIFQ==
-X-Gm-Message-State: AOJu0YytKhZM32lNXBq7PNQVu+DrL4CnqWGpVCi8vWe5kufKwJFal4Rd
-	hjEEuw3S71Haf4Ki5Bftebn0MNMU3fCn+AMkk+QzgnDnYPnqrgEY0Ikt2MAHog==
-X-Gm-Gg: Acq92OGC6x7wsBPoQgOS2viCnsDmXFXXi71kQsIItHdotC63g2HFRZfF0+7P0XTgnf5
-	UaU4RkTJOCio46bRm44VuCfXdzn4Kxx23zN/66GIyYM8ePBJAla4+GL1SUrekb6TO64Fazj0Gek
-	3Cp6pdZFos/OrIyJllx8ti3Cd4rBBC3anvYcrpApSGwvLXXFlNrOGF4cHHA5/By1Y1iKaaM/DkI
-	XuFfIjUJ0zr1XJT9bMPh5i6ISiQkTTHpCuKuKymedhrqCKtyGN9/wV+jZ0Xg9XjIsaiRha8m9TR
-	c+R3nnDXmO+4Znf6cELOJ1ouPtiU7R2ySA/idHmDbrbvDFjAWtF1aMbunvSFgeOf1FFzQw8nsOS
-	JvXbipd4d+qof39PWF8IC5kwmEv9JmoPZaf/GrNCeo+kPEQdGX//jei06Moe86dtjUiDdJK02cG
-	PTw64j9rVc9dvztUSKMsInizNRLBgmZ+mb3Gr8xDdaxGy+hcWqIBDHKGZXyxz++8VhJfi19X8Ta
-	+XRUt5cBdY10XR2JLdxnyXQQGT7
-X-Received: by 2002:a05:6820:f03:b0:69d:9153:56ed with SMTP id 006d021491bc7-69e102a87d7mr847884eaf.3.1780099983883;
-        Fri, 29 May 2026 17:13:03 -0700 (PDT)
-Received: from localhost ([2a03:2880:10ff:51::])
-        by smtp.gmail.com with ESMTPSA id 006d021491bc7-69e067f30fcsm2098238eaf.6.2026.05.29.17.13.01
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Fri, 29 May 2026 17:13:02 -0700 (PDT)
+        d=1e100.net; s=20251104; t=1780101301; x=1780706101;
+        h=cc:to:from:subject:message-id:references:mime-version:in-reply-to
+         :date:x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+        bh=nNBaqn7MVJGrLWJWnaVdqprmzYHk2rkmEwyyXy4tIQU=;
+        b=LRJBl/Dd5ab/aOT15uhp3uEwPF7Zzhzu/sVPQ5H+hD30nUB7wkwbIYvxoH+95ytTSi
+         72iLQo88SeCyDDwxkUm4d/jjCrI/V1gtbPCc7sGz5EnyHp8pCdrVDCk1IjoAxRZUdSLr
+         NoI9QvJrJwlm604CZDDP6pCXBLOuL9xc8PMj8NT+Q7KuqsNDeE9coosqCWRjAUbDUXgn
+         6Pg4btPQAMzynaGehdyj1TjsB2O2fqA1E5szHJASi1AZLUc4cKhmGe9CnpSpLSOFya9E
+         wOB1blqgkDoHGjhYvoP9YRncclpry63hQZouKs7fCSM0azTAN8o1Xd4svHlCQoH98rxx
+         EUfQ==
+X-Gm-Message-State: AOJu0YyDhO4HvXv1E5lDBWxsXb6M5g1rp5rpY4aqJFBnhcB7ty9vWWr/
+	gakUPs6m8Vlv4p4duT1S3+Qp2PFdXPYe3CZE/bagHHwlW+WCvayGRTcliEB6PRaQbJrj7PLgI0I
+	Q7AquC76J+c8nYhL17HJPnjEmXkSeOr2lueql/kZmT45JmueYHUBjidXKihd94FBAFkuicZnSHv
+	z3X4taGX2w3q6ZtAFZfv7yzPGR7UYmxcNZl8vXEAwpwFd8kQg7
+X-Received: from plblh4.prod.google.com ([2002:a17:903:2904:b0:2b2:488e:b71])
+ (user=seanjc job=prod-delivery.src-stubby-dispatcher) by 2002:a17:902:d4ce:b0:2bf:800:19f8
+ with SMTP id d9443c01a7336-2bf367e071dmr24203735ad.17.1780101300733; Fri, 29
+ May 2026 17:35:00 -0700 (PDT)
+Date: Fri, 29 May 2026 17:35:00 -0700
+In-Reply-To: <20260528005419.0228F1F00A3A@smtp.kernel.org>
 Precedence: bulk
 X-Mailing-List: sashiko-reviews@lists.linux.dev
 List-Id: <sashiko-reviews.lists.linux.dev>
 List-Subscribe: <mailto:sashiko-reviews+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:sashiko-reviews+unsubscribe@lists.linux.dev>
 Mime-Version: 1.0
-Content-Transfer-Encoding: quoted-printable
-Content-Type: text/plain; charset=UTF-8
-Date: Fri, 29 May 2026 17:13:01 -0700
-Message-Id: <DIVKS1X4Q76A.1Z3XA1HE3MI7F@gmail.com>
-Subject: Re: [PATCH bpf-next 4/4] selftests/bpf: Add tests for arena
- slub-backed allocator
-From: "Alexei Starovoitov" <alexei.starovoitov@gmail.com>
-To: <sashiko-reviews@lists.linux.dev>
-Cc: <bpf@vger.kernel.org>
-X-Mailer: aerc
-References: <20260529202438.16408-5-alexei.starovoitov@gmail.com>
- <20260529223907.B25251F00893@smtp.kernel.org>
-In-Reply-To: <20260529223907.B25251F00893@smtp.kernel.org>
+References: <20260527234711.4175166-9-yosry@kernel.org> <20260528005419.0228F1F00A3A@smtp.kernel.org>
+Message-ID: <ahowtCCtnr9t5DGy@google.com>
+Subject: Re: [PATCH v7 08/17] KVM: x86/pmu: Check mediated PMU counter
+ enablement before event filters
+From: Sean Christopherson <seanjc@google.com>
+To: sashiko-reviews@lists.linux.dev
+Cc: Yosry Ahmed <yosry@kernel.org>, kvm@vger.kernel.org
+Content-Type: text/plain; charset="us-ascii"
 
-On Fri May 29, 2026 at 3:39 PM PDT, sashiko-bot wrote:
-> Thank you for your contribution! Sashiko AI review found 1 potential issu=
-e(s) to consider:
-> - [Medium] The `arena_slab_freeptr_stale_pcs` selftest will reliably fail=
- on architectures with a page size larger than 4K (e.g., ARM64 with 64K pag=
-es) due to hardcoded assumptions about SLUB slab page capacities.
+On Thu, May 28, 2026, sashiko-bot@kernel.org wrote:
+> Thank you for your contribution! Sashiko AI review found 1 potential issue(s) to consider:
+> 
+> Pre-existing issues:
+> - [High] Guest can bypass PMU event filters for fixed counters by modifying MSR_CORE_PERF_FIXED_CTR_CTRL.
 > --
->
-> commit 307042b1f4f8cca55cad67f2c12869bf67a9f7c2
-> Author: Alexei Starovoitov <ast@kernel.org>
->
-> selftests/bpf: Add tests for arena slub-backed allocator
->
-> This commit adds end-to-end selftests covering the SLAB_BPF_ARENA path.
-> It includes smoke tests for basic alloc/free kfuncs and exercises corrupt=
-ed
-> in-object freepointers to validate get_freepointer() clamping.
->
->> diff --git a/tools/testing/selftests/bpf/progs/arena_slab_freeptr_stale_=
-pcs.c b/tools/testing/selftests/bpf/progs/arena_slab_freeptr_stale_pcs.c
->> new file mode 100644
->> index 0000000000000..4d23d75419d61
->> --- /dev/null
->> +++ b/tools/testing/selftests/bpf/progs/arena_slab_freeptr_stale_pcs.c
->
-> [ ... ]
->
->> +	victim =3D objs[TARGET_IDX];
->> +
->> +	/*
->> +	 * The 4096-byte bucket has one object per slab and a 4-object sheaf.
->> +	 * Free @victim while the sheaf is full, then turn its encoded NULL
->> +	 * freepointer into any non-NULL decoded value. The arena clamp keeps
->> +	 * non-NULL decoded values in the same slab and object-aligned, so thi=
-s
->> +	 * becomes a freelist self-cycle back to @victim.
->> +	 */
->
-> [Severity: Medium]
-> Is this assumption valid on architectures with page sizes larger than 4K?
->
-> On a system with 64KB pages, a 4096-byte bucket would hold multiple objec=
-ts
-> per slab page instead of just one.
+> 
+> commit 270fc772a7eb457f31ead154a0c426817961ae8a
+> Author: Yosry Ahmed <yosry@kernel.org>
+> 
+> KVM: x86/pmu: Check mediated PMU counter enablement before event filters
+> 
+> This commit checks if a PMU counter is enabled by the guest before performing
+> the potentially expensive PMU event filter lookup. It modifies
+> kvm_mediated_pmu_refresh_event_filter to use pmc_is_locally_enabled.
+> 
+> > diff --git a/arch/x86/kvm/pmu.c b/arch/x86/kvm/pmu.c
+> > index afbc731e72174..67dbbd4c73036 100644
+> > --- a/arch/x86/kvm/pmu.c
+> > +++ b/arch/x86/kvm/pmu.c
+> > @@ -532,7 +532,7 @@ static bool pmc_is_event_allowed(struct kvm_pmc *pmc)
+> >  
+> >  static void kvm_mediated_pmu_refresh_event_filter(struct kvm_pmc *pmc)
+> >  {
+> > -	bool allowed = pmc_is_event_allowed(pmc);
+> > +	bool allowed = pmc_is_locally_enabled(pmc) && pmc_is_event_allowed(pmc);
+> 
+> [Severity: High]
+> This is a pre-existing issue, but was it intended for guests to be able to
+> bypass PMU event filters for fixed counters by writing to the MSR twice?
+> 
+> Looking at reprogram_fixed_counters() in arch/x86/kvm/vmx/pmu_intel.c,
+> pmu->fixed_ctr_ctrl_hw is unconditionally overwritten with raw guest data
+> before checking which counters changed:
+> 
+> arch/x86/kvm/vmx/pmu_intel.c:reprogram_fixed_counters() {
+>     ...
+> 	pmu->fixed_ctr_ctrl = data;
+> 	pmu->fixed_ctr_ctrl_hw = data;
+> 	for (i = 0; i < pmu->nr_arch_fixed_counters; i++) {
+> 		u8 new_ctrl = fixed_ctrl_field(data, i);
+> 		u8 old_ctrl = fixed_ctrl_field(old_fixed_ctr_ctrl, i);
+> 
+> 		if (old_ctrl == new_ctrl)
+> 			continue;
+>     ...
+> 		kvm_pmu_request_counter_reprogram(pmc);
+> 	}
+> }
+> 
+> Because kvm_pmu_request_counter_reprogram() is skipped when the counter's
+> control bits haven't changed, kvm_mediated_pmu_refresh_event_filter() is
+> never called to apply the filter mask.
+> 
+> Could a guest enable a rejected counter (which gets correctly filtered and
+> cleared in fixed_ctr_ctrl_hw by the first write), and then write the MSR a
+> second time to enable a different counter while leaving the rejected
+> counter's bits set?
+> 
+> The second write would inject the unfiltered enable bits into
+> fixed_ctr_ctrl_hw, and since the software state (old_ctrl == new_ctrl)
+> matches, KVM skips reprogramming it. Does this allow the rejected counter to
+> remain enabled in hardware upon the next VM-enter, completely bypassing the
+> event filters?
 
-It's fine. It's a stress test for the algorithm. It's gotta work
-on at least one arch in CI.
-But I'll switch to __PAGE_SIZE to avoid sashiko complains in v2.
+Hrm, does look like that's the case.  If the guest toggles a different PMC, KVM
+will update pmu->fixed_ctr_ctrl_hw and reprogram the PMC that is changing, but
+not the others that are enabled in pmu->fixed_ctr_ctrl_hw.
+
+Aha!  I think this is quite easy to fix: use fixed_ctr_ctrl_hw as the basis for
+the diff.  For the perf-based PMU, fixed_ctr_ctrl_hw == fixed_ctr_ctrl at all
+times.  For the mediated PMU, "reprogramming" means changes the values that are
+loaded into hardware, and so unless I'm missing something, this?  I'll test and
+send a patch next week.
+
+idiff --git arch/x86/kvm/vmx/pmu_intel.c arch/x86/kvm/vmx/pmu_intel.c
+index 453cb3d3ec9b..a73a9515d96c 100644
+--- arch/x86/kvm/vmx/pmu_intel.c
++++ arch/x86/kvm/vmx/pmu_intel.c
+@@ -56,8 +56,16 @@ static struct x86_pmu_lbr *vcpu_to_lbr_records(struct kvm_vcpu *vcpu)
+ 
+ static void reprogram_fixed_counters(struct kvm_pmu *pmu, u64 data)
+ {
++       /*
++        * Compare against the value the mediated PMU shoves into hardware, not
++        * the guest's desired value.  For the emulated PMU (proxied via perf),
++        * they are one and the same (fixed_ctr_ctrl_hw isn't used other than
++        * here).  For the mediated PMU, KVM needs to reprogram the actual MSR,
++        * and so needs to react to potential changes in the value shoved into
++        * hardware, e.g. to ensure the event filter is enforced.
++        */
++       u64 old_fixed_ctr_ctrl = pmu->fixed_ctr_ctrl_hw;
+        struct kvm_pmc *pmc;
+-       u64 old_fixed_ctr_ctrl = pmu->fixed_ctr_ctrl;
+        int i;
+ 
+        pmu->fixed_ctr_ctrl = data;
+
+
+Note, general purpose counters (thankfully) don't have the same bug.
+
+			if (data != pmc->eventsel) {
+				pmc->eventsel = data;
+				pmc->eventsel_hw = data;
+				kvm_pmu_request_counter_reprogram(pmc);
+			}
+
+Oh, and for posterity, using fixed_ctr_ctrl_hw won't mess up pmc_in_use, because
+it's unused by the mediated PMU.  It's purpose is solely for releasing perf events
+that are no longer being actively used.  It's a bit hard to see, but need_cleanup
+will never be set for the mediated PMU, because pmu->event_count will always be
+zero.
+
+	if (vcpu->scheduled_out && pmu->version && pmu->event_count) {
+		pmu->need_cleanup = true;
+		kvm_make_request(KVM_REQ_PMU, vcpu);
+	}
+
+To make that more obvious, I think it makes sense to add
+
+  static inline void __kvm_pmu_mark_pmc_in_use(struct kvm_vcpu *vcpu, u8 idx)
+ {
+	if (kvm_vcpu_has_mediated_pmu(vcpu))
+		return;
+
+	__set_bit(idx, vcpu_to_pmu(vcpu)->pmc_in_use);
+  }
+
+and then use that everywhere, and WARN if kvm_pmu_cleanup() is ever called with
+a mediated PMU.
