@@ -1,184 +1,216 @@
-Received: from mail-dl1-f48.google.com (mail-dl1-f48.google.com [74.125.82.48])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from mout02.posteo.de (mout02.posteo.de [185.67.36.66])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2A6082DC79A
-	for <sashiko-reviews@lists.linux.dev>; Sat, 30 May 2026 23:17:23 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=pass smtp.client-ip=74.125.82.48
-ARC-Seal:i=2; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1780183046; cv=pass; b=qPXR8GBXuCG4oWcu51hnY0aLgvUmq++ATLtgxGllZKPeyRAV9pa04Oabhe18qzVtdB4V/my7hDGjICdIf3MBqezcVqa07lSv5OEpOBDBVpI5zVoXVafW1fYSSnEk4VQSVfaKPo3zfX1IX6WQ70MsKUGu63tPOr2I4r3aMv6cOi0=
-ARC-Message-Signature:i=2; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1780183046; c=relaxed/simple;
-	bh=QQSU1zzQnCL9cfy4Cb0A8NBU07sr7eZqMeoXplLn91s=;
-	h=From:In-Reply-To:References:MIME-Version:Date:Message-ID:Subject:
-	 To:Cc:Content-Type; b=VUqvPF5A7miC1H0EiDAnoW3Vretwe6FtzCau5n5YI5hJ9F2ANXZDtA1DsXwIeDR4IX+z3HGilVnXtWggPXjdEFRcbmTrm1yByh8HUlmCW6+lMt/sxumNqPRsw5KoVYSJDGEvf7Mhk6JCZ+hC90l38CMvvppmRPW0Vr90AM/53H4=
-ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=google.com; spf=pass smtp.mailfrom=google.com; dkim=pass (2048-bit key) header.d=google.com header.i=@google.com header.b=V0quoEha; arc=pass smtp.client-ip=74.125.82.48
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=google.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=google.com
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C583516A395
+	for <sashiko-reviews@lists.linux.dev>; Sat, 30 May 2026 23:48:08 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=185.67.36.66
+ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
+	t=1780184891; cv=none; b=BLIB4InDThHc8TxlJHGOETntWIdiSQTs1DAMDxagMK7RziRMDHn43eQqKe9jNvmQmUWBLXLkHcEZK9gSBpSAiYu7aLctljta3Lh926PGAWNy/GCjHywwa9mp+npX2EN0gw2Df42naKoEUXf6WRmIyTUrXryfw5DUr2G1un9Ezpk=
+ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
+	s=arc-20240116; t=1780184891; c=relaxed/simple;
+	bh=9eh1Wi6tET5mOKPtyR+QJWwyYNYnNinvP3kUOz9teC4=;
+	h=Message-ID:Subject:From:To:Cc:Date:In-Reply-To:References:
+	 Content-Type:MIME-Version; b=mNkyqi/o//iMd9mFXwlrLB1BF0Y21eVnyDjCaKrsm5+ivCuw9wKEQQTEvO7epPxN0XYQoMTt+fOTFOKKf2CdE46tbR7kyRSyLo5VPdk9OnGcwYea59+/tqXwh2yTYCwvhVxxOsMCLMeEzHcZRjEe2sto+b/Moh9Y/38RmJUAq5g=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=posteo.de; spf=pass smtp.mailfrom=posteo.de; dkim=pass (2048-bit key) header.d=posteo.de header.i=@posteo.de header.b=DRpO+8sf; arc=none smtp.client-ip=185.67.36.66
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=posteo.de
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=posteo.de
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=google.com header.i=@google.com header.b="V0quoEha"
-Received: by mail-dl1-f48.google.com with SMTP id a92af1059eb24-137bd9ed2b1so1537296c88.1
-        for <sashiko-reviews@lists.linux.dev>; Sat, 30 May 2026 16:17:23 -0700 (PDT)
-ARC-Seal: i=1; a=rsa-sha256; t=1780183043; cv=none;
-        d=google.com; s=arc-20240605;
-        b=bcrSX15L+2aI3xJjfifAY1FSLcQzfgJU8FdEhvApdTBifPgd5EMU8rMSw/dyc80xHp
-         6CYikrqPW3AdN2RX6BSCjFXEOu1Tz4mO0AxKdXM1db70rLDT5gGCdx20WtGq/lb5HuWS
-         f8XPr/QGxcGEgepgMIGztlP75X4/jBZqfZ25TBNGYRvDMLjD15bi+rb8Tln/OyiyXfqq
-         6Ajk7l87VkOKF6s5f9aJIyVnR0x6csbC+teGPqECgKT/i8IQH68TclW3C0hkCdNCFITJ
-         ledADLWi6LWty0djMUByyIR/Z1TAPsebRxOKHNOe0jLAPOkyNXX8e0CuAlmO4y5muzHz
-         V0Ew==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com; s=arc-20240605;
-        h=content-transfer-encoding:cc:to:subject:message-id:date
-         :mime-version:references:in-reply-to:from:dkim-signature;
-        bh=viCVJzQbV7r4+toyEfLLyYDk6SbXvXgwv3+sGjmcLbU=;
-        fh=n/xVjRsPLSx48DK0mlLV8S98n4Bay9rv1xBpMnS6M6Y=;
-        b=ExsYo81Merddo0xy87HXMnVw8Hj8lcVjUUJ6H43kckUtXds6wmsMJDLpSfYHXjkEw0
-         xk6NDLw1t5E14eLsyoZED5TisTsE984Py1c+bRgCKc8DGdYFViIcyd70egHwMMDP4WVS
-         PcDarw7IWgq3UKlGkYH+Xl8aCOW+uYL8nC/kkxss+qF0lbrtaRcGa2UbMs8KN7fFlRzi
-         WUNA4VydLgEg/DetSXH4fOtJC9yAiLlPfgYgBiAlS5KcqdFJi9zBlQzfVo4pRARtXrGo
-         bZMH3Ns2+o8SMDZcyEiGtdvsLZ25A4SMRFNqwRRP3RcLrZ52kB/SpTjBOCvKTuWTsz4t
-         IHfg==;
-        darn=lists.linux.dev
-ARC-Authentication-Results: i=1; mx.google.com; arc=none
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=google.com; s=20251104; t=1780183043; x=1780787843; darn=lists.linux.dev;
-        h=content-transfer-encoding:cc:to:subject:message-id:date
-         :mime-version:references:in-reply-to:from:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=viCVJzQbV7r4+toyEfLLyYDk6SbXvXgwv3+sGjmcLbU=;
-        b=V0quoEhay+moSogGk+/9M/npj2L9llU+i8xVyPbEvGXifJs8OJDyDX3Ve1RipnxVlr
-         XKL5uGjWMkRd/pw4Uy1DWQdwGw+1q9QjvwWUO53HjNlTMeOGkq9foDgQVgdBp9Ldz3Eu
-         vlR+mUb2rIARhc89U78PzLvTaBozLtErHPZgTXxS+aK45eJCjz29M14CmL2ZNfhE/gwF
-         U3hRnZS0tRdPLrKdlpVei/xQ7581tM2iHe/qrChj2l+QfEqyb/PUL/lNYR6StzcA1guw
-         IJDhpt+lAG1X/Zl+A96ru0v+Kq6IRi1rTCnFiiIDvWDaNuBsiW/HSOKBV2jx2SFPdFcc
-         pNbA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20251104; t=1780183043; x=1780787843;
-        h=content-transfer-encoding:cc:to:subject:message-id:date
-         :mime-version:references:in-reply-to:from:x-gm-gg:x-gm-message-state
-         :from:to:cc:subject:date:message-id:reply-to;
-        bh=viCVJzQbV7r4+toyEfLLyYDk6SbXvXgwv3+sGjmcLbU=;
-        b=Fj2jfd8A/Vg5sHeza/RLXyysGdFHFQv+RJss5VkGaYaMAKP5EdnxNTmSuWcexPRKZe
-         okYVKw1fzxbyPyxnoDLgZuTVHMd4caRHD1V95mTBJ3x1U/CY6q68pzml4dxplDjA4Bqq
-         HyWR7sBuo/TXnuQpcw99zpYeQdOcolBX7XPyESehZfkiGSfrrKc+GBVB3jyzqwBXjemh
-         7QAjZJGWBxr/Ji6f41qCuC0mEm7m+i0NOmpSIIo4Sa2YyobocpC4c/6YayWXlas18CkB
-         gpuCNAxcZo5bVzm2FH6HlZIa0BTcJdWItDBcMU0qd+WRBo+IeGyei+hZxoIQew+3ocjM
-         QLrA==
-X-Gm-Message-State: AOJu0YwJV+5NgCcNx5/EyBdx5ijVF+rzJ702KX8SS3yzHkh4YZJzlUpi
-	sbeUdsgceKrbLznaFQM/bdQ8BW3XVK3utqgQeQgqZTmogTF39x70P1ofx+/2xUDuUTNmfrsqJJK
-	DKUVQ5LAT+nTa+Bn5Vd2lpZkH9womTvmpL94DW3f6FGaTSucD/e4LSF2d
-X-Gm-Gg: Acq92OE2kss1EfmGfc+I7w/kgKfbN0gmbXdgM+pppD5G6sPO+jM0+tTr1RDTAt3ljoZ
-	eiCJxUXetjdddygdqVZPuf4Y4wmAJWHi/R6fpeoyOdBX6ODuTRxuPZnX+jIuZM5l3c2QPeaMx5T
-	oWor3aOjh+w6dHIuWwnWuTYKWPOpZgHNKd6ZiJx3Es9ggo7ZIjioNTtZc85TMtTIZeixd+8zgJQ
-	QUPCdoc9iqfjmHoS5rLeEKXvlbv7JsDtrhfyQmWhrUyDNN+IzwcjScVbi9RD4Rxt/43F05U2B4p
-	YwHOtwpDQLxcOkVOd93uN5SypN+cmToh9z05pXHOg3Gt7UXSXjYZqdMGzK2QLZh9gm/npg40XOS
-	iF2Atssrm
-X-Received: by 2002:a05:7022:60a3:b0:135:d749:574f with SMTP id
- a92af1059eb24-137d3f0f885mr2381955c88.13.1780183042448; Sat, 30 May 2026
- 16:17:22 -0700 (PDT)
-Received: from 176938342045 named unknown by gmailapi.google.com with
- HTTPREST; Sat, 30 May 2026 16:17:21 -0700
-Received: from 176938342045 named unknown by gmailapi.google.com with
- HTTPREST; Sat, 30 May 2026 16:17:21 -0700
-From: Ackerley Tng <ackerleytng@google.com>
-In-Reply-To: <20260528032925.BBCCB1F000E9@smtp.kernel.org>
-References: <20260528021117.107984-4-seanjc@google.com> <20260528032925.BBCCB1F000E9@smtp.kernel.org>
+	dkim=pass (2048-bit key) header.d=posteo.de header.i=@posteo.de header.b="DRpO+8sf"
+Received: from submission (posteo.de [185.67.36.169]) 
+	by mout02.posteo.de (Postfix) with ESMTPS id DBD1E240101
+	for <sashiko-reviews@lists.linux.dev>; Sun, 31 May 2026 01:48:06 +0200 (CEST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=posteo.de; s=2017;
+	t=1780184886; bh=h00BNJxHu9UnNH3x39/yY6xRF86uqXNPm9vyGTwudkE=;
+	h=Message-ID:Subject:From:To:Cc:Date:Autocrypt:Content-Type:
+	 MIME-Version:OpenPGP:From;
+	b=DRpO+8sfpjGTGSKs3B+KsPFpi/e7UCzV1WVk27WUR3PWwSb8/8aelfL0Sb0VTO+Z2
+	 D1wyocikPDCMN+UTaI3xI4Fa+PUEaVnPHsNOmly9s44+MZ4/X7L4MEc3jNVt7j/CP9
+	 5mTDYpdHGKvmbBOCqhCahlwaLeMra3hta4ENjJ8YeN0qSZGvAhWb3lQTzRqBxVUzyy
+	 SxaeER/ntCQ6CIyw0Bho3x7PHJtjqaPpd1iQnYRjYbN22LRu+g+keYCPMgpEbho1BN
+	 blTPdW4of3ZmKj4lKFMt+hoe8Q1UxajmCAitmMv857pJP5pZ/ho2RfwL0JIdKx8hGi
+	 CWI/OOXIBnIYA==
+Received: from customer (localhost [127.0.0.1])
+	by submission (posteo.de) with ESMTPSA id 4gScNk2tcRz6twg;
+	Sun, 31 May 2026 01:48:06 +0200 (CEST)
+Message-ID: <efb819ae72e3298aa6a14fc7f880631a837be455.camel@posteo.de>
+Subject: Re: [PATCH v18 1/3] rust: leds: add basic led classdev abstractions
+From: Markus Probst <markus.probst@posteo.de>
+To: sashiko-reviews@lists.linux.dev
+Cc: ojeda@kernel.org, linux-pci@vger.kernel.org
+Date: Sat, 30 May 2026 23:48:06 +0000
+In-Reply-To: <20260530230537.893561F00893@smtp.kernel.org>
+References: <20260531-rust_leds-v18-1-d07102ba5170@posteo.de>
+	 <20260530230537.893561F00893@smtp.kernel.org>
+Autocrypt: addr=markus.probst@posteo.de; prefer-encrypt=mutual;
+ keydata=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
+ jfGillcaQOqFZ3WwVqyzG1BUfTow==
+Content-Type: multipart/signed; micalg="pgp-sha256";
+	protocol="application/pgp-signature"; boundary="=-/1HCwH1hJfyq2QwBCz58"
 Precedence: bulk
 X-Mailing-List: sashiko-reviews@lists.linux.dev
 List-Id: <sashiko-reviews.lists.linux.dev>
 List-Subscribe: <mailto:sashiko-reviews+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:sashiko-reviews+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Date: Sat, 30 May 2026 16:17:21 -0700
-X-Gm-Features: AVHnY4J6QLRyCAUyZTY8SWiq9slHpWnhSD2XzBkrXjg8MYB91Ph4QMnrSosk5AY
-Message-ID: <CAEvNRgECjs5UqJsBjsgMc2JF8rRirCPAtB02dKxSgsTY0LAe6w@mail.gmail.com>
-Subject: Re: [PATCH v3 3/3] KVM: selftests: Add guest_memfd regression test
- signed offset+size bug
-To: sashiko-reviews@lists.linux.dev, Sean Christopherson <seanjc@google.com>
-Cc: kvm@vger.kernel.org
+OpenPGP: url=https://posteo.de/keys/markus.probst@posteo.de.asc; preference=encrypt
+
+
+--=-/1HCwH1hJfyq2QwBCz58
 Content-Type: text/plain; charset="UTF-8"
 Content-Transfer-Encoding: quoted-printable
 
-sashiko-bot@kernel.org writes:
-
->
-> [...snip...]
->
->> @@ -345,6 +345,16 @@ static void test_invalid_punch_hole(int fd, size_t =
-total_size)
->>  	}
->>  }
->>
->> +static void test_invalid_binding(struct kvm_vm *vm, int fd, size_t size=
-)
->> +{
->> +	int r;
->> +
->> +	r =3D __vm_set_user_memory_region2(vm, 0, KVM_MEM_GUEST_MEMFD, 0, size=
-, 0,
->> +					 fd, 0x7ffffffffffff000ull);
->
-> [Severity: Medium]
-> Is this hardcoded offset value correct?
->
-> The literal 0x7ffffffffffff000ull contains 17 hex digits (68 bits), which
-> will be truncated to 64 bits (0xfffffffffffff000ull) by the compiler. Bec=
-ause
-> this truncated value is very close to the maximum 64-bit unsigned integer=
-,
-> adding the size to it will wrap around zero.
->
-
-Sashiko miscounted the number of hex digits, it's actually 16.  That
-said, humans also have to count to understand what the test is
-doing... How about this, which I think highlights the signed overflow
-requirement on the selected offset?
-
- static void test_invalid_binding(struct kvm_vm *vm, int fd, size_t size)
- {
-+       const u64 large_offset =3D align_down(INT64_MAX, getpagesize());
-        int r;
-
-+       TEST_ASSERT(__builtin_add_overflow((s64)large_offset, (s64)size, &r=
-),
-+                   "large_offset+size must overflow when interpreted
-as signed.");
-+
-        r =3D __vm_set_user_memory_region2(vm, 0, KVM_MEM_GUEST_MEMFD, 0, s=
-ize, 0,
--                                        fd, 0x7ffffffffffff000ull);
-+                                        fd, large_offset);
-        TEST_ASSERT(r && errno =3D=3D EINVAL,
-                    "Memslot with out-of-range offset+size should fail");
- }
-
-> Will this trigger KVM's existing unsigned overflow check instead of the s=
-igned
-> offset plus size bug this test is meant to verify, causing the test to pa=
-ss
-> for the wrong reason?
->
-> Also, since the trailing 000 makes the offset strictly 4KB-aligned, will
-> this fail immediately during the page alignment check on architectures wi=
-th
-> larger page sizes (like 64KB on ARM64)?
->
-
-This is probably true too.
-
-> Should the offset be dynamically calculated at runtime based on the page =
-size
-> to ensure proper alignment and accurately test the signed boundary?
->
-
-The diff builds large_offset dynamically.
-
-Reviewed-by: Ackerley Tng <ackerleytng@google.com>
-Tested-by: Ackerley Tng <ackerleytng@google.com>
-
->> +	TEST_ASSERT(r && errno =3D=3D EINVAL,
->> +		    "Memslot with out-of-range offset+size should fail");
->> +}
->
+On Sat, 2026-05-30 at 23:05 +0000, sashiko-bot@kernel.org wrote:
+> Thank you for your contribution! Sashiko AI review found 1 potential issu=
+e(s) to consider:
+> - [High] The `Device` abstraction drops the `'a` lifetime of the `name` r=
+eference, leading to a potential use-after-free of the LED name.
 > --
-> Sashiko AI review =C2=B7 https://sashiko.dev/#/patchset/20260528021117.10=
-7984-1-seanjc@google.com?part=3D3
+>=20
+> commit bc77118736b867c88c1854d7a5c4eb57818535fd
+> Author: Markus Probst <markus.probst@posteo.de>
+>=20
+> rust: leds: add basic led classdev abstractions
+>=20
+> Implement the core abstractions needed for led class devices, including
+> LedOps, DeviceBuilder, and Device.
+>=20
+> > diff --git a/rust/kernel/led/normal.rs b/rust/kernel/led/normal.rs
+> > new file mode 100644
+> > index 0000000000000..09244133f14c8
+> > --- /dev/null
+> > +++ b/rust/kernel/led/normal.rs
+>=20
+> [ ... ]
+>=20
+> > +impl<'a, S: DeviceBuilderState> DeviceBuilder<'a, S> {
+> > +    /// Registers a new [`Device`].
+> > +    pub fn build<'bound: 'a, T: LedOps + 'bound>(
+> > +        self,
+> > +        parent: &'bound T::Bus,
+> > +        ops: impl PinInit<T, Error> + 'a,
+> > +    ) -> impl PinInit<Device<'bound, T>, Error> + 'a {
+> > +        const_assert!(T::MAX_BRIGHTNESS <=3D i32::MAX.unsigned_abs() |=
+| !T::HAS_BRIGHTNESS_GET);
+> > +
+> > +        try_pin_init!(Device {
+> > +            ops <- ops,
+> > +            classdev <- Opaque::try_ffi_init(|ptr: *mut bindings::led_=
+classdev| {
+> > +                // SAFETY: `try_ffi_init` guarantees that `ptr` is val=
+id for write.
+> > +                // `led_classdev` gets fully initialized in-place by
+> > +                // `led_classdev_register_ext` including `mutex` and `=
+list_head`.
+> > +                unsafe {
+> > +                    ptr.write(bindings::led_classdev {
+> > +                        brightness_set: (!T::BLOCKING)
+> > +                            .then_some(Adapter::<T>::brightness_set_ca=
+llback),
+> > +                        brightness_set_blocking: T::BLOCKING
+> > +                            .then_some(Adapter::<T>::brightness_set_bl=
+ocking_callback),
+> > +                        brightness_get: T::HAS_BRIGHTNESS_GET
+> > +                            .then_some(Adapter::<T>::brightness_get_ca=
+llback),
+> > +                        blink_set: T::HAS_BLINK_SET.then_some(Adapter:=
+:<T>::blink_set_callback),
+> > +                        max_brightness: T::MAX_BRIGHTNESS,
+> > +                        brightness: self.initial_brightness,
+> > +                        color: self.color as u32,
+> > +                        name: self.name.map_or(core::ptr::null(), CStr=
+Ext::as_char_ptr),
+>=20
+> [Severity: High]
+> Does this erase the lifetime of the name string and risk a use-after-free=
+?
+>=20
+> In DeviceBuilder::build, the builder takes a string reference tied to the=
+ 'a
+> lifetime, but the returned Device struct does not capture this lifetime. =
+The
+> raw pointer from the name is then written directly into the long-lived
+> led_classdev struct.
+>=20
+> If the name string is dropped immediately after the Device is initialized
+> (for example, if a dynamically allocated CString was used in the driver p=
+robe
+> function), the led_classdev struct registered with the C subsystem will
+> contain a dangling pointer.
+>=20
+> Could this lead to memory corruption if C code inspects the global leds_l=
+ist
+> and dereferences the dangling name pointer?
+false positive. The string gets copied in registration and doesn't have
+to outlive the device.
+
+>=20
+> > +                        ..bindings::led_classdev::default()
+> > +                    })
+> > +                };
+>=20
+> [ ... ]
+
+--=-/1HCwH1hJfyq2QwBCz58
+Content-Type: application/pgp-signature; name="signature.asc"
+Content-Description: This is a digitally signed message part
+
+-----BEGIN PGP SIGNATURE-----
+
+iQJPBAABCAA5FiEEgnQYxPSsWOdyMMRzNHYf+OetQ9IFAmobdzUbFIAAAAAABAAO
+bWFudTIsMi41KzEuMTIsMiwyAAoJEDR2H/jnrUPS9bwQAKCqSNPN7T8dSI/Hal0h
+bQM2DbTVIghNaopbOdYcA2JdouCAFKKSLsUDF2GNzxjgHvMa/v3JGSylQrQWgTdz
+5jAOMzzv7cMyvqmQcPmXGlR8LmE1bpLJRsG2Fr2NJAEaa3i9Yt6tHP1vWfyiWuuP
+bUDwF0Qv5ox1j8c2lDy2htuXq0LqXZAGNKMAzvQGeVvftOpQHO3bE5tud2MjnbNG
+Vny/0nl0RBkd2URTvPmvU0x4NfreS8Lra950cmq63bsl5295K8l6OpKQdI0z/YwB
+Zcms3m8m7yZtPsPO07+RO0roU3CNQQaLrGLBfuwtIJHpyW8JwULR3fod44FiPSJC
+ZnFDtoeKeXy9D1rrN6MgrhpREBum3EwtdXH8f+Gnz4rVbUNJoKyp64S6owREs9zP
+fYQEg41mY1Qmz6ZhI2nOwK501+UhH6mjBG8GiiKy27GoxCL3hazUrKb4bac255IG
+ZvEeWBXGKSyVUqor2Wn7beGGutiyx6qMQ1FbSaadSSGcHNRE0XYMgHmKhtFReVfa
+ia3xj/mXIbC8yr/Fh5TFAHU46haoxGRk9yEgaHeMi9oX7AhjXeC8Y8Eg0zFbkxpB
+tf7SQqyfcWdzIui0gvFu0sAU5wgxSJy88KJrWDgLRgJdvMapcarWfqqW65ww/VsD
+Hr+yMXAPnWKBguTqfGqjQ5Tv
+=vxti
+-----END PGP SIGNATURE-----
+
+--=-/1HCwH1hJfyq2QwBCz58--
