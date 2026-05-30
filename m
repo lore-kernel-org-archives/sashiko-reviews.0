@@ -1,251 +1,124 @@
-Received: from mail-ej1-f51.google.com (mail-ej1-f51.google.com [209.85.218.51])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from todd.t-8ch.de (todd.t-8ch.de [159.69.126.157])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0ECF13A83BF
-	for <sashiko-reviews@lists.linux.dev>; Sat, 30 May 2026 11:22:03 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=pass smtp.client-ip=209.85.218.51
-ARC-Seal:i=2; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1780140125; cv=pass; b=KefC6xlK1oSHCzBO9dQ4XvmLlfB6zfvXu/n/NsV0wrlgBjhMym7203k8ceVgFZyfHC/UnpdOSe0/bSMWhrq7Qqp/Jjmg/c47C+u4y6LpzR/pHpB8qmTomxqJ8GCL5/dpK8i5i90CSApsjcvjS/nnBLeARRE8GF8dF8z6s91LqGA=
-ARC-Message-Signature:i=2; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1780140125; c=relaxed/simple;
-	bh=lFNrxzNQ5edL8UN6TD1iTrQnKblEFc91/Mi79oiB39M=;
-	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
-	 To:Cc:Content-Type; b=WBRIHv+QT0GXeZrrEOwWhpL6QzM6UyxeVjJZ+WK/Vx5II0IcNfyk3famGFgGRHkR+aXtibPPCwQwylxPCCI57nYwJ88Nxqg44Ce+snUfwjNhUfuWkSfzCQMQtOJPA7GLMODnh6P3Yh+/thMQ4rah/AId0E9KUk14Ax/kRydHaHU=
-ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=ku9nHHl7; arc=pass smtp.client-ip=209.85.218.51
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3F1AF3A8743
+	for <sashiko-reviews@lists.linux.dev>; Sat, 30 May 2026 11:23:45 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=159.69.126.157
+ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
+	t=1780140226; cv=none; b=De+nRXOZGioLFnA6hI17NnLCCNeomywyx3G1DnSFdsZGh1Z0hCbepJNkB0M9NMtdbpJb0VagiFQHpinRC2Ng+yPc1V0sV6ygjxGrO5h/XVxHYgngMlrHk32OCZLioK9LMw58peOy2Ox7Yid51cUVsuZsK8DVbOEzG4MKKk583t0=
+ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
+	s=arc-20240116; t=1780140226; c=relaxed/simple;
+	bh=fqQ3Hg89H3GsB0CP4W9QrCaNrQNDlxsW/z0iANBaiUA=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=rQs+o8dMDzHY+vt/ZCPC3dIK2tZ10uW4eqH4leFcC6KvtCtJqgkkZKCIqmL1C/RI0yril4VefAfLeOvbO2ybr8ib6xsspUffF41CsG7cxoXgTf0vJ17AAzwTMfmz/ePsi6yKblQhAcOcBsO/8sVWdXlrHG0PZ9TDsE73/vhaNro=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=weissschuh.net; spf=pass smtp.mailfrom=weissschuh.net; dkim=pass (1024-bit key) header.d=weissschuh.net header.i=@weissschuh.net header.b=UdplQyAn; arc=none smtp.client-ip=159.69.126.157
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=weissschuh.net
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=weissschuh.net
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="ku9nHHl7"
-Received: by mail-ej1-f51.google.com with SMTP id a640c23a62f3a-beb19bce272so1891566b.1
-        for <sashiko-reviews@lists.linux.dev>; Sat, 30 May 2026 04:22:03 -0700 (PDT)
-ARC-Seal: i=1; a=rsa-sha256; t=1780140122; cv=none;
-        d=google.com; s=arc-20240605;
-        b=eyHF1Uyj5K47UzSeh0RB640m4IaWT+fzCzd+Hc4QdC9qK6+kndl5rxztIDSOvzIDSY
-         mfV4n/VTJWGjEcB8DpOYufX4MYw1OxXdqtOICbO0daBDDsM/m1ksPfSfP6d9wqSHjHjH
-         LbE1/KPImXbSTeZjCnQhgAqn43FY6AoNasdIn+IJ0SZuON6pkXtaRcU/PBd7m3mDIBog
-         z1CnAOFsJcwBerpIjVuWxGeuLZGI4+rZ98Dd4NqXiwd/7FeCy3xbPgQG4xqhZORSTCCu
-         z56qPQdk14kQeO3ka38pSi1Do8Cn7xo53DBVcR9r3ZEOljwE7FWSATJrc3kfBGVHP68Z
-         NC/A==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com; s=arc-20240605;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:dkim-signature;
-        bh=25QSe8FS27jbL7gvHOw+es5cmwhYoyIGedo22jkR4Mc=;
-        fh=q2oa1ekct7KR5WHTVsuodzZeNY7MhQ5926J4NNvSleA=;
-        b=KrAgHjNHNrYOUY/APWY1F0iI9joWCxClt7gvtAV19MflMe+4bsAk1HePOWcfuRcQpG
-         Kycxm2cagYs0mFU4s87r1ZBwXyonyo3jJUJP6FPoJrOzgyw7A69arzvDiLgTVVgHlZ30
-         8CxFQM8FaBnCD66zkjQNz6m93aBOmoMRyeFEG3mP30AjdtNsDtHCWslPQm/+FfMbCAoS
-         wloGEyY/S4GooiY+gDp2abhycY7RRxXauNM+JVrbM86+44UJExxs02+H2MOoIOVkznEb
-         zKwdf2yQLoYWvCwiRnGAWXg5HEmBhYw7TC4A51qBnAb4X5NHTisxnO/qpUk82bZ/vCrV
-         V7fA==;
-        darn=lists.linux.dev
-ARC-Authentication-Results: i=1; mx.google.com; arc=none
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20251104; t=1780140122; x=1780744922; darn=lists.linux.dev;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=25QSe8FS27jbL7gvHOw+es5cmwhYoyIGedo22jkR4Mc=;
-        b=ku9nHHl7Ly3eW83LEt9qvtRUzFls1ZiWUy/S7o6Kscl8jSEFwh3GXJB62aAqSywJOi
-         Xr7Oa37Pt84pp7IMPRTX+EpFFTQar+KY5UU6NN1gfRlaG0Exs1FrUOVbrM3+Ejc1eG6o
-         zzwrC4ZAYdJNzl9nUq7vKp7PJDkJsrvoAOqd05V6MJRxg1neH8BCDrpBXqaGBnW3To8d
-         NN7Ie49fmR8VLNGa470hndFcQlfHTCv3mckyHmWBFAh+27wCYP9OwWRPaiTgVa3WBfBk
-         csp/f/xhI9n4BcJtMMzk7qw/ZTMyNE+mVSQTe4Y1NC2XBahNUrv3vtdFisDEVxx/QMsB
-         U+vA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20251104; t=1780140122; x=1780744922;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:x-gm-gg:x-gm-message-state:from
-         :to:cc:subject:date:message-id:reply-to;
-        bh=25QSe8FS27jbL7gvHOw+es5cmwhYoyIGedo22jkR4Mc=;
-        b=bNtjHOZuPdEC7T8gwuzkipXrkG2W3kOxHNCFhf77YYM6ZU3ylWLNz24D14a8h1ISr7
-         FzNlBa/0mUcvKvvp1DEeVp0LOEahb8i0/16UNlnl1iVpvmt7UmGZGM04pu6lm922Sf5i
-         5j93flnAP1SB/PpXb7KS0/aJPyyxBf5XegU7avqY0AiCSyBBJRKpW3NrK/jHa/+V5NjC
-         V6xbMC4RsSE2nvhyEZ2VtDWx5GhlnWmBQfxY3lJulig/SMCwxcQmg10jZ0JyOlqNsxjN
-         0zDcK1vn1ZuJNpRIG736b9R8/tcPp6yCsURQVWgz7z6js7JOcetSVQyy1hp/Fao51Y82
-         dqog==
-X-Gm-Message-State: AOJu0Yw3wO91Sa83czyt5YVM0w3cMC9o2vgPEJEgNLkUpY4EuYh/E2cQ
-	LTslMXAIeAZUwT5BwDWtIO9Mm9erCBn3a/AFgZOcRNqLhSgksDybhKCW8wQLNiOpsfq3fOFgXkv
-	6nCfKdLUCs3RbiPmcasIZq5OVBGYTYU06cIl+w6xjY2CpzvY=
-X-Gm-Gg: Acq92OG7J2UwZpxX78TQROlWdc3pDmwtLQThdosBm2tLegyTZTaeR/0tcZ0n+G5BBtT
-	M13tt3R5AieqPVTiWDbNNt3sQm38f1QJYQSxGr1OtW+Fibc8SEYMYh1N1eaT33+OFSPmTJ/bkIh
-	67c7R82+9k1ZoXCeT8HFnHRtgebSKV9VCgR3FgtEd3K8PCHfYOv2PtoqZX9qqLcgqNHJAdJtTs8
-	aAxnvF6V4zZGWUdXZ7RuDNZKlT/eLqSZWsI2leXzGjBxtryCqThoKjhd2wVhi/nIWtaSynw63bz
-	GsBKj4Lgi9pywk4BjA==
-X-Received: by 2002:a50:ec96:0:b0:689:ac19:3fb4 with SMTP id
- 4fb4d7f45d1cf-68c8b2e7048mr483014a12.1.1780140122179; Sat, 30 May 2026
- 04:22:02 -0700 (PDT)
+	dkim=pass (1024-bit key) header.d=weissschuh.net header.i=@weissschuh.net header.b="UdplQyAn"
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=weissschuh.net;
+	s=mail; t=1780140223;
+	bh=fqQ3Hg89H3GsB0CP4W9QrCaNrQNDlxsW/z0iANBaiUA=;
+	h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
+	b=UdplQyAnIT2uG9BIYvkIrU7XcoJw4aluQRub9rpLIopgNflAkfIkVjon4dn9GdAOV
+	 fah8TZ2wBej/I1WQWS3V/7Fk/KKBVxZX9UFzolgwsz5tkQl9HeyXXEzZ5p86bMA9pf
+	 g/bC3CzCIfjM8c9L39h5IKmSnMOoaaAzCu4MfLrs=
+Date: Sat, 30 May 2026 13:23:42 +0200
+From: Thomas =?utf-8?Q?Wei=C3=9Fschuh?= <linux@weissschuh.net>
+To: sashiko-reviews@lists.linux.dev
+Cc: linux-hwmon@vger.kernel.org
+Subject: Re: [PATCH 4/5] hwmon: (cros_ec) Add support for displaying fan
+ curves
+Message-ID: <b1c58a43-826e-423f-8df7-0d11506063ba@t-8ch.de>
+References: <20260529-cros_ec-hwmon-fan-curve-v1-4-da6792b3830f@weissschuh.net>
+ <20260529212602.6AD3B1F00893@smtp.kernel.org>
+ <ae7ff79c-8180-4f76-ab38-f0ab38ecf556@t-8ch.de>
 Precedence: bulk
 X-Mailing-List: sashiko-reviews@lists.linux.dev
 List-Id: <sashiko-reviews.lists.linux.dev>
 List-Subscribe: <mailto:sashiko-reviews+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:sashiko-reviews+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-References: <20260530135302.54688-1-tahanarimani3443@gmail.com>
- <20260530110658.30EB11F00893@smtp.kernel.org> <CAEsNvj8Q3n3-tuPhANfRjUfqrnCtzfguuRKL0OrwCEEkSXrUaw@mail.gmail.com>
-In-Reply-To: <CAEsNvj8Q3n3-tuPhANfRjUfqrnCtzfguuRKL0OrwCEEkSXrUaw@mail.gmail.com>
-From: Taha Narimani <tahanarimani3443@gmail.com>
-Date: Sat, 30 May 2026 14:51:49 +0330
-X-Gm-Features: AVHnY4Lgj0IR4-__iwmvmZBCf2z0cg5CbA51LFHjpNp4kCeS6HxzCvMaJGnWKoc
-Message-ID: <CAEsNvj-xv4PC6jZD+x_xUh4_Ec=eO=BA=LXT0t9aMTEy4X+LEg@mail.gmail.com>
-Subject: Re: [PATCH] dt-bindings: iio: adc: Add schema for AD7816/7/8 digital
- temperature sensor
-To: sashiko-reviews@lists.linux.dev
-Cc: robh@kernel.org, devicetree@vger.kernel.org, conor+dt@kernel.org
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+Content-Transfer-Encoding: 8bit
+In-Reply-To: <ae7ff79c-8180-4f76-ab38-f0ab38ecf556@t-8ch.de>
 
-Hi,
+On 2026-05-30 13:04:04+0200, Thomas Weißschuh wrote:
+> On 2026-05-29 21:26:01+0000, sashiko-bot@kernel.org wrote:
+> > Thank you for your contribution! Sashiko AI review found 1 potential issue(s) to consider:
+> > - [Medium] Missing endianness conversion for EC thermal config data and sensor_num.
+> > --
+> > 
+> > commit be72df851dc1a1ab2ed2868ddf58166c69fe3c4c
+> > Author: Thomas Weißschuh <linux@weissschuh.net>
+> > 
+> > hwmon: (cros_ec) Add support for displaying fan curves
+> > 
+> > The automatic fan control mode of the embedded controller uses fan curves
+> > with two trigger points to calculate the target fan speed. All temperature
+> > sensors affect all fans. Expose these fan curves through the standard
+> > hwmon sysfs ABI.
+> > 
+> > > diff --git a/drivers/hwmon/cros_ec_hwmon.c b/drivers/hwmon/cros_ec_hwmon.c
+> > > index a6cc909e56b7e..731143f8c6b2a 100644
+> > > --- a/drivers/hwmon/cros_ec_hwmon.c
+> > > +++ b/drivers/hwmon/cros_ec_hwmon.c
+> > > @@ -372,6 +375,141 @@ static umode_t cros_ec_hwmon_is_visible(const void *data, enum hwmon_sensor_type
+> > >  	return 0;
+> > >  }
+> > 
+> > [ ... ]
+> > 
+> > > +static ssize_t temp_auto_point_temp_show(struct device *dev, struct device_attribute *attr,
+> > > +					 char *buf)
+> > > +{
+> > > +	struct sensor_device_attribute_2 *sattr = to_sensor_dev_attr_2(attr);
+> > > +	struct cros_ec_hwmon_priv *priv = dev_get_drvdata(dev);
+> > > +	struct ec_thermal_config config;
+> > > +	u32 temp;
+> > > +	int ret;
+> > > +
+> > > +	scoped_guard(hwmon_lock, dev) {
+> > > +		ret = cros_ec_hwmon_get_thermal_config(priv->cros_ec, sattr->index, &config);
+> > > +		if (ret)
+> > > +			return ret;
+> > > +	}
+> > > +
+> > > +	if (cros_ec_hwmon_attr_is_temp_fan_off(sattr))
+> > > +		temp = config.temp_fan_off;
+> > > +	else /* temp_fan_max */
+> > > +		temp = config.temp_fan_max;
+> > 
+> > [Severity: Medium]
+> > Since the Chrome OS EC wire protocol is little-endian, do these raw u32
+> > fields need to be converted using le32_to_cpu() to prevent corrupted values
+> > on big-endian hosts?
+> > 
+> > It looks like the pre-existing cros_ec_hwmon_get_thermal_config() helper
+> > similarly fails to use cpu_to_le32() when assigning req.sensor_num, which
+> > could cause the EC to receive a byte-swapped sensor number.
+> 
+> None of the cros_ec drivers handle big-endian systems properly.
+> But the drivers can only be used on little-endian systems anyways
+> through the dependency chain SENSORS_CROS_EC -> MFD_CROS_EC_DEV ->
+> CROS_EC -> X86 || ARM || ARM64 || COMPILE_TEST.
+> 
+> So we can ignore this for now in my opinion.
 
-Thank you for the detailed analysis and for pointing out these issues.
+Of course ARM and ARM64 have big-endian variants.
+I'll send a patch to prevent them being built there.
 
-I would like to clarify that these are pre-existing issues in the
-driver and were not introduced by my documentation patch. My current
-goal is limited to adding the missing Device Tree bindings to resolve
-the checkpatch.pl warnings.
-
-I acknowledge that the driver has issues regarding concurrency
-protection, DMA mapping, and polling loops. I intend to focus on those
-in a separate, subsequent patch series after this one is merged, as I
-believe refactoring the driver logic requires a broader scope.
-
-Thank you for your patience and for reviewing my contribution.
-
-Best regards, Taha Narimani
-
-
-On Sat, May 30, 2026 at 2:41=E2=80=AFPM Taha Narimani
-<tahanarimani3443@gmail.com> wrote:
->
-> Hi,
->
-> Thank you for the detailed analysis and for pointing out these issues.
->
-> I would like to clarify that these are pre-existing issues in the driver =
-and were not introduced by my documentation patch. My current goal is limit=
-ed to adding the missing Device Tree bindings to resolve the checkpatch.pl =
-warnings.
->
-> I acknowledge that the driver has issues regarding concurrency protection=
-, DMA mapping, and polling loops. I intend to focus on those in a separate,=
- subsequent patch series after this one is merged, as I believe refactoring=
- the driver logic requires a broader scope.
->
-> Thank you for your patience and for reviewing my contribution.
->
-> Best regards, Taha Narimani
->
->
-> On Sat, May 30, 2026 at 2:36=E2=80=AFPM <sashiko-bot@kernel.org> wrote:
->>
->> Thank you for your contribution! Sashiko AI review found 3 potential iss=
-ue(s) to consider:
->>
->> Pre-existing issues:
->> - [High] Missing concurrency protection during sysfs accesses.
->> - [High] Stack-allocated buffers are passed directly to `spi_read()` and=
- `spi_write()`, violating DMA mapping rules.
->> - [High] Unbounded polling loop for the BUSY pin can cause a hard CPU lo=
-ckup.
->> --
->>
->> commit cb7e57cc9cdde2668abda84c0f0d3e60ebb9a962
->> Author: Taha Narimani <tahanarimani3443@gmail.com>
->>
->> dt-bindings: iio: adc: Add schema for AD7816/7/8 digital temperature sen=
-sor
->>
->> This commit adds a new YAML device tree binding schema for the Analog
->> Devices AD7816, AD7817, and AD7818 digital temperature sensors. It
->> documents the compatible strings, SPI configuration, interrupts, and
->> required GPIO pins.
->>
->> > diff --git a/Documentation/devicetree/bindings/iio/adc/adi,ad7816.yaml=
- b/Documentation/devicetree/bindings/iio/adc/adi,ad7816.yaml
->> > new file mode 100644
->> > index 0000000000000..74008c14d40c6
->> > --- /dev/null
->> > +++ b/Documentation/devicetree/bindings/iio/adc/adi,ad7816.yaml
->> > @@ -0,0 +1,87 @@
->> > +# SPDX-License-Identifier: (GPL-2.0-only OR BSD-2-Clause)
->> > +%YAML 1.2
->> > +---
->> > +$id: http://devicetree.org/schemas/iio/adc/adi,ad7816.yaml#
->> > +$schema: http://devicetree.org/meta-schemas/core.yaml#
->>
->> [ ... ]
->>
->> > +properties:
->> > +  compatible:
->> > +    enum:
->> > +      - adi,ad7816
->> > +      - adi,ad7817
->> > +      - adi,ad7818
->>
->> [Severity: High]
->> This isn't a bug introduced by this patch, but is there a missing lock t=
-o
->> protect concurrent sysfs accesses?
->>
->> Looking at ad7816_show_value() in drivers/staging/iio/adc/ad7816.c:
->>
->> drivers/staging/iio/adc/ad7816.c:ad7816_show_value() {
->>     ...
->>     ret =3D ad7816_spi_read(chip, &data);
->>     ...
->> }
->>
->> Since this is called for world-readable sysfs attributes, can multiple
->> userspace processes trigger this concurrently?
->>
->> If so, could concurrent execution of ad7816_spi_read() interleave GPIO p=
-in
->> toggling and SPI transfers, corrupting the hardware state?
->>
->>
->> [Severity: High]
->> This isn't a bug introduced by this patch, but does this code pass
->> stack-allocated buffers to SPI transfers?
->>
->> Looking at drivers/staging/iio/adc/ad7816.c:
->>
->> drivers/staging/iio/adc/ad7816.c:ad7816_spi_read() {
->>     ...
->>     ret =3D spi_read(spi_dev, &buf, sizeof(*data));
->>     ...
->> }
->>
->> And also in ad7816_spi_write():
->>
->> drivers/staging/iio/adc/ad7816.c:ad7816_spi_write() {
->>     ...
->>     ret =3D spi_write(spi_dev, &data, sizeof(data));
->>     ...
->> }
->>
->> Since the SPI subsystem often maps these buffers for DMA, will passing
->> variables from the stack cause mapping failures or crashes on architectu=
-res
->> with virtually mapped kernel stacks?
->>
->>
->> [Severity: High]
->> This isn't a bug introduced by this patch, but can this unbounded pollin=
-g
->> loop cause a CPU lockup?
->>
->> Looking at ad7816_spi_read() in drivers/staging/iio/adc/ad7816.c:
->>
->> drivers/staging/iio/adc/ad7816.c:ad7816_spi_read() {
->>     ...
->>     while (gpiod_get_value(chip->busy_pin))
->>         cpu_relax();
->>     ...
->> }
->>
->> If the external device malfunctions or the GPIO line gets permanently st=
-uck
->> high, will this loop block indefinitely and cause a hard lockup?
->>
->> --
->> Sashiko AI review =C2=B7 https://sashiko.dev/#/patchset/20260530135302.5=
-4688-1-tahanarimani3443@gmail.com?part=3D1
+> To properly use leXX_to_cpu() helpers we would also need to change the
+> protocol structs in include/linux/platform_data/cros_ec_commands.h to
+> use the actual __leXX types.
+> 
+> > > +
+> > > +	if (temp == 0)
+> > > +		return -ENODATA;
+> > > +
+> > > +	return sysfs_emit(buf, "%ld\n", cros_ec_hwmon_kelvin_to_millicelsius(temp));
+> > > +}
+> > 
+> > -- 
+> > Sashiko AI review · https://sashiko.dev/#/patchset/20260529-cros_ec-hwmon-fan-curve-v1-0-da6792b3830f@weissschuh.net?part=4
