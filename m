@@ -1,168 +1,140 @@
-Received: from mail-wm1-f44.google.com (mail-wm1-f44.google.com [209.85.128.44])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id ADD06222565
-	for <sashiko-reviews@lists.linux.dev>; Sat, 30 May 2026 01:16:27 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=pass smtp.client-ip=209.85.128.44
-ARC-Seal:i=2; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1780103789; cv=pass; b=nytRJngHYHk5GZRb07a50plrmbHUdkK+rgsXk0uT4IABXW4hiFqZjzEEspR7fNxuUTGfJKN11l8nJ/bJY46CsTzUyp9RpXiupdp2bhPZwAHee92K+181a1zALOmitjAFryNOHKCAsjMuq3q5I17vYivhsOMhdMxGRnXCHfZUlk4=
-ARC-Message-Signature:i=2; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1780103789; c=relaxed/simple;
-	bh=PVZJKq0QZpDBs29p42qzJsANdYgSGTjFMDU66TixMSw=;
-	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
-	 To:Cc:Content-Type; b=Vih5yDRAHcCyVYIZbj+fGD5Hv/7qwALvJ34Nqf8qzhbArxgS+FKi9P00pDzYMzlL1AVtTnjlVhHHlsV360MllHlWOwj/8VeZIUXA35IgLZfUcpEEbhJ3DAjJyghMCXesI7EaVOkhnvYcVD8O1u7grxv2xdKvlwySKVTIdjyWAak=
-ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=DFXKqb3Q; arc=pass smtp.client-ip=209.85.128.44
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CCD461B4F1F
+	for <sashiko-reviews@lists.linux.dev>; Sat, 30 May 2026 01:54:57 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
+ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
+	t=1780106099; cv=none; b=fN9UCAgFlK2fLyxBDBGzExZu3lrn0xyR7nGSGDfFfhXOCUtQOyDrEoRmYlazWgQ/ZPrN6NEtSP4bitobo6Uuj+BomroVeunHB5LxX5jk7vRFSdhJMR+e7Rlxho7bh3wqzYNNuJoMl+Ei8IcQexvxwBLCR9tZLbTXtCHol78GziA=
+ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
+	s=arc-20240116; t=1780106099; c=relaxed/simple;
+	bh=xpZpRo9kAst4G2VSdSXHeQZv738WgcyhwaTTFUvOW/E=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=EGUI/dcJUuuxrRVA6lPdqhdMzpVvHiY4Af9l6cGmX9V+9eOGDzV2Sr/BNbMnU+r+UMjZ9131GSICSFWbsPkzene2VSlDRKUq0bpDeEnrZMa3LgLhFhn0uSuX2lmrykGqcyk4/1NFTcamhjXml9+h+XkEkON9499c/0jWZNcyYZ8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=GMFPlCh1; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="DFXKqb3Q"
-Received: by mail-wm1-f44.google.com with SMTP id 5b1f17b1804b1-4891e5b9c1fso125284705e9.2
-        for <sashiko-reviews@lists.linux.dev>; Fri, 29 May 2026 18:16:27 -0700 (PDT)
-ARC-Seal: i=1; a=rsa-sha256; t=1780103786; cv=none;
-        d=google.com; s=arc-20240605;
-        b=Cn52bNstcVq42sZmvz+akGo1MOzUEcdTGUT7fQ97TxOJvgLuzp0Ftbi65Hkhd0vEo8
-         WIuIZgnZMPPp9O0blzpLRZ5X6GR6yHZ9XspfKi0lqCVbX4BPDLiZpHyBpTu7GMhGX0CF
-         1jYrLEdCJSBEdU5SvwbGqLGAMokuWd7S6NMk2bFvsUlg7cOXT3A2zASyp5uVrnFv6uDy
-         P/7ke76+6+ib9yowmHyGm5wK5Ffderf+tT2PUjnNvC/y6DKsusH0KKV5xeh6suZhEemK
-         YpDuYL5PezdbUNjwF+8OLF+iZpVZnX7K3wvsh0fLbQy06GCw+7raMogB3kJnb7FLBGFD
-         GAnw==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com; s=arc-20240605;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:dkim-signature;
-        bh=uhtMF2ezlNaaALDfyaxkEF9+57T983SySMQAR7CATi4=;
-        fh=vz3pN3PK/bu+NRXdfIvIk2p5+cHuimYs4qHOOK8kDks=;
-        b=cPYChTEhz/PVijpI7K6EpBXNJHls682uKJ5RMBjRmHstLhRkrQABMYhyCFWPcGGkel
-         FtJOsDAR3jG0PgIGqxZPGdv6zJ7W8zaIE2O9niUU30mSK71FlDi78/xODz3If0klab8q
-         5EanSOfdPGu93Hwbrnrw2uwEsgUYw9JJPD45UK9kik925dGaMP+qI9F0iXIKk9pejpRq
-         em/8wUXri9nP68AcZmSrb+irhjupyJ04D49WhuBEjUXa6sHMt2WCQY19+XFYDkS1rVJS
-         46TPmV7OD8QOENT+MJaiuLkP5z1aKq7ZP61PkSLOPY8MU7hraDhMYiko+TDtukEzJlDe
-         ajsQ==;
-        darn=lists.linux.dev
-ARC-Authentication-Results: i=1; mx.google.com; arc=none
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20251104; t=1780103786; x=1780708586; darn=lists.linux.dev;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=uhtMF2ezlNaaALDfyaxkEF9+57T983SySMQAR7CATi4=;
-        b=DFXKqb3Qh3rXOxxDr7dZLW6mYnGC9lE7y4dC9L3Fw+hAjDzz05BAjulsaElFPyhDNH
-         egEEqNi0WoQpOfE/jYc4UGaJVVaWR2gncwNBGbZGVKmJKqZ9r572YIQ85uUYYlBwi1yQ
-         aHr1UgA8CbcTEIz7zMcmQlxNmWYRXRV3zhXSbXh11c+S9SrBh+zBwxg52d3SoBXchfN1
-         K70hevLrFeuDBA1dw2XXSdrsFAZxozw5E2Rqwf7I1ehtm2Fn2yxxLVbYNm64W8jS+seU
-         N1jOmDljW+VmPlS/FGJEvzvyYnIEzocq4CCRu12PU2e+e5S85tdbTMIEousf8aX8eLln
-         t1og==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20251104; t=1780103786; x=1780708586;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:x-gm-gg:x-gm-message-state:from
-         :to:cc:subject:date:message-id:reply-to;
-        bh=uhtMF2ezlNaaALDfyaxkEF9+57T983SySMQAR7CATi4=;
-        b=PCB0wp3mHP5CPKovspYyVzy2j1uKAQ0QylR0OwVj8Uh6oYTkfaltZQTVHdMdnJE1ai
-         50OZmoK1sm9JbauDsDoNsPO/trJX+JrYcWl8+EYM6z6zL/w1lQGwuzOQ5HWt+03l/urJ
-         vchFXgg6YiFtDmV9fQtK6FI8Dgf5sR45CPH7Yg3gbwUPZJ+TnDt+4eDLFW9sM5/tVW93
-         iKv+lYLY6wNard0pPA1ggcR56Rw5CmDgsCAgyRiANEWZ3t14dYSWLv+PmmpYsDSfnqLt
-         Vbz8rFLj2AqiQfhlksMHmDkIAPmwmaI93rF2+rxAeWoQPYYT2mFuvcmYADm53wDwQVUH
-         QTwA==
-X-Gm-Message-State: AOJu0Yxwjgmuh++TQDUWOD7HaVk2f0rkHcQ/v8Yc8pTEIAUogZZ0jL7/
-	TOh5R0xEd8TOWuPLF5S9UKyHdSk6ijPO7bJQoZu28FIlArkVOdUxI8FcjGev1UNBL2BHlobefG7
-	MPwQXIg8GAbagFH4DCNxTsyrWYQaZKa1ji/ERMtvVtQ==
-X-Gm-Gg: Acq92OE2JIYgJ56mcZMQFHEa8KTcATOqG0HEqdiHZ1udT7p8pgM1ktot35mrzAmCMsb
-	TD1V7/OD0psVcCAVmTBuhc0Y4ueyqVr//vBJ4rxJCRkog3mEr4HtqThDQEtdncXSxHvQhZQ5JY5
-	cyJGHofAIrGtfyOnzfM68iCFhsRTzdlE9zwTuwSLP1GsQQzifBhQC+shD7zPeDRiZs4IjwsY/fy
-	J8u0ioEkMpGDl01zgLSIyIUUV6G6BQGGtf/HjT2c9fVxMPGBJlwtTTPAlh2weF7KFcd+mL3tTwK
-	5o8ie5jQtNAEe0V9d5A52Ni9UMlj7d2hVSBnBLzoLIPaQes=
-X-Received: by 2002:a05:600c:4e92:b0:48a:7aad:4425 with SMTP id
- 5b1f17b1804b1-490a2901aefmr29792325e9.3.1780103785647; Fri, 29 May 2026
- 18:16:25 -0700 (PDT)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="GMFPlCh1"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 277121F00893;
+	Sat, 30 May 2026 01:54:57 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=kernel.org;
+	s=k20260515; t=1780106097;
+	bh=Y7ozkZex+bV50kUNRMkm7+2KH20CKgbCsnGEOaAlWOE=;
+	h=Date:From:To:Cc:Subject:References:In-Reply-To;
+	b=GMFPlCh10A0JGMVZGJw0xuqy6JOH52SutTzvx9GyhUBZhPT7xVboYfEuwKKvc3xgd
+	 4QLqO+/p6tK00JETOPmdNzzgn9z139pqdoUInYHo0CxserQVltqyoDsDkQ1lr2wXla
+	 Ook6qw45hkF3GotdW4i+dcQVMCCzUoP8hlV0XxFbkYepaDThahB3azmq6hxSXcNDo6
+	 dvawg+pY5JdLY2sddrcmrRbeh8OZbdYO5YUF79yoECpYLE4dcA87wF5YQPQ5Ub2/hX
+	 TKDAbHzxSxAdR1RoMsxFlISnkmSKFv/f58/BRzGw0aOyR9A+azxyRhkzbSqPEZBe0K
+	 9Z7WyLY2KU6tg==
+Date: Sat, 30 May 2026 01:54:55 +0000
+From: Yosry Ahmed <yosry@kernel.org>
+To: Nhat Pham <nphamcs@gmail.com>
+Cc: sashiko-reviews@lists.linux.dev, akpm@linux-foundation.org, 
+	Hao Jia <jiahao.kernel@gmail.com>, hannes@cmpxchg.org, mkoutny@suse.com, tj@kernel.org
+Subject: Re: [PATCH v2 2/4] mm/zswap: Implement proactive writeback
+Message-ID: <ahpDDwtBE-MG_lmO@google.com>
+References: <20260525122242.36127-3-jiahao.kernel@gmail.com>
+ <20260525135046.413871F000E9@smtp.kernel.org>
+ <b1ca372d-530a-228f-c888-d6d04a5c133c@gmail.com>
 Precedence: bulk
 X-Mailing-List: sashiko-reviews@lists.linux.dev
 List-Id: <sashiko-reviews.lists.linux.dev>
 List-Subscribe: <mailto:sashiko-reviews+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:sashiko-reviews+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-References: <20260529213506.37462-1-jbishop.dev@gmail.com> <20260529220113.CABB41F00893@smtp.kernel.org>
-In-Reply-To: <20260529220113.CABB41F00893@smtp.kernel.org>
-From: Jeremiah Bishop <jbishop.dev@gmail.com>
-Date: Fri, 29 May 2026 15:16:14 -1000
-X-Gm-Features: AVHnY4J1EQplGx6EDAXNaim1X35PETCeRy45Nv7d4cYMfuCuj0QUrBJHVErQBa0
-Message-ID: <CA+TTa56LOHAadhpVe0dcttVHHCp8m41bLLoO-DD+tLyCmLAVfg@mail.gmail.com>
-Subject: Re: [PATCH] dt-bindings: usb: convert PXA USB bindings to YAML
-To: sashiko-reviews@lists.linux.dev
-Cc: conor+dt@kernel.org, robh@kernel.org, devicetree@vger.kernel.org
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <b1ca372d-530a-228f-c888-d6d04a5c133c@gmail.com>
 
-Thank you, and good catch.
+On Tue, May 26, 2026 at 07:47:48PM +0800, Hao Jia wrote:
+> 
+> 
+> On 2026/5/25 21:50, sashiko-bot@kernel.org wrote:
+> > Thank you for your contribution! Sashiko AI review found 3 potential issue(s) to consider:
+> > 
+> > New issues:
+> > - [High] Premature abort of proactive writeback due to flawed failure tracking across the memcg hierarchy.
+> > - [Medium] zswap_proactive_writeback incorrectly returns 0 (success) on partial writebacks, breaking memory.reclaim semantics.
+> > 
+> > Pre-existing issues:
+> > - [High] Double decrement of `nlru->nr_items` in `list_lru` when `shrink_memcg_cb` successfully writes back a page.
+> > --
+> > 
+> > commit df0f700584d1310ed3a326adfe34b6963c7222ce
+> > Author: Hao Jia <jiahao1@lixiang.com>
+> > 
+> > mm/zswap: Implement proactive writeback
+> > 
+> > This commit introduces a "zswap_writeback_only" key to the memory.reclaim
+> > cgroup interface. It allows users to proactively write back zswap pages
+> > to the backing swap up to a specified budget without invoking standard
+> > memory reclaim.
+> > 
+> > > diff --git a/mm/zswap.c b/mm/zswap.c
+> > > index 6519f646b496b..947507b9a1852 100644
+> > > --- a/mm/zswap.c
+> > > +++ b/mm/zswap.c
+> > 
+> > [ ... ]
+> > 
+> > > @@ -1684,6 +1684,144 @@ int zswap_load(struct folio *folio)
+> > >   	return 0;
+> > >   }
+> > > +/*
+> > 
+> > [ ... ]
+> > 
+> > > +static long zswap_proactive_shrink_memcg(struct mem_cgroup *memcg,
+> > > +					 unsigned long nr_to_write)
+> > > +{
+> > 
+> > [ ... ]
+> > 
+> > > +		while (nr_scanned < nr_to_scan) {
+> > > +			unsigned long nr_to_walk = min(ZSWAP_PROACTIVE_WB_BATCH,
+> > > +						       nr_to_scan - nr_scanned);
+> > > +
+> > > +			if (signal_pending(current))
+> > > +				return nr_written;
+> > > +
+> > > +			/*
+> > > +			 * Account for the committed budget rather than the walker's
+> > > +			 * actual delta. If the list is emptied concurrently, the
+> > > +			 * walker visits nothing and nr_scanned would never advance.
+> > > +			 */
+> > > +			nr_scanned += nr_to_walk;
+> > > +
+> > > +			nr_written += list_lru_walk_one(&zswap_list_lru, nid, memcg,
+> > > +							&shrink_memcg_cb,
+> > > +							&encountered_page_in_swapcache,
+> > > +							&nr_to_walk);
+> > 
+> > [Severity: High]
+> > This is a pre-existing issue, but proactive writeback heavily triggers it on
+> > demand. When shrink_memcg_cb() initiates a successful writeback, it calls
+> > zswap_writeback_entry() which frees the entry. This removes the entry from
+> > the list and decrements the LRU item count. Then shrink_memcg_cb() returns
+> > LRU_REMOVED_RETRY.
+> > 
+> > Does __list_lru_walk_one() fall through to the LRU_REMOVED case and perform a
+> > second decrement of nlru->nr_items? If so, will this double decrement corrupt
+> > the global node LRU count and cause underflows?
+> > 
+> 
+> As for this pre-existing issue, nlru->nr_items could indeed be
+> double-decremented. IIRC, we don't have any code reading nlru->nr_items for
+> the zswap LRU; zswap only uses list_lru_count_one() (l->nr_items), so things
+> are working fine for now.
 
-ohci-pxa27x.c does indeed explicitly request vbus1, vbus2, and vbus3
-regulators via devm_regulator_get(). I've added the corresponding
-supply properties to the schema and will include the change in v2.
 
-On Fri, May 29, 2026 at 12:01=E2=80=AFPM <sashiko-bot@kernel.org> wrote:
->
-> Thank you for your contribution! Sashiko AI review found 1 potential issu=
-e(s) to consider:
-> - [Medium] The `marvell,pxa-ohci.yaml` schema omits the `vbus1-supply`, `=
-vbus2-supply`, and `vbus3-supply` properties but enforces `unevaluatedPrope=
-rties: false`, which will cause valid device trees to fail schema validatio=
-n.
-> --
->
-> commit 78f580ae03eab5d588221a2a8289471c77c1c517
-> Author: Jeremiah Bishop <jbishop.dev@gmail.com>
->
-> dt-bindings: usb: convert PXA USB bindings to YAML
->
-> This commit converts the legacy pxa-usb.txt binding documentation to
-> YAML schemas. It splits the documentation into marvell,pxa-ohci.yaml
-> and marvell,pxa270-udc.yaml to provide machine-readable validation for
-> both the host and device controllers.
->
-> > diff --git a/Documentation/devicetree/bindings/usb/marvell,pxa-ohci.yam=
-l b/Documentation/devicetree/bindings/usb/marvell,pxa-ohci.yaml
-> > new file mode 100644
-> > index 0000000000000..3f7935384b9f5
-> > --- /dev/null
-> > +++ b/Documentation/devicetree/bindings/usb/marvell,pxa-ohci.yaml
-> [ ... ]
-> > +required:
-> > +  - compatible
-> > +  - reg
-> > +  - interrupts
-> > +  - clocks
-> > +
-> > +unevaluatedProperties: false
->
-> [Severity: Medium]
-> Will this strict validation reject valid device trees that provide vbus
-> regulators?
->
-> The PXA OHCI driver in drivers/usb/host/ohci-pxa27x.c explicitly calls
-> devm_regulator_get() for "vbus1", "vbus2", and "vbus3" for enabled ports.
-> These requests resolve to the vbus1-supply, vbus2-supply, and vbus3-suppl=
-y
-> properties in the device tree.
->
-> Because these properties are not defined in this schema or inherited from
-> usb-hcd.yaml, and unevaluatedProperties is set to false, it appears that
-> any device tree describing the vbus supplies will falsely fail the
-> dt_binding_check validation.
->
-> Could these supply properties be added to the schema to prevent validatio=
-n
-> errors for existing users?
->
-> > +
-> > +examples:
-> > +  - |
-> [ ... ]
->
-> --
-> Sashiko AI review =C2=B7 https://sashiko.dev/#/patchset/20260529213506.37=
-462-1-jbishop.dev@gmail.com?part=3D1
+Yes, but it seems like we're misusing the list_lru infra here. I think
+we shouldn't end up calling list_lru_del() from the list_lru_walk
+callback?
 
+Nhat, WDYT?
 
-
---=20
-Regards,
-Jeremiah E. Bishop
+> 
+> This issue wasn't introduced by this patchset, but it will cause problems if
+> nlru->nr_items is ever used in the future. Therefore, I will try to address
+> it in a separate patch later, or ask for help if needed.
+ 
