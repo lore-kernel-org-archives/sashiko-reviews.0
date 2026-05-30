@@ -1,174 +1,172 @@
-Received: from mail-ed1-f46.google.com (mail-ed1-f46.google.com [209.85.208.46])
+Received: from mail-qv1-f50.google.com (mail-qv1-f50.google.com [209.85.219.50])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5A1D433859A
-	for <sashiko-reviews@lists.linux.dev>; Sat, 30 May 2026 04:18:37 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=pass smtp.client-ip=209.85.208.46
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C93C113635E
+	for <sashiko-reviews@lists.linux.dev>; Sat, 30 May 2026 05:40:12 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=pass smtp.client-ip=209.85.219.50
 ARC-Seal:i=2; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1780114719; cv=pass; b=SlfQSDrgLZij3Qfce1B/9KdXm3y1dUSYr/oXQVZGwqb2if0SVqS0A0Fd/R1FeNDaBonS7GnPZxfB0r67OdUYJGw5a/6rxG5jL6CCcnL8Us9aK7RkPf72NwIuyhYTQDmrj4WQHMbdBjG518VTdMTr4ii7zUiSKCeyYnxkjXzoTcY=
+	t=1780119614; cv=pass; b=Ue9ynHL8UbjOYCyG/RfkTTAYf46RB7q7wknuvU+sqw9ILZ5h+iNgkiLN8k628lkCbZrQ3igtLgIRT4yA53DXrr4aC4AZ9bnLkhFNvLX8YUR4l+mzvmhS0NsExB7HyFS70Kuc5I2eb606e+JWEubO5UN5a7/1XUa+yTgb6IMvFS8=
 ARC-Message-Signature:i=2; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1780114719; c=relaxed/simple;
-	bh=wt7vymfuvb00mlogfJIV49ibnO1dnFDAFSRvrqXEuRA=;
+	s=arc-20240116; t=1780119614; c=relaxed/simple;
+	bh=fcMiBykd2m247M2S8w3zuUBx++iTdz41/pyQA3cMvZ0=;
 	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
-	 To:Cc:Content-Type; b=gOBw535404zXk8TIwUWqXUgI3vJgTOgEEaFirpMmwwl/xLoXVL7eX133eI9imupYv0CCl3bjq9yafNpdVtsx+YAZ30CVAO2abcUrskKxO3CeaZcMxEgr5MT+aQLVxRm6O9HeAibQ7nHHVAD7saj6/FJyvvo5z95FVDZzAb7Bn64=
-ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=frTqE4Zr; arc=pass smtp.client-ip=209.85.208.46
+	 To:Cc:Content-Type; b=Mj5cHkPLaKKQuvL3hay0Cx4dxcTMXHc7rmsTbh9dZXVk9posazHAObzSQ+DsSGmqUeFMlYUzb4lCDvZI86maKC2YAaHFj+cuipuY34t0o+/FhM1nSmodHTqF2t2vifliLGPNIKTz37xUyPkM3iM5q5HVHHKug0ZVEM5+0Y+dKXU=
+ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=lTQwayyn; arc=pass smtp.client-ip=209.85.219.50
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="frTqE4Zr"
-Received: by mail-ed1-f46.google.com with SMTP id 4fb4d7f45d1cf-68c1653ea0cso1885535a12.2
-        for <sashiko-reviews@lists.linux.dev>; Fri, 29 May 2026 21:18:37 -0700 (PDT)
-ARC-Seal: i=1; a=rsa-sha256; t=1780114716; cv=none;
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="lTQwayyn"
+Received: by mail-qv1-f50.google.com with SMTP id 6a1803df08f44-8ccdef9f3d4so19606276d6.2
+        for <sashiko-reviews@lists.linux.dev>; Fri, 29 May 2026 22:40:12 -0700 (PDT)
+ARC-Seal: i=1; a=rsa-sha256; t=1780119612; cv=none;
         d=google.com; s=arc-20240605;
-        b=JkhbyKbNu7Cu3CFRejPCMU3XsPCj2CPlB5HBnsul23xekwOQgRoRGL459dwltDGZwn
-         D6JqZwRFYwmKr4J+VDj8p7bN6GaBboRbBistI1EDkC7bcEIxUlDl/LoXQFOOmhM17nsE
-         DIYghLsGCHFwpSECnxmVkgsA/2NglD9DMHX/9MVh22ZX8sYmVzk8C/mfZy953NOzvbOw
-         SVYUUaMDCHWzzWiEtUJc+wfAgwvYJM1Af7aL2R9a/BPE75oNATDWSyDn/4soDGrP0wq7
-         eoj08bDyHrmDuFhdtkW4+Mp/3CV5CofiXU76DEilNDrQ2syjLfbpuj8lpptMRlK14wSu
-         kukQ==
+        b=MRfpnrhHTmV3F7NBImgPz/PEDXx/JwO9BJNX/Wiqwu4ez3m2EpevqJgka3kY0vjpKr
+         gGwiHAEjgbY8Eb0g6rtopM8zykreWuvGSBp37xm7Db+VkGDcIAC9YEpVFlhGvFiO4aRC
+         nMqsjn/icupXqhX//2mgIGAkJNg5/G5702VyLPvoD10XgqNdFJ1LU1Jg7pJ4iuks5zll
+         bjuwlKBl6udoWXvn7jORg6Z4GhEJWeR8XOiq5hTAJ6ZR2I84pVYmIDlojXgSzNxmfMqD
+         ow6ITGYn913e0lzGNfcIOAfhdA5/c0z7gFFn7hh84qtlaSUQVeReRfHw162ozjzlYJOr
+         jZzQ==
 ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com; s=arc-20240605;
         h=content-transfer-encoding:cc:to:subject:message-id:date:from
          :in-reply-to:references:mime-version:dkim-signature;
-        bh=hErNnC1lMlzvaZQ75VA5piTpzFVvISuyV2i8pxTk4yY=;
-        fh=dZD3NgG1X7s6kpr5hZ2U8f/WHSVkfsXTB6YiQT1XEfs=;
-        b=GoTtknz1BMfYqptcJrcRbw/JHpiuAuW8uMmj1kqQXyb3dMHiG4aIA9wpw2TrkH074v
-         WQmBaMODWiPlVvGjr+2j2gkTBfFaTNXiUiC23Dy7ItbEkQh3396USBgpCa4pl7gPWaJN
-         2T1Rvalc4MuvGMGr17J2odm0/b2n7oFWcOyErXxvYYPVNEOqzgkJaJN00O8ejf0PHB6y
-         J5HNeZwruuU+qMPAlccKaj27z+rqwU0FN8spohpBHgSr//8lyyfc3d928xaA2zuaxxOa
-         GBDH4Ze218FGnD/cJ3T0kVoFmQUAIxGWcd7l4RlFI9Phek9qzESKZOeT1U8bxbE4Vt+Y
-         2VSg==;
+        bh=1Lip9dASBZ4072fUZd4OlCA8STD2eKlIyWdvqrb/3yE=;
+        fh=M1R/gWDo0vJmmK7j4ZPq4odrG9pMnT3/6DWsMyim7g0=;
+        b=Jamv97+s+6OxPtkMGP42nt7m7r3Ht6qbAYkwACXm48q6qPCF8/0LanVgpl+bPNnj1t
+         A0FFp98cEzCLTgH2ubwsVyYg+MCUjbV83lV1LwdPQ7RAdX90uvfjvhDDZFsrdH05dmWq
+         n8htSNMyrwPbnr45N/KIDNqdk/MGLqiN5RP+cX7z5peLJuIkUhB7re5B/oPHT5elVyqI
+         cCDfpm3CVvGoP9Eo4I1gAfJWXUowIwRNLyt3UJ/oE+J7YkoWLftnndwkRGe97fv2kgvh
+         h4QiCh4V9YqL0FWIOf7wj4AsUkDxnBa5kmqfvPcaQSJCueTPJS6hTH9cb7Rxj8zksPMu
+         gUMA==;
         darn=lists.linux.dev
 ARC-Authentication-Results: i=1; mx.google.com; arc=none
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20251104; t=1780114716; x=1780719516; darn=lists.linux.dev;
+        d=gmail.com; s=20251104; t=1780119612; x=1780724412; darn=lists.linux.dev;
         h=content-transfer-encoding:cc:to:subject:message-id:date:from
          :in-reply-to:references:mime-version:from:to:cc:subject:date
          :message-id:reply-to;
-        bh=hErNnC1lMlzvaZQ75VA5piTpzFVvISuyV2i8pxTk4yY=;
-        b=frTqE4ZrSoGL1OxO4Btu8c7F+zHZgdUZeTQeZ+3HRk+Qp4mERJX749RJKeR/3jUm8B
-         IYet491q5dr/bIatTHMAzJbEkhng/IRvEYR9+JD6c3H35Ik5RXq47f6tA6N1ov5h8otL
-         YNGYHZxh1mTi5UWGnylT14G9YHXIS4C97kI6dMHY/uz+FLSK/fPpOaxjCf4T37CGmgG8
-         JoVbJI+lshKkbOCynvskXLrx1AFfpzQLcJ6RPDkdD5Qn52cnL9FE0qhAUyi3ST0CakUc
-         mxGzJlr7PsT5Ya25fVVpWjyAz0U7Zg1NNaNoeQjVOxC3CwHuyk3A/xzlC1O0UJF7AYJ8
-         7I4g==
+        bh=1Lip9dASBZ4072fUZd4OlCA8STD2eKlIyWdvqrb/3yE=;
+        b=lTQwayynaIhweAG/+pQNNjH/J+JYCb/8NN+JIJISfokQhD99m+XnxFVqwOqZTf6bDQ
+         0otpfAJw4zO5CEmo8npCw3k3MZJO5vCvDB8T8nLonanl3o7dbc07DZIbDQ60QD7qDtNs
+         fI4rDuvjnXk1iiTMhaX8s9q4f58viP67InsB/m24TwnFeOgD9QkUmRm1YSDfdmw4GtoA
+         8JtskA6ded+sIF6JFSnuzpY5tfYKd8c8xBx7TPvNM37J5vj8WbZ7GWVb/FsbYnlrYiOy
+         L/bxOSzbToM0kDYDjmY7UUxkoPbHiYPA5CZGma7U6OrFTpq2/SklQp3mGG84ygYyNh3N
+         iMIg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20251104; t=1780114716; x=1780719516;
+        d=1e100.net; s=20251104; t=1780119612; x=1780724412;
         h=content-transfer-encoding:cc:to:subject:message-id:date:from
          :in-reply-to:references:mime-version:x-gm-gg:x-gm-message-state:from
          :to:cc:subject:date:message-id:reply-to;
-        bh=hErNnC1lMlzvaZQ75VA5piTpzFVvISuyV2i8pxTk4yY=;
-        b=XvQVHr4lLqoRDxZMVRNJrxXtZYGO7X8+/2xuXxIDCr2kUb17v4m0DFiXxAJJmIWmbm
-         snCf8sJKY7ImZZ8QnToBcsy39dy++4PO7E/DKgj+14SkwH41v/68taiC0hDUWulj1cPa
-         BycKOLy5Y1uY1nbftDOxvkgvI2RrIBrOXrw4AYWA9SChBeDA+DcrkXbjCa3eyI/3nBPO
-         MjHmrS3RNJoWuJDqUIhosDYK+qe23fuogWKvCGJ+pFVd+iaByK2mLBBXO2Lo0wjTRGRB
-         p5X4KkSXXlms0bgU1nVC2n93zhRHeTj8nSP/e/KSopj/ArU9D1qLCb+dJMmqmTJwkXhj
-         alLw==
-X-Gm-Message-State: AOJu0YyyOkJQ4IK+fSPWkRR+qCABPsHTLOvwLScNF3DoRlgQdAqglJ4k
-	WkMRtg1oyMaXTJzzXCjUNQr8/eZuRAcn1eF+STbkulUE+fKoebg2JbgNSASmOsse8vCTSCLV7EF
-	a8MBm7rTDaxxFrIIZfVXsDZ5WUYMThFXxeQsf
-X-Gm-Gg: Acq92OF19wgpLB2KvynXv/kxWcL0deiLwMfNQkzwKgqFInsEZCazyhgO8OEIi16lEcq
-	O1P+cNONM5YPPDWqJ2CpbZPaP6hpuw43Rs441+4FEsPj1B1sDBTdSm1HRo8ZA11qrb2YhC/Ztk+
-	rXCF/YcIVqQcVvyD5NSIPPA+mK8tJd5IfbCSkrQZJ714x7IDAfh+2gjfDttW72/rT0Uq3BUbwwy
-	E3+cSNur2CGn1RyvWBioN33AS7aFMJV3KFdlCUAzE+K/qMvSoACudtQhKFkfFiHAxdOC8AgyNwQ
-	v+JXQtCABQ9IHDoKgBJocdeW5AL4IILSve5b0jtUI3q26Y5TaS4FA74CvT9P37t+POZa6VkhCxb
-	ySqSwmXyqYrKlRaXyRzi3ww4N1Hc7BQhHuODvSz6IKJ7b0CEpVwZA8tHlIOBdGWOFj/LTMrQJLz
-	XJl+Y=
-X-Received: by 2002:a50:cc4b:0:b0:687:7fc4:1ea5 with SMTP id
- 4fb4d7f45d1cf-68c8d0076fbmr934151a12.23.1780114715584; Fri, 29 May 2026
- 21:18:35 -0700 (PDT)
+        bh=1Lip9dASBZ4072fUZd4OlCA8STD2eKlIyWdvqrb/3yE=;
+        b=LGLjfjt+bqFnm8WvxwCxdusE4Bi4U6kL5+tPOoqMenIppTAMISmcBmpJD7OID8pKdx
+         YfgAOnFFKdfMoSVel1tV+wjEeStecFV/GQHSf6u3AfL1Ig1FTpLqlJQuuk7XKRADoZw4
+         6qDX/rXal2C2Ki+ILom+yqbQPqp2oq095grvcPXEW5nNoZZA2tBUVy+ifMWFzaS2PC89
+         jWmG0kcPWApYa+O/AntZSdyzE6paiqDbPVoAjR0f1mkh/q9DXzaDoi6gi3HegHmTATNw
+         H/beGgwyEzZdW06Phf01tD30A8ws+HLgP2SEJ9neh0Ypk8ooZtOobtehA//lfMRMuude
+         zB3g==
+X-Gm-Message-State: AOJu0YyMqIamRP6ZesUxJgaI1OeTcBpEsrEwvfsESe8OkHtjrD3P6tWV
+	+T/OZUCzVYPkux7ATKsxBJF5qwzbAhwC0VWGy6ngtNwyQxe65NMuYjeH53U8HcGGZpxsl1tZH24
+	fIDnZKwgNwGqyGaV6vMXdZxEEq3T4msM=
+X-Gm-Gg: Acq92OEu2Q0L08vFQshs5lWAFUkAsEqw/Xbk34bolDn+yGjVqXP24Aa5EmfCiwEozN1
+	mdDMPpv1rt6wlfil61BuQkqEOmJvyTygTw1ccZGbbCTVQ8zoSR2OkDVWckcASt4v/1SYIMfh80w
+	UCqyjvaXQ7zgT7GCoI9UrZE6KB/+7ORJBMqqH3CjSesuw2UxUJqEfmux7TzZTEtx45VeRk+Jesf
+	MlAhPmrjw517dQy8+LDIzknXt21+Kx0MriBlusFLxCZRplRj5W8qysVTzIABFnRpStpySIrQAKb
+	3C8z/GQYsGsAF15GZi7Fr7V9utP3pqaluIxrOCMBjZtc6jdPgS/Z0v0n0VwUZuruEOEyhGCmYst
+	MffCN
+X-Received: by 2002:a05:6214:da6:b0:8ad:87a2:3c1a with SMTP id
+ 6a1803df08f44-8ccefe014e0mr47109986d6.46.1780119611758; Fri, 29 May 2026
+ 22:40:11 -0700 (PDT)
 Precedence: bulk
 X-Mailing-List: sashiko-reviews@lists.linux.dev
 List-Id: <sashiko-reviews.lists.linux.dev>
 List-Subscribe: <mailto:sashiko-reviews+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:sashiko-reviews+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-References: <20260530030152.49759-1-rosenp@gmail.com> <20260530031259.A630B1F00893@smtp.kernel.org>
-In-Reply-To: <20260530031259.A630B1F00893@smtp.kernel.org>
-From: Rosen Penev <rosenp@gmail.com>
-Date: Fri, 29 May 2026 21:18:23 -0700
-X-Gm-Features: AVHnY4LE4rbusb4FylXC6QnjDFW8i-P8aeafMpSxzTJ-JOOmjN1LqDrPgB91-lM
-Message-ID: <CAKxU2N_Vc1CuONb0gwi-3afzLoEfo0+d0M9w9R9GtO-q6GpgRg@mail.gmail.com>
-Subject: Re: [PATCH] bestcomm/gen_bd: fix out-of-bounds access in PSC
- parameter lookup
-To: sashiko-reviews@lists.linux.dev
-Cc: vkoul@kernel.org, dmaengine@vger.kernel.org, Frank.Li@kernel.org
+References: <20260524094616.106660-1-manishbaing2789@gmail.com>
+ <20260524101513.A76711F000E9@smtp.kernel.org> <20260525-radio-ungodly-9725b95ed67a@spud>
+In-Reply-To: <20260525-radio-ungodly-9725b95ed67a@spud>
+From: Manish Baing <manishbaing2789@gmail.com>
+Date: Sat, 30 May 2026 11:10:00 +0530
+X-Gm-Features: AVHnY4J4LRcPDSm1Jb4TgJEmvmkzMlak8iXI4y-cVUJQB65oF7f3ugFuB7bHFKI
+Message-ID: <CAJvdc_fabG+ks-DaV5yF0uc0ZxGkOrJNqzn0jt9rKvzGt+kbpQ@mail.gmail.com>
+Subject: Re: [PATCH] dt-bindings: mmc: mellanox,bluefield-dw-mshc: Convert DT schema
+To: Conor Dooley <conor@kernel.org>
+Cc: sashiko-reviews@lists.linux.dev, devicetree@vger.kernel.org, 
+	robh@kernel.org, conor+dt@kernel.org
 Content-Type: text/plain; charset="UTF-8"
 Content-Transfer-Encoding: quoted-printable
 
-On Fri, May 29, 2026 at 8:13=E2=80=AFPM <sashiko-bot@kernel.org> wrote:
+Hi Conor,
+Thanks for your review. I=E2=80=99ve already submitted a v2 that address th=
+e
+unit-address mismatch based on the Shahiko bot=E2=80=99s feedback.
+You can find the updated submission here:
+https://lore.kernel.org/all/20260524111528.107251-1-manishbaing2789@gmail.c=
+om/
+
+Thanks and Regards,
+Manish
+
+
+On Mon, May 25, 2026 at 10:11=E2=80=AFPM Conor Dooley <conor@kernel.org> wr=
+ote:
 >
-> Thank you for your contribution! Sashiko AI review found 1 potential issu=
-e(s) to consider:
->
-> Pre-existing issues:
-> - [Critical] Unchecked array access in `mpc512x_psc_alloc_clock` and rela=
-ted clock functions where `psc_num` derived from device tree is used to ind=
-ex arrays, causing out-of-bounds reads and writes.
-> --
->
-> commit 7a3c433b5cd814a1fd0d2b57113cd41cb03279a5
-> Author: Rosen Penev <rosenp@gmail.com>
->
-> bestcomm/gen_bd: fix out-of-bounds access in PSC parameter lookup
->
-> This commit fixes an out-of-bounds access issue in bcom_psc_gen_bd_rx_ini=
-t()
-> and bcom_psc_gen_bd_tx_init() by properly using ARRAY_SIZE() for bounds
-> checking on psc_num. It also removes an unused forward declaration in
-> bcom_psc_gen_bd_tx_init().
->
-> > diff --git a/drivers/dma/bestcomm/gen_bd.c b/drivers/dma/bestcomm/gen_b=
-d.c
-> > index 8a24a5cbc2633..75d1a6f543df9 100644
-> > --- a/drivers/dma/bestcomm/gen_bd.c
-> > +++ b/drivers/dma/bestcomm/gen_bd.c
-> > @@ -315,7 +315,7 @@ static struct bcom_psc_params {
-> >  struct bcom_task * bcom_psc_gen_bd_rx_init(unsigned psc_num, int queue=
-_len,
-> >                                          phys_addr_t fifo, int maxbufsi=
-ze)
-> >  {
-> > -     if (psc_num >=3D MPC52xx_PSC_MAXNUM)
-> > +     if (psc_num >=3D ARRAY_SIZE(bcom_psc_params))
->
-> [Severity: Critical]
-> This is a pre-existing issue, but while looking at this fix for the psc_n=
-um
-> bounds checking, I noticed a similar unchecked array access regression ve=
-ctor
-> using psc_num in drivers/tty/serial/mpc52xx_uart.c.
-cross driver review. Impressive. How is anyone supposed to get anything mer=
-ged?
->
-> In mpc512x_psc_alloc_clock(), psc_num is calculated directly from
-> port->mapbase:
->
-> drivers/tty/serial/mpc52xx_uart.c:mpc512x_psc_alloc_clock() {
->         ...
->         psc_num =3D (port->mapbase & 0xf00) >> 8;
->         ...
->         psc_mclk_clk[psc_num] =3D clk;
->         ...
-> }
->
-> Because port->mapbase comes from the device tree via
-> of_address_to_resource(), a malformed device tree could supply an address
-> like 0x11F00, allowing psc_num to evaluate up to 15.
->
-> Since psc_mclk_clk and psc_ipg_clk are arrays sized to MPC52xx_PSC_MAXNUM
-> (which is 12 when CONFIG_PPC_MPC512x is defined), wouldn't this allow an
-> out-of-bounds write of a pointer to the BSS section?
->
-> The exact same unchecked psc_num calculation also appears in
-> mpc512x_psc_relse_clock() and mpc512x_psc_endis_clock(), leading to simil=
-ar
-> out-of-bounds reads and writes.
->
-> >               return NULL;
+> On Sun, May 24, 2026 at 10:15:13AM +0000, sashiko-bot@kernel.org wrote:
+> > Thank you for your contribution! Sashiko AI review found 1 potential is=
+sue(s) to consider:
+> > - [Low] Mismatch between node unit-address and `reg` property base addr=
+ess in the YAML example.
+> > --
 > >
-> >       return bcom_gen_bd_rx_init(queue_len, fifo,
-> [ ... ]
+> > commit cdc4e472d6093984a0a6b661575b015b013ec9d6
+> > Author: Manish Baing <manishbaing2789@gmail.com>
+> >
+> > dt-bindings: mmc: mellanox,bluefield-dw-mshc: Convert DT schema
+> >
+> > This commit converts the Mellanox BlueField SoC extensions for the Syno=
+psys
+> > Designware Mobile Storage Host Controller from text format to YAML sche=
+ma.
+> >
+> > > diff --git a/Documentation/devicetree/bindings/mmc/mellanox,bluefield=
+-dw-mshc.yaml b/Documentation/devicetree/bindings/mmc/mellanox,bluefield-dw=
+-mshc.yaml
+> > > new file mode 100644
+> > > index 0000000000000..32d50e45ddb86
+> > > --- /dev/null
+> > > +++ b/Documentation/devicetree/bindings/mmc/mellanox,bluefield-dw-msh=
+c.yaml
+> >
+> > [ ... ]
+> >
+> > > +examples:
+> > > +  - |
+> > > +    /* Mellanox BlueField SoC MMC */
+> > > +    mmc@2804000 {
+> > > +        compatible =3D "mellanox,bluefield-dw-mshc";
+> > > +        reg =3D <0x6008000 0x400>;
+> >
+> > [Severity: Low]
+> > Should the node unit-address match the first address in the reg propert=
+y
+> > here?
 >
-> --
-> Sashiko AI review =C2=B7 https://sashiko.dev/#/patchset/20260530030152.49=
-759-1-rosenp@gmail.com?part=3D1
+> Of course it should.
+> pw-bot: changes-requested
+>
+> >
+> > The converted YAML example uses mmc@2804000 as the node name, but retai=
+ns
+> > reg =3D <0x6008000 0x400>. This mismatch typically causes a unit_addres=
+s_vs_reg
+> > warning during dt_binding_check validation.
+> >
+> > > +        interrupts =3D <32>;
+> > > +        fifo-depth =3D <0x100>;
+> > > +        clock-frequency =3D <24000000>;
+> > > +        bus-width =3D <8>;
+> > > +        cap-mmc-highspeed;
+> > > +    };
+> >
+> > --
+> > Sashiko AI review =C2=B7 https://sashiko.dev/#/patchset/20260524094616.=
+106660-1-manishbaing2789@gmail.com?part=3D1
