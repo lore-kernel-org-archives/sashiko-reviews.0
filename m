@@ -1,149 +1,84 @@
-Received: from out-171.mta0.migadu.com (out-171.mta0.migadu.com [91.218.175.171])
+Received: from out-174.mta0.migadu.com (out-174.mta0.migadu.com [91.218.175.174])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A58E72DC32A
-	for <sashiko-reviews@lists.linux.dev>; Sat, 30 May 2026 00:53:22 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=91.218.175.171
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E3CEE17A586
+	for <sashiko-reviews@lists.linux.dev>; Sat, 30 May 2026 01:08:14 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=91.218.175.174
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1780102404; cv=none; b=BOYgMfJ8OnK0dqYUdd3SGI/z2Y9bsRpyYtI5VzwO/zolNerzdbkR03TgmG3MCzW4ooNin50uP57aj9dtYW+KukCUgWttkDLwlced+rXahsM8zj54i8iK3XYC1CxYfl40O+Szli7KWU/YSgm9/17Hkj2xqzlOYNVKPOPLvrql+N4=
+	t=1780103296; cv=none; b=O4HbMcDZOtDcWRDr3GqiCNhWY1Ep6TpagXUKKqwYpyb40f0PWAj3JXmNB4ICkgUYOPsNEn7M0s1/L0HUOAhqQYW9dAxo3CSD2n+ASv9Om6PL/vJoMY7K4pVpK0H+xgafcgPWzxBKrKLW6ofpkz9SaMG3UY9m5SN5AfbDqQXzGrM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1780102404; c=relaxed/simple;
-	bh=qpde8EHjaLv/rrT6XwfIhis8MXFJjrUJIfhEEQqpxC8=;
+	s=arc-20240116; t=1780103296; c=relaxed/simple;
+	bh=wgVP9H3jxl9/T392t7NAw6c02DlLSXohGkZ2yrxb7cg=;
 	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=p3SVQQNeFJZdUyhaCsX3C8blNkuKsw8MnZOIATqjnfBnHGg4p5crVgnuQpVePnwGXVXlWIfk2rHRENSNhxiubZlYUSzZhMNJKOB3+iKkdZUGLeCUv55GWH9zQxlQWmec/S7NKr2q5956HqR2K8WHCBKrttYPk8vijDw7EGPOn9w=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linux.dev; spf=pass smtp.mailfrom=linux.dev; dkim=pass (1024-bit key) header.d=linux.dev header.i=@linux.dev header.b=vlg8FAcS; arc=none smtp.client-ip=91.218.175.171
+	 In-Reply-To:Content-Type; b=srr6/vYsu04u/NXn07lvNz3DPPM76npiNYRABabe3gjeL+id0pQY9floLfLrU0wcYd/waxm6hh28/8CuMVa+4QtzPctd5jj0LTtPpWYsYJ+Fao2qWxB4jvfpaDi9Yk8cNjPOsEZsua1PhvbMj8yEj+zSTP5zmOHC3lT3SxdkH4o=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linux.dev; spf=pass smtp.mailfrom=linux.dev; dkim=pass (1024-bit key) header.d=linux.dev header.i=@linux.dev header.b=U41IrxRh; arc=none smtp.client-ip=91.218.175.174
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linux.dev
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linux.dev
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linux.dev header.i=@linux.dev header.b="vlg8FAcS"
-Message-ID: <1dd5c998-ad2a-47dd-9875-c8fd5db6d374@linux.dev>
+	dkim=pass (1024-bit key) header.d=linux.dev header.i=@linux.dev header.b="U41IrxRh"
+Message-ID: <30421bf9-dc93-4e30-aa63-1284ac79b0ba@linux.dev>
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linux.dev; s=key1;
-	t=1780102400;
+	t=1780103292;
 	h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
 	 to:to:cc:cc:mime-version:mime-version:content-type:content-type:
 	 content-transfer-encoding:content-transfer-encoding:
 	 in-reply-to:in-reply-to:references:references;
-	bh=+IR+x4vwXkJmNdcGjyBRl1DqKrigG6hgOWj1BEdMSvw=;
-	b=vlg8FAcScy8s5VPPdDW7TS5sfsORpUMlmY2PIWrTRFSMvqUaWqNk6AVSyDpy7ZN3OLn89c
-	WVhpD8Nqsyy+hXdgNd1bSc2y+t9J2ET7r7eozK+NBsn6s+mMFDZ1YHTM4lN9gyW+JJdRTK
-	HUCUBFsAWYaLNyVIhhot30n8kEOdsuA=
-Date: Fri, 29 May 2026 17:53:15 -0700
+	bh=Djhqr86UuRC6GV6B4fby+vb6NNY0s9NtSE2NUpbhgoM=;
+	b=U41IrxRhmdsYIFcwiKvLJJTa+y5JZNDoKNNJaQ5tP6UbusshG7hPTJVxYvX5rKOskap9kr
+	4N7+foj8yRKaWRDCS/T+w6cdLWfLnFmamdCjl0VkzGoDk3N4EXiVnEG+o5CN3geLA2sbwy
+	7sSJ26JLySUIjAEL+al265jfDSo9ekg=
+Date: Fri, 29 May 2026 18:08:08 -0700
 Precedence: bulk
 X-Mailing-List: sashiko-reviews@lists.linux.dev
 List-Id: <sashiko-reviews.lists.linux.dev>
 List-Subscribe: <mailto:sashiko-reviews+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:sashiko-reviews+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Subject: Re: [PATCH 2/2] crypto: ccp: Fix possible deadlock in SEV init
- failure path
-To: sashiko-reviews@lists.linux.dev
-Cc: kvm@vger.kernel.org
-References: <20260528-sev_snp_fixes-v1-2-d67a08151779@meta.com>
- <20260529005119.8CFF11F000E9@smtp.kernel.org>
+Subject: Re: [PATCH 1/2] KVM: SEV: Do not allow SEV-SNP VMs from intra-host
+ migration
+To: Sean Christopherson <seanjc@google.com>
+Cc: sashiko-reviews@lists.linux.dev, kvm@vger.kernel.org
+References: <20260528-sev_snp_fixes-v1-1-d67a08151779@meta.com>
+ <20260528235151.9E59E1F000E9@smtp.kernel.org>
+ <709d9ca6-59bb-4f82-b48a-0aa67a4d6ba2@linux.dev>
+ <ahoTEgTSVcEmUMvM@google.com>
 Content-Language: en-US
 X-Report-Abuse: Please report any abuse attempt to abuse@migadu.com and include these headers.
 From: Atish Patra <atish.patra@linux.dev>
-In-Reply-To: <20260529005119.8CFF11F000E9@smtp.kernel.org>
+In-Reply-To: <ahoTEgTSVcEmUMvM@google.com>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 7bit
 X-Migadu-Flow: FLOW_OUT
 
 
-On 5/28/26 5:51 PM, sashiko-bot@kernel.org wrote:
-> Thank you for your contribution! Sashiko AI review found 3 potential issue(s) to consider:
->
-> Pre-existing issues:
-> - [Critical] Host kernel panics due to RMP violation when reading `sev_init_ex_buffer` in `sev_write_init_ex_file()`.
-> - [High] Memory allocated for `sev_init_ex_buffer` is leaked and leaves the device in a broken state if initialization fails in `__sev_platform_init_handle_init_ex_path()`.
-> - [High] Uninitialized kernel memory is allocated and provided to the SEV firmware and disk if the NV initialization file does not exist.
-> --
->
-> commit 405e31473bcf0fe9d84a37db761b7cf915973108
-> Author: Atish Patra <atishp@meta.com>
->
-> crypto: ccp: Fix possible deadlock in SEV init failure path
->
-> This commit modifies __sev_platform_init_handle_init_ex_path() to pass
-> locked=true to rmp_mark_pages_firmware(). This prevents a potential
-> deadlock on the sev_cmd_mutex when an rmpupdate fails and attempts to
-> reclaim pages during cleanup.
->
->> diff --git a/drivers/crypto/ccp/sev-dev.c b/drivers/crypto/ccp/sev-dev.c
->> index d1e9e0ac63b60..3d4793e8e34b2 100644
->> --- a/drivers/crypto/ccp/sev-dev.c
->> +++ b/drivers/crypto/ccp/sev-dev.c
->> @@ -1557,7 +1557,7 @@ static int __sev_platform_init_handle_init_ex_path(struct sev_device *sev)
->>   		unsigned long npages;
->>   
->>   		npages = 1UL << get_order(NV_LENGTH);
-> [Severity: High]
-> This isn't a bug introduced by this patch, but is there a risk of leaking
-> uninitialized kernel memory to the SEV firmware and disk?
->
-> Earlier in this function, the NV buffer is allocated without zeroing the
-> memory:
->
-> 	page = alloc_pages(GFP_KERNEL, get_order(NV_LENGTH));
-> 	...
-> 	sev_init_ex_buffer = page_address(page);
-> 	rc = sev_read_init_ex_file();
->
-> If the NV initialization file does not exist, sev_read_init_ex_file()
-> handles the -ENOENT error and returns 0 without reading any data, leaving
-> the 32KB buffer filled with uninitialized kernel memory. This buffer is
-> then provided to the SEV firmware.
->
-> Later, when state changes occur, sev_write_init_ex_file() writes this memory
-> back to the host filesystem.
->
-> Should alloc_pages() be called with __GFP_ZERO to prevent this?
+On 5/29/26 3:28 PM, Sean Christopherson wrote:
+> On Fri, May 29, 2026, Atish Patra wrote:
+>>> Because the mirror's vmsa_features is zero, KVM treats the mirror VM as a
+>>> standard SEV-ES VM (since ____sev_snp_guest() will evaluate to false).
+>>>
+>>> When vCPUs are created for the mirror VM, KVM allocates standard SEV-ES
+>>> VMSAs and fails to perform SNP-specific initialization, such as registering
+>>> the VMSA pages in the RMP via SEV_CMD_SNP_LAUNCH_UPDATE.
+>>>
+>>> When KVM executes VMRUN for the mirror VM's vCPU, the hardware evaluates an
+>>> ASID bound to SNP execution using an invalid, non-RMP-registered VMSA page.
+>>> Will this trigger an RMP #NPF (Nested Page Fault) on the host hypervisor,
+>>> leading to an unhandled hypervisor crash and denial of service?
+>> Nice catch! I don't think it will lead to hypervisor crash though. As per my
+>> understanding, the fault on VMSA page would be sent to user space and just a
+>> VM instance will crash which is not that critical.
+> RMP #PFs on the VMSA will typically crash the host.  In this case, I would
+> expect VMRUN to fault, which would trigger the BUG_ON() in kvm_spurious_fault().
+> So assuming the "bad" VM can get far enough along to attempt VMRUN, this is
+> likely fatal.
 
-Valid findings. The sev_init_ex_buffer should be set to NULL and pages 
-should be freed in case of failure in sev_read_init_ex_file.
+Ahh VMRUN would fault it self which would be bad. So no RMP #NPF.
+Thanks for the clarification. I will send the v2 with the mirroring fix.
 
-
->> -		if (rmp_mark_pages_firmware(__pa(sev_init_ex_buffer), npages, false)) {
->> +		if (rmp_mark_pages_firmware(__pa(sev_init_ex_buffer), npages, true)) {
->>   			dev_err(sev->dev, "SEV: INIT_EX NV memory page state change failed.\n");
->>   			return -ENOMEM;
-> [Severity: High]
-> This is a pre-existing issue, but is it possible this error path leaves the
-> device in a broken state?
->
-> If the page state transition fails, the function returns an error without
-> freeing the buffer or resetting sev_init_ex_buffer to NULL. Because it is a
-> static global, subsequent initialization attempts will return 0 immediately:
->
-> 	if (sev_init_ex_buffer)
-> 		return 0;
->
-> This bypasses the file reading and the required firmware page state
-> transition, passing an improperly initialized, host-owned buffer to the
-> firmware during the INIT_EX command.
->
-> Could this permanently break SEV initialization until the system reboots?
-
-I will add the fix as well for this along with the above one.
-
-
-> [Severity: Critical]
-> This is also a pre-existing issue, but will reading from sev_init_ex_buffer
-> trigger a host kernel panic?
->
-> Once the sev_init_ex_buffer pages are transitioned to a firmware-owned state
-> (RMP private) by rmp_mark_pages_firmware(), they are no longer accessible to
-> the host.
->
-> Later, sev_write_init_ex_file() is called to save the NV memory back to disk
-> and invokes kernel_write() using sev_init_ex_buffer as the buffer.
->
-> Since there is no code to reclaim the pages back to a host-accessible state
-> before this VFS write operation, won't the host CPU's attempt to read from
-> sev_init_ex_buffer trigger a Page Fault with the RMP bit set?
-
-As per my understanding that is not correct. A host cpu write to 
-firmware-owner state would result in RMP #PF but read would not raise a 
-fault. I confirmed that with loading ccp with init_ex_path and kvm_amd 
-as well.
-
->>   		}
+>> Having said that, we should close the gap for such mistakes from VMM side
+>> though by rejecting mirroring of sev-snp VMs. I will add a patch and update
+>> the migration kselftest as well for sanity checking.
+>>
+>>>>    		ret = -EINVAL;
+>>>>    		goto out_unlock;
+>>>>    	}
