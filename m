@@ -1,172 +1,119 @@
-Received: from mail-qv1-f50.google.com (mail-qv1-f50.google.com [209.85.219.50])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from todd.t-8ch.de (todd.t-8ch.de [159.69.126.157])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C93C113635E
-	for <sashiko-reviews@lists.linux.dev>; Sat, 30 May 2026 05:40:12 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=pass smtp.client-ip=209.85.219.50
-ARC-Seal:i=2; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1780119614; cv=pass; b=Ue9ynHL8UbjOYCyG/RfkTTAYf46RB7q7wknuvU+sqw9ILZ5h+iNgkiLN8k628lkCbZrQ3igtLgIRT4yA53DXrr4aC4AZ9bnLkhFNvLX8YUR4l+mzvmhS0NsExB7HyFS70Kuc5I2eb606e+JWEubO5UN5a7/1XUa+yTgb6IMvFS8=
-ARC-Message-Signature:i=2; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1780119614; c=relaxed/simple;
-	bh=fcMiBykd2m247M2S8w3zuUBx++iTdz41/pyQA3cMvZ0=;
-	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
-	 To:Cc:Content-Type; b=Mj5cHkPLaKKQuvL3hay0Cx4dxcTMXHc7rmsTbh9dZXVk9posazHAObzSQ+DsSGmqUeFMlYUzb4lCDvZI86maKC2YAaHFj+cuipuY34t0o+/FhM1nSmodHTqF2t2vifliLGPNIKTz37xUyPkM3iM5q5HVHHKug0ZVEM5+0Y+dKXU=
-ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=lTQwayyn; arc=pass smtp.client-ip=209.85.219.50
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 13F9B39C62F
+	for <sashiko-reviews@lists.linux.dev>; Sat, 30 May 2026 11:04:06 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=159.69.126.157
+ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
+	t=1780139049; cv=none; b=pyYim0xjzD76w7EIag/evcjsBgHSkVgSIbKkrrCcnNn6QxsxM0zmUuQB++V2GUNnegnNuQeSRLjTO5sILL2YjtZ3DwyHWXZgN5onpHnouoYhEbSOBemkkhhkqq9bfJh/WPbukOiKC04xfJdBi5CJO5B6mC0zemegRfJPRzsuMbg=
+ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
+	s=arc-20240116; t=1780139049; c=relaxed/simple;
+	bh=wWawFLaPVS+C0TT7LGI8PekcGkzYU+jEv0GJH51lyeE=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=Z+M/xaZBVj5lsB/4tgOkFsNynKb7DpV/mXirpG7TZxo3J6YA0mYjithTaZrVenrxIMycAQdcp9xZSFq7g4zCFNbzGGg97smdZk0Ditgd/D2mL27C54OfRoc5KTtuJaxsEvkElYKW5QycfuElDpZgw3G+6jg3mcfVRlQBHGNKlBo=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=weissschuh.net; spf=pass smtp.mailfrom=weissschuh.net; dkim=pass (1024-bit key) header.d=weissschuh.net header.i=@weissschuh.net header.b=RgjbkbzE; arc=none smtp.client-ip=159.69.126.157
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=weissschuh.net
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=weissschuh.net
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="lTQwayyn"
-Received: by mail-qv1-f50.google.com with SMTP id 6a1803df08f44-8ccdef9f3d4so19606276d6.2
-        for <sashiko-reviews@lists.linux.dev>; Fri, 29 May 2026 22:40:12 -0700 (PDT)
-ARC-Seal: i=1; a=rsa-sha256; t=1780119612; cv=none;
-        d=google.com; s=arc-20240605;
-        b=MRfpnrhHTmV3F7NBImgPz/PEDXx/JwO9BJNX/Wiqwu4ez3m2EpevqJgka3kY0vjpKr
-         gGwiHAEjgbY8Eb0g6rtopM8zykreWuvGSBp37xm7Db+VkGDcIAC9YEpVFlhGvFiO4aRC
-         nMqsjn/icupXqhX//2mgIGAkJNg5/G5702VyLPvoD10XgqNdFJ1LU1Jg7pJ4iuks5zll
-         bjuwlKBl6udoWXvn7jORg6Z4GhEJWeR8XOiq5hTAJ6ZR2I84pVYmIDlojXgSzNxmfMqD
-         ow6ITGYn913e0lzGNfcIOAfhdA5/c0z7gFFn7hh84qtlaSUQVeReRfHw162ozjzlYJOr
-         jZzQ==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com; s=arc-20240605;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:dkim-signature;
-        bh=1Lip9dASBZ4072fUZd4OlCA8STD2eKlIyWdvqrb/3yE=;
-        fh=M1R/gWDo0vJmmK7j4ZPq4odrG9pMnT3/6DWsMyim7g0=;
-        b=Jamv97+s+6OxPtkMGP42nt7m7r3Ht6qbAYkwACXm48q6qPCF8/0LanVgpl+bPNnj1t
-         A0FFp98cEzCLTgH2ubwsVyYg+MCUjbV83lV1LwdPQ7RAdX90uvfjvhDDZFsrdH05dmWq
-         n8htSNMyrwPbnr45N/KIDNqdk/MGLqiN5RP+cX7z5peLJuIkUhB7re5B/oPHT5elVyqI
-         cCDfpm3CVvGoP9Eo4I1gAfJWXUowIwRNLyt3UJ/oE+J7YkoWLftnndwkRGe97fv2kgvh
-         h4QiCh4V9YqL0FWIOf7wj4AsUkDxnBa5kmqfvPcaQSJCueTPJS6hTH9cb7Rxj8zksPMu
-         gUMA==;
-        darn=lists.linux.dev
-ARC-Authentication-Results: i=1; mx.google.com; arc=none
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20251104; t=1780119612; x=1780724412; darn=lists.linux.dev;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=1Lip9dASBZ4072fUZd4OlCA8STD2eKlIyWdvqrb/3yE=;
-        b=lTQwayynaIhweAG/+pQNNjH/J+JYCb/8NN+JIJISfokQhD99m+XnxFVqwOqZTf6bDQ
-         0otpfAJw4zO5CEmo8npCw3k3MZJO5vCvDB8T8nLonanl3o7dbc07DZIbDQ60QD7qDtNs
-         fI4rDuvjnXk1iiTMhaX8s9q4f58viP67InsB/m24TwnFeOgD9QkUmRm1YSDfdmw4GtoA
-         8JtskA6ded+sIF6JFSnuzpY5tfYKd8c8xBx7TPvNM37J5vj8WbZ7GWVb/FsbYnlrYiOy
-         L/bxOSzbToM0kDYDjmY7UUxkoPbHiYPA5CZGma7U6OrFTpq2/SklQp3mGG84ygYyNh3N
-         iMIg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20251104; t=1780119612; x=1780724412;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:x-gm-gg:x-gm-message-state:from
-         :to:cc:subject:date:message-id:reply-to;
-        bh=1Lip9dASBZ4072fUZd4OlCA8STD2eKlIyWdvqrb/3yE=;
-        b=LGLjfjt+bqFnm8WvxwCxdusE4Bi4U6kL5+tPOoqMenIppTAMISmcBmpJD7OID8pKdx
-         YfgAOnFFKdfMoSVel1tV+wjEeStecFV/GQHSf6u3AfL1Ig1FTpLqlJQuuk7XKRADoZw4
-         6qDX/rXal2C2Ki+ILom+yqbQPqp2oq095grvcPXEW5nNoZZA2tBUVy+ifMWFzaS2PC89
-         jWmG0kcPWApYa+O/AntZSdyzE6paiqDbPVoAjR0f1mkh/q9DXzaDoi6gi3HegHmTATNw
-         H/beGgwyEzZdW06Phf01tD30A8ws+HLgP2SEJ9neh0Ypk8ooZtOobtehA//lfMRMuude
-         zB3g==
-X-Gm-Message-State: AOJu0YyMqIamRP6ZesUxJgaI1OeTcBpEsrEwvfsESe8OkHtjrD3P6tWV
-	+T/OZUCzVYPkux7ATKsxBJF5qwzbAhwC0VWGy6ngtNwyQxe65NMuYjeH53U8HcGGZpxsl1tZH24
-	fIDnZKwgNwGqyGaV6vMXdZxEEq3T4msM=
-X-Gm-Gg: Acq92OEu2Q0L08vFQshs5lWAFUkAsEqw/Xbk34bolDn+yGjVqXP24Aa5EmfCiwEozN1
-	mdDMPpv1rt6wlfil61BuQkqEOmJvyTygTw1ccZGbbCTVQ8zoSR2OkDVWckcASt4v/1SYIMfh80w
-	UCqyjvaXQ7zgT7GCoI9UrZE6KB/+7ORJBMqqH3CjSesuw2UxUJqEfmux7TzZTEtx45VeRk+Jesf
-	MlAhPmrjw517dQy8+LDIzknXt21+Kx0MriBlusFLxCZRplRj5W8qysVTzIABFnRpStpySIrQAKb
-	3C8z/GQYsGsAF15GZi7Fr7V9utP3pqaluIxrOCMBjZtc6jdPgS/Z0v0n0VwUZuruEOEyhGCmYst
-	MffCN
-X-Received: by 2002:a05:6214:da6:b0:8ad:87a2:3c1a with SMTP id
- 6a1803df08f44-8ccefe014e0mr47109986d6.46.1780119611758; Fri, 29 May 2026
- 22:40:11 -0700 (PDT)
+	dkim=pass (1024-bit key) header.d=weissschuh.net header.i=@weissschuh.net header.b="RgjbkbzE"
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=weissschuh.net;
+	s=mail; t=1780139045;
+	bh=wWawFLaPVS+C0TT7LGI8PekcGkzYU+jEv0GJH51lyeE=;
+	h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
+	b=RgjbkbzEuPxXOSSFspFC6JUXJOrIj0JEpdAtGm40Or/hD+rQMzLiV9AJvc3I9HgK5
+	 4Evws+l5hJUOj8QCWItcNgRu3hi8Wrgmt+j0oDjpYVPgoEr0tdGbrSv/llysKXAALT
+	 2r1gaVy7dzeVCFOYWsrxnnpL/PUBZ4iOCNSNPA2k=
+Date: Sat, 30 May 2026 13:04:04 +0200
+From: Thomas =?utf-8?Q?Wei=C3=9Fschuh?= <linux@weissschuh.net>
+To: sashiko-reviews@lists.linux.dev
+Cc: linux-hwmon@vger.kernel.org
+Subject: Re: [PATCH 4/5] hwmon: (cros_ec) Add support for displaying fan
+ curves
+Message-ID: <ae7ff79c-8180-4f76-ab38-f0ab38ecf556@t-8ch.de>
+References: <20260529-cros_ec-hwmon-fan-curve-v1-4-da6792b3830f@weissschuh.net>
+ <20260529212602.6AD3B1F00893@smtp.kernel.org>
 Precedence: bulk
 X-Mailing-List: sashiko-reviews@lists.linux.dev
 List-Id: <sashiko-reviews.lists.linux.dev>
 List-Subscribe: <mailto:sashiko-reviews+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:sashiko-reviews+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-References: <20260524094616.106660-1-manishbaing2789@gmail.com>
- <20260524101513.A76711F000E9@smtp.kernel.org> <20260525-radio-ungodly-9725b95ed67a@spud>
-In-Reply-To: <20260525-radio-ungodly-9725b95ed67a@spud>
-From: Manish Baing <manishbaing2789@gmail.com>
-Date: Sat, 30 May 2026 11:10:00 +0530
-X-Gm-Features: AVHnY4J4LRcPDSm1Jb4TgJEmvmkzMlak8iXI4y-cVUJQB65oF7f3ugFuB7bHFKI
-Message-ID: <CAJvdc_fabG+ks-DaV5yF0uc0ZxGkOrJNqzn0jt9rKvzGt+kbpQ@mail.gmail.com>
-Subject: Re: [PATCH] dt-bindings: mmc: mellanox,bluefield-dw-mshc: Convert DT schema
-To: Conor Dooley <conor@kernel.org>
-Cc: sashiko-reviews@lists.linux.dev, devicetree@vger.kernel.org, 
-	robh@kernel.org, conor+dt@kernel.org
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+Content-Transfer-Encoding: 8bit
+In-Reply-To: <20260529212602.6AD3B1F00893@smtp.kernel.org>
 
-Hi Conor,
-Thanks for your review. I=E2=80=99ve already submitted a v2 that address th=
-e
-unit-address mismatch based on the Shahiko bot=E2=80=99s feedback.
-You can find the updated submission here:
-https://lore.kernel.org/all/20260524111528.107251-1-manishbaing2789@gmail.c=
-om/
+On 2026-05-29 21:26:01+0000, sashiko-bot@kernel.org wrote:
+> Thank you for your contribution! Sashiko AI review found 1 potential issue(s) to consider:
+> - [Medium] Missing endianness conversion for EC thermal config data and sensor_num.
+> --
+> 
+> commit be72df851dc1a1ab2ed2868ddf58166c69fe3c4c
+> Author: Thomas Weißschuh <linux@weissschuh.net>
+> 
+> hwmon: (cros_ec) Add support for displaying fan curves
+> 
+> The automatic fan control mode of the embedded controller uses fan curves
+> with two trigger points to calculate the target fan speed. All temperature
+> sensors affect all fans. Expose these fan curves through the standard
+> hwmon sysfs ABI.
+> 
+> > diff --git a/drivers/hwmon/cros_ec_hwmon.c b/drivers/hwmon/cros_ec_hwmon.c
+> > index a6cc909e56b7e..731143f8c6b2a 100644
+> > --- a/drivers/hwmon/cros_ec_hwmon.c
+> > +++ b/drivers/hwmon/cros_ec_hwmon.c
+> > @@ -372,6 +375,141 @@ static umode_t cros_ec_hwmon_is_visible(const void *data, enum hwmon_sensor_type
+> >  	return 0;
+> >  }
+> 
+> [ ... ]
+> 
+> > +static ssize_t temp_auto_point_temp_show(struct device *dev, struct device_attribute *attr,
+> > +					 char *buf)
+> > +{
+> > +	struct sensor_device_attribute_2 *sattr = to_sensor_dev_attr_2(attr);
+> > +	struct cros_ec_hwmon_priv *priv = dev_get_drvdata(dev);
+> > +	struct ec_thermal_config config;
+> > +	u32 temp;
+> > +	int ret;
+> > +
+> > +	scoped_guard(hwmon_lock, dev) {
+> > +		ret = cros_ec_hwmon_get_thermal_config(priv->cros_ec, sattr->index, &config);
+> > +		if (ret)
+> > +			return ret;
+> > +	}
+> > +
+> > +	if (cros_ec_hwmon_attr_is_temp_fan_off(sattr))
+> > +		temp = config.temp_fan_off;
+> > +	else /* temp_fan_max */
+> > +		temp = config.temp_fan_max;
+> 
+> [Severity: Medium]
+> Since the Chrome OS EC wire protocol is little-endian, do these raw u32
+> fields need to be converted using le32_to_cpu() to prevent corrupted values
+> on big-endian hosts?
+> 
+> It looks like the pre-existing cros_ec_hwmon_get_thermal_config() helper
+> similarly fails to use cpu_to_le32() when assigning req.sensor_num, which
+> could cause the EC to receive a byte-swapped sensor number.
 
-Thanks and Regards,
-Manish
+None of the cros_ec drivers handle big-endian systems properly.
+But the drivers can only be used on little-endian systems anyways
+through the dependency chain SENSORS_CROS_EC -> MFD_CROS_EC_DEV ->
+CROS_EC -> X86 || ARM || ARM64 || COMPILE_TEST.
 
+So we can ignore this for now in my opinion.
 
-On Mon, May 25, 2026 at 10:11=E2=80=AFPM Conor Dooley <conor@kernel.org> wr=
-ote:
->
-> On Sun, May 24, 2026 at 10:15:13AM +0000, sashiko-bot@kernel.org wrote:
-> > Thank you for your contribution! Sashiko AI review found 1 potential is=
-sue(s) to consider:
-> > - [Low] Mismatch between node unit-address and `reg` property base addr=
-ess in the YAML example.
-> > --
-> >
-> > commit cdc4e472d6093984a0a6b661575b015b013ec9d6
-> > Author: Manish Baing <manishbaing2789@gmail.com>
-> >
-> > dt-bindings: mmc: mellanox,bluefield-dw-mshc: Convert DT schema
-> >
-> > This commit converts the Mellanox BlueField SoC extensions for the Syno=
-psys
-> > Designware Mobile Storage Host Controller from text format to YAML sche=
-ma.
-> >
-> > > diff --git a/Documentation/devicetree/bindings/mmc/mellanox,bluefield=
--dw-mshc.yaml b/Documentation/devicetree/bindings/mmc/mellanox,bluefield-dw=
--mshc.yaml
-> > > new file mode 100644
-> > > index 0000000000000..32d50e45ddb86
-> > > --- /dev/null
-> > > +++ b/Documentation/devicetree/bindings/mmc/mellanox,bluefield-dw-msh=
-c.yaml
-> >
-> > [ ... ]
-> >
-> > > +examples:
-> > > +  - |
-> > > +    /* Mellanox BlueField SoC MMC */
-> > > +    mmc@2804000 {
-> > > +        compatible =3D "mellanox,bluefield-dw-mshc";
-> > > +        reg =3D <0x6008000 0x400>;
-> >
-> > [Severity: Low]
-> > Should the node unit-address match the first address in the reg propert=
-y
-> > here?
->
-> Of course it should.
-> pw-bot: changes-requested
->
-> >
-> > The converted YAML example uses mmc@2804000 as the node name, but retai=
-ns
-> > reg =3D <0x6008000 0x400>. This mismatch typically causes a unit_addres=
-s_vs_reg
-> > warning during dt_binding_check validation.
-> >
-> > > +        interrupts =3D <32>;
-> > > +        fifo-depth =3D <0x100>;
-> > > +        clock-frequency =3D <24000000>;
-> > > +        bus-width =3D <8>;
-> > > +        cap-mmc-highspeed;
-> > > +    };
-> >
-> > --
-> > Sashiko AI review =C2=B7 https://sashiko.dev/#/patchset/20260524094616.=
-106660-1-manishbaing2789@gmail.com?part=3D1
+To properly use leXX_to_cpu() helpers we would also need to change the
+protocol structs in include/linux/platform_data/cros_ec_commands.h to
+use the actual __leXX types.
+
+> > +
+> > +	if (temp == 0)
+> > +		return -ENODATA;
+> > +
+> > +	return sysfs_emit(buf, "%ld\n", cros_ec_hwmon_kelvin_to_millicelsius(temp));
+> > +}
+> 
+> -- 
+> Sashiko AI review · https://sashiko.dev/#/patchset/20260529-cros_ec-hwmon-fan-curve-v1-0-da6792b3830f@weissschuh.net?part=4
