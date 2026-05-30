@@ -1,175 +1,206 @@
-Received: from mail-ed1-f42.google.com (mail-ed1-f42.google.com [209.85.208.42])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from us-smtp-delivery-124.mimecast.com (us-smtp-delivery-124.mimecast.com [170.10.129.124])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6AFA2339B3D
-	for <sashiko-reviews@lists.linux.dev>; Sat, 30 May 2026 03:01:09 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=pass smtp.client-ip=209.85.208.42
-ARC-Seal:i=2; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1780110070; cv=pass; b=uOdU/h7xMDOTR88cdMcJ9xGqdbUNgnZW+eTuxN8irPUF/Jh66lvLZTqSRyC0uJPWXWiUdI5TP80x1RxEHNH446A3cTJHm3JhwXSc3OXv+pkQay88savDYBUO8eZzrv+eVY04o6ST95TBh6oMKqCycm88wtgbrusPHV8/HoLout8=
-ARC-Message-Signature:i=2; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1780110070; c=relaxed/simple;
-	bh=0/Fe2qVwaVDAS/yawKEtBBGMo9kRrZCxGn3LskzENWU=;
-	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
-	 To:Cc:Content-Type; b=IlACrhsGnoF/V4d4lhhgFOGRhpYpBh2iuENvanKdN8hsohRXIYwRd+l9K3eBY3Xr6RFRgoff/XU4jx74aXL70UXOctOEbhz18tg2XNedY1HI/EVHkcUJiuR5uw5qdXgOnaT6JaTbsViyBhHR4gnV+w1wok152CnbBazQX0ymlJY=
-ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=T+4U4VWl; arc=pass smtp.client-ip=209.85.208.42
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CEF6D30E85C
+	for <sashiko-reviews@lists.linux.dev>; Sat, 30 May 2026 03:33:42 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=170.10.129.124
+ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
+	t=1780112024; cv=none; b=nusZwB+qCjhR5vyo6zmASxC/MRlG4J2yY2cvY/fj1SBM+ovaRFLcrFR/R2a6AI8kXrMJbMYjZiwHLugkqnrmszDULvvmJJ9ey+SCuWopM38GQ7Nis9tRpmnt/CIEC7wJygezQVv+yaJ5lmlQNJUagF+qxsxs5vJXJdUTc9MDrHg=
+ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
+	s=arc-20240116; t=1780112024; c=relaxed/simple;
+	bh=IFI6sYcPQmKNmOqrHpONlcmdhOLZeCJw8xQLxIxD9CU=;
+	h=Message-ID:Subject:From:To:Cc:Date:In-Reply-To:References:
+	 MIME-Version:Content-Type; b=TA9v8NusQqkpR5p6JJBC8VzUoPFiMZA/hpK5Y2M0g7TbDD9+WhY/WbRNOJAgvpJphpnSpk/FiyS0dtaj4tOhq4YryMNzXNmIZzH/xwW9mLSBWwbLeqYY9Fv5pSEsHriasdD88it0SsyCzszmcpJvXWdT8O3/8NHmatFp+i4deho=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=redhat.com; spf=pass smtp.mailfrom=redhat.com; dkim=pass (1024-bit key) header.d=redhat.com header.i=@redhat.com header.b=dGAYvHOD; arc=none smtp.client-ip=170.10.129.124
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=redhat.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=redhat.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="T+4U4VWl"
-Received: by mail-ed1-f42.google.com with SMTP id 4fb4d7f45d1cf-67c9616b4feso22508623a12.1
-        for <sashiko-reviews@lists.linux.dev>; Fri, 29 May 2026 20:01:09 -0700 (PDT)
-ARC-Seal: i=1; a=rsa-sha256; t=1780110068; cv=none;
-        d=google.com; s=arc-20240605;
-        b=SAZK4GJnppGiZWxLgvY1oRPXlSw/CURuCRbKHNeMVD3Ye0BybWDGCEGIiQv95ojgG0
-         4MtlEsR3BWNhwTgLNiuPs2gakrDkvDO+v1Tq9Is9gA0Clu9oE899b5Is8ee9nGCE+jxZ
-         A+tESaa9UNgoSiaF9vHiWD2Yx87K0oE668bEGikPm7euhgA+274VAuyCSt0diaMeyLFH
-         hCvYVEkEkg5ZzJfhAzJ1pl1zoJGV3r5xPE0tLy51BsEZXEroFsS4UbuKz1bXlz6knRCJ
-         rL7rIDyjkXDAahcDxTzgnL7i9mQhhXcHlnX+zxEP+sYsSZfl8jyG03+lt+HddLSkUJHp
-         f0zw==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com; s=arc-20240605;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:dkim-signature;
-        bh=KNik6uGAIKHeAdY2s59qweB5n544vrvz8Tr1bg759no=;
-        fh=uxg1DeTlxIcX7SJmPf4a6bXzgnn12tX7jZn0ymPupr4=;
-        b=hEjTDfe9SBUpOZDC3xGTCRJaYpORzy9WiwyMWLletOtkqPDrqPWpwl4IDziMRfFd/j
-         MkbWcVnjS/cg5Qd4eH9GkZsSFSnOZ1mhssdRm/VHcEDLVsBbH4czUSFC2o53TrSsK5t+
-         U6X2cPJqB0KQVeXDf61ahiOFPpu61jirKuS81ilgeCmpVmrrKAk+9FR6gCmSkLCS6cSH
-         0fViMHyn83AhZZSbPYW+/bH2D9LJc9Dlmfc9zaQ2whULr+jNLBUZXPQA7lW8TV2GY0lz
-         wKnOgJHy8ceL6DOvzmr9XDdAgz4i1bVanKjSFAZSkTYI5ekoz85EULJzuB8WcsqMLIP0
-         7gvQ==;
-        darn=lists.linux.dev
-ARC-Authentication-Results: i=1; mx.google.com; arc=none
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20251104; t=1780110068; x=1780714868; darn=lists.linux.dev;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=KNik6uGAIKHeAdY2s59qweB5n544vrvz8Tr1bg759no=;
-        b=T+4U4VWl0Z9wh96R2BREcng6MYkME+bgQPwjJOZ+JwCILYncZN7OALL7GU5QaJyt5N
-         JVIaiNlMkTl0NS61prOUqY80mEO1u/f/ged769x6JbnwCHGyV0KrF47wQzs77lMZaER/
-         DFprpgwoerYamuh2+1UdcwlusuDnN4zwokyHgoWEnwDLmfRqPS8x5WlbH9LWWJ5+LbYD
-         aduQOavmq2KArw2HsU6vWEXLz1gvC6NbrXwMJ4ATY5Nrtpy60O+s7Omx3GT3ARnAi2qc
-         4CBCMXA2MbplN0oA0qYCjugyLSMyG3Pj/4kXWbDNuWKceQx7iICsdHhmR6nGeC0/6Y9x
-         wpHg==
+	dkim=pass (1024-bit key) header.d=redhat.com header.i=@redhat.com header.b="dGAYvHOD"
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+	s=mimecast20190719; t=1780112021;
+	h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+	 to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+	 content-transfer-encoding:content-transfer-encoding:
+	 in-reply-to:in-reply-to:references:references;
+	bh=fKshsE34Ej54G52qKAdqYDsrsfQi3PDZovluj+ciTtY=;
+	b=dGAYvHODCsxuPDm7/svCU8szG8hxKq6HF8oPVXOJgrzDfYm2kBZs56cAH7kSlZIYUUjkFv
+	e934sG+Y8zmrLEhoDBNmW/NNAkdXw8NVbesWbA6eOAg4tLlyxiC+0bfHqjUyvo767NaoV6
+	t4zrtwFSAo9j/a/zWDW3EHu9ofQ7jos=
+Received: from mail-qv1-f69.google.com (mail-qv1-f69.google.com
+ [209.85.219.69]) by relay.mimecast.com with ESMTP with STARTTLS
+ (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
+ us-mta-163-NfWM7Zn2NIq5NE_M1dZBLQ-1; Fri, 29 May 2026 23:33:40 -0400
+X-MC-Unique: NfWM7Zn2NIq5NE_M1dZBLQ-1
+X-Mimecast-MFC-AGG-ID: NfWM7Zn2NIq5NE_M1dZBLQ_1780112020
+Received: by mail-qv1-f69.google.com with SMTP id 6a1803df08f44-8cce1cc8cb2so30252486d6.1
+        for <sashiko-reviews@lists.linux.dev>; Fri, 29 May 2026 20:33:40 -0700 (PDT)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20251104; t=1780110068; x=1780714868;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:x-gm-gg:x-gm-message-state:from
-         :to:cc:subject:date:message-id:reply-to;
-        bh=KNik6uGAIKHeAdY2s59qweB5n544vrvz8Tr1bg759no=;
-        b=RUoyxaPSv/lfbyrE/1arPL1yCfRE/UbBpfcTdE8BUMgMaXppK+XjmPtzUV7lXSQem1
-         c6B39ubew3LbFPxgUUCUTyPZmTXCUD0YBHF/14YAOOo2xQgRMKyz4DceWl4Kgk9hVAsb
-         q8JcPBJuXbQC0qScEPg04hGJVz0EArj1KvA7LsCSYmYTO4OvQPkPB3P8gDswZ95FI53y
-         kzOuNWCvBE5hFtgpnRCyd+nVe5eXhYk4ioDl/yX2bbi4DPR4xp+PTHJZTI3CB0NDKNRy
-         3O0iUTQjVm42WgddCigibi3DGoaz2DNQwcEWRmuPo6LmCOrdFJC6PHJXoGjWcPZUeZFq
-         KS7A==
-X-Gm-Message-State: AOJu0YwgweVFZtmuVAno4eZH4fL3yvMGO1Wt8jM7xhqhtlUgmjjQwWYQ
-	R+90bE0IbVihml5k/VNJFUQW55uOLJUxQTxdga6uohOg8ccpgc/SdTt+ZFHY2XSbkv9QwSMkZCH
-	w93UbuXRM8SVTRp1igyxQCpbFQOUIGJYDotxK
-X-Gm-Gg: Acq92OFWEVUFdE0VduKFrhBoOsMa1G26X/E/XPBrvKFAhTAOUWy7bZA2GgLuV2Z+Meo
-	SElrseZiYyEbdDv3JRRRwXxRQ5fzgIDaJTWTGITF4hP/ZHhHu+xtyhQgq6wtYMwA0IEOwciKQI7
-	2yPagBxcSDB/uvK5Mke9Hogv2hJizoXSRfp5IIZAxd8+BI5E5wPV/Zhet+j0qC5YFlj97L6N/tA
-	nlb9tmA5c0kYF/jnJXjtT8Zc4me7iLZksbbTOCCSR1VNxV1xsjJk9j4dFlnIxmD+RutH0o3rwFr
-	P2n4ZlROWfozhoDdWj/sBqf4osKrqLtDdWz5FAFaV+bYKUV03wonbj9tC4QQBE93xrEdsE64817
-	6yfU0GQFQGGK2Bhk4Kba7S4dsmHVRU8Mkl8Oe4Rrpp/URmUA0SHupMenWK8A5TfWqZyyA
-X-Received: by 2002:a50:8dc6:0:b0:683:5589:4317 with SMTP id
- 4fb4d7f45d1cf-68c8ac28472mr904246a12.11.1780110067674; Fri, 29 May 2026
- 20:01:07 -0700 (PDT)
+        d=1e100.net; s=20251104; t=1780112020; x=1780716820;
+        h=mime-version:user-agent:content-transfer-encoding:references
+         :in-reply-to:date:cc:to:from:subject:message-id:x-gm-gg
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+        bh=iYMTrWIEGWTyvJqxHpESzH/Gg6triQriDVNWiwI0tqE=;
+        b=ozkvGiIRAMXnJ/yjqfMipPQnSYctK1NHKYixT2CEKy2ezxHaQmjKOyGXUzf2vZp4Az
+         Z8FyJo5RzEcq8WDZQwfjk9bp8kp6K/B8CsKgQrKDiw0Y2blN9dhIccGRbjG8M4ScYeuo
+         LRcBdl5ggiLxWzh73sS8Fk8vqRCgNmTqcuFuwkB3MxRwBEPOiqWQhMVHgL91g7tjcm62
+         6G0WZ1VGoxwd2shsOqKxsgl5xxC8q7e9+84uzRKPlbZyMG2SYP9rC7oK5pb9nKXve2cQ
+         cTp+KBOSTVtsk8+KrEjtXZ6oiLJf1rMlwzVVg2IXZ1gv9pGu0/XFUlusEN/8uuUOekJC
+         C17w==
+X-Forwarded-Encrypted: i=1; AFNElJ8LThG2iQ6vgp1gAz7yZd4aaIzyKUr77rnmvlREAzZUexMlVMioi/o2LMaT60IIEWDfKoHpvY7j/HHiHWAmxJc=@lists.linux.dev
+X-Gm-Message-State: AOJu0YyHKTBxTcY7QBTGMOSOxnIHP/e569I47IsEY7mxwvyixylY20Hr
+	h+QRemzNK0gumJZXtgqcZWpzE8Xz5CuW6bokZ9ozlc5D8tOOcfGnwSyKZxunpwaE6iIh3TnnFPu
+	ZCsCJiNP/VJ5FB7GLLIV9gKkvL/yEoF9aMhnb61jDfM2VhwDzMRRW2d58PUrbuYNDPaIZFA==
+X-Gm-Gg: Acq92OEOKvrZbi4+KG+ilc3Me/sTnQfCi6f91Yxs+T4B/X9RXKimu7qmIzhmT50mLB3
+	96+RQvsVZIZrJ9YcupAA0Jfcg6c1ROP9Pawoqko/ZMmYfTSbpWpnmCTmTU4GugcdwZZGhHajSgk
+	oobiCmNVeekHhJtlhn+RwU0YhiBZ1fq+APUahfnuCT8MgsEkLwagMV4vb2wkgdTMkTXT6xB99fW
+	+SprAa8NvXmqZn8ulwnLqFKA9nh+3tl/zZ0FhVRbZX8I+Nr3w9mO0eaArJuVhewBa5JIKwlACQC
+	g6DBhtN6ifW1Tmrb9X2jo/+BZxR+G61CVRneDTZY/ZZ/2DT83d5RidXMMcOVDpcagBslQs+ykB6
+	t2d+PRHANPc4Wyoyd7DFc+qoYwMyguj3x4tCd9bcK6d84yaX/u738Ry4Uenh1/FBO
+X-Received: by 2002:a05:620a:4005:b0:914:afb8:795e with SMTP id af79cd13be357-9153d975eaamr373794985a.19.1780112019931;
+        Fri, 29 May 2026 20:33:39 -0700 (PDT)
+X-Received: by 2002:a05:620a:4005:b0:914:afb8:795e with SMTP id af79cd13be357-9153d975eaamr373792085a.19.1780112019462;
+        Fri, 29 May 2026 20:33:39 -0700 (PDT)
+Received: from crwood-thinkpadp16vgen1.minnmso.csb ([2601:447:cc81:56d0:ab94:b2cb:29a6:7ac0])
+        by smtp.gmail.com with ESMTPSA id af79cd13be357-915326503d2sm391982685a.44.2026.05.29.20.33.38
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Fri, 29 May 2026 20:33:38 -0700 (PDT)
+Message-ID: <b555e6ba6f723c244edc88afbc6383022d51ed3c.camel@redhat.com>
+Subject: Re: [PATCH v2] tracing/osnoise: Array printk init and cleanup
+From: Crystal Wood <crwood@redhat.com>
+To: Steven Rostedt <rostedt@goodmis.org>
+Cc: linux-trace-kernel@vger.kernel.org, John Kacur <jkacur@redhat.com>, 
+ Tomas Glozar <tglozar@redhat.com>, Costa Shulyupin <costa.shul@redhat.com>,
+ Wander Lairson Costa	 <wander@redhat.com>, sashiko-bot@kernel.org,
+ sashiko-reviews@lists.linux.dev
+Date: Fri, 29 May 2026 22:33:37 -0500
+In-Reply-To: <0c6606c49ab912904f00663f113289f546084925.camel@redhat.com>
+References: <20260511223035.1475676-1-crwood@redhat.com>
+		 <20260520162810.3112a9d6@gandalf.local.home>
+	 <0c6606c49ab912904f00663f113289f546084925.camel@redhat.com>
+User-Agent: Evolution 3.60.1 (3.60.1-1.fc44)
 Precedence: bulk
 X-Mailing-List: sashiko-reviews@lists.linux.dev
 List-Id: <sashiko-reviews.lists.linux.dev>
 List-Subscribe: <mailto:sashiko-reviews+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:sashiko-reviews+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-References: <20260530012554.68605-1-rosenp@gmail.com> <20260530021906.99C2B1F00893@smtp.kernel.org>
-In-Reply-To: <20260530021906.99C2B1F00893@smtp.kernel.org>
-From: Rosen Penev <rosenp@gmail.com>
-Date: Fri, 29 May 2026 20:00:56 -0700
-X-Gm-Features: AVHnY4JNVns_ZxjiSOnWuc4Z-pDuYeBnG71JcGa9-SbbhXeIRhWVpkBkr3kz80s
-Message-ID: <CAKxU2N_vB9sTyY4dfeA=3TcJcRzskBA=ZcZ1fkP4tE_LQRFC9g@mail.gmail.com>
-Subject: Re: [PATCHv2] dma: bestcomm: gen_bd: split struct bcom_psc_params
- from array definition
-To: sashiko-reviews@lists.linux.dev
-Cc: dmaengine@vger.kernel.org, Frank.Li@kernel.org, vkoul@kernel.org
+X-Mimecast-Spam-Score: 0
+X-Mimecast-MFC-PROC-ID: Z3b16qKaE57N0STJuiCp-hctb_q1vI-PqB0fuEFpoJY_1780112020
+X-Mimecast-Originator: redhat.com
 Content-Type: text/plain; charset="UTF-8"
 Content-Transfer-Encoding: quoted-printable
 
-On Fri, May 29, 2026 at 7:19=E2=80=AFPM <sashiko-bot@kernel.org> wrote:
->
-> Thank you for your contribution! Sashiko AI review found 1 potential issu=
-e(s) to consider:
->
-> Pre-existing issues:
-> - [High] Inadequate or missing bounds checking on `psc_num` can lead to o=
-ut-of-bounds array access in `bcom_psc_params`.
-> --
->
-> commit c24864efcf21b2526be68d727e70076f6cee258c
-> Author: Rosen Penev <rosenp@gmail.com>
->
-> dma: bestcomm: gen_bd: split struct bcom_psc_params from array definition
->
-> This commit splits the bcom_psc_params struct definition from its array
-> declaration to resolve kernel-doc parser warnings. It also adds missing
-> members and marks the lookup table as const so it can be moved to read
-> only memory.
->
-> > diff --git a/drivers/dma/bestcomm/gen_bd.c b/drivers/dma/bestcomm/gen_b=
-d.c
-> > index 8a24a5cbc2633..61b5746e1a972 100644
-> > --- a/drivers/dma/bestcomm/gen_bd.c
-> > +++ b/drivers/dma/bestcomm/gen_bd.c
-> > @@ -254,17 +254,23 @@ EXPORT_SYMBOL_GPL(bcom_gen_bd_tx_release);
->
-> [ ... ]
->
-> > -static struct bcom_psc_params {
-> > +struct bcom_psc_params {
-> >       int rx_initiator;
-> >       int rx_ipr;
-> >       int tx_initiator;
-> >       int tx_ipr;
-> > -} bcom_psc_params[] =3D {
-> > +};
-> > +
-> > +static const struct bcom_psc_params bcom_psc_params[] =3D {
->
-> [Severity: High]
-> This is a pre-existing issue, but does this fixed-size array expose an
-> out-of-bounds access?
->
-> The array strictly contains 6 elements (indices 0 through 5). However,
-> bcom_psc_gen_bd_rx_init() checks the psc_num index against
-> MPC52xx_PSC_MAXNUM:
->
-> drivers/dma/bestcomm/gen_bd.c:bcom_psc_gen_bd_rx_init() {
->         if (psc_num >=3D MPC52xx_PSC_MAXNUM)
->                 return NULL;
->
->         ...
->         bcom_psc_params[psc_num].rx_initiator,
->         ...
-> }
->
-> If CONFIG_PPC_MPC512x is enabled, MPC52xx_PSC_MAXNUM can be 12, allowing =
-an
-> index up to 11 to access the 6-element bcom_psc_params[].
->
-> Additionally, bcom_psc_gen_bd_tx_init() appears to perform no bounds chec=
-king
-> on psc_num at all before indexing this array. Callers like
-> mpc5200_audio_dma_create() can pass an unvalidated cell-index from the
-> device tree directly into these functions.
->
-> Can a malformed device tree trigger out-of-bounds memory reads here, lead=
-ing
-> to out-of-bounds MMIO writes when using the read garbage as the initiator
-> and ipr?
-Fixed in different patch.
->
-> >       [0] =3D {
-> >               .rx_initiator =3D BCOM_INITIATOR_PSC1_RX,
->
-> --
-> Sashiko AI review =C2=B7 https://sashiko.dev/#/patchset/20260530012554.68=
-605-1-rosenp@gmail.com?part=3D1
+On Thu, 2026-05-21 at 18:48 -0500, Crystal Wood wrote:
+> On Wed, 2026-05-20 at 16:28 -0400, Steven Rostedt wrote:
+> > [ Replying to Sashiko: https://sashiko.dev/?list=3Dorg.kernel.vger.linu=
+x-trace-kernel#/patchset/20260511223035.1475676-1-crwood%40redhat.com ]
+> >=20
+> > > > diff --git a/kernel/trace/trace_osnoise.c b/kernel/trace/trace_osno=
+ise.c
+> > > > index 75678053b21c5..2be188768ab42 100644
+> > > > --- a/kernel/trace/trace_osnoise.c
+> > > > +++ b/kernel/trace/trace_osnoise.c
+> > > > @@ -83,6 +83,22 @@ struct osnoise_instance {
+> > > > =20
+> > > >  static struct list_head osnoise_instances;
+> > > > =20
+> > > > +static void osnoise_print(const char *fmt, ...)
+> > > > +{
+> > > > +=09struct osnoise_instance *inst;
+> > > > +=09struct trace_array *tr;
+> > > > +=09va_list ap;
+> > > > +
+> > > > +=09rcu_read_lock();
+> > > > +=09list_for_each_entry_rcu(inst, &osnoise_instances, list) {
+> > > > +=09=09tr =3D inst->tr;
+> > > > +=09=09va_start(ap, fmt);
+> > > > +=09=09trace_array_vprintk(tr, _RET_IP_, fmt, ap);
+> >=20
+> > > Does this code create a use-after-free on the trace array if an insta=
+nce is
+> > > removed concurrently?
+>=20
+> If so, it was already an issue with osnoise_taint(),
+> osnoise_stop_tracing(), osnoise_stop_exception(), etc.  Wouldn't be
+> surprising, as this file has a number of other synchronization issues as
+> well.
+
+It looks like it's actually also an issue in a bunch more places such as
+record_osnoise_sample(), timerlat_dump_stack(), etc.
+
+> > > When a user deletes a trace instance via rmdir, the unregister functi=
+on
+> > > removes the instance from the list using list_del_rcu(). However, the=
+ removal
+> > > routine does not appear to wait for an RCU grace period before freein=
+g the
+> > > trace array itself.
+> > > Could a concurrent execution of this loop inside the rcu_read_lock() =
+section
+> > > still access the unlinked instance, read the freed inst->tr, and pass=
+ it to
+> > > trace_array_vprintk()? This appears to be an existing issue, but it s=
+till
+> > > affects the loop here.
+> >=20
+> > Hmm, this is interesting. osnoise keeps track of its own instances via =
+a
+> > osnoise_instances list. But it only use kfree_rcu() to free the list
+> > descriptor but doesn't take care of the tr being freed before hand!
+> >=20
+> > Something like this could work [not even compiled]
+> >=20
+> > diff --git a/kernel/trace/trace_osnoise.c b/kernel/trace/trace_osnoise.=
+c
+> > index 75678053b21c..bda1e0e0d2e1 100644
+> > --- a/kernel/trace/trace_osnoise.c
+> > +++ b/kernel/trace/trace_osnoise.c
+> > @@ -476,8 +476,11 @@ static void print_osnoise_headers(struct seq_file =
+*s)
+> >  =09=09=09=09=09=09=09=09=09=09\
+> >  =09rcu_read_lock();=09=09=09=09=09=09=09\
+> >  =09list_for_each_entry_rcu(inst, &osnoise_instances, list) {=09=09\
+> > +=09=09if (trace_array_get(inst->tr) < 0)=09=09=09=09\
+> > +=09=09=09continue;=09=09=09=09=09=09\
+> >  =09=09buffer =3D inst->tr->array_buffer.buffer;=09=09=09=09\
+> >  =09=09trace_array_printk_buf(buffer, _THIS_IP_, msg);=09=09=09\
+> > +=09=09trace_array_put(inst->tr);=09=09=09=09=09\
+> >  =09}=09=09=09=09=09=09=09=09=09\
+> >  =09rcu_read_unlock();=09=09=09=09=09=09=09\
+> >  =09osnoise_data.tainted =3D true;=09=09=09=09=09=09\
+>=20
+> OK, I'll prepare a v3.
+
+Many osnoise_taint() callers, as well as timerlat_dump_stack(), can have
+preemption disabled, so the mutex in trace_array_get() won't work.
+
+What is the intended way for a tracer to record to all of its
+instances?  I tried looking at other tracers that allow instances, but
+it seems that most of them only allow one instance, apart from
+trace_function/trace_function_graph that are driven by a callback
+mechanism that doesn't fit here, and that made my brain hurt when I
+dove into the code to try to figure out how it ensures a valid tr.
+
+We could have osnoise_unregister_instance() set inst->tr =3D NULL
+under a raw lock, and then require users to hold the raw lock when
+manipulating inst->tr (which can't go away until ->stop() completes),
+skipping any that are NULL.
+
+It's not great that we lose the ability to do things with tr that are
+incompatible with a raw lock, but I don't know how to fix that without
+something like changing the tr refcount mechanism to allow an atomic
+refcount increase on a known-valid-for-now tr.  It looks like all the
+current users of this list are OK with a raw lock.
+
+We could go even further and simplify by un-RCUing the list, requiring
+that the raw lock be held over traversal -- I'm not thrilled at the
+idea of letting userspace create unbounded instances that are traversed
+with preemption disabled, but as noted, we already do that in some places.
+
+In any case, this patch is just moving the code around, not introducing
+the problem, so I hope that whatever synchronization overhaul this file
+requires (which goes well beyond this one issue) can wait for followup
+patches.
+
+-Crystal
+
