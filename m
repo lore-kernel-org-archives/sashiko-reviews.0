@@ -1,197 +1,149 @@
-Received: from mail-pl1-f202.google.com (mail-pl1-f202.google.com [209.85.214.202])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from out-171.mta0.migadu.com (out-171.mta0.migadu.com [91.218.175.171])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D13861A5BAE
-	for <sashiko-reviews@lists.linux.dev>; Sat, 30 May 2026 00:35:01 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.214.202
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A58E72DC32A
+	for <sashiko-reviews@lists.linux.dev>; Sat, 30 May 2026 00:53:22 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=91.218.175.171
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1780101303; cv=none; b=UaJEwRm9Xg0p8Ul1TxOJJT14mcNRSj0bI9U3HBekfNhwuBeJtrU3T+pKubB+SuaddcTh5TwpW9BKTPcEWVdvt4XB02IP556llijBSCDVMxviOFDxgq9Kz1F8Feng0hgjd50ulbU98vY5l57gki5AgLsFOjMaddofxSO0jUjjrIs=
+	t=1780102404; cv=none; b=BOYgMfJ8OnK0dqYUdd3SGI/z2Y9bsRpyYtI5VzwO/zolNerzdbkR03TgmG3MCzW4ooNin50uP57aj9dtYW+KukCUgWttkDLwlced+rXahsM8zj54i8iK3XYC1CxYfl40O+Szli7KWU/YSgm9/17Hkj2xqzlOYNVKPOPLvrql+N4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1780101303; c=relaxed/simple;
-	bh=LXrbqgGHJ5TCns2d/WLysB14JNxmqc26djxAVUrnz0c=;
-	h=Date:In-Reply-To:Mime-Version:References:Message-ID:Subject:From:
-	 To:Cc:Content-Type; b=D2Lsm4gRnDZoWvXXFPxId7EUb6TrlJYnI4YjyAyuS2MCE94Mg2PxVin7AUFA8dmzZa0QVM3FifVTj2Za9juaS75VHOzYWphqRKmXTWrI+bVvIGDFBjF6dSl1/B3OqHfWzjFEvZn82QjgJD3wAxPnkxrFxccz2FYWnfbgGfic6lE=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=google.com; spf=pass smtp.mailfrom=flex--seanjc.bounces.google.com; dkim=pass (2048-bit key) header.d=google.com header.i=@google.com header.b=vxAv+HnV; arc=none smtp.client-ip=209.85.214.202
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=google.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=flex--seanjc.bounces.google.com
+	s=arc-20240116; t=1780102404; c=relaxed/simple;
+	bh=qpde8EHjaLv/rrT6XwfIhis8MXFJjrUJIfhEEQqpxC8=;
+	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
+	 In-Reply-To:Content-Type; b=p3SVQQNeFJZdUyhaCsX3C8blNkuKsw8MnZOIATqjnfBnHGg4p5crVgnuQpVePnwGXVXlWIfk2rHRENSNhxiubZlYUSzZhMNJKOB3+iKkdZUGLeCUv55GWH9zQxlQWmec/S7NKr2q5956HqR2K8WHCBKrttYPk8vijDw7EGPOn9w=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linux.dev; spf=pass smtp.mailfrom=linux.dev; dkim=pass (1024-bit key) header.d=linux.dev header.i=@linux.dev header.b=vlg8FAcS; arc=none smtp.client-ip=91.218.175.171
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linux.dev
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linux.dev
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=google.com header.i=@google.com header.b="vxAv+HnV"
-Received: by mail-pl1-f202.google.com with SMTP id d9443c01a7336-2bf281d523eso5229405ad.0
-        for <sashiko-reviews@lists.linux.dev>; Fri, 29 May 2026 17:35:01 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=google.com; s=20251104; t=1780101301; x=1780706101; darn=lists.linux.dev;
-        h=cc:to:from:subject:message-id:references:mime-version:in-reply-to
-         :date:from:to:cc:subject:date:message-id:reply-to;
-        bh=nNBaqn7MVJGrLWJWnaVdqprmzYHk2rkmEwyyXy4tIQU=;
-        b=vxAv+HnVyMOe8P4+d3wWmsLELH056U0DMc8oLs8ikXiXrJz+m2qy0TjonZlWdIKWDi
-         OUibeEojSZpgqBCebOkA3gREKsLaH1/OhWgnWnlVkLc4qZqnrBGYi096MbJI8yX4RNyW
-         uMxTmNNbRr0ox+zpykZ/UrsGJINfNqbiDjc3JiImp/OySsZ69r5dvH1HOZL3jja86DXh
-         RJveXNWlnEXGN5pYvht5oV9842SDlmuqVGA22tSB5HbZbZBszs8reh25/4orJHYRoezz
-         2P/LtQl7JFsMVXtiucTMTCMnCUdacaX+bJIQcxEKV0Zp1ElKkB3SSta8kMoin3WpeeCz
-         c2lQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20251104; t=1780101301; x=1780706101;
-        h=cc:to:from:subject:message-id:references:mime-version:in-reply-to
-         :date:x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=nNBaqn7MVJGrLWJWnaVdqprmzYHk2rkmEwyyXy4tIQU=;
-        b=LRJBl/Dd5ab/aOT15uhp3uEwPF7Zzhzu/sVPQ5H+hD30nUB7wkwbIYvxoH+95ytTSi
-         72iLQo88SeCyDDwxkUm4d/jjCrI/V1gtbPCc7sGz5EnyHp8pCdrVDCk1IjoAxRZUdSLr
-         NoI9QvJrJwlm604CZDDP6pCXBLOuL9xc8PMj8NT+Q7KuqsNDeE9coosqCWRjAUbDUXgn
-         6Pg4btPQAMzynaGehdyj1TjsB2O2fqA1E5szHJASi1AZLUc4cKhmGe9CnpSpLSOFya9E
-         wOB1blqgkDoHGjhYvoP9YRncclpry63hQZouKs7fCSM0azTAN8o1Xd4svHlCQoH98rxx
-         EUfQ==
-X-Gm-Message-State: AOJu0YyDhO4HvXv1E5lDBWxsXb6M5g1rp5rpY4aqJFBnhcB7ty9vWWr/
-	gakUPs6m8Vlv4p4duT1S3+Qp2PFdXPYe3CZE/bagHHwlW+WCvayGRTcliEB6PRaQbJrj7PLgI0I
-	Q7AquC76J+c8nYhL17HJPnjEmXkSeOr2lueql/kZmT45JmueYHUBjidXKihd94FBAFkuicZnSHv
-	z3X4taGX2w3q6ZtAFZfv7yzPGR7UYmxcNZl8vXEAwpwFd8kQg7
-X-Received: from plblh4.prod.google.com ([2002:a17:903:2904:b0:2b2:488e:b71])
- (user=seanjc job=prod-delivery.src-stubby-dispatcher) by 2002:a17:902:d4ce:b0:2bf:800:19f8
- with SMTP id d9443c01a7336-2bf367e071dmr24203735ad.17.1780101300733; Fri, 29
- May 2026 17:35:00 -0700 (PDT)
-Date: Fri, 29 May 2026 17:35:00 -0700
-In-Reply-To: <20260528005419.0228F1F00A3A@smtp.kernel.org>
+	dkim=pass (1024-bit key) header.d=linux.dev header.i=@linux.dev header.b="vlg8FAcS"
+Message-ID: <1dd5c998-ad2a-47dd-9875-c8fd5db6d374@linux.dev>
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linux.dev; s=key1;
+	t=1780102400;
+	h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+	 to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+	 content-transfer-encoding:content-transfer-encoding:
+	 in-reply-to:in-reply-to:references:references;
+	bh=+IR+x4vwXkJmNdcGjyBRl1DqKrigG6hgOWj1BEdMSvw=;
+	b=vlg8FAcScy8s5VPPdDW7TS5sfsORpUMlmY2PIWrTRFSMvqUaWqNk6AVSyDpy7ZN3OLn89c
+	WVhpD8Nqsyy+hXdgNd1bSc2y+t9J2ET7r7eozK+NBsn6s+mMFDZ1YHTM4lN9gyW+JJdRTK
+	HUCUBFsAWYaLNyVIhhot30n8kEOdsuA=
+Date: Fri, 29 May 2026 17:53:15 -0700
 Precedence: bulk
 X-Mailing-List: sashiko-reviews@lists.linux.dev
 List-Id: <sashiko-reviews.lists.linux.dev>
 List-Subscribe: <mailto:sashiko-reviews+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:sashiko-reviews+unsubscribe@lists.linux.dev>
-Mime-Version: 1.0
-References: <20260527234711.4175166-9-yosry@kernel.org> <20260528005419.0228F1F00A3A@smtp.kernel.org>
-Message-ID: <ahowtCCtnr9t5DGy@google.com>
-Subject: Re: [PATCH v7 08/17] KVM: x86/pmu: Check mediated PMU counter
- enablement before event filters
-From: Sean Christopherson <seanjc@google.com>
+MIME-Version: 1.0
+Subject: Re: [PATCH 2/2] crypto: ccp: Fix possible deadlock in SEV init
+ failure path
 To: sashiko-reviews@lists.linux.dev
-Cc: Yosry Ahmed <yosry@kernel.org>, kvm@vger.kernel.org
-Content-Type: text/plain; charset="us-ascii"
+Cc: kvm@vger.kernel.org
+References: <20260528-sev_snp_fixes-v1-2-d67a08151779@meta.com>
+ <20260529005119.8CFF11F000E9@smtp.kernel.org>
+Content-Language: en-US
+X-Report-Abuse: Please report any abuse attempt to abuse@migadu.com and include these headers.
+From: Atish Patra <atish.patra@linux.dev>
+In-Reply-To: <20260529005119.8CFF11F000E9@smtp.kernel.org>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
+X-Migadu-Flow: FLOW_OUT
 
-On Thu, May 28, 2026, sashiko-bot@kernel.org wrote:
-> Thank you for your contribution! Sashiko AI review found 1 potential issue(s) to consider:
-> 
+
+On 5/28/26 5:51 PM, sashiko-bot@kernel.org wrote:
+> Thank you for your contribution! Sashiko AI review found 3 potential issue(s) to consider:
+>
 > Pre-existing issues:
-> - [High] Guest can bypass PMU event filters for fixed counters by modifying MSR_CORE_PERF_FIXED_CTR_CTRL.
+> - [Critical] Host kernel panics due to RMP violation when reading `sev_init_ex_buffer` in `sev_write_init_ex_file()`.
+> - [High] Memory allocated for `sev_init_ex_buffer` is leaked and leaves the device in a broken state if initialization fails in `__sev_platform_init_handle_init_ex_path()`.
+> - [High] Uninitialized kernel memory is allocated and provided to the SEV firmware and disk if the NV initialization file does not exist.
 > --
-> 
-> commit 270fc772a7eb457f31ead154a0c426817961ae8a
-> Author: Yosry Ahmed <yosry@kernel.org>
-> 
-> KVM: x86/pmu: Check mediated PMU counter enablement before event filters
-> 
-> This commit checks if a PMU counter is enabled by the guest before performing
-> the potentially expensive PMU event filter lookup. It modifies
-> kvm_mediated_pmu_refresh_event_filter to use pmc_is_locally_enabled.
-> 
-> > diff --git a/arch/x86/kvm/pmu.c b/arch/x86/kvm/pmu.c
-> > index afbc731e72174..67dbbd4c73036 100644
-> > --- a/arch/x86/kvm/pmu.c
-> > +++ b/arch/x86/kvm/pmu.c
-> > @@ -532,7 +532,7 @@ static bool pmc_is_event_allowed(struct kvm_pmc *pmc)
-> >  
-> >  static void kvm_mediated_pmu_refresh_event_filter(struct kvm_pmc *pmc)
-> >  {
-> > -	bool allowed = pmc_is_event_allowed(pmc);
-> > +	bool allowed = pmc_is_locally_enabled(pmc) && pmc_is_event_allowed(pmc);
-> 
+>
+> commit 405e31473bcf0fe9d84a37db761b7cf915973108
+> Author: Atish Patra <atishp@meta.com>
+>
+> crypto: ccp: Fix possible deadlock in SEV init failure path
+>
+> This commit modifies __sev_platform_init_handle_init_ex_path() to pass
+> locked=true to rmp_mark_pages_firmware(). This prevents a potential
+> deadlock on the sev_cmd_mutex when an rmpupdate fails and attempts to
+> reclaim pages during cleanup.
+>
+>> diff --git a/drivers/crypto/ccp/sev-dev.c b/drivers/crypto/ccp/sev-dev.c
+>> index d1e9e0ac63b60..3d4793e8e34b2 100644
+>> --- a/drivers/crypto/ccp/sev-dev.c
+>> +++ b/drivers/crypto/ccp/sev-dev.c
+>> @@ -1557,7 +1557,7 @@ static int __sev_platform_init_handle_init_ex_path(struct sev_device *sev)
+>>   		unsigned long npages;
+>>   
+>>   		npages = 1UL << get_order(NV_LENGTH);
 > [Severity: High]
-> This is a pre-existing issue, but was it intended for guests to be able to
-> bypass PMU event filters for fixed counters by writing to the MSR twice?
-> 
-> Looking at reprogram_fixed_counters() in arch/x86/kvm/vmx/pmu_intel.c,
-> pmu->fixed_ctr_ctrl_hw is unconditionally overwritten with raw guest data
-> before checking which counters changed:
-> 
-> arch/x86/kvm/vmx/pmu_intel.c:reprogram_fixed_counters() {
->     ...
-> 	pmu->fixed_ctr_ctrl = data;
-> 	pmu->fixed_ctr_ctrl_hw = data;
-> 	for (i = 0; i < pmu->nr_arch_fixed_counters; i++) {
-> 		u8 new_ctrl = fixed_ctrl_field(data, i);
-> 		u8 old_ctrl = fixed_ctrl_field(old_fixed_ctr_ctrl, i);
-> 
-> 		if (old_ctrl == new_ctrl)
-> 			continue;
->     ...
-> 		kvm_pmu_request_counter_reprogram(pmc);
-> 	}
-> }
-> 
-> Because kvm_pmu_request_counter_reprogram() is skipped when the counter's
-> control bits haven't changed, kvm_mediated_pmu_refresh_event_filter() is
-> never called to apply the filter mask.
-> 
-> Could a guest enable a rejected counter (which gets correctly filtered and
-> cleared in fixed_ctr_ctrl_hw by the first write), and then write the MSR a
-> second time to enable a different counter while leaving the rejected
-> counter's bits set?
-> 
-> The second write would inject the unfiltered enable bits into
-> fixed_ctr_ctrl_hw, and since the software state (old_ctrl == new_ctrl)
-> matches, KVM skips reprogramming it. Does this allow the rejected counter to
-> remain enabled in hardware upon the next VM-enter, completely bypassing the
-> event filters?
+> This isn't a bug introduced by this patch, but is there a risk of leaking
+> uninitialized kernel memory to the SEV firmware and disk?
+>
+> Earlier in this function, the NV buffer is allocated without zeroing the
+> memory:
+>
+> 	page = alloc_pages(GFP_KERNEL, get_order(NV_LENGTH));
+> 	...
+> 	sev_init_ex_buffer = page_address(page);
+> 	rc = sev_read_init_ex_file();
+>
+> If the NV initialization file does not exist, sev_read_init_ex_file()
+> handles the -ENOENT error and returns 0 without reading any data, leaving
+> the 32KB buffer filled with uninitialized kernel memory. This buffer is
+> then provided to the SEV firmware.
+>
+> Later, when state changes occur, sev_write_init_ex_file() writes this memory
+> back to the host filesystem.
+>
+> Should alloc_pages() be called with __GFP_ZERO to prevent this?
 
-Hrm, does look like that's the case.  If the guest toggles a different PMC, KVM
-will update pmu->fixed_ctr_ctrl_hw and reprogram the PMC that is changing, but
-not the others that are enabled in pmu->fixed_ctr_ctrl_hw.
-
-Aha!  I think this is quite easy to fix: use fixed_ctr_ctrl_hw as the basis for
-the diff.  For the perf-based PMU, fixed_ctr_ctrl_hw == fixed_ctr_ctrl at all
-times.  For the mediated PMU, "reprogramming" means changes the values that are
-loaded into hardware, and so unless I'm missing something, this?  I'll test and
-send a patch next week.
-
-idiff --git arch/x86/kvm/vmx/pmu_intel.c arch/x86/kvm/vmx/pmu_intel.c
-index 453cb3d3ec9b..a73a9515d96c 100644
---- arch/x86/kvm/vmx/pmu_intel.c
-+++ arch/x86/kvm/vmx/pmu_intel.c
-@@ -56,8 +56,16 @@ static struct x86_pmu_lbr *vcpu_to_lbr_records(struct kvm_vcpu *vcpu)
- 
- static void reprogram_fixed_counters(struct kvm_pmu *pmu, u64 data)
- {
-+       /*
-+        * Compare against the value the mediated PMU shoves into hardware, not
-+        * the guest's desired value.  For the emulated PMU (proxied via perf),
-+        * they are one and the same (fixed_ctr_ctrl_hw isn't used other than
-+        * here).  For the mediated PMU, KVM needs to reprogram the actual MSR,
-+        * and so needs to react to potential changes in the value shoved into
-+        * hardware, e.g. to ensure the event filter is enforced.
-+        */
-+       u64 old_fixed_ctr_ctrl = pmu->fixed_ctr_ctrl_hw;
-        struct kvm_pmc *pmc;
--       u64 old_fixed_ctr_ctrl = pmu->fixed_ctr_ctrl;
-        int i;
- 
-        pmu->fixed_ctr_ctrl = data;
+Valid findings. The sev_init_ex_buffer should be set to NULL and pages 
+should be freed in case of failure in sev_read_init_ex_file.
 
 
-Note, general purpose counters (thankfully) don't have the same bug.
+>> -		if (rmp_mark_pages_firmware(__pa(sev_init_ex_buffer), npages, false)) {
+>> +		if (rmp_mark_pages_firmware(__pa(sev_init_ex_buffer), npages, true)) {
+>>   			dev_err(sev->dev, "SEV: INIT_EX NV memory page state change failed.\n");
+>>   			return -ENOMEM;
+> [Severity: High]
+> This is a pre-existing issue, but is it possible this error path leaves the
+> device in a broken state?
+>
+> If the page state transition fails, the function returns an error without
+> freeing the buffer or resetting sev_init_ex_buffer to NULL. Because it is a
+> static global, subsequent initialization attempts will return 0 immediately:
+>
+> 	if (sev_init_ex_buffer)
+> 		return 0;
+>
+> This bypasses the file reading and the required firmware page state
+> transition, passing an improperly initialized, host-owned buffer to the
+> firmware during the INIT_EX command.
+>
+> Could this permanently break SEV initialization until the system reboots?
 
-			if (data != pmc->eventsel) {
-				pmc->eventsel = data;
-				pmc->eventsel_hw = data;
-				kvm_pmu_request_counter_reprogram(pmc);
-			}
+I will add the fix as well for this along with the above one.
 
-Oh, and for posterity, using fixed_ctr_ctrl_hw won't mess up pmc_in_use, because
-it's unused by the mediated PMU.  It's purpose is solely for releasing perf events
-that are no longer being actively used.  It's a bit hard to see, but need_cleanup
-will never be set for the mediated PMU, because pmu->event_count will always be
-zero.
 
-	if (vcpu->scheduled_out && pmu->version && pmu->event_count) {
-		pmu->need_cleanup = true;
-		kvm_make_request(KVM_REQ_PMU, vcpu);
-	}
+> [Severity: Critical]
+> This is also a pre-existing issue, but will reading from sev_init_ex_buffer
+> trigger a host kernel panic?
+>
+> Once the sev_init_ex_buffer pages are transitioned to a firmware-owned state
+> (RMP private) by rmp_mark_pages_firmware(), they are no longer accessible to
+> the host.
+>
+> Later, sev_write_init_ex_file() is called to save the NV memory back to disk
+> and invokes kernel_write() using sev_init_ex_buffer as the buffer.
+>
+> Since there is no code to reclaim the pages back to a host-accessible state
+> before this VFS write operation, won't the host CPU's attempt to read from
+> sev_init_ex_buffer trigger a Page Fault with the RMP bit set?
 
-To make that more obvious, I think it makes sense to add
+As per my understanding that is not correct. A host cpu write to 
+firmware-owner state would result in RMP #PF but read would not raise a 
+fault. I confirmed that with loading ccp with init_ex_path and kvm_amd 
+as well.
 
-  static inline void __kvm_pmu_mark_pmc_in_use(struct kvm_vcpu *vcpu, u8 idx)
- {
-	if (kvm_vcpu_has_mediated_pmu(vcpu))
-		return;
-
-	__set_bit(idx, vcpu_to_pmu(vcpu)->pmc_in_use);
-  }
-
-and then use that everywhere, and WARN if kvm_pmu_cleanup() is ever called with
-a mediated PMU.
+>>   		}
