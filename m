@@ -1,157 +1,251 @@
-Received: from todd.t-8ch.de (todd.t-8ch.de [159.69.126.157])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-ej1-f51.google.com (mail-ej1-f51.google.com [209.85.218.51])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A82CD39E175
-	for <sashiko-reviews@lists.linux.dev>; Sat, 30 May 2026 11:12:03 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=159.69.126.157
-ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1780139524; cv=none; b=sVWIcGa/kXrRlo6T/z1pIpzCt0iBozTw46h2Jf+RP+9YGjM4y8VpRT9ay5/7YrGP8RwmHUgSqDQWsfPMGMfVvemEtD0EaRpTaluKdKVypGIa43n3IFM3/xD7B/lAqOxho+8w/Fi6RkAB3AKIlxSDjun/O2Ie63htOWZs3TVZGd0=
-ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1780139524; c=relaxed/simple;
-	bh=a3QfrfJrYV1QYELjkBT3JtGsAN00rF3x2xbml8aM+Ao=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=nuHOv5jF9+V2jDgvA3nY+B6G2PzSXuEnK8mZYEUd6/UCubGdc+cW+T58eb4f97pQ77x3KAKpteVODMi7SPfXJGjV8vCfKBRUPxvqt2Qv6rhmVkVMw9swZSOlV07TEBeWRgQYjw5HI5fJrvnnFHTQpRQdiOSM2aM7JqbdjhwLGuY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=weissschuh.net; spf=pass smtp.mailfrom=weissschuh.net; dkim=pass (1024-bit key) header.d=weissschuh.net header.i=@weissschuh.net header.b=OD+b5SzS; arc=none smtp.client-ip=159.69.126.157
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=weissschuh.net
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=weissschuh.net
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0ECF13A83BF
+	for <sashiko-reviews@lists.linux.dev>; Sat, 30 May 2026 11:22:03 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=pass smtp.client-ip=209.85.218.51
+ARC-Seal:i=2; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
+	t=1780140125; cv=pass; b=KefC6xlK1oSHCzBO9dQ4XvmLlfB6zfvXu/n/NsV0wrlgBjhMym7203k8ceVgFZyfHC/UnpdOSe0/bSMWhrq7Qqp/Jjmg/c47C+u4y6LpzR/pHpB8qmTomxqJ8GCL5/dpK8i5i90CSApsjcvjS/nnBLeARRE8GF8dF8z6s91LqGA=
+ARC-Message-Signature:i=2; a=rsa-sha256; d=subspace.kernel.org;
+	s=arc-20240116; t=1780140125; c=relaxed/simple;
+	bh=lFNrxzNQ5edL8UN6TD1iTrQnKblEFc91/Mi79oiB39M=;
+	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
+	 To:Cc:Content-Type; b=WBRIHv+QT0GXeZrrEOwWhpL6QzM6UyxeVjJZ+WK/Vx5II0IcNfyk3famGFgGRHkR+aXtibPPCwQwylxPCCI57nYwJ88Nxqg44Ce+snUfwjNhUfuWkSfzCQMQtOJPA7GLMODnh6P3Yh+/thMQ4rah/AId0E9KUk14Ax/kRydHaHU=
+ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=ku9nHHl7; arc=pass smtp.client-ip=209.85.218.51
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=weissschuh.net header.i=@weissschuh.net header.b="OD+b5SzS"
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=weissschuh.net;
-	s=mail; t=1780139521;
-	bh=a3QfrfJrYV1QYELjkBT3JtGsAN00rF3x2xbml8aM+Ao=;
-	h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
-	b=OD+b5SzS/s0HYDKmEhQ9sabfR0ooKXHyk2xYadKVpWouHWIW49qZs/V911rl6RNML
-	 7nO7NUMcqcEeiz7aoi8APNQk3e+SqkMaDiphpFOY7imzSawRsFChUreO2PgGrXEk/X
-	 9yOT3StQXa5sVTTJ9NuN4bFYRzOuC/EmbpjE20fA=
-Date: Sat, 30 May 2026 13:12:01 +0200
-From: Thomas =?utf-8?Q?Wei=C3=9Fschuh?= <linux@weissschuh.net>
-To: sashiko-reviews@lists.linux.dev
-Cc: linux-hwmon@vger.kernel.org
-Subject: Re: [PATCH 5/5] hwmon: (cros_ec) Allow modification of fan curves
-Message-ID: <20159ced-3959-47da-9245-8d562d656f43@t-8ch.de>
-References: <20260529-cros_ec-hwmon-fan-curve-v1-5-da6792b3830f@weissschuh.net>
- <20260529213842.354A51F00893@smtp.kernel.org>
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="ku9nHHl7"
+Received: by mail-ej1-f51.google.com with SMTP id a640c23a62f3a-beb19bce272so1891566b.1
+        for <sashiko-reviews@lists.linux.dev>; Sat, 30 May 2026 04:22:03 -0700 (PDT)
+ARC-Seal: i=1; a=rsa-sha256; t=1780140122; cv=none;
+        d=google.com; s=arc-20240605;
+        b=eyHF1Uyj5K47UzSeh0RB640m4IaWT+fzCzd+Hc4QdC9qK6+kndl5rxztIDSOvzIDSY
+         mfV4n/VTJWGjEcB8DpOYufX4MYw1OxXdqtOICbO0daBDDsM/m1ksPfSfP6d9wqSHjHjH
+         LbE1/KPImXbSTeZjCnQhgAqn43FY6AoNasdIn+IJ0SZuON6pkXtaRcU/PBd7m3mDIBog
+         z1CnAOFsJcwBerpIjVuWxGeuLZGI4+rZ98Dd4NqXiwd/7FeCy3xbPgQG4xqhZORSTCCu
+         z56qPQdk14kQeO3ka38pSi1Do8Cn7xo53DBVcR9r3ZEOljwE7FWSATJrc3kfBGVHP68Z
+         NC/A==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com; s=arc-20240605;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:dkim-signature;
+        bh=25QSe8FS27jbL7gvHOw+es5cmwhYoyIGedo22jkR4Mc=;
+        fh=q2oa1ekct7KR5WHTVsuodzZeNY7MhQ5926J4NNvSleA=;
+        b=KrAgHjNHNrYOUY/APWY1F0iI9joWCxClt7gvtAV19MflMe+4bsAk1HePOWcfuRcQpG
+         Kycxm2cagYs0mFU4s87r1ZBwXyonyo3jJUJP6FPoJrOzgyw7A69arzvDiLgTVVgHlZ30
+         8CxFQM8FaBnCD66zkjQNz6m93aBOmoMRyeFEG3mP30AjdtNsDtHCWslPQm/+FfMbCAoS
+         wloGEyY/S4GooiY+gDp2abhycY7RRxXauNM+JVrbM86+44UJExxs02+H2MOoIOVkznEb
+         zKwdf2yQLoYWvCwiRnGAWXg5HEmBhYw7TC4A51qBnAb4X5NHTisxnO/qpUk82bZ/vCrV
+         V7fA==;
+        darn=lists.linux.dev
+ARC-Authentication-Results: i=1; mx.google.com; arc=none
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20251104; t=1780140122; x=1780744922; darn=lists.linux.dev;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=25QSe8FS27jbL7gvHOw+es5cmwhYoyIGedo22jkR4Mc=;
+        b=ku9nHHl7Ly3eW83LEt9qvtRUzFls1ZiWUy/S7o6Kscl8jSEFwh3GXJB62aAqSywJOi
+         Xr7Oa37Pt84pp7IMPRTX+EpFFTQar+KY5UU6NN1gfRlaG0Exs1FrUOVbrM3+Ejc1eG6o
+         zzwrC4ZAYdJNzl9nUq7vKp7PJDkJsrvoAOqd05V6MJRxg1neH8BCDrpBXqaGBnW3To8d
+         NN7Ie49fmR8VLNGa470hndFcQlfHTCv3mckyHmWBFAh+27wCYP9OwWRPaiTgVa3WBfBk
+         csp/f/xhI9n4BcJtMMzk7qw/ZTMyNE+mVSQTe4Y1NC2XBahNUrv3vtdFisDEVxx/QMsB
+         U+vA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20251104; t=1780140122; x=1780744922;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:x-gm-gg:x-gm-message-state:from
+         :to:cc:subject:date:message-id:reply-to;
+        bh=25QSe8FS27jbL7gvHOw+es5cmwhYoyIGedo22jkR4Mc=;
+        b=bNtjHOZuPdEC7T8gwuzkipXrkG2W3kOxHNCFhf77YYM6ZU3ylWLNz24D14a8h1ISr7
+         FzNlBa/0mUcvKvvp1DEeVp0LOEahb8i0/16UNlnl1iVpvmt7UmGZGM04pu6lm922Sf5i
+         5j93flnAP1SB/PpXb7KS0/aJPyyxBf5XegU7avqY0AiCSyBBJRKpW3NrK/jHa/+V5NjC
+         V6xbMC4RsSE2nvhyEZ2VtDWx5GhlnWmBQfxY3lJulig/SMCwxcQmg10jZ0JyOlqNsxjN
+         0zDcK1vn1ZuJNpRIG736b9R8/tcPp6yCsURQVWgz7z6js7JOcetSVQyy1hp/Fao51Y82
+         dqog==
+X-Gm-Message-State: AOJu0Yw3wO91Sa83czyt5YVM0w3cMC9o2vgPEJEgNLkUpY4EuYh/E2cQ
+	LTslMXAIeAZUwT5BwDWtIO9Mm9erCBn3a/AFgZOcRNqLhSgksDybhKCW8wQLNiOpsfq3fOFgXkv
+	6nCfKdLUCs3RbiPmcasIZq5OVBGYTYU06cIl+w6xjY2CpzvY=
+X-Gm-Gg: Acq92OG7J2UwZpxX78TQROlWdc3pDmwtLQThdosBm2tLegyTZTaeR/0tcZ0n+G5BBtT
+	M13tt3R5AieqPVTiWDbNNt3sQm38f1QJYQSxGr1OtW+Fibc8SEYMYh1N1eaT33+OFSPmTJ/bkIh
+	67c7R82+9k1ZoXCeT8HFnHRtgebSKV9VCgR3FgtEd3K8PCHfYOv2PtoqZX9qqLcgqNHJAdJtTs8
+	aAxnvF6V4zZGWUdXZ7RuDNZKlT/eLqSZWsI2leXzGjBxtryCqThoKjhd2wVhi/nIWtaSynw63bz
+	GsBKj4Lgi9pywk4BjA==
+X-Received: by 2002:a50:ec96:0:b0:689:ac19:3fb4 with SMTP id
+ 4fb4d7f45d1cf-68c8b2e7048mr483014a12.1.1780140122179; Sat, 30 May 2026
+ 04:22:02 -0700 (PDT)
 Precedence: bulk
 X-Mailing-List: sashiko-reviews@lists.linux.dev
 List-Id: <sashiko-reviews.lists.linux.dev>
 List-Subscribe: <mailto:sashiko-reviews+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:sashiko-reviews+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-Content-Transfer-Encoding: 8bit
-In-Reply-To: <20260529213842.354A51F00893@smtp.kernel.org>
+References: <20260530135302.54688-1-tahanarimani3443@gmail.com>
+ <20260530110658.30EB11F00893@smtp.kernel.org> <CAEsNvj8Q3n3-tuPhANfRjUfqrnCtzfguuRKL0OrwCEEkSXrUaw@mail.gmail.com>
+In-Reply-To: <CAEsNvj8Q3n3-tuPhANfRjUfqrnCtzfguuRKL0OrwCEEkSXrUaw@mail.gmail.com>
+From: Taha Narimani <tahanarimani3443@gmail.com>
+Date: Sat, 30 May 2026 14:51:49 +0330
+X-Gm-Features: AVHnY4Lgj0IR4-__iwmvmZBCf2z0cg5CbA51LFHjpNp4kCeS6HxzCvMaJGnWKoc
+Message-ID: <CAEsNvj-xv4PC6jZD+x_xUh4_Ec=eO=BA=LXT0t9aMTEy4X+LEg@mail.gmail.com>
+Subject: Re: [PATCH] dt-bindings: iio: adc: Add schema for AD7816/7/8 digital
+ temperature sensor
+To: sashiko-reviews@lists.linux.dev
+Cc: robh@kernel.org, devicetree@vger.kernel.org, conor+dt@kernel.org
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 
-On 2026-05-29 21:38:41+0000, sashiko-bot@kernel.org wrote:
-> Thank you for your contribution! Sashiko AI review found 2 potential issue(s) to consider:
-> - [High] Aggressiveness check incorrectly handles the disabled state (0 K), permanently locking unconfigured sensors and allowing fans to be disabled.
-> - [Medium] Integer truncation on 32-bit architectures bypasses input bounds validation.
-> --
-> 
-> commit 84e7ddf64f7f5ac65172c3a7ccc4e158bbb73094
-> Author: Thomas Weißschuh <linux@weissschuh.net>
-> 
-> hwmon: (cros_ec) Allow modification of fan curves
-> 
-> This commit exposes the EC fan curves through the standard hwmon sysfs
-> ABI, allowing both reading and writing. It includes logic to ensure
-> the curves can only be made more aggressive than their current state.
-> 
-> > diff --git a/drivers/hwmon/cros_ec_hwmon.c b/drivers/hwmon/cros_ec_hwmon.c
-> > index 731143f8c6b2a..fb73a00ebeebd 100644
-> > --- a/drivers/hwmon/cros_ec_hwmon.c
-> > +++ b/drivers/hwmon/cros_ec_hwmon.c
-> 
-> [ ... ]
-> 
-> > @@ -417,14 +435,60 @@ static ssize_t temp_auto_point_temp_show(struct device *dev, struct device_attri
-> >  	return sysfs_emit(buf, "%ld\n", cros_ec_hwmon_kelvin_to_millicelsius(temp));
-> >  }
-> >  
-> > +static ssize_t temp_auto_point_temp_store(struct device *dev, struct device_attribute *attr,
-> > +					  const char *buf, size_t size)
-> > +{
-> > +	struct sensor_device_attribute_2 *sattr = to_sensor_dev_attr_2(attr);
-> > +	struct cros_ec_hwmon_priv *priv = dev_get_drvdata(dev);
-> > +	struct ec_thermal_config config;
-> > +	u32 *temp_field;
-> > +	s64 temp;
-> > +	int ret;
-> > +
-> > +	ret = kstrtos64(buf, 10, &temp);
-> > +	if (ret)
-> > +		return ret;
-> > +
-> > +	temp = cros_ec_hwmon_millicelsius_to_kelvin(temp);
-> 
-> [Severity: Medium]
-> Does this silently truncate values on 32-bit platforms?
-> 
-> The cros_ec_hwmon_millicelsius_to_kelvin() function takes a long parameter:
-> 
-> static long cros_ec_hwmon_millicelsius_to_kelvin(long t)
-> 
-> Since temp is parsed as an s64, passing an extremely large out-of-bounds
-> value on a 32-bit architecture might truncate to a small valid value.
+Hi,
 
-We don't care about overflows anywhere else, so I am not sure that we
-should do so here. I'll switch the millicelsius to kelvin conversions
-to s32 to keep the logic more uniform, though.
+Thank you for the detailed analysis and for pointing out these issues.
 
-> Could this bypass the aggressiveness and overflow checks below, allowing
-> invalid internal values to be applied?
+I would like to clarify that these are pre-existing issues in the
+driver and were not introduced by my documentation patch. My current
+goal is limited to adding the missing Device Tree bindings to resolve
+the checkpatch.pl warnings.
 
-I don't see how it would bypass the checks.
+I acknowledge that the driver has issues regarding concurrency
+protection, DMA mapping, and polling loops. I intend to focus on those
+in a separate, subsequent patch series after this one is merged, as I
+believe refactoring the driver logic requires a broader scope.
 
-> > +
-> > +	if (overflows_type(temp, config.temp_fan_off))
-> > +		return -ERANGE;
-> > +
-> > +	guard(hwmon_lock)(dev);
-> > +
-> > +	ret = cros_ec_hwmon_get_thermal_config(priv->cros_ec, sattr->index, &config);
-> > +	if (ret)
-> > +		return ret;
-> > +
-> > +	if (cros_ec_hwmon_attr_is_temp_fan_off(sattr))
-> > +		temp_field = &config.temp_fan_off;
-> > +	else /* temp_fan_max */
-> > +		temp_field = &config.temp_fan_max;
-> > +
-> > +	/* Only allow values which are more aggressive than the current ones */
-> > +	if (temp > *temp_field)
-> > +		return -EINVAL;
-> 
-> [Severity: High]
-> How does this handle the disabled state where the current threshold is 0 K?
-> 
-> If a sensor is currently uninitialized or disabled where *temp_field is 0,
-> any valid positive temperature input evaluates to true here, rejecting the
-> configuration. This seems to make it impossible to configure uninitialized
-> fan curves.
+Thank you for your patience and for reviewing my contribution.
 
-If the sensor is currently disabled, I think we should reject *any* write
-to it. If somebody has a usecase for that, they can argue for it.
+Best regards, Taha Narimani
 
-> Conversely, if a user inputs -273150 mC representing 0 K, the check evaluates
-> to false. This bypasses the check and sets the threshold to 0, which disables
-> the fan. Would this allow the fans to be made less aggressive, contradicting
-> the documented policy?
 
-I'll add a check to reject writing '0' kelvin.
-
-> > +
-> > +	*temp_field = temp;
-> > +
-> > +	if (config.temp_fan_off > config.temp_fan_max)
-> > +		return -EINVAL;
-> > +
-> > +	ret = cros_ec_hwmon_set_thermal_config(priv->cros_ec, sattr->index, &config);
-> > +	if (ret)
-> > +		return ret;
-> > +
-> > +	return size;
-> > +}
-> 
-> -- 
-> Sashiko AI review · https://sashiko.dev/#/patchset/20260529-cros_ec-hwmon-fan-curve-v1-0-da6792b3830f@weissschuh.net?part=5
+On Sat, May 30, 2026 at 2:41=E2=80=AFPM Taha Narimani
+<tahanarimani3443@gmail.com> wrote:
+>
+> Hi,
+>
+> Thank you for the detailed analysis and for pointing out these issues.
+>
+> I would like to clarify that these are pre-existing issues in the driver =
+and were not introduced by my documentation patch. My current goal is limit=
+ed to adding the missing Device Tree bindings to resolve the checkpatch.pl =
+warnings.
+>
+> I acknowledge that the driver has issues regarding concurrency protection=
+, DMA mapping, and polling loops. I intend to focus on those in a separate,=
+ subsequent patch series after this one is merged, as I believe refactoring=
+ the driver logic requires a broader scope.
+>
+> Thank you for your patience and for reviewing my contribution.
+>
+> Best regards, Taha Narimani
+>
+>
+> On Sat, May 30, 2026 at 2:36=E2=80=AFPM <sashiko-bot@kernel.org> wrote:
+>>
+>> Thank you for your contribution! Sashiko AI review found 3 potential iss=
+ue(s) to consider:
+>>
+>> Pre-existing issues:
+>> - [High] Missing concurrency protection during sysfs accesses.
+>> - [High] Stack-allocated buffers are passed directly to `spi_read()` and=
+ `spi_write()`, violating DMA mapping rules.
+>> - [High] Unbounded polling loop for the BUSY pin can cause a hard CPU lo=
+ckup.
+>> --
+>>
+>> commit cb7e57cc9cdde2668abda84c0f0d3e60ebb9a962
+>> Author: Taha Narimani <tahanarimani3443@gmail.com>
+>>
+>> dt-bindings: iio: adc: Add schema for AD7816/7/8 digital temperature sen=
+sor
+>>
+>> This commit adds a new YAML device tree binding schema for the Analog
+>> Devices AD7816, AD7817, and AD7818 digital temperature sensors. It
+>> documents the compatible strings, SPI configuration, interrupts, and
+>> required GPIO pins.
+>>
+>> > diff --git a/Documentation/devicetree/bindings/iio/adc/adi,ad7816.yaml=
+ b/Documentation/devicetree/bindings/iio/adc/adi,ad7816.yaml
+>> > new file mode 100644
+>> > index 0000000000000..74008c14d40c6
+>> > --- /dev/null
+>> > +++ b/Documentation/devicetree/bindings/iio/adc/adi,ad7816.yaml
+>> > @@ -0,0 +1,87 @@
+>> > +# SPDX-License-Identifier: (GPL-2.0-only OR BSD-2-Clause)
+>> > +%YAML 1.2
+>> > +---
+>> > +$id: http://devicetree.org/schemas/iio/adc/adi,ad7816.yaml#
+>> > +$schema: http://devicetree.org/meta-schemas/core.yaml#
+>>
+>> [ ... ]
+>>
+>> > +properties:
+>> > +  compatible:
+>> > +    enum:
+>> > +      - adi,ad7816
+>> > +      - adi,ad7817
+>> > +      - adi,ad7818
+>>
+>> [Severity: High]
+>> This isn't a bug introduced by this patch, but is there a missing lock t=
+o
+>> protect concurrent sysfs accesses?
+>>
+>> Looking at ad7816_show_value() in drivers/staging/iio/adc/ad7816.c:
+>>
+>> drivers/staging/iio/adc/ad7816.c:ad7816_show_value() {
+>>     ...
+>>     ret =3D ad7816_spi_read(chip, &data);
+>>     ...
+>> }
+>>
+>> Since this is called for world-readable sysfs attributes, can multiple
+>> userspace processes trigger this concurrently?
+>>
+>> If so, could concurrent execution of ad7816_spi_read() interleave GPIO p=
+in
+>> toggling and SPI transfers, corrupting the hardware state?
+>>
+>>
+>> [Severity: High]
+>> This isn't a bug introduced by this patch, but does this code pass
+>> stack-allocated buffers to SPI transfers?
+>>
+>> Looking at drivers/staging/iio/adc/ad7816.c:
+>>
+>> drivers/staging/iio/adc/ad7816.c:ad7816_spi_read() {
+>>     ...
+>>     ret =3D spi_read(spi_dev, &buf, sizeof(*data));
+>>     ...
+>> }
+>>
+>> And also in ad7816_spi_write():
+>>
+>> drivers/staging/iio/adc/ad7816.c:ad7816_spi_write() {
+>>     ...
+>>     ret =3D spi_write(spi_dev, &data, sizeof(data));
+>>     ...
+>> }
+>>
+>> Since the SPI subsystem often maps these buffers for DMA, will passing
+>> variables from the stack cause mapping failures or crashes on architectu=
+res
+>> with virtually mapped kernel stacks?
+>>
+>>
+>> [Severity: High]
+>> This isn't a bug introduced by this patch, but can this unbounded pollin=
+g
+>> loop cause a CPU lockup?
+>>
+>> Looking at ad7816_spi_read() in drivers/staging/iio/adc/ad7816.c:
+>>
+>> drivers/staging/iio/adc/ad7816.c:ad7816_spi_read() {
+>>     ...
+>>     while (gpiod_get_value(chip->busy_pin))
+>>         cpu_relax();
+>>     ...
+>> }
+>>
+>> If the external device malfunctions or the GPIO line gets permanently st=
+uck
+>> high, will this loop block indefinitely and cause a hard lockup?
+>>
+>> --
+>> Sashiko AI review =C2=B7 https://sashiko.dev/#/patchset/20260530135302.5=
+4688-1-tahanarimani3443@gmail.com?part=3D1
