@@ -1,168 +1,161 @@
-Received: from mail-qt1-f175.google.com (mail-qt1-f175.google.com [209.85.160.175])
+Received: from mail-qt1-f178.google.com (mail-qt1-f178.google.com [209.85.160.178])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E2F9B246788
-	for <sashiko-reviews@lists.linux.dev>; Sun, 31 May 2026 01:38:03 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=pass smtp.client-ip=209.85.160.175
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0B19D7260F
+	for <sashiko-reviews@lists.linux.dev>; Sun, 31 May 2026 01:44:43 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=pass smtp.client-ip=209.85.160.178
 ARC-Seal:i=2; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1780191486; cv=pass; b=Zk8towtYVUKWOutkFb75b4ph3xu48ZZKG4/btJ8VP9gP/b8S1bIa7RBFKZqgH3OiboaVg1hrATZ2Wa4nZ4OrYZyT7HdvSV97Y4k8Bifi/gMnshPflY8aQwDMG/OZYwzLglmp5OVkj1nOQ2mSis1o2j1HhHQrYwO5bLJ4IOXUIBQ=
+	t=1780191885; cv=pass; b=QOUl2cpEmE1c//mmuUq2vwUCTjqz7aRjNZeGGVGtyzadyF9y7a3g+h4mAwilH2SLOxSd6EuF0qrguVcyoG3a1MXjLGh53smzGQ5+3lJgiyEDhu7bAalIuL1T9FeBDawGSL5H5Z2qYs0z7uDY+/QpRoMTY5hXcFKrjHAx0PPVfeA=
 ARC-Message-Signature:i=2; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1780191486; c=relaxed/simple;
-	bh=y3gLTJcDJCDzE/sfnkF6XTrsBFtj5BVc/GJwrhbKPok=;
+	s=arc-20240116; t=1780191885; c=relaxed/simple;
+	bh=JY17uG+peAbC3rGOIzWPUWF2GW6zXnCaUG0CsOCyQgk=;
 	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
-	 To:Cc:Content-Type; b=egSmI25UuqMANYIA45lwr1QOYKBCMNazcvmntItcnGEA32l264YhobqESQ+ahVLyB5xUzReqwV/sKV441QaHOfxfLQ6uo5YKYjEnOVPDq7UHToKPFioVFwp6r6ntx8fUdDJ1hL5MRpJD1RceEXfElxa2QP36niVnHh1A18UYVbw=
-ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=google.com; spf=pass smtp.mailfrom=google.com; dkim=pass (2048-bit key) header.d=google.com header.i=@google.com header.b=sMZEWOIy; arc=pass smtp.client-ip=209.85.160.175
+	 To:Cc:Content-Type; b=SH17UnYCXm9ZLXFPqFioFflN4UFXXifxk1dgkm57QRCBdmVD7r6z2GW6m4kxaWflvaTgZiNDUYGDiLxbnRts0CaHTCcNjAXcDJer/iRiUdeGU4ujowfvBSvvKT1Zd63oGdQGCfD/IolTTPvlCvji0uoMF4mYpzPdsF6lCE6eAGQ=
+ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=google.com; spf=pass smtp.mailfrom=google.com; dkim=pass (2048-bit key) header.d=google.com header.i=@google.com header.b=a4UdNWMV; arc=pass smtp.client-ip=209.85.160.178
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=google.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=google.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=google.com header.i=@google.com header.b="sMZEWOIy"
-Received: by mail-qt1-f175.google.com with SMTP id d75a77b69052e-516d78ba1adso611cf.1
-        for <sashiko-reviews@lists.linux.dev>; Sat, 30 May 2026 18:38:03 -0700 (PDT)
-ARC-Seal: i=1; a=rsa-sha256; t=1780191483; cv=none;
+	dkim=pass (2048-bit key) header.d=google.com header.i=@google.com header.b="a4UdNWMV"
+Received: by mail-qt1-f178.google.com with SMTP id d75a77b69052e-516d6009380so281cf.0
+        for <sashiko-reviews@lists.linux.dev>; Sat, 30 May 2026 18:44:43 -0700 (PDT)
+ARC-Seal: i=1; a=rsa-sha256; t=1780191883; cv=none;
         d=google.com; s=arc-20240605;
-        b=JQWJjP4zUH4DjNUnVKOQUaDaP+N04xmf/mkqMKFh5eLwU4LOvBpop4j8ISbKHEfMP+
-         Zrjn3DZMaCWI3zGPKu72JcaBzI98Jw1LahyBXh5zfqEWtiERZ/VnjtrCKm4vTiPQEAJa
-         jAz/XkhDfOZbba2aUeGg0f83YsWmbaaAiYOdx+kZsExNj/DMNoIzgHFXyejdaqil3mI0
-         TGwbhOdRpMqbmJDqeLWDU0076h8wrwp2P56e1q9hQkLcUDWGSlrNSaUFbxWu6UsyYWDD
-         oegPKP8+eVRvugNYTMK7fYXJOfhrTk/PUtzHL6fftBFCdRWN2x0GXVSHbvTNghpmDIBn
-         rFCw==
+        b=aYj5+kLMoZBJp1RQ7IIJOCC6qpGXJZEwIL4HXfaUFRGRkMcnA3Z43e0T/7zGweNKDd
+         kMS1uRIOWTtImn698HT0GjyeRLM/rNjiOoifTGOwEVpvNXenVCUfPSGdvtOR3Y7e/9Ub
+         jfXCufHyIBNVuX0F2TD/hsi+IcqjYAufukO6V0H3WWBR4vFDgG0Y7xiesfvmZh84RU4w
+         2uxvF1WM9wO/sstApoF5yR00qV6z/8JdgVdAWuWnEh/MPb9HdskRKXSofHLxuCKFRFmw
+         k+4FdjzpjVNxXElSZxl45BiqbO2VxGsCc9IfOdt/upcuGjgGWpX/kCDV8b9o3flgZOwJ
+         DB4w==
 ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com; s=arc-20240605;
         h=content-transfer-encoding:cc:to:subject:message-id:date:from
          :in-reply-to:references:mime-version:dkim-signature;
-        bh=7KEWFe5PI5fZtcQJyeW/bUVH7eGb4JFji1z5+4lcemo=;
+        bh=ilFSrviVs31RIfLP4HkhrNfgU+I8AsONLzeZnzt4ues=;
         fh=uA360uvxR9S0K/Y4Lovo7aIaGlBwzVBnnb2BKWupr/4=;
-        b=CnM9F+FjYF+VHWZHRgY8bKQh+QnMJx/IYsopeb/eRhVtHJ8hRRETqZUQqBxgs2H1Ac
-         WAHSxjXq94DuM9uZAoHXVZ+NU1M4nPfUEA5rFPSGDf6nKviNLX7tbHax2ktNv/QMZcHD
-         BO+0ttBMQS9rZDaCMZ0Qhp8v4TPTVAY1Dc+RO0kPCn3e5YBV/7rgx03gKk9WPBOLEMT4
-         gfDRWtr+vCfSo8rbL356WV1/3ACygTBKtAss8MXFzJb2IdWs0+7DFsRRUZRzXijAUnYm
-         USophZ9RO9fJ/YCNu7jgMqriadRv0timREi7sou0ASRbOa5+1lg1cPkdwkQ8arD34D0c
-         +oFw==;
+        b=OGbrsBeCH1+ZXp5XVZOZfKwaSQN+T73Ic4/+ZjwdjFmhoj8ZmTFA339zWkQXFNeUq/
+         WBK3uUSSQollOgFOtVf5uDBgDGqi8RQOVX3D+xI77OipyAVUnm2e0Tg2koxqOxYeJLxY
+         vK7zwdt0vnzmV/ECGHu4G6aMZQpJsPfXkXx5YRly/bNGuXvFQRvk/2OVFvNWXTDCy40V
+         pCffvLjFzkUSvnPZ19KXAkezefLmDXXdpRnSv8bD9QCB07QY6L4yWzCABBLMsDqxcV2r
+         40+VPecQjgFrSUDNTwLTnMW6EU2xuiWAAmuU2TWUueXhCGHA/zzTjVFDOY05uApIxYp1
+         q2+Q==;
         darn=lists.linux.dev
 ARC-Authentication-Results: i=1; mx.google.com; arc=none
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=google.com; s=20251104; t=1780191483; x=1780796283; darn=lists.linux.dev;
+        d=google.com; s=20251104; t=1780191883; x=1780796683; darn=lists.linux.dev;
         h=content-transfer-encoding:cc:to:subject:message-id:date:from
          :in-reply-to:references:mime-version:from:to:cc:subject:date
          :message-id:reply-to;
-        bh=7KEWFe5PI5fZtcQJyeW/bUVH7eGb4JFji1z5+4lcemo=;
-        b=sMZEWOIy13jOmuAMCUqFpJZJj9QHpzu+BsmPZvipvUS6jhuhJBJ3K9/fzIXzDYJMfM
-         wCCJ6DDk8+ECN1M81zYrLenskxK7gj92NV4VLzwQLUp/FT7l4zCKIkt6mMhphRcRZ5wX
-         gq8szoz1XYPV5zqLQSW8NA9c+4tLTm/UJWhm3eZL4+pk5GMmXmtE+SGCV5KMdsd1Ygso
-         wrH45ZOJ9Dor+/kSF60S9wdOryHv1GykdBQEUzXWOeLt45Rcxvu/i5zy8E8Qgd3UNpJy
-         MibKuenuOFrbZvqzUpAqa9m61gfmVB9z/n0bc+5MQC4w2nSEHvwpUr/t9SFOyTKTXI5I
-         pgmw==
+        bh=ilFSrviVs31RIfLP4HkhrNfgU+I8AsONLzeZnzt4ues=;
+        b=a4UdNWMVYcbkY0SnN6jCvKoFzNVQo3eVsftQ2BO2C4E8HxkOwkHBCNvCV4/Ai2QtA1
+         7Wv3SAaZUy4EmVMElYN05pXSyTGo6KH7wy469TrZvVNWls7KQcXkiTmVhWnifJGUwF87
+         GuWg1f1zOnUbBpej7vbVbU0S+HWDBW2r68Vr5Zc49by1BRg+GIPPLU+v1hu7ay+RhWh4
+         HL3priTY+jTIIm+7FHBNECzkuhAIAMOA+pNdN5IpEtI85FHhNh5DItgUDl10G2wNS4ge
+         0+ynz/dejnq1+OhwEt02XZVRlA5CsdJIJeURufbDdd8picG6TpirZKZWbTZBKe05nFuv
+         NaJA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20251104; t=1780191483; x=1780796283;
+        d=1e100.net; s=20251104; t=1780191883; x=1780796683;
         h=content-transfer-encoding:cc:to:subject:message-id:date:from
          :in-reply-to:references:mime-version:x-gm-gg:x-gm-message-state:from
          :to:cc:subject:date:message-id:reply-to;
-        bh=7KEWFe5PI5fZtcQJyeW/bUVH7eGb4JFji1z5+4lcemo=;
-        b=GhON7PmJ9c2RxmNrHIDJJkpkbktc/u5clPEnHWSjaxvSDD+wXiOdMd6xt5dlZpNeoy
-         QXTRJr7IjVn7psWoWiKSuKUQxCFE7BuycvRcQ2gCsJno6+Vq3r110CVaJyWyqBGPQszn
-         kqkZtErHeonpo9jI3VhXGRGxf1ulLCrQHJmTzyuEI8yzFTuIffRKpePUK55ttNTPZKnF
-         EUW719HaBs9spignj0MHNdeRgPbfIwb/SeggfhYkKyQWVt6Oxh+339dVZ74WQQcZeuxv
-         RdLnEkpuPUMMDCEnLVuHuHROkL8iGowCI+L6fVdhKccBT4RoxNWcLezaZWFBRK2uy+KJ
-         4ZfA==
-X-Gm-Message-State: AOJu0Yxp921w5pnAk6OnDfk9Y3Zljw25+ijoCcdWucjYsdfQC9N6fasY
-	jjVmCGV/VKIgTZ+OIFvbIW2xckV8A404ru5uwPbHqu9QWqsFfdPLSnBEarN2KAg1od0AXZX9QQ8
-	wyY3PUJYAYe2sXi22Qn0WhZABh4TV/qo1nRFftT3T03jAUWrhbYoc7DMXzB9s8Q==
-X-Gm-Gg: Acq92OEmbVaXdgH0aBw3ZvgeGW+1V5gk/y02K2YTpH0F2esKmBJjrTJyjbHLxQWT226
-	05I2T7omfSrqOum/ZX/b3rHdnBOLgPbuE/XMu83rUg57ftL92BxzHJ7XLT84ANKdTQLDFKosx7Z
-	xz+sIQZ0L9jLHwj0XCf/jyKxa12CwDMfGz4dcwJ9yxJ9PHqmiXtE6sxG0NJPHPRaYCkWnXdsIyO
-	4QV3Ur4JRZhyyEaiTNsKUAJOtE9T6+e0Z1qV2t4SZPQyEb5mMz6xlnfyoGaWRRbKuSBxRVbrm6U
-	5x9KEBef1sZytnSRZnWZKD9UbipdrzuXDt5YYyrLDxAG5TaK9EpQrrYLp9FQjIa6
+        bh=ilFSrviVs31RIfLP4HkhrNfgU+I8AsONLzeZnzt4ues=;
+        b=kD9KJYM6XrKaYgnscNcoxI/td55Y2S1Y8CmAiY3qIp52BLDB5JLWJAiIQqLbWAAeTN
+         MC+PTzjhBevuyTegqVv3WxwpovIlKFKNxw0bfOTMVwGOTpKO0YwBsFuDbOx2iHMdEiwD
+         pkBT9TuVHpz6wXgtaqKVVPtzjPPqTgobtPq8iAWbHHbftoSikp3xi++gEILw25gp2o9V
+         w/xF3dq/DJeWxLMjuhU78KjMAfK/9/1SlfSbtcXuYTCEts/SESgPd1UAKkMNdlVewV7A
+         uE22iVCnV/UDwRHKsncWdp7zgBiRtGYuf9ZjqmkcyNEJVJCpzpU4CArp5ECUIR+tuXTA
+         57Kw==
+X-Gm-Message-State: AOJu0YwIV45UrnMGcdmyLMkLDoBAu4/7WX+mko7TymKt0d//ntIwauIH
+	llTLdJpiItMJJ+0lnN4XQGivaJcZ0RXWNZtomjgCflwySyMbi+M0m4/DvEp/Y/As7Xp7kHwGnls
+	jJQYRJR4IcID2Oe2tcL0JUsyIsUhqMxZ1LeoSB3slWS3V4iwgE+bfaQB6qCLwmw==
+X-Gm-Gg: Acq92OFGodgG6yNif1VIzhreM9ERp/JdlxfzMpA6xT5vMJc3G76QBnTIeqVBmehrT8X
+	2+khgyX8c4zq7i8qg9UlTZdW58jzYBaZGo2UI/NMSKGaGgCO5NtX3OS4VjafYkmCVAGKkm2AD6p
+	DM6lUZFr25PC3DxyJHjLqqKQZsRXg7enr2u6c2INJ7wmM4cSgM42peuSkOTEgeLP0FjeSutTHYU
+	sVyCnK33G0+bVy1Jvwc5p33tHmYwAok8dexX24qDYRG1SeWmMSgOzqlxO+UfIHuvxBE5TPFznfO
+	VGjkZTzKLDFPWQYoiIxYv6WthxSYRYYBDdQYh5ysugUGy45RRSQwVZWHnnLbxgvB
 X-Received: by 2002:ac8:7f0c:0:b0:514:b17e:86f3 with SMTP id
- d75a77b69052e-5173b68d02cmr4503831cf.12.1780191482331; Sat, 30 May 2026
- 18:38:02 -0700 (PDT)
+ d75a77b69052e-5173b68d02cmr4528551cf.12.1780191882675; Sat, 30 May 2026
+ 18:44:42 -0700 (PDT)
 Precedence: bulk
 X-Mailing-List: sashiko-reviews@lists.linux.dev
 List-Id: <sashiko-reviews.lists.linux.dev>
 List-Subscribe: <mailto:sashiko-reviews+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:sashiko-reviews+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-References: <20260531004748.3567875-2-yuyanghuang@google.com> <20260531005931.D4F201F00893@smtp.kernel.org>
-In-Reply-To: <20260531005931.D4F201F00893@smtp.kernel.org>
+References: <20260531004748.3567875-3-yuyanghuang@google.com> <20260531011110.F22BA1F00893@smtp.kernel.org>
+In-Reply-To: <20260531011110.F22BA1F00893@smtp.kernel.org>
 From: Yuyang Huang <yuyanghuang@google.com>
-Date: Sun, 31 May 2026 09:37:26 +0800
-X-Gm-Features: AVHnY4JDaxYAfAHgGuWboGsrmqGbem2Csl5gpoCfrsX978gnKjtiiq7igFiEZ7I
-Message-ID: <CADXeF1HwVBz3crJtAuKw_20cK4wXmoCQM73A_tZc+pc97veLjQ@mail.gmail.com>
-Subject: Re: [PATCH bpf-next v2 1/2] bpf: reject BPF_PROG_QUERY with short
- uattr size
+Date: Sun, 31 May 2026 09:44:06 +0800
+X-Gm-Features: AVHnY4IzCADml3zKoYSyRSrNWNuSsrTy9RPkMx5SVD7WrajH2eDmneCa7VMWDJQ
+Message-ID: <CADXeF1HQCjVXqaqFEGLOicNOC6Nc-ki59Eyu2iaMhf+A6QFiMg@mail.gmail.com>
+Subject: Re: [PATCH bpf-next v2 2/2] selftests/bpf: add verification for
+ BPF_PROG_QUERY attr size boundaries
 To: sashiko-reviews@lists.linux.dev
 Cc: bpf@vger.kernel.org
 Content-Type: text/plain; charset="UTF-8"
 Content-Transfer-Encoding: quoted-printable
 
-On Sun, May 31, 2026 at 8:59=E2=80=AFAM <sashiko-bot@kernel.org> wrote:
+On Sun, May 31, 2026 at 9:11=E2=80=AFAM <sashiko-bot@kernel.org> wrote:
 >
-> Thank you for your contribution! Sashiko AI review found 2 potential issu=
+> Thank you for your contribution! Sashiko AI review found 1 potential issu=
 e(s) to consider:
-> - [Critical] The patch unconditionally rejects BPF_PROG_QUERY requests wi=
-th a smaller attribute size, breaking backward compatibility for older user=
-space applications.
-> - [Low] Returning -EFAULT for a structure size mismatch is semantically i=
-ncorrect.
+> - [Critical] The selftest validates and enshrines an ABI-breaking kernel =
+behavior where BPF_PROG_QUERY rejects valid queries from older user-space b=
+inaries with -EFAULT.
 > --
 >
-> commit 205b70f382d21dfafc18f8275384ff0f06e59f6e
+> commit a51bd156081fb623564c01426a789df272b5e924
 > Author: Yuyang Huang <yuyanghuang@google.com>
 >
-> bpf: reject BPF_PROG_QUERY with short uattr size
+> selftests/bpf: add verification for BPF_PROG_QUERY attr size boundaries
 >
-> This commit modifies bpf_prog_query() to return an error if the user-prov=
-ided
-> attribute size is smaller than the offset of the query.revision field. Th=
-is
-> aims to prevent an out-of-bounds write to userspace.
+> This commit adds a selftest to verify that BPF_PROG_QUERY rejects queries
+> with a user-declared size below the size covering query.revision with
+> -EFAULT. It also ensures the query succeeds when given the full size.
 >
-> > diff --git a/kernel/bpf/syscall.c b/kernel/bpf/syscall.c
-> > index 9e91fb2fb492c..4dbf53e81a38c 100644
-> > --- a/kernel/bpf/syscall.c
-> > +++ b/kernel/bpf/syscall.c
-> > @@ -4719,8 +4719,10 @@ static int bpf_prog_detach(const union bpf_attr =
-*attr)
-> >  #define BPF_PROG_QUERY_LAST_FIELD query.revision
-> >
-> >  static int bpf_prog_query(const union bpf_attr *attr,
-> > -                       union bpf_attr __user *uattr)
-> > +                       union bpf_attr __user *uattr, u32 uattr_size)
-> >  {
-> > +     if (uattr_size < offsetofend(union bpf_attr, query.revision))
+> > diff --git a/tools/testing/selftests/bpf/prog_tests/bpf_attr_size.c b/t=
+ools/testing/selftests/bpf/prog_tests/bpf_attr_size.c
+> > new file mode 100644
+> > index 0000000000000..4fbe56cb29d4a
+> > --- /dev/null
+> > +++ b/tools/testing/selftests/bpf/prog_tests/bpf_attr_size.c
+> > @@ -0,0 +1,65 @@
+> > +// SPDX-License-Identifier: GPL-2.0
+> > +/* Copyright (c) 2026 Google LLC */
+> > +#include <linux/bpf.h>
+>
+> [ ... ]
+>
+> > +#define OLD_QUERY_SIZE               offsetofend(union bpf_attr, query=
+.prog_cnt)
+> > +#define FULL_QUERY_SIZE              offsetofend(union bpf_attr, query=
+.revision)
+> > +
+> > +static void test_query_size_boundaries(void)
+> > +{
+>
+> [ ... ]
+>
+> > +     memset(&attr, 0, sizeof(attr));
+> > +     attr.query.target_fd =3D cg_fd;
+> > +     attr.query.attach_type =3D BPF_CGROUP_INET_INGRESS;
+> > +
+> > +     err =3D syscall(__NR_bpf, BPF_PROG_QUERY, &attr, OLD_QUERY_SIZE);
+> > +     ASSERT_EQ(err, -1, "query_old_size_fails");
+> > +     ASSERT_EQ(errno, EFAULT, "query_old_size_efault");
 >
 > [Severity: Critical]
-> Does this unconditionally reject older userspace applications that pass a
-> smaller uattr_size? The BPF syscall generally maintains backward
-> compatibility by allowing older binaries to pass smaller structures.
+> Does this selftest validate an ABI-breaking kernel behavior where
+> BPF_PROG_QUERY rejects valid queries from older user-space binaries with
+> -EFAULT?
 >
-> By rejecting the call entirely at the top-level dispatcher, wouldn't this
-> break ABI for all attachment types (like BPF_FLOW_DISSECTOR), even if tho=
-se
-> specific handlers never attempt to write to query.revision?
+> Older user-space applications (like an older bpftool) compiled with older
+> headers will supply a smaller bpf_attr size up to query.prog_cnt.
+> Previously, the kernel would accept this size, but this test now enforces
+> that the kernel rejects these historically valid queries unconditionally.
 >
-> Could we instead pass uattr_size down to the lower-level query handlers a=
-nd
-> conditionally skip writing the revision field to user space when the prov=
-ided
-> buffer size is insufficient?
+> Should the kernel conditionally copy to query.revision only if the
+> user-provided size is large enough, rather than breaking backwards
+> compatibility for existing binaries?
 >
-> > +             return -EFAULT;
->
-> [Severity: Low]
-> Is -EFAULT the correct error code for a structure size mismatch?
->
-> Standard practice usually returns -EINVAL (or -E2BIG) for mismatched or
-> inadequate sizes. -EFAULT typically indicates an invalid memory address
-> during a copy operation, which might mislead userspace developers trying =
-to
-> debug their applications.
->
-> >       if (!bpf_net_capable())
-> >               return -EPERM;
-> >       if (CHECK_ATTR(BPF_PROG_QUERY))
->
-> --
-> Sashiko AI review =C2=B7 https://sashiko.dev/#/patchset/20260531004748.35=
-67875-1-yuyanghuang@google.com?part=3D1
 
 The proposal in the patch is implemented based on the suggestion from
 the previous review thread:
