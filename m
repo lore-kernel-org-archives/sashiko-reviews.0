@@ -1,105 +1,71 @@
-Received: from mail-pl1-f169.google.com (mail-pl1-f169.google.com [209.85.214.169])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EE65535676D
-	for <sashiko-reviews@lists.linux.dev>; Sun, 31 May 2026 14:36:36 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.214.169
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B53483112C1;
+	Sun, 31 May 2026 15:26:30 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1780238198; cv=none; b=Zwlmv1fBjz1/kbNFgKJyLvc39Lhd8sq+EYcpGzcWS02XYF9JqQAwvDhJEDiNwmoJG2mcUNoUeG3/zCneGBgZdMaf0/x4e3GwbYTuT+PhGUtYOZMVPIlW4UE9vOblV+ks+ocuhh2MkwKXSvnzrqyuDeUk/+FGYlVPWaaymfh19N4=
+	t=1780241191; cv=none; b=kDH4KOubr+/QA55F8Op2ozN8WRPwFRDVxjGrPIOZ6eVQJI7KDny9CuX08wMZieHZIb99ujtJ9tyPAxn4LJULZ4PQ/R4UOspyQrwWPe+Ofd3IOqINST5O706aRFm7qk0Sym0HRiv2Lxl+420HURy3rb0X5PaBHVq4wR5sdcmc2PU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1780238198; c=relaxed/simple;
-	bh=VBfST3UXgyTlkP0EH/KCc/5GWH1k8BUjMNuhwJhVe3o=;
-	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=PHcL3DYYSD3JISleBxqWEfmwrhwguCMp/itpy04GnIQ9lILp0k/i7VK5vq5QCC/gRyatSMdytQ3iObrCTOYMK1VLkVAaGTzjoS1PKOIksOhi7c/LCAUWuj8E+4iEaYlEvJhfVQpmSNnhyEH+UpNRxv9t/Hz5bBu50l8z76VetF8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=hHa4d6ll; arc=none smtp.client-ip=209.85.214.169
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+	s=arc-20240116; t=1780241191; c=relaxed/simple;
+	bh=xW4ka1DZpu7P2cUnHjBUEMfDUHAeRAPOyMtbF+394+k=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=FOUmo+WBK8WKhSDJ6p3gKsErcnkW/IiCyME7bKXEOMU7AKDP76LpPzZUjKAN3bOr8XlY+QQL6CvYmZvBuuSuspLUyACBU80upr9gF2sR7kQcUNXOrqJCxz7lIlaFC10okrtfaasIdkeV15KPIsAocf3G7K5GG6eGAk6RhkSA8tI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=nhbaX4Nw; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="hHa4d6ll"
-Received: by mail-pl1-f169.google.com with SMTP id d9443c01a7336-2c0c2d792c8so2985155ad.1
-        for <sashiko-reviews@lists.linux.dev>; Sun, 31 May 2026 07:36:36 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20251104; t=1780238196; x=1780842996; darn=lists.linux.dev;
-        h=content-transfer-encoding:in-reply-to:from:references:cc:to:subject
-         :user-agent:mime-version:date:message-id:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=RAmB6qU0tUcDyuQM8cPLpHCE5VdrhYXfLUEjav8vq/s=;
-        b=hHa4d6llc6zpK+9jUf3uUeDl361rmiKwp0SCm+h2mMDGKYvgUdUsdvXLAtSyZCVt4s
-         SLvcrUIg1x1pS3xalgAr8AwYFsn0inqM6D0a7F6C2YkKjZNGyLiZnOyRRV2pW16kDsuH
-         dohJ4imNBwNCCxE+2kvssFq3/ybOYA84dp1PcIOXhsbi/Zn4UXrxAmcbPIzznlDquOv5
-         vtdl3OJVmalxbodNDyFU23dUJwiM7A/TczzWqzqpcT6sJrpXO8kqY6nbgUacZL28PV4O
-         T0AEFe3+k4tOSkUNNxpqooJ/g0wWZwfncmwe0fqxoDwnLD1/VUYLossjB0+cBGK+r0Zo
-         gP6g==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20251104; t=1780238196; x=1780842996;
-        h=content-transfer-encoding:in-reply-to:from:references:cc:to:subject
-         :user-agent:mime-version:date:message-id:x-gm-gg:x-gm-message-state
-         :from:to:cc:subject:date:message-id:reply-to;
-        bh=RAmB6qU0tUcDyuQM8cPLpHCE5VdrhYXfLUEjav8vq/s=;
-        b=Wlclyf7LMIVFbutdJ3AVpKspzYtV+qkiY2iOMy/RGPTVWO1adKAy1jfU6TrIPZI0wz
-         DO3uOtrprtHmM9UxiZdjCStd08OheClRVjWxOHTHWHyftnSKWY8ARFW27nVDS3q3Fk05
-         hOeIY+Ba4TVzR0QyyR+JuNhmVgsRb3DARQhOFZr0aBZIpr//fU6iHEiWcUfIWsWk7Ke1
-         qpr+d/R8+5pk4hwtL08E/2pzEYCEn8RmlM0IrI9dfd0uIVkM5nkJZD1pSIYCTsWZdhaU
-         7cPUuCBmpclMU9K5kAUocK1qCnqvrHg1QSZATY3upcpksBNY4kir5SdAihndCP2y216R
-         Ireg==
-X-Forwarded-Encrypted: i=1; AFNElJ+ZdOUQHhvElM2NpIcp02JZ88UE6aOQ0IEDpqxctfbcOHP73quUtM3SXhnwbp86B0Ano9ToHoKO8dIORhlCQhA=@lists.linux.dev
-X-Gm-Message-State: AOJu0YwWTIpBlH/45Wf3576awYHUbDtRavLZdF2cp+xUX10wVZswi1g/
-	de9EkWf91iSa4R0o4mHPyghRwdIvDyqsQpH81+640Mtl55Sh7uXMD91H
-X-Gm-Gg: Acq92OHtoqYzwgzaWPQ1IyVgzpJ9ai/hPazhoGqIOjcDQMh0R3zV/9BLnEt2FCbltxD
-	2OuOXGLMjkjEpEONodjd0IXMdbGOSkmoFt7WkKgWNbGVTDgWhpmGyCXUF9NHDqEsD21K9YULmml
-	v0KnM1iuBANwBYI+AkN8cHigfGpJDnpm5x3CnFFDknTNiEyADXL8EpB3OTOd6wCQuFsZktfyDTF
-	yAMGylmrHJXA6mNX7O/HmLseIM6m8OR/X0OmIEP+rngzC8Je2XZQN8yY9o0aIabIDKIvfEZEac5
-	Su5DhMlCAdjfpzo4gJOcssQQOioIkGNMzxk5b6Q8l1AupzWmv6+xxO7FBMR13gSvxKssbHhepyU
-	SCG1di8bMYHX3jVxm4ldCSl8oEQFiBtMe6x0mfKkFZWDTcZixBikBhUdTqR6lrYpgnqmXzg0ziZ
-	n9bWcazhLw3hiFwqggc5E+fWn2Q1Gmfi6WyTTdrZYrCzw8+DI=
-X-Received: by 2002:a17:903:3585:b0:2bf:160f:7038 with SMTP id d9443c01a7336-2bf367c1435mr92914815ad.12.1780238196196;
-        Sun, 31 May 2026 07:36:36 -0700 (PDT)
-Received: from [10.4.72.5] ([139.177.225.241])
-        by smtp.gmail.com with ESMTPSA id d9443c01a7336-2bf23b0121fsm77749365ad.49.2026.05.31.07.36.29
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Sun, 31 May 2026 07:36:35 -0700 (PDT)
-Message-ID: <5ee310d9-d432-400d-8506-751ee4a41fc6@gmail.com>
-Date: Sun, 31 May 2026 22:36:27 +0800
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="nhbaX4Nw"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 79D681F00893;
+	Sun, 31 May 2026 15:26:29 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
+	s=korg; t=1780241190;
+	bh=z704NJZDS6mAj4oNh35dy4uyshG7Q7lM1eefKHZO5B0=;
+	h=Date:From:To:Cc:Subject:References:In-Reply-To;
+	b=nhbaX4NwOU06t8ZNdaIO0VxywgUqso+21KIvjTGnO/dDzWyLgFVlSnXu1SKqAqAWa
+	 Gc1/Yty+0S8fbXvIQuX+5nSVl2Uvi931nBhBaIjTwOqIyFQLmWZnUHbcsWnPUXJrMN
+	 5QhiO+JCfjEQ+85odRPaGugXyv2V2ueo+g7uQJfY=
+Date: Sun, 31 May 2026 17:25:35 +0200
+From: Greg KH <gregkh@linuxfoundation.org>
+To: Yanfei Xu <isyanfei.xu@gmail.com>
+Cc: Yanfei Xu <yanfei.xu@bytedance.com>, harshpb@linux.ibm.com,
+	zhaotianrui@loongson.cn, maobibo@loongson.cn, chenhuacai@kernel.org,
+	maddy@linux.ibm.com, npiggin@gmail.com,
+	sashiko-reviews@lists.linux.dev, seanjc@google.com,
+	pbonzini@redhat.com, kvm@vger.kernel.org, stable@vger.kernel.org,
+	loongarch@lists.linux.dev, linuxppc-dev@lists.ozlabs.org,
+	caixiangfeng@bytedance.com, fangying.tommy@bytedance.com
+Subject: Re: [v2 0/2] KVM: Validate irqchip index in routing entries
+Message-ID: <2026053122-splashed-supernova-90c3@gregkh>
+References: <20260531135326.2238555-1-yanfei.xu@bytedance.com>
+ <2026053158-cussed-outweigh-6f0f@gregkh>
+ <5ee310d9-d432-400d-8506-751ee4a41fc6@gmail.com>
 Precedence: bulk
 X-Mailing-List: sashiko-reviews@lists.linux.dev
 List-Id: <sashiko-reviews.lists.linux.dev>
 List-Subscribe: <mailto:sashiko-reviews+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:sashiko-reviews+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [v2 0/2] KVM: Validate irqchip index in routing entries
-To: Greg KH <gregkh@linuxfoundation.org>, Yanfei Xu <yanfei.xu@bytedance.com>
-Cc: harshpb@linux.ibm.com, zhaotianrui@loongson.cn, maobibo@loongson.cn,
- chenhuacai@kernel.org, maddy@linux.ibm.com, npiggin@gmail.com,
- sashiko-reviews@lists.linux.dev, seanjc@google.com, pbonzini@redhat.com,
- kvm@vger.kernel.org, stable@vger.kernel.org, loongarch@lists.linux.dev,
- linuxppc-dev@lists.ozlabs.org, caixiangfeng@bytedance.com,
- fangying.tommy@bytedance.com
-References: <20260531135326.2238555-1-yanfei.xu@bytedance.com>
- <2026053158-cussed-outweigh-6f0f@gregkh>
-From: Yanfei Xu <isyanfei.xu@gmail.com>
-In-Reply-To: <2026053158-cussed-outweigh-6f0f@gregkh>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <5ee310d9-d432-400d-8506-751ee4a41fc6@gmail.com>
 
+On Sun, May 31, 2026 at 10:36:27PM +0800, Yanfei Xu wrote:
+> 
+> On 2026/5/31 22:15, Greg KH wrote:
+> > > -- 
+> > > 2.20.1
+> > > 
+> > <formletter>
+> > 
+> > This is not the correct way to submit patches for inclusion in the
+> > stable kernel tree.  Please read:
+> >      https://www.kernel.org/doc/html/latest/process/stable-kernel-rules.html
+> > for how to do this properly.
+> > 
+> > </formletter>
+> 
+> Thanks for pointing out the correct process. I saw
+> that PPC maintainer added "Cc: stable@vger.kernel.org"
+> on v1, so I mistakenly thought v2 should cc...
 
-On 2026/5/31 22:15, Greg KH wrote:
->> -- 
->> 2.20.1
->>
-> <formletter>
->
-> This is not the correct way to submit patches for inclusion in the
-> stable kernel tree.  Please read:
->      https://www.kernel.org/doc/html/latest/process/stable-kernel-rules.html
-> for how to do this properly.
->
-> </formletter>
-
-Thanks for pointing out the correct process. I saw
-that PPC maintainer added "Cc: stable@vger.kernel.org"
-on v1, so I mistakenly thought v2 should cc...
-
-Thanks,
-Yanfei
-
+That's great, then take a look at the file above to show you how to do
+that :)
