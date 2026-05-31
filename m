@@ -1,119 +1,147 @@
-Received: from mail-oi1-f171.google.com (mail-oi1-f171.google.com [209.85.167.171])
+Received: from mail-qt1-f179.google.com (mail-qt1-f179.google.com [209.85.160.179])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 718D514A8B
-	for <sashiko-reviews@lists.linux.dev>; Sun, 31 May 2026 05:18:27 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.167.171
-ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1780204708; cv=none; b=erl/ZUp+haLUiApvo4SBQbzp5JDH6v2LMiA5RQyVAWPX3dxNdx+dXadpT0z0gg5pZsigNCyn3QvPovEKkk67YMDCi1/iX46r/tv8mXFh2mUS6OtJwLuL4BCmTTPH9VyTbGqL5xULH8mA7y9I5aD442gQrGJVr8VntO2czOym7Hk=
-ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1780204708; c=relaxed/simple;
-	bh=Px4nFEz1UEBG3n9dnC0Qf3LTPV9/tzMyHk0YRBXyVFs=;
-	h=Mime-Version:Content-Type:Date:Message-Id:Cc:Subject:From:To:
-	 References:In-Reply-To; b=USO4+5KcN1QaxImeFD9uTflryZ3a2AYMhDdrS5xkYvJw5rHedBlRhBJ2pXRqxCEL3Fl8rs6L8ywGpB5H10CGWNT1UymHVnKJpDezNBOXWEnrDyFTPKSfKZ2wfz8xejP5OZDw8YMHwtpW4dUHKXzm4BUSutw4NDzUSUTGCqL3aJ0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=XfgqtLRm; arc=none smtp.client-ip=209.85.167.171
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6CEEF1DF980
+	for <sashiko-reviews@lists.linux.dev>; Sun, 31 May 2026 08:40:06 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=pass smtp.client-ip=209.85.160.179
+ARC-Seal:i=2; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
+	t=1780216807; cv=pass; b=S1JdHiQtAMl2Pqovdl7wDWxSJw+OKrqeexmRqt7QydEJCzABeO5WWprqVBHLX8YZQ9ag/x9ynT3t6V4eix/cOem6VHrtqoCyxDUYHyqcSO9YzmOo05zPFQXe//9PByBqJJwpczilBheEVR8U42unrzKtJIqlgA1q4iosdfESp4Y=
+ARC-Message-Signature:i=2; a=rsa-sha256; d=subspace.kernel.org;
+	s=arc-20240116; t=1780216807; c=relaxed/simple;
+	bh=Mp7e4yjhYxRDHFkPbMdL7drS2HhsJ7YpzanX5ys7ayw=;
+	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
+	 To:Cc:Content-Type; b=s/oCMUhs8uMN/LSX9aLFRai8uByJSZwCgDUGZUvZcHGiQ7z0yft0qKpRSQTlw2cZbzfdAAIqq+VpAfBqB9nmZlD7Bo56T75s+IomlinvostrA8wmMNTMQQF87WLJ8biQ98MslmJ4knyPjvU4NhWE07yI855oxUo1bWcO5WY/NIM=
+ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=google.com; spf=pass smtp.mailfrom=google.com; dkim=pass (2048-bit key) header.d=google.com header.i=@google.com header.b=bBLSA+8v; arc=pass smtp.client-ip=209.85.160.179
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=google.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=google.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="XfgqtLRm"
-Received: by mail-oi1-f171.google.com with SMTP id 5614622812f47-484cf882ce5so11602627b6e.1
-        for <sashiko-reviews@lists.linux.dev>; Sat, 30 May 2026 22:18:27 -0700 (PDT)
+	dkim=pass (2048-bit key) header.d=google.com header.i=@google.com header.b="bBLSA+8v"
+Received: by mail-qt1-f179.google.com with SMTP id d75a77b69052e-516d78ba1adso3251cf.1
+        for <sashiko-reviews@lists.linux.dev>; Sun, 31 May 2026 01:40:06 -0700 (PDT)
+ARC-Seal: i=1; a=rsa-sha256; t=1780216805; cv=none;
+        d=google.com; s=arc-20240605;
+        b=VBTNilC4LipO4JmXaRaupsoJ8O4ry3LJ48ynE3DryX3w67F/KRFkY8HKJIH6K8Pc1L
+         uRNeAYuiZa72leKAFIOdj7gIRm3BZJ37Za77+T3BweKrhgYIqPdvZS3KW+GPbb11srHM
+         6/9YD41mc+4BHiZfDET3EhDuLM43JS0Nr0tswomMFNtDq15EOEZH6NNfpuPfjIz0hDAa
+         nF1T5OLwXrJXdbdX68PtwpRWXYUG5UkKtqjNZ+nj87cykM3QwrkNTHp682Bw6cU/lsmr
+         GCiGuA9Pc+TJHCNh5c7fSY0rt/lPVAbBahhlGw7lr/tWhaOK+YN+5F2mSbuy2wK5sdoD
+         AYUA==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com; s=arc-20240605;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:dkim-signature;
+        bh=XP+5mGhuqYWyS6t2C4j6lLBTd4uy1YHWUAOZS/b8nWU=;
+        fh=uA360uvxR9S0K/Y4Lovo7aIaGlBwzVBnnb2BKWupr/4=;
+        b=O+Z9CssSDRZ/fFeeQWigZ3CCFdkbXDRJBQdCeWui2oqNN+N7iekuOPJ4RBsNbIhtGf
+         5yL1sUkfLHbWyUWIt7Oqilr/m9w7/rOlWmoLQbrpKqdy7x0LK7Z2zuZ94OAKOByPGWbF
+         xGH4+aqMCKksYuMGfxA5HhNpyENpdp9e9/d/ZyyzYswfcwjmS08VQMbcrb+SI7oGgQ0o
+         xuCS+IUsdGbnzKLcIK++vNCaP7gj3f6k4xCLcdE7hPsT4gidhUW1txy6rmQxLppWtslb
+         cgmzGLGXwubWnSxyQKOlJO4VJ83L7bU8xwOMDaR3kzVgim1u/MieRgl+nXratACLWfFm
+         64tA==;
+        darn=lists.linux.dev
+ARC-Authentication-Results: i=1; mx.google.com; arc=none
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20251104; t=1780204706; x=1780809506; darn=lists.linux.dev;
-        h=in-reply-to:references:to:from:subject:cc:message-id:date
-         :content-transfer-encoding:mime-version:from:to:cc:subject:date
+        d=google.com; s=20251104; t=1780216805; x=1780821605; darn=lists.linux.dev;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:from:to:cc:subject:date
          :message-id:reply-to;
-        bh=rGAALg4v24MIG6iZqmmf3RK/ZE7OvwF38ejvXCVftvA=;
-        b=XfgqtLRmCH6kYGrcvuY60QGzaAs+1q3CXiDY5Thv7Shkm8TmWlQCHsPtPs2DK1/u5Q
-         TIsnwUFkhRn2wxzOKYQWppvijK29odWoj2uRVE0wrbtFn/sjAZ76x2Yzf6vAdEcvIIcn
-         HYpxD0OxwvIC+RgMJ/yhGOEHjLCNXN9ddeBlcabLc9tVwgXl31LjlhcmpwByniqJ/1md
-         CwBxxoWOXAzLMu4kUW6PegTrw2aR3oF/hkCICUUqad7DecnhPxax9wMqkP9Lew+IkmeG
-         clLJn8DhRUCuH0RpJ6rutHjlAkd34bUVQGFZt3vCR+9Pecm825uf8Cx+fcRN2L3T1K9x
-         Kkwg==
+        bh=XP+5mGhuqYWyS6t2C4j6lLBTd4uy1YHWUAOZS/b8nWU=;
+        b=bBLSA+8vmwPMYoLLx1SvrYCoPXJuUC+laOQyd9NgWvSTpt15pgias8dv1SF9Jtbiw3
+         5MQ2CqN+QWgFMx1GVzdz7hnFY4q3oaBzKlKlY1EnvdvooLOXEeTZcH5UA+rNljYLxl70
+         pTVGsNRtWLFtZRRWn27vH7qdHQ719h4AMX7H1dVOyEpMCrt6uYVIoc+i6raCNpPbU7X9
+         cAMrqpFdScip9bahr6xcdn2tK5ZR+xWEUcru6njtxx8zY9ld1NXYzXRlgrg7kZgXEeT5
+         vUF6VtL3+c+kG/Vf9HZSad8AyigPD6h4xV2gCqPPXr2CBoiDRFJt0gdm3whUKVimvxeV
+         CRHQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20251104; t=1780204706; x=1780809506;
-        h=in-reply-to:references:to:from:subject:cc:message-id:date
-         :content-transfer-encoding:mime-version:x-gm-gg:x-gm-message-state
-         :from:to:cc:subject:date:message-id:reply-to;
-        bh=rGAALg4v24MIG6iZqmmf3RK/ZE7OvwF38ejvXCVftvA=;
-        b=GizVq1Ur2OJxO9cILRrEO5Ywzs/FLfY8jPDl3F65cQsWJAruWdvAQfKUy9lx5KlKGD
-         l29GdHawaAd75giYft6O1gFphpbqh7GE4HgkAMpZIpJH5aPALfIh97AhaTi6adJiYffL
-         e1I3RsCHZgPx91YoQlW4t8WngBzega6MLbOewoM7Fl6n8DMcwJXFgiS8xWmsBkeKzxxp
-         DejM0yo7VwVQqWPIoxJOz7kg5+356JqhEGBur9Fc9o9j6y+TaNZ3+qQ0pUPnF92qTprD
-         O3hSezZFsV/WXUm4neMpRiCCP3J/k/M3oTABwcI1RD52DwI0owQetjcmD7KVHYcDp/Kl
-         E+Eg==
-X-Gm-Message-State: AOJu0YwrWI0kFbPcYcrPG/7dUhJlb20kZdOw0SLAPJV27/0L2X3op4An
-	JLXBbwi7kl78fegVXZsiGAfp36/2rx8uNdAHqN3ISg09jBPM9c7dil38xVC6Fw==
-X-Gm-Gg: Acq92OEu4ievMx7+3a2eWo0Eg5RGLTQl/hpJ6U031gjATvLCRqng/WCZ85keMCTXFM+
-	t+Tx9bx69EC0SCMxHy6u9Nbwc9qoXh3fdJpQyFaLO0Wx9wygrucj/L7vSu6AQRJv6jPdbMZVP1p
-	8GyBDoXKQbmEj5QC9Mnge+bt7LyoJSeUJX9YA6PYijbPEAR1Lddiff4DxBlNaWGjc9KWQlgVOfZ
-	M8U9NaFjBz5LWDlleMaVKWyN7NyEU+fGhzir/B9V6aubFVc/JS5MeWzKQvgU/Zpmc6EDlxM9OxA
-	w8xzKp4F+DPRD1Nhc6ZrhJzBdWPei/axV7vIns5dAfQzIcFz8pXsWgvfKMGpjOxgLzT1zz5VLk5
-	r00GPbuuAGVdFoov/4ue4ZB9SfMKw7fPLOBwZErSD8V1xdWBmcAh21jblFhvhcJcaB/o9FywTMH
-	G5rRY53HsYN/qWmePFcZHmwF4mvaqDHwOq6lAm4weXweMxR9O/DSInBQGot98le6PflVifBUS73
-	MmMnWhoGPEeioNZkpKJ54bFXkMz5ogaSlfg
-X-Received: by 2002:a05:6808:690c:b0:485:a8c5:de75 with SMTP id 5614622812f47-485fb49e60dmr2945735b6e.33.1780204706378;
-        Sat, 30 May 2026 22:18:26 -0700 (PDT)
-Received: from localhost ([2a03:2880:10ff:3::])
-        by smtp.gmail.com with ESMTPSA id 5614622812f47-48606166072sm2087506b6e.11.2026.05.30.22.18.23
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Sat, 30 May 2026 22:18:24 -0700 (PDT)
+        d=1e100.net; s=20251104; t=1780216805; x=1780821605;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:x-gm-gg:x-gm-message-state:from
+         :to:cc:subject:date:message-id:reply-to;
+        bh=XP+5mGhuqYWyS6t2C4j6lLBTd4uy1YHWUAOZS/b8nWU=;
+        b=IBAMceOiwcVF848oLw36z4y3xX3m0b/W1hUedJ4RT0HV9809iM29VqMbMqZz3h8qnT
+         G77Cjw1HxWscu5MX7ZykSLWJp33kSWB8tpy/PuY/QNqaInhVR4l++dy0RT5T31JFJoa6
+         7O212waWVBIjXuUvjrrEIRdUvb01/jkaWUikNuc2v69o9KQGNHypxaQjqQuFc7jomdUv
+         wDhuiwBJh9dgZoHjFMk0qV6rEutC0xi1Le0ZgBNiUYQfNsSoLWU2bNZgPTmx56d/w74r
+         AITPxsUXDNMrPl5UIGMFuZiV3Wxuq1aIw4C82rnHcQcFMa+1uAvQZzneaWJZEuB8YhmX
+         2PLw==
+X-Gm-Message-State: AOJu0YxdhZpTRKIZWpO2wLkVwpEgGpC770KZOT74d8OT8uspYKyNFsdN
+	Lku+soGeKwA9IAx8tnIdNKsMr25QuzB/uJjw0T3fdsF6uC4tLfh/JJSaI3tHUDaY/i3sxAYSBFH
+	2gZ9wLoM8uCBRHrol5/OKPwM3KaY7M2oLi+zhEsYP4kTI3qOPCefbI83FWNj6hw==
+X-Gm-Gg: Acq92OGayPKlPqwIYatIaSwjNmOymBMkyIzaOeW5G6afC35VmTh9b7RCJ+qllLMou6u
+	658FS5ox2huBg4/CWnN7pUy6vzUtEksEscupE0QHVopqy825Uj5Mrn3Ym301gLWbeVWHQA/mLqZ
+	79K3FIAmLU6zLCfjA358mrVs+yVxpafQ8jLOCJGj6up9uVVxOSlEzvaBNkhQssflS0A1O9LtZBm
+	V89NuR/yTUzrJ4RjC2QBm2Iv80iEEzrrtkSn2fYjR8K1vct/rtndDLpN6RKXGnXkJjLtUlXjl/L
+	e+j70laiAmyQsM/WXlnZ+rWoV6utFlPWf2m/jXhPwN/V0gFiAkGkbqPb+jvsaOA5
+X-Received: by 2002:a05:622a:602f:b0:516:3f51:81cb with SMTP id
+ d75a77b69052e-5173c7c62admr9973511cf.13.1780216804875; Sun, 31 May 2026
+ 01:40:04 -0700 (PDT)
 Precedence: bulk
 X-Mailing-List: sashiko-reviews@lists.linux.dev
 List-Id: <sashiko-reviews.lists.linux.dev>
 List-Subscribe: <mailto:sashiko-reviews+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:sashiko-reviews+unsubscribe@lists.linux.dev>
-Mime-Version: 1.0
+MIME-Version: 1.0
+References: <20260531075600.4058207-3-yuyanghuang@google.com> <20260531081909.B43831F00893@smtp.kernel.org>
+In-Reply-To: <20260531081909.B43831F00893@smtp.kernel.org>
+From: Yuyang Huang <yuyanghuang@google.com>
+Date: Sun, 31 May 2026 16:39:28 +0800
+X-Gm-Features: AVHnY4KD0paNIVBC9uNyVFvRzOcbfSBNa0NzD8UXl-UeIELrmKSNma308t-9CmA
+Message-ID: <CADXeF1GFXkh9bRPN1xs=OqVbg3pQpkh8p-aChjHsR3sNVrjPTg@mail.gmail.com>
+Subject: Re: [PATCH bpf-next v3 2/2] selftests/bpf: add verification for
+ BPF_PROG_QUERY attr size boundaries
+To: sashiko-reviews@lists.linux.dev
+Cc: bpf@vger.kernel.org
+Content-Type: text/plain; charset="UTF-8"
 Content-Transfer-Encoding: quoted-printable
-Content-Type: text/plain; charset=UTF-8
-Date: Sat, 30 May 2026 22:18:23 -0700
-Message-Id: <DIWLWEKAUX29.3HJP2JO064JLR@gmail.com>
-Cc: <bpf@vger.kernel.org>
-Subject: Re: [PATCH bpf-next v2 4/5] selftests/bpf: Remove __arg_arena from
- the codebase
-From: "Alexei Starovoitov" <alexei.starovoitov@gmail.com>
-To: <sashiko-reviews@lists.linux.dev>, "Emil Tsalapatis"
- <emil@etsalapatis.com>
-X-Mailer: aerc
-References: <20260530002259.4505-5-emil@etsalapatis.com>
- <20260530050310.113761F00893@smtp.kernel.org>
-In-Reply-To: <20260530050310.113761F00893@smtp.kernel.org>
 
-On Fri May 29, 2026 at 10:03 PM PDT, sashiko-bot wrote:
-> Thank you for your contribution! Sashiko AI review found 1 potential issu=
-e(s) to consider:
-> - [Low] Incomplete removal of `__arg_arena` annotation
-> --
+On Sun, May 31, 2026 at 4:19=E2=80=AFPM <sashiko-bot@kernel.org> wrote:
+> [Severity: High]
+> This is a pre-existing issue, but while this test checks if the revision
+> field respects the buffer size limit, do the other fields actually respec=
+t
+> these boundaries?
 >
-> commit 936642e9509313ae2959c6a3c4255651cca7040f
-> Author: Emil Tsalapatis <emil@etsalapatis.com>
+> Looking at the BPF_PROG_QUERY command handlers, they appear to unconditio=
+nally
+> write to output fields without verifying if uattr_size is large enough to
+> contain them, which could cause out-of-bounds writes in user space memory=
+.
 >
-> selftests/bpf: Remove __arg_arena from the codebase
+> For example, in kernel/bpf/cgroup.c:__cgroup_bpf_query():
 >
-> This commit removes the __arg_arena annotation from the codebase because
-> it has been subsumed by the __arena BTF type tag. The typedefs previously
-> used to minimize __arena annotations are removed, and the pointer types
-> are directly annotated when declaring variables instead.
+>     if (copy_to_user(&uattr->query.attach_flags, &flags, sizeof(flags)))
+>             return -EFAULT;
+>     if (copy_to_user(&uattr->query.prog_cnt, &total_cnt, sizeof(total_cnt=
+)))
+>             return -EFAULT;
 >
->> diff --git a/tools/testing/selftests/bpf/bpf_arena_htab.h b/tools/testin=
-g/selftests/bpf/bpf_arena_htab.h
->> index acc01a876668e..eb80d67c38708 100644
->> --- a/tools/testing/selftests/bpf/bpf_arena_htab.h
->> +++ b/tools/testing/selftests/bpf/bpf_arena_htab.h
->
-> [ ... ]
->
->> @@ -53,7 +52,7 @@ static int htab_hash(int key)
->>  	return key;
->>  }
->> =20
->> -__weak int htab_lookup_elem(htab_t *htab __arg_arena, int key)
->> +__weak int htab_lookup_elem(struct htab __arena *htab __arg_arena, int =
-key)
->
-> [Severity: Low]
-> Is the __arg_arena annotation incorrectly retained here? The commit
-> message mentions removing __arg_arena from the codebase, but it seems to
-> still be present in the signature of htab_lookup_elem().
+> These writes happen unconditionally regardless of the size passed.
 
-Spotted this manually as well.
+attach_flags and prog_cnt should already have been present when
+BPF_PROG_QUERY was introduced, so those places don't seem to have
+backward compatibility issues.
+
+>
+> Furthermore, in kernel/bpf/syscall.c:bpf_prog_query(), the central
+> dispatcher drops the uattr_size parameter entirely for almost all backend
+> handlers:
+>
+>     case BPF_LIRC_MODE2:
+>             return lirc_prog_query(attr, uattr);
+>     case BPF_FLOW_DISSECTOR:
+>     case BPF_SK_LOOKUP:
+>             return netns_bpf_prog_query(attr, uattr);
+>
+> This means backends like bpf_mprog_query(), __netns_bpf_prog_query(), and
+> sock_map_bpf_prog_query() never even receive uattr_size and unconditional=
+ly
+> call copy_to_user() on fields like attach_flags, prog_cnt, and count.
+>
+> If a user application calls bpf(BPF_PROG_QUERY, &attr, 4), which is only
+> large enough for target_fd, would the kernel proceed to write multiple va=
+lues
+> past the end of the user's buffer, silently corrupting the process's stac=
+k
+> or heap?
+
+Per the discussion in the previous review thread, the fix should be
+minimal and limited to __cgroup_bpf_query only.
