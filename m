@@ -1,80 +1,244 @@
-Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
+Received: from mout-p-102.mailbox.org (mout-p-102.mailbox.org [80.241.56.152])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5FCF4372B50
-	for <sashiko-reviews@lists.linux.dev>; Mon,  1 Jun 2026 13:12:28 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 46B6133B97A
+	for <sashiko-reviews@lists.linux.dev>; Mon,  1 Jun 2026 13:14:12 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=80.241.56.152
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1780319549; cv=none; b=mdVRuarj6iLML59fi2ovkl2Rlf9zAVXmzB2MZ4m5+AS8Ekb0C9xH61L+FkyCYm+LSNMqEPG3y5/gHqCILi22F97OCfExj+XUsOQqGR+0h87ImppBd53qcq4onqgXEYAnjY/5+KTxPHAvMXXeccqb1jmG/XNsSPX8eUzXJEDKcPc=
+	t=1780319653; cv=none; b=VNpWd27kFQqd36LbabCG+1n4ANykB3sZfquTbRDRJj/PqsheiEuglxADXVBtNPaEXV5peFOG/ksO/Va1Lvgmg0cVPVRRI2cg2TvycfhQjdvgc54TkCnv8md/KsJ2DPNmmM/9MMKAF9aD9KU+x4YVmdWoiTHVw1cIM5vDCswqLCc=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1780319549; c=relaxed/simple;
-	bh=5dVk1Lp5I+yruMPgh3E179DUkAyiEJxxLJrxFhHEQ5I=;
-	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
-	 To:Cc:Content-Type; b=Erx/Y154f8HX7iX0XGLMXukGuMCejdL3zDlhMNt04ZwpRUOS2+m/s6gwgunQbhdRzXUMCfywsYGafHLM8eecx46IeJMNTorefe+RKmzMsLmaEhmDMg7SgfZ7E6SamNIjV04Zml4QT9Oj1TJ8UEvqR5cYf+LIAf/34mKmEAVkln8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=dvOJbbaA; arc=none smtp.client-ip=100.103.45.18
+	s=arc-20240116; t=1780319653; c=relaxed/simple;
+	bh=kWYr/sGOlkYaP/IlGre85FljeKIYxmCT+ALZVyn3QeA=;
+	h=Message-ID:Subject:From:To:Cc:Date:In-Reply-To:References:
+	 Content-Type:MIME-Version; b=RbeJ2nB5weD/th7pkkf33Uo53+yE42hkOCftfqa13jk61g+ooYp25r4TiVec368agSGW17vy1UeOOv9+4u6al+Pp41HA4tAJ+YFr4IKntYKTs0VEUipL7pxl4fNrqla92CNBmiXvHp5jIwaes+ocNMzMBnH0KFppEo19JBNGXQ8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=mailbox.org; spf=pass smtp.mailfrom=mailbox.org; dkim=pass (2048-bit key) header.d=mailbox.org header.i=@mailbox.org header.b=W3Rs9bQd; arc=none smtp.client-ip=80.241.56.152
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=mailbox.org
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=mailbox.org
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="dvOJbbaA"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 47AAD1F0089A
-	for <sashiko-reviews@lists.linux.dev>; Mon,  1 Jun 2026 13:12:28 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=kernel.org;
-	s=k20260515; t=1780319548;
-	bh=5dVk1Lp5I+yruMPgh3E179DUkAyiEJxxLJrxFhHEQ5I=;
-	h=References:In-Reply-To:From:Date:Subject:To:Cc;
-	b=dvOJbbaAttMoQQH1ju74EgrOZXYKxJM7u3oH1gYTD+UinAbKH7hQ5zqyJ7FvhPd3T
-	 ZTXH+OeOQ5Yb94JG5rcoqDzu//cEG6Jn0RgnlYvAB4EF90oHFFbnZH1D2nboJkQc0U
-	 Q6myDJ2DDbQ5tdMdldXm/dyNkCJkxmhX4akqWPbBX4qWrYGm/Rj+B/OQp5sIX5524v
-	 4JDd1XUq0G4mhlisLpHkLquMbzbTAs0mdJtR9KoL4EpuIk2ZYpUne8NQZmr0HQL0LZ
-	 xQU23X+bgNo4+sUphah9njD3jEecGCLjIWjJ6oifrKvoQoaPhW8oJlBwm9zXsHf+GD
-	 wlF2h6Ghxit6Q==
-Received: by mail-lj1-f175.google.com with SMTP id 38308e7fff4ca-396779b9a7fso12205561fa.3
-        for <sashiko-reviews@lists.linux.dev>; Mon, 01 Jun 2026 06:12:28 -0700 (PDT)
-X-Gm-Message-State: AOJu0Yy10dMZZU6pKSX70HQg++V/Vgzf09jAhg5H3Vwf2rFh6FlCmwaR
-	o+VxwUTOk2ZC3WlMXEoUHjo2BFbt3t1HiDNJhRt3DTH7nxi1AKbeVjXemKz5HvlMRiPQcof74r4
-	DUWk4D/g87nCgneAlNDw6BSLIbx2zOfM=
-X-Received: by 2002:a05:6512:1504:10b0:5aa:6301:846b with SMTP id
- 2adb3069b0e04-5aa73e054b7mr19003e87.5.1780319547052; Mon, 01 Jun 2026
- 06:12:27 -0700 (PDT)
+	dkim=pass (2048-bit key) header.d=mailbox.org header.i=@mailbox.org header.b="W3Rs9bQd"
+Received: from smtp202.mailbox.org (smtp202.mailbox.org [10.196.197.202])
+	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+	 key-exchange X25519 server-signature RSA-PSS (4096 bits) server-digest SHA256)
+	(No client certificate requested)
+	by mout-p-102.mailbox.org (Postfix) with ESMTPS id 4gTZDK2kNZz9v4J;
+	Mon,  1 Jun 2026 15:14:09 +0200 (CEST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=mailbox.org; s=mail20150812;
+	t=1780319649; h=from:from:reply-to:reply-to:subject:subject:date:date:
+	 message-id:message-id:to:to:cc:cc:mime-version:mime-version:
+	 content-type:content-type:
+	 content-transfer-encoding:content-transfer-encoding:
+	 in-reply-to:in-reply-to:references:references;
+	bh=vjq3QYgmmGW0ARK3lBSeF5oGty5b95jocBxlOKmuats=;
+	b=W3Rs9bQd/XTXflkXGpzTyAkCMyvpu0cygl35d5gsPDoLZ0kPMW20/I+Fw+CGoMAxv2MZlO
+	vIj4bJJKT4MB8gPs8D7aVfSkGdZgQkualRnBkCoxOUjn5VR+B7t8GUN1Q2taNea1CuK2Vi
+	i6NB5HFq41ZBGk1vv45SCaKScOq8v8u0wip8jmPt1xyfAI3FcK9ZZrTbHB6jMsFJP2CSjd
+	71/tM/EvZyj5w6JXD6ZGkzbP6wXvda9q9DQnsk+PI/Drkxx6iOsWjeePiRf+2l+ueVDqyW
+	tcQny9hztsXLWJn1tofa3O+IBhZWRYkqgpJSYm4Hgk9hUwm+jyRiRtpXzD+1gw==
+Message-ID: <24ef07ed85d9e7aa7f9d3a96301c4c15bc0f2315.camel@mailbox.org>
+Subject: Re: [PATCH 3/4] rust: Add dma_fence abstractions
+From: Philipp Stanner <phasta@mailbox.org>
+Reply-To: phasta@kernel.org
+To: Alice Ryhl <aliceryhl@google.com>, phasta@kernel.org
+Cc: sashiko-reviews@lists.linux.dev, linux-media@vger.kernel.org, 
+	ojeda@kernel.org, Boris Brezillon <boris.brezillon@collabora.com>
+Date: Mon, 01 Jun 2026 15:14:05 +0200
+In-Reply-To: <CAH5fLggvxGwJkAp+VqG7pA-e2zM-T8_DR0DeCiZiJyM+o51DuQ@mail.gmail.com>
+References: <20260530143541.229628-5-phasta@kernel.org>
+	 <20260530150622.393FC1F00893@smtp.kernel.org> <ah1c3NSU-4UkdUhb@google.com>
+	 <a3d09b270e6effb6f2bfb5d7ba8de48e3c2c4081.camel@mailbox.org>
+	 <CAH5fLggvxGwJkAp+VqG7pA-e2zM-T8_DR0DeCiZiJyM+o51DuQ@mail.gmail.com>
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 Precedence: bulk
 X-Mailing-List: sashiko-reviews@lists.linux.dev
 List-Id: <sashiko-reviews.lists.linux.dev>
 List-Subscribe: <mailto:sashiko-reviews+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:sashiko-reviews+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-References: <20260526-ks8995-to-ksz8-v3-5-c530f651989f@kernel.org>
- <20260530004902.BCC381F00898@smtp.kernel.org> <CAD++jLmZoGh+o5YKfjoUCWhwiRaO+Lm-9DFUdUzd9KpydWK27g@mail.gmail.com>
- <69dfe2a0-ce0f-4a92-98b5-c4cefd30ce49@redhat.com>
-In-Reply-To: <69dfe2a0-ce0f-4a92-98b5-c4cefd30ce49@redhat.com>
-From: Linus Walleij <linusw@kernel.org>
-Date: Mon, 1 Jun 2026 15:12:14 +0200
-X-Gmail-Original-Message-ID: <CAD++jLnZ1h4MpDEZn5FzX7yzGLYGCpt794zNf0OXQmgKnFPWew@mail.gmail.com>
-X-Gm-Features: AVHnY4LUshpVi1FlOnwrP2XEg9PLFn_Xmy8Mug-mvKbshLCGNkUUq8U-oquV09w
-Message-ID: <CAD++jLnZ1h4MpDEZn5FzX7yzGLYGCpt794zNf0OXQmgKnFPWew@mail.gmail.com>
-Subject: Re: [PATCH net-next v3 5/5] net: dsa: ks8995: Delete surplus driver
-To: Paolo Abeni <pabeni@redhat.com>
-Cc: sashiko-reviews@lists.linux.dev, devicetree@vger.kernel.org, 
-	conor+dt@kernel.org, robh@kernel.org
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
+X-MBO-RS-META: 8hdtzsz1s1i1ubgfi9hbuz1octpwn1co
+X-MBO-RS-ID: a47d8c8860d6ee95f43
 
-On Mon, Jun 1, 2026 at 12:41=E2=80=AFPM Paolo Abeni <pabeni@redhat.com> wro=
-te:
-> On 6/1/26 10:09 AM, Linus Walleij wrote:
-> > On Sat, May 30, 2026 at 2:49=E2=80=AFAM <sashiko-bot@kernel.org> wrote:
++Cc Boris
 
-> >> - [Medium] Silent loss of switch driver functionality on kernel upgrad=
-e due to missing Kconfig migration.
-> >
-> > No-one cares.
->
-> Uhm... I have quite mixed opinion WRT to the above points as try to
-> avoid breaking users in any way. I'd love to ear a 2nd opinion from the
-> DSA crew.
+On Mon, 2026-06-01 at 14:55 +0200, Alice Ryhl wrote:
+> On Mon, Jun 1, 2026 at 2:34=E2=80=AFPM Philipp Stanner <phasta@mailbox.or=
+g> wrote:
+> >=20
+> > On Mon, 2026-06-01 at 10:20 +0000, Alice Ryhl wrote:
+> > > On Sat, May 30, 2026 at 03:06:21PM +0000, sashiko-bot@kernel.org=C2=
+=A0wrote:
+> > > > > +impl<F: Send + Sync, C: Send + Sync> DriverFence<F, C> {
+> > > > > +=C2=A0=C2=A0=C2=A0 fn as_raw(&self) -> *mut bindings::dma_fence =
+{
+> > > > > +=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 // SAFETY: Valid beca=
+use `self` is valid.
+> > > > > +=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 let fence_data =3D un=
+safe { &mut *self.data.as_ptr() };
+> > > >=20
+> > > > [Severity: High]
+> > > > Does this create an exclusive mutable reference to actively shared =
+memory?
+> > > >=20
+> > > > DriverFenceData can be accessed concurrently by other threads holdi=
+ng Fence
+> > > > references (for instance, when checking if the fence is signaled). =
+Creating
+> > > > a mutable reference (&mut) in Rust asserts exclusive access and vio=
+lates
+> > > > aliasing rules, which allows the compiler to make invalid optimizat=
+ion
+> > > > assumptions.
+> > > >=20
+> > > > Could this use an immutable reference &*self.data.as_ptr() instead?
+> > >=20
+> > > Yes, please use an immutable reference here.
+> > >=20
+> > > > > +
+> > > > > +=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 fence_data.inner.inne=
+r.get()
+> > > > > +=C2=A0=C2=A0=C2=A0 }
+> > > >=20
+> > > > [ ... ]
+> > > >=20
+> > > > > +impl<F: Send + Sync, C: Send + Sync> DriverFenceBorrow<F, C> {
+> > > > > +=C2=A0=C2=A0=C2=A0 fn as_raw(&self) -> *mut bindings::dma_fence =
+{
+> > > > > +=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 // SAFETY: Valid beca=
+use `self` is valid.
+> > > > > +=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 let fence_data =3D un=
+safe { &mut *self.data.as_ptr() };
+> > > >=20
+> > > > [Severity: High]
+> > > > Similar to DriverFence::as_raw(), does this also incorrectly create=
+ a
+> > > > mutable reference to shared data?
+> > >=20
+> > > Here as well.
+> >=20
+> > `data` is not shared. By design there is only ever one DriverFence, and
+> > the driver's data (`data.data`) is `Sync`.
+> >=20
+> > But I guess an immutable one should do the trick, too.
+>=20
+> There's only one DriverFence, but I can perform shared access to that
+> one DriverFence from two threads in parallel. You made the type Sync,
+> and this is what you are allowing when you do so.
 
-OK then, I can be less cowboy-coding and try to play it nice.
+Nope, DriverFence is just Send, not Sync.
 
-Would a phase-over Kconfig option making
-CONFIG_NET_DSA_KS8995 just select NET_DSA_MICROCHIP_KSZ_SPI
-cut it? (Sashiko suggest this I think.)
+data.data is Sync, but `data` in the code above is not the actual user
+data, but the memory backing it up.
 
-Yours,
-Linus Walleij
+>=20
+> > > > > +=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=
+=A0=C2=A0=C2=A0=C2=A0=C2=A0 bindings::dma_fence_signal_locked(fence);
+> > > > > +=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=
+=A0 }
+> > > > > +=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=
+=A0 bindings::dma_fence_unlock_irqrestore(fence, flag_ptr);
+> > > > > +=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 }
+> > > > > +
+> > > > > +=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 // SAFETY: `self.data=
+` is owned by the DriverFence, but could be accessed
+> > > > > +=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 // through some dma_f=
+ence callbacks right now. Access is being revoked
+> > > > > +=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 // above by signallin=
+g the fence. The DriverFenceAllowedData trait
+> > > > > +=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 // ensures that the d=
+ata either does not need drop, or if it does it
+> > > > > +=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 // lives in a RcuBox =
+which will delay dropping by one grace period, hence
+> > > > > +=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 // ensuring that all =
+readers have disappeared.
+> > > > > +=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 unsafe { drop_in_plac=
+e(self.data.as_ptr()) };
+> > > >=20
+> > > > [Severity: Critical]
+> > > > Could this eagerly drop FenceCtx and user data before the C dma_fen=
+ce
+> > > > refcount reaches 0?
+> > > >=20
+> > > > The C dma_fence object can remain alive as long as consumers (like =
+sync_file
+> > > > or the GPU scheduler) hold references to it. If the backend later i=
+nvokes
+> > > > callbacks like ops->get_driver_name(), FenceCtx::get_driver_name() =
+would
+> > > > attempt to read fctx.driver_name from the already-dropped FenceCtx:
+> > > >=20
+> > > > FenceCtx::get_driver_name() {
+> > > > =C2=A0=C2=A0=C2=A0 ...
+> > > > =C2=A0=C2=A0=C2=A0 fctx.driver_name.as_char_ptr()
+> > > > }
+> > > >=20
+> > > > Can this result in a use-after-free?
+> > >=20
+> > > Hmm, I don't know about what sahisko said, but I don't think this is =
+the
+> > > right way to do rcu freeing. I think the type's destructor should be
+> > > reserved for cases where the value becomes immediately unusable.
+> >=20
+> > We could guard the strings with RcuBox, but we could not then guard the
+> > FenceCtx code against code UAF if we don't have the rcu_barrier().
+> >=20
+> > Or could we?
+> >=20
+> > If a rust module unloads, module::remove() should contain an
+> > rcu_barrier() (right??). Would that be enough to guard against the
+> > FenceCtx code being unloaded?
+> >=20
+> > >=20
+> > > For example, let's say I'm using RcuBox<_> here. Yes, the data you ge=
+t
+> > > from dereferencing the RcuBox will stay alive for a grace period, but
+> > > IMO once you run the destructor of the box itself, the *pointer* beco=
+mes
+> > > immediately unusable.
+> >=20
+> > I don't know why you're stressing the pointer?
+> >=20
+> > The trick above is simply that drop / dealloc *and* code unloading is
+> > delayed by a grace period.
+>=20
+> Sorry let me try to rephrase. I'm not worried about the stuff behind
+> the pointer. After all, you're using RcuBox to protect that stuff.
+> What I'm worried about is the pointer itself. You invoked
+> drop_in_place() on the pointer to the fence context,
+>=20
+
+on the pointer to DriverFenceData, which contains a refcount to the
+FenceCtx, which might then want to drop.
+
+>  so even though
+> the fence context may be valid for another grace period, the *pointer*
+> to the fence context is not. The pointer could have been zeroed by the
+> destructor.
+
+That particular pointer to the DriverFenceData could have been zeroed.
+But potential other accessors have already crafted themselves a new
+pointer to the, by the power of RCU, still valid data. That new pointer
+is container-of-ed from struct dma_fence *f.
+
+>=20
+> Actually maybe I am worried about the strings too. Let's say that one
+> thread does:
+>=20
+> rcu_read_lock()
+> get_driver_name()
+> // .. read the driver name
+> rcu_read_unlock()
+>=20
+> and another thread signals the fence. If there are no queued
+> call_rcu() callbacks right now, then the rcu_barrier() could be a
+> no-op and the rcu reader will UAF on the driver name. It looks like
+> you need synchronize_rcu() rather than rcu_barrier() here?
+
+It would seem to me that you are right.
+
+Boris, do you have an opinion on that?
+
+
+P.
+
+>=20
+> Alice
