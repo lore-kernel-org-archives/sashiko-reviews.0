@@ -1,46 +1,46 @@
 Received: from www62.your-server.de (www62.your-server.de [213.133.104.62])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 39CCE347505;
-	Mon,  1 Jun 2026 11:00:37 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C7F00331220;
+	Mon,  1 Jun 2026 12:31:41 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=213.133.104.62
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1780311640; cv=none; b=Oi2AH2PAir5u1Qg33QEne/Uu29yBt5bqFUlFdgA/4OQNYDbW9/C9rVz4v0aU6LA+TCOyCTqP4weaDdH/xZSVH88n0yW9I4cG4h/JUByBp3tk4+zDfJ8yBdcQ1XP2263PalOaj7gRFJOpDWArozdqUvJNK+V0Er0fUJJufz6V5Y4=
+	t=1780317104; cv=none; b=GiPUik5JgAGi8l/bqmzszpxW6KmzM9keWqzNCSgrsikVQ1yIJ6mWpOJcY2+ej6tkwujpHIEo68oLdzwE6WYW884T8twACe95QebyiN9higN1frlEm+WSLHUc9V9sW/nKC1Nhj7EbGuYncTtVXwqB9BosGfbtv8aVQQbheNDOTHo=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1780311640; c=relaxed/simple;
-	bh=X1XcqtFrih2Zgl/Bw1ZS5hLgbstTkN1DA3NqJ3kpSKY=;
-	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=dolwVHePUMkHqI0i5sRX+gpjkC2yOljpqdPCQ3q+98cbmCxx/F2XXO8ga5Z6/C9MaBoxJ5aJIC5UezmshT1F1M9pH0e3tvm1eKlU0iuAL02PL9wjrNrMl2fOD/z0oQmqXKUgrJHq7CwFGy3onXSITyiXzIaDFf8WzgttJdtp2GA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=iogearbox.net; spf=pass smtp.mailfrom=iogearbox.net; dkim=pass (2048-bit key) header.d=iogearbox.net header.i=@iogearbox.net header.b=OGiXpizB; arc=none smtp.client-ip=213.133.104.62
+	s=arc-20240116; t=1780317104; c=relaxed/simple;
+	bh=9oXeyNlvXbSAvz0x7BAQcT428jFlkr1aUVlgoXmpc0c=;
+	h=Message-ID:Date:MIME-Version:Subject:From:To:Cc:References:
+	 In-Reply-To:Content-Type; b=RHP5c59///GV83FtAinAND6qTUFw7ztrjc92Ngo28VVeZj5/L9bI4CXA0oqAATPFe/ICXAPshzxm/BlNH8ZnGRrZYtGYG9okfV0e+zLv4+PpxI5fMBRrK/Oe31fr1AfZ2dvVrf2TO6HILz2qmSa70y1JPl6IcV2tuu2T8O9kYME=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=iogearbox.net; spf=pass smtp.mailfrom=iogearbox.net; dkim=pass (2048-bit key) header.d=iogearbox.net header.i=@iogearbox.net header.b=h5b5Rmdn; arc=none smtp.client-ip=213.133.104.62
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=iogearbox.net
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=iogearbox.net
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=iogearbox.net header.i=@iogearbox.net header.b="OGiXpizB"
+	dkim=pass (2048-bit key) header.d=iogearbox.net header.i=@iogearbox.net header.b="h5b5Rmdn"
 DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed;
 	d=iogearbox.net; s=default2302; h=Content-Transfer-Encoding:Content-Type:
-	In-Reply-To:From:References:Cc:To:Subject:MIME-Version:Date:Message-ID:Sender
+	In-Reply-To:References:Cc:To:From:Subject:MIME-Version:Date:Message-ID:Sender
 	:Reply-To:Content-ID:Content-Description:Resent-Date:Resent-From:
 	Resent-Sender:Resent-To:Resent-Cc:Resent-Message-ID;
-	bh=fA10LMv7v/7QX/vkv3tPqpIT8Ygu2ejvDq7oF4iHjk0=; b=OGiXpizBFVa7pyboJmf5A4fIhx
-	mlt1eRv8argaYI7kjABzQNxe/ufoVDs0eCGzEMANu2PKgvKdj3y7t9aT31EJw5zm7swnACPYjhFql
-	8rLRAZ/fCTP1tNQFEwZn3lwZMBqdtKrhD0Cry2BlboGcJ0veKE4mGH3voo1JBBF2UDNoVh0O0d09z
-	oDdaoqyUCoyT11HnU9Y6b84wrKBG68qfKO9CcB6bxZ8Zds2KP/1XAizLXBbnD7RUWqMyzr7Kytilh
-	7m/U3EKr9dJV8oHMEeBRFnsT0X9YLHM/+OeFEEUE2LmzK+o0/smjwlOo5P690WF3BRIucetwdwX4K
-	eEF4S/CA==;
-Received: from sslproxy01.your-server.de ([78.46.139.224])
+	bh=9oXeyNlvXbSAvz0x7BAQcT428jFlkr1aUVlgoXmpc0c=; b=h5b5Rmdnkd9xQGwGg9ELH1GJlJ
+	SFNbLu1joqTKkTQWxbABQreVZUGiL4uND+FhGIRJCbdijFUinTrWY5JdeF3JnO2g4MxZAz8NtwY9e
+	LRhNae0giBgLN0fE5uGtmxd3mIYzDmMGnEniy8TIQun+AFxdcZfHAN549T7RsqVGTLpWhUYokWxFF
+	edqLJXi7CIDKq+xxmxr98cO5EbfOLGkJBy+Is0eCyEbYXbsqNFkkiYJczYpcfml0lTB18BxwRFeqS
+	Ub5ONMMLJ5z814dRFwv5mk7tRghKE7FvEtWrail7bnwthj/XG14eAGaMKzWNNj+Nicao9BlECtRHJ
+	cNUctu3g==;
+Received: from sslproxy05.your-server.de ([78.46.172.2])
 	by www62.your-server.de with esmtpsa  (TLS1.3) tls TLS_AES_256_GCM_SHA384
 	(Exim 4.96.2)
 	(envelope-from <daniel@iogearbox.net>)
-	id 1wU0No-000B5x-1N;
-	Mon, 01 Jun 2026 13:00:36 +0200
+	id 1wU1nv-000MpZ-1Z;
+	Mon, 01 Jun 2026 14:31:39 +0200
 Received: from localhost ([127.0.0.1])
-	by sslproxy01.your-server.de with esmtpsa  (TLS1.3) tls TLS_AES_256_GCM_SHA384
+	by sslproxy05.your-server.de with esmtpsa  (TLS1.3) tls TLS_AES_256_GCM_SHA384
 	(Exim 4.96)
 	(envelope-from <daniel@iogearbox.net>)
-	id 1wU0No-000AN1-0z;
-	Mon, 01 Jun 2026 13:00:36 +0200
-Message-ID: <dbb2c9f7-4e1a-42d5-80ad-ffff93249391@iogearbox.net>
-Date: Mon, 1 Jun 2026 13:00:35 +0200
+	id 1wU1nu-000OSR-1Z;
+	Mon, 01 Jun 2026 14:31:39 +0200
+Message-ID: <5d3e4f39-1053-416d-8e3f-0a6997003912@iogearbox.net>
+Date: Mon, 1 Jun 2026 14:31:38 +0200
 Precedence: bulk
 X-Mailing-List: sashiko-reviews@lists.linux.dev
 List-Id: <sashiko-reviews.lists.linux.dev>
@@ -50,12 +50,13 @@ MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
 Subject: Re: [PATCH bpf-next 1/3] libbpf: Reject non-exclusive metadata maps
  in the signed loader
+From: Daniel Borkmann <daniel@iogearbox.net>
 To: sashiko-reviews@lists.linux.dev
 Cc: bpf@vger.kernel.org
 References: <20260601100307.386243-1-daniel@iogearbox.net>
  <20260601103206.23C691F00893@smtp.kernel.org>
+ <dbb2c9f7-4e1a-42d5-80ad-ffff93249391@iogearbox.net>
 Content-Language: en-US
-From: Daniel Borkmann <daniel@iogearbox.net>
 Autocrypt: addr=daniel@iogearbox.net; keydata=
  xsFNBGNAkI0BEADiPFmKwpD3+vG5nsOznvJgrxUPJhFE46hARXWYbCxLxpbf2nehmtgnYpAN
  2HY+OJmdspBntWzGX8lnXF6eFUYLOoQpugoJHbehn9c0Dcictj8tc28MGMzxh4aK02H99KA8
@@ -99,17 +100,20 @@ Autocrypt: addr=daniel@iogearbox.net; keydata=
  rUD9YI1Je/WifL/HbIubHCCdK8/N7rblgUrZJMG3W+7vAvZsOh/6VTZeP4wCe7Gs/cJhE2gI
  DmGcR+7rQvbFQC4zQxEjo8fNaTwjpzLM9NIp4vG9SDIqAm20MXzLBAeVkofixCsosUWUODxP
  owLbpg7pFRJGL9YyEHpS7MGPb3jSLzucMAFXgoI8rVqoq6si2sxr2l0VsNH5o3NgoAgJNIg=
-In-Reply-To: <20260601103206.23C691F00893@smtp.kernel.org>
+In-Reply-To: <dbb2c9f7-4e1a-42d5-80ad-ffff93249391@iogearbox.net>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 7bit
 X-Virus-Scanned: Clear (ClamAV 1.4.3/28018/Mon Jun  1 08:31:13 2026)
 
-On 6/1/26 12:32 PM, sashiko-bot@kernel.org wrote:
-> Thank you for your contribution! Sashiko AI review found 2 potential issue(s) to consider:
-> 
-> New issues:
-> - [Critical] The BPF map exclusivity feature (`excl_prog_sha`) can be bypassed via `ARRAY_OF_MAPS`, allowing a malicious BPF program to mutate a frozen exclusive metadata map and defeating the signed loader's TOCTOU defense.
-> 
-> Pre-existing issues:
-> - [High] Concurrent bpf_map_get_info_by_fd() calls on a frozen array map trigger an unprotected data race and undefined behavior due to overlapping memcpy().
-Will take a look into the new findings.
+On 6/1/26 1:00 PM, Daniel Borkmann wrote:
+> On 6/1/26 12:32 PM, sashiko-bot@kernel.org wrote:
+>> Thank you for your contribution! Sashiko AI review found 2 potential issue(s) to consider:
+>>
+>> New issues:
+>> - [Critical] The BPF map exclusivity feature (`excl_prog_sha`) can be bypassed via `ARRAY_OF_MAPS`, allowing a malicious BPF program to mutate a frozen exclusive metadata map and defeating the signed loader's TOCTOU defense.
+>>
+>> Pre-existing issues:
+>> - [High] Concurrent bpf_map_get_info_by_fd() calls on a frozen array map trigger an unprotected data race and undefined behavior due to overlapping memcpy().
+> Will take a look into the new findings.
+
+Both findings are reasonable, will expand in a v2 and also fix up the selftest.
