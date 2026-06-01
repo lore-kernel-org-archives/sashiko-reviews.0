@@ -1,227 +1,400 @@
-Received: from mgamail.intel.com (mgamail.intel.com [192.198.163.12])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-ej1-f41.google.com (mail-ej1-f41.google.com [209.85.218.41])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 54F2533EB1B
-	for <sashiko-reviews@lists.linux.dev>; Mon,  1 Jun 2026 09:42:24 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=192.198.163.12
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 783AD39934A
+	for <sashiko-reviews@lists.linux.dev>; Mon,  1 Jun 2026 10:01:15 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.218.41
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1780306945; cv=none; b=KaVPHVWTlgNUV3gdSyEE3ntvfzbs2gEkkQqXIa8i01hZlXp0QgQCMDfOpUPcSx+aLNP417a0JitByhhdmhGhikCnzrqkg8Z1fe8e+5YlMXb/WGeMiGw5q+XBmTEtziHh2uneLweF25NaOZq69SwEMmVgPPrzRuOZAzYXeWzE14o=
+	t=1780308085; cv=none; b=BKd6wPbXk2xirhiza6UvRXU0i6Hy1/NwdFeIDnS52sjlgqODbMzsaeMtQxq9aVi9TP1lYxzf0MKpr746zpg9xWRE8ohbM9/FngRf3oQzY29s72rtGjEGBaLVQsr0avvfs3oiUnNri5I9NVZoGpC6fX5brVIXVtTbSbpVvPWGCUs=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1780306945; c=relaxed/simple;
-	bh=R5f6OCTfY9/jkZvLviNOkJhnTj5TltiT4CMC981kjYE=;
-	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=Fn6MfQduhpyJLDtPRqBl9W5S96+BSgnb1J0RHkvo0Mp49EsEmpy+DRB40J8hKmCw9cENtH6MjRD5kI2rS2nOkcnE3W7qu3+n97tNI+7zvnz8cApTmgJ57Lc1eXmGbqMYvsgvIvcRiZtrhhpZZH+HjFgYSCb6gihJXKBS14PtB9o=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linux.intel.com; spf=pass smtp.mailfrom=linux.intel.com; dkim=pass (2048-bit key) header.d=intel.com header.i=@intel.com header.b=QX93AhUm; arc=none smtp.client-ip=192.198.163.12
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linux.intel.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linux.intel.com
+	s=arc-20240116; t=1780308085; c=relaxed/simple;
+	bh=sLxliPp5zhohhmGKsS/9Xw/bEz9HCOcd/Tqlp27CPmI=;
+	h=Mime-Version:Content-Type:Date:Message-Id:Subject:Cc:To:From:
+	 References:In-Reply-To; b=YU24eHnauhW+hv5ij+NRPfs9uWB81YeYaaKMuxXvhWEW5rxUtmwc6ez9AThtmgbcVPDPRNGGMmVh5bOLtumw+ZAD+NL3L0NJoEPCBDMPVsZZSGMVP00+ueYs30YPb9Qu00WdPjjvoTxzC9WyIX7wzqsOxuKYsuu9p7ZzQTBK79U=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=VGt8bff+; arc=none smtp.client-ip=209.85.218.41
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=intel.com header.i=@intel.com header.b="QX93AhUm"
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
-  d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
-  t=1780306944; x=1811842944;
-  h=message-id:date:mime-version:subject:to:cc:references:
-   from:in-reply-to:content-transfer-encoding;
-  bh=R5f6OCTfY9/jkZvLviNOkJhnTj5TltiT4CMC981kjYE=;
-  b=QX93AhUmE2nthFKDwqIaX5Ulm0SdHqR7fQ6NJT1o26R9zOL4/cvLCjmx
-   yK/SoBIH9a4sSVFI3xWW0w0KFfdMA46vnrFNQOCmNyHaiujtCMik+KZxS
-   LcYXJA+Nuvtav/E6JL1WdmthmTwqZCh+9b5o8dQTozucASWukjxE+NzIp
-   3GCQdTmsXsn1j6yQGATy86/nPrat5tVWsJGo/sjw0c5vv1IqCSoNvts+Y
-   PVLcGt6gK27FQaSnZQp8nrN1RvySFqJCWJIgxcFrx1NCqvlwTiFbOD4Uf
-   Q98v9lOlcPgYkCj4VjXRRQqSr7aeBBGZ70un4V+HARTzk9ojnexcOAXEJ
-   A==;
-X-CSE-ConnectionGUID: AX4U5oqJRdiTNbuLAYzyLg==
-X-CSE-MsgGUID: 7AdWI5ikTKmvHmudD48ohg==
-X-IronPort-AV: E=McAfee;i="6800,10657,11803"; a="84920720"
-X-IronPort-AV: E=Sophos;i="6.24,181,1774335600"; 
-   d="scan'208";a="84920720"
-Received: from fmviesa009.fm.intel.com ([10.60.135.149])
-  by fmvoesa106.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 01 Jun 2026 02:42:24 -0700
-X-CSE-ConnectionGUID: gB3Y8YujTGy/sUpdlGeaEw==
-X-CSE-MsgGUID: qJE8UUWUS+2+xjN09JGjug==
-X-ExtLoop1: 1
-X-IronPort-AV: E=Sophos;i="6.24,181,1774335600"; 
-   d="scan'208";a="237191132"
-Received: from dapengmi-mobl1.ccr.corp.intel.com (HELO [10.124.241.147]) ([10.124.241.147])
-  by fmviesa009-auth.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 01 Jun 2026 02:42:23 -0700
-Message-ID: <5c622426-78d3-40f8-a6a2-a14e7858cf24@linux.intel.com>
-Date: Mon, 1 Jun 2026 17:42:20 +0800
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="VGt8bff+"
+Received: by mail-ej1-f41.google.com with SMTP id a640c23a62f3a-bec2ddee9bbso210070866b.3
+        for <sashiko-reviews@lists.linux.dev>; Mon, 01 Jun 2026 03:01:15 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20251104; t=1780308074; x=1780912874; darn=lists.linux.dev;
+        h=in-reply-to:references:from:to:cc:subject:message-id:date
+         :content-transfer-encoding:mime-version:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=o6FJGnhtFwE5Wu7/ZVGGWeKvZozD1/mJDapo39GYeEk=;
+        b=VGt8bff+lRsdXLZzFSAbKf1KhFbxeoDkdN99RwI/3ilL0qO6y1vUmzd7shDATdgmBX
+         OPjOaz8LqLHhivI02H/zxZsqJgOprvH37ZAAtZsPMkdfAuM14bc5YeILhytaGwBHbboJ
+         O5atDwG1ZxY5gGY6kPhFOwAlZocWIskY0tRZ2q6VN+WEK1+YIy1rWM3ABbsvPt86N9oU
+         OfyoEV7OBDG4ep+e4DlCCJk2pDtSGlmV9GN5MfnHktC/e0TvimuynyNzsuSQWkN7alOb
+         uu3CgWMPeYblgH8yTkUDrHPyTOkAnMQH5TsMIFOb/yIjJzGjwiy+rrm0J9fOHridiL31
+         LWJA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20251104; t=1780308074; x=1780912874;
+        h=in-reply-to:references:from:to:cc:subject:message-id:date
+         :content-transfer-encoding:mime-version:x-gm-gg:x-gm-message-state
+         :from:to:cc:subject:date:message-id:reply-to;
+        bh=o6FJGnhtFwE5Wu7/ZVGGWeKvZozD1/mJDapo39GYeEk=;
+        b=hb6byAV+vXzOjMaE1jy9R+FQq3KCqVBEBNDT1JVe2O3B/nI8rSSteYZ6cM/n9wqTFs
+         pqPWKJb2iNwoqIU2QF/V2VfA/QCaVhqlLmsz9JLpPPWG5J7kFxsgewlHyqinBXrjSCCK
+         Vgx7WgP/ObJplIpZrDtC8578pigjX4DZ884agd8/pIJak+LRL/+eRHp9Dfv57kZeiruN
+         APdp3HfxtsMBCjb51O9A2PCW+nvOSQiNwST5x0Bd/YmADJJPoXOHT4E5hqEvvnrx68N7
+         jXR2mG2NxfkaW3+3L1f75kikyNHHDCa4+ZdnbhojUGG4+mt49uXFwiTvBMvm6GSOWK4O
+         nUmQ==
+X-Gm-Message-State: AOJu0YxDw9QuB02iFJX2IUW/Ax6pWvNDrvpCdAWISJ8NcM2ss9Fzzx+Q
+	Lweoz2xxHl9iJ3XXpmECLwJRBjMW6KvUP8nij7UWeMm8qAgHPR/XeDVX6LH6Jw==
+X-Gm-Gg: Acq92OG4MabSpngC2W9fiEMVGk9Yi0vjq9ksB46jNu5KCuO/n61p8KY9yH9Q+wHBdGb
+	u00PS6UuWl9+R/1Njr5mU8u6K7ckI0J3dwEICzZfpRzqLL9N4Zys48YTcP6SxRzcVT9EM4s2MG0
+	xcAK3w7WEvsgJOnStW57yyfyd5iz7eNKuz7Kt6aXBGXWRXuByRAIBMhUPb0hmRFq02GO4vTBz9L
+	JJHA4KEvvIZ7telKQ24KjX07NsVimBD1tQAbAYYTZ4z3KJGCsF5WnuKn3hPde6Qafl9I/ylTILA
+	S4GP6X0BmY/r4TOMiormsGEuEM/qxUL7ErXEOP8MRxXWPQ1hdmqQCJJiQJp8BSdoE6/C+FRMs9q
+	Ew0mwwRPpn26FzG4MN/tjZGoALJEpbkNerTgfy1EeWiwNn/DM5JpQG78sfP3WLgoOuuNq0gDcXC
+	aSsteEzvQX7S187EhA2MAWheIYlTT/LhcpdHLwVyO8IwBg1xEx/m73wO2HFw==
+X-Received: by 2002:a17:907:2dac:b0:beb:e20b:3f86 with SMTP id a640c23a62f3a-bebe20b50bfmr376862066b.47.1780308072804;
+        Mon, 01 Jun 2026 03:01:12 -0700 (PDT)
+Received: from localhost ([2001:4bb8:152:df59:a520:3907:8d91:26f6])
+        by smtp.gmail.com with ESMTPSA id ffacd0b85a97d-45ef3563cb9sm25295649f8f.29.2026.06.01.03.01.11
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Mon, 01 Jun 2026 03:01:12 -0700 (PDT)
 Precedence: bulk
 X-Mailing-List: sashiko-reviews@lists.linux.dev
 List-Id: <sashiko-reviews.lists.linux.dev>
 List-Subscribe: <mailto:sashiko-reviews+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:sashiko-reviews+unsubscribe@lists.linux.dev>
-MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [Patch v8 23/23] perf/x86/intel: Add sanity check for PEBS
- fragment size
-To: sashiko-reviews@lists.linux.dev
-Cc: linux-perf-users@vger.kernel.org
-References: <20260529075645.580362-24-dapeng1.mi@linux.intel.com>
- <20260529095442.966DB1F00893@smtp.kernel.org>
-Content-Language: en-US
-From: "Mi, Dapeng" <dapeng1.mi@linux.intel.com>
-In-Reply-To: <20260529095442.966DB1F00893@smtp.kernel.org>
+Mime-Version: 1.0
+Content-Transfer-Encoding: quoted-printable
 Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8bit
+Date: Mon, 01 Jun 2026 12:01:10 +0200
+Message-Id: <DIXMJH3581S0.5DHXMLATTOV1@gmail.com>
+Subject: Re: [PATCH v4 4/4] iio: light: veml6031x00: add support for events
+ and trigger
+Cc: <linux-kernel@vger.kernel.org>, <linux-iio@vger.kernel.org>
+To: <sashiko-reviews@lists.linux.dev>, "Javier Carrasco"
+ <javier.carrasco.cruz@gmail.com>, "Jonathan Cameron" <jic23@kernel.org>
+From: "Javier Carrasco" <javier.carrasco.cruz@gmail.com>
+X-Mailer: aerc 0.21.0-143-g2f3a2e260c09
+References: <20260531-veml6031x00-v4-4-e64f7fdce38d@gmail.com>
+ <20260531204345.1C2A41F00893@smtp.kernel.org>
+In-Reply-To: <20260531204345.1C2A41F00893@smtp.kernel.org>
 
+My view about the issues Sashiko reported.
 
-On 5/29/2026 5:54 PM, sashiko-bot@kernel.org wrote:
-> Thank you for your contribution! Sashiko AI review found 3 potential issue(s) to consider:
+On Sun May 31, 2026 at 10:43 PM CEST, sashiko-bot wrote:
+> Thank you for your contribution! Sashiko AI review found 7 potential issu=
+e(s) to consider:
 >
 > New issues:
-> - [High] Skipping setup_sample on corrupted PEBS records leaves fields in perf_sample_data uninitialized, causing a kernel stack memory leak when the dummy sample is emitted.
+> - [High] Missing `.validate_device` in trigger operations allows other de=
+vices to attach to a sensor-specific trigger.
+
+Tested with no real issues, but the trigger is mean for this device
+only.
+
+> - [High] The trigger handler performs an unintended I2C read from address=
+ 0 for the software timestamp channel.
+
+Not a real issue.
+
+> - [High] PM runtime usage count is leaked if the device is unbound while =
+events are enabled.
+
+The usage count is set to 0 by the devres action.
+
+> - [High] Stale values in the regmap cache for the hardware-cleared `AF_TR=
+IG` bit cause unintended triggers.
+
+Real issue, I forgot to set CONF0 as a volatile register.
+
+> - [Medium] Mixing `goto` error handling with `guard()` scope-based cleanu=
+p in the same function.
+
+Not a real issue because the goto's happen after the guard, but it's easy t=
+o
+get rid of them.
+
+> - [Medium] Non-functional event sysfs attributes are exposed to userspace=
+ when the device lacks an IRQ.
+
+Missing fix to be added to V5.
+
 >
 > Pre-existing issues:
-> - [High] A pre-existing infinite loop vulnerability for corrupted PEBS records with a size of 0 was missed in intel_pmu_drain_pebs_icl().
-> - [High] Incomplete validation of corrupted PEBS fragment sizes allows out-of-bounds memory accesses.
+> - [High] Unbalanced PM runtime usage counter due to mixing devm action wi=
+th manual put.
+
+Not a real issue because an underflow is not possible.
+
 > --
 >
-> commit 68a663ba619b4d0d98aedabd45c1aa50b4acbe81
-> Author: Dapeng Mi <dapeng1.mi@linux.intel.com>
+> commit c0654b1fbfc516c85d27a7c169844b649c2a1077
+> Author: Javier Carrasco <javier.carrasco.cruz@gmail.com>
 >
-> perf/x86/intel: Add sanity check for PEBS fragment size
->     
-> Prevent potential infinite loops by adding a sanity check for the
-> corrupted PEBS fragment sizes which could happen in theory.
+> iio: light: veml6031x00: add support for events and trigger
 >
->> diff --git a/arch/x86/events/intel/ds.c b/arch/x86/events/intel/ds.c
->> index e0d3076277026..3e100cb206a84 100644
->> --- a/arch/x86/events/intel/ds.c
->> +++ b/arch/x86/events/intel/ds.c
->> @@ -2675,6 +2675,9 @@ static void setup_arch_pebs_sample_data(struct perf_event *event,
->>  
->>  again:
->>  	header = at;
->> +	if (!header->size)
->> +		return;
->> +
-> [Severity: High]
-> This is a pre-existing issue, but does checking only that header->size is
-> non-zero leave us vulnerable to out-of-bounds memory accesses?
+> The device provides a shared interrupt line for to notify events and
+> data ready, which can be used as a trigger. The interrupt line is not a
+> requirement for the device to work. Implement variants for the cases
+> whether the interrupt line is provided or not.
 >
-> If a corrupted fragment has a small non-zero size (e.g., 2 bytes) but has
-> multiple capability flags set (like header->basic, header->lbr), wouldn't
-> setup_arch_pebs_sample_data() blindly increment its next_record pointer
-> to parse those structures? Could this allow it to read past the declared
-> fragment size and potentially beyond the mapped bounds of the PEBS buffer
-> memory page?
-
-The software has no way to detect and report all kinds of corruptions. This
-patch only detects and recovers 2 kinds of the most severe corruptions, 0
-size which could lead to infinite loop and extreme large size which leads
-to the out of boundary memory access.
-
-
+>> diff --git a/drivers/iio/light/veml6031x00.c b/drivers/iio/light/veml603=
+1x00.c
+>> index facb1b8e42418..5e79eb942f09c 100644
+>> --- a/drivers/iio/light/veml6031x00.c
+>> +++ b/drivers/iio/light/veml6031x00.c
 >
 > [ ... ]
 >
->> @@ -2956,13 +2959,21 @@ __intel_pmu_pebs_last_event(struct perf_event *event,
->>  			    struct pt_regs *iregs,
->>  			    struct pt_regs *regs,
->>  			    struct perf_sample_data *data,
->> -			    void *at,
->> -			    int count,
->> +			    void *at, int count, bool corrupted,
->>  			    setup_fn setup_sample)
->>  {
->>  	struct hw_perf_event *hwc = &event->hw;
->>  
->> -	setup_sample(event, iregs, at, data, regs);
->> +	/* Skip parsing corrupted PEBS record. */
->> +	if (corrupted) {
->> +		/* Clear stale register states in previous records. */
->> +		memset(regs, 0, sizeof(*regs));
->> +		x86_pmu_clear_perf_regs(regs);
->> +		perf_sample_data_init(data, 0, event->hw.last_period);
+>> @@ -144,6 +197,8 @@ static const struct iio_chan_spec veml6031x00_channe=
+ls[] =3D {
+>>  		.info_mask_shared_by_all =3D BIT(IIO_CHAN_INFO_INT_TIME),
+>>  		.info_mask_shared_by_all_available =3D BIT(IIO_CHAN_INFO_INT_TIME),
+>>  		.info_mask_separate_available =3D BIT(IIO_CHAN_INFO_SCALE),
+>> +		.event_spec =3D veml6031x00_event_spec,
+>> +		.num_event_specs =3D ARRAY_SIZE(veml6031x00_event_spec),
+>
+> [Severity: Medium]
+> Will this unconditionally expose event sysfs attributes even when the dev=
+ice
+> lacks an IRQ?
+>
+> If i2c->irq is 0, the driver uses veml6031x00_info_no_irq to omit event
+> callbacks. However, the IIO core checks num_event_specs during
+> iio_check_for_dynamic_events() and creates sysfs attributes anyway. If th=
+ese
+> attributes are accessed from userspace without the callbacks, will they
+> return -EINVAL?
+>
+
+This fix is also missing. I will add it to V5.
+
+> [ ... ]
+>
+>> +static int veml6031x00_set_af_trig(struct veml6031x00_data *data, bool =
+state)
+>> +{
+>> +	regcache_drop_region(data->regmap, VEML6031X00_REG_CONF0,
+>> +			     VEML6031X00_REG_CONF0);
+>> +
+>> +	return regmap_update_bits(data->regmap, VEML6031X00_REG_CONF0,
+>> +				  VEML6031X00_CONF0_AF_TRIG,
+>> +				  FIELD_PREP(VEML6031X00_CONF0_AF_TRIG, state));
+>> +}
+>
+> [Severity: High]
+> Does this leave a stale AF_TRIG value in the non-volatile regmap cache?
+>
+> The AF_TRIG bit is cleared automatically by hardware. While this function
+> drops the cache region before setting the bit, VEML6031X00_REG_CONF0 is n=
+ot
+> marked as volatile in veml6031x00_volatile_ranges. Because of this,
+> regmap_update_bits() writes the new value to hardware and also caches it.
+>
+> Would any subsequent updates to CONF0 (such as changing AF or SD bits) re=
+ad
+> the cached AF_TRIG=3D1 and write it back, causing an unintended measureme=
+nt
+> trigger?
+>
+
+Absolutely right, I forgot to update this although I said I would do it.
+
+> [ ... ]
+>
+>> +static int veml6031x00_write_event_config(struct iio_dev *iio,
+>> +					  const struct iio_chan_spec *chan,
+>> +					  enum iio_event_type type,
+>> +					  enum iio_event_direction dir,
+>> +					  bool state)
+>> +{
+>> +	struct veml6031x00_data *data =3D iio_priv(iio);
+>> +	int ret;
+>> +
+>> +	guard(mutex)(&data->irq_lock);
+>> +
+>> +	/* avoid multiple increments/decrements from one source */
+>> +	if (state =3D=3D data->ev_en)
+>> +		return 0;
+>> +
+>> +	if (state) {
+>> +		ret =3D pm_runtime_resume_and_get(data->dev);
+>> +		if (ret)
+>> +			return ret;
+>> +	}
+>
+> [Severity: High]
+> Is the PM runtime usage count leaked if the device is unbound while event=
+s
+> are enabled?
+>
+> The pm_runtime_resume_and_get() call keeps the device powered on, but the=
+re
+> does not appear to be a custom devres action or remove callback to disabl=
+e
+> the event and drop this reference if the driver is unbound. Could this
+> prevent the parent I2C controller from ever entering runtime suspend?
+>
+
+The devres action that was registered in the probe function will
+decrement the counter if the driver is unbound. I explained the
+mechanism at the end of the mail.
+
+> [ ... ]
+>
+>> +static int veml6031x00_set_trigger_state(struct iio_trigger *trig, bool=
+ state)
+>> +{
+>> +	struct iio_dev *iio =3D iio_trigger_get_drvdata(trig);
+>> +	struct veml6031x00_data *data =3D iio_priv(iio);
+>> +	int ret;
+>> +
+>> +	guard(mutex)(&data->irq_lock);
+>> +
+>> +	if (state =3D=3D data->trig_en)
+>> +		return 0;
+>> +
+>> +	ret =3D veml6031x00_set_interrupt(data, state);
+>> +	if (ret)
+>> +		return ret;
+>> +
+>> +	/* The AF bit must be set before setting AF_TRIG */
+>> +	ret =3D regmap_update_bits(data->regmap, VEML6031X00_REG_CONF0,
+>> +				 VEML6031X00_CONF0_AF,
+>> +				 FIELD_PREP(VEML6031X00_CONF0_AF, state));
+>> +	if (ret)
+>> +		goto err_disable_interrupt;
+>> +
+>> +	ret =3D veml6031x00_set_af_trig(data, state);
+>> +	if (ret)
+>> +		goto err_clear_af;
+>
+> [Severity: Medium]
+> Is it safe to mix goto-based error handling with guard() scope-based clea=
+nup
+> in this function?
+>
+> According to the cleanup subsystem guidelines, mixing goto with guard() o=
+r
+> __free() in the same function can create confusing ownership semantics.
+> Should this function either use goto entirely or be fully converted to
+> scoped cleanups?
+>
+
+The real issue arises when there are goto calls before the cleanup, but
+I think it is cleaner to get rid of all goto calls where cleanup magic
+is used. I will remove them and add function calls and error return
+in the error paths.
+
+> [ ... ]
+>
+>> +static const struct iio_trigger_ops veml6031x00_trigger_ops =3D {
+>> +	.set_trigger_state =3D veml6031x00_set_trigger_state,
+>> +};
+>
+> [Severity: High]
+> Is a .validate_device callback needed here to prevent other devices from
+> attaching to this sensor-specific trigger?
+>
+> Without setting .validate_device to iio_trigger_validate_own_device, anot=
+her
+> IIO device could attach to it. If that happens, veml6031x00_set_trigger_s=
+tate()
+> would enable the DRDY interrupt while the sensor is PM runtime suspended
+> (since its own buffer_preenable isn't called). Would this cause the depen=
+dent
+> device's buffer captures to hang?
+>
+
+This trigger is intented to be used by its own device. I will add
+iio_trigger_validate_own_device to iio_trigger_ops.
+
+> [ ... ]
+>
+>> +static irqreturn_t veml6031x00_trig_handler(int irq, void *p)
+>> +{
+>> +	struct iio_poll_func *pf =3D p;
+>> +	struct iio_dev *iio =3D pf->indio_dev;
+>> +	struct veml6031x00_data *data =3D iio_priv(iio);
+>> +	int ch, ret, i =3D 0;
+>> +	struct {
+>> +		__le16 chans[2];
+>> +		aligned_s64 timestamp;
+>> +	} scan =3D { };
+>> +
+>> +	if (test_bit(VEML6031X00_SCAN_ALS, iio->active_scan_mask) &&
+>> +	    test_bit(VEML6031X00_SCAN_IR, iio->active_scan_mask)) {
+>> +		ret =3D regmap_bulk_read(data->regmap,
+>> +				       VEML6031X00_REG_ALS_L,
+>> +				       &scan.chans, sizeof(scan.chans));
+>> +		if (ret)
+>> +			goto done;
 >> +	} else {
->> +		setup_sample(event, iregs, at, data, regs);
+>> +		iio_for_each_active_channel(iio, ch) {
+>> +			ret =3D regmap_bulk_read(data->regmap,
+>> +					       iio->channels[ch].address,
+>> +					       &scan.chans[i++],
+>> +					       sizeof(*scan.chans));
+>
+> [Severity: High]
+> Does this loop inadvertently perform an I2C read from address 0 for the
+> software timestamp channel?
+>
+> When IIO_CHAN_SOFT_TIMESTAMP is active and the fast-path isn't taken, it
+> iterates over all active channels. Since the timestamp channel does not d=
+efine
+> a hardware address, its .address is 0.
+>
+> Would regmap_bulk_read() read VEML6031X00_REG_CONF0 instead of data,
+> wasting I2C bandwidth and writing the configuration register's value into
+> the scan buffer just before the timestamp?
+>
+
+We have mentioned before that Sashiko is wrong about this. Is there any
+way to tell Sashiko why this is ok?
+
+> [ ... ]
+>
+>> @@ -677,12 +1102,21 @@ static int veml6031x00_probe(struct i2c_client *i=
+2c)
+>>  	iio->channels =3D veml6031x00_channels;
+>>  	iio->num_channels =3D ARRAY_SIZE(veml6031x00_channels);
+>>  	iio->modes =3D INDIO_DIRECT_MODE;
+>>
+>>  	ret =3D veml6031x00_hw_init(iio);
+>>  	if (ret)
+>>  		return ret;
+>>
+>> +	if (i2c->irq) {
+>> +		ret =3D veml6031x00_setup_irq(i2c, iio);
+>> +		if (ret)
+>> +			return ret;
+>> +
+>> +		iio->info =3D &veml6031x00_info;
+>> +	} else {
+>> +		iio->info =3D &veml6031x00_info_no_irq;
 >> +	}
 >> +
+>>  	ret =3D devm_iio_triggered_buffer_setup(dev, iio, NULL,
+>>  					      veml6031x00_trig_handler,
+>>  					      &veml6031x00_buffer_setup_ops);
+>
 > [Severity: High]
-> If setup_sample() is skipped when corrupted is true, perf_sample_data_init()
-> will initialize generic fields like period and sample_flags, but what
-> about PMU-specific fields such as data->weight, data->data_src, and
-> data->txn?
+> This isn't a bug introduced by this patch, but is the PM runtime usage
+> counter unbalanced at the end of veml6031x00_probe()?
 >
-> Since the perf_sample_data struct is allocated on the kernel stack and not
-> zeroed upon initialization, could this leave those fields containing stale
-> kernel stack data? When perf_event_output() or perf_event_overflow() are
-> subsequently called, would this result in a kernel stack memory leak to
-> userspace?
+> The driver acquires a reference using devm_pm_runtime_get_noresume() whic=
+h
+> associates a devres cleanup action. If pm_runtime_put_autosuspend() is
+> called manually at the end of probe (immediately after this buffer setup)=
+,
+> the devres cleanup will still fire when the device is unbound, performing=
+ a
+> second put. Could this cause the PM runtime usage counter to underflow
+> to -1?
 
-Yes, this is true. would initialize the perf_sample_data to 0, like this,
+This cannot happen because the devres action uses pm_runtime_put_noidle(),
+which in turns uses atomic_add_unless(usage_count, -1, 0) to avoid
+decrementing the usage_count if it is already 0.
 
-diff --git a/arch/x86/events/intel/core.c b/arch/x86/events/intel/core.c
-index 4546b20429ba..f65c7cc6c38c 100644
---- a/arch/x86/events/intel/core.c
-+++ b/arch/x86/events/intel/core.c
-@@ -3798,7 +3798,7 @@ static int x86_pmu_handle_guest_pebs(struct pt_regs
-*regs,
-
- static int handle_pmi_common(struct pt_regs *regs, u64 status)
- {
--       struct perf_sample_data data;
-+       struct perf_sample_data data = {0};
-        struct cpu_hw_events *cpuc = this_cpu_ptr(&cpu_hw_events);
-        int bit;
-        int handled = 0;
-
-diff --git a/arch/x86/events/intel/ds.c b/arch/x86/events/intel/ds.c
-index 3e100cb206a8..df8ca5b12e02 100644
---- a/arch/x86/events/intel/ds.c
-+++ b/arch/x86/events/intel/ds.c
-@@ -1245,7 +1245,7 @@ int intel_pmu_drain_bts_buffer(void)
-
- void intel_pmu_drain_pebs_buffer(void)
- {
--       struct perf_sample_data data;
-+       struct perf_sample_data data = {0};
-
-        static_call(x86_pmu_drain_pebs)(NULL, &data);
- }
-
-
->
-> [ ... ]
->
->> @@ -3327,7 +3345,7 @@ static int intel_pmu_drain_pebs_icl(struct pt_regs *iregs, struct perf_sample_da
->>  	}
->>  
->>  	__intel_pmu_handle_last_pebs_record(iregs, regs, data, mask, counts, last,
->> -					    setup_pebs_adaptive_sample_data);
->> +					    false, setup_pebs_adaptive_sample_data);
->>  
->>  	return hweight64(events_bitmap);
->>  }
-> [Severity: High]
-> This is a pre-existing issue, but does intel_pmu_drain_pebs_icl() have a
-> similar infinite loop vulnerability for corrupted records with a size of 0?
->
-> Looking at the loop just above this code:
->
->     for (at = base; at < top; at += basic->format_size) {
->         u64 pebs_status;
->
->         basic = at;
->         if (basic->format_size != cpuc->pebs_record_size)
->             continue;
->     }
->
-> If a corrupted hardware record has basic->format_size == 0, the loop
-> condition evaluates to true, the continue statement executes, and the loop
-> attempts to advance at by 0. Wouldn't this result in at remaining
-> unchanged, creating an infinite loop in NMI context?
-
-Yes, it's a potential risk, would break the loop if 0 size is detected.
-
-@@ -3334,6 +3334,8 @@ static int intel_pmu_drain_pebs_icl(struct pt_regs
-*iregs, struct perf_sample_da
-                u64 pebs_status;
-
-                basic = at;
-+               if (WARN_ON_ONCE(!basic->format_size))
-+                       break;
-                if (basic->format_size != cpuc->pebs_record_size)
-                        continue;
-
->
+Best regards,
+Javier
