@@ -1,272 +1,127 @@
-Received: from mgamail.intel.com (mgamail.intel.com [198.175.65.14])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-pj1-f46.google.com (mail-pj1-f46.google.com [209.85.216.46])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6ECD618BBAE
-	for <sashiko-reviews@lists.linux.dev>; Mon,  1 Jun 2026 03:11:47 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=198.175.65.14
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E865A258EC1
+	for <sashiko-reviews@lists.linux.dev>; Mon,  1 Jun 2026 05:03:16 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.216.46
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1780283509; cv=none; b=rOVjaKyoTmjHjPs/R0I7rU+aZlZH33GzFfxbNKkz15jHDE7JHkf8zseGpjg3MXVNe2tvXb17C38JLQfNX6hh4VSSZiDFGaohFPVV1wjyQqsJdIqcCfqLXc1lAnXMJjJrsGpApaiihbNVkmP98DIt935uRZndMTvI63rMgSIEYPk=
+	t=1780290198; cv=none; b=QMeosMXs5fdvvaWj2Yq8KNapSOrXPpsGwTfUjics1R77lnOYTlINjw1ZbwhnT0ua9Jk2hq6jMEmXmTvBzfZI89BkAY9LUCiBH9ou76em8RU7Q3uriOW9ARvAkZ5FhvjXV6Kk57J7226ovnd/7ejjMqg39cZLb/Nf+5Kdv/ofRB4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1780283509; c=relaxed/simple;
-	bh=lfqejeSq0JlIgPlcxdVdLN7DnwTLwLSJ9J3QQFOQ8Sw=;
-	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=NERATqC1ONfEZTqbI911/GVzwxGIPZXqutGZ5E5dl30A+F4/0x8+iJ5B2q5oJBUtXiam6YnlrV6S3FzJMnigafAE0JW8s2MH5sdvi4kljE4UE6vtxDu+gl85jD0yHKh8gNMi94J33hFj8mkatB+KxfIoG/zNrTom0g3g1sq0m54=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linux.intel.com; spf=pass smtp.mailfrom=linux.intel.com; dkim=pass (2048-bit key) header.d=intel.com header.i=@intel.com header.b=bV6ip7Vw; arc=none smtp.client-ip=198.175.65.14
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linux.intel.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linux.intel.com
+	s=arc-20240116; t=1780290198; c=relaxed/simple;
+	bh=2+uyhBQagbfG5ZCWG5OKDBtrcFUr3emz6OXagiQU61s=;
+	h=Mime-Version:Content-Type:Date:Message-Id:Cc:Subject:From:To:
+	 References:In-Reply-To; b=a8/dlnEkDb4DdCGeIYlbVAT3zfVL3Mp3Yvxfb17F3iTQ1nkeYeMiFlyuedYgIrN90neKDOrSXIkpXGqnVj96rznpzJlqN5vFHoxU124e/2zryZk5Oo5XFi5taL9R1LFcL14lTriew+6ThoHL2bV2UuxwV0zKdOgEnSgWbkeSUIQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=etsalapatis.com; spf=pass smtp.mailfrom=etsalapatis.com; dkim=pass (2048-bit key) header.d=etsalapatis-com.20251104.gappssmtp.com header.i=@etsalapatis-com.20251104.gappssmtp.com header.b=czKSbQji; arc=none smtp.client-ip=209.85.216.46
+Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=etsalapatis.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=etsalapatis.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=intel.com header.i=@intel.com header.b="bV6ip7Vw"
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
-  d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
-  t=1780283507; x=1811819507;
-  h=message-id:date:mime-version:subject:to:cc:references:
-   from:in-reply-to:content-transfer-encoding;
-  bh=lfqejeSq0JlIgPlcxdVdLN7DnwTLwLSJ9J3QQFOQ8Sw=;
-  b=bV6ip7VwHLTuJLEl3YREPbQQbFHGgyjHQiW3LvhRh3iQye+EXLDkH2zQ
-   bR3h1eNO9bl5y+0wG3WOkV19601ysIt7xOAT4vTlcZ16VMlmDPT7rxcRd
-   utqHUiyGm6cvVNYTSJIteaOGuXQZlP4yL42GNbk3QZqiSM++rYULxvPPm
-   jcSv9FKInZ1Sz8BHUWF3//avGjNslyAGSVw+bTauDSpyHnbwhGCigi3Ha
-   NTDrQKulybbEHU/s0l8slVmf4BfCFSw/1V/QQda///kmz2031stAX8SQF
-   JWr01Tn+2nXabWGyQm9cqW6RhIVm3PZR02EvaDoS78O4tq8pTK/gqmmlp
-   g==;
-X-CSE-ConnectionGUID: sUfzA1fwSMaGEaugJvlJKA==
-X-CSE-MsgGUID: npY+7F9fQj+bAyg2kvS97w==
-X-IronPort-AV: E=McAfee;i="6800,10657,11803"; a="84923366"
-X-IronPort-AV: E=Sophos;i="6.24,180,1774335600"; 
-   d="scan'208";a="84923366"
-Received: from fmviesa005.fm.intel.com ([10.60.135.145])
-  by orvoesa106.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 31 May 2026 20:11:47 -0700
-X-CSE-ConnectionGUID: 9UVjC0s9Rn6LspzxazTkMA==
-X-CSE-MsgGUID: jvaUHsuZSZyzgl3IPHxcLw==
-X-ExtLoop1: 1
-X-IronPort-AV: E=Sophos;i="6.24,180,1774335600"; 
-   d="scan'208";a="248537313"
-Received: from dapengmi-mobl1.ccr.corp.intel.com (HELO [10.124.241.147]) ([10.124.241.147])
-  by fmviesa005-auth.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 31 May 2026 20:11:46 -0700
-Message-ID: <3a990307-e900-4b4a-ac88-b3373bf7afa6@linux.intel.com>
-Date: Mon, 1 Jun 2026 11:11:44 +0800
+	dkim=pass (2048-bit key) header.d=etsalapatis-com.20251104.gappssmtp.com header.i=@etsalapatis-com.20251104.gappssmtp.com header.b="czKSbQji"
+Received: by mail-pj1-f46.google.com with SMTP id 98e67ed59e1d1-36b8d414666so2240740a91.3
+        for <sashiko-reviews@lists.linux.dev>; Sun, 31 May 2026 22:03:16 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=etsalapatis-com.20251104.gappssmtp.com; s=20251104; t=1780290196; x=1780894996; darn=lists.linux.dev;
+        h=in-reply-to:references:to:from:subject:cc:message-id:date
+         :content-transfer-encoding:mime-version:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=7Sz5ZtK6XA9gIDZiiscXeLXvS4nQonpQUUo02wHj6Ok=;
+        b=czKSbQjir9FNyLM/lQr5xdUDHvDPAoZHiO2HC24ABGA1SHWUrZBKG07hsGTL4j0DVy
+         Wo1ppFeKU7loTUCIqnR14fAGKdxymhSnQ00Exl/nkGTBdC7QP0COJA8cunoxLHKS9MoK
+         AIqXn1V78ZhcQREhryEGLFf+y8Cz+ab9PfT1pLqI1RQVX9OQtyTEoVSZmGn1Y4jy+7rX
+         K2tBKtL6cSAC6mBGyhRZwfQ0FGJomAs3Gjoc/SQWG6MNZP9KTX7OfGig5bymihlKlgdV
+         qPsuLlrD4doELEuBQsiH3NxH6DQykE5IpXkM7pRkrPIbZBKsmfysdWa77JvWKNowH7hx
+         VqFQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20251104; t=1780290196; x=1780894996;
+        h=in-reply-to:references:to:from:subject:cc:message-id:date
+         :content-transfer-encoding:mime-version:x-gm-gg:x-gm-message-state
+         :from:to:cc:subject:date:message-id:reply-to;
+        bh=7Sz5ZtK6XA9gIDZiiscXeLXvS4nQonpQUUo02wHj6Ok=;
+        b=T46M7QaFZMgSNUYIcpJyjFX/pMmSLS9ciNlUCUSf1i7YNl3HetL0NHC/zaipE46FZc
+         YnOIS7ltlDrxeQRUsZuojoVzHi4Ghd+WeV/p54j/91lcfFEztZh6T6b1UVqaVJm3gFZT
+         ASDy4D+BXnf6yyscKkaXwp12iB4isdhkT0pUthKFaUTlLiopD/nBEIMTXAIc3TbH5YtI
+         wvf3lmSY1BK/ud5OlHtncC8BDircNyn55Pw66QxEy1OB38rVhORnYuX+b6jo4PFt1KPJ
+         ktdLWbyMjSUn20QDKEwa8AQUJ+jmDj41tAvJLUsfuSLBdcZ84zNuahKy54d6oWgMjJCB
+         EJvg==
+X-Forwarded-Encrypted: i=1; AFNElJ8/1RvkMnMBbzzTkLrL4azzAyf5OxFEuNhbeIs4laUhFuNNxghqN3N2MH2hWBYyfu4GwOR24fzcMFIk/17wTA4=@lists.linux.dev
+X-Gm-Message-State: AOJu0YxKctrVhyTTRD9QFLITrNCAao8jpJb3neFjNacHoxqVvqbf/ysG
+	D3i1EMDXYHHIKHjep/llQqMsfkBjPahlN/PA90+RYCcY8IDZftGHontfmkqFimwKygg=
+X-Gm-Gg: Acq92OEb3OWy11Cgy/6IdiJSoYpv3CwNqONMbPGo9BgoE9vhrUkUjWcen/fjakBUXKq
+	++ZQdY3g4NwL7nlVFRxN9TqA1l9M/6/jXp3XHXb8aqoU1BiMAv42E10VejPPIqXWn+YjrtnCvUQ
+	gwTdRehTxfDPBt2WFf20Wl5uVLaUdGqJl9/Ei4bQ250yZRJmRVBaCm586AhkJv9emS8fnFihdwU
+	Md6GjxzpWJV9tHDe7F1fMX0sjDi6ps4BXyhE4qsUywUw8gkue4xSEM82nDtym855kgp8+Z3n2Hk
+	rKB0XNw6IizcEs/Zl/al0ZpBgm8cvq5cGJdnv840PGiKFjJjBRkRWC40MLFyMDnNltwXv6UpJMv
+	n+gfym6ncztUYLk7ELgnZQuHAHBbsXkMefPSwEXPoF/NOPLcKEgqEgFIi4YH01ZNGAeoV++mAzX
+	QGi4J5BdNB8Wqb5w5/daAlkD2ACZyAtfaisdA=
+X-Received: by 2002:a17:90b:5289:b0:35a:189b:43db with SMTP id 98e67ed59e1d1-36c4ff25c56mr8168205a91.4.1780290195983;
+        Sun, 31 May 2026 22:03:15 -0700 (PDT)
+Received: from localhost ([2001:569:58a0:da00:a5c8:c4ce:f7c1:40c1])
+        by smtp.gmail.com with ESMTPSA id 98e67ed59e1d1-36bbdcf4773sm4250439a91.5.2026.05.31.22.03.15
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Sun, 31 May 2026 22:03:15 -0700 (PDT)
 Precedence: bulk
 X-Mailing-List: sashiko-reviews@lists.linux.dev
 List-Id: <sashiko-reviews.lists.linux.dev>
 List-Subscribe: <mailto:sashiko-reviews+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:sashiko-reviews+unsubscribe@lists.linux.dev>
-MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [Patch v8 10/23] perf/x86: Enable XMM Register Sampling for
- Non-PEBS Events
-To: sashiko-reviews@lists.linux.dev
-Cc: linux-perf-users@vger.kernel.org
-References: <20260529075645.580362-11-dapeng1.mi@linux.intel.com>
- <20260529090255.E5E801F00893@smtp.kernel.org>
-Content-Language: en-US
-From: "Mi, Dapeng" <dapeng1.mi@linux.intel.com>
-In-Reply-To: <20260529090255.E5E801F00893@smtp.kernel.org>
+Mime-Version: 1.0
+Content-Transfer-Encoding: quoted-printable
 Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8bit
+Date: Mon, 01 Jun 2026 01:03:14 -0400
+Message-Id: <DIXG7CV6I2RL.2D0BT0TKB2ZM9@etsalapatis.com>
+Cc: <bpf@vger.kernel.org>
+Subject: Re: [PATCH bpf-next v2 4/5] selftests/bpf: Remove __arg_arena from
+ the codebase
+From: "Emil Tsalapatis" <emil@etsalapatis.com>
+To: "Alexei Starovoitov" <alexei.starovoitov@gmail.com>,
+ <sashiko-reviews@lists.linux.dev>, "Emil Tsalapatis" <emil@etsalapatis.com>
+X-Mailer: aerc 0.21.0-0-g5549850facc2
+References: <20260530002259.4505-5-emil@etsalapatis.com>
+ <20260530050310.113761F00893@smtp.kernel.org>
+ <DIWLWEKAUX29.3HJP2JO064JLR@gmail.com>
+In-Reply-To: <DIWLWEKAUX29.3HJP2JO064JLR@gmail.com>
 
+On Sun May 31, 2026 at 1:18 AM EDT, Alexei Starovoitov wrote:
+> On Fri May 29, 2026 at 10:03 PM PDT, sashiko-bot wrote:
+>> Thank you for your contribution! Sashiko AI review found 1 potential iss=
+ue(s) to consider:
+>> - [Low] Incomplete removal of `__arg_arena` annotation
+>> --
+>>
+>> commit 936642e9509313ae2959c6a3c4255651cca7040f
+>> Author: Emil Tsalapatis <emil@etsalapatis.com>
+>>
+>> selftests/bpf: Remove __arg_arena from the codebase
+>>
+>> This commit removes the __arg_arena annotation from the codebase because
+>> it has been subsumed by the __arena BTF type tag. The typedefs previousl=
+y
+>> used to minimize __arena annotations are removed, and the pointer types
+>> are directly annotated when declaring variables instead.
+>>
+>>> diff --git a/tools/testing/selftests/bpf/bpf_arena_htab.h b/tools/testi=
+ng/selftests/bpf/bpf_arena_htab.h
+>>> index acc01a876668e..eb80d67c38708 100644
+>>> --- a/tools/testing/selftests/bpf/bpf_arena_htab.h
+>>> +++ b/tools/testing/selftests/bpf/bpf_arena_htab.h
+>>
+>> [ ... ]
+>>
+>>> @@ -53,7 +52,7 @@ static int htab_hash(int key)
+>>>  	return key;
+>>>  }
+>>> =20
+>>> -__weak int htab_lookup_elem(htab_t *htab __arg_arena, int key)
+>>> +__weak int htab_lookup_elem(struct htab __arena *htab __arg_arena, int=
+ key)
+>>
+>> [Severity: Low]
+>> Is the __arg_arena annotation incorrectly retained here? The commit
+>> message mentions removing __arg_arena from the codebase, but it seems to
+>> still be present in the signature of htab_lookup_elem().
+>
+> Spotted this manually as well.
 
-On 5/29/2026 5:02 PM, sashiko-bot@kernel.org wrote:
-> Thank you for your contribution! Sashiko AI review found 3 potential issue(s) to consider:
->
-> New issues:
-> - [High] reserve_ext_regs_buffers() fails to propagate memory allocation errors, leading to a predictable WARN_ON_ONCE in NMI context.
-> - [High] PEBS events on older platforms (e.g., Skylake) improperly accept `PERF_REG_EXTENDED_MASK`, bypassing capability checks.
->
-> Pre-existing issues:
-> - [High] Software PMU events (or hardware events requesting `PERF_SAMPLE_REGS_USER`) can request XMM registers, causing `perf_reg_value()` to perform an out-of-bounds read on the kernel stack.
-> --
->
-> commit cee33ccbb52239e18206f79aef67c4e7ac96ca59
-> Author: Dapeng Mi <dapeng1.mi@linux.intel.com>
->
-> perf/x86: Enable XMM Register Sampling for Non-PEBS Events
->
-> This commit extends XMM register sampling to non-PEBS events by utilizing the
-> xsaves instruction. It introduces a per-CPU 64-byte aligned buffer to store
-> SIMD and other registers, allocating it during hardware reservation. The XMM
-> data is then retrieved during the REGS_INTR case.
->
->> diff --git a/arch/x86/events/core.c b/arch/x86/events/core.c
->> index 17c8f44ee43b3..c219a563434d4 100644
->> --- a/arch/x86/events/core.c
->> +++ b/arch/x86/events/core.c
-> [ ... ]
->
->> @@ -410,6 +410,56 @@ set_ext_hw_attr(struct hw_perf_event *hwc, struct perf_event *event)
-> [ ... ]
->
->> +static void reserve_ext_regs_buffers(void)
->> +{
->> +	bool compacted = cpu_feature_enabled(X86_FEATURE_XCOMPACTED);
->> +	unsigned int size;
->> +	int cpu;
->> +
->> +	if (!x86_pmu.ext_regs_mask)
->> +		return;
->> +
->> +	/* +64 bytes for the 64 bytes alignment request of xsave area. */
->> +	size = xstate_calculate_size(x86_pmu.ext_regs_mask, compacted) + 64;
->> +
->> +	for_each_possible_cpu(cpu) {
->> +		per_cpu(ext_regs_buf, cpu) = kzalloc_node(size, GFP_KERNEL,
->> +							  cpu_to_node(cpu));
->> +		if (WARN_ON_ONCE(!per_cpu(ext_regs_buf, cpu)))
->> +			goto err;
->> +	}
->> +
->> +	return;
->> +
->> +err:
->> +	release_ext_regs_buffers();
->> +}
-> [Severity: High]
-> Does reserve_ext_regs_buffers() need to propagate the allocation failure back
-> to the caller?
->
-> When kzalloc_node() fails, this function frees any previously allocated buffers
-> and returns void. The caller, x86_reserve_hardware(), then assumes success
-> and allows the perf_event_open syscall to succeed. Later, when an event
-> requiring extended registers triggers a PMI, x86_pmu_sample_xregs() retrieves
-> a NULL buffer and triggers a WARN_ON_ONCE in NMI context.
->
-> Could this allow a local user to deliberately exhaust memory and repeatedly
-> open a perf event to trigger the warning? If the system has panic_on_warn
-> enabled, this could escalate to a kernel panic.
->
-> [ ... ]
-
-I suppose add "WARN_ON_ONCE" is fairly enough to report the issue.
-Propagating the error would lead to the whole perf reservation fails and
-lead to no any perf functions can be used. This is not what we want. Even
-the extended buffer allocation fails, most of perf functions can still
-work, only the SIMD/eGPRs sampling would be bypassed.
-
->
->> @@ -655,18 +707,26 @@ int x86_pmu_hw_config(struct perf_event *event)
-> [ ... ]
->
->> +	if (event->attr.sample_type & PERF_SAMPLE_REGS_INTR) {
->> +		/*
->> +		 * Besides the general purpose registers, XMM registers may
->> +		 * be collected as well.
->> +		 */
->> +		if (event->attr.sample_regs_intr & PERF_REG_EXTENDED_MASK) {
->> +			if (!(event->pmu->capabilities & PERF_PMU_CAP_EXTENDED_REGS))
->> +				return -EINVAL;
->> +			if (is_sampling_event(event) && !event->attr.precise_ip &&
->> +			    !this_cpu_has(X86_FEATURE_XSAVES))
->> +				return -EINVAL;
->> +		}
->> +	}
->>  
->> -		if (!event->attr.precise_ip)
->> +	if (event->attr.sample_type & PERF_SAMPLE_REGS_USER) {
->> +		/*
->> +		 * Currently XMM registers sampling for REGS_USER is not
->> +		 * supported yet.
->> +		 */
->> +		if (event->attr.sample_regs_user & PERF_REG_EXTENDED_MASK)
->>  			return -EINVAL;
->>  	}
-> [Severity: High]
-> This isn't a bug introduced by this patch, but can software PMU events request
-> XMM registers and cause an out-of-bounds read on the kernel stack?
->
-> While x86_pmu_hw_config() correctly blocks PERF_REG_EXTENDED_MASK for
-> unsupported scenarios here, software events bypass x86_pmu_hw_config()
-> completely. The function perf_reg_validate() checks requested registers against
-> PERF_REG_X86_RESERVED, which fails to exclude bits 32-63 (XMM registers).
->
-> If a software event requests XMM registers via PERF_SAMPLE_REGS_USER, and the
-> event overflows, a standard pt_regs pointing to the top of the kernel stack
-> is passed to perf_reg_value().
->
-> When it uses container_of(regs, struct x86_perf_regs, regs) and reads
-> perf_regs->xmm_regs, does it read past the end of the pt_regs on the stack,
-> potentially leaking kernel memory or triggering a page fault?
->
-> I note this is addressed later in the patch series by commit "perf/x86: Enable
-> XMM register sampling for REGS_USER case", but wanted to mention it here.
-
-I don't think the comment is correct. currently the below check in
-perf_try_init_event() would block the PMUs which haven't
-PERF_PMU_CAP_EXTENDED_REGS capability, like software PMU, to sample XMM
-registers,
-
-```
-
-   if (!(pmu->capabilities & PERF_PMU_CAP_EXTENDED_REGS) &&
-        event_has_extended_regs(event)) {
-        ret = -EOPNOTSUPP;
-        goto err_destroy;
-    }
-
-```
-
->
-> [ ... ]
->
->> diff --git a/arch/x86/events/intel/core.c b/arch/x86/events/intel/core.c
->> index 92cb9a716e83d..f5d458e3ba3f6 100644
->> --- a/arch/x86/events/intel/core.c
->> +++ b/arch/x86/events/intel/core.c
-> [ ... ]
->
->> @@ -6176,8 +6179,37 @@ static inline void __intel_update_large_pebs_flags(struct pmu *pmu)
-> [ ... ]
->
->> +static void intel_extended_regs_init(struct pmu *pmu)
->> +{
->> +	struct pmu *dest_pmu = pmu ? pmu : x86_get_pmu(smp_processor_id());
->> +
->> +	/*
->> +	 * Extend the vector registers support to non-PEBS.
->> +	 * The feature is limited to newer Intel machines with
->> +	 * PEBS V4+ or archPerfmonExt (0x23) enabled for now.
->> +	 * In theory, the vector registers can be retrieved as
->> +	 * long as the CPU supports. The support for the old
->> +	 * generations may be added later if there is a
->> +	 * requirement.
->> +	 * Only support the extension when XSAVES is available.
->> +	 */
->> +	if (!boot_cpu_has(X86_FEATURE_XSAVES))
->> +		return;
->>  
->> +	if (!boot_cpu_has(X86_FEATURE_XMM) ||
->> +	    !cpu_has_xfeatures(XFEATURE_MASK_SSE, NULL))
->> +		return;
->> +
->> +	/*
->> +	 * On current hybrid platforms, P-cores and E-cores expose the same
->> +	 * XSAVE feature set. Therefore, using the global x86_pmu.ext_regs_mask
->> +	 * is sufficient to represent the hardware-supported XSAVE features.
->> +	 */
->> +	x86_pmu.ext_regs_mask |= XFEATURE_MASK_SSE;
->> +	dest_pmu->capabilities |= PERF_PMU_CAP_EXTENDED_REGS;
->> +}
-> [Severity: High]
-> Will this allow PEBS events on older platforms like Skylake to bypass capability
-> checks?
->
-> Before this change, PERF_PMU_CAP_EXTENDED_REGS was only set for CPUs with PEBS
-> format >= 4 (Icelake+). By introducing intel_extended_regs_init(), the
-> capability is now set globally for any CPU supporting XSAVES, including
-> Skylake.
->
-> Looking back at x86_pmu_hw_config(), if an event is a PEBS event
-> (precise_ip > 0), it passes the capability check because the PMU now advertises
-> it.
->
-> Since Skylake's PEBS v3 hardware cannot sample XMM registers, does this result
-> in a silent ABI regression where the kernel returns zeroes in the sample
-> payload instead of returning -EINVAL at event creation? Should
-> x86_pmu_hw_config() enforce that PEBS XMM requests specifically require PEBS
-> v4+ support?
-
-Yes, would strengthen the check and ensure PERF_PMU_CAP_EXTENDED_REGS is
-set only when both PEBS and non-PEBS both support it. 
-
-Thanks.
-
-
->
+Valid issue, this use was originally left in because arena_htab has a
+selftests for FORCE_ASM mode that turns the __arena into a no-op. I will
+make sure __arena retains the type tag even with that option on, which
+should make the test pass.
