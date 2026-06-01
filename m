@@ -1,50 +1,50 @@
-Received: from mgamail.intel.com (mgamail.intel.com [198.175.65.12])
+Received: from mgamail.intel.com (mgamail.intel.com [192.198.163.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AE79C1A0BF3
-	for <sashiko-reviews@lists.linux.dev>; Mon,  1 Jun 2026 06:57:24 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=198.175.65.12
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F382030F548
+	for <sashiko-reviews@lists.linux.dev>; Mon,  1 Jun 2026 07:14:35 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=192.198.163.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1780297047; cv=none; b=nx3QZtXPHvnAUvR1z6D+58XZKgKhK23iXULgzw0rzGMo+kox0hDPpDWfQ4V9AaLUPlrb6K+EKyRQkfD6pipjPXii9nYmSAn7FAOzRc35kkE9WZgVQbk3UJmcmf3jgUf1jzc8yebBZ2icRn+7SteQDuuoYBPyKI9J3AuDDvPci6k=
+	t=1780298077; cv=none; b=rtJIZd0uIqO386PyDeBHr196KxGYWvlEBJhP/oiiXdnCQgzkFMmgv/w3Z5iCJQ+1M8tWi99Af2zKsf1ruAQfEcLAa1t2v3uPkQgD1xtK00cQ0Kex68hwoJlxA+QxnQjHCsXslmklTarOvMtTaFf8EU0OtKpo+cYsbc672qofXSA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1780297047; c=relaxed/simple;
-	bh=rf2ub5rKKHW/q4CNq/Z2j9d34U3dV6/FffF5KqSTMcc=;
+	s=arc-20240116; t=1780298077; c=relaxed/simple;
+	bh=RXNHJqsRLxRjxYiSLZQML7BAh8g4+PfRZhrk7wzvgoE=;
 	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=uN86Vick4slvIGs7Y1jS+yJOTv/b7ZtWPAnt6PhURaHFjDeOctyDBhwHl2VACkfefgt9jTmwHr4bqfUCfH2ISAln1h4LSyFDSAFvWyvRQYZuGymp7wv5DZHqdk7CmfiLuUlrezErLkB4Zt34WjBkzVoXRqzD2IIT29Q3NxepKn4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linux.intel.com; spf=pass smtp.mailfrom=linux.intel.com; dkim=pass (2048-bit key) header.d=intel.com header.i=@intel.com header.b=DBVvuisN; arc=none smtp.client-ip=198.175.65.12
+	 In-Reply-To:Content-Type; b=ZugmG2pg1pynw1Doay7MqWkb50cnS58jnX1e4eoYwqQN4eBkAJJU5Lr+lFeq4JKGBtBFkz0ItcHrn+RqPMj16nVwXBLhrx8DZjqPgXZq+8kl7VXSmmcyEslZTE8vW2hJ7foiVfetjHri+oNo15uHy6Py0rgsvNMBie8sdXCyARM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linux.intel.com; spf=pass smtp.mailfrom=linux.intel.com; dkim=pass (2048-bit key) header.d=intel.com header.i=@intel.com header.b=JbE5pCk2; arc=none smtp.client-ip=192.198.163.18
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linux.intel.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linux.intel.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=intel.com header.i=@intel.com header.b="DBVvuisN"
+	dkim=pass (2048-bit key) header.d=intel.com header.i=@intel.com header.b="JbE5pCk2"
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
   d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
-  t=1780297045; x=1811833045;
+  t=1780298076; x=1811834076;
   h=message-id:date:mime-version:subject:to:cc:references:
    from:in-reply-to:content-transfer-encoding;
-  bh=rf2ub5rKKHW/q4CNq/Z2j9d34U3dV6/FffF5KqSTMcc=;
-  b=DBVvuisNRGS+k4S27DGqLh07S4Yj7PAhapVwyk4I1u/p7C27NmL4lQb7
-   hTfmMjpbR22XEi6m9iJLoZUmJH3kDbVAQoI32mEePgkP61wnRLrEhJUfr
-   G9QIDGM0rwpxguKUEFtL0Z+RnpHbxG9tSm8eSCM28OeuwsuIGG6zVQWNA
-   lIcbdbSg2EFHXUwiHjWyl3Ohqo9QQOID/9dPf0BAznPmb94bzjfj5T8ii
-   ZlYznSiPJyRhtFR4LdDOqkDWnkFWZM+b2fCMPzx8L9056RS9xM51HbGhT
-   XHCziP5jnzV8Md9qJOSabIRbwqMiaR8p7TCXoWPaDt64zZJ5u/eUcpx7z
-   Q==;
-X-CSE-ConnectionGUID: qLAbx2uGTP+StaJZnjFGZw==
-X-CSE-MsgGUID: KhekKy8ESAyxZGQ2c+ikUg==
-X-IronPort-AV: E=McAfee;i="6800,10657,11803"; a="92521121"
+  bh=RXNHJqsRLxRjxYiSLZQML7BAh8g4+PfRZhrk7wzvgoE=;
+  b=JbE5pCk2Gf7YKLL9J2KQgCCAdO2frd+qtcSm9AWAdG7UB+hCqVY3jXUS
+   SzGj8+K//dYrAY6t8HHecqSakpYG5Le5dolxtjsEWKxQCkOFicjjrooUr
+   +x8l9CFDIwIpON5QTZb0Dw542PntnwWeW9XC0/HOqhJrqqwBTQxGgeHOk
+   zo1B12fhqYE/KumD92wjkdUs1XRJyHl22I++x+EsPe06jwYC7L7gbCreh
+   dwCfrOxSgxuFoQPcnX46fmnVqoLnydRzKuMsKFvzH0nOY4UiNlBxKNSXV
+   Gk8/TgjndnBwHoUvcm4RhBeKZsBBwjKNASzDp2n5HUinTGis/U2amnoNE
+   w==;
+X-CSE-ConnectionGUID: YSC5ovbqQsOIu51ugRiAlQ==
+X-CSE-MsgGUID: kzVXUxTWT8afD/dsKkbn7A==
+X-IronPort-AV: E=McAfee;i="6800,10657,11803"; a="80187825"
 X-IronPort-AV: E=Sophos;i="6.24,180,1774335600"; 
-   d="scan'208";a="92521121"
-Received: from orviesa003.jf.intel.com ([10.64.159.143])
-  by orvoesa104.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 31 May 2026 23:57:25 -0700
-X-CSE-ConnectionGUID: q5qtzKTDS3OH17JnbtGAVQ==
-X-CSE-MsgGUID: hVkq+HdoTdSKxQ7CPgSPNg==
+   d="scan'208";a="80187825"
+Received: from orviesa005.jf.intel.com ([10.64.159.145])
+  by fmvoesa112.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 01 Jun 2026 00:14:35 -0700
+X-CSE-ConnectionGUID: FgSuiE2OTz24NqTSd5FLpw==
+X-CSE-MsgGUID: Cl/ECFuwRUmLX+xHpdtPew==
 X-ExtLoop1: 1
 X-IronPort-AV: E=Sophos;i="6.24,180,1774335600"; 
-   d="scan'208";a="247465186"
+   d="scan'208";a="248409220"
 Received: from dapengmi-mobl1.ccr.corp.intel.com (HELO [10.124.241.147]) ([10.124.241.147])
-  by ORVIESA003-auth.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 31 May 2026 23:57:23 -0700
-Message-ID: <4dd94692-b60f-4c84-9207-e84f70bdd637@linux.intel.com>
-Date: Mon, 1 Jun 2026 14:57:21 +0800
+  by orviesa005-auth.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 01 Jun 2026 00:14:34 -0700
+Message-ID: <ed9aca04-2ce2-40d8-b286-524c145f6612@linux.intel.com>
+Date: Mon, 1 Jun 2026 15:14:31 +0800
 Precedence: bulk
 X-Mailing-List: sashiko-reviews@lists.linux.dev
 List-Id: <sashiko-reviews.lists.linux.dev>
@@ -52,102 +52,121 @@ List-Subscribe: <mailto:sashiko-reviews+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:sashiko-reviews+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [Patch v8 13/23] perf/x86: Support XMM sampling using
+Subject: Re: [Patch v8 14/23] perf/x86: Support YMM sampling using
  sample_simd_vec_reg_* fields
 To: sashiko-reviews@lists.linux.dev
 Cc: linux-perf-users@vger.kernel.org
-References: <20260529075645.580362-14-dapeng1.mi@linux.intel.com>
- <20260529084935.C73AE1F00893@smtp.kernel.org>
+References: <20260529075645.580362-15-dapeng1.mi@linux.intel.com>
+ <20260529084759.A4F051F00893@smtp.kernel.org>
 Content-Language: en-US
 From: "Mi, Dapeng" <dapeng1.mi@linux.intel.com>
-In-Reply-To: <20260529084935.C73AE1F00893@smtp.kernel.org>
+In-Reply-To: <20260529084759.A4F051F00893@smtp.kernel.org>
 Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 7bit
+Content-Transfer-Encoding: 8bit
 
 
-On 5/29/2026 4:49 PM, sashiko-bot@kernel.org wrote:
-> Thank you for your contribution! Sashiko AI review found 1 potential issue(s) to consider:
-> - [Critical] The validation logic in `perf_simd_reg_validate()` strictly checks unused, flag-gated syscall parameters outside of their respective flag scopes, breaking ABI compatibility.
+On 5/29/2026 4:47 PM, sashiko-bot@kernel.org wrote:
+> Thank you for your contribution! Sashiko AI review found 2 potential issue(s) to consider:
+>
+> New issues:
+> - [Medium] The `event_needs_ymm()` function evaluates flag-gated syscall parameters outside their corresponding flag gate (`PERF_SAMPLE_REGS_USER` / `PERF_SAMPLE_REGS_INTR`).
+>
+> Pre-existing issues:
+> - [High] The function `perf_simd_reg_validate` improperly returns an error when unused, flag-gated parameters are not zero-filled, breaking ABI compatibility.
 > --
 >
-> commit aeb4cf15401ade404bfd333c1c769dd23251abf8
+> commit f738764532819a2044a1239c400d83c8404d4843
 > Author: Dapeng Mi <dapeng1.mi@linux.intel.com>
 >
-> perf/x86: Support XMM sampling using sample_simd_vec_reg_* fields
+> perf/x86: Support YMM sampling using sample_simd_vec_reg_* fields
 >
-> This patch adds support for sampling XMM registers using the new
-> sample_simd_vec_reg_* fields. It introduces ABI tracking for perf_regs
-> on x86 and implements validation logic for SIMD registers.
+> This patch introduces support for sampling YMM registers via the
+> sample_simd_vec_reg_* fields. It updates the perf_simd_reg_value function
+> to assemble the XMM and YMMH halves into a complete YMM register and
+> sets the sample_simd_vec_reg_qwords to 4 for YMM sampling.
+>
+>> diff --git a/arch/x86/events/core.c b/arch/x86/events/core.c
+>> --- a/arch/x86/events/core.c
+>> +++ b/arch/x86/events/core.c
+> [ ... ]
+>> @@ -1967,6 +1973,8 @@ static void x86_pmu_sample_xregs(struct perf_event *event,
+>>  
+>>  	if (event_needs_xmm(event))
+>>  		mask |= XFEATURE_MASK_SSE;
+>> +	if (event_needs_ymm(event))
+>> +		mask |= XFEATURE_MASK_YMM;
+>>  
+>>  	mask &= x86_pmu.ext_regs_mask;
+>>  	if (sample_type & PERF_SAMPLE_REGS_USER) {
+> [Severity: Medium]
+> Does this evaluate flag-gated syscall parameters outside their flag gate?
+>
+> According to the syscall parameter trust boundaries, userspace is not
+> required to zero-fill unused fields, so they may contain arbitrary garbage
+> when their flag is absent.
+>
+> The event_needs_ymm() helper checks event->attr.sample_simd_regs_enabled
+> and event->attr.sample_simd_vec_reg_qwords.
+>
+> However, in x86_pmu_sample_xregs(), this check happens before we verify if
+> the sample type actually includes PERF_SAMPLE_REGS_USER or
+> PERF_SAMPLE_REGS_INTR.
+>
+> Could this cause the kernel to read uninitialized userspace values when
+> those sample_type flags are not set?
+
+Ok, would check if PERF_SAMPLE_REGS_INTR or PERF_SAMPLE_REGS_USER is set
+before calling x86_pmu_sample_xregs(), like this,
+
+diff --git a/arch/x86/events/core.c b/arch/x86/events/core.c
+index f990256fb2ff..cf621ab2cd46 100644
+--- a/arch/x86/events/core.c
++++ b/arch/x86/events/core.c
+@@ -2060,6 +2060,10 @@ void x86_pmu_update_perf_regs(struct perf_event *event,
+ {
+        u64 sample_type = event->attr.sample_type;
+
++       if (!(sample_type &
++             (PERF_SAMPLE_REGS_INTR | PERF_SAMPLE_REGS_USER)))
++               return;
++
+        if (!event_needs_xmm(event) &&
+            !event_has_simd_regs(event))
+                return;
+
 >
 >> diff --git a/arch/x86/kernel/perf_regs.c b/arch/x86/kernel/perf_regs.c
->> index 81204cb7f7239..7b9b38c189de2 100644
 >> --- a/arch/x86/kernel/perf_regs.c
 >> +++ b/arch/x86/kernel/perf_regs.c
 > [ ... ]
->> @@ -74,6 +77,71 @@ u64 perf_reg_value(struct pt_regs *regs, int idx)
-> [ ... ]
->> +int perf_simd_reg_validate(u16 simd_enabled, u16 vec_qwords,
->> +			   u64 vec_mask_intr, u64 vec_mask_user,
->> +			   u16 pred_qwords, u32 pred_mask_intr,
->> +			   u32 pred_mask_user)
->> +{
->> +	u64 size;
->> +
->> +	if (!simd_enabled) {
->> +		if (vec_qwords || vec_mask_intr || vec_mask_user ||
->> +		    pred_qwords || pred_mask_intr || pred_mask_user)
->> +			return -EINVAL;
-> [Severity: Critical]
-> Are we unconditionally validating syscall parameters outside their flag scopes
-> here?
+>> @@ -121,7 +128,8 @@ int perf_simd_reg_validate(u16 simd_enabled, u16 vec_qwords,
+>>  		if (vec_mask_intr || vec_mask_user)
+>>  			return -EINVAL;
+>>  	} else {
+>> -		if (vec_qwords != PERF_X86_XMM_QWORDS)
+>> +		if (vec_qwords != PERF_X86_XMM_QWORDS &&
+>> +		    vec_qwords != PERF_X86_YMM_QWORDS)
+>>  			return -EINVAL;
+> [Severity: High]
+> This isn't a bug introduced by this patch, but does the surrounding
+> validation code in perf_simd_reg_validate() inappropriately reject legal
+> syscalls?
 >
-> If userspace sets PERF_SAMPLE_REGS_USER but does not set
-> PERF_SAMPLE_REGS_INTR, the vec_mask_intr and pred_mask_intr parameters
-> could contain uninitialized stack garbage. Because userspace is not required
-> to zero-fill unused arguments, returning -EINVAL for garbage in these unused
-> masks could break ABI compatibility for programs recompiled against newer
-> kernel headers.
+> When simd_enabled is 0, the function checks if vec_qwords, vec_mask_intr,
+> and other parameters are zero, returning -EINVAL if they are not.
+>
+> Since userspace isn't required to zero-fill unused arguments outside their
+> flag gate, these parameters could contain garbage.
+>
+> Is it possible that enforcing zero-fill on these unused arguments
+> functionally breaks ABI compatibility by failing requests that should be
+> valid under the trust boundary rules?
 
-Hmm, it makes sense partly. Would add sample_type argument into this
-function and check more accurately.
+As previous comments said, would introduce an extra argument "sample_type"
+for perf_simd_reg_validate() and then do corresponding validate more
+accurately.
 
 Thanks.
 
 
 >
->> +		return 0;
->> +	}
->> +
->> +	if (!vec_qwords) {
->> +		if (vec_mask_intr || vec_mask_user)
->> +			return -EINVAL;
->> +	} else {
->> +		if (vec_qwords != PERF_X86_XMM_QWORDS)
->> +			return -EINVAL;
->> +		if ((!vec_mask_intr && !vec_mask_user) ||
->> +		    (vec_mask_intr & ~PERF_X86_SIMD_VEC_MASK) ||
->> +		    (vec_mask_user & ~PERF_X86_SIMD_VEC_MASK))
->> +			return -EINVAL;
-> [Severity: Critical]
-> Similarly, could checking these masks cause false -EINVAL errors
-> if only one of the sampling flags (INTR or USER) is enabled?
->
-> If PERF_SAMPLE_REGS_USER is enabled but PERF_SAMPLE_REGS_INTR is disabled,
-> vec_mask_intr might contain random bits that fail the PERF_X86_SIMD_VEC_MASK
-> check. Should these validation checks be gated behind the presence of their
-> respective flags in the sample_type to prevent regressions?
->
->> +	}
->> +
->> +	if (pred_qwords || pred_mask_intr || pred_mask_user)
->> +		return -EINVAL;
->> +
->> +	size = ((vec_qwords * hweight64(vec_mask_intr)) +
->> +		(vec_qwords * hweight64(vec_mask_user)) +
->> +		(pred_qwords * hweight32(pred_mask_intr)) +
->> +		(pred_qwords * hweight32(pred_mask_user))) * sizeof(u64);
->> +	if (size > U16_MAX)
->> +		return -EINVAL;
->> +
->> +	return 0;
->> +}
