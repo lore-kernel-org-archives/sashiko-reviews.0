@@ -1,119 +1,227 @@
-Received: from www62.your-server.de (www62.your-server.de [213.133.104.62])
+Received: from mout-p-103.mailbox.org (mout-p-103.mailbox.org [80.241.56.161])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C7F00331220;
-	Mon,  1 Jun 2026 12:31:41 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=213.133.104.62
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1AD5736404D
+	for <sashiko-reviews@lists.linux.dev>; Mon,  1 Jun 2026 12:34:33 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=80.241.56.161
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1780317104; cv=none; b=GiPUik5JgAGi8l/bqmzszpxW6KmzM9keWqzNCSgrsikVQ1yIJ6mWpOJcY2+ej6tkwujpHIEo68oLdzwE6WYW884T8twACe95QebyiN9higN1frlEm+WSLHUc9V9sW/nKC1Nhj7EbGuYncTtVXwqB9BosGfbtv8aVQQbheNDOTHo=
+	t=1780317275; cv=none; b=OcrQg52Lfkz7NXKbL7/pd4W75SK3BoxeEzktHuOWMVLQpX5T1NEYtncgsSUXI8cOv7oPREb/s7Yk1CrpERtjxEgTzctb2EUoA054iMNDOGWn2NzZn8FTL7BnNgXllTh3q/9dNlJsDQelYjLBikB3VSvv6U1sal90JP10r2RsboM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1780317104; c=relaxed/simple;
-	bh=9oXeyNlvXbSAvz0x7BAQcT428jFlkr1aUVlgoXmpc0c=;
-	h=Message-ID:Date:MIME-Version:Subject:From:To:Cc:References:
-	 In-Reply-To:Content-Type; b=RHP5c59///GV83FtAinAND6qTUFw7ztrjc92Ngo28VVeZj5/L9bI4CXA0oqAATPFe/ICXAPshzxm/BlNH8ZnGRrZYtGYG9okfV0e+zLv4+PpxI5fMBRrK/Oe31fr1AfZ2dvVrf2TO6HILz2qmSa70y1JPl6IcV2tuu2T8O9kYME=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=iogearbox.net; spf=pass smtp.mailfrom=iogearbox.net; dkim=pass (2048-bit key) header.d=iogearbox.net header.i=@iogearbox.net header.b=h5b5Rmdn; arc=none smtp.client-ip=213.133.104.62
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=iogearbox.net
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=iogearbox.net
+	s=arc-20240116; t=1780317275; c=relaxed/simple;
+	bh=G8naQnX023xiVBLy1JQKVDfF0uybstBTRqKw+rwEUTo=;
+	h=Message-ID:Subject:From:To:Cc:Date:In-Reply-To:References:
+	 Content-Type:MIME-Version; b=t43IB+5I/S3TagIgrsfc/quCUAjjkX/4ZCh60fV4qGX+8vB8AlawBZHAcDz3k4htCC2OVfOfVrl1eByWdE7O6KamqQWHBAKXJUiyL0pQ0TM50h0UHgh2jPen+sYIn2oz9BmvTwWnn0bvnfheTZ/iMOj5shgECjU5rh7RQVVXpd0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=mailbox.org; spf=pass smtp.mailfrom=mailbox.org; dkim=pass (2048-bit key) header.d=mailbox.org header.i=@mailbox.org header.b=mWjm3v8R; arc=none smtp.client-ip=80.241.56.161
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=mailbox.org
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=mailbox.org
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=iogearbox.net header.i=@iogearbox.net header.b="h5b5Rmdn"
-DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed;
-	d=iogearbox.net; s=default2302; h=Content-Transfer-Encoding:Content-Type:
-	In-Reply-To:References:Cc:To:From:Subject:MIME-Version:Date:Message-ID:Sender
-	:Reply-To:Content-ID:Content-Description:Resent-Date:Resent-From:
-	Resent-Sender:Resent-To:Resent-Cc:Resent-Message-ID;
-	bh=9oXeyNlvXbSAvz0x7BAQcT428jFlkr1aUVlgoXmpc0c=; b=h5b5Rmdnkd9xQGwGg9ELH1GJlJ
-	SFNbLu1joqTKkTQWxbABQreVZUGiL4uND+FhGIRJCbdijFUinTrWY5JdeF3JnO2g4MxZAz8NtwY9e
-	LRhNae0giBgLN0fE5uGtmxd3mIYzDmMGnEniy8TIQun+AFxdcZfHAN549T7RsqVGTLpWhUYokWxFF
-	edqLJXi7CIDKq+xxmxr98cO5EbfOLGkJBy+Is0eCyEbYXbsqNFkkiYJczYpcfml0lTB18BxwRFeqS
-	Ub5ONMMLJ5z814dRFwv5mk7tRghKE7FvEtWrail7bnwthj/XG14eAGaMKzWNNj+Nicao9BlECtRHJ
-	cNUctu3g==;
-Received: from sslproxy05.your-server.de ([78.46.172.2])
-	by www62.your-server.de with esmtpsa  (TLS1.3) tls TLS_AES_256_GCM_SHA384
-	(Exim 4.96.2)
-	(envelope-from <daniel@iogearbox.net>)
-	id 1wU1nv-000MpZ-1Z;
-	Mon, 01 Jun 2026 14:31:39 +0200
-Received: from localhost ([127.0.0.1])
-	by sslproxy05.your-server.de with esmtpsa  (TLS1.3) tls TLS_AES_256_GCM_SHA384
-	(Exim 4.96)
-	(envelope-from <daniel@iogearbox.net>)
-	id 1wU1nu-000OSR-1Z;
-	Mon, 01 Jun 2026 14:31:39 +0200
-Message-ID: <5d3e4f39-1053-416d-8e3f-0a6997003912@iogearbox.net>
-Date: Mon, 1 Jun 2026 14:31:38 +0200
+	dkim=pass (2048-bit key) header.d=mailbox.org header.i=@mailbox.org header.b="mWjm3v8R"
+Received: from smtp102.mailbox.org (smtp102.mailbox.org [10.196.197.102])
+	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+	 key-exchange X25519 server-signature RSA-PSS (4096 bits) server-digest SHA256)
+	(No client certificate requested)
+	by mout-p-103.mailbox.org (Postfix) with ESMTPS id 4gTYLb0TH0z9smK;
+	Mon,  1 Jun 2026 14:34:31 +0200 (CEST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=mailbox.org; s=mail20150812;
+	t=1780317271; h=from:from:reply-to:reply-to:subject:subject:date:date:
+	 message-id:message-id:to:to:cc:cc:mime-version:mime-version:
+	 content-type:content-type:
+	 content-transfer-encoding:content-transfer-encoding:
+	 in-reply-to:in-reply-to:references:references;
+	bh=G8naQnX023xiVBLy1JQKVDfF0uybstBTRqKw+rwEUTo=;
+	b=mWjm3v8RnB+2HYcWS922Nri0DnXhY9T4A/8M8nRY7edHycPPpGgZ93N+SyLiRiGkXsTILd
+	YUdLZ9qqxgEG4bUYjq4Xm9n4skpD1BbBPjFrVLZv+/1/T05ohnmuBDzRlg5j+OLekNQHLr
+	zZJ64PEZSbBXjUL3VGC9yLG+qDonV1cmV1WYNKrYr9r9YJYK1G3V/0zkPgXDmW+PP5dxQg
+	ebQw5kGS5EcOF7MQxXSGoyxS8zpxpWtkmrmdQ9gpw4yMIkXsZCLRO5kuiqK8jvaR3IPdnZ
+	Xx3D1kVu6UA2UAOJYWagMsMypd3jRa1ocmfvRqkSl0Kn73b2VF894zF9Se6XRA==
+Message-ID: <a3d09b270e6effb6f2bfb5d7ba8de48e3c2c4081.camel@mailbox.org>
+Subject: Re: [PATCH 3/4] rust: Add dma_fence abstractions
+From: Philipp Stanner <phasta@mailbox.org>
+Reply-To: phasta@kernel.org
+To: Alice Ryhl <aliceryhl@google.com>, sashiko-reviews@lists.linux.dev
+Cc: Philipp Stanner <phasta@kernel.org>, linux-media@vger.kernel.org, 
+	ojeda@kernel.org
+Date: Mon, 01 Jun 2026 14:34:28 +0200
+In-Reply-To: <ah1c3NSU-4UkdUhb@google.com>
+References: <20260530143541.229628-5-phasta@kernel.org>
+	 <20260530150622.393FC1F00893@smtp.kernel.org> <ah1c3NSU-4UkdUhb@google.com>
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 Precedence: bulk
 X-Mailing-List: sashiko-reviews@lists.linux.dev
 List-Id: <sashiko-reviews.lists.linux.dev>
 List-Subscribe: <mailto:sashiko-reviews+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:sashiko-reviews+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH bpf-next 1/3] libbpf: Reject non-exclusive metadata maps
- in the signed loader
-From: Daniel Borkmann <daniel@iogearbox.net>
-To: sashiko-reviews@lists.linux.dev
-Cc: bpf@vger.kernel.org
-References: <20260601100307.386243-1-daniel@iogearbox.net>
- <20260601103206.23C691F00893@smtp.kernel.org>
- <dbb2c9f7-4e1a-42d5-80ad-ffff93249391@iogearbox.net>
-Content-Language: en-US
-Autocrypt: addr=daniel@iogearbox.net; keydata=
- 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
-In-Reply-To: <dbb2c9f7-4e1a-42d5-80ad-ffff93249391@iogearbox.net>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
-X-Virus-Scanned: Clear (ClamAV 1.4.3/28018/Mon Jun  1 08:31:13 2026)
+X-MBO-RS-META: 5ehn3g8iqgwxdmdpf7gws67zosda7f1s
+X-MBO-RS-ID: 343d67c74a38ac11746
 
-On 6/1/26 1:00 PM, Daniel Borkmann wrote:
-> On 6/1/26 12:32 PM, sashiko-bot@kernel.org wrote:
->> Thank you for your contribution! Sashiko AI review found 2 potential issue(s) to consider:
->>
->> New issues:
->> - [Critical] The BPF map exclusivity feature (`excl_prog_sha`) can be bypassed via `ARRAY_OF_MAPS`, allowing a malicious BPF program to mutate a frozen exclusive metadata map and defeating the signed loader's TOCTOU defense.
->>
->> Pre-existing issues:
->> - [High] Concurrent bpf_map_get_info_by_fd() calls on a frozen array map trigger an unprotected data race and undefined behavior due to overlapping memcpy().
-> Will take a look into the new findings.
+On Mon, 2026-06-01 at 10:20 +0000, Alice Ryhl wrote:
+> On Sat, May 30, 2026 at 03:06:21PM +0000, sashiko-bot@kernel.org=C2=A0wro=
+te:
+> > > +impl<F: Send + Sync, C: Send + Sync> DriverFence<F, C> {
+> > > +=C2=A0=C2=A0=C2=A0 fn as_raw(&self) -> *mut bindings::dma_fence {
+> > > +=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 // SAFETY: Valid because =
+`self` is valid.
+> > > +=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 let fence_data =3D unsafe=
+ { &mut *self.data.as_ptr() };
+> >=20
+> > [Severity: High]
+> > Does this create an exclusive mutable reference to actively shared memo=
+ry?
+> >=20
+> > DriverFenceData can be accessed concurrently by other threads holding F=
+ence
+> > references (for instance, when checking if the fence is signaled). Crea=
+ting
+> > a mutable reference (&mut) in Rust asserts exclusive access and violate=
+s
+> > aliasing rules, which allows the compiler to make invalid optimization
+> > assumptions.
+> >=20
+> > Could this use an immutable reference &*self.data.as_ptr() instead?
+>=20
+> Yes, please use an immutable reference here.
+>=20
+> > > +
+> > > +=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 fence_data.inner.inner.ge=
+t()
+> > > +=C2=A0=C2=A0=C2=A0 }
+> >=20
+> > [ ... ]
+> >=20
+> > > +impl<F: Send + Sync, C: Send + Sync> DriverFenceBorrow<F, C> {
+> > > +=C2=A0=C2=A0=C2=A0 fn as_raw(&self) -> *mut bindings::dma_fence {
+> > > +=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 // SAFETY: Valid because =
+`self` is valid.
+> > > +=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 let fence_data =3D unsafe=
+ { &mut *self.data.as_ptr() };
+> >=20
+> > [Severity: High]
+> > Similar to DriverFence::as_raw(), does this also incorrectly create a
+> > mutable reference to shared data?
+>=20
+> Here as well.
 
-Both findings are reasonable, will expand in a v2 and also fix up the selftest.
+`data` is not shared. By design there is only ever one DriverFence, and
+the driver's data (`data.data`) is `Sync`.
+
+But I guess an immutable one should do the trick, too.
+
+>=20
+> > > +
+> > > +=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 fence_data.inner.inner.ge=
+t()
+> > > +=C2=A0=C2=A0=C2=A0 }
+> >=20
+> > [ ... ]
+> >=20
+> > > +impl<F: Send + Sync, C: Send + Sync> Drop for DriverFence<F, C> {
+> > > +=C2=A0=C2=A0=C2=A0 fn drop(&mut self) {
+> > > +=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 let fence =3D self.as_raw=
+();
+> > > +=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 let mut fence_flags: usiz=
+e =3D 0;
+> > > +=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 let flag_ptr =3D &raw mut=
+ fence_flags;
+> > > +
+> > > +=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 // SAFETY: Once a `Driver=
+Fence` is initialized, the inner `fence` is
+> > > +=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 // valid and initialized.=
+ It is valid until the refcount drops
+> > > +=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 // to 0, which can earlie=
+st happen once the `DriverFence` has been dropped.
+> > > +=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 unsafe {
+> > > +=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 b=
+indings::dma_fence_lock_irqsave(fence, flag_ptr);
+> > > +=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 #=
+[allow(unused_unsafe)]
+> > > +=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 i=
+f warn_on!(!bindings::dma_fence_is_signaled_locked(fence)) {
+> > > +=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=
+=C2=A0=C2=A0=C2=A0=C2=A0 bindings::dma_fence_set_error(fence, ECANCELED as =
+i32);
+> >=20
+> > [Severity: High]
+> > Is it intentional to pass a positive error code here?
+> >=20
+> > bindings::ECANCELED evaluates to a positive integer, but
+> > dma_fence_set_error() expects a negative error code (and triggers a WAR=
+N_ON
+> > for positive values). A positive value might also be interpreted as suc=
+cess
+> > by callers checking for values < 0.
+> >=20
+> > Should this be - (bindings::ECANCELED as i32)?
+>=20
+> Please use ECANCELED.to_errno(). Do not import these from bindings.
+>=20
+> > > +=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=
+=C2=A0=C2=A0=C2=A0=C2=A0 bindings::dma_fence_signal_locked(fence);
+> > > +=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 }
+> > > +=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 b=
+indings::dma_fence_unlock_irqrestore(fence, flag_ptr);
+> > > +=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 }
+> > > +
+> > > +=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 // SAFETY: `self.data` is=
+ owned by the DriverFence, but could be accessed
+> > > +=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 // through some dma_fence=
+ callbacks right now. Access is being revoked
+> > > +=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 // above by signalling th=
+e fence. The DriverFenceAllowedData trait
+> > > +=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 // ensures that the data =
+either does not need drop, or if it does it
+> > > +=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 // lives in a RcuBox whic=
+h will delay dropping by one grace period, hence
+> > > +=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 // ensuring that all read=
+ers have disappeared.
+> > > +=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 unsafe { drop_in_place(se=
+lf.data.as_ptr()) };
+> >=20
+> > [Severity: Critical]
+> > Could this eagerly drop FenceCtx and user data before the C dma_fence
+> > refcount reaches 0?
+> >=20
+> > The C dma_fence object can remain alive as long as consumers (like sync=
+_file
+> > or the GPU scheduler) hold references to it. If the backend later invok=
+es
+> > callbacks like ops->get_driver_name(), FenceCtx::get_driver_name() woul=
+d
+> > attempt to read fctx.driver_name from the already-dropped FenceCtx:
+> >=20
+> > FenceCtx::get_driver_name() {
+> > =C2=A0=C2=A0=C2=A0 ...
+> > =C2=A0=C2=A0=C2=A0 fctx.driver_name.as_char_ptr()
+> > }
+> >=20
+> > Can this result in a use-after-free?
+>=20
+> Hmm, I don't know about what sahisko said, but I don't think this is the
+> right way to do rcu freeing. I think the type's destructor should be
+> reserved for cases where the value becomes immediately unusable.
+
+We could guard the strings with RcuBox, but we could not then guard the
+FenceCtx code against code UAF if we don't have the rcu_barrier().
+
+Or could we?
+
+If a rust module unloads, module::remove() should contain an
+rcu_barrier() (right??). Would that be enough to guard against the
+FenceCtx code being unloaded?
+
+>=20
+> For example, let's say I'm using RcuBox<_> here. Yes, the data you get
+> from dereferencing the RcuBox will stay alive for a grace period, but
+> IMO once you run the destructor of the box itself, the *pointer* becomes
+> immediately unusable.
+
+I don't know why you're stressing the pointer?
+
+The trick above is simply that drop / dealloc *and* code unloading is
+delayed by a grace period.
+
+P.
+
+>=20
+> Alice
