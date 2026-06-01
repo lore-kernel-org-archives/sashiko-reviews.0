@@ -1,87 +1,50 @@
-Received: from mx0a-0031df01.pphosted.com (mx0a-0031df01.pphosted.com [205.220.168.131])
+Received: from mgamail.intel.com (mgamail.intel.com [198.175.65.9])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CD2A738D3F3
-	for <sashiko-reviews@lists.linux.dev>; Mon,  1 Jun 2026 09:02:50 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.168.131
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1024738B7AA
+	for <sashiko-reviews@lists.linux.dev>; Mon,  1 Jun 2026 09:08:38 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=198.175.65.9
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1780304572; cv=none; b=UKkkzhNfRR7kZQIbSvgCOBGlaGzX19JaClrppo6PP2M33q45roHLKK9W38gKBhgxLUqcp9ODO1lde9VItrvIAaTxKNc/G/ysrP9HbvR3vU0dE7kYu90hXbJGhdSZhKVbmv/EIu00AUuaiJsm5MQH9HyiAtwWbob5EEvoEGsMQKg=
+	t=1780304920; cv=none; b=HXvZ0PTXeNwbgi+Mw+mhGVHaS4TMLImgjGiaKfecvCiaI0Wd4yF1wh6TFZwQlWudItOilyQfExRPMD+8fPyXhPS6Qrg8zpsQFNq/cxVb/ms22Otf1LzcfBBqHXeoUINvREeklfInHtz3PZfB2jYGJ+vlWRT+k2DSzPwrHUV8cRQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1780304572; c=relaxed/simple;
-	bh=4dH6hzvTjnW+GZA3+yzP2/rz0qP6WSKvqY0caaPpiBo=;
+	s=arc-20240116; t=1780304920; c=relaxed/simple;
+	bh=TdW5yechDMCn6D+5IR3Ax4hPX4SbKRAR7SncK2dGYzY=;
 	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=m8lWZHjGz2Jqtr6FBJLvgQnJTsbeM1nJrufibV2v41mhQUUiyXsPRW8KZ0s275Ql4XmJ2zQMtcjoF0Cq5eq537F6Xd0vl0NZWzHNqWrIBkYv89+JBdPvll2cr1zAZANFYL0Sgkr+0SfDZhTB/Y7zSbPZL7jNKGzdr+86tCXr9Gk=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com; spf=pass smtp.mailfrom=oss.qualcomm.com; dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b=O5ot2mph; dkim=pass (2048-bit key) header.d=oss.qualcomm.com header.i=@oss.qualcomm.com header.b=Pf5GO1ZG; arc=none smtp.client-ip=205.220.168.131
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=oss.qualcomm.com
+	 In-Reply-To:Content-Type; b=ozKYHb2w0FPsXzkWBp8ZyA1oBytxsc9cm7V16Ue9THV5UpRApykOt+nIrRAa4uO0mJZ9bGfKwREPj5G3Nvy1YI5Inznl8AQPTT3r+XMJyCoTcLn0loEzLOghWsWykeDkbbn56+wDFHZ626c2LUUM8EtxkmWoptmhaM+rZq1Tncc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linux.intel.com; spf=pass smtp.mailfrom=linux.intel.com; dkim=pass (2048-bit key) header.d=intel.com header.i=@intel.com header.b=cyb4MuTQ; arc=none smtp.client-ip=198.175.65.9
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linux.intel.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linux.intel.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b="O5ot2mph";
-	dkim=pass (2048-bit key) header.d=oss.qualcomm.com header.i=@oss.qualcomm.com header.b="Pf5GO1ZG"
-Received: from pps.filterd (m0279866.ppops.net [127.0.0.1])
-	by mx0a-0031df01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id 65162VUd3358415
-	for <sashiko-reviews@lists.linux.dev>; Mon, 1 Jun 2026 09:02:50 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=qualcomm.com; h=
-	cc:content-transfer-encoding:content-type:date:from:in-reply-to
-	:message-id:mime-version:references:subject:to; s=qcppdkim1; bh=
-	dS24bvMnimy4PR7Q5DeqliRbUmxNl+ULW60N717m0To=; b=O5ot2mph9Ii9OZ1U
-	7Oe6dbxnNSnS5PZbp5A6e6S6UUl9QIEjiYDWroUKON+hT86eUuwxgbqG20BV8Akv
-	b5JcP3ZNJ2+Yb/EyNDQk4WzmmAQvFkveEHj8hxzYFWpCbCsi2jw589DNiLmAbRNi
-	31277feDw4wVvRuYwZ80mewh1BUJj9qzimaW2hm7z8QzfxImfXwxJAbMTxN4VFZl
-	TEx88LR41kdS7Mq9aEj3HmDbil4FoBV0I46csYbc6GcljXDsO3ipIjvY5sAm0SfT
-	/3u4LE/h9YbGOKuTSOG4n7Rfk62GPkRVcJzJ4iyTq8Pf9Q1Tpf4F7Y3Tl2I8fkWy
-	KqEyFA==
-Received: from mail-pl1-f197.google.com (mail-pl1-f197.google.com [209.85.214.197])
-	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 4efs66xhsj-1
-	(version=TLSv1.3 cipher=TLS_AES_128_GCM_SHA256 bits=128 verify=NOT)
-	for <sashiko-reviews@lists.linux.dev>; Mon, 01 Jun 2026 09:02:50 +0000 (GMT)
-Received: by mail-pl1-f197.google.com with SMTP id d9443c01a7336-2c0b35fa876so17667115ad.1
-        for <sashiko-reviews@lists.linux.dev>; Mon, 01 Jun 2026 02:02:50 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=oss.qualcomm.com; s=google; t=1780304569; x=1780909369; darn=lists.linux.dev;
-        h=content-transfer-encoding:in-reply-to:from:content-language
-         :references:cc:to:subject:user-agent:mime-version:date:message-id
-         :from:to:cc:subject:date:message-id:reply-to;
-        bh=dS24bvMnimy4PR7Q5DeqliRbUmxNl+ULW60N717m0To=;
-        b=Pf5GO1ZG5vfqc/0KkHRvVnagIwTV8AOGBvtT6RoYOewNGuzjdP+ALsBOk+RywwNIqo
-         N+L2qDT/2s0FiIUe2A+LJTcK/atJjGngL8H5czB/DwNljMr8kiVs1NrhwsA7oX6dZTS0
-         vFvpzHI7e5H1MONZCBov0zM0LAWS7MBQsx7PE8dpmMbbm5Ku1IfEXwddnRgpUyRUsNH7
-         Uq31YB5pp3e4ht1olet9C2DcfxovNT29gZSLUjhvtmRA3DAI9Hvyfisf2zbeGskSErhR
-         XSd6DlR2BpsV9T0Rft0UelEAg1xf8zbi39pkJ2nM/ueTb6fo2Oln4tkxsGX0SH2YEv3x
-         aRVg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20251104; t=1780304569; x=1780909369;
-        h=content-transfer-encoding:in-reply-to:from:content-language
-         :references:cc:to:subject:user-agent:mime-version:date:message-id
-         :x-gm-gg:x-gm-message-state:from:to:cc:subject:date:message-id
-         :reply-to;
-        bh=dS24bvMnimy4PR7Q5DeqliRbUmxNl+ULW60N717m0To=;
-        b=Fv1Quh4kn7AcyMUnN6DYfkeEpx0Kl4l+fIYrd0VyaqQFfnmuMbcilT+PBKn5ClgKp/
-         snhNG0vDUV4FQUfyf+qFtGm+SG5/s1W5XEc3WwFMTxw4KWRQSPYwQU/N9lQOjctQZZl0
-         rZgXLDlLZlNHnNMYkJcBxN3vwkbnOorgpvzBw4jx4iu9d4Khia7tFI3sFrlTKJ4K/DDq
-         cwFQIsOjBGSodY2fQQ0UtAMrMeUIxN5OAisSPsC7IzwQ5HrWQMoxadLT9rSw/j2UqG65
-         Pzd4gUgPkalCkq2R5BbGBKAGOZh4r8amT3o9KYso6PHl3zJLOOVRWWb71yaU2HTlQZpi
-         48BA==
-X-Gm-Message-State: AOJu0Yz0X0yewTc6t+pcPo4acbBHPyZtoSH6JMx9aPZFuhvm7oBfMVx/
-	AB07WJvk4xNXDGjEc8HKeeoRwKZKehdeJjJimi2FSb0wZg+mWm8m6vHRpDpnLFtCRUFXq5P7Hq6
-	BsJkgUJAF5vZcrbjWAtWKWBzc/fqwz6/I/3Vq80KaFwNlduXBgMUxfsuvoQJcNBwM0+uiWILaPa
-	aqY/p09Eft
-X-Gm-Gg: Acq92OHlwuibR2OLZBetsiu12HdJ9UgBHms+dxVDy6S+pKnXZ5eQE1CpKsLiZEf1qNl
-	/t5SxaLvR0S6UIIAKC22pKnpINp1ZIefMTkqxBNtIzEt6W3QOT2j9W7MdWwuBdjsSMl4rTR9xuN
-	5Efy54ySwxsKRV+J2IWS+NF+QGnEN/ygNObLZSNPoJ/m2Kt+cSIvz/U7bwCybFUjy0Fpd3s34qC
-	KhYSMNN11N4/SFBbxdPOr+nYEmjZZnVIkUvSqcNYzAExmY8sDXVCjz1Ui55xOOB7wCJmDrMo4QD
-	IAyrC4kLi/Ywxj7poen7lkdCEzR0AheRYyjUIkEejBUj/Q633ASftK9knwcqwpBKv1PFlK55WvW
-	8wIJGO3n+RXeaUDfluEG4Kt7xpHIcB9l0WessVGUhPSm60MblJTyb7k+wPIza+xx1MJIm5a5NHW
-	3Sr6M5pNtRGM2uz+IrWyX2
-X-Received: by 2002:a17:903:3585:b0:2bd:ba75:81c4 with SMTP id d9443c01a7336-2bf367cbd56mr111929645ad.13.1780304569353;
-        Mon, 01 Jun 2026 02:02:49 -0700 (PDT)
-X-Received: by 2002:a17:903:3585:b0:2bd:ba75:81c4 with SMTP id d9443c01a7336-2bf367cbd56mr111929095ad.13.1780304568792;
-        Mon, 01 Jun 2026 02:02:48 -0700 (PDT)
-Received: from [10.133.33.9] (tpe-colo-wan-fw-bordernet.qualcomm.com. [103.229.16.4])
-        by smtp.gmail.com with ESMTPSA id d9443c01a7336-2bf23b011f7sm130112305ad.41.2026.06.01.02.02.47
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Mon, 01 Jun 2026 02:02:48 -0700 (PDT)
-Message-ID: <e0a89628-84ef-4299-b25c-9d4d3c5c7b85@oss.qualcomm.com>
-Date: Mon, 1 Jun 2026 17:02:46 +0800
+	dkim=pass (2048-bit key) header.d=intel.com header.i=@intel.com header.b="cyb4MuTQ"
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
+  d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
+  t=1780304919; x=1811840919;
+  h=message-id:date:mime-version:subject:to:cc:references:
+   from:in-reply-to:content-transfer-encoding;
+  bh=TdW5yechDMCn6D+5IR3Ax4hPX4SbKRAR7SncK2dGYzY=;
+  b=cyb4MuTQLfhtMAM8g/671UXgfgBCQHf09FelA2LTECLrGsrHN4FhhEFM
+   7pPrG7YeYSBYhKlm0XrixmyP7oX4b4oywtH0zYP5BOxzJ18ssQZyR97ik
+   BoQQ+5sC27U7D6wQQeYyk+jioAurS+NY9fx4cOXY/7W2JrtQi+VmOZ7Gf
+   gLdNd/q1oQBGK0FPQDb1nzfG4Op97UtZSVfVcLhGharJVp2yIRvOFX+tU
+   au6CNwl9CxZAcB0nAD3cnP18eIwH5Co/MCY2/SeKN4/fZLZa+upCUNsMM
+   y/+onaqkXsDLG0OKrsZ1EGu76HiC/I15YK7ViLQBd1FFuVD+Zhn1CVfPy
+   g==;
+X-CSE-ConnectionGUID: QVBunxdjRe6Nk+qEa/xJEw==
+X-CSE-MsgGUID: csjqSj8qTlmV7fyQF5ytyA==
+X-IronPort-AV: E=McAfee;i="6800,10657,11803"; a="103729982"
+X-IronPort-AV: E=Sophos;i="6.24,181,1774335600"; 
+   d="scan'208";a="103729982"
+Received: from fmviesa010.fm.intel.com ([10.60.135.150])
+  by orvoesa101.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 01 Jun 2026 02:08:38 -0700
+X-CSE-ConnectionGUID: udRkzdS4SpiRQlebN6Hy6w==
+X-CSE-MsgGUID: P20tDGZCRnyp7zBghfFgEQ==
+X-ExtLoop1: 1
+X-IronPort-AV: E=Sophos;i="6.24,181,1774335600"; 
+   d="scan'208";a="239338036"
+Received: from dapengmi-mobl1.ccr.corp.intel.com (HELO [10.124.241.147]) ([10.124.241.147])
+  by fmviesa010-auth.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 01 Jun 2026 02:08:37 -0700
+Message-ID: <822ca505-9dd9-48f9-9461-75da241bde28@linux.intel.com>
+Date: Mon, 1 Jun 2026 17:08:35 +0800
 Precedence: bulk
 X-Mailing-List: sashiko-reviews@lists.linux.dev
 List-Id: <sashiko-reviews.lists.linux.dev>
@@ -89,133 +52,112 @@ List-Subscribe: <mailto:sashiko-reviews+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:sashiko-reviews+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v4 2/7] clk: qcom: Add generic clkref_en support
+Subject: Re: [Patch v8 20/23] perf/x86/intel: Support arch-PEBS based
+ SIMD/eGPRs/SSP sampling
 To: sashiko-reviews@lists.linux.dev
-Cc: devicetree@vger.kernel.org, robh@kernel.org, conor+dt@kernel.org
-References: <20260527-tcsr_qref_0527-v4-2-ded83866c9d9@oss.qualcomm.com>
- <20260528030538.F0FB31F00A3D@smtp.kernel.org>
+Cc: linux-perf-users@vger.kernel.org
+References: <20260529075645.580362-21-dapeng1.mi@linux.intel.com>
+ <20260529094559.5337D1F00893@smtp.kernel.org>
 Content-Language: en-US
-From: Qiang Yu <qiang.yu@oss.qualcomm.com>
-In-Reply-To: <20260528030538.F0FB31F00A3D@smtp.kernel.org>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
-X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwNjAxMDA5MCBTYWx0ZWRfX1HjJfEKGtE7R
- iqkgeg6ptKlQ8jAAUlLlMsxtHMr5jcXPlyj+N0dCenwoxcHV+fotOMOgX+7Kn+8yJu8vYlo85f2
- tTUmeTf2iWo+LEgNkyVtOGqRjb89EN60rER9b8qURN1wolYAjdFpuyz4QhIr2OsFlgzSJ/sO7l6
- X3Xt2yMN0iPSEVYReq4J/1jKNnQLiAs6bJEy5mHEDBYrLhxtzLqmEYDDoWnBPLw8vJUIw9HxBZd
- ogAk3wApwF3yTMURHK1BAq5UMnMlJvrs9uQVSBDrtEIxGm+B47pMeBRImf+GXdmgfx543iGc2VV
- Wi5NpXV/g0+DNk0usJmpTjkirUfEl+oGuB0bqcWHtEvGl4HZUq3rEGuKr2wP8++aIWQ4XPLkoWY
- W/FRnoyYOlgyYswHlg75j4Y1Xb49CHk9eRxqf7oSayabBL6qK7c2E7TeRdAMHAjy2OiWAHd13HW
- Nv0pexY6eaN7htpvegw==
-X-Authority-Analysis: v=2.4 cv=X8di7mTe c=1 sm=1 tr=0 ts=6a1d4aba cx=c_pps
- a=cmESyDAEBpBGqyK7t0alAg==:117 a=nuhDOHQX5FNHPW3J6Bj6AA==:17
- a=IkcTkHD0fZMA:10 a=FelO9ux0wxsA:10 a=s4-Qcg_JpJYA:10
- a=VkNPw1HP01LnGYTKEx00:22 a=u7WPNUs3qKkmUXheDGA7:22 a=YMgV9FUhrdKAYTUUvYB2:22
- a=VwQbUJbxAAAA:8 a=EUspDBNiAAAA:8 a=RwAibasCBCaYvBehKCwA:9 a=QEXdDO2ut3YA:10
- a=1OuFwYUASf3TG4hYMiVC:22
-X-Proofpoint-ORIG-GUID: 1mJsjCsfqRyi8U1Ko42P_lXNpg8-a35p
-X-Proofpoint-GUID: 1mJsjCsfqRyi8U1Ko42P_lXNpg8-a35p
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.293,Aquarius:18.0.1143,Hydra:6.1.125,FMLib:17.12.100.49
- definitions=2026-06-01_02,2026-05-28_03,2025-10-01_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
- clxscore=1011 suspectscore=0 lowpriorityscore=0 phishscore=0 impostorscore=0
- priorityscore=1501 bulkscore=0 adultscore=0 malwarescore=0 spamscore=0
- classifier=typeunknown authscore=0 authtc= authcc= route=outbound adjust=0
- reason=mlx scancount=1 engine=8.22.0-2605210000 definitions=main-2606010090
+From: "Mi, Dapeng" <dapeng1.mi@linux.intel.com>
+In-Reply-To: <20260529094559.5337D1F00893@smtp.kernel.org>
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
 
 
-On 5/28/2026 11:05 AM, sashiko-bot@kernel.org wrote:
-> Thank you for your contribution! Sashiko AI review found 3 potential issue(s) to consider:
-> - [High] Unbalanced regulator disable during late init for clocks left enabled by the bootloader.
-> - [Medium] Hardcoded resource mapping and OF provider registration prevent API reuse in multi-functional drivers.
-> - [Medium] `qcom_clk_ref_is_enabled` returns a negative error code on failure, which CCF interprets as true.
+On 5/29/2026 5:45 PM, sashiko-bot@kernel.org wrote:
+> Thank you for your contribution! Sashiko AI review found 1 potential issue(s) to consider:
+> - [High] Requesting the SSP (Shadow Stack Pointer) register improperly allows large PEBS to be enabled on legacy PEBS hardware, resulting in stale and identical SSP values across all samples in the buffer.
 > --
 >
-> commit 958034c0adafc3f72b4d7e46df81935d74404f7a
-> Author: Qiang Yu <qiang.yu@oss.qualcomm.com>
+> commit 2a27d3f31fac15c7d594a6588f8dacfa2939bc9f
+> Author: Dapeng Mi <dapeng1.mi@linux.intel.com>
 >
-> clk: qcom: Add generic clkref_en support
+> perf/x86/intel: Support arch-PEBS based SIMD/eGPRs/SSP sampling
 >
-> This commit introduces a new clk_ref clock type with custom clk_ops for
-> QREF blocks. It provides a common registration and probe API intended to
-> be reused across different placements like TCSR and TLMM.
+> This commit adds support for sampling SIMD, eGPRs, and SSP registers using
+> arch-PEBS. It defines the layout for these extended registers and manages
+> their sampling via MSRs and the XSTATE_BV bitmap.
 >
->> diff --git a/drivers/clk/qcom/clk-ref.c b/drivers/clk/qcom/clk-ref.c
->> new file mode 100644
->> index 0000000000000..213c0f58bb36e
->> --- /dev/null
->> +++ b/drivers/clk/qcom/clk-ref.c
+>> diff --git a/arch/x86/events/intel/core.c b/arch/x86/events/intel/core.c
+>> --- a/arch/x86/events/intel/core.c
+>> +++ b/arch/x86/events/intel/core.c
 > [ ... ]
 >
->> +static void qcom_clk_ref_unprepare(struct clk_hw *hw)
+>> @@ -4695,21 +4710,113 @@ static void intel_pebs_aliases_skl(struct perf_event *event)
+> [ ... ]
+>
+>> +static bool __regs_support_large_pebs(struct perf_event *event, bool intr)
 >> +{
->> +	struct qcom_clk_ref *rclk = to_qcom_clk_ref(hw);
+>> +	u64 regs = intr ? event->attr.sample_regs_intr :
+>> +			  event->attr.sample_regs_user;
+>> +	u64 vec_regs = intr ? event->attr.sample_simd_vec_reg_intr :
+>> +			      event->attr.sample_simd_vec_reg_user;
+>> +	u64 pred_regs = intr ? event->attr.sample_simd_pred_reg_intr :
+>> +			       event->attr.sample_simd_pred_reg_user;
+>> +	u64 xregs_mask = PEBS_GP_REGS | PERF_X86_EGPRS_MASK |
+>> +			 BIT_ULL(PERF_REG_X86_SSP);
 >> +
->> +	if (rclk->desc.num_regulators)
->> +		regulator_bulk_disable(rclk->desc.num_regulators, rclk->regulators);
->> +}
+>> +	if (regs & ~xregs_mask)
+>> +		return false;
+>> +
+>> +	if ((regs & (PEBS_GP_REGS | BIT_ULL(PERF_REG_X86_SSP))) &&
+>> +	    !intel_pebs_support_regs(event, PEBS_DATACFG_GP))
+>> +		return false;
 > [Severity: High]
-> If the bootloader leaves this clock enabled, the common clock framework
-> will call unprepare() during late init to turn off unused clocks. Since
-> prepare() was never called by the kernel, won't this
-> regulator_bulk_disable() call trigger an unbalanced disable warning and
-> permanently leak power?
+> Does this logic unintentionally allow large PEBS to be enabled on legacy PEBS
+> hardware when the SSP register is requested?
 >
-> Does the driver need to sync the hardware state during probe by enabling
-> the regulators if the clock is already on?
-clk_unprepare_unused_subtree() calls unprepare() only when
-clk_core_is_prepared() returns true. Since our driver has no .is_prepared
-op, the framework falls back to checking core->prepare_count, which is 0
-if the kernel never called prepare(). So unprepare() will not be called in
-that path, and the regulator imbalance you describe cannot happen via the
-unused clock cleanup.
+> Looking at intel_pebs_support_regs(), it returns true for PEBS_DATACFG_GP
+> unconditionally on legacy PEBS hardware. If a user requests SSP on legacy
+> PEBS, __regs_support_large_pebs() will return true and allow large PEBS.
+>
+> Since legacy PEBS hardware records do not contain the SSP, the perf core
+> fetches it from the thread's XSAVE buffer during the PMU interrupt via
+> x86_pmu_update_perf_regs(). 
+>
+> Because large PEBS batches multiple samples and delays the interrupt, won't
+> every sample in the batch end up with the exact same stale SSP value from
+> the time of the interrupt?
+>
+> Should large PEBS be explicitly disabled on legacy PEBS when SSP is
+> requested, perhaps similarly to how eGPRs are handled?
 
-- Qiang Yu
+Yes, this is a bug, need to check if arch-PEBS is supported for SSP, like this,
+
+```
+
+diff --git a/arch/x86/events/intel/core.c b/arch/x86/events/intel/core.c
+index 4546b20429ba..b37ee3e481bb 100644
+--- a/arch/x86/events/intel/core.c
++++ b/arch/x86/events/intel/core.c
+@@ -4764,7 +4764,7 @@ static bool __regs_support_large_pebs(struct
+perf_event *event, bool intr)
+        if (regs & ~xregs_mask)
+                return false;
+
+-       if ((regs & (PEBS_GP_REGS | BIT_ULL(PERF_REG_X86_SSP))) &&
++       if ((regs & PEBS_GP_REGS) &&
+            !intel_pebs_support_regs(event, PEBS_DATACFG_GP))
+                return false;
+
+@@ -4772,6 +4772,11 @@ static bool __regs_support_large_pebs(struct
+perf_event *event, bool intr)
+            !intel_pebs_support_regs(event, PEBS_DATACFG_EGPRS))
+                return false;
+
++       if ((regs & BIT_ULL(PERF_REG_X86_SSP)) &&
++           (!x86_pmu.arch_pebs ||
++            !intel_pebs_support_regs(event, PEBS_DATACFG_GP)))
++               return false;
++
+        if (event_needs_opmask(event) && pred_regs &&
+            !intel_pebs_support_regs(event, PEBS_DATACFG_OPMASKS))
+                return false;
+
+```
+
+
 >
 > [ ... ]
->
->> +static int qcom_clk_ref_is_enabled(struct clk_hw *hw)
->> +{
->> +	struct qcom_clk_ref *rclk = to_qcom_clk_ref(hw);
->> +	u32 val;
->> +	int ret;
->> +
->> +	ret = regmap_read(rclk->regmap, rclk->desc.offset, &val);
->> +	if (ret)
->> +		return ret;
-> [Severity: Medium]
-> If regmap_read() fails, this returns a negative error code (e.g., -EINVAL).
-> Since the common clock framework evaluates the is_enabled callback as a
-> boolean, won't it treat this negative error code as true and incorrectly
-> assume the clock is enabled?
->
->> +
->> +	return !!(val & QCOM_CLK_REF_EN_MASK);
->> +}
-> [ ... ]
->
->> +int qcom_clk_ref_probe(struct platform_device *pdev,
->> +		       const struct regmap_config *config,
->> +		       const struct qcom_clk_ref_desc *descs,
->> +		       size_t num_clk_refs)
->> +{
->> +	struct qcom_clk_ref_provider *provider;
->> +	struct device *dev = &pdev->dev;
->> +	struct regmap *regmap;
->> +	void __iomem *base;
->> +	int ret;
->> +
->> +	base = devm_platform_ioremap_resource(pdev, 0);
->> +	if (IS_ERR(base))
->> +		return PTR_ERR(base);
-> [Severity: Medium]
-> The commit message mentions reusing this model for blocks like TLMM on SM8750.
-> If a multi-functional driver like TLMM tries to use this helper, won't
-> devm_platform_ioremap_resource() fail with -EBUSY because the parent driver
-> already maps the register region?
->
-> Since qcom_clk_ref_register() is static and callers are forced to use
-> qcom_clk_ref_probe(), does this hardcoded resource mapping prevent the
-> intended integration with multi-functional drivers?
 >
