@@ -1,126 +1,146 @@
-Received: from us-smtp-delivery-124.mimecast.com (us-smtp-delivery-124.mimecast.com [170.10.129.124])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-wm1-f52.google.com (mail-wm1-f52.google.com [209.85.128.52])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 59BDF3AE18B
-	for <sashiko-reviews@lists.linux.dev>; Mon,  1 Jun 2026 14:38:57 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=170.10.129.124
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 74EBB3D810C
+	for <sashiko-reviews@lists.linux.dev>; Mon,  1 Jun 2026 15:05:38 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.52
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1780324738; cv=none; b=SHe1dS4cDREyToRUeD4J8R5gCVxtcTllKXjKc7YQksBgHnxOHQrpF4xkjlylHaTtfXmKwyKCxy5MfQyjh1ZgbzFlPZ37muKwznA2dvT/OpojenWWA6sadmyywzQ8GcOPVOvQZeFdAUfHI6UUJEecdh92jTzAZhlco7rj20hALwA=
+	t=1780326342; cv=none; b=SCGkpG5NRxiAbzEnmybLLENcOgzXHYh+4qxdvHD7Lh9MxmxbO+Z2szRCA8byBDNrDbqh7Zg1JXi8r0d/o1Hu78+qR+JvJlAQWt75jLUChqzjQEozCCQCmb4EVwYpYr6HXx5cO+vk17HH0f/mfEvhX647uJ0c4ZJslUD7S321bIg=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1780324738; c=relaxed/simple;
-	bh=+CnGQ9TO70FOcTY4MRKaNNO36huxITPaBaCyxApkKOs=;
-	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=hshIHJ90kiLcKppnB029YeFEuyKZM+RjqhBz0QYw5+GVeIo12Uof5gPNzP4XhJliBiTMJ7HQmEIKPBcGdeXDnuM5MDDdTqO78Ja9TzmaRMDaMkD/ReFKrUgG+0UNorXD5FsB+R5TGpAkktlOEKlH7wLWW31AxSWR2gI6q6S72kA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=redhat.com; spf=pass smtp.mailfrom=redhat.com; dkim=pass (1024-bit key) header.d=redhat.com header.i=@redhat.com header.b=b0FmVymX; arc=none smtp.client-ip=170.10.129.124
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=redhat.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=redhat.com
+	s=arc-20240116; t=1780326342; c=relaxed/simple;
+	bh=q7U5FdFdnmjh1a24iUampnKh0zlh+cXjbzSGoUU78PU=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=Ph/IJQwIH/f0Kpscps0VO07m7yKzTR8DOZyH/X+Y1zd6V9Z8Fhc0H35Yg1RXT3nTPVaxCOhC7o6S+bj5iJfXT5LMJJ5mALw38AJkpdoyvnBWnfwuUEeN13yULWX31Jm95dHayLUQjwqiyW68t6NA1aYSqDYtgwf6dRGCmQe+dck=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=suse.com; spf=pass smtp.mailfrom=suse.com; dkim=pass (2048-bit key) header.d=suse.com header.i=@suse.com header.b=gb5BClzD; arc=none smtp.client-ip=209.85.128.52
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=suse.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=suse.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=redhat.com header.i=@redhat.com header.b="b0FmVymX"
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
-	s=mimecast20190719; t=1780324736;
-	h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
-	 to:to:cc:cc:mime-version:mime-version:content-type:content-type:
-	 content-transfer-encoding:content-transfer-encoding:
-	 in-reply-to:in-reply-to:references:references;
-	bh=etk1wl0EQA40zfC85KF843N3y3SYchLVXHGTkLkJ2Ts=;
-	b=b0FmVymXBWsBLg9mGkAiQtmrQHgY9JyD0OyLJ0fYlZfdkT9awtzQ9ECqlND4f1SxNyKmG2
-	+KXYUiHAkGJjKkSLAtQP22iMJDz332+mavJF6V7RKSOs4SIQ31yIl4KEQmIb5Vg1gxwNNQ
-	M5g/HU5ywt2StqtLeOaCQedD0/RQPuA=
-Received: from mail-wr1-f69.google.com (mail-wr1-f69.google.com
- [209.85.221.69]) by relay.mimecast.com with ESMTP with STARTTLS
- (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-97-urf3gBE6PvqL2toUs3N7Fg-1; Mon, 01 Jun 2026 10:38:54 -0400
-X-MC-Unique: urf3gBE6PvqL2toUs3N7Fg-1
-X-Mimecast-MFC-AGG-ID: urf3gBE6PvqL2toUs3N7Fg_1780324733
-Received: by mail-wr1-f69.google.com with SMTP id ffacd0b85a97d-45ef5e38a18so1377469f8f.1
-        for <sashiko-reviews@lists.linux.dev>; Mon, 01 Jun 2026 07:38:53 -0700 (PDT)
+	dkim=pass (2048-bit key) header.d=suse.com header.i=@suse.com header.b="gb5BClzD"
+Received: by mail-wm1-f52.google.com with SMTP id 5b1f17b1804b1-490a7a9f81bso12111215e9.1
+        for <sashiko-reviews@lists.linux.dev>; Mon, 01 Jun 2026 08:05:38 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=suse.com; s=google; t=1780326337; x=1780931137; darn=lists.linux.dev;
+        h=in-reply-to:content-disposition:mime-version:references:message-id
+         :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
+        bh=q7U5FdFdnmjh1a24iUampnKh0zlh+cXjbzSGoUU78PU=;
+        b=gb5BClzDGciaan5jeLLu1ISnwFt8KHUwBoOdE5UbddS50NY6kzhKNy9qF7NjJvca1o
+         y01qX6ImXG9hU4yCOaN4Vv3H57jMPgD2dGIXJMqSf1B9TVjmDCtgt78auoJpsnHRntyU
+         vYKY0mBQsBBlA8P2t2cOH89HFfO82KwB8i/anJ6BKGePvGnTMqgH3yxlq1OIzi9E8W1N
+         G3QQ5zthLpYtWlZQHND1kANbGdIv1Av7VuUCcUuUgUuC9xUJ+jAC5rQbvjy9ktyIy/SA
+         DMgGetZzssWaH/wttC+kWLqWpQcEqR7k6MruIoeh+f+hgUXlrjxVWRP8oTFFN78SyXEh
+         8PMg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20251104; t=1780324733; x=1780929533;
-        h=content-transfer-encoding:in-reply-to:from:content-language
-         :references:cc:to:subject:user-agent:mime-version:date:message-id
-         :x-gm-gg:x-gm-message-state:from:to:cc:subject:date:message-id
-         :reply-to;
-        bh=etk1wl0EQA40zfC85KF843N3y3SYchLVXHGTkLkJ2Ts=;
-        b=YoLl7xJdudXptNd5Jb+IbLXxNCEAnYgTCjj5Q5Mo1LXC7fZltYgJEYGqCB7JkkMxm9
-         KGEpeVaWzAiHaOf+ql7ScGvlGVZQey0jqlsxhLqHj/KGA3fDgaUYTBS9dwMPvV+pWgjj
-         nA9nZb7jC9gFf8MU3/xv7crQ9OiGEPsZ9zl+M+AVNYSOkW37XJQu5WkkFbYE06twEKLH
-         Hy0b62bzN1OL+/Wejek7CgFgZyA2IZIjtS+yZ1bXm8E4yiUpUluxgZGUAE6ltR1SkKJM
-         a7cMj4Aol0dqwc9qSuKphG6U8oM9+fJvZwW14HRLIusUYDZhDrd3ZtdtlKeIGZh094ex
-         HTzA==
-X-Gm-Message-State: AOJu0YyDwZgp9vuOh+0rKezKYg7SQ2tLu8V/Gi8R4G/JSkUvBSY2e/Eo
-	3bzlctYGGuHzZY2ZNfIzPJUIOkIli13FpqRjG5/DUgpHGUjORywTila2+jZTNa63063RtLVXQmZ
-	5EnbJCHj22h91kSOXyXt4wjyRhYcKrAq6fYJxwszInJWHuo9Jpc9KXXhjjki27ykVirgYVw==
-X-Gm-Gg: Acq92OE9HTU+F0/0rE0dWKJ8IZjQU7jPN0Ar0HtHv6D+FP+GyXIHYtEkLT7pCU+YgLm
-	zcUeqofH3ThrNXLqcWmIE5IhxWHKVYdsN821WHAiL4sQVacV0XdkVNk3BLMDdq/mBhHQCrGMgn/
-	wQOjSSI5bIwaAh5j+Mx4IhoD96m07BkA+W3MaUs9L4EtgN+R/aHS+MmflMm8mR2VCpyTUARcWG6
-	0abbXdBlvq/1LnYcxYpYRG42py6BZAwh4Yl3mO6qInhP3r2OwzlU8NO4jwCrOnm+MifZpUmReki
-	rVIsp94oWf2qDyJCLKWR3temLFChT5kUdc9xKrKlev0Pucw002WlZHbOdU0DUZg9Cqvj+he+V5q
-	XlufilAuXNtkDRJbcZZs81ne+vj/a77p2b8eC5kK6pbhWdcEzOWqeXKVeWkpvM9t4Kq62
-X-Received: by 2002:a05:6000:26cf:b0:460:1695:89be with SMTP id ffacd0b85a97d-46016958be4mr2527480f8f.17.1780324732794;
-        Mon, 01 Jun 2026 07:38:52 -0700 (PDT)
-X-Received: by 2002:a05:6000:26cf:b0:460:1695:89be with SMTP id ffacd0b85a97d-46016958be4mr2527437f8f.17.1780324732403;
-        Mon, 01 Jun 2026 07:38:52 -0700 (PDT)
-Received: from [192.168.88.32] ([169.155.232.197])
-        by smtp.gmail.com with ESMTPSA id ffacd0b85a97d-45ef354cd7csm25549035f8f.18.2026.06.01.07.38.51
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Mon, 01 Jun 2026 07:38:51 -0700 (PDT)
-Message-ID: <4bf036ed-cf48-49ef-94df-8d7a03b0cda4@redhat.com>
-Date: Mon, 1 Jun 2026 16:38:50 +0200
+        d=1e100.net; s=20251104; t=1780326337; x=1780931137;
+        h=in-reply-to:content-disposition:mime-version:references:message-id
+         :subject:cc:to:from:date:x-gm-gg:x-gm-message-state:from:to:cc
+         :subject:date:message-id:reply-to;
+        bh=q7U5FdFdnmjh1a24iUampnKh0zlh+cXjbzSGoUU78PU=;
+        b=gPB5AoaC14Miasa+cxMzmafMgQw3nlSIOibt7lH6ug/KTcc8ZSi1rylWmXpNtwr9fo
+         A8vV46lXwoAMrY+8a4YIxk4Pj3qlKvJ9bQA9S+0DEycf0Nz39kIQv+2tWJbVZxlDzNdD
+         f66V8JzQ5TYLZUgj3+p3v/F0Ut0aeJsnvMYzK/abxpCfRbc8vf66Ghbngs1Ix7z3LH0h
+         u+R9eOeuhCtja6EyUuS92Pr3WrADCw3m2K7y4nP3NH1b5nAN+SIZMd8o+1dzt08TwarA
+         nq8/yM3ZQDd1b1dL4CMw6ghIlKaEMDsHtKhlaXs5LQgvOrXJslVRnbNYLNBpeujs/Z46
+         nNAg==
+X-Gm-Message-State: AOJu0Yy2kH54ydcvw7OhgUXX+JWaBMWKCLzPktq0sdr4n/zF6IflXpVs
+	FWH3Yar0qUxiUkLEMS0XrohVItiM+sPkN9OTNEHdzakvx+srW+HCkMHDpm3vVRfuJbU=
+X-Gm-Gg: Acq92OH8EwRFbRPtnMtFHjrsfp6kZJksYoazO65NaXu6fZd7yff+y6SjRi8o1El7dFX
+	LGkgkF9rETpBU1bk59lUseFIc39Jhn0bwNVMdjmXmNCjicxe3Df5PP4rUZ3Li5K/1jLjoSTntav
+	y6DJK+B1sshS/uBa/vqCwqV9l6MkgKGVGACO3WqvU9dpH2leVJ6siCjD7tf3dPjtQDtPCqCYzUA
+	W9SS0lSbQkBSzyIKcV119jt/0xNkzxbEdx9YIezkPgHv7v3RFmj5xCBMgg0QrXhCIPCnPq5/smK
+	5HZIxvzv/ta/SV6/ju/dYwhwsg6W67iXJThFdYEJltnqhRMQZ010xidwAr/1Yxj2EQ7r+OnzIAl
+	ZkbTmBFtTmE/jl+49qT+icEcLB49dIXNLFIB6bcZkGU77MYXy887Xz8mTGFUuCx1v9O8NSH8AUn
+	EpiSu9F/04IY+u44dJHRqTwxN4PXZJAJjC+uqLMfPfaD6N7rnbVw==
+X-Received: by 2002:a05:600c:628f:b0:490:b0bf:7606 with SMTP id 5b1f17b1804b1-490b0bf7735mr1174895e9.16.1780326336796;
+        Mon, 01 Jun 2026 08:05:36 -0700 (PDT)
+Received: from localhost.localdomain ([62.77.90.70])
+        by smtp.gmail.com with ESMTPSA id ffacd0b85a97d-45ef35598e5sm23651887f8f.27.2026.06.01.08.05.36
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Mon, 01 Jun 2026 08:05:36 -0700 (PDT)
+Date: Mon, 1 Jun 2026 17:05:34 +0200
+From: Michal =?utf-8?Q?Koutn=C3=BD?= <mkoutny@suse.com>
+To: Waiman Long <longman@redhat.com>
+Cc: sashiko-reviews@lists.linux.dev, tj@kernel.org, hannes@cmpxchg.org
+Subject: Re: [PATCH-next v4 1/6] cgroup/cpuset: Fix node inconsistencies
+ between cpuset_update_tasks_nodemask() and cpuset_attach()
+Message-ID: <ah2b4mpnSLNV0j05@localhost.localdomain>
+References: <20260529212108.120506-2-longman@redhat.com>
+ <20260529215622.7E3CF1F00893@smtp.kernel.org>
+ <6ca6597e-6ca0-4d10-99a9-cca6ca2b2e1a@redhat.com>
 Precedence: bulk
 X-Mailing-List: sashiko-reviews@lists.linux.dev
 List-Id: <sashiko-reviews.lists.linux.dev>
 List-Subscribe: <mailto:sashiko-reviews+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:sashiko-reviews+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH net-next v3 5/5] net: dsa: ks8995: Delete surplus driver
-To: Linus Walleij <linusw@kernel.org>
-Cc: sashiko-reviews@lists.linux.dev, devicetree@vger.kernel.org,
- conor+dt@kernel.org, robh@kernel.org,
- "netdev@vger.kernel.org" <netdev@vger.kernel.org>
-References: <20260526-ks8995-to-ksz8-v3-5-c530f651989f@kernel.org>
- <20260530004902.BCC381F00898@smtp.kernel.org>
- <CAD++jLmZoGh+o5YKfjoUCWhwiRaO+Lm-9DFUdUzd9KpydWK27g@mail.gmail.com>
- <69dfe2a0-ce0f-4a92-98b5-c4cefd30ce49@redhat.com>
- <CAD++jLnZ1h4MpDEZn5FzX7yzGLYGCpt794zNf0OXQmgKnFPWew@mail.gmail.com>
-From: Paolo Abeni <pabeni@redhat.com>
-In-Reply-To: <CAD++jLnZ1h4MpDEZn5FzX7yzGLYGCpt794zNf0OXQmgKnFPWew@mail.gmail.com>
-X-Mimecast-Spam-Score: 0
-X-Mimecast-MFC-PROC-ID: Puv181WkcxTnB61JiCjVVhl-YyZZUWrLRkGe2b1hIho_1780324733
-X-Mimecast-Originator: redhat.com
-Content-Language: en-US
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8bit
+Content-Type: multipart/signed; micalg=pgp-sha512;
+	protocol="application/pgp-signature"; boundary="arraeelhsihktay2"
+Content-Disposition: inline
+In-Reply-To: <6ca6597e-6ca0-4d10-99a9-cca6ca2b2e1a@redhat.com>
 
-Hi,
 
-I'm re-adding netdev to the CC-list which was stripped by the sashiko
-bot. I should have checked better in my first reply.
-On 6/1/26 3:12 PM, Linus Walleij wrote:
-> On Mon, Jun 1, 2026 at 12:41 PM Paolo Abeni <pabeni@redhat.com> wrote:
->> On 6/1/26 10:09 AM, Linus Walleij wrote:
->>> On Sat, May 30, 2026 at 2:49 AM <sashiko-bot@kernel.org> wrote:
-> 
->>>> - [Medium] Silent loss of switch driver functionality on kernel upgrade due to missing Kconfig migration.
->>>
->>> No-one cares.
->>
->> Uhm... I have quite mixed opinion WRT to the above points as try to
->> avoid breaking users in any way. I'd love to ear a 2nd opinion from the
->> DSA crew.
-> 
-> OK then, I can be less cowboy-coding and try to play it nice.
-> 
-> Would a phase-over Kconfig option making
-> CONFIG_NET_DSA_KS8995 just select NET_DSA_MICROCHIP_KSZ_SPI
-> cut it? (Sashiko suggest this I think.)
+--arraeelhsihktay2
+Content-Type: text/plain; protected-headers=v1; charset=us-ascii
+Content-Disposition: inline
+Content-Transfer-Encoding: quoted-printable
+Subject: Re: [PATCH-next v4 1/6] cgroup/cpuset: Fix node inconsistencies
+ between cpuset_update_tasks_nodemask() and cpuset_attach()
+MIME-Version: 1.0
 
-Yes, will do for me.
+Hi.
 
-Just wait a bit for Andrew's or other DSA maintainer feedback for
-confirmation.
+On Mon, Jun 01, 2026 at 10:04:19AM -0400, Waiman Long <longman@redhat.com> =
+wrote:
+> > When a node is hot-unplugged, the memory hotplug subsystem removes the =
+node
+> > from node_states[N_MEMORY] before invoking the notifier chain.
 
-Thanks,
+O.K.
 
-Paolo
+> >=20
+> > If cpuset_track_online_nodes() calls cpuset_handle_hotplug() but is del=
+ayed
+> > waiting for cpuset_mutex, and a concurrent write to cpuset.mems acquire=
+s the
+> > mutex first, wouldn't cp->effective_mems still contain the offlined node
+> > while node_states[N_MEMORY] does not?
 
+Not sure this condition could happen -- rewriting cpuset's
+effective_mems to a value containing an offlined node.
+
+> >=20
+> > This race condition might cause unexpected panics on systems where
+> > panic_on_warn is enabled.
+
+That AI reasoning is disputable -- with panic_on_warn=3D1 one kind of
+_expects_ panics.
+The warning upon a privileged action (memory hotplug) is IMO justified
+(and helpful for potential troubleshooting).
+
+The question is whether the warning bears any information and what could
+go wrong when the predicate is violated.
+Here I see the warning is right before cpuset_update_tasks_nodemask() so
+the invalid value may write through to tasks (only assuming the race is
+real) -- the warning may be useful.
+
+
+> OK, will remove the WARN_ON() test to avoid problem.
+
+IOW, if you thought the warning was useful (IMO it's not clear cut),
+question that reasoning.
+
+
+Michal
+
+--arraeelhsihktay2
+Content-Type: application/pgp-signature; name="signature.asc"
+
+-----BEGIN PGP SIGNATURE-----
+
+iJEEABYKADkWIQRCE24Fn/AcRjnLivR+PQLnlNv4CAUCah2fuBsUgAAAAAAEAA5t
+YW51MiwyLjUrMS4xMiwyLDIACgkQfj0C55Tb+AgllQEAvrnRBpz+ODtjZyXNPFRp
+NzSGCaadJoaGIYw6o2Jf38kBAMq0PQRYVLNk5Uq+3wYK9d/pDyYKabU+mxtljmY2
+ikYD
+=f5wi
+-----END PGP SIGNATURE-----
+
+--arraeelhsihktay2--
