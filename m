@@ -1,400 +1,174 @@
-Received: from mail-ej1-f41.google.com (mail-ej1-f41.google.com [209.85.218.41])
+Received: from mail-wr1-f73.google.com (mail-wr1-f73.google.com [209.85.221.73])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 783AD39934A
-	for <sashiko-reviews@lists.linux.dev>; Mon,  1 Jun 2026 10:01:15 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.218.41
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 136B138E8BF
+	for <sashiko-reviews@lists.linux.dev>; Mon,  1 Jun 2026 10:20:15 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.221.73
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1780308085; cv=none; b=BKd6wPbXk2xirhiza6UvRXU0i6Hy1/NwdFeIDnS52sjlgqODbMzsaeMtQxq9aVi9TP1lYxzf0MKpr746zpg9xWRE8ohbM9/FngRf3oQzY29s72rtGjEGBaLVQsr0avvfs3oiUnNri5I9NVZoGpC6fX5brVIXVtTbSbpVvPWGCUs=
+	t=1780309218; cv=none; b=ZhiQwh5VuCRFZ3voHXGLFfHy2/2LZwNB9Ew33bYYp38+Kg383PkgC2CaatHtOp0f4FOZs3rnIUgpuhQq2B/IPGV3fwz0i+Q+mgpeaynwXR5SyuuoV+/M6b098spqaF4qw6g4GULWxUduN4qvTWDdc0PnPjU4OyzpjLt7jiIh5yM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1780308085; c=relaxed/simple;
-	bh=sLxliPp5zhohhmGKsS/9Xw/bEz9HCOcd/Tqlp27CPmI=;
-	h=Mime-Version:Content-Type:Date:Message-Id:Subject:Cc:To:From:
-	 References:In-Reply-To; b=YU24eHnauhW+hv5ij+NRPfs9uWB81YeYaaKMuxXvhWEW5rxUtmwc6ez9AThtmgbcVPDPRNGGMmVh5bOLtumw+ZAD+NL3L0NJoEPCBDMPVsZZSGMVP00+ueYs30YPb9Qu00WdPjjvoTxzC9WyIX7wzqsOxuKYsuu9p7ZzQTBK79U=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=VGt8bff+; arc=none smtp.client-ip=209.85.218.41
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+	s=arc-20240116; t=1780309218; c=relaxed/simple;
+	bh=VkHk4No+sn/hTRAoCJ6c2rKomSzgYN5lIjBaYnFIVOE=;
+	h=Date:In-Reply-To:Mime-Version:References:Message-ID:Subject:From:
+	 To:Cc:Content-Type; b=TVmpUG+jgAzrmWigbund/dUGzLtPO1bddIA5P+hpmFHyg0ZaIwP1JvITdBhU3FfNJPgtvLOJvhIJ9KoKMwgDL11hI3UWd8vQUmazHzbkH8Nc5SY7U1yK1tN8C8aQtDRYHb+Ypl1Nzx3OUmJiaHuQgTBxDGiKoI/BtY6IPWpHIWI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=google.com; spf=pass smtp.mailfrom=flex--aliceryhl.bounces.google.com; dkim=pass (2048-bit key) header.d=google.com header.i=@google.com header.b=vfQs6xV9; arc=none smtp.client-ip=209.85.221.73
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=google.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=flex--aliceryhl.bounces.google.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="VGt8bff+"
-Received: by mail-ej1-f41.google.com with SMTP id a640c23a62f3a-bec2ddee9bbso210070866b.3
-        for <sashiko-reviews@lists.linux.dev>; Mon, 01 Jun 2026 03:01:15 -0700 (PDT)
+	dkim=pass (2048-bit key) header.d=google.com header.i=@google.com header.b="vfQs6xV9"
+Received: by mail-wr1-f73.google.com with SMTP id ffacd0b85a97d-46010bc0f1eso410145f8f.3
+        for <sashiko-reviews@lists.linux.dev>; Mon, 01 Jun 2026 03:20:15 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20251104; t=1780308074; x=1780912874; darn=lists.linux.dev;
-        h=in-reply-to:references:from:to:cc:subject:message-id:date
-         :content-transfer-encoding:mime-version:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=o6FJGnhtFwE5Wu7/ZVGGWeKvZozD1/mJDapo39GYeEk=;
-        b=VGt8bff+lRsdXLZzFSAbKf1KhFbxeoDkdN99RwI/3ilL0qO6y1vUmzd7shDATdgmBX
-         OPjOaz8LqLHhivI02H/zxZsqJgOprvH37ZAAtZsPMkdfAuM14bc5YeILhytaGwBHbboJ
-         O5atDwG1ZxY5gGY6kPhFOwAlZocWIskY0tRZ2q6VN+WEK1+YIy1rWM3ABbsvPt86N9oU
-         OfyoEV7OBDG4ep+e4DlCCJk2pDtSGlmV9GN5MfnHktC/e0TvimuynyNzsuSQWkN7alOb
-         uu3CgWMPeYblgH8yTkUDrHPyTOkAnMQH5TsMIFOb/yIjJzGjwiy+rrm0J9fOHridiL31
-         LWJA==
+        d=google.com; s=20251104; t=1780309214; x=1780914014; darn=lists.linux.dev;
+        h=cc:to:from:subject:message-id:references:mime-version:in-reply-to
+         :date:from:to:cc:subject:date:message-id:reply-to;
+        bh=TPi/JDyDp1v6pzp0p/cJ1JGw5JpKb6KywybUTo910mg=;
+        b=vfQs6xV92KYipon39R6sRBnw+8AJQylLRjbTRcbVLkoKBA/DaUXZvksbILoOahBmdx
+         f6u+2orx/dCS3PF4+l+UiT1ZrUFfFIFpcnHT5CIzG1BHWUB3pWtZJrVzAzrT6HHz4MIo
+         QFEDxLy2/YJtMISioHnNGMdCg8b4xwie2oxnV3zQliZDJr0qVdlEoYtdHYLkIS5gNPpR
+         tjwoGHRwJ8sqwkr0npsQBIN6yo4HxDV0EkF0aN41/JkeHfPXnlRj0VL0G+tGIu9ks1Zv
+         GChuSlsbDSCjp0kEegnnAVB44WjAYQwA/hVj97QnrXcQJKBN3UMQ0U2xM/U+MhClqmWf
+         8xnw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20251104; t=1780308074; x=1780912874;
-        h=in-reply-to:references:from:to:cc:subject:message-id:date
-         :content-transfer-encoding:mime-version:x-gm-gg:x-gm-message-state
-         :from:to:cc:subject:date:message-id:reply-to;
-        bh=o6FJGnhtFwE5Wu7/ZVGGWeKvZozD1/mJDapo39GYeEk=;
-        b=hb6byAV+vXzOjMaE1jy9R+FQq3KCqVBEBNDT1JVe2O3B/nI8rSSteYZ6cM/n9wqTFs
-         pqPWKJb2iNwoqIU2QF/V2VfA/QCaVhqlLmsz9JLpPPWG5J7kFxsgewlHyqinBXrjSCCK
-         Vgx7WgP/ObJplIpZrDtC8578pigjX4DZ884agd8/pIJak+LRL/+eRHp9Dfv57kZeiruN
-         APdp3HfxtsMBCjb51O9A2PCW+nvOSQiNwST5x0Bd/YmADJJPoXOHT4E5hqEvvnrx68N7
-         jXR2mG2NxfkaW3+3L1f75kikyNHHDCa4+ZdnbhojUGG4+mt49uXFwiTvBMvm6GSOWK4O
-         nUmQ==
-X-Gm-Message-State: AOJu0YxDw9QuB02iFJX2IUW/Ax6pWvNDrvpCdAWISJ8NcM2ss9Fzzx+Q
-	Lweoz2xxHl9iJ3XXpmECLwJRBjMW6KvUP8nij7UWeMm8qAgHPR/XeDVX6LH6Jw==
-X-Gm-Gg: Acq92OG4MabSpngC2W9fiEMVGk9Yi0vjq9ksB46jNu5KCuO/n61p8KY9yH9Q+wHBdGb
-	u00PS6UuWl9+R/1Njr5mU8u6K7ckI0J3dwEICzZfpRzqLL9N4Zys48YTcP6SxRzcVT9EM4s2MG0
-	xcAK3w7WEvsgJOnStW57yyfyd5iz7eNKuz7Kt6aXBGXWRXuByRAIBMhUPb0hmRFq02GO4vTBz9L
-	JJHA4KEvvIZ7telKQ24KjX07NsVimBD1tQAbAYYTZ4z3KJGCsF5WnuKn3hPde6Qafl9I/ylTILA
-	S4GP6X0BmY/r4TOMiormsGEuEM/qxUL7ErXEOP8MRxXWPQ1hdmqQCJJiQJp8BSdoE6/C+FRMs9q
-	Ew0mwwRPpn26FzG4MN/tjZGoALJEpbkNerTgfy1EeWiwNn/DM5JpQG78sfP3WLgoOuuNq0gDcXC
-	aSsteEzvQX7S187EhA2MAWheIYlTT/LhcpdHLwVyO8IwBg1xEx/m73wO2HFw==
-X-Received: by 2002:a17:907:2dac:b0:beb:e20b:3f86 with SMTP id a640c23a62f3a-bebe20b50bfmr376862066b.47.1780308072804;
-        Mon, 01 Jun 2026 03:01:12 -0700 (PDT)
-Received: from localhost ([2001:4bb8:152:df59:a520:3907:8d91:26f6])
-        by smtp.gmail.com with ESMTPSA id ffacd0b85a97d-45ef3563cb9sm25295649f8f.29.2026.06.01.03.01.11
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Mon, 01 Jun 2026 03:01:12 -0700 (PDT)
+        d=1e100.net; s=20251104; t=1780309214; x=1780914014;
+        h=cc:to:from:subject:message-id:references:mime-version:in-reply-to
+         :date:x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+        bh=TPi/JDyDp1v6pzp0p/cJ1JGw5JpKb6KywybUTo910mg=;
+        b=itkMDBXNkcHlBxGA2dl0pXPJLwrgkXNXqN1Ao2QtoLUbA7fc4I37d3LbJITVqqza2Z
+         rVJ2Y2r1bzCR9UH/C9/WauwcnHsyj1gN4bL2u6ai55laF4mJnHQGj1vmvNSekVEkKGnC
+         s9dDohVgr0qfPMKdIImcsCNGfL8chrg2E/bBvj5EQs2NGcoVKbaWHWYkWlEH0GOeCuLs
+         N0WQ+i4H7V/bsy/0wFIGD8Q/0qQnp7r476TKr+jyQ943H250z4F+dpDYDypF1SSNIaK7
+         Pvstz6wQkWWGcLmC1J31ga09/YbXJkH0aANCwNlyq8D3vbeCKAnNHj8NgZD9ttInQG4R
+         zq6w==
+X-Gm-Message-State: AOJu0YznOrqP8HFZiZnxSHMn2w0JYFs++W5CRFfIFw55O/vNQtGiXx/v
+	wFTLIuVgEY13IjzP6UMWGjnHxURRzOO/27RTPBCVxFrs2bIcNHxuO0O7PI0FiMpsg26LSa2Ox1I
+	+auKArsb6LLPnTsliAn9bmB35IH0uS5rq9TdY9QRhQMlYohUL3t10RGrUwJC5dGdpnKCYfm9NKi
+	ho5iiSGIJBp7hGbtHI7jhisqer83iWUAOAf8k8iFZ+c1docgoXRiEfennA9BvHXKe9
+X-Received: from wrmg6.prod.google.com ([2002:adf:e406:0:b0:45e:f121:4e17])
+ (user=aliceryhl job=prod-delivery.src-stubby-dispatcher) by
+ 2002:a5d:45d0:0:b0:45e:ea9b:edfb with SMTP id ffacd0b85a97d-45ef6b8b5f5mr15231355f8f.39.1780309213836;
+ Mon, 01 Jun 2026 03:20:13 -0700 (PDT)
+Date: Mon, 1 Jun 2026 10:20:12 +0000
+In-Reply-To: <20260530150622.393FC1F00893@smtp.kernel.org>
 Precedence: bulk
 X-Mailing-List: sashiko-reviews@lists.linux.dev
 List-Id: <sashiko-reviews.lists.linux.dev>
 List-Subscribe: <mailto:sashiko-reviews+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:sashiko-reviews+unsubscribe@lists.linux.dev>
 Mime-Version: 1.0
-Content-Transfer-Encoding: quoted-printable
-Content-Type: text/plain; charset=UTF-8
-Date: Mon, 01 Jun 2026 12:01:10 +0200
-Message-Id: <DIXMJH3581S0.5DHXMLATTOV1@gmail.com>
-Subject: Re: [PATCH v4 4/4] iio: light: veml6031x00: add support for events
- and trigger
-Cc: <linux-kernel@vger.kernel.org>, <linux-iio@vger.kernel.org>
-To: <sashiko-reviews@lists.linux.dev>, "Javier Carrasco"
- <javier.carrasco.cruz@gmail.com>, "Jonathan Cameron" <jic23@kernel.org>
-From: "Javier Carrasco" <javier.carrasco.cruz@gmail.com>
-X-Mailer: aerc 0.21.0-143-g2f3a2e260c09
-References: <20260531-veml6031x00-v4-4-e64f7fdce38d@gmail.com>
- <20260531204345.1C2A41F00893@smtp.kernel.org>
-In-Reply-To: <20260531204345.1C2A41F00893@smtp.kernel.org>
+References: <20260530143541.229628-5-phasta@kernel.org> <20260530150622.393FC1F00893@smtp.kernel.org>
+Message-ID: <ah1c3NSU-4UkdUhb@google.com>
+Subject: Re: [PATCH 3/4] rust: Add dma_fence abstractions
+From: Alice Ryhl <aliceryhl@google.com>
+To: sashiko-reviews@lists.linux.dev
+Cc: Philipp Stanner <phasta@kernel.org>, linux-media@vger.kernel.org, ojeda@kernel.org
+Content-Type: text/plain; charset="utf-8"
 
-My view about the issues Sashiko reported.
-
-On Sun May 31, 2026 at 10:43 PM CEST, sashiko-bot wrote:
-> Thank you for your contribution! Sashiko AI review found 7 potential issu=
-e(s) to consider:
->
-> New issues:
-> - [High] Missing `.validate_device` in trigger operations allows other de=
-vices to attach to a sensor-specific trigger.
-
-Tested with no real issues, but the trigger is mean for this device
-only.
-
-> - [High] The trigger handler performs an unintended I2C read from address=
- 0 for the software timestamp channel.
-
-Not a real issue.
-
-> - [High] PM runtime usage count is leaked if the device is unbound while =
-events are enabled.
-
-The usage count is set to 0 by the devres action.
-
-> - [High] Stale values in the regmap cache for the hardware-cleared `AF_TR=
-IG` bit cause unintended triggers.
-
-Real issue, I forgot to set CONF0 as a volatile register.
-
-> - [Medium] Mixing `goto` error handling with `guard()` scope-based cleanu=
-p in the same function.
-
-Not a real issue because the goto's happen after the guard, but it's easy t=
-o
-get rid of them.
-
-> - [Medium] Non-functional event sysfs attributes are exposed to userspace=
- when the device lacks an IRQ.
-
-Missing fix to be added to V5.
-
->
-> Pre-existing issues:
-> - [High] Unbalanced PM runtime usage counter due to mixing devm action wi=
-th manual put.
-
-Not a real issue because an underflow is not possible.
-
-> --
->
-> commit c0654b1fbfc516c85d27a7c169844b649c2a1077
-> Author: Javier Carrasco <javier.carrasco.cruz@gmail.com>
->
-> iio: light: veml6031x00: add support for events and trigger
->
-> The device provides a shared interrupt line for to notify events and
-> data ready, which can be used as a trigger. The interrupt line is not a
-> requirement for the device to work. Implement variants for the cases
-> whether the interrupt line is provided or not.
->
->> diff --git a/drivers/iio/light/veml6031x00.c b/drivers/iio/light/veml603=
-1x00.c
->> index facb1b8e42418..5e79eb942f09c 100644
->> --- a/drivers/iio/light/veml6031x00.c
->> +++ b/drivers/iio/light/veml6031x00.c
->
-> [ ... ]
->
->> @@ -144,6 +197,8 @@ static const struct iio_chan_spec veml6031x00_channe=
-ls[] =3D {
->>  		.info_mask_shared_by_all =3D BIT(IIO_CHAN_INFO_INT_TIME),
->>  		.info_mask_shared_by_all_available =3D BIT(IIO_CHAN_INFO_INT_TIME),
->>  		.info_mask_separate_available =3D BIT(IIO_CHAN_INFO_SCALE),
->> +		.event_spec =3D veml6031x00_event_spec,
->> +		.num_event_specs =3D ARRAY_SIZE(veml6031x00_event_spec),
->
-> [Severity: Medium]
-> Will this unconditionally expose event sysfs attributes even when the dev=
-ice
-> lacks an IRQ?
->
-> If i2c->irq is 0, the driver uses veml6031x00_info_no_irq to omit event
-> callbacks. However, the IIO core checks num_event_specs during
-> iio_check_for_dynamic_events() and creates sysfs attributes anyway. If th=
-ese
-> attributes are accessed from userspace without the callbacks, will they
-> return -EINVAL?
->
-
-This fix is also missing. I will add it to V5.
-
-> [ ... ]
->
->> +static int veml6031x00_set_af_trig(struct veml6031x00_data *data, bool =
-state)
->> +{
->> +	regcache_drop_region(data->regmap, VEML6031X00_REG_CONF0,
->> +			     VEML6031X00_REG_CONF0);
->> +
->> +	return regmap_update_bits(data->regmap, VEML6031X00_REG_CONF0,
->> +				  VEML6031X00_CONF0_AF_TRIG,
->> +				  FIELD_PREP(VEML6031X00_CONF0_AF_TRIG, state));
->> +}
->
+On Sat, May 30, 2026 at 03:06:21PM +0000, sashiko-bot@kernel.org wrote:
+> > +impl<F: Send + Sync, C: Send + Sync> DriverFence<F, C> {
+> > +    fn as_raw(&self) -> *mut bindings::dma_fence {
+> > +        // SAFETY: Valid because `self` is valid.
+> > +        let fence_data = unsafe { &mut *self.data.as_ptr() };
+> 
 > [Severity: High]
-> Does this leave a stale AF_TRIG value in the non-volatile regmap cache?
->
-> The AF_TRIG bit is cleared automatically by hardware. While this function
-> drops the cache region before setting the bit, VEML6031X00_REG_CONF0 is n=
-ot
-> marked as volatile in veml6031x00_volatile_ranges. Because of this,
-> regmap_update_bits() writes the new value to hardware and also caches it.
->
-> Would any subsequent updates to CONF0 (such as changing AF or SD bits) re=
-ad
-> the cached AF_TRIG=3D1 and write it back, causing an unintended measureme=
-nt
-> trigger?
->
+> Does this create an exclusive mutable reference to actively shared memory?
+> 
+> DriverFenceData can be accessed concurrently by other threads holding Fence
+> references (for instance, when checking if the fence is signaled). Creating
+> a mutable reference (&mut) in Rust asserts exclusive access and violates
+> aliasing rules, which allows the compiler to make invalid optimization
+> assumptions.
+> 
+> Could this use an immutable reference &*self.data.as_ptr() instead?
 
-Absolutely right, I forgot to update this although I said I would do it.
+Yes, please use an immutable reference here.
 
+> > +
+> > +        fence_data.inner.inner.get()
+> > +    }
+> 
 > [ ... ]
->
->> +static int veml6031x00_write_event_config(struct iio_dev *iio,
->> +					  const struct iio_chan_spec *chan,
->> +					  enum iio_event_type type,
->> +					  enum iio_event_direction dir,
->> +					  bool state)
->> +{
->> +	struct veml6031x00_data *data =3D iio_priv(iio);
->> +	int ret;
->> +
->> +	guard(mutex)(&data->irq_lock);
->> +
->> +	/* avoid multiple increments/decrements from one source */
->> +	if (state =3D=3D data->ev_en)
->> +		return 0;
->> +
->> +	if (state) {
->> +		ret =3D pm_runtime_resume_and_get(data->dev);
->> +		if (ret)
->> +			return ret;
->> +	}
->
+> 
+> > +impl<F: Send + Sync, C: Send + Sync> DriverFenceBorrow<F, C> {
+> > +    fn as_raw(&self) -> *mut bindings::dma_fence {
+> > +        // SAFETY: Valid because `self` is valid.
+> > +        let fence_data = unsafe { &mut *self.data.as_ptr() };
+> 
 > [Severity: High]
-> Is the PM runtime usage count leaked if the device is unbound while event=
-s
-> are enabled?
->
-> The pm_runtime_resume_and_get() call keeps the device powered on, but the=
-re
-> does not appear to be a custom devres action or remove callback to disabl=
-e
-> the event and drop this reference if the driver is unbound. Could this
-> prevent the parent I2C controller from ever entering runtime suspend?
->
+> Similar to DriverFence::as_raw(), does this also incorrectly create a
+> mutable reference to shared data?
 
-The devres action that was registered in the probe function will
-decrement the counter if the driver is unbound. I explained the
-mechanism at the end of the mail.
+Here as well.
 
+> > +
+> > +        fence_data.inner.inner.get()
+> > +    }
+> 
 > [ ... ]
->
->> +static int veml6031x00_set_trigger_state(struct iio_trigger *trig, bool=
- state)
->> +{
->> +	struct iio_dev *iio =3D iio_trigger_get_drvdata(trig);
->> +	struct veml6031x00_data *data =3D iio_priv(iio);
->> +	int ret;
->> +
->> +	guard(mutex)(&data->irq_lock);
->> +
->> +	if (state =3D=3D data->trig_en)
->> +		return 0;
->> +
->> +	ret =3D veml6031x00_set_interrupt(data, state);
->> +	if (ret)
->> +		return ret;
->> +
->> +	/* The AF bit must be set before setting AF_TRIG */
->> +	ret =3D regmap_update_bits(data->regmap, VEML6031X00_REG_CONF0,
->> +				 VEML6031X00_CONF0_AF,
->> +				 FIELD_PREP(VEML6031X00_CONF0_AF, state));
->> +	if (ret)
->> +		goto err_disable_interrupt;
->> +
->> +	ret =3D veml6031x00_set_af_trig(data, state);
->> +	if (ret)
->> +		goto err_clear_af;
->
-> [Severity: Medium]
-> Is it safe to mix goto-based error handling with guard() scope-based clea=
-nup
-> in this function?
->
-> According to the cleanup subsystem guidelines, mixing goto with guard() o=
-r
-> __free() in the same function can create confusing ownership semantics.
-> Should this function either use goto entirely or be fully converted to
-> scoped cleanups?
->
-
-The real issue arises when there are goto calls before the cleanup, but
-I think it is cleaner to get rid of all goto calls where cleanup magic
-is used. I will remove them and add function calls and error return
-in the error paths.
-
-> [ ... ]
->
->> +static const struct iio_trigger_ops veml6031x00_trigger_ops =3D {
->> +	.set_trigger_state =3D veml6031x00_set_trigger_state,
->> +};
->
+> 
+> > +impl<F: Send + Sync, C: Send + Sync> Drop for DriverFence<F, C> {
+> > +    fn drop(&mut self) {
+> > +        let fence = self.as_raw();
+> > +        let mut fence_flags: usize = 0;
+> > +        let flag_ptr = &raw mut fence_flags;
+> > +
+> > +        // SAFETY: Once a `DriverFence` is initialized, the inner `fence` is
+> > +        // valid and initialized. It is valid until the refcount drops
+> > +        // to 0, which can earliest happen once the `DriverFence` has been dropped.
+> > +        unsafe {
+> > +            bindings::dma_fence_lock_irqsave(fence, flag_ptr);
+> > +            #[allow(unused_unsafe)]
+> > +            if warn_on!(!bindings::dma_fence_is_signaled_locked(fence)) {
+> > +                bindings::dma_fence_set_error(fence, ECANCELED as i32);
+> 
 > [Severity: High]
-> Is a .validate_device callback needed here to prevent other devices from
-> attaching to this sensor-specific trigger?
->
-> Without setting .validate_device to iio_trigger_validate_own_device, anot=
-her
-> IIO device could attach to it. If that happens, veml6031x00_set_trigger_s=
-tate()
-> would enable the DRDY interrupt while the sensor is PM runtime suspended
-> (since its own buffer_preenable isn't called). Would this cause the depen=
-dent
-> device's buffer captures to hang?
->
+> Is it intentional to pass a positive error code here?
+> 
+> bindings::ECANCELED evaluates to a positive integer, but
+> dma_fence_set_error() expects a negative error code (and triggers a WARN_ON
+> for positive values). A positive value might also be interpreted as success
+> by callers checking for values < 0.
+> 
+> Should this be - (bindings::ECANCELED as i32)?
 
-This trigger is intented to be used by its own device. I will add
-iio_trigger_validate_own_device to iio_trigger_ops.
+Please use ECANCELED.to_errno(). Do not import these from bindings.
 
-> [ ... ]
->
->> +static irqreturn_t veml6031x00_trig_handler(int irq, void *p)
->> +{
->> +	struct iio_poll_func *pf =3D p;
->> +	struct iio_dev *iio =3D pf->indio_dev;
->> +	struct veml6031x00_data *data =3D iio_priv(iio);
->> +	int ch, ret, i =3D 0;
->> +	struct {
->> +		__le16 chans[2];
->> +		aligned_s64 timestamp;
->> +	} scan =3D { };
->> +
->> +	if (test_bit(VEML6031X00_SCAN_ALS, iio->active_scan_mask) &&
->> +	    test_bit(VEML6031X00_SCAN_IR, iio->active_scan_mask)) {
->> +		ret =3D regmap_bulk_read(data->regmap,
->> +				       VEML6031X00_REG_ALS_L,
->> +				       &scan.chans, sizeof(scan.chans));
->> +		if (ret)
->> +			goto done;
->> +	} else {
->> +		iio_for_each_active_channel(iio, ch) {
->> +			ret =3D regmap_bulk_read(data->regmap,
->> +					       iio->channels[ch].address,
->> +					       &scan.chans[i++],
->> +					       sizeof(*scan.chans));
->
-> [Severity: High]
-> Does this loop inadvertently perform an I2C read from address 0 for the
-> software timestamp channel?
->
-> When IIO_CHAN_SOFT_TIMESTAMP is active and the fast-path isn't taken, it
-> iterates over all active channels. Since the timestamp channel does not d=
-efine
-> a hardware address, its .address is 0.
->
-> Would regmap_bulk_read() read VEML6031X00_REG_CONF0 instead of data,
-> wasting I2C bandwidth and writing the configuration register's value into
-> the scan buffer just before the timestamp?
->
+> > +                bindings::dma_fence_signal_locked(fence);
+> > +            }
+> > +            bindings::dma_fence_unlock_irqrestore(fence, flag_ptr);
+> > +        }
+> > +
+> > +        // SAFETY: `self.data` is owned by the DriverFence, but could be accessed
+> > +        // through some dma_fence callbacks right now. Access is being revoked
+> > +        // above by signalling the fence. The DriverFenceAllowedData trait
+> > +        // ensures that the data either does not need drop, or if it does it
+> > +        // lives in a RcuBox which will delay dropping by one grace period, hence
+> > +        // ensuring that all readers have disappeared.
+> > +        unsafe { drop_in_place(self.data.as_ptr()) };
+> 
+> [Severity: Critical]
+> Could this eagerly drop FenceCtx and user data before the C dma_fence
+> refcount reaches 0?
+> 
+> The C dma_fence object can remain alive as long as consumers (like sync_file
+> or the GPU scheduler) hold references to it. If the backend later invokes
+> callbacks like ops->get_driver_name(), FenceCtx::get_driver_name() would
+> attempt to read fctx.driver_name from the already-dropped FenceCtx:
+> 
+> FenceCtx::get_driver_name() {
+>     ...
+>     fctx.driver_name.as_char_ptr()
+> }
+> 
+> Can this result in a use-after-free?
 
-We have mentioned before that Sashiko is wrong about this. Is there any
-way to tell Sashiko why this is ok?
+Hmm, I don't know about what sahisko said, but I don't think this is the
+right way to do rcu freeing. I think the type's destructor should be
+reserved for cases where the value becomes immediately unusable.
 
-> [ ... ]
->
->> @@ -677,12 +1102,21 @@ static int veml6031x00_probe(struct i2c_client *i=
-2c)
->>  	iio->channels =3D veml6031x00_channels;
->>  	iio->num_channels =3D ARRAY_SIZE(veml6031x00_channels);
->>  	iio->modes =3D INDIO_DIRECT_MODE;
->>
->>  	ret =3D veml6031x00_hw_init(iio);
->>  	if (ret)
->>  		return ret;
->>
->> +	if (i2c->irq) {
->> +		ret =3D veml6031x00_setup_irq(i2c, iio);
->> +		if (ret)
->> +			return ret;
->> +
->> +		iio->info =3D &veml6031x00_info;
->> +	} else {
->> +		iio->info =3D &veml6031x00_info_no_irq;
->> +	}
->> +
->>  	ret =3D devm_iio_triggered_buffer_setup(dev, iio, NULL,
->>  					      veml6031x00_trig_handler,
->>  					      &veml6031x00_buffer_setup_ops);
->
-> [Severity: High]
-> This isn't a bug introduced by this patch, but is the PM runtime usage
-> counter unbalanced at the end of veml6031x00_probe()?
->
-> The driver acquires a reference using devm_pm_runtime_get_noresume() whic=
-h
-> associates a devres cleanup action. If pm_runtime_put_autosuspend() is
-> called manually at the end of probe (immediately after this buffer setup)=
-,
-> the devres cleanup will still fire when the device is unbound, performing=
- a
-> second put. Could this cause the PM runtime usage counter to underflow
-> to -1?
+For example, let's say I'm using RcuBox<_> here. Yes, the data you get
+from dereferencing the RcuBox will stay alive for a grace period, but
+IMO once you run the destructor of the box itself, the *pointer* becomes
+immediately unusable.
 
-This cannot happen because the devres action uses pm_runtime_put_noidle(),
-which in turns uses atomic_add_unless(usage_count, -1, 0) to avoid
-decrementing the usage_count if it is already 0.
-
-Best regards,
-Javier
+Alice
