@@ -1,62 +1,63 @@
-Received: from DB3PR0202CU003.outbound.protection.outlook.com (mail-northeuropeazon11010041.outbound.protection.outlook.com [52.101.84.41])
+Received: from AM0PR02CU008.outbound.protection.outlook.com (mail-westeuropeazon11013033.outbound.protection.outlook.com [52.101.72.33])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2096338425A;
-	Mon,  1 Jun 2026 19:42:23 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=fail smtp.client-ip=52.101.84.41
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4D43B363C7C;
+	Mon,  1 Jun 2026 19:52:22 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=fail smtp.client-ip=52.101.72.33
 ARC-Seal:i=2; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1780342947; cv=fail; b=RBzY4Id2SItSBmEUDGI6JhPO7r4N3D/2wdEQOD2VsRqeyekixxVDunUntzL16IW1AA3q7bEF5znBYZxpLLOZcT9HJ9LElmnhR26b9xhBN9gzmd/MOTMGZBZ80uz/ehhXwAe5j6LNL4KIRzqCJOQ1hzx1SzWlD2LllTxgBMtUA5M=
+	t=1780343543; cv=fail; b=GA518/V0J9Qv2lqJHUi+Wlr/V5NjYUX4l74n/nFG1Y33MOKTSdTH7JpQP8cr7zIFwSkC7pA59TIHeIhYbGMSkdd6M0Y2UqP8LRaXUPhgSO53KjHEhxUwtrGT1dXSmAS97yiVTEoXtc+04WYWmxy+mmy1dTiARoCPxdyVgOZWDOk=
 ARC-Message-Signature:i=2; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1780342947; c=relaxed/simple;
-	bh=xbyEr7Wey7qVTa6YORKP6BqypW/axj8GadcquP65yeg=;
+	s=arc-20240116; t=1780343543; c=relaxed/simple;
+	bh=CITRQNwmmPHYlbIdBQn+7oze+8omvt0+wXXjzFQVTKQ=;
 	h=Date:From:To:Cc:Subject:Message-ID:References:Content-Type:
-	 Content-Disposition:In-Reply-To:MIME-Version; b=KrRrzGrRU0tYggIII0+qbsBPp6MrTYrqSwKDAghJpUSuQ+tMI+dMupwHRnYtnhOo0+lwnmzdHunKAkjdQ4B/drecpxLvmNgvLNr3Fv4xJ+G2GYLc4pAqQB5w9TE/5DeYDzyGEpdQuL+l74EUoZ5T/dVjJ+Wl5ll3IUDqnUcSVOQ=
-ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=nxp.com; spf=pass smtp.mailfrom=nxp.com; dkim=fail (2048-bit key) header.d=nxp.com header.i=@nxp.com header.b=DYfhIuzW reason="signature verification failed"; arc=fail smtp.client-ip=52.101.84.41
+	 Content-Disposition:In-Reply-To:MIME-Version; b=S20Rg2/hVB56Bz4M5YzMPlTElIiUE8WKF2s2+Ph9j9k8rddG4U08/KDRwH/uuRqx5Hj0EN0ahNLmbFrqLdaXYeUKlEm8vV7WZZ34/9ygqfDyELRQiG1Z6uE+Rgf3EjZRcBxoynC64Z8l+63HqdP1m9wCej52yEwe8CvtR2bUF6M=
+ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=nxp.com; spf=pass smtp.mailfrom=nxp.com; dkim=fail (2048-bit key) header.d=nxp.com header.i=@nxp.com header.b=cynF4ilY reason="signature verification failed"; arc=fail smtp.client-ip=52.101.72.33
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=nxp.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=nxp.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=fail reason="signature verification failed" (2048-bit key) header.d=nxp.com header.i=@nxp.com header.b="DYfhIuzW"
+	dkim=fail reason="signature verification failed" (2048-bit key) header.d=nxp.com header.i=@nxp.com header.b="cynF4ilY"
 ARC-Seal: i=1; a=rsa-sha256; s=arcselector10001; d=microsoft.com; cv=none;
- b=oWNB8QQ1yeeXRCOV8e+3ilboZ37lW2L7BYsheiUbcixTLWwQwNO50b7dPjsN5kd1jA+S2wAdjnzjdZNwammInu5PW/uYP9kXlHwiFJU+ZqUb5Tv92IQcWHqu1X6DpVEf8bTIjZ1xRvsoGSasRmwr31ZGNldUrdXasSWYHaimFnIz15dquuZR0kVucuF6ulR1q701fmto8z7VdKDJJgpkQi4+BScJY/+H0eS5jj4e2nj6zC7lxa9HRApxwPMUZBLrKf0ngqyqU4avJdQHGoRb9YKjBEdq3zNtoMyBQkg7uvO7TQWtmu7uuEnbeDUnnaATfO2Deixe5wu4i7b6ZrhJ4w==
+ b=VZbgwZg6m/uNETzaAtYTALYfujxkyxNpewguQU7d1spu/uzv6L8iFjZIEdVJTQ4otXR3qICkIDmL/p6HOjZfwvgSF2roQc7DAWSQL1EVy6LhHraQGDvIJG2mpedr+/xAMmyHIZuAlILEmwBzzNPEfT3i9KVFVCaf2GWZQ7rGyGn8VZaFjC1TELjGa0R0xg5LcpL198bVbclLEN+bQY9qTIoRhXQGyiEufnd0IVOHiruBriUQmMSne9/06U+eqr2yQultd8rpgwER4eBoULaE7J5Wd7A285uZDv5XV8DBhMK7kWBr2fqpG4FBCYKCQfTQBBbje+1b766f2YlDK0IAvA==
 ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com;
  s=arcselector10001;
  h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
- bh=iaCJdCnlr2UMgK4aGUrTEIvFZccGCunvv9zg9AYNmQM=;
- b=xAy6JfOmKp557/O1zRAy3KFPJJJ14M5zbsPf5oQke7kmjH8bxicrWboS1oEs8YiuwB6/EoE4f1Sn8Gh25VhQEMXoMzb9bbC1DRdk0SD6iXSj8apw1YvQdJm0TPmtL/kiLDWleUMT0BjkzWDG0W0EFrUF2umLLJ9fCK5B7E/pAn0Xl2q2rvnZccZ6SNhLsZWybRu/mUTRA+loyCiMLy08wvz4cYlsItPrzUEqsKj+Vk6/n41ecLePD1/f9iocCm/xSbuSTZ5sw4FH2mLxd7s4z8ZUgiteZ8vVJPQgmhHGu+ALM23X0BNsSZ5RKrVEgH18IvNnAr9CD3sUhMfdC8zwiA==
+ bh=LY4Q3dGyx1A18J5Vwes50I7BMYV9fluM97sBJH0c5+4=;
+ b=jvrdv22ADmLcd+I5DP0848PQaXoQoje+qQ3+FlGCbrM+3hWiEwqVACbY7Xl3u0KhTiNRa7RekoWzkcPQZ+iajKhWwobWCw5oDcQZddYp4rR3hqiPWLHCbe7n+H34azJ00mlzlKZrBEDtz4r5xMKmz/cgt8tjkuu+IzrUxq/s0RrR927kHM2Ai8bwwU/6TrRrb032FBXRYsYnE63Wr5DcMPHjAz/A5DiKp7kr1ETPBTVY6AexIoViNGyOa+Of9wpbZw7rITQ3gpvinFX0UjCa160f9iWmyAHjYU+3uvLZwDdBi/XFPpRv7vrssc68MnoM+1I47iMA9zOVuHwGf73yIQ==
 ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
  smtp.mailfrom=nxp.com; dmarc=pass action=none header.from=nxp.com; dkim=pass
  header.d=nxp.com; arc=none
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=nxp.com; s=selector1;
  h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
- bh=iaCJdCnlr2UMgK4aGUrTEIvFZccGCunvv9zg9AYNmQM=;
- b=DYfhIuzWkUkY0HQfbGsyw1eD9uKQKLNmYVReL3EQMFv8qlzgxSxRdsxasW3PaK+24ANbBd171Xn2KzRCKz7OIAdj1BJa6Lsq/93VbjklDW6AFuXyRZVKNfpUoYXo8Ado6iZo+eGg5VdIK2yF/qoUF7bHfkP+9ASw8h93kMMdRA9Q+CKSWfzCV1mXDXpqRuLoXvG3ksbdspJYBXZRJEK708gnSWQffpfIaLVM0GprwOl/a9LuSWwZzvAxRC0x9b9GyHJmJZZg7lf51qNY+y2ayg52vB4v1XJBqgzYTIMUjRb0KT3bQlXSm3+2Ph+yfGO5w8pFslaIcpkQ9XEkTDzkBg==
+ bh=LY4Q3dGyx1A18J5Vwes50I7BMYV9fluM97sBJH0c5+4=;
+ b=cynF4ilYMKeFuL7QWPxOZVEA+778bsshZ/jokRFwVQ5of0UUunZkvji3vNJvVEx5QeCUhQj9d+D0Xc3Bv2B29S0amZ+PpAIHfW5NETV08hHF8dTIXeEqSg5ZeFG29sb1ct95h+y/YBhpkBHvFTUjvuE1RqVKgUmm8snNFJpb4HJaL/PaGNg7T/sg0B/l+7RefbEOMst8pWRYRK2hR8IpHaEiRAZyIfpDzfcFnOhRbajmuQxxfgJokY4MJVKD135+Tm3H6oT9i/bf/keVXRxD2CQqlC6JOyLDtL4vWimTIcgyG0f8u0G7n7m2huGshTp12kFQLdX84vGWg6Ty/i/qgg==
 Authentication-Results: dkim=none (message not signed)
  header.d=none;dmarc=none action=none header.from=nxp.com;
 Received: from PA4PR04MB9366.eurprd04.prod.outlook.com (2603:10a6:102:2a9::8)
- by PR3PR04MB7241.eurprd04.prod.outlook.com (2603:10a6:102:92::10) with
+ by GV2PR04MB12656.eurprd04.prod.outlook.com (2603:10a6:150:36d::15) with
  Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.21.71.16; Mon, 1 Jun 2026
- 19:42:21 +0000
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.21.71.15; Mon, 1 Jun 2026
+ 19:52:19 +0000
 Received: from PA4PR04MB9366.eurprd04.prod.outlook.com
  ([fe80::75e4:8143:ddbc:6588]) by PA4PR04MB9366.eurprd04.prod.outlook.com
  ([fe80::75e4:8143:ddbc:6588%3]) with mapi id 15.21.0071.015; Mon, 1 Jun 2026
- 19:42:20 +0000
-Date: Mon, 1 Jun 2026 15:42:15 -0400
+ 19:52:18 +0000
+Date: Mon, 1 Jun 2026 15:52:11 -0400
 From: Frank Li <Frank.li@nxp.com>
 To: sashiko-reviews@lists.linux.dev
-Cc: Franz Schnyder <fra.schnyder@gmail.com>, devicetree@vger.kernel.org,
-	Frank.Li@kernel.org, robh@kernel.org, conor+dt@kernel.org,
-	imx@lists.linux.dev
-Subject: Re: [PATCH v4 2/3] arm64: dts: freescale: add Aquila iMX95 support
-Message-ID: <ah3gl2imBTPoEpHm@lizhi-Precision-Tower-5810>
-References: <20260521-add-aquila-imx95-v4-2-5a7f86c824f5@toradex.com>
- <20260521173020.0A03E1F000E9@smtp.kernel.org>
+Cc: Alexander Stein <alexander.stein@ew.tq-group.com>, conor+dt@kernel.org,
+	Frank.Li@kernel.org, robh@kernel.org, devicetree@vger.kernel.org,
+	imx@lists.linux.dev, wsa+renesas@sang-engineering.com
+Subject: Re: [PATCH v3 2/2] arm64: dts: freescale: add initial device tree
+ for TQMa8MPQS with i.MX8MP
+Message-ID: <ah3i63BKcwav8t7n@lizhi-Precision-Tower-5810>
+References: <20260522075656.841745-2-alexander.stein@ew.tq-group.com>
+ <20260522082439.011DF1F000E9@smtp.kernel.org>
 Content-Type: text/plain; charset=iso-8859-1
 Content-Disposition: inline
 Content-Transfer-Encoding: 8bit
-In-Reply-To: <20260521173020.0A03E1F000E9@smtp.kernel.org>
-X-ClientProxiedBy: SA9PR13CA0178.namprd13.prod.outlook.com
- (2603:10b6:806:28::33) To PA4PR04MB9366.eurprd04.prod.outlook.com
+In-Reply-To: <20260522082439.011DF1F000E9@smtp.kernel.org>
+X-ClientProxiedBy: PH5P222CA0001.NAMP222.PROD.OUTLOOK.COM
+ (2603:10b6:510:34b::12) To PA4PR04MB9366.eurprd04.prod.outlook.com
  (2603:10a6:102:2a9::8)
 Precedence: bulk
 X-Mailing-List: sashiko-reviews@lists.linux.dev
@@ -65,142 +66,128 @@ List-Subscribe: <mailto:sashiko-reviews+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:sashiko-reviews+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 X-MS-PublicTrafficType: Email
-X-MS-TrafficTypeDiagnostic: PA4PR04MB9366:EE_|PR3PR04MB7241:EE_
-X-MS-Office365-Filtering-Correlation-Id: 24ef51f4-3d55-4e67-7a0c-08dec015e553
+X-MS-TrafficTypeDiagnostic: PA4PR04MB9366:EE_|GV2PR04MB12656:EE_
+X-MS-Office365-Filtering-Correlation-Id: 8dc4f454-14df-490b-0ab5-08dec01749cf
 X-MS-Exchange-SenderADCheck: 1
 X-MS-Exchange-AntiSpam-Relay: 0
 X-Microsoft-Antispam:
-	BCL:0;ARA:13230040|376014|52116014|1800799024|19092799006|366016|38350700014|18002099003|22082099003|56012099006|4143699003|11063799006;
+	BCL:0;ARA:13230040|376014|52116014|19092799006|366016|1800799024|56012099006|4143699003|11063799006|6133799003|38350700014|18002099003|22082099003;
 X-Microsoft-Antispam-Message-Info:
-	KSpJiOkmhT34bCiPKXIDTdsY7cQ+6u5q8AJG1jG13eEuOERvnBa3YiRxeWueK6CidwNnfNUbcmqnPRe4WYHSiGoEbBRp3OXoMFOSiNfTYoYDXPdCxoZ1//ixE6JCq7oXAwrR2WAr44Ejq44Q9CW9/wQNBeA2yetCSZZB5R90mIgimG7h5bnLzJEL+T9z80vfK9qyysCn6gm8s3TB6DT1HYipfj+GWnjynkxy3Yua3YyQBabLnkJ6eROkNQoQ4hp9Vky75KRp/0pJ3uXGh0SCh0c9QcneS3ddP/RTTC2hPEhI6wLh4v8UqbYAFsrJcFo82D2hzx0fUbtTIiCB0EbOik4ZgA6vY+maiS/vqaZabSJtfpNzlQqd3Pf5vvxez8d9NcCRLAzWspwrRQn5tsdQrKRVj4EoKT5cxsysA76sjBthkESw9S7AJqFMBv6QeZseDNH5UWVP5uW1LaR7mqFJJWIeTRNmOjcF+SvZZzbmhE5OsA/kM129K/Cic5Qa0d5yg8INzj5Yzu4K/ODSnXuDbyvp+/bCTBOYRY7H9FH/UE2Ke6s5aA/3IJd93ep8XbeRaHaHSCgI+QygqfzncJtnszcGlxhOcFVkLlskoF9PerkQhRqUD2rsGJ2266GzkNO1PROW80WbrYWq/N9WaPiWKV4PKilCUwrnVls6UZp2HuIxM3p1kIH3zSOnlDdbsk5x
+	a0bGB2H+ZrjwYIiUkvuS1brObqEDScz+HuNxkvkwZurtMRZr6fcxl7SUp1BiX/Pl5OffDjMZV1ByFQlc3eyEkwCq5oh1FY+120BHwIk3od0O02uO9NPjEsTGJLJ3EsIeEPeyl7oceg5U2H+ZZ49PQucbdm1mZtkIt+iEn4rmeSR5AWiHj0u50Uz7VTLieokNUU2fSAmwZzE/WAkl+tlxVo2NkGwa+WGIUjz0KzRpAnje6lQ6AdTU6ULhrhLW4OFQoqH6NkHnCGzJVz+aHiHG2tK9gS9Xef70h3VrelzVb6ETrAGWLIaRjVfH346+y+CjWMjpdiijVR2mYBAgKfqwQ8wTHycXVSbIzM59wATZB4t/78mo1jULYrzpAah6JtICseWo7uFB9J1rcF5SwhoBQ4IwGj6HUW04TriNtFMAPt4PZVgassjGig1C3Xrx4iQ1FICGqGOPk0uwD21+cUBrAqv2MHO0yEFx1nLr1FRlLneauFGcv5SMSjVE0i5tXn80E1ciKnFBWAjZF4quTRf4fKgViYd8mw+K7faheIIRliiylAzPx+1j3W7/Wd1UnsFGH7qRh4/aH3h29iygJNqH1BATsOi5E7al0sUo1nIMDWFiRSrdpAEe3T02btEfSwo7/+4RMpyDKLXP2CFjXIPFOBKbDfyFmGRvsv5i9K1/hR0T4GQD7TuiWqgqAjSzDvIg
 X-Forefront-Antispam-Report:
-	CIP:255.255.255.255;CTRY:;LANG:en;SCL:1;SRV:;IPV:NLI;SFV:NSPM;H:PA4PR04MB9366.eurprd04.prod.outlook.com;PTR:;CAT:NONE;SFS:(13230040)(376014)(52116014)(1800799024)(19092799006)(366016)(38350700014)(18002099003)(22082099003)(56012099006)(4143699003)(11063799006);DIR:OUT;SFP:1101;
+	CIP:255.255.255.255;CTRY:;LANG:en;SCL:1;SRV:;IPV:NLI;SFV:NSPM;H:PA4PR04MB9366.eurprd04.prod.outlook.com;PTR:;CAT:NONE;SFS:(13230040)(376014)(52116014)(19092799006)(366016)(1800799024)(56012099006)(4143699003)(11063799006)(6133799003)(38350700014)(18002099003)(22082099003);DIR:OUT;SFP:1101;
 X-MS-Exchange-AntiSpam-MessageData-ChunkCount: 1
 X-MS-Exchange-AntiSpam-MessageData-0:
-	=?iso-8859-1?Q?EV6cGqtQq6XFWsvdZ+5BFitRcaPjwGdYgnnu/mCnvFO/3QeessdnSRoWRw?=
- =?iso-8859-1?Q?eOX4UEUyqCJqxrKp27FjaWRWtrlJcnzN2FWWZE20U7G4vpHAg7JCUJilzQ?=
- =?iso-8859-1?Q?GHAQGm5A4NEWRu2tba3n+eHt8Y+V6mIl15sga62WO/JSJD34udPWpusabE?=
- =?iso-8859-1?Q?e7uGGLwEHwyhpUW94Z6srervN+0fbu1xDxDWVQQ3Y+QyXBMiaOOCczrIpV?=
- =?iso-8859-1?Q?C6Wxcmg+7/sLz+blOMNsLSV4NaRcg86MB+RPZtW7B6P7mF7K0qtXTJE50a?=
- =?iso-8859-1?Q?Q0FeRJO5PvlTo6SUDaNa3vUScoiQ9s1amEXcMvr4/xLU8bLpqnuxqTU3q+?=
- =?iso-8859-1?Q?LiPOShnG4Txm4S7U7AS1jhcBEAUqzMzHzIR/NGM64ZNFPzfwp4vinOBLTU?=
- =?iso-8859-1?Q?k8/TLQ3p1pjyThkrbmciXrKFXOoRCCquVq93oloxAL6PUTTGo9J7LjUIwf?=
- =?iso-8859-1?Q?vS0yUaO5THqcWwdR1ALDlsL/WFZualEX8gKKAJKlm1kXbIWNJe0ZDaK5jn?=
- =?iso-8859-1?Q?euHwcaDrlPkPMDuL3L9vXgMjVglKhVjjGd/JFwZudLcgmh5AfQbTeYA9Ha?=
- =?iso-8859-1?Q?iOCz/41VkS6JT6egmKsIfN3cXGL54i2VIJ9kOLC9x6T6pVDaZJLxEWOadJ?=
- =?iso-8859-1?Q?eFsl0Ny6PbYTJYxra9Ob9kywp9z2Tv/3+CP3cr1c+PxgtFDYDqLLcfEkYA?=
- =?iso-8859-1?Q?0KeKP97xbxksq4F1aldliannjoWKWPxDJASHZeJ7bFquYl7NYD2KVsGdS9?=
- =?iso-8859-1?Q?smkXxUVYzAOD89jAvem+gZFr7QrEgrc5+Y4+FUVDB+g9KXmy1pC67CL4v3?=
- =?iso-8859-1?Q?tZK/AhTm3+XuiLgZ/1E2PVPnmIRbXBUc9ihS3+5M8V/hKImVbFsRD9A3el?=
- =?iso-8859-1?Q?GoaIGWg3ReMOVahfoudUWoRdFnWYhzhr0kN5YAGY83LYQAJRpNkh7F9msj?=
- =?iso-8859-1?Q?0hx7EkY+Jbn+PiQ29Sn01HfLlgu1XFtvvM+ijJeEChD+6rmjU8xrZXHjAM?=
- =?iso-8859-1?Q?ZMnY1NF5Jeqj8C9dDO9bKMcEYYbWai8lkT4h1kOxI9n88y6uFF3uzu7pjO?=
- =?iso-8859-1?Q?l5ySd+Hmd2WySYruqNo3Lvy1Fy4UkFSW3VyDyMaEZfW9mcTqBC3lMXRxoW?=
- =?iso-8859-1?Q?87rm7kUkJpGLmUu/WqgCbT85f6KilFrRTb8W9emVfWqQfZfFk/nNYWMRUc?=
- =?iso-8859-1?Q?6AGGUCFgC0rJ3AQpNQyKcB7bmE6o6MlW0Ve0mR+4f4pQIjCsUfK08zMx6U?=
- =?iso-8859-1?Q?M/uwpUJFQ9Ioz2PEAwL2Z2MtcBRv4UcAQrGBHbpxBCWgMuz0wLnyUxOGTl?=
- =?iso-8859-1?Q?UqC5suf9ShmgIsXKtI79y2kRtc4Ol8TuORhRxctY5K4TPvGZt2qAgRkhN8?=
- =?iso-8859-1?Q?D9l9UA0OIRBpEp6A0Rt59QpKpzvBKKzcfC1vZmPYhiy5xnZVIYSPVFxJxZ?=
- =?iso-8859-1?Q?kAst9fy5FmPaVm+sX3CKTgupU0UYdB77AsfKcFjhKUW0d600yoaXGb+6Nx?=
- =?iso-8859-1?Q?a639gEbL/QTBqQKsNaOiqE9mSlKe5a0eO15QgEQ321o7ckM5OQfytDSQa4?=
- =?iso-8859-1?Q?S9QXzoEzb1faKRGC773HDha//PIbvXFOvWkMG58n77Sg5eAlpxpGmN9XPL?=
- =?iso-8859-1?Q?HIrMtzORYY6d8OGqQdCA14f3EosjF3o+hbDiRNb8n38FTdY2KRORLgVjgU?=
- =?iso-8859-1?Q?44mMt4BAuniHDRB0tieEvzvNav/jx3QlkNwZuyd3AMM+gOXa+RYZKOaCAa?=
- =?iso-8859-1?Q?BgKguD2cYew1bFHbb5nOSuruhnNJQtwm6JVMYLYiZr/K1a?=
+	=?iso-8859-1?Q?qwSkROfAodPn1IY8PCOgaA69eWDotXCDoOijlq2FCvpQmYjf754ffBvpC8?=
+ =?iso-8859-1?Q?jsS55uXwY/2UWq8Wa/P1ZBMXGWlhHvP2hatbIy8dUyqQjMagBaWkY4Wy+d?=
+ =?iso-8859-1?Q?i/y8CgrGPdjcxFdhHw5vwS+nW119pysSnLk5Ru7UA3H+y62OMAqetaRGs5?=
+ =?iso-8859-1?Q?FEzbpa5qbsrAPBfJBFXOLQg1P50aT3ttBzFjXQoGyKWA8Ip/IdlB5zro2h?=
+ =?iso-8859-1?Q?kd3tm0bav9F7lyr+tPtbK6lHo6aA0txtNTxILhbdpobpzSvFVT7n5wWx1D?=
+ =?iso-8859-1?Q?MQq8hpszfTGVBusQ5jQRpmVa2PLh1oDSNNx/zS02Tr0M/ImbO51dHBUNT9?=
+ =?iso-8859-1?Q?QqDhRqDE33qjE+OfsI90oYwY+K0Up2C8vceyttBwEwNWv2v4soA/YgAnCf?=
+ =?iso-8859-1?Q?wKihaJ2BnbBe4rTB2YkJxSSbpxa8ipdgaIzx0nPTkbIg7SQpcea7mNDH5d?=
+ =?iso-8859-1?Q?r/AX4k3MlqiKvb/tWSRbuZu4O1EE3LKuF8fOGERWDfDOUzlYv9SJnC7v9p?=
+ =?iso-8859-1?Q?O5hqsIioJ2Wf1LUq3f5Hr00kIWXGBBv/g5Rg//pzuTA2ttYKpZP2YmpS7Q?=
+ =?iso-8859-1?Q?jzTlD9Kuq/Xs1QT18st9dS0/5W1VVkWJ6UXX4hCJuu66a9Bcns3Tmc4DHx?=
+ =?iso-8859-1?Q?NInsSfmA59wt3kF0Ew57qxvMbxHXiD1WxKDSz1lqN4WUhZOo3bzG7d9D6R?=
+ =?iso-8859-1?Q?ehppQ2bYXDv2kVuMMfVjV1w8fZJHYsDGD5Vjw5t7SJUNdr+ATJpZg4pxPL?=
+ =?iso-8859-1?Q?qWvfBVMLR4VZBIJOe36fmOa8stOR7JNUMeyjIftGCRaSTIXwbWhjbiGz15?=
+ =?iso-8859-1?Q?/K0hTBHu39CVVA+Npkh8tQvGtpHqipeolgVpvCwfiOxdNMpudXrjHiRdJs?=
+ =?iso-8859-1?Q?HUYmZR6mrWyUPok2qM1hV6ziL7h4EzULIE7dkGEdrDBhQnzeKe7mO/q4Iu?=
+ =?iso-8859-1?Q?OXhzGtWNXv2YgNgPMhrXepHlAFGivKNNk/JCj27DgdIx2RsGZz99CcZyEW?=
+ =?iso-8859-1?Q?qyGgXUnAwpNo46yV896ToTxMsYPsIQDB5A6YSIySo6D5I2XemsEbhxB92x?=
+ =?iso-8859-1?Q?Sjoq5chd+HoGtGMb3b8VZrK9eZUx8eE58kP6NPhzxRlrfTO7lm/a+qrY7f?=
+ =?iso-8859-1?Q?imeMl0wg7fn2RR4W19bkLBEKu3goR8LGEjx6BcnqC5A+3zoLEQWk38nyVB?=
+ =?iso-8859-1?Q?UHguZvQZf7MGOANCddxGv373olkCBpysHteg8dy5bPyL4lDXNnHc2lVcSf?=
+ =?iso-8859-1?Q?tag4IafbGqJjsXVwhLeYO3PPAm6noz2b8zhIBlCpWefFtbcyuNqurMhb1e?=
+ =?iso-8859-1?Q?Aljk/GtgovztxcYwxutANiUqbwwQAfSxhR4iBV6HmmWRI/Ee46/t3ERECC?=
+ =?iso-8859-1?Q?S5X5B5ry65UYGYwnWLGZaoDA8SKccg3tz085eEgQxgCUx1DXuy1/G9Fqke?=
+ =?iso-8859-1?Q?wHmMYuX4yiRj7ihgGkxMHcAT+RdmHl61x52IPiT5cyQ0Yg7254+UhqstDJ?=
+ =?iso-8859-1?Q?6MPtgxlQke0qx0twfscV2citlaadQD07Mu6PPFPkHeoFjQhOHShg0RYLNM?=
+ =?iso-8859-1?Q?ei5JWWQ8DB3rTj9nDrOw8RlcB53jDl3vT7WQ0WGCq78FD9qWPZpx3cI3Fj?=
+ =?iso-8859-1?Q?WW+HTdGudkDzz0Ox0Sl4ZcJ1LshGGRDrpqLOTEt6XnJCCDHhec9XZE5vUJ?=
+ =?iso-8859-1?Q?3r2rSLDnW3ANpUX2072ZbqJXNGu2Ov5lGWqk/4v2VPKkfnbz+ZD79gmtAC?=
+ =?iso-8859-1?Q?PpQ+1+TLAMaUAy+DNF+xsIJExBG1ugkJuCY0o6LFZPK9iD?=
 X-OriginatorOrg: nxp.com
-X-MS-Exchange-CrossTenant-Network-Message-Id: 24ef51f4-3d55-4e67-7a0c-08dec015e553
+X-MS-Exchange-CrossTenant-Network-Message-Id: 8dc4f454-14df-490b-0ab5-08dec01749cf
 X-MS-Exchange-CrossTenant-AuthSource: PA4PR04MB9366.eurprd04.prod.outlook.com
 X-MS-Exchange-CrossTenant-AuthAs: Internal
-X-MS-Exchange-CrossTenant-OriginalArrivalTime: 01 Jun 2026 19:42:20.8840
+X-MS-Exchange-CrossTenant-OriginalArrivalTime: 01 Jun 2026 19:52:18.9397
  (UTC)
 X-MS-Exchange-CrossTenant-FromEntityHeader: Hosted
 X-MS-Exchange-CrossTenant-Id: 686ea1d3-bc2b-4c6f-a92c-d99c5c301635
 X-MS-Exchange-CrossTenant-MailboxType: HOSTED
-X-MS-Exchange-CrossTenant-UserPrincipalName: 7AYqEJjfoxzh5Qa+6bnSKWm/1foybItSwWST/iMuFOxJNeegt4PYFecgSOXeM0SMWotTskJNRECG/Ctb2caP7A==
-X-MS-Exchange-Transport-CrossTenantHeadersStamped: PR3PR04MB7241
+X-MS-Exchange-CrossTenant-UserPrincipalName: EhjZuH7aIL+uJ6tBw2ijRit/sPLv7RMEQKB5dFa8E3xYgEqdqNeNu3j+OnGyHuVDGxhNiOPv72OhYIclWfTYOw==
+X-MS-Exchange-Transport-CrossTenantHeadersStamped: GV2PR04MB12656
 
-On Thu, May 21, 2026 at 05:30:19PM +0000, sashiko-bot@kernel.org wrote:
-> Thank you for your contribution! Sashiko AI review found 2 potential issue(s) to consider:
-> - [Medium] The DisplayPort connector references a disabled DisplayPort bridge, leaving dangling references and rendering the connector non-functional while wasting power.
-> - [Medium] The dedicated power supply regulator for the disabled DSI-to-DP bridge is incorrectly marked as always-on, wasting power.
+On Fri, May 22, 2026 at 08:24:38AM +0000, sashiko-bot@kernel.org wrote:
+> Thank you for your contribution! Sashiko AI review found 3 potential issue(s) to consider:
+> - [High] Off-by-4 error in `gpio4` line names array assigns GPIO names to actively driven Ethernet pins
+> - [Medium] Redundant `gpio-hog` nodes for pins concurrently used as interrupts by drivers
+> - [Medium] Missing `status = "okay";` for `pwm2` and `pwm3` will cause backlight overlays to fail
 > --
 >
-> commit 3392fc6b669bcc9dccbd369d342a80d81c494ed6
-> Author: João Paulo Gonçalves <joao.goncalves@toradex.com>
+> commit 33a28c1f4850f44b57edd7bcc9794f6b7f5401a7
+> Author: Paul Gerber <paul.gerber@tq-group.com>
 >
-> arm64: dts: freescale: add Aquila iMX95 support
+> arm64: dts: freescale: add initial device tree for TQMa8MPQS with i.MX8MP
 >
-> This commit adds support for the Toradex Aquila iMX95 computer-on-module
-> and its corresponding development carrier board.
+> This adds support for TQMa8MPQS module on MB-SMARC-2 board.
 >
-> Link: https://www.toradex.com/computer-on-modules/aquila-arm-family/nxp-imx95
-> Link: https://www.toradex.com/products/carrier-board/aquila-development-board-kit
+...
 >
-> > diff --git a/arch/arm64/boot/dts/freescale/imx95-aquila-dev.dts b/arch/arm64/boot/dts/freescale/imx95-aquila-dev.dts
-> > new file mode 100644
-> > index 0000000000000..3df17700b632f
-> > --- /dev/null
-> > +++ b/arch/arm64/boot/dts/freescale/imx95-aquila-dev.dts
-> > @@ -0,0 +1,389 @@
-> [ ... ]
-> > +	aliases {
-> > +		eeprom1 = &carrier_eeprom;
-> > +	};
+> > +&gpio4 {
+> > +	pinctrl-names = "default";
+> > +	pinctrl-0 = <&pinctrl_gpio4>, <&pinctrl_sdp>, <&pinctrl_espi_rst>;
 > > +
-> > +	dp_1_connector: dp0-connector {
-> > +		compatible = "dp-connector";
-> > +		dp-pwr-supply = <&reg_dp_3p3v>;
-> > +		type = "full-size";
-> > +
-> > +		port {
-> > +			dp_1_connector_in: endpoint {
-> > +				remote-endpoint = <&dsi2dp_out>;
-> > +			};
-> > +		};
-> > +	};
+> > +	gpio-line-names = "RTC_INT#", "GPIO8", "", "",
+> > +			  "GPIO9", "ESPI_RST#", "", "",
+> > +			  "", "", "", "",
+> > +			  "", "", "GBE0_SDP_DIR", "",
+> > +			  "GPIO7", "", "", "",
+> > +			  "", "", "", "",
+> > +			  "", "GPIO0", "GPIO1", "",
+> > +			  "GPIO2", "GPIO6", "", "";
 >
-> [Severity: Medium]
-> Since som_dsi2dp_bridge is disabled by default in imx95-aquila.dtsi and not
-> explicitly enabled in this device tree, does this connector node leave
-> dangling references?
+> [Severity: High]
+> Are GBE0_SDP_DIR and GPIO7 placed at the correct indices in this array?
 >
-> Without status = "disabled" on this node, the display-connector driver will
-> probe successfully and unconditionally enable its dp-pwr-supply (reg_dp_3p3v),
-> wasting power on the carrier board for an unusable interface.
+> They are currently at indices 14 and 16, which correspond to GPIO4_IO14 and
+> GPIO4_IO16. However, these are actively driven Ethernet lines (ENET1_RGMII_TD2
+> and ENET1_RGMII_TX_CTL) as multiplexed in pinctrl_fec.
 >
-> Should this connector be disabled by default or have the bridge enabled here?
->
-> > diff --git a/arch/arm64/boot/dts/freescale/imx95-aquila.dtsi b/arch/arm64/boot/dts/freescale/imx95-aquila.dtsi
-> > new file mode 100644
-> > index 0000000000000..69dc962a24a1d
-> > --- /dev/null
-> > +++ b/arch/arm64/boot/dts/freescale/imx95-aquila.dtsi
-> > @@ -0,0 +1,1160 @@
-> [ ... ]
-> > +	reg_dp_1p2v: regulator-dp-1p2v {
-> > +		compatible = "regulator-fixed";
-> > +		/* CTRL_DP_BRIDGE_EN */
-> > +		gpios = <&som_gpio_expander_0 7 GPIO_ACTIVE_HIGH>;
-> > +		enable-active-high;
-> > +		regulator-always-on;
-> > +		regulator-max-microvolt = <1200000>;
-> > +		regulator-min-microvolt = <1200000>;
-> > +		regulator-name = "On-module +V1.2_DP";
-> > +		vin-supply = <&reg_1p8v>;
-> > +	};
->
-> [Severity: Medium]
-> Since this regulator is a dedicated power supply for som_dsi2dp_bridge which
-> is marked as status = "disabled" below, is it necessary to have the
-> regulator-always-on property here?
+> Could this be an off-by-4 error, and should they instead be at indices 18 and
+> 20, which are explicitly multiplexed as GPIOs? If exposed to userspace as
+> GPIOs, could manipulating these active Ethernet TX lines cause hardware
+> conflicts or disrupt network connectivity?
 
-This one make sense. Does this regulator-dp-1p2v really need always on.
+Is AI said true?
+
+>
+> [ ... ]
+>
+> > +&pwm2 {
+> > +	pinctrl-names = "default";
+> > +	pinctrl-0 = <&pinctrl_pwm2>;
+> > +};
+> > +
+> > +&pwm3 {
+> > +	pinctrl-names = "default";
+> > +	pinctrl-0 = <&pinctrl_pwm3>;
+> > +};
+>
+> [Severity: Medium]
+> Since the backlight_lvds0 and backlight_lvds1 nodes on the baseboard rely on
+> &pwm3 and &pwm2, should these controllers have status = "okay"; added here?
+
+Make sense, in dtsi, pwm2 pwm3's status is disabled.
 
 Frank
+
 >
-> The always-on property bypasses the driver and forces the regulator core to
-> unconditionally assert the CTRL_DP_BRIDGE_EN GPIO at boot, continuously
-> powering the bridge chip on the module even when disabled.
+> If left disabled (as they are in the SoC dtsi), won't any overlays that enable
+> the panels silently fail when the backlight driver cannot acquire the disabled
+> PWM channels?
 >
 > --
-> Sashiko AI review · https://sashiko.dev/#/patchset/20260521-add-aquila-imx95-v4-0-5a7f86c824f5@toradex.com?part=2
+> Sashiko AI review · https://sashiko.dev/#/patchset/20260522075656.841745-1-alexander.stein@ew.tq-group.com?part=2
