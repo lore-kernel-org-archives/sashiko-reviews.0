@@ -1,65 +1,46 @@
-Received: from mail-ej1-f54.google.com (mail-ej1-f54.google.com [209.85.218.54])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from www62.your-server.de (www62.your-server.de [213.133.104.62])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B580D3DCD9C
-	for <sashiko-reviews@lists.linux.dev>; Mon,  1 Jun 2026 15:33:54 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.218.54
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D5CE13D8104;
+	Mon,  1 Jun 2026 15:40:38 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=213.133.104.62
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1780328038; cv=none; b=J726A6ek9ys6kK+c0DMcgwdPgMQPH6grV5hWRkLlrecRnpZxUQpW667SgQNSPwQZJybV5uEhSXIHPkvnw5hSUFG7CVfgushS1ErdMA100TOZT/gOk+9PL9fCLy9k8A0i8pgUcn6DaTrS/CUBLrrEkm0chZSWQAYxMqciKkpxhkk=
+	t=1780328442; cv=none; b=tDLR9J9RnQEvF1+WdyPkpHJt5Scs1AEgjPtUE2Dbd0ovbK7g7vJkJUz/yhxAlk7UIPqHs8c56siaZL4hU8m5ejwmAVEZBB/EALce3Id4FKTYtG0RHwigWP/a5W3IwfZBIXlkRta4LzG0ElyVU8sxUo5WyhLePe9f1ELG8v4WOCU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1780328038; c=relaxed/simple;
-	bh=rGoAurEoLA1pXl7F+SSgjSYQ9FrcIc5baVLYJPGEd/Y=;
+	s=arc-20240116; t=1780328442; c=relaxed/simple;
+	bh=sFeSBd+2tcSY/5ecnolgNPPVx9cbP0gwu5NN0Z4kLTI=;
 	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=UEHmZ5hQnYkDfKEjOvdw2XpZ3GMe4OEAoPt8wrEHJmleE4PSfO7y4ESyNuZmZU5Hzuzpi2AUpywjzxC7GyMJ7dKpHaUuuCWzGd7O96IHiExu+K5i4M8vD95k983JUyRa4me0cCBDVVq32rr/daCJFo5V1sH5ttn+2znXGjw1+Tg=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=eF3B3xgU; arc=none smtp.client-ip=209.85.218.54
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+	 In-Reply-To:Content-Type; b=sdMNDbcEKkPAZCmhEhqnQ5NP0eXVz3N+nunWVkRpavS75LqdrjiYALsjhJpHPnRWaG8WFCV3y+RfI528GGp2dNZ72UuYxW3AVxG7qqGr1Yr+x0Ae6jlnTvjTP4RQdKyHTeTy+5bX+u73YBZqaMjUbi5RAKOC6vLIcriiRXXWipg=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=iogearbox.net; spf=pass smtp.mailfrom=iogearbox.net; dkim=pass (2048-bit key) header.d=iogearbox.net header.i=@iogearbox.net header.b=Jm0VRL3Q; arc=none smtp.client-ip=213.133.104.62
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=iogearbox.net
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=iogearbox.net
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="eF3B3xgU"
-Received: by mail-ej1-f54.google.com with SMTP id a640c23a62f3a-bec49f7e35eso194717366b.2
-        for <sashiko-reviews@lists.linux.dev>; Mon, 01 Jun 2026 08:33:54 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20251104; t=1780328033; x=1780932833; darn=lists.linux.dev;
-        h=content-transfer-encoding:in-reply-to:from:content-language
-         :references:cc:to:subject:user-agent:mime-version:date:message-id
-         :from:to:cc:subject:date:message-id:reply-to;
-        bh=e8VgCm9XB5VMkj9oTgzpT73+TANb1YKCvjZzDgyzRqo=;
-        b=eF3B3xgUQMikluKZi3mHLnkIa7hQuvWMjTcDg+aPFH2RvZuTap2fNyFEfFP8VRjeU7
-         oP4GJCAkL7mvpKzEUXg2wDZX6ByRUuwkXouoRgVr8TLcdE8qZP0RdLYIcGnmV9tiw/My
-         86vs3X9VqOyt6kbvuWSx/stVsVbM4fSfSM5edSxIiKRsXBfBfAkPlsCUYn+jk69Myydl
-         rYYHe0USy8GMgzNa0M3JyogYCwwupgtWOio+C9w+RZCiIsrvAh7YOtpq8llFDpfqGuZy
-         ykY/dSTCyL4DufcFtBpu9nxQUHLmesrqHOUe5XhYOxqTQY/uKreoiIkMAQhWdqWZNScV
-         hBbg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20251104; t=1780328033; x=1780932833;
-        h=content-transfer-encoding:in-reply-to:from:content-language
-         :references:cc:to:subject:user-agent:mime-version:date:message-id
-         :x-gm-gg:x-gm-message-state:from:to:cc:subject:date:message-id
-         :reply-to;
-        bh=e8VgCm9XB5VMkj9oTgzpT73+TANb1YKCvjZzDgyzRqo=;
-        b=iQciMaS5TU/Nwgm38oGaDLhyIrK9NHbmz5/vn+SeeIdNAryAylPqo8B4hPhyefL3LL
-         D3H977VcPyJS3//OcXSVPZj0SthBbrNwoqDgEbWSRfzX9ySQDTtjkkNkTgLrMLEuYWSI
-         7bGvr0dWNjclaXM59UwY5hEJYZhR3tPbGN40NI8tocsM0EXxie8lrtfIucyL12bC3mDv
-         EI/2YuDrG15duD+mJSdOBcms2SyH0hh53cVvJod3IjriWxqYYT1ZMbK9K3GEq1JwQIqC
-         jdUGOae02j8VF+nfxGpdmcqsfBn4tv5q8OUYWn460h0y90h/6RJumjWQ/2YgFwcYAueX
-         Pt7w==
-X-Gm-Message-State: AOJu0YxHD3ehGhmZYN6DFYkFRijcuUpoA5dOjS1d93FicyqdqvawSlOt
-	TvetSjLA1JXv7I6FqJ6tQ5CeJ9ZxUXfGF3lsnSTrkhcEOj+5FS4ikNB1WlqFRmV+
-X-Gm-Gg: Acq92OFOVyyX/7IBb+LdRLm846ARzGDaZ8I8xGnThHBxNkl9Yc67KWQvt4n9U+RuAdE
-	+CnmhuIZn8MN2iN8d2etwd/6aR9mwicAWza2AGEGJ/cvXeHKtiF+N5FHX3xq8B2TyCCjU3+K1y3
-	jRIEajJeOw5MpTedQjafax9nF1n1fIj7/UXP9IrVAG6p9dfgzxlMLCBKd4deVHLFzDBCv1Dl4f4
-	LrGLKYVD74WiRupSbS1nbWs/pH5EsBZrcn6afP0yaOsZgysxvIPKfyXdCsKy4vdxFrcfYx+++J6
-	2gwhf+rcKo3x+GjkCesyp9axLbZQVE/5SC27dCYftS3G0N9z3CODZkd5hiYX3N8nayLFstJs0t8
-	2szf/WWxHQshltFaZDcnm5cNrhJ282CZYYnUYgwIYNsva3Du2n+NY/CyfBROyoj553VN7v5YjHQ
-	sl2y9amAZk87wTEGMDQXiNjH0VWR6fcSvjMGxb+3MxY5xfFbRkoHv/2No9zt9CftMbB6M9
-X-Received: by 2002:a17:906:9fc8:b0:ba1:1181:b773 with SMTP id a640c23a62f3a-beaafceff43mr619978166b.10.1780328032881;
-        Mon, 01 Jun 2026 08:33:52 -0700 (PDT)
-Received: from [192.168.1.30] (71-212-98-95.ftth.glasoperator.nl. [95.98.212.71])
-        by smtp.gmail.com with ESMTPSA id a640c23a62f3a-bee94d11126sm43162366b.27.2026.06.01.08.33.51
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Mon, 01 Jun 2026 08:33:52 -0700 (PDT)
-Message-ID: <4198bedb-807e-4330-9172-f12928d446a8@gmail.com>
-Date: Mon, 1 Jun 2026 17:33:51 +0200
+	dkim=pass (2048-bit key) header.d=iogearbox.net header.i=@iogearbox.net header.b="Jm0VRL3Q"
+DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed;
+	d=iogearbox.net; s=default2302; h=Content-Transfer-Encoding:Content-Type:
+	In-Reply-To:From:References:Cc:To:Subject:MIME-Version:Date:Message-ID:Sender
+	:Reply-To:Content-ID:Content-Description:Resent-Date:Resent-From:
+	Resent-Sender:Resent-To:Resent-Cc:Resent-Message-ID;
+	bh=xkiuLr25uRi9mFS/F6dn81CJeFleUDTKvFBkRzexncQ=; b=Jm0VRL3QIcpa7lHk1p1NkbyT6i
+	bzBdxcsMiJGbvjmEYYemUq+jYCw8hdp36d6hjX4AeCAoz3wZ9TSWnfpEpmcXqDmwboR169bP1er16
+	iFJoTFf2ncMo0GHJeypZxI9TvyTzkx+YKqLvGAs16g3NqiY2Qcj7+FOUSlqzxZfikdnbWCu/5qFxl
+	0yqjrjg7UCoNy1B/O6j7mKFWxmrDeCmEZePku6YSmnR7vvYfFBc3TwDNqyc6quAs8MLsFzw/6IXpT
+	DmQhF2JRccMEiQ/2RaXR4W9U0zKmp0VBoulzH2gT47lzNbV66JXIEBmaJEhOnU/jlsdOZuOQZaiTs
+	LEFuU8rw==;
+Received: from sslproxy06.your-server.de ([78.46.172.3])
+	by www62.your-server.de with esmtpsa  (TLS1.3) tls TLS_AES_256_GCM_SHA384
+	(Exim 4.96.2)
+	(envelope-from <daniel@iogearbox.net>)
+	id 1wU4kn-000M2t-04;
+	Mon, 01 Jun 2026 17:40:37 +0200
+Received: from localhost ([127.0.0.1])
+	by sslproxy06.your-server.de with esmtpsa  (TLS1.3) tls TLS_AES_256_GCM_SHA384
+	(Exim 4.96)
+	(envelope-from <daniel@iogearbox.net>)
+	id 1wU4km-000Oqd-0s;
+	Mon, 01 Jun 2026 17:40:36 +0200
+Message-ID: <cb5bbdce-d043-4b97-a894-5793cc6caf3b@iogearbox.net>
+Date: Mon, 1 Jun 2026 17:40:36 +0200
 Precedence: bulk
 X-Mailing-List: sashiko-reviews@lists.linux.dev
 List-Id: <sashiko-reviews.lists.linux.dev>
@@ -67,98 +48,126 @@ List-Subscribe: <mailto:sashiko-reviews+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:sashiko-reviews+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v8 2/2] arm64: dts: qcom: Add Xiaomi 12 Lite 5G (taoyao)
- DTS
+Subject: Re: [PATCH bpf-next v2 1/7] bpf: Reject exclusive maps as inner maps
+ in map-in-map
 To: sashiko-reviews@lists.linux.dev
-Cc: robh@kernel.org, conor+dt@kernel.org, devicetree@vger.kernel.org
-References: <20260601150752.666393-3-zstaseg@gmail.com>
- <20260601151907.AD44F1F00A1B@smtp.kernel.org>
+Cc: bpf@vger.kernel.org
+References: <20260601150248.394863-2-daniel@iogearbox.net>
+ <20260601151810.68BCF1F00893@smtp.kernel.org>
 Content-Language: en-US
-From: Stanislav Zaikin <zstaseg@gmail.com>
-In-Reply-To: <20260601151907.AD44F1F00A1B@smtp.kernel.org>
+From: Daniel Borkmann <daniel@iogearbox.net>
+Autocrypt: addr=daniel@iogearbox.net; keydata=
+ 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
+In-Reply-To: <20260601151810.68BCF1F00893@smtp.kernel.org>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 7bit
+X-Virus-Scanned: Clear (ClamAV 1.4.3/28018/Mon Jun  1 08:31:13 2026)
 
-On 6/1/26 5:19 PM, sashiko-bot@kernel.org wrote:
-> Thank you for your contribution! Sashiko AI review found 2 potential issue(s) to consider:
-> - [Medium] The SBU port in the USB-C connector node has a mismatched unit-address and reg property (`port@2` with `reg = <1>`).
-> - [Low] Invalid 'mem-type' property in the ramoops node.
+On 6/1/26 5:18 PM, sashiko-bot@kernel.org wrote:
+> Thank you for your contribution! Sashiko AI review found 1 potential issue(s) to consider:
+> 
+> Pre-existing issues:
+> - [Critical] BPF iterators bypass map exclusivity (`excl_prog_sha`) and map freezing (`map->frozen`) protections, allowing arbitrary modification of secure maps.
 > --
 > 
-> commit 444192d5f33eb93dfce53fe410ae77991af6102e
-> Author: Stanislav Zaikin <zstaseg@gmail.com>
+> commit 94f0db1114c682145008741a58e7ea931a088e25
+> Author: Daniel Borkmann <daniel@iogearbox.net>
 > 
-> arm64: dts: qcom: Add Xiaomi 12 Lite 5G (taoyao) DTS
+> bpf: Reject exclusive maps as inner maps in map-in-map
 > 
-> This commit adds devicetree support for the Xiaomi 12 Lite 5G handset,
-> including display, touchscreen, UFS, buttons, regulators, remote
-> processors, and USB device mode.
+> This commit prevents an exclusive map from being inserted into a
+> map-of-maps. This addresses an issue where unrelated programs could
+> bypass exclusivity guarantees by accessing the map at runtime.
 > 
->> diff --git a/arch/arm64/boot/dts/qcom/sm7325-xiaomi-taoyao.dts b/arch/arm64/boot/dts/qcom/sm7325-xiaomi-taoyao.dts
->> new file mode 100644
->> index 0000000000000..ec795f8adc467
->> --- /dev/null
->> +++ b/arch/arm64/boot/dts/qcom/sm7325-xiaomi-taoyao.dts
+>> diff --git a/kernel/bpf/map_in_map.c b/kernel/bpf/map_in_map.c
+>> index 645bd30bc9a9d..d2cbab4bdf644 100644
+>> --- a/kernel/bpf/map_in_map.c
+>> +++ b/kernel/bpf/map_in_map.c
+>> @@ -20,7 +20,8 @@ struct bpf_map *bpf_map_meta_alloc(int inner_map_ufd)
+>>   	/* Does not support >1 level map-in-map */
+>>   	if (inner_map->inner_map_meta)
+>>   		return ERR_PTR(-EINVAL);
+>> -
+>> +	if (inner_map->excl_prog_sha)
+>> +		return ERR_PTR(-ENOTSUPP);
 > 
-> [ ... ]
+> [Severity: Critical]
+> This is a pre-existing issue, but while this patch closes the map-in-map
+> bypass for exclusive maps, does a similar bypass still exist through BPF
+> iterators?
 > 
->> +			ports {
->> +				#address-cells = <1>;
->> +				#size-cells = <0>;
->> +
->> +				port@0 {
->> +					reg = <0>;
->> +
->> +					pmic_glink_hs_in: endpoint {
->> +						remote-endpoint = <&usb_1_dwc3_hs>;
->> +					};
->> +				};
->> +
->> +				port@2 {
->> +					reg = <1>;
+> Looking at bpf_iter_attach_map() in kernel/bpf/map_iter.c, when a BPF map
+> iterator is attached via BPF_LINK_CREATE:
 > 
-> [Severity: Medium]
-> Is this port index correct for the SBU endpoint? The devicetree specification
-> requires the unit-address (@2) to match the first address in the reg property.
+> 	map = bpf_map_get_with_uref(linfo->map.map_fd);
+> 	if (IS_ERR(map))
+> 		return PTR_ERR(map);
 > 
-> Additionally, the usb-connector binding assigns fixed indices to ports:
-> reg = <0> for High Speed, reg = <1> for SuperSpeed, and reg = <2> for SBU.
-> Using reg = <1> here for the SBU port violates the schema and might logically
-> miswire the SBU mux to the SuperSpeed data graph port index, breaking
-> alternate mode routing. It will also generate a dtc unit_address_vs_reg
-> mismatch warning.
+> // [...]
+> 
+> 	if (key_acc_size > key_size || value_acc_size > value_size) {
+> 		err = -EACCES;
+> 		goto put_map;
+> 	}
+> 
+> This function retrieves the target map but appears to lack checks against
+> map->excl_prog_sha, map->frozen, and BPF_F_RDONLY_PROG.
+> 
+> Furthermore, the iterator context defined in bpf_map_elem_reg_info() sets
+> up the value argument without the MEM_RDONLY flag:
+> 
+> 		{ offsetof(struct bpf_iter__bpf_map_elem, value),
+> 		  PTR_TO_BUF | PTR_MAYBE_NULL },
+> 
+> Because MEM_RDONLY is omitted, the verifier permits BPF programs to perform
+> direct memory writes to ctx->value.
+> 
+> Could this allow a program to locate the FD of an exclusive, frozen map via
+> its ID, attach a custom BPF map iterator, and arbitrarily overwrite the
+> contents of the protected map?
 
-Right, sorry, forgot to run CHECK_DTBS=1 before sending this time. Will 
-fix in v9.
 
-> 
->> +		cdsp_mem: cdsp@9c700000 {
->> +			reg = <0x0 0x9c700000 0x0 0x1e00000>;
->> +			no-map;
->> +		};
->> +
->> +		ramoops@a9000000 {
->> +			compatible = "ramoops";
->> +			reg = <0x0 0xa9000000 0x0 0x200000>;
->> +			mem-type = <2>;
-> 
-> [Severity: Low]
-> Does this mem-type property pass upstream validation? This appears to be a
-> downstream addition historically used to force memory caching attributes,
-> which is not supported by the upstream ramoops bindings.
-> 
-> Leaving this in will trigger a dtbs_check validation failure. Upstream
-> typically handles memory attributes via standard reserved-memory properties
-> like no-map.
-
-This one passes dtbs check.
-
-Another thing that it complains about - memory-region for ipa node but 
-this relies on Dmitry's patch [0]
-
-[0] - 
-https://lore.kernel.org/all/20260517-ipa-loader-v1-6-3c3764c1b4a3@oss.qualcomm.com/
-
--- 
-Best regards,
-Stanislav
+Hm, oh well, more things to look into.. if sashiko/others don't find anything
+specific with this series, then I'll send patches on top given these are all
+independent issues, otherwise I'd fold them into v3.
