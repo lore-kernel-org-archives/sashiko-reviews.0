@@ -1,202 +1,133 @@
-Received: from foss.arm.com (foss.arm.com [217.140.110.172])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 3AF843E121B
-	for <sashiko-reviews@lists.linux.dev>; Mon,  1 Jun 2026 17:45:24 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=217.140.110.172
+Received: from stravinsky.debian.org (stravinsky.debian.org [82.195.75.108])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+	(No client certificate requested)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 055243DF003;
+	Mon,  1 Jun 2026 17:46:26 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=82.195.75.108
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1780335927; cv=none; b=MOMNYyA3zdLo8doCG0UJE25pGFgtDCZtO6XF8iq80Yc0XPUEeAkQz2N0eRRWMQcLIBPyZ/8QIL5PNobHCGGcDZfAVsLBg+d08315tnQ2RY4wmSxDX5r7/rZ20OrF1929olMuPxklTVfXUDR0z6tzFhQMtlGilN/exkdU/zmQ/XI=
+	t=1780335988; cv=none; b=dtFIRvb6nMLgINZuHxmlxAzqvaKZXYpQivYoCGLdGPct/da6MiL2egp3XO9450IX+8sdDI2LtOsHulVPvlDClDruIMBGfSJqv0E0mpDk6XbMxJCl1IoigLfrl/eOutFHhTBNGtWGQ4VObqyLcrEN6vXWwt+0kI9KQPcpgphfHdY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1780335927; c=relaxed/simple;
-	bh=obYPMTqCpdo/P+LHqGirODUwR9JZ1tIrVLU26guOo8k=;
-	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=juh9e/U3kBdEr+hMqTPJpcwRQS9oHLns1RXxY461YI4zqHN77WxoI5JOF1z7bX+r00pe6XJZGjLRXFEvQ/YEQMbZ6eEfS11hdv0dMIa6B0yV7Fb7eGQEhejOJnaIgIMRVDUDaTfq+UOez1Oqb2UyKw9+sq5rcFzwg28i87JwLDY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=arm.com; spf=pass smtp.mailfrom=arm.com; dkim=pass (1024-bit key) header.d=arm.com header.i=@arm.com header.b=KCmIEnUF; arc=none smtp.client-ip=217.140.110.172
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=arm.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=arm.com
+	s=arc-20240116; t=1780335988; c=relaxed/simple;
+	bh=3sdy84BDOZZ9GCa+7G7a8euBbAkMRqixm061bLKdiIg=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=dn2HQSVR6aZjhHRlsr/S+UoPQ25pRECJYVibMZqxxA4YW3GZEP2o6Y/3Q4yQ42QB6rbAFGO5Zf9zf+BTPoZ/19imOr7zuqteNwpdQXrgnidvIVMiz7rq2SoUJ6dLzAVARXBVHxVqcGaWOCp8e3w+5ShUAE1kEOXO95aQ3GxotBg=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=debian.org; spf=pass smtp.mailfrom=debian.org; dkim=pass (2048-bit key) header.d=debian.org header.i=@debian.org header.b=SwwlzFFb; arc=none smtp.client-ip=82.195.75.108
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=debian.org
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=debian.org
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=arm.com header.i=@arm.com header.b="KCmIEnUF"
-Received: from usa-sjc-imap-foss1.foss.arm.com (unknown [10.121.207.14])
-	by usa-sjc-mx-foss1.foss.arm.com (Postfix) with ESMTP id 5D1CC1BA8;
-	Mon,  1 Jun 2026 10:45:18 -0700 (PDT)
-Received: from [10.57.36.65] (unknown [10.57.36.65])
-	by usa-sjc-imap-foss1.foss.arm.com (Postfix) with ESMTPSA id D15F83F7D8;
-	Mon,  1 Jun 2026 10:45:22 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=simple/simple; d=arm.com; s=foss;
-	t=1780335923; bh=obYPMTqCpdo/P+LHqGirODUwR9JZ1tIrVLU26guOo8k=;
-	h=Date:Subject:To:Cc:References:From:In-Reply-To:From;
-	b=KCmIEnUFWAUQXcvMZMdCzSlKsbbtQkS6c1Abuonbl/C0OjFv/SBoltrTJPjgVk8gW
-	 4ilL2RIbAj+bKkRKE5MdIozqB8fqgGvx7986/zvZ37TQG9nfnIdWn7E5r8aH13o1/L
-	 M7Tm0m7zw3+f/EaNW0eM4rKClvodJI5Bc/9/4w+A=
-Message-ID: <59893923-0faa-4cfd-b062-16df596637c2@arm.com>
-Date: Mon, 1 Jun 2026 18:45:17 +0100
+	dkim=pass (2048-bit key) header.d=debian.org header.i=@debian.org header.b="SwwlzFFb"
+DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed; d=debian.org;
+	s=smtpauto.stravinsky; h=X-Debian-User:In-Reply-To:Content-Type:MIME-Version:
+	References:Message-ID:Subject:Cc:To:From:Date:Reply-To:
+	Content-Transfer-Encoding:Content-ID:Content-Description;
+	bh=CSzNv37AwbZ34yeGtfqaKjZWoi1h80Uqe0YqIXBcuWU=; b=SwwlzFFbcOre8rlHOsbDi5F+nb
+	zIRBw7kp3BEa1hQNNNeC4o/CpdXF2n9AIrnBrhkep4TX9/JkM4GQuTayE6eYa5IIWDkUWlOMFWuiN
+	Gb8hB2gZA4hPIkHQcMZTv+cWxFJVmyCZodmqHsTv1a5wINPmMcL2NN8UH03sf0OUN6uVASp1j1uuu
+	C8UEv5WeoMQf1Nxm2SAPys0bDfBJrW++SuLTgMZlDmvgBS2V6clZq1vYif9nLahhQcBldtqVaLu7J
+	LkMtyqPDAake66LoMQKyDqSJbJRLqotJnBxSlzuRBBoZ1tFlAAh6nhTjmQyS9lb3edV1wFU1p2lgW
+	Ij3/nf2Q==;
+Received: from authenticated-user
+	by stravinsky.debian.org with esmtpsa (TLS1.3:ECDHE_X25519__RSA_PSS_RSAE_SHA256__AES_256_GCM:256)
+	(Exim 4.96)
+	(envelope-from <leitao@debian.org>)
+	id 1wU6iW-002LWr-2h;
+	Mon, 01 Jun 2026 17:46:25 +0000
+Date: Mon, 1 Jun 2026 10:46:21 -0700
+From: Breno Leitao <leitao@debian.org>
+To: sashiko-reviews@lists.linux.dev
+Cc: bpf@vger.kernel.org
+Subject: Re: [PATCH 1/4] bootconfig: return 0 from xbc_snprint_cmdline() for
+ a leaf root
+Message-ID: <ah3FVZGQLc6MipYA@gmail.com>
+References: <20260527-bootconfig_using_tools-v1-1-b6906a86e7d5@debian.org>
+ <20260527170522.835641F000E9@smtp.kernel.org>
 Precedence: bulk
 X-Mailing-List: sashiko-reviews@lists.linux.dev
 List-Id: <sashiko-reviews.lists.linux.dev>
 List-Subscribe: <mailto:sashiko-reviews+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:sashiko-reviews+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v4 2/2] perf/arm-cmn: Add workarounds for CMN-S3 on
- Graviton5
-To: sashiko-reviews@lists.linux.dev, Aviv Bakal <avivb@amazon.com>
-Cc: linux-perf-users@vger.kernel.org
-References: <20260531110447.10095-3-avivb@amazon.com>
- <20260531113259.5B0F71F00893@smtp.kernel.org>
-From: Robin Murphy <robin.murphy@arm.com>
-Content-Language: en-GB
-In-Reply-To: <20260531113259.5B0F71F00893@smtp.kernel.org>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <20260527170522.835641F000E9@smtp.kernel.org>
+X-Debian-User: leitao
 
-For the benefit of any humans...
-
-On 2026-05-31 12:32 pm, sashiko-bot@kernel.org wrote:
-> Thank you for your contribution! Sashiko AI review found 3 potential issue(s) to consider:
-> 
-> New issues:
-> - [High] Setting the DTC node's logical ID to the parent XP's logical ID causes DTC nodes to be sorted out of domain order, breaking PMU event routing.
-> - [High] The hardcoded bit-shifts in arm_cmn_graviton5_dtc_domain() can produce DTC domains >= 4, leading to out-of-bounds writes in arm_cmn_event_init().
+On Wed, May 27, 2026 at 05:05:21PM +0000, sashiko-bot@kernel.org wrote:
+> Thank you for your contribution! Sashiko AI review found 1 potential issue(s) to consider:
 > 
 > Pre-existing issues:
-> - [High] Memory allocated for `hw->dtm_idx` and `hw->wp_idx` is leaked if `arm_cmn_event_init` fails.
+> - [High] The early return incorrectly assumes `xbc_node_is_leaf(root)` means there are no descendant key/value pairs, causing it to silently skip rendering valid subkeys if the root node has both a value and subkeys.
 > --
 > 
-> commit c34c59523c8b94745143d1d1114415bb33c12d3e
-> Author: Aviv Bakal <avivb@amazon.com>
+> commit 7fe40e4bc583f53fe486de6d90af68f475369ee3
+> Author: Breno Leitao <leitao@debian.org>
 > 
-> perf/arm-cmn: Add workarounds for CMN-S3 on Graviton5
+> bootconfig: return 0 from xbc_snprint_cmdline() for a leaf root
 > 
-> Graviton5 uses a customised CMN-S3 implementation where certain discovery
-> registers report zeroed fields. This patch adds workarounds to identify the
-> variant, derive the DTC domain from the XP node ID, and set the DTC logical
-> ID from the XP's logical ID.
+> This commit changes xbc_snprint_cmdline() to return 0 instead of an error
+> when the root node is considered a leaf, preventing a build failure for
+> empty subtrees in the bootconfig tools.
 > 
->> diff --git a/drivers/perf/arm-cmn.c b/drivers/perf/arm-cmn.c
->> index f1978a53d1c19..3fb71d9a57eb5 100644
->> --- a/drivers/perf/arm-cmn.c
->> +++ b/drivers/perf/arm-cmn.c
->> @@ -2250,6 +2253,18 @@ static unsigned int arm_cmn_dtc_domain(struct arm_cmn *cmn, void __iomem *xp_reg
->>   	return FIELD_GET(CMN_DTM_UNIT_INFO_DTC_DOMAIN, readl_relaxed(xp_region + offset));
->>   }
->>   
->> +static unsigned int arm_cmn_graviton5_dtc_domain(u16 xp_id)
->> +{
->> +	unsigned int x = (xp_id >> 7) & 0xf;
->> +	unsigned int y = (xp_id >> 3) & 0xf;
->> +
->> +	/*
->> +	 * The unit info register reads as zero; derive the DTC domain from
->> +	 * the XP's mesh coordinates over the 10x14 mesh.
->> +	 */
->> +	return (x / 5) + (y / 7) * 2;
->> +}
+> > diff --git a/lib/bootconfig.c b/lib/bootconfig.c
+> > index f445b7703fdd9..3a102c9122f71 100644
+> > --- a/lib/bootconfig.c
+> > +++ b/lib/bootconfig.c
+> > @@ -431,6 +431,16 @@ int __init xbc_snprint_cmdline(char *buf, size_t size, struct xbc_node *root)
+> >  	const char *val, *q;
+> >  	int ret;
+> >  
+> > +	/*
+> > +	 * A leaf @root (e.g. an empty "kernel {}" subtree, or a key whose
+> > +	 * only child is a value node) has no descendant key/value pairs to
+> > +	 * render. The leaf-finding iterator below would otherwise return
+> > +	 * @root itself, which xbc_node_compose_key_after() rejects with
+> > +	 * -EINVAL.
+> > +	 */
+> > +	if (root && xbc_node_is_leaf(root))
+> > +		return 0;
 > 
 > [Severity: High]
-> Can the hardcoded bit-shifts extract overlapping bits if the mesh dimensions
-> are smaller than 10x14?
-
-No, because this code path is specific to things which firmware claims 
-to be the Graviton5 CMN, and as such it hard-codes the known topology of 
-the Graviton5 CMN. We have to assume we can trust what firmware tells us 
-about the platform, or we wouldn't even be able to boot.
-
-> If the system describes a smaller mesh (e.g., 8x8), arm_cmn_xyidbits
-> evaluates to 3. This would cause the hardcoded shifts (xp_id >> 7) and
-> (xp_id >> 3) to extract overlapping bits that inflate y (e.g., y = 15),
-> yielding a domain of 5.
+> This is a pre-existing issue, but does this early return unintentionally
+> skip valid descendant subkeys?
 > 
-> If a 14x10 mesh is used, the x coordinate can natively reach 13, yielding
-> a domain index of 4 ((13 / 5) + (9 / 7) * 2).
+> Looking at include/linux/bootconfig.h, xbc_node_is_leaf() evaluates to true
+> if a node has no children or its first child is a value node:
 > 
-> When an unvalidated domain index >= 4 is assigned to dn->dtc, does it
-> cause an out-of-bounds write in arm_cmn_event_init()?
-
-No, because there is no such thing. The maximum possible number of DTC 
-domains is 4. Even when correctly generated, the ID field in the 
-register is only 2 bits:
-
-https://developer.arm.com/documentation/107858/0205/Programmers-model/Register-summary/MXP-register-summary/por-dtm-unit-info?lang=en
-
-> drivers/perf/arm-cmn.c:arm_cmn_event_init() {
->      ...
->      hw->dtc_idx[dn->dtc] = 0;
->      ...
+> static inline __init bool xbc_node_is_leaf(struct xbc_node *node)
+> {
+> 	return xbc_node_is_key(node) &&
+> 		(!node->child || xbc_node_is_value(xbc_node_get_child(node)));
 > }
 > 
-> Since hw->dtc_idx is a fixed 4-byte array (s8 dtc_idx[CMN_MAX_DTCS]), an
-> index >= 4 would write past its bounds and corrupt adjacent fields like
-> hw->num_dns.
+> If a bootconfig contains a root node with both a value and subkeys
+> (for example, "kernel = val" and "kernel.param = 1"), xbc_node_is_leaf()
+> will evaluate to true for the root node.
 > 
-> [ ... ]
+> Since this patch changes the behavior to return 0 instead of propagating
+> the -EINVAL error, will it silently skip rendering these descendant subkeys
+> and cause missing kernel command line parameters?
 > 
->> @@ -2472,6 +2497,10 @@ static int arm_cmn_discover(struct arm_cmn *cmn, unsigned int rgn_offset)
->>   
->>   			switch (dn->type) {
->>   			case CMN_TYPE_DTC:
->> +				if (graviton5_workaround) {
->> +					/* Node info logical ID is zeroed; use the XP's */
->> +					dn->logid = xp->logid;
->> +				}
-> 
-> [Severity: High]
-> Does overriding the DTC logical ID with the parent XP's logical ID cause
-> DTC nodes to be sorted out of domain order?
-> 
-> In arm_cmn_init_dtcs(), CMN_TYPE_DTC nodes are sorted by their logical ID
-> (dn->logid), which determines their index in the dynamically allocated
-> cmn->dtc array. Standard CMN parts have their logid read from hardware as
-> the exact domain index (0-3).
+> Would it be safer to drop this early return and instead add a check like
+> "if (knode == root) continue;" inside the xbc_node_for_each_key_value() loop
+> to skip the root's value while continuing to process its subkeys?
 
-No, the DTC logical ID is read from the logical_id field in 
-por_dt_node_info, and while the main HN-D DTC always has an ID of 0, 
-additional HN-T sub-DTCs should normally inherit the logical ID of their 
-parent XP.
 
-> Because the domain index here is a 2D block distribution, the physical XP IDs
-> do not monotonically increase with the domain index. For example, an XP at
-> x=7, y=0 belongs to domain 1 but has a smaller logid than an XP at
-> x=2, y=3 which belongs to domain 0.
+Good catch, you're right. If @root carries both a value and child keys
+(e.g. "kernel = val" together with "kernel.foo = bar"),
+xbc_node_is_leaf(root) is true -- root's first child is a value node --
+so the early return drops kernel.foo=bar, which the pre-patch code did
+render.
 
-That is true, but since neither of those XPs has a DTC in this 
-configuration, it is also entirely irrelevant.
+For v2 I'll drop the early return and skip @root itself inside the loop,
+as you suggest:
 
-> If cmn->dtc[0] points to the hardware base of domain 1 instead of domain 0,
-> will events programmed for domain 0 be routed to domain 1's hardware, breaking
-> PMU event counting?
-> 
-> Would it be better to explicitly set this as:
-> 
->      dn->logid = arm_cmn_graviton5_dtc_domain(xp->id);
-
-No, because that would then be inconsistent with how the driver works 
-normally on non-Graviton5 systems, and as Aviv already confirmed, it 
-doesn't change the outcome in this case anyway.
-
-> [Severity: High]
-> This is a pre-existing issue, but does arm_cmn_event_init() leak memory
-> if initialization fails?
-> 
-> drivers/perf/arm-cmn.c:arm_cmn_event_init() {
->      ...
->      if (arm_cmn_is_watchpoint(event))
->          if (eventid != CMN_WP_UP && eventid != CMN_WP_DOWN)
->              return -EINVAL;
->      ...
->      return arm_cmn_validate_group(cmn, event);
-> }
-> 
-> The driver dynamically allocates memory using arm_cmn_alloc_dtm_idx() and
-> arm_cmn_alloc_wp_idx(). If the initialization subsequently encounters an
-> error, such as an invalid eventid for a watchpoint or a failure in
-> arm_cmn_validate_group(), it returns an error code without freeing the
-> allocated memory.
-> 
-> The core perf code perf_try_init_event() does not call the driver's
-> event->destroy() callback if pmu->event_init() fails, expecting the driver
-> to clean up its own resources. Could this allow memory leaks if invalid events
-> are repeatedly created?
-
-No, __free_event() invokes event->destroy(), and if perf_alloc_event() 
-could fail without freeing the event then that would be a much greater 
-memory leak anyway.
-
-Robin.
+	xbc_node_for_each_key_value(root, knode, val) {
+		/*
+			* An empty or value-only @root yields @root itself here;
+			* skip it so we still render any real descendant keys
+			* (and return 0 rather than -EINVAL for an empty subtree).
+			*/
+		if (knode == root)
+			continue;
+		...
+	}
