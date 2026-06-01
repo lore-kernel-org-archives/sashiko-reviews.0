@@ -1,140 +1,172 @@
-Received: from galois.linutronix.de (Galois.linutronix.de [193.142.43.55])
+Received: from us-smtp-delivery-124.mimecast.com (us-smtp-delivery-124.mimecast.com [170.10.133.124])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 948E93DB961;
-	Mon,  1 Jun 2026 15:28:30 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=193.142.43.55
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 234023E073E
+	for <sashiko-reviews@lists.linux.dev>; Mon,  1 Jun 2026 15:31:55 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=170.10.133.124
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1780327717; cv=none; b=KU97DtePZdDldpa837q+Cdk2HSf57UfVvWgHbIFM18kZ1shEexlyCBhjQrjkeYx4aA5UpIU7bs03hgaFkiJe7bxwJgjtA0vEldEM3LMPyWcUDqsmZseB77xx+GhO5R/GGoO0H/fSGnkTSEp1LMR5MbXRJS1Gy5loEig3yFs7Yok=
+	t=1780327923; cv=none; b=t+HqTXebLxL/8ON7m4n1U2qemZ2oIEWthyk1Ge3UDGZj5Q7tuTTvGr5WOekvF6/9oL4bLzZK9wniNLz1YO9vF3jbFqLZQEi8cXqvXGDaJYBoA6MFWPPjM7PWlQu+UeN/EmuW1QtopmQEc2A0BU9KglAtLztcX4/7V8TDjk+U4XY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1780327717; c=relaxed/simple;
-	bh=iYOy2ktxYO51p96+fWq7rxcL/JrYMzF3TBpkM3pBJJg=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=iBufV5C8FU5bsPBS1JNqQCtYMXRb3Av9KyOtiG2MUjz6kxiTa/M2/LhW1VLx3dgMu6fjgAiDb5hGFDWHiHghLacu74ISBkZvi2VjEH/9xps77MCWj17A33yg4Ij/wULoWEHGqPrj3x2X1MV8/QT0Z6uEYGBU2+rFEPLFSV3Refw=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linutronix.de; spf=pass smtp.mailfrom=linutronix.de; dkim=pass (2048-bit key) header.d=linutronix.de header.i=@linutronix.de header.b=mg8uQcMo; dkim=permerror (0-bit key) header.d=linutronix.de header.i=@linutronix.de header.b=54Kf0/RG; arc=none smtp.client-ip=193.142.43.55
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linutronix.de
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linutronix.de
+	s=arc-20240116; t=1780327923; c=relaxed/simple;
+	bh=zu3sWawkZeeBTKJe01/wPEAVgcKJx6/rW+s/hWMRnOk=;
+	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
+	 In-Reply-To:Content-Type; b=g5yHtZJx5uXX9fs4TYR/UFLS/I82jR38vX8blJb9VhV5LVCqADhJErtGBQeYvZ5rVH4onFkF8tyXvi+LjxO947eiHigjFvIYwT29OEt5tJibOYcfZaxjuvD0BeRD0x4wGSxfd+E89tBhHf4jret4Zz5z0JykoJajt8QdMizEDqc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=redhat.com; spf=pass smtp.mailfrom=redhat.com; dkim=pass (1024-bit key) header.d=redhat.com header.i=@redhat.com header.b=geA2cDXI; arc=none smtp.client-ip=170.10.133.124
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=redhat.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=redhat.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=linutronix.de header.i=@linutronix.de header.b="mg8uQcMo";
-	dkim=permerror (0-bit key) header.d=linutronix.de header.i=@linutronix.de header.b="54Kf0/RG"
-Date: Mon, 1 Jun 2026 17:28:27 +0200
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linutronix.de;
-	s=2020; t=1780327708;
+	dkim=pass (1024-bit key) header.d=redhat.com header.i=@redhat.com header.b="geA2cDXI"
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+	s=mimecast20190719; t=1780327915;
 	h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
 	 to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+	 content-transfer-encoding:content-transfer-encoding:
 	 in-reply-to:in-reply-to:references:references;
-	bh=dtfoWhUnIneS/JLsKnuGHsXBwB598+gXYhEdjgH5d60=;
-	b=mg8uQcMoGGegOnsKWlWcBb+5T/4a22++kvF6PrhRTTlCws+0ZwN4JU+C0zjNT8V5bBQTv9
-	PRpI/X+pdNzs96kfKJgRYCQelt2iXSAzNn0PIBgJo/OoAPytGsv8k1sRI39Uq/FgIn+iE5
-	wpSeZjkYOgZrTA5UsCDDwcT8vDDiZ9O1Ux1ZQu4py8cv0ba2uIFUvCYRZ3V1tHPbr9mEee
-	5PhD7Zgo6p6UL+Vj2wvqpABW6u6sE0SOvTiPbhUs1kZ2Uz6cNoOwbKoYaNHB9yAEOGevwF
-	Ir7+ZFQ+qguRoe/l1+q4JkKijUr9SZq62fYaewf5hE0ufUMkUruLonAtJdOWSQ==
-DKIM-Signature: v=1; a=ed25519-sha256; c=relaxed/relaxed; d=linutronix.de;
-	s=2020e; t=1780327708;
-	h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
-	 to:to:cc:cc:mime-version:mime-version:content-type:content-type:
-	 in-reply-to:in-reply-to:references:references;
-	bh=dtfoWhUnIneS/JLsKnuGHsXBwB598+gXYhEdjgH5d60=;
-	b=54Kf0/RGlR81vKvp7MtmrrQaMtuF89miWM9Mw2dplJdkPWI9jMUSuB96JiaqZ+paYygQhu
-	3XO+GKltg56ua/Cg==
-From: Sebastian Andrzej Siewior <bigeasy@linutronix.de>
-To: sashiko-reviews@lists.linux.dev
-Cc: Frank.Li@kernel.org, imx@lists.linux.dev
-Subject: Re: [PATCH 1/5] mailbox: imx: Start splitting the IRQ handler in
- primary and threaded handler
-Message-ID: <20260601152827.2l0Ly8o4@linutronix.de>
-References: <20260529-imx_mbox_rproc-v1-1-b8ffc36e11e5@linutronix.de>
- <20260529164343.6C3081F0089A@smtp.kernel.org>
+	bh=5ge/zNpG7MiQQuvvUOiUj3O/GD7tLW/6g/Nt4OF1Fu4=;
+	b=geA2cDXIY6uX32O4/RsOtPa4E5Q4M3ObBtOqu8kdA55wu+WR5Aa7OZvI/uEXN9fays0SvT
+	0sSU4MIx3oaKUg0yTpgH8/TiFdBJbMuDw5cIbT8xLPnfjm5AlsqsoPPTrk35mXSwWdyVcx
+	TfDmhebLLW8ivJOYknvBw71IOin6Li0=
+Received: from mx-prod-mc-06.mail-002.prod.us-west-2.aws.redhat.com
+ (ec2-35-165-154-97.us-west-2.compute.amazonaws.com [35.165.154.97]) by
+ relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-680-46-YZTumOeaKoX4ufb9isQ-1; Mon,
+ 01 Jun 2026 11:31:50 -0400
+X-MC-Unique: 46-YZTumOeaKoX4ufb9isQ-1
+X-Mimecast-MFC-AGG-ID: 46-YZTumOeaKoX4ufb9isQ_1780327909
+Received: from mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com (mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.4])
+	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+	 key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
+	(No client certificate requested)
+	by mx-prod-mc-06.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS id C56A41800614;
+	Mon,  1 Jun 2026 15:31:48 +0000 (UTC)
+Received: from [10.22.88.124] (unknown [10.22.88.124])
+	by mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP id E6CAF30001A2;
+	Mon,  1 Jun 2026 15:31:47 +0000 (UTC)
+Message-ID: <ac847ee1-2ff3-4d71-9608-cfcbcee36ccc@redhat.com>
+Date: Mon, 1 Jun 2026 11:31:47 -0400
 Precedence: bulk
 X-Mailing-List: sashiko-reviews@lists.linux.dev
 List-Id: <sashiko-reviews.lists.linux.dev>
 List-Subscribe: <mailto:sashiko-reviews+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:sashiko-reviews+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-In-Reply-To: <20260529164343.6C3081F0089A@smtp.kernel.org>
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH-next v4 4/6] cgroup/cpuset: Made cpuset_attach_old_cs
+ track task group leaders
+To: sashiko-reviews@lists.linux.dev
+Cc: tj@kernel.org, hannes@cmpxchg.org, mkoutny@suse.com
+References: <20260529212108.120506-5-longman@redhat.com>
+ <20260529231931.7326C1F00893@smtp.kernel.org>
+From: Waiman Long <longman@redhat.com>
+In-Reply-To: <20260529231931.7326C1F00893@smtp.kernel.org>
+X-Scanned-By: MIMEDefang 3.4.1 on 10.30.177.4
+X-Mimecast-Spam-Score: 0
+X-Mimecast-MFC-PROC-ID: dTs8fZlviTBLFj1FrievMoLQrjmtDUbif6DzdpIqtAI_1780327909
+X-Mimecast-Originator: redhat.com
+Content-Language: en-US
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 8bit
 
-On 2026-05-29 16:43:42 [+0000], sashiko-bot@kernel.org wrote:
-> mailbox: imx: Start splitting the IRQ handler in primary and threaded handler
-> 
-> This commit splits the i.MX mailbox interrupt handling into a primary
-> and a threaded handler. The primary handler acknowledges the interrupt
-> and wakes the threaded handler to invoke the actual callback in
-> preemptible context, starting with the TX path.
-> 
-> > Split the mailbox irq handling into a primary handler (imx_mu_isr()) and
-> > a threaded handler (imx_mu_isr_th()). The primary handler unmasks the
-> > interrupt so the threaded handler can run without raising the interrupt
-> > again. The threaded handler can invoke the actuall callback in
-> > preemtible context.
-> 
-> [Severity: Medium]
-> Is this commit message description accurate regarding unmasking?
-> 
-> Looking at imx_mu_isr(), it calls imx_mu_xcr_rmw() passing the interrupt
-> enable bit as the clr parameter:
-> 
-> imx_mu_xcr_rmw(priv, IMX_MU_TCR, 0, IMX_MU_xCR_TIEn(priv->dcfg->type, cp->idx));
-> 
-> Since this clears the enable bit, doesn't it actually mask the interrupt
-> rather than unmask it? The code implementation seems structurally correct
-> to prevent continuous firing until the threaded handler can process the
-> completion, but the commit message appears reversed.
 
-Yeah. It masks the event rather that the interrupt.
-
-> > diff --git a/drivers/mailbox/imx-mailbox.c b/drivers/mailbox/imx-mailbox.c
-> > index 246a9a9e39520..2809965677bd7 100644
-> > --- a/drivers/mailbox/imx-mailbox.c
-> > +++ b/drivers/mailbox/imx-mailbox.c
-> [ ... ]
-> > @@ -508,11 +509,34 @@ static void imx_mu_txdb_work(struct work_struct *t)
-> >  	mbox_chan_txdone(cp->chan, 0);
-> >  }
-> >  
-> > +static irqreturn_t imx_mu_isr_th(int irq, void *p)
-> > +{
-> > +	struct mbox_chan *chan = p;
-> > +	struct imx_mu_priv *priv = to_imx_mu_priv(chan->mbox);
-> > +	struct imx_mu_con_priv *cp = chan->con_priv;
-> > +
-> > +	if (!cp->pending)
-> > +		return IRQ_NONE;
-> > +
-> > +	switch (cp->type) {
-> > +	case IMX_MU_TYPE_TX:
-> > +		cp->pending = 0;
-> > +		mbox_chan_txdone(chan, 0);
-> 
+On 5/29/26 7:19 PM, sashiko-bot@kernel.org wrote:
+> Thank you for your contribution! Sashiko AI review found 4 potential issue(s) to consider:
+>
+> Pre-existing issues:
+> - [High] Global boolean flags are evaluated based solely on the first task's source cpuset during multi-cpuset migrations, skipping updates for subsequent tasks.
+> - [High] SCHED_DEADLINE task accounting (`nr_deadline_tasks`) underflows and leaks when migrating tasks from multiple source cpusets.
+> - [High] When migrating a process whose threads reside in different cpusets, `cpuset_migrate_mm()` only migrates pages from the leader's old nodes, bypassing other threads' nodes.
+> - [High] If a migrating process's thread group leader has exited (e.g., is a zombie), page migration and memory policy rebinding are entirely bypassed for surviving threads.
+> --
+>
+> commit 80e6ff469724f377b7de8a5fa03f60d067749c38
+> Author: Waiman Long <longman@redhat.com>
+>
+> cgroup/cpuset: Made cpuset_attach_old_cs track task group leaders
+>
+> This commit modifies cpuset_can_attach() to update cpuset_attach_old_cs
+> to track the old cpuset of the task group leader. This ensures that when a
+> multithreaded application spans multiple cpusets, the mm setting of the
+> group leader is used during migration.
+>
+>> diff --git a/kernel/cgroup/cpuset.c b/kernel/cgroup/cpuset.c
+>> index 36784fce285d5..dec708edb0e12 100644
+>> --- a/kernel/cgroup/cpuset.c
+>> +++ b/kernel/cgroup/cpuset.c
+>> @@ -3092,6 +3106,10 @@ static int cpuset_can_attach(struct cgroup_taskset *tset)
+>>   		if (ret)
+>>   			goto out_unlock;
+>>   
+>> +		/* Update cpuset_attach_old_cs to the latest group leader */
+>> +		if (task == task->group_leader)
+>> +			cpuset_attach_old_cs = task_cs(task);
+>> +
 > [Severity: High]
-> This is a pre-existing issue, but can this lead to an interrupt storm
-> during channel teardown?
-> 
-> When a client frees a mailbox channel, mbox_free_channel() first calls
-> the driver's shutdown() callback before calling mbox_clean_and_put_channel()
-> which aborts queued messages.
-> 
-> If imx_mu_shutdown() calls free_irq(), it synchronizes with the pending
-> threaded handler. The threaded handler then runs to completion while
-> shutdown() is blocked, calling mbox_chan_txdone():
-> 
-> imx_mu_isr_th()
->   mbox_chan_txdone()
->     tx_tick()
->       msg_submit()
->         imx_mu_send_data()
-> 
-> Because the queues haven't been aborted yet, the core will immediately
-> submit the next queued message, and imx_mu_send_data() will re-enable
-> the hardware interrupt.
-> 
-> After the threaded handler finishes, free_irq() completes and unregisters
-> the IRQ action. Since the hardware interrupt was just re-enabled, won't
-> the hardware assert the interrupt again, resulting in an unhandled
-> interrupt storm that permanently disables the shared IRQ line?
+> This isn't a bug introduced by this patch, but does relying on a single
+> cpuset_attach_old_cs cause global boolean flags to be evaluated incorrectly
+> during multi-cpuset migrations?
+>
+> In cpuset_can_attach_check(), attach_cpus_updated and attach_mems_updated
+> are evaluated by comparing the target cpuset only against the oldcs of the
+> first task. If the first task originates from a cpuset with masks matching
+> the target, these flags become false.
+>
+> This optimizes out the v2 task mask updates in cpuset_attach():
+>
+>      if (!attach_cpus_updated && !attach_mems_updated)
+>          goto out;
+>
+> Does this mean subsequent tasks migrating from different cpusets are skipped
+> and left with incorrect affinities?
+I am going to remove the global update flags and re-evaluate the local 
+update flags in cpuset_attach().
+>
+> [Severity: High]
+> This is a pre-existing issue, but does tracking a single oldcs cause
+> SCHED_DEADLINE task accounting to underflow?
+>
+> In cpuset_can_attach(), the count of migrating SCHED_DEADLINE tasks across
+> all source cpusets is aggregated into a single variable:
+>
+>      cs->nr_migrate_dl_tasks++;
+>
+> In cpuset_attach(), this total count is subtracted from the
+> nr_deadline_tasks of the single selected oldcs:
+>
+>      oldcs->nr_deadline_tasks -= cs->nr_migrate_dl_tasks;
+>
+> If tasks are migrating from multiple cpusets, this would cause an underflow
+> in the selected oldcs and leak the deadline task count in the other source
+> cpusets.
+This is a known problem that has been fixed in a later patch  of the 
+series.
+>
+> [Severity: High]
+> This isn't a bug introduced by this patch, but since cpuset_migrate_mm()
+> uses only the leader's old_mems_allowed, does it bypass page migration for
+> pages allocated by other threads?
+>
+> cpuset_migrate_mm() is invoked with the from mask pointing to
+> &oldcs->old_mems_allowed. If the process has threads in other cpusets that
+> allocated pages on different memory nodes, those nodes are excluded from the
+> from mask, leaving pages on nodes that may be disallowed in the new cpuset.
+For best performance, the node mask of all the threads of a 
+multithreaded application should be the same, though it is common for 
+different threads to be associated with different CPUs. Anyway, this is 
+out of scope for this patch series and will not be addressed.
+>
+> [Severity: High]
+> This is a pre-existing issue, but if a migrating process's thread group
+> leader has exited (e.g., is a zombie), does this fail to update
+> cpuset_attach_old_cs and bypass migration for surviving threads?
+>
+> Exiting tasks are excluded from the migration taskset. If the leader is
+> absent from tset, cpuset_attach() never executes its loop body for surviving
+> threads because it iterates using cgroup_taskset_for_each_leader(). This
+> leaves surviving threads' memory unmigrated and their memory policies unbound
+> to the new cpuset.
 
-Right. It should reverse the startup order and first free_irq() and then
-unmask the event.
+It is out of scope for this patch series and will not be addressed here.
 
-Sebastian
+Cheers,
+Longman
+
