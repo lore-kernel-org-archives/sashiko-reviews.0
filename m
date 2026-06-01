@@ -1,202 +1,206 @@
-Received: from mail-ed1-f51.google.com (mail-ed1-f51.google.com [209.85.208.51])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from DB3PR0202CU003.outbound.protection.outlook.com (mail-northeuropeazon11010041.outbound.protection.outlook.com [52.101.84.41])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3DC4935AC3C
-	for <sashiko-reviews@lists.linux.dev>; Mon,  1 Jun 2026 19:06:04 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=pass smtp.client-ip=209.85.208.51
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2096338425A;
+	Mon,  1 Jun 2026 19:42:23 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=fail smtp.client-ip=52.101.84.41
 ARC-Seal:i=2; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1780340765; cv=pass; b=bvoZZe0iLvvPRH8STKRcJr1TR/9U0lRW1J4ubg+BZn9+/ZGEerXIQLTkKjGKMSLMXHMRsBEXEkdnKbh7BoEuMGEhh/diKkRX/4zQGzN/axA8t6+whnkqSHFu3WaNhhwpMgPZi+IIlm8bdD833uGhgrX7GOvJDhe3NlziOmdscew=
+	t=1780342947; cv=fail; b=RBzY4Id2SItSBmEUDGI6JhPO7r4N3D/2wdEQOD2VsRqeyekixxVDunUntzL16IW1AA3q7bEF5znBYZxpLLOZcT9HJ9LElmnhR26b9xhBN9gzmd/MOTMGZBZ80uz/ehhXwAe5j6LNL4KIRzqCJOQ1hzx1SzWlD2LllTxgBMtUA5M=
 ARC-Message-Signature:i=2; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1780340765; c=relaxed/simple;
-	bh=dsNHqGMwTUPlrUfe55QMxdZJILtC75BjFNl1GeWCT5w=;
-	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
-	 To:Cc:Content-Type; b=c6nRJvrCRCTMnyp2j82ueg5bE4oFYvxSXFMq1ZTUGT31MvpgLGot9cfkkK1Y2sS65K9COKOL/+ZHUFKzhLze7z6yze3eDMrueMOeIXgdt5Nrc5qC5WIsqOwt2QDwL0o/uvX7ajwgxTBnurA+sPXlH7dfqF6GjUubfUTgXRThU4M=
-ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=AjUpP3N2; arc=pass smtp.client-ip=209.85.208.51
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+	s=arc-20240116; t=1780342947; c=relaxed/simple;
+	bh=xbyEr7Wey7qVTa6YORKP6BqypW/axj8GadcquP65yeg=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:Content-Type:
+	 Content-Disposition:In-Reply-To:MIME-Version; b=KrRrzGrRU0tYggIII0+qbsBPp6MrTYrqSwKDAghJpUSuQ+tMI+dMupwHRnYtnhOo0+lwnmzdHunKAkjdQ4B/drecpxLvmNgvLNr3Fv4xJ+G2GYLc4pAqQB5w9TE/5DeYDzyGEpdQuL+l74EUoZ5T/dVjJ+Wl5ll3IUDqnUcSVOQ=
+ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=nxp.com; spf=pass smtp.mailfrom=nxp.com; dkim=fail (2048-bit key) header.d=nxp.com header.i=@nxp.com header.b=DYfhIuzW reason="signature verification failed"; arc=fail smtp.client-ip=52.101.84.41
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=nxp.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=nxp.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="AjUpP3N2"
-Received: by mail-ed1-f51.google.com with SMTP id 4fb4d7f45d1cf-68b2229b48eso7713792a12.2
-        for <sashiko-reviews@lists.linux.dev>; Mon, 01 Jun 2026 12:06:04 -0700 (PDT)
-ARC-Seal: i=1; a=rsa-sha256; t=1780340763; cv=none;
-        d=google.com; s=arc-20240605;
-        b=HMOXDlHNJTXbihLRouF7PBitpyKLmzjuUMCyBcAGL0emoWVB3ei08S/R8H5Tz4KTgI
-         zWmdL4XL7j+1TPQcJcl32JW1FFcYyrsSFnvRJXy7r1xQ2At8Cbc8/Cloi5Ju65+9t9Fl
-         FQHtRqTW6x+o4cBiV1Hh3c/oTbjpdhu78TgZFW8pEZuX2Z25cypGUW4gCS87K8HG1pzy
-         MIlHDnBO3k36A8OIWGPQwRzn2GOrsJSO+G0OMwptPrcnjUXMXrx5ACLn39UVoLvVdrvz
-         hQ7tUafqUUqQe8mRlM1wYf51Z68KUB8Rw8phhkixM7buNWLhi0CuiaHLZp2jvbxz3qiG
-         DFKA==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com; s=arc-20240605;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:dkim-signature;
-        bh=8ToRh5cKTPUe+pKq487HFcup2FxYOsRDUpBYxyNWwsg=;
-        fh=CevGES2AFLxh77zkXsdBdBroN5O9WERkcETXwr7159A=;
-        b=bhzPJtHAczS0HVtrDsoqRf7R1jebqcDv8jKUuSNzJF5yURv2dSWLfAGze1sTqcWluA
-         LPsEDvMredCBjK29Ju2GLgOaVJiKnNQirigjZrK/E6ibDePeUeaV9429rXFYnCyEwEYI
-         5r2u0PLY/HrT3s5Jt9TcsVI1Soe42EM7fhWpOrVTqvdWO9pp2lvkDgHISzMzTFUV8FI7
-         SffCGM52IEfz4twP7+WGydOa3Qvcn13kuQJQQ9EEqaWSqmzoxBUYqAXaFL5vozveYupD
-         XIYhdwWjnFk5pEL4Cup3lgtdUB4Jswl3ZNSox60/LaDdn6P2gN+pEL2LWt8E+MmMicQ+
-         k8Qg==;
-        darn=lists.linux.dev
-ARC-Authentication-Results: i=1; mx.google.com; arc=none
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20251104; t=1780340763; x=1780945563; darn=lists.linux.dev;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=8ToRh5cKTPUe+pKq487HFcup2FxYOsRDUpBYxyNWwsg=;
-        b=AjUpP3N2X+Q/Gtr5BOQFp+yw0WypEOlyM2Z3uMRFIzhmjvm+2TfCdYNVSuFdg5wtCV
-         riNcIXXmhQh6OsBJRC4AjVuMsG3KNNLMkIKoPrZrE8XQSkKqC+v+s56dG1owgzEznWjT
-         WU2b8pqQO2lh/AHn1AJxdyF6G/QKyRUmCCY69UHuDbqYKomC6mA328pSM69eM8vW9JXm
-         NNjPtmgg0fv6RRvdLgIPA4QXl039qyhqVHEzdV4w8No+ZqGO0203fS05Q6FalAaxWDU0
-         tz1KW2+nM11alqgL6qpcwco4s+/raPBvk6Bsm3x1YJyaCrvUzU6LOD4dSxrKkMsE9oLL
-         PlQg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20251104; t=1780340763; x=1780945563;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:x-gm-gg:x-gm-message-state:from
-         :to:cc:subject:date:message-id:reply-to;
-        bh=8ToRh5cKTPUe+pKq487HFcup2FxYOsRDUpBYxyNWwsg=;
-        b=jl8s16Bs5Wyc7fmjbs0LwJeDBKCbujWkrH6xMAj9mCLKxmrme0nJ4T0A6sp2C7MOrJ
-         P5KuyJUwF5qyJ6c5ROo4mIBPKqCwzRtc6qo8rcEjKOQ3vCWwZVFeM91gTsYYx9Hwn43k
-         lzlq0UCCGHtQ1bRSbiGQTOXytxniWBuflzS1FWyqCkyvtcv3eUTxzZrWotAZStojT4c+
-         p3uwGzqgbWGOSSAPJ62hAUuPP8KiGI55yFQtbM6PtY6JYAcsj8FdueDdKKZ2OXJdybvT
-         /8a3mGQo+9HsegNC0pJUmbf/lpqB6hzf+F9FUzjsi3qBnPEuse1C6iLQoqp9K9qS+bDs
-         8GAQ==
-X-Gm-Message-State: AOJu0Yw6ztFBXTjkZ+RTSX+mv6eK2Mo+mPHF0EH68FjfU+tcck0XP1fm
-	+1YCnr7pqMMHk85eG8CvvILG/X2LuRTtKybuQQL7rB3BUSpvwYG2alyQiskXyobk/hliilWnXvU
-	lQ6BV6G6zyZTYE6Q4y8bLmr4KZZBPy0PUbA==
-X-Gm-Gg: Acq92OEUwgQP+NRNhJ1/S8+nqPlnjLpyTHsw1/3hRxqVB1avaqyGZrpYHfyCh5DazUO
-	dPKkrhbVHFfM0q4QcIvjPi6Fi8r39It8IPD6D2sc+flSdXLlJ30MSXPffubo8lMT9baQD6LL4No
-	nW9+7hmgYK1oPMf/0zAJanFGQHJ+F8gGYVLduU5Aspd/pE1GdPIWmnJ9sr61O1QduhubBwnilal
-	zpIM+TFR/DZLPRHweHXokIP3bl10Qy1Xaba7VkZCLmBcWoV6hIMR4b8PwkPzdwACpvcF894tNc7
-	Buzm0yBEi2f1GVxjRNlcXQB4z+rUV1qZKLaWbaDkmaxYzAwiHZjG2ShjXPrgaaW0mp9AFmYYdqD
-	Q5fgSrNWmf3YXCf5h307Hs+uob2oJxp1Pz3JIJ176zA+CgXb9zl82NGVC+MiybEPksFoo
-X-Received: by 2002:a05:6402:321a:b0:683:75ec:c17c with SMTP id
- 4fb4d7f45d1cf-68c8b1eddcfmr6022796a12.10.1780340762242; Mon, 01 Jun 2026
- 12:06:02 -0700 (PDT)
+	dkim=fail reason="signature verification failed" (2048-bit key) header.d=nxp.com header.i=@nxp.com header.b="DYfhIuzW"
+ARC-Seal: i=1; a=rsa-sha256; s=arcselector10001; d=microsoft.com; cv=none;
+ b=oWNB8QQ1yeeXRCOV8e+3ilboZ37lW2L7BYsheiUbcixTLWwQwNO50b7dPjsN5kd1jA+S2wAdjnzjdZNwammInu5PW/uYP9kXlHwiFJU+ZqUb5Tv92IQcWHqu1X6DpVEf8bTIjZ1xRvsoGSasRmwr31ZGNldUrdXasSWYHaimFnIz15dquuZR0kVucuF6ulR1q701fmto8z7VdKDJJgpkQi4+BScJY/+H0eS5jj4e2nj6zC7lxa9HRApxwPMUZBLrKf0ngqyqU4avJdQHGoRb9YKjBEdq3zNtoMyBQkg7uvO7TQWtmu7uuEnbeDUnnaATfO2Deixe5wu4i7b6ZrhJ4w==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com;
+ s=arcselector10001;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
+ bh=iaCJdCnlr2UMgK4aGUrTEIvFZccGCunvv9zg9AYNmQM=;
+ b=xAy6JfOmKp557/O1zRAy3KFPJJJ14M5zbsPf5oQke7kmjH8bxicrWboS1oEs8YiuwB6/EoE4f1Sn8Gh25VhQEMXoMzb9bbC1DRdk0SD6iXSj8apw1YvQdJm0TPmtL/kiLDWleUMT0BjkzWDG0W0EFrUF2umLLJ9fCK5B7E/pAn0Xl2q2rvnZccZ6SNhLsZWybRu/mUTRA+loyCiMLy08wvz4cYlsItPrzUEqsKj+Vk6/n41ecLePD1/f9iocCm/xSbuSTZ5sw4FH2mLxd7s4z8ZUgiteZ8vVJPQgmhHGu+ALM23X0BNsSZ5RKrVEgH18IvNnAr9CD3sUhMfdC8zwiA==
+ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
+ smtp.mailfrom=nxp.com; dmarc=pass action=none header.from=nxp.com; dkim=pass
+ header.d=nxp.com; arc=none
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=nxp.com; s=selector1;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
+ bh=iaCJdCnlr2UMgK4aGUrTEIvFZccGCunvv9zg9AYNmQM=;
+ b=DYfhIuzWkUkY0HQfbGsyw1eD9uKQKLNmYVReL3EQMFv8qlzgxSxRdsxasW3PaK+24ANbBd171Xn2KzRCKz7OIAdj1BJa6Lsq/93VbjklDW6AFuXyRZVKNfpUoYXo8Ado6iZo+eGg5VdIK2yF/qoUF7bHfkP+9ASw8h93kMMdRA9Q+CKSWfzCV1mXDXpqRuLoXvG3ksbdspJYBXZRJEK708gnSWQffpfIaLVM0GprwOl/a9LuSWwZzvAxRC0x9b9GyHJmJZZg7lf51qNY+y2ayg52vB4v1XJBqgzYTIMUjRb0KT3bQlXSm3+2Ph+yfGO5w8pFslaIcpkQ9XEkTDzkBg==
+Authentication-Results: dkim=none (message not signed)
+ header.d=none;dmarc=none action=none header.from=nxp.com;
+Received: from PA4PR04MB9366.eurprd04.prod.outlook.com (2603:10a6:102:2a9::8)
+ by PR3PR04MB7241.eurprd04.prod.outlook.com (2603:10a6:102:92::10) with
+ Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.21.71.16; Mon, 1 Jun 2026
+ 19:42:21 +0000
+Received: from PA4PR04MB9366.eurprd04.prod.outlook.com
+ ([fe80::75e4:8143:ddbc:6588]) by PA4PR04MB9366.eurprd04.prod.outlook.com
+ ([fe80::75e4:8143:ddbc:6588%3]) with mapi id 15.21.0071.015; Mon, 1 Jun 2026
+ 19:42:20 +0000
+Date: Mon, 1 Jun 2026 15:42:15 -0400
+From: Frank Li <Frank.li@nxp.com>
+To: sashiko-reviews@lists.linux.dev
+Cc: Franz Schnyder <fra.schnyder@gmail.com>, devicetree@vger.kernel.org,
+	Frank.Li@kernel.org, robh@kernel.org, conor+dt@kernel.org,
+	imx@lists.linux.dev
+Subject: Re: [PATCH v4 2/3] arm64: dts: freescale: add Aquila iMX95 support
+Message-ID: <ah3gl2imBTPoEpHm@lizhi-Precision-Tower-5810>
+References: <20260521-add-aquila-imx95-v4-2-5a7f86c824f5@toradex.com>
+ <20260521173020.0A03E1F000E9@smtp.kernel.org>
+Content-Type: text/plain; charset=iso-8859-1
+Content-Disposition: inline
+Content-Transfer-Encoding: 8bit
+In-Reply-To: <20260521173020.0A03E1F000E9@smtp.kernel.org>
+X-ClientProxiedBy: SA9PR13CA0178.namprd13.prod.outlook.com
+ (2603:10b6:806:28::33) To PA4PR04MB9366.eurprd04.prod.outlook.com
+ (2603:10a6:102:2a9::8)
 Precedence: bulk
 X-Mailing-List: sashiko-reviews@lists.linux.dev
 List-Id: <sashiko-reviews.lists.linux.dev>
 List-Subscribe: <mailto:sashiko-reviews+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:sashiko-reviews+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-References: <20260601183359.11343-1-rosenp@gmail.com> <20260601184409.C1CF21F00893@smtp.kernel.org>
-In-Reply-To: <20260601184409.C1CF21F00893@smtp.kernel.org>
-From: Rosen Penev <rosenp@gmail.com>
-Date: Mon, 1 Jun 2026 12:05:49 -0700
-X-Gm-Features: AVHnY4KnIMcoYyn6BxHK4-bEmZR9C9G0FfA-ZjB3cx_hF-FLZ-By-coC51D4ZXA
-Message-ID: <CAKxU2N_8V9A5fcp7JWQWorPsU2PdKj=uiCV+rs9BAs-to_DctA@mail.gmail.com>
-Subject: Re: [PATCH] ata: pata_ep93xx: fix double free and ERR_PTR dereference
- on DMA error path
-To: sashiko-reviews@lists.linux.dev
-Cc: linux-ide@vger.kernel.org, dlemoal@kernel.org, cassel@kernel.org
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
+X-MS-PublicTrafficType: Email
+X-MS-TrafficTypeDiagnostic: PA4PR04MB9366:EE_|PR3PR04MB7241:EE_
+X-MS-Office365-Filtering-Correlation-Id: 24ef51f4-3d55-4e67-7a0c-08dec015e553
+X-MS-Exchange-SenderADCheck: 1
+X-MS-Exchange-AntiSpam-Relay: 0
+X-Microsoft-Antispam:
+	BCL:0;ARA:13230040|376014|52116014|1800799024|19092799006|366016|38350700014|18002099003|22082099003|56012099006|4143699003|11063799006;
+X-Microsoft-Antispam-Message-Info:
+	KSpJiOkmhT34bCiPKXIDTdsY7cQ+6u5q8AJG1jG13eEuOERvnBa3YiRxeWueK6CidwNnfNUbcmqnPRe4WYHSiGoEbBRp3OXoMFOSiNfTYoYDXPdCxoZ1//ixE6JCq7oXAwrR2WAr44Ejq44Q9CW9/wQNBeA2yetCSZZB5R90mIgimG7h5bnLzJEL+T9z80vfK9qyysCn6gm8s3TB6DT1HYipfj+GWnjynkxy3Yua3YyQBabLnkJ6eROkNQoQ4hp9Vky75KRp/0pJ3uXGh0SCh0c9QcneS3ddP/RTTC2hPEhI6wLh4v8UqbYAFsrJcFo82D2hzx0fUbtTIiCB0EbOik4ZgA6vY+maiS/vqaZabSJtfpNzlQqd3Pf5vvxez8d9NcCRLAzWspwrRQn5tsdQrKRVj4EoKT5cxsysA76sjBthkESw9S7AJqFMBv6QeZseDNH5UWVP5uW1LaR7mqFJJWIeTRNmOjcF+SvZZzbmhE5OsA/kM129K/Cic5Qa0d5yg8INzj5Yzu4K/ODSnXuDbyvp+/bCTBOYRY7H9FH/UE2Ke6s5aA/3IJd93ep8XbeRaHaHSCgI+QygqfzncJtnszcGlxhOcFVkLlskoF9PerkQhRqUD2rsGJ2266GzkNO1PROW80WbrYWq/N9WaPiWKV4PKilCUwrnVls6UZp2HuIxM3p1kIH3zSOnlDdbsk5x
+X-Forefront-Antispam-Report:
+	CIP:255.255.255.255;CTRY:;LANG:en;SCL:1;SRV:;IPV:NLI;SFV:NSPM;H:PA4PR04MB9366.eurprd04.prod.outlook.com;PTR:;CAT:NONE;SFS:(13230040)(376014)(52116014)(1800799024)(19092799006)(366016)(38350700014)(18002099003)(22082099003)(56012099006)(4143699003)(11063799006);DIR:OUT;SFP:1101;
+X-MS-Exchange-AntiSpam-MessageData-ChunkCount: 1
+X-MS-Exchange-AntiSpam-MessageData-0:
+	=?iso-8859-1?Q?EV6cGqtQq6XFWsvdZ+5BFitRcaPjwGdYgnnu/mCnvFO/3QeessdnSRoWRw?=
+ =?iso-8859-1?Q?eOX4UEUyqCJqxrKp27FjaWRWtrlJcnzN2FWWZE20U7G4vpHAg7JCUJilzQ?=
+ =?iso-8859-1?Q?GHAQGm5A4NEWRu2tba3n+eHt8Y+V6mIl15sga62WO/JSJD34udPWpusabE?=
+ =?iso-8859-1?Q?e7uGGLwEHwyhpUW94Z6srervN+0fbu1xDxDWVQQ3Y+QyXBMiaOOCczrIpV?=
+ =?iso-8859-1?Q?C6Wxcmg+7/sLz+blOMNsLSV4NaRcg86MB+RPZtW7B6P7mF7K0qtXTJE50a?=
+ =?iso-8859-1?Q?Q0FeRJO5PvlTo6SUDaNa3vUScoiQ9s1amEXcMvr4/xLU8bLpqnuxqTU3q+?=
+ =?iso-8859-1?Q?LiPOShnG4Txm4S7U7AS1jhcBEAUqzMzHzIR/NGM64ZNFPzfwp4vinOBLTU?=
+ =?iso-8859-1?Q?k8/TLQ3p1pjyThkrbmciXrKFXOoRCCquVq93oloxAL6PUTTGo9J7LjUIwf?=
+ =?iso-8859-1?Q?vS0yUaO5THqcWwdR1ALDlsL/WFZualEX8gKKAJKlm1kXbIWNJe0ZDaK5jn?=
+ =?iso-8859-1?Q?euHwcaDrlPkPMDuL3L9vXgMjVglKhVjjGd/JFwZudLcgmh5AfQbTeYA9Ha?=
+ =?iso-8859-1?Q?iOCz/41VkS6JT6egmKsIfN3cXGL54i2VIJ9kOLC9x6T6pVDaZJLxEWOadJ?=
+ =?iso-8859-1?Q?eFsl0Ny6PbYTJYxra9Ob9kywp9z2Tv/3+CP3cr1c+PxgtFDYDqLLcfEkYA?=
+ =?iso-8859-1?Q?0KeKP97xbxksq4F1aldliannjoWKWPxDJASHZeJ7bFquYl7NYD2KVsGdS9?=
+ =?iso-8859-1?Q?smkXxUVYzAOD89jAvem+gZFr7QrEgrc5+Y4+FUVDB+g9KXmy1pC67CL4v3?=
+ =?iso-8859-1?Q?tZK/AhTm3+XuiLgZ/1E2PVPnmIRbXBUc9ihS3+5M8V/hKImVbFsRD9A3el?=
+ =?iso-8859-1?Q?GoaIGWg3ReMOVahfoudUWoRdFnWYhzhr0kN5YAGY83LYQAJRpNkh7F9msj?=
+ =?iso-8859-1?Q?0hx7EkY+Jbn+PiQ29Sn01HfLlgu1XFtvvM+ijJeEChD+6rmjU8xrZXHjAM?=
+ =?iso-8859-1?Q?ZMnY1NF5Jeqj8C9dDO9bKMcEYYbWai8lkT4h1kOxI9n88y6uFF3uzu7pjO?=
+ =?iso-8859-1?Q?l5ySd+Hmd2WySYruqNo3Lvy1Fy4UkFSW3VyDyMaEZfW9mcTqBC3lMXRxoW?=
+ =?iso-8859-1?Q?87rm7kUkJpGLmUu/WqgCbT85f6KilFrRTb8W9emVfWqQfZfFk/nNYWMRUc?=
+ =?iso-8859-1?Q?6AGGUCFgC0rJ3AQpNQyKcB7bmE6o6MlW0Ve0mR+4f4pQIjCsUfK08zMx6U?=
+ =?iso-8859-1?Q?M/uwpUJFQ9Ioz2PEAwL2Z2MtcBRv4UcAQrGBHbpxBCWgMuz0wLnyUxOGTl?=
+ =?iso-8859-1?Q?UqC5suf9ShmgIsXKtI79y2kRtc4Ol8TuORhRxctY5K4TPvGZt2qAgRkhN8?=
+ =?iso-8859-1?Q?D9l9UA0OIRBpEp6A0Rt59QpKpzvBKKzcfC1vZmPYhiy5xnZVIYSPVFxJxZ?=
+ =?iso-8859-1?Q?kAst9fy5FmPaVm+sX3CKTgupU0UYdB77AsfKcFjhKUW0d600yoaXGb+6Nx?=
+ =?iso-8859-1?Q?a639gEbL/QTBqQKsNaOiqE9mSlKe5a0eO15QgEQ321o7ckM5OQfytDSQa4?=
+ =?iso-8859-1?Q?S9QXzoEzb1faKRGC773HDha//PIbvXFOvWkMG58n77Sg5eAlpxpGmN9XPL?=
+ =?iso-8859-1?Q?HIrMtzORYY6d8OGqQdCA14f3EosjF3o+hbDiRNb8n38FTdY2KRORLgVjgU?=
+ =?iso-8859-1?Q?44mMt4BAuniHDRB0tieEvzvNav/jx3QlkNwZuyd3AMM+gOXa+RYZKOaCAa?=
+ =?iso-8859-1?Q?BgKguD2cYew1bFHbb5nOSuruhnNJQtwm6JVMYLYiZr/K1a?=
+X-OriginatorOrg: nxp.com
+X-MS-Exchange-CrossTenant-Network-Message-Id: 24ef51f4-3d55-4e67-7a0c-08dec015e553
+X-MS-Exchange-CrossTenant-AuthSource: PA4PR04MB9366.eurprd04.prod.outlook.com
+X-MS-Exchange-CrossTenant-AuthAs: Internal
+X-MS-Exchange-CrossTenant-OriginalArrivalTime: 01 Jun 2026 19:42:20.8840
+ (UTC)
+X-MS-Exchange-CrossTenant-FromEntityHeader: Hosted
+X-MS-Exchange-CrossTenant-Id: 686ea1d3-bc2b-4c6f-a92c-d99c5c301635
+X-MS-Exchange-CrossTenant-MailboxType: HOSTED
+X-MS-Exchange-CrossTenant-UserPrincipalName: 7AYqEJjfoxzh5Qa+6bnSKWm/1foybItSwWST/iMuFOxJNeegt4PYFecgSOXeM0SMWotTskJNRECG/Ctb2caP7A==
+X-MS-Exchange-Transport-CrossTenantHeadersStamped: PR3PR04MB7241
 
-On Mon, Jun 1, 2026 at 11:44=E2=80=AFAM <sashiko-bot@kernel.org> wrote:
->
-> Thank you for your contribution! Sashiko AI review found 2 potential issu=
-e(s) to consider:
->
-> Pre-existing issues:
-> - [High] The PATA driver fails to initialize if DMA channels are not avai=
-lable, breaking the PIO-only fallback mode.
-Yep. Makes this patch completely pointless.
-> - [High] Trailing byte transfer logic in PIO data transfer truncates 16-b=
-it values, leading to data corruption on big-endian systems.
+On Thu, May 21, 2026 at 05:30:19PM +0000, sashiko-bot@kernel.org wrote:
+> Thank you for your contribution! Sashiko AI review found 2 potential issue(s) to consider:
+> - [Medium] The DisplayPort connector references a disabled DisplayPort bridge, leaving dangling references and rendering the connector non-functional while wasting power.
+> - [Medium] The dedicated power supply regulator for the disabled DSI-to-DP bridge is incorrectly marked as always-on, wasting power.
 > --
 >
-> commit 01fbd237d0698dff8591ae6c458732b482391c35
-> Author: Rosen Penev <rosenp@gmail.com>
+> commit 3392fc6b669bcc9dccbd369d342a80d81c494ed6
+> Author: João Paulo Gonçalves <joao.goncalves@toradex.com>
 >
-> ata: pata_ep93xx: fix double free and ERR_PTR dereference on DMA error pa=
-th
+> arm64: dts: freescale: add Aquila iMX95 support
 >
-> This commit fixes a double free of the rx channel and an invalid pointer
-> dereference of the tx channel on the DMA initialization error path. By
-> NULLing the tx channel before calling the release function, the cleanup
-> is handled correctly.
+> This commit adds support for the Toradex Aquila iMX95 computer-on-module
+> and its corresponding development carrier board.
 >
-> > diff --git a/drivers/ata/pata_ep93xx.c b/drivers/ata/pata_ep93xx.c
-> > index b2b9e0058333e..aa6f8172925d5 100644
-> > --- a/drivers/ata/pata_ep93xx.c
-> > +++ b/drivers/ata/pata_ep93xx.c
-> > @@ -688,7 +688,7 @@ static int ep93xx_pata_dma_init(struct ep93xx_pata_=
-data *drv_data)
-> >       return 0;
-> >
-> >  fail_release_rx:
-> > -     dma_release_channel(drv_data->dma_rx_channel);
-> > +     drv_data->dma_tx_channel =3D NULL;
+> Link: https://www.toradex.com/computer-on-modules/aquila-arm-family/nxp-imx95
+> Link: https://www.toradex.com/products/carrier-board/aquila-development-board-kit
 >
-> [Severity: High]
-> This isn't a bug introduced by this patch, but since we are modifying the
-> error paths in ep93xx_pata_dma_init(), does this initialization failure
-> unintentionally break the PIO-only fallback?
+> > diff --git a/arch/arm64/boot/dts/freescale/imx95-aquila-dev.dts b/arch/arm64/boot/dts/freescale/imx95-aquila-dev.dts
+> > new file mode 100644
+> > index 0000000000000..3df17700b632f
+> > --- /dev/null
+> > +++ b/arch/arm64/boot/dts/freescale/imx95-aquila-dev.dts
+> > @@ -0,0 +1,389 @@
+> [ ... ]
+> > +	aliases {
+> > +		eeprom1 = &carrier_eeprom;
+> > +	};
+> > +
+> > +	dp_1_connector: dp0-connector {
+> > +		compatible = "dp-connector";
+> > +		dp-pwr-supply = <&reg_dp_3p3v>;
+> > +		type = "full-size";
+> > +
+> > +		port {
+> > +			dp_1_connector_in: endpoint {
+> > +				remote-endpoint = <&dsi2dp_out>;
+> > +			};
+> > +		};
+> > +	};
 >
-> Looking at the start of ep93xx_pata_dma_init(), if dma_request_chan()
-> returns -ENODEV because no DMA channels are available in the device tree:
+> [Severity: Medium]
+> Since som_dsi2dp_bridge is disabled by default in imx95-aquila.dtsi and not
+> explicitly enabled in this device tree, does this connector node leave
+> dangling references?
 >
->         drv_data->dma_rx_channel =3D dma_request_chan(dev, "rx");
->         if (IS_ERR(drv_data->dma_rx_channel))
->                 return dev_err_probe(dev, PTR_ERR(drv_data->dma_rx_channe=
-l),
->                                      "rx DMA setup failed\n");
+> Without status = "disabled" on this node, the display-connector driver will
+> probe successfully and unconditionally enable its dp-pwr-supply (reg_dp_3p3v),
+> wasting power on the carrier board for an unusable interface.
 >
-> This error propagates directly back to ep93xx_pata_probe():
+> Should this connector be disabled by default or have the bridge enabled here?
 >
->         err =3D ep93xx_pata_dma_init(drv_data);
->         if (err)
->                 return err;
+> > diff --git a/arch/arm64/boot/dts/freescale/imx95-aquila.dtsi b/arch/arm64/boot/dts/freescale/imx95-aquila.dtsi
+> > new file mode 100644
+> > index 0000000000000..69dc962a24a1d
+> > --- /dev/null
+> > +++ b/arch/arm64/boot/dts/freescale/imx95-aquila.dtsi
+> > @@ -0,0 +1,1160 @@
+> [ ... ]
+> > +	reg_dp_1p2v: regulator-dp-1p2v {
+> > +		compatible = "regulator-fixed";
+> > +		/* CTRL_DP_BRIDGE_EN */
+> > +		gpios = <&som_gpio_expander_0 7 GPIO_ACTIVE_HIGH>;
+> > +		enable-active-high;
+> > +		regulator-always-on;
+> > +		regulator-max-microvolt = <1200000>;
+> > +		regulator-min-microvolt = <1200000>;
+> > +		regulator-name = "On-module +V1.2_DP";
+> > +		vin-supply = <&reg_1p8v>;
+> > +	};
 >
-> Does this abort the probe entirely on systems without DMA, rather than cl=
-eanly
-> dropping DMA support and allowing the driver to fall back to PIO mode?
+> [Severity: Medium]
+> Since this regulator is a dedicated power supply for som_dsi2dp_bridge which
+> is marked as status = "disabled" below, is it necessary to have the
+> regulator-always-on property here?
+
+This one make sense. Does this regulator-dp-1p2v really need always on.
+
+Frank
 >
-> >  fail_release_dma:
-> >       ep93xx_pata_release_dma(drv_data);
-> >
->
-> [Severity: High]
-> This is a pre-existing issue, but could the trailing byte transfer logic =
-in
-> ep93xx_pata_data_xfer() truncate 16-bit values and cause data corruption =
-on
-> big-endian systems?
->
-> In ep93xx_pata_data_xfer(), the pad variable is an array of 2 bytes:
->
->         unsigned char pad[2] =3D { };
->
-> On the READ path, a 16-bit value is assigned directly to *pad:
->
->         if (rw =3D=3D READ) {
->                 *pad =3D cpu_to_le16(
->                         ep93xx_pata_read_data(
->                                 drv_data, IDECTRL_ADDR_DATA));
->                 *buf =3D pad[0];
->
-> Doesn't this truncate the 16-bit integer to its lowest 8 bits? On a
-> little-endian CPU this evaluates to the correct first byte, but on a
-> big-endian CPU, cpu_to_le16() places the first byte into the upper 8 bits=
-,
-> which are lost during truncation.
->
-> Similarly, on the WRITE path:
->
->         } else {
->                 pad[0] =3D *buf;
->                 ep93xx_pata_write_data(drv_data, le16_to_cpu(*pad),
->                                   IDECTRL_ADDR_DATA);
->         }
->
-> Will le16_to_cpu(*pad) zero-extend the 8-bit pad[0] value to a 16-bit
-> integer, resulting in 0x00BB instead of 0xBB00 before byte swapping,
-> ultimately writing 0x00 as the first byte of the transfer? Would casting
-> to a 16-bit pointer better manage memory across endianness boundaries her=
-e?
+> The always-on property bypasses the driver and forces the regulator core to
+> unconditionally assert the CTRL_DP_BRIDGE_EN GPIO at boot, continuously
+> powering the bridge chip on the module even when disabled.
 >
 > --
-> Sashiko AI review =C2=B7 https://sashiko.dev/#/patchset/20260601183359.11=
-343-1-rosenp@gmail.com?part=3D1
+> Sashiko AI review · https://sashiko.dev/#/patchset/20260521-add-aquila-imx95-v4-0-5a7f86c824f5@toradex.com?part=2
