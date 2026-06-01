@@ -1,174 +1,201 @@
-Received: from mail-wr1-f73.google.com (mail-wr1-f73.google.com [209.85.221.73])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from OS0P286CU010.outbound.protection.outlook.com (mail-japanwestazon11011033.outbound.protection.outlook.com [40.107.74.33])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 136B138E8BF
-	for <sashiko-reviews@lists.linux.dev>; Mon,  1 Jun 2026 10:20:15 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.221.73
-ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1780309218; cv=none; b=ZhiQwh5VuCRFZ3voHXGLFfHy2/2LZwNB9Ew33bYYp38+Kg383PkgC2CaatHtOp0f4FOZs3rnIUgpuhQq2B/IPGV3fwz0i+Q+mgpeaynwXR5SyuuoV+/M6b098spqaF4qw6g4GULWxUduN4qvTWDdc0PnPjU4OyzpjLt7jiIh5yM=
-ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1780309218; c=relaxed/simple;
-	bh=VkHk4No+sn/hTRAoCJ6c2rKomSzgYN5lIjBaYnFIVOE=;
-	h=Date:In-Reply-To:Mime-Version:References:Message-ID:Subject:From:
-	 To:Cc:Content-Type; b=TVmpUG+jgAzrmWigbund/dUGzLtPO1bddIA5P+hpmFHyg0ZaIwP1JvITdBhU3FfNJPgtvLOJvhIJ9KoKMwgDL11hI3UWd8vQUmazHzbkH8Nc5SY7U1yK1tN8C8aQtDRYHb+Ypl1Nzx3OUmJiaHuQgTBxDGiKoI/BtY6IPWpHIWI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=google.com; spf=pass smtp.mailfrom=flex--aliceryhl.bounces.google.com; dkim=pass (2048-bit key) header.d=google.com header.i=@google.com header.b=vfQs6xV9; arc=none smtp.client-ip=209.85.221.73
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=google.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=flex--aliceryhl.bounces.google.com
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 813D83988F8
+	for <sashiko-reviews@lists.linux.dev>; Mon,  1 Jun 2026 10:21:24 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=fail smtp.client-ip=40.107.74.33
+ARC-Seal:i=2; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
+	t=1780309288; cv=fail; b=SZCYN0ouRSEHRd1ALPLoO281YXuPv2JZhxuqe5SJsrqn/F4PRIHJ9M5ItDHqlzzNZqCWKQH0KsVW9q5DMuJKYxi5FWMFlIabA1keJO8WSLUCS/mDyfkklp3VM2CQle0n66m14S3CvwwLoZgf0/wuv/0HqItzJCFpbBiF/IsKhHM=
+ARC-Message-Signature:i=2; a=rsa-sha256; d=subspace.kernel.org;
+	s=arc-20240116; t=1780309288; c=relaxed/simple;
+	bh=ipKr2thYYqaub7C8pVOcP7cRxql0g0mFWEGtwAO5NbQ=;
+	h=From:To:CC:Subject:Date:Message-ID:References:In-Reply-To:
+	 Content-Type:MIME-Version; b=MELIXiSsnhSWTDAlzhrzWn2v4u/QXwlf2MmA05hxRi0fz8wowy2MfQh5oSEda2cl0793WknuA/j5L24UA16EnY3xCEiT9tvJuPw8yl0fgB7sXUhnM8hMT8aZJjuK8ZmnSwSkrVA+Qnu+uuL0C8Xg5o3Y795vj0aFQfk2/ALU7II=
+ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=bp.renesas.com; spf=pass smtp.mailfrom=bp.renesas.com; dkim=pass (1024-bit key) header.d=bp.renesas.com header.i=@bp.renesas.com header.b=fIMse6kS; arc=fail smtp.client-ip=40.107.74.33
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=bp.renesas.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=bp.renesas.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=google.com header.i=@google.com header.b="vfQs6xV9"
-Received: by mail-wr1-f73.google.com with SMTP id ffacd0b85a97d-46010bc0f1eso410145f8f.3
-        for <sashiko-reviews@lists.linux.dev>; Mon, 01 Jun 2026 03:20:15 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=google.com; s=20251104; t=1780309214; x=1780914014; darn=lists.linux.dev;
-        h=cc:to:from:subject:message-id:references:mime-version:in-reply-to
-         :date:from:to:cc:subject:date:message-id:reply-to;
-        bh=TPi/JDyDp1v6pzp0p/cJ1JGw5JpKb6KywybUTo910mg=;
-        b=vfQs6xV92KYipon39R6sRBnw+8AJQylLRjbTRcbVLkoKBA/DaUXZvksbILoOahBmdx
-         f6u+2orx/dCS3PF4+l+UiT1ZrUFfFIFpcnHT5CIzG1BHWUB3pWtZJrVzAzrT6HHz4MIo
-         QFEDxLy2/YJtMISioHnNGMdCg8b4xwie2oxnV3zQliZDJr0qVdlEoYtdHYLkIS5gNPpR
-         tjwoGHRwJ8sqwkr0npsQBIN6yo4HxDV0EkF0aN41/JkeHfPXnlRj0VL0G+tGIu9ks1Zv
-         GChuSlsbDSCjp0kEegnnAVB44WjAYQwA/hVj97QnrXcQJKBN3UMQ0U2xM/U+MhClqmWf
-         8xnw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20251104; t=1780309214; x=1780914014;
-        h=cc:to:from:subject:message-id:references:mime-version:in-reply-to
-         :date:x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=TPi/JDyDp1v6pzp0p/cJ1JGw5JpKb6KywybUTo910mg=;
-        b=itkMDBXNkcHlBxGA2dl0pXPJLwrgkXNXqN1Ao2QtoLUbA7fc4I37d3LbJITVqqza2Z
-         rVJ2Y2r1bzCR9UH/C9/WauwcnHsyj1gN4bL2u6ai55laF4mJnHQGj1vmvNSekVEkKGnC
-         s9dDohVgr0qfPMKdIImcsCNGfL8chrg2E/bBvj5EQs2NGcoVKbaWHWYkWlEH0GOeCuLs
-         N0WQ+i4H7V/bsy/0wFIGD8Q/0qQnp7r476TKr+jyQ943H250z4F+dpDYDypF1SSNIaK7
-         Pvstz6wQkWWGcLmC1J31ga09/YbXJkH0aANCwNlyq8D3vbeCKAnNHj8NgZD9ttInQG4R
-         zq6w==
-X-Gm-Message-State: AOJu0YznOrqP8HFZiZnxSHMn2w0JYFs++W5CRFfIFw55O/vNQtGiXx/v
-	wFTLIuVgEY13IjzP6UMWGjnHxURRzOO/27RTPBCVxFrs2bIcNHxuO0O7PI0FiMpsg26LSa2Ox1I
-	+auKArsb6LLPnTsliAn9bmB35IH0uS5rq9TdY9QRhQMlYohUL3t10RGrUwJC5dGdpnKCYfm9NKi
-	ho5iiSGIJBp7hGbtHI7jhisqer83iWUAOAf8k8iFZ+c1docgoXRiEfennA9BvHXKe9
-X-Received: from wrmg6.prod.google.com ([2002:adf:e406:0:b0:45e:f121:4e17])
- (user=aliceryhl job=prod-delivery.src-stubby-dispatcher) by
- 2002:a5d:45d0:0:b0:45e:ea9b:edfb with SMTP id ffacd0b85a97d-45ef6b8b5f5mr15231355f8f.39.1780309213836;
- Mon, 01 Jun 2026 03:20:13 -0700 (PDT)
-Date: Mon, 1 Jun 2026 10:20:12 +0000
-In-Reply-To: <20260530150622.393FC1F00893@smtp.kernel.org>
+	dkim=pass (1024-bit key) header.d=bp.renesas.com header.i=@bp.renesas.com header.b="fIMse6kS"
+ARC-Seal: i=1; a=rsa-sha256; s=arcselector10001; d=microsoft.com; cv=none;
+ b=mSxdduRN55iyM02zoXubcIMUUUQFYMjvyZ+VHy3FhOYb3cDeb7ACdoVLkYMMeK8e75Ibu2IWy4wNuo098tJ0bPzNJAFY4Difz7SuW1QG/kkja9s5QAdY6bs+17ex8PoKMhezWlCr87wV8yWEamYLoTkjFXFGBjJnIsZ37FUlDWIndsXuOXpF2Zt1WrmIcN3+01T2mk39DYXj8IDp440zdAmufpK2KQf53+c3kwA7pG4WmRKsZsgRt+vpHLE6Hae6Ghi4lMBWhMUYuSkcYDPk0UICqPcAxx+aV3o4xvKbnFIl+lzUVypURBGUcywvuoGm6UU6eEoy7/gCWeaOcFyNmg==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com;
+ s=arcselector10001;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
+ bh=ipKr2thYYqaub7C8pVOcP7cRxql0g0mFWEGtwAO5NbQ=;
+ b=Yliv9r7q2VBxfYnED9iDimg8wjo/PfasWkZv4m26kjNZyLhq4B6n+xJ70fRuq4KEbaCSGGtXN2g1RxvrWD303GQFQERsFPThQqjq3U96RtTHjdi5iiEtua20lQm3ep9BAZGxVvBPeyU/hXUVkKHeFeLpqmF6Ha4qHnBl2FPZ4zt1GehxeRGEDHcQExmpTB24fs5/5xtrVD3LnC91Zw4UylQCB1qycb4TdiBGSeq2WlYsHDASVYlV1VCA+330NMkG/RBxYnEjqQxtHSY+XXw8YLkePY8Ey0iZfrzp6Sd4thz+1/Qbt1iiCht2wfNpDQe8rfGZSSqraTpDc0PgKxMk2w==
+ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
+ smtp.mailfrom=bp.renesas.com; dmarc=pass action=none
+ header.from=bp.renesas.com; dkim=pass header.d=bp.renesas.com; arc=none
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=bp.renesas.com;
+ s=selector1;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
+ bh=ipKr2thYYqaub7C8pVOcP7cRxql0g0mFWEGtwAO5NbQ=;
+ b=fIMse6kSf5OYv1F/6KA4BDZVEIGVqQ0NmMJzpZAg041zfvH2rs5pz4hG7qJCRwMrVHeZjgCJ+Ate8Q/MdfDEdrLkE0vGWvWeWCcnL+jckcelp1QJuSHBKmyA/meno5001+2z5+zGhli4qdlYbhdUCKiEgkDLnWRA997rJHPSMnU=
+Received: from TY3PR01MB11346.jpnprd01.prod.outlook.com (2603:1096:400:3d0::7)
+ by OSCPR01MB13025.jpnprd01.prod.outlook.com (2603:1096:604:32d::7) with
+ Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.21.71.16; Mon, 1 Jun 2026
+ 10:21:21 +0000
+Received: from TY3PR01MB11346.jpnprd01.prod.outlook.com
+ ([fe80::87d1:4928:d55:97de]) by TY3PR01MB11346.jpnprd01.prod.outlook.com
+ ([fe80::87d1:4928:d55:97de%4]) with mapi id 15.21.0071.011; Mon, 1 Jun 2026
+ 10:21:21 +0000
+From: Biju Das <biju.das.jz@bp.renesas.com>
+To: Rob Herring <robh@kernel.org>, biju.das.au <biju.das.au@gmail.com>
+CC: "sashiko-reviews@lists.linux.dev" <sashiko-reviews@lists.linux.dev>,
+	"conor+dt@kernel.org" <conor+dt@kernel.org>, "devicetree@vger.kernel.org"
+	<devicetree@vger.kernel.org>, wsa+renesas <wsa+renesas@sang-engineering.com>,
+	"linux-renesas-soc@vger.kernel.org" <linux-renesas-soc@vger.kernel.org>
+Subject: RE: [PATCH v2 1/2] dt-bindings: display: bridge: Document Renesas
+ RZ/G3L LVDS encoder
+Thread-Topic: [PATCH v2 1/2] dt-bindings: display: bridge: Document Renesas
+ RZ/G3L LVDS encoder
+Thread-Index: AQHc67XSOXReT+gxn06RqQ9MqkvErbYeXYragAqnGYCAAILzgA==
+Date: Mon, 1 Jun 2026 10:21:20 +0000
+Message-ID:
+ <TY3PR01MB1134611A3BA64F10AAC5375B686152@TY3PR01MB11346.jpnprd01.prod.outlook.com>
+References: <20260524194457.479681-2-biju.das.jz@bp.renesas.com>
+ <20260524195829.960401F000E9@smtp.kernel.org>
+ <CADT+UeAYhrwpmApCWaJ9w0gK3zF4eR4LVptTTwegGucvF6mmiA@mail.gmail.com>
+ <20260601022619.GA3961324-robh@kernel.org>
+In-Reply-To: <20260601022619.GA3961324-robh@kernel.org>
+Accept-Language: en-GB, en-US
+Content-Language: en-US
+X-MS-Has-Attach:
+X-MS-TNEF-Correlator:
+authentication-results: dkim=none (message not signed)
+ header.d=none;dmarc=none action=none header.from=bp.renesas.com;
+x-ms-publictraffictype: Email
+x-ms-traffictypediagnostic: TY3PR01MB11346:EE_|OSCPR01MB13025:EE_
+x-ms-office365-filtering-correlation-id: b345eb5d-1944-44cf-9a5a-08debfc78688
+x-ld-processed: 53d82571-da19-47e4-9cb4-625a166a4a2a,ExtAddr
+x-ms-exchange-senderadcheck: 1
+x-ms-exchange-antispam-relay: 0
+x-microsoft-antispam:
+ BCL:0;ARA:13230040|376014|366016|1800799024|56012099006|4143699003|22082099003|18002099003|3023799007|11063799006|38070700021;
+x-microsoft-antispam-message-info:
+ KIWEUvhrjJogs2QbOdIvxcmyNcA5R4WduYmshQY8OsUAfrfpOReY8CiS2w0KHDw353+6prYqb4P20zH0EaWZNlbrtOkw21AjoQxQvzTMhs70kuBpBZGDT+dNcWnGq9YJA95nEJzaD5XKro2XJ9hHd3cM0RaSIqozc94jvP9klxhHI8iBIlst0ouBK7rpnnyNV32t/nr5vUpIgIqZagKd1dTvbG9zjt4MWjAcetpg23YfrWz0gXcsid3cT7+QkJLa7g7ZJsmYZhl4uctRGDDN+gU0wFhUY/oY2qTIpX6z8PYkFSJE/oHsTQ+HMF7jgSuTVdoEBzQiVpDjCKQMjb+TO9kEt4qRaPnKof8x4JczNrbOpdFr/S5pn5eQy25d2NNwGHWMDuFox2GaV+JHh+z9L+iD0wKlKkPzQkoD6ANLtCCBt9UnQYmGfkd5o98XWnIJlVFVot7roSqM7THiFFcxRvD7o3eQ4caXaj8DpW0AEZoLZBOw/A5dY6iesXdB7HGaG2q6ui6VmtzcTKZqZ2kJ3LLg63FDVL5Qppko41o9vvKb953UROkjmPucB43B09bNWrAi19Ujo04l3R6w4LiaH6ZHTT930mcHVqlYyrUP069jcWYkA+TmnPm3shb7vjIxuG2gylNvuYygdVoif0G9VvJOS7eMiy6htoSdb8H1h7KbS/gBvg3Ms8D830Y6/s/mZ59U16avL8ndT96r5uUjQJYuN+4Kq0BcFxEk40sAxfUUAq1XqTWWfdw1SxbJdjj9
+x-forefront-antispam-report:
+ CIP:255.255.255.255;CTRY:;LANG:en;SCL:1;SRV:;IPV:NLI;SFV:NSPM;H:TY3PR01MB11346.jpnprd01.prod.outlook.com;PTR:;CAT:NONE;SFS:(13230040)(376014)(366016)(1800799024)(56012099006)(4143699003)(22082099003)(18002099003)(3023799007)(11063799006)(38070700021);DIR:OUT;SFP:1101;
+x-ms-exchange-antispam-messagedata-chunkcount: 1
+x-ms-exchange-antispam-messagedata-0:
+ =?utf-8?B?M3F3aTFVRDVQTnJsWHBrR2tuY0grSkMwQjF0dTQ5dTN1NlJUWFpSOUhzQWpM?=
+ =?utf-8?B?bjVkbko2YTNLdEsrcFZ2L3o4RC9yRTIwQ0dxTlFuQytYYk03ZkRIWHlsYjRH?=
+ =?utf-8?B?NzJ2c1pPckZsYTBrWWhIdWo5WlZNaTNvd3BPT1hvZXp3VUgxajZFU1huSklp?=
+ =?utf-8?B?UG5yMXFWQVFJMjZ2SWFxWWxUQU1Pa3JVaklNTjhvWDZyVFVOWE5uMzJURXdp?=
+ =?utf-8?B?a3lwM0puaXNmdzRHWis0VGF2SUZOZ3VpR0dBS05weVRGOFBvK244dHVmYUtN?=
+ =?utf-8?B?NVlDL1J3RXNSeTRjcW9GVVkxc1lnM0EwTkNxK2QvTWhhRVlhc3RLUHF5YVdk?=
+ =?utf-8?B?bWdEWUgyQjZuWjBKZ0I0YkM5aXh2SUt2MHhhbEE0TTVaLzZYREpuQytaTTdo?=
+ =?utf-8?B?RXVWME5MeFl6ZUF5Y2E4cjlJeWxTQ0FrYjd1YmtQWXJ6RUFJcTc2bCtEVEVp?=
+ =?utf-8?B?NWlNZE1jcUtJQVBKbW5EaDhuREQ4WGVWRXIxZWtDcTY3SDN1K1l0c2RnRHNz?=
+ =?utf-8?B?akpDSVJpRTlCVFVGYXc5cjUxWi8zR0lRR2NsMTRtM2lTS1BDcnhuNURHazlo?=
+ =?utf-8?B?Q2xzNTJyK24wdGdEU3BpTmMyS0taTkZscThiMUNReW80UU9PZnJIWGxSREk5?=
+ =?utf-8?B?SGR3eDBLemNnYzNYdnVxdElKTWtKWUFzTGdnZ2RtZ3J6YlNyaVd6bURxdlNT?=
+ =?utf-8?B?YkdLWjNFMVg5M2FHaW1xeE56dFlPcEN4c0RheGdJa2RhZ3Q5M2p3Q3lCbEt4?=
+ =?utf-8?B?Rm9Hb3pxQWw3VE9DT0xiMy9GYnhnSFdtUHN4M0NNVnUxd2Jvdlovb2xHZjdk?=
+ =?utf-8?B?TUJSRE9QOElyUnZ1NmlpYjJYY3BhMittWWVBWDNwKzd4RFBMdGNBRGEyY3pZ?=
+ =?utf-8?B?TFpCVXEwWEpmemQ3UlRhSVhHOEpRRE10ZkczazY0bkU0T0pVM1M1VjlPSVBI?=
+ =?utf-8?B?RVJPNG5lM1NyOWVNaDdFM0t2ZkN0S3oyMHRGV1QydW5zaXhneVZRQnQ0WHRM?=
+ =?utf-8?B?NjlVV3FFcTQ5d1hrSWdwS0xPOW03VHJvREx2NTdKK2doMG0vb3QxZDdvUDlh?=
+ =?utf-8?B?cmo0aVBQcGE5WnFrM2J2NDhMcmxwdXZjWUhxdkdqQldVVnNqbDFpcnkxYXoy?=
+ =?utf-8?B?anppU0ZreVBHdzRaaVBXYzhCaG92Zy9POVFBNFR1d0hZYW1XZW9NOVdacjFK?=
+ =?utf-8?B?WjUrRFpVai9TYkFROU5BMjZueUhkR0R3MldwcnFSTFhlTTFSWEl0R2NhMEtv?=
+ =?utf-8?B?ZVhES0pLV1U3a01PcjdyYTBTR2hya283ODNsUkU3d05WcC8rcnN4QTJlNmNN?=
+ =?utf-8?B?dlBNRHg3Y2h3bEczMEdNM25aRlRZNUo5eU9aSlI3YXBkMXlJVTRJSTlxK3Fa?=
+ =?utf-8?B?cjR6VjFLQ1Fya21TSUk0WUFSVkZjR3R6NWlXWlRxVklrMnMxZDkyV3FycTRD?=
+ =?utf-8?B?U0ZVZzBmNUNlWSs5cDIrZVdjckhGTmIwb2czOTIyTUhJZi9MTUhDNHcyT2gv?=
+ =?utf-8?B?N1hhSndXekFuWkNaVjczeDFnOW9aUEpGWUhQTExVdDllcWlONzhSbTNPRU1U?=
+ =?utf-8?B?Zm83NEdJenhzVG56OU5RcXhYcXRrcDB4V010cUJSeU83M1JGMWxBL2VvdTFN?=
+ =?utf-8?B?RzNQeUpsNVpFZ2xGNzhrWlV6MDBXRWJ3RGtkR1FPVDZwTE9XNEFrUmEvZXoz?=
+ =?utf-8?B?Yy9WQitJZUtacnl4cTQwL01WSU9nL1VGek9JM0xWMC9KWmoxVGxDV29FNWRW?=
+ =?utf-8?B?NVhYR3lCV25ISFFoSStQZVF5WjRGbUJ5WURCbjlqUXlBS1QwaVMwczg4OWpR?=
+ =?utf-8?B?SlNpcERNNE9qNGthRFdTYkwzUTk5Ri9wa09GQUJpVXpTb01BQW03eElHMEsz?=
+ =?utf-8?B?WVpCekVCd0Y2dzRzVnRmQmF3Ukpzb3oySi85RTJwa0IySXREdERIUTBlYk0y?=
+ =?utf-8?B?c21XdjkyclYxMkJTU2dWT2crUUJMOW1KSWN4KzdwSC9aZzRRYmF4QXpHcTBw?=
+ =?utf-8?B?dVhUbC9GOWFPZy9XUmFsQ0ZBT2cyM0FhdDJmQTNnWnVsS3FIWlFaZnBkMnp3?=
+ =?utf-8?B?WG1CTVFQZVEwUTRQRldRb3JvZlZsOU84Zy9TRW8zclp1a2tOdVBGL3p4RUZk?=
+ =?utf-8?B?MEFCUUc3SVFJZDlMZitNSFkxOUtOVHo2N2wyYkZiTUtqOXJFcXpiaGZJbU1T?=
+ =?utf-8?B?R2ptWEVJWWl4TjlhaTBPNlpGR0svMnRGOHlWY0tHVGN0eENKK3RKUTgzYkIx?=
+ =?utf-8?B?clpWeW80ZVlINCtWU1hnU0xSeHh3dExrTGVqUjIvOGN6WnVtVjFxNlpTYlBB?=
+ =?utf-8?B?di91OE9qZzh1ZjR0eEowNzFnVWhnMUxPVnpBL2duT0M1ZHRtRDdoUT09?=
+Content-Type: text/plain; charset="utf-8"
+Content-Transfer-Encoding: base64
 Precedence: bulk
 X-Mailing-List: sashiko-reviews@lists.linux.dev
 List-Id: <sashiko-reviews.lists.linux.dev>
 List-Subscribe: <mailto:sashiko-reviews+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:sashiko-reviews+unsubscribe@lists.linux.dev>
-Mime-Version: 1.0
-References: <20260530143541.229628-5-phasta@kernel.org> <20260530150622.393FC1F00893@smtp.kernel.org>
-Message-ID: <ah1c3NSU-4UkdUhb@google.com>
-Subject: Re: [PATCH 3/4] rust: Add dma_fence abstractions
-From: Alice Ryhl <aliceryhl@google.com>
-To: sashiko-reviews@lists.linux.dev
-Cc: Philipp Stanner <phasta@kernel.org>, linux-media@vger.kernel.org, ojeda@kernel.org
-Content-Type: text/plain; charset="utf-8"
+MIME-Version: 1.0
+X-OriginatorOrg: bp.renesas.com
+X-MS-Exchange-CrossTenant-AuthAs: Internal
+X-MS-Exchange-CrossTenant-AuthSource: TY3PR01MB11346.jpnprd01.prod.outlook.com
+X-MS-Exchange-CrossTenant-Network-Message-Id: b345eb5d-1944-44cf-9a5a-08debfc78688
+X-MS-Exchange-CrossTenant-originalarrivaltime: 01 Jun 2026 10:21:20.9537
+ (UTC)
+X-MS-Exchange-CrossTenant-fromentityheader: Hosted
+X-MS-Exchange-CrossTenant-id: 53d82571-da19-47e4-9cb4-625a166a4a2a
+X-MS-Exchange-CrossTenant-mailboxtype: HOSTED
+X-MS-Exchange-CrossTenant-userprincipalname: cTWotyZEioxEPQ6w/n4wvcEFtsSY9weRkODBLG1TQ11Xp7ThDvLnXXSXB5tDVIaC5ETSIkjnpLMtiJp0Ncp7cyOVe5wLsvd3eUO2+lHqKpk=
+X-MS-Exchange-Transport-CrossTenantHeadersStamped: OSCPR01MB13025
 
-On Sat, May 30, 2026 at 03:06:21PM +0000, sashiko-bot@kernel.org wrote:
-> > +impl<F: Send + Sync, C: Send + Sync> DriverFence<F, C> {
-> > +    fn as_raw(&self) -> *mut bindings::dma_fence {
-> > +        // SAFETY: Valid because `self` is valid.
-> > +        let fence_data = unsafe { &mut *self.data.as_ptr() };
-> 
-> [Severity: High]
-> Does this create an exclusive mutable reference to actively shared memory?
-> 
-> DriverFenceData can be accessed concurrently by other threads holding Fence
-> references (for instance, when checking if the fence is signaled). Creating
-> a mutable reference (&mut) in Rust asserts exclusive access and violates
-> aliasing rules, which allows the compiler to make invalid optimization
-> assumptions.
-> 
-> Could this use an immutable reference &*self.data.as_ptr() instead?
-
-Yes, please use an immutable reference here.
-
-> > +
-> > +        fence_data.inner.inner.get()
-> > +    }
-> 
-> [ ... ]
-> 
-> > +impl<F: Send + Sync, C: Send + Sync> DriverFenceBorrow<F, C> {
-> > +    fn as_raw(&self) -> *mut bindings::dma_fence {
-> > +        // SAFETY: Valid because `self` is valid.
-> > +        let fence_data = unsafe { &mut *self.data.as_ptr() };
-> 
-> [Severity: High]
-> Similar to DriverFence::as_raw(), does this also incorrectly create a
-> mutable reference to shared data?
-
-Here as well.
-
-> > +
-> > +        fence_data.inner.inner.get()
-> > +    }
-> 
-> [ ... ]
-> 
-> > +impl<F: Send + Sync, C: Send + Sync> Drop for DriverFence<F, C> {
-> > +    fn drop(&mut self) {
-> > +        let fence = self.as_raw();
-> > +        let mut fence_flags: usize = 0;
-> > +        let flag_ptr = &raw mut fence_flags;
-> > +
-> > +        // SAFETY: Once a `DriverFence` is initialized, the inner `fence` is
-> > +        // valid and initialized. It is valid until the refcount drops
-> > +        // to 0, which can earliest happen once the `DriverFence` has been dropped.
-> > +        unsafe {
-> > +            bindings::dma_fence_lock_irqsave(fence, flag_ptr);
-> > +            #[allow(unused_unsafe)]
-> > +            if warn_on!(!bindings::dma_fence_is_signaled_locked(fence)) {
-> > +                bindings::dma_fence_set_error(fence, ECANCELED as i32);
-> 
-> [Severity: High]
-> Is it intentional to pass a positive error code here?
-> 
-> bindings::ECANCELED evaluates to a positive integer, but
-> dma_fence_set_error() expects a negative error code (and triggers a WARN_ON
-> for positive values). A positive value might also be interpreted as success
-> by callers checking for values < 0.
-> 
-> Should this be - (bindings::ECANCELED as i32)?
-
-Please use ECANCELED.to_errno(). Do not import these from bindings.
-
-> > +                bindings::dma_fence_signal_locked(fence);
-> > +            }
-> > +            bindings::dma_fence_unlock_irqrestore(fence, flag_ptr);
-> > +        }
-> > +
-> > +        // SAFETY: `self.data` is owned by the DriverFence, but could be accessed
-> > +        // through some dma_fence callbacks right now. Access is being revoked
-> > +        // above by signalling the fence. The DriverFenceAllowedData trait
-> > +        // ensures that the data either does not need drop, or if it does it
-> > +        // lives in a RcuBox which will delay dropping by one grace period, hence
-> > +        // ensuring that all readers have disappeared.
-> > +        unsafe { drop_in_place(self.data.as_ptr()) };
-> 
-> [Severity: Critical]
-> Could this eagerly drop FenceCtx and user data before the C dma_fence
-> refcount reaches 0?
-> 
-> The C dma_fence object can remain alive as long as consumers (like sync_file
-> or the GPU scheduler) hold references to it. If the backend later invokes
-> callbacks like ops->get_driver_name(), FenceCtx::get_driver_name() would
-> attempt to read fctx.driver_name from the already-dropped FenceCtx:
-> 
-> FenceCtx::get_driver_name() {
->     ...
->     fctx.driver_name.as_char_ptr()
-> }
-> 
-> Can this result in a use-after-free?
-
-Hmm, I don't know about what sahisko said, but I don't think this is the
-right way to do rcu freeing. I think the type's destructor should be
-reserved for cases where the value becomes immediately unusable.
-
-For example, let's say I'm using RcuBox<_> here. Yes, the data you get
-from dereferencing the RcuBox will stay alive for a grace period, but
-IMO once you run the destructor of the box itself, the *pointer* becomes
-immediately unusable.
-
-Alice
+SGkgUm9iLA0KDQpUaGFua3MgZm9yIHRoZSBmZWVkYmFjay4NCg0KPiAtLS0tLU9yaWdpbmFsIE1l
+c3NhZ2UtLS0tLQ0KPiBGcm9tOiBSb2IgSGVycmluZyA8cm9iaEBrZXJuZWwub3JnPg0KPiBTZW50
+OiAwMSBKdW5lIDIwMjYgMDM6MjYNCj4gU3ViamVjdDogUmU6IFtQQVRDSCB2MiAxLzJdIGR0LWJp
+bmRpbmdzOiBkaXNwbGF5OiBicmlkZ2U6IERvY3VtZW50IFJlbmVzYXMgUlovRzNMIExWRFMgZW5j
+b2Rlcg0KPiANCj4gT24gTW9uLCBNYXkgMjUsIDIwMjYgYXQgMDg6NDU6MDBBTSArMDEwMCwgQmlq
+dSBEYXMgd3JvdGU6DQo+ID4gSGkgQm90LA0KPiA+DQo+ID4gT24gU3VuLCBNYXkgMjQsIDIwMjYg
+YXQgODo1OOKAr1BNIDxzYXNoaWtvLWJvdEBrZXJuZWwub3JnPiB3cm90ZToNCj4gPiA+DQo+ID4g
+PiBUaGFuayB5b3UgZm9yIHlvdXIgY29udHJpYnV0aW9uISBTYXNoaWtvIEFJIHJldmlldyBmb3Vu
+ZCAyIHBvdGVudGlhbCBpc3N1ZShzKSB0byBjb25zaWRlcjoNCj4gPiA+IC0gW0xvd10gVGhlIGNv
+bXBhdGlibGUgc3RyaW5nICdyZW5lc2FzLHI5YTA4ZzA0Ni1sdmRzLWNtbicgaXMgdXNlZCBpbiB0
+aGUgZHQtYmluZGluZyBleGFtcGxlIGJ1dA0KPiBpcyBub3QgZG9jdW1lbnRlZC4NCj4gPiA+IC0g
+W0xvd10gVGhlIHBhcmVudCBub2RlICdsdmRzLWNtbicgaW4gdGhlIGV4YW1wbGUgbGFja3MgYSAn
+cmFuZ2VzJyBwcm9wZXJ0eSwgYnJlYWtpbmcgYWRkcmVzcw0KPiB0cmFuc2xhdGlvbiBmb3IgaXRz
+IGNoaWxkIG5vZGVzLg0KPiA+ID4gLS0NCj4gPiA+DQo+ID4gPiBjb21taXQgYmU1OTVjMGRiMmQ4
+NWQ5ZWExMzk2ZjBmMzBhYzdhZDc1ZjQxMDFmZQ0KPiA+ID4gQXV0aG9yOiBCaWp1IERhcyA8Ymlq
+dS5kYXMuanpAYnAucmVuZXNhcy5jb20+DQo+ID4gPg0KPiA+ID4gZHQtYmluZGluZ3M6IGRpc3Bs
+YXk6IGJyaWRnZTogRG9jdW1lbnQgUmVuZXNhcyBSWi9HM0wgTFZEUyBlbmNvZGVyDQo+ID4gPg0K
+PiA+ID4gRG9jdW1lbnRzIHRoZSBMVkRTIGVuY29kZXIgSVAgZm91bmQgb24gdGhlIFJaL0czTCBT
+b0MuIEl0IHN1cHBvcnRzDQo+ID4gPiBzaW5nbGUtbGluayBtb2RlIGFuZCBzaGFyZXMgYSBwZXJp
+cGhlcmFsIGNsb2NrIGFuZCByZXNldCBzaWduYWwgd2l0aA0KPiA+ID4gdGhlIE1JUEktRFNJIGlu
+dGVyZmFjZS4NCj4gPiA+DQo+ID4gPiA+IGRpZmYgLS1naXQNCj4gPiA+ID4gYS9Eb2N1bWVudGF0
+aW9uL2RldmljZXRyZWUvYmluZGluZ3MvZGlzcGxheS9icmlkZ2UvcmVuZXNhcyxyOWEwOGcwDQo+
+ID4gPiA+IDQ2LWx2ZHMueWFtbA0KPiA+ID4gPiBiL0RvY3VtZW50YXRpb24vZGV2aWNldHJlZS9i
+aW5kaW5ncy9kaXNwbGF5L2JyaWRnZS9yZW5lc2FzLHI5YTA4ZzANCj4gPiA+ID4gNDYtbHZkcy55
+YW1sDQo+ID4gPiA+IG5ldyBmaWxlIG1vZGUgMTAwNjQ0DQo+ID4gPiA+IGluZGV4IDAwMDAwMDAw
+MDAwMDAuLmIxZjZkMDIwYWU3YjENCj4gPiA+ID4gLS0tIC9kZXYvbnVsbA0KPiA+ID4gPiArKysg
+Yi9Eb2N1bWVudGF0aW9uL2RldmljZXRyZWUvYmluZGluZ3MvZGlzcGxheS9icmlkZ2UvcmVuZXNh
+cyxyOWENCj4gPiA+ID4gKysrIDA4ZzA0Ni1sdmRzLnlhbWwNCj4gPiA+DQo+ID4gPiBbIC4uLiBd
+DQo+ID4gPg0KPiA+ID4gPiArZXhhbXBsZXM6DQo+ID4gPiA+ICsgIC0gfA0KPiA+ID4gPiArICAg
+ICNpbmNsdWRlIDxkdC1iaW5kaW5ncy9jbG9jay9yZW5lc2FzLHI5YTA4ZzA0Ni1jcGcuaD4NCj4g
+PiA+ID4gKw0KPiA+ID4gPiArICAgIGx2ZHMtY21uQDEwOGEwMDAwIHsNCj4gPiA+ID4gKyAgICAg
+ICAgY29tcGF0aWJsZSA9ICJyZW5lc2FzLHI5YTA4ZzA0Ni1sdmRzLWNtbiIsDQo+ID4gPiA+ICsg
+ICAgICAgICAgICAgICAgICAgICAic2ltcGxlLW1mZCIsICJzeXNjb24iOw0KPiA+ID4NCj4gPiA+
+IFtTZXZlcml0eTogTG93XQ0KPiA+ID4gSXMgdGhpcyBjb21wYXRpYmxlIHN0cmluZyBkb2N1bWVu
+dGVkIHNvbWV3aGVyZSBlbHNlPyBJdCBsb29rcyBsaWtlDQo+ID4gPiByZW5lc2FzLHI5YTA4ZzA0
+Ni1sdmRzLWNtbiBpc24ndCBwcmVzZW50IGluIHRoZSB0cmVlLCB3aGljaCBtaWdodA0KPiA+ID4g
+Y2F1c2UgZHRfYmluZGluZ19jaGVjayB0byBmYWlsIHdoZW4gaXQgdmFsaWRhdGVzIHRoZSBleGFt
+cGxlLg0KPiA+DQo+ID4gVGhpcyBjb21wYXRpYmxlIGlzIGRvY3VtZW50ZWQgYW5kIGlzIGluIG5l
+eHQgWzFdLg0KPiA+DQo+ID4gUTEpIENhbiB5b3UgcGxlYXNlIHJldW4gdGhlIEFJIHJldmlldyB3
+aXRoIFsxXSA/DQo+ID4NCj4gPiBbMV0NCj4gPiBodHRwczovL2dpdC5rZXJuZWwub3JnL3B1Yi9z
+Y20vbGludXgva2VybmVsL2dpdC9uZXh0L2xpbnV4LW5leHQuZ2l0L2NvDQo+ID4gbW1pdC8/aD1u
+ZXh0LTIwMjYwNTIyJmlkPTUxMjg0ZDhiMWRiY2Q3ZmEwMjIwYzQ5ZWVhYjI5YjE0NjE3ZTBkODgN
+Cj4gPg0KPiA+ID4NCj4gPiA+ID4gKyAgICAgICAgcmVnID0gPDB4MTA4YTAwMDAgMHgxMDAwMD47
+DQo+ID4gPiA+ICsgICAgICAgICNhZGRyZXNzLWNlbGxzID0gPDE+Ow0KPiA+ID4gPiArICAgICAg
+ICAjc2l6ZS1jZWxscyA9IDwxPjsNCj4gPiA+DQo+ID4gPiBbU2V2ZXJpdHk6IExvd10NCj4gPiA+
+IERvZXMgdGhpcyBwYXJlbnQgbm9kZSBuZWVkIGEgcmFuZ2VzIHByb3BlcnR5PyBXaXRob3V0IGl0
+LCBhZGRyZXNzDQo+ID4gPiB0cmFuc2xhdGlvbiBmb3IgdGhlIGNoaWxkIG5vZGUncyByZWcgPSA8
+MHgxMCAweDg+IG1pZ2h0IGZhaWwsIGFuZA0KPiA+ID4gZHRjIG9mdGVuIHdhcm5zIGFib3V0IG1p
+c3NpbmcgcmFuZ2VzIGluIHNpbXBsZS1tZmQgbm9kZXMgd2l0aCBjaGlsZHJlbi4NCj4gPg0KPiA+
+IEkgZG9uJ3QgZ2V0IGFueSBlcnJvciBvciBkdGMgd2FybmluZ3MuIEhhdmUgeW91IHJhbiBkdC1i
+aW5kaW5nIGNoZWNrDQo+ID4gYmVmb3JlIHByb3ZpZGluZyBzdWNoIGNvbW1lbnQ/DQo+IA0KPiBU
+aGVyZSBwcm9iYWJseSBpc24ndCBhbnkgd2FybmluZywgYnV0IHNhc2hpa28gaXMgY29ycmVjdCB0
+aGF0ICdyYW5nZXMnDQo+IHNob3VsZCBiZSBwcmVzZW50LiBUaGUgc2NoZW1hIGZvciB0aGUgcGFy
+ZW50IHNob3VsZCByZXF1aXJlICdyYW5nZXMnLg0KPiBUaGUgJ3NpbXBsZS1tZmQnIGJpbmRpbmcg
+ZG9lcyBub3QgYXMgbm90IGFsbCBzaW1wbGUtbWZkJ3MgaGF2ZSBNTUlPIGFkZHJlc2VzcyBpbiB0
+aGUgY2hpbGQgbm9kZXMuDQoNCk9LLCBJIHdpbGwgc2VuZCBhIHBhdGNoIGZvciBSWi9HM0wgd2l0
+aCBiZWxvdyBjaGFuZ2VzIGFzIGl0IGhhcyBNTUlPIGFkZHJlc3MuDQoNCisgIC0gaWY6DQorICAg
+ICAgcHJvcGVydGllczoNCisgICAgICAgIGNvbXBhdGlibGU6DQorICAgICAgICAgIGNvbnRhaW5z
+Og0KKyAgICAgICAgICAgIGNvbnN0OiByZW5lc2FzLHI5YTA4ZzA0Ni1sdmRzLWNtbg0KKyAgICB0
+aGVuOg0KKyAgICAgIHByb3BlcnRpZXM6DQorICAgICAgICByYW5nZXM6IHRydWUNCisNCisgICAg
+ICByZXF1aXJlZDoNCisgICAgICAgIC0gcmFuZ2VzDQoNCg0KQ2hlZXJzLA0KQmlqdQ0K
