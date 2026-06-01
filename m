@@ -1,173 +1,147 @@
-Received: from www62.your-server.de (www62.your-server.de [213.133.104.62])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-pl1-f169.google.com (mail-pl1-f169.google.com [209.85.214.169])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D5CE13D8104;
-	Mon,  1 Jun 2026 15:40:38 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=213.133.104.62
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8417E1C5F13
+	for <sashiko-reviews@lists.linux.dev>; Mon,  1 Jun 2026 16:01:21 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.214.169
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1780328442; cv=none; b=tDLR9J9RnQEvF1+WdyPkpHJt5Scs1AEgjPtUE2Dbd0ovbK7g7vJkJUz/yhxAlk7UIPqHs8c56siaZL4hU8m5ejwmAVEZBB/EALce3Id4FKTYtG0RHwigWP/a5W3IwfZBIXlkRta4LzG0ElyVU8sxUo5WyhLePe9f1ELG8v4WOCU=
+	t=1780329682; cv=none; b=eJcJob8NhQO5XuPb7vqqcK/h8JdQ918icWsT+VoClBDUhmZIVI4cB5HsTCaMbH2VXrTLik7T4+NI3FNpv7FdP4u6YnC+wvh9aCQ5ZzklVioRnz2S9+sCB0/liLkY5leDDSYRCbNdy8AuYGjriQ23W6yj5hK1TDL0r+29zPMC+4s=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1780328442; c=relaxed/simple;
-	bh=sFeSBd+2tcSY/5ecnolgNPPVx9cbP0gwu5NN0Z4kLTI=;
-	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=sdMNDbcEKkPAZCmhEhqnQ5NP0eXVz3N+nunWVkRpavS75LqdrjiYALsjhJpHPnRWaG8WFCV3y+RfI528GGp2dNZ72UuYxW3AVxG7qqGr1Yr+x0Ae6jlnTvjTP4RQdKyHTeTy+5bX+u73YBZqaMjUbi5RAKOC6vLIcriiRXXWipg=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=iogearbox.net; spf=pass smtp.mailfrom=iogearbox.net; dkim=pass (2048-bit key) header.d=iogearbox.net header.i=@iogearbox.net header.b=Jm0VRL3Q; arc=none smtp.client-ip=213.133.104.62
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=iogearbox.net
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=iogearbox.net
+	s=arc-20240116; t=1780329682; c=relaxed/simple;
+	bh=tqyb8j/dV7maTDE6A53XUG/pllUilNmVuiuRAuhvyMM=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=cNjGCBZxj1v0IHN92ljKMnztlt0PqcnBD3Fc3HZGIHNH0De22ctm6pkSO4GWpZSHsHZuHOxnEXPgii0X1zdT0deSyz6AW4QfSXRnIxoB5fN31STawoNLWkcS6bQGCSJe9wisRuFY2LrT589l0/25+MsJU7FE4EIMkYnRKpAcCnE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=google.com; spf=pass smtp.mailfrom=google.com; dkim=pass (2048-bit key) header.d=google.com header.i=@google.com header.b=jHEdnOdz; arc=none smtp.client-ip=209.85.214.169
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=google.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=google.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=iogearbox.net header.i=@iogearbox.net header.b="Jm0VRL3Q"
-DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed;
-	d=iogearbox.net; s=default2302; h=Content-Transfer-Encoding:Content-Type:
-	In-Reply-To:From:References:Cc:To:Subject:MIME-Version:Date:Message-ID:Sender
-	:Reply-To:Content-ID:Content-Description:Resent-Date:Resent-From:
-	Resent-Sender:Resent-To:Resent-Cc:Resent-Message-ID;
-	bh=xkiuLr25uRi9mFS/F6dn81CJeFleUDTKvFBkRzexncQ=; b=Jm0VRL3QIcpa7lHk1p1NkbyT6i
-	bzBdxcsMiJGbvjmEYYemUq+jYCw8hdp36d6hjX4AeCAoz3wZ9TSWnfpEpmcXqDmwboR169bP1er16
-	iFJoTFf2ncMo0GHJeypZxI9TvyTzkx+YKqLvGAs16g3NqiY2Qcj7+FOUSlqzxZfikdnbWCu/5qFxl
-	0yqjrjg7UCoNy1B/O6j7mKFWxmrDeCmEZePku6YSmnR7vvYfFBc3TwDNqyc6quAs8MLsFzw/6IXpT
-	DmQhF2JRccMEiQ/2RaXR4W9U0zKmp0VBoulzH2gT47lzNbV66JXIEBmaJEhOnU/jlsdOZuOQZaiTs
-	LEFuU8rw==;
-Received: from sslproxy06.your-server.de ([78.46.172.3])
-	by www62.your-server.de with esmtpsa  (TLS1.3) tls TLS_AES_256_GCM_SHA384
-	(Exim 4.96.2)
-	(envelope-from <daniel@iogearbox.net>)
-	id 1wU4kn-000M2t-04;
-	Mon, 01 Jun 2026 17:40:37 +0200
-Received: from localhost ([127.0.0.1])
-	by sslproxy06.your-server.de with esmtpsa  (TLS1.3) tls TLS_AES_256_GCM_SHA384
-	(Exim 4.96)
-	(envelope-from <daniel@iogearbox.net>)
-	id 1wU4km-000Oqd-0s;
-	Mon, 01 Jun 2026 17:40:36 +0200
-Message-ID: <cb5bbdce-d043-4b97-a894-5793cc6caf3b@iogearbox.net>
-Date: Mon, 1 Jun 2026 17:40:36 +0200
+	dkim=pass (2048-bit key) header.d=google.com header.i=@google.com header.b="jHEdnOdz"
+Received: by mail-pl1-f169.google.com with SMTP id d9443c01a7336-2bf2d865383so1645ad.1
+        for <sashiko-reviews@lists.linux.dev>; Mon, 01 Jun 2026 09:01:21 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=google.com; s=20251104; t=1780329681; x=1780934481; darn=lists.linux.dev;
+        h=in-reply-to:content-disposition:mime-version:references:message-id
+         :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
+        bh=JqeyGtP1BtIlNo5CtVdhbiR2kLYidnVAzCET6d04Mv0=;
+        b=jHEdnOdzR1rWGymEXTTF8PZC5Z59qwSWt29O3azN5aQ47uYO9rDi4+jSLt6Srg9mEW
+         owGv6vVgk3/+Tfh/Cb4KPfwKlP5qtscbpNrPkBMQtjuJSnTo/M9O8Gq5ahwZ8z4Hh3xy
+         y3M7/RNfFe99dfR7DBjnI8JWO/ywJLH6ytPpBG0PMwpwIDCV/PHMfdcxBmDHRdCZbYJG
+         tEMiqdDpUso3rQgeJCfrY8gWrgLa2XhDOU83hgVM2HwtFah7g+V5r++w/805jEGNMRw6
+         2lRNfJTk+b6x0DpyOc4gzQ6Z9fUGv8+9+95URh5D+XQD8mn9VxYRwchWdnaSeDGXDT/c
+         VTsA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20251104; t=1780329681; x=1780934481;
+        h=in-reply-to:content-disposition:mime-version:references:message-id
+         :subject:cc:to:from:date:x-gm-gg:x-gm-message-state:from:to:cc
+         :subject:date:message-id:reply-to;
+        bh=JqeyGtP1BtIlNo5CtVdhbiR2kLYidnVAzCET6d04Mv0=;
+        b=HsrZcRSpWYA6Bzf/vXJq1rUHC5P0+1qkck0s+cIHwDv4b4ZNqDdN187g/69AxrTgpK
+         CY30sP/BQQylkW3E6mjEVkHU2ssblDvFore0FXFlOE8+Ip8RUglAEjChimPJVeOGlgks
+         2B0oWD/DxnTKcfRtyqG56iY/nrM8NuAiL7dKs/Yq5eXRv5yRCBXokcflKhflqXFEREm9
+         6XHNpEz6w1EwLftxwtOInq3N9fV2CxCpW9q6BIxeUy2KnZVa56onw7yfnrXX9caiCxpK
+         KJqbHVk7j3Oq8xLbjkm9kd/8G6UIDVeXFOZyXUWLVyehJavF+EqBiG2M1Gp1vsZb3waw
+         g5dA==
+X-Gm-Message-State: AOJu0Yzow+oAFJpL5kKtsQuZvuGPgpvSXhXNDzV6gERHjY9Vm0rTRcIz
+	oa1r3wzsc+ZjcRPNLn3dIy4SIkFUQO2uDg9HofRLiG8fGhOfGNl2KBvKyh+0+bsT/fu9c2pc+W+
+	aj1RhAw==
+X-Gm-Gg: Acq92OFXBWmlsXN2iZBcY0ChpHuqjlxpodnYey/UkfiixVYrkNlUF2vPjOgPESC1i5n
+	SI4HRnueKn/+h2kurpWFlmCx8aR9B9Iz2KWlOpMaDHjtdLO5MaHfCZbpkg4tsOwKIwJnBuQFHs4
+	OGABj8pyS2HiDzgm0oWje+UHtPE1jg9jl6F99Dgptq/jdS6ve3mmv7l271lzK+9YqnvClZhDghE
+	/mReH2vypNrwe9BwVgEIXGNXevqGljO/bgNlLkgVc6gkeUfBnV8Fg+pWTor0k10T6UfCg4CVMj3
+	kNuyDdBEhdHCOcdO7EBpfz7kfGVGVoFiKml7v7QB9MGDaNIVP4TnA+1/CBJFORw3mwslnQfY0PS
+	1ozyoTqUrQsIDKBFWYxtOsWdfQ0ksemNyXlQ5wGMNXndVInazUNIgnOwWp6MRwClk4P0HYsQIbT
+	N4CJWGiYZwbiJJR4wRar3gIjYGEejH1DMs3/B5LGhnuY474O+jzYEYkdQLEoO2V7oPgiotoU4=
+X-Received: by 2002:a17:902:ccc8:b0:2c0:b1b0:376e with SMTP id d9443c01a7336-2c0b1b0389emr3865105ad.8.1780329679954;
+        Mon, 01 Jun 2026 09:01:19 -0700 (PDT)
+Received: from google.com (199.255.142.34.bc.googleusercontent.com. [34.142.255.199])
+        by smtp.gmail.com with ESMTPSA id d2e1a72fcca58-84214c9252bsm10773325b3a.39.2026.06.01.09.01.18
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Mon, 01 Jun 2026 09:01:19 -0700 (PDT)
+Date: Mon, 1 Jun 2026 16:01:13 +0000
+From: Pranjal Shrivastava <praan@google.com>
+To: sashiko-reviews@lists.linux.dev
+Cc: linux-pci@vger.kernel.org
+Subject: Re: [PATCH v7 5/5] iommu/vt-d: Fail probe on ATS configuration
+ failure
+Message-ID: <ah2syZ_FmVusREQx@google.com>
+References: <20260601143644.2358771-6-praan@google.com>
+ <20260601153032.36C861F00893@smtp.kernel.org>
 Precedence: bulk
 X-Mailing-List: sashiko-reviews@lists.linux.dev
 List-Id: <sashiko-reviews.lists.linux.dev>
 List-Subscribe: <mailto:sashiko-reviews+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:sashiko-reviews+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH bpf-next v2 1/7] bpf: Reject exclusive maps as inner maps
- in map-in-map
-To: sashiko-reviews@lists.linux.dev
-Cc: bpf@vger.kernel.org
-References: <20260601150248.394863-2-daniel@iogearbox.net>
- <20260601151810.68BCF1F00893@smtp.kernel.org>
-Content-Language: en-US
-From: Daniel Borkmann <daniel@iogearbox.net>
-Autocrypt: addr=daniel@iogearbox.net; keydata=
- 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
-In-Reply-To: <20260601151810.68BCF1F00893@smtp.kernel.org>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
-X-Virus-Scanned: Clear (ClamAV 1.4.3/28018/Mon Jun  1 08:31:13 2026)
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <20260601153032.36C861F00893@smtp.kernel.org>
 
-On 6/1/26 5:18 PM, sashiko-bot@kernel.org wrote:
+On Mon, Jun 01, 2026 at 03:30:31PM +0000, sashiko-bot@kernel.org wrote:
 > Thank you for your contribution! Sashiko AI review found 1 potential issue(s) to consider:
 > 
 > Pre-existing issues:
-> - [Critical] BPF iterators bypass map exclusivity (`excl_prog_sha`) and map freezing (`map->frozen`) protections, allowing arbitrary modification of secure maps.
+> - [High] Unconditional call to `device_rbtree_remove(info)` in the error path causes rbtree corruption for non-ATS devices.
 > --
 > 
-> commit 94f0db1114c682145008741a58e7ea931a088e25
-> Author: Daniel Borkmann <daniel@iogearbox.net>
+> commit 73f5ec2d0aa9d509723e686b4cbf5b853c3a39c6
+> Author: Pranjal Shrivastava <praan@google.com>
 > 
-> bpf: Reject exclusive maps as inner maps in map-in-map
+>     iommu/vt-d: Fail probe on ATS configuration failure
+>     
+>     Update the Intel VT-d driver to handle ATS configuration and enablement
+>     more strictly. Specifically, update the device probe to fail if
+>     pci_prepare_ats() returns an error. This ensures that any ATS-capable
+>     master reaching the attach phase is guaranteed to have a valid config.
 > 
-> This commit prevents an exclusive map from being inserted into a
-> map-of-maps. This addresses an issue where unrelated programs could
-> bypass exclusivity guarantees by accessing the map at runtime.
+> > diff --git a/drivers/iommu/intel/iommu.c b/drivers/iommu/intel/iommu.c
+> > index 4d0e65bc131d7..22308e4911e1f 100644
+> > --- a/drivers/iommu/intel/iommu.c
+> > +++ b/drivers/iommu/intel/iommu.c
+> [ ... ]
+> > @@ -3288,7 +3294,10 @@ static struct iommu_device *intel_iommu_probe_device(struct device *dev)
+> >  
+> >  	dev_iommu_priv_set(dev, info);
+> >  	if (pdev && pci_ats_supported(pdev)) {
+> > -		pci_prepare_ats(pdev, VTD_PAGE_SHIFT);
+> > +		ret = pci_prepare_ats(pdev, VTD_PAGE_SHIFT);
+> > +		if (ret)
+> > +			goto free;
+> > +
+> >  		ret = device_rbtree_insert(iommu, info);
+> >  		if (ret)
+> >  			goto free;
 > 
->> diff --git a/kernel/bpf/map_in_map.c b/kernel/bpf/map_in_map.c
->> index 645bd30bc9a9d..d2cbab4bdf644 100644
->> --- a/kernel/bpf/map_in_map.c
->> +++ b/kernel/bpf/map_in_map.c
->> @@ -20,7 +20,8 @@ struct bpf_map *bpf_map_meta_alloc(int inner_map_ufd)
->>   	/* Does not support >1 level map-in-map */
->>   	if (inner_map->inner_map_meta)
->>   		return ERR_PTR(-EINVAL);
->> -
->> +	if (inner_map->excl_prog_sha)
->> +		return ERR_PTR(-ENOTSUPP);
+> [Severity: High]
+> This is a pre-existing issue, but does the error path in this function
+> unconditionally call device_rbtree_remove() on failure, even for non-ATS
+> devices?
 > 
-> [Severity: Critical]
-> This is a pre-existing issue, but while this patch closes the map-in-map
-> bypass for exclusive maps, does a similar bypass still exist through BPF
-> iterators?
+> If intel_pasid_alloc_table() fails later in intel_iommu_probe_device(), it
+> jumps to clear_rbtree:
 > 
-> Looking at bpf_iter_attach_map() in kernel/bpf/map_iter.c, when a BPF map
-> iterator is attached via BPF_LINK_CREATE:
+>         if (sm_supported(iommu) && !dev_is_real_dma_subdevice(dev)) {
+>                 ret = intel_pasid_alloc_table(dev);
+>                 if (ret) {
+>                         dev_err(dev, "PASID table allocation failed\n");
+>                         goto clear_rbtree;
+>                 }
 > 
-> 	map = bpf_map_get_with_uref(linfo->map.map_fd);
-> 	if (IS_ERR(map))
-> 		return PTR_ERR(map);
+> clear_rbtree unconditionally removes the info from the rbtree:
 > 
-> // [...]
+> clear_rbtree:
+>         device_rbtree_remove(info);
 > 
-> 	if (key_acc_size > key_size || value_acc_size > value_size) {
-> 		err = -EACCES;
-> 		goto put_map;
-> 	}
+> Since info->node is zero-initialized via kzalloc_obj(), calling rb_erase()
+> on it for a non-ATS device (which was never inserted into the rbtree) causes
+> the rbtree implementation to treat it as a root node and overwrite
+> iommu->device_rbtree.rb_node with NULL.
 > 
-> This function retrieves the target map but appears to lack checks against
-> map->excl_prog_sha, map->frozen, and BPF_F_RDONLY_PROG.
-> 
-> Furthermore, the iterator context defined in bpf_map_elem_reg_info() sets
-> up the value argument without the MEM_RDONLY flag:
-> 
-> 		{ offsetof(struct bpf_iter__bpf_map_elem, value),
-> 		  PTR_TO_BUF | PTR_MAYBE_NULL },
-> 
-> Because MEM_RDONLY is omitted, the verifier permits BPF programs to perform
-> direct memory writes to ctx->value.
-> 
-> Could this allow a program to locate the FD of an exclusive, frozen map via
-> its ID, attach a custom BPF map iterator, and arbitrarily overwrite the
-> contents of the protected map?
+> This silently destroys the entire rbtree and detaches all previously
+> registered ATS devices. Could we add a check to verify if the device was
+> actually inserted before calling device_rbtree_remove(info)?
 
+All of these have already been fixed in the Intel series:
+https://lore.kernel.org/all/20260531170254.60493-1-praan@google.com/
 
-Hm, oh well, more things to look into.. if sashiko/others don't find anything
-specific with this series, then I'll send patches on top given these are all
-independent issues, otherwise I'd fold them into v3.
+Thanks,
+Praan
