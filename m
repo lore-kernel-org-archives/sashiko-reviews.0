@@ -1,140 +1,120 @@
-Received: from mail-pl1-f202.google.com (mail-pl1-f202.google.com [209.85.214.202])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from galois.linutronix.de (Galois.linutronix.de [193.142.43.55])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 347EA2BDC32
-	for <sashiko-reviews@lists.linux.dev>; Mon,  1 Jun 2026 16:02:59 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.214.202
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CB09C2DA74C;
+	Mon,  1 Jun 2026 16:07:06 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=193.142.43.55
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1780329780; cv=none; b=KNnOIEwedHt8VM1bpBCzjYlHvhrcSFoNAoyV3Dq12EPBoYca5sUYZb/7Jx0TPvcrIhjVvwnvtltQvWW2d3qPsEwAf20J7QYXU4OKx59ZUakruXA2xwU9DzgdBzWg1XgtOg1kUwr20jGr1iGGclod3yKHmjb21GyYHAAI7amSFjg=
+	t=1780330029; cv=none; b=E4qCKZjHVH0IqmY99mXVCkU8wkmX2+DhV9IEx52QCsCMcRMAVVV6CmcpiXHufSUQruG6IIEw95AAnWPlIsGLa9G9weI+PiqPVjVdzKe1zpxG1AA3OaCk55ORJHytnWfb0iwwpbPOMyLIs1rCFu0h4ZW6etiWQr9hrLs9R2ONH20=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1780329780; c=relaxed/simple;
-	bh=r21VC/QO+Cm/jEoZLF9kBRN/xDqJx1mIkwsADo9V/kc=;
-	h=Date:In-Reply-To:Mime-Version:References:Message-ID:Subject:From:
-	 To:Cc:Content-Type; b=gfIK3i0TwTSOs1obyzdC1qHTJy0bRL1smqQKrr9Dl6WbGeJaFcIRxTr6V9utr6rVGDqKD94JUG4X9FtiSNq1bU2DIWRmR4xPSWlbBrPZEx6aPaHoj6579z33Qc6LY75sHD3S+O5gcLwTtrvbi3EFVXDqbP9pX15fb4ukwtgdj0M=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=google.com; spf=pass smtp.mailfrom=flex--seanjc.bounces.google.com; dkim=pass (2048-bit key) header.d=google.com header.i=@google.com header.b=h0ilkgxp; arc=none smtp.client-ip=209.85.214.202
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=google.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=flex--seanjc.bounces.google.com
+	s=arc-20240116; t=1780330029; c=relaxed/simple;
+	bh=oo/QYOnYLetuILEalDu1SKxNIdDA9CwVlLYOmmPoKgo=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=TUT+qa4xcT1+hup43JJVfYXtWsUc4Sixg+6rV1M2wnkcMKQHRAfAHbMCGLslZGm79roVloR75T3z32VEGV8Q11v1nTJRN6UJyxGWcXNTa/x93fRdr4PbHswUyc2vtKw0CxCtyiuesuXl1J8ja7cXMpspXX8IY2LIHeFAHV0Fmlk=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linutronix.de; spf=pass smtp.mailfrom=linutronix.de; dkim=pass (2048-bit key) header.d=linutronix.de header.i=@linutronix.de header.b=DwlBBR6M; dkim=permerror (0-bit key) header.d=linutronix.de header.i=@linutronix.de header.b=gCjOo6hd; arc=none smtp.client-ip=193.142.43.55
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linutronix.de
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linutronix.de
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=google.com header.i=@google.com header.b="h0ilkgxp"
-Received: by mail-pl1-f202.google.com with SMTP id d9443c01a7336-2bf0b7425bbso79042475ad.0
-        for <sashiko-reviews@lists.linux.dev>; Mon, 01 Jun 2026 09:02:59 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=google.com; s=20251104; t=1780329778; x=1780934578; darn=lists.linux.dev;
-        h=cc:to:from:subject:message-id:references:mime-version:in-reply-to
-         :date:from:to:cc:subject:date:message-id:reply-to;
-        bh=U7UFbuJuGr2mJB706k3sMJIDSg8zK0y7ivtbLm8CNu8=;
-        b=h0ilkgxpSfmbardTp+r3Bagw8UBzLWoxFIPg1hsg++EXNqy6A0LXBNmsDMrAqSg6dn
-         hNgZ+avVB6e2z2+aZbweC1VDlbaNLIwNg+rsMpajOsK/8vfzhX1dHFapoGdXaDAainYZ
-         wxSdOD9kXNtGD3HX7B/qzXI1lwfgEkI5Fht+ihCYGH0yRDXvr1vPiL2LXDbofyifdvA0
-         fkraiYAZ0ILjSBtFWAryjiFWnAADERhcjB4H6SxbjNC5vAkErSzPcR87uHJsjQINmwAJ
-         Ory2eXT9VwlbzmA4lCo2tstpW8FxZCs7J37hdfd0f+2vCmbQKrxBPGDIZ+JbnPFD5pzZ
-         RUqw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20251104; t=1780329778; x=1780934578;
-        h=cc:to:from:subject:message-id:references:mime-version:in-reply-to
-         :date:x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=U7UFbuJuGr2mJB706k3sMJIDSg8zK0y7ivtbLm8CNu8=;
-        b=knVkgA9+TtlQDlYEWjgUYIz8K7brB1+Pt48yXpFpqVdm48YJ/FsShqqRbHs/Vs/EIC
-         Z4+6ThMcR5GAzmDIs7xdcA27LDwAYEnNYUx34B9SbOAfjaBDC1cPFJejOqe3dTQETjY4
-         EKApQB02bBYpXrGaYaanXUtJvNrS0dxK/1VnFlpNsvtqIP+/4LYzI1Sdor5AIH95NzHd
-         3wji6Q/C36wxuiqHAHMVa1F5EjTUQmkPA4AKhaGP8nyO4fRRfefGpr8rKSd6pq7ZIbkr
-         TpLOgbejikrA534bBvh95our7UgGEd88PDHo1SGWiUheTGzJtOYJCuugP+LzhhD9JFnm
-         4RLQ==
-X-Gm-Message-State: AOJu0Yx1Za/114EM/OWIGt717uWzMwMppRLEsd8T0ZDliQpxn1MhZTDh
-	ETh+ULDzq6Rm6ifCEUlATfd2+l4PjDOyHwlHlZxnPeNH8vA9ZelgHe8W4K+vPK1yez6ZeZ69Koo
-	ML0siJ40tzbBY0UOLcNXTbur0tWW5d8HX4kieVgb8golcbVwBDfVD+EAbjeIBHsqBUQCsWn06QA
-	19VythT+CqVQ2newFCnNecZskXGz//tyRfmQTa0hS/u9IhCC05
-X-Received: from plho10.prod.google.com ([2002:a17:903:23ca:b0:2be:3026:1d0f])
- (user=seanjc job=prod-delivery.src-stubby-dispatcher) by 2002:a17:902:fc44:b0:2c0:a711:534
- with SMTP id d9443c01a7336-2c0a71111b4mr106190555ad.13.1780329777919; Mon, 01
- Jun 2026 09:02:57 -0700 (PDT)
-Date: Mon, 1 Jun 2026 09:02:57 -0700
-In-Reply-To: <20260530085043.927231F00893@smtp.kernel.org>
+	dkim=pass (2048-bit key) header.d=linutronix.de header.i=@linutronix.de header.b="DwlBBR6M";
+	dkim=permerror (0-bit key) header.d=linutronix.de header.i=@linutronix.de header.b="gCjOo6hd"
+Date: Mon, 1 Jun 2026 18:07:02 +0200
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linutronix.de;
+	s=2020; t=1780330024;
+	h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+	 to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+	 in-reply-to:in-reply-to:references:references;
+	bh=Fq7Kc8lQbI6eVkEnnUZrZ0365IjcRBi59m9wngY/bzU=;
+	b=DwlBBR6Mn2JTLYRfmXwMh9/WVm6Dih12U66SI8Ntiiq9IO1ppLrUpl+hPvNduq5b5zS1zl
+	bnayzbllePHlW1csTatS4PVs7W4aWsxGUhzhpVGzKP025Jav9UgZZuO65LP4kLD4W3AU7l
+	Ko9Hbi3UaSOGPUg2vCSNMAIN4GD1J0FjjxGBfnqmrswj+UxnZtxHR9lSz39d9B5gGyM55w
+	g/4I0MUbkhRDbpmrRdZk9IEfJve6VMumsTpPEAPWci6kpNR+u7zS0v5pmAQ7nk7D45ocG1
+	lOeTqJR0PxbiBk3lr7z3S7CXXfVI+4FpngbeHzjXgTtSXDydtUT0T/fvhvtU9g==
+DKIM-Signature: v=1; a=ed25519-sha256; c=relaxed/relaxed; d=linutronix.de;
+	s=2020e; t=1780330024;
+	h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+	 to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+	 in-reply-to:in-reply-to:references:references;
+	bh=Fq7Kc8lQbI6eVkEnnUZrZ0365IjcRBi59m9wngY/bzU=;
+	b=gCjOo6hdH4BpwwEebvz8HBa9y2OwnVTx39fVPH0bV62ER+w2ieXmsepuAyH+7qXTvAng7B
+	8YIIN0yLD2HKNfBw==
+From: Sebastian Andrzej Siewior <bigeasy@linutronix.de>
+To: sashiko-reviews@lists.linux.dev
+Cc: Frank.Li@kernel.org, imx@lists.linux.dev
+Subject: Re: [PATCH 2/5] mailbox: imx: Move the RX part of the mailbox into
+ the threaded handler
+Message-ID: <20260601160702.eZoCBpfm@linutronix.de>
+References: <20260529-imx_mbox_rproc-v1-2-b8ffc36e11e5@linutronix.de>
+ <20260529172635.A1EDB1F00893@smtp.kernel.org>
 Precedence: bulk
 X-Mailing-List: sashiko-reviews@lists.linux.dev
 List-Id: <sashiko-reviews.lists.linux.dev>
 List-Subscribe: <mailto:sashiko-reviews+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:sashiko-reviews+unsubscribe@lists.linux.dev>
-Mime-Version: 1.0
-References: <20260529183549.1104619-17-pbonzini@redhat.com> <20260530085043.927231F00893@smtp.kernel.org>
-Message-ID: <ah2tMbMLPNUQyXrE@google.com>
-Subject: Re: [PATCH 16/24] KVM: SEV: Decouple the need to sync the GHCB SA
- from the need to free the SA
-From: Sean Christopherson <seanjc@google.com>
-To: sashiko-reviews@lists.linux.dev
-Cc: Paolo Bonzini <pbonzini@redhat.com>, kvm@vger.kernel.org
-Content-Type: text/plain; charset="us-ascii"
+MIME-Version: 1.0
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+In-Reply-To: <20260529172635.A1EDB1F00893@smtp.kernel.org>
 
-On Sat, May 30, 2026, sashiko-bot@kernel.org wrote:
-> > diff --git a/arch/x86/kvm/svm/sev.c b/arch/x86/kvm/svm/sev.c
-> > index 437282f0ea943..11d46600cbdc0 100644
-> > --- a/arch/x86/kvm/svm/sev.c
-> > +++ b/arch/x86/kvm/svm/sev.c
-> > @@ -3560,20 +3560,17 @@ void sev_es_unmap_ghcb(struct vcpu_svm *svm)
-> >  	if (!svm->sev_es.ghcb)
-> >  		return;
+On 2026-05-29 17:26:35 [+0000], sashiko-bot@kernel.org wrote:
+> commit 7ab3fb54b60e0decf23b64d1d78df0e2b4409f2a
+> Author: Sebastian Andrzej Siewior <bigeasy@linutronix.de>
+> 
+> mailbox: imx: Move the RX part of the mailbox into the threaded handler
+> 
+> This commit moves the RX mailbox callback handling into the threaded
+> interrupt handler. It updates the driver to mask the RX interrupt in the
+> primary handler and unmask it in the threaded handler upon success.
+> 
+> > diff --git a/drivers/mailbox/imx-mailbox.c b/drivers/mailbox/imx-mailbox.c
+> > --- a/drivers/mailbox/imx-mailbox.c
+> > +++ b/drivers/mailbox/imx-mailbox.c
+> 
+> [ ... ]
+> 
+> > @@ -524,6 +522,12 @@ static irqreturn_t imx_mu_isr_th(int irq, void *p)
+> >  		mbox_chan_txdone(chan, 0);
+> >  		return IRQ_HANDLED;
 > >  
-> > -	if (svm->sev_es.ghcb_sa_free) {
-> > -		/*
-> > -		 * The scratch area lives outside the GHCB, so there is a
-> > -		 * buffer that, depending on the operation performed, may
-> > -		 * need to be synced, then freed.
-> > -		 */
-> > -		if (svm->sev_es.ghcb_sa_sync) {
-> > -			kvm_write_guest(svm->vcpu.kvm,
-> > -					svm->sev_es.sw_scratch,
-> > -					svm->sev_es.ghcb_sa,
-> > -					svm->sev_es.ghcb_sa_len);
-> > -			svm->sev_es.ghcb_sa_sync = false;
-> > -		}
-> > +	/*
-> > +	 * If the scratch area lives outside the GHCB, there's a buffer that,
-> > +	 * depending on the operation performed, may need to be synced.
-> > +	 */
-> > +	if (svm->sev_es.ghcb_sa_sync) {
-> > +		kvm_write_guest(svm->vcpu.kvm, svm->sev_es.sw_scratch,
-> > +				svm->sev_es.ghcb_sa, svm->sev_es.ghcb_sa_len);
-> > +		svm->sev_es.ghcb_sa_sync = false;
-> > +	}
+> > +	case IMX_MU_TYPE_RX:
+> > +		cp->pending = 0;
+> > +		if (!priv->dcfg->rx(priv, cp))
+> > +			imx_mu_xcr_rmw(priv, IMX_MU_RCR, IMX_MU_xCR_RIEn(priv->dcfg->type, cp->idx), 0);
 > 
 > [Severity: High]
-> This isn't a bug introduced by this patch, but can this call to
-> kvm_write_guest() trigger a warning
+> This is a pre-existing issue, but does bypassing the unmasking step on
+> error permanently disable the channel?
 
-Yes.
+Yes, I think this is the intention. The RX callback does not unmask the
+event on error.
 
-> or cause silent guest memory corruption?
-
-I suppose in theory, yes?
-
-> In arch/x86/kvm/x86.c:vcpu_enter_guest(), KVM disables preemption before
-> calling prepare_switch_to_guest():
+> If imx_mu_specific_rx() encounters an error, such as a read timeout or
+> receiving a message that exceeds the maximum size, it returns a negative
+> error code. When this happens, the condition evaluates to false and the
+> interrupt remains masked.
 > 
-> 	preempt_disable();
+> Since there does not seem to be a mechanism to automatically reset the
+> channel after these errors, could a buggy remote processor trigger this
+> to cause a permanent denial of service for the RX channel?
 > 
-> 	kvm_x86_call(prepare_switch_to_guest)(vcpu);
+> [Severity: High]
+> Can this unmasking step also race with channel shutdown?
 > 
-> For SEV-ES guests, this invokes svm_prepare_switch_to_guest() ->
-> sev_es_unmap_ghcb(). Within sev_es_unmap_ghcb(), if svm->sev_es.ghcb_sa_sync is
-> true, KVM calls kvm_write_guest().
+> If mbox_free_channel() is called concurrently, imx_mu_shutdown() masks the
+> interrupt and invokes free_irq(). The free_irq() function synchronizes
+> with the threaded handler and will block until imx_mu_isr_th() finishes
+> processing.
 > 
-> Since kvm_write_guest() is a sleepable function and preemption is disabled,
-> this could trigger a warning in might_fault(), potentially leading to a host
-> denial of service if panic_on_warn is set.
+> Because imx_mu_isr_th() proceeds to unmask the interrupt here after
+> processing, the hardware interrupt will be left enabled after the kernel
+> IRQ handler is fully unregistered. If a new message arrives afterward,
+> won't this cause an interrupt storm and prompt the genirq core to disable
+> the shared IRQ line entirely?
 
-LOL, yes, for all of those production environments that run with panic_on_warn=1,
-CONFIG_DEBUG_ATOMIC_SLEEP=y, and a preemptible kernel model.
+Yes, we had this.
 
-We (Google) have an internal patch that we've been carrying for a while, but it's
-a hack.  It's basically:
+> > +		return IRQ_HANDLED;
+> > +
+> >  	default:
+> >  		dev_warn_ratelimited(priv->dev, "Unhandled channel type %d\n",
 
-	kvm_x86_call(prepare_switch_to_guest_early)(vcpu);
-
-	preempt_disable();
-
-	kvm_x86_call(prepare_switch_to_guest)(vcpu);
-
-Given that the external scratch area is deprecated in v2, i.e. now that we know
-it's not going to be a super common operation, I think the proper way to fix this
-would be to have kvm_sev_es_mmio() and kvm_sev_es_{ins,outs}() sync and free the
-buffer.
+Sebastian
