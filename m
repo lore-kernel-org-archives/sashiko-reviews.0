@@ -1,188 +1,227 @@
-Received: from mail-pj1-f65.google.com (mail-pj1-f65.google.com [209.85.216.65])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from mgamail.intel.com (mgamail.intel.com [198.175.65.21])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4187A23817E
-	for <sashiko-reviews@lists.linux.dev>; Mon,  1 Jun 2026 05:42:52 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.216.65
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3F78232ED27
+	for <sashiko-reviews@lists.linux.dev>; Mon,  1 Jun 2026 05:57:41 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=198.175.65.21
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1780292573; cv=none; b=S3vdqnclceYj+12hkMu+hjf4qLrQXOyCCq5HEylUAY0XGEbzaCs1aKXhiwFKQq31lc6fzdQpHq3whKCDamETqjYxEax0PTx5Rf0QBXdc9opWLwdRYLl+xYCjuUIz+yfLEffvlIeCRMDmnEWvizRqyh9k5NzYk5sSDB73RS4xva4=
+	t=1780293464; cv=none; b=lCVLLaU5/wb8YbDzZcfS+ejoV9E2fOZQbyB3sBdbNw1Xa9hPFUi7JwPnRKzssmQWtinxkhppM/SY4aEaO0hTxXXKDT5YOdan9cv0LGvrNGILX8azRUZYT1EDE3Yvrs3FEuXqXOLq2rPsu8vRVsXX3mr8X5S4HiEysbZ39SP0R9s=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1780292573; c=relaxed/simple;
-	bh=gAGuC7mgz3cTmFY2p5Z4NrMXwl4G6tnbtkwL5iJWcKY=;
-	h=Mime-Version:Content-Type:Date:Message-Id:Cc:Subject:From:To:
-	 References:In-Reply-To; b=sXvvrj9UcX9SjyERj0yLg4LBFjE7DJd+I4y2KqGuJbJPPH4/y0hDr40mqvnJzIJhy85EKOfPqBoelOJ034AKPwJ0N5nYxj1WBSIAw0CbXYtEVHWJVpAj5M3LOsCoLGPO5A45+C4CctBQ6fJiVHliGvHVrTwf3T8MqPzpWxPi7ow=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=etsalapatis.com; spf=pass smtp.mailfrom=etsalapatis.com; dkim=pass (2048-bit key) header.d=etsalapatis-com.20251104.gappssmtp.com header.i=@etsalapatis-com.20251104.gappssmtp.com header.b=Wvbis8BO; arc=none smtp.client-ip=209.85.216.65
-Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=etsalapatis.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=etsalapatis.com
+	s=arc-20240116; t=1780293464; c=relaxed/simple;
+	bh=HB4LbUt2Ni/I5OgdL6OsLAXATb6FCK+C85Z/A/fdgd0=;
+	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
+	 In-Reply-To:Content-Type; b=SOJoV2PMiH7RyzsKsIfw5xBrLrP3jL9YyuUs233G2jVgfLm7YBLzF48cdx4q0j1kZ4G50AeYtkSzVyg2vffnvnphCkR/jYNCtC1ylxpf4iCViF2xVCcp9UWxV2yPXMOtBO0mSrVFD8orNjnVt+Ee76GjKtvO4i6TUwjIU+vXEws=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linux.intel.com; spf=pass smtp.mailfrom=linux.intel.com; dkim=pass (2048-bit key) header.d=intel.com header.i=@intel.com header.b=YUXDd6Bq; arc=none smtp.client-ip=198.175.65.21
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linux.intel.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linux.intel.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=etsalapatis-com.20251104.gappssmtp.com header.i=@etsalapatis-com.20251104.gappssmtp.com header.b="Wvbis8BO"
-Received: by mail-pj1-f65.google.com with SMTP id 98e67ed59e1d1-36d8b644473so1044221a91.3
-        for <sashiko-reviews@lists.linux.dev>; Sun, 31 May 2026 22:42:52 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=etsalapatis-com.20251104.gappssmtp.com; s=20251104; t=1780292571; x=1780897371; darn=lists.linux.dev;
-        h=in-reply-to:references:to:from:subject:cc:message-id:date
-         :content-transfer-encoding:mime-version:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=sHvGYuplz5QC4FAZEE77//dWf1JalWwiXwaCA2SHLeA=;
-        b=Wvbis8BOkivxT6lk3sRk+KEqjSC0aCKfe7DBKxdc6j17kEzQhVS7cXDN8QyYuGJpp9
-         C3TsvVdyaxjm1sVOyADElgXu/3N8EYmowEL9Y/H6cItve5ffmvxan8y/9qtr9Fhu5dFZ
-         nsv7L0k0ZLN3BBVCQXGjYxGjnAo4uynzxjqd0DYTESj77b7qCsQ0iEWkcWA3IZ9Wczkl
-         Bz1SSytF8GxPNGtxHswRXT+acqYwhV6U5SK17jyrjfv8b4mt4XvnYTFnY2x+tfGpz7SC
-         TuKrUU76ciij25k0V75rKgikR+VJWxX+6TLtc3QBCxY71jo7xbiS/+9+ADFA0t8bvOCK
-         1zrQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20251104; t=1780292571; x=1780897371;
-        h=in-reply-to:references:to:from:subject:cc:message-id:date
-         :content-transfer-encoding:mime-version:x-gm-gg:x-gm-message-state
-         :from:to:cc:subject:date:message-id:reply-to;
-        bh=sHvGYuplz5QC4FAZEE77//dWf1JalWwiXwaCA2SHLeA=;
-        b=UgBG0TZ6JdcXGEfgpPF0c+nAF4gdQ+i9SjQhI+dP33kJzC8z8AAzkIKKUmRIOUEOue
-         GIzmWP3a5U41I1t/S/6WEcJSSLcA21MwyiqjP+2XerdWfmowj5/nSKTQFovFBzZW5DJf
-         1VdM6+2qvvDCkc+p69I1OC1lODKTmc08siKuXEoDoZC2bFEvY/99Sb/IQsDZUlR3+EA7
-         ECbnF4jFSe69cxEwAjwb495xqExn5cNgv2tE/jj9SM5Dg/rL1tejziZe9Vf3BX01vMFw
-         Lac//NW/ic1rRYZnGcH+jN++XLUIc7/ujGJaqRY6BzE31GB0chZebGnoMjw0VcM79Y60
-         oIVg==
-X-Gm-Message-State: AOJu0YzbDEggwe/hICDs+SzyuVmxFA5oy1R6YTmGrK5827n3RwCP5Pbm
-	Kf/o5A0TpjPvJZeVQ32zw4hVqH11ZCnkS9oTUQPLG/fh5hOWGfGQTuNwmb1DBQDkPqQCMKkath8
-	ZRyKd2gNAI3pR
-X-Gm-Gg: Acq92OGFB+sTlUPEpjg9z7kFnlVuUw6954hlOpljPMM77wDQGVOPc98ZR/L22m8aDD/
-	zExozpYGMumHfBvrKFCIyfEGCKeMAsak0AbCOEHb53whUFjy32Q4R+M8bylzQLjrmrhXfSspu5s
-	9P54EaugOdEeybUFG9nt3VKrud5RGZ0ZsuU+z6kk+qy/4C2FAovfMy/WyRvLe4DG7azcJPRncYR
-	EK2l7s/4ZLYRimoJRIWjO9qdG6PavisUREaLg53F9AaCN4KDm+iMV+szAyXFeY6jSFLv+8S1+/h
-	p77q8N8DU0dU4r33hSnHJd6/ztxeBvmCbhstrGK/WvyN/vJ1B45TIapLe8mXqO4cOq70pF33TZm
-	p6y0fWDqsDdon50ahf4iR2kfQjw+g/E1wpa/oRc4gm9XJiHlDA48OsvpGmHmhhj3GCMndsWxdBy
-	o6PMzUKkxunsv1QlMz8YUyrV6x98B97Q6Oyak=
-X-Received: by 2002:a17:90a:d604:b0:369:69f8:ad6b with SMTP id 98e67ed59e1d1-36c2eb88bd7mr8758527a91.0.1780292571400;
-        Sun, 31 May 2026 22:42:51 -0700 (PDT)
-Received: from localhost ([2001:569:58a0:da00:a5c8:c4ce:f7c1:40c1])
-        by smtp.gmail.com with ESMTPSA id 98e67ed59e1d1-36bc0c1ab21sm9430416a91.14.2026.05.31.22.42.50
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Sun, 31 May 2026 22:42:50 -0700 (PDT)
+	dkim=pass (2048-bit key) header.d=intel.com header.i=@intel.com header.b="YUXDd6Bq"
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
+  d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
+  t=1780293462; x=1811829462;
+  h=message-id:date:mime-version:subject:to:cc:references:
+   from:in-reply-to:content-transfer-encoding;
+  bh=HB4LbUt2Ni/I5OgdL6OsLAXATb6FCK+C85Z/A/fdgd0=;
+  b=YUXDd6Bq3Ra/LDyedUoyTHbzvx0E0GVQ3YAOflHngX7v+q5gA0IVHu9m
+   bqZDalwzShBaN1pVMlbwzP4UzwW/3+Z+5ld98V/K/NylM6a1dQjpSvT8p
+   3ONdZ+gdgah2GG5mbVA5P2QsFOLNwpECnv8vBN2qvYK9zE+MbG+Q6vrNz
+   foY5RumNBvGxCS8MD6zziKaGvMDPu91N8fGKBWDDkYpxjdakrnZX6HdQ0
+   XYhhtq5yJnl03v85XVKcSzJSzkc9BCA9VS6QRS6EqX0EY3zh9a4Ov//R2
+   hfqq2qIV3NgyORWa19ktpPTh6u62UqKjtUKwqhHnZs3VdX5vVDXLLNXI0
+   g==;
+X-CSE-ConnectionGUID: R9ufdasKQ0++hcvZ11oldw==
+X-CSE-MsgGUID: vwQKHboSQae1d4FIUb0nyA==
+X-IronPort-AV: E=McAfee;i="6800,10657,11803"; a="80939976"
+X-IronPort-AV: E=Sophos;i="6.24,180,1774335600"; 
+   d="scan'208";a="80939976"
+Received: from fmviesa008.fm.intel.com ([10.60.135.148])
+  by orvoesa113.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 31 May 2026 22:57:41 -0700
+X-CSE-ConnectionGUID: AUAcn4fyQoabukHewLYi9w==
+X-CSE-MsgGUID: eXl5ZS/2Ri69vM8cUVnONQ==
+X-ExtLoop1: 1
+X-IronPort-AV: E=Sophos;i="6.24,180,1774335600"; 
+   d="scan'208";a="240961831"
+Received: from dapengmi-mobl1.ccr.corp.intel.com (HELO [10.124.241.147]) ([10.124.241.147])
+  by fmviesa008-auth.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 31 May 2026 22:57:40 -0700
+Message-ID: <3a08b9f4-186e-411c-a17b-4eeb4b413e38@linux.intel.com>
+Date: Mon, 1 Jun 2026 13:57:37 +0800
 Precedence: bulk
 X-Mailing-List: sashiko-reviews@lists.linux.dev
 List-Id: <sashiko-reviews.lists.linux.dev>
 List-Subscribe: <mailto:sashiko-reviews+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:sashiko-reviews+unsubscribe@lists.linux.dev>
-Mime-Version: 1.0
-Content-Transfer-Encoding: quoted-printable
+MIME-Version: 1.0
+User-Agent: Mozilla Thunderbird
+Subject: Re: [Patch v8 11/23] perf/x86: Enable XMM register sampling for
+ REGS_USER case
+To: sashiko-reviews@lists.linux.dev
+Cc: linux-perf-users@vger.kernel.org
+References: <20260529075645.580362-12-dapeng1.mi@linux.intel.com>
+ <20260529092423.F2DD81F00893@smtp.kernel.org>
+Content-Language: en-US
+From: "Mi, Dapeng" <dapeng1.mi@linux.intel.com>
+In-Reply-To: <20260529092423.F2DD81F00893@smtp.kernel.org>
 Content-Type: text/plain; charset=UTF-8
-Date: Mon, 01 Jun 2026 01:42:50 -0400
-Message-Id: <DIXH1O3E96VX.EYFDM9QIT6AD@etsalapatis.com>
-Cc: <bpf@vger.kernel.org>
-Subject: Re: [PATCH bpf v3 1/3] bpf: Add validation for bpf_set_retval
- argument
-From: "Emil Tsalapatis" <emil@etsalapatis.com>
-To: <sashiko-reviews@lists.linux.dev>, "Xu Kuohai"
- <xukuohai@huaweicloud.com>
-X-Mailer: aerc 0.21.0-0-g5549850facc2
-References: <20260530101239.590395-2-xukuohai@huaweicloud.com>
- <20260530105334.8E8BA1F00893@smtp.kernel.org>
-In-Reply-To: <20260530105334.8E8BA1F00893@smtp.kernel.org>
+Content-Transfer-Encoding: 7bit
 
-On Sat May 30, 2026 at 6:53 AM EDT, sashiko-bot wrote:
-> Thank you for your contribution! Sashiko AI review found 2 potential issu=
-e(s) to consider:
-> - [High] The strict bounds check added to `bpf_set_retval()` unconditiona=
-lly rejects programs that pass unconstrained variables, such as the output =
-of `bpf_get_retval()`, breaking backward compatibility for existing user pr=
-ograms.
-> - [High] Restricting `bpf_set_retval()` to `[-MAX_ERRNO, 0]` breaks `BPF_=
-CGROUP_GETSOCKOPT` programs that legitimately return positive values.
+
+On 5/29/2026 5:24 PM, sashiko-bot@kernel.org wrote:
+> Thank you for your contribution! Sashiko AI review found 2 potential issue(s) to consider:
+> - [High] Calling `xsaves_nmi()` for PEBS events on CPUs lacking `X86_FEATURE_XSAVES` causes an invalid opcode exception (`#UD`), triggering warning loops and overhead.
+> - [High] Guest XMM registers are incorrectly sampled as host REGS_USER XMM registers when a PMU interrupt occurs during KVM guest execution.
 > --
 >
-> commit 822adc8377df563ad6f9bfabc65c87c7f98aaf52
-> Author: Xu Kuohai <xukuohai@huawei.com>
+> commit feabaffcb00c51c951e3f0889a9ad615fe731d5e
+> Author: Dapeng Mi <dapeng1.mi@linux.intel.com>
 >
-> bpf: Add validation for bpf_set_retval argument
+> perf/x86: Enable XMM register sampling for REGS_USER case
 >
-> This commit adds validation to the bpf_set_retval helper to prevent
-> cgroup BPF programs from returning unexpected positive values, which can
-> cause wild pointer dereferences or bypass error checks. For BPF_LSM_CGROU=
-P,
-> it enforces LSM-specific ranges. For other cgroup types, it restricts the
-> argument to [-MAX_ERRNO, 0].
+> This patch adds support for XMM register sampling in the REGS_USER case.
+> To handle simultaneous sampling of XMM registers, a per-CPU x86_user_regs
+> is introduced to store REGS_USER-specific XMM registers. The
+> x86_pmu_update_user_xregs helper function is added to retrieve user-space
+> XMM registers.
 >
-> Link: https://lore.kernel.org/all/567d3206-74a5-44e5-99c6-779c425f399e@st=
-d.uestc.edu.cn
->
->> diff --git a/kernel/bpf/verifier.c b/kernel/bpf/verifier.c
->> index 7fb88e1cd7c4d..4948bd4bf9e16 100644
->> --- a/kernel/bpf/verifier.c
->> +++ b/kernel/bpf/verifier.c
->> @@ -10460,6 +10460,19 @@ static int check_helper_call(struct bpf_verifie=
-r_env *env, struct bpf_insn *insn
+>> diff --git a/arch/x86/events/core.c b/arch/x86/events/core.c
+>> --- a/arch/x86/events/core.c
+>> +++ b/arch/x86/events/core.c
+>> @@ -707,12 +707,12 @@ int x86_pmu_hw_config(struct perf_event *event)
+>>  			return -EINVAL;
+>>  	}
+>>  
+>> -	if (event->attr.sample_type & PERF_SAMPLE_REGS_INTR) {
+>> +	if (event->attr.sample_type & (PERF_SAMPLE_REGS_INTR | PERF_SAMPLE_REGS_USER)) {
+>>  		/*
+>>  		 * Besides the general purpose registers, XMM registers may
+>>  		 * be collected as well.
+>>  		 */
+>> -		if (event->attr.sample_regs_intr & PERF_REG_EXTENDED_MASK) {
+>> +		if (event_has_extended_regs(event)) {
+>>  			if (!(event->pmu->capabilities & PERF_PMU_CAP_EXTENDED_REGS))
+>>  				return -EINVAL;
+>>  			if (is_sampling_event(event) && !event->attr.precise_ip &&
+>>  			    !this_cpu_has(X86_FEATURE_XSAVES))
+>>  				return -EINVAL;
 >>  		}
->>  		break;
->>  	case BPF_FUNC_set_retval:
->> +	{
->> +		struct bpf_retval_range range =3D {
->> +			.minval =3D -MAX_ERRNO,
->> +			.maxval =3D 0,
->> +			.return_32bit =3D true
->> +		};
->
-> [Severity: High]
-> Does this blanket restriction to 0 break BPF_CGROUP_GETSOCKOPT programs?
->
-> Commit c4dcfdd406aa2167 ("bpf: Move getsockopt retval to struct
-> bpf_cg_run_ctx") removed the restriction that getsockopt filters must
-> return <=3D 0, noting that valid getsockopt handlers often return positiv=
-e
-> values for the option length.=20
->
-> Could this maxval =3D 0 limit prevent BPF_CGROUP_GETSOCKOPT programs from=
-=20
-> legitimately returning positive lengths via bpf_set_retval?
->
-
-AFAICT the getsockopt manpage corroborates the issue, should be possible to
-account for this.
-
->> +		struct bpf_reg_state *r1 =3D &regs[BPF_REG_1];
->> +
->> +		if (r1->type !=3D SCALAR_VALUE) {
->> +			verbose(env, "R1 is not a scalar\n");
->> +			return -EINVAL;
->> +		}
->> +
->
+>>  	}
 > [ ... ]
->
->> @@ -10469,8 +10482,20 @@ static int check_helper_call(struct bpf_verifie=
-r_env *env, struct bpf_insn *insn
->> +		err =3D mark_chain_precision(env, BPF_REG_1);
->> +		if (err)
->> +			return err;
+>> @@ -1812,33 +1803,155 @@ static void x86_pmu_update_regs_intr(struct perf_event *event,
+> [ ... ]
+>> +static inline u64 x86_pmu_update_user_xregs(struct perf_sample_data *data,
+>> +					    struct pt_regs *regs,
+>> +					    u64 mask, u64 ignore_mask)
+>> +{
+>> +	struct x86_perf_regs *perf_regs;
+>> +	struct xregs_state *xsave;
+>> +	struct fpu *fpu;
+>> +	struct fpstate *fps;
+>> +	u64 user_mask = mask;
 >> +
->> +		if (!retval_range_within(range, r1)) {
->> +			verbose_invalid_scalar(env, r1, range, "At bpf_set_retval", "R1");
->> +			return -EINVAL;
->> +		}
->
+>> +	if (data->regs_user.abi == PERF_SAMPLE_REGS_ABI_NONE)
+>> +		return 0;
+>> +
+>> +	/*
+>> +	 * If PEBS hits kernel space, need to re-sample extended
+>> +	 * registers for user space.
+>> +	 */
+>> +	if (user_mode(regs))
+>> +		user_mask &= ~ignore_mask;
+>> +
+>> +	if (user_mask && test_thread_flag(TIF_NEED_FPU_LOAD)) {
 > [Severity: High]
-> Will this strict bounds check unconditionally reject programs that pass=
-=20
-> unconstrained variables, such as the output of bpf_get_retval?
+> When KVM loads a guest's FPU state, fpu_swap_kvm_fpstate() caches the host's
+> state in fpu->__task_fpstate and explicitly clears the TIF_NEED_FPU_LOAD flag
+> via fpregs_mark_activate().
 >
-> The helper bpf_get_retval returns an int which is tracked by the verifier=
-=20
-> as an unknown scalar. If this unconstrained scalar is passed directly to=
-=20
-> bpf_set_retval, it is checked against the newly hardcoded [-MAX_ERRNO, 0]=
-=20
-> range.=20
+> If a perf NMI interrupts the guest, this check for TIF_NEED_FPU_LOAD will
+> evaluate to false, causing x86_pmu_update_user_xregs() to return the mask
+> instead of reading the cached host state from __task_fpstate.
 >
-> Since the unknown bounds fall outside this narrow range, the verifier wil=
-l=20
-> reject the program at load time.=20
->
-> Could this break backward compatibility for existing user programs relyin=
-g=20
-> on the bpf_set_retval(bpf_get_retval()) pattern?
+> Does this cause xsaves_nmi() to sample the hardware registers directly, which
+> currently hold the KVM guest's XMM registers, and expose them to the host's
+> user-space perf record, leading to cross-VM data leaks?
 
-"Backward compatibility" is definitely the wrong way to put this
-considering past behavior was buggy. The only alternative I can see is
-checking the return value dynamically in the helper itself and returning
-failure if the attempted value is illegal, and that is an even bigger
-change in behavior. Programs can add bounds checking to get_retval to
-handle this.
+This is the intended behavior. Users may want to sample guest's register
+data from host. As long as the privilege is correctly set, there would be
+no data leak.
+
+
+>
+>> +		perf_regs = container_of(data->regs_user.regs,
+>> +				 struct x86_perf_regs, regs);
+>> +		fpu = x86_task_fpu(current);
+>> +		/*
+>> +		 * If __task_fpstate is set, it holds the right pointer,
+>> +		 * otherwise fpstate will.
+>> +		 */
+>> +		fps = READ_ONCE(fpu->__task_fpstate);
+>> +		if (!fps)
+>> +			fps = fpu->fpstate;
+>> +		xsave = &fps->regs.xsave;
+>> +
+>> +		update_perf_regs(perf_regs, xsave, user_mask);
+>> +		return 0;
+>> +	}
+>> +
+>> +	return user_mask;
+>> +}
+> [ ... ]
+>>  static void x86_pmu_sample_xregs(struct perf_event *event,
+>>  				 struct perf_sample_data *data,
+>> +				 struct pt_regs *regs,
+>>  				 u64 ignore_mask)
+>>  {
+>>  	struct xregs_state *xsave = get_ext_regs_buf(smp_processor_id());
+>>  	u64 sample_type = event->attr.sample_type;
+>>  	struct x86_perf_regs *perf_regs;
+>> +	u64 user_mask = 0;
+>>  	u64 intr_mask = 0;
+>>  	u64 mask = 0;
+>>  
+>>  	if (WARN_ON_ONCE(!xsave) || !in_nmi())
+>>  		return;
+>>  
+>> -	if ((sample_type & PERF_SAMPLE_REGS_INTR) &&
+>> -	    (event->attr.sample_regs_intr & PERF_REG_EXTENDED_MASK))
+>> +	if (event_has_extended_regs(event))
+>>  		mask |= XFEATURE_MASK_SSE;
+>>  
+>>  	mask &= x86_pmu.ext_regs_mask;
+>> +	if (sample_type & PERF_SAMPLE_REGS_USER) {
+>> +		user_mask = x86_pmu_update_user_xregs(data, regs,
+>> +						      mask, ignore_mask);
+>> +	}
+>>  
+>>  	if (sample_type & PERF_SAMPLE_REGS_INTR)
+>>  		intr_mask = mask & ~ignore_mask;
+>>  
+>> +	if (user_mask | intr_mask) {
+>> +		xsave->header.xfeatures = 0;
+>> +		xsaves_nmi(xsave, user_mask | intr_mask);
+>> +	}
+> [Severity: High]
+> For PEBS events with PERF_SAMPLE_REGS_USER, the X86_FEATURE_XSAVES check in
+> x86_pmu_hw_config() is bypassed due to event->attr.precise_ip being set.
+>
+> If this event triggers in kernel space on a CPU lacking XSAVES (for example,
+> booted with noxsaves or masked in a VM), user_mode(regs) is false, so
+> user_mask retains the extended bits from x86_pmu_update_user_xregs().
+>
+> Since xsaves_nmi() unconditionally emits the xsaves instruction, will this
+> trigger an Invalid Opcode exception on CPUs without XSAVES support and add
+> overhead to every PEBS interrupt in kernel space?
+
+Yes, it's a defect. As previous comment said, would enhance the check and
+only set the PERF_PMU_CAP_EXTENDED_REGS capability when both PEBS and xsave
+support XMM sampling.
+
+Thanks.
+
+
+>
+>> +
+>> +	if (user_mask) {
+>> +		perf_regs = container_of(data->regs_user.regs,
+>> +					 struct x86_perf_regs, regs);
+>> +		update_perf_regs(perf_regs, xsave, user_mask);
+>> +	}
