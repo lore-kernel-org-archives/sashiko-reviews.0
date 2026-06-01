@@ -1,157 +1,202 @@
-Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-ed1-f51.google.com (mail-ed1-f51.google.com [209.85.208.51])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B5FCD3E275E
-	for <sashiko-reviews@lists.linux.dev>; Mon,  1 Jun 2026 18:33:14 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
-ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1780338795; cv=none; b=MRxPRmcH02SGF6/Bv3/ODyefDBqpQ7wb9GBQsDC02sIbegoBhdXXS30sfPZmaMVdGtwJtQaz2H7yk3Z5KZS21nL3DnmbB5XoN9OUEiIioP/FT0zYuRUswgEYNspSMeqmiG1+6ihf7//wwkWsExO4c2bzGOwVKud9l+kljkxnj6E=
-ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1780338795; c=relaxed/simple;
-	bh=hfinmS7LxtGPsI8sB2v5neamafqQiHYTnsw1ZTsh9KQ=;
-	h=MIME-Version:Date:From:To:Cc:Message-Id:In-Reply-To:References:
-	 Subject:Content-Type; b=AbpB7wYPPFtHmAcH5firfOWXLyp8rhB2IbRJLr+HgCjNy9ef38B/Ux3las9/hGiSUCbwxUD5CBRdzYxmn+MIPuLwcGv3jPgfWqkcnvlMJcNDF7VIBnBFhwW2wmnV9cYgfTxYqo8/gIAkqLD/2kNyY+t1931H3cvHV2hSq0l/eaU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=BQ5FEoG7; arc=none smtp.client-ip=100.103.45.18
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3DC4935AC3C
+	for <sashiko-reviews@lists.linux.dev>; Mon,  1 Jun 2026 19:06:04 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=pass smtp.client-ip=209.85.208.51
+ARC-Seal:i=2; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
+	t=1780340765; cv=pass; b=bvoZZe0iLvvPRH8STKRcJr1TR/9U0lRW1J4ubg+BZn9+/ZGEerXIQLTkKjGKMSLMXHMRsBEXEkdnKbh7BoEuMGEhh/diKkRX/4zQGzN/axA8t6+whnkqSHFu3WaNhhwpMgPZi+IIlm8bdD833uGhgrX7GOvJDhe3NlziOmdscew=
+ARC-Message-Signature:i=2; a=rsa-sha256; d=subspace.kernel.org;
+	s=arc-20240116; t=1780340765; c=relaxed/simple;
+	bh=dsNHqGMwTUPlrUfe55QMxdZJILtC75BjFNl1GeWCT5w=;
+	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
+	 To:Cc:Content-Type; b=c6nRJvrCRCTMnyp2j82ueg5bE4oFYvxSXFMq1ZTUGT31MvpgLGot9cfkkK1Y2sS65K9COKOL/+ZHUFKzhLze7z6yze3eDMrueMOeIXgdt5Nrc5qC5WIsqOwt2QDwL0o/uvX7ajwgxTBnurA+sPXlH7dfqF6GjUubfUTgXRThU4M=
+ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=AjUpP3N2; arc=pass smtp.client-ip=209.85.208.51
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="BQ5FEoG7"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6C14C1F00893
-	for <sashiko-reviews@lists.linux.dev>; Mon,  1 Jun 2026 18:33:14 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=kernel.org;
-	s=k20260515; t=1780338794;
-	bh=IrmAtEJfJzUcPIeNSpsR45e4ng04o1+FX2zZga+xxvA=;
-	h=Date:From:To:Cc:In-Reply-To:References:Subject;
-	b=BQ5FEoG78fCXf4dCiCFVtFJPWPVA6mZswWU+o8hdm50pnEdJyfOLiBGItZkc1DHHR
-	 3u2qGO+b/9Yx7sCDrWFyWtamhoSSpKynu84TsyQJCQLa7i/M5R/heiMFuAeaGWicm5
-	 HXvA8qTpuQOe6Obh6eHiKpmqRXCOSmUa+OHb5g9QZQV8U3fStu+Bs5MXAs92tz+A2H
-	 y6ftszfw1/na+Y4RyyqxlVbrzEBLbCmAoTyaMjVa66Mc5jFBo8SASiEzugwh55drgm
-	 gGkvXMuCgKv3li2e3qslXZSg1J9EX90dFPj8TJprh/W5JgG5xvw/yjceIvnAY+DXGC
-	 DIC+PoP0Gfgzg==
-Received: from phl-compute-04.internal (phl-compute-04.internal [10.202.2.44])
-	by mailfauth.phl.internal (Postfix) with ESMTP id 86BBDF4007F;
-	Mon,  1 Jun 2026 14:33:13 -0400 (EDT)
-Received: from phl-imap-05 ([10.202.2.95])
-  by phl-compute-04.internal (MEProxy); Mon, 01 Jun 2026 14:33:13 -0400
-X-ME-Sender: <xms:adAdauyYsrqagDhrEx_uggR8z_TuxMHY5FFS9lJTpI8MnoFSjBLM8w>
-    <xme:adAdalH4jXDdotyWQOGCbLXvo8TY43KMXCYsbM9IIYcv7lV62Hi0PIVQtImhfZQWM
-    qflBIqG39ADy4VJMi34-zeQ5oPHv8gN7lSG3IWXRrRXc45kcITodjM>
-X-ME-Proxy-Cause: dmFkZTEVbPm8Q2RnrXoI3zzNekE7UJk2dx7scpcbzaCBA8w3GR5cZ/Xa8ijNwmB1xdwEUv
-    I3SUimJcck8HgmOUlUIxyNq0gdql1aiMWXgPamKvPpjG8uc5zJr5EswfgUPHad7piNeUPI
-    AHvmh/AOdWg1FvAWg+PuTZAqkUkfGq+2Jr0VCmKRE04YADMTGUKXg+fiLrr7Jl9VtBcpkA
-    LJiwd2mzxCAzawGZpJVbflsuja80JXdITBEVDsM79RrvFUCHCdXbkUltgnqllWBpWrMMzW
-    SPQayIuW1MNPhltuBxHkLbZQlakokKjeaZu1m+uDNamVat7vEnJZj0Wy+eD0O6doaUYILj
-    xqLqNwUdvtIAuHpyByw4bqR1m3K4GMpAxCaGCVMU4x0+7jKE+WO3tEGUb4l6gTno4ITb4H
-    YIOA/1Bl0PwrHMvFk/tgwZHypSdPBu0Cmq0I7KD7ou9m7eGAuhhmzvL3iNss6L0K1pENOG
-    PT7aV1njmYp22hKaUICXEwcBYLuqz/YCZ+KhQtwszVFv3XE2KyWurpzDQjtiW1mgUR3na9
-    q7l4IJeFpnJ+2MaDCFRLq5imZlwsZpTOjiafUnWZZgAA3ztVBg3HrZp8UoleYwtxPI0cWg
-    Mz55yW3cG1bwNAEdRKBBDTl6IN071Qj4DzS/xaAoQ56gMJj8/rvm4uOTgdlA
-X-ME-Proxy: <xmx:adAdaqnC4JlAdiV-gzO6LWjX3dv7TTcXn2c1YzkQDKuo0cflqmkPwA>
-    <xmx:adAdalj502yA0IxVpoiUVlM4P6DXB1WtRqzP5k529kHoTMRIoVkY8A>
-    <xmx:adAdaieVKT6VB038ApYtXsUY1BCEEGILla-EbMMuMAcQu5Yz4Sjyrg>
-    <xmx:adAdalj7lgn_O-B6jFdL7jZ0x7oazQgPa9l-DkCalP2yUH3Ph7VlMg>
-    <xmx:adAdaqzjrya6RrJdCT1l_mKWVHCbpkyR5vdOowoi54CQd9KS6zFymRSc>
-Feedback-ID: i36794607:Fastmail
-Received: by mailuser.phl.internal (Postfix, from userid 501)
-	id 65D49182007A; Mon,  1 Jun 2026 14:33:13 -0400 (EDT)
-X-Mailer: MessagingEngine.com Webmail Interface
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="AjUpP3N2"
+Received: by mail-ed1-f51.google.com with SMTP id 4fb4d7f45d1cf-68b2229b48eso7713792a12.2
+        for <sashiko-reviews@lists.linux.dev>; Mon, 01 Jun 2026 12:06:04 -0700 (PDT)
+ARC-Seal: i=1; a=rsa-sha256; t=1780340763; cv=none;
+        d=google.com; s=arc-20240605;
+        b=HMOXDlHNJTXbihLRouF7PBitpyKLmzjuUMCyBcAGL0emoWVB3ei08S/R8H5Tz4KTgI
+         zWmdL4XL7j+1TPQcJcl32JW1FFcYyrsSFnvRJXy7r1xQ2At8Cbc8/Cloi5Ju65+9t9Fl
+         FQHtRqTW6x+o4cBiV1Hh3c/oTbjpdhu78TgZFW8pEZuX2Z25cypGUW4gCS87K8HG1pzy
+         MIlHDnBO3k36A8OIWGPQwRzn2GOrsJSO+G0OMwptPrcnjUXMXrx5ACLn39UVoLvVdrvz
+         hQ7tUafqUUqQe8mRlM1wYf51Z68KUB8Rw8phhkixM7buNWLhi0CuiaHLZp2jvbxz3qiG
+         DFKA==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com; s=arc-20240605;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:dkim-signature;
+        bh=8ToRh5cKTPUe+pKq487HFcup2FxYOsRDUpBYxyNWwsg=;
+        fh=CevGES2AFLxh77zkXsdBdBroN5O9WERkcETXwr7159A=;
+        b=bhzPJtHAczS0HVtrDsoqRf7R1jebqcDv8jKUuSNzJF5yURv2dSWLfAGze1sTqcWluA
+         LPsEDvMredCBjK29Ju2GLgOaVJiKnNQirigjZrK/E6ibDePeUeaV9429rXFYnCyEwEYI
+         5r2u0PLY/HrT3s5Jt9TcsVI1Soe42EM7fhWpOrVTqvdWO9pp2lvkDgHISzMzTFUV8FI7
+         SffCGM52IEfz4twP7+WGydOa3Qvcn13kuQJQQ9EEqaWSqmzoxBUYqAXaFL5vozveYupD
+         XIYhdwWjnFk5pEL4Cup3lgtdUB4Jswl3ZNSox60/LaDdn6P2gN+pEL2LWt8E+MmMicQ+
+         k8Qg==;
+        darn=lists.linux.dev
+ARC-Authentication-Results: i=1; mx.google.com; arc=none
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20251104; t=1780340763; x=1780945563; darn=lists.linux.dev;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=8ToRh5cKTPUe+pKq487HFcup2FxYOsRDUpBYxyNWwsg=;
+        b=AjUpP3N2X+Q/Gtr5BOQFp+yw0WypEOlyM2Z3uMRFIzhmjvm+2TfCdYNVSuFdg5wtCV
+         riNcIXXmhQh6OsBJRC4AjVuMsG3KNNLMkIKoPrZrE8XQSkKqC+v+s56dG1owgzEznWjT
+         WU2b8pqQO2lh/AHn1AJxdyF6G/QKyRUmCCY69UHuDbqYKomC6mA328pSM69eM8vW9JXm
+         NNjPtmgg0fv6RRvdLgIPA4QXl039qyhqVHEzdV4w8No+ZqGO0203fS05Q6FalAaxWDU0
+         tz1KW2+nM11alqgL6qpcwco4s+/raPBvk6Bsm3x1YJyaCrvUzU6LOD4dSxrKkMsE9oLL
+         PlQg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20251104; t=1780340763; x=1780945563;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:x-gm-gg:x-gm-message-state:from
+         :to:cc:subject:date:message-id:reply-to;
+        bh=8ToRh5cKTPUe+pKq487HFcup2FxYOsRDUpBYxyNWwsg=;
+        b=jl8s16Bs5Wyc7fmjbs0LwJeDBKCbujWkrH6xMAj9mCLKxmrme0nJ4T0A6sp2C7MOrJ
+         P5KuyJUwF5qyJ6c5ROo4mIBPKqCwzRtc6qo8rcEjKOQ3vCWwZVFeM91gTsYYx9Hwn43k
+         lzlq0UCCGHtQ1bRSbiGQTOXytxniWBuflzS1FWyqCkyvtcv3eUTxzZrWotAZStojT4c+
+         p3uwGzqgbWGOSSAPJ62hAUuPP8KiGI55yFQtbM6PtY6JYAcsj8FdueDdKKZ2OXJdybvT
+         /8a3mGQo+9HsegNC0pJUmbf/lpqB6hzf+F9FUzjsi3qBnPEuse1C6iLQoqp9K9qS+bDs
+         8GAQ==
+X-Gm-Message-State: AOJu0Yw6ztFBXTjkZ+RTSX+mv6eK2Mo+mPHF0EH68FjfU+tcck0XP1fm
+	+1YCnr7pqMMHk85eG8CvvILG/X2LuRTtKybuQQL7rB3BUSpvwYG2alyQiskXyobk/hliilWnXvU
+	lQ6BV6G6zyZTYE6Q4y8bLmr4KZZBPy0PUbA==
+X-Gm-Gg: Acq92OEUwgQP+NRNhJ1/S8+nqPlnjLpyTHsw1/3hRxqVB1avaqyGZrpYHfyCh5DazUO
+	dPKkrhbVHFfM0q4QcIvjPi6Fi8r39It8IPD6D2sc+flSdXLlJ30MSXPffubo8lMT9baQD6LL4No
+	nW9+7hmgYK1oPMf/0zAJanFGQHJ+F8gGYVLduU5Aspd/pE1GdPIWmnJ9sr61O1QduhubBwnilal
+	zpIM+TFR/DZLPRHweHXokIP3bl10Qy1Xaba7VkZCLmBcWoV6hIMR4b8PwkPzdwACpvcF894tNc7
+	Buzm0yBEi2f1GVxjRNlcXQB4z+rUV1qZKLaWbaDkmaxYzAwiHZjG2ShjXPrgaaW0mp9AFmYYdqD
+	Q5fgSrNWmf3YXCf5h307Hs+uob2oJxp1Pz3JIJ176zA+CgXb9zl82NGVC+MiybEPksFoo
+X-Received: by 2002:a05:6402:321a:b0:683:75ec:c17c with SMTP id
+ 4fb4d7f45d1cf-68c8b1eddcfmr6022796a12.10.1780340762242; Mon, 01 Jun 2026
+ 12:06:02 -0700 (PDT)
 Precedence: bulk
 X-Mailing-List: sashiko-reviews@lists.linux.dev
 List-Id: <sashiko-reviews.lists.linux.dev>
 List-Subscribe: <mailto:sashiko-reviews+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:sashiko-reviews+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-X-ThreadId: ArrYli9DFPON
-Date: Mon, 01 Jun 2026 20:32:31 +0200
-From: "Arnd Bergmann" <arnd@kernel.org>
+References: <20260601183359.11343-1-rosenp@gmail.com> <20260601184409.C1CF21F00893@smtp.kernel.org>
+In-Reply-To: <20260601184409.C1CF21F00893@smtp.kernel.org>
+From: Rosen Penev <rosenp@gmail.com>
+Date: Mon, 1 Jun 2026 12:05:49 -0700
+X-Gm-Features: AVHnY4KnIMcoYyn6BxHK4-bEmZR9C9G0FfA-ZjB3cx_hF-FLZ-By-coC51D4ZXA
+Message-ID: <CAKxU2N_8V9A5fcp7JWQWorPsU2PdKj=uiCV+rs9BAs-to_DctA@mail.gmail.com>
+Subject: Re: [PATCH] ata: pata_ep93xx: fix double free and ERR_PTR dereference
+ on DMA error path
 To: sashiko-reviews@lists.linux.dev
-Cc: linux-input@vger.kernel.org,
- "Dmitry Torokhov" <dmitry.torokhov@gmail.com>,
- "Hans de Goede" <hansg@kernel.org>, "Jin Yao" <yao.jin@linux.intel.com>
-Message-Id: <dfe153e1-a3d1-4dca-a59b-59899082c4e9@app.fastmail.com>
-In-Reply-To: <20260530004519.1C8E81F00893@smtp.kernel.org>
-References: <20260520183815.2510387-3-arnd@kernel.org>
- <20260530004519.1C8E81F00893@smtp.kernel.org>
-Subject: Re: [PATCH 02/10] [v3] input: gpio-keys: make legacy gpiolib optional
-Content-Type: text/plain
-Content-Transfer-Encoding: 7bit
+Cc: linux-ide@vger.kernel.org, dlemoal@kernel.org, cassel@kernel.org
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 
-On Sat, May 30, 2026, at 02:45, sashiko-bot@kernel.org wrote:
+On Mon, Jun 1, 2026 at 11:44=E2=80=AFAM <sashiko-bot@kernel.org> wrote:
+>
+> Thank you for your contribution! Sashiko AI review found 2 potential issu=
+e(s) to consider:
+>
+> Pre-existing issues:
+> - [High] The PATA driver fails to initialize if DMA channels are not avai=
+lable, breaking the PIO-only fallback mode.
+Yep. Makes this patch completely pointless.
+> - [High] Trailing byte transfer logic in PIO data transfer truncates 16-b=
+it values, leading to data corruption on big-endian systems.
+> --
+>
+> commit 01fbd237d0698dff8591ae6c458732b482391c35
+> Author: Rosen Penev <rosenp@gmail.com>
+>
+> ata: pata_ep93xx: fix double free and ERR_PTR dereference on DMA error pa=
+th
+>
+> This commit fixes a double free of the rx channel and an invalid pointer
+> dereference of the tx channel on the DMA initialization error path. By
+> NULLing the tx channel before calling the release function, the cleanup
+> is handled correctly.
+>
+> > diff --git a/drivers/ata/pata_ep93xx.c b/drivers/ata/pata_ep93xx.c
+> > index b2b9e0058333e..aa6f8172925d5 100644
+> > --- a/drivers/ata/pata_ep93xx.c
+> > +++ b/drivers/ata/pata_ep93xx.c
+> > @@ -688,7 +688,7 @@ static int ep93xx_pata_dma_init(struct ep93xx_pata_=
+data *drv_data)
+> >       return 0;
+> >
+> >  fail_release_rx:
+> > -     dma_release_channel(drv_data->dma_rx_channel);
+> > +     drv_data->dma_tx_channel =3D NULL;
+>
 > [Severity: High]
-> Does this change break legacy devices that legitimately provide both a valid
-> GPIO and a valid IRQ?
+> This isn't a bug introduced by this patch, but since we are modifying the
+> error paths in ep93xx_pata_dma_init(), does this initialization failure
+> unintentionally break the PIO-only fallback?
 >
-> If a legacy platform provides both a valid GPIO and an IRQ, this condition
-> now evaluates to false.
+> Looking at the start of ep93xx_pata_dma_init(), if dma_request_chan()
+> returns -ENODEV because no DMA channels are available in the device tree:
 >
-> By skipping the GPIO request entirely, the driver falls back to treating the
-> device as a pure IRQ button. This forces the driver to lose hardware
-> debouncing and rely on a simulated release timer instead of checking the
-> physical GPIO line.
-
-There are only three drivers that provide the ->irq field. Two are the
-ones that I'm changing in this patch, the soc_button_array driver
-is the third and none of them set ->irq and ->gpio at the same time.
-
->>   */
->>  struct gpio_keys_button {
->>  	unsigned int code;
->> +#ifdef CONFIG_GPIOLIB_LEGACY
->>  	int gpio;
->> +#endif
->>  	int active_low;
+>         drv_data->dma_rx_channel =3D dma_request_chan(dev, "rx");
+>         if (IS_ERR(drv_data->dma_rx_channel))
+>                 return dev_err_probe(dev, PTR_ERR(drv_data->dma_rx_channe=
+l),
+>                                      "rx DMA setup failed\n");
 >
-> [Severity: Medium]
-> Will this cause build failures for drivers that assign to this field when
-> CONFIG_GPIOLIB_LEGACY is disabled?
-
-Yes, that is the intention of the patch: nothing should set the
-->gpio field unless GPIOLIB_LEGACY is set.
-
-> Other modern drivers dynamically create the platform device and pass legacy
-> GPIO numbers by directly assigning to this field:
+> This error propagates directly back to ep93xx_pata_probe():
 >
-> drivers/input/misc/soc_button_array.c:soc_button_device_create() {
->     ...
->     gpio_keys[n_buttons].gpio = gpio;
->     ...
-> }
+>         err =3D ep93xx_pata_dma_init(drv_data);
+>         if (err)
+>                 return err;
 >
-> When CONFIG_GPIOLIB_LEGACY is disabled, this results in a compilation failure
-> since struct gpio_keys_button no longer has the gpio member.
-
-I previously included a patch force-enable GPIOLIB_LEGACY in this
-patch series, see
-
-https://lore.kernel.org/all/npijagtgyad33xxlq46b7kwzydhcgt5tkgd5ihsjl6t4czbqyf@umovipwh73i2/
-
-I made a mistake during a rebase, so my older patch was still
-included in my randconfig testing but not in the series I
-sent. All the other changes in it are now redundant, bit
-the soc_button_array portion indeed still remains.
-
-Hans, Dmitry, do you already have plans to deal with the
-soc_button_array driver to move it away from legacy GPIOs?
-
-So far I can see four possible ways we can deal with it,
-but none that I actually like:
-
-a) delay the problem, apply my original oneline change
-   to 'select GPIOLIB_LEGACY' and fix it later, so we
-   can make GPIOLIB_LEGACY default-disabled in 7.3.
-
-b) add a gpiod member to struct gpio_keys_button and skip
-   the intermediate gpio number here. Clean it up later.
-
-c) always pass the gpio as an interrupt, as the driver
-   already does for some machines
-
-d) add dynamic device properties that duplicate the
-   information from ACPI/DMI, so the driver can
-   stop using platform data
-
-e) disconnect gpio_keys_button from gpio-keys.c and
-   register the buttons to the input subsystem
-   directly from soc_button_device_create().
-
-Any suggestions?
-
-        Arnd
+> Does this abort the probe entirely on systems without DMA, rather than cl=
+eanly
+> dropping DMA support and allowing the driver to fall back to PIO mode?
+>
+> >  fail_release_dma:
+> >       ep93xx_pata_release_dma(drv_data);
+> >
+>
+> [Severity: High]
+> This is a pre-existing issue, but could the trailing byte transfer logic =
+in
+> ep93xx_pata_data_xfer() truncate 16-bit values and cause data corruption =
+on
+> big-endian systems?
+>
+> In ep93xx_pata_data_xfer(), the pad variable is an array of 2 bytes:
+>
+>         unsigned char pad[2] =3D { };
+>
+> On the READ path, a 16-bit value is assigned directly to *pad:
+>
+>         if (rw =3D=3D READ) {
+>                 *pad =3D cpu_to_le16(
+>                         ep93xx_pata_read_data(
+>                                 drv_data, IDECTRL_ADDR_DATA));
+>                 *buf =3D pad[0];
+>
+> Doesn't this truncate the 16-bit integer to its lowest 8 bits? On a
+> little-endian CPU this evaluates to the correct first byte, but on a
+> big-endian CPU, cpu_to_le16() places the first byte into the upper 8 bits=
+,
+> which are lost during truncation.
+>
+> Similarly, on the WRITE path:
+>
+>         } else {
+>                 pad[0] =3D *buf;
+>                 ep93xx_pata_write_data(drv_data, le16_to_cpu(*pad),
+>                                   IDECTRL_ADDR_DATA);
+>         }
+>
+> Will le16_to_cpu(*pad) zero-extend the 8-bit pad[0] value to a 16-bit
+> integer, resulting in 0x00BB instead of 0xBB00 before byte swapping,
+> ultimately writing 0x00 as the first byte of the transfer? Would casting
+> to a 16-bit pointer better manage memory across endianness boundaries her=
+e?
+>
+> --
+> Sashiko AI review =C2=B7 https://sashiko.dev/#/patchset/20260601183359.11=
+343-1-rosenp@gmail.com?part=3D1
