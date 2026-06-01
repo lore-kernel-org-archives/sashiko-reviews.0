@@ -1,117 +1,272 @@
-Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
+Received: from mgamail.intel.com (mgamail.intel.com [198.175.65.14])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7CFC418BBAE;
-	Mon,  1 Jun 2026 02:26:20 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6ECD618BBAE
+	for <sashiko-reviews@lists.linux.dev>; Mon,  1 Jun 2026 03:11:47 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=198.175.65.14
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1780280781; cv=none; b=HS0I30lo63jrxGwLbarJLF6JHgNQOwc8dg1FGcyW785ouavcF1MuK487P7t3drMeJZdAVX1JiG9907+0AN4Ah5xblxOVpgFhtbG0bMk1iz3KWc1OuzpyrO4ShowBS4MCeOQ0H7hki9PAK/vXggdrBBy1wENa/xLFL4pt3stHM0w=
+	t=1780283509; cv=none; b=rOVjaKyoTmjHjPs/R0I7rU+aZlZH33GzFfxbNKkz15jHDE7JHkf8zseGpjg3MXVNe2tvXb17C38JLQfNX6hh4VSSZiDFGaohFPVV1wjyQqsJdIqcCfqLXc1lAnXMJjJrsGpApaiihbNVkmP98DIt935uRZndMTvI63rMgSIEYPk=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1780280781; c=relaxed/simple;
-	bh=U/+5R1lWRqJAsWn4rvOd9TEJGh0tSpWWdjHqo27vY3Y=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=rnkNlvph/rOyoFgkgj7Ok9i0jcuWwZwLCZTXR+qOQxlP5BTrH/NPhorbjLiXCohhvENki5cNoQfdxZfriTK3NWXpgcoh6PQHEN6k/P37Oa29TmSlEEOkzmamC0da76lj4xIBpKJsk3vKGd081C3rsxy5XHXy2630P/yMUlpY6nk=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=epo7cXxQ; arc=none smtp.client-ip=100.103.45.18
+	s=arc-20240116; t=1780283509; c=relaxed/simple;
+	bh=lfqejeSq0JlIgPlcxdVdLN7DnwTLwLSJ9J3QQFOQ8Sw=;
+	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
+	 In-Reply-To:Content-Type; b=NERATqC1ONfEZTqbI911/GVzwxGIPZXqutGZ5E5dl30A+F4/0x8+iJ5B2q5oJBUtXiam6YnlrV6S3FzJMnigafAE0JW8s2MH5sdvi4kljE4UE6vtxDu+gl85jD0yHKh8gNMi94J33hFj8mkatB+KxfIoG/zNrTom0g3g1sq0m54=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linux.intel.com; spf=pass smtp.mailfrom=linux.intel.com; dkim=pass (2048-bit key) header.d=intel.com header.i=@intel.com header.b=bV6ip7Vw; arc=none smtp.client-ip=198.175.65.14
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linux.intel.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linux.intel.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="epo7cXxQ"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id E5E031F00893;
-	Mon,  1 Jun 2026 02:26:19 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=kernel.org;
-	s=k20260515; t=1780280780;
-	bh=UEW+CBPeGaXOv67OjmaNomjMEwykYbnfDwfMc30LrEc=;
-	h=Date:From:To:Cc:Subject:References:In-Reply-To;
-	b=epo7cXxQUr3DwHKtUDowiQXL3Pcl9gODiCePLoen85tE7/sWnLsi+fLm7T6oko9/d
-	 z58c3fj7e3ux48yNUPL6lQn5wu2AhBuW46cmCJY+gMbRwSX4DQTt6P1SLKRPAhC/F3
-	 EcjsrztO5TlWmMxux6d5MXYoCn7nFa0II4noM/H90C4Y0oU3dHknsawXXLMIarMBxp
-	 7iConc+bfzVDgHNoBkNhs+NUZaY1Ff82k8/+PHHFmFh1zXyM3CJxYTssR11XYMaH2P
-	 vFdydS7yF5eYrDqPVGsvc58HrHMeD6zPsMQvoiJZZdEhmmqDHGvFVJ/FZedPNXClw/
-	 RLu5eW7UN3Lww==
-Date: Sun, 31 May 2026 21:26:19 -0500
-From: Rob Herring <robh@kernel.org>
-To: Biju Das <biju.das.au@gmail.com>
-Cc: sashiko-reviews@lists.linux.dev, conor+dt@kernel.org,
-	devicetree@vger.kernel.org, wsa+renesas@sang-engineering.com,
-	linux-renesas-soc@vger.kernel.org
-Subject: Re: [PATCH v2 1/2] dt-bindings: display: bridge: Document Renesas
- RZ/G3L LVDS encoder
-Message-ID: <20260601022619.GA3961324-robh@kernel.org>
-References: <20260524194457.479681-2-biju.das.jz@bp.renesas.com>
- <20260524195829.960401F000E9@smtp.kernel.org>
- <CADT+UeAYhrwpmApCWaJ9w0gK3zF4eR4LVptTTwegGucvF6mmiA@mail.gmail.com>
+	dkim=pass (2048-bit key) header.d=intel.com header.i=@intel.com header.b="bV6ip7Vw"
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
+  d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
+  t=1780283507; x=1811819507;
+  h=message-id:date:mime-version:subject:to:cc:references:
+   from:in-reply-to:content-transfer-encoding;
+  bh=lfqejeSq0JlIgPlcxdVdLN7DnwTLwLSJ9J3QQFOQ8Sw=;
+  b=bV6ip7VwHLTuJLEl3YREPbQQbFHGgyjHQiW3LvhRh3iQye+EXLDkH2zQ
+   bR3h1eNO9bl5y+0wG3WOkV19601ysIt7xOAT4vTlcZ16VMlmDPT7rxcRd
+   utqHUiyGm6cvVNYTSJIteaOGuXQZlP4yL42GNbk3QZqiSM++rYULxvPPm
+   jcSv9FKInZ1Sz8BHUWF3//avGjNslyAGSVw+bTauDSpyHnbwhGCigi3Ha
+   NTDrQKulybbEHU/s0l8slVmf4BfCFSw/1V/QQda///kmz2031stAX8SQF
+   JWr01Tn+2nXabWGyQm9cqW6RhIVm3PZR02EvaDoS78O4tq8pTK/gqmmlp
+   g==;
+X-CSE-ConnectionGUID: sUfzA1fwSMaGEaugJvlJKA==
+X-CSE-MsgGUID: npY+7F9fQj+bAyg2kvS97w==
+X-IronPort-AV: E=McAfee;i="6800,10657,11803"; a="84923366"
+X-IronPort-AV: E=Sophos;i="6.24,180,1774335600"; 
+   d="scan'208";a="84923366"
+Received: from fmviesa005.fm.intel.com ([10.60.135.145])
+  by orvoesa106.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 31 May 2026 20:11:47 -0700
+X-CSE-ConnectionGUID: 9UVjC0s9Rn6LspzxazTkMA==
+X-CSE-MsgGUID: jvaUHsuZSZyzgl3IPHxcLw==
+X-ExtLoop1: 1
+X-IronPort-AV: E=Sophos;i="6.24,180,1774335600"; 
+   d="scan'208";a="248537313"
+Received: from dapengmi-mobl1.ccr.corp.intel.com (HELO [10.124.241.147]) ([10.124.241.147])
+  by fmviesa005-auth.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 31 May 2026 20:11:46 -0700
+Message-ID: <3a990307-e900-4b4a-ac88-b3373bf7afa6@linux.intel.com>
+Date: Mon, 1 Jun 2026 11:11:44 +0800
 Precedence: bulk
 X-Mailing-List: sashiko-reviews@lists.linux.dev
 List-Id: <sashiko-reviews.lists.linux.dev>
 List-Subscribe: <mailto:sashiko-reviews+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:sashiko-reviews+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
+User-Agent: Mozilla Thunderbird
+Subject: Re: [Patch v8 10/23] perf/x86: Enable XMM Register Sampling for
+ Non-PEBS Events
+To: sashiko-reviews@lists.linux.dev
+Cc: linux-perf-users@vger.kernel.org
+References: <20260529075645.580362-11-dapeng1.mi@linux.intel.com>
+ <20260529090255.E5E801F00893@smtp.kernel.org>
+Content-Language: en-US
+From: "Mi, Dapeng" <dapeng1.mi@linux.intel.com>
+In-Reply-To: <20260529090255.E5E801F00893@smtp.kernel.org>
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-In-Reply-To: <CADT+UeAYhrwpmApCWaJ9w0gK3zF4eR4LVptTTwegGucvF6mmiA@mail.gmail.com>
 
-On Mon, May 25, 2026 at 08:45:00AM +0100, Biju Das wrote:
-> Hi Bot,
-> 
-> On Sun, May 24, 2026 at 8:58 PM <sashiko-bot@kernel.org> wrote:
-> >
-> > Thank you for your contribution! Sashiko AI review found 2 potential issue(s) to consider:
-> > - [Low] The compatible string 'renesas,r9a08g046-lvds-cmn' is used in the dt-binding example but is not documented.
-> > - [Low] The parent node 'lvds-cmn' in the example lacks a 'ranges' property, breaking address translation for its child nodes.
-> > --
-> >
-> > commit be595c0db2d85d9ea1396f0f30ac7ad75f4101fe
-> > Author: Biju Das <biju.das.jz@bp.renesas.com>
-> >
-> > dt-bindings: display: bridge: Document Renesas RZ/G3L LVDS encoder
-> >
-> > Documents the LVDS encoder IP found on the RZ/G3L SoC. It supports
-> > single-link mode and shares a peripheral clock and reset signal with the
-> > MIPI-DSI interface.
-> >
-> > > diff --git a/Documentation/devicetree/bindings/display/bridge/renesas,r9a08g046-lvds.yaml b/Documentation/devicetree/bindings/display/bridge/renesas,r9a08g046-lvds.yaml
-> > > new file mode 100644
-> > > index 0000000000000..b1f6d020ae7b1
-> > > --- /dev/null
-> > > +++ b/Documentation/devicetree/bindings/display/bridge/renesas,r9a08g046-lvds.yaml
-> >
-> > [ ... ]
-> >
-> > > +examples:
-> > > +  - |
-> > > +    #include <dt-bindings/clock/renesas,r9a08g046-cpg.h>
-> > > +
-> > > +    lvds-cmn@108a0000 {
-> > > +        compatible = "renesas,r9a08g046-lvds-cmn",
-> > > +                     "simple-mfd", "syscon";
-> >
-> > [Severity: Low]
-> > Is this compatible string documented somewhere else? It looks like
-> > renesas,r9a08g046-lvds-cmn isn't present in the tree, which might cause
-> > dt_binding_check to fail when it validates the example.
-> 
-> This compatible is documented and is in next [1].
-> 
-> Q1) Can you please reun the AI review with [1] ?
-> 
-> [1] https://git.kernel.org/pub/scm/linux/kernel/git/next/linux-next.git/commit/?h=next-20260522&id=51284d8b1dbcd7fa0220c49eeab29b14617e0d88
-> 
-> >
-> > > +        reg = <0x108a0000 0x10000>;
-> > > +        #address-cells = <1>;
-> > > +        #size-cells = <1>;
-> >
-> > [Severity: Low]
-> > Does this parent node need a ranges property? Without it, address translation
-> > for the child node's reg = <0x10 0x8> might fail, and dtc often warns about
-> > missing ranges in simple-mfd nodes with children.
-> 
-> I don't get any error or dtc warnings. Have you ran dt-binding check
-> before providing
-> such comment?
 
-There probably isn't any warning, but sashiko is correct that 'ranges' 
-should be present. The schema for the parent should require 'ranges'. 
-The 'simple-mfd' binding does not as not all simple-mfd's have MMIO 
-addresess in the child nodes.
+On 5/29/2026 5:02 PM, sashiko-bot@kernel.org wrote:
+> Thank you for your contribution! Sashiko AI review found 3 potential issue(s) to consider:
+>
+> New issues:
+> - [High] reserve_ext_regs_buffers() fails to propagate memory allocation errors, leading to a predictable WARN_ON_ONCE in NMI context.
+> - [High] PEBS events on older platforms (e.g., Skylake) improperly accept `PERF_REG_EXTENDED_MASK`, bypassing capability checks.
+>
+> Pre-existing issues:
+> - [High] Software PMU events (or hardware events requesting `PERF_SAMPLE_REGS_USER`) can request XMM registers, causing `perf_reg_value()` to perform an out-of-bounds read on the kernel stack.
+> --
+>
+> commit cee33ccbb52239e18206f79aef67c4e7ac96ca59
+> Author: Dapeng Mi <dapeng1.mi@linux.intel.com>
+>
+> perf/x86: Enable XMM Register Sampling for Non-PEBS Events
+>
+> This commit extends XMM register sampling to non-PEBS events by utilizing the
+> xsaves instruction. It introduces a per-CPU 64-byte aligned buffer to store
+> SIMD and other registers, allocating it during hardware reservation. The XMM
+> data is then retrieved during the REGS_INTR case.
+>
+>> diff --git a/arch/x86/events/core.c b/arch/x86/events/core.c
+>> index 17c8f44ee43b3..c219a563434d4 100644
+>> --- a/arch/x86/events/core.c
+>> +++ b/arch/x86/events/core.c
+> [ ... ]
+>
+>> @@ -410,6 +410,56 @@ set_ext_hw_attr(struct hw_perf_event *hwc, struct perf_event *event)
+> [ ... ]
+>
+>> +static void reserve_ext_regs_buffers(void)
+>> +{
+>> +	bool compacted = cpu_feature_enabled(X86_FEATURE_XCOMPACTED);
+>> +	unsigned int size;
+>> +	int cpu;
+>> +
+>> +	if (!x86_pmu.ext_regs_mask)
+>> +		return;
+>> +
+>> +	/* +64 bytes for the 64 bytes alignment request of xsave area. */
+>> +	size = xstate_calculate_size(x86_pmu.ext_regs_mask, compacted) + 64;
+>> +
+>> +	for_each_possible_cpu(cpu) {
+>> +		per_cpu(ext_regs_buf, cpu) = kzalloc_node(size, GFP_KERNEL,
+>> +							  cpu_to_node(cpu));
+>> +		if (WARN_ON_ONCE(!per_cpu(ext_regs_buf, cpu)))
+>> +			goto err;
+>> +	}
+>> +
+>> +	return;
+>> +
+>> +err:
+>> +	release_ext_regs_buffers();
+>> +}
+> [Severity: High]
+> Does reserve_ext_regs_buffers() need to propagate the allocation failure back
+> to the caller?
+>
+> When kzalloc_node() fails, this function frees any previously allocated buffers
+> and returns void. The caller, x86_reserve_hardware(), then assumes success
+> and allows the perf_event_open syscall to succeed. Later, when an event
+> requiring extended registers triggers a PMI, x86_pmu_sample_xregs() retrieves
+> a NULL buffer and triggers a WARN_ON_ONCE in NMI context.
+>
+> Could this allow a local user to deliberately exhaust memory and repeatedly
+> open a perf event to trigger the warning? If the system has panic_on_warn
+> enabled, this could escalate to a kernel panic.
+>
+> [ ... ]
 
-Rob
+I suppose add "WARN_ON_ONCE" is fairly enough to report the issue.
+Propagating the error would lead to the whole perf reservation fails and
+lead to no any perf functions can be used. This is not what we want. Even
+the extended buffer allocation fails, most of perf functions can still
+work, only the SIMD/eGPRs sampling would be bypassed.
+
+>
+>> @@ -655,18 +707,26 @@ int x86_pmu_hw_config(struct perf_event *event)
+> [ ... ]
+>
+>> +	if (event->attr.sample_type & PERF_SAMPLE_REGS_INTR) {
+>> +		/*
+>> +		 * Besides the general purpose registers, XMM registers may
+>> +		 * be collected as well.
+>> +		 */
+>> +		if (event->attr.sample_regs_intr & PERF_REG_EXTENDED_MASK) {
+>> +			if (!(event->pmu->capabilities & PERF_PMU_CAP_EXTENDED_REGS))
+>> +				return -EINVAL;
+>> +			if (is_sampling_event(event) && !event->attr.precise_ip &&
+>> +			    !this_cpu_has(X86_FEATURE_XSAVES))
+>> +				return -EINVAL;
+>> +		}
+>> +	}
+>>  
+>> -		if (!event->attr.precise_ip)
+>> +	if (event->attr.sample_type & PERF_SAMPLE_REGS_USER) {
+>> +		/*
+>> +		 * Currently XMM registers sampling for REGS_USER is not
+>> +		 * supported yet.
+>> +		 */
+>> +		if (event->attr.sample_regs_user & PERF_REG_EXTENDED_MASK)
+>>  			return -EINVAL;
+>>  	}
+> [Severity: High]
+> This isn't a bug introduced by this patch, but can software PMU events request
+> XMM registers and cause an out-of-bounds read on the kernel stack?
+>
+> While x86_pmu_hw_config() correctly blocks PERF_REG_EXTENDED_MASK for
+> unsupported scenarios here, software events bypass x86_pmu_hw_config()
+> completely. The function perf_reg_validate() checks requested registers against
+> PERF_REG_X86_RESERVED, which fails to exclude bits 32-63 (XMM registers).
+>
+> If a software event requests XMM registers via PERF_SAMPLE_REGS_USER, and the
+> event overflows, a standard pt_regs pointing to the top of the kernel stack
+> is passed to perf_reg_value().
+>
+> When it uses container_of(regs, struct x86_perf_regs, regs) and reads
+> perf_regs->xmm_regs, does it read past the end of the pt_regs on the stack,
+> potentially leaking kernel memory or triggering a page fault?
+>
+> I note this is addressed later in the patch series by commit "perf/x86: Enable
+> XMM register sampling for REGS_USER case", but wanted to mention it here.
+
+I don't think the comment is correct. currently the below check in
+perf_try_init_event() would block the PMUs which haven't
+PERF_PMU_CAP_EXTENDED_REGS capability, like software PMU, to sample XMM
+registers,
+
+```
+
+   if (!(pmu->capabilities & PERF_PMU_CAP_EXTENDED_REGS) &&
+        event_has_extended_regs(event)) {
+        ret = -EOPNOTSUPP;
+        goto err_destroy;
+    }
+
+```
+
+>
+> [ ... ]
+>
+>> diff --git a/arch/x86/events/intel/core.c b/arch/x86/events/intel/core.c
+>> index 92cb9a716e83d..f5d458e3ba3f6 100644
+>> --- a/arch/x86/events/intel/core.c
+>> +++ b/arch/x86/events/intel/core.c
+> [ ... ]
+>
+>> @@ -6176,8 +6179,37 @@ static inline void __intel_update_large_pebs_flags(struct pmu *pmu)
+> [ ... ]
+>
+>> +static void intel_extended_regs_init(struct pmu *pmu)
+>> +{
+>> +	struct pmu *dest_pmu = pmu ? pmu : x86_get_pmu(smp_processor_id());
+>> +
+>> +	/*
+>> +	 * Extend the vector registers support to non-PEBS.
+>> +	 * The feature is limited to newer Intel machines with
+>> +	 * PEBS V4+ or archPerfmonExt (0x23) enabled for now.
+>> +	 * In theory, the vector registers can be retrieved as
+>> +	 * long as the CPU supports. The support for the old
+>> +	 * generations may be added later if there is a
+>> +	 * requirement.
+>> +	 * Only support the extension when XSAVES is available.
+>> +	 */
+>> +	if (!boot_cpu_has(X86_FEATURE_XSAVES))
+>> +		return;
+>>  
+>> +	if (!boot_cpu_has(X86_FEATURE_XMM) ||
+>> +	    !cpu_has_xfeatures(XFEATURE_MASK_SSE, NULL))
+>> +		return;
+>> +
+>> +	/*
+>> +	 * On current hybrid platforms, P-cores and E-cores expose the same
+>> +	 * XSAVE feature set. Therefore, using the global x86_pmu.ext_regs_mask
+>> +	 * is sufficient to represent the hardware-supported XSAVE features.
+>> +	 */
+>> +	x86_pmu.ext_regs_mask |= XFEATURE_MASK_SSE;
+>> +	dest_pmu->capabilities |= PERF_PMU_CAP_EXTENDED_REGS;
+>> +}
+> [Severity: High]
+> Will this allow PEBS events on older platforms like Skylake to bypass capability
+> checks?
+>
+> Before this change, PERF_PMU_CAP_EXTENDED_REGS was only set for CPUs with PEBS
+> format >= 4 (Icelake+). By introducing intel_extended_regs_init(), the
+> capability is now set globally for any CPU supporting XSAVES, including
+> Skylake.
+>
+> Looking back at x86_pmu_hw_config(), if an event is a PEBS event
+> (precise_ip > 0), it passes the capability check because the PMU now advertises
+> it.
+>
+> Since Skylake's PEBS v3 hardware cannot sample XMM registers, does this result
+> in a silent ABI regression where the kernel returns zeroes in the sample
+> payload instead of returning -EINVAL at event creation? Should
+> x86_pmu_hw_config() enforce that PEBS XMM requests specifically require PEBS
+> v4+ support?
+
+Yes, would strengthen the check and ensure PERF_PMU_CAP_EXTENDED_REGS is
+set only when both PEBS and non-PEBS both support it. 
+
+Thanks.
+
+
+>
