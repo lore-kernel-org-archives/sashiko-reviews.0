@@ -1,66 +1,75 @@
-Received: from mout-p-201.mailbox.org (mout-p-201.mailbox.org [80.241.56.171])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-wm1-f74.google.com (mail-wm1-f74.google.com [209.85.128.74])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 60E0E3AC0FC
-	for <sashiko-reviews@lists.linux.dev>; Mon,  1 Jun 2026 13:30:47 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=80.241.56.171
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DE397394474
+	for <sashiko-reviews@lists.linux.dev>; Mon,  1 Jun 2026 13:45:00 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.74
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1780320649; cv=none; b=K2duTXtkrDuimBNOkGRM+l6dMVRwvdeG5aou6nqphcU3xF1IVX3UkDEk2ai+Ezc1yFMsvjy1zA4YrEw9fSOWjEGmOgWsFC8VrWUCq8ab5e02yI+5P7GR27UVzihhgYwTC1Ti4cyYTfmjwygw3c8yuTzJ6cnmnPjPnr59+2ssazM=
+	t=1780321502; cv=none; b=jJ8A+KjjLN0dvltPiEKmWkfRFfWubnSgXD/uYI1QQsPTEogVMQ9KtMNi6OKxNqhNlOFmIuQcd6lWRmF7RSII2Ksb4r9lVPCZpdN5sIR7WXyg0wf8mFbeHmPUYur0koTjAsztW4i/shpXMjEO0yUPv6P2GyZiaO9ti0JB52iNBE4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1780320649; c=relaxed/simple;
-	bh=8od38mN8RGoPUTqcetnFeVT6MlcYS3uqlzPU8Aid2DA=;
-	h=Message-ID:Subject:From:To:Cc:Date:In-Reply-To:References:
-	 Content-Type:MIME-Version; b=E0TahE5KkugdjlLE9OONk0AquMMC004NqJsub2qVdSjo79sAAg39EckjDv1UyYR3elbqy/GgUxvZhgif7yeO4APZbOaBBzQ3vLw0kDXeerEH1m16fxs+AizTAeU4EcDEwo27/IaXCG/IiusQbgBw5jyZq4S+zNXTpZvSj2/bL50=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=mailbox.org; spf=pass smtp.mailfrom=mailbox.org; dkim=pass (2048-bit key) header.d=mailbox.org header.i=@mailbox.org header.b=gB+ixUoO; arc=none smtp.client-ip=80.241.56.171
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=mailbox.org
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=mailbox.org
+	s=arc-20240116; t=1780321502; c=relaxed/simple;
+	bh=Mhb3V4SZBIoGw4HaeEbkEEO6zOg+o75In8eZSjRjaws=;
+	h=Date:In-Reply-To:Mime-Version:References:Message-ID:Subject:From:
+	 To:Cc:Content-Type; b=ODs+V6hqlnAPSZUt3dXSSzUFgrhRVBRGGqge9b4msO2E07vtikFEK5TXoZfXIKTsHdpHQtczAXzNbkcFcWEYs1luXNHTXuuhTHWQulfA9wq4xn6wLM4Ag2cfuG1X6b/6NqWszhQ1c8UzIvSvCMwE/vn1TfTFrw2Glhk3CGwyiWA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=google.com; spf=pass smtp.mailfrom=flex--aliceryhl.bounces.google.com; dkim=pass (2048-bit key) header.d=google.com header.i=@google.com header.b=FQHuIIaZ; arc=none smtp.client-ip=209.85.128.74
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=google.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=flex--aliceryhl.bounces.google.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=mailbox.org header.i=@mailbox.org header.b="gB+ixUoO"
-Received: from smtp102.mailbox.org (smtp102.mailbox.org [IPv6:2001:67c:2050:b231:465::102])
-	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
-	 key-exchange X25519 server-signature RSA-PSS (4096 bits) server-digest SHA256)
-	(No client certificate requested)
-	by mout-p-201.mailbox.org (Postfix) with ESMTPS id 4gTZbR0sV0z9txV;
-	Mon,  1 Jun 2026 15:30:43 +0200 (CEST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=mailbox.org; s=mail20150812;
-	t=1780320643; h=from:from:reply-to:reply-to:subject:subject:date:date:
-	 message-id:message-id:to:to:cc:cc:mime-version:mime-version:
-	 content-type:content-type:
-	 content-transfer-encoding:content-transfer-encoding:
-	 in-reply-to:in-reply-to:references:references;
-	bh=tUA6+vSRcRGCo2mXauDXESLTiUY0t5EjlzPqXhMCfaE=;
-	b=gB+ixUoOKuA+JLTSFS00U5QDrEUCY9lIEOPtKefgVSgMrvg8gNO7ngRajooDrT5iVLIB3y
-	vrOtrfid4GGVl+A6m2Yj4wS23vJKPtHWaRKIBQE/hqpkBa7fIpZPR8qvbtEonvvrdwlolL
-	y4ZK3xiINeM6WJkxCCiPn1dnMy+hRbKcKD5GsnhmtEDgKTmm7cAYb0Q4WOukPDjpmGK0Zs
-	gXy87bOK2Zjohe2j5MkZdZHlcvI4RrXG1fbvgkm/TLBjGGRhMMLD8LLv8W3bb9jWHP2XOq
-	xicmIO/vHlAOKMB0GrRj+DcTBZ2OZzEkZTNuufOzTDuo72sUUAyzi+436myyYw==
-Message-ID: <88fa86984dbc8a11bb9f4d1af76a1ba0d942136f.camel@mailbox.org>
-Subject: Re: [PATCH 3/4] rust: Add dma_fence abstractions
-From: Philipp Stanner <phasta@mailbox.org>
-Reply-To: phasta@kernel.org
-To: phasta@kernel.org, Alice Ryhl <aliceryhl@google.com>
-Cc: sashiko-reviews@lists.linux.dev, linux-media@vger.kernel.org, 
-	ojeda@kernel.org, Boris Brezillon <boris.brezillon@collabora.com>
-Date: Mon, 01 Jun 2026 15:30:38 +0200
+	dkim=pass (2048-bit key) header.d=google.com header.i=@google.com header.b="FQHuIIaZ"
+Received: by mail-wm1-f74.google.com with SMTP id 5b1f17b1804b1-490a767c7dcso11032535e9.2
+        for <sashiko-reviews@lists.linux.dev>; Mon, 01 Jun 2026 06:45:00 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=google.com; s=20251104; t=1780321499; x=1780926299; darn=lists.linux.dev;
+        h=content-transfer-encoding:cc:to:from:subject:message-id:references
+         :mime-version:in-reply-to:date:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=hX/IFOsdbALQFM8UDWl4s7L9iaJ+vDyTCJoOKgbumTw=;
+        b=FQHuIIaZpnD6vXU6akl5sugQhngyDum5wupgqeaYCFpHg6H44g5un42QIXCHlk/vOu
+         WmuPCW9tZ+bjuAtgO9eW86pf1dBr368zBpje3wCBIjh27X6BlONr3QLxkeBG7oBmkxRH
+         bgpNhh2pENgZDhX8iUqWgcNWU7l5r8WbYxMK0tVBV2pHmnGcwFXw4j5uxtfBcFJqx7wM
+         F5KTIim2qDAQeDGaen3P6IhzhPbnXkQpo4YiVsUMyXvRqTt1772fg5CRnN3v/G0tMvGJ
+         U3kSbS93jD+FA1oEiTwUSHOx7PgKjMUZ3mnq/8Vx/jb0T4/edIeO8P/RzyQFHs1joulr
+         kAcw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20251104; t=1780321499; x=1780926299;
+        h=content-transfer-encoding:cc:to:from:subject:message-id:references
+         :mime-version:in-reply-to:date:x-gm-message-state:from:to:cc:subject
+         :date:message-id:reply-to;
+        bh=hX/IFOsdbALQFM8UDWl4s7L9iaJ+vDyTCJoOKgbumTw=;
+        b=k2gWGZwFd9jpufdqhUtLCLBidrmPJZaUtWOW87z6SIn9NRdgB/q1RKynu1gWMqoFgR
+         jY/4xRye5DCho7aNXvck9E10MeZ/LiB+eUtBFaA+o8Dv7N0nXS6vRbFVLiugYt3cWa0v
+         fY5hRjMJsquXE63upbQIopHjcdQRbFlErvK5WCYHeA5g62AdMQ0Hv60PrvrS4er6EFAS
+         S8+V5sXvQdnFCpplUC41lS+NQwSa1NLRV6dAKE4MAR/+DFLqebRHymTdlYcmBK1qb/by
+         quqAnIA/UpsI2/h0ktPAQRTiBZQiOCyIW9RI4XJjkVNSiKKN3UaxuxyeigPu5pMosoQO
+         UmDQ==
+X-Gm-Message-State: AOJu0YxQKTIcISS5L/GV23ZaZ8SH9TYrSdtT+S32bgvDJHSggP02jVa1
+	Csa3fcv4JzCYs4kh9SqW1Q1cvIm5zpWafdLkGKVmYBrsIKlCBdyJqYZnrOfR6+UCsHK8eEgDxMF
+	zvxNvdiVMtXPJrJsawQ==
+X-Received: from wruv14.prod.google.com ([2002:a5d:678e:0:b0:45e:8fa3:14f7])
+ (user=aliceryhl job=prod-delivery.src-stubby-dispatcher) by
+ 2002:a05:600c:e48a:b0:490:9804:afdc with SMTP id 5b1f17b1804b1-490a2939daamr141170055e9.23.1780321499173;
+ Mon, 01 Jun 2026 06:44:59 -0700 (PDT)
+Date: Mon, 1 Jun 2026 13:44:57 +0000
 In-Reply-To: <24ef07ed85d9e7aa7f9d3a96301c4c15bc0f2315.camel@mailbox.org>
-References: <20260530143541.229628-5-phasta@kernel.org>
-		 <20260530150622.393FC1F00893@smtp.kernel.org>
-	 <ah1c3NSU-4UkdUhb@google.com>
-		 <a3d09b270e6effb6f2bfb5d7ba8de48e3c2c4081.camel@mailbox.org>
-		 <CAH5fLggvxGwJkAp+VqG7pA-e2zM-T8_DR0DeCiZiJyM+o51DuQ@mail.gmail.com>
-	 <24ef07ed85d9e7aa7f9d3a96301c4c15bc0f2315.camel@mailbox.org>
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
 Precedence: bulk
 X-Mailing-List: sashiko-reviews@lists.linux.dev
 List-Id: <sashiko-reviews.lists.linux.dev>
 List-Subscribe: <mailto:sashiko-reviews+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:sashiko-reviews+unsubscribe@lists.linux.dev>
-MIME-Version: 1.0
-X-MBO-RS-META: nh9kcw14h8q57rginwga3c3o9jg1j7z5
-X-MBO-RS-ID: 34be4622bcf030201fb
+Mime-Version: 1.0
+References: <20260530143541.229628-5-phasta@kernel.org> <20260530150622.393FC1F00893@smtp.kernel.org>
+ <ah1c3NSU-4UkdUhb@google.com> <a3d09b270e6effb6f2bfb5d7ba8de48e3c2c4081.camel@mailbox.org>
+ <CAH5fLggvxGwJkAp+VqG7pA-e2zM-T8_DR0DeCiZiJyM+o51DuQ@mail.gmail.com> <24ef07ed85d9e7aa7f9d3a96301c4c15bc0f2315.camel@mailbox.org>
+Message-ID: <ah2M2a_4PneZpjTS@google.com>
+Subject: Re: [PATCH 3/4] rust: Add dma_fence abstractions
+From: Alice Ryhl <aliceryhl@google.com>
+To: phasta@kernel.org
+Cc: sashiko-reviews@lists.linux.dev, linux-media@vger.kernel.org, 
+	ojeda@kernel.org, Boris Brezillon <boris.brezillon@collabora.com>
+Content-Type: text/plain; charset="utf-8"
+Content-Transfer-Encoding: quoted-printable
 
-On Mon, 2026-06-01 at 15:14 +0200, Philipp Stanner wrote:
+On Mon, Jun 01, 2026 at 03:14:05PM +0200, Philipp Stanner wrote:
 > +Cc Boris
 >=20
 > On Mon, 2026-06-01 at 14:55 +0200, Alice Ryhl wrote:
@@ -133,8 +142,10 @@ nd
 >=20
 > data.data is Sync, but `data` in the code above is not the actual user
 > data, but the memory backing it up.
->=20
-> >=20
+
+Ok, well, it probably should be Sync. I don't see any &self methods that
+can't be called from multiple threads in parallel.
+
 > > > > > > +=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=
 =C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 bindings::dma_fence_signal_locked(fence);
 > > > > > > +=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=
@@ -217,48 +228,45 @@ comes
 >=20
 > on the pointer to DriverFenceData, which contains a refcount to the
 > FenceCtx, which might then want to drop.
->=20
-> > =C2=A0so even though
+
+Let me clarify.
+
+You invoked drop_in_place on DriverFenceData which is effectively this
+method:
+
+fn drop_in_place::<DriverFenceData<F,C>>(self: *mut DriverFenceData) {
+    drop_in_place::<Fence>(&raw mut (*self).fence);
+    drop_in_place::<Arc<FenceCtx<F,C>>>(&raw mut (*self).fctx);
+    drop_in_place::<F>(&raw mut (*self).data);
+}
+
+So yes you did indirectly invoke `drop_in_place` on Arc<FenceCtx<F,C>>.
+
+> >  so even though
 > > the fence context may be valid for another grace period, the *pointer*
 > > to the fence context is not. The pointer could have been zeroed by the
 > > destructor.
 >=20
 > That particular pointer to the DriverFenceData could have been zeroed.
 > But potential other accessors have already crafted themselves a new
-> pointer to the, by the power of RCU, still valid data.
->=20
-
-correction:
-it is refcounting that ensures the memory is still valid.
-
-dma_fence_put() in DriverFence::drop() could earliest free the memory.
-
-P.
-
-
->  That new pointer
+> pointer to the, by the power of RCU, still valid data. That new pointer
 > is container-of-ed from struct dma_fence *f.
->=20
-> >=20
-> > Actually maybe I am worried about the strings too. Let's say that one
-> > thread does:
-> >=20
-> > rcu_read_lock()
-> > get_driver_name()
-> > // .. read the driver name
-> > rcu_read_unlock()
-> >=20
-> > and another thread signals the fence. If there are no queued
-> > call_rcu() callbacks right now, then the rcu_barrier() could be a
-> > no-op and the rcu reader will UAF on the driver name. It looks like
-> > you need synchronize_rcu() rather than rcu_barrier() here?
->=20
-> It would seem to me that you are right.
->=20
-> Boris, do you have an opinion on that?
->=20
->=20
-> P.
->=20
-> >=20
-> > Alice
+
+I'm not talking about the pointer to DriverFenceData, I'm talking about
+the pointer to the FenceCtx, or the pointer to the data (if F is
+RcuBox).
+
+The Arc type is not a type that opts-out of &mut =3D=3D exclusive, so the
+second drop_in_place() above is assumed exclusive access to the
+Arc<FenceCtx<F,C>> field. If another thread obtains a pointer to the
+FenceCtx via reading the fctx field of the DriverFence in parallel with
+this, then that's not allowed because the drop_in_place() call has
+exclusive access to that field.
+
+This is why Boqun's RcuFreeSafe has a drop_in_place_before_gp() method
+that can be used instead of drop_in_place() for this kind of use-case.
+You must leave the fctx and data fields in a state where they contain
+data that's safe to use for at least one grace period, and drop_in_place()
+fundamentally does not leave the value in a usable state.
+
+Alice
