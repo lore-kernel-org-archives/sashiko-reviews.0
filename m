@@ -1,162 +1,117 @@
-Received: from mgamail.intel.com (mgamail.intel.com [192.198.163.13])
+Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A767C13959D
-	for <sashiko-reviews@lists.linux.dev>; Mon,  1 Jun 2026 01:40:24 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=192.198.163.13
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7CFC418BBAE;
+	Mon,  1 Jun 2026 02:26:20 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1780278027; cv=none; b=XA77Logv0BgrsrxyFwlDM1ynyldm1VolYkp4/+2pRdFNGfjXKPiea+63K8w/LI6Q+vBVabcAfJgQjHTAfATe6tLCmb5WVwuPSnOLeeich38Elixo8rEqa5yAl9ftilvFsep5nYSM3dimz6h3HZ1f0sbVpDLchJ6vXfGZHU1EJzQ=
+	t=1780280781; cv=none; b=HS0I30lo63jrxGwLbarJLF6JHgNQOwc8dg1FGcyW785ouavcF1MuK487P7t3drMeJZdAVX1JiG9907+0AN4Ah5xblxOVpgFhtbG0bMk1iz3KWc1OuzpyrO4ShowBS4MCeOQ0H7hki9PAK/vXggdrBBy1wENa/xLFL4pt3stHM0w=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1780278027; c=relaxed/simple;
-	bh=aQV126QGyJh6x5c6zGdqFhNSUqpTD4aRp9lT6F/hgBY=;
-	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=iPhY0fpKthbNtY8Py4OTPhL8SyXWRGzO9dMcpLvKdOaCGbdBze/N3HrqgfPbiuYF52IBZNsewKNCJn+pXjKD4HQICgNN4l66v8SWQ4xS0eioiwkiWL4NqWZUHkZHKVsKiFPCQj0uwKtdA/ZDPvPvjCtVzxS7K5IvbJzp7Sz62Ss=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linux.intel.com; spf=pass smtp.mailfrom=linux.intel.com; dkim=pass (2048-bit key) header.d=intel.com header.i=@intel.com header.b=lUlf3RL4; arc=none smtp.client-ip=192.198.163.13
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linux.intel.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linux.intel.com
+	s=arc-20240116; t=1780280781; c=relaxed/simple;
+	bh=U/+5R1lWRqJAsWn4rvOd9TEJGh0tSpWWdjHqo27vY3Y=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=rnkNlvph/rOyoFgkgj7Ok9i0jcuWwZwLCZTXR+qOQxlP5BTrH/NPhorbjLiXCohhvENki5cNoQfdxZfriTK3NWXpgcoh6PQHEN6k/P37Oa29TmSlEEOkzmamC0da76lj4xIBpKJsk3vKGd081C3rsxy5XHXy2630P/yMUlpY6nk=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=epo7cXxQ; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=intel.com header.i=@intel.com header.b="lUlf3RL4"
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
-  d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
-  t=1780278025; x=1811814025;
-  h=message-id:date:mime-version:subject:to:cc:references:
-   from:in-reply-to:content-transfer-encoding;
-  bh=aQV126QGyJh6x5c6zGdqFhNSUqpTD4aRp9lT6F/hgBY=;
-  b=lUlf3RL4xghigMOj1F53vQF3wy3rU1B1WZ6V8ATVW7OTN+Dv8l/QYsvP
-   6oB6MQiIXRUIQ4OiruxCZW5rULbxRIowfjCPhOwNr2vvEXgXk+TCWsq4n
-   LwgS58vD/1DbRS9G+YvxxnCiOyk1J9FMJUOa+pbPkwKQ5qVIKxT7tl2++
-   adIXr/5IOv/z7xMlas2D0heof6QFeYQ9i2+cjc+g8fzYcy8xLcQV0f3p2
-   VdpQPccPKqYw3FV6NPwcEeQa0zPIVd0JL/qz7B1f4HhWp7UAYnLUeGTsu
-   PHIp6EjRzTTa9adb2+yXdMzCcba8t04D4q2xp119Dl//HLffNURCzkq+c
-   w==;
-X-CSE-ConnectionGUID: tncUDYfMSD+sOyjXKBbJCg==
-X-CSE-MsgGUID: qdP6GgWySbKMiiMwu3yyLQ==
-X-IronPort-AV: E=McAfee;i="6800,10657,11803"; a="83609261"
-X-IronPort-AV: E=Sophos;i="6.24,180,1774335600"; 
-   d="scan'208";a="83609261"
-Received: from orviesa004.jf.intel.com ([10.64.159.144])
-  by fmvoesa107.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 31 May 2026 18:40:24 -0700
-X-CSE-ConnectionGUID: PVLWLujgSBiI2HtIpn56fQ==
-X-CSE-MsgGUID: Rya/I9QCSEGQPFF5TlNiQg==
-X-ExtLoop1: 1
-X-IronPort-AV: E=Sophos;i="6.24,180,1774335600"; 
-   d="scan'208";a="247694588"
-Received: from dapengmi-mobl1.ccr.corp.intel.com (HELO [10.124.241.147]) ([10.124.241.147])
-  by orviesa004-auth.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 31 May 2026 18:40:23 -0700
-Message-ID: <9f80cd55-9559-4fca-b56f-32e744d4fac4@linux.intel.com>
-Date: Mon, 1 Jun 2026 09:40:20 +0800
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="epo7cXxQ"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id E5E031F00893;
+	Mon,  1 Jun 2026 02:26:19 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=kernel.org;
+	s=k20260515; t=1780280780;
+	bh=UEW+CBPeGaXOv67OjmaNomjMEwykYbnfDwfMc30LrEc=;
+	h=Date:From:To:Cc:Subject:References:In-Reply-To;
+	b=epo7cXxQUr3DwHKtUDowiQXL3Pcl9gODiCePLoen85tE7/sWnLsi+fLm7T6oko9/d
+	 z58c3fj7e3ux48yNUPL6lQn5wu2AhBuW46cmCJY+gMbRwSX4DQTt6P1SLKRPAhC/F3
+	 EcjsrztO5TlWmMxux6d5MXYoCn7nFa0II4noM/H90C4Y0oU3dHknsawXXLMIarMBxp
+	 7iConc+bfzVDgHNoBkNhs+NUZaY1Ff82k8/+PHHFmFh1zXyM3CJxYTssR11XYMaH2P
+	 vFdydS7yF5eYrDqPVGsvc58HrHMeD6zPsMQvoiJZZdEhmmqDHGvFVJ/FZedPNXClw/
+	 RLu5eW7UN3Lww==
+Date: Sun, 31 May 2026 21:26:19 -0500
+From: Rob Herring <robh@kernel.org>
+To: Biju Das <biju.das.au@gmail.com>
+Cc: sashiko-reviews@lists.linux.dev, conor+dt@kernel.org,
+	devicetree@vger.kernel.org, wsa+renesas@sang-engineering.com,
+	linux-renesas-soc@vger.kernel.org
+Subject: Re: [PATCH v2 1/2] dt-bindings: display: bridge: Document Renesas
+ RZ/G3L LVDS encoder
+Message-ID: <20260601022619.GA3961324-robh@kernel.org>
+References: <20260524194457.479681-2-biju.das.jz@bp.renesas.com>
+ <20260524195829.960401F000E9@smtp.kernel.org>
+ <CADT+UeAYhrwpmApCWaJ9w0gK3zF4eR4LVptTTwegGucvF6mmiA@mail.gmail.com>
 Precedence: bulk
 X-Mailing-List: sashiko-reviews@lists.linux.dev
 List-Id: <sashiko-reviews.lists.linux.dev>
 List-Subscribe: <mailto:sashiko-reviews+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:sashiko-reviews+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [Patch v8 02/23] perf/x86: Move hybrid PMU initialization before
- x86_pmu_starting_cpu()
-To: sashiko-reviews@lists.linux.dev
-Cc: linux-perf-users@vger.kernel.org
-References: <20260529075645.580362-3-dapeng1.mi@linux.intel.com>
- <20260529085116.A92351F0089D@smtp.kernel.org>
-Content-Language: en-US
-From: "Mi, Dapeng" <dapeng1.mi@linux.intel.com>
-In-Reply-To: <20260529085116.A92351F0089D@smtp.kernel.org>
-Content-Type: text/plain; charset=UTF-8
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
 Content-Transfer-Encoding: 8bit
+In-Reply-To: <CADT+UeAYhrwpmApCWaJ9w0gK3zF4eR4LVptTTwegGucvF6mmiA@mail.gmail.com>
 
+On Mon, May 25, 2026 at 08:45:00AM +0100, Biju Das wrote:
+> Hi Bot,
+> 
+> On Sun, May 24, 2026 at 8:58 PM <sashiko-bot@kernel.org> wrote:
+> >
+> > Thank you for your contribution! Sashiko AI review found 2 potential issue(s) to consider:
+> > - [Low] The compatible string 'renesas,r9a08g046-lvds-cmn' is used in the dt-binding example but is not documented.
+> > - [Low] The parent node 'lvds-cmn' in the example lacks a 'ranges' property, breaking address translation for its child nodes.
+> > --
+> >
+> > commit be595c0db2d85d9ea1396f0f30ac7ad75f4101fe
+> > Author: Biju Das <biju.das.jz@bp.renesas.com>
+> >
+> > dt-bindings: display: bridge: Document Renesas RZ/G3L LVDS encoder
+> >
+> > Documents the LVDS encoder IP found on the RZ/G3L SoC. It supports
+> > single-link mode and shares a peripheral clock and reset signal with the
+> > MIPI-DSI interface.
+> >
+> > > diff --git a/Documentation/devicetree/bindings/display/bridge/renesas,r9a08g046-lvds.yaml b/Documentation/devicetree/bindings/display/bridge/renesas,r9a08g046-lvds.yaml
+> > > new file mode 100644
+> > > index 0000000000000..b1f6d020ae7b1
+> > > --- /dev/null
+> > > +++ b/Documentation/devicetree/bindings/display/bridge/renesas,r9a08g046-lvds.yaml
+> >
+> > [ ... ]
+> >
+> > > +examples:
+> > > +  - |
+> > > +    #include <dt-bindings/clock/renesas,r9a08g046-cpg.h>
+> > > +
+> > > +    lvds-cmn@108a0000 {
+> > > +        compatible = "renesas,r9a08g046-lvds-cmn",
+> > > +                     "simple-mfd", "syscon";
+> >
+> > [Severity: Low]
+> > Is this compatible string documented somewhere else? It looks like
+> > renesas,r9a08g046-lvds-cmn isn't present in the tree, which might cause
+> > dt_binding_check to fail when it validates the example.
+> 
+> This compatible is documented and is in next [1].
+> 
+> Q1) Can you please reun the AI review with [1] ?
+> 
+> [1] https://git.kernel.org/pub/scm/linux/kernel/git/next/linux-next.git/commit/?h=next-20260522&id=51284d8b1dbcd7fa0220c49eeab29b14617e0d88
+> 
+> >
+> > > +        reg = <0x108a0000 0x10000>;
+> > > +        #address-cells = <1>;
+> > > +        #size-cells = <1>;
+> >
+> > [Severity: Low]
+> > Does this parent node need a ranges property? Without it, address translation
+> > for the child node's reg = <0x10 0x8> might fail, and dtc often warns about
+> > missing ranges in simple-mfd nodes with children.
+> 
+> I don't get any error or dtc warnings. Have you ran dt-binding check
+> before providing
+> such comment?
 
-On 5/29/2026 4:51 PM, sashiko-bot@kernel.org wrote:
-> Thank you for your contribution! Sashiko AI review found 1 potential issue(s) to consider:
->
-> Pre-existing issues:
-> - [High] Use-after-free in `intel_pmu_cpu_dead()` triggered during error rollback if `perf_pmu_register()` fails.
-> --
->
-> commit a6b6c338247bf2e5f630f8fc0cce5709a4fbe801
-> Author: Dapeng Mi <dapeng1.mi@linux.intel.com>
->
-> perf/x86: Move hybrid PMU initialization before x86_pmu_starting_cpu()
->
-> This patch moves the default hybrid PMU structure initialization before
-> calling x86_pmu_starting_cpu(). This change prevents key fields like
-> capabilities from being inadvertently overwritten during initialization.
->
->> diff --git a/arch/x86/events/core.c b/arch/x86/events/core.c
->> index 4b9e105309c6a..17e122e27e0b7 100644
->> --- a/arch/x86/events/core.c
->> +++ b/arch/x86/events/core.c
-> [ ... ]
->> @@ -2195,8 +2195,20 @@ static int __init init_hw_perf_events(void)
->>  
->>  	pmu.attr_update = x86_pmu.attr_update;
->>  
->> -	if (!is_hybrid())
->> +	if (!is_hybrid()) {
->>  		x86_pmu_show_pmu_cap(NULL);
->> +	} else {
->> +		int i;
->> +
->> +		/*
->> +		 * Init default ops.
->> +		 * Must be called before registering x86_pmu_starting_cpu(),
->> +		 * otherwise some key PMU fields, e.g., capabilities
->> +		 * initialized in x86_pmu_starting_cpu(), would be overwritten.
->> +		 */
->> +		for (i = 0; i < x86_pmu.num_hybrid_pmus; i++)
->> +			x86_pmu.hybrid_pmu[i].pmu = pmu;
-> [Severity: High]
-> This is a pre-existing issue, but I noticed a potential use-after-free
-> during error rollback.
->
-> During init_hw_perf_events(), the CPU hotplug states are set up and
-> x86_pmu_starting_cpu() sets cpuc->pmu to point to elements within the
-> dynamically allocated x86_pmu.hybrid_pmu array.
->
-> If the subsequent perf_pmu_register() loop fails, the error path frees the
-> x86_pmu.hybrid_pmu array via kfree() and jumps to out2 to unregister the
-> CPU hotplug states:
->
->     if (i < x86_pmu.num_hybrid_pmus) {
->         ...
->         kfree(x86_pmu.hybrid_pmu);
->         ...
->         goto out2;
->     }
->     ...
->     out:
->         cpuhp_remove_state(CPUHP_PERF_X86_PREPARE);
->
-> Tearing down the CPUHP_PERF_X86_PREPARE state triggers x86_pmu_dead_cpu(),
-> which eventually calls intel_pmu_cpu_dead().
->
-> Could tearing down CPUHP_PERF_X86_PREPARE evaluate the dangling cpuc->pmu
-> pointer in intel_pmu_cpu_dead(), causing cpumask_clear_cpu() to write to
-> the array that was just freed?
+There probably isn't any warning, but sashiko is correct that 'ranges' 
+should be present. The schema for the parent should require 'ranges'. 
+The 'simple-mfd' binding does not as not all simple-mfd's have MMIO 
+addresess in the child nodes.
 
-Yes, it's a bug. Need to check if x86_pmu.num_hybrid_pmus is 0 before
-accessing the cpuc->pmu, like this,
-
-diff --git a/arch/x86/events/intel/core.c b/arch/x86/events/intel/core.c
-index 5013c424a0a2..7aecc86b5788 100644
---- a/arch/x86/events/intel/core.c
-+++ b/arch/x86/events/intel/core.c
-@@ -6378,7 +6378,7 @@ static void intel_pmu_cpu_dead(int cpu)
-        release_arch_pebs_buf_on_cpu(cpu);
-        intel_cpuc_finish(cpuc);
-
--       if (is_hybrid() && cpuc->pmu)
-+       if (is_hybrid() && x86_pmu.num_hybrid_pmus && cpuc->pmu)
-                cpumask_clear_cpu(cpu, &hybrid_pmu(cpuc->pmu)->supported_cpus);
- }
-
-BTW, I would extract these bug fixing and clean-up patches to a separate
-patchset and avoid this patchset inflating too much.
-
-Thanks.
-
-
->
->> +	}
->>  
->>  	if (!x86_pmu.read)
->>  		x86_pmu.read = _x86_pmu_read;
+Rob
