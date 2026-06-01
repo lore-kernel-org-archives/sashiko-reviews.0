@@ -1,120 +1,100 @@
-Received: from www62.your-server.de (www62.your-server.de [213.133.104.62])
+Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B095B312819;
-	Mon,  1 Jun 2026 16:45:04 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=213.133.104.62
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 908433101A0;
+	Mon,  1 Jun 2026 16:51:08 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1780332306; cv=none; b=iOTA1j/vnnoOBukosGNBgcLYjHiDqB7BYH8D0i4OoKv4/oTdN/I55sMEZn6IN7v8PK7joGrC3StX+G2yCx082j+yMX/lOJzUgWRFLTw7BuKF+qtUWxUWZIpa0XWv+tyWgD02vYTMCIQq2X6FZ2BVDHcCfZqIKJ9O1B0X0FgB15c=
+	t=1780332669; cv=none; b=Lgx/eTnvN5lJ4M2YpjVDz169v2rF9WYjQGQCrPdT903ezJifpJD6W3Vj/aGHxHHSTVD6QDf4SXIcD0M+s2F27iUXcNBaGBCZwIa0vFJ73Fqv6QmeLNT8iZBAh2Gy4VUH9d64VEneA2u3rTKFJ6U6HHemAgMieX2iYTy7n4/KReE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1780332306; c=relaxed/simple;
-	bh=BLYV54VfR+7XEIquuz19ciuAfp/0e4fMd8cGl+3te1A=;
-	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=Kdgh1FHqIDR/Vp3SQq3V0ksO7Uy7anpeM4QeLMRTn/Vi8wfzPoHPTt1AzUsfS+CttGUMJMsuKCDYB1qAPK/U4TDoejTUGqQUbjg3QDZS+mqx2xKXNI4Vq5IL39jOHTJFXuIQmdCGNWaUwK5FJS/kqvIT0T0mupMHV5a7/bYvq9M=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=iogearbox.net; spf=pass smtp.mailfrom=iogearbox.net; dkim=pass (2048-bit key) header.d=iogearbox.net header.i=@iogearbox.net header.b=it1xWeGQ; arc=none smtp.client-ip=213.133.104.62
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=iogearbox.net
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=iogearbox.net
+	s=arc-20240116; t=1780332669; c=relaxed/simple;
+	bh=mnSvAkyAKEV64YOg4TXgo6ur5+tE84mQn/kzgI2OKHc=;
+	h=MIME-Version:Date:From:To:Cc:Message-Id:In-Reply-To:References:
+	 Subject:Content-Type; b=mKc9rOxSpfdsgK3N3N4tlwn1Z8TzleuHOwkZg+50FxP7M+ALdREN6FhBaLDZZ1Cql3LDMSmLUydU6lq/O6jHaWYd5NlR38eEXNfhUE8LAfXYO+423x7XGPYA/dv2eGpm8NRsXoCrFpMRRgioKaluim7OeW7+lP0tOdzYJr6QS4g=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=bPiKEsII; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=iogearbox.net header.i=@iogearbox.net header.b="it1xWeGQ"
-DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed;
-	d=iogearbox.net; s=default2302; h=Content-Transfer-Encoding:Content-Type:
-	In-Reply-To:From:References:Cc:To:Subject:MIME-Version:Date:Message-ID:Sender
-	:Reply-To:Content-ID:Content-Description:Resent-Date:Resent-From:
-	Resent-Sender:Resent-To:Resent-Cc:Resent-Message-ID;
-	bh=v0LoDzCq0Ko/LjdM1TM6VO+eqcd/Inzg3mMmdGUhy8o=; b=it1xWeGQWvsuxyK9tbizEt1h83
-	CpSTTVptUAIYuW9RsUpf1pcgjRbV2d8nI3NW3JZJCSAGMPneByulLGTFA1BBRO+lwqD8xzR26QjNs
-	khRtYh2XAXT2ZkCVxTIXM6R85q0A4347Fz5OqW3dN/ZoqI00gbD/N49ivpoGGKthzuXjJAfeHUM5Y
-	evkjRZAqMVAJIuRZvwBHgc85H6bLnsFQ4B8hWk4DRLL5ABYku0dLDRoffM107s7h0eEBWHfuItdZD
-	eYFPHjsGytg5pMh9OHhdUVeZSvurZwX3SoV4sXCjpjweDIC832DA0UfqO8UozNgPiYideL1p6GlSp
-	uYMyoTJw==;
-Received: from sslproxy03.your-server.de ([88.198.220.132])
-	by www62.your-server.de with esmtpsa  (TLS1.3) tls TLS_AES_256_GCM_SHA384
-	(Exim 4.96.2)
-	(envelope-from <daniel@iogearbox.net>)
-	id 1wU5l8-0004GO-3C;
-	Mon, 01 Jun 2026 18:45:03 +0200
-Received: from localhost ([127.0.0.1])
-	by sslproxy03.your-server.de with esmtpsa  (TLS1.3) tls TLS_AES_256_GCM_SHA384
-	(Exim 4.96)
-	(envelope-from <daniel@iogearbox.net>)
-	id 1wU5l7-000Flg-31;
-	Mon, 01 Jun 2026 18:45:02 +0200
-Message-ID: <b5769b51-073e-4f91-8eb8-feb685e7e256@iogearbox.net>
-Date: Mon, 1 Jun 2026 18:45:02 +0200
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="bPiKEsII"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0A2681F00893;
+	Mon,  1 Jun 2026 16:51:07 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=kernel.org;
+	s=k20260515; t=1780332668;
+	bh=czmPJqXZMmdpshyUZi9ZFX1mrThHJaOUqSLQ0ZlacWI=;
+	h=Date:From:To:Cc:In-Reply-To:References:Subject;
+	b=bPiKEsIIjuS0SzESIHKPkLJYVfj7MY1KHTZxnFs3c/h3qZHTq+K/ph8CKPpnO0JNk
+	 +wTtvF5NY1NU4W3FWMhegKz/ptXdw+0VBbWVa5vGaX4KY6AyrDuVNzfogaGEQK3Cbe
+	 /UEjRvZ3dL6EkeDz2bGPmXzXiLimosqKCT0ZXECfs7e8Ax6EnAnWLFhnroU9wjohKx
+	 M584TOmRvptV3A/nAJZ00KCh9UaxlMscOAb08lScopeesRgy3X0KCtg+RVwntlO5rg
+	 SmNx9NQ/4Aw3lzJpAPrfNaxkIjA+zmvs8/1zTtBX0dUzPzQ0Drp/6t6/flGt1rCWiT
+	 cx3Icq083ZfBg==
+Received: from phl-compute-04.internal (phl-compute-04.internal [10.202.2.44])
+	by mailfauth.phl.internal (Postfix) with ESMTP id 447EFF40097;
+	Mon,  1 Jun 2026 12:51:07 -0400 (EDT)
+Received: from phl-imap-05 ([10.202.2.95])
+  by phl-compute-04.internal (MEProxy); Mon, 01 Jun 2026 12:51:07 -0400
+X-ME-Sender: <xms:e7gdauhhu95keg-RXpu4IoCXpvI5L94tmu3h211J11HVdnPQziAasQ>
+    <xme:e7gdap3zLX3Racp-R-1NVSBtnEwpR_SVw3pgvs9HGzQDBmWO5d_ueM5nwzcI2jNlD
+    N0Y6mkNVXKDcCTjFf8VE9AdOgU__oITEymUAlGn90WP7227lMAtnU0>
+X-ME-Proxy-Cause: dmFkZTEsnE6xJLC9nA7G9BbfEpwnb72Uxk2msx5m6J9qRN0ZQGEThJK5Em/LgCcdV3G1LU
+    LmECNPt6iBGeBOekCeOqSK1sitRy916kTyrli8rG6nO5inRhaq/seJOyea0q8kiJtGsjur
+    FP+RE8t/zCAKSrt712azKNoZNMyWO0BYh3enlC9CetBSPyVOCC97zMCMAW4lnyBu5BEzNb
+    Mx4L9/sowFccFtJv7i8EhGqJVHPdCOX1U9qoI4QPwRekkacJdsIBGCImY7LYpllEACLYch
+    s7L0yxssXox9soXt6PLVdWkNredOEztkbU5YWdW0zENLISA02NvvC3xKJ1tPlvTUwFWzE2
+    KAvZ/yv3k+5bVMRi3+4gzQRfkk1wca5oS1YSQr3mkcNrCilseTuxTq1vGFfFbbzD1YxqHK
+    RnaMt3/Mdxfoy94VZ6UdYkOdir8auQJvUa/Njb7HRtQMhhWhUcHJMo7IDLeDjN5MP2RsIo
+    jB84ooZKq3wiVOMBauQHjTPIEJLtt8ZOhH5qO6Cij+hOYP8bFgFPGDVlL2K+O2iwG4jmj0
+    maGvMTpDWk2NDOKT+S7Peq+HkEYeIDbJ7Zu4kamxrUyJwMEPsUOg6awyqdhI276FR1QVvp
+    jKi+OPlpcgxogpA38x5VapzD/KIMlPQ/3zmbcnHZT5y2q1z48hz62bMRRA1Q
+X-ME-Proxy: <xmx:e7gdagFg4dV41RCqWbZFuB3tVhYNsuqcYYobknNbvNHIoNQDyzj7Tg>
+    <xmx:e7gdapdHtPYhFxUWpan1YDA9Q45eAd30IWoQsK5FbmY25inN7LcQxQ>
+    <xmx:e7gdaiEvG2KpXQL8UkDYEFhLIOZ7eKEzJ9eGXTI3rBXKmFovcKDPDQ>
+    <xmx:e7gdaqV3haWd0JSfKO4KJ6JeJ65kHZVOgDZVQsAw27RIsZHKPZMunQ>
+    <xmx:e7gdahI9WDOglMhvZ9xOGw04C0q6TrgX5gVszmz2u6hwsu1Klt7vKIhl>
+Feedback-ID: i36794607:Fastmail
+Received: by mailuser.phl.internal (Postfix, from userid 501)
+	id 1697F182007E; Mon,  1 Jun 2026 12:51:07 -0400 (EDT)
+X-Mailer: MessagingEngine.com Webmail Interface
 Precedence: bulk
 X-Mailing-List: sashiko-reviews@lists.linux.dev
 List-Id: <sashiko-reviews.lists.linux.dev>
 List-Subscribe: <mailto:sashiko-reviews+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:sashiko-reviews+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH vfs-7.2.xattr v2] bpf: Add simple xattr support to bpffs
+X-ThreadId: ADJg51WCz7jo
+Date: Mon, 01 Jun 2026 18:50:16 +0200
+From: "Arnd Bergmann" <arnd@kernel.org>
 To: sashiko-reviews@lists.linux.dev
-Cc: bpf@vger.kernel.org
-References: <20260529221234.324174-1-daniel@iogearbox.net>
- <20260529225204.ADBAE1F00893@smtp.kernel.org>
-Content-Language: en-US
-From: Daniel Borkmann <daniel@iogearbox.net>
-Autocrypt: addr=daniel@iogearbox.net; keydata=
- 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
-In-Reply-To: <20260529225204.ADBAE1F00893@smtp.kernel.org>
-Content-Type: text/plain; charset=UTF-8; format=flowed
+Cc: "Dmitry Torokhov" <dmitry.torokhov@gmail.com>, linux-input@vger.kernel.org
+Message-Id: <c998d342-c001-4ed9-a359-2be24984ca02@app.fastmail.com>
+In-Reply-To: <20260530004519.A9BAB1F00898@smtp.kernel.org>
+References: <20260520183815.2510387-2-arnd@kernel.org>
+ <20260530004519.A9BAB1F00898@smtp.kernel.org>
+Subject: Re: [PATCH 01/10] [v2] [net-next] net: dsa: b53: hide legacy gpiolib usage on
+ non-mips
+Content-Type: text/plain
 Content-Transfer-Encoding: 7bit
-X-Virus-Scanned: Clear (ClamAV 1.4.3/28018/Mon Jun  1 08:31:13 2026)
 
-On 5/30/26 12:52 AM, sashiko-bot@kernel.org wrote:
-> Thank you for your contribution! Sashiko AI review found 3 potential issue(s) to consider:
-> 
-> New issues:
-> - [Critical] The patch relies on an out-of-tree or obsolete version of the VFS simple_xattr API, leading to hard compilation failures and potential memory corruption.
+On Sat, May 30, 2026, at 02:45, sashiko-bot@kernel.org wrote:
+>
+> [Severity: High]
+> Does this silently ignore probe errors like -EPROBE_DEFER?
+>
+> Previously, if devm_gpio_request_one failed, the error was returned to the
+> caller. Now, b53_switch_get_reset_gpio handles the request and returns an
+> ERR_PTR on failure, but that error pointer is simply stored in dev->reset_gpio
+> while b53_switch_init unconditionally returns 0.
+>
+> Later in the code, b53_switch_reset_gpio relies on IS_ERR(dev->reset_gpio)
+> to gracefully return, which would silently skip the reset sequence entirely
+> if the GPIO controller simply isn't ready yet (-EPROBE_DEFER) or if there
+> was a memory allocation failure (-ENOMEM).
 
-nope, vfs-7.2.xattr branch of vfs.git
+The driver already ignored errors previously on BCM47xx. and
+I can see that -EPROBE_DEFER cannot happen because the gpio
+driver is very simplistic and always built-in.
 
-> - [High] The per-inode xattr quota limits can be underflowed by removing initial security xattrs, allowing unprivileged users to bypass the `SIMPLE_XATTR_MAX_SIZE` and `SIMPLE_XATTR_MAX_NR` limits.
+I've updated the patch to propagate -EPROBE_DEFER anway as that
+is clearly the correct thing to do in case it ever gets used extended
+to other platforms. All other errors continue to be ignored to
+keep the current behavior of the driver.
 
-I'll take a look.
-
-> Pre-existing issues:
-> - [High] `bpf_symlink` allocates symlink target strings without memcg accounting, allowing an unprivileged user to bypass memory limits and exhaust kernel memory.
-Independent, but I'll also look into this one.
+       Arnd
