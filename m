@@ -1,53 +1,53 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7E518387359
-	for <sashiko-reviews@lists.linux.dev>; Mon,  1 Jun 2026 07:43:43 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AAF62341AC7
+	for <sashiko-reviews@lists.linux.dev>; Mon,  1 Jun 2026 07:47:39 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1780299824; cv=none; b=ZMqY4oSwPed4kF7g6TTOaHa3zHjrXu9rsS4xg4qZF0u7LJ2sz4jl+zjWIRmWoovZXpk5tZRCTnCRW4sh0UJDPEaFmTSNn7Pf61Kdhuh7ELeiSF3IRsQfPaA8RU7V2Q6OL6DihiB59NC9Ce2ZdWMVb98LaNSB9J7WIk0lpd4fFgY=
+	t=1780300060; cv=none; b=W8x0+za1cGGNS29nuF93a1SeJl9yKbpV3yALwlEtJdlK21k75Z2EJosKesKysFMXSWyK4Z+QWpLHnG5hYb9/7/MfxS4ErZXJN6fqdLVieaVa6LuOIMoATIZ2ahU7nESJfN+aK4LKLSQI0SoUU7erTDgBVQifZ/c3jBBdEfS4a7Q=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1780299824; c=relaxed/simple;
-	bh=qMtKzaRG1JyxGNgBU/zbhtltiFCLQAPT4zq0DN3gSGE=;
+	s=arc-20240116; t=1780300060; c=relaxed/simple;
+	bh=3otQ+6lx0LIlkHarxdUeqFFkUzEFZ3jonGFusK2y6wk=;
 	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
-	 To:Cc:Content-Type; b=SxvbrzGZ4VTHgFpGd+FqzXyls6cV+KQjtz59uy9Zgs0RnMCPdoUEkuYrFLVBm3U6Aiw0n5NP0Yw+gBOXTSRTCcR66WW6cgwA0bU7Ne5blsxHMh2mrEraxNEgH+t+enB3GZToUyY2l7XbMmoPFTS/MrDvzq3AT4+LnsVQtZDm5zw=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=ZBdr+jJx; arc=none smtp.client-ip=100.103.45.18
+	 To:Cc:Content-Type; b=ewaHjL04whXOl0xKQCIa9TIIypa0NlRXLvCPwqEhem7XUaQXnGJxOxjIs9ZYGACI3xs1L3A7y/zmc7UE2mC31apEBrIe6wweiZTy7qkpyzgRzNxvrOWKtW0ch4vzx5EGXqz4BgsKdYqrBDp6V45chwbsMdKqvIeFtbIGfyfMSLo=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=fFn6IdGX; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="ZBdr+jJx"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 31A221F00898
-	for <sashiko-reviews@lists.linux.dev>; Mon,  1 Jun 2026 07:43:43 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="fFn6IdGX"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5816A1F00893
+	for <sashiko-reviews@lists.linux.dev>; Mon,  1 Jun 2026 07:47:39 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=kernel.org;
-	s=k20260515; t=1780299823;
-	bh=qMtKzaRG1JyxGNgBU/zbhtltiFCLQAPT4zq0DN3gSGE=;
+	s=k20260515; t=1780300059;
+	bh=3otQ+6lx0LIlkHarxdUeqFFkUzEFZ3jonGFusK2y6wk=;
 	h=References:In-Reply-To:From:Date:Subject:To:Cc;
-	b=ZBdr+jJxED4UPFH3pIatQubDjAj2Jd18uItu4u72LwwJZoSUNA9L+9vt5NbCtsR8V
-	 gwebINCZ6dPZfeLXfelzSmgOVdikm/j8+DwKca3XzM1SOARjBzhYI/708iKCfA7Toh
-	 Oja/BhwfYZJg/wEbA0lmatTOpUrUfseb0L/uRxTQ5tOA3LgRxnpfO1OypjJ0itNz80
-	 rveo3wH2bMHMaX8EsJvHsPaWb0ZZpQ5KguAy6pfnDOdO+qiJqJlh+D1hCEc8VLWWHT
-	 Nj4+Zo825yIpn5ksPswnm7eGso5m8t5px/0c9IAgV2Ky/I7aOhY6Lg4pb29bCyWdaR
-	 a9sQYvCc+rt7A==
-Received: by mail-lj1-f178.google.com with SMTP id 38308e7fff4ca-39677c434efso12408281fa.3
-        for <sashiko-reviews@lists.linux.dev>; Mon, 01 Jun 2026 00:43:43 -0700 (PDT)
-X-Gm-Message-State: AOJu0Yyaj2ZrRHXt30fNTq55AEDuRgg2oQ3Xj8OIKUGoWQlMmg4ndYwW
-	IwuNhDKgyNFA0rFUOk2RnY/BBZ7nOKZv8dYoguuRM8HBPoDTKDH5trrL05kBT98i+z8isEyImLk
-	eP+b7PeeDArYYXCjbqJd56A7ZgV1yIYY=
-X-Received: by 2002:a05:6512:65d1:20b0:5a8:94c2:d49a with SMTP id
- 2adb3069b0e04-5aa6090338emr1997047e87.27.1780299821994; Mon, 01 Jun 2026
- 00:43:41 -0700 (PDT)
+	b=fFn6IdGXtqBh65YZr7vHq8tevdnO8xb3YOpLHwlp5wvvlEojCIo1Bm1Lgcxu2zHnP
+	 GH8WSlWnNrWmFgmDv1cYW1ROCg+UpAqLyFdt2Rp56godxQwZkobqKUY9DZAk5u9o+e
+	 TPtkg+vIB48NHvgc7l8q8mBczplfnX99mL+3zPjb0bqJTYkF6xehyBUlEnmeSrdr5O
+	 PsH0X3ndS+sio6V8nRL6SUtFvwNCQm4OKCQoy9MAjpPo2HIS0KXFaKpP8hHnbbGQDx
+	 Tc/aHyoq7YZ/WfDaQVOAlp0Fov16g4UOqr4LEsYmjxU83cHUx2z6EtzDeEr3XmqoXJ
+	 bvCrCBrOjje0A==
+Received: by mail-lj1-f172.google.com with SMTP id 38308e7fff4ca-396779b9a7fso9824451fa.3
+        for <sashiko-reviews@lists.linux.dev>; Mon, 01 Jun 2026 00:47:39 -0700 (PDT)
+X-Gm-Message-State: AOJu0Yztpa+jR3xDy2CNi4aw+zDYSjrOl+M0ir/aWu8zrPaKDsRgZAsD
+	1wX2fF5o5irn7cpfhBvHMbPAylHI4FjtZ5/LqxBiB37kEHXwrLwIKEF+KZLEiAUYvr37X3CGlpS
+	mOxWE7WFbplllxws3CcW81UIvJNIULLE=
+X-Received: by 2002:a05:6512:3408:b0:5a8:6e64:a932 with SMTP id
+ 2adb3069b0e04-5aa6092a8b2mr2385807e87.32.1780300058183; Mon, 01 Jun 2026
+ 00:47:38 -0700 (PDT)
 Precedence: bulk
 X-Mailing-List: sashiko-reviews@lists.linux.dev
 List-Id: <sashiko-reviews.lists.linux.dev>
 List-Subscribe: <mailto:sashiko-reviews+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:sashiko-reviews+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-References: <20260526-ks8995-to-ksz8-v3-1-c530f651989f@kernel.org> <20260530004900.8C1C51F00893@smtp.kernel.org>
-In-Reply-To: <20260530004900.8C1C51F00893@smtp.kernel.org>
+References: <20260526-ks8995-to-ksz8-v3-3-c530f651989f@kernel.org> <20260530004901.49E6C1F00898@smtp.kernel.org>
+In-Reply-To: <20260530004901.49E6C1F00898@smtp.kernel.org>
 From: Linus Walleij <linusw@kernel.org>
-Date: Mon, 1 Jun 2026 09:43:28 +0200
-X-Gmail-Original-Message-ID: <CAD++jLmT7pcna8DzckpQG7TG7KrfX-kUVNiKB2Stux-VbAgHiA@mail.gmail.com>
-X-Gm-Features: AVHnY4KHNantugeBORRJz-jK-ADm5ZSHfpwdjpHGJ_0lybs4LwI3uSXJAaCOSY4
-Message-ID: <CAD++jLmT7pcna8DzckpQG7TG7KrfX-kUVNiKB2Stux-VbAgHiA@mail.gmail.com>
-Subject: Re: [PATCH net-next v3 1/5] net: dsa: microchip: Add fallback Micrel compatibles
+Date: Mon, 1 Jun 2026 09:47:25 +0200
+X-Gmail-Original-Message-ID: <CAD++jLn8LD9nnUg4emLDLJ7vdF5x1gOZzowfnsui+KCjTVEUew@mail.gmail.com>
+X-Gm-Features: AVHnY4I_QNw0zp6cDiRvPt5b7n7lRo9hnRLNZARX2oVoeKTsNHzV3n9mlUsOsLQ
+Message-ID: <CAD++jLn8LD9nnUg4emLDLJ7vdF5x1gOZzowfnsui+KCjTVEUew@mail.gmail.com>
+Subject: Re: [PATCH net-next v3 3/5] net: dsa: tag_ks8995: Add the KS8995 tag handling
 To: sashiko-reviews@lists.linux.dev
 Cc: robh@kernel.org, conor+dt@kernel.org, devicetree@vger.kernel.org
 Content-Type: text/plain; charset="UTF-8"
@@ -55,25 +55,24 @@ Content-Transfer-Encoding: quoted-printable
 
 On Sat, May 30, 2026 at 2:49=E2=80=AFAM <sashiko-bot@kernel.org> wrote:
 
-> Thank you for your contribution! Sashiko AI review found 2 potential issu=
+> Thank you for your contribution! Sashiko AI review found 4 potential issu=
 e(s) to consider:
-> - [High] Making the KS8995 driver mutually exclusive with the KSZ SPI dri=
-ver temporarily breaks support for legacy `micrel,ks8995` hardware, causing=
- a bisection regression.
+> - [High] Double free in ks8995_xmit() error path when vlan_insert_tag() f=
+ails.
+> - [High] Double free in ks8995_rcv() error path when skb_vlan_untag() fai=
+ls.
+> - [High] Undefined behavior from ilog2(0) when receiving standard 802.1Q =
+frames.
+> - [High] Failure to push non-802.1Q hardware-accelerated VLAN tags into t=
+he payload.
 
-Straining a gnat.
+I have already looked at this.
 
-Nobody cares about a temporary module compilation issue in a series of
-changes to
-an ages old driver almost used by nobody.
+Sashiko is missing context, in this case comparing this code to
+other taggers in net/dsa/tag_* and realizing this tagger is doing
+exactly what other taggers do.
 
-This kind of comments add work on top of work for maintaining old code and
-incentivize people to not maintain it. Go adjust your weights.
-
-> - [Medium] The Kconfig dependency `depends on !NET_DSA_MICROCHIP_KSZ_SPI`=
- fails to prevent both drivers from being built as modules, defeating the s=
-tated purpose of avoiding probe races.
-
-It=C3=A4s not about probe races, it's about building both.
+If there is an issue with that there is an issue with DSA tagging
+in general and not with individual taggers.
 
 Linus Walleij
