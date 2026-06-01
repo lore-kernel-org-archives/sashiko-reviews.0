@@ -1,95 +1,223 @@
-Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
+Received: from casper.infradead.org (casper.infradead.org [90.155.50.34])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8E80A3438BF;
-	Mon,  1 Jun 2026 21:35:20 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AB026340407;
+	Mon,  1 Jun 2026 22:02:49 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=90.155.50.34
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1780349721; cv=none; b=rcAiJ04zaRPwai7CyIAejQgv/RjvFfrMk17M0naOtCawKg85wGqL+kwwLhqBO89D1ypRHYw3MIsCHqSDWMG/+mqsWMWdp2PWPbL1PFQh52Vm2eXb0i+R85NuF33bcTa2HJPgIywfr7qcVUlQpHT9WHLsCVUuYaRpCQi4oInssCU=
+	t=1780351370; cv=none; b=XIitKJiQuVjq5AN7vmWCcGjlD7e9Y27+uzTqv7iW7SkID4QM2m5bQvzjZzzRk4SiOuzMx1wvbesGZO3ZVDjgaV1S5vqQi3lPN2nOGy0aDahwEv6UA9L8Qd/0UgO5Zqxsrt3jov0thhM82j3RSG5fQKQg6xsaBOOekm1Dbe4Nj+k=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1780349721; c=relaxed/simple;
-	bh=JX3a56ROqRUJYWv7JLOrWtKCiHHjyk6kNHGwYD50qlY=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=rPOh9KlxsIPmHB9Hh4mAuL1PvCmhOeHraS4HetMgi4Zt1V/lv3cAtkgGJLpZ57J6Enig3m+ETlH39o6se+s+hdjSWqxWeWzfA0vFKS2glmVuzkah4X94IijBpsIZOY4yboeBpz+ET/Wf12WucmEUkM79OUNsIX6lC6g0/aXeAe4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=Z9dejrFP; arc=none smtp.client-ip=100.103.45.18
+	s=arc-20240116; t=1780351370; c=relaxed/simple;
+	bh=2A2/50CIpR0IO/GkCIq4zHDSYFB1EOLJ6Zfiv0C9IF4=;
+	h=Message-ID:Subject:From:To:Cc:Date:in-reply-to:Content-Type:
+	 MIME-Version; b=Q9Ov4i7TrgCsqO+RGWhvxz0xuVs9hzriCV/x9KzdEYONyftizIPteVeFxMMeWLfPoiGfCgwEnH7GBt7tCdY43Bfobihj24FfsaDoSsh3Kunfj7RX5LCqGxvZedsXJkgsefsVBGFwP8JCVsR0bYcVNvVLCjksxvxrN5xzi7urX24=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=infradead.org; spf=none smtp.mailfrom=casper.srs.infradead.org; dkim=pass (2048-bit key) header.d=infradead.org header.i=@infradead.org header.b=gLXgZ+EI; arc=none smtp.client-ip=90.155.50.34
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=infradead.org
+Authentication-Results: smtp.subspace.kernel.org; spf=none smtp.mailfrom=casper.srs.infradead.org
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="Z9dejrFP"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0BC201F00893;
-	Mon,  1 Jun 2026 21:35:19 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=kernel.org;
-	s=k20260515; t=1780349720;
-	bh=+xqhpciIcKX86EWtkX3wT2FdsVnifRlQ0F7pq6tZMiQ=;
-	h=Date:From:To:Cc:Subject:References:In-Reply-To;
-	b=Z9dejrFPuPoHWEQu5J2ko0Bd57NtHTtxh7XkdxgglKT0olwbazk0EO95ebcLPiAbq
-	 ydau/rHrvi3Il01J5S1F1hIIx4JknI89rn3dcE7g28QdiRtnZB7WcJyGWKNgu9iQWn
-	 kZlsNhcV7iakiP896Cmu/5WTL6h06fNWAQLtgZNebkSUDo38jyvCb3Qm7OeCz4JzK9
-	 UN244FgYdszXzPwKivqUiFIravi8yfzYlAdw7gu1c5S87c1DaEbseDASdfe1Ea5Rmq
-	 Txpcb+gFOqmKDqDblvmG85NdGtpcyzIrlwrdrDVm/7+4ruyE3Bdl0sFPzuwFPKHZU2
-	 Ut3CmaLmjvoxw==
-Date: Mon, 1 Jun 2026 16:35:19 -0500
-From: Rob Herring <robh@kernel.org>
-To: sashiko-reviews@lists.linux.dev
-Cc: CL Wang <cl634@andestech.com>, vkoul@kernel.org, conor+dt@kernel.org,
-	dmaengine@vger.kernel.org, devicetree@vger.kernel.org,
-	Frank.Li@kernel.org
-Subject: Re: [PATCH v4 1/3] dt-bindings: dmaengine: Add support for
- ATCDMAC300 DMA engine
-Message-ID: <20260601213519.GA28688-robh@kernel.org>
-References: <20260601094846.1097678-2-cl634@andestech.com>
- <20260601095846.3B2431F00893@smtp.kernel.org>
+	dkim=pass (2048-bit key) header.d=infradead.org header.i=@infradead.org header.b="gLXgZ+EI"
+DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed;
+	d=infradead.org; s=casper.20170209; h=MIME-Version:Content-Type:in-reply-to:
+	Date:Cc:To:From:Subject:Message-ID:Sender:Reply-To:Content-Transfer-Encoding:
+	Content-ID:Content-Description:References;
+	bh=YMtAUyyHU1vX6B9UP1RiyOa1m3GMSAdDk5Oub0dmiXc=; b=gLXgZ+EIer010zqfWvK04DOLCY
+	zEKZA4v0jFQapNFzT8sXvPdJQLBPlpZXWawYAan48r1VMg+CKaLW+Ux5H+6UOjKJ+Z84OZn6GSokw
+	d7xsVLZ/zg0Aar/XcHsCtZugOG7CWvdahBg6B1DKmnVzGD7UO00y7Qmn6Ka1GJH9PDlv4wMAPp5Mt
+	OoQ2tgSiyjbObhsbVvEZpSaTFxFOFRAmMEThIx/1z7Qn7v9Qc/qO/BGyxG38wjYIEjhx4bjejy3uq
+	u7IeskRA9SuJ7cSa7OCD7DHta3/+e5kR1xsLIT4lSjOtW+uOzZ+ggP6aDut1U0m33RSoZKVBY6wTp
+	NxoFVYEw==;
+Received: from [2001:8b0:10b:5:5b40:b57d:669c:36f4] (helo=u09cd745991455d.ant.amazon.com)
+	by casper.infradead.org with esmtpsa (Exim 4.99.1 #2 (Red Hat Linux))
+	id 1wUAiR-00000000q8s-2rmz;
+	Mon, 01 Jun 2026 22:02:36 +0000
+Message-ID: <58abd0584ce23d4d2f65be68c2d36351326c955f.camel@infradead.org>
+Subject: Re: [PATCH v4 17/47] x86/kvm: Mark TSC as reliable when it's
+ constant and nonstop
+From: David Woodhouse <dwmw2@infradead.org>
+To: seanjc@google.com
+Cc: pbonzini@redhat.com, tglx@kernel.org, mingo@redhat.com, bp@alien8.de, 
+ dave.hansen@linux.intel.com, x86@kernel.org, kas@kernel.org,
+ kys@microsoft.com,  haiyangz@microsoft.com, wei.liu@kernel.org,
+ decui@microsoft.com,  longli@microsoft.com, ajay.kaher@broadcom.com,
+ alexey.makhalov@broadcom.com,  jan.kiszka@siemens.com, luto@kernel.org,
+ peterz@infradead.org, jgross@suse.com,  daniel.lezcano@kernel.org,
+ jstultz@google.com, hpa@zytor.com,  rick.p.edgecombe@intel.com,
+ vkuznets@redhat.com,  bcm-kernel-feedback-list@broadcom.com,
+ boris.ostrovsky@oracle.com,  sboyd@kernel.org, kvm@vger.kernel.org,
+ linux-kernel@vger.kernel.org,  linux-coco@lists.linux.dev,
+ linux-hyperv@vger.kernel.org,  virtualization@lists.linux.dev,
+ xen-devel@lists.xenproject.org,  dwmw@amazon.co.uk,
+ thomas.lendacky@amd.com, nikunj@amd.com, dwmw2@infradead.org, 
+ mhklinux@outlook.com, tglx@linutronix.de, sashiko-reviews@lists.linux.dev
+Date: Mon, 01 Jun 2026 23:02:35 +0100
+in-reply-to: <ahnhnjvfIblFxTFX@google.com>
+Content-Type: multipart/signed; micalg="sha-256"; protocol="application/pkcs7-signature";
+	boundary="=-UCq5TPNq7HWqnoTOeAX/"
+User-Agent: Evolution 3.52.3-0ubuntu1.1 
 Precedence: bulk
 X-Mailing-List: sashiko-reviews@lists.linux.dev
 List-Id: <sashiko-reviews.lists.linux.dev>
 List-Subscribe: <mailto:sashiko-reviews+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:sashiko-reviews+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <20260601095846.3B2431F00893@smtp.kernel.org>
+X-SRS-Rewrite: SMTP reverse-path rewritten from <dwmw2@infradead.org> by casper.infradead.org. See http://www.infradead.org/rpr.html
 
-On Mon, Jun 01, 2026 at 09:58:45AM +0000, sashiko-bot@kernel.org wrote:
-> Thank you for your contribution! Sashiko AI review found 1 potential issue(s) to consider:
-> - [Low] The Device Tree schema uses `additionalProperties: false` alongside an `allOf: [ { $ref: dma-controller.yaml# } ]` inclusion, which violates DT schema guidelines and prevents the use of standard generic DMA properties.
-> --
-> 
-> commit 65ee89a1dfc4e52aa6a4083163369bef3de2c374
-> Author: CL Wang <cl634@andestech.com>
-> 
-> dt-bindings: dmaengine: Add support for ATCDMAC300 DMA engine
-> 
-> This commit documents the devicetree bindings for the Andes ATCDMAC300
-> DMA engine. The IP is embedded in AndesCore-based platforms or SoCs
-> such as AE350 and Qilai.
-> 
-> > diff --git a/Documentation/devicetree/bindings/dma/andestech,ae350-dma.yaml b/Documentation/devicetree/bindings/dma/andestech,ae350-dma.yaml
-> > new file mode 100644
-> > --- /dev/null
-> > +++ b/Documentation/devicetree/bindings/dma/andestech,ae350-dma.yaml
-> [ ... ]
-> > +allOf:
-> > +  - $ref: dma-controller.yaml#
-> > +
-> > +properties:
-> [ ... ]
-> > +required:
-> > +  - compatible
-> > +  - reg
-> > +  - interrupts
-> > +  - "#dma-cells"
-> > +
-> > +additionalProperties: false
-> 
-> [Severity: Low]
-> Does this cause a regression during schema validation when standard DMA
-> properties are used?
-> 
-> Since this binding references dma-controller.yaml# via an allOf block, using
-> additionalProperties: false will reject generic properties like dma-channels
-> or dma-requests if they are present in the device tree node. 
-> 
-> Should this be unevaluatedProperties: false instead to properly allow the
-> inherited properties?
 
-No, it is fine as-is.
+--=-UCq5TPNq7HWqnoTOeAX/
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 
-Rob
+On Fri, 29 May 2026 11:57:34 -0700, Sean Christopherson wrote:
+> On Fri, May 29, 2026, sashiko-bot@kernel.org wrote:
+> > > diff --git a/arch/x86/kernel/kvm.c b/arch/x86/kernel/kvm.c
+> > > index 909d3e5e5bcd5..4fe9c69bf40b3 100644
+> > > --- a/arch/x86/kernel/kvm.c
+> > > +++ b/arch/x86/kernel/kvm.c
+> > [ ... ]
+> > > @@ -1040,7 +1041,20 @@ static void __init kvm_init_platform(void)
+> > [ ... ]
+> > > -	kvmclock_init();
+> > > +        /*
+> > > +         * If the TSC counts at a constant frequency across P/T stat=
+es, counts
+> > > +         * in deep C-states, and the TSC hasn't been marked unstable=
+, treat the
+> > > +         * TSC reliable, as guaranteed by KVM.  Note, the TSC unstab=
+le check
+> > > +         * exists purely to honor the TSC being marked unstable via =
+command
+> > > +         * line, any runtime detection of an unstable will happen af=
+ter this.
+> > > +         */
+> > > +	tsc_is_reliable =3D boot_cpu_has(X86_FEATURE_CONSTANT_TSC) &&
+> > > +			  boot_cpu_has(X86_FEATURE_NONSTOP_TSC) &&
+> > > +			  !check_tsc_unstable();
+> >=20
+> > [Severity: High]
+> > Does this evaluate check_tsc_unstable() too early to catch the command =
+line
+> > parameter?
+>=20
+> Huh, it does indeed.
+>=20
+> > It looks like kvm_init_platform() is called from setup_arch(), but the
+> > tsc=3Dunstable kernel parameter is parsed via __setup() later during
+> > parse_args() in start_kernel().
+> >=20
+> > If check_tsc_unstable() evaluates to 0 here because the parameter hasn'=
+t
+> > been parsed yet, wouldn't it incorrectly force X86_FEATURE_TSC_RELIABLE
+> > and set prefer_tsc to true?
+>=20
+> Yep, but this is a pre-existing problem that goes all the way back to the=
+ original
+> commit 7539b174aef4 ("x86: kvmguest: use TSC clocksource if invariant TSC=
+ is exposed").
+>=20
+> We could try to fix that, but I'm _very_ strongly inclined to add (yet an=
+other)
+> patch to simply drop the check_tsc_unstable() since it has always been de=
+ad code.
+
+Yeah, kill it with fire.
+
+Reviewed-by: David Woodhouse <dwmw@amazon.co.uk>
+
+
+--=-UCq5TPNq7HWqnoTOeAX/
+Content-Type: application/pkcs7-signature; name="smime.p7s"
+Content-Disposition: attachment; filename="smime.p7s"
+Content-Transfer-Encoding: base64
+
+MIAGCSqGSIb3DQEHAqCAMIACAQExDzANBglghkgBZQMEAgEFADCABgkqhkiG9w0BBwEAAKCCD9Aw
+ggSOMIIDdqADAgECAhAOmiw0ECVD4cWj5DqVrT9PMA0GCSqGSIb3DQEBCwUAMGUxCzAJBgNVBAYT
+AlVTMRUwEwYDVQQKEwxEaWdpQ2VydCBJbmMxGTAXBgNVBAsTEHd3dy5kaWdpY2VydC5jb20xJDAi
+BgNVBAMTG0RpZ2lDZXJ0IEFzc3VyZWQgSUQgUm9vdCBDQTAeFw0yNDAxMzAwMDAwMDBaFw0zMTEx
+MDkyMzU5NTlaMEExCzAJBgNVBAYTAkFVMRAwDgYDVQQKEwdWZXJva2V5MSAwHgYDVQQDExdWZXJv
+a2V5IFNlY3VyZSBFbWFpbCBHMjCCASIwDQYJKoZIhvcNAQEBBQADggEPADCCAQoCggEBAMjvgLKj
+jfhCFqxYyRiW8g3cNFAvltDbK5AzcOaR7yVzVGadr4YcCVxjKrEJOgi7WEOH8rUgCNB5cTD8N/Et
+GfZI+LGqSv0YtNa54T9D1AWJy08ZKkWvfGGIXN9UFAPMJ6OLLH/UUEgFa+7KlrEvMUupDFGnnR06
+aDJAwtycb8yXtILj+TvfhLFhafxroXrflspavejQkEiHjNjtHnwbZ+o43g0/yxjwnarGI3kgcak7
+nnI9/8Lqpq79tLHYwLajotwLiGTB71AGN5xK+tzB+D4eN9lXayrjcszgbOv2ZCgzExQUAIt98mre
+8EggKs9mwtEuKAhYBIP/0K6WsoMnQCcCAwEAAaOCAVwwggFYMBIGA1UdEwEB/wQIMAYBAf8CAQAw
+HQYDVR0OBBYEFIlICOogTndrhuWByNfhjWSEf/xwMB8GA1UdIwQYMBaAFEXroq/0ksuCMS1Ri6en
+IZ3zbcgPMA4GA1UdDwEB/wQEAwIBhjAdBgNVHSUEFjAUBggrBgEFBQcDBAYIKwYBBQUHAwIweQYI
+KwYBBQUHAQEEbTBrMCQGCCsGAQUFBzABhhhodHRwOi8vb2NzcC5kaWdpY2VydC5jb20wQwYIKwYB
+BQUHMAKGN2h0dHA6Ly9jYWNlcnRzLmRpZ2ljZXJ0LmNvbS9EaWdpQ2VydEFzc3VyZWRJRFJvb3RD
+QS5jcnQwRQYDVR0fBD4wPDA6oDigNoY0aHR0cDovL2NybDMuZGlnaWNlcnQuY29tL0RpZ2lDZXJ0
+QXNzdXJlZElEUm9vdENBLmNybDARBgNVHSAECjAIMAYGBFUdIAAwDQYJKoZIhvcNAQELBQADggEB
+ACiagCqvNVxOfSd0uYfJMiZsOEBXAKIR/kpqRp2YCfrP4Tz7fJogYN4fxNAw7iy/bPZcvpVCfe/H
+/CCcp3alXL0I8M/rnEnRlv8ItY4MEF+2T/MkdXI3u1vHy3ua8SxBM8eT9LBQokHZxGUX51cE0kwa
+uEOZ+PonVIOnMjuLp29kcNOVnzf8DGKiek+cT51FvGRjV6LbaxXOm2P47/aiaXrDD5O0RF5SiPo6
+xD1/ClkCETyyEAE5LRJlXtx288R598koyFcwCSXijeVcRvBB1cNOLEbg7RMSw1AGq14fNe2cH1HG
+W7xyduY/ydQt6gv5r21mDOQ5SaZSWC/ZRfLDuEYwggWbMIIEg6ADAgECAhAH5JEPagNRXYDiRPdl
+c1vgMA0GCSqGSIb3DQEBCwUAMEExCzAJBgNVBAYTAkFVMRAwDgYDVQQKEwdWZXJva2V5MSAwHgYD
+VQQDExdWZXJva2V5IFNlY3VyZSBFbWFpbCBHMjAeFw0yNDEyMzAwMDAwMDBaFw0yODAxMDQyMzU5
+NTlaMB4xHDAaBgNVBAMME2R3bXcyQGluZnJhZGVhZC5vcmcwggIiMA0GCSqGSIb3DQEBAQUAA4IC
+DwAwggIKAoICAQDali7HveR1thexYXx/W7oMk/3Wpyppl62zJ8+RmTQH4yZeYAS/SRV6zmfXlXaZ
+sNOE6emg8WXLRS6BA70liot+u0O0oPnIvnx+CsMH0PD4tCKSCsdp+XphIJ2zkC9S7/yHDYnqegqt
+w4smkqUqf0WX/ggH1Dckh0vHlpoS1OoxqUg+ocU6WCsnuz5q5rzFsHxhD1qGpgFdZEk2/c//ZvUN
+i12vPWipk8TcJwHw9zoZ/ZrVNybpMCC0THsJ/UEVyuyszPtNYeYZAhOJ41vav1RhZJzYan4a1gU0
+kKBPQklcpQEhq48woEu15isvwWh9/+5jjh0L+YNaN0I//nHSp6U9COUG9Z0cvnO8FM6PTqsnSbcc
+0j+GchwOHRC7aP2t5v2stVx3KbptaYEzi4MQHxm/0+HQpMEVLLUiizJqS4PWPU6zfQTOMZ9uLQRR
+ci+c5xhtMEBszlQDOvEQcyEG+hc++fH47K+MmZz21bFNfoBxLP6bjR6xtPXtREF5lLXxp+CJ6KKS
+blPKeVRg/UtyJHeFKAZXO8Zeco7TZUMVHmK0ZZ1EpnZbnAhKE19Z+FJrQPQrlR0gO3lBzuyPPArV
+hvWxjlO7S4DmaEhLzarWi/ze7EGwWSuI2eEa/8zU0INUsGI4ywe7vepQz7IqaAovAX0d+f1YjbmC
+VsAwjhLmveFjNwIDAQABo4IBsDCCAawwHwYDVR0jBBgwFoAUiUgI6iBOd2uG5YHI1+GNZIR//HAw
+HQYDVR0OBBYEFFxiGptwbOfWOtMk5loHw7uqWUOnMDAGA1UdEQQpMCeBE2R3bXcyQGluZnJhZGVh
+ZC5vcmeBEGRhdmlkQHdvb2Rob3Uuc2UwFAYDVR0gBA0wCzAJBgdngQwBBQEBMA4GA1UdDwEB/wQE
+AwIF4DAdBgNVHSUEFjAUBggrBgEFBQcDAgYIKwYBBQUHAwQwewYDVR0fBHQwcjA3oDWgM4YxaHR0
+cDovL2NybDMuZGlnaWNlcnQuY29tL1Zlcm9rZXlTZWN1cmVFbWFpbEcyLmNybDA3oDWgM4YxaHR0
+cDovL2NybDQuZGlnaWNlcnQuY29tL1Zlcm9rZXlTZWN1cmVFbWFpbEcyLmNybDB2BggrBgEFBQcB
+AQRqMGgwJAYIKwYBBQUHMAGGGGh0dHA6Ly9vY3NwLmRpZ2ljZXJ0LmNvbTBABggrBgEFBQcwAoY0
+aHR0cDovL2NhY2VydHMuZGlnaWNlcnQuY29tL1Zlcm9rZXlTZWN1cmVFbWFpbEcyLmNydDANBgkq
+hkiG9w0BAQsFAAOCAQEAQXc4FPiPLRnTDvmOABEzkIumojfZAe5SlnuQoeFUfi+LsWCKiB8Uextv
+iBAvboKhLuN6eG/NC6WOzOCppn4mkQxRkOdLNThwMHW0d19jrZFEKtEG/epZ/hw/DdScTuZ2m7im
+8ppItAT6GXD3aPhXkXnJpC/zTs85uNSQR64cEcBFjjoQDuSsTeJ5DAWf8EMyhMuD8pcbqx5kRvyt
+JPsWBQzv1Dsdv2LDPLNd/JUKhHSgr7nbUr4+aAP2PHTXGcEBh8lTeYea9p4d5k969pe0OHYMV5aL
+xERqTagmSetuIwolkAuBCzA9vulg8Y49Nz2zrpUGfKGOD0FMqenYxdJHgDCCBZswggSDoAMCAQIC
+EAfkkQ9qA1FdgOJE92VzW+AwDQYJKoZIhvcNAQELBQAwQTELMAkGA1UEBhMCQVUxEDAOBgNVBAoT
+B1Zlcm9rZXkxIDAeBgNVBAMTF1Zlcm9rZXkgU2VjdXJlIEVtYWlsIEcyMB4XDTI0MTIzMDAwMDAw
+MFoXDTI4MDEwNDIzNTk1OVowHjEcMBoGA1UEAwwTZHdtdzJAaW5mcmFkZWFkLm9yZzCCAiIwDQYJ
+KoZIhvcNAQEBBQADggIPADCCAgoCggIBANqWLse95HW2F7FhfH9bugyT/danKmmXrbMnz5GZNAfj
+Jl5gBL9JFXrOZ9eVdpmw04Tp6aDxZctFLoEDvSWKi367Q7Sg+ci+fH4KwwfQ8Pi0IpIKx2n5emEg
+nbOQL1Lv/IcNiep6Cq3DiyaSpSp/RZf+CAfUNySHS8eWmhLU6jGpSD6hxTpYKye7PmrmvMWwfGEP
+WoamAV1kSTb9z/9m9Q2LXa89aKmTxNwnAfD3Ohn9mtU3JukwILRMewn9QRXK7KzM+01h5hkCE4nj
+W9q/VGFknNhqfhrWBTSQoE9CSVylASGrjzCgS7XmKy/BaH3/7mOOHQv5g1o3Qj/+cdKnpT0I5Qb1
+nRy+c7wUzo9OqydJtxzSP4ZyHA4dELto/a3m/ay1XHcpum1pgTOLgxAfGb/T4dCkwRUstSKLMmpL
+g9Y9TrN9BM4xn24tBFFyL5znGG0wQGzOVAM68RBzIQb6Fz758fjsr4yZnPbVsU1+gHEs/puNHrG0
+9e1EQXmUtfGn4InoopJuU8p5VGD9S3Ikd4UoBlc7xl5yjtNlQxUeYrRlnUSmdlucCEoTX1n4UmtA
+9CuVHSA7eUHO7I88CtWG9bGOU7tLgOZoSEvNqtaL/N7sQbBZK4jZ4Rr/zNTQg1SwYjjLB7u96lDP
+sipoCi8BfR35/ViNuYJWwDCOEua94WM3AgMBAAGjggGwMIIBrDAfBgNVHSMEGDAWgBSJSAjqIE53
+a4blgcjX4Y1khH/8cDAdBgNVHQ4EFgQUXGIam3Bs59Y60yTmWgfDu6pZQ6cwMAYDVR0RBCkwJ4ET
+ZHdtdzJAaW5mcmFkZWFkLm9yZ4EQZGF2aWRAd29vZGhvdS5zZTAUBgNVHSAEDTALMAkGB2eBDAEF
+AQEwDgYDVR0PAQH/BAQDAgXgMB0GA1UdJQQWMBQGCCsGAQUFBwMCBggrBgEFBQcDBDB7BgNVHR8E
+dDByMDegNaAzhjFodHRwOi8vY3JsMy5kaWdpY2VydC5jb20vVmVyb2tleVNlY3VyZUVtYWlsRzIu
+Y3JsMDegNaAzhjFodHRwOi8vY3JsNC5kaWdpY2VydC5jb20vVmVyb2tleVNlY3VyZUVtYWlsRzIu
+Y3JsMHYGCCsGAQUFBwEBBGowaDAkBggrBgEFBQcwAYYYaHR0cDovL29jc3AuZGlnaWNlcnQuY29t
+MEAGCCsGAQUFBzAChjRodHRwOi8vY2FjZXJ0cy5kaWdpY2VydC5jb20vVmVyb2tleVNlY3VyZUVt
+YWlsRzIuY3J0MA0GCSqGSIb3DQEBCwUAA4IBAQBBdzgU+I8tGdMO+Y4AETOQi6aiN9kB7lKWe5Ch
+4VR+L4uxYIqIHxR7G2+IEC9ugqEu43p4b80LpY7M4KmmfiaRDFGQ50s1OHAwdbR3X2OtkUQq0Qb9
+6ln+HD8N1JxO5nabuKbymki0BPoZcPdo+FeRecmkL/NOzzm41JBHrhwRwEWOOhAO5KxN4nkMBZ/w
+QzKEy4PylxurHmRG/K0k+xYFDO/UOx2/YsM8s138lQqEdKCvudtSvj5oA/Y8dNcZwQGHyVN5h5r2
+nh3mT3r2l7Q4dgxXlovERGpNqCZJ624jCiWQC4ELMD2+6WDxjj03PbOulQZ8oY4PQUyp6djF0keA
+MYIDuzCCA7cCAQEwVTBBMQswCQYDVQQGEwJBVTEQMA4GA1UEChMHVmVyb2tleTEgMB4GA1UEAxMX
+VmVyb2tleSBTZWN1cmUgRW1haWwgRzICEAfkkQ9qA1FdgOJE92VzW+AwDQYJYIZIAWUDBAIBBQCg
+ggE3MBgGCSqGSIb3DQEJAzELBgkqhkiG9w0BBwEwHAYJKoZIhvcNAQkFMQ8XDTI2MDYwMTIyMDIz
+NVowLwYJKoZIhvcNAQkEMSIEIKBm6ajC7RcOXC7t5vZvHSGBZYpyi47wdtAkxJaD6hJLMGQGCSsG
+AQQBgjcQBDFXMFUwQTELMAkGA1UEBhMCQVUxEDAOBgNVBAoTB1Zlcm9rZXkxIDAeBgNVBAMTF1Zl
+cm9rZXkgU2VjdXJlIEVtYWlsIEcyAhAH5JEPagNRXYDiRPdlc1vgMGYGCyqGSIb3DQEJEAILMVeg
+VTBBMQswCQYDVQQGEwJBVTEQMA4GA1UEChMHVmVyb2tleTEgMB4GA1UEAxMXVmVyb2tleSBTZWN1
+cmUgRW1haWwgRzICEAfkkQ9qA1FdgOJE92VzW+AwDQYJKoZIhvcNAQEBBQAEggIAgXF7gHyX/lqK
+I8HOZ55Kr4SVmD13J1PQOj4PZYOWdMb8kBR5IRoOKP14j7o9g4BONnYMrHzxgKS06MKy0OM4Sv3/
+3EUGIbTIBShSYSvHRv+LAouZvutGTwXOnvLo5TB1neyb+bwMTDGxl7hk67XRi4UTYQ0QXOu7GEoV
+BtQ9ZLZHXCRBn82l5EhPmzcgWujlgZ50EJyhYQFvoHTrw8F5ONved7BNzozfRiAFBSRxmhf1CicK
+kP111ompP+Gmnwq3WfUhAFSBm0A6Jnm/horZAWqMp6a/ldE9ts8QvBS86ZUDzTAWjIBjXbmlb6Rf
+5f48cSfFuN/SpPA8IKp/YI7oMU1b6JSmbXxTdAsyRHqdXM777048iSEDaSr93uooiSzV2q1f2nKC
+lWfv1fAM+e0jEi5G9F27bEnZoV6z2Gr7STQD8BDH+MDCEbGWc81GMBJs6QYwwYUJPVsaFd1e3hcM
+BugpKxzghABauGakfQcJfoytls1Y42nRcx9HFRZmjaNQsgdhkJsme2cHuqJo7RSTj0NP0JW8D3b1
+Yxg77GR+T5T5oNFva20Rd2IYwDaLwTioAj+PsXi4Sl265DcXQxxd7s49vbQ75WAIh+2rStNO6hO1
+atp6VHA+VYybiTkFCq9hjW18vYNf6/QJcFL9zpZk5xRufxTScygBv3n+jZudflsAAAAAAAA=
+
+
+--=-UCq5TPNq7HWqnoTOeAX/--
