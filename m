@@ -1,91 +1,246 @@
-Received: from galois.linutronix.de (Galois.linutronix.de [193.142.43.55])
+Received: from mout-p-103.mailbox.org (mout-p-103.mailbox.org [80.241.56.161])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4291338737E;
-	Tue,  2 Jun 2026 12:11:09 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=193.142.43.55
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E04E13DBD54
+	for <sashiko-reviews@lists.linux.dev>; Tue,  2 Jun 2026 12:14:48 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=80.241.56.161
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1780402270; cv=none; b=R1JrTh8acwdWEIWM8Ap9BCc2DZ0/mti/kGFKCRBpV3xpQKoo9auNtHKd32wq0KrvjzTQ9sM7xuKT6WEroJa+cRdCNGGfyxmNlz18sJy5IwM8uQtYGJ31RsDii0tDlrHpiW6EWct8G+5KhW9wBGSbMUqxsKkkBMT1KABCv3C0rwc=
+	t=1780402490; cv=none; b=aSLF9Jxu+jngMu8cPobJT58dhqAb/QxCHuEFFgls1NhDq90bHOQ0rnC9Tw2jGU5sXoU/TuqiUehB7tbjLWGhNkEzcnZI15F7o9t0ors86CpydWEYg3iBKmm1v6izzEG+PtKjANtu+HeGh2KghsEoKLmkMvXWY/y29WvPLenfCjc=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1780402270; c=relaxed/simple;
-	bh=8YnBNZ5lo0jJ/8ZzDTRH3eTyQTuv4V7o7qhEGF+7xNE=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=FnBv2eW23dBK54qO/fSKGKqkWG2dSQQjPYHXS98Uk2n7oFarZDD9Kij4MoK6Z+LNJE7pEd1R8FU23AiHLUHW22VlBdj2W69BrbzqrrMVQ+Nw8AsKQTXRYA/1u6+ULabQ9xfK2ZH5rgRd60tK+UqNh6A0RVayQ6f1gcAwIWIUhSc=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linutronix.de; spf=pass smtp.mailfrom=linutronix.de; dkim=pass (2048-bit key) header.d=linutronix.de header.i=@linutronix.de header.b=UU9lMTk1; dkim=permerror (0-bit key) header.d=linutronix.de header.i=@linutronix.de header.b=ZZz9NigC; arc=none smtp.client-ip=193.142.43.55
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linutronix.de
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linutronix.de
+	s=arc-20240116; t=1780402490; c=relaxed/simple;
+	bh=sNCjBWDNan1FJgCoxcb/iHPwiqPvsLiiHiw/iQ2FqiY=;
+	h=Message-ID:Subject:From:To:Cc:Date:In-Reply-To:References:
+	 Content-Type:MIME-Version; b=B4X2z9mLCFh7Mol4zHM/bSjNy/aGQZVM4QklUsDGSuVzrwfv6j0HB2mzHpButUq0X4B3kbtiXBstbxXKiQd+MhygTd0oFRTqB7qi2Gr2IJ9j9VIZ+GSwLbGy/6Ysm5Wk156N773HGtolaSzvqDZzMLu9RAmXWOqmoXjbN2sXL1U=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=mailbox.org; spf=pass smtp.mailfrom=mailbox.org; dkim=pass (2048-bit key) header.d=mailbox.org header.i=@mailbox.org header.b=sQ8Jo/8H; arc=none smtp.client-ip=80.241.56.161
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=mailbox.org
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=mailbox.org
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=linutronix.de header.i=@linutronix.de header.b="UU9lMTk1";
-	dkim=permerror (0-bit key) header.d=linutronix.de header.i=@linutronix.de header.b="ZZz9NigC"
-Date: Tue, 2 Jun 2026 14:11:05 +0200
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linutronix.de;
-	s=2020; t=1780402267;
-	h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
-	 to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+	dkim=pass (2048-bit key) header.d=mailbox.org header.i=@mailbox.org header.b="sQ8Jo/8H"
+Received: from smtp202.mailbox.org (smtp202.mailbox.org [10.196.197.202])
+	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+	 key-exchange X25519 server-signature RSA-PSS (4096 bits) server-digest SHA256)
+	(No client certificate requested)
+	by mout-p-103.mailbox.org (Postfix) with ESMTPS id 4gV8h63Nfcz9t2R;
+	Tue,  2 Jun 2026 14:06:46 +0200 (CEST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=mailbox.org; s=mail20150812;
+	t=1780402006; h=from:from:reply-to:reply-to:subject:subject:date:date:
+	 message-id:message-id:to:to:cc:cc:mime-version:mime-version:
+	 content-type:content-type:
+	 content-transfer-encoding:content-transfer-encoding:
 	 in-reply-to:in-reply-to:references:references;
-	bh=cyUX5nSI1JO53ZcwcF1oCIU9U+h6EIF90UE97RnD5UA=;
-	b=UU9lMTk1hfzECeGpiB/Sl3GMzU02+/5/R88b9bz2fBzW6BphMmbcAx+Edblnn4jVMrzN8N
-	rf/YK88EMRF8XaJhKn52zMtWQrfTZPxyGYXtznfeUxNRCKjfotHzfBlasWfKv6+D/Lg0oo
-	4/FzXGbk62iorZWSsbwCbp1NmXScDG76O6ucJ96VxPsUZ7SVM8or4hqxUimTdBTxF32bRW
-	9Awy8ia36Hhknz0ygYuORezoRlnVUL/oUAK/fHZIo8jtXF7csHWk2VQ9G3uYJr+ZLNCs4t
-	LhsVaXj/u69LzHGKcvzZKt+rE2wnVTGl+mdV6P1awK1g6WOgbJlWbmXNsmleYA==
-DKIM-Signature: v=1; a=ed25519-sha256; c=relaxed/relaxed; d=linutronix.de;
-	s=2020e; t=1780402267;
-	h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
-	 to:to:cc:cc:mime-version:mime-version:content-type:content-type:
-	 in-reply-to:in-reply-to:references:references;
-	bh=cyUX5nSI1JO53ZcwcF1oCIU9U+h6EIF90UE97RnD5UA=;
-	b=ZZz9NigCq/ZCxxFRKuZX0FURoZBs1O4awKgldlzDOweN9aeLbwOoqYJqszKeo1bg204eX2
-	AChFCu/C9wLXdWAQ==
-From: Sebastian Andrzej Siewior <bigeasy@linutronix.de>
-To: sashiko-reviews@lists.linux.dev
-Cc: Frank.Li@kernel.org, imx@lists.linux.dev
-Subject: Re: [PATCH 5/5] remoteproc: imx_rproc: Invoke the callback directly
-Message-ID: <20260602121105.e6hqhBJz@linutronix.de>
-References: <20260529-imx_mbox_rproc-v1-5-b8ffc36e11e5@linutronix.de>
- <20260529190854.1680E1F00893@smtp.kernel.org>
+	bh=v0TvCuZ8ET2HwW7HOhyfPPGZt6fmcpbq6yTEF8pUxTE=;
+	b=sQ8Jo/8HL5dA69lQvsmFAp2DqVnu0b4pZlaCFEIhyG0cPsJPkcCkyoY+YOTLKI2FwBtsn4
+	doP37R5cM/Erryd8+aLI8n/t5bsw8Y7JeOvBjjKFXafY66PcBzpf7wz8Un/yoFpUqs6/Zc
+	8mRhtAH8A+e/ODLv2F8rdgDluGNPwEejATC4i7A9ejlxPlYMMCSh5NSqdjYuZH7Tc6TadB
+	BWbqhdhm8m087QaWYhXBHjZUMtsjHVKcdnxJoZPMwr66X3SQEy0eKlDKCTg75h6hXnrPvg
+	LPGYkbHDtEUa+hvF1idvQ5f42iyukuPzVUZb6XKrEZIss5FntJs2BCuh2TdWBw==
+Message-ID: <4bf6e916efe54bab66defda6fffea8c41358b3cc.camel@mailbox.org>
+Subject: Re: [PATCH 3/4] rust: Add dma_fence abstractions
+From: Philipp Stanner <phasta@mailbox.org>
+Reply-To: phasta@kernel.org
+To: Alice Ryhl <aliceryhl@google.com>, phasta@kernel.org
+Cc: sashiko-reviews@lists.linux.dev, linux-media@vger.kernel.org, 
+	ojeda@kernel.org, Boris Brezillon <boris.brezillon@collabora.com>
+Date: Tue, 02 Jun 2026 14:06:43 +0200
+In-Reply-To: <ah7FjDdU6zt65qId@google.com>
+References: <20260530143541.229628-5-phasta@kernel.org>
+	 <20260530150622.393FC1F00893@smtp.kernel.org> <ah1c3NSU-4UkdUhb@google.com>
+	 <a3d09b270e6effb6f2bfb5d7ba8de48e3c2c4081.camel@mailbox.org>
+	 <CAH5fLggvxGwJkAp+VqG7pA-e2zM-T8_DR0DeCiZiJyM+o51DuQ@mail.gmail.com>
+	 <24ef07ed85d9e7aa7f9d3a96301c4c15bc0f2315.camel@mailbox.org>
+	 <ah2M2a_4PneZpjTS@google.com>
+	 <16dff07d28fca94749f14e9c91e6f812f605d6e5.camel@mailbox.org>
+	 <ah7CGySkyE7mSM8a@google.com>
+	 <7a978596279eca99cd41ca46606c7e5a6a38e801.camel@mailbox.org>
+	 <ah7FjDdU6zt65qId@google.com>
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 Precedence: bulk
 X-Mailing-List: sashiko-reviews@lists.linux.dev
 List-Id: <sashiko-reviews.lists.linux.dev>
 List-Subscribe: <mailto:sashiko-reviews+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:sashiko-reviews+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-In-Reply-To: <20260529190854.1680E1F00893@smtp.kernel.org>
+X-MBO-RS-ID: 52e53dd3c7b68597cf2
+X-MBO-RS-META: rx6eka3p495tyg3ufqr7nrpzwutccmgs
 
-On 2026-05-29 19:08:53 [+0000], sashiko-bot@kernel.org wrote:
-> >  static void imx_rproc_rx_callback(struct mbox_client *cl, void *msg)
-> >  {
-> >  	struct rproc *rproc = dev_get_drvdata(cl->dev);
-> > -	struct imx_rproc *priv = rproc->priv;
-> >  
-> > -	queue_work(priv->workqueue, &priv->rproc_work);
-> > +	idr_for_each(&rproc->notifyids, imx_rproc_notified_idr_cb, rproc);
-> 
-> [Severity: High]
-> This is a pre-existing issue, but does this idr_for_each() call require
-> rcu_read_lock() protection?
-> 
-> Looking at the call chain, it also performs an idr_find() in
-> rproc_vq_interrupt() without rcu_read_lock():
-> 
-> imx_rproc_rx_callback()
->   -> idr_for_each()
->      -> imx_rproc_notified_idr_cb()
->         -> rproc_vq_interrupt()
->            -> idr_find()
-> 
-> If a user unbinds the rproc-virtio driver via sysfs concurrently,
-> rproc_virtio_remove() calls rproc_free_vring() which executes idr_remove().
-> 
-> Since idr_for_each() and idr_find() rely on RCU internally to protect radix
-> tree nodes, could running this in a preemptible context without
-> rcu_read_lock() race with idr_remove() and lead to a use-after-free of the
-> IDR nodes or the rvring structure?
+On Tue, 2026-06-02 at 11:59 +0000, Alice Ryhl wrote:
+> On=20
 
-If I see this right there is no RCU involved. First the interrupt gets
-removed (via free_irq()) which ensures that it is no longer active and
-then the channel is removed.
+[=E2=80=A6]
 
-Sebastian
+> > >=20
+> > > If you don't implement Sync, then DriverFence cannot be stored in an
+> > > Arc. I wouldn't take away that ability unless you have to, and I don'=
+t
+> > > see anything in the DriverFence API that would mean you can't do that=
+.
+> >=20
+> > Nope. We explicitly agreed on this design.
+> >=20
+> > Just 1 DriverFence. Just 1 party that can signal it.
+> > Note that we also agreed upon the Driverfence disappearing with
+> > .signal(), which certainly prevents several from existing, unless you
+> > do an Option.take()
+>=20
+> I would like to clarify that I'm not suggesting any changes to the
+> design. Implementing Sync is not the same as having multiple driver
+> fences.
+
+I mean, I guess one can do that. But it's up to the driver then to see how =
+it can signal its fence.
+
+>=20
+> > > > > > > =C2=A0so even though
+> > > > > > > the fence context may be valid for another grace period, the =
+*pointer*
+> > > > > > > to the fence context is not. The pointer could have been zero=
+ed by the
+> > > > > > > destructor.
+> > > > > >=20
+> > > > > > That particular pointer to the DriverFenceData could have been =
+zeroed.
+> > > > > > But potential other accessors have already crafted themselves a=
+ new
+> > > > > > pointer to the, by the power of RCU, still valid data. That new=
+ pointer
+> > > > > > is container-of-ed from struct dma_fence *f.
+> > > > >=20
+> > > > > I'm not talking about the pointer to DriverFenceData, I'm talking=
+ about
+> > > > > the pointer to the FenceCtx, or the pointer to the data (if F is
+> > > > > RcuBox).
+> > > >=20
+> > > > Yeah, but the backing memory is still alive. And new pointers to th=
+at
+> > > > memory get crafted by the accessors. If a callback accesses the dat=
+a
+> > > > through `container_of(Fence)`, it gets a new pointer.
+> > > >=20
+> > > > So what's the problem?
+> > > >=20
+> > > > Where is the invalid pointer that someone is accessing?
+> > > >=20
+> > > > >=20
+> > > > > The Arc type is not a type that opts-out of &mut =3D=3D exclusive=
+, so the
+> > > > > second drop_in_place() above is assumed exclusive access to the
+> > > > > Arc<FenceCtx<F,C>> field.
+> > > >=20
+> > > > OK, so I think I see the problem. So the invalid pointer is
+> > > > Arc<FenceCtx=E2=80=A6>? And potentially the <F> pointer (although w=
+e don't have
+> > > > a picture yet as to how that would be accessed through other callba=
+cks.
+> > > >=20
+> > > > > =C2=A0If another thread obtains a pointer to the
+> > > > > FenceCtx via reading the fctx field of the DriverFence in paralle=
+l with
+> > > > > this, then that's not allowed because the drop_in_place() call ha=
+s
+> > > > > exclusive access to that field.
+> > > >=20
+> > > > I think I have been asking in several of our meetings in the past
+> > > > whether it is actually a problem to access data that has been dropp=
+ed()
+> > > > IF we know that drop does not cause UAF and the answer was kind of =
+like
+> > > > a "well if it does not actually get freed=E2=80=A6"
+> > >=20
+> > > Ok, well, IMO the simplest approach is to say you can't. There may be
+> > > roundabout ways to do it, but I would suggest that we just ... don't.
+> >=20
+> > Ack.
+> >=20
+> > >=20
+> > > > Anyways.
+> > > >=20
+> > > > It would seem the way to get this right is then
+> > > >=20
+> > > > synchronize_rcu();
+> > > > drop_in_palace(data);
+> > > >=20
+> > > >=20
+> > > > Agreed?
+> > > >=20
+> > > > This would then mean, however, that every time a fence drops, you h=
+ave
+> > > > to wait a grace period.
+> > > >=20
+> > > > Or maybe stuff DriverFenceData into an RcuBox, too, and defer its
+> > > > dropping.
+> > >=20
+> > > That would work, but I think we can do better and avoid the
+> > > synchronize_rcu() along these lines:
+> > >=20
+> > > unsafe trait RcuRevocable {
+> > > =C2=A0=C2=A0=C2=A0 unsafe fn rcu_revoke_in_place(ptr: *mut Self);
+> > > }
+> > >=20
+> > > This trait provides a method that's like drop_in_place(), except that
+> > > when you use this destructor, the value remains usable for one grace
+> > > period. You could implement it for RcuBox, and for any Copy type, and
+> > > for ARef<T> when T is cleaned up with rcu, and probably also other
+> > > stuff.
+> >=20
+> > I mean, this cannot be magic. It also boils down to executing one RCU
+> > callback per DriverFence dropping.
+> >=20
+> > Is there a significant difference to stuffing DriverFenceData into an
+> > RcuBox?
+>=20
+> Do you mean hard-coding that the user-data of a driver fence is always
+> stored in an RcuBox?
+
+
+I'm talking about this:
+
+
+
+impl<F: Send + Sync + DriverFenceAllowedData, C: Send + Sync> DriverFenceAl=
+location<F, C> {
+    /// Create a new allocation slot that can later be used to create a ful=
+ly
+    /// initialized [`DriverFence`] without the need to allocate.
+    pub fn new(fctx: Arc<FenceCtx<F, C>>, data: F) -> Result<Self> {
+        let fence_data =3D DriverFenceData {
+            // `inner` remains uninitialized until a [`DriverFence`] takes =
+over.
+            inner: Fence {
+                inner: Opaque::uninit(),
+            },
+            fctx,
+            data,
+        };
+
+        // In order to support the C dma_fence callbacks, it is necessary f=
+or
+        // a `Fence` and a `DriverFence` to live in the same allocation,
+        // because the C backend passes a dma_fence, from which the driver =
+most
+        // likely wants to be able to access its `data` in `DriverFence`.
+        //
+        // Hence, we need the manage the memory manually. It will be freed =
+by the
+        // C backend automatically once the refcount within `Fence` drops t=
+o 0.
+        let data =3D RcuBox::new(fence_data, GFP_KERNEL | __GFP_ZERO)?;
+
+        Ok(Self { data })
+    }
+
+
+This way, the entire DriverFenceData will remain valid for an
+additional grace period. I suppose this would solve your pointer-
+invalid concern.
+
+However, it appears like overkill to me because the refcounting + C
+backend already ensure that nothing drops too soon, and the backend
+frees with kfree_rcu(), so=E2=80=A6
+
+
+P.
+
+
+>=20
+> Alice
