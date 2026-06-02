@@ -1,162 +1,126 @@
-Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
+Received: from out-178.mta0.migadu.com (out-178.mta0.migadu.com [91.218.175.178])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 89E403FC5C1;
-	Tue,  2 Jun 2026 17:35:40 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A650F3955F5
+	for <sashiko-reviews@lists.linux.dev>; Tue,  2 Jun 2026 18:36:26 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=91.218.175.178
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1780421741; cv=none; b=BdCEP/LMJmjzFopQEKvK7kE/ji0CYA3E2pfN+Y96TCeEw1vexnezq3Ci6+UvhfTWIm+BMznMeLGZ2IrI7BJ5Iy+YBfjisLD2X6DaEU+kTBmvDEH7xjBefL5mJfGTEURZKwO8He4GyCxk3Z/KrWGEn5n0i/X0xyuruhPI2dajgow=
+	t=1780425388; cv=none; b=bqtNJ+Zgg3PrF9pWDabGUAM5MHMxlsSm19L+dP9T9i54FLK43LY/KmKrWlaxN0KTdjE7Wt8josOllvZQuxJ0onMznW2OEKHFElA7L+XvKqKf3jc7mJNiaJRNXOHRL02cz+9zlCh/YjACBRmp7FRg+km1LptGNQpDvly7ockuIxw=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1780421741; c=relaxed/simple;
-	bh=hAVCgVMsUH36PqmlREmHCi6f/cTGgYb0ZmnFXZiFjLA=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=pvmk4hbt/+Ww7AUl5xJk/POPdk/1vMtN/ZFfPqEM4jOnJ6QIZWQtfFM64rnALCMk2e9i3jBYwerNn9ld887Qyzb96PE4jIM0K+jrEn8LSG3D1R9yguKN9d6KlUWG+tVrENwHehAtcZ/He2CVwL2k1gutf3RXO3rQUb+M5B6hJY4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=UVM0hYG5; arc=none smtp.client-ip=100.103.45.18
+	s=arc-20240116; t=1780425388; c=relaxed/simple;
+	bh=U2fX4Im3M3L10DVA6s01fOcvlG8bPt9e7Shen6VAzD4=;
+	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
+	 In-Reply-To:Content-Type; b=XW6daaUO5j3PCisa1YREBbU4WXTjf/UKdd9Azr1aDI6ABmKDbKYtrCtk8FxYP4IODwuIpFpbtWYLN1A9z0mE0aZqAmTlS9VenOCEu4tsgGzblQ0fHuHuJmwnXIBQh02c9nyMuF/NEP+7QNraZvgBB/ZGoEc/Wv/QddRfnWHqgww=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linux.dev; spf=pass smtp.mailfrom=linux.dev; dkim=pass (1024-bit key) header.d=linux.dev header.i=@linux.dev header.b=kw6wr1Mo; arc=none smtp.client-ip=91.218.175.178
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linux.dev
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linux.dev
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="UVM0hYG5"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 34D971F00893;
-	Tue,  2 Jun 2026 17:35:40 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=kernel.org;
-	s=k20260515; t=1780421740;
-	bh=6iOKCxrF+VwVFlLhu2aGZMzAZ5aG4XD13YMUU1/MUkk=;
-	h=Date:From:To:Cc:Subject:References:In-Reply-To;
-	b=UVM0hYG5LJxcPfg11/K4mMyi4KkFbaSUD7VSvddD4WUy5Yn+mozloZ+Lyuby1T03R
-	 SgZVj5HgRz3TfDUCUR0xMhgBC+2RC2TuI6aSZQDmncjTseT2YUT+KxNd2FMJd4ymbx
-	 UdCpdlexvLL3nNcwPR3afQRa9wdnvD1k5ZpE4UMbfZ0tgSs1PeRl9hrtI2rPscwOER
-	 bFE3xrG7NXYywUM5U1LkEnhrl+iXh4DFsjaBaNSeAr4ayggljJajYSYoK6pnrvSnTk
-	 GiqWtmGhHn+KMWzDVceweTRpaOAAuShHDOM2i2k8ikpC4CNj6JcxhfrhFfLs+XPLRu
-	 RySPgwmVnkogQ==
-Date: Tue, 2 Jun 2026 10:35:39 -0700
-From: Drew Fustini <fustini@kernel.org>
-To: sashiko-reviews@lists.linux.dev
-Cc: linux-kernel@vger.kernel.org
-Subject: Re: [PATCH RFC v6 14/18] riscv_cbqri: resctrl: Add MB_WGHT bandwidth
- allocation via Mweight
-Message-ID: <ah8Ua/oX9fWlO5lf@x1>
-References: <20260601-ssqosid-cbqri-rqsc-v7-0-v6-14-baf00f50028a@kernel.org>
- <20260601205734.76D021F00893@smtp.kernel.org>
+	dkim=pass (1024-bit key) header.d=linux.dev header.i=@linux.dev header.b="kw6wr1Mo"
+Message-ID: <7808103b-5daf-46bd-a3bb-6d64f8f2e680@linux.dev>
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linux.dev; s=key1;
+	t=1780425384;
+	h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+	 to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+	 content-transfer-encoding:content-transfer-encoding:
+	 in-reply-to:in-reply-to:references:references;
+	bh=2wzN4GALLPuVcqXOA/t9aT4SlAO+gKewctMR8F/17uk=;
+	b=kw6wr1Moezu+q4NxUUUcpXMvXmobkf2Q1FBAPMcM/66ZHq2qaHQHkGs9cM7Lqt2Wmu2K8p
+	Du5AYhdw5AJmVR8r10QzX7xYyoJnVB6DU+TXoOGEliUgOjKkbi+X04ZqJ8am0ThzfQahKf
+	9+UlSKq+LNmkS4qlYh9lsQzCVgF5uNE=
+Date: Tue, 2 Jun 2026 11:36:20 -0700
 Precedence: bulk
 X-Mailing-List: sashiko-reviews@lists.linux.dev
 List-Id: <sashiko-reviews.lists.linux.dev>
 List-Subscribe: <mailto:sashiko-reviews+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:sashiko-reviews+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <20260601205734.76D021F00893@smtp.kernel.org>
+Subject: Re: [PATCH bpf-next v1 06/14] resolve_btfids: Discover kfuncs from
+ BTF ID sets
+To: sashiko-reviews@lists.linux.dev
+Cc: bpf@vger.kernel.org
+References: <20260601221805.821394-7-ihor.solodrai@linux.dev>
+ <20260601223325.C912E1F00893@smtp.kernel.org>
+Content-Language: en-US
+X-Report-Abuse: Please report any abuse attempt to abuse@migadu.com and include these headers.
+From: Ihor Solodrai <ihor.solodrai@linux.dev>
+In-Reply-To: <20260601223325.C912E1F00893@smtp.kernel.org>
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 7bit
+X-Migadu-Flow: FLOW_OUT
 
-On Mon, Jun 01, 2026 at 08:57:34PM +0000, sashiko-bot@kernel.org wrote:
-> > +	case RDT_RESOURCE_MB_WGHT: {
-> > +		u64 mweight;
-> > +
-> > +		err = cbqri_read_mweight(ctrl, closid, &mweight);
+On 6/1/26 3:33 PM, sashiko-bot@kernel.org wrote:
+> Thank you for your contribution! Sashiko AI review found 1 potential issue(s) to consider:
+> - [High] Ambiguous string-based lookup in resolve_btfids incorrectly resolves kfunc BTF IDs on name collisions, causing silent failures in BTF mutation and tag emission.
+> --
+> 
+> commit 8f8fb9808a6cbcfa547c7cbbeadbb0e70e3b6b81
+> Author: Ihor Solodrai <ihor.solodrai@linux.dev>
+> 
+> resolve_btfids: Discover kfuncs from BTF ID sets
+> 
+> This commit updates resolve_btfids to discover kfuncs by parsing BTF_ID_SET8
+> symbols instead of relying on bpf_kfunc decl tags. It extracts the kfunc name
+> from the symbol address, then looks up the BTF ID by name and records the
+> associated flags.
+> 
+>> diff --git a/tools/bpf/resolve_btfids/main.c b/tools/bpf/resolve_btfids/main.c
+>> index 43512af131482..d35a7b2460e83 100644
+>> --- a/tools/bpf/resolve_btfids/main.c
+>> +++ b/tools/bpf/resolve_btfids/main.c
+> [ ... ]
+>> @@ -1003,92 +1020,63 @@ static int collect_decl_tags(struct btf2btf_context *ctx)
+> [ ... ]
+>> +static int collect_kfuncs(struct object *obj, struct btf2btf_context *ctx)
+>> +{
+> [ ... ]
+>> +		for (u32 i = 0; i < set_id->cnt; i++) {
+>> +			Elf64_Addr addr = set_addr + sizeof(u64) * (i + 1);
+>> +			const char *name = find_name_by_addr(obj, addr);
+>> +			struct kfunc kfunc;
+>> +			s32 func_id;
+>>  
+>> -			if (!name || strcmp(name, kfunc_id->name) != 0)
+>> +			if (!name) {
+>> +				pr_err("WARN: resolve_btfids: no kfunc symbol for set %s entry %u\n",
+>> +				       set_id->name, i);
+>> +				warnings++;
+>>  				continue;
+>> +			}
+>>  
+>> -			pr_debug("found kfunc %s in BTF_ID_FLAGS %s\n",
+>> -				 kfunc_id->name, set_id->name);
+> [ ... ]
+>> +			func_id = btf__find_by_name_kind(btf, name, BTF_KIND_FUNC);
 > 
 > [Severity: High]
-> This isn't a bug introduced by this patch, but the newly added
-> cbqri_read_mweight() called here duplicates a pre-existing flaw.
+> Does this string-based lookup risk returning the wrong BTF ID when processing
+> kernel modules?
 > 
-> Can this corrupt data by writing to staging registers before ensuring the
-> hardware is not busy?
-> 
-> In cbqri_read_mweight(), the driver interacts with the hardware by writing to a
-> staging register, writing a control register, and waiting for the BUSY flag to
-> clear.
-> 
-> If a previous operation times out (such as the 1ms limit in
-> cbqri_wait_busy_flag()), the driver returns -EIO and releases ctrl->lock, but
-> the hardware might still be processing.
-> 
-> The next caller acquires the lock and immediately calls cbqri_set_bc_bw_alloc()
-> to read-modify-write the staging register before cbqri_bc_alloc_op() verifies
-> the BUSY flag is 0.
-> 
-> Would modifying the staging register of an in-flight hardware operation cause
-> undefined behavior, misconfiguration, or WPRI field corruption?
+> When resolve_btfids processes a kernel module, btf__find_by_name_kind() searches
+> the base_btf (vmlinux BTF) before the module's BTF. If a module kfunc shares
+> a name with a static function in vmlinux, or if there are multiple static
+> functions with the same name within the module, it seems this might return an
+> incorrect BTF ID.
 
-This is not a problem:
+I am not convinced this is an issue, because a module kfunc shadowing a kernel
+kfunc by name seems to me like a bad idea at first glance.
 
- - cbqri_apply_bc_field() waits for BUSY = 0 before staging so there is
-   no corruption on the apply path.
- - cbqri_bc_alloc_op() waits at entry, so a staging write only lands
-   during BUSY on an already-faulted controller.
- - cbqri_set_bc_bw_alloc() stages both fields from the caches, so there
-   is no unmodified field to corrupt. 
+Still, AI might be onto something here. I'll experiment with bpf test module in
+the selftests to investigate.
 
-> > +static void cbqri_detach_cpu_from_one_bw_res(struct cbqri_controller *ctrl,
-> > +					     enum resctrl_res_level rid,
-> > +					     unsigned int cpu)
-> > +{
-> > +	struct cbqri_resctrl_res *hw_res = &cbqri_resctrl_resources[rid];
-> > +	struct rdt_resource *res = &hw_res->resctrl_res;
-> > +	struct rdt_ctrl_domain *domain;
-> > +	int dom_id = ctrl->mem.prox_dom;
-> > +
-> > +	lockdep_assert_held(&cbqri_domain_list_lock);
-> > +
-> > +	if (!hw_res->ctrl)
-> > +		return;
-> > +
-> > +	domain = cbqri_find_ctrl_domain(&res->ctrl_domains, dom_id);
-> > +	if (!domain || !cpumask_test_cpu(cpu, &domain->hdr.cpu_mask))
-> > +		return;
-> > +
-> > +	cpumask_clear_cpu(cpu, &domain->hdr.cpu_mask);
-> > +	if (cpumask_empty(&domain->hdr.cpu_mask)) {
-> > +		resctrl_offline_ctrl_domain(res, domain);
 > 
-> This isn't a bug introduced by this patch, but the newly added
-> cbqri_detach_cpu_from_one_bw_res() replicates a broken lock ordering.
+> If the wrong BTF ID is returned, resolve_btfids could silently mutate the wrong
+> type in memory later, for example in process_kfunc_with_implicit_args() or
+> process_kfunc_with_arena_flags(). Since base_btf modifications are not saved to
+> the module's .BTF section, the actual module kfunc would remain unmodified. Will
+> this cause the BPF verifier to reject programs using the module kfunc due to
+> missing implicit args removal or tags?
 > 
-> Could this lead to an AB-BA deadlock between rdtgroup_mutex and
-> cbqri_domain_list_lock?
+>> +			if (func_id < 0) {
+>> +				pr_err("WARN: resolve_btfids: no BTF FUNC for kfunc %s in set %s\n",
+>> +				       name, set_id->name);
+>> +				warnings++;
+>> +				continue;
+>> +			}
 > 
-> If a user reading a monitor data file triggers rdtgroup_mondata_show(), it
-> acquires rdtgroup_mutex, then calls mon_event_read() ->
-> resctrl_arch_rmid_read(), which acquires cbqri_domain_list_lock.
-> 
-> Concurrently, when a CPU is taken offline, cbqri_resctrl_offline_cpu()
-> acquires cbqri_domain_list_lock, then calls cbqri_detach_cpu_from_all_ctrls()
-> -> cbqri_detach_cpu_from_one_bw_res(). If the domain becomes empty, it calls
-> resctrl_offline_ctrl_domain(), which attempts to acquire rdtgroup_mutex.
-> 
-> Would these two paths race and cause a permanent AB-BA deadlock?
 
-This is not a problem. cpu_hotplug_lock serializes the two lock orderings:
-
- - Every rdtgroup_mutex -> cbqri_domain_list_lock path runs under
-   cpus_read_lock
- - The cbqri_domain_list_lock -> rdtgroup_mutex path is the cpuhp
-   online/offline callback under cpus_write_lock.
-
-Those are mutually exclusive, so the orders never overlap.
-> 
-> > +		list_del(&domain->hdr.list);
-> > +		kfree(container_of(domain, struct cbqri_resctrl_dom,
-> > +				   resctrl_ctrl_dom));
-> 
-> [Severity: High]
-> This is a pre-existing issue, but the new cbqri_detach_cpu_from_one_bw_res()
-> replicates it here.
-> 
-> Can this result in a Use-After-Free on the res->ctrl_domains list?
-> 
-> VFS read paths in fs/resctrl (like rdtgroup_schemata_show()) traverse the
-> res->ctrl_domains list using list_for_each_entry while holding only
-> rdtgroup_mutex.
-> 
-> When the CPU mask becomes empty, resctrl_offline_ctrl_domain() is called above,
-> which takes and releases rdtgroup_mutex. After it returns, list_del() and
-> kfree() are executed without holding rdtgroup_mutex or using RCU primitives.
-> 
-> Could a concurrent list traversal under rdtgroup_mutex dereference the freed
-> domain pointer and crash?
-
-This is not a problem:
-
- - The VFS readers of res->ctrl_domains hold cpus_read_lock in addition
-   to rdtgroup_mutex
- - The detach that does list_del() and kfree() is the cpuhp offline
-   callback under cpus_write_lock.  
- - They cannot run concurrently so list_del()/kfree() is fine.
-
-Drew
