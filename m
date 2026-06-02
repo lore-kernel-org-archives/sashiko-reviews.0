@@ -1,153 +1,152 @@
-Received: from mail-dl1-f54.google.com (mail-dl1-f54.google.com [74.125.82.54])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A36E9370D70
-	for <sashiko-reviews@lists.linux.dev>; Tue,  2 Jun 2026 20:41:38 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=pass smtp.client-ip=74.125.82.54
-ARC-Seal:i=2; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1780432899; cv=pass; b=eb/nFMDh7LGEgmWNwWnxKCazzrz61obU8ljqUqFXWrDJ5mkHVKCnV+2Ex6wkubbr/+mYNqpQK1wQ0ynf2/4d9LIxiWlmND+mwWNuzf00TuLgzPwgbKh1Nd13G4WT0I3lW5DxZ9clJQBQmZF56sSn6T9IQyVyqpoTR+23tDw5cLA=
-ARC-Message-Signature:i=2; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1780432899; c=relaxed/simple;
-	bh=nTYPsQanuHPOf3+YdCHnJYoAoqYTW65WA3kXZLPmJs8=;
-	h=From:In-Reply-To:References:MIME-Version:Date:Message-ID:Subject:
-	 To:Cc:Content-Type; b=P4Sa4JOIHl4udW9rKJpscAFzSN42Okc6eRQupS9ysmfgf0oZBVwFrp3AtOUmO08uYNvz4xa1kQjg7iW2igmnXMJWvOJXtl6QZtXKV8DQ0YPYKSkp8bZF7K0pRLjfEkIk4rDkyYWNsLZ4zAtivLGxy1p+u9lLFr4nBDd2vklnQps=
-ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=google.com; spf=pass smtp.mailfrom=google.com; dkim=pass (2048-bit key) header.d=google.com header.i=@google.com header.b=n6vFnYhm; arc=pass smtp.client-ip=74.125.82.54
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=google.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=google.com
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6DC7519D89E;
+	Tue,  2 Jun 2026 21:09:14 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
+ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
+	t=1780434555; cv=none; b=NABh6Fpz1UEzA8ZqFc/nl0pbnkrr1r8vto75GdVj0Nue3x381UdFDsq/M8sr/Aob/wyGkS3+TLZHSz3S8To5T+TLpq1BsH6/3Jw75LF8hJ25HVrSnf4w0RIaMLEYXgDkEsAh317Vsz911sMvpTvkI3xEiR/ThhTWCPVKB8N+YIs=
+ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
+	s=arc-20240116; t=1780434555; c=relaxed/simple;
+	bh=0rL/3VRirg5ODbcnOGuyiX7i6mSlhGh3R2znObiaOmg=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=Xk+dITq9BCHm/KTGBMPUG3WWptmxiQrjT/LCEcvf1l0By2bYSy9h1e1s4400wXq0A7qn1/dvHFJP0p6n9mJGPlDXK4iCUvWDOjeFEYE1Z8dtAAEe6LMSd3VNaOMiAuXxPptcgFulOcZg+oP912p1AEPfBYxuFLHnBGj/oqnXyxk=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=dlh8n3i3; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=google.com header.i=@google.com header.b="n6vFnYhm"
-Received: by mail-dl1-f54.google.com with SMTP id a92af1059eb24-137dd51129bso627380c88.1
-        for <sashiko-reviews@lists.linux.dev>; Tue, 02 Jun 2026 13:41:38 -0700 (PDT)
-ARC-Seal: i=1; a=rsa-sha256; t=1780432898; cv=none;
-        d=google.com; s=arc-20240605;
-        b=JmQ/W3c2+o66un0IDOLWBEGYLv9tmkKukpcSlg7IwyuFzZkVsILKPMGd2vVof5VJ7w
-         Y+jmnuvYla+0+zfJl0I2q9ugwAwP3SdraZGTV5GHvwkKEC6utNOsX9LFfWOmEYdqRUZ9
-         rAKgd+EUdD5FolPQ/05ILWDRuD7j7DMrM4QmNymadpF9ZqNBWRb7Er2NdDqtp2IYNd8B
-         ZeRJ+yGZwrwoDS82F7lAuei3T7bczua4kAR2gr/6tX6udGQecYCWgmV5SCRUtpmfjV7M
-         2NmtEaWmhIiLHSO/2Hn1e7AAj5vncq8IxDSObYZF8w+BiJPIwq5d5834/m+ObuAc2KDg
-         O1Xg==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com; s=arc-20240605;
-        h=content-transfer-encoding:cc:to:subject:message-id:date
-         :mime-version:references:in-reply-to:from:dkim-signature;
-        bh=Q9DfpYFNGzsB6sazPDXo4YOkWRxIbqoOx7DhukB8QIE=;
-        fh=KVy4+j+TE0qJlGnL1oxDtQvAs+ZlkPteDJwxhHS2piY=;
-        b=ZhgGjnguZ5tnr2zuOnZHjTbMgx/TYhiYEOHzAt9iqChDqRNSiErZV3+uJ7tvM2Nhzq
-         u5mFdGdK/0aLZk6+4E4U7OmKVXo5bm60hDQcGbry7qsxWwDE65fNJqVdfX2HwTPjJtU9
-         uqW1jIJJ3uvBGgsrxDcl29E/JzQUKP6/TNEPdPLYV6aMsl0O/GdjDDlDcx6I6InzNxKS
-         dDx+9pvNKV4OtWuoRMwWi/8XSMJY5NNulaagwqADL12UpKfsBLP5VYl5XlQv2pQwLQkM
-         NYMUeqE0nm3TVeD4fELyF81JMfQ3245YZmiV+/OFdnugQf0SgCfb82X8ejIUXOajHdwY
-         RbCg==;
-        darn=lists.linux.dev
-ARC-Authentication-Results: i=1; mx.google.com; arc=none
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=google.com; s=20251104; t=1780432898; x=1781037698; darn=lists.linux.dev;
-        h=content-transfer-encoding:cc:to:subject:message-id:date
-         :mime-version:references:in-reply-to:from:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=Q9DfpYFNGzsB6sazPDXo4YOkWRxIbqoOx7DhukB8QIE=;
-        b=n6vFnYhmK9Ldy+/18gNAOs3V2g8/ENubWJQHPAJZoGBOth5YX+KLEsgGaCD+WUyudm
-         kawLYcwdof2uNlhmUNrwEPO0bN1YnYUmOHwW20MkVZlUb29oHyN4dm1MKNQkocKnt3UP
-         SehplLCDCEOrYvk1UFfDCvEKcyWSZdF38j35rGIQG2rvruTsMtjwMxdqeq7HMjLW/FYl
-         /0CiSbrqaYtYsN8DvX4CLqfW3l/PKVIRZlc+MiXPCgutGI2SXjO9YdYmF4iZfwCcQiJK
-         4Ix7AuvpDnkCgXYreHVIn/lwGxmCT8p2W/jlDWQCiHtlJGO6kSOb/XMbXDJCg1/WTD9e
-         0eVg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20251104; t=1780432898; x=1781037698;
-        h=content-transfer-encoding:cc:to:subject:message-id:date
-         :mime-version:references:in-reply-to:from:x-gm-gg:x-gm-message-state
-         :from:to:cc:subject:date:message-id:reply-to;
-        bh=Q9DfpYFNGzsB6sazPDXo4YOkWRxIbqoOx7DhukB8QIE=;
-        b=FCge10up/wO+X3jO+ncpEwtMOZTluu8x5HL4JWbgSDJYdbOb0MNrEi0hmXiqu+jj18
-         nVNFoIwVYt4bDzGlXfUp5KiX+W2A8Pos3HmQAwxfNBsJKMd3dikcTqGiTKcl4oJ8k1Ej
-         e/tX0C0MpUiS53SLEL/rcyYlvtWbjjRp4MpvMiZaHzFdyuRNoze2SKpUF4dcFG4VRL2E
-         qutUjIftT5mlRQwttene7EbpDKZ4lfa6ZIr7EtNpvWp3cGzPmL8XMF1Q8MTEeXPaghL5
-         8G1/igQV+X7g9b9DIlK/0ott0WaGnxgT5hqakLrdjni44YM05nfLAl6JeRa3lOZq5RaW
-         z1XA==
-X-Gm-Message-State: AOJu0YyeU1RowS4QjdYAoZaAF8GUEmhduQy7/u8OGgGU6XCEZ2VRB5di
-	7rhNZBXRf2+Gfw29KX8VWjMK+Rr55NY7/ZQzkz3CLBKGbhMMkmYHiQS/QlYQjWT8D/vWx7TOgOQ
-	WX7YYtd0d6Nx69n8ORgKfrF813gAno5JHR+nEx39qycKk9prq1zlVDnyR
-X-Gm-Gg: Acq92OF3F/HGZW84lqv9lGtCo1E5W9PoFsiiZ+XeVhCYO/8P6Tqh4hPY+iP8U/pOp7v
-	RIYGa/+h775MYjdm/zvo9yacklBFHctBU7PspWYVEJYsiHMH3pjjCYqTsEXvsSk6uXVx4Z+PM4Q
-	Mg8SZ+XoP5IYwWApYIrXgB2FIjgrUCStwkAPUKGaMNnAu5b3MTf4nHP9NsxNBkeGPar1TbZ7Ro+
-	JzU9baZUeXP55/xrbq4frp0yK7D6mg/7R2mQe8/w+ARFE/hH4jFuNaxRvU2ZA+hFedp4raq2yqg
-	DqOiy5GlmJJoQS9wH2fgGIUajTaZCPt0P056ZGNoQfTXO5hwRcQl9Oy29vset5HxWgktP1FE5bk
-	q72ST
-X-Received: by 2002:a05:701b:2058:20b0:137:eb26:117 with SMTP id
- a92af1059eb24-137f6b87c7fmr108819c88.13.1780432897006; Tue, 02 Jun 2026
- 13:41:37 -0700 (PDT)
-Received: from 176938342045 named unknown by gmailapi.google.com with
- HTTPREST; Tue, 2 Jun 2026 13:41:36 -0700
-Received: from 176938342045 named unknown by gmailapi.google.com with
- HTTPREST; Tue, 2 Jun 2026 13:41:36 -0700
-From: Ackerley Tng <ackerleytng@google.com>
-In-Reply-To: <20260523005223.5B9651F000E9@smtp.kernel.org>
-References: <20260522-gmem-inplace-conversion-v7-7-2f0fae496530@google.com> <20260523005223.5B9651F000E9@smtp.kernel.org>
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="dlh8n3i3"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2D5311F00893;
+	Tue,  2 Jun 2026 21:09:14 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=kernel.org;
+	s=k20260515; t=1780434554;
+	bh=jPW4+bDCMwDt1HiLGDLDGJ2r3CAgguA/gXZ5VD5duAU=;
+	h=Date:From:To:Cc:Subject:References:In-Reply-To;
+	b=dlh8n3i3W5Z9OiSocXyW3M2GIKcrsUtq4UJVs46xn59FUZl5mQNbX0Btoib20KSKv
+	 4xIBbwKDqTpvsYbfOHVjFk0mItNTZDrpXQjF75tNa5LZgmVCkFvJr5E8edlijqUVCS
+	 upmJBVbkfchuDsTHLVGqg80nso85vwTOa2CLNM3zHdVCaTEPbVVHxZM6YRQk5neqRv
+	 2HHkGnDEp6bDjZbHDMkI4QygERjftoSsBJjBa41ApQ5ZhBr33J8lRSFEcFu07v+l7H
+	 Tgo73E1CDWwjrHDLjUHjsWK7/LB29+/Hg0AvZ7U3fio/TSPX4HT9zzNx39jdXAOfHb
+	 eyFm0mtsIr/HA==
+Date: Tue, 2 Jun 2026 14:09:12 -0700
+From: Drew Fustini <fustini@kernel.org>
+To: sashiko-reviews@lists.linux.dev
+Cc: devicetree@vger.kernel.org, robh@kernel.org, conor+dt@kernel.org
+Subject: Re: [PATCH RFC v6 15/18] riscv_cbqri: resctrl: Add mbm_total_bytes
+ bandwidth monitoring
+Message-ID: <ah9GeBlzrrL/C3kL@x1>
+References: <20260601-ssqosid-cbqri-rqsc-v7-0-v6-15-baf00f50028a@kernel.org>
+ <20260601210114.88F1B1F00893@smtp.kernel.org>
 Precedence: bulk
 X-Mailing-List: sashiko-reviews@lists.linux.dev
 List-Id: <sashiko-reviews.lists.linux.dev>
 List-Subscribe: <mailto:sashiko-reviews+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:sashiko-reviews+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Date: Tue, 2 Jun 2026 13:41:36 -0700
-X-Gm-Features: AVHnY4I-p28f6R-pwlANnTjmbkkEzzn4cv_rflApgLZ-buk8YP2KDCX9f8QQ2KQ
-Message-ID: <CAEvNRgHn44ASMxyBpDWXYO0QiGi1PgREUWfopgdk_aQ7bFx_UQ@mail.gmail.com>
-Subject: Re: [PATCH v7 07/42] KVM: guest_memfd: Only prepare folios for
- private pages
-To: sashiko-reviews@lists.linux.dev, 
-	Ackerley Tng via B4 Relay <devnull+ackerleytng.google.com@kernel.org>
-Cc: kvm@vger.kernel.org
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <20260601210114.88F1B1F00893@smtp.kernel.org>
 
-sashiko-bot@kernel.org writes:
-
->
-> [...snip...]
->
->> @@ -908,7 +910,8 @@ int kvm_gmem_get_pfn(struct kvm *kvm, struct kvm_mem=
-ory_slot *slot,
->>  		folio_mark_uptodate(folio);
->>  	}
->>
->
+On Mon, Jun 01, 2026 at 09:01:14PM +0000, sashiko-bot@kernel.org wrote:
+> > @@ -184,17 +191,67 @@ void resctrl_arch_mon_event_config_write(void *info)
+> >  void resctrl_arch_reset_rmid(struct rdt_resource *r, struct rdt_l3_mon_domain *d,
+> >  			     u32 unused, u32 rmid, enum resctrl_event_id eventid)
+> >  {
+> > +	struct cbqri_resctrl_dom *hw_dom;
+> > +	struct rdt_ctrl_domain *cd;
+> > +
+> > +	if (irqs_disabled())
+> > +		return;
+> > +
+> > +	mutex_lock(&cbqri_domain_list_lock);
+> 
 > [Severity: High]
-> This is a pre-existing issue, but does clear_highpage() fully initialize =
-the
-> folio if it is a large folio?
->
-> Just above this diff context in kvm_gmem_get_pfn(), the code clears the
-> newly allocated folio:
->
-> 	if (!folio_test_uptodate(folio)) {
-> 		clear_highpage(folio_page(folio, 0));
-> 		folio_mark_uptodate(folio);
-> 	}
->
-> Since clear_highpage() only clears a single PAGE_SIZE page, won't this le=
-ak
-> uninitialized host memory in the tail pages if __kvm_gmem_get_pfn() retur=
-ns
-> a higher-order folio?
->
+> This is a pre-existing issue, but does expanding cbqri_domain_list_lock
+> usage here worsen an AB-BA deadlock with rdtgroup_mutex?
+> 
+> A deadlock can occur during CPU hotplug and sysfs reads due to conflicting
+> lock ordering:
+> 
+> Thread A (CPU Hotplug) takes cbqri_domain_list_lock in
+> cbqri_resctrl_online_cpu(), then calls resctrl_online_mon_domain() via
+> cbqri_attach_cpu_to_l3_mon(), which blocks waiting for rdtgroup_mutex.
+> 
+> Thread B (Sysfs read) takes rdtgroup_mutex in rdtgroup_mondata_show(), then
+> delegates the read via smp_call_on_cpu() to a worker thread.
+> 
+> Thread C (Worker) executes resctrl_arch_rmid_read(), which blocks waiting
+> for cbqri_domain_list_lock.
 
-guest_memfd only supports 4K folios now. I'll fix these when I get to
-huge pages.
+This is not a problem. Every rdtgroup_mutex -> cbqri_domain_list_lock
+path runs under cpus_read_lock, and the hotplug path runs under
+cpus_write_lock.
 
-> While comments in kvm_gmem_prepare_folio() state that the code is ready
-> for huge folios, silently leaving tail pages uninitialized could lead to =
-a
-> severe information leak once mapped into the guest.
->
+> > +static void cbqri_resctrl_pick_counters(void)
+> > +{
+> [ ... ]
+> > +	/*
+> > +	 * mbm_total_bytes is surfaced on the L3 monitoring domain, so it
+> > +	 * needs a mon-capable L3 cache controller as well as a single
+> > +	 * mon-capable bandwidth controller.
+> > +	 */
+> > +	if (l3->ctrl && l3->ctrl->mon_capable && cbqri_find_only_mon_bc())
+> > +		resctrl_enable_mon_event(QOS_L3_MBM_TOTAL_EVENT_ID, false, 0, NULL);
+> 
+> Does passing any_cpu = false here break monitor reads and RMID resets on
+> nohz_full systems?
+> 
+> When any_cpu is false, the resctrl core ensures the read executes on a CPU
+> in the target domain. If all CPUs in that domain are nohz_full,
+> mon_event_read() falls back from smp_call_on_cpu() (process context) to
+> smp_call_function_any() (IPI hardirq context with interrupts disabled).
+> 
+> Because drivers/resctrl/cbqri_resctrl.c checks for irqs_disabled() in both
+> resctrl_arch_rmid_read() and resctrl_arch_reset_rmid() and silently aborts,
+> monitor reads and resets will fail on nohz_full systems.
 
-It's actually not quite ready, but I think this series is big enough as
-it is, I'd like to defer the hugepage stuff to other series.
+The CBQRI MMIO registers are cpu agnostic so I will register
+QOS_L3_MBM_TOTAL with any_cpu=true so the core reads in process context.
 
->> -	r =3D kvm_gmem_prepare_folio(kvm, slot, gfn, folio);
->> +	if (kvm_gmem_is_private_mem(inode, index))
->> +		r =3D kvm_gmem_prepare_folio(kvm, slot, gfn, folio);
->>
->>  	folio_unlock(folio);
->
-> --
-> Sashiko AI review =C2=B7 https://sashiko.dev/#/patchset/20260522-gmem-inp=
-lace-conversion-v7-0-2f0fae496530@google.com?part=3D7
+> > @@ -854,6 +1054,7 @@ static int cbqri_attach_cpu_to_l3_mon(struct cbqri_controller *ctrl,
+> [ ... ]
+> >  err_offline:
+> >  	/*
+> >  	 * cancel_delayed_work avoids deadlocking against the cqm_limbo
+> >  	 * worker which takes cpus_read_lock while this hotplug callback
+> >  	 * already holds cpus_write_lock. mbm_over is only
+> >  	 * INIT_DELAYED_WORK'd when MBM_TOTAL was enabled, so gate the
+> >  	 * cancel on the same condition to avoid touching a zeroed work
+> >  	 * struct.
+> >  	 */
+> >  	cancel_delayed_work(&mon_dom->cqm_limbo);
+> > +	if (resctrl_is_mon_event_enabled(QOS_L3_MBM_TOTAL_EVENT_ID))
+> > +		cancel_delayed_work(&mon_dom->mbm_over);
+> >  	resctrl_offline_mon_domain(res, &mon_dom->hdr);
+> >  err_listdel:
+> >  	list_del(&mon_dom->hdr.list);
+> >  err_free:
+> >  	kfree(mon_dom);
+> >  	return err;
+> >  }
+> 
+> Does this non-blocking cancel_delayed_work() lead to a use-after-free of
+> mon_dom?
+> 
+> In drivers/resctrl/cbqri_resctrl.c:cbqri_attach_cpu_to_l3_mon(),
+> resctrl_online_mon_domain() schedules the mbm_over delayed work. If hardware
+> initialization fails later in the function, the error path executes
+> cancel_delayed_work(), which is non-blocking.
+> 
+> If the worker thread has already woken up and is actively blocked on
+> cpus_read_lock() waiting for the hotplug thread to drop cpus_write_lock(),
+> cancel_delayed_work() will return false.
+> 
+> The hotplug thread will then proceed to free mon_dom and drop the lock.
+> Once the lock is dropped, the worker thread resumes execution and will
+> access the freed mon_dom.
+
+I don't think that this is a problem. resctrl_offline_mon_domain()
+already issues cancel_delayed_work() for mbm_over and cqm_limbo, and x86
+frees the domain right after. The mbm_over and cqm_limbo workers take
+cpus_read_lock() first, and both the error path and the offline teardown
+run under cpus_write_lock().
+
+Drew
