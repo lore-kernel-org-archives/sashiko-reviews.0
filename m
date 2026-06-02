@@ -1,152 +1,173 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6DC7519D89E;
-	Tue,  2 Jun 2026 21:09:14 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 35DFD2236E0;
+	Tue,  2 Jun 2026 21:22:36 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1780434555; cv=none; b=NABh6Fpz1UEzA8ZqFc/nl0pbnkrr1r8vto75GdVj0Nue3x381UdFDsq/M8sr/Aob/wyGkS3+TLZHSz3S8To5T+TLpq1BsH6/3Jw75LF8hJ25HVrSnf4w0RIaMLEYXgDkEsAh317Vsz911sMvpTvkI3xEiR/ThhTWCPVKB8N+YIs=
+	t=1780435358; cv=none; b=sxdSBv1THt7VGwxHuIPhy99+p0v5DrZdMySgEqQRkT3uUMszU7yuCTq7l13NfQUuA26HWN2PU21x2WmJP2B+iGnLZBliYhDTg+zvU6ZWlnHCZlPqptMBOjtFzSwIUZ7+OM4C9POggTKedx3BdXu7qlMm67MW/20lIo0+bjJQftI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1780434555; c=relaxed/simple;
-	bh=0rL/3VRirg5ODbcnOGuyiX7i6mSlhGh3R2znObiaOmg=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=Xk+dITq9BCHm/KTGBMPUG3WWptmxiQrjT/LCEcvf1l0By2bYSy9h1e1s4400wXq0A7qn1/dvHFJP0p6n9mJGPlDXK4iCUvWDOjeFEYE1Z8dtAAEe6LMSd3VNaOMiAuXxPptcgFulOcZg+oP912p1AEPfBYxuFLHnBGj/oqnXyxk=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=dlh8n3i3; arc=none smtp.client-ip=100.103.45.18
+	s=arc-20240116; t=1780435358; c=relaxed/simple;
+	bh=dLQofESjHvi63IUYtOVmcINuJCrrc7RS72cm6ZzARWM=;
+	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
+	 In-Reply-To:Content-Type; b=jT0X1WKDwn7OFlom2hVHVmXdVvt6BC8o0SZt0Ssu7iTChOkk+04xW0THYsUkdUsBjnx0YJyPyzh3uhqUkjlzdGiok1ydH9pRowSK9Rjxj/gXKObxxcPO9qgEuOIBSOZi8ovxDKDcpMdAaWUE7oX8jQ786Ld4JqAm7UMpTojWMFI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=N1Jopuuh; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="dlh8n3i3"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2D5311F00893;
-	Tue,  2 Jun 2026 21:09:14 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="N1Jopuuh"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5404D1F00893;
+	Tue,  2 Jun 2026 21:22:36 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=kernel.org;
-	s=k20260515; t=1780434554;
-	bh=jPW4+bDCMwDt1HiLGDLDGJ2r3CAgguA/gXZ5VD5duAU=;
-	h=Date:From:To:Cc:Subject:References:In-Reply-To;
-	b=dlh8n3i3W5Z9OiSocXyW3M2GIKcrsUtq4UJVs46xn59FUZl5mQNbX0Btoib20KSKv
-	 4xIBbwKDqTpvsYbfOHVjFk0mItNTZDrpXQjF75tNa5LZgmVCkFvJr5E8edlijqUVCS
-	 upmJBVbkfchuDsTHLVGqg80nso85vwTOa2CLNM3zHdVCaTEPbVVHxZM6YRQk5neqRv
-	 2HHkGnDEp6bDjZbHDMkI4QygERjftoSsBJjBa41ApQ5ZhBr33J8lRSFEcFu07v+l7H
-	 Tgo73E1CDWwjrHDLjUHjsWK7/LB29+/Hg0AvZ7U3fio/TSPX4HT9zzNx39jdXAOfHb
-	 eyFm0mtsIr/HA==
-Date: Tue, 2 Jun 2026 14:09:12 -0700
-From: Drew Fustini <fustini@kernel.org>
-To: sashiko-reviews@lists.linux.dev
-Cc: devicetree@vger.kernel.org, robh@kernel.org, conor+dt@kernel.org
-Subject: Re: [PATCH RFC v6 15/18] riscv_cbqri: resctrl: Add mbm_total_bytes
- bandwidth monitoring
-Message-ID: <ah9GeBlzrrL/C3kL@x1>
-References: <20260601-ssqosid-cbqri-rqsc-v7-0-v6-15-baf00f50028a@kernel.org>
- <20260601210114.88F1B1F00893@smtp.kernel.org>
+	s=k20260515; t=1780435356;
+	bh=S+cFiRqq9o+qpbMGUFYlom4l2OVWuiw1Uju2cmfRXVE=;
+	h=Date:Subject:To:Cc:References:From:In-Reply-To;
+	b=N1JopuuhgJOsa1eI49fw7C2AlZZ9SVetPD2vuHDGy4QD/LcLy5dc2C4rkFDGUstR/
+	 YtXfHCAhhDW8LuXQBv/rCL0JeU25Bqcx/zHMplJg+7S08WLLmGctyr2OMcKXeKpmt5
+	 DyGKuaw7MRJ4ZD8zmgOpPaAp/K8f0IByRHIlvLA2puxpET0LVnN9KCtNir34L8UNzj
+	 c4AEA2KIOMnaAIAFcaMvaL/kfZDX5ydaE4vTQfVSj6zFh5PewfHptQF47ftZgrO+7a
+	 c/2wmaiJ2sQ6VmsXPI21qn0zE/eukgU22TJmIo+G1GtdR5vgotiW6kLDeuOIo3lDHF
+	 0LpName6WMCBw==
+Message-ID: <21ee337e-e9f6-4d8e-840d-35c2bd12d208@kernel.org>
+Date: Tue, 2 Jun 2026 22:22:34 +0100
 Precedence: bulk
 X-Mailing-List: sashiko-reviews@lists.linux.dev
 List-Id: <sashiko-reviews.lists.linux.dev>
 List-Subscribe: <mailto:sashiko-reviews+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:sashiko-reviews+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <20260601210114.88F1B1F00893@smtp.kernel.org>
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH] media: iris: Fix FPS calculation and VPP FW overhead
+To: sashiko-reviews@lists.linux.dev
+Cc: linux-media@vger.kernel.org
+References: <20260602-fixbranch-v1-1-b8eccaad6d17@kernel.org>
+ <NawUTvMD-_ja7n6Bm5IaMQMPaMefhnfspwkNHtGtZJSbv1hqzuHPsMCa7E439vd9jYNAs5LcIrmcd3HEA6J8CQ==@protonmail.internalid>
+ <20260602211551.61F1A1F00893@smtp.kernel.org>
+From: Bryan O'Donoghue <bod@kernel.org>
+Content-Language: en-US
+Autocrypt: addr=bod@kernel.org; keydata=
+ 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
+In-Reply-To: <20260602211551.61F1A1F00893@smtp.kernel.org>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 8bit
 
-On Mon, Jun 01, 2026 at 09:01:14PM +0000, sashiko-bot@kernel.org wrote:
-> > @@ -184,17 +191,67 @@ void resctrl_arch_mon_event_config_write(void *info)
-> >  void resctrl_arch_reset_rmid(struct rdt_resource *r, struct rdt_l3_mon_domain *d,
-> >  			     u32 unused, u32 rmid, enum resctrl_event_id eventid)
-> >  {
-> > +	struct cbqri_resctrl_dom *hw_dom;
-> > +	struct rdt_ctrl_domain *cd;
-> > +
-> > +	if (irqs_disabled())
-> > +		return;
-> > +
-> > +	mutex_lock(&cbqri_domain_list_lock);
+On 02/06/2026 22:15, sashiko-bot@kernel.org wrote:
+> Thank you for your contribution! Sashiko AI review found 2 potential issue(s) to consider:
+> 
+> Pre-existing issues:
+> - [High] 32-bit integer overflow in `mult_frac` frequency calculation affects both 32-bit and 64-bit platforms.
+> - [High] Critical 32-bit integer overflow when calculating `vsp_cycles` leads to severe VPU under-clocking on 32-bit platforms.
+> --
+> 
+> commit 77f6f57aadf558885bf4697f0e3df01315999c7b
+> Author: Bryan O'Donoghue <bod@kernel.org>
+> 
+> media: iris: Fix FPS calculation and VPP FW overhead
+> 
+> This commit replaces the mult_frac() macro with div_u64() for calculating
+> vpp_cycles. This fixes a compilation issue on 32-bit systems lacking libgcc,
+> where 64-bit operator division would otherwise fail.
+> 
+> Fixes: 5c66647a5c3e ("media: iris: add FPS calculation and VPP FW overhead in frequency formula")
+> Reported-by: kernel test robot <lkp@intel.com>
+> Closes: https://lore.kernel.org/oe-kbuild-all/202606030132.qnBXVDkM-lkp@intel.com/
+> 
+>> diff --git a/drivers/media/platform/qcom/iris/iris_vpu_common.c b/drivers/media/platform/qcom/iris/iris_vpu_common.c
+>> index 5a85568c5ee1c..37dbfe433a085 100644
+>> --- a/drivers/media/platform/qcom/iris/iris_vpu_common.c
+>> +++ b/drivers/media/platform/qcom/iris/iris_vpu_common.c
+>> @@ -444,7 +444,7 @@ u64 iris_vpu3x_vpu4x_calculate_frequency(struct iris_inst *inst, size_t data_siz
 > 
 > [Severity: High]
-> This is a pre-existing issue, but does expanding cbqri_domain_list_lock
-> usage here worsen an AB-BA deadlock with rdtgroup_mutex?
+> This is a pre-existing issue, but can the call to mult_frac() for vpp_cycles
+> earlier in this function overflow on both 32-bit and 64-bit platforms?
 > 
-> A deadlock can occur during CPU hotplug and sysfs reads due to conflicting
-> lock ordering:
+> In iris_vpu3x_vpu4x_calculate_frequency():
+>      vpp_cycles = mult_frac(mbs_per_second, caps->mb_cycles_vpp, ...);
 > 
-> Thread A (CPU Hotplug) takes cbqri_domain_list_lock in
-> cbqri_resctrl_online_cpu(), then calls resctrl_online_mon_domain() via
-> cbqri_attach_cpu_to_l3_mon(), which blocks waiting for rdtgroup_mutex.
+> Because mbs_per_second is a u32, the mult_frac() macro performs the internal
+> multiplication in 32-bit arithmetic.
 > 
-> Thread B (Sysfs read) takes rdtgroup_mutex in rdtgroup_mondata_show(), then
-> delegates the read via smp_call_on_cpu() to a worker thread.
+> For high resolutions and framerates natively supported by the driver,
+> mbs_per_second exceeds 21.4M. Multiplying this by caps->mb_cycles_vpp
+> (e.g., 200) produces a value greater than 4.29 billion, wrapping around the
+> maximum 32-bit unsigned limit.
 > 
-> Thread C (Worker) executes resctrl_arch_rmid_read(), which blocks waiting
-> for cbqri_domain_list_lock.
+> Could this regression result in severely under-provisioning the hardware VPU
+> clock and causing encoding or decoding failures?
+> 
+>>
+>>   	/* 1.05 is VPP FW overhead */
+>>   	if (inst->fw_caps[STAGE].value == STAGE_2)
+>> -		vpp_cycles += mult_frac(vpp_cycles, 5, 100);
+>> +		vpp_cycles += div_u64(vpp_cycles * 5, 100);
+>>
+>>   	vsp_cycles = fps * data_size * 8;
+> 
+> [Severity: High]
+> This is a pre-existing issue, but does this calculation overflow on 32-bit
+> platforms?
+> 
+> The variable fps is a u32, data_size is a size_t, and 8 is an int. On 32-bit
+> architectures, this multiplication evaluates entirely in 32-bit arithmetic
+> before being zero-extended and assigned to the 64-bit vsp_cycles variable.
+> 
+> For standard 4K 60fps encoding, an uncompressed data_size of around 12.4MB
+> yields 60 * 12441600 * 8 = 5,971,968,000, which wraps around the maximum
+> 32-bit limit.
+> 
+> Since this patch explicitly addresses 32-bit systems, will this regression
+> cause the VSP to be severely under-clocked during common use cases on those
+> platforms?
+> 
+>>   	vsp_cycles = div_u64(vsp_cycles, 2);
+> 
+> --
+> Sashiko AI review · https://sashiko.dev/#/patchset/20260602-fixbranch-v1-1-b8eccaad6d17@kernel.org?part=1
 
-This is not a problem. Every rdtgroup_mutex -> cbqri_domain_list_lock
-path runs under cpus_read_lock, and the hotplug path runs under
-cpus_write_lock.
+Yeah but no but yeah.
 
-> > +static void cbqri_resctrl_pick_counters(void)
-> > +{
-> [ ... ]
-> > +	/*
-> > +	 * mbm_total_bytes is surfaced on the L3 monitoring domain, so it
-> > +	 * needs a mon-capable L3 cache controller as well as a single
-> > +	 * mon-capable bandwidth controller.
-> > +	 */
-> > +	if (l3->ctrl && l3->ctrl->mon_capable && cbqri_find_only_mon_bc())
-> > +		resctrl_enable_mon_event(QOS_L3_MBM_TOTAL_EVENT_ID, false, 0, NULL);
-> 
-> Does passing any_cpu = false here break monitor reads and RMID resets on
-> nohz_full systems?
-> 
-> When any_cpu is false, the resctrl core ensures the read executes on a CPU
-> in the target domain. If all CPUs in that domain are nohz_full,
-> mon_event_read() falls back from smp_call_on_cpu() (process context) to
-> smp_call_function_any() (IPI hardirq context with interrupts disabled).
-> 
-> Because drivers/resctrl/cbqri_resctrl.c checks for irqs_disabled() in both
-> resctrl_arch_rmid_read() and resctrl_arch_reset_rmid() and silently aborts,
-> monitor reads and resets will fail on nohz_full systems.
+This driver only really runs on 64 bit systems so making it resilient 
+for 32 bit is another day's pile of proverbial to shovel.
 
-The CBQRI MMIO registers are cpu agnostic so I will register
-QOS_L3_MBM_TOTAL with any_cpu=true so the core reads in process context.
-
-> > @@ -854,6 +1054,7 @@ static int cbqri_attach_cpu_to_l3_mon(struct cbqri_controller *ctrl,
-> [ ... ]
-> >  err_offline:
-> >  	/*
-> >  	 * cancel_delayed_work avoids deadlocking against the cqm_limbo
-> >  	 * worker which takes cpus_read_lock while this hotplug callback
-> >  	 * already holds cpus_write_lock. mbm_over is only
-> >  	 * INIT_DELAYED_WORK'd when MBM_TOTAL was enabled, so gate the
-> >  	 * cancel on the same condition to avoid touching a zeroed work
-> >  	 * struct.
-> >  	 */
-> >  	cancel_delayed_work(&mon_dom->cqm_limbo);
-> > +	if (resctrl_is_mon_event_enabled(QOS_L3_MBM_TOTAL_EVENT_ID))
-> > +		cancel_delayed_work(&mon_dom->mbm_over);
-> >  	resctrl_offline_mon_domain(res, &mon_dom->hdr);
-> >  err_listdel:
-> >  	list_del(&mon_dom->hdr.list);
-> >  err_free:
-> >  	kfree(mon_dom);
-> >  	return err;
-> >  }
-> 
-> Does this non-blocking cancel_delayed_work() lead to a use-after-free of
-> mon_dom?
-> 
-> In drivers/resctrl/cbqri_resctrl.c:cbqri_attach_cpu_to_l3_mon(),
-> resctrl_online_mon_domain() schedules the mbm_over delayed work. If hardware
-> initialization fails later in the function, the error path executes
-> cancel_delayed_work(), which is non-blocking.
-> 
-> If the worker thread has already woken up and is actively blocked on
-> cpus_read_lock() waiting for the hotplug thread to drop cpus_write_lock(),
-> cancel_delayed_work() will return false.
-> 
-> The hotplug thread will then proceed to free mon_dom and drop the lock.
-> Once the lock is dropped, the worker thread resumes execution and will
-> access the freed mon_dom.
-
-I don't think that this is a problem. resctrl_offline_mon_domain()
-already issues cancel_delayed_work() for mbm_over and cqm_limbo, and x86
-frees the domain right after. The mbm_over and cqm_limbo workers take
-cpus_read_lock() first, and both the error path and the offline teardown
-run under cpus_write_lock().
-
-Drew
+---
+bod
