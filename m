@@ -1,90 +1,203 @@
-Received: from mail11.truemail.it (mail11.truemail.it [217.194.8.81])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from mgamail.intel.com (mgamail.intel.com [192.198.163.9])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AF66427466A;
-	Tue,  2 Jun 2026 05:08:07 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=217.194.8.81
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A161225B093
+	for <sashiko-reviews@lists.linux.dev>; Tue,  2 Jun 2026 05:12:53 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=192.198.163.9
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1780376891; cv=none; b=q+1YC3T3BJVx2Hou42Wu7c0FvFPUYfNHhpiQ9DWwJHz38+t5aQmmHzuDx6InhSCWdkihav3qpgYcP4Dqlg7N6XMEmrZfBSuAFM+Cmf2wTYYPaCtPjI8pFkacjy0WDT4Ms4ra9fYZij76n5f3rBRUrTPu63S45iO9OAk7+Kxzhzs=
+	t=1780377175; cv=none; b=TzfZBe6Xe4Ki3JfmysQKbcX7BwHYQHhjawJ0fcsrrQuKd1wNI5K7UqWnXD7LF6fVmxVCZ0xS+4gUhhvRR56I7vPPCWDfMaWP1MaOz7/l7wDe8LyMq029lzBZNu8LK9XodBv24oxqokyNNspbN3nClhHIhcnwj4NfXMpmE5x8wHU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1780376891; c=relaxed/simple;
-	bh=83QphIv7dy/BKMGWee202X7zhREyExn6VZgZWV6tp3A=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=JAVFT+6AyKuLbU7roSQn5x0OMAPta8JCa8g2RAhK/pFHXhhPp6jLcZ5W/imOgsEg2yq/melBFIx2jgpIDNd+VKoP2FXpF7hEuFFhsdyceO3VBW3f9Y6j6gZtxqpyje3qvi3MQiexe49oIJx57cyGO/NVUSdcIF7aBDBA0q4YZ9w=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=dolcini.it; spf=pass smtp.mailfrom=dolcini.it; dkim=pass (2048-bit key) header.d=dolcini.it header.i=@dolcini.it header.b=xbP5KvT3; arc=none smtp.client-ip=217.194.8.81
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=dolcini.it
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=dolcini.it
+	s=arc-20240116; t=1780377175; c=relaxed/simple;
+	bh=gqpQge/JlKKAHXFNohM0NnwXrPrUroOFAz3dUacjbSU=;
+	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
+	 In-Reply-To:Content-Type; b=TyLER95W/8+RxhwGA87is/PEmO7S4wTr34q8urEk3S0thWxlwU5TPMG40aEGlNFVhJzNDg2QOzmO4Y4ZBCzQUfBNaycc73dFr/OFVzLqevxR/bnet/jtICIkGZvgM3E7lv1cEeGpnOolpGAIXpEcJR3O7znmDpINtUu/sw2UQc0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linux.intel.com; spf=pass smtp.mailfrom=linux.intel.com; dkim=pass (2048-bit key) header.d=intel.com header.i=@intel.com header.b=jdrFJ45l; arc=none smtp.client-ip=192.198.163.9
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linux.intel.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linux.intel.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=dolcini.it header.i=@dolcini.it header.b="xbP5KvT3"
-Received: from francesco-nb (93-35-44-150.ip53.fastwebnet.it [93.35.44.150])
-	by mail11.truemail.it (Postfix) with ESMTPA id 5CE411F944;
-	Tue,  2 Jun 2026 07:08:04 +0200 (CEST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=dolcini.it;
-	s=default; t=1780376885;
-	bh=c+5u1Yt7s4Cg95FTtZjWyQ0rHXvVRxYSon9dVPyidmk=; h=From:To:Subject;
-	b=xbP5KvT3o0o6G36PYgw2R/TxfHT7OHjd5XQlF5ZqCG0z7UDrkbm4FTcGs9ZH1XDqw
-	 DUDVD/rvRqX9yY1aclC3QhFRKcsvolVQX9PAq6WLx8FdBzXwb27a1xNLjIrCeiX/Lj
-	 BWh91alk11NroXaNGscV4nExhy+00ZVVQhY03S0sAkOKD2SBpl+4z74VqS+N+FgU/M
-	 KM7SOnK4iTcUQF+W6wvMJfxwkpvQr+9/MtITQYOGML22ecIRjZLS7F92ZM4dGa5aF6
-	 42zqn4Xp5vPOTYds1rZ6JO8LFmgN4sOcrIjavX+5IBEkqPQUx007rgM5h2MQ8tfc++
-	 k8MU2mnAtTzSA==
-Date: Tue, 2 Jun 2026 07:07:58 +0200
-From: Francesco Dolcini <francesco@dolcini.it>
-To: Frank Li <Frank.li@nxp.com>
-Cc: sashiko-reviews@lists.linux.dev,
-	Franz Schnyder <fra.schnyder@gmail.com>, devicetree@vger.kernel.org,
-	Frank.Li@kernel.org, robh@kernel.org, conor+dt@kernel.org,
-	imx@lists.linux.dev
-Subject: Re: [PATCH v4 2/3] arm64: dts: freescale: add Aquila iMX95 support
-Message-ID: <20260602050758.GA4108@francesco-nb>
-References: <20260521-add-aquila-imx95-v4-2-5a7f86c824f5@toradex.com>
- <20260521173020.0A03E1F000E9@smtp.kernel.org>
- <ah3gl2imBTPoEpHm@lizhi-Precision-Tower-5810>
+	dkim=pass (2048-bit key) header.d=intel.com header.i=@intel.com header.b="jdrFJ45l"
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
+  d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
+  t=1780377174; x=1811913174;
+  h=message-id:date:mime-version:subject:to:cc:references:
+   from:in-reply-to:content-transfer-encoding;
+  bh=gqpQge/JlKKAHXFNohM0NnwXrPrUroOFAz3dUacjbSU=;
+  b=jdrFJ45lYsfzVej9TgRoXNhR1VNNIKSprJc/CYY8n2hfBw6hagzwoM1F
+   SKSkNlRHxaQ651nlvVZjCN34ae6FOYWsoCyrkSyFmea2SUvdI0MBSgOLv
+   PdPsxqx2e2nK3spPkeh3z0Siip61P7FpEeBK753ma+rMRzmJ+d5bT2rgc
+   iCVvrcNN8z4UEEO5ysKez9OKE0qiJSOxKZPVbMLzBlmTQt1m25SXqr8MZ
+   mT8ZY2PyiDMDKeWvn7Tc322MWDs8eZpCXvIENwurxmNknJWyOP5Aumids
+   FwRXBYnMVp7kB7Jfq7GEhSStI8srbk5tIew/DPjjckk9S620qGfGoY/sR
+   Q==;
+X-CSE-ConnectionGUID: 5k/8MeRnTD2F/ZO3w3gz3A==
+X-CSE-MsgGUID: ba5aTiQ6Q5mrd7Yf/r2n1A==
+X-IronPort-AV: E=McAfee;i="6800,10657,11804"; a="91839468"
+X-IronPort-AV: E=Sophos;i="6.24,182,1774335600"; 
+   d="scan'208";a="91839468"
+Received: from fmviesa010.fm.intel.com ([10.60.135.150])
+  by fmvoesa103.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 01 Jun 2026 22:12:53 -0700
+X-CSE-ConnectionGUID: dLN37qnlRPSvqkYfpgKFCQ==
+X-CSE-MsgGUID: yTU5Xd8qRxi2uVFi9n2cZA==
+X-ExtLoop1: 1
+X-IronPort-AV: E=Sophos;i="6.24,182,1774335600"; 
+   d="scan'208";a="239630114"
+Received: from unknown (HELO [10.238.1.64]) ([10.238.1.64])
+  by fmviesa010-auth.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 01 Jun 2026 22:12:52 -0700
+Message-ID: <bcc73423-2a00-4b2c-afec-83c70e28f023@linux.intel.com>
+Date: Tue, 2 Jun 2026 13:12:50 +0800
 Precedence: bulk
 X-Mailing-List: sashiko-reviews@lists.linux.dev
 List-Id: <sashiko-reviews.lists.linux.dev>
 List-Subscribe: <mailto:sashiko-reviews+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:sashiko-reviews+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <ah3gl2imBTPoEpHm@lizhi-Precision-Tower-5810>
-
-On Mon, Jun 01, 2026 at 03:42:15PM -0400, Frank Li wrote:
-> On Thu, May 21, 2026 at 05:30:19PM +0000, sashiko-bot@kernel.org wrote:
-> > > diff --git a/arch/arm64/boot/dts/freescale/imx95-aquila.dtsi b/arch/arm64/boot/dts/freescale/imx95-aquila.dtsi
-> > > new file mode 100644
-> > > index 0000000000000..69dc962a24a1d
-> > > --- /dev/null
-> > > +++ b/arch/arm64/boot/dts/freescale/imx95-aquila.dtsi
-> > > @@ -0,0 +1,1160 @@
-> > [ ... ]
-> > > +	reg_dp_1p2v: regulator-dp-1p2v {
-> > > +		compatible = "regulator-fixed";
-> > > +		/* CTRL_DP_BRIDGE_EN */
-> > > +		gpios = <&som_gpio_expander_0 7 GPIO_ACTIVE_HIGH>;
-> > > +		enable-active-high;
-> > > +		regulator-always-on;
-> > > +		regulator-max-microvolt = <1200000>;
-> > > +		regulator-min-microvolt = <1200000>;
-> > > +		regulator-name = "On-module +V1.2_DP";
-> > > +		vin-supply = <&reg_1p8v>;
-> > > +	};
-> >
-> > [Severity: Medium]
-> > Since this regulator is a dedicated power supply for som_dsi2dp_bridge which
-> > is marked as status = "disabled" below, is it necessary to have the
-> > regulator-always-on property here?
-> 
-> This one make sense. Does this regulator-dp-1p2v really need always on.
-
-Yes, it is wanted to be like that.
-
-Keeping it as always-on is a HW decision from the vendor, Toradex.
-
-If this is disabled at run-time, for example in some stand-by use case,
-it does not work properly afterward.
-
-Francesco
+User-Agent: Mozilla Thunderbird
+Subject: Re: [Patch v8 2/5] perf regs: Support x86 eGPRs/SSP sampling
+To: Ian Rogers <irogers@google.com>, sashiko-reviews@lists.linux.dev
+Cc: linux-perf-users@vger.kernel.org
+References: <20260529082451.591783-3-dapeng1.mi@linux.intel.com>
+ <20260529100610.5E84C1F00898@smtp.kernel.org>
+ <CAP-5=fWugapi9c-HWx9acm=MzyE=hb0muYwj3w86774iOBnvWw@mail.gmail.com>
+Content-Language: en-US
+From: "Mi, Dapeng" <dapeng1.mi@linux.intel.com>
+In-Reply-To: <CAP-5=fWugapi9c-HWx9acm=MzyE=hb0muYwj3w86774iOBnvWw@mail.gmail.com>
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
 
 
+On 5/30/2026 1:29 AM, Ian Rogers wrote:
+> On Fri, May 29, 2026 at 3:08 AM <sashiko-bot@kernel.org> wrote:
+>> Thank you for your contribution! Sashiko AI review found 2 potential issue(s) to consider:
+>> - [Medium] Intel PT PEBS register synthesis is silently disabled on SIMD-capable machines.
+>> - [Medium] Requesting legacy XMM registers (e.g., `-I XMM0`) fails with an 'Unknown register' error on modern CPUs, breaking backwards compatibility.
+>> --
+>>
+>> commit a0d7b85bb399d047c94284c24c34805466f84209
+>> Author: Dapeng Mi <dapeng1.mi@linux.intel.com>
+>> Subject: perf regs: Support x86 eGPRs/SSP sampling
+>>
+>> This commit adds support for sampling x86 extended GP registers (R16-R31) and
+>> the shadow stack pointer (SSP) register. It reclaims the original XMM registers
+>> space in sample_regs_user/sample_regs_intr to represent the eGPRs and SSP when
+>> SIMD sampling is supported, using a new abi argument to distinguish layouts.
+> Thanks Dapeng! I think stylistically this is exactly what I was hoping for!
+>
+> When I try to apply the patch on perf-tools-next it is failing, on
+> this patch with a conflict on:
+> ```
+> --- tools/perf/builtin-inject.c
+> +++ tools/perf/builtin-inject.c
+> @@ -457,6 +457,8 @@ static int
+> perf_event__convert_sample_callchain(const struct perf_tool *tool,
+>   /* adjust sample size for stack and regs */
+>   sample_size -= sample->user_stack.size;
+>   sample_size -= (hweight64(evsel->core.attr.sample_regs_user) + 1) *
+> sizeof(u64);
+> + if (sample->user_regs && sample->user_regs->abi & PERF_SAMPLE_REGS_ABI_SIMD)
+> + sample_size -= 4 * sizeof(u64); /* Reduce SIMD regs header size */
+>   sample_size += (sample->callchain->nr + 1) * sizeof(u64);
+>   event_copy->header.size = sample_size;
+> ```
+> This is happening because commit daac18e7c42c ("perf inject: Fix
+> itrace branch stack synthesis") switched the size logic to use
+> perf_event__sample_event_size, which I believe accurately accounts for
+> the new layout and so it is safe to drop this part of the change.
+
+Sure. I would drop it in next version. This pachset is based on top of
+Peter's perf/core tree and I forgot to rebase it on the perf-tools-next
+tree. :(
+
+
+
+>
+>>> diff --git a/tools/perf/util/intel-pt.c b/tools/perf/util/intel-pt.c
+>>> index fc9eec8b54b82..2729ad8c6d263 100644
+>>> --- a/tools/perf/util/intel-pt.c
+>>> +++ b/tools/perf/util/intel-pt.c
+>>> @@ -2470,6 +2470,7 @@ static int intel_pt_do_synth_pebs_sample(struct intel_pt_queue *ptq, struct evse
+>>>       }
+>>>
+>>>       if (sample_type & PERF_SAMPLE_REGS_INTR &&
+>>> +         !evsel->core.attr.sample_simd_regs_enabled &&
+>>>           (items->mask[INTEL_PT_GP_REGS_POS] ||
+>>>            items->mask[INTEL_PT_XMM_POS])) {
+>>>               u64 regs_mask = evsel->core.attr.sample_regs_intr;
+>> [Severity: Medium]
+>> Does this completely disable PEBS register synthesis on SIMD-capable machines?
+>>
+>> Since PERF_SAMPLE_REGS_ABI_SIMD is set by default on supported platforms in
+>> __perf_reg_mask_x86(), opts->sample_simd_regs_enabled will be set to 1 for
+>> any register request (like -I ax).
+>>
+>> Could this cause basic GPR synthesis to be silently skipped here, resulting in
+>> a functional regression for userspace tooling?
+> I don't think functionality is lost and presumably the driver is
+> ensuring PEBS sampled registers are preferred over say pt_regs from
+> the interrupt.
+
+Strictly speaking, PEBS_VIA_PT feature is only enabled for legacy PEBS now,
+so sample_simd_regs_enabled won't be enabled on such kind of supporting
+legacy PEBS platforms and then there is no any functionality lost.
+
+Thanks.
+
+
+>
+>> [ ... ]
+>>
+>>> diff --git a/tools/perf/util/perf-regs-arch/perf_regs_x86.c b/tools/perf/util/perf-regs-arch/perf_regs_x86.c
+>>> index b6d20522b4e8f..ae26d991cdc9f 100644
+>>> --- a/tools/perf/util/perf-regs-arch/perf_regs_x86.c
+>>> +++ b/tools/perf/util/perf-regs-arch/perf_regs_x86.c
+>>> @@ -276,13 +276,38 @@ uint64_t __perf_reg_mask_x86(bool intr)
+>> [ ... ]
+>>> +uint64_t __perf_reg_mask_x86(bool intr, int *abi)
+>>> +{
+>> [ ... ]
+>>> +     if (mask != PERF_REGS_MASK) {
+>>> +             *abi |= PERF_SAMPLE_REGS_ABI_SIMD;
+>>> +     } else {
+>>> +             mask |= __arch__reg_mask(sample_type, PERF_REG_EXTENDED_MASK,
+>>> +                                      false);
+>>>       }
+>>>
+>>> -     return PERF_REGS_MASK;
+>>> +     return mask;
+>>>  }
+>> [ ... ]
+>>> +const char *__perf_reg_name_x86(int id, int abi)
+>>> +{
+>>> +     const char *name;
+>>> +
+>>> +     name = __arch_reg_gpr_name(id);
+>>> +     if (name)
+>>> +             return name;
+>>> +
+>>> +     if (abi & PERF_SAMPLE_REGS_ABI_SIMD)
+>>> +             name = __arch_reg_egpr_name(id);
+>>> +     else
+>>> +             name = __arch_reg_xmm_name(id);
+>>> +
+>>> +     return name;
+>>> +}
+>> [Severity: Medium]
+>> Does this break backwards compatibility for legacy XMM register requests?
+>>
+>> When the CPU supports eGPRs/SSP, PERF_SAMPLE_REGS_ABI_SIMD is set and the
+>> legacy XMM registers (PERF_REG_EXTENDED_MASK) are excluded from the returned
+>> mask because they share the same bit space.
+>>
+>> If __perf_reg_name_x86() maps these overlapping IDs exclusively to eGPR names
+>> (for instance, mapping ID 32 to R16), will name_to_perf_reg_mask() fail to
+>> resolve legacy requests like -I XMM0 and throw an unknown register error?
+> So with PERF_SAMPLE_REGS_ABI_SIMD XMM0 is no longer part of the
+> register mask and thus name_to_perf_reg_mask shouldn't set a bit for
+> it. The next patch adjusts __parse_regs to encode vector registers in
+> the new space within perf_event_attr.
+>
+> Thanks,
+> Ian
+>
+>> --
+>> Sashiko AI review · https://sashiko.dev/#/patchset/20260529082451.591783-1-dapeng1.mi@linux.intel.com?part=2
+>>
