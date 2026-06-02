@@ -1,129 +1,153 @@
-Received: from out-170.mta1.migadu.com (out-170.mta1.migadu.com [95.215.58.170])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-dl1-f54.google.com (mail-dl1-f54.google.com [74.125.82.54])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 67D863A6EEC
-	for <sashiko-reviews@lists.linux.dev>; Tue,  2 Jun 2026 19:08:26 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=95.215.58.170
-ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1780427308; cv=none; b=ikDFxL0HYsAYdSVLaJcgjpiuiq7tRMOIOALjfQ+f0AizRuytPKs3JA+UYZli2PwSHa8nghckd6Wj+WjVHYQsw2PymoL//0ETlHJsQsXqR6+F7WXT0NtKUTMrBoa6ZmdyGy8ZHaIj3yh01DpL0H+1g+WiKcwHg/TfvD+QEXQPyRU=
-ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1780427308; c=relaxed/simple;
-	bh=iWNJSn4uo8JSQotP+QmyWfX5z49t2zzsZf5KGuqaKsk=;
-	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=KYoRNKEpmiOWNdVPDfj+mexKrZslcvE17AzpOSrEEO4Z4Vw6eHMIUibWzygplSnHm14v4/ok3fC0ajuUG/VdgnYW9Ms3J3pOQC2+SwMYii4hIQoWxHU0OsNXv8o2YJ2FvvKFy2M2uP2obn05bLlndRToZKIGDMXGcPRCJEHPBX4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linux.dev; spf=pass smtp.mailfrom=linux.dev; dkim=pass (1024-bit key) header.d=linux.dev header.i=@linux.dev header.b=CGlcTgjB; arc=none smtp.client-ip=95.215.58.170
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linux.dev
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linux.dev
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A36E9370D70
+	for <sashiko-reviews@lists.linux.dev>; Tue,  2 Jun 2026 20:41:38 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=pass smtp.client-ip=74.125.82.54
+ARC-Seal:i=2; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
+	t=1780432899; cv=pass; b=eb/nFMDh7LGEgmWNwWnxKCazzrz61obU8ljqUqFXWrDJ5mkHVKCnV+2Ex6wkubbr/+mYNqpQK1wQ0ynf2/4d9LIxiWlmND+mwWNuzf00TuLgzPwgbKh1Nd13G4WT0I3lW5DxZ9clJQBQmZF56sSn6T9IQyVyqpoTR+23tDw5cLA=
+ARC-Message-Signature:i=2; a=rsa-sha256; d=subspace.kernel.org;
+	s=arc-20240116; t=1780432899; c=relaxed/simple;
+	bh=nTYPsQanuHPOf3+YdCHnJYoAoqYTW65WA3kXZLPmJs8=;
+	h=From:In-Reply-To:References:MIME-Version:Date:Message-ID:Subject:
+	 To:Cc:Content-Type; b=P4Sa4JOIHl4udW9rKJpscAFzSN42Okc6eRQupS9ysmfgf0oZBVwFrp3AtOUmO08uYNvz4xa1kQjg7iW2igmnXMJWvOJXtl6QZtXKV8DQ0YPYKSkp8bZF7K0pRLjfEkIk4rDkyYWNsLZ4zAtivLGxy1p+u9lLFr4nBDd2vklnQps=
+ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=google.com; spf=pass smtp.mailfrom=google.com; dkim=pass (2048-bit key) header.d=google.com header.i=@google.com header.b=n6vFnYhm; arc=pass smtp.client-ip=74.125.82.54
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=google.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=google.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linux.dev header.i=@linux.dev header.b="CGlcTgjB"
-Message-ID: <f921a5e0-6a86-48ae-9ac2-d58f42519476@linux.dev>
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linux.dev; s=key1;
-	t=1780427304;
-	h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
-	 to:to:cc:cc:mime-version:mime-version:content-type:content-type:
-	 content-transfer-encoding:content-transfer-encoding:
-	 in-reply-to:in-reply-to:references:references;
-	bh=bkJRJHzsiHH/1/ryNQ7smNyOStVTjUbqlqi+pruClso=;
-	b=CGlcTgjBOVDRMQOBGLrIu1j+aOShnoFf8/oKphdQCd3VAZeoYkPvRoBU56Yk3KYkF5iRHV
-	2+aIhDsLeeiKpjjKEbVsT+spE8y9+l5Y5usXfIz6jaC19qRhfp0V5HUIUet7cywXMxEo1W
-	/ew08AWC1+AL9OIOMM+iFfD7ENy1bDY=
-Date: Tue, 2 Jun 2026 12:08:10 -0700
+	dkim=pass (2048-bit key) header.d=google.com header.i=@google.com header.b="n6vFnYhm"
+Received: by mail-dl1-f54.google.com with SMTP id a92af1059eb24-137dd51129bso627380c88.1
+        for <sashiko-reviews@lists.linux.dev>; Tue, 02 Jun 2026 13:41:38 -0700 (PDT)
+ARC-Seal: i=1; a=rsa-sha256; t=1780432898; cv=none;
+        d=google.com; s=arc-20240605;
+        b=JmQ/W3c2+o66un0IDOLWBEGYLv9tmkKukpcSlg7IwyuFzZkVsILKPMGd2vVof5VJ7w
+         Y+jmnuvYla+0+zfJl0I2q9ugwAwP3SdraZGTV5GHvwkKEC6utNOsX9LFfWOmEYdqRUZ9
+         rAKgd+EUdD5FolPQ/05ILWDRuD7j7DMrM4QmNymadpF9ZqNBWRb7Er2NdDqtp2IYNd8B
+         ZeRJ+yGZwrwoDS82F7lAuei3T7bczua4kAR2gr/6tX6udGQecYCWgmV5SCRUtpmfjV7M
+         2NmtEaWmhIiLHSO/2Hn1e7AAj5vncq8IxDSObYZF8w+BiJPIwq5d5834/m+ObuAc2KDg
+         O1Xg==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com; s=arc-20240605;
+        h=content-transfer-encoding:cc:to:subject:message-id:date
+         :mime-version:references:in-reply-to:from:dkim-signature;
+        bh=Q9DfpYFNGzsB6sazPDXo4YOkWRxIbqoOx7DhukB8QIE=;
+        fh=KVy4+j+TE0qJlGnL1oxDtQvAs+ZlkPteDJwxhHS2piY=;
+        b=ZhgGjnguZ5tnr2zuOnZHjTbMgx/TYhiYEOHzAt9iqChDqRNSiErZV3+uJ7tvM2Nhzq
+         u5mFdGdK/0aLZk6+4E4U7OmKVXo5bm60hDQcGbry7qsxWwDE65fNJqVdfX2HwTPjJtU9
+         uqW1jIJJ3uvBGgsrxDcl29E/JzQUKP6/TNEPdPLYV6aMsl0O/GdjDDlDcx6I6InzNxKS
+         dDx+9pvNKV4OtWuoRMwWi/8XSMJY5NNulaagwqADL12UpKfsBLP5VYl5XlQv2pQwLQkM
+         NYMUeqE0nm3TVeD4fELyF81JMfQ3245YZmiV+/OFdnugQf0SgCfb82X8ejIUXOajHdwY
+         RbCg==;
+        darn=lists.linux.dev
+ARC-Authentication-Results: i=1; mx.google.com; arc=none
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=google.com; s=20251104; t=1780432898; x=1781037698; darn=lists.linux.dev;
+        h=content-transfer-encoding:cc:to:subject:message-id:date
+         :mime-version:references:in-reply-to:from:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=Q9DfpYFNGzsB6sazPDXo4YOkWRxIbqoOx7DhukB8QIE=;
+        b=n6vFnYhmK9Ldy+/18gNAOs3V2g8/ENubWJQHPAJZoGBOth5YX+KLEsgGaCD+WUyudm
+         kawLYcwdof2uNlhmUNrwEPO0bN1YnYUmOHwW20MkVZlUb29oHyN4dm1MKNQkocKnt3UP
+         SehplLCDCEOrYvk1UFfDCvEKcyWSZdF38j35rGIQG2rvruTsMtjwMxdqeq7HMjLW/FYl
+         /0CiSbrqaYtYsN8DvX4CLqfW3l/PKVIRZlc+MiXPCgutGI2SXjO9YdYmF4iZfwCcQiJK
+         4Ix7AuvpDnkCgXYreHVIn/lwGxmCT8p2W/jlDWQCiHtlJGO6kSOb/XMbXDJCg1/WTD9e
+         0eVg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20251104; t=1780432898; x=1781037698;
+        h=content-transfer-encoding:cc:to:subject:message-id:date
+         :mime-version:references:in-reply-to:from:x-gm-gg:x-gm-message-state
+         :from:to:cc:subject:date:message-id:reply-to;
+        bh=Q9DfpYFNGzsB6sazPDXo4YOkWRxIbqoOx7DhukB8QIE=;
+        b=FCge10up/wO+X3jO+ncpEwtMOZTluu8x5HL4JWbgSDJYdbOb0MNrEi0hmXiqu+jj18
+         nVNFoIwVYt4bDzGlXfUp5KiX+W2A8Pos3HmQAwxfNBsJKMd3dikcTqGiTKcl4oJ8k1Ej
+         e/tX0C0MpUiS53SLEL/rcyYlvtWbjjRp4MpvMiZaHzFdyuRNoze2SKpUF4dcFG4VRL2E
+         qutUjIftT5mlRQwttene7EbpDKZ4lfa6ZIr7EtNpvWp3cGzPmL8XMF1Q8MTEeXPaghL5
+         8G1/igQV+X7g9b9DIlK/0ott0WaGnxgT5hqakLrdjni44YM05nfLAl6JeRa3lOZq5RaW
+         z1XA==
+X-Gm-Message-State: AOJu0YyeU1RowS4QjdYAoZaAF8GUEmhduQy7/u8OGgGU6XCEZ2VRB5di
+	7rhNZBXRf2+Gfw29KX8VWjMK+Rr55NY7/ZQzkz3CLBKGbhMMkmYHiQS/QlYQjWT8D/vWx7TOgOQ
+	WX7YYtd0d6Nx69n8ORgKfrF813gAno5JHR+nEx39qycKk9prq1zlVDnyR
+X-Gm-Gg: Acq92OF3F/HGZW84lqv9lGtCo1E5W9PoFsiiZ+XeVhCYO/8P6Tqh4hPY+iP8U/pOp7v
+	RIYGa/+h775MYjdm/zvo9yacklBFHctBU7PspWYVEJYsiHMH3pjjCYqTsEXvsSk6uXVx4Z+PM4Q
+	Mg8SZ+XoP5IYwWApYIrXgB2FIjgrUCStwkAPUKGaMNnAu5b3MTf4nHP9NsxNBkeGPar1TbZ7Ro+
+	JzU9baZUeXP55/xrbq4frp0yK7D6mg/7R2mQe8/w+ARFE/hH4jFuNaxRvU2ZA+hFedp4raq2yqg
+	DqOiy5GlmJJoQS9wH2fgGIUajTaZCPt0P056ZGNoQfTXO5hwRcQl9Oy29vset5HxWgktP1FE5bk
+	q72ST
+X-Received: by 2002:a05:701b:2058:20b0:137:eb26:117 with SMTP id
+ a92af1059eb24-137f6b87c7fmr108819c88.13.1780432897006; Tue, 02 Jun 2026
+ 13:41:37 -0700 (PDT)
+Received: from 176938342045 named unknown by gmailapi.google.com with
+ HTTPREST; Tue, 2 Jun 2026 13:41:36 -0700
+Received: from 176938342045 named unknown by gmailapi.google.com with
+ HTTPREST; Tue, 2 Jun 2026 13:41:36 -0700
+From: Ackerley Tng <ackerleytng@google.com>
+In-Reply-To: <20260523005223.5B9651F000E9@smtp.kernel.org>
+References: <20260522-gmem-inplace-conversion-v7-7-2f0fae496530@google.com> <20260523005223.5B9651F000E9@smtp.kernel.org>
 Precedence: bulk
 X-Mailing-List: sashiko-reviews@lists.linux.dev
 List-Id: <sashiko-reviews.lists.linux.dev>
 List-Subscribe: <mailto:sashiko-reviews+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:sashiko-reviews+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Subject: Re: [PATCH v2 4/4] crypto: ccp: Fix memory leak in SEV INIT_EX path
-To: sashiko-reviews@lists.linux.dev
+Date: Tue, 2 Jun 2026 13:41:36 -0700
+X-Gm-Features: AVHnY4I-p28f6R-pwlANnTjmbkkEzzn4cv_rflApgLZ-buk8YP2KDCX9f8QQ2KQ
+Message-ID: <CAEvNRgHn44ASMxyBpDWXYO0QiGi1PgREUWfopgdk_aQ7bFx_UQ@mail.gmail.com>
+Subject: Re: [PATCH v7 07/42] KVM: guest_memfd: Only prepare folios for
+ private pages
+To: sashiko-reviews@lists.linux.dev, 
+	Ackerley Tng via B4 Relay <devnull+ackerleytng.google.com@kernel.org>
 Cc: kvm@vger.kernel.org
-References: <20260601-sev_snp_fixes-v2-4-611891b28a86@meta.com>
- <20260601235540.C089C1F00893@smtp.kernel.org>
-Content-Language: en-US
-X-Report-Abuse: Please report any abuse attempt to abuse@migadu.com and include these headers.
-From: Atish Patra <atish.patra@linux.dev>
-In-Reply-To: <20260601235540.C089C1F00893@smtp.kernel.org>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
-X-Migadu-Flow: FLOW_OUT
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 
+sashiko-bot@kernel.org writes:
 
-On 6/1/26 4:55 PM, sashiko-bot@kernel.org wrote:
-> Thank you for your contribution! Sashiko AI review found 2 potential issue(s) to consider:
 >
-> Pre-existing issues:
-> - [Critical] When SEV-SNP is initialized, `sev_init_ex_buffer` is explicitly transitioned to a firmware-owned state via `rmp_mark_pages_firmware()`. However, the driver never reclaims this buffer back to a shared state before reading it. Immediately after the `INIT_EX` command completes, `__sev_do_cmd_locked()` unconditionally calls `sev_write_init_ex_file_if_required()`, which invokes `kernel_write()` to read from `sev_init_ex_buffer` and save it to disk. The host CPU's attempt to read firmware-owned pages inside `kernel_write()` will trigger an RMP violation (Machine Check Exception or #PF with RMP bit), causing a fatal host crash.
-> - [High] The `sev_init_ex_buffer` is allocated without the `__GFP_ZERO` flag. If the NV memory file does not exist (returning `-ENOENT`), or a short read occurs, `sev_read_init_ex_file()` returns 0 without fully initializing the 32KB buffer. This uninitialized kernel memory is passed to the SEV firmware via the `INIT_EX` command. Later, `sev_write_init_ex_file()` writes the entire 32KB buffer back to the host filesystem, resulting in an information leak of kernel heap data to disk.
-> --
+> [...snip...]
 >
-> commit 9089d07a571c9b175950b197e846ef7b16492229
-> Author: Atish Patra <atishp@meta.com>
+>> @@ -908,7 +910,8 @@ int kvm_gmem_get_pfn(struct kvm *kvm, struct kvm_mem=
+ory_slot *slot,
+>>  		folio_mark_uptodate(folio);
+>>  	}
+>>
 >
-> crypto: ccp: Fix memory leak in SEV INIT_EX path
->
-> This commit fixes a memory leak in the SEV INIT_EX path by freeing
-> allocated pages and clearing the buffer on failure. It avoids freeing
-> pages if they have already been converted to firmware-owned memory.
->
->> diff --git a/drivers/crypto/ccp/sev-dev.c b/drivers/crypto/ccp/sev-dev.c
->> --- a/drivers/crypto/ccp/sev-dev.c
->> +++ b/drivers/crypto/ccp/sev-dev.c
->> @@ -1550,7 +1550,7 @@ static int __sev_platform_init_handle_init_ex_path(struct sev_device *sev)
->>   
->>   	rc = sev_read_init_ex_file();
->>   	if (rc)
->> -		return rc;
->> +		goto err_free;
 > [Severity: High]
-> This is a pre-existing issue, but does allocating sev_init_ex_buffer
-> without zeroing leak kernel memory?
+> This is a pre-existing issue, but does clear_highpage() fully initialize =
+the
+> folio if it is a large folio?
 >
-> Earlier in __sev_platform_init_handle_init_ex_path(), the buffer is
-> allocated without the zeroing flag:
+> Just above this diff context in kvm_gmem_get_pfn(), the code clears the
+> newly allocated folio:
 >
-> page = alloc_pages(GFP_KERNEL, get_order(NV_LENGTH));
+> 	if (!folio_test_uptodate(folio)) {
+> 		clear_highpage(folio_page(folio, 0));
+> 		folio_mark_uptodate(folio);
+> 	}
 >
-> If the NV memory file does not exist, sev_read_init_ex_file() sets
-> ret = 0 on -ENOENT and returns without initializing the buffer. Short
-> reads also leave the remainder of the buffer uninitialized.
-> Later, sev_write_init_ex_file() writes the entire 32KB buffer back to
-> the host filesystem via kernel_write(). Could this result in an
-> information leak of uninitialized kernel heap data to disk?
+> Since clear_highpage() only clears a single PAGE_SIZE page, won't this le=
+ak
+> uninitialized host memory in the tail pages if __kvm_gmem_get_pfn() retur=
+ns
+> a higher-order folio?
+>
 
-Fair point. I am not sure if the firmware implements writing to full 
-NV_LENTH
-so zeroing the buffer at allocation time is idea IMO.
+guest_memfd only supports 4K folios now. I'll fix these when I get to
+huge pages.
 
->>   
->>   	/* If SEV-SNP is initialized, transition to firmware page. */
->>   	if (sev->snp_initialized) {
->> @@ -1559,11 +1559,23 @@ static int __sev_platform_init_handle_init_ex_path(struct sev_device *sev)
->>   		npages = 1UL << get_order(NV_LENGTH);
->>   		if (rmp_mark_pages_firmware(__pa(sev_init_ex_buffer), npages, true)) {
->>   			dev_err(sev->dev, "SEV: INIT_EX NV memory page state change failed.\n");
->> -			return -ENOMEM;
->> +			rc = -ENOMEM;
-> [Severity: Critical]
-> This is a pre-existing issue, but does reading a firmware-owned page
-> from the host CPU trigger an RMP violation?
+> While comments in kvm_gmem_prepare_folio() state that the code is ready
+> for huge folios, silently leaving tail pages uninitialized could lead to =
+a
+> severe information leak once mapped into the guest.
 >
-> When the buffer is explicitly transitioned to a firmware-owned state
-> via rmp_mark_pages_firmware() here, the driver does not appear to
-> reclaim this buffer back to a shared state before reading it.
->
-> Immediately after the command completes, __sev_do_cmd_locked()
-> unconditionally calls sev_write_init_ex_file_if_required(), which
-> invokes kernel_write() to read from sev_init_ex_buffer and save it
-> to disk.
->
-> Will the host CPU's attempt to read firmware-owned pages inside
-> kernel_write() trigger a fatal page fault or Machine Check Exception,
-> crashing the host?
 
-NA. Already invalidated the theory in response to v1.
+It's actually not quite ready, but I think this series is big enough as
+it is, I'd like to defer the hugepage stuff to other series.
 
-https://lore.kernel.org/kvm/1dd5c998-ad2a-47dd-9875-c8fd5db6d374@linux.dev/
-
+>> -	r =3D kvm_gmem_prepare_folio(kvm, slot, gfn, folio);
+>> +	if (kvm_gmem_is_private_mem(inode, index))
+>> +		r =3D kvm_gmem_prepare_folio(kvm, slot, gfn, folio);
+>>
+>>  	folio_unlock(folio);
 >
-> [ ... ]
->
+> --
+> Sashiko AI review =C2=B7 https://sashiko.dev/#/patchset/20260522-gmem-inp=
+lace-conversion-v7-0-2f0fae496530@google.com?part=3D7
