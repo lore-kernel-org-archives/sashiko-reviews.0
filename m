@@ -1,49 +1,48 @@
 Received: from casper.infradead.org (casper.infradead.org [90.155.50.34])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DD409361DD2;
-	Tue,  2 Jun 2026 12:29:35 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 39B7130148A;
+	Tue,  2 Jun 2026 12:37:17 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=90.155.50.34
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1780403379; cv=none; b=k++ojSdYqE34jSK9Md2HGuWUaRU7ehXJh+NpvtElGJdXv8b3YmmdmOocvwkxuocyHrfCIFMKCzbyqJQ5NoKKDp5hdG4GhNbkyyRFHIxknBsu9fuB2j3BShXaosTp6VAgVVi46dvVELXXrOsmIHX5jF5qomUENGnhyuMgCQ3OyRQ=
+	t=1780403839; cv=none; b=aEUqO8VMIHlrJAlqXdpiC0PfUotlXT9i+3QG9LwzH/w3YI1ANSo/mNSiUHfiHQkgsLOxM+62ZERgCpvlRTyMyjY45mOfeCjMkIcqmVBkwlnzqr+vsv7aKqb47xOPc8VT48A0aDWDWrTonRNJsDQNOGCRxufDo1rlPFYGDa1J+uY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1780403379; c=relaxed/simple;
-	bh=1HHEHedufZMWDrUxHmCBjsBK2hu0Ktlha7KvlmEjqeY=;
+	s=arc-20240116; t=1780403839; c=relaxed/simple;
+	bh=OCCLL5SwGu4xH+cgJtdC4qx2BKJXREzwT7+DWS3BLFU=;
 	h=Message-ID:Subject:From:To:Cc:Date:in-reply-to:Content-Type:
-	 MIME-Version; b=NaPeNobVoNs2u64DTkH13H/Oe1iU44UEeqq6JE0zinWrYXmDFF+KdebRRmsvUcAdN7ljVO0exogfqAXqzdtzZy7Pbg83mBRB7iPgW8lTIwrgjCZ4Os5wn8k7OsBVFsBjeYgLoqD8lCZ3BDQOfS1zv0n0zmw2eSB2ytat1wY23/g=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=infradead.org; spf=none smtp.mailfrom=casper.srs.infradead.org; dkim=pass (2048-bit key) header.d=infradead.org header.i=@infradead.org header.b=eJbYmjIQ; arc=none smtp.client-ip=90.155.50.34
+	 MIME-Version; b=GS0vLJ/YAHtDtlrd1c47Y8FTMlKW+9EgeDc0A7o0E/KcxsSYWNQynRGi2WXSYV7tpKIiIbKIGk701xiEoSc9/Yowb9Nd/Ui+1R0ySp8ngQ7o9qYTWndO1HPr/stUK2tRCMpmH82UuR7ifSTIq33raVKGgy0nzpN6d+A3KXjGXwA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=infradead.org; spf=none smtp.mailfrom=casper.srs.infradead.org; dkim=pass (2048-bit key) header.d=infradead.org header.i=@infradead.org header.b=kl6CoK2i; arc=none smtp.client-ip=90.155.50.34
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=infradead.org
 Authentication-Results: smtp.subspace.kernel.org; spf=none smtp.mailfrom=casper.srs.infradead.org
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=infradead.org header.i=@infradead.org header.b="eJbYmjIQ"
+	dkim=pass (2048-bit key) header.d=infradead.org header.i=@infradead.org header.b="kl6CoK2i"
 DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed;
 	d=infradead.org; s=casper.20170209; h=MIME-Version:Content-Type:in-reply-to:
 	Date:Cc:To:From:Subject:Message-ID:Sender:Reply-To:Content-Transfer-Encoding:
 	Content-ID:Content-Description:References;
-	bh=1HHEHedufZMWDrUxHmCBjsBK2hu0Ktlha7KvlmEjqeY=; b=eJbYmjIQoir/BCLfN3EdeKhqPh
-	qXFxdtOTynvUN8Ag52uOmom4WOa3W/5MK9FsQd22ZdPjV0UNkDrzKkfyIz33oAOIYxzGmSENv2Il8
-	GjH1MaZu7QypXR/1fBDP+AwTPg/w89eml7crENuWTEbj8JsZVNbQfpuv8cqHr6OdUDYMvoApykFy5
-	eyN6FddDemdZAP3vqqxZfTa1rx5IL3cB4L3huHtFIwbN7PFYq6nfsANvCMN2RtWfF69726BL4evtR
-	GR5KaMiYdN+D4ehYEVTp3u98zC5W6K6XRTgFWKXr6vjfR4Z9b2Ss/z/XXmgBlwwgDbS6lYAVOBkOZ
-	xiH/Ft+w==;
+	bh=Rb5yfIwgrBRrR87AJg7XBlvLHfCDmy+gpwdr9xfXtVA=; b=kl6CoK2inRLDsF2+v5xJ4s/imP
+	211nfAkrvv6yzbQvGzTBOUPqIUlHS+BlLPJhwDz7PA14FzglYo0bkMPBUoBtmQbc7PiWF30UXV/hD
+	tVLeFBnMcAuqZdbIuHuXa5kFBpQCqplVjb3IcugmV9mV9tNJyvyJ5YyK/VSPy3nlgyaqHpVNHl1AP
+	2AL20Jsvkr93JLvO4WflzF07b9EhsVTBauPLJ/xSgFpz6YYZ0LACuT4LiewWTGfUYFOFgC6BzVnKw
+	ni0U6VgWny5yUkHFh9i+ZiW2fY0Ki4+se+RPfimfu9AnqBptC36xHiVRe/PGVvWn0amCA0Q6t9+8g
+	hbB8E7rQ==;
 Received: from [2001:8b0:10b:5:5b40:b57d:669c:36f4] (helo=u09cd745991455d.ant.amazon.com)
 	by casper.infradead.org with esmtpsa (Exim 4.99.1 #2 (Red Hat Linux))
-	id 1wUOFF-00000001vnZ-3o6U;
-	Tue, 02 Jun 2026 12:29:22 +0000
-Message-ID: <3291d47ea5fdd6ee2f284cadb518473130954cfc.camel@infradead.org>
-Subject: Re: [PATCH v2 20/20] KVM: x86: Use gfn_to_pfn_cache for
- record_steal_time
+	id 1wUOMo-00000001wQi-3KfG;
+	Tue, 02 Jun 2026 12:37:11 +0000
+Message-ID: <c1f0dee379e282ffb35296da4b666d93025f1c95.camel@infradead.org>
+Subject: Re: [PATCH v2 15/20] KVM: x86/xen: Convert
+ kvm_xen_set_evtchn_fast() to gpc's CLASS() APIs
 From: David Woodhouse <dwmw2@infradead.org>
-To: sashiko-bot@kernel.org
-Cc: seanjc@google.com, pbonzini@redhat.com, tglx@kernel.org,
- mingo@redhat.com,  bp@alien8.de, dave.hansen@linux.intel.com,
- x86@kernel.org, hpa@zytor.com,  kvm@vger.kernel.org,
- linux-kernel@vger.kernel.org,  sashiko-reviews@lists.linux.dev,
- stollmc@amazon.com, dwmw@amazon.co.uk
-Date: Tue, 02 Jun 2026 13:29:21 +0100
-in-reply-to: <20260530061932.7849D1F00893@smtp.kernel.org>
+To: seanjc@google.com
+Cc: pbonzini@redhat.com, tglx@kernel.org, mingo@redhat.com, bp@alien8.de, 
+ dave.hansen@linux.intel.com, x86@kernel.org, hpa@zytor.com,
+ kvm@vger.kernel.org,  linux-kernel@vger.kernel.org,
+ sashiko-reviews@lists.linux.dev, dwmw@amazon.co.uk
+Date: Tue, 02 Jun 2026 13:37:10 +0100
+in-reply-to: <ahnk6cBLuuPIAwmA@google.com>
 Content-Type: multipart/signed; micalg="sha-256"; protocol="application/pkcs7-signature";
-	boundary="=-qviAXgzMU7nciQkLH7U+"
+	boundary="=-J5W3Jn6TTVM29ghdH7g3"
 User-Agent: Evolution 3.52.3-0ubuntu1.1 
 Precedence: bulk
 X-Mailing-List: sashiko-reviews@lists.linux.dev
@@ -54,57 +53,45 @@ MIME-Version: 1.0
 X-SRS-Rewrite: SMTP reverse-path rewritten from <dwmw2@infradead.org> by casper.infradead.org. See http://www.infradead.org/rpr.html
 
 
---=-qviAXgzMU7nciQkLH7U+
+--=-J5W3Jn6TTVM29ghdH7g3
 Content-Type: text/plain; charset="UTF-8"
 Content-Transfer-Encoding: quoted-printable
 
-On Sat, 30 May 2026 06:19:32 +0000, sashiko-bot@kernel.org wrote:
-> [Severity: High]
-> Does this introduce a scheduling while atomic bug on non-PREEMPT_RT kerne=
-ls?
->
-> The CLASS(gpc_map_local, st_map) macro acquires a read_lock on gpc->lock,
-> which disables preemption. While this lock is held, if the guest supports
-> PV TLB flush, the code calls kvm_vcpu_flush_tlb_guest().
->
-> If TDP is disabled (shadow paging), kvm_vcpu_flush_tlb_guest() calls
-> kvm_mmu_sync_roots() and eventually mmu_sync_children(). This path can yi=
-eld
-> via cond_resched_rwlock_write(). Yielding while preemption is disabled by
-> the gpc read lock will trigger a BUG.
+On Fri, 29 May 2026 12:11:37 -0700, Sean Christopherson wrote:
+> On Fri, May 29, 2026, sashiko-bot@kernel.org wrote:
+> > [Severity: High]
+> > Does this unintentionally hold the gpc lock across the IPI kick?
+>=20
+> No, it intentionally holds the gpc lock across _sending_ the IPI kick.
+>=20
+> > [Severity: High]
+> > Does this now hold the VM-wide shinfo_cache lock while calling
+> > __kvm_xen_set_evtchn_fast() and kicking the vCPU?
+> >=20
+> > Since shinfo_map is a function-scoped CLASS() variable, its destructor
+> > won't release the lock until after __kvm_xen_set_evtchn_fast() returns.
+> > This creates a nested locking dependency and holds locks over expensive
+> > cross-vCPU operations, potentially serializing event channel deliveries
+> > across the entire VM on the fast path.
+>=20
+> __kvm_vcpu_kick() is neither expensive nor cross-vCPU.  In the wait=3Dfal=
+se case,
+> which is the behavior of kvm_vcpu_kick(), it sends IPIs via smp_send_resc=
+hedule(),
+> i.e. it's more or less just __apic_send_IPI(cpu, RESCHEDULE_VECTOR), whic=
+h is a
+> single WRMSR on modern harware.
 
-Ah, that issue exists in the previous versions too, but it's simple
-enough to fix. There's no particular timing constraint for flushing the
-TLB; it just have to be done before this vCPU ever runs again. It can
-just be moved to the end of the function after the lock is dropped.
+Hm, if we really are going to use a raw rwlock then I suppose we should
+take care not to spend any extra cycles with the lock held unless we
+actually *need* to?
 
-That does mean record_steal_time() should use the explicit
-gpc_map_local_lock()/gpc_map_local_unlock() instead of the CLASS()
-macro, but that's easy enough.
-
-> [Severity: High]
-> Can this cause an ABBA deadlock in the scheduler on PREEMPT_RT?
->
-> kvm_steal_time_set_preempted() is called during a vCPU context switch
-> via kvm_sched_out(), which is a preempt notifier hook. This runs with
-> the local CPUs runqueue lock (rq->lock) held.
->
-> While the code correctly uses a trylock to avoid sleeping when acquiring
-> the lock, the CLASS macro destructor will implicitly call read_unlock()
-> at the end of the function. On PREEMPT_RT kernels, unlocking an rt_rwlock
-> can wake up a waiting writer, such as a concurrent kvm_gpc_refresh().
-
-This one is more fun, and the problem already exists on RT for the Xen
-runstate update so it's not even really new with this patch.
-
-I think the gpc lock needs to be a raw_rwlock_t, so that it remains a
-true spinning lock even on PREEMPT_RT. The writer side
-(kvm_gpc_refresh) only holds the lock briefly to swap in the new
-pfn/khva after doing the heavyweight work, so it should be fine as a
-raw lock.
+In which case I wonder if we really need the scoped CLASS() thing (that
+encourages people to run to the end of the function under the lock), or
+if the helpers you add for that are sufficient on their own?
 
 
---=-qviAXgzMU7nciQkLH7U+
+--=-J5W3Jn6TTVM29ghdH7g3
 Content-Type: application/pkcs7-signature; name="smime.p7s"
 Content-Disposition: attachment; filename="smime.p7s"
 Content-Transfer-Encoding: base64
@@ -183,21 +170,21 @@ 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
-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
+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
-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
+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
 
 
---=-qviAXgzMU7nciQkLH7U+--
+--=-J5W3Jn6TTVM29ghdH7g3--
