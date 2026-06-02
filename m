@@ -1,40 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 02AEA14A8B;
-	Tue,  2 Jun 2026 04:32:26 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5B1161A680C;
+	Tue,  2 Jun 2026 04:47:39 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1780374747; cv=none; b=akq1phZ+CVWvGyOz+w4dyqlpzx9hZ7D5pnz/eUM3l5ShvV7lLt/V9GHHZ0Ev8ED2s3WNEarJ21QAND1E6CHEeGOGVfLyTIpHd8a5ymhIdYjyl28IcMxgoj/nBG73pzOmAQU7zofa7c5j6K3XrdLlUBw/eypQ/S8A96IHiejYPYg=
+	t=1780375660; cv=none; b=tupSZAkTEufDgMWXLBfQHZSbHb0nhi154+ZcLlmVUMfWqjpvygG9CzifvLBaWVN+4/RxZ0V0A1g3AltHo/bHAD+ryHiIH/zhoraHxwAG7peO/FJ94uAdCSqjNFL9iGMbo4C2QehWsK2QsUVkp9PyKaHUKxwP01AlhJJiZzH3VBs=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1780374747; c=relaxed/simple;
-	bh=Gf8Kkf5+WgD+8BCdBzRCuiTPvdPXZeXmP+v1xmws//w=;
+	s=arc-20240116; t=1780375660; c=relaxed/simple;
+	bh=figzwIQjLJ6/wYOhbtThrg5JL20rtRu0/W7QFMh7uKw=;
 	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=YEvSxfLTFv8obUSzRjBjA/loSpFVWjDgmAfN3aLRgjq6K+BYKEgsiM8Wyxe0KlQcAm0XwGVPbSELiOrCOyZl0aTn81R+DmqX8rHtC6phRmMGZsHIi7NtaOxFKWA0ss+qwANEsDOuSbBhTcAagfY2ebJQ7IShI6mOvUYOMi5/VzY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=mnELyeQi; arc=none smtp.client-ip=100.103.45.18
+	 Content-Type:Content-Disposition:In-Reply-To; b=KVVr1MR1pMQNVuJo6CL6to462qQOZEtWyfwMvTg37bLWMaTctHEnJTZH33+68axVbVPLgwxI6+HyiRZleEyH1AT1lt8/A3VzYJSFVncqOc3tcJhEkivinG6IpKNYR8KUHr//Od/faEwqu4waSR2I8fSF+RripomZgynyB+yUGT8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=eJL5X6Z6; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="mnELyeQi"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id A4E7E1F00893;
-	Tue,  2 Jun 2026 04:32:26 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="eJL5X6Z6"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id E15551F00893;
+	Tue,  2 Jun 2026 04:47:38 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=kernel.org;
-	s=k20260515; t=1780374746;
-	bh=ZCR8z9TRk89y9aR68XfemeQQYeqN3XdefKmdyRl1IeY=;
+	s=k20260515; t=1780375659;
+	bh=BTEDAuQRMmoOnsNXUwkiwi5b8kYjVRTDKcS8cYhKsd4=;
 	h=Date:From:To:Cc:Subject:References:In-Reply-To;
-	b=mnELyeQi5PCD66+BMAKZf0NFvzxjGhfYZHn9AUOJ0aigprt2Mm/z8UoOVZuYx5QHT
-	 UTu8nDW8LwdQJu+l9c1fPgma9ic/ry8xg8oma7n21sAfd2ACmxp4vkDTr4pox2oYXn
-	 7kzcKTEjkJhsNt6OL5E6/B+R1ji8wkrKK7ZFJZyABV/hXSPOIdao56iuaOGDL6IQAg
-	 XsjDAHs0jPLd/6bKPXngx15Dou+9o6pYouD+/4foWQN2GTAaYkZJwIZ+bn0ZWM1TCH
-	 DcL0+mn43o3HkN7CCNL+eIFnVWFymv3YjoCnfhSRkDgR/IWH17ttaW6fyVicCgar0V
-	 2/sgc+t5UImPw==
-Date: Mon, 1 Jun 2026 21:31:57 -0700
+	b=eJL5X6Z6aaigF6HZQG5aAe4ACuuIx4HJw8xtFt7t2WxjPwIrk8o9JR+z8N5PSFv9L
+	 HoFJcucvfW4UGlzfVkzTTK7s8ZIreBTq5sEW/WHPfbvq65nJi8hhEW0Bu441um+FOa
+	 KaI1+Gr+vmAV9upRWviiuMTKu6nlifCGfA3VIk2nkwcfKN4hVMxuSFu7ABJsJYKqH4
+	 WUKkFOQzAWpSX6FAkn1AJqrNP7uo++ew48+v83zpqiQts0yaMOhfDm3pGkM3WlwOqr
+	 fuH4Lrc3y3unpjcJXwYzh9yAM5lnIjF72NJoa3rQG+mvdSPwaDGlwIb7y4Y27Tyx8A
+	 A0Vk25WBDiJgA==
+Date: Mon, 1 Jun 2026 21:47:09 -0700
 From: Drew Fustini <fustini@kernel.org>
 To: sashiko-reviews@lists.linux.dev
 Cc: linux-kernel@vger.kernel.org
-Subject: Re: [PATCH RFC v6 11/18] riscv_cbqri: resctrl: Add cache allocation
- via capacity block mask
-Message-ID: <ah5cvQ6QHqzQYd46@gen8>
-References: <20260601-ssqosid-cbqri-rqsc-v7-0-v6-11-baf00f50028a@kernel.org>
- <20260601205608.D86481F00893@smtp.kernel.org>
+Subject: Re: [PATCH RFC v6 12/18] riscv_cbqri: resctrl: Add L3 cache
+ occupancy monitoring
+Message-ID: <ah5gTWvnnkMcTP4s@gen8>
+References: <20260601-ssqosid-cbqri-rqsc-v7-0-v6-12-baf00f50028a@kernel.org>
+ <20260601205837.C1AC91F00893@smtp.kernel.org>
 Precedence: bulk
 X-Mailing-List: sashiko-reviews@lists.linux.dev
 List-Id: <sashiko-reviews.lists.linux.dev>
@@ -43,58 +43,120 @@ List-Unsubscribe: <mailto:sashiko-reviews+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-In-Reply-To: <20260601205608.D86481F00893@smtp.kernel.org>
+In-Reply-To: <20260601205837.C1AC91F00893@smtp.kernel.org>
 
-On Mon, Jun 01, 2026 at 08:56:08PM +0000, sashiko-bot@kernel.org wrote:
-> > @@ -595,6 +595,7 @@ config RISCV_ISA_SSQOSID
-> >  	bool "Ssqosid extension support for supervisor mode Quality of Service ID"
-> >  	depends on 64BIT
-> >  	default n
-> > +	select ARCH_HAS_CPU_RESCTRL
+On Mon, Jun 01, 2026 at 08:58:37PM +0000, sashiko-bot@kernel.org wrote:
+> > +	/*
+> > +	 * cbqri_domain_list_lock serialises the list walk against
+> > +	 * cbqri_detach_cpu_from_ctrl_domains().
+> > +	 */
+> > +	mutex_lock(&cbqri_domain_list_lock);
 > 
-> Does selecting ARCH_HAS_CPU_RESCTRL here unconditionally allow RESCTRL_FS
-> to be enabled, even if the RISC-V backend driver isn't built?
+> [Severity: High]
+> During CPU hotplug, cbqri_resctrl_online_cpu() acquires
+> cbqri_domain_list_lock and eventually calls resctrl_online_mon_domain()
+> which acquires the core framework rdtgroup_mutex.
 > 
-> Since the backend implementation in cbqri_resctrl.c is gated by
-> RISCV_CBQRI_DRIVER:
+> However, when reading monitoring data, the core framework acquires
+> rdtgroup_mutex and then invokes resctrl_arch_rmid_read() which acquires
+> cbqri_domain_list_lock here.
 > 
-> config RISCV_CBQRI_RESCTRL_FS
->     bool
->     default y if RISCV_CBQRI_DRIVER && RESCTRL_FS
+> Does this establish an AB-BA lock inversion between cbqri_domain_list_lock
+> and rdtgroup_mutex?
 > 
-> Could this result in a linker error for missing resctrl_arch_* symbols if
-> RISCV_ISA_SSQOSID is enabled but RISCV_CBQRI_DRIVER is disabled?
+> [Severity: High]
+> Additionally, when a CPU goes offline, cbqri_resctrl_offline_cpu() acquires
+> cbqri_domain_list_lock before initiating domain teardown.
+> 
+> If the domain is torn down, the resctrl core flushes busy RMIDs by calling
+> __check_limbo(), which invokes this resctrl_arch_rmid_read() hook.
+> 
+> Since this hook unconditionally attempts to acquire cbqri_domain_list_lock,
+> does this cause a self-deadlock when offlining a CPU with active monitoring
+> traffic?
 
-This is not reachable. RESCTRL_FS cannot be enabled without the backend that provides the resctrl_arch_* symbols.
+For the next rev, I will drop the list lock around the teardown so the
+limbo flush does not re-enter it.
 
-> > +		cbqri_res = &cbqri_resctrl_resources[rid];
-> > +		if (cbqri_res->ctrl) {
-> > +			/*
-> > +			 * CCs at the same cache level must agree on every cap
-> > +			 * resctrl exposes globally. Reject mismatches at pick
-> > +			 * time so the inconsistency is visible at boot.
-> > +			 */
-> > +			if (cbqri_res->ctrl->rcid_count != ctrl->rcid_count ||
-> > +			    cbqri_res->ctrl->cc.ncblks != ctrl->cc.ncblks ||
-> > +			    cbqri_res->ctrl->cc.supports_alloc_at_code !=
-> > +				    ctrl->cc.supports_alloc_at_code ||
-> > +			    cbqri_res->ctrl->alloc_capable != ctrl->alloc_capable) {
+> > @@ -500,6 +582,13 @@ static int cbqri_resctrl_control_init(struct cbqri_resctrl_res *cbqri_res)
+> [ ... ]
+> > +		if (ctrl->mon_capable && res->rid == RDT_RESOURCE_L3) {
+> > +			res->mon_scope = RESCTRL_L3_CACHE;
+> > +			resctrl_enable_mon_event(QOS_L3_OCCUP_EVENT_ID,
+> > +						 false, 0, NULL);
+> > +			res->mon_capable = true;
+> > +		}
 > 
-> Is this alloc_capable mismatch check dead code?
+> [Severity: Medium]
+> The L3 occupancy event is registered with any_cpu set to false. This
+> requires the core to read the event from a specific CPU using
+> smp_call_function_any().
 > 
-> Because the earlier loop condition explicitly skips controllers where
-> alloc_capable is false:
+> If that CPU is configured as nohz_full, the read executes in an IPI context
+> with interrupts disabled. Since resctrl_arch_rmid_read() correctly returns
+> -EIO when irqs_disabled(), will userspace reads fail on nohz_full CPUs?
 > 
->     if (!ctrl->alloc_capable) {
->         ...
->         continue;
->     }
-> 
-> Will both cbqri_res->ctrl and the current ctrl always have alloc_capable
-> set to true at this point in cbqri_resctrl_pick_caches? This seems to
-> cause non-alloc-capable controllers to be silently ignored rather than
-> triggering the fatal configuration error described in the commit message.
+> Could any_cpu be true here to avoid cross-CPU IPIs, since the MMIO reads
+> can be safely executed from any CPU?
 
-It is harmless, but I will drop the dead term in v7 for clarity.
+I will switch QOS_L3_OCCUP and QOS_L3_MBM_TOTAL to any_cpu = true in the
+next rev.
+
+> > @@ -510,6 +599,7 @@ static int cbqri_resctrl_control_init(struct cbqri_resctrl_res *cbqri_res)
+> [ ... ]
+> > +	l3_ctrl = cbqri_resctrl_resources[RDT_RESOURCE_L3].ctrl;
+> > +	if (l3_ctrl && l3_ctrl->mon_capable)
+> > +		max_rmid = min(max_rmid, l3_ctrl->mcid_count);
+> > +
+> > +	if (!exposed_mon_capable) {
+> > +		max_rmid = 1;
+> > +		return;
+> >  	}
+> 
+> [Severity: High]
+> If the hardware has an L2 monitoring controller but no L3 monitoring,
+> exposed_mon_capable becomes true but max_rmid is never narrowed from its
+> initial U32_MAX value.
+> 
+> When the core framework mounts the filesystem, it will query
+> resctrl_arch_system_num_rmid_idx() which returns max_rmid. Will this
+> cause an immediate OOM panic when it attempts to allocate
+> U32_MAX * sizeof(struct rmid_entry)?
+
+For the next rev, I will only set exposed_mon_capable when an event is
+actually enabled and clamp max_rmid.
+
+> > @@ -560,13 +673,89 @@ static struct rdt_ctrl_domain *cbqri_create_ctrl_domain(struct cbqri_controller
+> [ ... ]
+> > +err_offline:
+> > +	/*
+> > +	 * cancel_delayed_work avoids deadlocking against the cqm_limbo
+> > +	 * worker which takes cpus_read_lock while this hotplug callback
+> > +	 * already holds cpus_write_lock. mbm_over is only
+> > +	 * INIT_DELAYED_WORK'd when MBM_TOTAL was enabled, so gate the
+> > +	 * cancel on the same condition to avoid touching a zeroed work
+> > +	 * struct.
+> > +	 */
+> > +	cancel_delayed_work(&mon_dom->cqm_limbo);
+> > +	if (resctrl_is_mon_event_enabled(QOS_L3_MBM_TOTAL_EVENT_ID))
+> > +		cancel_delayed_work(&mon_dom->mbm_over);
+> > +	resctrl_offline_mon_domain(res, &mon_dom->hdr);
+> > +err_listdel:
+> > +	list_del(&mon_dom->hdr.list);
+> > +err_free:
+> > +	kfree(mon_dom);
+> > +	return err;
+> > +}
+> 
+> [Severity: High]
+> If a worker thread is currently executing but blocked waiting for
+> cpus_read_lock(), cancel_delayed_work() will return immediately because
+> the work is no longer pending in the queue.
+> 
+> After the hotplug thread drops cpus_write_lock(), the worker could unblock
+> and continue executing, accessing the mon_dom structure after it was freed.
+> Does this create a use-after-free window?
+
+This is not a problem. The non-sync cancel is the resctrl core's own pattern
 
 Drew
