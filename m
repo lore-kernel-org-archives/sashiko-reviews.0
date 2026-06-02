@@ -1,190 +1,195 @@
-Received: from casper.infradead.org (casper.infradead.org [90.155.50.34])
+Received: from DU2PR03CU002.outbound.protection.outlook.com (mail-northeuropeazon11011063.outbound.protection.outlook.com [52.101.65.63])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 39B7130148A;
-	Tue,  2 Jun 2026 12:37:17 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=90.155.50.34
-ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1780403839; cv=none; b=aEUqO8VMIHlrJAlqXdpiC0PfUotlXT9i+3QG9LwzH/w3YI1ANSo/mNSiUHfiHQkgsLOxM+62ZERgCpvlRTyMyjY45mOfeCjMkIcqmVBkwlnzqr+vsv7aKqb47xOPc8VT48A0aDWDWrTonRNJsDQNOGCRxufDo1rlPFYGDa1J+uY=
-ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1780403839; c=relaxed/simple;
-	bh=OCCLL5SwGu4xH+cgJtdC4qx2BKJXREzwT7+DWS3BLFU=;
-	h=Message-ID:Subject:From:To:Cc:Date:in-reply-to:Content-Type:
-	 MIME-Version; b=GS0vLJ/YAHtDtlrd1c47Y8FTMlKW+9EgeDc0A7o0E/KcxsSYWNQynRGi2WXSYV7tpKIiIbKIGk701xiEoSc9/Yowb9Nd/Ui+1R0ySp8ngQ7o9qYTWndO1HPr/stUK2tRCMpmH82UuR7ifSTIq33raVKGgy0nzpN6d+A3KXjGXwA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=infradead.org; spf=none smtp.mailfrom=casper.srs.infradead.org; dkim=pass (2048-bit key) header.d=infradead.org header.i=@infradead.org header.b=kl6CoK2i; arc=none smtp.client-ip=90.155.50.34
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=infradead.org
-Authentication-Results: smtp.subspace.kernel.org; spf=none smtp.mailfrom=casper.srs.infradead.org
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 788AA1DA60D
+	for <sashiko-reviews@lists.linux.dev>; Tue,  2 Jun 2026 14:38:52 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=fail smtp.client-ip=52.101.65.63
+ARC-Seal:i=2; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
+	t=1780411134; cv=fail; b=KILt3lLaRCfrscTyNPv6Vhnuk3olW/DmIO5H8SzfijZN8rMy/DJWDDhcBHheb7ZXdRE4gyyHwNnIt10xCIiyLFdDdU/0SO3i++TlkEF9Amc7mfrENQ75Dl0Ta2/QL1N+YJvuO4Iyuoe9Q4RDdhIsOx6pkFrV7XEffj6lvqEcOIw=
+ARC-Message-Signature:i=2; a=rsa-sha256; d=subspace.kernel.org;
+	s=arc-20240116; t=1780411134; c=relaxed/simple;
+	bh=zHnI7pgis4rtRir5b9dFnaA61d1epTWyRAXGo/TNlp0=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:Content-Type:
+	 Content-Disposition:In-Reply-To:MIME-Version; b=APVpnsirYZX8EVbPvvcO73leRpAnTcZlrk0fYr+qr/DFEpwldEOXTVBuPIVHTRU9XsVBYz3Fn3O3M+R9vSy1dlPkpmv63oN4KrgiKmyXvx//kQsT3VmoJV6SQYUtnyxg4mO0eXfN3M27XiSHqzlXCEWauGMRIbUdKiwU63K9k1M=
+ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=nxp.com; spf=pass smtp.mailfrom=nxp.com; dkim=pass (2048-bit key) header.d=nxp.com header.i=@nxp.com header.b=WHc9qOoz; arc=fail smtp.client-ip=52.101.65.63
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=nxp.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=nxp.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=infradead.org header.i=@infradead.org header.b="kl6CoK2i"
-DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed;
-	d=infradead.org; s=casper.20170209; h=MIME-Version:Content-Type:in-reply-to:
-	Date:Cc:To:From:Subject:Message-ID:Sender:Reply-To:Content-Transfer-Encoding:
-	Content-ID:Content-Description:References;
-	bh=Rb5yfIwgrBRrR87AJg7XBlvLHfCDmy+gpwdr9xfXtVA=; b=kl6CoK2inRLDsF2+v5xJ4s/imP
-	211nfAkrvv6yzbQvGzTBOUPqIUlHS+BlLPJhwDz7PA14FzglYo0bkMPBUoBtmQbc7PiWF30UXV/hD
-	tVLeFBnMcAuqZdbIuHuXa5kFBpQCqplVjb3IcugmV9mV9tNJyvyJ5YyK/VSPy3nlgyaqHpVNHl1AP
-	2AL20Jsvkr93JLvO4WflzF07b9EhsVTBauPLJ/xSgFpz6YYZ0LACuT4LiewWTGfUYFOFgC6BzVnKw
-	ni0U6VgWny5yUkHFh9i+ZiW2fY0Ki4+se+RPfimfu9AnqBptC36xHiVRe/PGVvWn0amCA0Q6t9+8g
-	hbB8E7rQ==;
-Received: from [2001:8b0:10b:5:5b40:b57d:669c:36f4] (helo=u09cd745991455d.ant.amazon.com)
-	by casper.infradead.org with esmtpsa (Exim 4.99.1 #2 (Red Hat Linux))
-	id 1wUOMo-00000001wQi-3KfG;
-	Tue, 02 Jun 2026 12:37:11 +0000
-Message-ID: <c1f0dee379e282ffb35296da4b666d93025f1c95.camel@infradead.org>
-Subject: Re: [PATCH v2 15/20] KVM: x86/xen: Convert
- kvm_xen_set_evtchn_fast() to gpc's CLASS() APIs
-From: David Woodhouse <dwmw2@infradead.org>
-To: seanjc@google.com
-Cc: pbonzini@redhat.com, tglx@kernel.org, mingo@redhat.com, bp@alien8.de, 
- dave.hansen@linux.intel.com, x86@kernel.org, hpa@zytor.com,
- kvm@vger.kernel.org,  linux-kernel@vger.kernel.org,
- sashiko-reviews@lists.linux.dev, dwmw@amazon.co.uk
-Date: Tue, 02 Jun 2026 13:37:10 +0100
-in-reply-to: <ahnk6cBLuuPIAwmA@google.com>
-Content-Type: multipart/signed; micalg="sha-256"; protocol="application/pkcs7-signature";
-	boundary="=-J5W3Jn6TTVM29ghdH7g3"
-User-Agent: Evolution 3.52.3-0ubuntu1.1 
+	dkim=pass (2048-bit key) header.d=nxp.com header.i=@nxp.com header.b="WHc9qOoz"
+ARC-Seal: i=1; a=rsa-sha256; s=arcselector10001; d=microsoft.com; cv=none;
+ b=CKurU1TSaoMQNbW1nR/G+mprzpOaiVb8ekUuQddptQ3vbBc0oyKUh1itnT4ekC3DEQBeXKgvIXvz7/IZDkUK3YMMmHUSp0oj79C6kfwHpnuSZIANvjkhUjPqsbW8muA/DyT57uvo0UIQj87DCeOmKBeVOaF3GaSAPjGx6IPcbGv+Xc5AL2VRh523nWMBe9e5eu5OR6Gh387Ct74RTAUeiAqn+r2L90LH4smwSzOdQUrZmc1C8ksaELbnwJ7gVMxCe2QXPNh3MNvK0snkv2+OOW6zT5KldCRGmRcyPJ+bmctf9IFFBhpcYsv1JSWH4YZ0dFN8yJ7LlRlxy7ayzQzoVw==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com;
+ s=arcselector10001;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
+ bh=AfB1uAUNd9Bg+6I2oMavp7SvgAkOVCMt8eqxiwMJ9ds=;
+ b=bRwXIN316X58bXC6l2TY2bUyEozcocEMVb04ZiwF+CiawLBwNv/t8NTGdveDgWsFMfUjYwIz7flIPdqaYMIFYvYXJUcttHrPcbRwWcsalg0kkgFW26hwM9b54QO4KSquQW540qxS2Gwas+Cx0HIy1w9aDmbCtC0Sez1sfLcAmKFCJZmEExYYgkj60sTWy0d5SpFTDDNGpCJtSnrnYL7Jdro4f87nWNPECbgSC0EaLmKefgbHavUvyH2bSM5QiN8mnhgxnv7E55pI4O1i9ui1NxB92/kyIP5qa2iCYGjjSnW5ccA/heMxOjiBbRHqV9kQcZAh86vMTW8tQ8v25vB2Yg==
+ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
+ smtp.mailfrom=nxp.com; dmarc=pass action=none header.from=nxp.com; dkim=pass
+ header.d=nxp.com; arc=none
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=nxp.com; s=selector1;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
+ bh=AfB1uAUNd9Bg+6I2oMavp7SvgAkOVCMt8eqxiwMJ9ds=;
+ b=WHc9qOozwJCKXwG23YzsBUoR+tt0Bmbpnpan1eRvw1EBLf8MczysfRBLhcloGpJB/J3lX+/cTpO31cLCfWZxlJDNWtEewEyVd5Bp4dniMZdMhEKmWUboloKB9eY9UIlb8MKRuVY9/QQAOr/6/XXir0x6X0ipqng7g7mb31/ArMC5MwCM+bnzIYuPgaeHNUwBjSYG+boVZhIsHpJ9mVWWHTvyNA/dcDjZ5e368zHFJx+7DgwnuPV1zLdaWg/cH1GdAciE10q3gnmwCNnuHLiQ+xa8ujLuJ827kwehpqpNJSpp8CZljOHJnnbe2OZzIePvWaigvN6Ho8Ga4idup9LoXg==
+Authentication-Results: dkim=none (message not signed)
+ header.d=none;dmarc=none action=none header.from=nxp.com;
+Received: from AM0PR04MB6900.eurprd04.prod.outlook.com (2603:10a6:208:17d::10)
+ by DUZPR04MB9967.eurprd04.prod.outlook.com (2603:10a6:10:4dd::6) with
+ Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.21.71.16; Tue, 2 Jun 2026
+ 14:38:48 +0000
+Received: from AM0PR04MB6900.eurprd04.prod.outlook.com
+ ([fe80::7fda:8431:ca1b:b023]) by AM0PR04MB6900.eurprd04.prod.outlook.com
+ ([fe80::7fda:8431:ca1b:b023%5]) with mapi id 15.21.0071.015; Tue, 2 Jun 2026
+ 14:38:48 +0000
+Date: Tue, 2 Jun 2026 17:38:45 +0300
+From: Vladimir Oltean <vladimir.oltean@nxp.com>
+To: sashiko-reviews@lists.linux.dev
+Cc: vkoul@kernel.org, olteanv@gmail.com, linux-phy@lists.infradead.org,
+	neil.armstrong@linaro.org
+Subject: Re: [PATCH v2 phy-next 02/15] phy: lynx-28g: move lane mode helpers
+ to new core module
+Message-ID: <20260602143845.iwhimj5utn6kidx5@skbuf>
+References: <20260529171509.1163787-3-vladimir.oltean@nxp.com>
+ <20260529172706.50EC21F00893@smtp.kernel.org>
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <20260529172706.50EC21F00893@smtp.kernel.org>
+X-ClientProxiedBy: VIZP296CA0006.AUTP296.PROD.OUTLOOK.COM
+ (2603:10a6:800:2a1::7) To AM0PR04MB6900.eurprd04.prod.outlook.com
+ (2603:10a6:208:17d::10)
 Precedence: bulk
 X-Mailing-List: sashiko-reviews@lists.linux.dev
 List-Id: <sashiko-reviews.lists.linux.dev>
 List-Subscribe: <mailto:sashiko-reviews+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:sashiko-reviews+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-X-SRS-Rewrite: SMTP reverse-path rewritten from <dwmw2@infradead.org> by casper.infradead.org. See http://www.infradead.org/rpr.html
+X-MS-PublicTrafficType: Email
+X-MS-TrafficTypeDiagnostic: AM0PR04MB6900:EE_|DUZPR04MB9967:EE_
+X-MS-Office365-Filtering-Correlation-Id: 7c6a3877-f79e-42d9-3b2c-08dec0b4a835
+X-MS-Exchange-SenderADCheck: 1
+X-MS-Exchange-AntiSpam-Relay: 0
+X-Microsoft-Antispam:
+	BCL:0;ARA:13230040|376014|1800799024|366016|19092799006|10070799003|56012099006|6133799003|4143699003|11063799006|18002099003|22082099003;
+X-Microsoft-Antispam-Message-Info:
+	S2atVSelqN+2oAIw1WsGc6pCv8TDrw/PdBOfQsRw9siJSpAXntjytF7GQVyxJMksxgzKpH9E7fQ0yzXLISO/rfw/OGHezVtPwyX2xiKLs73oPX4l0B0fCZ6suJFKIQWD5hDXYZMYjVJZN01NqE1iRQwfQNcsT+KsZUAIMVtH0OrI3mxtPOBUdN+TkbS5gcYTyii6U20rkF14wR1Tx0ASGioFsQTyqzucbTHZLG2UY5fbX8jjqztms/1lY+ayw2OciAnMdk2mt0si9tug6td8Uk/ShthSglWbqKB66AW4a10fjcwkp5Jx2F220Ru5VsphR1L4n6CN0gBzX6zwXBphUvhEWAafNdMMNEoI7rQhcRvNg4PKocsTuQk6gj5FsEK7qK24Ti0KX1GxYUq1FwYMSGSXErMrqtcQlF/gUkXHbJHZ9qUNVdBRY/TPw9E2iZJqx4Kp56sAHkxTIIbR0TkvxnUk0mAZ5uyUT9sW/PxxG+itsarWYHW4EbDV7i2BEo1JN5uH8Ua9LwhKVK62KuFIs9W7rSwewugQ7k+NVhvzgIhnXaQHK1OjwCjZnUi3Y/FcCeX7gYDWxhiEam1dBTHFGvrqN09nDiVCX3qo3ZL7MSJoNnaj+g6IFsDepeoyZbAGJv6o6ndkHO7Nt3COBvPNoFy5QvCwoE2vWFg6amK3IsetcZYd7dMijdhGgDpsNMiY
+X-Forefront-Antispam-Report:
+	CIP:255.255.255.255;CTRY:;LANG:en;SCL:1;SRV:;IPV:NLI;SFV:NSPM;H:AM0PR04MB6900.eurprd04.prod.outlook.com;PTR:;CAT:NONE;SFS:(13230040)(376014)(1800799024)(366016)(19092799006)(10070799003)(56012099006)(6133799003)(4143699003)(11063799006)(18002099003)(22082099003);DIR:OUT;SFP:1101;
+X-MS-Exchange-AntiSpam-MessageData-ChunkCount: 2
+X-MS-Exchange-AntiSpam-MessageData-0:
+	=?us-ascii?Q?2egD+KxiGi3Lgy1SeGSWC8+2oUd5qAcdz04s/q8vWLdCy1EiiAioT09ftV4p?=
+ =?us-ascii?Q?EF3HRxbvZN+k45KqxDTThuOnrzeQwhWmey/KOGJqSCgtRsWg+1rDCxVePix/?=
+ =?us-ascii?Q?hap8rvDXJ7aXqGmsVWSWE8tbGxzeMWmnvD6FVGuGzfZz7vgiU+1l7eScYNiG?=
+ =?us-ascii?Q?olErwG+hOjrFWzlHIlm6hLTv3mEkseWc0OFKTq/ezSFQ2YhdQ2iSXhAV3zQ4?=
+ =?us-ascii?Q?enpN02KiRC/5FcdaS+dPuGUhy+hNtpqpzOTDony+0wJdA8VQryz5XI/G2+e+?=
+ =?us-ascii?Q?b0n3fkHNNKjUX92rWcPa8v9M0C+p8nHfPjPAjGFc0Clc4GO5bwZ8L74zFdYF?=
+ =?us-ascii?Q?OuUc26UL7RJ01ts/ekZ4wbpIQens4LZkWmo/HxIIFTcWO9aMoeLrK/ndXMcR?=
+ =?us-ascii?Q?Stv6FnSgncSh0h4ltoVjeIjJMVpyGdJhmHPokmvFrK3HULDHoHTwqpIGAK8G?=
+ =?us-ascii?Q?wzmTb70JZHXJAemXzNnriQzKvtgBv7IeB/lewC2YOaGk5SNnVqcRKR8GTcnv?=
+ =?us-ascii?Q?sAWx6j0gbYZ3a+W2fWcEG3/9IUc1k8xjV7bqsLEPgkj0uTtl3c6rmu37BNZy?=
+ =?us-ascii?Q?e0scZNp2TVvQXC/61c5FrQhNuQjAxKZxW7/o69er0VOZaxFBYmo1BQE56vrA?=
+ =?us-ascii?Q?JqxMTP5jBgQTnS+F7FfkfaSD3XL8nFasUabOA5zSyz43cIJR2O5kDrGOi1io?=
+ =?us-ascii?Q?8x8BEUEL3wdAbwhodxeibrfpHfFJQPiB/RsPWZ0o23V2guGGnm/f5LUYv7/O?=
+ =?us-ascii?Q?ci2zv8F+E+m1n2LaxFc370MUdSgWNch9sqFCrGV94DTfCkjIfhVIWcMrSKJk?=
+ =?us-ascii?Q?bz6sJ0+p+HmgkPyWppDiraE17kl4ZPyyXBLjcZ4QxXuMVkuOCqr/Wogux1EI?=
+ =?us-ascii?Q?sECyp7DijJxssi1pua2emnyOb607RMrR9ZBX/6ZLAzgngDKnVpX0I9qn3NGZ?=
+ =?us-ascii?Q?cL+Zwa3SS7FLHqq82flxmOdKPZOeZk+cNtFKuT81QahdRd6Z2+Pi56qPFDyS?=
+ =?us-ascii?Q?CW9cFUdhUxaxNT5t8YHRbpEH22sMc3m3KfbpZAyHwAKKvGuEshFEWNqDHGZ7?=
+ =?us-ascii?Q?3fsrVcGq6tSI7CvB7xT6STbBg7Avw8ZRLqS1ArzMPlL0pphnUU+kSV/Kfx+J?=
+ =?us-ascii?Q?5pJCMG/28uPBFVgNNahXTYvZo90roEHAlSXRmKn4gH+6fLRSYAqJassdclNI?=
+ =?us-ascii?Q?l4TrfbliFUE0uu+FCA3Qh3AgpICPYOBMLEhcMxFyU7aPvLfOlb2QlNdqw6wB?=
+ =?us-ascii?Q?wgS3jpoDE4QSy+rbjB6NXOIP05C4qM7s+bK79e1kHU5sc5MfBUJ26WR9UALi?=
+ =?us-ascii?Q?7GES0XVEeGcfm8DcTN9FoygpNyRGCdrgMnMazhCjoChDWuGYipMOKWpy5TVm?=
+ =?us-ascii?Q?a9//udqQfRJL6HHbp+8rL45+EtTCmdU78KWCd/liAZKGgbK4XdZE9Otc/55Q?=
+ =?us-ascii?Q?NpXR5hNi1jOoDYPysot99tQiI7anqtgNuzOW2zG39VnU0tuSOH2t037lljd5?=
+ =?us-ascii?Q?w+WEA7TV98oPBtiw9MHL/i5XINGYwJ/7Pi4knUtDz1cpihaFH9TlvK8gVfEN?=
+ =?us-ascii?Q?WxRHXngd3kGEyd44VJYe0OE5fYgehnyJ2wFhXX8R+NXVeIiNacUL9UGRWNBC?=
+ =?us-ascii?Q?BgYw1yRaw4HjzlwvkXH7VO8ViNVQM/VkrVKHJ1bLG51y349/ZB+QlA8Rtl7t?=
+ =?us-ascii?Q?pIcXGTIVqPUdUkIXlmxNNEsk2bR9KZcL67m0H0eWA4WqzKUPBUi1ONVPLUSY?=
+ =?us-ascii?Q?Dxnd1r8DHaWWgxiSoDVrjdRqcdWy2BpxavJwIlBU+Bm/Hdx8+SMJjZRL/x9x?=
+X-MS-Exchange-AntiSpam-MessageData-1: 7lEcKsm7PxOCM0ExqHWEqWAO34bGH92tnHA=
+X-OriginatorOrg: nxp.com
+X-MS-Exchange-CrossTenant-Network-Message-Id: 7c6a3877-f79e-42d9-3b2c-08dec0b4a835
+X-MS-Exchange-CrossTenant-AuthSource: AM0PR04MB6900.eurprd04.prod.outlook.com
+X-MS-Exchange-CrossTenant-AuthAs: Internal
+X-MS-Exchange-CrossTenant-OriginalArrivalTime: 02 Jun 2026 14:38:48.3868
+ (UTC)
+X-MS-Exchange-CrossTenant-FromEntityHeader: Hosted
+X-MS-Exchange-CrossTenant-Id: 686ea1d3-bc2b-4c6f-a92c-d99c5c301635
+X-MS-Exchange-CrossTenant-MailboxType: HOSTED
+X-MS-Exchange-CrossTenant-UserPrincipalName: G86nRtnrmByDlD/EwGGmQMTvExb2IN1d+PF5nEu5x0hD5DIENuA1FCy0hTKCNx7pmOK9TnOVpmlD9yZVzgfKNw==
+X-MS-Exchange-Transport-CrossTenantHeadersStamped: DUZPR04MB9967
 
+On Fri, May 29, 2026 at 05:27:05PM +0000, sashiko-bot@kernel.org wrote:
+> Thank you for your contribution! Sashiko AI review found 2 potential issue(s) to consider:
+> - [Low] The enum values for `lynx_lane_mode` are globally exposed without proper namespacing, risking build failures due to collisions.
+> - [Low] Invisible Kconfig symbol contains useless 'help' text.
+> --
+> 
+> commit afcf6c44814cd194adbadc7748b22b52095d7d42
+> Author: Vladimir Oltean <vladimir.oltean@nxp.com>
+> 
+> phy: lynx-28g: move lane mode helpers to new core module
+> 
+> This commit extracts lane mode helpers and shared structures from the
+> lynx-28g driver into a new core module. The lane modes are exported to
+> a public header to allow coordination with the upcoming lynx-10g driver.
+> 
+> > diff --git a/drivers/phy/freescale/Kconfig b/drivers/phy/freescale/Kconfig
+> > index 81f53564ee156..a87429f634ea8 100644
+> > --- a/drivers/phy/freescale/Kconfig
+> > +++ b/drivers/phy/freescale/Kconfig
+> > @@ -51,11 +51,18 @@ config PHY_FSL_SAMSUNG_HDMI_PHY
+> >  	  Enable this to add support for the Samsung HDMI PHY in i.MX8MP.
+> >  endif
+> >  
+> > +config PHY_FSL_LYNX_CORE
+> > +	tristate
+> > +	help
+> > +	  Enable this to add common support code for NXP Lynx 10G and Lynx 28G
+> > +	  SerDes blocks.
+> 
+> [Severity: Low]
+> This isn't a bug, but does this invisible Kconfig symbol need a help text?
+> 
+> Since this tristate doesn't have a prompt string, it won't be visible in
+> menuconfig, making the help text inaccessible to users.
 
---=-J5W3Jn6TTVM29ghdH7g3
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
+Will remove help text.
 
-On Fri, 29 May 2026 12:11:37 -0700, Sean Christopherson wrote:
-> On Fri, May 29, 2026, sashiko-bot@kernel.org wrote:
-> > [Severity: High]
-> > Does this unintentionally hold the gpc lock across the IPI kick?
->=20
-> No, it intentionally holds the gpc lock across _sending_ the IPI kick.
->=20
-> > [Severity: High]
-> > Does this now hold the VM-wide shinfo_cache lock while calling
-> > __kvm_xen_set_evtchn_fast() and kicking the vCPU?
-> >=20
-> > Since shinfo_map is a function-scoped CLASS() variable, its destructor
-> > won't release the lock until after __kvm_xen_set_evtchn_fast() returns.
-> > This creates a nested locking dependency and holds locks over expensive
-> > cross-vCPU operations, potentially serializing event channel deliveries
-> > across the entire VM on the fast path.
->=20
-> __kvm_vcpu_kick() is neither expensive nor cross-vCPU.  In the wait=3Dfal=
-se case,
-> which is the behavior of kvm_vcpu_kick(), it sends IPIs via smp_send_resc=
-hedule(),
-> i.e. it's more or less just __apic_send_IPI(cpu, RESCHEDULE_VECTOR), whic=
-h is a
-> single WRMSR on modern harware.
+> > diff --git a/include/soc/fsl/phy-fsl-lynx.h b/include/soc/fsl/phy-fsl-lynx.h
+> > new file mode 100644
+> > index 0000000000000..92e8272d5ae15
+> > --- /dev/null
+> > +++ b/include/soc/fsl/phy-fsl-lynx.h
+> > @@ -0,0 +1,16 @@
+> > +/* SPDX-License-Identifier: GPL-2.0+ */
+> > +/* Copyright 2023-2026 NXP */
+> > +
+> > +#ifndef __PHY_FSL_LYNX_H_
+> > +#define __PHY_FSL_LYNX_H_
+> > +
+> > +enum lynx_lane_mode {
+> > +	LANE_MODE_UNKNOWN,
+> > +	LANE_MODE_1000BASEX_SGMII,
+> > +	LANE_MODE_10GBASER,
+> > +	LANE_MODE_USXGMII,
+> > +	LANE_MODE_25GBASER,
+> > +	LANE_MODE_MAX,
+> > +};
+> 
+> [Severity: Low]
+> Since this header is now globally accessible under include/soc/, could these
+> generic enum values cause namespace collisions?
+> 
+> Values like LANE_MODE_UNKNOWN and LANE_MODE_MAX lack a subsystem or
+> driver-specific prefix (like LYNX_ or FSL_). If another subsystem defines
+> a macro or enum with the same generic name, it might lead to build failures.
 
-Hm, if we really are going to use a raw rwlock then I suppose we should
-take care not to spend any extra cycles with the lock held unless we
-actually *need* to?
-
-In which case I wonder if we really need the scoped CLASS() thing (that
-encourages people to run to the end of the function under the lock), or
-if the helpers you add for that are sufficient on their own?
-
-
---=-J5W3Jn6TTVM29ghdH7g3
-Content-Type: application/pkcs7-signature; name="smime.p7s"
-Content-Disposition: attachment; filename="smime.p7s"
-Content-Transfer-Encoding: base64
-
-MIAGCSqGSIb3DQEHAqCAMIACAQExDzANBglghkgBZQMEAgEFADCABgkqhkiG9w0BBwEAAKCCD9Aw
-ggSOMIIDdqADAgECAhAOmiw0ECVD4cWj5DqVrT9PMA0GCSqGSIb3DQEBCwUAMGUxCzAJBgNVBAYT
-AlVTMRUwEwYDVQQKEwxEaWdpQ2VydCBJbmMxGTAXBgNVBAsTEHd3dy5kaWdpY2VydC5jb20xJDAi
-BgNVBAMTG0RpZ2lDZXJ0IEFzc3VyZWQgSUQgUm9vdCBDQTAeFw0yNDAxMzAwMDAwMDBaFw0zMTEx
-MDkyMzU5NTlaMEExCzAJBgNVBAYTAkFVMRAwDgYDVQQKEwdWZXJva2V5MSAwHgYDVQQDExdWZXJv
-a2V5IFNlY3VyZSBFbWFpbCBHMjCCASIwDQYJKoZIhvcNAQEBBQADggEPADCCAQoCggEBAMjvgLKj
-jfhCFqxYyRiW8g3cNFAvltDbK5AzcOaR7yVzVGadr4YcCVxjKrEJOgi7WEOH8rUgCNB5cTD8N/Et
-GfZI+LGqSv0YtNa54T9D1AWJy08ZKkWvfGGIXN9UFAPMJ6OLLH/UUEgFa+7KlrEvMUupDFGnnR06
-aDJAwtycb8yXtILj+TvfhLFhafxroXrflspavejQkEiHjNjtHnwbZ+o43g0/yxjwnarGI3kgcak7
-nnI9/8Lqpq79tLHYwLajotwLiGTB71AGN5xK+tzB+D4eN9lXayrjcszgbOv2ZCgzExQUAIt98mre
-8EggKs9mwtEuKAhYBIP/0K6WsoMnQCcCAwEAAaOCAVwwggFYMBIGA1UdEwEB/wQIMAYBAf8CAQAw
-HQYDVR0OBBYEFIlICOogTndrhuWByNfhjWSEf/xwMB8GA1UdIwQYMBaAFEXroq/0ksuCMS1Ri6en
-IZ3zbcgPMA4GA1UdDwEB/wQEAwIBhjAdBgNVHSUEFjAUBggrBgEFBQcDBAYIKwYBBQUHAwIweQYI
-KwYBBQUHAQEEbTBrMCQGCCsGAQUFBzABhhhodHRwOi8vb2NzcC5kaWdpY2VydC5jb20wQwYIKwYB
-BQUHMAKGN2h0dHA6Ly9jYWNlcnRzLmRpZ2ljZXJ0LmNvbS9EaWdpQ2VydEFzc3VyZWRJRFJvb3RD
-QS5jcnQwRQYDVR0fBD4wPDA6oDigNoY0aHR0cDovL2NybDMuZGlnaWNlcnQuY29tL0RpZ2lDZXJ0
-QXNzdXJlZElEUm9vdENBLmNybDARBgNVHSAECjAIMAYGBFUdIAAwDQYJKoZIhvcNAQELBQADggEB
-ACiagCqvNVxOfSd0uYfJMiZsOEBXAKIR/kpqRp2YCfrP4Tz7fJogYN4fxNAw7iy/bPZcvpVCfe/H
-/CCcp3alXL0I8M/rnEnRlv8ItY4MEF+2T/MkdXI3u1vHy3ua8SxBM8eT9LBQokHZxGUX51cE0kwa
-uEOZ+PonVIOnMjuLp29kcNOVnzf8DGKiek+cT51FvGRjV6LbaxXOm2P47/aiaXrDD5O0RF5SiPo6
-xD1/ClkCETyyEAE5LRJlXtx288R598koyFcwCSXijeVcRvBB1cNOLEbg7RMSw1AGq14fNe2cH1HG
-W7xyduY/ydQt6gv5r21mDOQ5SaZSWC/ZRfLDuEYwggWbMIIEg6ADAgECAhAH5JEPagNRXYDiRPdl
-c1vgMA0GCSqGSIb3DQEBCwUAMEExCzAJBgNVBAYTAkFVMRAwDgYDVQQKEwdWZXJva2V5MSAwHgYD
-VQQDExdWZXJva2V5IFNlY3VyZSBFbWFpbCBHMjAeFw0yNDEyMzAwMDAwMDBaFw0yODAxMDQyMzU5
-NTlaMB4xHDAaBgNVBAMME2R3bXcyQGluZnJhZGVhZC5vcmcwggIiMA0GCSqGSIb3DQEBAQUAA4IC
-DwAwggIKAoICAQDali7HveR1thexYXx/W7oMk/3Wpyppl62zJ8+RmTQH4yZeYAS/SRV6zmfXlXaZ
-sNOE6emg8WXLRS6BA70liot+u0O0oPnIvnx+CsMH0PD4tCKSCsdp+XphIJ2zkC9S7/yHDYnqegqt
-w4smkqUqf0WX/ggH1Dckh0vHlpoS1OoxqUg+ocU6WCsnuz5q5rzFsHxhD1qGpgFdZEk2/c//ZvUN
-i12vPWipk8TcJwHw9zoZ/ZrVNybpMCC0THsJ/UEVyuyszPtNYeYZAhOJ41vav1RhZJzYan4a1gU0
-kKBPQklcpQEhq48woEu15isvwWh9/+5jjh0L+YNaN0I//nHSp6U9COUG9Z0cvnO8FM6PTqsnSbcc
-0j+GchwOHRC7aP2t5v2stVx3KbptaYEzi4MQHxm/0+HQpMEVLLUiizJqS4PWPU6zfQTOMZ9uLQRR
-ci+c5xhtMEBszlQDOvEQcyEG+hc++fH47K+MmZz21bFNfoBxLP6bjR6xtPXtREF5lLXxp+CJ6KKS
-blPKeVRg/UtyJHeFKAZXO8Zeco7TZUMVHmK0ZZ1EpnZbnAhKE19Z+FJrQPQrlR0gO3lBzuyPPArV
-hvWxjlO7S4DmaEhLzarWi/ze7EGwWSuI2eEa/8zU0INUsGI4ywe7vepQz7IqaAovAX0d+f1YjbmC
-VsAwjhLmveFjNwIDAQABo4IBsDCCAawwHwYDVR0jBBgwFoAUiUgI6iBOd2uG5YHI1+GNZIR//HAw
-HQYDVR0OBBYEFFxiGptwbOfWOtMk5loHw7uqWUOnMDAGA1UdEQQpMCeBE2R3bXcyQGluZnJhZGVh
-ZC5vcmeBEGRhdmlkQHdvb2Rob3Uuc2UwFAYDVR0gBA0wCzAJBgdngQwBBQEBMA4GA1UdDwEB/wQE
-AwIF4DAdBgNVHSUEFjAUBggrBgEFBQcDAgYIKwYBBQUHAwQwewYDVR0fBHQwcjA3oDWgM4YxaHR0
-cDovL2NybDMuZGlnaWNlcnQuY29tL1Zlcm9rZXlTZWN1cmVFbWFpbEcyLmNybDA3oDWgM4YxaHR0
-cDovL2NybDQuZGlnaWNlcnQuY29tL1Zlcm9rZXlTZWN1cmVFbWFpbEcyLmNybDB2BggrBgEFBQcB
-AQRqMGgwJAYIKwYBBQUHMAGGGGh0dHA6Ly9vY3NwLmRpZ2ljZXJ0LmNvbTBABggrBgEFBQcwAoY0
-aHR0cDovL2NhY2VydHMuZGlnaWNlcnQuY29tL1Zlcm9rZXlTZWN1cmVFbWFpbEcyLmNydDANBgkq
-hkiG9w0BAQsFAAOCAQEAQXc4FPiPLRnTDvmOABEzkIumojfZAe5SlnuQoeFUfi+LsWCKiB8Uextv
-iBAvboKhLuN6eG/NC6WOzOCppn4mkQxRkOdLNThwMHW0d19jrZFEKtEG/epZ/hw/DdScTuZ2m7im
-8ppItAT6GXD3aPhXkXnJpC/zTs85uNSQR64cEcBFjjoQDuSsTeJ5DAWf8EMyhMuD8pcbqx5kRvyt
-JPsWBQzv1Dsdv2LDPLNd/JUKhHSgr7nbUr4+aAP2PHTXGcEBh8lTeYea9p4d5k969pe0OHYMV5aL
-xERqTagmSetuIwolkAuBCzA9vulg8Y49Nz2zrpUGfKGOD0FMqenYxdJHgDCCBZswggSDoAMCAQIC
-EAfkkQ9qA1FdgOJE92VzW+AwDQYJKoZIhvcNAQELBQAwQTELMAkGA1UEBhMCQVUxEDAOBgNVBAoT
-B1Zlcm9rZXkxIDAeBgNVBAMTF1Zlcm9rZXkgU2VjdXJlIEVtYWlsIEcyMB4XDTI0MTIzMDAwMDAw
-MFoXDTI4MDEwNDIzNTk1OVowHjEcMBoGA1UEAwwTZHdtdzJAaW5mcmFkZWFkLm9yZzCCAiIwDQYJ
-KoZIhvcNAQEBBQADggIPADCCAgoCggIBANqWLse95HW2F7FhfH9bugyT/danKmmXrbMnz5GZNAfj
-Jl5gBL9JFXrOZ9eVdpmw04Tp6aDxZctFLoEDvSWKi367Q7Sg+ci+fH4KwwfQ8Pi0IpIKx2n5emEg
-nbOQL1Lv/IcNiep6Cq3DiyaSpSp/RZf+CAfUNySHS8eWmhLU6jGpSD6hxTpYKye7PmrmvMWwfGEP
-WoamAV1kSTb9z/9m9Q2LXa89aKmTxNwnAfD3Ohn9mtU3JukwILRMewn9QRXK7KzM+01h5hkCE4nj
-W9q/VGFknNhqfhrWBTSQoE9CSVylASGrjzCgS7XmKy/BaH3/7mOOHQv5g1o3Qj/+cdKnpT0I5Qb1
-nRy+c7wUzo9OqydJtxzSP4ZyHA4dELto/a3m/ay1XHcpum1pgTOLgxAfGb/T4dCkwRUstSKLMmpL
-g9Y9TrN9BM4xn24tBFFyL5znGG0wQGzOVAM68RBzIQb6Fz758fjsr4yZnPbVsU1+gHEs/puNHrG0
-9e1EQXmUtfGn4InoopJuU8p5VGD9S3Ikd4UoBlc7xl5yjtNlQxUeYrRlnUSmdlucCEoTX1n4UmtA
-9CuVHSA7eUHO7I88CtWG9bGOU7tLgOZoSEvNqtaL/N7sQbBZK4jZ4Rr/zNTQg1SwYjjLB7u96lDP
-sipoCi8BfR35/ViNuYJWwDCOEua94WM3AgMBAAGjggGwMIIBrDAfBgNVHSMEGDAWgBSJSAjqIE53
-a4blgcjX4Y1khH/8cDAdBgNVHQ4EFgQUXGIam3Bs59Y60yTmWgfDu6pZQ6cwMAYDVR0RBCkwJ4ET
-ZHdtdzJAaW5mcmFkZWFkLm9yZ4EQZGF2aWRAd29vZGhvdS5zZTAUBgNVHSAEDTALMAkGB2eBDAEF
-AQEwDgYDVR0PAQH/BAQDAgXgMB0GA1UdJQQWMBQGCCsGAQUFBwMCBggrBgEFBQcDBDB7BgNVHR8E
-dDByMDegNaAzhjFodHRwOi8vY3JsMy5kaWdpY2VydC5jb20vVmVyb2tleVNlY3VyZUVtYWlsRzIu
-Y3JsMDegNaAzhjFodHRwOi8vY3JsNC5kaWdpY2VydC5jb20vVmVyb2tleVNlY3VyZUVtYWlsRzIu
-Y3JsMHYGCCsGAQUFBwEBBGowaDAkBggrBgEFBQcwAYYYaHR0cDovL29jc3AuZGlnaWNlcnQuY29t
-MEAGCCsGAQUFBzAChjRodHRwOi8vY2FjZXJ0cy5kaWdpY2VydC5jb20vVmVyb2tleVNlY3VyZUVt
-YWlsRzIuY3J0MA0GCSqGSIb3DQEBCwUAA4IBAQBBdzgU+I8tGdMO+Y4AETOQi6aiN9kB7lKWe5Ch
-4VR+L4uxYIqIHxR7G2+IEC9ugqEu43p4b80LpY7M4KmmfiaRDFGQ50s1OHAwdbR3X2OtkUQq0Qb9
-6ln+HD8N1JxO5nabuKbymki0BPoZcPdo+FeRecmkL/NOzzm41JBHrhwRwEWOOhAO5KxN4nkMBZ/w
-QzKEy4PylxurHmRG/K0k+xYFDO/UOx2/YsM8s138lQqEdKCvudtSvj5oA/Y8dNcZwQGHyVN5h5r2
-nh3mT3r2l7Q4dgxXlovERGpNqCZJ624jCiWQC4ELMD2+6WDxjj03PbOulQZ8oY4PQUyp6djF0keA
-MYIDuzCCA7cCAQEwVTBBMQswCQYDVQQGEwJBVTEQMA4GA1UEChMHVmVyb2tleTEgMB4GA1UEAxMX
-VmVyb2tleSBTZWN1cmUgRW1haWwgRzICEAfkkQ9qA1FdgOJE92VzW+AwDQYJYIZIAWUDBAIBBQCg
-ggE3MBgGCSqGSIb3DQEJAzELBgkqhkiG9w0BBwEwHAYJKoZIhvcNAQkFMQ8XDTI2MDYwMjEyMzcx
-MFowLwYJKoZIhvcNAQkEMSIEII9RTlsDqib6UqH0CFhsYx+dYcfoTELqT+1n8Gb94ILGMGQGCSsG
-AQQBgjcQBDFXMFUwQTELMAkGA1UEBhMCQVUxEDAOBgNVBAoTB1Zlcm9rZXkxIDAeBgNVBAMTF1Zl
-cm9rZXkgU2VjdXJlIEVtYWlsIEcyAhAH5JEPagNRXYDiRPdlc1vgMGYGCyqGSIb3DQEJEAILMVeg
-VTBBMQswCQYDVQQGEwJBVTEQMA4GA1UEChMHVmVyb2tleTEgMB4GA1UEAxMXVmVyb2tleSBTZWN1
-cmUgRW1haWwgRzICEAfkkQ9qA1FdgOJE92VzW+AwDQYJKoZIhvcNAQEBBQAEggIAXtkP2hIfBjGH
-bfTNt9vJ3LNguiOAHZUPNIQm1sARI1MxCwoc0YiZRaD+qVx+kJA2kd6grTSC514CU3683JZFc+8f
-E4979j2J0QPcH3B7CFw3RHDPaXZNSnEcY7kESXn6OyMeVucRvuOEeLTzGOJIKD4Ry5GnaXZC3Md9
-oHPgGA8o2Mf7keO+h+izoiNNYPTvN2CNdRf2QyTqr/srl1bnnwmSq4bMe+77/zO2CUmomMpj2NLg
-qDsG7+0XaCSm2jr+M73fU0TKfaJzISWss9wfktAANjewUndF+sVnZ1e/VuEoVV/3MEeBX/HyA4I3
-QSpvHd175KcJriL4Bt7LdorBcWQ6y+f+u4AdWnPzKPtZUj/W8OYRVMWYkX5beDTmIIj8qZ8Q6JRT
-2BEeWm4Rf/YI5DsEcXQdSJFW8H/atmhz7ZxqhAUIZShCTdJxku+bShW3v8Ao4CR526uFvHrOVKxg
-E6SanHZFchkgaVtLcDRB80edFRNlG9owaejbJC7u9XQyZ5mBH5FYEbZdx8Kdt41qdgrun0LYPSAt
-aWBke9vn8fBLv0qykJKqw6YrG2XzvR6qffQQRYVW7GK+ku3/BH7zESVSa9M5WdCUu1Q4q4KfVwQO
-/c0ZY2mTIno47l7uJUTMt+svU2dBc/GHtnJ/WhUW5xdnm3bvqu8zpVet7FKqQ4IAAAAAAAA=
-
-
---=-J5W3Jn6TTVM29ghdH7g3--
+In a vacuum this is a valid point, but unless I am being told by a human
+to make this refactoring, the risk of namespacing conflicts will have to
+be there. The churn resulting from renaming these will be painful for me
+to manage and will result in additional patches too. At least we can go
+with the lane mode variables named this way and rename them later, if it
+ever becomes a practical problem (hopefully I can upstream the rest of
+the code by then, so I don't have to resolve merge conflicts in tens of
+patches).
