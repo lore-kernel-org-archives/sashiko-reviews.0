@@ -1,176 +1,206 @@
-Received: from out-170.mta0.migadu.com (out-170.mta0.migadu.com [91.218.175.170])
+Received: from out-171.mta0.migadu.com (out-171.mta0.migadu.com [91.218.175.171])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 29DAC37A4AB
-	for <sashiko-reviews@lists.linux.dev>; Tue,  2 Jun 2026 21:56:05 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=91.218.175.170
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B7C4135E1CE
+	for <sashiko-reviews@lists.linux.dev>; Tue,  2 Jun 2026 21:58:52 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=91.218.175.171
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1780437367; cv=none; b=qmsPd4e9SMSf0ekzwE7B96zNwftT9g3638LnUHsL92s7GChyu7uFDY53Hdk/lwwuT7lF04RFl9rSaYz+Aj+3+lt3GrcHHriKwnLgh00oEvKuZFdj/gjGlokpEo81zES4UywdTFCKbTkHXAjuFxQUkXoGXEFYk5Wy78cAeFLMElc=
+	t=1780437534; cv=none; b=WCoCaGCM1ywfYvhe4pFpbr3czYWiNzEmtTsTIb7s+jFRjm6/Ucy8QRPxbINOYM2Qk1ZfKQF6WZJZFPz3cu/P8G29Ae2MpWtRA8w3eWD7nytXDb54itiLQty7cJkUlFoQdidfI3Aq0NPHaMy3ROGl6htFbyZUb88t3L1ZzC+oVtQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1780437367; c=relaxed/simple;
-	bh=AE9qpM7nYQbqHZLW8lJrUPKuoZQ14UINWbY79FTZpDk=;
+	s=arc-20240116; t=1780437534; c=relaxed/simple;
+	bh=RBZUgb63t5P8qKXlNGcGwz87NI64X8PI0EJfAhtXEQg=;
 	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=Y3aAuK0JIu6UueZKI1h3vU6Ah5pJ1Yvn8faVWFAk2ZibV7CQSlyyM4mcI2FTYOmopdlBzb3+q4h+KjaLid7D8pd23T4WQQUmTiEBWySUMe/yEUQRdy3ca+3IP2jQhESTA6MIl7N0VfoogsQxqGDgxCbKfclk1lj/yYquXccJkDM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linux.dev; spf=pass smtp.mailfrom=linux.dev; dkim=pass (1024-bit key) header.d=linux.dev header.i=@linux.dev header.b=kbywP3C9; arc=none smtp.client-ip=91.218.175.170
+	 In-Reply-To:Content-Type; b=t8Iu9OMlQTp/IrHJtg4Pcnox7GwmMaPIBtYCrJcA/HqRXfF7jE9U0XkUw5zNDPs5ff3ohDNHcrd0rfB9tVEfc6UxUSXzwnHYQwpGaGCiu5lxdm+HoaR7KIEwLMCYfcRx9JMsnJzEWNFK9YWMKNiRc0y0ffnUMTkTDvnyxrLyAnA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linux.dev; spf=pass smtp.mailfrom=linux.dev; dkim=pass (1024-bit key) header.d=linux.dev header.i=@linux.dev header.b=Pw0JdRSv; arc=none smtp.client-ip=91.218.175.171
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linux.dev
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linux.dev
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linux.dev header.i=@linux.dev header.b="kbywP3C9"
-Message-ID: <33dccdf4-45f7-40b5-a0cf-3f99b26d46f1@linux.dev>
+	dkim=pass (1024-bit key) header.d=linux.dev header.i=@linux.dev header.b="Pw0JdRSv"
+Message-ID: <947f8b24-b5de-4e40-8d27-0f85d1fd6547@linux.dev>
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linux.dev; s=key1;
-	t=1780437362;
+	t=1780437531;
 	h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
 	 to:to:cc:cc:mime-version:mime-version:content-type:content-type:
 	 content-transfer-encoding:content-transfer-encoding:
 	 in-reply-to:in-reply-to:references:references;
-	bh=iMLhbJ4HXNg/dZXFD4JTH5x+MlzfsBAaNNL9l5upBNc=;
-	b=kbywP3C9EdS8FSB1w/ZrbwmmCr+Y5TMCGgaUX8cylueS8ubpQE6xN5au/xNZrSftPG/Ygq
-	Uo+ZOOUYF91u2+2BYXxHvtRLm/c6Q1vNi7r932YPBy+sG9q0RV2+707m1VXG4zA5Sr4xDX
-	Xx9lOP9nEuvdVEYuqYNNZ/uO0+7bS28=
-Date: Tue, 2 Jun 2026 14:55:49 -0700
+	bh=WG/pFlpqjtidmPWmvsZ/O2ImctXvqcM8DPS3bnhtjfw=;
+	b=Pw0JdRSv+Zv+WhTmFBkzZRoiteMVy9ycBQvaRFmSs/YmCi+6NFKL7NrUR5+qvYzjj2Mdu4
+	1jW0Gswo3nFQ7qnj+k88c6CGeKDvAn1FVPiOqZmQTY92BMNvLKDsN6VJyOkU7zasmLTSTM
+	U0/dFtR1Wkt6l0QcjWzWDZJBExT5WgY=
+Date: Tue, 2 Jun 2026 14:58:45 -0700
 Precedence: bulk
 X-Mailing-List: sashiko-reviews@lists.linux.dev
 List-Id: <sashiko-reviews.lists.linux.dev>
 List-Subscribe: <mailto:sashiko-reviews+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:sashiko-reviews+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Subject: Re: [PATCH v2 1/4] KVM: SEV: Do not allow intra-host
- migration/mirroring of SNP VMs
-To: sashiko-reviews@lists.linux.dev, Tom Lendacky <thomas.lendacky@amd.com>
+Subject: Re: [PATCH v2 3/4] crypto: ccp: Fix possible deadlock in SEV init
+ failure path
+To: sashiko-reviews@lists.linux.dev
 Cc: kvm@vger.kernel.org
-References: <20260601-sev_snp_fixes-v2-1-611891b28a86@meta.com>
- <20260601231728.C67C51F00893@smtp.kernel.org>
+References: <20260601-sev_snp_fixes-v2-3-611891b28a86@meta.com>
+ <20260601234159.0961C1F00898@smtp.kernel.org>
 Content-Language: en-US
 X-Report-Abuse: Please report any abuse attempt to abuse@migadu.com and include these headers.
 From: Atish Patra <atish.patra@linux.dev>
-In-Reply-To: <20260601231728.C67C51F00893@smtp.kernel.org>
+In-Reply-To: <20260601234159.0961C1F00898@smtp.kernel.org>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 7bit
 X-Migadu-Flow: FLOW_OUT
 
 
-On 6/1/26 4:17 PM, sashiko-bot@kernel.org wrote:
-> Thank you for your contribution! Sashiko AI review found 3 potential issue(s) to consider:
+On 6/1/26 4:41 PM, sashiko-bot@kernel.org wrote:
+> Thank you for your contribution! Sashiko AI review found 5 potential issue(s) to consider:
 >
 > Pre-existing issues:
-> - [High] Missing `kvm->arch.vm_type` validation in `sev_vm_copy_enc_context_from` allows creating structurally inconsistent mirror VMs.
-> - [High] Missing `vmsa_features` copy in `sev_vm_copy_enc_context_from` breaks SEV-ES mirror VMs that use features like `DEBUG_SWAP`.
-> - [High] Concurrent list modification of `owner_sev_info->mirror_vms` without holding the owner VM's lock during mirror VM migration.
+> - [High] Failure in snp_prep_cmd_buf permanently leaks the command buffer active state in __sev_do_cmd_locked, deadlocking the SEV interface.
+> - [High] sev_init_ex_buffer is allocated without zeroing, leaking uninitialized kernel memory to the host filesystem.
+> - [High] Unhandled allocation failure for dev_data->output in spdm_ctrl_alloc leads to passing a null physical address to the PSP firmware.
+> - [High] Retrying SEV-TIO commands after buffer expansion uses stale, freed physical addresses, leading to RMP violations.
+> - [High] Bounce buffer memory is permanently leaked when firmware page transitions fail during legacy SEV command preparation.
 > --
 >
-> commit 5adb8a893221b0569310f07fd9fc7abca8088651
+> commit 1396d09c5ba264e4a091f5fa101bb062c384525c
 > Author: Atish Patra <atishp@meta.com>
 >
-> KVM: SEV: Do not allow intra-host migration/mirroring of SNP VMs
+> crypto: ccp: Fix possible deadlock in SEV init failure path
 >
-> This commit rejects SNP source VMs in migration/mirroring until proper SNP
-> state transfer is implemented.
+> __sev_platform_init_handle_init_ex_path() called
+> rmp_mark_pages_firmware() with locked=false but while the parent
+> function of init_ex_path already acquired the sev_cmd_mutex.
+> In case of a rmpupdate failure for any page after the first, the cleanup
+> path would invoke reclaim pages which would result in a deadlock in
+> sev_do_cmd.
 >
->> diff --git a/arch/x86/kvm/svm/sev.c b/arch/x86/kvm/svm/sev.c
->> --- a/arch/x86/kvm/svm/sev.c
->> +++ b/arch/x86/kvm/svm/sev.c
->> @@ -2142,7 +2142,8 @@ int sev_vm_move_enc_context_from(struct kvm *kvm, unsigned int source_fd)
->>   		return ret;
+> Pass locked=true to honor the lock status of the parent function.
+>
+> Fixes: 7364a6fbca45 ("crypto: ccp: Handle non-volatile INIT_EX data when SNP is enabled")
+> Reported-by: Chris Mason <clm@meta.com>
+> Assisted-by: Claude:claude-opus-4-6
+> Signed-off-by: Atish Patra <atishp@meta.com>
+>
+>> diff --git a/drivers/crypto/ccp/sev-dev.c b/drivers/crypto/ccp/sev-dev.c
+>> index d1e9e0ac63b60..3d4793e8e34b2 100644
+>> --- a/drivers/crypto/ccp/sev-dev.c
+>> +++ b/drivers/crypto/ccp/sev-dev.c
+>> @@ -1557,7 +1557,7 @@ static int __sev_platform_init_handle_init_ex_path(struct sev_device *sev)
+>>   		unsigned long npages;
 >>   
->>   	if (kvm->arch.vm_type != source_kvm->arch.vm_type ||
->> -	    sev_guest(kvm) || !sev_guest(source_kvm)) {
->> +	    sev_guest(kvm) || !sev_guest(source_kvm) ||
->> +	    sev_snp_guest(source_kvm)) {
+>>   		npages = 1UL << get_order(NV_LENGTH);
+>> -		if (rmp_mark_pages_firmware(__pa(sev_init_ex_buffer), npages, false)) {
+>> +		if (rmp_mark_pages_firmware(__pa(sev_init_ex_buffer), npages, true)) {
+>>   			dev_err(sev->dev, "SEV: INIT_EX NV memory page state change failed.\n");
+>>   			return -ENOMEM;
+>>   		}
 > [Severity: High]
-> This is a pre-existing issue, but I noticed a potential locking race when
-> an existing mirror VM is migrated via sev_vm_move_enc_context_from().
+> This is a pre-existing issue, but does this allocation leak uninitialized
+> memory?
 >
-> Locks are only acquired for the source mirror (source_kvm) and destination
-> VM (kvm):
+> Looking at __sev_platform_init_handle_init_ex_path() in the same file:
 >
-> arch/x86/kvm/svm/sev.c:sev_vm_move_enc_context_from() {
+> drivers/crypto/ccp/sev-dev.c:__sev_platform_init_handle_init_ex_path() {
 >      ...
->      ret = sev_lock_two_vms(kvm, source_kvm);
->      if (ret)
->          return ret;
+>      page = alloc_pages(GFP_KERNEL, get_order(NV_LENGTH));
 >      ...
 > }
 >
-> Later, in sev_migrate_from(), it updates its owner's list of mirrors:
+> If the NV file does not exist, sev_read_init_ex_file() returns 0 without
+> writing any data. This leaves the 32KB buffer filled with uninitialized
+> kernel memory before transitioning to firmware state. When
+> sev_write_init_ex_file() later writes this buffer to the host filesystem,
+> could this persist kernel heap contents to disk if the firmware did not
+> fully overwrite it?
+fixed in PATCH 4.
+> [Severity: High]
+> This is a pre-existing issue, but can this error path leave the command
+> buffer permanently active?
 >
-> arch/x86/kvm/svm/sev.c:sev_migrate_from() {
+> drivers/crypto/ccp/sev-dev.c:__sev_do_cmd_locked() {
 >      ...
->      if (is_mirroring_enc_context(dst_kvm)) {
->          struct kvm_sev_info *owner_sev_info =
->              to_kvm_sev_info(dst->enc_context_owner);
->
->          list_del(&src->mirror_entry);
->          list_add_tail(&dst->mirror_entry, &owner_sev_info->mirror_vms);
+>      ret = snp_prep_cmd_buf(cmd, cmd_buf, desc_list);
+>      if (ret) {
+>          dev_err(sev->dev, "SEV: failed to prepare buffer...");
+>          return ret;
 >      }
 >      ...
 > }
 >
-> Since the required lock for enc_context_owner is omitted entirely, could
-> this concurrently modify the owner_sev_info->mirror_vms linked list if
-> userspace creates a new mirror via sev_vm_copy_enc_context_from(), which
-> locks the owner VM? Would this result in kernel list corruption?
-
-It looks possible for SEV VMs looking at the code but I don't the know 
-code path
-or the mirroring/migration use case well enough to judge how likely this 
-scenario
-in real world.
-
->>   		ret = -EINVAL;
->>   		goto out_unlock;
->>   	}
->> @@ -2865,6 +2866,7 @@ int sev_vm_copy_enc_context_from(struct kvm *kvm, unsigned int source_fd)
->>   	 * created after SEV/SEV-ES initialization, e.g. to init intercepts.
->>   	 */
->>   	if (sev_guest(kvm) || !sev_guest(source_kvm) ||
->> +	    sev_snp_guest(source_kvm) ||
->>   	    is_mirroring_enc_context(source_kvm) || kvm->created_vcpus) {
+> Since sev->cmd_buf_active or sev->cmd_buf_backup_active were set to true
+> before this call, returning directly here bypasses resetting those flags.
+> Would this cause subsequent commands to fail with -EBUSY and lock up the
+> interface?
+>
 > [Severity: High]
-> This isn't a bug introduced by this patch, but this block seems to be
-> missing the kvm->arch.vm_type != source_kvm->arch.vm_type check that
-> exists in sev_vm_move_enc_context_from().
+> This is a pre-existing issue, but does this error path leak the mapped
+> bounce buffers?
 >
-> Does this omission allow creating structurally inconsistent mirror VMs?
-> Userspace could potentially create a destination VM as KVM_X86_SNP_VM and
-> mirror a source VM of type KVM_X86_SEV_VM into it. Since KVM's core MMU
-> would treat the new VM as an SNP VM (due to arch.vm_type), but the SEV
-> code treats it as a legacy SEV VM (because ____sev_snp_guest evaluates
-> to false), could this produce an inconsistent internal state and allow
-> attaching guest_memfd to standard SEV VMs?
-NA. They don't have to be same vm type as per my understanding from the 
-selftest code.
->>   		ret = -EINVAL;
->>   		goto e_unlock;
-> [Severity: High]
-> This is a pre-existing issue, but I noticed another detail in
-> sev_vm_copy_enc_context_from() just below this diff.
->
-> The initialization block for the mirror VM omits copying vmsa_features:
->
-> arch/x86/kvm/svm/sev.c:sev_vm_copy_enc_context_from() {
+> drivers/crypto/ccp/sev-dev.c:snp_prep_cmd_buf() {
 >      ...
->      mirror_sev->enc_context_owner = source_kvm;
->      mirror_sev->active = true;
->      mirror_sev->asid = source_sev->asid;
->      mirror_sev->fd = source_sev->fd;
->      mirror_sev->es_active = source_sev->es_active;
->      mirror_sev->need_init = false;
->      mirror_sev->handle = source_sev->handle;
+>      if (sev_cmd_buf_writable(cmd)) {
+>          if (rmp_mark_pages_firmware(__pa(cmd_buf), 1, true))
+>              return -EFAULT;
+>      }
 >      ...
 > }
 >
-> This omits mirror_sev->vmsa_features = source_sev->vmsa_features.
+> If this fails, it returns -EFAULT without calling
+> snp_unmap_cmd_buf_desc_list(), which appears to leave the mapped command
+> descriptors unmapped.
 >
-> Since SEV-ES VMs use vmsa_features to track capabilities like
-> SVM_SEV_FEAT_DEBUG_SWAP, would a mirrored SEV-ES VM incorrectly
-> initialize its vmsa_features to 0? When vCPUs are instantiated,
-> sev_es_init_vmcb() checks sev_vcpu_has_debug_swap(), which would evaluate
-> to false, resulting in misconfigured VMCB intercepts. Could this silently
-> drop important execution features for SEV-ES mirrors?
-
-As per my understanding, that is intentional as well.
-Is it common to mirror SEV VMs with SVM_SEV_FEAT_DEBUG_SWAP enabled ?
-
-@tom: Please let me know if any of the above statements are not true.
+> Similarly, in snp_map_cmd_buf_desc():
+>
+> drivers/crypto/ccp/sev-dev.c:snp_map_cmd_buf_desc() {
+>      ...
+>      if (rmp_mark_pages_firmware(*desc->paddr_ptr, npages, true)) {
+>          pr_warn("Error moving pages to firmware-owned state...");
+>          return -EFAULT;
+>      }
+>      ...
+> }
+>
+> If the firmware transition fails for an individual bounce buffer, the newly
+> allocated page isn't freed before returning -EFAULT. Could both of these
+> paths result in permanent memory leaks?
+>
+> [Severity: High]
+> This is a pre-existing issue, but does this validation correctly check the
+> output buffer?
+>
+> drivers/crypto/ccp/sev-dev-tio.c:spdm_ctrl_alloc() {
+>      ...
+>      dev_data->output = sla_alloc(dev_data->output_len, true);
+>
+>      if (IS_SLA_NULL(dev_data->req) || IS_SLA_NULL(dev_data->resp) ||
+>          IS_SLA_NULL(dev_data->scratch) || IS_SLA_NULL(dev_data->dev_ctx)) {
+>      ...
+> }
+>
+> The check examines dev_ctx instead of the newly allocated output. If the
+> output allocation fails, dev_data->output will be SLA_NULL (physical frame
+> number 0). Will returning success here cause the PSP firmware to use
+> physical page 0 as an output buffer and trigger an RMP violation?
+>
+> [Severity: High]
+> This is a pre-existing issue, but does retrying the command use stale
+> physical addresses?
+>
+> drivers/crypto/ccp/sev-dev-tio.c:sev_tio_do_cmd() {
+>      ...
+>      rc1 = sla_expand(&dev_data->output, &dev_data->output_len);
+>      ...
+>      rc = sev_do_cmd(cmd, data, psp_ret);
+>      ...
+> }
+>
+> When sla_expand() allocates a new buffer and frees the old one, dev_data
+> pointers are updated. However, the data pointer passed to sev_do_cmd()
+> comes from the caller and contains a by-value copy of the old spdm_ctrl
+> fields. Will retrying the command pass the old, freed physical addresses
+> to the PSP firmware?
+>
+Above issues require a bit detailed investigation to see if it is a 
+false positive.
+These are completely unrelated to this patch as well.
+Does these needs to be addressed before merging ?
 
 
