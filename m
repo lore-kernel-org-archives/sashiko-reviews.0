@@ -1,40 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5B1161A680C;
-	Tue,  2 Jun 2026 04:47:39 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 72AE924E4C3;
+	Tue,  2 Jun 2026 05:00:50 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1780375660; cv=none; b=tupSZAkTEufDgMWXLBfQHZSbHb0nhi154+ZcLlmVUMfWqjpvygG9CzifvLBaWVN+4/RxZ0V0A1g3AltHo/bHAD+ryHiIH/zhoraHxwAG7peO/FJ94uAdCSqjNFL9iGMbo4C2QehWsK2QsUVkp9PyKaHUKxwP01AlhJJiZzH3VBs=
+	t=1780376451; cv=none; b=XEB/UzBvXRD3ROtFPpsyM532s0fS0n96aCivUiKmCACGt0zNB6RwSlvreTVTIoKBTjLAxdPb12ty7y3woVzQ6VccBkgBNaU2wLlqFlBHKCdTF85VzSOIul094nGg1wy+8BIm0VqYKS+5oZhUwcP9rtvNzbDjF6h08C6qBeCdHIk=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1780375660; c=relaxed/simple;
-	bh=figzwIQjLJ6/wYOhbtThrg5JL20rtRu0/W7QFMh7uKw=;
+	s=arc-20240116; t=1780376451; c=relaxed/simple;
+	bh=lDcJAzOeqoxyirEqgXqAVF1KX4qWnR/3dbT4e+6eQ+I=;
 	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=KVVr1MR1pMQNVuJo6CL6to462qQOZEtWyfwMvTg37bLWMaTctHEnJTZH33+68axVbVPLgwxI6+HyiRZleEyH1AT1lt8/A3VzYJSFVncqOc3tcJhEkivinG6IpKNYR8KUHr//Od/faEwqu4waSR2I8fSF+RripomZgynyB+yUGT8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=eJL5X6Z6; arc=none smtp.client-ip=100.103.45.18
+	 Content-Type:Content-Disposition:In-Reply-To; b=QLW38pImeOqH/QOaxX5P1h62e8HvMk6f1cUptjvPWNeLzwEy5vzVEZQPo+bTx0QeocMiaf0oe0+tCjgTIWbGUJWUXi5dEMsrRuKMQwKPrxF3gDkL83c+p5EJ6doPnPwtKLGmGvK6qN8XLpuO5ZbVEWXs/cH/FGdJeAk4S3dKz5c=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=VlhBxpi6; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="eJL5X6Z6"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id E15551F00893;
-	Tue,  2 Jun 2026 04:47:38 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="VlhBxpi6"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 26F721F00893;
+	Tue,  2 Jun 2026 05:00:50 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=kernel.org;
-	s=k20260515; t=1780375659;
-	bh=BTEDAuQRMmoOnsNXUwkiwi5b8kYjVRTDKcS8cYhKsd4=;
+	s=k20260515; t=1780376450;
+	bh=wBkWJk8W2TpQaFD2Y4FUARE4rkZFHlehakL+Au601kM=;
 	h=Date:From:To:Cc:Subject:References:In-Reply-To;
-	b=eJL5X6Z6aaigF6HZQG5aAe4ACuuIx4HJw8xtFt7t2WxjPwIrk8o9JR+z8N5PSFv9L
-	 HoFJcucvfW4UGlzfVkzTTK7s8ZIreBTq5sEW/WHPfbvq65nJi8hhEW0Bu441um+FOa
-	 KaI1+Gr+vmAV9upRWviiuMTKu6nlifCGfA3VIk2nkwcfKN4hVMxuSFu7ABJsJYKqH4
-	 WUKkFOQzAWpSX6FAkn1AJqrNP7uo++ew48+v83zpqiQts0yaMOhfDm3pGkM3WlwOqr
-	 fuH4Lrc3y3unpjcJXwYzh9yAM5lnIjF72NJoa3rQG+mvdSPwaDGlwIb7y4Y27Tyx8A
-	 A0Vk25WBDiJgA==
-Date: Mon, 1 Jun 2026 21:47:09 -0700
+	b=VlhBxpi6n+2xthuTwdCl/0zkxTERLRunOQj+OLFETxw36uUWBpmUMRhlQ0eWoIMqZ
+	 QEjV9PnZyynuW7kwlRhDTmSDSPJLw6vq9m9y/1kena7pBF3Sz0NFVBSAdHlwcpoHMU
+	 TGmdUIg9VuXlcsAn9GXfeCVkgBt6RZok9odS5GlaVzPh+NkNB0Gbz9plbRJqH0KABC
+	 QQb/rVTc0KzjjI4APbhDO+VRXytjC7ivlIwuWrVp3korwXAwQm8c/zBoL76u42u5Rb
+	 YYm/X7hLEEFa6Z5pMn5F45AeAOXKQRXc+UmlYQrqWqeBx/01IbzUb+2DPxjrKyXwzE
+	 ty1/v/OWXdK6g==
+Date: Mon, 1 Jun 2026 22:00:49 -0700
 From: Drew Fustini <fustini@kernel.org>
 To: sashiko-reviews@lists.linux.dev
 Cc: linux-kernel@vger.kernel.org
-Subject: Re: [PATCH RFC v6 12/18] riscv_cbqri: resctrl: Add L3 cache
- occupancy monitoring
-Message-ID: <ah5gTWvnnkMcTP4s@gen8>
-References: <20260601-ssqosid-cbqri-rqsc-v7-0-v6-12-baf00f50028a@kernel.org>
- <20260601205837.C1AC91F00893@smtp.kernel.org>
+Subject: Re: [PATCH RFC v6 13/18] riscv_cbqri: resctrl: Add MB_MIN bandwidth
+ allocation via Rbwb
+Message-ID: <ah5jgXEHzQUEREV0@gen8>
+References: <20260601-ssqosid-cbqri-rqsc-v7-0-v6-13-baf00f50028a@kernel.org>
+ <20260601205717.7FDA51F00893@smtp.kernel.org>
 Precedence: bulk
 X-Mailing-List: sashiko-reviews@lists.linux.dev
 List-Id: <sashiko-reviews.lists.linux.dev>
@@ -43,120 +43,224 @@ List-Unsubscribe: <mailto:sashiko-reviews+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-In-Reply-To: <20260601205837.C1AC91F00893@smtp.kernel.org>
+In-Reply-To: <20260601205717.7FDA51F00893@smtp.kernel.org>
 
-On Mon, Jun 01, 2026 at 08:58:37PM +0000, sashiko-bot@kernel.org wrote:
-> > +	/*
-> > +	 * cbqri_domain_list_lock serialises the list walk against
-> > +	 * cbqri_detach_cpu_from_ctrl_domains().
-> > +	 */
-> > +	mutex_lock(&cbqri_domain_list_lock);
+On Mon, Jun 01, 2026 at 08:57:17PM +0000, sashiko-bot@kernel.org wrote:
+> > diff --git a/drivers/resctrl/cbqri_resctrl.c b/drivers/resctrl/cbqri_resctrl.c
+> > index f379058b0114b..1d312004b07d9 100644
+> > --- a/drivers/resctrl/cbqri_resctrl.c
+> > +++ b/drivers/resctrl/cbqri_resctrl.c
+> > @@ -363,6 +363,9 @@ int resctrl_arch_update_one(struct rdt_resource *r, struct rdt_ctrl_domain *d,
+> >  	case RDT_RESOURCE_L2:
+> >  	case RDT_RESOURCE_L3:
+> >  		return cbqri_apply_cache_config_dom(dom, r, closid, t, cfg_val);
+> > +	case RDT_RESOURCE_MB_MIN:
+> > +		/* sum(Rbwb) <= MRBWB validation runs inside cbqri_apply_rbwb(). */
+> > +		return cbqri_apply_rbwb(dom->hw_ctrl, closid, cfg_val, true);
 > 
 > [Severity: High]
-> During CPU hotplug, cbqri_resctrl_online_cpu() acquires
-> cbqri_domain_list_lock and eventually calls resctrl_online_mon_domain()
-> which acquires the core framework rdtgroup_mutex.
+> Does this code leak memory bandwidth capacity when a resctrl group is removed?
 > 
-> However, when reading monitoring data, the core framework acquires
-> rdtgroup_mutex and then invokes resctrl_arch_rmid_read() which acquires
-> cbqri_domain_list_lock here.
+> When a resctrl group is removed via rmdir, the CLOSID is freed by the core,
+> but no architecture hook is invoked to reset the hardware or software cache.
+> This means ctrl->rbwb_cache[closid] permanently retains the deleted group's
+> bandwidth allocation.
 > 
-> Does this establish an AB-BA lock inversion between cbqri_domain_list_lock
-> and rdtgroup_mutex?
+> Later, when cbqri_apply_rbwb() is called to modify bandwidth for any active
+> group, it sums across all ctrl->rcid_count CLOSIDs, including the unallocated
+> ones. The stranded bandwidth from deleted groups is included in the sum,
+> causing new allocations to be rejected with -EINVAL.
 > 
-> [Severity: High]
-> Additionally, when a CPU goes offline, cbqri_resctrl_offline_cpu() acquires
-> cbqri_domain_list_lock before initiating domain teardown.
-> 
-> If the domain is torn down, the resctrl core flushes busy RMIDs by calling
-> __check_limbo(), which invokes this resctrl_arch_rmid_read() hook.
-> 
-> Since this hook unconditionally attempts to acquire cbqri_domain_list_lock,
-> does this cause a self-deadlock when offlining a CPU with active monitoring
-> traffic?
+> Can an attacker with mkdir permissions repeatedly create groups, assign high
+> bandwidth, and remove them, to permanently starve the default group and
+> active processes?
 
-For the next rev, I will drop the list lock around the teardown so the
-limbo flush does not re-enter it.
+Only root can create directories in /sys/fs/resctrl so I do not think
+this is a practical concern.
 
-> > @@ -500,6 +582,13 @@ static int cbqri_resctrl_control_init(struct cbqri_resctrl_res *cbqri_res)
-> [ ... ]
-> > +		if (ctrl->mon_capable && res->rid == RDT_RESOURCE_L3) {
-> > +			res->mon_scope = RESCTRL_L3_CACHE;
-> > +			resctrl_enable_mon_event(QOS_L3_OCCUP_EVENT_ID,
-> > +						 false, 0, NULL);
-> > +			res->mon_capable = true;
-> > +		}
-> 
-> [Severity: Medium]
-> The L3 occupancy event is registered with any_cpu set to false. This
-> requires the core to read the event from a specific CPU using
-> smp_call_function_any().
-> 
-> If that CPU is configured as nohz_full, the read executes in an IPI context
-> with interrupts disabled. Since resctrl_arch_rmid_read() correctly returns
-> -EIO when irqs_disabled(), will userspace reads fail on nohz_full CPUs?
-> 
-> Could any_cpu be true here to avoid cross-CPU IPIs, since the MMIO reads
-> can be safely executed from any CPU?
-
-I will switch QOS_L3_OCCUP and QOS_L3_MBM_TOTAL to any_cpu = true in the
-next rev.
-
-> > @@ -510,6 +599,7 @@ static int cbqri_resctrl_control_init(struct cbqri_resctrl_res *cbqri_res)
-> [ ... ]
-> > +	l3_ctrl = cbqri_resctrl_resources[RDT_RESOURCE_L3].ctrl;
-> > +	if (l3_ctrl && l3_ctrl->mon_capable)
-> > +		max_rmid = min(max_rmid, l3_ctrl->mcid_count);
-> > +
-> > +	if (!exposed_mon_capable) {
-> > +		max_rmid = 1;
-> > +		return;
-> >  	}
-> 
-> [Severity: High]
-> If the hardware has an L2 monitoring controller but no L3 monitoring,
-> exposed_mon_capable becomes true but max_rmid is never narrowed from its
-> initial U32_MAX value.
-> 
-> When the core framework mounts the filesystem, it will query
-> resctrl_arch_system_num_rmid_idx() which returns max_rmid. Will this
-> cause an immediate OOM panic when it attempts to allocate
-> U32_MAX * sizeof(struct rmid_entry)?
-
-For the next rev, I will only set exposed_mon_capable when an event is
-actually enabled and clamp max_rmid.
-
-> > @@ -560,13 +673,89 @@ static struct rdt_ctrl_domain *cbqri_create_ctrl_domain(struct cbqri_controller
-> [ ... ]
-> > +err_offline:
-> > +	/*
-> > +	 * cancel_delayed_work avoids deadlocking against the cqm_limbo
-> > +	 * worker which takes cpus_read_lock while this hotplug callback
-> > +	 * already holds cpus_write_lock. mbm_over is only
-> > +	 * INIT_DELAYED_WORK'd when MBM_TOTAL was enabled, so gate the
-> > +	 * cancel on the same condition to avoid touching a zeroed work
-> > +	 * struct.
-> > +	 */
-> > +	cancel_delayed_work(&mon_dom->cqm_limbo);
-> > +	if (resctrl_is_mon_event_enabled(QOS_L3_MBM_TOTAL_EVENT_ID))
-> > +		cancel_delayed_work(&mon_dom->mbm_over);
-> > +	resctrl_offline_mon_domain(res, &mon_dom->hdr);
-> > +err_listdel:
-> > +	list_del(&mon_dom->hdr.list);
-> > +err_free:
-> > +	kfree(mon_dom);
-> > +	return err;
+> > @@ -422,9 +433,22 @@ u32 resctrl_arch_get_config(struct rdt_resource *r, struct rdt_ctrl_domain *d,
+> >  	return val;
+> >  }
+> >  
+> > +/*
+> > + * RCID 0 carries the remaining MRBWB after every other RCID is seeded with
+> > + * the minimum Rbwb of 1. cbqri_probe_bc() rejects a bandwidth controller
+> > + * with mrbwb < rcid_count, so this subtraction cannot underflow.
+> > + */
+> > +static u64 cbqri_rcid0_rbwb(struct cbqri_controller *ctrl)
+> > +{
+> > +	if (WARN_ON_ONCE(ctrl->bc.mrbwb < ctrl->rcid_count))
+> > +		return 1;
+> > +	return ctrl->bc.mrbwb - (ctrl->rcid_count - 1);
 > > +}
 > 
 > [Severity: High]
-> If a worker thread is currently executing but blocked waiting for
-> cpus_read_lock(), cancel_delayed_work() will return immediately because
-> the work is no longer pending in the queue.
+> Does this calculation cause unconditional initialization failure on systems
+> where MRBWB exceeds U16_MAX?
 > 
-> After the hotplug thread drops cpus_write_lock(), the worker could unblock
-> and continue executing, accessing the mon_dom structure after it was freed.
-> Does this create a use-after-free window?
+> The maximum reserved bandwidth blocks (mrbwb) is a 32-bit field in hardware
+> capabilities, but cbqri_apply_rbwb() enforces a strict hardware limitation
+> of 16 bits per RCID (rejecting values > U16_MAX).
+> 
+> If the global mrbwb exceeds 65535, this function returns a value exceeding
+> U16_MAX, causing cbqri_apply_rbwb() to reject it with -EINVAL. This in turn
+> causes domain initialization to fail, preventing CPUs from coming online
+> with resctrl.
 
-This is not a problem. The non-sync cancel is the resctrl core's own pattern
+This is not a real issue. MRBWB can not exceeds U16_MAX.
+
+> > @@ -439,15 +463,41 @@ void resctrl_arch_reset_all_ctrls(struct rdt_resource *r)
+> >  		return;
+> >  
+> >  	list_for_each_entry(d, &r->ctrl_domains, hdr.list) {
+> > -		for (i = 0; i < hw_res->ctrl->rcid_count; i++) {
+> > -			for (t = 0; t < CDP_NUM_TYPES; t++) {
+> > +		dom = container_of(d, struct cbqri_resctrl_dom,
+> > +				   resctrl_ctrl_dom);
+> > +
+> > +		switch (r->rid) {
+> > +		case RDT_RESOURCE_MB_MIN:
+> > +			/*
+> > +			 * CBQRI section 4.5: Rbwb >= 1, sum(Rbwb) <= MRBWB.
+> > +			 * Walk N-1..1 first so RCID 0 lands last with the
+> > +			 * remaining budget.
+> > +			 */
+> > +			for (i = 0; i < hw_res->ctrl->rcid_count; i++) {
+> > +				u32 rcid = (i + 1) % hw_res->ctrl->rcid_count;
+> > +				u64 rbwb = (rcid == 0) ?
+> > +					cbqri_rcid0_rbwb(dom->hw_ctrl) : 1;
+> >  				int rerr;
+> >  
+> > -				rerr = resctrl_arch_update_one(r, d, i, t, default_ctrl);
+> > +				rerr = cbqri_apply_rbwb(dom->hw_ctrl, rcid, rbwb, false);
+> >  				if (rerr)
+> > -					pr_err_ratelimited("rid=%d reset RCID %u type %u failed (%d)\n",
+> > -							   r->rid, i, t, rerr);
+> > +					pr_err_ratelimited("RBWB reset RCID %u failed (%d)\n",
+> > +							   rcid, rerr);
+> 
+> [Severity: High]
+> Does this error handling violate the hardware bandwidth sum invariant?
+> 
+> If cbqri_apply_rbwb() fails for any RCID (such as an MMIO error), it logs
+> the error but continues the loop, leaving that RCID at its previous
+> (potentially large) bandwidth.
+> 
+> When it later blindly writes MRBWB - (N-1) to RCID 0 with check_sum = false,
+> the total sum of all RCIDs in the hardware will exceed the hardware's MRBWB
+> capacity. Could this violate the CBQRI invariant and potentially lock up the
+> controller?
+
+This is not a problem. The reset uses check_sum = false because the
+intermediate sums during the walk legitimately exceed MRBWB, but the
+hardware enforces sum(Rbwb) <= MRBWB itself. 
+
+> > +	case RDT_RESOURCE_MB_MIN:
+> > +		res->name = "MB_MIN";
+> > +		res->schema_fmt = RESCTRL_SCHEMA_RANGE;
+> > +		/*
+> > +		 * resctrl requires a cache scope for MBA-style domains.
+> > +		 * Use L3 as a proxy until the resctrl supports non-cache
+> > +		 * scopes for bandwidth resources.
+> > +		 */
+> > +		res->ctrl_scope = RESCTRL_L3_CACHE;
+> > +		/* Rbwb is an integer block count, not a percentage. No MBA delay_linear. */
+> > +		res->membw.throttle_mode = THREAD_THROTTLE_UNDEFINED;
+> > +		res->membw.min_bw = 1;
+> > +		res->membw.max_bw = ctrl->bc.mrbwb;
+> 
+> Does setting max_bw to ctrl->bc.mrbwb expose an unclamped 32-bit maximum
+> bandwidth to userspace?
+> 
+> If ctrl->bc.mrbwb exceeds U16_MAX, exposing this value to userspace allows
+> requests that bypass core validation but will ultimately fail at the hardware
+> layer in cbqri_apply_rbwb().
+
+I will address this issue in the next revision.
+
+> > +		res->membw.bw_gran = 1;
+> > +		/*
+> > +		 * CBQRI section 4.5 caps sum(Rbwb) <= MRBWB. Default new
+> > +		 * groups to min_bw so mkdir cannot overflow that sum.
+> > +		 */
+> > +		res->membw.default_to_min = true;
+> > +		res->alloc_capable = ctrl->alloc_capable;
+> > +		INIT_LIST_HEAD(&res->ctrl_domains);
+> > +		INIT_LIST_HEAD(&res->mon_domains);
+> 
+> [Severity: High]
+> Does enabling MB_MIN cause massive memory allocation failures due to an
+> unbounded max_rmid?
+> 
+> In cbqri_resctrl_accumulate_caps(), exposed_mon_capable is set to true if
+> any hardware controller has mon_capable == true, which now includes the
+> bandwidth controller backing MB_MIN.
+> 
+> However, max_rmid is conditionally bounded only by the L3 capacity
+> controller. If the system has a monitor-capable bandwidth controller but no
+> monitor-capable L3 capacity controller, max_rmid remains U32_MAX.
+> 
+> Later, resctrl_init() invokes rmid_init(), which attempts to allocate
+> structures for U32_MAX RMIDs. This will fail with -ENOMEM and completely
+> abort resctrl initialization.
+
+I'll address this in the next rev.
+> 
+> > @@ -893,14 +1054,24 @@ static int cbqri_attach_cpu_to_all_ctrls(unsigned int cpu)
+> >  	lockdep_assert_held(&cbqri_domain_list_lock);
+> >  
+> >  	list_for_each_entry(ctrl, &cbqri_controllers, list) {
+> > -		if (ctrl->type != CBQRI_CONTROLLER_TYPE_CAPACITY)
+> > -			continue;
+> > -		if (!cpumask_test_cpu(cpu, &ctrl->cache.cpu_mask))
+> > -			continue;
+> > -		if (!ctrl->alloc_capable)
+> > +		switch (ctrl->type) {
+> > +		case CBQRI_CONTROLLER_TYPE_CAPACITY:
+> > +			if (!cpumask_test_cpu(cpu, &ctrl->cache.cpu_mask))
+> > +				continue;
+> > +			if (!ctrl->alloc_capable)
+> > +				continue;
+> > +			err = cbqri_attach_cpu_to_cap_ctrl(ctrl, cpu);
+> > +			break;
+> > +		case CBQRI_CONTROLLER_TYPE_BANDWIDTH:
+> > +			if (!cpumask_test_cpu(cpu, &ctrl->mem.cpu_mask))
+> > +				continue;
+> > +			if (!ctrl->alloc_capable)
+> > +				continue;
+> > +			err = cbqri_attach_cpu_to_bw_ctrl(ctrl, cpu);
+> > +			break;
+> > +		default:
+> >  			continue;
+> > -
+> > -		err = cbqri_attach_cpu_to_cap_ctrl(ctrl, cpu);
+> > +		}
+> >  		if (err) {
+> >  			cbqri_detach_cpu_from_all_ctrls(cpu);
+> 
+> [Severity: High]
+> This is a pre-existing issue, but does cbqri_detach_cpu_from_l3_mon() have a
+> use-after-free bug due to an unsafe cancel_delayed_work()?
+> 
+> If cbqri_detach_cpu_from_all_ctrls() eventually calls into
+> cbqri_detach_cpu_from_l3_mon():
+> 
+> drivers/resctrl/cbqri_resctrl.c:cbqri_detach_cpu_from_l3_mon() {
+>     ...
+>             cancel_delayed_work(&mon_dom->cqm_limbo);
+>             ...
+>             kfree(mon_dom);
+>     ...
+> }
+> 
+> The CPU offline callback runs under cpus_write_lock(). If the worker has
+> already dequeued from the workqueue but is preempted right before acquiring
+> cpus_read_lock(), cancel_delayed_work() returns false and does not wait.
+> 
+> The callback then proceeds to kfree(mon_dom). When the hotplug callback
+> finishes and releases the write lock, the worker acquires the read lock and
+> dereferences the freed mon_dom pointer, resulting in a use-after-free.
+
+I don't believe this a problem.
 
 Drew
