@@ -1,205 +1,139 @@
-Received: from mgamail.intel.com (mgamail.intel.com [192.198.163.16])
+Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9094C4204E
-	for <sashiko-reviews@lists.linux.dev>; Tue,  2 Jun 2026 06:35:48 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=192.198.163.16
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9AECC2D6E66;
+	Tue,  2 Jun 2026 07:55:22 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1780382151; cv=none; b=RZyaH81yiNW5E5FZhAv+nsOfiPSennXp9ch3sdOeDF+5o7NUD6SIBJXDsNeuQRwLb0h1FUOf8O6c+VzUf59NWt53EDWssX6az4rtKGIOc54dt9dgzlqWqfpcIICnccA98jQOyDNXnAe3HEPM7jSzfOmT/aj9a90TGt9OdBBikio=
+	t=1780386923; cv=none; b=T8dcV36NyUmEhKwTgJysx8oqEXXSBpKLzXrmXJbxf4JcVaVEO8/TU802yKT3J7z+ruSy6Xy5raBYRRzrEGaFB8cdIq+Ud9ASHQpfcNVZWIEZ5+DHJgJuJyDiP4LO2fj75cL0yjpyEU2/RmJbfPQJcwTFZtzn92tmEgIvvg5Jt6o=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1780382151; c=relaxed/simple;
-	bh=rtUOi9QaAiQi5Ip5GtJ7Ng73F+mPgtw6b5QgB5Eyhy4=;
-	h=Message-ID:Date:MIME-Version:Subject:From:To:Cc:References:
-	 In-Reply-To:Content-Type; b=q91erWFciUFj0tYqOelDlVcpoX3koxzBSXkixxFsHqkdRbloXEhAQnZGh/8CpFCKhO+VOPuo2rj79PQIRHqwjbzOyxADfu28cXiP0DFa+fF58xBrSIL4HRx+PCcEw4g5q5jM1O92UQ/uSHfP7Y23FQxP++ExqlzCXtPZT1W79Nc=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linux.intel.com; spf=pass smtp.mailfrom=linux.intel.com; dkim=pass (2048-bit key) header.d=intel.com header.i=@intel.com header.b=adiSjeWO; arc=none smtp.client-ip=192.198.163.16
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linux.intel.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linux.intel.com
+	s=arc-20240116; t=1780386923; c=relaxed/simple;
+	bh=+sN6zpdyOriXPsnZU12ENPS+DNo75xefbvKGq6qCAIY=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=FPHfLTpY+8bgr+rh4pEVikWZTEGLVOb+DJWcaVhdUjwjUbW2vwpFwlaiQI5BgB11PFFpvMG0dC0vEr0Dq/eEWK65oz5DplTpujhcOKmXbuU9p7i6LgeGd/FwcmJCLYi/XF/XuwLFpsOP0P9WqHcnHl8MOTN64m5lXqVsk2gnZ3o=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=loPyPs+I; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=intel.com header.i=@intel.com header.b="adiSjeWO"
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
-  d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
-  t=1780382148; x=1811918148;
-  h=message-id:date:mime-version:subject:from:to:cc:
-   references:in-reply-to:content-transfer-encoding;
-  bh=rtUOi9QaAiQi5Ip5GtJ7Ng73F+mPgtw6b5QgB5Eyhy4=;
-  b=adiSjeWOFtmtDJx7JvxOpVtOe3HJbi4cY97sD/HEBCY8oI26+8EUg+XA
-   Zt/i3W0MDmqvPCa3JswalnhE8L/fM9Oal1CU5qKHfk3HCi5SchJ/wcHYf
-   8yX82KIBY8vLNiyVeQ0YRjfDvBB1PptdjQ/AULxbnO/Onf+oEE5YcT8mL
-   hZzsr8yDaYZ0IYbu0dSqpA8t5z8t/2mKYqDtBNRxSxMBkbJmIqUjlfSCS
-   xqe4Xz7rXTUuDx8gpt6JbSMnLTyt5m4Lbh3PM20Ndu7cRmE+gX06wAdDN
-   9GiL/56GaQzgFFYSGphiW25TNZfm/HP/I6oy0Ixew66rgHHPgJ4ev+F/1
-   A==;
-X-CSE-ConnectionGUID: 4aPHEPVbQsuxfnrchmTlxw==
-X-CSE-MsgGUID: z6I8pbPoSgqBLPsY8l4/bw==
-X-IronPort-AV: E=McAfee;i="6800,10657,11804"; a="68703683"
-X-IronPort-AV: E=Sophos;i="6.24,182,1774335600"; 
-   d="scan'208";a="68703683"
-Received: from orviesa005.jf.intel.com ([10.64.159.145])
-  by fmvoesa110.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 01 Jun 2026 23:35:48 -0700
-X-CSE-ConnectionGUID: Kk6AkzEmSgavayIBR3bKRw==
-X-CSE-MsgGUID: SMnZZeH7T0mmamW9fmhplQ==
-X-ExtLoop1: 1
-X-IronPort-AV: E=Sophos;i="6.24,182,1774335600"; 
-   d="scan'208";a="248742806"
-Received: from unknown (HELO [10.238.1.64]) ([10.238.1.64])
-  by orviesa005-auth.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 01 Jun 2026 23:35:47 -0700
-Message-ID: <10afdb91-d72f-450a-87c3-c78ae52d966f@linux.intel.com>
-Date: Tue, 2 Jun 2026 14:35:44 +0800
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="loPyPs+I"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 58F6A1F00893;
+	Tue,  2 Jun 2026 07:55:21 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=kernel.org;
+	s=k20260515; t=1780386922;
+	bh=dhcwDr+/sqdcNLo5+3Szbnc8VATvExtO2SZeE9jrkw4=;
+	h=Date:From:To:Cc:Subject:References:In-Reply-To;
+	b=loPyPs+IW/GaVzmRT/KhS6ca2s4Wxx4sLY9Nz6Eal7ZNIKsXeOeDPzcBhpi4Zv710
+	 qwWuZq+hXCen+3WXaZ0J/Bz3mWWRaTbn+tFMa729/lJm5oq4EubIoos++D8mxXZRP+
+	 Y17yOlYwSvQ2urWU+VLyLtoqCwWqOHwAo3PD3lCGYJBeOcRNe6gMmG/ixe+lLsuNWE
+	 Hb636KUUKfmYi+X7oBzO/MOgqzSe05599QouOcabPqQAmpni4Gkmqfqls2xvabT3Qn
+	 P6ItzWtrBQ5bCyh/j+Gy6a5s0KgNuAjV/EiU3Kuc5bre8mDlkrdWifqxlclUZQNc3h
+	 duo1bXC+4fSZA==
+Date: Tue, 2 Jun 2026 09:55:18 +0200
+From: Benjamin Tissoires <bentiss@kernel.org>
+To: sashiko-reviews@lists.linux.dev
+Cc: Danny Kaehn <danny.kaehn@plexus.com>, dmitry.torokhov@gmail.com, 
+	linux-input@vger.kernel.org
+Subject: Re: [PATCH v14 1/2] HID: cp2112: Add fwnode support
+Message-ID: <ah6LJw5bgVyrtnyI@beelink>
+References: <20260520-cp2112-dt-v14-1-b1b4b6734b6f@plexus.com>
+ <20260520170229.CEFA31F000E9@smtp.kernel.org>
 Precedence: bulk
 X-Mailing-List: sashiko-reviews@lists.linux.dev
 List-Id: <sashiko-reviews.lists.linux.dev>
 List-Subscribe: <mailto:sashiko-reviews+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:sashiko-reviews+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [Patch v8 3/5] perf regs: Support x86 SIMD registers sampling
-From: "Mi, Dapeng" <dapeng1.mi@linux.intel.com>
-To: Ian Rogers <irogers@google.com>, sashiko-reviews@lists.linux.dev
-Cc: linux-perf-users@vger.kernel.org
-References: <20260529082451.591783-4-dapeng1.mi@linux.intel.com>
- <20260529104532.CE9D11F00893@smtp.kernel.org>
- <CAP-5=fV0wY_B22Zma06JjWaMSWnChwFwk28c1uMfEGBBWA5-Xg@mail.gmail.com>
- <41b14d9b-3db9-4b73-a56c-9e06753257f7@linux.intel.com>
-Content-Language: en-US
-In-Reply-To: <41b14d9b-3db9-4b73-a56c-9e06753257f7@linux.intel.com>
-Content-Type: text/plain; charset=UTF-8
+Content-Type: text/plain; charset=iso-8859-1
+Content-Disposition: inline
 Content-Transfer-Encoding: 8bit
+In-Reply-To: <20260520170229.CEFA31F000E9@smtp.kernel.org>
 
+On May 20 2026, sashiko-bot@kernel.org wrote:
+> Thank you for your contribution! Sashiko AI review found 1 potential issue(s) to consider:
+> - [High] Premature release of firmware node references results in use-after-free vulnerabilities when assigning the I2C adapter and GPIO chip firmware nodes.
+> --
+> 
+> commit 3dfaf368e855835bf23009205c4b93a2a070aae1
+> Author: Danny Kaehn <danny.kaehn@plexus.com>
+> 
+> HID: cp2112: Add fwnode support
+> 
+> This commit adds firmware node support to describe the CP2112's I2C and
+> GPIO interfaces. It differentiates between ACPI and DeviceTree bindings,
+> mapping the child nodes to the respective adapter and gpio_chip devices.
+> 
+> > diff --git a/drivers/hid/hid-cp2112.c b/drivers/hid/hid-cp2112.c
+> > index 803b883ae8750..e960fc988058f 100644
+> > --- a/drivers/hid/hid-cp2112.c
+> > +++ b/drivers/hid/hid-cp2112.c
+> [ ... ]
+> > @@ -1226,6 +1241,28 @@ static int cp2112_probe(struct hid_device *hdev, const struct hid_device_id *id)
+> >  		return ret;
+> >  	}
+> >  
+> > +	cp2112_fwnode = dev_fwnode(&hdev->dev);
+> > +	if (is_acpi_device_node(cp2112_fwnode)) {
+> > +		fwnode_for_each_child_node(cp2112_fwnode, child) {
+> > +			ret = acpi_get_local_address(ACPI_HANDLE_FWNODE(child), &addr);
+> > +			if (ret)
+> > +				continue;
+> > +
+> > +			switch (addr) {
+> > +			case CP2112_I2C_ADR:
+> > +				device_set_node(&dev->adap.dev, child);
+> > +				break;
+> > +			case CP2112_GPIO_ADR:
+> > +				dev->gc.fwnode = child;
+> > +				break;
+> > +			}
+> 
+> [Severity: High]
+> Does this code leave dangling pointers in the device structures?
+> 
+> The fwnode_for_each_child_node() macro automatically drops the reference to
+> the child node when advancing to the next node or exiting the loop.
+> 
+> Because device_set_node() and direct pointer assignments do not increment
+> the reference count, the nodes assigned here could be prematurely freed
+> resulting in a use-after-free.
 
-On 6/2/2026 1:38 PM, Mi, Dapeng wrote:
-> On 5/30/2026 1:41 AM, Ian Rogers wrote:
->> On Fri, May 29, 2026 at 3:51 AM <sashiko-bot@kernel.org> wrote:
->>> Thank you for your contribution! Sashiko AI review found 3 potential issue(s) to consider:
->>> - [Medium] Parsing of `--intr-regs` and `--user-regs` with multiple options is order-dependent, preventing intended combination of General Purpose (GP) and SIMD registers.
->>> - [Medium] Specifying only SIMD registers (e.g., `--intr-regs=xmm` without GP registers) leaves the general-purpose register mask as 0, causing the kernel to reject the event configuration with `-EINVAL`.
->>> - [Low] The `sample_simd_regs_enabled` field is omitted from `perf_event_attr__fprintf()`.
->>> --
->>>
->>> commit 03a81994cf381ee1d67a41deb452833fc73a023e
->>> Author: Dapeng Mi <dapeng1.mi@linux.intel.com>
->>>
->>> perf regs: Support x86 SIMD registers sampling
->>>
->>> This patch adds support for the newly introduced SIMD register sampling
->>> format by adding functions to support parsing and sampling x86 SIMD/PRED
->>> registers.
->>>
->>>> diff --git a/tools/perf/util/evsel.c b/tools/perf/util/evsel.c
->>>> index 1c856a2ecc6ec..cd62af14a4f54 100644
->>>> --- a/tools/perf/util/evsel.c
->>>> +++ b/tools/perf/util/evsel.c
->>> [ ... ]
->>>
->>>> @@ -1594,6 +1595,16 @@ void evsel__config(struct evsel *evsel, const struct record_opts *opts,
->>>>               evsel__set_sample_bit(evsel, REGS_INTR);
->>>>       }
->>>>
->>>> +     if ((opts->sample_intr_vec_regs || opts->sample_intr_pred_regs) &&
->>>> +         !evsel->no_aux_samples && !evsel__is_dummy_event(evsel)) {
->>>> +             attr->sample_simd_regs_enabled = !!opts->sample_simd_regs_enabled;
->>>> +             attr->sample_simd_vec_reg_intr = opts->sample_intr_vec_regs;
->>>> +             attr->sample_simd_vec_reg_qwords = opts->sample_vec_reg_qwords;
->>>> +             attr->sample_simd_pred_reg_intr = opts->sample_intr_pred_regs;
->>>> +             attr->sample_simd_pred_reg_qwords = opts->sample_pred_reg_qwords;
->>>> +             evsel__set_sample_bit(evsel, REGS_INTR);
->>>> +     }
->>> [Severity: Medium]
->>> Will specifying only SIMD registers (e.g., perf record --intr-regs=xmm)
->>> leave the general-purpose register mask as 0?
->>>
->>> If opts->sample_intr_regs is 0, attr->sample_regs_intr remains 0. However,
->>> setting the REGS_INTR bit here causes the kernel validation function
->>> (perf_reg_validate()) to unconditionally return -EINVAL because the sample
->>> type bit is set but the corresponding GP register mask is 0.
->> It is an interesting corner case, we could extend this test to cover it:
->> https://web.git.kernel.org/pub/scm/linux/kernel/git/perf/perf-tools-next.git/tree/tools/perf/tests/shell/record.sh?h=perf-tools-next#n106
-> No, this is not a real issue. The perf_reg_validate() has been leased to
-> allow 0 mask bit if simd_enabled is true. So no -EINVAL would be returned,
-> like below,
->
-> $ sudo ./perf record -e cycles:p -Ixmm -c 10000 sleep 1
-> [ perf record: Woken up 1 times to write data ]
-> [ perf record: Captured and wrote 0.111 MB perf.data (262 samples) ]
->
->
->>>> diff --git a/tools/perf/util/parse-regs-options.c b/tools/perf/util/parse-regs-options.c
->>>> index 70a1cc90b2c13..26d560a486c85 100644
->>>> --- a/tools/perf/util/parse-regs-options.c
->>>> +++ b/tools/perf/util/parse-regs-options.c
->>> [ ... ]
->>>
->>>> @@ -53,22 +106,96 @@ name_to_perf_reg_mask(const char *to_match, uint64_t mask, int abi)
->>> [ ... ]
->>>
->>>>       /*
->>>> -      * cannot set it twice
->>>> +      * Non-SIMD registers cannot be set twice.
->>>> +      * SIMD registers can be set multiple times, but only the register
->>>> +      * class with largest length (qwords) is sampled.
->>>>        */
->>>>       if (*mode)
->>>>               return -1;
->>> [Severity: Medium]
->>> Does the order of options affect whether they are parsed successfully?
->>>
->>> If SIMD registers are parsed first (e.g., -I xmm), *mode is left as 0,
->>> which allows a subsequent GP register option like -I ax to be parsed
->>> successfully.
->>>
->>> However, if GP registers are parsed first (e.g., -I ax), *mode is set to
->>> a non-zero value, which triggers this failure check when -I xmm is
->>> evaluated. Does this prevent intended combinations of GP and SIMD registers
->>> from working consistently?
->> It's probably worth adding coverage for this too. In this case having
->> a C unit test may make most sense.
-> Ok, It's indeed a corner issue. The simplest way may be remove this check.
-> Would fix it in next version.
->
-> Sure. Would extend current perf record test to cover the SIMD registers
-> sampling.
->
->
->>>> diff --git a/tools/perf/util/perf_event_attr_fprintf.c b/tools/perf/util/perf_event_attr_fprintf.c
->>>> index 741c3d657a8b6..c6b8e53e06fd1 100644
->>>> --- a/tools/perf/util/perf_event_attr_fprintf.c
->>>> +++ b/tools/perf/util/perf_event_attr_fprintf.c
->>>> @@ -362,6 +362,12 @@ int perf_event_attr__fprintf(FILE *fp, struct perf_event_attr *attr,
->>>>       PRINT_ATTRf(aux_start_paused, p_unsigned);
->>>>       PRINT_ATTRf(aux_pause, p_unsigned);
->>>>       PRINT_ATTRf(aux_resume, p_unsigned);
->>>> +     PRINT_ATTRf(sample_simd_pred_reg_qwords, p_unsigned);
->>>> +     PRINT_ATTRf(sample_simd_pred_reg_intr, p_hex);
->>>> +     PRINT_ATTRf(sample_simd_pred_reg_user, p_hex);
->>>> +     PRINT_ATTRf(sample_simd_vec_reg_qwords, p_unsigned);
->>>> +     PRINT_ATTRf(sample_simd_vec_reg_intr, p_hex);
->>>> +     PRINT_ATTRf(sample_simd_vec_reg_user, p_hex);
->>>>
->>>>       return ret;
->>>>  }
->>> [Severity: Low]
->>> Does this also need to print the sample_simd_regs_enabled field?
->>>
->>> This patch adds several new SIMD-related fields to struct perf_event_attr,
->>> but sample_simd_regs_enabled is missing here. Could this prevent developers
->>> from verifying whether the tool correctly enabled SIMD sampling when inspecting
->>> configurations via debug commands like perf record -vvv?
->> It looks like this uncovers some technical debt. I don't see config3
->> or config4 being printed either :-( Could you help to address, if not
->> remind me :-)
-> It looks like sig_data, config3 and config4 are missed to print here. I
-> would add a patch to print them before printing these new SIMD fields.
+Sashiko is overly cautious here. ACPI handles are not refcounted, so we
+are fine.
 
-Just correct above words, sig_data has been printed and doesn't need to
-print again. Thanks.
+That being said, we could unify the OF and ACPI behaviour by calling the
+noops fwnode_handle_get(child) for ACPI as well and clean them up in
+cp2112_remove(). This would also shut up the next warning from Sashiko
+below.
 
+> 
+> > +		}
+> > +	} else if (is_of_node(cp2112_fwnode)) {
+> > +		child = fwnode_get_named_child_node(cp2112_fwnode, "i2c");
+> > +		device_set_node(&dev->adap.dev, child);
+> > +		fwnode_handle_put(child);
+> 
+> [Severity: High]
+> Are we releasing the firmware node prematurely here?
+> 
+> fwnode_get_named_child_node() returns a node with an incremented reference
+> count. However, since device_set_node() does not take its own reference on
+> the child node, dropping the reference immediately after could leave
+> dev->adap.dev with a dangling pointer if the node is later removed.
 
->
-> Thanks.
->
->
->> Thanks,
->> Ian
->>
->>> --
->>> Sashiko AI review · https://sashiko.dev/#/patchset/20260529082451.591783-1-dapeng1.mi@linux.intel.com?part=3
->>>
+OF children are tied to the lifespan of the OF device, so we are fine,
+but technically incorrect, as mentioned by Sashiko.
+
+If you regroup the 2 behaviours and clean them in cp2112_remove(), this
+would be cleaner IMO.
+
+Cheers,
+Benjamin
+
+> 
+> > +	}
+> > +
+> >  	ret = hid_parse(hdev);
+> >  	if (ret) {
+> >  		hid_err(hdev, "parse failed\n");
+> 
+> -- 
+> Sashiko AI review � https://sashiko.dev/#/patchset/20260520-cp2112-dt-v14-0-b1b4b6734b6f@plexus.com?part=1
+> 
