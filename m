@@ -1,129 +1,149 @@
-Received: from mail-pg1-f182.google.com (mail-pg1-f182.google.com [209.85.215.182])
+Received: from mail-pl1-f174.google.com (mail-pl1-f174.google.com [209.85.214.174])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 15166286D5E
-	for <sashiko-reviews@lists.linux.dev>; Tue,  2 Jun 2026 09:56:03 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=pass smtp.client-ip=209.85.215.182
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A12BA37F011
+	for <sashiko-reviews@lists.linux.dev>; Tue,  2 Jun 2026 10:02:21 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=pass smtp.client-ip=209.85.214.174
 ARC-Seal:i=2; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1780394165; cv=pass; b=alFvlnTwi7EIDYn0QZNDwkzZosz0OX/Sv+X1OF0BnG/P5zgABdm86zsfZJG9wEd3RJ72BmhaWUl2uQKffjIBArJhwMCXmz0jUUYvWQk2ZOWpYGYX9ItpVLSm6C/usb5vPi5dx23ozyLnmoLjbICcRjy65VhjGCtUIDPUBqwEGNg=
+	t=1780394543; cv=pass; b=iQokbUkaW+hkUN8yf3qI/XgFs3NAQ8Bv7EshNDoCAAhk6lX/py7/vNkocIBt0/RLL2JYdFrpE0ZpnHXsUnVRZl+ARpJj8Ya7L6o+LJt2dOjxXKys30WB2Kt94Ju6lH0snkbLHFU+FXKpufdPABollCBlBAsgNRIUHeNVGut+rmk=
 ARC-Message-Signature:i=2; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1780394165; c=relaxed/simple;
-	bh=O59CtIljZhLqWH4hYhVsqdio4RXdVIpr8uwu6olzWvU=;
+	s=arc-20240116; t=1780394543; c=relaxed/simple;
+	bh=0gvLGFThv2lHT+nyPjifExNtH/ts5i70ONfWfPnWqh4=;
 	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
-	 To:Cc:Content-Type; b=owKmPMxjclOVwozUcFL8AI31KArbRXiiiL4unjyTW9dr3+RSNLTcwB8SO8XMdngNAlAcWFUKVXCODDnyU/YErC/+zXf4O/hdY41Klb37OGSiTjC91ICINXtAFAjhElDB+Nxo9vEZtn9mXf5UMcjvGzpGZsYqZrKLBxGnPtQHJKI=
-ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=SEgH88SP; arc=pass smtp.client-ip=209.85.215.182
+	 To:Cc:Content-Type; b=tQNS7j6irA++KFYtJAP+5iMPxqym1GsyAw8GoV8igcC6el46oqUZuw45mlf1ZM7V6I3pwLgwCSOqwnLGkehqtOaMts/IjjkhIoe4tV+7WwF5EfKhYL3ZZ9k5ovd2jC2COUbmD7eaWvfTCbBDZ4Ccy2WAfU2XZkt7rzDzLSzszwM=
+ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=AmRnCT6o; arc=pass smtp.client-ip=209.85.214.174
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="SEgH88SP"
-Received: by mail-pg1-f182.google.com with SMTP id 41be03b00d2f7-c857fba35cfso1553913a12.1
-        for <sashiko-reviews@lists.linux.dev>; Tue, 02 Jun 2026 02:56:03 -0700 (PDT)
-ARC-Seal: i=1; a=rsa-sha256; t=1780394163; cv=none;
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="AmRnCT6o"
+Received: by mail-pl1-f174.google.com with SMTP id d9443c01a7336-2bf20f6be6bso23677825ad.3
+        for <sashiko-reviews@lists.linux.dev>; Tue, 02 Jun 2026 03:02:21 -0700 (PDT)
+ARC-Seal: i=1; a=rsa-sha256; t=1780394541; cv=none;
         d=google.com; s=arc-20240605;
-        b=SlXzRUZ/qWppexzteQxgbxWMBNonlNxto2Yc+YU17Er4vkbZCi4GFOBLisxF0Enhwp
-         7iNfPKJ0/gdVKIs5/DjSALmyNIpdVOAdYUXMBW50eQz3Ne60eeuGRx/8fzSmpeaU4k6M
-         TQ2kdMsdx72siC51Zk7UJ8qP1uaHgVV/vfH9WAtNcxKOIn/fSFvT/mJL2nDbfgedY6iT
-         L+4wVTDnuGM2ndBIJet8hS5rHLliOOAdAwWzTul/oUmAhMLHff1Xn6wjARzfKYQmnyHe
-         +aryQ7y2bG851AGByi84R6HN+4J8pcx9c/CW+F+pqYGK0fopGzwKtroRgobgZcHl1ecy
-         gVyw==
+        b=Rtqpi/fmtIZPD725F0YHubsUPYywNL27y6uvXOzeCfQp12FCSE9tYX05MMD4UhefO+
+         nKgqEBALT6hBMY6Phvi5CruOcPwQdnvWz5k03a3skpTuuSiCM/2HUYBXKv4TKB4qS/9m
+         kpIjotxoUY4mcLttynlhQj6yQzzUnIrVM7Fw+qKii8KzfZfdI+0KiVuygntG0JlUoTWC
+         NCiMpd/WFdHntcObsRZNsn3nmKPAVAEfsa2rAdcyNLRy81FOxbEAODAzgWLoWPBigSVI
+         EoTpyLgoypryy0Wnh0VSXd+n4uOXqFBG+NVscEED4jCq8FuEyjhSqGPYkEiIUFgHJZsr
+         JmZg==
 ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com; s=arc-20240605;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:dkim-signature;
-        bh=ry0TM5y3k6sgeU6WW3HpH4JK7qKCt8a8l3Hhsms+rjc=;
-        fh=53qvJawqK0TJTsq+MaD47KBMEtgXQmC582XHmZ7TrbI=;
-        b=LyAilWji3uFtwTeuzn7X71lIRfqcem+tod226hoMAZv+RBUqv8SozwCHHQE8COUnd/
-         IvWicAoV+FxYjHam2fpDx2ho5y9Bcb55wLo/HOkVOczwbnKxAC2snHPbXlzf6uzxyJ/T
-         Pts8RhsVeQSpLxikFaHmfFWocXEVEAmbA0I/w7hstKo7IbLxgAXhcm4fINYVokWJh+Ru
-         4m1caufDg4Dh9bPqeopDMjKPw8F1R1L07n/YCbhepNL6jh25wnwCzDDM93AQHDdK2pGj
-         VtKPKFci7FLdn0coHhKSf/R8Ru08ZiNooPTPEblTs5oCF9kMfoy4eCFiqyMm/2nPkoC1
-         rasw==;
+        h=cc:to:subject:message-id:date:from:in-reply-to:references
+         :mime-version:dkim-signature;
+        bh=0gvLGFThv2lHT+nyPjifExNtH/ts5i70ONfWfPnWqh4=;
+        fh=+Kn94FVzl6rE7mDhn4pFvEHlRshbQ57dQ5o19v04Oyg=;
+        b=VJaTnjWin787QBMsccXwexnALiEw+lgIlN54CerFucDbdEIJ0QX7sdMXKGUcQNQCSu
+         dE+NjOEbM5Q6do3cAELCH2B1MczyuhGKJ885XpbtNuQfVXrc4D5gbaUl9K+YhlokzL+b
+         p4Ytc9MAFgnbK/FjN1ivR0OyDSd8q0KlOS7JWJKj79q8H7fowq/vsncDbVFHcQEWowIW
+         fD0jt3w25ozCiaPTXbK2PPW4OdasDfnlokieyfgAIsvhZK+j5DqNqTNllACw2q1jNjSS
+         oN27qR30jHsR7eT+L5mZxDuIfBOcYyThX3WjqxBkO2SMWj/9mYEUDymSzZf4EoFZnN9C
+         w3oQ==;
         darn=lists.linux.dev
 ARC-Authentication-Results: i=1; mx.google.com; arc=none
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20251104; t=1780394163; x=1780998963; darn=lists.linux.dev;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=ry0TM5y3k6sgeU6WW3HpH4JK7qKCt8a8l3Hhsms+rjc=;
-        b=SEgH88SPwN9z+rvTd5sDArN+MVIX/g2aWfKlHAxzHOpxx1SMWKfx0BoK493YuchDLq
-         ZTfIIbS9Ye+N3vh6Jaw+IOimXOJh9ktqPbbxJ+Luo4CPhrTgw/J/52tXsSpgEB0hv62G
-         hWA2MQJW7CbirriQmKCy0y7ZBpoTkB9eZCjqHN03dabHeXZVMnkynFvdP0xxbWcdQftM
-         ZyGtD8KyRNYWaykxqIcGK2/V0s7SyUhFprow78JStKGnv+jFThaWH2FgrAAlkaSflwLT
-         AOJ5UgC8Pe0LJKhI3ewgh6RIYGayPdvVhzErKD26SGipPxFMZmsFTMt3VuLrBz7w3Wwo
-         vs1Q==
+        d=gmail.com; s=20251104; t=1780394541; x=1780999341; darn=lists.linux.dev;
+        h=cc:to:subject:message-id:date:from:in-reply-to:references
+         :mime-version:from:to:cc:subject:date:message-id:reply-to;
+        bh=0gvLGFThv2lHT+nyPjifExNtH/ts5i70ONfWfPnWqh4=;
+        b=AmRnCT6oE0ldgwtHF3ZGyvJ8yXWRHq8uIGrorI4YwFCPGcax/g6cGH+7tsPMsNqcYC
+         2o2ON3gxQjAjzYX5fBQUp8SB4RKJpDjJBIswCdRkrL7lOrJO81HzqjQx+Yzdf8uznvvq
+         ZlHQBIv9Rdicf66wNMQd/K6oFMtv8zLQq6QLLIhqX13eGJjif/OQ08q0xzrWj2cWCizx
+         Wjf2Iw2KhyIJUWhXii7mWdRZ7Z2856MTigDw+RAoRgLKhX0paWNucO1P4LoIBwUG6GT3
+         cHcqGMiVuIeaRFb9P12DUYmx7f+Q5TWQ1ZRTJuYNOW8ZWZgG0I8bMAwYiM/cXwU94DGi
+         1yZA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20251104; t=1780394163; x=1780998963;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:x-gm-gg:x-gm-message-state:from
-         :to:cc:subject:date:message-id:reply-to;
-        bh=ry0TM5y3k6sgeU6WW3HpH4JK7qKCt8a8l3Hhsms+rjc=;
-        b=BV7pZZniYnCZRiV+xLXeLvS/XnN66Wo/ZeVhUjuJagJeUi705t7H9JCyzw7sGHr+qp
-         plrrm0II+Yrh48eQy9IrfPu6jBW+BpX+DZ3NKsDuP3gAg9fJlhYrhcz4dNHDEGZKHYHU
-         XVJG5y8KPpPRrCgkT48lZ0yCnkkpZx7+Ig6BRkUEusZnK8tGYlpdRsM6CG+bN7y1LX3N
-         ZZaMpkC+lXoQzdFvhPO56NSMN/2fqy9b+0Tm3hcTGCSdrt3daxfh2hwuHewPr24/PTrA
-         tQNNfPy3VpNrS02ZdVEvbBcUEObf6EUqpfQr49sW6ctdTYecrXapa1D1cRaUml17AzEA
-         SSmg==
-X-Gm-Message-State: AOJu0Yyb7h94si8bT0aV4x8W4EMzxpbO19aFkc7azSkMdUy2pocHL50y
-	OYzzXma3hW6Yv2TZr/Wk/8Z+U+YbLDTnP4AGJP/90YWMSok/I3fjNbHIZZbRzFn4bIIa1qm8G8/
-	CKMY4KjfQ0GwsAB1KamJ4INmOGHYm0znyI3+N
-X-Gm-Gg: Acq92OFdFF1zAxyXOLNTRDHVTLxC6Mb5L+vBIWGvXRmsaZLNPLovV8aDTI/P44THquG
-	k3+l/Ww8IGIYGl2HMivF8Ct0JfTsI5KH91YtipZ7M48cV8N9diUljy+Eo1Gc61OAX2GmbIlniDa
-	Ax9/TMBx6tDVsITAMZb6o2dYFK5tgLn+49Mq0wIIgoXcZmGVlxT5BB6kT4w8i4oK1+bqIGTXAyA
-	JbEeXtDIXBLX4PGPImn1f+BX8u/aUMtSC/wjdXTkfDh8cTHQymWsysWErbKx68gPdXMHwhNWO93
-	8AdIjmpIsOjO757mCvDNIJ81xcIEpT735rIKeIaCdx4hTaNh
-X-Received: by 2002:a05:6a21:7016:b0:3b4:71c1:ab29 with SMTP id
- adf61e73a8af0-3b471c1afafmr5517169637.16.1780394163282; Tue, 02 Jun 2026
- 02:56:03 -0700 (PDT)
+        d=1e100.net; s=20251104; t=1780394541; x=1780999341;
+        h=cc:to:subject:message-id:date:from:in-reply-to:references
+         :mime-version:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=0gvLGFThv2lHT+nyPjifExNtH/ts5i70ONfWfPnWqh4=;
+        b=WH3wiCdqHvWEgTKqNL/TIpZlv5nLpKuSrcisDxXOGMe8Wa7GFc+TSGl4zwDVCiwBAL
+         OvhH1CaHuCrDQ8yGWNFeH6pM1lqG+pMsXDVVQdvcE7EuZD/iIc03K6lIJ78EsbiQg7K3
+         WRMimxpPRP6l8acXvkutTZ1mut0Y6dlamdqOfyHxlwx9d07fUQiZ6IwJtJnryUufgnLu
+         Rb9FiLWRGcTejKZIXAnkEe2yGMmS0FynZupH8e7dS6NMxzLrjAeXzDbNmvRpbZe2HSYv
+         rJGRlVgPPsZyYs3HZqsH3ms4xsY2dRYnjlRVmJo0cL67Ulz0BrPj1k5DYhEM9QLfC2GA
+         W2CA==
+X-Gm-Message-State: AOJu0YxBwJttwhrX4zloQjffJFCj7aVn37CPlaorHRZwxp+RmibCJnF3
+	5OI+EzE2MzEDz9k6riNogY8oiNvp+VhCvbIWiqPfRP56yy7Q1SyBQd24Exb5soE/MXLLnWAgWB2
+	HXEQR6puvux/NytAwZ+Qe8KbDndMbH7KtAqu2
+X-Gm-Gg: Acq92OGtfnFUgCqX/g9Hj36uaT3R5V2ubRNgdd0P8iPniSnQZbeBviqhRFuuaoVYv7Y
+	bJowLOO7LRgz8DjGvB4XzojleVPJMhXOSIwYS7Dircl3utvL4t3wQZaYB9RhLU/6uTsvIBYpUoD
+	AhT/kt/g5ZdrlfWVCO4nZlYTNLn1HPu8dTJEIw5MooITKua7YK0hS07Il/r/qxU2NYO0soz1gvN
+	SXXWIi474eZfFtMAMjaE4mYx5E+X3UvojtLPRm4ivk1QfidUoFFiMG5rpi9pKDrLak3iT4spZ4K
+	lEW/67p+uR7eiW7PNY20hW/ocfQsU2dAbM0XUh/ZH4GwN4F0
+X-Received: by 2002:a17:903:1983:b0:2bf:23cf:3e4 with SMTP id
+ d9443c01a7336-2bf367d9da0mr163447475ad.17.1780394540758; Tue, 02 Jun 2026
+ 03:02:20 -0700 (PDT)
 Precedence: bulk
 X-Mailing-List: sashiko-reviews@lists.linux.dev
 List-Id: <sashiko-reviews.lists.linux.dev>
 List-Subscribe: <mailto:sashiko-reviews+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:sashiko-reviews+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-References: <20260522100318.73474-3-phucduc.bui@gmail.com> <20260522103713.6C09D1F000E9@smtp.kernel.org>
-In-Reply-To: <20260522103713.6C09D1F000E9@smtp.kernel.org>
+References: <20260522100318.73474-4-phucduc.bui@gmail.com> <20260522110302.349421F000E9@smtp.kernel.org>
+In-Reply-To: <20260522110302.349421F000E9@smtp.kernel.org>
 From: Bui Duc Phuc <phucduc.bui@gmail.com>
-Date: Tue, 2 Jun 2026 16:55:52 +0700
-X-Gm-Features: AVHnY4L1XSy8xh1n7_8eywzteDnYmK_ktmmzmw4IKNhvqBL8NzTqlNXMe3QnjJg
-Message-ID: <CAABR9nFn95Pu4AGd+AXoKdezVyxqHwnPNimQrrzoqAXbqq1Seg@mail.gmail.com>
-Subject: Re: [PATCH 2/3] ASoC: rockchip: spdif: Reorder clock enable sequence
+Date: Tue, 2 Jun 2026 17:02:09 +0700
+X-Gm-Features: AVHnY4IKu4cfANumj7wmqQvDtssDhq3TpxXIjIHmGdj6XFJ_23uSlD1EG9gmtw8
+Message-ID: <CAABR9nEHn7Fz2RNz2ttp-3NmHX8pAMtVQPuP+z2Qi1v9FLT9+g@mail.gmail.com>
+Subject: Re: [PATCH 3/3] ASoC: rockchip: rockchip_pdm: Reorder clock enable sequence
 To: sashiko-reviews@lists.linux.dev
-Cc: devicetree@vger.kernel.org, conor+dt@kernel.org, robh@kernel.org
+Cc: devicetree@vger.kernel.org, robh@kernel.org, conor+dt@kernel.org
 Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
 
-Thank you for the review.
-I agree with your analysis. This appears to be a valid issue, and the
-fix should
-be relatively small and localized. I do not have the hardware on hand
-for runtime
- testing, but I'll prepare a follow-up patch.
-
+>
 > [Severity: High]
-> This is a pre-existing issue, but is the regmap cache-only state left
-> unrestored on this error path?
+> This is a pre-existing issue, but can manually disabling the clocks and PM
+> runtime before the devm teardown cause bus faults?
 >
-> If regcache_sync() fails, the driver disables the clocks and returns an e=
-rror.
-> This causes the runtime power management core to leave the device in the
-> suspended state.
+> The driver registers the ASoC component using
+> devm_snd_soc_register_component() in rockchip_pdm_probe(), which defers
+> unregistration until after the remove() callback returns.
 >
-> However, the error path doesn't appear to restore the cache-only mode via
-> regcache_cache_only(spdif->regmap, true).
+> If the device is unbound via sysfs while an audio stream is active, ALSA
+> will attempt to tear down the stream during the deferred devres
+> unregistration. This triggers operations like
+> rockchip_pdm_trigger(SNDRV_PCM_TRIGGER_STOP), which writes to the
+> hardware registers.
 >
-> If a subsequent register read or write occurs while the device is in this
-> suspended state, could the regmap bypass the cache and attempt a physical
-> memory-mapped I/O access?
+> Since the clocks and power domains were already forcibly disabled in
+> remove(), this could result in a bus fault and kernel panic.
 >
-> Since the generic power domain would be powered off when suspended,
-> attempting this access might trigger an asynchronous system error or
-> synchronous data abort.
+> Should the driver use devm_pm_runtime_enable() with a devres action for
+> clock disable, or unregister the component manually before turning off
+> resources?
 >
-> >       }
-> >
-> >       return ret;
-> >  }
+
+Thank you for pointing this out.
+
+I agree that your concern makes sense, and the teardown ordering may
+indeed deserve further investigation.
+However, addressing it appears to require a relatively significant change
+to the driver's resource management and lifecycle handling. Since I do
+not have the hardware on hand, I am not able to validate either the reported
+scenario or a potential fix.
+Given that, I don't feel comfortable submitting a speculative patch that
+I cannot test properly. For now, I'll leave this issue to someone with the
+hardware or with more familiarity with the expected teardown sequence
+in this driver.
+
+
 >
-> --
-> Sashiko AI review =C2=B7 https://sashiko.dev/#/patchset/20260522100318.73=
-474-1-phucduc.bui@gmail.com?part=3D2
+> [Severity: High]
+> This isn't a bug introduced by this patch, but is it safe to ignore the
+> return value of pm_runtime_get_sync() here?
+>
+> If the runtime resume fails (for example, if clock enablement or power
+> domain restoration fails), the function ignores the negative error code
+> and proceeds to call regmap_update_bits().
+>
+> Accessing hardware registers when the hardware is powered down or unclocked
+> can lead to a synchronous external abort (bus fault) and a kernel panic.
+>
+> Should pm_runtime_resume_and_get() be used instead, and the error handled?
+>
+
+I agree this looks like a valid issue. The proposed fix is relatively
+ small and localized, and does not affect the overall resource lifetime
+ handling of the driver. I'll prepare a follow-up patch for it, although
+I can only perform compile testing since I don't have the hardware
+on hand.
