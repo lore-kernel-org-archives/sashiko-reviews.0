@@ -1,135 +1,446 @@
-Received: from azure-sdnproxy.icoremail.net (azure-sdnproxy.icoremail.net [4.193.249.245])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id D399D380FF9
-	for <sashiko-reviews@lists.linux.dev>; Wed,  3 Jun 2026 09:45:57 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=4.193.249.245
+Received: from bali.collaboradmins.com (bali.collaboradmins.com [148.251.105.195])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+	(No client certificate requested)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6838A2D5941
+	for <sashiko-reviews@lists.linux.dev>; Wed,  3 Jun 2026 09:52:54 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=148.251.105.195
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1780479961; cv=none; b=GHSCoACvnAeuqUPKLJ5BB0jYm4oA1ca6jWbDbQ6aWER2EL0N9ccAQz6p4QmAMDV5mIMN/z81IqJ5O+5a9VAo16ag3pXoo8keC8t0Jm2nDsa53lnX4IFoYQ1maWbgmGilEogHmwlUFXc8HIU3qmAfiZUiKK145zVYifhfRoRvU9c=
+	t=1780480380; cv=none; b=iefKrucnSD2kI7g3Nn+2KgSeunqpXmhr/CA3PVJMiXbjTfPs15tc1vWP7g0g9Q8tQojkoPtZlM40+X3nb/6ITRftK/FgrafxjpGwFukPIFqUaWCW0LB7w7CPdubkyMswQTAGar6babd5vw5vNAqQEwDcMceHnJ1lgGneWjmNmb8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1780479961; c=relaxed/simple;
-	bh=hfMwMWIeD40JBlf358ChxZk6WC+tzRlI80zaLBP6KBw=;
-	h=Date:From:To:Cc:Subject:In-Reply-To:References:Content-Type:
-	 MIME-Version:Message-ID; b=qWEbE/Pg359/PUmgGSA4gHgwLa5k7ZLIpgZO5/vTE6lXRg0t33bDTEbZsXvNE7qSy9zDzFD9YyTS3GYZGKN6tHQs0PGeGfh+FeDPI0ZkEY1YsVn6TTtHOkC/botun3l3pSVwvRhYgTYPKPOyZtRbJzRNL7kKF+sYJJALV96VJgY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=eswincomputing.com; spf=pass smtp.mailfrom=eswincomputing.com; arc=none smtp.client-ip=4.193.249.245
-Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=eswincomputing.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=eswincomputing.com
-Received: from dongxuyang$eswincomputing.com ( [10.12.96.41] ) by
- ajax-webmail-app2 (Coremail) ; Wed, 3 Jun 2026 17:45:38 +0800 (GMT+08:00)
-Date: Wed, 3 Jun 2026 17:45:38 +0800 (GMT+08:00)
-X-CM-HeaderCharset: UTF-8
-From: "Xuyang Dong" <dongxuyang@eswincomputing.com>
-To: sashiko-reviews@lists.linux.dev
-Cc: mturquette@baylibre.com, sboyd@kernel.org, robh@kernel.org,
-	krzk+dt@kernel.org, conor+dt@kernel.org, linux-clk@vger.kernel.org,
-	devicetree@vger.kernel.org, linux-kernel@vger.kernel.org,
-	p.zabel@pengutronix.de, huangyifeng@eswincomputing.com,
-	benoit.monin@bootlin.com, bmasney@redhat.com,
-	ningyu@eswincomputing.com, linmin@eswincomputing.com,
-	pinkesh.vaghela@einfochips.com
-Subject: Re: Re: Re: [PATCH v6 2/3] clk: eswin: Add eic7700 HSP clock driver
-X-Priority: 3
-X-Mailer: Coremail Webmail Server Version 2024.2-cmXT6 build
- 20241203(6b039d88) Copyright (c) 2002-2026 www.mailtech.cn
- mispb-72143050-eaf5-4703-89e0-86624513b4ce-eswincomputing.com
-In-Reply-To: <61fe8681.6622.19e44532865.Coremail.dongxuyang@eswincomputing.com>
-References: <20260519081627.1591-1-dongxuyang@eswincomputing.com>
- <20260519090034.CCED6C2BCB3@smtp.kernel.org>
- <61fe8681.6622.19e44532865.Coremail.dongxuyang@eswincomputing.com>
-Content-Transfer-Encoding: base64
-Content-Type: text/plain; charset=UTF-8
+	s=arc-20240116; t=1780480380; c=relaxed/simple;
+	bh=hsaNx7nKtNZKqi62InoYE6OCRy0g/xMUXPZU8Xg8SbI=;
+	h=Date:From:To:Cc:Subject:Message-ID:In-Reply-To:References:
+	 MIME-Version:Content-Type; b=Bv4WCoEl8AURmQl3bAUAhWKjnPGW9p8RtFyehPIM7cquCmX3qbX8PSYd5ZL7hoiU/POnlNUt2fhb7zE3LMmAVKtCsZqP5wQVB/DdVCxlcJa2LR/5WKjr3WpTB244X2GNo9wq8EXq63wl8KZxNlgBIh609P2/AXwk4q1eTTG/yqo=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=collabora.com; spf=pass smtp.mailfrom=collabora.com; dkim=pass (2048-bit key) header.d=collabora.com header.i=@collabora.com header.b=p/tHQGA9; arc=none smtp.client-ip=148.251.105.195
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=collabora.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=collabora.com
+Authentication-Results: smtp.subspace.kernel.org;
+	dkim=pass (2048-bit key) header.d=collabora.com header.i=@collabora.com header.b="p/tHQGA9"
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=collabora.com;
+	s=mail; t=1780480372;
+	bh=hsaNx7nKtNZKqi62InoYE6OCRy0g/xMUXPZU8Xg8SbI=;
+	h=Date:From:To:Cc:Subject:In-Reply-To:References:From;
+	b=p/tHQGA9OOGpBiyRS0QysTKQjljJbFhOmKbLLFMg/H3aD5tLXc1Q78Cfa8LCbAb8q
+	 UoBfvwJLJlyKNhcBC+UCkXTu4m4SQvj5qlfqSVSrt/1bTRPrHA8iA1A3tBxYrCdj8D
+	 YYlJay5U7NoPStuxWK2ZIWg7sx6uR7ENKbY31RG3s7FaYnxwxRTofrtw+QyC6UYBgB
+	 G7V3f1QY//uXEiUWxhLoLJK804BxRWvM7oZnuCR0dBUzAtWc6f7H3cwJ+n659SOxxz
+	 ZwnTr0gXT1tz8VLSudNqpooTV34yR76QFKG/NyxVAp8QOdIhCCBee47icBXkfsptNX
+	 ZAi4cd98rdy5g==
+Received: from fedora-2.home (unknown [100.64.0.11])
+	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+	 key-exchange ECDHE (prime256v1) server-signature RSA-PSS (4096 bits) server-digest SHA256)
+	(No client certificate requested)
+	(Authenticated sender: bbrezillon)
+	by bali.collaboradmins.com (Postfix) with ESMTPSA id CBF8417E05FC;
+	Wed,  3 Jun 2026 11:52:51 +0200 (CEST)
+Date: Wed, 3 Jun 2026 11:52:47 +0200
+From: Boris Brezillon <boris.brezillon@collabora.com>
+To: Philipp Stanner <phasta@mailbox.org>
+Cc: phasta@kernel.org, Alice Ryhl <aliceryhl@google.com>,
+ sashiko-reviews@lists.linux.dev, linux-media@vger.kernel.org,
+ ojeda@kernel.org, Danilo Krummrich	 <dakr@kernel.org>, Christian
+ =?UTF-8?B?S8O2bmln?= <christian.koenig@amd.com>, Gary Guo
+ <gary@garyguo.net>, Daniel Almeida <daniel.almeida@collabora.com>
+Subject: Re: [PATCH 3/4] rust: Add dma_fence abstractions
+Message-ID: <20260603115247.21ee5d1d@fedora-2.home>
+In-Reply-To: <aa11e74f419b02c0e4fe417face43e7d05e62783.camel@mailbox.org>
+References: <ah1c3NSU-4UkdUhb@google.com>
+	<a3d09b270e6effb6f2bfb5d7ba8de48e3c2c4081.camel@mailbox.org>
+	<CAH5fLggvxGwJkAp+VqG7pA-e2zM-T8_DR0DeCiZiJyM+o51DuQ@mail.gmail.com>
+	<24ef07ed85d9e7aa7f9d3a96301c4c15bc0f2315.camel@mailbox.org>
+	<ah2M2a_4PneZpjTS@google.com>
+	<16dff07d28fca94749f14e9c91e6f812f605d6e5.camel@mailbox.org>
+	<ah7CGySkyE7mSM8a@google.com>
+	<7a978596279eca99cd41ca46606c7e5a6a38e801.camel@mailbox.org>
+	<ah7FjDdU6zt65qId@google.com>
+	<4bf6e916efe54bab66defda6fffea8c41358b3cc.camel@mailbox.org>
+	<ah72Bi2Q5Wpgo2kE@google.com>
+	<3c7e4db139df7cea18bc683d6dd33da2d00f0358.camel@mailbox.org>
+	<20260603084805.5e0e23ea@fedora-2.home>
+	<aa11e74f419b02c0e4fe417face43e7d05e62783.camel@mailbox.org>
+Organization: Collabora
+X-Mailer: Claws Mail 4.4.0 (GTK 3.24.52; x86_64-redhat-linux-gnu)
 Precedence: bulk
 X-Mailing-List: sashiko-reviews@lists.linux.dev
 List-Id: <sashiko-reviews.lists.linux.dev>
 List-Subscribe: <mailto:sashiko-reviews+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:sashiko-reviews+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Message-ID: <848663b.6e91.19e8cdfcf1a.Coremail.dongxuyang@eswincomputing.com>
-X-Coremail-Locale: zh_CN
-X-CM-TRANSID:TQJkCgDH3aDC9x9qHSghAA--.7097W
-X-CM-SenderInfo: pgrqw5xx1d0w46hv4xpqfrz1xxwl0woofrz/1tbiAgEHAmofBhUfl
-	gAAsp
-X-Coremail-Antispam: 1Ur529EdanIXcx71UUUUU7IcSsGvfJ3iIAIbVAYjsxI4VWxJw
-	CS07vEb4IE77IF4wCS07vE1I0E4x80FVAKz4kxMIAIbVAFxVCaYxvI4VCIwcAKzIAtYxBI
-	daVFxhVjvjDU=
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: quoted-printable
 
-PiAKPiA+IAo+ID4gVGhhbmsgeW91IGZvciB5b3VyIGNvbnRyaWJ1dGlvbiEgU2FzaGlrbyBBSSBy
-ZXZpZXcgZm91bmQgMiBwb3RlbnRpYWwgaXNzdWUocykgdG8gY29uc2lkZXI6Cj4gPiAtIFtMb3dd
-IEdsb2JhbCBzdGF0aWMgY2xvY2sgYXJyYXlzIGFyZSBtb2RpZmllZCBkdXJpbmcgcHJvYmUgd2l0
-aG91dCBsb2NraW5nLCBicmVha2luZyBzdXBwb3J0IGZvciBtdWx0aXBsZSBpbnN0YW5jZXMuCj4g
-PiAtIFtMb3ddIFRoZSBLY29uZmlnIHN5bWJvbCBgQ09NTU9OX0NMS19FSUM3NzAwX0hTUGAgbGFj
-a3MgdGhlIGBkZWZhdWx0IEFSQ0hfRVNXSU5gIHByb3BlcnR5LCB3aGljaCBpcyBpbmNvbnNpc3Rl
-bnQgd2l0aCB0aGUgYmFzZSBjbG9jayBkcml2ZXIuCj4gPiAtLQo+ID4gCj4gPiBjb21taXQgNWM4
-N2Y4NjVjYThhZTc0NmQ4MGZmNzFmZGJiY2U3M2Y3YmU1MDJlYwo+ID4gQXV0aG9yOiBYdXlhbmcg
-RG9uZyA8ZG9uZ3h1eWFuZ0Blc3dpbmNvbXB1dGluZy5jb20+Cj4gPiAKPiA+IGNsazogZXN3aW46
-IEFkZCBlaWM3NzAwIEhTUCBjbG9jayBkcml2ZXIKPiA+IAo+ID4gQWRkIGRyaXZlciBmb3IgdGhl
-IEVTV0lOIEVJQzc3MDAgaGlnaC1zcGVlZCBwZXJpcGhlcmFscyBzeXN0ZW0gY2xvY2sKPiA+IGNv
-bnRyb2xsZXIgYW5kIHJlZ2lzdGVyIGFuIGF1eGlsaWFyeSBkZXZpY2UgZm9yIHN5c3RlbSByZXNl
-dCBjb250cm9sbGVyCj4gPiB3aGljaCBpcyBuYW1lZCBhcyAiaHNwLXJlc2V0Ii4KPiA+IAo+ID4g
-PiBkaWZmIC0tZ2l0IGEvZHJpdmVycy9jbGsvZXN3aW4vS2NvbmZpZyBiL2RyaXZlcnMvY2xrL2Vz
-d2luL0tjb25maWcKPiA+ID4gaW5kZXggMDQwNmVjNDk5ZWM5Yy4uMzc4NTdiZDc3MzM1NiAxMDA2
-NDQKPiA+ID4gLS0tIGEvZHJpdmVycy9jbGsvZXN3aW4vS2NvbmZpZwo+ID4gPiArKysgYi9kcml2
-ZXJzL2Nsay9lc3dpbi9LY29uZmlnCj4gPiBbIC4uLiBdCj4gPiA+IEBAIC0xMywzICsxMywxNiBA
-QCBjb25maWcgQ09NTU9OX0NMS19FSUM3NzAwCj4gPiA+ICAJICBTb0MuIFRoZSBjbG9jayBjb250
-cm9sbGVyIGdlbmVyYXRlcyBhbmQgc3VwcGxpZXMgY2xvY2tzIHRvIHZhcmlvdXMKPiA+ID4gIAkg
-IHBlcmlwaGVyYWxzIHdpdGhpbiB0aGUgU29DLgo+ID4gPiAgCSAgU2F5IHllcyBoZXJlIHRvIHN1
-cHBvcnQgdGhlIGNsb2NrIGNvbnRyb2xsZXIgb24gdGhlIEVJQzc3MDAgU29DLgo+ID4gPiArCj4g
-PiA+ICtjb25maWcgQ09NTU9OX0NMS19FSUM3NzAwX0hTUAo+ID4gPiArCXRyaXN0YXRlICJFSUM3
-NzAwIEhTUCBDbG9jayBEcml2ZXIiCj4gPiA+ICsJZGVwZW5kcyBvbiBBUkNIX0VTV0lOIHx8IENP
-TVBJTEVfVEVTVAo+ID4gCj4gPiBUaGlzIGlzbid0IGEgYnVnLCBidXQgc2hvdWxkIHRoaXMgY29u
-ZmlnIGhhdmUgZGVmYXVsdCBBUkNIX0VTV0lOIHRvIG1hdGNoCj4gPiB0aGUgYmFzZSBjbG9jayBk
-cml2ZXI/IFdpdGhvdXQgaXQsIHRoZSBoaWdoLXNwZWVkIHBlcmlwaGVyYWwgY2xvY2tzIG1pZ2h0
-Cj4gPiBiZSB1bmV4cGVjdGVkbHkgZGlzYWJsZWQgYnkgZGVmYXVsdCBvbiBFU1dJTiBwbGF0Zm9y
-bXMuCj4gPiAKPiAKPiBIaSBTYXNoaWtvLAo+IAo+IFRoZSBIU1AgY2xvY2sgcmVzZXQgZGV2aWNl
-IGNhbiBiZSBidWlsdCBhcyBhIGtlcm5lbCBtb2R1bGUuwqAKPiBIb3dldmVyLCBpZiAnZGVmYXVs
-dCBBUkNIX0VTV0lOJyBpcyBzZXQsIGl0IHdpbGwgYmUgY29tcGlsZWQgZGlyZWN0bHnCoAo+IGlu
-dG8gdGhlIGtlcm5lbCBpbnN0ZWFkIG9mIGFzIGEgbW9kdWxlLgo+IAo+ID4gPiArCXNlbGVjdCBB
-VVhJTElBUllfQlVTCj4gPiA+ICsJc2VsZWN0IENPTU1PTl9DTEtfRUlDNzcwMAo+ID4gPiArCXNl
-bGVjdCBSRVNFVF9FSUM3NzAwX0hTUCBpZiBSRVNFVF9DT05UUk9MTEVSCj4gPiA+ICsJc2VsZWN0
-IFJFR01BUF9NTUlPCj4gPiAKPiA+IFsgLi4uIF0KPiA+ID4gZGlmZiAtLWdpdCBhL2RyaXZlcnMv
-Y2xrL2Vzd2luL2Nsay1laWM3NzAwLWhzcC5jIGIvZHJpdmVycy9jbGsvZXN3aW4vY2xrLWVpYzc3
-MDAtaHNwLmMKPiA+ID4gbmV3IGZpbGUgbW9kZSAxMDA2NDQKPiA+ID4gaW5kZXggMDAwMDAwMDAw
-MDAwMC4uMzM4M2FhNjQ5NDhhNgo+ID4gPiAtLS0gL2Rldi9udWxsCj4gPiA+ICsrKyBiL2RyaXZl
-cnMvY2xrL2Vzd2luL2Nsay1laWM3NzAwLWhzcC5jCj4gPiBbIC4uLiBdCj4gPiA+ICtzdGF0aWMg
-c3RydWN0IGVzd2luX2ZpeGVkX2ZhY3Rvcl9jbG9jayBlaWM3NzAwX2hzcF9mYWN0b3JfY2xrc1td
-ID0gewo+ID4gPiArCUVTV0lOX0ZBQ1RPUihFSUM3NzAwX0hTUF9DTEtfRkFDX0NGR19ESVYyLCAi
-ZmFjdG9yX2hzcF9jZmdfZGl2MiIsCj4gPiA+ICsJCSAgICAgaHNwX2NmZywgMSwgMiwgMCksCj4g
-PiA+ICsJRVNXSU5fRkFDVE9SKEVJQzc3MDBfSFNQX0NMS19GQUNfQ0ZHX0RJVjQsICJmYWN0b3Jf
-aHNwX2NmZ19kaXY0IiwKPiA+ID4gKwkJICAgICBoc3BfY2ZnLCAxLCA0LCAwKSwKPiA+ID4gKwlF
-U1dJTl9GQUNUT1IoRUlDNzcwMF9IU1BfQ0xLX0ZBQ19NTUNfRElWMTAsICJmYWN0b3JfaHNwX21t
-Y19kaXYxMCIsCj4gPiA+ICsJCSAgICAgaHNwX21tYywgMSwgMTAsIDApLAo+ID4gPiArfTsKPiA+
-IFsgLi4uIF0KPiA+ID4gK3N0YXRpYyBpbnQgZWljNzcwMF9oc3BfY2xrX3Byb2JlKHN0cnVjdCBw
-bGF0Zm9ybV9kZXZpY2UgKnBkZXYpCj4gPiA+ICt7Cj4gPiA+ICsJc3RydWN0IGRldmljZSAqZGV2
-ID0gJnBkZXYtPmRldjsKPiA+ID4gKwlzdHJ1Y3QgYXV4aWxpYXJ5X2RldmljZSAqYWRldjsKPiA+
-ID4gKwlzdHJ1Y3QgZXN3aW5fY2xvY2tfZGF0YSAqZGF0YTsKPiA+ID4gKwlzdHJ1Y3QgcmVnbWFw
-ICpyZWdtYXA7Cj4gPiA+ICsJc3RydWN0IGNsa19odyAqaHc7Cj4gPiA+ICsJaW50IGksIHJldDsK
-PiA+ID4gKwo+ID4gPiArCWRhdGEgPSBlc3dpbl9jbGtfaW5pdChwZGV2LCBFSUM3NzAwX0hTUF9O
-Ul9DTEtTKTsKPiA+ID4gKwlpZiAoSVNfRVJSKGRhdGEpKQo+ID4gPiArCQlyZXR1cm4gZGV2X2Vy
-cl9wcm9iZShkZXYsIFBUUl9FUlIoZGF0YSksCj4gPiA+ICsJCQkJICAgICAiZmFpbGVkIHRvIGdl
-dCBjbGsgZGF0YSFcbiIpOwo+ID4gPiArCj4gPiA+ICsJcmVnbWFwID0gZGV2bV9yZWdtYXBfaW5p
-dF9tbWlvKGRldiwgZGF0YS0+YmFzZSwKPiA+ID4gKwkJCQkgICAgICAgJmVpYzc3MDBfaHNwX3Jl
-Z21hcF9jb25maWcpOwo+ID4gPiArCWlmIChJU19FUlIocmVnbWFwKSkKPiA+ID4gKwkJcmV0dXJu
-IGRldl9lcnJfcHJvYmUoZGV2LCBQVFJfRVJSKHJlZ21hcCksCj4gPiA+ICsJCQkJICAgICAiZmFp
-bGVkIHRvIGdldCByZWdtYXAhXG4iKTsKPiA+ID4gKwo+ID4gPiArCXJldCA9IGVzd2luX2Nsa19y
-ZWdpc3Rlcl9maXhlZF9mYWN0b3IoZGV2LCBlaWM3NzAwX2hzcF9mYWN0b3JfY2xrcywKPiA+ID4g
-KwkJCQkJICAgICAgQVJSQVlfU0laRShlaWM3NzAwX2hzcF9mYWN0b3JfY2xrcyksCj4gPiA+ICsJ
-CQkJCSAgICAgIGRhdGEpOwo+ID4gCj4gPiBJcyBpdCBzYWZlIHRvIHBhc3MgdGhlIGdsb2JhbCBz
-dGF0aWMgYXJyYXkgZWljNzcwMF9oc3BfZmFjdG9yX2Nsa3MgdG8gdGhpcwo+ID4gZnVuY3Rpb24/
-Cj4gPiAKPiA+IExvb2tpbmcgYXQgZXN3aW5fY2xrX3JlZ2lzdGVyX2ZpeGVkX2ZhY3RvcigpIGlu
-IGRyaXZlcnMvY2xrL2Vzd2luL2Nsay5jLCBpdAo+ID4gbW9kaWZpZXMgdGhlIGFycmF5IGR1cmlu
-ZyBwcm9iZToKPiA+IAo+ID4gaW50IGVzd2luX2Nsa19yZWdpc3Rlcl9maXhlZF9mYWN0b3IoLi4u
-KQo+ID4gewo+ID4gICAgIC4uLgo+ID4gICAgICAgICBjbGtzW2ldLmh3ID0gKmNsa19odzsKPiA+
-ICAgICAgICAgZGF0YS0+Y2xrX2RhdGEuaHdzW2Nsa3NbaV0uaWRdID0gY2xrX2h3Owo+ID4gICAg
-IC4uLgo+ID4gfQo+ID4gCj4gPiBJZiBtdWx0aXBsZSBpbnN0YW5jZXMgb2YgdGhpcyBkcml2ZXIg
-cHJvYmUgY29uY3VycmVudGx5IG9yIGRlZmVyLCBjb3VsZCB0aGlzCj4gPiBkYXRhIHJhY2UgY29y
-cnVwdCB0aGUgQ0NGIHBhcmVudC1jaGlsZCBsaW5rYWdlcz8gVGhlIHNhbWUgcGF0dGVybiBhcHBl
-YXJzCj4gPiB0byBhZmZlY3QgZWljNzcwMF9oc3BfZ2F0ZV9jbGtzIGFuZCBlaWM3NzAwX2hzcF9t
-dXhfY2xrcy4KPiA+IAo+IAo+IE5vLiBUaGVyZSBpcyBvbmx5IG9uZSBjb21wYXRpYmxlIHN0cmlu
-ZyBpbiB0aGUgRFRTLCBzbyB0aGVyZSB3aWxsIG9ubHkgYmUKPiBhIHNpbmdsZSBkcml2ZXIgaW5z
-dGFuY2UuIFRoZXJlZm9yZSwgY29uY3VycmVudCBwcm9iaW5nIGNhbm5vdCBvY2N1ciwgYW5kwqAK
-PiB0aGUgQ0NGIHBhcmVudC1jaGlsZCBsaW5rYWdlcyB3aWxsIG5vdCBiZSBjb3JydXB0ZWQgYnkg
-YSBkYXRhIHJhY2UuwqAKPiAKCkhpIFNhc2hpa28sCgpJIGhhdmUgY2xhcmlmaWVkIHlvdXIgY29t
-bWVudHMgYWJvdmUuIFBsZWFzZSBsZXQgbWUga25vdyBpZiBteSByZXBsaWVzwqAKYXJlIGFjY2Vw
-dGFibGUuwqAKSWYgdGhlcmUgYXJlIG5vIGZ1cnRoZXIgaXNzdWVzLCBJIHdpbGwgc2VuZCB0aGUg
-bmV4dCB2ZXJzaW9uIG9mIHRoZSBwYXRjaC4KCkJlc3QgcmVnYXJkcywKWHV5YW5nIERvbmcKCj4g
-Cj4gPiAtLSAKPiA+IFNhc2hpa28gQUkgcmV2aWV3IMK3IGh0dHBzOi8vc2FzaGlrby5kZXYvIy9w
-YXRjaHNldC8yMDI2MDUxOTA4MTQzMS4xNDI0LTEtZG9uZ3h1eWFuZ0Blc3dpbmNvbXB1dGluZy5j
-b20/cGFydD0yCg==
+On Wed, 03 Jun 2026 09:43:55 +0200
+Philipp Stanner <phasta@mailbox.org> wrote:
+
+> On Wed, 2026-06-03 at 08:48 +0200, Boris Brezillon wrote:
+> > On Wed, 03 Jun 2026 08:10:51 +0200
+> > Philipp Stanner <phasta@mailbox.org> wrote:
+> >  =20
+> > > +Cc Danilo, Gary, Daniel, Christian
+> > > (who seem to have been lost because Sashiko dropped them and this thr=
+ead is a reply to that tool)
+> > >=20
+> > >=20
+> > > On Tue, 2026-06-02 at 15:25 +0000, Alice Ryhl wrote: =20
+> > > > On Tue, Jun 02, 2026 at 02:06:43PM +0200, Philipp Stanner wrote:=C2=
+=A0 =20
+> > > > > On Tue, 2026-06-02 at 11:59 +0000, Alice Ryhl wrote:=C2=A0  =20
+> > > > > > On=C2=A0=C2=A0  =20
+> > > > >=20
+> > > > > [=E2=80=A6]
+> > > > > =C2=A0  =20
+> > > > > > > >=20
+> > > > > > > > If you don't implement Sync, then DriverFence cannot be sto=
+red in an
+> > > > > > > > Arc. I wouldn't take away that ability unless you have to, =
+and I don't
+> > > > > > > > see anything in the DriverFence API that would mean you can=
+'t do that.=C2=A0  =20
+> > > > > > >=20
+> > > > > > > Nope. We explicitly agreed on this design.
+> > > > > > >=20
+> > > > > > > Just 1 DriverFence. Just 1 party that can signal it.
+> > > > > > > Note that we also agreed upon the Driverfence disappearing wi=
+th
+> > > > > > > .signal(), which certainly prevents several from existing, un=
+less you
+> > > > > > > do an Option.take()=C2=A0  =20
+> > > > > >=20
+> > > > > > I would like to clarify that I'm not suggesting any changes to =
+the
+> > > > > > design. Implementing Sync is not the same as having multiple dr=
+iver
+> > > > > > fences.=C2=A0  =20
+> > > > >=20
+> > > > > I mean, I guess one can do that. But it's up to the driver then t=
+o see how it can signal its fence.=C2=A0  =20
+> > > >=20
+> > > > I don't believe Sync changes anything with that regard. The signal
+> > > > method takes 'self', but the Sync trait only affects how '&self' me=
+thods
+> > > > can be called.
+> > > > =C2=A0  =20
+> > > > > > > > > > > > =C2=A0so even though
+> > > > > > > > > > > > the fence context may be valid for another grace pe=
+riod, the *pointer*
+> > > > > > > > > > > > to the fence context is not. The pointer could have=
+ been zeroed by the
+> > > > > > > > > > > > destructor.=C2=A0  =20
+> > > > > > > > > > >=20
+> > > > > > > > > > > That particular pointer to the DriverFenceData could =
+have been zeroed.
+> > > > > > > > > > > But potential other accessors have already crafted th=
+emselves a new
+> > > > > > > > > > > pointer to the, by the power of RCU, still valid data=
+. That new pointer
+> > > > > > > > > > > is container-of-ed from struct dma_fence *f.=C2=A0  =
+=20
+> > > > > > > > > >=20
+> > > > > > > > > > I'm not talking about the pointer to DriverFenceData, I=
+'m talking about
+> > > > > > > > > > the pointer to the FenceCtx, or the pointer to the data=
+ (if F is
+> > > > > > > > > > RcuBox).=C2=A0  =20
+> > > > > > > > >=20
+> > > > > > > > > Yeah, but the backing memory is still alive. And new poin=
+ters to that
+> > > > > > > > > memory get crafted by the accessors. If a callback access=
+es the data
+> > > > > > > > > through `container_of(Fence)`, it gets a new pointer.
+> > > > > > > > >=20
+> > > > > > > > > So what's the problem?
+> > > > > > > > >=20
+> > > > > > > > > Where is the invalid pointer that someone is accessing?
+> > > > > > > > > =C2=A0  =20
+> > > > > > > > > >=20
+> > > > > > > > > > The Arc type is not a type that opts-out of &mut =3D=3D=
+ exclusive, so the
+> > > > > > > > > > second drop_in_place() above is assumed exclusive acces=
+s to the
+> > > > > > > > > > Arc<FenceCtx<F,C>> field.=C2=A0  =20
+> > > > > > > > >=20
+> > > > > > > > > OK, so I think I see the problem. So the invalid pointer =
+is
+> > > > > > > > > Arc<FenceCtx=E2=80=A6>? And potentially the <F> pointer (=
+although we don't have
+> > > > > > > > > a picture yet as to how that would be accessed through ot=
+her callbacks.
+> > > > > > > > > =C2=A0  =20
+> > > > > > > > > > =C2=A0If another thread obtains a pointer to the
+> > > > > > > > > > FenceCtx via reading the fctx field of the DriverFence =
+in parallel with
+> > > > > > > > > > this, then that's not allowed because the drop_in_place=
+() call has
+> > > > > > > > > > exclusive access to that field.=C2=A0  =20
+> > > > > > > > >=20
+> > > > > > > > > I think I have been asking in several of our meetings in =
+the past
+> > > > > > > > > whether it is actually a problem to access data that has =
+been dropped()
+> > > > > > > > > IF we know that drop does not cause UAF and the answer wa=
+s kind of like
+> > > > > > > > > a "well if it does not actually get freed=E2=80=A6"=C2=A0=
+  =20
+> > > > > > > >=20
+> > > > > > > > Ok, well, IMO the simplest approach is to say you can't. Th=
+ere may be
+> > > > > > > > roundabout ways to do it, but I would suggest that we just =
+... don't.=C2=A0  =20
+> > > > > > >=20
+> > > > > > > Ack.
+> > > > > > > =C2=A0  =20
+> > > > > > > > =C2=A0  =20
+> > > > > > > > > Anyways.
+> > > > > > > > >=20
+> > > > > > > > > It would seem the way to get this right is then
+> > > > > > > > >=20
+> > > > > > > > > synchronize_rcu();
+> > > > > > > > > drop_in_palace(data);
+> > > > > > > > >=20
+> > > > > > > > >=20
+> > > > > > > > > Agreed?
+> > > > > > > > >=20
+> > > > > > > > > This would then mean, however, that every time a fence dr=
+ops, you have
+> > > > > > > > > to wait a grace period.
+> > > > > > > > >=20
+> > > > > > > > > Or maybe stuff DriverFenceData into an RcuBox, too, and d=
+efer its
+> > > > > > > > > dropping.=C2=A0  =20
+> > > > > > > >=20
+> > > > > > > > That would work, but I think we can do better and avoid the
+> > > > > > > > synchronize_rcu() along these lines:
+> > > > > > > >=20
+> > > > > > > > unsafe trait RcuRevocable {
+> > > > > > > > =C2=A0=C2=A0=C2=A0 unsafe fn rcu_revoke_in_place(ptr: *mut =
+Self);
+> > > > > > > > }
+> > > > > > > >=20
+> > > > > > > > This trait provides a method that's like drop_in_place(), e=
+xcept that
+> > > > > > > > when you use this destructor, the value remains usable for =
+one grace
+> > > > > > > > period. You could implement it for RcuBox, and for any Copy=
+ type, and
+> > > > > > > > for ARef<T> when T is cleaned up with rcu, and probably als=
+o other
+> > > > > > > > stuff.=C2=A0  =20
+> > > > > > >=20
+> > > > > > > I mean, this cannot be magic. It also boils down to executing=
+ one RCU
+> > > > > > > callback per DriverFence dropping.
+> > > > > > >=20
+> > > > > > > Is there a significant difference to stuffing DriverFenceData=
+ into an
+> > > > > > > RcuBox?=C2=A0  =20
+> > > > > >=20
+> > > > > > Do you mean hard-coding that the user-data of a driver fence is=
+ always
+> > > > > > stored in an RcuBox?=C2=A0  =20
+> > > > >=20
+> > > > >=20
+> > > > > I'm talking about this:
+> > > > >=20
+> > > > >=20
+> > > > >=20
+> > > > > impl<F: Send + Sync + DriverFenceAllowedData, C: Send + Sync> Dri=
+verFenceAllocation<F, C> {
+> > > > > =C2=A0=C2=A0=C2=A0 /// Create a new allocation slot that can late=
+r be used to create a fully
+> > > > > =C2=A0=C2=A0=C2=A0 /// initialized [`DriverFence`] without the ne=
+ed to allocate.
+> > > > > =C2=A0=C2=A0=C2=A0 pub fn new(fctx: Arc<FenceCtx<F, C>>, data: F)=
+ -> Result<Self> {
+> > > > > =C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 let fence_data =3D Dri=
+verFenceData {
+> > > > > =C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=
+=A0 // `inner` remains uninitialized until a [`DriverFence`] takes over.
+> > > > > =C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=
+=A0 inner: Fence {
+> > > > > =C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=
+=A0=C2=A0=C2=A0=C2=A0=C2=A0 inner: Opaque::uninit(),
+> > > > > =C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=
+=A0 },
+> > > > > =C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=
+=A0 fctx,
+> > > > > =C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=
+=A0 data,
+> > > > > =C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 };
+> > > > >=20
+> > > > > =C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 // In order to support=
+ the C dma_fence callbacks, it is necessary for
+> > > > > =C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 // a `Fence` and a `Dr=
+iverFence` to live in the same allocation,
+> > > > > =C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 // because the C backe=
+nd passes a dma_fence, from which the driver most
+> > > > > =C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 // likely wants to be =
+able to access its `data` in `DriverFence`.
+> > > > > =C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 //
+> > > > > =C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 // Hence, we need the =
+manage the memory manually. It will be freed by the
+> > > > > =C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 // C backend automatic=
+ally once the refcount within `Fence` drops to 0.
+> > > > > =C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 let data =3D RcuBox::n=
+ew(fence_data, GFP_KERNEL | __GFP_ZERO)?;
+> > > > >=20
+> > > > > =C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 Ok(Self { data })
+> > > > > =C2=A0=C2=A0=C2=A0 }
+> > > > >=20
+> > > > >=20
+> > > > > This way, the entire DriverFenceData will remain valid for an
+> > > > > additional grace period. I suppose this would solve your pointer-
+> > > > > invalid concern.
+> > > > >=20
+> > > > > However, it appears like overkill to me because the refcounting +=
+ C
+> > > > > backend already ensure that nothing drops too soon, and the backe=
+nd
+> > > > > frees with kfree_rcu(), so=E2=80=A6=C2=A0  =20
+> > > >=20
+> > > > I agree that it doesn't sound like we want RcuBox here.
+> > > >=20
+> > > > What kind of metadata are we actually planning to store in the
+> > > > DriverFence in practice?=C2=A0  =20
+> > >=20
+> > > I suppose it might be GPUVM payloads. IIRC in Tyr it's currently just
+> > > empty structs as some sort of identifier. I guess copies of the actual
+> > > command buffers will also reside in their associated fences.
+> > >=20
+> > > But Boris, Daniel and Danilo probably have something smart to say abo=
+ut
+> > > that. =20
+> >=20
+> > In Tyr we don't need any, because we're using SW signalling: we get an
+> > interrupt, look at our HW fence seqno, and walk the set of pending
+> > fences to signal them with the ::signal() method (that's an
+> > over-simplified view of it, but functionally that's how it works).
+> >=20
+> > Now, the question is more, what drivers planning to support HW
+> > signaling want attached to the DriverFence. My gut feeling is that now
+> > that we have a way to get back to the FenceCtx, and given that FenceCtx
+> > also has driver-specific data attached to it, most common use cases
+> > where the fence contains a backpointer to its timeline/creator are
+> > covered. If I look at nouveau_fence [1] (I intentionally looked at the
+> > most likely next user of this) for instance:
+> >=20
+> > struct nouveau_fence {
+> > 	struct dma_fence base;
+> >=20
+> > 	struct list_head head;
+> >=20
+> > 	struct nouveau_channel __rcu *channel;
+> > 	unsigned long timeout;
+> > }; =20
+>=20
+> Thx for the explanation
+>=20
+> >=20
+> > - channel is basically the FenceCtx in your new design
+> > - head is used to insert the fence in the fence context list. Not too
+> > =C2=A0 sure how it translates in rust (insertion in an XArray instead?).
+> > =C2=A0 Anyway, that's just stuff you need to make your fence part of the
+> > =C2=A0 context timeline, so it's again related to how you link a fence =
+to
+> > =C2=A0 its context and let the context walk back pending fences when it
+> > =C2=A0 needs to. Feels like my original FenceTimeline abstract proposal=
+ [2]
+> > =C2=A0 could help make this thing generic, but let's reconsider this on=
+ce
+> > =C2=A0 we've got the basics sorted out, please
+> > - timeout is probably the only thing of interest here, assuming things
+> > =C2=A0 can be signaled out of order (if they are signaled in order, lik=
+e is
+> > =C2=A0 the case in Tyr, the timeout can just be on the FenceCtxData and
+> > =C2=A0 represent the timeout of the first fence in the set). Anyway, th=
+at's a
+> > =C2=A0 scalar, so no fancy ::drop() needed if that's what you're worried
+> > =C2=A0 about =20
+>=20
+> What we / Alice are worried about is multiple things.
+>=20
+> One issue is that Alice believes that=20
+>=20
+>         // SAFETY: `self.data` is owned by the DriverFence, but could be =
+accessed
+>         // through some dma_fence callbacks right now. Access is being re=
+voked
+>         // above by signalling the fence. The DriverFenceSafeToDrop trait
+>         // ensures that the data either does not need drop, or if it does=
+ it
+>         // lives in a RcuBox which will delay dropping by one grace perio=
+d, hence
+>         // ensuring that all readers have disappeared.
+>         unsafe { drop_in_place(self.data.as_ptr()) };
+>=20
+>=20
+> from DriverFence::drop() invalidates the pointers that thread A
+> accesses, even if DriverFence::data.data's drop is delayed with RCU.
+>=20
+> Now if thread B drops DriverFence, thread A could use invalid pointers,
+> but while still operating on non-deallocated memory (because our
+> refcounting guards against that).
+
+This is where I think our very permissive dma_fence callback design is
+hitting us in the face. There are callbacks that are called with the
+fence lock held (::enable_signalling(), ::signaled()), and because we
+forcibly signal on DriverFence::drop() (which requires locking as well)
+and then drop the DriverFenceData::data (I'd expect
+DriverFenceData::fctx to be manually dropped too, but I don't see
+that done in the current version), the problem you're describing doesn't
+exist, I think.
+
+That leaves those that are not called with the lock held, and for
+which we rely on the RCU lock:
+
+- ::get_{driver,timeline}_name() get back to the FenceCtx to get those
+  names, and if the Arc<FenceCtx> inside the DriverFenceData is dropped,
+  I guess it can't be trusted
+- ::set_deadline() is problematic as well
+- ::wait() and ::release() are deprecated
+
+>=20
+> The only way I can see to make that bullet proof would be to do
+> synchronize_rcu() before the drop_in_place() above =E2=80=93 but that wou=
+ld
+> mean that we delay each fence drop by one grace period.
+
+synchronize_rcu() in the DriverFence::drop() path is indeed not a great
+idea. Not only because it adds an heavy synchronization point in a
+potentially hot-path, but also because you're back to a situation where
+DriverFence users need to be very careful about the context they are
+when they drop these objects, and because drop() is an implicit
+operation most of the time, it becomes super fragile.
+
+If we're going to force this synchronize_rcu(), I think it should be
+done when the FenceCtx is dropped, meaning we're back to a situation
+where DriverFenceData::data is also RCU-deferred with an rcu_call(),
+which, IIRC, was the original idea.
+
+>=20
+> I'm still not sure how real the problem really is, though. Because
+> refcounting guards, and drop() doesn't actually *do* something to the
+> pointers, or does it?
+
+It doesn't do anything to the dma_fence part of the DriverFenceData,
+but it can touch the driver-specific part, and most importantly, it
+might leave it with stale information that are then re-interpreted by
+the dma_fence_ops callback that's still in-flight.
+
+>=20
+>=20
+> --
+>=20
+> Another, related issue would be
+> - thread A accesses DriverFence::data through a backend_ops
+> - thread B drops DriverFence
+> - there are no RCU callbacks (call_rcu()) pending
+> - thus, the rcu_barrier() in FenceCtx::drop() takes no effect. We would
+> actually need synchronize_rcu() there.
+>=20
+>=20
+> So would seem we still didn't get fence and fence_ctx teardown
+> completely right.
+
+Nope, indeed. The driver_name/timeline_name retrieval is already
+problematic. You probably get away with it because you're leaking the
+context (no drop on DriverFenceData::fctx AFAICT).
