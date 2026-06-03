@@ -1,49 +1,50 @@
 Received: from galois.linutronix.de (Galois.linutronix.de [193.142.43.55])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0B9CB3955D4;
-	Wed,  3 Jun 2026 15:01:28 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 60E4F3A961E;
+	Wed,  3 Jun 2026 15:07:05 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=193.142.43.55
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1780498890; cv=none; b=G5mcd+KsgcDVGiiM5n+6lRzwp6QaSRrXWsW4dIGyUZ6CZC8v6N8bEfFvoyapeQlmGmHt4ItfRAGkmeNk9oPymIkgu16fRlSBiOoORU0ZmmIgk6dXGw3x3Ul6VlpcLlCzWsEJhF0JNbNQkbik0pN6/JOT+ax8nDzlCFzBU66HoBo=
+	t=1780499226; cv=none; b=fReZSGgjbHk0sEHDRmUJk7Cf8j67QNf6E0Y8S/eBfn/PtJr6Sdl+YwK0nTDC4U/W/1+xCaB54CLCUvgNloVCUQbJZal2Wm49EQx3az5jp6rtLxh6ncL9EW3z3JqpgSrRePVLeMIp8sBCa7SpLzk653/j4hhnzI66aW7jI9i4XRg=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1780498890; c=relaxed/simple;
-	bh=LgXltxMEvS0dvMHIgwn9fgkjktVp4qKt4XiY3sjVHzM=;
+	s=arc-20240116; t=1780499226; c=relaxed/simple;
+	bh=x7bKmivEX8oA3kEU64Z/f61X2knJ1G42+V6xLwDeaQ8=;
 	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=T7LLUe8KpRn34aKxaDt+fSalqN3Qn7mENfGdMjVCCp2K2xbkj0XitfZG/OFjsibaHcknsD/efqjInIs8gKSRbrU/oQOiQVQGlgW79ndNNUXmLszA3KfFX/YI5jJxBt0wnKDb1Qd/x2gp2wVv3L7y9lcEiBvOyFNWa0txmuKJIgg=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linutronix.de; spf=pass smtp.mailfrom=linutronix.de; dkim=pass (2048-bit key) header.d=linutronix.de header.i=@linutronix.de header.b=dD5L8wi0; dkim=permerror (0-bit key) header.d=linutronix.de header.i=@linutronix.de header.b=GyyvPgXT; arc=none smtp.client-ip=193.142.43.55
+	 Content-Type:Content-Disposition:In-Reply-To; b=Vat72E56RoctjErFfy98V1D2FmiA1IR3paBLaRz22kwTN9Z+A95yoe0nRBjSCxRckzIXEbrkys1jgSVNEHD2lYEjLaiqFDSaub2yHMI4OeJ8P4pqkeOfCBe6PJivvwQZ5uF+RQou+7lcUDG80D+9PWKhHMtppFLrVFY+SwxeuCI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linutronix.de; spf=pass smtp.mailfrom=linutronix.de; dkim=pass (2048-bit key) header.d=linutronix.de header.i=@linutronix.de header.b=UbZ+Bt6/; dkim=permerror (0-bit key) header.d=linutronix.de header.i=@linutronix.de header.b=P4lkiKDe; arc=none smtp.client-ip=193.142.43.55
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linutronix.de
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linutronix.de
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=linutronix.de header.i=@linutronix.de header.b="dD5L8wi0";
-	dkim=permerror (0-bit key) header.d=linutronix.de header.i=@linutronix.de header.b="GyyvPgXT"
-Date: Wed, 3 Jun 2026 17:01:26 +0200
+	dkim=pass (2048-bit key) header.d=linutronix.de header.i=@linutronix.de header.b="UbZ+Bt6/";
+	dkim=permerror (0-bit key) header.d=linutronix.de header.i=@linutronix.de header.b="P4lkiKDe"
+Date: Wed, 3 Jun 2026 17:07:02 +0200
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linutronix.de;
-	s=2020; t=1780498887;
+	s=2020; t=1780499223;
 	h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
 	 to:to:cc:cc:mime-version:mime-version:content-type:content-type:
 	 in-reply-to:in-reply-to:references:references;
-	bh=LgXltxMEvS0dvMHIgwn9fgkjktVp4qKt4XiY3sjVHzM=;
-	b=dD5L8wi0h2hHti2VzsDovBJNUafowvQhaEUipkR/9/i+vRVSMplxx+A6foyldLqUCLTjLT
-	NQEDNZMEuivumfWQmy2W2DGA/pbJZi6PZadmAHroTQ//hlzVrAIsedpAotQEOF0TaOjiTX
-	czd1ofEy7s0DndJ8cXeBZVuJdRGWrjco0+u8pWUjXy9TcY+LcmgUs0KzsWS4RcPEmj/64a
-	A/eJx/TSVRRYNx6oRERay20RC8KXtS3LenFLeaKImha/ytOLor1edCX+Wq79oGfsAzy4L6
-	QiO1M8RJMWw4q5Nd+70V/H9wXpBA1/bVoz/QO2o9tpL6+CLYJ2MZjsM3EA9a8A==
+	bh=GXQF/dFcPxumU0fV8ISBYaljDmK6bOpyXMC+vPn+0uQ=;
+	b=UbZ+Bt6/AyZuRYVeYl8zENmmUWFxKiamKKhXoRc1inXRfBlnru9bHlxFfJZ7v43VgF8f57
+	SRMCkS/uacdYpnKI1ZaEZCMY4wsaGv+brSMhtqNznMu301n5jk9o//Tv3y/QpgwuYmLuQk
+	0Ftld5HYV02HLZ70v8pqU3qWqYOnPJoPpfMg7FXyYfz3h+i5FfVGyUwi3YZECBxFNeC8ex
+	R+BlkLYJlXkop3JRoWat2lL3XWnZl/HXdgxsaJd8V55H8//3K09VmS8RmuJv3J9L1D1wiI
+	47dk5xoVZsPC2XYb7V0io5dw4FUiv95X0llqfCR0UFo/AYvUMhD299zGb3WHDw==
 DKIM-Signature: v=1; a=ed25519-sha256; c=relaxed/relaxed; d=linutronix.de;
-	s=2020e; t=1780498887;
+	s=2020e; t=1780499223;
 	h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
 	 to:to:cc:cc:mime-version:mime-version:content-type:content-type:
 	 in-reply-to:in-reply-to:references:references;
-	bh=LgXltxMEvS0dvMHIgwn9fgkjktVp4qKt4XiY3sjVHzM=;
-	b=GyyvPgXT4RYWBOWxvgg7YY4NtslwVrDwmE4u/DHDf7w/mtCDO9jOEiuTKbye8gTGuRdM2s
-	9qDoqVCkZAZJikCg==
+	bh=GXQF/dFcPxumU0fV8ISBYaljDmK6bOpyXMC+vPn+0uQ=;
+	b=P4lkiKDerQNcN7yaR+z6vv3FQoo9OB+6vOU/fmuzT9sTX09NMyWzsnjD0h/6ollDFmoVKH
+	9Z3SjayN5Gx4iUBw==
 From: Sebastian Andrzej Siewior <bigeasy@linutronix.de>
 To: sashiko-reviews@lists.linux.dev
 Cc: Frank.Li@kernel.org, imx@lists.linux.dev
-Subject: Re: [PATCH v2 3/9] mailbox: imx: use devm_of_platform_populate()
-Message-ID: <20260603150126.AwpEcc9E@linutronix.de>
-References: <20260603-imx_mbox_rproc-v2-3-a0059dc3b69a@linutronix.de>
- <20260603133715.D22571F00898@smtp.kernel.org>
+Subject: Re: [PATCH v2 5/9] mailbox: imx: Start splitting the IRQ handler in
+ primary and threaded handler
+Message-ID: <20260603150702.m9EFLCZb@linutronix.de>
+References: <20260603-imx_mbox_rproc-v2-5-a0059dc3b69a@linutronix.de>
+ <20260603135823.1094E1F00893@smtp.kernel.org>
 Precedence: bulk
 X-Mailing-List: sashiko-reviews@lists.linux.dev
 List-Id: <sashiko-reviews.lists.linux.dev>
@@ -52,12 +53,40 @@ List-Unsubscribe: <mailto:sashiko-reviews+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=utf-8
 Content-Disposition: inline
-In-Reply-To: <20260603133715.D22571F00898@smtp.kernel.org>
+In-Reply-To: <20260603135823.1094E1F00893@smtp.kernel.org>
 
-On 2026-06-03 13:37:15 [+0000], sashiko-bot@kernel.org wrote:
-> Thank you for your contribution! Sashiko AI review found 1 potential issue(s) to consider:
-> - [High] Unbalanced clk_disable_unprepare() on the error path for devm_mbox_controller_register() causes a double clock disable.
+On 2026-06-03 13:58:22 [+0000], sashiko-bot@kernel.org wrote:
+> > diff --git a/drivers/mailbox/imx-mailbox.c b/drivers/mailbox/imx-mailbox.c
+> > index d1de07cc0ed62..006aa76b74b62 100644
+> > --- a/drivers/mailbox/imx-mailbox.c
+> > +++ b/drivers/mailbox/imx-mailbox.c
+> 
+> [ ... ]
+> 
+> > @@ -629,7 +655,8 @@ static int imx_mu_startup(struct mbox_chan *chan)
+> >  	if (!(priv->dcfg->type & IMX_MU_V2_IRQ))
+> >  		irq_flag |= IRQF_SHARED;
+> >  
+> > -	ret = request_irq(priv->irq[cp->type], imx_mu_isr, irq_flag, cp->irq_desc, chan);
+> > +	ret = request_threaded_irq(priv->irq[cp->type], imx_mu_isr, imx_mu_isr_th,
+> > +				   irq_flag, cp->irq_desc, chan);
+> 
+> [Severity: High]
+> This isn't a bug introduced by this patch, but looking at imx_mu_startup()
+> in drivers/mailbox/imx-mailbox.c, the return value of pm_runtime_get_sync()
+> is ignored:
+> 
+> 	pm_runtime_get_sync(priv->dev);
+> 	if (cp->type == IMX_MU_TYPE_TXDB_V2)
+> 		return 0;
+> 
+> If the PM domain fails to resume (for example, returning -ENOMEM or
+> -ETIMEDOUT), will the function proceed to interact with hardware registers?
+> On i.MX platforms, accessing unclocked or unpowered hardware registers
+> typically results in a synchronous external abort and a kernel panic.
 
-We had this.
+Yeah, not sure what to do here. If it fails, and we return with an error
+the upper layer invokes the shutdown callback wich will free_irq, put pm
+and write registers anyway.
 
 Sebastian
