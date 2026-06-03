@@ -1,150 +1,141 @@
-Received: from out-179.mta0.migadu.com (out-179.mta0.migadu.com [91.218.175.179])
+Received: from dvalin.narfation.org (dvalin.narfation.org [213.160.73.56])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 77FEC43D508
-	for <sashiko-reviews@lists.linux.dev>; Wed,  3 Jun 2026 08:43:19 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=91.218.175.179
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F153F1B4F1F
+	for <sashiko-reviews@lists.linux.dev>; Wed,  3 Jun 2026 09:02:34 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=213.160.73.56
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1780476201; cv=none; b=asuuxoymbey4Ta3nehJHZveuZRUve8MXOZCwQXQGfe6QYJVwSKPHSVNxcWo8v4RtJkJcmK3Y/VWS5xJLeEaZor3qP9IsYKs7Wc8pH+7pv7yhfz2xkoqbFeEr+hcnT2LMVfpMSYBLRxXiFinNLFj85DU0M1ApjDH47uIZ7k62NLg=
+	t=1780477356; cv=none; b=aKKLFtRCqUxHcjDRQB7+G5y162f5oJInMgWLEc+wAXWmL5WYG4Iv9i+mqy9d6zUDrI6gnXcK1JNGLvziTh1I0QSpJddC+rIj2vq1wVHYQ9+fi77rsL3u+MHAKICQ5LG2QYV1w59liDV24ws4s7VjXGkDh+yUjbdaOfVcsMMxzuI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1780476201; c=relaxed/simple;
-	bh=neRdMmqsu+xeIevkABFuVkJfsDh+Fvk+6xUxtHdyj7o=;
-	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=Nv634kRN+jBlZTfIaSOQhY8LB3vmYO2IGYRR6fjHa0MCqgz3ixRx5AH2IyYMwxH4uqwd7V0c3Am4r9M5mN2FDPXinXxb+2cSEEBsdiX5WBr7aGHfX4l2OGDe7scvDiVmVwiDjeKB5+PgdvZqJiulnpulRoQ58Ema/WC1uL5zgEc=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linux.dev; spf=pass smtp.mailfrom=linux.dev; dkim=pass (1024-bit key) header.d=linux.dev header.i=@linux.dev header.b=oPhkfvP0; arc=none smtp.client-ip=91.218.175.179
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linux.dev
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linux.dev
+	s=arc-20240116; t=1780477356; c=relaxed/simple;
+	bh=LGs6qFxgDHihzWkDKcvL5VmST44rOBrR7X5wst/S0dg=;
+	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
+	 MIME-Version:Content-Type; b=Navb250ng3uNcahjayQRaiMQG/ck+Xy1EeNOeXDcb3GfTEh9xgzb1QuygJL7EAGLaUnIYJj0yD3CMwp2GFXoNGdPoLTzIHjseEVMEr7S8czmYrUTARb2x9rD5YY6gMivx+fshZR++s+CjpIzQbz1cEy0Xm/9nOssAbSneMgBGNU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=narfation.org; spf=pass smtp.mailfrom=narfation.org; dkim=pass (1024-bit key) header.d=narfation.org header.i=@narfation.org header.b=IO2Dej4j; arc=none smtp.client-ip=213.160.73.56
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=narfation.org
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=narfation.org
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linux.dev header.i=@linux.dev header.b="oPhkfvP0"
-Message-ID: <fc9077f5-ec68-43d9-a874-c110e38b2530@linux.dev>
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linux.dev; s=key1;
-	t=1780476197;
+	dkim=pass (1024-bit key) header.d=narfation.org header.i=@narfation.org header.b="IO2Dej4j"
+Received: by dvalin.narfation.org (Postfix) id D8D672023F;
+	Wed, 03 Jun 2026 09:02:25 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=narfation.org;
+	s=20121; t=1780477346;
 	h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
 	 to:to:cc:cc:mime-version:mime-version:content-type:content-type:
-	 content-transfer-encoding:content-transfer-encoding:
 	 in-reply-to:in-reply-to:references:references;
-	bh=SmtTBGssJBnFw/NUoGfjkfUe7XkUJMyaR/OPnVmUDg0=;
-	b=oPhkfvP0N/Cxa9Rh4GvRJf401qh6UGMeuT57y2jlP5N7U4fqZwsGHqVzkGUxA5nTNkkEmr
-	V8llpMakmz5ojzIeScDuk2z4sUjO/q/CQ1D/cs0XRVsQDN4CqDdtnn9Ypzy+uqRNlTYzla
-	qQ0NJN11dCO8GxNzJQ3Ru0jNf23iDF0=
-Date: Wed, 3 Jun 2026 16:42:30 +0800
+	bh=K0GOSa7pR1jJR5EBKpCSaPddlA99w+oFdD0eiBfewGU=;
+	b=IO2Dej4jiDjYqggV8MHOmM3Ky1qiwgZLzy3Byeso0dLqda/EQKjzepBnA22QpjdMEd1vqR
+	5BcvBBF83MqRErYFzzTIi+kSINaZYgrc78FwKF0MD5eUV2/30oPBRbNVp02nZcuG5NkVNw
+	o/GJ+mc6QhDcRp3vlNfJZTDynU6mMv4=
+From: Sven Eckelmann <sven@narfation.org>
+To: sashiko-reviews@lists.linux.dev
+Cc: sw@simonwunderlich.de, marek.lindner@mailbox.org, antonio@mandelbit.com,
+ b.a.t.m.a.n@lists.open-mesh.org
+Subject:
+ Re: [PATCH batadv 3/3] batman-adv: use GFP_KERNEL allocations for the wifi
+ detection cache
+Date: Wed, 03 Jun 2026 11:02:23 +0200
+Message-ID: <2275479.Mh6RI2rZIc@ripper>
+In-Reply-To: <20260603045118.0625E1F00893@smtp.kernel.org>
+References:
+ <20260603-wifi-cache-cleanup-v1-3-d5ed08075c96@narfation.org>
+ <20260603045118.0625E1F00893@smtp.kernel.org>
 Precedence: bulk
 X-Mailing-List: sashiko-reviews@lists.linux.dev
 List-Id: <sashiko-reviews.lists.linux.dev>
 List-Subscribe: <mailto:sashiko-reviews+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:sashiko-reviews+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Subject: Re: [PATCH] bpf: Clear rb node linkage when freeing bpf_rb_root
+Content-Type: multipart/signed; boundary="nextPart3760743.R56niFO833";
+ micalg="pgp-sha512"; protocol="application/pgp-signature"
+
+--nextPart3760743.R56niFO833
+Content-Transfer-Encoding: 7Bit
+Content-Type: text/plain; charset="utf-8"; protected-headers="v1"
+From: Sven Eckelmann <sven@narfation.org>
 To: sashiko-reviews@lists.linux.dev
-Cc: bpf@vger.kernel.org, ast@kernel.org, daniel@iogearbox.net,
- andrii@kernel.org, martin.lau@linux.dev, eddyz87@gmail.com,
- memxor@gmail.com, song@kernel.org, yonghong.song@linux.dev,
- jolsa@kernel.org, davemarchevsky@fb.com, linux-kernel@vger.kernel.org,
- chengkaitao@kylinos.cn, martin.lau@kernel.org, clm@meta.com,
- ihor.solodrai@linux.dev
-References: <20260601055859.13888-1-kaitao.cheng@linux.dev>
- <20260601061503.EFD881F00898@smtp.kernel.org>
-X-Report-Abuse: Please report any abuse attempt to abuse@migadu.com and include these headers.
-From: Kaitao Cheng <kaitao.cheng@linux.dev>
-In-Reply-To: <20260601061503.EFD881F00898@smtp.kernel.org>
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8bit
-X-Migadu-Flow: FLOW_OUT
+Date: Wed, 03 Jun 2026 11:02:23 +0200
+Message-ID: <2275479.Mh6RI2rZIc@ripper>
+In-Reply-To: <20260603045118.0625E1F00893@smtp.kernel.org>
+MIME-Version: 1.0
 
-在 2026/6/1 14:15, sashiko-bot@kernel.org 写道:
-> Thank you for your contribution! Sashiko AI review found 2 potential issue(s) to consider:
-> 
-> New issues:
-> - [High] Unbounded O(N) red-black tree traversal inside an IRQ-disabled spinlock critical section introduces latency spikes, potential soft/hard lockups, and deadlocks.
-> 
-> Pre-existing issues:
-> - [High] Nodes added to a deleted map element's rbtree after `bpf_obj_free_fields` are permanently leaked.
-> --
-> 
-> commit 867fefb5dd2755c5bd12c9f3bd37d5367c6793f3
-> Author: Kaitao Cheng <chengkaitao@kylinos.cn>
-> 
-> bpf: Clear rb node linkage when freeing bpf_rb_root
-> 
-> This commit modifies bpf_rb_root_free to clear red-black node linkage when
-> freeing a root. It mirrors list draining behavior by marking nodes as busy
-> while detaching the root, clearing the linkage, and releasing the owner
-> before dropping the containing object.
-> 
->> diff --git a/kernel/bpf/helpers.c b/kernel/bpf/helpers.c
->> index b5314c9fed3cf..c7f26336984f0 100644
->> --- a/kernel/bpf/helpers.c
->> +++ b/kernel/bpf/helpers.c
->> @@ -2296,22 +2296,30 @@ void bpf_rb_root_free(const struct btf_field *field, void *rb_root,
->>  {
->>  	struct rb_root_cached orig_root, *root = rb_root;
->>  	struct rb_node *pos, *n;
->> -	void *obj;
->>  
->>  	BUILD_BUG_ON(sizeof(struct rb_root_cached) > sizeof(struct bpf_rb_root));
->>  	BUILD_BUG_ON(__alignof__(struct rb_root_cached) > __alignof__(struct bpf_rb_root));
->>  
->>  	__bpf_spin_lock_irqsave(spin_lock);
->>  	orig_root = *root;
->> +	bpf_rbtree_postorder_for_each_entry_safe(pos, n, &orig_root.rb_root) {
->> +		struct bpf_rb_node_kern *node;
->> +
->> +		node = rb_entry(pos, struct bpf_rb_node_kern, rb_node);
->> +		WRITE_ONCE(node->owner, BPF_PTR_POISON);
->> +	}
-> 
+On Wednesday, 3 June 2026 06:51:17 CEST sashiko-bot@kernel.org wrote:
 > [Severity: High]
-> Since there is no verifier-enforced limit on the number of nodes in a BPF
-> rbtree, could this O(N) post-order traversal trigger latency spikes, RCU
-> stalls, or NMI watchdog lockups?
+> This isn't a bug introduced by this patch, but while looking at the
+> rhashtable usage in this file, I noticed that rhashtable_lookup_fast() is
+> called without rcu_read_lock() in batadv_wifi_net_device_update():
 > 
-> This loop runs inside the __bpf_spin_lock_irqsave() critical section, which
-> disables local interrupts.
-
-The critical sections protected by the bpf_spin_lock are very small.
-They only do simple pointer/value assignments and do not perform
-any expensive operation, so I do not think they should introduce
-noticeable latency by themselves.
-
-> Additionally, since rb_first_postorder() and rb_next_postorder() are
-> exported and traceable, if an fentry/fexit BPF program is attached to them
-> and attempts to acquire the same bpf_spin_lock, will it cause a hard deadlock?
-
-I am not entirely sure whether this needs to be changed. I would like
-to hear others' opinions on this. If we do want to avoid calling
-rb_first_postorder()/rb_next_postorder() here, the straightforward
-fix would be to duplicate these two helpers with exactly the same
-implementation but under different names, and use the renamed versions
-locally. That feels somewhat redundant to me, though.
-
->>  	*root = RB_ROOT_CACHED;
->>  	__bpf_spin_unlock_irqrestore(spin_lock);
+> net/batman-adv/hard-interface.c:batadv_wifi_net_device_update() {
+> ...
+>         wifi_flags = batadv_wifi_flags_evaluate(net_dev);
+>         device_state = rhashtable_lookup_fast(&batadv_wifi_net_devices,
+>                                               &net_dev,
+>                                               batadv_wifi_net_devices_params);
+> ...
+> }
 > 
-> [Severity: High]
-> This isn't a bug introduced by this patch, but does this pattern permanently
-> leak memory if a concurrent BPF program adds a node after the tree is emptied?
+> And similarly in batadv_wifi_net_device_unregister():
 > 
-> When a map element is replaced or deleted, bpf_obj_free_fields() detaches
-> the tree here and sets *root = RB_ROOT_CACHED. However, a concurrent BPF
-> program running inside an RCU critical section might still hold a pointer
-> to the map element.
+> net/batman-adv/hard-interface.c:batadv_wifi_net_device_unregister() {
+> ...
+>         device_state = rhashtable_lookup_fast(&batadv_wifi_net_devices,
+>                                               &net_dev,
+>                                               batadv_wifi_net_devices_params);
+> ...
+> }
 > 
-> If that program takes the spinlock and calls bpf_rbtree_add(), it will
-> successfully add a new node to the now-emptied tree.
+> Can this lead to a use-after-free on the bucket array?
 > 
-> After the RCU grace period ends, bpf_mem_free_rcu() frees the map element,
-> but bpf_obj_free_fields() is never called again. Will the newly added node
-> be left behind and leaked?
+> Since batadv_wifi_net_devices is initialized with automatic_shrinking = true,
+> it can be asynchronously resized by a background worker at any time. This
+> worker frees the old bucket array via kfree_rcu(). Without an active RCU
+> read-side critical section, couldn't the RCU grace period end while
+> rhashtable_lookup_fast() is still iterating?
 
-This looks like a more general pre-existing issue. I am not sure whether
-we should fix it in this series, and would like to hear others' opinions.
+Would be nice if someone else can double check this. But this doesn't seem to 
+be valid:
 
-If we do want to fix it here, maybe we need to distinguish map_free/delete
-from in-place map_update. For map_free/delete, a concurrent bpf_rbtree_add()
-after the tree is detached should fail and drop the node. For in-place
-map_update, the root should still be reset so that it remains usable.
+static __always_inline void *rhashtable_lookup_fast(
+	struct rhashtable *ht, const void *key,
+	const struct rhashtable_params params)
+{
+	void *obj;
 
--- 
-Thanks
-Kaitao Cheng
+	rcu_read_lock();
+	obj = rhashtable_lookup(ht, key, params);
+	rcu_read_unlock();
+
+	return obj;
+}
+
+So, rhashtable_lookup_fast() takes rcu_read_lock() itself. And the returned obj 
+cannot be freed because all functions mentioned here are protected by the 
+rtnl_lock().
+
+We are therefore also fulfilling the requirement from the 
+rhashtable_lookup_fast comment:
+
+ * Only use this function when you have other mechanisms guaranteeing
+ * that the object won't go away after the RCU read lock is released.
+
+Regards,
+	Sven
+
+
+--nextPart3760743.R56niFO833
+Content-Type: application/pgp-signature; name="signature.asc"
+Content-Description: This is a digitally signed message part.
+Content-Transfer-Encoding: 7Bit
+
+-----BEGIN PGP SIGNATURE-----
+
+iHUEABYKAB0WIQS81G/PswftH/OW8cVND3cr0xT1ywUCah/tnwAKCRBND3cr0xT1
+y8ZzAP9vEh68cW1+QPtnKyDD9MMkyFWwasYaKYcXBTLuiIysuAD/Sju84BZx5nyk
+qg4Z7ALt19w7SiOWotndBC/9ROpIMwU=
+=Vaaz
+-----END PGP SIGNATURE-----
+
+--nextPart3760743.R56niFO833--
+
+
 
