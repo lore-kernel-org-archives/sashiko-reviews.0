@@ -1,245 +1,278 @@
-Received: from mx0a-0031df01.pphosted.com (mx0a-0031df01.pphosted.com [205.220.168.131])
+Received: from MW6PR02CU001.outbound.protection.outlook.com (mail-westus2azon11012062.outbound.protection.outlook.com [52.101.48.62])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3662035F5FB
-	for <sashiko-reviews@lists.linux.dev>; Tue,  2 Jun 2026 23:49:38 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.168.131
-ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1780444179; cv=none; b=qkMi9BmEUPlAgrQUYg9wQcvuSkEtbTwHs0C7/i4QBD8smXzUY48N4H420QXpLH3QKXH4yobPiHZED018nOo1XVWZt2UBcxCG6q2Y2KzIFDNbDGG2NSuGYCHOB8RQP9kadEXdPUoPjN3OKfAw7Pm5PjNcSI403+0vVEOBK7j9L8k=
-ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1780444179; c=relaxed/simple;
-	bh=PP4Ab7q7bBhZBforAUmhfQA46fPz+szxQvwSCoQNmMI=;
-	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=R648DAilaQilfTA/aTNUO71OYdqgOevnONSfz6VaTJJVQ3badFQD3ripCy3MLVVBCvmLF/up6h5Wd8I7eJHSXJW9Ad79Y8asgDEazwmvYYiQnF+j1aCEAA6yaOUo8dA7j6qPT6qMNZhpRHurS4ZRJYeJAOeJbYEsEcYg/7Uqduc=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com; spf=pass smtp.mailfrom=oss.qualcomm.com; dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b=poLfBzV0; dkim=pass (2048-bit key) header.d=oss.qualcomm.com header.i=@oss.qualcomm.com header.b=iho6Cb1+; arc=none smtp.client-ip=205.220.168.131
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=oss.qualcomm.com
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4AD7130C17D;
+	Wed,  3 Jun 2026 01:14:58 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=fail smtp.client-ip=52.101.48.62
+ARC-Seal:i=2; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
+	t=1780449299; cv=fail; b=Abp4lcK4qHGCtHSSqqEo749lU/nZqrtk070H1aJD1YBboktLysS24gCASh4F8qqFrW1PTD6g8q2mCEb998loeqtbMobSnSTdPJiJbWc6KG38gUZC0R2aN6uBdwCsSDg8V+SIjtpzRltemEJKa05V6/Lxqwzy72ykyPOHsZbzZkA=
+ARC-Message-Signature:i=2; a=rsa-sha256; d=subspace.kernel.org;
+	s=arc-20240116; t=1780449299; c=relaxed/simple;
+	bh=AtZBcJPo4XP+iMX8jtYXO1L6YHt5ZqFUS2aUlSdpqkw=;
+	h=Content-Type:Date:Message-Id:To:Cc:Subject:From:References:
+	 In-Reply-To:MIME-Version; b=MX8ptHgSlsS4QHIpBsGL1BK94eomN2yphG0P7IO24Q8aE6ZPQBm0txpmSfc3qS0NynIZ7pQ/W44uHZUqsAmXZzxplomHyvVTTQOpfAw6tYx0wUNuDQ/Kr6+UzW+mR2ZUZvmMMwrEgSg6xnJgkt+6yuMenh1bSrrmMocQHgIal5I=
+ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=nvidia.com; spf=fail smtp.mailfrom=nvidia.com; dkim=pass (2048-bit key) header.d=Nvidia.com header.i=@Nvidia.com header.b=OxpkJqMF; arc=fail smtp.client-ip=52.101.48.62
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=nvidia.com
+Authentication-Results: smtp.subspace.kernel.org; spf=fail smtp.mailfrom=nvidia.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b="poLfBzV0";
-	dkim=pass (2048-bit key) header.d=oss.qualcomm.com header.i=@oss.qualcomm.com header.b="iho6Cb1+"
-Received: from pps.filterd (m0279865.ppops.net [127.0.0.1])
-	by mx0a-0031df01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id 652ExfUG3430929
-	for <sashiko-reviews@lists.linux.dev>; Tue, 2 Jun 2026 23:49:37 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=qualcomm.com; h=
-	cc:content-transfer-encoding:content-type:date:from:in-reply-to
-	:message-id:mime-version:references:subject:to; s=qcppdkim1; bh=
-	cd9Ab75Rf14GfPrJvi6fhohIldOnPDctgt3FNkxUhC8=; b=poLfBzV04IZsVhrS
-	XamRq4LLahGtNtLNrLxWrtzRuKPZ4wfGUlX/rVsO4OS4EuJcpMl3g4D9RiVGOfiB
-	AlgfRN8E1o5AbtV6DEj1Ij0CrB7y/H8qm4NY5DkbrMPv75Za3TBHai9Sk4bOY/ug
-	cx7uhFOZXXEy/bVyIl1gwQCcTgCoSDsfIv4/S3jno/UEgbqxZHyfs97AkVC1+sW+
-	5jg8135YlYGFvRYHsfhDBq9xdPpw1eOZffcSxEoWXJLyINmjl9Gu0UKYvJd2L6BZ
-	Y7KYPpr54Np5IbVUredYU75TLr9DdWVkkbUREId8uNkc6oIGl+kB/iqAycQp+IAq
-	LcFDRQ==
-Received: from mail-dy1-f199.google.com (mail-dy1-f199.google.com [74.125.82.199])
-	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 4ehn8mn7b2-1
-	(version=TLSv1.3 cipher=TLS_AES_128_GCM_SHA256 bits=128 verify=NOT)
-	for <sashiko-reviews@lists.linux.dev>; Tue, 02 Jun 2026 23:49:37 +0000 (GMT)
-Received: by mail-dy1-f199.google.com with SMTP id 5a478bee46e88-304ea1eea05so14606585eec.0
-        for <sashiko-reviews@lists.linux.dev>; Tue, 02 Jun 2026 16:49:37 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=oss.qualcomm.com; s=google; t=1780444177; x=1781048977; darn=lists.linux.dev;
-        h=content-transfer-encoding:in-reply-to:from:content-language
-         :references:cc:to:subject:user-agent:mime-version:date:message-id
-         :from:to:cc:subject:date:message-id:reply-to;
-        bh=cd9Ab75Rf14GfPrJvi6fhohIldOnPDctgt3FNkxUhC8=;
-        b=iho6Cb1+XSBmZkXAS0jf8k8OpVZzmr17yozLB8BVyAvn1BniBT0mGgO0GnNwAnWCcF
-         WgNhMUiIYCxExP4+bNFaJUeQTZ7Z7CHlAtG/jyEHmYEdJBRi0Luzz2xfz9oE/1PrJDnW
-         2smSIl/SVDmSEy3qMErUQRj9gPS2VvC7lmYI8YPObAgOzJk3sOUFQIPoJIMlqZEukC3n
-         7O1codx9aGDYQLBgfHealy5ZGeqkW7eaXPwGencG5Lp37dTFwc8O2mp6iN5SNooyrCac
-         Mi/kEUDjP1MHyONMBo+CkQsnxye2lSmel2dadSTXSvrmN0+EuEdtkifHqAlR9ciKmlSH
-         B67w==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20251104; t=1780444177; x=1781048977;
-        h=content-transfer-encoding:in-reply-to:from:content-language
-         :references:cc:to:subject:user-agent:mime-version:date:message-id
-         :x-gm-gg:x-gm-message-state:from:to:cc:subject:date:message-id
-         :reply-to;
-        bh=cd9Ab75Rf14GfPrJvi6fhohIldOnPDctgt3FNkxUhC8=;
-        b=JIoMGVvb+HmnpSj7SznSz4cLzACU6aw68ULL1UUr5BHj2XThRbsoR8yBsdWuEWJ+Me
-         tn1r1ylMRJ1tHt1in4oJleWYagQGIXdVOfq/c7AMJIcNCMNKRfRckntid630Vfkvd4bd
-         MNvvr+TjXEyUVFfVVXVMOOBLvmcmwSlo5eIN9mQHOBR99SrBBRTNiBgHMQAm9a7fIDlj
-         Mkgdj3VhH9t8ggT3OcdslEDTTMnukW1QrOWB+5IVjMtOkhElU6s0EDAT7wFg8VzsWJ0d
-         sPgGO8GZQ4hc0uouEQ7YnxQasJamuoHipX5kwx34MtcUbKIX5Rr5lBXzgUyHVaA5l59J
-         ReOw==
-X-Gm-Message-State: AOJu0Yx/dSxsAJoZyjCxKB+93a423HqRRl6+KFnNpAcFwLl0CpQV5LRd
-	F+4ssX7fOEzRX9QX3skwE3brq0yFBA8aLxlgfqe46XH8oEbUsJ3YFvKbwTCNxSJ4BPEk8GEhRuQ
-	lZtEWEPi7BLJ0HR5waZ24c9g9HQzFQjbG1kLIGrZ4SzmQrlG6YQe3cDTB7SvYuVPZle50cfhO4T
-	rgQmY=
-X-Gm-Gg: Acq92OGSY88/Bj6ty/prVT3LH1Mk+r9ITyi+RzzMDwXlL5Q6whQUk32aaaa9yGXeWH4
-	E1+Jj9pkRTLm9wFyhiOe11WKo6++vvCTsf2i6yHeKx9Z0JsyEuAiGsGzBXLDeHlDHb54rjc4o7l
-	Yfmhl886Y9bf0Ipduh89B3F6moLdtXO5Sdo98FatjmRy7OU3dK3HVLI6lM0L/mtF1e2CnPpGMJT
-	FsIFqJxHYFvArDrAnU+4DdcNs1ISa7m2tgfZmJ5/XlSggaEvHJj2cHs9wVO0O6U+bV0gh8xVZBm
-	LtQyETUM5nHauo+DQuCDEQj1O34zz6MLu3ev1wg26EYeqGZu62lqRgUtzWyfF/TmX5Ol3CX5D/Z
-	iH/0VFQs3HwcHUG4v0L/kJnKCyKdXkqpPBRM0Hgw0emjHv1vZ0ZqQxrd6tpN3+v1+cLfXo3FaO2
-	LMVzcBpEXiZAE=
-X-Received: by 2002:a05:7300:7483:b0:304:eaa8:11ea with SMTP id 5a478bee46e88-3074fcaa2bcmr580434eec.34.1780444176613;
-        Tue, 02 Jun 2026 16:49:36 -0700 (PDT)
-X-Received: by 2002:a05:7300:7483:b0:304:eaa8:11ea with SMTP id 5a478bee46e88-3074fcaa2bcmr580416eec.34.1780444176064;
-        Tue, 02 Jun 2026 16:49:36 -0700 (PDT)
-Received: from [10.62.37.26] (i-global254.qualcomm.com. [199.106.103.254])
-        by smtp.gmail.com with ESMTPSA id 5a478bee46e88-3074dcbe995sm1153763eec.13.2026.06.02.16.49.35
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Tue, 02 Jun 2026 16:49:35 -0700 (PDT)
-Message-ID: <cabea216-23ad-48dd-aa75-47c9708afdbf@oss.qualcomm.com>
-Date: Tue, 2 Jun 2026 16:49:34 -0700
+	dkim=pass (2048-bit key) header.d=Nvidia.com header.i=@Nvidia.com header.b="OxpkJqMF"
+ARC-Seal: i=1; a=rsa-sha256; s=arcselector10001; d=microsoft.com; cv=none;
+ b=LBOPRn2VSVcLhEPW/5WuzYRS5H0ZTfnRnxTUPoJN1J7NiUwJ9fl5jbd1GLzXRFQcJpaF8WKEHtMr6CsrMXEdiCvrunm8rFCesnBpU8CZKDzhwis00dJnAs2YFRNTiw8bEiF5PtuL/B8lEbIpFrzHKeD7XeHABu8mgrBF6dFNGsug8KdXt7TLTMhzOzDP7Rm/rw7Lg/ZG10bGhxMqWmyMu1tb4dCekkCoYfqrhWZyG9bcO329JNDdxoyaqO8c47BLQzO56M2+4UjE8BN5camVXY7SXOkgPYi7JgDXs41/odxdHa7wsClGeseGGc1jgxm7kEqkRu+8df3vgJ0e3WCP4w==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com;
+ s=arcselector10001;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
+ bh=73MtpaAfdgn7L2b73+Ju+38ksLpXv0Dt8/kObuJO5fA=;
+ b=Sqc1o2CuDzIimvWTqwHjJsRKznwSjgtSvG6J4tqMQmMwgBjw+9jlGcI032YgEy5FpBn0kSFpPpAlZKVux3d3QL/iZWuY71e374PWPPAAHmjPdpS0xzH1Bd+eaGwc9Rie/ZYHUqRVNPrFl7pbU/gfmihdJRv6sg9yMXpHby2tgGpaqugCYPldoqSIcPqO1tdEZ2yAM38UdI1rQbedvZQBSVcQC6KUo1oF5SQr4ibK1xAO7ZoT9j9HTW6xp3I3fOjwP3s/QF2OhNKMHT8z93if35O5ACxIShNMYGMjUyqgcIXXUcn58Lv5tBRzKvVTnE8ci5YTqJK5O7Z6rO/U9mVxrw==
+ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
+ smtp.mailfrom=nvidia.com; dmarc=pass action=none header.from=nvidia.com;
+ dkim=pass header.d=nvidia.com; arc=none
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=Nvidia.com;
+ s=selector2;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
+ bh=73MtpaAfdgn7L2b73+Ju+38ksLpXv0Dt8/kObuJO5fA=;
+ b=OxpkJqMFOIe9IWJDrFl7vO/aXddPXb+m9GpnKY+mox4LhzwfPrQfPTEzrb4voS66R5HBnBCaeF3X6Px3/q/IjvLM05ctwGfUHhHpaV2eQmDQL7ZZ1m4ZwSTRhslczP/SJF+lBF/Oo52D5PeFtehJwy5Kqb4xo02AEjh89P/Ju/ZzFRJOSgkEnLB0ZrSJz/nUqQP2i4E6WSKywvHW4XZUrDMeWSon4ekvz44zcMevKFZprTzM6gJeVatjivutb2q8yfrg927bqKg5YeVAkQ6FZnrU7GfAIwRjl9fJ1H5Gb2iTeuap9ahu6csK4ZtJDEccEZnx1zzsPY4cyx2wrSY9xQ==
+Authentication-Results: dkim=none (message not signed)
+ header.d=none;dmarc=none action=none header.from=nvidia.com;
+Received: from CH2PR12MB3990.namprd12.prod.outlook.com (2603:10b6:610:28::18)
+ by PH7PR12MB6635.namprd12.prod.outlook.com (2603:10b6:510:210::16) with
+ Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.21.92.7; Wed, 3 Jun 2026
+ 01:14:53 +0000
+Received: from CH2PR12MB3990.namprd12.prod.outlook.com
+ ([fe80::7de1:4fe5:8ead:5989]) by CH2PR12MB3990.namprd12.prod.outlook.com
+ ([fe80::7de1:4fe5:8ead:5989%4]) with mapi id 15.21.0092.006; Wed, 3 Jun 2026
+ 01:14:52 +0000
+Content-Transfer-Encoding: quoted-printable
+Content-Type: text/plain; charset=UTF-8
+Date: Wed, 03 Jun 2026 10:14:48 +0900
+Message-Id: <DIZ0LJNPWG9L.1WJCBXNFIUU1V@nvidia.com>
+To: <sashiko-bot@kernel.org>
+Cc: <sashiko-reviews@lists.linux.dev>, "Danilo Krummrich" <dakr@kernel.org>,
+ "John Hubbard" <jhubbard@nvidia.com>, "Simona Vetter" <simona@ffwll.ch>,
+ "Benno Lossin" <lossin@kernel.org>, "Bjorn Helgaas" <bhelgaas@google.com>,
+ "Trevor Gross" <tmgross@umich.edu>, "Eliot Courtney"
+ <ecourtney@nvidia.com>, =?utf-8?q?Bj=C3=B6rn_Roy_Baron?=
+ <bjorn3_gh@protonmail.com>, "Timur Tabi" <ttabi@nvidia.com>, "Shashank
+ Sharma" <shashanks@nvidia.com>, "Zhi Wang" <zhiw@nvidia.com>, "Boqun Feng"
+ <boqun.feng@gmail.com>, "Alistair Popple" <apopple@nvidia.com>, "Gary Guo"
+ <gary@garyguo.net>, "Andreas Hindborg" <a.hindborg@kernel.org>, "Alex
+ Gaynor" <alex.gaynor@gmail.com>, "Alice Ryhl" <aliceryhl@google.com>,
+ "Miguel Ojeda" <ojeda@kernel.org>, "David Airlie" <airlied@gmail.com>,
+ <nova-gpu@lists.linux.dev>, "LKML" <linux-kernel@vger.kernel.org>
+Subject: Re: [PATCH v12 15/22] gpu: nova-core: Hopper/Blackwell: add FSP
+ message infrastructure
+From: "Alexandre Courbot" <acourbot@nvidia.com>
+References: <20260602032111.224790-16-jhubbard@nvidia.com>
+ <20260602033358.5F2B71F00893@smtp.kernel.org>
+In-Reply-To: <20260602033358.5F2B71F00893@smtp.kernel.org>
+X-ClientProxiedBy: TYCP286CA0242.JPNP286.PROD.OUTLOOK.COM
+ (2603:1096:400:456::9) To CH2PR12MB3990.namprd12.prod.outlook.com
+ (2603:10b6:610:28::18)
 Precedence: bulk
 X-Mailing-List: sashiko-reviews@lists.linux.dev
 List-Id: <sashiko-reviews.lists.linux.dev>
 List-Subscribe: <mailto:sashiko-reviews+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:sashiko-reviews+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v14 5/5] media: qcom: camss: vfe: Add support for VFE gen4
-To: sashiko-reviews@lists.linux.dev,
-        Hangxiang Ma <hangxiang.ma@oss.qualcomm.com>
-Cc: conor+dt@kernel.org, linux-media@vger.kernel.org,
-        devicetree@vger.kernel.org, robh@kernel.org
-References: <20260601-kaanapali-camss-v14-5-e76f26aa6691@oss.qualcomm.com>
- <20260601164403.8CE831F00893@smtp.kernel.org>
-Content-Language: en-US
-From: Vijay Kumar Tumati <vijay.tumati@oss.qualcomm.com>
-In-Reply-To: <20260601164403.8CE831F00893@smtp.kernel.org>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
-X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwNjAyMDIzMiBTYWx0ZWRfXxSw+q0f9YeWc
- irjCR/1mkkuKf9b8v1qJDG+2VGwzcd5vVEMnM8x+Qoxrd0Soo1jA4ApKMaQcSeRBherI9XFA3lJ
- ovhWfAHG3EexaH/qA38qCyahqMkDnRvGb9X4+COKvM0Ip8y9ljJEkM/cpSWo+nOsQrY6JOKhpSA
- eTlYXAWW4Toyi3FE3afzU7k9pBaiqurzvkzZVe4USt5hH5ol1lmgiJlThNkclCMo8SmuCgT+vA8
- zF5vvWIDjm95wTosvAbtTzHTnqr7wXsvP0gdPW8sWq9Gj75ugAXjTPlzcZqpKTbGkgV7CBKSAP/
- 0KZIORx17kg7DoXaFMSpm/Y9jTml6tqKWMYaDHTe16G/d8KDDaafo4dQWXT3clQPCkXApgJhgRK
- Rg3G5fSYzHabhwxqoUKmfUCpsatKV1cArmXKBGI6F15ce2GemEV+5pmAw0nqgTTRUDyf3AXJPJi
- kEVq+y0EmeHb6j3jmNg==
-X-Authority-Analysis: v=2.4 cv=d5nFDxjE c=1 sm=1 tr=0 ts=6a1f6c11 cx=c_pps
- a=cFYjgdjTJScbgFmBucgdfQ==:117 a=JYp8KDb2vCoCEuGobkYCKw==:17
- a=IkcTkHD0fZMA:10 a=FelO9ux0wxsA:10 a=s4-Qcg_JpJYA:10
- a=VkNPw1HP01LnGYTKEx00:22 a=u7WPNUs3qKkmUXheDGA7:22 a=Um2Pa8k9VHT-vaBCBUpS:22
- a=VwQbUJbxAAAA:8 a=EUspDBNiAAAA:8 a=NFO_ntjReJqzzR5GOAAA:9 a=QEXdDO2ut3YA:10
- a=scEy_gLbYbu1JhEsrz4S:22
-X-Proofpoint-ORIG-GUID: ikrZ6wc4KflnrbPt3tRNc_hJe-90sVK_
-X-Proofpoint-GUID: ikrZ6wc4KflnrbPt3tRNc_hJe-90sVK_
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.293,Aquarius:18.0.1143,Hydra:6.1.125,FMLib:17.12.100.49
- definitions=2026-06-02_04,2026-05-28_03,2025-10-01_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
- priorityscore=1501 impostorscore=0 malwarescore=0 clxscore=1011 adultscore=0
- spamscore=0 lowpriorityscore=0 bulkscore=0 phishscore=0 suspectscore=0
- classifier=typeunknown authscore=0 authtc= authcc= route=outbound adjust=0
- reason=mlx scancount=1 engine=8.22.0-2605210000 definitions=main-2606020232
+X-MS-PublicTrafficType: Email
+X-MS-TrafficTypeDiagnostic: CH2PR12MB3990:EE_|PH7PR12MB6635:EE_
+X-MS-Office365-Filtering-Correlation-Id: 88c543af-c334-474e-08c1-08dec10d83a9
+X-MS-Exchange-SenderADCheck: 1
+X-MS-Exchange-AntiSpam-Relay: 0
+X-Microsoft-Antispam:
+	BCL:0;ARA:13230040|1800799024|7416014|376014|366016|10070799003|56012099006|4143699003|3023799007|11063799006|22082099003|18002099003;
+X-Microsoft-Antispam-Message-Info:
+	6zrCkqzZ5zBZlx42zo2fuoPpl+ZLBLN3a4V1SYLSJyQh0/Rp0fvvutznF9PJRWHrnGiFF/Jhq2TAztiMWR8XKC8r85BVtGb25I/3KeJrph5OVsD9GRNuxWUe2B7TLr0arkv4KVnobWm86khQy2I/Cxtxruo9FPs7JK9Zde4Mt0TLgGQDY+Se3OfD30pnllUpaDlJLxH9zARZAgf4TTKX1SdhTI9zJ2btu8n0qv1g2zdnm6RVIYJwNCxpR4glr7RJdlkIWmHqaoF2T14PnORLW7m/Cxzkc/wyIfMUF4h2hfv+J6TITpUI+0tDvGvVe+Qbxmj48nYHt6gpY9wXXSndoPrx2f9H+p7DvOZ0gy1zlQf1uCryNuBzKtv+jkaq0u/0sUgREiQplhM0x5foFyGua1c/u6n390MVNUtQb+h/OcYV5QJs/q7BVVfvGDLIuv78DnM89W0ETnpI4p5IirukWta/pMSDnRzsK2QzReqDIomjAnk25DJJ5FjTM/mUsWHQAq04JYtG3Y13HWS7wz4TzaQnajUBZuwfScH7yKKmtS+c6vzqMSHqHDr8OZjqKA30EtoFxFxM7YfFFGVwcUAOnUOx6o6AywLyyfMjBmXjUZ62CrpZclq4OTOLdCZmcbXFRQpFcLD3ui7Ttmhk7CYZ7XydbgC4LZgG2ruWRoAhaxHz7IcD9QDnFscfzrQ7W1Ud
+X-Forefront-Antispam-Report:
+	CIP:255.255.255.255;CTRY:;LANG:en;SCL:1;SRV:;IPV:NLI;SFV:NSPM;H:CH2PR12MB3990.namprd12.prod.outlook.com;PTR:;CAT:NONE;SFS:(13230040)(1800799024)(7416014)(376014)(366016)(10070799003)(56012099006)(4143699003)(3023799007)(11063799006)(22082099003)(18002099003);DIR:OUT;SFP:1101;
+X-MS-Exchange-AntiSpam-MessageData-ChunkCount: 2
+X-MS-Exchange-AntiSpam-MessageData-0:
+	=?utf-8?B?MWtkZ08xb0U5OGVLWDFlZ3JYMWk2U2JhM1R6RzlrMXgyaENiZExOQ1N6NlJZ?=
+ =?utf-8?B?YS81UFVPb2lXQTFjZ0hCUUtNa0U5WW85dC90SUdQM2hZbi9UWko5ZWZGb2Zu?=
+ =?utf-8?B?dE9Ha1lPUTNFMVJpSlZqd2hJUmV4aWZjaEdOOUFWWlR1V2hzTmNEZHNCdVdE?=
+ =?utf-8?B?eVd2V1Fldmt1cklsd1dlQ0kvcCtZRmZBV21DaHJ2czBqUXYzVVViRjh2TnRF?=
+ =?utf-8?B?eHl5UC84WWxUUnpqQjQxcWJsYVZIaFVDd1M0eUhCZ2czY3h0TFRVUVp6alhy?=
+ =?utf-8?B?em1NK1dFTUxJbUZSYkdwb3VrTkc2Q01YWGpJeUp1Wnh2KzRNQmd3bysrb2ZM?=
+ =?utf-8?B?a2gwTjJYaGRxZ2N2TmVnbjkwSTlOS01HSnlQSWp4bDl6M1VVSHBPZlQ1SHdK?=
+ =?utf-8?B?UFh2UnVseXl3aGg1VFI0bWQ5U3FMRWl3R1R6MUZxcDdieFVjdlY5OUVJUlRx?=
+ =?utf-8?B?cWJ6b1BhWTZ2QXY5QUVldXdwUlpPQmdYQ0svSXQzSFJOd0hVTFp6UTlSTjN3?=
+ =?utf-8?B?Z1YvbGdNT3BBby9XRzVvWUJtWm51cnY2ZGN4QnR1aDhrZ2M0bWY5MDI5Rllm?=
+ =?utf-8?B?OGJxY2V2dno1N0dtYlFuRGZXbTk0MURlMEdIbGw2bWVWWFRCWlRReEc3b3ZC?=
+ =?utf-8?B?ZXhwRnVCcnJzVHBxL0loZWsrRGtBOW9GWitJMndTOG5wakNRZm94YUw0c2hG?=
+ =?utf-8?B?cFhiNmRFU1B4N3ZocUJ3T1VpZmFxN2Y0M1FhRW9GTTdCMjB4NFhSa0JpWG53?=
+ =?utf-8?B?YVZreDd4bXUwaUIvN2R3b0lxWlNnb0VveFRTako0enZUeVNCNG9qaVZOSGlv?=
+ =?utf-8?B?STUzTEcxU2VOczdJZTlBMmtUMkVUbWtzcEZpYlNSTWY3c0JCSGt2ZURpajNY?=
+ =?utf-8?B?SFRPbTJhWjdFMGdPNkFaK1lyK216ZTRHMmx0Tm4zcW5IdWl6Wmd6V1RQRzJG?=
+ =?utf-8?B?NDlUZyt1MFdVMUpaSGRTSjExTmM3NVQ0NE1FdnV5QlpqQmI0NGRUNkl0MXFV?=
+ =?utf-8?B?WFRnRXl1TXA3MzVmcHduNDQ5eEV5Qkp4OXR5bEIvQmRIZlZyTkh1ZXdNdmk1?=
+ =?utf-8?B?V2UvYU1vdUJhR09NbFZNd3Nad21IclRSUGlDRDRoNHpiL0s5WFZsdnlORU1K?=
+ =?utf-8?B?My9DSmRuR245c2puUzV6OTJTWW5aalZpSmhSaG51WUpCSUNOSDF6c3UvWk14?=
+ =?utf-8?B?TDNBWU5XcTlNODhGUm5DZWJEVldWWGFQYWs1a1E3ek5LMWhUZSsxL3o5eXZj?=
+ =?utf-8?B?NnJ5azM3QWhFbHVaN2pudGFpY3BHU2ZpdldFL0lGRmI1eXYyb3hEeUlTOEFJ?=
+ =?utf-8?B?Y3BsVncwWDc1UmhWRXpDVm9WRTl6UWFjVHBIaHQ4VUhscnlETjNHUmQyeEtr?=
+ =?utf-8?B?K2JTZWFFYUpCVEtUVXk3VUlWRFBDaDBuSmxwQlN3RFJQTUhmQWlZRlZibERR?=
+ =?utf-8?B?M2tJUlhRM2hmaFJ1bzVpOXppelU3RlBzeEIwTDBibUlrVVIrZ0xGY2NiYWw0?=
+ =?utf-8?B?MmJ5YzQyQXIvV3VqOGNDeGFsUkc3UkRVeUdJV1hDbWR4MCtnQjdmRG5UZFMv?=
+ =?utf-8?B?VmFYK29aQktzMXRuOXR1dm42NGpBcjhrMXFnWHRNZ2JPZkJ3T2E0UTROYjhB?=
+ =?utf-8?B?WVNwTXhjdmttMmNjaWZQL29vTUMzRzFHZkp2c0xveTZ5bk5TK3UxZkRpZVRj?=
+ =?utf-8?B?THl2M0E4TjVUU3JFSjZTbXVXOWdGRWhFRTFUYlFOZnViRUxrbHk0Ukd4TnRL?=
+ =?utf-8?B?Uk5ZQUh4MGFGTVQyeGxPaHVZdUNjUElwUHM3WkxDcVRLeWE3MzZScFl3aU1B?=
+ =?utf-8?B?dTliUVpOUUNiaEN6UUQxcEJKcnN3TEpBNnJOcTZRSXh5b1ZkaFh6OHlvQ2FI?=
+ =?utf-8?B?R0RDL1FXRXJPd1hYREgxQkUrSiswRVBEczA3a1p6T0lrZytlOTZtdHl3ZC9S?=
+ =?utf-8?B?MDRvUWFsNWdQRVI2V3pteWptTFphS1hrMDVWYTJ2MHB2am4rcjZQZTdsR2Zu?=
+ =?utf-8?B?WmtCOHZGS3ZkYWhIYWJZcHM4bks0enF1eS9tNXlFc010K2UxVFc3VDFYM0l6?=
+ =?utf-8?B?bTk4MFZPRjJvVlNvZzljK0xKeVI1b3c2eFdCeVYxaUx6ZFoxeVdsblh3Q2pC?=
+ =?utf-8?B?dlg2d2ltTGtYZGdyeTFTQjF0VG00TnBLekdQaGxZWGNnTS9Lb0xyd3F2OUVY?=
+ =?utf-8?B?anpSendaN1g3RTVLeGtpcVNZeE9rRmxsVFlHcEZXNUFpbkNTK2dHR0dwYUdD?=
+ =?utf-8?B?NlRHd1ZZeFJWODdVK3R0UlBkRzlzVE9SWTYxbUVsQ2JqRmtndy9ia1ZQUFBk?=
+ =?utf-8?B?ZVFLVkpoek1jQkdINW9Ud3A2bTlSTzVyMGd4d0plcjRzYm92eUNnMUxoUUJK?=
+ =?utf-8?Q?X6rLlDPunYYQVEzvJsuZtgGENzwDvViAik77vH8m+Wl1p?=
+X-MS-Exchange-AntiSpam-MessageData-1: rlkybuGn0Y5mTg==
+X-OriginatorOrg: Nvidia.com
+X-MS-Exchange-CrossTenant-Network-Message-Id: 88c543af-c334-474e-08c1-08dec10d83a9
+X-MS-Exchange-CrossTenant-AuthSource: CH2PR12MB3990.namprd12.prod.outlook.com
+X-MS-Exchange-CrossTenant-AuthAs: Internal
+X-MS-Exchange-CrossTenant-OriginalArrivalTime: 03 Jun 2026 01:14:52.4085
+ (UTC)
+X-MS-Exchange-CrossTenant-FromEntityHeader: Hosted
+X-MS-Exchange-CrossTenant-Id: 43083d15-7273-40c1-b7db-39efd9ccc17a
+X-MS-Exchange-CrossTenant-MailboxType: HOSTED
+X-MS-Exchange-CrossTenant-UserPrincipalName: 0s+8IwVocyJEWazzs39nNeEIrpRtoARwUD2EZCdIwuKhg2azDWydTi9yhVGiZHsgAY3PYkpViB2qxGyqFMbpXQ==
+X-MS-Exchange-Transport-CrossTenantHeadersStamped: PH7PR12MB6635
 
-
-
-On 6/1/2026 9:44 AM, sashiko-bot@kernel.org wrote:
-> Thank you for your contribution! Sashiko AI review found 3 potential issue(s) to consider:
-> 
-> New issues:
-> - [High] Unconditional issue of `CAMSS_INIT_BUF_COUNT` AUP_UPDATEs in CSID stream configuration violates the Kaanapali hardware constraint, mismatching the actual number of enqueued VFE buffers.
-> 
-> Pre-existing issues:
-> - [High] Cross-linked VFE and CSID pipelines will write `reg_update` commands to the wrong CSID instance.
-> - [High] Concurrent read-modify-write of `csid->aup_update` and `csid->rup_update` across process and interrupt contexts without synchronization.
+On Tue Jun 2, 2026 at 12:33 PM JST, sashiko-bot wrote:
+> Thank you for your contribution! Sashiko AI review found 3 potential issu=
+e(s) to consider:
+> - [High] Race condition due to incorrect order of writing queue pointers =
+in `send_msg`.
+> - [High] Silent failure when sending a 4-byte message.
+> - [High] Unchecked integer addition in `poll_msgq` can cause a kernel pan=
+ic on untrusted MMIO reads.
 > --
-> 
-> commit 961118b5c346fbca24b27d8e33cf75e4120aa72e
-> Author: Hangxiang Ma <hangxiang.ma@oss.qualcomm.com>
-> 
-> media: qcom: camss: vfe: Add support for VFE gen4
-> 
-> Add Video Front End (VFE) version gen4 as found on the Kaanapali SoC.
-> The FULL front end modules in Kaanapali camera subsystem are called TFEs
-> (Thin Front End), however, retaining the name VFE at places to maintain
-> consistency and avoid unnecessary code changes.
-> 
->> diff --git a/drivers/media/platform/qcom/camss/camss-vfe-gen4.c b/drivers/media/platform/qcom/camss/camss-vfe-gen4.c
->> new file mode 100644
->> index 0000000000000..d73d70898710a
->> --- /dev/null
->> +++ b/drivers/media/platform/qcom/camss/camss-vfe-gen4.c
+>
+> commit 8a59b49984011320aa631b20a05550242e2baef2
+> Author: John Hubbard <jhubbard@nvidia.com>
+>
+> gpu: nova-core: Hopper/Blackwell: add FSP message infrastructure
+>
+> This commit adds the foundation security processor (FSP) message
+> infrastructure for the nova-core GPU driver. It implements queue
+> registers and low-level helpers to communicate with the FSP falcon's EMEM=
+.
+>
+>> diff --git a/drivers/gpu/nova-core/falcon/fsp.rs b/drivers/gpu/nova-core=
+/falcon/fsp.rs
+>> index 6b057d958115a..0ec1c55213bc8 100644
+>> --- a/drivers/gpu/nova-core/falcon/fsp.rs
+>> +++ b/drivers/gpu/nova-core/falcon/fsp.rs
 > [ ... ]
->> +static void vfe_reg_update(struct vfe_device *vfe, enum vfe_line_id line_id)
->> +{
->> +	int port_id = line_id;
+>> @@ -145,4 +143,63 @@ fn read_emem(&mut self, bar: &Bar0, offset: u32, da=
+ta: &mut [u8]) -> Result {
+>> =20
+>>          Ok(())
+>>      }
 >> +
->> +	camss_reg_update(vfe->camss, vfe->id, port_id, false);
->> +}
-> 
-> [Severity: High]
-> This isn't a bug introduced by this patch, but cross-linked VFE and CSID
-> pipelines will write reg_update commands to the wrong CSID instance.
-> 
-> When this callback executes to commit buffer addresses during runtime, it
-> passes vfe->id as the hw_id to camss_reg_update(). In camss_reg_update(), this
-> hw_id is used to index into the CSID array:
-> 
->      csid = &camss->csid[hw_id];
->      csid->res->hw_ops->reg_update(csid, port_id, is_clear);
-> 
-> If the media graph cross-links a CSID source pad to a mismatched VFE sink pad
-> (e.g., CSID 0 to VFE 1), the register update is erroneously dispatched to
-> CSID 1. Could this starve the active CSID of necessary buffer updates and
-> trigger an unclocked register access (and panic) if CSID 1 is powered off?
-> 
-> [Severity: High]
-> This is a pre-existing issue, but there appears to be a data race when updating
-> the CSID register bitmasks across process and interrupt contexts.
-> 
-> When userspace queues a buffer during an active stream, vfe_queue_buffer_v2()
-> runs in process context and delegates to __csid_aup_update() via this
-> reg_update callback. In __csid_aup_update(), a read-modify-write operation
-> is performed:
-> 
->      csid->aup_update |= CSID_RUP_AUP_RDI(port_id);
-> 
-> Concurrently, a hardware interrupt can fire on another CPU, executing
-> csid_isr() in hardirq context. This delegates to __csid_aup_rup_clear() which
-> modifies the exact same bitmask:
-> 
->      csid->aup_update &= ~CSID_RUP_AUP_RDI(port_id);
-> 
-> Because neither context acquires a shared lock to protect csid->aup_update,
-> can this data race silently corrupt the bitmask and cause hardware commands to
-> be dropped or repeatedly dispatched?
-> 
->> diff --git a/drivers/media/platform/qcom/camss/camss-vfe.c b/drivers/media/platform/qcom/camss/camss-vfe.c
->> index 319d191589884..826ab85a44a14 100644
->> --- a/drivers/media/platform/qcom/camss/camss-vfe.c
->> +++ b/drivers/media/platform/qcom/camss/camss-vfe.c
-> [ ... ]
->> @@ -552,7 +554,9 @@ int vfe_enable_output_v2(struct vfe_line *line)
->>   		output->gen2.active_num++;
->>   		ops->vfe_wm_update(vfe, output->wm_idx[0],
->>   				   output->buf[i]->addr[0], line);
->> -		ops->reg_update(vfe, line->id);
+>> +    /// Poll FSP for incoming data.
+>> +    ///
+>> +    /// Returns the size of available data in bytes, or 0 if no data is=
+ available.
+>> +    ///
+>> +    /// The FSP message queue is not circular. Pointers are reset to 0 =
+after each
+>> +    /// message exchange, so `tail >=3D head` is always true when data =
+is present.
+>> +    #[expect(dead_code)]
+>> +    pub(crate) fn poll_msgq(&self, bar: &Bar0) -> u32 {
+>> +        let head =3D bar.read(regs::NV_PFSP_MSGQ_HEAD).address();
+>> +        let tail =3D bar.read(regs::NV_PFSP_MSGQ_TAIL).address();
 >> +
->> +		if (!vfe->res->reg_update_after_csid_config)
->> +			ops->reg_update(vfe, line->id);
->>   	}
-> 
+>> +        if head =3D=3D tail {
+>> +            return 0;
+>> +        }
+>> +
+>> +        // TAIL points at last DWORD written, so add 4 to get total siz=
+e
+>> +        tail.saturating_sub(head) + 4
+>            ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+>
 > [Severity: High]
-> The commit message documents a Kaanapali hardware constraint: "the number of
-> AUP_UPDATEs should match the number of buffers enqueued to the write master
-> while it's being enabled."
-> 
-> Here in vfe_enable_output_v2(), active_num is accurately populated based on
-> available buffers, but since reg_update_after_csid_config is true, the register
-> update is deferred to the CSID.
-> 
-> However, csid_configure_stream() unconditionally loops CAMSS_INIT_BUF_COUNT
-> times:
-> 
-> for (k = 0; k < CAMSS_INIT_BUF_COUNT; k++)
->      __csid_aup_update(csid, i);
-> 
-> If userspace queues fewer than CAMSS_INIT_BUF_COUNT buffers (since
-> min_queued_buffers defaults to 0), this unconditional loop will violate the
-> hardware constraint. Does this mismatch instruct the hardware to ingest more
-> frames than there are configured buffer addresses, potentially causing the
-> hardware to process uninitialized memory or trigger IOMMU faults?
-This seems to be the only issue that is specific to this series here. To 
-answer this, we verified it and confirmed with the HW team as well that 
-it is not possible for the hardware to use random address to write data 
-to the memory just because an extra AUP is issued. It only takes effect 
-after the ADDR update is issued.
+> Can this unchecked addition panic if we encounter a PCIe link failure?
+>
+> If `head` reads normally as 0 but a surprise removal occurs before readin=
+g
+> `tail`, `tail` could read as 0xFFFFFFFF. The saturating subtraction would
+> leave 0xFFFFFFFF, and the subsequent `+ 4` will overflow, causing a panic=
+ in
+> debug builds where CONFIG_RUST_OVERFLOW_CHECKS=3Dy is set.
+>
+> Should this use `saturating_add(4)` or another form of checked math to ha=
+ndle
+> untrusted hardware inputs safely?
 
-Thanks,
-Vijay.>
+This is cheap to fix, and indeed probably a good idea.
 
+>
+>> +    }
+>> +
+>> +    /// Writes `packet` to FSP EMEM and updates the queue pointers to n=
+otify FSP.
+>> +    ///
+>> +    /// Returns `EINVAL` if `packet` is empty or its length is not 4-by=
+te aligned.
+>> +    #[expect(dead_code)]
+>> +    pub(crate) fn send_msg(&mut self, bar: &Bar0, packet: &[u8]) -> Res=
+ult {
+>> +        if packet.is_empty() {
+>> +            return Err(EINVAL);
+>> +        }
+>> +
+>> +        // Write message to EMEM at offset 0 (validates 4-byte alignmen=
+t)
+>> +        self.write_emem(bar, 0, packet)?;
+>> +
+>> +        // Update queue pointers. TAIL points at the last DWORD written=
+.
+>> +        let tail_offset =3D u32::try_from(packet.len() - 4).map_err(|_|=
+ EINVAL)?;
+>            ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+>
+> [Severity: High]
+> Does this create a silent failure if a 4-byte message is sent?
+>
+> If `packet.len()` is 4, `tail_offset` is calculated as 0. Both NV_PFSP_QU=
+EUE_HEAD
+> and NV_PFSP_QUEUE_TAIL will then be written as 0. Because the FSP protoco=
+l treats
+> `HEAD =3D=3D TAIL` as an empty queue, the FSP will ignore the message whi=
+le the
+> function still returns `Ok(())`.
+>
+> Should this enforce a minimum packet length of 8 bytes or return an error
+> for 4-byte messages?
+
+This one looks bogus (looks like the claim that `HEAD =3D=3D TAIL` means
+empty queue is hallucinated?).
+
+>
+>> +        bar.write_reg(regs::NV_PFSP_QUEUE_TAIL::zeroed().with_address(t=
+ail_offset));
+>> +        bar.write_reg(regs::NV_PFSP_QUEUE_HEAD::zeroed().with_address(0=
+));
+>            ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^=
+^^^
+>
+> [Severity: High]
+> Is there a race condition with the FSP hardware due to the order of these
+> writes?
+>
+> By writing NV_PFSP_QUEUE_TAIL before NV_PFSP_QUEUE_HEAD, if QUEUE_HEAD wa=
+s
+> non-zero from a prior transaction, we momentarily create a state where
+> `TAIL !=3D HEAD`. The FSP may wake up immediately and read from the old, =
+incorrect
+> QUEUE_HEAD offset before the driver can write 0 to QUEUE_HEAD.
+>
+> Should NV_PFSP_QUEUE_HEAD be initialized to 0 before writing the
+> NV_PFSP_QUEUE_TAIL doorbell?
+
+Here IIUC QUEUE_HEAD is always `0`, so this is a non-issue.
