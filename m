@@ -1,198 +1,144 @@
-Received: from MRWPR03CU001.outbound.protection.outlook.com (mail-francesouthazon11011036.outbound.protection.outlook.com [40.107.130.36])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-dl1-f54.google.com (mail-dl1-f54.google.com [74.125.82.54])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D67953CF058;
-	Wed,  3 Jun 2026 17:41:57 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=fail smtp.client-ip=40.107.130.36
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 288D931F986
+	for <sashiko-reviews@lists.linux.dev>; Wed,  3 Jun 2026 19:01:57 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=pass smtp.client-ip=74.125.82.54
 ARC-Seal:i=2; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1780508519; cv=fail; b=TLxJlX+Qo5tZt6Ib1TgXJ22hd8U7RHguidHocj4jH2Qytlcu0LNITz0gqgQv2mOAQmhTd4XqHYOPK70B10eF8/llACyekMehsNeJPoRMlZO4B6Wwbcwn3DVXFGZni8o7uTVDmOIoHTEoRp+bBxQv7Z3HN/naT/OMtHC5Hkq9qcc=
+	t=1780513318; cv=pass; b=SiNNptcDIpnH66m4OXmfj+aljflElXu5VgG3a5yxhm/EQGqINin8hSUSDrfITleeQqqJ1CBKnqOiDUoqMNLBsEjrzgTTMHx/BWs/gXl7WcUgwmlRQKF7lGTMDpbu0Rn/0kqySTTQP07UotptDBpEtXfGagTytLjDoA+hV5fB5/k=
 ARC-Message-Signature:i=2; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1780508519; c=relaxed/simple;
-	bh=epRNxFXNdOM99RUfHWdAG0Oxsxxkko+I8u2wSPJlHYI=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:Content-Type:
-	 Content-Disposition:In-Reply-To:MIME-Version; b=hc5juTI006sF2DFEkS/0lWEOrbwatKO38ASAfCmOEocHxrm/fl9vmo4vXFyWSMrYcTNSrPQG9hz+rJr3ZdA+Wiz6/Cflo64Nq6cnuwWYax+OZyO0hTuLer2LpsFPzz7JPJu60C6qF7NrELHscJJyC/E2vS43hsGUJA9jm2SvWXE=
-ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=nxp.com; spf=pass smtp.mailfrom=nxp.com; dkim=fail (2048-bit key) header.d=nxp.com header.i=@nxp.com header.b=jhej7Zzs reason="signature verification failed"; arc=fail smtp.client-ip=40.107.130.36
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=nxp.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=nxp.com
+	s=arc-20240116; t=1780513318; c=relaxed/simple;
+	bh=Xc5kcfMakf+nJeCEsm2n26H/r2PF//roHh+fh1kcMqM=;
+	h=From:In-Reply-To:References:MIME-Version:Date:Message-ID:Subject:
+	 To:Cc:Content-Type; b=CYRXB1C6Tq2Upolz9fDGS3Ur0rRHrPYpuqigodJx9ylhzOJjbxVpMmAuCgba1SGvuO8oKXLASE9XI9VDmra0z6ofRop8kFgEOb0sIYUO9Cfh9FIkhPkUSThtcTF05lzoJ9DnEFBpkzj2DmBYsFO+VXZmkovF5Q7BfpD7FUBVyPs=
+ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=google.com; spf=pass smtp.mailfrom=google.com; dkim=pass (2048-bit key) header.d=google.com header.i=@google.com header.b=jLpguWGu; arc=pass smtp.client-ip=74.125.82.54
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=google.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=google.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=fail reason="signature verification failed" (2048-bit key) header.d=nxp.com header.i=@nxp.com header.b="jhej7Zzs"
-ARC-Seal: i=1; a=rsa-sha256; s=arcselector10001; d=microsoft.com; cv=none;
- b=KaC4hszGNuu44ZTsm7qr7NKNlPKc9ZFehXadg4PFOSxeyiGiik77jpRSRBPOAiHy1XmCK/ILVmAxLyfNm6e9mR+JEFoho+5PjzNmmlefevPcWhwLW+J3AyDoQDlfPKUBOeIBbGw4H0gAi8kINMRrFay0IWnqU6//6XsqrJ7ad/9ID9SsOZWQXA2OBnM1/7Izqe7dOOPyzAa9mBCqpbmolyuLQTvYeIPKw5h/aVc7YZ1PA7J4+EYhdImiicLvXA7z+lR9yeocs8GmSyBsThwGK8dgIkkoC+IgWLmdZJZXUzT0kjaT57XRW1q8eli9qiUdy5g0WbHFD4BewKc2XYmEOA==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com;
- s=arcselector10001;
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
- bh=tehRoeauYin0xW30r0MX8tlKHvoTJMH/YJGLz53wW+E=;
- b=Lyv94esPpx38VX9PLU/L3swLeGBLB5Z9MBzrTBveiTDMcjAeJbBX19pKEcnkVdQ9SRijGC69ne/Tdw4W9xEivBFBbGhceSR4Xe+ElTFjUISjAmNHjnvq8+DjMTp8a2wXpQGl7kYHOwiCFTCxxTQHN1r4ImJ91fsopBAVTI7CfRe7VxA9QIwAU/YTRRORcrmpltnIKOiZzDMtyr+jXcXSgcZBOFszE7LLA89LRc7kAHp2BU09Hh20FmMgfrLR3PUnZOS0dNpTFatmEGDI1dsYn+Kv9ZEljO7ayllHFvCqH8O+EnFCenuvMQ6NjkQxE/TaQ6DZS7AEz+vUkqwNW3+LgQ==
-ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
- smtp.mailfrom=nxp.com; dmarc=pass action=none header.from=nxp.com; dkim=pass
- header.d=nxp.com; arc=none
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=nxp.com; s=selector1;
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
- bh=tehRoeauYin0xW30r0MX8tlKHvoTJMH/YJGLz53wW+E=;
- b=jhej7ZzsQcpUuM/MPI6/Bqysp4TbXCvk+DO9+9vgh8U2q7R8HVRfk1fqDoApGVIcml3b2XMfvpbTgPy88rJVfEG1VKj2acT3Ill458qo8bjsGEwpQQXYxHVoJrttws/mgXyL4yL9lMNsu6fh7jxGhR3THCEUaBToh6oB3dKpeDzkNTOa7Mm3uHo973L2faIHeXzEdIO6qHd7safLGCCgyqQkoLy0Ns+3eFKkmVCJdsbkJLxgibNjg4nI8w4SRmqfEzNwlPeLZ8p3jjDDLBe2v2l6zzPt8dceRfTrOqRu7rVlbDzInapfEn1yG0vOVK6ZsWHu0T6WomLbVpFFz/5/wA==
-Authentication-Results: dkim=none (message not signed)
- header.d=none;dmarc=none action=none header.from=nxp.com;
-Received: from PA4PR04MB9366.eurprd04.prod.outlook.com (2603:10a6:102:2a9::8)
- by DBBPR04MB7689.eurprd04.prod.outlook.com (2603:10a6:10:206::20) with
- Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.21.92.7; Wed, 3 Jun 2026
- 17:41:54 +0000
-Received: from PA4PR04MB9366.eurprd04.prod.outlook.com
- ([fe80::75e4:8143:ddbc:6588]) by PA4PR04MB9366.eurprd04.prod.outlook.com
- ([fe80::75e4:8143:ddbc:6588%3]) with mapi id 15.21.0092.006; Wed, 3 Jun 2026
- 17:41:54 +0000
-Date: Wed, 3 Jun 2026 13:41:47 -0400
-From: Frank Li <Frank.li@nxp.com>
-To: sashiko-reviews@lists.linux.dev
-Cc: Alexander Stein <alexander.stein@ew.tq-group.com>, Frank.Li@kernel.org,
-	imx@lists.linux.dev, wsa+renesas@sang-engineering.com,
-	devicetree@vger.kernel.org, conor+dt@kernel.org, robh@kernel.org
-Subject: Re: [PATCH v4 2/4] arm64: dts: freescale: add initial device tree
- for TQMa8MPQS with i.MX8MP
-Message-ID: <aiBnWwW2x1TOsGcy@lizhi-Precision-Tower-5810>
-References: <20260603093621.2504490-2-alexander.stein@ew.tq-group.com>
- <20260603100559.6E7E21F00893@smtp.kernel.org>
-Content-Type: text/plain; charset=iso-8859-1
-Content-Disposition: inline
-Content-Transfer-Encoding: 8bit
-In-Reply-To: <20260603100559.6E7E21F00893@smtp.kernel.org>
-X-ClientProxiedBy: PH8PR02CA0034.namprd02.prod.outlook.com
- (2603:10b6:510:2da::13) To PA4PR04MB9366.eurprd04.prod.outlook.com
- (2603:10a6:102:2a9::8)
+	dkim=pass (2048-bit key) header.d=google.com header.i=@google.com header.b="jLpguWGu"
+Received: by mail-dl1-f54.google.com with SMTP id a92af1059eb24-137f0aa125bso4661183c88.0
+        for <sashiko-reviews@lists.linux.dev>; Wed, 03 Jun 2026 12:01:56 -0700 (PDT)
+ARC-Seal: i=1; a=rsa-sha256; t=1780513316; cv=none;
+        d=google.com; s=arc-20240605;
+        b=WyUsr6ZRlG4F8crtIoZ5Y2NJ1BF94YCxkw+Z9WABQQvbZDAWQrjMa9hBKLRF9moQ5o
+         N8TPv8dLG4b5rM3rU/Ce1qfXqeL2EHxk93mkyO1Ol+9jjAkPXakxv/zB2hf6A5e3gC/O
+         iloKr/vQmxOTmfZ7UUfb+yWUEur95Q+4WSsJoGsGvWBzCK4U/ux3qRMefYgh1uZCP//0
+         ypE2Vacx5VrnDTOfQrf73MFiuj3QAsGnjUgWoCPjg0nvOH1malsPPO62agNn7C7M3rYB
+         Bk1b5f8GgDLaeHfE90LHQ0v2ntryQNtrRACzB6FKexpxvXi4FSmjS4l/TxRxOJyorMvP
+         amNQ==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com; s=arc-20240605;
+        h=cc:to:subject:message-id:date:mime-version:references:in-reply-to
+         :from:dkim-signature;
+        bh=FrdppwqBUMbQkQbLbGXJfGioEcfkU9p7vcumdWWrqwE=;
+        fh=KVy4+j+TE0qJlGnL1oxDtQvAs+ZlkPteDJwxhHS2piY=;
+        b=FlJKyNpaaq7SYj+wYKIM/GbDM9H7iQ+3cizfFAAXdf2FKhJ2UnYek9MRLWC1M0TcKQ
+         W93gFeHp15Kp4ilwLdsuaVP9VKsK/Zcl8BLCKkPCAWta9k+OlgD6wa2Zsla71ik2h7mW
+         uDVZcz9D5+rnFl5vtxYCYK8dKRcOCAwb/y1oFGhWy5r0UrKvm4Spd/fMCjhF+fZubG/P
+         pQoBL3IsGyj8Ghp937rkMcH1TQkCJY/k1SG/ovgazr6LaijYaBU2px41on3e6jZA8xL1
+         A3OfjoauMFjTFsDesIyf+B9EZZoLKdb/s2+9Tr3EfAbPYlQBEod8CmsSsugWKy13lxPU
+         bNKw==;
+        darn=lists.linux.dev
+ARC-Authentication-Results: i=1; mx.google.com; arc=none
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=google.com; s=20251104; t=1780513316; x=1781118116; darn=lists.linux.dev;
+        h=cc:to:subject:message-id:date:mime-version:references:in-reply-to
+         :from:from:to:cc:subject:date:message-id:reply-to;
+        bh=FrdppwqBUMbQkQbLbGXJfGioEcfkU9p7vcumdWWrqwE=;
+        b=jLpguWGuD7eeY9n47j67Ur3Q/DMsd58yTohSYb6tN5k4qaJJ9t+kAAdNxwD71XyOKL
+         cRqMOs3Sq1Z9UQpI6XGUSLKGTOA5hBpfcmwaP2G0LsP03hr7X56LkUXUg2NyQYUTp1u4
+         Yfxv2XmKVu5O7PEb4yqyp5BwsiMUMcT/9t0Ae3+fMXxpdWK6qA6r2/JK35+vq9dqJLPd
+         oA4Rs16WixfTeYmGFx/I8u4xclp4Nt10fhxkp8pEmB50vk+KwkHQV/YvLezP6PZTZoyn
+         guCGu1X8lnyKkANOWLbVT4n1dn/vKdD5p3nnQ23+Owy1QFQ2Se7yvURyWkZr4U2ZkyWu
+         hjZg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20251104; t=1780513316; x=1781118116;
+        h=cc:to:subject:message-id:date:mime-version:references:in-reply-to
+         :from:x-gm-gg:x-gm-message-state:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=FrdppwqBUMbQkQbLbGXJfGioEcfkU9p7vcumdWWrqwE=;
+        b=R6Qp0Yg8B1oDYed7sXw8Kao6JRMB7nwIkK1CXil0sIDO7OQhxYHJaQ0lvcU8Mi5oTN
+         fhGbcjgmUlAXnvEfdjAuHptimziOx237d6V9j3fwZphOe1fhLzv3L/da8pBj3CTEWxbY
+         RZYztznPw8KcPGuP4D67UNlLxzH/yXD3ISKuPEWeJnC4RsRu7zSJO7tj7vVdz7zTlfDd
+         YDj7+QhNn4pxviLADByYBizTtT9p0Jh0lmFGKJK1VkBN8WL09xR4Kqo+4lnXqzq2iGAg
+         0MQvAjWx0QMMnlnIvVR7pqNWFmEpxomiEzyosSy8YRsb+luAQxPo1VMa4w6MJXsmDrdR
+         FmEQ==
+X-Gm-Message-State: AOJu0YyncC25g2hIstoje67U3ctCRpCVc6Kr7WzmVWvk2LdVftVy97VA
+	76pkka64FM+jFDIRZh2N6G79nhqAcE38azIvYArAgUK+5/FVJH+pByoMroUZkyyWtIBDa/c6+bL
+	QgGWxXe2vZFNMHNlLmH5XocmBTfhXp9g3SVBg++Wz9otxCHLUr0bI/14K
+X-Gm-Gg: Acq92OHhMwVdBlP6z+ldrARyBKJKPWirCx3OWFPhCO4t7Om23T5s5FMs/9845ylzDbU
+	KLJrmPstMz1BnRvb/C6k6oIVAOiMwDelYk6qLCRUOyv3EUTKKpzQ9pX3B1tjPToMhdieQtKZhaW
+	29wfEsG0DQGd4TSsYk8+1iISGl2Brjdv0TCtAVKbWDJIaiSx3KumGJ/5rjdXcH1ETxZSFAR+L+H
+	rsqB+ut97IUHXuBA0ggH0kE4BPOMEksz9MOFGT/eiv7l93rjfNNivwWzmRG/M9mSjbCxHxLcZVS
+	65+hKb8sWeWA67FB3olsDOaqORmtg/C5iy3Ct+t5n6fmvRD40p17dHzTBiSxQXRgM9qtFWYhEPk
+	3WA==
+X-Received: by 2002:a05:7022:2390:b0:135:e312:47a4 with SMTP id
+ a92af1059eb24-137f69382a9mr1895079c88.9.1780513313859; Wed, 03 Jun 2026
+ 12:01:53 -0700 (PDT)
+Received: from 176938342045 named unknown by gmailapi.google.com with
+ HTTPREST; Wed, 3 Jun 2026 12:01:52 -0700
+Received: from 176938342045 named unknown by gmailapi.google.com with
+ HTTPREST; Wed, 3 Jun 2026 12:01:52 -0700
+From: Ackerley Tng <ackerleytng@google.com>
+In-Reply-To: <20260523013557.8DE1B1F000E9@smtp.kernel.org>
+References: <20260522-gmem-inplace-conversion-v7-37-2f0fae496530@google.com> <20260523013557.8DE1B1F000E9@smtp.kernel.org>
 Precedence: bulk
 X-Mailing-List: sashiko-reviews@lists.linux.dev
 List-Id: <sashiko-reviews.lists.linux.dev>
 List-Subscribe: <mailto:sashiko-reviews+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:sashiko-reviews+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-X-MS-PublicTrafficType: Email
-X-MS-TrafficTypeDiagnostic: PA4PR04MB9366:EE_|DBBPR04MB7689:EE_
-X-MS-Office365-Filtering-Correlation-Id: e6be3ebc-22f2-4354-e60d-08dec197669e
-X-MS-Exchange-SenderADCheck: 1
-X-MS-Exchange-AntiSpam-Relay: 0
-X-Microsoft-Antispam:
-	BCL:0;ARA:13230040|376014|52116014|1800799024|19092799006|366016|38350700014|56012099006|11063799006|4143699003|22082099003|18002099003;
-X-Microsoft-Antispam-Message-Info:
-	vN0lWhR0gOMDo7aIr8t9fA/LlFPz36/99fjc747CpwQSfwg/VEfvpB2Benxxp20cBCs9YWoqV7eHxRHN+EqQw/DK62JpJ3QgH0vz/28EnlLAXjjvEQudOhzlaYaL9S+XCVZb8wFjK4CfYhB9UH1kTlpnW3cIJGZZT07wAPuIRNHcr2ekfBGKYAmsxryHejoau7Onqal151DU6tLakqsIPEwJCj4zYzKvktA62iv+MoxwV1MCIKHiQQ2anVU9eeCYSUjpKgnGLnr1O+X+f8Kes4DwHtPEGpSEtWON01pnfna15bMjJExbwsX9F5pm1Lv/cN/IFvU+IqK8tKLQ9uSa0i5N1jNY7mlYcCqNdJjsP9XLEjfIJD5wIWoqrFteoqtUruMsU0O8m6PREGWwz+IfeYK8yJeHyVKpYo5tdttXETemtY4f6XC3WION5P6wpghiPE3vT+pglfG62fjFkuHUuC9/FjhGxeInEX7Ae/I+8TMhU2HcsWwB2YZMKQ7ECG21f50wMWzsYTR2poBhImq4gCn0llYXRKp5GCYOOwhBM0yMikKWLKhJkvi6nvVu/AIpgBHXt5sDZ/ptLUGioqPPXH2Od6K/SVIich2mNp1SsvHzYbgsTNmYfEDeT+M1CBsXS7HyI/3mOl1SF1wI/TLncBfPjQ1BCEU4PwY+s3J2psigtwVnkUh8SUX6TIb/YbU7
-X-Forefront-Antispam-Report:
-	CIP:255.255.255.255;CTRY:;LANG:en;SCL:1;SRV:;IPV:NLI;SFV:NSPM;H:PA4PR04MB9366.eurprd04.prod.outlook.com;PTR:;CAT:NONE;SFS:(13230040)(376014)(52116014)(1800799024)(19092799006)(366016)(38350700014)(56012099006)(11063799006)(4143699003)(22082099003)(18002099003);DIR:OUT;SFP:1101;
-X-MS-Exchange-AntiSpam-MessageData-ChunkCount: 1
-X-MS-Exchange-AntiSpam-MessageData-0:
-	=?iso-8859-1?Q?cttBvZYKkgLmrvClk8F19wM2Ncc5lkYg9Q411L2iIpOudnwLL0pkx2322s?=
- =?iso-8859-1?Q?1EI3EdaC/YPDweyDOah19o4uySh4PCfH+qiiEGXVXTQGZ8owG34sk+TgK7?=
- =?iso-8859-1?Q?+82fe8gLz4QdcNy2HjGfQfDCtPL9p0LFjFHl4Ix2tJCph/UQKW42wipkUy?=
- =?iso-8859-1?Q?1VI0I9UUWHXJ+ebU5f/882RnDoLnH6UfzgJDqEAPGsbY002fgC6Nw4TL/0?=
- =?iso-8859-1?Q?ZA39fFqUixXJwTEs/jd3b4Ck89YiM2h9DXbwUNcnNaVH1MD1ga0YpUOScK?=
- =?iso-8859-1?Q?mhOZq+y5jjmdYkwoESXT9towo2/ElNgCCHmcl2WjTZT9kv6hcz2/yIMAcT?=
- =?iso-8859-1?Q?TGK7lIgocOLR3I+2j50L7ajU+fUKRnVhrdmh/Y0o4UiLiTqe3bdX/O9C/T?=
- =?iso-8859-1?Q?MzcpgsSW5VoRfx2cQEWhl0mS6nf0bpb7kZARQWE7rCidRZ45NoMb8U3s3W?=
- =?iso-8859-1?Q?HsqRQuQlejVcXoLVoIxGs8DHOe4IL14tpq4Cj87FNPRzfx/4C2T4jQIOMm?=
- =?iso-8859-1?Q?VZtM3HUdOPja98mxTafEZu21utPF8/RMs0aQwoVJEFfIw4p5E1YxGF5P5I?=
- =?iso-8859-1?Q?/ktDRib0g//jCc/J+2mbVXNrcRJruX1eOv42j8LOGREDkDXcpFu5LSVGar?=
- =?iso-8859-1?Q?Me+U2cS5rRlSmePX77g6WMaYQto724HbKLW/vlcCmd0TBW0gnKCpKGpB3V?=
- =?iso-8859-1?Q?8wTWEYBddxl0jd3UZG4jgMJ/wxpc9r8xAm07ZUqih+qo5XZjTFF6kI0E6D?=
- =?iso-8859-1?Q?NdNRk3NQZXXSqTgGZwoAudtswePcUW9zqDNL2LyU7CNPbCPth1w65fFSFq?=
- =?iso-8859-1?Q?JVUCdvPG+D0X/YpWTpTVH5FpG1kKFkvp/6SHKfRo6Ngy1Kqzrl8/j93R5q?=
- =?iso-8859-1?Q?AV5USNMRDjxZ+G+nOg15k6tR6cX0a2e1h8vwRE0aj8AO3hvQ1gL9v6gJ7V?=
- =?iso-8859-1?Q?3aquQEEs15zSSam8y4xYmav3PpGwqW/LFzMiw5L23mUsCUmJSrX3Mw1kZ7?=
- =?iso-8859-1?Q?fightC2/5vm2mnbL6lWwdVKrLYOCfsfJaTOvIqS4IXzahFvlq1uzN1uAnc?=
- =?iso-8859-1?Q?m/l4PO0fjHj19oMnQR1ZU9EnDin7XTywed1GoOiGHZo7WtU+Ryn0FBznfS?=
- =?iso-8859-1?Q?TqaRnCJfJoEexq8E23yNk3m3shMDHOttWZJhZTKT8rwJUla36eMw6bkpu9?=
- =?iso-8859-1?Q?HHqLEJWSEOOvmUDp+ifgAVQxaJMcxqzKu7oES5hDd4V01/w82ibMJEPmWJ?=
- =?iso-8859-1?Q?ryW+gLqZcfXJ9msYdpnwS7f8GqBzi+2xJNOZfAZURnCQo7h6+Q88dMeTNR?=
- =?iso-8859-1?Q?JogM/eq/o9gOWqq8tgkuPGWaIXNLV2/Jh8E8v5qhS5pWhTNb2Af6gUq0j+?=
- =?iso-8859-1?Q?xfEP12C1F6T6Q16v0pSVz2brZRHMINI5ZAkdjvzRjp631kuzSJz3hCvSw0?=
- =?iso-8859-1?Q?+UZiNJA0G/+t4N6D/GqxDZ0QUy8PUkkLnHsCt+Cx6vM+zQMbs5kCrvEZki?=
- =?iso-8859-1?Q?LnDoB3OIeLNgOFrCATwbSKLqQpf6snZm+5JonG/LuDcgx3NBTdbPTuIw/z?=
- =?iso-8859-1?Q?gi5l5yh1G7H5xEwFHQCLaLVhOg4tp5jCdEPyEmCepQgtuR7W1iYF/NrnsI?=
- =?iso-8859-1?Q?6HwV9+dg/QHXbYWzdz7ezOeoGk4L+cD76Y6jNn/WTvVG7DyWcALhsTFN6a?=
- =?iso-8859-1?Q?ipQdJeNsGorkTKdb9jgEJYSQv1FrI3MMgXoOEHqtSUgkK0TAzw6a97QPmS?=
- =?iso-8859-1?Q?mAYKVcgv4+8EYHDRgNI4iq2ILHbmA65DO1iE7eF/57qBNJ?=
-X-OriginatorOrg: nxp.com
-X-MS-Exchange-CrossTenant-Network-Message-Id: e6be3ebc-22f2-4354-e60d-08dec197669e
-X-MS-Exchange-CrossTenant-AuthSource: PA4PR04MB9366.eurprd04.prod.outlook.com
-X-MS-Exchange-CrossTenant-AuthAs: Internal
-X-MS-Exchange-CrossTenant-OriginalArrivalTime: 03 Jun 2026 17:41:54.0963
- (UTC)
-X-MS-Exchange-CrossTenant-FromEntityHeader: Hosted
-X-MS-Exchange-CrossTenant-Id: 686ea1d3-bc2b-4c6f-a92c-d99c5c301635
-X-MS-Exchange-CrossTenant-MailboxType: HOSTED
-X-MS-Exchange-CrossTenant-UserPrincipalName: mFnwROFACISJ4MqDJZO8D4+oDZn7ph8E5HjkBhVllVULD6k3bwEKRr41AUu3XN1EuLKxcDZdgu5jaby/uj/9tQ==
-X-MS-Exchange-Transport-CrossTenantHeadersStamped: DBBPR04MB7689
+Date: Wed, 3 Jun 2026 12:01:52 -0700
+X-Gm-Features: AVHnY4KsbUCYkAg_J7QB9NZy7MzgdWA0kDAtfdN45OW6sA1mj4HkxgKzF-rW7mI
+Message-ID: <CAEvNRgFWBWPKCPWQYCQ_14Ec+Z80jtU28+-ojAAh7rtr9AFwPA@mail.gmail.com>
+Subject: Re: [PATCH v7 37/42] KVM: selftests: Provide common function to set
+ memory attributes
+To: sashiko-reviews@lists.linux.dev, 
+	Ackerley Tng via B4 Relay <devnull+ackerleytng.google.com@kernel.org>
+Cc: kvm@vger.kernel.org
+Content-Type: text/plain; charset="UTF-8"
 
-On Wed, Jun 03, 2026 at 10:05:59AM +0000, sashiko-bot@kernel.org wrote:
-> Thank you for your contribution! Sashiko AI review found 2 potential issue(s) to consider:
-> - [High] Incorrect `reset-gpios` polarity on `dp_bridge` will permanently disable the device.
-> - [Medium] Missing `interrupts` property for the DisplayPort bridge despite hardware routing.
-> --
+sashiko-bot@kernel.org writes:
+
 >
-> commit ec4a92e3f2baae5d65ed787df020c8a40c851231
-> Author: Paul Gerber <paul.gerber@tq-group.com>
+> [...snip...]
 >
-> arm64: dts: freescale: add initial device tree for TQMa8MPQS with i.MX8MP
->
-> This adds support for TQMa8MPQS module on MB-SMARC-2 board.
->
-> > diff --git a/arch/arm64/boot/dts/freescale/imx8mp-tqma8mpqs.dtsi b/arch/arm64/boot/dts/freescale/imx8mp-tqma8mpqs.dtsi
-> > new file mode 100644
-> > --- /dev/null
-> > +++ b/arch/arm64/boot/dts/freescale/imx8mp-tqma8mpqs.dtsi
->
-> [ ... ]
->
-> > +&i2c3 {
-> > +	clock-frequency = <384000>;
-> > +	pinctrl-names = "default", "gpio";
-> > +	pinctrl-0 = <&pinctrl_i2c3>;
-> > +	pinctrl-1 = <&pinctrl_i2c3_gpio>;
-> > +	scl-gpios = <&gpio5 18 (GPIO_ACTIVE_HIGH | GPIO_OPEN_DRAIN)>;
-> > +	sda-gpios = <&gpio5 19 (GPIO_ACTIVE_HIGH | GPIO_OPEN_DRAIN)>;
-> > +	status = "okay";
-> > +
-> > +	dp_bridge: dp-bridge@f {
-> > +		compatible = "toshiba,tc9595", "toshiba,tc358767";
-> > +		reg = <0xf>;
-> > +		pinctrl-names = "default";
-> > +		pinctrl-0 = <&pinctrl_tc9595>;
-> > +		clock-names = "ref";
-> > +		clocks = <&clk_dp>;
+>> +static inline void vm_mem_set_memory_attributes(struct kvm_vm *vm, gpa_t gpa,
+>> +						size_t size, u64 attrs)
+>> +{
+>> +	if (kvm_has_gmem_attributes) {
+>> +		gpa_t end = gpa + size;
+>> +		off_t fd_offset;
+>> +		gpa_t addr;
+>> +		size_t len;
+>> +		int fd;
+>> +
+>> +		for (addr = gpa; addr < end; addr += len) {
+>> +			fd = kvm_gpa_to_guest_memfd(vm, addr, &fd_offset, &len);
 >
 > [Severity: Medium]
-> Is this node missing the interrupt properties for the Hot Plug Detect signal?
+> Does this unconditionally assume the memslot uses guest_memfd if the host
+> supports KVM_CAP_GUEST_MEMFD_MEMORY_ATTRIBUTES?
 >
-> The pinctrl node pinctrl_tc9595 configures GPIO5_IO21 (DP_HPD_INT), but
-> without the interrupt-parent and interrupts properties here, the tc358767
-> driver won't be able to request the hardware IRQ.
+> Since kvm_has_gmem_attributes is a global capability check, it doesn't
+> guarantee the specific memslot was created with the KVM_MEM_GUEST_MEMFD
+> flag. For example, test_private_access_memslot_not_private() in
+> private_mem_kvm_exits_test.c explicitly creates a memslot with flags = 0
+> and then calls vm_mem_set_private().
 >
-> Will this cause the driver to silently fall back to 10-second software
-> polling for HPD and link training events instead of using the hardware
-> interrupt?
->
-> > +		reset-gpios = <&expander0 4 GPIO_ACTIVE_HIGH>;
->
-> [Severity: High]
-> Will this reset-gpios polarity leave the device permanently held in reset?
->
-> The tc358767 driver initializes the reset GPIO to logical 0, pulses it to
-> logical 1 to assert, and returns it to logical 0 to deassert. Since this
-> is specified as GPIO_ACTIVE_HIGH, the final logical 0 maps to a physical
-> LOW signal.
->
-> If this pin controls the bridge's Enable or active-low Reset, won't holding
-> it physically LOW leave the bridge permanently disabled? Does this need to be
-> GPIO_ACTIVE_LOW so the driver's logical 0 maps to a physical HIGH instead?
 
-Does AI said correctly?
+I think calling vm_mem_set_memory_attributes on a address in a
+non-guest_memfd memslot is something that the test author should be
+alerted to ASAP, hence asserting and failing the test is the right thing
+to do.
 
-Frank
-
+> Calling kvm_gpa_to_guest_memfd() here will trigger its internal TEST_ASSERT
+> verifying the region flags, which causes the test to crash and breaks
+> bisection.
 >
-> > +		toshiba,hpd-pin = <0>;
-> > +		status = "disabled";
-> > +
-> > +		ports {
+> (Note: I see this is fixed later in the patch series by updating the test
+> to skip when per-gmem attributes are active, but pointing this out since it
+> breaks intermediate bisection.)
 >
-> [ ... ]
->
-> --
-> Sashiko AI review · https://sashiko.dev/#/patchset/20260603093621.2504490-1-alexander.stein@ew.tq-group.com?part=2
+>>
+>> [...snip...]
+>>
