@@ -1,747 +1,223 @@
-Received: from mout-p-201.mailbox.org (mout-p-201.mailbox.org [80.241.56.171])
+Received: from AM0PR83CU005.outbound.protection.outlook.com (mail-westeuropeazon11010006.outbound.protection.outlook.com [52.101.69.6])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 51F2D25B0A3
-	for <sashiko-reviews@lists.linux.dev>; Wed,  3 Jun 2026 11:49:27 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=80.241.56.171
-ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1780487370; cv=none; b=miRJnJi+hC6Gi4f4LJUIxpTnstn/FKe5wjPLLLUnreQpY8o0KDr2mAlGgoj0Zmxe2gqt+9mYGqWzR8ZTipoXSjk6bMAvk1Lp4gCCYcCxE/E6zbCwj+T3El9TTN1JWAPuratesl9e43uZqYNPQ2VzBOuqxOZWxASu72FVRTVyQLg=
-ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1780487370; c=relaxed/simple;
-	bh=+0837MDE/tnW1iM7AEgyrltbSPfqxmU0TaHL2LAQKDs=;
-	h=Message-ID:Subject:From:To:Cc:Date:In-Reply-To:References:
-	 Content-Type:MIME-Version; b=Uf67vPEjfvP2pGqV2QahijuP/XLxq6ENEsmfwGpKp2Xu0myAksO3E6rhn4omvOVStYCzcNbiC9Z2DX6ni2TdJcw0jhZK6fFqqqEIqGuxqflpzlh3uhSfKop2HfBRRDodABARXFLqh51yXOsGxz0qbgw1P5UKXLQQWD9eY4uUovI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=mailbox.org; spf=pass smtp.mailfrom=mailbox.org; dkim=pass (2048-bit key) header.d=mailbox.org header.i=@mailbox.org header.b=wTxtGxUz; arc=none smtp.client-ip=80.241.56.171
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=mailbox.org
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=mailbox.org
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DF2AA47798C
+	for <sashiko-reviews@lists.linux.dev>; Wed,  3 Jun 2026 11:54:00 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=fail smtp.client-ip=52.101.69.6
+ARC-Seal:i=2; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
+	t=1780487642; cv=fail; b=FknESfpmAo/xAxiFPij/QBwzbWD+FGYKNektgJV9f/m9myiefSb7axS9QSuR5mB9L3oGXLvAlnIZe0p6whvPA1fUCxBBDtY/X6Y3oYsOrQna316SuHv0BK72WpvM4D+edi3uni/cPLsUsH12QiaYHRLiYH7cQL/Gtyp9kNyWNWw=
+ARC-Message-Signature:i=2; a=rsa-sha256; d=subspace.kernel.org;
+	s=arc-20240116; t=1780487642; c=relaxed/simple;
+	bh=nsayEAw9EyjUNYrQ0fYytxbzcfEYpNA3tsog4qV1H+I=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:Content-Type:
+	 Content-Disposition:In-Reply-To:MIME-Version; b=pIFBYmbmsw6+eFvzxK8+QdGBomfLiOBKfDxRHdrp9LXp35HAJKNXpfFt2AgD+LKiFEmRyKd4HI5AhFPcYEcUnHCB0cg5xag6SoFEtFknbnYO/gwvbGLXzVKmecv1XqwfmXn5znHhMsndYrGYCE8N7wNfmU4tMOIA94uTp3H8L9o=
+ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=nxp.com; spf=pass smtp.mailfrom=nxp.com; dkim=pass (2048-bit key) header.d=nxp.com header.i=@nxp.com header.b=iSnEeuTT; arc=fail smtp.client-ip=52.101.69.6
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=nxp.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=nxp.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=mailbox.org header.i=@mailbox.org header.b="wTxtGxUz"
-Received: from smtp2.mailbox.org (smtp2.mailbox.org [IPv6:2001:67c:2050:b231:465::2])
-	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
-	 key-exchange X25519 server-signature RSA-PSS (4096 bits) server-digest SHA256)
-	(No client certificate requested)
-	by mout-p-201.mailbox.org (Postfix) with ESMTPS id 4gVmFb3f3qz9sTh;
-	Wed,  3 Jun 2026 13:49:23 +0200 (CEST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=mailbox.org; s=mail20150812;
-	t=1780487363; h=from:from:reply-to:reply-to:subject:subject:date:date:
-	 message-id:message-id:to:to:cc:cc:mime-version:mime-version:
-	 content-type:content-type:
-	 content-transfer-encoding:content-transfer-encoding:
-	 in-reply-to:in-reply-to:references:references;
-	bh=9n16+odR0Rvupk6K/BFKAl6CnTMidWci5OPasLiPb8U=;
-	b=wTxtGxUzajxBxYVZEX4O0AbjUQteDTmLL5YzeCI87DkOCxvxUNeyAdbAUzNbDdBl0Pszj/
-	03BJ2+q7EZLfL7KLiLnZG2vZR4YttwOuldirNppAiG+tpm8sdYP2/clq9R9PwskZQWunh9
-	zbJGxUa/v7fw7mZC8zEMwWSJ+XUgoWe95GNbOz/YPzRz6Wzg0q9b17CyXkPSLDfDg3xrfv
-	RAbMsFpnHKSz8pWH4+2+uPJYHOsZziVxGtUND1Tci7ASiNDJ6fQHgIaTQSy+3EwwNwK2dm
-	t5nkPB94mY9Rov9rNMLkdbGNc57kLspdf4jxh443E2Gj9A76ttd2fCdlpYBuZA==
-Message-ID: <6df53a0ee6b205de7aff34c2901f51b1a1f0a34e.camel@mailbox.org>
-Subject: Re: [PATCH 3/4] rust: Add dma_fence abstractions
-From: Philipp Stanner <phasta@mailbox.org>
-Reply-To: phasta@kernel.org
-To: Boris Brezillon <boris.brezillon@collabora.com>
-Cc: phasta@kernel.org, Alice Ryhl <aliceryhl@google.com>, 
-	sashiko-reviews@lists.linux.dev, linux-media@vger.kernel.org,
- ojeda@kernel.org,  Danilo Krummrich	 <dakr@kernel.org>, Christian
- =?ISO-8859-1?Q?K=F6nig?= <christian.koenig@amd.com>,  Gary Guo
- <gary@garyguo.net>, Daniel Almeida <daniel.almeida@collabora.com>
-Date: Wed, 03 Jun 2026 13:49:19 +0200
-In-Reply-To: <20260603132259.42184da0@fedora-2.home>
-References: <ah1c3NSU-4UkdUhb@google.com>
-		<a3d09b270e6effb6f2bfb5d7ba8de48e3c2c4081.camel@mailbox.org>
-		<CAH5fLggvxGwJkAp+VqG7pA-e2zM-T8_DR0DeCiZiJyM+o51DuQ@mail.gmail.com>
-		<24ef07ed85d9e7aa7f9d3a96301c4c15bc0f2315.camel@mailbox.org>
-		<ah2M2a_4PneZpjTS@google.com>
-		<16dff07d28fca94749f14e9c91e6f812f605d6e5.camel@mailbox.org>
-		<ah7CGySkyE7mSM8a@google.com>
-		<7a978596279eca99cd41ca46606c7e5a6a38e801.camel@mailbox.org>
-		<ah7FjDdU6zt65qId@google.com>
-		<4bf6e916efe54bab66defda6fffea8c41358b3cc.camel@mailbox.org>
-		<ah72Bi2Q5Wpgo2kE@google.com>
-		<3c7e4db139df7cea18bc683d6dd33da2d00f0358.camel@mailbox.org>
-		<20260603084805.5e0e23ea@fedora-2.home>
-		<aa11e74f419b02c0e4fe417face43e7d05e62783.camel@mailbox.org>
-		<20260603115247.21ee5d1d@fedora-2.home>
-		<20260603115804.29eb8f7d@fedora-2.home>
-		<5e710e0bffd21eded77f060ae34e641449325c73.camel@mailbox.org>
-	 <20260603132259.42184da0@fedora-2.home>
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
+	dkim=pass (2048-bit key) header.d=nxp.com header.i=@nxp.com header.b="iSnEeuTT"
+ARC-Seal: i=1; a=rsa-sha256; s=arcselector10001; d=microsoft.com; cv=none;
+ b=Ywa8Ai3NqPPzh68R1wPZrTX05L9KYt+IFxulizfGKfnqVgNF8l4PLK9uag9H0nCXU0ZTA29+QNBRoqu534eIiRTgwTsSrzMdwqiFp5JXvYPEwAEIOhb4X88ucCXoqDxRpwW9jL+VITJmk/2+DS1JbDssnqKKQhP/m7CQj1K/imsV235T1wp/rU16Wn0t5ETO38eE77QNMVSm73zbWfyP/r5WS3KdIKWLmZSdiHVkRGSjG11VVavMmIwzxCPTmoW4JzYGiAKCQsaNqjiHEy5BlOPBDdTh1j6WHneOhQATMc2AqTsQ/DRhOWL0SFoS/5/rWypzht3qO9PEqqKyLCo4tA==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com;
+ s=arcselector10001;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
+ bh=7LLqRVhNWdO53pqOQzC0RX5V7NZyoK/3Sll8+Gu5YEI=;
+ b=OpOajW5AneTSz6FlJ0fdOJxOpIetnU+51VH31epe8MSUkE7YIzPw6tymKpKYKk0i6r25sFAzDIOwucOY010WyrZ5eBPtzjjXBHOMZ4aV0lGrDawiNyaI6PIa/lv0bI6Iy6ks7yQKiQJCm2wllv03GzCikN5f4/luWAzkdlbjtwaDPzXJLA4O38lMTXCYrgha4z3JS3jcvasPZ0VKYU2VJ2FznPSctmSDH39rCYROZKBmeqCem+AkozPEr43G2sQeLaJspim6rr1SydAveszrHyq0JL7X3mjEX9Bl7V1d/qqgTxjl+aw/7u1ON6JHe1DNotF64q1YrjWYcuC5WMjZaQ==
+ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
+ smtp.mailfrom=nxp.com; dmarc=pass action=none header.from=nxp.com; dkim=pass
+ header.d=nxp.com; arc=none
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=nxp.com; s=selector1;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
+ bh=7LLqRVhNWdO53pqOQzC0RX5V7NZyoK/3Sll8+Gu5YEI=;
+ b=iSnEeuTTxWKHVdtpCfSeMVZYpnEzMe+wNXMr21EiRSyRBDAso+l/bl2+4y7Az4kH8CRtsCHk9LZKZXsUQFmsZqWYnPIpY6ARX+caTAmVh5vasJgR9J5oIo18HwFjv5U+bIqU9cBRH89sGWfMndbcqVeHwtoKs88IWQZ+mV2HP/Qdspq3ad9n51TFs0nO+BtAABJZAt7HfMwiRVwNlfEqhdhjiHcpwst5wEe2EVzmDq33f64fjorFOl+sOfmPBSTG9RhzZKxG/jcunL5T5DZlNW7j4uOGq9pu/Ir1cOGIJJ/nqQZ/dirirxZ8Tpgs9lZsoleGpuezNdCudvpU6fCr+A==
+Authentication-Results: dkim=none (message not signed)
+ header.d=none;dmarc=none action=none header.from=nxp.com;
+Received: from AM0PR04MB6900.eurprd04.prod.outlook.com (2603:10a6:208:17d::10)
+ by AM9PR04MB7667.eurprd04.prod.outlook.com (2603:10a6:20b:2d5::12) with
+ Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.21.71.13; Wed, 3 Jun 2026
+ 11:53:57 +0000
+Received: from AM0PR04MB6900.eurprd04.prod.outlook.com
+ ([fe80::7fda:8431:ca1b:b023]) by AM0PR04MB6900.eurprd04.prod.outlook.com
+ ([fe80::7fda:8431:ca1b:b023%5]) with mapi id 15.21.0092.006; Wed, 3 Jun 2026
+ 11:53:57 +0000
+Date: Wed, 3 Jun 2026 14:53:54 +0300
+From: Vladimir Oltean <vladimir.oltean@nxp.com>
+To: sashiko-reviews@lists.linux.dev
+Cc: conor+dt@kernel.org, devicetree@vger.kernel.org, vkoul@kernel.org,
+	neil.armstrong@linaro.org, linux-phy@lists.infradead.org,
+	robh@kernel.org, olteanv@gmail.com
+Subject: Re: [PATCH v2 phy-next 14/15] phy: lynx-10g: new driver
+Message-ID: <20260603115354.l356gejs6ysqf4s2@skbuf>
+References: <20260529171509.1163787-15-vladimir.oltean@nxp.com>
+ <20260529182118.007AC1F00893@smtp.kernel.org>
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <20260529182118.007AC1F00893@smtp.kernel.org>
+X-ClientProxiedBy: BE1P281CA0089.DEUP281.PROD.OUTLOOK.COM
+ (2603:10a6:b10:78::12) To AM0PR04MB6900.eurprd04.prod.outlook.com
+ (2603:10a6:208:17d::10)
 Precedence: bulk
 X-Mailing-List: sashiko-reviews@lists.linux.dev
 List-Id: <sashiko-reviews.lists.linux.dev>
 List-Subscribe: <mailto:sashiko-reviews+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:sashiko-reviews+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-X-MBO-RS-META: yhawrsamaqzsgj73xnjzuxic67dorjrh
-X-MBO-RS-ID: 58e2b9a377378af10b3
+X-MS-PublicTrafficType: Email
+X-MS-TrafficTypeDiagnostic: AM0PR04MB6900:EE_|AM9PR04MB7667:EE_
+X-MS-Office365-Filtering-Correlation-Id: 9ce5c54b-c112-4bf8-10b4-08dec166cb5c
+X-MS-Exchange-SenderADCheck: 1
+X-MS-Exchange-AntiSpam-Relay: 0
+X-Microsoft-Antispam:
+	BCL:0;ARA:13230040|366016|376014|1800799024|19092799006|10070799003|3023799007|56012099006|22082099003|6133799003|4143699003|11063799006|18002099003;
+X-Microsoft-Antispam-Message-Info:
+	GQFOE6P/jGXQi/1U3DC8o4KuHg0D4cKfaIZSQsbddMCKxamhz9vt03NyNEfIX3BeOrnBXLyga1AoVU4taow50qXs9YIC4npdq6Lp30SNTcxIh0nkJNOb/sCzYnzdpLSC0bAyu8Uya5KKCYiBVT1bRIrMgRHC+7pZdz+cKnLwqvMDKCK9Lx7+olmXl3cjnWhhhgNezwhA2Nz+XBby2JuXjwQ05WDuPyT/+zcWJQAH11EBfbrlVf9ii0p25QXs8lts94+8az94Mv2pH7fCo1tRE1SelRd9evh0ktn+CKNGijbemsngdso7G+45vU5Uqtu7PE+hNDrYWkgHL3tK/UxWNYzmcFn2gTNDnvzu1pK+Z96lt8TjnYEpxPsucU7WY8wbqxW38CU4pCvQnc6v/ngcL2Qh8H8NlPsmIOp55JLiUZY03idsD8DjpXUYhFSRK+t2Z8o4iUl/7RwX2Jp2lWzvq5wTn5RcLld0ZvXS0xdonnVBpvzZ4zXIZdt5pY/5GBgsY9CzNtWAAAS9hVDPW0VVed31+ZsW0M0k9WCxQEAY+XIm8Qk064NmucKgHiIOIy9lSmi+lIad1dSj6J+Lfq4ThHy9yqSXwjRTUGqstGyYXQjU8OH6VeY+yAK/W5YE/dcozypUGy+iR3fffLf+IalTX0IcASIAOn9EvsGdKLzeVWb8rLxrrspGVcj8dKKhg7Km
+X-Forefront-Antispam-Report:
+	CIP:255.255.255.255;CTRY:;LANG:en;SCL:1;SRV:;IPV:NLI;SFV:NSPM;H:AM0PR04MB6900.eurprd04.prod.outlook.com;PTR:;CAT:NONE;SFS:(13230040)(366016)(376014)(1800799024)(19092799006)(10070799003)(3023799007)(56012099006)(22082099003)(6133799003)(4143699003)(11063799006)(18002099003);DIR:OUT;SFP:1101;
+X-MS-Exchange-AntiSpam-MessageData-ChunkCount: 2
+X-MS-Exchange-AntiSpam-MessageData-0:
+	=?us-ascii?Q?yhLpkSwFt3LdXX9t+67SLHe2KEVLxxfWlSSPswtZUl/yzds4FMeFivTVmENM?=
+ =?us-ascii?Q?hcQ7JuLQXiKq4pEr3x5qOgwbsHCYhqXXo8808XPReyB9J4jdLEV5xSBbk+G8?=
+ =?us-ascii?Q?yXSt21Od5RrNLd61gYmniU5qxq8zfblPWyZrQ11BNxMEcj5LmVUIGJHkqJVi?=
+ =?us-ascii?Q?UQnE8fWtohSdW6fgw760JoCFETB7RoTa8rx3qH1m+k03iaTudVmTfJi7xhQ0?=
+ =?us-ascii?Q?/E94RbvsikqWlcvVbhfgpSxTOBQnVGpGsKYZDw+rfRtJ18swVt6nyogvj7Me?=
+ =?us-ascii?Q?CdM2OZ0BYBfl3DG0pwe0GnqJgmW6XN8s6H676axD8P3hr6HZeBX29U8OFXOQ?=
+ =?us-ascii?Q?NohFdaeeLvhiFEDCgM4aKI9lBg+8dlf1LsCaGcjrGsGpOh4BtFwJ8JmFgbnV?=
+ =?us-ascii?Q?Qd1aAqu1+r+MSorC2jgUINN4m+oetk4UHGlHsqXDCSs7VGGg3g6KbZIwy8pl?=
+ =?us-ascii?Q?8IXlUH2fkVqmrroaU6m3Ur7ppIOUJx4gqFJ6wCp+/xIGPiiing57HyJeJTDS?=
+ =?us-ascii?Q?KQaj4kNJ/QJxtv9ogw4hSSmjF7LndjvRHEiCb1oAfH+Th69aFR98O1rlWtit?=
+ =?us-ascii?Q?9RS8arGrkq0n01DwKBDEO6n6sP68MxB1v+Jf8prO2OwWN3L2wksmiTLx3rQZ?=
+ =?us-ascii?Q?sUSwxSaPFKZGQHAEHyMb3zCl4jgIW0/0/YuwM6PxHk1YnYh93B24Cd9UESGX?=
+ =?us-ascii?Q?ia0hU+iZb/XGoc8iFdiQAHQsIrrsYYev1kRJC92o5m1LChqiI399GUYros+P?=
+ =?us-ascii?Q?4OmxhUQPUHdU+ancIyUd9t9OwNyGRaqMy5rWfMaMz41rmGs2Emb/O+YZdlLv?=
+ =?us-ascii?Q?SQpj//hwiAVahYfmUv88d6nTzxgFkGQti1RPs6ocpDXVzODPVajQU1jfqI0B?=
+ =?us-ascii?Q?O92Lu+LgrxtPxj0Pdg36x0JbGPzxbtPqLLpFiCEPT8u78wLqiFGcRR1LPgWh?=
+ =?us-ascii?Q?CZF5cCQADvcPgNUS3fzg/eI89ikwaCylL0MllT2bhbAgKSwA3ULdYbuApAkQ?=
+ =?us-ascii?Q?8ie5f1CsXy7Zc90pwDCsg7jFKMENxB8bo1bRIN2sYGzridw+6VYB2vzUkP6L?=
+ =?us-ascii?Q?w7zbaydJpCP0VOdLjXPNFMDlXU/V8r9BTCJav+kdjY6Jn2A912wSv0eFyPRT?=
+ =?us-ascii?Q?aqeJg6mGnYU+i8LNelx7PHjWkVeSls3TQPEGrVE9iyY/4TaLMAaM8iK34ADu?=
+ =?us-ascii?Q?uRzp9ZHO8AuzdTnchtfDSsgLEblOMBxvsKbtRg9JgOSUNSU5MSuGKaZJ5x8o?=
+ =?us-ascii?Q?ad8y1n7QPAmrZxtZ4X6Aab2iCO2r8iRnG27SVgvhsRL97QIWMSqphSqye8Sb?=
+ =?us-ascii?Q?6CSW2nq3C5NEVI1n6gyHNlLr1UPY7PHn4hgPUXKkpvAoo0uyiU5VAgfZWNC1?=
+ =?us-ascii?Q?uJBAhJ5sg0XYLUaEaCGzw6Y5ALJZyk4gyIODOoHnlsa3y2M+/x1DM1Vlzq6L?=
+ =?us-ascii?Q?N8E6c1lCvid7BIeyPZiCalTb98Fv+SbGmLXecggChvRL6r7G2hCWEqgIy39g?=
+ =?us-ascii?Q?SymARavFvc4/IuIQo/WbPWDM1CmXGzKJrywGjhcfH0dFAInBNEBCKyZF1I8c?=
+ =?us-ascii?Q?kkQzpG8diu5wcgXffoREUQrRiAtobbfNr1cGgqvxFhRtRnd+en+2rd4QGg5Z?=
+ =?us-ascii?Q?114uiyKv4322tLcCkIlYptlg5xXp1LGYvRCQCn9JWeS6uOUn4lEHpqM7pmfA?=
+ =?us-ascii?Q?9x8IOLRZ8imPTUxd5u+Ae8TpVhSKXxnMjrlR1jlwEjZgHhe6sQiuY2vAInJp?=
+ =?us-ascii?Q?MV5iDtBxOlLwsE+4FSGykToAG98Q5caerXeIQXoc/O1H5+KGmNr4fc22LEW/?=
+X-MS-Exchange-AntiSpam-MessageData-1: o5goLjUfQ0rZBd8DdNYtXc6Gba9HeypUJr4=
+X-OriginatorOrg: nxp.com
+X-MS-Exchange-CrossTenant-Network-Message-Id: 9ce5c54b-c112-4bf8-10b4-08dec166cb5c
+X-MS-Exchange-CrossTenant-AuthSource: AM0PR04MB6900.eurprd04.prod.outlook.com
+X-MS-Exchange-CrossTenant-AuthAs: Internal
+X-MS-Exchange-CrossTenant-OriginalArrivalTime: 03 Jun 2026 11:53:57.7593
+ (UTC)
+X-MS-Exchange-CrossTenant-FromEntityHeader: Hosted
+X-MS-Exchange-CrossTenant-Id: 686ea1d3-bc2b-4c6f-a92c-d99c5c301635
+X-MS-Exchange-CrossTenant-MailboxType: HOSTED
+X-MS-Exchange-CrossTenant-UserPrincipalName: O+h0Gxex97KFh5Q1l0GkRgPQ/FAjDKSHAzxrib/Yf3EHxbB8g/sQ9LTphgD2mu/2tIbdoIftwtiRbv6zGFMqWA==
+X-MS-Exchange-Transport-CrossTenantHeadersStamped: AM9PR04MB7667
 
-On Wed, 2026-06-03 at 13:22 +0200, Boris Brezillon wrote:
-> On Wed, 03 Jun 2026 12:07:42 +0200
-> Philipp Stanner <phasta@mailbox.org> wrote:
->=20
-> > On Wed, 2026-06-03 at 11:58 +0200, Boris Brezillon wrote:
-> > > On Wed, 3 Jun 2026 11:52:47 +0200
-> > > Boris Brezillon <boris.brezillon@collabora.com> wrote:
-> > > =C2=A0=20
-> > > > On Wed, 03 Jun 2026 09:43:55 +0200
-> > > > Philipp Stanner <phasta@mailbox.org> wrote:
-> > > > =C2=A0=20
-> > > > > On Wed, 2026-06-03 at 08:48 +0200, Boris Brezillon wrote:=C2=A0=
-=C2=A0=C2=A0=20
-> > > > > > On Wed, 03 Jun 2026 08:10:51 +0200
-> > > > > > Philipp Stanner <phasta@mailbox.org> wrote:
-> > > > > > =C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=20
-> > > > > > > +Cc Danilo, Gary, Daniel, Christian
-> > > > > > > (who seem to have been lost because Sashiko dropped them and =
-this thread is a reply to that tool)
-> > > > > > >=20
-> > > > > > >=20
-> > > > > > > On Tue, 2026-06-02 at 15:25 +0000, Alice Ryhl wrote:=C2=A0=C2=
-=A0=C2=A0=C2=A0=C2=A0
-> > > > > > > > On Tue, Jun 02, 2026 at 02:06:43PM +0200, Philipp Stanner w=
-rote:=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=20
-> > > > > > > > > On Tue, 2026-06-02 at 11:59 +0000, Alice Ryhl wrote:=C2=
-=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=20
-> > > > > > > > > > On=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=20
-> > > > > > > > >=20
-> > > > > > > > > [=E2=80=A6]
-> > > > > > > > > =C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=20
-> > > > > > > > > > > >=20
-> > > > > > > > > > > > If you don't implement Sync, then DriverFence canno=
-t be stored in an
-> > > > > > > > > > > > Arc. I wouldn't take away that ability unless you h=
-ave to, and I don't
-> > > > > > > > > > > > see anything in the DriverFence API that would mean=
- you can't do that.=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=20
-> > > > > > > > > > >=20
-> > > > > > > > > > > Nope. We explicitly agreed on this design.
-> > > > > > > > > > >=20
-> > > > > > > > > > > Just 1 DriverFence. Just 1 party that can signal it.
-> > > > > > > > > > > Note that we also agreed upon the Driverfence disappe=
-aring with
-> > > > > > > > > > > .signal(), which certainly prevents several from exis=
-ting, unless you
-> > > > > > > > > > > do an Option.take()=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=
-=A0=C2=A0=20
-> > > > > > > > > >=20
-> > > > > > > > > > I would like to clarify that I'm not suggesting any cha=
-nges to the
-> > > > > > > > > > design. Implementing Sync is not the same as having mul=
-tiple driver
-> > > > > > > > > > fences.=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=20
-> > > > > > > > >=20
-> > > > > > > > > I mean, I guess one can do that. But it's up to the drive=
-r then to see how it can signal its fence.=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=
-=A0=C2=A0=20
-> > > > > > > >=20
-> > > > > > > > I don't believe Sync changes anything with that regard. The=
- signal
-> > > > > > > > method takes 'self', but the Sync trait only affects how '&=
-self' methods
-> > > > > > > > can be called.
-> > > > > > > > =C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=20
-> > > > > > > > > > > > > > > > =C2=A0so even though
-> > > > > > > > > > > > > > > > the fence context may be valid for another =
-grace period, the *pointer*
-> > > > > > > > > > > > > > > > to the fence context is not. The pointer co=
-uld have been zeroed by the
-> > > > > > > > > > > > > > > > destructor.=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=
-=C2=A0=C2=A0=20
-> > > > > > > > > > > > > > >=20
-> > > > > > > > > > > > > > > That particular pointer to the DriverFenceDat=
-a could have been zeroed.
-> > > > > > > > > > > > > > > But potential other accessors have already cr=
-afted themselves a new
-> > > > > > > > > > > > > > > pointer to the, by the power of RCU, still va=
-lid data. That new pointer
-> > > > > > > > > > > > > > > is container-of-ed from struct dma_fence *f.=
-=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=20
-> > > > > > > > > > > > > >=20
-> > > > > > > > > > > > > > I'm not talking about the pointer to DriverFenc=
-eData, I'm talking about
-> > > > > > > > > > > > > > the pointer to the FenceCtx, or the pointer to =
-the data (if F is
-> > > > > > > > > > > > > > RcuBox).=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=
-=A0=20
-> > > > > > > > > > > > >=20
-> > > > > > > > > > > > > Yeah, but the backing memory is still alive. And =
-new pointers to that
-> > > > > > > > > > > > > memory get crafted by the accessors. If a callbac=
-k accesses the data
-> > > > > > > > > > > > > through `container_of(Fence)`, it gets a new poin=
-ter.
-> > > > > > > > > > > > >=20
-> > > > > > > > > > > > > So what's the problem?
-> > > > > > > > > > > > >=20
-> > > > > > > > > > > > > Where is the invalid pointer that someone is acce=
-ssing?
-> > > > > > > > > > > > > =C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=20
-> > > > > > > > > > > > > >=20
-> > > > > > > > > > > > > > The Arc type is not a type that opts-out of &mu=
-t =3D=3D exclusive, so the
-> > > > > > > > > > > > > > second drop_in_place() above is assumed exclusi=
-ve access to the
-> > > > > > > > > > > > > > Arc<FenceCtx<F,C>> field.=C2=A0=C2=A0=C2=A0=C2=
-=A0=C2=A0=C2=A0=C2=A0=20
-> > > > > > > > > > > > >=20
-> > > > > > > > > > > > > OK, so I think I see the problem. So the invalid =
-pointer is
-> > > > > > > > > > > > > Arc<FenceCtx=E2=80=A6>? And potentially the <F> p=
-ointer (although we don't have
-> > > > > > > > > > > > > a picture yet as to how that would be accessed th=
-rough other callbacks.
-> > > > > > > > > > > > > =C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=20
-> > > > > > > > > > > > > > =C2=A0If another thread obtains a pointer to th=
-e
-> > > > > > > > > > > > > > FenceCtx via reading the fctx field of the Driv=
-erFence in parallel with
-> > > > > > > > > > > > > > this, then that's not allowed because the drop_=
-in_place() call has
-> > > > > > > > > > > > > > exclusive access to that field.=C2=A0=C2=A0=C2=
-=A0=C2=A0=C2=A0=C2=A0=C2=A0=20
-> > > > > > > > > > > > >=20
-> > > > > > > > > > > > > I think I have been asking in several of our meet=
-ings in the past
-> > > > > > > > > > > > > whether it is actually a problem to access data t=
-hat has been dropped()
-> > > > > > > > > > > > > IF we know that drop does not cause UAF and the a=
-nswer was kind of like
-> > > > > > > > > > > > > a "well if it does not actually get freed=E2=80=
-=A6"=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=20
-> > > > > > > > > > > >=20
-> > > > > > > > > > > > Ok, well, IMO the simplest approach is to say you c=
-an't. There may be
-> > > > > > > > > > > > roundabout ways to do it, but I would suggest that =
-we just ... don't.=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=20
-> > > > > > > > > > >=20
-> > > > > > > > > > > Ack.
-> > > > > > > > > > > =C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=20
-> > > > > > > > > > > > =C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=20
-> > > > > > > > > > > > > Anyways.
-> > > > > > > > > > > > >=20
-> > > > > > > > > > > > > It would seem the way to get this right is then
-> > > > > > > > > > > > >=20
-> > > > > > > > > > > > > synchronize_rcu();
-> > > > > > > > > > > > > drop_in_palace(data);
-> > > > > > > > > > > > >=20
-> > > > > > > > > > > > >=20
-> > > > > > > > > > > > > Agreed?
-> > > > > > > > > > > > >=20
-> > > > > > > > > > > > > This would then mean, however, that every time a =
-fence drops, you have
-> > > > > > > > > > > > > to wait a grace period.
-> > > > > > > > > > > > >=20
-> > > > > > > > > > > > > Or maybe stuff DriverFenceData into an RcuBox, to=
-o, and defer its
-> > > > > > > > > > > > > dropping.=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=
-=A0=20
-> > > > > > > > > > > >=20
-> > > > > > > > > > > > That would work, but I think we can do better and a=
-void the
-> > > > > > > > > > > > synchronize_rcu() along these lines:
-> > > > > > > > > > > >=20
-> > > > > > > > > > > > unsafe trait RcuRevocable {
-> > > > > > > > > > > > =C2=A0=C2=A0=C2=A0 unsafe fn rcu_revoke_in_place(pt=
-r: *mut Self);
-> > > > > > > > > > > > }
-> > > > > > > > > > > >=20
-> > > > > > > > > > > > This trait provides a method that's like drop_in_pl=
-ace(), except that
-> > > > > > > > > > > > when you use this destructor, the value remains usa=
-ble for one grace
-> > > > > > > > > > > > period. You could implement it for RcuBox, and for =
-any Copy type, and
-> > > > > > > > > > > > for ARef<T> when T is cleaned up with rcu, and prob=
-ably also other
-> > > > > > > > > > > > stuff.=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=
-=20
-> > > > > > > > > > >=20
-> > > > > > > > > > > I mean, this cannot be magic. It also boils down to e=
-xecuting one RCU
-> > > > > > > > > > > callback per DriverFence dropping.
-> > > > > > > > > > >=20
-> > > > > > > > > > > Is there a significant difference to stuffing DriverF=
-enceData into an
-> > > > > > > > > > > RcuBox?=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=20
-> > > > > > > > > >=20
-> > > > > > > > > > Do you mean hard-coding that the user-data of a driver =
-fence is always
-> > > > > > > > > > stored in an RcuBox?=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=
-=A0=C2=A0=20
-> > > > > > > > >=20
-> > > > > > > > >=20
-> > > > > > > > > I'm talking about this:
-> > > > > > > > >=20
-> > > > > > > > >=20
-> > > > > > > > >=20
-> > > > > > > > > impl<F: Send + Sync + DriverFenceAllowedData, C: Send + S=
-ync> DriverFenceAllocation<F, C> {
-> > > > > > > > > =C2=A0=C2=A0=C2=A0 /// Create a new allocation slot that =
-can later be used to create a fully
-> > > > > > > > > =C2=A0=C2=A0=C2=A0 /// initialized [`DriverFence`] withou=
-t the need to allocate.
-> > > > > > > > > =C2=A0=C2=A0=C2=A0 pub fn new(fctx: Arc<FenceCtx<F, C>>, =
-data: F) -> Result<Self> {
-> > > > > > > > > =C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 let fence_data=
- =3D DriverFenceData {
-> > > > > > > > > =C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=
-=A0=C2=A0 // `inner` remains uninitialized until a [`DriverFence`] takes ov=
-er.
-> > > > > > > > > =C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=
-=A0=C2=A0 inner: Fence {
-> > > > > > > > > =C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=
-=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 inner: Opaque::uninit(),
-> > > > > > > > > =C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=
-=A0=C2=A0 },
-> > > > > > > > > =C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=
-=A0=C2=A0 fctx,
-> > > > > > > > > =C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=
-=A0=C2=A0 data,
-> > > > > > > > > =C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 };
-> > > > > > > > >=20
-> > > > > > > > > =C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 // In order to=
- support the C dma_fence callbacks, it is necessary for
-> > > > > > > > > =C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 // a `Fence` a=
-nd a `DriverFence` to live in the same allocation,
-> > > > > > > > > =C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 // because the=
- C backend passes a dma_fence, from which the driver most
-> > > > > > > > > =C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 // likely want=
-s to be able to access its `data` in `DriverFence`.
-> > > > > > > > > =C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 //
-> > > > > > > > > =C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 // Hence, we n=
-eed the manage the memory manually. It will be freed by the
-> > > > > > > > > =C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 // C backend a=
-utomatically once the refcount within `Fence` drops to 0.
-> > > > > > > > > =C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 let data =3D R=
-cuBox::new(fence_data, GFP_KERNEL | __GFP_ZERO)?;
-> > > > > > > > >=20
-> > > > > > > > > =C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 Ok(Self { data=
- })
-> > > > > > > > > =C2=A0=C2=A0=C2=A0 }
-> > > > > > > > >=20
-> > > > > > > > >=20
-> > > > > > > > > This way, the entire DriverFenceData will remain valid fo=
-r an
-> > > > > > > > > additional grace period. I suppose this would solve your =
-pointer-
-> > > > > > > > > invalid concern.
-> > > > > > > > >=20
-> > > > > > > > > However, it appears like overkill to me because the refco=
-unting + C
-> > > > > > > > > backend already ensure that nothing drops too soon, and t=
-he backend
-> > > > > > > > > frees with kfree_rcu(), so=E2=80=A6=C2=A0=C2=A0=C2=A0=C2=
-=A0=C2=A0=C2=A0=C2=A0=20
-> > > > > > > >=20
-> > > > > > > > I agree that it doesn't sound like we want RcuBox here.
-> > > > > > > >=20
-> > > > > > > > What kind of metadata are we actually planning to store in =
-the
-> > > > > > > > DriverFence in practice?=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=
-=A0=C2=A0=20
-> > > > > > >=20
-> > > > > > > I suppose it might be GPUVM payloads. IIRC in Tyr it's curren=
-tly just
-> > > > > > > empty structs as some sort of identifier. I guess copies of t=
-he actual
-> > > > > > > command buffers will also reside in their associated fences.
-> > > > > > >=20
-> > > > > > > But Boris, Daniel and Danilo probably have something smart to=
- say about
-> > > > > > > that.=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=20
-> > > > > >=20
-> > > > > > In Tyr we don't need any, because we're using SW signalling: we=
- get an
-> > > > > > interrupt, look at our HW fence seqno, and walk the set of pend=
-ing
-> > > > > > fences to signal them with the ::signal() method (that's an
-> > > > > > over-simplified view of it, but functionally that's how it work=
-s).
-> > > > > >=20
-> > > > > > Now, the question is more, what drivers planning to support HW
-> > > > > > signaling want attached to the DriverFence. My gut feeling is t=
-hat now
-> > > > > > that we have a way to get back to the FenceCtx, and given that =
-FenceCtx
-> > > > > > also has driver-specific data attached to it, most common use c=
-ases
-> > > > > > where the fence contains a backpointer to its timeline/creator =
-are
-> > > > > > covered. If I look at nouveau_fence [1] (I intentionally looked=
- at the
-> > > > > > most likely next user of this) for instance:
-> > > > > >=20
-> > > > > > struct nouveau_fence {
-> > > > > > 	struct dma_fence base;
-> > > > > >=20
-> > > > > > 	struct list_head head;
-> > > > > >=20
-> > > > > > 	struct nouveau_channel __rcu *channel;
-> > > > > > 	unsigned long timeout;
-> > > > > > };=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=20
-> > > > >=20
-> > > > > Thx for the explanation
-> > > > > =C2=A0=C2=A0=C2=A0=20
-> > > > > >=20
-> > > > > > - channel is basically the FenceCtx in your new design
-> > > > > > - head is used to insert the fence in the fence context list. N=
-ot too
-> > > > > > =C2=A0 sure how it translates in rust (insertion in an XArray i=
-nstead?).
-> > > > > > =C2=A0 Anyway, that's just stuff you need to make your fence pa=
-rt of the
-> > > > > > =C2=A0 context timeline, so it's again related to how you link =
-a fence to
-> > > > > > =C2=A0 its context and let the context walk back pending fences=
- when it
-> > > > > > =C2=A0 needs to. Feels like my original FenceTimeline abstract =
-proposal [2]
-> > > > > > =C2=A0 could help make this thing generic, but let's reconsider=
- this once
-> > > > > > =C2=A0 we've got the basics sorted out, please
-> > > > > > - timeout is probably the only thing of interest here, assuming=
- things
-> > > > > > =C2=A0 can be signaled out of order (if they are signaled in or=
-der, like is
-> > > > > > =C2=A0 the case in Tyr, the timeout can just be on the FenceCtx=
-Data and
-> > > > > > =C2=A0 represent the timeout of the first fence in the set). An=
-yway, that's a
-> > > > > > =C2=A0 scalar, so no fancy ::drop() needed if that's what you'r=
-e worried
-> > > > > > =C2=A0 about=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=20
-> > > > >=20
-> > > > > What we / Alice are worried about is multiple things.
-> > > > >=20
-> > > > > One issue is that Alice believes that=20
-> > > > >=20
-> > > > > =C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 // SAFETY: `self.data`=
- is owned by the DriverFence, but could be accessed
-> > > > > =C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 // through some dma_fe=
-nce callbacks right now. Access is being revoked
-> > > > > =C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 // above by signalling=
- the fence. The DriverFenceSafeToDrop trait
-> > > > > =C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 // ensures that the da=
-ta either does not need drop, or if it does it
-> > > > > =C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 // lives in a RcuBox w=
-hich will delay dropping by one grace period, hence
-> > > > > =C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 // ensuring that all r=
-eaders have disappeared.
-> > > > > =C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 unsafe { drop_in_place=
-(self.data.as_ptr()) };
-> > > > >=20
-> > > > >=20
-> > > > > from DriverFence::drop() invalidates the pointers that thread A
-> > > > > accesses, even if DriverFence::data.data's drop is delayed with R=
-CU.
-> > > > >=20
-> > > > > Now if thread B drops DriverFence, thread A could use invalid poi=
-nters,
-> > > > > but while still operating on non-deallocated memory (because our
-> > > > > refcounting guards against that).=C2=A0=C2=A0=C2=A0=20
-> > > >=20
-> > > > This is where I think our very permissive dma_fence callback design=
- is
-> > > > hitting us in the face. There are callbacks that are called with th=
-e
-> > > > fence lock held (::enable_signalling(), ::signaled()), and because =
-we
-> > > > forcibly signal on DriverFence::drop() (which requires locking as w=
-ell)
-> > > > and then drop the DriverFenceData::data (I'd expect
-> > > > DriverFenceData::fctx to be manually dropped too, but I don't see
-> > > > that done in the current version), the problem you're describing do=
-esn't
-> > > > exist, I think.=C2=A0=20
-> >=20
-> > The problem of *nominally* those Rust pointers / references in
-> > DriverFenceData becoming invalid does exist.
-> >=20
-> > But I tend to believe that this is a syntactic theoretical problem. All
-> > the memory is still valid.
->=20
-> But accessing an Arc<Xx> that has been dropped is invalid. You just
-> basically rely on the implementation leaving the memory as is after it
-> dropped the ref it had, but there's nothing preventing it from zero-ing
-> the Arc<>, at which point this becomes a NULL deref. Also, when you
-> drop DriverFenceData::fctx, you might very well be the last FenceCtx
-> owner, so FenceCtx can go away at this point, meaning your in-flight
-> dma_fence_ops::{driver,timeline}_name() callbacks might now point to
-> memory that has been returned to the system and lead to a UAF.
+On Fri, May 29, 2026 at 06:21:17PM +0000, sashiko-bot@kernel.org wrote:
+> Thank you for your contribution! Sashiko AI review found 3 potential issue(s) to consider:
+> 
+> New issues:
+> - [High] Incorrect restoration of the PCCR mux configuration because `0` is treated as uninitialized.
+> - [High] Potential timing violation when bringing lanes out of reset and power down simultaneously.
+> 
+> Pre-existing issues:
+> - [High] lynx_xlate can return a NULL pointer for unprobed PHY lanes, leading to a NULL pointer dereference in the PHY core framework.
+> --
+> 
+> commit 851e6824db7b03958722b9808f3549609168de99
+> Author: Vladimir Oltean <vladimir.oltean@nxp.com>
+> 
+> phy: lynx-10g: new driver
+>     
+> Introduce a driver for the networking lanes of the 10G Lynx SerDes
+> block, present on the majority of Layerscape and QorIQ (Freescale/NXP)
+> SoCs.
+> 
+> > diff --git a/drivers/phy/freescale/phy-fsl-lynx-10g.c b/drivers/phy/freescale/phy-fsl-lynx-10g.c
+> > index 0000000000000..9b04d6a4b825a
+> > --- /dev/null
+> > +++ b/drivers/phy/freescale/phy-fsl-lynx-10g.c
+> [ ... ]
+> > +static int lynx_10g_lane_enable_pcvt(struct lynx_lane *lane,
+> > +				     enum lynx_lane_mode mode)
+> > +{
+> > +	struct lynx_priv *priv = lane->priv;
+> > +	u32 val;
+> > +	int err;
+> > +
+> > +	spin_lock(&priv->pcc_lock);
+> [ ... ]
+> > +	if (lane->default_pccr[mode]) {
+> [Severity: High]
+> Can this condition incorrectly fall through to hardcoded defaults if a valid
+> mux configuration of 0 is backed up?
+> 
+> Since default_pccr is zero-initialized by devm_kcalloc(), a backed-up value
+> of 0 evaluates to false. This skips the restoration and allows the driver to
+> apply hardcoded defaults later, which could permanently reroute the hardware
+> lanes and break the network interface.
 
-Nope.
-The Arc<fctx> can earliest disappear once the DriverFence dropped. The
-Arc<fctx> has been allocated with DriverFenceAllocation. That memory
-only does become re-usable once dma_fence_put() in DriverFence::drop()
-releases the memory.
+No it cannot. default_pccr[mode] == 0 is not a valid mux configuration,
+it universally means the protocol converter is disabled.
 
-A consuming / reading Fence also holds a refcount.
+> > +		err = lynx_pccr_write(lane, mode, lane->default_pccr[mode]);
+> > +		goto out;
+> > +	}
+> > +
+> > +	val = 0;
+> [ ... ]
+> > +static int lynx_10g_power_on(struct phy *phy)
+> > +{
+> > +	struct lynx_lane *lane = phy_get_drvdata(phy);
+> > +
+> > +	if (lane->powered_up)
+> > +		return 0;
+> > +
+> > +	/* The RM says to wait for at least 120ns between per lane setting have
+> > +	 * been changed and the lane being taken out of reset
+> > +	 */
+> > +	usleep_range(1, 2);
+> > +
+> > +	lynx_lane_rmw(lane, LNaGCR0, LNaGCR0_RRST_OFF | LNaGCR0_TRST_OFF,
+> > +		      LNaGCR0_RRST | LNaGCR0_TRST |
+> > +		      LNaGCR0_RX_PD | LNaGCR0_TX_PD);
+> [Severity: High]
+> Does this code violate typical PHY hardware sequencing by clearing both the
+> power-down bits and digital reset bits simultaneously?
+> 
+> Releasing the digital reset at the same time as activating the analog
+> components doesn't leave time for the analog circuitry to stabilize. The
+> prior usleep_range() occurs before power-up is initiated, which might not
+> prevent hardware lockups or unreliable behavior on link up.
 
-The FenceCtx on the other hand delays its drop() by an RCU grace
-period. So until all accessors are gone.
+This is actually a great comment. Re-reading the hardware documentation,
+the power up sequence is indeed messed up. Will fix for v3.
 
-Where is the problem?
+> > +
+> > +	lane->powered_up = true;
+> > +
+> > +	return 0;
+> > +}
+> [ ... ]
+> > +static int lynx_10g_probe(struct platform_device *pdev)
+> > +{
+> > +	return lynx_probe(pdev, of_device_get_match_data(&pdev->dev),
+> > +			  &lynx_10g_ops);
+> > +}
+> [Severity: High]
+> This is a pre-existing issue, but does the core PHY framework crash if
+> lynx_xlate() returns a NULL pointer for an unprobed PHY lane?
+> 
+> If a PHY lane is requested via device tree but the driver did not probe it,
+> priv->lane[idx].phy will be NULL. If lynx_xlate() returns this NULL pointer,
+> the core PHY framework interprets it as a successful retrieval of an optional
+> PHY and might attempt to dereference it. Would it be safer to explicitly
+> return ERR_PTR(-ENODEV) in lynx_xlate() when the phy pointer is NULL?
 
->=20
-> >=20
-> > The FenceCtx cannot disappear because its drop is delayed with
-> > synchronize_rcu() (previously rcu_barrier()).
->=20
-> Okay, so that protects against the UAF I was mentioning, but fact the
-> Arc implementation doesn't give any guarantee about what happens to the
-> dropped Arc is still problematic.
-
-Well yes, that's the "what does drop() really do" issue I was
-mentioning.
-
-Anyways.
-Can you think of a solution?
-
->=20
-> >=20
-> > It's really just about the question whether
-> >=20
-> > rcu_read_lock()
-> > let ptr =3D something_valid_for_a_grace_period;
-> > drop(something_valid_for_a_grace_period); // delayed by a GP
-> > do_stuff_with_(ptr);
-> > rcu_read_unlock()
-> >=20
-> > is dangerous or not.
->=20
-> It's more:
->=20
-> thread A						| thread B			| thread C
-> 							|				|
-> rcu_read_lock()						|				|
-> =C2=A0let ptr =3D something_valid_for_a_grace_period;		|				|
-> 							| rcu_defer(drop(ptr))		|
-> =C2=A0do_stuff_with_(ptr);					|				|
-> rcu_read_unlock()					|				|
-> 							|				| drop(ptr)
->=20
-
-Yep, that's what I meant, but was too lazy to draw it properly <.<
-
-> And yes, as long as the drop is always deferred I don't see an
-> issue. But IIUC, you were trying to not defer the drop unless
-> the F on DriverFenceData needs a drop. The fact DriverFenceData::fctx
-> is also impacted by that immediate ::drop() means you have to defer
-> the drop() unconditionally now.
-
-I have to defer the drop() *of the FenceCtx* unconditionally. Which is
-fine, because how often does that happen?
-
->=20
-> >=20
-> > Alice doesn't like it =E2=80=93 but I do point out that the memory cann=
-ot go
-> > away. So in C this is perfectly safe.
->=20
-> It might work, but it's very very fragile, to say the least. Honestly,
-> the more I think about it, the more I believe we should defer the drop
-> unconditionally and call it a day. Yes, it's a potential overhead,
-> but it's, IMHO, way better than relying on some Arc implementation
-> details that might change at some point.
-
-That or perhaps Revocable. But since Revocable also just defers
-unconditionally AFAICT=E2=80=A6
-
-That said, is it legal to always wait a grace period?
-
->=20
-> >=20
-> > About Rust, I don't know.
-> >=20
-> > > >=20
-> > > > That leaves those that are not called with the lock held, and for
-> > > > which we rely on the RCU lock:
-> > > >=20
-> > > > - ::get_{driver,timeline}_name() get back to the FenceCtx to get th=
-ose
-> > > > =C2=A0 names, and if the Arc<FenceCtx> inside the DriverFenceData i=
-s dropped,
-> > > > =C2=A0 I guess it can't be trusted
-> > > > - ::set_deadline() is problematic as well
-> > > > - ::wait() and ::release() are deprecated
-> > > > =C2=A0=20
-> > > > >=20
-> > > > > The only way I can see to make that bullet proof would be to do
-> > > > > synchronize_rcu() before the drop_in_place() above =E2=80=93 but =
-that would
-> > > > > mean that we delay each fence drop by one grace period.=C2=A0=C2=
-=A0=C2=A0=20
-> > > >=20
-> > > > synchronize_rcu() in the DriverFence::drop() path is indeed not a g=
-reat
-> > > > idea. Not only because it adds an heavy synchronization point in a
-> > > > potentially hot-path, but also because you're back to a situation w=
-here
-> > > > DriverFence users need to be very careful about the context they ar=
-e
-> > > > when they drop these objects, and because drop() is an implicit
-> > > > operation most of the time, it becomes super fragile.=C2=A0=20
-> >=20
-> > We declared it illegal to drop a fence without signalling it. So it's
-> > not thaaat implicit.
->=20
-> What's implicit is that ::drop() is implicitly called when the object
-> goes out of scope.
-
-Ack.
-
->=20
-> >=20
-> > Moreover, the current suggestion for v2 is that we force the user to
-> > obey to our safety requirements:
-> >=20
-> >=20
-> > /// Trait to ensure that the fence implementation can safely drop the u=
-ser data
-> > /// passed in [`FenceCtx::new_fence_allocation()`].
->=20
-> So, if your fence is the last owner of FenceCtx, it drops the last ref,
-> and FenceCtx::drop() is called. In there, I guess the first thing you
-> do in FenceCtx::drop() which waits for a grace period to expire
-> which might force an unexpected blocking operation in the otherwise
-> super trivial atomic-safe FenceData::drop() path.
->=20
-
-IF the driver has already dropped its separate reference to FenceCtx,
-which it must have around somewhere, no?
-
-So that could only happen if a FenceCtx gets dropped *before* the last
-fence. That would only happen if the driver is tearing down, typically.
-
-But to be safe we could also demand the trait on FenceCtx::data.
-
->  Plus, then you have
-> to drop FenceCtx::data, which might or might not be SafeToDrop.
->=20
-> This is exactly the sort of complications I wanted to avoid initially,
-> and this is why I still think letting the user tell when it's
-> DriverFenceSafeToDrop is just calling for more pain.
-
-The trait is at the very least useful for documenting what the driver
-must not do in its data::drop().
-
->=20
-> > ///
-> > /// # Safety
-> > ///
-> > /// You must only implement this trait for your type if the following r=
-ules are
-> > /// obeyed to:
-> > ///
-> > /// 1. Your type either does not need [`Drop`] at all, OR drops only af=
-ter 1 RCU
-> > ///=C2=A0=C2=A0=C2=A0 grace period has passed.
-> > /// 2. If present, your [`Drop`] implementation performs no operations =
-illegal in
-> > ///=C2=A0=C2=A0=C2=A0 atomic context, such as allocating with GFP_KERNE=
-L.
-> > pub unsafe trait DriverFenceSafeToDrop {}
-> >=20
-> > https://gitlab.freedesktop.org/pstanner/linux-drm-work/-/blob/jobqueue-=
-dma-fence-v2/rust/kernel/dma_buf/dma_fence.rs?ref_type=3Dheads#L512
-> >=20
-> >=20
-> > That way we hit several birds with one stone. We get our delayed-by-a-
-> > grace-period drop, *and* we can very explicitly document: "you must not
-> > do atomic-hostile stuff in drop()".
-> >=20
-> > Pretty cool, right? :]
->=20
-> Except you don't know. Now you have to carefully audit
->=20
-> - FenceCtx::drop()
-> - FenceCtx::data::drop()
-
-Not our responsibility. Whoever implements the trait needs to audit
-that.
-
-The alternative is to stuff the data into an RcuBox unconditionally, if
-it does implement a drop().
-
->=20
-> to guarantee that this is safe. Because with this API, there's no
-> guarantee that the FenceCtx outlives the fences it emitted. BTW,
-> maybe we should enforce that with lifetimes instead of having an Arc<Fenc=
-eCtx>
-> in DriverFenceData.
-
-What. How is that not enforced?
-
-Each DriverFence refcounts the FenceCtx. It is impossible for the
-FenceCtx to disappear before a DriverFence.
-
->=20
-> >=20
-> > > >=20
-> > > > If we're going to force this synchronize_rcu(), I think it should b=
-e
-> > > > done when the FenceCtx is dropped, meaning we're back to a situatio=
-n
-> > > > where DriverFenceData::data is also RCU-deferred with an rcu_call()=
-,
-> > > > which, IIRC, was the original idea.=C2=A0=20
-> >=20
-> > See the trait, yes.
-> >=20
-> > > > =C2=A0=20
-> > > > >=20
-> > > > > I'm still not sure how real the problem really is, though. Becaus=
-e
-> > > > > refcounting guards, and drop() doesn't actually *do* something to=
- the
-> > > > > pointers, or does it?=C2=A0=C2=A0=C2=A0=20
-> > > >=20
-> > > > It doesn't do anything to the dma_fence part of the DriverFenceData=
-,
-> > > > but it can touch the driver-specific part, and most importantly, it
-> > > > might leave it with stale information that are then re-interpreted =
-by
-> > > > the dma_fence_ops callback that's still in-flight.=C2=A0=20
-> >=20
-> > Hmm no, I think this is all safe.
->=20
-> Well, this might be safe (baring the Arc invalidation I mentioned), but a=
-lso
-> super convoluted design that's hard to audit and maintain overtime. I'm
-> very skeptical that this is what we want to start with just to make
-> sure we optimize the case where no drop on fence data is needed.
-
-It is super convoluted.
-
-Please remember that we started out with a far simpler design, but the
-demand was made that we must already prepare for future support of
-is_signaled() callback & partner.
-
-Without the hw_signalling callbacks, we simply had
-
-Fence
-  |
-  | refcounts
-  V=20
-DriverFence
-
-both of which lived in their own allocations. Was super simple, well
-maintainable.
-
-
-I think we are approaching the point where we simply have "to die one
-[of many possible] deaths" (a german saying)
-
->=20
-> >=20
-> > It's really about the question whether you are allowed to access a
-> > pointer in Rust that has been dropped, even if you can guarantee that
-> > it is still valid after dropping (for a grace period).
->=20
-> An Arc, I don't think so.
-
-I don't know. See further above. The Arc's memory cannot be touched by
-anyone, cannot be reused.
-
-
-P.
+Will fix in v3.
