@@ -1,144 +1,151 @@
-Received: from mail-dl1-f54.google.com (mail-dl1-f54.google.com [74.125.82.54])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from mout-p-202.mailbox.org (mout-p-202.mailbox.org [80.241.56.172])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 288D931F986
-	for <sashiko-reviews@lists.linux.dev>; Wed,  3 Jun 2026 19:01:57 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=pass smtp.client-ip=74.125.82.54
-ARC-Seal:i=2; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1780513318; cv=pass; b=SiNNptcDIpnH66m4OXmfj+aljflElXu5VgG3a5yxhm/EQGqINin8hSUSDrfITleeQqqJ1CBKnqOiDUoqMNLBsEjrzgTTMHx/BWs/gXl7WcUgwmlRQKF7lGTMDpbu0Rn/0kqySTTQP07UotptDBpEtXfGagTytLjDoA+hV5fB5/k=
-ARC-Message-Signature:i=2; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1780513318; c=relaxed/simple;
-	bh=Xc5kcfMakf+nJeCEsm2n26H/r2PF//roHh+fh1kcMqM=;
-	h=From:In-Reply-To:References:MIME-Version:Date:Message-ID:Subject:
-	 To:Cc:Content-Type; b=CYRXB1C6Tq2Upolz9fDGS3Ur0rRHrPYpuqigodJx9ylhzOJjbxVpMmAuCgba1SGvuO8oKXLASE9XI9VDmra0z6ofRop8kFgEOb0sIYUO9Cfh9FIkhPkUSThtcTF05lzoJ9DnEFBpkzj2DmBYsFO+VXZmkovF5Q7BfpD7FUBVyPs=
-ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=google.com; spf=pass smtp.mailfrom=google.com; dkim=pass (2048-bit key) header.d=google.com header.i=@google.com header.b=jLpguWGu; arc=pass smtp.client-ip=74.125.82.54
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=google.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=google.com
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 29C0948C3EE
+	for <sashiko-reviews@lists.linux.dev>; Wed,  3 Jun 2026 19:43:46 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=80.241.56.172
+ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
+	t=1780515829; cv=none; b=hdr3k9rpdVmT9FRql9oqIM/g0hggrybb2iRnsIR0l46NR+MRY0tNztpn1UNvG+T6CpVJ6/M/8/i0rwjyCquu4GYLnI7KW0bAzHTJD3EgmcCdYyKY5c/CI+HJw1nvTlB2tF2qBopePMn3WbO5E9btKO5Peqx3Q+RlPiu2aVr8xpk=
+ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
+	s=arc-20240116; t=1780515829; c=relaxed/simple;
+	bh=3aYo/ev6hWbpdnajg8XRbsQo9rMs3p7erOe9olX+d14=;
+	h=Message-ID:Subject:From:To:Cc:Date:In-Reply-To:References:
+	 Content-Type:MIME-Version; b=QIvULsRKg0wO4rz80qw+MfV5jD3Zb4X8CBmrmeDWW6nobqJBYuIjgwfm2+32WxoV8t8JiuRx7TlbT6lAMi3l6z1IT788w/cw/NciYVhhD0zJ1kxteduhmYrvMRDX/yZTdRsLCelVR1rTdTxs2HEauOFwExEBlaVDc7denUJs0Kk=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=mailbox.org; spf=pass smtp.mailfrom=mailbox.org; dkim=pass (2048-bit key) header.d=mailbox.org header.i=@mailbox.org header.b=AaAdScBU; arc=none smtp.client-ip=80.241.56.172
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=mailbox.org
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=mailbox.org
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=google.com header.i=@google.com header.b="jLpguWGu"
-Received: by mail-dl1-f54.google.com with SMTP id a92af1059eb24-137f0aa125bso4661183c88.0
-        for <sashiko-reviews@lists.linux.dev>; Wed, 03 Jun 2026 12:01:56 -0700 (PDT)
-ARC-Seal: i=1; a=rsa-sha256; t=1780513316; cv=none;
-        d=google.com; s=arc-20240605;
-        b=WyUsr6ZRlG4F8crtIoZ5Y2NJ1BF94YCxkw+Z9WABQQvbZDAWQrjMa9hBKLRF9moQ5o
-         N8TPv8dLG4b5rM3rU/Ce1qfXqeL2EHxk93mkyO1Ol+9jjAkPXakxv/zB2hf6A5e3gC/O
-         iloKr/vQmxOTmfZ7UUfb+yWUEur95Q+4WSsJoGsGvWBzCK4U/ux3qRMefYgh1uZCP//0
-         ypE2Vacx5VrnDTOfQrf73MFiuj3QAsGnjUgWoCPjg0nvOH1malsPPO62agNn7C7M3rYB
-         Bk1b5f8GgDLaeHfE90LHQ0v2ntryQNtrRACzB6FKexpxvXi4FSmjS4l/TxRxOJyorMvP
-         amNQ==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com; s=arc-20240605;
-        h=cc:to:subject:message-id:date:mime-version:references:in-reply-to
-         :from:dkim-signature;
-        bh=FrdppwqBUMbQkQbLbGXJfGioEcfkU9p7vcumdWWrqwE=;
-        fh=KVy4+j+TE0qJlGnL1oxDtQvAs+ZlkPteDJwxhHS2piY=;
-        b=FlJKyNpaaq7SYj+wYKIM/GbDM9H7iQ+3cizfFAAXdf2FKhJ2UnYek9MRLWC1M0TcKQ
-         W93gFeHp15Kp4ilwLdsuaVP9VKsK/Zcl8BLCKkPCAWta9k+OlgD6wa2Zsla71ik2h7mW
-         uDVZcz9D5+rnFl5vtxYCYK8dKRcOCAwb/y1oFGhWy5r0UrKvm4Spd/fMCjhF+fZubG/P
-         pQoBL3IsGyj8Ghp937rkMcH1TQkCJY/k1SG/ovgazr6LaijYaBU2px41on3e6jZA8xL1
-         A3OfjoauMFjTFsDesIyf+B9EZZoLKdb/s2+9Tr3EfAbPYlQBEod8CmsSsugWKy13lxPU
-         bNKw==;
-        darn=lists.linux.dev
-ARC-Authentication-Results: i=1; mx.google.com; arc=none
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=google.com; s=20251104; t=1780513316; x=1781118116; darn=lists.linux.dev;
-        h=cc:to:subject:message-id:date:mime-version:references:in-reply-to
-         :from:from:to:cc:subject:date:message-id:reply-to;
-        bh=FrdppwqBUMbQkQbLbGXJfGioEcfkU9p7vcumdWWrqwE=;
-        b=jLpguWGuD7eeY9n47j67Ur3Q/DMsd58yTohSYb6tN5k4qaJJ9t+kAAdNxwD71XyOKL
-         cRqMOs3Sq1Z9UQpI6XGUSLKGTOA5hBpfcmwaP2G0LsP03hr7X56LkUXUg2NyQYUTp1u4
-         Yfxv2XmKVu5O7PEb4yqyp5BwsiMUMcT/9t0Ae3+fMXxpdWK6qA6r2/JK35+vq9dqJLPd
-         oA4Rs16WixfTeYmGFx/I8u4xclp4Nt10fhxkp8pEmB50vk+KwkHQV/YvLezP6PZTZoyn
-         guCGu1X8lnyKkANOWLbVT4n1dn/vKdD5p3nnQ23+Owy1QFQ2Se7yvURyWkZr4U2ZkyWu
-         hjZg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20251104; t=1780513316; x=1781118116;
-        h=cc:to:subject:message-id:date:mime-version:references:in-reply-to
-         :from:x-gm-gg:x-gm-message-state:from:to:cc:subject:date:message-id
-         :reply-to;
-        bh=FrdppwqBUMbQkQbLbGXJfGioEcfkU9p7vcumdWWrqwE=;
-        b=R6Qp0Yg8B1oDYed7sXw8Kao6JRMB7nwIkK1CXil0sIDO7OQhxYHJaQ0lvcU8Mi5oTN
-         fhGbcjgmUlAXnvEfdjAuHptimziOx237d6V9j3fwZphOe1fhLzv3L/da8pBj3CTEWxbY
-         RZYztznPw8KcPGuP4D67UNlLxzH/yXD3ISKuPEWeJnC4RsRu7zSJO7tj7vVdz7zTlfDd
-         YDj7+QhNn4pxviLADByYBizTtT9p0Jh0lmFGKJK1VkBN8WL09xR4Kqo+4lnXqzq2iGAg
-         0MQvAjWx0QMMnlnIvVR7pqNWFmEpxomiEzyosSy8YRsb+luAQxPo1VMa4w6MJXsmDrdR
-         FmEQ==
-X-Gm-Message-State: AOJu0YyncC25g2hIstoje67U3ctCRpCVc6Kr7WzmVWvk2LdVftVy97VA
-	76pkka64FM+jFDIRZh2N6G79nhqAcE38azIvYArAgUK+5/FVJH+pByoMroUZkyyWtIBDa/c6+bL
-	QgGWxXe2vZFNMHNlLmH5XocmBTfhXp9g3SVBg++Wz9otxCHLUr0bI/14K
-X-Gm-Gg: Acq92OHhMwVdBlP6z+ldrARyBKJKPWirCx3OWFPhCO4t7Om23T5s5FMs/9845ylzDbU
-	KLJrmPstMz1BnRvb/C6k6oIVAOiMwDelYk6qLCRUOyv3EUTKKpzQ9pX3B1tjPToMhdieQtKZhaW
-	29wfEsG0DQGd4TSsYk8+1iISGl2Brjdv0TCtAVKbWDJIaiSx3KumGJ/5rjdXcH1ETxZSFAR+L+H
-	rsqB+ut97IUHXuBA0ggH0kE4BPOMEksz9MOFGT/eiv7l93rjfNNivwWzmRG/M9mSjbCxHxLcZVS
-	65+hKb8sWeWA67FB3olsDOaqORmtg/C5iy3Ct+t5n6fmvRD40p17dHzTBiSxQXRgM9qtFWYhEPk
-	3WA==
-X-Received: by 2002:a05:7022:2390:b0:135:e312:47a4 with SMTP id
- a92af1059eb24-137f69382a9mr1895079c88.9.1780513313859; Wed, 03 Jun 2026
- 12:01:53 -0700 (PDT)
-Received: from 176938342045 named unknown by gmailapi.google.com with
- HTTPREST; Wed, 3 Jun 2026 12:01:52 -0700
-Received: from 176938342045 named unknown by gmailapi.google.com with
- HTTPREST; Wed, 3 Jun 2026 12:01:52 -0700
-From: Ackerley Tng <ackerleytng@google.com>
-In-Reply-To: <20260523013557.8DE1B1F000E9@smtp.kernel.org>
-References: <20260522-gmem-inplace-conversion-v7-37-2f0fae496530@google.com> <20260523013557.8DE1B1F000E9@smtp.kernel.org>
+	dkim=pass (2048-bit key) header.d=mailbox.org header.i=@mailbox.org header.b="AaAdScBU"
+Received: from smtp1.mailbox.org (smtp1.mailbox.org [IPv6:2001:67c:2050:b231:465::1])
+	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+	 key-exchange X25519 server-signature RSA-PSS (4096 bits) server-digest SHA256)
+	(No client certificate requested)
+	by mout-p-202.mailbox.org (Postfix) with ESMTPS id 4gVymv7185z9v1m;
+	Wed,  3 Jun 2026 21:43:43 +0200 (CEST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=mailbox.org; s=mail20150812;
+	t=1780515824; h=from:from:reply-to:reply-to:subject:subject:date:date:
+	 message-id:message-id:to:to:cc:cc:mime-version:mime-version:
+	 content-type:content-type:
+	 content-transfer-encoding:content-transfer-encoding:
+	 in-reply-to:in-reply-to:references:references;
+	bh=3aYo/ev6hWbpdnajg8XRbsQo9rMs3p7erOe9olX+d14=;
+	b=AaAdScBUQs94C3Bm1VfQ+ASJbsJboa/qPgeCZBvPID+IYAljOKfeOPUn2UxoefHOD7CsQg
+	gdFrbtrCeWW/vvuB/Dck5ISSyXhIYJo616keHxzXNdlHDPPurdGYxI8UW1BP5LUt4m/TzP
+	MwaIHvsu0+rVtkCLI1dwZZTAIouPs5IzLyftFDi4iSTN1mSBu92FMMvkwrDyHbBSGcv8UW
+	H9+bxlJU4T8J5o6NuZTOUC3ckMwm9IWD0Vi1H0sTk6uT6iDvFoa+ERI50KaqhMUCoeu5de
+	0qkbP10iUNE5YdenXjSYuTRce7lxW2lpKNh1ynFYxszz4trssMxLMK7rqkFqsQ==
+Message-ID: <844b17bf90c3623694c242649878651cb4e19de3.camel@mailbox.org>
+Subject: Re: [PATCH 3/4] rust: Add dma_fence abstractions
+From: Philipp Stanner <phasta@mailbox.org>
+Reply-To: phasta@kernel.org
+To: Boris Brezillon <boris.brezillon@collabora.com>, Danilo Krummrich
+	 <dakr@kernel.org>
+Cc: phasta@kernel.org, Alice Ryhl <aliceryhl@google.com>, 
+	sashiko-reviews@lists.linux.dev, linux-media@vger.kernel.org,
+ ojeda@kernel.org,  Christian =?ISO-8859-1?Q?K=F6nig?=	
+ <christian.koenig@amd.com>, Gary Guo <gary@garyguo.net>, Daniel Almeida	
+ <daniel.almeida@collabora.com>
+Date: Wed, 03 Jun 2026 21:43:40 +0200
+In-Reply-To: <20260603183421.06c04082@fedora-2.home>
+References: <ah1c3NSU-4UkdUhb@google.com>
+		<a3d09b270e6effb6f2bfb5d7ba8de48e3c2c4081.camel@mailbox.org>
+		<CAH5fLggvxGwJkAp+VqG7pA-e2zM-T8_DR0DeCiZiJyM+o51DuQ@mail.gmail.com>
+		<24ef07ed85d9e7aa7f9d3a96301c4c15bc0f2315.camel@mailbox.org>
+		<ah2M2a_4PneZpjTS@google.com>
+		<16dff07d28fca94749f14e9c91e6f812f605d6e5.camel@mailbox.org>
+		<ah7CGySkyE7mSM8a@google.com>
+		<7a978596279eca99cd41ca46606c7e5a6a38e801.camel@mailbox.org>
+		<ah7FjDdU6zt65qId@google.com>
+		<4bf6e916efe54bab66defda6fffea8c41358b3cc.camel@mailbox.org>
+		<ah72Bi2Q5Wpgo2kE@google.com>
+		<3c7e4db139df7cea18bc683d6dd33da2d00f0358.camel@mailbox.org>
+		<20260603084805.5e0e23ea@fedora-2.home>
+		<aa11e74f419b02c0e4fe417face43e7d05e62783.camel@mailbox.org>
+		<20260603115247.21ee5d1d@fedora-2.home>
+		<20260603115804.29eb8f7d@fedora-2.home>
+		<5e710e0bffd21eded77f060ae34e641449325c73.camel@mailbox.org>
+		<20260603132259.42184da0@fedora-2.home>
+		<DIZJD7DXYF5L.2Z7JGH55EMNU2@kernel.org>
+	 <20260603183421.06c04082@fedora-2.home>
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 Precedence: bulk
 X-Mailing-List: sashiko-reviews@lists.linux.dev
 List-Id: <sashiko-reviews.lists.linux.dev>
 List-Subscribe: <mailto:sashiko-reviews+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:sashiko-reviews+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Date: Wed, 3 Jun 2026 12:01:52 -0700
-X-Gm-Features: AVHnY4KsbUCYkAg_J7QB9NZy7MzgdWA0kDAtfdN45OW6sA1mj4HkxgKzF-rW7mI
-Message-ID: <CAEvNRgFWBWPKCPWQYCQ_14Ec+Z80jtU28+-ojAAh7rtr9AFwPA@mail.gmail.com>
-Subject: Re: [PATCH v7 37/42] KVM: selftests: Provide common function to set
- memory attributes
-To: sashiko-reviews@lists.linux.dev, 
-	Ackerley Tng via B4 Relay <devnull+ackerleytng.google.com@kernel.org>
-Cc: kvm@vger.kernel.org
-Content-Type: text/plain; charset="UTF-8"
+X-MBO-RS-ID: 25f01775bd12ea2495e
+X-MBO-RS-META: dif45xwnyzkj7fuqm8ag8utx3o6y9nac
 
-sashiko-bot@kernel.org writes:
+On Wed, 2026-06-03 at 18:34 +0200, Boris Brezillon wrote:
+> On Wed, 03 Jun 2026 17:57:16 +0200
+> "Danilo Krummrich" <dakr@kernel.org> wrote:
+>=20
+> > On Wed Jun 3, 2026 at 1:22 PM CEST, Boris Brezillon wrote:
+> > > Honestly, the more I think about it, the more I believe we should def=
+er the
+> > > drop unconditionally and call it a day.=C2=A0=20
+> >=20
+> > I think deferring is fine, a hard synchronization with synchronize_rcu(=
+) in
+> > DriverFence::drop() seems very undesirable though.
+> >=20
+> > Another option would be to change dma_fence_is_signaled() to take the f=
+ence lock
+> > already for signaled(), which should be fine given that drivers should =
+only ever
+> > check a sequence number.
+> >=20
+> > It would account for the fact that the same race is possible on the C s=
+ide.
+> > While the memory allocation is protected by RCU, the contents are not, =
+and it
+> > seems realistic a driver could invalidate the contents of its private d=
+ata after
+> > signaling the fence while signaled() callbacks are still in flight.
+> >=20
+> > Note that there are no new constraints, signaled() is already called wi=
+th RCU
+> > read lock held, plus there's also dma_fence_is_signaled_locked() which =
+also
+> > calls signaled() with the fence lock held.
+> >=20
+> > With this, the problem goes away, as it would guarantee that once we re=
+ach
+> > drop_in_place() in DriverFence::drop() it is impossible that there are =
+still
+> > callback in flight.
+>=20
+> If we can guarantee that no dma_fence_ops we ever consider implementing
+> in dma_fence.rs will be called after we've signaled the fence, that's
+> even better, but it's not that clear to me that it works just for the
+> callbacks we already implement (get_{driver,timeline}_name()). Take
+> dma_fence_describe() for instance, with your solution the
+> dma_fence_is_signaled() call in there would take/release the fence lock
+> unconditionally, but it's still racy, because the fence might be
+> signaled just after the lock is released and we would consider it valid
+> to call ->get_{driver,timeline}_name() and use the returned strings even
+> though the fence was effectively signaled in the meantime. We can of
+> course fix that by forcing dma_fence_describe() to take the fence lock
+> around the whole section where it's retrieving/using the driver/timeline
+> strings, but I'm pretty sure this has been considered and dismissed by
+> Christian.
 
->
-> [...snip...]
->
->> +static inline void vm_mem_set_memory_attributes(struct kvm_vm *vm, gpa_t gpa,
->> +						size_t size, u64 attrs)
->> +{
->> +	if (kvm_has_gmem_attributes) {
->> +		gpa_t end = gpa + size;
->> +		off_t fd_offset;
->> +		gpa_t addr;
->> +		size_t len;
->> +		int fd;
->> +
->> +		for (addr = gpa; addr < end; addr += len) {
->> +			fd = kvm_gpa_to_guest_memfd(vm, addr, &fd_offset, &len);
->
-> [Severity: Medium]
-> Does this unconditionally assume the memslot uses guest_memfd if the host
-> supports KVM_CAP_GUEST_MEMFD_MEMORY_ATTRIBUTES?
->
-> Since kvm_has_gmem_attributes is a global capability check, it doesn't
-> guarantee the specific memslot was created with the KVM_MEM_GUEST_MEMFD
-> flag. For example, test_private_access_memslot_not_private() in
-> private_mem_kvm_exits_test.c explicitly creates a memslot with flags = 0
-> and then calls vm_mem_set_private().
->
+Then I would like to hear the reasons because what Danilo suggests
+sounds like an incredible clean thing to do. We'd get a bullet-proof
+synchronisation point.
 
-I think calling vm_mem_set_memory_attributes on a address in a
-non-guest_memfd memslot is something that the test author should be
-alerted to ASAP, hence asserting and failing the test is the right thing
-to do.
+It would solve all our problems regarding UAF. Only thing left to do
+would be to ensure atomic-friendly dropping of data.
 
-> Calling kvm_gpa_to_guest_memfd() here will trigger its internal TEST_ASSERT
-> verifying the region flags, which causes the test to crash and breaks
-> bisection.
->
-> (Note: I see this is fixed later in the patch series by updating the test
-> to skip when per-gmem attributes are active, but pointing this out since it
-> breaks intermediate bisection.)
->
->>
->> [...snip...]
->>
+
+P.
+
+>=20
+> I think we can't have it all, either we consider RCU deferral cheap
+> enough that we can live with the scheduling overhead + the fact we
+> might hold on system resources a bit longer. Or we consider DriverFence
+> release a hot-path where resources should be returned as soon as
+> possible, and we need to protect dma_fence::ops with a dedicated
+> rwlock_t.
