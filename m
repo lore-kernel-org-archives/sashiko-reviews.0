@@ -1,141 +1,128 @@
-Received: from dvalin.narfation.org (dvalin.narfation.org [213.160.73.56])
+Received: from mgamail.intel.com (mgamail.intel.com [192.198.163.14])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F153F1B4F1F
-	for <sashiko-reviews@lists.linux.dev>; Wed,  3 Jun 2026 09:02:34 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=213.160.73.56
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D3A7836C592
+	for <sashiko-reviews@lists.linux.dev>; Wed,  3 Jun 2026 09:05:50 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=192.198.163.14
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1780477356; cv=none; b=aKKLFtRCqUxHcjDRQB7+G5y162f5oJInMgWLEc+wAXWmL5WYG4Iv9i+mqy9d6zUDrI6gnXcK1JNGLvziTh1I0QSpJddC+rIj2vq1wVHYQ9+fi77rsL3u+MHAKICQ5LG2QYV1w59liDV24ws4s7VjXGkDh+yUjbdaOfVcsMMxzuI=
+	t=1780477552; cv=none; b=aXANSKwvGpQrBRE0ByNOqGXSb52bV37u3fFGRv8oYweuh7nuc3orL8cOPR+29Zv5nhjuEBJE842AtZ8KaROnBK2say1iAZbvUjXmrcQE8qr03l/BucaLuE726Ro5eCgLsGIYgNVDk9FKl9ZYdyW44TUlsSWmkXeJkuCW7XOCIsc=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1780477356; c=relaxed/simple;
-	bh=LGs6qFxgDHihzWkDKcvL5VmST44rOBrR7X5wst/S0dg=;
-	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=Navb250ng3uNcahjayQRaiMQG/ck+Xy1EeNOeXDcb3GfTEh9xgzb1QuygJL7EAGLaUnIYJj0yD3CMwp2GFXoNGdPoLTzIHjseEVMEr7S8czmYrUTARb2x9rD5YY6gMivx+fshZR++s+CjpIzQbz1cEy0Xm/9nOssAbSneMgBGNU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=narfation.org; spf=pass smtp.mailfrom=narfation.org; dkim=pass (1024-bit key) header.d=narfation.org header.i=@narfation.org header.b=IO2Dej4j; arc=none smtp.client-ip=213.160.73.56
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=narfation.org
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=narfation.org
+	s=arc-20240116; t=1780477552; c=relaxed/simple;
+	bh=XMrKqPPL6EnxrPNqt7DnB6/q9v2v5jYjq00A27CAQF0=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=qJtX8kCyl976mEByw1OCuWNYfPELToKk21LrFTDRURE2axQTPFeY/X7T5+9myEgjsDGSZst6dc2jQNoOjTvbrIjfNf1FhtAV8DT2L458KgGlxokf+6uIxAe14jwW+5PEKxvPqAOlzgQaZhPSAeF8+ErwP3itYPqIY8HSD4Op7a0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linux.intel.com; spf=pass smtp.mailfrom=linux.intel.com; dkim=pass (2048-bit key) header.d=intel.com header.i=@intel.com header.b=CvW7PMCE; arc=none smtp.client-ip=192.198.163.14
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linux.intel.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linux.intel.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=narfation.org header.i=@narfation.org header.b="IO2Dej4j"
-Received: by dvalin.narfation.org (Postfix) id D8D672023F;
-	Wed, 03 Jun 2026 09:02:25 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=narfation.org;
-	s=20121; t=1780477346;
-	h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
-	 to:to:cc:cc:mime-version:mime-version:content-type:content-type:
-	 in-reply-to:in-reply-to:references:references;
-	bh=K0GOSa7pR1jJR5EBKpCSaPddlA99w+oFdD0eiBfewGU=;
-	b=IO2Dej4jiDjYqggV8MHOmM3Ky1qiwgZLzy3Byeso0dLqda/EQKjzepBnA22QpjdMEd1vqR
-	5BcvBBF83MqRErYFzzTIi+kSINaZYgrc78FwKF0MD5eUV2/30oPBRbNVp02nZcuG5NkVNw
-	o/GJ+mc6QhDcRp3vlNfJZTDynU6mMv4=
-From: Sven Eckelmann <sven@narfation.org>
+	dkim=pass (2048-bit key) header.d=intel.com header.i=@intel.com header.b="CvW7PMCE"
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
+  d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
+  t=1780477551; x=1812013551;
+  h=date:from:to:cc:subject:message-id:references:
+   mime-version:in-reply-to;
+  bh=XMrKqPPL6EnxrPNqt7DnB6/q9v2v5jYjq00A27CAQF0=;
+  b=CvW7PMCEYKEDkuE/xaCF4V65sCbrwvjYx8AjD9cGSb31jdzIXXJI5RBg
+   cAJtkAlIGC9ES3Pa2CpaNfrGX5oeOUZ5ZPSr82uDkrUPBUjf+NIZMZxmo
+   bzy8y9gHkJOZa5ok3mAqyalGHmHnaOtS0gQ8lHdV1ullcXCiVAonfKbpv
+   XAABnSVC6qs/n9LbixyJ5ihEyePlrgJa4Qlgp/U7vAzz5o4DOfs3fTmTo
+   bHVW5Lgm2n0Klx5SU/8laOo+ND6r0kEm01PEiMZq2h479YTmjPvby86BO
+   Ah+fEBYShu72T4fAdhXCHdXoRLNKrmX8ap8ICe2/aLC/g36PMZxgW9DfG
+   g==;
+X-CSE-ConnectionGUID: uSufvA13SaStrYb0t0XwQg==
+X-CSE-MsgGUID: bIATDUUxRMyVKwXRPxMZDg==
+X-IronPort-AV: E=McAfee;i="6800,10657,11805"; a="81309715"
+X-IronPort-AV: E=Sophos;i="6.24,184,1774335600"; 
+   d="scan'208";a="81309715"
+Received: from fmviesa010.fm.intel.com ([10.60.135.150])
+  by fmvoesa108.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 03 Jun 2026 02:05:50 -0700
+X-CSE-ConnectionGUID: 15YMYGhSTd6uyx89p/I/lQ==
+X-CSE-MsgGUID: VKzSLoGVRTWuSf4KRX9IHw==
+X-ExtLoop1: 1
+X-IronPort-AV: E=Sophos;i="6.24,184,1774335600"; 
+   d="scan'208";a="239998597"
+Received: from pgcooper-mobl3.ger.corp.intel.com (HELO localhost) ([10.245.244.116])
+  by fmviesa010-auth.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 03 Jun 2026 02:05:49 -0700
+Date: Wed, 3 Jun 2026 12:05:46 +0300
+From: Andy Shevchenko <andriy.shevchenko@linux.intel.com>
 To: sashiko-reviews@lists.linux.dev
-Cc: sw@simonwunderlich.de, marek.lindner@mailbox.org, antonio@mandelbit.com,
- b.a.t.m.a.n@lists.open-mesh.org
-Subject:
- Re: [PATCH batadv 3/3] batman-adv: use GFP_KERNEL allocations for the wifi
- detection cache
-Date: Wed, 03 Jun 2026 11:02:23 +0200
-Message-ID: <2275479.Mh6RI2rZIc@ripper>
-In-Reply-To: <20260603045118.0625E1F00893@smtp.kernel.org>
-References:
- <20260603-wifi-cache-cleanup-v1-3-d5ed08075c96@narfation.org>
- <20260603045118.0625E1F00893@smtp.kernel.org>
+Cc: linux-input@vger.kernel.org, dmitry.torokhov@gmail.com
+Subject: Re: [PATCH v1 1/1] HID: nintendo: Use %pM format specifier for MAC
+ addresses
+Message-ID: <ah_uajaqNy5urdFC@ashevche-desk.local>
+References: <20260603082808.119958-1-andriy.shevchenko@linux.intel.com>
+ <20260603083946.923AD1F00893@smtp.kernel.org>
 Precedence: bulk
 X-Mailing-List: sashiko-reviews@lists.linux.dev
 List-Id: <sashiko-reviews.lists.linux.dev>
 List-Subscribe: <mailto:sashiko-reviews+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:sashiko-reviews+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: multipart/signed; boundary="nextPart3760743.R56niFO833";
- micalg="pgp-sha512"; protocol="application/pgp-signature"
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <20260603083946.923AD1F00893@smtp.kernel.org>
+Organization: Intel Finland Oy - BIC 0357606-4 - c/o Alberga Business Park, 6
+ krs, Bertel Jungin Aukio 5, 02600 Espoo
 
---nextPart3760743.R56niFO833
-Content-Transfer-Encoding: 7Bit
-Content-Type: text/plain; charset="utf-8"; protected-headers="v1"
-From: Sven Eckelmann <sven@narfation.org>
-To: sashiko-reviews@lists.linux.dev
-Date: Wed, 03 Jun 2026 11:02:23 +0200
-Message-ID: <2275479.Mh6RI2rZIc@ripper>
-In-Reply-To: <20260603045118.0625E1F00893@smtp.kernel.org>
-MIME-Version: 1.0
-
-On Wednesday, 3 June 2026 06:51:17 CEST sashiko-bot@kernel.org wrote:
-> [Severity: High]
-> This isn't a bug introduced by this patch, but while looking at the
-> rhashtable usage in this file, I noticed that rhashtable_lookup_fast() is
-> called without rcu_read_lock() in batadv_wifi_net_device_update():
+On Wed, Jun 03, 2026 at 08:39:46AM +0000, sashiko-bot@kernel.org wrote:
+> Thank you for your contribution! Sashiko AI review found 1 potential issue(s) to consider:
+> - [Critical] ABI Breakage: The patch changes the MAC address exposed via sysfs from uppercase to lowercase, breaking userspace tools that rely on exact string matching.
+> --
 > 
-> net/batman-adv/hard-interface.c:batadv_wifi_net_device_update() {
-> ...
->         wifi_flags = batadv_wifi_flags_evaluate(net_dev);
->         device_state = rhashtable_lookup_fast(&batadv_wifi_net_devices,
->                                               &net_dev,
->                                               batadv_wifi_net_devices_params);
-> ...
-> }
+> commit 6c8c4e53eb547a4381d6f8dabe9201540c4f0168
+> Author: Andy Shevchenko <andriy.shevchenko@linux.intel.com>
 > 
-> And similarly in batadv_wifi_net_device_unregister():
+> HID: nintendo: Use %pM format specifier for MAC addresses
 > 
-> net/batman-adv/hard-interface.c:batadv_wifi_net_device_unregister() {
-> ...
->         device_state = rhashtable_lookup_fast(&batadv_wifi_net_devices,
->                                               &net_dev,
->                                               batadv_wifi_net_devices_params);
-> ...
-> }
+> This commit refactors the MAC address string generation in the nintendo HID
+> driver. It replaces a custom sprintf format string with the standard %pM
+> format specifier.
 > 
-> Can this lead to a use-after-free on the bucket array?
+> > diff --git a/drivers/hid/hid-nintendo.c b/drivers/hid/hid-nintendo.c
+> > index 29008c2cc5304..77b14dfdae867 100644
+> > --- a/drivers/hid/hid-nintendo.c
+> > +++ b/drivers/hid/hid-nintendo.c
+> > @@ -2431,14 +2431,8 @@ static int joycon_read_info(struct joycon_ctlr *ctlr)
+> >  	for (i = 4, j = 0; j < 6; i++, j++)
+> >  		ctlr->mac_addr[j] = report->subcmd_reply.data[i];
+> >  
+> > -	ctlr->mac_addr_str = devm_kasprintf(&ctlr->hdev->dev, GFP_KERNEL,
+> > -					    "%02X:%02X:%02X:%02X:%02X:%02X",
+> > -					    ctlr->mac_addr[0],
+> > -					    ctlr->mac_addr[1],
+> > -					    ctlr->mac_addr[2],
+> > -					    ctlr->mac_addr[3],
+> > -					    ctlr->mac_addr[4],
+> > -					    ctlr->mac_addr[5]);
+> > +	ctlr->mac_addr_str = devm_kasprintf(&ctlr->hdev->dev, GFP_KERNEL, "%pM",
+> > +					    ctlr->mac_addr);
 > 
-> Since batadv_wifi_net_devices is initialized with automatic_shrinking = true,
-> it can be asynchronously resized by a background worker at any time. This
-> worker frees the old bucket array via kfree_rcu(). Without an active RCU
-> read-side critical section, couldn't the RCU grace period end while
-> rhashtable_lookup_fast() is still iterating?
+> [Severity: Critical]
+> Does this change the sysfs output from uppercase to lowercase?
 
-Would be nice if someone else can double check this. But this doesn't seem to 
-be valid:
+I think yes, it does.
 
-static __always_inline void *rhashtable_lookup_fast(
-	struct rhashtable *ht, const void *key,
-	const struct rhashtable_params params)
-{
-	void *obj;
+> The original format string %02X explicitly generated an uppercase MAC
+> address string, while %pM delegates to hex_byte_pack() and generates a
+> lowercase string.
+> 
+> Since ctlr->mac_addr_str is exposed to userspace via the uniq attribute,
+> could this cause an ABI regression?
 
-	rcu_read_lock();
-	obj = rhashtable_lookup(ht, key, params);
-	rcu_read_unlock();
+This is a good question. This is MAC address string and conceptually the
+user space should be prepared to parse it as a mac address and not an arbitrary
+string. OTOH, the field is named something like uniq, which means the
+driver just supplies MAC as an arbitrary (unique) string.
 
-	return obj;
-}
+> Userspace utilities and gaming libraries (like SDL and the joycond daemon)
+> often map USB controllers to their Bluetooth pairings by performing
+> case-sensitive matching against the uppercase Bluetooth MAC addresses
+> exposed by BlueZ.
 
-So, rhashtable_lookup_fast() takes rcu_read_lock() itself. And the returned obj 
-cannot be freed because all functions mentioned here are protected by the 
-rtnl_lock().
+Hmm... Interesting. Okay, perhaps we need to have %pMU first.
 
-We are therefore also fulfilling the requirement from the 
-rhashtable_lookup_fast comment:
-
- * Only use this function when you have other mechanisms guaranteeing
- * that the object won't go away after the RCU read lock is released.
-
-Regards,
-	Sven
-
-
---nextPart3760743.R56niFO833
-Content-Type: application/pgp-signature; name="signature.asc"
-Content-Description: This is a digitally signed message part.
-Content-Transfer-Encoding: 7Bit
-
------BEGIN PGP SIGNATURE-----
-
-iHUEABYKAB0WIQS81G/PswftH/OW8cVND3cr0xT1ywUCah/tnwAKCRBND3cr0xT1
-y8ZzAP9vEh68cW1+QPtnKyDD9MMkyFWwasYaKYcXBTLuiIysuAD/Sju84BZx5nyk
-qg4Z7ALt19w7SiOWotndBC/9ROpIMwU=
-=Vaaz
------END PGP SIGNATURE-----
-
---nextPart3760743.R56niFO833--
-
+-- 
+With Best Regards,
+Andy Shevchenko
 
 
