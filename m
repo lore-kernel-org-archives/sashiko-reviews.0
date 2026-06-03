@@ -1,176 +1,216 @@
-Received: from mail-yx1-f52.google.com (mail-yx1-f52.google.com [74.125.224.52])
+Received: from mail-dy1-f179.google.com (mail-dy1-f179.google.com [74.125.82.179])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C022B3E317F
-	for <sashiko-reviews@lists.linux.dev>; Wed,  3 Jun 2026 16:29:09 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=pass smtp.client-ip=74.125.224.52
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 09D373D6CA9
+	for <sashiko-reviews@lists.linux.dev>; Wed,  3 Jun 2026 16:33:07 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=pass smtp.client-ip=74.125.82.179
 ARC-Seal:i=2; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1780504151; cv=pass; b=cIYKJkaC0c0LcLK1wgS8dn69skzMtHLVEDgK2z+D2IHzCLJMCgASTEG8ZF1GA5i66ayf4dH+BGC53Qbx53yDwi85VoCy4Nd20gv8xWvXovlUbdAcHShMs8U21+p1JyHuEdDPr7tcAiKOr24zd/v5YiPK4e/OeH03qjQIq0Jcnu4=
+	t=1780504389; cv=pass; b=TC7fOqMISvcpLDm9PwJBrMlnMXIEDx+Qt9Gt5qX2MeT5lhWLzXDTtPcnh/JJ8YgvpLcLwxYnfTuLyCUjMTKW44Vdj7v+RQBRHyOQ+8I/Ys+UvVrRu9JGQoVhcea32Gq8UyYVRIP7ejdVfZs6ZEnsCIHhTSc7+Tu6jr36k88hZLc=
 ARC-Message-Signature:i=2; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1780504151; c=relaxed/simple;
-	bh=xyNkSPsQXlCChbk0bato3dv0WPNUOqGeLAR4C4A+Iv4=;
-	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
-	 To:Cc:Content-Type; b=LXYEIiZnfd54iaEZdyjvow5JsSxBAl68qTnr2DNsPz4x8/1uWorwgH54tZLh8rZjRGjHJI0cfXvP3NYtLJSZDAiFhxV7P+vmwFtf5iC2JvIwK2FonGlYeSNTGyxMjzcvtVOaLgQY9n9C1Cea6oX4Uby9O57p9vo2wx0exWDxLkc=
-ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=L7GW4mY+; arc=pass smtp.client-ip=74.125.224.52
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+	s=arc-20240116; t=1780504389; c=relaxed/simple;
+	bh=ZxPkRCLPdwYvE5wVv13N/w4GFCh3fcUHpcgVy3lddVA=;
+	h=From:In-Reply-To:References:MIME-Version:Date:Message-ID:Subject:
+	 To:Cc:Content-Type; b=Dm+ARqSjoNBMoovFUfGVvO43opI7UVEjMpog7sZUCRusCtz1oe/ctno21EDsCK9iWoARQNI7wDxKhS0Vi69hP1dUCb5q9tNDGGE+MnOa6HYf+q3uldvs8cYwT2Ihrd0asJL3IkPPRRyI6yckUz59yyIx14Ua0rk2BRIdaHUhqG4=
+ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=google.com; spf=pass smtp.mailfrom=google.com; dkim=pass (2048-bit key) header.d=google.com header.i=@google.com header.b=roJFyWDD; arc=pass smtp.client-ip=74.125.82.179
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=google.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=google.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="L7GW4mY+"
-Received: by mail-yx1-f52.google.com with SMTP id 956f58d0204a3-660e9ea26b9so817835d50.3
-        for <sashiko-reviews@lists.linux.dev>; Wed, 03 Jun 2026 09:29:09 -0700 (PDT)
-ARC-Seal: i=1; a=rsa-sha256; t=1780504149; cv=none;
+	dkim=pass (2048-bit key) header.d=google.com header.i=@google.com header.b="roJFyWDD"
+Received: by mail-dy1-f179.google.com with SMTP id 5a478bee46e88-304e83724bfso7788924eec.0
+        for <sashiko-reviews@lists.linux.dev>; Wed, 03 Jun 2026 09:33:07 -0700 (PDT)
+ARC-Seal: i=1; a=rsa-sha256; t=1780504387; cv=none;
         d=google.com; s=arc-20240605;
-        b=Z5wjKyOC89vju8xwpPu22m72eiQJzKSbQYVg1aceZvPu+3xya6h/qElRqvPoelINis
-         tWb2I/dSAG1OJ0aUUDQzA9l0Ky1tBBo/3O+uXGkvfG8iL0bLSqDkUhr5IqaoFOwPtnrJ
-         XTWRUwaq4eDAXg7/h65FhfzDgtxIYMS6+eqMwdnCtCpEzdO29C5cSwq3a53V2NQqZSSU
-         rrJtoz0mHh/wwXFh9v5ty4XIW4v7b+D2tfQGbYsdEanLW27qhoFsSi0uFshR7Inava0X
-         RWS5A0r1kQuUbHxGs1jyefLURDuXAH5gHGQHgz50yiGLJOeNQjgxiTrPGzw/loUDZFY7
-         VDBw==
+        b=GZSY1VDZagOGtvh6WNfmMiBnDvhOoTlWkxVglvsrCZg2EeDGwGHsoxMhhoD+n8l7no
+         XQqNwf+ti3Vu+CvhTfQEScueFxczoEbGsHnNqqvb3b3f9KBEYXvXFQdsKSoMj+AwVEfK
+         iHT5GiH+NOgZhHDQOoHcixFOKWHDouC7vJyVvAwyM15broTtgytCuQZA7aSf8ss04XK7
+         ZfsDaA1HevtlQ95tjMjF/9OM5mG9Jg33QnCOPhvDOpBVsBHr4lt1veNjI5sdAVtc6SpP
+         j1j+EwudnO3K8JS/WmxjhlLkq1g++HSqoWGLrImoluAvy53SBNTiJ/L6HYv2qkVIX4dw
+         LrSg==
 ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com; s=arc-20240605;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:dkim-signature;
-        bh=YWtdi4wwUR2U1Nle2qsjEO9rC1OFuVOfLjScwZBeEhc=;
-        fh=D0e8sSTaVPmAgUSFERRWgkzhkCafsr+sW9jV93yuieQ=;
-        b=fJjSrsgGIKtwXwWdgWZEufqSpQ73JTqGRv6Kje7HmXfV9iBSRlNENAhtCFy7xqasj/
-         kANkrTprI5huzNo9VfVN3Lk9aUrtHTSsijHRj6UwT+SBDIdhVUWkh4vhEgKWvReYfl4n
-         UXojBo/4BOWUlELoNRuA8zkvj1CnJOQ3BurKDFfmMl0LQTKHhAfMUpWNce3ND2y7iWnQ
-         BEIYJ2u9Lyl2oy1iE+Wp1fApQ34ITNL4L0aLSxoOzSrn3ECNR12wc0fz3wIcPx4QobZQ
-         K0YKgl8BvDVjqxK6bh1iw8W5vFb1Zj/O9RWxfwMBPGdkGVxRGnVIrqXYbgw0gwqM5HEX
-         zzfw==;
+        h=content-transfer-encoding:cc:to:subject:message-id:date
+         :mime-version:references:in-reply-to:from:dkim-signature;
+        bh=Ac75VsX3g/JvZKVcVDB50QISY1fBI93TsemytCxfqQg=;
+        fh=KVy4+j+TE0qJlGnL1oxDtQvAs+ZlkPteDJwxhHS2piY=;
+        b=avs8FvVQ++ZiYSEB+JosyOCtFIMu384chKWUQ9lxlq6s/5zEQHQo5mFch+P5yH9WL1
+         cxBiSoC20A6nbyN+NYHWVJdPaBOHk37m0GeD0Y7ch/nC9Mb92tWqpt4/wUKjrRkiHcqa
+         edKRFBxB0hqbPSNKAFH6Wo/7xfxg7UnIB24cLNUtbxjSucSrt4q409j3vbssBpZV1BDW
+         0HmO1R2TYdtSOZSzFwF3eFY35+Xi3Sc7WthYMu/mOIlzRdSOj0DIRaoeHmVF1GiB+gvB
+         qPUGPmxKWJ/n9azXqq+QO3Qk7Yw/urzOWGCAdSurCmzvMSDBTSID4vqFVh27srt4Jkt6
+         f7gA==;
         darn=lists.linux.dev
 ARC-Authentication-Results: i=1; mx.google.com; arc=none
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20251104; t=1780504149; x=1781108949; darn=lists.linux.dev;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:from:to:cc:subject:date
+        d=google.com; s=20251104; t=1780504387; x=1781109187; darn=lists.linux.dev;
+        h=content-transfer-encoding:cc:to:subject:message-id:date
+         :mime-version:references:in-reply-to:from:from:to:cc:subject:date
          :message-id:reply-to;
-        bh=YWtdi4wwUR2U1Nle2qsjEO9rC1OFuVOfLjScwZBeEhc=;
-        b=L7GW4mY+c/l9dnjEIT+E07XQOMZipxWwTkzaP5PF2iR8lnvh4F6A2OLqDFqnFkjCG4
-         DZdf1HmeCbAATuDt0j3PPbSz1KfkDyTeG1XLR6s2Jdi1+lzP5KT4Q18Q4cTPXdNhWuOz
-         tKT4NceMyRTicUia/Ip9DKq+sSPJqit2veWXWEwzUZJOcEnL47JPCIfNNFuniQpEoW2t
-         rjbVm5qv00wsz+jI/ZgkTUJL4cmvn5mKSTqodVfTUnuta66gOyEHJzp1KrV55KHVmk/6
-         GrLGLdDrAAajQrcuYEVsCNU40jCPQYkzHXwjEBAIB9D87H7L2U+L6liIPgQgBXnTIVA3
-         1zdQ==
+        bh=Ac75VsX3g/JvZKVcVDB50QISY1fBI93TsemytCxfqQg=;
+        b=roJFyWDD7pLBjNirA3HLcH4i47Tk/48T2zXWdvPSlYp07WcceCJwbOgSUBAcbN8e+i
+         E8hH8GgoSc1CEUUqX9gTSNNmyKs4HohfpisqZQDn3xW8W1WP71e7Sxl2Ot6QttdqyKr6
+         ZhnPKhlp/3BGsyxCpYxGMHrZLFOSCp9Pbspm/aVEB8czE1jo/6Dg4vWEa51/FC334EfC
+         uR5wkiv/Ii8M64/8O3dkSvApqIRGLdEm294uqv15i8xILaKePflf9Y4UePYyKNMTjBM3
+         OuxlZsp69DJsA7zJdPzzT/VVaJNtRWLj/8n/T0QFFUeQknN5R/MWuRDRvxfi+f5epZgw
+         gt4g==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20251104; t=1780504149; x=1781108949;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:x-gm-gg:x-gm-message-state:from
-         :to:cc:subject:date:message-id:reply-to;
-        bh=YWtdi4wwUR2U1Nle2qsjEO9rC1OFuVOfLjScwZBeEhc=;
-        b=nTbP9nDyK3Ps00k0WsXt/UYNmj2s76rGH46YJCRhq7bCq17DWOrXpa3G2P+n3gt32I
-         otq4byXbVeRlhdsDdt2bSX9vBqCeF9lEHE4RjY8RD+eXRO5DJbKhqavsInRpfkfgopBn
-         UutuVXedJc/71dWNgZpJ5twwWsUOXq0LQTQle8AXmbVwLdSWdbr+ezcqiYeRrS2eyBK8
-         Ct2RvEcqMOmXbnY322UUZBbQthADgEb1RQ4lhoezFQYrk7ESCfVyo8c2EQJvyUdKOWMD
-         YMTI0yflqtFFKrkDUwVQK/X5JAuvab88lVpvkr6lUXAxZvTk20b/vI05x9Wu+DvySTOa
-         LoMw==
-X-Gm-Message-State: AOJu0Yz9Zci/gserzKQH5Op2F/QftC7WxMY9xGZmf3YubsCClhebSlZ6
-	XMJfqixNLjRpe2+vn22Dspdw8/XWKaRPY6DS0j6v+ElhUWSuGhnzih6e1aMQ6gCR6HCiiEqxkDz
-	I/NJlZhjfu23I2l2YkpEpd5a5mm0D4dBZzLI4JyQVzsnq
-X-Gm-Gg: Acq92OHW8xpsgFhkRvE+XcsQIoYdck1K8emRM9N0jwDRAvrwXFQnSt19NEkxUb0+084
-	hffQDBnOcE3DZU5u0enUa0aD9kuncu0HeKcrVKrR5FldZhYqY4fA2Cf1SZ3JuEZe/7zLYJiyBk1
-	1Rvn8cxLutaw+BnUyP894bi1rHMT8jZBL3TcoLkyj6+nP/uYKb5fYLqzitsn36mdlUNwwk7S2/3
-	xj8AhWCV0JuIy+otsfmYjVblYEI0CsYWWiUWUeaAg1OnluZ/tJD8jD1Abi9LSAV3/qMlafgh29b
-	tbiQA/8lh4jMITfRPmxr
-X-Received: by 2002:a05:690e:408c:b0:660:ec14:ef82 with SMTP id
- 956f58d0204a3-660ec14f7d6mr1656108d50.41.1780504148595; Wed, 03 Jun 2026
- 09:29:08 -0700 (PDT)
+        d=1e100.net; s=20251104; t=1780504387; x=1781109187;
+        h=content-transfer-encoding:cc:to:subject:message-id:date
+         :mime-version:references:in-reply-to:from:x-gm-gg:x-gm-message-state
+         :from:to:cc:subject:date:message-id:reply-to;
+        bh=Ac75VsX3g/JvZKVcVDB50QISY1fBI93TsemytCxfqQg=;
+        b=Z5HZ/4Yk21RRE3hsFPdzYvG7i8eXZYkFTgu2JR+00CoGd16d1xxyLovJ4byAYkTlG0
+         AQ2gCEmnzrMCe7zhXo3+7b/31q1Ragj7VkMBIzf5Xv2rK96/bvoxS7VvvdvKzt+Qaz/z
+         otgCSFt9iln3WgTrJwbiRDQ5frbMLxzxY8T65TPK5VthUrhoEkS2+lXSxQL3gQJmHRoR
+         TEs2h5HbyeBVN61sZ4sxYU8SNqDm8ueKN6gTKRBQ5ob9p5AoOa4xJL0UjUKMgdGgkT3E
+         1IW7cLI1RPbp8/9nldkANfCXML2pEzphroayEscE17mCrqD1hSqXX/Lo6AamgO+4XDJ7
+         q+Ag==
+X-Gm-Message-State: AOJu0Ywh0dT0qRUDzOrL1e8AZTpP8D/PYSkQGqBhXV0tBfyNkdabOf8F
+	5kjbqokJmsCEFyJ+DFEKH99IDIVg8uIHNP9UuqsiblRWPg+49AkBBC522ZpaWywI8CfJ32owVje
+	8mgl8nly+UZCeUkaHnb5LIFsYIQyj55O5LXjIpiYHuo85v9jOOh552+Tj
+X-Gm-Gg: Acq92OF2UMnxK8OQHaStrOOOmOEv/ojkc7pUc2wLuOlo+hNnAppiRQRNtfWA8wuxx54
+	14xsdg8qfya9TZgf2SZjXvHHb8L4W132CG3CrmO3A9T0f4GFZiKEi66gV3xitzph+DFyHWQ6gxi
+	VYXPgalJA6D17JVuRZcAGmBDcf10/iyHXcMItvGsDlfU7YYp64nGESMAb21MnqWI8FB53zFY0ts
+	5hitBC6rPqws2sAJC+MlsG4NUx0xlV4R7fluXaEZ04hRr8sboXjoxx5Ektkl2aKawhcPMnT3t6s
+	xA3492E38wSaIwSSnGRbj14PZtjwKcDNtDAclCML+HSZpNyHhQdwYIuAH5gq1IG1DGYeKQGnSmY
+	89Q==
+X-Received: by 2002:a05:7301:100c:b0:304:5a9c:644c with SMTP id
+ 5a478bee46e88-3074fb04f07mr2172446eec.15.1780504386326; Wed, 03 Jun 2026
+ 09:33:06 -0700 (PDT)
+Received: from 176938342045 named unknown by gmailapi.google.com with
+ HTTPREST; Wed, 3 Jun 2026 09:33:05 -0700
+Received: from 176938342045 named unknown by gmailapi.google.com with
+ HTTPREST; Wed, 3 Jun 2026 09:33:05 -0700
+From: Ackerley Tng <ackerleytng@google.com>
+In-Reply-To: <20260523004223.446AF1F000E9@smtp.kernel.org>
+References: <20260522-gmem-inplace-conversion-v7-26-2f0fae496530@google.com> <20260523004223.446AF1F000E9@smtp.kernel.org>
 Precedence: bulk
 X-Mailing-List: sashiko-reviews@lists.linux.dev
 List-Id: <sashiko-reviews.lists.linux.dev>
 List-Subscribe: <mailto:sashiko-reviews+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:sashiko-reviews+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-References: <20260602155210.90987-1-leontyevanton1995@gmail.com> <20260603155344.7CE871F00893@smtp.kernel.org>
-In-Reply-To: <20260603155344.7CE871F00893@smtp.kernel.org>
-From: Anton Leontev <leontyevantony@gmail.com>
-Date: Wed, 3 Jun 2026 19:29:05 +0300
-X-Gm-Features: AVHnY4Ke1MZXYgw-YYbKoNRJAeBGxFNFOYNb53zskNp9hhlw99jeifLEkfo-iro
-Message-ID: <CAAN-wAmgH9QEoj-cFjOxhytP4qC5sCgAsd9cn6cgZk1bfqznZQ@mail.gmail.com>
-Subject: Re: [PATCH net] hv_netvsc: use kmap_local_page in netvsc_copy_to_send_buf
-To: sashiko-reviews@lists.linux.dev
-Cc: linux-hyperv@vger.kernel.org
+Date: Wed, 3 Jun 2026 09:33:05 -0700
+X-Gm-Features: AVHnY4JW2u1ZtWpSbetCl3rrz2ZqMMas87ECOInjSalJ6zcCgQyc1sNDL8XEXxs
+Message-ID: <CAEvNRgFrCYEzX8jtbhwTj3qRqo-_CZ1=F_v9H231UC6uY86=Fw@mail.gmail.com>
+Subject: Re: [PATCH v7 26/42] KVM: selftests: Add helpers for calling ioctls
+ on guest_memfd
+To: sashiko-reviews@lists.linux.dev, 
+	Ackerley Tng via B4 Relay <devnull+ackerleytng.google.com@kernel.org>
+Cc: kvm@vger.kernel.org
 Content-Type: text/plain; charset="UTF-8"
 Content-Transfer-Encoding: quoted-printable
 
-You are right, thanks for catching this. pb[i].pfn is a Hyper-V PFN at
-4K granularity, so passing it directly to pfn_to_page() is wrong where
-PAGE_SIZE > 4K, and it also drops the intra-page offset. Fixed in v2 by
-reconstructing the physical address and using phys_to_page() +
-offset_in_page(). Built for i386 (HIGHMEM) and arm64 (64K pages).
+sashiko-bot@kernel.org writes:
 
-Thanks,
-Anton
-
-=D1=81=D1=80, 3 =D0=B8=D1=8E=D0=BD. 2026=E2=80=AF=D0=B3. =D0=B2 18:53, <sas=
-hiko-bot@kernel.org>:
->
-> Thank you for your contribution! Sashiko AI review found 1 potential issu=
+> Thank you for your contribution! Sashiko AI review found 2 potential issu=
 e(s) to consider:
-> - [Critical] Passing a Hyper-V PFN directly to `pfn_to_page()` causes out=
--of-bounds memory accesses on architectures where `PAGE_SIZE > 4KB` (e.g., =
-ARM64 with 64KB pages), and loses the intra-page chunk offset.
+> - [Medium] The size parameter in `vm_set_memory_attributes` and the new `=
+gmem` helpers was defined as `size_t` rather than `u64`, risking silent tru=
+ncation of guest memory sizes on 32-bit platforms.
+> - [Medium] `gmem_set_memory_attributes` invokes `kvm_check_cap` directly,=
+ which incurs heavy system call overhead on every invocation and incorrectl=
+y validates the capability attributes.
 > --
 >
-> commit a844fbf018cd37eedc9a1f0aea79d6235c00bec3
-> Author: Anton Leontev <leontyevantony@gmail.com>
+> commit 89dd80303d47a776c6d340afaf265966a073bd73
+> Author: Sean Christopherson <seanjc@google.com>
 >
-> hv_netvsc: use kmap_local_page in netvsc_copy_to_send_buf
+> KVM: selftests: Add helpers for calling ioctls on guest_memfd
 >
-> This commit replaces phys_to_virt() with kmap_local_page() in
-> netvsc_copy_to_send_buf() to map skb fragment pages. This is intended to
-> fix a fatal transmit softirq fault on 32-bit x86 configurations with
-> HIGHMEM, where phys_to_virt() is only valid for LOWMEM addresses.
+> This commit adds helper functions to kvm_util.h for executing ioctls on a
+> guest_memfd. It introduces standard macros like gmem_ioctl and functions =
+for
+> setting memory attributes. It also refactors supported attribute checks i=
+nto
+> a new TEST_ASSERT_SUPPORTED_ATTRIBUTES macro.
 >
-> > diff --git a/drivers/net/hyperv/netvsc.c b/drivers/net/hyperv/netvsc.c
-> > index 59e95341f9b1e..6984f6c97257d 100644
-> > --- a/drivers/net/hyperv/netvsc.c
-> > +++ b/drivers/net/hyperv/netvsc.c
->
+>> diff --git a/tools/testing/selftests/kvm/include/kvm_util.h b/tools/test=
+ing/selftests/kvm/include/kvm_util.h
+>> --- a/tools/testing/selftests/kvm/include/kvm_util.h
+>> +++ b/tools/testing/selftests/kvm/include/kvm_util.h
 > [ ... ]
+>>  static inline void vm_set_memory_attributes(struct kvm_vm *vm, gpa_t gp=
+a,
+>> -					    u64 size, u64 attributes)
+>> +					    size_t size, u64 attributes)
 >
-> > @@ -965,11 +966,13 @@ static void netvsc_copy_to_send_buf(struct netvsc=
-_device *net_device,
-> >       }
-> >
-> >       for (i =3D 0; i < page_count; i++) {
-> > -             char *src =3D phys_to_virt(pb[i].pfn << HV_HYP_PAGE_SHIFT=
-);
-> > +             struct page *page =3D pfn_to_page(pb[i].pfn);
-> > +             char *src =3D kmap_local_page(page);
+> [Severity: Medium]
+> The KVM UAPI structures like kvm_memory_attributes use __u64 for the size
+> field because guest physical memory regions can exceed 4GB. Since wrapper=
+s
+> like vm_mem_set_private() accept u64 sizes, does changing this parameter =
+to
+> size_t risk silent truncation of guest memory sizes on 32-bit platforms?
 >
-> [Severity: Critical]
-> Does this cause out-of-bounds memory accesses on architectures with a nat=
-ive
-> page size greater than 4KB?
+
+guest_memfd is 64-bit only.
+
+>>  {
+>>  	struct kvm_memory_attributes attr =3D {
+>>  		.attributes =3D attributes,
+> [ ... ]
+>> +static inline int __gmem_set_memory_attributes(int fd, u64 offset,
+>> +					       size_t size, u64 attributes,
 >
-> The pb[i].pfn field contains a Hyper-V PFN, which always operates at 4KB
-> granularity. Passing this directly to pfn_to_page() assumes it is a nativ=
-e
-> Linux PFN.
+> [Severity: Medium]
+> Will this size_t parameter similarly truncate memory sizes greater than
+> 4GB on 32-bit platforms, causing the ioctl to operate on incomplete memor=
+y
+> ranges?
 >
-> On architectures where the native page size is larger than 4KB (such as
-> ARM64 with 64KB pages), the Hyper-V PFN is significantly larger than the
-> corresponding native Linux PFN. Using it with pfn_to_page() would return =
-an
-> invalid struct page pointer.
+
+guest_memfd is 64-bit only.
+
+>> +					       u64 *error_offset)
+>> +{
+> [ ... ]
+>> +static inline void gmem_set_memory_attributes(int fd, u64 offset,
+>> +					      size_t size, u64 attributes)
+>> +{
+>> +	struct kvm_memory_attributes2 attr =3D {
+>> +		.attributes =3D attributes,
+>> +		.offset =3D offset,
+>> +		.size =3D size,
+>> +		.flags =3D 0,
+>> +	};
+>> +
+>> +	TEST_ASSERT_SUPPORTED_ATTRIBUTES(attributes);
+>> +
+>> +	__TEST_REQUIRE(kvm_check_cap(KVM_CAP_GUEST_MEMFD_MEMORY_ATTRIBUTES) > =
+0,
+>> +		       "No valid attributes for guest_memfd ioctl!");
 >
-> Calling kmap_local_page() on this invalid pointer in
-> netvsc_copy_to_send_buf() and subsequently reading from it could lead to
-> memory corruption, out-of-bounds accesses, or kernel panics.
+> [Severity: Medium]
+> The kvm_check_cap() function performs open, an ioctl, and close on /dev/k=
+vm
+> every time it is called. Since gmem_set_memory_attributes() might be call=
+ed
+> repeatedly in loops over multiple memory regions, will this incur signifi=
+cant
+> syscall overhead and degrade test performance?
 >
-> Could this also lose the native page offset of the original 4KB chunk wit=
-hin
-> the larger Linux page, resulting in an incorrect read offset during the
-> subsequent memcpy?
+
+I think this is ok? The part that concerns me is where we test for
+races, like in x86/private_mem_conversions_test.c where we also use
+gmem_set_memory_attributes(), and if doing open/close on /dev/kvm causes
+false synchronization somewhere. I don't know of any false
+synchronizations and I think this is fine.
+
+> Additionally, this merely verifies that the capability bitmask is non-zer=
+o.
+> Should this perform a bitwise validation against the requested attributes=
+ to
+> ensure the specific attributes requested are supported, rather than passi=
+ng
+> the check and later crashing the test with -EINVAL from the ioctl?
 >
-> >               u32 offset =3D pb[i].offset;
-> >               u32 len =3D pb[i].len;
-> >
-> >               memcpy(dest, (src + offset), len);
-> > +             kunmap_local(src);
-> >               dest +=3D len;
-> >       }
+
+This part is intended to check for presence of attributes, the validity
+of the requested attributes is checked later.
+
+>> +
+>> +	gmem_ioctl(fd, KVM_SET_MEMORY_ATTRIBUTES2, &attr);
+>> +}
 >
 > --
-> Sashiko AI review =C2=B7 https://sashiko.dev/#/patchset/20260602155210.90=
-987-1-leontyevanton1995@gmail.com?part=3D1
+> Sashiko AI review =C2=B7 https://sashiko.dev/#/patchset/20260522-gmem-inp=
+lace-conversion-v7-0-2f0fae496530@google.com?part=3D26
