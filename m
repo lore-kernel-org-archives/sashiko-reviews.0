@@ -1,216 +1,124 @@
-Received: from mail-dy1-f179.google.com (mail-dy1-f179.google.com [74.125.82.179])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from bali.collaboradmins.com (bali.collaboradmins.com [148.251.105.195])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 09D373D6CA9
-	for <sashiko-reviews@lists.linux.dev>; Wed,  3 Jun 2026 16:33:07 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=pass smtp.client-ip=74.125.82.179
-ARC-Seal:i=2; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1780504389; cv=pass; b=TC7fOqMISvcpLDm9PwJBrMlnMXIEDx+Qt9Gt5qX2MeT5lhWLzXDTtPcnh/JJ8YgvpLcLwxYnfTuLyCUjMTKW44Vdj7v+RQBRHyOQ+8I/Ys+UvVrRu9JGQoVhcea32Gq8UyYVRIP7ejdVfZs6ZEnsCIHhTSc7+Tu6jr36k88hZLc=
-ARC-Message-Signature:i=2; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1780504389; c=relaxed/simple;
-	bh=ZxPkRCLPdwYvE5wVv13N/w4GFCh3fcUHpcgVy3lddVA=;
-	h=From:In-Reply-To:References:MIME-Version:Date:Message-ID:Subject:
-	 To:Cc:Content-Type; b=Dm+ARqSjoNBMoovFUfGVvO43opI7UVEjMpog7sZUCRusCtz1oe/ctno21EDsCK9iWoARQNI7wDxKhS0Vi69hP1dUCb5q9tNDGGE+MnOa6HYf+q3uldvs8cYwT2Ihrd0asJL3IkPPRRyI6yckUz59yyIx14Ua0rk2BRIdaHUhqG4=
-ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=google.com; spf=pass smtp.mailfrom=google.com; dkim=pass (2048-bit key) header.d=google.com header.i=@google.com header.b=roJFyWDD; arc=pass smtp.client-ip=74.125.82.179
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=google.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=google.com
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 866B13E5ED7
+	for <sashiko-reviews@lists.linux.dev>; Wed,  3 Jun 2026 16:34:28 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=148.251.105.195
+ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
+	t=1780504469; cv=none; b=SFGxhKghMDEMI4eCR9D0IY7ffWcfYSlGxVK3xbfnVqiRYTjq2fqWN/idhFaNVdY27USJEdaFFZWq7aMaSmxKLvBmUlylac1D0TjGfH3dRx6iAxZyhqUVfDLuazbVu8T8IDgiMuyl1kyW3Av7EdNI/zrBtsWqktxhsHHlMs1V+kE=
+ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
+	s=arc-20240116; t=1780504469; c=relaxed/simple;
+	bh=RH/ZZwoGUfS6MSyonoD/OyON6LGHRGILLCmTKsLTlL4=;
+	h=Date:From:To:Cc:Subject:Message-ID:In-Reply-To:References:
+	 MIME-Version:Content-Type; b=qPE77kpeqN1NtBqLjv54bK674OQS8ZkHxPurWOgCUjrXXCBoxVfIoCbeFDqhLHAt5wn5g/ZcMktbNvxFHnWwTYiAi8+/+8ofC8P3HDrbpipqdQJHhMTPCCE33VKm4E8eC4GRm1xxWjbOBwrQ5TDLy8WnfQgJmukAm5aCqR1HVzM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=collabora.com; spf=pass smtp.mailfrom=collabora.com; dkim=pass (2048-bit key) header.d=collabora.com header.i=@collabora.com header.b=VgJiAwKR; arc=none smtp.client-ip=148.251.105.195
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=collabora.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=collabora.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=google.com header.i=@google.com header.b="roJFyWDD"
-Received: by mail-dy1-f179.google.com with SMTP id 5a478bee46e88-304e83724bfso7788924eec.0
-        for <sashiko-reviews@lists.linux.dev>; Wed, 03 Jun 2026 09:33:07 -0700 (PDT)
-ARC-Seal: i=1; a=rsa-sha256; t=1780504387; cv=none;
-        d=google.com; s=arc-20240605;
-        b=GZSY1VDZagOGtvh6WNfmMiBnDvhOoTlWkxVglvsrCZg2EeDGwGHsoxMhhoD+n8l7no
-         XQqNwf+ti3Vu+CvhTfQEScueFxczoEbGsHnNqqvb3b3f9KBEYXvXFQdsKSoMj+AwVEfK
-         iHT5GiH+NOgZhHDQOoHcixFOKWHDouC7vJyVvAwyM15broTtgytCuQZA7aSf8ss04XK7
-         ZfsDaA1HevtlQ95tjMjF/9OM5mG9Jg33QnCOPhvDOpBVsBHr4lt1veNjI5sdAVtc6SpP
-         j1j+EwudnO3K8JS/WmxjhlLkq1g++HSqoWGLrImoluAvy53SBNTiJ/L6HYv2qkVIX4dw
-         LrSg==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com; s=arc-20240605;
-        h=content-transfer-encoding:cc:to:subject:message-id:date
-         :mime-version:references:in-reply-to:from:dkim-signature;
-        bh=Ac75VsX3g/JvZKVcVDB50QISY1fBI93TsemytCxfqQg=;
-        fh=KVy4+j+TE0qJlGnL1oxDtQvAs+ZlkPteDJwxhHS2piY=;
-        b=avs8FvVQ++ZiYSEB+JosyOCtFIMu384chKWUQ9lxlq6s/5zEQHQo5mFch+P5yH9WL1
-         cxBiSoC20A6nbyN+NYHWVJdPaBOHk37m0GeD0Y7ch/nC9Mb92tWqpt4/wUKjrRkiHcqa
-         edKRFBxB0hqbPSNKAFH6Wo/7xfxg7UnIB24cLNUtbxjSucSrt4q409j3vbssBpZV1BDW
-         0HmO1R2TYdtSOZSzFwF3eFY35+Xi3Sc7WthYMu/mOIlzRdSOj0DIRaoeHmVF1GiB+gvB
-         qPUGPmxKWJ/n9azXqq+QO3Qk7Yw/urzOWGCAdSurCmzvMSDBTSID4vqFVh27srt4Jkt6
-         f7gA==;
-        darn=lists.linux.dev
-ARC-Authentication-Results: i=1; mx.google.com; arc=none
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=google.com; s=20251104; t=1780504387; x=1781109187; darn=lists.linux.dev;
-        h=content-transfer-encoding:cc:to:subject:message-id:date
-         :mime-version:references:in-reply-to:from:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=Ac75VsX3g/JvZKVcVDB50QISY1fBI93TsemytCxfqQg=;
-        b=roJFyWDD7pLBjNirA3HLcH4i47Tk/48T2zXWdvPSlYp07WcceCJwbOgSUBAcbN8e+i
-         E8hH8GgoSc1CEUUqX9gTSNNmyKs4HohfpisqZQDn3xW8W1WP71e7Sxl2Ot6QttdqyKr6
-         ZhnPKhlp/3BGsyxCpYxGMHrZLFOSCp9Pbspm/aVEB8czE1jo/6Dg4vWEa51/FC334EfC
-         uR5wkiv/Ii8M64/8O3dkSvApqIRGLdEm294uqv15i8xILaKePflf9Y4UePYyKNMTjBM3
-         OuxlZsp69DJsA7zJdPzzT/VVaJNtRWLj/8n/T0QFFUeQknN5R/MWuRDRvxfi+f5epZgw
-         gt4g==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20251104; t=1780504387; x=1781109187;
-        h=content-transfer-encoding:cc:to:subject:message-id:date
-         :mime-version:references:in-reply-to:from:x-gm-gg:x-gm-message-state
-         :from:to:cc:subject:date:message-id:reply-to;
-        bh=Ac75VsX3g/JvZKVcVDB50QISY1fBI93TsemytCxfqQg=;
-        b=Z5HZ/4Yk21RRE3hsFPdzYvG7i8eXZYkFTgu2JR+00CoGd16d1xxyLovJ4byAYkTlG0
-         AQ2gCEmnzrMCe7zhXo3+7b/31q1Ragj7VkMBIzf5Xv2rK96/bvoxS7VvvdvKzt+Qaz/z
-         otgCSFt9iln3WgTrJwbiRDQ5frbMLxzxY8T65TPK5VthUrhoEkS2+lXSxQL3gQJmHRoR
-         TEs2h5HbyeBVN61sZ4sxYU8SNqDm8ueKN6gTKRBQ5ob9p5AoOa4xJL0UjUKMgdGgkT3E
-         1IW7cLI1RPbp8/9nldkANfCXML2pEzphroayEscE17mCrqD1hSqXX/Lo6AamgO+4XDJ7
-         q+Ag==
-X-Gm-Message-State: AOJu0Ywh0dT0qRUDzOrL1e8AZTpP8D/PYSkQGqBhXV0tBfyNkdabOf8F
-	5kjbqokJmsCEFyJ+DFEKH99IDIVg8uIHNP9UuqsiblRWPg+49AkBBC522ZpaWywI8CfJ32owVje
-	8mgl8nly+UZCeUkaHnb5LIFsYIQyj55O5LXjIpiYHuo85v9jOOh552+Tj
-X-Gm-Gg: Acq92OF2UMnxK8OQHaStrOOOmOEv/ojkc7pUc2wLuOlo+hNnAppiRQRNtfWA8wuxx54
-	14xsdg8qfya9TZgf2SZjXvHHb8L4W132CG3CrmO3A9T0f4GFZiKEi66gV3xitzph+DFyHWQ6gxi
-	VYXPgalJA6D17JVuRZcAGmBDcf10/iyHXcMItvGsDlfU7YYp64nGESMAb21MnqWI8FB53zFY0ts
-	5hitBC6rPqws2sAJC+MlsG4NUx0xlV4R7fluXaEZ04hRr8sboXjoxx5Ektkl2aKawhcPMnT3t6s
-	xA3492E38wSaIwSSnGRbj14PZtjwKcDNtDAclCML+HSZpNyHhQdwYIuAH5gq1IG1DGYeKQGnSmY
-	89Q==
-X-Received: by 2002:a05:7301:100c:b0:304:5a9c:644c with SMTP id
- 5a478bee46e88-3074fb04f07mr2172446eec.15.1780504386326; Wed, 03 Jun 2026
- 09:33:06 -0700 (PDT)
-Received: from 176938342045 named unknown by gmailapi.google.com with
- HTTPREST; Wed, 3 Jun 2026 09:33:05 -0700
-Received: from 176938342045 named unknown by gmailapi.google.com with
- HTTPREST; Wed, 3 Jun 2026 09:33:05 -0700
-From: Ackerley Tng <ackerleytng@google.com>
-In-Reply-To: <20260523004223.446AF1F000E9@smtp.kernel.org>
-References: <20260522-gmem-inplace-conversion-v7-26-2f0fae496530@google.com> <20260523004223.446AF1F000E9@smtp.kernel.org>
+	dkim=pass (2048-bit key) header.d=collabora.com header.i=@collabora.com header.b="VgJiAwKR"
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=collabora.com;
+	s=mail; t=1780504466;
+	bh=RH/ZZwoGUfS6MSyonoD/OyON6LGHRGILLCmTKsLTlL4=;
+	h=Date:From:To:Cc:Subject:In-Reply-To:References:From;
+	b=VgJiAwKRIGyuIX/3K+D5ZO3LshNOZ3WBQ3swbt107gMxYpE5x1cPoQA42+bieUM/E
+	 3l8MIRUm1guZJ3e3U92ACEt8JjLCdLh98lUepIHu0YxOAFwoSXdoc5z0TrFJ9iKel+
+	 CBJbEc5hf3QBNL3WY+1rf36ORt9R4rJwhdPqjhUzZlFsFF7FWaWnHkXPd24RYgHp2O
+	 H1Cq+cXio5Z/BWtTUPke1y0ErYGa+q+m4C+EGLeA9s9cUocrwqngetyyJz1aBSyNAu
+	 zbVKN0KxiPSToK6oUxGyFOFghhYOL0IKcyxc4kSrae3hMeQaoFbDiHn5Wd7wsDpJEa
+	 VgNF2v3LxsAQw==
+Received: from fedora-2.home (unknown [100.64.0.11])
+	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+	 key-exchange ECDHE (prime256v1) server-signature RSA-PSS (4096 bits) server-digest SHA256)
+	(No client certificate requested)
+	(Authenticated sender: bbrezillon)
+	by bali.collaboradmins.com (Postfix) with ESMTPSA id 733BE17E05FC;
+	Wed,  3 Jun 2026 18:34:26 +0200 (CEST)
+Date: Wed, 3 Jun 2026 18:34:21 +0200
+From: Boris Brezillon <boris.brezillon@collabora.com>
+To: "Danilo Krummrich" <dakr@kernel.org>
+Cc: "Philipp Stanner" <phasta@mailbox.org>, <phasta@kernel.org>, "Alice
+ Ryhl" <aliceryhl@google.com>, <sashiko-reviews@lists.linux.dev>,
+ <linux-media@vger.kernel.org>, <ojeda@kernel.org>, Christian
+ =?UTF-8?B?S8O2bmln?= <christian.koenig@amd.com>, "Gary Guo"
+ <gary@garyguo.net>, "Daniel Almeida" <daniel.almeida@collabora.com>
+Subject: Re: [PATCH 3/4] rust: Add dma_fence abstractions
+Message-ID: <20260603183421.06c04082@fedora-2.home>
+In-Reply-To: <DIZJD7DXYF5L.2Z7JGH55EMNU2@kernel.org>
+References: <ah1c3NSU-4UkdUhb@google.com>
+	<a3d09b270e6effb6f2bfb5d7ba8de48e3c2c4081.camel@mailbox.org>
+	<CAH5fLggvxGwJkAp+VqG7pA-e2zM-T8_DR0DeCiZiJyM+o51DuQ@mail.gmail.com>
+	<24ef07ed85d9e7aa7f9d3a96301c4c15bc0f2315.camel@mailbox.org>
+	<ah2M2a_4PneZpjTS@google.com>
+	<16dff07d28fca94749f14e9c91e6f812f605d6e5.camel@mailbox.org>
+	<ah7CGySkyE7mSM8a@google.com>
+	<7a978596279eca99cd41ca46606c7e5a6a38e801.camel@mailbox.org>
+	<ah7FjDdU6zt65qId@google.com>
+	<4bf6e916efe54bab66defda6fffea8c41358b3cc.camel@mailbox.org>
+	<ah72Bi2Q5Wpgo2kE@google.com>
+	<3c7e4db139df7cea18bc683d6dd33da2d00f0358.camel@mailbox.org>
+	<20260603084805.5e0e23ea@fedora-2.home>
+	<aa11e74f419b02c0e4fe417face43e7d05e62783.camel@mailbox.org>
+	<20260603115247.21ee5d1d@fedora-2.home>
+	<20260603115804.29eb8f7d@fedora-2.home>
+	<5e710e0bffd21eded77f060ae34e641449325c73.camel@mailbox.org>
+	<20260603132259.42184da0@fedora-2.home>
+	<DIZJD7DXYF5L.2Z7JGH55EMNU2@kernel.org>
+Organization: Collabora
+X-Mailer: Claws Mail 4.4.0 (GTK 3.24.52; x86_64-redhat-linux-gnu)
 Precedence: bulk
 X-Mailing-List: sashiko-reviews@lists.linux.dev
 List-Id: <sashiko-reviews.lists.linux.dev>
 List-Subscribe: <mailto:sashiko-reviews+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:sashiko-reviews+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Date: Wed, 3 Jun 2026 09:33:05 -0700
-X-Gm-Features: AVHnY4JW2u1ZtWpSbetCl3rrz2ZqMMas87ECOInjSalJ6zcCgQyc1sNDL8XEXxs
-Message-ID: <CAEvNRgFrCYEzX8jtbhwTj3qRqo-_CZ1=F_v9H231UC6uY86=Fw@mail.gmail.com>
-Subject: Re: [PATCH v7 26/42] KVM: selftests: Add helpers for calling ioctls
- on guest_memfd
-To: sashiko-reviews@lists.linux.dev, 
-	Ackerley Tng via B4 Relay <devnull+ackerleytng.google.com@kernel.org>
-Cc: kvm@vger.kernel.org
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
+Content-Type: text/plain; charset=US-ASCII
+Content-Transfer-Encoding: 7bit
 
-sashiko-bot@kernel.org writes:
+On Wed, 03 Jun 2026 17:57:16 +0200
+"Danilo Krummrich" <dakr@kernel.org> wrote:
 
-> Thank you for your contribution! Sashiko AI review found 2 potential issu=
-e(s) to consider:
-> - [Medium] The size parameter in `vm_set_memory_attributes` and the new `=
-gmem` helpers was defined as `size_t` rather than `u64`, risking silent tru=
-ncation of guest memory sizes on 32-bit platforms.
-> - [Medium] `gmem_set_memory_attributes` invokes `kvm_check_cap` directly,=
- which incurs heavy system call overhead on every invocation and incorrectl=
-y validates the capability attributes.
-> --
->
-> commit 89dd80303d47a776c6d340afaf265966a073bd73
-> Author: Sean Christopherson <seanjc@google.com>
->
-> KVM: selftests: Add helpers for calling ioctls on guest_memfd
->
-> This commit adds helper functions to kvm_util.h for executing ioctls on a
-> guest_memfd. It introduces standard macros like gmem_ioctl and functions =
-for
-> setting memory attributes. It also refactors supported attribute checks i=
-nto
-> a new TEST_ASSERT_SUPPORTED_ATTRIBUTES macro.
->
->> diff --git a/tools/testing/selftests/kvm/include/kvm_util.h b/tools/test=
-ing/selftests/kvm/include/kvm_util.h
->> --- a/tools/testing/selftests/kvm/include/kvm_util.h
->> +++ b/tools/testing/selftests/kvm/include/kvm_util.h
-> [ ... ]
->>  static inline void vm_set_memory_attributes(struct kvm_vm *vm, gpa_t gp=
-a,
->> -					    u64 size, u64 attributes)
->> +					    size_t size, u64 attributes)
->
-> [Severity: Medium]
-> The KVM UAPI structures like kvm_memory_attributes use __u64 for the size
-> field because guest physical memory regions can exceed 4GB. Since wrapper=
-s
-> like vm_mem_set_private() accept u64 sizes, does changing this parameter =
-to
-> size_t risk silent truncation of guest memory sizes on 32-bit platforms?
->
+> On Wed Jun 3, 2026 at 1:22 PM CEST, Boris Brezillon wrote:
+> > Honestly, the more I think about it, the more I believe we should defer the
+> > drop unconditionally and call it a day.  
+> 
+> I think deferring is fine, a hard synchronization with synchronize_rcu() in
+> DriverFence::drop() seems very undesirable though.
+> 
+> Another option would be to change dma_fence_is_signaled() to take the fence lock
+> already for signaled(), which should be fine given that drivers should only ever
+> check a sequence number.
+> 
+> It would account for the fact that the same race is possible on the C side.
+> While the memory allocation is protected by RCU, the contents are not, and it
+> seems realistic a driver could invalidate the contents of its private data after
+> signaling the fence while signaled() callbacks are still in flight.
+> 
+> Note that there are no new constraints, signaled() is already called with RCU
+> read lock held, plus there's also dma_fence_is_signaled_locked() which also
+> calls signaled() with the fence lock held.
+> 
+> With this, the problem goes away, as it would guarantee that once we reach
+> drop_in_place() in DriverFence::drop() it is impossible that there are still
+> callback in flight.
 
-guest_memfd is 64-bit only.
+If we can guarantee that no dma_fence_ops we ever consider implementing
+in dma_fence.rs will be called after we've signaled the fence, that's
+even better, but it's not that clear to me that it works just for the
+callbacks we already implement (get_{driver,timeline}_name()). Take
+dma_fence_describe() for instance, with your solution the
+dma_fence_is_signaled() call in there would take/release the fence lock
+unconditionally, but it's still racy, because the fence might be
+signaled just after the lock is released and we would consider it valid
+to call ->get_{driver,timeline}_name() and use the returned strings even
+though the fence was effectively signaled in the meantime. We can of
+course fix that by forcing dma_fence_describe() to take the fence lock
+around the whole section where it's retrieving/using the driver/timeline
+strings, but I'm pretty sure this has been considered and dismissed by
+Christian.
 
->>  {
->>  	struct kvm_memory_attributes attr =3D {
->>  		.attributes =3D attributes,
-> [ ... ]
->> +static inline int __gmem_set_memory_attributes(int fd, u64 offset,
->> +					       size_t size, u64 attributes,
->
-> [Severity: Medium]
-> Will this size_t parameter similarly truncate memory sizes greater than
-> 4GB on 32-bit platforms, causing the ioctl to operate on incomplete memor=
-y
-> ranges?
->
-
-guest_memfd is 64-bit only.
-
->> +					       u64 *error_offset)
->> +{
-> [ ... ]
->> +static inline void gmem_set_memory_attributes(int fd, u64 offset,
->> +					      size_t size, u64 attributes)
->> +{
->> +	struct kvm_memory_attributes2 attr =3D {
->> +		.attributes =3D attributes,
->> +		.offset =3D offset,
->> +		.size =3D size,
->> +		.flags =3D 0,
->> +	};
->> +
->> +	TEST_ASSERT_SUPPORTED_ATTRIBUTES(attributes);
->> +
->> +	__TEST_REQUIRE(kvm_check_cap(KVM_CAP_GUEST_MEMFD_MEMORY_ATTRIBUTES) > =
-0,
->> +		       "No valid attributes for guest_memfd ioctl!");
->
-> [Severity: Medium]
-> The kvm_check_cap() function performs open, an ioctl, and close on /dev/k=
-vm
-> every time it is called. Since gmem_set_memory_attributes() might be call=
-ed
-> repeatedly in loops over multiple memory regions, will this incur signifi=
-cant
-> syscall overhead and degrade test performance?
->
-
-I think this is ok? The part that concerns me is where we test for
-races, like in x86/private_mem_conversions_test.c where we also use
-gmem_set_memory_attributes(), and if doing open/close on /dev/kvm causes
-false synchronization somewhere. I don't know of any false
-synchronizations and I think this is fine.
-
-> Additionally, this merely verifies that the capability bitmask is non-zer=
-o.
-> Should this perform a bitwise validation against the requested attributes=
- to
-> ensure the specific attributes requested are supported, rather than passi=
-ng
-> the check and later crashing the test with -EINVAL from the ioctl?
->
-
-This part is intended to check for presence of attributes, the validity
-of the requested attributes is checked later.
-
->> +
->> +	gmem_ioctl(fd, KVM_SET_MEMORY_ATTRIBUTES2, &attr);
->> +}
->
-> --
-> Sashiko AI review =C2=B7 https://sashiko.dev/#/patchset/20260522-gmem-inp=
-lace-conversion-v7-0-2f0fae496530@google.com?part=3D26
+I think we can't have it all, either we consider RCU deferral cheap
+enough that we can live with the scheduling overhead + the fact we
+might hold on system resources a bit longer. Or we consider DriverFence
+release a hot-path where resources should be returned as soon as
+possible, and we need to protect dma_fence::ops with a dedicated
+rwlock_t.
