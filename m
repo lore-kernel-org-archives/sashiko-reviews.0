@@ -1,131 +1,94 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 342A93E4C61
-	for <sashiko-reviews@lists.linux.dev>; Thu,  4 Jun 2026 21:11:16 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 40A723E2AC8;
+	Thu,  4 Jun 2026 21:15:05 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1780607478; cv=none; b=NOL3QblwNgTkvR0Ti80UqjfgLIwN5umD7fa5+5xPZXxEbPhW8rpaNojvjM7fL56zJfYEjaMc1vp65fSZWqJSlbgoPgns5RYhCZzThGne9itpWvVLHjGPuXNi54M/JwZiw4x2JiJ5leqlCWcfScTogdjlwTmpNssH2kYsSX2vfr0=
+	t=1780607706; cv=none; b=ddvJHh9NRS6742rlhBZVbqdWH6KTGsuQnhWiuH8K8LSoV2a30OmcPdjuru9SQ9BQVNilnCy+qr/DSX5kmW+JtY5Xj2LaeZLRejeJlsDjC31ANhCtoBh7BIo571hQ7/htqGkDch5iOzCI5nUF5/Zb/8Nhymk9x4opf4bDEl36U6U=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1780607478; c=relaxed/simple;
-	bh=HCH7nmkV3cAshOT62LQ5OBKgU2V2cTi+JY/8vfhZhoo=;
-	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
-	 To:Cc:Content-Type; b=T4QETcKsmgah4v3vj1m9sN7NfaBLTNck38lgvAoOs3U9MihL/LLYCbUTqtfyog03B8tihLzrMJ1qqxMKHPNmHxh1R1APc5KytsTjiuTND8mvIH+WV+zsq4AUCzyPY6IvxhBIWY0QsccSBVW+HtG4437MJOa9Ap76TPmQfpI1NBc=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=mXovWRU4; arc=none smtp.client-ip=100.103.45.18
+	s=arc-20240116; t=1780607706; c=relaxed/simple;
+	bh=WEPhgeZ5v7o05IhmsPQA+0VY2O4s/DcLdIM2+sKoqJk=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=dbyT663N7CA8ESE/U8Hy/H13Ra6Y0eSXk08oWo9CexqqLemrk9AoSJy87LsCw9+aKmVSlhjMcr74mUQbRETMvLG2k3bCFHfm2wgOIL1KZ+eaR/kSptg97xDQD7sRwV9aRVIafGWebFebE0GcFnemy1hDixFJbkis8EB28gzC7g8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=j0uHVBN+; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="mXovWRU4"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id CA37E1F00898
-	for <sashiko-reviews@lists.linux.dev>; Thu,  4 Jun 2026 21:11:15 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="j0uHVBN+"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5AA391F00893;
+	Thu,  4 Jun 2026 21:15:04 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=kernel.org;
-	s=k20260515; t=1780607475;
-	bh=3rVgNw4C014s5+q1Xrmod6YUCzBaQTwSOL48z5g0N5g=;
-	h=References:In-Reply-To:From:Date:Subject:To:Cc;
-	b=mXovWRU4spW2ild8JLjij+d+7wcrkCeNz1+JbmZYEDb17QvyjAuBmn8ILuoN0x/rm
-	 zqZ+41ZsiEbWgBBi1121hRRfY9UY9Af8diE+9T71kZrGsYmFpfkJmWmLI5sLGeeeA2
-	 6hxy9vUeqX2M++8b01ZoKwCHBcn9rzlkPe+63NQFJE4xrUE5K+tbDtaCA1HnBWTb6h
-	 MEo3+QTFSE1qHeInqqB0SiRVYqxdY+ofJ7sRmRpEqN0RxMgkj74l6iFlMy4zzSksrj
-	 39rWMCQ1oYRka/3pWeDNVt3ULeY3B2pNyxuERfT0SPjm0STz3qjQ8bJe3PTBLDz+4X
-	 WIbekTlsX2LNA==
-Received: by mail-ej1-f51.google.com with SMTP id a640c23a62f3a-bf0170c80f7so217732966b.3
-        for <sashiko-reviews@lists.linux.dev>; Thu, 04 Jun 2026 14:11:15 -0700 (PDT)
-X-Gm-Message-State: AOJu0Yz8+jQ2rqtt8bOKmXwjgyk/tmg6Cw+ox6kMucc5/j8qe4njrTj6
-	2+ozZ7dzLUop6INI6yRAsAJX3WGnzyUXcrfZ1WLegQUmkkj1shejkgdkBRMOWBuGuXri3up8SAo
-	auAAEXk+4vAYwRdWhkQwR2hcLPjC7zIw=
-X-Received: by 2002:a17:906:f5aa:b0:bec:6c5c:cced with SMTP id
- a640c23a62f3a-bf372159bf0mr20265966b.28.1780607474695; Thu, 04 Jun 2026
- 14:11:14 -0700 (PDT)
+	s=k20260515; t=1780607705;
+	bh=Ny/KVvtry5ETYhSHZ762wNa07hCQUVPHNbtvrPR+Llg=;
+	h=Date:From:To:Cc:Subject:References:In-Reply-To;
+	b=j0uHVBN+P/r70HDMp3PXhJYqX1XMpNpMQdBRd+9gfnS/o9bJFtQxrfCM1y/0KO0dq
+	 T7fyn0iTTRa3kX2jIfrhjfz7WnR6Up0dImWmaXGJdshggL6l2ZW0DgTS+BhmFXa9Pr
+	 BFWtqLc3m4L4pte1sf5pVZWysawN3Ye2YsoGKnXiNyqAiJWLBaXbczUmBYrmiVW8Mu
+	 jUy+NS5J9mnYrv0/xaWR33XPIm8dx3Rg6UllkOVwZOTw8sdYbxzqoBow9x6KL5X3f7
+	 lTk2UcQQ5Mw756UmSag/qBCnxmULMVaLtnOU7/5WnbbO0Dpre4Ra+QTW4VNXOMvVFT
+	 k+2pmK1ZOj6Bw==
+Date: Thu, 4 Jun 2026 18:15:01 -0300
+From: Arnaldo Carvalho de Melo <acme@kernel.org>
+To: sashiko-reviews@lists.linux.dev
+Cc: linux-perf-users@vger.kernel.org
+Subject: Re: [PATCH 1/4] perf tools: Guard test_bit from out-of-bounds sample
+ CPU
+Message-ID: <aiHq1ftD8tIVK_6q@x1>
+References: <20260604204921.1707333-2-acme@kernel.org>
+ <20260604210904.468941F00893@smtp.kernel.org>
 Precedence: bulk
 X-Mailing-List: sashiko-reviews@lists.linux.dev
 List-Id: <sashiko-reviews.lists.linux.dev>
 List-Subscribe: <mailto:sashiko-reviews+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:sashiko-reviews+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-References: <20260604203546.365658-7-yosry@kernel.org> <20260604205007.D004E1F00893@smtp.kernel.org>
-In-Reply-To: <20260604205007.D004E1F00893@smtp.kernel.org>
-From: Yosry Ahmed <yosry@kernel.org>
-Date: Thu, 4 Jun 2026 14:11:02 -0700
-X-Gmail-Original-Message-ID: <CAO9r8zOe+VguHTmLUG8QZM0SgM0OkkZpeA6JpyTCVLo7CtSmag@mail.gmail.com>
-X-Gm-Features: AVHnY4LmkHbfspEp4GQlSuCA7uP_fKSciDdzVdXOT-vmNCtSnx2RUW11QwrfqL4
-Message-ID: <CAO9r8zOe+VguHTmLUG8QZM0SgM0OkkZpeA6JpyTCVLo7CtSmag@mail.gmail.com>
-Subject: Re: [PATCH v2 06/10] KVM: selftests: Drop HORRIFIC_L2_UCALL_CLOBBER_HACK
-To: sashiko-reviews@lists.linux.dev
-Cc: kvm@vger.kernel.org
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <20260604210904.468941F00893@smtp.kernel.org>
 
- On Thu, Jun 4, 2026 at 1:50=E2=80=AFPM <sashiko-bot@kernel.org> wrote:
->
-> Thank you for your contribution! Sashiko AI review found 1 potential issu=
-e(s) to consider:
-> - [Medium] Removal of the ucall GPR hack causes L2 register corruption in=
- EVMCS nested virtualization tests.
+On Thu, Jun 04, 2026 at 09:09:03PM +0000, sashiko-bot@kernel.org wrote:
+> Thank you for your contribution! Sashiko AI review found 1 potential issue(s) to consider:
+> 
+> Pre-existing issues:
+> - [High] The patch adds `MAX_NR_CPUS` bounds checks to several call sites of `test_bit()` to prevent out-of-bounds reads from corrupted `sample->cpu` values, but misses an identical vulnerability in `tools/perf/util/auxtrace.c`.
 > --
->
-> commit 15ef07c71219fb9256d8d4da6427386aaf993fbd
-> Author: Yosry Ahmed <yosry@kernel.org>
-> KVM: selftests: Drop HORRIFIC_L2_UCALL_CLOBBER_HACK
->
-> This commit drops the HORRIFIC_L2_UCALL_CLOBBER_HACK from ucall_arch_do_u=
-call(),
-> relying on the nVMX test code to preserve L2 GPRs across nested VM-exits.
->
-> > diff --git a/tools/testing/selftests/kvm/lib/x86/ucall.c b/tools/testin=
-g/selftests/kvm/lib/x86/ucall.c
-> > index e7dd5791959ba..38050c60a0670 100644
-> > --- a/tools/testing/selftests/kvm/lib/x86/ucall.c
-> > +++ b/tools/testing/selftests/kvm/lib/x86/ucall.c
-> > @@ -10,36 +10,8 @@
-> >
-> >  void ucall_arch_do_ucall(gva_t uc)
-> >  {
-> [ ... ]
-> > -                  HORRIFIC_L2_UCALL_CLOBBER_HACK);
-> > +     asm volatile("in %[port], %%al"
-> > +             : : [port] "d" (UCALL_PIO_PORT), "D" (uc) : "rax", "memor=
-y");
->
-> [Severity: Medium]
-> Does the removal of this hack cause L2 register corruption in Enlightened
-> VMX (EVMCS) tests?
+> 
+> commit 086b55e55838d35a34eaf71d763ccfabb74ba9a3
+> Author: Arnaldo Carvalho de Melo <acme@redhat.com>
+> 
+> perf tools: Guard test_bit from out-of-bounds sample CPU
+> 
+> This commit adds guards against MAX_NR_CPUS before test_bit() calls across
+> several built-in tools to prevent out-of-bounds reads on corrupted
+> sample->cpu values.
+> 
+> > diff --git a/tools/perf/builtin-annotate.c b/tools/perf/builtin-annotate.c
+> > index b918f9eed5fd2..8a0eb30eac24f 100644
+> > --- a/tools/perf/builtin-annotate.c
+> > +++ b/tools/perf/builtin-annotate.c
+> > @@ -295,7 +295,8 @@ static int process_sample_event(const struct perf_tool *tool,
+> >  		goto out_put;
+> >  	}
+> >  
+> > -	if (ann->cpu_list && !test_bit(sample->cpu, ann->cpu_bitmap))
+> > +	if (ann->cpu_list && (sample->cpu >= MAX_NR_CPUS ||
+> > +			     !test_bit(sample->cpu, ann->cpu_bitmap)))
+> >  		goto out_put;
+> 
+> [Severity: High]
+> This isn't a bug introduced by this patch, but does a similar out-of-bounds
+> read of cpu_bitmap exist in tools/perf/util/auxtrace.c?
+> 
+> Looking at filter_cpu() in tools/perf/util/auxtrace.c:
+> 
+>         return cpu_bitmap && cpu.cpu != -1 && !test_bit(cpu.cpu, cpu_bitmap);
+> 
+> Since auxtrace events can bypass the upstream clamping logic in
+> perf_session__deliver_event(), could a corrupted cpu value from a
+> perf.data file exceed the bitmap size?
+> 
+> Should filter_cpu() also verify cpu.cpu < MAX_NR_CPUS before calling
+> test_bit() to prevent reading past the allocation?
 
-This is interesting because:
-- Yes, I did forget to handle evmcs_vmlaunch() and evmcs_vmresume().
-- Yes, HORRIFIC_L2_UCALL_CLOBBER_HACK was introduced specifically due
-to a failure in hyperv_evmcs (according to the changelog of
-6783ca4105a7).
-- Yes, I did run hyperv_evmcs before sending this patch
+We're addressing this in a followup series,
 
-...but NO, the test did not fail.
-
-I guess it depends on what registers the compiler ends up using and
-how the code is compiled? Not sure.
-
-Looking at the code, it actually seems evmcs_vmlaunch() and
-evmcs_vmresume() properly save and restore RBP, RDX, and RDI (the
-registers mentioned with HORRIFIC_L2_UCALL_CLOBBER_HACK), so I don't
-understand how HORRIFIC_L2_UCALL_CLOBBER_HACK ever made a difference.
-
-All that being said, yes, I need to fix evmcs_vmlaunch() and evmcs_vmresume=
-().
-
->
-> While standard nVMX tests preserve GPRs using VMX_SWITCH_GPRS_ASM, it app=
-ears
-> the EVMCS helpers evmcs_vmlaunch() and evmcs_vmresume() in
-> tools/testing/selftests/kvm/include/x86/evmcs.h were not updated.
->
-> These functions still use a hardcoded inline assembly sequence that expli=
-citly
-> clobbers %rbx and %r8-%r15.
->
-> If L2 triggers a ucall and an asynchronous event forces a nested VM-Exit
-> to L1, wouldn't the L1 compiler clobber L2's GPRs, causing L2 to resume
-> with corrupted registers and leading to a test failure?
->
-> >  }
-> >
-> >  void *ucall_arch_get_ucall(struct kvm_vcpu *vcpu)
->
-> --
-> Sashiko AI review =C2=B7 https://sashiko.dev/#/patchset/20260604203546.36=
-5658-1-yosry@kernel.org?part=3D6
+- Arnaldo
