@@ -1,156 +1,165 @@
-Received: from mail-wr1-f42.google.com (mail-wr1-f42.google.com [209.85.221.42])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2DF682FF67E
-	for <sashiko-reviews@lists.linux.dev>; Thu,  4 Jun 2026 08:00:48 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.221.42
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 28A5B1A8F84
+	for <sashiko-reviews@lists.linux.dev>; Thu,  4 Jun 2026 08:09:21 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1780560049; cv=none; b=Xlqun1sy56dNUNd7uadOKaBHAaPyptKYjaolJx5Yng/BJmwLcu/fnMi/X2KPdYN/MWQV0tK7xaDTpho2MGdy9ZniyzY9YqjEua+7uoygHcDAnzc4NvAO5ouQgmE6SBCjElso7LDWq/tOYcA+Fx7kz700m0dgXy6znycB4L/SX+M=
+	t=1780560562; cv=none; b=n4xXge57gqZRB1kI/4ZbOk3pdYTRQWTUijIdh6y8caz9qAmZRgGizH4W2NPIq2Mpa0/1nd98v8wVCNx3FthwoRKWsXygt4x3LKWc3RgLijNEoGvRzy16Yml+Rmwdl3ZkmYwzWncPVV0Ov/KsJqQOkf8Yg87z/oM7IeY5N6IcZ5A=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1780560049; c=relaxed/simple;
-	bh=euaKvkz0bmQioDFYhOdMwAp8A8tyElTXhl7rJTkQKPw=;
-	h=From:Date:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=mPTh5KHTGiyDE+ZEn9DYurOT6NjKs3UUbgZYj6JUaICGSuBBDUFC5R4VI+CWkZyh+CuyWmnESvn5b+/iBVOVI7rO2RroTlvb7ie+C9OV6+MBq6JKFubnFhQ1X03Ugddd7BfO2riR+VKYMmFYckQG5s5y/uEwwPYTsEc1MalSv1M=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=rpsOVX4F; arc=none smtp.client-ip=209.85.221.42
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+	s=arc-20240116; t=1780560562; c=relaxed/simple;
+	bh=kVXSRRu09MvbIZ/v4ibOUXuCN7EFvNW2Afke7TysLtU=;
+	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
+	 To:Cc:Content-Type; b=OcWpOnOOR1tqsM3axXDwz++///enWPf4exBIz2mF40rcD2rx7WzqNMQOeFgjhG1ATQSssS+XqibvrOH15N9tKNEo1yDSFmn9iLejwxatMeOPPOd8/V3na9DF2VUrt3HxNmoYXHO9irqDD15BwrVB+K4p/7dOCxaE2NpQ9tZrMZA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=UKZljw09; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="rpsOVX4F"
-Received: by mail-wr1-f42.google.com with SMTP id ffacd0b85a97d-45eedc94d37so175405f8f.3
-        for <sashiko-reviews@lists.linux.dev>; Thu, 04 Jun 2026 01:00:47 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20251104; t=1780560046; x=1781164846; darn=lists.linux.dev;
-        h=in-reply-to:content-disposition:mime-version:references:message-id
-         :subject:cc:to:date:from:from:to:cc:subject:date:message-id:reply-to;
-        bh=RL7FImbpIn+VjTJfYXkZ93eX1v/NTo7ok1lWqFVH6L8=;
-        b=rpsOVX4FU1COi8NH0BgYwV3cAiKAd4AWu/6g+iokPUjS9Bya9+Na0kEaumLbfb5vn8
-         KA9zRrwKwbviYrW7k85pSoVtqqC1HOBuztdI4WoA7I/gd7OP3Ewpaypq5r5CTAidtZ97
-         EnZzq6RajwI83kGqLrWQ2CzVrcTaefSLNqt1AejkL5xMtH4TtpKcuoqFafQaHPUykXSB
-         ypNhAJSt8lHKnvw7zVp0ZUFt2o+6J29TdPdEYQuqQew+pIqg3XkDauN1Wzrj5SNbz5ae
-         oWt72cxbIGGc9VScRR4aRiXPcmvFSBkuXw8NK7CLbJ1ci6OOs0mT2s5mpANGXYAnrVON
-         hX8w==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20251104; t=1780560046; x=1781164846;
-        h=in-reply-to:content-disposition:mime-version:references:message-id
-         :subject:cc:to:date:from:x-gm-gg:x-gm-message-state:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=RL7FImbpIn+VjTJfYXkZ93eX1v/NTo7ok1lWqFVH6L8=;
-        b=pS6vZfjE6FT3ohO+eq6KO+aATLAwKxGw2k094tGT2Ijl6FksNnuIS8xXPbTXV+vWP1
-         Kh1ZA5gUVPI1c6P2B05DPMZBFuYbwlefiIcE+dBSqK943tBCx7h2Q7M0hwGAI14Lm8ij
-         gySrdGKF3dw7UyjLeywLkk+gr+laHnNSosIJ4uaw5C5cXp6NXZv7DFdbqt7zAc7ZNV5E
-         3DRxnsNzSjmjoAzD/NowBdGOpnJIay3/DTYIXhT/fzc/+rFg3LulOaBzYQGz4caXjSm7
-         nvMW5DQ7y1Vo+VYQ5UcMjw0p5tOZIZmQEB9zU9qX3+cHp6QmEWsgRlitCqM0vFb84tDC
-         GZoA==
-X-Gm-Message-State: AOJu0YyXJuwCkdAcmKX91GmsqsVeYhho4z5tuBb0lvQwOwlXrrX17szP
-	OzvyiNVC9xSOMdD0b0Uo/oVWdcPStTzr1zhIpE/nkmRS3XZb0bP1/IFmKHnFfA==
-X-Gm-Gg: Acq92OH9xvabTR0NJJMZsOZZt8WSwC7QdxDNIWKdJltu1aZK/m+qlzKf6gIQJMS17gb
-	z2s9E7/F1dnkvWd+OsQemcubPSpmzIqlL63VyuaPon9MpLAjbKuVeQuP5j8FdXBPs/4syri/5T0
-	zGdcH0cfkm89MPphfYV/zOd4vv2Xs62I2lqMZcxONx/gzLVlKvGSO8Ep6EKOsrZ7G1iT91k4oyn
-	ASP8kQOP5CMjCZHhJt38P1TUH+L9cnyI121qmlco3GMaGSgE4EfbaMdcaOH9FO6pWZ578MS2khu
-	SElS65jKTTxOy9FdJ+JOqoYqpkGmCw4lY1+Tu5JnbmXmeg24FwMUdGTppcNtHbxBUNcSRl6AnVC
-	TQHdIjwySXuBN0KhNXAqk9hfxVP4T+ooj4dRH78Nd8/xRF7/piaeXSrUFMi12zpAISfKss0QrrQ
-	+kaM9E82VcznD1+DtCQ1LbY9UCqQ==
-X-Received: by 2002:a5d:424b:0:b0:45e:ee50:d066 with SMTP id ffacd0b85a97d-4602178307fmr7803012f8f.6.1780560046008;
-        Thu, 04 Jun 2026 01:00:46 -0700 (PDT)
-Received: from krava ([2a02:8308:a00c:e200:b655:ff13:e355:16a3])
-        by smtp.gmail.com with ESMTPSA id ffacd0b85a97d-4601f345209sm14077545f8f.17.2026.06.04.01.00.44
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Thu, 04 Jun 2026 01:00:45 -0700 (PDT)
-From: Jiri Olsa <olsajiri@gmail.com>
-X-Google-Original-From: Jiri Olsa <jolsa@kernel.org>
-Date: Thu, 4 Jun 2026 10:00:43 +0200
-To: sashiko-reviews@lists.linux.dev
-Cc: bpf@vger.kernel.org
-Subject: Re: [PATCHv7 bpf-next 21/29] selftests/bpf: Add tracing multi
- skel/pattern/ids attach tests
-Message-ID: <aiEwq_Oo7vKbxZAB@krava>
-References: <20260603110554.29590-22-jolsa@kernel.org>
- <20260603134059.D02E71F00893@smtp.kernel.org>
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="UKZljw09"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id E5C101F00899
+	for <sashiko-reviews@lists.linux.dev>; Thu,  4 Jun 2026 08:09:20 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=kernel.org;
+	s=k20260515; t=1780560560;
+	bh=WzyglERegEMt8yEQznzxLvK0AAqBBpQavEa92vxHnHI=;
+	h=References:In-Reply-To:From:Date:Subject:To:Cc;
+	b=UKZljw09K66uULRy3kx/uqI1GRtGUFbZBgXjkTAPoyS0DUaqV//OlAuFMASAmHfP5
+	 BseA98RL1uLzFnihEy7pib47wei/mLumdgamgQZMP1/SU+tOIdqYsUrNBYXBllVg+t
+	 jgVfobe4A6kIkfkNV35klWOeerUfC4SzMAofE1ND8tU0MWf00SkZoTJNiaN94NurEI
+	 /pqwLusY7pMVFo/GdDQOZis3tctaRbL4x00KdOxX5bhq4CwrSMxWmDZzomOR0K+rKz
+	 UL6M9TTMhSE4Q1HCMgCuMk9cv28kS7BcqkF500GbzTB0X1zWOJjwpZu/GYVLLyeQ7M
+	 0M+WPJSn72sJA==
+Received: by mail-lf1-f41.google.com with SMTP id 2adb3069b0e04-5aa7a7ad4d3so299377e87.1
+        for <sashiko-reviews@lists.linux.dev>; Thu, 04 Jun 2026 01:09:20 -0700 (PDT)
+X-Gm-Message-State: AOJu0YyX8ZwyG1zNfqYciK5nLMilYT36AYGeHerLbIItW6OXthA+Au36
+	qf8/YFwkpEMJiYh3FITqi1zv065RV1XklKW6JKQzgriwlpDVw7t9offikqDJUrW1t2Rzm8FEJLZ
+	bG2g2yCrMClZpNWRdAwakg0fPCWAwpiw=
+X-Received: by 2002:a05:6512:3186:b0:5aa:6e8c:e6cd with SMTP id
+ 2adb3069b0e04-5aa7c13506cmr1985299e87.40.1780560559574; Thu, 04 Jun 2026
+ 01:09:19 -0700 (PDT)
 Precedence: bulk
 X-Mailing-List: sashiko-reviews@lists.linux.dev
 List-Id: <sashiko-reviews.lists.linux.dev>
 List-Subscribe: <mailto:sashiko-reviews+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:sashiko-reviews+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <20260603134059.D02E71F00893@smtp.kernel.org>
+References: <20260603-ks8995-to-ksz8-v4-4-e15149ef21e7@kernel.org> <20260603231124.184B01F00899@smtp.kernel.org>
+In-Reply-To: <20260603231124.184B01F00899@smtp.kernel.org>
+From: Linus Walleij <linusw@kernel.org>
+Date: Thu, 4 Jun 2026 10:09:06 +0200
+X-Gmail-Original-Message-ID: <CAD++jL=V48G13poLmJuQMKz5M2L9sDNp4tg_i0O4CsK1u513ZQ@mail.gmail.com>
+X-Gm-Features: AVVi8CcDaB7cb-6Q3GyIdlfdpk4rI2XxWqgyIkAXMQjYqR1PG1nb3pyN5xYNIl8
+Message-ID: <CAD++jL=V48G13poLmJuQMKz5M2L9sDNp4tg_i0O4CsK1u513ZQ@mail.gmail.com>
+Subject: Re: [PATCH net-next v4 4/5] net: dsa: microchip: Support Microchip
+ KSZ8995XA / KS8995XA
+To: sashiko-reviews@lists.linux.dev
+Cc: devicetree@vger.kernel.org, robh@kernel.org, conor+dt@kernel.org
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 
-On Wed, Jun 03, 2026 at 01:40:59PM +0000, sashiko-bot@kernel.org wrote:
-> Thank you for your contribution! Sashiko AI review found 1 potential issue(s) to consider:
-> - [Low] The patch introduces tests using new libbpf APIs and section definitions (`bpf_program__attach_tracing_multi`, `struct bpf_tracing_multi_opts`, `fentry.multi`) that are not present in the tree.
-> --
-> 
-> commit 51532d297dcd0ba4ad28dece86396b88a934e780
-> Author: Jiri Olsa <jolsa@kernel.org>
-> Subject: selftests/bpf: Add tracing multi skel/pattern/ids attach tests
-> 
-> Adding tests for tracing_multi link attachment via all possible libbpf
-> apis - skeleton, function pattern and btf ids.
-> 
-> > diff --git a/tools/testing/selftests/bpf/prog_tests/tracing_multi.c b/tools/testing/selftests/bpf/prog_tests/tracing_multi.c
-> > new file mode 100644
-> > index 0000000000000..f333b2514b345
-> > --- /dev/null
-> > +++ b/tools/testing/selftests/bpf/prog_tests/tracing_multi.c
-> 
-> [ ... ]
-> 
-> > +static void test_link_api_pattern(void)
-> > +{
-> > +	struct tracing_multi *skel;
-> > +
-> > +	skel = tracing_multi__open_and_load();
-> > +	if (!ASSERT_OK_PTR(skel, "tracing_multi__open_and_load"))
-> > +		return;
-> > +
-> > +	skel->bss->pid = getpid();
-> > +
-> > +	skel->links.test_fentry = bpf_program__attach_tracing_multi(skel->progs.test_fentry,
-> > +					"bpf_fentry_test*", NULL);
-> 
-> [Severity: Low]
-> Is the bpf_program__attach_tracing_multi() function implemented in the tree?
-> I couldn't find its definition in the libbpf headers, which might cause a
-> build failure when compiling the selftests.
+On Thu, Jun 4, 2026 at 1:11=E2=80=AFAM <sashiko-bot@kernel.org> wrote:
 
-yes, added in: libbpf: Add support to create tracing multi link
+> > -     if (speed & PORT_HP_MDIX)
+> > -             *val |=3D KSZ886X_BMCR_HP_MDIX;
+> > +     if (!ksz_is_ksz8995xa(dev)) {
+> > +             if (speed & PORT_HP_MDIX)
+> > +                     *val |=3D KSZ886X_BMCR_HP_MDIX;
+> > +     }
+> >
+> >       if (restart & PORT_FORCE_MDIX)
+> >               *val |=3D KSZ886X_BMCR_FORCE_MDI;
+>
+> [Severity: High]
+> Does this code invert the Auto-Negotiation Enable bit polarity for KSZ899=
+5XA?
+>
+> The KSZ8995XA falls into the else branch of ksz_is_ksz88x3(dev) earlier i=
+n
+> ksz8_r_phy_bmcr(), which treats BIT(7) of the P_FORCE_CTRL register as
+> PORT_AUTO_NEG_DISABLE (where 1 =3D disable, 0 =3D enable).
+>
+> However, it appears the KSZ8995XA hardware uses BIT(7) for Auto-Negotiati=
+on
+> Enable (1 =3D enable, 0 =3D disable), matching the KSZ88X3.
 
-> 
-> [ ... ]
-> 
-> > +static void test_link_api_ids(void)
-> > +{
-> > +	LIBBPF_OPTS(bpf_tracing_multi_opts, opts);
-> 
-> [Severity: Low]
-> Does struct bpf_tracing_multi_opts exist in the current libbpf headers?
-> This instantiation seems to rely on a structure that is missing from the tree.
+No it does not, P_FORCE_CTRL is 0x0c for KSZ8995XA and the datasheet
+says very clearly:
 
-yes, in: libbpf: Add support to create tracing multi link
+7 Disable Auto Negotiation
 
-> 
-> [ ... ]
-> 
-> > diff --git a/tools/testing/selftests/bpf/progs/tracing_multi_attach.c b/tools/testing/selftests/bpf/progs/tracing_multi_attach.c
-> > new file mode 100644
-> > index 0000000000000..332d0a423a430
-> > --- /dev/null
-> > +++ b/tools/testing/selftests/bpf/progs/tracing_multi_attach.c
-> 
-> [ ... ]
-> 
-> > +__u64 test_result_fentry = 0;
-> > +__u64 test_result_fexit = 0;
-> > +
-> > +SEC("fentry.multi/bpf_fentry_test*")
-> > +int BPF_PROG(test_fentry)
-> 
-> [Severity: Low]
-> Is the fentry.multi section prefix supported by the current version of
-> libbpf? Using an unrecognized section might cause libbpf to fail when loading
-> the object.
+Again I think Sashiko is pattern matching and reading some other datasheet
+with a similar name.
 
-yes, in: libbpf: Add support to create tracing multi link
+> > -     ret =3D ksz_prmw8(dev, port, regs[P_SPEED_STATUS], PORT_HP_MDIX, =
+speed);
+> > -     if (ret)
+> > -             return ret;
+> > +             ret =3D ksz_prmw8(dev, port, regs[P_SPEED_STATUS], PORT_H=
+P_MDIX, speed);
+> > +             if (ret)
+> > +                     return ret;
+> > +     }
+> >
+> >       ctrl =3D 0;
+> >       if (ksz_is_ksz88x3(dev)) {
+>
+> [Severity: High]
+> Does this function write incorrect bits to P_NEG_RESTART_CTRL for the
+> KSZ8995XA?
+>
+> Later in ksz8_w_phy_bmcr(), it constructs a bitmask using KSZ8895-specifi=
+c
+> bits:
+>
+>     restart_mask =3D PORT_LED_OFF | PORT_TX_DISABLE | PORT_AUTO_NEG_RESTA=
+RT |
+>         PORT_POWER_DOWN | PORT_AUTO_MDIX_DISABLE | PORT_FORCE_MDIX;
+>
+> For KSZ8995XA, are these features mapped to different bits? Writing these
+> might apply the wrong settings.
 
-jirka
+I have checked and this is a similar instance.
+
+The KSZ8995XA does map all these bits the same way as KSZ8895.
+
+> Additionally, because KSZ8995XA is not KSZ88X3, it calls
+> ksz879x_set_loopback() which sets BIT(7) of REG_PORT_STATUS_3 (0x0F). Doe=
+s
+> 0x0F resolve to Port Control 15 (0x1F) on the KSZ8995XA and corrupt the 8=
+02.1p
+> priority mapping register instead of enabling loopback?
+
+Again no, the KSZ8995XA does have the loopback bit in bit 7.
+
+> > +const struct dsa_switch_ops ksz8995xa_switch_ops =3D {
+> > +     .get_tag_protocol       =3D ksz8995xa_get_tag_protocol,
+> > +     .get_phy_flags          =3D ksz_get_phy_flags,
+> > +     .setup                  =3D ksz8_setup,
+> > +     .teardown               =3D ksz_teardown,
+> > +     .phy_read               =3D ksz8_phy_read16,
+> > +     .phy_write              =3D ksz8_phy_write16,
+> > +     .phylink_get_caps       =3D ksz8_phylink_get_caps,
+> > +     .port_setup             =3D ksz8_dsa_port_setup,
+>
+> [Severity: High]
+> Since global DCB initialization ksz_dcb_init() is explicitly skipped for =
+the
+> KSZ8995XA in ksz8_setup(), will configuring DCB at the port level cause i=
+ssues
+> here?
+>
+> ksz8_dsa_port_setup() unconditionally calls ksz_dcb_init_port(dev, port),
+> which enables DiffServ and 802.1p priorities on the ports while the globa=
+l
+> DSCP mapping remains uninitialized.
+>
+> Could this cause unpredictable traffic classification, or corrupt unrelat=
+ed
+> port configurations by writing to bits 3:6 of offset 0x00 (REG_PORT_CTRL_=
+0)
+> on the KSZ8995XA?
+
+This one is correct though!
+
+Sometimes reading Sashiko reviews is a bit surreal, like a delicate
+meal mixed up with garbage.
+
+Yours,
+Linus Walleij
