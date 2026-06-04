@@ -1,95 +1,141 @@
-Received: from out-173.mta1.migadu.com (out-173.mta1.migadu.com [95.215.58.173])
+Received: from mgamail.intel.com (mgamail.intel.com [192.198.163.14])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 969822EDD40
-	for <sashiko-reviews@lists.linux.dev>; Thu,  4 Jun 2026 02:23:36 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=95.215.58.173
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 046223AB480
+	for <sashiko-reviews@lists.linux.dev>; Thu,  4 Jun 2026 02:54:51 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=192.198.163.14
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1780539818; cv=none; b=Ik/34grJooNWiWHsO+pdpUKmwodMTzxGtNK8sOxVLQ5qTAqMfCzFfFArwRxyJDRuPECFmy4rtd8pCvErPZUOOm+r/7uDmJ8CzdY5ZwU88kUMV0PyV5SjuipvYC7RYwTj9z2Yu2qgbC7IDpzgX62wSxZjVtDxJKwj6L8dtrSMoOU=
+	t=1780541693; cv=none; b=nAN3+76YgZvvqKep1Dy4tznlHEDkdhAw55u2exXU82yj9prIHMTB2jF91k9fUQ9jo58WdAhqwwvl/jpbSx5/oQl1mpTMLj1iaaN6Wz0fYoLocpEKLsXUAOAvymdWOSmGkj1hI0k/IRL4QDJ5rIPYdRLb21ULMrnqtE9zfzxza+M=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1780539818; c=relaxed/simple;
-	bh=QG7vPbkyoq7VlC1qwYsactQbnLDbsH5yklFMqCbrvIU=;
+	s=arc-20240116; t=1780541693; c=relaxed/simple;
+	bh=QwL6diGUVPs3irTGpndZkAlVzmKc1IPtnBT5494zAQE=;
 	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=XKLYmWmzTEf5t+DpBEESTKLuYRky/ygJ/EtWfL3FCx22Pzt7M177fk2mBhWxIdjN2HaIbG/6tsSgDM0/jpu9UVclWYL2y8G0bCDcBYiUsXR4zjAiwP0w4UK1WhLQ8sRu0rLRMbNxNUT5YB+tdocGOg75otOHZ70Bohz210nNKfo=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linux.dev; spf=pass smtp.mailfrom=linux.dev; dkim=pass (1024-bit key) header.d=linux.dev header.i=@linux.dev header.b=iymTNiKZ; arc=none smtp.client-ip=95.215.58.173
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linux.dev
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linux.dev
+	 In-Reply-To:Content-Type; b=j7MsQ2TNDCx5aTBUGtkn1tHTEm9TH3kcF1vImA3uvVOkkTyEfXhQsPPMcozAXhjLlPPSmCLKete3uRuPuN+bQzICzuR6I4yMJHlraVIrcEoXv8VqWv8rwvuEULytBoDfuZfW11k6J0I3u0/eQYs03xyDXNzHXK2z7a1vLjVtHFc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linux.intel.com; spf=pass smtp.mailfrom=linux.intel.com; dkim=pass (2048-bit key) header.d=intel.com header.i=@intel.com header.b=C6Q95Vcb; arc=none smtp.client-ip=192.198.163.14
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linux.intel.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linux.intel.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linux.dev header.i=@linux.dev header.b="iymTNiKZ"
-Message-ID: <802f6e4f-8cf4-4437-8035-d9a5c02cac97@linux.dev>
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linux.dev; s=key1;
-	t=1780539814;
-	h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
-	 to:to:cc:cc:mime-version:mime-version:content-type:content-type:
-	 content-transfer-encoding:content-transfer-encoding:
-	 in-reply-to:in-reply-to:references:references;
-	bh=YoY78+x+SH2QoAJCHHmcdAiYEbylwJaqt/cNFDwcfKQ=;
-	b=iymTNiKZHtVy5+R952b7XmD8OqJAUo6ar9tqvtC6l8J+BkMeoFyR1zx0Au1XfuCIIf3e44
-	qJVNto+J3vxmsDNbO1Kn7JHjnQyxDXKH0drKkE1PeO+kWRTgTc5mOOlDn41EvAZe4UbI/f
-	uUFdu+zAj+A8N0d2h9QPBQfWLfekdPw=
-Date: Thu, 4 Jun 2026 10:23:10 +0800
+	dkim=pass (2048-bit key) header.d=intel.com header.i=@intel.com header.b="C6Q95Vcb"
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
+  d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
+  t=1780541692; x=1812077692;
+  h=message-id:date:mime-version:subject:to:cc:references:
+   from:in-reply-to:content-transfer-encoding;
+  bh=QwL6diGUVPs3irTGpndZkAlVzmKc1IPtnBT5494zAQE=;
+  b=C6Q95VcbLqxLKBg/tVu/Gat6VDevpV6jIpLf+XHfEvj2Os52TDPKZ1GN
+   6DJ/DInxnb9Qvf5yOCtetxulBr8oayQPsM39KCzoRTL8RrJx8/8CyY+pZ
+   mRII/PJKmYaV62gh2TgMhT0gBSg973orQ1Vhj1RieqovwV4su2NEacFSm
+   PEFBuiDm6x6k3xDDok3dw26ncoakj/UvHZ9qdTXzWeRJzL1ZvoeoZMcUd
+   JtyGGDkPxqvthy3j2CHLCezNc/dbn5mmdzi7fYAho6Y/V/ui0HKJr87iJ
+   HsquTOpy2Kctckpu61eV2g9qdbUlAOOGnUQPonswMpO2xMjOvk6oMOvVG
+   w==;
+X-CSE-ConnectionGUID: bpgQctIdTdqlJWF3fjs+9w==
+X-CSE-MsgGUID: f6WBAZaYQ3am8NvoI+GW+g==
+X-IronPort-AV: E=McAfee;i="6800,10657,11806"; a="81395717"
+X-IronPort-AV: E=Sophos;i="6.24,186,1774335600"; 
+   d="scan'208";a="81395717"
+Received: from fmviesa004.fm.intel.com ([10.60.135.144])
+  by fmvoesa108.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 03 Jun 2026 19:54:51 -0700
+X-CSE-ConnectionGUID: j9rUERyoRQOMlnAWHh4pAA==
+X-CSE-MsgGUID: 0FLTgoPuQyuWUjikjLX2Mg==
+X-ExtLoop1: 1
+X-IronPort-AV: E=Sophos;i="6.24,186,1774335600"; 
+   d="scan'208";a="246240712"
+Received: from unknown (HELO [10.238.2.24]) ([10.238.2.24])
+  by fmviesa004-auth.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 03 Jun 2026 19:54:50 -0700
+Message-ID: <0c09d581-1efe-4ddb-8bd5-75f78e946a23@linux.intel.com>
+Date: Thu, 4 Jun 2026 10:54:47 +0800
 Precedence: bulk
 X-Mailing-List: sashiko-reviews@lists.linux.dev
 List-Id: <sashiko-reviews.lists.linux.dev>
 List-Subscribe: <mailto:sashiko-reviews+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:sashiko-reviews+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Subject: Re: [PATCH bpf-next 2/3] bpf: Check tail zero of bpf_prog_info
-Content-Language: en-US
+User-Agent: Mozilla Thunderbird
+Subject: Re: [RFC PATCH v2 2/4] KVM: x86: TDX: Hide unsupported configurable
+ CPUID bits
 To: sashiko-reviews@lists.linux.dev
-Cc: bpf@vger.kernel.org
-References: <20260603144518.67065-3-leon.hwang@linux.dev>
- <20260603151405.6DB111F00893@smtp.kernel.org>
-X-Report-Abuse: Please report any abuse attempt to abuse@migadu.com and include these headers.
-From: Leon Hwang <leon.hwang@linux.dev>
-In-Reply-To: <20260603151405.6DB111F00893@smtp.kernel.org>
+Cc: kvm@vger.kernel.org
+References: <20260604023314.3907511-3-binbin.wu@linux.intel.com>
+ <20260604024718.497F21F00893@smtp.kernel.org>
+Content-Language: en-US
+From: Binbin Wu <binbin.wu@linux.intel.com>
+In-Reply-To: <20260604024718.497F21F00893@smtp.kernel.org>
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 7bit
-X-Migadu-Flow: FLOW_OUT
 
-On 3/6/26 23:14, sashiko-bot@kernel.org wrote:
-[...]
->> diff --git a/kernel/bpf/syscall.c b/kernel/bpf/syscall.c
->> index 1007fb7c87e91..0c86a70d31c17 100644
->> --- a/kernel/bpf/syscall.c
->> +++ b/kernel/bpf/syscall.c
->> @@ -5115,10 +5115,11 @@ static int bpf_prog_get_info_by_fd(struct file *file,
->>  	u32 info_len = attr->info.info_len;
->>  	struct bpf_prog_kstats stats;
->>  	char __user *uinsns;
->> -	u32 ulen;
->> +	u32 ulen, len;
->>  	int err;
+
+
+On 6/4/2026 10:47 AM, sashiko-bot@kernel.org wrote:
+> Thank you for your contribution! Sashiko AI review found 1 potential issue(s) to consider:
+> 
+> Pre-existing issues:
+> - [High] The secure-by-default CPUID allowlist is applied to KVM capability reporting but missing from TD initialization validation. This allows a malicious userspace VMM to bypass capability enumeration and supply unsupported configurable CPUID bits directly to the TDX module, potentially causing host state corruption.
+> --
+> 
+> commit e4dd30c1f72bbeeb74f3ba5a865ab30e0c17bcf6
+> Author: Binbin Wu <binbin.wu@linux.intel.com>
+> 
+> KVM: x86: TDX: Hide unsupported configurable CPUID bits
+> 
+> This commit introduces get_supported_cfg_cpuid() to filter the CPUID 
+> capabilities reported by KVM_TDX_CAPABILITIES. It replaces a hardcoded 
+> denylist with a secure-by-default allowlist approach to prevent exposing 
+> unsupported features that could lead to host state corruption.
+> 
+>> diff --git a/arch/x86/kvm/vmx/tdx.c b/arch/x86/kvm/vmx/tdx.c
+>> index 028d54c76b81e..befda6bc17b1e 100644
+>> --- a/arch/x86/kvm/vmx/tdx.c
+>> +++ b/arch/x86/kvm/vmx/tdx.c
+> 
+> [ ... ]
+> 
+>> -static void clear_waitpkg(struct kvm_cpuid_entry2 *entry)
+>> +static bool tdx_unsupported_cpuid(const struct kvm_cpuid_entry2 *entry)
+>>  {
+>> -	entry->ecx &= ~__feature_bit(X86_FEATURE_WAITPKG);
+>> +	return has_tsx(entry) || has_waitpkg(entry);
+>>  }
+> 
+> [Severity: High]
+> This is a pre-existing issue, but by keeping this legacy denylist active, is
+> there a risk that userspace can bypass the new secure-by-default allowlist
+> during TD initialization?
+> 
+> While this patch updates capability reporting to explicitly mask unsupported 
+> features, the configuration path in setup_tdparams_cpuids() still appears to 
+> use this older denylist function to validate user input:
+> 
+> arch/x86/kvm/vmx/tdx.c:setup_tdparams_cpuids() {
+>         ...
+>         if (tdx_unsupported_cpuid(entry))
+>                 return -EINVAL;
+> 
+>         value = &td_params->cpuid_values[i];
+>         value->eax = entry->eax;
+>         value->ebx = entry->ebx;
+>         value->ecx = entry->ecx;
+>         value->edx = entry->edx;
+>         ...
+> }
+> 
+> Because these user-provided CPUID values are copied directly into the hardware 
+> initialization parameters without being masked against the newly introduced 
+> get_supported_cfg_cpuid() allowlist, could a VMM explicitly request and pass 
+> unsupported configurable CPUID bits directly to the TDX module?
+> 
+> Does this still leave the door open to the host state corruption mentioned
+> in the commit message if the TDX module only enforces hardware-level support
+> rather than KVM's software constraints?
+
+This is addressed by the next patch.
+
+> 
 >>  
->> -	err = bpf_check_uarg_tail_zero(USER_BPFPTR(uinfo), sizeof(info), info_len);
->> +	len = offsetofend(struct bpf_prog_info, attach_btf_id);
->> +	err = bpf_check_uarg_tail_zero(USER_BPFPTR(uinfo), len, info_len);
+>> -static void tdx_clear_unsupported_cpuid(struct kvm_cpuid_entry2 *entry)
+>> +static u32 get_supported_cfg_cpuid(u32 function, u32 index, u8 reg)
+>>  {
 > 
-> [Severity: Critical]
-> Does this change break the ABI for existing deployed binaries?
+> [ ... ]
 > 
-> Previously, expected_size was 232 (sizeof(info)). If an existing binary
-> passes info_len = 232 with uninitialized stack garbage in the 4-byte
-> padding, bpf_check_uarg_tail_zero() would see actual_size <= expected_size
-> (232 <= 232) and immediately return 0.
-> 
-> By reducing expected_size to 228, actual_size > expected_size (232 > 228),
-> so bpf_check_uarg_tail_zero() will actively check the 4 padding bytes and
-> return -E2BIG if they contain garbage. This rejects previously working
-> applications.
-> 
-> Additionally, does this actually protect against the stated future issue?
-> 
-> If a future kernel adds a new 4-byte field, the struct size stays 232, and
-> the new kernel's expected_size will be 232. At that point, those old buggy
-> binaries passing info_len = 232 will once again hit the fast path
-> (actual_size <= expected_size), skipping the check and allowing the
-> uninitialized padding to be consumed as the new field.
-> 
-For this case, forward compatibility is more important than backward
-compatibility. Thereafter, those old buggy binaries should fix
-themselves instead.
-
-Thanks,
-Leon
 
