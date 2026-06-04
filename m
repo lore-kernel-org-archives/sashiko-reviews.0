@@ -1,182 +1,153 @@
-Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-wr1-f52.google.com (mail-wr1-f52.google.com [209.85.221.52])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CD81C480346;
-	Thu,  4 Jun 2026 14:41:47 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 94B9A48094E
+	for <sashiko-reviews@lists.linux.dev>; Thu,  4 Jun 2026 14:42:34 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.221.52
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1780584109; cv=none; b=d9PnH+Vi6DRqWtbFmStKN02IG6Jnz+nAyBDaLPp7UyM4Pqr7TopTwLKo9wiHFP8utcySKAGIrXeaP26OXsU3huqmvVQ78qRn28NGAKmT47AvxBZzqJW3M0bmCgywQlPmXUZmYQxKUl8yMS7kGqzXjABLENL/wvSE8cwt5k4a+EQ=
+	t=1780584156; cv=none; b=UOb2VLE5+CB99o4PL3EGtz68zA6v8yFOW7vWKrYILN6CGQrx00L13WQnJQ+VuoSn1xNrG5AdFx7ZHjYqFeMimOYtSn21HxxpMz+BKAEz8jj/20AXJDW1a+owJmoQ08m/b9Ay1qeaoNrwg09dRuIvBiTiavEdMxGqXAgUP8F4SlI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1780584109; c=relaxed/simple;
-	bh=IZUyeHpEUiDBY1eTrI7fDkU8pJLG9YW9Z3nCBg2piHg=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=ebV9oW7q31LYjn0UlHQOIb2k+HgmegZcjbfpfjk71RPQTnVtu4JgtY3FneWmgr0wMuW1b3SgGjLhva8XX2BxtCVOBxYKrMe+TFjP91bgAkEdU+EGbrePohXGQiBn90C7gcbTWijn3tu3L9JiNGm3lXzKmHtMoAPDrZ15ZLrtDMs=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=T/2IrbBC; arc=none smtp.client-ip=100.103.45.18
+	s=arc-20240116; t=1780584156; c=relaxed/simple;
+	bh=WhcVfvjiU5OOZnzJyfjaqNDG3/Fn+ujsPPuGRfolw5g=;
+	h=Message-ID:Date:MIME-Version:From:Subject:To:Cc:References:
+	 In-Reply-To:Content-Type; b=MxNC5e4HcJ3lp1oopk9Zis596P4mnDcFtTHF0hdD9RA3bXoRsuo1iWnKjaJsWLfIkGCXw57InsmO56gJVpYJazS/Xrb/BJU+zcjlYvXvO3zf8P829nrKM7gA1mBPyQL4THH2preLs0/jpR4KbC+3DnWSJx21qKMnmqImyc1vZY0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=FujdRgn/; arc=none smtp.client-ip=209.85.221.52
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="T/2IrbBC"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id C31FC1F00893;
-	Thu,  4 Jun 2026 14:41:46 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=kernel.org;
-	s=k20260515; t=1780584107;
-	bh=HBDFAOUIf06+kgPr/KpezRch+RnqzzpEdLRUW3CWOoY=;
-	h=Date:From:To:Cc:Subject:References:In-Reply-To;
-	b=T/2IrbBCCqRk8eGWYpDY8mS3C2xilWw6y9J/9+4SQIsUUqRVnF05mKwdrZi1JaW2k
-	 S68vieM8Dhy5vH+pJZfq+FADLixfKvesdJKPTHV+X89eWRi3oUhcFKvD4jQMNak0Pk
-	 12WffE1rWCtRG0eA2gJ3HC6OjPopcE7Ofm55nOGMYaVWVPfzyqM4NdK7i8p1jkX+oW
-	 hTl3QOUDXvFCn5CBwN9IkVX/z86AcR4D3O+KIuoTN2bE2kl1JN2p70xyLgLEZuwZYi
-	 vXrkRBm1HgmXHm29PmF4yEIYqVloCBabuKYlaSWC4wqQKHnfHP00OoZkUTyi370DeX
-	 Lpe4PlOW3SB+w==
-Date: Thu, 4 Jun 2026 16:41:43 +0200
-From: Benjamin Tissoires <bentiss@kernel.org>
-To: Danny Kaehn <danny.kaehn@plexus.com>
-Cc: sashiko-reviews@lists.linux.dev, dmitry.torokhov@gmail.com, 
-	linux-input@vger.kernel.org
-Subject: Re: [PATCH v14 1/2] HID: cp2112: Add fwnode support
-Message-ID: <aiGNkO9nFF4mF7vB@beelink>
-References: <20260520-cp2112-dt-v14-1-b1b4b6734b6f@plexus.com>
- <20260520170229.CEFA31F000E9@smtp.kernel.org>
- <ah6LJw5bgVyrtnyI@beelink>
- <20260604143104.GB1355442@LNDCL34533.neenah.na.plexus.com>
+	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="FujdRgn/"
+Received: by mail-wr1-f52.google.com with SMTP id ffacd0b85a97d-45fe59255beso409673f8f.1
+        for <sashiko-reviews@lists.linux.dev>; Thu, 04 Jun 2026 07:42:34 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linaro.org; s=google; t=1780584153; x=1781188953; darn=lists.linux.dev;
+        h=content-transfer-encoding:in-reply-to:organization:autocrypt
+         :content-language:references:cc:to:subject:reply-to:from:user-agent
+         :mime-version:date:message-id:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=edXeUisUOZStFE68DISSeh9JLM/7psQJBNg/h6ooJj0=;
+        b=FujdRgn/pbcMa2NmkNhZz+aHLZg0QXmq8iRkT23o/yD8B/Aj7fWI4oSBMj9EgBgCpQ
+         w0cJ4UjdXTopPMVzBTfJU2wQbJ58G+e5+nawIwkikLBb5MZB9WW0Z5rok0rqdhD8c3Zt
+         ZTeQycT24j7IddGqHoPzrWMfiCkxBw6UPbxOOzsLhT2DxTb6P7FLmlMG2dMhG8sxS4gu
+         RP+xJ61mFN3wjdaQbY865VopmZD1wfSMXZe+rAEgQiAXGJjtcedE+3C50HIRYzlQcb9Y
+         NN+cGt2SWyVNa99LHZ8oT/TxrEw/zZ2cQabRn4i9phR9cjAmiGz8fqGaJoEJ50YACygk
+         KELg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20251104; t=1780584153; x=1781188953;
+        h=content-transfer-encoding:in-reply-to:organization:autocrypt
+         :content-language:references:cc:to:subject:reply-to:from:user-agent
+         :mime-version:date:message-id:x-gm-gg:x-gm-message-state:from:to:cc
+         :subject:date:message-id:reply-to;
+        bh=edXeUisUOZStFE68DISSeh9JLM/7psQJBNg/h6ooJj0=;
+        b=gZi5H4Qyg7QOKGf0xd3ZF/rI3WMHy8BaeZ6bxMNYSVekMSacHlFQCN/MjO4yalBDkE
+         RezSjjF2y4VlK+yJ/Tp7iLQu8j2ZKtZk4l/y6DjZ3lklUrKpP98IwAFk8K7f2S548wJA
+         Wg64R9jd8kxWkwzZhTkYdLbg0cdYtpbhlQ8MIhzaW1URLkqvYDpQOHUlUNBSb4d6leJ5
+         lyxnyOceGQBUCq0l9EP4M8TpoOsfZ3lJacKBNVx20RguweT5sv3tLdWzjv2DfkYtQz7K
+         dMiCcNGldgYCjYob0vmtMBtamR8ZDgAiaOAwc0U9iBgWyNpfbfG6F1j1+On7Kw7Odg+L
+         Fv/A==
+X-Gm-Message-State: AOJu0YxMO5MzIldRrU263rfrV8LWeMPaHcLrdBSW3eKOyk0bgyShubyG
+	YI0s1P29UwAE7tsZs3owRRbAKivasSxnZxVa0Odgklm6LBpP1jw9NrMoaB5FLxxaOo76+7Gm2Jv
+	+7UDN
+X-Gm-Gg: Acq92OFbBDeP+meWww3WSrE5k+dLpwdGaeiHL8/75uPHGq6KgSuyM/7YY//ZBigA3fg
+	78rXS65u7JLnbXc9Cj1LdFjzBjeskZ1TAJdLDBAGVPI0EdX9lTdCP4XG0b1EoGIU/sOyiBZ4q+r
+	mqa98Al+hzxDPNOrT7AOTod+rBZtAIxhx3VtE5Mwt4k3syMeCmr5R/zmBE+unkGGvhH/5FCk7CK
+	/J6EHDS2tjUisca3wCSmYNgvv3RqGceI7FY84wBGQt3r4CIgLAYtI9XSx/Y7AcsAwJEs1Zx3my/
+	pQeXkkEzFOcTpr2HOawLhG3EXyfpNvSoluOY13wSXcEVtfHW9B2hPQsI+DBHpCxFpT+VHnr8e3k
+	UMdweridIV7eGtcA1gGuD9Hl+NjyCGxkqwcEE4D/c/iDXmELJPuWSvdDbWxSEP7Au/8PXt8/oXy
+	IGPpz8omtJXvE5RBDtsIJzGjkeKb1T1gWYeX4pGAI0M4RYpJF7/xm+OqMS/pyhRQxRR0A0806dN
+	t4PJjEViUN7EyA=
+X-Received: by 2002:a5d:6941:0:b0:43d:68ad:3b7f with SMTP id ffacd0b85a97d-46021829aefmr9569274f8f.21.1780584152786;
+        Thu, 04 Jun 2026 07:42:32 -0700 (PDT)
+Received: from ?IPV6:2a01:e0a:106d:1080:dbd:100f:afd5:9221? ([2a01:e0a:106d:1080:dbd:100f:afd5:9221])
+        by smtp.gmail.com with ESMTPSA id ffacd0b85a97d-4601f2dc412sm17426979f8f.4.2026.06.04.07.42.31
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Thu, 04 Jun 2026 07:42:32 -0700 (PDT)
+Message-ID: <18d06d5f-7bf3-4e8d-bc8e-b0c632864190@linaro.org>
+Date: Thu, 4 Jun 2026 16:42:30 +0200
 Precedence: bulk
 X-Mailing-List: sashiko-reviews@lists.linux.dev
 List-Id: <sashiko-reviews.lists.linux.dev>
 List-Subscribe: <mailto:sashiko-reviews+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:sashiko-reviews+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=iso-8859-1
-Content-Disposition: inline
-Content-Transfer-Encoding: 8bit
-In-Reply-To: <20260604143104.GB1355442@LNDCL34533.neenah.na.plexus.com>
+User-Agent: Mozilla Thunderbird
+From: Neil Armstrong <neil.armstrong@linaro.org>
+Reply-To: Neil Armstrong <neil.armstrong@linaro.org>
+Subject: Re: [PATCH 1/2] drm/panel: Enable DSC for Visionox VTDR6130 panel
+To: sashiko-reviews@lists.linux.dev
+Cc: dri-devel@lists.freedesktop.org
+References: <20260604-topic-sm8x50-vtdr6130-dsc-v1-1-09bcd1dff1fb@linaro.org>
+ <20260604130349.2BE0F1F00893@smtp.kernel.org>
+Content-Language: en-US, fr
+Autocrypt: addr=neil.armstrong@linaro.org; keydata=
+ xsBNBE1ZBs8BCAD78xVLsXPwV/2qQx2FaO/7mhWL0Qodw8UcQJnkrWmgTFRobtTWxuRx8WWP
+ GTjuhvbleoQ5Cxjr+v+1ARGCH46MxFP5DwauzPekwJUD5QKZlaw/bURTLmS2id5wWi3lqVH4
+ BVF2WzvGyyeV1o4RTCYDnZ9VLLylJ9bneEaIs/7cjCEbipGGFlfIML3sfqnIvMAxIMZrvcl9
+ qPV2k+KQ7q+aXavU5W+yLNn7QtXUB530Zlk/d2ETgzQ5FLYYnUDAaRl+8JUTjc0CNOTpCeik
+ 80TZcE6f8M76Xa6yU8VcNko94Ck7iB4vj70q76P/J7kt98hklrr85/3NU3oti3nrIHmHABEB
+ AAHNKk5laWwgQXJtc3Ryb25nIDxuZWlsLmFybXN0cm9uZ0BsaW5hcm8ub3JnPsLAkQQTAQoA
+ OwIbIwULCQgHAwUVCgkICwUWAgMBAAIeAQIXgBYhBInsPQWERiF0UPIoSBaat7Gkz/iuBQJk
+ Q5wSAhkBAAoJEBaat7Gkz/iuyhMIANiD94qDtUTJRfEW6GwXmtKWwl/mvqQtaTtZID2dos04
+ YqBbshiJbejgVJjy+HODcNUIKBB3PSLaln4ltdsV73SBcwUNdzebfKspAQunCM22Mn6FBIxQ
+ GizsMLcP/0FX4en9NaKGfK6ZdKK6kN1GR9YffMJd2P08EO8mHowmSRe/ExAODhAs9W7XXExw
+ UNCY4pVJyRPpEhv373vvff60bHxc1k/FF9WaPscMt7hlkbFLUs85kHtQAmr8pV5Hy9ezsSRa
+ GzJmiVclkPc2BY592IGBXRDQ38urXeM4nfhhvqA50b/nAEXc6FzqgXqDkEIwR66/Gbp0t3+r
+ yQzpKRyQif3OwE0ETVkGzwEIALyKDN/OGURaHBVzwjgYq+ZtifvekdrSNl8TIDH8g1xicBYp
+ QTbPn6bbSZbdvfeQPNCcD4/EhXZuhQXMcoJsQQQnO4vwVULmPGgtGf8PVc7dxKOeta+qUh6+
+ SRh3vIcAUFHDT3f/Zdspz+e2E0hPV2hiSvICLk11qO6cyJE13zeNFoeY3ggrKY+IzbFomIZY
+ 4yG6xI99NIPEVE9lNBXBKIlewIyVlkOaYvJWSV+p5gdJXOvScNN1epm5YHmf9aE2ZjnqZGoM
+ Mtsyw18YoX9BqMFInxqYQQ3j/HpVgTSvmo5ea5qQDDUaCsaTf8UeDcwYOtgI8iL4oHcsGtUX
+ oUk33HEAEQEAAcLAXwQYAQIACQUCTVkGzwIbDAAKCRAWmrexpM/4rrXiB/sGbkQ6itMrAIfn
+ M7IbRuiSZS1unlySUVYu3SD6YBYnNi3G5EpbwfBNuT3H8//rVvtOFK4OD8cRYkxXRQmTvqa3
+ 3eDIHu/zr1HMKErm+2SD6PO9umRef8V82o2oaCLvf4WeIssFjwB0b6a12opuRP7yo3E3gTCS
+ KmbUuLv1CtxKQF+fUV1cVaTPMyT25Od+RC1K+iOR0F54oUJvJeq7fUzbn/KdlhA8XPGzwGRy
+ 4zcsPWvwnXgfe5tk680fEKZVwOZKIEuJC3v+/yZpQzDvGYJvbyix0lHnrCzq43WefRHI5XTT
+ QbM0WUIBIcGmq38+OgUsMYu4NzLu7uZFAcmp6h8g
+Organization: Linaro
+In-Reply-To: <20260604130349.2BE0F1F00893@smtp.kernel.org>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
 
-On Jun 04 2026, Danny Kaehn wrote:
+On 6/4/26 15:03, sashiko-bot@kernel.org wrote:
+> Thank you for your contribution! Sashiko AI review found 1 potential issue(s) to consider:
+> - [Low] The panel driver DRM_PANEL_VISIONOX_VTDR6130 lacks Kconfig dependencies for DSC helpers, causing a linker error when compiled without them.
+> --
 > 
+> commit 2b76aa2af63143268815713af0dc4f51234d7f43
+> Author: Jun Nie <jun.nie@linaro.org>
 > 
-> On Tue, Jun 02, 2026 at 09:55:18AM +0200, Benjamin Tissoires wrote:
-> > On May 20 2026, sashiko-bot@kernel.org wrote:
-> > > Thank you for your contribution! Sashiko AI review found 1 potential issue(s) to consider:
-> > > - [High] Premature release of firmware node references results in use-after-free vulnerabilities when assigning the I2C adapter and GPIO chip firmware nodes.
-> > > --
-> > > 
-> > > commit 3dfaf368e855835bf23009205c4b93a2a070aae1
-> > > Author: Danny Kaehn <danny.kaehn@plexus.com>
-> > > 
-> > > HID: cp2112: Add fwnode support
-> > > 
-> > > This commit adds firmware node support to describe the CP2112's I2C and
-> > > GPIO interfaces. It differentiates between ACPI and DeviceTree bindings,
-> > > mapping the child nodes to the respective adapter and gpio_chip devices.
-> > > 
-> > > > diff --git a/drivers/hid/hid-cp2112.c b/drivers/hid/hid-cp2112.c
-> > > > index 803b883ae8750..e960fc988058f 100644
-> > > > --- a/drivers/hid/hid-cp2112.c
-> > > > +++ b/drivers/hid/hid-cp2112.c
-> > > [ ... ]
-> > > > @@ -1226,6 +1241,28 @@ static int cp2112_probe(struct hid_device *hdev, const struct hid_device_id *id)
-> > > >  		return ret;
-> > > >  	}
-> > > >  
-> > > > +	cp2112_fwnode = dev_fwnode(&hdev->dev);
-> > > > +	if (is_acpi_device_node(cp2112_fwnode)) {
-> > > > +		fwnode_for_each_child_node(cp2112_fwnode, child) {
-> > > > +			ret = acpi_get_local_address(ACPI_HANDLE_FWNODE(child), &addr);
-> > > > +			if (ret)
-> > > > +				continue;
-> > > > +
-> > > > +			switch (addr) {
-> > > > +			case CP2112_I2C_ADR:
-> > > > +				device_set_node(&dev->adap.dev, child);
-> > > > +				break;
-> > > > +			case CP2112_GPIO_ADR:
-> > > > +				dev->gc.fwnode = child;
-> > > > +				break;
-> > > > +			}
-> > > 
-> > > [Severity: High]
-> > > Does this code leave dangling pointers in the device structures?
-> > > 
-> > > The fwnode_for_each_child_node() macro automatically drops the reference to
-> > > the child node when advancing to the next node or exiting the loop.
-> > > 
-> > > Because device_set_node() and direct pointer assignments do not increment
-> > > the reference count, the nodes assigned here could be prematurely freed
-> > > resulting in a use-after-free.
-> > 
-> > Sashiko is overly cautious here. ACPI handles are not refcounted, so we
-> > are fine.
-> > 
-> > That being said, we could unify the OF and ACPI behaviour by calling the
-> > noops fwnode_handle_get(child) for ACPI as well and clean them up in
-> > cp2112_remove(). This would also shut up the next warning from Sashiko
-> > below.
-> > 
-> > > 
-> > > > +		}
-> > > > +	} else if (is_of_node(cp2112_fwnode)) {
-> > > > +		child = fwnode_get_named_child_node(cp2112_fwnode, "i2c");
-> > > > +		device_set_node(&dev->adap.dev, child);
-> > > > +		fwnode_handle_put(child);
-> > > 
-> > > [Severity: High]
-> > > Are we releasing the firmware node prematurely here?
-> > > 
-> > > fwnode_get_named_child_node() returns a node with an incremented reference
-> > > count. However, since device_set_node() does not take its own reference on
-> > > the child node, dropping the reference immediately after could leave
-> > > dev->adap.dev with a dangling pointer if the node is later removed.
-> > 
-> > OF children are tied to the lifespan of the OF device, so we are fine,
-> > but technically incorrect, as mentioned by Sashiko.
-> > 
-> > If you regroup the 2 behaviours and clean them in cp2112_remove(), this
-> > would be cleaner IMO.
-> >
+> drm/panel: Enable DSC for Visionox VTDR6130 panel
 > 
-> Ack, this is something I've gone back-and-forth on in the revisions of
-> this patch. Will update the driver to hold the fwnode reference for the
-> I2C subnode.
+> This commit enables display compression (DSC v1.2) for the 1080x2400 Visionox
+> VTDR6130 AMOLED DSI panel. It sets up the DSC configuration parameters and
+> sends the picture parameter set during panel initialization.
 > 
-> However, for the GPIO chip, DT uses the parent node (which shouldn't
-> need an increment to the refcount), while ACPI uses a child node. Given
+>> diff --git a/drivers/gpu/drm/panel/panel-visionox-vtdr6130.c b/drivers/gpu/drm/panel/panel-visionox-vtdr6130.c
+>> index 97a79411e1ecd..0cdcdbbc766da 100644
+>> --- a/drivers/gpu/drm/panel/panel-visionox-vtdr6130.c
+>> +++ b/drivers/gpu/drm/panel/panel-visionox-vtdr6130.c
+> [ ... ]
+>> @@ -123,6 +128,9 @@ static int visionox_vtdr6130_on(struct visionox_vtdr6130 *ctx)
+>>   	mipi_dsi_dcs_set_display_on_multi(&dsi_ctx);
+>>   	mipi_dsi_msleep(&dsi_ctx, 20);
+>>   
+>> +	drm_dsc_pps_payload_pack(&pps, dsi->dsc);
+> 
+> [Severity: Low]
+> Will this cause a linker error if CONFIG_DRM_DISPLAY_DSC_HELPER is not enabled?
 
-Oh, if they are different, then maybe following that advice is not such
-a good idea.
-
-> this discussion, it sounds like I ought to still increment the refcount
-> for the GPIO child node to comply to the interface, even though ACPI
-> handles aren't refcounted.
-
-Yeah, sashiko says that this is harmless and would provide symetrical
-behavior (but artificial)
-
-> This will require another bit of DT/ACPI
-> diverging behavior in _remove(), which is fine by me, just announcing
-> that intent in case it doesn't match your expectation / might appear as
-> a code smell in the follow-up patch.
-
-I thought you would just deref the stored node, so it doesn't matter
-whether the original node is a parent or a child. Especially because it
-would be a noop for ACPI.
-
-But if there are no way of having a single fwnode_handle_put(node) (per
-ref, of course), then maybe we can stick to the current code.
-
-We should probably fix the other speed downgrade from 2/2.
-
-Cheers,
-Benjamin
+Good catch
 
 > 
+> This adds a call to drm_dsc_pps_payload_pack(), but it doesn't appear to
+> update the Kconfig entry for DRM_PANEL_VISIONOX_VTDR6130 to select
+> DRM_DISPLAY_DSC_HELPER and DRM_DISPLAY_HELPER.
 > 
+> Could this lead to undefined reference errors during the build for
+> configurations where the panel is enabled but the helpers are not?
 > 
+>> +	mipi_dsi_picture_parameter_set_multi(&dsi_ctx, &pps);
+>> +
+>>   	return dsi_ctx.accum_err;
+>>   }
 > 
-> > Cheers,
-> > Benjamin
-> > 
-> > > -- 
-> > > Sashiko AI review � https://sashiko.dev/#/patchset/20260520-cp2112-dt-v14-0-b1b4b6734b6f@plexus.com?part=1
-> 
-> Thanks,
-> 
-> Danny Kaehn
-> 
-> 
+
