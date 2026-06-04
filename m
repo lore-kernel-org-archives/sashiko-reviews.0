@@ -1,146 +1,182 @@
-Received: from us-smtp-delivery-124.mimecast.com (us-smtp-delivery-124.mimecast.com [170.10.133.124])
+Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 77E7B1F1534
-	for <sashiko-reviews@lists.linux.dev>; Thu,  4 Jun 2026 14:34:50 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=170.10.133.124
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CD81C480346;
+	Thu,  4 Jun 2026 14:41:47 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1780583691; cv=none; b=FaWWz/CI8n0ml4KfrUKebMXX/jaaLvImOYaXsaXUnDaVMtVnez5qY5RpV1MuCuHKw6CTD7b9CgzrBSzI6nLp7WHkwWCphErm/6wrJXQqfvybFVVoNNBBQMapTG+YKKCvh6iKnizFXsLdOVpxBB8PYzqEPB26x8NIjZqB2BBSo04=
+	t=1780584109; cv=none; b=d9PnH+Vi6DRqWtbFmStKN02IG6Jnz+nAyBDaLPp7UyM4Pqr7TopTwLKo9wiHFP8utcySKAGIrXeaP26OXsU3huqmvVQ78qRn28NGAKmT47AvxBZzqJW3M0bmCgywQlPmXUZmYQxKUl8yMS7kGqzXjABLENL/wvSE8cwt5k4a+EQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1780583691; c=relaxed/simple;
-	bh=9xEH7aplTt6e7CFJF3pq+ulJ2VLipK+EcttUBdeSGFs=;
-	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=dtEZEvS8L5o3ZuQ9yqW4e29yP2QJ5p+tOfU2bvk3Q3OqXGi3CXOm+GtdVqiK2UvlQXwZ7A1wOPjnfL4uyyIzGprAXjvbBb3i8cLUVNGEtMVxz01pY2MntWj7rZ/EBp3BTHyiZxpzDbIyDbDWc9VFuScehs7qKXVwkfbS3WRT2Es=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=redhat.com; spf=pass smtp.mailfrom=redhat.com; dkim=pass (1024-bit key) header.d=redhat.com header.i=@redhat.com header.b=BdpL2Bmo; arc=none smtp.client-ip=170.10.133.124
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=redhat.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=redhat.com
+	s=arc-20240116; t=1780584109; c=relaxed/simple;
+	bh=IZUyeHpEUiDBY1eTrI7fDkU8pJLG9YW9Z3nCBg2piHg=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=ebV9oW7q31LYjn0UlHQOIb2k+HgmegZcjbfpfjk71RPQTnVtu4JgtY3FneWmgr0wMuW1b3SgGjLhva8XX2BxtCVOBxYKrMe+TFjP91bgAkEdU+EGbrePohXGQiBn90C7gcbTWijn3tu3L9JiNGm3lXzKmHtMoAPDrZ15ZLrtDMs=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=T/2IrbBC; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=redhat.com header.i=@redhat.com header.b="BdpL2Bmo"
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
-	s=mimecast20190719; t=1780583689;
-	h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
-	 to:to:cc:cc:mime-version:mime-version:content-type:content-type:
-	 content-transfer-encoding:content-transfer-encoding:
-	 in-reply-to:in-reply-to:references:references;
-	bh=ek8k8MN/W+Lw2KrfkVX8W34nQ6n6n6bVTBNOqxYcdIw=;
-	b=BdpL2BmoXVsVMhZPA9ULYP6IDc8mpI8DzOec+jK41mhmz1PMidIrdoZvteOc5cwUAEVycS
-	3Qv3X0XD9QoR3zn6/9YPlwUxlN1Z2zCmKke6Rndkvm7pzuX0U5IcAqCuFKvLwofRVWBdRj
-	Sok991P0Vo9vMR7TURbVBI10uKyT++o=
-Received: from mx-prod-mc-01.mail-002.prod.us-west-2.aws.redhat.com
- (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
- relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-166-aov5BgoFNu6HEo1i5yc6pQ-1; Thu,
- 04 Jun 2026 10:34:45 -0400
-X-MC-Unique: aov5BgoFNu6HEo1i5yc6pQ-1
-X-Mimecast-MFC-AGG-ID: aov5BgoFNu6HEo1i5yc6pQ_1780583684
-Received: from mx-prod-int-10.mail-002.prod.us-west-2.aws.redhat.com (mx-prod-int-10.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.95])
-	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
-	 key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
-	(No client certificate requested)
-	by mx-prod-mc-01.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS id 186EB19560A7;
-	Thu,  4 Jun 2026 14:34:44 +0000 (UTC)
-Received: from [10.22.88.175] (unknown [10.22.88.175])
-	by mx-prod-int-10.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP id 41FE6763;
-	Thu,  4 Jun 2026 14:34:42 +0000 (UTC)
-Message-ID: <0468014e-4d56-4214-8622-126da85ae7d9@redhat.com>
-Date: Thu, 4 Jun 2026 10:34:42 -0400
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="T/2IrbBC"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id C31FC1F00893;
+	Thu,  4 Jun 2026 14:41:46 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=kernel.org;
+	s=k20260515; t=1780584107;
+	bh=HBDFAOUIf06+kgPr/KpezRch+RnqzzpEdLRUW3CWOoY=;
+	h=Date:From:To:Cc:Subject:References:In-Reply-To;
+	b=T/2IrbBCCqRk8eGWYpDY8mS3C2xilWw6y9J/9+4SQIsUUqRVnF05mKwdrZi1JaW2k
+	 S68vieM8Dhy5vH+pJZfq+FADLixfKvesdJKPTHV+X89eWRi3oUhcFKvD4jQMNak0Pk
+	 12WffE1rWCtRG0eA2gJ3HC6OjPopcE7Ofm55nOGMYaVWVPfzyqM4NdK7i8p1jkX+oW
+	 hTl3QOUDXvFCn5CBwN9IkVX/z86AcR4D3O+KIuoTN2bE2kl1JN2p70xyLgLEZuwZYi
+	 vXrkRBm1HgmXHm29PmF4yEIYqVloCBabuKYlaSWC4wqQKHnfHP00OoZkUTyi370DeX
+	 Lpe4PlOW3SB+w==
+Date: Thu, 4 Jun 2026 16:41:43 +0200
+From: Benjamin Tissoires <bentiss@kernel.org>
+To: Danny Kaehn <danny.kaehn@plexus.com>
+Cc: sashiko-reviews@lists.linux.dev, dmitry.torokhov@gmail.com, 
+	linux-input@vger.kernel.org
+Subject: Re: [PATCH v14 1/2] HID: cp2112: Add fwnode support
+Message-ID: <aiGNkO9nFF4mF7vB@beelink>
+References: <20260520-cp2112-dt-v14-1-b1b4b6734b6f@plexus.com>
+ <20260520170229.CEFA31F000E9@smtp.kernel.org>
+ <ah6LJw5bgVyrtnyI@beelink>
+ <20260604143104.GB1355442@LNDCL34533.neenah.na.plexus.com>
 Precedence: bulk
 X-Mailing-List: sashiko-reviews@lists.linux.dev
 List-Id: <sashiko-reviews.lists.linux.dev>
 List-Subscribe: <mailto:sashiko-reviews+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:sashiko-reviews+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH-next v5 6/6] cgroup/cpuset: Support multiple
- source/destination cpusets for cpuset_*attach()
-To: sashiko-reviews@lists.linux.dev
-Cc: mkoutny@suse.com, tj@kernel.org, hannes@cmpxchg.org
-References: <20260602023203.248077-7-longman@redhat.com>
- <20260602033921.9A3311F00893@smtp.kernel.org>
-From: Waiman Long <longman@redhat.com>
-In-Reply-To: <20260602033921.9A3311F00893@smtp.kernel.org>
-X-Scanned-By: MIMEDefang 3.6 on 10.30.177.95
-X-Mimecast-Spam-Score: 0
-X-Mimecast-MFC-PROC-ID: KGpE1WBr_eg8GOyTS8naATk_sbxMYsCeQyKQ8RJ2P_s_1780583684
-X-Mimecast-Originator: redhat.com
-Content-Language: en-US
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
+Content-Type: text/plain; charset=iso-8859-1
+Content-Disposition: inline
+Content-Transfer-Encoding: 8bit
+In-Reply-To: <20260604143104.GB1355442@LNDCL34533.neenah.na.plexus.com>
 
-On 6/1/26 11:39 PM, sashiko-bot@kernel.org wrote:
-> Thank you for your contribution! Sashiko AI review found 1 potential issue(s) to consider:
-> - [High] Cpuset CPU and memory mask updates are silently skipped for tasks when migrating a process with threads in multiple cpusets.
-> --
->
-> commit a6d20cd30ffff4c71ea67a488e69d137c1a06525
-> Author: Waiman Long <longman@redhat.com>
->
-> cgroup/cpuset: Support multiple source/destination cpusets for cpuset_*attach()
->
-> This commit updates cpuset_can_attach() and cpuset_attach() to support
-> task migration data with multiple destination or source cpusets. It uses
-> singly linked lists to track the source and destination cpusets.
->
->> diff --git a/kernel/cgroup/cpuset.c b/kernel/cgroup/cpuset.c
->> index a085765a11c65..b0e8e5819af3d 100644
->> --- a/kernel/cgroup/cpuset.c
->> +++ b/kernel/cgroup/cpuset.c
->> @@ -3227,48 +3307,76 @@ static void cpuset_attach(struct cgroup_taskset *tset)
->>   	struct task_struct *task;
->>   	struct cgroup_subsys_state *css;
->>   	struct cpuset *cs;
->> -	struct cpuset *oldcs = cpuset_attach_old_cs;
->> +	bool many_cs_to_one = !!src_cs_head.first->next;
-> [Severity: High]
-> Does this logic correctly handle migrating a process that spans multiple
-> cpusets (e.g., A and C) into one of those existing cpusets (e.g., C)?
->
-> If cpuset_can_attach_check() processes a task migrating from A to C, it adds
-> C to dst_cs_head and sets its attach_node_in_llist flag to true.
->
-> When it subsequently processes a task migrating from C to C, C is the oldcs.
-> Since C's attach_node_in_llist flag is already true, it is not added to
-> src_cs_head.
->
-> If src_cs_head only ends up containing A, src_cs_head.first->next is NULL,
-> and many_cs_to_one incorrectly evaluates to false.
->
-> [ ... ]
+On Jun 04 2026, Danny Kaehn wrote:
+> 
+> 
+> On Tue, Jun 02, 2026 at 09:55:18AM +0200, Benjamin Tissoires wrote:
+> > On May 20 2026, sashiko-bot@kernel.org wrote:
+> > > Thank you for your contribution! Sashiko AI review found 1 potential issue(s) to consider:
+> > > - [High] Premature release of firmware node references results in use-after-free vulnerabilities when assigning the I2C adapter and GPIO chip firmware nodes.
+> > > --
+> > > 
+> > > commit 3dfaf368e855835bf23009205c4b93a2a070aae1
+> > > Author: Danny Kaehn <danny.kaehn@plexus.com>
+> > > 
+> > > HID: cp2112: Add fwnode support
+> > > 
+> > > This commit adds firmware node support to describe the CP2112's I2C and
+> > > GPIO interfaces. It differentiates between ACPI and DeviceTree bindings,
+> > > mapping the child nodes to the respective adapter and gpio_chip devices.
+> > > 
+> > > > diff --git a/drivers/hid/hid-cp2112.c b/drivers/hid/hid-cp2112.c
+> > > > index 803b883ae8750..e960fc988058f 100644
+> > > > --- a/drivers/hid/hid-cp2112.c
+> > > > +++ b/drivers/hid/hid-cp2112.c
+> > > [ ... ]
+> > > > @@ -1226,6 +1241,28 @@ static int cp2112_probe(struct hid_device *hdev, const struct hid_device_id *id)
+> > > >  		return ret;
+> > > >  	}
+> > > >  
+> > > > +	cp2112_fwnode = dev_fwnode(&hdev->dev);
+> > > > +	if (is_acpi_device_node(cp2112_fwnode)) {
+> > > > +		fwnode_for_each_child_node(cp2112_fwnode, child) {
+> > > > +			ret = acpi_get_local_address(ACPI_HANDLE_FWNODE(child), &addr);
+> > > > +			if (ret)
+> > > > +				continue;
+> > > > +
+> > > > +			switch (addr) {
+> > > > +			case CP2112_I2C_ADR:
+> > > > +				device_set_node(&dev->adap.dev, child);
+> > > > +				break;
+> > > > +			case CP2112_GPIO_ADR:
+> > > > +				dev->gc.fwnode = child;
+> > > > +				break;
+> > > > +			}
+> > > 
+> > > [Severity: High]
+> > > Does this code leave dangling pointers in the device structures?
+> > > 
+> > > The fwnode_for_each_child_node() macro automatically drops the reference to
+> > > the child node when advancing to the next node or exiting the loop.
+> > > 
+> > > Because device_set_node() and direct pointer assignments do not increment
+> > > the reference count, the nodes assigned here could be prematurely freed
+> > > resulting in a use-after-free.
+> > 
+> > Sashiko is overly cautious here. ACPI handles are not refcounted, so we
+> > are fine.
+> > 
+> > That being said, we could unify the OF and ACPI behaviour by calling the
+> > noops fwnode_handle_get(child) for ACPI as well and clean them up in
+> > cp2112_remove(). This would also shut up the next warning from Sashiko
+> > below.
+> > 
+> > > 
+> > > > +		}
+> > > > +	} else if (is_of_node(cp2112_fwnode)) {
+> > > > +		child = fwnode_get_named_child_node(cp2112_fwnode, "i2c");
+> > > > +		device_set_node(&dev->adap.dev, child);
+> > > > +		fwnode_handle_put(child);
+> > > 
+> > > [Severity: High]
+> > > Are we releasing the firmware node prematurely here?
+> > > 
+> > > fwnode_get_named_child_node() returns a node with an incremented reference
+> > > count. However, since device_set_node() does not take its own reference on
+> > > the child node, dropping the reference immediately after could leave
+> > > dev->adap.dev with a dangling pointer if the node is later removed.
+> > 
+> > OF children are tied to the lifespan of the OF device, so we are fine,
+> > but technically incorrect, as mentioned by Sashiko.
+> > 
+> > If you regroup the 2 behaviours and clean them in cp2112_remove(), this
+> > would be cleaner IMO.
+> >
+> 
+> Ack, this is something I've gone back-and-forth on in the revisions of
+> this patch. Will update the driver to hold the fwnode reference for the
+> I2C subnode.
+> 
+> However, for the GPIO chip, DT uses the parent node (which shouldn't
+> need an increment to the refcount), while ACPI uses a child node. Given
 
-My own testing indicates that the cgroup core will only put tasks that 
-need migration into the cgroup_taskset passed to cpuset_can_attach(). 
-IOW, existing tasks in C won't show up in the task iteration process. To 
-be safe, safeguard will be added to guard against this situation.
+Oh, if they are different, then maybe following that advice is not such
+a good idea.
+
+> this discussion, it sounds like I ought to still increment the refcount
+> for the GPIO child node to comply to the interface, even though ACPI
+> handles aren't refcounted.
+
+Yeah, sashiko says that this is harmless and would provide symetrical
+behavior (but artificial)
+
+> This will require another bit of DT/ACPI
+> diverging behavior in _remove(), which is fine by me, just announcing
+> that intent in case it doesn't match your expectation / might appear as
+> a code smell in the follow-up patch.
+
+I thought you would just deref the stored node, so it doesn't matter
+whether the original node is a parent or a child. Especially because it
+would be a noop for ACPI.
+
+But if there are no way of having a single fwnode_handle_put(node) (per
+ref, of course), then maybe we can stick to the current code.
+
+We should probably fix the other speed downgrade from 2/2.
 
 Cheers,
-Longman
+Benjamin
 
->
->>   	cs = css_cs(css);
->>   	/*
->>   	 * In the default hierarchy, enabling cpuset in the child cgroups
->>   	 * will trigger a cpuset_attach() call with no change in effective cpus
->>   	 * and mems. In that case, we can optimize out by skipping the task
->> -	 * iteration and update.
->> +	 * iteration and update, but the destination cpuset list is iterated to
->> +	 * set old_mems_sllowed.
->>   	 */
->>   	if (cpuset_v2()) {
->>   		cpuset_attach_nodemask_to = cs->effective_mems;
->> -		if (!attach_cpus_updated && !attach_mems_updated)
->> +		if (!attach_cpus_updated && !attach_mems_updated) {
->> +			llist_for_each_entry(cs, dst_cs_head.first, attach_node)
->> +				cs->old_mems_allowed = cs->effective_mems;
->>   			goto out;
->> +		}
-> [Severity: High]
-> If many_cs_to_one evaluated to false in the scenario above, could this cause
-> threads migrating from A to incorrectly hit this early exit?
->
-> If the destination (C) matches the group leader's origin (C),
-> attach_cpus_updated and attach_mems_updated would be false.
->
-> This would skip cpuset_attach_task() for the thread migrating from A,
-> causing it to retain A's affinity parameters while logically residing in C.
->
-
+> 
+> 
+> 
+> 
+> > Cheers,
+> > Benjamin
+> > 
+> > > -- 
+> > > Sashiko AI review � https://sashiko.dev/#/patchset/20260520-cp2112-dt-v14-0-b1b4b6734b6f@plexus.com?part=1
+> 
+> Thanks,
+> 
+> Danny Kaehn
+> 
+> 
