@@ -1,118 +1,76 @@
-Received: from mail-oo1-f43.google.com (mail-oo1-f43.google.com [209.85.161.43])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 21D153C4B77
-	for <sashiko-reviews@lists.linux.dev>; Thu,  4 Jun 2026 06:46:49 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=pass smtp.client-ip=209.85.161.43
-ARC-Seal:i=2; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1780555614; cv=pass; b=m2EjJYCY167JpmUX4bA/5Ya+M4WUrUhGj7Q/5AohPAW6RRNR3lSw2b5JWaN47Pn/AjspLEvbj8B90CUmm+mxwUyij6R7zwkBGDIteY8DIXKJdnLNH2wqUEijQUjLkQb2G8Q5KvGh9Ek2w5e6PMgHGPjUmGs8SdrgH52hoTYQWHk=
-ARC-Message-Signature:i=2; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1780555614; c=relaxed/simple;
-	bh=I4yDMq8ZmDr5oaZiEBM9CEqvD/HRefTgkgtwWuFh/Zw=;
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C4258391E49
+	for <sashiko-reviews@lists.linux.dev>; Thu,  4 Jun 2026 07:42:35 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
+ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
+	t=1780558956; cv=none; b=SKQALDCBaF888QWamHU/qcFApXeZkUEiWMBhgYlGwkqZvgaCqmLLDjEZy8xjsvqhEWSn/j7cPFATxwC9Jcb1uZIW2yIlQZ8R8cuFWnqOXCudPHjF2pHjSDBpldOWzyEksS8pDRXBFLaGKzHM7FMuHh6gZRXJLLqAjkV62WowHu4=
+ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
+	s=arc-20240116; t=1780558956; c=relaxed/simple;
+	bh=43JHRMPrE8RExZMDKaJc5/rpSNlgegvQLCpdc2buwiY=;
 	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
-	 To:Cc:Content-Type; b=NRCv4IHwGRTE8BdgjNV2VEkQvFUuSFEa+ABmXHo+qTzaEMKJ9PN9KYthHjdRP+kR1XncsMaRg2AyP5evNMW8BqoewtXCZDN+rtUPZmcMSz9g7wmHRt/SzI/S35uZ+qduCRhN9rnUi5DhxSmSmzxXqpwwKfsYgtvssv/uuTmy/Ao=
-ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=jdHW98Bg; arc=pass smtp.client-ip=209.85.161.43
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+	 To:Cc:Content-Type; b=aekDKcBYpdap6jUkzI4Ap2unfnywU1BoWRXRtTur39sMvSfHOyWQT/K9JE9OK7pKXrnNwqT1xd+UtAg0BhFN6tQf7jjg6unsZWCc4a5aVQKSkB2AJGw/a4IWV2YnUtguSA7XApnYXiBAr0vMe9eecTVAT9TnpnlqEk1E232WEt4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=ARlnr6Qg; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="jdHW98Bg"
-Received: by mail-oo1-f43.google.com with SMTP id 006d021491bc7-69d862236ddso252992eaf.0
-        for <sashiko-reviews@lists.linux.dev>; Wed, 03 Jun 2026 23:46:49 -0700 (PDT)
-ARC-Seal: i=1; a=rsa-sha256; t=1780555609; cv=none;
-        d=google.com; s=arc-20240605;
-        b=BpEpE+KhLKzNxTmkU1PAp5q5qoRNh2DWZsUgcrsjGjABIUu7wnN8nQgbKDytrI1iBN
-         2yGjov0iVeJtGqrkeCOoNnqUjbqgGcQTnp+adr09duRjzIRomPy28dt4ltcXL5tVkYJV
-         WwFZz3hgDBVZruCChSQPWICtRDmEmbCsrfgTJshAY2tabCwgKcgrrOF7mnL74/P0eepE
-         XlpdTMloSNUkkreLwCtFBmvGXBuZ68HYRL+R/Ptc9Ke2SwYk2HRryc/2XLn6JtmXppi9
-         OO/o5Nli3WZVKPBAqkrUAexpFlDF3gwBr/00FXTKvMks+t9x+//GvH5dBCX9iPnVNcSQ
-         lxiQ==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com; s=arc-20240605;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:dkim-signature;
-        bh=I4yDMq8ZmDr5oaZiEBM9CEqvD/HRefTgkgtwWuFh/Zw=;
-        fh=6x9uhpCI/gq+YqWyh60QozKX94C8TIGbO7qpTkaI1lo=;
-        b=cIEW7oPPXVbnQP/evN6joGclEY/5pA7rBzXpqWcIewMaVkadw3NxcMAFeuucUzCw8N
-         ZDhDy/MYa+Iyp9RznFIpcVKpcvwY2ndNp8iJuaZaOyTf+/1xgQMEKdW8R8ykzsEylIXN
-         MrE0764/IxYspbBpXvBHRi4Ij6rbBmoe00ve3yltEX/rCdB0EX8DoOfxw25dsixcuUkB
-         e4+o+G1woTi7S9JnaGVHAEvXvd6eBUIGZIxDPobN2FoPLWYRCcI7KbXT9PAS/ZWOhsea
-         vyJ4+UPoZMfJfRSsaxsp6kg/PYNQfi1IAt18Ud6xzt5lQ0Xomv5LFWeoGO7ldLtMusPy
-         q3BQ==;
-        darn=lists.linux.dev
-ARC-Authentication-Results: i=1; mx.google.com; arc=none
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20251104; t=1780555609; x=1781160409; darn=lists.linux.dev;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=I4yDMq8ZmDr5oaZiEBM9CEqvD/HRefTgkgtwWuFh/Zw=;
-        b=jdHW98BgUO6r81fPJp8am3mzXMnq7kEaSW/6WkGv2l6kkElZx3Q/9XXEEOTd5eDWAf
-         Ql1t+fV8K1V88Tn18Osn438BlX/16cWpODWMLNYRYggpCo59vL+t7h7etudloQAIF8Sk
-         Z65kWh2B+szjYW1dI66GoHY8yohToWhahg2vEnAtaPH8SL8HLc6LDav60OvtAtsy+R2l
-         1tbYen1fHXvyeva3EGs0MW6a3IIZkQa5gVczXU0GZM0iEHA7A7lEMPtRBFD7XDzVsNCE
-         DDiUQeAxP/m0pX2a9BN0c7N4NbPSdfAYzcV9t59ZJUKOTLvgeI7Y6NBnSzTjS6mY4V46
-         e6Sg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20251104; t=1780555609; x=1781160409;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:x-gm-gg:x-gm-message-state:from
-         :to:cc:subject:date:message-id:reply-to;
-        bh=I4yDMq8ZmDr5oaZiEBM9CEqvD/HRefTgkgtwWuFh/Zw=;
-        b=qios3vDrDoWiEwBmZHxP1lWlTsk4tF+r1zl1jVAbQvpjA22Fy6WrnFrwUawVQ0EQm1
-         cobu7WFo9VbMkjjtQ26e6dqmKiQ7p6mM1WDd5lOoxSNKdNmZPnp1BAYevs5ZYvR0kGXW
-         eQGTi3ljEwdUbaWyDpbkFDp58hHNWmb0sDuI6gjZbhWfx1ZP91ye4AIhbsghrT4rxgyM
-         LMGtIX9XDoxGDhEe5myAZsbRVFUFYqRN7tKtD7cd/XqLNaKKNX1tk1mfx/78EXTutqMd
-         3H3UN3uYxiMxIuGRGbrBn+1M0/7Ml3HuasClPaXSw1I6EXEuFe860BKSyzVz/hf5dqRd
-         jzbA==
-X-Gm-Message-State: AOJu0Yz22a7ooiSn8RBlFXvJ5p9SG6Rb/2wF413pCZytOXKHXY9H7Axl
-	DZpMAYNT34VycJWOi8mYA3zuf46tgWtsHvF+eq8FnX2hpZYJOmhiLB6HIWW6mnQfLdDhlSBNv0X
-	IwtN/K85Cy0T2gSMDpzm1TO0RIeFueUAaGpqKxi7cAw==
-X-Gm-Gg: Acq92OF0Zw5ybTh8cJoPPv9kkXv3gwYnC7pDSOHO3fTVE8yBdAJhNzmImjsBjFjBIZj
-	qYkCkpuPWYM7/3ACFTlgc98ZMngxWDtQV38bItVYtJ3rSaF23LYeGCFYVc1OO0QjLFS/8BlNAmr
-	1tuP1lPUNVyT2Ikvcd6Dxp092Og7CZBZi0APVaqVEWtlg03gSKDRpFcz/wkGzyeXmepR5Ae+Jp6
-	COGn5iWpRTeC2kQ6w8nwIuYcQ1gYiYXPQBDuFjwremj4fnlFJrgmuSHanh0BigQSDLsy9YHXH9B
-	czU/ZV7Xhp/tY8/DZ68iBrM=
-X-Received: by 2002:a05:6820:2d45:b0:69e:1a0c:123b with SMTP id
- 006d021491bc7-69e47ec6971mr2637278eaf.24.1780555608862; Wed, 03 Jun 2026
- 23:46:48 -0700 (PDT)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="ARlnr6Qg"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8483D1F0089A
+	for <sashiko-reviews@lists.linux.dev>; Thu,  4 Jun 2026 07:42:35 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=kernel.org;
+	s=k20260515; t=1780558955;
+	bh=43JHRMPrE8RExZMDKaJc5/rpSNlgegvQLCpdc2buwiY=;
+	h=References:In-Reply-To:From:Date:Subject:To:Cc;
+	b=ARlnr6QgxV0f24N7f+XibJR5NUGfSP5Et5uHIOXcTTB434jnPSf7qDIm93yW9x4A6
+	 hnp8zJj2WPekGIH5U/DlFUaPl6zqpSKwt/R4dRr6J87ZYKIWN5QhuNcmBjMnYi5N4q
+	 dfyTqPPGGtiVMZr/VfYA1NAl7dKGyx5/AvFowlgnS8u+kDSW8DvvsUJtqnqlTejS1M
+	 UcwVfytr7NZJ3KV6RDaGq18umQt2Uvg99qEChojK9bTC37Gi6UOqaW8Zm1aMhnD6IS
+	 GUg7qI8dPSs8IBvsge9lbZkvj2ZQOTrbQ8mEuhxEEiJptVAOil9evPUV33RWzTtwlR
+	 bqV7JBI1rE8KA==
+Received: by mail-lj1-f170.google.com with SMTP id 38308e7fff4ca-39677c80386so3744511fa.3
+        for <sashiko-reviews@lists.linux.dev>; Thu, 04 Jun 2026 00:42:35 -0700 (PDT)
+X-Gm-Message-State: AOJu0YwIaWjA9xYHYEGkOfBww+b2yY57/D24uAiuiB2z4pwk55yxLW+2
+	6p9lCwXLCiSovZcx92Dkvdvk/V+EGGse8k1yd+cITqqc/EARqYnkS5k5I4K/ucdv7YDsa6dJXCs
+	A0Yg0MZf0HoofN2fBOsr2wVE1g3xMq3I=
+X-Received: by 2002:a05:6512:33c5:b0:5aa:6a2b:d456 with SMTP id
+ 2adb3069b0e04-5aa7c0fed0bmr2286914e87.27.1780558954293; Thu, 04 Jun 2026
+ 00:42:34 -0700 (PDT)
 Precedence: bulk
 X-Mailing-List: sashiko-reviews@lists.linux.dev
 List-Id: <sashiko-reviews.lists.linux.dev>
 List-Subscribe: <mailto:sashiko-reviews+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:sashiko-reviews+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-References: <20260603-rva23u64-hwprobe-v2-v3-13-5529a7b28384@gmail.com> <20260602233750.B03631F00893@smtp.kernel.org>
-In-Reply-To: <20260602233750.B03631F00893@smtp.kernel.org>
-From: Guodong Xu <docular.xu@gmail.com>
-Date: Thu, 4 Jun 2026 14:46:36 +0800
-X-Gm-Features: AVHnY4JQnjs7_bMYHUUcNhOXOgnpJynf1huEM1b6suF6X2cIO5M1zEC4xtBl6pQ
-Message-ID: <CA+Ck9FaHADhss2sV=Z-vX4zr6VL+X=goFX_vznYE9JWBGCjwZQ@mail.gmail.com>
-Subject: Re: [PATCH v3 13/15] riscv: cpufeature: Introduce ISA bases bitmap
- and rva23u64 detection
+References: <20260603-ks8995-to-ksz8-v4-1-e15149ef21e7@kernel.org> <20260603231122.905771F00893@smtp.kernel.org>
+In-Reply-To: <20260603231122.905771F00893@smtp.kernel.org>
+From: Linus Walleij <linusw@kernel.org>
+Date: Thu, 4 Jun 2026 09:42:20 +0200
+X-Gmail-Original-Message-ID: <CAD++jLkV4yb+e8+q+SfMFn6xh9+-6cdcHQ4yH_eBEj1LFMYNoA@mail.gmail.com>
+X-Gm-Features: AVVi8CddqEUNmdHCizuLNlST0WT8-kHrjy8EucFRF_4NySw4BhHCEs0-6rW5PHs
+Message-ID: <CAD++jLkV4yb+e8+q+SfMFn6xh9+-6cdcHQ4yH_eBEj1LFMYNoA@mail.gmail.com>
+Subject: Re: [PATCH net-next v4 1/5] net: dsa: microchip: Add fallback Micrel compatibles
 To: sashiko-reviews@lists.linux.dev
-Cc: devicetree@vger.kernel.org, conor+dt@kernel.org, kvm@vger.kernel.org, 
-	robh@kernel.org
+Cc: conor+dt@kernel.org, devicetree@vger.kernel.org, robh@kernel.org
 Content-Type: text/plain; charset="UTF-8"
 Content-Transfer-Encoding: quoted-printable
 
-Hi,
+On Thu, Jun 4, 2026 at 1:11=E2=80=AFAM <sashiko-bot@kernel.org> wrote:
 
-On Wed, Jun 3, 2026 at 7:37=E2=80=AFAM <sashiko-bot@kernel.org> wrote:
->
-> Thank you for your contribution! Sashiko AI review found 1 potential issu=
+> Thank you for your contribution! Sashiko AI review found 2 potential issu=
 e(s) to consider:
-> - [Medium] Detection of the RVA23U64 profile fails on compliant platforms=
- because it strictly requires the unratified `RISCV_ISA_EXT_B` bundle inste=
-ad of the formally ratified bitmanip extensions (`Zba`, `Zbb`, `Zbs`).
+> - [High] The Kconfig dependency `depends on !NET_DSA_MICROCHIP_KSZ_SPI` f=
+ails to prevent both drivers from being compiled as modules simultaneously,=
+ leaving the probe race unresolved.
+> - [High] Enforcing blanket mutual exclusion entirely disables the KS8995 =
+driver when KSZ_SPI is enabled, breaking support for legacy `micrel,ks8995`=
+ (KS8995MA) hardware.
 
-I disagree. But I would welcome more ideas.
+We discussed this before.
 
-My reply is threaded in v2, FYI:
-Link: https://lore.kernel.org/linux-riscv/CAH1PCMa-5W9PsX8cDLUk6-MkcM53HOz2=
-QtaxCHd+XOr7DgH5+w@mail.gmail.com/#t
-[1]
+Putting !NET_DSA_MICROCHIP_KSZ_SPI on the NET_DSA_KS8995
+is the right thing to do, trying to put it on both sides would create
+a circular dependency.
 
-Also, when Sashiko says "unratified `RISCV_ISA_EXT_B`", this is wrong.
-B is ratified.
+Sashiko needs to learn Kconfig properly, not that humans are good
+at it either...
 
-BR
-Guodong
+Linus Walleij
