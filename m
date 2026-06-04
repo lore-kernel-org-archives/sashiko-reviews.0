@@ -1,113 +1,139 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 644F2366DB9;
-	Thu,  4 Jun 2026 20:42:20 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D5F0B4C954A
+	for <sashiko-reviews@lists.linux.dev>; Thu,  4 Jun 2026 20:49:47 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1780605741; cv=none; b=r9VnKMUpQoWi98sSQAUH8jdslXKGLnmR3Ag+rvJ2/VS/2SEuCumb6ebKzNfYAlSMszABCdpoCMqTfD6oTMWZa2efodc2iR7sB18TYSxaMZ3N4onHgeh//UN49Tsp0A6AYLrKXLEl/Jf42nswlw4CB3FjgtAMcDuyuzvODqUEo/M=
+	t=1780606188; cv=none; b=mdedrGzROxlY29amkuZdYMzgeBQl5QGjLuPUgUF4C9kDuHfeZHHk1HDy/DhnqEzhZUqUrbzpS4priiDJmIg3zbAD19WgMZ2pTfwuhREakMu03dmNfpTQ3sBExX9bvCMYjFeCBzkxupH1m3LOmTrvdpauIuG6rU3jDG2g1CVAmY4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1780605741; c=relaxed/simple;
-	bh=Z3fxOrbgiFCujm61gNgwZ5fCkgCxx+qtp67/u1z2ioU=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=avfm9V/+fu+H3wM07VR3yY0J8PcnbZz2FYRBKHruDK8KxIQ5UmZ5H9+l0Zvdc2HatCc6UhZKI42AWBe4Uyij8QXLs3BG1dVs4fjbdTBY59lCD7cuNGlWEsdtApKFttl1TPjwxWqhTysq6XGOgGJJlAUWRkmaOUCSXlGZzXn7XHk=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=Sf8UGZEx; arc=none smtp.client-ip=100.103.45.18
+	s=arc-20240116; t=1780606188; c=relaxed/simple;
+	bh=uIklUXV51d8RquIWwwE3NON+irFc3H3uTxWkwa+xH/g=;
+	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
+	 To:Cc:Content-Type; b=o2Oh9GNIsTOdqXlCPINAMhA+GL6Jd+HEnCEl8gtnMmQZ2lJci8imTYIHqzbltm75ghBKZo2Dqj8skRzx3Nt2AyfubaENsvceByuQSXRCwJoW34zwbYRtmvXzCjMaJySEDzqD/FYrtOlK/CgPYV6plhRH2GL2s1qyNE00PmJ3GZI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=kQq9wulA; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="Sf8UGZEx"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9FCAE1F00893;
-	Thu,  4 Jun 2026 20:42:19 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="kQq9wulA"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7DEBA1F00893
+	for <sashiko-reviews@lists.linux.dev>; Thu,  4 Jun 2026 20:49:47 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=kernel.org;
-	s=k20260515; t=1780605740;
-	bh=txq3vHUfagQTEfXkHZ/xabBiG7M8uCFwxdCufHVEUxk=;
-	h=Date:From:To:Cc:Subject:References:In-Reply-To;
-	b=Sf8UGZExx5VsV4oE3wXe1TinXWW2SgtH/8LusiU1lJTbMJEtKXfITMYRkOwXDPkCn
-	 OP7Gbo80rAxygBUsPpdcKQB695s397RPdNNnqUAt4rJQdYjj0G4uEgcRRn/cGd12rT
-	 tPa4I0wqYuj1g0dCmldUIhgXcMBZxdusKHv1/xg8/BH4+RFxKJ/yX3YrJwfEddhgDV
-	 ZmB4H6KH5eQX5Vy/HuOKDkXQrRYtep4W6gkztGLBO1eavPkze7k2VUq1lXJaqWa0Fq
-	 SWZAJwWcD614Rbhtl0kB1UA2lksSP5Dkmu9OQ1l1jETARGfCMnfU3w10xzMxi/ndis
-	 qzaADYZtR7tSA==
-Date: Thu, 4 Jun 2026 17:42:17 -0300
-From: Arnaldo Carvalho de Melo <acme@kernel.org>
-To: sashiko-reviews@lists.linux.dev
-Cc: linux-perf-users@vger.kernel.org
-Subject: Re: [PATCH 4/4] perf sched: Fix comp_cpus heap overflow with
- cross-machine recordings
-Message-ID: <aiHjKUD8Ks1BJ_Hc@x1>
-References: <20260604201119.1702338-5-acme@kernel.org>
- <20260604202605.99EFC1F00898@smtp.kernel.org>
+	s=k20260515; t=1780606187;
+	bh=IPwWzkIAjXMXQSh2BTTtiq1p1znEItmiodJvDT2k6wI=;
+	h=References:In-Reply-To:From:Date:Subject:To:Cc;
+	b=kQq9wulAR6keoS5H+tis9U4TjfXWLqKpokZEIdgEcfxqpDGaBqndgv29qcdZWyxej
+	 qRpWM9SjJIMbV8g+Jd8qEPJ8mt7EeHL47U1EiOwoYgXlfDq/d5VL9qAo8mtdiKNwLd
+	 vsfShOe4fWLGALA9YtAyr/nSiZQJ72x9ReLp7tL3SHgM/ChZAq3dpfj6GOs5a6IVIV
+	 Q3cXgCodH+s5XGZ97YAG1VVsFYSfkF5XgpxVNaYxSBccO/jS14DlbBjU+5T6zg434H
+	 KPMJfJZfwWmrd5yaCh+6QhCZ7XFoeKSJUl43yi8tx3WadMPLnt+fAJBMYw69fn1yYI
+	 xfTAq46RbSCxA==
+Received: by mail-ed1-f53.google.com with SMTP id 4fb4d7f45d1cf-68d232ed3f9so1815057a12.0
+        for <sashiko-reviews@lists.linux.dev>; Thu, 04 Jun 2026 13:49:47 -0700 (PDT)
+X-Gm-Message-State: AOJu0Yxl9POmZtwd9XRTDjBpJTtkkBFFU6erxLTe5n3+RgEyi/ybDoYt
+	v/BRDVim5KBIX0o57NLnuAVrjtiUb8wlqoBRn590ScYUqoknlLVVmlrOafkS7Q93S0Azc0HEIaB
+	mpOOhwb0HCAzcLH2rQ652pF8aOkys3P8=
+X-Received: by 2002:a17:907:180d:b0:bee:426:87ec with SMTP id
+ a640c23a62f3a-bf373406e26mr13410566b.23.1780606186446; Thu, 04 Jun 2026
+ 13:49:46 -0700 (PDT)
 Precedence: bulk
 X-Mailing-List: sashiko-reviews@lists.linux.dev
 List-Id: <sashiko-reviews.lists.linux.dev>
 List-Subscribe: <mailto:sashiko-reviews+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:sashiko-reviews+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=iso-8859-1
-Content-Disposition: inline
-Content-Transfer-Encoding: 8bit
-In-Reply-To: <20260604202605.99EFC1F00898@smtp.kernel.org>
+References: <20260604203546.365658-4-yosry@kernel.org> <20260604204415.9FE0F1F00893@smtp.kernel.org>
+In-Reply-To: <20260604204415.9FE0F1F00893@smtp.kernel.org>
+From: Yosry Ahmed <yosry@kernel.org>
+Date: Thu, 4 Jun 2026 13:49:34 -0700
+X-Gmail-Original-Message-ID: <CAO9r8zMQYYkjW6oxDOPvH9PO173RPfWSpNWdw4oLz=Z9Zns3ww@mail.gmail.com>
+X-Gm-Features: AVHnY4KB1MiIcQ_qS72eTt7fV69hadxr5sHAaBDEYM3FJggAfooou7c2OPcJAd8
+Message-ID: <CAO9r8zMQYYkjW6oxDOPvH9PO173RPfWSpNWdw4oLz=Z9Zns3ww@mail.gmail.com>
+Subject: Re: [PATCH v2 03/10] KVM: selftests: Use an array for guest_regs (and
+ fix offsets)
+To: sashiko-reviews@lists.linux.dev
+Cc: kvm@vger.kernel.org
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 
-On Thu, Jun 04, 2026 at 08:26:05PM +0000, sashiko-bot@kernel.org wrote:
-> Thank you for your contribution! Sashiko AI review found 1 potential issue(s) to consider:
-> - [Medium] Removing the `sched->max_cpu.cpu` initialization introduces a severe off-by-one error, causing `perf sched map` to truncate the highest CPU from its output and print nothing for single-CPU traces.
+On Thu, Jun 4, 2026 at 1:44=E2=80=AFPM <sashiko-bot@kernel.org> wrote:
+>
+> Thank you for your contribution! Sashiko AI review found 1 potential issu=
+e(s) to consider:
+> - [Medium] The `guest_regs` array is under-allocated by one element, lead=
+ing to an out-of-bounds write that clobbers adjacent memory when swapping t=
+he `r15` register.
 > --
-> 
-> commit 4c1487bde6fa91cfb4bca7de01bfd611065c7c9a
-> Author: Arnaldo Carvalho de Melo <acme@redhat.com>
-> 
-> perf sched: Fix comp_cpus heap overflow with cross-machine recordings
-> 
-> This commit fixes a heap buffer overflow by allocating comp_cpus with
-> MAX_CPUS and the correct element size. It also removes the initial assignment
-> of max_cpu from the host's CPU count.
-> 
-> > diff --git a/tools/perf/builtin-sched.c b/tools/perf/builtin-sched.c
-> > index 36da451447b5e..80e42536400a9 100644
-> > --- a/tools/perf/builtin-sched.c
-> > +++ b/tools/perf/builtin-sched.c
-> > @@ -3573,10 +3573,8 @@ static int perf_sched__lat(struct perf_sched *sched)
-> >  
-> >  static int setup_map_cpus(struct perf_sched *sched)
-> >  {
-> > -	sched->max_cpu.cpu  = sysconf(_SC_NPROCESSORS_CONF);
-> > -
-> 
+>
+> commit 2b93b9d75a4b05f37bd5b56a9795d649f317160b
+> Author: Yosry Ahmed <yosry@kernel.org>
+>
+> KVM: selftests: Use an array for guest_regs (and fix offsets)
+>
+> This commit replaces the gpr64_regs struct with an array to eliminate
+> hardcoded offsets. It also renames the SAVE_GPR_C and LOAD_GPR_C macros
+> to a single SVM_SWITCH_GPRS_ASM macro.
+>
+> > diff --git a/tools/testing/selftests/kvm/include/x86/processor.h b/tool=
+s/testing/selftests/kvm/include/x86/processor.h
+> > index 513e4a1075fac..ff0b270bfe27f 100644
+> > --- a/tools/testing/selftests/kvm/include/x86/processor.h
+> > +++ b/tools/testing/selftests/kvm/include/x86/processor.h
+>
+> [ ... ]
+>
+> > +#define GUEST_REGS_R13       13
+> > +#define GUEST_REGS_R14       14
+> > +#define GUEST_REGS_R15       15
+> > +#define NR_GUEST_REGS        GUEST_REGS_R15
+>
 > [Severity: Medium]
-> Does removing this initialization cause an off-by-one error when rendering
-> the schedule map?
-> 
-> Without this initialization, sched->max_cpu.cpu tracks the maximum 0-based
-> CPU index seen in the trace. However, when compact mode is disabled,
-> map_switch_event() assigns this 0-based index directly to cpus_nr:
-> 
-> tools/perf/builtin-sched.c:map_switch_event() {
->         ...
->         } else
->                 cpus_nr = sched->max_cpu.cpu;
->         ...
-> }
-> 
-> Then print_sched_map() iterates strictly less than cpus_nr:
-> 
-> tools/perf/builtin-sched.c:print_sched_map() {
->         ...
->         for (int i = 0; i < cpus_nr; i++) {
->         ...
-> }
-> 
-> Will this skip the highest CPU column entirely, and print nothing for 
-> single-CPU traces where cpus_nr becomes 0?
+> Does this under-allocate the guest_regs array?
+>
+> GUEST_REGS_R15 evaluates to 15, making NR_GUEST_REGS 15. However, there a=
+re
+> 16 registers in total when counting from index 0 (RAX) through 15 (R15).
+>
+> >
+> >  struct desc64 {
+> > diff --git a/tools/testing/selftests/kvm/lib/x86/svm.c b/tools/testing/=
+selftests/kvm/lib/x86/svm.c
+> > index f9ea1a2aeb8bc..1bd111e8bed26 100644
+> > --- a/tools/testing/selftests/kvm/lib/x86/svm.c
+> > +++ b/tools/testing/selftests/kvm/lib/x86/svm.c
+> > @@ -13,7 +13,7 @@
+> >
+> >  #define SEV_DEV_PATH "/dev/sev"
+> >
+> > -struct gpr64_regs guest_regs;
+> > +u64 guest_regs[NR_GUEST_REGS];
+> >  u64 rflags;
+>
+> [Severity: Medium]
+> Since NR_GUEST_REGS is 15, does this array allocation leave out space for=
+ the
+> final register?
+>
+> [ ... ]
+>
+> > +#define SVM_SWITCH_GPRS_ASM \
+> > +     GUEST_SWITCH_GPR_ASM(rbx, GUEST_REGS_RBX) \
+>
+> [ ... ]
+>
+> > +     GUEST_SWITCH_GPR_ASM(r14, GUEST_REGS_R14) \
+> > +     GUEST_SWITCH_GPR_ASM(r15, GUEST_REGS_R15)
+>
+> [Severity: Medium]
+> Can this write to index 15 clobber adjacent memory?
 
-Legit, v2 will have a fix for this, the sysconf() was just masking a
-pre-existing problem.
+It's ironic that the changelog says:
+  Also, the last offset in the struct (R15) is 0x78, not 0x80, so
+  the code actually saves and restore beyond the end of gpr64_regs.
 
-- Arnaldo
- 
-> >  	if (sched->map.comp) {
-> > -		sched->map.comp_cpus = calloc(sched->max_cpu.cpu, sizeof(int));
-> > +		sched->map.comp_cpus = calloc(MAX_CPUS, sizeof(*sched->map.comp_cpus));
-> >  		if (!sched->map.comp_cpus)
-> >  			return -1;
-> >  	}
-> 
-> -- 
-> Sashiko AI review · https://sashiko.dev/#/patchset/20260604201119.1702338-1-acme@kernel.org?part=4
+Yet I reintroduced the same exact bug lol.
+
+Obviously NR_GUEST_REGS should be defined as GUEST_REGS_R15+1.
+
+I also failed to document why an enum cannot be used here, which would
+have been ideal to avoid such problems. The preprocessor doesn't seem
+to be able to use enum values, passing an enum value to
+GUEST_SWITCH_GPR_ASM() causes compilation failures.
