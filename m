@@ -1,364 +1,197 @@
-Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-yx1-f50.google.com (mail-yx1-f50.google.com [74.125.224.50])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3372536F909;
-	Thu,  4 Jun 2026 16:55:34 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
-ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1780592136; cv=none; b=QJ481ahj7NUwI8aOM1DlG4+H/hhbU6C8YJwQ/TwNPymZjQFpm8bJIPl7aQwwTqsB2GY7ePwsEmsHNJCnBwEHntuTyKCYHMaSdcfpKeSBByuJRQ/GCm/+/U31waBHdW5HcMgrHQRZJU9N5i+JSoEIZFDWanIx8Hrx6xyWW1QXXJ8=
-ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1780592136; c=relaxed/simple;
-	bh=HpRCK8IhvkgCV1irgLP62mPf5uqW9UjJ8Veap3IdZRs=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=pHNBObkprxdQUjYSnp4Z50s0zVcwvCq+DaLfGSDgJ+Bum7qmtiXmIyfY+iOPIO/OhXtVjjlGTaaBi9ELCd07ahO6yV/PFUYwWbiKEzQm+abY1DAo8jWf7oFIDzGpvi5pt/Tf6iTrtDxLiqaocNdqOuLGDQpsCqDEj/ns2bi1Rdw=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=ESiBGNLI; arc=none smtp.client-ip=100.103.45.18
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id ABD6C3B9D98
+	for <sashiko-reviews@lists.linux.dev>; Thu,  4 Jun 2026 16:59:59 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=pass smtp.client-ip=74.125.224.50
+ARC-Seal:i=2; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
+	t=1780592401; cv=pass; b=omcoHvf48R+X9MBTOxn6lGqnrIgm9wDP+Er3aWkCMr0QupYsXqeTDPVnNOLdwUvSfTAFuayM3L6FG32usgfRQQzNJd7jdeO21Re8TbFKxE7mjDthOjGB1RrEfO4YlQDBARknTMuo3OWx0Wr3eNUTcgfLefTHTs3cvW9ilsZP/XU=
+ARC-Message-Signature:i=2; a=rsa-sha256; d=subspace.kernel.org;
+	s=arc-20240116; t=1780592401; c=relaxed/simple;
+	bh=aYLfMzw9PHJwFY6JBY5oV2zpZ2+xt+0iwSXoHkKmj3Y=;
+	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
+	 To:Cc:Content-Type; b=fU8oOMgRE9LRrMYsZstIf4KoQ8B+VSZ3i4Ftw9uIbakKc43lOjaRKPwNIxeW8McQYFgTmHVjOlBHc6y6bsWRJxxY7waDsYQyK+wHMQ0GTHS5eUKijyDtRQ63SoNgDwi1w81izXM0eDWKmKt7kMLpD9hZf21SeIiXFM8GUaC3c2o=
+ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=X5A3uvnK; arc=pass smtp.client-ip=74.125.224.50
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="ESiBGNLI"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 93AF81F00893;
-	Thu,  4 Jun 2026 16:55:33 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=kernel.org;
-	s=k20260515; t=1780592134;
-	bh=KFK59Iuxfm39UpQWPx7lBY9nYyQCimcNM2GPkU1XEAQ=;
-	h=Date:From:To:Cc:Subject:References:In-Reply-To;
-	b=ESiBGNLIYj8jlcCfFvrhqb4xi9eHgkZbuQb/QSrRALC8wxvdbu/wbxJheZqyNmU4d
-	 jJTUHwK7nB4fzeY7388X4eyypS81XlZsS4sAh4h2alwOiFkhOva0HpVqQsShvVW5MW
-	 LbN5HalVvZ/iZfNrvGpO0C3tVxem+nHaif/98S1IJcX4lUjn5d4KaUk+/sQ6ID0GYX
-	 hXTcQNY4XrlGZxtL0RxF1SBOIbuA18v1+H+Apa7/3OV65d4BbbZDqnpSRxqUW4Gx1T
-	 W3AzRFmHQ7vtPhO2E0RURQBBfSQruoBUBEu8GCfPEdfY8XPrSwmCKvwmFhAFh7FSw+
-	 4U61S2XK5UVKA==
-Date: Thu, 4 Jun 2026 17:55:31 +0100
-From: Conor Dooley <conor@kernel.org>
-To: sashiko-reviews@lists.linux.dev
-Cc: Midgy BALON <midgy971@gmail.com>, conor+dt@kernel.org,
-	dri-devel@lists.freedesktop.org, robh@kernel.org,
-	devicetree@vger.kernel.org
-Subject: Re: [RFC PATCH v3 7/9] dt-bindings: npu: rockchip,rk3588-rknn-core:
- Add RK3568
-Message-ID: <20260604-disparate-encircle-2de02c0885d0@spud>
-References: <20260604135255.62682-8-midgy971@gmail.com>
- <20260604140850.C56C21F00899@smtp.kernel.org>
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="X5A3uvnK"
+Received: by mail-yx1-f50.google.com with SMTP id 956f58d0204a3-660ea43107fso1151701d50.0
+        for <sashiko-reviews@lists.linux.dev>; Thu, 04 Jun 2026 09:59:59 -0700 (PDT)
+ARC-Seal: i=1; a=rsa-sha256; t=1780592399; cv=none;
+        d=google.com; s=arc-20240605;
+        b=jpvwhUjntxED5XyAaKA04zxBKOQFOIktV1+7gRPQUgqR1H5C4fIII1FMFfbcfkW6Lm
+         aYjIV1Uace3Q60aVggeUbOw7Jm0/YlQJZDpnNuYT2PsScvlH+fbkqnVBTsjQov0JVzZu
+         7NYnUjJL79xUQrW0BwMmvZUYkGVqZi3cETkdeXJIZnwyo4PAqoefqTLc+lwdVakbWtrS
+         sYMef4R2OaG1QJvQ6KajupEksJF1Rw+l6e912itBii00Y5Geq55ij1Ssgy4icA0Quwpd
+         278yS+TyH3xOcl7CLDhaXSiChu7XE17JwoMVUKAxckQej2AgzZvBGpdPbRFuM7x6YH4V
+         4q0w==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com; s=arc-20240605;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:dkim-signature;
+        bh=7jCmuIqZca1BHFbKewzVbW4c8gx6ri67M5ywiPVj0zA=;
+        fh=D0e8sSTaVPmAgUSFERRWgkzhkCafsr+sW9jV93yuieQ=;
+        b=LlGP3P10iICgLtaCeI09+rhCUYMdYT5BBMf2jf3/n5dQDGngVyXXdPuRkPhmY6f2X3
+         gCy/Wp/rNlr5M7GNvvGXLF4miVj+pfJKdzcC2bUM9a7CRc5Pgxt+GosTVzJzBkdY5tkY
+         fgHKcY/Z20hR/eMI99+ViugLgsQeH7wk+/hFNauWbTyGkGssnOBuQpmgnLHy9lJbgxMq
+         bVZIbG8YubSPbSVma6kvmhkBUuRxL70L3FsTgPmiFzz2SLhPNrwPQUfX4PN/zb/0QPIZ
+         FmSiydEGYBsLl++UqAmpjIxRxN2xqd6a4wGQM0twcEcDXCNET6rNWkws7OQeX8kYYna/
+         CO6A==;
+        darn=lists.linux.dev
+ARC-Authentication-Results: i=1; mx.google.com; arc=none
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20251104; t=1780592399; x=1781197199; darn=lists.linux.dev;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=7jCmuIqZca1BHFbKewzVbW4c8gx6ri67M5ywiPVj0zA=;
+        b=X5A3uvnKk0BxgmZYNGSFrS/zk5DeL4Unv0izC07NM1epc2uElu8l0EHZMPpzoVlfWD
+         EfIjD8VtojqNxT9ZytTAN3JbtTd2bQNlbZNNJ8vG2vrneOedkXrBac6BYom+vsD6+fTn
+         1wkHh7mqrlu+kGNTfYDFVGLJBmfA7GVFaQPg0Vj+jxVL39lcHiumbHjNNP627wgzHMOV
+         vVLZ+S55ca1mp9hMSVYkfasMbBjZAUrJlCK4javyEHRAgimGqJujJciudc+GkgPyTJhs
+         K9KHUcxEnYB4bqHrKDMmeJl0Bs7wR3kj/6Muaxp0k54NAd17gBNFL47NRbWf+f5tShtC
+         Dr2A==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20251104; t=1780592399; x=1781197199;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:x-gm-gg:x-gm-message-state:from
+         :to:cc:subject:date:message-id:reply-to;
+        bh=7jCmuIqZca1BHFbKewzVbW4c8gx6ri67M5ywiPVj0zA=;
+        b=fmlakm4EwYcfILOlpjVJn0OfSJw2mJkccsOb8x0QmEYHpVimFHi6Txbt/qGfkGxKgl
+         3F+SW8+f0CJ2lbue8KRiJyCm4PzzxS2bja2FbOYV4PPMp5EVV2BP6QPG7vrsy1O6786D
+         lnlRs6+lNAMYJbnI6FgwgYMHv2A2CXYCRbOEqSnXXtPxlRwQHXdetGiz+qSWUyYITCp6
+         pdYmxpD+Zs7vx+Ij3y/xnkXM5WdJO9alld/RAyP3ViqY1SjOxu2w+d/LyDYzgYgktnwV
+         1+oc3ZtTrneUj23/1dxsbttU3w2iOiazq1Q47S0377veGO1woTroSHQ66jWOP1dLP1yA
+         4dbw==
+X-Gm-Message-State: AOJu0YwEUjj0vHy2mg2zyAhWLR3mtfmJdRVY+XRxREyAD8LM1AVqmRLC
+	hkEo3qTUjAK5VT2/0kd7mSGkDAe1Cxs1lI/IU0OarTxq6reKSky5IA1Hcan2maM662Pp8M5WVos
+	+wGNzjxJ5VP2CLOMwzcRWmPIYadyDf8FqmhqAadk1sYyf
+X-Gm-Gg: Acq92OFOEbAztEak0GsVwI8FtMgO+OYQ33NEKc7D2U33TLMrgfwxZjhcMJt6GLPJfW3
+	zGJduZW6oHFsckBjj1GKHnOVtdP14LPCdFzBGUvFrtZrn85sTTxpFyQCqtpeKy+60LpjsdGPTI6
+	xtKtkO/sm0cmkEUO/Jxw+QAUUNNU8TVolyINnyV6FBttPsPhoY0RLQ0MpEsNJadIAXsRkuB2D3v
+	ukiG6GUDKvhfodrME5VrMftxnlX0BmFYqCdqPvaItJS3RnP1xGwM/OBKz9I5oA2DeCPYrMm4kSY
+	+WJE+rvjrOketDQ7QBCu
+X-Received: by 2002:a05:690e:4191:b0:660:8253:b836 with SMTP id
+ 956f58d0204a3-660dbe97d54mr7489173d50.5.1780592398732; Thu, 04 Jun 2026
+ 09:59:58 -0700 (PDT)
 Precedence: bulk
 X-Mailing-List: sashiko-reviews@lists.linux.dev
 List-Id: <sashiko-reviews.lists.linux.dev>
 List-Subscribe: <mailto:sashiko-reviews+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:sashiko-reviews+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: multipart/signed; micalg=pgp-sha512;
-	protocol="application/pgp-signature"; boundary="dh0UPhkfjL/WP3lO"
-Content-Disposition: inline
-In-Reply-To: <20260604140850.C56C21F00899@smtp.kernel.org>
-
-
---dh0UPhkfjL/WP3lO
-Content-Type: text/plain; charset=iso-8859-1
-Content-Disposition: inline
+References: <20260603163851.18058-1-leontyevantony@gmail.com> <20260604163900.A09211F00893@smtp.kernel.org>
+In-Reply-To: <20260604163900.A09211F00893@smtp.kernel.org>
+From: Anton Leontev <leontyevantony@gmail.com>
+Date: Thu, 4 Jun 2026 19:59:56 +0300
+X-Gm-Features: AVHnY4Kx6izZI2s_HEh1p5bSx_cod3KVKOkHhawTK4DW9XbpO2P58tWIhRLHIXk
+Message-ID: <CAAN-wAnJWMttpbsdAHAfOJ6PyPGqLvp38oU+DqEk2FU67FWc6Q@mail.gmail.com>
+Subject: Re: [PATCH net v2] hv_netvsc: use kmap_local_page in netvsc_copy_to_send_buf
+To: sashiko-reviews@lists.linux.dev
+Cc: linux-hyperv@vger.kernel.org
+Content-Type: text/plain; charset="UTF-8"
 Content-Transfer-Encoding: quoted-printable
 
-On Thu, Jun 04, 2026 at 02:08:50PM +0000, sashiko-bot@kernel.org wrote:
-> Thank you for your contribution! Sashiko AI review found 6 potential issu=
+You are right, thanks. Since 41a6328b2c55 ("hv_netvsc: Preserve
+contiguous PFN grouping in the page buffer array") a pb entry
+describes a full physically contiguous fragment and pb[i].len can
+exceed PAGE_SIZE, while kmap_local_page() maps a single page. v3
+copies page by page, splitting at native page boundaries, and was
+posted as a new thread per netdev process.
+
+=D1=87=D1=82, 4 =D0=B8=D1=8E=D0=BD. 2026=E2=80=AF=D0=B3. =D0=B2 19:39, <sas=
+hiko-bot@kernel.org>:
+>
+> Thank you for your contribution! Sashiko AI review found 1 potential issu=
 e(s) to consider:
->=20
-> New issues:
-> - [High] The value written to `RK_MMU_AUTO_GATING` sets bit 1 instead of =
-clearing it, contradicting the inline comment and hardware workaround logic.
-> - [High] The error handling path for `noc_init()` failure leaks the IOMMU=
- group reference and leaves the device in an unbalanced PM runtime state.
-> - [High] A malformed device tree with excessive NPU core nodes triggers a=
-n out-of-bounds write in `rocket_probe()` array access.
-> - [High] The NOC bus de-idle sequence via the PMU is missing from the run=
-time PM resume path.
-> - [Medium] The `rockchip,pmu` property is functionally mandatory for RK35=
-68 but is not added to the schema's conditional `required` list.
->=20
-> Pre-existing issues:
-> - [High] The clock names in the `core->clks` array are uninitialized befo=
-re being passed to `devm_clk_bulk_get()`, causing the framework to fetch th=
-e wrong clocks.
+> - [Critical] The patch replaces `phys_to_virt()` with `kmap_local_page()`=
+ in `netvsc_copy_to_send_buf()` to support HIGHMEM SKB fragments. However, =
+`kmap_local_page()` maps exactly one page (e.g., 4096 bytes). SKB fragments=
+ (such as those from TCP sends using `sk_page_frag()` or NFS) can be backed=
+ by compound pages where the fragment size (`len`) exceeds a single page, o=
+r where `offset + len` crosses a page boundary. The `pb` array populated by=
+ `init_page_array()` contains exactly one entry per fragment, meaning `pb[i=
+].len` can exceed `PAGE_SIZE`. When `memcpy(dest, src + offset, len)` is ca=
+lled, it will read past the 4KB window mapped by `kmap_local_page()`. On 32=
+-bit HIGHMEM systems, this accesses adjacent unmapped or unrelated fixmap s=
+lots, causing a fatal page fault or memory leakage.
 > --
->=20
-> commit 6c61da961bed3360a99f625d4a3b1599e7bfe685
-> Author: Midgy BALON <midgy971@gmail.com>
->=20
->     dt-bindings: npu: rockchip, rk3588-rknn-core: Add RK3568
->    =20
->     The RK3568 carries a single core of the same NVDLA-derived NPU IP as =
-the
->     RK3588. Add its compatible. On RK3568 the NPU NOC bus-idle and power
->     gating are controlled through the system PMU rather than a dedicated
->     register block.
->=20
-> > diff --git a/Documentation/devicetree/bindings/npu/rockchip,rk3588-rknn=
--core.yaml b/Documentation/devicetree/bindings/npu/rockchip,rk3588-rknn-cor=
-e.yaml
-> > index caca2a4903cd1..af9936b32e9fe 100644
-> > --- a/Documentation/devicetree/bindings/npu/rockchip,rk3588-rknn-core.y=
-aml
-> > +++ b/Documentation/devicetree/bindings/npu/rockchip,rk3588-rknn-core.y=
-aml
+>
+> commit dfe36312b193784583b28a894f895984d7d0ebba
+> Author: Anton Leontev <leontyevantony@gmail.com>
+>
+> hv_netvsc: use kmap_local_page in netvsc_copy_to_send_buf
+>
+> This patch replaces phys_to_virt() with kmap_local_page() to support HIGH=
+MEM
+> SKB fragments that are beyond the LOWMEM boundary on 32-bit systems.
+>
+> > diff --git a/drivers/net/hyperv/netvsc.c b/drivers/net/hyperv/netvsc.c
+> > index 59e95341f9b1e..2038d9f5c9f9a 100644
+> > --- a/drivers/net/hyperv/netvsc.c
+> > +++ b/drivers/net/hyperv/netvsc.c
 > [ ... ]
-> > @@ -75,7 +83,15 @@ required:
-> >    - resets
-> >    - reset-names
-> >    - npu-supply
-> > -  - sram-supply
-> > +
-> > +if:
-> > +  properties:
-> > +    compatible:
-> > +      contains:
-> > +        const: rockchip,rk3588-rknn-core
-> > +then:
-> > +  required:
-> > +    - sram-supply
->=20
-> [Severity: Medium]
-> Does the missing rockchip,pmu property from the conditional required block
-> cause incomplete device trees to pass validation?
->=20
-> The rockchip,pmu property is functionally mandatory for the
-> rockchip,rk3568-rknn-core variant as the driver unconditionally fails to =
-probe
-> without it. Missing this mandatory property here could allow invalid devi=
-ce
-> trees to go undetected.
-
-This looks valid. Additionally, the condition should forbid this
-property on rk3588.
-pw-bot: changes-requested
->=20
-> >  additionalProperties: false
-> > =20
-> > diff --git a/drivers/accel/rocket/rocket_core.c b/drivers/accel/rocket/=
-rocket_core.c
-
-Why is the bot commenting on driver stuff here?
-
-Cheers,
-Conor.
-
-> > index b3b2fa9ba645a..634f78dfe2887 100644
-> > --- a/drivers/accel/rocket/rocket_core.c
-> > +++ b/drivers/accel/rocket/rocket_core.c
-> [ ... ]
-> > @@ -83,6 +89,15 @@ int rocket_core_init(struct rocket_core *core)
-> >  		return err;
-> >  	}
-> > =20
-> > +	if (core->soc_data->noc_init) {
-> > +		err =3D core->soc_data->noc_init(core);
-> > +		if (err) {
-> > +			pm_runtime_put_sync(dev);
-> > +			rocket_job_fini(core);
-> > +			return err;
-> > +		}
-> > +	}
->=20
-> [Severity: High]
-> Does this error path leak the IOMMU group reference and leave the device =
-in an
-> unbalanced PM runtime state?
->=20
-> By returning directly after pm_runtime_put_sync() and rocket_job_fini(), =
-the
-> code misses calling rocket_core_fini() which handles iommu_group_put(),
-> pm_runtime_disable(), and pm_runtime_dont_use_autosuspend().
->=20
-> > +
-> >  	version =3D rocket_pc_readl(core, VERSION);
-> >  	version +=3D rocket_pc_readl(core, VERSION_NUM) & 0xffff;
-> > =20
-> > diff --git a/drivers/accel/rocket/rocket_device.c b/drivers/accel/rocke=
-t/rocket_device.c
-> > index 46e6ee1e72c5f..6186f4faa3a2a 100644
-> > --- a/drivers/accel/rocket/rocket_device.c
-> > +++ b/drivers/accel/rocket/rocket_device.c
-> [ ... ]
-> > @@ -27,17 +25,14 @@ struct rocket_device *rocket_device_init(struct pla=
-tform_device *pdev,
-> >  	ddev =3D &rdev->ddev;
-> >  	dev_set_drvdata(dev, rdev);
-> > =20
-> > -	for_each_compatible_node(core_node, NULL, "rockchip,rk3588-rknn-core")
-> > -		if (of_device_is_available(core_node))
-> > -			num_cores++;
-> > -
-> > -	rdev->cores =3D devm_kcalloc(dev, num_cores, sizeof(*rdev->cores), GF=
-P_KERNEL);
-> > +	rdev->cores =3D devm_kcalloc(dev, soc_data->num_cores, sizeof(*rdev->=
-cores),
-> > +				   GFP_KERNEL);
->=20
-> [Severity: High]
-> Can this code overflow rdev->cores[] if the device tree contains more NPU
-> nodes than soc_data->num_cores?
->=20
-> With this change, the array size is fixed to soc_data->num_cores, but
-> rocket_probe() in drivers/accel/rocket/rocket_drv.c is still called for e=
-very
-> matching node. If there are too many nodes in the device tree, it appears
-> rocket_probe() will write out of bounds here:
->=20
-> drivers/accel/rocket/rocket_drv.c:rocket_probe() {
->     ...
-> 	unsigned int core =3D rdev->num_cores;
->     ...
-> 	rdev->cores[core].rdev =3D rdev;
-> 	rdev->cores[core].dev =3D &pdev->dev;
-> 	rdev->cores[core].index =3D core;
->     ...
+> > @@ -965,11 +966,14 @@ static void netvsc_copy_to_send_buf(struct netvsc=
+_device *net_device,
+> >       }
+> >
+> >       for (i =3D 0; i < page_count; i++) {
+> > -             char *src =3D phys_to_virt(pb[i].pfn << HV_HYP_PAGE_SHIFT=
+);
+> > -             u32 offset =3D pb[i].offset;
+> > +             phys_addr_t paddr =3D pb[i].pfn << HV_HYP_PAGE_SHIFT;
+> > +             struct page *page =3D phys_to_page(paddr);
+> > +             u32 offset =3D offset_in_page(paddr) + pb[i].offset;
+> >               u32 len =3D pb[i].len;
+> > +             char *src =3D kmap_local_page(page);
+> >
+> >               memcpy(dest, (src + offset), len);
+>
+> [Severity: Critical]
+> Will this memcpy() read beyond the 1-page mapping established by
+> kmap_local_page()?
+>
+> If the fragment size (len) plus offset exceeds PAGE_SIZE, it seems memcpy=
+()
+> will read past the locally mapped window. SKB fragments can be backed by
+> compound pages where the fragment size exceeds a single page, and
+> init_page_array() assigns the full fragment size to pb[i].len:
+>
+> drivers/net/hyperv/netvsc_drv.c:init_page_array() {
+>         ...
+>         cur_pb->offset =3D offset_in_hvpage(offset);
+>         cur_pb->len =3D skb_frag_size(frag);
+>         cur_pb->pfn =3D pfn + (offset >> HV_HYP_PAGE_SHIFT);
+>         ...
 > }
->=20
-> >  	if (!rdev->cores)
-> >  		return ERR_PTR(-ENOMEM);
-> > =20
-> > diff --git a/drivers/accel/rocket/rocket_drv.c b/drivers/accel/rocket/r=
-ocket_drv.c
-> > index 8bbbce594883e..5a72d0b5f4dff 100644
-> > --- a/drivers/accel/rocket/rocket_drv.c
-> > +++ b/drivers/accel/rocket/rocket_drv.c
-> [ ... ]
-> > @@ -213,8 +219,64 @@ static void rocket_remove(struct platform_device *=
-pdev)
-> >  	}
-> >  }
-> > =20
-> > +/*
-> > + * On RK3568 the NPU NOC bus is gated and idle out of reset and must be
-> > + * powered on and de-idled through the PMU before the NPU is reachable=
-=2E  PMU
-> > + * registers use a write-mask protocol: the upper 16 bits enable write=
-s to the
-> > + * matching lower 16 bits.
-> > + *
-> > + * The NPU's high-speed clock is a PVTPLL managed by TF-A via SCMI and=
- must be
-> > + * running before the NOC acknowledges the de-idle request.  Force a r=
-eal SCMI
-> > + * rate change (an intermediate rate defeats the clock framework's
-> > + * unchanged-rate shortcut) now that the power domain is on and clocks=
- enabled.
-> > + */
-> > +#define ROCKET_RK3568_SCMI_CLK	2
-> > +
-> > +static int rk3568_noc_init(struct rocket_core *core)
-> > +{
-> > +	struct regmap *pmu;
-> > +	unsigned int val;
-> > +	int ret;
-> > +
-> > +	clk_set_rate(core->clks[ROCKET_RK3568_SCMI_CLK].clk, 600000000UL);
-> > +	clk_set_rate(core->clks[ROCKET_RK3568_SCMI_CLK].clk, 1000000000UL);
->=20
-> [Severity: High]
-> This is a pre-existing issue, but does this unintentionally alter the sys=
-tem
-> aclk rate?
->=20
-> Looking at rocket_core_init(), the core->clks array is passed to
-> devm_clk_bulk_get() without initializing the id strings:
->=20
-> drivers/accel/rocket/rocket_core.c:rocket_core_init() {
->     ...
-> 	err =3D devm_clk_bulk_get(dev, ARRAY_SIZE(core->clks), core->clks);
->     ...
+>
+> Other parts of the subsystem also document that a pb entry can cross page
+> boundaries:
+>
+> drivers/net/hyperv/netvsc.c:netvsc_build_mpb_array() {
+>         ...
+>         /* Each entry in the input "pb" array must describe a contiguous =
+range
+>          * of guest physical memory so that the pfns are sequential if th=
+e range
+>          * crosses a page boundary. */
+>         ...
+>         for (j =3D 0; j < HVPFN_UP(offset + len); j++)
+>                 mpb_entry->pfnArray[j] =3D pb[i].pfn + j;
+>         ...
 > }
->=20
-> Because the id fields are NULL, the framework fetches the first DT clock
-> (aclk) for all elements. Calling clk_set_rate() here seems to alter the
-> system aclk frequency instead of the intended SCMI clock.
->=20
-> > +
-> > +	pmu =3D syscon_regmap_lookup_by_phandle(core->dev->of_node, "rockchip=
-,pmu");
-> > +	if (IS_ERR(pmu))
-> > +		return dev_err_probe(core->dev, PTR_ERR(pmu),
-> > +				     "failed to get PMU regmap\n");
-> > +
-> > +	/* Power on the NPU power domain (PWR_GATE_SFTCON bit 1 =3D 0). */
-> > +	regmap_write(pmu, 0xa0, BIT(1 + 16));
-> > +
-> > +	/* Disable NPU NOC auto-idle (NOC_AUTO_CON0 bit 2). */
-> > +	regmap_write(pmu, 0x70, BIT(2 + 16));
-> > +
-> > +	/* Request NPU bus de-idle (BUS_IDLE_SFTCON0 bit 2 =3D 0). */
-> > +	regmap_write(pmu, 0x50, BIT(2 + 16));
-> > +
-> > +	/* Wait for the bus to report active (BUS_IDLE_ST bit 2 =3D 0). */
-> > +	ret =3D regmap_read_poll_timeout(pmu, 0x68, val, !(val & BIT(2)), 10,=
- 1000);
-> > +	if (ret)
-> > +		dev_err(core->dev, "timed out waiting for NPU bus de-idle\n");
-> > +
-> > +	return ret;
-> > +}
->=20
-> [Severity: High]
-> Is a NOC bus de-idle sequence required in the runtime PM resume path as w=
-ell?
->=20
-> If the generic power domain (genpd) powers off the NPU during runtime sus=
-pend,
-> the NOC bus idle state would reset. Currently, rocket_device_runtime_resu=
-me()
-> enables clocks but doesn't repeat this PMU de-idle sequence, which could =
-leave
-> the AXI bus gated and cause subsequent hardware accesses to hang or crash.
->=20
-> > +
-> >  static const struct rocket_soc_data rk3568_soc_data =3D {
-> >  	.num_cores =3D 1,
-> >  	.dma_bits =3D 32,
-> >  	.noc_init =3D rk3568_noc_init,
-> >  };
-> > =20
-> > diff --git a/drivers/iommu/rockchip-iommu.c b/drivers/iommu/rockchip-io=
-mmu.c
-> > index 0013cf196c573..7d40ecb26123f 100644
-> > --- a/drivers/iommu/rockchip-iommu.c
-> > +++ b/drivers/iommu/rockchip-iommu.c
-> > @@ -952,6 +952,18 @@ static int rk_iommu_enable(struct rk_iommu *iommu)
-> > =20
-> >  	ret =3D rk_iommu_enable_paging(iommu);
-> > =20
-> > +	if (!ret) {
-> > +		/*
-> > +		 * RK356x v1 IOMMU: RK_MMU_AUTO_GATING bit 1 enables page-walker
-> > +		 * auto clock-gating; the walker's AXI master then loses its clock
-> > +		 * between transactions and a TLB-miss page walk never completes,
-> > +		 * leaving the IOMMU stuck (PAGING_ENABLED, never IDLE).  Clear
-> > +		 * bit 1 (keep bit 0, the slave-port gate) once paging is enabled.
-> > +		 */
-> > +		for (i =3D 0; i < iommu->num_mmu; i++)
-> > +			rk_iommu_write(iommu->bases[i], RK_MMU_AUTO_GATING, 0x2);
->=20
-> [Severity: High]
-> Will this write operation inadvertently set bit 1 instead of clearing it?
->=20
-> Writing 0x2 (binary 10) sets bit 1 and clears bit 0, which contradicts the
-> inline comment indicating that bit 1 should be cleared and bit 0 kept. Th=
-is
-> appears to enable the buggy page-walker auto clock-gating and disable the
-> slave-port gate.
->=20
-> > +	}
-> > +
-> >  out_disable_stall:
-> >  	rk_iommu_disable_stall(iommu);
-> >  out_disable_clocks:
->=20
-> --=20
-> Sashiko AI review =B7 https://sashiko.dev/#/patchset/20260604135255.62682=
--1-midgy971@gmail.com?part=3D7
-
---dh0UPhkfjL/WP3lO
-Content-Type: application/pgp-signature; name="signature.asc"
-
------BEGIN PGP SIGNATURE-----
-
-iHUEABYKAB0WIQRh246EGq/8RLhDjO14tDGHoIJi0gUCaiGuAwAKCRB4tDGHoIJi
-0tP2APsE0I8hlUQjHx6Q+YvbRR/+e/YnDowmSE1/fsVgdf9L0QD8DVc8XQUWO/SB
-GAZtg/sxgRg9xhV6De0JBbj2zYDMBww=
-=lOwb
------END PGP SIGNATURE-----
-
---dh0UPhkfjL/WP3lO--
+>
+> Could this regression cause a fatal page fault on 32-bit HIGHMEM guests w=
+hen
+> an SKB fragment crosses a page boundary, or leak unrelated fixmap memory =
+if
+> the adjacent slot happens to be mapped?
+>
+> > +             kunmap_local(src);
+> >               dest +=3D len;
+> >       }
+> >
+>
+> --
+> Sashiko AI review =C2=B7 https://sashiko.dev/#/patchset/20260603163851.18=
+058-1-leontyevantony@gmail.com?part=3D1
