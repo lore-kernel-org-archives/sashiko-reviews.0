@@ -1,138 +1,129 @@
-Received: from mail-wm1-f47.google.com (mail-wm1-f47.google.com [209.85.128.47])
+Received: from mail-wr1-f41.google.com (mail-wr1-f41.google.com [209.85.221.41])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8299B3C6A27
-	for <sashiko-reviews@lists.linux.dev>; Thu,  4 Jun 2026 07:59:35 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.47
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0255E3C6A56
+	for <sashiko-reviews@lists.linux.dev>; Thu,  4 Jun 2026 07:59:42 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.221.41
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1780559978; cv=none; b=dKCvWYYLO/CrYunFdeWBs7IHAcRXMasgd+fPIp9kWVXirWykR/EkAxPk2LOyCe5YXT3Zo8dUBnRxLpTWW42YW0KBhi+/qwc7P4QfaNo2Ou9A8QbWPm04gxzRVOODmD7+26qwIiTWY5OO4oTCjtgPEFipEKSPpQtTIQgg3GTPbAo=
+	t=1780559984; cv=none; b=gN0euxr3j4S05i/H/SeU2n7dCmiQna0nqnpBG0U0Xy+GIA2SvY7hhEhEcJWPLWRl4smcqoNqUuh/BO8tvQ3pinb8MkdsCcFrOP3A9l/K8sX5/dp+ccd0dYTeXyjFkP0uNPu4xplZMPxDtrqw7geV6vv2Aa40wSXZKb6L502/+SE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1780559978; c=relaxed/simple;
-	bh=N7XFvxq6uMxAVWjKUzpyldIRjh1dfUspj22geuigDWo=;
+	s=arc-20240116; t=1780559984; c=relaxed/simple;
+	bh=EObEDmgAbrmoMGQf41FBnakR8lHg3gqKEeVus6KjzGk=;
 	h=From:Date:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=Mo7gRYVOK2J1ILU0Ekw0q8l4ZJnC+beq5DMWmCGm7PCgKyvWwDZFaZ+1+dAqYm6aS0hUGMIuBP7x33v1EBGh5hybEpGyF93gqXKEmVP/u+xUuY4AtPaEjZ94QLHKHNoVnq3GytRpkchCl3jcd3hvBWtMFNgvrFyt17QglJn7+aU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=Z4GgjGyr; arc=none smtp.client-ip=209.85.128.47
+	 Content-Type:Content-Disposition:In-Reply-To; b=MJSMa4xKZo8XaKkZpyBFnrQlllOF6LN+Go+LKSLnEdOVaCWRTdBbyXEiswWYFnpMSwKKN1Jb72umbHBhCozTbJhO6Nqvjc33MZOTkd5nIMNEwaYo01wrVl7TNMn4K7gmTPgj16d1J7iIrAamhZqniS1R0r6t+iVVqgLW9eW0aYM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=IWQ/6bCp; arc=none smtp.client-ip=209.85.221.41
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="Z4GgjGyr"
-Received: by mail-wm1-f47.google.com with SMTP id 5b1f17b1804b1-490b8a97b11so4825325e9.0
-        for <sashiko-reviews@lists.linux.dev>; Thu, 04 Jun 2026 00:59:35 -0700 (PDT)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="IWQ/6bCp"
+Received: by mail-wr1-f41.google.com with SMTP id ffacd0b85a97d-45ef6565cfdso196677f8f.0
+        for <sashiko-reviews@lists.linux.dev>; Thu, 04 Jun 2026 00:59:42 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20251104; t=1780559974; x=1781164774; darn=lists.linux.dev;
-        h=in-reply-to:content-transfer-encoding:content-disposition
-         :mime-version:references:message-id:subject:cc:to:date:from:from:to
-         :cc:subject:date:message-id:reply-to;
-        bh=Xr+ux2g6fgVsR71sMDGTVxIHHMX3sO8aKW8cZWnSGvE=;
-        b=Z4GgjGyrb1n6huLogjVbcO8wWzXM00WIOgK2niWabyYUylc1N9T+DQL0Ohr6lB93o0
-         Cgu8m9kISFtv0QiThGRUbVUum99fKWuCHGOqc+9hDvA6kBF9uCwLvs+wTSRgPmTTDWLc
-         a7Ydz1qWNwwvB6/5eZ78+dtqq4yBg6Gc0EuBeMk4hSon/7HrJb3SyYhEh3DBjJdr3L0X
-         sYX+S0LptwbhzHBP6hxWMxHD2bFX8TIA1CT+9+kbR4gxwopfIF4soWdy7qzrr/YTBG9l
-         gadnAx3/ygolxBS3+zosklZYAQks2xVw/RzzRlMagfX8Mj0NJCe4UBj32vX6K3exiDJa
-         YW8w==
+        d=gmail.com; s=20251104; t=1780559981; x=1781164781; darn=lists.linux.dev;
+        h=in-reply-to:content-disposition:mime-version:references:message-id
+         :subject:cc:to:date:from:from:to:cc:subject:date:message-id:reply-to;
+        bh=QXS/z/soeHYJ/mNI5HAUAm9JLuJ2u2VWKE1vQ89HSDM=;
+        b=IWQ/6bCpeQTlhpllPpm0DmnY9Pq+5+u04MMZQLBZppwHqC2GniavPv2B8LsAsmiVKP
+         vccjJZOLRn2vatkS2A90WAXWRoYN/Wt4z8KCn36DjwCM3WbGPtpUyjdB8O5FvEWAR63q
+         s43WIIH18Fk5uaFcTk5qzqMQ1ljeunZEfeXRF5hIWxJv2pZJBJGVP77SVDGenA1fawjn
+         BFBkhFiEi53siRSWSe/62Btq2+nO8H6Qmc7wEq/0JZg62UpV7hgDPPKupvp6395bhwY2
+         wd3ZJYESBA2cxxo6z2YYyl1FjwME/uctRT49Y3f21nrzOuXDWD0FeqN3O+ZadGBULvVa
+         FGqg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20251104; t=1780559974; x=1781164774;
-        h=in-reply-to:content-transfer-encoding:content-disposition
-         :mime-version:references:message-id:subject:cc:to:date:from:x-gm-gg
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=Xr+ux2g6fgVsR71sMDGTVxIHHMX3sO8aKW8cZWnSGvE=;
-        b=daO3330dCaqIz7YY94h/jMCwAcWSqkDrYAg2j+er4z5gYVAT4OP3rcGpW3QIqLHTFI
-         B5oPNObCYJ/S/nlwjWr9WRv+NcVXsj9sJVXiugWfhaqmEHqBQbi9zDq4DgSSb5oWKn/q
-         G8Gfmuac3hFaSgLQgnhIU6cM1M50c5skhLOzu0qeu1ZU6pB3Q6QfceKGWOJQSWGLR7jP
-         WyFzqqpxkH01CLYYynRVfeZRx9b+pIBt07acqpvPaEmRFUtCMdnZheWoOts0+uVs5DST
-         3LwgOlUdR/HOK+KZdzfl4XPgiVWwvb/2qz1/y6UXqCM7MtAAjERD1oD2bo3hBFKOrUlG
-         5Wcg==
-X-Gm-Message-State: AOJu0YxgCeRM+ioqrR7Ng0x9CWM6QEJO1ze60RjsKMzcWWcvRkuyD42g
-	hTr2IrV9f9+S9+1VOO/GOxwPzucPklRnTVPKDTbTzzKtLe2+OWo9Ai94D1EGrA==
-X-Gm-Gg: Acq92OG8Si2lOs5SLqYMkNafyRXtYOhQ1SQ0wAirirCcj7O2S2b5vGBhPl0ffBZpJhk
-	Sm5WeSagbbAm0UJvEHFlCs3mP8bdbSULDwaN0pEi5zHm+bKZhMSuLhBM5hZuTn6d2B3+qy/koYr
-	hb6WmjwRjNV2q89MM95U6aAEwpfQTQen/3D8WkCM6WrfjYK85EwLcjFuca0whxevGR5PPZnlZ1x
-	1ZrX1dWjU5I5nzIfIL8vFsioPDylOXHJ1bj+TnrQZpdEtDBHbcrpAoq6LLyvvuUKb9vsir3IHQy
-	QsiQ6wcqyicqJsQidj8L1vWGpdVxcuDKbl3Dy7nN60k/0NsLGF/MGD9vC4tfVzP1A3TMxIxqUUH
-	eu9PvEqwj1ptDGN4U69UwSdWhDa3gfoQacugmmkx8P9QXlOtjVJsCAcQQlVE0Cv6RbYC725Hd2d
-	yLVoN9cZXBPl6aed2p35uvlkFmIg==
-X-Received: by 2002:a05:600c:34ca:b0:490:4ee0:82ff with SMTP id 5b1f17b1804b1-490b5fe6112mr101748985e9.27.1780559973698;
-        Thu, 04 Jun 2026 00:59:33 -0700 (PDT)
+        d=1e100.net; s=20251104; t=1780559981; x=1781164781;
+        h=in-reply-to:content-disposition:mime-version:references:message-id
+         :subject:cc:to:date:from:x-gm-gg:x-gm-message-state:from:to:cc
+         :subject:date:message-id:reply-to;
+        bh=QXS/z/soeHYJ/mNI5HAUAm9JLuJ2u2VWKE1vQ89HSDM=;
+        b=pcClQSD92JVb68EnUxltdS21UsQ+KMi0a3D/L6/TxpZjzr82pDh8HMUBFlDXzqECLD
+         /GbPJFGUAqUwzai620YZXcgVxNcQcwPeGMxqVp+ezL+lHp5YvQtG8Z9g8vcC3sJm1ytO
+         Bqf6gnS4En3axYc++1UUvOUkGeaIoNhU3YN4DfI1ApIgGKnFNxh7cLKbDnWhwxkQGXxb
+         2i1W5I7MKVgf5otuP7JoWXpoggYbgNAvOJY2Y12CyoizY0p5KeCQM+Kq0W/bPkYA3l9V
+         2gDtG8MuuE353ooCwUsl97qIuEbkAAIcwYlnXDKknh5y/pqeseUvodoyntnSUBCr+0ND
+         7b0A==
+X-Gm-Message-State: AOJu0Ywjf+IpqEbBX6fwNs+g30P83Sg3w0p0qrRPNlXNe3dtnkGw5R5V
+	f1sIQH+WKMtEf3A7wSc/ebgVWIfWJe+WBOsMBOoekF5JY0CMTifpfi/V+PjLdg==
+X-Gm-Gg: Acq92OFtODbbnCS1Hkei8G5gGtDi33Bc/JS8KTTl6tLDvnjHjFX5tb3eEL9jjKpqGX5
+	QFL8k4sRdEqnyn9SWH9X2azAjz2NyY46lJp/cLlTb7/bpWrFVK+wBbmGYXTZ7+fVBZIF5V7JpJs
+	wvRD0YyPE244UH2rnGPc0HFOkUlC8Bjaau7SJBtg6O/mSGEjxMp6rSnULaDrg4h8zPU4bWFiy7J
+	y0ByeMd+WW+wBg3EKV2EsxhfnIJCEojQlJzPTJhQw6EaXZGJZfhnw+Jyv4iSaMbgrt6+9rasB5w
+	PdSskLGR1Wwaa65IRBpA/UduuK9mlMHuQPGh/9mWpcYFeaIJvAP7lTMY6SQFyq9RkLTNgb/xRSA
+	80ogKPAAOfcHfIPygNLbBQSb57EfI9N3wP0ww4DNwy7PCOi7MkNwCeYFuAV2958KHnuhdXb/1kc
+	30Vm7NaAhlxMsjWHcbUKbZjPpcwfGBasiCehnq
+X-Received: by 2002:a5d:649c:0:b0:45e:eea1:f1e9 with SMTP id ffacd0b85a97d-460217a7001mr7788727f8f.11.1780559981312;
+        Thu, 04 Jun 2026 00:59:41 -0700 (PDT)
 Received: from krava ([2a02:8308:a00c:e200:b655:ff13:e355:16a3])
-        by smtp.gmail.com with ESMTPSA id ffacd0b85a97d-4601f344762sm15672983f8f.23.2026.06.04.00.59.33
+        by smtp.gmail.com with ESMTPSA id ffacd0b85a97d-4601f2f2710sm11330211f8f.14.2026.06.04.00.59.40
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Thu, 04 Jun 2026 00:59:33 -0700 (PDT)
+        Thu, 04 Jun 2026 00:59:40 -0700 (PDT)
 From: Jiri Olsa <olsajiri@gmail.com>
 X-Google-Original-From: Jiri Olsa <jolsa@kernel.org>
-Date: Thu, 4 Jun 2026 09:59:31 +0200
+Date: Thu, 4 Jun 2026 09:59:39 +0200
 To: sashiko-reviews@lists.linux.dev
 Cc: bpf@vger.kernel.org
-Subject: Re: [PATCHv7 bpf-next 18/29] libbpf: Add bpf_link_create support for
- tracing_multi link
-Message-ID: <aiEwY-dYqjQQu3n1@krava>
-References: <20260603110554.29590-19-jolsa@kernel.org>
- <20260603113419.D927B1F00893@smtp.kernel.org>
+Subject: Re: [PATCHv7 bpf-next 19/29] libbpf: Add btf_type_is_traceable_func
+ function
+Message-ID: <aiEwa0ymzmFBA2J6@krava>
+References: <20260603110554.29590-20-jolsa@kernel.org>
+ <20260603113617.49FA41F00893@smtp.kernel.org>
 Precedence: bulk
 X-Mailing-List: sashiko-reviews@lists.linux.dev
 List-Id: <sashiko-reviews.lists.linux.dev>
 List-Subscribe: <mailto:sashiko-reviews+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:sashiko-reviews+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=iso-8859-1
+Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-Content-Transfer-Encoding: 8bit
-In-Reply-To: <20260603113419.D927B1F00893@smtp.kernel.org>
+In-Reply-To: <20260603113617.49FA41F00893@smtp.kernel.org>
 
-On Wed, Jun 03, 2026 at 11:34:19AM +0000, sashiko-bot@kernel.org wrote:
+On Wed, Jun 03, 2026 at 11:36:16AM +0000, sashiko-bot@kernel.org wrote:
 > Thank you for your contribution! Sashiko AI review found 1 potential issue(s) to consider:
-> - [Low] The patch references undefined UAPI constants and struct fields, causing a build failure.
+> - [Medium] btf_get_type_size() fails to handle union types, leading to the incorrect rejection of functions with valid union arguments.
 > --
 > 
-> commit dfbf332632be62321ec615d0d0c35a8d46309172
+> commit 3f5d4e8440eaf929ad94e8774deb7fce495d30c8
 > Author: Jiri Olsa <jolsa@kernel.org>
 > 
-> libbpf: Add bpf_link_create support for tracing_multi link
+> libbpf: Add btf_type_is_traceable_func function
 > 
-> This commit adds support for the tracing_multi link in bpf_link_create().
-> It introduces the tracing_multi record to struct bpf_link_create_opts and
-> maps these new options to the bpf_attr union for the sys_bpf syscall.
+> This commit adds the btf_type_is_traceable_func function to libbpf to
+> perform the same checks as the kernel's btf_distill_func_proto, preventing
+> attachment on unsupported functions. It exports this function via
+> libbpf_internal.h for use in benchmark tests.
 > 
-> > diff --git a/tools/lib/bpf/bpf.c b/tools/lib/bpf/bpf.c
-> > index bc513aa8f4041..f37e3416f61a5 100644
-> > --- a/tools/lib/bpf/bpf.c
-> > +++ b/tools/lib/bpf/bpf.c
+> > diff --git a/tools/lib/bpf/libbpf.c b/tools/lib/bpf/libbpf.c
+> > index ab2071fdd3e8b..c659865ec2def 100644
+> > --- a/tools/lib/bpf/libbpf.c
+> > +++ b/tools/lib/bpf/libbpf.c
+> 
 > [ ... ]
-> > @@ -845,6 +845,15 @@ int bpf_link_create(int prog_fd, int target_fd,
-> >  		if (!OPTS_ZEROED(opts, uprobe_multi))
-> >  			return libbpf_err(-EINVAL);
-> >  		break;
-> > +	case BPF_TRACE_FENTRY_MULTI:
-> > +	case BPF_TRACE_FEXIT_MULTI:
-> > +	case BPF_TRACE_FSESSION_MULTI:
-> > +		attr.link_create.tracing_multi.ids = ptr_to_u64(OPTS_GET(opts, tracing_multi.ids, 0));
-> > +		attr.link_create.tracing_multi.cookies = ptr_to_u64(OPTS_GET(opts, tracing_multi.cookies, 0));
-> > +		attr.link_create.tracing_multi.cnt = OPTS_GET(opts, tracing_multi.cnt, 0);
 > 
-> [Severity: Low]
-> Are the UAPI constants (BPF_TRACE_FENTRY_MULTI, etc.) and the tracing_multi
-> struct within union bpf_attr defined at this point in the tree?
+> > +static int btf_get_type_size(const struct btf *btf, __u32 type_id,
+> > +			     const struct btf_type **ret_type)
+> > +{
+> > +	const struct btf_type *t;
+> > +	int i;
+> > +
+> > +	*ret_type = btf__type_by_id(btf, 0);
+> > +	if (!type_id)
+> > +		return 0;
+> > +	t = btf__type_by_id(btf, type_id);
+> > +	for (i = 0; i < MAX_RESOLVE_DEPTH && t && btf_type_is_modifier(t); i++)
+> > +		t = btf__type_by_id(btf, t->type);
+> > +	if (!t || i == MAX_RESOLVE_DEPTH)
+> > +		return -EINVAL;
+> > +	*ret_type = t;
+> > +	if (btf_is_ptr(t))
+> > +		return btf__pointer_size(btf);
+> > +	if (btf_is_int(t) || btf_is_any_enum(t) || btf_is_struct(t))
+> > +		return t->size;
 > 
-> It appears this patch relies on UAPI additions to linux/bpf.h that are
-> missing from this specific commit. This causes a build failure in
-> tools/lib/bpf/bpf.c due to undeclared identifiers.
+> [Severity: Medium]
+> Will this return -EINVAL for union types?
 > 
-> Should this commit include the UAPI header updates, or be reordered after
-> the corresponding kernel patch to prevent breaking git bisect?
+> Unlike the kernel where btf_type_is_struct() covers both structs and unions,
 
-added in:
-  2beba92273f5 bpf: Add support for tracing multi link
-
-this commit compiles fine
+ugh.. kernel btf_type_is_struct checks for both struct and union, nice
+will add the union check back
 
 jirka
-
-> 
-> > +		if (!OPTS_ZEROED(opts, tracing_multi))
-> > +			return libbpf_err(-EINVAL);
-> > +		break;
-> >  	case BPF_TRACE_RAW_TP:
-> >  	case BPF_TRACE_FENTRY:
-> >  	case BPF_TRACE_FEXIT:
-> 
-> -- 
-> Sashiko AI review · https://sashiko.dev/#/patchset/20260603110554.29590-19-jolsa@kernel.org?part=1
