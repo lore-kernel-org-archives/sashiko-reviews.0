@@ -1,219 +1,164 @@
-Received: from CY3PR05CU001.outbound.protection.outlook.com (mail-westcentralusazon11013041.outbound.protection.outlook.com [40.93.201.41])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-vs1-f43.google.com (mail-vs1-f43.google.com [209.85.217.43])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AAE6D37F74C
-	for <sashiko-reviews@lists.linux.dev>; Thu,  4 Jun 2026 11:28:17 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=fail smtp.client-ip=40.93.201.41
-ARC-Seal:i=2; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1780572499; cv=fail; b=ry6FJ5EY3QmtmM5vQN47gYUTlEbagA76AVqIo6lAF/bpu9spjBLU2yvHAwBpw11EXyYQSoIbYiTo7a/3HMpSrwsop7AplQmqzaW8cFE4WuG9LVrex7ginkJGKl/oj3ZhmrEdi2j74O3LuWsAKiE7fM4Ye+VeEhfLEfl/rEsexFw=
-ARC-Message-Signature:i=2; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1780572499; c=relaxed/simple;
-	bh=qNU2yJmUip0nN+nPRsTy4FkxvSswBTpicBUnYHtinDo=;
-	h=From:To:CC:Subject:Date:Message-ID:References:In-Reply-To:
-	 Content-Type:MIME-Version; b=aAh1zNsHgJA4U/5nvjXvj0F8M4VS1djxsBRa5ScW7ndREvwbEVQoXZDATQEyL3DyDfFO2qx81wV6xke1d1Hj+A76U5v9I6a4XxaFyCdPpgm7Z55ggHsXdfAAfPes+L8XKZ0brY2JWyPYyfzRj7rpCzr3qIoOAbGmm4Kd6Ygt8ug=
-ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=amd.com; spf=fail smtp.mailfrom=amd.com; dkim=pass (1024-bit key) header.d=amd.com header.i=@amd.com header.b=lUiF2qVo; arc=fail smtp.client-ip=40.93.201.41
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=amd.com
-Authentication-Results: smtp.subspace.kernel.org; spf=fail smtp.mailfrom=amd.com
-Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=amd.com header.i=@amd.com header.b="lUiF2qVo"
-ARC-Seal: i=1; a=rsa-sha256; s=arcselector10001; d=microsoft.com; cv=none;
- b=k1UYeDNxGgvnS/37c7TQ3TQyHTYSwIvK50buRs7FptCWN1kmEKOnH0gxtrvvDJcKAPVPtwi4o7UZwMN/3pKty4okKl5yvsF7nw874+RugwsvwDu0HxHWTVoT+6JNmlcGDea4AAoAOYSVAcmFehbm/XCWwHL2UXTXS9NqLVK0gs9Z9pdtaKSCO+z/PIYMC6cglkJVC7RjH4+XfGXyjktjQLqW4SWWgABJWOz1ug74vmfZNkEWsUoCP4RxlitkDj+m19MUvPf+dU8cPAgqzbz6H9hfamkl4/Oqv7wDEBjGx20auoTnYoaVgi6r2Tcqj1Velp+TjvtkIkzBAXgpGfManQ==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com;
- s=arcselector10001;
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
- bh=SylsoA4Fvi60Qx5Ep2DqkuT5kdRNPUEYSTOepUZHcAs=;
- b=C1e3t0YSQbnwTNlwm/MySpA+xfV24sYukFW4mio0Y0jGyXA57DEXi85ZMjcxtFZrLsIR3cKJp/xJS8HsT5sPE44ryx051+0HP8e2os9XtFbbtyHZh346r0rnCPFZOAPmOGsLrrBYYFJ8+9ilRQ4i7kazLaP0806owdchdUBaiLsZQR2yz4sXk91N3Erq2K3SJt+zdX1QbEsFmowWwTblw9M28wmA1OWifz2mO7Ozpg54xQyEX3Bh5KyA31qUWz+2WSmIEOMrPVR+8oXdWFDRIPwjD3VntrmUBaIKW+vI3Wj2Ax4oFSfYQjAhvCmBOsAUNZXYCwzOfxEwxGoCI+twPw==
-ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
- smtp.mailfrom=amd.com; dmarc=pass action=none header.from=amd.com; dkim=pass
- header.d=amd.com; arc=none
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=amd.com; s=selector1;
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
- bh=SylsoA4Fvi60Qx5Ep2DqkuT5kdRNPUEYSTOepUZHcAs=;
- b=lUiF2qVoNWBeSpPo4X9vBhxrWevCheLTtdBfaqG9XQrcFkTyibP9RS4tY/avkajiWbRE7fhc2gbi3gRPxXeI1gvNvjJUUxAImnCpJDFnl+kNCDfVyji4lFs+6l7xteteXsMHf68Axm2UJ2fvDp2QqPxy7d+EvPXMm3oYMNT2rV4=
-Received: from DS4PR12MB999075.namprd12.prod.outlook.com (2603:10b6:8:2fc::20)
- by SA1PR12MB6776.namprd12.prod.outlook.com (2603:10b6:806:25b::14) with
- Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.21.92.7; Thu, 4 Jun 2026
- 11:28:14 +0000
-Received: from DS4PR12MB999075.namprd12.prod.outlook.com
- ([fe80::4c9d:851d:3f44:800f]) by DS4PR12MB999075.namprd12.prod.outlook.com
- ([fe80::4c9d:851d:3f44:800f%3]) with mapi id 15.21.0092.006; Thu, 4 Jun 2026
- 11:28:14 +0000
-From: "Golla, Nagendra" <Nagendra.Golla@amd.com>
-To: Conor Dooley <conor@kernel.org>, "sashiko-reviews@lists.linux.dev"
-	<sashiko-reviews@lists.linux.dev>
-CC: "devicetree@vger.kernel.org" <devicetree@vger.kernel.org>,
-	"dmaengine@vger.kernel.org" <dmaengine@vger.kernel.org>, "robh@kernel.org"
-	<robh@kernel.org>, "vkoul@kernel.org" <vkoul@kernel.org>,
-	"Frank.Li@kernel.org" <Frank.Li@kernel.org>, "conor+dt@kernel.org"
-	<conor+dt@kernel.org>
-Subject: RE: [PATCH 1/2] dt-bindings: dma: xilinx: Add optional resets
- property for ZDMA
-Thread-Topic: [PATCH 1/2] dt-bindings: dma: xilinx: Add optional resets
- property for ZDMA
-Thread-Index: AQHc7DR3iNIqcbqW70Cn0v+WtZBYg7YekveAgABlNgCAD1lsQA==
-Date: Thu, 4 Jun 2026 11:28:14 +0000
-Message-ID:
- <DS4PR12MB999075E402F2396B652F00DED28E102@DS4PR12MB999075.namprd12.prod.outlook.com>
-References: <20260525105042.2249542-2-nagendra.golla@amd.com>
- <20260525110025.E5A6A1F00A3A@smtp.kernel.org>
- <20260525-petition-yogurt-27f2999d4968@spud>
-In-Reply-To: <20260525-petition-yogurt-27f2999d4968@spud>
-Accept-Language: en-US
-Content-Language: en-US
-X-MS-Has-Attach:
-X-MS-TNEF-Correlator:
-msip_labels:
- MSIP_Label_198e8dea-a4f3-4850-b16a-fd6d2b1302b4_Enabled=True;MSIP_Label_198e8dea-a4f3-4850-b16a-fd6d2b1302b4_SiteId=3dd8961f-e488-4e60-8e11-a82d994e183d;MSIP_Label_198e8dea-a4f3-4850-b16a-fd6d2b1302b4_SetDate=2026-06-04T11:26:36.0000000Z;MSIP_Label_198e8dea-a4f3-4850-b16a-fd6d2b1302b4_Name=AMD
- General
- v26;MSIP_Label_198e8dea-a4f3-4850-b16a-fd6d2b1302b4_ContentBits=3;MSIP_Label_198e8dea-a4f3-4850-b16a-fd6d2b1302b4_Method=Standard
-authentication-results: dkim=none (message not signed)
- header.d=none;dmarc=none action=none header.from=amd.com;
-x-ms-publictraffictype: Email
-x-ms-traffictypediagnostic: DS4PR12MB999075:EE_|SA1PR12MB6776:EE_
-x-ms-office365-filtering-correlation-id: ae083765-21bf-4cd6-85a7-08dec22c5de8
-x-ms-exchange-senderadcheck: 1
-x-ms-exchange-antispam-relay: 0
-x-microsoft-antispam:
- BCL:0;ARA:13230040|366016|376014|1800799024|18002099003|22082099003|38070700021|3023799007|4143699003|11063799006|56012099006;
-x-microsoft-antispam-message-info:
- 1iaxzotQKaUSKi34BFGbR33TeBCeAi+uoohKs/a0JarbZfNtHPtNVR5Lsxu7ub3YZgitkYHBFIJBHA62fmX3DM/m5NhwND0Em/1NlrOE3yzZN5l+/8dOvA7bvKZ6mkxHw61E4ZmJLbnSN2HZSuQtKuvPGUtQ/4J8wz/EIG7ZCt0rwGiIGrACUwVqswsWB3LLkS7ad1/nFiSZb0ITlSDCsNQXqyHACHMJUV8bbrH/V+9kgar2CabDAjBN+mB6tiMV/PAxak6ftWJmI4wfV3GbKa7EnlNcyTPFgNaITMCFsEh6Zu5KNEPIs13/aRxaCwj6WIlUxoAqi1C8FMEESi1AhQbJFHs4wRVdpm2Z6AccU1pkg0o5eIppOAZzV1/OSrcYa/5Uk80OmWsgNFvUZIRw32sCy2p/owj0VHciUU5GEQAhDkrjFTOpkmOcEwvPww4yikqBIr685xmJWHGkxxl8EVM0l0+bOQei+jmpt4G6Pote1oykrYdZGL0ml+AA8y3iFP73qtu9xSOHOTjDhPJUwptahr4lOWYk2rnho9k77Khbfhqt54yQJUfXcfrdhJkpjKe3He52Ug6BumgC/HR6TBjWhUy80aYShSX+Zq/jOVmuObYCp3U6mAg0BuysAcXCQPXy05B8d4pJND/OMIzLByu2GFdtMJUCHb1EAS6jeeiNPpxfA5AIOA3y+wFxDHEm
-x-forefront-antispam-report:
- CIP:255.255.255.255;CTRY:;LANG:en;SCL:1;SRV:;IPV:NLI;SFV:NSPM;H:DS4PR12MB999075.namprd12.prod.outlook.com;PTR:;CAT:NONE;SFS:(13230040)(366016)(376014)(1800799024)(18002099003)(22082099003)(38070700021)(3023799007)(4143699003)(11063799006)(56012099006);DIR:OUT;SFP:1101;
-x-ms-exchange-antispam-messagedata-chunkcount: 1
-x-ms-exchange-antispam-messagedata-0:
- =?us-ascii?Q?DgfhPQQabkz140xniv77RG8iya15/4oiNjJTLPI61zdBRHPniL4QpRtKds0W?=
- =?us-ascii?Q?pfCnYAX9sQh6r/Kf6EgPSnWP2TgjO2XMHxh07zOxaUhnYbbzEYrTBcwr8R4K?=
- =?us-ascii?Q?BWp/jHcgxNECWdV4VvpC1G+4f5ID3y1PA60CwI3jjiaZngZhKrj2IMZd+ZGB?=
- =?us-ascii?Q?ykJlbf2SuwMofqWnGiofNGyFfKO5v3S+vKJyhA4jrbNRh3bFHe1yufusHNYk?=
- =?us-ascii?Q?jIGT4ye3z7gfjt8WkyqKIYwBA1Q0LGd7N4KmN4ej4Xfa1n6RmRvvygXXjmRn?=
- =?us-ascii?Q?ja5RwKll+tppe02pkjSx2P4HG22N9TQJzOfyYVFmLAiJmyszMAbYPs/jWN2s?=
- =?us-ascii?Q?zVhG9b53oskiCbiV10za4LR3qbWxSbcGs75ZT2WVgmbKXknH/7OcCh7O8QOl?=
- =?us-ascii?Q?cXquOZ7/F3pqfz+U+wcW1EXxmToaEWctgHYN2vKMHEd508G0GrXYv2cxuHM6?=
- =?us-ascii?Q?8Xa9uMGjTPuzOzY3+RnTg1B5/qmq9Ls9845YIlFFPKf7sHPkfrEhbebuHwGm?=
- =?us-ascii?Q?ZhFkafMwS8a5KQYAeFtetOSfEXibhW2rHf5J0NWjeKFCHuJOZlrtceHRppBd?=
- =?us-ascii?Q?PuKJHRa0bLdygcp6i5+HV7r/K98vj7PGu4UQxnIXxl4I/s/MyhBFxhGMnTJ5?=
- =?us-ascii?Q?n06vCmCukFb/7gs6YomBt4Qsk5hPP0IjW9Zlql3PKcG7hb5WlFk7jQjX3Ae0?=
- =?us-ascii?Q?tqKgcdrWcj91zWdX/mlCsdW8Y5xs6/wB057KJ1cPbiefpYSoqXqpyM1pHIlC?=
- =?us-ascii?Q?NZRwXXJ5g85XmCvQNXZmvnSH4qLPxBvlGQJjM+qclWKEDdZBUEKTCzsOVM1R?=
- =?us-ascii?Q?tXypwKz9tR9MmRRnPGqd4vDOCOsNugJl2HbzkeJHlpy3ScpYskbhNCySDJMa?=
- =?us-ascii?Q?x4MiP8z5zPxSxXlujRteceBvm4zqg14iwp4RgcrdXw7wFYZp2HFu1um5++Be?=
- =?us-ascii?Q?0BB7q6cQy47AO5kcmCvEiinNcbQDjIdFYksIUIOk3SC24Q4lpTZUY/X4Y0LW?=
- =?us-ascii?Q?JDlLKeodZHgdqRgvl6MZMzdNMqNyVORDd/9CcxZtZkJGncawotwTZM2kAiMm?=
- =?us-ascii?Q?zgL3IFyuEEx3eaN7GDvcJy1OpOf3TDoQYJc0yBuF3XE5eAksbYS3DhO65hGE?=
- =?us-ascii?Q?pODoauxslpTyzI5kFdXCnHMab5pgkp/BNV6AhVeLYIvZin3/qD/Etsp5yULp?=
- =?us-ascii?Q?fBVWvezfkHZ+xizX4Pq41eP9GdouRfGF+zDZO458kVD3OtJmjTSSqtetOBrz?=
- =?us-ascii?Q?1p1IesZfu6Cdf1HesOPQz28/hzQGTlN/QL5/F2cd7QbrYu+uUJyTm7hM/Wvy?=
- =?us-ascii?Q?JMmbQF49BhdS4YpM8g/Vda7fh4Ohm0Q8mQLK4h6lcO5uMQDiscTAngATVewJ?=
- =?us-ascii?Q?LEgw48YlVROosCKxP71rYo7/Iv89qoq3W6aiv6doAVw+GiTqe2aOEPhXSuTb?=
- =?us-ascii?Q?Mselzj0TwXFMe2H2BX6OzYESyZIrIrARlKYfxhgEqTedy2bM3boAeH4kltoa?=
- =?us-ascii?Q?GcoFbEYcZBMnVjXxSvUMBYbVWPoUTcvp7+4AUcgYhfCltlFjVYHk28zWtUnu?=
- =?us-ascii?Q?4LJ4EOmNUVJcSZv15UYmHkGhpFBZPdIgjaA3YDnG63z4Q8EF7tmepDoqymnE?=
- =?us-ascii?Q?xSK65srIbRAPkZJ2UW8PCEkdCZm7/f2dVXm7ICd+xP6WQ33gEmklFb5rfTc6?=
- =?us-ascii?Q?lIaO54UnBh8b6W7z3dtefUL3X97GejwKC+y6E6G5ddAFtca1?=
-Content-Type: text/plain; charset="us-ascii"
-Content-Transfer-Encoding: quoted-printable
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BC28B35E1AF
+	for <sashiko-reviews@lists.linux.dev>; Thu,  4 Jun 2026 11:39:55 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.217.43
+ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
+	t=1780573197; cv=none; b=TfFjSOpSXGzZCMS9sMFQFubBD58H84F/OfhgfsHJPd1Fv+Inn8oWnENLR/709TwEraoQGCxLxkBJk9furGhT9qooMpKHI4LubsZCB4DNZbMkSrolYuuWWoEG1emDOfHgATX2Jl7IPPAL6/QE75NRVl/qSibvTy594CLEzRAr+is=
+ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
+	s=arc-20240116; t=1780573197; c=relaxed/simple;
+	bh=h7RzAlW+e/DbDaPRYK/dV7EgaMQjIr/OWSPs4s1Uyuk=;
+	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
+	 To:Cc:Content-Type; b=CGV8o3a1+xzCjiLTewxXB9txsMrRMOZS6vSe1aMk2mS8bW66UAslyAYw/KdS2Hr6C1ALATfyQPz+cWdOheM5iNb1jSTrUyahPSaPLnFpvrgQ/ofz7973IRJdbGc9o9UpUcnL7QUHIY6Oi0RUhLLFdP2Opy3InCKf3TJBQs6LV6M=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=linux-m68k.org; spf=pass smtp.mailfrom=gmail.com; arc=none smtp.client-ip=209.85.217.43
+Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=linux-m68k.org
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+Received: by mail-vs1-f43.google.com with SMTP id ada2fe7eead31-6cfdcc79789so194940137.3
+        for <sashiko-reviews@lists.linux.dev>; Thu, 04 Jun 2026 04:39:55 -0700 (PDT)
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20251104; t=1780573195; x=1781177995;
+        h=cc:to:subject:message-id:date:from:in-reply-to:references
+         :mime-version:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=GA1zRYlCwaY5UIVlOist2qYc6nqjPNa2Luk4uie1AQQ=;
+        b=WcFOxWET3NztxwRYAWuE/owDzVGfe3IAt+04wQu1UMf1vzCulDVH2gUVngtE4vnydG
+         kjnv/ljDLCWn92hzf5MqkDHtMAMdWH2Z3H6ZM7VtOY8x91gpoRjvh9RYc4ic6qpGiTnJ
+         4p5EH4mZuO45z2vix5vMLXT9JSS/26Zvc2HzkTy96xepf8dK5LPtC3nQBnLtwTepYC6T
+         AuU/9Ebd8FG9o3QqU08VOCnN41zLxU4dF7blwu1Qf0sb1KHO4A6ExlKUHSPU21J2K4UY
+         I6r/Rapkkq4wRN/PMCS5wxxU8Q2d1Yusar63+iczIUQwhDbmIqwbEj4TFeEtoWG/z7QR
+         RZNw==
+X-Gm-Message-State: AOJu0YxWyd0bCOfgiXvEcNFzi3N+NV+g9YYu7BxXyuIxl4jwYBLDrrv3
+	j7kyInEJ6R3RA0jcU2hgfi9D3Dj9bjxbGqAg/vundIjCWjJl7Xa1lCz26/2WzL6XMlM=
+X-Gm-Gg: Acq92OGQI8ctbxhAhh69wbOBs20aLhUIZHjjco1vFqATK8hvaG6p6keHZHWAttrPkp7
+	F5J4FcptirDc1fFyiDvBzYAd7Ll92Fk9g43efZ9/7dpVHlvwt0+L9StbrZIdDugi0371ET6CLZb
+	N2op9AmjZZqexdVHCSiknhcxxY50x+o81v8NuHrtnAbv0LQpCDdpgN/kcr0wPg++Y29bkqFxodF
+	c/CnlKDrvirckHrswr96GQ4105C8Y1Ddi/53QpblaHxUhpX9AD//HFxEp57Yq374UFfgzXjYdMf
+	bvxcxwbry0zRiDeSyR2qMz7wCtPGGdzi18iQeB7pS+wO0/3e1tcftPN3cEgATZTYImZg18P/dnb
+	Q5DBJvPI603yQ7TR8djX3jz3hHBCWDDjtlPQCwCnQOpuoJkB3JvQJ+q2UTa66Oql8Mi5qHn4N9K
+	qklvjnsiz9ViRU5lVWqQoEKW5I21GUFsvsBWHP0mD5JoxfgBEiCES/Jv+YWA3DsxssSN3P1jA=
+X-Received: by 2002:a05:6102:3594:b0:62f:34db:9474 with SMTP id ada2fe7eead31-6ec4881b28bmr4151134137.20.1780573194607;
+        Thu, 04 Jun 2026 04:39:54 -0700 (PDT)
+Received: from mail-vs1-f54.google.com (mail-vs1-f54.google.com. [209.85.217.54])
+        by smtp.gmail.com with ESMTPSA id a1e0cc1a2514c-96413f91f2esm4216049241.4.2026.06.04.04.39.53
+        for <sashiko-reviews@lists.linux.dev>
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Thu, 04 Jun 2026 04:39:53 -0700 (PDT)
+Received: by mail-vs1-f54.google.com with SMTP id ada2fe7eead31-6cfdcc79789so194932137.3
+        for <sashiko-reviews@lists.linux.dev>; Thu, 04 Jun 2026 04:39:53 -0700 (PDT)
+X-Received: by 2002:a05:6102:2b87:b0:6db:4f2b:6cd2 with SMTP id
+ ada2fe7eead31-6ec4d5157a9mr4436237137.31.1780573193567; Thu, 04 Jun 2026
+ 04:39:53 -0700 (PDT)
 Precedence: bulk
 X-Mailing-List: sashiko-reviews@lists.linux.dev
 List-Id: <sashiko-reviews.lists.linux.dev>
 List-Subscribe: <mailto:sashiko-reviews+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:sashiko-reviews+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-X-OriginatorOrg: amd.com
-X-MS-Exchange-CrossTenant-AuthAs: Internal
-X-MS-Exchange-CrossTenant-AuthSource: DS4PR12MB999075.namprd12.prod.outlook.com
-X-MS-Exchange-CrossTenant-Network-Message-Id: ae083765-21bf-4cd6-85a7-08dec22c5de8
-X-MS-Exchange-CrossTenant-originalarrivaltime: 04 Jun 2026 11:28:14.3041
- (UTC)
-X-MS-Exchange-CrossTenant-fromentityheader: Hosted
-X-MS-Exchange-CrossTenant-id: 3dd8961f-e488-4e60-8e11-a82d994e183d
-X-MS-Exchange-CrossTenant-mailboxtype: HOSTED
-X-MS-Exchange-CrossTenant-userprincipalname: pTrAEhI45yHQDAaS6smb+MNBJvyCREvWL5TTLkS9OtYSmGHFMiZK4z+pCjngWbK1eg13OpbKen1H2EoMf2GIdA==
-X-MS-Exchange-Transport-CrossTenantHeadersStamped: SA1PR12MB6776
+References: <20260525110603.4018170-2-john.madieu.xa@bp.renesas.com>
+ <20260525111920.15F771F000E9@smtp.kernel.org> <20260525-gaining-unaired-c96367a78c9b@spud>
+ <CAMuHMdWUeExOnKm1=kRSr0=HVJhgyLDBAK3VqTP-LK1q0-f9gA@mail.gmail.com>
+ <20260527-prankish-causing-4139d0dd0b51@spud> <CAMuHMdVtLorK+Hjc-ZWCAn273ZN6yUEdyjxpJ5ynZ09sWqcBdg@mail.gmail.com>
+ <20260527-botanical-pushy-b9cffbe9ea16@spud>
+In-Reply-To: <20260527-botanical-pushy-b9cffbe9ea16@spud>
+From: Geert Uytterhoeven <geert@linux-m68k.org>
+Date: Thu, 4 Jun 2026 13:39:40 +0200
+X-Gmail-Original-Message-ID: <CAMuHMdWGuZS5aCn8TXg9mZd8=3UaZ_L1QzO+ozajVQ+gUDrk_g@mail.gmail.com>
+X-Gm-Features: AVVi8CfdijaxamMwVKcNgiCLNexBulG-uqDwuK5a2fXjKCLaNr0jqJtQpxnHUc0
+Message-ID: <CAMuHMdWGuZS5aCn8TXg9mZd8=3UaZ_L1QzO+ozajVQ+gUDrk_g@mail.gmail.com>
+Subject: Re: [PATCH v4 1/8] dt-bindings: clock: renesas: Add audio clock
+ inputs for RZ/V2H family
+To: Conor Dooley <conor@kernel.org>
+Cc: sashiko-reviews@lists.linux.dev, 
+	John Madieu <john.madieu.xa@bp.renesas.com>, conor+dt@kernel.org, 
+	wsa+renesas@sang-engineering.com, devicetree@vger.kernel.org, robh@kernel.org
+Content-Type: text/plain; charset="UTF-8"
 
-AMD General
+On Wed, 27 May 2026 at 18:36, Conor Dooley <conor@kernel.org> wrote:
+> On Wed, May 27, 2026 at 05:45:12PM +0200, Geert Uytterhoeven wrote:
+> > On Wed, 27 May 2026 at 16:54, Conor Dooley <conor@kernel.org> wrote:
+> > > On Wed, May 27, 2026 at 02:44:51PM +0200, Geert Uytterhoeven wrote:
+> > > > On Mon, 25 May 2026 at 18:57, Conor Dooley <conor@kernel.org> wrote:
+> > > > > On Mon, May 25, 2026 at 11:19:19AM +0000, sashiko-bot@kernel.org wrote:
+> > > > > > Thank you for your contribution! Sashiko AI review found 1 potential issue(s) to consider:
+> > > > > > - [Medium] Strict array ordering prevents the independent use of newly added optional clocks.
+> > > > > > --
+> > > > > >
+> > > > > > commit 3723d06ba80fe72a3e7492af52e5e54aa0f36b03
+> > > > > > Author: John Madieu <john.madieu.xa@bp.renesas.com>
+> > > > > >
+> > > > > > dt-bindings: clock: renesas: Add audio clock inputs for RZ/V2H family
+> > > > > >
+> > > > > > This commit updates the clock bindings for the RZ/V2H family SoCs to include
+> > > > > > the optional external audio clock inputs AUDIO_CLKB and AUDIO_CLKC. The
+> > > > > > AUDIO_CLKA input is fed internally and thus does not require a binding entry.
+> > > > > >
+> > > > > > > diff --git a/Documentation/devicetree/bindings/clock/renesas,rzv2h-cpg.yaml b/Documentation/devicetree/bindings/clock/renesas,rzv2h-cpg.yaml
+> > > > > > > --- a/Documentation/devicetree/bindings/clock/renesas,rzv2h-cpg.yaml
+> > > > > > > +++ b/Documentation/devicetree/bindings/clock/renesas,rzv2h-cpg.yaml
+> > > > > > > @@ -26,16 +26,22 @@ properties:
+> > > > > > >      maxItems: 1
+> > > > > > >
+> > > > > > >    clocks:
+> > > > > > > +    minItems: 3
+> > > > > > >      items:
+> > > > > > >        - description: AUDIO_EXTAL clock input
+> > > > > > >        - description: RTXIN clock input
+> > > > > > >        - description: QEXTAL clock input
+> > > > > > > +      - description: AUDIO_CLKB clock input
+> > > > > > > +      - description: AUDIO_CLKC clock input
+> > > > > > >
+> > > > > > >    clock-names:
+> > > > > > > +    minItems: 3
+> > > > > > >      items:
+> > > > > > >        - const: audio_extal
+> > > > > > >        - const: rtxin
+> > > > > > >        - const: qextal
+> > > > > > > +      - const: audio_clkb
+> > > > > > > +      - const: audio_clkc
+> > > > > >
+> > > > > > [Severity: Medium]
+> > > > > > Will this strict array ordering prevent the independent use of the newly
+> > > > > > added optional clocks?
+> > > > > >
+> > > > > > Because JSON schema validates arrays strictly by position based on the items
+> > > > > > list, if a hardware board connects AUDIO_CLKC but does not connect AUDIO_CLKB,
+> > > > > > the device tree node would provide an array of 4 clocks where the 4th name
+> > > > > > is audio_clkc.
+> > > > > >
+> > > > > > When dt_binding_check evaluates this, won't it check the 4th element against
+> > > > > > the schema's expectation of audio_clkb and fail, incorrectly rejecting a valid
+> > > > > > hardware configuration?
+> > > > > >
+> > > > > > Should this use an anyOf block enumerating the valid permutations of optional
+> > > > > > clocks to avoid forcing users to write incorrect device trees to pass
+> > > > > > validation?
+> > > > >
+> > > > > Seems like a valid question to me. Can be solved by making the second
+> > > > > last clock an enum.
+> > > >
+> > > > Calling them optional may be a misnomer: these pins are present.
+> > > > Typically we provide zero rate fixed clocks for such clocks in the
+> > > > SoC .dtsi, to be filled in or replaced by the board .dts.
+> > >
+> > > IOW, either both clocks will be provided or none will be?
+> >
+> > Exactly, see the first hunk of "[PATCH v4 3/8] arm64: dts: renesas:
+> > rzv2h: Add audio clock inputs" later in this series.
+> > https://lore.kernel.org/20260525110603.4018170-4-john.madieu.xa@bp.renesas.com
+>
+> In that case,
+> Acked-by: Conor Dooley <conor.dooley@microchip.com>
 
->-----Original Message-----
->From: Conor Dooley <conor@kernel.org>
->Sent: Monday, May 25, 2026 10:33 PM
->To: sashiko-reviews@lists.linux.dev
->Cc: Golla, Nagendra <Nagendra.Golla@amd.com>; devicetree@vger.kernel.org;
->dmaengine@vger.kernel.org; robh@kernel.org; vkoul@kernel.org;
->Frank.Li@kernel.org; conor+dt@kernel.org
->Subject: Re: [PATCH 1/2] dt-bindings: dma: xilinx: Add optional resets pro=
-perty
->for ZDMA
->
->On Mon, May 25, 2026 at 11:00:25AM +0000, sashiko-bot@kernel.org wrote:
->> Thank you for your contribution! Sashiko AI review found 1 potential iss=
-ue(s)
->to consider:
->> - [Medium] The `resets` property is added globally without conditional
->constraints, allowing it to pass validation on older SoCs that do not supp=
-ort it in
->hardware.
->> --
->>
->> commit 832c482914e7639cb1a410d061bf9d631b41ae68
->> Author: Jay Buddhabhatti <jay.buddhabhatti@amd.com>
->>
->> dt-bindings: dma: xilinx: Add optional resets property for ZDMA
->>
->> This commit adds an optional resets property for ZDMA on newer SoCs
->> like Versal Gen2 and Versal-Net. Older SoCs do not have a reset line pro=
-vision.
->>
->> > diff --git
->> > a/Documentation/devicetree/bindings/dma/xilinx/xlnx,zynqmp-dma-1.0.y
->> > aml
->> > b/Documentation/devicetree/bindings/dma/xilinx/xlnx,zynqmp-dma-1.0.y
->> > aml index 2da86037ad79e..dff16763e11b9 100644
->> > ---
->> > a/Documentation/devicetree/bindings/dma/xilinx/xlnx,zynqmp-dma-1.0.y
->> > aml
->> > +++ b/Documentation/devicetree/bindings/dma/xilinx/xlnx,zynqmp-dma-1
->> > +++ .0.yaml
->> > @@ -56,6 +56,9 @@ properties:
->> >    iommus:
->> >      maxItems: 1
->> >
->> > +  resets:
->> > +    maxItems: 1
->> > +
->>
->> [Severity: Medium]
->> The commit message notes that older SoCs do not support this reset line.
->> Since the resets property is added to the top-level properties block,
->> will this allow device trees for older hardware to erroneously define
->> a reset line and silently pass validation?
->>
->> Should this be guarded by an allOf conditional block restricting the
->> resets property to the newer hardware compatible strings?
->
->Additionally, should it be required on the new platforms?
+Thanks, will queue in renesas-clk for v7.3.
 
-Hi,
+Gr{oetje,eeting}s,
 
-Currently, the resets property is optional for both Versal Net and Versal G=
-en 2. If future platforms add per-channel reset support, we
-can add an allOf conditional at that point to make the resets property requ=
-ired for those specific compatible strings.
+                        Geert
 
-Thanks,
-Nagendra
+-- 
+Geert Uytterhoeven -- There's lots of Linux beyond ia32 -- geert@linux-m68k.org
 
->
->
->Either way,
->pw-bot: changes-requested
->
->
->>
->> >    power-domains:
->> >      maxItems: 1
->>
->> --
->> Sashiko AI review *
->> https://sashiko.dev/#/patchset/20260525105042.2249542-1-
->nagendra.golla
->> @amd.com?part=3D1
+In personal conversations with technical people, I call myself a hacker. But
+when I'm talking to journalists I just say "programmer" or something like that.
+                                -- Linus Torvalds
