@@ -1,105 +1,128 @@
-Received: from mail-pj1-f73.google.com (mail-pj1-f73.google.com [209.85.216.73])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from us-smtp-delivery-124.mimecast.com (us-smtp-delivery-124.mimecast.com [170.10.133.124])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 35BE939EF39
-	for <sashiko-reviews@lists.linux.dev>; Thu,  4 Jun 2026 16:12:56 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.216.73
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3938C4218B6
+	for <sashiko-reviews@lists.linux.dev>; Thu,  4 Jun 2026 16:20:46 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=170.10.133.124
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1780589577; cv=none; b=h7EkGFTYw/+30zmHtCMM7J9Mz6SiucpwoRApAQpkMh32joiWoF7WWnLWCWCLp8B+bJU5oMTAQq22p8iv0CZfwmebDjvwXvrYYXC/SmWd7eb1H9rV6UKgs6Mgd+MAyFVLomQdKso50m+j+Wa7TpjMQasfROrKsiOYzJdFnJOgTiA=
+	t=1780590048; cv=none; b=slbn4FiOh82kV/Mpr8k3smVfx+Gz/su/V/st41DkdHHK+8D1GQ17+2voLOJZgTLR0sxiAcwW/0LvSVQvHLr9+rMAy4FhcoXG17CfU08jmzPujJ/tQbo6qh13w4Psr1Byj2uKO1SCLve6TD+fQx8hcAx2Ni/og4/CLi0y7qNxzZE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1780589577; c=relaxed/simple;
-	bh=r5q17zAJ5FVo6m2eXuZpQdHcUcqOccrbNsR+ygn1HHQ=;
-	h=Date:In-Reply-To:Mime-Version:References:Message-ID:Subject:From:
-	 To:Cc:Content-Type; b=nyQ2aScLmNH6ots1sWgl3OAHsAwUmi1jaQxBFPhMwU4WqjaaZ6zhDnVlz4LtjGWZXIsr8lr8AKEYmaq/8XdB5dcN1ocOJ4atDNC0qBxff1OoqNh2QDdX8lWvHsrZByUvsMZwhX288gC8sLwnbxnEYiBSKA3kOrHRZhJpzGXiMuw=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=google.com; spf=pass smtp.mailfrom=flex--seanjc.bounces.google.com; dkim=pass (2048-bit key) header.d=google.com header.i=@google.com header.b=c1j9vEln; arc=none smtp.client-ip=209.85.216.73
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=google.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=flex--seanjc.bounces.google.com
+	s=arc-20240116; t=1780590048; c=relaxed/simple;
+	bh=3uKYiMW82q/2JyTIcUnnWtVO/dGVxZXgaW/O/fXe1Jc=;
+	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
+	 In-Reply-To:Content-Type; b=AfrGacnkyxTrALjTHRUIlicJF6ZS8KMC2rY/Ya3x3JQinXYU0tz8rdO2QDmhnnnWm5ULUNaxD2A9a+dGLVtpm/6N7owlDB7VlfpYcWLA4IRswX4aMzoK3qDVMOTzjCR8BPoJeNYMSw0+6AJAIl+op9KhEbd+P2X5JNOBB27V1z0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=redhat.com; spf=pass smtp.mailfrom=redhat.com; dkim=pass (1024-bit key) header.d=redhat.com header.i=@redhat.com header.b=TiYCdMNF; arc=none smtp.client-ip=170.10.133.124
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=redhat.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=redhat.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=google.com header.i=@google.com header.b="c1j9vEln"
-Received: by mail-pj1-f73.google.com with SMTP id 98e67ed59e1d1-36b808bedfaso1265755a91.1
-        for <sashiko-reviews@lists.linux.dev>; Thu, 04 Jun 2026 09:12:56 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=google.com; s=20251104; t=1780589575; x=1781194375; darn=lists.linux.dev;
-        h=cc:to:from:subject:message-id:references:mime-version:in-reply-to
-         :date:from:to:cc:subject:date:message-id:reply-to;
-        bh=qHofGI5BidNPmhFV7CbtCFar5wuofTyEezac0pXH5gE=;
-        b=c1j9vElnys+hLjMlXpOBygFaNDIDpsIHI3m16xtSDmzAqcw0imdSvNO6+/idDOtua+
-         sOBpEr00psVdZYzn/92C8OKt2X9uYomoauwJVXf/HFilMry6FbaMV55lu10vVaIYjpDM
-         znlM8BXiupOqC3V/beBSPyar+kpWk80p3b9Bk2rW9OmXemzp9iZSYBxTRMFlUxGj/B7y
-         0YniuCh3wHXF/A+1sibhj0sQjKTWc6AMb1pKjZrc8U2wNkGJGTSiW6wi/20FbJrzDr2z
-         9EksGQ+bc+vRwhX/Q4a38Qn5sGk6jpWnzzNSTJfNlo1d+3wR1WWyLz2WbZIdRUGM3OzL
-         CFtA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20251104; t=1780589575; x=1781194375;
-        h=cc:to:from:subject:message-id:references:mime-version:in-reply-to
-         :date:x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=qHofGI5BidNPmhFV7CbtCFar5wuofTyEezac0pXH5gE=;
-        b=Td/AlYWXcmpo9IX66E50OaJM88TVX8O2zX2PsEpOw48Qm/jwvoqVR2Wk7Dio1ngriU
-         PLK/zJQTyOB+ZM4sGgNzfk5JcLK++ol1yiSfMoA0IG4aHC/7uhDNrOG/0rjazfcRLHJv
-         7gbOdXLBY2KQbViha4Pejpo2TIMg7TCy+ZvQ+e5B0OO4W/6EEYP3UjX+9T63Ac7YTIzx
-         0ZNz716tXSbu+9Ehd1gW1u68JQdmHEhRRaz9pl4Kd3vc2uur5//cdrTHt32JNoe9XYV6
-         jeEXu2/HY9dd8hEf0fcRIJTbwtztufPlHfE/B9w0AF0GpTpjOQf0wWJEfOcsiSt2vZDu
-         1+Xw==
-X-Gm-Message-State: AOJu0Yw6wI8G4ZuRZiVlU9ozmPBsFPMrXfHQz4TTBEVySaJcNPSR0LC0
-	1m93jU8lmeh9kQ7QacpNh05Vu4Kmziuj4tuTxmkNqpxzrNetDbwMBaY7HxPbjzSjFFGmbTiQRMN
-	FFpalp7+kuIQZlFViixpKbl5mNXoAi3cGgmI9hQXOIwCnrOBh0VjS8ghKxe3tm8UmdjejN9wniy
-	blId2LUIqPbs3piPPTmcPVZaWmdGL9S+UOz+l5m6nq1Qdk/wCG
-X-Received: from pjqx13.prod.google.com ([2002:a17:90a:b00d:b0:36b:a7c4:95be])
- (user=seanjc job=prod-delivery.src-stubby-dispatcher) by 2002:a17:90b:3e8d:b0:36b:afa0:c675
- with SMTP id 98e67ed59e1d1-36e31cacd39mr7915263a91.26.1780589575061; Thu, 04
- Jun 2026 09:12:55 -0700 (PDT)
-Date: Thu, 4 Jun 2026 09:12:54 -0700
-In-Reply-To: <20260604021233.703BC1F00893@smtp.kernel.org>
+	dkim=pass (1024-bit key) header.d=redhat.com header.i=@redhat.com header.b="TiYCdMNF"
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+	s=mimecast20190719; t=1780590046;
+	h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+	 to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+	 content-transfer-encoding:content-transfer-encoding:
+	 in-reply-to:in-reply-to:references:references;
+	bh=PGJscH6CFrhh7QA1wgB+N9HKXzFhlDu3w0J6ZZA1/XU=;
+	b=TiYCdMNFqx3icKRIGkCHF7Jb1upWI1giAMmXqAJGuTJBj9KBmuFRdC7Gyunj1YnKGVboiE
+	S3tAoR5fKAhWI5QVXmR7GaVmAY5HruyTaUWyH8AlarJOdX7iH8sTkEDVyttTSKYodM5dCx
+	qIGq5iF9BG5npog/h5LDyZuayZhILfw=
+Received: from mx-prod-mc-08.mail-002.prod.us-west-2.aws.redhat.com
+ (ec2-35-165-154-97.us-west-2.compute.amazonaws.com [35.165.154.97]) by
+ relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-682-wXqud4VzNPSDPCNhex8_vw-1; Thu,
+ 04 Jun 2026 12:20:43 -0400
+X-MC-Unique: wXqud4VzNPSDPCNhex8_vw-1
+X-Mimecast-MFC-AGG-ID: wXqud4VzNPSDPCNhex8_vw_1780590042
+Received: from mx-prod-int-05.mail-002.prod.us-west-2.aws.redhat.com (mx-prod-int-05.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.17])
+	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+	 key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
+	(No client certificate requested)
+	by mx-prod-mc-08.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS id 0E4521800370;
+	Thu,  4 Jun 2026 16:20:42 +0000 (UTC)
+Received: from [10.22.88.175] (unknown [10.22.88.175])
+	by mx-prod-int-05.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP id 283FC195608E;
+	Thu,  4 Jun 2026 16:20:40 +0000 (UTC)
+Message-ID: <5774d3ca-0065-4666-abef-958b62e0fdf8@redhat.com>
+Date: Thu, 4 Jun 2026 12:20:39 -0400
 Precedence: bulk
 X-Mailing-List: sashiko-reviews@lists.linux.dev
 List-Id: <sashiko-reviews.lists.linux.dev>
 List-Subscribe: <mailto:sashiko-reviews+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:sashiko-reviews+unsubscribe@lists.linux.dev>
-Mime-Version: 1.0
-References: <20260604020143.748245-5-jrhilke@google.com> <20260604021233.703BC1F00893@smtp.kernel.org>
-Message-ID: <aiGkBodadEKK9F-w@google.com>
-Subject: Re: [PATCH v5 04/21] KVM: selftests: Add helper to generate random
- u64 in range [min,max]
-From: Sean Christopherson <seanjc@google.com>
+MIME-Version: 1.0
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH-next v6 6/6] cgroup/cpuset: Support multiple
+ source/destination cpusets for cpuset_*attach()
 To: sashiko-reviews@lists.linux.dev
-Cc: Josh Hilke <jrhilke@google.com>, kvm@vger.kernel.org
-Content-Type: text/plain; charset="us-ascii"
+Cc: hannes@cmpxchg.org, mkoutny@suse.com, tj@kernel.org
+References: <20260604150229.414135-7-longman@redhat.com>
+ <20260604152715.99C421F00893@smtp.kernel.org>
+From: Waiman Long <longman@redhat.com>
+In-Reply-To: <20260604152715.99C421F00893@smtp.kernel.org>
+X-Scanned-By: MIMEDefang 3.0 on 10.30.177.17
+X-Mimecast-Spam-Score: 0
+X-Mimecast-MFC-PROC-ID: ePLvyB3L5tb4zllY6RUn-WJP_lYXRTyBFf49jV5uCzQ_1780590042
+X-Mimecast-Originator: redhat.com
+Content-Language: en-US
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
 
-On Thu, Jun 04, 2026, sashiko-bot@kernel.org wrote:
-> > @@ -42,6 +42,24 @@ u32 kvm_random_u32(struct kvm_random_state *state)
-> >  	return state->seed;
-> >  }
-> >  
-> > +/* Returns a random u64 in the inclusive range [min, max] */
-> > +u64 kvm_random_u64_in_range(struct kvm_random_state *state, u64 min,
-> > +			    u64 max)
-> > +{
-> > +	u64 value;
-> > +	u64 range;
-> > +
-> > +	TEST_ASSERT(min <= max, "PEBKAC, min = 0x%lx, max = 0x%lx", min, max);
-> > +
-> > +	value = kvm_random_u64(state);
-> > +
-> > +	range = max - min;
-> > +	if (range == ULLONG_MAX)
-> > +		return value;
-> > +
-> > +	return min + (value % (range + 1));
-> 
-> [Severity: Medium]
-> Will this return values uniformly across the entire 64-bit range?
-> 
-> Because kvm_random_u32() uses a Lehmer PRNG with a modulus of 2^31 - 1, its
-> maximum return value is 0x7FFFFFFE. When kvm_random_u64() concatenates two
-> of these values, the maximum possible output is 0x7FFFFFFE7FFFFFFE, meaning
-> bits 31 and 63 are never set.
-> 
-> Due to this restricted PRNG space, using the modulo operator here means the
-> function cannot generate values in the upper half of large ranges (above
-> 0x7FFFFFFE7FFFFFFE). It also introduces significant modulo bias for ranges
-> that don't evenly divide this artificial maximum, preventing uniform coverage
-> of the requested [min, max] range.
 
-Not sure how much I trust AI's ability to reason about math, given past "bug"
-reports.  Regardless, this is a problem to solve in the future.
+On 6/4/26 11:27 AM, sashiko-bot@kernel.org wrote:
+> Thank you for your contribution! Sashiko AI review found 1 potential issue(s) to consider:
+> - [High] Unprivileged users can trigger a kernel WARN_ON_ONCE (local DoS) during a valid cgroup migration.
+> --
+>
+> commit 5ed00e2c5b52acfe513b327768730d3015a032f0
+> Author: Waiman Long <longman@redhat.com>
+> cgroup/cpuset: Support multiple source/destination cpusets for cpuset_*attach()
+>
+> This commit updates cpuset migration to track multiple source and destination
+> cpusets using singly linked lists. It handles many-to-many migrations that can
+> occur when moving multithreaded processes across threaded cgroups. Proper
+> accounting for deadline tasks is also ensured across multiple cpusets.
+>
+>> diff --git a/kernel/cgroup/cpuset.c b/kernel/cgroup/cpuset.c
+>> --- a/kernel/cgroup/cpuset.c
+>> +++ b/kernel/cgroup/cpuset.c
+> [ ... ]
+>> @@ -3011,6 +3015,23 @@ static int cpuset_can_attach_check(struct cpuset *cs, struct cpuset *oldcs,
+>>   	if (!oldcs)
+>>   		return 0;
+>>   
+>> +	/*
+>> +	 * The cgroup core shouldn't migrate a task to its original cpuset.
+>> +	 * In the unlikely event that it happens, it will be treated as a
+>> +	 * destination cpuset only and the attach_conflict flag will be set.
+>> +	 */
+>> +	if (WARN_ON_ONCE(cs == oldcs))
+> [Severity: High]
+> Can this WARN_ON_ONCE be triggered by unprivileged users during a valid
+> multithreaded process migration?
+>
+> In cgroup v2, a multithreaded process can be spread across multiple threaded
+> cgroups. If the entire process is migrated via cgroup.procs, the migration
+> taskset will contain all threads.
+>
+> If a thread moves between two cgroups that share the same cpuset css (for
+> example, if neither explicitly enables the cpuset controller and they share
+> an ancestor's cpuset css), its oldcs and newcs will be identical. When
+> cpuset_can_attach_check() evaluates this thread, cs will equal oldcs.
+>
+> If an unprivileged user with cgroup delegation triggers this, wouldn't it
+> cause a local DoS on systems with panic_on_warn enabled?
+
+panic_on_warn is for debugging purpose only. It shouldn't be enabled in 
+a production system. AFAICS, no further change will be needed.
+
+Cheers,
+Longman
+
+>
+>> +		attach_conflict = true;
+>> +
+>> +	if (!cs->attach_node_in_llist) {
+>> +		llist_add(&cs->attach_node, &dst_cs_head);
+>> +		cs->attach_node_in_llist = true;
+>> +	}
+
