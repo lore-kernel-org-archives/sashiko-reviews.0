@@ -1,146 +1,113 @@
-Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-pj1-f73.google.com (mail-pj1-f73.google.com [209.85.216.73])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 926DD4949F6;
-	Thu,  4 Jun 2026 17:03:44 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6E2D536F8FF
+	for <sashiko-reviews@lists.linux.dev>; Thu,  4 Jun 2026 17:17:34 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.216.73
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1780592625; cv=none; b=H7wnz1MOrPUQpDyS/NMud+03sMCLXm0T8r8UieQsh2HKyEkvJ/fxMfNhJksThdNniLPncq9pLgbFIOmLlgOuwMiOvNE47HTFC71i3qFEVxw2ZTzR+O+30xp1doILU6fNsliGxT5b/m5ZCZ5Zx4M9HH4DV3eXsKqLzxBDZDFAZ8w=
+	t=1780593455; cv=none; b=dFSMEPW6MjhNaKlnDuTn5QnNoNoAWyfH1k3vNJcW+c144lHGrPvsfOa15s8wCPBIVoXjy2TdbxFT+EI2a+8EEaY/7zTU/nJxfMGdVe01utJQ248oX+fCSIluYAiygH+bGgzStp6Y7gvefrLifsHdJqGBUGqbdlK9GKhnR5uax/Q=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1780592625; c=relaxed/simple;
-	bh=bmQ3mW8NNmbM1E8iFKZaxdkSWzLBkrYgSC9Qbe5pme4=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=dL2tYPpGuE0pckl0EPIkkc9/8nq9XLLQ1MlRGynJpHFv/B6cfREmlHXa/QOCNFODxG98l4M7e5rJDaKjBtDHASU6iVTPZPw0t74b8fW4DoGvImLWQ+tVF7Eg4mNuqh7nu0GtCHoPtu6ijfimcee+kl8RaU6I1sVv79kkWbjZ7Rg=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=jvlQ/Jb3; arc=none smtp.client-ip=100.103.45.18
+	s=arc-20240116; t=1780593455; c=relaxed/simple;
+	bh=cnQDhI3rPLRAlQ3SMyaVGYpY+5KTbMQDpuXpfVrgGhA=;
+	h=Date:In-Reply-To:Mime-Version:References:Message-ID:Subject:From:
+	 To:Cc:Content-Type; b=NWeux3cWDecoPqleeAKrMf/ueZNPdA8wkS4m+l7WwD1/zX8r7g/pKfR89dNi9/ec7hgSUl8B2rpSVU1uATZx345CNOGsD4grsCQMAjinPTevlqNXDmoYKTU3qk9GlyfCHU5Pl4ISq4GgEtS12JY30wP7SoqCiX7iLWk9biX+cws=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=google.com; spf=pass smtp.mailfrom=flex--seanjc.bounces.google.com; dkim=pass (2048-bit key) header.d=google.com header.i=@google.com header.b=VsyR1wsQ; arc=none smtp.client-ip=209.85.216.73
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=google.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=flex--seanjc.bounces.google.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="jvlQ/Jb3"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1C26D1F00893;
-	Thu,  4 Jun 2026 17:03:42 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=kernel.org;
-	s=k20260515; t=1780592624;
-	bh=pA3FpXvPMYrY7IWWxE3/QmmbpUQfGz6nC066+u28lEg=;
-	h=Date:From:To:Cc:Subject:References:In-Reply-To;
-	b=jvlQ/Jb3RhEM8FFk6qquT8sCrE/b7ymQyEvV80ZS9bpCEaRnZKMjQNKWU/eWefOeb
-	 VRQhBQ490o87oY+PFdmwdXw7gLA/Zp+YbKDFWbiuwpsRfB0FmtaslVxyqyC77nzakV
-	 ulyAon9KCM8g39tNJjIZ1uFxy/yYe0PkZNepdlliNsOB6GJpo26JI9BVzQ2e0HcoB7
-	 1n4rX1cW1iY+pTW0ZKRBDSQBAokuLR5eonU+9vE2bv+wRGPFaM3zRM5nuRMnaSYL60
-	 G+jOm4YHzz9Q8fHP3muAxwm0eMfXU1kABRYLPAyfmRsb4iTUtxdOivg05XXxAlGe9k
-	 HV3JQBfKSVnZg==
-Date: Thu, 4 Jun 2026 18:03:41 +0100
-From: Conor Dooley <conor@kernel.org>
-To: sashiko-reviews@lists.linux.dev
-Cc: Piyush Patle <piyushpatle228@gmail.com>, robh@kernel.org,
-	conor+dt@kernel.org, devicetree@vger.kernel.org
-Subject: Re: [PATCH v11 04/11] dt-bindings: iio: adc: hx711: add HX710B
- support
-Message-ID: <20260604-java-dizziness-dd68a245c7ff@spud>
-References: <20260603184859.89693-5-piyushpatle228@gmail.com>
- <20260603190230.E7DE11F00893@smtp.kernel.org>
+	dkim=pass (2048-bit key) header.d=google.com header.i=@google.com header.b="VsyR1wsQ"
+Received: by mail-pj1-f73.google.com with SMTP id 98e67ed59e1d1-36bc54005a7so1321224a91.0
+        for <sashiko-reviews@lists.linux.dev>; Thu, 04 Jun 2026 10:17:34 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=google.com; s=20251104; t=1780593454; x=1781198254; darn=lists.linux.dev;
+        h=cc:to:from:subject:message-id:references:mime-version:in-reply-to
+         :date:from:to:cc:subject:date:message-id:reply-to;
+        bh=QiE08N0otE8gZoBNOAFs9Ba6fLHtJ9Xhjyt4xcKDCXo=;
+        b=VsyR1wsQPeVnBTS45PqebGL+jcYwpbjNCAt1wPl9393id/71CuEYDB5qhEoWiLdoN1
+         FL6FQ8PwD+/d8Un8MrTfrVfDeOfLnnYZh8quQUfBKTDsiRQuQl7hyFR4BLcLywpp/JGV
+         46GnJrVdAPFawoEp1c0df+XcQsuZ9OodJuSNVzqckgESU/nNdPP0X088TLObni9wVJDp
+         NFdSisPZ6BzWQtWBI4ciaQXjfJ0m2+NXlsFKYBrYKIb8k9EoHvC8pEbnWE9QJJ/0jL/1
+         MqdZFVLmamFxyjeizNnVKdWhAt+7d/D0agCP4OJl7jfwgAmSZbwUXRyk0qXY/NJxrY76
+         Yngw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20251104; t=1780593454; x=1781198254;
+        h=cc:to:from:subject:message-id:references:mime-version:in-reply-to
+         :date:x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+        bh=QiE08N0otE8gZoBNOAFs9Ba6fLHtJ9Xhjyt4xcKDCXo=;
+        b=LjRR/ZPNZWyQPsoGfr8kIcK4I0Lu+GgQ55EaQnWaiLlB+WrkaPab1Omez8V7bFGQzL
+         67Krx5FjA4krWjXYUFDC/iwYsWjRuDwYo/vsKXeEhdVIrA6v0e3cWDTpc9vP96SL/eM6
+         +yPV9onDDZAG2o3Q7JBRmvLm44Y/+GzkhVt9Di2NfLqk56JwxJGuJOQuwbhb9XWZK5Rx
+         O7RJebOuWZetJgd9agikMCH2txIXpVFobMI3AV7syWZzQFHG0xeHVsKyx3nlnzXBI+iY
+         5yjQn/OfeRowC76B0j52d9vpNNihMzCtTbJWLrKDF6rfzJFSKWccBUR0M/xXx/wXoHat
+         XKhw==
+X-Gm-Message-State: AOJu0YyEg7beqftsd3o6TFiuVQ2UNBkXaex79V2OayR+zNeJFOrllHig
+	cAlQ4bYahLhlAROTDMbeE8N9h4/wOvFVj27Sy32oEh7IGg427AfF7o16hWj/2ALbdw6y/sYp88G
+	Qc6fhNBPWmWwEWdn6oMP0edRs/pEAUeVMD9C1UScHTf85kbTqNzNgbO8qgviPlfsu/R/dc319mo
+	GOlm503tWpNA4SvN607KBMYD1g+A1TgydxKXR+uKo39nCrQ3it
+X-Received: from pjbqi11.prod.google.com ([2002:a17:90b:274b:b0:368:1f77:ffae])
+ (user=seanjc job=prod-delivery.src-stubby-dispatcher) by 2002:a17:90b:2742:b0:36b:bec8:94cf
+ with SMTP id 98e67ed59e1d1-36e2f9a2497mr8748830a91.9.1780593453567; Thu, 04
+ Jun 2026 10:17:33 -0700 (PDT)
+Date: Thu, 4 Jun 2026 10:17:32 -0700
+In-Reply-To: <20260604020939.3D12C1F00893@smtp.kernel.org>
 Precedence: bulk
 X-Mailing-List: sashiko-reviews@lists.linux.dev
 List-Id: <sashiko-reviews.lists.linux.dev>
 List-Subscribe: <mailto:sashiko-reviews+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:sashiko-reviews+unsubscribe@lists.linux.dev>
-MIME-Version: 1.0
-Content-Type: multipart/signed; micalg=pgp-sha512;
-	protocol="application/pgp-signature"; boundary="NkPsNM0jZw5n6mwr"
-Content-Disposition: inline
-In-Reply-To: <20260603190230.E7DE11F00893@smtp.kernel.org>
+Mime-Version: 1.0
+References: <20260604020143.748245-10-jrhilke@google.com> <20260604020939.3D12C1F00893@smtp.kernel.org>
+Message-ID: <aiGzLEMLMR06kVZY@google.com>
+Subject: Re: [PATCH v5 09/21] KVM: selftests: Add helpers to print proc IRQ
+ affinity for IRQ test
+From: Sean Christopherson <seanjc@google.com>
+To: sashiko-reviews@lists.linux.dev
+Cc: Josh Hilke <jrhilke@google.com>, kvm@vger.kernel.org
+Content-Type: text/plain; charset="us-ascii"
 
+On Thu, Jun 04, 2026, sashiko-bot@kernel.org wrote:
+> > +static void print_proc_irq_file(unsigned int irq, const char *file)
+> > +{
+> > +	char path[PATH_MAX];
+> > +	char buf[256];
+> 
+> [Severity: Medium]
+> Will fgets() silently truncate the smp_affinity masks on large systems when
+> reading into this buffer?
+> 
+> CPU affinity masks are formatted as comma-separated 32-bit hex words. A
+> 256-byte buffer limits the output to roughly 910 CPUs. 
+> 
+> Because masks are printed from highest index to lowest, truncation would
+> drop the affinity data for lower CPU indices, which are typically where 
+> IRQs are pinned.
+> 
+> > +	FILE *fp;
+> > +
+> > +	snprintf(path, sizeof(path), "/proc/irq/%u/%s", irq, file);
+> > +	fp = fopen(path, "r");
+> > +	if (!fp) {
+> > +		printf("  Failed to open %s\n", path);
+> 
+> [Severity: Medium]
+> Does this bypass the selftest logging framework?
+> 
+> KVM selftests typically use pr_info() from test_util.h to allow standard
+> informational output to be suppressed when QUIET is defined. Using printf()
+> directly forces unconditional output and can cause log spam in CI
+> environments.
+> 
+> > +		return;
+> > +	}
+> > +
+> > +	if (fgets(buf, sizeof(buf), fp)) {
+> > +		buf[strcspn(buf, "\n")] = 0;
+> > +		printf("  %s: %s\n", path, buf);
+> 
+> [Severity: Medium]
+> Should this also be updated to use pr_info() instead of printf() to respect
+> the QUIET mode flag?
 
---NkPsNM0jZw5n6mwr
-Content-Type: text/plain; charset=iso-8859-1
-Content-Disposition: inline
-Content-Transfer-Encoding: quoted-printable
-
-On Wed, Jun 03, 2026 at 07:02:30PM +0000, sashiko-bot@kernel.org wrote:
-> Thank you for your contribution! Sashiko AI review found 2 potential issu=
-e(s) to consider:
-> - [High] The HX710B driver fails to request and enable the `avdd-supply` =
-and `dvdd-supply` regulators, leaving the chip unpowered.
-> - [Low] The driver uses a non-existent compiler macro `__counted_by_ptr`,=
- which will cause a build failure.
-> --
->=20
-> commit 4a57ad17002849c3ffed8137401cf0ed7fd81778
-> Author: Piyush Patle <piyushpatle228@gmail.com>
->=20
-> iio: adc: hx711: add support for HX710B
->=20
-> This commit adds support for the AVIA HX710B ADC, sharing the GPIO interf=
-ace
-> with the HX711 but using trailing pulses for mode selection. It introduces
-> variant-specific channel configurations and tracks active channels across
-> conversions. Additionally, it refactors the gain and scale computations to
-> use fixed values for the new variant.
-
-Sashiko is replying here to the wrong patch.
-
->=20
-> > diff --git a/drivers/iio/adc/hx711.c b/drivers/iio/adc/hx711.c
-> > index 5c326f01c5543..e90780dfd34e5 100644
-> > --- a/drivers/iio/adc/hx711.c
-> > +++ b/drivers/iio/adc/hx711.c
-> > @@ -84,12 +86,16 @@ static int hx711_get_scale_to_gain(const int *gain_=
-scale, int scale)
-> >   * @channels: channel specification array
-> >   * @num_channels: number of entries in @channels
-> >   * @iio_info: IIO info ops for this variant
-> > + * @fixed_gain_val: fixed PGA gain (used when @has_fixed_gain is true)
-> > + * @has_fixed_gain: true if the variant has a fixed ADC gain
-> >   */
-> >  struct hx711_chip_info {
-> >  	const char			*name;
-> >  	const struct iio_chan_spec	*channels __counted_by_ptr(num_channels);
->=20
-> [Severity: Low]
-> Will this compile? The __counted_by_ptr macro doesn't appear to be defined
-> anywhere in the kernel, whereas __counted_by is used for flexible array
-> members. Could this result in a syntax error during the build?
->=20
-> >  	unsigned int			num_channels;
-> >  	const struct iio_info		*iio_info;
-> > +	unsigned int			fixed_gain_val;
-> > +	bool				has_fixed_gain;
-> >  };
->=20
-> [ ... ]
->=20
-> > @@ -543,32 +709,43 @@ static int hx711_probe(struct platform_device *pd=
-ev)
-> >  		return dev_err_probe(dev, PTR_ERR(hx711_data->gpiod_dout),
-> >  				     "failed to get dout-gpiod\n");
-> > =20
-> > -	ret =3D devm_regulator_get_enable_read_voltage(dev, "avdd");
-> > +	if (chip_info->has_fixed_gain)
-> > +		ret =3D devm_regulator_get_enable_read_voltage(dev, "vref");
-> > +	else
-> > +		ret =3D devm_regulator_get_enable_read_voltage(dev, "avdd");
-> >  	if (ret < 0)
-> >  		return ret;
->=20
-> [Severity: High]
-> Does this leave the HX710B unpowered? The device tree bindings require
-> both avdd-supply and dvdd-supply for the avia,hx710b compatible.
->=20
-> However, when has_fixed_gain is true for the HX710B variant, the driver
-> only requests the vref supply. If avdd and dvdd are controlled by actual
-> regulators on the board, will they remain disabled and cause the hardware
-> to fail?
->=20
-> --=20
-> Sashiko AI review =B7 https://sashiko.dev/#/patchset/20260603184859.89693=
--1-piyushpatle228@gmail.com?part=3D4
-
---NkPsNM0jZw5n6mwr
-Content-Type: application/pgp-signature; name="signature.asc"
-
------BEGIN PGP SIGNATURE-----
-
-iHUEABYKAB0WIQRh246EGq/8RLhDjO14tDGHoIJi0gUCaiGv7QAKCRB4tDGHoIJi
-0ho0AQDkXHxRlR9D/MkXDiGGeuNco1zTRUHNryX52NYISDi1HAEAwgUNI/w5/vcK
-gqcXLuidX7cJQvmN4z7/5rIp498gpQ4=
-=7IOS
------END PGP SIGNATURE-----
-
---NkPsNM0jZw5n6mwr--
+I think for the initial landing, it makes sense to skip this and the usage in
+irq_test.  Printing the affinity information definitely qualifies as "nice to
+have", i.e. it can wait.
