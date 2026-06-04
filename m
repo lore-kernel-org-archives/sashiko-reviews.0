@@ -1,158 +1,118 @@
-Received: from mail-oo1-f48.google.com (mail-oo1-f48.google.com [209.85.161.48])
+Received: from mail-oo1-f43.google.com (mail-oo1-f43.google.com [209.85.161.43])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 74B223CD8AC
-	for <sashiko-reviews@lists.linux.dev>; Thu,  4 Jun 2026 06:42:35 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=pass smtp.client-ip=209.85.161.48
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 21D153C4B77
+	for <sashiko-reviews@lists.linux.dev>; Thu,  4 Jun 2026 06:46:49 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=pass smtp.client-ip=209.85.161.43
 ARC-Seal:i=2; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1780555356; cv=pass; b=qZgF6+WV8p8hF4SAqAGHG44wcVQsEXdudtNo0x6XtW9kDYfdiNRUvTc39Sex0Inxig6hu5+jLsB16ZdTTtBKV6DDMmCkdC4mcJmVnbgvTG/uKXTIy3WYKuKM1LBWnaBRlTD7rv7O3eZEw3VC0CHHoeQlLCREEXLGAq5OhQFdaV8=
+	t=1780555614; cv=pass; b=m2EjJYCY167JpmUX4bA/5Ya+M4WUrUhGj7Q/5AohPAW6RRNR3lSw2b5JWaN47Pn/AjspLEvbj8B90CUmm+mxwUyij6R7zwkBGDIteY8DIXKJdnLNH2wqUEijQUjLkQb2G8Q5KvGh9Ek2w5e6PMgHGPjUmGs8SdrgH52hoTYQWHk=
 ARC-Message-Signature:i=2; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1780555356; c=relaxed/simple;
-	bh=H3rnulMfl3DeILYXkuBtcVo0HBpok14PmwBuns7JPa0=;
+	s=arc-20240116; t=1780555614; c=relaxed/simple;
+	bh=I4yDMq8ZmDr5oaZiEBM9CEqvD/HRefTgkgtwWuFh/Zw=;
 	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
-	 To:Cc:Content-Type; b=NswTG6RlZCxK7B/FKIWE7+ZGy06z72Nd4VzYDZWuCPWnE2VUX0m2q2+ZhdXqpUvT3iTyJXT6O5Z9qLqFT1n/LzJernGfQjw1Bv5R4QHsYwiGv5mtYjizB0H4SXiq22p1i13WKol01Oi3gY/e15555QCBVtHvTDZ0GfLh/DsE+R4=
-ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=obXKqQyy; arc=pass smtp.client-ip=209.85.161.48
+	 To:Cc:Content-Type; b=NRCv4IHwGRTE8BdgjNV2VEkQvFUuSFEa+ABmXHo+qTzaEMKJ9PN9KYthHjdRP+kR1XncsMaRg2AyP5evNMW8BqoewtXCZDN+rtUPZmcMSz9g7wmHRt/SzI/S35uZ+qduCRhN9rnUi5DhxSmSmzxXqpwwKfsYgtvssv/uuTmy/Ao=
+ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=jdHW98Bg; arc=pass smtp.client-ip=209.85.161.43
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="obXKqQyy"
-Received: by mail-oo1-f48.google.com with SMTP id 006d021491bc7-69e49452f35so98519eaf.1
-        for <sashiko-reviews@lists.linux.dev>; Wed, 03 Jun 2026 23:42:35 -0700 (PDT)
-ARC-Seal: i=1; a=rsa-sha256; t=1780555354; cv=none;
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="jdHW98Bg"
+Received: by mail-oo1-f43.google.com with SMTP id 006d021491bc7-69d862236ddso252992eaf.0
+        for <sashiko-reviews@lists.linux.dev>; Wed, 03 Jun 2026 23:46:49 -0700 (PDT)
+ARC-Seal: i=1; a=rsa-sha256; t=1780555609; cv=none;
         d=google.com; s=arc-20240605;
-        b=UvYhNieIl8+nFVhXtFmqh9SxcbPeKJ9GWTQ04Rwn9L+5jf23fYfXzfiZBoFTo1pY6P
-         A4TSJ+losfE6yH30gFsT+4QKcmVvmERLmrxEAFBkS6l3t+9MsMNAuJWEtnocqCoGriLi
-         2Gq6puDsSyD2e0cg94vHJpY/6AgbbXpQa2N92TwVtrOu1wLcaGel+TlYnM4HZR9ez8Ep
-         nPpPQeJDIpyQUymqyQcjokf8Xi3kIHXURq6IHctv/B6sXGzz981xb0VF5VDVmlE3mOef
-         XDH2d9mopNT0pD51QV7QU77NE2SphTTUf8Bx0ro2OCPSIw3ocC/wTPEyB/0oR/AKnKtC
-         ZOzA==
+        b=BpEpE+KhLKzNxTmkU1PAp5q5qoRNh2DWZsUgcrsjGjABIUu7wnN8nQgbKDytrI1iBN
+         2yGjov0iVeJtGqrkeCOoNnqUjbqgGcQTnp+adr09duRjzIRomPy28dt4ltcXL5tVkYJV
+         WwFZz3hgDBVZruCChSQPWICtRDmEmbCsrfgTJshAY2tabCwgKcgrrOF7mnL74/P0eepE
+         XlpdTMloSNUkkreLwCtFBmvGXBuZ68HYRL+R/Ptc9Ke2SwYk2HRryc/2XLn6JtmXppi9
+         OO/o5Nli3WZVKPBAqkrUAexpFlDF3gwBr/00FXTKvMks+t9x+//GvH5dBCX9iPnVNcSQ
+         lxiQ==
 ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com; s=arc-20240605;
         h=content-transfer-encoding:cc:to:subject:message-id:date:from
          :in-reply-to:references:mime-version:dkim-signature;
-        bh=6yfZQB52noCs/9R98yvRH4ThEmgKOXXjOByci/XdGgY=;
-        fh=QfcTh0wJfLHP1QZBMZRnZ/OybELer8XYHKfbofkyCNs=;
-        b=PNPfJ1WNAPnEy9wxLYRQkvLvApwNuce8K/NlF/jKQ9w+/+S9j+ld3bShQf255XImWc
-         lBXW4z4ZZx5di2BG9hYxt5uMb3zqV4Svus5fDFbrAT+08o8ZMOb+71EhRjmwGC785JcW
-         0JDy/dZCpg2DrODSWf6bf9zX4zaaltayoc9S8Tm4O8G70+2JbcFpV0VyVbBoKrCjJ82+
-         yMv75zVy1fLq3OEQIM7ZfbwWcbx/lIXRmYdbhSZRnM2ROfFKHfnMncoL8JV3vD+ksS+4
-         A1HGSWHMCBi6QSyjt1xb6SWnvCWXJRFBI5kh4boEpgBkvBNYb96qa3khcgE4S3XFyMIv
-         etNw==;
+        bh=I4yDMq8ZmDr5oaZiEBM9CEqvD/HRefTgkgtwWuFh/Zw=;
+        fh=6x9uhpCI/gq+YqWyh60QozKX94C8TIGbO7qpTkaI1lo=;
+        b=cIEW7oPPXVbnQP/evN6joGclEY/5pA7rBzXpqWcIewMaVkadw3NxcMAFeuucUzCw8N
+         ZDhDy/MYa+Iyp9RznFIpcVKpcvwY2ndNp8iJuaZaOyTf+/1xgQMEKdW8R8ykzsEylIXN
+         MrE0764/IxYspbBpXvBHRi4Ij6rbBmoe00ve3yltEX/rCdB0EX8DoOfxw25dsixcuUkB
+         e4+o+G1woTi7S9JnaGVHAEvXvd6eBUIGZIxDPobN2FoPLWYRCcI7KbXT9PAS/ZWOhsea
+         vyJ4+UPoZMfJfRSsaxsp6kg/PYNQfi1IAt18Ud6xzt5lQ0Xomv5LFWeoGO7ldLtMusPy
+         q3BQ==;
         darn=lists.linux.dev
 ARC-Authentication-Results: i=1; mx.google.com; arc=none
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20251104; t=1780555354; x=1781160154; darn=lists.linux.dev;
+        d=gmail.com; s=20251104; t=1780555609; x=1781160409; darn=lists.linux.dev;
         h=content-transfer-encoding:cc:to:subject:message-id:date:from
          :in-reply-to:references:mime-version:from:to:cc:subject:date
          :message-id:reply-to;
-        bh=6yfZQB52noCs/9R98yvRH4ThEmgKOXXjOByci/XdGgY=;
-        b=obXKqQyyTmnTMzfzGJF/MLF82yivmJGSRfTHeOsFCwYnUHqtoG5DPMCwIp5dmEGAoO
-         /ruLpSaHHyWwY6GES1r1FZYYn/8kMjZt3C8f0cKcPBTeIn3WAlLBCwqVnDTl+ijkpKg3
-         +MPbTTodQpS2FOGdl2F2Vc4bXZ2uvErFvGVGDWzZdBPh3Litb1eqaNCkig+ImMEhzft6
-         iEJimN0nE9BmjT7GWws9We6U3CDghprlk7iyj3xCLIkj3RPvywxGCNm32Mtwk/VpK+vj
-         mjTsG29/uCl3dFqrXvcACnFr2bsMWG0IfnE5MfTUhvFC84pDIK8XzAVPUJTO8pVcZqE8
-         yIow==
+        bh=I4yDMq8ZmDr5oaZiEBM9CEqvD/HRefTgkgtwWuFh/Zw=;
+        b=jdHW98BgUO6r81fPJp8am3mzXMnq7kEaSW/6WkGv2l6kkElZx3Q/9XXEEOTd5eDWAf
+         Ql1t+fV8K1V88Tn18Osn438BlX/16cWpODWMLNYRYggpCo59vL+t7h7etudloQAIF8Sk
+         Z65kWh2B+szjYW1dI66GoHY8yohToWhahg2vEnAtaPH8SL8HLc6LDav60OvtAtsy+R2l
+         1tbYen1fHXvyeva3EGs0MW6a3IIZkQa5gVczXU0GZM0iEHA7A7lEMPtRBFD7XDzVsNCE
+         DDiUQeAxP/m0pX2a9BN0c7N4NbPSdfAYzcV9t59ZJUKOTLvgeI7Y6NBnSzTjS6mY4V46
+         e6Sg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20251104; t=1780555354; x=1781160154;
+        d=1e100.net; s=20251104; t=1780555609; x=1781160409;
         h=content-transfer-encoding:cc:to:subject:message-id:date:from
          :in-reply-to:references:mime-version:x-gm-gg:x-gm-message-state:from
          :to:cc:subject:date:message-id:reply-to;
-        bh=6yfZQB52noCs/9R98yvRH4ThEmgKOXXjOByci/XdGgY=;
-        b=M+gVT0+l5TF7aZ4wU4PXB0uerTjZ0hNwqpXCLey6lAkeiIoGA3cztzH77t3GZqSsF5
-         rFISuSnSPbIj7JAtcmxnzW00kfO0Rn9OlcX73aRd6yu+LBDx0KlSIfJ4KJPMb1aU7WL3
-         gcKgRqAPuawsq0xpJKL3EnxQwNYYAdfEK2OMX70/w5Oeot89Oo8Mqbxvc0ShNiNN8S/u
-         fj+Prq95xvSvMfW3JNf7iNVv/mf6bYth2JnyiiJFcBXblltG6qnHiItPW7QcbZGWRmb5
-         SAbTNZ0wrJPwAwWg8p6xh59K1IZVPNp+xFpRHCHaDEjj4XRzJh+ws6sGynVvatwtSMBU
-         SweA==
-X-Gm-Message-State: AOJu0Yyj3SELoTwvsfnyXa3MlK1H8eWhTYBeGStaVtK/flip0wC97IYY
-	Awf958KnWPhgnWpSXRXGltcG8ArXZfsTXlNRj5lXuhnhyXyli6OQuz2VvaIHa38c3wTMMSp5q3J
-	UQolq4J3PV27g/0gaLoEdOpSLlSTy2Eoy6pK23yMQZg==
-X-Gm-Gg: Acq92OFIu5y7TjtvaCFoGrCqUa8F2tyTtgrZw6zPvDVA6xiV4VgTaKjWc4/p2SCKGkM
-	qZF+lhZb/jDaos/VOylNDuzfYjJ3DDsAniSzbd6HhoWFWqWrzrKN2a2334lka0PcQmOzQkCjD7z
-	eQ14IRgu4SLnkC2kDMk9eie5f2PpqFJGPOwd0I1zMd36LPWHylx+beI+vSFg5PkL+FeAiWymWhE
-	7L5Js6frULH89iZD7b4Sdm9A3JmghhVhYKPo3OsiZZeoksHICWZ2R7Xo1azNai4A4MKO9PprDUS
-	wxOdTvrFznKI6f/WT/UJ+ro=
-X-Received: by 2002:a05:6820:c3cb:20b0:69e:b8:ffe8 with SMTP id
- 006d021491bc7-69e480cea9amr3162580eaf.52.1780555354372; Wed, 03 Jun 2026
- 23:42:34 -0700 (PDT)
+        bh=I4yDMq8ZmDr5oaZiEBM9CEqvD/HRefTgkgtwWuFh/Zw=;
+        b=qios3vDrDoWiEwBmZHxP1lWlTsk4tF+r1zl1jVAbQvpjA22Fy6WrnFrwUawVQ0EQm1
+         cobu7WFo9VbMkjjtQ26e6dqmKiQ7p6mM1WDd5lOoxSNKdNmZPnp1BAYevs5ZYvR0kGXW
+         eQGTi3ljEwdUbaWyDpbkFDp58hHNWmb0sDuI6gjZbhWfx1ZP91ye4AIhbsghrT4rxgyM
+         LMGtIX9XDoxGDhEe5myAZsbRVFUFYqRN7tKtD7cd/XqLNaKKNX1tk1mfx/78EXTutqMd
+         3H3UN3uYxiMxIuGRGbrBn+1M0/7Ml3HuasClPaXSw1I6EXEuFe860BKSyzVz/hf5dqRd
+         jzbA==
+X-Gm-Message-State: AOJu0Yz22a7ooiSn8RBlFXvJ5p9SG6Rb/2wF413pCZytOXKHXY9H7Axl
+	DZpMAYNT34VycJWOi8mYA3zuf46tgWtsHvF+eq8FnX2hpZYJOmhiLB6HIWW6mnQfLdDhlSBNv0X
+	IwtN/K85Cy0T2gSMDpzm1TO0RIeFueUAaGpqKxi7cAw==
+X-Gm-Gg: Acq92OF0Zw5ybTh8cJoPPv9kkXv3gwYnC7pDSOHO3fTVE8yBdAJhNzmImjsBjFjBIZj
+	qYkCkpuPWYM7/3ACFTlgc98ZMngxWDtQV38bItVYtJ3rSaF23LYeGCFYVc1OO0QjLFS/8BlNAmr
+	1tuP1lPUNVyT2Ikvcd6Dxp092Og7CZBZi0APVaqVEWtlg03gSKDRpFcz/wkGzyeXmepR5Ae+Jp6
+	COGn5iWpRTeC2kQ6w8nwIuYcQ1gYiYXPQBDuFjwremj4fnlFJrgmuSHanh0BigQSDLsy9YHXH9B
+	czU/ZV7Xhp/tY8/DZ68iBrM=
+X-Received: by 2002:a05:6820:2d45:b0:69e:1a0c:123b with SMTP id
+ 006d021491bc7-69e47ec6971mr2637278eaf.24.1780555608862; Wed, 03 Jun 2026
+ 23:46:48 -0700 (PDT)
 Precedence: bulk
 X-Mailing-List: sashiko-reviews@lists.linux.dev
 List-Id: <sashiko-reviews.lists.linux.dev>
 List-Subscribe: <mailto:sashiko-reviews+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:sashiko-reviews+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-References: <20260603-rva23u64-hwprobe-v2-v3-8-5529a7b28384@gmail.com> <20260602232800.768311F00893@smtp.kernel.org>
-In-Reply-To: <20260602232800.768311F00893@smtp.kernel.org>
+References: <20260603-rva23u64-hwprobe-v2-v3-13-5529a7b28384@gmail.com> <20260602233750.B03631F00893@smtp.kernel.org>
+In-Reply-To: <20260602233750.B03631F00893@smtp.kernel.org>
 From: Guodong Xu <docular.xu@gmail.com>
-Date: Thu, 4 Jun 2026 14:42:22 +0800
-X-Gm-Features: AVHnY4I8rB9-WPj3dLhf7Mcp5Ee0Ym_vIrvBsuBkaWpxQWp0kj0HO6TjI-qUSM0
-Message-ID: <CA+Ck9FbKRM0wjJMg1fQpdwmow8cf_zTfir7V6+T=CRxU+vomdg@mail.gmail.com>
-Subject: Re: [PATCH v3 08/15] riscv: Add Zic64b to cpufeature and hwprobe
+Date: Thu, 4 Jun 2026 14:46:36 +0800
+X-Gm-Features: AVHnY4JQnjs7_bMYHUUcNhOXOgnpJynf1huEM1b6suF6X2cIO5M1zEC4xtBl6pQ
+Message-ID: <CA+Ck9FaHADhss2sV=Z-vX4zr6VL+X=goFX_vznYE9JWBGCjwZQ@mail.gmail.com>
+Subject: Re: [PATCH v3 13/15] riscv: cpufeature: Introduce ISA bases bitmap
+ and rva23u64 detection
 To: sashiko-reviews@lists.linux.dev
-Cc: kvm@vger.kernel.org, devicetree@vger.kernel.org, robh@kernel.org, 
-	conor+dt@kernel.org
+Cc: devicetree@vger.kernel.org, conor+dt@kernel.org, kvm@vger.kernel.org, 
+	robh@kernel.org
 Content-Type: text/plain; charset="UTF-8"
 Content-Transfer-Encoding: quoted-printable
 
-On Wed, Jun 3, 2026 at 7:28=E2=80=AFAM <sashiko-bot@kernel.org> wrote:
+Hi,
+
+On Wed, Jun 3, 2026 at 7:37=E2=80=AFAM <sashiko-bot@kernel.org> wrote:
 >
-> > @@ -154,6 +154,23 @@ static int riscv_ext_zicbop_validate(const struct =
-riscv_isa_ext_data *data,
-> >       return 0;
-> >  }
-> >
-> > +static int riscv_ext_zic64b_validate(const struct riscv_isa_ext_data *=
-data,
-> > +                                  const unsigned long *isa_bitmap)
-> > +{
-> > +     /*
-> > +      * Zic64b mandates 64-byte naturally aligned cache blocks; cross-=
-check the
-> > +      * cbom/cbop/cboz block-size device-tree properties to avoid inco=
-nsistency.
-> > +      */
-> > +     if (riscv_cbom_block_size !=3D 64 ||
-> > +         riscv_cbop_block_size !=3D 64 ||
-> > +         riscv_cboz_block_size !=3D 64) {
->
-> [Severity: Medium]
-> Will this check erroneously disable Zic64b if a platform does not impleme=
-nt
-> all three CBO extensions?
+> Thank you for your contribution! Sashiko AI review found 1 potential issu=
+e(s) to consider:
+> - [Medium] Detection of the RVA23U64 profile fails on compliant platforms=
+ because it strictly requires the unratified `RISCV_ISA_EXT_B` bundle inste=
+ad of the formally ratified bitmanip extensions (`Zba`, `Zbb`, `Zbs`).
 
-Zic64b is mandatory in RVA22/RVA23, which also mandate Zicbom,
-Zicbop and Zicboz, so all three block sizes must be present on any Zic64b
-platform.
+I disagree. But I would welcome more ideas.
 
-And architecturally, all the block sizes are one quantity: under Zic64b
-that value is 64, so the three must all read 64.
+My reply is threaded in v2, FYI:
+Link: https://lore.kernel.org/linux-riscv/CAH1PCMa-5W9PsX8cDLUk6-MkcM53HOz2=
+QtaxCHd+XOr7DgH5+w@mail.gmail.com/#t
+[1]
 
-Anything else is a misconfigured DT, and the kernel should not trust
-the zic64b it claims.
+Also, when Sashiko says "unratified `RISCV_ISA_EXT_B`", this is wrong.
+B is ratified.
 
-BR,
+BR
 Guodong
-
->
-> If a hardware platform implements Zic64b but omits an optional extension
-> like Zicbop, the riscv,cbop-block-size property might be absent from the
-> device tree, leaving riscv_cbop_block_size initialized at 0.
->
-> This unconditional check evaluates 0 !=3D 64 as true, which would spuriou=
-sly
-> trigger this error path and disable the valid Zic64b extension.
->
-> Should this validation only enforce the 64-byte size if the corresponding
-> block size variable is non-zero, indicating the extension is actually pre=
-sent?
->
-> > +             pr_err("Zic64b detected in ISA string, disabling as the c=
-ache block size is not 64 bytes\n");
-> > +             return -EINVAL;
-> > +     }
-> > +
-> > +     return 0;
-> > +}
->
-> --
-> Sashiko AI review =C2=B7 https://sashiko.dev/#/patchset/20260603-rva23u64=
--hwprobe-v2-v3-0-5529a7b28384@gmail.com?part=3D8
