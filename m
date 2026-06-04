@@ -1,153 +1,163 @@
-Received: from mail-wr1-f52.google.com (mail-wr1-f52.google.com [209.85.221.52])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from mx0a-0046e701.pphosted.com (mx0a-0046e701.pphosted.com [67.231.149.93])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 94B9A48094E
-	for <sashiko-reviews@lists.linux.dev>; Thu,  4 Jun 2026 14:42:34 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.221.52
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7133A3019C3;
+	Thu,  4 Jun 2026 14:48:19 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=67.231.149.93
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1780584156; cv=none; b=UOb2VLE5+CB99o4PL3EGtz68zA6v8yFOW7vWKrYILN6CGQrx00L13WQnJQ+VuoSn1xNrG5AdFx7ZHjYqFeMimOYtSn21HxxpMz+BKAEz8jj/20AXJDW1a+owJmoQ08m/b9Ay1qeaoNrwg09dRuIvBiTiavEdMxGqXAgUP8F4SlI=
+	t=1780584500; cv=none; b=nmgvq4JF3HPddsI5LU6qFusfF+WBAeSG8PqVaMKr7hu6dma+KVmvB7BMxJlK9j95uYJ6/iX9SzHWXUxxwxomfM2aoj7xwdY7l1EIHCADPty4OHwaFcjxRLr7foKzEARnR9Xzn5ZXqhYA/4RA4j8tw3kEnq6yn1iuL5900XryoGk=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1780584156; c=relaxed/simple;
-	bh=WhcVfvjiU5OOZnzJyfjaqNDG3/Fn+ujsPPuGRfolw5g=;
-	h=Message-ID:Date:MIME-Version:From:Subject:To:Cc:References:
-	 In-Reply-To:Content-Type; b=MxNC5e4HcJ3lp1oopk9Zis596P4mnDcFtTHF0hdD9RA3bXoRsuo1iWnKjaJsWLfIkGCXw57InsmO56gJVpYJazS/Xrb/BJU+zcjlYvXvO3zf8P829nrKM7gA1mBPyQL4THH2preLs0/jpR4KbC+3DnWSJx21qKMnmqImyc1vZY0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=FujdRgn/; arc=none smtp.client-ip=209.85.221.52
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
+	s=arc-20240116; t=1780584500; c=relaxed/simple;
+	bh=RbLZDymbM43CQVMhvDRhT42I4f600tPN+/juBdzGuv4=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=g21CBD4G5k2tE3/6rKJ71kbeYKjgYCSppx9Rg9XQvs3Fb3bgdtahdW01lMGzFbqGEJcM41Wc5OoMQ1+pUeo0mUqzMW9QGHXKZJU2M1CZ8XXUTacYqA4UHEGKM9GtKM0xhYrZoGr6yyEcmyIZJmkCS6Xt95jn8zvNjrF4zC1ic9o=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=plexus.com; spf=pass smtp.mailfrom=plexus.com; dkim=pass (2048-bit key) header.d=plexus.com header.i=@plexus.com header.b=XpI3Ln2d; arc=none smtp.client-ip=67.231.149.93
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=plexus.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=plexus.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="FujdRgn/"
-Received: by mail-wr1-f52.google.com with SMTP id ffacd0b85a97d-45fe59255beso409673f8f.1
-        for <sashiko-reviews@lists.linux.dev>; Thu, 04 Jun 2026 07:42:34 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1780584153; x=1781188953; darn=lists.linux.dev;
-        h=content-transfer-encoding:in-reply-to:organization:autocrypt
-         :content-language:references:cc:to:subject:reply-to:from:user-agent
-         :mime-version:date:message-id:from:to:cc:subject:date:message-id
-         :reply-to;
-        bh=edXeUisUOZStFE68DISSeh9JLM/7psQJBNg/h6ooJj0=;
-        b=FujdRgn/pbcMa2NmkNhZz+aHLZg0QXmq8iRkT23o/yD8B/Aj7fWI4oSBMj9EgBgCpQ
-         w0cJ4UjdXTopPMVzBTfJU2wQbJ58G+e5+nawIwkikLBb5MZB9WW0Z5rok0rqdhD8c3Zt
-         ZTeQycT24j7IddGqHoPzrWMfiCkxBw6UPbxOOzsLhT2DxTb6P7FLmlMG2dMhG8sxS4gu
-         RP+xJ61mFN3wjdaQbY865VopmZD1wfSMXZe+rAEgQiAXGJjtcedE+3C50HIRYzlQcb9Y
-         NN+cGt2SWyVNa99LHZ8oT/TxrEw/zZ2cQabRn4i9phR9cjAmiGz8fqGaJoEJ50YACygk
-         KELg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20251104; t=1780584153; x=1781188953;
-        h=content-transfer-encoding:in-reply-to:organization:autocrypt
-         :content-language:references:cc:to:subject:reply-to:from:user-agent
-         :mime-version:date:message-id:x-gm-gg:x-gm-message-state:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=edXeUisUOZStFE68DISSeh9JLM/7psQJBNg/h6ooJj0=;
-        b=gZi5H4Qyg7QOKGf0xd3ZF/rI3WMHy8BaeZ6bxMNYSVekMSacHlFQCN/MjO4yalBDkE
-         RezSjjF2y4VlK+yJ/Tp7iLQu8j2ZKtZk4l/y6DjZ3lklUrKpP98IwAFk8K7f2S548wJA
-         Wg64R9jd8kxWkwzZhTkYdLbg0cdYtpbhlQ8MIhzaW1URLkqvYDpQOHUlUNBSb4d6leJ5
-         lyxnyOceGQBUCq0l9EP4M8TpoOsfZ3lJacKBNVx20RguweT5sv3tLdWzjv2DfkYtQz7K
-         dMiCcNGldgYCjYob0vmtMBtamR8ZDgAiaOAwc0U9iBgWyNpfbfG6F1j1+On7Kw7Odg+L
-         Fv/A==
-X-Gm-Message-State: AOJu0YxMO5MzIldRrU263rfrV8LWeMPaHcLrdBSW3eKOyk0bgyShubyG
-	YI0s1P29UwAE7tsZs3owRRbAKivasSxnZxVa0Odgklm6LBpP1jw9NrMoaB5FLxxaOo76+7Gm2Jv
-	+7UDN
-X-Gm-Gg: Acq92OFbBDeP+meWww3WSrE5k+dLpwdGaeiHL8/75uPHGq6KgSuyM/7YY//ZBigA3fg
-	78rXS65u7JLnbXc9Cj1LdFjzBjeskZ1TAJdLDBAGVPI0EdX9lTdCP4XG0b1EoGIU/sOyiBZ4q+r
-	mqa98Al+hzxDPNOrT7AOTod+rBZtAIxhx3VtE5Mwt4k3syMeCmr5R/zmBE+unkGGvhH/5FCk7CK
-	/J6EHDS2tjUisca3wCSmYNgvv3RqGceI7FY84wBGQt3r4CIgLAYtI9XSx/Y7AcsAwJEs1Zx3my/
-	pQeXkkEzFOcTpr2HOawLhG3EXyfpNvSoluOY13wSXcEVtfHW9B2hPQsI+DBHpCxFpT+VHnr8e3k
-	UMdweridIV7eGtcA1gGuD9Hl+NjyCGxkqwcEE4D/c/iDXmELJPuWSvdDbWxSEP7Au/8PXt8/oXy
-	IGPpz8omtJXvE5RBDtsIJzGjkeKb1T1gWYeX4pGAI0M4RYpJF7/xm+OqMS/pyhRQxRR0A0806dN
-	t4PJjEViUN7EyA=
-X-Received: by 2002:a5d:6941:0:b0:43d:68ad:3b7f with SMTP id ffacd0b85a97d-46021829aefmr9569274f8f.21.1780584152786;
-        Thu, 04 Jun 2026 07:42:32 -0700 (PDT)
-Received: from ?IPV6:2a01:e0a:106d:1080:dbd:100f:afd5:9221? ([2a01:e0a:106d:1080:dbd:100f:afd5:9221])
-        by smtp.gmail.com with ESMTPSA id ffacd0b85a97d-4601f2dc412sm17426979f8f.4.2026.06.04.07.42.31
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Thu, 04 Jun 2026 07:42:32 -0700 (PDT)
-Message-ID: <18d06d5f-7bf3-4e8d-bc8e-b0c632864190@linaro.org>
-Date: Thu, 4 Jun 2026 16:42:30 +0200
+	dkim=pass (2048-bit key) header.d=plexus.com header.i=@plexus.com header.b="XpI3Ln2d"
+Received: from pps.filterd (m0341554.ppops.net [127.0.0.1])
+	by mx0a-0046e701.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id 6546a5KY518581;
+	Thu, 4 Jun 2026 09:25:28 -0500
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=plexus.com; h=cc
+	:content-transfer-encoding:content-type:date:from:in-reply-to
+	:message-id:mime-version:references:subject:to; s=pps1; bh=beeWq
+	Q0hxI0eg6n5fhsT/kZau9PKcyMFwfTI9cfpy5A=; b=XpI3Ln2dy9bLDSoYFLijl
+	P3kIw405YGPBqT1ix4bvBKJvgWJBF7GNwLBBNoaiF5PLg4mEpo7rTXI+cH8lEeYt
+	4RYE9fF9Y8qJLOWzb18hWUVbLM1YX3PYE3OF08oP9q1qP9TfGcFY0fpkc2dt7AhW
+	5a5WEKJ+T2ReJvY5v5yymvXtctPhgS3jKCPldgz3i4JtZmXEOeDANs2jER5Ybg2O
+	MJkWPSIedilKpHeRqWcm2e4iSoVFPCsMsFFn70hPonBzgKH5UY4r1R5nGUiBsU2f
+	Qqzg2JN1DD7GrYYnAkp/9/fVXvZ0LZhTkuMkxk6i5YJ0EQmHRh0TKZBR/O4fj0Xt
+	w==
+Received: from intranet-smtp.plexus.com ([64.215.193.254])
+	by mx0a-0046e701.pphosted.com (PPS) with ESMTPS id 4eh8wsywgt-1
+	(version=TLSv1.3 cipher=TLS_AES_256_GCM_SHA384 bits=256 verify=NOT);
+	Thu, 04 Jun 2026 09:25:27 -0500 (CDT)
+Received: from localhost (unknown [10.255.48.203])
+	by intranet-smtp.plexus.com (Postfix) with ESMTP id 5A271432DD;
+	Thu,  4 Jun 2026 09:25:26 -0500 (CDT)
+Date: Thu, 4 Jun 2026 09:23:25 -0500
+From: Danny Kaehn <danny.kaehn@plexus.com>
+To: Benjamin Tissoires <bentiss@kernel.org>
+Cc: sashiko-reviews@lists.linux.dev, dmitry.torokhov@gmail.com,
+        linux-input@vger.kernel.org
+Subject: Re: [PATCH v14 2/2] HID: cp2112: Configure I2C bus speed from
+ firmware
+Message-ID: <20260604142325.GA1355442@LNDCL34533.neenah.na.plexus.com>
+References: <20260520-cp2112-dt-v14-2-b1b4b6734b6f@plexus.com>
+ <20260520174401.BDE571F00893@smtp.kernel.org>
+ <ah6MeSb-NlzniiCA@beelink>
 Precedence: bulk
 X-Mailing-List: sashiko-reviews@lists.linux.dev
 List-Id: <sashiko-reviews.lists.linux.dev>
 List-Subscribe: <mailto:sashiko-reviews+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:sashiko-reviews+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-From: Neil Armstrong <neil.armstrong@linaro.org>
-Reply-To: Neil Armstrong <neil.armstrong@linaro.org>
-Subject: Re: [PATCH 1/2] drm/panel: Enable DSC for Visionox VTDR6130 panel
-To: sashiko-reviews@lists.linux.dev
-Cc: dri-devel@lists.freedesktop.org
-References: <20260604-topic-sm8x50-vtdr6130-dsc-v1-1-09bcd1dff1fb@linaro.org>
- <20260604130349.2BE0F1F00893@smtp.kernel.org>
-Content-Language: en-US, fr
-Autocrypt: addr=neil.armstrong@linaro.org; keydata=
- xsBNBE1ZBs8BCAD78xVLsXPwV/2qQx2FaO/7mhWL0Qodw8UcQJnkrWmgTFRobtTWxuRx8WWP
- GTjuhvbleoQ5Cxjr+v+1ARGCH46MxFP5DwauzPekwJUD5QKZlaw/bURTLmS2id5wWi3lqVH4
- BVF2WzvGyyeV1o4RTCYDnZ9VLLylJ9bneEaIs/7cjCEbipGGFlfIML3sfqnIvMAxIMZrvcl9
- qPV2k+KQ7q+aXavU5W+yLNn7QtXUB530Zlk/d2ETgzQ5FLYYnUDAaRl+8JUTjc0CNOTpCeik
- 80TZcE6f8M76Xa6yU8VcNko94Ck7iB4vj70q76P/J7kt98hklrr85/3NU3oti3nrIHmHABEB
- AAHNKk5laWwgQXJtc3Ryb25nIDxuZWlsLmFybXN0cm9uZ0BsaW5hcm8ub3JnPsLAkQQTAQoA
- OwIbIwULCQgHAwUVCgkICwUWAgMBAAIeAQIXgBYhBInsPQWERiF0UPIoSBaat7Gkz/iuBQJk
- Q5wSAhkBAAoJEBaat7Gkz/iuyhMIANiD94qDtUTJRfEW6GwXmtKWwl/mvqQtaTtZID2dos04
- YqBbshiJbejgVJjy+HODcNUIKBB3PSLaln4ltdsV73SBcwUNdzebfKspAQunCM22Mn6FBIxQ
- GizsMLcP/0FX4en9NaKGfK6ZdKK6kN1GR9YffMJd2P08EO8mHowmSRe/ExAODhAs9W7XXExw
- UNCY4pVJyRPpEhv373vvff60bHxc1k/FF9WaPscMt7hlkbFLUs85kHtQAmr8pV5Hy9ezsSRa
- GzJmiVclkPc2BY592IGBXRDQ38urXeM4nfhhvqA50b/nAEXc6FzqgXqDkEIwR66/Gbp0t3+r
- yQzpKRyQif3OwE0ETVkGzwEIALyKDN/OGURaHBVzwjgYq+ZtifvekdrSNl8TIDH8g1xicBYp
- QTbPn6bbSZbdvfeQPNCcD4/EhXZuhQXMcoJsQQQnO4vwVULmPGgtGf8PVc7dxKOeta+qUh6+
- SRh3vIcAUFHDT3f/Zdspz+e2E0hPV2hiSvICLk11qO6cyJE13zeNFoeY3ggrKY+IzbFomIZY
- 4yG6xI99NIPEVE9lNBXBKIlewIyVlkOaYvJWSV+p5gdJXOvScNN1epm5YHmf9aE2ZjnqZGoM
- Mtsyw18YoX9BqMFInxqYQQ3j/HpVgTSvmo5ea5qQDDUaCsaTf8UeDcwYOtgI8iL4oHcsGtUX
- oUk33HEAEQEAAcLAXwQYAQIACQUCTVkGzwIbDAAKCRAWmrexpM/4rrXiB/sGbkQ6itMrAIfn
- M7IbRuiSZS1unlySUVYu3SD6YBYnNi3G5EpbwfBNuT3H8//rVvtOFK4OD8cRYkxXRQmTvqa3
- 3eDIHu/zr1HMKErm+2SD6PO9umRef8V82o2oaCLvf4WeIssFjwB0b6a12opuRP7yo3E3gTCS
- KmbUuLv1CtxKQF+fUV1cVaTPMyT25Od+RC1K+iOR0F54oUJvJeq7fUzbn/KdlhA8XPGzwGRy
- 4zcsPWvwnXgfe5tk680fEKZVwOZKIEuJC3v+/yZpQzDvGYJvbyix0lHnrCzq43WefRHI5XTT
- QbM0WUIBIcGmq38+OgUsMYu4NzLu7uZFAcmp6h8g
-Organization: Linaro
-In-Reply-To: <20260604130349.2BE0F1F00893@smtp.kernel.org>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
+Content-Type: text/plain; charset=iso-8859-1
+Content-Disposition: inline
+Content-Transfer-Encoding: 8bit
+In-Reply-To: <ah6MeSb-NlzniiCA@beelink>
+X-Proofpoint-Reinject: loops=2 maxloops=12
+X-Proofpoint-ORIG-GUID: Feto8lvSUlGz2k8qGvGksnJ8r7mWw3Rf
+X-Proofpoint-GUID: AN2x8W7_AuNWXD2Jt2NIYMA5XWoajtvs
+X-Authority-Analysis: v=2.4 cv=euvvCIpX c=1 sm=1 tr=0 ts=6a218ad7 cx=c_pps
+ a=356DXeqjepxy6lyVU6o3hA==:117 a=356DXeqjepxy6lyVU6o3hA==:17
+ a=8nJEP1OIZ-IA:10 a=FelO9ux0wxsA:10 a=VkNPw1HP01LnGYTKEx00:22
+ a=SL0Da4cj2IsybHzvybfz:22 a=3mNqGZouX4yY8cy_l5z6:22 a=c92rfblmAAAA:8
+ a=Y_joWELsAAAA:8 a=VwQbUJbxAAAA:8 a=taodae8e8x6o541nS3IA:9 a=3ZKOabzyN94A:10
+ a=wPNLvfGTeEIA:10 a=GvGzcOZaWPEFPQC_NcjD:22 a=g_BQsM8wYJVSTWLOHH1t:22
+X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwNjA0MDEzOSBTYWx0ZWRfX7fpxuUZWjfyj
+ zV+1NY/w10bl2vWFwyR5fwA+/cMFegVz9tXFah1y5LKvXhvq32QbeJI1J97T7/amKbfkMH3EjtZ
+ KbFt6hWixJsSHDxwVc33s5o0OwP1NtrgZDPkG6pmZOaVolf5pGEoJLGe2Rw4kQU6a/TzPZfIPM5
+ 2j2NVUvbu8JZCf2yssvmwgOflp+S7vpqskzakpUp9p9qwTHJrrYeqUngE89tAESzuBx7YC7al3R
+ d1UI5nFXdpkPaVYDuVisTWVPqEcwTDVN11Xb+u9aRqJqi+hUhuuf9SXDC9QnPeHKFLZ5U/S/W82
+ RgTH3JLj6uyuTKBrx3Y+2nXTz5BsxTsgDoNpQ33u77M/TbhLOIj4mHGySNUxKZKGhSSdJKkgLoh
+ eD4/ceWqz9iKToaPyyk05lMgjmoO/l83EqXJo+2fpaQLcMSLOW0QiXWud/yUPmh5ELeqVTfYnIe
+ o5g3KTKcbKuWrzxIUxA==
+X-Proofpoint-Spam-Reason: orgsafe
 
-On 6/4/26 15:03, sashiko-bot@kernel.org wrote:
-> Thank you for your contribution! Sashiko AI review found 1 potential issue(s) to consider:
-> - [Low] The panel driver DRM_PANEL_VISIONOX_VTDR6130 lacks Kconfig dependencies for DSC helpers, causing a linker error when compiled without them.
-> --
-> 
-> commit 2b76aa2af63143268815713af0dc4f51234d7f43
-> Author: Jun Nie <jun.nie@linaro.org>
-> 
-> drm/panel: Enable DSC for Visionox VTDR6130 panel
-> 
-> This commit enables display compression (DSC v1.2) for the 1080x2400 Visionox
-> VTDR6130 AMOLED DSI panel. It sets up the DSC configuration parameters and
-> sends the picture parameter set during panel initialization.
-> 
->> diff --git a/drivers/gpu/drm/panel/panel-visionox-vtdr6130.c b/drivers/gpu/drm/panel/panel-visionox-vtdr6130.c
->> index 97a79411e1ecd..0cdcdbbc766da 100644
->> --- a/drivers/gpu/drm/panel/panel-visionox-vtdr6130.c
->> +++ b/drivers/gpu/drm/panel/panel-visionox-vtdr6130.c
-> [ ... ]
->> @@ -123,6 +128,9 @@ static int visionox_vtdr6130_on(struct visionox_vtdr6130 *ctx)
->>   	mipi_dsi_dcs_set_display_on_multi(&dsi_ctx);
->>   	mipi_dsi_msleep(&dsi_ctx, 20);
->>   
->> +	drm_dsc_pps_payload_pack(&pps, dsi->dsc);
-> 
-> [Severity: Low]
-> Will this cause a linker error if CONFIG_DRM_DISPLAY_DSC_HELPER is not enabled?
+Hi Benjamin,
 
-Good catch
+Thanks for the review; will fix the issue pointed out here.
 
+On Tue, Jun 02, 2026 at 09:59:23AM +0200, Benjamin Tissoires wrote:
+> On May 20 2026, sashiko-bot@kernel.org wrote:
+> > Thank you for your contribution! Sashiko AI review found 3 potential issue(s) to consider:
+> > 
+> > New issues:
+> > - [Medium] The driver silently overwrites custom hardware I2C clock speeds with a 100kHz default for devices without firmware nodes.
+> > 
+> > Pre-existing issues:
+> > - [High] Firmware nodes are attached to device structures without holding a reference, leading to a dangling pointer and use-after-free.
+> > - [High] The delayed work `gpio_poll_worker` is not canceled in the probe error path, leading to a use-after-free if the probe fails.
+> > --
+> > 
+> > commit 07ff467e4d8df706a7a27476591cd82570fb8287
+> > Author: Danny Kaehn <danny.kaehn@plexus.com>
+> > 
+> >     HID: cp2112: Configure I2C bus speed from firmware
+> >     
+> >     Now that the I2C adapter on the CP2112 can have an associated firmware
+> >     node, set the bus speed based on firmware configuration.
+> > 
+> > > diff --git a/drivers/hid/hid-cp2112.c b/drivers/hid/hid-cp2112.c
+> > > index e960fc988058f..04379db93571b 100644
+> > > --- a/drivers/hid/hid-cp2112.c
+> > > +++ b/drivers/hid/hid-cp2112.c
+> > [ ... ]
+> > > @@ -1308,6 +1309,9 @@ static int cp2112_probe(struct hid_device *hdev, const struct hid_device_id *id)
+...
+> > > +	config.clock_speed = cpu_to_be32(timings.bus_freq_hz);
+> > 
+> > [Severity: Medium]
+> > Since use_defaults is set to true, does this overwrite custom hardware I2C
+> > clock speeds with a 100kHz default for devices without firmware nodes?
+> > 
+> > Before this patch, it looks like cp2112_probe() read the current SMBus
+> > configuration from the device, only modified retry_time, and wrote it back.
+> > This preserved the device's original configured clock speed (which might be
+> > set to 400kHz in the EEPROM).
+> > 
+> > By calling i2c_parse_fw_timings() with an uninitialized local timings
+> > struct and use_defaults = true, timings.bus_freq_hz will be
+> > unconditionally set to 100kHz if the device lacks a firmware property.
+> > 
+> > Is it intended to silently downgrade the speed and override user-configured
+> > EEPROM settings?
 > 
-> This adds a call to drm_dsc_pps_payload_pack(), but it doesn't appear to
-> update the Kconfig entry for DRM_PANEL_VISIONOX_VTDR6130 to select
-> DRM_DISPLAY_DSC_HELPER and DRM_DISPLAY_HELPER.
+> I think we should fix this:
+> i2c_parse_fw_timings(&dev->adap.dev, &timings, false);
+> if (timings.bus_freq_hz)
+>     config.clock_speed = cpu_to_be32(timings.bus_freq_hz);
+>
+
+Yeah, agreed, a good find. The CP2112's default is 100kHz, but
+technically possible the bootloader or something has changed it from the
+default. Will fix.
+
+> > 
+> > [Severity: High]
+> > This is a pre-existing issue, but is there a missing cancellation of the
+> > delayed work in the probe error path?
 > 
-> Could this lead to undefined reference errors during the build for
-> configurations where the panel is enabled but the helpers are not?
+> This one would be nice to fix in a follow up patch.
+>
+
+(Not planning to include with this patchset for sake of churn, but could
+perhaps be fixed separately in the future... I do have a handfull of
+other CP2112 patches to send on once these merge).
+
+> > >  
+> > >  	ret = cp2112_hid_output(hdev, (u8 *)&config, sizeof(config),
+> > 
+> > -- 
+> > Sashiko AI review · https://sashiko.dev/#/patchset/20260520-cp2112-dt-v14-0-b1b4b6734b6f@plexus.com?part=2
+> > 
 > 
->> +	mipi_dsi_picture_parameter_set_multi(&dsi_ctx, &pps);
->> +
->>   	return dsi_ctx.accum_err;
->>   }
-> 
+> Cheers,
+> Benjamin
+
+Thanks,
+
+Danny Kaehn
 
