@@ -1,134 +1,138 @@
-Received: from mail-ot1-f53.google.com (mail-ot1-f53.google.com [209.85.210.53])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from mgamail.intel.com (mgamail.intel.com [192.198.163.13])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AFD173BF665
-	for <sashiko-reviews@lists.linux.dev>; Thu,  4 Jun 2026 05:23:36 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=pass smtp.client-ip=209.85.210.53
-ARC-Seal:i=2; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1780550617; cv=pass; b=erMTbz+w+79LmqMWcJau/IQKOHZFE2HD5K1yUVzr6AjWwGci0pzF4jVsGvzpzPfrpEulVwz3YeKqvn1GA4TOO2Il/Nh3L5NmEss37/SCcNcSUg0iwPXBor76iHR+17GIIB0CEelE3+WXVoz//86LIrCUiQsNnL3UcIx2i8WmyAs=
-ARC-Message-Signature:i=2; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1780550617; c=relaxed/simple;
-	bh=4HC8s43tFJbSgyaqkLOVyH2ryMUhq+vDGxIzbU0F9vo=;
-	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
-	 To:Cc:Content-Type; b=A2gVoWq9U4TbTGYUx4Kqs+0TSy2tLburpvXLLlyeTcYYrLNrKL52uFR8DrP2DTfgqQ52EzIIuMu+cjzfVRkeRsCIg/KxMmVRqqxdYjzj2qjpVofNdIWUB01CKmH4iCW1kZSklwvv7Eb3Oo6fC1g+RuJEu2TqRKPJJHo4VDzaRxA=
-ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=AhF1ixN8; arc=pass smtp.client-ip=209.85.210.53
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F36F2385D77
+	for <sashiko-reviews@lists.linux.dev>; Thu,  4 Jun 2026 05:32:37 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=192.198.163.13
+ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
+	t=1780551160; cv=none; b=R8sZ37nTWDX9Irk4ck+05s5h80HNK8u8EfhB8IhrNj+4b1xESdzZz5VDPa8VYf3LqfZOwcunmbrZevlAUcRmwrELUvs07uYvsWP2MCedcbGrbJD5lZ1ejqTxN4unPxMmXpfMjpFAOD/vEYwzAfCME+mP4qqY9jPSEqGOJJMArU0=
+ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
+	s=arc-20240116; t=1780551160; c=relaxed/simple;
+	bh=A2J9LO8Lgt+UPtTSt8kPI2wRLARc5uc90oOItpIkw9A=;
+	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
+	 In-Reply-To:Content-Type; b=YtVEUSOktJ5FDkUmpWxth0RsHNo6/Z3EnNZIAlxRMiesXPN+Jspvy2GERvYuj9GuWUhjXuT6G+sfFvK/44xD+KZEzgLWHGPwvyqrpQPAbRw/k9dPHcTQf+yH1yLRVczaDLyKv3oVgOKlekjGEtBU512USQOrkV0TGj5lXhNSiKE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linux.intel.com; spf=pass smtp.mailfrom=linux.intel.com; dkim=pass (2048-bit key) header.d=intel.com header.i=@intel.com header.b=W6n25gWa; arc=none smtp.client-ip=192.198.163.13
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linux.intel.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linux.intel.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="AhF1ixN8"
-Received: by mail-ot1-f53.google.com with SMTP id 46e09a7af769-7e6f8f26d66so318049a34.1
-        for <sashiko-reviews@lists.linux.dev>; Wed, 03 Jun 2026 22:23:36 -0700 (PDT)
-ARC-Seal: i=1; a=rsa-sha256; t=1780550615; cv=none;
-        d=google.com; s=arc-20240605;
-        b=j2wIi8vkDp8AFyPsl/jYfS5bxS40pJZQxf7HCdcv/+rCLS/NvycPkYxQynApHmZdix
-         v40e1MFdzMnD0uCzbUNKssyVCvstH5vFncLA9lInpFxiAvOaalW5fNO97a9FAJTf3Nfi
-         L9DVIJsKZLjNhwJWqJrpmZrt4rJ88+tP6777Q8t2Zgvc8c+EotUfqQd17vLgZIC5aEJo
-         cLlpRVhfh36W4lotTknaXTjQ9tPEB3J9hW2imvgVJVMqplxJEPG9bNZo6+W+k4Mw8RmW
-         1sD+R2kfkzfe0GJvUVet3xbnO2lU25eEzrMIsTgnuEFl/U8t4U/MKl9e6YxpvHfG+0ZS
-         So5A==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com; s=arc-20240605;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:dkim-signature;
-        bh=4HC8s43tFJbSgyaqkLOVyH2ryMUhq+vDGxIzbU0F9vo=;
-        fh=wyk7RlhnBrJLts+xkTX7UljkNG2sQfMr/p5mU25CN9s=;
-        b=J27I+nmapUeb7sLlgbx1oxvi9Z1RCToCsUqME4YX/6IoxjFThOF1CauCWpj5o44lpQ
-         vl2jSVbTveZwjY5QRMfKlSvTmL6SCIDD7IvMMEy/EpLB/7CImheDzDB7pfnixgWKYkOL
-         MCMG6KthXs8PiQ9a3f0LjP41TlFNrAvRtz/d4YlnZzI7D5LfLuegUmlSIQGAGxuSvQiZ
-         IMvfmgx0+wEE4JfGn2JHsPEMKW9dMOXq92WHw0MfVWbXo5oenFhefBrxHkPXEqC2IibY
-         r1U7CttFS3EekBUegIZwX2MUbILDNPUXtxnZt4WkecPRFhZ8TA6sfhuMySAU8c5KTDth
-         7e4w==;
-        darn=lists.linux.dev
-ARC-Authentication-Results: i=1; mx.google.com; arc=none
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20251104; t=1780550615; x=1781155415; darn=lists.linux.dev;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=4HC8s43tFJbSgyaqkLOVyH2ryMUhq+vDGxIzbU0F9vo=;
-        b=AhF1ixN8hXKZJ/1liXAZNe/lsZEiE/w2w1R5RoaD/1PnAb2nGJTtq18/NpO5fl3NDs
-         NY1FnkGEV/3N/GJqPaWNL+GDYOhIIXv1tHXMMNq+inZREKVPdISUzskG2KPRWHjQ6IUa
-         mm/GQjER4Wwovh0TEx70h520L70ZX6qXPRHTW3hr8kVVGV8A2NmXdSosuIKnGd2I+XWz
-         JrnyIshS0rpsad2Ctx+Ood7IAKmnpC9IO5ra81LlFBYfb+qGWjOcGCIokQkKPS2tHcbD
-         JbX3UqMPqvwoWNF251QPQR8kx/kRacd6fK5KCb/XnsuNsAIbVHcUXA3C9XAWIIPxKPy5
-         JhjA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20251104; t=1780550615; x=1781155415;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:x-gm-gg:x-gm-message-state:from
-         :to:cc:subject:date:message-id:reply-to;
-        bh=4HC8s43tFJbSgyaqkLOVyH2ryMUhq+vDGxIzbU0F9vo=;
-        b=CGryjG0wQQ1rBTVUaOwaGhoul3tQ/ehrPAjduWeUS5/RHEhxH/kIME5BteIaDrjd25
-         qpBOc0aMgBr5D2/sXVj7WMfLwLVZr1KxQoBPR8//2MohpdXkNwh8uft1TwQ1DfmsOxVo
-         4UzlQayIMf6OoyDhOqvGqsrafKj0b/xClNFHGpy82YtY2IPDp92S1dBWOHsxJTlScqeL
-         fPbFWMFezcYYCO3sHjyr2rt1vpMymDgKO0+pQMIHKGs+cEDNCfeYWGPYUAkhaQLDmD8l
-         rmGHZgJLfURNmVnfIbWQx8hwwOAAAuxUoyv6lglMWnwx1IMCdcYM/ZfTDNVNop3VTpk6
-         AKbA==
-X-Forwarded-Encrypted: i=1; AFNElJ9XnodMAdF8Br5tqv7OjAV8kVp0taDq604rRSa1f2+oOrafHZy/WX8ygDJQjExxLmQLLSrDyWfeaJMK3kj+ODE=@lists.linux.dev
-X-Gm-Message-State: AOJu0YyVLJkZaBiJu8CD6rM6Wwe98PIbAV0ekIVbxGKSADTDrMMqQPXv
-	8oW57oTiKkG5qRdEoVXCZUOs4ueY9lWmakaDBTXFdNKjd9KycvvIGL5uCJjJ2MuznbGVfkWwslV
-	UwAuJ+tHS2ilJRp0QiRPyOr8ipbi0860=
-X-Gm-Gg: Acq92OHJc18qch3c8hmNN4U+twbNYOjA66qmrAUaNPryGDVe6QaE8QU9jpSok8pT4cY
-	HjSQqBowGf9yGQyAbMdvNBSx+mYXESBEPn2VZjFGzp0qI2Q0lrARTeN5HJk0yorpxD9heRYDb+O
-	gf1KT0VHF+CPWGY4VplEK3ZaAFUeWTjoZRoaWu4ojaebvE5+calMC16xevCQ62Fr7PPKFHd+gkC
-	UrY1S3Ym5WgdlB9WTDnN/PsKtUH0VRldrb+bEQO06FS3LIR5d5d1HXHOwWWBWdeHkuDoBixoz4U
-	2mExswrT51glOPRODC84mz8=
-X-Received: by 2002:a05:6820:c2d0:10b0:69e:5e9b:a47d with SMTP id
- 006d021491bc7-69e5e9ba739mr125726eaf.5.1780550615598; Wed, 03 Jun 2026
- 22:23:35 -0700 (PDT)
+	dkim=pass (2048-bit key) header.d=intel.com header.i=@intel.com header.b="W6n25gWa"
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
+  d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
+  t=1780551158; x=1812087158;
+  h=message-id:date:mime-version:subject:to:cc:references:
+   from:in-reply-to:content-transfer-encoding;
+  bh=A2J9LO8Lgt+UPtTSt8kPI2wRLARc5uc90oOItpIkw9A=;
+  b=W6n25gWat3NsM+PP/9/eww+vltqTjgto0YscZ9AWq3NfAvHIhGBvMuDX
+   6nyCl+wXNIQGgFVAYnz/xMYfuvhbpO42E8YBEfAAbipUfMYGMIx4kwYIH
+   /ntoOKIbFQTe8RGq69vDnExtHcFQIJjb6FCIG3IMMAVbatRHCMp5iSEPe
+   lDrBJfX71MTnler9BVsqhFMNk5Pg7fcheXhoCOBAEXaNQ6Rcl66e6Y7fJ
+   5hPsC7yDowPbOUidNbXEou9fCpraAvGzeFZW817LOVDrG1u2qqp6+kwaH
+   rqiueJXIYOeV2zXARgTTJ4+RGidVTQ/WEjmZUpqyniV5aSdRsHZzlg2ek
+   w==;
+X-CSE-ConnectionGUID: /nwV6pl6SoKKyLI2fyIcvw==
+X-CSE-MsgGUID: 4npnnXgtTZGcLowN/07wYw==
+X-IronPort-AV: E=McAfee;i="6800,10657,11806"; a="83947709"
+X-IronPort-AV: E=Sophos;i="6.24,186,1774335600"; 
+   d="scan'208";a="83947709"
+Received: from orviesa005.jf.intel.com ([10.64.159.145])
+  by fmvoesa107.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 03 Jun 2026 22:32:37 -0700
+X-CSE-ConnectionGUID: MHBpgH+9R0qEOnE9L624KA==
+X-CSE-MsgGUID: Zq0ITMpzTTesM6aN4g42HA==
+X-ExtLoop1: 1
+X-IronPort-AV: E=Sophos;i="6.24,186,1774335600"; 
+   d="scan'208";a="249366437"
+Received: from unknown (HELO [10.238.2.24]) ([10.238.2.24])
+  by orviesa005-auth.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 03 Jun 2026 22:32:36 -0700
+Message-ID: <f33a2ef6-0f81-4417-89c4-ecf3d3e11e56@linux.intel.com>
+Date: Thu, 4 Jun 2026 13:32:34 +0800
 Precedence: bulk
 X-Mailing-List: sashiko-reviews@lists.linux.dev
 List-Id: <sashiko-reviews.lists.linux.dev>
 List-Subscribe: <mailto:sashiko-reviews+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:sashiko-reviews+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-References: <20260603-rva23u64-hwprobe-v2-v3-7-5529a7b28384@gmail.com> <20260602232859.3494A1F00893@smtp.kernel.org>
-In-Reply-To: <20260602232859.3494A1F00893@smtp.kernel.org>
-From: Guodong Xu <docular.xu@gmail.com>
-Date: Thu, 4 Jun 2026 13:23:24 +0800
-X-Gm-Features: AVHnY4KMEU2WhD0nvjMwpU3NMXUXsI7Ox3Ri4eRsECUeb1hKlU4cqSpj1AHXzbM
-Message-ID: <CA+Ck9FYWCbHO6-BU48KLx_Lov7pJiSbAP8j3Te_uqFFq81rUjg@mail.gmail.com>
-Subject: Re: [PATCH v3 07/15] dt-bindings: riscv: Add Zic64b extension description
-To: robh@kernel.org, conor+dt@kernel.org
-Cc: devicetree@vger.kernel.org, kvm@vger.kernel.org, 
-	sashiko-reviews@lists.linux.dev
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
+User-Agent: Mozilla Thunderbird
+Subject: Re: [RFC PATCH v2 4/4] KVM: x86: TDX: Report CORE_CAPABILITIES as
+ supported
+To: sashiko-reviews@lists.linux.dev
+Cc: kvm@vger.kernel.org, Xiaoyao Li <xiaoyao.li@intel.com>
+References: <20260604023314.3907511-5-binbin.wu@linux.intel.com>
+ <20260604025142.200341F00893@smtp.kernel.org>
+Content-Language: en-US
+From: Binbin Wu <binbin.wu@linux.intel.com>
+In-Reply-To: <20260604025142.200341F00893@smtp.kernel.org>
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 7bit
 
-Hi Rob, Conor,
 
-On Wed, Jun 3, 2026 at 7:29=E2=80=AFAM <sashiko-bot@kernel.org> wrote:
->
-> The properties block requires multi-letter extensions to be sorted
-> alphanumerically. Because '6' comes before 'c', would it be more accurate=
- to
-> place zic64b before ziccamoa?
 
-On a double check, I found here Sashiko is flagging a real ordering issue.
-(Although it exists before my submission.)
-
-In current riscv/extensions.yaml, zic* entries are split into two groups:
-one (ziccamoa etc.) sits above the Zk* block, the other (zicbom, zimop,
-etc.) sits below it. This is wrong considering the rule says "# multi-lette=
-r
-extensions, sorted alphanumerically".
-
-Would you like a standalone patch that re-sorts the zi*/zk* ordering
-properly? It's purely cosmetic.
-
-If there are no objections I can send it as part of my v4.
-Let me know what you think.
-
-BR,
-Guodong
-
->
-> Does it make sense to place zic64b in its strictly correct alphanumeric
-> position, rather than continuing the out-of-order grouping of the existin=
-g
-> cache-block extensions like zicbom?
->
-> [ ... ]
->
+On 6/4/2026 10:51 AM, sashiko-bot@kernel.org wrote:
+> Thank you for your contribution! Sashiko AI review found 1 potential issue(s) to consider:
+> - [High] Missing handling of MSR_IA32_CORE_CAPS in tdx_set_msr() causes KVM_SET_MSRS to fail, breaking VM initialization and live migration.
 > --
-> Sashiko AI review =C2=B7 https://sashiko.dev/#/patchset/20260603-rva23u64=
--hwprobe-v2-v3-0-5529a7b28384@gmail.com?part=3D7
+> 
+> commit 217a78047d73d2be68ef27e206470a6c237db79a
+> Author: Binbin Wu <binbin.wu@linux.intel.com>
+> 
+> KVM: x86: TDX: Report CORE_CAPABILITIES as supported
+> 
+> This commit adds CORE_CAPABILITIES to the TDX configurable CPUID allowlist
+> to accommodate legacy TDX module behavior. It also modifies tdx_get_msr()
+> to return 0 for MSR_IA32_CORE_CAPS.
+> 
+>> diff --git a/arch/x86/kvm/vmx/tdx.c b/arch/x86/kvm/vmx/tdx.c
+>> index 26a5ad59a5694..b7661ba98a8d4 100644
+>> --- a/arch/x86/kvm/vmx/tdx.c
+>> +++ b/arch/x86/kvm/vmx/tdx.c
+> 
+> [ ... ]
+> 
+>> @@ -2319,6 +2319,14 @@ int tdx_get_msr(struct kvm_vcpu *vcpu, struct msr_data *msr)
+>>  			return 1;
+>>  		msr->data = vcpu->arch.mcg_ext_ctl;
+>>  		return 0;
+>> +	case MSR_IA32_CORE_CAPS:
+>> +		/*
+>> +		 * KVM doesn't support MSR_IA32_CORE_CAPS, however, in some old
+>> +		 * TDX modules, CPUID.0x7.0.EDX[30] is fixed-1. As a workaround,
+>> +		 * just return 0 for this MSR.
+>> +		 */
+>> +		msr->data = 0;
+>> +		return 0;
+> 
+> [Severity: High]
+> Since MSR_IA32_CORE_CAPS is now exposed to userspace via tdx_get_msr(), does
+MSR_IA32_CORE_CAPS is not exposed to userspace via KVM_GET_MSR_INDEX_LIST.
+I suppose userspace should retrieve the supported MSRs via KVM_GET_MSR_INDEX_LIST
+before KVM_GET_MSRS/KVM_SET_MSRS?
+
+
+Had a second thought, this MSR code could be dropped.
+In Linux kernel, MSR_IA32_CORE_CAPS is either read by the safe version or skipped
+when it's running in virtualized environment. Also, there was no complain about
+the access of this MSR in any guest so far.
+
+We can just report CORE_CAPABILITIES as a TDX configurable CPUID bit to userspace.
+Userspace can do some change to remove any bit that reported as configurable from
+fixed1 bits. Since KVM doesn't support CORE_CAPABILITIES via KVM_GET_CPUID2,
+userspace then should not enable CORE_CAPABILITIES bit for TDX guests.
+
+
+> tdx_set_msr() need a corresponding update to accept host-initiated writes?
+> 
+> During VM migration or state restore, userspace typically reads MSRs on the
+> source and writes them to the destination. If tdx_set_msr() doesn't handle
+> MSR_IA32_CORE_CAPS, the KVM_SET_MSRS ioctl will fall through to the default
+> case.
+> 
+> Because tdx_has_emulated_msr() does not include MSR_IA32_CORE_CAPS, won't
+> tdx_set_msr() return an error and immediately abort the migration?
+> 
+>>  	default:
+>>  		if (!tdx_has_emulated_msr(msr->index))
+>>  			return 1;
+> 
+
+
+
+
