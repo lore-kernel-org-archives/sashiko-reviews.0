@@ -1,195 +1,131 @@
-Received: from mail-wr1-f45.google.com (mail-wr1-f45.google.com [209.85.221.45])
+Received: from mail-wm1-f50.google.com (mail-wm1-f50.google.com [209.85.128.50])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7896C360751
-	for <sashiko-reviews@lists.linux.dev>; Thu,  4 Jun 2026 08:00:19 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.221.45
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5BE4D30B53A
+	for <sashiko-reviews@lists.linux.dev>; Thu,  4 Jun 2026 08:00:35 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.50
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1780560020; cv=none; b=cOpeEFBgN05+Vha6vTazfZ8JeeNX1XihKyDCmODAdEt80Zgn8uLX+ZdKbE3rz+LfPb2zi4/ac3d9cT1UGfpHpsBeFJGKFbPNDg3Z2BctV0dFrhMCqm+xhccvfju2UJQnSTdaUsR801zlX43BMP/dEndW9BxSmkniRCJ/qnFMTx8=
+	t=1780560036; cv=none; b=FYVTtSbXd2PhfyeukBHMOxs87Kwdjy3x1G88kJErBZ9wD5jn8FnMZUWvIUDvbXgF7N+ypfQ2NrWXoF1+MZcyGvp1Voi2IK32IlOSs7H2EBxRQQmSEq/DupGI6CBNVBIdIPGbNdZnYzyD4mEd4a551+1pijIEbr70R8vO8+26ga4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1780560020; c=relaxed/simple;
-	bh=/kK0EiqbtRxcXCneLjLSqWB+1SFHKACpn5JrEZdEokU=;
+	s=arc-20240116; t=1780560036; c=relaxed/simple;
+	bh=SfESCifJlQC8gwG7XGfkvZA9ud2mCQVHiHUPsZbe7+A=;
 	h=From:Date:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=bDzYH2Ts2zL6yVDMIQCI0YAvxtG0aaFNDk2SqoLHQzq0y6pFjoYRUE+3QLTyZ4kJEvc/gnbnwB2lg50RIXub1T35XFe3T4/dnNSsB7ukAQTWJoxzx+kE7yNCvhq1NNLy+VqemuDB4sRG9ZCYSaCeu0KPT3dIeYsF+aRX9XoB6eg=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=N0yz+bUP; arc=none smtp.client-ip=209.85.221.45
+	 Content-Type:Content-Disposition:In-Reply-To; b=jCPL6zKAj6S8lInv/aRbAIn9/0GCGKsEmNv3bfdm2DHcJ2tAjUxIT9i/+0Yl38YDQ3w9S1CKyEgGMFOHrrNKad94qyzG1zPUwCPIH8BnY+3pikpNC6cs//AD52fXRRmJoUquXk8mqdwJL6BMVUmMmrsjUvy8ga6SbH98D5vTYgU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=iKpsf3UV; arc=none smtp.client-ip=209.85.128.50
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="N0yz+bUP"
-Received: by mail-wr1-f45.google.com with SMTP id ffacd0b85a97d-45f3cf907ceso170112f8f.2
-        for <sashiko-reviews@lists.linux.dev>; Thu, 04 Jun 2026 01:00:19 -0700 (PDT)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="iKpsf3UV"
+Received: by mail-wm1-f50.google.com with SMTP id 5b1f17b1804b1-490b64c8311so5101495e9.3
+        for <sashiko-reviews@lists.linux.dev>; Thu, 04 Jun 2026 01:00:35 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20251104; t=1780560018; x=1781164818; darn=lists.linux.dev;
-        h=in-reply-to:content-transfer-encoding:content-disposition
-         :mime-version:references:message-id:subject:cc:to:date:from:from:to
-         :cc:subject:date:message-id:reply-to;
-        bh=KR2sxU8/RVafv8i+YN/YPRdPY2nC6pIwxn29KCvs/x4=;
-        b=N0yz+bUPaM9ih+SVnKsrncsNJb6GoV0VLQdc8NB2bN3abDiILpv8YNP6R+pM6F0aem
-         SnZNyjvrG2TeSklTALKb0Y4CUmOgYRxAONzppYEFW5kFHPjqOZPOwziYuqoJLYbqghjy
-         s0dEEqCdy79/6ULw0L7AClM9cqq3tCeqi6/8SnpjERQkQjd56CPqndRYJxMZQG6ZjW/E
-         0nyBFjsr/QOBR3akmdX23stYoEIeIQav3pxlu/yyLgGylaazTfmfPlu2i6M2NoLYsXP7
-         aI3uliNnZXYfR2QChD6sgdpiY+S6cJblmA4cnlF0quJQEXqj0xDlDMzH9icGtlQrhPfL
-         N8/A==
+        d=gmail.com; s=20251104; t=1780560034; x=1781164834; darn=lists.linux.dev;
+        h=in-reply-to:content-disposition:mime-version:references:message-id
+         :subject:cc:to:date:from:from:to:cc:subject:date:message-id:reply-to;
+        bh=5fwggcNXE/qZG0R5u5GBwdY5Nt2S4QAlzMN0onVXeTE=;
+        b=iKpsf3UVBzubbxZrApxSwB4HfKix5tkwbw5BZ4kLJVdhURg/+i7m0Jt9uA8suoGyCQ
+         JpFPO3WHWi5wTEIjycrnALYLoE07c6LfOj4h5Qr2n/jnL8pIr/sU2IvhHxNdWzwCC69Y
+         RhIzWz/dv7ogTUcMhY4Xb0WrcnDIAb7IOjBZNQhpHbOdswNrm3U9P8v4jkH7dXNCE2hb
+         e0cVZv3TLjw2fD2OflYqESulrskwuBmQs72zwc6AJjP0Hv0baWXd9v0yTxrAqCI7Rq/Q
+         sLdQBLuvRaIQ8d8y/6gc72C0t2r7cdvf3Aksp2gB8p5dsuvnUgRhthcDvgoki8onDBbn
+         E/qw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20251104; t=1780560018; x=1781164818;
-        h=in-reply-to:content-transfer-encoding:content-disposition
-         :mime-version:references:message-id:subject:cc:to:date:from:x-gm-gg
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=KR2sxU8/RVafv8i+YN/YPRdPY2nC6pIwxn29KCvs/x4=;
-        b=rr1T0jUWRGZesSgkq6UF3rfKF+xmUxT22WG4YbFslggsAoNqr2xWmQsKoe7KKrrdwB
-         IgjUkuRanq9EkAQ9YLfpzP+gflKfDS7XNUcOw407t7wnQh9SKIAhbFr8V/gCYuM0Ub/i
-         GnnVdDtcaRv82wEUZP6WaUNJIuvoYsgErxNKre6P30Uf0+8JdI7FpZr05nA2GjU5c22a
-         Jf+WBhMUVYWuF6aQfTr+nngqwhB0qTcanV7DHTaHfKnktkKJOZeXs7IBpE8VX77dluqw
-         mJVvHRSXzzEOOuCXzwoCujhX95LHyosACI77Y1w0AFxe5oroqIGRem1K2inOutxEvqo7
-         wLCQ==
-X-Gm-Message-State: AOJu0YyJBbwp3bPKJL/umVjzM7za2clK9YjVX6eLWobWlaLk+0KDE9Lg
-	ulseWysAr4hDd50jJPaMZ1aPo0ZZHbfZK7Ib0uOTySejymhT+rIbZB0LzV9Bag==
-X-Gm-Gg: Acq92OHcnKT5/LbS4o4HBsH9z7BuIUFPFR/7Mi8b+1nay6DexgFhyGkhuR7nIS1GMsq
-	ueX+Svhsfnhn5XIVy9pwzquiiEeANagHPV6nmu3lEboTO6EQLl6TDvZZgffkO0ITkr9ABCfUVkd
-	bYedw/QNsTYN1yYk5JxIn9Y4b494VkZC9tHbkXGbJZu9RuVfokFebHZXbtiHSbCwc2o0hB46Oe6
-	YI7KptZSxz8bH7IZjUf0XuusPS9F0sU9oGEtwgq6ps6H5th0/ksDnsK2gSTvTg8+mLk1boxu5ST
-	kY9op42hRYe9CQIuarh9aJc75nKwgyjuiUuto31wxNq9+DTrTuExpPN4zQRsiammopxocC5Ofjp
-	ZQehWjqOih1pdW6KNjCa3XhjdNw5PmJ7/6c7tivBEwFd1dNGjwNsPa1JE6qvjCN0AZ0R3DFKFxZ
-	r5Lr8/HiG81eg3sOOePansDAuCDA==
-X-Received: by 2002:adf:f484:0:b0:460:efd:c682 with SMTP id ffacd0b85a97d-460218271b6mr8956673f8f.24.1780560017687;
-        Thu, 04 Jun 2026 01:00:17 -0700 (PDT)
+        d=1e100.net; s=20251104; t=1780560034; x=1781164834;
+        h=in-reply-to:content-disposition:mime-version:references:message-id
+         :subject:cc:to:date:from:x-gm-gg:x-gm-message-state:from:to:cc
+         :subject:date:message-id:reply-to;
+        bh=5fwggcNXE/qZG0R5u5GBwdY5Nt2S4QAlzMN0onVXeTE=;
+        b=qRF2tGmySuRmTDZtIw0PfT1LsH7RNx2YNqbd8SmcKltbesny6eG2W8rY5lW9Zw2kDb
+         IwDp2+OuFRR8/C6+P0Uldm6hzf40U7YytN1tF0bSjnd2DCRdvBIMod12mO6RpK2AK4vf
+         yUKtKOkXC/5J5HTcpkfcqucWYONwGyMj4HXMkA3p9hkf7kRGrCW1yydAn47URab7lUSF
+         iChHu+dqbhlB/YegIObEcV4iECYNGiORzmyzcOBowr76AfoyDm++Y8jUXsBs/UTncjQk
+         X770NO9x2JPxve8i2EKaxAK0B655DjGlKxcZTqRR7CfuZZSnF53qs1AvFxN4d8IPJFVh
+         vITA==
+X-Gm-Message-State: AOJu0YyS94EEwSWqqVS1hz0N624QidYwqEi7/PgjyhU1Lcd+7EHgyNYe
+	6He/6zxw4rX/thS1mJ05ZQFtt+2l+1PMkCbZnV+LqdWtnNzmFahQnaz80c1GFw==
+X-Gm-Gg: Acq92OEhUz1uDJ4/jq9odls/tIBq4u57H+pRQ4oh596TdxdWU8KxEd7tDN2JocHI1Ia
+	/dD0ld6CDWouVuODcDlO+CdW1GMOPJPDyVti3twCy2uUubApHG1jitDB1B73tV9sEcp1D9luwbE
+	hEML7zqztdKQrDl5wU6ZSdSZsO+Iu7bpDEDXIlTfbqq5amhNMwL93VtbUSqicV/p4stHjHmexqW
+	G0Ow73TGrB7fGh+YRcT0nqMCJlohANitRAwtOLZdJB50GrDhe6b41Cmm3RjjZPyREx2iVEWDiS5
+	xU3DpQ1GEMGF7hA2ANQlcIuA4IazdbQloUfGSjEki10HCaqJA+osgLiiff4jQIQBljZGR/qx5Sc
+	m9TUdd2YnnTHcQdUdQoFWA7m1/kn8Hww6xg66CRaRFKDWdUVPNV+cLsd/ruwq/n1C5+yUI24M9I
+	b25oQp85T1yrYpoCG6fbE1ltkDrdL0g/JRNs6e
+X-Received: by 2002:a05:600c:458b:b0:490:b409:94f4 with SMTP id 5b1f17b1804b1-490b5fdcda1mr115062605e9.28.1780560033621;
+        Thu, 04 Jun 2026 01:00:33 -0700 (PDT)
 Received: from krava ([2a02:8308:a00c:e200:b655:ff13:e355:16a3])
-        by smtp.gmail.com with ESMTPSA id ffacd0b85a97d-4601f2dcae2sm14961528f8f.6.2026.06.04.01.00.17
+        by smtp.gmail.com with ESMTPSA id ffacd0b85a97d-4602cda363bsm1541050f8f.31.2026.06.04.01.00.32
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Thu, 04 Jun 2026 01:00:17 -0700 (PDT)
+        Thu, 04 Jun 2026 01:00:33 -0700 (PDT)
 From: Jiri Olsa <olsajiri@gmail.com>
 X-Google-Original-From: Jiri Olsa <jolsa@kernel.org>
-Date: Thu, 4 Jun 2026 10:00:15 +0200
+Date: Thu, 4 Jun 2026 10:00:31 +0200
 To: sashiko-reviews@lists.linux.dev
 Cc: bpf@vger.kernel.org
-Subject: Re: [PATCHv7 bpf-next 13/29] bpf: Add support for tracing multi link
-Message-ID: <aiEwj71lWsgZEbv9@krava>
-References: <20260603110554.29590-14-jolsa@kernel.org>
- <20260603114150.AB61C1F00898@smtp.kernel.org>
+Subject: Re: [PATCHv7 bpf-next 10/29] bpf: Add multi tracing attach types
+Message-ID: <aiEwnwBeP69ZUpCA@krava>
+References: <20260603110554.29590-11-jolsa@kernel.org>
+ <20260603113751.DC4C51F00893@smtp.kernel.org>
 Precedence: bulk
 X-Mailing-List: sashiko-reviews@lists.linux.dev
 List-Id: <sashiko-reviews.lists.linux.dev>
 List-Subscribe: <mailto:sashiko-reviews+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:sashiko-reviews+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=iso-8859-1
+Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-Content-Transfer-Encoding: 8bit
-In-Reply-To: <20260603114150.AB61C1F00898@smtp.kernel.org>
+In-Reply-To: <20260603113751.DC4C51F00893@smtp.kernel.org>
 
-On Wed, Jun 03, 2026 at 11:41:50AM +0000, sashiko-bot@kernel.org wrote:
+On Wed, Jun 03, 2026 at 11:37:51AM +0000, sashiko-bot@kernel.org wrote:
 > Thank you for your contribution! Sashiko AI review found 1 potential issue(s) to consider:
-> - [Low] The patch references multiple undefined symbols (`struct bpf_tracing_multi_link`, `bpf_trampoline_multi_attach`, `bpf_trampoline_multi_detach`, and `is_tracing_multi`), which results in compilation failures.
+> - [High] Missing `BPF_TRACE_FENTRY_MULTI` and `BPF_TRACE_FEXIT_MULTI` cases in `btf_validate_prog_ctx_type` causes valid `.multi` programs using `u64 *ctx` to be rejected.
 > --
-
-this commit compiles fine, specific answers below
-
-jirka
-
 > 
-> commit 4e3377b79034e4eafa802e1a2382a4ca893a956f
+> commit 0330f287f02c3a32c9ab8bf7f4f5a6ad6cf7366f
 > Author: Jiri Olsa <jolsa@kernel.org>
 > 
-> bpf: Add support for tracing multi link
+> bpf: Add multi tracing attach types
 > 
-> This commit adds a new link type to allow attaching a BPF program to
-> multiple function BTF IDs. It introduces the tracing_multi configuration
-> fields in bpf_attr::link_create and implements the attachment logic.
+> This commit introduces new program attach types BPF_TRACE_FENTRY_MULTI and 
+> BPF_TRACE_FEXIT_MULTI to support multi-tracing attachment. Base verifier 
+> support is added to recognize these types and accept them as sleepable 
+> programs, while deferring actual target validation to link creation.
 > 
-> > diff --git a/kernel/bpf/syscall.c b/kernel/bpf/syscall.c
-> > index 625a4366fe6d7..6f72ede0c8f04 100644
-> > --- a/kernel/bpf/syscall.c
-> > +++ b/kernel/bpf/syscall.c
-> > @@ -5842,6 +5842,8 @@ static int link_create(union bpf_attr *attr, bpfptr_t uattr)
-> >  			ret = bpf_iter_link_attach(attr, uattr, prog);
-> >  		else if (prog->expected_attach_type == BPF_LSM_CGROUP)
-> >  			ret = cgroup_bpf_link_attach(attr, prog);
-> > +		else if (is_tracing_multi(prog->expected_attach_type))
-> 
-> [Severity: Low]
-> Is is_tracing_multi() defined anywhere in this series? It appears this might
-> cause an implicit declaration error during the build, as the function or macro
-> seems to be missing.
-
-yes, in: bpf: Add multi tracing attach types
-
-> 
-> > +			ret = bpf_tracing_multi_attach(prog, attr);
-> >  		else
-> >  			ret = bpf_tracing_prog_attach(prog,
-> 
+> > diff --git a/kernel/bpf/verifier.c b/kernel/bpf/verifier.c
+> > index 8ed484cb1a8a4..521ec2a9051ed 100644
+> > --- a/kernel/bpf/verifier.c
+> > +++ b/kernel/bpf/verifier.c
 > [ ... ]
+> > @@ -16314,6 +16314,8 @@ static bool return_retval_range(struct bpf_verifier_env *env, struct bpf_retval_
+> >  		case BPF_TRACE_FENTRY:
+> >  		case BPF_TRACE_FEXIT:
+> >  		case BPF_TRACE_FSESSION:
+> > +		case BPF_TRACE_FENTRY_MULTI:
+> > +		case BPF_TRACE_FEXIT_MULTI:
 > 
-> > diff --git a/kernel/trace/bpf_trace.c b/kernel/trace/bpf_trace.c
-> > index d853f97bd154f..9e3cb547651e5 100644
-> > --- a/kernel/trace/bpf_trace.c
-> > +++ b/kernel/trace/bpf_trace.c
-> > @@ -3641,3 +3642,132 @@ __bpf_kfunc int bpf_copy_from_user_task_str_dynptr(const struct bpf_dynptr *dptr
-> >  }
-> >  
-> >  __bpf_kfunc_end_defs();
-> > +
-> > +#if defined(CONFIG_DYNAMIC_FTRACE_WITH_DIRECT_CALLS) && \
-> > +    defined(CONFIG_HAVE_SINGLE_FTRACE_DIRECT_OPS)
-> > +
-> > +static void bpf_tracing_multi_link_release(struct bpf_link *link)
-> > +{
-> > +	struct bpf_tracing_multi_link *tr_link =
-> > +		container_of(link, struct bpf_tracing_multi_link, link);
-> > +
-> > +	WARN_ON_ONCE(bpf_trampoline_multi_detach(link->prog, tr_link));
+> [Severity: High]
+> Are we missing an update to btf_validate_prog_ctx_type() in kernel/bpf/btf.c
+> to handle these new multi types?
 > 
-> [Severity: Low]
-> Where is bpf_trampoline_multi_detach() declared? It looks like the declaration
-> and definition for this function are missing, which will break the build.
+> Currently, BPF_TRACE_FENTRY and BPF_TRACE_FEXIT are explicitly whitelisted
+> there to allow u64 * as a context type:
+> 
+> kernel/bpf/btf.c:btf_validate_prog_ctx_type() {
+>     ...
+> 		case BPF_TRACE_FENTRY:
+> 		case BPF_TRACE_FEXIT:
+> 		case BPF_MODIFY_RETURN:
+> 		case BPF_TRACE_FSESSION:
+> 			/* allow u64* as ctx */
+> 			if (btf_is_int(t) && t->size == 8)
+> 				return 0;
+> 			break;
+>     ...
+> }
+> 
+> Without adding the new multi types to this switch statement, the verifier
+> will fall back to the default canonical type (void *) and will reject valid
+> multi programs that use BPF_PROG and u64 *ctx.
 
-yes, in: bpf: Add bpf_trampoline_multi_attach/detach functions
+yes, we disabled direct ctx access for tracing multi programs 
 
-> 
-> > +}
-> 
-> [ ... ]
-> 
-> > +int bpf_tracing_multi_attach(struct bpf_prog *prog, const union bpf_attr *attr)
-> > +{
-> > +	struct bpf_tracing_multi_link *link = NULL;
-> > +	struct bpf_link_primer link_primer;
-> > +	u32 cnt, *ids = NULL;
-> 
-> [ ... ]
-> 
-> > +	err = check_dup_ids(ids, cnt);
-> > +	if (err)
-> > +		goto error;
-> > +
-> > +	link = kvzalloc_flex(*link, nodes, cnt);
-> 
-> [Severity: Low]
-> Is struct bpf_tracing_multi_link defined anywhere? Evaluating the size of an
-> incomplete type in this allocation macro will lead to a compiler error.
-
-yes, in: bpf: Add bpf_trampoline_multi_attach/detach functions
-
-> 
-> > +	if (!link) {
-> > +		err = -ENOMEM;
-> > +		goto error;
-> > +	}
-> 
-> [ ... ]
-> 
-> > +	link->nodes_cnt = cnt;
-> > +
-> > +	err = bpf_trampoline_multi_attach(prog, ids, link);
-> 
-> [Severity: Low]
-> Does bpf_trampoline_multi_attach() exist yet? Like the detach function, this
-> seems to be undeclared and undefined, leading to a build failure.
-
-yes, in: bpf: Add bpf_trampoline_multi_attach/detach functions
-
-> 
-> > +	kvfree(ids);
-> 
-> -- 
-> Sashiko AI review · https://sashiko.dev/#/patchset/20260603110554.29590-14-jolsa@kernel.org?part=1
+jirka
