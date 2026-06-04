@@ -1,182 +1,165 @@
-Received: from mail-wm1-f51.google.com (mail-wm1-f51.google.com [209.85.128.51])
+Received: from mail-wr1-f47.google.com (mail-wr1-f47.google.com [209.85.221.47])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5FA4247A0C4
-	for <sashiko-reviews@lists.linux.dev>; Thu,  4 Jun 2026 12:46:15 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.51
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 28C49239E9B
+	for <sashiko-reviews@lists.linux.dev>; Thu,  4 Jun 2026 13:09:49 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.221.47
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1780577176; cv=none; b=ZFOIaMmHmT+CmWWycbLm96mtZiRzIwXH0YMF0O1XXSe/ysWJC5dZ6SBaquSx47oAn0O0R6CFXALlMatOvCzy8PIZ+jX7frMrAPKiHXjB79lqOcJp9D101DwHJQG8j56V+sLhhklo9wFhsJC1BdrImWlUWSlsCE7DFXRNaSMjOJo=
+	t=1780578592; cv=none; b=NkhyiBzBljtr1EN5Hr/EiLjJ3i6bv/Dq1ULNP2Wx2SlBnXCQ2xdBmG2TGV2SrWDZpW+BCrKdDzEse1QTwaUm0crCJLziOje9it7pjWid8PeGGfmXbjgsaYdb50ltebqpAiGHZlvb5lvNeplaZZa/r5dLkgyqKo7PqldrTM7ODQU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1780577176; c=relaxed/simple;
-	bh=LRtadUmB8iW5U3+lyUIKXngJGb8N4NhLMSSMPsBj5ww=;
-	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=LRXCTOhILibG/3SrcuzFQ51wX/mm8KAx4X6M2o6wHS6Ij5untfmwqKpAFvPNTVL8qB5JxB14I0slpzlACdWmi+kRHK9PwWrNgPVu0lINwd84goNk7vveATQKjJil0Zwk5wujzitRZb84lvZjMFlQxSeEjJNy4hHEIeCGLY/MSSk=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=AwnLJKSw; arc=none smtp.client-ip=209.85.128.51
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
+	s=arc-20240116; t=1780578592; c=relaxed/simple;
+	bh=Sn3lKQIudwwunx7+Nr0y3ITWmEl6iVkiYlEfVNv7FTA=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=ebR3kwvmO1KQJuIBOoEFO4znFONjuLkU+vbMmDurG559L1AU1XPA2zbIYxTnsc0jo9hwo29AylIlUJheEXEEi8MEA5efPJhYPLcX/dDqUsoBhxygXqvd0XwTyU3IGNX7JFrf2is5G6TR6o83+3f3yXttmHKPfOL24Y/+ditwlM4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=suse.com; spf=pass smtp.mailfrom=suse.com; dkim=pass (2048-bit key) header.d=suse.com header.i=@suse.com header.b=GYtkT9dN; arc=none smtp.client-ip=209.85.221.47
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=suse.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=suse.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="AwnLJKSw"
-Received: by mail-wm1-f51.google.com with SMTP id 5b1f17b1804b1-490b3e03939so5772035e9.1
-        for <sashiko-reviews@lists.linux.dev>; Thu, 04 Jun 2026 05:46:15 -0700 (PDT)
+	dkim=pass (2048-bit key) header.d=suse.com header.i=@suse.com header.b="GYtkT9dN"
+Received: by mail-wr1-f47.google.com with SMTP id ffacd0b85a97d-4600cbb06deso400332f8f.1
+        for <sashiko-reviews@lists.linux.dev>; Thu, 04 Jun 2026 06:09:49 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1780577174; x=1781181974; darn=lists.linux.dev;
-        h=content-transfer-encoding:in-reply-to:from:content-language
-         :references:cc:to:subject:user-agent:mime-version:date:message-id
-         :from:to:cc:subject:date:message-id:reply-to;
-        bh=Y8L6wxZtCAQTGBF5p67+Z/vLXWJAdDinu+/qJ39j5po=;
-        b=AwnLJKSwhGhkd0qbu++qUBFuwe+AQn0twgDlSGg2rKx3MSSDnIkE9095se5Fxeresu
-         UK3r6TbqS2/zUbEiScYyHzJAD0JjDz5wHjglGNdo08P+sbBxYITkHKdKh5mGpVPxPOFk
-         Sy7uHqbEyQ1QbBgFn+Dz7md2Q55NU3Z+pDm8Hgl4Kq+V20Ae74ccLlqtlcZiWdQUExEG
-         i4EhKVPX0pr8DzNNE1xTZVvX8YQg5T9omz9Zc3I7wldf2mQPGRNSS98x0TYLUjVEqNv6
-         q7udWI8kk8YnCEkkXiwvGo2oklq3KHAAKMGAyIvV9wlEKy15PqwP7nJFnR5WDUacl7BN
-         A28g==
+        d=suse.com; s=google; t=1780578588; x=1781183388; darn=lists.linux.dev;
+        h=in-reply-to:content-disposition:mime-version:references:message-id
+         :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
+        bh=+oY1VKwPkVFKv4NeE5kqwicRyh8+m7qj+rD/u5rkZKI=;
+        b=GYtkT9dN1VeMgaESrp8KNHZ+3F2sikk+e5iOAf1XXUAutFL9TBtJHeZ4yZ/qeibx3V
+         13IFKjVJsfEFdgi5w8ftjOZtO+cUACW8CUMPMpeJElGnnukqbTANPoHcyTI9M//sqF4Y
+         Af56Z6PDHmcLnnYhYC6H4itLb8vrNIxwO/UFzmcWIFTWIRvek4aiQtEBbrYf/g8qumRO
+         kcZts7Hsx62zFl9og1ABLam0AX01jUWyNzorckF/QADi5qOapu6JVrN8lhjAhBdLXn7C
+         S06kPFtnsEIOcHKTfRhFJLTRsrPk/a8HmdqT+PW3tDiGSulAizPlLrfJIFjfKAzBW3Es
+         /qdA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20251104; t=1780577174; x=1781181974;
-        h=content-transfer-encoding:in-reply-to:from:content-language
-         :references:cc:to:subject:user-agent:mime-version:date:message-id
-         :x-gm-gg:x-gm-message-state:from:to:cc:subject:date:message-id
-         :reply-to;
-        bh=Y8L6wxZtCAQTGBF5p67+Z/vLXWJAdDinu+/qJ39j5po=;
-        b=KWs2fE3pAb9AYbvcHhLDcbxjsmMqbO4EThVjK/gK7jijZJUhmKW3Z57taxqf5Yo+ey
-         7NZ/cCeB2OV+mKSN6alzd+qjQKvSzHPRSobgwRSYoPSyjfk/HEKRZhXBdhPwz9IJfvFS
-         PMDz3Gx0enKUqxBZlSEAWviEZXtZsZbU37UMDGoEVIItPLLksLG05s9a6zk5b5NfPYY3
-         si6ppDurMa18aSVPnckkQlZwnc3WUBIvnvuWNhYra/7X475RZlFWigR/3dRPvEY8e5Xt
-         OlQHLga2Dfpmm35Zlty5cuUWUDLlrw5iyp6xwl52fkI236XFlLFs9VQBgX3NzSiyN7W+
-         /mhQ==
-X-Gm-Message-State: AOJu0YwRvcGYQs/d43Ji6W3Yh01RIYpR9g+K1lO8C1Rj0pu6R7/Aza1g
-	A6QBinS73PnuoxI2ws/yqClkDqIGPjnBqlVS7xsvA92YOgiWCOxS1jJdd+O6D512jGWvHyrfgfL
-	N56Y4mkQ=
-X-Gm-Gg: Acq92OH/Xuh4D0TdatMyxvjDAZVGa7mNhqC7CNtYnzR6WrMxkTRkXqHxnk9E0foVOl3
-	HI69eOfBYewxbGCSwjqE1srXeg35ZwKzopkUowa+Va2IQCcxVIv2JW3svxF1fYdTRENNgbUTzJL
-	px6rXyzyxjSW5BSoJeLxLIPQowR2R2iMxF1hDmT6/IeCxg85lGXuVyOvZO0bHi49pormRT3J3yt
-	NtozjYTZf/uTR76i+9/EcYLUgnp4TMJwt6eoR7bbhKc8G+UmOcgeqpuC5L2WA4Qg79VASLzjY1W
-	Ii0ek7ZmnEz24GqrOTJwYeDXd+EwNy8Ib1tvK44mrMSOv5XeADCAEd3t8U3aLk3G0L4mTpOZRHD
-	4VZj6DflRz9JZ711GrdUka9uFvyjLMPUzzd/wRcpQEVaBDDQ2cS2mgyrBRg+oHAsKBMXgakqAEo
-	GJi+MW9uol+er6Bl1Fjpz4b9u9I3ZUshxIdW9hSe8=
-X-Received: by 2002:a05:600c:8b76:b0:490:9dc3:3483 with SMTP id 5b1f17b1804b1-490bc4b5734mr50395435e9.2.1780577173383;
-        Thu, 04 Jun 2026 05:46:13 -0700 (PDT)
-Received: from [192.168.1.3] ([185.48.77.170])
-        by smtp.gmail.com with ESMTPSA id 5b1f17b1804b1-490bc3b5b82sm72731835e9.1.2026.06.04.05.46.12
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Thu, 04 Jun 2026 05:46:12 -0700 (PDT)
-Message-ID: <5889c018-8bbb-40e1-a0b4-5e9f024d27b6@linaro.org>
-Date: Thu, 4 Jun 2026 13:46:12 +0100
+        d=1e100.net; s=20251104; t=1780578588; x=1781183388;
+        h=in-reply-to:content-disposition:mime-version:references:message-id
+         :subject:cc:to:from:date:x-gm-gg:x-gm-message-state:from:to:cc
+         :subject:date:message-id:reply-to;
+        bh=+oY1VKwPkVFKv4NeE5kqwicRyh8+m7qj+rD/u5rkZKI=;
+        b=gK1bIdIOnjGMOXkwIIt2vfXIIKvF+tKP9DiJVtS+4vF6DCNxTFFMzwRA+58KmEmuD/
+         aFsN5FeW2miep/w//KroX9PtuS4PnE0TA75tCYGZoVj83DfbnIen31uPRKpiUhvMZR1Q
+         5w3m4Z0imlpCaN/1ITkndIgDOupZUPRb0QeQP/69IU9+U0994nbTojsF4HAqZOrZwHzN
+         1eHAy0GYC6lkXJ1xpj9UomPN8XC2qHBribRUCKJPOdBIBLUsvgCtuAXUm78zm5a2uP+H
+         N1Y2EIc5Qdp168nMv0lkfvxtDHYQr1h8vae8wkgWu3fBgxqkRWfFRpm6B21xPcfxtxeH
+         TgJQ==
+X-Gm-Message-State: AOJu0YzHUcsLO1JVk1ntYfu1Y7d/9MG3tazPGHtFvjExrevWTuntouwM
+	GBDgROhqrcAVpe15h8cFlvR2M28pWdQRRTbx9t7o6kHMVS13DnyhRTyje/I0yW35POYS+3j0ial
+	mXj6z
+X-Gm-Gg: Acq92OFnd363uHIGe0KJeIe33XwfUjma8UafGcHcXrD9bKRAw7eKOntexPSGOkiJokx
+	vr7xovfmZD7SuPHBDxpf2narw6wJ7YMNLsdABNMKT6OiF1yhBAAcaZbcPdhfviHnfpQYa0YDsBj
+	0BAdCpCxMtF+KWQYjH46Sima6hTZDUKF+TkGqGICaYlTn8zZVyKmkPKB6s4DL40wY/BShOpa3Bb
+	AxAKaeZmiHNheywSnJy7tefg5Nlx0T8+vJnKWCFPcCugTWT/AnbAtKG1vuo5gzS0lEzW8r/jK3u
+	wK04eZel5Y24JvJvMvGfLtbB2Ul0XkSBRxlbTwaBGY+zNtBS4zuiWUJpRgvPjQf5yU+azUYMkol
+	Kaim/x955t3tPak0nBDRzzJThbpWN7z/gE4QArsIBivoT4Vkf/kPrxxLNAxgksI1BeO3tEaf+GJ
+	zvRgvItYJ9iSoFw4Iw03k/46lAtmtib/S8mjYP+0kuFhYmBi0=
+X-Received: by 2002:a05:6000:2082:b0:460:1c93:6eb6 with SMTP id ffacd0b85a97d-4602743465dmr5736255f8f.20.1780578588549;
+        Thu, 04 Jun 2026 06:09:48 -0700 (PDT)
+Received: from pathway.suse.cz ([176.114.240.130])
+        by smtp.gmail.com with ESMTPSA id ffacd0b85a97d-4601f0a43e9sm16351006f8f.0.2026.06.04.06.09.47
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Thu, 04 Jun 2026 06:09:48 -0700 (PDT)
+Date: Thu, 4 Jun 2026 15:09:46 +0200
+From: Petr Mladek <pmladek@suse.com>
+To: sashiko-reviews@lists.linux.dev
+Cc: mbenes@suse.cz, live-patching@vger.kernel.org, jpoimboe@kernel.org,
+	Rui Qi <qirui.001@bytedance.com>, joe.lawrence@redhat.com,
+	linux-kernel@vger.kernel.org, linux-kselftest@vger.kernel.org,
+	jikos@kernel.org, shuah@kernel.org
+Subject: Re: [PATCH v2] selftests/livepatch: fix resource leak in
+ test_klp_syscall init error path
+Message-ID: <aiF5GjePTYmLrpg0@pathway.suse.cz>
+References: <20260604083208.1071428-1-qirui.001@bytedance.com>
+ <20260604084214.4F9751F00893@smtp.kernel.org>
 Precedence: bulk
 X-Mailing-List: sashiko-reviews@lists.linux.dev
 List-Id: <sashiko-reviews.lists.linux.dev>
 List-Subscribe: <mailto:sashiko-reviews+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:sashiko-reviews+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v3 15/19] perf test cs-etm: Remove unused Coresight
- workloads
-To: sashiko-reviews@lists.linux.dev
-Cc: linux-perf-users@vger.kernel.org
-References: <20260603-james-cs-context-tracking-fix-v3-15-c392945d9ed5@linaro.org>
- <20260603104130.4C65A1F00893@smtp.kernel.org>
-Content-Language: en-US
-From: James Clark <james.clark@linaro.org>
-In-Reply-To: <20260603104130.4C65A1F00893@smtp.kernel.org>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <20260604084214.4F9751F00893@smtp.kernel.org>
 
-
-
-On 03/06/2026 11:41 am, sashiko-bot@kernel.org wrote:
-> Thank you for your contribution! Sashiko AI review found 2 potential issue(s) to consider:
-> - [High] The function `cs_etm__synth_instruction_sample` takes a `packet` argument but ignores it in favor of `tidq->packet` for critical fields, leading to incorrect instruction synthesis.
-> - [Medium] Incorrect validation of the double pointer `thread` in `cs_etm__etmq_update_thread` breaks the fallback logic and creates a potential segmentation fault hazard.
+On Thu 2026-06-04 08:42:13, sashiko-bot@kernel.org wrote:
+> Thank you for your contribution! Sashiko AI review found 1 potential issue(s) to consider:
+> 
+> Pre-existing issues:
+> - [High] Relying exclusively on kobject_put() to clean up sysfs attributes backed by module memory introduces a use-after-free window during module unload if CONFIG_DEBUG_KOBJECT_RELEASE is enabled.
 > --
 > 
-> commit b1b29e2b51869a73781c3576698bb30e8e7b0cb9
-> Author: James Clark <james.clark@linaro.org>
+> commit 89541aa9ecd8e356eaf4884fa2b111bc605a7933
+> Author: Rui Qi <qirui.001@bytedance.com>
 > 
-> perf test cs-etm: Remove unused Coresight workloads
+> selftests/livepatch: fix resource leak in test_klp_syscall init error path
 > 
-> This commit removes unused CoreSight workloads from the perf tests. These
-> workloads had issues with out-of-source builds and slow compilation times.
+> This commit attempts to fix a resource leak in livepatch_init() by calling
+> kobject_put() on the error path if klp_enable_patch() fails.
 > 
->> diff --git a/tools/perf/util/cs-etm.c b/tools/perf/util/cs-etm.c
->> index 40c6ddfa8c8d9..ce570913669c1 100644
->> --- a/tools/perf/util/cs-etm.c
->> +++ b/tools/perf/util/cs-etm.c
->> @@ -1490,34 +1508,51 @@ cs_etm__get_trace(struct cs_etm_queue *etmq)
+> > --- a/tools/testing/selftests/livepatch/test_modules/test_klp_syscall.c
+> > +++ b/tools/testing/selftests/livepatch/test_modules/test_klp_syscall.c
 > [ ... ]
->> +/*
->> + * Convert a raw thread number to a thread struct and assign it to **thread.
->> + */
->> +static int cs_etm__etmq_update_thread(struct cs_etm_queue *etmq,
->> +				      ocsd_ex_level el, pid_t tid,
->> +				      struct thread **thread)
->>   {
->>   	struct machine *machine = cs_etm__get_machine(etmq, el);
->>   
->> +	if (!machine || !*thread)
->> +		return -EINVAL;
-> 
-> [Severity: Medium]
-> Will this early return prevent the fallback logic from executing?
-> 
-> If *thread is initially NULL (e.g. from an allocation failure), this check
-> returns -EINVAL immediately instead of reaching the fallback assignment
-> *thread = machine__idle_thread(machine) at the bottom of the function.
-> Additionally, checking !*thread before checking if the pointer thread
-> itself is valid could lead to a segmentation fault if thread is NULL. Should
-> this verify !thread instead, or should the !*thread check be removed to
-> allow the idle thread fallback?
-> 
-
-Thread can't ever be NULL. It starts as the idle thread and is only 
-swapped to a real threads or the idle thread again.
-
->> +
->>   	if (tid != -1) {
->> -		thread__zput(tidq->thread);
->> -		tidq->thread = machine__find_thread(machine, -1, tid);
->> +		thread__zput(*thread);
->> +		*thread = machine__find_thread(machine, -1, tid);
->>   	}
->>   
->>   	/* Couldn't find a known thread */
->> -	if (!tidq->thread)
->> -		tidq->thread = machine__idle_thread(machine);
->> +	if (!*thread)
->> +		*thread = machine__idle_thread(machine);
->>   
->> -	tidq->el = el;
->> +	return 0;
->>   }
-> [ ... ]
->> @@ -1579,6 +1614,7 @@ static inline u64 cs_etm__resolve_sample_time(struct cs_etm_queue *etmq,
->>   
->>   static int cs_etm__synth_instruction_sample(struct cs_etm_queue *etmq,
->>   					    struct cs_etm_traceid_queue *tidq,
->> +					    struct cs_etm_packet *packet,
->>   					    u64 addr, u64 period)
->>   {
->>   	int ret = 0;
-> [ ... ]
->>   	sample.flags = tidq->prev_packet->flags;
->>   	sample.cpumode = event->sample.header.misc;
->>   
->> -	cs_etm__copy_insn(etmq, tidq->trace_chan_id, tidq->packet, &sample);
->> +	cs_etm__copy_insn(etmq, tidq, tidq->packet, &sample);
+> > @@ -98,7 +98,11 @@ static int livepatch_init(void)
+> >  	 */
+> >  	npids = npids_pending;
+> >  
+> > -	return klp_enable_patch(&patch);
+> > +	ret = klp_enable_patch(&patch);
+> > +	if (ret)
+> > +		kobject_put(klp_kobj);
 > 
 > [Severity: High]
-> Is the correct packet being used for instruction synthesis here?
+> This isn't a bug introduced by this patch, but it replicates a pre-existing
+> issue into the error path.
 > 
-> The function signature was updated to take a struct cs_etm_packet *packet
-> argument, but this line explicitly references tidq->packet instead of the
-> passed packet. Since callers like cs_etm__flush() and cs_etm__end_block()
-> pass tidq->prev_packet as the argument, referencing tidq->packet here will
-> use stale or incorrect packet data, potentially corrupting synthesized trace
-> data.
+> Does relying exclusively on kobject_put() here create a use-after-free window
+> during module unload?
+
+Sigh, I always get lost when looking at kobject-related API.
+
+> If CONFIG_DEBUG_KOBJECT_RELEASE is enabled, kobject_put() drops the refcount
+> but schedules kobject_cleanup() (and thus sysfs_remove_dir()) to run
+> asynchronously via a workqueue after a 1 to 4 second delay. Because klp_attr
+> and its show callback are allocated in the module's memory, returning an error
+> here causes the module loader to free that memory immediately.
+>
+> During this delay, the sysfs file remains fully accessible. If a user reads
+> this file, would sysfs_kf_seq_show() dereference the attribute and callback
+> that now point to unmapped module memory?
+
+This sounds correct.
+
+> Should kobject_del(klp_kobj) be called prior to kobject_put() to
+> synchronously remove the sysfs entries?
+
+I am not sure if this would be a complete solution. I do not see
+anywhere that kobject_del() would be synchronous. I think that
+the file still might stay opened.
+
+> > +
+> > +	return ret;
+> >  }
+> >  
+> >  static void livepatch_exit(void)
+> >  {
+> >  	kobject_put(klp_kobj);
+> >  }
 > 
-
-Will fix.
-
->>   
->>   	if (etm->synth_opts.last_branch)
->>   		sample.branch_stack = tidq->last_branch;
+> [Severity: High]
+> This is a pre-existing issue, but the exact same vulnerability exists here in
+> the unmodified module exit path where kobject_put() is the only cleanup
+> mechanism before the module unloads.
 > 
+> Could we also add kobject_del(klp_kobj) before kobject_put() in
+> livepatch_exit() to ensure sysfs entries are synchronously removed before
+> module memory is freed?
 
+I would ignore this. The same code (just kobject_put()) is used in
+samples/kobject/kobject-example.c which is supposed to show how
+the API should be used.
+
+It is just a test module. The interface is used only by the selftest.
+
+I believe that this is a problem of the kobject API and should
+be fixed there.
+
+Best Regards,
+Petr
