@@ -1,76 +1,103 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C4258391E49
-	for <sashiko-reviews@lists.linux.dev>; Thu,  4 Jun 2026 07:42:35 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 215793939D2;
+	Thu,  4 Jun 2026 07:45:10 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1780558956; cv=none; b=SKQALDCBaF888QWamHU/qcFApXeZkUEiWMBhgYlGwkqZvgaCqmLLDjEZy8xjsvqhEWSn/j7cPFATxwC9Jcb1uZIW2yIlQZ8R8cuFWnqOXCudPHjF2pHjSDBpldOWzyEksS8pDRXBFLaGKzHM7FMuHh6gZRXJLLqAjkV62WowHu4=
+	t=1780559112; cv=none; b=VWAIBke4xrwsqUdOsSGC4PKjaYYQWJfk2K40c0SR4qv2Uzuuzne6eG+Or/rSGS7SLhEk+wro/iex49+3iUKE6am5fbeyMWur6Vu8CPE6GMtqVaVx5DQ3qktZJoTRo0DpmdL8pubmgYnWHV+mHGLXWmqfmw0J2btGUaqkeFyfI/4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1780558956; c=relaxed/simple;
-	bh=43JHRMPrE8RExZMDKaJc5/rpSNlgegvQLCpdc2buwiY=;
-	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
-	 To:Cc:Content-Type; b=aekDKcBYpdap6jUkzI4Ap2unfnywU1BoWRXRtTur39sMvSfHOyWQT/K9JE9OK7pKXrnNwqT1xd+UtAg0BhFN6tQf7jjg6unsZWCc4a5aVQKSkB2AJGw/a4IWV2YnUtguSA7XApnYXiBAr0vMe9eecTVAT9TnpnlqEk1E232WEt4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=ARlnr6Qg; arc=none smtp.client-ip=100.103.45.18
+	s=arc-20240116; t=1780559112; c=relaxed/simple;
+	bh=TiFjIvkVhpduKyeYWOCDKy+kt/HeDIoBED1SRL3S/LU=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=RnasGx0rsHbcXiNf99oiLLdNbmWW7QG0wxdubXHFE7dQRTgpiRclH8Gf99Bv+3BOYbWmBt/t/2txcCsVeDxAfYyDyWIQpw5pkO8wZaJWp117tpi3fAdrqSIlrqm/qxcHWnuGO2fKbRv8OOmEubCKqDc+EtjPP9m0NR5UbC+77GQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=Eu7v34YV; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="ARlnr6Qg"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8483D1F0089A
-	for <sashiko-reviews@lists.linux.dev>; Thu,  4 Jun 2026 07:42:35 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="Eu7v34YV"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1F1121F00893;
+	Thu,  4 Jun 2026 07:45:08 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=kernel.org;
-	s=k20260515; t=1780558955;
-	bh=43JHRMPrE8RExZMDKaJc5/rpSNlgegvQLCpdc2buwiY=;
-	h=References:In-Reply-To:From:Date:Subject:To:Cc;
-	b=ARlnr6QgxV0f24N7f+XibJR5NUGfSP5Et5uHIOXcTTB434jnPSf7qDIm93yW9x4A6
-	 hnp8zJj2WPekGIH5U/DlFUaPl6zqpSKwt/R4dRr6J87ZYKIWN5QhuNcmBjMnYi5N4q
-	 dfyTqPPGGtiVMZr/VfYA1NAl7dKGyx5/AvFowlgnS8u+kDSW8DvvsUJtqnqlTejS1M
-	 UcwVfytr7NZJ3KV6RDaGq18umQt2Uvg99qEChojK9bTC37Gi6UOqaW8Zm1aMhnD6IS
-	 GUg7qI8dPSs8IBvsge9lbZkvj2ZQOTrbQ8mEuhxEEiJptVAOil9evPUV33RWzTtwlR
-	 bqV7JBI1rE8KA==
-Received: by mail-lj1-f170.google.com with SMTP id 38308e7fff4ca-39677c80386so3744511fa.3
-        for <sashiko-reviews@lists.linux.dev>; Thu, 04 Jun 2026 00:42:35 -0700 (PDT)
-X-Gm-Message-State: AOJu0YwIaWjA9xYHYEGkOfBww+b2yY57/D24uAiuiB2z4pwk55yxLW+2
-	6p9lCwXLCiSovZcx92Dkvdvk/V+EGGse8k1yd+cITqqc/EARqYnkS5k5I4K/ucdv7YDsa6dJXCs
-	A0Yg0MZf0HoofN2fBOsr2wVE1g3xMq3I=
-X-Received: by 2002:a05:6512:33c5:b0:5aa:6a2b:d456 with SMTP id
- 2adb3069b0e04-5aa7c0fed0bmr2286914e87.27.1780558954293; Thu, 04 Jun 2026
- 00:42:34 -0700 (PDT)
+	s=k20260515; t=1780559110;
+	bh=kXQkI9+DXRjaIp9RfDhWbe5qlEIe11pWQMnoO4ZK15U=;
+	h=Date:From:To:Cc:Subject:References:In-Reply-To;
+	b=Eu7v34YV/mZZt+xwg4PmmyxKqBfrH/TwVYWl85R2EQqQYp+Kj0SU4tvJpky6NAox5
+	 qTR6SGxDT2o9XrpZPgrlL1VoIhbtneXcuTGcYqQ+jSoQFEXCN8OFvfp/UtBWjRCBOH
+	 T6dyuCSyZAgM807ZOI+S4a7GR6Nq1YlEN7J0zm4tG1E3g2DCHOrgFFyC86+XHLrT+v
+	 xIf2WrlpwJHrYxSoTwXtNGRMEkgMJVkAxFzylLcXTcBQETHAvMswN384oTSYrO3qpF
+	 6lL+aXuxO2j/xntpXFbjCTDpwjE4OfGdpF+oD7k6yoL7eSGB5yPpbHyi0jWM8DmBgf
+	 nMixGMWJlRXxw==
+Date: Thu, 4 Jun 2026 09:45:04 +0200
+From: Manivannan Sadhasivam <mani@kernel.org>
+To: sashiko-reviews@lists.linux.dev
+Cc: Yadu M G <yadu.mg@oss.qualcomm.com>, linux-pci@vger.kernel.org
+Subject: Re: [PATCH v2] PCI: dwc: Initialize pp->lock before MSI domain
+ registration
+Message-ID: <rn3iccwguseu3dvygwauog62jgcg4azrxvusotolpfr6tlga7y@odknnlfue3ym>
+References: <20260514181901.315647-1-yadu.mg@oss.qualcomm.com>
+ <20260514212621.55873C2BCB3@smtp.kernel.org>
 Precedence: bulk
 X-Mailing-List: sashiko-reviews@lists.linux.dev
 List-Id: <sashiko-reviews.lists.linux.dev>
 List-Subscribe: <mailto:sashiko-reviews+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:sashiko-reviews+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-References: <20260603-ks8995-to-ksz8-v4-1-e15149ef21e7@kernel.org> <20260603231122.905771F00893@smtp.kernel.org>
-In-Reply-To: <20260603231122.905771F00893@smtp.kernel.org>
-From: Linus Walleij <linusw@kernel.org>
-Date: Thu, 4 Jun 2026 09:42:20 +0200
-X-Gmail-Original-Message-ID: <CAD++jLkV4yb+e8+q+SfMFn6xh9+-6cdcHQ4yH_eBEj1LFMYNoA@mail.gmail.com>
-X-Gm-Features: AVVi8CddqEUNmdHCizuLNlST0WT8-kHrjy8EucFRF_4NySw4BhHCEs0-6rW5PHs
-Message-ID: <CAD++jLkV4yb+e8+q+SfMFn6xh9+-6cdcHQ4yH_eBEj1LFMYNoA@mail.gmail.com>
-Subject: Re: [PATCH net-next v4 1/5] net: dsa: microchip: Add fallback Micrel compatibles
-To: sashiko-reviews@lists.linux.dev
-Cc: conor+dt@kernel.org, devicetree@vger.kernel.org, robh@kernel.org
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+Content-Transfer-Encoding: 8bit
+In-Reply-To: <20260514212621.55873C2BCB3@smtp.kernel.org>
 
-On Thu, Jun 4, 2026 at 1:11=E2=80=AFAM <sashiko-bot@kernel.org> wrote:
+On Thu, May 14, 2026 at 09:26:20PM +0000, sashiko-bot@kernel.org wrote:
+> Thank you for your contribution! Sashiko AI review found 1 potential issue(s) to consider:
+> - [High] Unconditional double initialization of `pp->lock` in `dw_pcie_allocate_domains()` destroys lock state and corrupts lockdep tracking for standard platforms.
+> --
+> 
+> commit 34c5622cf23f408a8b7191136ff7caf71c5a0456
+> Author: Yadu M G <yadu.mg@oss.qualcomm.com>
+> 
+> PCI: dwc: Initialize pp->lock before MSI domain registration
+> 
+> This commit adds an initialization of pp->lock in dw_pcie_allocate_domains()
+> to fix a lockdep warning on Qcom platforms. These platforms allocate the MSI
+> domain from a custom .msi_init callback, bypassing the standard
+> dw_pcie_host_init() flow.
+> 
+> > diff --git a/drivers/pci/controller/dwc/pcie-designware-host.c b/drivers/pci/controller/dwc/pcie-designware-host.c
+> > index c9517a3488368..de316f103c73b 100644
+> > --- a/drivers/pci/controller/dwc/pcie-designware-host.c
+> > +++ b/drivers/pci/controller/dwc/pcie-designware-host.c
+> > @@ -215,6 +215,13 @@ int dw_pcie_allocate_domains(struct dw_pcie_rp *pp)
+> >  		.host_data	= pp,
+> >  	};
+> >  
+> > +	/*
+> > +	 * Initialize pp->lock here to cover direct callers from custom
+> > +	 * .msi_init() paths (e.g. firmware-managed platforms) that
+> > +	 * bypass dw_pcie_host_init().
+> > +	 */
+> > +	raw_spin_lock_init(&pp->lock);
+> > +
+> 
+> Does this unconditionally re-initialize the lock for standard platforms?
+> 
+> In the standard DesignWare host initialization flow, dw_pcie_host_init()
+> initializes pp->lock at the beginning of the function. It then calls the
+> platform-specific pp->ops->init() callback, which on some platforms like
+> Uniphier configures and enables INTx interrupts.
+> 
+> If an INTx interrupt fires asynchronously and its handler legitimately
+> acquires pp->lock, would this second raw_spin_lock_init() call in
+> dw_pcie_allocate_domains() destroy the lock state while it is in use?
+> 
+> Re-initializing the spinlock forcibly resets its internal state to
+> unlocked and assigns a new lockdep key, which could introduce a data
+> race or corrupt lock dependency tracking for platforms using the
+> standard initialization flow.
+> 
 
-> Thank you for your contribution! Sashiko AI review found 2 potential issu=
-e(s) to consider:
-> - [High] The Kconfig dependency `depends on !NET_DSA_MICROCHIP_KSZ_SPI` f=
-ails to prevent both drivers from being compiled as modules simultaneously,=
- leaving the probe race unresolved.
-> - [High] Enforcing blanket mutual exclusion entirely disables the KS8995 =
-driver when KSZ_SPI is enabled, breaking support for legacy `micrel,ks8995`=
- (KS8995MA) hardware.
+This is getting messier. Why don't you just initialize the lock in the ECAM path
+of pcie-qcom driver to contain the fix in one place?
 
-We discussed this before.
+- Mani
 
-Putting !NET_DSA_MICROCHIP_KSZ_SPI on the NET_DSA_KS8995
-is the right thing to do, trying to put it on both sides would create
-a circular dependency.
-
-Sashiko needs to learn Kconfig properly, not that humans are good
-at it either...
-
-Linus Walleij
+-- 
+மணிவண்ணன் சதாசிவம்
