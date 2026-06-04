@@ -1,50 +1,50 @@
-Received: from mgamail.intel.com (mgamail.intel.com [192.198.163.14])
+Received: from mgamail.intel.com (mgamail.intel.com [198.175.65.14])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 046223AB480
-	for <sashiko-reviews@lists.linux.dev>; Thu,  4 Jun 2026 02:54:51 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=192.198.163.14
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C55823AF678
+	for <sashiko-reviews@lists.linux.dev>; Thu,  4 Jun 2026 03:14:00 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=198.175.65.14
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1780541693; cv=none; b=nAN3+76YgZvvqKep1Dy4tznlHEDkdhAw55u2exXU82yj9prIHMTB2jF91k9fUQ9jo58WdAhqwwvl/jpbSx5/oQl1mpTMLj1iaaN6Wz0fYoLocpEKLsXUAOAvymdWOSmGkj1hI0k/IRL4QDJ5rIPYdRLb21ULMrnqtE9zfzxza+M=
+	t=1780542843; cv=none; b=c8ugIRl2fNt7uB5WxFA84E/xFkOOMW6T7WGOC667FlC5UxNv6uYuTVz+tN0ZVsPtgt+Zr8cFRUY48doj9LVGegEfJZMRTbgi6Pb5sH25Xa4sZ6TUbgTnJ6xHMm8nK2LhQSFic3diPRnempFLCwl3gzbXO4AYEZd6BalIbED1jmo=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1780541693; c=relaxed/simple;
-	bh=QwL6diGUVPs3irTGpndZkAlVzmKc1IPtnBT5494zAQE=;
+	s=arc-20240116; t=1780542843; c=relaxed/simple;
+	bh=BjMhBrjtywp6iQlrwG21PodVsE+wIwaz/oPlgP71X+k=;
 	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=j7MsQ2TNDCx5aTBUGtkn1tHTEm9TH3kcF1vImA3uvVOkkTyEfXhQsPPMcozAXhjLlPPSmCLKete3uRuPuN+bQzICzuR6I4yMJHlraVIrcEoXv8VqWv8rwvuEULytBoDfuZfW11k6J0I3u0/eQYs03xyDXNzHXK2z7a1vLjVtHFc=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linux.intel.com; spf=pass smtp.mailfrom=linux.intel.com; dkim=pass (2048-bit key) header.d=intel.com header.i=@intel.com header.b=C6Q95Vcb; arc=none smtp.client-ip=192.198.163.14
+	 In-Reply-To:Content-Type; b=d1g1RjDRWTbQSwqvUL8zfTTTNs3q2J/9gTrVBEXzdhq3y8kYwuKnHY72YICYKi0JTM7B3yZBhpRrlJowaK1S6n/2qQgRXSvky7RjhfMRP0Y7sHvKAxs4bJq1E4WQbduix7cerMU9aYVzCQ0QNRGHns0QTjf8Y+bLeNaVkkGvfDU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linux.intel.com; spf=pass smtp.mailfrom=linux.intel.com; dkim=pass (2048-bit key) header.d=intel.com header.i=@intel.com header.b=W+eG0k47; arc=none smtp.client-ip=198.175.65.14
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linux.intel.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linux.intel.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=intel.com header.i=@intel.com header.b="C6Q95Vcb"
+	dkim=pass (2048-bit key) header.d=intel.com header.i=@intel.com header.b="W+eG0k47"
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
   d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
-  t=1780541692; x=1812077692;
+  t=1780542840; x=1812078840;
   h=message-id:date:mime-version:subject:to:cc:references:
    from:in-reply-to:content-transfer-encoding;
-  bh=QwL6diGUVPs3irTGpndZkAlVzmKc1IPtnBT5494zAQE=;
-  b=C6Q95VcbLqxLKBg/tVu/Gat6VDevpV6jIpLf+XHfEvj2Os52TDPKZ1GN
-   6DJ/DInxnb9Qvf5yOCtetxulBr8oayQPsM39KCzoRTL8RrJx8/8CyY+pZ
-   mRII/PJKmYaV62gh2TgMhT0gBSg973orQ1Vhj1RieqovwV4su2NEacFSm
-   PEFBuiDm6x6k3xDDok3dw26ncoakj/UvHZ9qdTXzWeRJzL1ZvoeoZMcUd
-   JtyGGDkPxqvthy3j2CHLCezNc/dbn5mmdzi7fYAho6Y/V/ui0HKJr87iJ
-   HsquTOpy2Kctckpu61eV2g9qdbUlAOOGnUQPonswMpO2xMjOvk6oMOvVG
+  bh=BjMhBrjtywp6iQlrwG21PodVsE+wIwaz/oPlgP71X+k=;
+  b=W+eG0k47L7XTtEmUOT0bo05nNDq5WIa1d+VVv+UxOKtMIySyTk/IuOIm
+   9F2xHwvHP9pHJ/HeMr8TNkntRDzACZ/feHqcucEgSmEU420FpIxlcmUIh
+   lxjF2OqahjMfJ5oPefykJ3K5/QURuvqWRHeIB56AYfhFZVGnOgQoPhIVR
+   S6j4TDdDcBfjAEgIYSk7lSP0aMGwDrqnLT+bmwvtbiOiDej40/ExnchHU
+   saxkhhxk5nJK6HA2cFuQOsEj3nxJIxebobNZLry7MZdbFguuVyeqYh7uz
+   po+aENPqJEoJPSuw+RydzBFn9DTRP18JQpvZcI4h77eUl1PWpgFRDooEv
    w==;
-X-CSE-ConnectionGUID: bpgQctIdTdqlJWF3fjs+9w==
-X-CSE-MsgGUID: f6WBAZaYQ3am8NvoI+GW+g==
-X-IronPort-AV: E=McAfee;i="6800,10657,11806"; a="81395717"
+X-CSE-ConnectionGUID: tstHBQ4XTni3JUm4D/nuFw==
+X-CSE-MsgGUID: UrAY00MbRX2DtR7LOLZPCA==
+X-IronPort-AV: E=McAfee;i="6800,10657,11806"; a="85253851"
 X-IronPort-AV: E=Sophos;i="6.24,186,1774335600"; 
-   d="scan'208";a="81395717"
-Received: from fmviesa004.fm.intel.com ([10.60.135.144])
-  by fmvoesa108.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 03 Jun 2026 19:54:51 -0700
-X-CSE-ConnectionGUID: j9rUERyoRQOMlnAWHh4pAA==
-X-CSE-MsgGUID: 0FLTgoPuQyuWUjikjLX2Mg==
+   d="scan'208";a="85253851"
+Received: from orviesa002.jf.intel.com ([10.64.159.142])
+  by orvoesa106.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 03 Jun 2026 20:14:00 -0700
+X-CSE-ConnectionGUID: LorJoaHCQjqcal03sNB+3w==
+X-CSE-MsgGUID: EM+c4NrDSt2tCiWvhHg+mw==
 X-ExtLoop1: 1
 X-IronPort-AV: E=Sophos;i="6.24,186,1774335600"; 
-   d="scan'208";a="246240712"
+   d="scan'208";a="274656994"
 Received: from unknown (HELO [10.238.2.24]) ([10.238.2.24])
-  by fmviesa004-auth.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 03 Jun 2026 19:54:50 -0700
-Message-ID: <0c09d581-1efe-4ddb-8bd5-75f78e946a23@linux.intel.com>
-Date: Thu, 4 Jun 2026 10:54:47 +0800
+  by orviesa002-auth.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 03 Jun 2026 20:13:59 -0700
+Message-ID: <3cbba342-058d-4c87-97f6-5a9e6007a428@linux.intel.com>
+Date: Thu, 4 Jun 2026 11:13:56 +0800
 Precedence: bulk
 X-Mailing-List: sashiko-reviews@lists.linux.dev
 List-Id: <sashiko-reviews.lists.linux.dev>
@@ -52,90 +52,63 @@ List-Subscribe: <mailto:sashiko-reviews+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:sashiko-reviews+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [RFC PATCH v2 2/4] KVM: x86: TDX: Hide unsupported configurable
- CPUID bits
+Subject: Re: [RFC PATCH v2 3/4] KVM: x86: TDX: Validate userspace CPUID input
+ for KVM_TDX_INIT_VM
 To: sashiko-reviews@lists.linux.dev
 Cc: kvm@vger.kernel.org
-References: <20260604023314.3907511-3-binbin.wu@linux.intel.com>
- <20260604024718.497F21F00893@smtp.kernel.org>
+References: <20260604023314.3907511-4-binbin.wu@linux.intel.com>
+ <20260604024927.E22311F00893@smtp.kernel.org>
 Content-Language: en-US
 From: Binbin Wu <binbin.wu@linux.intel.com>
-In-Reply-To: <20260604024718.497F21F00893@smtp.kernel.org>
+In-Reply-To: <20260604024927.E22311F00893@smtp.kernel.org>
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 7bit
 
 
 
-On 6/4/2026 10:47 AM, sashiko-bot@kernel.org wrote:
+On 6/4/2026 10:49 AM, sashiko-bot@kernel.org wrote:
 > Thank you for your contribution! Sashiko AI review found 1 potential issue(s) to consider:
-> 
-> Pre-existing issues:
-> - [High] The secure-by-default CPUID allowlist is applied to KVM capability reporting but missing from TD initialization validation. This allows a malicious userspace VMM to bypass capability enumeration and supply unsupported configurable CPUID bits directly to the TDX module, potentially causing host state corruption.
+> - [High] `tdx_unsupported_cpuid()` incorrectly uses the userspace-provided CPUID index instead of the canonical TDX configurable index for validation, allowing feature allowlist bypasses.
 > --
 > 
-> commit e4dd30c1f72bbeeb74f3ba5a865ab30e0c17bcf6
+> commit c2adba56353483cd6dcf40b3fe14141409c0ce54
 > Author: Binbin Wu <binbin.wu@linux.intel.com>
 > 
-> KVM: x86: TDX: Hide unsupported configurable CPUID bits
+> KVM: x86: TDX: Validate userspace CPUID input for KVM_TDX_INIT_VM
 > 
-> This commit introduces get_supported_cfg_cpuid() to filter the CPUID 
-> capabilities reported by KVM_TDX_CAPABILITIES. It replaces a hardcoded 
-> denylist with a secure-by-default allowlist approach to prevent exposing 
-> unsupported features that could lead to host state corruption.
+> This commit replaces the hardcoded CPUID denylist with a validation mechanism
+> that checks userspace input against KVM's supported allowlist. It aims to
+> prevent userspace from enabling unsupported TDX features during VM init.
 > 
 >> diff --git a/arch/x86/kvm/vmx/tdx.c b/arch/x86/kvm/vmx/tdx.c
->> index 028d54c76b81e..befda6bc17b1e 100644
 >> --- a/arch/x86/kvm/vmx/tdx.c
 >> +++ b/arch/x86/kvm/vmx/tdx.c
-> 
 > [ ... ]
-> 
->> -static void clear_waitpkg(struct kvm_cpuid_entry2 *entry)
->> +static bool tdx_unsupported_cpuid(const struct kvm_cpuid_entry2 *entry)
->>  {
->> -	entry->ecx &= ~__feature_bit(X86_FEATURE_WAITPKG);
->> +	return has_tsx(entry) || has_waitpkg(entry);
->>  }
+>> +static bool tdx_unsupported_cpuid(const struct kvm_cpuid_entry2 *e,
+>> +				  const struct kvm_cpuid_entry2 *mask)
+>> +{
+>> +	return ((e->eax & mask->eax & (~get_supported_cfg_cpuid(e->function, e->index, CPUID_EAX))) ||
+>> +		(e->ebx & mask->ebx & (~get_supported_cfg_cpuid(e->function, e->index, CPUID_EBX))) ||
+>> +		(e->ecx & mask->ecx & (~get_supported_cfg_cpuid(e->function, e->index, CPUID_ECX))) ||
+>> +		(e->edx & mask->edx & (~get_supported_cfg_cpuid(e->function, e->index, CPUID_EDX))));
+>> +}
 > 
 > [Severity: High]
-> This is a pre-existing issue, but by keeping this legacy denylist active, is
-> there a risk that userspace can bypass the new secure-by-default allowlist
-> during TD initialization?
+> Does this validation query the allowlist using the correct index?
 > 
-> While this patch updates capability reporting to explicitly mask unsupported 
-> features, the configuration path in setup_tdparams_cpuids() still appears to 
-> use this older denylist function to validate user input:
+> If userspace provides a CPUID entry with the KVM_CPUID_FLAG_SIGNIFCANT_INDEX
+> flag cleared, kvm_find_cpuid_entry2() matches based solely on the function.
+> This means the returned entry 'e' could contain an arbitrary, user-controlled
+> index.
 > 
-> arch/x86/kvm/vmx/tdx.c:setup_tdparams_cpuids() {
->         ...
->         if (tdx_unsupported_cpuid(entry))
->                 return -EINVAL;
+> Because get_supported_cfg_cpuid() is queried using e->index instead of the
+> canonical target subleaf mask->index, userspace could spoof e->index to
+> point to a more permissive subleaf in KVM's allowlist. The TDX module would
+> then blindly apply those validated bits to the original, narrower target
+> subleaf, bypassing the intended feature restrictions.
 > 
->         value = &td_params->cpuid_values[i];
->         value->eax = entry->eax;
->         value->ebx = entry->ebx;
->         value->ecx = entry->ecx;
->         value->edx = entry->edx;
->         ...
-> }
+> Should this use mask->index instead of e->index when querying the allowlist?
 > 
-> Because these user-provided CPUID values are copied directly into the hardware 
-> initialization parameters without being masked against the newly introduced 
-> get_supported_cfg_cpuid() allowlist, could a VMM explicitly request and pass 
-> unsupported configurable CPUID bits directly to the TDX module?
-> 
-> Does this still leave the door open to the host state corruption mentioned
-> in the commit message if the TDX module only enforces hardware-level support
-> rather than KVM's software constraints?
 
-This is addressed by the next patch.
-
-> 
->>  
->> -static void tdx_clear_unsupported_cpuid(struct kvm_cpuid_entry2 *entry)
->> +static u32 get_supported_cfg_cpuid(u32 function, u32 index, u8 reg)
->>  {
-> 
-> [ ... ]
-> 
+Right, it should use mask->index.
 
