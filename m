@@ -1,197 +1,146 @@
-Received: from mail-yx1-f50.google.com (mail-yx1-f50.google.com [74.125.224.50])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id ABD6C3B9D98
-	for <sashiko-reviews@lists.linux.dev>; Thu,  4 Jun 2026 16:59:59 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=pass smtp.client-ip=74.125.224.50
-ARC-Seal:i=2; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1780592401; cv=pass; b=omcoHvf48R+X9MBTOxn6lGqnrIgm9wDP+Er3aWkCMr0QupYsXqeTDPVnNOLdwUvSfTAFuayM3L6FG32usgfRQQzNJd7jdeO21Re8TbFKxE7mjDthOjGB1RrEfO4YlQDBARknTMuo3OWx0Wr3eNUTcgfLefTHTs3cvW9ilsZP/XU=
-ARC-Message-Signature:i=2; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1780592401; c=relaxed/simple;
-	bh=aYLfMzw9PHJwFY6JBY5oV2zpZ2+xt+0iwSXoHkKmj3Y=;
-	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
-	 To:Cc:Content-Type; b=fU8oOMgRE9LRrMYsZstIf4KoQ8B+VSZ3i4Ftw9uIbakKc43lOjaRKPwNIxeW8McQYFgTmHVjOlBHc6y6bsWRJxxY7waDsYQyK+wHMQ0GTHS5eUKijyDtRQ63SoNgDwi1w81izXM0eDWKmKt7kMLpD9hZf21SeIiXFM8GUaC3c2o=
-ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=X5A3uvnK; arc=pass smtp.client-ip=74.125.224.50
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 926DD4949F6;
+	Thu,  4 Jun 2026 17:03:44 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
+ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
+	t=1780592625; cv=none; b=H7wnz1MOrPUQpDyS/NMud+03sMCLXm0T8r8UieQsh2HKyEkvJ/fxMfNhJksThdNniLPncq9pLgbFIOmLlgOuwMiOvNE47HTFC71i3qFEVxw2ZTzR+O+30xp1doILU6fNsliGxT5b/m5ZCZ5Zx4M9HH4DV3eXsKqLzxBDZDFAZ8w=
+ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
+	s=arc-20240116; t=1780592625; c=relaxed/simple;
+	bh=bmQ3mW8NNmbM1E8iFKZaxdkSWzLBkrYgSC9Qbe5pme4=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=dL2tYPpGuE0pckl0EPIkkc9/8nq9XLLQ1MlRGynJpHFv/B6cfREmlHXa/QOCNFODxG98l4M7e5rJDaKjBtDHASU6iVTPZPw0t74b8fW4DoGvImLWQ+tVF7Eg4mNuqh7nu0GtCHoPtu6ijfimcee+kl8RaU6I1sVv79kkWbjZ7Rg=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=jvlQ/Jb3; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="X5A3uvnK"
-Received: by mail-yx1-f50.google.com with SMTP id 956f58d0204a3-660ea43107fso1151701d50.0
-        for <sashiko-reviews@lists.linux.dev>; Thu, 04 Jun 2026 09:59:59 -0700 (PDT)
-ARC-Seal: i=1; a=rsa-sha256; t=1780592399; cv=none;
-        d=google.com; s=arc-20240605;
-        b=jpvwhUjntxED5XyAaKA04zxBKOQFOIktV1+7gRPQUgqR1H5C4fIII1FMFfbcfkW6Lm
-         aYjIV1Uace3Q60aVggeUbOw7Jm0/YlQJZDpnNuYT2PsScvlH+fbkqnVBTsjQov0JVzZu
-         7NYnUjJL79xUQrW0BwMmvZUYkGVqZi3cETkdeXJIZnwyo4PAqoefqTLc+lwdVakbWtrS
-         sYMef4R2OaG1QJvQ6KajupEksJF1Rw+l6e912itBii00Y5Geq55ij1Ssgy4icA0Quwpd
-         278yS+TyH3xOcl7CLDhaXSiChu7XE17JwoMVUKAxckQej2AgzZvBGpdPbRFuM7x6YH4V
-         4q0w==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com; s=arc-20240605;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:dkim-signature;
-        bh=7jCmuIqZca1BHFbKewzVbW4c8gx6ri67M5ywiPVj0zA=;
-        fh=D0e8sSTaVPmAgUSFERRWgkzhkCafsr+sW9jV93yuieQ=;
-        b=LlGP3P10iICgLtaCeI09+rhCUYMdYT5BBMf2jf3/n5dQDGngVyXXdPuRkPhmY6f2X3
-         gCy/Wp/rNlr5M7GNvvGXLF4miVj+pfJKdzcC2bUM9a7CRc5Pgxt+GosTVzJzBkdY5tkY
-         fgHKcY/Z20hR/eMI99+ViugLgsQeH7wk+/hFNauWbTyGkGssnOBuQpmgnLHy9lJbgxMq
-         bVZIbG8YubSPbSVma6kvmhkBUuRxL70L3FsTgPmiFzz2SLhPNrwPQUfX4PN/zb/0QPIZ
-         FmSiydEGYBsLl++UqAmpjIxRxN2xqd6a4wGQM0twcEcDXCNET6rNWkws7OQeX8kYYna/
-         CO6A==;
-        darn=lists.linux.dev
-ARC-Authentication-Results: i=1; mx.google.com; arc=none
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20251104; t=1780592399; x=1781197199; darn=lists.linux.dev;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=7jCmuIqZca1BHFbKewzVbW4c8gx6ri67M5ywiPVj0zA=;
-        b=X5A3uvnKk0BxgmZYNGSFrS/zk5DeL4Unv0izC07NM1epc2uElu8l0EHZMPpzoVlfWD
-         EfIjD8VtojqNxT9ZytTAN3JbtTd2bQNlbZNNJ8vG2vrneOedkXrBac6BYom+vsD6+fTn
-         1wkHh7mqrlu+kGNTfYDFVGLJBmfA7GVFaQPg0Vj+jxVL39lcHiumbHjNNP627wgzHMOV
-         vVLZ+S55ca1mp9hMSVYkfasMbBjZAUrJlCK4javyEHRAgimGqJujJciudc+GkgPyTJhs
-         K9KHUcxEnYB4bqHrKDMmeJl0Bs7wR3kj/6Muaxp0k54NAd17gBNFL47NRbWf+f5tShtC
-         Dr2A==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20251104; t=1780592399; x=1781197199;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:x-gm-gg:x-gm-message-state:from
-         :to:cc:subject:date:message-id:reply-to;
-        bh=7jCmuIqZca1BHFbKewzVbW4c8gx6ri67M5ywiPVj0zA=;
-        b=fmlakm4EwYcfILOlpjVJn0OfSJw2mJkccsOb8x0QmEYHpVimFHi6Txbt/qGfkGxKgl
-         3F+SW8+f0CJ2lbue8KRiJyCm4PzzxS2bja2FbOYV4PPMp5EVV2BP6QPG7vrsy1O6786D
-         lnlRs6+lNAMYJbnI6FgwgYMHv2A2CXYCRbOEqSnXXtPxlRwQHXdetGiz+qSWUyYITCp6
-         pdYmxpD+Zs7vx+Ij3y/xnkXM5WdJO9alld/RAyP3ViqY1SjOxu2w+d/LyDYzgYgktnwV
-         1+oc3ZtTrneUj23/1dxsbttU3w2iOiazq1Q47S0377veGO1woTroSHQ66jWOP1dLP1yA
-         4dbw==
-X-Gm-Message-State: AOJu0YwEUjj0vHy2mg2zyAhWLR3mtfmJdRVY+XRxREyAD8LM1AVqmRLC
-	hkEo3qTUjAK5VT2/0kd7mSGkDAe1Cxs1lI/IU0OarTxq6reKSky5IA1Hcan2maM662Pp8M5WVos
-	+wGNzjxJ5VP2CLOMwzcRWmPIYadyDf8FqmhqAadk1sYyf
-X-Gm-Gg: Acq92OFOEbAztEak0GsVwI8FtMgO+OYQ33NEKc7D2U33TLMrgfwxZjhcMJt6GLPJfW3
-	zGJduZW6oHFsckBjj1GKHnOVtdP14LPCdFzBGUvFrtZrn85sTTxpFyQCqtpeKy+60LpjsdGPTI6
-	xtKtkO/sm0cmkEUO/Jxw+QAUUNNU8TVolyINnyV6FBttPsPhoY0RLQ0MpEsNJadIAXsRkuB2D3v
-	ukiG6GUDKvhfodrME5VrMftxnlX0BmFYqCdqPvaItJS3RnP1xGwM/OBKz9I5oA2DeCPYrMm4kSY
-	+WJE+rvjrOketDQ7QBCu
-X-Received: by 2002:a05:690e:4191:b0:660:8253:b836 with SMTP id
- 956f58d0204a3-660dbe97d54mr7489173d50.5.1780592398732; Thu, 04 Jun 2026
- 09:59:58 -0700 (PDT)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="jvlQ/Jb3"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1C26D1F00893;
+	Thu,  4 Jun 2026 17:03:42 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=kernel.org;
+	s=k20260515; t=1780592624;
+	bh=pA3FpXvPMYrY7IWWxE3/QmmbpUQfGz6nC066+u28lEg=;
+	h=Date:From:To:Cc:Subject:References:In-Reply-To;
+	b=jvlQ/Jb3RhEM8FFk6qquT8sCrE/b7ymQyEvV80ZS9bpCEaRnZKMjQNKWU/eWefOeb
+	 VRQhBQ490o87oY+PFdmwdXw7gLA/Zp+YbKDFWbiuwpsRfB0FmtaslVxyqyC77nzakV
+	 ulyAon9KCM8g39tNJjIZ1uFxy/yYe0PkZNepdlliNsOB6GJpo26JI9BVzQ2e0HcoB7
+	 1n4rX1cW1iY+pTW0ZKRBDSQBAokuLR5eonU+9vE2bv+wRGPFaM3zRM5nuRMnaSYL60
+	 G+jOm4YHzz9Q8fHP3muAxwm0eMfXU1kABRYLPAyfmRsb4iTUtxdOivg05XXxAlGe9k
+	 HV3JQBfKSVnZg==
+Date: Thu, 4 Jun 2026 18:03:41 +0100
+From: Conor Dooley <conor@kernel.org>
+To: sashiko-reviews@lists.linux.dev
+Cc: Piyush Patle <piyushpatle228@gmail.com>, robh@kernel.org,
+	conor+dt@kernel.org, devicetree@vger.kernel.org
+Subject: Re: [PATCH v11 04/11] dt-bindings: iio: adc: hx711: add HX710B
+ support
+Message-ID: <20260604-java-dizziness-dd68a245c7ff@spud>
+References: <20260603184859.89693-5-piyushpatle228@gmail.com>
+ <20260603190230.E7DE11F00893@smtp.kernel.org>
 Precedence: bulk
 X-Mailing-List: sashiko-reviews@lists.linux.dev
 List-Id: <sashiko-reviews.lists.linux.dev>
 List-Subscribe: <mailto:sashiko-reviews+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:sashiko-reviews+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-References: <20260603163851.18058-1-leontyevantony@gmail.com> <20260604163900.A09211F00893@smtp.kernel.org>
-In-Reply-To: <20260604163900.A09211F00893@smtp.kernel.org>
-From: Anton Leontev <leontyevantony@gmail.com>
-Date: Thu, 4 Jun 2026 19:59:56 +0300
-X-Gm-Features: AVHnY4Kx6izZI2s_HEh1p5bSx_cod3KVKOkHhawTK4DW9XbpO2P58tWIhRLHIXk
-Message-ID: <CAAN-wAnJWMttpbsdAHAfOJ6PyPGqLvp38oU+DqEk2FU67FWc6Q@mail.gmail.com>
-Subject: Re: [PATCH net v2] hv_netvsc: use kmap_local_page in netvsc_copy_to_send_buf
-To: sashiko-reviews@lists.linux.dev
-Cc: linux-hyperv@vger.kernel.org
-Content-Type: text/plain; charset="UTF-8"
+Content-Type: multipart/signed; micalg=pgp-sha512;
+	protocol="application/pgp-signature"; boundary="NkPsNM0jZw5n6mwr"
+Content-Disposition: inline
+In-Reply-To: <20260603190230.E7DE11F00893@smtp.kernel.org>
+
+
+--NkPsNM0jZw5n6mwr
+Content-Type: text/plain; charset=iso-8859-1
+Content-Disposition: inline
 Content-Transfer-Encoding: quoted-printable
 
-You are right, thanks. Since 41a6328b2c55 ("hv_netvsc: Preserve
-contiguous PFN grouping in the page buffer array") a pb entry
-describes a full physically contiguous fragment and pb[i].len can
-exceed PAGE_SIZE, while kmap_local_page() maps a single page. v3
-copies page by page, splitting at native page boundaries, and was
-posted as a new thread per netdev process.
-
-=D1=87=D1=82, 4 =D0=B8=D1=8E=D0=BD. 2026=E2=80=AF=D0=B3. =D0=B2 19:39, <sas=
-hiko-bot@kernel.org>:
->
-> Thank you for your contribution! Sashiko AI review found 1 potential issu=
+On Wed, Jun 03, 2026 at 07:02:30PM +0000, sashiko-bot@kernel.org wrote:
+> Thank you for your contribution! Sashiko AI review found 2 potential issu=
 e(s) to consider:
-> - [Critical] The patch replaces `phys_to_virt()` with `kmap_local_page()`=
- in `netvsc_copy_to_send_buf()` to support HIGHMEM SKB fragments. However, =
-`kmap_local_page()` maps exactly one page (e.g., 4096 bytes). SKB fragments=
- (such as those from TCP sends using `sk_page_frag()` or NFS) can be backed=
- by compound pages where the fragment size (`len`) exceeds a single page, o=
-r where `offset + len` crosses a page boundary. The `pb` array populated by=
- `init_page_array()` contains exactly one entry per fragment, meaning `pb[i=
-].len` can exceed `PAGE_SIZE`. When `memcpy(dest, src + offset, len)` is ca=
-lled, it will read past the 4KB window mapped by `kmap_local_page()`. On 32=
--bit HIGHMEM systems, this accesses adjacent unmapped or unrelated fixmap s=
-lots, causing a fatal page fault or memory leakage.
+> - [High] The HX710B driver fails to request and enable the `avdd-supply` =
+and `dvdd-supply` regulators, leaving the chip unpowered.
+> - [Low] The driver uses a non-existent compiler macro `__counted_by_ptr`,=
+ which will cause a build failure.
 > --
->
-> commit dfe36312b193784583b28a894f895984d7d0ebba
-> Author: Anton Leontev <leontyevantony@gmail.com>
->
-> hv_netvsc: use kmap_local_page in netvsc_copy_to_send_buf
->
-> This patch replaces phys_to_virt() with kmap_local_page() to support HIGH=
-MEM
-> SKB fragments that are beyond the LOWMEM boundary on 32-bit systems.
->
-> > diff --git a/drivers/net/hyperv/netvsc.c b/drivers/net/hyperv/netvsc.c
-> > index 59e95341f9b1e..2038d9f5c9f9a 100644
-> > --- a/drivers/net/hyperv/netvsc.c
-> > +++ b/drivers/net/hyperv/netvsc.c
+>=20
+> commit 4a57ad17002849c3ffed8137401cf0ed7fd81778
+> Author: Piyush Patle <piyushpatle228@gmail.com>
+>=20
+> iio: adc: hx711: add support for HX710B
+>=20
+> This commit adds support for the AVIA HX710B ADC, sharing the GPIO interf=
+ace
+> with the HX711 but using trailing pulses for mode selection. It introduces
+> variant-specific channel configurations and tracks active channels across
+> conversions. Additionally, it refactors the gain and scale computations to
+> use fixed values for the new variant.
+
+Sashiko is replying here to the wrong patch.
+
+>=20
+> > diff --git a/drivers/iio/adc/hx711.c b/drivers/iio/adc/hx711.c
+> > index 5c326f01c5543..e90780dfd34e5 100644
+> > --- a/drivers/iio/adc/hx711.c
+> > +++ b/drivers/iio/adc/hx711.c
+> > @@ -84,12 +86,16 @@ static int hx711_get_scale_to_gain(const int *gain_=
+scale, int scale)
+> >   * @channels: channel specification array
+> >   * @num_channels: number of entries in @channels
+> >   * @iio_info: IIO info ops for this variant
+> > + * @fixed_gain_val: fixed PGA gain (used when @has_fixed_gain is true)
+> > + * @has_fixed_gain: true if the variant has a fixed ADC gain
+> >   */
+> >  struct hx711_chip_info {
+> >  	const char			*name;
+> >  	const struct iio_chan_spec	*channels __counted_by_ptr(num_channels);
+>=20
+> [Severity: Low]
+> Will this compile? The __counted_by_ptr macro doesn't appear to be defined
+> anywhere in the kernel, whereas __counted_by is used for flexible array
+> members. Could this result in a syntax error during the build?
+>=20
+> >  	unsigned int			num_channels;
+> >  	const struct iio_info		*iio_info;
+> > +	unsigned int			fixed_gain_val;
+> > +	bool				has_fixed_gain;
+> >  };
+>=20
 > [ ... ]
-> > @@ -965,11 +966,14 @@ static void netvsc_copy_to_send_buf(struct netvsc=
-_device *net_device,
-> >       }
-> >
-> >       for (i =3D 0; i < page_count; i++) {
-> > -             char *src =3D phys_to_virt(pb[i].pfn << HV_HYP_PAGE_SHIFT=
-);
-> > -             u32 offset =3D pb[i].offset;
-> > +             phys_addr_t paddr =3D pb[i].pfn << HV_HYP_PAGE_SHIFT;
-> > +             struct page *page =3D phys_to_page(paddr);
-> > +             u32 offset =3D offset_in_page(paddr) + pb[i].offset;
-> >               u32 len =3D pb[i].len;
-> > +             char *src =3D kmap_local_page(page);
-> >
-> >               memcpy(dest, (src + offset), len);
->
-> [Severity: Critical]
-> Will this memcpy() read beyond the 1-page mapping established by
-> kmap_local_page()?
->
-> If the fragment size (len) plus offset exceeds PAGE_SIZE, it seems memcpy=
-()
-> will read past the locally mapped window. SKB fragments can be backed by
-> compound pages where the fragment size exceeds a single page, and
-> init_page_array() assigns the full fragment size to pb[i].len:
->
-> drivers/net/hyperv/netvsc_drv.c:init_page_array() {
->         ...
->         cur_pb->offset =3D offset_in_hvpage(offset);
->         cur_pb->len =3D skb_frag_size(frag);
->         cur_pb->pfn =3D pfn + (offset >> HV_HYP_PAGE_SHIFT);
->         ...
-> }
->
-> Other parts of the subsystem also document that a pb entry can cross page
-> boundaries:
->
-> drivers/net/hyperv/netvsc.c:netvsc_build_mpb_array() {
->         ...
->         /* Each entry in the input "pb" array must describe a contiguous =
-range
->          * of guest physical memory so that the pfns are sequential if th=
-e range
->          * crosses a page boundary. */
->         ...
->         for (j =3D 0; j < HVPFN_UP(offset + len); j++)
->                 mpb_entry->pfnArray[j] =3D pb[i].pfn + j;
->         ...
-> }
->
-> Could this regression cause a fatal page fault on 32-bit HIGHMEM guests w=
-hen
-> an SKB fragment crosses a page boundary, or leak unrelated fixmap memory =
-if
-> the adjacent slot happens to be mapped?
->
-> > +             kunmap_local(src);
-> >               dest +=3D len;
-> >       }
-> >
->
-> --
-> Sashiko AI review =C2=B7 https://sashiko.dev/#/patchset/20260603163851.18=
-058-1-leontyevantony@gmail.com?part=3D1
+>=20
+> > @@ -543,32 +709,43 @@ static int hx711_probe(struct platform_device *pd=
+ev)
+> >  		return dev_err_probe(dev, PTR_ERR(hx711_data->gpiod_dout),
+> >  				     "failed to get dout-gpiod\n");
+> > =20
+> > -	ret =3D devm_regulator_get_enable_read_voltage(dev, "avdd");
+> > +	if (chip_info->has_fixed_gain)
+> > +		ret =3D devm_regulator_get_enable_read_voltage(dev, "vref");
+> > +	else
+> > +		ret =3D devm_regulator_get_enable_read_voltage(dev, "avdd");
+> >  	if (ret < 0)
+> >  		return ret;
+>=20
+> [Severity: High]
+> Does this leave the HX710B unpowered? The device tree bindings require
+> both avdd-supply and dvdd-supply for the avia,hx710b compatible.
+>=20
+> However, when has_fixed_gain is true for the HX710B variant, the driver
+> only requests the vref supply. If avdd and dvdd are controlled by actual
+> regulators on the board, will they remain disabled and cause the hardware
+> to fail?
+>=20
+> --=20
+> Sashiko AI review =B7 https://sashiko.dev/#/patchset/20260603184859.89693=
+-1-piyushpatle228@gmail.com?part=3D4
+
+--NkPsNM0jZw5n6mwr
+Content-Type: application/pgp-signature; name="signature.asc"
+
+-----BEGIN PGP SIGNATURE-----
+
+iHUEABYKAB0WIQRh246EGq/8RLhDjO14tDGHoIJi0gUCaiGv7QAKCRB4tDGHoIJi
+0ho0AQDkXHxRlR9D/MkXDiGGeuNco1zTRUHNryX52NYISDi1HAEAwgUNI/w5/vcK
+gqcXLuidX7cJQvmN4z7/5rIp498gpQ4=
+=7IOS
+-----END PGP SIGNATURE-----
+
+--NkPsNM0jZw5n6mwr--
