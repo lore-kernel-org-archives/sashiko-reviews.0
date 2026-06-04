@@ -1,127 +1,105 @@
 Received: from mail-pj1-f73.google.com (mail-pj1-f73.google.com [209.85.216.73])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A3A6D33C1B4
-	for <sashiko-reviews@lists.linux.dev>; Thu,  4 Jun 2026 16:11:54 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 35BE939EF39
+	for <sashiko-reviews@lists.linux.dev>; Thu,  4 Jun 2026 16:12:56 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.216.73
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1780589516; cv=none; b=Oo2koLqAuAJwfgY6Bd3FjFK9x679qc3AC94bHeNYxm5G20RmCXjQWRerqOCcDh6icn/s/TDUTwgK2mY2LIKApzjxa28MVsEvh3jyzIk5ZKcOg9mqSQCJJz+RA7yEj6WmYf8U8glyyKKZ0kgBKhvjCxWeEINWaz8VNGMIMLc7wNM=
+	t=1780589577; cv=none; b=h7EkGFTYw/+30zmHtCMM7J9Mz6SiucpwoRApAQpkMh32joiWoF7WWnLWCWCLp8B+bJU5oMTAQq22p8iv0CZfwmebDjvwXvrYYXC/SmWd7eb1H9rV6UKgs6Mgd+MAyFVLomQdKso50m+j+Wa7TpjMQasfROrKsiOYzJdFnJOgTiA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1780589516; c=relaxed/simple;
-	bh=mm4rYToWN8PDg2Taq6Ny5698HQBxA/e9Kov4gskqGDk=;
+	s=arc-20240116; t=1780589577; c=relaxed/simple;
+	bh=r5q17zAJ5FVo6m2eXuZpQdHcUcqOccrbNsR+ygn1HHQ=;
 	h=Date:In-Reply-To:Mime-Version:References:Message-ID:Subject:From:
-	 To:Cc:Content-Type; b=cpHoujlJvQKOsLTGghsuls6HvP4BnfNNvgYJMQ3kOyyn3lg92oyd+swopvwtIT8qLT+Gm1w2K1o3UAGgTJFKYDJIhgE6tyalBrAjz+rJPfn/vpppICUYGp+4ur5GP26u9cLYHqwxzmsNkTiorFY5gue2d6MTx6/U3xi43U1VD8U=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=google.com; spf=pass smtp.mailfrom=flex--seanjc.bounces.google.com; dkim=pass (2048-bit key) header.d=google.com header.i=@google.com header.b=KV6B2H6m; arc=none smtp.client-ip=209.85.216.73
+	 To:Cc:Content-Type; b=nyQ2aScLmNH6ots1sWgl3OAHsAwUmi1jaQxBFPhMwU4WqjaaZ6zhDnVlz4LtjGWZXIsr8lr8AKEYmaq/8XdB5dcN1ocOJ4atDNC0qBxff1OoqNh2QDdX8lWvHsrZByUvsMZwhX288gC8sLwnbxnEYiBSKA3kOrHRZhJpzGXiMuw=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=google.com; spf=pass smtp.mailfrom=flex--seanjc.bounces.google.com; dkim=pass (2048-bit key) header.d=google.com header.i=@google.com header.b=c1j9vEln; arc=none smtp.client-ip=209.85.216.73
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=google.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=flex--seanjc.bounces.google.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=google.com header.i=@google.com header.b="KV6B2H6m"
-Received: by mail-pj1-f73.google.com with SMTP id 98e67ed59e1d1-36d98b74447so642550a91.2
-        for <sashiko-reviews@lists.linux.dev>; Thu, 04 Jun 2026 09:11:54 -0700 (PDT)
+	dkim=pass (2048-bit key) header.d=google.com header.i=@google.com header.b="c1j9vEln"
+Received: by mail-pj1-f73.google.com with SMTP id 98e67ed59e1d1-36b808bedfaso1265755a91.1
+        for <sashiko-reviews@lists.linux.dev>; Thu, 04 Jun 2026 09:12:56 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=google.com; s=20251104; t=1780589514; x=1781194314; darn=lists.linux.dev;
+        d=google.com; s=20251104; t=1780589575; x=1781194375; darn=lists.linux.dev;
         h=cc:to:from:subject:message-id:references:mime-version:in-reply-to
          :date:from:to:cc:subject:date:message-id:reply-to;
-        bh=Ma/DewyJFgYgz0xP+3/0017sOureUkpqAC/UR6g35xA=;
-        b=KV6B2H6mUe+rgIsQTq6LvBHHzCYNrd89eb7Mu9gQKg4QqwnLr6QEsngW0Ug8B6JJcv
-         CQQrSjTdIxh59u1BTM/Q7UL8obVCQZuNjMkNyXVw1txksRxIrzQfhjHWiKmOPfmgSpJI
-         51wfVWaP7H9fLc8/4pKDql2kK7+xKij57g0rlqRBH3jr5nv98yTBa4hvlHlJSzKm310b
-         5uV6mDtAS5JWB0AqWkhekkxZD8dkVrWFGc/Qu35brpImyuqIKZZ4Ovh4MhrTb+BDXIxg
-         tcIj8rmx1mz1kKztBXkXwQc4OAf7YRho19rtGqC9FZF5TrSR8BU5owhSn3B/MIFyzWOp
-         GfGw==
+        bh=qHofGI5BidNPmhFV7CbtCFar5wuofTyEezac0pXH5gE=;
+        b=c1j9vElnys+hLjMlXpOBygFaNDIDpsIHI3m16xtSDmzAqcw0imdSvNO6+/idDOtua+
+         sOBpEr00psVdZYzn/92C8OKt2X9uYomoauwJVXf/HFilMry6FbaMV55lu10vVaIYjpDM
+         znlM8BXiupOqC3V/beBSPyar+kpWk80p3b9Bk2rW9OmXemzp9iZSYBxTRMFlUxGj/B7y
+         0YniuCh3wHXF/A+1sibhj0sQjKTWc6AMb1pKjZrc8U2wNkGJGTSiW6wi/20FbJrzDr2z
+         9EksGQ+bc+vRwhX/Q4a38Qn5sGk6jpWnzzNSTJfNlo1d+3wR1WWyLz2WbZIdRUGM3OzL
+         CFtA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20251104; t=1780589514; x=1781194314;
+        d=1e100.net; s=20251104; t=1780589575; x=1781194375;
         h=cc:to:from:subject:message-id:references:mime-version:in-reply-to
          :date:x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=Ma/DewyJFgYgz0xP+3/0017sOureUkpqAC/UR6g35xA=;
-        b=kcNe7VYibj2onw9DZ3srYm0vaI4Y59MKu7GfuFW+sWpsjyA10BQG7u3qiGbp5vQvqg
-         O63NL3qUpxWCFrVcFCjnrHhqu64iia1h8+8WtWKDoqw8g8TogH1fiYWhqa+2pTRVia1D
-         wFmTOGRPgcBzxI2TPEE/TEiMsvjqZOxrEOC4Qgf1PHJnIt6Pr/YV8XyWM8Kxrt8OURu7
-         3xNXwxL5Zc4ybt9njbA8o1ioolcPz5kiiDFE2jExqP3HHPJuICdzqT3OawhhAMmYsABc
-         Z3ahT9Co6fKaNU/gxUUiFHiiIdQesjxzUQtF/gOZGb2Cs+GbNV2rPhDQSzYDW/fg/wfv
-         oEig==
-X-Gm-Message-State: AOJu0YzcA0IBM4T7UGzi7SCv0r9v8/81KDzzRL7JYArShofGR8I6ysRG
-	oi1hi2UZp1qbAmoKNUNxwOPqgT6+ft+7SfPrWeUWbGR+016AI6tOTJZeRCjmYc2dGIx2FCFLq9b
-	jbM8Oy9CPgPP3OYbDKtLmLHsHSyvKdwXibDihp2ofeCpFaa3IgK3z2E6L72/pyvSE0h9H28jBO1
-	bZX/zoz0hQlrZQYg24aF/A8kXx6TOb3jv4tfDwuqVgUfULhw/E
-X-Received: from pjboh6.prod.google.com ([2002:a17:90b:3a46:b0:36a:fcf5:b57f])
- (user=seanjc job=prod-delivery.src-stubby-dispatcher) by 2002:a17:90b:4f47:b0:367:b8ad:f0e9
- with SMTP id 98e67ed59e1d1-36e30a286cdmr9217648a91.16.1780589513680; Thu, 04
- Jun 2026 09:11:53 -0700 (PDT)
-Date: Thu, 4 Jun 2026 09:11:53 -0700
-In-Reply-To: <20260604021538.BC1A91F0089B@smtp.kernel.org>
+        bh=qHofGI5BidNPmhFV7CbtCFar5wuofTyEezac0pXH5gE=;
+        b=Td/AlYWXcmpo9IX66E50OaJM88TVX8O2zX2PsEpOw48Qm/jwvoqVR2Wk7Dio1ngriU
+         PLK/zJQTyOB+ZM4sGgNzfk5JcLK++ol1yiSfMoA0IG4aHC/7uhDNrOG/0rjazfcRLHJv
+         7gbOdXLBY2KQbViha4Pejpo2TIMg7TCy+ZvQ+e5B0OO4W/6EEYP3UjX+9T63Ac7YTIzx
+         0ZNz716tXSbu+9Ehd1gW1u68JQdmHEhRRaz9pl4Kd3vc2uur5//cdrTHt32JNoe9XYV6
+         jeEXu2/HY9dd8hEf0fcRIJTbwtztufPlHfE/B9w0AF0GpTpjOQf0wWJEfOcsiSt2vZDu
+         1+Xw==
+X-Gm-Message-State: AOJu0Yw6wI8G4ZuRZiVlU9ozmPBsFPMrXfHQz4TTBEVySaJcNPSR0LC0
+	1m93jU8lmeh9kQ7QacpNh05Vu4Kmziuj4tuTxmkNqpxzrNetDbwMBaY7HxPbjzSjFFGmbTiQRMN
+	FFpalp7+kuIQZlFViixpKbl5mNXoAi3cGgmI9hQXOIwCnrOBh0VjS8ghKxe3tm8UmdjejN9wniy
+	blId2LUIqPbs3piPPTmcPVZaWmdGL9S+UOz+l5m6nq1Qdk/wCG
+X-Received: from pjqx13.prod.google.com ([2002:a17:90a:b00d:b0:36b:a7c4:95be])
+ (user=seanjc job=prod-delivery.src-stubby-dispatcher) by 2002:a17:90b:3e8d:b0:36b:afa0:c675
+ with SMTP id 98e67ed59e1d1-36e31cacd39mr7915263a91.26.1780589575061; Thu, 04
+ Jun 2026 09:12:55 -0700 (PDT)
+Date: Thu, 4 Jun 2026 09:12:54 -0700
+In-Reply-To: <20260604021233.703BC1F00893@smtp.kernel.org>
 Precedence: bulk
 X-Mailing-List: sashiko-reviews@lists.linux.dev
 List-Id: <sashiko-reviews.lists.linux.dev>
 List-Subscribe: <mailto:sashiko-reviews+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:sashiko-reviews+unsubscribe@lists.linux.dev>
 Mime-Version: 1.0
-References: <20260604020143.748245-12-jrhilke@google.com> <20260604021538.BC1A91F0089B@smtp.kernel.org>
-Message-ID: <aiGjyfSpkU8t4_W4@google.com>
-Subject: Re: [PATCH v5 11/21] KVM: selftests: Verify IRQs wake up halted vCPUs
- in IRQ test
+References: <20260604020143.748245-5-jrhilke@google.com> <20260604021233.703BC1F00893@smtp.kernel.org>
+Message-ID: <aiGkBodadEKK9F-w@google.com>
+Subject: Re: [PATCH v5 04/21] KVM: selftests: Add helper to generate random
+ u64 in range [min,max]
 From: Sean Christopherson <seanjc@google.com>
 To: sashiko-reviews@lists.linux.dev
 Cc: Josh Hilke <jrhilke@google.com>, kvm@vger.kernel.org
 Content-Type: text/plain; charset="us-ascii"
 
 On Thu, Jun 04, 2026, sashiko-bot@kernel.org wrote:
-> Thank you for your contribution! Sashiko AI review found 1 potential issue(s) to consider:
-> - [Medium] The guest code introduces a missed wakeup (TOCTOU) race condition between checking the `done` flag and executing the `hlt` instruction. This can cause the guest vCPU to sleep indefinitely, leading to a test hang.
-> --
-> 
-> commit 9a28612ad82c9a519d18da6d85e17ef536f35e8d
-> Author: David Matlack <dmatlack@google.com>
-> 
-> KVM: selftests: Verify IRQs wake up halted vCPUs in IRQ test
->     
-> This commit adds a '-b' flag to the KVM IRQ selftest to verify that
-> interrupts correctly wake up vCPUs from a halted state.
-
-s/halted/blocking, to connect '-b' to "blocking".
-
-> If the flag is provided, the guest uses the HLT instruction instead of
-> spinning.
-
-Describe the *change* as a command, don't describe the effect of the code.  E.g.
-
-  If blocking mode is enabled, execute HLT in the guest (for x86) instead of
-  simply doing cpu_relax(), blah blah blah.
-
-> > diff --git a/tools/testing/selftests/kvm/irq_test.c b/tools/testing/selftests/kvm/irq_test.c
-> > index 90cff165c3512..671338f0e6122 100644
-> > --- a/tools/testing/selftests/kvm/irq_test.c
-> > +++ b/tools/testing/selftests/kvm/irq_test.c
-> 
-> [ ... ]
-> 
-> > @@ -43,8 +44,12 @@ static void guest_code(void)
+> > @@ -42,6 +42,24 @@ u32 kvm_random_u32(struct kvm_random_state *state)
+> >  	return state->seed;
+> >  }
 > >  
-> >  	WRITE_ONCE(guest_ready_for_irqs[guest_get_vcpu_id()], true);
-> >  
-> > -	while (!READ_ONCE(done))
-> > -		cpu_relax();
-> > +	while (!READ_ONCE(done)) {
-> > +		if (block_vcpus)
-> > +			hlt();
+> > +/* Returns a random u64 in the inclusive range [min, max] */
+> > +u64 kvm_random_u64_in_range(struct kvm_random_state *state, u64 min,
+> > +			    u64 max)
+> > +{
+> > +	u64 value;
+> > +	u64 range;
+> > +
+> > +	TEST_ASSERT(min <= max, "PEBKAC, min = 0x%lx, max = 0x%lx", min, max);
+> > +
+> > +	value = kvm_random_u64(state);
+> > +
+> > +	range = max - min;
+> > +	if (range == ULLONG_MAX)
+> > +		return value;
+> > +
+> > +	return min + (value % (range + 1));
 > 
 > [Severity: Medium]
-> Is there a missed wakeup (TOCTOU) race condition between checking the done
-> flag and executing the hlt instruction?
+> Will this return values uniformly across the entire 64-bit range?
 > 
-> If the host sets done to true and triggers the final wake-up interrupt
-> after the guest evaluates !READ_ONCE(done) but before it executes hlt(),
-> the interrupt handler will run immediately. Upon returning, the guest will
-> blindly execute hlt() and go to sleep. 
+> Because kvm_random_u32() uses a Lehmer PRNG with a modulus of 2^31 - 1, its
+> maximum return value is 0x7FFFFFFE. When kvm_random_u64() concatenates two
+> of these values, the maximum possible output is 0x7FFFFFFE7FFFFFFE, meaning
+> bits 31 and 63 are never set.
 > 
-> Since the host only sends one final interrupt per vCPU, does the guest
-> need to disable interrupts (e.g., using cli()) before checking the condition
-> and use safe_halt() to atomically re-enable interrupts and halt?
+> Due to this restricted PRNG space, using the modulo operator here means the
+> function cannot generate values in the upper half of large ranges (above
+> 0x7FFFFFFE7FFFFFFE). It also introduces significant modulo bias for ranges
+> that don't evenly divide this artificial maximum, preventing uniform coverage
+> of the requested [min, max] range.
 
-Yeah, this is all kinds of broken.  Even if the test passes (I haven't actually
-tried this version), there's zero chance it's actually providing the coverage I
-want it to provide.
-
-In the interest of landing this test sooner than later, as I *really* want this
-coverage, I'll skip this patch and punt on getting a functionally correct version
-to the future.
+Not sure how much I trust AI's ability to reason about math, given past "bug"
+reports.  Regardless, this is a problem to solve in the future.
