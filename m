@@ -1,158 +1,191 @@
-Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
+Received: from mx0a-001b2d01.pphosted.com (mx0a-001b2d01.pphosted.com [148.163.156.1])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0DEC029AAFA;
-	Thu,  4 Jun 2026 15:35:43 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5124B3E024B;
+	Thu,  4 Jun 2026 16:10:35 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=148.163.156.1
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1780587344; cv=none; b=XHnx18FyTK4Wbf/QEwhDutq520zyhqaKTkRiObkN0IaCWswrkVvLUSFanK7xrcisZi4JaDw1YKQrPtVF+/2NZsdEUeVbQ3FrYztNSNDeyr8I7FjkoS2lE3aADSfiHkcp7NMhInyAKGCtQwgrx/CFrzF5sLr/Ro8GwdfWafCTDSk=
+	t=1780589436; cv=none; b=l0RQynu2WLBhpYd15HIriEXPjC/4ytTOm4WcM9Z7QgHWpF38Na3D0OcGpE6MJN48eX3fKenBJI5Ju84PfHcyzvQfXzMSknaZkZHUQRzHWIVbsnAyJryDPX+j6XqFBQJiELN0jsU27nuEN9qwiq4Gz5/eIFOGPEDmUTymxro3A64=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1780587344; c=relaxed/simple;
-	bh=mS9MMrnaL4n025Ve3v+9xL4XFnfNGJ72ZQACgSgL22A=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=C9NEUcJMGQBs3FRMwvCL2wbAqZF6VKBzF+PpVyK0l0Scwf3k1BH6iw64CavOmmtfPV916ODPJ/C+EeJXlkqFLTbY6OD5tOhiusY+35xj6vdL/0X3hGbB7CMIJC+mc+On0IsGT0itwz55zgqvq+lonylHipOs7snx7q3h1bAWLjM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=kVq3TPF1; arc=none smtp.client-ip=100.103.45.18
+	s=arc-20240116; t=1780589436; c=relaxed/simple;
+	bh=TUqRFn5UPGPEfnUHQUX3oPGvQnVixdaGssAULGSCR70=;
+	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
+	 In-Reply-To:Content-Type; b=P7QGVnYjY7/sr//y6hhpN4Z94vJMoyPjJePjC9WRGJpPNPXRKFG8l+ipDfnDPwfTJg0U+Z1AZpsxm6JMMOxD5lhH6jIsKbycHYx0bSIqnUzJ/s/q+v4n2m9L8/2tDE/Wy7vlO808aaG8qev1Hm/tPV39rqTt9anL0JJiRXMXiCE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linux.ibm.com; spf=pass smtp.mailfrom=linux.ibm.com; dkim=pass (2048-bit key) header.d=ibm.com header.i=@ibm.com header.b=aqZ98haz; arc=none smtp.client-ip=148.163.156.1
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linux.ibm.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linux.ibm.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="kVq3TPF1"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2E1D71F00893;
-	Thu,  4 Jun 2026 15:35:41 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=kernel.org;
-	s=k20260515; t=1780587342;
-	bh=US2ll7hbhiZHgqyxcw43ERfVS7KfsrMuZAMTBwoHr3I=;
-	h=Date:From:To:Cc:Subject:References:In-Reply-To;
-	b=kVq3TPF1M2rG32l/VTGDPN/ALksdgEnsJbRqpPgKgZ+i2FFKpas2fqHqvsaV96hD4
-	 FZ/pCdW28rasD6ZFtul3GCszvRaBmzR6T0oMuItvP6x2TeeXptuJu870vmdDlwClNk
-	 BOzZAw5sGGtiNiaNvXsIvPg1CIfQvziUKOyeOBjaonLw4VN1P2HOsD4IaCyatMJSvf
-	 CFHkAZl6CZ1WjExiRqW5VSG/MWvNioOd0FSKJcvHNmV800rmLrzDSXMyI8boTG3wfc
-	 i/G4R8IaqWSrmrp3/JA+2WeM05gkidbedsd8+91q+RHmv/IEJvvLbJ6ZAyJYrtqdmB
-	 h6zloBXneE5LQ==
-Date: Thu, 4 Jun 2026 21:05:38 +0530
-From: Vinod Koul <vkoul@kernel.org>
-To: "Verma, Devendra" <Devendra.Verma@amd.com>
-Cc: "sashiko-reviews@lists.linux.dev" <sashiko-reviews@lists.linux.dev>,
-	"dmaengine@vger.kernel.org" <dmaengine@vger.kernel.org>,
-	"Frank.Li@kernel.org" <Frank.Li@kernel.org>,
-	"linux-pci@vger.kernel.org" <linux-pci@vger.kernel.org>
-Subject: Re: [PATCH v1] dmaengine: dw-edma: Add Xilinx CPM6-DMA DeviceID
-Message-ID: <aiGbShotOS4usSdm@vaman>
-References: <20260603143158.3243500-1-devendra.verma@amd.com>
- <20260603144445.562521F00893@smtp.kernel.org>
- <BL4PR12MB948277305F69CC4A87F0D1F695102@BL4PR12MB9482.namprd12.prod.outlook.com>
+	dkim=pass (2048-bit key) header.d=ibm.com header.i=@ibm.com header.b="aqZ98haz"
+Received: from pps.filterd (m0356517.ppops.net [127.0.0.1])
+	by mx0a-001b2d01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id 6548EWlU2497718;
+	Thu, 4 Jun 2026 16:10:34 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=ibm.com; h=cc
+	:content-transfer-encoding:content-type:date:from:in-reply-to
+	:message-id:mime-version:references:subject:to; s=pp1; bh=zkN0Kn
+	b7oNZUOF+D+DaNSoI5kwYaOUixImOB7tzfPeg=; b=aqZ98haz5gGg9A45SkJOiU
+	+QjGFIiWZrJuJMJGq09ymAC9zZ2xOCQdt6m3k+mLhCzks5JWTyYEiMg+JGw2aoSF
+	ce4EgdUU4k9rVUKeeuOg0HmYaaOlCJZYSh7tqlcWfQlyPe4Dlv7hsSTf0eISenSF
+	SPxpkBtSLZNfRWS+agzxNsTMG5Bcdp8f4W4HDdCCaZAqMaBnBgcS0EcncuJmKRUU
+	RJ9tSOeD0tVvSMHFGvPmHCauvuxoUg69YUkfa3xHmJMpWzMYHHAu6q1lDhmwNWJa
+	LfpcguCDKRzUs3SWRfwcpdl2RHvZkumozAQMTDrWGf6fYCZpu8/BJyrnEnS7xHvg
+	==
+Received: from ppma22.wdc07v.mail.ibm.com (5c.69.3da9.ip4.static.sl-reverse.com [169.61.105.92])
+	by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 4efqm58m61-1
+	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+	Thu, 04 Jun 2026 16:10:34 +0000 (GMT)
+Received: from pps.filterd (ppma22.wdc07v.mail.ibm.com [127.0.0.1])
+	by ppma22.wdc07v.mail.ibm.com (8.18.1.7/8.18.1.7) with ESMTP id 654Fs5qh013227;
+	Thu, 4 Jun 2026 16:10:33 GMT
+Received: from smtprelay06.wdc07v.mail.ibm.com ([172.16.1.73])
+	by ppma22.wdc07v.mail.ibm.com (PPS) with ESMTPS id 4egakw5wc4-1
+	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+	Thu, 04 Jun 2026 16:10:33 +0000 (GMT)
+Received: from smtpav01.wdc07v.mail.ibm.com (smtpav01.wdc07v.mail.ibm.com [10.39.53.228])
+	by smtprelay06.wdc07v.mail.ibm.com (8.14.9/8.14.9/NCO v10.0) with ESMTP id 654GAWnE23593478
+	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
+	Thu, 4 Jun 2026 16:10:32 GMT
+Received: from smtpav01.wdc07v.mail.ibm.com (unknown [127.0.0.1])
+	by IMSVA (Postfix) with ESMTP id C0A2F58055;
+	Thu,  4 Jun 2026 16:10:32 +0000 (GMT)
+Received: from smtpav01.wdc07v.mail.ibm.com (unknown [127.0.0.1])
+	by IMSVA (Postfix) with ESMTP id A071F5804B;
+	Thu,  4 Jun 2026 16:10:31 +0000 (GMT)
+Received: from [9.124.208.23] (unknown [9.124.208.23])
+	by smtpav01.wdc07v.mail.ibm.com (Postfix) with ESMTP;
+	Thu,  4 Jun 2026 16:10:31 +0000 (GMT)
+Message-ID: <69f07855-6e7d-4c8e-9557-13bc4d845878@linux.ibm.com>
+Date: Thu, 4 Jun 2026 21:40:29 +0530
 Precedence: bulk
 X-Mailing-List: sashiko-reviews@lists.linux.dev
 List-Id: <sashiko-reviews.lists.linux.dev>
 List-Subscribe: <mailto:sashiko-reviews+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:sashiko-reviews+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=iso-8859-1
-Content-Disposition: inline
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH] perf data convert json: Fix trace_seq memory leak in
+ process_sample_event()
+To: sashiko-reviews@lists.linux.dev
+Cc: linux-perf-users@vger.kernel.org
+References: <20260604065519.112101-1-tshah@linux.ibm.com>
+ <20260604070617.0050E1F00893@smtp.kernel.org>
+Content-Language: en-US
+From: Tanushree Shah <tshah@linux.ibm.com>
+In-Reply-To: <20260604070617.0050E1F00893@smtp.kernel.org>
+Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 8bit
-In-Reply-To: <BL4PR12MB948277305F69CC4A87F0D1F695102@BL4PR12MB9482.namprd12.prod.outlook.com>
+X-TM-AS-GCONF: 00
+X-Proofpoint-GUID: 6QH0fgRSNxdFek7-QJHUKCBLCtlmA3_J
+X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwNjA0MDE1NyBTYWx0ZWRfX3BZxBZPaA3k1
+ OG0jZFFPtwfPj2fYQBQ42cH7HqeHVs1xO2SCTOV792bdDxcvznai2apXcH7Yvsyllm37QVyYr53
+ rxvrdXDcBT3/RytKlJi7PZIv+sL3+QLhxn84u2xT4nF7Tr4YmQkPSIiV80MOB0ggbKmiw0Rq2y2
+ JeX7i50dbXuOKJSkgls/4qGowdKe4dsKT34A3mM6luNg3LmeozrLPkzQDhVDlR0ZU45OlfNlxAH
+ EqB8LI0kexPOamT/+raEoOpRhv89njSukxJfeoVz+pDeAK/fjobap4SjmCAtwpDECmKsk/vsupa
+ Qc60yPhouzsfBslnd/guC/6eTviAq4p6CAR32xTbpJeWmkR/2g7sURWOzVUKzJ8vKXedN/tGmFO
+ jVVK9/hpTiaMJvL4TEczrirDoxBf7ioUneNIHlRv39LeURRlsH72SwQdHCU6xSTTw4cjbtcrpOf
+ QJ7h9M0xqndbOwjqZAg==
+X-Proofpoint-ORIG-GUID: 6QH0fgRSNxdFek7-QJHUKCBLCtlmA3_J
+X-Authority-Analysis: v=2.4 cv=Vf3H+lp9 c=1 sm=1 tr=0 ts=6a21a37a cx=c_pps
+ a=5BHTudwdYE3Te8bg5FgnPg==:117 a=5BHTudwdYE3Te8bg5FgnPg==:17
+ a=IkcTkHD0fZMA:10 a=FelO9ux0wxsA:10 a=VkNPw1HP01LnGYTKEx00:22
+ a=RnoormkPH1_aCDwRdu11:22 a=U7nrCbtTmkRpXpFmAIza:22 a=c92rfblmAAAA:8
+ a=VwQbUJbxAAAA:8 a=VnNF1IyMAAAA:8 a=1-rSC9nhN4gWdckfc50A:9 a=3ZKOabzyN94A:10
+ a=QEXdDO2ut3YA:10 a=GvGzcOZaWPEFPQC_NcjD:22
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.293,Aquarius:18.0.1143,Hydra:6.1.125,FMLib:17.12.100.49
+ definitions=2026-06-04_04,2026-05-28_03,2025-10-01_01
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
+ priorityscore=1501 suspectscore=0 adultscore=0 bulkscore=0 impostorscore=0
+ phishscore=0 lowpriorityscore=0 malwarescore=0 clxscore=1011 spamscore=0
+ classifier=typeunknown authscore=0 authtc= authcc= route=outbound adjust=0
+ reason=mlx scancount=1 engine=8.22.0-2605210000 definitions=main-2606040157
 
-On 04-06-26, 12:12, Verma, Devendra wrote:
-> Public
+Hi Sashiko,
 
-Pls do _not_ Top Post!
+Thank you for the review and for spotting this!
 
+Regarding the addr_location reference leak:
+
+yes its correct. The early return path for time-filtered samples does 
+leak addr_location references.
+
+When machine__resolve() succeeds, it calls thread__find_map(), which 
+acquires reference counts for thread, map, and maps objects and stores 
+them in the addr_location structure. The early return bypasses 
+addr_location__exit(), preventing these references from being released.
+
+Validation with Valgrind:
+
+I've validated the issue with Valgrind using a test case with 2,385 
+total samples (150 converted, 2,235 skipped by time filter):
+
+Without the fix:
+
+definitely lost:  8,336 bytes in 32 blocks
+indirectly lost:  1,539,361 bytes in 21,307 blocks
+possibly lost:    10,325,465 bytes in 146,283 blocks
+Total leaked:     ~11.9 MB
+
+With the fix:
+
+definitely lost:  0 bytes in 0 blocks
+indirectly lost:  0 bytes in 0 blocks
+possibly lost:    0 bytes in 0 blocks
+Total leaked:     0 bytes
+
+
+I will send a v2 patch series that addresses both memory leaks:
+
+The trace_seq_destroy() fix (original issue)
+The addr_location__exit() fix for the early return path
+
+Thanks
+Tanushree Shah
+
+On 04/06/26 12:36, sashiko-bot@kernel.org wrote:
+> perf data convert json: Fix trace_seq memory leak in process_sample_event()
 > 
-> The pre-existing issues need to be taken up in a separate series.
-> The changes require separate testing which is not related to the
-> current patch.
-
-While I agree to that and it wont block the review but would be good if
-you can fix that as well. Sure affects your users...
-
+> This commit fixes a memory leak by ensuring trace_seq_destroy() is called
+> to pair with trace_seq_init() when formatting tracepoint raw data.
 > 
-> Regards,
-> Devendra
+>> diff --git a/tools/perf/util/data-convert-json.c b/tools/perf/util/data-convert-json.c
+>> index d526c91312ed8..6dd9349ab10f1 100644
+>> --- a/tools/perf/util/data-convert-json.c
+>> +++ b/tools/perf/util/data-convert-json.c
+>> @@ -257,6 +257,7 @@ static int process_sample_event(const struct perf_tool *tool,
+>>   				trace_seq_init(&s);
+>>   				tep_print_field(&s, sample->raw_data, fields[i]);
+>>   				output_json_key_string(out, true, 3, fields[i]->name, s.buffer);
+>> +				trace_seq_destroy(&s);
+>>   
+>>   				i++;
+>>   			}
+> [Severity: High]
+> This is a pre-existing issue, but does the early return path for skipped
+> samples higher up in process_sample_event() leak the addr_location
+> reference handles?
 > 
-> > -----Original Message-----
-> > From: sashiko-bot@kernel.org <sashiko-bot@kernel.org>
-> > Sent: Wednesday, June 3, 2026 20:15
-> > To: Verma, Devendra <Devendra.Verma@amd.com>
-> > Cc: dmaengine@vger.kernel.org; vkoul@kernel.org; Frank.Li@kernel.org;
-> > linux-pci@vger.kernel.org
-> > Subject: Re: [PATCH v1] dmaengine: dw-edma: Add Xilinx CPM6-DMA
-> > DeviceID
-> >
-> > Thank you for your contribution! Sashiko AI review found 1 potential issue(s)
-> > to consider:
-> >
-> > Pre-existing issues:
-> > - [High] Missing pci_free_irq_vectors() cleanup on error paths in
-> > dw_edma_pcie_probe() leading to IRQ resource leaks.
-> > --
-> >
-> > commit a523468dbe7999a5962895c3e0d73662a2938006
-> > Author: Devendra K Verma <devverma@amd.com>
-> >
-> > dmaengine: dw-edma: Add Xilinx CPM6-DMA DeviceID
-> >
-> > Add Device ID for AMD (Xilinx) CPM6 DMA IP to enable 64 Read and 64 Write
-> > Channels. Adds the relevant dw_edma_pcie_data to use 8 Read and 8 Write
-> > Channels for the initial commit.
-> >
-> > > diff --git a/drivers/dma/dw-edma/dw-edma-pcie.c
-> > > b/drivers/dma/dw-edma/dw-edma-pcie.c
-> > > index 0b30ce1385036..4ba368d18cb1d 100644
-> > > --- a/drivers/dma/dw-edma/dw-edma-pcie.c
-> > > +++ b/drivers/dma/dw-edma/dw-edma-pcie.c
-> >
-> > [ ... ]
-> >
-> > > @@ -547,6 +561,8 @@ static const struct pci_device_id
-> > dw_edma_pcie_id_table[] = {
-> > >     { PCI_DEVICE_DATA(SYNOPSYS, EDDA, &snps_edda_data) },
-> > >     { PCI_VDEVICE(XILINX, PCI_DEVICE_ID_XILINX_B054),
-> > >       (kernel_ulong_t)&xilinx_mdb_data },
-> > > +   { PCI_VDEVICE(XILINX, PCI_DEVICE_ID_XILINX_B00F),
-> > > +     (kernel_ulong_t)&xilinx_cpm6_dma_data },
-> >
-> > [Severity: High]
-> > This is a pre-existing issue, but adding this new device ID exposes the new
-> > device to an IRQ resource leak in dw_edma_pcie_probe().
-> >
-> > When the device is probed, dw_edma_pcie_probe() successfully allocates
-> > IRQs via pci_alloc_irq_vectors(). However, several subsequent error paths
-> > return directly without calling pci_free_irq_vectors().
-> >
-> > For example, if the pcim_iomap_table() lookup fails:
-> >
-> > drivers/dma/dw-edma/dw-edma-pcie.c:dw_edma_pcie_probe() {
-> >     ...
-> >       chip->reg_base = pcim_iomap_table(pdev)[vsec_data->rg.bar];
-> >       if (!chip->reg_base)
-> >               return -ENOMEM;
-> >     ...
-> > }
-> >
-> > Or if the main eDMA probe fails later on:
-> >
-> > drivers/dma/dw-edma/dw-edma-pcie.c:dw_edma_pcie_probe() {
-> >     ...
-> >       err = dw_edma_probe(chip);
-> >       if (err) {
-> >               pci_err(pdev, "eDMA probe failed\n");
-> >               return err;
-> >       }
-> >     ...
-> > }
-> >
-> > Does this code leak the allocated IRQ vectors in these error paths? Because
-> > IRQs are a strictly limited resource, repeated probe failures (such as deferred
-> > probe or unbind/rebind cycles) could silently exhaust the system's IRQ
-> > capacity.
-> >
-> > Would it make sense to ensure pci_free_irq_vectors() is called on all error
-> > paths after successful allocation before enabling new devices?
-> >
-> > >     { }
-> > >  };
-> > >  MODULE_DEVICE_TABLE(pci, dw_edma_pcie_id_table);
-> >
-> > --
-> > Sashiko AI review · https://sashiko.dev/#/patchset/20260603143158.3243500-
-> > 1-devendra.verma@amd.com?part=1
+> tools/perf/util/data-convert-json.c:process_sample_event() {
+>          addr_location__init(&al);
+>          if (machine__resolve(machine, &al, sample) < 0) {
+>                  pr_err("Sample resolution failed!\n");
+>                  addr_location__exit(&al);
+>                  return -1;
+>          }
+> 
+>          if (perf_time__ranges_skip_sample(c->ptime_range, c->range_num, sample->time)) {
+>                  ++c->skipped;
+>                  return 0;
+>          }
+>          ...
+> }
+> 
+> When machine__resolve() populates the addr_location structure, it acquires
+> reference handles for objects like thread and map. The early return for time
+> filtering bypasses the addr_location__exit() cleanup.
+> 
+> Could this cause reference counts and memory to leak when dropping skipped
+> samples?
+> 
+> -- Sashiko AI review Â· https://sashiko.dev/#/ 
+> patchset/20260604065519.112101-1-tshah@linux.ibm.com?part=1
 
--- 
-~Vinod
