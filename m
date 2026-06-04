@@ -1,139 +1,161 @@
-Received: from mail-pg1-f195.google.com (mail-pg1-f195.google.com [209.85.215.195])
+Received: from mail-vk1-f170.google.com (mail-vk1-f170.google.com [209.85.221.170])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9D41B238C36
-	for <sashiko-reviews@lists.linux.dev>; Thu,  4 Jun 2026 09:18:15 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.215.195
-ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1780564698; cv=none; b=ECkv2e93w9YR7sDNHN/jmPKdlGA1kjUseFsChZS93dMngKWvmZat147MoTWoNwIsmb70BqmW1yknoRD2HoCHNI0KaGDIM1AzaWII+Zw4/1KFuYya6oQ/AAMi+rsWltU8BBFSW4WbWFE7tdoOlOjdeULR1m6rT4JQFWhfaaus7R0=
-ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1780564698; c=relaxed/simple;
-	bh=Mpu1O4t7OQcsTOr5C8ljDCMbWiLVCF2byHGao00K5Kg=;
-	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=MOGGYr5/HNuNUfG5jLmI0aXlhqLbPIT2wZcti5PMKMXDWLBr4MXK9V0PlXeiLTGMr1+wegfrEXiyqbdlc3UinbnPd0+IfzBtBE8FnEjjpzQXJQzeX/Pu81EKPn2qMTslxvTX9ZSgQnYRMN9hyHFW9FnZ7Kan2xTz+Bt/H0eBKgc=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=J0LeenhL; arc=none smtp.client-ip=209.85.215.195
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id ED9CA372058
+	for <sashiko-reviews@lists.linux.dev>; Thu,  4 Jun 2026 09:28:23 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=pass smtp.client-ip=209.85.221.170
+ARC-Seal:i=2; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
+	t=1780565305; cv=pass; b=jNhR7Gv4v9zXMavpFC/K/MH6ACvBnuVasPsV5BCeGdp/IFtz1Elbege4BhcoTiIMOX3cMVJAxeHBWFNRP1iP7HHS2AItAwZ79YosEkfUBZw9EPJHimiZc2fwZ0a5hLaLRYfZoKxrmPQA3xDk1qnHu9BsfYGc0u5/N2oibP1Ll+E=
+ARC-Message-Signature:i=2; a=rsa-sha256; d=subspace.kernel.org;
+	s=arc-20240116; t=1780565305; c=relaxed/simple;
+	bh=wg7lRJNlsW0oBCESMFNCRkAIROxOMlKhfCp9PuczJeY=;
+	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
+	 To:Cc:Content-Type; b=Um4capT6RR6vITO5smbC1XmEz54wakkpujyPWccNg4wvc13/N6ZaBQQDewP6Bb6IX1jbIuwD4Hd1I1D/3u0NcuhBDJ9XWlbcygoXPuJVLvRvySAlcHNTfdj/57fSyHl47wVQ740erN6WMlilCYHCz0nRaWN5LORXOG32+pqYMWY=
+ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=sifive.com; spf=pass smtp.mailfrom=sifive.com; dkim=pass (2048-bit key) header.d=sifive.com header.i=@sifive.com header.b=FnMQZr/E; arc=pass smtp.client-ip=209.85.221.170
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=sifive.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=sifive.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="J0LeenhL"
-Received: by mail-pg1-f195.google.com with SMTP id 41be03b00d2f7-c85d8615b09so306945a12.3
-        for <sashiko-reviews@lists.linux.dev>; Thu, 04 Jun 2026 02:18:15 -0700 (PDT)
+	dkim=pass (2048-bit key) header.d=sifive.com header.i=@sifive.com header.b="FnMQZr/E"
+Received: by mail-vk1-f170.google.com with SMTP id 71dfb90a1353d-59ebb89109aso390177e0c.1
+        for <sashiko-reviews@lists.linux.dev>; Thu, 04 Jun 2026 02:28:23 -0700 (PDT)
+ARC-Seal: i=1; a=rsa-sha256; t=1780565303; cv=none;
+        d=google.com; s=arc-20240605;
+        b=b3FsT08g/p8lWvAeV7kpapXgmy+ShI2FxybS0PDllmusgSAOIdHsWNq6Ps90PItt5P
+         RRABvia6EcdOeQRcFfnG2NoyLlNcRD7uzJu5iSuk0UnaCR+cKydVWphzdoXdVChdhR39
+         DBX/ZIwj5H0cZ9ov3RVFZfusR7fkb+y9lPvsHIT0i9uNkMMDBDIz1e9VHUb7vWeZ1Kgw
+         OF7ybqhAJfyzRilZ9jvzKo6qb5qHUVajENRKLsV6ufFurHFm+JjfDBnZbfLfHwaJ/PiS
+         biXD/6RjvfXkDGIqBE03cLeBidbl3faCQ29GyFqoM8MmpUExFF3uTDBNy79i5EQVdwVZ
+         jv4Q==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com; s=arc-20240605;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:dkim-signature;
+        bh=RCL4lcQvD3orPEEgkWOhjChzr8i+E32h69rRAld3F+M=;
+        fh=fItrUtV5UsY1KSNx1ZNnzv3miYMbODbRRQWQ18AP5Zc=;
+        b=asbP+/15mwwhXN6mn9NP2n6IJOKdQYgdKu9TP6cvmc0OfppGLPfAZxniGg444pz5k/
+         IuIa45VdyHv5SibIrHtE3tJI4RF3DejmAd8XrnN3nGUSKU4eJs2V83tp0lUWtcwSIQSi
+         2X+lsoE1Mv2I/6gpzMFgBBsNnS449EuqRBryyMEKn23t+wDzAvFNksKZUjA/qvYdmt1d
+         Fjd6V4hplPyCnkbIorCMAKuCPxCIgE210uh4o2rQbuRQfmrd6SkgNR1bwSxVGu2meWog
+         z5vrZaOeSk3Nlwn9yBi0VWyKWOMyekQY+bUVjYx1s8Hqw5XBvMcweWqpNTftzwEdwUIJ
+         5QCA==;
+        darn=lists.linux.dev
+ARC-Authentication-Results: i=1; mx.google.com; arc=none
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20251104; t=1780564695; x=1781169495; darn=lists.linux.dev;
-        h=content-transfer-encoding:in-reply-to:from:content-language
-         :references:cc:to:subject:user-agent:mime-version:date:message-id
-         :from:to:cc:subject:date:message-id:reply-to;
-        bh=9dTSEEZGMHnZUETkD5f3nrjeQdILJk7hEEyXeY0PvtM=;
-        b=J0LeenhLnMP6MkNYXc42NcAeOcq9lx/TvXWoDirio5DvIKnkXO3+IWX4035ggcnAfJ
-         vtPm71wUFTrEMTg64zNlGHKfbPqqfZoIVXJIAvnV3r1lMWSedzm3pzCvR7dGdUCoqq2h
-         OBhNECcZlZdI6navfCo9FDf0ob+H5a2gHQK3q9AeyIusWbBR7VNvYULZbDdLIPKrK018
-         jPHNCKUzsQF7thd0OQs9ucRIFgVegAZS1rof+HWdJMfqG1v7SXevz6zKlfdG56y+oGrv
-         nmYSX3deClI3yvCvuHhYBN61svSJmwIw5Lr8oh+Luh8Gpp18fA6w2Q5s3VsQxAsrRjd9
-         9JuA==
+        d=sifive.com; s=google; t=1780565303; x=1781170103; darn=lists.linux.dev;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=RCL4lcQvD3orPEEgkWOhjChzr8i+E32h69rRAld3F+M=;
+        b=FnMQZr/E9PEl5pGGrI3VXY64mcXrUCHIKy/VyHnCW97Ic4mJRa2B0nTuCJR+6MEwHW
+         y3MQQYn6JPxpNueK+hNp7bQMPgQNcq9nlmWAW7DkOCWyFRM8k8h8YsxPn4xIRqWGnT4x
+         SkMJEXLU49kEXhFAZhoIF15kyeYyC5DpzF2r2xQZngdyP2GH4Ar4VQrZ216KtH9pl+zm
+         hP1VUwiNjsVe+nwF8FRGwUtPHDHk+ZZlXviTS+o1GMVLaf0/nhcmtCPj3oMPjxKd1yq4
+         NFGoPeCSW1ljuBepsd+gFSQ9puklZrV+93SB4xalrGI/CyA10MSLQPOkF9NJwW9cS4HN
+         JagA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20251104; t=1780564695; x=1781169495;
-        h=content-transfer-encoding:in-reply-to:from:content-language
-         :references:cc:to:subject:user-agent:mime-version:date:message-id
-         :x-gm-gg:x-gm-message-state:from:to:cc:subject:date:message-id
-         :reply-to;
-        bh=9dTSEEZGMHnZUETkD5f3nrjeQdILJk7hEEyXeY0PvtM=;
-        b=opMUH/czZ5a7bSs+TWpJrsV4z4Q92eDDaZWZb9W2ZJ6sWqEXqYVkbwvy+qzeXbX6y1
-         Abe1sTFxbHQYO35WHJz0qSUqBV8BDpaH+JkQc5P0XPc1zYI3gFushiLirRYvKABl+pSz
-         /umVx5TmevOOtIUv5ZFAn4Y4L7zGU0eUiortIqgZD5EjMLqPQwf1I+aNhr7Sj/R1WcrQ
-         bCA7OKmWl5EN/7VvgTfKN63v7+Ct4eJ8SQXhDFYmcrghl2xXwqRWKCd3frJwACfZUMP3
-         PyerMJcuHtdEm51UT2JOcSFMAygzrzckkirvyUSIudIcAL0zONWd23WbPddzppz4fTWr
-         C/ZQ==
-X-Gm-Message-State: AOJu0YyqnLayYHg58bAW2sAb5GA36OFuHH0qOu8tqkpDjTHHcE+GidaG
-	OAmsyYqUxCaxWphvdC8z7Z2A0nWQglYw3miw2WAAIUisyubof22tETstXfOROdMbps33QQ==
-X-Gm-Gg: Acq92OFeV9vQ5yuCYCO/DqtpluScxQoB1/V7sq6fYCT6JrX15jPjZ2R6xhIWCkp9+As
-	Nw10X3+0HsSaTxhW1oHOiBG824hZYMVz37SjP31Q6g2csvqihYpQAc/9X6YAYYSSXSW5PY+IhOM
-	9J/+VSttSpoKXi5sVHOReMOgkNJNXQlxWq18x1fdjCo92yN/Hd62cYsr5ceM8DpeVbYDGS24JIq
-	zMzWvKMXlcyNpED2+eT179R6T9udJPifxeeNQOQjWeTgoS43I+ToYoPiTqq9cPeU+MqU/HhcK2h
-	3bZCZd+GxY2/bgAZe5eIaC70tSHA9lJa6hqoY6BJzJxSJQeEU0bbc5Jx1VJxVn1TJbTeQjS+Kd9
-	XRf/fjRFtrdQj0pWN+3vTw/PAkxtau60CSxH1OE/G/b4Eb9x3QIU557Adnwd2oDkTW/mLKVH4LT
-	EQdFDGPuwN5AzoU/cZ9AV4HYUgxOOdEQpK2+YpmIRsJv+nXtNI+ffc
-X-Received: by 2002:a05:6300:228c:b0:3b3:1c7b:ff0 with SMTP id adf61e73a8af0-3b497884d60mr8050475637.32.1780564694812;
-        Thu, 04 Jun 2026 02:18:14 -0700 (PDT)
-Received: from [10.125.112.20] ([210.184.73.204])
-        by smtp.gmail.com with ESMTPSA id 41be03b00d2f7-c85df0b315esm4353216a12.26.2026.06.04.02.18.12
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Thu, 04 Jun 2026 02:18:14 -0700 (PDT)
-Message-ID: <757480ae-2d7d-40e9-9900-edd14ed3b3ac@gmail.com>
-Date: Thu, 4 Jun 2026 17:18:09 +0800
+        d=1e100.net; s=20251104; t=1780565303; x=1781170103;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:x-gm-gg:x-gm-message-state:from
+         :to:cc:subject:date:message-id:reply-to;
+        bh=RCL4lcQvD3orPEEgkWOhjChzr8i+E32h69rRAld3F+M=;
+        b=A0dzQE1JVEWUGmd1yJBdL2db7tDnTjGyPUplAdxS5VD5TwbmWxQ+4zXJBIOxiLa3jE
+         cAFR0ASbEhWOAC21fg9+XzUgq0xBFyr/wxx3LEwuiWpHWa0bIMc6EqQX3DY9z1N6/gVE
+         yLx06HbGpth7G9FBGVpAY8nzn/eJVYWcQj1e2Qy/wxak6Ya0RRcHw/+ur+tqSmxSM3HY
+         3pdH+9TSzfeqUqWamI+RsRWigupg2sOFf9X29ZDjcD0FOxEkxfH0gMfoGiDnjlEAwPaI
+         uEH67t9okjjt8V1H95/v8qG+NAheUFB6EFPezY3iESvgmArT4/yets7j1TNQUZyNvpaq
+         SvIQ==
+X-Gm-Message-State: AOJu0YypgH1+hmnaPR+t49TOW+EmPzqu7q2QOprqxWISH/4cyAfZKkyW
+	jih1+qg0zd4kwFp88+6UTDYurJ+Dr0NbtBHs8DMRPtyKI0YvmH/EsU72O9kx9yr66W9Ip6ObSQb
+	odc/gnuEh0vvijbIsNW2wasSwsXoADmX11Z1HFqGNf1hSKs7Y6p0dmNY9LQ==
+X-Gm-Gg: Acq92OE17bzqSCoCuVyxBECZlAr//sWtGdUYzJ9f3mIRmHu2moW3DSTi4m6cUony+5B
+	4sJL+f86VT5qj35Q+aWa3VFAvochcqo+zZf8oxi4KBYfMHhszkyeMlvhdXRdEfbBffxgIGq73rL
+	syXdRoJPY7j02SLJ/K0wPtiK+DEHm8NdBw8k2gy8PK5I8a1aSL6BEm9lUNpEI2R1bUSjUlWkY8Q
+	m6wpEE56OOtxRhFbUgOmcmwFNTjNRynfeLtlieblE7ijwlDzJ0CG3QeE8qKvKTTzOc0IgyB/GBj
+	tl6jpKRC1rWL/fl9AvmV
+X-Received: by 2002:a05:6122:8b01:b0:59b:396b:cea7 with SMTP id
+ 71dfb90a1353d-5a6e852f461mr4558017e0c.9.1780565302845; Thu, 04 Jun 2026
+ 02:28:22 -0700 (PDT)
 Precedence: bulk
 X-Mailing-List: sashiko-reviews@lists.linux.dev
 List-Id: <sashiko-reviews.lists.linux.dev>
 List-Subscribe: <mailto:sashiko-reviews+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:sashiko-reviews+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 1/2] of: reserved_mem: avoid stack buffer overflow in
- fdt_scan_reserved_mem()
+References: <20260601-kvm-get_reg_list-v2-v5-5-415d08a2813b@sifive.com> <20260601115444.8FA2E1F0089A@smtp.kernel.org>
+In-Reply-To: <20260601115444.8FA2E1F0089A@smtp.kernel.org>
+From: Yong-Xuan Wang <yongxuan.wang@sifive.com>
+Date: Thu, 4 Jun 2026 17:28:11 +0800
+X-Gm-Features: AVVi8CeZRd_Q-LBEz-R52ZmAsGdJ0GpJ5AL3CndkzKAkQ3KhAAdQ_zLy8QAqlUs
+Message-ID: <CAMWQL2jD_QKcEBRERJHnObgWYO8gApyM+LEG8NU5dwSurYX9yw@mail.gmail.com>
+Subject: Re: [PATCH v5 5/5] KVM: riscv: selftests: Split SBI FWFT into
+ separate feature-specific sublists
 To: sashiko-reviews@lists.linux.dev
-Cc: devicetree@vger.kernel.org, robh@kernel.org, conor+dt@kernel.org
-References: <20260604073611.3954433-2-chenwandun1@gmail.com>
- <20260604074520.D5B181F00893@smtp.kernel.org>
-Content-Language: en-US
-From: Wandun <chenwandun1@gmail.com>
-In-Reply-To: <20260604074520.D5B181F00893@smtp.kernel.org>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
+Cc: kvm@vger.kernel.org
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 
-
-
-On 6/4/26 15:45, sashiko-bot@kernel.org wrote:
-> Thank you for your contribution! Sashiko AI review found 1 potential issue(s) to consider:
-> - [Medium] The newly added bounds check for `dynamic_nodes_cnt` is placed outside the block that evaluates whether a node is actually a dynamically-placed region, leading to spurious error logs.
+On Mon, Jun 1, 2026 at 7:54=E2=80=AFPM <sashiko-bot@kernel.org> wrote:
+>
+> Thank you for your contribution! Sashiko AI review found 1 potential issu=
+e(s) to consider:
+> - [Low] The `pointer_masking` FWFT registers are omitted from `filter_reg=
+()`, causing spurious "new registers" output when testing other FWFT config=
+urations.
 > --
 >
-> commit 6a79f526de5e1185b7c79fb469545f4094fb402f
-> Author: Wandun Chen <chenwandun@lixiang.com>
+> commit aac064e5a6f0dbfa5efc45c4b208f71e477aa98e
+> Author: Yong-Xuan Wang <yongxuan.wang@sifive.com>
 >
-> of: reserved_mem: avoid stack buffer overflow in fdt_scan_reserved_mem()
+> KVM: riscv: selftests: Split SBI FWFT into separate feature-specific subl=
+ists
 >
-> This commit adds bounds checking on dynamic_nodes_cnt to prevent a
-> potential stack buffer overflow in fdt_scan_reserved_mem().
+> Divide the monolithic SBI FWFT register list into separate sublists, each
+> testing a specific FWFT feature independently. This allows tests to run
+> correctly on platforms where not all FWFT features are available.
 >
-> Link: https://sashiko.dev/#/patchset/20260604015332.3669384-1-chenwandun1%40gmail.com?part=1 [1]
->
->> diff --git a/drivers/of/of_reserved_mem.c b/drivers/of/of_reserved_mem.c
->> --- a/drivers/of/of_reserved_mem.c
->> +++ b/drivers/of/of_reserved_mem.c
+> > diff --git a/tools/testing/selftests/kvm/riscv/get-reg-list.c b/tools/t=
+esting/selftests/kvm/riscv/get-reg-list.c
+> > index 5033c09201ef1..cb86cb6b36355 100644
+> > --- a/tools/testing/selftests/kvm/riscv/get-reg-list.c
+> > +++ b/tools/testing/selftests/kvm/riscv/get-reg-list.c
 > [ ... ]
+> > @@ -149,6 +150,14 @@ bool filter_reg(__u64 reg)
+> >       case KVM_REG_RISCV_CSR | KVM_REG_RISCV_CSR_AIA | KVM_REG_RISCV_CS=
+R_AIA_REG(iprio1h):
+> >       case KVM_REG_RISCV_CSR | KVM_REG_RISCV_CSR_AIA | KVM_REG_RISCV_CS=
+R_AIA_REG(iprio2h):
+> >               return isa_ext_cant_disable[KVM_RISCV_ISA_EXT_SSAIA];
+> > +     /*
+> > +      * FWFT misaligned delegation registers are always visible when t=
+he SBI FWFT
+> > +      * extension is enable and the host supports the misaligned deleg=
+ation.
+> > +      */
+> > +     case KVM_REG_RISCV_SBI_STATE | KVM_REG_RISCV_SBI_FWFT | KVM_REG_R=
+ISCV_SBI_FWFT_REG(misaligned_deleg.enable):
+> > +     case KVM_REG_RISCV_SBI_STATE | KVM_REG_RISCV_SBI_FWFT | KVM_REG_R=
+ISCV_SBI_FWFT_REG(misaligned_deleg.flags):
+> > +     case KVM_REG_RISCV_SBI_STATE | KVM_REG_RISCV_SBI_FWFT | KVM_REG_R=
+ISCV_SBI_FWFT_REG(misaligned_deleg.value):
+> > +             return sbi_ext_enabled[KVM_RISCV_SBI_EXT_FWFT];
 >
->> @@ -341,6 +341,12 @@ int __init fdt_scan_reserved_mem(void)
->>   		err = __reserved_mem_reserve_reg(child, uname);
->>   		if (!err)
->>   			count++;
->> +
->> +		if (dynamic_nodes_cnt >= MAX_RESERVED_REGIONS) {
->> +			pr_err_once("Reserved memory: reached MAX_RESERVED_REGIONS(%d)\n",
->> +				    MAX_RESERVED_REGIONS);
->> +			continue;
->> +		}
-> [Severity: Medium]
-> Will this bounds check trigger spurious error logs for statically-placed
-> regions?
-Yes, it indeed, will fix in v2.
+> [Severity: Low]
+> Should the pointer_masking FWFT registers be included here as well?
 >
-> Because the check is placed outside the block that evaluates whether a node
-> is actually a dynamically-placed region, it evaluates for all subsequent nodes
-> once the limit is reached.
->
-> If the number of dynamically-placed regions exactly reaches
-> MAX_RESERVED_REGIONS, and a statically-placed region is processed
-> afterwards, won't it incorrectly trigger the warning claiming the dynamic
-> nodes limit was exceeded?
->
->>   		/*
->>   		 * Save the nodes for the dynamically-placed regions
->>   		 * into an array which will be used for allocation right
->>   		 * after all the statically-placed regions are reserved
->>   		 * or marked as no-map. This is done to avoid dynamically
->>   		 * allocating from one of the statically-placed regions.
->>   		 */
->>   		if (err == -ENOENT && of_get_flat_dt_prop(child, "size", NULL)) {
->>   			dynamic_nodes[dynamic_nodes_cnt] = child;
->>   			dynamic_nodes_cnt++;
->>   		}
+> If config_sbi_fwft_misaligned_deleg is tested on a host where the SMNPM
+> extension is available and cannot be disabled, KVM will expose the
+> pointer_masking registers. Because they are omitted from filter_reg(), wo=
+n't
+> the test framework spuriously report them as new registers?
 
+The SMNPM extension can be disabled so the KVM won't expose the pointer_mas=
+king
+registers when testing config_sbi_fwft_misaligned_deleg.
+
+>
+> >       default:
+> >               break;
+> >       }
+>
+> --
+> Sashiko AI review =C2=B7 https://sashiko.dev/#/patchset/20260601-kvm-get_=
+reg_list-v2-v5-0-415d08a2813b@sifive.com?part=3D5
