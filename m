@@ -1,167 +1,116 @@
-Received: from mail-wm1-f46.google.com (mail-wm1-f46.google.com [209.85.128.46])
+Received: from mail-wm1-f50.google.com (mail-wm1-f50.google.com [209.85.128.50])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8BB862D6409
-	for <sashiko-reviews@lists.linux.dev>; Thu,  4 Jun 2026 07:59:19 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.46
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AFE412E65D
+	for <sashiko-reviews@lists.linux.dev>; Thu,  4 Jun 2026 07:59:27 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.50
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1780559960; cv=none; b=sCtlf1Iwcru5HCe/OymIbJ1akMKff1418UT0AuQhRYZUG7FJzyF1GCGT1GwGKkyJOLR6+0PdZlGTm9jO4PsyaUxYJSi07X9rVeWs87sTSQBDI//GwOP6u6eL+uvjd9Z0eSJyI8nqcsV0chSF55Q+eVIb11Imt7m7FfDGAGGoiBY=
+	t=1780559969; cv=none; b=Kx2Xs0pp2j1iVs1GodLjaKbI24UQgr6rePa7VB1tsv0tecM60tx9/+nF8ZE1f2ihev8qcqM7mN4iqya34hnB3w1ZMHS/6Sep9epFxXAo5pmahvpIWixr46NR3Bj9quHQUiP7x8k+FPYRqRlDoeGTY5AP9hyAebW2zuUkSDQFfBc=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1780559960; c=relaxed/simple;
-	bh=Abt7s4PkODrLPYtt/GowGs46G361XNVIuLXOTwhVOkc=;
+	s=arc-20240116; t=1780559969; c=relaxed/simple;
+	bh=CnhMj81FkK5riQbmtkpJCB21rHzxFk+nB0anZX/jsjM=;
 	h=From:Date:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=d0Xhyikfty55VTXnpx7xqAhvTCiJ3Si9S9RMKXNf0Fy17J0b0w1+mJXGf/K7HXOh8vKU/Owwfpn1w5DPTCB16gzLxHvCixaBUab6T7Teo8oFhB1x1YZN5sTdz2mOcoua1S4t934+lcWzIvVIoaYjQcOhXYn+1rpj7WmB3FrmUj4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=S1GIwhke; arc=none smtp.client-ip=209.85.128.46
+	 Content-Type:Content-Disposition:In-Reply-To; b=nCob/+2OlpfHeawiRdDlCzcanbryNklXUIlwKuCqx30Kge4+shzUv0YYvz27Iojy+JA5oUeAVcpE77JvawWgSRH3cRPBCJhlnP4OGIU/PSHx3OI5bPOMVn4JpiAj06RolXKDlLfVPXhZEIpAZ1H0ATv4dzmbD16FJlq9h41UzY4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=Hs5Ym+py; arc=none smtp.client-ip=209.85.128.50
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="S1GIwhke"
-Received: by mail-wm1-f46.google.com with SMTP id 5b1f17b1804b1-490ae94a89eso3565485e9.1
-        for <sashiko-reviews@lists.linux.dev>; Thu, 04 Jun 2026 00:59:19 -0700 (PDT)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="Hs5Ym+py"
+Received: by mail-wm1-f50.google.com with SMTP id 5b1f17b1804b1-490b1bbcf3aso2898325e9.1
+        for <sashiko-reviews@lists.linux.dev>; Thu, 04 Jun 2026 00:59:27 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20251104; t=1780559958; x=1781164758; darn=lists.linux.dev;
-        h=in-reply-to:content-transfer-encoding:content-disposition
-         :mime-version:references:message-id:subject:cc:to:date:from:from:to
-         :cc:subject:date:message-id:reply-to;
-        bh=K0S3H7P3znE+t+BHRumrEOEZYnM/V06pBrS5mPyks6Y=;
-        b=S1GIwhkeHzW1PxmvTwi2RVV80pIdFvrliDjZXX2FOoBrcVaq/uofZdnwwrx1in++if
-         wBmqp56R9J8gSnaP/m/vtlBoiEi3eLfeoIOyi2CB05LpssR5VFmnZ6h6ib53Ief8EXym
-         LopzxI6fI4U6xXR9u1jifYWN+9YA4nSwqMc2ZLLlbP9kwCs1J/9sTA8aHY0gzH6RbQRy
-         ZmCkjFqk5AXz0od1DXEIdfGccSRfdxZp6HBPi7zagRJccStALQPIZbfoBB7gv3VZbTlB
-         zrHe9lAWjVOcyYt000gzt2TN7/cwV1sj77M/6xX0AiCRpMRc9fTgkZ9ACT/Xao9yoQNO
-         aAeA==
+        d=gmail.com; s=20251104; t=1780559966; x=1781164766; darn=lists.linux.dev;
+        h=in-reply-to:content-disposition:mime-version:references:message-id
+         :subject:cc:to:date:from:from:to:cc:subject:date:message-id:reply-to;
+        bh=FlSlkzihrQLsWLGFxnsYvqE+OsF/acsWFa5H1/cLFIk=;
+        b=Hs5Ym+pydJGQeuquXVO5Q5RpltK4Gd+LG4jual6pmXCL2VzDGza3EQ6eTsdth3apV1
+         hNC/cGfV0Tm1osFL1j1/Z4UfDMNw6bRxqVSP/HGW7nLv4EMrS4ckc2beUXIO/Gs3hhgc
+         pRzsjR4lrrGEu7ufHBj2sJjyyC+bOkmCWdEOe9Ga87qWiLiUVpPkIwom+gDy5Vyefa9E
+         uDB81blo9faaaR6Uj8Ln9geDhasSGan5IHCmunVm4Q9tABYZTfU0OlDLmsngdOFnaUKB
+         yK6nQKKvpJhTy00KRTU9o2XRDwvzQmE0DPUdBLoRU3QhrvWPPl7ckGb+dOUZm/kj8tE6
+         D1FQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20251104; t=1780559958; x=1781164758;
-        h=in-reply-to:content-transfer-encoding:content-disposition
-         :mime-version:references:message-id:subject:cc:to:date:from:x-gm-gg
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=K0S3H7P3znE+t+BHRumrEOEZYnM/V06pBrS5mPyks6Y=;
-        b=IpaOycD5CdeQR911QBd8TBeBjxk6LRA+dFBXAE8ijvCZ/6tsSjZSdjKdWcCNj0R0LL
-         WG38PTFRSHsWppxAv2ywEKCf4tTGu/p3z3/V+50YMXMcjfYebPrGcZq/UTdu7BSijrQV
-         J9TBuq+EEsV+IFQ3FeYQ3jDPPK4yh8gjTmln4a5repAs/p6gH6Vqo1mvi6fqk6VlcHmh
-         ZeI9Uc7HvEy7sRxgb24pEAD9azexBlebtlb/TEL2pO5aMy2v3AD/q/w2PvhX85ykPsAe
-         HJGBLppXKi9fH8srtJ/MbkgrnAnLTUwjc0/kaVGKjQWjN+hPHjxhndP7BFybfuk82h9m
-         galg==
-X-Gm-Message-State: AOJu0YyNfJ5w2S+fKrDVgWengXcJfSlwBxaNAgTUZO4+6yolxW8rByeD
-	RODtI3YfakBGjjOEasHzUEc0KGw5fHCWqK2DJ55UvdcQlQcOrBC/8dKZSGEjSg==
-X-Gm-Gg: Acq92OELMaoO2tME6e4TQrhL4rn0/YRdGbWxL7duLZe9HIWE5lh19MCD7VgMz0A+L44
-	FR1TVD+Uarkgs3GZ1FC5LUrtunjHdwxIWroYbrVfLr+RRMIP0qDs4FebZ7W4g9AX6u0phQy5m51
-	LCt1qMjVQvsXJ/cM5c2r6gU0Al1pAbi1r/6C/vu3oXz82HE+ZzEyNYGiQ1sGjgYfCEs2E8OiWpC
-	cH/AkkO8WrW2p0uBGuPass/+9MPUDeb96U2cUI3lzAgbIWkgbwMUy9pBU1UVX3tJ7WWUiPZBQi5
-	LN6J47Ggttt9yIYkyvpKEbFk3/JrKOYzXS5fYJS6FqfY+YD74KBhROyuSE+cwZK4iTBZEw8G2DZ
-	A+LrLhqo0huY9jdhV4xo/K7vjaSmXcDMHfYYasIDaczRAGgojVzbSPOnJ5vWkZibXPqJfjWy5kU
-	1xQAszc1av8Y4RsROalleQzE1b6moEJk75x+RB
-X-Received: by 2002:a05:600c:821a:b0:490:c024:2ec8 with SMTP id 5b1f17b1804b1-490c02430cdmr346815e9.0.1780559957627;
-        Thu, 04 Jun 2026 00:59:17 -0700 (PDT)
+        d=1e100.net; s=20251104; t=1780559966; x=1781164766;
+        h=in-reply-to:content-disposition:mime-version:references:message-id
+         :subject:cc:to:date:from:x-gm-gg:x-gm-message-state:from:to:cc
+         :subject:date:message-id:reply-to;
+        bh=FlSlkzihrQLsWLGFxnsYvqE+OsF/acsWFa5H1/cLFIk=;
+        b=nI6vM0uTlzP/Hoq5i5fqwzeAutJrmr1vBG7sLs9wYB1Xx7CSBafFWbmZYAlXbOv4RZ
+         SLsgl+7ip5IMyZz5pNSQyTy3ItsrgRXXkFPuSprvk0fr47KgDsalA2z5636dGvpWRNQC
+         JXOrd41KCnAtetbJqNQZ8v0w+sWEMT4nx+veKNn/UZGEip1g+vTK4N/ZGMd2ZAxDIsfd
+         NQxQFy0A1ZiaOwpRnl+PZYNY1j70zpKRrtROimIO6JiVVr8hMtxZtpE50Z9gkhMqjKqe
+         vP6QLeF575dcY6sldmtdqtAeVapz6LQcWbpvFyOzecVcCXtn54ysEMKciGVZnkoQ4Sen
+         sfig==
+X-Gm-Message-State: AOJu0Yz5AU55n/s5Xe88v9PMTgUB7x3ATrNgJhA5Fcjw4ZFZYboZL21d
+	6wsqRzsXYw9B9QbNs5rk/tiAr1m9UnbPZARTlKc18VfabyGqbeg6C45+ifG/pg==
+X-Gm-Gg: Acq92OEmwdhEBh9Qbni25yODgf3oa+qdBclH46hW/k5oa5Tm79NKIBOiMvdB8UlzEbp
+	wMdVnI0BzUDeBSs6MLmkN5UI4ZbkjtFSZr+fibyEtkTEMgcZpQyYjdWxjrFszAaAVwDwwufUOjw
+	afti4PGz227+QsByLOdBxN9TruSON/6nzd2pNYXrqOf+wVwn+JWOZnm0VM/5CavaZCoUSe71q9a
+	U4ME7TRDTwHqZJz7eFDjoktp88pH2kRDjSyjP9j8MyQRACyGr3sRJrLPsWuXAplpVqEhFTokBV2
+	5XK1KKv/24RKeLm+3HOIW7xIR6oZWxb/6Dtf8oaC/xI/ezNn2t0DpmDz39JmRq8wfSP8OH+pxqv
+	d0GvzzoePcwjxu4pKnH+nTBkn/4ZbF+qgXhbkmXHx9pcHK4J76EU8tNrJGFUFVs1xHLl6Y+b+vj
+	y+web04A8liuKvoS3t0EESKbbKbg==
+X-Received: by 2002:a05:600c:444c:b0:490:b58b:a4a5 with SMTP id 5b1f17b1804b1-490b60e0a19mr106863165e9.31.1780559965940;
+        Thu, 04 Jun 2026 00:59:25 -0700 (PDT)
 Received: from krava ([2a02:8308:a00c:e200:b655:ff13:e355:16a3])
-        by smtp.gmail.com with ESMTPSA id ffacd0b85a97d-4601f2ec711sm13840200f8f.12.2026.06.04.00.59.17
+        by smtp.gmail.com with ESMTPSA id 5b1f17b1804b1-490b7d6b990sm71476955e9.2.2026.06.04.00.59.24
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Thu, 04 Jun 2026 00:59:17 -0700 (PDT)
+        Thu, 04 Jun 2026 00:59:25 -0700 (PDT)
 From: Jiri Olsa <olsajiri@gmail.com>
 X-Google-Original-From: Jiri Olsa <jolsa@kernel.org>
-Date: Thu, 4 Jun 2026 09:59:15 +0200
+Date: Thu, 4 Jun 2026 09:59:23 +0200
 To: sashiko-reviews@lists.linux.dev
 Cc: bpf@vger.kernel.org
-Subject: Re: [PATCHv7 bpf-next 01/29] ftrace: Add ftrace_hash_count function
-Message-ID: <aiEwU0CyceOkPrfV@krava>
-References: <20260603110554.29590-2-jolsa@kernel.org>
- <20260603112630.3D1EB1F00893@smtp.kernel.org>
+Subject: Re: [PATCHv7 bpf-next 04/29] bpf: Use mutex lock pool for bpf
+ trampolines
+Message-ID: <aiEwW3-dzi8Y5d0n@krava>
+References: <20260603110554.29590-5-jolsa@kernel.org>
+ <20260603112900.318991F00893@smtp.kernel.org>
 Precedence: bulk
 X-Mailing-List: sashiko-reviews@lists.linux.dev
 List-Id: <sashiko-reviews.lists.linux.dev>
 List-Subscribe: <mailto:sashiko-reviews+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:sashiko-reviews+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=iso-8859-1
+Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-Content-Transfer-Encoding: 8bit
-In-Reply-To: <20260603112630.3D1EB1F00893@smtp.kernel.org>
+In-Reply-To: <20260603112900.318991F00893@smtp.kernel.org>
 
-On Wed, Jun 03, 2026 at 11:26:29AM +0000, sashiko-bot@kernel.org wrote:
+On Wed, Jun 03, 2026 at 11:28:59AM +0000, sashiko-bot@kernel.org wrote:
 > Thank you for your contribution! Sashiko AI review found 1 potential issue(s) to consider:
-> - [Medium] The generic ftrace_hash_count() API is incorrectly guarded by CONFIG_DYNAMIC_FTRACE_WITH_DIRECT_CALLS, returning a false 0 when direct calls are disabled.
+> - [Low] Multi-line comments modified by the patch do not follow the mandatory BPF subsystem comment style.
 > --
 > 
-> commit 61129b2eed8ea43ed2c045ef25d031a4504c8af4
+> commit 107ed36e35d617129f1228fd0db67188b4ce4a98
 > Author: Jiri Olsa <jolsa@kernel.org>
 > 
-> ftrace: Add ftrace_hash_count function
+> bpf: Use mutex lock pool for bpf trampolines
 > 
-> Adds an external ftrace_hash_count function to allow retrieving the hash
-> count from outside the ftrace object.
+> This commit replaces the per-trampoline mutex with a mutex pool to
+> prevent lockdep warnings when attaching multiple trampolines during
+> tracing_multi link. Trampolines are hashed to one of 32 pool locks,
+> keeping the maximum simultaneous locks below the 48 lock limit.
 > 
-> > diff --git a/include/linux/ftrace.h b/include/linux/ftrace.h
-> > index 28b30c6f10314..02c24bf766ced 100644
-> > --- a/include/linux/ftrace.h
-> > +++ b/include/linux/ftrace.h
+> > diff --git a/kernel/bpf/trampoline.c b/kernel/bpf/trampoline.c
+> > index a4298a25d4bae..c0b4732627bef 100644
+> > --- a/kernel/bpf/trampoline.c
+> > +++ b/kernel/bpf/trampoline.c
 > [ ... ]
-> > @@ -551,6 +551,8 @@ int update_ftrace_direct_mod(struct ftrace_ops *ops, struct ftrace_hash *hash, b
-> >  
-> >  void ftrace_stub_direct_tramp(void);
-> >  
-> > +unsigned long ftrace_hash_count(struct ftrace_hash *hash);
-> > +
-> >  #else
-> >  struct ftrace_ops;
-> >  static inline unsigned long ftrace_find_rec_direct(unsigned long ip)
-> > @@ -590,6 +592,11 @@ static inline int update_ftrace_direct_mod(struct ftrace_ops *ops, struct ftrace
-> >  	return -ENODEV;
-> >  }
-> >  
-> > +static inline unsigned long ftrace_hash_count(struct ftrace_hash *hash)
-> > +{
-> > +	return 0;
-> > +}
-> > +
+> > @@ -99,12 +128,12 @@ static int bpf_tramp_ftrace_ops_func(struct ftrace_ops *ops, unsigned long ip,
+> [ ... ]
+> > -	if (!mutex_trylock(&tr->mutex)) {
+> > -		/* sleep 1 ms to make sure whatever holding tr->mutex makes
+> > -		 * some progress.
+> > +	if (!mutex_trylock(select_trampoline_lock(tr))) {
+> > +		/* sleep 1 ms to make sure whatever holding select_trampoline_lock(tr)
+> > +		 * makes some progress.
+> >  		 */
 > 
-> [Severity: Medium]
-> Is it intended to restrict this generic API to configurations where direct
-> calls are enabled?
-> 
-> It appears this declaration and the inline dummy are placed inside the
-> CONFIG_DYNAMIC_FTRACE_WITH_DIRECT_CALLS block.
+> [Severity: Low]
+> This isn't a bug, but since this multi-line comment in
+> bpf_tramp_ftrace_ops_func() is being modified, should it be updated to
+> follow the BPF subsystem comment style, with the opening /* on its own line?
 
-ftrace_hash_count declaration is in CONFIG_DYNAMIC_FTRACE_WITH_DIRECT_CALLS
-black, the inline stub is in !CONFIG_DYNAMIC_FTRACE_WITH_DIRECT_CALLS block
-
-> 
-> When CONFIG_DYNAMIC_FTRACE is enabled but direct calls are disabled, any
-> external caller will silently receive 0. Could this cause subtle logic
-> errors for users of this generic ftrace infrastructure?
-
-ftrace_hash_count is enabled for CONFIG_DYNAMIC_FTRACE_WITH_DIRECT_CALLS
-as are all its users, seems ok to me
+already answered in here: https://lore.kernel.org/bpf/ahg_YFpqlTGYQUay@krava/
 
 jirka
-
-> 
-> >  /*
-> >   * This must be implemented by the architecture.
-> >   * It is the way the ftrace direct_ops helper, when called
-> > diff --git a/kernel/trace/ftrace.c b/kernel/trace/ftrace.c
-> > index b2611de3f5943..57ab01fd00bda 100644
-> > --- a/kernel/trace/ftrace.c
-> > +++ b/kernel/trace/ftrace.c
-> [ ... ]
-> > @@ -6288,11 +6288,16 @@ int modify_ftrace_direct(struct ftrace_ops *ops, unsigned long addr)
-> >  }
-> >  EXPORT_SYMBOL_GPL(modify_ftrace_direct);
-> >  
-> > -static unsigned long hash_count(struct ftrace_hash *hash)
-> > +static inline unsigned long hash_count(struct ftrace_hash *hash)
-> >  {
-> >  	return hash ? hash->count : 0;
-> >  }
-> >  
-> > +unsigned long ftrace_hash_count(struct ftrace_hash *hash)
-> > +{
-> > +	return hash_count(hash);
-> > +}
-> > +
-> 
-> [Severity: Medium]
-> Similarly, does this implementation need to be moved outside the direct
-> calls block so it is broadly available to dynamic ftrace?
-> 
-> -- 
-> Sashiko AI review · https://sashiko.dev/#/patchset/20260603110554.29590-2-jolsa@kernel.org?part=1
