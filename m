@@ -1,83 +1,60 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AA1FB4DC520
-	for <sashiko-reviews@lists.linux.dev>; Thu,  4 Jun 2026 21:37:54 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BA7BA2EEE7A;
+	Thu,  4 Jun 2026 21:45:38 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1780609076; cv=none; b=Y8Z7FGO7faI4c7PvsxE2fDj8fftIiQV9FeLXucTyGCQthuQdR/HyQ7OLC4cWREgXADW3f5sh9wJsX5NIyiBNig5f3stmOzzQEZ2zm5pV+Ix1rb0aTKmH/JiXQ3jyPmewxpNdMnp+Yc08cTrsMRii7yUMmtyT5zI/iDNLTYzSRHM=
+	t=1780609539; cv=none; b=EcjYrbjpBSJjmD+ONlmntGqVAxPWTY9BToAcCrzYHbTgRnbTYBzfZijVBFPgr7r26ZzOHe28+x4AaJQFF8FhK3nGO/K0qX4oqZe/9Z9U46dDCbSmKTv9P3BYP0rH4ZqLj0TTGgZ0XrHuD7mc3PptFEyJLpHX/w+MT5KVwzI1JoE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1780609076; c=relaxed/simple;
-	bh=RdARIrsL4d3wMj4gObHhASuoGP1uqqTyUSoZT66WTtQ=;
-	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
-	 To:Cc:Content-Type; b=qakULvq5YomHE31Cm9AzoMJ40gcKBy7LlU+aUub5G00SOuOVVywwwlcw1SeUt0KIFSRIkLn28VIariKLxJJK4geL6oZn1LDUhaewnVwKzvBtkOFf+yzxOiKq3kQ3LjmSV7LUe+y87+GUxPML4QvNHsx8oFzSCRybecmZj6/+8L8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=g4LA7kNy; arc=none smtp.client-ip=100.103.45.18
+	s=arc-20240116; t=1780609539; c=relaxed/simple;
+	bh=eGlTq58OPuaKU98Sw1Dy4HI/GbZ3deybTOS4jSYPFNs=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=qjrMBVXsetSEYIgrfx8oBHItujValcLAHI+qdf0dPcE3dYw6N6bfN7eE/ZUwyxUW3vtHz0LZhfXsXwDOr7SgIYo2vxs/k3yAdorMkldPym2npZooVxJ9Wdy9OsymQ6MSSip00bxlJJ0oCFsDEA1HVgXAhGhmKjwNUdCkfBKV1gs=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=JxYilrHq; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="g4LA7kNy"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 167821F00898
-	for <sashiko-reviews@lists.linux.dev>; Thu,  4 Jun 2026 21:37:54 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="JxYilrHq"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 533F41F00893;
+	Thu,  4 Jun 2026 21:45:38 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=kernel.org;
-	s=k20260515; t=1780609074;
-	bh=hIAVBU8zFqw+Rho/q24j0JAjEDxqHS+EV/shAvn34RQ=;
-	h=References:In-Reply-To:From:Date:Subject:To:Cc;
-	b=g4LA7kNyb6Wn+JG6IEBkL/v8KIw253wmriTkroAvY0Kt6Av/JRVjr5dSW/lppRasT
-	 3Dfng8CsnF5WBCNk5eIKDRY+XP0QOW4ZXpEDfiWZGEnbNYX4hKOE5zCpsYn6treGVv
-	 usJqSXyB7Dv2+PmqRWDEKLvNCYssRUP3/o853zNj8F72KqoroWR2J8DceAPmbPRcvm
-	 j9Thi/Z0IjfVbZDV+FYyRF29S1PWOL8CyCCpY4aryHWA/gYTtr95uvMnMC4B5uhBj0
-	 Bl70ZheEoBLfB1Mx0QLbDP5MDDaVySk3VhyznnnpL9QpmUKeeBQ9H4G+/LkfY88eIq
-	 qzBgShsnBAFTw==
-Received: by mail-ej1-f52.google.com with SMTP id a640c23a62f3a-bebb72b845aso149837066b.3
-        for <sashiko-reviews@lists.linux.dev>; Thu, 04 Jun 2026 14:37:54 -0700 (PDT)
-X-Gm-Message-State: AOJu0YyTbuvPRv10gXyr2ScDxi2DTegyCCXTOeHk0/YJItrJYiSae3R5
-	B4KFC1cCYzeXpwT5WASWxPrmR/aIkVJ4m7xtJa5GrbKPmrqWtqI+1EmHDSvlwmX1UfjRirSm2Yv
-	c7kmgATBDiFXSHV5PsQxM2FhiD22fwe4=
-X-Received: by 2002:a17:907:1c0d:b0:bd4:6c96:f87b with SMTP id
- a640c23a62f3a-bf37234998fmr29169866b.28.1780609073020; Thu, 04 Jun 2026
- 14:37:53 -0700 (PDT)
+	s=k20260515; t=1780609538;
+	bh=D198WoNPL0fOturA9ZR1xYcBW/1qBSSMoaqkKcghODw=;
+	h=Date:From:To:Cc:Subject:References:In-Reply-To;
+	b=JxYilrHqnnWLoTwvovOz9tEAUf+NEKoMqo59T1zN9PwN+HTUJEGASY02GttELRIdq
+	 k9Xhnh24HKnx4dOtdw08maj0vX4yUU73KPuVeBvkJwBRCiavK9YYins+7UH8twERxH
+	 1qJa0VbC6xORR/ZvnS8yjHTkTvoT/vL04MaIwmepmkCDhz7ZHosOuutbBWxemNle1g
+	 AP+XSILl+Hs6piDnpcg5x6XpZ88HtihDtfGhDXjWhbMFbXBY8PT5cuiic3OyTGFFw5
+	 A/da7oyAk+C/FHyrq7z5E0VdVS6dGxZwS3Zm2RstrIcbAhUXFzP94iWEXtwQ8sev/M
+	 jTNnikNXEgYiw==
+Date: Thu, 4 Jun 2026 14:45:37 -0700
+From: Namhyung Kim <namhyung@kernel.org>
+To: Arnaldo Carvalho de Melo <acme@kernel.org>
+Cc: sashiko-reviews@lists.linux.dev, linux-perf-users@vger.kernel.org
+Subject: Re: [PATCH 4/4] perf timechart: Remove unnecessary copy of backtrace
+Message-ID: <aiHyAeODQHSxccCy@google.com>
+References: <20260604190812.2168118-5-namhyung@kernel.org>
+ <20260604191818.352171F00893@smtp.kernel.org>
+ <aiHcxl4rHnvkcUkK@x1>
 Precedence: bulk
 X-Mailing-List: sashiko-reviews@lists.linux.dev
 List-Id: <sashiko-reviews.lists.linux.dev>
 List-Subscribe: <mailto:sashiko-reviews+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:sashiko-reviews+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-References: <20260604203546.365658-4-yosry@kernel.org> <20260604204415.9FE0F1F00893@smtp.kernel.org>
- <CAO9r8zMQYYkjW6oxDOPvH9PO173RPfWSpNWdw4oLz=Z9Zns3ww@mail.gmail.com>
-In-Reply-To: <CAO9r8zMQYYkjW6oxDOPvH9PO173RPfWSpNWdw4oLz=Z9Zns3ww@mail.gmail.com>
-From: Yosry Ahmed <yosry@kernel.org>
-Date: Thu, 4 Jun 2026 14:37:41 -0700
-X-Gmail-Original-Message-ID: <CAO9r8zPz8WbijVN6mgLb8OaU6=tNSSz1NgNBjZCsC36D4+TO+w@mail.gmail.com>
-X-Gm-Features: AVHnY4If8_bs-LcnnQJtK7WlQarj8ZNmeu9NowIHE0muL-UkGdzgMdvdS5JJMgg
-Message-ID: <CAO9r8zPz8WbijVN6mgLb8OaU6=tNSSz1NgNBjZCsC36D4+TO+w@mail.gmail.com>
-Subject: Re: [PATCH v2 03/10] KVM: selftests: Use an array for guest_regs (and
- fix offsets)
-To: sashiko-reviews@lists.linux.dev
-Cc: kvm@vger.kernel.org
-Content-Type: text/plain; charset="UTF-8"
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+In-Reply-To: <aiHcxl4rHnvkcUkK@x1>
 
-> It's ironic that the changelog says:
->   Also, the last offset in the struct (R15) is 0x78, not 0x80, so
->   the code actually saves and restore beyond the end of gpr64_regs.
->
-> Yet I reintroduced the same exact bug lol.
->
-> Obviously NR_GUEST_REGS should be defined as GUEST_REGS_R15+1.
->
-> I also failed to document why an enum cannot be used here, which would
-> have been ideal to avoid such problems. The preprocessor doesn't seem
-> to be able to use enum values, passing an enum value to
-> GUEST_SWITCH_GPR_ASM() causes compilation failures.
+On Thu, Jun 04, 2026 at 05:15:02PM -0300, Arnaldo Carvalho de Melo wrote:
+> On Thu, Jun 04, 2026 at 07:18:17PM +0000, sashiko-bot@kernel.org wrote:
+> > Thank you for your contribution! Sashiko AI review found 1 potential issue(s) to consider:
+> > - [Medium] Removing `free(backtrace)` causes severe memory leaks when the backtrace string is not consumed by the sample tracking logic.
+> > --
+> 
+> From a quick look the suggestions seems legit, will wait for v2 then.
 
-One thing I can do is create macros like __GUEST_REGS_RAX, and then an
-enum using those values similar to enum kvm_reg, something like this:
+Yep, will send out soon.
 
-#define __GUEST_REGS_RAX 0
-...
+Thanks,
+Namhyung
 
-enum guest_regs {
-    GUEST_REGS_RAX = __GUEST_REGS_RAX,
-    ...
-    NR_GUEST_REGS,
-};
-
-Although this might be too verbose and the only real benefit is
-getting NR_GUEST_REGS right.
