@@ -1,113 +1,109 @@
-Received: from mail-pj1-f73.google.com (mail-pj1-f73.google.com [209.85.216.73])
+Received: from mail-pg1-f202.google.com (mail-pg1-f202.google.com [209.85.215.202])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6E2D536F8FF
-	for <sashiko-reviews@lists.linux.dev>; Thu,  4 Jun 2026 17:17:34 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.216.73
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6DDBA4C6F0F
+	for <sashiko-reviews@lists.linux.dev>; Thu,  4 Jun 2026 17:28:02 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.215.202
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1780593455; cv=none; b=dFSMEPW6MjhNaKlnDuTn5QnNoNoAWyfH1k3vNJcW+c144lHGrPvsfOa15s8wCPBIVoXjy2TdbxFT+EI2a+8EEaY/7zTU/nJxfMGdVe01utJQ248oX+fCSIluYAiygH+bGgzStp6Y7gvefrLifsHdJqGBUGqbdlK9GKhnR5uax/Q=
+	t=1780594083; cv=none; b=FU9jASPnFFpNxdKvtOmCW8bRss6P4hN5gb8W5oY2CCA3qvdEVBWYT4P4qfhp488oWx4hQnCZ2cnaWmHIqoYJeFOZxVLsr4W/HID+QlMTIaobT+fwvB0pLqh1ooXmOU5gimpkuqGh7FfAquWbBk+VrBQinXUlgW66fGjUz+HDDjc=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1780593455; c=relaxed/simple;
-	bh=cnQDhI3rPLRAlQ3SMyaVGYpY+5KTbMQDpuXpfVrgGhA=;
+	s=arc-20240116; t=1780594083; c=relaxed/simple;
+	bh=M2T5ZxLA1JyjKgcvQpdxw8SCcHYr1mJ0zHofsSl1ww8=;
 	h=Date:In-Reply-To:Mime-Version:References:Message-ID:Subject:From:
-	 To:Cc:Content-Type; b=NWeux3cWDecoPqleeAKrMf/ueZNPdA8wkS4m+l7WwD1/zX8r7g/pKfR89dNi9/ec7hgSUl8B2rpSVU1uATZx345CNOGsD4grsCQMAjinPTevlqNXDmoYKTU3qk9GlyfCHU5Pl4ISq4GgEtS12JY30wP7SoqCiX7iLWk9biX+cws=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=google.com; spf=pass smtp.mailfrom=flex--seanjc.bounces.google.com; dkim=pass (2048-bit key) header.d=google.com header.i=@google.com header.b=VsyR1wsQ; arc=none smtp.client-ip=209.85.216.73
+	 To:Cc:Content-Type; b=IvpGh4TbYs6R9bNOK4NGePpPkhBnqEFdFYRGKVKv4L0ApWCJ0dJ/uwcOAYtqwVEM3HahMCev6qheUgKRmaQ6JXW2w5Hio6YQHudGRnEtaGqF4BbzOJD1UsAgcg+U9+tPAaW9oE1xziu6Nru2ZoXlfMkST+ymh1+kkbWRvpJ15Q4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=google.com; spf=pass smtp.mailfrom=flex--seanjc.bounces.google.com; dkim=pass (2048-bit key) header.d=google.com header.i=@google.com header.b=iZ1F0U2P; arc=none smtp.client-ip=209.85.215.202
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=google.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=flex--seanjc.bounces.google.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=google.com header.i=@google.com header.b="VsyR1wsQ"
-Received: by mail-pj1-f73.google.com with SMTP id 98e67ed59e1d1-36bc54005a7so1321224a91.0
-        for <sashiko-reviews@lists.linux.dev>; Thu, 04 Jun 2026 10:17:34 -0700 (PDT)
+	dkim=pass (2048-bit key) header.d=google.com header.i=@google.com header.b="iZ1F0U2P"
+Received: by mail-pg1-f202.google.com with SMTP id 41be03b00d2f7-c85798977dcso698942a12.0
+        for <sashiko-reviews@lists.linux.dev>; Thu, 04 Jun 2026 10:28:02 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=google.com; s=20251104; t=1780593454; x=1781198254; darn=lists.linux.dev;
+        d=google.com; s=20251104; t=1780594082; x=1781198882; darn=lists.linux.dev;
         h=cc:to:from:subject:message-id:references:mime-version:in-reply-to
          :date:from:to:cc:subject:date:message-id:reply-to;
-        bh=QiE08N0otE8gZoBNOAFs9Ba6fLHtJ9Xhjyt4xcKDCXo=;
-        b=VsyR1wsQPeVnBTS45PqebGL+jcYwpbjNCAt1wPl9393id/71CuEYDB5qhEoWiLdoN1
-         FL6FQ8PwD+/d8Un8MrTfrVfDeOfLnnYZh8quQUfBKTDsiRQuQl7hyFR4BLcLywpp/JGV
-         46GnJrVdAPFawoEp1c0df+XcQsuZ9OodJuSNVzqckgESU/nNdPP0X088TLObni9wVJDp
-         NFdSisPZ6BzWQtWBI4ciaQXjfJ0m2+NXlsFKYBrYKIb8k9EoHvC8pEbnWE9QJJ/0jL/1
-         MqdZFVLmamFxyjeizNnVKdWhAt+7d/D0agCP4OJl7jfwgAmSZbwUXRyk0qXY/NJxrY76
-         Yngw==
+        bh=VYJiLzugjQMK/35RUx1gXPZXJK9kZ1zLL4JhlYRYAi8=;
+        b=iZ1F0U2PP8De2B1WL8/sXxPqqInxltkXrxk7u+coxT1U9EOdsnaPSgxUGmHHShrJBY
+         qPUYkHRUEYEakV8yGngan6LHEwUgtMk04srL3zEt897dw36vsnKpdEhfQJeYbMUxS5jX
+         ZiSzisu2RDou8gPYP04AaNw1OnkkbPB+wg3laSfxny7yf35chtTKrYelgcVkBK3ZSgIC
+         vYzJpq9PzPHmmy72vtg2D/JrWrgv6o2rHzy6eq2426IldnCyIixLiMh6dRn/DNbZL45a
+         b2pbs4HXH5cEbz4NXP6u4XAVORHydOCz4I9epkIEriHBsJdtVYMU+kPeZS7xVwrsME9x
+         ZmHw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20251104; t=1780593454; x=1781198254;
+        d=1e100.net; s=20251104; t=1780594082; x=1781198882;
         h=cc:to:from:subject:message-id:references:mime-version:in-reply-to
          :date:x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=QiE08N0otE8gZoBNOAFs9Ba6fLHtJ9Xhjyt4xcKDCXo=;
-        b=LjRR/ZPNZWyQPsoGfr8kIcK4I0Lu+GgQ55EaQnWaiLlB+WrkaPab1Omez8V7bFGQzL
-         67Krx5FjA4krWjXYUFDC/iwYsWjRuDwYo/vsKXeEhdVIrA6v0e3cWDTpc9vP96SL/eM6
-         +yPV9onDDZAG2o3Q7JBRmvLm44Y/+GzkhVt9Di2NfLqk56JwxJGuJOQuwbhb9XWZK5Rx
-         O7RJebOuWZetJgd9agikMCH2txIXpVFobMI3AV7syWZzQFHG0xeHVsKyx3nlnzXBI+iY
-         5yjQn/OfeRowC76B0j52d9vpNNihMzCtTbJWLrKDF6rfzJFSKWccBUR0M/xXx/wXoHat
-         XKhw==
-X-Gm-Message-State: AOJu0YyEg7beqftsd3o6TFiuVQ2UNBkXaex79V2OayR+zNeJFOrllHig
-	cAlQ4bYahLhlAROTDMbeE8N9h4/wOvFVj27Sy32oEh7IGg427AfF7o16hWj/2ALbdw6y/sYp88G
-	Qc6fhNBPWmWwEWdn6oMP0edRs/pEAUeVMD9C1UScHTf85kbTqNzNgbO8qgviPlfsu/R/dc319mo
-	GOlm503tWpNA4SvN607KBMYD1g+A1TgydxKXR+uKo39nCrQ3it
-X-Received: from pjbqi11.prod.google.com ([2002:a17:90b:274b:b0:368:1f77:ffae])
- (user=seanjc job=prod-delivery.src-stubby-dispatcher) by 2002:a17:90b:2742:b0:36b:bec8:94cf
- with SMTP id 98e67ed59e1d1-36e2f9a2497mr8748830a91.9.1780593453567; Thu, 04
- Jun 2026 10:17:33 -0700 (PDT)
-Date: Thu, 4 Jun 2026 10:17:32 -0700
-In-Reply-To: <20260604020939.3D12C1F00893@smtp.kernel.org>
+        bh=VYJiLzugjQMK/35RUx1gXPZXJK9kZ1zLL4JhlYRYAi8=;
+        b=cdGZDcCGZ9G0xRtSVD3ol8352KEa3hAb9+yDAJVKylUmwXTA/hJr2TpaZTBeOBnrQx
+         RmNcWZD2+8eaC7HXifb8JnEdjqkTAvb9V66li8DWWTsRqDcGX1IBBT14JrS08I61pFBB
+         RCIy80Iy6WjSbDa6VZAFONHuIi2DouFzWFqkzAXA/s0JyTFHOr5w3irm/IeB9aDMTM6j
+         /qmPEnDQvGLGyBBTBy7OJ8pE7ZH/ZqY/NUDXxHMBoKzbIPNyUqtdyinrbIcQn/pzMOMr
+         JJhFSQ3WjQwDze8IWlnENJOKU9rWbJ9XaLC2nrFnSgaJ/VKerO9lG67ev+O/PkYksXvU
+         DD5A==
+X-Gm-Message-State: AOJu0Ywmb3E6BekipSXUjq2BxprIu+sv1B3mChqeXDyWP0F4laPoS9SB
+	iYTEHGui4Lrdnjjdl1nSa0VuVIcpZDryDtex+zbZf3ycIBCyYScbHRe72k+dRMF9/60RSnSZNSG
+	ekeXXpoq7wWAojOeW7luNxLU+fid3vdJMSmG5URyPPdETOvNO1iQ/kNdAJ/TGyrOd8dCTuk+M9R
+	zaLIa8yXHJ42um0NlSdUvnIyfqH3/V1aq/fzicQcZSBtv0NB73
+X-Received: from pgww25.prod.google.com ([2002:a05:6a02:2c99:b0:c85:6d7c:2c15])
+ (user=seanjc job=prod-delivery.src-stubby-dispatcher) by 2002:a05:6a21:6113:b0:3b4:9168:d9e6
+ with SMTP id adf61e73a8af0-3b4cd04029emr53452637.37.1780594081546; Thu, 04
+ Jun 2026 10:28:01 -0700 (PDT)
+Date: Thu, 4 Jun 2026 10:28:00 -0700
+In-Reply-To: <20260604022125.A29011F00893@smtp.kernel.org>
 Precedence: bulk
 X-Mailing-List: sashiko-reviews@lists.linux.dev
 List-Id: <sashiko-reviews.lists.linux.dev>
 List-Subscribe: <mailto:sashiko-reviews+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:sashiko-reviews+unsubscribe@lists.linux.dev>
 Mime-Version: 1.0
-References: <20260604020143.748245-10-jrhilke@google.com> <20260604020939.3D12C1F00893@smtp.kernel.org>
-Message-ID: <aiGzLEMLMR06kVZY@google.com>
-Subject: Re: [PATCH v5 09/21] KVM: selftests: Add helpers to print proc IRQ
- affinity for IRQ test
+References: <20260604020143.748245-20-jrhilke@google.com> <20260604022125.A29011F00893@smtp.kernel.org>
+Message-ID: <aiG1oPLl6kD5ygJT@google.com>
+Subject: Re: [PATCH v5 19/21] KVM: selftests: Print vCPU affinity on timeout
+ during IRQ test
 From: Sean Christopherson <seanjc@google.com>
 To: sashiko-reviews@lists.linux.dev
 Cc: Josh Hilke <jrhilke@google.com>, kvm@vger.kernel.org
 Content-Type: text/plain; charset="us-ascii"
 
 On Thu, Jun 04, 2026, sashiko-bot@kernel.org wrote:
-> > +static void print_proc_irq_file(unsigned int irq, const char *file)
+> > +void kvm_print_vcpu_affinity(struct kvm_vcpu *vcpu, pid_t tid)
 > > +{
-> > +	char path[PATH_MAX];
-> > +	char buf[256];
-> 
-> [Severity: Medium]
-> Will fgets() silently truncate the smp_affinity masks on large systems when
-> reading into this buffer?
-> 
-> CPU affinity masks are formatted as comma-separated 32-bit hex words. A
-> 256-byte buffer limits the output to roughly 910 CPUs. 
-> 
-> Because masks are printed from highest index to lowest, truncation would
-> drop the affinity data for lower CPU indices, which are typically where 
-> IRQs are pinned.
-> 
-> > +	FILE *fp;
+> > +	int nprocs = get_nprocs();
+> > +	bool first_range = true;
+> > +	int i, start = -1;
+> > +	cpu_set_t cpus;
 > > +
-> > +	snprintf(path, sizeof(path), "/proc/irq/%u/%s", irq, file);
-> > +	fp = fopen(path, "r");
-> > +	if (!fp) {
-> > +		printf("  Failed to open %s\n", path);
-> 
-> [Severity: Medium]
-> Does this bypass the selftest logging framework?
-> 
-> KVM selftests typically use pr_info() from test_util.h to allow standard
-> informational output to be suppressed when QUIET is defined. Using printf()
-> directly forces unconditional output and can cause log spam in CI
-> environments.
-> 
-> > +		return;
-> > +	}
+> > +	kvm_sched_getaffinity(tid, sizeof(cpus), &cpus);
 > > +
-> > +	if (fgets(buf, sizeof(buf), fp)) {
-> > +		buf[strcspn(buf, "\n")] = 0;
-> > +		printf("  %s: %s\n", path, buf);
+> > +	/*
+> > +	 * Output format examples:
+> > +	 * - Single CPU:  "vCPU 0 (TID 1234) affined to pCPU(s): 2"
+> > +	 * - List:        "vCPU 0 (TID 1234) affined to pCPU(s): 0,2,4"
+> > +	 * - Range:       "vCPU 0 (TID 1234) affined to pCPU(s): 0-7"
+> > +	 * - Mixed:       "vCPU 0 (TID 1234) affined to pCPU(s): 0-3,8,10-12"
+> > +	 */
+> > +	printf("vCPU %u (TID %d) affined to pCPU(s): ", vcpu->id, tid);
+> > +
+> > +	for (i = 0; i <= nprocs; i++) {
+> > +		/*
+> > +		 * Iterate to nprocs (inclusive) to ensure that if the last pCPU
+> > +		 * is part of a range, the 'else' block triggers one final time
+> > +		 * to flush that range to stdout.
+> > +		 */
+> > +		if (i < nprocs && CPU_ISSET(i, &cpus)) {
 > 
 > [Severity: Medium]
-> Should this also be updated to use pr_info() instead of printf() to respect
-> the QUIET mode flag?
+> Does using get_nprocs() as the loop boundary risk silently truncating CPUs 
+> on sparse topologies?
+> 
+> get_nprocs() returns the count of currently online CPUs, not the maximum 
+> CPU ID. If a system has 4 online CPUs but their IDs are 0, 1, 2, and 7, 
+> get_nprocs() will return 4.
+> 
+> This would cause the loop to terminate prematurely, completely ignoring 
+> valid but higher-numbered CPU indices (like CPU 7) in the cpu_set_t mask.
+> 
+> Should this iterate up to CPU_SETSIZE instead to encompass the entire mask 
+> capacity, similar to other helper functions like pin_task_to_random_cpu()?
 
-I think for the initial landing, it makes sense to skip this and the usage in
-irq_test.  Printing the affinity information definitely qualifies as "nice to
-have", i.e. it can wait.
+I'm going to skip this one for now, too.
