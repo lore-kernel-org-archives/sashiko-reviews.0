@@ -1,103 +1,101 @@
-Received: from mail-pf1-f202.google.com (mail-pf1-f202.google.com [209.85.210.202])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2D03735B650
-	for <sashiko-reviews@lists.linux.dev>; Thu,  4 Jun 2026 17:41:59 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.210.202
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2D87D2DA756;
+	Thu,  4 Jun 2026 18:43:58 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1780594920; cv=none; b=A0z7j6/MYlJbKlnDhvm5z2vcNitJfsu/WTY1eqzo11rfy76mFXIC8t/TUxWUM+Ku66YOZmRSfqjEPLbAeuxigXHwjJ1XqhR60faNsUSDaWakUY1WUXeO3b2PbTraIVjKlAg+gNW6XvQQ1fXqaIhcyFxhAsEhL3eQY3ZWq5RvJzg=
+	t=1780598640; cv=none; b=s7gWReCkhzaugkHjsKYXKBj/+ykyAcx+MS/BdzjE26OqZ5gGpi5Wziimym9j/AJxSI3DbWmNck2T3o5LovpnMxFMo453lo9yMW//cMPXWn59qt3tWwqp9UUI2n9Wl4Lm2xvMD3fKhOZED8PC0WQFpQn+iPFWBYY1rn0QTXYJxmU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1780594920; c=relaxed/simple;
-	bh=ezSlhog56VUDGe4X2nOnkDwxK++qGblH63of9Uv59cI=;
-	h=Date:In-Reply-To:Mime-Version:References:Message-ID:Subject:From:
-	 To:Cc:Content-Type; b=ZeYIxKGTLi6Iav/sqTZhfO3KpISPCRm6vfyaJVmanIm2lpiB9h1orgeHcIKy5Iti9rWUW7e2jJrj8Lf3XSP5NMP2ZYsxwKW4xUd2AUolF/7wBuFvbvvY80c+y8tgkng9H1IavevZ3p2BU56u7YpIXZJwVuQkDYpRSNlb3GS9hgY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=google.com; spf=pass smtp.mailfrom=flex--seanjc.bounces.google.com; dkim=pass (2048-bit key) header.d=google.com header.i=@google.com header.b=hLpdEQtq; arc=none smtp.client-ip=209.85.210.202
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=google.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=flex--seanjc.bounces.google.com
+	s=arc-20240116; t=1780598640; c=relaxed/simple;
+	bh=eSI7P83VnxscIAOiacHg+IRreTRG4OO8MztvRHY2KKE=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=DRBRZgDqYyk75Jsc666wZDLeBRNcS9bRUdtk59I56k+J+bhwymXFUtXXA/c8cflwdPrp4SHvR4DJHRyYZercRZqYGY0wt8DETtsA3p09HzkUO7pT0C7+CJjMCZmYqbDPdHazZVJKMAt8W8rT590nJhMhxcjqHkp/AzWqTQSu60o=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=doHo2H8Y; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=google.com header.i=@google.com header.b="hLpdEQtq"
-Received: by mail-pf1-f202.google.com with SMTP id d2e1a72fcca58-8428384f31fso736882b3a.3
-        for <sashiko-reviews@lists.linux.dev>; Thu, 04 Jun 2026 10:41:59 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=google.com; s=20251104; t=1780594918; x=1781199718; darn=lists.linux.dev;
-        h=cc:to:from:subject:message-id:references:mime-version:in-reply-to
-         :date:from:to:cc:subject:date:message-id:reply-to;
-        bh=VWduaCqIW5OJ/1rUkmACp7uJQm5U7cfJMYHZpLa1/5M=;
-        b=hLpdEQtqW835ZtNJgRkCQNZmJ4hMlDY0xbQhNtAXpdNgDK1F1yxFde+CwENqNWxSRU
-         etKZ6nsZIuNiZEh3qJKRR44Xanm6r0GdaI5D4Izn+OMu2uYLfRjWYdfXpzWh2V/4E2s8
-         KTu/BdIawky4ZA7B6KEf3PFJ2CfalETz02kWhkGci4Ddg+yOKwfhpP6yoPitcmIElz5S
-         XTjzeASEj8Cvd7p6cQklPBivnk3bdu2tF+xgjKSr0mF8Rt8tInuvhcARcz9TxpfX+m0b
-         Tdma+3lnAu7o2SzpJheYAKFFzw9OjBwcbG18iKplZhdDybcgqOjoOPLqBf8fpjQBNFkx
-         XFaA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20251104; t=1780594918; x=1781199718;
-        h=cc:to:from:subject:message-id:references:mime-version:in-reply-to
-         :date:x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=VWduaCqIW5OJ/1rUkmACp7uJQm5U7cfJMYHZpLa1/5M=;
-        b=LVlAPrYAdgega1ZPi1n3MKv1pA8+OyxAgiids0NIxlnicCyrD6/P7hfI98vX6w+5m5
-         nCb6kizI+7cCXg5sqN2IX+YZqjtBvQmAKu763gOK8CwzLIpKUKJz8ibtmGtgQhhTWRwi
-         jHlFtACc444SbJCbsoc8kVwPB+vpFAfOuEZyhuHGNNx08DzrD6Qz7c9XUOA00nrAn2J8
-         PFGEzfwhYm6ExPHZlAeJOs70cD4+gFcwYKL1WzzxUrSeqbag9WCjUwezf85kN5HLRWw4
-         phnHPAPHh5h+r2SwHPs9UyMc5gv1QvENOh2T9KVXjOLTHrnlKf+UaCb2bNt+pT2KGNjq
-         Dp8Q==
-X-Gm-Message-State: AOJu0YytMPHlHQM+9g/ypiOucoeIMmM+Qkywr0rBBSPxCXXqp0vl7pbP
-	GkMUF3mglrO6E5DUryo7kJdhytr3qzZJ4Pml22nex5d1MllFZgDm1v7dtEQlu6Nzz/UuPELlgQS
-	/t+sxW34iI3RcfEuYdRsjmno/ziAtsBqcgpmXFAabv/xpAgNMalvGrTcfJQRRW3pKuUxTTzmtRT
-	c0GsJJ/4o678/0sguMxfx4CcxBwFQ+qFFWz+sfxBcOhilxYbef
-X-Received: from pful13.prod.google.com ([2002:a05:6a00:140d:b0:842:9ad4:d8c7])
- (user=seanjc job=prod-delivery.src-stubby-dispatcher) by 2002:a05:6a00:188b:b0:83a:b344:826a
- with SMTP id d2e1a72fcca58-84284f78f93mr9224683b3a.26.1780594918108; Thu, 04
- Jun 2026 10:41:58 -0700 (PDT)
-Date: Thu, 4 Jun 2026 10:41:57 -0700
-In-Reply-To: <aiG13utvmTJeHbnV@google.com>
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="doHo2H8Y"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 86D741F00893;
+	Thu,  4 Jun 2026 18:43:58 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=kernel.org;
+	s=k20260515; t=1780598638;
+	bh=VqSS10h2AUJUcCZwvdHE2yhkHcXcmUxZJ3hTKVbdwVU=;
+	h=Date:From:To:Cc:Subject:References:In-Reply-To;
+	b=doHo2H8YcwaAU0h5DPYQIJ+o+v7I9xaPz6+X9MirSvMzYiCbeiIm/jISGNgS5v9Ch
+	 1C+15fZQP0L+2WhokPDB2jOFfEclZQvcLF5yi5F90vkoD+MVUn5PNiK9wBTwx4vgr6
+	 glb2TcxN6oEHp9flZzsjS4yKnnkozacgVK6ST6GX06mdIkEOgAv3+knn5fMCIV4x+/
+	 qj3NpT+e1UG+EmeXTpTa5iyupVPYbjqDTp7xrb4L1J+v6UIjZtocvDgHchIoJniPO+
+	 Oe8C0x6EERFbH6+djXsRdDwYQga+befhFHw8zSe2u4/6+r+8zJp9tUxDuYFL64qPVP
+	 n/393bGOHexbg==
+Date: Thu, 4 Jun 2026 13:43:57 -0500
+From: Rob Herring <robh@kernel.org>
+To: sashiko-reviews@lists.linux.dev
+Cc: Damon Ding <damon.ding@rock-chips.com>, conor+dt@kernel.org,
+	devicetree@vger.kernel.org, dri-devel@lists.freedesktop.org
+Subject: Re: [PATCH v5 1/4] dt-bindings: display: bridge: analogix-dp: Add
+ data-lanes support for endpoint
+Message-ID: <20260604184357.GA988009-robh@kernel.org>
+References: <20260604085220.2862986-2-damon.ding@rock-chips.com>
+ <20260604090639.D40751F00893@smtp.kernel.org>
 Precedence: bulk
 X-Mailing-List: sashiko-reviews@lists.linux.dev
 List-Id: <sashiko-reviews.lists.linux.dev>
 List-Subscribe: <mailto:sashiko-reviews+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:sashiko-reviews+unsubscribe@lists.linux.dev>
-Mime-Version: 1.0
-References: <20260604020143.748245-21-jrhilke@google.com> <20260604022049.A44EB1F00893@smtp.kernel.org>
- <aiG13utvmTJeHbnV@google.com>
-Message-ID: <aiG45cqd0gCRVgp_@google.com>
-Subject: Re: [PATCH v5 20/21] KVM: selftests: Make number of vCPUs
- configurable in IRQ test
-From: Sean Christopherson <seanjc@google.com>
-To: sashiko-reviews@lists.linux.dev
-Cc: Josh Hilke <jrhilke@google.com>, kvm@vger.kernel.org
-Content-Type: text/plain; charset="us-ascii"
+MIME-Version: 1.0
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <20260604090639.D40751F00893@smtp.kernel.org>
 
-On Thu, Jun 04, 2026, Sean Christopherson wrote:
-> On Thu, Jun 04, 2026, sashiko-bot@kernel.org wrote:
-> > Thank you for your contribution! Sashiko AI review found 1 potential issue(s) to consider:
-> > - [Medium] Missing bounds check on user-supplied `nr_vcpus` allows stack buffer overflows and out-of-bounds global array accesses.
-> > --
-> > 
-> > commit 115e22303a8d11509c805d6bfdcdbd39b670c16d
-> > Author: David Matlack <dmatlack@google.com>
-> > 
-> > KVM: selftests: Make number of vCPUs configurable in IRQ test
-> > 
-> > This commit adds a '-v' flag to tools/testing/selftests/kvm/irq_test.c,
-> > allowing users to configure the number of vCPUs to run in the test.
-> > 
-> > > diff --git a/tools/testing/selftests/kvm/irq_test.c b/tools/testing/selftests/kvm/irq_test.c
-> > > index 1d66293b6d0b8..41c50caa928e2 100644
-> > > --- a/tools/testing/selftests/kvm/irq_test.c
-> > > +++ b/tools/testing/selftests/kvm/irq_test.c
-> > [ ... ]
-> > > @@ -213,6 +214,9 @@ int main(int argc, char **argv)
-> > >  		case 'n':
-> > >  			use_nmi = true;
-> > >  			break;
-> > > +		case 'v':
-> > > +			nr_vcpus = atoi_positive("Number of vCPUS", optarg);
-> > 
-> > [Severity: Medium]
-> > Does this code need a bounds check for nr_vcpus against KVM_MAX_VCPUS?
+On Thu, Jun 04, 2026 at 09:06:37AM +0000, sashiko-bot@kernel.org wrote:
+> Thank you for your contribution! Sashiko AI review found 1 potential issue(s) to consider:
+> - [Medium] The `data-lanes` property is defined strictly for the `endpoint` node name, causing schema validation to fail or miss constraints if applied to valid unit-addressed nodes like `endpoint@0`.
+> --
 > 
-> Yep.  It also needs to configure the test to enable x2APIC format and disable
-> KVM's broadcast quirk, otherwise running with 255+ vCPUs will fail due to KVM
-> blasting an IRQ to all vCPUs when trying to target vCPU 255.
+> commit c6792a12ea4c785878c85982c6a4537b6a1901d6
+> Author: Damon Ding <damon.ding@rock-chips.com>
+> 
+> dt-bindings: display: bridge: analogix-dp: Add data-lanes support for endpoint
+>     
+> This commit adds data-lanes property support to the port@1 endpoint in
+> the analogix-dp bridge binding to allow physical lane mapping configuration.
+> It also updates the Rockchip eDP DT node example to demonstrate its usage.
+> 
+> > diff --git a/Documentation/devicetree/bindings/display/bridge/analogix,dp.yaml b/Documentation/devicetree/bindings/display/bridge/analogix,dp.yaml
+> > index 62f0521b09245..ecf206871cdde 100644
+> > --- a/Documentation/devicetree/bindings/display/bridge/analogix,dp.yaml
+> > +++ b/Documentation/devicetree/bindings/display/bridge/analogix,dp.yaml
+> > @@ -42,13 +42,22 @@ properties:
+> >      properties:
+> >        port@0:
+> 
+> [ ... ]
+> 
+> >        port@1:
+> > -        $ref: /schemas/graph.yaml#/properties/port
+> > -        description:
+> > -          Port node with one endpoint connected to a dp-connector node.
+> > +        $ref: /schemas/graph.yaml#/$defs/port-base
+> > +        unevaluatedProperties: false
+> > +        description: Port node with one endpoint connected to sink device node.
+> > +        properties:
+> > +          endpoint:
+>              ^^^^^^^^
+> [Severity: Medium]
+> Does restricting this to the exact node name 'endpoint' cause validation
+> issues for unit-addressed nodes?
+> 
+> Because JSON Schema strictly matches object keys, a node named endpoint@0
+> under port@1 will bypass this block, meaning the video-interfaces $ref
+> and data-lanes validation constraints are never applied.
 
-Oh, and the routing logic needs to be updated to actually shove ID[31:8] into the
-correct field.
+That could be an issue...
+
+> Should this use patternProperties: "^endpoint(@[0-9a-f]+)?$": instead
+> of properties: endpoint: to ensure unit-addressed endpoint nodes don't
+> bypass these constraints?
+
+But no, this is fine as-is because it defines that only a single 
+endpoint is valid and we'd need to fix everywhere as this is a common 
+pattern.
+
+Rob
