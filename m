@@ -1,114 +1,134 @@
-Received: from mgamail.intel.com (mgamail.intel.com [198.175.65.14])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-ot1-f53.google.com (mail-ot1-f53.google.com [209.85.210.53])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C55823AF678
-	for <sashiko-reviews@lists.linux.dev>; Thu,  4 Jun 2026 03:14:00 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=198.175.65.14
-ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1780542843; cv=none; b=c8ugIRl2fNt7uB5WxFA84E/xFkOOMW6T7WGOC667FlC5UxNv6uYuTVz+tN0ZVsPtgt+Zr8cFRUY48doj9LVGegEfJZMRTbgi6Pb5sH25Xa4sZ6TUbgTnJ6xHMm8nK2LhQSFic3diPRnempFLCwl3gzbXO4AYEZd6BalIbED1jmo=
-ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1780542843; c=relaxed/simple;
-	bh=BjMhBrjtywp6iQlrwG21PodVsE+wIwaz/oPlgP71X+k=;
-	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=d1g1RjDRWTbQSwqvUL8zfTTTNs3q2J/9gTrVBEXzdhq3y8kYwuKnHY72YICYKi0JTM7B3yZBhpRrlJowaK1S6n/2qQgRXSvky7RjhfMRP0Y7sHvKAxs4bJq1E4WQbduix7cerMU9aYVzCQ0QNRGHns0QTjf8Y+bLeNaVkkGvfDU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linux.intel.com; spf=pass smtp.mailfrom=linux.intel.com; dkim=pass (2048-bit key) header.d=intel.com header.i=@intel.com header.b=W+eG0k47; arc=none smtp.client-ip=198.175.65.14
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linux.intel.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linux.intel.com
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AFD173BF665
+	for <sashiko-reviews@lists.linux.dev>; Thu,  4 Jun 2026 05:23:36 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=pass smtp.client-ip=209.85.210.53
+ARC-Seal:i=2; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
+	t=1780550617; cv=pass; b=erMTbz+w+79LmqMWcJau/IQKOHZFE2HD5K1yUVzr6AjWwGci0pzF4jVsGvzpzPfrpEulVwz3YeKqvn1GA4TOO2Il/Nh3L5NmEss37/SCcNcSUg0iwPXBor76iHR+17GIIB0CEelE3+WXVoz//86LIrCUiQsNnL3UcIx2i8WmyAs=
+ARC-Message-Signature:i=2; a=rsa-sha256; d=subspace.kernel.org;
+	s=arc-20240116; t=1780550617; c=relaxed/simple;
+	bh=4HC8s43tFJbSgyaqkLOVyH2ryMUhq+vDGxIzbU0F9vo=;
+	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
+	 To:Cc:Content-Type; b=A2gVoWq9U4TbTGYUx4Kqs+0TSy2tLburpvXLLlyeTcYYrLNrKL52uFR8DrP2DTfgqQ52EzIIuMu+cjzfVRkeRsCIg/KxMmVRqqxdYjzj2qjpVofNdIWUB01CKmH4iCW1kZSklwvv7Eb3Oo6fC1g+RuJEu2TqRKPJJHo4VDzaRxA=
+ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=AhF1ixN8; arc=pass smtp.client-ip=209.85.210.53
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=intel.com header.i=@intel.com header.b="W+eG0k47"
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
-  d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
-  t=1780542840; x=1812078840;
-  h=message-id:date:mime-version:subject:to:cc:references:
-   from:in-reply-to:content-transfer-encoding;
-  bh=BjMhBrjtywp6iQlrwG21PodVsE+wIwaz/oPlgP71X+k=;
-  b=W+eG0k47L7XTtEmUOT0bo05nNDq5WIa1d+VVv+UxOKtMIySyTk/IuOIm
-   9F2xHwvHP9pHJ/HeMr8TNkntRDzACZ/feHqcucEgSmEU420FpIxlcmUIh
-   lxjF2OqahjMfJ5oPefykJ3K5/QURuvqWRHeIB56AYfhFZVGnOgQoPhIVR
-   S6j4TDdDcBfjAEgIYSk7lSP0aMGwDrqnLT+bmwvtbiOiDej40/ExnchHU
-   saxkhhxk5nJK6HA2cFuQOsEj3nxJIxebobNZLry7MZdbFguuVyeqYh7uz
-   po+aENPqJEoJPSuw+RydzBFn9DTRP18JQpvZcI4h77eUl1PWpgFRDooEv
-   w==;
-X-CSE-ConnectionGUID: tstHBQ4XTni3JUm4D/nuFw==
-X-CSE-MsgGUID: UrAY00MbRX2DtR7LOLZPCA==
-X-IronPort-AV: E=McAfee;i="6800,10657,11806"; a="85253851"
-X-IronPort-AV: E=Sophos;i="6.24,186,1774335600"; 
-   d="scan'208";a="85253851"
-Received: from orviesa002.jf.intel.com ([10.64.159.142])
-  by orvoesa106.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 03 Jun 2026 20:14:00 -0700
-X-CSE-ConnectionGUID: LorJoaHCQjqcal03sNB+3w==
-X-CSE-MsgGUID: EM+c4NrDSt2tCiWvhHg+mw==
-X-ExtLoop1: 1
-X-IronPort-AV: E=Sophos;i="6.24,186,1774335600"; 
-   d="scan'208";a="274656994"
-Received: from unknown (HELO [10.238.2.24]) ([10.238.2.24])
-  by orviesa002-auth.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 03 Jun 2026 20:13:59 -0700
-Message-ID: <3cbba342-058d-4c87-97f6-5a9e6007a428@linux.intel.com>
-Date: Thu, 4 Jun 2026 11:13:56 +0800
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="AhF1ixN8"
+Received: by mail-ot1-f53.google.com with SMTP id 46e09a7af769-7e6f8f26d66so318049a34.1
+        for <sashiko-reviews@lists.linux.dev>; Wed, 03 Jun 2026 22:23:36 -0700 (PDT)
+ARC-Seal: i=1; a=rsa-sha256; t=1780550615; cv=none;
+        d=google.com; s=arc-20240605;
+        b=j2wIi8vkDp8AFyPsl/jYfS5bxS40pJZQxf7HCdcv/+rCLS/NvycPkYxQynApHmZdix
+         v40e1MFdzMnD0uCzbUNKssyVCvstH5vFncLA9lInpFxiAvOaalW5fNO97a9FAJTf3Nfi
+         L9DVIJsKZLjNhwJWqJrpmZrt4rJ88+tP6777Q8t2Zgvc8c+EotUfqQd17vLgZIC5aEJo
+         cLlpRVhfh36W4lotTknaXTjQ9tPEB3J9hW2imvgVJVMqplxJEPG9bNZo6+W+k4Mw8RmW
+         1sD+R2kfkzfe0GJvUVet3xbnO2lU25eEzrMIsTgnuEFl/U8t4U/MKl9e6YxpvHfG+0ZS
+         So5A==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com; s=arc-20240605;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:dkim-signature;
+        bh=4HC8s43tFJbSgyaqkLOVyH2ryMUhq+vDGxIzbU0F9vo=;
+        fh=wyk7RlhnBrJLts+xkTX7UljkNG2sQfMr/p5mU25CN9s=;
+        b=J27I+nmapUeb7sLlgbx1oxvi9Z1RCToCsUqME4YX/6IoxjFThOF1CauCWpj5o44lpQ
+         vl2jSVbTveZwjY5QRMfKlSvTmL6SCIDD7IvMMEy/EpLB/7CImheDzDB7pfnixgWKYkOL
+         MCMG6KthXs8PiQ9a3f0LjP41TlFNrAvRtz/d4YlnZzI7D5LfLuegUmlSIQGAGxuSvQiZ
+         IMvfmgx0+wEE4JfGn2JHsPEMKW9dMOXq92WHw0MfVWbXo5oenFhefBrxHkPXEqC2IibY
+         r1U7CttFS3EekBUegIZwX2MUbILDNPUXtxnZt4WkecPRFhZ8TA6sfhuMySAU8c5KTDth
+         7e4w==;
+        darn=lists.linux.dev
+ARC-Authentication-Results: i=1; mx.google.com; arc=none
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20251104; t=1780550615; x=1781155415; darn=lists.linux.dev;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=4HC8s43tFJbSgyaqkLOVyH2ryMUhq+vDGxIzbU0F9vo=;
+        b=AhF1ixN8hXKZJ/1liXAZNe/lsZEiE/w2w1R5RoaD/1PnAb2nGJTtq18/NpO5fl3NDs
+         NY1FnkGEV/3N/GJqPaWNL+GDYOhIIXv1tHXMMNq+inZREKVPdISUzskG2KPRWHjQ6IUa
+         mm/GQjER4Wwovh0TEx70h520L70ZX6qXPRHTW3hr8kVVGV8A2NmXdSosuIKnGd2I+XWz
+         JrnyIshS0rpsad2Ctx+Ood7IAKmnpC9IO5ra81LlFBYfb+qGWjOcGCIokQkKPS2tHcbD
+         JbX3UqMPqvwoWNF251QPQR8kx/kRacd6fK5KCb/XnsuNsAIbVHcUXA3C9XAWIIPxKPy5
+         JhjA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20251104; t=1780550615; x=1781155415;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:x-gm-gg:x-gm-message-state:from
+         :to:cc:subject:date:message-id:reply-to;
+        bh=4HC8s43tFJbSgyaqkLOVyH2ryMUhq+vDGxIzbU0F9vo=;
+        b=CGryjG0wQQ1rBTVUaOwaGhoul3tQ/ehrPAjduWeUS5/RHEhxH/kIME5BteIaDrjd25
+         qpBOc0aMgBr5D2/sXVj7WMfLwLVZr1KxQoBPR8//2MohpdXkNwh8uft1TwQ1DfmsOxVo
+         4UzlQayIMf6OoyDhOqvGqsrafKj0b/xClNFHGpy82YtY2IPDp92S1dBWOHsxJTlScqeL
+         fPbFWMFezcYYCO3sHjyr2rt1vpMymDgKO0+pQMIHKGs+cEDNCfeYWGPYUAkhaQLDmD8l
+         rmGHZgJLfURNmVnfIbWQx8hwwOAAAuxUoyv6lglMWnwx1IMCdcYM/ZfTDNVNop3VTpk6
+         AKbA==
+X-Forwarded-Encrypted: i=1; AFNElJ9XnodMAdF8Br5tqv7OjAV8kVp0taDq604rRSa1f2+oOrafHZy/WX8ygDJQjExxLmQLLSrDyWfeaJMK3kj+ODE=@lists.linux.dev
+X-Gm-Message-State: AOJu0YyVLJkZaBiJu8CD6rM6Wwe98PIbAV0ekIVbxGKSADTDrMMqQPXv
+	8oW57oTiKkG5qRdEoVXCZUOs4ueY9lWmakaDBTXFdNKjd9KycvvIGL5uCJjJ2MuznbGVfkWwslV
+	UwAuJ+tHS2ilJRp0QiRPyOr8ipbi0860=
+X-Gm-Gg: Acq92OHJc18qch3c8hmNN4U+twbNYOjA66qmrAUaNPryGDVe6QaE8QU9jpSok8pT4cY
+	HjSQqBowGf9yGQyAbMdvNBSx+mYXESBEPn2VZjFGzp0qI2Q0lrARTeN5HJk0yorpxD9heRYDb+O
+	gf1KT0VHF+CPWGY4VplEK3ZaAFUeWTjoZRoaWu4ojaebvE5+calMC16xevCQ62Fr7PPKFHd+gkC
+	UrY1S3Ym5WgdlB9WTDnN/PsKtUH0VRldrb+bEQO06FS3LIR5d5d1HXHOwWWBWdeHkuDoBixoz4U
+	2mExswrT51glOPRODC84mz8=
+X-Received: by 2002:a05:6820:c2d0:10b0:69e:5e9b:a47d with SMTP id
+ 006d021491bc7-69e5e9ba739mr125726eaf.5.1780550615598; Wed, 03 Jun 2026
+ 22:23:35 -0700 (PDT)
 Precedence: bulk
 X-Mailing-List: sashiko-reviews@lists.linux.dev
 List-Id: <sashiko-reviews.lists.linux.dev>
 List-Subscribe: <mailto:sashiko-reviews+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:sashiko-reviews+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [RFC PATCH v2 3/4] KVM: x86: TDX: Validate userspace CPUID input
- for KVM_TDX_INIT_VM
-To: sashiko-reviews@lists.linux.dev
-Cc: kvm@vger.kernel.org
-References: <20260604023314.3907511-4-binbin.wu@linux.intel.com>
- <20260604024927.E22311F00893@smtp.kernel.org>
-Content-Language: en-US
-From: Binbin Wu <binbin.wu@linux.intel.com>
-In-Reply-To: <20260604024927.E22311F00893@smtp.kernel.org>
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 7bit
+References: <20260603-rva23u64-hwprobe-v2-v3-7-5529a7b28384@gmail.com> <20260602232859.3494A1F00893@smtp.kernel.org>
+In-Reply-To: <20260602232859.3494A1F00893@smtp.kernel.org>
+From: Guodong Xu <docular.xu@gmail.com>
+Date: Thu, 4 Jun 2026 13:23:24 +0800
+X-Gm-Features: AVHnY4KMEU2WhD0nvjMwpU3NMXUXsI7Ox3Ri4eRsECUeb1hKlU4cqSpj1AHXzbM
+Message-ID: <CA+Ck9FYWCbHO6-BU48KLx_Lov7pJiSbAP8j3Te_uqFFq81rUjg@mail.gmail.com>
+Subject: Re: [PATCH v3 07/15] dt-bindings: riscv: Add Zic64b extension description
+To: robh@kernel.org, conor+dt@kernel.org
+Cc: devicetree@vger.kernel.org, kvm@vger.kernel.org, 
+	sashiko-reviews@lists.linux.dev
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 
+Hi Rob, Conor,
 
+On Wed, Jun 3, 2026 at 7:29=E2=80=AFAM <sashiko-bot@kernel.org> wrote:
+>
+> The properties block requires multi-letter extensions to be sorted
+> alphanumerically. Because '6' comes before 'c', would it be more accurate=
+ to
+> place zic64b before ziccamoa?
 
-On 6/4/2026 10:49 AM, sashiko-bot@kernel.org wrote:
-> Thank you for your contribution! Sashiko AI review found 1 potential issue(s) to consider:
-> - [High] `tdx_unsupported_cpuid()` incorrectly uses the userspace-provided CPUID index instead of the canonical TDX configurable index for validation, allowing feature allowlist bypasses.
-> --
-> 
-> commit c2adba56353483cd6dcf40b3fe14141409c0ce54
-> Author: Binbin Wu <binbin.wu@linux.intel.com>
-> 
-> KVM: x86: TDX: Validate userspace CPUID input for KVM_TDX_INIT_VM
-> 
-> This commit replaces the hardcoded CPUID denylist with a validation mechanism
-> that checks userspace input against KVM's supported allowlist. It aims to
-> prevent userspace from enabling unsupported TDX features during VM init.
-> 
->> diff --git a/arch/x86/kvm/vmx/tdx.c b/arch/x86/kvm/vmx/tdx.c
->> --- a/arch/x86/kvm/vmx/tdx.c
->> +++ b/arch/x86/kvm/vmx/tdx.c
+On a double check, I found here Sashiko is flagging a real ordering issue.
+(Although it exists before my submission.)
+
+In current riscv/extensions.yaml, zic* entries are split into two groups:
+one (ziccamoa etc.) sits above the Zk* block, the other (zicbom, zimop,
+etc.) sits below it. This is wrong considering the rule says "# multi-lette=
+r
+extensions, sorted alphanumerically".
+
+Would you like a standalone patch that re-sorts the zi*/zk* ordering
+properly? It's purely cosmetic.
+
+If there are no objections I can send it as part of my v4.
+Let me know what you think.
+
+BR,
+Guodong
+
+>
+> Does it make sense to place zic64b in its strictly correct alphanumeric
+> position, rather than continuing the out-of-order grouping of the existin=
+g
+> cache-block extensions like zicbom?
+>
 > [ ... ]
->> +static bool tdx_unsupported_cpuid(const struct kvm_cpuid_entry2 *e,
->> +				  const struct kvm_cpuid_entry2 *mask)
->> +{
->> +	return ((e->eax & mask->eax & (~get_supported_cfg_cpuid(e->function, e->index, CPUID_EAX))) ||
->> +		(e->ebx & mask->ebx & (~get_supported_cfg_cpuid(e->function, e->index, CPUID_EBX))) ||
->> +		(e->ecx & mask->ecx & (~get_supported_cfg_cpuid(e->function, e->index, CPUID_ECX))) ||
->> +		(e->edx & mask->edx & (~get_supported_cfg_cpuid(e->function, e->index, CPUID_EDX))));
->> +}
-> 
-> [Severity: High]
-> Does this validation query the allowlist using the correct index?
-> 
-> If userspace provides a CPUID entry with the KVM_CPUID_FLAG_SIGNIFCANT_INDEX
-> flag cleared, kvm_find_cpuid_entry2() matches based solely on the function.
-> This means the returned entry 'e' could contain an arbitrary, user-controlled
-> index.
-> 
-> Because get_supported_cfg_cpuid() is queried using e->index instead of the
-> canonical target subleaf mask->index, userspace could spoof e->index to
-> point to a more permissive subleaf in KVM's allowlist. The TDX module would
-> then blindly apply those validated bits to the original, narrower target
-> subleaf, bypassing the intended feature restrictions.
-> 
-> Should this use mask->index instead of e->index when querying the allowlist?
-> 
-
-Right, it should use mask->index.
-
+>
+> --
+> Sashiko AI review =C2=B7 https://sashiko.dev/#/patchset/20260603-rva23u64=
+-hwprobe-v2-v3-0-5529a7b28384@gmail.com?part=3D7
