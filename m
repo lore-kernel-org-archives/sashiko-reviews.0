@@ -1,296 +1,126 @@
-Received: from mout.gmx.net (mout.gmx.net [212.227.15.15])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-qk1-f175.google.com (mail-qk1-f175.google.com [209.85.222.175])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4C16A13A3F7
-	for <sashiko-reviews@lists.linux.dev>; Fri,  5 Jun 2026 21:33:46 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=212.227.15.15
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C34CD37DAAA
+	for <sashiko-reviews@lists.linux.dev>; Fri,  5 Jun 2026 21:43:41 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.222.175
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1780695229; cv=none; b=gLjapcYCcnf8/L+Ty9N9PsV0AQPX98ca5LJlBLrb8Fpf+yq8P5SyTjE3luDQF3502EPUNiLEy1+KkgrUFzXewZNK3FrNBAZGERyQlhBhLomkWmi8lJTEi03C96PCjOU/1LrusR5YKTlYgdgp2RO/48uCqeJ7rkw3vHjQeHZ/xdw=
+	t=1780695823; cv=none; b=ihQ/uPxGtsuKKk7sxbtra2ahj9jyjjJzAHLv0iFz000Q3OGI7s0mQ96Yg4rjlHMbbG0HxRLJ0BSg0Q2boFcZaeNBFMBtvGS8n3HfyqlOthb/6GbGZH8YVukoGuV6Ip2+rnbAdpNhBUP6Yujsqglcn0owRuHlGQpwolpA2/eIftg=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1780695229; c=relaxed/simple;
-	bh=srxoidQRERHZQdn9SICG3w9M3aZa9Xl7N+eE0c6ToBQ=;
-	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=ixJVpzAwcSQuLLivTES53Qwj+PUNFBopF+l5j3m70ccnJPhk5omSo8TUIecINZIrMJuFvOZp3AZYyI7MUviZVoW3EjIrp3pKYsGDcvT5nSq1fnNtLB7tbnsACYsNk+s5BaxfZo4T/JPK5MMPxyPnR6xSxfZxPuYsH6FHkavP84A=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=gmx.de; spf=pass smtp.mailfrom=gmx.de; dkim=pass (2048-bit key) header.d=gmx.de header.i=w_armin@gmx.de header.b=jQuHQfBg; arc=none smtp.client-ip=212.227.15.15
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=gmx.de
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmx.de
+	s=arc-20240116; t=1780695823; c=relaxed/simple;
+	bh=g/uKp+Kypu5nsKraqsfRJP2QJGUO/CBDdxfUmVZClz0=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=D76Cw66tEp287EPf5MAZquy1fjUAiFA7B9NP5ihY0dyQUmF4Sn1EksPykvsnRtl/22nnAjJkejJFcGr85HZMz1gdAuCVMFjt//1CGMUvEZvDvaiCTvwKuqddjn2HUdnngeOzdgZNa9qFTIzs+trn7aTmgSKunXFwcKOM6QLReU8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=gourry.net; spf=pass smtp.mailfrom=gourry.net; dkim=pass (2048-bit key) header.d=gourry.net header.i=@gourry.net header.b=S5QQuPRv; arc=none smtp.client-ip=209.85.222.175
+Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=gourry.net
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gourry.net
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmx.de header.i=w_armin@gmx.de header.b="jQuHQfBg"
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=gmx.de;
-	s=s31663417; t=1780695225; x=1781300025; i=w_armin@gmx.de;
-	bh=WglVgm3z59Im0TBwOKzfC55nYhlie0N7obC9ak6wl+A=;
-	h=X-UI-Sender-Class:Message-ID:Date:MIME-Version:Subject:To:Cc:
-	 References:From:In-Reply-To:Content-Type:
-	 Content-Transfer-Encoding:cc:content-transfer-encoding:
-	 content-type:date:from:message-id:mime-version:reply-to:subject:
-	 to;
-	b=jQuHQfBgAi8PekyaMkURgQuEDRgl24NatSsWg+INvdbKsyr9jpsK6Z2J3L9ntEuE
-	 08TcpCjdW9dYuPl3wkKe14ohHJto+3/wsnVKKJRgkm9J6IBPM7n+lENoUc2zaIkAa
-	 5lDTch1gQAdSieLRKt2ofpalBWzxoSt8gDoUk8GDvnOjEkHZ5N1H2+cVKDwo5PBnk
-	 XNf4NwspUrwEQgY2KVge5+Nt4lEW9CtcL3/dHH9mcWbic1kM2Tj8O7EHGiE2j1Rz1
-	 g6BlywaVhMQ+omQ9X4QLHrmRpoEoWubKshPRCMwuc1pwPby4ra9YfYgOO+eWIhR9v
-	 WOSNBu120jTiM/9B8w==
-X-UI-Sender-Class: 724b4f7f-cbec-4199-ad4e-598c01a50d3a
-Received: from client.hidden.invalid by mail.gmx.net (mrgmx004
- [212.227.17.190]) with ESMTPSA (Nemesis) id 1M2O2W-1wYNap18CE-004T0N; Fri, 05
- Jun 2026 23:33:45 +0200
-Message-ID: <5b8ce936-72aa-4843-bbe6-2d89b2479763@gmx.de>
-Date: Fri, 5 Jun 2026 23:33:44 +0200
+	dkim=pass (2048-bit key) header.d=gourry.net header.i=@gourry.net header.b="S5QQuPRv"
+Received: by mail-qk1-f175.google.com with SMTP id af79cd13be357-9158c621ebbso277986885a.2
+        for <sashiko-reviews@lists.linux.dev>; Fri, 05 Jun 2026 14:43:41 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gourry.net; s=google; t=1780695821; x=1781300621; darn=lists.linux.dev;
+        h=in-reply-to:content-transfer-encoding:content-disposition
+         :mime-version:references:message-id:subject:cc:to:from:date:from:to
+         :cc:subject:date:message-id:reply-to;
+        bh=w3e264EXuF93CA2YNjr7D6CScO/3LfEt9+ewpdao2ag=;
+        b=S5QQuPRvGz1tTVuTNoUYKxVWN9Spw9a5rRhynRmxEBUqqRy6CWwFhDoz1OFwVocjxF
+         HXAtN2mvgnOcNRb0AHpdSQUkPqvtKQrOm/bELlG9iGyIPoXOJeXKJa+1Ge8nLx2VVYEN
+         4fitkRAUzjudHg9Ih0eXvbgcNhwNV2LpnuhzvTYu2tNw1g4XtGnZJNMkuv56b4xgrlVk
+         JiwgCHuatwupSjDA4DXSSScD+3nspdNIYz56IoSR0c23ZQgfekIPrOeO9ZHzoDbwmErN
+         4zFSlxtm04J8teezzmcLTUHOylQh3C+sIGaEV3v3gE4ceLpTOSORg5dp9UK/QoZAyIm4
+         0IOw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20251104; t=1780695821; x=1781300621;
+        h=in-reply-to:content-transfer-encoding:content-disposition
+         :mime-version:references:message-id:subject:cc:to:from:date:x-gm-gg
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+        bh=w3e264EXuF93CA2YNjr7D6CScO/3LfEt9+ewpdao2ag=;
+        b=nwHdVnNXc+ZMT4XMdIjIOa6qZNW/7kIfJLh1QM8SslYA+hn6b0bIwsqlryX+lbgLBg
+         g4Y4iQBPayFk5rZmGd924lkVbb2FEvhrqJflXkgFx/F88jLOhf/py5zNDN+8+A23ntPk
+         O6RfEZvoqBfNz8oyfIU7SPtp6uvS1MKzY9HaPh/V0Qu7pAYfD0BhdWVhArDnA6hfWem9
+         i2FFx45dPCl9ycVI/QTdinwW6Atfc+BHMcZAB21FrlBL2w34UTPHPopSeAHq4pZCFAj0
+         PTR6uxyqewPEkKER60rVu/VjW3HYI67UbUost2k/TkU8SRyJktyhiHXgxMZSHfSIqe4L
+         NNeQ==
+X-Gm-Message-State: AOJu0Yy4CEImtATwMJPX8HvEeAn+ORg3Ts82agnXPvyEqln65sda1RK2
+	8g2WmUvCprd/gnLtLdCrUmPCCSfXuUwEiJznmSW9R91j21Ff7y41x/8G+sEZKB11fRBKYBUFSC5
+	c0UuOVxPnnA==
+X-Gm-Gg: Acq92OFU4pQoWOHgmgjjuwXBzY5FApivyAmiji8VXJjnUEcgu2gITNbVOx2wtsS9yim
+	VDVaODe5/Qy9hSxQkiZ3mr8XnLzvOeHPzO1xZfJg+SIVYoDf930TkJBUSIoA+Nt/BUv9/s9+ZYj
+	YkEnz5sppoelfxOlkpXy9pI2slOyjqgiiI6eAsX4TIqozFlq34HEIMZM4knJjEjrGu4vHRuqzlT
+	h1wgTn0ZAaban3NSoMlGbGLDRansc/hf9J36RFoDHy0dIZp7+mkPVSLIYtIN1WmF4UJ1qXCRucF
+	Zu8SJrqmVy7CHFYPJ78ogz+930x7W9liUbi90NXehPD0k8dzdA8aEEEYt12c4CmXd8AkqYH6aZ+
+	ZCfhZYfjNXlPTURZhlBb8sMxBwYUfp6EmgWqCEhoEF+y4tMfu9TftEU2WdVsVxJyANXdR4DeGhI
+	+XbTeb0Qll/5jLL6go2HXp6LKR/sG+7JNCiqZ3bEIanpTgW6lnwhJF9zaoAPs6gqrQAuHthjqeZ
+	6lYTM6oVW7K2/7utg==
+X-Received: by 2002:a05:620a:1a18:b0:915:776d:52fe with SMTP id af79cd13be357-915a9e07fc6mr980638185a.57.1780695820823;
+        Fri, 05 Jun 2026 14:43:40 -0700 (PDT)
+Received: from gourry-fedora-PF4VCD3F (pool-173-79-60-52.washdc.fios.verizon.net. [173.79.60.52])
+        by smtp.gmail.com with ESMTPSA id af79cd13be357-9158a3b3f6bsm996717385a.33.2026.06.05.14.43.39
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Fri, 05 Jun 2026 14:43:40 -0700 (PDT)
+Date: Fri, 5 Jun 2026 22:43:38 +0100
+From: Gregory Price <gourry@gourry.net>
+To: sashiko-reviews@lists.linux.dev
+Cc: linux-cxl@vger.kernel.org
+Subject: Re: [PATCH v4 3/9] mm/memory_hotplug: export
+ mhp_get_default_online_type
+Message-ID: <aiNDCjf-rSVjK868@gourry-fedora-PF4VCD3F>
+References: <20260605211911.2160954-4-gourry@gourry.net>
+ <20260605212916.7B3591F00893@smtp.kernel.org>
 Precedence: bulk
 X-Mailing-List: sashiko-reviews@lists.linux.dev
 List-Id: <sashiko-reviews.lists.linux.dev>
 List-Subscribe: <mailto:sashiko-reviews+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:sashiko-reviews+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v5 3/9] platform/x86: dell-smbios-wmi: Use new
- buffer-based WMI API
-To: sashiko-reviews@lists.linux.dev
-Cc: linux-hwmon@vger.kernel.org
-References: <20260605205937.530897-4-W_Armin@gmx.de>
- <20260605211346.53E9E1F00893@smtp.kernel.org>
-Content-Language: en-US
-From: Armin Wolf <W_Armin@gmx.de>
-In-Reply-To: <20260605211346.53E9E1F00893@smtp.kernel.org>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: quoted-printable
-X-Provags-ID: V03:K1:ogoqrJplBbqIXUczMLXBByLogwV+2jNUVH/7J9HFGgrFZFECeDI
- UxXuelBkx/uDuPh/M4qXun1Z+laBQELPkMOh4b3ukcGGCL+LllB02AvLiFZN3cgOHC6bqly
- ZsbM+JV4T4Hk2NNudl55gw80bIT+CjFlCp9Wrc6mserr3TmMZnRQxA82PolB3e8fd6ollra
- IPsavbxlU8J2K+KvILu3w==
-X-Spam-Flag: NO
-UI-OutboundReport: notjunk:1;M01:P0:L9ONJCZ72KI=;cHPOMEVW8X7StbA1XXcyFeV2soT
- eb5Xi8edU2/mSwUxawk9szlz8/6IDU53E0NwledogYxD0HFxXLw2tMbWTKl0xotRaBbz4zn7D
- ZtbLP7RmV99jga/Vz5zcr8tk4oTLTxdvTB/zmcw5lPvd5at3DXZOhvVJFRdu6cbTkWhSQufFz
- brutgd38YOFd8GphgJC0vZ75OkN5u6krIRiv4jk46f6i9FTwQgwhL01Xc2m+yZD57AUp+70V3
- dHrpzmotCUcJQAyKbHFaaiw97oG9i7+mpD55omOYA5F2trt71s/cacqjv8vO5uhJqnLN1KNeh
- +pkxcyITUK0qbXH8+xnl4c9orScWCkql4/E/63KpKaXulHNOJhD7/iJpr3oeYF3v/5zOpkc0r
- 2Ut+0TCCZgZzh/6pC1vfxnCw7Bs4HWfwFmOdq9VAd+GwubGsrS6naghuU+zK5rsCUjcnmXa5+
- SD8n7UOFBPIjeKOjmmrD9ZE4Fd8/1y+oRyf5vWrkxEV5Y+DiUcLRL2bF3nq7LqiURqaVwIYA5
- 4nL34DvECYs1ICU41/vy81QwR9HL1sFFq2xdxbEkKDk6/uXGdDjq2NOHy2lalNZKUHFkrZnBl
- rif+tFC4BNtwz94Tru+2MSH5t+Ai6bslL4EfJS05Tn1cra17HXiMM71+X35yRdqv5LpcwoBYC
- ZQuEmsbEssAB7/w9H5euskRq8lbp/5KBTRyJy1rxqohTH9/CA6/cZOqMqKWy9l1FW8osCsfhc
- UmQ39XR8CIrIsjzVMo9i99bKU07Sn8UfJChMHuCPIb7s4e8Uf6B0WLgxBZ4oN/ILSNsrAJ3+1
- NnRU0dL9ZNRylncO64s0LWiO6zWln4JQbqVAEWvF5FND/x24Eml8ShersGrIYFW+99nJdHJvC
- OsPELbwoJW/xkjEleZuID4Or2evB2X8CGzqjuU+9lTm5l8Cy2CaXTEJyCQ0tb5j+DVuFtM19B
- k7Eawf2/LAK9iiqQ187z9g23+HE2SGNw01i8bvWEkIuOhVBSHPB/dZkof25TtnCB8cdTM78il
- YOzxxmPvV2grOgJQd7jXBv9q7HPkOgy6UJ2d+KWP2K8QcUBBz9dRgi95pgnedY3/NSENsutTD
- KpvBYDCr0qffdhsb3MEUEkAd+8utkxWXDVIxbB3XHqHbtr98pBc0fkZ6WFSwfIbLSlL+XvesH
- BgHa/4nAdKLs+v8q67uwOmRuw3S8tB+HMjlf38WHkQY6rj48HeKn0cxC9H52ilAlTsbgFLP37
- vYRrEeJ5rEzZ0HFm4V6EaMNK2XO4JtDTzif56ZlcxgmN8cwTmoQbKNc1QrJrNuWKI2MpSRZQY
- taz9c0aCiLI4nbAjkyUw+tB4VRTWro7MygmNDurdmD99OiRa0eEEiPo59+GfxFlccvCk+ogkr
- TlD50mXK7TeO81RrfLXaiVBqV2cq9+OSThKWUqj3cNKQXi9Ee/OD5gLc4nAmRKNl97AAxJ4TP
- L9BUfRfliB83Q2nkhppzMQh/7QL1ErgKhkCs/DdhovxDdeGTxN2wPkAVJrrXsA9eiRtMQoB5s
- ImxAQzOQ4Oy85tUQA+vEwPOewexaPNwE+wptAf4WsNVhcSbY3DEssuMdbrZRjxa7J9ebZRXeR
- Ze8bEChpZ0r7yqSGTDdPkZu4XC5j+ZPUtetbVI85q7+NFOhrQsfqd2ozf3aTJjDSb5TlaMQwE
- BHc2b7FrAgkmhliJ6mtccL83SbPGPQYILNyHG6n7GNfTGAKSk/GOMeWxMwSsEHfvm5i/tbupm
- KGn2IeOmpo5+ZGiXGb4uPQcndEKWJfAPFoMap7xK4ZA6FJY3QzLIWMKOAZapah7h34hiqpYH4
- A+apDcUVblP7UKurCeJn8WFnwMUayecjidm0r/40VTGojTmFS/uOCfmCHMCk0+TVHSU1zV/3D
- fzhJscI/CIyS3E/wyYQyLtRie2yuJE1wGre4YdFoJhKBQD3BcG7/twbKIVyERR7wgVQmpn7/C
- 6IjDia+yofypF8a5UsBQBOnLgR6wqR2qprArjhKtcZdc+AhdjD9hFJyolRl+SPeiqweMpf1PM
- DwUwL96lRl0mcAZISVvOFsp1RS+uBPp1UByc3F9Tn1sGR1Wey8gZIQUZJjw1GwHBPutncdS/i
- 62ojmvEmjv1QAs0UZPEkaPc8G1wu/GdgPAALtofHtT7rlFT/xU7gnTF4YJ3JKv8Eqvp4WtRv4
- VkJfF1KrAh5n75F9nxq3UvawKWPVTkXHP1icrmF9WjgScvImHLyFgP6i2EWNLxiNhk+S8NUsE
- QTYFX36F49EF3bYobTPfclcg440Efd6cLY2GZIPnHkr9oGAcMxwiCPiOPhtF8pDEbDoO7yk2Z
- +mbOqO8MkgwW2x9uY7FRFir8YDJ0ZQtDztQKoqeWCA9EelG1wi22iXRSMqCnZHlf4pENWKQQX
- nrb9IJCsaWuVcNADinAI63ipAlpgEUfso+TYNJQjqH2halRY+n5a1inWi2u8YrZHpjPyukd9z
- 1cJ+R9xzCFIjkckFolrFdESblb7FQfqHDkdhLn7rc57qKQGqglA24okJWgONw4gUW1jv53CuP
- 2rNygZJ2GSDiOiL4tn2ZeMlJ1DqoslDFXCNirfOt7TK4pdxKR3y8JExA+Y71lOvcvGuILKz1M
- vHrVo9WCX2Z0gjh5ixBcutnROLPUmcm/1Y4/hS1X10S9S3+RRVRe4jnU7nuzf7mg4z5jpOlWw
- e6zavCcarvysNB/zZEVxi8+Dd2RVO+9/C+Wgra/rknz1o/t5Q6KZrmlId2l3BN/x82p8ZOvQK
- 5fsfeOmlR0+ZlM8fXMd0JLCIUybNBYjUqC1x4iY13T2bbEZQvqQNFoZSbc+pKyBSMB5jXQefB
- whTXcS0MeWxEoLuyEqARl5ADcyWipHGo8W31SwqCyXQOocnud3Lbo1McMfBTM8VsxnAkJFDQ8
- TW7cFPdHcD+SOzsoHUgyF2WjE8Eo6O26ZeHazEeekME0mLN+BtWWhnQQiUBQVZIUf+2EmAv7F
- 50/o80F82xWhNsccgipOOvniO25Qg8YeANdaw7VZaz8JFi4IDVJfuCZQPX0pmvuuJoJyY+9eJ
- b0/Ff60ICWPC2DFhk/i12wBOVcTbxAMbmnu04dyExxjQ0bOedH4aJJC3EFs5p57gdu7wpLFQV
- U9hW7CpotjCHAUJY9+Dz9p+Kx4Xv3veH6FVJ/NxcjBC/MpFTkYreR14kfy26YpX76BvDi1yFq
- 3sVojnynv7169CfW64UQvCLMHHQUqdXD3SdCZAwsGh+d4WY9w8dnErHen7A8Gnaq1SdKstISX
- PShFSqme0bkN143yk1Lg40SXqmU4wcNPeqauhHca/BKdKmfWalcFq+m8orzYFCCBZE1fpLsIo
- 7Wg5SCd7+9lJpYjwsJi9zk4+Rt7wSYDy3N0jVfKXCCZ17fu1pN5hFBPyLwgAt6ofU954Y4Ssx
- N96B3KEUB8Q34xqubT6tJ2QA5woeG3LHPdhrePC2Uf3SZ9Dh090EbvspRIkhYNy05C2s+FLgB
- 18zCT/E4d+KYSOKaF/PuIARO3POuSTLQgraDEcP1/7uAckTJTys294YNJWkbvwFPeErLjLsrM
- pAK3WAbTl/7fQ6PSpb41Ay4HhuAfHzb2PR/b/zUJvaXuwEk6aWeme3ceQZ3wUQ6pisDzJhHmJ
- 4HC/JmZ408eQQEGKPCsyFKIzeDOhdxJbg+mwoMTr4kMg+R5B+fJwF/sSpUrn/XaFekqtG+f4+
- rSOfVhVtX0SQhZ6L0XZCiCDNaG0errbb/1hTXCJFOMP06jAY7WfYKbdCYZ6UexelPgS9TK0xl
- t0y1NR24iDxPS3K15d7DVJdVP/mLkasma5Oos6ACfH2IjjuRAwwO2RgAeNhak6UJW8DUWR/uq
- vbsUT136eB+I6pzoInKz2vdGtqwdBuB28WmLAu5C1Ppa2fMedExa+WvU+PmDbqNQGso2rYZ6u
- 8wcNr2oNUXXbWhRBf4fMaWos2YHr4otq/fkreHEuVYT3jFS/q8wpxVJ34XtPn7uLRSJafIncO
- tVLUEPh8x9wDZ6RGNNrihGqwxJ7LXcXhCWzjJ1b9ySwvWBZfNv/2u7tW7wwU+vJTxDLSarc9b
- y+dhwBR5v3zdtxvJHmjaKgBXHWZcpapmdBhJYMqdFgyu8OD2Xkg7c5JG01hjwDPeAaX0jUm4u
- JgogBlUNONg1DN1qZ/CM/nDoPMCsQZPW/MM2HKiAEcsglGMBjGdbUXX31RO51P6Qhjk0+R4bD
- v6qAP5rtB2nRp+rji4VZsgw4UBTjRxUpJCVf4VJnq74xdkKTgC5Q0bb4LWlODepu1vX8yDRkg
- jdq6m7FTpG8xCeHvyXPNX6g4m7uefJXdBlBMIuyIpuClJaF7E+/JylY2Zxc2Fd7Dr5j1Eme7t
- hrYLgkJeJTHJ0nalKq/3y8BCj0UtDzZJUyC24klfINpf8LqI38aYa8bMO49/eUu3B3elugvv5
- NgPhT1fRJt++elV5VQM+NaShVcSdP9Q4axus+EfZAskz4yaY1UB67Q5lVH7z8Tu3HojXYhf6s
- RRzss38oO9/rtkXgFvgrNW18LW67oeeSjQlETPjrFlQsKWc4z9Irp8f0hHZurnP3lCIfp2lcO
- WWvuYVZoCyX8mamHDreqee0DjypxG1KrCeMYRgxeLPGGXXw7ZfQNeBrslhj6DA9h7a88GN6Io
- VOsB/pro+v58wE2KFPQJXD6fVsnoRLZRSq4iLNfIbmJ7aE73uJCbvOjOvnONFjD6FJPThQB3z
- gt1I5uiwBkjNAKJE0ob7SPqu4QovnjMJXorMI8nNqe1V5vyw4+bEGQwX4y4MnNMZ1Mn/0g2B4
- fIsb31u8m8J99JQT/1xLcu8eKZRM+vtNqc9lMlKOF9qwtaxNVxH06D8fuaVa845wez6ULDQPD
- DaRDg+dXssdR4FXBdk0F56l2tPyitxezJvMvoDKLAO9ZpZXeA7ZvQKTjaHPe3T8g65yuHcqbT
- w5kEJuaA9wHy41Kjngw5DXNVMwyVzuj4lEn44u20isy1h30tEIl9m7leyhoOokhXZ7Ixdw3wA
- 2zitKIROpFC4mNvGBDBTE6yVFxTYprAuGlnGpBvs1NEzeVU78BVyLAR8jHpwP6/hV80a8GFwS
- Oshdi0BjpK98U3u3bUv32OSEyN14UfY5zAAMH3yRvuaZfUbPnmzwOamg1qNMFLmi1S4qe4MXb
- ENFJIZIFJZYhnPBjR+0ejsUkeykee0AwDlPvLZFc6JuVluMgTIMdRCih1dLeXIurWoc+2dRhx
- 3bSeAcG5LBZ4pPMkmu1IhaaKdLj4BgQVzLG3p/6V/ObkItcMxcuu/c+mIamgDF3s5poDUeQrW
- 1m56SA17gPFUXyFMDH4ub/e6eO8de3z46Lc1Xpt1LrgY/JAlp0zbwTYlCkLPSqa8ZqcNhI5+o
- OEOBIWyYGz57yrcMhGJv+jdEUfEn1lDtQglKnztpjbvzw0NiDITrTvlsERHz63DXanbt9zuRR
- OLBA8UU4UsDv1Ey5dD1AO9jreFSKwNTcZtXprt2jFkkyRxNm4Z0nbFg1jZOiZjq0Tnv5iaj2v
- 4fzaS+qL0LGBt33U9lKm9jU78A04e6nbJZK3rs8ZOyEkLR6r5pXWnfWgsE5/IaWqQG7j4Xswm
- YEgcbo/DQJSSeeZ6oGTx+iZbdHxzhM3z/XadV/SNujHn7O/JJyi7oF47P4B5Vz6LA0vPD2qgj
- UWYvjvesXsILCtI8Y/UrSacleg+A/hVQ4TMJsaR
+Content-Type: text/plain; charset=iso-8859-1
+Content-Disposition: inline
+Content-Transfer-Encoding: 8bit
+In-Reply-To: <20260605212916.7B3591F00893@smtp.kernel.org>
 
-Am 05.06.26 um 23:13 schrieb sashiko-bot@kernel.org:
-
-> Thank you for your contribution! Sashiko AI review found 3 potential iss=
-ue(s) to consider:
->
-> New issues:
-> - [Medium] The driver silently drops SMBIOS integer error codes and chan=
-ges the returned error from `-EIO` to `-ENODATA`.
->
+On Fri, Jun 05, 2026 at 09:29:16PM +0000, sashiko-bot@kernel.org wrote:
+> Thank you for your contribution! Sashiko AI review found 1 potential issue(s) to consider:
+> 
 > Pre-existing issues:
-> - [High] If the ACPI WMI method evaluates successfully but returns no ob=
-ject, `wmidev_invoke_method` returns success (0) and sets `output.data` to=
- `ZERO_SIZE_PTR`. The `dell-smbios-wmi` driver then blindly dereferences i=
-t in `memcpy` using `input.length` (which is > 0), causing an immediate ke=
-rnel panic.
-> - [High] User space open file descriptors can trigger a use-after-free o=
-n `priv` and `priv->buf` after the WMI device unbinds.
+> - [High] Lazy initialization of `mhp_default_online_type` can race with sysfs updates, silently clobbering the user-specified hotplug policy.
 > --
->
-> commit 16e2a3995c7578613ee091087b9699433b85564f
-> Author: Armin Wolf <W_Armin@gmx.de>
->
-> platform/x86: dell-smbios-wmi: Use new buffer-based WMI API
->
-> This commit updates the dell-smbios-wmi driver to use the new buffer-bas=
-ed
-> WMI API. It replaces manual ACPI buffer handling with wmidev_invoke_meth=
-od()
-> to better support various ACPI firmware implementations.
->
->> diff --git a/drivers/platform/x86/dell/dell-smbios-wmi.c b/drivers/plat=
-form/x86/dell/dell-smbios-wmi.c
->> index a7dca8c59d602..64d0871b706e5 100644
->> --- a/drivers/platform/x86/dell/dell-smbios-wmi.c
->> +++ b/drivers/platform/x86/dell/dell-smbios-wmi.c
->> @@ -50,38 +50,32 @@ static inline struct wmi_smbios_priv *get_first_smb=
-ios_priv(void)
->>  =20
->>   static int run_smbios_call(struct wmi_device *wdev)
->>   {
-> [ ... ]
->
->> -	status =3D wmidev_evaluate_method(wdev, 0, 1, &input, &output);
->> -	if (ACPI_FAILURE(status))
->> -		return -EIO;
->> -	obj =3D (union acpi_object *)output.pointer;
->> -	if (obj->type !=3D ACPI_TYPE_BUFFER) {
->> -		dev_dbg(&wdev->dev, "received type: %d\n", obj->type);
->> -		if (obj->type =3D=3D ACPI_TYPE_INTEGER)
->> -			dev_dbg(&wdev->dev, "SMBIOS call failed: %llu\n",
->> -				obj->integer.value);
->> -		kfree(output.pointer);
->> -		return -EIO;
->> -	}
->> -	memcpy(input.pointer, obj->buffer.pointer, obj->buffer.length);
->> +	/*
->> +	 * The output buffer returned by the WMI method should have at least =
-the size
->> +	 * of the input buffer.
->> +	 */
->> +	ret =3D wmidev_invoke_method(wdev, 0, 1, &input, &output, input.lengt=
-h);
->> +	if (ret < 0)
->> +		return ret;
-> [Severity: Medium]
-> Will this change cause the driver to silently drop SMBIOS integer error =
-codes?
->
-> Previously, if the BIOS returned an integer error, the driver explicitly=
- logged
-> "SMBIOS call failed: %llu" with the specific error code and returned -EI=
-O.
->
-> Now, wmidev_invoke_method() unmarshals the integer into a 4-byte buffer,
-> fails the length < min_size check, and returns -ENODATA.
->
-> Does this loss of precise error codes hinder debugging, and could the ch=
-anged
-> errno break userspace tools expecting -EIO?
-
-I do not think that any user program relies on EIO in particular. I decide=
-d to remove
-the debug message because the WMI interface does not specify that an integ=
-er is returned
-in case of an error, so this is a implementation detail of the individual =
-ACPI implementation.
-
-Thanks,
-Armin Wolf
-
->> +
->> +	memcpy(input.data, output.data, input.length);
+> 
+... snip ...
+> 
 > [Severity: High]
-> This is a pre-existing issue, but can this memcpy() cause a kernel panic=
- if
-> the WMI evaluation returns no object?
->
-> If a buggy or malicious ACPI BIOS returns no object for the SMBIOS WMI m=
-ethod:
->
-> drivers/platform/wmi/core.c:wmidev_invoke_method() {
->      ...
->      if (!obj) {
->          out->length =3D 0;
->          out->data =3D ZERO_SIZE_PTR;
->          return 0;
->      }
->      ...
-> }
->
-> wmidev_invoke_method() will bypass the min_size check and return success=
-.
->
-> Since output.data is ZERO_SIZE_PTR and input.length is strictly positive=
-,
-> does this memcpy() directly dereference ZERO_SIZE_PTR and trigger a fata=
-l
-> page fault?
->
->> +	kfree(output.data);
-> [Severity: High]
-> This isn't a bug introduced by this patch, but is there a use-after-free
-> vulnerability during driver unbind?
->
-> The driver allocates resources using devm_kzalloc() and devm_get_free_pa=
-ges()
-> in dell_smbios_wmi_probe():
->
-> drivers/platform/x86/dell/dell-smbios-wmi.c:dell_smbios_wmi_probe() {
->      ...
->      priv =3D devm_kzalloc(&wdev->dev, sizeof(struct wmi_smbios_priv), G=
-FP_KERNEL);
->      ...
->      priv->buf =3D (void *)devm_get_free_pages(&wdev->dev, GFP_KERNEL, c=
-ount);
->      ...
-> }
->
-> It uses devm_add_action_or_reset() to call misc_deregister(). While this
-> removes the device node, it does not revoke existing open file descripto=
-rs.
-> During unbind, devres subsequently frees priv and priv->buf.
->
-> If a user space application holds an open file descriptor, could a concu=
-rrent
-> or subsequent ioctl() access the freed structures here?
->
-> drivers/platform/x86/dell/dell-smbios-wmi.c:dell_smbios_wmi_ioctl() {
->      struct wmi_smbios_priv *priv =3D filp->private_data;
->      ...
->      ret =3D dell_smbios_wmi_do_ioctl(priv, input);
->      ...
-> }
->
+
+Classifying this as "High Severity" is almost comical.
+
+If we want to address this, then we can just slap a lock on the global
+and call it a day I suppose.
+
+This seems incredibly unlikely, and a good example why a single global
+auto-online policy is bad anyway.
+
+> This isn't a bug introduced by this patch, but exporting this function for
+> asynchronous driver module initialization paths significantly increases the
+> probability of a data race with sysfs updates.
+> 
+> Can this lazy initialization clobber a user-specified hotplug policy?
+> 
+> If a driver calls mhp_get_default_online_type() and reads the uninitialized
+> state just as userspace writes to /sys/devices/system/memory/auto_online_blocks,
+> could the following sequence occur?
+> 
+> CPU1 (Driver init calling mhp_get_default_online_type):
+>     if (mhp_default_online_type >= 0) // reads -1
+> 
+> CPU2 (Sysfs write calling auto_online_blocks_store in drivers/base/memory.c):
+>     mhp_set_default_online_type(online_type); // sets user policy
+> 
+> CPU1 (Continuing in mhp_get_default_online_type):
+>     if (IS_ENABLED(CONFIG_MHP_DEFAULT_ONLINE_TYPE_OFFLINE))
+>         mhp_default_online_type = MMOP_OFFLINE; // clobbers user policy
+> 
+> Does this unprotected check-and-set sequence on a global configuration
+> variable need serialization to prevent the user-specified policy from being
+> silently lost?
+> 
+> -- 
+> Sashiko AI review · https://sashiko.dev/#/patchset/20260605211911.2160954-1-gourry@gourry.net?part=3
