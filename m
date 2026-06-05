@@ -1,159 +1,272 @@
-Received: from DM1PR04CU001.outbound.protection.outlook.com (mail-centralusazon11010018.outbound.protection.outlook.com [52.101.61.18])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-pf1-f179.google.com (mail-pf1-f179.google.com [209.85.210.179])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B7E6C2EEE98
-	for <sashiko-reviews@lists.linux.dev>; Fri,  5 Jun 2026 22:19:24 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=fail smtp.client-ip=52.101.61.18
-ARC-Seal:i=2; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1780697965; cv=fail; b=c2n06wUBbQSMP/furFjv0XsrwaXmNqXrJlKrZUuPPUXaI+umI3tfniJRd5F5s/Wj/NBG2DhqDYRW0s+sO6A1uJqdQsh8JH38+VIm2A9M1ldhZ8nDccpn3oMQEVGSu7QiXT7piK4wYTnWnKjIRKBsZ7i9HSqZnz+wB2YY26zJBpg=
-ARC-Message-Signature:i=2; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1780697965; c=relaxed/simple;
-	bh=Beupt88INTsnrtgOfe2MPnznkNRE3tNDNAed7dxGkPs=;
-	h=From:To:CC:Subject:In-Reply-To:References:Date:Message-ID:
-	 MIME-Version:Content-Type; b=oKHvx+Fn1o7hY+HrD6i49QpDDv2A3ljTs5GIYIwK7jKRs0kQor5sjswVJjr24uxkTpI33EWL5QTdIDVy+4I5ttkKnSG6dewEzEY2SWM6+5yljM7Tx7EhvsAiA/EYpNB7UgmrxcWzdqUzXvDtAdZo/2waaLeW8m7kbNGqXuwv9ZA=
-ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=amd.com; spf=fail smtp.mailfrom=amd.com; dkim=pass (1024-bit key) header.d=amd.com header.i=@amd.com header.b=QSV4P9sU; arc=fail smtp.client-ip=52.101.61.18
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=amd.com
-Authentication-Results: smtp.subspace.kernel.org; spf=fail smtp.mailfrom=amd.com
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2753735F192
+	for <sashiko-reviews@lists.linux.dev>; Fri,  5 Jun 2026 23:01:23 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.210.179
+ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
+	t=1780700484; cv=none; b=TN68bgHJM9lvwlbQHQK8Hmdt3hVLdHdR/EHG9sApSkOgGyMWpcWKKMrH84VLwmBuKFY5hfAWE+hYVIzRvLExjC11tLIu2btAzGXJ+NdjZivJFCsCxbkOIe3yjQIk7hIXtX4VbMMh0aRQjUawvPBNMQxKKaGiBX1Jq4GpPI6EYDc=
+ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
+	s=arc-20240116; t=1780700484; c=relaxed/simple;
+	bh=O8GdzxxXiZ3G7l1nv/53S34k1iKnVwkdcP6Nvg3W3iM=;
+	h=Mime-Version:Content-Type:Date:Message-Id:Cc:Subject:From:To:
+	 References:In-Reply-To; b=PkosYa2GILeGXzUOKj1Q9DCzZ/ZAA6SZ/4+cWOE4frr8NxwpjR2qNAcQevekj5TcU+xLgL8F+uhu79Fpm9wxwcyQ2ZcS7GpelQIPWqll3UjLpAv3keDteCWIZ1GHrdbVg0anZLnBOgyHL/tWruat3tWLbSkLwFeMDuaXvUQfFsU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=etsalapatis.com; spf=pass smtp.mailfrom=etsalapatis.com; dkim=pass (2048-bit key) header.d=etsalapatis-com.20251104.gappssmtp.com header.i=@etsalapatis-com.20251104.gappssmtp.com header.b=sBj/XHvH; arc=none smtp.client-ip=209.85.210.179
+Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=etsalapatis.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=etsalapatis.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=amd.com header.i=@amd.com header.b="QSV4P9sU"
-ARC-Seal: i=1; a=rsa-sha256; s=arcselector10001; d=microsoft.com; cv=none;
- b=ZT6WeHgOifB0HoX3E59IsNS1S7bVWTVemP1zgLK1IQDmc1VY5Hty2quFeLeBxZ6HP061xurQt7koR7UCKsgdAl5q0bN8XwXR+HbVpy4tkHF/Xsowhb3A3mLWgmrPc4o7Fy1OfszaXwx5uYLxixIklEAEEtiLbBeXCXSpMGfqq7uAx3x+IN9GzU2i7UqtcwKj/i26WI58iMMbvkchV+i2s7/kOXlXUEglExoGr0jHRUXBuv9CI3KzqeGnskC0bKlTCa79ckGNIy1/C9weELO5Q1VN8GkocE6hNT+v1D0s0zLq0MP4fZLQa+DAhArcFGP6DyAx89y9Tu1k2TqmME3ReA==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com;
- s=arcselector10001;
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
- bh=pR7ENMnFMXVW6tQYaX9OKrKOr54AK1Uhbg1HLwf0a2g=;
- b=FjSqZG1tPhQSAMVoUYrWQNGCYupWylFMUfyrSR4wFW3M5iT8KZ3V2kUA/Hr9EBrBRhivwwJ3EhqNLybg8+58JjZcqelPVOxNAuNWyEsy4Ny/Y1WmPQ+/IFOXLzRl2D974u3Lu3Gg6TICPOId/yHbLYF7Z91pzz3DE+bCPXmH7XcyVl+ptwKIuBSDIJ/pp/gHF9LkwkiZEMBogV0V/W2tNAIv+TI0IP9vGq9Uqb6nPZhWrG0G6tGXF9TdyeXzUQzaA26a4daLmQay5EriefBzCh+kVxjb+l3jUwpMRc47U4ResJFQLI5VPenJLEqIi3O3SPWfl2XOc1fxuykWKXjHiQ==
-ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass (sender ip is
- 165.204.84.17) smtp.rcpttodomain=lists.linux.dev smtp.mailfrom=amd.com;
- dmarc=pass (p=quarantine sp=quarantine pct=100) action=none
- header.from=amd.com; dkim=none (message not signed); arc=none (0)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=amd.com; s=selector1;
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
- bh=pR7ENMnFMXVW6tQYaX9OKrKOr54AK1Uhbg1HLwf0a2g=;
- b=QSV4P9sUPwkce4lTGMslZ3TLANg8Dfpp8C4WRqodxYzaxsoIGcWrCtsBxAiNGHOBgPPNeR5jbkB06TO90m42TSHquwph9n0L1Nx1Hk87b8XfzTL0RxnpPTXkDv9lUJh2Sz87qFqPQAA/tRMYvG9JTapcGepebW2DQKi04HYM+rM=
-Received: from BLAPR05CA0047.namprd05.prod.outlook.com (2603:10b6:208:335::28)
- by SA0PR12MB4447.namprd12.prod.outlook.com (2603:10b6:806:9b::23) with
- Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.21.92.9; Fri, 5 Jun 2026
- 22:19:21 +0000
-Received: from MN1PEPF0000ECDA.namprd02.prod.outlook.com
- (2603:10b6:208:335:cafe::2) by BLAPR05CA0047.outlook.office365.com
- (2603:10b6:208:335::28) with Microsoft SMTP Server (version=TLS1_3,
- cipher=TLS_AES_256_GCM_SHA384) id 15.21.92.10 via Frontend Transport; Fri, 5
- Jun 2026 22:19:20 +0000
-X-MS-Exchange-Authentication-Results: spf=pass (sender IP is 165.204.84.17)
- smtp.mailfrom=amd.com; dkim=none (message not signed)
- header.d=none;dmarc=pass action=none header.from=amd.com;
-Received-SPF: Pass (protection.outlook.com: domain of amd.com designates
- 165.204.84.17 as permitted sender) receiver=protection.outlook.com;
- client-ip=165.204.84.17; helo=satlexmb07.amd.com; pr=C
-Received: from satlexmb07.amd.com (165.204.84.17) by
- MN1PEPF0000ECDA.mail.protection.outlook.com (10.167.242.134) with Microsoft
- SMTP Server (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
- 15.21.92.5 via Frontend Transport; Fri, 5 Jun 2026 22:19:20 +0000
-Received: from localhost (10.180.168.240) by satlexmb07.amd.com
- (10.181.42.216) with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.2562.41; Fri, 5 Jun
- 2026 17:19:20 -0500
-From: Nathan Lynch <nathan.lynch@amd.com>
-To: <sashiko-reviews@lists.linux.dev>
-CC: <vkoul@kernel.org>, <dmaengine@vger.kernel.org>,
-	<linux-pci@vger.kernel.org>, <Frank.Li@kernel.org>
-Subject: Re: [PATCH v2 05/23] dmaengine: sdxi: Configure context tables
-In-Reply-To: <20260513011220.DFC94C2BCB0@smtp.kernel.org>
-References: <20260511-sdxi-base-v2-5-889cfed17e3f@amd.com>
- <20260513011220.DFC94C2BCB0@smtp.kernel.org>
-Date: Fri, 5 Jun 2026 17:19:19 -0500
-Message-ID: <87se70d40o.fsf@amd.com>
+	dkim=pass (2048-bit key) header.d=etsalapatis-com.20251104.gappssmtp.com header.i=@etsalapatis-com.20251104.gappssmtp.com header.b="sBj/XHvH"
+Received: by mail-pf1-f179.google.com with SMTP id d2e1a72fcca58-842307472d4so841124b3a.0
+        for <sashiko-reviews@lists.linux.dev>; Fri, 05 Jun 2026 16:01:23 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=etsalapatis-com.20251104.gappssmtp.com; s=20251104; t=1780700482; x=1781305282; darn=lists.linux.dev;
+        h=in-reply-to:references:to:from:subject:cc:message-id:date
+         :content-transfer-encoding:mime-version:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=jMUU/6j6qQEoXyWYhsfpILaPga52Ykc268OSJ9blCEU=;
+        b=sBj/XHvHwKelS/gOMNvn++0M2PW5vFC0ImhhDPZrsv6z59JXdCAAAIQh6LSxa4yj4k
+         BluG36F+ql4F0s3mjFPEI8YFfNULESzQKjZwJq7YHxVjYRkkXbLIwNoqGBhvtF/G9m5E
+         AZtDAsz1MYk0FMuQ0ygcWPs8QTjWxQ1LiLzeP7Z7phTjH+CVzXt5qAmXpIFpiNmQV68e
+         cYwZfhM8CF/jlp6K1/lS0UEasobrZV2kCTyVJc5L52VZc7ykoizmjHvg55Y92fF5u75F
+         iHv4qf8Xp9GDV13tbeKCPeN5P4YxD9IGp82UIcxGW0V3f/q8J4KuaYSaSKnSiRgFhfFc
+         Cl6w==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20251104; t=1780700482; x=1781305282;
+        h=in-reply-to:references:to:from:subject:cc:message-id:date
+         :content-transfer-encoding:mime-version:x-gm-gg:x-gm-message-state
+         :from:to:cc:subject:date:message-id:reply-to;
+        bh=jMUU/6j6qQEoXyWYhsfpILaPga52Ykc268OSJ9blCEU=;
+        b=EBS9Pu64ARYqAogarBCt4XMR6djvhDOv6boam32wuL6cFdSsAJLT3SCNF2W9KgPCG7
+         OyW9y0aRy2k0Qx3kv9u0tAo1UZE4nJ+N2TBwkJM5AQ9DNcnhdU7EfuqDkh1lLL6AHGbz
+         1fXfFyoiygYCF0w4Qn9VRgPEsSgtnpGokpZatdVxwWeI17pKPYvM1t/Ze/9tFpc3kiBw
+         dGwFCw9lx5cIdUDA1+7niIbCJbFPxr7R/UrXBcIZq+NsVP92yM6YhnLbmcIX32NF9CgH
+         pXaSZnfoUhBt0KvtGX3tTU4OBCxsGygbWeY68qfg8CGz3I5XRS++9P370mWnr6f3ZSQO
+         ucPA==
+X-Gm-Message-State: AOJu0YzfStz+DqRk+DPPt6Vw62jZynPyoE0tE6uYfkm/fQa4y5qllJDG
+	uAT6ZDyFGgtq1G5rYeJvr6cTBKOpn5xjgJ0Zboh/WY6xvM7J9ZpBWKLRZ7Omxe7y+8b1ZM3262M
+	KJ1h3HQhIodZT
+X-Gm-Gg: Acq92OGH9UvT8iVAuoU2wrvLb+hkt05COsXMU6GZnBCt/IogUfTmvKvtlnGCc3/fyD/
+	+R5KI16vZ2Oms0B1zQcpWXlrIxaDynEpo9nsPMNLMBkFXNsDhzfvNaP5KByyjXh8bvNOz+XXlTM
+	YCfHnPt8ZzcCgZt1JajiN1FcxbD9DWQUff5rrgUqoJlzQuV4BcWl1VnyEJoQlTVIM1bv+ryYK4A
+	Hrbe82LOlaOKF6ZwNRsPc44sAAQrrppvPqu7f5ZWg7PteplFtlRBD/9+ntFr0ahD6wmmlFPXNqH
+	kgWXh8Wp/CBpOsPwiGQqtCZSPmXBHbzyDaqXb8HmjH/9hFG3Y7V0KLXLvYl1sLMZPHchqm7TmjS
+	0oNJIqu6qR7Su5OXS92Wrd9ubuFA/gH8f4pW2qVKurBO/dLIVuWeFPlIwHADumYtYaw5FxQuqcd
+	2VeK6dGrU+/ZexSnyGd6tGj4/wRC1awuv6UdEE80TZaL/B6g==
+X-Received: by 2002:a05:6a00:338c:b0:842:48ae:1d56 with SMTP id d2e1a72fcca58-842b104d70dmr5980160b3a.35.1780700482310;
+        Fri, 05 Jun 2026 16:01:22 -0700 (PDT)
+Received: from localhost ([2001:569:58a0:da00:a5c8:c4ce:f7c1:40c1])
+        by smtp.gmail.com with ESMTPSA id d2e1a72fcca58-84282882751sm10488015b3a.39.2026.06.05.16.01.21
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Fri, 05 Jun 2026 16:01:22 -0700 (PDT)
 Precedence: bulk
 X-Mailing-List: sashiko-reviews@lists.linux.dev
 List-Id: <sashiko-reviews.lists.linux.dev>
 List-Subscribe: <mailto:sashiko-reviews+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:sashiko-reviews+unsubscribe@lists.linux.dev>
-MIME-Version: 1.0
-Content-Type: text/plain
-X-ClientProxiedBy: satlexmb08.amd.com (10.181.42.217) To satlexmb07.amd.com
- (10.181.42.216)
-X-EOPAttributedMessage: 0
-X-MS-PublicTrafficType: Email
-X-MS-TrafficTypeDiagnostic: MN1PEPF0000ECDA:EE_|SA0PR12MB4447:EE_
-X-MS-Office365-Filtering-Correlation-Id: d01eb7bb-f085-4c41-49c6-08dec3507db5
-X-MS-Exchange-SenderADCheck: 1
-X-MS-Exchange-AntiSpam-Relay: 0
-X-Microsoft-Antispam:
-	BCL:0;ARA:13230040|36860700016|376014|1800799024|82310400026|4143699003|11063799006|56012099006|18002099003|22082099003;
-X-Microsoft-Antispam-Message-Info:
-	qm4roQ/jXOHWDC+qBJo9GIOWMCU4FnByTjKKAXzuV0Gaju88A0NI4KlKF/tpi90rdj4QbfENClLfxJSvX5tvaKymbhNyfynqVwaQHqHxsZMpf+sl/4iDRiurnTEVRTAZqegi+d9+gZ8p9ymuBH7hHQDdrROgk54mwrq1WRC92mpNCYSJ85hXN/eSnpfEp9TyjEiJ799QMz2eOknEgNSt9DOjIAWpsaJd/qorkd3b+0ZGgTs4ZB3ZmkjwiPdekEqut2poYFPai+NPGNoYX+Gkj3exji6kda+Wp7YLs+CBlABp/ll6l7BAUYbaLHdFBXSyR4k8wOKgW8nD9RSNMD4ihKFZP8yt5xVcdjJE5q7JVbMPA/mzvA6z3PdoIXr98eGMwrJTrDeHv8sK5TXTszCAz6IC7u6vWLrnYdp88nrZJMzi1yjYNShgW8dMOgrDs3ZFplCtwZAwwTCU2YmZ28qGdl/DAJ8hXuTAGbSJ7rSrmEK6+bLsjLP0nSoUrOeh6lYf8CeUQtc/exAQLkcO+xJfkYDq4P2k4199usTZ0Qx5j1GMwgc9lU1Z0/XHWcTWcB3gQvFD96MxgJMMg5kqMhYHX9mq7R2OS3U6RcSpVU48Ttvl+hIHMXnwF002+4uGTsdS7DX2OUJQw+rqO14fVf91QTEIEcztbAnDnV+wAQhbfgAEPTiRWg1Vb3qAQrifky4YmtW/0ozuAb8XKkGx6hL+FAZdMLJf5vIcClACOC+W1Ak=
-X-Forefront-Antispam-Report:
-	CIP:165.204.84.17;CTRY:US;LANG:en;SCL:1;SRV:;IPV:NLI;SFV:NSPM;H:satlexmb07.amd.com;PTR:InfoDomainNonexistent;CAT:NONE;SFS:(13230040)(36860700016)(376014)(1800799024)(82310400026)(4143699003)(11063799006)(56012099006)(18002099003)(22082099003);DIR:OUT;SFP:1101;
-X-MS-Exchange-AntiSpam-MessageData-ChunkCount: 1
-X-MS-Exchange-AntiSpam-MessageData-0:
-	uoSyVwNx/i7HrMjcDrj4cthOV5YT8TczYYVuNKkhFlFKMXjpqkR7YgWuC8FXTsbHQfHKcIf9gmAAf879l8JIyDr21llg/qmqRt23Monx14PX5WgAsxGZO2WbomgZX7yGWyAYH4ffBnAZTCpdwBEoS6WM0Nu6Sdl/NC9yoOfm0IwDJsUgKMhlbyBSuPH88YwgGU6qSdcQ2fLTGFWXHwTkp+CMAYkcsIXXJiPg1ggpvn2Q9MUzZjntN9c217dSrQHeiaYS9TZSDh+RGnMD5+fp+4kJCoafMtXUkzie8Y0XNTVHuqs7NAqdhcHzOBstIxhlAIwJrPxOKAbmZcV7+ELiIQPXg6btK9mLVMm9Yj1Y4kyBsVrVwLguj95xd6GoMjpMS7hM6WwpNR4hag81igVESZAu2dtvV3zSntrSc44LSIP8iuzmuT4Qn/DsvWMNm8Jm
-X-OriginatorOrg: amd.com
-X-MS-Exchange-CrossTenant-OriginalArrivalTime: 05 Jun 2026 22:19:20.6594
- (UTC)
-X-MS-Exchange-CrossTenant-Network-Message-Id: d01eb7bb-f085-4c41-49c6-08dec3507db5
-X-MS-Exchange-CrossTenant-Id: 3dd8961f-e488-4e60-8e11-a82d994e183d
-X-MS-Exchange-CrossTenant-OriginalAttributedTenantConnectingIp: TenantId=3dd8961f-e488-4e60-8e11-a82d994e183d;Ip=[165.204.84.17];Helo=[satlexmb07.amd.com]
-X-MS-Exchange-CrossTenant-AuthSource:
-	MN1PEPF0000ECDA.namprd02.prod.outlook.com
-X-MS-Exchange-CrossTenant-AuthAs: Anonymous
-X-MS-Exchange-CrossTenant-FromEntityHeader: HybridOnPrem
-X-MS-Exchange-Transport-CrossTenantHeadersStamped: SA0PR12MB4447
+Mime-Version: 1.0
+Content-Transfer-Encoding: quoted-printable
+Content-Type: text/plain; charset=UTF-8
+Date: Fri, 05 Jun 2026 19:01:21 -0400
+Message-Id: <DJ1HN00TAYO9.3MAYZZJMB84PJ@etsalapatis.com>
+Cc: <bpf@vger.kernel.org>
+Subject: Re: [PATCH bpf-next v4 1/3] selftests/bpf: libarena: Add rbtree
+ data structure
+From: "Emil Tsalapatis" <emil@etsalapatis.com>
+To: <sashiko-reviews@lists.linux.dev>, "Emil Tsalapatis"
+ <emil@etsalapatis.com>
+X-Mailer: aerc 0.21.0-0-g5549850facc2
+References: <20260605222020.5231-2-emil@etsalapatis.com>
+ <20260605223052.D18201F00893@smtp.kernel.org>
+In-Reply-To: <20260605223052.D18201F00893@smtp.kernel.org>
 
-sashiko-bot@kernel.org writes:
-
-> Thank you for your contribution! Sashiko AI review found 2 potential issue(s) to consider:
-> - [Medium] Premature programming of the L2 table base address in the hardware register, leading to a dangling DMA pointer on error paths.
-> - [Medium] Unnecessary and potentially harmful `__packed` attribute on naturally aligned DMA structures.
+On Fri Jun 5, 2026 at 6:30 PM EDT, sashiko-bot wrote:
+> Thank you for your contribution! Sashiko AI review found 1 potential issu=
+e(s) to consider:
+> - [High] Failure to check `can_loop` termination leads to severe tree cor=
+ruption, memory leaks, and NULL pointer dereferences.
 > --
 >
-> commit 0a4d9e9c9ca24875b4f7b4512a3bf669c25c0595
-> Author: Nathan Lynch <nathan.lynch@amd.com>
+> commit 090a58da31563cb07c7562cdaaf67470a54e90c0
+> Author: Emil Tsalapatis <emil@etsalapatis.com>
 >
-> dmaengine: sdxi: Configure context tables
+> selftests/bpf: libarena: Add rbtree data structure
 >
-> This commit allocates and configures the two-level context tracking tables (L1
-> and L2) for the SDXI driver. It allocates enough space for context IDs 0-127
-> and caps the maximum contexts accordingly, using devres-managed allocations to
-> simplify cleanup.
+> This commit adds a native red-black tree data structure to libarena. It
+> supports multiple APIs for querying and modifying the tree, and uses the
+> libarena memory allocator to manage its data.
 >
->> diff --git a/drivers/dma/sdxi/device.c b/drivers/dma/sdxi/device.c
->> --- a/drivers/dma/sdxi/device.c
->> +++ b/drivers/dma/sdxi/device.c
+>> diff --git a/tools/testing/selftests/bpf/libarena/src/rbtree.bpf.c b/too=
+ls/testing/selftests/bpf/libarena/src/rbtree.bpf.c
+>> new file mode 100644
+>> index 0000000000000..0e4aaec96b6fa
+>> --- /dev/null
+>> +++ b/tools/testing/selftests/bpf/libarena/src/rbtree.bpf.c
 >
 > [ ... ]
 >
->> @@ -172,6 +182,32 @@ static int sdxi_fn_activate(struct sdxi_dev *sdxi)
->>  			   FIELD_GET(SDXI_MMIO_CAP1_OPB_000_CAP, cap1));
->>  	sdxi_write64(sdxi, SDXI_MMIO_CTL2, ctl2);
->>  
->> +	/* SDXI 1.0 4.1.8.2 Context Level 2 Table Setup */
->> +	sdxi->L2_table = dmam_alloc_coherent(sdxi->dev,
->> +					     sizeof(*sdxi->L2_table),
->> +					     &sdxi->L2_dma, GFP_KERNEL);
->> +	if (!sdxi->L2_table)
->> +		return -ENOMEM;
+>> +__weak
+>> +int rb_destroy(struct rbtree __arena *rbtree)
+>> +{
+>> +	int ret =3D 0;
 >> +
->> +	cxt_l2 = FIELD_PREP(SDXI_MMIO_CXT_L2_PTR, sdxi->L2_dma >> ilog2(SZ_4K));
->> +	sdxi_write64(sdxi, SDXI_MMIO_CXT_L2, cxt_l2);
+>> +	arena_subprog_init();
 >> +
->> +	/* SDXI 1.0 4.1.8.3 Context Level 1 Table Setup */
->> +	sdxi->L1_table = dmam_alloc_coherent(sdxi->dev,
->> +					     sizeof(*sdxi->L1_table),
->> +					     &sdxi->L1_dma, GFP_KERNEL);
->> +	if (!sdxi->L1_table)
->> +		return -ENOMEM;
+>> +	if (unlikely(!rbtree))
+>> +		return -EINVAL;
 >
-> If dmam_alloc_coherent() fails for L1_table, we return -ENOMEM. The devres
-> framework will then free L2_table, but does this leave a dangling physical
-> pointer in the hardware SDXI_MMIO_CXT_L2 register?
+> [ ... ]
 >
-> Could this lead to a DMA use-after-free regression if the hardware incorrectly
-> resumes or is later manipulated? Should we defer writing to SDXI_MMIO_CXT_L2
-> until both tables are fully allocated and linked?
+>> +	while (rbtree->root && can_loop) {
+>> +		ret =3D rb_remove(rbtree, rbtree->root->key);
+>> +		if (ret)
+>> +			break;
+>> +	}
+>> +
+>> +out:
+>> +	arena_free(rbtree);
+>
+> [Severity: High]
+> Does this code leak memory if the loop exits early due to the can_loop
+> limit being reached? If the loop aborts early, the rbtree container is fr=
+eed
+> even though the remaining nodes have not been removed.
+>
+>> +	return ret;
+>> +}
+>
+> [ ... ]
+>
+>> +static
+>> +struct rbnode __arena *rbnode_least_upper_bound(struct rbnode __arena *=
+subtree, uint64_t key)
+>> +{
+>> +	struct rbnode __arena *node =3D subtree;
+>> +	int dir;
+>> +
+>> +	if (!subtree)
+>> +		return NULL;
+>> +
+>> +	while (can_loop) {
+>> +		dir =3D (key <=3D node->key) ? 0 : 1;
+>> +
+>> +		if (!node->child[dir])
+>> +			break;
+>> +
+>> +		node =3D node->child[dir];
+>> +	}
+>> +
+>> +	return node;
+>
+> [Severity: High]
+> If this loop terminates early because can_loop evaluates to false, will i=
+t
+> return an internal tree node rather than a leaf node?
+>
+>> +}
+>
+> [ ... ]
+>
+>> +static
+>> +int rb_node_insert(struct rbtree __arena *rbtree,
+>> +		   struct rbnode __arena *node)
+>> +{
+>> +	struct rbnode __arena *grandparent, *parent =3D rbtree->root;
+>> +	u64 key =3D node->key;
+>> +	struct rbnode __arena *uncle;
+>> +	int dir;
+>> +	int ret;
+>
+> [ ... ]
+>
+>> +	if (rbtree->insert !=3D RB_DUPLICATE)
+>> +		parent =3D rbnode_find(parent, key);
+>> +	else
+>> +		parent =3D rbnode_least_upper_bound(parent, key);
+>
+> [ ... ]
+>
+>> +	node->parent =3D parent;
+>> +	/* Also works if key =3D=3D parent->key. */
+>> +	if (key <=3D parent->key)
+>> +		parent->left =3D node;
+>
+> [Severity: High]
+> If rbnode_find() or rbnode_least_upper_bound() returns an internal node
+> due to a can_loop timeout, does unconditionally overwriting parent->left =
+or
+> parent->right here permanently detach and leak the existing subtree?
+>
+>> +	else
+>> +		parent->right =3D node;
+>
+> [ ... ]
+>
+>> +static
+>> +int rb_node_remove(struct rbtree __arena *rbtree,
+>> +		   struct rbnode __arena *node)
+>> +{
+>> +	struct rbnode __arena *parent, *sibling, *close_nephew, *distant_nephe=
+w;
+>> +	bool free =3D (rbtree->alloc =3D=3D RB_ALLOC);
+>> +	struct rbnode __arena *replace, *initial;
+>
+> [ ... ]
+>
+>> +	while (can_loop) {
+>> +
+>> +		/* Balancing reached the root, there can be no imbalance. */
+>> +		if (!parent)
+>> +			return 0;
+>
+> [ ... ]
+>
+>> +		sibling->is_red =3D true;
+>> +		node =3D parent;
+>> +		parent =3D node->parent;
+>> +		dir =3D rbnode_dir(node);
+>> +	}
+>> +
+>> +	if (node !=3D initial) {
+>> +		dir =3D rbnode_dir(node);
+>> +		parent =3D node->parent;
+>> +		sibling =3D parent->child[1-dir];
+>> +	}
+>> +	/*
+>> +	 * Almost there. We know between the parent, sibling,
+>> +	 * and nephews only one or two of the nephews are red. If
+>> +	 * it is the close one, rotate it to the sibling position,
+>> +	 * paint it black, and paint the previous sibling red.
+>> +	 */
+>> +
+>> +	close_nephew =3D sibling->child[dir];
+>> +	distant_nephew =3D sibling->child[1 - dir];
+>> +
+>> +	/*
+>> +	 * If the distant red nephew is not red, rotate
+>> +	 * and repaint. We need the distant nephew
+>> +	 * to be red. We know the close nephew is red
+>> +	 * because at least one of them are, so the
+>> +	 * distant one is black if it exists.
+>> +	 */
+>> +	if (!distant_nephew || !distant_nephew->is_red) {
+>> +		rbnode_rotate(rbtree, sibling, 1 - dir);
+>> +		sibling->is_red =3D true;
+>> +		close_nephew->is_red =3D false;
+>
+> [Severity: High]
+> Can this cause a NULL pointer dereference if the rebalancing loop above
+> exits early due to can_loop?
+>
+> An early exit bypasses the guarantee that the sibling has red children,
+> which means both nephews, including close_nephew, might be NULL here.
 
-Yes, the error path potentially leaves MMIO_CXT_L2 programmed, but the
-device is not going to access the table address until it actually gets
-driven to active state. Maybe I'm missing something but I don't see any
-issue here.
+No. We don't care what happens if can_loop triggers. Same for the rest
+of the bot feedback. The only outstanding actionable nit is imo the
+mismatch between the function names in the patch description and the
+actual code for spmc, for which I can send another version if necessary.
+
+>
+>> +		distant_nephew =3D sibling;
+>> +		sibling =3D close_nephew;
+>> +	}
+
