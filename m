@@ -1,173 +1,130 @@
-Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
-	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8D7B73A9DB9
-	for <sashiko-reviews@lists.linux.dev>; Fri,  5 Jun 2026 06:27:02 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
+Received: from azure-sdnproxy.icoremail.net (azure-sdnproxy.icoremail.net [13.76.78.106])
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 52C2C413D69
+	for <sashiko-reviews@lists.linux.dev>; Fri,  5 Jun 2026 06:57:22 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=13.76.78.106
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1780640823; cv=none; b=buK9Baz61UqURuLj5I6MD+LSV4YZZVyMsWmv/alkxpNCu0CCfEuJ5gF350BV+lyRbRWX5wWf8YGF2RZG0/bKmiik54T6bux9cd8yWo7PVdkHhiRYcCKSpIwNxSAxoC/PFkbSlprrNgU3nQhkka//ewoASRCz9SBD3x2W5px6SEM=
+	t=1780642647; cv=none; b=APwa8HUs0ZD5gm0QQ0zXDpPWyk39Mlai0I/WiYei0pf6vuPF7d2E9YTo+K58uVv/3R0vU2C9d3YWJjE0HtXrMbhP1iPbI/SsPLcs90/tSUrmnJfwb0bE9/AkPLkpEFytTyuhy6GgceDblmmF2eGoQEilcst97rHRAlQlBRJ1g94=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1780640823; c=relaxed/simple;
-	bh=XTdMRW7xuzKszm4MBXFtcZ9+NxKWkyL54OfOcYA0vrA=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=Ijufgq+11km2d2wC1aPcQe1LgZ1Axv05j8nFaNCaOZNAeG2cFlaI40OOvCm82RRksP+3jOiNzdxrDhqeMudpc/mmyw60RR9d6ZkrjrtN5V8X2+ltkUQz1Vtxr2kwS2C/1hUBAHSkOrKABqXnZ2TOrN35b5/i/LAvI4P03tubPUY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=SekQfSAX; arc=none smtp.client-ip=100.103.45.18
-Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="SekQfSAX"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0673B1F00898;
-	Fri,  5 Jun 2026 06:27:01 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=kernel.org;
-	s=k20260515; t=1780640822;
-	bh=82oF7SteqPJKLjGIvCqxjPneO9OR8LiL3IIZL4gz+R4=;
-	h=Date:From:To:Cc:Subject:References:In-Reply-To;
-	b=SekQfSAXYJ77G/dsAoWpBq4nV7btqVgfes/JzQqrl9PhHg965A5u33c9RjH6iJlvr
-	 wPTm+llxvDyKbuFvfG7Z7gm0miFmc+0N8BpiW5d3pDEcRJWzPrOPor4LRs9PbtwBkd
-	 VF3tUpof9gY/JyPmfK4XA718saOFuTPlwYxoNElgrAc6T7xbYBWy9RzAkCuw3wiu9n
-	 qsTOA8opuRK4lK6We4RDL/2L0xLieLIf0rJ/KKb6j4aTD+l1gGnHasyA6Vm4h40155
-	 Rmk6XSjra3vvyShGb1w/6T5PAxJFfswMLQos7D47P2Bo1gZj5rSBTRtrZADLM+wlRq
-	 x8CkOSSjN/grw==
-Received: from phl-compute-05.internal (phl-compute-05.internal [10.202.2.45])
-	by mailfauth.phl.internal (Postfix) with ESMTP id 55E89F40070;
-	Fri,  5 Jun 2026 02:27:01 -0400 (EDT)
-Received: from phl-frontend-04 ([10.202.2.163])
-  by phl-compute-05.internal (MEProxy); Fri, 05 Jun 2026 02:27:01 -0400
-X-ME-Sender: <xms:NWwiai-EWHEsfxcbT6HBKGstrtimgX72D73-2ZxUPDBZNqooLqPHxQ>
-    <xme:NWwiagiQ5j-ped3VXH0sloZ0doCJXWnT8Y9Vicu1zF5PGUscsNuaFnG_E-NTHhfRJ
-    D0wlIFbNUIjVbjpt_ocH3ipFmpGH6Lfd-Opwl-JYMTY2b3v676r0g>
-X-ME-Received: <xmr:NWwiaie5M78am-yFoD1nDvmN7c6psSSu2ZI9dRSnbkGDad3HvFic2vsX3fs>
-X-ME-Proxy-Cause: dmFkZTGmBpRejcFHokcxaZs/oyOYFDeu25Tilw2lGB0djfv7yRf9i5ZSk/TcsqR0f4PUvD
-    xfh7Kih9gMoOeuKv9VfhkabtEPrLZMn1DUZDvx5lJTyLepRyBg8S2xE91BFG7bvVH+UY8X
-    JNcaIe6woVI47iSwASiaxOH5FTXaWLQFIbCLidooXWv+hzV46P7kConPEo1Y0qRe2H+9Zz
-    t12GpmjAxvWypcOdEPOiOgNf47xrZ14dXjECZ2MZuWguEe12yGG2poxoovkzaS2pOB2mb1
-    Mg7W/vzW1LhzfCZWmPcUhKYdhlmJo8x7ikX8GXHPiyRfkk/0x2upuq9x6geQ6wIml3pfax
-    RrkF9WpRUTebu/auELKeRVnD8DuERg/V6g4rKHCMea4x08dwkOIIimwj7q6tup3wf/pO2d
-    Em764LRQT4URc5XeGcj9mEjQEqeIJj9wMybyHxgpDb9CEdJQHzYurZv96eMfccHgSVtqX7
-    ElZFNTemxdObt4GzKAdbXc34etla7Y/pqDVftVdnNOLTIEIfejhtHWclgU2k+vi2svlwr9
-    bH95vWlt2jPhA7LPxZNpOF6m1cZzzyeZkcZuNedis5uDa9oiIz9CPt35fcnxdHufnOA8Qp
-    wofSo7q2eHO2indkT9LMN8e0xKbxtKWNo89uDZUk+z3O3xWnEWhTj4snBi7w
-X-ME-Proxy: <xmx:NWwianot6bGIDr04KKXUCAVdddP2S-J0_JkmBdkZT5J3pTxuCUWE4w>
-    <xmx:NWwianAMh398NfKHdqAer_1GtXf-jKrpfrgw2YjU3b1vaUfo0XLJKQ>
-    <xmx:NWwiakbSGVRU2Rtsfa_aClLwgteJrs3ilnwUapnC-24gfy_8G4TC4w>
-    <xmx:NWwiaq7-gzEnpJp8a_LF4TxdTdz6EEu0DjRrOqZjWPTBD5Jr_984Bw>
-    <xmx:NWwialbuDN7Tbro5FwgrhbDt2_oq4kwfY8Y3gTgi21YmKn9EwvdKwJiC>
-Feedback-ID: i8dbe485b:Fastmail
-Received: by mail.messagingengine.com (Postfix) with ESMTPA; Fri,
- 5 Jun 2026 02:27:00 -0400 (EDT)
-Date: Thu, 4 Jun 2026 23:27:00 -0700
-From: Boqun Feng <boqun@kernel.org>
+	s=arc-20240116; t=1780642647; c=relaxed/simple;
+	bh=c2n8HfFJZWyE3FfVuV4d0gFPUl0N2KB4g/8imvsfJ0s=;
+	h=Date:From:To:Cc:Subject:In-Reply-To:References:Content-Type:
+	 MIME-Version:Message-ID; b=r7hH8T4ky4OcYe5l+mAvm6+Ln8TeRJ3NrzZ+pxtfn4Kh6ZvabajtAFbY4Fb3ivVNVmqWuqv2kk7EjwkJ1rB7gLn0L9iojGe4SFGKrQN5mPNsyHMPMM7wsW8bULu1VORBzKYkLl0pLj1UzZrL9hWkF3u4Bbh5qPy1x2V3rzAnxDU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=eswincomputing.com; spf=pass smtp.mailfrom=eswincomputing.com; arc=none smtp.client-ip=13.76.78.106
+Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=eswincomputing.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=eswincomputing.com
+Received: from hehuan1$eswincomputing.com ( [10.12.96.103] ) by
+ ajax-webmail-app2 (Coremail) ; Fri, 5 Jun 2026 14:57:19 +0800 (GMT+08:00)
+Date: Fri, 5 Jun 2026 14:57:19 +0800 (GMT+08:00)
+X-CM-HeaderCharset: UTF-8
+From: "Huan He" <hehuan1@eswincomputing.com>
 To: sashiko-reviews@lists.linux.dev
-Cc: bpf@vger.kernel.org, ojeda@kernel.org
-Subject: Re: [PATCH v3 05/13] irq & spin_lock: Add counted interrupt
- disabling/enabling
-Message-ID: <aiJsNDshrr3j0hq1@tardis-2.local>
-References: <20260605054128.5925-6-boqun@kernel.org>
- <20260605060155.D562C1F00893@smtp.kernel.org>
+Cc: linux-hwmon@vger.kernel.org, robh@kernel.org, devicetree@vger.kernel.org,
+	conor+dt@kernel.org, linux@roeck-us.net, krzk+dt@kernel.org,
+	p.zabel@pengutronix.de, linux-kernel@vger.kernel.org,
+	ningyu@eswincomputing.com, linmin@eswincomputing.com,
+	luyulin@eswincomputing.com, pinkesh.vaghela@einfochips.com
+Subject: Re: Re: [PATCH v6 2/2] hwmon: Add Eswin EIC7700 PVT sensor driver
+X-Priority: 3
+X-Mailer: Coremail Webmail Server Version 2024.2-cmXT6 build
+ 20241203(6b039d88) Copyright (c) 2002-2026 www.mailtech.cn
+ mispb-72143050-eaf5-4703-89e0-86624513b4ce-eswincomputing.com
+In-Reply-To: <20260604081720.5D5251F00893@smtp.kernel.org>
+References: <20260604080552.169-1-hehuan1@eswincomputing.com>
+ <20260604081720.5D5251F00893@smtp.kernel.org>
+Content-Transfer-Encoding: base64
+Content-Type: text/plain; charset=UTF-8
 Precedence: bulk
 X-Mailing-List: sashiko-reviews@lists.linux.dev
 List-Id: <sashiko-reviews.lists.linux.dev>
 List-Subscribe: <mailto:sashiko-reviews+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:sashiko-reviews+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=iso-8859-1
-Content-Disposition: inline
-Content-Transfer-Encoding: 8bit
-In-Reply-To: <20260605060155.D562C1F00893@smtp.kernel.org>
+Message-ID: <5d095049.700f.19e96926fec.Coremail.hehuan1@eswincomputing.com>
+X-Coremail-Locale: zh_CN
+X-CM-TRANSID:TQJkCgAnPqFPcyJqtUQiAA--.7352W
+X-CM-SenderInfo: 5khk3tzqr6v25zlqu0xpsx3x1qjou0bp/1tbiAQEJCmohqKAkwAAB
+	sl
+X-Coremail-Antispam: 1Ur529EdanIXcx71UUUUU7IcSsGvfJ3iIAIbVAYjsxI4VW3Jw
+	CS07vEb4IE77IF4wCS07vE1I0E4x80FVAKz4kxMIAIbVAFxVCaYxvI4VCIwcAKzIAtYxBI
+	daVFxhVjvjDU=
 
-On Fri, Jun 05, 2026 at 06:01:55AM +0000, sashiko-bot@kernel.org wrote:
-> Thank you for your contribution! Sashiko AI review found 1 potential issue(s) to consider:
-> - [High] local_interrupt_enable() fails to invoke deferred softirqs and re-arm hrtimers, leading to indefinite stalls.
-> --
-> 
-> commit de449b5be29a59d42df6ee590a2de395da7bbacc
-> Author: Boqun Feng <boqun@kernel.org>
-> 
-> irq & spin_lock: Add counted interrupt disabling/enabling
-> 
-> This commit introduces a new set of interrupt disabling APIs:
-> local_interrupt_disable() and local_interrupt_enable(). These save the
-> interrupt state to a per-cpu variable and use a per-cpu counter to track
-> nesting levels, preventing accidental enablement.
-> 
-> Link: https://patch.msgid.link/20260121223933.1568682-6-lyude@redhat.com
-> 
-> > diff --git a/include/linux/interrupt_rc.h b/include/linux/interrupt_rc.h
-> > new file mode 100644
-> > index 0000000000000..dd4444c613307
-> > --- /dev/null
-> > +++ b/include/linux/interrupt_rc.h
-> 
-> [ ... ]
-> 
-> > +static inline void local_interrupt_enable(void)
-> > +{
-> > +	int new_count;
-> > +
-> > +	new_count = hardirq_disable_exit();
-> > +
-> > +	if ((new_count & HARDIRQ_DISABLE_MASK) == 0) {
-> > +		unsigned long flags;
-> > +
-> > +		flags = raw_cpu_read(local_interrupt_disable_state.flags);
-> > +		local_irq_restore(flags);
-> > +		/*
-> > +		 * TODO: re-read preempt count can be avoided, but it needs
-> > +		 * should_resched() taking another parameter as the current
-> > +		 * preempt count
-> > +		 */
-> > +#ifdef CONFIG_PREEMPTION
-> > +		if (should_resched(0))
-> > +			__preempt_schedule();
-> > +#endif
-> > +	}
-> > +}
-> 
-> [Severity: High]
-> When the hardirq disable count drops to 0 here, does this miss checking for
-> deferred softirqs?
-> 
-
-Yes, but it doesn't have any behavioral difference than a
-local_irq_enable(), which won't trigger deferred softirqs either.
-
-Regards,
-Boqun
-
-> Because __irq_exit_rcu() is updated later in this patch to skip invoking
-> softirqs and re-arming hrtimers if hardirq_disable_count() is non-zero, the
-> responsibility appears to shift to this function. Without a check for
-> local_softirq_pending() when the count reaches 0, could softirqs and hrtimers
-> deferred during the vulnerable window be indefinitely stalled until the next
-> hardware interrupt fires?
-> 
-> > diff --git a/kernel/softirq.c b/kernel/softirq.c
-> > index 10af5ed859e73..d1ab1799794ca 100644
-> > --- a/kernel/softirq.c
-> > +++ b/kernel/softirq.c
-> 
-> [ ... ]
-> 
-> > @@ -728,7 +731,16 @@ static inline void __irq_exit_rcu(void)
-> >  #endif
-> >  	account_hardirq_exit(current);
-> >  	preempt_count_sub(HARDIRQ_OFFSET);
-> > -	if (!in_interrupt() && local_softirq_pending()) {
-> > +	/*
-> > +	 * Interrupts may happen between hardirq_disable_enter() and
-> > +	 * local_irq_save() in local_interrupt_disable(), if irq_exit() invokes
-> > +	 * softirq here, we may have a softirq handler calling
-> > +	 * local_interrupt_disable() but it won't disable the irq because
-> > +	 * hardirq disabling count is already 1, hence we need to prevent
-> > +	 * invoking softirq when a local_interrupt_disable() is ongoing.
-> > +	 */
-> > +	if (!in_interrupt() && !hardirq_disable_count() &&
-> > +	    local_softirq_pending()) {
-> >  		/*
-> >  		 * If we left hrtimers unarmed, make sure to arm them now,
-> >  		 * before enabling interrupts to run SoftIRQ.
-> >  		 */
-> > +		hrtimer_rearm_deferred();
-> > +		invoke_softirq();
-> > +	}
-> 
-> -- 
-> Sashiko AI review · https://sashiko.dev/#/patchset/20260605054128.5925-1-boqun@kernel.org?part=5
+SGkgU2FzaGlrbywKClRoYW5rIHlvdSB2ZXJ5IG11Y2ggZm9yIHlvdXIgZGV0YWlsZWQgcmV2aWV3
+LsKgV2UgYXBwcmVjaWF0ZSB0aGUgZmVlZGJhY2suCgo+IAo+IFRoYW5rIHlvdSBmb3IgeW91ciBj
+b250cmlidXRpb24hIFNhc2hpa28gQUkgcmV2aWV3IGZvdW5kIDIgcG90ZW50aWFsIGlzc3VlKHMp
+IHRvIGNvbnNpZGVyOgo+IC0gW0hpZ2hdIENsZWFyaW5nIHRoZSBpbnRlcnJ1cHQgc3RhdHVzIGJl
+Zm9yZSBkaXNhYmxpbmcgc2Vuc29yIGNvbnZlcnNpb25zIGluIGluaXRfaWZhY2UoKSBjcmVhdGVz
+IGEgcmFjZSBjb25kaXRpb24gdGhhdCBjYW4gbGVhZCB0byBhbiB1bmhhbmRsZWQgaW50ZXJydXB0
+IHN0b3JtLgo+IC0gW01lZGl1bV0gTWlzc2luZyBwbV9ydW50aW1lX2Rpc2FibGUoKSBpbiB0aGUg
+ZGV2aWNlIGNsZWFudXAgcGF0aCBjYXVzZXMgYW4gdW5iYWxhbmNlZCBQTSBydW50aW1lIHN0YXRl
+Lgo+IC0tCj4gCj4gY29tbWl0IDU4NDJhZDMyMjcxZjdkOTY3ZTlmMWUxMGMxMzQ3NGE1YjU3ZGE4
+YWQKPiBBdXRob3I6IEh1YW4gSGUgPGhlaHVhbjFAZXN3aW5jb21wdXRpbmcuY29tPgo+IAo+IGh3
+bW9uOiBBZGQgRXN3aW4gRUlDNzcwMCBQVlQgc2Vuc29yIGRyaXZlcgo+IAo+IEFkZCBzdXBwb3J0
+IGZvciBFU1dJTiBFSUM3NzAwIFZvbHRhZ2UgYW5kIFRlbXBlcmF0dXJlIHNlbnNvci4gVGhlIGRy
+aXZlcgo+IHN1cHBvcnRzIHRlbXBlcmF0dXJlIGFuZCB2b2x0YWdlIG1vbml0b3Jpbmcgd2l0aCBw
+b2x5bm9taWFsIGNvbnZlcnNpb24sCj4gYW5kIHByb3ZpZGVzIHN5c2ZzIGludGVyZmFjZSBmb3Ig
+c2Vuc29yIGRhdGEgYWNjZXNzLgo+IAo+ID4gZGlmZiAtLWdpdCBhL2RyaXZlcnMvaHdtb24vZWlj
+NzcwMC1wdnQuYyBiL2RyaXZlcnMvaHdtb24vZWljNzcwMC1wdnQuYwo+ID4gbmV3IGZpbGUgbW9k
+ZSAxMDA2NDQKPiA+IC0tLSAvZGV2L251bGwKPiA+ICsrKyBiL2RyaXZlcnMvaHdtb24vZWljNzcw
+MC1wdnQuYwo+IFsgLi4uIF0KPiA+ICtzdGF0aWMgaW50IGVpYzc3MDBfcHZ0X2luaXRfaWZhY2Uo
+c3RydWN0IHB2dF9od21vbiAqcHZ0KQo+ID4gK3sKPiA+ICsJLyoKPiA+ICsJICogTWFrZSBzdXJl
+IGNvbnRyb2xsZXIgYXJlIGRpc2FibGVkIHNvIG5vdCB0byBhY2NpZGVudGFsbHkgaGF2ZSBJU1IK
+PiA+ICsJICogZXhlY3V0ZWQgYmVmb3JlIHRoZSBkcml2ZXIgZGF0YSBpcyBmdWxseSBpbml0aWFs
+aXplZC4gQ2xlYXIgdGhlIElSUQo+ID4gKwkgKiBzdGF0dXMgYXMgd2VsbC4KPiA+ICsJICovCj4g
+PiArCWVpYzc3MDBfcHZ0X3VwZGF0ZShwdnQtPnJlZ3MgKyBQVlRfSU5ULCBQVlRfSU5UX0NMUiwg
+UFZUX0lOVF9DTFIpOwo+ID4gKwllaWM3NzAwX3B2dF91cGRhdGUocHZ0LT5yZWdzICsgUFZUX0VO
+QSwgUFZUX0VOQV9FTiwgMCk7Cj4gCj4gW1NldmVyaXR5OiBIaWdoXQo+IENvdWxkIHRoaXMgY2xl
+YXItdGhlbi1kaXNhYmxlIHNlcXVlbmNlIGNhdXNlIGFuIHVuaGFuZGxlZCBpbnRlcnJ1cHQgc3Rv
+cm0/Cj4gCj4gSWYgYSBib290bG9hZGVyIGxlZnQgdGhlIHNlbnNvciBhY3RpdmUsIGEgY29udmVy
+c2lvbiBtaWdodCBjb21wbGV0ZSBpbiB0aGUKPiBzbWFsbCB3aW5kb3cgYmV0d2VlbiBjbGVhcmlu
+ZyBQVlRfSU5UX0NMUiBhbmQgZGlzYWJsaW5nIFBWVF9FTkFfRU4uIFRoaXMKPiB3b3VsZCBhc3Nl
+cnQgdGhlIElSUSBsaW5lLgo+IAo+IFdoZW4gdGhlIElSUSBpcyBsYXRlciByZXF1ZXN0ZWQgaW4g
+cHJvYmUoKSwgdGhlIElTUiBlaWM3NzAwX3B2dF9oYXJkX2lzcigpCj4gd2lsbCBmaXJlIGltbWVk
+aWF0ZWx5LiBIb3dldmVyLCBzaW5jZSB0aGUgZGV2aWNlIGlzIHN1c3BlbmRlZCwKPiBwbV9ydW50
+aW1lX2dldF9pZl9hY3RpdmUoKSByZXR1cm5zIDw9IDAsIGNhdXNpbmcgdGhlIElTUiB0byByZXR1
+cm4gSVJRX05PTkUKPiB3aXRob3V0IGNsZWFyaW5nIHRoZSBpbnRlcnJ1cHQuCj4gCj4gQmVjYXVz
+ZSB0aGUgaW50ZXJydXB0IGlzIGxldmVsLXRyaWdnZXJlZCAoSVJRRl9UUklHR0VSX0hJR0gpLCB3
+b3VsZCB0aGlzCj4gcmVzdWx0IGluIGEgY29udGludW91cyBpbnRlcnJ1cHQgc3Rvcm0gdGhhdCB1
+bHRpbWF0ZWx5IGZvcmNlcyB0aGUga2VybmVsCj4gdG8gcGVybWFuZW50bHkgZGlzYWJsZSB0aGUg
+SVJRIGxpbmU/Cj4gCj4gU2hvdWxkIHRoZSBjb252ZXJzaW9uIGVuZ2luZSBiZSBkaXNhYmxlZCBi
+ZWZvcmUgdGhlIGludGVycnVwdCBpcyBjbGVhcmVkPwoKSSB3aWxsIGZpeCB0aGlzIGJ5IGRpc2Fi
+bGluZyB0aGUgY29udmVyc2lvbiBlbmdpbmUgZmlyc3QsIGFuZCBvbmx5IHRoZW4KY2xlYXJpbmcg
+dGhlIHBlbmRpbmcgaW50ZXJydXB0IHN0YXR1cy4KClRoZSBpbml0aWFsaXphdGlvbiBzZXF1ZW5j
+ZSB3aWxsIGJlIGNoYW5nZWQgYWxvbmcgdGhlc2UgbGluZXM6CgrCoCDCoCBlaWM3NzAwX3B2dF91
+cGRhdGUocHZ0LT5yZWdzICsgUFZUX0VOQSwgUFZUX0VOQV9FTiwgMCk7CsKgIMKgIGVpYzc3MDBf
+cHZ0X3VwZGF0ZShwdnQtPnJlZ3MgKyBQVlRfSU5ULCBQVlRfSU5UX0NMUiwgUFZUX0lOVF9DTFIp
+OwrCoCDCoCByZWFkbChwdnQtPnJlZ3MgKyBQVlRfSU5UKTsKCj4gCj4gWyAuLi4gXQo+ID4gK3N0
+YXRpYyB2b2lkIGVpYzc3MDBfcHZ0X2Rpc2FibGVfcG1fcnVudGltZSh2b2lkICpkYXRhKQo+ID4g
+K3sKPiA+ICsJc3RydWN0IHB2dF9od21vbiAqcHZ0ID0gZGF0YTsKPiA+ICsKPiA+ICsJcG1fcnVu
+dGltZV9kb250X3VzZV9hdXRvc3VzcGVuZChwdnQtPmRldik7Cj4gPiArCXBtX3J1bnRpbWVfZm9y
+Y2Vfc3VzcGVuZChwdnQtPmRldik7Cj4gPiArCj4gPiArCWlmICghSVNfRU5BQkxFRChDT05GSUdf
+UE0pKQo+ID4gKwkJY2xrX2Rpc2FibGVfdW5wcmVwYXJlKHB2dC0+Y2xrKTsKPiA+ICt9Cj4gCj4g
+W1NldmVyaXR5OiBNZWRpdW1dCj4gRG9lcyB0aGlzIGRldmljZSBjbGVhbnVwIHBhdGggbmVlZCBh
+IGNhbGwgdG8gcG1fcnVudGltZV9kaXNhYmxlKCk/Cj4gCj4gSW4gZWljNzcwMF9wdnRfcHJvYmUo
+KSwgcG1fcnVudGltZV9lbmFibGUoKSBpcyBjYWxsZWQsIHdoaWNoIGFsdGVycyB0aGUKPiBQTSBj
+b3JlJ3MgZGlzYWJsZV9kZXB0aCBjb3VudC4gU2luY2UgcG1fcnVudGltZV9kaXNhYmxlKCkgaXMg
+bWlzc2luZyBoZXJlLAo+IGlmIHRoZSBkcml2ZXIgaXMgdW5ib3VuZCBhbmQgbGF0ZXIgcmVib3Vu
+ZCwgdGhlIG5leHQgcG1fcnVudGltZV9lbmFibGUoKQo+IHdpbGwgZW5jb3VudGVyIGFuIHVuYmFs
+YW5jZWQgZGVwdGguCj4gCj4gQ291bGQgdGhpcyB0cmlnZ2VyIGFuICJVbmJhbGFuY2VkIHBtX3J1
+bnRpbWVfZW5hYmxlISIgd2FybmluZyBhbmQgY2F1c2UKPiBpbmNvbnNpc3RlbnQgUE0gc3RhdGUg
+dHJhY2tpbmc/CgpJIGRvbid0IHRoaW5rIHRoaXMgaXMgYW4gYWN0dWFsIGlzc3VlLgoKSSByZS1j
+aGVja2VkIHRoZSBydW50aW1lIFBNIHBhaXJpbmcgaGVyZS4KClRoZSBwcm9iZSBwYXRoIGVuYWJs
+ZXMgcnVudGltZSBQTSB3aXRoIHBtX3J1bnRpbWVfZW5hYmxlKCkuIFRoZSBkZXZpY2UKY2xlYW51
+cCBwYXRoIGNhbGxzIHBtX3J1bnRpbWVfZm9yY2Vfc3VzcGVuZCgpLCBhbmQKcG1fcnVudGltZV9m
+b3JjZV9zdXNwZW5kKCkgYWxyZWFkeSBkaXNhYmxlcyBydW50aW1lIFBNIGludGVybmFsbHk6Cgpp
+bnQgcG1fcnVudGltZV9mb3JjZV9zdXNwZW5kKHN0cnVjdCBkZXZpY2UgKmRldikKewrCoCDCoCAu
+Li4KwqAgwqAgcG1fcnVudGltZV9kaXNhYmxlKGRldik7CsKgIMKgIC4uLgp9CgpUaGlzIGNsZWFu
+dXAgcGF0aCBpbnRlbnRpb25hbGx5IHVzZXMgcG1fcnVudGltZV9mb3JjZV9zdXNwZW5kKCkgcmF0
+aGVyCnRoYW4gYSBzdGFuZGFsb25lIHBtX3J1bnRpbWVfZGlzYWJsZSgpLgoKQSBzdGFuZGFsb25l
+IHBtX3J1bnRpbWVfZGlzYWJsZSgpIG9ubHkgZGlzYWJsZXMgcnVudGltZSBQTS4gSXQgZG9lcyBu
+b3QKZm9yY2UgYW4gUlBNX0FDVElWRSBkZXZpY2UgdGhyb3VnaCB0aGUgZHJpdmVyJ3MgcnVudGlt
+ZV9zdXNwZW5kKCkKY2FsbGJhY2ssIHNvIHRoZSBjbG9jayBjb3VsZCByZW1haW4gZW5hYmxlZCBp
+ZiB0aGUgZHJpdmVyIGlzIHVuYm91bmQKZHVyaW5nIHRoZSBhdXRvc3VzcGVuZCBkZWxheSB3aW5k
+b3cuCgpwbV9ydW50aW1lX2ZvcmNlX3N1c3BlbmQoKSBoYW5kbGVzIHRoYXQgY2FzZSBieSBkaXNh
+YmxpbmcgcnVudGltZSBQTQppbnRlcm5hbGx5IGFuZCwgaWYgdGhlIGRldmljZSBpcyBzdGlsbCBh
+Y3RpdmUsIGludm9raW5nIHRoZSBkcml2ZXIncwpydW50aW1lX3N1c3BlbmQoKSBjYWxsYmFjayBz
+byB0aGUgY2xvY2sgaXMgYWN0dWFsbHkgdHVybmVkIG9mZi4KClRoZXJlZm9yZSwgYWRkaW5nIGFu
+b3RoZXIgZXhwbGljaXQgcG1fcnVudGltZV9kaXNhYmxlKCkgYWZ0ZXIKcG1fcnVudGltZV9mb3Jj
+ZV9zdXNwZW5kKCkgd291bGQgcmVzdWx0IGluIGFuIGV4dHJhIGRpc2FibGVfZGVwdGgKaW5jcmVt
+ZW50IGFuZCBjb3VsZCBsZWF2ZSB0aGUgcnVudGltZSBQTSBzdGF0ZSB1bmJhbGFuY2VkLgoKUGxl
+YXNlIGxldCBtZSBrbm93IGlmIHlvdSB3b3VsZCBwcmVmZXIgYSBkaWZmZXJlbnQgcnVudGltZSBQ
+TSBjbGVhbnVwCmFwcHJvYWNoIGhlcmUuCgpCZXN0IHJlZ2FyZHMsCkh1YW4gSGUK
