@@ -1,187 +1,93 @@
-Received: from mgamail.intel.com (mgamail.intel.com [192.198.163.7])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-pf1-f201.google.com (mail-pf1-f201.google.com [209.85.210.201])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5C3183D7D77
-	for <sashiko-reviews@lists.linux.dev>; Fri,  5 Jun 2026 03:43:02 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=192.198.163.7
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D8272403E93
+	for <sashiko-reviews@lists.linux.dev>; Fri,  5 Jun 2026 06:26:49 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.210.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1780630984; cv=none; b=gu6pmfD9xFTtN18jwY6V7orYOXE4Cx/WGNnivO1kY+Q7GjFwgDbTUVDmyaqwTWbfkPyTrbdOqtRLxHRHbS24Np4h0rmy+m3r5ft996LUlQFpYNZ1B+e3iF+LlneUAu4/KwPJ0inMQG0KBTR1Gw9aQugfElTujl9mzwYAfvV8ZEY=
+	t=1780640810; cv=none; b=eGS07K8yV44vYmW0NAY15+KPab2g9Z7/2+WP4O/+JWL+pfvHCJBiLb6gAVMDivopiRHG/pBKTbT26Yij3p3xnHt3M3vauybWl6l1mwHj5smfoXZ/ING89xbczcBDjPqOmHqijc0yYs8NaxlczjtZ1VUm81oQlbmf/GgxUrjU69c=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1780630984; c=relaxed/simple;
-	bh=OjDcggc+MRX8BCYBkodLwtWzE6eUOjAlCr9aEl5m9Ac=;
-	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=Lf1z/LchBR7Ln/vyJGbOwphnD+XeecfMpxWTR4uCkabW5H0DWDG2UJ4eBEN14Ow+22y6Qs7oQyTJpJD23wS8k4PBnv4mWjX8ou+Yrj5wSVKCk9IJnzl/q2bSgRSXcvqgiileh5o1gL2yGmH3AoIc01BmOMKKZtWQfFVluzaDFso=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linux.intel.com; spf=pass smtp.mailfrom=linux.intel.com; dkim=pass (2048-bit key) header.d=intel.com header.i=@intel.com header.b=GM3mIF/L; arc=none smtp.client-ip=192.198.163.7
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linux.intel.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linux.intel.com
+	s=arc-20240116; t=1780640810; c=relaxed/simple;
+	bh=O96Kd5nCMNC5vhy8bUzXigz/IEAI2pnsxYggVkV7Sfs=;
+	h=Date:In-Reply-To:Mime-Version:References:Message-ID:Subject:From:
+	 To:Cc:Content-Type; b=awqfDsrehc3mwahg7xzPaH/8Ye8pmTTyfK4Gk8jB2ImekVGpvH40qhP2KICxoTU2p+eVKgZ2gkKZ87sefeSlIbKuW055b261FvpwtFHAn9tUIBR8QFH9x4Wi9/KsS7P9gEuFVOqFHDo9G7LV8ekgV7/lNKK7PVA450c78XCqFxY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=google.com; spf=pass smtp.mailfrom=flex--praan.bounces.google.com; dkim=pass (2048-bit key) header.d=google.com header.i=@google.com header.b=Z/WT6d2P; arc=none smtp.client-ip=209.85.210.201
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=google.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=flex--praan.bounces.google.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=intel.com header.i=@intel.com header.b="GM3mIF/L"
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
-  d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
-  t=1780630982; x=1812166982;
-  h=message-id:date:mime-version:subject:to:cc:references:
-   from:in-reply-to:content-transfer-encoding;
-  bh=OjDcggc+MRX8BCYBkodLwtWzE6eUOjAlCr9aEl5m9Ac=;
-  b=GM3mIF/LWUAXvQ/Eef1Mg3hhJjwcQB6oCWn4AHsKAHmzLKcKbRrbZvsc
-   Uuvc3MsMl6/BCpUYwr/MDQhbqG5EsJfzSF/KAF6tbWzu0mw97wSUBsz+S
-   loOHqcO87IQKTSoQxTGKUJm18VYdWlhObDQZReteQ9K1kZgrhK72Vj1YS
-   Jvd9uk+RncXLJln/H8URXu3WkOIVXpz3o0kYUWyIwWrjJiMlH/hArbUAL
-   BGjGmw/B+/cRT+2cP7WEdk75Abl0nauiIv1Ky7wwFBIsPdxqLYkG9AfZL
-   I2iLGFJEn5yDIQLGfgjf5rWbfHlZefxBwkwybqHEmRbRQZspOYTGlLarg
-   A==;
-X-CSE-ConnectionGUID: LBCmF27tTLeyivfP5cng3A==
-X-CSE-MsgGUID: 2mswaZ3vTZmN2Yz+vWhqOw==
-X-IronPort-AV: E=McAfee;i="6800,10657,11807"; a="106907729"
-X-IronPort-AV: E=Sophos;i="6.24,188,1774335600"; 
-   d="scan'208";a="106907729"
-Received: from fmviesa007.fm.intel.com ([10.60.135.147])
-  by fmvoesa101.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 04 Jun 2026 20:43:01 -0700
-X-CSE-ConnectionGUID: CrRkhbMeRE2qGHMpxDDv+Q==
-X-CSE-MsgGUID: PektKz8eTi+zN6fkzp2DLg==
-X-ExtLoop1: 1
-X-IronPort-AV: E=Sophos;i="6.24,188,1774335600"; 
-   d="scan'208";a="241743290"
-Received: from dapengmi-mobl1.ccr.corp.intel.com (HELO [10.124.241.147]) ([10.124.241.147])
-  by fmviesa007-auth.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 04 Jun 2026 20:43:01 -0700
-Message-ID: <7540cfd9-153b-49d7-a5f9-26f83f17f7b1@linux.intel.com>
-Date: Fri, 5 Jun 2026 11:42:58 +0800
+	dkim=pass (2048-bit key) header.d=google.com header.i=@google.com header.b="Z/WT6d2P"
+Received: by mail-pf1-f201.google.com with SMTP id d2e1a72fcca58-8428384f31fso1124324b3a.3
+        for <sashiko-reviews@lists.linux.dev>; Thu, 04 Jun 2026 23:26:49 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=google.com; s=20251104; t=1780640809; x=1781245609; darn=lists.linux.dev;
+        h=cc:to:from:subject:message-id:references:mime-version:in-reply-to
+         :date:from:to:cc:subject:date:message-id:reply-to;
+        bh=khdJqNPKXPEiqKWLMRj6izd0dTEEX7BxQCSIjhtaalo=;
+        b=Z/WT6d2P8n6wKokd5acsYc4Y0PlAoKRKPlw4oV/0d+NkvA/mSIvari3UlD9xNviWal
+         Uy25vS4bux30PVAcO5cdNPCiPINQu8skYGRQoch58OxuL6dHsRiupeMs59FnldzFuR98
+         qO9fLvxbE9+BkHYPG3T6I+QGy5Q7OWM3IAOxsbqdsaXm8BIRTcC3iPUKyyUMoS6X7chM
+         spEYL/qAtlTK5ZQ80hHFnZJUMwafZSEdASejkq9e5+8Dem5I8TPbVOaEuth+9yKOkmhV
+         WSwJPnWw93sxQWZRoN6kYQo5JlvOxZKgOqooygl23F5xnhxG7QL1tFcY54aZQ6hl2zF5
+         cKJg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20251104; t=1780640809; x=1781245609;
+        h=cc:to:from:subject:message-id:references:mime-version:in-reply-to
+         :date:x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+        bh=khdJqNPKXPEiqKWLMRj6izd0dTEEX7BxQCSIjhtaalo=;
+        b=O6WmL8y9kFaxvGz3+zPe6uQNLRt0qWwT/9qUF85GDk9BfFu8mQcgVvuTnu3nzayFKU
+         x4H40bc0RTnSR/ZgfpOD9RvFUqyJwfFZgvo3aZJM4S1ODwj2mE0nPBIGH0fvupwivbgK
+         3RsnGhKS4Ain8lRkzrIZWz5r1HkDt1/r3Eb2r5HG+jEQIVTboiUE91w/6lgW8IffsTAb
+         xT5hakGry/g5bVMWKH1n0eLzXBiNFh4i5RuQvPvlN6rYf9r8A9ye5sGWkYCosG1yprEl
+         5jMvdmJUIUbyh+Dnq3ETHYg1LJ85+QvHR4MM5GwQhmu3JdukEL1tmbNn59IDa7Av5TaU
+         PzMw==
+X-Forwarded-Encrypted: i=1; AFNElJ9gGo8fCldirUIBpcTw4c8Qrcxxp0mo5sK7LRwKu1tNkvC8SXIrNKy+HEaXrtlLezmfjyqy2eDYw0etY4soDAc=@lists.linux.dev
+X-Gm-Message-State: AOJu0Yx7OUMGOMyKjYRT+ZhAYlfcwatmysdVNpg4Zz9ToXxMgZRw6i6a
+	aGxKXr3ch/VMCKwNqXuFsLuYV08e2Q86uTItMfOIwUOfkIL8pGupLJVPz6VytCsAlsNsSXJwpCR
+	ITA==
+X-Received: from pgbda1.prod.google.com ([2002:a05:6a02:2381:b0:c73:bc95:cca8])
+ (user=praan job=prod-delivery.src-stubby-dispatcher) by 2002:a05:6a21:3a94:b0:3aa:f9cb:d438
+ with SMTP id adf61e73a8af0-3b4ccdc2d18mr3060292637.21.1780640808801; Thu, 04
+ Jun 2026 23:26:48 -0700 (PDT)
+Date: Fri,  5 Jun 2026 06:26:47 +0000
+In-Reply-To: <CALzav=fgi_ezr7JV3to=RM-RC7sF_XsEcash_+vp65J-jXnkWQ@mail.gmail.com>
 Precedence: bulk
 X-Mailing-List: sashiko-reviews@lists.linux.dev
 List-Id: <sashiko-reviews.lists.linux.dev>
 List-Subscribe: <mailto:sashiko-reviews+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:sashiko-reviews+unsubscribe@lists.linux.dev>
-MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 8/8] perf/core: Fix kernel register info leak via hardware
- skid
-To: sashiko-reviews@lists.linux.dev
-Cc: linux-perf-users@vger.kernel.org
-References: <20260605011136.2043393-9-dapeng1.mi@linux.intel.com>
- <20260605013848.317911F00893@smtp.kernel.org>
-Content-Language: en-US
-From: "Mi, Dapeng" <dapeng1.mi@linux.intel.com>
-In-Reply-To: <20260605013848.317911F00893@smtp.kernel.org>
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8bit
+Mime-Version: 1.0
+References: <CALzav=fgi_ezr7JV3to=RM-RC7sF_XsEcash_+vp65J-jXnkWQ@mail.gmail.com>
+X-Mailer: git-send-email 2.54.0.1032.g2f8565e1d1-goog
+Message-ID: <20260605062647.4025725-1-praan@google.com>
+Subject: Re: [PATCH v6 02/12] PCI: liveupdate: Track outgoing preserved PCI devices
+From: Pranjal Shrivastava <praan@google.com>
+To: dmatlack@google.com
+Cc: linux-pci@vger.kernel.org, sashiko-reviews@lists.linux.dev
+Content-Type: text/plain; charset="UTF-8"
 
+On Fri, May 22, 2026 at 2:28 PM David Matlack <dmatlack@google.com> wrote:
+>
+> Gemini found 3 files where pci_dev_put() is called under a spinlock:
+>
+>  - drivers/net/ethernet/microsoft/mana/gdma_main.c (mana_driver_exit())
+>  - arch/x86/pci/i386.c (pcibios_fw_addr_list_del())
+>  - arch/powerpc/platforms/pasemi/dma_lib.c (pasemi_dma_init())
+>
+> OTOH, pci_release_dev() does not seem atomic-safe. On s390, it can
+> take the zpci_add_remove_lock mutex via pcibios_release_device(). And
+> on all architectures it can call kernfs_remove() via pci_bus_put(),
+> which takes multiple semaphores.
 
-On 6/5/2026 9:38 AM, sashiko-bot@kernel.org wrote:
-> Thank you for your contribution! Sashiko AI review found 2 potential issue(s) to consider:
->
-> New issues:
-> - [High] Valid hardware-captured user-space register samples from precise events (e.g., Intel PEBS) are incorrectly dropped as sensitive kernel data when the PMU interrupt (PMI) skids into kernel mode.
->
-> Pre-existing issues:
-> - [High] Hardware PMI skid still leaks kernel IPs and callchains to unprivileged users when exclude_kernel=1.
-> --
->
-> commit 8a7df272a8b8797c3525f28de5158f11f610df4d
-> Author: Dapeng Mi <dapeng1.mi@linux.intel.com>
->
-> perf/core: Fix kernel register info leak via hardware skid
->     
-> This patch addresses a security vulnerability where hardware skid can
-> cause a PMI to trigger in kernel space, leaking kernel register data
-> to user space via PERF_SAMPLE_REGS_INTR. It fixes this by dropping
-> sampled register data if the event has exclude_kernel set but the CPU
-> is in kernel mode.
->     
-> Link: https://lore.kernel.org/all/20260529085613.CCAFB1F00893@smtp.kernel.org/
->
->> diff --git a/kernel/events/core.c b/kernel/events/core.c
->> index 7935d5663944e..b7326bc3acd00 100644
->> --- a/kernel/events/core.c
->> +++ b/kernel/events/core.c
->> @@ -7800,10 +7800,21 @@ static void perf_sample_regs_user(struct perf_regs *regs_user,
->>  }
->>  
->>  static void perf_sample_regs_intr(struct perf_regs *regs_intr,
->> -				  struct pt_regs *regs)
->> +				  struct pt_regs *regs,
->> +				  bool exclude_kernel)
->>  {
->> -	regs_intr->regs = regs;
->> -	regs_intr->abi  = perf_reg_abi(current);
->> +	/*
->> +	 * Hardware skid can lead to PMI is delivered after
->> +	 * the CPU has already entered kernel mode. In that case,
->> +	 * user-space sampling must not expose kernel register state.
->> +	 */
->> +	if (exclude_kernel && !user_mode(regs)) {
-> [Severity: High]
-> Will this incorrectly drop valid hardware-captured user-space register
-> samples from precise events like Intel PEBS?
->
-> For precise events, the PMU driver populates a temporary pt_regs
-> with exact user-space registers captured by the hardware. Because PEBS
-> does not capture segment registers, the driver copies them from the
-> delayed PMI interrupt context:
->
-> arch/x86/events/intel/ds.c:setup_pebs_fixed_sample_data() {
->     *regs = *iregs;
->     ...
-> }
->
-> If the PMI skids and is delivered after the CPU enters kernel space,
-> iregs->cs reflects kernel mode, causing user_mode(regs) to evaluate
-> to false. This would result in these safe, hardware-captured user
-> registers being zeroed out here, which seems like it might break
-> unprivileged precise profiling.
+AFAICT, Sashiko seems to be wrong here.. pci_dev_put calls put_device()
+The put_device() doc clearly mentions might_sleep [1] to warns that 
+dropping the final reference may trigger a sleepable cleanup.
 
-Yes, it's true. But since PEBS has no way to sample CS register and the
-value of CS register can only come from the data of PMI. It seems no better
-way except dropping all these register data from PEBS records. 
+Any existing code calling put_device in atomic context is in violation.
+put_device / release are *expected* to sleep.
 
+This patch doesn't introduce any sleep-in-atomic issues.
 
->
->> +		regs_intr->abi = PERF_SAMPLE_REGS_ABI_NONE;
->> +		regs_intr->regs = NULL;
->> +	} else {
->> +		regs_intr->regs = regs;
->> +		regs_intr->abi = perf_reg_abi(current);
->> +	}
->>  }
-> [ ... ]
->
->> @@ -8694,7 +8705,8 @@ void perf_prepare_sample(struct perf_sample_data *data,
->>  		/* regs dump ABI info */
->>  		int size = sizeof(u64);
->>  
->> -		perf_sample_regs_intr(&data->regs_intr, regs);
->> +		perf_sample_regs_intr(&data->regs_intr, regs,
->> +				      event->attr.exclude_kernel);
-> [Severity: High]
-> This is a pre-existing issue, but does the hardware PMI skid still leak
-> kernel IPs and callchains to unprivileged users when exclude_kernel=1?
->
-> While this patch correctly zeroes out the register state to prevent
-> leaking the full CPU register context, it appears the same privilege
-> boundaries are not applied to PERF_SAMPLE_IP and PERF_SAMPLE_CALLCHAIN.
->
-> In perf_prepare_sample(), the kernel IP is unconditionally extracted
-> from regs if the PMI skid caught the CPU in kernel mode:
->
-> kernel/events/core.c:perf_prepare_sample() {
->     if (filtered_sample_type & PERF_SAMPLE_IP) {
->         data->ip = perf_instruction_pointer(event, regs);
->         ...
->     }
-> }
->
-> Similarly, unprivileged users can set exclude_kernel=1 and leave
-> exclude_callchain_kernel=0. On a skid, !user_mode(regs) evaluates to
-> true, causing perf_callchain() to unwind and expose the kernel stack
-> trace.
->
-> Could this allow a deterministic KASLR bypass, and should it be
-> addressed alongside the register clearing?
+Thanks,
+Praan
 
-Hmm, make sense. Need extra changes to prevent these 2 leakages.
-
-Thanks.
-
-
->
->>  
->>  		if (data->regs_intr.regs) {
->>  			u64 mask = event->attr.sample_regs_intr;
+[1] https://elixir.bootlin.com/linux/v7.1-rc6/source/drivers/base/core.c#L3812
