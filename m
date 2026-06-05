@@ -1,160 +1,133 @@
-Received: from mail-dl1-f41.google.com (mail-dl1-f41.google.com [74.125.82.41])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D44D8388E49
-	for <sashiko-reviews@lists.linux.dev>; Fri,  5 Jun 2026 18:40:05 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=pass smtp.client-ip=74.125.82.41
-ARC-Seal:i=2; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1780684807; cv=pass; b=UNM4gq5ySH7I2NHeB0Al/Fx4ijvn/oxjG6P0UQZSvxDiLQ/VMu/6Qolyqj3Yj4fqsBeVm0nbHKVIoVewFUVTT0sW2BkKrLSiS8S4194pXCdkimsnbLaLyq+Y+c8Cfmfx9j5SfEjTdTrthkIBoMmiaKvIQIXunY4OAOjSPX51zDg=
-ARC-Message-Signature:i=2; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1780684807; c=relaxed/simple;
-	bh=ylp/WG2OsDo7VxpUtN0UDtDOBb9IQxlolEx2IztCpG8=;
-	h=From:In-Reply-To:References:MIME-Version:Date:Message-ID:Subject:
-	 To:Cc:Content-Type; b=D0f6l94/Z6Wo5QGawgtxJqUAX/g2VY8H1hlfYZONQnRt+8+WyAqWjn5Tw/Omo7J96d9vmXVkU5pqhOWFiXA551SaqgtC+HbDYPKZbvoiFiSV+czR7N0sK4bL0iFmKuk/UP65m4+17O5/lrDJ+OO8da0iyoKYo0qWeXegQqsp70s=
-ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=google.com; spf=pass smtp.mailfrom=google.com; dkim=pass (2048-bit key) header.d=google.com header.i=@google.com header.b=Ldb3Pc3V; arc=pass smtp.client-ip=74.125.82.41
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=google.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=google.com
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 04F3320FA81;
+	Fri,  5 Jun 2026 20:24:59 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
+ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
+	t=1780691101; cv=none; b=hRra0rWAPMspKp+bVLGLp5+ltU71q1jX1dr/mARmdV3qNbi4qzpabV/VBOS/QyyxvMZV+4AteH8pjWkmPcFrtJv8rX3jINXyV6r+TvCmHlT3TdtIi91X3WVdSrR7R2MPkWxCLGFfbyriQbzV7pXIWFvm0CTvXVYla8d8yZTbge4=
+ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
+	s=arc-20240116; t=1780691101; c=relaxed/simple;
+	bh=nsBm8BUJvKZZNT7WZtRlEi0j3WlsL7RFLF1qhu7sDVg=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=Yg1KeG+1DJc72YMmGNcKUJAjgvO6zOa/oItgvcPTzNZT0dJH8Ohcm4U4klLv+HPelXNvOKL8e1F/Me/qXeZZGSJExjaLPpLG1K64GYL/wSlhB8BWgZpDDi/um/YEC6nfwMHWFDyfCgEphBvTxCHKzclFCKAgM/eI/CKO9vN29OY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=GMk2bsim; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=google.com header.i=@google.com header.b="Ldb3Pc3V"
-Received: by mail-dl1-f41.google.com with SMTP id a92af1059eb24-13809ed8fbeso1480119c88.0
-        for <sashiko-reviews@lists.linux.dev>; Fri, 05 Jun 2026 11:40:05 -0700 (PDT)
-ARC-Seal: i=1; a=rsa-sha256; t=1780684805; cv=none;
-        d=google.com; s=arc-20240605;
-        b=Z7lpKmy55nJqw1RBkGnL12z0L9qoa/N0U6cJQOoXXsd68Qbe3VGZrF45da2+wr2Drq
-         LJ5PuI3/S3pNFFQ6gX42E5mhGqcCoIVgxJClTkUEDkTP7S/ycXzam01bVg1TFVklT1qW
-         YxNOUWi+FICvQR7x80lpFJkr1Jo5NTnAADNmAE8LMoui/bteflYplWbvzKTPNjJkQ4Om
-         Fh+im30MJyLwUNZMxfZQkCEp8NuRjylXYR/+8TvNCXS5Z8e8eo0jeIX/GGdWHRYXjsNu
-         ImN+gsUGIeIxjNzFQz4o3iXCbJ19gOLCkNEoS3a0760p2vzAOhpsQ+0FYFg5leewNfRE
-         6yYg==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com; s=arc-20240605;
-        h=cc:to:subject:message-id:date:mime-version:references:in-reply-to
-         :from:dkim-signature;
-        bh=ylp/WG2OsDo7VxpUtN0UDtDOBb9IQxlolEx2IztCpG8=;
-        fh=YrPbP0BUDxXsWEKBgSpVC34GsR1C7suTxJB0UnYoVvU=;
-        b=CqzHY8cz1/mlRCJS+yc/PUb4WysLnj88dmAIR/cr6Rw1Mzo55b8W6oZ3pul3ifBglP
-         SDTqqIEkbUuQGV474nNY7xxnp2q9t3JZc56RoIZnQgTCR4w9aWVHcoiV9t5HiHYtEE87
-         fH7xAchqtSDb6ZHgQ4KiIIEsT9QvFXzDUXd0LmptsYyD8ipR5sqRQ2UWRMT8aPTR4o8a
-         YDHzf/AjBEhrgurxGAQh91vlW4FhQG6IjiriTckXFXiDuO0hG4uwBrVJsJK9WvFh0HJQ
-         GOSC4N3kS3Ot/kVBbAHMHAeKkfsxEzLD/1LJhd4e5ldZ6IHqxOzvXTQ5mpG8duh+PkI8
-         ifAg==;
-        darn=lists.linux.dev
-ARC-Authentication-Results: i=1; mx.google.com; arc=none
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=google.com; s=20251104; t=1780684805; x=1781289605; darn=lists.linux.dev;
-        h=cc:to:subject:message-id:date:mime-version:references:in-reply-to
-         :from:from:to:cc:subject:date:message-id:reply-to;
-        bh=ylp/WG2OsDo7VxpUtN0UDtDOBb9IQxlolEx2IztCpG8=;
-        b=Ldb3Pc3VNBzNCIpn99M6Nfy5BKj7OJubfcLLZD5dZBsEcBBUFqG49/d8Q8CkyDZv7Q
-         kbaPLs+OXG30A8c6lpUa6KVegg1kP6vZJNGBnroZAlwuAL46f9DvMe/pdzHlypT0/ZmD
-         /rOpIdJDXSesoAZ/2rAixSNcCDFv1nM1ebeeeDsH5Lr2yGxG+u0sGHUa9jIfe8ORwONq
-         rymKq5OcOaHRNn+cbrl5AB68sbZqMLB7bnwZ0ykt+F+zVXsdvqd2o7ouqkPeFgqPw5gu
-         uUSrwnimwkhQwa3MwbqYp8miXzg4Osz2Hck+gj+a7VsYMfmFgCGN9z7vOu0RsRhqE00m
-         DfRg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20251104; t=1780684805; x=1781289605;
-        h=cc:to:subject:message-id:date:mime-version:references:in-reply-to
-         :from:x-gm-gg:x-gm-message-state:from:to:cc:subject:date:message-id
-         :reply-to;
-        bh=ylp/WG2OsDo7VxpUtN0UDtDOBb9IQxlolEx2IztCpG8=;
-        b=AL2Y0goet5mEV9yZ+ooixXKvU9AhLCR302o+juv6g3RfhJXRoWotK3CpRucKq0wzOg
-         VnvfzW99c01A1u1EUTopt4LXg+S6NdC7wdZk3BH7loSwS98p75GU+u9tjjLZEIuF8SrC
-         W93qWQPeyOPKM9e4UXp+u90BjXILeb1la5a9vqFmhmVX9irMifZ8r3nC075O/bYDb6pM
-         g9ulRy6C9a7V/kO0jAfFCT54UFwrj3xxoaTS5ftev+OiIRD1iKbjdUAkeEEGJ+KABwIG
-         V6rX1qg2jF+5SWp7G+ANrnSD0bRWjytyeAdrlHIxjS+YtfIPYX0o2gfhYmFeUPuDhVzW
-         68Nw==
-X-Gm-Message-State: AOJu0YzqGnuUom0nH4xwwTYrGL6xARi9GkEsHFWOBXlbEPpbRk2rw7uw
-	wdskSCaTTczqZhYvdNkgDPmBBs6Yrt0tERkxXb3ANbXdMYVMIoAGG4sqO2CPs2Av/lCMafUk/aU
-	IRtR4Rzo5vwvxkShhETqj5ghXgL+/d+wZAtelUW6M
-X-Gm-Gg: Acq92OEnX06HBYfva8LncA8dko+1U/7NPvS687YzIzQTF74MiYiUEkFW97g/J56GNvq
-	VmMRNj9g7RW4FefOpLPe+p627cVaG4c/0e9mi4bP//q0ixXarqH//mn1/yPtvdNksiGqaxnYsQW
-	MRjdwfM0C5Jy6AygjjvQYOoSRFkajKQxJHZ0w9+3ZErlLCwKgkOOLHy23qEKw4//x1wXPeg3UeG
-	lLlo4f54CPqGD+uySozxRsPOnwNacd0oZynB9eQVAururrmEU9ZdsAXwC4jeElClfyOu7kifeAq
-	i9xTrshnkvfIsn/mTe7N2SiAije61Rso38mQpI5Bxf82xaj0xo5LKKkr1hvqsiP0iPM+eAaYuhA
-	qpOwO
-X-Received: by 2002:a05:701b:2704:b0:135:e312:47a4 with SMTP id
- a92af1059eb24-138066874afmr1383213c88.9.1780684804398; Fri, 05 Jun 2026
- 11:40:04 -0700 (PDT)
-Received: from 176938342045 named unknown by gmailapi.google.com with
- HTTPREST; Fri, 5 Jun 2026 11:40:03 -0700
-Received: from 176938342045 named unknown by gmailapi.google.com with
- HTTPREST; Fri, 5 Jun 2026 11:40:03 -0700
-From: Ackerley Tng <ackerleytng@google.com>
-In-Reply-To: <44o2z5j553adpapnyequmk2t6cukor2wjm5urujhrnqhufogh7@jbsolz5b4i2b>
-References: <20260522-gmem-inplace-conversion-v7-21-2f0fae496530@google.com>
- <20260523010752.CA7AF1F000E9@smtp.kernel.org> <CAEvNRgEVC=fFuKVgZYvWyZD7t_zvUZihFG8hrACjvtkD5cwugw@mail.gmail.com>
- <vawib73p6wsjdihwz636soxorvp74v6zyqona2a2nnpuc673lt@jvlhihgqrs6t> <44o2z5j553adpapnyequmk2t6cukor2wjm5urujhrnqhufogh7@jbsolz5b4i2b>
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="GMk2bsim"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 637E11F00893;
+	Fri,  5 Jun 2026 20:24:59 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=kernel.org;
+	s=k20260515; t=1780691099;
+	bh=AawfnxPkBu+nR18PFrwVItmZPaX3o7vFcdq98RO2TxI=;
+	h=Date:From:To:Cc:Subject:References:In-Reply-To;
+	b=GMk2bsimU+Mb1HFIU6mQvPXsEs8zIOlAwzfX5LYbZe0sM7Til3WaUdFcMAO2A+fvX
+	 axiiea11D1JLKzZZ1w9ByNOcmJSz1gAN283rmiSIwgmBbzo6Lip2/lCBcewI9rEjVU
+	 Cz5VMonxKOcCruXzurk80jmFIVuLWozz3yrmsH+vGjPTyNeyXCX873KjCK9KlPVwBN
+	 O8QSbj+UHwe781TRcknt1PkxrEz4zeGMvjQXDSgS/EtaUUgK7DOmky0OZwzUBX68yO
+	 q1s950gU2OYh2EUt+qeB4XBROhCS4l5YbI7Ek6bFuhlU70lEQN6d+sbNnyAz1i3BSV
+	 mCleqJVjdUrog==
+Date: Fri, 5 Jun 2026 15:24:58 -0500
+From: Rob Herring <robh@kernel.org>
+To: Vladimir Oltean <vladimir.oltean@nxp.com>
+Cc: Conor Dooley <conor@kernel.org>, sashiko-reviews@lists.linux.dev,
+	vkoul@kernel.org, neil.armstrong@linaro.org, conor+dt@kernel.org,
+	linux-phy@lists.infradead.org, devicetree@vger.kernel.org,
+	olteanv@gmail.com
+Subject: Re: [PATCH v3 phy-next 14/16] dt-bindings: phy: lynx-10g: initial
+ document
+Message-ID: <20260605202458.GA6304-robh@kernel.org>
+References: <20260603132059.503527-1-vladimir.oltean@nxp.com>
+ <20260603133350.9FA271F00893@smtp.kernel.org>
+ <20260603133825.l544tnmtn2pqfrzh@skbuf>
+ <20260603-numerate-unbundle-ef259832006d@spud>
+ <20260605083737.yryq2a763zhnkjyq@skbuf>
 Precedence: bulk
 X-Mailing-List: sashiko-reviews@lists.linux.dev
 List-Id: <sashiko-reviews.lists.linux.dev>
 List-Subscribe: <mailto:sashiko-reviews+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:sashiko-reviews+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Date: Fri, 5 Jun 2026 11:40:03 -0700
-X-Gm-Features: AVHnY4J1_4p8mu5YSy0mKWuQG8dcjs_GQ0Bde6jh1xabblqeid9ouo3IPdVn-Ck
-Message-ID: <CAEvNRgFkfqirL6hZDk5eugeaf4u7J_=a0xj6RdE=QnG5T6N29A@mail.gmail.com>
-Subject: Re: [PATCH v7 21/42] KVM: TDX: Make source page optional for KVM_TDX_INIT_MEM_REGION
-To: Michael Roth <michael.roth@amd.com>
-Cc: sashiko-reviews@lists.linux.dev, 
-	Ackerley Tng via B4 Relay <devnull+ackerleytng.google.com@kernel.org>, kvm@vger.kernel.org
-Content-Type: text/plain; charset="UTF-8"
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <20260605083737.yryq2a763zhnkjyq@skbuf>
 
-Michael Roth <michael.roth@amd.com> writes:
+On Fri, Jun 05, 2026 at 11:37:37AM +0300, Vladimir Oltean wrote:
+> On Wed, Jun 03, 2026 at 04:50:39PM +0100, Conor Dooley wrote:
+> > On Wed, Jun 03, 2026 at 04:38:25PM +0300, Vladimir Oltean wrote:
+> > > On Wed, Jun 03, 2026 at 01:33:50PM +0000, sashiko-bot@kernel.org wrote:
+> > > > Thank you for your contribution! Sashiko AI review found 1 potential issue(s) to consider:
+> > > > - [Medium] The `if` condition for enforcing the `big-endian` property incorrectly matches the `compatible` string array directly against an `enum`, which will always evaluate to false and cause the requirement to silently fail.
+> > > > --
+> > > > 
+> > > > commit 8bd3982a89722b20a3686e42d4ab3b9f0711ae11
+> > > > Author: Vladimir Oltean <vladimir.oltean@nxp.com>
+> > > > 
+> > > > dt-bindings: phy: lynx-10g: initial document
+> > > > 
+> > > > This commit adds the schema for the 10G Lynx SerDes used on most QorIQ and
+> > > > Layerscape SoCs. It defines the valid compatible strings, PHY cell requirements,
+> > > > and enforces SoC-specific constraints such as lane counts and endianness.
+> > > > 
+> > > > > diff --git a/Documentation/devicetree/bindings/phy/fsl,lynx-10g.yaml b/Documentation/devicetree/bindings/phy/fsl,lynx-10g.yaml
+> > > > > new file mode 100644
+> > > > > index 0000000000000..8cf6027a75b91
+> > > > > --- /dev/null
+> > > > > +++ b/Documentation/devicetree/bindings/phy/fsl,lynx-10g.yaml
+> > > > > +  - if:
+> > > > > +      properties:
+> > > > > +        compatible:
+> > > > > +          enum:
+> > > > > +            - fsl,ls1046a-serdes1
+> > > > > +            - fsl,ls1046a-serdes2
+> > > > 
+> > > > [Severity: Medium]
+> > > > Does this conditional correctly enforce the big-endian property? 
+> > > > 
+> > > > Since the compatible property is a string array in device trees, evaluating it
+> > > > directly against an enum always returns false. Should this use "contains:" 
+> > > > with the enum, similar to the preceding if block, so dt_binding_check 
+> > > > correctly enforces the requirement?
+> > > 
+> > > The tests I did suggest that it does enforce the requirement.
+> > 
+> > Yeah, sashiko just doesn't understand how this works without "contains".
+> > "contains" is only actually required for validation purposes if there's
+> > fallback compatibles and you're trying to get a partial match.
 
->
-> [...snip...]
->
->> > > When KVM_TDX_INIT_MEM_REGION is called with a NULL source_addr,
->> > > __kvm_gmem_populate() attempts an in-place conversion. If the target
->> > > guest_memfd folio is unpopulated, __kvm_gmem_get_pfn() allocates a new folio
->> > > using GFP_HIGHUSER, which lacks __GFP_ZERO.
->>
->> For in-place conversion, if src is NULL, it's generally because src *is*
->> the target and it makes no sense to copy the page to itself because
->> userspace already initialized it, which means userspace should have already
->> trigged the uptodate flag to be set via kvm_gmem_fault_user_mapping().
->>
->> So maybe to address the malicious case that Sashiko seems to be worried
->> about (where VMM purposely doesn't touch/init the memory to try to leak data
->> into the guest), we just need to error out if: !src && !folio_uptodate(folio)?
->
-> Of course immediately after posting this I think of exceptional cases, like
-> SEV-SNP can set up pre-zero'd private guest pages via this path, where
-> userspace wouldn't necessarily have done any touching/init of the page
-> in advance.
->
+Not exactly. The missing part is the schema is fixed up so the above is 
+converted to:
 
-Are you referring to KVM_SEV_SNP_PAGE_TYPE_ZERO?
+compatible:
+  minItems: 1
+  maxItems: 1
+  items:
+     - enum:
+         - fsl,ls1046a-serdes1
+         - fsl,ls1046a-serdes2
 
-> BUT.... in that case it would be okay, because the kernel knows
-> everything would get zero'd.
->
-> So maybe the post-populate callbacks need to be the ones that would need
-> to implement these checks, or some API to that gmem can do it on their
-> behalf...
->
-> So maybe your proposed patch is the more straightforward fix for now.
->
+If we didn't do that, the above is not what we want here, but 'contains' 
+is as that's the loosest condition and works regardless of how many 
+entries compatible has. That's what you should do here.
 
-Is KVM_SEV_SNP_PAGE_TYPE_ZERO expected to be used for a large number
-pages? If not, I think we can defer this to a future optimization, like
-in snp_launch_update(), if KVM_SEV_SNP_PAGE_TYPE_ZERO, pass a flag
-through to __kvm_gmem_get_pfn() to skip zeroing?
+This fixup used to be a lot more widespread when we used the DT YAML 
+format and everything was decoded to an an array or matrix. The fixups 
+saved a lot of boilerplate. That's less true now, so maybe getting rid 
+of more fixups like this case would be better.
 
-For all other page types, __kvm_gmem_get_pfn() MUST zero to avoid the
-issue Sashiko pointed out, right?
+> Yeah, I have no clear understanding of the json-schema syntax either, I
+> just copied from another place where it was clear that the intention was
+> to have multiple matches on nodes having a single compatible string each.
+> 
+> But maybe it would be good from DT bindings maintainers to teach LLMs
+> where they get things wrong in this repo?
+> https://github.com/masoncl/review-prompts/blob/main/kernel/subsystem/dt-bindings.md
 
-Currently, kvm_gmem_fault_user_mapping() will zero, and then userspace
-presumably writes the entire page. Can't avoid zeroing to avoid leaking
-uninitialized memory.
+Yes, there's a few things it consistently gets wrong. I've looked at 
+this and I can go write more instructions (and fix some things that seem 
+wrong), but how do I know if it really works? First, I'd be testing with 
+a different LLM as that's what I have access to. Second, how do I know 
+if no warning is just the indeterminate nature of LLMs? What's really 
+needed is for sashiko to incorporate feedback like any other developer. 
+Otherwise, it's going to be like some certain reviewers we've banned.
 
-To avoid that zeroing, I guess there's the future guest_memfd write()
-syscall too, userspace can write() the entire page - write in the kernel
-can avoid zeroing since it knows which parts of the page was written and
-set uptodate. Then, kvm_gmem_fault_user_mapping() won't zero since the
-page is uptodate, and populate will not zero since it was also uptodate.
-
-> -Mike
->
->>
->> [...snip...]
->>
+Rob
