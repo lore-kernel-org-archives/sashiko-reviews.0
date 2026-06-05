@@ -1,196 +1,104 @@
-Received: from mail-pj1-f46.google.com (mail-pj1-f46.google.com [209.85.216.46])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BCE8A4192E5
-	for <sashiko-reviews@lists.linux.dev>; Fri,  5 Jun 2026 15:16:09 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.216.46
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 36C942F7EE4
+	for <sashiko-reviews@lists.linux.dev>; Fri,  5 Jun 2026 15:33:29 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1780672572; cv=none; b=pss66irTSyN2G7+m509Ilonjro8Y+XTgFuU5ZfECjL8zNGL0lcEa7GkL1g5dZSDXectHulizfksZsO8szSgBx7763RuThlB9d2GUo1cdHjRfVyO9SXobgVWINgz/acxPdnpJ12SvRq6Rv1iTgGIQC+7tium6MUwUG1NfCzJCYBM=
+	t=1780673611; cv=none; b=KDBwp97cabWFpX9Nh9A6hJhjzKBay9fdzffNBZl8x3mJq6EmR2Z+YQqPXRq4coeT2WSDVmRrIn6Cilr0uOLIC2uKOqWLndB/xObTCfNjgHIKnvgkb7TZKneEN0V68GP9iE/JmNbV92UxWn1PizW+yE4SAni7zxoJ1Us93osS9FY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1780672572; c=relaxed/simple;
-	bh=aShNvsl9/UV6Crwi+FiPnYS1KsTUHaoROsqg2c9hrKo=;
-	h=Content-Type:Mime-Version:Subject:From:In-Reply-To:Date:Cc:
-	 Message-Id:References:To; b=sM7wXrcsQHwgHJ9QUcdemLdNM8AarGP3AXebP7PawEAPHai/ZLYcZcUpPehjq9ywD7iyUsUz0mOxJMIQqDzGLlF4dQUFs0g/JEigHgVq5U7loTHp/CV5cVeVCUHCl3a39+KvE7hMsVLMGdMFVDSIvnkfpRlKiGdaFcU7gqs/IWw=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=bytedance.com; spf=pass smtp.mailfrom=bytedance.com; dkim=pass (2048-bit key) header.d=bytedance.com header.i=@bytedance.com header.b=izQfjSFf; arc=none smtp.client-ip=209.85.216.46
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=bytedance.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=bytedance.com
+	s=arc-20240116; t=1780673611; c=relaxed/simple;
+	bh=pe0rmx+cxv9y62/iOkR1NUb7COuXxk0zlNl1qRN4sF4=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=tkWcFINM5aLpvggJ66W8dNZj5p/s3+68Hl4X9BO2b+gXKyPqBDERkqP1I8n5XlEatP/VQwBILzjSwEDFjDugcPFAyh4CmomLiNuiqecu6xEWGetyyc5mc/2x/uVCytysJCfvV7hZ7JVMgicaQ5wUOK4Q1OCeGHmbYtLftgDocxA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=Sarze8Ca; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=bytedance.com header.i=@bytedance.com header.b="izQfjSFf"
-Received: by mail-pj1-f46.google.com with SMTP id 98e67ed59e1d1-36ba285e98bso1976348a91.2
-        for <sashiko-reviews@lists.linux.dev>; Fri, 05 Jun 2026 08:16:09 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=bytedance.com; s=google; t=1780672569; x=1781277369; darn=lists.linux.dev;
-        h=to:references:message-id:content-transfer-encoding:cc:date
-         :in-reply-to:from:subject:mime-version:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=RIWsKvi/6lQbiJxe71BS27OCJvhTSW9AzUP/bpE81+Y=;
-        b=izQfjSFfhqOYk5DCP6Drau77YzA5337/35qm3MnSUPMVpmhPnKJVlM8lwT98bCRRWo
-         dlh3YF6r3B3G8mvE+n+06oEpD4cfIGygGOsA16kOG4jRlC0TFPnxmqs+g4bhjMQr9S8I
-         rVXK0W1aKjrk2Q+BDuaue+99fZYehikSYcAzE/3Gv6er7ac0J0Pp2cb8oUh8wVp4oBDg
-         rWFEeXLhmfLDw+EFgpn70YrPugLRoXOQZo66LhB9wth9XeH6XfVlSce4WlKSPeUVNVAo
-         Xh9cM9SXunY2UKOZZ0qqKNzguuzTPzUtDzPxb550fu7sLyVvU9qsLfzAuT1nSwdy5as2
-         V5uA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20251104; t=1780672569; x=1781277369;
-        h=to:references:message-id:content-transfer-encoding:cc:date
-         :in-reply-to:from:subject:mime-version:x-gm-gg:x-gm-message-state
-         :from:to:cc:subject:date:message-id:reply-to;
-        bh=RIWsKvi/6lQbiJxe71BS27OCJvhTSW9AzUP/bpE81+Y=;
-        b=iFNed2wusRHrnynklWHzYZPObhDWZfUGllVPtq9cDSv2g1I3Kps1+0g8lhKQW3yGB2
-         I7BehQ2D6dw01m/DPKUEXlfC4aspI3Z9Ow2lAPl5I0eTRsbpf+dqIZYiNBAYnWIzUlYp
-         9kFAGzvyi8YYs0TUXowIcUn8DnbMzpQBaGiNFxhPWJpchqTpvmVuHKMh/DmJYQHBIWH9
-         wp89Hcf5Zfz8/ys/LnV1zuVPXjd9KAdkO7cIAZ+IqDG2NYWbHIJd6U7i2UovdbkrKtrC
-         /lItEhB6gaHfHDgBqmS6akvox/zgAVgumsAABcXAjDYtcTjXbML3Zou4fchrdczUOGlX
-         8U8Q==
-X-Forwarded-Encrypted: i=1; AFNElJ9X/Q/+j7RTSywFTAW7bh4Rf6Z1fsP9MRx9Y2p7Qalwh+YoiIJmFhRawNRsndyk6IZZedVcL61QjkrlPndXj3w=@lists.linux.dev
-X-Gm-Message-State: AOJu0YxC+ZMFe20k6BEXG7IoCkJoBaR6sGRLpWM8eqNZIGOx2acb+SjO
-	N55M5Zw4+tf9HTCRXl8EYmM4LKfxAP2xNQF05NKW8WGiH3yqglwyNeRoyoR7izsrv6A=
-X-Gm-Gg: Acq92OFpDZUGJ6EpyaMuKnUsLDl3ddjK8a1Ys/RUPXBu9slQlvaHcJH8oPefRwgI4F+
-	InzNmxHBTA3faZqGVgyw3/J4c1rLe5YCnHfPODbTioBxKE+Sx8b6oRxI48XiwSu5sxDJBEdwCsO
-	ubAokLofRaVQair7irzwBu5mW9z1almhfV7URUYYWd0wgnuXXYOPyeFIkXVi7HqZ0tb5F0FXI6t
-	239Ht1aqBoHpKx/yj2/JgCgMa5zOocxTAUKXHvl209qCECoDJULHliMeIMg/fYjESv52NZylMzb
-	7RvL3kSo7q4o4FHI1nN3O7Pl2tYp/vvqpB758elbgWHCXkVhEeWvqeX2cuE82LS1m9sDWk1ku1h
-	GwLU8a4HmoM0KfrZZEgexmqK7ieKPmw2FCYnrq6SIgvvRa2fIH7BLdXNjr8vDsNsjUcvk40d+B8
-	fvGHczWSAyo+pcz3lTA42QUd0A8YvONpJETTTQUbHK7QSoGpLoQJ0i+ZWupaHrGVs=
-X-Received: by 2002:a17:90b:3dd0:b0:36b:8873:d96d with SMTP id 98e67ed59e1d1-370ef3e4eb0mr4796160a91.11.1780672568701;
-        Fri, 05 Jun 2026 08:16:08 -0700 (PDT)
-Received: from smtpclient.apple ([139.177.225.251])
-        by smtp.gmail.com with ESMTPSA id 98e67ed59e1d1-36f6dba82c6sm6695319a91.13.2026.06.05.08.16.05
-        (version=TLS1_2 cipher=ECDHE-ECDSA-AES128-GCM-SHA256 bits=128/128);
-        Fri, 05 Jun 2026 08:16:08 -0700 (PDT)
-Content-Type: text/plain;
-	charset=us-ascii
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="Sarze8Ca"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 62FAB1F00893;
+	Fri,  5 Jun 2026 15:33:28 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=kernel.org;
+	s=k20260515; t=1780673608;
+	bh=Mbdmq4Leb+ZwNWt2t0EiTXdInl4X5ELk6gS+BDi40i8=;
+	h=Date:From:To:Cc:Subject:References:In-Reply-To;
+	b=Sarze8CaQXIeUh0LxG+LNjaZOAkFNtKMtCGAUXKYWRLQog2MHPBW3mcMuD6wzHjAx
+	 GKBmtxTTlomZ8JP74z6t+PolFKlpVyxSz2w6ELKxn98iYspxRD409Q55yJGD+hQdqM
+	 SL38P2cYSM4uaidBYzOoWY5kwpCEmMTpI0etpt+4gCIB+huwE6aWdBkOwYpYDJ61AS
+	 km+JqK0FApRGa56+1n9iAlrNmWw4FUk/FA/4T4wW8lf545QIz1Z2wlbAXLVNWSeDHO
+	 6V2qpjEnM1bIO0BGu7lFUPiYOruwGuTEvyNVOkiPI+sRYfsU7g2U82Uugc3kMFJT4z
+	 Heik13egUPbew==
+Received: from phl-compute-01.internal (phl-compute-01.internal [10.202.2.41])
+	by mailfauth.phl.internal (Postfix) with ESMTP id 9922DF4006F;
+	Fri,  5 Jun 2026 11:33:27 -0400 (EDT)
+Received: from phl-frontend-03 ([10.202.2.162])
+  by phl-compute-01.internal (MEProxy); Fri, 05 Jun 2026 11:33:27 -0400
+X-ME-Sender: <xms:R-wiag_yggALpQ_A3CEUcnpnnZIdWF84d_9K86fZpaYuXJ5uKCZbPQ>
+    <xme:R-wiajqpPpSJ5tlj8qN9Ml9aiKLQ3vvbaolr3hjPTSsBEolHogb4WF1El6g0ZQPZG
+    qhihsY6MxHIqJZmML48ZX0VGL_-trCIH-w16xo740KHBXlylgoiNRs>
+X-ME-Received: <xmr:R-wialCgOMZeCMpQfi7Y3flj7cDHYl3v3ISRNyNmGGpyiUwVQK8G1Gwyy7s>
+X-ME-Proxy-Cause: dmFkZTE5q7wspRguf/xfzLeVi3MIs2Gj4EfIHTkUc1lLAmhybEywZyWFPuPAchSTPk302j
+    5qa7Ta75/FfpsA9ph/y6zR8dOlipoy2NsJryeCv/cMr+KRmiWbN5BTDzMY09PKgPw6Q8/S
+    JOrNBMYEwaRZaQQpqEbygfvD4EKweAd1f/LEWcRkUNU2kx6mYNxsjy1On2KzKqsLciVQGU
+    BpN5qsnQnZ09Sg8h+Ite1nVQy3obAfWhBuTG1G+oW38s2TVFq31W9GKGBj7Wah+ndwXE7Q
+    QqsDM+FN9gCvCmAM8OijbjxYVINJ7C121xS0f50lXW82d75diCF5OdbN1WyWapAyFjgblL
+    brlJoA0MM1gvpmGP3KPxPVpJRj6PLnoZyPyzS09TqOKWpLmgYjhUJfLcKomC+L3pAq+RV1
+    gs2zfu2UwvnVrLTwJxCGGo0/z/Bp68InsXjq7MXUx9UdhxdvB6vWOXdAiezHG2Qr2HbUmk
+    EWQyAwszmoBUUTayyLTi12jUIVK3wd5uasMtHv2bYL+7+No3nez6Gn6Wiy4NjrwxNQChvE
+    2MkrosLDTsbe1qHXAb/YZN53ElTwbVaczqkhjEV/l1ZgJlS5J2e2D8qfRiAZplZ5FuS6oN
+    XhzegrTUvLMLshR5WLVYINVI1VkPLf6EQzzQntPp4f4CfO1YtSoloe32I+9w
+X-ME-Proxy: <xmx:R-wialwmsm7WJhW1PeysoUg4RdFP0hVThJgIJt_tawH-TdrEF48Igw>
+    <xmx:R-wiai3ZZECYe4b5noWuc65Ow--1iNyXAM2bR6lVH0Oz6CyrG18qFw>
+    <xmx:R-wialxUOtBmFVJwt6aLXC_hJ1Koj5VmMDdhfxVoGm0wX-zUpwPP1Q>
+    <xmx:R-wiapFnJeVXfqsTY6IYikssaDySFaVP3k4arC0WUPNnMCTy635shQ>
+    <xmx:R-wiaoa-8rVNKpz61--7XNOBC41A8UQwkolhdzlcePhlwhgALiG6a1U_>
+Feedback-ID: i8dbe485b:Fastmail
+Received: by mail.messagingengine.com (Postfix) with ESMTPA; Fri,
+ 5 Jun 2026 11:33:27 -0400 (EDT)
+Date: Fri, 5 Jun 2026 08:33:26 -0700
+From: Boqun Feng <boqun@kernel.org>
+To: Alice Ryhl <aliceryhl@google.com>
+Cc: sashiko-reviews@lists.linux.dev, ojeda@kernel.org,
+	dri-devel@lists.freedesktop.org, linux-media@vger.kernel.org
+Subject: Re: [PATCH 1/3] rust: rcu: add RcuBox type
+Message-ID: <aiLsRpKWnRk5DQBd@tardis-2.local>
+References: <20260605133541.22569-2-boqun@kernel.org>
+ <20260605134935.B6C0E1F00893@smtp.kernel.org>
+ <aiLgJkKzwEDGWNtY@tardis-2.local>
+ <CAH5fLgimUgbK_dVwq7RQimOugqJka2bM_u2r5S=3aze_8uCnbA@mail.gmail.com>
 Precedence: bulk
 X-Mailing-List: sashiko-reviews@lists.linux.dev
 List-Id: <sashiko-reviews.lists.linux.dev>
 List-Subscribe: <mailto:sashiko-reviews+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:sashiko-reviews+unsubscribe@lists.linux.dev>
-Mime-Version: 1.0 (Mac OS X Mail 16.0 \(3864.300.41.1.7\))
-Subject: Re: [External] [PATCH v3 08/15] riscv: Add Zic64b to cpufeature and
- hwprobe
-From: Qingwei Hu <qingwei.hu@bytedance.com>
-In-Reply-To: <a2o7tkslomyf43dcs4tultdmrzcjgvkjh736l7lqemasljhs2j@tyixe5krxw6z>
-Date: Fri, 5 Jun 2026 23:15:37 +0800
-Cc: Conor Dooley <conor@kernel.org>,
- sashiko-reviews@lists.linux.dev,
- kvm@vger.kernel.org,
- devicetree@vger.kernel.org,
- robh@kernel.org,
- conor+dt@kernel.org
-Content-Transfer-Encoding: quoted-printable
-Message-Id: <72942B6A-0B50-49E4-B1F4-E69D1A09288B@bytedance.com>
-References: <20260603-rva23u64-hwprobe-v2-v3-8-5529a7b28384@gmail.com>
- <20260602232800.768311F00893@smtp.kernel.org>
- <CA+Ck9FbKRM0wjJMg1fQpdwmow8cf_zTfir7V6+T=CRxU+vomdg@mail.gmail.com>
- <20260604-rice-protegee-3a0b8e4cb609@spud>
- <u52q565xhv5s7gz3wbh4heplhbm4pv732s5kqvf4deiw6ceb4t@n4bnpzu5kabs>
- <6940420B-C9C3-4D60-AB7F-7FBC4B93D855@bytedance.com>
- <a2o7tkslomyf43dcs4tultdmrzcjgvkjh736l7lqemasljhs2j@tyixe5krxw6z>
-To: Guodong Xu <docular.xu@gmail.com>
-X-Mailer: Apple Mail (2.3864.300.41.1.7)
+MIME-Version: 1.0
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <CAH5fLgimUgbK_dVwq7RQimOugqJka2bM_u2r5S=3aze_8uCnbA@mail.gmail.com>
 
-Hi Guodong,
+On Fri, Jun 05, 2026 at 04:54:55PM +0200, Alice Ryhl wrote:
+[..]
+> >
+> > [Cc Alice]
+> >
+> > I fixed this locally by:
+> >
+> >     fn into_foreign(self) -> *mut c_void {
+> >         let ptr = self.0.as_ptr().cast();
+> >
+> >         // FORGET: Leaking it as a pointer, the caller is responsible to free it or unleak it by
+> >         // from_foreign().
+> >         core::mem::forget(self);
+> >
+> >         ptr
+> >     }
+> 
+> I prefer to avoid use core::mem::forget.
+> 
+>     ManuallyDrop(self).0.as_ptr().cast()
+> 
 
-> On Jun 5, 2026, at 19:32, Guodong Xu <docular.xu@gmail.com> wrote:
->=20
-> Hi, Qingwei
->=20
-> On 2026-06-05 00:43, Qingwei Hu wrote:
->>=20
->>=20
->>> Ok, I get your point. Agree, Zic64b/Zicbom/cbop/cboz can be =
-implemented
->>> on each hart independently (at least spec doesn't say no). With this =
-in
->>> mind, the validation of Zic64b should be like this:
->>>=20
->>>   if ((riscv_cbom_block_size && riscv_cbom_block_size !=3D 64) ||
->>>      (riscv_cbop_block_size && riscv_cbop_block_size !=3D 64) ||
->>>      (riscv_cboz_block_size && riscv_cboz_block_size !=3D 64))
->>>   return -EINVAL;
->>>=20
->>> This will allow :
->>> 1. A Zic64b hart with 0, 1, 2, or 3 CBO extension and block_size 64
->>>  passes the validation.
->>> 2. A Zic64b hart with CBO extensions but block_size is not 64
->>>  fails the validation
->>>=20
->>> Thanks for the catch.
->>>=20
->>> I will fix that in v4.
->>>=20
->>> BR,
->>> Guodong
->>=20
->> Hi Guodong,
->>=20
->> Thanks for working on this.
->>=20
->> This overlaps with my earlier Zic64b cpufeature patch[1].
->=20
-> Thanks, and you're right that your patch predates mine. Your =
-validation
-> was also correct (at least resonate with what I planned to do in v4)
-> from the start.
->=20
->>=20
->> and Greg confirmed that Zic64b does not imply support for any CMO
->> extensions[2]. It only has meaning for whichever CMO extensions are
->=20
-> I'll add a link to quote this in v4. Great info. Thanks for checking
-> with them.
->=20
->> implemented.
->>=20
->> Since the Zic64b cpufeature support in this patch overlaps with my
->> earlier patch, if you keep this work in your series and base it on =
-that
->=20
-> Yes, I'd like to, and I prefer, take the your patch into this series, =
-and
-> credit you properly. In this series, I also added dt-binding, =
-documentation
-> and howprobe, and make it consumed by rva23u64 detection.
->=20
->> patch, could you please put my sign-off credit for the Zic64b =
-cpufeature part?
->>=20
->> For example:
->>=20
->> Signed-off-by: Qingwei Hu <qingwei.hu@bytedance.com>
->=20
-> Yes, since your work came first, I'm happy for you to be the author of =
-the
-> cpufeature patch, with me as Co-developed-by:
->=20
->    From: Qingwei Hu <qingwei.hu@bytedance.com>
->    ...
->    ...
->    Signed-off-by: Qingwei Hu <qingwei.hu@bytedance.com>
->    Co-developed-by: Guodong Xu <docular.xu@gmail.com>
->    Signed-off-by: Guodong Xu <docular.xu@gmail.com>
->=20
-> Let me know whether this works for you.
->=20
-> Thank you for pointing me to your existing patch.
->=20
-> BR,
-> Guodong
+Sounds good ;-)
 
-I agree with this arrangement.
+Regards,
+Boqun
 
-Thanks,
-Qingwei Hu
-
->=20
->>=20
->> [1] Link: =
-https://lore.kernel.org/all/20260528141630.2741710-1-qingwei.hu@bytedance.=
-com/
->> [2] Link: =
-https://lists.riscv.org/g/tech-unprivileged/topic/question_about_zic64b_an=
-d/119631059
->>=20
->> Best regards,
->> Qingwei Hu
-
+> Alice
