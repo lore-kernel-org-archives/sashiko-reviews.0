@@ -1,193 +1,111 @@
-Received: from SN4PR2101CU001.outbound.protection.outlook.com (mail-southcentralusazon11012060.outbound.protection.outlook.com [40.93.195.60])
+Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BC8063D3CF4
-	for <sashiko-reviews@lists.linux.dev>; Fri,  5 Jun 2026 23:26:48 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=fail smtp.client-ip=40.93.195.60
-ARC-Seal:i=2; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1780702010; cv=fail; b=asqdsqApeEEwLcprklWiuhSdGsXoDNGoIf0V6fpT1tgEZlZ2SQ+BS5H9S2Vj5OdkTDLtZNIcUW8fBgkEdMFfj8w/U7c3uc8AAfFsoLn/6F0FVsSeaHds8tbqnt67STUIeKUGKBHTKx5/ItDRT9A23mmcGZLk2luH4oP8/lT8Xcc=
-ARC-Message-Signature:i=2; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1780702010; c=relaxed/simple;
-	bh=L41a86jmyLp6lO7jhykgClXroux/cGkqLO/dMTFRjoI=;
-	h=From:To:CC:Subject:In-Reply-To:References:Date:Message-ID:
-	 MIME-Version:Content-Type; b=HitzVQGGJRsNM2WszkHu9HN2RotuH5gCOOqUEZeM0SOHfjU3gSMoEeQeHOV7ahA/FFjvC0OtwUnSPykstgiijSonFeeHnYb9XZQJRVR4wlP0zmZLXjbb3ahJfgA0vpsNgHiPlVJS0RSRP1MX+awkKvC5MdzXsBXZ2CEn68CZxCo=
-ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=amd.com; spf=fail smtp.mailfrom=amd.com; dkim=pass (1024-bit key) header.d=amd.com header.i=@amd.com header.b=hv7x+s/+; arc=fail smtp.client-ip=40.93.195.60
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=amd.com
-Authentication-Results: smtp.subspace.kernel.org; spf=fail smtp.mailfrom=amd.com
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CFF1513D539;
+	Fri,  5 Jun 2026 23:32:58 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
+ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
+	t=1780702379; cv=none; b=g6dFCb1a4Ot8o/Z24GoR9hSvRa5Oc+YqvyzYwNscEYHJzggF10tcRBzICydYqFD8CaZu8mqK/fg6P1p3tBtGtGhOa9LfvfZ3/fQVxAfJ0R/UVRIWJCaAI03NAt5af9hrdL8y2GDWUASQiMDyMJZLzk5Eeccs7QOf5CERv16J67M=
+ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
+	s=arc-20240116; t=1780702379; c=relaxed/simple;
+	bh=1yNcfK7eyF7DBLwdIVKeYx193kANK6dyVC9KCznh3rg=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=Dhqn6mn/nEUgx/9C3ZkSUVeESFHZcavtDuB+DMlyhyqXV1DI9ZxWVjW8BEflIcyPWueGWcyOzUyw1JxXpssioyF0YDBRoC0HiMNLn39q6tRztG04U7QqLX56U4fkNdHlHy+br3juYVz+MMQAg5zr4ssGkDfF9THd2upVAB3OVHw=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=UHvo1NHt; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=amd.com header.i=@amd.com header.b="hv7x+s/+"
-ARC-Seal: i=1; a=rsa-sha256; s=arcselector10001; d=microsoft.com; cv=none;
- b=fcm7PXON8ynnwSlPigwCsWTs8QLUPJNKbgc1/ERuPx1kSSsqLqfFflEp2EWcxEo5olJy9ddN+QM3XBgzcWhX34jPXKL9Njncw4apGeYQjWnWYjOYZLLLyS+T+A0s/i6f3sbZwry5c6geJ3nsArPqYy51w88JgErE/t7k1hTHXNfIbs+TPQjkua+qiEteRu7l4D23Ng1OaKrC8AMCFSszRL4H+8F9HUQhOalNwJHTlf10EIXJ6Gy/mzomMPQ8OZdVCTiRvG1LuFvbC7Pt1MzyMvV4GbE7ZyrhawW2hy1m1/bQMjiA3+PEMK6Q12N5DAWf1ew7ZrcyTjJvM1hSjjwK5w==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com;
- s=arcselector10001;
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
- bh=ymCQEqQpsXU+m7DMNHrYlVlphOPHa1sLKZjhD0FeCt4=;
- b=R59Ftl7ocauxXQSgYY0vIgp4EXC8Xf6q27HG6qw0l2Edzeh6o4lQFjuzi+Z+DsAO7lgEral68urHIcz1rOFxUkIdg1ZTlJx/bn1EZ/QVIuDrzH5dOlBKDRFRTvAorXaFL6B07mj7mAbyR/zjjBEbYvYJ+PdnGFLYaAxORV3PVpqfGlPLLzeil0nwIsb44RP6zIQbMAXXQPdbhD3g1oYFOGEjOXvutT7D+0RZ4/vT5KH+ME9qySJlCrplpMRcDsLDIOMZT3t5vO+XVXEaCQgCuoDxN2jeUSKWHHsnPMgaRwf8OxGe8RVGQKbG3VC3n8AeZGqzJcRBc8/eOyzs/5XxjQ==
-ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass (sender ip is
- 165.204.84.17) smtp.rcpttodomain=lists.linux.dev smtp.mailfrom=amd.com;
- dmarc=pass (p=quarantine sp=quarantine pct=100) action=none
- header.from=amd.com; dkim=none (message not signed); arc=none (0)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=amd.com; s=selector1;
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
- bh=ymCQEqQpsXU+m7DMNHrYlVlphOPHa1sLKZjhD0FeCt4=;
- b=hv7x+s/+i7khvEPG40fN+qoaPpUR6cOnNKVK+Vey3MRrrF3h6mqItHB9S1HqJJV3nGlonIgB+ooEguSz2+7j5YsxUa2D9oxtFxOkVUU2ZJkOonzmU6z3B09X8MCQtp5knrBhEwgnFn32mBuEE8mVj6H/vaZRn6MidwpGB5Q2/bE=
-Received: from CY5PR15CA0146.namprd15.prod.outlook.com (2603:10b6:930:67::15)
- by LV5PR12MB9779.namprd12.prod.outlook.com (2603:10b6:408:301::14) with
- Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.21.92.8; Fri, 5 Jun 2026
- 23:26:45 +0000
-Received: from DS2PEPF00003443.namprd04.prod.outlook.com
- (2603:10b6:930:67:cafe::ad) by CY5PR15CA0146.outlook.office365.com
- (2603:10b6:930:67::15) with Microsoft SMTP Server (version=TLS1_3,
- cipher=TLS_AES_256_GCM_SHA384) id 15.21.92.9 via Frontend Transport; Fri, 5
- Jun 2026 23:26:44 +0000
-X-MS-Exchange-Authentication-Results: spf=pass (sender IP is 165.204.84.17)
- smtp.mailfrom=amd.com; dkim=none (message not signed)
- header.d=none;dmarc=pass action=none header.from=amd.com;
-Received-SPF: Pass (protection.outlook.com: domain of amd.com designates
- 165.204.84.17 as permitted sender) receiver=protection.outlook.com;
- client-ip=165.204.84.17; helo=satlexmb07.amd.com; pr=C
-Received: from satlexmb07.amd.com (165.204.84.17) by
- DS2PEPF00003443.mail.protection.outlook.com (10.167.17.70) with Microsoft
- SMTP Server (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
- 15.21.92.5 via Frontend Transport; Fri, 5 Jun 2026 23:26:44 +0000
-Received: from localhost (10.180.168.240) by satlexmb07.amd.com
- (10.181.42.216) with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.2562.41; Fri, 5 Jun
- 2026 18:26:43 -0500
-From: Nathan Lynch <nathan.lynch@amd.com>
-To: <sashiko-reviews@lists.linux.dev>
-CC: <vkoul@kernel.org>, <Frank.Li@kernel.org>, <linux-pci@vger.kernel.org>,
-	<dmaengine@vger.kernel.org>
-Subject: Re: [PATCH v2 08/23] dmaengine: sdxi: Install administrative context
-In-Reply-To: <20260513031712.0C8EDC2BCB0@smtp.kernel.org>
-References: <20260511-sdxi-base-v2-8-889cfed17e3f@amd.com>
- <20260513031712.0C8EDC2BCB0@smtp.kernel.org>
-Date: Fri, 5 Jun 2026 18:26:42 -0500
-Message-ID: <87pl24d0wd.fsf@amd.com>
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="UHvo1NHt"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6E2DB1F00893;
+	Fri,  5 Jun 2026 23:32:58 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=kernel.org;
+	s=k20260515; t=1780702378;
+	bh=bfgZJpXhhPov5BEla8SQNZJSxOSY1OW2cCXZ8taqn9U=;
+	h=Date:From:To:Cc:Subject:References:In-Reply-To;
+	b=UHvo1NHtNijnudJ1KexB6x5guYbNU1GMzvAKBjUZA9QZT9CmZlST10TdDrsIYwiAY
+	 5o0HeDh93E8wALWemHKpbPWbxqiE+8E5xtK4ytZKDjfIiIflTQm7Zxai4LYF2cuJr4
+	 0eJICSZY1mhtX7P/Uk4oM48WSxxlfn7EnNmDM978blxiU7b2oLW4+f3aV0NproT6XY
+	 e5DCAZGrRpjTxC3JrM0HKoaKVMI05rCPq3UTMbmWeycbmmkHW62AdR/1auJbuoveWG
+	 JXCODT4uSrigJ6hcqzvBjUfNeWJ7qHcep62LwZqIjv7u8f9lzNJ8r9vTGJJz1DBaT5
+	 SzeFzeF4dOY6Q==
+Date: Fri, 5 Jun 2026 16:32:57 -0700
+From: Namhyung Kim <namhyung@kernel.org>
+To: sashiko-reviews@lists.linux.dev
+Cc: linux-perf-users@vger.kernel.org
+Subject: Re: [PATCH 1/4] perf timechart: Release event samples at the end
+Message-ID: <aiNcqfkyWo4zPsxC@google.com>
+References: <20260605231155.2415760-2-namhyung@kernel.org>
+ <20260605232318.218551F00893@smtp.kernel.org>
 Precedence: bulk
 X-Mailing-List: sashiko-reviews@lists.linux.dev
 List-Id: <sashiko-reviews.lists.linux.dev>
 List-Subscribe: <mailto:sashiko-reviews+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:sashiko-reviews+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain
-X-ClientProxiedBy: satlexmb07.amd.com (10.181.42.216) To satlexmb07.amd.com
- (10.181.42.216)
-X-EOPAttributedMessage: 0
-X-MS-PublicTrafficType: Email
-X-MS-TrafficTypeDiagnostic: DS2PEPF00003443:EE_|LV5PR12MB9779:EE_
-X-MS-Office365-Filtering-Correlation-Id: e8894267-39a3-4739-3575-08dec359e7d8
-X-MS-Exchange-SenderADCheck: 1
-X-MS-Exchange-AntiSpam-Relay: 0
-X-Microsoft-Antispam:
-	BCL:0;ARA:13230040|376014|36860700016|82310400026|1800799024|4143699003|56012099006|11063799006|5023799004|6133799003|18002099003|22082099003;
-X-Microsoft-Antispam-Message-Info:
-	6Gi5YIWoAPbG5c0xoEfvX/+Ud4cQhhobnWRyIQJbq2HxFMczkOaGXgvQs1KzAjDk+3F3tbMKHdahkuYqYgBxlqPzqVuBoUXKX0EqgvRog2jEuz8CLiU+Mqgw8NyKdCN8IoDXh3OYGbqbY9hi88mtuJJMjiZzgxjon8i+ZazbSpNPIPauWMPsRPFSqQJis/Sp4ngnuqfMIwZHv6YThn1RelOQmtXGBIXB9m32YmswYZp4JNbJ6suVlPEWuWb1T0OzeqAVVRKDMIn+FvYAjHelmTic3fX6H36/MAzuqrvPDoRR5GiPGzkVTcAa4flxNHuLpAsZfsNudh5xU9f7dRD42NT2BCtsFbycbLolnDpD5+bmVyA7IOAHmeRx7RKNlv6LKz20sNEbI1WYjNTEgOgHDHZQOXUKQtIYHbDhP60K7+zNH/l8BGbgpUR+QOx5GxfeHwu4PkLXS2ZE4RlbTbdY2azlSTxmQm1SasmKam1XXI+phgiVx7jMLs5P/MBho8aFUrqltHIv93Eaf7jdw4If4zLqsN3jWIWkMH3aQRajPV3kQdyuVFlarpjAKMZPNF2zOPtupNdPOuq/3hl97Ua6yH730zmzMMFm5bm4ywYzfMF+rh+g8Lcm4o8h/9+2Bns+Wg2S3Ipl6sU8BVJLu2SitsVr27PVgfFczpN01tv3KW7ATvxRWKKWIuyEk60DmK0VW0K1KBQBuSYswdeqrC0x9f7C+9/xHVVJKnbFiju5wWY=
-X-Forefront-Antispam-Report:
-	CIP:165.204.84.17;CTRY:US;LANG:en;SCL:1;SRV:;IPV:NLI;SFV:NSPM;H:satlexmb07.amd.com;PTR:InfoDomainNonexistent;CAT:NONE;SFS:(13230040)(376014)(36860700016)(82310400026)(1800799024)(4143699003)(56012099006)(11063799006)(5023799004)(6133799003)(18002099003)(22082099003);DIR:OUT;SFP:1101;
-X-MS-Exchange-AntiSpam-MessageData-ChunkCount: 1
-X-MS-Exchange-AntiSpam-MessageData-0:
-	+9lwD7cfL4fthK6ns+gmBBAlUObsALR4jO/bqISRzfYRMr5PS2SIFLzj4iizM6aeEiIAjg7WD3jaEaNToW9OLiQx+GDhameu5hOMyiJ/X8uoGWVMC6d8f4OFC/FIdImTOcMbAJJN86hOwbT7e7lEqY3wJqCd4GYMHV34od6OSP7KAtWL1miKGQJZCDxcVVZezalaJ4b2VEKfjBVO0EaHKCEeK9PGDAwQo4Qe8T2ily+8Q5eqLZruNHlIMIlKxLdG0/lvBKRoE0oJvUtvHjkXVUPuMzDzMKP3Oa1PKWK7TY+Uq7wthIBwsERa6RwXqvI2BWxwJgAvMmj/VJ+urxW6osI+cVoMg1fqr5arVJaxYBwGHg0u8KUlcC1qFfB8KhovALqyXik8hFHppU8+nRttcs8KEP4atLKYvHBF2cH1qZIl8uV9CH4y7B91eflSjlIz
-X-OriginatorOrg: amd.com
-X-MS-Exchange-CrossTenant-OriginalArrivalTime: 05 Jun 2026 23:26:44.1957
- (UTC)
-X-MS-Exchange-CrossTenant-Network-Message-Id: e8894267-39a3-4739-3575-08dec359e7d8
-X-MS-Exchange-CrossTenant-Id: 3dd8961f-e488-4e60-8e11-a82d994e183d
-X-MS-Exchange-CrossTenant-OriginalAttributedTenantConnectingIp: TenantId=3dd8961f-e488-4e60-8e11-a82d994e183d;Ip=[165.204.84.17];Helo=[satlexmb07.amd.com]
-X-MS-Exchange-CrossTenant-AuthSource:
-	DS2PEPF00003443.namprd04.prod.outlook.com
-X-MS-Exchange-CrossTenant-AuthAs: Anonymous
-X-MS-Exchange-CrossTenant-FromEntityHeader: HybridOnPrem
-X-MS-Exchange-Transport-CrossTenantHeadersStamped: LV5PR12MB9779
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+In-Reply-To: <20260605232318.218551F00893@smtp.kernel.org>
 
-sashiko-bot@kernel.org writes:
-> Thank you for your contribution! Sashiko AI review found 3 potential issue(s) to consider:
-> - [Critical] Hardware Use-After-Free due to missing admin context teardown
-> - [High] Torn writes on 32-bit platforms exposing incomplete addresses to hardware
-> - [Medium] Incorrect error check for `dma_pool_zalloc()` using the DMA handle instead of the virtual pointer
+On Fri, Jun 05, 2026 at 11:23:17PM +0000, sashiko-bot@kernel.org wrote:
+> Thank you for your contribution! Sashiko AI review found 1 potential issue(s) to consider:
+> - [High] Double-free of the `backtrace` string in `timechart__release()` due to shared pointers across multiple `cpu_sample` objects.
 > --
->
-> commit 794d6cb84f7ad6a7699311744a5e9c87b9d20316
-> Author: Nathan Lynch <nathan.lynch@amd.com>
->
-> dmaengine: sdxi: Install administrative context
->
-> This commit serializes the context control block, akey table, and L1 entry for
-> the admin context. It makes the descriptor ring, write index, and context
-> status block visible to the SDXI implementation once activated.
->
->> diff --git a/drivers/dma/sdxi/context.c b/drivers/dma/sdxi/context.c
->> index 27821cfaf0311..c0b55c945cc4e 100644
->> --- a/drivers/dma/sdxi/context.c
->> +++ b/drivers/dma/sdxi/context.c
->
+> 
+> commit 3e2b8bb6971b84cf83df8b57e574d558c36bdaf8
+> Author: Namhyung Kim <namhyung@kernel.org>
+> 
+> perf timechart: Release event samples at the end
+> 
+> This commit adds timechart__release() to clean up data structures created
+> during sample processing to prevent memory leaks when the perf tool exits.
+> 
+> > diff --git a/tools/perf/builtin-timechart.c b/tools/perf/builtin-timechart.c
+> > index 28f33e39895d3..73a08236ac299 100644
+> > --- a/tools/perf/builtin-timechart.c
+> > +++ b/tools/perf/builtin-timechart.c
 > [ ... ]
->
->> @@ -106,6 +112,152 @@ static struct sdxi_cxt *sdxi_alloc_cxt(struct sdxi_dev *sdxi)
->
+> > @@ -1509,6 +1509,59 @@ static void write_svg_file(struct timechart *tchart, const char *filename)
+> >  	svg_close();
+> >  }
+> >  
+> > +static void timechart__release(struct timechart *tchart)
+> > +{
+> > +	struct per_pid *p = tchart->all_data;
 > [ ... ]
->
->> +static int configure_cxt_ctl(struct sdxi_cxt_ctl *ctl, const struct sdxi_cxt_ctl_cfg *cfg)
->> +{
->> +	u64 ds_ring_ptr, cxt_sts_ptr, write_index_ptr;
->
-> [ ... ]
->
->> +	ds_ring_ptr = FIELD_PREP(SDXI_CXT_CTL_VL, 1) |
->> +		      FIELD_PREP(SDXI_CXT_CTL_QOS, cfg->qos) |
->> +		      FIELD_PREP(SDXI_CXT_CTL_SE, cfg->se) |
->> +		      FIELD_PREP(SDXI_CXT_CTL_CSA, cfg->csa) |
->> +		      FIELD_PREP(SDXI_CXT_CTL_DS_RING_PTR,
->> +				 cfg->ds_ring_ptr >> DESC_RING_BASE_PTR_SHIFT);
->> +	/* Ensure other fields are visible before hw sees vl=1. */
->> +	dma_wmb();
->> +	WRITE_ONCE(ctl->ds_ring_ptr, cpu_to_le64(ds_ring_ptr));
->
-> Can this introduce a regression with torn writes on 32-bit platforms?
+> > +		while (c) {
+> > +			struct per_pidcomm *next_comm = c->next;
+> > +			struct cpu_sample *cs = c->samples;
+> > +			struct io_sample *ios = c->io_samples;
+> > +
+> > +			while (cs) {
+> > +				struct cpu_sample *next = cs->next;
+> > +
+> > +				free((char *)cs->backtrace);
+> > +				free(cs);
+> > +				cs = next;
+> > +			}
+> 
+> [Severity: High]
+> Will this result in a double-free of the backtrace string?
+> 
+> Looking at sched_switch(), when a context switch occurs between two active
+> processes, it shares the exact same backtrace pointer across multiple
+> cpu_sample objects:
+> 
+> if (prev_p->current && prev_p->current->state != TYPE_NONE)
+> 	pid_put_sample(tchart, prev_pid, TYPE_RUNNING, cpu,
+> 		       prev_p->current->state_since, timestamp,
+> 		       backtrace);
+> if (p && p->current) {
+> 	if (p->current->state != TYPE_NONE)
+> 		pid_put_sample(tchart, next_pid, p->current->state, cpu,
+> 			       p->current->state_since, timestamp,
+> 			       backtrace);
+> 
+> Because timechart__release() iterates over all processes and unconditionally
+> calls free() on cs->backtrace, won't it attempt to free the same pointer 
+> multiple times when it cleans up these overlapping samples?
 
-As mentioned elsewhere the driver will just depend on CONFIG_64BIT for
-now.
+Actually this is handled in another series.
 
+Thanks,
+Namhyung
 
->> +static void free_admin_cxt(void *ptr)
->> +{
->> +	struct sdxi_dev *sdxi = ptr;
->> +
->> +	sdxi_free_cxt(sdxi->admin_cxt);
->> +}
->
-> Does this sequence cause a use-after-free regression?
->
-> In sdxi_publish_cxt(), the admin context is published to the hardware by
-> setting the valid bit (VL=1) in the L1_table.
->
-> When the context is torn down via the devres cleanup action free_admin_cxt(),
-> it directly invokes sdxi_free_cxt(), which frees the DMA memory for the
-> context control block, descriptor ring, and akey table.
->
-> However, the VL bit in the hardware's L1 table entry is never cleared. Could
-> this leave the hardware actively fetching from freed physical
-> addresses?
-
-No I don't think so, the code as written ensures the device is in
-stopped state when we get to the point of freeing the admin context
-control structures.
-
-
-> Additionally, looking at the sdxi_alloc_cxt() implementation, the return value
-> of dma_pool_zalloc() is checked via the DMA address instead of the virtual
-> pointer:
->
-> 	cxt->cxt_ctl = dma_pool_zalloc(sdxi->cxt_ctl_pool, GFP_KERNEL,
-> 				       &cxt->cxt_ctl_dma);
-> 	if (!cxt->cxt_ctl_dma)
-> 		return NULL;
->
-> Since physical address 0 is a valid DMA address on many architectures and IOMMU
-> configurations, could this regression incorrectly abort initialization if a
-> successful allocation returns DMA address 0? Should this code check the
-> returned virtual pointer (!cxt->cxt_ctl) instead?
-
-Valid bug but I think this is a redundant report, the bot pointed it out
-elsewhere in the thread.
