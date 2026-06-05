@@ -1,164 +1,230 @@
-Received: from mail-pg1-f176.google.com (mail-pg1-f176.google.com [209.85.215.176])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from SJ2PR03CU001.outbound.protection.outlook.com (mail-westusazon11012047.outbound.protection.outlook.com [52.101.43.47])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 154A21F30BB
-	for <sashiko-reviews@lists.linux.dev>; Thu,  4 Jun 2026 23:33:21 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.215.176
-ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1780616003; cv=none; b=Ep4WhsCBk5S5ERLhOQDhQe39vQ2qgGWjOZYCVWXgl9MkV0MdeCzWOKC0MC0Nan6qsxBO8ZX95n5RpHAO99bDcFjt7iyl6WDdwVtB6VA0+YjQ2Y7NOSk+ITun3CvvQX27zpojX6WJeJ5ODr6VgkqUGn7sZmdxDFeUvYCS7J/DRDE=
-ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1780616003; c=relaxed/simple;
-	bh=Lb+xLGteN8rGNFfXJPGYAlrX4zLjvvSOH8R+LOVRa9Q=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=sT2WDekeHji3yONIhOIG3HQrb7nIK7PmMU6fVW1TxtEtHM1DPB7JsTD4tp6dDInkWYD7M1KJxwIXxav16eiDh7LjJP0zNkV2gXn2RQewbIUPw23tKf2RhKsV1mqenZx9twGLXYskzcSgvS8PfWlZaAKaSI08ZyOGjQcTsmA5PVc=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=dMbREfQn; arc=none smtp.client-ip=209.85.215.176
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 03F7333893D
+	for <sashiko-reviews@lists.linux.dev>; Fri,  5 Jun 2026 02:03:25 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=fail smtp.client-ip=52.101.43.47
+ARC-Seal:i=2; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
+	t=1780625015; cv=fail; b=mkhL8BJs477jQ1iIDEacXG1erVRqKczSM53j1DRCUqd0pTF5wPJp9a8TvQvLQ/Cat0W2MERLR+9dXS4lSDCmXR8baQnPnM4aLpo5JPbbalj3PxPnFx1nVqwTFqrkKHhZG5xf1qCfCJaSlk4tlNwC7Nlru5Cp4qgzJ4gVBlLwpfU=
+ARC-Message-Signature:i=2; a=rsa-sha256; d=subspace.kernel.org;
+	s=arc-20240116; t=1780625015; c=relaxed/simple;
+	bh=KH72f9W9pNOkleMw84pV/ShxaTu91tzInE3MJRYdsh0=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:Content-Type:
+	 Content-Disposition:In-Reply-To:MIME-Version; b=EjkMAUXclWcgIQLyvJWxU/jPghiS1vh4Pt7/Qv0UmA5yPJcE0c55Imq5q7pH3WNER5pt3UtWvUZ+CWgGjz+NTRKKD50xsu401osNU1MTrQ2Di3H1NpWmCosMD5LyPwTsBRMPAzt9tHqdAvfYDCnbSupVf2VZR5Whh27IQQvusj8=
+ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=nvidia.com; spf=fail smtp.mailfrom=nvidia.com; dkim=pass (2048-bit key) header.d=Nvidia.com header.i=@Nvidia.com header.b=hNCgcPVq; arc=fail smtp.client-ip=52.101.43.47
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=nvidia.com
+Authentication-Results: smtp.subspace.kernel.org; spf=fail smtp.mailfrom=nvidia.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="dMbREfQn"
-Received: by mail-pg1-f176.google.com with SMTP id 41be03b00d2f7-c8588ec1b44so974075a12.1
-        for <sashiko-reviews@lists.linux.dev>; Thu, 04 Jun 2026 16:33:21 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20251104; t=1780616001; x=1781220801; darn=lists.linux.dev;
-        h=in-reply-to:content-disposition:mime-version:references:message-id
-         :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
-        bh=iGFlwyuNaR2/Raijzn5hJY/deT6FrQc+hecXmcS90Nw=;
-        b=dMbREfQnuT4mqqFdK4xP4GB00xRJm0TlBlq+oeGxyY7jfEE8YFWxGplneYRCs72ybR
-         IxJT0qydLpmxGli6bbyNSvlAB3hDx8hnQc1c3/XlzTG8k2wgpq8rp+a4oE98vqshhNSR
-         Ev3XSMS5nRZDEmK9tAImLpGUqEym8/S7ISXn3x93cWv8n+LuILAayQL9AS4LgI3D4oVS
-         1/KorSz/4v0PPhrQaAauEV1KzNWv3F8IkEc9fB+ZNfGz+AMA9toOmwpv+5yCX7KwYrvd
-         oLG83sJDFUsJ26JMHIrQxeFVH6Flv1pvt1If3YhHQvUgJLAWEwOQ7n6ZB8a08T/UWkqz
-         ZKYw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20251104; t=1780616001; x=1781220801;
-        h=in-reply-to:content-disposition:mime-version:references:message-id
-         :subject:cc:to:from:date:x-gm-gg:x-gm-message-state:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=iGFlwyuNaR2/Raijzn5hJY/deT6FrQc+hecXmcS90Nw=;
-        b=EiKOF+0CjmhX6AyH6ZrxAU1/MXcrS1c8gAYaNxP5ALeUE9jigDnKIUrbzSsh0AtUBl
-         UJjLMTU5090oRm6jJGmpN32LNpPMQAjQVhiC1akmSDeo7CNnJ/sjBEpzY+2TqSMJOf0n
-         V0WrC8QoYte2SIOFFAX++OoHq++8kfU/Wtp3c15DuCaEdcPKtQ9aKev11EgouKlwfj66
-         5pRE/Xn6jKMHOrTmm/gOD0F5TObbA77pDltlZ1DDzBPe/SzhdubYt2ntfU/nt9M45sOW
-         KlILHtG8dHzB+EBaixqYV4ekAIP5TuFe/uQ83jGkZMWjdFL+OM/ZsmIH01OzFg+2Ngyd
-         aH1A==
-X-Forwarded-Encrypted: i=1; AFNElJ/kzpnGLRNYGEaMiyxLZRq91ZFbXRnGNM3+7Fk4789bchSu8tQ6+h3jM3xpKImMDpdcZ6FYJXznEi+XscjseYA=@lists.linux.dev
-X-Gm-Message-State: AOJu0Yzwlh1VhSdT3W8Hxi4LIRF8wZtn8xjpoqn9luvvKT5s8qGFoahR
-	/Gv98n/IW5Z4JMZYOIHffPW8j41g0fdOeoyqJwzpq8Da8zPHwPnQhfdN
-X-Gm-Gg: Acq92OGrxmfz+Ag9tx6kKfnusSbb73hLfsSBLfQ4K/b2+N6vKlDC7QdAjiZMQR6V+AF
-	fgZwiLqkKLnWxXuM/0snbwuOThIQGCyRh4fgUbhwFF6ijU1XwPBmGzqGyOejcQqu/fwI9jz+TVl
-	2KIQNwrXCsGdybWmhwYocZdPlJcPTcxXTqr6yejOaI0mCUVJ6ejPfpQ8of8GUi2UINe58WLa4Pl
-	BA4PryhS+ReI4zKMxH8TRU5xHqVfrvRd0cT7cHvqo2DDJRAK2oVU0vmPcHIsEuEasx844ygcfeC
-	vobZZqHOjPeLqnrqBwDkSbl773rguV4QskvEYxvBoiA3bmkfUGVOEDCXtdgJ0hJgTT9JxfLGTRK
-	7QgGONVi4C4L+Mdupyoe7CYy9XBybuwpoyRmMlLHwV2+MgtRW4L1hZxEKBn/4loZfWzDqejFI93
-	Ob/xU5Xw==
-X-Received: by 2002:a05:6a21:9d4c:b0:398:89b6:1b41 with SMTP id adf61e73a8af0-3b4cd066bc8mr1219019637.32.1780616001275;
-        Thu, 04 Jun 2026 16:33:21 -0700 (PDT)
-Received: from localhost ([2a12:a305:4::305d])
-        by smtp.gmail.com with ESMTPSA id 41be03b00d2f7-c85df0a505fsm6146958a12.20.2026.06.04.16.33.20
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Thu, 04 Jun 2026 16:33:20 -0700 (PDT)
-Date: Fri, 5 Jun 2026 07:32:42 -0400
-From: Guodong Xu <docular.xu@gmail.com>
-To: Qingwei Hu <qingwei.hu@bytedance.com>
-Cc: Conor Dooley <conor@kernel.org>, sashiko-reviews@lists.linux.dev, 
-	kvm@vger.kernel.org, devicetree@vger.kernel.org, robh@kernel.org, conor+dt@kernel.org
-Subject: Re: [PATCH v3 08/15] riscv: Add Zic64b to cpufeature and hwprobe
-Message-ID: <a2o7tkslomyf43dcs4tultdmrzcjgvkjh736l7lqemasljhs2j@tyixe5krxw6z>
-References: <20260603-rva23u64-hwprobe-v2-v3-8-5529a7b28384@gmail.com>
- <20260602232800.768311F00893@smtp.kernel.org>
- <CA+Ck9FbKRM0wjJMg1fQpdwmow8cf_zTfir7V6+T=CRxU+vomdg@mail.gmail.com>
- <20260604-rice-protegee-3a0b8e4cb609@spud>
- <u52q565xhv5s7gz3wbh4heplhbm4pv732s5kqvf4deiw6ceb4t@n4bnpzu5kabs>
- <6940420B-C9C3-4D60-AB7F-7FBC4B93D855@bytedance.com>
+	dkim=pass (2048-bit key) header.d=Nvidia.com header.i=@Nvidia.com header.b="hNCgcPVq"
+ARC-Seal: i=1; a=rsa-sha256; s=arcselector10001; d=microsoft.com; cv=none;
+ b=jAAByxgxvUAD7xN1CDhbjjj2LF7n4oiPny/AOs6Gs0q7W3iliXecigQqUfUrLyKWym70ZGn5v1fp6yozqnAbIULIckufZVTdO6kuBo84G7wj6A9p+6SW7mM0tg0WbU/c2E3a1hLeG+dJPxy19bhaaI2YUTUxTCw5XShh62oNk/V4Sb8cGx29yR5wfRWf40LwIOMxymG1LmuQiYl6VXZHRDf0dFYjED6lk5jlgrwbnWRsSxIiiRObWZuAvfDcITiz0lN+TDAid30mAQFuPwH6eVD/GOgcH6kNT/Sn/zDfjvr2Gi970BLc46w4x+EMCOT/G+sseCeKUoPmklU2ZkqvkA==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com;
+ s=arcselector10001;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
+ bh=Q9Qcp8nuv2eWxDPnH+xFYVQ2t6ga0j96oneepZEq3zM=;
+ b=k8fnh05nwUmHbuVQhtLEKnhUbD2/wnJeq8a3ee2+CDrx10quFkVMSDtGA/GC03Ume+obyPqYtZGF7Z7csbZLRpNmM0F9W5DeXqYOjYF23HpygLi+zSbwgdy1jxkAzQJwHrI+QLTT6l33EFsy75J7H3A0U0XSZWWjkQDXnpobdV67pSwINAuM/MhHuXaahjTDLCQTzn9q2nDSfiFutN0GZL4S50OUDIFWjFn3ap9JTg68Mi2dE/bDiOjL+38/gq0yyCQvHZx5dBvq4bELTfagSzx2gcOQM6X74kg9MMy6piqK8SxDLlFXfP/l6dsWvmgzvP4NrUdbyP2gCx95C9Cojg==
+ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
+ smtp.mailfrom=nvidia.com; dmarc=pass action=none header.from=nvidia.com;
+ dkim=pass header.d=nvidia.com; arc=none
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=Nvidia.com;
+ s=selector2;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
+ bh=Q9Qcp8nuv2eWxDPnH+xFYVQ2t6ga0j96oneepZEq3zM=;
+ b=hNCgcPVq2Dwo/L5i4eeBG8MSRsXEc6fdkjQ63/S0bSubfaOvuwLtVJ4ZFUQSoc+tbxejMoRGDsGtllKA4B1fjsOZw/nN8CLNx3Wq9ZNPZf9lXtke8ND+Z8REcYjujKpAvBW4Jsr78PHs/q9Ad7Fq/UTPVgK3Mnh31E4+CiDP/ulKoW9rg3Fo9e6K/k2+d4WMO/g7sLuC3CtCX3g/zkl8lF5l9FRiN9O51vaqd8adUbE+jLzsglKJrhI6poVQcpd8TpFTYmOLBGeU7voG+h1umVrFan17mMBW62FmHgfoDw6+QU+CGnRGm50H4P5VUSykrcAiYy2Gg3kL0WYdrbcHWQ==
+Authentication-Results: dkim=none (message not signed)
+ header.d=none;dmarc=none action=none header.from=nvidia.com;
+Received: from BL0PR12MB2370.namprd12.prod.outlook.com (2603:10b6:207:47::27)
+ by SAVPR12MB999144.namprd12.prod.outlook.com (2603:10b6:806:4e6::18) with
+ Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.9891.15; Fri, 5 Jun
+ 2026 02:03:19 +0000
+Received: from BL0PR12MB2370.namprd12.prod.outlook.com
+ ([fe80::86cf:c3ec:2cf5:74c8]) by BL0PR12MB2370.namprd12.prod.outlook.com
+ ([fe80::86cf:c3ec:2cf5:74c8%5]) with mapi id 15.21.0092.007; Fri, 5 Jun 2026
+ 02:03:19 +0000
+Date: Fri, 5 Jun 2026 10:03:11 +0800
+From: Richard Cheng <icheng@nvidia.com>
+To: sashiko-reviews@lists.linux.dev
+Cc: Davidlohr Bueso <dave@stgolabs.net>, linux-cxl@vger.kernel.org
+Subject: Re: [PATCH 1/5] cxl: Add BI register probing and port initialization
+Message-ID: <aiItL9wmNPDafyFG@MWDK4CY14F>
+References: <20260605003329.2584012-2-dave@stgolabs.net>
+ <20260605013307.DA9421F00898@smtp.kernel.org>
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+Content-Transfer-Encoding: 8bit
+In-Reply-To: <20260605013307.DA9421F00898@smtp.kernel.org>
+X-ClientProxiedBy: KL1PR01CA0087.apcprd01.prod.exchangelabs.com
+ (2603:1096:820:2::27) To BL0PR12MB2370.namprd12.prod.outlook.com
+ (2603:10b6:207:47::27)
 Precedence: bulk
 X-Mailing-List: sashiko-reviews@lists.linux.dev
 List-Id: <sashiko-reviews.lists.linux.dev>
 List-Subscribe: <mailto:sashiko-reviews+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:sashiko-reviews+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii; format=flowed
-Content-Disposition: inline
-In-Reply-To: <6940420B-C9C3-4D60-AB7F-7FBC4B93D855@bytedance.com>
+X-MS-PublicTrafficType: Email
+X-MS-TrafficTypeDiagnostic: BL0PR12MB2370:EE_|SAVPR12MB999144:EE_
+X-MS-Office365-Filtering-Correlation-Id: edada9f0-26f4-42bf-b39f-08dec2a69d47
+X-MS-Exchange-SenderADCheck: 1
+X-MS-Exchange-AntiSpam-Relay: 0
+X-Microsoft-Antispam:
+	BCL:0;ARA:13230040|376014|1800799024|366016|11063799006|4143699003|6133799003|3023799007|56012099006|18002099003|22082099003;
+X-Microsoft-Antispam-Message-Info:
+	xT7x53GsCFCN6e5x2HsfT42DkhKSN0yQW6SIxMgYlpYZ+Y9ROEj0XOCX6w7rYCWqpxurXnRaUOmWcrhNVIvmc8tFjOmHo7oFwYdwK4lSDXSbBCF1n3eYdKS5lY1Pz5yfj2+AV6+2ugC6BHJvt5sAXkNUeW6qI/ZQAAtzEq8LO8UIlG85+CQ31I/8mhqsONwkug1H82NNlG9/zf6JlfpFZ6acHQp0ujyp3eUM/LaEtqu34N4KjCZoBsieQWMekMjrASd8MCtFx9t7UZGUZM13cowXcpxCI/DLAq5gqvKunIQpvwgCycYnu20IXqGtaLb20P6AJkLBSqHNZJWwBEcthR1V/+8SB6jRVertiz3TprCLe5dJ0RM5lDRc2CZPrnWAu0wy+NGyDekRTK/eGLiIx7snEF93o7i1bl+Mz3QOFas4diOxTKn2OeL04zr/oR3H4yXWLi0742s+CxMBh0O7A2iC18xDiL7nbYZUxwtJ87RufIIaRvdAh8/ADVG7P8UZm3EGJq+xfQhU438gI8IQ1rt2F/D2lesZ+himSJ/a/52bJTrB3g/Mu5WqdH/x8VwHQjlPtJAslEkHVzR2Uuhte0O95ITRP2G9CocCEwgB2N4PaThC79Tx9PXlEO6GOhAwJtQ+QFTkoNR3rgq7yo5htxuCOvxWfMJtpqDgsn63cWHgnmXuXCtDLVq7NsxzgVPw
+X-Forefront-Antispam-Report:
+	CIP:255.255.255.255;CTRY:;LANG:en;SCL:1;SRV:;IPV:NLI;SFV:NSPM;H:BL0PR12MB2370.namprd12.prod.outlook.com;PTR:;CAT:NONE;SFS:(13230040)(376014)(1800799024)(366016)(11063799006)(4143699003)(6133799003)(3023799007)(56012099006)(18002099003)(22082099003);DIR:OUT;SFP:1101;
+X-MS-Exchange-AntiSpam-MessageData-ChunkCount: 1
+X-MS-Exchange-AntiSpam-MessageData-0:
+	=?utf-8?B?a1NIVVVSYjM1d1lsQnkxTnJwOStZUHVQeDc5MGk1L2JaMUswakRWMUJCc3Jm?=
+ =?utf-8?B?M25wVUpJdjVGSmxwY2dOTlBLZVVjT1M1V0N5T2dLeDJXRE9wNHg3REZtbDJm?=
+ =?utf-8?B?V0hoaThsVjI4L1UzOWo5Sy9PTkE4SWM0dzRUZEtrZ1NLeVBJN25tUWora0dT?=
+ =?utf-8?B?TmdjT252UDRUTHZKam1RMUJxakJDTUJJMnk0Nm9PMFpVeHUxdkZ6ZHV2d3lM?=
+ =?utf-8?B?ZTI4SFlIbzVWSzM3bFNlMkQ4bjJSaDhDZHkyNGgzYUlwSFNVU3o4Ukh3d1k5?=
+ =?utf-8?B?d2dseDFhYWh5MTFKZWt6Z0ZwRCtSN3B4VG1IMHRaQjA3WDNkQzF4cVVSN0ls?=
+ =?utf-8?B?bEM1U3lVYk9Rdk1GSGwxa1lQaFFnS1ZYOGk4cXVaalNmZFFwd3Z6YW5OUzUy?=
+ =?utf-8?B?YkxsUExNck1ZS2VPcHVwR092dnJxTzRUK2RnNjk2Qysxc2oxOFRHQ3hRVCt6?=
+ =?utf-8?B?SFY2ZldkdFlEWHIwMVgxMVd0MHBOV1BKdlpldTlvdkFaL3JoYjNOVm8weEdr?=
+ =?utf-8?B?TXh5b1cwNUFjczJnT2I1L0lXRnlsZHFvdEpxUnM5RzhZTlZkelJUcnlXalMy?=
+ =?utf-8?B?YXpzY3BFYlFvS1ZVck8zL203bEt1VTFvblhvb3pNMVV6aFNJZFlUUUVoQXpw?=
+ =?utf-8?B?aGdSRFR6R2xITE5KY21yZjR2cXc5QnQ5b1RWclN5YkFrdHpjeFJBRXlLTFBJ?=
+ =?utf-8?B?cW40MFI3OXY4dUllZE5EZGNGcC9FY0IwdERGZEQ0YVZra25TZktNMzF0ekdT?=
+ =?utf-8?B?V3RBelVEU3c1UEFJMDR2dlNZMy9NcjZ6YzJkQUo5bUdHZHNPdm05WVhHRko1?=
+ =?utf-8?B?MEVHejh6YWlHOFZUWG50dEU2QThhakc0QnJjRGlZdnBSdUdGWGx1NzVSUlNT?=
+ =?utf-8?B?b1B3Z0xVM0VCSHN5ZStNUGdtajFxakF2ZnpzT3JLYmFldkRMcTVJMDJwdXU1?=
+ =?utf-8?B?cTB3Uy80NGl4Uk5qTENGWG00NmlKT05KZVdyd2RiVms3aDFBZjJUS29YOU1t?=
+ =?utf-8?B?QVIvellMcStnUVFHb3VaMDZBRXhoaHB6WEsrdG8ycjA4UXR4UzFQRUY4WXpT?=
+ =?utf-8?B?NjIyQWxmenl2dnJORlFic0dwUCtTUWNKeDZYZGVBRFdSYzcvOWVYNXJDTmlB?=
+ =?utf-8?B?bUl3ZmIrck1rNXpXZC93UGdqeFc1RGlzSnJyYitjL1JPS3BWMWZBUnExc3BU?=
+ =?utf-8?B?UHc2VFA4eUJPd1M5V2R0S2R1VGtzcDZJdlhCQWRId2syNXFOckw2Zk41MG9L?=
+ =?utf-8?B?ajByVEVWcVdTZFgrVTdJaTA4TEZ6dDRDTFVSNHJqYVJYK1ZmSXBCeVpGeU5v?=
+ =?utf-8?B?anEvSURBZ1BZRDlVSklwWng5OGNOYXBudkhYS2VnS1J2M1lhMXUyVkcrWnNX?=
+ =?utf-8?B?bXdNSTZlditRVitaVCtxajBMaXlVdDFJNjIreGdmUGVmNDNyTkNVQ3ljTjRO?=
+ =?utf-8?B?Z1NsSEdaaFVPc3lSRXJSbUN3T2YxcXEzdG1zSFJSL3A4UStXd0VlMHFGYnpL?=
+ =?utf-8?B?a0wwVUM3VHgxU3E3R0JYQWdmdDRBZVg5Tm1KM3VkUFhyQTBZeWxWeUZuWkEv?=
+ =?utf-8?B?YjMyMDZBVGlJVFpNK05JNVRyUXpEam53aWxJeVpSSXhKZ3F1V1VHNEpRQzRy?=
+ =?utf-8?B?bkYxYXFUa0doSjRWd0dlN3dicVNhT2FWK1NzcU5BaEdqSGE0UU1rWFVKN29Q?=
+ =?utf-8?B?UUpSRGZyMkpiSFNvc2NwbGJpNDdRV09EUVpVaEVrcEt2NXNvcXRoenk4WmY1?=
+ =?utf-8?B?K3E1N1ZUUzEvYkNKNS82U21vS1VIY2FYeGtxdExVemp2aTM0aUJVaUNHcUE2?=
+ =?utf-8?B?QW5ucDlGRWhhR2dyV1NwRU5HTjB6Z2d2QWt5U2liWEs4VUVJTGJBOG4xYits?=
+ =?utf-8?B?dGcvSHpyMmdyRXYrdEo2MVowbzRyUE1nMUcvZllvWmI4Z01kSzJnNEhJUE1R?=
+ =?utf-8?B?SytCcVNWRHo4SE0vOGswRlE4NEZYS0xjVTNnbW93TFUwVGNKaWVROG1rZW9n?=
+ =?utf-8?B?d2hyK28vTklrMnlDd1llcUNZYi9hYkppaENsaW9LYUE3bE43Ym45NEYwd3BK?=
+ =?utf-8?B?Q0VZV29JbXJsZXRWVldOMGdHazBpSFNsaTJDdHpuWVZhSCtmTWNpRitxQ0RC?=
+ =?utf-8?B?RDFMc1l3ejVlallYa2V0cXdVVDdzSTFySWtQY01wV3ZzaWR0THp0NitxTnlS?=
+ =?utf-8?B?SjkxOWhPa0hrOFFFdGdRb2U1N2RYRUVha1JneTM1M0xVM05IWURabmRYTCs2?=
+ =?utf-8?B?NERqMmNIV2VpUDdVY2lTQ1FSTm9VZk44SkJPdG5EWWN5Mnp6ckM3UzlFVVZs?=
+ =?utf-8?B?L3g1WDhKYVZsYXNUNWRUNnk2eWxURHhzYkhJN085STQ5d1lBVHdWQT09?=
+X-OriginatorOrg: Nvidia.com
+X-MS-Exchange-CrossTenant-Network-Message-Id: edada9f0-26f4-42bf-b39f-08dec2a69d47
+X-MS-Exchange-CrossTenant-AuthSource: BL0PR12MB2370.namprd12.prod.outlook.com
+X-MS-Exchange-CrossTenant-AuthAs: Internal
+X-MS-Exchange-CrossTenant-OriginalArrivalTime: 05 Jun 2026 02:03:19.5942
+ (UTC)
+X-MS-Exchange-CrossTenant-FromEntityHeader: Hosted
+X-MS-Exchange-CrossTenant-Id: 43083d15-7273-40c1-b7db-39efd9ccc17a
+X-MS-Exchange-CrossTenant-MailboxType: HOSTED
+X-MS-Exchange-CrossTenant-UserPrincipalName: 0pbVzOhX5ZAXMYale28xfY/0eoktVexIyfBVZsbgZuUwJAsJTEZlKsyDLHyA+AEIqUdGzM9+lX4namuH8HGttw==
+X-MS-Exchange-Transport-CrossTenantHeadersStamped: SAVPR12MB999144
 
-Hi, Qingwei
-
-On 2026-06-05 00:43, Qingwei Hu wrote:
+On Fri, Jun 05, 2026 at 01:33:07AM +0800, sashiko-bot@kernel.org wrote:
+> Thank you for your contribution! Sashiko AI review found 1 potential issue(s) to consider:
+> - [High] Silent failure to map and configure CXL BI Route Table due to probe sequence mismatch
+> --
+> 
+> commit 34d3cc24691a25107f1dbbcc8e03fc18ffcae164
+> Author: Davidlohr Bueso <dave@stgolabs.net>
+> 
+> cxl: Add BI register probing and port initialization
+> 
+> This commit adds register probing for BI Route Table and BI Decoder capability
+> structures. It introduces helpers to map these structures at dport-creation
+> time and port probe time.
+> 
+> > diff --git a/drivers/cxl/port.c b/drivers/cxl/port.c
+> > index ada51948d52fa..2dd712c5d312a 100644
+> > --- a/drivers/cxl/port.c
+> > +++ b/drivers/cxl/port.c
+> [ ... ]
+> > @@ -58,6 +58,62 @@ static int discover_region(struct device *dev, void *unused)
+> [ ... ]
+> > +static void cxl_port_map_bi(struct cxl_port *port)
+> > +{
+> > +	struct cxl_register_map *map = &port->reg_map;
+> [ ... ]
+> > +	/* map this port's own BI capability */
+> > +	if (is_cxl_endpoint(port)) {
+> > +		if (!map->component_map.bi_decoder.valid) {
+> > +			dev_dbg(&port->dev, "BI Decoder registers not found\n");
+> > +			return;
+> > +		}
+> > +		cap_id = CXL_CM_CAP_CAP_ID_BI_DECODER;
+> > +	} else {
+> > +		if (!map->component_map.bi_rt.valid) {
+> > +			dev_dbg(&port->dev, "BI RT registers not found\n");
+> > +			return;
+> > +		}
+> 
+> [Severity: High]
+> Does this silently fail to map the BI Route Table registers for switch
+> ports?
+> 
+> When called from cxl_switch_port_probe(), the component registers have not
+> been discovered yet. The registers are actually probed and marked valid when
+> the first downstream port is added, which triggers cxl_port_add_dport() to call
+> cxl_port_setup_regs().
+> 
+> Because the valid flag is always false here during switch port probe, the map
+> function returns early and permanently leaves port->regs.bi_rt unmapped. Will
+> this bypass the required hardware commit protocol for the switch upstream port
+> and break Back-Invalidate coherency for downstream endpoints?
+> 
+> > +		cap_id = CXL_CM_CAP_CAP_ID_BI_RT;
+> > +	}
+> > +
+> > +	map->host = &port->dev;
+> > +	if (cxl_map_component_regs(map, &port->regs, BIT(cap_id)))
+> > +		dev_dbg(&port->dev, "Failed to map BI capability 0x%x\n",
+> > +			cap_id);
+> > +}
+> > +
+> >  static int cxl_switch_port_probe(struct cxl_port *port)
+> >  {
+> >  	/* Reset nr_dports for rebind of driver */
+> [ ... ]
+> > @@ -66,6 +122,8 @@ static int cxl_switch_port_probe(struct cxl_port *port)
+> >  	/* Cache the data early to ensure is_visible() works */
+> >  	read_cdat_data(port);
+> >  
+> > +	cxl_port_map_bi(port);
+> > +
+> >  	return 0;
+> >  }
 >
->
->> Ok, I get your point. Agree, Zic64b/Zicbom/cbop/cboz can be implemented
->> on each hart independently (at least spec doesn't say no). With this in
->> mind, the validation of Zic64b should be like this:
->>
->>    if ((riscv_cbom_block_size && riscv_cbom_block_size != 64) ||
->>       (riscv_cbop_block_size && riscv_cbop_block_size != 64) ||
->>       (riscv_cboz_block_size && riscv_cboz_block_size != 64))
->>    return -EINVAL;
->>
->> This will allow :
->> 1. A Zic64b hart with 0, 1, 2, or 3 CBO extension and block_size 64
->>   passes the validation.
->> 2. A Zic64b hart with CBO extensions but block_size is not 64
->>   fails the validation
->>
->> Thanks for the catch.
->>
->> I will fix that in v4.
->>
->> BR,
->> Guodong
->
->Hi Guodong,
->
->Thanks for working on this.
->
->This overlaps with my earlier Zic64b cpufeature patch[1].
 
-Thanks, and you're right that your patch predates mine. Your validation
-was also correct (at least resonate with what I planned to do in v4)
-from the start.
+Hi Davidlohr,
 
->
->and Greg confirmed that Zic64b does not imply support for any CMO
->extensions[2]. It only has meaning for whichever CMO extensions are
+cxl_port_map_bi() is called here before any dport exists.
+Component register discovery happends later in cxl_port_add_dport() and then
+cxl_port_setup_regs() on the first dport.
 
-I'll add a link to quote this in v4. Great info. Thanks for checking
-with them.
+So for switch USP, bi_rt.valid is false at probe time, mapping is skipped
+and never retried. I saw from your cover letter's dmesg
 
->implemented.
->
->Since the Zic64b cpufeature support in this patch overlaps with my
->earlier patch, if you keep this work in your series and base it on that
+"""
+cxl_port port2: BI RT registers not found   ← probe-time map_bi
+...
+cxl_port port2: found BI RT capability      ← later, on first dport
+"""
 
-Yes, I'd like to, and I prefer, take the your patch into this series, and
-credit you properly. In this series, I also added dt-binding, documentation
-and howprobe, and make it consumed by rva23u64 detection.
+Endpoints and RP/DSP paths are fine, but switch BI RT mapping might
+be the gap.
 
->patch, could you please put my sign-off credit for the Zic64b cpufeature part?
->
->For example:
->
->Signed-off-by: Qingwei Hu <qingwei.hu@bytedance.com>
+Let me know what you think, please correct me if I'm wrong, thanks
 
-Yes, since your work came first, I'm happy for you to be the author of the
-cpufeature patch, with me as Co-developed-by:
 
-     From: Qingwei Hu <qingwei.hu@bytedance.com>
-     ...
-     ...
-     Signed-off-by: Qingwei Hu <qingwei.hu@bytedance.com>
-     Co-developed-by: Guodong Xu <docular.xu@gmail.com>
-     Signed-off-by: Guodong Xu <docular.xu@gmail.com>
-
-Let me know whether this works for you.
-
-Thank you for pointing me to your existing patch.
-
-BR,
-Guodong
-
->
->[1] Link: https://lore.kernel.org/all/20260528141630.2741710-1-qingwei.hu@bytedance.com/
->[2] Link: https://lists.riscv.org/g/tech-unprivileged/topic/question_about_zic64b_and/119631059
->
->Best regards,
->Qingwei Hu
+Best regards,
+Richard Cheng.
+> -- 
+> Sashiko AI review · https://sashiko.dev/#/patchset/20260605003329.2584012-1-dave@stgolabs.net?part=1
+> 
