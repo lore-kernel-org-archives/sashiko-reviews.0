@@ -1,377 +1,211 @@
-Received: from out162-62-57-64.mail.qq.com (out162-62-57-64.mail.qq.com [162.62.57.64])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-wm1-f54.google.com (mail-wm1-f54.google.com [209.85.128.54])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4D44A305690
-	for <sashiko-reviews@lists.linux.dev>; Fri,  5 Jun 2026 12:21:20 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=162.62.57.64
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 00714326923
+	for <sashiko-reviews@lists.linux.dev>; Fri,  5 Jun 2026 13:44:17 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.54
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1780662084; cv=none; b=tbvd5ViXXS2cTh4rQmD91UwgdJM4SDKjL0VVu64edCQw8pJFHU3gSBmfSNGlt/Qh5PLTrqr8/KctAsFLuJSEf2kLany8auxtKw+lSw6UjjCNKITIHQlPhmeG99hsSh195mmsW5vOnlYhg3MchwsKnHCeHrKVx6MiEkUL/2M3obU=
+	t=1780667061; cv=none; b=iGQn+SCJpfwcMcnNpTvTa2VC2mrSdRVSL+cNJy64TTCF/eZjqk0grOJoa9XhymYs9wKBg43c4lhNNFst5EBXDca2pVatWO2YmbEyQklvAenbLb/0t/VWNGCO5bNgyd4qUi5hz9PNyvX7WokCH0fb7QfK5ZWKBFhZTTFFJ76v6BY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1780662084; c=relaxed/simple;
-	bh=bOV5TRQo+9JjUAKV6onNxZ1oJuNumU0Oz2tAPHtE7Qg=;
-	h=Message-ID:From:To:Cc:Subject:Date:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=LPHquEec/FC8fUfC3awR0JS2TayJDSzm+rV92X9TZSIoBm6qPoZz1SWsr509um2DjVn9hX2+ViumoGV+DScZmNTBzQnNGfSCXeEqa8rBqEcYcqVzXCEGw/iqDNUW34gwv61K7mLl0E/R5qbQPM/EcsQD9yMzIsWJ0Fd/d21bRLk=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=Red54.com; spf=pass smtp.mailfrom=red54.com; dkim=pass (1024-bit key) header.d=qq.com header.i=@qq.com header.b=dFQ1Oxfm; arc=none smtp.client-ip=162.62.57.64
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=Red54.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=red54.com
+	s=arc-20240116; t=1780667061; c=relaxed/simple;
+	bh=fjf1uQejVeOJ9fn7LjyfkZZCewgephLotbm/g892LTc=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=THckcMUaGzUcSGrIxyMWgWVLRD24Ivxk+GaY+MfxkhYuEMjlThbyyZGw4E+cYTCy172lroztxOf8rh/YBS5OLO+5PTW1JQezJuJQjiZHq6HyRB1qK3Bt3h9ahN/zitIQ6Bf6KeLJ6nyaWIUjCAjxfzjCHjSsHl2+p3kT8BWv1dw=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=suse.com; spf=pass smtp.mailfrom=suse.com; dkim=pass (2048-bit key) header.d=suse.com header.i=@suse.com header.b=EY3ix9WA; arc=none smtp.client-ip=209.85.128.54
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=suse.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=suse.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=qq.com header.i=@qq.com header.b="dFQ1Oxfm"
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=qq.com; s=s201512;
-	t=1780662071; bh=VvcTIIICLW2CoKU0ueeLuYvNlghlhupW0ZVJ9ZaqoQ0=;
-	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=dFQ1OxfmudekIDab0/ooBOxkli+ntmllqRBSSzAh7hpDL3Kpr8U52WLGbVUhyzWgj
-	 BVjxq3XMhXdVfOmefU8zgPIp38DsHBnKHrT3rQ+fphn2FVP1uWlTqZ3+3NDCovk+Rx
-	 ECf78ocrTDC6SXzM3Q6Xm/mLMQkNc+mFgpTaU7IU=
-Received: from mail.red54.com ([139.99.8.57])
-	by newxmesmtplogicsvrszc43-0.qq.com (NewEsmtp) with SMTP
-	id 53502241; Fri, 05 Jun 2026 20:20:53 +0800
-X-QQ-mid: xmsmtpt1780662053tx9d12pgo
-Message-ID: <tencent_3310584FFECD3CBBB563FC8C079ED072F40A@qq.com>
-X-QQ-XMAILINFO: N7orI5eWepzGkR89KWsfQrW1jTxcX0bA75vmWUirsjbqE9+SNuUoAtOFM0csde
-	 ioP/GnbJgSdyxKPygYfFyuk1z4cQO7JDEVh2kEOSieKQqeDtcBzCfXYfECmPMK8dXdqH2L9z8si7
-	 NaYBoUUDkbLtakR647XAeN5NEaLN2yUwm2kgEWedk0uN2Cq+Ccl6SNPSCHotXEW5r1kf+MtkCvtJ
-	 sdUn88LuYxN7e0PMaV8sQw6MCxhnqi4me45LQwrFo8a44Es/U2QNHTlkShheQqffimvS0PU81FtH
-	 dHrb/TB2VWd8vkl1wDc7hxgxhi5mS8tAQaSEcVCj159VL6e7/tixvB62a2SoSQIMkexB8+p8ngC8
-	 Af8pWFni6vqwJadu5y+T6MYI0c90kmDpsdmCEtpc6ngsWCdYCcRDIHOycuU3qjIklrj0gfeRmpR+
-	 bMeL014cVGbq34q8yBGbgIKk7i014qlb1J239cdYH69qWM5GhJeCMS7t1xrtDMHXmSWJpDbrpdRf
-	 102dOk8jAOufxfjEYa1gEjTiqma0qXeLCJYohJ0IeYVopUiggKFx03kE8ZFnV0V2CojthSlbo1je
-	 mGV+QowaODX/Rps2t4Y9437yMi+wtNQrrzfVa7cM8m60AzyTekMCrxSd8fJlxwnap4CMy/hy4onP
-	 bgoPfad9vi9CS83sE7ij0SgOAo51Fy4gAcnmcyzw/zVvdPPPVvrQOMTId3a9cuqJ/qh1IWF88SZ8
-	 N+RksTTu1Lzj3clNyqT49B6TvY4IGlQwQsKB5hFjZukSedu+TYmlTAjGHvE413jNC9BsKadukzW8
-	 E+zCMrNSplXQ9psGUBpi1vj3PS0cKNmC8zmpARxrHZO9+Ad3MFsLgX8pW61TjA5vTkGCjsV8ixqi
-	 C7x5zAUl2oKDDW12Nd8/NrEsJIAurYaIhzLUV1YNwSDiY6Uz9sFA4ywlQBZIWLb/ldmV12ihQq8t
-	 ZBsqZcdBF0qpWYi549SrzlmYiO+1g6S7Oqgz1lBYwKC7iVLVa6lMlbCRFzZzPQHfO6ABg4Uqad0+
-	 D1lqPbqXnJCiRzwKam0nfMD3Ne4SaZUhCUtUDBQK6RIwFuorYVD5XHxm0nGu1OVLHuqidNmvrkdR
-	 zXQ/ray6hAq2D2Yju0tc+huLoXin5uSPkxlTHEv5l6r69rFe8=
-X-QQ-XMRINFO: OWPUhxQsoeAVwkVaQIEGSKwwgKCxK/fD5g==
-Sender: yeking@red54.com
-From: =?UTF-8?q?=E8=B0=A2=E8=87=B4=E9=82=A6=20=28XIE=20Zhibang=29?= <Yeking@Red54.com>
-To: linux-input@vger.kernel.org,
-	hansg@kernel.org,
-	dmitry.torokhov@gmail.com,
-	bentiss@kernel.org,
-	sashiko-bot@kernel.org
-Cc: sashiko-reviews@lists.linux.dev,
-	=?UTF-8?q?=E8=B0=A2=E8=87=B4=E9=82=A6=20=28XIE=20Zhibang=29?= <Yeking@Red54.com>,
-	Jiri Kosina <jikos@kernel.org>,
-	"Mario Limonciello (AMD)" <superm1@kernel.org>,
-	Douglas Anderson <dianders@chromium.org>,
-	linux-kernel@vger.kernel.org
-Subject: [PATCH v2] HID: i2c-hid: Refactor _DSM helper and add i2c-hid-acpi-prp0001 driver
-Date: Fri,  5 Jun 2026 12:20:37 +0000
-X-OQ-MSGID: <20260605122037.53250-1-Yeking@Red54.com>
-X-Mailer: git-send-email 2.43.0
-In-Reply-To: <20260605014101.1889E1F00893@smtp.kernel.org>
-References: <20260605014101.1889E1F00893@smtp.kernel.org>
+	dkim=pass (2048-bit key) header.d=suse.com header.i=@suse.com header.b="EY3ix9WA"
+Received: by mail-wm1-f54.google.com with SMTP id 5b1f17b1804b1-490ace40f4bso22791455e9.3
+        for <sashiko-reviews@lists.linux.dev>; Fri, 05 Jun 2026 06:44:17 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=suse.com; s=google; t=1780667056; x=1781271856; darn=lists.linux.dev;
+        h=in-reply-to:content-transfer-encoding:content-disposition
+         :mime-version:references:message-id:subject:cc:to:from:date:from:to
+         :cc:subject:date:message-id:reply-to;
+        bh=PdsfWOnLuuY9elhMzfIfrh1St5S/FY4B3lK+KDhQ7jU=;
+        b=EY3ix9WAg1TH2UixilQ33APEK5sgRo8DrJUltNG1cw5d+PZMw9mbVAjlLWiJxD8QZ6
+         GdTfvXK0DFABwExkaMcNRX51VPz323cDYEYv24HhJnGc5h0AlrdVT2O2CWk78gv3OvIm
+         QmPk0HL2EZ4XnJcWSQa5uBSUlwiUHWR0nGSz/1RwSe6XgYTsRI9hxRkNB+U513NONy93
+         Il+VV0tA8joSgJjR9oIIc85ro/nRE/P/KZDsKI1GTS+V91yzgmaCqDRWmQRiX4Wm46or
+         UVGK4PtZzOhxMmwViP4o1QfyH/Y6v/HOzuqh0sQc9aGTputex7159VpIe96dx8lYsU3J
+         2W7w==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20251104; t=1780667056; x=1781271856;
+        h=in-reply-to:content-transfer-encoding:content-disposition
+         :mime-version:references:message-id:subject:cc:to:from:date:x-gm-gg
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+        bh=PdsfWOnLuuY9elhMzfIfrh1St5S/FY4B3lK+KDhQ7jU=;
+        b=QN7LlSThT7QBaNWAVWE/Stku6Vbo0OkEWdaJbi4oo+F/fb9zJlsQ5k/s+S1u4l5UfR
+         EmeUpqiSL948OBnw+DxR8Ee37tYnSr2tiCrbApiTnRr95i8zsqyxrgzxs8D5mBas4w8w
+         YSKgy39Wh/CaGmGDMVnO3QG9Q7Iqxo9ZxVAYK0BbgTdKWyCuJnxSg4lsIRLWNrjz9iL9
+         NdTM+gIxwFM2gB81WPUPBJ6+DjLUAYp6gZigXUL2wM1/lOGlDqxnxNderrWR1iW8iH8N
+         pIA1UJGYbAztp9BuNB8an0hsxtpj6Ea72Smi5DYLkOYlAz89dCC3NaDQMBTeGUOktNk3
+         EtVQ==
+X-Gm-Message-State: AOJu0YxayeJxdAkr4h+hd5Fnu4ZRli1VY2UcpcG8LQu0YGgWpLAqFyA6
+	qBaiBBELsiZAyQ6SxL3JxguEeoU/Nx8dMLngPyG50/eJpiWPuckzgrUDN1W3/ZBj+4Y=
+X-Gm-Gg: Acq92OEu2sBqnvOovBXxWZxXbc7y2qhVdMKbJWNqJjgGjhh5FEvhCNM9JxiUL7oO/pb
+	c+Q0jRtYQmftuzLZee0+d0qIr7YlQqEi5HUEentUcXCRPXDbUzNAYnJglrQ36JUTK+Dj+NrrYGB
+	mQi8Aib4Atj9xI7onJHLI2/TXS9ZqbJNCZu87GNcjVyKOazpJxnkrZyWScoIi2aJ/mIlEpqvbUB
+	dVc7SXOPp8IjiRGmoxaVbFUtJCK0+N/j20yK8O2Vz1r4O9iJz3HwtObX31+mLor8DUVhfv4n0rv
+	26s7vP+JN+DyTxOhd4b/JhK2+IaepvuTAypumJY+u43eWtNgdyrVEmYIVwFipazvqI3OaMUp3Ra
+	Yzw/2pwYR33T2s9RoGsrLeLRsbAkEQK/tppBuQ6Wyf9OPxJv+kmboJ0fLR0sJTyL0Gnu3q+riIM
+	LUc1x+DY51KKP0cCoSUv/xu3auK0FOTzRljB3D
+X-Received: by 2002:a05:600c:828f:b0:490:b3fe:9732 with SMTP id 5b1f17b1804b1-490c25dd6aamr54022405e9.16.1780667056226;
+        Fri, 05 Jun 2026 06:44:16 -0700 (PDT)
+Received: from pathway.suse.cz ([176.114.240.130])
+        by smtp.gmail.com with ESMTPSA id 5b1f17b1804b1-490c2d2d11asm63158325e9.1.2026.06.05.06.44.15
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Fri, 05 Jun 2026 06:44:15 -0700 (PDT)
+Date: Fri, 5 Jun 2026 15:44:13 +0200
+From: Petr Mladek <pmladek@suse.com>
+To: Marcos Paulo de Souza <mpdesouza@suse.com>
+Cc: sashiko-reviews@lists.linux.dev, Jiri Kosina <jikos@kernel.org>,
+	Joe Lawrence <joe.lawrence@redhat.com>,
+	Shuah Khan <shuah@kernel.org>, Miroslav Benes <mbenes@suse.cz>,
+	Josh Poimboeuf <jpoimboe@kernel.org>, linux-kernel@vger.kernel.org,
+	linux-kselftest@vger.kernel.org, live-patching@vger.kernel.org
+Subject: Re: [PATCH 1/4] selftests: livepatch: Introduce _remove_mod function
+Message-ID: <aiLSraCKXmqYExqA@pathway.suse.cz>
+References: <20260524-livepatch-unload-on-fail-v1-1-7465de7f741d@suse.com>
+ <20260524235906.267EF1F000E9@smtp.kernel.org>
+ <d329f22e75fd01f2250490e4cba87f064a726f52.camel@suse.com>
 Precedence: bulk
 X-Mailing-List: sashiko-reviews@lists.linux.dev
 List-Id: <sashiko-reviews.lists.linux.dev>
 List-Subscribe: <mailto:sashiko-reviews+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:sashiko-reviews+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
+Content-Type: text/plain; charset=iso-8859-1
+Content-Disposition: inline
 Content-Transfer-Encoding: 8bit
+In-Reply-To: <d329f22e75fd01f2250490e4cba87f064a726f52.camel@suse.com>
 
-Move the _DSM call that gets the HID descriptor address from
-i2c-hid-acpi.c into i2c-hid-acpi.h as a static inline so both the ACPI
-and the new PRP0001 driver can use it. While refactoring, move the
-blacklist check and the _DSM call to the top of probe() to avoid a
-pointless alloc when the device is blacklisted or does not implement the
-_DSM.
+On Mon 2026-05-25 08:49:10, Marcos Paulo de Souza wrote:
+> On Sun, 2026-05-24 at 23:59 +0000, sashiko-bot@kernel.org wrote:
+> > Thank you for your contribution! Sashiko AI review found 1 potential
+> > issue(s) to consider:
+> > - [Medium] `_remove_mod` uses `die()` which will terminate the script
+> > during cleanup operations.
+> > --
+> > 
+> > commit 7b1591f4e5c3b351136e7fe2821eb2e15ae59ad0
+> > Author: Marcos Paulo de Souza <mpdesouza@suse.com>
+> > 
+> > selftests: livepatch: Introduce _remove_mod function
+> > 
+> > This commit introduces the _remove_mod internal function to remove a
+> > loaded
+> > module, intended to be used during cleanup when a testcase fails. It
+> > also
+> > refactors unload_mod to use this new helper function.
+> > 
+> > > diff --git a/tools/testing/selftests/livepatch/functions.sh
+> > > b/tools/testing/selftests/livepatch/functions.sh
+> > > index 2bc50271729c6..3ec0b7962fc5c 100644
+> > > --- a/tools/testing/selftests/livepatch/functions.sh
+> > > +++ b/tools/testing/selftests/livepatch/functions.sh
+> > 
+> > [ ... ]
+> > 
+> > > @@ -241,9 +241,10 @@ function load_failing_mod() {
+> > >  	log "$ret"
+> > >  }
+> > >  
+> > > -# unload_mod(modname) - unload a kernel module
+> > > +# _remove_mod(modname) - Internal function to remove a loaded
+> > > module.
+> > > +#                        Use unload_mod() instead, which also
+> > > updates TEST_MODS tracking.
+> > >  #	modname - module name to unload
+> > > -function unload_mod() {
+> > > +function _remove_mod() {
+> > >  	local mod="$1"
+> > >  
+> > >  	# Wait for module reference count to clear ...
+> > > @@ -261,6 +262,14 @@ function unload_mod() {
+> > >  		die "failed to unload module $mod (/sys/module)"
+> > 
+> > [Severity: Medium]
+> > The commit message notes this function will be used to remove loaded
+> > modules
+> > when a testcase fails. If used in a cleanup path (such as a bash EXIT
+> > trap),
+> > will calling die() here terminate the script prematurely?
+> > 
+> > If a module fails to unload (for example, if its refcount doesn't
+> > drop),
+> > die() executes exit 1. Inside a trap, this aborts the rest of the
+> > cleanup process. This could skip unloading any remaining modules and
+> > prevent final cleanup operations like pop_config() from running,
+> > potentially
+> > leaving kernel tracing persistently enabled and polluting the system
+> > state
+> > for subsequent tests.
+> 
+> The system is already polluted when a testcase fails nowadays, since a
+> module is kept loaded either way, making the next tests to fail if they
+> also try to lead the same modules.
+> 
+> The current approach is trying to make it more reliable.
 
-Some devices, for example the Lenovo KaiTian N60d and Inspur CP300L3,
-are declared with _HID "PRP0001" and _DSD compatible "hid-over-i2c" but
-lack "hid-descr-addr" from the _DSD and provide the HID descriptor
-address only through an ACPI _DSM. The OF driver fails to probe them
-because it requires hid-descr-addr. Add a new driver that handles these
-devices by calling the shared _DSM helper.
+I believe that Sashiko suggested that the clean up path should not
+use "die" or "exit" when something fails. It should try to continue
+with the next cleanup task.
 
-Fixes: b33752c30023 ("HID: i2c-hid: Reorganize so ACPI and OF are separate modules")
-Signed-off-by: è°¢è‡´é‚¦ (XIE Zhibang) <Yeking@Red54.com>
----
-v2: Name the unused parameter and document why
-acpi_device_fix_up_power() is skipped.
+I remember that we even used the following in rpm post install scripts:
 
- drivers/hid/i2c-hid/Kconfig                | 18 ++++
- drivers/hid/i2c-hid/Makefile               |  1 +
- drivers/hid/i2c-hid/i2c-hid-acpi-prp0001.c | 96 ++++++++++++++++++++++
- drivers/hid/i2c-hid/i2c-hid-acpi.c         | 48 +++--------
- drivers/hid/i2c-hid/i2c-hid-acpi.h         | 32 ++++++++
- 5 files changed, 159 insertions(+), 36 deletions(-)
- create mode 100644 drivers/hid/i2c-hid/i2c-hid-acpi-prp0001.c
- create mode 100644 drivers/hid/i2c-hid/i2c-hid-acpi.h
+    command || true
 
-diff --git a/drivers/hid/i2c-hid/Kconfig b/drivers/hid/i2c-hid/Kconfig
-index e8d51f410cc1..7db8b2abff78 100644
---- a/drivers/hid/i2c-hid/Kconfig
-+++ b/drivers/hid/i2c-hid/Kconfig
-@@ -22,6 +22,24 @@ config I2C_HID_ACPI
- 	  will be called i2c-hid-acpi.  It will also build/depend on the
- 	  module i2c-hid.
- 
-+config I2C_HID_ACPI_PRP0001
-+	tristate "Driver for PRP0001 devices missing hid-descr-addr"
-+	depends on ACPI
-+	depends on DRM || !DRM
-+	select I2C_HID_CORE
-+	help
-+	  Say Y here if you want support for I2C HID touchpads that
-+	  are declared with _HID "PRP0001" and _DSD compatible
-+	  "hid-over-i2c" but lack the "hid-descr-addr" property from
-+	  the _DSD. The HID descriptor address is instead provided
-+	  through an ACPI _DSM. Known affected devices include the
-+	  Lenovo KaiTian N60d and Inspur CP300L3.
-+
-+	  If unsure, say N.
-+
-+	  This support is also available as a module. If so, the
-+	  module will be called i2c-hid-acpi-prp0001.
-+
- config I2C_HID_OF
- 	tristate "HID over I2C transport layer Open Firmware driver"
- 	# No "depends on OF" because this can also be used for manually
-diff --git a/drivers/hid/i2c-hid/Makefile b/drivers/hid/i2c-hid/Makefile
-index 55bd5e0f35af..da420c1a8ec6 100644
---- a/drivers/hid/i2c-hid/Makefile
-+++ b/drivers/hid/i2c-hid/Makefile
-@@ -9,6 +9,7 @@ i2c-hid-objs					=  i2c-hid-core.o
- i2c-hid-$(CONFIG_DMI)				+= i2c-hid-dmi-quirks.o
- 
- obj-$(CONFIG_I2C_HID_ACPI)			+= i2c-hid-acpi.o
-+obj-$(CONFIG_I2C_HID_ACPI_PRP0001)		+= i2c-hid-acpi-prp0001.o
- obj-$(CONFIG_I2C_HID_OF)			+= i2c-hid-of.o
- obj-$(CONFIG_I2C_HID_OF_ELAN)			+= i2c-hid-of-elan.o
- obj-$(CONFIG_I2C_HID_OF_GOODIX)			+= i2c-hid-of-goodix.o
-diff --git a/drivers/hid/i2c-hid/i2c-hid-acpi-prp0001.c b/drivers/hid/i2c-hid/i2c-hid-acpi-prp0001.c
-new file mode 100644
-index 000000000000..b6b64e868f36
---- /dev/null
-+++ b/drivers/hid/i2c-hid/i2c-hid-acpi-prp0001.c
-@@ -0,0 +1,96 @@
-+// SPDX-License-Identifier: GPL-2.0-only
-+/*
-+ * HID over I2C driver for PRP0001 devices missing hid-descr-addr
-+ *
-+ * Some devices, for example the Lenovo KaiTian N60d and Inspur CP300L3, use
-+ * _HID "PRP0001" with _DSD compatible "hid-over-i2c" but lack "hid-descr-addr"
-+ * from the _DSD. The HID descriptor address is provided only through an ACPI
-+ * _DSM. The TPD0 node in the DSDT shows _DSM Function 1 returning 0x20.
-+ *
-+ * Copyright (C) 2026 è°¢è‡´é‚¦ (XIE Zhibang) <Yeking@Red54.com>
-+ */
-+
-+#include <linux/delay.h>
-+#include <linux/device.h>
-+#include <linux/i2c.h>
-+#include <linux/module.h>
-+#include <linux/of.h>
-+
-+#include "i2c-hid.h"
-+#include "i2c-hid-acpi.h"
-+
-+static int i2c_hid_acpi_prp0001_power_up(struct i2chid_ops *ops)
-+{
-+	/* give the device time to power up */
-+	msleep(250);
-+	return 0;
-+}
-+
-+static struct i2chid_ops i2c_hid_acpi_prp0001_ops = {
-+	.power_up = i2c_hid_acpi_prp0001_power_up,
-+	/*
-+	 * No .restore_sequence needed: the _DSM on these devices returns a
-+	 * constant (0x20) with no side effects, unlike some PNP0C50 _DSM
-+	 * implementations that switch the hardware between PS/2 and I2C modes.
-+	 */
-+};
-+
-+static int i2c_hid_acpi_prp0001_probe(struct i2c_client *client)
-+{
-+	struct device *dev = &client->dev;
-+	struct acpi_device *adev;
-+	u16 hid_descriptor_address;
-+	int ret;
-+
-+	/* If hid-descr-addr is present, let i2c-hid-of handle it */
-+	if (device_property_present(dev, "hid-descr-addr"))
-+		return -ENODEV;
-+
-+	adev = ACPI_COMPANION(dev);
-+	if (!adev)
-+		return -ENODEV;
-+
-+	ret = i2c_hid_acpi_get_descriptor(adev);
-+	if (ret < 0)
-+		return ret;
-+	hid_descriptor_address = ret;
-+
-+	/*
-+	 * No acpi_device_fix_up_power() needed: TPD0 has no _PS0, _PS3, _PSC
-+	 * or _PRx methods and follows I2C bus power.
-+	 */
-+	return i2c_hid_core_probe(client, &i2c_hid_acpi_prp0001_ops,
-+				  hid_descriptor_address, 0);
-+}
-+
-+static const struct of_device_id i2c_hid_acpi_prp0001_of_match[] = {
-+	{ .compatible = "hid-over-i2c" },
-+	{},
-+};
-+MODULE_DEVICE_TABLE(of, i2c_hid_acpi_prp0001_of_match);
-+
-+static const struct i2c_device_id i2c_hid_acpi_prp0001_id[] = {
-+	{ .name = "hid-over-i2c" },
-+	{ }
-+};
-+MODULE_DEVICE_TABLE(i2c, i2c_hid_acpi_prp0001_id);
-+
-+static struct i2c_driver i2c_hid_acpi_prp0001_driver = {
-+	.driver = {
-+		.name	= "i2c_hid_acpi_prp0001",
-+		.pm	= &i2c_hid_core_pm,
-+		.probe_type = PROBE_PREFER_ASYNCHRONOUS,
-+		.of_match_table = of_match_ptr(i2c_hid_acpi_prp0001_of_match),
-+	},
-+
-+	.probe		= i2c_hid_acpi_prp0001_probe,
-+	.remove		= i2c_hid_core_remove,
-+	.shutdown	= i2c_hid_core_shutdown,
-+	.id_table	= i2c_hid_acpi_prp0001_id,
-+};
-+
-+module_i2c_driver(i2c_hid_acpi_prp0001_driver);
-+
-+MODULE_DESCRIPTION("HID over I2C driver for PRP0001 devices missing hid-descr-addr");
-+MODULE_AUTHOR("è°¢è‡´é‚¦ (XIE Zhibang) <Yeking@Red54.com>");
-+MODULE_LICENSE("GPL");
-diff --git a/drivers/hid/i2c-hid/i2c-hid-acpi.c b/drivers/hid/i2c-hid/i2c-hid-acpi.c
-index abd700a101f4..f0bcfb2663ef 100644
---- a/drivers/hid/i2c-hid/i2c-hid-acpi.c
-+++ b/drivers/hid/i2c-hid/i2c-hid-acpi.c
-@@ -25,9 +25,9 @@
- #include <linux/kernel.h>
- #include <linux/module.h>
- #include <linux/pm.h>
--#include <linux/uuid.h>
- 
- #include "i2c-hid.h"
-+#include "i2c-hid-acpi.h"
- 
- struct i2c_hid_acpi {
- 	struct i2chid_ops ops;
-@@ -48,39 +48,11 @@ static const struct acpi_device_id i2c_hid_acpi_blacklist[] = {
- 	{ }
- };
- 
--/* HID IÂ²C Device: 3cdff6f7-4267-4555-ad05-b30a3d8938de */
--static guid_t i2c_hid_guid =
--	GUID_INIT(0x3CDFF6F7, 0x4267, 0x4555,
--		  0xAD, 0x05, 0xB3, 0x0A, 0x3D, 0x89, 0x38, 0xDE);
--
--static int i2c_hid_acpi_get_descriptor(struct i2c_hid_acpi *ihid_acpi)
--{
--	struct acpi_device *adev = ihid_acpi->adev;
--	acpi_handle handle = acpi_device_handle(adev);
--	union acpi_object *obj;
--	u16 hid_descriptor_address;
--
--	if (acpi_match_device_ids(adev, i2c_hid_acpi_blacklist) == 0)
--		return -ENODEV;
--
--	obj = acpi_evaluate_dsm_typed(handle, &i2c_hid_guid, 1, 1, NULL,
--				      ACPI_TYPE_INTEGER);
--	if (!obj) {
--		acpi_handle_err(handle, "Error _DSM call to get HID descriptor address failed\n");
--		return -ENODEV;
--	}
--
--	hid_descriptor_address = obj->integer.value;
--	ACPI_FREE(obj);
--
--	return hid_descriptor_address;
--}
--
- static void i2c_hid_acpi_restore_sequence(struct i2chid_ops *ops)
- {
- 	struct i2c_hid_acpi *ihid_acpi = container_of(ops, struct i2c_hid_acpi, ops);
- 
--	i2c_hid_acpi_get_descriptor(ihid_acpi);
-+	i2c_hid_acpi_get_descriptor(ihid_acpi->adev);
+It is useful when the script does several independent actions
+and we would like to process as many of them as possible.
+
+For example, in our case, if one module can't be unloaded
+then we might still try to remove other modules and
+call pop_config.
+
+So, we should somehow distinguish when some code paths are
+called in the script and when in the clean up part.
+
+I would export some variable in the cleanup() function and
+check it in the called code paths, for example:
+
+diff --git a/tools/testing/selftests/livepatch/functions.sh b/tools/testing/selftests/livepatch/functions.sh
+index 9c98bbb8b725..eebc7f193d98 100644
+--- a/tools/testing/selftests/livepatch/functions.sh
++++ b/tools/testing/selftests/livepatch/functions.sh
+@@ -62,7 +62,9 @@ function has_kdir() {
+ function die() {
+ 	log "ERROR: $1"
+ 	echo "ERROR: $1" >&2
+-	exit 1
++	if [ -z "$in_klp_cleanup" ] ; then
++	    exit 1
++	fi
  }
  
- static void i2c_hid_acpi_shutdown_tail(struct i2chid_ops *ops)
-@@ -93,23 +65,27 @@ static void i2c_hid_acpi_shutdown_tail(struct i2chid_ops *ops)
- static int i2c_hid_acpi_probe(struct i2c_client *client)
- {
- 	struct device *dev = &client->dev;
-+	struct acpi_device *adev = ACPI_COMPANION(dev);
- 	struct i2c_hid_acpi *ihid_acpi;
- 	u16 hid_descriptor_address;
- 	int ret;
+ function push_config() {
+@@ -128,6 +130,8 @@ function set_ftrace_enabled() {
+ }
  
-+	if (acpi_match_device_ids(adev, i2c_hid_acpi_blacklist) == 0)
-+		return -ENODEV;
+ function cleanup() {
++	export in_klp_cleanup=1
 +
-+	ret = i2c_hid_acpi_get_descriptor(adev);
-+	if (ret < 0)
-+		return ret;
-+	hid_descriptor_address = ret;
-+
- 	ihid_acpi = devm_kzalloc(&client->dev, sizeof(*ihid_acpi), GFP_KERNEL);
- 	if (!ihid_acpi)
- 		return -ENOMEM;
- 
--	ihid_acpi->adev = ACPI_COMPANION(dev);
-+	ihid_acpi->adev = adev;
- 	ihid_acpi->ops.shutdown_tail = i2c_hid_acpi_shutdown_tail;
- 	ihid_acpi->ops.restore_sequence = i2c_hid_acpi_restore_sequence;
- 
--	ret = i2c_hid_acpi_get_descriptor(ihid_acpi);
--	if (ret < 0)
--		return ret;
--	hid_descriptor_address = ret;
--
- 	acpi_device_fix_up_power(ihid_acpi->adev);
- 
- 	return i2c_hid_core_probe(client, &ihid_acpi->ops,
-diff --git a/drivers/hid/i2c-hid/i2c-hid-acpi.h b/drivers/hid/i2c-hid/i2c-hid-acpi.h
-new file mode 100644
-index 000000000000..8cebbeebcc23
---- /dev/null
-+++ b/drivers/hid/i2c-hid/i2c-hid-acpi.h
-@@ -0,0 +1,32 @@
-+/* SPDX-License-Identifier: GPL-2.0-only */
-+
-+#ifndef _I2C_HID_ACPI_H
-+#define _I2C_HID_ACPI_H
-+
-+#include <linux/acpi.h>
-+#include <linux/uuid.h>
-+
-+static inline int i2c_hid_acpi_get_descriptor(struct acpi_device *adev)
-+{
-+	/* HID IÂ²C Device: 3cdff6f7-4267-4555-ad05-b30a3d8938de */
-+	static const guid_t i2c_hid_guid =
-+		GUID_INIT(0x3CDFF6F7, 0x4267, 0x4555,
-+			  0xAD, 0x05, 0xB3, 0x0A, 0x3D, 0x89, 0x38, 0xDE);
-+
-+	acpi_handle handle = acpi_device_handle(adev);
-+	union acpi_object *obj;
-+	u16 addr;
-+
-+	obj = acpi_evaluate_dsm_typed(handle, &i2c_hid_guid,
-+				      1, 1, NULL, ACPI_TYPE_INTEGER);
-+	if (!obj) {
-+		acpi_handle_err(handle, "Error _DSM call to get HID descriptor address failed\n");
-+		return -ENODEV;
-+	}
-+
-+	addr = obj->integer.value;
-+	ACPI_FREE(obj);
-+	return addr;
-+}
-+
-+#endif
--- 
-2.54.0
+ 	# Remove leftover modules in reverse order to handle dependencies
+ 	for mod_item in "${TEST_MODS[@]}"; do
+ 		if is_livepatch_mod "$mod_item"; then
 
+
+Finally, I think how to split the changes into patches.
+
+I think that the above changes which add "in_klp_cleanup" might be a
+separate patch,
+
+But the original 1st patch looked weird. It did split _remove_mod()
+and talked about TEST_MODS tracking but the tracking was added in
+2nd patch. I would prefer to split the function and add the tracking
+in the same patch so that it is obvious why it is split and what
+is the difference.
+
+Best Regards,
+Petr
