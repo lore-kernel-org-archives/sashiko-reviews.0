@@ -1,315 +1,193 @@
-Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
+Received: from SN4PR2101CU001.outbound.protection.outlook.com (mail-southcentralusazon11012060.outbound.protection.outlook.com [40.93.195.60])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6B31F37DE84;
-	Fri,  5 Jun 2026 23:22:21 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
-ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1780701743; cv=none; b=H8BbvZBuohjmaGq1N3TNSPWjdYYDuLLP+C7ZPBhTDzG66sy4/60HyHOyiO076CzILcvL5RC2hQIvwCiEqaNsZYU/Q+DsIa4ItBGTXclsUUL9MutTNg7BYYhl8ZwLG8kDVFcAMZITIKrQZlpTUyZ6PYFT/SYB06dBeVuCd/zMwvg=
-ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1780701743; c=relaxed/simple;
-	bh=cL7oGNpHSaQoYe12JSJR8CfNlXbRCiOtU/3sdLnZHsw=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=MJTebiNeYHzCUCnd3lx7IQAxzf39ZG1LowkBBxBfZZbTYr8jeXG5GXlOZms5mgmLs+kVGDjIR+CIs1Zlm4Ty/0axR3pQJ9nJedlf9owFbk87x9hda3mUjmntzjyAnoB7S3MyIx5+TSk4+QPuXoO2ZqdFYP61Q7ktSyUA++MWLl8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=dwKyQC4A; arc=none smtp.client-ip=100.103.45.18
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BC8063D3CF4
+	for <sashiko-reviews@lists.linux.dev>; Fri,  5 Jun 2026 23:26:48 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=fail smtp.client-ip=40.93.195.60
+ARC-Seal:i=2; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
+	t=1780702010; cv=fail; b=asqdsqApeEEwLcprklWiuhSdGsXoDNGoIf0V6fpT1tgEZlZ2SQ+BS5H9S2Vj5OdkTDLtZNIcUW8fBgkEdMFfj8w/U7c3uc8AAfFsoLn/6F0FVsSeaHds8tbqnt67STUIeKUGKBHTKx5/ItDRT9A23mmcGZLk2luH4oP8/lT8Xcc=
+ARC-Message-Signature:i=2; a=rsa-sha256; d=subspace.kernel.org;
+	s=arc-20240116; t=1780702010; c=relaxed/simple;
+	bh=L41a86jmyLp6lO7jhykgClXroux/cGkqLO/dMTFRjoI=;
+	h=From:To:CC:Subject:In-Reply-To:References:Date:Message-ID:
+	 MIME-Version:Content-Type; b=HitzVQGGJRsNM2WszkHu9HN2RotuH5gCOOqUEZeM0SOHfjU3gSMoEeQeHOV7ahA/FFjvC0OtwUnSPykstgiijSonFeeHnYb9XZQJRVR4wlP0zmZLXjbb3ahJfgA0vpsNgHiPlVJS0RSRP1MX+awkKvC5MdzXsBXZ2CEn68CZxCo=
+ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=amd.com; spf=fail smtp.mailfrom=amd.com; dkim=pass (1024-bit key) header.d=amd.com header.i=@amd.com header.b=hv7x+s/+; arc=fail smtp.client-ip=40.93.195.60
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=amd.com
+Authentication-Results: smtp.subspace.kernel.org; spf=fail smtp.mailfrom=amd.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="dwKyQC4A"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 417271F00893;
-	Fri,  5 Jun 2026 23:22:21 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=kernel.org;
-	s=k20260515; t=1780701741;
-	bh=iTvKGfUHfEwHAHby9sTb+8K0urlQPbYcbCT1uaTMREY=;
-	h=Date:From:To:Cc:Subject:References:In-Reply-To;
-	b=dwKyQC4ALEp9ZQ4BR+GlBJwPhN+IAIPY7mlNOVFLOMo9xViUUpHasH0acor0R2sLJ
-	 rzUb5OSWQ88hn9hF2Wj/ipjzgjTw/a6H5xtYy4DBof07GZmL03EjCQLxR9f9M9ouMq
-	 P3icHRNbZ8Gk4uqkks/93wUrxxA10FeDeC+HasAP8C4c3eA17rgnh8jOie6tCMBdYd
-	 MnrCEN8/hJXFS/LWGtQh0x7qK/XoBBO+bUDKy+CIa3vGFx9oRc0iqAl4nxfMMejdOl
-	 gRIhlkuXxe/e2z+SVQWRfUbGm9HM2Zhn8H6TvByAJSOz38T5H4mxHWSFy5DZ4G1HER
-	 Kgo98O0+NKWsw==
-Date: Fri, 5 Jun 2026 16:22:20 -0700
-From: Namhyung Kim <namhyung@kernel.org>
-To: sashiko-reviews@lists.linux.dev
-Cc: linux-perf-users@vger.kernel.org
-Subject: Re: [PATCH] perf jitdump: Fix a build error with ASAN
-Message-ID: <aiNaLKTyJWg9sEtb@google.com>
-References: <20260605064932.34316-1-namhyung@kernel.org>
- <20260605070349.E27A41F00893@smtp.kernel.org>
+	dkim=pass (1024-bit key) header.d=amd.com header.i=@amd.com header.b="hv7x+s/+"
+ARC-Seal: i=1; a=rsa-sha256; s=arcselector10001; d=microsoft.com; cv=none;
+ b=fcm7PXON8ynnwSlPigwCsWTs8QLUPJNKbgc1/ERuPx1kSSsqLqfFflEp2EWcxEo5olJy9ddN+QM3XBgzcWhX34jPXKL9Njncw4apGeYQjWnWYjOYZLLLyS+T+A0s/i6f3sbZwry5c6geJ3nsArPqYy51w88JgErE/t7k1hTHXNfIbs+TPQjkua+qiEteRu7l4D23Ng1OaKrC8AMCFSszRL4H+8F9HUQhOalNwJHTlf10EIXJ6Gy/mzomMPQ8OZdVCTiRvG1LuFvbC7Pt1MzyMvV4GbE7ZyrhawW2hy1m1/bQMjiA3+PEMK6Q12N5DAWf1ew7ZrcyTjJvM1hSjjwK5w==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com;
+ s=arcselector10001;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
+ bh=ymCQEqQpsXU+m7DMNHrYlVlphOPHa1sLKZjhD0FeCt4=;
+ b=R59Ftl7ocauxXQSgYY0vIgp4EXC8Xf6q27HG6qw0l2Edzeh6o4lQFjuzi+Z+DsAO7lgEral68urHIcz1rOFxUkIdg1ZTlJx/bn1EZ/QVIuDrzH5dOlBKDRFRTvAorXaFL6B07mj7mAbyR/zjjBEbYvYJ+PdnGFLYaAxORV3PVpqfGlPLLzeil0nwIsb44RP6zIQbMAXXQPdbhD3g1oYFOGEjOXvutT7D+0RZ4/vT5KH+ME9qySJlCrplpMRcDsLDIOMZT3t5vO+XVXEaCQgCuoDxN2jeUSKWHHsnPMgaRwf8OxGe8RVGQKbG3VC3n8AeZGqzJcRBc8/eOyzs/5XxjQ==
+ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass (sender ip is
+ 165.204.84.17) smtp.rcpttodomain=lists.linux.dev smtp.mailfrom=amd.com;
+ dmarc=pass (p=quarantine sp=quarantine pct=100) action=none
+ header.from=amd.com; dkim=none (message not signed); arc=none (0)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=amd.com; s=selector1;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
+ bh=ymCQEqQpsXU+m7DMNHrYlVlphOPHa1sLKZjhD0FeCt4=;
+ b=hv7x+s/+i7khvEPG40fN+qoaPpUR6cOnNKVK+Vey3MRrrF3h6mqItHB9S1HqJJV3nGlonIgB+ooEguSz2+7j5YsxUa2D9oxtFxOkVUU2ZJkOonzmU6z3B09X8MCQtp5knrBhEwgnFn32mBuEE8mVj6H/vaZRn6MidwpGB5Q2/bE=
+Received: from CY5PR15CA0146.namprd15.prod.outlook.com (2603:10b6:930:67::15)
+ by LV5PR12MB9779.namprd12.prod.outlook.com (2603:10b6:408:301::14) with
+ Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.21.92.8; Fri, 5 Jun 2026
+ 23:26:45 +0000
+Received: from DS2PEPF00003443.namprd04.prod.outlook.com
+ (2603:10b6:930:67:cafe::ad) by CY5PR15CA0146.outlook.office365.com
+ (2603:10b6:930:67::15) with Microsoft SMTP Server (version=TLS1_3,
+ cipher=TLS_AES_256_GCM_SHA384) id 15.21.92.9 via Frontend Transport; Fri, 5
+ Jun 2026 23:26:44 +0000
+X-MS-Exchange-Authentication-Results: spf=pass (sender IP is 165.204.84.17)
+ smtp.mailfrom=amd.com; dkim=none (message not signed)
+ header.d=none;dmarc=pass action=none header.from=amd.com;
+Received-SPF: Pass (protection.outlook.com: domain of amd.com designates
+ 165.204.84.17 as permitted sender) receiver=protection.outlook.com;
+ client-ip=165.204.84.17; helo=satlexmb07.amd.com; pr=C
+Received: from satlexmb07.amd.com (165.204.84.17) by
+ DS2PEPF00003443.mail.protection.outlook.com (10.167.17.70) with Microsoft
+ SMTP Server (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
+ 15.21.92.5 via Frontend Transport; Fri, 5 Jun 2026 23:26:44 +0000
+Received: from localhost (10.180.168.240) by satlexmb07.amd.com
+ (10.181.42.216) with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.2562.41; Fri, 5 Jun
+ 2026 18:26:43 -0500
+From: Nathan Lynch <nathan.lynch@amd.com>
+To: <sashiko-reviews@lists.linux.dev>
+CC: <vkoul@kernel.org>, <Frank.Li@kernel.org>, <linux-pci@vger.kernel.org>,
+	<dmaengine@vger.kernel.org>
+Subject: Re: [PATCH v2 08/23] dmaengine: sdxi: Install administrative context
+In-Reply-To: <20260513031712.0C8EDC2BCB0@smtp.kernel.org>
+References: <20260511-sdxi-base-v2-8-889cfed17e3f@amd.com>
+ <20260513031712.0C8EDC2BCB0@smtp.kernel.org>
+Date: Fri, 5 Jun 2026 18:26:42 -0500
+Message-ID: <87pl24d0wd.fsf@amd.com>
 Precedence: bulk
 X-Mailing-List: sashiko-reviews@lists.linux.dev
 List-Id: <sashiko-reviews.lists.linux.dev>
 List-Subscribe: <mailto:sashiko-reviews+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:sashiko-reviews+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-Content-Transfer-Encoding: 8bit
-In-Reply-To: <20260605070349.E27A41F00893@smtp.kernel.org>
+Content-Type: text/plain
+X-ClientProxiedBy: satlexmb07.amd.com (10.181.42.216) To satlexmb07.amd.com
+ (10.181.42.216)
+X-EOPAttributedMessage: 0
+X-MS-PublicTrafficType: Email
+X-MS-TrafficTypeDiagnostic: DS2PEPF00003443:EE_|LV5PR12MB9779:EE_
+X-MS-Office365-Filtering-Correlation-Id: e8894267-39a3-4739-3575-08dec359e7d8
+X-MS-Exchange-SenderADCheck: 1
+X-MS-Exchange-AntiSpam-Relay: 0
+X-Microsoft-Antispam:
+	BCL:0;ARA:13230040|376014|36860700016|82310400026|1800799024|4143699003|56012099006|11063799006|5023799004|6133799003|18002099003|22082099003;
+X-Microsoft-Antispam-Message-Info:
+	6Gi5YIWoAPbG5c0xoEfvX/+Ud4cQhhobnWRyIQJbq2HxFMczkOaGXgvQs1KzAjDk+3F3tbMKHdahkuYqYgBxlqPzqVuBoUXKX0EqgvRog2jEuz8CLiU+Mqgw8NyKdCN8IoDXh3OYGbqbY9hi88mtuJJMjiZzgxjon8i+ZazbSpNPIPauWMPsRPFSqQJis/Sp4ngnuqfMIwZHv6YThn1RelOQmtXGBIXB9m32YmswYZp4JNbJ6suVlPEWuWb1T0OzeqAVVRKDMIn+FvYAjHelmTic3fX6H36/MAzuqrvPDoRR5GiPGzkVTcAa4flxNHuLpAsZfsNudh5xU9f7dRD42NT2BCtsFbycbLolnDpD5+bmVyA7IOAHmeRx7RKNlv6LKz20sNEbI1WYjNTEgOgHDHZQOXUKQtIYHbDhP60K7+zNH/l8BGbgpUR+QOx5GxfeHwu4PkLXS2ZE4RlbTbdY2azlSTxmQm1SasmKam1XXI+phgiVx7jMLs5P/MBho8aFUrqltHIv93Eaf7jdw4If4zLqsN3jWIWkMH3aQRajPV3kQdyuVFlarpjAKMZPNF2zOPtupNdPOuq/3hl97Ua6yH730zmzMMFm5bm4ywYzfMF+rh+g8Lcm4o8h/9+2Bns+Wg2S3Ipl6sU8BVJLu2SitsVr27PVgfFczpN01tv3KW7ATvxRWKKWIuyEk60DmK0VW0K1KBQBuSYswdeqrC0x9f7C+9/xHVVJKnbFiju5wWY=
+X-Forefront-Antispam-Report:
+	CIP:165.204.84.17;CTRY:US;LANG:en;SCL:1;SRV:;IPV:NLI;SFV:NSPM;H:satlexmb07.amd.com;PTR:InfoDomainNonexistent;CAT:NONE;SFS:(13230040)(376014)(36860700016)(82310400026)(1800799024)(4143699003)(56012099006)(11063799006)(5023799004)(6133799003)(18002099003)(22082099003);DIR:OUT;SFP:1101;
+X-MS-Exchange-AntiSpam-MessageData-ChunkCount: 1
+X-MS-Exchange-AntiSpam-MessageData-0:
+	+9lwD7cfL4fthK6ns+gmBBAlUObsALR4jO/bqISRzfYRMr5PS2SIFLzj4iizM6aeEiIAjg7WD3jaEaNToW9OLiQx+GDhameu5hOMyiJ/X8uoGWVMC6d8f4OFC/FIdImTOcMbAJJN86hOwbT7e7lEqY3wJqCd4GYMHV34od6OSP7KAtWL1miKGQJZCDxcVVZezalaJ4b2VEKfjBVO0EaHKCEeK9PGDAwQo4Qe8T2ily+8Q5eqLZruNHlIMIlKxLdG0/lvBKRoE0oJvUtvHjkXVUPuMzDzMKP3Oa1PKWK7TY+Uq7wthIBwsERa6RwXqvI2BWxwJgAvMmj/VJ+urxW6osI+cVoMg1fqr5arVJaxYBwGHg0u8KUlcC1qFfB8KhovALqyXik8hFHppU8+nRttcs8KEP4atLKYvHBF2cH1qZIl8uV9CH4y7B91eflSjlIz
+X-OriginatorOrg: amd.com
+X-MS-Exchange-CrossTenant-OriginalArrivalTime: 05 Jun 2026 23:26:44.1957
+ (UTC)
+X-MS-Exchange-CrossTenant-Network-Message-Id: e8894267-39a3-4739-3575-08dec359e7d8
+X-MS-Exchange-CrossTenant-Id: 3dd8961f-e488-4e60-8e11-a82d994e183d
+X-MS-Exchange-CrossTenant-OriginalAttributedTenantConnectingIp: TenantId=3dd8961f-e488-4e60-8e11-a82d994e183d;Ip=[165.204.84.17];Helo=[satlexmb07.amd.com]
+X-MS-Exchange-CrossTenant-AuthSource:
+	DS2PEPF00003443.namprd04.prod.outlook.com
+X-MS-Exchange-CrossTenant-AuthAs: Anonymous
+X-MS-Exchange-CrossTenant-FromEntityHeader: HybridOnPrem
+X-MS-Exchange-Transport-CrossTenantHeadersStamped: LV5PR12MB9779
 
-On Fri, Jun 05, 2026 at 07:03:49AM +0000, sashiko-bot@kernel.org wrote:
-> Thank you for your contribution! Sashiko AI review found 10 potential issue(s) to consider:
-> 
-> Pre-existing issues:
-> - [High] Unlocking an unlocked stream on the error path causes undefined behavior.
-> - [High] Incorrect logic for skipping extended jitdump headers leads to parsing failure.
-> - [High] Ignoring the return value of `dirname()` breaks directory extraction and causes ENOTDIR failures.
-> - [High] If the generated JIT ELF path exceeds PATH_MAX, snprintf truncation causes size underflow resulting in a heap buffer overflow.
-> - [High] Cross-endian byte swapping of JIT_CODE_DEBUG_INFO records corrupts data by ignoring the flexible array member.
-> - [High] Lack of validation on `code_size` enables arbitrary out-of-bounds read and memory leakage.
-> - [Medium] Memory leak of `debug_data` and `unwinding_data` pointers.
-> - [Medium] Memory leak of `event` in `jit_repipe_code_move`.
-> - [Medium] Ineffective inter-process synchronization using `flockfile`.
-> - [Medium] Integer underflow leading to massive malloc in `jit_repipe_debug_info`.
-
-I don't plan to touch any of these issues, at least in the near future.
-
-Thanks,
-Namhyung
-
+sashiko-bot@kernel.org writes:
+> Thank you for your contribution! Sashiko AI review found 3 potential issue(s) to consider:
+> - [Critical] Hardware Use-After-Free due to missing admin context teardown
+> - [High] Torn writes on 32-bit platforms exposing incomplete addresses to hardware
+> - [Medium] Incorrect error check for `dma_pool_zalloc()` using the DMA handle instead of the virtual pointer
 > --
-> 
-> commit f314399f4edf9366c3ee4d529f45cb2d7e7d454d
-> Author: Namhyung Kim <namhyung@kernel.org>
-> 
-> perf jitdump: Fix a build error with ASAN
-> 
-> This patch resolves a stringop-truncation build error when compiling perf
-> with ASAN on GCC 16. It reduces the strncpy bound by one byte to avoid
-> truncation warnings.
-> 
-> > diff --git a/tools/perf/util/jitdump.c b/tools/perf/util/jitdump.c
-> > index e0ce8b9047298..16390e7f9062d 100644
-> > --- a/tools/perf/util/jitdump.c
-> > +++ b/tools/perf/util/jitdump.c
-> > @@ -234,7 +234,7 @@ jit_open(struct jit_buf_desc *jd, const char *name)
-> >  	/*
-> >  	 * keep dirname for generating files and mmap records
-> >  	 */
-> > -	strncpy(jd->dir, name, PATH_MAX);
-> > +	strncpy(jd->dir, name, PATH_MAX - 1);
-> >  	jd->dir[PATH_MAX - 1] = '\0';
-> >  	dirname(jd->dir);
-> 
-> [Severity: High]
-> This isn't a bug introduced by this patch, but is it correct to ignore the
-> return value of dirname()?
-> 
-> If jd->dir contains no slashes, glibc dirname() returns a pointer to "." but
-> leaves the original string unmodified. Since the return value is discarded,
-> jd->dir retains the full filename instead of becoming ".". This could cause
-> later snprintf calls to use the target file as a directory component, leading
-> to ENOTDIR failures.
-> 
-> >  	free(buf);
-> 
-> [Severity: High]
-> This is a pre-existing issue, but does the error handling path incorrectly
-> unlock an unlocked stream?
-> 
-> If malloc() fails early in jit_open(), it jumps to the error label:
-> 
-> tools/perf/util/jitdump.c:jit_open() {
->     ...
-> 	buf = malloc(bsz);
-> 	if (!buf)
-> 		goto error;
-> 
-> 	/*
-> 	 * protect from writer modifying the file while we are reading it
-> 	 */
-> 	flockfile(jd->in);
->     ...
-> error:
-> 	free(buf);
-> 	funlockfile(jd->in);
-> 	fclose(jd->in);
-> 	return retval;
-> }
-> 
-> Since flockfile() is only called after malloc() succeeds, calling funlockfile()
-> here results in undefined behavior on an unlocked stream.
-> 
-> [Severity: High]
-> This is a pre-existing issue, but does this logic break extended header reads?
-> 
-> In jit_open(), when handling extended headers, bsz is updated to bs right
-> before calculating the read size:
-> 
-> tools/perf/util/jitdump.c:jit_open() {
->     ...
-> 	if (bs > bsz) {
-> 		n = realloc(buf, bs);
-> 		if (!n)
-> 			goto error;
-> 		bsz = bs;
-> 		buf = n;
-> 		/* read extra we do not know about */
-> 		ret = fread(buf, bs - bsz, 1, jd->in);
-> 		if (ret != 1)
-> 			goto error;
-> 	}
->     ...
-> }
-> 
-> Because bsz = bs, the read size bs - bsz is always 0. fread() will return 0,
-> causing the ret != 1 check to fail and unconditionally jump to the error path.
-> 
-> [Severity: High]
-> This is a pre-existing issue, but could snprintf() truncation cause an
-> out-of-bounds pointer calculation?
-> 
-> In jit_repipe_code_load(), snprintf() calculates a path:
-> 
-> tools/perf/util/jitdump.c:jit_repipe_code_load() {
->     ...
-> 	filename = event->mmap2.filename;
-> 	size = snprintf(filename, PATH_MAX, "%s/jitted-%d-%" PRIu64 ".so",
-> 			jd->dir,
-> 			nspid,
-> 			count);
-> 
-> 	size++; /* for \0 */
-> 
-> 	size = PERF_ALIGN(size, sizeof(u64));
->     ...
-> 	event->mmap2.header.size = (sizeof(event->mmap2) -
-> 			(sizeof(event->mmap2.filename) - size) + idr_size);
->     ...
-> 	id = (void *)((unsigned long)event + event->mmap.header.size - idr_size);
-> 	if (jd->sample_type & PERF_SAMPLE_TID) {
-> 		id->pid  = pid;
->     ...
-> }
-> 
-> If the string exceeds PATH_MAX, snprintf() returns the untruncated length. The
-> expression sizeof(event->mmap2.filename) - size will then underflow because size
-> is greater than PATH_MAX, resulting in a massively inflated header.size. The
-> pointer id will point outside the allocated bounds, leading to heap corruption
-> when id->pid is assigned.
-> 
-> [Severity: High]
-> This isn't a bug introduced by this patch, but does the byte-swapping logic
-> corrupt data by ignoring a flexible array member?
-> 
-> In jit_get_next_entry():
-> 
-> tools/perf/util/jitdump.c:jit_get_next_entry() {
->     ...
-> 	case JIT_CODE_DEBUG_INFO:
-> 		if (jd->needs_bswap) {
-> 			uint64_t n;
-> 			jr->info.code_addr = bswap_64(jr->info.code_addr);
-> 			jr->info.nr_entry  = bswap_64(jr->info.nr_entry);
-> 			for (n = 0 ; n < jr->info.nr_entry; n++) {
-> 				jr->info.entries[n].addr    = bswap_64(jr->info.entries[n].addr);
-> 				jr->info.entries[n].lineno  = bswap_32(jr->info.entries[n].lineno);
-> 				jr->info.entries[n].discrim = bswap_32(jr->info.entries[n].discrim);
-> 			}
-> 		}
-> 		break;
->     ...
-> }
-> 
-> struct debug_entry contains a flexible array member (const char name[]). Using
-> array indexing (jr->info.entries[n]) assumes fixed-size elements. This will
-> calculate incorrect offsets that land inside the variable-length strings of
-> earlier entries, overwriting them with byte-swapped data.
-> 
-> [Severity: Medium]
-> This is a pre-existing issue, but do jd->debug_data and jd->unwinding_data leak?
-> 
-> In jit_repipe_debug_info(), memory is allocated and assigned:
-> 
-> tools/perf/util/jitdump.c:jit_repipe_debug_info() {
->     ...
-> 	data = malloc(sz);
-> 	if (!data)
-> 		return -1;
-> 
-> 	memcpy(data, &jr->info.entries, sz);
-> 
-> 	jd->debug_data       = data;
->     ...
-> }
-> 
-> While these are freed during jit_repipe_code_load(), if a JIT dump terminates
-> early, lacks trailing load records, or contains consecutive debug records, the
-> previously allocated buffers are overwritten or never freed. Neither jit_close()
-> nor jit_process() cleans up jd->debug_data or jd->unwinding_data.
-> 
-> [Severity: Medium]
-> This isn't a bug introduced by this patch, but does jit_repipe_code_move() leak
-> its event allocation?
-> 
-> tools/perf/util/jitdump.c:jit_repipe_code_move() {
->     ...
-> 	event = calloc(1, sizeof(*event) + 16);
-> 	if (!event)
-> 		return -1;
->     ...
-> out:
-> 	perf_sample__exit(&sample);
-> 	return ret;
-> }
-> 
-> The event buffer is dynamically allocated but there is no free(event) in the
-> cleanup block, leaking the memory for every JIT_CODE_MOVE record processed.
-> 
-> [Severity: Medium]
-> This is a pre-existing issue, but is flockfile() being used incorrectly for
-> inter-process synchronization?
-> 
-> In jit_open():
-> 
-> tools/perf/util/jitdump.c:jit_open() {
->     ...
-> 	/*
-> 	 * protect from writer modifying the file while we are reading it
-> 	 */
-> 	flockfile(jd->in);
->     ...
-> }
-> 
-> flockfile() is a POSIX thread mutex that provides no OS-level file locking.
-> It cannot prevent an external process from modifying the file concurrently,
-> making this synchronization completely ineffective against external writers.
-> 
-> [Severity: Medium]
-> This isn't a bug introduced by this patch, but could this allocation size calculation
-> underflow?
-> 
-> In jit_repipe_debug_info():
-> 
-> tools/perf/util/jitdump.c:jit_repipe_debug_info() {
->     ...
-> 	sz  = jr->prefix.total_size - sizeof(jr->info);
-> 	data = malloc(sz);
->     ...
-> }
-> 
-> If total_size is smaller than sizeof(jr->info), the unsigned subtraction will
-> underflow to a massive value, leading to a guaranteed malloc() failure or
-> instability if memory is overcommitted.
-> 
-> [Severity: High]
-> This is a pre-existing issue, but does lack of validation on code_size allow
-> out-of-bounds reads?
-> 
-> In jit_repipe_code_load():
-> 
-> tools/perf/util/jitdump.c:jit_repipe_code_load() {
->     ...
-> 	csize = jr->load.code_size;
->     ...
-> 	code  = (unsigned long)jr + jr->load.p.total_size - csize;
->     ...
-> 	ret = jit_emit_elf(jd, filename, sym, addr, (const void *)uaddr, csize, ...
->     ...
-> }
-> 
-> If an artificially large csize is parsed from the file without being bounds
-> checked against total_size, the code pointer calculation will underflow and
-> point into earlier heap memory. jit_emit_elf() will then dump csize bytes
-> from this out-of-bounds memory into the ELF file.
-> 
-> -- 
-> Sashiko AI review · https://sashiko.dev/#/patchset/20260605064932.34316-1-namhyung@kernel.org?part=1
+>
+> commit 794d6cb84f7ad6a7699311744a5e9c87b9d20316
+> Author: Nathan Lynch <nathan.lynch@amd.com>
+>
+> dmaengine: sdxi: Install administrative context
+>
+> This commit serializes the context control block, akey table, and L1 entry for
+> the admin context. It makes the descriptor ring, write index, and context
+> status block visible to the SDXI implementation once activated.
+>
+>> diff --git a/drivers/dma/sdxi/context.c b/drivers/dma/sdxi/context.c
+>> index 27821cfaf0311..c0b55c945cc4e 100644
+>> --- a/drivers/dma/sdxi/context.c
+>> +++ b/drivers/dma/sdxi/context.c
+>
+> [ ... ]
+>
+>> @@ -106,6 +112,152 @@ static struct sdxi_cxt *sdxi_alloc_cxt(struct sdxi_dev *sdxi)
+>
+> [ ... ]
+>
+>> +static int configure_cxt_ctl(struct sdxi_cxt_ctl *ctl, const struct sdxi_cxt_ctl_cfg *cfg)
+>> +{
+>> +	u64 ds_ring_ptr, cxt_sts_ptr, write_index_ptr;
+>
+> [ ... ]
+>
+>> +	ds_ring_ptr = FIELD_PREP(SDXI_CXT_CTL_VL, 1) |
+>> +		      FIELD_PREP(SDXI_CXT_CTL_QOS, cfg->qos) |
+>> +		      FIELD_PREP(SDXI_CXT_CTL_SE, cfg->se) |
+>> +		      FIELD_PREP(SDXI_CXT_CTL_CSA, cfg->csa) |
+>> +		      FIELD_PREP(SDXI_CXT_CTL_DS_RING_PTR,
+>> +				 cfg->ds_ring_ptr >> DESC_RING_BASE_PTR_SHIFT);
+>> +	/* Ensure other fields are visible before hw sees vl=1. */
+>> +	dma_wmb();
+>> +	WRITE_ONCE(ctl->ds_ring_ptr, cpu_to_le64(ds_ring_ptr));
+>
+> Can this introduce a regression with torn writes on 32-bit platforms?
+
+As mentioned elsewhere the driver will just depend on CONFIG_64BIT for
+now.
+
+
+>> +static void free_admin_cxt(void *ptr)
+>> +{
+>> +	struct sdxi_dev *sdxi = ptr;
+>> +
+>> +	sdxi_free_cxt(sdxi->admin_cxt);
+>> +}
+>
+> Does this sequence cause a use-after-free regression?
+>
+> In sdxi_publish_cxt(), the admin context is published to the hardware by
+> setting the valid bit (VL=1) in the L1_table.
+>
+> When the context is torn down via the devres cleanup action free_admin_cxt(),
+> it directly invokes sdxi_free_cxt(), which frees the DMA memory for the
+> context control block, descriptor ring, and akey table.
+>
+> However, the VL bit in the hardware's L1 table entry is never cleared. Could
+> this leave the hardware actively fetching from freed physical
+> addresses?
+
+No I don't think so, the code as written ensures the device is in
+stopped state when we get to the point of freeing the admin context
+control structures.
+
+
+> Additionally, looking at the sdxi_alloc_cxt() implementation, the return value
+> of dma_pool_zalloc() is checked via the DMA address instead of the virtual
+> pointer:
+>
+> 	cxt->cxt_ctl = dma_pool_zalloc(sdxi->cxt_ctl_pool, GFP_KERNEL,
+> 				       &cxt->cxt_ctl_dma);
+> 	if (!cxt->cxt_ctl_dma)
+> 		return NULL;
+>
+> Since physical address 0 is a valid DMA address on many architectures and IOMMU
+> configurations, could this regression incorrectly abort initialization if a
+> successful allocation returns DMA address 0? Should this code check the
+> returned virtual pointer (!cxt->cxt_ctl) instead?
+
+Valid bug but I think this is a redundant report, the bot pointed it out
+elsewhere in the thread.
