@@ -1,114 +1,377 @@
-Received: from smtpout-03.galae.net (smtpout-03.galae.net [185.246.85.4])
+Received: from out162-62-57-64.mail.qq.com (out162-62-57-64.mail.qq.com [162.62.57.64])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 737DF4D8D9D
-	for <sashiko-reviews@lists.linux.dev>; Fri,  5 Jun 2026 11:38:10 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=185.246.85.4
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4D44A305690
+	for <sashiko-reviews@lists.linux.dev>; Fri,  5 Jun 2026 12:21:20 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=162.62.57.64
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1780659493; cv=none; b=UA+e+IkVFQMhJMV8qt3lwOMvHWaLJLzwRgODEhx4HKlTOgtpGZv8UK7rGIQvix7p/Zgt1J5YGGUDEb1YxQHfBxPNGgkfzaesa8B70yp74Z3+4ZTYrWrguaA0T7YVXBdV7z/n1jNKIV05ZKxTxf8Lv5vtMO3YI7HTDvcu2xy9LIA=
+	t=1780662084; cv=none; b=tbvd5ViXXS2cTh4rQmD91UwgdJM4SDKjL0VVu64edCQw8pJFHU3gSBmfSNGlt/Qh5PLTrqr8/KctAsFLuJSEf2kLany8auxtKw+lSw6UjjCNKITIHQlPhmeG99hsSh195mmsW5vOnlYhg3MchwsKnHCeHrKVx6MiEkUL/2M3obU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1780659493; c=relaxed/simple;
-	bh=2ghoS6no9AaHRf7BNxhJ8BH+3mX/8y4443oHD+TL/s4=;
-	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=T0qVaMOltea68Rx8ugCMYbQjlqS3n4ftdwMeIJng7cC8mIeF7b1SnnMKHkLBn1rTNMtL87HXKQXO1NMjcTzpkUtCghi3GkMdHfV8jIe0UFA8PmdjhjqfViC/R1692ZYDU1b7keYAEgfgSMq3ZBIcM5O0IBvRwbm2vP+/yfGDmSM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=bootlin.com; spf=pass smtp.mailfrom=bootlin.com; dkim=pass (2048-bit key) header.d=bootlin.com header.i=@bootlin.com header.b=QE4eRpYi; arc=none smtp.client-ip=185.246.85.4
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=bootlin.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=bootlin.com
+	s=arc-20240116; t=1780662084; c=relaxed/simple;
+	bh=bOV5TRQo+9JjUAKV6onNxZ1oJuNumU0Oz2tAPHtE7Qg=;
+	h=Message-ID:From:To:Cc:Subject:Date:In-Reply-To:References:
+	 MIME-Version:Content-Type; b=LPHquEec/FC8fUfC3awR0JS2TayJDSzm+rV92X9TZSIoBm6qPoZz1SWsr509um2DjVn9hX2+ViumoGV+DScZmNTBzQnNGfSCXeEqa8rBqEcYcqVzXCEGw/iqDNUW34gwv61K7mLl0E/R5qbQPM/EcsQD9yMzIsWJ0Fd/d21bRLk=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=Red54.com; spf=pass smtp.mailfrom=red54.com; dkim=pass (1024-bit key) header.d=qq.com header.i=@qq.com header.b=dFQ1Oxfm; arc=none smtp.client-ip=162.62.57.64
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=Red54.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=red54.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=bootlin.com header.i=@bootlin.com header.b="QE4eRpYi"
-Received: from smtpout-01.galae.net (smtpout-01.galae.net [212.83.139.233])
-	by smtpout-03.galae.net (Postfix) with ESMTPS id A79694E408D1
-	for <sashiko-reviews@lists.linux.dev>; Fri,  5 Jun 2026 11:38:08 +0000 (UTC)
-Received: from mail.galae.net (mail.galae.net [212.83.136.155])
-	by smtpout-01.galae.net (Postfix) with ESMTPS id 5F3845FED1;
-	Fri,  5 Jun 2026 11:38:08 +0000 (UTC)
-Received: from [127.0.0.1] (localhost [127.0.0.1]) by localhost (Mailerdaemon) with ESMTPSA id 1AFA5106A2122;
-	Fri,  5 Jun 2026 13:38:06 +0200 (CEST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=bootlin.com; s=dkim;
-	t=1780659487; h=from:subject:date:message-id:to:cc:mime-version:content-type:
-	 in-reply-to:references; bh=fMdwehU3dvdlFcRAg/UEX6VsNEVgYxvT3ihO0867UDk=;
-	b=QE4eRpYiT1i6Jt+O+rFdTnlxB4/HiPVHnYt+GdpVKisAKGB2J8+HgSPMzOYsXVGqp3Eqw0
-	paliopc4KbDpciRnIlkhq41cumtfHs73vYKYwTJ2jOW1G/yLUmnZKPhZQUOmgIWZNoRr74
-	6wEJxYmORZkjXARpig1kbIIx07NzNRJscIpnWkJuqcV/vFQ0jSS9TB1keuCiVwWq8utJ8O
-	+htP0I5hWe4zaMLyUexsvg44TJ7gRckX00juEJpZdmAeqXq2hrH9at4qh7VVfuNIMXPYDY
-	74IllUC3slK/KLvivnUkpSLDxhNzCDnHm8MrJOlq2ZcTS41TI2wzcStxRMGowg==
-From: Romain Gantois <romain.gantois@bootlin.com>
-To: sashiko-reviews@lists.linux.dev
-Cc: devicetree@vger.kernel.org, robh@kernel.org, conor+dt@kernel.org
-Subject: Re: [PATCH 2/2] iio: temperature: tmp117: add TI TMP119 support
-Date: Fri, 05 Jun 2026 13:38:01 +0200
-Message-ID: <18PCQgHDRMeFeQrJjHXSqQ@bootlin.com>
-In-Reply-To: <20260605110802.74B701F00893@smtp.kernel.org>
-References:
- <20260605-tmp119-v1-2-349f45f17d12@bootlin.com>
- <20260605110802.74B701F00893@smtp.kernel.org>
+	dkim=pass (1024-bit key) header.d=qq.com header.i=@qq.com header.b="dFQ1Oxfm"
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=qq.com; s=s201512;
+	t=1780662071; bh=VvcTIIICLW2CoKU0ueeLuYvNlghlhupW0ZVJ9ZaqoQ0=;
+	h=From:To:Cc:Subject:Date:In-Reply-To:References;
+	b=dFQ1OxfmudekIDab0/ooBOxkli+ntmllqRBSSzAh7hpDL3Kpr8U52WLGbVUhyzWgj
+	 BVjxq3XMhXdVfOmefU8zgPIp38DsHBnKHrT3rQ+fphn2FVP1uWlTqZ3+3NDCovk+Rx
+	 ECf78ocrTDC6SXzM3Q6Xm/mLMQkNc+mFgpTaU7IU=
+Received: from mail.red54.com ([139.99.8.57])
+	by newxmesmtplogicsvrszc43-0.qq.com (NewEsmtp) with SMTP
+	id 53502241; Fri, 05 Jun 2026 20:20:53 +0800
+X-QQ-mid: xmsmtpt1780662053tx9d12pgo
+Message-ID: <tencent_3310584FFECD3CBBB563FC8C079ED072F40A@qq.com>
+X-QQ-XMAILINFO: N7orI5eWepzGkR89KWsfQrW1jTxcX0bA75vmWUirsjbqE9+SNuUoAtOFM0csde
+	 ioP/GnbJgSdyxKPygYfFyuk1z4cQO7JDEVh2kEOSieKQqeDtcBzCfXYfECmPMK8dXdqH2L9z8si7
+	 NaYBoUUDkbLtakR647XAeN5NEaLN2yUwm2kgEWedk0uN2Cq+Ccl6SNPSCHotXEW5r1kf+MtkCvtJ
+	 sdUn88LuYxN7e0PMaV8sQw6MCxhnqi4me45LQwrFo8a44Es/U2QNHTlkShheQqffimvS0PU81FtH
+	 dHrb/TB2VWd8vkl1wDc7hxgxhi5mS8tAQaSEcVCj159VL6e7/tixvB62a2SoSQIMkexB8+p8ngC8
+	 Af8pWFni6vqwJadu5y+T6MYI0c90kmDpsdmCEtpc6ngsWCdYCcRDIHOycuU3qjIklrj0gfeRmpR+
+	 bMeL014cVGbq34q8yBGbgIKk7i014qlb1J239cdYH69qWM5GhJeCMS7t1xrtDMHXmSWJpDbrpdRf
+	 102dOk8jAOufxfjEYa1gEjTiqma0qXeLCJYohJ0IeYVopUiggKFx03kE8ZFnV0V2CojthSlbo1je
+	 mGV+QowaODX/Rps2t4Y9437yMi+wtNQrrzfVa7cM8m60AzyTekMCrxSd8fJlxwnap4CMy/hy4onP
+	 bgoPfad9vi9CS83sE7ij0SgOAo51Fy4gAcnmcyzw/zVvdPPPVvrQOMTId3a9cuqJ/qh1IWF88SZ8
+	 N+RksTTu1Lzj3clNyqT49B6TvY4IGlQwQsKB5hFjZukSedu+TYmlTAjGHvE413jNC9BsKadukzW8
+	 E+zCMrNSplXQ9psGUBpi1vj3PS0cKNmC8zmpARxrHZO9+Ad3MFsLgX8pW61TjA5vTkGCjsV8ixqi
+	 C7x5zAUl2oKDDW12Nd8/NrEsJIAurYaIhzLUV1YNwSDiY6Uz9sFA4ywlQBZIWLb/ldmV12ihQq8t
+	 ZBsqZcdBF0qpWYi549SrzlmYiO+1g6S7Oqgz1lBYwKC7iVLVa6lMlbCRFzZzPQHfO6ABg4Uqad0+
+	 D1lqPbqXnJCiRzwKam0nfMD3Ne4SaZUhCUtUDBQK6RIwFuorYVD5XHxm0nGu1OVLHuqidNmvrkdR
+	 zXQ/ray6hAq2D2Yju0tc+huLoXin5uSPkxlTHEv5l6r69rFe8=
+X-QQ-XMRINFO: OWPUhxQsoeAVwkVaQIEGSKwwgKCxK/fD5g==
+Sender: yeking@red54.com
+From: =?UTF-8?q?=E8=B0=A2=E8=87=B4=E9=82=A6=20=28XIE=20Zhibang=29?= <Yeking@Red54.com>
+To: linux-input@vger.kernel.org,
+	hansg@kernel.org,
+	dmitry.torokhov@gmail.com,
+	bentiss@kernel.org,
+	sashiko-bot@kernel.org
+Cc: sashiko-reviews@lists.linux.dev,
+	=?UTF-8?q?=E8=B0=A2=E8=87=B4=E9=82=A6=20=28XIE=20Zhibang=29?= <Yeking@Red54.com>,
+	Jiri Kosina <jikos@kernel.org>,
+	"Mario Limonciello (AMD)" <superm1@kernel.org>,
+	Douglas Anderson <dianders@chromium.org>,
+	linux-kernel@vger.kernel.org
+Subject: [PATCH v2] HID: i2c-hid: Refactor _DSM helper and add i2c-hid-acpi-prp0001 driver
+Date: Fri,  5 Jun 2026 12:20:37 +0000
+X-OQ-MSGID: <20260605122037.53250-1-Yeking@Red54.com>
+X-Mailer: git-send-email 2.43.0
+In-Reply-To: <20260605014101.1889E1F00893@smtp.kernel.org>
+References: <20260605014101.1889E1F00893@smtp.kernel.org>
 Precedence: bulk
 X-Mailing-List: sashiko-reviews@lists.linux.dev
 List-Id: <sashiko-reviews.lists.linux.dev>
 List-Subscribe: <mailto:sashiko-reviews+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:sashiko-reviews+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: multipart/signed; boundary="nextParteYA6NtF9QaaxaqfKzKG7sw";
- micalg="pgp-sha512"; protocol="application/pgp-signature"
-X-Last-TLS-Session-Version: TLSv1.3
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
 
---nextParteYA6NtF9QaaxaqfKzKG7sw
-Content-Transfer-Encoding: 7Bit
-Content-Type: text/plain; charset="utf-8"; protected-headers="v1"
-From: Romain Gantois <romain.gantois@bootlin.com>
-To: sashiko-reviews@lists.linux.dev
-Cc: devicetree@vger.kernel.org, robh@kernel.org, conor+dt@kernel.org
-Subject: Re: [PATCH 2/2] iio: temperature: tmp117: add TI TMP119 support
-Date: Fri, 05 Jun 2026 13:38:01 +0200
-Message-ID: <18PCQgHDRMeFeQrJjHXSqQ@bootlin.com>
-In-Reply-To: <20260605110802.74B701F00893@smtp.kernel.org>
-MIME-Version: 1.0
+Move the _DSM call that gets the HID descriptor address from
+i2c-hid-acpi.c into i2c-hid-acpi.h as a static inline so both the ACPI
+and the new PRP0001 driver can use it. While refactoring, move the
+blacklist check and the _DSM call to the top of probe() to avoid a
+pointless alloc when the device is blacklisted or does not implement the
+_DSM.
 
-On Friday, 5 June 2026 13:08:02 CEST sashiko-bot@kernel.org wrote:
-> Thank you for your contribution! Sashiko AI review found 1 potential
-> issue(s) to consider: - [Medium] The IIO device name for the TMP119 sensor
-...
-> 
-> And indio_dev->name is assigned from match_data->name later in
-> 
-> tmp117_probe():
->         indio_dev->name = match_data->name;
-> 
-> Does this break userspace applications or udev rules that rely on reading
-> the correct sensor part name ("tmp119") from sysfs?
+Some devices, for example the Lenovo KaiTian N60d and Inspur CP300L3,
+are declared with _HID "PRP0001" and _DSD compatible "hid-over-i2c" but
+lack "hid-descr-addr" from the _DSD and provide the HID descriptor
+address only through an ACPI _DSM. The OF driver fails to probe them
+because it requires hid-descr-addr. Add a new driver that handles these
+devices by calling the shared _DSM helper.
 
-While unlikely that userspace applications would need to differentiate between 
-these two sensors, it is preferable that the correct part name appears in 
-sysfs. I'll fix this in version 2.
+Fixes: b33752c30023 ("HID: i2c-hid: Reorganize so ACPI and OF are separate modules")
+Signed-off-by: 谢致邦 (XIE Zhibang) <Yeking@Red54.com>
+---
+v2: Name the unused parameter and document why
+acpi_device_fix_up_power() is skipped.
 
+ drivers/hid/i2c-hid/Kconfig                | 18 ++++
+ drivers/hid/i2c-hid/Makefile               |  1 +
+ drivers/hid/i2c-hid/i2c-hid-acpi-prp0001.c | 96 ++++++++++++++++++++++
+ drivers/hid/i2c-hid/i2c-hid-acpi.c         | 48 +++--------
+ drivers/hid/i2c-hid/i2c-hid-acpi.h         | 32 ++++++++
+ 5 files changed, 159 insertions(+), 36 deletions(-)
+ create mode 100644 drivers/hid/i2c-hid/i2c-hid-acpi-prp0001.c
+ create mode 100644 drivers/hid/i2c-hid/i2c-hid-acpi.h
+
+diff --git a/drivers/hid/i2c-hid/Kconfig b/drivers/hid/i2c-hid/Kconfig
+index e8d51f410cc1..7db8b2abff78 100644
+--- a/drivers/hid/i2c-hid/Kconfig
++++ b/drivers/hid/i2c-hid/Kconfig
+@@ -22,6 +22,24 @@ config I2C_HID_ACPI
+ 	  will be called i2c-hid-acpi.  It will also build/depend on the
+ 	  module i2c-hid.
+ 
++config I2C_HID_ACPI_PRP0001
++	tristate "Driver for PRP0001 devices missing hid-descr-addr"
++	depends on ACPI
++	depends on DRM || !DRM
++	select I2C_HID_CORE
++	help
++	  Say Y here if you want support for I2C HID touchpads that
++	  are declared with _HID "PRP0001" and _DSD compatible
++	  "hid-over-i2c" but lack the "hid-descr-addr" property from
++	  the _DSD. The HID descriptor address is instead provided
++	  through an ACPI _DSM. Known affected devices include the
++	  Lenovo KaiTian N60d and Inspur CP300L3.
++
++	  If unsure, say N.
++
++	  This support is also available as a module. If so, the
++	  module will be called i2c-hid-acpi-prp0001.
++
+ config I2C_HID_OF
+ 	tristate "HID over I2C transport layer Open Firmware driver"
+ 	# No "depends on OF" because this can also be used for manually
+diff --git a/drivers/hid/i2c-hid/Makefile b/drivers/hid/i2c-hid/Makefile
+index 55bd5e0f35af..da420c1a8ec6 100644
+--- a/drivers/hid/i2c-hid/Makefile
++++ b/drivers/hid/i2c-hid/Makefile
+@@ -9,6 +9,7 @@ i2c-hid-objs					=  i2c-hid-core.o
+ i2c-hid-$(CONFIG_DMI)				+= i2c-hid-dmi-quirks.o
+ 
+ obj-$(CONFIG_I2C_HID_ACPI)			+= i2c-hid-acpi.o
++obj-$(CONFIG_I2C_HID_ACPI_PRP0001)		+= i2c-hid-acpi-prp0001.o
+ obj-$(CONFIG_I2C_HID_OF)			+= i2c-hid-of.o
+ obj-$(CONFIG_I2C_HID_OF_ELAN)			+= i2c-hid-of-elan.o
+ obj-$(CONFIG_I2C_HID_OF_GOODIX)			+= i2c-hid-of-goodix.o
+diff --git a/drivers/hid/i2c-hid/i2c-hid-acpi-prp0001.c b/drivers/hid/i2c-hid/i2c-hid-acpi-prp0001.c
+new file mode 100644
+index 000000000000..b6b64e868f36
+--- /dev/null
++++ b/drivers/hid/i2c-hid/i2c-hid-acpi-prp0001.c
+@@ -0,0 +1,96 @@
++// SPDX-License-Identifier: GPL-2.0-only
++/*
++ * HID over I2C driver for PRP0001 devices missing hid-descr-addr
++ *
++ * Some devices, for example the Lenovo KaiTian N60d and Inspur CP300L3, use
++ * _HID "PRP0001" with _DSD compatible "hid-over-i2c" but lack "hid-descr-addr"
++ * from the _DSD. The HID descriptor address is provided only through an ACPI
++ * _DSM. The TPD0 node in the DSDT shows _DSM Function 1 returning 0x20.
++ *
++ * Copyright (C) 2026 谢致邦 (XIE Zhibang) <Yeking@Red54.com>
++ */
++
++#include <linux/delay.h>
++#include <linux/device.h>
++#include <linux/i2c.h>
++#include <linux/module.h>
++#include <linux/of.h>
++
++#include "i2c-hid.h"
++#include "i2c-hid-acpi.h"
++
++static int i2c_hid_acpi_prp0001_power_up(struct i2chid_ops *ops)
++{
++	/* give the device time to power up */
++	msleep(250);
++	return 0;
++}
++
++static struct i2chid_ops i2c_hid_acpi_prp0001_ops = {
++	.power_up = i2c_hid_acpi_prp0001_power_up,
++	/*
++	 * No .restore_sequence needed: the _DSM on these devices returns a
++	 * constant (0x20) with no side effects, unlike some PNP0C50 _DSM
++	 * implementations that switch the hardware between PS/2 and I2C modes.
++	 */
++};
++
++static int i2c_hid_acpi_prp0001_probe(struct i2c_client *client)
++{
++	struct device *dev = &client->dev;
++	struct acpi_device *adev;
++	u16 hid_descriptor_address;
++	int ret;
++
++	/* If hid-descr-addr is present, let i2c-hid-of handle it */
++	if (device_property_present(dev, "hid-descr-addr"))
++		return -ENODEV;
++
++	adev = ACPI_COMPANION(dev);
++	if (!adev)
++		return -ENODEV;
++
++	ret = i2c_hid_acpi_get_descriptor(adev);
++	if (ret < 0)
++		return ret;
++	hid_descriptor_address = ret;
++
++	/*
++	 * No acpi_device_fix_up_power() needed: TPD0 has no _PS0, _PS3, _PSC
++	 * or _PRx methods and follows I2C bus power.
++	 */
++	return i2c_hid_core_probe(client, &i2c_hid_acpi_prp0001_ops,
++				  hid_descriptor_address, 0);
++}
++
++static const struct of_device_id i2c_hid_acpi_prp0001_of_match[] = {
++	{ .compatible = "hid-over-i2c" },
++	{},
++};
++MODULE_DEVICE_TABLE(of, i2c_hid_acpi_prp0001_of_match);
++
++static const struct i2c_device_id i2c_hid_acpi_prp0001_id[] = {
++	{ .name = "hid-over-i2c" },
++	{ }
++};
++MODULE_DEVICE_TABLE(i2c, i2c_hid_acpi_prp0001_id);
++
++static struct i2c_driver i2c_hid_acpi_prp0001_driver = {
++	.driver = {
++		.name	= "i2c_hid_acpi_prp0001",
++		.pm	= &i2c_hid_core_pm,
++		.probe_type = PROBE_PREFER_ASYNCHRONOUS,
++		.of_match_table = of_match_ptr(i2c_hid_acpi_prp0001_of_match),
++	},
++
++	.probe		= i2c_hid_acpi_prp0001_probe,
++	.remove		= i2c_hid_core_remove,
++	.shutdown	= i2c_hid_core_shutdown,
++	.id_table	= i2c_hid_acpi_prp0001_id,
++};
++
++module_i2c_driver(i2c_hid_acpi_prp0001_driver);
++
++MODULE_DESCRIPTION("HID over I2C driver for PRP0001 devices missing hid-descr-addr");
++MODULE_AUTHOR("谢致邦 (XIE Zhibang) <Yeking@Red54.com>");
++MODULE_LICENSE("GPL");
+diff --git a/drivers/hid/i2c-hid/i2c-hid-acpi.c b/drivers/hid/i2c-hid/i2c-hid-acpi.c
+index abd700a101f4..f0bcfb2663ef 100644
+--- a/drivers/hid/i2c-hid/i2c-hid-acpi.c
++++ b/drivers/hid/i2c-hid/i2c-hid-acpi.c
+@@ -25,9 +25,9 @@
+ #include <linux/kernel.h>
+ #include <linux/module.h>
+ #include <linux/pm.h>
+-#include <linux/uuid.h>
+ 
+ #include "i2c-hid.h"
++#include "i2c-hid-acpi.h"
+ 
+ struct i2c_hid_acpi {
+ 	struct i2chid_ops ops;
+@@ -48,39 +48,11 @@ static const struct acpi_device_id i2c_hid_acpi_blacklist[] = {
+ 	{ }
+ };
+ 
+-/* HID I²C Device: 3cdff6f7-4267-4555-ad05-b30a3d8938de */
+-static guid_t i2c_hid_guid =
+-	GUID_INIT(0x3CDFF6F7, 0x4267, 0x4555,
+-		  0xAD, 0x05, 0xB3, 0x0A, 0x3D, 0x89, 0x38, 0xDE);
+-
+-static int i2c_hid_acpi_get_descriptor(struct i2c_hid_acpi *ihid_acpi)
+-{
+-	struct acpi_device *adev = ihid_acpi->adev;
+-	acpi_handle handle = acpi_device_handle(adev);
+-	union acpi_object *obj;
+-	u16 hid_descriptor_address;
+-
+-	if (acpi_match_device_ids(adev, i2c_hid_acpi_blacklist) == 0)
+-		return -ENODEV;
+-
+-	obj = acpi_evaluate_dsm_typed(handle, &i2c_hid_guid, 1, 1, NULL,
+-				      ACPI_TYPE_INTEGER);
+-	if (!obj) {
+-		acpi_handle_err(handle, "Error _DSM call to get HID descriptor address failed\n");
+-		return -ENODEV;
+-	}
+-
+-	hid_descriptor_address = obj->integer.value;
+-	ACPI_FREE(obj);
+-
+-	return hid_descriptor_address;
+-}
+-
+ static void i2c_hid_acpi_restore_sequence(struct i2chid_ops *ops)
+ {
+ 	struct i2c_hid_acpi *ihid_acpi = container_of(ops, struct i2c_hid_acpi, ops);
+ 
+-	i2c_hid_acpi_get_descriptor(ihid_acpi);
++	i2c_hid_acpi_get_descriptor(ihid_acpi->adev);
+ }
+ 
+ static void i2c_hid_acpi_shutdown_tail(struct i2chid_ops *ops)
+@@ -93,23 +65,27 @@ static void i2c_hid_acpi_shutdown_tail(struct i2chid_ops *ops)
+ static int i2c_hid_acpi_probe(struct i2c_client *client)
+ {
+ 	struct device *dev = &client->dev;
++	struct acpi_device *adev = ACPI_COMPANION(dev);
+ 	struct i2c_hid_acpi *ihid_acpi;
+ 	u16 hid_descriptor_address;
+ 	int ret;
+ 
++	if (acpi_match_device_ids(adev, i2c_hid_acpi_blacklist) == 0)
++		return -ENODEV;
++
++	ret = i2c_hid_acpi_get_descriptor(adev);
++	if (ret < 0)
++		return ret;
++	hid_descriptor_address = ret;
++
+ 	ihid_acpi = devm_kzalloc(&client->dev, sizeof(*ihid_acpi), GFP_KERNEL);
+ 	if (!ihid_acpi)
+ 		return -ENOMEM;
+ 
+-	ihid_acpi->adev = ACPI_COMPANION(dev);
++	ihid_acpi->adev = adev;
+ 	ihid_acpi->ops.shutdown_tail = i2c_hid_acpi_shutdown_tail;
+ 	ihid_acpi->ops.restore_sequence = i2c_hid_acpi_restore_sequence;
+ 
+-	ret = i2c_hid_acpi_get_descriptor(ihid_acpi);
+-	if (ret < 0)
+-		return ret;
+-	hid_descriptor_address = ret;
+-
+ 	acpi_device_fix_up_power(ihid_acpi->adev);
+ 
+ 	return i2c_hid_core_probe(client, &ihid_acpi->ops,
+diff --git a/drivers/hid/i2c-hid/i2c-hid-acpi.h b/drivers/hid/i2c-hid/i2c-hid-acpi.h
+new file mode 100644
+index 000000000000..8cebbeebcc23
+--- /dev/null
++++ b/drivers/hid/i2c-hid/i2c-hid-acpi.h
+@@ -0,0 +1,32 @@
++/* SPDX-License-Identifier: GPL-2.0-only */
++
++#ifndef _I2C_HID_ACPI_H
++#define _I2C_HID_ACPI_H
++
++#include <linux/acpi.h>
++#include <linux/uuid.h>
++
++static inline int i2c_hid_acpi_get_descriptor(struct acpi_device *adev)
++{
++	/* HID I²C Device: 3cdff6f7-4267-4555-ad05-b30a3d8938de */
++	static const guid_t i2c_hid_guid =
++		GUID_INIT(0x3CDFF6F7, 0x4267, 0x4555,
++			  0xAD, 0x05, 0xB3, 0x0A, 0x3D, 0x89, 0x38, 0xDE);
++
++	acpi_handle handle = acpi_device_handle(adev);
++	union acpi_object *obj;
++	u16 addr;
++
++	obj = acpi_evaluate_dsm_typed(handle, &i2c_hid_guid,
++				      1, 1, NULL, ACPI_TYPE_INTEGER);
++	if (!obj) {
++		acpi_handle_err(handle, "Error _DSM call to get HID descriptor address failed\n");
++		return -ENODEV;
++	}
++
++	addr = obj->integer.value;
++	ACPI_FREE(obj);
++	return addr;
++}
++
++#endif
 -- 
-Romain Gantois, Bootlin
-Embedded Linux and Kernel engineering
-https://bootlin.com
-
---nextParteYA6NtF9QaaxaqfKzKG7sw
-Content-Type: application/pgp-signature; name="signature.asc"
-Content-Description: This is a digitally signed message part.
-Content-Transfer-Encoding: 7Bit
-
------BEGIN PGP SIGNATURE-----
-
-iQIzBAABCgAdFiEEIcCsAScRrtr7W0x0KCYAIARzeA4FAmoitRkACgkQKCYAIARz
-eA6LGw//a6T4jpcIFoIQXqRspnSKYDv49lNsWsan/6sAAAa6q/TNo9UwDbzpHnH0
-/HqVgmtfjPgfR9FGZswQiFJ8gCRNNh+codapkgbyT1rr3jpuofGsTo9ECq9yTCCr
-4PkRGF0jIrE55y1tyLmmlGmJvonY9UogN0SzHwgxeOQns2Dq8+OLqgtz7pdEjE1J
-S8Ud9LJ38p/6fKt9UUJ9J2Py/s+RHqSV6axXKqm+7R3GSoo/+cPGL5SPTiGZdKUQ
-HElq6vmtTzcxZoLxtwHeUw4z8FfknVeVqr+GETcYIJw2Rhhlp06Rd4RXOwgPgDkp
-dZU27T2sHsDsQmI6gjjmhvvsXxKKztaWHqy3Ys0hJgs3Cue1V9eqQElKDQJkk+y2
-oPeA81ip1XymFNy92Znup8r5vUpK4N42ztzxtx5Eq2mDkvUC6oQalpJ+63CxwZZL
-CluxSNBSRTQs49pc9/ixlD9uJipGmCwDqaze6CPOGBQBnieg+kTQvXZdwv/N7sC5
-kv0B/tgGir3vYXbVl6OgbRWrRWn2hMzkWq81WCarq6eVYPRO2c2pCEphb2CAmC+3
-9sG9rlVh7wZbsYD45HprjyUfC1d7BLtMbcwRIFxS3QrFjeM3uqiE2RcmdKRXtDnI
-UQHee/7RItbEFJdpbjmsIZNj588BlFaNWlyR/Ys/dnGLxQkiPmM=
-=VSSn
------END PGP SIGNATURE-----
-
---nextParteYA6NtF9QaaxaqfKzKG7sw--
-
-
+2.54.0
 
