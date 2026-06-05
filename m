@@ -1,166 +1,149 @@
-Received: from esa.microchip.iphmx.com (esa.microchip.iphmx.com [68.232.154.123])
+Received: from frasgout.his.huawei.com (frasgout.his.huawei.com [185.176.79.56])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3D1FD4C77D3
-	for <sashiko-reviews@lists.linux.dev>; Fri,  5 Jun 2026 10:53:06 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=68.232.154.123
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AB87D4C77CE;
+	Fri,  5 Jun 2026 10:57:51 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=185.176.79.56
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1780656788; cv=none; b=jZDk+HE2wIxB53GbtHwBvloDMo8l/M4z9dsl5GZCG+Gs2DJ9J2tmK4xYnYLKXhJJcB7smeNYJhO7RIRSRcY5dJ9j4lUy66kmqD34aLK/1IEHXk63Mty1F3lDOLlKYfOmEpEEf57zo7hELxnbHu/QYazdVP9AhedmiwjPVWOaCEg=
+	t=1780657077; cv=none; b=tykmao76N5eXa4cdTCNcXvgYwcZGka2aLnJyxuMwFcyy1GbZDdG5v3ELrEww0bhH9IYxs9a1XxGeafB/dJlknivsjv6KSIebwVxNPxeXsWyK1oyXWpykam/zf1sA34ymGkyNgdl861+/wTcEtx+/mv3nHeVqgtSmuZZLjC2/JOI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1780656788; c=relaxed/simple;
-	bh=eko3ejY1AKL8S/i3X/Usf5JDfNK2dEIqUhYr1ERevno=;
-	h=Date:From:To:CC:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=Nlp3TwbEMCCzgxXsBfXJ7zFNRXwBk9G5ekilCL9wYXcqfhWkiy1sAJF5Hq9gC/F7lmUakYaRsMCVwtGJMEFIirn7rqaxT+1/YuOJyK/IMc7WeXZvM4mIA+tnybF3XbqTr90EIZkiWejMOpO37ZhzF2qrY2JWCjxJXBFUvs/yclQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=microchip.com; spf=pass smtp.mailfrom=microchip.com; dkim=pass (2048-bit key) header.d=microchip.com header.i=@microchip.com header.b=iKMy53Fd; arc=none smtp.client-ip=68.232.154.123
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=microchip.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=microchip.com
-Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=microchip.com header.i=@microchip.com header.b="iKMy53Fd"
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
-  d=microchip.com; i=@microchip.com; q=dns/txt; s=mchp;
-  t=1780656786; x=1812192786;
-  h=date:from:to:cc:subject:message-id:references:
-   mime-version:in-reply-to;
-  bh=eko3ejY1AKL8S/i3X/Usf5JDfNK2dEIqUhYr1ERevno=;
-  b=iKMy53FdvFcVl2Z40ywJicH9wxclttGHSRs3IaZ2uacrigS3qwwEGhtb
-   Zh6WY4jSDkMjYu/+c+ls1e/vgfG3HEw5QsuVaJmHFzEBI1K4VxoMNWUdK
-   +rsqQGP45JEH51LQAXtLrkR9slJVxKHLH4G7g0uWy1niJGsREdQoQ5qCa
-   1tQcSUnqcG9BbsNzByilk+XZYMuBt9GpEm5eKe/kNLOrgI/+rpQlEyYVi
-   13J80bfrQ18078BN/ZGVz7cIN3x1P2woHElh+8oQdnP9HqwK2LbnZ76V3
-   1cwtjwxdzr0HpnRCKR2zjEY0RMAWRrfOiwHcJLvNnQGLmBTAhy3lnt1/k
-   Q==;
-X-CSE-ConnectionGUID: /HEGIi8URK2IGcijAbVT8Q==
-X-CSE-MsgGUID: X/asKt5zRO2ijWBY7kwauA==
-X-IronPort-AV: E=Sophos;i="6.24,188,1774335600"; 
-   d="asc'?scan'208";a="59053131"
-X-Amp-Result: UNKNOWN
-X-Amp-Original-Verdict: FILE UNKNOWN
-Received: from unknown (HELO email.microchip.com) ([170.129.1.10])
-  by esa2.microchip.iphmx.com with ESMTP/TLS/ECDHE-RSA-AES128-GCM-SHA256; 05 Jun 2026 03:53:05 -0700
-Received: from chn-vm-ex02.mchp-main.com (10.10.87.72) by
- chn-vm-ex02.mchp-main.com (10.10.87.72) with Microsoft SMTP Server
- (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256) id
- 15.1.2507.58; Fri, 5 Jun 2026 03:53:05 -0700
-Received: from wendy (10.10.85.11) by chn-vm-ex02.mchp-main.com (10.10.85.144)
- with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256) id 15.1.2507.58 via Frontend
- Transport; Fri, 5 Jun 2026 03:53:03 -0700
-Date: Fri, 5 Jun 2026 11:52:19 +0100
-From: Conor Dooley <conor.dooley@microchip.com>
-To: Jonas Rebmann <jre@pengutronix.de>
-CC: <devicetree@vger.kernel.org>, <conor+dt@kernel.org>, <robh@kernel.org>,
-	"kernel@pengutronix.de" <kernel@pengutronix.de>,
-	<sashiko-reviews@lists.linux.dev>
-Subject: Re: [PATCH v2 1/2] dt-bindings: leds: Add default-intensity property
-Message-ID: <20260605-widow-griminess-7c5dd14aa308@wendy>
-References: <20260605-multicolor-default-v2-1-ed07271df6b0@pengutronix.de>
- <20260605073816.E916D1F00893@smtp.kernel.org>
- <3cbee0dc-87a9-4b87-9d22-b3e378fa57c3@pengutronix.de>
- <20260605-factsheet-giving-69f8767bc5d7@wendy>
+	s=arc-20240116; t=1780657077; c=relaxed/simple;
+	bh=aCv7GgXhK/6RiM3+Z0K8/ByaZk2fg9SXCuds31gdm8o=;
+	h=Message-ID:Date:MIME-Version:Subject:To:CC:References:From:
+	 In-Reply-To:Content-Type; b=srxeRDLgHDmXlxq8MC1N73aVb96BDrVlTcieeWz4XmYHRoP0TrNE5DmrTvQK+68VjZM8aPqLtbUnNx1rz4uTK0bJ0voL43XRPGJbdpqzqWY6BdSm3Bq5f+z8QkzDCu0Ygc1eBpHAiTduRiECWhYZq5BuIjRCrL9XvVJ3uZVQjtI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=huawei-partners.com; spf=pass smtp.mailfrom=huawei-partners.com; arc=none smtp.client-ip=185.176.79.56
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=huawei-partners.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=huawei-partners.com
+Received: from mail.maildlp.com (unknown [172.18.224.107])
+	by frasgout.his.huawei.com (SkyGuard) with ESMTPS id 4gWz05051lzHnH4p;
+	Fri,  5 Jun 2026 18:56:53 +0800 (CST)
+Received: from mscpeml500003.china.huawei.com (unknown [7.188.49.51])
+	by mail.maildlp.com (Postfix) with ESMTPS id 5A8FB40584;
+	Fri,  5 Jun 2026 18:57:48 +0800 (CST)
+Received: from [10.123.123.154] (10.123.123.154) by
+ mscpeml500003.china.huawei.com (7.188.49.51) with Microsoft SMTP Server
+ (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
+ 15.2.1544.11; Fri, 5 Jun 2026 13:57:47 +0300
+Message-ID: <2a4665b3-ac61-4ea2-b360-5cc6c21a6606@huawei-partners.com>
+Date: Fri, 5 Jun 2026 13:57:47 +0300
 Precedence: bulk
 X-Mailing-List: sashiko-reviews@lists.linux.dev
 List-Id: <sashiko-reviews.lists.linux.dev>
 List-Subscribe: <mailto:sashiko-reviews+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:sashiko-reviews+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: multipart/signed; micalg=pgp-sha256;
-	protocol="application/pgp-signature"; boundary="FG1YpU5IGLvFTb7z"
-Content-Disposition: inline
-In-Reply-To: <20260605-factsheet-giving-69f8767bc5d7@wendy>
-
---FG1YpU5IGLvFTb7z
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-Content-Transfer-Encoding: quoted-printable
-
-On Fri, Jun 05, 2026 at 11:29:31AM +0100, Conor Dooley wrote:
-> On Fri, Jun 05, 2026 at 10:45:12AM +0200, Jonas Rebmann wrote:
-> > Hello,
-> >=20
-> > On 2026-06-05 09:38, sashiko-bot@kernel.org wrote:
-> > > > @@ -73,6 +73,17 @@ properties:
-> > > >         - keep
-> > > >       default: off
-> > > > +  default-intensity:
-> > > > +    description:
-> > > > +      The initial intensity of the LED color component. Used only =
-during
-> > > > +      initialization. Defaults to 0. As the intensity of each sub-=
-LED is
->=20
-> I'd drop sentence two here, it just duplicates sentence one.
-
-Also drop "Defaults to 0." since that duplicates the default: 0.
-
-> > > > +      multiplied with the overall brightness, without this propert=
-y on a
-> > > > +      sub-LED, the leds-pwm-multicolor-LED is effectively initiali=
-zed at
-> > > > +      minimum brightness regardless of its linux,default-trigger a=
-nd
-> > > > +      default-brightness properties.
-> > >=20
-> > > [Severity: Low]
-> > > This isn't a bug, but the description for default-intensity explicitly
-> > > mentions the specific driver name leds-pwm-multicolor-LED.
-> > >=20
-> > > Since common.yaml is intended to be a hardware-agnostic specification
-> > > for all LED bindings, could this wording be updated to refer generica=
-lly
-> > > to the multicolor LED or simply the LED to avoid leaking an
-> > > implementation detail into the generic schema?
-> >=20
-> > I'll be leaving this as-is until human feedback.
-> >=20
-> > I think documenting the property in common.yaml is correct because the
-> > default-intensity itself is applicable to other multicolor-LED drivers,
->=20
-> I think this is fine.
->=20
-> > I just only implemented it for pwm-multicolor because that's what I use.
-> > But we could just as well move it to leds-pwm-multicolor.yaml for as
-> > long as that's the only driver supporting it.
->=20
-> But this is probably also fine and it can be moved if other users crop
-> up.
->=20
-> > I intentionally included the "pwm" in that sentence because the
-> > described issue that default-intensity is effectively required when
-> > using linux,default-trigger may be pwm-multicolor specific.
->=20
-> I don't think this is fine. However, it is almost certainly fine if you
-> just do s/the leds-pwm-multicolour-LED/it/ because you're no longer
-> tying the description to the name of one driver.
->=20
-> >=20
-> > I would not like to omit the sentence either because this situation is
-> > the reason why one might actually need (not just want)
-> > default-intensity (for -pwm-).
-> >=20
-> > Regards,
-> > Jonas
-> >=20
-> > --=20
-> > Pengutronix e.K.                           | Jonas Rebmann             =
-  |
-> > Steuerwalder Str. 21                       | http://www.pengutronix.de/=
-  |
-> > 31137 Hildesheim, Germany                  | Phone: +49-5121-206917-0  =
-  |
-> > Amtsgericht Hildesheim, HRA 2686           | Fax:   +49-5121-206917-9  =
-  |
+User-Agent: Mozilla Thunderbird
+Subject: Re: [RFC PATCH v3 1/4] mm/damon: Introduce DAMOS_QUOTA_HUGEPAGE auto
+ tuning
+To: <sashiko-reviews@lists.linux.dev>
+CC: <damon@lists.linux.dev>
+References: <20260604150338.501128-2-gutierrez.asier@huawei-partners.com>
+ <20260604151932.93C431F00893@smtp.kernel.org>
+Content-Language: en-US
+From: Gutierrez Asier <gutierrez.asier@huawei-partners.com>
+In-Reply-To: <20260604151932.93C431F00893@smtp.kernel.org>
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: 7bit
+X-ClientProxiedBy: mscpeml100003.china.huawei.com (10.199.174.67) To
+ mscpeml500003.china.huawei.com (7.188.49.51)
 
 
 
---FG1YpU5IGLvFTb7z
-Content-Type: application/pgp-signature; name="signature.asc"
+On 6/4/2026 6:19 PM, sashiko-bot@kernel.org wrote:
+> Thank you for your contribution! Sashiko AI review found 5 potential issue(s) to consider:
+> 
+> New issues:
+> - [High] A potential division by zero in damos_hugepage_mem_bp() can cause a kernel panic if the total non-free RAM pages evaluate to 0.
+> - [Medium] The new DAMOS_QUOTA_HUGEPAGE metric is inaccessible from userspace because it was not added to the sysfs mapping array damos_sysfs_qgoal_metric_names.
+> - [Medium] The implementation calculates the ratio of all THP memory to total used memory, directly contradicting the commit message's claim that it measures huge page consumption relative to total anonymous memory.
+> - [Medium] The calculation in mult_frac() can silently overflow a 32-bit unsigned long, resulting in arbitrarily small, incorrect quota targets.
+> 
+> Pre-existing issues:
+> - [High] The pre-existing DAMOS_QUOTA_ACTIVE_MEM_BP and INACTIVE_MEM_BP metric computation can trigger a kernel panic via division by zero.
+> --
+> 
+> commit 1f37bbf7381e392f999f133e0444c2faad754df9
+> Author: Asier Gutierrez <gutierrez.asier@huawei-partners.com>
+> 
+> mm/damon: Introduce DAMOS_QUOTA_HUGEPAGE auto tuning
+> 
+> This commit introduces a new DAMOS quota goal metric, DAMOS_QUOTA_HUGEPAGE,
+> which is intended to measure the ratio of huge page consumption against
+> total anonymous memory.
+Right, the commit is outdated. I will update it to reflect the
+last changes.
+>> Introduce DAMOS_QUOTA_HUGEPAGE auto tuning Add a
+>> new DAMOS quota goal metric to measure the amount of huge
+>> page consumption to total anonymous memory consumption
+>> ratio.
+> 
+> [Severity: Medium]
+> Does this description match the implementation?
+> 
+> The commit message states this measures huge page consumption against total
+> anonymous memory, but the code in damos_hugepage_mem_bp() calculates the sum
+> of all transparent huge pages relative to total used memory.
+As mentioned, I will update the commit message.
+>> diff --git a/include/linux/damon.h b/include/linux/damon.h
+>> index 6f7edb3590ef9..d840b0bc0b953 100644
+>> --- a/include/linux/damon.h
+>> +++ b/include/linux/damon.h
+> [ ... ]
+>> @@ -176,6 +176,7 @@ enum damos_quota_goal_metric {
+>>  	DAMOS_QUOTA_ACTIVE_MEM_BP,
+>>  	DAMOS_QUOTA_INACTIVE_MEM_BP,
+>>  	DAMOS_QUOTA_NODE_ELIGIBLE_MEM_BP,
+>> +	DAMOS_QUOTA_HUGEPAGE,
+> 
+> [Severity: Medium]
+> Does this new metric need to be added to damos_sysfs_qgoal_metric_names[]
+> in mm/damon/sysfs-schemes.c?
+> 
+> Without adding it to the string mapping array, it appears this metric cannot
+> be configured from userspace via sysfs.
+> 
+I had it a local branch. I forgot to add it to the patch series. I will do it.
 
------BEGIN PGP SIGNATURE-----
+>> diff --git a/mm/damon/core.c b/mm/damon/core.c
+>> index 265d51ade25bf..71c8699bdd476 100644
+>> --- a/mm/damon/core.c
+>> +++ b/mm/damon/core.c
+>> @@ -2756,6 +2756,17 @@ static unsigned int damos_get_in_active_mem_bp(bool active_ratio)
+>>  	return mult_frac(inactive, 10000, total);
+>>  }
+> 
+> [Severity: High]
+> This is a pre-existing issue, but can this cause a divide by zero kernel
+> panic?
+> 
+> If there are no active or inactive pages, or if per-CPU vmstat counter drift
+> evaluates total to 0, mult_frac() will divide by zero.
+Not a bug. The system can never have 0 consumed memory.
+>> +static unsigned int damos_hugepage_mem_bp(void)
+>> +{
+>> +	unsigned long thp, total;
+>> +
+>> +	thp = global_node_page_state(NR_ANON_THPS) +
+>> +				global_node_page_state(NR_SHMEM_THPS) +
+>> +				global_node_page_state(NR_FILE_THPS);
+>> +	total = totalram_pages() - global_zone_page_state(NR_FREE_PAGES);
+>> +	return mult_frac(thp, 10000, total);
+> 
+> [Severity: High]
+> Can mult_frac() divide by zero here?
+> 
+> If the system is highly idle or due to per-CPU vmstat counter drift, total
+> could evaluate to exactly 0.
+No, total can never be 0.
+> [Severity: Medium]
+> Is there a risk of a 32-bit overflow in this calculation?
+> 
+> On 32-bit architectures, mult_frac() preserves types, and computing
+> thp * 10000 could exceed the maximum unsigned long value if there are
+> more than ~1.7 GB of THPs, producing an arbitrarily small quota target.
+> 
+Good catch! I will cast 10000 to unsigned long to preserve the types.
+-- 
+Asier Gutierrez
+Huawei
 
-iHUEABYIAB0WIQRh246EGq/8RLhDjO14tDGHoIJi0gUCaiKqYwAKCRB4tDGHoIJi
-0vsfAQD2B/woMBteEYBiU98oBWwXt5vsU+GiwOOpiWiZTszvRwEAiB3uNnGhqzDK
-tAIrzUODvmUPoCrTVrs+y+V7IiZZrgM=
-=VEdq
------END PGP SIGNATURE-----
-
---FG1YpU5IGLvFTb7z--
