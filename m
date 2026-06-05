@@ -1,95 +1,120 @@
-Received: from mail-pg1-f202.google.com (mail-pg1-f202.google.com [209.85.215.202])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from mail-24417.protonmail.ch (mail-24417.protonmail.ch [109.224.244.17])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CB2E437DEAA
-	for <sashiko-reviews@lists.linux.dev>; Fri,  5 Jun 2026 18:14:36 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.215.202
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 09B433D564D
+	for <sashiko-reviews@lists.linux.dev>; Fri,  5 Jun 2026 18:37:19 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=109.224.244.17
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1780683277; cv=none; b=ZOy0pAXUR4daIlsMP3VLGkL/T9awxmhH+2+/fYiIvqF1Yr3rqcPo7TtFPz6l/4iJ2XsSZqTiPsdJvtnUwO7G2F+xTtXMsJMH1A9LHWWS1Fjs+RuvKDtp6+BtXGgQcibrJgiLQaY4hrpkLGG7EFDkIYu7pCUMCKDDW45jeLNaShw=
+	t=1780684641; cv=none; b=GtQKWkbnhSkwKfpDUdzFrAfJP4qFC1U2y362Aorzeg61Xko/Rua+CSxduFuBGTf0o2/9vGiC+ROdJFdBb72UOTsIFt8BuKys1fcFAUv8ZvNUI9/llJDmR8v/W/TMKdP/uwPvE2ghQRebkZ+RHdyn4ewpo4RbRbg+j2X1ZCj0TzY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1780683277; c=relaxed/simple;
-	bh=xxvtzaNKnyLrHob8HID9MbR/obHYgCNgsxkSJATtNWk=;
-	h=Date:In-Reply-To:Mime-Version:References:Message-ID:Subject:From:
-	 To:Cc:Content-Type; b=ajpaxLc2G32y43FIbAZ3/LEuMJBnk3Bj9hQ6WA+WXZIqKrfzgYq+M9D9uBA6tR4ro4N3cgw278pBxEeVZdABaWqccJHA0EfR/ns3pNn++lQcDqKynDOY3ggQBXe1Io4Qn36r6VRbnIF1gvQTYwf7NZYmMWKgSWZrQFTu35WKTMw=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=google.com; spf=pass smtp.mailfrom=flex--seanjc.bounces.google.com; dkim=pass (2048-bit key) header.d=google.com header.i=@google.com header.b=iJvQEfcA; arc=none smtp.client-ip=209.85.215.202
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=google.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=flex--seanjc.bounces.google.com
+	s=arc-20240116; t=1780684641; c=relaxed/simple;
+	bh=+TpvU/R0Io7brKOuQMO4MbPS134eFVMpmzHUVQzaxDw=;
+	h=Date:To:From:Cc:Subject:Message-ID:In-Reply-To:References:
+	 MIME-Version:Content-Type; b=VGKA7ccsFRE2zrlBJcNVNKb/5Xsb8boM03DDFYLy9K5PWt1CsN340lMJTQJVUCWPUTe1lVtu14eVDe+IU2EXhLhlhHDBLMr45hJ/pvTpt1WhKAO66TXxTjkYMYAO/imjmc+ISTRdPWSSe00c/3Gxs8D41eEsXgcs9tr0jWe3tYo=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=pm.me; spf=pass smtp.mailfrom=pm.me; dkim=pass (2048-bit key) header.d=pm.me header.i=@pm.me header.b=l+FIJSoX; arc=none smtp.client-ip=109.224.244.17
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=pm.me
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pm.me
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=google.com header.i=@google.com header.b="iJvQEfcA"
-Received: by mail-pg1-f202.google.com with SMTP id 41be03b00d2f7-c85a2f19558so1411475a12.2
-        for <sashiko-reviews@lists.linux.dev>; Fri, 05 Jun 2026 11:14:36 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=google.com; s=20251104; t=1780683276; x=1781288076; darn=lists.linux.dev;
-        h=cc:to:from:subject:message-id:references:mime-version:in-reply-to
-         :date:from:to:cc:subject:date:message-id:reply-to;
-        bh=DjJ7de1MemmKpp/4CANs5HHA++5sJk2rNlJjP4akQbk=;
-        b=iJvQEfcAct0psGDJHkY3LKlIEE6xD0rZHdqcv4KxIigCNqyEliktkLPvNkkiztVTfw
-         0cbKjnskSxHxR/YI4tFqDQS7HSQhnZvfnHJ4Fvrmy58IUQPX4tve+sC++wgWWD8TMdel
-         YjMiHLD0V5TFZ9voWOziqFTOWi7vTYxKTzy1aN0mYJfcJ1mmaIO51qqkzQM86JzDPp3q
-         1KM1mDDapdonZNCiGnyPTQwiVdCsKtVEypc4kcwMrrAzdateATUcL2xLbkK+sTPEoCjv
-         Zsi1GgtcWxCD/dkBT3cIn/gg8WTsi1blC37nVvPGAX6ACM6Kgutmv/K7h2o1XLWnzunk
-         neTw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20251104; t=1780683276; x=1781288076;
-        h=cc:to:from:subject:message-id:references:mime-version:in-reply-to
-         :date:x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=DjJ7de1MemmKpp/4CANs5HHA++5sJk2rNlJjP4akQbk=;
-        b=h50qYIKWqhMPxAgkZQWrrUKBcSYEw8Z2HOupdQL0WHw4w+mTe1nDlPJE51HTz9SHFy
-         7SnNSyx+/GIIfan5d9mCY9Jw+dWnLXGm9Ma692PMrGZer8wPTzutNjCIpmBp0tvjQ0/B
-         71KSWDP3aTAth/8upjeenlqGXSxa+mSl9ckf59aerGKyJnGitUo+ICF3YuuvQmFZmW/9
-         OJHiYwhjZbgnR71gzBgtnsyyjRg/tgNDGxxl7Q3qMymHK3i67jhWxBRqAQTb4pV07Ysl
-         lCjKTgo9LmqnxQUhuDxfKOyxZAEOjDG2Zh3lqTFC23gryYG4Ul6t6TXRzEERoFLBiZcu
-         lbYQ==
-X-Gm-Message-State: AOJu0Yy73HBPH8gutcSyoyX4QTDTuRwD+hfcZYfR4mXSwHBsPtpZgVut
-	QhcIO0OsFbk5fKfpqIJVVSfQbexu2fA/dfXKhUJNlG8jir1HQLiYXYGnYNBAHxhKHQj7jwTDXo8
-	JuvG30l+1EuWENivISWjNQnfE/UmmhiW3XJMHuLiKfCixcITVjcps/8myNIgVVbj8zAvFipgV1H
-	kUm3PyAqmfirjEdFNn4m/p6+4WTKAu17hQBJx+CsAXcsmqojHV
-X-Received: from pgac28.prod.google.com ([2002:a05:6a02:295c:b0:c85:9a33:baf4])
- (user=seanjc job=prod-delivery.src-stubby-dispatcher) by 2002:a05:6a20:1609:b0:39b:d5f1:4ff
- with SMTP id adf61e73a8af0-3b4ccdc2fafmr6024851637.20.1780683275729; Fri, 05
- Jun 2026 11:14:35 -0700 (PDT)
-Date: Fri, 5 Jun 2026 11:14:35 -0700
-In-Reply-To: <20260605180617.5B4B01F00893@smtp.kernel.org>
+	dkim=pass (2048-bit key) header.d=pm.me header.i=@pm.me header.b="l+FIJSoX"
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pm.me;
+	s=protonmail3; t=1780684638; x=1780943838;
+	bh=HnEAjbYdrwt2ZUBl5XxwHoVRcBJydiwq0iDN1d+q7u8=;
+	h=Date:To:From:Cc:Subject:Message-ID:In-Reply-To:References:
+	 Feedback-ID:From:To:Cc:Date:Subject:Reply-To:Feedback-ID:
+	 Message-ID:BIMI-Selector;
+	b=l+FIJSoX5x3n1UATFHj8/Ype1pLqIadVPMTkCkyWat6I/v0T/WyhWzUrpcFT/Uz2K
+	 EREYc4rF8m2XTLPaoFwO3L1MDC8mJLS7zJ9XM7u9NHqrPNQfATchTq53w5FtLOn9Uy
+	 DkROlaYwsgBi76MPt90uBHED51wNNWoCJNDc69GADAMR3xcfeK5adRfrNa6VrZDZVx
+	 HINt51xDCuxaoUkB/E9Fq6jDaEKyRRS+FOZletyxtjzwCSV4/JJYQztBnk2JlJX/YZ
+	 PGbvgbjKkKgQ6okNMxrq2sjL5HW1TffD+cKHmytwso0cM3xuTV6fqD2Lr9qKXJkris
+	 dSCBWQGZC0Cpg==
+Date: Fri, 05 Jun 2026 18:37:11 +0000
+To: sashiko-reviews@lists.linux.dev
+From: Alexander Koskovich <akoskovich@pm.me>
+Cc: dri-devel@lists.freedesktop.org, robh@kernel.org, devicetree@vger.kernel.org, conor+dt@kernel.org
+Subject: Re: [PATCH v2 1/2] dt-bindings: display: panel: Document Raydium RM69220 DDIC
+Message-ID: <bz9vWgofmc_257MBAJFRETCchlU3NkTiEkOl-ADSbDOR0ncCQTluKglcHRQgL8ojI8yXSPPbYzCwnMyaBZQAGSEOWL0DBHXqpfUR9eKbg3w=@pm.me>
+In-Reply-To: <20260605183434.273CE1F00893@smtp.kernel.org>
+References: <20260605-asteroids-panel-support-v2-1-44b96c6eca91@pm.me> <20260605183434.273CE1F00893@smtp.kernel.org>
+Feedback-ID: 37836894:user:proton
+X-Pm-Message-ID: 28cb9d9c2537be9b600771d9e8ce5df823ee51d2
 Precedence: bulk
 X-Mailing-List: sashiko-reviews@lists.linux.dev
 List-Id: <sashiko-reviews.lists.linux.dev>
 List-Subscribe: <mailto:sashiko-reviews+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:sashiko-reviews+unsubscribe@lists.linux.dev>
-Mime-Version: 1.0
-References: <20260605174611.2222504-3-seanjc@google.com> <20260605180617.5B4B01F00893@smtp.kernel.org>
-Message-ID: <aiMSC-EPsCstfZrz@google.com>
-Subject: Re: [PATCH 2/2] KVM: x86/mmu: Expose number of shadow MMU shadow
- pages as a stat
-From: Sean Christopherson <seanjc@google.com>
-To: sashiko-reviews@lists.linux.dev
-Cc: kvm@vger.kernel.org
-Content-Type: text/plain; charset="us-ascii"
+MIME-Version: 1.0
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: quoted-printable
 
-On Fri, Jun 05, 2026, sashiko-bot@kernel.org wrote:
-> > diff --git a/arch/x86/include/asm/kvm_host.h b/arch/x86/include/asm/kvm_host.h
-> > index 3886b536c8a57..be84e4d2405e0 100644
-> > --- a/arch/x86/include/asm/kvm_host.h
-> > +++ b/arch/x86/include/asm/kvm_host.h
-> > @@ -1701,6 +1701,7 @@ struct kvm_vm_stat {
-> >  	u64 mmu_recycled;
-> >  	u64 mmu_cache_miss;
-> >  	u64 mmu_unsync;
-> > +	u64 mmu_shadow_pages;
-> >  	union {
-> >  		struct {
-> >  			atomic64_t pages_4k;
-> 
+On Friday, June 5th, 2026 at 2:34 PM, sashiko-bot@kernel.org <sashiko-bot@k=
+ernel.org> wrote:
+
+> Thank you for your contribution! Sashiko AI review found 1 potential issu=
+e(s) to consider:
+> - [Low] The newly added DT binding schema introduces a dtbs_check regress=
+ion for an existing dummy panel node in `arch/arm64/boot/dts/qcom/milos-not=
+hing-asteroids.dts`. The existing device tree uses `compatible =3D "boe,bf0=
+68mwm-td0"` for a simple-framebuffer dummy node, but lacks the strictly req=
+uired properties mandated by the new schema.
+> --
+>=20
+> commit 6315e592e65e15de511f78a600454fa1ddbaf9e2
+> Author: Alexander Koskovich <akoskovich@pm.me>
+>=20
+> dt-bindings: display: panel: Document Raydium RM69220 DDIC
+>=20
+> Document the Raydium RM69220 DDIC and the BOE BF068MWM-TD0 6.77"
+> 1080x2392 AMOLED display panel used in the Nothing Phone (3a).
+>=20
+> > diff --git a/Documentation/devicetree/bindings/display/panel/raydium,rm=
+69220.yaml b/Documentation/devicetree/bindings/display/panel/raydium,rm6922=
+0.yaml
+> > new file mode 100644
+> > index 0000000000000..7423b192d892c
+> > --- /dev/null
+> > +++ b/Documentation/devicetree/bindings/display/panel/raydium,rm69220.y=
+aml
+> [ ... ]
+> > +properties:
+> > +  compatible:
+> > +    items:
+> > +      - enum:
+> > +          - boe,bf068mwm-td0
+> > +      - const: raydium,rm69220
+>=20
 > [Severity: Low]
-> Should n_used_mmu_pages be removed from struct kvm_arch in this file?
-> 
-> Since all usages of kvm->arch.n_used_mmu_pages are replaced by
-> kvm->stat.mmu_shadow_pages in this patch, it appears the original
-> declaration is left behind as unused dead code:
-> 
-> arch/x86/include/asm/kvm_host.h:
-> struct kvm_arch {
-> 	unsigned long n_used_mmu_pages;
-> 	...
-> }
+> Will this strict compatible requirement trigger dtbs_check failures for t=
+he
+> existing dummy panel node in
+> arch/arm64/boot/dts/qcom/milos-nothing-asteroids.dts?
+>=20
+> That file currently uses this compatible string for a dummy node:
+>=20
+> =09=09=09/* Dummy panel for simple-framebuffer dimension info */
+> =09=09=09panel: dummy-panel {
+> =09=09=09=09compatible =3D "boe,bf068mwm-td0";
+> =09=09=09=09height-mm =3D <157>;
+> =09=09=09=09width-mm =3D <71>;
+> =09=09=09};
+>=20
+> Since the new schema mandates a two-item array with "raydium,rm69220" and
+> several other required properties like dvdd-supply, reg, and port, valida=
+ting
+> the existing dts against this schema appears to cause validation failures=
+.
+>=20
+> Should the dummy node's compatible string be updated to avoid conflicting=
+ with
+> the actual hardware schema, or should the dts update be included in this
+> series?
 
-/facepalm
+The dummy node is being dropped here:
+https://lore.kernel.org/linux-arm-msm/20260603-asteroids-drop-simplefb-v1-1=
+-34d73477c9d4@pm.me
+
+>=20
+> --
+> Sashiko AI review =C2=B7 https://sashiko.dev/#/patchset/20260605-asteroid=
+s-panel-support-v2-0-44b96c6eca91@pm.me?part=3D1
+> 
