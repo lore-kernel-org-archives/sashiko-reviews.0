@@ -1,223 +1,296 @@
-Received: from MW6PR02CU001.outbound.protection.outlook.com (mail-westus2azon11012009.outbound.protection.outlook.com [52.101.48.9])
+Received: from mout.gmx.net (mout.gmx.net [212.227.15.15])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 174463D5C2C
-	for <sashiko-reviews@lists.linux.dev>; Fri,  5 Jun 2026 21:25:16 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=fail smtp.client-ip=52.101.48.9
-ARC-Seal:i=2; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1780694720; cv=fail; b=dFS9HFo9Qh33k1PiFJgQslftZIWE9TPS24R5LO4FL+vmGphU3Mu0dHYRpewq7gim8f13Se4hifaisRXYQi+DW3WcEHkwZTXHwxNkedHN5TS4t7gIuu5cdYtTgZmn0RwwG3YgA7Ss3lCTVYGJ+hgqv3maTOQWVDu36eY5ZrupfQE=
-ARC-Message-Signature:i=2; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1780694720; c=relaxed/simple;
-	bh=1QXa+NHT69qWLPRCj3VCmB2Oj6i8KDWd6+dAXMmaQZ0=;
-	h=From:To:CC:Subject:In-Reply-To:References:Date:Message-ID:
-	 MIME-Version:Content-Type; b=qOp7WL69+69zftPlI0GQTaxJcKbF3UzYVtPmM8lFsSHtBfzfbO087iUCJSqpNNz+C6n8dvkK2XhxKsN9x9r9SoUCMIxjcuEh061k/K/U3Tj+zansr2USjvQB1bl8xYtxeICClNcL8XVOpK0H/ju3rxUB4ymWTjeYwNnWY127Iws=
-ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=amd.com; spf=fail smtp.mailfrom=amd.com; dkim=pass (1024-bit key) header.d=amd.com header.i=@amd.com header.b=zbDqqwKH; arc=fail smtp.client-ip=52.101.48.9
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=amd.com
-Authentication-Results: smtp.subspace.kernel.org; spf=fail smtp.mailfrom=amd.com
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4C16A13A3F7
+	for <sashiko-reviews@lists.linux.dev>; Fri,  5 Jun 2026 21:33:46 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=212.227.15.15
+ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
+	t=1780695229; cv=none; b=gLjapcYCcnf8/L+Ty9N9PsV0AQPX98ca5LJlBLrb8Fpf+yq8P5SyTjE3luDQF3502EPUNiLEy1+KkgrUFzXewZNK3FrNBAZGERyQlhBhLomkWmi8lJTEi03C96PCjOU/1LrusR5YKTlYgdgp2RO/48uCqeJ7rkw3vHjQeHZ/xdw=
+ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
+	s=arc-20240116; t=1780695229; c=relaxed/simple;
+	bh=srxoidQRERHZQdn9SICG3w9M3aZa9Xl7N+eE0c6ToBQ=;
+	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
+	 In-Reply-To:Content-Type; b=ixJVpzAwcSQuLLivTES53Qwj+PUNFBopF+l5j3m70ccnJPhk5omSo8TUIecINZIrMJuFvOZp3AZYyI7MUviZVoW3EjIrp3pKYsGDcvT5nSq1fnNtLB7tbnsACYsNk+s5BaxfZo4T/JPK5MMPxyPnR6xSxfZxPuYsH6FHkavP84A=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=gmx.de; spf=pass smtp.mailfrom=gmx.de; dkim=pass (2048-bit key) header.d=gmx.de header.i=w_armin@gmx.de header.b=jQuHQfBg; arc=none smtp.client-ip=212.227.15.15
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=gmx.de
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmx.de
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=amd.com header.i=@amd.com header.b="zbDqqwKH"
-ARC-Seal: i=1; a=rsa-sha256; s=arcselector10001; d=microsoft.com; cv=none;
- b=t6uRbfKsHahZ/5o/1CznTnMbpW5pnoNPyXd2CWy0uQKoqJRimdsZi4bvRBTmvAQtiXRf1O6lMBEiFI/Is3J8t9v58oIJ9nyzwPL25jfCLMU+LJADBk8n/AnGSNfVaEp9sOCfCX9yRf5Vdau6zE2I7HlaSUrT7X0X7lDd7EEn5RjLp5KspJi+DBpKAflIEVrzFexa3GRWtK/0KP1e+rZCWRvGml4Mq+SIoLri/+vg6lIx4HPuazvaFbv7KPWvuU+3lVnXY8eNUKtF7KaYaHQaz/quGB2u//aCrO050A/Lbjmn8ycitfANoXGzemSJzf17kgRACBBSgfgbzO7QophFWA==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com;
- s=arcselector10001;
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
- bh=nk6MT6+DUahtqhOi6Ui2slWstzwKz4mTLkN+3E2qS04=;
- b=rGT0Q7z+xLIA0oRIvJDgDoyLO5g2CfFlTF56LZN/L5yWd2XUP1n7QttRdDT/WOGbqZSdx/lRJ4wnAOlpQKpvIf3rEgiam7NEtLrOgxF1q5QBQP4ET7zUgvO4em3I+QRtrya9V0e5taq8nih9vCb2+a5fkhheOFcrhvqjJ9s7fKkCJlRn5c0vgrL4YUNRHSmnbRj0ULtKPLYVLY1kkSDTYbSBVqVO9LS7yDg0PkEXr3neLahFGuPQu7CSMhe6dQ1tArQl/8x4QXFpLORAlPz3Ouqb4vpR/n0zdP50VWVTMWeENBbmpXkHXdN0Ho08mE3Sfpi2ZCZv9Sp8M8YdyS3nTA==
-ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass (sender ip is
- 165.204.84.17) smtp.rcpttodomain=lists.linux.dev smtp.mailfrom=amd.com;
- dmarc=pass (p=quarantine sp=quarantine pct=100) action=none
- header.from=amd.com; dkim=none (message not signed); arc=none (0)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=amd.com; s=selector1;
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
- bh=nk6MT6+DUahtqhOi6Ui2slWstzwKz4mTLkN+3E2qS04=;
- b=zbDqqwKH0L0MgEr4MKibtyC2AGYK5aBV10eLBv84Ox9bF4G/Toixya0GItvb+xihtU+umww9+IhqGDQ0kJuV1HPX5tHXRpYPQ8LDKtkH47JepVYOYdB2FmTjZUl9u+tj76suelNQcLeYfsOSEA0Y55Kph5xJ13ZxHmrrRhFVy5c=
-Received: from SJ0PR13CA0178.namprd13.prod.outlook.com (2603:10b6:a03:2c7::33)
- by MN2PR12MB4485.namprd12.prod.outlook.com (2603:10b6:208:269::12) with
- Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.21.92.9; Fri, 5 Jun 2026
- 21:25:12 +0000
-Received: from BY1PEPF0001AE1B.namprd04.prod.outlook.com
- (2603:10b6:a03:2c7:cafe::4a) by SJ0PR13CA0178.outlook.office365.com
- (2603:10b6:a03:2c7::33) with Microsoft SMTP Server (version=TLS1_3,
- cipher=TLS_AES_256_GCM_SHA384) id 15.21.92.8 via Frontend Transport; Fri, 5
- Jun 2026 21:25:12 +0000
-X-MS-Exchange-Authentication-Results: spf=pass (sender IP is 165.204.84.17)
- smtp.mailfrom=amd.com; dkim=none (message not signed)
- header.d=none;dmarc=pass action=none header.from=amd.com;
-Received-SPF: Pass (protection.outlook.com: domain of amd.com designates
- 165.204.84.17 as permitted sender) receiver=protection.outlook.com;
- client-ip=165.204.84.17; helo=satlexmb07.amd.com; pr=C
-Received: from satlexmb07.amd.com (165.204.84.17) by
- BY1PEPF0001AE1B.mail.protection.outlook.com (10.167.242.103) with Microsoft
- SMTP Server (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
- 15.21.92.5 via Frontend Transport; Fri, 5 Jun 2026 21:25:11 +0000
-Received: from localhost (10.180.168.240) by satlexmb07.amd.com
- (10.181.42.216) with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.2562.41; Fri, 5 Jun
- 2026 16:25:11 -0500
-From: Nathan Lynch <nathan.lynch@amd.com>
-To: <sashiko-reviews@lists.linux.dev>
-CC: <dmaengine@vger.kernel.org>, <linux-pci@vger.kernel.org>,
-	<vkoul@kernel.org>, <Frank.Li@kernel.org>
-Subject: Re: [PATCH v2 04/23] dmaengine: sdxi: Feature discovery and initial
- configuration
-In-Reply-To: <20260513003352.8EDB2C2BCB0@smtp.kernel.org>
-References: <20260511-sdxi-base-v2-4-889cfed17e3f@amd.com>
- <20260513003352.8EDB2C2BCB0@smtp.kernel.org>
-Date: Fri, 5 Jun 2026 16:25:10 -0500
-Message-ID: <87v7bwd6ix.fsf@amd.com>
+	dkim=pass (2048-bit key) header.d=gmx.de header.i=w_armin@gmx.de header.b="jQuHQfBg"
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=gmx.de;
+	s=s31663417; t=1780695225; x=1781300025; i=w_armin@gmx.de;
+	bh=WglVgm3z59Im0TBwOKzfC55nYhlie0N7obC9ak6wl+A=;
+	h=X-UI-Sender-Class:Message-ID:Date:MIME-Version:Subject:To:Cc:
+	 References:From:In-Reply-To:Content-Type:
+	 Content-Transfer-Encoding:cc:content-transfer-encoding:
+	 content-type:date:from:message-id:mime-version:reply-to:subject:
+	 to;
+	b=jQuHQfBgAi8PekyaMkURgQuEDRgl24NatSsWg+INvdbKsyr9jpsK6Z2J3L9ntEuE
+	 08TcpCjdW9dYuPl3wkKe14ohHJto+3/wsnVKKJRgkm9J6IBPM7n+lENoUc2zaIkAa
+	 5lDTch1gQAdSieLRKt2ofpalBWzxoSt8gDoUk8GDvnOjEkHZ5N1H2+cVKDwo5PBnk
+	 XNf4NwspUrwEQgY2KVge5+Nt4lEW9CtcL3/dHH9mcWbic1kM2Tj8O7EHGiE2j1Rz1
+	 g6BlywaVhMQ+omQ9X4QLHrmRpoEoWubKshPRCMwuc1pwPby4ra9YfYgOO+eWIhR9v
+	 WOSNBu120jTiM/9B8w==
+X-UI-Sender-Class: 724b4f7f-cbec-4199-ad4e-598c01a50d3a
+Received: from client.hidden.invalid by mail.gmx.net (mrgmx004
+ [212.227.17.190]) with ESMTPSA (Nemesis) id 1M2O2W-1wYNap18CE-004T0N; Fri, 05
+ Jun 2026 23:33:45 +0200
+Message-ID: <5b8ce936-72aa-4843-bbe6-2d89b2479763@gmx.de>
+Date: Fri, 5 Jun 2026 23:33:44 +0200
 Precedence: bulk
 X-Mailing-List: sashiko-reviews@lists.linux.dev
 List-Id: <sashiko-reviews.lists.linux.dev>
 List-Subscribe: <mailto:sashiko-reviews+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:sashiko-reviews+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain
-X-ClientProxiedBy: satlexmb07.amd.com (10.181.42.216) To satlexmb07.amd.com
- (10.181.42.216)
-X-EOPAttributedMessage: 0
-X-MS-PublicTrafficType: Email
-X-MS-TrafficTypeDiagnostic: BY1PEPF0001AE1B:EE_|MN2PR12MB4485:EE_
-X-MS-Office365-Filtering-Correlation-Id: 0bdb299a-b07c-43cd-7f98-08dec348ed5c
-X-MS-Exchange-SenderADCheck: 1
-X-MS-Exchange-AntiSpam-Relay: 0
-X-Microsoft-Antispam:
-	BCL:0;ARA:13230040|376014|36860700016|82310400026|1800799024|18002099003|22082099003|6133799003|4143699003|5023799004|56012099006|11063799006;
-X-Microsoft-Antispam-Message-Info:
-	Bb9cRql7F566OmMzXU33HYLjTi7Ifl/+fcLRzpQsFvsVnlEGw7F63JlFL4p6tY/zdQaGtSd7kvP4sC7jPQhcxNDyUqFPfw19hSFFSLn2PhsD3/tcyHcAxn6l1jcrXA29UlmayLHmp4o/zM+nZ+BYfWedmNBCPEhrsrdp2pzXH2kXPW9FiDI/2D6DpxXAvq6pzGbLaZAuLhJycIoBl+eUqu7jMXnIsje4lGPUlRfoq+X+9Ww6sY/O3IwPJ0cJULN56VJ17WJde23cN666LN16whSv8bKHlp/UHPgQRIO1/gZdaG6tlFHrfq1IUuf4PiWYx1+S8z3+XRRBkytsTI/TlD+cRt0UvSNsee2eZLxJIUbQmZVFRflz8aEemw9dy2+xTRkzr1CHlKXa0a3QRS70D7sWE0kDuzxQyke304smQ/biruyVm8kIkWNjXgfGagOehGi2OrEbAFJjN1Esg2c9dK0g9l2gaDNMkisBapM1FEpkYAMofteRXYj3veXNSFDtzBVkRQTSTQKLpgjoYpeD6IFnsR8r8NWqJau2FwZdQgsWHth55OeFoY2XGkhWEsIt+o3yTpyzkQYMzwpyWHvZk2nsppLTzy+lk+uIvoauJolc8j6lh30ru7TEYngg9RCb+j8cYFxXKLNbE2m6FbdLXFzM+fsB4G2vNVEvLkeMXc8uMc5Gn0g86ifbY/9f1ZHb/4CQZyVOdr9Wz9z/mmfpa+EDFz/QB1h3kjq0sb3vyfA=
-X-Forefront-Antispam-Report:
-	CIP:165.204.84.17;CTRY:US;LANG:en;SCL:1;SRV:;IPV:NLI;SFV:NSPM;H:satlexmb07.amd.com;PTR:InfoDomainNonexistent;CAT:NONE;SFS:(13230040)(376014)(36860700016)(82310400026)(1800799024)(18002099003)(22082099003)(6133799003)(4143699003)(5023799004)(56012099006)(11063799006);DIR:OUT;SFP:1101;
-X-MS-Exchange-AntiSpam-MessageData-ChunkCount: 1
-X-MS-Exchange-AntiSpam-MessageData-0:
-	svUMtoVqyx+yBWHxMGDbfWBVsm7YjwhyUZGZ8nQnQfjfLq3XUqWFDD1sjXAlcacvQ7bFiHBT5O6qmd56MRPNA9oEMvOToAC8OVA02UUdghNMM0RViRGn08u3mTFu+/IAsI3Rom/UQelFoZmmRNuCaFGcmhlnWkdGPT35ih7AW79WlGPgcmbssvd4ruwqHXz3OGbuSWWGyuhoKUpJ0rwLBkRcCXaAbOstlkgpRLlVQ6yzar9HNwlyUKnNkaUHvolhu4Y3/KcFDqxR+3tn6JDB4aLPgfYoUZq6Qtbofsf2tlYoaz7ljWMPuwWv0ybJADUaoXp9QrP/3Nwj7PAbCRlPdVE1pR4xzzG1nMABSifxNMTEam/ybnXGV7aDHUoLXyV1OTZGlaLM9tPXte0GDd9BdsaVPnxoysrqEHl6o0Zsm8AcLYgx6F60U3mBOWUV2XuC
-X-OriginatorOrg: amd.com
-X-MS-Exchange-CrossTenant-OriginalArrivalTime: 05 Jun 2026 21:25:11.9722
- (UTC)
-X-MS-Exchange-CrossTenant-Network-Message-Id: 0bdb299a-b07c-43cd-7f98-08dec348ed5c
-X-MS-Exchange-CrossTenant-Id: 3dd8961f-e488-4e60-8e11-a82d994e183d
-X-MS-Exchange-CrossTenant-OriginalAttributedTenantConnectingIp: TenantId=3dd8961f-e488-4e60-8e11-a82d994e183d;Ip=[165.204.84.17];Helo=[satlexmb07.amd.com]
-X-MS-Exchange-CrossTenant-AuthSource:
-	BY1PEPF0001AE1B.namprd04.prod.outlook.com
-X-MS-Exchange-CrossTenant-AuthAs: Anonymous
-X-MS-Exchange-CrossTenant-FromEntityHeader: HybridOnPrem
-X-MS-Exchange-Transport-CrossTenantHeadersStamped: MN2PR12MB4485
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH v5 3/9] platform/x86: dell-smbios-wmi: Use new
+ buffer-based WMI API
+To: sashiko-reviews@lists.linux.dev
+Cc: linux-hwmon@vger.kernel.org
+References: <20260605205937.530897-4-W_Armin@gmx.de>
+ <20260605211346.53E9E1F00893@smtp.kernel.org>
+Content-Language: en-US
+From: Armin Wolf <W_Armin@gmx.de>
+In-Reply-To: <20260605211346.53E9E1F00893@smtp.kernel.org>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: quoted-printable
+X-Provags-ID: V03:K1:ogoqrJplBbqIXUczMLXBByLogwV+2jNUVH/7J9HFGgrFZFECeDI
+ UxXuelBkx/uDuPh/M4qXun1Z+laBQELPkMOh4b3ukcGGCL+LllB02AvLiFZN3cgOHC6bqly
+ ZsbM+JV4T4Hk2NNudl55gw80bIT+CjFlCp9Wrc6mserr3TmMZnRQxA82PolB3e8fd6ollra
+ IPsavbxlU8J2K+KvILu3w==
+X-Spam-Flag: NO
+UI-OutboundReport: notjunk:1;M01:P0:L9ONJCZ72KI=;cHPOMEVW8X7StbA1XXcyFeV2soT
+ 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
+ UWYvjvesXsILCtI8Y/UrSacleg+A/hVQ4TMJsaR
 
-sashiko-bot@kernel.org writes:
-> Thank you for your contribution! Sashiko AI review found 2 potential issue(s) to consider:
-> - [High] Hardware state machine mismanagement and TOCTOU race during device initialization.
-> - [Low] Use of 64-bit MMIO accessors without proper fallback causes build failures on 32-bit architectures.
+Am 05.06.26 um 23:13 schrieb sashiko-bot@kernel.org:
+
+> Thank you for your contribution! Sashiko AI review found 3 potential iss=
+ue(s) to consider:
+>
+> New issues:
+> - [Medium] The driver silently drops SMBIOS integer error codes and chan=
+ges the returned error from `-EIO` to `-ENODATA`.
+>
+> Pre-existing issues:
+> - [High] If the ACPI WMI method evaluates successfully but returns no ob=
+ject, `wmidev_invoke_method` returns success (0) and sets `output.data` to=
+ `ZERO_SIZE_PTR`. The `dell-smbios-wmi` driver then blindly dereferences i=
+t in `memcpy` using `input.length` (which is > 0), causing an immediate ke=
+rnel panic.
+> - [High] User space open file descriptors can trigger a use-after-free o=
+n `priv` and `priv->buf` after the WMI device unbinds.
 > --
 >
-> commit 20635a3fda61c4d58fcd763198caf0840128ff21
-> Author: Nathan Lynch <nathan.lynch@amd.com>
+> commit 16e2a3995c7578613ee091087b9699433b85564f
+> Author: Armin Wolf <W_Armin@gmx.de>
 >
-> dmaengine: sdxi: Feature discovery and initial configuration
+> platform/x86: dell-smbios-wmi: Use new buffer-based WMI API
 >
-> Discover via the capability registers the doorbell region stride, the
-> maximum supported context ID, the operation groups implemented, and
-> limits on buffer and control structure sizes. The driver has the
-> option of writing more conservative limits to the ctl2 register, but
-> it uses those supplied by the implementation for now.
+> This commit updates the dell-smbios-wmi driver to use the new buffer-bas=
+ed
+> WMI API. It replaces manual ACPI buffer handling with wmidev_invoke_meth=
+od()
+> to better support various ACPI firmware implementations.
 >
->> diff --git a/drivers/dma/sdxi/device.c b/drivers/dma/sdxi/device.c
->> index b718ce04afa07..f9a9944ad8929 100644
->> --- a/drivers/dma/sdxi/device.c
->> +++ b/drivers/dma/sdxi/device.c
+>> diff --git a/drivers/platform/x86/dell/dell-smbios-wmi.c b/drivers/plat=
+form/x86/dell/dell-smbios-wmi.c
+>> index a7dca8c59d602..64d0871b706e5 100644
+>> --- a/drivers/platform/x86/dell/dell-smbios-wmi.c
+>> +++ b/drivers/platform/x86/dell/dell-smbios-wmi.c
+>> @@ -50,38 +50,32 @@ static inline struct wmi_smbios_priv *get_first_smb=
+ios_priv(void)
+>>  =20
+>>   static int run_smbios_call(struct wmi_device *wdev)
+>>   {
 > [ ... ]
->> @@ -5,14 +5,180 @@
->> +/* Get the device to the GSV_STOP state. */
->> +static int sdxi_dev_stop(struct sdxi_dev *sdxi)
->> +{
->> +	enum sdxi_fn_gsv status = sdxi_dev_gsv(sdxi);
->> +	int ret;
->> +
->> +	dev_dbg(sdxi->dev, "attempting stop, current state: %s\n",
->> +		gsv_str(status));
->> +
->> +	switch (status) {
->> +	case SDXI_GSV_INIT:
->> +	case SDXI_GSV_ACTIVE:
->> +		sdxi_write_fn_gsr(sdxi, SDXI_GSRV_STOP_SF);
->> +		break;
->> +	case SDXI_GSV_STOPG_SF:
->> +		sdxi_write_fn_gsr(sdxi, SDXI_GSRV_STOP_HD);
->> +		break;
->> +	case SDXI_GSV_STOPG_HD:
->> +	case SDXI_GSV_ERROR:
->> +		/*
->> +		 * If hard-stopping, there's nothing to do but wait.
->> +		 * If in error state, the reset is issued below.
->> +		 */
->> +		break;
->> +	default:
->> +		/* Unrecognized state; try a reset. */
->> +		sdxi_write_fn_gsr(sdxi, SDXI_GSRV_RESET);
->> +		break;
->> +	}
 >
-> If the device is already in the SDXI_GSV_STOP state, does the switch fall
-> through to the default case and unintentionally issue a reset?
->
-> The subsequent read_poll_timeout() check would then immediately return success
-> because the state evaluates as STOP before the background reset actually begins.
-> Could this allow the reset to proceed in the background while the driver
-> continues with initialization, potentially wiping the configuration?
-
-No, this is ok as written; when the function is in GSV_STOP, it ignores
-any value written to fn_gsr except for SDXI_GSRV_ACTIVE.
-
->> +/*
->> + * See SDXI 1.0 4.1.8 Activation of the SDXI Function by Software.
->> + */
->> +static int sdxi_fn_activate(struct sdxi_dev *sdxi)
->> +{
->> +	u64 version, cap0, cap1, ctl2;
->> +	int err;
->> +
+>> -	status =3D wmidev_evaluate_method(wdev, 0, 1, &input, &output);
+>> -	if (ACPI_FAILURE(status))
+>> -		return -EIO;
+>> -	obj =3D (union acpi_object *)output.pointer;
+>> -	if (obj->type !=3D ACPI_TYPE_BUFFER) {
+>> -		dev_dbg(&wdev->dev, "received type: %d\n", obj->type);
+>> -		if (obj->type =3D=3D ACPI_TYPE_INTEGER)
+>> -			dev_dbg(&wdev->dev, "SMBIOS call failed: %llu\n",
+>> -				obj->integer.value);
+>> -		kfree(output.pointer);
+>> -		return -EIO;
+>> -	}
+>> -	memcpy(input.pointer, obj->buffer.pointer, obj->buffer.length);
 >> +	/*
->> +	 * Clear any existing configuration from MMIO_CTL0 and ensure
->> +	 * the function is in GSV_STOP state.
+>> +	 * The output buffer returned by the WMI method should have at least =
+the size
+>> +	 * of the input buffer.
 >> +	 */
->> +	sdxi_write64(sdxi, SDXI_MMIO_CTL0, 0);
->> +	err = sdxi_dev_stop(sdxi);
+>> +	ret =3D wmidev_invoke_method(wdev, 0, 1, &input, &output, input.lengt=
+h);
+>> +	if (ret < 0)
+>> +		return ret;
+> [Severity: Medium]
+> Will this change cause the driver to silently drop SMBIOS integer error =
+codes?
 >
-> Does writing 0 to SDXI_MMIO_CTL0 implicitly write SDXI_GSRV_RESET (value 0)
-> to the FN_GSR command field?
+> Previously, if the BIOS returned an integer error, the driver explicitly=
+ logged
+> "SMBIOS call failed: %llu" with the specific error code and returned -EI=
+O.
 >
-> If so, sdxi_dev_stop() might read a stale device state while the hardware is
-> processing the reset, and overwrite the command field with a conflicting command
-> like SDXI_GSRV_STOP_SF. Can this lead to a hardware state machine
-> conflict?
+> Now, wmidev_invoke_method() unmarshals the integer into a 4-byte buffer,
+> fails the length < min_size check, and returns -ENODATA.
+>
+> Does this loss of precise error codes hinder debugging, and could the ch=
+anged
+> errno break userspace tools expecting -EIO?
 
-I don't think there's a state machine conflict (see Figure 4-1: SDXI
-Function States and State Transitions in the spec). But we probably
-shouldn't change the fn_pasid_vl or fn_err_intr_en fields in the
-register unless the function is already in stopped state.
+I do not think that any user program relies on EIO in particular. I decide=
+d to remove
+the debug message because the WMI interface does not specify that an integ=
+er is returned
+in case of an error, so this is a implementation detail of the individual =
+ACPI implementation.
 
-Another reason to be more careful here is that we shouldn't clear
-MMIO_CTL0's fn_grp_id field, which is software-assignable for function
-grouping, and is read-only for VFs.
+Thanks,
+Armin Wolf
 
-
->> @@ -30,9 +34,24 @@ struct sdxi_dev {
->> +static inline u64 sdxi_read64(const struct sdxi_dev *sdxi, enum sdxi_reg reg)
->> +{
->> +	return ioread64(sdxi->ctrl_regs + reg);
->> +}
 >> +
->> +static inline void sdxi_write64(struct sdxi_dev *sdxi, enum sdxi_reg reg, u64 val)
->> +{
->> +	iowrite64(val, sdxi->ctrl_regs + reg);
->> +}
+>> +	memcpy(input.data, output.data, input.length);
+> [Severity: High]
+> This is a pre-existing issue, but can this memcpy() cause a kernel panic=
+ if
+> the WMI evaluation returns no object?
 >
-> Can this cause build failures on 32-bit architectures?
+> If a buggy or malicious ACPI BIOS returns no object for the SMBIOS WMI m=
+ethod:
 >
-> The functions use ioread64() and iowrite64(), which typically rely on readq()
-> and writeq() that are not defined on 32-bit platforms.
+> drivers/platform/wmi/core.c:wmidev_invoke_method() {
+>      ...
+>      if (!obj) {
+>          out->length =3D 0;
+>          out->data =3D ZERO_SIZE_PTR;
+>          return 0;
+>      }
+>      ...
+> }
 >
-> Although linux/io-64-nonatomic-lo-hi.h is included at the top of the file,
-> the code does not use the macros actually provided by that header
-> (e.g., ioread64_lo_hi()).
-
-I decided to just make the driver depend on 64BIT and use readq/writeq.
-We can take up 32-bit build coverage later.
+> wmidev_invoke_method() will bypass the min_size check and return success=
+.
+>
+> Since output.data is ZERO_SIZE_PTR and input.length is strictly positive=
+,
+> does this memcpy() directly dereference ZERO_SIZE_PTR and trigger a fata=
+l
+> page fault?
+>
+>> +	kfree(output.data);
+> [Severity: High]
+> This isn't a bug introduced by this patch, but is there a use-after-free
+> vulnerability during driver unbind?
+>
+> The driver allocates resources using devm_kzalloc() and devm_get_free_pa=
+ges()
+> in dell_smbios_wmi_probe():
+>
+> drivers/platform/x86/dell/dell-smbios-wmi.c:dell_smbios_wmi_probe() {
+>      ...
+>      priv =3D devm_kzalloc(&wdev->dev, sizeof(struct wmi_smbios_priv), G=
+FP_KERNEL);
+>      ...
+>      priv->buf =3D (void *)devm_get_free_pages(&wdev->dev, GFP_KERNEL, c=
+ount);
+>      ...
+> }
+>
+> It uses devm_add_action_or_reset() to call misc_deregister(). While this
+> removes the device node, it does not revoke existing open file descripto=
+rs.
+> During unbind, devres subsequently frees priv and priv->buf.
+>
+> If a user space application holds an open file descriptor, could a concu=
+rrent
+> or subsequent ioctl() access the freed structures here?
+>
+> drivers/platform/x86/dell/dell-smbios-wmi.c:dell_smbios_wmi_ioctl() {
+>      struct wmi_smbios_priv *priv =3D filp->private_data;
+>      ...
+>      ret =3D dell_smbios_wmi_do_ioctl(priv, input);
+>      ...
+> }
+>
