@@ -1,163 +1,175 @@
-Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-wr1-f50.google.com (mail-wr1-f50.google.com [209.85.221.50])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7F7CB289340;
-	Fri,  5 Jun 2026 14:45:57 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
-ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1780670758; cv=none; b=QQWgEJe5pYVxZTh9dWlVRmmpdXtMNgcr6epmLHHLWH6Bagzo72CHrjH3f/ypQpD5H9I48melRlaDWCp+tDbhhFTN3WUPSKkL0ahRdaI/hMIdxbF4fThW3XIKfdiMWuVL38Af/ZflVtKzqUhM8BVygoWI+fVZxZfjZWmp985I0qw=
-ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1780670758; c=relaxed/simple;
-	bh=bYnYHrZQLqezAAEClptwkiPB18M4FWj2nyOjvDldeA0=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=dU300ONrG0n/0qz2P/PK8ix+MWSOthGKii3axEADIbbX5wXQmaJIPI0p0ic4WPXHyXYqLm1mYyJtE898RJv0adzX+QrjFm98y0t1OV/Rb9DUVRE+t3jdOIvKp6vs4IickwkqBgIRFRUHNtroay2sqNZ1tASzFehrVpD0XRG5I9U=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=eF15EbQs; arc=none smtp.client-ip=100.103.45.18
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3D4563E00AB
+	for <sashiko-reviews@lists.linux.dev>; Fri,  5 Jun 2026 14:55:10 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=pass smtp.client-ip=209.85.221.50
+ARC-Seal:i=2; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
+	t=1780671311; cv=pass; b=hS6J25qs2jpKoe+AHWN2ebmcnnGiDtobl6PZXSlAaEGu32p9eQozZdaru8V6qzMgCV8nIeYu057ndQhsuyy7ZnocYjQEl2kp0nk7SHgZlwhFAEms1db5b6XpwKXLdPxoIBqKmnRAkRQLxkD8xOoScP8vOog4wO7rYE6E0WlnrTQ=
+ARC-Message-Signature:i=2; a=rsa-sha256; d=subspace.kernel.org;
+	s=arc-20240116; t=1780671311; c=relaxed/simple;
+	bh=uAyomS5JQN29ENBomMwzxMcVDyQgqPKS6joeV5zeK/E=;
+	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
+	 To:Cc:Content-Type; b=fiqZa3wsBvcj/m9SS+Jisor0313Oyt5zDo1e5Bxl2JnYzfASbxb8Reb0txS7JVc+mQOf6NR/V8I6YUyzhHDeuk/7a+yv63B7IldUIZplZcK5rxUWMl9DSm3DEIlMObAvYZW9diA3ACKiYnPET+XwVQPWtKTNoz2/P359YVYRQto=
+ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=google.com; spf=pass smtp.mailfrom=google.com; dkim=pass (2048-bit key) header.d=google.com header.i=@google.com header.b=GmQkpPj8; arc=pass smtp.client-ip=209.85.221.50
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=google.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=google.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="eF15EbQs"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5FFB01F00893;
-	Fri,  5 Jun 2026 14:45:56 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=kernel.org;
-	s=k20260515; t=1780670757;
-	bh=Ww/M3NWb2znT+uTU6Ci5K7Qcsa7wnGMgbYt6hVS76LE=;
-	h=Date:From:To:Cc:Subject:References:In-Reply-To;
-	b=eF15EbQsWMjRR5kCkKXKH0EoQd76XAm2fo6dT9+ctlNlIcekDWujaHJGOrR9W52zt
-	 JiPGvIUecY6IkacxiGXE6thQnHzxELX9nDp2CnCZR25anMypd/e3s1HErSagJWLr+O
-	 3nCfAXWW/fsZkXBEp6vh9EoJc/iekU/QtcCewTY9xCD4DxzkiIvHD+rdk8kv2Pq/Gl
-	 gMtOfwI46ZU0vrKOcLVAbaJap8urId0tAuyDKpM+KQeCbRgP75wa52JYpkkZ5T3jHu
-	 JbgSJ2ltOp9bDAko/8VaBaam6sJ4DVCH3Zz+mYWRsMO8f+kU8DfXIZNq2VOZ6VW3o+
-	 ZikadOLoNJhyQ==
-Date: Fri, 5 Jun 2026 11:45:51 -0300
-From: Arnaldo Carvalho de Melo <acme@kernel.org>
-To: sashiko-reviews@lists.linux.dev
-Cc: linux-perf-users@vger.kernel.org
-Subject: Re: [PATCH 2/5] perf tools: Add bounds check to cpu__get_node()
-Message-ID: <aiLhH7NEScm55m3X@x1>
-References: <20260605121515.1725549-3-acme@kernel.org>
- <20260605143000.DE0CD1F00893@smtp.kernel.org>
+	dkim=pass (2048-bit key) header.d=google.com header.i=@google.com header.b="GmQkpPj8"
+Received: by mail-wr1-f50.google.com with SMTP id ffacd0b85a97d-45ef5146b56so2018728f8f.0
+        for <sashiko-reviews@lists.linux.dev>; Fri, 05 Jun 2026 07:55:09 -0700 (PDT)
+ARC-Seal: i=1; a=rsa-sha256; t=1780671309; cv=none;
+        d=google.com; s=arc-20240605;
+        b=ZXLoQg7o+DbbuPloD5DDzpNV3G1/QLa+//I6hABof5wiNjelKPE7pgQsxSZepaBThe
+         FKo4Jm8E5nMTH3yac/94S/BQYZWgmSFRL2hSET6iABSzHoNegT0XCClDgu4OhpFafcVc
+         4wndZDJKKtmo8d6m9TAt0Ekp/PBXFmEV35iCox70tnKWfb0pN8/N8LvI2RKPiO4/6a+k
+         7pUqmQbZPEpWSzDeWzqlx3ONI/i4tSUySR1IoohQsRtjYKVYIW9LjNXafAm3G/afuFIY
+         TaFraVUftUKlB0vO97JPcNTbFKtJjaRiR2V77SbY0uCCL1U0H2dZLEW4bzuYxpnpCHSn
+         sxwA==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com; s=arc-20240605;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:dkim-signature;
+        bh=ga5I8YlfP9EVgN78rA8flUbrTYvBmVk8NvjmWyk37Eo=;
+        fh=Ubq1rulsywyCU10+7K7q/O35o4WLROh46KME/Dc8mdA=;
+        b=ZSEpIsq9byhioEx8PyB3ODzi0Eg0vuHoiX08QLC8bRYJUvxxrnQN2ahcVLMrOJQLAN
+         eFpgck3AEsxhPClwCsg7VoEIFIOXOgvFXEzEJ8ykB93udJwHeeHIrvCT9LOHAbkUZRBL
+         NU/UYDdXkJz90DIwlFmGFUI62jbBh8wL5DjTRKFsrvhTi6jZJJ7meIgqvV5lCRbAef5E
+         wFWM9r8qnaPKQ14SCWnTh5EcZFqXdBhJC5H/l5Lv6jEauFnaPT2AQQZL16ZAKoXn7LRF
+         5q2kwbr+pUU5UzOJg2sKZuuRd9RHEhnjLQGr8uPgEfNcZsEkYeYZ8VrZYVEiZ8YCYLnO
+         20Og==;
+        darn=lists.linux.dev
+ARC-Authentication-Results: i=1; mx.google.com; arc=none
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=google.com; s=20251104; t=1780671309; x=1781276109; darn=lists.linux.dev;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=ga5I8YlfP9EVgN78rA8flUbrTYvBmVk8NvjmWyk37Eo=;
+        b=GmQkpPj8Ku8ppv9SmiZqFLEUpj1v43sUr0Z7V3jY7W3m2hYEEZZwgIYaTUG+32J8tT
+         zSSiyIC/FJZIkBmnY5Fn2ivPyAVEtTWgZmyqbuJLxMAhUWuz51eHuGh2VNize/cHJQZ3
+         a9f1D5oX5wXi7v/GluOR7oLSzrbB7lHIUmKiQ7Fs5+AGj5GB+astougrKdjZ2yeIVhYA
+         1vFw2aPKvVj94HA1XQi/iPtxkiPXMkCyZblVpwpJYeinc0e0fUUWixu37imicIXdqTeG
+         LtG45fa5RdZ+l2pcD3mBDTLrIcHDPnrRsfp/2Rd8n7S10PsQkpLoz33NvFFruz17py2L
+         NdxQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20251104; t=1780671309; x=1781276109;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:x-gm-gg:x-gm-message-state:from
+         :to:cc:subject:date:message-id:reply-to;
+        bh=ga5I8YlfP9EVgN78rA8flUbrTYvBmVk8NvjmWyk37Eo=;
+        b=W8fH26zmCY/jCRB2rTbrQWIb5cL+do6Axmds8nQl/CUSJnltJDwmaSiZBKj9/cUB53
+         1qa7URQfCnZhUUvF5DbHLeyQW9EW6EXKEsHm6TEwUATHBO4k6yuiAE8Fg4HsV5y2IPpc
+         XqQeE54CJWvAnh7hhM5heB6t9v0ajXv+EwddL7jShvZQna7N0bRaK6IjHZHlPpVRwIip
+         FAfDbA1d2Oe/fXP6PaxJmQhom1TfIgGcS9aTOmfuOqvSx5j8rbj02mhcKwHX/cR1aij5
+         QhOS3sCeG+aWEI3eKIF/WYLwa1EaDE4SK4Vy7n+JnGSbLOFOnpP/AFzk7A92OrQyyktz
+         P8Bw==
+X-Gm-Message-State: AOJu0YwAIM+O3HsyJq2Bpam2l80kLkaq6TMycRaiTixD7tjhYcIcaGEn
+	VGyX56UBc/AmNJ7r+fCor/5U4upPLNu2lM9QQO2u4ot0zGraztGKx+Ry0aOZyhHHxxjCkFGmCzQ
+	TU/IvDB93JTMexI59867V/ebV+J6uCzuEaAPKC8k/
+X-Gm-Gg: Acq92OGaEKh8jmrV0eCf1dpLXXBnliU96zdLVE/E4qNtEaXfRF4U3wSUT495mE/uZ6g
+	o37qiMerR8fHZY/xZiXFsi6/fTCfB4V7aTfVCIbe6VkYJFkpwlQ5vaMHQ72on3V8UBoCqVKf+lT
+	9TeAoivcXxwjaj4WyCzVGKFR8QZTnCjqhIf1EhGZzDpUioQiMSN1MgXIutACdlPo97dMbD1pX2H
+	AlHtv5gjqKwXKwBmJT+HhN+TwvcbKham+YYR4j4yAf0h9/tLeOwAh/uTriGm0WBRIrtu0AZJgQ4
+	zkzv+C1d87r2kJRH98hDGOLt28pPy2LtPeMzpfpISUaUcOmN
+X-Received: by 2002:a05:6000:4312:b0:460:395c:7404 with SMTP id
+ ffacd0b85a97d-460395c7421mr2318434f8f.20.1780671307856; Fri, 05 Jun 2026
+ 07:55:07 -0700 (PDT)
 Precedence: bulk
 X-Mailing-List: sashiko-reviews@lists.linux.dev
 List-Id: <sashiko-reviews.lists.linux.dev>
 List-Subscribe: <mailto:sashiko-reviews+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:sashiko-reviews+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=iso-8859-1
-Content-Disposition: inline
-Content-Transfer-Encoding: 8bit
-In-Reply-To: <20260605143000.DE0CD1F00893@smtp.kernel.org>
+References: <20260605133541.22569-2-boqun@kernel.org> <20260605134935.B6C0E1F00893@smtp.kernel.org>
+ <aiLgJkKzwEDGWNtY@tardis-2.local>
+In-Reply-To: <aiLgJkKzwEDGWNtY@tardis-2.local>
+From: Alice Ryhl <aliceryhl@google.com>
+Date: Fri, 5 Jun 2026 16:54:55 +0200
+X-Gm-Features: AVVi8CcIvUHIO2p_9VW6ZHI2m65-lN84pQk89kmG3nnyyy__psHz_pZWj_Nq3k4
+Message-ID: <CAH5fLgimUgbK_dVwq7RQimOugqJka2bM_u2r5S=3aze_8uCnbA@mail.gmail.com>
+Subject: Re: [PATCH 1/3] rust: rcu: add RcuBox type
+To: Boqun Feng <boqun@kernel.org>
+Cc: sashiko-reviews@lists.linux.dev, ojeda@kernel.org, 
+	dri-devel@lists.freedesktop.org, linux-media@vger.kernel.org
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 
-On Fri, Jun 05, 2026 at 02:30:00PM +0000, sashiko-bot@kernel.org wrote:
-> Thank you for your contribution! Sashiko AI review found 3 potential issue(s) to consider:
-> 
-> Pre-existing issues:
-> - [High] `builtin-kmem` omits the `.attr` callback in its `perf_tool`, which breaks processing of piped streams natively.
-> - [High] Integer truncation in `set_max_cpu_num()` combined with missing bounds checks in `cpu__setup_cpunode_map()` causes heap out-of-bounds writes on systems with large sparse CPU topologies.
-> - [High] `perf_mmap__aio_bind` triggers an out-of-bounds memory write and subsequent crash when a CPU's NUMA node is unknown or mapped to a dummy CPU.
-> --
+On Fri, Jun 5, 2026 at 4:41=E2=80=AFPM Boqun Feng <boqun@kernel.org> wrote:
+>
+> On Fri, Jun 05, 2026 at 01:49:35PM +0000, sashiko-bot@kernel.org wrote:
+> > Thank you for your contribution! Sashiko AI review found 2 potential is=
+sue(s) to consider:
+> > - [Critical] RcuBox::into_foreign drops `self` instead of forgetting it=
+, causing a guaranteed Use-After-Free.
+> > - [High] RcuBox::drop bypasses the custom Allocator A and hardcodes kvf=
+ree_call_rcu() for types that do not require dropping, causing undefined be=
+havior for non-kvfree compatible allocators.
+> > --
+> >
+> > commit f69c06884595bb68a76f4f1dd4014ee9e2c9e31c
+> > Author: Alice Ryhl <aliceryhl@google.com>
+> >
+> > rust: rcu: add RcuBox type
+> >
+> > This adds an RcuBox container, which is like Box except that the value
+> > is freed after waiting for one grace period (via {kvfree_,}call_rcu()).
+> > To allow containers to rely on the RCU properties of RcuBox, an
+> > extension of ForeignOwnable is added.
+> >
+> > > diff --git a/rust/kernel/sync/rcu/rcu_box.rs b/rust/kernel/sync/rcu/r=
+cu_box.rs
+> > > new file mode 100644
+> > > index 0000000000000..943fe3e8974e0
+> > > --- /dev/null
+> > > +++ b/rust/kernel/sync/rcu/rcu_box.rs
+> >
+> > [ ... ]
+> >
+> > > +// SAFETY:
+> > > +// * The `RcuBoxInner<T>` was allocated with `A`.
+> > > +// * `NonNull::as_ptr` returns a non-null pointer.
+> > > +unsafe impl<T: Send + 'static, A: Allocator> ForeignOwnable for RcuB=
+ox<T, A> {
+> > > +    const FOREIGN_ALIGN: usize =3D <Box<RcuBoxInner<T>, A> as Foreig=
+nOwnable>::FOREIGN_ALIGN;
+> > > +
+> > > +    type Borrowed<'a> =3D &'a T;
+> > > +    type BorrowedMut<'a> =3D &'a T;
+> > > +
+> > > +    fn into_foreign(self) -> *mut c_void {
+> > > +        self.0.as_ptr().cast()
+> > > +    }
+> >
+> > [Severity: Critical]
+> > Since `self` is consumed by value here without being wrapped in `Manual=
+lyDrop`
+> > or passed to `core::mem::forget()`, won't it be dropped at the end of t=
+his
+> > method?
+> >
+> > This seems like it would immediately schedule the memory for RCU free, =
+causing
+> > a use-after-free for the foreign code when it later accesses the pointe=
+r.
+> >
+>
+> [Cc Alice]
+>
+> I fixed this locally by:
+>
+>     fn into_foreign(self) -> *mut c_void {
+>         let ptr =3D self.0.as_ptr().cast();
+>
+>         // FORGET: Leaking it as a pointer, the caller is responsible to =
+free it or unleak it by
+>         // from_foreign().
+>         core::mem::forget(self);
+>
+>         ptr
+>     }
 
-Thanks, added all these pre-existing conditions for the following
-series,
+I prefer to avoid use core::mem::forget.
 
-- Arnaldo
- 
-> commit 84fade77fbbcea06a93ffe9275b1abcc29bbc6bc
-> Author: Arnaldo Carvalho de Melo <acme@redhat.com>
-> 
-> perf tools: Add bounds check to cpu__get_node()
-> 
-> The patch adds a bounds check against max_cpu_num in cpu__get_node() to
-> protect against untrusted or out-of-bounds CPU index values before accessing
-> cpunode_map. This prevents out-of-bounds array indexing, particularly when
-> analyzing cross-machine perf recordings where the recorded CPU count may
-> exceed the host's CPU count.
-> 
-> > diff --git a/tools/perf/util/cpumap.c b/tools/perf/util/cpumap.c
-> > index b1e5c29c6e3ec..d3432622b2adc 100644
-> > --- a/tools/perf/util/cpumap.c
-> > +++ b/tools/perf/util/cpumap.c
-> > @@ -576,6 +576,10 @@ int cpu__get_node(struct perf_cpu cpu)
-> >  		return -1;
-> >  	}
-> >  
-> > +	/* cpunode_map allocated for max_cpu_num entries; input may be untrusted */
-> > +	if (cpu.cpu < 0 || cpu.cpu >= max_cpu_num.cpu)
-> 
-> [Severity: High]
-> This isn't a bug introduced by this patch, but parsing sysfs to determine
-> the maximum CPU number introduces a memory corruption vulnerability.
-> 
-> In tools/perf/util/cpumap.c:set_max_cpu_num(), the max possible CPU number
-> is parsed from sysfs into a local int max. This value is directly assigned to
-> max_cpu_num.cpu, which is an int16_t. If max exceeds 32,767 (as is possible on
-> large modern architectures or due to sparse APIC numbering), the assignment
-> truncates the value, resulting in a small or negative integer.
-> 
-> Later, init_cpunode_map() allocates cpunode_map based on this truncated size,
-> and cpu__setup_cpunode_map() writes to it without truncation:
-> 
-> tools/perf/util/cpumap.c:cpu__setup_cpunode_map() {
-> ...
-> 		while ((dent2 = readdir(dir2)) != NULL) {
-> 			if (dent2->d_type != DT_LNK || sscanf(dent2->d_name, "cpu%u", &cpu) < 1)
-> 				continue;
-> 			cpunode_map[cpu] = mem;
-> 		}
-> ...
-> 
-> Could this result in an out-of-bounds write on the heap?
-> 
-> > +		return -1;
-> 
-> [Severity: High]
-> This isn't a bug introduced by this patch, but returning -1 here causes a
-> crash in perf_mmap__aio_bind() when a CPU's NUMA node is unknown or mapped to
-> a dummy CPU.
-> 
-> tools/perf/util/mmap.c:perf_mmap__aio_bind() {
-> ...
-> 		node_index = cpu__get_node(cpu);
-> 		node_mask = bitmap_zalloc(node_index + 1);
-> 		if (!node_mask) {
-> 			pr_err("Failed to allocate node mask for mbind: error %m\n");
-> 			return -1;
-> 		}
-> 		__set_bit(node_index, node_mask);
-> ...
-> 
-> When cpu__get_node() returns -1, it is implicitly cast to unsigned long
-> node_index (ULONG_MAX). bitmap_zalloc(ULONG_MAX + 1) evaluates to
-> bitmap_zalloc(0) and allocates a minimal buffer.
-> 
-> Does the subsequent __set_bit(ULONG_MAX, node_mask) perform a wild memory
-> write vastly outside the allocated bitmap?
-> 
-> > +
-> >  	return cpunode_map[cpu.cpu];
-> >  }
-> 
-> [Severity: High]
-> This isn't a bug introduced by this patch, but while reviewing
-> builtin-kmem.c which is mentioned in the commit message as calling
-> cpu__get_node(), it appears the perf_tool initialization omits the
-> .attr callback:
-> 
-> tools/perf/builtin-kmem.c:cmd_kmem() {
-> ...
-> 	perf_tool__init(&perf_kmem, /*ordered_events=*/true);
-> 	perf_kmem.sample	= process_sample_event;
-> 	perf_kmem.comm		= perf_event__process_comm;
-> 	perf_kmem.mmap		= perf_event__process_mmap;
-> 	perf_kmem.mmap2		= perf_event__process_mmap2;
-> 	perf_kmem.namespaces	= perf_event__process_namespaces;
-> ...
-> 
-> In pipe mode (e.g., perf kmem record -o - | perf kmem stat -i -), perf.data
-> headers are missing and events must be processed sequentially. Omitting the
-> perf_event__process_attr callback causes perf_event_header_attr events to be
-> silently discarded by the default stub.
-> 
-> Does this prevent the creation of evsels and the initialization of the
-> perf_env, completely breaking the tool's ability to process piped data
-> streams natively?
-> 
-> -- 
-> Sashiko AI review · https://sashiko.dev/#/patchset/20260605121515.1725549-1-acme@kernel.org?part=2
+    ManuallyDrop(self).0.as_ptr().cast()
+
+Alice
