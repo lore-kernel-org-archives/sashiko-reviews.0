@@ -1,196 +1,223 @@
-Received: from mail-wr1-f44.google.com (mail-wr1-f44.google.com [209.85.221.44])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from MW6PR02CU001.outbound.protection.outlook.com (mail-westus2azon11012009.outbound.protection.outlook.com [52.101.48.9])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 053AD388382
-	for <sashiko-reviews@lists.linux.dev>; Fri,  5 Jun 2026 20:51:59 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.221.44
-ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1780692721; cv=none; b=lsRuTpkpuQZRM7065euC7yxTDvLBhXKl+ur3ge3T+VYxGpxtpN9r5T+tw4+dpuHISkvAfI09WSJ6AUorbGR6fYviYRGQal0EF+uJReWqOkRBmbU/dEd12u/OjXcwF2wXAZTVXHwD2hnSdWUqcaGVKkroWWzsiI+WZRemSi9tyT0=
-ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1780692721; c=relaxed/simple;
-	bh=cwXikz+lLbmRr5N7JJ078/Uw2Dp9IDZdcO75SW0+G4k=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=fdL3M7B2C/X7+kKq2exQ2g7Iwb/u6eij+ZkspBeBHgxACS946J1s2cNRHYnaw+hTed7vY8UZLszk5jQD7yNp6s8tkw/QYLN1/x9IE9OqjsgBCHqNyYEOA+NBXFVpiyKiTUzDWhds7GmGdQ3hNfaOW4EfRb3nc2TYsicRYg36XlU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=baylibre.com; spf=pass smtp.mailfrom=baylibre.com; dkim=pass (2048-bit key) header.d=baylibre.com header.i=@baylibre.com header.b=Hvga8Eh3; arc=none smtp.client-ip=209.85.221.44
-Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=baylibre.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=baylibre.com
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 174463D5C2C
+	for <sashiko-reviews@lists.linux.dev>; Fri,  5 Jun 2026 21:25:16 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=fail smtp.client-ip=52.101.48.9
+ARC-Seal:i=2; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
+	t=1780694720; cv=fail; b=dFS9HFo9Qh33k1PiFJgQslftZIWE9TPS24R5LO4FL+vmGphU3Mu0dHYRpewq7gim8f13Se4hifaisRXYQi+DW3WcEHkwZTXHwxNkedHN5TS4t7gIuu5cdYtTgZmn0RwwG3YgA7Ss3lCTVYGJ+hgqv3maTOQWVDu36eY5ZrupfQE=
+ARC-Message-Signature:i=2; a=rsa-sha256; d=subspace.kernel.org;
+	s=arc-20240116; t=1780694720; c=relaxed/simple;
+	bh=1QXa+NHT69qWLPRCj3VCmB2Oj6i8KDWd6+dAXMmaQZ0=;
+	h=From:To:CC:Subject:In-Reply-To:References:Date:Message-ID:
+	 MIME-Version:Content-Type; b=qOp7WL69+69zftPlI0GQTaxJcKbF3UzYVtPmM8lFsSHtBfzfbO087iUCJSqpNNz+C6n8dvkK2XhxKsN9x9r9SoUCMIxjcuEh061k/K/U3Tj+zansr2USjvQB1bl8xYtxeICClNcL8XVOpK0H/ju3rxUB4ymWTjeYwNnWY127Iws=
+ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=amd.com; spf=fail smtp.mailfrom=amd.com; dkim=pass (1024-bit key) header.d=amd.com header.i=@amd.com header.b=zbDqqwKH; arc=fail smtp.client-ip=52.101.48.9
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=amd.com
+Authentication-Results: smtp.subspace.kernel.org; spf=fail smtp.mailfrom=amd.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=baylibre.com header.i=@baylibre.com header.b="Hvga8Eh3"
-Received: by mail-wr1-f44.google.com with SMTP id ffacd0b85a97d-45eee266c6cso1858394f8f.1
-        for <sashiko-reviews@lists.linux.dev>; Fri, 05 Jun 2026 13:51:59 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=baylibre.com; s=google; t=1780692718; x=1781297518; darn=lists.linux.dev;
-        h=in-reply-to:content-disposition:mime-version:references:message-id
-         :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
-        bh=4752DjrAFfM455Jumpwe99BPH46nw67ZETlya+2HAFs=;
-        b=Hvga8Eh3xtnQBnAsKF90LRAItMfjODEvvysL6I+Wy2F5c+TWCq6YSy0CPJZ+YT/XO/
-         QKMWYIRrtfzwi/rVZS1GuvdJVvtXNRhYothGJlYWmaYuTQpih9U5lMtAqPhz4YXV694D
-         3kh9yyiXA4YpjmRp65zkQ+TqcQ7osAs913i2eqrj3NH2N6+UNrBP1k6cXLKzI850zlAx
-         /utkq07TtdqS1LcTbDkVnWE1dZl8Ec6Oem7kngfvpzJUviHQv0OuV7rbgLqCEOG6bq0o
-         DiveQ9gmlaoHJDi15nsPEhkxKMdC3v4qBBvkwXw1OUP+QYzhpi0jlhrQOBPnNbaGACx3
-         /4nw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20251104; t=1780692718; x=1781297518;
-        h=in-reply-to:content-disposition:mime-version:references:message-id
-         :subject:cc:to:from:date:x-gm-gg:x-gm-message-state:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=4752DjrAFfM455Jumpwe99BPH46nw67ZETlya+2HAFs=;
-        b=iR9UO1Z7u6AD4IPPXmbN5/gVppd2Ughq9MXObCQsykreu/aJ4coWvUF6jNbEkiXYW7
-         KIxmcU40CsLY8Ie1FzQGvYILf2qTCsPbh5+0l9vrKQvAN9JGFRwc/7Ducn4+aOu1w1SW
-         cY8Gzi9YfsDNntkZKSGKlcMtezZBLIcgTK6RykGxvSuEIirbXy3hq/5VngPbNw7Nkw1Q
-         a+1rQJjBBGgq9aO0njq6u1UW5cn9EeYkenkHNE3pbPQSBdx72RXF0OIjYAV25z+nWbfV
-         +sEP6/nSyWEESvbGhiQI+RSnoLvgJtrRm3BU4H3dbQWBk9ZTpXyZYLijXyUV+zX02px9
-         CZGQ==
-X-Gm-Message-State: AOJu0YxTFEST+YhOli3u7v/8S94+CrS6AzPBFneEuE/8WVKWQFGGpWGm
-	ACJxbjJTJlNWnSkGPgOghjLbvHyHC6qYRrNLnJvAEm5oElxon5JktwgWZ287bmcGrcc=
-X-Gm-Gg: Acq92OEf+1r/47s4l0GA4Zn2Q8cLu7ELp5b2dTZKlnst/cm7P4QyuB77Eie36QZm/4X
-	qJIUal8RIP39lLgnThQ9yQhwbLnA9zT76YXJBMLQgDEQTl5bw6H9XnvDthYFfYvm3kartv5MB8Y
-	0CtjaCL8gQt+1X3R2pObcPi2DgtzuL5J0ZvdfGEww6Dm3jINjHRIpQnxPc/ldT9wRzpe3/0qmod
-	WwJYowGy990jc8nc3FGmrKySL7nCTOWr25zaRbLKWWehmmFMjsS6cKt7b1OIh5MZXtBejlrZbeT
-	Y/zjrsl2yqwg/3jOyjZRHseMsfJXgJV1LfWca6hdaKXAw8KIo4NLi6utgUSctEsbeotV4CZevRm
-	HzswgejNC+o5FdWQ5m0CGlLoftZV5fjR94PL1LYjZUPzmXmm/VJD0t0mKRBdLNd6bKrWQc0vEIA
-	5QP/pf5NSvDdU/OuPNuLiq44Dy0K9K4QyDu2g24Zlo7DL7DW526Q==
-X-Received: by 2002:a05:6000:4697:b0:45e:739b:3e43 with SMTP id ffacd0b85a97d-46030186d90mr6010770f8f.0.1780692718359;
-        Fri, 05 Jun 2026 13:51:58 -0700 (PDT)
-Received: from localhost ([2a02:8071:56d1:2de0:559d:eec2:887f:c200])
-        by smtp.gmail.com with UTF8SMTPSA id ffacd0b85a97d-4601f35133csm28128682f8f.25.2026.06.05.13.51.56
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Fri, 05 Jun 2026 13:51:57 -0700 (PDT)
-Date: Fri, 5 Jun 2026 22:51:56 +0200
-From: Uwe =?utf-8?Q?Kleine-K=C3=B6nig?= <u.kleine-koenig@baylibre.com>
-To: Andrea della Porta <andrea.porta@suse.com>
-Cc: sashiko-reviews@lists.linux.dev, conor+dt@kernel.org, 
-	devicetree@vger.kernel.org, robh@kernel.org, Kevin Hilman <khilman@baylibre.com>
-Subject: Re: [PATCH v4 2/3] pwm: rp1: Add RP1 PWM controller driver
-Message-ID: <aiM0VlVXAWs54v-G@monoceros>
-References: <8eef956a5eb473f051bbda89ec4c9991c1b47de2.1780498640.git.andrea.porta@suse.com>
- <20260603154716.1B5C41F00893@smtp.kernel.org>
- <aiGAINsTG8VZLn28@apocalypse>
- <aiHn5-gQMbjttrR6@monoceros>
- <aiL-DWqU5bnIPL8B@apocalypse>
+	dkim=pass (1024-bit key) header.d=amd.com header.i=@amd.com header.b="zbDqqwKH"
+ARC-Seal: i=1; a=rsa-sha256; s=arcselector10001; d=microsoft.com; cv=none;
+ b=t6uRbfKsHahZ/5o/1CznTnMbpW5pnoNPyXd2CWy0uQKoqJRimdsZi4bvRBTmvAQtiXRf1O6lMBEiFI/Is3J8t9v58oIJ9nyzwPL25jfCLMU+LJADBk8n/AnGSNfVaEp9sOCfCX9yRf5Vdau6zE2I7HlaSUrT7X0X7lDd7EEn5RjLp5KspJi+DBpKAflIEVrzFexa3GRWtK/0KP1e+rZCWRvGml4Mq+SIoLri/+vg6lIx4HPuazvaFbv7KPWvuU+3lVnXY8eNUKtF7KaYaHQaz/quGB2u//aCrO050A/Lbjmn8ycitfANoXGzemSJzf17kgRACBBSgfgbzO7QophFWA==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com;
+ s=arcselector10001;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
+ bh=nk6MT6+DUahtqhOi6Ui2slWstzwKz4mTLkN+3E2qS04=;
+ b=rGT0Q7z+xLIA0oRIvJDgDoyLO5g2CfFlTF56LZN/L5yWd2XUP1n7QttRdDT/WOGbqZSdx/lRJ4wnAOlpQKpvIf3rEgiam7NEtLrOgxF1q5QBQP4ET7zUgvO4em3I+QRtrya9V0e5taq8nih9vCb2+a5fkhheOFcrhvqjJ9s7fKkCJlRn5c0vgrL4YUNRHSmnbRj0ULtKPLYVLY1kkSDTYbSBVqVO9LS7yDg0PkEXr3neLahFGuPQu7CSMhe6dQ1tArQl/8x4QXFpLORAlPz3Ouqb4vpR/n0zdP50VWVTMWeENBbmpXkHXdN0Ho08mE3Sfpi2ZCZv9Sp8M8YdyS3nTA==
+ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass (sender ip is
+ 165.204.84.17) smtp.rcpttodomain=lists.linux.dev smtp.mailfrom=amd.com;
+ dmarc=pass (p=quarantine sp=quarantine pct=100) action=none
+ header.from=amd.com; dkim=none (message not signed); arc=none (0)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=amd.com; s=selector1;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
+ bh=nk6MT6+DUahtqhOi6Ui2slWstzwKz4mTLkN+3E2qS04=;
+ b=zbDqqwKH0L0MgEr4MKibtyC2AGYK5aBV10eLBv84Ox9bF4G/Toixya0GItvb+xihtU+umww9+IhqGDQ0kJuV1HPX5tHXRpYPQ8LDKtkH47JepVYOYdB2FmTjZUl9u+tj76suelNQcLeYfsOSEA0Y55Kph5xJ13ZxHmrrRhFVy5c=
+Received: from SJ0PR13CA0178.namprd13.prod.outlook.com (2603:10b6:a03:2c7::33)
+ by MN2PR12MB4485.namprd12.prod.outlook.com (2603:10b6:208:269::12) with
+ Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.21.92.9; Fri, 5 Jun 2026
+ 21:25:12 +0000
+Received: from BY1PEPF0001AE1B.namprd04.prod.outlook.com
+ (2603:10b6:a03:2c7:cafe::4a) by SJ0PR13CA0178.outlook.office365.com
+ (2603:10b6:a03:2c7::33) with Microsoft SMTP Server (version=TLS1_3,
+ cipher=TLS_AES_256_GCM_SHA384) id 15.21.92.8 via Frontend Transport; Fri, 5
+ Jun 2026 21:25:12 +0000
+X-MS-Exchange-Authentication-Results: spf=pass (sender IP is 165.204.84.17)
+ smtp.mailfrom=amd.com; dkim=none (message not signed)
+ header.d=none;dmarc=pass action=none header.from=amd.com;
+Received-SPF: Pass (protection.outlook.com: domain of amd.com designates
+ 165.204.84.17 as permitted sender) receiver=protection.outlook.com;
+ client-ip=165.204.84.17; helo=satlexmb07.amd.com; pr=C
+Received: from satlexmb07.amd.com (165.204.84.17) by
+ BY1PEPF0001AE1B.mail.protection.outlook.com (10.167.242.103) with Microsoft
+ SMTP Server (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
+ 15.21.92.5 via Frontend Transport; Fri, 5 Jun 2026 21:25:11 +0000
+Received: from localhost (10.180.168.240) by satlexmb07.amd.com
+ (10.181.42.216) with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.2562.41; Fri, 5 Jun
+ 2026 16:25:11 -0500
+From: Nathan Lynch <nathan.lynch@amd.com>
+To: <sashiko-reviews@lists.linux.dev>
+CC: <dmaengine@vger.kernel.org>, <linux-pci@vger.kernel.org>,
+	<vkoul@kernel.org>, <Frank.Li@kernel.org>
+Subject: Re: [PATCH v2 04/23] dmaengine: sdxi: Feature discovery and initial
+ configuration
+In-Reply-To: <20260513003352.8EDB2C2BCB0@smtp.kernel.org>
+References: <20260511-sdxi-base-v2-4-889cfed17e3f@amd.com>
+ <20260513003352.8EDB2C2BCB0@smtp.kernel.org>
+Date: Fri, 5 Jun 2026 16:25:10 -0500
+Message-ID: <87v7bwd6ix.fsf@amd.com>
 Precedence: bulk
 X-Mailing-List: sashiko-reviews@lists.linux.dev
 List-Id: <sashiko-reviews.lists.linux.dev>
 List-Subscribe: <mailto:sashiko-reviews+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:sashiko-reviews+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: multipart/signed; micalg=pgp-sha512;
-	protocol="application/pgp-signature"; boundary="tyzbnupcwsiwxiir"
-Content-Disposition: inline
-In-Reply-To: <aiL-DWqU5bnIPL8B@apocalypse>
+Content-Type: text/plain
+X-ClientProxiedBy: satlexmb07.amd.com (10.181.42.216) To satlexmb07.amd.com
+ (10.181.42.216)
+X-EOPAttributedMessage: 0
+X-MS-PublicTrafficType: Email
+X-MS-TrafficTypeDiagnostic: BY1PEPF0001AE1B:EE_|MN2PR12MB4485:EE_
+X-MS-Office365-Filtering-Correlation-Id: 0bdb299a-b07c-43cd-7f98-08dec348ed5c
+X-MS-Exchange-SenderADCheck: 1
+X-MS-Exchange-AntiSpam-Relay: 0
+X-Microsoft-Antispam:
+	BCL:0;ARA:13230040|376014|36860700016|82310400026|1800799024|18002099003|22082099003|6133799003|4143699003|5023799004|56012099006|11063799006;
+X-Microsoft-Antispam-Message-Info:
+	Bb9cRql7F566OmMzXU33HYLjTi7Ifl/+fcLRzpQsFvsVnlEGw7F63JlFL4p6tY/zdQaGtSd7kvP4sC7jPQhcxNDyUqFPfw19hSFFSLn2PhsD3/tcyHcAxn6l1jcrXA29UlmayLHmp4o/zM+nZ+BYfWedmNBCPEhrsrdp2pzXH2kXPW9FiDI/2D6DpxXAvq6pzGbLaZAuLhJycIoBl+eUqu7jMXnIsje4lGPUlRfoq+X+9Ww6sY/O3IwPJ0cJULN56VJ17WJde23cN666LN16whSv8bKHlp/UHPgQRIO1/gZdaG6tlFHrfq1IUuf4PiWYx1+S8z3+XRRBkytsTI/TlD+cRt0UvSNsee2eZLxJIUbQmZVFRflz8aEemw9dy2+xTRkzr1CHlKXa0a3QRS70D7sWE0kDuzxQyke304smQ/biruyVm8kIkWNjXgfGagOehGi2OrEbAFJjN1Esg2c9dK0g9l2gaDNMkisBapM1FEpkYAMofteRXYj3veXNSFDtzBVkRQTSTQKLpgjoYpeD6IFnsR8r8NWqJau2FwZdQgsWHth55OeFoY2XGkhWEsIt+o3yTpyzkQYMzwpyWHvZk2nsppLTzy+lk+uIvoauJolc8j6lh30ru7TEYngg9RCb+j8cYFxXKLNbE2m6FbdLXFzM+fsB4G2vNVEvLkeMXc8uMc5Gn0g86ifbY/9f1ZHb/4CQZyVOdr9Wz9z/mmfpa+EDFz/QB1h3kjq0sb3vyfA=
+X-Forefront-Antispam-Report:
+	CIP:165.204.84.17;CTRY:US;LANG:en;SCL:1;SRV:;IPV:NLI;SFV:NSPM;H:satlexmb07.amd.com;PTR:InfoDomainNonexistent;CAT:NONE;SFS:(13230040)(376014)(36860700016)(82310400026)(1800799024)(18002099003)(22082099003)(6133799003)(4143699003)(5023799004)(56012099006)(11063799006);DIR:OUT;SFP:1101;
+X-MS-Exchange-AntiSpam-MessageData-ChunkCount: 1
+X-MS-Exchange-AntiSpam-MessageData-0:
+	svUMtoVqyx+yBWHxMGDbfWBVsm7YjwhyUZGZ8nQnQfjfLq3XUqWFDD1sjXAlcacvQ7bFiHBT5O6qmd56MRPNA9oEMvOToAC8OVA02UUdghNMM0RViRGn08u3mTFu+/IAsI3Rom/UQelFoZmmRNuCaFGcmhlnWkdGPT35ih7AW79WlGPgcmbssvd4ruwqHXz3OGbuSWWGyuhoKUpJ0rwLBkRcCXaAbOstlkgpRLlVQ6yzar9HNwlyUKnNkaUHvolhu4Y3/KcFDqxR+3tn6JDB4aLPgfYoUZq6Qtbofsf2tlYoaz7ljWMPuwWv0ybJADUaoXp9QrP/3Nwj7PAbCRlPdVE1pR4xzzG1nMABSifxNMTEam/ybnXGV7aDHUoLXyV1OTZGlaLM9tPXte0GDd9BdsaVPnxoysrqEHl6o0Zsm8AcLYgx6F60U3mBOWUV2XuC
+X-OriginatorOrg: amd.com
+X-MS-Exchange-CrossTenant-OriginalArrivalTime: 05 Jun 2026 21:25:11.9722
+ (UTC)
+X-MS-Exchange-CrossTenant-Network-Message-Id: 0bdb299a-b07c-43cd-7f98-08dec348ed5c
+X-MS-Exchange-CrossTenant-Id: 3dd8961f-e488-4e60-8e11-a82d994e183d
+X-MS-Exchange-CrossTenant-OriginalAttributedTenantConnectingIp: TenantId=3dd8961f-e488-4e60-8e11-a82d994e183d;Ip=[165.204.84.17];Helo=[satlexmb07.amd.com]
+X-MS-Exchange-CrossTenant-AuthSource:
+	BY1PEPF0001AE1B.namprd04.prod.outlook.com
+X-MS-Exchange-CrossTenant-AuthAs: Anonymous
+X-MS-Exchange-CrossTenant-FromEntityHeader: HybridOnPrem
+X-MS-Exchange-Transport-CrossTenantHeadersStamped: MN2PR12MB4485
+
+sashiko-bot@kernel.org writes:
+> Thank you for your contribution! Sashiko AI review found 2 potential issue(s) to consider:
+> - [High] Hardware state machine mismanagement and TOCTOU race during device initialization.
+> - [Low] Use of 64-bit MMIO accessors without proper fallback causes build failures on 32-bit architectures.
+> --
+>
+> commit 20635a3fda61c4d58fcd763198caf0840128ff21
+> Author: Nathan Lynch <nathan.lynch@amd.com>
+>
+> dmaengine: sdxi: Feature discovery and initial configuration
+>
+> Discover via the capability registers the doorbell region stride, the
+> maximum supported context ID, the operation groups implemented, and
+> limits on buffer and control structure sizes. The driver has the
+> option of writing more conservative limits to the ctl2 register, but
+> it uses those supplied by the implementation for now.
+>
+>> diff --git a/drivers/dma/sdxi/device.c b/drivers/dma/sdxi/device.c
+>> index b718ce04afa07..f9a9944ad8929 100644
+>> --- a/drivers/dma/sdxi/device.c
+>> +++ b/drivers/dma/sdxi/device.c
+> [ ... ]
+>> @@ -5,14 +5,180 @@
+>> +/* Get the device to the GSV_STOP state. */
+>> +static int sdxi_dev_stop(struct sdxi_dev *sdxi)
+>> +{
+>> +	enum sdxi_fn_gsv status = sdxi_dev_gsv(sdxi);
+>> +	int ret;
+>> +
+>> +	dev_dbg(sdxi->dev, "attempting stop, current state: %s\n",
+>> +		gsv_str(status));
+>> +
+>> +	switch (status) {
+>> +	case SDXI_GSV_INIT:
+>> +	case SDXI_GSV_ACTIVE:
+>> +		sdxi_write_fn_gsr(sdxi, SDXI_GSRV_STOP_SF);
+>> +		break;
+>> +	case SDXI_GSV_STOPG_SF:
+>> +		sdxi_write_fn_gsr(sdxi, SDXI_GSRV_STOP_HD);
+>> +		break;
+>> +	case SDXI_GSV_STOPG_HD:
+>> +	case SDXI_GSV_ERROR:
+>> +		/*
+>> +		 * If hard-stopping, there's nothing to do but wait.
+>> +		 * If in error state, the reset is issued below.
+>> +		 */
+>> +		break;
+>> +	default:
+>> +		/* Unrecognized state; try a reset. */
+>> +		sdxi_write_fn_gsr(sdxi, SDXI_GSRV_RESET);
+>> +		break;
+>> +	}
+>
+> If the device is already in the SDXI_GSV_STOP state, does the switch fall
+> through to the default case and unintentionally issue a reset?
+>
+> The subsequent read_poll_timeout() check would then immediately return success
+> because the state evaluates as STOP before the background reset actually begins.
+> Could this allow the reset to proceed in the background while the driver
+> continues with initialization, potentially wiping the configuration?
+
+No, this is ok as written; when the function is in GSV_STOP, it ignores
+any value written to fn_gsr except for SDXI_GSRV_ACTIVE.
+
+>> +/*
+>> + * See SDXI 1.0 4.1.8 Activation of the SDXI Function by Software.
+>> + */
+>> +static int sdxi_fn_activate(struct sdxi_dev *sdxi)
+>> +{
+>> +	u64 version, cap0, cap1, ctl2;
+>> +	int err;
+>> +
+>> +	/*
+>> +	 * Clear any existing configuration from MMIO_CTL0 and ensure
+>> +	 * the function is in GSV_STOP state.
+>> +	 */
+>> +	sdxi_write64(sdxi, SDXI_MMIO_CTL0, 0);
+>> +	err = sdxi_dev_stop(sdxi);
+>
+> Does writing 0 to SDXI_MMIO_CTL0 implicitly write SDXI_GSRV_RESET (value 0)
+> to the FN_GSR command field?
+>
+> If so, sdxi_dev_stop() might read a stale device state while the hardware is
+> processing the reset, and overwrite the command field with a conflicting command
+> like SDXI_GSRV_STOP_SF. Can this lead to a hardware state machine
+> conflict?
+
+I don't think there's a state machine conflict (see Figure 4-1: SDXI
+Function States and State Transitions in the spec). But we probably
+shouldn't change the fn_pasid_vl or fn_err_intr_en fields in the
+register unless the function is already in stopped state.
+
+Another reason to be more careful here is that we shouldn't clear
+MMIO_CTL0's fn_grp_id field, which is software-assignable for function
+grouping, and is read-only for VFs.
 
 
---tyzbnupcwsiwxiir
-Content-Type: text/plain; protected-headers=v1; charset=iso-8859-1
-Content-Disposition: inline
-Content-Transfer-Encoding: quoted-printable
-Subject: Re: [PATCH v4 2/3] pwm: rp1: Add RP1 PWM controller driver
-MIME-Version: 1.0
+>> @@ -30,9 +34,24 @@ struct sdxi_dev {
+>> +static inline u64 sdxi_read64(const struct sdxi_dev *sdxi, enum sdxi_reg reg)
+>> +{
+>> +	return ioread64(sdxi->ctrl_regs + reg);
+>> +}
+>> +
+>> +static inline void sdxi_write64(struct sdxi_dev *sdxi, enum sdxi_reg reg, u64 val)
+>> +{
+>> +	iowrite64(val, sdxi->ctrl_regs + reg);
+>> +}
+>
+> Can this cause build failures on 32-bit architectures?
+>
+> The functions use ioread64() and iowrite64(), which typically rely on readq()
+> and writeq() that are not defined on 32-bit platforms.
+>
+> Although linux/io-64-nonatomic-lo-hi.h is included at the top of the file,
+> the code does not use the macros actually provided by that header
+> (e.g., ioread64_lo_hi()).
 
-Hello Andrea,
-
-On Fri, Jun 05, 2026 at 06:49:17PM +0200, Andrea della Porta wrote:
-> On 23:28 Thu 04 Jun     , Uwe Kleine-K=F6nig wrote:
-> > Thinking again, the tohw() callback could be a bit more clever and also
-> > use period_ticks =3D 0xffffffff, as this fine if duty_ticks is less than
-> > this value and if duty_ticks =3D period_ticks =3D 0xffffffff you can st=
-ill
-> > configure the hardware using period_ticks =3D 0xfffffffe to achieve the
-> > 100% relative dutycycle. (But keeping the current behaviour is fine for
-> > me, too.)
->=20
-> I think this is what it's currently doing in this patch iteration. I stand
-> corrected here when I said that period_ticks should be at max U32_MAX-1: =
-logically
-> it can be U32_MAX but it's getting 'translated' into U32_MAX-1 as the val=
-ue which=20
-> is fed to the register. So the period is still U32_MAX, accounting for th=
-e extra
-> tick at the end. So I guess we're on the same page.
-
-Not sure you got what I wrote. You can use the maximal value possible in
-hardware, because for all but 100% relative duty cycle it works as
-expected. You only need to map 100% relative duty cycle with that
-maximal period to a different 100% relative duty cycle setting. I think
-PWM_DEBUG even doesn't yell at you for that. (And if it does, that needs
-fixing.)
-
-> > > I'm not sure whether an inverted polarity pin shoudl stay low when di=
-sabled.
-> > > After all, the inactive state for a reversed pin is high.
-> >=20
-> > Sashiko's concern is correctly stated, if you go from
-> >=20
-> > 	polarity =3D inversed, enabled
-> >=20
-> > to
-> >=20
-> > 	polarity =3D normal, disabled
-> >=20
-> > the output stays high, which is active for polarity =3D normal.
->=20
-> Ack. I'll set the polarity first so there will be no uncovered corner
-> case.
-
-You can, but as I wrote below, being lazy is also fine.
-=20
-> > However the behaviour of a disabled PWM isn't specified, so any
-> > behaviour is fine, the only objective is to save power. And if the
-> > consumer relies on a constant inactive output, it's supposed to not
-> > disable it.
-> >=20
-> > For me both behaviours are fine. Making the hardware emit the inactive
-> > level might prevent a surprise if the consumer isn't aware of the
-> > missing guarantee, but being lazy and so surprise the consumer is also
-> > fine as this might uncover that wrong assumption and allow the consumer
-> > to be fixed.
-> >=20
-> > (And not all PWM implementations allow to configure the output level, so
-> > a guarantee cannot be given. Some go to 0 irrespective of the configured
-> > polarity, some go to High-Z.)
->=20
-> I was just curious about sashiko saying it's violating the pwm framework
-> expectations, while according to your words it seems there's no constrain=
-ts.
-
-In doubt trust me :-)
-
-> BTW, I've tried to install sashiko and use it on my patches but it's obvi=
-ous
-> that some custom settings are in order, since all I can get is some error
-> aborting the review after 3 attempts. Any chance you can share your Setti=
-ngs.toml
-> or any customization so I can test it in advance before submitting the ne=
-w patchset
-> or do you recommend just throwing the new V5 at your script?
-
-Note that sashiko is not "my script", it was setup by Google engineers
-and I have nothing to do with it (apart from benefitting from its review
-feedback). Kevin (added to Cc) tried to setup a local instance with his
-Claude plan, but (IIUC) it quickly ate his day's amount of tokens before
-completing review of a series of only 4 patches.
-
-So without knowing the size of Kevin's or your AI plan, probably it's
-easier to just rely on the public instance. (And IMHO that's nothing to
-be afraid of, just handle it like a human reviewer. For these you also
-don't know what they will reply for your next revision.)
-
-Best regards
-Uwe
-
---tyzbnupcwsiwxiir
-Content-Type: application/pgp-signature; name="signature.asc"
-
------BEGIN PGP SIGNATURE-----
-
-iQEzBAABCgAdFiEEP4GsaTp6HlmJrf7Tj4D7WH0S/k4FAmojNukACgkQj4D7WH0S
-/k7yIAgAuG/1LknG+8WFsQWqsfZx2XFKVf2uKi1Dn3FMvb2WbA9LQRZl44B9eRgH
-vhBZT+pohmM3Aiq+1QbBgbcs5W+EtAP8YzX4PJh16EYJzoeYr5f+SMJN3Vo5p7XK
-EqFWKwsGTtE5TnZt+YyZsEE4ofpCEQkHLNWnu//EisOWGMLDLeGlmZ4hp74dQfFy
-bezEPihHw78I/Bhzm6Y9bBoeufvYJh6uzkBkM88QwCbEhYGeZDrlGgMmbBtLB6fI
-0JAEOB2cred6vUkvLhfPdVxAC0DEC1QTPtwgbGBV/bcWIfNWz1yz1H3B0Kx+Djre
-QNy0bli78fy8sSZC/fXQ9mfEowYUxQ==
-=zWWX
------END PGP SIGNATURE-----
-
---tyzbnupcwsiwxiir--
+I decided to just make the driver depend on 64BIT and use readq/writeq.
+We can take up 32-bit build coverage later.
