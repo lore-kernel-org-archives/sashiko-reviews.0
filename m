@@ -1,149 +1,262 @@
-Received: from frasgout.his.huawei.com (frasgout.his.huawei.com [185.176.79.56])
+Received: from CY3PR05CU001.outbound.protection.outlook.com (mail-westcentralusazon11013063.outbound.protection.outlook.com [40.93.201.63])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AB87D4C77CE;
-	Fri,  5 Jun 2026 10:57:51 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=185.176.79.56
-ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1780657077; cv=none; b=tykmao76N5eXa4cdTCNcXvgYwcZGka2aLnJyxuMwFcyy1GbZDdG5v3ELrEww0bhH9IYxs9a1XxGeafB/dJlknivsjv6KSIebwVxNPxeXsWyK1oyXWpykam/zf1sA34ymGkyNgdl861+/wTcEtx+/mv3nHeVqgtSmuZZLjC2/JOI=
-ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1780657077; c=relaxed/simple;
-	bh=aCv7GgXhK/6RiM3+Z0K8/ByaZk2fg9SXCuds31gdm8o=;
-	h=Message-ID:Date:MIME-Version:Subject:To:CC:References:From:
-	 In-Reply-To:Content-Type; b=srxeRDLgHDmXlxq8MC1N73aVb96BDrVlTcieeWz4XmYHRoP0TrNE5DmrTvQK+68VjZM8aPqLtbUnNx1rz4uTK0bJ0voL43XRPGJbdpqzqWY6BdSm3Bq5f+z8QkzDCu0Ygc1eBpHAiTduRiECWhYZq5BuIjRCrL9XvVJ3uZVQjtI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=huawei-partners.com; spf=pass smtp.mailfrom=huawei-partners.com; arc=none smtp.client-ip=185.176.79.56
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=huawei-partners.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=huawei-partners.com
-Received: from mail.maildlp.com (unknown [172.18.224.107])
-	by frasgout.his.huawei.com (SkyGuard) with ESMTPS id 4gWz05051lzHnH4p;
-	Fri,  5 Jun 2026 18:56:53 +0800 (CST)
-Received: from mscpeml500003.china.huawei.com (unknown [7.188.49.51])
-	by mail.maildlp.com (Postfix) with ESMTPS id 5A8FB40584;
-	Fri,  5 Jun 2026 18:57:48 +0800 (CST)
-Received: from [10.123.123.154] (10.123.123.154) by
- mscpeml500003.china.huawei.com (7.188.49.51) with Microsoft SMTP Server
- (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
- 15.2.1544.11; Fri, 5 Jun 2026 13:57:47 +0300
-Message-ID: <2a4665b3-ac61-4ea2-b360-5cc6c21a6606@huawei-partners.com>
-Date: Fri, 5 Jun 2026 13:57:47 +0300
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3D1CA4C954D
+	for <sashiko-reviews@lists.linux.dev>; Fri,  5 Jun 2026 11:27:05 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=fail smtp.client-ip=40.93.201.63
+ARC-Seal:i=2; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
+	t=1780658826; cv=fail; b=Avt0CvrbHdmgBxwus01cKYRiysXWtNpK6YH4V4NLzQ+y1AO+pfQfQaYUPqtwSuHWYvvhAbJRn5mxO2qvgjen0fLQQ27jhOS06NAVJk7cHuWe3mTTHKD9EVB8WgksHw3W1aZ2+vs72zL+au9eEIQK/flYUVQl1eoI0NQBi7YUA+8=
+ARC-Message-Signature:i=2; a=rsa-sha256; d=subspace.kernel.org;
+	s=arc-20240116; t=1780658826; c=relaxed/simple;
+	bh=EiTMe4jeAx69eOVmvnkSJCVNbN58KF6zJ0SEPShUSgM=;
+	h=From:To:CC:Subject:Date:Message-ID:References:In-Reply-To:
+	 Content-Type:MIME-Version; b=LYXuF1l5PTDwN8lyllHcuoL7xF3zUv9Itj+aomCMEWe2ZBI00HxTrpLjgX+sPrfLkUiSPvo9IQ/l/djbxEODlFzEE7rgzcKyimbOC/KQjDrIsudMW+vZj59gehDaCepFq7EocN67WtV35DEOKtogH8Ly1ZWHuajiA6+aOfbkuCU=
+ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=amd.com; spf=fail smtp.mailfrom=amd.com; dkim=pass (1024-bit key) header.d=amd.com header.i=@amd.com header.b=kBm+GVaA; arc=fail smtp.client-ip=40.93.201.63
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=amd.com
+Authentication-Results: smtp.subspace.kernel.org; spf=fail smtp.mailfrom=amd.com
+Authentication-Results: smtp.subspace.kernel.org;
+	dkim=pass (1024-bit key) header.d=amd.com header.i=@amd.com header.b="kBm+GVaA"
+ARC-Seal: i=1; a=rsa-sha256; s=arcselector10001; d=microsoft.com; cv=none;
+ b=cxydUxxZWKtoIExlD/2ZAyfjqKVQU6MDF1GtcSih4s5BBS2qffDye9UppJ6QU5Z3lTpXgCVWTYiyKAyGs43wtEl6Oj4Zhbz60f2tiluw8K/WIzLVTxIAxAQFZoy2vmMSXM+XodPXFb5oDT6ILBAdJpcSSZHOdkae+xaIDM25O8XUiirC24ASiXRffbDXtZi+CM0+9k0pFOScQ5razFDlPzzV9yHgG4JQcTuxyj3GtzO6OSwd7XsUVHIsXYujVavMWs9xU4TewqjJ9bsMISaNDrOeOHcpkSjCbl0x2++b6K1WwNuZC9N8BEJdBxxTPO0OoHutspTFJnJpEQ1nlarBBA==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com;
+ s=arcselector10001;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
+ bh=uuEPGOEzt1POEjj8Fp57E+1MwSqXGmp3JtH5gy+f0Cc=;
+ b=eCj3DuV68MH2InXnHeksnU9BwrKm4WTCspMntiPam5D9cI9owUCOk/1fJxWuH3KbTsmyLZIM03uO7glKswRJFIp8Q1IUOjP2AihVXcizA9WikMeoRh8OYZq/DGHp8X8IYxnFjzUTeAagk+SKvA0UaqkdgRVj39Ox1MS3AFnQ0wUBRei1yQzP7t2yBGxBJ88IyVknmkULfd8eTm6gakrgRqPHj+sbek8Sxxv9uM45yLNAvBxlouk+7xk49upObgsYboSQObeDFocNqgg8znycw1ztI30MXFeyUxNXmmicHFKKJG7HJq6pqhZfN1kPA5MQG4R+vX0ZENVzkFAktEkZHw==
+ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
+ smtp.mailfrom=amd.com; dmarc=pass action=none header.from=amd.com; dkim=pass
+ header.d=amd.com; arc=none
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=amd.com; s=selector1;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
+ bh=uuEPGOEzt1POEjj8Fp57E+1MwSqXGmp3JtH5gy+f0Cc=;
+ b=kBm+GVaABDaMUSDaW9cmITj1rPRw7zoWVx8Qca58RPbb5GTT5X/LxoDk1OnNhIXwiSmYYjRlaoXuPbgfetq2TaCz0bO8z28N+xqBuzjCHtTl9kLYFHIedWAdKvAcZJxRzOTNxuXzj3htoWteVi3E8mqA8003z9oC+xkma3AKVVM=
+Received: from BL4PR12MB9482.namprd12.prod.outlook.com (2603:10b6:208:58d::19)
+ by LV3PR12MB9411.namprd12.prod.outlook.com (2603:10b6:408:215::20) with
+ Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.21.92.9; Fri, 5 Jun 2026
+ 11:27:01 +0000
+Received: from BL4PR12MB9482.namprd12.prod.outlook.com
+ ([fe80::e4cf:3801:9631:2965]) by BL4PR12MB9482.namprd12.prod.outlook.com
+ ([fe80::e4cf:3801:9631:2965%4]) with mapi id 15.21.0092.006; Fri, 5 Jun 2026
+ 11:27:01 +0000
+From: "Verma, Devendra" <Devendra.Verma@amd.com>
+To: Vinod Koul <vkoul@kernel.org>
+CC: "sashiko-reviews@lists.linux.dev" <sashiko-reviews@lists.linux.dev>,
+	"dmaengine@vger.kernel.org" <dmaengine@vger.kernel.org>,
+	"Frank.Li@kernel.org" <Frank.Li@kernel.org>, "linux-pci@vger.kernel.org"
+	<linux-pci@vger.kernel.org>
+Subject: RE: [PATCH v1] dmaengine: dw-edma: Add Xilinx CPM6-DMA DeviceID
+Thread-Topic: [PATCH v1] dmaengine: dw-edma: Add Xilinx CPM6-DMA DeviceID
+Thread-Index: AQHc82X6OzOMXJ0Kz0iYp8qveJQ9C7Ys6DwAgAFnk+CAADj6AIABSukg
+Date: Fri, 5 Jun 2026 11:27:01 +0000
+Message-ID:
+ <BL4PR12MB9482B102C4B19C57F110CC2995112@BL4PR12MB9482.namprd12.prod.outlook.com>
+References: <20260603143158.3243500-1-devendra.verma@amd.com>
+ <20260603144445.562521F00893@smtp.kernel.org>
+ <BL4PR12MB948277305F69CC4A87F0D1F695102@BL4PR12MB9482.namprd12.prod.outlook.com>
+ <aiGbShotOS4usSdm@vaman>
+In-Reply-To: <aiGbShotOS4usSdm@vaman>
+Accept-Language: en-US
+Content-Language: en-US
+X-MS-Has-Attach:
+X-MS-TNEF-Correlator:
+msip_labels:
+ MSIP_Label_2d0b1989-8fc8-4a69-bcac-d46889461ba5_Enabled=True;MSIP_Label_2d0b1989-8fc8-4a69-bcac-d46889461ba5_SiteId=3dd8961f-e488-4e60-8e11-a82d994e183d;MSIP_Label_2d0b1989-8fc8-4a69-bcac-d46889461ba5_SetDate=2026-06-05T11:26:27.0000000Z;MSIP_Label_2d0b1989-8fc8-4a69-bcac-d46889461ba5_Name=AMD
+ Public
+ v26;MSIP_Label_2d0b1989-8fc8-4a69-bcac-d46889461ba5_ContentBits=3;MSIP_Label_2d0b1989-8fc8-4a69-bcac-d46889461ba5_Method=Privileged
+authentication-results: dkim=none (message not signed)
+ header.d=none;dmarc=none action=none header.from=amd.com;
+x-ms-publictraffictype: Email
+x-ms-traffictypediagnostic: BL4PR12MB9482:EE_|LV3PR12MB9411:EE_
+x-ms-office365-filtering-correlation-id: a574c041-8a25-4e5e-d4a3-08dec2f55d18
+x-ms-exchange-senderadcheck: 1
+x-ms-exchange-antispam-relay: 0
+x-microsoft-antispam:
+ BCL:0;ARA:13230040|366016|1800799024|376014|38070700021|18002099003|22082099003|6133799003|4143699003|11063799006|56012099006;
+x-microsoft-antispam-message-info:
+ 8ZgZxpjlraqsUbfo2Xsnn+ZR+jQimTnQXRtWNYQ7IVe4UKdBjluMnPdrsFrZjW5xqfA0BY8b4eiUVKPjGxXEuehKHpz3MTgqEWzapnBzUhkOkpjYLQvrTmtdjZGePzGPmvdzLwxsi1PB7OlL4RfTmU9p9yxNSc78MfA6lp2AbYNYS1qGEXhxTHN518mkjHWSII51D/43SzhoGNMeizRRs36xizuFC2hkxTF7eIOZaz/nXn3Yl2a+ZKLcj7tgm00yfFoL9IT0wwB3ItgQthst2+GZW30G7Aqfnb9c2hMKLOWb/xNxC1CPbzSpRMFhyeNgdIrjFlyQDg67P0ItHV0USZd62tZL/K+SLJQSbFr5IGkSSxh0YrpTUOsikyz91KWXIs8u1f9cKcycCC0lC5nCITbhCiiWXMAkS69lO8w/TGGy0LMdNiOSF7aVXImgAOtsYGKwN63R4ZI0qgZZalmHDAJ8NG13QTaD+Pj9G0PLPWmSUm4sTOecMwO5W1h7NKve0GMGmpk8g9q7mjwKGJMtzOOgEJZciDWnyTAXPHzODgm8dG52+gDqg11oSIaJ49apj4slQ6r39TOQQGW1pmwLTToxQVPe50rTcvTSdQ+yexUyI/ZWWRKewoAQyHopDDBj3eHpt8OolmErUc3mA5ZC+efHf3SwaEKEiXj4DOf27G2Z8t6ABtUIwOJdHgT/qWrt3CEFAEcdGBQhoVMZa0ZPyQ==
+x-forefront-antispam-report:
+ CIP:255.255.255.255;CTRY:;LANG:en;SCL:1;SRV:;IPV:NLI;SFV:NSPM;H:BL4PR12MB9482.namprd12.prod.outlook.com;PTR:;CAT:NONE;SFS:(13230040)(366016)(1800799024)(376014)(38070700021)(18002099003)(22082099003)(6133799003)(4143699003)(11063799006)(56012099006);DIR:OUT;SFP:1101;
+x-ms-exchange-antispam-messagedata-chunkcount: 1
+x-ms-exchange-antispam-messagedata-0:
+ =?us-ascii?Q?eALSpNq++gbDgivicSbUEN0PJETNM2QEVIeCabIid5YJp29gkiM/I2ADpmeS?=
+ =?us-ascii?Q?0H1wJffEqGjzq6gjhfssS0CJrrYOSZBGYeVhRCNrVfRdMe9RlqPNQ2CCA46u?=
+ =?us-ascii?Q?i35vWo4GanUm4IlBUv5ZEaQnLHIAngDZdq/3bJfgY+8YcPM4H9hh953df/5V?=
+ =?us-ascii?Q?Rk6+K3G6M0Qqxh6RV2jcjSh0iY/5ZzhSiTLSvdUsPoGs7LZJqgKE28bSroIk?=
+ =?us-ascii?Q?XLdsG6AGGUbHFkzvqU22huxWNTjCBBtKWiUJlvg2v6fnKjbKwJgKKZVAxn7b?=
+ =?us-ascii?Q?KIn9aemNWfvqK4HB02nWOdrR0/NF84aZNAo6lNUf8A6WVltWLe6bV08Sumzn?=
+ =?us-ascii?Q?Axuveervd4gkKY1KWhsDIlKTlBSrkJZ5vbMMpAU4Dyky99WkbrUtFPRRhpWU?=
+ =?us-ascii?Q?/KpFUdV7Jk28dzkXqZmuws3gB5zlSvmoZjy5JuMiiDDFW3jVM24bJjNsLGTX?=
+ =?us-ascii?Q?CM226k86yg/hKF33CpOJlnwlpIPG8IRvhgxK/8Vj4j0AgmSlSwRcT5CvZz/v?=
+ =?us-ascii?Q?fhIKdyxkKplYu69HqKRxC+CB4E3o0DaHtwBYsBQjtmzBkua5gi7kKiIJ3X8t?=
+ =?us-ascii?Q?2WB/HrYADqYyIeTzWU1GKZ6j6ANO5sLhfl0ssWapJZdmEGJbU0W6231/WlUn?=
+ =?us-ascii?Q?HBfwat4GF6KBecEmgFK45PmkfXtf7JQpHeac4SZiGkRGqkSrq3Vtbw3cbO29?=
+ =?us-ascii?Q?3jv/VGR/qhykp0kf65K6toq6ay7eWrPrsOU/ttI3BwPR8q+7dlt1jzCkQevE?=
+ =?us-ascii?Q?bfyuRrF1/82i94F2M7mQLIhCxBtbKts69k3VZj3uzS//ZDXXT5va0p+ixyP6?=
+ =?us-ascii?Q?lHqt0MsGGjKVMLFtXzbtJURzjqlr1gLRQX7n+JQM9vpiKgf8UYy0fcPQrjyr?=
+ =?us-ascii?Q?vU20AQ05I9Q9d4g1EUuP2PD8ymX52gI0qh6XsbVDC8mtoosMgsq6Ll5nS3Zm?=
+ =?us-ascii?Q?EYp4kcdvyMJpkJyB33GimFfWcPOnP7XW1Hn5zv0IMtU/JnwP5BKBaXLBQ6LG?=
+ =?us-ascii?Q?RhQROFtTH+M7DnuhpbktKLIGKzTTzSQYrGKHd+ZLVorMMoWNYVuumJn4i86W?=
+ =?us-ascii?Q?PH178Gxbe6q6wdWSf54rZ6b4rG6Tc2d9Bqu4/EhBeRkKFJ6HM+fIuvohnIQX?=
+ =?us-ascii?Q?5cVNBpT6/LhwzOdPyUdARAmysLduByMHDYLyQy616DwyoALGKhrhncXhLBif?=
+ =?us-ascii?Q?mv2uD7O7lK55OHikws5rHr0bD1maKZpb030j9Lyznk8l1bjA+LRjS5MrqumV?=
+ =?us-ascii?Q?V0B/S7JyHA0XSZ1an1lTOZI/b4F6CvcoGeW8XJW+KGnmLB+d2iH0BxY+SDAH?=
+ =?us-ascii?Q?1JhxoKGCJ+OEnPW/AG/rdXyMebRIQUQdUggwnIAvlziTwcsEsirfD+zh4n3X?=
+ =?us-ascii?Q?6fuT+8s0SXZASjhpZoiJOyKVIijBfeSOUmER2rJrJbWXKfsRRTXE1FOKmZHg?=
+ =?us-ascii?Q?2fcLxVZ5oxK4Jq7QQumoDTcVONWtbNz0Z7bko+I8wDhFyRGKCbn6AvSxaxGo?=
+ =?us-ascii?Q?1GwQ1CE1b/Tt+a2M28EwHD9Vmo1GN0PmQ3QcErjkYX0/xzEsYYnbVP+EWMwf?=
+ =?us-ascii?Q?0dcYCEBmFeCQgHWYEXixpj4X5gNvWhEFiwFFASLTf+gxhqtwMsInUM0ik0gW?=
+ =?us-ascii?Q?qVNoK31URJMSlb6i4SDbDCk3WLMPo7UTsp1XmSSJOyMZ9H/TvJdXNian2+ZG?=
+ =?us-ascii?Q?YND3priXvAnC4d2Vixl9sYW/Bj/x49Pf+6OVxEIGkmTVjA13?=
+Content-Type: text/plain; charset="us-ascii"
+Content-Transfer-Encoding: quoted-printable
 Precedence: bulk
 X-Mailing-List: sashiko-reviews@lists.linux.dev
 List-Id: <sashiko-reviews.lists.linux.dev>
 List-Subscribe: <mailto:sashiko-reviews+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:sashiko-reviews+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [RFC PATCH v3 1/4] mm/damon: Introduce DAMOS_QUOTA_HUGEPAGE auto
- tuning
-To: <sashiko-reviews@lists.linux.dev>
-CC: <damon@lists.linux.dev>
-References: <20260604150338.501128-2-gutierrez.asier@huawei-partners.com>
- <20260604151932.93C431F00893@smtp.kernel.org>
-Content-Language: en-US
-From: Gutierrez Asier <gutierrez.asier@huawei-partners.com>
-In-Reply-To: <20260604151932.93C431F00893@smtp.kernel.org>
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: 7bit
-X-ClientProxiedBy: mscpeml100003.china.huawei.com (10.199.174.67) To
- mscpeml500003.china.huawei.com (7.188.49.51)
+X-OriginatorOrg: amd.com
+X-MS-Exchange-CrossTenant-AuthAs: Internal
+X-MS-Exchange-CrossTenant-AuthSource: BL4PR12MB9482.namprd12.prod.outlook.com
+X-MS-Exchange-CrossTenant-Network-Message-Id: a574c041-8a25-4e5e-d4a3-08dec2f55d18
+X-MS-Exchange-CrossTenant-originalarrivaltime: 05 Jun 2026 11:27:01.7491
+ (UTC)
+X-MS-Exchange-CrossTenant-fromentityheader: Hosted
+X-MS-Exchange-CrossTenant-id: 3dd8961f-e488-4e60-8e11-a82d994e183d
+X-MS-Exchange-CrossTenant-mailboxtype: HOSTED
+X-MS-Exchange-CrossTenant-userprincipalname: ynbBc6m6v1PzysOkf9x/h5fkx2O9KYe9KV0x7lN5ly1lLVy+0kloEEvfxrNCSWuf1QbQSFCyiZkfBZ4NqWF35w==
+X-MS-Exchange-Transport-CrossTenantHeadersStamped: LV3PR12MB9411
 
+Public
 
+> -----Original Message-----
+> From: Vinod Koul <vkoul@kernel.org>
+> Sent: Thursday, June 4, 2026 21:06
+> To: Verma, Devendra <Devendra.Verma@amd.com>
+> Cc: sashiko-reviews@lists.linux.dev; dmaengine@vger.kernel.org;
+> Frank.Li@kernel.org; linux-pci@vger.kernel.org
+> Subject: Re: [PATCH v1] dmaengine: dw-edma: Add Xilinx CPM6-DMA
+> DeviceID
+>
+> On 04-06-26, 12:12, Verma, Devendra wrote:
+> > Public
+>
+> Pls do _not_ Top Post!
+>
 
-On 6/4/2026 6:19 PM, sashiko-bot@kernel.org wrote:
-> Thank you for your contribution! Sashiko AI review found 5 potential issue(s) to consider:
-> 
-> New issues:
-> - [High] A potential division by zero in damos_hugepage_mem_bp() can cause a kernel panic if the total non-free RAM pages evaluate to 0.
-> - [Medium] The new DAMOS_QUOTA_HUGEPAGE metric is inaccessible from userspace because it was not added to the sysfs mapping array damos_sysfs_qgoal_metric_names.
-> - [Medium] The implementation calculates the ratio of all THP memory to total used memory, directly contradicting the commit message's claim that it measures huge page consumption relative to total anonymous memory.
-> - [Medium] The calculation in mult_frac() can silently overflow a 32-bit unsigned long, resulting in arbitrarily small, incorrect quota targets.
-> 
-> Pre-existing issues:
-> - [High] The pre-existing DAMOS_QUOTA_ACTIVE_MEM_BP and INACTIVE_MEM_BP metric computation can trigger a kernel panic via division by zero.
+Noted.
+
+> >
+> > The pre-existing issues need to be taken up in a separate series.
+> > The changes require separate testing which is not related to the
+> > current patch.
+>
+> While I agree to that and it wont block the review but would be good if y=
+ou
+> can fix that as well. Sure affects your users...
+>
+
+Thanks for the suggestion!
+I would like to contribute, in fact for my other reviews I have taken it up=
+ for few of the issues reported. I need to evaluate the effort estimates an=
+d fix the issues. These issues are noted and will be taken up in due course=
+ without derailing the current upgrade to the code.
+
+> >
+> > Regards,
+> > Devendra
+> >
+> > > -----Original Message-----
+> > > From: sashiko-bot@kernel.org <sashiko-bot@kernel.org>
+> > > Sent: Wednesday, June 3, 2026 20:15
+> > > To: Verma, Devendra <Devendra.Verma@amd.com>
+> > > Cc: dmaengine@vger.kernel.org; vkoul@kernel.org;
+> > > Frank.Li@kernel.org; linux-pci@vger.kernel.org
+> > > Subject: Re: [PATCH v1] dmaengine: dw-edma: Add Xilinx CPM6-DMA
+> > > DeviceID
+> > >
+> > > Thank you for your contribution! Sashiko AI review found 1 potential
+> > > issue(s) to consider:
+> > >
+> > > Pre-existing issues:
+> > > - [High] Missing pci_free_irq_vectors() cleanup on error paths in
+> > > dw_edma_pcie_probe() leading to IRQ resource leaks.
+> > > --
+> > >
+> > > commit a523468dbe7999a5962895c3e0d73662a2938006
+> > > Author: Devendra K Verma <devverma@amd.com>
+> > >
+> > > dmaengine: dw-edma: Add Xilinx CPM6-DMA DeviceID
+> > >
+> > > Add Device ID for AMD (Xilinx) CPM6 DMA IP to enable 64 Read and 64
+> > > Write Channels. Adds the relevant dw_edma_pcie_data to use 8 Read
+> > > and 8 Write Channels for the initial commit.
+> > >
+> > > > diff --git a/drivers/dma/dw-edma/dw-edma-pcie.c
+> > > > b/drivers/dma/dw-edma/dw-edma-pcie.c
+> > > > index 0b30ce1385036..4ba368d18cb1d 100644
+> > > > --- a/drivers/dma/dw-edma/dw-edma-pcie.c
+> > > > +++ b/drivers/dma/dw-edma/dw-edma-pcie.c
+> > >
+> > > [ ... ]
+> > >
+> > > > @@ -547,6 +561,8 @@ static const struct pci_device_id
+> > > dw_edma_pcie_id_table[] =3D {
+> > > >     { PCI_DEVICE_DATA(SYNOPSYS, EDDA, &snps_edda_data) },
+> > > >     { PCI_VDEVICE(XILINX, PCI_DEVICE_ID_XILINX_B054),
+> > > >       (kernel_ulong_t)&xilinx_mdb_data },
+> > > > +   { PCI_VDEVICE(XILINX, PCI_DEVICE_ID_XILINX_B00F),
+> > > > +     (kernel_ulong_t)&xilinx_cpm6_dma_data },
+> > >
+> > > [Severity: High]
+> > > This is a pre-existing issue, but adding this new device ID exposes
+> > > the new device to an IRQ resource leak in dw_edma_pcie_probe().
+> > >
+> > > When the device is probed, dw_edma_pcie_probe() successfully
+> > > allocates IRQs via pci_alloc_irq_vectors(). However, several
+> > > subsequent error paths return directly without calling
+> pci_free_irq_vectors().
+> > >
+> > > For example, if the pcim_iomap_table() lookup fails:
+> > >
+> > > drivers/dma/dw-edma/dw-edma-pcie.c:dw_edma_pcie_probe() {
+> > >     ...
+> > >       chip->reg_base =3D pcim_iomap_table(pdev)[vsec_data->rg.bar];
+> > >       if (!chip->reg_base)
+> > >               return -ENOMEM;
+> > >     ...
+> > > }
+> > >
+> > > Or if the main eDMA probe fails later on:
+> > >
+> > > drivers/dma/dw-edma/dw-edma-pcie.c:dw_edma_pcie_probe() {
+> > >     ...
+> > >       err =3D dw_edma_probe(chip);
+> > >       if (err) {
+> > >               pci_err(pdev, "eDMA probe failed\n");
+> > >               return err;
+> > >       }
+> > >     ...
+> > > }
+> > >
+> > > Does this code leak the allocated IRQ vectors in these error paths?
+> > > Because IRQs are a strictly limited resource, repeated probe
+> > > failures (such as deferred probe or unbind/rebind cycles) could
+> > > silently exhaust the system's IRQ capacity.
+> > >
+> > > Would it make sense to ensure pci_free_irq_vectors() is called on
+> > > all error paths after successful allocation before enabling new devic=
+es?
+> > >
+> > > >     { }
+> > > >  };
+> > > >  MODULE_DEVICE_TABLE(pci, dw_edma_pcie_id_table);
+> > >
+> > > --
+> > > Sashiko AI review *
+> > > https://sashiko.dev/#/patchset/20260603143158.3243500-
+> > > 1-devendra.verma@amd.com?part=3D1
+>
 > --
-> 
-> commit 1f37bbf7381e392f999f133e0444c2faad754df9
-> Author: Asier Gutierrez <gutierrez.asier@huawei-partners.com>
-> 
-> mm/damon: Introduce DAMOS_QUOTA_HUGEPAGE auto tuning
-> 
-> This commit introduces a new DAMOS quota goal metric, DAMOS_QUOTA_HUGEPAGE,
-> which is intended to measure the ratio of huge page consumption against
-> total anonymous memory.
-Right, the commit is outdated. I will update it to reflect the
-last changes.
->> Introduce DAMOS_QUOTA_HUGEPAGE auto tuning Add a
->> new DAMOS quota goal metric to measure the amount of huge
->> page consumption to total anonymous memory consumption
->> ratio.
-> 
-> [Severity: Medium]
-> Does this description match the implementation?
-> 
-> The commit message states this measures huge page consumption against total
-> anonymous memory, but the code in damos_hugepage_mem_bp() calculates the sum
-> of all transparent huge pages relative to total used memory.
-As mentioned, I will update the commit message.
->> diff --git a/include/linux/damon.h b/include/linux/damon.h
->> index 6f7edb3590ef9..d840b0bc0b953 100644
->> --- a/include/linux/damon.h
->> +++ b/include/linux/damon.h
-> [ ... ]
->> @@ -176,6 +176,7 @@ enum damos_quota_goal_metric {
->>  	DAMOS_QUOTA_ACTIVE_MEM_BP,
->>  	DAMOS_QUOTA_INACTIVE_MEM_BP,
->>  	DAMOS_QUOTA_NODE_ELIGIBLE_MEM_BP,
->> +	DAMOS_QUOTA_HUGEPAGE,
-> 
-> [Severity: Medium]
-> Does this new metric need to be added to damos_sysfs_qgoal_metric_names[]
-> in mm/damon/sysfs-schemes.c?
-> 
-> Without adding it to the string mapping array, it appears this metric cannot
-> be configured from userspace via sysfs.
-> 
-I had it a local branch. I forgot to add it to the patch series. I will do it.
-
->> diff --git a/mm/damon/core.c b/mm/damon/core.c
->> index 265d51ade25bf..71c8699bdd476 100644
->> --- a/mm/damon/core.c
->> +++ b/mm/damon/core.c
->> @@ -2756,6 +2756,17 @@ static unsigned int damos_get_in_active_mem_bp(bool active_ratio)
->>  	return mult_frac(inactive, 10000, total);
->>  }
-> 
-> [Severity: High]
-> This is a pre-existing issue, but can this cause a divide by zero kernel
-> panic?
-> 
-> If there are no active or inactive pages, or if per-CPU vmstat counter drift
-> evaluates total to 0, mult_frac() will divide by zero.
-Not a bug. The system can never have 0 consumed memory.
->> +static unsigned int damos_hugepage_mem_bp(void)
->> +{
->> +	unsigned long thp, total;
->> +
->> +	thp = global_node_page_state(NR_ANON_THPS) +
->> +				global_node_page_state(NR_SHMEM_THPS) +
->> +				global_node_page_state(NR_FILE_THPS);
->> +	total = totalram_pages() - global_zone_page_state(NR_FREE_PAGES);
->> +	return mult_frac(thp, 10000, total);
-> 
-> [Severity: High]
-> Can mult_frac() divide by zero here?
-> 
-> If the system is highly idle or due to per-CPU vmstat counter drift, total
-> could evaluate to exactly 0.
-No, total can never be 0.
-> [Severity: Medium]
-> Is there a risk of a 32-bit overflow in this calculation?
-> 
-> On 32-bit architectures, mult_frac() preserves types, and computing
-> thp * 10000 could exceed the maximum unsigned long value if there are
-> more than ~1.7 GB of THPs, producing an arbitrarily small quota target.
-> 
-Good catch! I will cast 10000 to unsigned long to preserve the types.
--- 
-Asier Gutierrez
-Huawei
-
+> ~Vinod
