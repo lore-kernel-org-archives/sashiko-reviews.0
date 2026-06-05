@@ -1,230 +1,133 @@
-Received: from SJ2PR03CU001.outbound.protection.outlook.com (mail-westusazon11012047.outbound.protection.outlook.com [52.101.43.47])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-pf1-f194.google.com (mail-pf1-f194.google.com [209.85.210.194])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 03F7333893D
-	for <sashiko-reviews@lists.linux.dev>; Fri,  5 Jun 2026 02:03:25 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=fail smtp.client-ip=52.101.43.47
-ARC-Seal:i=2; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1780625015; cv=fail; b=mkhL8BJs477jQ1iIDEacXG1erVRqKczSM53j1DRCUqd0pTF5wPJp9a8TvQvLQ/Cat0W2MERLR+9dXS4lSDCmXR8baQnPnM4aLpo5JPbbalj3PxPnFx1nVqwTFqrkKHhZG5xf1qCfCJaSlk4tlNwC7Nlru5Cp4qgzJ4gVBlLwpfU=
-ARC-Message-Signature:i=2; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1780625015; c=relaxed/simple;
-	bh=KH72f9W9pNOkleMw84pV/ShxaTu91tzInE3MJRYdsh0=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:Content-Type:
-	 Content-Disposition:In-Reply-To:MIME-Version; b=EjkMAUXclWcgIQLyvJWxU/jPghiS1vh4Pt7/Qv0UmA5yPJcE0c55Imq5q7pH3WNER5pt3UtWvUZ+CWgGjz+NTRKKD50xsu401osNU1MTrQ2Di3H1NpWmCosMD5LyPwTsBRMPAzt9tHqdAvfYDCnbSupVf2VZR5Whh27IQQvusj8=
-ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=nvidia.com; spf=fail smtp.mailfrom=nvidia.com; dkim=pass (2048-bit key) header.d=Nvidia.com header.i=@Nvidia.com header.b=hNCgcPVq; arc=fail smtp.client-ip=52.101.43.47
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=nvidia.com
-Authentication-Results: smtp.subspace.kernel.org; spf=fail smtp.mailfrom=nvidia.com
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1611C30FF30
+	for <sashiko-reviews@lists.linux.dev>; Fri,  5 Jun 2026 02:10:57 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.210.194
+ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
+	t=1780625466; cv=none; b=i+JSuNjBm3jqLtSxdy5t1esJSzI+MOeb14P0jeTnQ5lXl6en3bgJJHT+0M2HTrO4rY61eDTY/q8UDGJx7pEuQiRvg9lkninzKwKaT8zYpdbBpnyyTBpjG2RZxkDa3JPmBLCslecFNrIo6c3mlvX8hCi7NLK7QkQMrd7QsxHIH2k=
+ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
+	s=arc-20240116; t=1780625466; c=relaxed/simple;
+	bh=rt8QiFKCUtKyRyCjlNWltkcE+h7JQzz3Oiq6lIOH/YM=;
+	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
+	 In-Reply-To:Content-Type; b=RXvalnys4nVpMg6Wk42MlRc0bUDs1OI14Z/YAlq9NRrXmiEqpXza1Zof7Df6mknvw4weIvPXu3EyF9qirn3FtzHV1rwhO9csZi+cp5HsQMVQ6uvlaGVWgXON5g5+irLNF+GCT203Sz5bFU2uSMiT8VxlwCsJ4yCWmxygd+90WCM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=nWrjr2zB; arc=none smtp.client-ip=209.85.210.194
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=Nvidia.com header.i=@Nvidia.com header.b="hNCgcPVq"
-ARC-Seal: i=1; a=rsa-sha256; s=arcselector10001; d=microsoft.com; cv=none;
- b=jAAByxgxvUAD7xN1CDhbjjj2LF7n4oiPny/AOs6Gs0q7W3iliXecigQqUfUrLyKWym70ZGn5v1fp6yozqnAbIULIckufZVTdO6kuBo84G7wj6A9p+6SW7mM0tg0WbU/c2E3a1hLeG+dJPxy19bhaaI2YUTUxTCw5XShh62oNk/V4Sb8cGx29yR5wfRWf40LwIOMxymG1LmuQiYl6VXZHRDf0dFYjED6lk5jlgrwbnWRsSxIiiRObWZuAvfDcITiz0lN+TDAid30mAQFuPwH6eVD/GOgcH6kNT/Sn/zDfjvr2Gi970BLc46w4x+EMCOT/G+sseCeKUoPmklU2ZkqvkA==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com;
- s=arcselector10001;
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
- bh=Q9Qcp8nuv2eWxDPnH+xFYVQ2t6ga0j96oneepZEq3zM=;
- b=k8fnh05nwUmHbuVQhtLEKnhUbD2/wnJeq8a3ee2+CDrx10quFkVMSDtGA/GC03Ume+obyPqYtZGF7Z7csbZLRpNmM0F9W5DeXqYOjYF23HpygLi+zSbwgdy1jxkAzQJwHrI+QLTT6l33EFsy75J7H3A0U0XSZWWjkQDXnpobdV67pSwINAuM/MhHuXaahjTDLCQTzn9q2nDSfiFutN0GZL4S50OUDIFWjFn3ap9JTg68Mi2dE/bDiOjL+38/gq0yyCQvHZx5dBvq4bELTfagSzx2gcOQM6X74kg9MMy6piqK8SxDLlFXfP/l6dsWvmgzvP4NrUdbyP2gCx95C9Cojg==
-ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
- smtp.mailfrom=nvidia.com; dmarc=pass action=none header.from=nvidia.com;
- dkim=pass header.d=nvidia.com; arc=none
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=Nvidia.com;
- s=selector2;
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
- bh=Q9Qcp8nuv2eWxDPnH+xFYVQ2t6ga0j96oneepZEq3zM=;
- b=hNCgcPVq2Dwo/L5i4eeBG8MSRsXEc6fdkjQ63/S0bSubfaOvuwLtVJ4ZFUQSoc+tbxejMoRGDsGtllKA4B1fjsOZw/nN8CLNx3Wq9ZNPZf9lXtke8ND+Z8REcYjujKpAvBW4Jsr78PHs/q9Ad7Fq/UTPVgK3Mnh31E4+CiDP/ulKoW9rg3Fo9e6K/k2+d4WMO/g7sLuC3CtCX3g/zkl8lF5l9FRiN9O51vaqd8adUbE+jLzsglKJrhI6poVQcpd8TpFTYmOLBGeU7voG+h1umVrFan17mMBW62FmHgfoDw6+QU+CGnRGm50H4P5VUSykrcAiYy2Gg3kL0WYdrbcHWQ==
-Authentication-Results: dkim=none (message not signed)
- header.d=none;dmarc=none action=none header.from=nvidia.com;
-Received: from BL0PR12MB2370.namprd12.prod.outlook.com (2603:10b6:207:47::27)
- by SAVPR12MB999144.namprd12.prod.outlook.com (2603:10b6:806:4e6::18) with
- Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.9891.15; Fri, 5 Jun
- 2026 02:03:19 +0000
-Received: from BL0PR12MB2370.namprd12.prod.outlook.com
- ([fe80::86cf:c3ec:2cf5:74c8]) by BL0PR12MB2370.namprd12.prod.outlook.com
- ([fe80::86cf:c3ec:2cf5:74c8%5]) with mapi id 15.21.0092.007; Fri, 5 Jun 2026
- 02:03:19 +0000
-Date: Fri, 5 Jun 2026 10:03:11 +0800
-From: Richard Cheng <icheng@nvidia.com>
-To: sashiko-reviews@lists.linux.dev
-Cc: Davidlohr Bueso <dave@stgolabs.net>, linux-cxl@vger.kernel.org
-Subject: Re: [PATCH 1/5] cxl: Add BI register probing and port initialization
-Message-ID: <aiItL9wmNPDafyFG@MWDK4CY14F>
-References: <20260605003329.2584012-2-dave@stgolabs.net>
- <20260605013307.DA9421F00898@smtp.kernel.org>
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-Content-Transfer-Encoding: 8bit
-In-Reply-To: <20260605013307.DA9421F00898@smtp.kernel.org>
-X-ClientProxiedBy: KL1PR01CA0087.apcprd01.prod.exchangelabs.com
- (2603:1096:820:2::27) To BL0PR12MB2370.namprd12.prod.outlook.com
- (2603:10b6:207:47::27)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="nWrjr2zB"
+Received: by mail-pf1-f194.google.com with SMTP id d2e1a72fcca58-84226d0f1d2so965177b3a.1
+        for <sashiko-reviews@lists.linux.dev>; Thu, 04 Jun 2026 19:10:57 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20251104; t=1780625457; x=1781230257; darn=lists.linux.dev;
+        h=content-transfer-encoding:in-reply-to:from:content-language
+         :references:cc:to:subject:user-agent:mime-version:date:message-id
+         :from:to:cc:subject:date:message-id:reply-to;
+        bh=ULATv2+XYxYgQ4SMTbT2+7ryN++47TE5p2N63JMlAZU=;
+        b=nWrjr2zB8mi537SXjiw0wl6s0bEQHuhhQSkZv5fr78WqcvHQRjfYiaC1nRBjgiz5E1
+         2xDI7KlqVz/5MVPDbf1xyXkjH1bs5zj8v4IzYaUUtOe4R+WgmHIfJq6K7uRPGriyEnaI
+         Florfw9Q8Rpw52IM9RTEQVZE9y7MmVlRSc/4lK4Xte3aWx8QfTgga9fTgxGAJe7f4S27
+         eRk6Swz+WgORheJAWOQYKmrM6sqGQfeQLjd4MyoLb3KxsHlRYJLxe5B3F9LB98LRmd6V
+         8OFk+86zEjwjk/6gPHGH9jiTYEM664yLKK/wF31BGnmLMbfdlPhTSjPDJEyLTEoNsXwg
+         goWw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20251104; t=1780625457; x=1781230257;
+        h=content-transfer-encoding:in-reply-to:from:content-language
+         :references:cc:to:subject:user-agent:mime-version:date:message-id
+         :x-gm-gg:x-gm-message-state:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=ULATv2+XYxYgQ4SMTbT2+7ryN++47TE5p2N63JMlAZU=;
+        b=ifeTtmoXPl+3efsO3jUzjMeOI+TcdNT2Zd20GtAAEkDcL2Y/Cm+uPlTk6XnnoCBw7j
+         by7e/KVVGOBwCG7ovuUjrALfcr9uT15SrsqBcAP+YbyujT8JF47rKOtKfljvp+vvN0n+
+         8pdzMo7rMQkpPViVkc5a0Mp4DDKbMKLNckwAZiJgxQXMUIKPQHWP/ts7P7wsnoFDJfi8
+         JGjLKcTAIpsu3TGY6QaqTxIXMnBR7p4vipqTWVg+j0z0UWgkc3bRcBqhzreNL8fXsrQR
+         Ng3hdF5dkPn87vaJQetr6kaDpAYRDxmdBtki+7k3Du0eTD80mTd6mAJ6NlkQvC9fJI9K
+         oKuw==
+X-Gm-Message-State: AOJu0Yy9BZVd2o8KC4mHU1pYZ7MShSc0b/Mm9Uk694KFw/f5mxOPd61k
+	Ln9FtUwXRJczg1QjwUL04ql/5p+gd+9F1DwamGiIsl93onCWvyjPjPoG
+X-Gm-Gg: Acq92OFO+WN7rgttW56t1y7qIBR2nO0q/0EWOTLjcy3jm8QeT5JfzlctfFyyO1UWaU/
+	S+7LKeyzuwjDvWRYTRA3CtbtshSlSpdu8cxa1QQCTOeLiTiBFckM8iplQ7w2T5w8OU9VxweRp+H
+	xLRtw+G1xpCzlPXTS2cIEjOOTtXJDVJ603ZLAqrMzf8aPhCJRcc1EQh3RP3xq6kqPahDjNXf40Y
+	rFKsWY2Sg9WgbCAk2q1xxrjhToO031LEKX2KUBixzXqt4VFBKNFibPDft46MEGkyqQIL9Wdcjv8
+	Q4SE1hVdPEfUAhqx1gUKPkWO/FhycuJg1uMLbDt7XH14x3tTb7TXlt7+Kh2uR5kY7edX6FOmHTF
+	lgn+CRA2YZjTyhZsdY9TCRq6b8my4CLhCw3wDnJ+R/TUmCubGDlE+Ha3xed/S6IZRyCW0CtunDU
+	sVNByjvss8PP1tGw3p38WnXwR3SSj0LYf6BrU/0kFAcA==
+X-Received: by 2002:a05:6a00:a227:b0:82c:6683:b866 with SMTP id d2e1a72fcca58-842b0c083e3mr1205470b3a.4.1780625457100;
+        Thu, 04 Jun 2026 19:10:57 -0700 (PDT)
+Received: from [10.125.112.20] ([210.184.73.204])
+        by smtp.gmail.com with ESMTPSA id d2e1a72fcca58-8428288217bsm8833262b3a.37.2026.06.04.19.10.54
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Thu, 04 Jun 2026 19:10:56 -0700 (PDT)
+Message-ID: <b8a5e883-16be-4106-97d3-d4ab69faa8bb@gmail.com>
+Date: Fri, 5 Jun 2026 10:10:52 +0800
 Precedence: bulk
 X-Mailing-List: sashiko-reviews@lists.linux.dev
 List-Id: <sashiko-reviews.lists.linux.dev>
 List-Subscribe: <mailto:sashiko-reviews+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:sashiko-reviews+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-X-MS-PublicTrafficType: Email
-X-MS-TrafficTypeDiagnostic: BL0PR12MB2370:EE_|SAVPR12MB999144:EE_
-X-MS-Office365-Filtering-Correlation-Id: edada9f0-26f4-42bf-b39f-08dec2a69d47
-X-MS-Exchange-SenderADCheck: 1
-X-MS-Exchange-AntiSpam-Relay: 0
-X-Microsoft-Antispam:
-	BCL:0;ARA:13230040|376014|1800799024|366016|11063799006|4143699003|6133799003|3023799007|56012099006|18002099003|22082099003;
-X-Microsoft-Antispam-Message-Info:
-	xT7x53GsCFCN6e5x2HsfT42DkhKSN0yQW6SIxMgYlpYZ+Y9ROEj0XOCX6w7rYCWqpxurXnRaUOmWcrhNVIvmc8tFjOmHo7oFwYdwK4lSDXSbBCF1n3eYdKS5lY1Pz5yfj2+AV6+2ugC6BHJvt5sAXkNUeW6qI/ZQAAtzEq8LO8UIlG85+CQ31I/8mhqsONwkug1H82NNlG9/zf6JlfpFZ6acHQp0ujyp3eUM/LaEtqu34N4KjCZoBsieQWMekMjrASd8MCtFx9t7UZGUZM13cowXcpxCI/DLAq5gqvKunIQpvwgCycYnu20IXqGtaLb20P6AJkLBSqHNZJWwBEcthR1V/+8SB6jRVertiz3TprCLe5dJ0RM5lDRc2CZPrnWAu0wy+NGyDekRTK/eGLiIx7snEF93o7i1bl+Mz3QOFas4diOxTKn2OeL04zr/oR3H4yXWLi0742s+CxMBh0O7A2iC18xDiL7nbYZUxwtJ87RufIIaRvdAh8/ADVG7P8UZm3EGJq+xfQhU438gI8IQ1rt2F/D2lesZ+himSJ/a/52bJTrB3g/Mu5WqdH/x8VwHQjlPtJAslEkHVzR2Uuhte0O95ITRP2G9CocCEwgB2N4PaThC79Tx9PXlEO6GOhAwJtQ+QFTkoNR3rgq7yo5htxuCOvxWfMJtpqDgsn63cWHgnmXuXCtDLVq7NsxzgVPw
-X-Forefront-Antispam-Report:
-	CIP:255.255.255.255;CTRY:;LANG:en;SCL:1;SRV:;IPV:NLI;SFV:NSPM;H:BL0PR12MB2370.namprd12.prod.outlook.com;PTR:;CAT:NONE;SFS:(13230040)(376014)(1800799024)(366016)(11063799006)(4143699003)(6133799003)(3023799007)(56012099006)(18002099003)(22082099003);DIR:OUT;SFP:1101;
-X-MS-Exchange-AntiSpam-MessageData-ChunkCount: 1
-X-MS-Exchange-AntiSpam-MessageData-0:
-	=?utf-8?B?a1NIVVVSYjM1d1lsQnkxTnJwOStZUHVQeDc5MGk1L2JaMUswakRWMUJCc3Jm?=
- =?utf-8?B?M25wVUpJdjVGSmxwY2dOTlBLZVVjT1M1V0N5T2dLeDJXRE9wNHg3REZtbDJm?=
- =?utf-8?B?V0hoaThsVjI4L1UzOWo5Sy9PTkE4SWM0dzRUZEtrZ1NLeVBJN25tUWora0dT?=
- =?utf-8?B?TmdjT252UDRUTHZKam1RMUJxakJDTUJJMnk0Nm9PMFpVeHUxdkZ6ZHV2d3lM?=
- =?utf-8?B?ZTI4SFlIbzVWSzM3bFNlMkQ4bjJSaDhDZHkyNGgzYUlwSFNVU3o4Ukh3d1k5?=
- =?utf-8?B?d2dseDFhYWh5MTFKZWt6Z0ZwRCtSN3B4VG1IMHRaQjA3WDNkQzF4cVVSN0ls?=
- =?utf-8?B?bEM1U3lVYk9Rdk1GSGwxa1lQaFFnS1ZYOGk4cXVaalNmZFFwd3Z6YW5OUzUy?=
- =?utf-8?B?YkxsUExNck1ZS2VPcHVwR092dnJxTzRUK2RnNjk2Qysxc2oxOFRHQ3hRVCt6?=
- =?utf-8?B?SFY2ZldkdFlEWHIwMVgxMVd0MHBOV1BKdlpldTlvdkFaL3JoYjNOVm8weEdr?=
- =?utf-8?B?TXh5b1cwNUFjczJnT2I1L0lXRnlsZHFvdEpxUnM5RzhZTlZkelJUcnlXalMy?=
- =?utf-8?B?YXpzY3BFYlFvS1ZVck8zL203bEt1VTFvblhvb3pNMVV6aFNJZFlUUUVoQXpw?=
- =?utf-8?B?aGdSRFR6R2xITE5KY21yZjR2cXc5QnQ5b1RWclN5YkFrdHpjeFJBRXlLTFBJ?=
- =?utf-8?B?cW40MFI3OXY4dUllZE5EZGNGcC9FY0IwdERGZEQ0YVZra25TZktNMzF0ekdT?=
- =?utf-8?B?V3RBelVEU3c1UEFJMDR2dlNZMy9NcjZ6YzJkQUo5bUdHZHNPdm05WVhHRko1?=
- =?utf-8?B?MEVHejh6YWlHOFZUWG50dEU2QThhakc0QnJjRGlZdnBSdUdGWGx1NzVSUlNT?=
- =?utf-8?B?b1B3Z0xVM0VCSHN5ZStNUGdtajFxakF2ZnpzT3JLYmFldkRMcTVJMDJwdXU1?=
- =?utf-8?B?cTB3Uy80NGl4Uk5qTENGWG00NmlKT05KZVdyd2RiVms3aDFBZjJUS29YOU1t?=
- =?utf-8?B?QVIvellMcStnUVFHb3VaMDZBRXhoaHB6WEsrdG8ycjA4UXR4UzFQRUY4WXpT?=
- =?utf-8?B?NjIyQWxmenl2dnJORlFic0dwUCtTUWNKeDZYZGVBRFdSYzcvOWVYNXJDTmlB?=
- =?utf-8?B?bUl3ZmIrck1rNXpXZC93UGdqeFc1RGlzSnJyYitjL1JPS3BWMWZBUnExc3BU?=
- =?utf-8?B?UHc2VFA4eUJPd1M5V2R0S2R1VGtzcDZJdlhCQWRId2syNXFOckw2Zk41MG9L?=
- =?utf-8?B?ajByVEVWcVdTZFgrVTdJaTA4TEZ6dDRDTFVSNHJqYVJYK1ZmSXBCeVpGeU5v?=
- =?utf-8?B?anEvSURBZ1BZRDlVSklwWng5OGNOYXBudkhYS2VnS1J2M1lhMXUyVkcrWnNX?=
- =?utf-8?B?bXdNSTZlditRVitaVCtxajBMaXlVdDFJNjIreGdmUGVmNDNyTkNVQ3ljTjRO?=
- =?utf-8?B?Z1NsSEdaaFVPc3lSRXJSbUN3T2YxcXEzdG1zSFJSL3A4UStXd0VlMHFGYnpL?=
- =?utf-8?B?a0wwVUM3VHgxU3E3R0JYQWdmdDRBZVg5Tm1KM3VkUFhyQTBZeWxWeUZuWkEv?=
- =?utf-8?B?YjMyMDZBVGlJVFpNK05JNVRyUXpEam53aWxJeVpSSXhKZ3F1V1VHNEpRQzRy?=
- =?utf-8?B?bkYxYXFUa0doSjRWd0dlN3dicVNhT2FWK1NzcU5BaEdqSGE0UU1rWFVKN29Q?=
- =?utf-8?B?UUpSRGZyMkpiSFNvc2NwbGJpNDdRV09EUVpVaEVrcEt2NXNvcXRoenk4WmY1?=
- =?utf-8?B?K3E1N1ZUUzEvYkNKNS82U21vS1VIY2FYeGtxdExVemp2aTM0aUJVaUNHcUE2?=
- =?utf-8?B?QW5ucDlGRWhhR2dyV1NwRU5HTjB6Z2d2QWt5U2liWEs4VUVJTGJBOG4xYits?=
- =?utf-8?B?dGcvSHpyMmdyRXYrdEo2MVowbzRyUE1nMUcvZllvWmI4Z01kSzJnNEhJUE1R?=
- =?utf-8?B?SytCcVNWRHo4SE0vOGswRlE4NEZYS0xjVTNnbW93TFUwVGNKaWVROG1rZW9n?=
- =?utf-8?B?d2hyK28vTklrMnlDd1llcUNZYi9hYkppaENsaW9LYUE3bE43Ym45NEYwd3BK?=
- =?utf-8?B?Q0VZV29JbXJsZXRWVldOMGdHazBpSFNsaTJDdHpuWVZhSCtmTWNpRitxQ0RC?=
- =?utf-8?B?RDFMc1l3ejVlallYa2V0cXdVVDdzSTFySWtQY01wV3ZzaWR0THp0NitxTnlS?=
- =?utf-8?B?SjkxOWhPa0hrOFFFdGdRb2U1N2RYRUVha1JneTM1M0xVM05IWURabmRYTCs2?=
- =?utf-8?B?NERqMmNIV2VpUDdVY2lTQ1FSTm9VZk44SkJPdG5EWWN5Mnp6ckM3UzlFVVZs?=
- =?utf-8?B?L3g1WDhKYVZsYXNUNWRUNnk2eWxURHhzYkhJN085STQ5d1lBVHdWQT09?=
-X-OriginatorOrg: Nvidia.com
-X-MS-Exchange-CrossTenant-Network-Message-Id: edada9f0-26f4-42bf-b39f-08dec2a69d47
-X-MS-Exchange-CrossTenant-AuthSource: BL0PR12MB2370.namprd12.prod.outlook.com
-X-MS-Exchange-CrossTenant-AuthAs: Internal
-X-MS-Exchange-CrossTenant-OriginalArrivalTime: 05 Jun 2026 02:03:19.5942
- (UTC)
-X-MS-Exchange-CrossTenant-FromEntityHeader: Hosted
-X-MS-Exchange-CrossTenant-Id: 43083d15-7273-40c1-b7db-39efd9ccc17a
-X-MS-Exchange-CrossTenant-MailboxType: HOSTED
-X-MS-Exchange-CrossTenant-UserPrincipalName: 0pbVzOhX5ZAXMYale28xfY/0eoktVexIyfBVZsbgZuUwJAsJTEZlKsyDLHyA+AEIqUdGzM9+lX4namuH8HGttw==
-X-MS-Exchange-Transport-CrossTenantHeadersStamped: SAVPR12MB999144
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH 1/2] of: reserved_mem: avoid stack buffer overflow in
+ fdt_scan_reserved_mem()
+To: Rob Herring <robh@kernel.org>
+Cc: sashiko-reviews@lists.linux.dev, devicetree@vger.kernel.org,
+ conor+dt@kernel.org
+References: <20260604073611.3954433-2-chenwandun1@gmail.com>
+ <20260604074520.D5B181F00893@smtp.kernel.org>
+ <757480ae-2d7d-40e9-9900-edd14ed3b3ac@gmail.com>
+ <20260604193041.GA1057262-robh@kernel.org>
+Content-Language: en-US
+From: Wandun <chenwandun1@gmail.com>
+In-Reply-To: <20260604193041.GA1057262-robh@kernel.org>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
 
-On Fri, Jun 05, 2026 at 01:33:07AM +0800, sashiko-bot@kernel.org wrote:
-> Thank you for your contribution! Sashiko AI review found 1 potential issue(s) to consider:
-> - [High] Silent failure to map and configure CXL BI Route Table due to probe sequence mismatch
-> --
-> 
-> commit 34d3cc24691a25107f1dbbcc8e03fc18ffcae164
-> Author: Davidlohr Bueso <dave@stgolabs.net>
-> 
-> cxl: Add BI register probing and port initialization
-> 
-> This commit adds register probing for BI Route Table and BI Decoder capability
-> structures. It introduces helpers to map these structures at dport-creation
-> time and port probe time.
-> 
-> > diff --git a/drivers/cxl/port.c b/drivers/cxl/port.c
-> > index ada51948d52fa..2dd712c5d312a 100644
-> > --- a/drivers/cxl/port.c
-> > +++ b/drivers/cxl/port.c
-> [ ... ]
-> > @@ -58,6 +58,62 @@ static int discover_region(struct device *dev, void *unused)
-> [ ... ]
-> > +static void cxl_port_map_bi(struct cxl_port *port)
-> > +{
-> > +	struct cxl_register_map *map = &port->reg_map;
-> [ ... ]
-> > +	/* map this port's own BI capability */
-> > +	if (is_cxl_endpoint(port)) {
-> > +		if (!map->component_map.bi_decoder.valid) {
-> > +			dev_dbg(&port->dev, "BI Decoder registers not found\n");
-> > +			return;
-> > +		}
-> > +		cap_id = CXL_CM_CAP_CAP_ID_BI_DECODER;
-> > +	} else {
-> > +		if (!map->component_map.bi_rt.valid) {
-> > +			dev_dbg(&port->dev, "BI RT registers not found\n");
-> > +			return;
-> > +		}
-> 
-> [Severity: High]
-> Does this silently fail to map the BI Route Table registers for switch
-> ports?
-> 
-> When called from cxl_switch_port_probe(), the component registers have not
-> been discovered yet. The registers are actually probed and marked valid when
-> the first downstream port is added, which triggers cxl_port_add_dport() to call
-> cxl_port_setup_regs().
-> 
-> Because the valid flag is always false here during switch port probe, the map
-> function returns early and permanently leaves port->regs.bi_rt unmapped. Will
-> this bypass the required hardware commit protocol for the switch upstream port
-> and break Back-Invalidate coherency for downstream endpoints?
-> 
-> > +		cap_id = CXL_CM_CAP_CAP_ID_BI_RT;
-> > +	}
-> > +
-> > +	map->host = &port->dev;
-> > +	if (cxl_map_component_regs(map, &port->regs, BIT(cap_id)))
-> > +		dev_dbg(&port->dev, "Failed to map BI capability 0x%x\n",
-> > +			cap_id);
-> > +}
-> > +
-> >  static int cxl_switch_port_probe(struct cxl_port *port)
-> >  {
-> >  	/* Reset nr_dports for rebind of driver */
-> [ ... ]
-> > @@ -66,6 +122,8 @@ static int cxl_switch_port_probe(struct cxl_port *port)
-> >  	/* Cache the data early to ensure is_visible() works */
-> >  	read_cdat_data(port);
-> >  
-> > +	cxl_port_map_bi(port);
-> > +
-> >  	return 0;
-> >  }
+
+
+On 6/5/26 03:30, Rob Herring wrote:
+> On Thu, Jun 04, 2026 at 05:18:09PM +0800, Wandun wrote:
+>>
+>> On 6/4/26 15:45, sashiko-bot@kernel.org wrote:
+>>> Thank you for your contribution! Sashiko AI review found 1 potential issue(s) to consider:
+>>> - [Medium] The newly added bounds check for `dynamic_nodes_cnt` is placed outside the block that evaluates whether a node is actually a dynamically-placed region, leading to spurious error logs.
+>>> --
+>>>
+>>> commit 6a79f526de5e1185b7c79fb469545f4094fb402f
+>>> Author: Wandun Chen <chenwandun@lixiang.com>
+>>>
+>>> of: reserved_mem: avoid stack buffer overflow in fdt_scan_reserved_mem()
+>>>
+>>> This commit adds bounds checking on dynamic_nodes_cnt to prevent a
+>>> potential stack buffer overflow in fdt_scan_reserved_mem().
+>>>
+>>> Link: https://sashiko.dev/#/patchset/20260604015332.3669384-1-chenwandun1%40gmail.com?part=1 [1]
+>>>
+>>>> diff --git a/drivers/of/of_reserved_mem.c b/drivers/of/of_reserved_mem.c
+>>>> --- a/drivers/of/of_reserved_mem.c
+>>>> +++ b/drivers/of/of_reserved_mem.c
+>>> [ ... ]
+>>>
+>>>> @@ -341,6 +341,12 @@ int __init fdt_scan_reserved_mem(void)
+>>>>    		err = __reserved_mem_reserve_reg(child, uname);
+>>>>    		if (!err)
+>>>>    			count++;
+>>>> +
+>>>> +		if (dynamic_nodes_cnt >= MAX_RESERVED_REGIONS) {
+>>>> +			pr_err_once("Reserved memory: reached MAX_RESERVED_REGIONS(%d)\n",
+>>>> +				    MAX_RESERVED_REGIONS);
+>>>> +			continue;
+>>>> +		}
+>>> [Severity: Medium]
+>>> Will this bounds check trigger spurious error logs for statically-placed
+>>> regions?
+>> Yes, it indeed, will fix in v2.
+> I now have the same change (and same problems) in another submission:
 >
+> https://lore.kernel.org/all/20260603152709.941788-1-ekffu200098@gmail.com/
+>
+> See my comment there.
+Thanks for pointing out the other submission. Since the same fix is 
+already being worked on, I'll drop this patch. Best regards, Wandun
+>
+> Rob
 
-Hi Davidlohr,
-
-cxl_port_map_bi() is called here before any dport exists.
-Component register discovery happends later in cxl_port_add_dport() and then
-cxl_port_setup_regs() on the first dport.
-
-So for switch USP, bi_rt.valid is false at probe time, mapping is skipped
-and never retried. I saw from your cover letter's dmesg
-
-"""
-cxl_port port2: BI RT registers not found   ← probe-time map_bi
-...
-cxl_port port2: found BI RT capability      ← later, on first dport
-"""
-
-Endpoints and RP/DSP paths are fine, but switch BI RT mapping might
-be the gap.
-
-Let me know what you think, please correct me if I'm wrong, thanks
-
-
-Best regards,
-Richard Cheng.
-> -- 
-> Sashiko AI review · https://sashiko.dev/#/patchset/20260605003329.2584012-1-dave@stgolabs.net?part=1
-> 
