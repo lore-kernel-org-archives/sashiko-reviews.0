@@ -1,123 +1,150 @@
-Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-wm1-f46.google.com (mail-wm1-f46.google.com [209.85.128.46])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E7E4633ADAE
-	for <sashiko-reviews@lists.linux.dev>; Fri,  5 Jun 2026 13:58:30 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 91DB53596E1
+	for <sashiko-reviews@lists.linux.dev>; Fri,  5 Jun 2026 14:05:40 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.46
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1780667912; cv=none; b=B488d4op6EWBzdoX6sIIaIp9duflmOguBqPEw9o1lM8SWxrDjJSIy6VUzIvTwHmjwz6QTQYi8GO9F9JKb1nAv0DuHmsOjk/Z7gkBzoW/bT57YS8qal/Bp3Ob3EhdAiZwUrPru6Mo+5qIttgyMmP5IQ5NAbWTuUM1dw7XmUmXcvs=
+	t=1780668344; cv=none; b=js4oPMyxhamTHLh9dWKTCPdJp+kWlEjOLKbMC2NwzgvbeosRknQB+2y0XXffaYBKRbEkLKeIjKD0jQy5jlBmFTaWxJp26uYgHtZ5omVnTbfrYYttnz9iLWd8wYnRXzLaMA42bh0xMxARjBRahBbnTVxh3qEv/zXU2OdK0dMVAGA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1780667912; c=relaxed/simple;
-	bh=3XBWY6MMPZ6f2vfP73CVGG6zmnJNFrkKpcwnUc4yDZ0=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=N3fv3d5gh3tovXNyYRqdpa9q6IR3ZIiRxhU/yz69Xx9FKlRpWSeiLW2/I1xR8ZN7a9JGo/tEabrn4cGANlEKgZqHza3BxBpsuWKTAx3MrXyn8ADWHh04ekHUgQGr6CSNlthuvvYDZ0biA0fBrvBV+Q7Pxyfmw5Kwd/OMediVmcQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=BFJnrfEU; arc=none smtp.client-ip=100.103.45.18
+	s=arc-20240116; t=1780668344; c=relaxed/simple;
+	bh=Naw+0pM5jX8sriiCIMcNpVykYT6UQjT0Lv2jeaVucUI=;
+	h=Message-ID:Subject:From:To:Cc:Date:In-Reply-To:References:
+	 Content-Type:MIME-Version; b=fG7MsK74fuxkRHiHodJp6xOcMAgD5iGzwCGqxys0LaeQiI+MDdFp2s/cs61p2Yp7hCTADk7+LPeIrrLGJxTNHOlmNnw1wVVnbaMde8mcw2IsMBkFw21S8kI//TSXRH+4s58n8l3HR1B2jtVOLSn5EtCHZv+qQiH9IYbRP/7LdvQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=suse.com; spf=pass smtp.mailfrom=suse.com; dkim=pass (2048-bit key) header.d=suse.com header.i=@suse.com header.b=THM2IGq9; arc=none smtp.client-ip=209.85.128.46
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=suse.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=suse.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="BFJnrfEU"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 813921F00899;
-	Fri,  5 Jun 2026 13:58:30 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=kernel.org;
-	s=k20260515; t=1780667910;
-	bh=Q885mhCv0lIPD60VFH3SrbDmv8DP44ATAyk0g8vyOIw=;
-	h=Date:From:To:Cc:Subject:References:In-Reply-To;
-	b=BFJnrfEUeeqZ1RZ3Ul1PU1vuT6YpuWJi4TvxTRGDeHBmReq4769cYkueRrFA2Ezqw
-	 XoSwCrYHHOB/enzwzMOtgM/dZfneUZmNySFCpwIVMCmTzOUJ3yj44anGv0+vgq9WTk
-	 c1cNcP+f0YMbtlEzKcShPPpXtBj7JItoul0KGvdDLntCfjYyTkCiV4I5FjfEeTeCtE
-	 vfiE0ISq18u+vnWQOxm9qiEq01SMiBfSQv0hiyfNVO842opi97J5hXNrBKKGq+11ml
-	 pOpGN7BW01hU5uNUoDcE55FV6AF4tt2NC9aC/aI2wugrvO2Zcf4fjbX2r1YDkz/WH4
-	 9Yvd7M5qSy3kQ==
-Received: from phl-compute-04.internal (phl-compute-04.internal [10.202.2.44])
-	by mailfauth.phl.internal (Postfix) with ESMTP id BEBE1F40081;
-	Fri,  5 Jun 2026 09:58:29 -0400 (EDT)
-Received: from phl-frontend-04 ([10.202.2.163])
-  by phl-compute-04.internal (MEProxy); Fri, 05 Jun 2026 09:58:29 -0400
-X-ME-Sender: <xms:BdYialzhV6KiM2N-ripSx4Ts3VydALqXnlHAG-cB68omg1IZyN8rVQ>
-    <xme:BdYiauP1r6B4t8sge-RESH7li-TZKsapqOPHmty-_-C6MQY7ZbylUYQblv6UQOUOH
-    -SnijHae-UYyedvQGzoSoUlZw_aK_fy6fTqTKY382AhRtAgj-i9dw>
-X-ME-Received: <xmr:BdYiaq7rUl9oAJ1dreslzcRdEsyOH6VtQx2yKX__PYBzDu6N5wVN3olmsho>
-X-ME-Proxy-Cause: dmFkZTGaSo7q4H7+bMA6ihnLQtBdT9xCwaWwGm0m9NWD4XbkJYiP2HHuhlBeMmscxt+LX7
-    AgjNs9tdqamSEr20FWQv7TM6WxDP45fu+Va3WXZkbPXtP3t24wMICWWQ81RemQ26NKJx6H
-    qeXbzzwuSgGAlKEhwLWjqlmQ1o7GFDVZ9FYhNp/6oo4D5Id27FHXJzLjJtH+Fy7Z4vaiBy
-    xPGkSIBby0cGeUCWDOAynVpTTZ+qafifdbIupTJU1x24504y6qGygDSWKS740HrnVTLWp2
-    iuEp6Gd+Cx4xr5Q2nerY3VdXxugbGnPvuSVawshoAbjl+4gTu2XfXxNCfYdZRwF+zJ4kiH
-    mWuja+cPEJ6mqr05UJ+dyja/1qyKyJQAQC09a3i7BFZS0Jd5hG5gNbbo36L6dVE9L1A92g
-    xmBPnfnFT9T5YdJDy3nkQLRuBYd3mFamqrec58fcIViXCMWYvoB810p4JEKWLU+sJh0DPi
-    q1SpIgTcH0luyqoG0g+N+P8zHWiWOBwfF4brQFAVW9t50MnHY2Lvdi5mAHR1VlAwQDkEN9
-    bjzrEqQNiWbHsfLDvDjvmZ8Jxb5ea8kqBJRdnjs5OX/k7OcYZzQwDI5li6IbcZnERy8Pia
-    4mZGwCHYtNaaXHxOcPuaKuTcYc4oyaidKpqydcXN1AQKunK/JqDXbthRYcZQ
-X-ME-Proxy: <xmx:BdYiannu5TVtKeoWOeolOWfSPbwzoooOYg6MIpkoinV3CSSpcCVYqA>
-    <xmx:BdYiajSadpVXmaj599wn5ev4v66n-is06KcPapai76N8M-vSviBmqA>
-    <xmx:BdYiauHP51Vh0kIuyAq_VE-gW_jluylhACQCUXDfSh9vFNQyyx9x9g>
-    <xmx:BdYiagF4WQBzsD0H0vZSPGhOqI76irp7BXt_QtDjUjWpHJpSw_-jyA>
-    <xmx:BdYiakQdBZZj4KLYK7d3oAFhWfmZD8A6Gute7Dak5RPYs95x5vAb38lh>
-Feedback-ID: i8dbe485b:Fastmail
-Received: by mail.messagingengine.com (Postfix) with ESMTPA; Fri,
- 5 Jun 2026 09:58:29 -0400 (EDT)
-Date: Fri, 5 Jun 2026 06:58:28 -0700
-From: Boqun Feng <boqun@kernel.org>
-To: sashiko-reviews@lists.linux.dev
-Cc: ojeda@kernel.org, dri-devel@lists.freedesktop.org,
-	linux-media@vger.kernel.org
-Subject: Re: [PATCH 1/3] rust: rcu: add RcuBox type
-Message-ID: <aiLWBAE23BtXzVIU@tardis-2.local>
-References: <20260605133541.22569-2-boqun@kernel.org>
- <20260605134935.B6C0E1F00893@smtp.kernel.org>
+	dkim=pass (2048-bit key) header.d=suse.com header.i=@suse.com header.b="THM2IGq9"
+Received: by mail-wm1-f46.google.com with SMTP id 5b1f17b1804b1-490b09e4cccso14806155e9.0
+        for <sashiko-reviews@lists.linux.dev>; Fri, 05 Jun 2026 07:05:40 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=suse.com; s=google; t=1780668339; x=1781273139; darn=lists.linux.dev;
+        h=mime-version:user-agent:content-transfer-encoding:autocrypt
+         :references:in-reply-to:date:cc:to:from:subject:message-id:from:to
+         :cc:subject:date:message-id:reply-to;
+        bh=nQz8xMZ+YvTuLBSXCkopz10mbJB9XgtGAZm9roBwzQY=;
+        b=THM2IGq90cEh/7DDgHJfUkV29hzzcofkAeuI3AKPruGhHie1C5+CW8LKw4+YJl885N
+         mMh9vqhoGH90IYgG43nmrCzhCbpZjXNCksNUaEP8LAFvCNJjiNl8Tn5lV0Y4jUAJlw/2
+         0qMxh1VuXLE6XOyqYKoND1//hw42wk0RpAuiK5w0VWteHVcDMorE+IRHNhgMr28addVp
+         W8TwAijVK6IMU+IG05SJpw3FFXuSHPVFQ+/EVU5sxW3Ehr1RYXoQJw+GHslte41ykSj4
+         jBsCbr+URKrJwGJcxPnKQYkCuoA9Gg76XN98Xq/+2P2OQ5D5jkM46znXvHntZBftClgM
+         lTmg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20251104; t=1780668339; x=1781273139;
+        h=mime-version:user-agent:content-transfer-encoding:autocrypt
+         :references:in-reply-to:date:cc:to:from:subject:message-id:x-gm-gg
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+        bh=nQz8xMZ+YvTuLBSXCkopz10mbJB9XgtGAZm9roBwzQY=;
+        b=VDGOtaAYSiASxAOEABEJ2KQiYE1A/A0UWABy378eq4eQCBCmaLlpQrZUSuSkusxJKX
+         MFArqeG58BvuOoMz68IfwrJ5QY5Ae6wDbzGK3PAhhPDiCUw5wojsHYa2AMrXDeyHC+tP
+         asRB+IGUHWBn9D/QPfg5ENh/b1PuGNWfNnVGO27zLEPadoKIkOCRWMYJsXrsAJiwZTbI
+         cjvs3yWgj82uppGfynofDUKXS4o7O9ofBfb8aT2KCKYiKEebb6oBFCed8/JFXBxsOGi5
+         x6XMLIeageYwbJTOOnn1V2i+qsZ4GA9xgiVRzokccy814KjTkEeUNEqRS+eMClVkrrFH
+         2IIQ==
+X-Gm-Message-State: AOJu0YxEaYbaax6ImsRjufZYBJtIZ3mOc6v+Zv31KLmvw3i/B7vgMs9c
+	rU18EYIF72l+iPCBzGVktPMhMcJjo3cVRKGULjMcVqxSdl76XwVVCN/+iNaikXaIm6RhlsYGjjJ
+	lWVIEeck=
+X-Gm-Gg: Acq92OE4AvZEhFzqSjs1s2i8lrXXHS5pAZhg5iF2D/gcdOQDyOVsvEKDzl+gWWF1kod
+	HwbXViw+kdIJRZk8lxI2f0QyuATYwj8hPMd1NwKpKdCPEkvV8I9VwK4tDIm5vfnHm/+oczm3SbI
+	mWwhVTmWhLBLKD2ojWTvSJLttC29mCwBZaBlXv/TtgV9aGjFFGn9h1DP8heUUUOiHUKxOMhRbrl
+	j5WebnSCkCmb1e4xEM2Bs+kJC7v2fzqk7TZLZyWHe0asz3XBMJo5ruR8lcfi8b4MmVjZa8fdpz5
+	J2hTbl976dNmExvDBtqaE8p5nE2BKKWCi2yikyP5KQxYLjtwQsgGtM6iv+iI4mszB+B2smaLBjj
+	+y5uk8C4m+MuYo7LSVcKI/jX4JH6dHrvuEiv41rEWycXZTX8vi2Xezrd7+/n68nDHxqEHHGEpVb
+	PtG6RKCsM2b0NsBGU2MXzM0WAmU/nXEgro/zC6OjZfajRmIdUsgSG3GzBErdZ+KrV0pChsv7Ex6
+	XweiLLW0us=
+X-Received: by 2002:a05:600c:6094:b0:490:4b89:5362 with SMTP id 5b1f17b1804b1-490c2609cecmr59481725e9.24.1780668339022;
+        Fri, 05 Jun 2026 07:05:39 -0700 (PDT)
+Received: from ?IPv6:2804:1bc4:803a:4c00:6a4d:bd81:dde2:ff59? ([2804:1bc4:803a:4c00:6a4d:bd81:dde2:ff59])
+        by smtp.gmail.com with ESMTPSA id 5b1f17b1804b1-490bc3c1149sm138093265e9.4.2026.06.05.07.05.35
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Fri, 05 Jun 2026 07:05:38 -0700 (PDT)
+Message-ID: <0f269520407c8cfc554059ffcba45ef3220ecfea.camel@suse.com>
+Subject: Re: [PATCH 3/4] selftests: livepatch: Adapt mod_target module to
+ pass on 4.12 kernels
+From: Marcos Paulo de Souza <mpdesouza@suse.com>
+To: sashiko-reviews@lists.linux.dev, Miroslav Benes <mbenes@suse.cz>, Shuah
+ Khan <shuah@kernel.org>, Petr Mladek <pmladek@suse.com>, Josh Poimboeuf
+ <jpoimboe@kernel.org>,  Joe Lawrence <joe.lawrence@redhat.com>, Jiri Kosina
+ <jikos@kernel.org>
+Cc: live-patching@vger.kernel.org, linux-kselftest@vger.kernel.org, 
+	linux-kernel@vger.kernel.org
+Date: Fri, 05 Jun 2026 11:05:32 -0300
+In-Reply-To: <20260525002416.3B3A41F000E9@smtp.kernel.org>
+References: <20260524-livepatch-unload-on-fail-v1-3-7465de7f741d@suse.com>
+	 <20260525002416.3B3A41F000E9@smtp.kernel.org>
+Autocrypt: addr=mpdesouza@suse.com; prefer-encrypt=mutual;
+ keydata=mDMEZ/0YqhYJKwYBBAHaRw8BAQdA4JZz0FED+JD5eKlhkNyjDrp6lAGmgR3LPTduPYGPT
+ Km0Kk1hcmNvcyBQYXVsbyBkZSBTb3V6YSA8bXBkZXNvdXphQHN1c2UuY29tPoiTBBMWCgA7FiEE2g
+ gC66iLbhUsCBoBemssEuRpLLUFAmf9GKoCGwMFCwkIBwICIgIGFQoJCAsCBBYCAwECHgcCF4AACgk
+ QemssEuRpLLWGxwD/S1I0bjp462FlKb81DikrOfWbeJ0FOJP44eRzmn20HmEBALBZIMrfIH2dJ5eM
+ GO8seNG8sYiP6JfRjl7Hyqca6YsE
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
+User-Agent: Evolution 3.60.1 (by Flathub.org) 
 Precedence: bulk
 X-Mailing-List: sashiko-reviews@lists.linux.dev
 List-Id: <sashiko-reviews.lists.linux.dev>
 List-Subscribe: <mailto:sashiko-reviews+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:sashiko-reviews+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=iso-8859-1
-Content-Disposition: inline
-Content-Transfer-Encoding: 8bit
-In-Reply-To: <20260605134935.B6C0E1F00893@smtp.kernel.org>
 
-On Fri, Jun 05, 2026 at 01:49:35PM +0000, sashiko-bot@kernel.org wrote:
-> Thank you for your contribution! Sashiko AI review found 2 potential issue(s) to consider:
-> - [Critical] RcuBox::into_foreign drops `self` instead of forgetting it, causing a guaranteed Use-After-Free.
-> - [High] RcuBox::drop bypasses the custom Allocator A and hardcodes kvfree_call_rcu() for types that do not require dropping, causing undefined behavior for non-kvfree compatible allocators.
+On Mon, 2026-05-25 at 00:24 +0000, sashiko-bot@kernel.org wrote:
+> Thank you for your contribution! Sashiko AI review found 1 potential
+> issue(s) to consider:
+> - [Medium] The `test_klp_mod_target_ops` structure omits the
+> logically required `.set` callback, exposing the kernel to a NULL
+> pointer dereference during module load.
 > --
-> 
-[...]
-> > +
-> > +    unsafe fn from_foreign(ptr: *mut c_void) -> Self {
-> 
+>=20
+> commit 532c1b8c7438f534fd4e3440716ede6cf83efe1c
+> Author: Marcos Paulo de Souza <mpdesouza@suse.com>
+>=20
+> selftests: livepatch: Adapt mod_target module to pass on 4.12 kernels
+>=20
+> Use the stable module_param_cb API instead of proc_fs for exposing
+> module
+> state. This approach is compatible with kernel 4.12 and later.
+>=20
+> > diff --git
+> > a/tools/testing/selftests/livepatch/test_modules/test_klp_mod_targe
+> > t.c
+> > b/tools/testing/selftests/livepatch/test_modules/test_klp_mod_targe
+> > t.c
+> > index 9643984d24022..1382a266825fb 100644
+> > ---
+> > a/tools/testing/selftests/livepatch/test_modules/test_klp_mod_targe
+> > t.c
+> > +++
+> > b/tools/testing/selftests/livepatch/test_modules/test_klp_mod_targe
+> > t.c
+> > @@ -5,31 +5,29 @@
 > [ ... ]
-> 
-> > +impl<T: Send, A: Allocator> Drop for RcuBox<T, A> {
-> > +    fn drop(&mut self) {
-> > +        // SAFETY: The `rcu_head` field is in-bounds of a valid allocation.
-> > +        let rcu_head = unsafe { &raw mut (*self.0.as_ptr()).rcu_head };
-> > +        if core::mem::needs_drop::<T>() {
-> > +            // SAFETY: `rcu_head` is the `rcu_head` field of `RcuBoxInner<T>`. All users will be
-> > +            // gone in an rcu grace period. This is the destructor, so we may pass ownership of the
-> > +            // allocation.
-> > +            unsafe { bindings::call_rcu(rcu_head, Some(drop_rcu_box::<T, A>)) };
-> > +        } else {
-> > +            // SAFETY: All users will be gone in an rcu grace period.
-> > +            // TODO: We are luckily since `kvfree_call_rcu()` works on both kmalloc and vmalloc,
-> > +            // maybe a new `Allocator` method is needed.
-> > +            unsafe { bindings::kvfree_call_rcu(rcu_head, self.0.as_ptr().cast()) };
-> 
-> [Severity: High]
-> Since `RcuBox` is generic over any custom `A: Allocator`, wouldn't calling
-> `kvfree_call_rcu()` here break for allocators other than kmalloc or vmalloc?
-> 
-> Does this need to always route through `A::free()` via `drop_rcu_box`, or
-> should `A` be explicitly bounded to an allocator trait that supports
-> `kvfree_rcu`?
-> 
+> > +static const struct kernel_param_ops test_klp_mod_target_ops =3D {
+> > +	.get =3D test_klp_mod_target_get,
+> > +};
+> > +
+> > +module_param_cb(klp_mod_arg, &test_klp_mod_target_ops, NULL,
+> > 0444);
+>=20
+> [Severity: Medium]
+> Does this code need a .set callback in the kernel_param_ops
+> structure?
+>=20
+> When a module parameter is passed during module load, the kernel
+> parses the
+> arguments using parse_args(), which invokes parse_one() in
+> kernel/params.c.
+> Because parse_one() unconditionally executes the .set callback
+> without
+> verifying if it is actually defined, omitting it here leaves the
+> callback
+> implicitly initialized to NULL.
+>=20
+> Could this lead to a NULL pointer dereference and a kernel panic if
+> someone
+> attempts to set this parameter during module load?
 
-There is a "TODO" here to describe why currently kvfree_call_rcu() is
-fine, is this a real issue in the current code base?
+Indeed! I'll send a v2 addressing the missing argument. Thanks Sachiko
+for spotting it :)
 
-Regards,
-Boqun
-
-> > +        }
-> > +    }
-> > +}
-> 
-> -- 
-> Sashiko AI review · https://sashiko.dev/#/patchset/20260605133541.22569-1-boqun@kernel.org?part=1
