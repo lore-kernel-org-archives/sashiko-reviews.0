@@ -1,219 +1,387 @@
-Received: from AM0PR02CU008.outbound.protection.outlook.com (mail-westeuropeazon11013008.outbound.protection.outlook.com [52.101.72.8])
+Received: from out162-62-58-216.mail.qq.com (out162-62-58-216.mail.qq.com [162.62.58.216])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6DA322571C0;
-	Sat,  6 Jun 2026 14:05:44 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=fail smtp.client-ip=52.101.72.8
-ARC-Seal:i=2; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1780754747; cv=fail; b=l486EGim2XPOuG7Dyo+zS59fTeCOf8b5ZORy0XYfqbcWpe9y3bW/QeNUtjl0aUa6IcxXwfgKPnkU6DjPuD4SzbLDC0PanXNdtDhfThWhrC0ir8Bwhjte2fvZeHtM/rqThNNGw06cPBoPmqpNZ4FuPeBrSsqLQnsL3e0AMp7YJnM=
-ARC-Message-Signature:i=2; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1780754747; c=relaxed/simple;
-	bh=FGs4VfCugAx8NJvL/FrncbELUJst3BZtkzll/iJOmew=;
-	h=From:To:CC:Subject:Date:Message-ID:References:In-Reply-To:
-	 Content-Type:MIME-Version; b=f/1HKBTFh9/yKaO9zAqyEwXE6n2RmFYn8h/ut8pk3GJWiUuLDCKgdxJuAsWSYQGFKHh0D32O7YeDrxUojZssebZqidzPYHjyR+9GrpknCP1sdcwbybyoqpDcF8yPChENA0pkTujZ8cHIKwXDLtj7VJ2EzKhDHY2q6H3mDDmONSM=
-ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=oss.nxp.com; spf=pass smtp.mailfrom=oss.nxp.com; dkim=pass (2048-bit key) header.d=NXP1.onmicrosoft.com header.i=@NXP1.onmicrosoft.com header.b=PQiHqaCz; arc=fail smtp.client-ip=52.101.72.8
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=oss.nxp.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=oss.nxp.com
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 378092D97AA
+	for <sashiko-reviews@lists.linux.dev>; Sat,  6 Jun 2026 16:08:01 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=162.62.58.216
+ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
+	t=1780762085; cv=none; b=WPFLK1jbyiTpae1OcBSQJZnsA9qdVgcuCfmJ03fQ36x71F+P0mHCdVL/XPxdFV+x2O6WvqPeppclguiXtnZUWPjKe+X3XKlVR9Y+Ff0kll4hg1RXTJQ4kixzMe2esob7ufxryneg0kc8p1tu61OkKEadprdDcenSNRRW6LBMsRU=
+ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
+	s=arc-20240116; t=1780762085; c=relaxed/simple;
+	bh=1CiQhyg1n/6K57tIo71CsoGHLWYYb/8+vVvNht4mVcw=;
+	h=Message-ID:From:To:Cc:Subject:Date:In-Reply-To:References:
+	 MIME-Version:Content-Type; b=OfG/QrRMUWtDmwVbDjJay4Gm671yYFp4RtGC+ElyZh/6bdonnPPp7VQh9JP//oyNDYPBAFUPyS9HNpHatE+YbotLtXArSbyVE4hIamvGhqSd1EEblDWWiJJZx1AOJUD3roLW+LR5LaJOrtYa6hxsvEVEL2sdfbalamkHH66dElU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=Red54.com; spf=pass smtp.mailfrom=red54.com; dkim=pass (1024-bit key) header.d=qq.com header.i=@qq.com header.b=sjXsjLsr; arc=none smtp.client-ip=162.62.58.216
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=Red54.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=red54.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=NXP1.onmicrosoft.com header.i=@NXP1.onmicrosoft.com header.b="PQiHqaCz"
-ARC-Seal: i=1; a=rsa-sha256; s=arcselector10001; d=microsoft.com; cv=none;
- b=SEwH4RjylulLaT6/WIWr1uqwdtjQTTRj2uqtVIEbaFn1U6paMx+aVpKZ7PuaZV/vReZeexl2yxR7JnBuU6YhRoOkmTVqoVfwkuseKMxBq1NymeYXoC/DeD7uJ5XVTFkPt4vrhDMbb3zSW8GgLpwzRE7L5WJvlzgWXgmkpi9xvU9ebVM93q3FYq+V22FVmGnqA33aKeF4QUZioLw8amZaqBZhxQNritkHoqyhcGnmM2E8uCKWwr+F9/mLkOZ0TozOGCIkmWuohYkSiQ8S2lthCdy7I17UYl+oxPsr/UeEeSioNLqcc8eV+yJqqCt1e8gv5Gh3S9MKruDwnTw/a0x1xw==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com;
- s=arcselector10001;
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
- bh=FGs4VfCugAx8NJvL/FrncbELUJst3BZtkzll/iJOmew=;
- b=YXdFYLwMjq14rDpGswf7+Y2I5QQzgh7xkS0orlN4+l0GPXhcSPMZtduw7vqnwq1JuAZqSuvkdU69GNSO3bnGLUZe90gsncbg7bMhHu7UBFbhhv11WJrvY7y5U5qfvR2FwjVCXhWDVRAmsxey2MqbYn7XsUwBVYor/C9wyGfeUomEqO80hrqmlQV7v6KzazNLzFhZWlPc5j5EXRWDKtU3ph2eBL+bDe992j0NHQxYZxqhoec4knSAqdKcNw7o81LqdrPU/2RNJ/qdzit+gKxt18BNO00TkOghcbRtyEmXeuP76bczs+9pr+SRXsFk5FIBodhPBpZJvkd9bUL2YtL+Qg==
-ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
- smtp.mailfrom=oss.nxp.com; dmarc=pass action=none header.from=oss.nxp.com;
- dkim=pass header.d=oss.nxp.com; arc=none
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=NXP1.onmicrosoft.com;
- s=selector1-NXP1-onmicrosoft-com;
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
- bh=FGs4VfCugAx8NJvL/FrncbELUJst3BZtkzll/iJOmew=;
- b=PQiHqaCzehGfI/SDvOPVNUXOsQWRZECEpUgT4+Pfx8T9fu9EKfgOphedKfY2AfTNFgv4riCyEHwMnIYKOJegW/ikkFHfdSk9rOJXnWEuXSw+9cio5DwsGZyoKIzrosGvw27HR9Bw95p316KlzMgvAKrgPMna9dwJaVBnjluIGmugNpCDKHkxspcLiLwWpX8Wy3h5HL6rnd+eTXOHDUcASMpoTRqDkPG5O+WRBW3iSj0ie6jPjSs4JJ8lHQM3YRbg4OsvzQ5xoQzV/JiJRrUzom6bz1Zwh8UeIVmmgcNXxfZn0MgNbX5XlkqHrJEPRNT1KajkIn0KyBQtEZMPLJEgaA==
-Received: from DU2PR04MB8629.eurprd04.prod.outlook.com (2603:10a6:10:2dc::6)
- by DU0PR04MB9468.eurprd04.prod.outlook.com (2603:10a6:10:35c::12) with
- Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.21.92.11; Sat, 6 Jun 2026
- 14:05:40 +0000
-Received: from DU2PR04MB8629.eurprd04.prod.outlook.com
- ([fe80::9d04:7526:a901:fe47]) by DU2PR04MB8629.eurprd04.prod.outlook.com
- ([fe80::9d04:7526:a901:fe47%6]) with mapi id 15.21.0092.010; Sat, 6 Jun 2026
- 14:05:40 +0000
-From: "Wei Fang (OSS)" <wei.fang@oss.nxp.com>
-To: "sashiko-reviews@lists.linux.dev" <sashiko-reviews@lists.linux.dev>, "Wei
- Fang (OSS)" <wei.fang@oss.nxp.com>
-CC: "imx@lists.linux.dev" <imx@lists.linux.dev>, "Frank.Li@kernel.org"
-	<Frank.Li@kernel.org>, Networking <netdev@vger.kernel.org>
-Subject: RE: [PATCH net-next 03/15] net: enetc: add link status message
- support to PF driver
-Thread-Topic: [PATCH net-next 03/15] net: enetc: add link status message
- support to PF driver
-Thread-Index: AQHc9LwrBZNbjnHkr0el7KKJv6B2ybYxIZgAgABwCZA=
-Date: Sat, 6 Jun 2026 14:05:40 +0000
-Message-ID:
- <DU2PR04MB862943241D80F2DFDE753CB7881E2@DU2PR04MB8629.eurprd04.prod.outlook.com>
-References: <20260605065550.3038579-4-wei.fang@oss.nxp.com>
- <20260606072439.50C3A1F00898@smtp.kernel.org>
-In-Reply-To: <20260606072439.50C3A1F00898@smtp.kernel.org>
-Accept-Language: en-US
-Content-Language: en-US
-X-MS-Has-Attach:
-X-MS-TNEF-Correlator:
-authentication-results: dkim=none (message not signed)
- header.d=none;dmarc=none action=none header.from=oss.nxp.com;
-x-ms-exchange-messagesentrepresentingtype: 1
-x-ms-publictraffictype: Email
-x-ms-traffictypediagnostic: DU2PR04MB8629:EE_|DU0PR04MB9468:EE_
-x-ms-office365-filtering-correlation-id: 11f44e6e-205a-4ba3-859b-08dec3d4b0f2
-x-ms-exchange-sharedmailbox-routingagent-processed: True
-x-ms-exchange-senderadcheck: 1
-x-ms-exchange-antispam-relay: 0
-x-microsoft-antispam:
- BCL:0;ARA:13230040|1800799024|366016|19092799006|376014|22082099003|18002099003|6133799003|38070700021|56012099006|4143699003|11063799006;
-x-microsoft-antispam-message-info:
- usFaWTmAHWffiAMCVbpBgCHCFt7igEPoIx+qN+5paIsAlfdbMgJEgd+XrStkufISG5Y11W06ATz+UQZkstDMYHcjGlfs/yj+2sz4VITdkBtWAqPkVjezH6LKqaXOOgbI6vPyItLsHAlbhfpjLpZJ7fGlWqT0OHio21NI7U/FyomqUvQL7dyjWU7I/M83xV1IfEZg6+5SJ9wBZxMOuhsFswQqx2kdE+hOgiIuCOzAR37eHwa27AmYTOV1zaoE/2Y20JAoPHpv0yLTWvEBJ94upWuBF2aOIgGJ7V8hkYEXtrCQFUeE4SARzDzYPpavgxAiYfohbONr5ntqOSikwQkhUE+MOD8KZkx1MG5MspoYN8Qy+hqxgaNU54JmqNkv1g+Xc7FOS/31gXtYNJnE76jstSqZHlBMW9TKfo2nVxzk8/cr2zBRJQDPNaqveWUzRhRWgCbEv1sVBhlqdO+ZWb/MALsAMSNY8zzwwTVtMedOVoi9uqDe24kdKGfTEJfLcfbmNGY1viQ4SC+SYDEwHC1IbAEtXz3Y9618MT3InlagfFOX/sAWgcCj3aD/s/YHv1CDMQAH0wVTMvLn2qp2csFtFulKS0NXrJcXN+dPJZl8ox/Q1wthmvYJc7X6U4GR6tEt3EvK6SV1Eg2fSDXtBmKoWZv8pYPWolhOdqfcQalrkpQuiKPs7kXx6BcTzZZt5uEefUFVinwxS4gOqSZKls59TN7VpW3RI5YFVYffvmKlxJBXvShzlASkguu7284kvKFq
-x-forefront-antispam-report:
- CIP:255.255.255.255;CTRY:;LANG:en;SCL:1;SRV:;IPV:NLI;SFV:NSPM;H:DU2PR04MB8629.eurprd04.prod.outlook.com;PTR:;CAT:NONE;SFS:(13230040)(1800799024)(366016)(19092799006)(376014)(22082099003)(18002099003)(6133799003)(38070700021)(56012099006)(4143699003)(11063799006);DIR:OUT;SFP:1101;
-x-ms-exchange-antispam-messagedata-chunkcount: 1
-x-ms-exchange-antispam-messagedata-0:
- =?utf-8?B?VW9RQTBHZ3pHMXA3Y25TcEhaUWdWMUprRHdQVWpzUHdSZzFRN3RGYTZ2cU5C?=
- =?utf-8?B?bUl2dnBKOHRJdXF0bC80YVFOMWc1MEE1aEJaNWhlbS80Zm9qeHlpdW1uNWEr?=
- =?utf-8?B?R21xZXNXVENCUFJpSmliamc4MTI1U2FiQ3FNUHFBMFZCRmlBeEhDV1hCNDNO?=
- =?utf-8?B?UjJTQlZpRm5SM1ZLR2lTeWhVUGJZQk5RRlp5eitybjNTandIanVaaVJzNzU0?=
- =?utf-8?B?QXBtNGFiZ0NLZStEcFRnSUQ3bkFud1RkTlJGSklPbzBVNXp3SlUwUVRheXo4?=
- =?utf-8?B?RG1TeitDSEwzaElnVnZoUjZDVWVLVXhoZUlwOFNSTjhVUENxNGtUcllCczBs?=
- =?utf-8?B?ekw0S3NRMlJvOUsvVEU0R2s3NDJva0lrSFhVTjY5QlZpVUVPci9IN21qNnlT?=
- =?utf-8?B?UkZ6ZkJ5S0VjY0lMdFZKMnN5S0tsNkJZdHVJSngyMC9kVGVpd3ZsNk5mS3d0?=
- =?utf-8?B?RXlKYXc5TlFpRnRrcm8wZGJWcENJaUJOakFoaTBiQmhzaUJyQUZFNXdFYTFE?=
- =?utf-8?B?SVBCZ0ZxZXJlbGYrd0h1L096b1BoZ2VKcHhzeHJ3SUFTdEZqODFlbCtSMDM2?=
- =?utf-8?B?ZEs5T2x1V0hwekNxc0xldFhUK1h0aklBMlcxc0M0UlFkREcrYnlzZzhKMTJj?=
- =?utf-8?B?OE9waTZOR3poT0dnOVQrLzZXdVFzcDNnTFN1K2tHNzVEd1VpcnZObEZoc1lW?=
- =?utf-8?B?ZXQyRmxlSUxUcC9WY1puOFYwNWpReWI4WWJQVGF2ZEtsV2hqSVJnaVVNc0Rq?=
- =?utf-8?B?RTRvMGdVeVljaCtuTFNaQVZZOVFvN3ZLanBXbm9WcXdOc0thNG9QVXZCbUE3?=
- =?utf-8?B?Y3k0RFY0R05aUTh4dERZa2RoVEVzNUdlRHVJcGJ4Mnd5RUNPZ3F0TU01cXZP?=
- =?utf-8?B?NHROQlc0V28yMG50RHJuVnIvL25SL3NkelAzL1FueFpnT1YzNGxlQnhxeVBa?=
- =?utf-8?B?MkpkSjhSUlZacHAzWS9CaWJlSi93Sy95QmNtVjJrSjN5OGNJU2V4Y3Q4a3RM?=
- =?utf-8?B?a29ETGNyWk5HMGloZ0FtR3VJWUlna1JRZlhiUjU1NHJSMXQ0aHE4SFlWNFRW?=
- =?utf-8?B?Smt1V1FxNG9Ka3QySGM0WWduc1BSWW1oSlRWVlVsbGRUbnRzTUxCZVZYcnFK?=
- =?utf-8?B?UHNad05vcGNuSm13eHJxSXZPTktIMkR1amxHcmljK3k2V3lUOWFwYklwWWF1?=
- =?utf-8?B?blA2MjF6aERaYk15TnhzMlVIK1UrYzJxc3RvUzc1c0JMd2dBZm96NEluNHo0?=
- =?utf-8?B?WldpWitCTnNZMFNDY0x5S1lIKzV0VUFXOSs2dW5mNTZYVHBtM1pvaUtIWHJs?=
- =?utf-8?B?QXo0U0h5UlhiK1dmZElvM1cvbWpERHhlcUUzYjZPcnFpT3lQbktPTTkwQUow?=
- =?utf-8?B?NlJxU0NlRU5QL1dLSEZIYkI2MmlJdDB4RHhxMDhNMDZiNzA1azJOVGhROFli?=
- =?utf-8?B?VlhTQTZZcVE1Sm9ySjhXTjY3U2FVUjVMRHpkbEs4amdQaWlMK1djempWOThS?=
- =?utf-8?B?dXdNWVorc1FLSnA4K21rUE9OUHRteVJHaVZDSXlVcUJ2dklWaGhDcUpMSlhH?=
- =?utf-8?B?Q2MwVW5LdzdIeGU4T2xpOTZHZWFIR3g3LzF5c3QwanU0bEZmNFNhOGhCU3Ey?=
- =?utf-8?B?KzI5MjlIY0picHlPdVRJNUJ2OWREdzJXWkhTZk5nT3lURng5VmZuc3UzNVd0?=
- =?utf-8?B?T1dRUDNwLzF1WVFtbmNLQ04ybC8ralF5MWtJdVpxaFVYOGZhcVBWTktVYWxk?=
- =?utf-8?B?Ylk1b2VZNlpjdENMb1FxVEhsWG43V2w2N3VXdzRqWjNvSjZtc1M5TzJCbWNJ?=
- =?utf-8?B?SGJzRVB3MVNqaXdvaWtXLzJYMVJvTTY3LzJWZ1owcjVIWXh5RE5qUjRlTUxv?=
- =?utf-8?B?YkE3MUp1UnZva1hjUkpKc3MybXM4dmJNUHhLaTRGd1JNRVhjU1hvTVFjaUox?=
- =?utf-8?B?eFMvNG5hdGc4S3Mzd1pkL2pvWVpCK2VYVFkwZHNZNkJCejhWZ1BONi9iODg2?=
- =?utf-8?B?ZU1IMWpjbEZKRTZRdzZXOEZOOWx6NUc5V0U3R09ZNlhWMzB5akRlQlh6ZnhJ?=
- =?utf-8?B?THlQWW5sZzBpYUxuNTJMUFRqYTBVR0NYZWlNUWxXVHNscFowS2lhSVNhUDRD?=
- =?utf-8?B?YnBZdCtveE95VFRjcmtzVjFPL0g1cEhxZkdJOExXcEY5cHlWaXVQWVg0MjJk?=
- =?utf-8?B?ZnNzaHhIQW1MY0VtbGRGcmxBc1kxZkdpRTBCWFZPcVdIT05ycnY0K0NVUFc2?=
- =?utf-8?B?aml6cXA1STA5ZHMwU2VOUUE4M2hMd2FHNjVZaUc1SXJVeEcvZmk2dnp4ZzVE?=
- =?utf-8?Q?oklXoq3s8531Fzu8aD?=
-Content-Type: text/plain; charset="utf-8"
-Content-Transfer-Encoding: base64
+	dkim=pass (1024-bit key) header.d=qq.com header.i=@qq.com header.b="sjXsjLsr"
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=qq.com; s=s201512;
+	t=1780762072; bh=Kk2TO0s07DdVRJwmEC5B9fvE06a8k9RaWIDyb70Yubg=;
+	h=From:To:Cc:Subject:Date:In-Reply-To:References;
+	b=sjXsjLsrHJXYePh/BEgIQbT9aYMAWlFFy8SXUegIWobW9QzKON8AlajLkzZBrhJPO
+	 c//XWWnGHnE6YZoEpCVwmLjjQ5KqMblvBnukvuL7C66+D9crT0DqsLoGf67BPjyXAL
+	 iywfFl1XAjvlA2HG+BcdrL32yGwX/kkVF08k3a88=
+Received: from mail.red54.com ([139.99.8.57])
+	by newxmesmtplogicsvrszb51-1.qq.com (NewEsmtp) with SMTP
+	id 19608063; Sun, 07 Jun 2026 00:06:22 +0800
+X-QQ-mid: xmsmtpt1780761982t90g8kacc
+Message-ID: <tencent_E0B44D3DB1D67A7F20CF82ED6D3F0881FE08@qq.com>
+X-QQ-XMAILINFO: MkcmaJdvxCL9d4p4YgpWCIt6eXFT9i5Ecj7+g5YFugRsFcnJDd7E7ODww+C7wY
+	 CrO8fLbL8Zg9tDX6IK6/1muM4omYgTxtO7e69ZDRZfjTDcB50zdfmlpvqoJROeu9asc1lwgDpEVj
+	 N3lX9YNbhavxlPN0S81gA56tq2ITvt78m0r3fDJUGPn71WPbYWCYz8Vwb9rGRAMMPjAQd1XYGtNV
+	 CP9QOYYEkzs3DnUKzVD0WtS4k53lvKUvF5d50mcl4X7WSe97fM5MLHi9Rn1oeBv/WMRGgWgGua8M
+	 S5GMg28CPQco8FN7tshRQRYGq09IDCOqSGHk5qkDfdS7Ju6AkOOmnabhEpw9FaSoMU/IZP6psaLL
+	 wG3izNBv2puT1fGG88AAMR/JmqrK5mCgwadKfm01brOBsV/mKltrOvLZtyhH0yGi82iA2rTQ9Ad7
+	 G5O0HN7xMJrttTVHODDMi8Uz924E3eeKS+YqcNcmb3bFHfyLQoguYSaTbZH0FXjM90MszWLedDzK
+	 XSKNpmSTkg3GaxKucCLmMtvTP/412EWydoGZ2iF7LUxfv16qH6bRQWoKx+ColTIhuVfjIRu67C+H
+	 PTcA4HZ38pg3kYLZTvfhLaYTI7YAEodbpbl31lwk6dNprmU8TND/eY98w8Q5SCuS2UFAEc4E9HpQ
+	 lDgKrKqhA/dJmEXNxdvMn1dbYMPp4qYZJp1se/WLza3cjrVX4moptZjsKI4vx45n8kT6M9M0coXh
+	 0HyUetzbwBSvhPHbP+y9qtEF0ltyEwLRfuixdGevz6biDc4ioJksaDDoCPKv6qXNR2ke43VlwhCM
+	 CZVFAOy7+YHEbc6/8fomTGcJv6+Adg9eOWS5MMtNAXt6iKmo1ldIADksyddm+PlCjmznzfJd4YiW
+	 h05ghn+aZudMIs6A9MYJ7NqeGWN8e6OgzdkeFl7K04WrfLmUytiUNpxFSwvfYpG5HCb5si0ATsBn
+	 yZejCoZ4vpvuWUJcQxCJdPFI4IfjymffrS98ARtaiC/AkNBiDLaEhbgOK2zcdV94sEk+FnYS6Sz4
+	 pmXl/figKcwGe+4akDzAV0jZVbSf8KyprHom/cngHHkaFCDb/HIS0Bw0tWTT/SXltnjy9qlI5pk4
+	 j88dRboqXeRPYZugy0GVt47NrUvCEaQV+/tTSKCnFGq9JDUQckcNJqYnNM1+q4xgHYt12aBjhix2
+	 63fd4=
+X-QQ-XMRINFO: Nq+8W0+stu50tPAe92KXseR0ZZmBTk3gLg==
+Sender: yeking@red54.com
+From: =?UTF-8?q?=E8=B0=A2=E8=87=B4=E9=82=A6=20=28XIE=20Zhibang=29?= <Yeking@Red54.com>
+To: linux-input@vger.kernel.org,
+	hansg@kernel.org,
+	dmitry.torokhov@gmail.com,
+	bentiss@kernel.org,
+	yeking@red54.com
+Cc: dianders@chromium.org,
+	jikos@kernel.org,
+	linux-kernel@vger.kernel.org,
+	sashiko-bot@kernel.org,
+	sashiko-reviews@lists.linux.dev,
+	superm1@kernel.org,
+	=?UTF-8?q?=E8=B0=A2=E8=87=B4=E9=82=A6=20=28XIE=20Zhibang=29?= <Yeking@Red54.com>
+Subject: [PATCH v3] HID: i2c-hid: Refactor _DSM helper and add i2c-hid-acpi-prp0001 driver
+Date: Sat,  6 Jun 2026 16:06:12 +0000
+X-OQ-MSGID: <20260606160612.66267-1-Yeking@Red54.com>
+X-Mailer: git-send-email 2.43.0
+In-Reply-To: <tencent_3310584FFECD3CBBB563FC8C079ED072F40A@qq.com>
+References: <tencent_3310584FFECD3CBBB563FC8C079ED072F40A@qq.com>
 Precedence: bulk
 X-Mailing-List: sashiko-reviews@lists.linux.dev
 List-Id: <sashiko-reviews.lists.linux.dev>
 List-Subscribe: <mailto:sashiko-reviews+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:sashiko-reviews+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-X-OriginatorOrg: oss.nxp.com
-X-MS-Exchange-CrossTenant-AuthAs: Internal
-X-MS-Exchange-CrossTenant-AuthSource: DU2PR04MB8629.eurprd04.prod.outlook.com
-X-MS-Exchange-CrossTenant-Network-Message-Id: 11f44e6e-205a-4ba3-859b-08dec3d4b0f2
-X-MS-Exchange-CrossTenant-originalarrivaltime: 06 Jun 2026 14:05:40.2123
- (UTC)
-X-MS-Exchange-CrossTenant-fromentityheader: Hosted
-X-MS-Exchange-CrossTenant-id: 686ea1d3-bc2b-4c6f-a92c-d99c5c301635
-X-MS-Exchange-CrossTenant-mailboxtype: HOSTED
-X-MS-Exchange-CrossTenant-userprincipalname: JAqAhKaEJxX1apEjtmxegi6uv+cz14W4XsjQq1auIjH0Y1YvhDZCtnBUGdcYcbUYanQcpZzSU4n7SfDEn9LkDw==
-X-MS-Exchange-Transport-CrossTenantHeadersStamped: DU0PR04MB9468
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
 
-PiA+IGRpZmYgLS1naXQgYS9kcml2ZXJzL25ldC9ldGhlcm5ldC9mcmVlc2NhbGUvZW5ldGMvZW5l
-dGNfcGZfY29tbW9uLmMNCj4gYi9kcml2ZXJzL25ldC9ldGhlcm5ldC9mcmVlc2NhbGUvZW5ldGMv
-ZW5ldGNfcGZfY29tbW9uLmMNCj4gPiAtLS0gYS9kcml2ZXJzL25ldC9ldGhlcm5ldC9mcmVlc2Nh
-bGUvZW5ldGMvZW5ldGNfcGZfY29tbW9uLmMNCj4gPiArKysgYi9kcml2ZXJzL25ldC9ldGhlcm5l
-dC9mcmVlc2NhbGUvZW5ldGMvZW5ldGNfcGZfY29tbW9uLmMNCj4gPiBAQCAtNDU4LDYgKzQ1OCw4
-IEBAIGludCBlbmV0Y19pbml0X3NyaW92X3Jlc291cmNlcyhzdHJ1Y3QgZW5ldGNfcGYgKnBmKQ0K
-PiA+ICAJZm9yIChpbnQgaSA9IDA7IGkgPCBwZi0+dG90YWxfdmZzOyBpKyspDQo+ID4gIAkJbXV0
-ZXhfaW5pdCgmcGYtPnZmX3N0YXRlW2ldLmxvY2spOw0KPiA+DQo+ID4gKwltdXRleF9pbml0KCZw
-Zi0+bXNnX2xvY2spOw0KPiA+ICsNCj4gPiAgCXJldHVybiAwOw0KPiA+ICB9DQo+IA0KPiBbU2V2
-ZXJpdHk6IEhpZ2hdDQo+IElmIHRoZSBkZXZpY2UgZG9lcyBub3Qgc3VwcG9ydCBTUi1JT1Ygb3Ig
-dG90YWxfdmZzIGlzIDAsDQo+IGVuZXRjX2luaXRfc3Jpb3ZfcmVzb3VyY2VzKCkgcmV0dXJucyBl
-YXJseToNCj4gDQo+ICAgICAgICAgcGYtPnRvdGFsX3ZmcyA9IHBjaV9zcmlvdl9nZXRfdG90YWx2
-ZnMocGYtPnNpLT5wZGV2KTsNCj4gICAgICAgICBpZiAoIXBmLT50b3RhbF92ZnMpDQo+ICAgICAg
-ICAgICAgICAgICByZXR1cm4gMDsNCj4gDQo+IFRoaXMgc2tpcHMgdGhlIG11dGV4X2luaXQoKSBm
-b3IgbXNnX2xvY2suDQo+IA0KPiBIb3dldmVyLCB0aGUgcGh5bGluayBjYWxsYmFja3MgZW5ldGM0
-X3BsX21hY19saW5rX3VwKCkgYW5kDQo+IGVuZXRjNF9wbF9tYWNfbGlua19kb3duKCkgdW5jb25k
-aXRpb25hbGx5IGNhbGwgZW5ldGNfcGZfbm90aWZ5X3ZmX2xpbmtfdXAoKQ0KPiBhbmQgZW5ldGNf
-cGZfbm90aWZ5X3ZmX2xpbmtfZG93bigpLg0KPiANCj4gVGhlc2UgZnVuY3Rpb25zIGV2ZW50dWFs
-bHkgcmVhY2ggZW5ldGNfcGZfbm90aWZ5X3ZmX2xpbmtfc3RhdHVzKCksIHdoaWNoDQo+IGF0dGVt
-cHRzIHRvIGFjcXVpcmUgdGhpcyB1bmluaXRpYWxpemVkIGxvY2s6DQo+IA0KPiBlbmV0Y19wZl9u
-b3RpZnlfdmZfbGlua19zdGF0dXMoKQ0KPiAgICAgbXV0ZXhfbG9jaygmcGYtPm1zZ19sb2NrKTsN
-Cj4gDQo+IENvdWxkIHRoaXMgY2F1c2UgYSBsb2NrZGVwIHdhcm5pbmcgb3IgYSBjcmFzaCB3aGVu
-IHRoZSBkZXZpY2UgbGluayBjb21lcw0KPiB1cCBvciBnb2VzIGRvd24gYW5kIHRvdGFsX3ZmcyBp
-cyAwPw0KDQpUaGlzIGlzIGEgYnVnLCB3aWxsIGZpeCBpdCBpbiB2Mi4NCg0KPiANCj4gPiBkaWZm
-IC0tZ2l0IGEvZHJpdmVycy9uZXQvZXRoZXJuZXQvZnJlZXNjYWxlL2VuZXRjL2VuZXRjX21zZy5j
-DQo+IGIvZHJpdmVycy9uZXQvZXRoZXJuZXQvZnJlZXNjYWxlL2VuZXRjL2VuZXRjX21zZy5jDQo+
-ID4gLS0tIGEvZHJpdmVycy9uZXQvZXRoZXJuZXQvZnJlZXNjYWxlL2VuZXRjL2VuZXRjX21zZy5j
-DQo+ID4gKysrIGIvZHJpdmVycy9uZXQvZXRoZXJuZXQvZnJlZXNjYWxlL2VuZXRjL2VuZXRjX21z
-Zy5jDQo+IFsgLi4uIF0NCj4gPiArc3RhdGljIGludCBlbmV0Y19wZl9zZW5kX21zZyhzdHJ1Y3Qg
-ZW5ldGNfcGYgKnBmLCB1MzIgbXNnX2NvZGUsIHUxNg0KPiBtc19tYXNrKQ0KPiA+ICt7DQo+ID4g
-KwlzdHJ1Y3QgZW5ldGNfc2kgKnNpID0gcGYtPnNpOw0KPiA+ICsJdTMyIHZhbDsNCj4gPiArDQo+
-ID4gKwllbmV0Y193cigmc2ktPmh3LCBFTkVUQ19QU0lNU0dTUiwNCj4gPiArCQkgRklFTERfUFJF
-UChQU0lNU0dTUl9NQywgbXNnX2NvZGUpIHwgbXNfbWFzayk7DQo+ID4gKw0KPiA+ICsJcmV0dXJu
-IHJlYWRfcG9sbF90aW1lb3V0KGVuZXRjX3JkLCB2YWwsICEodmFsICYgbXNfbWFzayksIDEwMDAs
-DQo+ID4gKwkJCQkgMjAwMDAwLCBmYWxzZSwgJnNpLT5odywgRU5FVENfUFNJTVNHU1IpOw0KPiA+
-ICt9DQo+ID4gKw0KPiA+ICtzdGF0aWMgdm9pZCBlbmV0Y19tc2dfbm90aWZ5X3ZmX2xpbmtfc3Rh
-dHVzKHN0cnVjdCBlbmV0Y19wZiAqcGYsIHUxNg0KPiBtc19tYXNrLA0KPiA+ICsJCQkJCSAgICBi
-b29sIGxpbmtfdXApDQo+ID4gK3sNCj4gWyAuLi4gXQ0KPiA+ICsJaWYgKGVuZXRjX3BmX3NlbmRf
-bXNnKHBmLCBwZl9tc2csIG1zX21hc2spKQ0KPiA+ICsJCWRldl9lcnJfcmF0ZWxpbWl0ZWQoJnBm
-LT5zaS0+cGRldi0+ZGV2LA0KPiA+ICsJCQkJICAgICJQRiBub3RpZmllcyBsaW5rIHN0YXR1cyBm
-YWlsZWRcbiIpOw0KPiA+ICt9DQo+IA0KPiBbU2V2ZXJpdHk6IEhpZ2hdDQo+IElmIGEgVkYgaXMg
-bWFsaWNpb3VzLCBjcmFzaGVkLCBvciBpbXByb3Blcmx5IGNvbmZpZ3VyZWQgYW5kIGZhaWxzIHRv
-IGNsZWFyDQo+IGl0cyBiaXQgaW4gRU5FVENfUFNJTVNHU1IsIGVuZXRjX3BmX3NlbmRfbXNnKCkg
-d2lsbCBibG9jayB0aGUgcGh5bGluayB3b3JrZXINCj4gdGhyZWFkIGZvciBpdHMgbWF4aW11bSAy
-MDBtcyBwb2xsaW5nIHRpbWVvdXQuDQo+IA0KPiBCZWNhdXNlIGVuZXRjX21zZ19ub3RpZnlfdmZf
-bGlua19zdGF0dXMoKSBvbmx5IGxvZ3MgYW4gZXJyb3IgYW5kIGRvZXMgbm90DQo+IHJlbW92ZSB0
-aGUgdW5yZXNwb25zaXZlIFZGIGZyb20gcGYtPmxpbmtfc3RhdHVzX21zX21hc2ssIHdvbid0IGV2
-ZXJ5DQo+IHN1YnNlcXVlbnQgbGluayBzdGF0ZSBjaGFuZ2UgYWxzbyBpbmN1ciB0aGlzIDIwMG1z
-IHN0YWxsPw0KDQpUaGlzIHByb2JsZW0gaXMgdW5hdm9pZGFibGUuIFdlIGNhbm5vdCBkZXRlcm1p
-bmUgd2hldGhlciBWRiBpcyBtYWxpY2lvdXMNCm9yIHNpbXBseSBub3QgcmVzcG9uZGluZyBkdWUg
-dG8gYnVzeSBjb25kaXRpb25zLiBSZW1vdmluZyBpdCBmcm9tDQpwZi0+bGlua19zdGF0dXNfbXNf
-bWFzayB3aWxsIGNhdXNlIFZGIHRvIG1hbGZ1bmN0aW9uLg0KDQpQbGVhc2UgaWdub3JlIHRoaXMg
-d2FybmluZy4NCg0KPiANCj4gQWRkaXRpb25hbGx5LCBhIG1hbGljaW91cyBWRiBjb3VsZCBzcGFt
-DQo+IEVORVRDX01TR19SRUdJU1RFUl9MSU5LX0NIQU5HRV9OT1RJRklFUg0KPiBtZXNzYWdlcywg
-Zm9yY2luZyB0aGUgUEYgdG8gcmVwZWF0ZWRseSBjYWxsIGVuZXRjX3BmX3NlbmRfbXNnKCkgd2hp
-bGUgaG9sZGluZw0KPiBwZi0+bXNnX2xvY2suIENvdWxkIHRoaXMgc3RhbGwgdGhlIHNoYXJlZCBt
-c2dfdGFzayB3b3JrcXVldWUgYW5kIHN0YXJ2ZQ0KPiBvdGhlciBWRnM/DQoNCkkgZG9uJ3QgdGhp
-bmsgdGhhdCdzIHRoZSBjYXNlLCBzaW5jZSBtc2dfdGFzayBkb2Vzbid0IG9ubHkgaGFuZGxlIG1l
-c3NhZ2VzIGZyb20NCm1hbGljaW91cyBWRnMuDQoNCj4gDQo+ID4gQEAgLTM2MSw2ICs0NzEsNyBA
-QCBpbnQgZW5ldGNfc3Jpb3ZfY29uZmlndXJlKHN0cnVjdCBwY2lfZGV2ICpwZGV2LCBpbnQNCj4g
-bnVtX3ZmcykNCj4gPiAgCWlmICghbnVtX3Zmcykgew0KPiA+ICAJCXBjaV9kaXNhYmxlX3NyaW92
-KHBkZXYpOw0KPiA+ICAJCWVuZXRjX21zZ19wc2lfZnJlZShwZik7DQo+ID4gKwkJcGYtPmxpbmtf
-c3RhdHVzX21zX21hc2sgPSAwOw0KPiA+ICAJCXBmLT5udW1fdmZzID0gMDsNCj4gPiAgCX0gZWxz
-ZSB7DQo+IA0KPiBbU2V2ZXJpdHk6IE1lZGl1bV0NCj4gV2hlbiBkaXNhYmxpbmcgU1ItSU9WLCBw
-Zi0+bGlua19zdGF0dXNfbXNfbWFzayBpcyBjbGVhcmVkIG91dHNpZGUgb2YNCj4gcGYtPm1zZ19s
-b2NrIGFuZCBhZnRlciB0aGUgVkZzIGhhdmUgYmVlbiBkaXNhYmxlZCB2aWEgcGNpX2Rpc2FibGVf
-c3Jpb3YoKS4NCj4gDQo+IElmIGEgcGh5c2ljYWwgbGluayBzdGF0ZSBjaGFuZ2Ugb2NjdXJzIGNv
-bmN1cnJlbnRseSwgY291bGQNCj4gZW5ldGNfcGZfbm90aWZ5X3ZmX2xpbmtfc3RhdHVzKCkgYWNx
-dWlyZSB0aGUgbG9jaywgb2JzZXJ2ZSBhIHN0YWxlIG5vbi16ZXJvDQo+IG1zX21hc2ssIGFuZCBh
-dHRlbXB0IHRvIG5vdGlmeSBkZXN0cm95ZWQgVkZzPw0KPiANCj4gU2luY2UgdGhlIFZGcyBhcmUg
-bm8gbG9uZ2VyIGFjdGl2ZSwgdGhleSB3b3VsZG4ndCBjbGVhciB0aGVpciBiaXRzLCBjYXVzaW5n
-DQo+IGVuZXRjX3BmX3NlbmRfbXNnKCkgdG8gaW5ldml0YWJseSB0aW1lb3V0IGFmdGVyIDIwMG1z
-LiBTaG91bGQgdGhpcyBtYXNrIGJlDQo+IGNsZWFyZWQgdW5kZXIgdGhlIG1zZ19sb2NrIGJlZm9y
-ZSBkaXNhYmxpbmcgU1ItSU9WPw0KDQpJIGRvbid0IHRoaW5rIHRoaXMgbmVlZHMgdG8gYmUgaW1w
-cm92ZWQuIEZpcnN0LCB0aGlzIGtpbmQgb2YgcHJvYmxlbSBpcyB2ZXJ5IHJhcmUsDQphbmQgc2Vj
-b25kLCB0aGUgdGltZW91dCBpcyBub3JtYWwgYW5kIHdpbGwgbm90IGhhdmUgYSBmdW5jdGlvbmFs
-IGltcGFjdC4NCg0KQW5kIHRoZSBwcm9ibGVtIGNvdWxkIG5vdCBiZSBzb2x2ZWQgZXZlbiBiZWZv
-cmUgbW92aW5nIHRvDQpwY2lfZGlzYWJsZV9zcmlvdigpLiBCZWNhdXNlIFZGIG1heSBzdGlsbCBz
-ZXQgaXRzIG1hc2sgdmlhIG1lc3NhZ2UgZHVyaW5nIHRoZQ0Kd2luZG93IGJldHdlZW4gY2xlYXJp
-bmcgdGhlIG1hc2sgYW5kIFZGIGFjdHVhbGx5IGNsb3NpbmcuDQoNCi0tDQpwdy1ib3Q6IGNyDQoN
-Cg==
+Move the _DSM call that gets the HID descriptor address from
+i2c-hid-acpi.c into i2c-hid-acpi.h as a static inline so both the ACPI
+and the new PRP0001 driver can use it. While refactoring, move the
+blacklist check and the _DSM call to the top of probe() to avoid a
+pointless alloc when the device is blacklisted or does not implement the
+_DSM.
+
+Some devices, for example the Lenovo KaiTian N60d and Inspur CP300L3,
+are declared with _HID "PRP0001" and _DSD compatible "hid-over-i2c" but
+lack "hid-descr-addr" from the _DSD and provide the HID descriptor
+address only through an ACPI _DSM. The OF driver fails to probe them
+because it requires hid-descr-addr. Add a new driver that handles these
+devices by calling the shared _DSM helper.
+
+Fixes: b33752c30023 ("HID: i2c-hid: Reorganize so ACPI and OF are separate modules")
+Signed-off-by: 谢致邦 (XIE Zhibang) <Yeking@Red54.com>
+---
+v2: Name the unused parameter and document why
+acpi_device_fix_up_power() is skipped.
+v3: Add a dev_warn() asking users to contact vendors for firmware
+updates, and use existing locals in devm_kzalloc() and
+acpi_device_fix_up_power().
+
+ drivers/hid/i2c-hid/Kconfig                | 18 ++++
+ drivers/hid/i2c-hid/Makefile               |  1 +
+ drivers/hid/i2c-hid/i2c-hid-acpi-prp0001.c | 98 ++++++++++++++++++++++
+ drivers/hid/i2c-hid/i2c-hid-acpi.c         | 52 ++++--------
+ drivers/hid/i2c-hid/i2c-hid-acpi.h         | 32 +++++++
+ 5 files changed, 163 insertions(+), 38 deletions(-)
+ create mode 100644 drivers/hid/i2c-hid/i2c-hid-acpi-prp0001.c
+ create mode 100644 drivers/hid/i2c-hid/i2c-hid-acpi.h
+
+diff --git a/drivers/hid/i2c-hid/Kconfig b/drivers/hid/i2c-hid/Kconfig
+index e8d51f410cc1..7db8b2abff78 100644
+--- a/drivers/hid/i2c-hid/Kconfig
++++ b/drivers/hid/i2c-hid/Kconfig
+@@ -22,6 +22,24 @@ config I2C_HID_ACPI
+ 	  will be called i2c-hid-acpi.  It will also build/depend on the
+ 	  module i2c-hid.
+ 
++config I2C_HID_ACPI_PRP0001
++	tristate "Driver for PRP0001 devices missing hid-descr-addr"
++	depends on ACPI
++	depends on DRM || !DRM
++	select I2C_HID_CORE
++	help
++	  Say Y here if you want support for I2C HID touchpads that
++	  are declared with _HID "PRP0001" and _DSD compatible
++	  "hid-over-i2c" but lack the "hid-descr-addr" property from
++	  the _DSD. The HID descriptor address is instead provided
++	  through an ACPI _DSM. Known affected devices include the
++	  Lenovo KaiTian N60d and Inspur CP300L3.
++
++	  If unsure, say N.
++
++	  This support is also available as a module. If so, the
++	  module will be called i2c-hid-acpi-prp0001.
++
+ config I2C_HID_OF
+ 	tristate "HID over I2C transport layer Open Firmware driver"
+ 	# No "depends on OF" because this can also be used for manually
+diff --git a/drivers/hid/i2c-hid/Makefile b/drivers/hid/i2c-hid/Makefile
+index 55bd5e0f35af..da420c1a8ec6 100644
+--- a/drivers/hid/i2c-hid/Makefile
++++ b/drivers/hid/i2c-hid/Makefile
+@@ -9,6 +9,7 @@ i2c-hid-objs					=  i2c-hid-core.o
+ i2c-hid-$(CONFIG_DMI)				+= i2c-hid-dmi-quirks.o
+ 
+ obj-$(CONFIG_I2C_HID_ACPI)			+= i2c-hid-acpi.o
++obj-$(CONFIG_I2C_HID_ACPI_PRP0001)		+= i2c-hid-acpi-prp0001.o
+ obj-$(CONFIG_I2C_HID_OF)			+= i2c-hid-of.o
+ obj-$(CONFIG_I2C_HID_OF_ELAN)			+= i2c-hid-of-elan.o
+ obj-$(CONFIG_I2C_HID_OF_GOODIX)			+= i2c-hid-of-goodix.o
+diff --git a/drivers/hid/i2c-hid/i2c-hid-acpi-prp0001.c b/drivers/hid/i2c-hid/i2c-hid-acpi-prp0001.c
+new file mode 100644
+index 000000000000..b54370a938ab
+--- /dev/null
++++ b/drivers/hid/i2c-hid/i2c-hid-acpi-prp0001.c
+@@ -0,0 +1,98 @@
++// SPDX-License-Identifier: GPL-2.0-only
++/*
++ * HID over I2C driver for PRP0001 devices missing hid-descr-addr
++ *
++ * Some devices, for example the Lenovo KaiTian N60d and Inspur CP300L3, use
++ * _HID "PRP0001" with _DSD compatible "hid-over-i2c" but lack "hid-descr-addr"
++ * from the _DSD. The HID descriptor address is provided only through an ACPI
++ * _DSM. The TPD0 node in the DSDT shows _DSM Function 1 returning 0x20.
++ *
++ * Copyright (C) 2026 谢致邦 (XIE Zhibang) <Yeking@Red54.com>
++ */
++
++#include <linux/delay.h>
++#include <linux/device.h>
++#include <linux/i2c.h>
++#include <linux/module.h>
++#include <linux/of.h>
++
++#include "i2c-hid.h"
++#include "i2c-hid-acpi.h"
++
++static int i2c_hid_acpi_prp0001_power_up(struct i2chid_ops *ops)
++{
++	/* give the device time to power up */
++	msleep(250);
++	return 0;
++}
++
++static struct i2chid_ops i2c_hid_acpi_prp0001_ops = {
++	.power_up = i2c_hid_acpi_prp0001_power_up,
++	/*
++	 * No .restore_sequence needed: the _DSM on these devices returns a
++	 * constant (0x20) with no side effects, unlike some PNP0C50 _DSM
++	 * implementations that switch the hardware between PS/2 and I2C modes.
++	 */
++};
++
++static int i2c_hid_acpi_prp0001_probe(struct i2c_client *client)
++{
++	struct device *dev = &client->dev;
++	struct acpi_device *adev;
++	u16 hid_descriptor_address;
++	int ret;
++
++	/* If hid-descr-addr is present, let i2c-hid-of handle it */
++	if (device_property_present(dev, "hid-descr-addr"))
++		return -ENODEV;
++
++	adev = ACPI_COMPANION(dev);
++	if (!adev)
++		return -ENODEV;
++
++	ret = i2c_hid_acpi_get_descriptor(adev);
++	if (ret < 0)
++		return ret;
++	dev_warn(dev,
++		 "hid-descr-addr device property NOT found, using ACPI _DSM fallback. Contact vendor for firmware update!\n");
++	hid_descriptor_address = ret;
++
++	/*
++	 * No acpi_device_fix_up_power() needed: TPD0 has no _PS0, _PS3, _PSC
++	 * or _PRx methods and follows I2C bus power.
++	 */
++	return i2c_hid_core_probe(client, &i2c_hid_acpi_prp0001_ops,
++				  hid_descriptor_address, 0);
++}
++
++static const struct of_device_id i2c_hid_acpi_prp0001_of_match[] = {
++	{ .compatible = "hid-over-i2c" },
++	{},
++};
++MODULE_DEVICE_TABLE(of, i2c_hid_acpi_prp0001_of_match);
++
++static const struct i2c_device_id i2c_hid_acpi_prp0001_id[] = {
++	{ .name = "hid-over-i2c" },
++	{ }
++};
++MODULE_DEVICE_TABLE(i2c, i2c_hid_acpi_prp0001_id);
++
++static struct i2c_driver i2c_hid_acpi_prp0001_driver = {
++	.driver = {
++		.name	= "i2c_hid_acpi_prp0001",
++		.pm	= &i2c_hid_core_pm,
++		.probe_type = PROBE_PREFER_ASYNCHRONOUS,
++		.of_match_table = of_match_ptr(i2c_hid_acpi_prp0001_of_match),
++	},
++
++	.probe		= i2c_hid_acpi_prp0001_probe,
++	.remove		= i2c_hid_core_remove,
++	.shutdown	= i2c_hid_core_shutdown,
++	.id_table	= i2c_hid_acpi_prp0001_id,
++};
++
++module_i2c_driver(i2c_hid_acpi_prp0001_driver);
++
++MODULE_DESCRIPTION("HID over I2C driver for PRP0001 devices missing hid-descr-addr");
++MODULE_AUTHOR("谢致邦 (XIE Zhibang) <Yeking@Red54.com>");
++MODULE_LICENSE("GPL");
+diff --git a/drivers/hid/i2c-hid/i2c-hid-acpi.c b/drivers/hid/i2c-hid/i2c-hid-acpi.c
+index abd700a101f4..13f977d6aab6 100644
+--- a/drivers/hid/i2c-hid/i2c-hid-acpi.c
++++ b/drivers/hid/i2c-hid/i2c-hid-acpi.c
+@@ -25,9 +25,9 @@
+ #include <linux/kernel.h>
+ #include <linux/module.h>
+ #include <linux/pm.h>
+-#include <linux/uuid.h>
+ 
+ #include "i2c-hid.h"
++#include "i2c-hid-acpi.h"
+ 
+ struct i2c_hid_acpi {
+ 	struct i2chid_ops ops;
+@@ -48,39 +48,11 @@ static const struct acpi_device_id i2c_hid_acpi_blacklist[] = {
+ 	{ }
+ };
+ 
+-/* HID I²C Device: 3cdff6f7-4267-4555-ad05-b30a3d8938de */
+-static guid_t i2c_hid_guid =
+-	GUID_INIT(0x3CDFF6F7, 0x4267, 0x4555,
+-		  0xAD, 0x05, 0xB3, 0x0A, 0x3D, 0x89, 0x38, 0xDE);
+-
+-static int i2c_hid_acpi_get_descriptor(struct i2c_hid_acpi *ihid_acpi)
+-{
+-	struct acpi_device *adev = ihid_acpi->adev;
+-	acpi_handle handle = acpi_device_handle(adev);
+-	union acpi_object *obj;
+-	u16 hid_descriptor_address;
+-
+-	if (acpi_match_device_ids(adev, i2c_hid_acpi_blacklist) == 0)
+-		return -ENODEV;
+-
+-	obj = acpi_evaluate_dsm_typed(handle, &i2c_hid_guid, 1, 1, NULL,
+-				      ACPI_TYPE_INTEGER);
+-	if (!obj) {
+-		acpi_handle_err(handle, "Error _DSM call to get HID descriptor address failed\n");
+-		return -ENODEV;
+-	}
+-
+-	hid_descriptor_address = obj->integer.value;
+-	ACPI_FREE(obj);
+-
+-	return hid_descriptor_address;
+-}
+-
+ static void i2c_hid_acpi_restore_sequence(struct i2chid_ops *ops)
+ {
+ 	struct i2c_hid_acpi *ihid_acpi = container_of(ops, struct i2c_hid_acpi, ops);
+ 
+-	i2c_hid_acpi_get_descriptor(ihid_acpi);
++	i2c_hid_acpi_get_descriptor(ihid_acpi->adev);
+ }
+ 
+ static void i2c_hid_acpi_shutdown_tail(struct i2chid_ops *ops)
+@@ -93,24 +65,28 @@ static void i2c_hid_acpi_shutdown_tail(struct i2chid_ops *ops)
+ static int i2c_hid_acpi_probe(struct i2c_client *client)
+ {
+ 	struct device *dev = &client->dev;
++	struct acpi_device *adev = ACPI_COMPANION(dev);
+ 	struct i2c_hid_acpi *ihid_acpi;
+ 	u16 hid_descriptor_address;
+ 	int ret;
+ 
+-	ihid_acpi = devm_kzalloc(&client->dev, sizeof(*ihid_acpi), GFP_KERNEL);
++	if (acpi_match_device_ids(adev, i2c_hid_acpi_blacklist) == 0)
++		return -ENODEV;
++
++	ret = i2c_hid_acpi_get_descriptor(adev);
++	if (ret < 0)
++		return ret;
++	hid_descriptor_address = ret;
++
++	ihid_acpi = devm_kzalloc(dev, sizeof(*ihid_acpi), GFP_KERNEL);
+ 	if (!ihid_acpi)
+ 		return -ENOMEM;
+ 
+-	ihid_acpi->adev = ACPI_COMPANION(dev);
++	ihid_acpi->adev = adev;
+ 	ihid_acpi->ops.shutdown_tail = i2c_hid_acpi_shutdown_tail;
+ 	ihid_acpi->ops.restore_sequence = i2c_hid_acpi_restore_sequence;
+ 
+-	ret = i2c_hid_acpi_get_descriptor(ihid_acpi);
+-	if (ret < 0)
+-		return ret;
+-	hid_descriptor_address = ret;
+-
+-	acpi_device_fix_up_power(ihid_acpi->adev);
++	acpi_device_fix_up_power(adev);
+ 
+ 	return i2c_hid_core_probe(client, &ihid_acpi->ops,
+ 				  hid_descriptor_address, 0);
+diff --git a/drivers/hid/i2c-hid/i2c-hid-acpi.h b/drivers/hid/i2c-hid/i2c-hid-acpi.h
+new file mode 100644
+index 000000000000..8cebbeebcc23
+--- /dev/null
++++ b/drivers/hid/i2c-hid/i2c-hid-acpi.h
+@@ -0,0 +1,32 @@
++/* SPDX-License-Identifier: GPL-2.0-only */
++
++#ifndef _I2C_HID_ACPI_H
++#define _I2C_HID_ACPI_H
++
++#include <linux/acpi.h>
++#include <linux/uuid.h>
++
++static inline int i2c_hid_acpi_get_descriptor(struct acpi_device *adev)
++{
++	/* HID I²C Device: 3cdff6f7-4267-4555-ad05-b30a3d8938de */
++	static const guid_t i2c_hid_guid =
++		GUID_INIT(0x3CDFF6F7, 0x4267, 0x4555,
++			  0xAD, 0x05, 0xB3, 0x0A, 0x3D, 0x89, 0x38, 0xDE);
++
++	acpi_handle handle = acpi_device_handle(adev);
++	union acpi_object *obj;
++	u16 addr;
++
++	obj = acpi_evaluate_dsm_typed(handle, &i2c_hid_guid,
++				      1, 1, NULL, ACPI_TYPE_INTEGER);
++	if (!obj) {
++		acpi_handle_err(handle, "Error _DSM call to get HID descriptor address failed\n");
++		return -ENODEV;
++	}
++
++	addr = obj->integer.value;
++	ACPI_FREE(obj);
++	return addr;
++}
++
++#endif
+-- 
+2.54.0
+
