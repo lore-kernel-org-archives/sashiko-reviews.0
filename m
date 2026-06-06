@@ -1,111 +1,96 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CFF1513D539;
-	Fri,  5 Jun 2026 23:32:58 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5699C27453;
+	Sat,  6 Jun 2026 00:12:17 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1780702379; cv=none; b=g6dFCb1a4Ot8o/Z24GoR9hSvRa5Oc+YqvyzYwNscEYHJzggF10tcRBzICydYqFD8CaZu8mqK/fg6P1p3tBtGtGhOa9LfvfZ3/fQVxAfJ0R/UVRIWJCaAI03NAt5af9hrdL8y2GDWUASQiMDyMJZLzk5Eeccs7QOf5CERv16J67M=
+	t=1780704738; cv=none; b=OJYGeONF6Wq9Qv0MKgkR+mwyNjqbFP/r9ayRtI/EG6DA3libxdrOxi0N7KvF9D/wsVJIzSB/0NUO8HQkZ07ZuJpBrkUo6JhevLBHdoULnXt2P/klQ9NmYwySpmzI9TCRxlbRo4IZ8aXoww2cc6juOrHkodJYW9h8Ora88aeyxW0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1780702379; c=relaxed/simple;
-	bh=1yNcfK7eyF7DBLwdIVKeYx193kANK6dyVC9KCznh3rg=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=Dhqn6mn/nEUgx/9C3ZkSUVeESFHZcavtDuB+DMlyhyqXV1DI9ZxWVjW8BEflIcyPWueGWcyOzUyw1JxXpssioyF0YDBRoC0HiMNLn39q6tRztG04U7QqLX56U4fkNdHlHy+br3juYVz+MMQAg5zr4ssGkDfF9THd2upVAB3OVHw=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=UHvo1NHt; arc=none smtp.client-ip=100.103.45.18
+	s=arc-20240116; t=1780704738; c=relaxed/simple;
+	bh=hz8BU3FBo+qtSG7SP6Lf8hloiGdOU27SeTpYdUebhzo=;
+	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
+	 MIME-Version; b=ehI8Wa6W88AW/4gkN8+C7EoHmYJb0ENbZ7b51Aa29NEPlU7r2RKjDdqqMnXzdD0nxjXUnvavguLJpCLMY/cIoXrHzvvOOjnu8dPfw2brz/nM9jfOUFgd6aKYT/gMCJmWCVOdJQq5YTZTHkAv50UIy0xHWOtg4Q4vl9dpd7VDxFQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=czRW9f8V; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="UHvo1NHt"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6E2DB1F00893;
-	Fri,  5 Jun 2026 23:32:58 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="czRW9f8V"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id AB0ED1F00893;
+	Sat,  6 Jun 2026 00:12:16 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=kernel.org;
-	s=k20260515; t=1780702378;
-	bh=bfgZJpXhhPov5BEla8SQNZJSxOSY1OW2cCXZ8taqn9U=;
-	h=Date:From:To:Cc:Subject:References:In-Reply-To;
-	b=UHvo1NHtNijnudJ1KexB6x5guYbNU1GMzvAKBjUZA9QZT9CmZlST10TdDrsIYwiAY
-	 5o0HeDh93E8wALWemHKpbPWbxqiE+8E5xtK4ytZKDjfIiIflTQm7Zxai4LYF2cuJr4
-	 0eJICSZY1mhtX7P/Uk4oM48WSxxlfn7EnNmDM978blxiU7b2oLW4+f3aV0NproT6XY
-	 e5DCAZGrRpjTxC3JrM0HKoaKVMI05rCPq3UTMbmWeycbmmkHW62AdR/1auJbuoveWG
-	 JXCODT4uSrigJ6hcqzvBjUfNeWJ7qHcep62LwZqIjv7u8f9lzNJ8r9vTGJJz1DBaT5
-	 SzeFzeF4dOY6Q==
-Date: Fri, 5 Jun 2026 16:32:57 -0700
-From: Namhyung Kim <namhyung@kernel.org>
-To: sashiko-reviews@lists.linux.dev
-Cc: linux-perf-users@vger.kernel.org
-Subject: Re: [PATCH 1/4] perf timechart: Release event samples at the end
-Message-ID: <aiNcqfkyWo4zPsxC@google.com>
-References: <20260605231155.2415760-2-namhyung@kernel.org>
- <20260605232318.218551F00893@smtp.kernel.org>
+	s=k20260515; t=1780704736;
+	bh=0OCPRVR1wmkQl3i0ICCAJcUs67GgsoPTKyPUliid0Oc=;
+	h=From:To:Cc:Subject:Date:In-Reply-To:References;
+	b=czRW9f8Vp4tgSqYsfCv1hSpDSPigPOJK8CDMptzmVQDGG7YnA0umr4GA7fhEByan+
+	 4iYLZj/OqNTOuPHxKGecDGfJniYM9cwjDVGdmbU78VUdgV/i0Cy6+hofpm/PN3yDuL
+	 n9bLtp2BDV7MM2DO5P+aWaZZKrhwocuBCocPpblDde9MzT2AjbnqIp3SRM/iq43ZlD
+	 Szbnxfp58dI3hDnzitZA4McV8iFkJH1r30UT0FbuE/kQ2TILVa9NC70nZMx2KOp/O1
+	 dofGbY3h0RwbP6+DnbUbuYxJcP7Ebg8jKxtyWtGdbquxHkDOmBL4R1lubEGK6mhKrE
+	 Q78ut1mqxFeUQ==
+From: SeongJae Park <sj@kernel.org>
+To: Gutierrez Asier <gutierrez.asier@huawei-partners.com>
+Cc: SeongJae Park <sj@kernel.org>,
+	sashiko-reviews@lists.linux.dev,
+	damon@lists.linux.dev
+Subject: Re: [RFC PATCH v3 1/4] mm/damon: Introduce DAMOS_QUOTA_HUGEPAGE auto tuning
+Date: Fri,  5 Jun 2026 17:12:07 -0700
+Message-ID: <20260606001209.88310-1-sj@kernel.org>
+X-Mailer: git-send-email 2.47.3
+In-Reply-To: <2a4665b3-ac61-4ea2-b360-5cc6c21a6606@huawei-partners.com>
+References: 
 Precedence: bulk
 X-Mailing-List: sashiko-reviews@lists.linux.dev
 List-Id: <sashiko-reviews.lists.linux.dev>
 List-Subscribe: <mailto:sashiko-reviews+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:sashiko-reviews+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-In-Reply-To: <20260605232318.218551F00893@smtp.kernel.org>
+Content-Transfer-Encoding: 8bit
 
-On Fri, Jun 05, 2026 at 11:23:17PM +0000, sashiko-bot@kernel.org wrote:
-> Thank you for your contribution! Sashiko AI review found 1 potential issue(s) to consider:
-> - [High] Double-free of the `backtrace` string in `timechart__release()` due to shared pointers across multiple `cpu_sample` objects.
-> --
-> 
-> commit 3e2b8bb6971b84cf83df8b57e574d558c36bdaf8
-> Author: Namhyung Kim <namhyung@kernel.org>
-> 
-> perf timechart: Release event samples at the end
-> 
-> This commit adds timechart__release() to clean up data structures created
-> during sample processing to prevent memory leaks when the perf tool exits.
-> 
-> > diff --git a/tools/perf/builtin-timechart.c b/tools/perf/builtin-timechart.c
-> > index 28f33e39895d3..73a08236ac299 100644
-> > --- a/tools/perf/builtin-timechart.c
-> > +++ b/tools/perf/builtin-timechart.c
-> [ ... ]
-> > @@ -1509,6 +1509,59 @@ static void write_svg_file(struct timechart *tchart, const char *filename)
-> >  	svg_close();
-> >  }
-> >  
-> > +static void timechart__release(struct timechart *tchart)
-> > +{
-> > +	struct per_pid *p = tchart->all_data;
-> [ ... ]
-> > +		while (c) {
-> > +			struct per_pidcomm *next_comm = c->next;
-> > +			struct cpu_sample *cs = c->samples;
-> > +			struct io_sample *ios = c->io_samples;
-> > +
-> > +			while (cs) {
-> > +				struct cpu_sample *next = cs->next;
-> > +
-> > +				free((char *)cs->backtrace);
-> > +				free(cs);
-> > +				cs = next;
-> > +			}
-> 
-> [Severity: High]
-> Will this result in a double-free of the backtrace string?
-> 
-> Looking at sched_switch(), when a context switch occurs between two active
-> processes, it shares the exact same backtrace pointer across multiple
-> cpu_sample objects:
-> 
-> if (prev_p->current && prev_p->current->state != TYPE_NONE)
-> 	pid_put_sample(tchart, prev_pid, TYPE_RUNNING, cpu,
-> 		       prev_p->current->state_since, timestamp,
-> 		       backtrace);
-> if (p && p->current) {
-> 	if (p->current->state != TYPE_NONE)
-> 		pid_put_sample(tchart, next_pid, p->current->state, cpu,
-> 			       p->current->state_since, timestamp,
-> 			       backtrace);
-> 
-> Because timechart__release() iterates over all processes and unconditionally
-> calls free() on cs->backtrace, won't it attempt to free the same pointer 
-> multiple times when it cleans up these overlapping samples?
+On Fri, 5 Jun 2026 13:57:47 +0300 Gutierrez Asier <gutierrez.asier@huawei-partners.com> wrote:
 
-Actually this is handled in another series.
+> 
+> 
+> On 6/4/2026 6:19 PM, sashiko-bot@kernel.org wrote:
+[...]
+> > [Severity: High]
+> > This is a pre-existing issue, but can this cause a divide by zero kernel
+> > panic?
+> > 
+> > If there are no active or inactive pages, or if per-CPU vmstat counter drift
+> > evaluates total to 0, mult_frac() will divide by zero.
+> Not a bug. The system can never have 0 consumed memory.
+
+Makes sense.
+
+> >> +static unsigned int damos_hugepage_mem_bp(void)
+> >> +{
+> >> +	unsigned long thp, total;
+> >> +
+> >> +	thp = global_node_page_state(NR_ANON_THPS) +
+> >> +				global_node_page_state(NR_SHMEM_THPS) +
+> >> +				global_node_page_state(NR_FILE_THPS);
+> >> +	total = totalram_pages() - global_zone_page_state(NR_FREE_PAGES);
+> >> +	return mult_frac(thp, 10000, total);
+> > 
+> > [Severity: High]
+> > Can mult_frac() divide by zero here?
+> > 
+> > If the system is highly idle or due to per-CPU vmstat counter drift, total
+> > could evaluate to exactly 0.
+> No, total can never be 0.
+> > [Severity: Medium]
+> > Is there a risk of a 32-bit overflow in this calculation?
+> > 
+> > On 32-bit architectures, mult_frac() preserves types, and computing
+> > thp * 10000 could exceed the maximum unsigned long value if there are
+> > more than ~1.7 GB of THPs, producing an arbitrarily small quota target.
+> > 
+> Good catch! I will cast 10000 to unsigned long to preserve the types.
+
+But still it is 'unsigned long' that has only 32 bits on 32-bit architectures?
+So it shouldn't make any change here.  Or, am I missing something?
+
 
 Thanks,
-Namhyung
+SJ
 
+[...]
