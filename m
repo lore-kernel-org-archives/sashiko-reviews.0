@@ -1,387 +1,272 @@
-Received: from out162-62-58-216.mail.qq.com (out162-62-58-216.mail.qq.com [162.62.58.216])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-yw1-f182.google.com (mail-yw1-f182.google.com [209.85.128.182])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 378092D97AA
-	for <sashiko-reviews@lists.linux.dev>; Sat,  6 Jun 2026 16:08:01 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=162.62.58.216
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 50F5C2DCF45
+	for <sashiko-reviews@lists.linux.dev>; Sat,  6 Jun 2026 16:27:52 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.182
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1780762085; cv=none; b=WPFLK1jbyiTpae1OcBSQJZnsA9qdVgcuCfmJ03fQ36x71F+P0mHCdVL/XPxdFV+x2O6WvqPeppclguiXtnZUWPjKe+X3XKlVR9Y+Ff0kll4hg1RXTJQ4kixzMe2esob7ufxryneg0kc8p1tu61OkKEadprdDcenSNRRW6LBMsRU=
+	t=1780763273; cv=none; b=V/78xw3GSU7hk0AC59ue2DwMgH04hZg29CJmlCOyJMQHjm0MPLNLFR3PF5jCSmIzJEEcstdxmsmxbzGhbI9UGumQHJ20rSNotyewoZhtvGXfGODFyF/nHkY3VZQRa8+WWFwiV7nQ9Ojg9LPS6ACvCCIuj6miEiCesS7/E4PbPsk=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1780762085; c=relaxed/simple;
-	bh=1CiQhyg1n/6K57tIo71CsoGHLWYYb/8+vVvNht4mVcw=;
-	h=Message-ID:From:To:Cc:Subject:Date:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=OfG/QrRMUWtDmwVbDjJay4Gm671yYFp4RtGC+ElyZh/6bdonnPPp7VQh9JP//oyNDYPBAFUPyS9HNpHatE+YbotLtXArSbyVE4hIamvGhqSd1EEblDWWiJJZx1AOJUD3roLW+LR5LaJOrtYa6hxsvEVEL2sdfbalamkHH66dElU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=Red54.com; spf=pass smtp.mailfrom=red54.com; dkim=pass (1024-bit key) header.d=qq.com header.i=@qq.com header.b=sjXsjLsr; arc=none smtp.client-ip=162.62.58.216
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=Red54.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=red54.com
+	s=arc-20240116; t=1780763273; c=relaxed/simple;
+	bh=dF7QO6ZjPt2ZR9/UvbN/N52OV08VOWQaY8itXBTTf2c=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=YL6YifPoiU1ACy4n7RteFl475sC9M3n4rD1kJpk/E7fxS83RuCJNUmc+j0qLZLyZqJZdVek9suLzYg3up6qnbdVlES/aBxvbsDRkIEhK3TAcq6Abm1NEwmNPdeTLwFmeXYuZtchf2FJ1ZeoAI6yiixDZs7XbzKQCfPfU28SoiTg=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=NAQKKBD0; arc=none smtp.client-ip=209.85.128.182
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=qq.com header.i=@qq.com header.b="sjXsjLsr"
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=qq.com; s=s201512;
-	t=1780762072; bh=Kk2TO0s07DdVRJwmEC5B9fvE06a8k9RaWIDyb70Yubg=;
-	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=sjXsjLsrHJXYePh/BEgIQbT9aYMAWlFFy8SXUegIWobW9QzKON8AlajLkzZBrhJPO
-	 c//XWWnGHnE6YZoEpCVwmLjjQ5KqMblvBnukvuL7C66+D9crT0DqsLoGf67BPjyXAL
-	 iywfFl1XAjvlA2HG+BcdrL32yGwX/kkVF08k3a88=
-Received: from mail.red54.com ([139.99.8.57])
-	by newxmesmtplogicsvrszb51-1.qq.com (NewEsmtp) with SMTP
-	id 19608063; Sun, 07 Jun 2026 00:06:22 +0800
-X-QQ-mid: xmsmtpt1780761982t90g8kacc
-Message-ID: <tencent_E0B44D3DB1D67A7F20CF82ED6D3F0881FE08@qq.com>
-X-QQ-XMAILINFO: MkcmaJdvxCL9d4p4YgpWCIt6eXFT9i5Ecj7+g5YFugRsFcnJDd7E7ODww+C7wY
-	 CrO8fLbL8Zg9tDX6IK6/1muM4omYgTxtO7e69ZDRZfjTDcB50zdfmlpvqoJROeu9asc1lwgDpEVj
-	 N3lX9YNbhavxlPN0S81gA56tq2ITvt78m0r3fDJUGPn71WPbYWCYz8Vwb9rGRAMMPjAQd1XYGtNV
-	 CP9QOYYEkzs3DnUKzVD0WtS4k53lvKUvF5d50mcl4X7WSe97fM5MLHi9Rn1oeBv/WMRGgWgGua8M
-	 S5GMg28CPQco8FN7tshRQRYGq09IDCOqSGHk5qkDfdS7Ju6AkOOmnabhEpw9FaSoMU/IZP6psaLL
-	 wG3izNBv2puT1fGG88AAMR/JmqrK5mCgwadKfm01brOBsV/mKltrOvLZtyhH0yGi82iA2rTQ9Ad7
-	 G5O0HN7xMJrttTVHODDMi8Uz924E3eeKS+YqcNcmb3bFHfyLQoguYSaTbZH0FXjM90MszWLedDzK
-	 XSKNpmSTkg3GaxKucCLmMtvTP/412EWydoGZ2iF7LUxfv16qH6bRQWoKx+ColTIhuVfjIRu67C+H
-	 PTcA4HZ38pg3kYLZTvfhLaYTI7YAEodbpbl31lwk6dNprmU8TND/eY98w8Q5SCuS2UFAEc4E9HpQ
-	 lDgKrKqhA/dJmEXNxdvMn1dbYMPp4qYZJp1se/WLza3cjrVX4moptZjsKI4vx45n8kT6M9M0coXh
-	 0HyUetzbwBSvhPHbP+y9qtEF0ltyEwLRfuixdGevz6biDc4ioJksaDDoCPKv6qXNR2ke43VlwhCM
-	 CZVFAOy7+YHEbc6/8fomTGcJv6+Adg9eOWS5MMtNAXt6iKmo1ldIADksyddm+PlCjmznzfJd4YiW
-	 h05ghn+aZudMIs6A9MYJ7NqeGWN8e6OgzdkeFl7K04WrfLmUytiUNpxFSwvfYpG5HCb5si0ATsBn
-	 yZejCoZ4vpvuWUJcQxCJdPFI4IfjymffrS98ARtaiC/AkNBiDLaEhbgOK2zcdV94sEk+FnYS6Sz4
-	 pmXl/figKcwGe+4akDzAV0jZVbSf8KyprHom/cngHHkaFCDb/HIS0Bw0tWTT/SXltnjy9qlI5pk4
-	 j88dRboqXeRPYZugy0GVt47NrUvCEaQV+/tTSKCnFGq9JDUQckcNJqYnNM1+q4xgHYt12aBjhix2
-	 63fd4=
-X-QQ-XMRINFO: Nq+8W0+stu50tPAe92KXseR0ZZmBTk3gLg==
-Sender: yeking@red54.com
-From: =?UTF-8?q?=E8=B0=A2=E8=87=B4=E9=82=A6=20=28XIE=20Zhibang=29?= <Yeking@Red54.com>
-To: linux-input@vger.kernel.org,
-	hansg@kernel.org,
-	dmitry.torokhov@gmail.com,
-	bentiss@kernel.org,
-	yeking@red54.com
-Cc: dianders@chromium.org,
-	jikos@kernel.org,
-	linux-kernel@vger.kernel.org,
-	sashiko-bot@kernel.org,
-	sashiko-reviews@lists.linux.dev,
-	superm1@kernel.org,
-	=?UTF-8?q?=E8=B0=A2=E8=87=B4=E9=82=A6=20=28XIE=20Zhibang=29?= <Yeking@Red54.com>
-Subject: [PATCH v3] HID: i2c-hid: Refactor _DSM helper and add i2c-hid-acpi-prp0001 driver
-Date: Sat,  6 Jun 2026 16:06:12 +0000
-X-OQ-MSGID: <20260606160612.66267-1-Yeking@Red54.com>
-X-Mailer: git-send-email 2.43.0
-In-Reply-To: <tencent_3310584FFECD3CBBB563FC8C079ED072F40A@qq.com>
-References: <tencent_3310584FFECD3CBBB563FC8C079ED072F40A@qq.com>
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="NAQKKBD0"
+Received: by mail-yw1-f182.google.com with SMTP id 00721157ae682-7e8833c99fcso33689687b3.3
+        for <sashiko-reviews@lists.linux.dev>; Sat, 06 Jun 2026 09:27:52 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20251104; t=1780763271; x=1781368071; darn=lists.linux.dev;
+        h=in-reply-to:content-disposition:mime-version:references:message-id
+         :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
+        bh=7BttLOF29gVUPciUNpnBFamecNHnBLVu+zJ6G0qMKk0=;
+        b=NAQKKBD0VrHesX5AjJ8lqqRw/O5/belL1Z8dB3Mdkc05Ngz9dVXkzhzvf5U6sMu3kg
+         Q8SSncU96/lPbiYTrhe02jixMMNll9JtKjfkgZXJs0kksmkz5+rkYy1ZXR6BQvqgq308
+         OpKIAkEwrJU+tq7/HFr+8dSP3ujAdfK0AhW0k3MvNdQ07a2ClRgQdDdAzG4OvFMH1b16
+         WX9iWO+P5us+ve33Ihh+miMQYWpxuX/jAClQvPkEtLU0UBV8wRuMCFkIWvh2IkDcfSZ1
+         qxRxyS/mRbN/Hq/sQ/RpHf00k92vLBVIQelxwbhBH2bVHJHxVkYE4HmClpFcjYh8p2lX
+         BmUw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20251104; t=1780763271; x=1781368071;
+        h=in-reply-to:content-disposition:mime-version:references:message-id
+         :subject:cc:to:from:date:x-gm-gg:x-gm-message-state:from:to:cc
+         :subject:date:message-id:reply-to;
+        bh=7BttLOF29gVUPciUNpnBFamecNHnBLVu+zJ6G0qMKk0=;
+        b=noHoQgDOHtSs6NptJ2ymbPQmMOaiu6kPX/bCO7sDiQsc4cp7+xBO4voIMkuaizXv/6
+         a+Mwo744IRhASyYAcdOUNTMkExfzIJNlciz/opansdDeNZHaUNcKD+xP1dVlQmxa/usH
+         2utZQ65/vC5hsqE2NU2IopBbJwHjTrFMUNyagm/jdKOcwfaEYCumUW+H4V61BJU1xnMa
+         T5eWmDbZpkXTH1hRODiEnLERTWjVUYcxzkxYOAK3rl2grmYYJrsJPC5XwOSYiWFzWQjG
+         hcqDScBU1a7/7aI09KQQw13dsxix/aVqz7bsN/Um5SPsrAsBzG9OBAk6PAK9zNIDfxgv
+         gKWQ==
+X-Gm-Message-State: AOJu0YxQsHKprdZBH/qFTcHfMQWK//HEP/fExwEKznWS/E8mmeuVbbnl
+	N5zN7EM5uCzPRVgplFvj0Y5PcSDkMRlGFqg6xID0dT7yJUV5UlFzy5rJ
+X-Gm-Gg: Acq92OEjO0GN4PtAyNk+XUZTmPqDbDeyMSSjjweYCIFsxioNtLkZ+ujOT4hdgYuXzvH
+	f04PNg1l8fK/TXnH12Fr4kCyeSBf4pqRrJQj7o2x3At1YBOEfn1DQ+ICiIut/e1m0ii8uEPlh+d
+	eFeAbsv8OaDfDa8Yaj2jlmJNVWJuZuvZ2v3AMFxtYOBZ36JH0h3+1JndZsRAkr+dbzWoQefAMNj
+	c/k5dodk5kVmrPXXxFFWJMR7u0PP72rSiWy17cjQPneBsFQnrQblh68lWR6nijYsP3j5/tgLw71
+	tgSBoMkVqugulDIRKavVELWMApDNL/sadY6raHdkQEqO66rg5wD4fEtDZab96xmdLRYijKRLfNm
+	NBz/RNc8ZVOSe1CeOZsaIUx+s5zvBUHtmMKQSwfgCFigRK/tDAMlMmUFFa9qr0iPjhht2BCYMTH
+	zopK96ZQ1nlI+bhDc+tGKX1lgzWqLalu/pdo45hLzgAACs1M1w9YZYO3DFoDnqe3Suvg==
+X-Received: by 2002:a05:690c:d87:b0:7b9:d6b8:b9ac with SMTP id 00721157ae682-7ed0ed4eef8mr81055147b3.26.1780763270872;
+        Sat, 06 Jun 2026 09:27:50 -0700 (PDT)
+Received: from zenbox ([2600:1700:18fb:6011:694:b67f:fc7:4c0a])
+        by smtp.gmail.com with ESMTPSA id 00721157ae682-7ea2167b40bsm62834257b3.17.2026.06.06.09.27.50
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Sat, 06 Jun 2026 09:27:50 -0700 (PDT)
+Date: Sat, 6 Jun 2026 12:27:49 -0400
+From: Justin Suess <utilityemal77@gmail.com>
+To: Kumar Kartikeya Dwivedi <memxor@gmail.com>
+Cc: sashiko-reviews@lists.linux.dev, bpf@vger.kernel.org
+Subject: Re: [PATCH bpf-next 1/1] bpf: fix deadlock in special field
+ destruction in NMI
+Message-ID: <aiRG9nsbRi2cO3XT@zenbox>
+References: <20260519011450.1144935-2-utilityemal77@gmail.com>
+ <20260519015123.36096C2BCB7@smtp.kernel.org>
+ <agxkV-hsdwhvMliI@suesslenovo>
+ <agyG3eQwgmoJwmj2@suesslenovo>
+ <DIMWGCWL1AG2.14F7CN23GMS8N@gmail.com>
 Precedence: bulk
 X-Mailing-List: sashiko-reviews@lists.linux.dev
 List-Id: <sashiko-reviews.lists.linux.dev>
 List-Subscribe: <mailto:sashiko-reviews+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:sashiko-reviews+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8bit
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <DIMWGCWL1AG2.14F7CN23GMS8N@gmail.com>
 
-Move the _DSM call that gets the HID descriptor address from
-i2c-hid-acpi.c into i2c-hid-acpi.h as a static inline so both the ACPI
-and the new PRP0001 driver can use it. While refactoring, move the
-blacklist check and the _DSM call to the top of probe() to avoid a
-pointless alloc when the device is blacklisted or does not implement the
-_DSM.
+On Tue, May 19, 2026 at 09:27:58PM +0200, Kumar Kartikeya Dwivedi wrote:
+> On Tue May 19, 2026 at 5:59 PM CEST, Justin Suess wrote:
+> > On Tue, May 19, 2026 at 10:42:44AM -0400, Justin Suess wrote:
+> >> Looks like this kfunc also tries to eagerly free fields and is callable
+> >> from tp_btf/nmi_handler with no recovery mechanism.
+> >>
+> >> I don't see a good way to handle this at all... it also is effectively
+> >> already bugged in the existing code unless I'm missing something
+> >>
+> >> Since you can use it to call abritrary dtors in NMI.
+> >>
+> >> 1.
+> >>
+> >> In some context where task_acquire is valid:
+> >>
+> >> struct blah {
+> >>   struct task_struct __kptr* task;
+> >> }
+> >>
+> >> b = bpf_task_acquire(...)
+> >> a = bpf_obj_new(typeof(*blah_ptr));
+> >> bpf_kptr_xchg(a->task, b);
+> >>
+> >> 2.
+> >>
+> >> Then xchg a into map
+> >> bpf_kptr_xchg([map slot], a);
+> >> ...
+> >>
+> >> 3.
+> >>
+> >> In tp_btf/nmi_handler we exchange the obj out of the map
+> >> and then drop it.
+> >>
+> >> c = bpf_kptr_xchg([slot where a is stored], NULL);
+> >> bpf_obj_drop(c);
+> >>
+> >> And because this can be called on an object not in a map, we don't have
+> >> a good recovery mechanism.
+> >>
+> >> Because tp_btf/nmi_handler is always in_nmi and hence irqs_disabled, in
+> >> the code before this patch the task_struct dtor will be invoked and
+> >> cause a deadlock.
+> >>
+> >> This patch will not fix the issue and just free a struct blah holding the
+> >> reference without actually dropping it.
+> >>
+> >> Unless I'm missing something then this whole approach taken by this
+> >> patch can't handle this case since the bpf_obj is detached from the map
+> >> entirely and has no allocator recovery mechanism at all.
+> >>
+> >> Then we are back to square 1 needing to defer the freeing with irq work.
+> >>
+> >> Kumar / Alexei do you have anything on this?
+> >
+> > I've confirmed this is a viable mechanism to deadlock as well
+> >
+> > Using the above approach, just exchanging out of a map and dropping the
+> > bpf_obj containing a task_struct kptr can be used to cause a deadlock
+> > outside any map path:
+> >
+> > On 576482b55c19e7ec00e162a0fde4c4f1a95128c7 (bpf-next/master) w/ RCU_NOCB_CPU/RCU_EXPERT:
+> >
+> >   [   10.773819] ================================
+> >   [   10.773820] WARNING: inconsistent lock state
+> >   [   10.773821] 7.1.0-rc2-g576482b55c19 #150 Not tainted
+> >   [   10.773822] --------------------------------
+> >   [   10.773822] inconsistent {INITIAL USE} -> {IN-NMI} usage.
+> >   [   10.773823] test_progs/471 [HC1[1]:SC0[0]:HE0:SE1] takes:
+> >   [   10.773825] ffff98623d66f0e8 (&rdp->nocb_lock){-.-.}-{2:2}, at: __call_rcu_common.constprop.0+0x54a/0x730
+> >   [   10.773832] {INITIAL USE} state was registered at:
+> >   [   10.773832]   lock_acquire+0xbf/0x2e0
+> >   [   10.773835]   _raw_spin_lock+0x30/0x40
+> >   [   10.773838]   rcu_nocb_gp_kthread+0x13f/0xb90
+> >   [   10.773840]   kthread+0xf4/0x130
+> >   [   10.773845]   ret_from_fork+0x264/0x330
+> >   [   10.773848]   ret_from_fork_asm+0x1a/0x30
+> >   [   10.773851] irq event stamp: 1127908
+> >   [   10.773851] hardirqs last  enabled at (1127907): [<ffffffff87104484>] _raw_spin_unlock_irqrestore+0x44/0x60
+> >   [   10.773853] hardirqs last disabled at (1127908): [<ffffffff871041a1>] _raw_spin_lock_irqsave+0x51/0x60
+> >   [   10.773854] softirqs last  enabled at (1127782): [<ffffffff862e6b80>] __irq_exit_rcu+0xc0/0x100
+> >   [   10.773857] softirqs last disabled at (1127777): [<ffffffff862e6b80>] __irq_exit_rcu+0xc0/0x100
+> >   [   10.773858]
+> >                  other info that might help us debug this:
+> >   [   10.773859]  Possible unsafe locking scenario:
+> >
+> >   [   10.773859]        CPU0
+> >   [   10.773859]        ----
+> >   [   10.773860]   lock(&rdp->nocb_lock);
+> >   [   10.773861]   <Interrupt>
+> >   [   10.773861]     lock(&rdp->nocb_lock);
+> >   [   10.773862]
+> >                   *** DEADLOCK ***
+> >
+> >   [   10.773862] 4 locks held by test_progs/471:
+> >   [   10.773863]  #0: ffffffff885ccaf0 (dup_mmap_sem){.+.+}-{0:0}, at: copy_process+0x1e39/0x2b80
+> >   [   10.773866]  #1: ffff9861c33a2ff8 (&mm->mmap_lock){++++}-{4:4}, at: dup_mmap+0x83/0x990
+> >   [   10.773871]  #2: ffff9861c1152ff8 (&mm->mmap_lock/1){+.+.}-{4:4}, at: dup_mmap+0xc8/0x990
+> >   [   10.773874]  #3: ffffffff885f43b8 (kmemleak_lock){-.-.}-{2:2}, at: __create_object+0x3a/0xa0
+> >   [   10.773877]
+> >                  stack backtrace:
+> >   [   10.773879] CPU: 1 UID: 0 PID: 471 Comm: test_progs Not tainted 7.1.0-rc2-g576482b55c19 #150 PREEMPT(full)
+> >   [   10.773881] Hardware name: QEMU Standard PC (Q35 + ICH9, 2009), BIOS rel-1.17.0-0-gb52ca86e094d-prebuilt.qemu.org 04/01/2014
+> >   [   10.773882] Call Trace:
+> >   [   10.773883]  <NMI>
+> >   [   10.773884]  dump_stack_lvl+0x5d/0x80
+> >   [   10.773887]  print_usage_bug.part.0+0x22b/0x2c0
+> >   [   10.773891]  lock_acquire+0x295/0x2e0
+> >   [   10.773893]  ? __call_rcu_common.constprop.0+0x54a/0x730
+> >   [   10.773896]  _raw_spin_lock+0x30/0x40
+> >   [   10.773898]  ? __call_rcu_common.constprop.0+0x54a/0x730
+> >   [   10.773899]  __call_rcu_common.constprop.0+0x54a/0x730
+> >   [   10.773903]  bpf_obj_free_fields+0x118/0x250
+> >   [   10.773907]  bpf_obj_drop+0x4f/0x80
+> >   [   10.773910]  bpf_prog_b7ff9c2e6c583824_clear_task_kptrs_from_nmi+0x174/0x1f4
+> >   [   10.773912]  bpf_trace_run3+0x126/0x430
+> >   [   10.773916]  ? __pfx_perf_event_nmi_handler+0x10/0x10
+> >   [   10.773919]  nmi_handle.part.0+0x15b/0x250
+> >   [   10.773922]  ? __pfx_perf_event_nmi_handler+0x10/0x10
+> >   [   10.773924]  default_do_nmi+0x120/0x180
+> >   [   10.773927]  exc_nmi+0xe3/0x110
+> >   [   10.773928]  end_repeat_nmi+0xf/0x53
+> >   [   10.773931] RIP: 0010:__link_object+0xb4/0x270
+> >   [   10.773932] Code: 00 00 00 48 c7 c6 80 36 bb 89 48 c7 43 70 00 00 00 00 48 c7 43 78 00 00 00 00 48 89 3d 35 62 50 03 eb 66 48 89 c8 48 8b 48 30 <48> 8d 70 10 48 39 d1 73 11 48 03 48 38 48 39 cf 0f 82 2f 01 00 00
+> >   [   10.773933] RSP: 0018:ffffb516013b7a60 EFLAGS: 00000082
+> >   [   10.773935] RAX: ffff9861c37b5c80 RBX: ffff9861df869878 RCX: ffff9861c3776420
+> >   [   10.773936] RDX: ffff9861c3769e00 RSI: ffff9861c43564f8 RDI: ffff9861c3769d00
+> >   [   10.773936] RBP: 0000000000000100 R08: 0000000000000000 R09: 0000000000000000
+> >   [   10.773937] R10: 0000000000000000 R11: 0000000000000000 R12: ffff9861c3769d00
+> >   [   10.773937] R13: 0000000000000286 R14: 0000000000000000 R15: 0000000000000001
+> >   [   10.773943]  ? __link_object+0xb4/0x270
+> >   [   10.773945]  ? __link_object+0xb4/0x270
+> >   [   10.773947]  </NMI>
+> >   [   10.773947]  <TASK>
+> >   [   10.773948]  __create_object+0x51/0xa0
+> >   [   10.773951]  kmem_cache_alloc_from_sheaf_noprof+0x1e2/0x290
+> >   [   10.773956]  mas_dup_build+0x41d/0x7f0
+> >   [   10.773960]  __mt_dup+0x78/0xf0
+> >   [   10.773967]  dup_mmap+0x12e/0x990
+> >   [   10.773972]  ? srso_alias_return_thunk+0x5/0xfbef5
+> >   [   10.773973]  ? lock_acquire+0xbf/0x2e0
+> >   [   10.773979]  copy_process+0x1e45/0x2b80
+> >   [   10.773985]  kernel_clone+0xbb/0x3d0
+> >   [   10.773986]  ? srso_alias_return_thunk+0x5/0xfbef5
+> >   [   10.773987]  ? __lock_acquire+0x481/0x2590
+> >   [   10.773993]  __do_sys_clone+0x65/0x90
+> >   [   10.773998]  do_syscall_64+0xa1/0x5f0
+> >   [   10.774002]  entry_SYSCALL_64_after_hwframe+0x76/0x7e
+> >   [   10.774003] RIP: 0033:0x7f9da26e8f2f
+> >   [   10.774005] Code: 89 e7 e8 c4 0e f6 ff 45 31 c0 31 d2 31 f6 64 48 8b 04 25 10 00 00 00 bf 11 00 20 01 4c 8d 90 d0 02 00 00 b8 38 00 00 00 0f 05 <48> 3d 00 f0 ff ff 77 59 89 c5 85 c0 75 31 64 48 8b 04 25 10 00 00
+> >   [   10.774005] RSP: 002b:00007ffc278b4540 EFLAGS: 00000246 ORIG_RAX: 0000000000000038
+> >   [   10.774007] RAX: ffffffffffffffda RBX: 0000000000000000 RCX: 00007f9da26e8f2f
+> >   [   10.774007] RDX: 0000000000000000 RSI: 0000000000000000 RDI: 0000000001200011
+> >   [   10.774008] RBP: 00007ffc278b4740 R08: 0000000000000000 R09: 0000000000000001
+> >   [   10.774008] R10: 00007f9da2acaf10 R11: 0000000000000246 R12: 0000000000000003
+> >   [   10.774009] R13: 0000000000000001 R14: 0000000000000000 R15: 00005625de8b38d0
+> >   [   10.774014]  </TASK>
+> >   [   10.866584] perf: interrupt took too long (6193 > 6190), lowering kernel.perf_event_max_sample_rate to 32000
+> >   [   16.630663] kauditd_printk_skb: 30 callbacks suppressed
+> >
+> > I can give the reproducer if wished.
+> >
+> > You can see the path involves bpf_obj_drop and not any map methods at
+> > all.
+> >
+> > But basically this makes the whole mechanism of relying on map allocators to
+> > recycle and free objects in irqs_disabled contexts unsound because kptrs
+> > can live and be released outside map contexts.
+> 
+> The approach in this version is still different than what I had proposed. For
+> the particular case you highlighted, we should just reject bpf_obj_drop() in
+> is_tracing_prog_type() once the object has kptr fields etc. If someone still
+> wants it they should just use bpf_wq to defer manually.
+>
+Would you be opposed to me submitting a fix for *just* the bpf_obj_drop case?
 
-Some devices, for example the Lenovo KaiTian N60d and Inspur CP300L3,
-are declared with _HID "PRP0001" and _DSD compatible "hid-over-i2c" but
-lack "hid-descr-addr" from the _DSD and provide the HID descriptor
-address only through an ACPI _DSM. The OF driver fails to probe them
-because it requires hid-descr-addr. Add a new driver that handles these
-devices by calling the shared _DSM helper.
+Since your proposed solution for that is just a tiny verifier fix w/ btf_record_has_field and a prog_type check and is mostly unrelated to this fix for the map cases.
 
-Fixes: b33752c30023 ("HID: i2c-hid: Reorganize so ACPI and OF are separate modules")
-Signed-off-by: 谢致邦 (XIE Zhibang) <Yeking@Red54.com>
----
-v2: Name the unused parameter and document why
-acpi_device_fix_up_power() is skipped.
-v3: Add a dev_warn() asking users to contact vendors for firmware
-updates, and use existing locals in devm_kzalloc() and
-acpi_device_fix_up_power().
+It's a small fix, but just don't want to be rude and submit anything if
+you're working on that too in your patch. :)
 
- drivers/hid/i2c-hid/Kconfig                | 18 ++++
- drivers/hid/i2c-hid/Makefile               |  1 +
- drivers/hid/i2c-hid/i2c-hid-acpi-prp0001.c | 98 ++++++++++++++++++++++
- drivers/hid/i2c-hid/i2c-hid-acpi.c         | 52 ++++--------
- drivers/hid/i2c-hid/i2c-hid-acpi.h         | 32 +++++++
- 5 files changed, 163 insertions(+), 38 deletions(-)
- create mode 100644 drivers/hid/i2c-hid/i2c-hid-acpi-prp0001.c
- create mode 100644 drivers/hid/i2c-hid/i2c-hid-acpi.h
+Thanks for your guidance with this fix in general and apologize for my
+misinterpretation of the intended route.
 
-diff --git a/drivers/hid/i2c-hid/Kconfig b/drivers/hid/i2c-hid/Kconfig
-index e8d51f410cc1..7db8b2abff78 100644
---- a/drivers/hid/i2c-hid/Kconfig
-+++ b/drivers/hid/i2c-hid/Kconfig
-@@ -22,6 +22,24 @@ config I2C_HID_ACPI
- 	  will be called i2c-hid-acpi.  It will also build/depend on the
- 	  module i2c-hid.
- 
-+config I2C_HID_ACPI_PRP0001
-+	tristate "Driver for PRP0001 devices missing hid-descr-addr"
-+	depends on ACPI
-+	depends on DRM || !DRM
-+	select I2C_HID_CORE
-+	help
-+	  Say Y here if you want support for I2C HID touchpads that
-+	  are declared with _HID "PRP0001" and _DSD compatible
-+	  "hid-over-i2c" but lack the "hid-descr-addr" property from
-+	  the _DSD. The HID descriptor address is instead provided
-+	  through an ACPI _DSM. Known affected devices include the
-+	  Lenovo KaiTian N60d and Inspur CP300L3.
-+
-+	  If unsure, say N.
-+
-+	  This support is also available as a module. If so, the
-+	  module will be called i2c-hid-acpi-prp0001.
-+
- config I2C_HID_OF
- 	tristate "HID over I2C transport layer Open Firmware driver"
- 	# No "depends on OF" because this can also be used for manually
-diff --git a/drivers/hid/i2c-hid/Makefile b/drivers/hid/i2c-hid/Makefile
-index 55bd5e0f35af..da420c1a8ec6 100644
---- a/drivers/hid/i2c-hid/Makefile
-+++ b/drivers/hid/i2c-hid/Makefile
-@@ -9,6 +9,7 @@ i2c-hid-objs					=  i2c-hid-core.o
- i2c-hid-$(CONFIG_DMI)				+= i2c-hid-dmi-quirks.o
- 
- obj-$(CONFIG_I2C_HID_ACPI)			+= i2c-hid-acpi.o
-+obj-$(CONFIG_I2C_HID_ACPI_PRP0001)		+= i2c-hid-acpi-prp0001.o
- obj-$(CONFIG_I2C_HID_OF)			+= i2c-hid-of.o
- obj-$(CONFIG_I2C_HID_OF_ELAN)			+= i2c-hid-of-elan.o
- obj-$(CONFIG_I2C_HID_OF_GOODIX)			+= i2c-hid-of-goodix.o
-diff --git a/drivers/hid/i2c-hid/i2c-hid-acpi-prp0001.c b/drivers/hid/i2c-hid/i2c-hid-acpi-prp0001.c
-new file mode 100644
-index 000000000000..b54370a938ab
---- /dev/null
-+++ b/drivers/hid/i2c-hid/i2c-hid-acpi-prp0001.c
-@@ -0,0 +1,98 @@
-+// SPDX-License-Identifier: GPL-2.0-only
-+/*
-+ * HID over I2C driver for PRP0001 devices missing hid-descr-addr
-+ *
-+ * Some devices, for example the Lenovo KaiTian N60d and Inspur CP300L3, use
-+ * _HID "PRP0001" with _DSD compatible "hid-over-i2c" but lack "hid-descr-addr"
-+ * from the _DSD. The HID descriptor address is provided only through an ACPI
-+ * _DSM. The TPD0 node in the DSDT shows _DSM Function 1 returning 0x20.
-+ *
-+ * Copyright (C) 2026 谢致邦 (XIE Zhibang) <Yeking@Red54.com>
-+ */
-+
-+#include <linux/delay.h>
-+#include <linux/device.h>
-+#include <linux/i2c.h>
-+#include <linux/module.h>
-+#include <linux/of.h>
-+
-+#include "i2c-hid.h"
-+#include "i2c-hid-acpi.h"
-+
-+static int i2c_hid_acpi_prp0001_power_up(struct i2chid_ops *ops)
-+{
-+	/* give the device time to power up */
-+	msleep(250);
-+	return 0;
-+}
-+
-+static struct i2chid_ops i2c_hid_acpi_prp0001_ops = {
-+	.power_up = i2c_hid_acpi_prp0001_power_up,
-+	/*
-+	 * No .restore_sequence needed: the _DSM on these devices returns a
-+	 * constant (0x20) with no side effects, unlike some PNP0C50 _DSM
-+	 * implementations that switch the hardware between PS/2 and I2C modes.
-+	 */
-+};
-+
-+static int i2c_hid_acpi_prp0001_probe(struct i2c_client *client)
-+{
-+	struct device *dev = &client->dev;
-+	struct acpi_device *adev;
-+	u16 hid_descriptor_address;
-+	int ret;
-+
-+	/* If hid-descr-addr is present, let i2c-hid-of handle it */
-+	if (device_property_present(dev, "hid-descr-addr"))
-+		return -ENODEV;
-+
-+	adev = ACPI_COMPANION(dev);
-+	if (!adev)
-+		return -ENODEV;
-+
-+	ret = i2c_hid_acpi_get_descriptor(adev);
-+	if (ret < 0)
-+		return ret;
-+	dev_warn(dev,
-+		 "hid-descr-addr device property NOT found, using ACPI _DSM fallback. Contact vendor for firmware update!\n");
-+	hid_descriptor_address = ret;
-+
-+	/*
-+	 * No acpi_device_fix_up_power() needed: TPD0 has no _PS0, _PS3, _PSC
-+	 * or _PRx methods and follows I2C bus power.
-+	 */
-+	return i2c_hid_core_probe(client, &i2c_hid_acpi_prp0001_ops,
-+				  hid_descriptor_address, 0);
-+}
-+
-+static const struct of_device_id i2c_hid_acpi_prp0001_of_match[] = {
-+	{ .compatible = "hid-over-i2c" },
-+	{},
-+};
-+MODULE_DEVICE_TABLE(of, i2c_hid_acpi_prp0001_of_match);
-+
-+static const struct i2c_device_id i2c_hid_acpi_prp0001_id[] = {
-+	{ .name = "hid-over-i2c" },
-+	{ }
-+};
-+MODULE_DEVICE_TABLE(i2c, i2c_hid_acpi_prp0001_id);
-+
-+static struct i2c_driver i2c_hid_acpi_prp0001_driver = {
-+	.driver = {
-+		.name	= "i2c_hid_acpi_prp0001",
-+		.pm	= &i2c_hid_core_pm,
-+		.probe_type = PROBE_PREFER_ASYNCHRONOUS,
-+		.of_match_table = of_match_ptr(i2c_hid_acpi_prp0001_of_match),
-+	},
-+
-+	.probe		= i2c_hid_acpi_prp0001_probe,
-+	.remove		= i2c_hid_core_remove,
-+	.shutdown	= i2c_hid_core_shutdown,
-+	.id_table	= i2c_hid_acpi_prp0001_id,
-+};
-+
-+module_i2c_driver(i2c_hid_acpi_prp0001_driver);
-+
-+MODULE_DESCRIPTION("HID over I2C driver for PRP0001 devices missing hid-descr-addr");
-+MODULE_AUTHOR("谢致邦 (XIE Zhibang) <Yeking@Red54.com>");
-+MODULE_LICENSE("GPL");
-diff --git a/drivers/hid/i2c-hid/i2c-hid-acpi.c b/drivers/hid/i2c-hid/i2c-hid-acpi.c
-index abd700a101f4..13f977d6aab6 100644
---- a/drivers/hid/i2c-hid/i2c-hid-acpi.c
-+++ b/drivers/hid/i2c-hid/i2c-hid-acpi.c
-@@ -25,9 +25,9 @@
- #include <linux/kernel.h>
- #include <linux/module.h>
- #include <linux/pm.h>
--#include <linux/uuid.h>
- 
- #include "i2c-hid.h"
-+#include "i2c-hid-acpi.h"
- 
- struct i2c_hid_acpi {
- 	struct i2chid_ops ops;
-@@ -48,39 +48,11 @@ static const struct acpi_device_id i2c_hid_acpi_blacklist[] = {
- 	{ }
- };
- 
--/* HID I²C Device: 3cdff6f7-4267-4555-ad05-b30a3d8938de */
--static guid_t i2c_hid_guid =
--	GUID_INIT(0x3CDFF6F7, 0x4267, 0x4555,
--		  0xAD, 0x05, 0xB3, 0x0A, 0x3D, 0x89, 0x38, 0xDE);
--
--static int i2c_hid_acpi_get_descriptor(struct i2c_hid_acpi *ihid_acpi)
--{
--	struct acpi_device *adev = ihid_acpi->adev;
--	acpi_handle handle = acpi_device_handle(adev);
--	union acpi_object *obj;
--	u16 hid_descriptor_address;
--
--	if (acpi_match_device_ids(adev, i2c_hid_acpi_blacklist) == 0)
--		return -ENODEV;
--
--	obj = acpi_evaluate_dsm_typed(handle, &i2c_hid_guid, 1, 1, NULL,
--				      ACPI_TYPE_INTEGER);
--	if (!obj) {
--		acpi_handle_err(handle, "Error _DSM call to get HID descriptor address failed\n");
--		return -ENODEV;
--	}
--
--	hid_descriptor_address = obj->integer.value;
--	ACPI_FREE(obj);
--
--	return hid_descriptor_address;
--}
--
- static void i2c_hid_acpi_restore_sequence(struct i2chid_ops *ops)
- {
- 	struct i2c_hid_acpi *ihid_acpi = container_of(ops, struct i2c_hid_acpi, ops);
- 
--	i2c_hid_acpi_get_descriptor(ihid_acpi);
-+	i2c_hid_acpi_get_descriptor(ihid_acpi->adev);
- }
- 
- static void i2c_hid_acpi_shutdown_tail(struct i2chid_ops *ops)
-@@ -93,24 +65,28 @@ static void i2c_hid_acpi_shutdown_tail(struct i2chid_ops *ops)
- static int i2c_hid_acpi_probe(struct i2c_client *client)
- {
- 	struct device *dev = &client->dev;
-+	struct acpi_device *adev = ACPI_COMPANION(dev);
- 	struct i2c_hid_acpi *ihid_acpi;
- 	u16 hid_descriptor_address;
- 	int ret;
- 
--	ihid_acpi = devm_kzalloc(&client->dev, sizeof(*ihid_acpi), GFP_KERNEL);
-+	if (acpi_match_device_ids(adev, i2c_hid_acpi_blacklist) == 0)
-+		return -ENODEV;
-+
-+	ret = i2c_hid_acpi_get_descriptor(adev);
-+	if (ret < 0)
-+		return ret;
-+	hid_descriptor_address = ret;
-+
-+	ihid_acpi = devm_kzalloc(dev, sizeof(*ihid_acpi), GFP_KERNEL);
- 	if (!ihid_acpi)
- 		return -ENOMEM;
- 
--	ihid_acpi->adev = ACPI_COMPANION(dev);
-+	ihid_acpi->adev = adev;
- 	ihid_acpi->ops.shutdown_tail = i2c_hid_acpi_shutdown_tail;
- 	ihid_acpi->ops.restore_sequence = i2c_hid_acpi_restore_sequence;
- 
--	ret = i2c_hid_acpi_get_descriptor(ihid_acpi);
--	if (ret < 0)
--		return ret;
--	hid_descriptor_address = ret;
--
--	acpi_device_fix_up_power(ihid_acpi->adev);
-+	acpi_device_fix_up_power(adev);
- 
- 	return i2c_hid_core_probe(client, &ihid_acpi->ops,
- 				  hid_descriptor_address, 0);
-diff --git a/drivers/hid/i2c-hid/i2c-hid-acpi.h b/drivers/hid/i2c-hid/i2c-hid-acpi.h
-new file mode 100644
-index 000000000000..8cebbeebcc23
---- /dev/null
-+++ b/drivers/hid/i2c-hid/i2c-hid-acpi.h
-@@ -0,0 +1,32 @@
-+/* SPDX-License-Identifier: GPL-2.0-only */
-+
-+#ifndef _I2C_HID_ACPI_H
-+#define _I2C_HID_ACPI_H
-+
-+#include <linux/acpi.h>
-+#include <linux/uuid.h>
-+
-+static inline int i2c_hid_acpi_get_descriptor(struct acpi_device *adev)
-+{
-+	/* HID I²C Device: 3cdff6f7-4267-4555-ad05-b30a3d8938de */
-+	static const guid_t i2c_hid_guid =
-+		GUID_INIT(0x3CDFF6F7, 0x4267, 0x4555,
-+			  0xAD, 0x05, 0xB3, 0x0A, 0x3D, 0x89, 0x38, 0xDE);
-+
-+	acpi_handle handle = acpi_device_handle(adev);
-+	union acpi_object *obj;
-+	u16 addr;
-+
-+	obj = acpi_evaluate_dsm_typed(handle, &i2c_hid_guid,
-+				      1, 1, NULL, ACPI_TYPE_INTEGER);
-+	if (!obj) {
-+		acpi_handle_err(handle, "Error _DSM call to get HID descriptor address failed\n");
-+		return -ENODEV;
-+	}
-+
-+	addr = obj->integer.value;
-+	ACPI_FREE(obj);
-+	return addr;
-+}
-+
-+#endif
--- 
-2.54.0
+Kind Regards,
+Justin
+> The whole prealloc related change to the map is unnecessary, as I said before.
+> It's an orthogonal change. We should also not use irqs_disabled() and just do
+> the skipping unconditionally.
+> 
+> Let me work on a patch, since the nuance is obviously getting lost in email.
 
