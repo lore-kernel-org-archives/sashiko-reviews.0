@@ -1,159 +1,108 @@
-Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
+Received: from butterfly.aspen.relay.mailchannels.net (butterfly.aspen.relay.mailchannels.net [23.83.221.27])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3343B33067F;
-	Sun,  7 Jun 2026 20:44:22 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DDECA3FFD
+	for <sashiko-reviews@lists.linux.dev>; Sun,  7 Jun 2026 21:13:19 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=23.83.221.27
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1780865064; cv=none; b=TXqA3ZXiqBIQtjAz+bvP9Q91oU/GbtQhJPR8yHnX9AWcA2JQ2BzPaBDRojs7kRSPNeQrF7lnSAOe9ykG2mIz+1Cr6w0lqYZt+tnxtoH2swndNyoVyJ4CVW8A3YYLVsdtBYhuuYCKqXDEAhsniiHmAl8xyopR8UYw206RZoR2X5I=
+	t=1780866801; cv=none; b=LvAqX827FWG5GXMaJgB9mIGIu/agGKwexefrerag/bTJVPvANHGFAZjXF8fy6HrZoVAUMoSqkOGaH622vqGRRhgBxKQQaYQQxrUp7F+vwgUhLz4rL5BGzjmlWbTdGTxuAVk6zpnVPbbJCIi3u7L2Kpox6tDIimGhDnRW6avWkOI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1780865064; c=relaxed/simple;
-	bh=g85QJn47EThEKRGwSKW/QRjWydFP9WGGTaOI6rbRGOM=;
-	h=Date:Message-ID:From:To:Cc:Subject:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=jRXnpOKrNvzN9IjFizea165rOFXban1WM4BDtThQ8REExRHb/CQgWbx1idPvbqVmbkuf56RgtEcXNh2hynHyVIb+zmNdiDtjNPnqyXl89jEQHFlOY9d0hv4pxXbQEkl7uTcdAYtfy2Wu8TcAuazuoUnB/NupJ00/sNXxRxiYmEA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=ZXnDEAND; arc=none smtp.client-ip=100.103.45.18
+	s=arc-20240116; t=1780866801; c=relaxed/simple;
+	bh=eZ2xLjyqidwT+dAzJnaQRROoZ67YTAzkQbJeIp6PVVA=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=JvsBJZ9H7fbPyX3MGjMmNpYL3c8u5FWP31igNAFygIlASmlFRP3GOkzwaxsQQSpqCnbkL9v9lQgXKnff6FvjujvXQrnZFyTxQyWrWdpz7QCfq/0GGLUEtvhTV+24fww0QaL2x2LwcsIBC+pLYH/8dDb9UO5fIZapl4SqvsEVXQU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=stgolabs.net; spf=fail smtp.mailfrom=stgolabs.net; dkim=pass (2048-bit key) header.d=stgolabs.net header.i=@stgolabs.net header.b=DMqxg3K4; arc=none smtp.client-ip=23.83.221.27
+Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=stgolabs.net
+Authentication-Results: smtp.subspace.kernel.org; spf=fail smtp.mailfrom=stgolabs.net
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="ZXnDEAND"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id C65FB1F00893;
-	Sun,  7 Jun 2026 20:44:22 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=kernel.org;
-	s=k20260515; t=1780865062;
-	bh=vtESHvQ50fjYokNyM5J8XzrLXPw6aMyPidD3oI+lCZ4=;
-	h=Date:From:To:Cc:Subject:In-Reply-To:References;
-	b=ZXnDEANDtb+xOC1KS85q2WiGTTengV47I915Z2Mtje1Oj/mTpmAhnJ5BB6LaM9M6x
-	 JdsLogP9Z7F4kUBWG00enMpHYXpTE4ZeFn6U8YajWhcOuQ+TxTuJNnlhf+4CGaHQP/
-	 U9o25x8joZey0xd5TYzVYLOtORzHdtgcyPh1DoONAVsEwDmY2IPdGfIdakE+j7o6l5
-	 fSdgmkqwjhlYip1de+itpBUHLZprHZgYC17F6kd3kBrYAIurCxtnCtyVogUumO5N+2
-	 PtvBs0z+fgQuvNuETI/rUDE8iBosfhRGaWm9y+t2KbNQnjTtpN6q3pXgVsM3VEK5ey
-	 ddYtiroUGmI8w==
-Received: from sofa.misterjones.org ([185.219.108.64] helo=lobster-girl.misterjones.org)
-	by disco-boy.misterjones.org with esmtpsa  (TLS1.3) tls TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384
-	(Exim 4.98.2)
-	(envelope-from <maz@kernel.org>)
-	id 1wWKM1-0000000AFwE-0LVA;
-	Sun, 07 Jun 2026 20:44:21 +0000
-Date: Sun, 07 Jun 2026 21:47:41 +0100
-Message-ID: <87v7bu84cy.wl-maz@kernel.org>
-From: Marc Zyngier <maz@kernel.org>
-To: sashiko-reviews@lists.linux.dev
-Cc: kvm@vger.kernel.org
-Subject: Re: [PATCH] KVM: arm64: Add kvm_for_each_vncr_tlb() helper
-In-Reply-To: <20260607180815.85FBC1F00893@smtp.kernel.org>
-References: <20260607175745.297793-1-maz@kernel.org>
-	<20260607180815.85FBC1F00893@smtp.kernel.org>
-User-Agent: Wanderlust/2.15.9 (Almost Unreal) SEMI-EPG/1.14.7 (Harue)
- FLIM-LB/1.14.9 (=?UTF-8?B?R29qxY0=?=) APEL-LB/10.8 EasyPG/1.0.0 Emacs/30.1
- (aarch64-unknown-linux-gnu) MULE/6.0 (HANACHIRUSATO)
+	dkim=pass (2048-bit key) header.d=stgolabs.net header.i=@stgolabs.net header.b="DMqxg3K4"
+X-Sender-Id: dreamhost|x-authsender|dave@stgolabs.net
+Received: from relay.mailchannels.net (localhost [127.0.0.1])
+	by relay.mailchannels.net (Postfix) with ESMTP id 8CB5241139;
+	Sun, 07 Jun 2026 21:13:18 +0000 (UTC)
+Received: from pdx1-sub0-mail-a251.dreamhost.com (trex-green-3.trex.outbound.svc.cluster.local [100.114.214.242])
+	(Authenticated sender: dreamhost)
+	by relay.mailchannels.net (Postfix) with ESMTPA id 4239941A85;
+	Sun, 07 Jun 2026 21:13:16 +0000 (UTC)
+X-Sender-Id: dreamhost|x-authsender|dave@stgolabs.net
+X-MC-Relay: Junk
+X-MailChannels-SenderId: dreamhost|x-authsender|dave@stgolabs.net
+X-MailChannels-Auth-Id: dreamhost
+X-Tart-Average: 63738728761c6fde_1780866798465_2497135080
+X-MC-Loop-Signature: 1780866798464:2098169700
+X-MC-Ingress-Time: 1780866798464
+Received: from pdx1-sub0-mail-a251.dreamhost.com (pop.dreamhost.com
+ [64.90.62.162])
+	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384)
+	by 100.114.214.242 (trex/7.1.5);
+	Sun, 07 Jun 2026 21:13:18 +0000
+Received: from offworld (unknown [172.56.180.160])
+	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+	 key-exchange ECDHE (P-256) server-signature RSA-PSS (2048 bits) server-digest SHA256)
+	(No client certificate requested)
+	(Authenticated sender: dave@stgolabs.net)
+	by pdx1-sub0-mail-a251.dreamhost.com (Postfix) with ESMTPSA id 4gYSZL43wfz105C;
+	Sun,  7 Jun 2026 14:13:14 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=stgolabs.net;
+	s=dreamhost; t=1780866796;
+	bh=VgS4HHHUlydDvT5zaoC60e2DvAPSe/JTite81U6ZiSs=;
+	h=Date:From:To:Cc:Subject:Content-Type;
+	b=DMqxg3K4cwg32X25e/rWKykxr91lZKiOXjGix7eQASQllJDx8aJm4hJ42aG2eW09f
+	 HKIQP5RjGOSeoWFfUec0oX0QLC1nR5yqD8EyVFfMyQgfsO8YTuxW+dLvOFmSGkh8Mw
+	 ifcZFL6Wlb8l0YusK7p/yPPXKeLJyOD/ugCdTldT+QDVSBVGl33ocUEGWNs51FnArV
+	 ttt3qABQQ45eJhNQ9NI3oLwUvwNxrP7Gw7D2rzaNqheUxr2i61WyTtMtG/LuKB5DQ9
+	 uEUoxWYABWiWbXrvjnnfBHAfq5FKEcPBm8Pt5UifvV5tXqc4cEXga6Dh7t5y/u4aOA
+	 OXXOmwapSsUcg==
+Date: Sun, 7 Jun 2026 14:13:08 -0700
+From: Davidlohr Bueso <dave@stgolabs.net>
+To: Richard Cheng <icheng@nvidia.com>
+Cc: sashiko-reviews@lists.linux.dev, linux-cxl@vger.kernel.org
+Subject: Re: [PATCH 2/5] cxl/pci: Add BI topology enable/disable
+Message-ID: <20260607211308.boymh6ahlbjlfb7p@offworld>
+References: <20260605003329.2584012-3-dave@stgolabs.net>
+ <20260605012940.1A1EC1F00898@smtp.kernel.org>
+ <aiIwmkvqVGb-Tdvw@MWDK4CY14F>
 Precedence: bulk
 X-Mailing-List: sashiko-reviews@lists.linux.dev
 List-Id: <sashiko-reviews.lists.linux.dev>
 List-Subscribe: <mailto:sashiko-reviews+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:sashiko-reviews+unsubscribe@lists.linux.dev>
-MIME-Version: 1.0 (generated by SEMI-EPG 1.14.7 - "Harue")
-Content-Type: text/plain; charset=US-ASCII
-X-SA-Exim-Connect-IP: 185.219.108.64
-X-SA-Exim-Rcpt-To: sashiko-reviews@lists.linux.dev, kvm@vger.kernel.org
-X-SA-Exim-Mail-From: maz@kernel.org
-X-SA-Exim-Scanned: No (on disco-boy.misterjones.org); SAEximRunCond expanded to false
+MIME-Version: 1.0
+Content-Type: text/plain; charset=us-ascii; format=flowed
+Content-Disposition: inline
+In-Reply-To: <aiIwmkvqVGb-Tdvw@MWDK4CY14F>
+User-Agent: NeoMutt/20220429
 
-On Sun, 07 Jun 2026 19:08:15 +0100,
-sashiko-bot@kernel.org wrote:
-> 
-> Thank you for your contribution! Sashiko AI review found 3 potential issue(s) to consider:
-> 
-> New issues:
-> - [Low] The `kvm_for_each_vncr_tlb` macro introduces an unbraced `if` statement, exposing callers to a dangling `else` vulnerability.
-> 
-> Pre-existing issues:
-> - [High] Concurrent lockless publication and observation of `vcpu->arch.vncr_tlb` lacks memory barriers and `READ_ONCE()`, risking uninitialized memory access.
-> - [High] Unconditional allocation in `kvm_vcpu_allocate_vncr_tlb` leaks memory if `kvm_arch_vcpu_run_pid_change` is restarted.
-> --
-> 
-> commit 03a7f368fcb61f7b51d0623ed1c15d57166b377e
-> Author: Marc Zyngier <maz@kernel.org>
-> Subject: KVM: arm64: Add kvm_for_each_vncr_tlb() helper
-> 
-> This commit introduces a new helper macro kvm_for_each_vncr_tlb() to 
-> iterate over vCPUs that have a valid vncr_tlb allocated. It then
-> converts kvm_invalidate_vncr_ipa() and invalidate_vncr_va() to use
-> this new iterator.
-> 
-> Link: https://lore.kernel.org/r/aiUvSbrWndQeUPc8@v4bel
-> 
-> > diff --git a/arch/arm64/kvm/nested.c b/arch/arm64/kvm/nested.c
-> > index 883b6c1008fbb..e25d7289aa9e5 100644
-> > --- a/arch/arm64/kvm/nested.c
-> > +++ b/arch/arm64/kvm/nested.c
-> > @@ -897,9 +897,21 @@ static void invalidate_vncr(struct vncr_tlb *vt)
-> >  		clear_fixmap(vncr_fixmap(vt->cpu));
-> >  }
-> >  
-> > +/*
-> > + * VNCR TLB invalidation occurs from MMU notifiers or TLBI instructions, and
-> > + * either can race against a vcpu not being onlined yet (no pseudo-TLB
-> > + * allocated). Similarly, the TLB might be invalid.  Skip those, as they
-> > + * obviously don't participate in the invalidation at this stage.
-> > + */
-> > +#define kvm_for_each_vncr_tlb(idx, vcpup, tlbp, kvm)	\
-> > +	kvm_for_each_vcpu(idx, vcpup, kvm)		\
-> > +		if (((tlbp) = vcpup->arch.vncr_tlb) &&	\
-> > +		    (tlbp)->valid)
-> 
-> [Severity: High]
-> This isn't a bug introduced by this patch, but can we read uninitialized
-> memory here due to a missing memory barrier?
-> 
-> When vcpu->arch.vncr_tlb is allocated in kvm_vcpu_allocate_vncr_tlb(),
-> it is assigned via a plain store without smp_store_release(), and not
-> under kvm->mmu_lock.
-> 
-> Concurrently, the MMU notifier path (which holds kvm->mmu_lock) iterates
-> over vCPUs and reads this pointer locklessly using a plain load here without
-> READ_ONCE() or smp_load_acquire(). 
-> 
-> On weakly-ordered architectures, could the observing CPU see a non-NULL
-> pointer before the zero-initialization of kzalloc_obj() is visible?
-> 
-> If so, tlbp->valid could be evaluated using uninitialized memory.
-> If it evaluates to true, invalidate_vncr() could read garbage from
-> vt->cpu and trigger the BUG_ON() in vncr_fixmap(), causing a host panic.
-> 
-> [Severity: High]
-> This is a pre-existing issue, but does kvm_vcpu_allocate_vncr_tlb() leak
-> memory if KVM_RUN is restarted?
-> 
-> In kvm_arch_vcpu_run_pid_change(), kvm_vcpu_allocate_vncr_tlb() is
-> called during the first KVM_RUN and unconditionally allocates the pointer
-> with kzalloc_obj().
-> 
-> If subsequent initialization steps in kvm_arch_vcpu_run_pid_change() fail
-> (like kvm_timer_enable()), it returns an error to userspace without
-> marking the vCPU as having run.
-> 
-> If userspace repeatedly invokes the KVM_RUN ioctl after a failure,
-> could kvm_vcpu_allocate_vncr_tlb() be executed again, overwriting the
-> previous vncr_tlb allocation without freeing it and leaking memory?
+On Fri, 05 Jun 2026, Richard Cheng wrote:
+
+>On Fri, Jun 05, 2026 at 01:29:39AM +0800, sashiko-bot@kernel.org wrote:
+>> > +static unsigned long __cxl_bi_get_timeout_us(struct device *dev,
+>> > +					     unsigned int scale,
+>> > +					     unsigned int base)
+>> > +{
+>> > +	static const unsigned long scale_tbl[] = {
+>> > +		1, 10, 100, 1000, 10000, 100000, 1000000, 10000000,
+>> > +	};
+>> > +
+>> > +	if (scale >= ARRAY_SIZE(scale_tbl)) {
+>> > +		dev_dbg(dev, "Invalid BI commit timeout scale: %u\n", scale);
+>> > +		return CXL_BI_COMMIT_MAXTMO_US;
+>> > +	}
+>> > +
+>> > +	return scale_tbl[scale] * base;
+>> > +}
+>>
+>> [Severity: High]
+>> If the hardware provides a base of 0, could this return a 0 timeout?
+>>
 >
+>Yes, if base is 0, "readx_poll_timeout()" will never timeout
+>and thus hang there forever.
+>"tmo_us = min(5s, 0)" will result in 0, making tmo_us == 0
 
-Both issues can be solved in one go by taking the kvm->mmu_lock when
-updating vncr_tlb, relying on the release effects of the unlock, and
-testing for vncr_tlb before assignment. I'll hack something.
+Hmm yeah, I guess we could just return the max tmo (5secs) here,
+and still attempt the commit even upon bogus hw/fw, similar to
+the scale check (albeit this is the opposite hw issue).
 
-> [Severity: Low]
-> Does the unbraced if in this macro expose callers to a dangling else
-> vulnerability?
-> 
-> While current usages are safely enclosed in braces, if a future caller uses
-> this macro inside an unbraced if block and attempts to attach an else,
-> the compiler could incorrectly bind it to this hidden internal if.
-
-This is C, and more importantly Linux-C. It's out to get you, on
-purpose, and by design. Try a scoped_guard() with a continue statement
-within a for loop to have some real fun, rather than this hypothetical
-'else' which would be most bizarre. Given the above and how its use is
-wildly promoted within the kernel, I'm not exactly worried.
-
-	M.
-
--- 
-Jazz isn't dead. It just smells funny.
+Thanks,
+Davidlohr
