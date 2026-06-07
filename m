@@ -1,166 +1,159 @@
-Received: from mail-pl1-f182.google.com (mail-pl1-f182.google.com [209.85.214.182])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from mx0b-0031df01.pphosted.com (mx0b-0031df01.pphosted.com [205.220.180.131])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4EFB32192FA
-	for <sashiko-reviews@lists.linux.dev>; Sun,  7 Jun 2026 15:42:53 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=pass smtp.client-ip=209.85.214.182
-ARC-Seal:i=2; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1780846974; cv=pass; b=Hm6VlgcXRLOX8JXJA0lyNe3q6VLlT2e188gFD035sZZWkNuXClq8hSoUFKu8HlKewPEeZ7PzYr5HgPMA79iTPqvuPAtSaP8vYuyAhrZSBNpV0GLfw4sx8Pla3h7pfIgdPETxf1YIb/KENU+zQDKNzno7djTnimuQPQCyEUIwtag=
-ARC-Message-Signature:i=2; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1780846974; c=relaxed/simple;
-	bh=XCkHV8ZeNsUm5lPYgRn5fehEBmeWytVYAVnjilzGzk0=;
-	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
-	 To:Cc:Content-Type; b=uX5X1zYp2mHsNGSyf2CMfS3TBQhKI6eMUv1giCY/+7EGQ6aiRYvWINEUn8iQxv1ew3arx8TH4jt7tLK36VEvU3VWUChzxOjpyG7QFl0AOphBIfsC2LD4uVmzaFzi0eb7C2WYXUD1qbdnuj4QsDOyimb1OrrNc4qfgdyxXwlb9U8=
-ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=C5ND8MFC; arc=pass smtp.client-ip=209.85.214.182
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6E28E2EAD1C
+	for <sashiko-reviews@lists.linux.dev>; Sun,  7 Jun 2026 20:11:06 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.180.131
+ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
+	t=1780863067; cv=none; b=dLgRczCicIn9vGBeNLwemVsM1X0D8j+AoskhdKjFtDbcJT0Q0ZxjJV6cu7PQ+GgzmrJnir/jUv4dIbVe7XDoU6aAV90fWt2QE3KxBKjt48WLMexjA5e8rvLa8AjqbumVyIOToSKuVXWAZc6dY2zwyLTda36c9mLZMr7WMsXqmNw=
+ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
+	s=arc-20240116; t=1780863067; c=relaxed/simple;
+	bh=UR2bcIZ9fNj1oDZPGcdtMwxjyHrfZW8APyEZsxwXSV4=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=Zq/SmPmEmb4p5pnBHxzioVufVq49hgP17lMKC1SvDrUneRkCf2tb84Hp5uR9F7R6FHib2Oc+moUzc3LHJXAq+d7EeQCvhDWds0+xp2jw/ou9HW4V+6z0f5yxLdYtG9NRwJtlSnV9fGl0jsGrA53CJ0oSLT/XFUd/fmStXgE7UUw=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com; spf=pass smtp.mailfrom=oss.qualcomm.com; dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b=ZA/I6gE7; dkim=pass (2048-bit key) header.d=oss.qualcomm.com header.i=@oss.qualcomm.com header.b=EkMwBadd; arc=none smtp.client-ip=205.220.180.131
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=oss.qualcomm.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="C5ND8MFC"
-Received: by mail-pl1-f182.google.com with SMTP id d9443c01a7336-2c0a5354da1so27858715ad.0
-        for <sashiko-reviews@lists.linux.dev>; Sun, 07 Jun 2026 08:42:53 -0700 (PDT)
-ARC-Seal: i=1; a=rsa-sha256; t=1780846973; cv=none;
-        d=google.com; s=arc-20240605;
-        b=iu34bHTH+h8WwXThHyYphpyelJFlSlr0rvWmnby/4J6+XM6VqngqM42d5BlKlUvTV5
-         WTWuMwW35dlY9fhlo5j7nOKBgMWiS0H6hkLSereIjvnvz1u0K8BknnvVOJcSpfKgnuH9
-         6xpuxImmX2PZU9HvV/SXE8y4jhd5HSZs87tUUyeXg5HNzncapEEStYlYPSHZezHgkSDm
-         t+KFLsyHG88xp4BNpK8+WjpyQxYm1FLjs0v2W0jeCs711gZ4bzF4KQ0TV6S2WtWQsG5L
-         4Qn3QL3t06Eq0SBHFXyeD/SyIYhOm9MVofDvgh8s+2Y55DstOibakussn2T/Ld0x54xY
-         PtSw==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com; s=arc-20240605;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:dkim-signature;
-        bh=45MZ8afngvd7K1ygn3gw3ZGKK+4IuTNrYGUdSONsW8E=;
-        fh=0hdvEPJRino8wRvGrrw1gATkOs6ExpSix2L2F38xNVA=;
-        b=D/7kqBHJtoGqbq8QZ/M3WmEKC88H/Ll9X1pDYgw36g4+DBhe+3KICFOLr+L1g6gp4G
-         W4VL+UtoVUeHo60sziVn37L9dw8DvFQuYgsqIKTo4phui+oP2jYHBq5stCIDM0MUZnZg
-         EYzKlrSHe/9dtERsfjz5Wyph2hi9N458TYC0wfYQG4vTAHq3TImpGYzjgxkN4EGGbAw9
-         r4Qd97/mP94Xzw3Ebpbc7adZGBTLIQzwEZgDhCO8vxb//KW+zEY2kiigEAYl2xYK+gEr
-         lI4gE8xzI/k+YuK5JJVlNBkM5bXYNQRtQVI0l+slGUxKDAY0eV/bgVk/W99xAn4fyaCU
-         2dCg==;
-        darn=lists.linux.dev
-ARC-Authentication-Results: i=1; mx.google.com; arc=none
+	dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b="ZA/I6gE7";
+	dkim=pass (2048-bit key) header.d=oss.qualcomm.com header.i=@oss.qualcomm.com header.b="EkMwBadd"
+Received: from pps.filterd (m0279871.ppops.net [127.0.0.1])
+	by mx0a-0031df01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id 657ElCMK866323
+	for <sashiko-reviews@lists.linux.dev>; Sun, 7 Jun 2026 20:11:05 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=qualcomm.com; h=
+	cc:content-type:date:from:in-reply-to:message-id:mime-version
+	:references:subject:to; s=qcppdkim1; bh=VH3iAh7MAS/nClNrEAXyxrKo
+	p1YZ+KC9P64fMnhqna0=; b=ZA/I6gE7l2ZhU6d7hOxQGW+0oB0wTZbJa18oFUd8
+	HAMzmuntecG3U3vlojwntYoYsOkCq+aVy1NjshfPgXNVaD2i9VG3pxReQVq/+wKP
+	Uo4zfNCExC9nOBkeaslcGN/V87mt8Nz7lOGfI0ldZCaSt0GIyyMDYw7Je5v0qTjj
+	0X34LfqHZndK2Wyjjuq2rpK/Zdp3t+pNdM6NTCb0lLALnw8TNcHgImLBhj2k4emf
+	KJO202/MDxPCVDaVqMYkvj5LBITFUG6GYYCSryx0uxP90m/YgDDdJbCPl8F12Git
+	28npDIAf/TDZL+5KA+5JHxtirWpUXB4xRK433OSjJ7hVCA==
+Received: from mail-qt1-f199.google.com (mail-qt1-f199.google.com [209.85.160.199])
+	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 4emb4w4rqq-1
+	(version=TLSv1.3 cipher=TLS_AES_128_GCM_SHA256 bits=128 verify=NOT)
+	for <sashiko-reviews@lists.linux.dev>; Sun, 07 Jun 2026 20:11:05 +0000 (GMT)
+Received: by mail-qt1-f199.google.com with SMTP id d75a77b69052e-517582695d7so87378921cf.0
+        for <sashiko-reviews@lists.linux.dev>; Sun, 07 Jun 2026 13:11:05 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20251104; t=1780846973; x=1781451773; darn=lists.linux.dev;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=45MZ8afngvd7K1ygn3gw3ZGKK+4IuTNrYGUdSONsW8E=;
-        b=C5ND8MFC0Hud2liSYJa25ywRcHVGxsPSs7J2LLL2z6xAl+RSGCS2cuflZ3kNbCE2mw
-         jznS2/88pFOZ9/75QIhWZd0w0IYScmW0iXqeM4Xrw+UMgxY+0ODcUtt6uQMgwHdsVpZJ
-         aCbvcb6jBJFZl6WxtJKDWabIMZm8ie4x8S/c2Tb/MNYyQ/BTfLucqIfs0Cx3OD3oIfJJ
-         Akeymmz4nrnjynpTD63iyx5anRwrIEQTsLtvna1hExftZQJ+EScaJNIBNDE2dU/Y4jep
-         StGlT1vQ+yRf3zsF7zE7tl8RogGoIrF8/7zJBl34gMhH6ClP0rpINKYouagGdacWIESk
-         EvJQ==
+        d=oss.qualcomm.com; s=google; t=1780863065; x=1781467865; darn=lists.linux.dev;
+        h=in-reply-to:content-disposition:mime-version:references:message-id
+         :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
+        bh=VH3iAh7MAS/nClNrEAXyxrKop1YZ+KC9P64fMnhqna0=;
+        b=EkMwBaddrbfGzN3vFhIYcbW76CvR0LJf9jIAfmovrkVqiTgpJGxMdPHHBDhtfjpqX6
+         SHf5gniIgycyqQD1P7GoUrcjri9QkuZOEx/ccRj1q/FQ6xGD/s+JyUt06gSqlT2qIBkc
+         Eidaraw+B10/1t7sJFOdO7QRvzYv5Hc80a37320EvmcheJZu6MhyKUMQ1OArQ1fBSC5+
+         X/PqAdXZElspO7V+3o9TK5Nek98ROb8rvGqC3dRKISO56woZi7CpoPtDbhsm0pVV1vU1
+         srgJuoLd9/u6HRfo14j2Y0cuk88IdC26JoSoAfiHxRlEpbB0jpwWReVPf61XzrEU2jvu
+         W+Bg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20251104; t=1780846973; x=1781451773;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:x-gm-gg:x-gm-message-state:from
-         :to:cc:subject:date:message-id:reply-to;
-        bh=45MZ8afngvd7K1ygn3gw3ZGKK+4IuTNrYGUdSONsW8E=;
-        b=l8lILeigTT2Zm0+isNaaPbsNQ8v32OjV/Gh7WPYCg4OdgUn9Xywkrt0ILq7bmGRUoC
-         R21Qw+IRDH8SlrfhPX58G+pfL3jaB4SpjBNJGdC9KZCvurPA7HdgJlq4/ZxTztkxYCN+
-         gQx5nElJua9ao9w1uV6RfBkngi9Ji2KV16o/WjNAlp4uxgR/QvefK/d6J+aYEuv0iYT9
-         0c2tugNYsciP/1X8CZJqJPx+pgNtS1BMv1r2LPMBhSbRjb2CPmcRTNx1AJhwo8Xr6587
-         oen742fIMbKVtMnScC5FCBbqukw7kffJafi19o+d+bnypoVaZ8A/oTCW1fM83YK50YGN
-         M8Fg==
-X-Gm-Message-State: AOJu0Yx368KboPH1W9wNCYfwvZwuYSo0/lNCgsQA/mSx+FEL391t9qss
-	YvjjvVpMXQG+j1xs+HvBCmS8iX27fL1IPq2HPpBww4z/Qz3RjH+VSXb7gobb6U9sBO7jmlrY4BK
-	l8R7e2uulKmsxC2olzgjUdCn2fT1pocIebunpcGL6Nw==
-X-Gm-Gg: Acq92OGN+vJHUs00FOVkeD6tgcJg5pJG+BC9JbUFbwVeQYl9+mDM8lgXolnBdiZlbvF
-	vacusCOYmUjYyzWRI9hS5VXgykzuDdQvddgU6RMjT08UCvirwj54SQjB3JxuOBo+TilZzaNPk1y
-	EMynsuEr93qG3ZWyHJq7As93EgmULuJlrcZheVDWGYLyYpOdgM0U41F6IUP38S7sPwL+5H/vDu9
-	1tvn1HQZgiizIl//aAxxqzhj2jc/RAOEW6/gYP1VLA/FcbmnA1Khm8lx5n984CZ4OV3zFF8xXOW
-	mjgCF1ZiSeZz2rqrLyfkY4nV7u4eh62wn6zrGnM8xIKBmMNYK7g=
-X-Received: by 2002:a17:903:3d05:b0:2c2:343:88b0 with SMTP id
- d9443c01a7336-2c203438bcamr79596615ad.19.1780846972505; Sun, 07 Jun 2026
- 08:42:52 -0700 (PDT)
+        d=1e100.net; s=20251104; t=1780863065; x=1781467865;
+        h=in-reply-to:content-disposition:mime-version:references:message-id
+         :subject:cc:to:from:date:x-gm-gg:x-gm-message-state:from:to:cc
+         :subject:date:message-id:reply-to;
+        bh=VH3iAh7MAS/nClNrEAXyxrKop1YZ+KC9P64fMnhqna0=;
+        b=UzDdJ3PldgQdV3tzCjZkkqfBAa3SO5S2/cNHVpzJqvW066VM67oF8tvXNkz7m6eOcC
+         4Yra4CwFOpNBrIC2ry9R0rD1iwTIFuPsUF+8HQ8IFbRZq50Fg93VIleffp0RPuukygmP
+         ibSbRNY00gAGJ6/WYgqVzC/+1EZFCr0I3tlKRCpx2wlZDmDIbu3gkBIx+wcWudZZJEf9
+         e1WU3MsM7JKFR+3ZZ6t+UOILiTXacA2HUWiLiOnSd/S1+hJ18a0hL6+xh54dZoHw3Cnl
+         IRxcrhdik+wTII2+QrwIgs178B+OOrncgLrjW0Nh1PssX1mGIO/yuHBuecmEm7miANZN
+         Hvwg==
+X-Gm-Message-State: AOJu0Yx3QO7ii60uqL9ixuNmeMbrbt3GWW63son6azPLBD9ONPW/Qnnp
+	1cjL3NWsz6rLRnKYQ3n+IBeQ+QXUpRYJl/XVFhwAKwGQ7zIOS9AGeouVyHwzu7QXlsXvjITyajK
+	NHzsAJuUvDN/LaspFuoZdf0BEugI1rUteu9KNg7HGPi5adPy8mPJlJB4g/bqoCoIJJzNLQuk=
+X-Gm-Gg: Acq92OHN6DrZAI20r9zrmBmQQjg0XLlTSHaz24j8wwkMQ64i7c22ACQchxtGEm41fA5
+	EyWkV4UNXy2UbcoWyBQkTsr8eXLv24LRHVQaKrzmmKOqXw0Ab1b5U7CdTUBsYvXowLltpQZSRhF
+	a7uTrsB5tC/v5ORRFokVm3fzMJdLESbxMhiQVd/eUpEGjiI7G81uV1rjEWKT/9BDqPXraLYwFNF
+	qaStoR2jgFAXjV/bHEjXdQiabjZO4P3n4oeOclp/fE56+CQvLWRWELqfZEXhC/nQKYCaO1jE4kx
+	+l3W8UwKmHysKx89Ft/LB0yZ2E0cpCTsuhyDT8BJfWCAA7ZpftFaYPoOjGsSJio31sW2SpFl+Mx
+	1UsurvbMnQPQ2nj5OP3lFYBRusjOeUiy/HxTLsQZCS/Ri7H0A0aBUwbHB8sj0xDMfO6jVmQPYeW
+	P0Iu17BJn5Gxm79GCxax/OfPE8OTdCP6pFkhEmhwtcdHffZw==
+X-Received: by 2002:ac8:7d47:0:b0:516:e0e7:6e42 with SMTP id d75a77b69052e-517986c5482mr139898661cf.13.1780863064932;
+        Sun, 07 Jun 2026 13:11:04 -0700 (PDT)
+X-Received: by 2002:ac8:7d47:0:b0:516:e0e7:6e42 with SMTP id d75a77b69052e-517986c5482mr139898361cf.13.1780863064555;
+        Sun, 07 Jun 2026 13:11:04 -0700 (PDT)
+Received: from umbar.lan (2001-14ba-a073-af00-264b-feff-fe8b-be8a.rev.dnainternet.fi. [2001:14ba:a073:af00:264b:feff:fe8b:be8a])
+        by smtp.gmail.com with ESMTPSA id 38308e7fff4ca-396ac2d3a1dsm41825351fa.28.2026.06.07.13.10.59
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Sun, 07 Jun 2026 13:11:01 -0700 (PDT)
+Date: Sun, 7 Jun 2026 23:10:57 +0300
+From: Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>
+To: Kathiravan Thirumoorthy <kathiravan.thirumoorthy@oss.qualcomm.com>
+Cc: sashiko-reviews@lists.linux.dev, devicetree@vger.kernel.org,
+        robh@kernel.org, conor+dt@kernel.org
+Subject: Re: [PATCH 1/2] arm64: dts: qcom: ipq5332: Move PHYs and PERST# to
+ Root Port node
+Message-ID: <y23cvj7jmfdysybgw7lobud6mlgacvr62iagqimn46i4adsdbq@xkeh6z4qvktz>
+References: <20260602-move_perst_to_rp-v1-1-8ee5b80316da@oss.qualcomm.com>
+ <20260602164512.9F1CC1F00893@smtp.kernel.org>
+ <35f1ff50-74f5-412f-a52b-9906fda0edb7@oss.qualcomm.com>
 Precedence: bulk
 X-Mailing-List: sashiko-reviews@lists.linux.dev
 List-Id: <sashiko-reviews.lists.linux.dev>
 List-Subscribe: <mailto:sashiko-reviews+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:sashiko-reviews+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-References: <20260607144238.128259-1-eugene.shalygin@gmail.com> <20260607145912.558FF1F00893@smtp.kernel.org>
-In-Reply-To: <20260607145912.558FF1F00893@smtp.kernel.org>
-From: Eugene Shalygin <eugene.shalygin@gmail.com>
-Date: Sun, 7 Jun 2026 17:42:40 +0200
-X-Gm-Features: AVVi8Cc2WdM1NlzuL36qde311cEr23kQJqMzFvmX39CF_vJU9xTuXAY9Qst8XrQ
-Message-ID: <CAB95QATYOcHgYKi73M2cQOXUD1Z7rLPU0XZYAZivaVrcxohm_w@mail.gmail.com>
-Subject: Re: [PATCH] hwmon: (asus-ec-sensors) add ROG MAXIMUS Z790 EXTREME
-To: sashiko-reviews@lists.linux.dev
-Cc: linux-hwmon@vger.kernel.org
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <35f1ff50-74f5-412f-a52b-9906fda0edb7@oss.qualcomm.com>
+X-Proofpoint-ORIG-GUID: HL7cUVIVMg9qS_FgUbdEeQaDSkgbbL10
+X-Proofpoint-GUID: HL7cUVIVMg9qS_FgUbdEeQaDSkgbbL10
+X-Authority-Analysis: v=2.4 cv=YIWvDxGx c=1 sm=1 tr=0 ts=6a25d059 cx=c_pps
+ a=WeENfcodrlLV9YRTxbY/uA==:117 a=xqWC_Br6kY4A:10 a=kj9zAlcOel0A:10
+ a=FelO9ux0wxsA:10 a=s4-Qcg_JpJYA:10 a=VkNPw1HP01LnGYTKEx00:22
+ a=u7WPNUs3qKkmUXheDGA7:22 a=3WHJM1ZQz_JShphwDgj5:22 a=VwQbUJbxAAAA:8
+ a=-9TPMfOEyAajJc7o744A:9 a=CjuIK1q_8ugA:10 a=kacYvNCVWA4VmyqE58fU:22
+X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwNjA3MDIwMiBTYWx0ZWRfX4a3NJW14baBo
+ qKaF+kryL2OeVnla3FonEdodTTqaHH7bQPdFlW+I6/YtKvxVuesvgXJQl8/0fmXKWTl34hRHSeI
+ GoD/W4MDJaqFEmF+EZuem8g2FlchmaALAUgq8EKFas1bK+cLEr+jIXFomKBFA5r4POsSNyTFzYI
+ F+fSZcJCqPYtvPGcxY1zEYT7aUVGQGBNDbcm2uGzetFtY2b8c5VVXQtN6/tM1NTblrlWpGAr6Ar
+ BZSa7mdtO2/erOTn4gjvwetr07lCgBgOhkvFHuSZc3zYaLPUOZ8IFBwoXb4ze1PTBRVS9Z9E6Fo
+ rzwVubdwHqJY7i0fkUo+TamufcDzZVHEJiG9iDTd2ZLI6ijvIyOojmXBSKWPvx7nUcXER/IHVdv
+ Rvbn5DHKe+QFDOjvg3XRqADIGXhezhBeEoTDIb0XSXs2NLRRQOBRwCmAawfWOObcZrQxQvd29D/
+ ylOnL2DVuQBWwu/HpKw==
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.293,Aquarius:18.0.1143,Hydra:6.1.125,FMLib:17.12.100.49
+ definitions=2026-06-07_04,2026-06-05_02,2025-10-01_01
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
+ suspectscore=0 malwarescore=0 lowpriorityscore=0 adultscore=0 impostorscore=0
+ spamscore=0 phishscore=0 clxscore=1015 priorityscore=1501 bulkscore=0
+ classifier=typeunknown authscore=0 authtc= authcc= route=outbound adjust=0
+ reason=mlx scancount=1 engine=8.22.0-2605210000 definitions=main-2606070202
 
-I fell into the same trap again :( Thanks, Sashiko!
+On Thu, Jun 04, 2026 at 02:28:03PM +0530, Kathiravan Thirumoorthy wrote:
+> 
+> On 6/2/2026 10:15 PM, sashiko-bot@kernel.org wrote:
+> > 
+> > > diff --git a/arch/arm64/boot/dts/qcom/ipq5332-rdp441.dts b/arch/arm64/boot/dts/qcom/ipq5332-rdp441.dts
+> > > index 79ec77cfe5527..7fcf632e289f0 100644
+> > > --- a/arch/arm64/boot/dts/qcom/ipq5332-rdp441.dts
+> > > +++ b/arch/arm64/boot/dts/qcom/ipq5332-rdp441.dts
+> > [ ... ]
+> > 
+> > > @@ -46,13 +43,15 @@ &pcie0_phy {
+> > >   	status = "okay";
+> > >   };
+> > > +&pcie0_port0 {
+> > > +	reset-gpios = <&tlmm 38 GPIO_ACTIVE_LOW>;
+> > > +	wake-gpios = <&tlmm 39 GPIO_ACTIVE_LOW>;
+> > > +};
+> > [Severity: High]
+> > This is a pre-existing issue, but does moving these properties to the
+> > Root Port node expose a PHY initialization leak on probe deferral?
+> > 
+> > When the driver processes the port via qcom_pcie_parse_port(), it calls
+> > phy_init() and then immediately calls qcom_pcie_parse_perst(). If parsing
+> > the PERST# GPIO (now added to the port node here) fails with -EPROBE_DEFER,
+> > the function returns early:
+> 
+> EPROBE_DEFER will be returned when the GPIO device has not yet been
+> registered, which I believe should not happen because the GPIO driver is
+> enabled by default on the QCOM platforms.
 
-On Sun, 7 Jun 2026 at 16:59, <sashiko-bot@kernel.org> wrote:
->
-> Thank you for your contribution! Sashiko AI review found 1 potential issu=
-e(s) to consider:
-> - [Medium] Missing sensor metadata for ROG MAXIMUS Z790 EXTREME causes re=
-quested sensors to be silently ignored.
-> --
->
-> commit 409e24c49843127f834ed70831b89be991b9e50c
-> Author: Brian Downey <bdowne01@gmail.com>
->
-> hwmon: (asus-ec-sensors) add ROG MAXIMUS Z790 EXTREME
->
-> Add support for ROG MAXIMUS Z790 EXTREME
->
-> > diff --git a/drivers/hwmon/asus-ec-sensors.c b/drivers/hwmon/asus-ec-se=
-nsors.c
-> > index b5d97a27f80d3..34f96aba5cb99 100644
-> > --- a/drivers/hwmon/asus-ec-sensors.c
-> > +++ b/drivers/hwmon/asus-ec-sensors.c
-> [ ... ]
-> > @@ -514,6 +514,13 @@ static const struct ec_board_info board_info_maxim=
-us_z690_formula =3D {
-> >       .family =3D family_intel_600_series,
-> >  };
-> >
-> > +static const struct ec_board_info board_info_maximus_z790_extreme =3D =
-{
-> > +     .sensors =3D SENSOR_TEMP_T_SENSOR | SENSOR_TEMP_VRM |
-> > +             SENSOR_SET_TEMP_WATER | SENSOR_FAN_WATER_FLOW,
-> > +     .mutex_path =3D ASUS_HW_ACCESS_MUTEX_RMTW_ASMX,
-> > +     .family =3D family_intel_700_series,
-> > +};
-> > +
->
-> [Severity: Medium]
-> Will these water sensors be successfully exposed to userspace?
->
-> The newly added board configuration specifies SENSOR_SET_TEMP_WATER and
-> SENSOR_FAN_WATER_FLOW. However, looking at the sensors_family_intel_700 a=
-rray
-> used for family_intel_700_series:
->
-> static const struct ec_sensor_info sensors_family_intel_700[] =3D {
->         [ec_sensor_temp_t_sensor] =3D
->                 EC_SENSOR("T_Sensor", hwmon_temp, 1, 0x01, 0x09),
->         [ec_sensor_temp_t_sensor_2] =3D
->                 EC_SENSOR("T_Sensor 2", hwmon_temp, 1, 0x01, 0x05),
->         [ec_sensor_temp_vrm] =3D EC_SENSOR("VRM", hwmon_temp, 1, 0x00, 0x=
-33),
->         [ec_sensor_fan_cpu_opt] =3D
->                 EC_SENSOR("CPU_Opt", hwmon_fan, 2, 0x00, 0xb0),
-> };
->
-> This array lacks the initializers for the requested water sensors. Becaus=
-e
-> they are not explicitly initialized, their definitions default to zero an=
-d
-> they will be silently ignored during sysfs creation.
->
-> While the driver safely handles zeroed structs without causing out-of-bou=
-nds
-> reads or sysfs corruption (because get_sensor_value() returns 0 when size=
-=3D0
-> and hwmon_genattrs skips attributes without templates), this regression
-> means the requested water sensors will not be exposed to userspace.
->
-> --
-> Sashiko AI review =C2=B7 https://sashiko.dev/#/patchset/20260607144238.12=
-8259-1-eugene.shalygin@gmail.com?part=3D1
+It can still be disabled. Please send a fix, it's not worth keepin an
+error in the code.
+
+
+-- 
+With best wishes
+Dmitry
