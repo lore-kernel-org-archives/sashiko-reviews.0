@@ -1,159 +1,159 @@
-Received: from mx0b-0031df01.pphosted.com (mx0b-0031df01.pphosted.com [205.220.180.131])
+Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6E28E2EAD1C
-	for <sashiko-reviews@lists.linux.dev>; Sun,  7 Jun 2026 20:11:06 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.180.131
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3343B33067F;
+	Sun,  7 Jun 2026 20:44:22 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1780863067; cv=none; b=dLgRczCicIn9vGBeNLwemVsM1X0D8j+AoskhdKjFtDbcJT0Q0ZxjJV6cu7PQ+GgzmrJnir/jUv4dIbVe7XDoU6aAV90fWt2QE3KxBKjt48WLMexjA5e8rvLa8AjqbumVyIOToSKuVXWAZc6dY2zwyLTda36c9mLZMr7WMsXqmNw=
+	t=1780865064; cv=none; b=TXqA3ZXiqBIQtjAz+bvP9Q91oU/GbtQhJPR8yHnX9AWcA2JQ2BzPaBDRojs7kRSPNeQrF7lnSAOe9ykG2mIz+1Cr6w0lqYZt+tnxtoH2swndNyoVyJ4CVW8A3YYLVsdtBYhuuYCKqXDEAhsniiHmAl8xyopR8UYw206RZoR2X5I=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1780863067; c=relaxed/simple;
-	bh=UR2bcIZ9fNj1oDZPGcdtMwxjyHrfZW8APyEZsxwXSV4=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=Zq/SmPmEmb4p5pnBHxzioVufVq49hgP17lMKC1SvDrUneRkCf2tb84Hp5uR9F7R6FHib2Oc+moUzc3LHJXAq+d7EeQCvhDWds0+xp2jw/ou9HW4V+6z0f5yxLdYtG9NRwJtlSnV9fGl0jsGrA53CJ0oSLT/XFUd/fmStXgE7UUw=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com; spf=pass smtp.mailfrom=oss.qualcomm.com; dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b=ZA/I6gE7; dkim=pass (2048-bit key) header.d=oss.qualcomm.com header.i=@oss.qualcomm.com header.b=EkMwBadd; arc=none smtp.client-ip=205.220.180.131
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=oss.qualcomm.com
+	s=arc-20240116; t=1780865064; c=relaxed/simple;
+	bh=g85QJn47EThEKRGwSKW/QRjWydFP9WGGTaOI6rbRGOM=;
+	h=Date:Message-ID:From:To:Cc:Subject:In-Reply-To:References:
+	 MIME-Version:Content-Type; b=jRXnpOKrNvzN9IjFizea165rOFXban1WM4BDtThQ8REExRHb/CQgWbx1idPvbqVmbkuf56RgtEcXNh2hynHyVIb+zmNdiDtjNPnqyXl89jEQHFlOY9d0hv4pxXbQEkl7uTcdAYtfy2Wu8TcAuazuoUnB/NupJ00/sNXxRxiYmEA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=ZXnDEAND; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b="ZA/I6gE7";
-	dkim=pass (2048-bit key) header.d=oss.qualcomm.com header.i=@oss.qualcomm.com header.b="EkMwBadd"
-Received: from pps.filterd (m0279871.ppops.net [127.0.0.1])
-	by mx0a-0031df01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id 657ElCMK866323
-	for <sashiko-reviews@lists.linux.dev>; Sun, 7 Jun 2026 20:11:05 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=qualcomm.com; h=
-	cc:content-type:date:from:in-reply-to:message-id:mime-version
-	:references:subject:to; s=qcppdkim1; bh=VH3iAh7MAS/nClNrEAXyxrKo
-	p1YZ+KC9P64fMnhqna0=; b=ZA/I6gE7l2ZhU6d7hOxQGW+0oB0wTZbJa18oFUd8
-	HAMzmuntecG3U3vlojwntYoYsOkCq+aVy1NjshfPgXNVaD2i9VG3pxReQVq/+wKP
-	Uo4zfNCExC9nOBkeaslcGN/V87mt8Nz7lOGfI0ldZCaSt0GIyyMDYw7Je5v0qTjj
-	0X34LfqHZndK2Wyjjuq2rpK/Zdp3t+pNdM6NTCb0lLALnw8TNcHgImLBhj2k4emf
-	KJO202/MDxPCVDaVqMYkvj5LBITFUG6GYYCSryx0uxP90m/YgDDdJbCPl8F12Git
-	28npDIAf/TDZL+5KA+5JHxtirWpUXB4xRK433OSjJ7hVCA==
-Received: from mail-qt1-f199.google.com (mail-qt1-f199.google.com [209.85.160.199])
-	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 4emb4w4rqq-1
-	(version=TLSv1.3 cipher=TLS_AES_128_GCM_SHA256 bits=128 verify=NOT)
-	for <sashiko-reviews@lists.linux.dev>; Sun, 07 Jun 2026 20:11:05 +0000 (GMT)
-Received: by mail-qt1-f199.google.com with SMTP id d75a77b69052e-517582695d7so87378921cf.0
-        for <sashiko-reviews@lists.linux.dev>; Sun, 07 Jun 2026 13:11:05 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=oss.qualcomm.com; s=google; t=1780863065; x=1781467865; darn=lists.linux.dev;
-        h=in-reply-to:content-disposition:mime-version:references:message-id
-         :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
-        bh=VH3iAh7MAS/nClNrEAXyxrKop1YZ+KC9P64fMnhqna0=;
-        b=EkMwBaddrbfGzN3vFhIYcbW76CvR0LJf9jIAfmovrkVqiTgpJGxMdPHHBDhtfjpqX6
-         SHf5gniIgycyqQD1P7GoUrcjri9QkuZOEx/ccRj1q/FQ6xGD/s+JyUt06gSqlT2qIBkc
-         Eidaraw+B10/1t7sJFOdO7QRvzYv5Hc80a37320EvmcheJZu6MhyKUMQ1OArQ1fBSC5+
-         X/PqAdXZElspO7V+3o9TK5Nek98ROb8rvGqC3dRKISO56woZi7CpoPtDbhsm0pVV1vU1
-         srgJuoLd9/u6HRfo14j2Y0cuk88IdC26JoSoAfiHxRlEpbB0jpwWReVPf61XzrEU2jvu
-         W+Bg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20251104; t=1780863065; x=1781467865;
-        h=in-reply-to:content-disposition:mime-version:references:message-id
-         :subject:cc:to:from:date:x-gm-gg:x-gm-message-state:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=VH3iAh7MAS/nClNrEAXyxrKop1YZ+KC9P64fMnhqna0=;
-        b=UzDdJ3PldgQdV3tzCjZkkqfBAa3SO5S2/cNHVpzJqvW066VM67oF8tvXNkz7m6eOcC
-         4Yra4CwFOpNBrIC2ry9R0rD1iwTIFuPsUF+8HQ8IFbRZq50Fg93VIleffp0RPuukygmP
-         ibSbRNY00gAGJ6/WYgqVzC/+1EZFCr0I3tlKRCpx2wlZDmDIbu3gkBIx+wcWudZZJEf9
-         e1WU3MsM7JKFR+3ZZ6t+UOILiTXacA2HUWiLiOnSd/S1+hJ18a0hL6+xh54dZoHw3Cnl
-         IRxcrhdik+wTII2+QrwIgs178B+OOrncgLrjW0Nh1PssX1mGIO/yuHBuecmEm7miANZN
-         Hvwg==
-X-Gm-Message-State: AOJu0Yx3QO7ii60uqL9ixuNmeMbrbt3GWW63son6azPLBD9ONPW/Qnnp
-	1cjL3NWsz6rLRnKYQ3n+IBeQ+QXUpRYJl/XVFhwAKwGQ7zIOS9AGeouVyHwzu7QXlsXvjITyajK
-	NHzsAJuUvDN/LaspFuoZdf0BEugI1rUteu9KNg7HGPi5adPy8mPJlJB4g/bqoCoIJJzNLQuk=
-X-Gm-Gg: Acq92OHN6DrZAI20r9zrmBmQQjg0XLlTSHaz24j8wwkMQ64i7c22ACQchxtGEm41fA5
-	EyWkV4UNXy2UbcoWyBQkTsr8eXLv24LRHVQaKrzmmKOqXw0Ab1b5U7CdTUBsYvXowLltpQZSRhF
-	a7uTrsB5tC/v5ORRFokVm3fzMJdLESbxMhiQVd/eUpEGjiI7G81uV1rjEWKT/9BDqPXraLYwFNF
-	qaStoR2jgFAXjV/bHEjXdQiabjZO4P3n4oeOclp/fE56+CQvLWRWELqfZEXhC/nQKYCaO1jE4kx
-	+l3W8UwKmHysKx89Ft/LB0yZ2E0cpCTsuhyDT8BJfWCAA7ZpftFaYPoOjGsSJio31sW2SpFl+Mx
-	1UsurvbMnQPQ2nj5OP3lFYBRusjOeUiy/HxTLsQZCS/Ri7H0A0aBUwbHB8sj0xDMfO6jVmQPYeW
-	P0Iu17BJn5Gxm79GCxax/OfPE8OTdCP6pFkhEmhwtcdHffZw==
-X-Received: by 2002:ac8:7d47:0:b0:516:e0e7:6e42 with SMTP id d75a77b69052e-517986c5482mr139898661cf.13.1780863064932;
-        Sun, 07 Jun 2026 13:11:04 -0700 (PDT)
-X-Received: by 2002:ac8:7d47:0:b0:516:e0e7:6e42 with SMTP id d75a77b69052e-517986c5482mr139898361cf.13.1780863064555;
-        Sun, 07 Jun 2026 13:11:04 -0700 (PDT)
-Received: from umbar.lan (2001-14ba-a073-af00-264b-feff-fe8b-be8a.rev.dnainternet.fi. [2001:14ba:a073:af00:264b:feff:fe8b:be8a])
-        by smtp.gmail.com with ESMTPSA id 38308e7fff4ca-396ac2d3a1dsm41825351fa.28.2026.06.07.13.10.59
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Sun, 07 Jun 2026 13:11:01 -0700 (PDT)
-Date: Sun, 7 Jun 2026 23:10:57 +0300
-From: Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>
-To: Kathiravan Thirumoorthy <kathiravan.thirumoorthy@oss.qualcomm.com>
-Cc: sashiko-reviews@lists.linux.dev, devicetree@vger.kernel.org,
-        robh@kernel.org, conor+dt@kernel.org
-Subject: Re: [PATCH 1/2] arm64: dts: qcom: ipq5332: Move PHYs and PERST# to
- Root Port node
-Message-ID: <y23cvj7jmfdysybgw7lobud6mlgacvr62iagqimn46i4adsdbq@xkeh6z4qvktz>
-References: <20260602-move_perst_to_rp-v1-1-8ee5b80316da@oss.qualcomm.com>
- <20260602164512.9F1CC1F00893@smtp.kernel.org>
- <35f1ff50-74f5-412f-a52b-9906fda0edb7@oss.qualcomm.com>
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="ZXnDEAND"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id C65FB1F00893;
+	Sun,  7 Jun 2026 20:44:22 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=kernel.org;
+	s=k20260515; t=1780865062;
+	bh=vtESHvQ50fjYokNyM5J8XzrLXPw6aMyPidD3oI+lCZ4=;
+	h=Date:From:To:Cc:Subject:In-Reply-To:References;
+	b=ZXnDEANDtb+xOC1KS85q2WiGTTengV47I915Z2Mtje1Oj/mTpmAhnJ5BB6LaM9M6x
+	 JdsLogP9Z7F4kUBWG00enMpHYXpTE4ZeFn6U8YajWhcOuQ+TxTuJNnlhf+4CGaHQP/
+	 U9o25x8joZey0xd5TYzVYLOtORzHdtgcyPh1DoONAVsEwDmY2IPdGfIdakE+j7o6l5
+	 fSdgmkqwjhlYip1de+itpBUHLZprHZgYC17F6kd3kBrYAIurCxtnCtyVogUumO5N+2
+	 PtvBs0z+fgQuvNuETI/rUDE8iBosfhRGaWm9y+t2KbNQnjTtpN6q3pXgVsM3VEK5ey
+	 ddYtiroUGmI8w==
+Received: from sofa.misterjones.org ([185.219.108.64] helo=lobster-girl.misterjones.org)
+	by disco-boy.misterjones.org with esmtpsa  (TLS1.3) tls TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384
+	(Exim 4.98.2)
+	(envelope-from <maz@kernel.org>)
+	id 1wWKM1-0000000AFwE-0LVA;
+	Sun, 07 Jun 2026 20:44:21 +0000
+Date: Sun, 07 Jun 2026 21:47:41 +0100
+Message-ID: <87v7bu84cy.wl-maz@kernel.org>
+From: Marc Zyngier <maz@kernel.org>
+To: sashiko-reviews@lists.linux.dev
+Cc: kvm@vger.kernel.org
+Subject: Re: [PATCH] KVM: arm64: Add kvm_for_each_vncr_tlb() helper
+In-Reply-To: <20260607180815.85FBC1F00893@smtp.kernel.org>
+References: <20260607175745.297793-1-maz@kernel.org>
+	<20260607180815.85FBC1F00893@smtp.kernel.org>
+User-Agent: Wanderlust/2.15.9 (Almost Unreal) SEMI-EPG/1.14.7 (Harue)
+ FLIM-LB/1.14.9 (=?UTF-8?B?R29qxY0=?=) APEL-LB/10.8 EasyPG/1.0.0 Emacs/30.1
+ (aarch64-unknown-linux-gnu) MULE/6.0 (HANACHIRUSATO)
 Precedence: bulk
 X-Mailing-List: sashiko-reviews@lists.linux.dev
 List-Id: <sashiko-reviews.lists.linux.dev>
 List-Subscribe: <mailto:sashiko-reviews+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:sashiko-reviews+unsubscribe@lists.linux.dev>
-MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <35f1ff50-74f5-412f-a52b-9906fda0edb7@oss.qualcomm.com>
-X-Proofpoint-ORIG-GUID: HL7cUVIVMg9qS_FgUbdEeQaDSkgbbL10
-X-Proofpoint-GUID: HL7cUVIVMg9qS_FgUbdEeQaDSkgbbL10
-X-Authority-Analysis: v=2.4 cv=YIWvDxGx c=1 sm=1 tr=0 ts=6a25d059 cx=c_pps
- a=WeENfcodrlLV9YRTxbY/uA==:117 a=xqWC_Br6kY4A:10 a=kj9zAlcOel0A:10
- a=FelO9ux0wxsA:10 a=s4-Qcg_JpJYA:10 a=VkNPw1HP01LnGYTKEx00:22
- a=u7WPNUs3qKkmUXheDGA7:22 a=3WHJM1ZQz_JShphwDgj5:22 a=VwQbUJbxAAAA:8
- a=-9TPMfOEyAajJc7o744A:9 a=CjuIK1q_8ugA:10 a=kacYvNCVWA4VmyqE58fU:22
-X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwNjA3MDIwMiBTYWx0ZWRfX4a3NJW14baBo
- qKaF+kryL2OeVnla3FonEdodTTqaHH7bQPdFlW+I6/YtKvxVuesvgXJQl8/0fmXKWTl34hRHSeI
- GoD/W4MDJaqFEmF+EZuem8g2FlchmaALAUgq8EKFas1bK+cLEr+jIXFomKBFA5r4POsSNyTFzYI
- F+fSZcJCqPYtvPGcxY1zEYT7aUVGQGBNDbcm2uGzetFtY2b8c5VVXQtN6/tM1NTblrlWpGAr6Ar
- BZSa7mdtO2/erOTn4gjvwetr07lCgBgOhkvFHuSZc3zYaLPUOZ8IFBwoXb4ze1PTBRVS9Z9E6Fo
- rzwVubdwHqJY7i0fkUo+TamufcDzZVHEJiG9iDTd2ZLI6ijvIyOojmXBSKWPvx7nUcXER/IHVdv
- Rvbn5DHKe+QFDOjvg3XRqADIGXhezhBeEoTDIb0XSXs2NLRRQOBRwCmAawfWOObcZrQxQvd29D/
- ylOnL2DVuQBWwu/HpKw==
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.293,Aquarius:18.0.1143,Hydra:6.1.125,FMLib:17.12.100.49
- definitions=2026-06-07_04,2026-06-05_02,2025-10-01_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
- suspectscore=0 malwarescore=0 lowpriorityscore=0 adultscore=0 impostorscore=0
- spamscore=0 phishscore=0 clxscore=1015 priorityscore=1501 bulkscore=0
- classifier=typeunknown authscore=0 authtc= authcc= route=outbound adjust=0
- reason=mlx scancount=1 engine=8.22.0-2605210000 definitions=main-2606070202
+MIME-Version: 1.0 (generated by SEMI-EPG 1.14.7 - "Harue")
+Content-Type: text/plain; charset=US-ASCII
+X-SA-Exim-Connect-IP: 185.219.108.64
+X-SA-Exim-Rcpt-To: sashiko-reviews@lists.linux.dev, kvm@vger.kernel.org
+X-SA-Exim-Mail-From: maz@kernel.org
+X-SA-Exim-Scanned: No (on disco-boy.misterjones.org); SAEximRunCond expanded to false
 
-On Thu, Jun 04, 2026 at 02:28:03PM +0530, Kathiravan Thirumoorthy wrote:
+On Sun, 07 Jun 2026 19:08:15 +0100,
+sashiko-bot@kernel.org wrote:
 > 
-> On 6/2/2026 10:15 PM, sashiko-bot@kernel.org wrote:
-> > 
-> > > diff --git a/arch/arm64/boot/dts/qcom/ipq5332-rdp441.dts b/arch/arm64/boot/dts/qcom/ipq5332-rdp441.dts
-> > > index 79ec77cfe5527..7fcf632e289f0 100644
-> > > --- a/arch/arm64/boot/dts/qcom/ipq5332-rdp441.dts
-> > > +++ b/arch/arm64/boot/dts/qcom/ipq5332-rdp441.dts
-> > [ ... ]
-> > 
-> > > @@ -46,13 +43,15 @@ &pcie0_phy {
-> > >   	status = "okay";
-> > >   };
-> > > +&pcie0_port0 {
-> > > +	reset-gpios = <&tlmm 38 GPIO_ACTIVE_LOW>;
-> > > +	wake-gpios = <&tlmm 39 GPIO_ACTIVE_LOW>;
-> > > +};
-> > [Severity: High]
-> > This is a pre-existing issue, but does moving these properties to the
-> > Root Port node expose a PHY initialization leak on probe deferral?
-> > 
-> > When the driver processes the port via qcom_pcie_parse_port(), it calls
-> > phy_init() and then immediately calls qcom_pcie_parse_perst(). If parsing
-> > the PERST# GPIO (now added to the port node here) fails with -EPROBE_DEFER,
-> > the function returns early:
+> Thank you for your contribution! Sashiko AI review found 3 potential issue(s) to consider:
 > 
-> EPROBE_DEFER will be returned when the GPIO device has not yet been
-> registered, which I believe should not happen because the GPIO driver is
-> enabled by default on the QCOM platforms.
+> New issues:
+> - [Low] The `kvm_for_each_vncr_tlb` macro introduces an unbraced `if` statement, exposing callers to a dangling `else` vulnerability.
+> 
+> Pre-existing issues:
+> - [High] Concurrent lockless publication and observation of `vcpu->arch.vncr_tlb` lacks memory barriers and `READ_ONCE()`, risking uninitialized memory access.
+> - [High] Unconditional allocation in `kvm_vcpu_allocate_vncr_tlb` leaks memory if `kvm_arch_vcpu_run_pid_change` is restarted.
+> --
+> 
+> commit 03a7f368fcb61f7b51d0623ed1c15d57166b377e
+> Author: Marc Zyngier <maz@kernel.org>
+> Subject: KVM: arm64: Add kvm_for_each_vncr_tlb() helper
+> 
+> This commit introduces a new helper macro kvm_for_each_vncr_tlb() to 
+> iterate over vCPUs that have a valid vncr_tlb allocated. It then
+> converts kvm_invalidate_vncr_ipa() and invalidate_vncr_va() to use
+> this new iterator.
+> 
+> Link: https://lore.kernel.org/r/aiUvSbrWndQeUPc8@v4bel
+> 
+> > diff --git a/arch/arm64/kvm/nested.c b/arch/arm64/kvm/nested.c
+> > index 883b6c1008fbb..e25d7289aa9e5 100644
+> > --- a/arch/arm64/kvm/nested.c
+> > +++ b/arch/arm64/kvm/nested.c
+> > @@ -897,9 +897,21 @@ static void invalidate_vncr(struct vncr_tlb *vt)
+> >  		clear_fixmap(vncr_fixmap(vt->cpu));
+> >  }
+> >  
+> > +/*
+> > + * VNCR TLB invalidation occurs from MMU notifiers or TLBI instructions, and
+> > + * either can race against a vcpu not being onlined yet (no pseudo-TLB
+> > + * allocated). Similarly, the TLB might be invalid.  Skip those, as they
+> > + * obviously don't participate in the invalidation at this stage.
+> > + */
+> > +#define kvm_for_each_vncr_tlb(idx, vcpup, tlbp, kvm)	\
+> > +	kvm_for_each_vcpu(idx, vcpup, kvm)		\
+> > +		if (((tlbp) = vcpup->arch.vncr_tlb) &&	\
+> > +		    (tlbp)->valid)
+> 
+> [Severity: High]
+> This isn't a bug introduced by this patch, but can we read uninitialized
+> memory here due to a missing memory barrier?
+> 
+> When vcpu->arch.vncr_tlb is allocated in kvm_vcpu_allocate_vncr_tlb(),
+> it is assigned via a plain store without smp_store_release(), and not
+> under kvm->mmu_lock.
+> 
+> Concurrently, the MMU notifier path (which holds kvm->mmu_lock) iterates
+> over vCPUs and reads this pointer locklessly using a plain load here without
+> READ_ONCE() or smp_load_acquire(). 
+> 
+> On weakly-ordered architectures, could the observing CPU see a non-NULL
+> pointer before the zero-initialization of kzalloc_obj() is visible?
+> 
+> If so, tlbp->valid could be evaluated using uninitialized memory.
+> If it evaluates to true, invalidate_vncr() could read garbage from
+> vt->cpu and trigger the BUG_ON() in vncr_fixmap(), causing a host panic.
+> 
+> [Severity: High]
+> This is a pre-existing issue, but does kvm_vcpu_allocate_vncr_tlb() leak
+> memory if KVM_RUN is restarted?
+> 
+> In kvm_arch_vcpu_run_pid_change(), kvm_vcpu_allocate_vncr_tlb() is
+> called during the first KVM_RUN and unconditionally allocates the pointer
+> with kzalloc_obj().
+> 
+> If subsequent initialization steps in kvm_arch_vcpu_run_pid_change() fail
+> (like kvm_timer_enable()), it returns an error to userspace without
+> marking the vCPU as having run.
+> 
+> If userspace repeatedly invokes the KVM_RUN ioctl after a failure,
+> could kvm_vcpu_allocate_vncr_tlb() be executed again, overwriting the
+> previous vncr_tlb allocation without freeing it and leaking memory?
+>
 
-It can still be disabled. Please send a fix, it's not worth keepin an
-error in the code.
+Both issues can be solved in one go by taking the kvm->mmu_lock when
+updating vncr_tlb, relying on the release effects of the unlock, and
+testing for vncr_tlb before assignment. I'll hack something.
 
+> [Severity: Low]
+> Does the unbraced if in this macro expose callers to a dangling else
+> vulnerability?
+> 
+> While current usages are safely enclosed in braces, if a future caller uses
+> this macro inside an unbraced if block and attempts to attach an else,
+> the compiler could incorrectly bind it to this hidden internal if.
+
+This is C, and more importantly Linux-C. It's out to get you, on
+purpose, and by design. Try a scoped_guard() with a continue statement
+within a for loop to have some real fun, rather than this hypothetical
+'else' which would be most bizarre. Given the above and how its use is
+wildly promoted within the kernel, I'm not exactly worried.
+
+	M.
 
 -- 
-With best wishes
-Dmitry
+Jazz isn't dead. It just smells funny.
