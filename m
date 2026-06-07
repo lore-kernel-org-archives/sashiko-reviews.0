@@ -1,341 +1,197 @@
-Received: from mail-wm1-f67.google.com (mail-wm1-f67.google.com [209.85.128.67])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from OSPPR02CU001.outbound.protection.outlook.com (mail-norwayeastazon11013069.outbound.protection.outlook.com [40.107.159.69])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5638E17A2FC
-	for <sashiko-reviews@lists.linux.dev>; Sun,  7 Jun 2026 02:41:01 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.67
-ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1780800063; cv=none; b=Y/4PjnG+vPL3Ny7wvXhJ53U7Hg7vkwnNvnnpNtOY3m8Zf9hMGx93aFsGTB+xYCuTfPgfr3QAFdwMEJvfJ0EDixJ1jm/20eggLm5BpIkE/B/7OkJdmcrixs0ErKeEgQQEGgyDU+ShPltYncA+dR2IRCY/6Jz5OZC+xI2pibN1+5A=
-ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1780800063; c=relaxed/simple;
-	bh=jdHt/EMx2RjSEN6qwUYLfnVvh57YIEqA1cafHiHVz8I=;
-	h=Mime-Version:Content-Type:Date:Message-Id:Cc:Subject:From:To:
-	 References:In-Reply-To; b=TKG/hRnMVzIp6nkOzq8WeAMFzMdh3a/ohhRdsWXWdDNUm+MO4WfcgvehWr6vU3Rs9y7I3NHOo4OYzF9PopSRlQnnkjH6m9MukKZvbMWO04MQOjfenIK7Mr9M+F+k6XuToYCsFQk18MXu9/SqYjaQJbuXuT+C+p1yRFUQAZvKk/w=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=AZ2SYppB; arc=none smtp.client-ip=209.85.128.67
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9A0301C5F27;
+	Sun,  7 Jun 2026 02:52:29 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=fail smtp.client-ip=40.107.159.69
+ARC-Seal:i=2; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
+	t=1780800751; cv=fail; b=c1zt5JFUy5BfzrQ+mD15wxeIhEKeioVR0QqdYelnPik3mKradH96sdC1tV2qFkFqOOHthFRGLq3FTBjO7uTnbQmSX7dvMtzBaDYuQUj370WqLtRtE6fD6+bBVQaraPEr1JHAp3GwbUehPkpk0pC4NDdiUP9/9kq2nFKvo3YiV0U=
+ARC-Message-Signature:i=2; a=rsa-sha256; d=subspace.kernel.org;
+	s=arc-20240116; t=1780800751; c=relaxed/simple;
+	bh=N890W0OIjMuU8f5RXoy+tCbHY/xtB0OLz0716CYy6vU=;
+	h=From:To:CC:Subject:Date:Message-ID:References:In-Reply-To:
+	 Content-Type:MIME-Version; b=scwI2t5ssmZll5/2sV/uLJZj5POgankdyqdajiKMfeN0mBd0zV8nbjqg3uauvpdaHM97S6QTuMyWT06htxBnflOxNRqEtLDXoALZ/JYscn+yzyMDr19tC+8kiHNiIx1e5Y4BNs1M45nfl1FauzYIBRoONWszm9kDmrx28p53Sq4=
+ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=oss.nxp.com; spf=pass smtp.mailfrom=oss.nxp.com; dkim=pass (2048-bit key) header.d=NXP1.onmicrosoft.com header.i=@NXP1.onmicrosoft.com header.b=a/FdvTZq; arc=fail smtp.client-ip=40.107.159.69
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=oss.nxp.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=oss.nxp.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="AZ2SYppB"
-Received: by mail-wm1-f67.google.com with SMTP id 5b1f17b1804b1-490b8ac62baso27735295e9.0
-        for <sashiko-reviews@lists.linux.dev>; Sat, 06 Jun 2026 19:41:01 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20251104; t=1780800060; x=1781404860; darn=lists.linux.dev;
-        h=in-reply-to:references:to:from:subject:cc:message-id:date
-         :content-transfer-encoding:mime-version:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=RpjM7elKYnXx9FvoN6+W+67XNbFLMp1wijxRTUf8ZZQ=;
-        b=AZ2SYppBnySVW3wkGNfUA7Qi0Dt8ikXlVHlWR5UTwRoDXR24WdXBjdX+lxUmzKNCym
-         kpfKLdfWaXEJRfNqDuRrSeytacvcwOmJwCGbV+j8/PcJJfUzbeXT7KLYBOYhDRktM24u
-         NXtwuOKl//5Wyqi83U7rwSwEvaEfxasksshh/DzpoT0T1HFq6E+LNZNUXqJKfEevFJ5Q
-         osXkuZ/SvwICQ9Lyuf0f4CG+kt5y0cEytfqSPQsbkdcB6fR+uS8cp7O3wRkOwLPEQ0oD
-         bnIqMqslUvnEXthNmKcBDfbmDojGEt5SXkk4u9UQYbFVzjFt4uocy3WymC+aKztUD/oA
-         0dIg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20251104; t=1780800060; x=1781404860;
-        h=in-reply-to:references:to:from:subject:cc:message-id:date
-         :content-transfer-encoding:mime-version:x-gm-gg:x-gm-message-state
-         :from:to:cc:subject:date:message-id:reply-to;
-        bh=RpjM7elKYnXx9FvoN6+W+67XNbFLMp1wijxRTUf8ZZQ=;
-        b=VQqT0VoyrPaNluX+uunacGTa7uZyoj+qnA2k5GXTEen3GK/5aes5IqzUco0azV4MDu
-         zItX+IVgO3DrzGQotv1P+JLLibTZoVsQ27oT1dzt04o/DBFabDskmdFx9PPL92XfWL4H
-         P7ohHYXbxf8n+WoVPfQIUjW+1Bp3cfvirOSWbIS7vqUPaFnJptBHnL5Rdlsa2gOLiLgr
-         owP3/q1c7gPLU5+vNrJM67Rnm2Zpo5PMIH0ineHN9mhg7GBO+t+WhmAZt834RFeFALl7
-         RntHXNfRu41Ho1KfOBNQ0qS2qUQdzzSQ+h9QyFBBAgygT8vuthDNguzjdm7UhJ19YmpE
-         KUAg==
-X-Gm-Message-State: AOJu0YyhfawFWwccyA5VG24o5sMGwuqovV85UtrPc1NtZ2pIP/4a/f6w
-	cX/xXzzsKxhqdk+mhJo/H1e2lnU2nav2P9+EErtVuCHIZ+SZjnUNaUZf
-X-Gm-Gg: Acq92OFHOmDoky/TXBeevVRCGxrWv2E7S8Y4pmTJE5DyUQD55yWa0qOOyGwJkGu/sq4
-	/gjkVesk6RYAgUZUc7+76x3hSW8Kw+4YkXmaM4OW7zGWfS4yeVUZXCMBZnQneGoOQml/XDbnXDs
-	2Um6/BwStXni95M2FzT9z+yeGJOem82gKnt9tuF3d7L5GRfZ8WX32Z1kMVU+pLH6lCev5QYJAb/
-	ickGadxxz6k65b3swhZiQxWrAOQ6fOpS49fw7PTBXkb9GNu9TDLW76uuK8OpL+GO4K0zT3rEZhn
-	SR5q2WZjgcm59tS7o3G+65FUCCvkKaMBE1njm4Yk7yI2sx7H0Hbphp8my6ZM9aOhAdRgAe6VO0P
-	KItYmVdRe0qzNYto+n/qBiR9bdu8CtzjuHyrDCSBXE+jGnY7KuL1I6kaiTXS8UNBffxQBxYp9k2
-	POJzTIlfEOiIJSmvHTsRD+yVl9CRTfrqwPWi40c7QniNNxwLZkphkSLfuoDXUBDRn9uWjvYNo1x
-	F+rjyhQAqZsr5AAcXn3lIvtDfx6MskHXXUw6dMzRc+d+ZdGxUBaT8wRPsKudNXFAX6QvatqlHrk
-	qXQHAIQUoKs=
-X-Received: by 2002:a05:600c:34d2:b0:48f:e230:29f4 with SMTP id 5b1f17b1804b1-490c2d1fb35mr141120145e9.15.1780800059463;
-        Sat, 06 Jun 2026 19:40:59 -0700 (PDT)
-Received: from localhost (nat-icclus-192-26-29-3.epfl.ch. [192.26.29.3])
-        by smtp.gmail.com with ESMTPSA id 5b1f17b1804b1-490bc3cc140sm331423635e9.9.2026.06.06.19.40.58
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Sat, 06 Jun 2026 19:40:59 -0700 (PDT)
+	dkim=pass (2048-bit key) header.d=NXP1.onmicrosoft.com header.i=@NXP1.onmicrosoft.com header.b="a/FdvTZq"
+ARC-Seal: i=1; a=rsa-sha256; s=arcselector10001; d=microsoft.com; cv=none;
+ b=kkQqHf+YHX13+pix3f8xO6tNoaUTo20L7X1rk69994JRcSUPK1fb71v340nmQcS47q8+fvtRYLlMnqFN6OkXCad4UoBFISiE/cRTSGtvFIIpIcuUc8unz4OYoruW9Ge0xdPPglLOWMls0GykIL0lm88K1UTNpuTcckHO8ulQYHY5l619vNL0UJGkVXR8FzuFMokwKiOv7np0kN8P0n6RMG1Gd6n4A3CipT+WVCelx+/gh+hibzdw+F2kM3cvfruXYhtONB3IDq/0d28XweK1hpf0L8GBep+G0/t0guluZRAnP9awT56O0WjVRUOV/ADdZPBkvKeRZklcchUTz+ii1Q==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com;
+ s=arcselector10001;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
+ bh=N890W0OIjMuU8f5RXoy+tCbHY/xtB0OLz0716CYy6vU=;
+ b=Oht9UKGCa/u/2YZtgBl94s5TggJrhYyT4MhrwbPG7rBuWQuheByDySObv2EWpqO/bkjivf3Q8nWzMZWJjbh8yeAihLzBMS69996cfb2xKqDBnI9JqTFO5cre7twiOdyyjamsyrF6MjyD6xs3TpoKXJKA76aY1IdeVbmzRz2DIH8neTwzORG3rKmPgDtnvqpqnBE0LbzpKR+UtaZ2FJ8CHZGWXioCLdDIlPe13X8vVfhTGPF5mSt6A9SaXmeH0wAlo0TbmM47ZMMa0nhllHpWyvnSxPN6jKLqdeCUPLqANh5XjHPwqa/UAJHpQniM2LXNdU9vWRGY4/LQrmKq//NYtw==
+ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
+ smtp.mailfrom=oss.nxp.com; dmarc=pass action=none header.from=oss.nxp.com;
+ dkim=pass header.d=oss.nxp.com; arc=none
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=NXP1.onmicrosoft.com;
+ s=selector1-NXP1-onmicrosoft-com;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
+ bh=N890W0OIjMuU8f5RXoy+tCbHY/xtB0OLz0716CYy6vU=;
+ b=a/FdvTZqRjJ9ZD2j4QDma63s3r8YrztCDznundEU0HbEO7iHtas7IgOrsqOx19muUthQCWhaAy6YO1sh1oAFYeTgRHhP+h2p3zy/sgitXQmOKufRDAr6RIpcPMJSqzAPW1pF9CZDA+95fQdQtchuJ9ICpUJjVoYiFsTmCVsBPF2h32vIsj3MPEYx/vgW50ZtdWtOatHIaoPkfwWRerAMq+8pHSjjZ6izD9bDJIfTJOsNva/+hyunolWJdEyN4ixKKLxhJuU/AOdcmD6GgOtNumJerZ76MauYnzQpeafHeeNw2rfDcdjjsVuOQxQlbYZqJaRGforhIkpPpRVV/E1OzA==
+Received: from DU2PR04MB8629.eurprd04.prod.outlook.com (2603:10a6:10:2dc::6)
+ by AM0PR04MB12052.eurprd04.prod.outlook.com (2603:10a6:20b:745::13) with
+ Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.21.92.11; Sun, 7 Jun 2026
+ 02:52:23 +0000
+Received: from DU2PR04MB8629.eurprd04.prod.outlook.com
+ ([fe80::9d04:7526:a901:fe47]) by DU2PR04MB8629.eurprd04.prod.outlook.com
+ ([fe80::9d04:7526:a901:fe47%6]) with mapi id 15.21.0092.010; Sun, 7 Jun 2026
+ 02:52:23 +0000
+From: "Wei Fang (OSS)" <wei.fang@oss.nxp.com>
+To: "sashiko-reviews@lists.linux.dev" <sashiko-reviews@lists.linux.dev>
+CC: "Frank.Li@kernel.org" <Frank.Li@kernel.org>, "imx@lists.linux.dev"
+	<imx@lists.linux.dev>, Networking <netdev@vger.kernel.org>
+Subject: RE: [PATCH net-next 08/15] net: enetc: move mac_filter from struct
+ enetc_pf to struct enetc_si
+Thread-Topic: [PATCH net-next 08/15] net: enetc: move mac_filter from struct
+ enetc_pf to struct enetc_si
+Thread-Index: AQHc9Lw+qLB2Scw+g0aggbDG9UW797YxIZoAgAFGPuA=
+Date: Sun, 7 Jun 2026 02:52:23 +0000
+Message-ID:
+ <DU2PR04MB8629EC8987F8FDC3BCDEC176881F2@DU2PR04MB8629.eurprd04.prod.outlook.com>
+References: <20260605065550.3038579-9-wei.fang@oss.nxp.com>
+ <20260606072440.9E3851F00893@smtp.kernel.org>
+In-Reply-To: <20260606072440.9E3851F00893@smtp.kernel.org>
+Accept-Language: en-US
+Content-Language: en-US
+X-MS-Has-Attach:
+X-MS-TNEF-Correlator:
+authentication-results: dkim=none (message not signed)
+ header.d=none;dmarc=none action=none header.from=oss.nxp.com;
+x-ms-exchange-messagesentrepresentingtype: 1
+x-ms-publictraffictype: Email
+x-ms-traffictypediagnostic: DU2PR04MB8629:EE_|AM0PR04MB12052:EE_
+x-ms-office365-filtering-correlation-id: 0fe34581-262b-4a24-f527-08dec43fccf5
+x-ms-exchange-sharedmailbox-routingagent-processed: True
+x-ms-exchange-senderadcheck: 1
+x-ms-exchange-antispam-relay: 0
+x-microsoft-antispam:
+ BCL:0;ARA:13230040|366016|19092799006|1800799024|376014|11063799006|4143699003|56012099006|38070700021|18002099003|22082099003;
+x-microsoft-antispam-message-info:
+ K1FKhmJGat0CvjRZrLu7i/0BSUN51pG/nVv9hZrtBddviJStl1l5+dEx5WBz3u+CZ8a8ye5V0q2tmJHVDwWx8i3O3flHjS7iCWlyttmZUjbOITtXmoqtu5BwXMmm5OLH8rqsBaPw8v9GEApbHdJXLVvuQYMmTHK2gVyTBTdrvvvJtpS3Rv+SOZxGgi8gazq1/3cFh9xIrb9kSiGtZ0JYiI4V9VNPO3F+HkMsBuox/y4W75sDu2MItkYiM3+7rNUjjM/Op9+gRxRMfR/mrfaB3XX5mD7FDXokuK9bNZl3WSFaZ+f/dwJPHphM/aTAb0KOqs0q+r4FSVwWEOc8fS9IVMmg2U8UZzLdJSknTPnm79vTxRzoDJVENIxKHBbNfa0mRptIQVhNYGexwz5AbIGCrgvfL0ZXLT5YzrNOlx1HO/oRswlrKRwJ20ZeEbREbvyztmfxhpP/4IRx4K3JoU5uiR63KGileSzaIUHOpxVyHYwMkm6CUoFwU266/Ow5EAmxVgMWUD+OHilvyZo9XkkVQKQknMFYS1+dVAeQnTshKA8sdXe+LPWF2ZOAh5rWh6Ped5U8IzOLyh3X9LsV3uCthTsSVW1va+xANSJf6mb0K0Edr1Y4cPOYzdn8MFl+VY5Bb9qr3a2HXfD9ydU5AHItKbpRJU/oLndcnC3Xf+xnWjZzbJzmWclMfuycUMa+fDnDbJ8BSYcbJO8goLHqzlhFwyTb/qkKtrjGBE1OPDmQcqCbBKj4yrYyT+9/enkohLw3
+x-forefront-antispam-report:
+ CIP:255.255.255.255;CTRY:;LANG:en;SCL:1;SRV:;IPV:NLI;SFV:NSPM;H:DU2PR04MB8629.eurprd04.prod.outlook.com;PTR:;CAT:NONE;SFS:(13230040)(366016)(19092799006)(1800799024)(376014)(11063799006)(4143699003)(56012099006)(38070700021)(18002099003)(22082099003);DIR:OUT;SFP:1101;
+x-ms-exchange-antispam-messagedata-chunkcount: 1
+x-ms-exchange-antispam-messagedata-0:
+ =?utf-8?B?Z0J2eU5wejQ3ZmhlNTQzbHdhQmFFbHc3TURTemJ1NEo5bFMrZ0g2cC9CeXFE?=
+ =?utf-8?B?SytDREdEL2VnUm1yS01Ueml3RWM5dU94RVJ2d05PSzltbEpnN1RtUXJqMkI2?=
+ =?utf-8?B?VVFUUVFnWHpsUFRjeGhFMXFQU1VyMmxtbTlVamN5bWF4QjJUV0t5ZVR2VUNn?=
+ =?utf-8?B?U2FtNnJGWkVtd0tkRFkyanUxUGI2UGFpMkF2M3NsanhlZXRBc0xyRmU2aHZN?=
+ =?utf-8?B?NEFaVHBadjhTUDBnVjNzUzFnNUdnaml0RFJiL3ZwVnIvLzNKc24wWWFLQm9i?=
+ =?utf-8?B?ZG5NL0Nmclh5SmNDVEFsSWN3NVF2aGlFK1ZjNVNCcnN5b3M4RHB1ZmdXSUY3?=
+ =?utf-8?B?TU9zSXRtaTNCK0ZYZ2NITmhDUjBSdHY5dGN5SjBka0pLQXFDeGMwcEd6NmpO?=
+ =?utf-8?B?VXVMbGU1aGlxek9XM0FGVklTcE96MU1KdGduK1F2bEM5Zk54OEVZL1RsVkZ1?=
+ =?utf-8?B?UkJLL3gwTDZTdXFjVzZRdlhoLzNsT3locHBzMitIQkN6Q0VERkJ0MVRlQ0xZ?=
+ =?utf-8?B?aUdmTWtnUGVYbEdBRHAyRWlWUE54Rlc0WkRPczZjK1VKSlFkcmtVNGpVUDdZ?=
+ =?utf-8?B?bks0Nk1pdnc5UHkrakdXTXNCODNVZWhWSE93azhUcGZsa0gvaUZOcllrVEds?=
+ =?utf-8?B?djFrUzhEeTNTOVlkM3grNDdGajZCRHI3WDNHZjc0YkY5c25lY3dnbzN2WHhC?=
+ =?utf-8?B?RGd3aHdaNmJlZkNjZDJsYWY5WnJOSXhtUVpjUlI2aWRlNXhQdU8xUWZmVWNn?=
+ =?utf-8?B?bDE2MFRESUtZRXhQN0ZFR3ROSFQ5eTdMSm9XMDZGQkFkRlBnSnhKcVo0VlIw?=
+ =?utf-8?B?U0hpcFJ5TDNwN29HZXdyNkYyZ3JjNW9teUozQVpaMEtyTFkwMGdPVVhTSDdZ?=
+ =?utf-8?B?SzJCbzZNU3BSYXoxRVQwZGFWSFp1aGRmTU9qM2RFTzBiY2VBQmppNmN1RzNq?=
+ =?utf-8?B?SFBDdWI5ZTFjQU1saEN6NjFCK1ZXUldRUzZ6enMyNjQ4bGVmbmxFWUxXUzlo?=
+ =?utf-8?B?a1pNS2lEbUlWdklLQjhRN0duRmNWckg4S0pmbksrR21NcWJ6NzVDeTJPaloz?=
+ =?utf-8?B?T2swR2VYUUo2bXhCVVVpZ1ZKWEVXL00za1RMZG5IRUdzTHVTZkk2dUlBRFQy?=
+ =?utf-8?B?UFY3cjN5Vkp1OEUvSUVnckVtcWNRdXBIMGt1SktrZTBuckFKZzcwemlJK0Fr?=
+ =?utf-8?B?ZVVTRnNmTE0yK0R5UmEzcndtcDh3MjNYTmZ4SHI3Sk83OFpJYWFucFphZUwx?=
+ =?utf-8?B?cGRlSTU0Q2NzcDRRRkZ2Zng2Uy9IOThWU1VOZ3hNeUxjMWVTZmFUbXowdVNC?=
+ =?utf-8?B?cmxyWGJIK1lJd3kwQmw5aHR6Z0RPM0laS1dpNkZxZ0U4dEloNDNYZEMwZVR6?=
+ =?utf-8?B?UTdHN2N2Vlp6K2I3VmE0OUZEQ0pPc3hjVE5vZmRFcHNGVUc1M0NkOTdESTc1?=
+ =?utf-8?B?Q2d1Y0tWd3pKR3d0aGxvSU9mbk0rOU5DVlBaSENCdnd4NEpXb2wxNUkvVWYy?=
+ =?utf-8?B?TE12bUhWcnJESWVOTk1WaDRTRGxmaVpWWnY4a2NZTTFLTldPMlM1eWI1VTY0?=
+ =?utf-8?B?U1pkelBOa2xNbEI3cTUxeTFtKzdXVS8vL3lsZFFoWlYxN0t1Tmx4aVZDcjNG?=
+ =?utf-8?B?c3NWQ1RDcnBBWFZsWVBjYzBqR2RBd1prRHpkTi9vRXFJMkhSRDBIVTBtdmJu?=
+ =?utf-8?B?NG9WMEIrMUwvZFR2cE85aDZTRC9DcTQ2bUx4VUZmcnhmUnNkWng1L3NKSzBH?=
+ =?utf-8?B?T0loQWNrVVZCZHhHZmhDUEtGZXhwQkFlQmNZODRGSXNaaEZuZi9jWk9yalZP?=
+ =?utf-8?B?V1krclk5cjhVbDBhZk5vczU4MmhwQTdjVnF3K0dwb3BaTjBlWC9JQ3ZHSFNK?=
+ =?utf-8?B?S1VxV1dmRkFWY0J0RUhGck8yM3A5UkNUakl1Q2JRNE9uWmJ2VHdxS2htajZm?=
+ =?utf-8?B?MFFkSWJUUlNrU0NTMEFqVDNySFkzK0hDbzZvSGs3ZFdweTBSU2RaT3E1R3Ur?=
+ =?utf-8?B?TTlCRUpVVDRySjVSUURmdkVNOEJ0V1ZFNGZOOWNmaEFrY1NQMkNNWUpEREE4?=
+ =?utf-8?B?ZU45UmJtdDVMa2h3UmxmRzRTNjZCNDAxQjkzUHRUaXk3T0hGOWtRUTg5aHgw?=
+ =?utf-8?B?cGRSRmU5TTRnZTJSOXpBT3h0N3NPQytyTVlVVEI4LzlIMzRXRlFDT3IwbTFM?=
+ =?utf-8?B?Y1F0cThxU0VhdXMrUjRITXpOZDFuTFBvcDB0eCtVS3VXQXQwSEhHWUE4YXUr?=
+ =?utf-8?B?ckZaa1hPN1hRVEFQZEpKL0d4Ly9QY0V5S01GZWxKMmwxQU1GbDRtZ1J3SmNH?=
+ =?utf-8?Q?Bbiq/ZKL85yp0Xs1Wd?=
+Content-Type: text/plain; charset="utf-8"
+Content-Transfer-Encoding: base64
 Precedence: bulk
 X-Mailing-List: sashiko-reviews@lists.linux.dev
 List-Id: <sashiko-reviews.lists.linux.dev>
 List-Subscribe: <mailto:sashiko-reviews+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:sashiko-reviews+unsubscribe@lists.linux.dev>
-Mime-Version: 1.0
-Content-Transfer-Encoding: quoted-printable
-Content-Type: text/plain; charset=UTF-8
-Date: Sun, 07 Jun 2026 04:40:58 +0200
-Message-Id: <DJ2GXOXL4O0G.9DI5VYR6GUMU@gmail.com>
-Cc: <sashiko-reviews@lists.linux.dev>, <bpf@vger.kernel.org>
-Subject: Re: [PATCH bpf-next 1/1] bpf: fix deadlock in special field
- destruction in NMI
-From: "Kumar Kartikeya Dwivedi" <memxor@gmail.com>
-To: "Justin Suess" <utilityemal77@gmail.com>, "Kumar Kartikeya Dwivedi"
- <memxor@gmail.com>
-X-Mailer: aerc 0.21.0
-References: <20260519011450.1144935-2-utilityemal77@gmail.com>
- <20260519015123.36096C2BCB7@smtp.kernel.org> <agxkV-hsdwhvMliI@suesslenovo>
- <agyG3eQwgmoJwmj2@suesslenovo> <DIMWGCWL1AG2.14F7CN23GMS8N@gmail.com>
- <aiRG9nsbRi2cO3XT@zenbox>
-In-Reply-To: <aiRG9nsbRi2cO3XT@zenbox>
+MIME-Version: 1.0
+X-OriginatorOrg: oss.nxp.com
+X-MS-Exchange-CrossTenant-AuthAs: Internal
+X-MS-Exchange-CrossTenant-AuthSource: DU2PR04MB8629.eurprd04.prod.outlook.com
+X-MS-Exchange-CrossTenant-Network-Message-Id: 0fe34581-262b-4a24-f527-08dec43fccf5
+X-MS-Exchange-CrossTenant-originalarrivaltime: 07 Jun 2026 02:52:23.3779
+ (UTC)
+X-MS-Exchange-CrossTenant-fromentityheader: Hosted
+X-MS-Exchange-CrossTenant-id: 686ea1d3-bc2b-4c6f-a92c-d99c5c301635
+X-MS-Exchange-CrossTenant-mailboxtype: HOSTED
+X-MS-Exchange-CrossTenant-userprincipalname: qgW49ZsdZpryZoxXvmCKW85PAPqnBjLCzv1QgN4wqUZbEHRcQwj1b9DGK/LD3iEsLL8xlYrH0vNfKSiKVz1//w==
+X-MS-Exchange-Transport-CrossTenantHeadersStamped: AM0PR04MB12052
 
-On Sat Jun 6, 2026 at 6:27 PM CEST, Justin Suess wrote:
-> On Tue, May 19, 2026 at 09:27:58PM +0200, Kumar Kartikeya Dwivedi wrote:
->> On Tue May 19, 2026 at 5:59 PM CEST, Justin Suess wrote:
->> > On Tue, May 19, 2026 at 10:42:44AM -0400, Justin Suess wrote:
->> >> Looks like this kfunc also tries to eagerly free fields and is callab=
-le
->> >> from tp_btf/nmi_handler with no recovery mechanism.
->> >>
->> >> I don't see a good way to handle this at all... it also is effectivel=
-y
->> >> already bugged in the existing code unless I'm missing something
->> >>
->> >> Since you can use it to call abritrary dtors in NMI.
->> >>
->> >> 1.
->> >>
->> >> In some context where task_acquire is valid:
->> >>
->> >> struct blah {
->> >>   struct task_struct __kptr* task;
->> >> }
->> >>
->> >> b =3D bpf_task_acquire(...)
->> >> a =3D bpf_obj_new(typeof(*blah_ptr));
->> >> bpf_kptr_xchg(a->task, b);
->> >>
->> >> 2.
->> >>
->> >> Then xchg a into map
->> >> bpf_kptr_xchg([map slot], a);
->> >> ...
->> >>
->> >> 3.
->> >>
->> >> In tp_btf/nmi_handler we exchange the obj out of the map
->> >> and then drop it.
->> >>
->> >> c =3D bpf_kptr_xchg([slot where a is stored], NULL);
->> >> bpf_obj_drop(c);
->> >>
->> >> And because this can be called on an object not in a map, we don't ha=
-ve
->> >> a good recovery mechanism.
->> >>
->> >> Because tp_btf/nmi_handler is always in_nmi and hence irqs_disabled, =
-in
->> >> the code before this patch the task_struct dtor will be invoked and
->> >> cause a deadlock.
->> >>
->> >> This patch will not fix the issue and just free a struct blah holding=
- the
->> >> reference without actually dropping it.
->> >>
->> >> Unless I'm missing something then this whole approach taken by this
->> >> patch can't handle this case since the bpf_obj is detached from the m=
-ap
->> >> entirely and has no allocator recovery mechanism at all.
->> >>
->> >> Then we are back to square 1 needing to defer the freeing with irq wo=
-rk.
->> >>
->> >> Kumar / Alexei do you have anything on this?
->> >
->> > I've confirmed this is a viable mechanism to deadlock as well
->> >
->> > Using the above approach, just exchanging out of a map and dropping th=
-e
->> > bpf_obj containing a task_struct kptr can be used to cause a deadlock
->> > outside any map path:
->> >
->> > On 576482b55c19e7ec00e162a0fde4c4f1a95128c7 (bpf-next/master) w/ RCU_N=
-OCB_CPU/RCU_EXPERT:
->> >
->> >   [   10.773819] =3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=
-=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D
->> >   [   10.773820] WARNING: inconsistent lock state
->> >   [   10.773821] 7.1.0-rc2-g576482b55c19 #150 Not tainted
->> >   [   10.773822] --------------------------------
->> >   [   10.773822] inconsistent {INITIAL USE} -> {IN-NMI} usage.
->> >   [   10.773823] test_progs/471 [HC1[1]:SC0[0]:HE0:SE1] takes:
->> >   [   10.773825] ffff98623d66f0e8 (&rdp->nocb_lock){-.-.}-{2:2}, at: _=
-_call_rcu_common.constprop.0+0x54a/0x730
->> >   [   10.773832] {INITIAL USE} state was registered at:
->> >   [   10.773832]   lock_acquire+0xbf/0x2e0
->> >   [   10.773835]   _raw_spin_lock+0x30/0x40
->> >   [   10.773838]   rcu_nocb_gp_kthread+0x13f/0xb90
->> >   [   10.773840]   kthread+0xf4/0x130
->> >   [   10.773845]   ret_from_fork+0x264/0x330
->> >   [   10.773848]   ret_from_fork_asm+0x1a/0x30
->> >   [   10.773851] irq event stamp: 1127908
->> >   [   10.773851] hardirqs last  enabled at (1127907): [<ffffffff871044=
-84>] _raw_spin_unlock_irqrestore+0x44/0x60
->> >   [   10.773853] hardirqs last disabled at (1127908): [<ffffffff871041=
-a1>] _raw_spin_lock_irqsave+0x51/0x60
->> >   [   10.773854] softirqs last  enabled at (1127782): [<ffffffff862e6b=
-80>] __irq_exit_rcu+0xc0/0x100
->> >   [   10.773857] softirqs last disabled at (1127777): [<ffffffff862e6b=
-80>] __irq_exit_rcu+0xc0/0x100
->> >   [   10.773858]
->> >                  other info that might help us debug this:
->> >   [   10.773859]  Possible unsafe locking scenario:
->> >
->> >   [   10.773859]        CPU0
->> >   [   10.773859]        ----
->> >   [   10.773860]   lock(&rdp->nocb_lock);
->> >   [   10.773861]   <Interrupt>
->> >   [   10.773861]     lock(&rdp->nocb_lock);
->> >   [   10.773862]
->> >                   *** DEADLOCK ***
->> >
->> >   [   10.773862] 4 locks held by test_progs/471:
->> >   [   10.773863]  #0: ffffffff885ccaf0 (dup_mmap_sem){.+.+}-{0:0}, at:=
- copy_process+0x1e39/0x2b80
->> >   [   10.773866]  #1: ffff9861c33a2ff8 (&mm->mmap_lock){++++}-{4:4}, a=
-t: dup_mmap+0x83/0x990
->> >   [   10.773871]  #2: ffff9861c1152ff8 (&mm->mmap_lock/1){+.+.}-{4:4},=
- at: dup_mmap+0xc8/0x990
->> >   [   10.773874]  #3: ffffffff885f43b8 (kmemleak_lock){-.-.}-{2:2}, at=
-: __create_object+0x3a/0xa0
->> >   [   10.773877]
->> >                  stack backtrace:
->> >   [   10.773879] CPU: 1 UID: 0 PID: 471 Comm: test_progs Not tainted 7=
-.1.0-rc2-g576482b55c19 #150 PREEMPT(full)
->> >   [   10.773881] Hardware name: QEMU Standard PC (Q35 + ICH9, 2009), B=
-IOS rel-1.17.0-0-gb52ca86e094d-prebuilt.qemu.org 04/01/2014
->> >   [   10.773882] Call Trace:
->> >   [   10.773883]  <NMI>
->> >   [   10.773884]  dump_stack_lvl+0x5d/0x80
->> >   [   10.773887]  print_usage_bug.part.0+0x22b/0x2c0
->> >   [   10.773891]  lock_acquire+0x295/0x2e0
->> >   [   10.773893]  ? __call_rcu_common.constprop.0+0x54a/0x730
->> >   [   10.773896]  _raw_spin_lock+0x30/0x40
->> >   [   10.773898]  ? __call_rcu_common.constprop.0+0x54a/0x730
->> >   [   10.773899]  __call_rcu_common.constprop.0+0x54a/0x730
->> >   [   10.773903]  bpf_obj_free_fields+0x118/0x250
->> >   [   10.773907]  bpf_obj_drop+0x4f/0x80
->> >   [   10.773910]  bpf_prog_b7ff9c2e6c583824_clear_task_kptrs_from_nmi+=
-0x174/0x1f4
->> >   [   10.773912]  bpf_trace_run3+0x126/0x430
->> >   [   10.773916]  ? __pfx_perf_event_nmi_handler+0x10/0x10
->> >   [   10.773919]  nmi_handle.part.0+0x15b/0x250
->> >   [   10.773922]  ? __pfx_perf_event_nmi_handler+0x10/0x10
->> >   [   10.773924]  default_do_nmi+0x120/0x180
->> >   [   10.773927]  exc_nmi+0xe3/0x110
->> >   [   10.773928]  end_repeat_nmi+0xf/0x53
->> >   [   10.773931] RIP: 0010:__link_object+0xb4/0x270
->> >   [   10.773932] Code: 00 00 00 48 c7 c6 80 36 bb 89 48 c7 43 70 00 00=
- 00 00 48 c7 43 78 00 00 00 00 48 89 3d 35 62 50 03 eb 66 48 89 c8 48 8b 48=
- 30 <48> 8d 70 10 48 39 d1 73 11 48 03 48 38 48 39 cf 0f 82 2f 01 00 00
->> >   [   10.773933] RSP: 0018:ffffb516013b7a60 EFLAGS: 00000082
->> >   [   10.773935] RAX: ffff9861c37b5c80 RBX: ffff9861df869878 RCX: ffff=
-9861c3776420
->> >   [   10.773936] RDX: ffff9861c3769e00 RSI: ffff9861c43564f8 RDI: ffff=
-9861c3769d00
->> >   [   10.773936] RBP: 0000000000000100 R08: 0000000000000000 R09: 0000=
-000000000000
->> >   [   10.773937] R10: 0000000000000000 R11: 0000000000000000 R12: ffff=
-9861c3769d00
->> >   [   10.773937] R13: 0000000000000286 R14: 0000000000000000 R15: 0000=
-000000000001
->> >   [   10.773943]  ? __link_object+0xb4/0x270
->> >   [   10.773945]  ? __link_object+0xb4/0x270
->> >   [   10.773947]  </NMI>
->> >   [   10.773947]  <TASK>
->> >   [   10.773948]  __create_object+0x51/0xa0
->> >   [   10.773951]  kmem_cache_alloc_from_sheaf_noprof+0x1e2/0x290
->> >   [   10.773956]  mas_dup_build+0x41d/0x7f0
->> >   [   10.773960]  __mt_dup+0x78/0xf0
->> >   [   10.773967]  dup_mmap+0x12e/0x990
->> >   [   10.773972]  ? srso_alias_return_thunk+0x5/0xfbef5
->> >   [   10.773973]  ? lock_acquire+0xbf/0x2e0
->> >   [   10.773979]  copy_process+0x1e45/0x2b80
->> >   [   10.773985]  kernel_clone+0xbb/0x3d0
->> >   [   10.773986]  ? srso_alias_return_thunk+0x5/0xfbef5
->> >   [   10.773987]  ? __lock_acquire+0x481/0x2590
->> >   [   10.773993]  __do_sys_clone+0x65/0x90
->> >   [   10.773998]  do_syscall_64+0xa1/0x5f0
->> >   [   10.774002]  entry_SYSCALL_64_after_hwframe+0x76/0x7e
->> >   [   10.774003] RIP: 0033:0x7f9da26e8f2f
->> >   [   10.774005] Code: 89 e7 e8 c4 0e f6 ff 45 31 c0 31 d2 31 f6 64 48=
- 8b 04 25 10 00 00 00 bf 11 00 20 01 4c 8d 90 d0 02 00 00 b8 38 00 00 00 0f=
- 05 <48> 3d 00 f0 ff ff 77 59 89 c5 85 c0 75 31 64 48 8b 04 25 10 00 00
->> >   [   10.774005] RSP: 002b:00007ffc278b4540 EFLAGS: 00000246 ORIG_RAX:=
- 0000000000000038
->> >   [   10.774007] RAX: ffffffffffffffda RBX: 0000000000000000 RCX: 0000=
-7f9da26e8f2f
->> >   [   10.774007] RDX: 0000000000000000 RSI: 0000000000000000 RDI: 0000=
-000001200011
->> >   [   10.774008] RBP: 00007ffc278b4740 R08: 0000000000000000 R09: 0000=
-000000000001
->> >   [   10.774008] R10: 00007f9da2acaf10 R11: 0000000000000246 R12: 0000=
-000000000003
->> >   [   10.774009] R13: 0000000000000001 R14: 0000000000000000 R15: 0000=
-5625de8b38d0
->> >   [   10.774014]  </TASK>
->> >   [   10.866584] perf: interrupt took too long (6193 > 6190), lowering=
- kernel.perf_event_max_sample_rate to 32000
->> >   [   16.630663] kauditd_printk_skb: 30 callbacks suppressed
->> >
->> > I can give the reproducer if wished.
->> >
->> > You can see the path involves bpf_obj_drop and not any map methods at
->> > all.
->> >
->> > But basically this makes the whole mechanism of relying on map allocat=
-ors to
->> > recycle and free objects in irqs_disabled contexts unsound because kpt=
-rs
->> > can live and be released outside map contexts.
->>
->> The approach in this version is still different than what I had proposed=
-. For
->> the particular case you highlighted, we should just reject bpf_obj_drop(=
-) in
->> is_tracing_prog_type() once the object has kptr fields etc. If someone s=
-till
->> wants it they should just use bpf_wq to defer manually.
->>
-> Would you be opposed to me submitting a fix for *just* the bpf_obj_drop c=
-ase?
->
-> Since your proposed solution for that is just a tiny verifier fix w/ btf_=
-record_has_field and a prog_type check and is mostly unrelated to this fix =
-for the map cases.
->
-> It's a small fix, but just don't want to be rude and submit anything if
-> you're working on that too in your patch. :)
->
-> Thanks for your guidance with this fix in general and apologize for my
-> misinterpretation of the intended route.
-
-Unfortunately I already prepared it, though for both fixes I already kept y=
-our
-authorship since you've put in so much effort in reporting, reproducing, an=
-d
-testing various fixes, the adjustments might as well have been done by you
-rather than me.
-
-I will send it later today, once I do, please help in reviewing and testing
-corner cases in the fixes. Reviewing code will be more appreciated than cra=
-nking
-out new code, there are few people who can do that.
-
-Thanks
-
->
-> Kind Regards,
-> Justin
->> The whole prealloc related change to the map is unnecessary, as I said b=
-efore.
->> It's an orthogonal change. We should also not use irqs_disabled() and ju=
-st do
->> the skipping unconditionally.
->>
->> Let me work on a patch, since the nuance is obviously getting lost in em=
-ail.
-
+PiA+IGRpZmYgLS1naXQgYS9kcml2ZXJzL25ldC9ldGhlcm5ldC9mcmVlc2NhbGUvZW5ldGMvZW5l
+dGM0X3BmLmMNCj4gYi9kcml2ZXJzL25ldC9ldGhlcm5ldC9mcmVlc2NhbGUvZW5ldGMvZW5ldGM0
+X3BmLmMNCj4gPiBpbmRleCA0Y2ZmMmYxMjM3ZjE4Li5mNjkyMGRlZDlmN2VmIDEwMDY0NA0KPiA+
+IC0tLSBhL2RyaXZlcnMvbmV0L2V0aGVybmV0L2ZyZWVzY2FsZS9lbmV0Yy9lbmV0YzRfcGYuYw0K
+PiA+ICsrKyBiL2RyaXZlcnMvbmV0L2V0aGVybmV0L2ZyZWVzY2FsZS9lbmV0Yy9lbmV0YzRfcGYu
+Yw0KPiA+IEBAIC0yMjUsMTEgKzIyNSwxMiBAQCBzdGF0aWMgdm9pZCBlbmV0YzRfcGZfc2V0X21h
+Y19oYXNoX2ZpbHRlcihzdHJ1Y3QNCj4gZW5ldGNfcGYgKnBmLCBpbnQgdHlwZSkNCj4gPiAgCXN0
+cnVjdCBuZXRfZGV2aWNlICpuZGV2ID0gcGYtPnNpLT5uZGV2Ow0KPiA+ICAJc3RydWN0IGVuZXRj
+X21hY19maWx0ZXIgKm1hY19maWx0ZXI7DQo+ID4gIAlzdHJ1Y3QgZW5ldGNfaHcgKmh3ID0gJnBm
+LT5zaS0+aHc7DQo+ID4gKwlzdHJ1Y3QgZW5ldGNfc2kgKnNpID0gcGYtPnNpOw0KPiA+ICAJc3Ry
+dWN0IG5ldGRldl9od19hZGRyICpoYTsNCj4gPg0KPiA+ICAJbmV0aWZfYWRkcl9sb2NrX2JoKG5k
+ZXYpOw0KPiA+ICAJaWYgKHR5cGUgJiBFTkVUQ19NQUNfRklMVEVSX1RZUEVfVUMpIHsNCj4gPiAt
+CQltYWNfZmlsdGVyID0gJnBmLT5tYWNfZmlsdGVyW1VDXTsNCj4gPiArCQltYWNfZmlsdGVyID0g
+JnNpLT5tYWNfZmlsdGVyW1VDXTsNCj4gDQo+IFtTZXZlcml0eTogSGlnaF0NCj4gVGhpcyBpc24n
+dCBhIGJ1ZyBpbnRyb2R1Y2VkIGJ5IHRoaXMgcGF0Y2gsIGJ1dCBvbiAzMi1iaXQgcGxhdGZvcm1z
+LCBkb2VzDQo+IGRlcmVmZXJlbmNpbmcgbWFjX2hhc2hfdGFibGUgdHJ1bmNhdGUgdGhlIDY0LWJp
+dCBmaWx0ZXIgZG93biB0byAzMiBiaXRzPw0KPiANCj4gVGhlIG1hY19oYXNoX3RhYmxlIGlzIGRl
+Y2xhcmVkIGFzIERFQ0xBUkVfQklUTUFQKG1hY19oYXNoX3RhYmxlLCA2NCksDQo+IHdoaWNoIGV2
+YWx1YXRlcyB0byBhbiBhcnJheSBvZiB0d28gdW5zaWduZWQgbG9uZyBlbGVtZW50cyBvbiAzMi1i
+aXQgc3lzdGVtcy4NCj4gV2hlbiBjb25maWd1cmluZyB0aGUgaGFyZHdhcmUgbGF0ZXIgaW4gdGhp
+cyBmdW5jdGlvbjoNCj4gDQo+IGVuZXRjNF9wZl9zZXRfbWFjX2hhc2hfZmlsdGVyKCkgew0KPiAg
+ICAgICAgIC4uLg0KPiAgICAgICAgIGVuZXRjNF9wZl9zZXRfc2lfdWNfaGFzaF9maWx0ZXIoaHcs
+IDAsDQo+ICptYWNfZmlsdGVyLT5tYWNfaGFzaF90YWJsZSk7DQo+IH0NCj4gDQo+IERlcmVmZXJl
+bmNpbmcgbWFjX2hhc2hfdGFibGUgZGlyZWN0bHkgbGlrZSB0aGlzIG9ubHkgcGFzc2VzIHRoZSBm
+aXJzdA0KPiB1bnNpZ25lZCBsb25nLiBTaW5jZSBlbmV0YzRfcGZfc2V0X3NpX3VjX2hhc2hfZmls
+dGVyKCkgdGFrZXMgYSB1NjQNCj4gcGFyYW1ldGVyLCB0aGUgMzItYml0IHZhbHVlIHdpbGwgYmUg
+emVyby1leHRlbmRlZCwgZWZmZWN0aXZlbHkgbG9zaW5nIHRoZQ0KPiB1cHBlciAzMiBiaXRzIG9m
+IHRoZSBNQUMgaGFzaC4NCj4gDQo+IFsgLi4uIF0NCj4gDQo+ID4gZGlmZiAtLWdpdCBhL2RyaXZl
+cnMvbmV0L2V0aGVybmV0L2ZyZWVzY2FsZS9lbmV0Yy9lbmV0Y19wZi5jDQo+IGIvZHJpdmVycy9u
+ZXQvZXRoZXJuZXQvZnJlZXNjYWxlL2VuZXRjL2VuZXRjX3BmLmMNCj4gPiBpbmRleCAzOGZjYzdi
+NWZjNmRhLi4yMDlhMzUwMzYwOWY1IDEwMDY0NA0KPiA+IC0tLSBhL2RyaXZlcnMvbmV0L2V0aGVy
+bmV0L2ZyZWVzY2FsZS9lbmV0Yy9lbmV0Y19wZi5jDQo+ID4gKysrIGIvZHJpdmVycy9uZXQvZXRo
+ZXJuZXQvZnJlZXNjYWxlL2VuZXRjL2VuZXRjX3BmLmMNCj4gPiBAQCAtMTExLDEwICsxMTEsOSBA
+QCBzdGF0aWMgdm9pZCBlbmV0Y19zZXRfbWFjX2h0X2ZsdChzdHJ1Y3QgZW5ldGNfc2kgKnNpLA0K
+PiBpbnQgc2lfaWR4LCBpbnQgdHlwZSwNCj4gPiAgCX0NCj4gPiAgfQ0KPiA+DQo+ID4gLXN0YXRp
+YyB2b2lkIGVuZXRjX3N5bmNfbWFjX2ZpbHRlcnMoc3RydWN0IGVuZXRjX3BmICpwZikNCj4gPiAr
+c3RhdGljIHZvaWQgZW5ldGNfc3luY19tYWNfZmlsdGVycyhzdHJ1Y3QgZW5ldGNfc2kgKnNpKQ0K
+PiA+ICB7DQo+ID4gLQlzdHJ1Y3QgZW5ldGNfbWFjX2ZpbHRlciAqZiA9IHBmLT5tYWNfZmlsdGVy
+Ow0KPiA+IC0Jc3RydWN0IGVuZXRjX3NpICpzaSA9IHBmLT5zaTsNCj4gPiArCXN0cnVjdCBlbmV0
+Y19tYWNfZmlsdGVyICpmID0gc2ktPm1hY19maWx0ZXI7DQo+ID4gIAlpbnQgaSwgcG9zOw0KPiAN
+Cj4gW1NldmVyaXR5OiBIaWdoXQ0KPiBUaGlzIGlzIGEgcHJlLWV4aXN0aW5nIGlzc3VlLCBidXQg
+ZG9lcyBlbmV0Y19zeW5jX21hY19maWx0ZXJzKCkgYWxzbyB0cnVuY2F0ZQ0KPiB0aGUgaGFzaCB0
+YWJsZSBvbiAzMi1iaXQgYXJjaGl0ZWN0dXJlcz8NCj4gDQo+IGVuZXRjX3N5bmNfbWFjX2ZpbHRl
+cnMoKSB7DQo+ICAgICAgICAgLi4uDQo+ICAgICAgICAgZW5ldGNfc2V0X21hY19odF9mbHQoc2ks
+IDAsIGksICpmLT5tYWNfaGFzaF90YWJsZSk7DQo+IH0NCj4gDQo+IExpa2UgaW4gZW5ldGM0X3Bm
+X3NldF9tYWNfaGFzaF9maWx0ZXIoKSwgcGFzc2luZyAqZi0+bWFjX2hhc2hfdGFibGUgb25seQ0K
+PiBwcm92aWRlcyB0aGUgZmlyc3QgMzIgYml0cyBvbiAzMi1iaXQgcGxhdGZvcm1zLiBGdXJ0aGVy
+bW9yZSwNCj4gZW5ldGNfc2V0X21hY19odF9mbHQoKSBhY2NlcHRzIGFuIHVuc2lnbmVkIGxvbmcg
+Zm9yIHRoZSBoYXNoOg0KPiANCj4gc3RhdGljIHZvaWQgZW5ldGNfc2V0X21hY19odF9mbHQoc3Ry
+dWN0IGVuZXRjX3NpICpzaSwgaW50IHNpX2lkeCwgaW50IHR5cGUsDQo+ICAgICAgICAgICAgICAg
+ICAgICAgICAgICAgICAgICAgIHVuc2lnbmVkIGxvbmcgaGFzaCkNCj4gew0KPiAgICAgICAgIC4u
+Lg0KPiAgICAgICAgIGVuZXRjX3BvcnRfd3IoJnNpLT5odywgRU5FVENfUFNJVU1IRlIxKHNpX2lk
+eCksDQo+ICAgICAgICAgICAgICAgICAgICAgICB1cHBlcl8zMl9iaXRzKGhhc2gpKTsNCj4gfQ0K
+PiANCj4gU2luY2UgaGFzaCBpcyBhbiB1bnNpZ25lZCBsb25nLCB1cHBlcl8zMl9iaXRzKGhhc2gp
+IHdpbGwgYWx3YXlzIGV2YWx1YXRlIHRvIDANCj4gb24gMzItYml0IHBsYXRmb3Jtcy4gSXMgdGhl
+cmUgYSByaXNrIHRoYXQgYW55IHVuaWNhc3Qgb3IgbXVsdGljYXN0IE1BQw0KPiBhZGRyZXNzZXMg
+dGhhdCBoYXNoIHRvIGJpdHMgMzItNjMgd2lsbCBiZSBzaWxlbnRseSBkcm9wcGVkIGJ5IHRoZSBo
+YXJkd2FyZQ0KPiBmaWx0ZXI/DQoNCkxTMTAyOEEsIGkuTVg5NS85NCBhbmQgbGF0ZXIgaS5NWCBz
+ZXJpZXMgYW5kIFMzMk43IGFyZSBhbGwgNjQtYml0IGFyY2hpdGVjdHVyZXMuDQpTbyB0aGlzIG5v
+dCBhIHJlYWwgaXNzdWUuDQoNCg==
