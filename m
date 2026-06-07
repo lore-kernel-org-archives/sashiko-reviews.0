@@ -1,295 +1,166 @@
-Received: from mail-yx1-f49.google.com (mail-yx1-f49.google.com [74.125.224.49])
+Received: from mail-pl1-f182.google.com (mail-pl1-f182.google.com [209.85.214.182])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D900F38BF7F
-	for <sashiko-reviews@lists.linux.dev>; Sun,  7 Jun 2026 15:05:26 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=74.125.224.49
-ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1780844728; cv=none; b=X/lIiim3LGMPGWSBSwa5m/wRIU6LJgU3ahx2YjwdP/QPlY6YBz2HTQAJZbgyAWJJIcj180F+0jlAZxKUbOy6aacgkTJbqSv0WH+rIGXdG3UwPC7/EFIGxaREN+E9LGnaYjSIlAuUEAqiHR/uVsqDfCm1c4Bbq6dSztJ3ZIYvD2I=
-ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1780844728; c=relaxed/simple;
-	bh=1Jv3EXhFOK77dOJBtNtI2r1vQIukhUGV7sC1dcZg7Uc=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=sjouyGQhep0/vK4TxnfLIFF1xiAgA8iCHtLDcjvIbfbdX9R0gstl5/gUwxREMDCNMx5X0axhTiWl6028JyTXPeLJgRCwp/aeQFNmzWSLuT2eBbMrry29i8OFnn78esdJfDtV718V1Vu5ZpLJfk0yl9nMkbIJibJUQgTOT6kaQqg=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=j6dy6fQT; arc=none smtp.client-ip=74.125.224.49
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4EFB32192FA
+	for <sashiko-reviews@lists.linux.dev>; Sun,  7 Jun 2026 15:42:53 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=pass smtp.client-ip=209.85.214.182
+ARC-Seal:i=2; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
+	t=1780846974; cv=pass; b=Hm6VlgcXRLOX8JXJA0lyNe3q6VLlT2e188gFD035sZZWkNuXClq8hSoUFKu8HlKewPEeZ7PzYr5HgPMA79iTPqvuPAtSaP8vYuyAhrZSBNpV0GLfw4sx8Pla3h7pfIgdPETxf1YIb/KENU+zQDKNzno7djTnimuQPQCyEUIwtag=
+ARC-Message-Signature:i=2; a=rsa-sha256; d=subspace.kernel.org;
+	s=arc-20240116; t=1780846974; c=relaxed/simple;
+	bh=XCkHV8ZeNsUm5lPYgRn5fehEBmeWytVYAVnjilzGzk0=;
+	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
+	 To:Cc:Content-Type; b=uX5X1zYp2mHsNGSyf2CMfS3TBQhKI6eMUv1giCY/+7EGQ6aiRYvWINEUn8iQxv1ew3arx8TH4jt7tLK36VEvU3VWUChzxOjpyG7QFl0AOphBIfsC2LD4uVmzaFzi0eb7C2WYXUD1qbdnuj4QsDOyimb1OrrNc4qfgdyxXwlb9U8=
+ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=C5ND8MFC; arc=pass smtp.client-ip=209.85.214.182
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="j6dy6fQT"
-Received: by mail-yx1-f49.google.com with SMTP id 956f58d0204a3-660e9fef1d4so3901633d50.1
-        for <sashiko-reviews@lists.linux.dev>; Sun, 07 Jun 2026 08:05:26 -0700 (PDT)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="C5ND8MFC"
+Received: by mail-pl1-f182.google.com with SMTP id d9443c01a7336-2c0a5354da1so27858715ad.0
+        for <sashiko-reviews@lists.linux.dev>; Sun, 07 Jun 2026 08:42:53 -0700 (PDT)
+ARC-Seal: i=1; a=rsa-sha256; t=1780846973; cv=none;
+        d=google.com; s=arc-20240605;
+        b=iu34bHTH+h8WwXThHyYphpyelJFlSlr0rvWmnby/4J6+XM6VqngqM42d5BlKlUvTV5
+         WTWuMwW35dlY9fhlo5j7nOKBgMWiS0H6hkLSereIjvnvz1u0K8BknnvVOJcSpfKgnuH9
+         6xpuxImmX2PZU9HvV/SXE8y4jhd5HSZs87tUUyeXg5HNzncapEEStYlYPSHZezHgkSDm
+         t+KFLsyHG88xp4BNpK8+WjpyQxYm1FLjs0v2W0jeCs711gZ4bzF4KQ0TV6S2WtWQsG5L
+         4Qn3QL3t06Eq0SBHFXyeD/SyIYhOm9MVofDvgh8s+2Y55DstOibakussn2T/Ld0x54xY
+         PtSw==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com; s=arc-20240605;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:dkim-signature;
+        bh=45MZ8afngvd7K1ygn3gw3ZGKK+4IuTNrYGUdSONsW8E=;
+        fh=0hdvEPJRino8wRvGrrw1gATkOs6ExpSix2L2F38xNVA=;
+        b=D/7kqBHJtoGqbq8QZ/M3WmEKC88H/Ll9X1pDYgw36g4+DBhe+3KICFOLr+L1g6gp4G
+         W4VL+UtoVUeHo60sziVn37L9dw8DvFQuYgsqIKTo4phui+oP2jYHBq5stCIDM0MUZnZg
+         EYzKlrSHe/9dtERsfjz5Wyph2hi9N458TYC0wfYQG4vTAHq3TImpGYzjgxkN4EGGbAw9
+         r4Qd97/mP94Xzw3Ebpbc7adZGBTLIQzwEZgDhCO8vxb//KW+zEY2kiigEAYl2xYK+gEr
+         lI4gE8xzI/k+YuK5JJVlNBkM5bXYNQRtQVI0l+slGUxKDAY0eV/bgVk/W99xAn4fyaCU
+         2dCg==;
+        darn=lists.linux.dev
+ARC-Authentication-Results: i=1; mx.google.com; arc=none
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20251104; t=1780844726; x=1781449526; darn=lists.linux.dev;
-        h=in-reply-to:content-disposition:mime-version:references:message-id
-         :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
-        bh=IxcJylqdvL/bZokoezhkYb1Oi44269zoZ+zcqvLoXeo=;
-        b=j6dy6fQTlJ6x2bO4P5UH/mD4NDgN4/8ozfS5C58jCCUkHIWoxeZyGbsGgiTyyCSTLD
-         6vbnpls8iLzScPPnOSM9IhTTyTpcA3MH0VHPCOEaOL0ePcd87I4H5UAgW2K13iUFJma3
-         kytU9/2bOXTiAEJ7SZC59n3sCjzPLB/izinV+MSVta5MFmv5TBM7ouRAgewoZWfRvccB
-         GK1NbxK4UuuMqNehXZUjvqLGgmjjHaKDPUZ6sLka9NX7AOQ8ifWtvjV5tR3a2k7YVq/v
-         YRDtccY55ZyJP+Ai+nfQzpT9UY/t6fa1/dqXzPyl1F4c8lS/UIX3NzHk/RA7ICLMKrkJ
-         PIDQ==
+        d=gmail.com; s=20251104; t=1780846973; x=1781451773; darn=lists.linux.dev;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=45MZ8afngvd7K1ygn3gw3ZGKK+4IuTNrYGUdSONsW8E=;
+        b=C5ND8MFC0Hud2liSYJa25ywRcHVGxsPSs7J2LLL2z6xAl+RSGCS2cuflZ3kNbCE2mw
+         jznS2/88pFOZ9/75QIhWZd0w0IYScmW0iXqeM4Xrw+UMgxY+0ODcUtt6uQMgwHdsVpZJ
+         aCbvcb6jBJFZl6WxtJKDWabIMZm8ie4x8S/c2Tb/MNYyQ/BTfLucqIfs0Cx3OD3oIfJJ
+         Akeymmz4nrnjynpTD63iyx5anRwrIEQTsLtvna1hExftZQJ+EScaJNIBNDE2dU/Y4jep
+         StGlT1vQ+yRf3zsF7zE7tl8RogGoIrF8/7zJBl34gMhH6ClP0rpINKYouagGdacWIESk
+         EvJQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20251104; t=1780844726; x=1781449526;
-        h=in-reply-to:content-disposition:mime-version:references:message-id
-         :subject:cc:to:from:date:x-gm-gg:x-gm-message-state:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=IxcJylqdvL/bZokoezhkYb1Oi44269zoZ+zcqvLoXeo=;
-        b=rHs1OI8VqXcNt75Da0sfUDHVinI+PLzTyIzohIS81l0SWEYdb0Pbpvc+0RKnwAgjZF
-         mvbJwgR5KkjBxMBUjhQ/z7mr205DcRp31exJzvZUra15B+abnIxwTUhfhm+JbNkU12Z6
-         hfK4XMu1TW616lqdYgcaENQW0Tr6Cp6WpmJ596L3b1BcKSs7PwNXjNx/gd97hO4qpzhL
-         4QDXJdtJHPSTB5VKSGN3v2YBghlTnQfIs6XyNEjtHjB8L/dT0nCdFq+oIjzapmQZJkvh
-         6HmOo2zkFBkFsUcobLc9Iot1d7x3g9QbK6Wzx7xyLBh/NlD1GnFWNni3QrMrIr08JF9C
-         1Qxg==
-X-Gm-Message-State: AOJu0YwbTRq9nkB5GNbB/vev9DPPVKrlLCzza8kvBJPojRrTPA2ZyEBx
-	7mMZoGJ/Afs7A/ISh8c0vCM1EcpUT5Nf3XLjbqnLcb0xMh1wlrGeW/hX
-X-Gm-Gg: Acq92OHEFgEONfZXhFseL+DOwM6sUPnsqsLvAhN1WDA/eGjCNIcm7WZ0Sh0QhAeaGAf
-	64mEnku4rJyLu16FonjBULXg4gLgfjZxPFhf1o/GajN3rP/7H5ucfoblftQpaFTO26RUGc09Tmr
-	OtcXJgeG+cRtS3xeYRULFIBLSKW4Ve667sHK+JzsGjEzyA/npumdP0tBwOb+iPAk+5nXT7nsjXC
-	uaDeB7sOPxUwQw7s+c3vdTq97Uht9t1f4vOP4BMrTonu2+1sSL466IkIECpmW9KUyMxdew8Gdg4
-	Ijp/Zei+ruCdDbXGh35ich6+V4mfynjL8k31Xh9RVVSGyah1NVWdeDqRT9PT8XdQxJcp9xaHnis
-	MkzwJ5LMAJJu4YsHRni3V+pU9FaKESAPvja0L739PtatpSgMG8liHD4Xg95BKF1tpo2+TYsZhUQ
-	1lsZtDS4PpGdkhyp8toXynjuh9t/1VvI6W4/7+J1VsBaSPOiBGhtsFhIY9wxfDRb3g/m9LjBBXu
-	gQBfzs=
-X-Received: by 2002:a05:690e:150f:b0:65c:477a:2ad7 with SMTP id 956f58d0204a3-66106f5006amr10333586d50.25.1780844725517;
-        Sun, 07 Jun 2026 08:05:25 -0700 (PDT)
-Received: from zenbox ([2600:1700:18fb:6011:360a:d4cf:1c8d:f0c4])
-        by smtp.gmail.com with ESMTPSA id 956f58d0204a3-660d64409e9sm8137906d50.15.2026.06.07.08.05.24
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Sun, 07 Jun 2026 08:05:25 -0700 (PDT)
-Date: Sun, 7 Jun 2026 11:05:24 -0400
-From: Justin Suess <utilityemal77@gmail.com>
-To: Kumar Kartikeya Dwivedi <memxor@gmail.com>
-Cc: sashiko-reviews@lists.linux.dev, bpf@vger.kernel.org
-Subject: Re: [PATCH bpf-next 1/1] bpf: fix deadlock in special field
- destruction in NMI
-Message-ID: <aiWFGUQRP-VCtlNr@zenbox>
-References: <20260519011450.1144935-2-utilityemal77@gmail.com>
- <20260519015123.36096C2BCB7@smtp.kernel.org>
- <agxkV-hsdwhvMliI@suesslenovo>
- <agyG3eQwgmoJwmj2@suesslenovo>
- <DIMWGCWL1AG2.14F7CN23GMS8N@gmail.com>
- <aiRG9nsbRi2cO3XT@zenbox>
- <DJ2GXOXL4O0G.9DI5VYR6GUMU@gmail.com>
+        d=1e100.net; s=20251104; t=1780846973; x=1781451773;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:x-gm-gg:x-gm-message-state:from
+         :to:cc:subject:date:message-id:reply-to;
+        bh=45MZ8afngvd7K1ygn3gw3ZGKK+4IuTNrYGUdSONsW8E=;
+        b=l8lILeigTT2Zm0+isNaaPbsNQ8v32OjV/Gh7WPYCg4OdgUn9Xywkrt0ILq7bmGRUoC
+         R21Qw+IRDH8SlrfhPX58G+pfL3jaB4SpjBNJGdC9KZCvurPA7HdgJlq4/ZxTztkxYCN+
+         gQx5nElJua9ao9w1uV6RfBkngi9Ji2KV16o/WjNAlp4uxgR/QvefK/d6J+aYEuv0iYT9
+         0c2tugNYsciP/1X8CZJqJPx+pgNtS1BMv1r2LPMBhSbRjb2CPmcRTNx1AJhwo8Xr6587
+         oen742fIMbKVtMnScC5FCBbqukw7kffJafi19o+d+bnypoVaZ8A/oTCW1fM83YK50YGN
+         M8Fg==
+X-Gm-Message-State: AOJu0Yx368KboPH1W9wNCYfwvZwuYSo0/lNCgsQA/mSx+FEL391t9qss
+	YvjjvVpMXQG+j1xs+HvBCmS8iX27fL1IPq2HPpBww4z/Qz3RjH+VSXb7gobb6U9sBO7jmlrY4BK
+	l8R7e2uulKmsxC2olzgjUdCn2fT1pocIebunpcGL6Nw==
+X-Gm-Gg: Acq92OGN+vJHUs00FOVkeD6tgcJg5pJG+BC9JbUFbwVeQYl9+mDM8lgXolnBdiZlbvF
+	vacusCOYmUjYyzWRI9hS5VXgykzuDdQvddgU6RMjT08UCvirwj54SQjB3JxuOBo+TilZzaNPk1y
+	EMynsuEr93qG3ZWyHJq7As93EgmULuJlrcZheVDWGYLyYpOdgM0U41F6IUP38S7sPwL+5H/vDu9
+	1tvn1HQZgiizIl//aAxxqzhj2jc/RAOEW6/gYP1VLA/FcbmnA1Khm8lx5n984CZ4OV3zFF8xXOW
+	mjgCF1ZiSeZz2rqrLyfkY4nV7u4eh62wn6zrGnM8xIKBmMNYK7g=
+X-Received: by 2002:a17:903:3d05:b0:2c2:343:88b0 with SMTP id
+ d9443c01a7336-2c203438bcamr79596615ad.19.1780846972505; Sun, 07 Jun 2026
+ 08:42:52 -0700 (PDT)
 Precedence: bulk
 X-Mailing-List: sashiko-reviews@lists.linux.dev
 List-Id: <sashiko-reviews.lists.linux.dev>
 List-Subscribe: <mailto:sashiko-reviews+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:sashiko-reviews+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <DJ2GXOXL4O0G.9DI5VYR6GUMU@gmail.com>
+References: <20260607144238.128259-1-eugene.shalygin@gmail.com> <20260607145912.558FF1F00893@smtp.kernel.org>
+In-Reply-To: <20260607145912.558FF1F00893@smtp.kernel.org>
+From: Eugene Shalygin <eugene.shalygin@gmail.com>
+Date: Sun, 7 Jun 2026 17:42:40 +0200
+X-Gm-Features: AVVi8Cc2WdM1NlzuL36qde311cEr23kQJqMzFvmX39CF_vJU9xTuXAY9Qst8XrQ
+Message-ID: <CAB95QATYOcHgYKi73M2cQOXUD1Z7rLPU0XZYAZivaVrcxohm_w@mail.gmail.com>
+Subject: Re: [PATCH] hwmon: (asus-ec-sensors) add ROG MAXIMUS Z790 EXTREME
+To: sashiko-reviews@lists.linux.dev
+Cc: linux-hwmon@vger.kernel.org
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 
-On Sun, Jun 07, 2026 at 04:40:58AM +0200, Kumar Kartikeya Dwivedi wrote:
-> On Sat Jun 6, 2026 at 6:27 PM CEST, Justin Suess wrote:
-> > On Tue, May 19, 2026 at 09:27:58PM +0200, Kumar Kartikeya Dwivedi wrote:
-> >> On Tue May 19, 2026 at 5:59 PM CEST, Justin Suess wrote:
-> >> > On Tue, May 19, 2026 at 10:42:44AM -0400, Justin Suess wrote:
-> >> >> Looks like this kfunc also tries to eagerly free fields and is callable
-> >> >> from tp_btf/nmi_handler with no recovery mechanism.
-> >> >>
-> >> >> I don't see a good way to handle this at all... it also is effectively
-> >> >> already bugged in the existing code unless I'm missing something
-> >> >>
-> >> >> Since you can use it to call abritrary dtors in NMI.
-> >> >>
-> >> >> 1.
-> >> >>
-> >> >> In some context where task_acquire is valid:
-> >> >>
-> >> >> struct blah {
-> >> >>   struct task_struct __kptr* task;
-> >> >> }
-> >> >>
-> >> >> b = bpf_task_acquire(...)
-> >> >> a = bpf_obj_new(typeof(*blah_ptr));
-> >> >> bpf_kptr_xchg(a->task, b);
-> >> >>
-> >> >> 2.
-> >> >>
-> >> >> Then xchg a into map
-> >> >> bpf_kptr_xchg([map slot], a);
-> >> >> ...
-> >> >>
-> >> >> 3.
-> >> >>
-> >> >> In tp_btf/nmi_handler we exchange the obj out of the map
-> >> >> and then drop it.
-> >> >>
-> >> >> c = bpf_kptr_xchg([slot where a is stored], NULL);
-> >> >> bpf_obj_drop(c);
-> >> >>
-> >> >> And because this can be called on an object not in a map, we don't have
-> >> >> a good recovery mechanism.
-> >> >>
-> >> >> Because tp_btf/nmi_handler is always in_nmi and hence irqs_disabled, in
-> >> >> the code before this patch the task_struct dtor will be invoked and
-> >> >> cause a deadlock.
-> >> >>
-> >> >> This patch will not fix the issue and just free a struct blah holding the
-> >> >> reference without actually dropping it.
-> >> >>
-> >> >> Unless I'm missing something then this whole approach taken by this
-> >> >> patch can't handle this case since the bpf_obj is detached from the map
-> >> >> entirely and has no allocator recovery mechanism at all.
-> >> >>
-> >> >> Then we are back to square 1 needing to defer the freeing with irq work.
-> >> >>
-> >> >> Kumar / Alexei do you have anything on this?
-> >> >
-> >> > I've confirmed this is a viable mechanism to deadlock as well
-> >> >
-> >> > Using the above approach, just exchanging out of a map and dropping the
-> >> > bpf_obj containing a task_struct kptr can be used to cause a deadlock
-> >> > outside any map path:
-> >> >
-> >> > On 576482b55c19e7ec00e162a0fde4c4f1a95128c7 (bpf-next/master) w/ RCU_NOCB_CPU/RCU_EXPERT:
-> >> >
-> >> >   [   10.773819] ================================
-> >> >   [   10.773820] WARNING: inconsistent lock state
-> >> >   [   10.773821] 7.1.0-rc2-g576482b55c19 #150 Not tainted
-> >> >   [   10.773822] --------------------------------
-> >> >   [   10.773822] inconsistent {INITIAL USE} -> {IN-NMI} usage.
-> >> >   [   10.773823] test_progs/471 [HC1[1]:SC0[0]:HE0:SE1] takes:
-> >> >   [   10.773825] ffff98623d66f0e8 (&rdp->nocb_lock){-.-.}-{2:2}, at: __call_rcu_common.constprop.0+0x54a/0x730
-> >> >   [   10.773832] {INITIAL USE} state was registered at:
-> >> >   [   10.773832]   lock_acquire+0xbf/0x2e0
-> >> >   [   10.773835]   _raw_spin_lock+0x30/0x40
-> >> >   [   10.773838]   rcu_nocb_gp_kthread+0x13f/0xb90
-> >> >   [   10.773840]   kthread+0xf4/0x130
-> >> >   [   10.773845]   ret_from_fork+0x264/0x330
-> >> >   [   10.773848]   ret_from_fork_asm+0x1a/0x30
-> >> >   [   10.773851] irq event stamp: 1127908
-> >> >   [   10.773851] hardirqs last  enabled at (1127907): [<ffffffff87104484>] _raw_spin_unlock_irqrestore+0x44/0x60
-> >> >   [   10.773853] hardirqs last disabled at (1127908): [<ffffffff871041a1>] _raw_spin_lock_irqsave+0x51/0x60
-> >> >   [   10.773854] softirqs last  enabled at (1127782): [<ffffffff862e6b80>] __irq_exit_rcu+0xc0/0x100
-> >> >   [   10.773857] softirqs last disabled at (1127777): [<ffffffff862e6b80>] __irq_exit_rcu+0xc0/0x100
-> >> >   [   10.773858]
-> >> >                  other info that might help us debug this:
-> >> >   [   10.773859]  Possible unsafe locking scenario:
-> >> >
-> >> >   [   10.773859]        CPU0
-> >> >   [   10.773859]        ----
-> >> >   [   10.773860]   lock(&rdp->nocb_lock);
-> >> >   [   10.773861]   <Interrupt>
-> >> >   [   10.773861]     lock(&rdp->nocb_lock);
-> >> >   [   10.773862]
-> >> >                   *** DEADLOCK ***
-> >> >
-> >> >   [   10.773862] 4 locks held by test_progs/471:
-> >> >   [   10.773863]  #0: ffffffff885ccaf0 (dup_mmap_sem){.+.+}-{0:0}, at: copy_process+0x1e39/0x2b80
-> >> >   [   10.773866]  #1: ffff9861c33a2ff8 (&mm->mmap_lock){++++}-{4:4}, at: dup_mmap+0x83/0x990
-> >> >   [   10.773871]  #2: ffff9861c1152ff8 (&mm->mmap_lock/1){+.+.}-{4:4}, at: dup_mmap+0xc8/0x990
-> >> >   [   10.773874]  #3: ffffffff885f43b8 (kmemleak_lock){-.-.}-{2:2}, at: __create_object+0x3a/0xa0
-> >> >   [   10.773877]
-> >> >                  stack backtrace:
-> >> >   [   10.773879] CPU: 1 UID: 0 PID: 471 Comm: test_progs Not tainted 7.1.0-rc2-g576482b55c19 #150 PREEMPT(full)
-> >> >   [   10.773881] Hardware name: QEMU Standard PC (Q35 + ICH9, 2009), BIOS rel-1.17.0-0-gb52ca86e094d-prebuilt.qemu.org 04/01/2014
-> >> >   [   10.773882] Call Trace:
-> >> >   [   10.773883]  <NMI>
-> >> >   [   10.773884]  dump_stack_lvl+0x5d/0x80
-> >> >   [   10.773887]  print_usage_bug.part.0+0x22b/0x2c0
-> >> >   [   10.773891]  lock_acquire+0x295/0x2e0
-> >> >   [   10.773893]  ? __call_rcu_common.constprop.0+0x54a/0x730
-> >> >   [   10.773896]  _raw_spin_lock+0x30/0x40
-> >> >   [   10.773898]  ? __call_rcu_common.constprop.0+0x54a/0x730
-> >> >   [   10.773899]  __call_rcu_common.constprop.0+0x54a/0x730
-> >> >   [   10.773903]  bpf_obj_free_fields+0x118/0x250
-> >> >   [   10.773907]  bpf_obj_drop+0x4f/0x80
-> >> >   [   10.773910]  bpf_prog_b7ff9c2e6c583824_clear_task_kptrs_from_nmi+0x174/0x1f4
-> >> >   [   10.773912]  bpf_trace_run3+0x126/0x430
-> >> >   [   10.773916]  ? __pfx_perf_event_nmi_handler+0x10/0x10
-> >> >   [   10.773919]  nmi_handle.part.0+0x15b/0x250
-> >> >   [   10.773922]  ? __pfx_perf_event_nmi_handler+0x10/0x10
-> >> >   [   10.773924]  default_do_nmi+0x120/0x180
-> >> >   [   10.773927]  exc_nmi+0xe3/0x110
-> >> >   [   10.773928]  end_repeat_nmi+0xf/0x53
-> >> >   [   10.773931] RIP: 0010:__link_object+0xb4/0x270
-> >> >   [   10.773932] Code: 00 00 00 48 c7 c6 80 36 bb 89 48 c7 43 70 00 00 00 00 48 c7 43 78 00 00 00 00 48 89 3d 35 62 50 03 eb 66 48 89 c8 48 8b 48 30 <48> 8d 70 10 48 39 d1 73 11 48 03 48 38 48 39 cf 0f 82 2f 01 00 00
-> >> >   [   10.773933] RSP: 0018:ffffb516013b7a60 EFLAGS: 00000082
-> >> >   [   10.773935] RAX: ffff9861c37b5c80 RBX: ffff9861df869878 RCX: ffff9861c3776420
-> >> >   [   10.773936] RDX: ffff9861c3769e00 RSI: ffff9861c43564f8 RDI: ffff9861c3769d00
-> >> >   [   10.773936] RBP: 0000000000000100 R08: 0000000000000000 R09: 0000000000000000
-> >> >   [   10.773937] R10: 0000000000000000 R11: 0000000000000000 R12: ffff9861c3769d00
-> >> >   [   10.773937] R13: 0000000000000286 R14: 0000000000000000 R15: 0000000000000001
-> >> >   [   10.773943]  ? __link_object+0xb4/0x270
-> >> >   [   10.773945]  ? __link_object+0xb4/0x270
-> >> >   [   10.773947]  </NMI>
-> >> >   [   10.773947]  <TASK>
-> >> >   [   10.773948]  __create_object+0x51/0xa0
-> >> >   [   10.773951]  kmem_cache_alloc_from_sheaf_noprof+0x1e2/0x290
-> >> >   [   10.773956]  mas_dup_build+0x41d/0x7f0
-> >> >   [   10.773960]  __mt_dup+0x78/0xf0
-> >> >   [   10.773967]  dup_mmap+0x12e/0x990
-> >> >   [   10.773972]  ? srso_alias_return_thunk+0x5/0xfbef5
-> >> >   [   10.773973]  ? lock_acquire+0xbf/0x2e0
-> >> >   [   10.773979]  copy_process+0x1e45/0x2b80
-> >> >   [   10.773985]  kernel_clone+0xbb/0x3d0
-> >> >   [   10.773986]  ? srso_alias_return_thunk+0x5/0xfbef5
-> >> >   [   10.773987]  ? __lock_acquire+0x481/0x2590
-> >> >   [   10.773993]  __do_sys_clone+0x65/0x90
-> >> >   [   10.773998]  do_syscall_64+0xa1/0x5f0
-> >> >   [   10.774002]  entry_SYSCALL_64_after_hwframe+0x76/0x7e
-> >> >   [   10.774003] RIP: 0033:0x7f9da26e8f2f
-> >> >   [   10.774005] Code: 89 e7 e8 c4 0e f6 ff 45 31 c0 31 d2 31 f6 64 48 8b 04 25 10 00 00 00 bf 11 00 20 01 4c 8d 90 d0 02 00 00 b8 38 00 00 00 0f 05 <48> 3d 00 f0 ff ff 77 59 89 c5 85 c0 75 31 64 48 8b 04 25 10 00 00
-> >> >   [   10.774005] RSP: 002b:00007ffc278b4540 EFLAGS: 00000246 ORIG_RAX: 0000000000000038
-> >> >   [   10.774007] RAX: ffffffffffffffda RBX: 0000000000000000 RCX: 00007f9da26e8f2f
-> >> >   [   10.774007] RDX: 0000000000000000 RSI: 0000000000000000 RDI: 0000000001200011
-> >> >   [   10.774008] RBP: 00007ffc278b4740 R08: 0000000000000000 R09: 0000000000000001
-> >> >   [   10.774008] R10: 00007f9da2acaf10 R11: 0000000000000246 R12: 0000000000000003
-> >> >   [   10.774009] R13: 0000000000000001 R14: 0000000000000000 R15: 00005625de8b38d0
-> >> >   [   10.774014]  </TASK>
-> >> >   [   10.866584] perf: interrupt took too long (6193 > 6190), lowering kernel.perf_event_max_sample_rate to 32000
-> >> >   [   16.630663] kauditd_printk_skb: 30 callbacks suppressed
-> >> >
-> >> > I can give the reproducer if wished.
-> >> >
-> >> > You can see the path involves bpf_obj_drop and not any map methods at
-> >> > all.
-> >> >
-> >> > But basically this makes the whole mechanism of relying on map allocators to
-> >> > recycle and free objects in irqs_disabled contexts unsound because kptrs
-> >> > can live and be released outside map contexts.
-> >>
-> >> The approach in this version is still different than what I had proposed. For
-> >> the particular case you highlighted, we should just reject bpf_obj_drop() in
-> >> is_tracing_prog_type() once the object has kptr fields etc. If someone still
-> >> wants it they should just use bpf_wq to defer manually.
-> >>
-> > Would you be opposed to me submitting a fix for *just* the bpf_obj_drop case?
-> >
-> > Since your proposed solution for that is just a tiny verifier fix w/ btf_record_has_field and a prog_type check and is mostly unrelated to this fix for the map cases.
-> >
-> > It's a small fix, but just don't want to be rude and submit anything if
-> > you're working on that too in your patch. :)
-> >
-> > Thanks for your guidance with this fix in general and apologize for my
-> > misinterpretation of the intended route.
-> 
-> Unfortunately I already prepared it, though for both fixes I already kept your
-> authorship since you've put in so much effort in reporting, reproducing, and
-> testing various fixes, the adjustments might as well have been done by you
-> rather than me.
-> 
-> I will send it later today, once I do, please help in reviewing and testing
-> corner cases in the fixes. Reviewing code will be more appreciated than cranking
-> out new code, there are few people who can do that.
-> 
-> Thanks
+I fell into the same trap again :( Thanks, Sashiko!
+
+On Sun, 7 Jun 2026 at 16:59, <sashiko-bot@kernel.org> wrote:
 >
-No worries! thanks. All that matters is the code, not who writes it.
-kernel dev is just a hobby for me so all that work was for fun anyways.
-Once you send it I'll apply it and poke around at the corner cases and
-see if I can make it splat again.
-
-Justin
+> Thank you for your contribution! Sashiko AI review found 1 potential issu=
+e(s) to consider:
+> - [Medium] Missing sensor metadata for ROG MAXIMUS Z790 EXTREME causes re=
+quested sensors to be silently ignored.
+> --
+>
+> commit 409e24c49843127f834ed70831b89be991b9e50c
+> Author: Brian Downey <bdowne01@gmail.com>
+>
+> hwmon: (asus-ec-sensors) add ROG MAXIMUS Z790 EXTREME
+>
+> Add support for ROG MAXIMUS Z790 EXTREME
+>
+> > diff --git a/drivers/hwmon/asus-ec-sensors.c b/drivers/hwmon/asus-ec-se=
+nsors.c
+> > index b5d97a27f80d3..34f96aba5cb99 100644
+> > --- a/drivers/hwmon/asus-ec-sensors.c
+> > +++ b/drivers/hwmon/asus-ec-sensors.c
+> [ ... ]
+> > @@ -514,6 +514,13 @@ static const struct ec_board_info board_info_maxim=
+us_z690_formula =3D {
+> >       .family =3D family_intel_600_series,
+> >  };
 > >
-> > Kind Regards,
-> > Justin
-> >> The whole prealloc related change to the map is unnecessary, as I said before.
-> >> It's an orthogonal change. We should also not use irqs_disabled() and just do
-> >> the skipping unconditionally.
-> >>
-> >> Let me work on a patch, since the nuance is obviously getting lost in email.
-> 
+> > +static const struct ec_board_info board_info_maximus_z790_extreme =3D =
+{
+> > +     .sensors =3D SENSOR_TEMP_T_SENSOR | SENSOR_TEMP_VRM |
+> > +             SENSOR_SET_TEMP_WATER | SENSOR_FAN_WATER_FLOW,
+> > +     .mutex_path =3D ASUS_HW_ACCESS_MUTEX_RMTW_ASMX,
+> > +     .family =3D family_intel_700_series,
+> > +};
+> > +
+>
+> [Severity: Medium]
+> Will these water sensors be successfully exposed to userspace?
+>
+> The newly added board configuration specifies SENSOR_SET_TEMP_WATER and
+> SENSOR_FAN_WATER_FLOW. However, looking at the sensors_family_intel_700 a=
+rray
+> used for family_intel_700_series:
+>
+> static const struct ec_sensor_info sensors_family_intel_700[] =3D {
+>         [ec_sensor_temp_t_sensor] =3D
+>                 EC_SENSOR("T_Sensor", hwmon_temp, 1, 0x01, 0x09),
+>         [ec_sensor_temp_t_sensor_2] =3D
+>                 EC_SENSOR("T_Sensor 2", hwmon_temp, 1, 0x01, 0x05),
+>         [ec_sensor_temp_vrm] =3D EC_SENSOR("VRM", hwmon_temp, 1, 0x00, 0x=
+33),
+>         [ec_sensor_fan_cpu_opt] =3D
+>                 EC_SENSOR("CPU_Opt", hwmon_fan, 2, 0x00, 0xb0),
+> };
+>
+> This array lacks the initializers for the requested water sensors. Becaus=
+e
+> they are not explicitly initialized, their definitions default to zero an=
+d
+> they will be silently ignored during sysfs creation.
+>
+> While the driver safely handles zeroed structs without causing out-of-bou=
+nds
+> reads or sysfs corruption (because get_sensor_value() returns 0 when size=
+=3D0
+> and hwmon_genattrs skips attributes without templates), this regression
+> means the requested water sensors will not be exposed to userspace.
+>
+> --
+> Sashiko AI review =C2=B7 https://sashiko.dev/#/patchset/20260607144238.12=
+8259-1-eugene.shalygin@gmail.com?part=3D1
