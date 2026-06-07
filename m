@@ -1,283 +1,196 @@
-Received: from mail-ej1-f41.google.com (mail-ej1-f41.google.com [209.85.218.41])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from BN8PR05CU002.outbound.protection.outlook.com (mail-eastus2azon11011010.outbound.protection.outlook.com [52.101.57.10])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3FADF27603A
-	for <sashiko-reviews@lists.linux.dev>; Sun,  7 Jun 2026 07:12:20 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=pass smtp.client-ip=209.85.218.41
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 032391514F8
+	for <sashiko-reviews@lists.linux.dev>; Sun,  7 Jun 2026 08:16:57 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=fail smtp.client-ip=52.101.57.10
 ARC-Seal:i=2; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1780816341; cv=pass; b=KsMWBS6xH0+0l6RaPtFM9uB/VW1ZLsZTgeO+aWXHvlUDF9+Sb4WGXO5a7JVl6y7mL48BHw2Z1KW6HY/MbUFF7m5q6BXeyVJ0WNfiFrFj3+LzJ+kHBPJfk9MZmxff7GvUcTTLfzwdzH5RDjfmNO7yM/FNF+BVc+vhgqn8O596daA=
+	t=1780820219; cv=fail; b=Cl19RmWkBkP3K5uz6GxyN4MzawlS1cB+blrOwCkNWteswwwa7UOnP1x9Rfpei99yCiXkcoro0Juf6Oz9pZGFtZFg2fDFja8F/HB/WY+Mm3Qb2+Kw3U3Rw3PrMlTyvdP9GSzN00enxIwvqsTNu2PAgCBObtYYB1NHD0x+ECfGJ9g=
 ARC-Message-Signature:i=2; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1780816341; c=relaxed/simple;
-	bh=G7luavM/r2nql26XEifNX/X2mZPj9YNSfOeR7LbWUBo=;
-	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
-	 To:Cc:Content-Type; b=rRdW5I4yjvOsSbIM+J0W5aBKhMiFAXFVMfpxzOt5/JdB4u7brr5ni0nZsMDcCCZ7J0cjK2jTsB8S0//HA2vtHsSR9iwW/65pr5SnTqO6QyPUIBsV1GdLcKLUU3jkC3RpfdV/FubBMD19dHROmUvSrWHFD+BGY0a1m35Lv/7YkkE=
-ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=NOkL/6/n; arc=pass smtp.client-ip=209.85.218.41
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+	s=arc-20240116; t=1780820219; c=relaxed/simple;
+	bh=B1QWuMf181fAyuDOzJaaUt8YsiCD7ROwtDkp+/4g950=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:Content-Type:
+	 Content-Disposition:In-Reply-To:MIME-Version; b=b1z6t81fFZhgecrsrPhS2qv3BQxBOW3ByTc+BNbJaihzdGWkZXQUabO0fWaBsREyBaID+l8M+glOfhS1ORdek7P9niSKDpFH+9ut/Xoo84FVZeEjqKsmbfJ1GW58KxmcAeHCTIvRYWr0wup9DETqJ5Chckmk8b4LHSgjvIuZWQM=
+ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=fail (p=reject dis=none) header.from=nvidia.com; spf=fail smtp.mailfrom=nvidia.com; dkim=fail (2048-bit key) header.d=Nvidia.com header.i=@Nvidia.com header.b=OWLlW7DD reason="signature verification failed"; arc=fail smtp.client-ip=52.101.57.10
+Authentication-Results: smtp.subspace.kernel.org; dmarc=fail (p=reject dis=none) header.from=nvidia.com
+Authentication-Results: smtp.subspace.kernel.org; spf=fail smtp.mailfrom=nvidia.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="NOkL/6/n"
-Received: by mail-ej1-f41.google.com with SMTP id a640c23a62f3a-bec405a6ea5so467474666b.0
-        for <sashiko-reviews@lists.linux.dev>; Sun, 07 Jun 2026 00:12:20 -0700 (PDT)
-ARC-Seal: i=1; a=rsa-sha256; t=1780816338; cv=none;
-        d=google.com; s=arc-20240605;
-        b=UBBs3WswKfaFYCBCRTb9JLks1XQgNOTKmWvhM/UKGhtVilY/yAXybmzRGKpVkTgAlx
-         VaG18STUsANDM68EH/UYbIiWKlmzrZ6dqeEtBinBvGXlW/NOV0DD/ELbezMfnPW8m3rk
-         2YclYjxWGFpZ9tJHrrsrT+kpigHax8ON+oOldYI05pqjc/rqUhFkjtm+geneL8k9oSSE
-         eEnkUWxPLBf7Su5H92N9x12X7xKv+MsH1Jl0NZuGSu/V0FxtoUsa9zeTzvPuAw90LL7C
-         5VJoSD5VVBIBT+byHCsbS9dt0bkQqYp3Buan9fRkuRPTpVNIU3Mzx7DTNclpWqiDRU98
-         uixA==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com; s=arc-20240605;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:dkim-signature;
-        bh=B0ckcyoETbXT0qw1CXSwY+Cor9uhDO3R8JWwhYej1Us=;
-        fh=78L2agMsSesHOvC78om5KEJtFFOfp01JVxLjVZJw7CQ=;
-        b=LiV2KBJsqXQYJ/21QcC971ein1pQAMsSaTSee/LwgfyG/Op39+I4IEf87rgNXOZn1z
-         axA483mCedyI93mMDfdGRYc6SLgUvOJBZ+W8bp0zKG6uBmWN+mKkczcM3QypAFwo+ZRj
-         tF2cAmU4f6mygHu/+iDPbE5oFnJnwU+B8wmQ41l3oF3qlz7MngL6z2Rmqxb0S6c+sy6t
-         cm39oVz2vyj5qFT8+DPRchzO5L9wjp/xGQC7wrpjR0cPCBCN2kGu68Stjk11RNjR8WnU
-         0pDa3upCM99RjJ4h0cO1B5/R+J24KDUlFzQfzfgDefC5wcmQTorpvyFQhbkS3nHQqjI3
-         dTqA==;
-        darn=lists.linux.dev
-ARC-Authentication-Results: i=1; mx.google.com; arc=none
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20251104; t=1780816338; x=1781421138; darn=lists.linux.dev;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=B0ckcyoETbXT0qw1CXSwY+Cor9uhDO3R8JWwhYej1Us=;
-        b=NOkL/6/nyeYRij+m92ZeyNIeeHvyHBe/Y17HkLeK8LLrNFu8VnJTDHeaGXkQmZBemw
-         gZCwp6Yxj8Ir6lO73bGPQYNKov4QP0xx8fZc0zseok9fvw6PKXj6xuHAdI1X2e4eCUB0
-         nWQ5FVlp2d+6krQBfRlkbff+JSR1xM5PNaKXYXhuVWaX+d8xQh7d/Pl83NktCuLVGHzM
-         HnLq0dkQ1gGSZIAi6TkIUU/0VIYMCgrH0qto5L/5HUTxcmbDzlRLAN1jsQ7KaYR5/JLK
-         +T6+1hg1s3/bZcF3ljSNhfq/ZNP0u/krZRJGj1jk0WMqK2OvJ5eF5kl0Tlgex5Wsr+3b
-         v0RQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20251104; t=1780816338; x=1781421138;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:x-gm-gg:x-gm-message-state:from
-         :to:cc:subject:date:message-id:reply-to;
-        bh=B0ckcyoETbXT0qw1CXSwY+Cor9uhDO3R8JWwhYej1Us=;
-        b=gl8xUE0csUimzuwfps2rXBbcxUr07m8hu8bz2D4Uc4k78zHILnvKDouVTOuPX5eUCi
-         +g6cE5ASd+keuP+AirLGIBViwTzBEL66PV3Qr8bvYFjfR9cxai9So9p7S8HRK+2IGuTw
-         KDdBlZP5uQVo4qEOUTD5OPpz4TUifBXBKKfYymZn0R+oJo3W2X3b9thZLknh9TlMaz3v
-         FiNAEngrMkcSpAD+WLzNW2qUsboRifjoLXDV73Ut1iAvO4OdL6JPfBfdNNlEdSHRyj/0
-         ZHjGGRpQMEGQv3bB2H2dUCYo6/n5WzaFgnG+zVoXklkY8OJ0S1PXvg1krELWp2L3U1AU
-         wXTw==
-X-Gm-Message-State: AOJu0YwkWlenq7aSjBQ0zLUQ/BzSaCzb0MwKJslUlolpEgKRtn+dCB10
-	lDNGgSOtipJWTIlpqfmSdOaNh0CzNsK+jFkeHdfCJ/E0yJQYQGMiIoDFLGHs0ohbglLZ8PrlWYQ
-	fDrvTgNBn2M/xkpbSk/snYPlN5ctKK+MBZ8ezwahPM+ej
-X-Gm-Gg: Acq92OFtmQogthFnTLltzXH7nJ9eveMlPJBXpBO5GyzQnUGnEVSRyWRUye758XzC8X2
-	h2LXIO5hQI8D2Hy0nZegQ2EtdGTOS/X94X9imh1NVt8osN10nMqvnq4QdT15ndtQCb5ObATkyjF
-	yE92DeMcHwFEqWK700M5cRrppvLY2XwKVPEChNcm6GdEPO3NCsT/IWj7TXH3MqvtIuHWmHNmfTZ
-	vbMoUewH6G3QK8q5VoGZeSVfFb+sT/22g0bYGBDvVLF81/BQDslMqrukxhQqQ0x2TVemadPdBYn
-	kOSlQqxhRuqEDBo49DpZ3rqahXNF4xcAcIjkNJNOmMDSMQzVD/BBr5cg6J823w==
-X-Received: by 2002:a17:907:971b:b0:bee:bbaa:f19d with SMTP id
- a640c23a62f3a-bf37057b43bmr467387166b.14.1780816338088; Sun, 07 Jun 2026
- 00:12:18 -0700 (PDT)
+	dkim=fail reason="signature verification failed" (2048-bit key) header.d=Nvidia.com header.i=@Nvidia.com header.b="OWLlW7DD"
+ARC-Seal: i=1; a=rsa-sha256; s=arcselector10001; d=microsoft.com; cv=none;
+ b=JnBBEbb6Am873ctIAIZQvCQK9QW4TlC4MApOU0vgWl4tZtGehhjzif5nBXGSEXloo8BZsUq1Kl7l+rkwd+tGBqMmdosh0D3u8XHwU4yzwz6qvhuzwupXunvF8srXoKLcU/4n1gAMwCIsCTMUFuwZfQD5P2YGuUkcgjZZEdbitQpNtwP5lxhjWzDwOQja0jvGDV8TcinJSq8YrCjHgF5OQsgyXi8nslbN8QDkNoT54LqOSlbul4MZoJS+xJ+31zR7Q64Fg0fNnKNlRHTQ9/76qDRuDkLzq32iWTVykV210ysejbKpZE7k0ASwn82Cz4FisFM0+rDBkmuAR7IILnuiNA==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com;
+ s=arcselector10001;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
+ bh=vHaF6osDjdmPrCdKv9CyUaI8g/HzNP4ej1PDCjTEj6I=;
+ b=Dsan4CCSL6IestEonAqh84NfejogOX0UEvLrxKrC++zEVqGcU9Ziw32+Y9dcdOhMCVwibmValaKBPEc1Pdo6p1+i36g6mBT/QpQIGeUSqmDyXpyJ90Sa8l8kerES67HUT7/hS80lDe9lYGHIX+RJy8GAa6HqZK4J13ugk0IC6U949+6By0UTQQEtRfS8qerQ138odEfe+LV8nU0I8pMFmbTmBvyW55h7d2yvmlBMCqgC/N1mTAzP1Kwoc5ttLRbRxG7Yy7wS3H9oFMKRicquOvAWlNgexmDFTONdd+cxjxBe1TELZlf6B4ObMc8gwCBHqL9juPG8ZPoGMLka/GffJw==
+ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
+ smtp.mailfrom=nvidia.com; dmarc=pass action=none header.from=nvidia.com;
+ dkim=pass header.d=nvidia.com; arc=none
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=Nvidia.com;
+ s=selector2;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
+ bh=vHaF6osDjdmPrCdKv9CyUaI8g/HzNP4ej1PDCjTEj6I=;
+ b=OWLlW7DDi+mM/T7zY7JISyCvZ2KnFTVjLxKzFe7Pz700G7DsU+pRh3hSU4bqPyIiN4PCnNdXgohnASi1yV/SM6Ghtf0gRtJjDVPrGOe6fG+IGuvpZ+Xy7uuykgr7AGoOATetD77flwV+09X0lGtJY41lvCg5W8N0W4yeXLEM8sFDIh86DxO/rM9q4g80REx7ZNicHP0Hvm98FVU+APDP8dY4OaNw/wu2ZQsC+aE3uQKsyrApbiQycWs05BFisEJtKf1+7+jsLqdw8QKhug13iRyrWgzzDPkAMHeoX8cqIQXaRMNcj6A/+K+mGB0RTseQjn4gS+k8G9EaVu9etGj46A==
+Authentication-Results: dkim=none (message not signed)
+ header.d=none;dmarc=none action=none header.from=nvidia.com;
+Received: from BL0PR12MB2370.namprd12.prod.outlook.com (2603:10b6:207:47::27)
+ by SN7PR12MB7417.namprd12.prod.outlook.com (2603:10b6:806:2a4::18) with
+ Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.21.92.12; Sun, 7 Jun 2026
+ 08:16:54 +0000
+Received: from BL0PR12MB2370.namprd12.prod.outlook.com
+ ([fe80::86cf:c3ec:2cf5:74c8]) by BL0PR12MB2370.namprd12.prod.outlook.com
+ ([fe80::86cf:c3ec:2cf5:74c8%5]) with mapi id 15.21.0092.011; Sun, 7 Jun 2026
+ 08:16:54 +0000
+Date: Sun, 7 Jun 2026 16:16:48 +0800
+From: Richard Cheng <icheng@nvidia.com>
+To: sashiko-reviews@lists.linux.dev
+Cc: linux-cxl@vger.kernel.org
+Subject: Re: [PATCH v3 1/2] cxl/hdm: Allow zero sized HDM decoders
+Message-ID: <aiUoynISLHPsZ6od@MWDK4CY14F>
+References: <20260607053837.4389-2-icheng@nvidia.com>
+ <20260607055101.672B91F00893@smtp.kernel.org>
+Content-Type: text/plain; charset=iso-8859-1
+Content-Disposition: inline
+Content-Transfer-Encoding: 8bit
+In-Reply-To: <20260607055101.672B91F00893@smtp.kernel.org>
+X-ClientProxiedBy: SI1PR02CA0019.apcprd02.prod.outlook.com
+ (2603:1096:4:1f4::15) To BL0PR12MB2370.namprd12.prod.outlook.com
+ (2603:10b6:207:47::27)
 Precedence: bulk
 X-Mailing-List: sashiko-reviews@lists.linux.dev
 List-Id: <sashiko-reviews.lists.linux.dev>
 List-Subscribe: <mailto:sashiko-reviews+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:sashiko-reviews+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-References: <20260604134019.39161-1-yimingqian591@gmail.com> <20260605134041.623E31F00893@smtp.kernel.org>
-In-Reply-To: <20260605134041.623E31F00893@smtp.kernel.org>
-From: =?UTF-8?B?6ZKx5LiA6ZOt?= <yimingqian591@gmail.com>
-Date: Sun, 7 Jun 2026 15:12:06 +0800
-X-Gm-Features: AVVi8CeiV3ArOCRHeHEGu_Jx0-sEP06IN1T27ooceEn3WQ_RqB_prKHofa4QHtM
-Message-ID: <CAL_bE8JcBEg37HDj7ri7b9g=VMS662PFGWCzA6J0msCA4oHZBQ@mail.gmail.com>
-Subject: Re: [PATCH net] net/tls: preserve sk_msg sg.copy when splitting records
-To: sashiko-reviews@lists.linux.dev
-Cc: bpf@vger.kernel.org, Keenan Dong <keenanat2000@gmail.com>
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
+X-MS-PublicTrafficType: Email
+X-MS-TrafficTypeDiagnostic: BL0PR12MB2370:EE_|SN7PR12MB7417:EE_
+X-MS-Office365-Filtering-Correlation-Id: 88638c49-67f0-4d0d-9401-08dec46d2280
+X-MS-Exchange-SenderADCheck: 1
+X-MS-Exchange-AntiSpam-Relay: 0
+X-Microsoft-Antispam:
+	BCL:0;ARA:13230040|366016|1800799024|376014|6133799003|3023799007|18002099003|22082099003|4143699003|11063799006|56012099006;
+X-Microsoft-Antispam-Message-Info:
+	mt+AIps1o+xtym7/wVuUQmcpaL4+jtAxzTNkj2Vc6PqLg9KRiWWxkgaigjlthaOEhAQkJ8sZ+oLZAmst1Oe45RaG6eeTwBBUt3yLxkMHJNElZYhS12X59jvDjR2fxnH6KiYwdQO6HQFlXQLAwIlsM8UpiFpB/5L4PKNbDamn88t9HDKGv2Gi92vNSo+nYgeE0LbQIoae4ZtCcuW9PslODDXpFLEDTtcfZKzIHj4L/21XRj5oxNV1wGhcPVpTr+oZoE6qWP8cTV6PVsugSyCNW8Gytkruag7nK1yAll684nPDV+eM+uqHBxdTgvqtNefbFJJ2+JOxHlCeYkbphVyxcUj6TyQPEzU4YcQ9dQ398s4QbiEnqpz+xiI34eXdM0m4S0evdUPizsxjdf0MfYdIDP+cc7PbMYm/TRQUBosbaM4I4KVaRCaBV+kFkYz9GsfiyKFEhBYwoodo+S3uU4WV1liuHo5LCGYyD6xaZQAxTh5ZXltBqpYBQdNQnqAEaYtJhg2fngwNU9mckmwCcOh8r2pqafN3/FG7l1tWJy0wfdlk+aQDE9MCW4nIgIro2enCnMPPOL42JfmsMA4OK6wM4k9Lrw1caB0PoTM0VGOK17kCCl9hASxOjkMx/2/e6rABUvxLkFG+mXVUR/2l6XtbQ0E3iMEjE1zSEYJCPMJa/hUQF5CvQPY/4frOBU9UkT30
+X-Forefront-Antispam-Report:
+	CIP:255.255.255.255;CTRY:;LANG:en;SCL:1;SRV:;IPV:NLI;SFV:NSPM;H:BL0PR12MB2370.namprd12.prod.outlook.com;PTR:;CAT:NONE;SFS:(13230040)(366016)(1800799024)(376014)(6133799003)(3023799007)(18002099003)(22082099003)(4143699003)(11063799006)(56012099006);DIR:OUT;SFP:1101;
+X-MS-Exchange-AntiSpam-MessageData-ChunkCount: 1
+X-MS-Exchange-AntiSpam-MessageData-0:
+	=?iso-8859-1?Q?5pxgjBn/vikB7jMZSbIk4vy9Z5OehvV58w6/oXNbzV6S4GMs2rFfBkiEMy?=
+ =?iso-8859-1?Q?/8iCG29wTdtqEvfYl76x0gnvCtGvs7Oi8iiWn4hkoCoVO5EGzkMoMy/tJg?=
+ =?iso-8859-1?Q?KWlKS4OZa5eCezRLJDayRs+X+drz09zxkeFg4zAhN1+APF7XjAckEsDgHl?=
+ =?iso-8859-1?Q?ocyuir//QvjxO+JF/LtxNVJt16kMToXMKpd2BbBuiwbYIv8XCeTvvs1hnm?=
+ =?iso-8859-1?Q?yGr8vGTCSNJB7za1WEVY3exWREa3W0Lf21OZD6+zdY6bBv7EN+5Pg9bxGx?=
+ =?iso-8859-1?Q?BHYmT/3btUBaewjirZfcYcyMYt8Ynka+9BcTgwu5HI9JFmZ1V0IIpH1rRw?=
+ =?iso-8859-1?Q?fzhiDsE0G011irnKcFrJNx2S6UIhh3I6XSnv4J5hMCqU6Xp+nkMWLvHUOt?=
+ =?iso-8859-1?Q?SijbkteNc6aQw9jr2minlAyWCugmGZAArafn9bs+lnBxawmzM1r2SV7xtK?=
+ =?iso-8859-1?Q?RN2s6S1LAJ0qUTwZtyOt/WTLj6ALaETxDqK9xrywwulLvuyjwvu4ZecmNR?=
+ =?iso-8859-1?Q?G/hKzFaTRpPt36zLPWbeSvCBBymfhEQTclbTPbSmB/Th84zkwbZxOfVB6G?=
+ =?iso-8859-1?Q?YfS13MLeEKpJJB7PkVGkv6iS1j4ZIfvVb2ZTy/6hmgeuW667bb1R4BrEYK?=
+ =?iso-8859-1?Q?KzDAJDChwlMHRymm2qeLewTw2XGJoLhRTqg/IbcHXTwWM4wEnalS5Ac0rZ?=
+ =?iso-8859-1?Q?0WRSIgMQpijEbzPrWt13m4cxywkMnTRlLYm2cBJ0eN7hkCJ4UjLogMDLGW?=
+ =?iso-8859-1?Q?BUFPyvuKOjIEiGgJn5EV2CpRA0vimjsLBzWP9oxnGkE+iUfFhNk7N6Q7w1?=
+ =?iso-8859-1?Q?dORVBIRPqNflBhBzHQyevYxmgyoPYaNxCmh5Fa88q1kchdYwgC79mvnY13?=
+ =?iso-8859-1?Q?/vZHLZjuYbVHQnVeJAVSQUb4T/KXwS3G9o3aODXyssfzTmassSyqlvreqe?=
+ =?iso-8859-1?Q?StD3XVynh6jzMAgn3kT9vphF0yw320gfeXc0LsB6cNcGUSUFs9Dgmons9s?=
+ =?iso-8859-1?Q?Dy1Y/M7lsYnXMA4WvFdVm+LnOedNcLbCtr1PdyC0sX6Z6JZsUo3MObwJoM?=
+ =?iso-8859-1?Q?Zm6v0TfmDbMu3sXAfAjA+0L5F/Ldt2hUBYkz21WEGquk2imch+vQAHwOWh?=
+ =?iso-8859-1?Q?hdadG1F2FBEkHc0TCzN7iP9AM4PjOATuSWzlqk/vHczP86h8iQLYiouhrG?=
+ =?iso-8859-1?Q?Di6xz1ynmWlMGO7ZdoyuN08lH3pGTk7uImwrJxI4P16HoCuYiO5XgzcpHV?=
+ =?iso-8859-1?Q?k75BDIOPTZC9V+Ov2YdeQyQo1MC+Nf3I+AIolvitidfU6IBv5VrQS4t37/?=
+ =?iso-8859-1?Q?8Y1s58SSjZpdsuRY5c+8GNQnxYlYFVoKJdB9u+Tf/crVaD9zPwmSMslIFe?=
+ =?iso-8859-1?Q?C+h9HXKTQZaag6TcHYWzUDISkZzY/iHt93VJnMi93fQJTH67/5KQn4bSpd?=
+ =?iso-8859-1?Q?APGXRoZzgdnppS9ZAFX3QVhVJ3ln+m1F6H4G+g5bVWi7MTZNHpSiVVgc86?=
+ =?iso-8859-1?Q?IxyxneGE/vA1lCWgWZQ2yNkjKD2p9Go3V3CuPJEKACM25qlUOE6qS3UVT0?=
+ =?iso-8859-1?Q?RtYLnCjevpIemTC+bRVxL1Iv4OODX32hfoyWKi9i/zlnn+m3P+MgZa8BY+?=
+ =?iso-8859-1?Q?1v5OZptU6E1GU3WfoceDvVJA8etBU/y52WQavmM+8hgeVUwd0Ue5Vn7aAs?=
+ =?iso-8859-1?Q?ZPTD1N3kHfWGIxRCRTfyoeNY52nybyVpWtO8JQHdN7b+afabTn7VXNQlMI?=
+ =?iso-8859-1?Q?MW7TZeFSHTsHyYg3D8TgkMnHGKlvGCvzewzxfDQCsAETaIl1VYkCJD5SM+?=
+ =?iso-8859-1?Q?nHlqZZhvJQ=3D=3D?=
+X-OriginatorOrg: Nvidia.com
+X-MS-Exchange-CrossTenant-Network-Message-Id: 88638c49-67f0-4d0d-9401-08dec46d2280
+X-MS-Exchange-CrossTenant-AuthSource: BL0PR12MB2370.namprd12.prod.outlook.com
+X-MS-Exchange-CrossTenant-AuthAs: Internal
+X-MS-Exchange-CrossTenant-OriginalArrivalTime: 07 Jun 2026 08:16:54.7077
+ (UTC)
+X-MS-Exchange-CrossTenant-FromEntityHeader: Hosted
+X-MS-Exchange-CrossTenant-Id: 43083d15-7273-40c1-b7db-39efd9ccc17a
+X-MS-Exchange-CrossTenant-MailboxType: HOSTED
+X-MS-Exchange-CrossTenant-UserPrincipalName: VMyALTo+Pxzrwuv5c68qlT0Iat6s8wsUrtTgTlHIYh7QubiXDtQa7ej6qfqBUd3RpRBX8LzRce7d/euZjxbIaw==
+X-MS-Exchange-Transport-CrossTenantHeadersStamped: SN7PR12MB7417
 
-Thanks for the review.
+On Sun, Jun 07, 2026 at 05:51:00AM +0800, sashiko-bot@kernel.org wrote:
+> Thank you for your contribution! Sashiko AI review found 2 potential issue(s) to consider:
+> - [High] Unbalanced lifecycle operation: manually advancing `port->hdm_end` for a zero-size decoder permanently breaks DPA resource freeing for all preceding decoders.
+> - [High] The patch modifies the port's DPA watermark (`port->hdm_end`) for zero-sized decoders without acquiring the required `cxl_rwsem.dpa` lock.
 
-  The sk_msg_shift_left/right issue is the related pre-existing sk_msg
-  sg.copy bug that I explicitly separated in the report. This patch does
-  not attempt to fix that helper/shift transform site.
+Hello,
 
-  This patch is limited to a different transform site in kTLS:
-  tls_split_open_record() copies SG entries into a new sk_msg but failed to
-  copy the corresponding sg.copy bitmap state. The fix preserves that
-  metadata only for the entries copied by tls_split_open_record().
+I've sent v4 to address these issues.
 
-  The other findings appear pre-existing and independent. They should not
-  block this focused fix, and can be investigated or fixed separately if
-  needed.
+--Richard
 
-<sashiko-bot@kernel.org> =E4=BA=8E2026=E5=B9=B46=E6=9C=885=E6=97=A5=E5=91=
-=A8=E4=BA=94 21:40=E5=86=99=E9=81=93=EF=BC=9A
->
-> Thank you for your contribution! Sashiko AI review found 4 potential issu=
-e(s) to consider:
->
-> Pre-existing issues:
-> - [Critical] tls_merge_open_record incorrectly merges naturally contiguou=
-s scatterlist elements, leading to a page double-free.
-> - [Critical] tls_split_open_record() ignores the split_point argument, le=
-ading to an out-of-bounds write in the crypto layer.
-> - [High] sk_msg element shifting functions fail to shift the msg->sg.copy=
- bitmap, allowing BPF to overwrite externally owned page cache memory.
-> - [High] sk_msg_alloc reuses freed scatterlist indices without clearing t=
-he msg->sg.copy bit, causing valid memory to be treated as read-only.
 > --
->
-> commit d2043cc374b476d5c2b7d9a3d811593ca2bebf5c
-> Author: Yiming Qian <yimingqian591@gmail.com>
->
-> net/tls: preserve sk_msg sg.copy when splitting records
->
-> This patch modifies tls_split_open_record to correctly copy the sg.copy
-> bit state from the original sk_msg into the new sk_msg when an open recor=
-d
-> is split. It introduces a helper sk_msg_sg_copy_one to facilitate this bi=
-t
-> copying for both partial and whole tail entries.
->
-> > diff --git a/include/linux/skmsg.h b/include/linux/skmsg.h
-> > index 19f4f253b4f90..f3988ce2219db 100644
-> > --- a/include/linux/skmsg.h
-> > +++ b/include/linux/skmsg.h
+> 
+> commit 9ef90cd8aa01ad12f98b0af61f61ae8863b14582
+> Author: Richard Cheng <icheng@nvidia.com>
+> 
+> cxl/hdm: Allow zero sized HDM decoders
+> 
+> This patch permits committing an HDM decoder with a size of 0. It enumerates
+> the decoder into the topology and manually advances the port's DPA watermark
+> to pass in-order checks without reserving actual DPA space.
+> 
+> > diff --git a/drivers/cxl/core/hdm.c b/drivers/cxl/core/hdm.c
+> > --- a/drivers/cxl/core/hdm.c
+> > +++ b/drivers/cxl/core/hdm.c
 > [ ... ]
-> > diff --git a/net/tls/tls_sw.c b/net/tls/tls_sw.c
-> > index 964ebc268ee46..434753de8aadd 100644
-> > --- a/net/tls/tls_sw.c
-> > +++ b/net/tls/tls_sw.c
-> > @@ -623,6 +623,7 @@ static int tls_split_open_record(struct sock *sk, s=
-truct tls_rec *from,
-> >       struct scatterlist *sge, *osge, *nsge;
-> >       u32 orig_size =3D msg_opl->sg.size;
-> >       struct scatterlist tmp =3D { };
->
-> [Severity: Critical]
-> This is a pre-existing issue, but does tls_split_open_record ignore the
-> split_point argument?
->
-> When a BPF program uses bpf_msg_push_data to expand a payload beyond the
-> pre-allocated encrypted buffer capacity, tls_push_record calculates a
-> necessary split_point and calls tls_split_open_record.
->
-> However, tls_split_open_record ignores the split_point argument entirely
-> and unconditionally sets apply =3D msg_opl->apply_bytes.
->
-> If apply_bytes is 0, the function effectively splits at 0 bytes, creating
-> an empty msg_opl. The fallback logic in tls_push_record then merges them
-> back together.
->
-> Subsequently, sk_msg_trim silently fails because the size is larger than
-> the target, and tls_do_encryption uses the undersized buffer to encrypt
-> the oversized msg_pl. Can this cause an out-of-bounds write in the
-> scatterlist array when constructing the crypto request?
->
-> > +     u32 tmp_i =3D NR_MSG_FRAG_IDS;
-> >       struct sk_msg *msg_npl;
-> [ ... ]
->
-> net/tls/tls_sw.c:tls_merge_open_record() {
->     ...
->     if (sg_page(osge) =3D=3D sg_page(nsge) &&
->         osge->offset + osge->length =3D=3D nsge->offset) {
->         osge->length +=3D nsge->length;
->         put_page(sg_page(nsge));
->     }
->     ...
-> }
->
-> [Severity: Critical]
-> This isn't a bug introduced by this patch, but does tls_merge_open_record
-> incorrectly merge naturally contiguous scatterlist elements?
->
-> When tls_split_open_record splits an open record exactly on an element
-> boundary, no extra page reference is acquired.
->
-> If encryption subsequently fails, tls_merge_open_record attempts to merge
-> the elements back. To detect a split element, it merely checks if the
-> pages are the same and the offsets are contiguous.
->
-> If the user originally provided two elements that were naturally contiguo=
-us
-> in memory, this condition falsely evaluates to true. tls_merge_open_recor=
-d
-> then adds their lengths and calls put_page on sg_page(nsge), improperly
-> releasing a reference that was never taken.
->
-> The element remains in the scatterlist, resulting in another put_page
-> during destruction. Does this directly cause a double-free on the page?
->
-> net/core/filter.c:sk_msg_shift_left() {
->     ...
->     do {
->         prev =3D i;
->         sk_msg_iter_var_next(i);
->         msg->sg.data[prev] =3D msg->sg.data[i];
->     } while (i !=3D msg->sg.end);
->     ...
-> }
->
-> net/core/filter.c:sk_msg_shift_right() {
->     ...
->     while (i !=3D msg->sg.end) {
->         msg->sg.data[i] =3D sge;
->         sk_msg_iter_var_next(i);
->         sge =3D tmp;
->         tmp =3D sk_msg_elem_cpy(msg, i);
->     }
->     ...
-> }
->
+> > @@ -1096,6 +1100,15 @@ static int init_hdm_decoder(struct cxl_port *port, struct cxl_decoder *cxld,
+> >  	if (!committed)
+> >  		return 0;
+> >  
+> > +	/*
+> > +	 * A committed zero-size decoder reserves no DPA, but still advance
+> > +	 * the port's DPA watermark.
+> > +	 */
+> > +	if (size == 0) {
+> > +		port->hdm_end = cxld->id;
+> 
 > [Severity: High]
-> This is a pre-existing issue, but do the sk_msg element shifting function=
-s
-> fail to shift the msg->sg.copy bitmap?
->
-> BPF helpers manipulate sk_msg scatterlist arrays using sk_msg_shift_left
-> and sk_msg_shift_right. These functions physically shift the msg->sg.data
-> entries but fail to concurrently shift the corresponding msg->sg.copy
-> bitmap.
->
-> Consequently, shifted scatterlist elements incorrectly inherit the
-> read-only states of their new indices.
->
-> If a read-only element is shifted into an index where the copy bit is 0,
-> sk_msg_compute_data_pointers will erroneously provide a writable data
-> pointer to the BPF program. Could this allow an unprivileged BPF program
-> to write to externally owned page cache pages?
->
-> net/core/skmsg.c:sk_msg_alloc() {
->     ...
->         sge =3D &msg->sg.data[msg->sg.end];
->         sg_unmark_end(sge);
->         sg_set_page(sge, pfrag->page, use, orig_offset);
->         get_page(pfrag->page);
->         sk_msg_iter_next(msg, end);
->     ...
-> }
->
-> net/core/skmsg.c:sk_msg_free_elem() {
->     ...
->     memset(sge, 0, sizeof(*sge));
->     return len;
-> }
->
+> Does modifying port->hdm_end here require the cxl_rwsem.dpa lock?
+> 
+> It appears other reads and writes to port->hdm_end are protected by the DPA
+> read-write semaphore. Since devm_cxl_enumerate_decoders() iteratively adds
+> decoders and exposes them to sysfs before the enumeration loop finishes,
+> could a concurrent sysfs operation on a previously added decoder race with
+> this assignment?
+> 
 > [Severity: High]
-> This isn't a bug introduced by this patch, but does sk_msg_alloc reuse
-> freed scatterlist indices without clearing the msg->sg.copy bit?
->
-> When sk_msg_free_elem or sk_msg_trim frees a scatterlist element, it zero=
-es
-> the sg.data entry but does not clear the corresponding bit in the
-> msg->sg.copy bitmap.
->
-> If sk_msg_alloc later allocates new memory and reuses that same index in
-> the ring buffer, the stale copy bit remains set.
->
-> Because of this, sk_msg_compute_data_pointers incorrectly assumes the new=
-ly
-> allocated, writable memory is read-only and sets msg->data to NULL. Does
-> this abruptly break BPF programs that rely on writing to pushed data?
->
-> --
-> Sashiko AI review =C2=B7 https://sashiko.dev/#/patchset/20260604134019.39=
-161-1-yimingqian591@gmail.com?part=3D1
+> Could advancing port->hdm_end without registering a devres cleanup action
+> break DPA freeing for earlier decoders?
+> 
+> Normally devm_cxl_dpa_reserve() registers a cleanup that manages teardown.
+> If we advance port->hdm_end here but cxl_dpa_free() exits early when it sees
+> no DPA resource:
+> 
+> cxl_dpa_free() {
+>         if (!cxled->dpa_res)
+>                 return 0;
+>         ...
+>         if (cxled->cxld.id != port->hdm_end) {
+>                 return -EBUSY;
+>         }
+>         ...
+> }
+> 
+> Will port->hdm_end remain permanently trapped at this zero-size decoder's
+> ID, preventing the strict LIFO un-provisioning of any preceding valid
+> decoders and breaking manual sysfs teardown?
+> 
+> > +		return 0;
+> > +	}
+> > +
+> >  	dpa_size = div_u64_rem(size, cxld->interleave_ways, &remainder);
+> 
+> -- 
+> Sashiko AI review · https://sashiko.dev/#/patchset/20260607053837.4389-1-icheng@nvidia.com?part=1
