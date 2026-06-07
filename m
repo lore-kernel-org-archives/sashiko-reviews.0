@@ -1,167 +1,216 @@
-Received: from mail-wm1-f66.google.com (mail-wm1-f66.google.com [209.85.128.66])
+Received: from mail-yw1-f176.google.com (mail-yw1-f176.google.com [209.85.128.176])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C49CD18859B
-	for <sashiko-reviews@lists.linux.dev>; Sun,  7 Jun 2026 09:17:23 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.66
-ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1780823845; cv=none; b=tTiBsRc7X0EhQ95XzD/CL76S+6KLneSHkCEVd5jv46QucR3m94v5fj9rVS7v2I8JnbICRMNnnQwGpppDowYB5QfhuDu2nNduSMtuTaDtLgnAaAR6rDlbBL45sYgc9eYu+gV4yk04738kA1w36dEby8rxPZ/xxDgm0CkLblLxmKE=
-ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1780823845; c=relaxed/simple;
-	bh=sGRfu/p05xv6+8wOEt3PXH38SdB+tJA9PS7n97haZ8A=;
-	h=Mime-Version:Content-Type:Date:Message-Id:Cc:Subject:From:To:
-	 References:In-Reply-To; b=p5LJPMFE2JsgbH4vJAcRj/TqxZpz7SDoEESdG9W7CRHCyF9RPbQ2VOO8W3JI9P6T+6iMfReFf8A2N37gnySyP648Wm2CTIwR+AIGZ3A1tdKH6bq6LVdkb5elXEnfCvy35Rj/d1hIpQaSSoHwubrjnnFVxNxDXJ7wYcoPPYBeMkk=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=nXaF44u2; arc=none smtp.client-ip=209.85.128.66
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8DBC63859F6
+	for <sashiko-reviews@lists.linux.dev>; Sun,  7 Jun 2026 14:01:36 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=pass smtp.client-ip=209.85.128.176
+ARC-Seal:i=2; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
+	t=1780840899; cv=pass; b=On2lT0ZQZhDeRimjUYQBmqf3TDVAjdu8HIU9dESAdAGDGB5De/nRl4RzUBsz6dE0taiujwa9TVshnumh3nHNLf1jRBG+kNS0L+HLcMSvRvo2zYqsXafne+bIsM7R/ePwiViCCS8mNXsrkC7OyaoCoFeun0gFSODRoSV4hCQTHvs=
+ARC-Message-Signature:i=2; a=rsa-sha256; d=subspace.kernel.org;
+	s=arc-20240116; t=1780840899; c=relaxed/simple;
+	bh=qrLeuvCFzR2hQ3pzCF50zMqJUsKk3LsT/QApP1Cp3uM=;
+	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
+	 To:Cc:Content-Type; b=j3k+lzC+h74vcI94t9WTpkPEh9xu+70hODsnsDdPGlyhiIlLGrMd2x0aSsPtnbxk6s+Ha1Ji+CIZy3yPr3LIcndGsfpPbonYi3yTS53+3Cxl7mmJ5rl9cLrNmyoNF7CFKGwZRa/8DKGye4mgnxaKQ75MZFnnzSCE7kh98SnXwfg=
+ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=N/etvEeX; arc=pass smtp.client-ip=209.85.128.176
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="nXaF44u2"
-Received: by mail-wm1-f66.google.com with SMTP id 5b1f17b1804b1-490a76757e5so20553085e9.2
-        for <sashiko-reviews@lists.linux.dev>; Sun, 07 Jun 2026 02:17:23 -0700 (PDT)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="N/etvEeX"
+Received: by mail-yw1-f176.google.com with SMTP id 00721157ae682-7e2fd65f968so29980157b3.3
+        for <sashiko-reviews@lists.linux.dev>; Sun, 07 Jun 2026 07:01:36 -0700 (PDT)
+ARC-Seal: i=1; a=rsa-sha256; t=1780840896; cv=none;
+        d=google.com; s=arc-20240605;
+        b=V5s2GQbGvHQiapeqOUEZMKVL6afdMXorsMMdSaxbL4k+Y7nBhwTtgAiCr8fSioMzhW
+         1Wfqmhw+oPceRTl8dWLJ4cav/+srKKt5gqpLTVUp0phpzaA+YhwfkcYYg7w9KKmv++xx
+         DxaPuWB/VDRHsdiUmcyXXfOTt//a7ZbHVYyZ0V27HOPIC2ebHWLv2a8G2XxtdkJZvUxR
+         A165EqdBkmFYOLe3a8MrCDYQEEOM2EawEZ7Rs6XLP8voEg7dUsmhU0xQx2e4zsO7xFPO
+         taXj1a5VXcJvCmH4b1Dvam9CUlGF54W6uBtYhcFLKfVkbkLtZJ+kHMVG7a1H3uFkpCbY
+         PCmg==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com; s=arc-20240605;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:dkim-signature;
+        bh=4pYahT0z4LacNeBL11VjXkln5kCP+7BgtEQcumXBxMc=;
+        fh=gil4l1ZdtuwZ0BOON6r2rez0EcGyFSpyaNOoG+TQ7ws=;
+        b=ImgrzvydfbcDcDVs+WmmVR4CfoO32LLDo94TiFe/iTPyYNVIr4sP1XfnbCvnoSZ5IS
+         sSpXI+eWfyXq8QL6b4FqELPtcuU9p5k3QH1+oSC1i+kOU3sfdKRrsQvpzCF4KqH4HTyG
+         p6UNqb0a4PkM+LHElRNUeSVhGtlD3B9M9oX7QYv/f+wbDUGdRl9ebeRjhwC2MDij65sf
+         2AqV8+Rp4SNCrlsII2AYnyo67hNvTc2hXuRozdt/N6zp6+QhPrZ9ZspqeZo5vv8x2iz8
+         aySdt8oU9q1AnVGjgcE13VbGFUm94iZ9rwkRYX57TLn0ZHm1VBmN+z9K19+OYVf947/2
+         lNsg==;
+        darn=lists.linux.dev
+ARC-Authentication-Results: i=1; mx.google.com; arc=none
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20251104; t=1780823842; x=1781428642; darn=lists.linux.dev;
-        h=in-reply-to:references:to:from:subject:cc:message-id:date
-         :content-transfer-encoding:mime-version:from:to:cc:subject:date
+        d=gmail.com; s=20251104; t=1780840896; x=1781445696; darn=lists.linux.dev;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:from:to:cc:subject:date
          :message-id:reply-to;
-        bh=Or/uZEM1Mr/Fy//hQIxqzuqiLQi1LgViOgSt2pTVu/8=;
-        b=nXaF44u2ao5ojfXirLwBevoye58RSsF33moHztX5Agh2X12DRi86wwWiDpawKO7Jhd
-         kqAZ0WiXDpTQrzVYDr0XrdK1/3YFDylO8NHcy3RRjIxJrQGcC21EGgdmNfGA/Tji3DO4
-         2eICScssnM8Fq+TBPipPIzx0pQKKBKkNceiXZN6uiTl+9HgDBkWoE0kKnKkeHXbBjsAP
-         NDFrrxQt8P/q0AtGNiKU9xvkbNz4Xj1nm+Ad5luNnVklz8+Mqr/6/3r5Rq75hPVLlYH5
-         /TK09TEMxnJxfeXU9F0lDKSOG+0SZdKlnElmaefT1WUHnYpWRKigxDLyIo9U0fOKOYlO
-         /bCw==
+        bh=4pYahT0z4LacNeBL11VjXkln5kCP+7BgtEQcumXBxMc=;
+        b=N/etvEeXMAfAF0hPSC0EnrgdPCHR+yo18obzCHwtJokVFQeKtIA6rNE+6HZugiwjug
+         D+2k1V0PTN32GdE/RP25K4e9aoaguEAR3RKCootwvzfCqi7GkOwbkMS4Fr/e9Ke91JQl
+         x7V4dCzYuGlonSXSRXbxIIZbhsrdvtkDZ5xtDHLWigylipAkpKt9/rLU48uZLtG8/PO7
+         9u7xXG6qLAS+1piOrYtPZq1MCBAyK7Hazw4drDGQ87l9jPT+cV4FFxnqb2iyvuNQZXfb
+         CSiBmjVFzegbQL3t3goktddNcfKUcWCnCPo8Z8OUMGzcOJoEgPjr56kyGM7fcSo6N+p5
+         VPgg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20251104; t=1780823842; x=1781428642;
-        h=in-reply-to:references:to:from:subject:cc:message-id:date
-         :content-transfer-encoding:mime-version:x-gm-gg:x-gm-message-state
-         :from:to:cc:subject:date:message-id:reply-to;
-        bh=Or/uZEM1Mr/Fy//hQIxqzuqiLQi1LgViOgSt2pTVu/8=;
-        b=B9WE4bxL/OYzj2bN/uq0cJt45h5tJ/hfPelqQ4O8acjDgghaOP2q+mE2BLTqPJgzBm
-         sePbFB/klhhQFUhak0+XArcd7Nsa79XSHPlTXhWGNJk+Yw5fdTifgU5glQWkH7e5apq7
-         7AmXdHUd2Kiz6Z29ZeTVWc2nFVsWc3wpQaAs34i7XDKiFjIEf+vqx5ykpHSvxUWGFyPG
-         o5dEnwLhML9YChhUMwFZ729csfnH+HbZyjOeoIQYCkcwr3rN34Vrk2EnK1oLbByKAbEN
-         83rmemae546avAtf7rV/cCi2SszIV/PvJVZmOo2FI03/4XtclJUFU5bXCNsS1RBwfvC0
-         049w==
-X-Gm-Message-State: AOJu0YzmuLH6RwYwnAB+iM4V7vGVy0IPCeRit2hm1GzRpNlBfZ7DTefg
-	aeP26M1SYNJidlggJK+pXNHhGMpaAbaNAEiArdvTAJFL6R5F7NR9SHwXjgWew6IJ
-X-Gm-Gg: Acq92OFEjgYq25z3Y6nxeUlqbeuB0fM2u385205ZTKomJkm8/PT2bQAdONOVpEfJgmW
-	oWNmZZxMe0uZamw84KXvgdYrOjUdjDtklU1RA4sLLL0Ij6fP8lm5ZcR324Dw+NsTlRzQc2TsCtG
-	9vh5idrWLCAF/LKjpUymC9LVB9pmskjrx+ypYD4r4NeQlxdnvLo/qn34qDvaaq0mb9IZIu06zyA
-	p/ZMguEqiFGL8lEkf86dcGsPALkaeK06uSZeEzPzuGBNkwkNxFKLmy6KmRo/lyw6tE20bCU7YfN
-	ZgBCQlAjyq+jcJkklCOwGp5whe057jww70kcaP8wEsk8yaTy+Cw0cfZ3LGMJHv7B8dSZjX3Xdik
-	IoHJhVNZCVPl8s1SZcWSRfpwl2c4hWDanZkX4TZTBmZdrnxxYA9fQteCnmztsXE1NE5xzdVdNWG
-	q/WSZUoCsRS6Lupgu9BPx+4DbuEMRaBbrd9oT8ObbdR+6nevANo5ji2gUIneJFnR0/Qm9nfXZeR
-	ZyJ0e4Ts5Tlo7OCHSEj7YqE60P5jbFHm39ycTI0k2BFussyzy+gU+b9tAllmi4rwlZ/XYfY/dIh
-X-Received: by 2002:a05:600c:5248:b0:490:c024:2ec8 with SMTP id 5b1f17b1804b1-490c2522657mr179010725e9.0.1780823842143;
-        Sun, 07 Jun 2026 02:17:22 -0700 (PDT)
-Received: from localhost (nat-icclus-192-26-29-3.epfl.ch. [192.26.29.3])
-        by smtp.gmail.com with ESMTPSA id ffacd0b85a97d-46028a6dce6sm34703602f8f.30.2026.06.07.02.17.21
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Sun, 07 Jun 2026 02:17:21 -0700 (PDT)
+        d=1e100.net; s=20251104; t=1780840896; x=1781445696;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:x-gm-gg:x-gm-message-state:from
+         :to:cc:subject:date:message-id:reply-to;
+        bh=4pYahT0z4LacNeBL11VjXkln5kCP+7BgtEQcumXBxMc=;
+        b=QE5PcgwQjTjPTaGhRIwxZRStHAgvyV5eoeHPynTZ+FLevhZk38t/ddxfziJcTJR5tB
+         vfbNW9Mq/ejj7O96s6gwP+uSGJvoX6npRr8vYOEeF+UiZrvqXw0pKaoTAGG2WuvfMI+u
+         qi+qK7b/nYrX23pQ0q5gTN/y7JZJ49d0NOGRwwI+FEs6/eskVBDX1C38pENHeVegAobv
+         skd+9A1OWlfiJnguGtozKP3Ua6D77xCS8jZC44AhWHBis2WZJWnXr4U47N/OXIcYCUGr
+         fgcksaVORnBW/S77zK9muRCFM/PP02jugFQ+HrXGLKIgqR+rdY7k7rA+YpKzw3veTRmD
+         0CEw==
+X-Gm-Message-State: AOJu0YzGFOWGOFAeRmREyjb+Szew6yXkxqcRQm+sjljQbK1IjhuD84nt
+	Pne2wOQrqIECtv33bAXfLaLczUZ+MC/PKU59CNGQOHP+64OnjGKgpi6UT0K920dFg/OkGAfgEXG
+	1tqXPXVwcCKp6dKAUQrOlhrdu2ZVTobvZL3WngDc=
+X-Gm-Gg: Acq92OHaEaPoph/2Tj0MBxQUmwHSj68X5SdP3skgZEyumA2vahWrS7MW7eQhhvei6tQ
+	JaTODWbGyGvGf6nac0VH6G5PjBSZcu/vVgkXe77wljBMzJX/xro/zmsigkTlvK7A4SXFDoTv/aW
+	UgTDJ/JDGdMwW3xLOjV/nPu1QN8MPFvUQD81Gc/1jbSAwc1OqZPr5WqBUesWzxIxYjQJzL0Hw7R
+	YFS6c2cJs6OXBYuDQnl5GobYEzmvNeQDE2FA3weB/DL5BO7xVo0VsGLFfQu1DGzlYticw33EAHD
+	t9ctVKMor7NO7eBm2ywGInkCsYlI/6MiMIn1mLps6OtTMECJbc0=
+X-Received: by 2002:a05:690c:680d:b0:7db:ba77:899e with SMTP id
+ 00721157ae682-7ed073f1754mr108786337b3.0.1780840895541; Sun, 07 Jun 2026
+ 07:01:35 -0700 (PDT)
 Precedence: bulk
 X-Mailing-List: sashiko-reviews@lists.linux.dev
 List-Id: <sashiko-reviews.lists.linux.dev>
 List-Subscribe: <mailto:sashiko-reviews+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:sashiko-reviews+unsubscribe@lists.linux.dev>
-Mime-Version: 1.0
+MIME-Version: 1.0
+References: <20260607131659.29281-4-laoar.shao@gmail.com> <20260607133313.EE8A21F00893@smtp.kernel.org>
+In-Reply-To: <20260607133313.EE8A21F00893@smtp.kernel.org>
+From: Yafang Shao <laoar.shao@gmail.com>
+Date: Sun, 7 Jun 2026 22:00:58 +0800
+X-Gm-Features: AVVi8Cc1Jb25xR84tgMeD3ll20m9cTzarLFALGHcOZ6Z6rB1gi3jfSeZRfbeJl0
+Message-ID: <CALOAHbDBVtkTfoK8Sv5mYj-Kq2e9QVe3uKAB-_pjYqb=8HH3Rg@mail.gmail.com>
+Subject: Re: [PATCH v3 3/7] livepatch: Support scoped atomic replace using replace_set
+To: sashiko-reviews@lists.linux.dev
+Cc: joe.lawrence@redhat.com, mbenes@suse.cz, jikos@kernel.org, song@kernel.org, 
+	jpoimboe@kernel.org, pmladek@suse.com, live-patching@vger.kernel.org
+Content-Type: text/plain; charset="UTF-8"
 Content-Transfer-Encoding: quoted-printable
-Content-Type: text/plain; charset=UTF-8
-Date: Sun, 07 Jun 2026 11:17:21 +0200
-Message-Id: <DJ2PD6LPWBZH.23QDYT24490ZH@gmail.com>
-Cc: <bpf@vger.kernel.org>
-Subject: Re: [PATCH bpf] bpf, lpm_trie: Allow lookups from sleepable BPF
- programs
-From: "Kumar Kartikeya Dwivedi" <memxor@gmail.com>
-To: <sashiko-reviews@lists.linux.dev>, "Vlad Poenaru" <vlad.wing@gmail.com>
-X-Mailer: aerc 0.21.0
-References: <20260529174233.2954240-1-vlad.wing@gmail.com>
- <20260529190220.2090C1F00893@smtp.kernel.org>
-In-Reply-To: <20260529190220.2090C1F00893@smtp.kernel.org>
 
-On Fri May 29, 2026 at 9:02 PM CEST, sashiko-bot wrote:
+On Sun, Jun 7, 2026 at 9:33=E2=80=AFPM <sashiko-bot@kernel.org> wrote:
+>
 > Thank you for your contribution! Sashiko AI review found 1 potential issu=
 e(s) to consider:
->
-> Pre-existing issues:
-> - [High] This problem wasn't introduced by this patch, but the fix is inc=
-omplete. The patch resolves an RCU lockdep splat in `trie_lookup_elem` for =
-sleepable BPF programs, but leaves identical core kernel locking rule viola=
-tions in `trie_update_elem` and `trie_delete_elem`. Sleepable eBPF programs=
- hold `rcu_read_lock_trace()`, not the classic `rcu_read_lock()`. The updat=
-e and delete operations acquire the map's spinlock (`trie->lock`) and corre=
-ctly serialize access, but they use `rcu_dereference()` to traverse the tri=
-e instead of the update-side API `rcu_dereference_protected()`. `rcu_derefe=
-rence()` strictly asserts that `rcu_read_lock_held()` is true. Holding a sp=
-inlock disables preemption but does not satisfy this check, leading to the =
-exact same 'suspicious rcu_dereference_check() usage' lockdep splat that th=
-is patch aimed to fix.
+> - [High] The newly introduced check in `klp_is_patch_compatible` causes a=
+ kernel panic if a livepatch module contains a `klp_func` entry with `old_n=
+ame =3D=3D NULL`.
 > --
 >
-> commit 1ac6e30b3c7fb4d93d67bfcbb5dc35077814b266
-> Author: Vlad Poenaru <vlad.wing@gmail.com>
+> commit ed678e88294b650a730cda1a47351fce99677c1e
+> Author: Yafang Shao <laoar.shao@gmail.com>
 >
-> bpf, lpm_trie: Allow lookups from sleepable BPF programs
+> livepatch: Support scoped atomic replace using replace_set
 >
-> This commit fixes a lockdep warning caused by sleepable BPF programs
-> accessing LPM tries. It updates the RCU dereference checks in
-> trie_lookup_elem() to use bpf_rcu_lock_held() instead of
-> rcu_read_lock_bh_held().
+> Convert the replace attribute from a boolean to a u32 to function as a
+> "replace set." A newly loaded livepatch will now atomically replace any
+> existing patch belonging to the same set.
 >
->> diff --git a/kernel/bpf/lpm_trie.c b/kernel/bpf/lpm_trie.c
->> index 0f57608b385d4..ac36063cb7e62 100644
->> --- a/kernel/bpf/lpm_trie.c
->> +++ b/kernel/bpf/lpm_trie.c
+> Link: https://github.com/pmladek/linux/tree/klp-state-transfer-v1-iter12 =
+[0]
+>
 > [ ... ]
->> @@ -280,7 +280,7 @@ static void *trie_lookup_elem(struct bpf_map *map, v=
-oid *_key)
->>  		 */
->>  		next_bit =3D extract_bit(key->data, node->prefixlen);
->>  		node =3D rcu_dereference_check(node->child[next_bit],
->> -					     rcu_read_lock_bh_held());
->> +					     bpf_rcu_lock_held());
->>  	}
->>
->>  	if (!found)
+> > --- a/kernel/livepatch/state.c
+> > +++ b/kernel/livepatch/state.c
+> [ ... ]
+> > +             /*
+> > +              * Refuse loading a livepatch which would want to modify =
+a
+> > +              * function which is already livepatched with the livepat=
+ch
+> > +              * with another "replace_set".
+> > +              */
+> > +             klp_for_each_object_static(patch, obj) {
+> > +                     klp_for_each_object(old_patch, old_obj) {
+> > +                             if (!!obj->name !=3D !!old_obj->name)
+> > +                                     continue;
+> > +                             if (obj->name && strcmp(obj->name, old_ob=
+j->name))
+> > +                                     continue;
+> > +                             klp_for_each_func_static(obj, func) {
+> > +                                     if (klp_find_func(old_obj, func))
+> > +                                             return false;
+> > +                             }
+> > +                     }
+> > +             }
+> >       }
 >
 > [Severity: High]
-> This is a pre-existing issue, but does this patch leave the fix incomplet=
-e?
+> Can passing an unvalidated function to klp_find_func() cause a NULL point=
+er
+> dereference here?
 >
-> While this patch updates the lookup path to avoid lockdep splats from sle=
-epable
-> BPF programs, sleepable BPF programs can also trigger map updates and del=
-etes.
-> The functions trie_update_elem() and trie_delete_elem() acquire the map's
-> spinlock (trie->lock) but traverse the tree using rcu_dereference():
+> If a new livepatch module is loaded with an improperly initialized klp_fu=
+nc
+> array (e.g., accidentally missing old_name but providing new_func),
+> klp_for_each_func_static() will still process it because structural
+> validation in klp_init_patch() hasn't occurred yet at this point in the
+> loading process.
 >
-> kernel/bpf/lpm_trie.c:trie_update_elem() {
-> ...
->         while ((node =3D rcu_dereference(*slot))) {
->                 matchlen =3D longest_prefix_match(trie, node, key);
-> ...
-> }
+> When this unvalidated func is passed as the second argument to
+> klp_find_func(old_obj, func), the roles inside klp_find_func() are revers=
+ed
+> from its usual context. The old_func parameter represents the new patch's
+> unvalidated function, while the local func iterator represents the
+> already-installed patch.
 >
-> kernel/bpf/lpm_trie.c:trie_delete_elem() {
-> ...
->         while ((node =3D rcu_dereference(*trim))) {
->                 matchlen =3D longest_prefix_match(trie, node, key);
-> ...
-> }
+> Inside klp_find_func(), the check evaluates:
 >
-> Because rcu_dereference() strictly asserts that rcu_read_lock_held() is t=
-rue,
-> and holding a spinlock does not satisfy the classic RCU read lock check, =
-won't
-> calling map updates or deletes from sleepable programs still trigger the =
-exact
-> same suspicious rcu_dereference_check() usage lockdep splats?
+>     if ((func->old_name && strcmp(old_func->old_name, func->old_name) =3D=
+=3D 0)
+>
+> Since the installed patch's func->old_name is guaranteed to be non-NULL,
+> strcmp() will be called with old_func->old_name. If old_func->old_name is
+> NULL, does this turn what would normally be a graceful -EINVAL module
+> rejection into a system crash?
 
-Please address this feedback for other instances and respin.
+Oops, I missed that. It seems we should better check both func->name
+and old_func->name in patch #1.
 
-pw-bot: cr
+--- a/kernel/livepatch/core.c
++++ b/kernel/livepatch/core.c
+@@ -82,20 +82,22 @@ static bool klp_initialized(void)
+        return !!klp_root_kobj;
+ }
 
->
-> Should these paths be updated to use rcu_dereference_protected() since th=
-e
-> trie->lock is held?
++/* Check if @func is present in @obj */
+ static struct klp_func *klp_find_func(struct klp_object *obj,
+-                                     struct klp_func *old_func)
++                                     struct klp_func *func)
+ {
+-       struct klp_func *func;
++       struct klp_func *obj_func;
 
+-       klp_for_each_func(obj, func) {
++       klp_for_each_func(obj, obj_func) {
+                /*
+                 * Besides identical old_sympos, also consider old_sympos
+                 * of 0 and 1 are identical.
+                 */
+-               if ((strcmp(old_func->old_name, func->old_name) =3D=3D 0) &=
+&
+-                   ((old_func->old_sympos =3D=3D func->old_sympos) ||
+-                    (old_func->old_sympos =3D=3D 0 && func->old_sympos =3D=
+=3D 1) ||
+-                    (old_func->old_sympos =3D=3D 1 && func->old_sympos =3D=
+=3D 0))) {
++               if ((obj_func->old_name && func->old_name &&
++                    strcmp(obj_func->old_name, func->old_name) =3D=3D 0) &=
+&
++                   ((obj_func->old_sympos =3D=3D func->old_sympos) ||
++                    (obj_func->old_sympos =3D=3D 0 && func->old_sympos =3D=
+=3D 1) ||
++                    (obj_func->old_sympos =3D=3D 1 && func->old_sympos =3D=
+=3D 0))) {
+                        return func;
+                }
+        }
+
+--=20
+Regards
+Yafang
