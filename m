@@ -1,253 +1,176 @@
-Received: from CO1PR03CU002.outbound.protection.outlook.com (mail-westus2azon11010071.outbound.protection.outlook.com [52.101.46.71])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-pl1-f171.google.com (mail-pl1-f171.google.com [209.85.214.171])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8A708382F08
-	for <sashiko-reviews@lists.linux.dev>; Sun,  7 Jun 2026 23:13:46 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=fail smtp.client-ip=52.101.46.71
-ARC-Seal:i=2; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1780874029; cv=fail; b=Wdmg98kPFA/9Ped21Cvn+a3aEqtTFUCspZNFaQtCrmVMEB4YqKC6UqaysCeXoOLiym0RuYWlF2/wGCcVBJ9Omnnclat2dXTnXDVgEoHMvKrtik/ZbxEg4j3Quxk1Ogycq57vRjj4QzrFUHx5SkTkZQn2TQdDYobbOw7GQl1DvWk=
-ARC-Message-Signature:i=2; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1780874029; c=relaxed/simple;
-	bh=gGGr94GM3WvlepsQmHvdjxzGhPaM44xjRjo2oF9F0gc=;
-	h=Message-ID:Date:MIME-Version:Subject:To:CC:References:From:
-	 In-Reply-To:Content-Type; b=q8E543PcuPvlu2t+U/kV7WTk5ekxjVaDsUrcwjMQTN8BTBxL2j1oloFkCmRj5Lwf4Xftk1ZrnOkf8xR2X5Ym7H4yZTOubGS+YylCyguG9n+RVjMC3Rkz6I1w7cMaUt+uWXTu6vaokRNGBznL8WbYkWsxA8Yb/0mvpGkJDcTPT1M=
-ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=amd.com; spf=fail smtp.mailfrom=amd.com; dkim=pass (1024-bit key) header.d=amd.com header.i=@amd.com header.b=R9YJbakT; arc=fail smtp.client-ip=52.101.46.71
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=amd.com
-Authentication-Results: smtp.subspace.kernel.org; spf=fail smtp.mailfrom=amd.com
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EA94D3115AE
+	for <sashiko-reviews@lists.linux.dev>; Sun,  7 Jun 2026 23:27:11 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.214.171
+ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
+	t=1780874833; cv=none; b=b+A4Ufd6R7cHiFuTop3v25peyemvPQOnbqG+SPNKHKukilTHImzwgo00Jhzz5739u5POADozJxz7Cc34B7va2EenUepxuhKXPI9g26nsiGT7PCDKJXmGJZmnyIZyn07kI6oJNUGPhlqRcskonG2F82oNtsrOEpRmNyf/cKqtpks=
+ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
+	s=arc-20240116; t=1780874833; c=relaxed/simple;
+	bh=JaIgZGp87mHQeaWQRPlb24gfMcw+k2bxvNISw/zeBi8=;
+	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
+	 In-Reply-To:Content-Type; b=MJf+/wA5mvNOv3dIfafILjdru3ZazOYKIKPQPT+4SMsTSVcsEsvHA/oMsNzqBGOWi2/g92rFvjv+Hcbr7FuvFMHEPBQkrysLDMjYD0n5QNDCUAIrS6QxxoVpXGSU6Atg/vLekun2qYzOfkwZ6inzZN4hjlHeisEbM42Ckklc4eY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=roeck-us.net; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=PZcKVTro; arc=none smtp.client-ip=209.85.214.171
+Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=roeck-us.net
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=amd.com header.i=@amd.com header.b="R9YJbakT"
-ARC-Seal: i=1; a=rsa-sha256; s=arcselector10001; d=microsoft.com; cv=none;
- b=Hsfg+ljbgNY3FH+Sk6yQPJLcTFxd8yR7PuTWet8poci2NjRtBC+CPRPGwFz/LIWAVuTz5KCMnvX7R3OkIrDI7uSbXSsLKBWDsW7i0Pp27QHvXmkPb6v9AOSfiCQ6HJsRQkKUkCqJBbdiqoR54MVjuNXbVoIRJJDbHlSH3GDcQYR565usR0iLbuTW5pS4Bl2/MUxxiNKPlIPO5wDNSPlti6VgaDdUSAyr1Z+Jn7gowJfvt+eUu8ysEacdYh0JGR5HjjMfFSy1lR06Co5HzlIqbrDAgeMt0CCavNCfcpFw09711R8n4cVt+DsxonkquGgKitdSszzPwR9cvsVrcBw2Fg==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com;
- s=arcselector10001;
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
- bh=sv00gUoNs9PAbMnKoP3YuSk+jhec/RNUOekUbChQBgk=;
- b=MaNdSsWh25tCDIG9ugTcCPflzvTw5mnWVjjqd1jUddQXWqBEJTEG8Lb/VNPMGoU09BIxpAuOa6kdCY14lu8R+1NpIPXkZ8bFj0w0CIQsLrj8HXYScu0GJQak8vVIf70UfFDYtYTjnst0dU7/EBXcFUyUmLGO699mYpTpQqMmX2yFR8vBljRVwPXnI9PGhkz2gPy0W0KS46c2OS/wGhS0bIF7XLPprt7r+z0OdpDDMJX9BIYJ9/DbGMh+Mb4M8CWZK7nk+wSJdFyPkleVjx7aLjH79ZF1X9cKal520gf8NL3zRcaeeLzNnkhgwUN4zWHNwBtqPR4rDP2wb2AmDZUjUQ==
-ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass (sender ip is
- 165.204.84.17) smtp.rcpttodomain=lists.linux.dev smtp.mailfrom=amd.com;
- dmarc=pass (p=quarantine sp=quarantine pct=100) action=none
- header.from=amd.com; dkim=none (message not signed); arc=none (0)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=amd.com; s=selector1;
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
- bh=sv00gUoNs9PAbMnKoP3YuSk+jhec/RNUOekUbChQBgk=;
- b=R9YJbakTT9QNVgzxxaZwjB6qbYCiVydHfukU10sDsvOSN410EiL8pDEHC9AOm+xsUnya/kNZSO0f7VAa7npVM1/zw7A8TevCMIIGP9CP4eVD4YFA00DaFt7lVvlhj9sn8gEtveNaQGzoAY83ij4yZH/EvuwNQU/a9H0B9EhLP6k=
-Received: from MN0P223CA0018.NAMP223.PROD.OUTLOOK.COM (2603:10b6:208:52b::35)
- by DM6PR12MB4330.namprd12.prod.outlook.com (2603:10b6:5:21d::20) with
- Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.21.92.12; Sun, 7 Jun 2026
- 23:13:42 +0000
-Received: from BL02EPF0001A103.namprd05.prod.outlook.com
- (2603:10b6:208:52b:cafe::a0) by MN0P223CA0018.outlook.office365.com
- (2603:10b6:208:52b::35) with Microsoft SMTP Server (version=TLS1_3,
- cipher=TLS_AES_256_GCM_SHA384) id 15.21.92.12 via Frontend Transport; Sun, 7
- Jun 2026 23:13:41 +0000
-X-MS-Exchange-Authentication-Results: spf=pass (sender IP is 165.204.84.17)
- smtp.mailfrom=amd.com; dkim=none (message not signed)
- header.d=none;dmarc=pass action=none header.from=amd.com;
-Received-SPF: Pass (protection.outlook.com: domain of amd.com designates
- 165.204.84.17 as permitted sender) receiver=protection.outlook.com;
- client-ip=165.204.84.17; helo=satlexmb07.amd.com; pr=C
-Received: from satlexmb07.amd.com (165.204.84.17) by
- BL02EPF0001A103.mail.protection.outlook.com (10.167.241.133) with Microsoft
- SMTP Server (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
- 15.21.113.7 via Frontend Transport; Sun, 7 Jun 2026 23:13:41 +0000
-Received: from satlexmb10.amd.com (10.181.42.219) by satlexmb07.amd.com
- (10.181.42.216) with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.2562.41; Sun, 7 Jun
- 2026 18:13:41 -0500
-Received: from satlexmb08.amd.com (10.181.42.217) by satlexmb10.amd.com
- (10.181.42.219) with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.2562.41; Sun, 7 Jun
- 2026 18:13:41 -0500
-Received: from [172.19.71.207] (10.180.168.240) by satlexmb08.amd.com
- (10.181.42.217) with Microsoft SMTP Server id 15.2.2562.41 via Frontend
- Transport; Sun, 7 Jun 2026 18:13:41 -0500
-Message-ID: <5bf9faa6-59a3-eb26-b9b0-b063e74d8964@amd.com>
-Date: Sun, 7 Jun 2026 16:13:41 -0700
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="PZcKVTro"
+Received: by mail-pl1-f171.google.com with SMTP id d9443c01a7336-2bf2e8ccca1so25557685ad.0
+        for <sashiko-reviews@lists.linux.dev>; Sun, 07 Jun 2026 16:27:11 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20251104; t=1780874831; x=1781479631; darn=lists.linux.dev;
+        h=content-transfer-encoding:in-reply-to:autocrypt:from
+         :content-language:references:cc:to:subject:user-agent:mime-version
+         :date:message-id:sender:from:to:cc:subject:date:message-id:reply-to;
+        bh=bUZyp94wCma5Mp7itw6GHKFNArJTxzXMRHFwaw1fChk=;
+        b=PZcKVTroR4hBHaaeSv2e9EOjFZwGtzmk39AkeCidRFgVKumSATTAgo8MQzSOyFLY8Z
+         jn9p64pe13c87UYx3Yxy+S3RHJ48dLr9VvcVUYazUVjQObzq9O7bhuzmetl/Rg8vCmSm
+         qRE3GFxZLL29QGhhzAP7FNw2+NiWkPE9J9R6kHHw0SOamMOco9NAa0U+xfaRJ8WP0cWh
+         oz4DOctFa1zjPYMXYgRlr5EsSDKLI52jJntZlupHqkNm91DqDSWHf9pUmfFdYWqNuBbN
+         W5qdxBa2F6A50RNAxOrExvvZ1VRtOJM1pgCqt0bt/dsJJ6Yz87nTwlooOe27u5rk/dFd
+         MU+A==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20251104; t=1780874831; x=1781479631;
+        h=content-transfer-encoding:in-reply-to:autocrypt:from
+         :content-language:references:cc:to:subject:user-agent:mime-version
+         :date:message-id:sender:x-gm-gg:x-gm-message-state:from:to:cc
+         :subject:date:message-id:reply-to;
+        bh=bUZyp94wCma5Mp7itw6GHKFNArJTxzXMRHFwaw1fChk=;
+        b=YjMvI1Uf7jYYXIBmt9CqXK+tC8Khseic/P6D9zcyLROTQJsjAunmTLT9aPLxAz1QoD
+         FlK3u77KhiRk2VKxWJga/7f7/ordwdShtPQRZT4EPL/2pOzK7sQSV17yumXFwzJoGeIM
+         fYSb7bxPBF2JoQwbJjT7qAaP0PPyBPmPKUkxf34Eys1m3RWagPVmrRfbbssDoW7dyY1C
+         ZSo9b4sihOoGM2pi6pldvnqaKkZyIPk5+tmwkJsVlR1cDQlzS595g4QuIgfnPVtNyYwS
+         D4xu/iXHqKFXrr1+Y8Mg1D6tDNTBViq+YIxREAkDRXn2AQu8jE3Ilfo5L0cMwGxgriNu
+         scDw==
+X-Gm-Message-State: AOJu0Yw/HwFC/UbBAfl+Hg8gqCGyEghI21isGyabISSxTWv9VEvKZYVY
+	gXK+vP5sOmxmDdr3NFhoFNkO73zDtMyNCS8XW3Tmf+fmqbFJNsCho/py8W8tQ13I
+X-Gm-Gg: Acq92OF1HVBzJD72/BPTl4eHVXpJpqhIHeXdQftaEgm6v57e5YoIoZD6bEcFzt4p/ZS
+	129Pw21za/Vq3mDoYuAYysUThoTOEkuc4iER3JSu+wUkZ0DJkdQtF0oc9+3+5N9QllVt0yoHZjm
+	nXsvY4tkqv2K0/nV5PYtA+E9EFsFIDkvRE1cfabcGFBJrIzcRjE6fgkdzAJrldVdsqN6R7cNBab
+	ay6ah5C2Yw3uJd4b4/pYGJzKZV+EqLrLG+VmXUnyFNt6Tkd7zUA/ygJFYG0EH0h1Ih+gtZT/Gon
+	jC8YvTPspJrF/hqwTso2uYeimGxyZUUmLtMn/YESNph7ow5uH1QiiJsUiwbd+g2Go3lzsW7LNhm
+	QulejpgzmxJApTbq2VclaFqSmFec4+XZpmtbGgMFZeaQTDhnxw7Z3SInkYtYPsVpDV9nQ1uXYQ6
+	0IBKG+EwTvyABead4JOaM4nmF6FyHjue/+z2G5zqaH+j7oq+OwZq6m8rJHOwor8CTzKg4vGrc6W
+	JnjXyE11nA=
+X-Received: by 2002:a17:902:f64f:b0:2c1:6e2c:a5e2 with SMTP id d9443c01a7336-2c1e7e4f342mr146940555ad.17.1780874831262;
+        Sun, 07 Jun 2026 16:27:11 -0700 (PDT)
+Received: from ?IPV6:2600:1700:e321:62f0:da43:aeff:fecc:bfd5? ([2600:1700:e321:62f0:da43:aeff:fecc:bfd5])
+        by smtp.gmail.com with ESMTPSA id d9443c01a7336-2c164f8792bsm162281735ad.23.2026.06.07.16.27.10
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Sun, 07 Jun 2026 16:27:10 -0700 (PDT)
+Sender: Guenter Roeck <groeck7@gmail.com>
+Message-ID: <e47953be-dc37-4d97-803c-5d38b4f7e910@roeck-us.net>
+Date: Sun, 7 Jun 2026 16:27:09 -0700
 Precedence: bulk
 X-Mailing-List: sashiko-reviews@lists.linux.dev
 List-Id: <sashiko-reviews.lists.linux.dev>
 List-Subscribe: <mailto:sashiko-reviews+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:sashiko-reviews+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:91.0) Gecko/20100101
- Thunderbird/91.11.0
-Subject: Re: [PATCH V1] accel/amdxdna: Fix amdxdna_client lifetime race during
- device removal
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH v1 2/3] hwmon: (emc1403) Convert to use OF bindings
+To: sashiko-reviews@lists.linux.dev, Svyatoslav Ryhel <clamor95@gmail.com>
+Cc: devicetree@vger.kernel.org, robh@kernel.org, conor+dt@kernel.org,
+ linux-hwmon@vger.kernel.org
+References: <20260603141033.111300-3-clamor95@gmail.com>
+ <20260603143009.38F961F00893@smtp.kernel.org>
 Content-Language: en-US
-To: <sashiko-reviews@lists.linux.dev>
-CC: <dri-devel@lists.freedesktop.org>
-References: <20260605175351.2496830-1-lizhi.hou@amd.com>
- <20260605181834.D03571F00899@smtp.kernel.org>
-From: Lizhi Hou <lizhi.hou@amd.com>
-In-Reply-To: <20260605181834.D03571F00899@smtp.kernel.org>
-Content-Type: text/plain; charset="UTF-8"; format=flowed
-Content-Transfer-Encoding: 7bit
-X-EOPAttributedMessage: 0
-X-MS-PublicTrafficType: Email
-X-MS-TrafficTypeDiagnostic: BL02EPF0001A103:EE_|DM6PR12MB4330:EE_
-X-MS-Office365-Filtering-Correlation-Id: d12dc4d9-61b3-4d84-0741-08dec4ea6a63
-X-MS-Exchange-SenderADCheck: 1
-X-MS-Exchange-AntiSpam-Relay: 0
-X-Microsoft-Antispam:
-	BCL:0;ARA:13230040|1800799024|82310400026|376014|36860700016|22082099003|18002099003|6133799003|5023799004|4143699003|11063799006|56012099006;
-X-Microsoft-Antispam-Message-Info:
-	yQ7gLfTHLD+7USk1niV2Etuh+3yxefNZAOF1vxgE+FdVjzJv4gNBNhZtUQB8+cz3794G4LQwKCCl9RG7Vpa6sYjKrKbIRLrxOle126/dFJ6baYihQ0gZK0UpG9bkTnmZOjVQoQGY2qEQGntcdTtzA423jItxJpO4urdxF8P7m7EuPRgAu4haXPXMJDC0nR9xw1xAtnT1XBRu2RiKt8HJfmi76yuB7JMsjRX1xCMxXTGJlNvHGEST0Z2EfvhCy0xtIwdGUUVnsWIR6hp9OAIOxCY3BDpVhxgmWqdIm4JgfdV5QfN8Q8AojojSTSSwb6+kO0HTdkzEI5BzfEqoXslvNGyij5Zm+Nrw6v2PkVvyGXvFr+YRp+R7hphB0lEHDt8nV10SaypPC4JSfuBhSlztqAZK5681SXqTE+9Bdj68Ps2rbvbL8S0E58G9iIKxjOB/ugGReZF3iu1GfW8J+tTk/hSpi2yhudbfajENVAP+W7Y360HB5Jr0dJ2ewDEcfMH9HH+c3XkRqD/HMJbdnMTzRhFsqjzo493lKlxVE8hZgjgmeGAiIFDgbO1wGlxKOsTKPlHbj/wvJndLqqQTNultgbaFdra1CR3uvAPwvmkcrAdcOeuNzlvPl7ptQ5Z57ayAzRQRUTjnnjAaTE3IznWmXdzeTatdXo2UYdRf2zNNBsrqraYLNKTrCnz0zIThzlm1Y7wkfo96SktKTA4/FIbyM/4JW5puQASBrUyaCuzIjlQ=
-X-Forefront-Antispam-Report:
-	CIP:165.204.84.17;CTRY:US;LANG:en;SCL:1;SRV:;IPV:NLI;SFV:NSPM;H:satlexmb07.amd.com;PTR:InfoDomainNonexistent;CAT:NONE;SFS:(13230040)(1800799024)(82310400026)(376014)(36860700016)(22082099003)(18002099003)(6133799003)(5023799004)(4143699003)(11063799006)(56012099006);DIR:OUT;SFP:1101;
-X-MS-Exchange-AntiSpam-MessageData-ChunkCount: 1
-X-MS-Exchange-AntiSpam-MessageData-0:
-	JzFSiNmVmdTTBmKeRdf1lEayHzjlOiuOxT0ohiISJehNX/rF8xu4JE0dnRyFM0jgtEJldqUcSMkMNfLpGcQnaEeHJGJ7m9MSpO4PJcUorliKVIge71ce/tvG/TkeL6PXbTZYHLm+/I9CQ4+MHaGa9rqwJBTpsmwOPORVFaVQw3prPashJeTS+tpdmN6HjczFigdwbLuIbh9GHD4YykEjdtSJxMP/UaAB+j+2GOqlpezKwLCm0Unla59HoHshwyCbnD7Y41ywWFpqbnH1/aJviiNXIBskS0QvXepmVf2fjobB8Pea94mOJUIY8EFBnJiWHt+83iVkT2nmbN779vPVKStbixtzUVN2K/JF8dFQMeqUibEO2HkpGFAN3xBGDftNqkbtjZ3SwadRuZ2vbhUouIIgPN9ldL5xxnSUITXSUtXWFaofpvtI2ktsewbbSetA
-X-OriginatorOrg: amd.com
-X-MS-Exchange-CrossTenant-OriginalArrivalTime: 07 Jun 2026 23:13:41.9092
- (UTC)
-X-MS-Exchange-CrossTenant-Network-Message-Id: d12dc4d9-61b3-4d84-0741-08dec4ea6a63
-X-MS-Exchange-CrossTenant-Id: 3dd8961f-e488-4e60-8e11-a82d994e183d
-X-MS-Exchange-CrossTenant-OriginalAttributedTenantConnectingIp: TenantId=3dd8961f-e488-4e60-8e11-a82d994e183d;Ip=[165.204.84.17];Helo=[satlexmb07.amd.com]
-X-MS-Exchange-CrossTenant-AuthSource:
-	BL02EPF0001A103.namprd05.prod.outlook.com
-X-MS-Exchange-CrossTenant-AuthAs: Anonymous
-X-MS-Exchange-CrossTenant-FromEntityHeader: HybridOnPrem
-X-MS-Exchange-Transport-CrossTenantHeadersStamped: DM6PR12MB4330
+From: Guenter Roeck <linux@roeck-us.net>
+Autocrypt: addr=linux@roeck-us.net; keydata=
+ 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
+ np3900V20aS7eD9K8GTU0TGC1pyz6IVJwIE=
+In-Reply-To: <20260603143009.38F961F00893@smtp.kernel.org>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 8bit
 
-
-On 6/5/26 11:18, sashiko-bot@kernel.org wrote:
-> Thank you for your contribution! Sashiko AI review found 4 potential issue(s) to consider:
->
-> New issues:
-> - [High] Dropping dev_lock during amdxdna_remove() list iteration causes a Use-After-Free if a file is closed concurrently.
-> - [High] Deferring IOMMU SVA unbind to amdxdna_drm_close() causes a NULL pointer dereference in the IOMMU core.
-
-Agreed. I will provide a simpler fix in v2 patch.
-
-Lizhi
-
->
-> Pre-existing issues:
-> - [High] Deferred GEM object freeing accesses destroyed IOMMU domain structures, causing a Use-After-Free.
-> - [High] Deferred GEM object freeing calls flush_workqueue() on a destroyed workqueue pointer.
+On 6/3/26 07:30, sashiko-bot@kernel.org wrote:
+> Thank you for your contribution! Sashiko AI review found 2 potential issue(s) to consider:
+> - [High] The driver probe unconditionally fails for `emc1402` devices because its chip enum value evaluates to 0, which triggers an erroneous error path.
+> - [Low] Directly casting `const void *` to `enum emc1403_chip` causes a `-Wpointer-to-int-cast` compiler warning on 64-bit architectures.
 > --
->
-> commit ec7bb08ec6d7a0837cd580d24a3f76e7ed06a6c6
-> Author: Lizhi Hou <lizhi.hou@amd.com>
->
-> accel/amdxdna: Fix amdxdna_client lifetime race during device removal
->
-> This patch changes the client cleanup logic during device removal.
-> It decouples hardware teardown from client cleanup to avoid a use-after-free
-> if amdxdna_drm_close() is called concurrently with amdxdna_remove().
->
->> diff --git a/drivers/accel/amdxdna/amdxdna_pci_drv.c b/drivers/accel/amdxdna/amdxdna_pci_drv.c
->> index c677293c1ae7f..3016db07c7cad 100644
->> --- a/drivers/accel/amdxdna/amdxdna_pci_drv.c
->> +++ b/drivers/accel/amdxdna/amdxdna_pci_drv.c
->> @@ -167,18 +167,12 @@ static void amdxdna_drm_close(struct drm_device *ddev, struct drm_file *filp)
->>   {
->>   	struct amdxdna_client *client = filp->driver_priv;
->>   	struct amdxdna_dev *xdna = to_xdna_dev(ddev);
->> -	int idx;
->>   
->>   	XDNA_DBG(xdna, "closing pid %d", client->pid);
->>   
->> -	if (!drm_dev_enter(&xdna->ddev, &idx))
->> -		return;
->> -
->>   	mutex_lock(&xdna->dev_lock);
->>   	amdxdna_client_cleanup(client);
+> 
+> commit 8e14b2d237bb423a526fb43282f03dadf7dbb7dc
+> Author: Jonas Schwöbel <jonasschwoebel@yahoo.de>
+> 
+> hwmon: (emc1403) Convert to use OF bindings
+> 
+> This commit adds an OF match compatible table. This allows the driver to be
+> used with Device Trees.
+> 
+>> diff --git a/drivers/hwmon/emc1403.c b/drivers/hwmon/emc1403.c
+>> --- a/drivers/hwmon/emc1403.c
+>> +++ b/drivers/hwmon/emc1403.c
+> [ ... ]
+>> @@ -659,14 +660,16 @@ static int emc1403_probe(struct i2c_client *client)
+> [ ... ]
+>> -	data->chip = id->driver_data;
+>> +	data->chip = (enum emc1403_chip)i2c_get_match_data(client);
+> 
+> [Severity: Low]
+> Does directly casting the pointer returned by i2c_get_match_data() to a
+> 32-bit enum cause a pointer-to-int-cast compiler warning on 64-bit
+> architectures? Would it be safer to cast it to an intermediate
+> pointer-sized integer first?
+> 
+
+Most drivers either use a double cast or cast to uintptr_t to avoid
+that problem.
+
+>> +	if (!data->chip)
+> 
 > [Severity: High]
-> Since amdxdna_client_cleanup() is now deferred until file close, could this
-> trigger a NULL pointer dereference during SVA teardown?
->
-> When a device is removed, the PCI subsystem unlinks it from its IOMMU group.
-> Later, when this file is closed, amdxdna_sva_fini() calls
-> iommu_sva_unbind_device().
->
-> Inside the IOMMU core, iommu_detach_device_pasid() dereferences the group
-> pointer:
->
-> 	struct iommu_group *group = dev->iommu_group;
->
-> 	mutex_lock(&group->mutex);
->
-> If the device was already removed, dev->iommu_group would be NULL, causing a
-> crash. Does the SVA unbind need to happen earlier during device removal?
->
->>   	mutex_unlock(&xdna->dev_lock);
->> -
->> -	drm_dev_exit(idx);
->>   }
->>   
->> [ ... ]
->> @@ -436,14 +430,8 @@ static void amdxdna_remove(struct pci_dev *pdev)
->>   	amdxdna_sysfs_fini(xdna);
->>   
->>   	mutex_lock(&xdna->dev_lock);
->> -	client = list_first_entry_or_null(&xdna->client_list,
->> -					  struct amdxdna_client, node);
->> -	while (client) {
->> -		amdxdna_client_cleanup(client);
->> -
->> -		client = list_first_entry_or_null(&xdna->client_list,
->> -						  struct amdxdna_client, node);
->> -	}
->> +	list_for_each_entry(client, &xdna->client_list, node)
-> [Severity: High]
-> Does this list_for_each_entry() loop have a use-after-free risk if the lock
-> is dropped internally?
->
-> The loop calls amdxdna_hwctx_remove_all(), which invokes aie2_hwctx_fini().
-> Inside aie2_hwctx_fini(), xdna->dev_lock is temporarily dropped to wait for
-> hardware idle:
->
-> 	mutex_unlock(&xdna->dev_lock);
->
-> Since this patch removes the drm_dev_enter() safeguard from
-> amdxdna_drm_close(), a concurrent file close can acquire dev_lock while it
-> is dropped here. The concurrent close would remove the client from the list
-> via list_del() and free the client structure.
->
-> When the lock is re-acquired and list_for_each_entry() attempts to fetch the
-> next element, won't it dereference the freed client->node.next pointer?
->
->> +		amdxdna_hwctx_remove_all(client);
->>   
->>   	xdna->dev_info->ops->fini(xdna);
->>   	mutex_unlock(&xdna->dev_lock);
-> [Severity: High]
-> This is a pre-existing issue, but does this function leave xdna->domain
-> dangling, leading to a use-after-free on deferred file close?
->
-> During device removal, amdxdna_remove() calls amdxdna_iommu_fini(), which
-> frees the domain but leaves the pointer intact:
->
-> 	iommu_domain_free(xdna->domain);
->
-> If the application keeps the file descriptor open, drm_gem_object_put() will
-> later invoke amdxdna_gem_obj_free() during cleanup. This calls
-> amdxdna_dma_unmap_bo():
->
-> 	if (amdxdna_iova_on(xdna)) {
-> 		size = iova_align(&xdna->iovad, abo->mem.size);
-> 		iommu_unmap(xdna->domain, abo->mem.dma_addr, size);
->
-> Since xdna->domain is not NULL, amdxdna_iova_on() returns true, and
-> iommu_unmap() is called on the freed domain. Should the domain pointer
-> be set to NULL after being freed?
->
->
-> [Severity: High]
-> This is a pre-existing issue, but could deferred GEM cleanup trigger a
-> use-after-free on the notifier workqueue?
->
-> Earlier in amdxdna_remove(), destroy_workqueue(xdna->notifier_wq) frees the
-> workqueue structure.
->
-> When a process retains an open file descriptor past device removal, the DRM
-> core defers GEM cleanup to the eventual file close. When
-> drm_gem_object_put() calls amdxdna_gem_obj_free(), it unconditionally does:
->
-> 	flush_workqueue(xdna->notifier_wq);
->
-> Since the workqueue was already destroyed and freed, won't this result in
-> a use-after-free crash?
->
+> Since enum emc1403_chip defines emc1402 as 0, will this check evaluate
+> to true for devices compatible with emc1402? It appears this might cause
+> the probe function to erroneously return -ENODEV and break initialization
+> for chips mapping to emc1402.
+> 
+Other drivers do not add this check, and I don't see why it would be
+necessary here.
+
+>> +		return dev_err_probe(&client->dev, -ENODEV, "Unknown device!\n");
+>> +
+>>   	data->regmap = devm_regmap_init_i2c(client, &emc1403_regmap_config);
+> [ ... ]
+> 
+
