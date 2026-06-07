@@ -1,189 +1,341 @@
-Received: from mail-ej1-f74.google.com (mail-ej1-f74.google.com [209.85.218.74])
+Received: from mail-wm1-f67.google.com (mail-wm1-f67.google.com [209.85.128.67])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BA7AB1A317D
-	for <sashiko-reviews@lists.linux.dev>; Sun,  7 Jun 2026 00:41:19 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.218.74
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5638E17A2FC
+	for <sashiko-reviews@lists.linux.dev>; Sun,  7 Jun 2026 02:41:01 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.67
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1780792881; cv=none; b=DkHZajX95zWgzwvGeRjtZ/bkPZpeizmzQieBhL6yrThkEEmeobArYcXn/rbJsTmi1AGP9N4XbxjBHuDSitTArXld20BNjgmdhfUwjVYEg8hhmh7Ev4w5y0YbKuAz6vxLyHz7e29AWOs7Kps60QHd33Q0uRA7vYsDMVmu4gNJpGE=
+	t=1780800063; cv=none; b=Y/4PjnG+vPL3Ny7wvXhJ53U7Hg7vkwnNvnnpNtOY3m8Zf9hMGx93aFsGTB+xYCuTfPgfr3QAFdwMEJvfJ0EDixJ1jm/20eggLm5BpIkE/B/7OkJdmcrixs0ErKeEgQQEGgyDU+ShPltYncA+dR2IRCY/6Jz5OZC+xI2pibN1+5A=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1780792881; c=relaxed/simple;
-	bh=XqKubzGYoCaN00MFXoG9fIkhNKI5f20XSoYlVbwpvQQ=;
-	h=Date:In-Reply-To:Mime-Version:Message-ID:Subject:From:To:Cc:
-	 Content-Type; b=OS7zudT4niIYrEzlg/1vbKo3iBK/dqWCLmfaHG0xsnVoYT8AOkfh5Zb4cVOtPScYqdb7gPAl2+kM28Nu30IozANQ0r2VXG5wN6hAJXV609atqtTwrYcC+7KBjBp+y18KjO+4j97eX4W4fSKkcZxNBbf2edBoda78MOZfRDMzhi0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=google.com; spf=pass smtp.mailfrom=flex--tarunsahu.bounces.google.com; dkim=pass (2048-bit key) header.d=google.com header.i=@google.com header.b=sph2jUt+; arc=none smtp.client-ip=209.85.218.74
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=google.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=flex--tarunsahu.bounces.google.com
+	s=arc-20240116; t=1780800063; c=relaxed/simple;
+	bh=jdHt/EMx2RjSEN6qwUYLfnVvh57YIEqA1cafHiHVz8I=;
+	h=Mime-Version:Content-Type:Date:Message-Id:Cc:Subject:From:To:
+	 References:In-Reply-To; b=TKG/hRnMVzIp6nkOzq8WeAMFzMdh3a/ohhRdsWXWdDNUm+MO4WfcgvehWr6vU3Rs9y7I3NHOo4OYzF9PopSRlQnnkjH6m9MukKZvbMWO04MQOjfenIK7Mr9M+F+k6XuToYCsFQk18MXu9/SqYjaQJbuXuT+C+p1yRFUQAZvKk/w=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=AZ2SYppB; arc=none smtp.client-ip=209.85.128.67
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=google.com header.i=@google.com header.b="sph2jUt+"
-Received: by mail-ej1-f74.google.com with SMTP id a640c23a62f3a-bdad545342aso455662866b.0
-        for <sashiko-reviews@lists.linux.dev>; Sat, 06 Jun 2026 17:41:19 -0700 (PDT)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="AZ2SYppB"
+Received: by mail-wm1-f67.google.com with SMTP id 5b1f17b1804b1-490b8ac62baso27735295e9.0
+        for <sashiko-reviews@lists.linux.dev>; Sat, 06 Jun 2026 19:41:01 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=google.com; s=20251104; t=1780792878; x=1781397678; darn=lists.linux.dev;
-        h=content-transfer-encoding:cc:to:from:subject:message-id
-         :mime-version:in-reply-to:date:from:to:cc:subject:date:message-id
-         :reply-to;
-        bh=BIc4Vdvungi3qkA2df3LiMCfTnpbTVtTcJ7k45yeXRs=;
-        b=sph2jUt+OGIDdUBr+Hnhtd1vsYqHw3fq+jx1ubGk4PPA/mbDN/uNYH+ezTq3Xl0MMc
-         rctpflZF75mWswBbwuIj5NqQoxaUEp727gFIzx1R7oSKkeRptjTlgetwb0zRd+WDStgU
-         ywdnB9iC3e6THTsTHAmDtUw0uSRMV8e06uMqc9xFfu2q6pFwBv/r4PPWztn72XRYMKIU
-         wcQRyxfUGr7unGoKyM6GEndbBfi1fZLDxZA5UeyB2AsaxrOA0KUPBmNJX7Utq/pKvhTf
-         5RxufSb9UotOWlDqfkRrq+6SXuQw7ZeHuSKnEKuhwMIZdbM66Qea8P8ALXytYTs4CVPf
-         dGHA==
+        d=gmail.com; s=20251104; t=1780800060; x=1781404860; darn=lists.linux.dev;
+        h=in-reply-to:references:to:from:subject:cc:message-id:date
+         :content-transfer-encoding:mime-version:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=RpjM7elKYnXx9FvoN6+W+67XNbFLMp1wijxRTUf8ZZQ=;
+        b=AZ2SYppBnySVW3wkGNfUA7Qi0Dt8ikXlVHlWR5UTwRoDXR24WdXBjdX+lxUmzKNCym
+         kpfKLdfWaXEJRfNqDuRrSeytacvcwOmJwCGbV+j8/PcJJfUzbeXT7KLYBOYhDRktM24u
+         NXtwuOKl//5Wyqi83U7rwSwEvaEfxasksshh/DzpoT0T1HFq6E+LNZNUXqJKfEevFJ5Q
+         osXkuZ/SvwICQ9Lyuf0f4CG+kt5y0cEytfqSPQsbkdcB6fR+uS8cp7O3wRkOwLPEQ0oD
+         bnIqMqslUvnEXthNmKcBDfbmDojGEt5SXkk4u9UQYbFVzjFt4uocy3WymC+aKztUD/oA
+         0dIg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20251104; t=1780792878; x=1781397678;
-        h=content-transfer-encoding:cc:to:from:subject:message-id
-         :mime-version:in-reply-to:date:x-gm-message-state:from:to:cc:subject
-         :date:message-id:reply-to;
-        bh=BIc4Vdvungi3qkA2df3LiMCfTnpbTVtTcJ7k45yeXRs=;
-        b=jYbj0yFEsxO/OYi9GPJ/ismU1ULpz6qdHKm38Dct/EuReYc2Dlp0ovKYmdnsSRxUGu
-         ZtAgbK9VmUJMbaUb/pKdfQ/9uEOPwX/W5a3osVD/8uSDdGR0lj3CnYsA75zW47XKIzM0
-         9DUc6rN4aoCQamae33ZoFp41c0c2rTfw3p9khEoE6xM3SBucL9j+l9SPkIVoVRzsxgJ8
-         DbHP3ahnuVjVIE5P36ZzPayWZubEi0r9i1RVvIAuwwhJ99Rg0E9UJOt1VMDw3suMvL5y
-         xTD+VqGxfV7we9n7uUO8JjA9W1SQMM+dWlZNh+cMj6j54uLvaAPAI5B83I9P9uugxADx
-         VRZA==
-X-Gm-Message-State: AOJu0YxCXe2s1y1Sj/Kixc5AVvc4bFjtEKnMyYuqFrsjCLEq0A0Aihyx
-	jGeqNS7In1xkOSrHyR05gBDQUpmNPBxWdUypaPjqrgWq2+gcjOgkQAtHEJ3yv8nnfNX35lA0mVw
-	JZf90gSlsiQgYDgKwevnqfERimGGAeQzp9KFusLaYvqgQLH/MHnqV0GQ2Y4HfULEXJf6/cuhW46
-	SPurR/8SSwHUp3vIXozlZZ3DK4gvgsgS1zobJpaCPl/YU5taseMekPLe7Q50e6PY1V
-X-Received: from ejah25.prod.google.com ([2002:a17:906:1119:b0:bef:3b02:c49d])
- (user=tarunsahu job=prod-delivery.src-stubby-dispatcher) by
- 2002:a17:907:160f:b0:bed:2a8b:3e73 with SMTP id a640c23a62f3a-bf3739f9bc3mr519953166b.41.1780792877841;
- Sat, 06 Jun 2026 17:41:17 -0700 (PDT)
-Date: Sun, 07 Jun 2026 00:41:17 +0000
-In-Reply-To: <20260605172418.012811F00893@smtp.kernel.org>
+        d=1e100.net; s=20251104; t=1780800060; x=1781404860;
+        h=in-reply-to:references:to:from:subject:cc:message-id:date
+         :content-transfer-encoding:mime-version:x-gm-gg:x-gm-message-state
+         :from:to:cc:subject:date:message-id:reply-to;
+        bh=RpjM7elKYnXx9FvoN6+W+67XNbFLMp1wijxRTUf8ZZQ=;
+        b=VQqT0VoyrPaNluX+uunacGTa7uZyoj+qnA2k5GXTEen3GK/5aes5IqzUco0azV4MDu
+         zItX+IVgO3DrzGQotv1P+JLLibTZoVsQ27oT1dzt04o/DBFabDskmdFx9PPL92XfWL4H
+         P7ohHYXbxf8n+WoVPfQIUjW+1Bp3cfvirOSWbIS7vqUPaFnJptBHnL5Rdlsa2gOLiLgr
+         owP3/q1c7gPLU5+vNrJM67Rnm2Zpo5PMIH0ineHN9mhg7GBO+t+WhmAZt834RFeFALl7
+         RntHXNfRu41Ho1KfOBNQ0qS2qUQdzzSQ+h9QyFBBAgygT8vuthDNguzjdm7UhJ19YmpE
+         KUAg==
+X-Gm-Message-State: AOJu0YyhfawFWwccyA5VG24o5sMGwuqovV85UtrPc1NtZ2pIP/4a/f6w
+	cX/xXzzsKxhqdk+mhJo/H1e2lnU2nav2P9+EErtVuCHIZ+SZjnUNaUZf
+X-Gm-Gg: Acq92OFHOmDoky/TXBeevVRCGxrWv2E7S8Y4pmTJE5DyUQD55yWa0qOOyGwJkGu/sq4
+	/gjkVesk6RYAgUZUc7+76x3hSW8Kw+4YkXmaM4OW7zGWfS4yeVUZXCMBZnQneGoOQml/XDbnXDs
+	2Um6/BwStXni95M2FzT9z+yeGJOem82gKnt9tuF3d7L5GRfZ8WX32Z1kMVU+pLH6lCev5QYJAb/
+	ickGadxxz6k65b3swhZiQxWrAOQ6fOpS49fw7PTBXkb9GNu9TDLW76uuK8OpL+GO4K0zT3rEZhn
+	SR5q2WZjgcm59tS7o3G+65FUCCvkKaMBE1njm4Yk7yI2sx7H0Hbphp8my6ZM9aOhAdRgAe6VO0P
+	KItYmVdRe0qzNYto+n/qBiR9bdu8CtzjuHyrDCSBXE+jGnY7KuL1I6kaiTXS8UNBffxQBxYp9k2
+	POJzTIlfEOiIJSmvHTsRD+yVl9CRTfrqwPWi40c7QniNNxwLZkphkSLfuoDXUBDRn9uWjvYNo1x
+	F+rjyhQAqZsr5AAcXn3lIvtDfx6MskHXXUw6dMzRc+d+ZdGxUBaT8wRPsKudNXFAX6QvatqlHrk
+	qXQHAIQUoKs=
+X-Received: by 2002:a05:600c:34d2:b0:48f:e230:29f4 with SMTP id 5b1f17b1804b1-490c2d1fb35mr141120145e9.15.1780800059463;
+        Sat, 06 Jun 2026 19:40:59 -0700 (PDT)
+Received: from localhost (nat-icclus-192-26-29-3.epfl.ch. [192.26.29.3])
+        by smtp.gmail.com with ESMTPSA id 5b1f17b1804b1-490bc3cc140sm331423635e9.9.2026.06.06.19.40.58
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Sat, 06 Jun 2026 19:40:59 -0700 (PDT)
 Precedence: bulk
 X-Mailing-List: sashiko-reviews@lists.linux.dev
 List-Id: <sashiko-reviews.lists.linux.dev>
 List-Subscribe: <mailto:sashiko-reviews+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:sashiko-reviews+unsubscribe@lists.linux.dev>
 Mime-Version: 1.0
-Message-ID: <9huzecijxjv6.fsf@tarunix.c.googlers.com>
-Subject: Re: [RFC PATCH v2 01/10] liveupdate: luo_file: Add internal APIs for
- file preservation
-From: tarunsahu@google.com
-To: sashiko-reviews@lists.linux.dev
-Cc: kvm@vger.kernel.org, skhawaja@google.com
-Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: quoted-printable
+Content-Type: text/plain; charset=UTF-8
+Date: Sun, 07 Jun 2026 04:40:58 +0200
+Message-Id: <DJ2GXOXL4O0G.9DI5VYR6GUMU@gmail.com>
+Cc: <sashiko-reviews@lists.linux.dev>, <bpf@vger.kernel.org>
+Subject: Re: [PATCH bpf-next 1/1] bpf: fix deadlock in special field
+ destruction in NMI
+From: "Kumar Kartikeya Dwivedi" <memxor@gmail.com>
+To: "Justin Suess" <utilityemal77@gmail.com>, "Kumar Kartikeya Dwivedi"
+ <memxor@gmail.com>
+X-Mailer: aerc 0.21.0
+References: <20260519011450.1144935-2-utilityemal77@gmail.com>
+ <20260519015123.36096C2BCB7@smtp.kernel.org> <agxkV-hsdwhvMliI@suesslenovo>
+ <agyG3eQwgmoJwmj2@suesslenovo> <DIMWGCWL1AG2.14F7CN23GMS8N@gmail.com>
+ <aiRG9nsbRi2cO3XT@zenbox>
+In-Reply-To: <aiRG9nsbRi2cO3XT@zenbox>
 
+On Sat Jun 6, 2026 at 6:27 PM CEST, Justin Suess wrote:
+> On Tue, May 19, 2026 at 09:27:58PM +0200, Kumar Kartikeya Dwivedi wrote:
+>> On Tue May 19, 2026 at 5:59 PM CEST, Justin Suess wrote:
+>> > On Tue, May 19, 2026 at 10:42:44AM -0400, Justin Suess wrote:
+>> >> Looks like this kfunc also tries to eagerly free fields and is callab=
+le
+>> >> from tp_btf/nmi_handler with no recovery mechanism.
+>> >>
+>> >> I don't see a good way to handle this at all... it also is effectivel=
+y
+>> >> already bugged in the existing code unless I'm missing something
+>> >>
+>> >> Since you can use it to call abritrary dtors in NMI.
+>> >>
+>> >> 1.
+>> >>
+>> >> In some context where task_acquire is valid:
+>> >>
+>> >> struct blah {
+>> >>   struct task_struct __kptr* task;
+>> >> }
+>> >>
+>> >> b =3D bpf_task_acquire(...)
+>> >> a =3D bpf_obj_new(typeof(*blah_ptr));
+>> >> bpf_kptr_xchg(a->task, b);
+>> >>
+>> >> 2.
+>> >>
+>> >> Then xchg a into map
+>> >> bpf_kptr_xchg([map slot], a);
+>> >> ...
+>> >>
+>> >> 3.
+>> >>
+>> >> In tp_btf/nmi_handler we exchange the obj out of the map
+>> >> and then drop it.
+>> >>
+>> >> c =3D bpf_kptr_xchg([slot where a is stored], NULL);
+>> >> bpf_obj_drop(c);
+>> >>
+>> >> And because this can be called on an object not in a map, we don't ha=
+ve
+>> >> a good recovery mechanism.
+>> >>
+>> >> Because tp_btf/nmi_handler is always in_nmi and hence irqs_disabled, =
+in
+>> >> the code before this patch the task_struct dtor will be invoked and
+>> >> cause a deadlock.
+>> >>
+>> >> This patch will not fix the issue and just free a struct blah holding=
+ the
+>> >> reference without actually dropping it.
+>> >>
+>> >> Unless I'm missing something then this whole approach taken by this
+>> >> patch can't handle this case since the bpf_obj is detached from the m=
+ap
+>> >> entirely and has no allocator recovery mechanism at all.
+>> >>
+>> >> Then we are back to square 1 needing to defer the freeing with irq wo=
+rk.
+>> >>
+>> >> Kumar / Alexei do you have anything on this?
+>> >
+>> > I've confirmed this is a viable mechanism to deadlock as well
+>> >
+>> > Using the above approach, just exchanging out of a map and dropping th=
+e
+>> > bpf_obj containing a task_struct kptr can be used to cause a deadlock
+>> > outside any map path:
+>> >
+>> > On 576482b55c19e7ec00e162a0fde4c4f1a95128c7 (bpf-next/master) w/ RCU_N=
+OCB_CPU/RCU_EXPERT:
+>> >
+>> >   [   10.773819] =3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=
+=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D
+>> >   [   10.773820] WARNING: inconsistent lock state
+>> >   [   10.773821] 7.1.0-rc2-g576482b55c19 #150 Not tainted
+>> >   [   10.773822] --------------------------------
+>> >   [   10.773822] inconsistent {INITIAL USE} -> {IN-NMI} usage.
+>> >   [   10.773823] test_progs/471 [HC1[1]:SC0[0]:HE0:SE1] takes:
+>> >   [   10.773825] ffff98623d66f0e8 (&rdp->nocb_lock){-.-.}-{2:2}, at: _=
+_call_rcu_common.constprop.0+0x54a/0x730
+>> >   [   10.773832] {INITIAL USE} state was registered at:
+>> >   [   10.773832]   lock_acquire+0xbf/0x2e0
+>> >   [   10.773835]   _raw_spin_lock+0x30/0x40
+>> >   [   10.773838]   rcu_nocb_gp_kthread+0x13f/0xb90
+>> >   [   10.773840]   kthread+0xf4/0x130
+>> >   [   10.773845]   ret_from_fork+0x264/0x330
+>> >   [   10.773848]   ret_from_fork_asm+0x1a/0x30
+>> >   [   10.773851] irq event stamp: 1127908
+>> >   [   10.773851] hardirqs last  enabled at (1127907): [<ffffffff871044=
+84>] _raw_spin_unlock_irqrestore+0x44/0x60
+>> >   [   10.773853] hardirqs last disabled at (1127908): [<ffffffff871041=
+a1>] _raw_spin_lock_irqsave+0x51/0x60
+>> >   [   10.773854] softirqs last  enabled at (1127782): [<ffffffff862e6b=
+80>] __irq_exit_rcu+0xc0/0x100
+>> >   [   10.773857] softirqs last disabled at (1127777): [<ffffffff862e6b=
+80>] __irq_exit_rcu+0xc0/0x100
+>> >   [   10.773858]
+>> >                  other info that might help us debug this:
+>> >   [   10.773859]  Possible unsafe locking scenario:
+>> >
+>> >   [   10.773859]        CPU0
+>> >   [   10.773859]        ----
+>> >   [   10.773860]   lock(&rdp->nocb_lock);
+>> >   [   10.773861]   <Interrupt>
+>> >   [   10.773861]     lock(&rdp->nocb_lock);
+>> >   [   10.773862]
+>> >                   *** DEADLOCK ***
+>> >
+>> >   [   10.773862] 4 locks held by test_progs/471:
+>> >   [   10.773863]  #0: ffffffff885ccaf0 (dup_mmap_sem){.+.+}-{0:0}, at:=
+ copy_process+0x1e39/0x2b80
+>> >   [   10.773866]  #1: ffff9861c33a2ff8 (&mm->mmap_lock){++++}-{4:4}, a=
+t: dup_mmap+0x83/0x990
+>> >   [   10.773871]  #2: ffff9861c1152ff8 (&mm->mmap_lock/1){+.+.}-{4:4},=
+ at: dup_mmap+0xc8/0x990
+>> >   [   10.773874]  #3: ffffffff885f43b8 (kmemleak_lock){-.-.}-{2:2}, at=
+: __create_object+0x3a/0xa0
+>> >   [   10.773877]
+>> >                  stack backtrace:
+>> >   [   10.773879] CPU: 1 UID: 0 PID: 471 Comm: test_progs Not tainted 7=
+.1.0-rc2-g576482b55c19 #150 PREEMPT(full)
+>> >   [   10.773881] Hardware name: QEMU Standard PC (Q35 + ICH9, 2009), B=
+IOS rel-1.17.0-0-gb52ca86e094d-prebuilt.qemu.org 04/01/2014
+>> >   [   10.773882] Call Trace:
+>> >   [   10.773883]  <NMI>
+>> >   [   10.773884]  dump_stack_lvl+0x5d/0x80
+>> >   [   10.773887]  print_usage_bug.part.0+0x22b/0x2c0
+>> >   [   10.773891]  lock_acquire+0x295/0x2e0
+>> >   [   10.773893]  ? __call_rcu_common.constprop.0+0x54a/0x730
+>> >   [   10.773896]  _raw_spin_lock+0x30/0x40
+>> >   [   10.773898]  ? __call_rcu_common.constprop.0+0x54a/0x730
+>> >   [   10.773899]  __call_rcu_common.constprop.0+0x54a/0x730
+>> >   [   10.773903]  bpf_obj_free_fields+0x118/0x250
+>> >   [   10.773907]  bpf_obj_drop+0x4f/0x80
+>> >   [   10.773910]  bpf_prog_b7ff9c2e6c583824_clear_task_kptrs_from_nmi+=
+0x174/0x1f4
+>> >   [   10.773912]  bpf_trace_run3+0x126/0x430
+>> >   [   10.773916]  ? __pfx_perf_event_nmi_handler+0x10/0x10
+>> >   [   10.773919]  nmi_handle.part.0+0x15b/0x250
+>> >   [   10.773922]  ? __pfx_perf_event_nmi_handler+0x10/0x10
+>> >   [   10.773924]  default_do_nmi+0x120/0x180
+>> >   [   10.773927]  exc_nmi+0xe3/0x110
+>> >   [   10.773928]  end_repeat_nmi+0xf/0x53
+>> >   [   10.773931] RIP: 0010:__link_object+0xb4/0x270
+>> >   [   10.773932] Code: 00 00 00 48 c7 c6 80 36 bb 89 48 c7 43 70 00 00=
+ 00 00 48 c7 43 78 00 00 00 00 48 89 3d 35 62 50 03 eb 66 48 89 c8 48 8b 48=
+ 30 <48> 8d 70 10 48 39 d1 73 11 48 03 48 38 48 39 cf 0f 82 2f 01 00 00
+>> >   [   10.773933] RSP: 0018:ffffb516013b7a60 EFLAGS: 00000082
+>> >   [   10.773935] RAX: ffff9861c37b5c80 RBX: ffff9861df869878 RCX: ffff=
+9861c3776420
+>> >   [   10.773936] RDX: ffff9861c3769e00 RSI: ffff9861c43564f8 RDI: ffff=
+9861c3769d00
+>> >   [   10.773936] RBP: 0000000000000100 R08: 0000000000000000 R09: 0000=
+000000000000
+>> >   [   10.773937] R10: 0000000000000000 R11: 0000000000000000 R12: ffff=
+9861c3769d00
+>> >   [   10.773937] R13: 0000000000000286 R14: 0000000000000000 R15: 0000=
+000000000001
+>> >   [   10.773943]  ? __link_object+0xb4/0x270
+>> >   [   10.773945]  ? __link_object+0xb4/0x270
+>> >   [   10.773947]  </NMI>
+>> >   [   10.773947]  <TASK>
+>> >   [   10.773948]  __create_object+0x51/0xa0
+>> >   [   10.773951]  kmem_cache_alloc_from_sheaf_noprof+0x1e2/0x290
+>> >   [   10.773956]  mas_dup_build+0x41d/0x7f0
+>> >   [   10.773960]  __mt_dup+0x78/0xf0
+>> >   [   10.773967]  dup_mmap+0x12e/0x990
+>> >   [   10.773972]  ? srso_alias_return_thunk+0x5/0xfbef5
+>> >   [   10.773973]  ? lock_acquire+0xbf/0x2e0
+>> >   [   10.773979]  copy_process+0x1e45/0x2b80
+>> >   [   10.773985]  kernel_clone+0xbb/0x3d0
+>> >   [   10.773986]  ? srso_alias_return_thunk+0x5/0xfbef5
+>> >   [   10.773987]  ? __lock_acquire+0x481/0x2590
+>> >   [   10.773993]  __do_sys_clone+0x65/0x90
+>> >   [   10.773998]  do_syscall_64+0xa1/0x5f0
+>> >   [   10.774002]  entry_SYSCALL_64_after_hwframe+0x76/0x7e
+>> >   [   10.774003] RIP: 0033:0x7f9da26e8f2f
+>> >   [   10.774005] Code: 89 e7 e8 c4 0e f6 ff 45 31 c0 31 d2 31 f6 64 48=
+ 8b 04 25 10 00 00 00 bf 11 00 20 01 4c 8d 90 d0 02 00 00 b8 38 00 00 00 0f=
+ 05 <48> 3d 00 f0 ff ff 77 59 89 c5 85 c0 75 31 64 48 8b 04 25 10 00 00
+>> >   [   10.774005] RSP: 002b:00007ffc278b4540 EFLAGS: 00000246 ORIG_RAX:=
+ 0000000000000038
+>> >   [   10.774007] RAX: ffffffffffffffda RBX: 0000000000000000 RCX: 0000=
+7f9da26e8f2f
+>> >   [   10.774007] RDX: 0000000000000000 RSI: 0000000000000000 RDI: 0000=
+000001200011
+>> >   [   10.774008] RBP: 00007ffc278b4740 R08: 0000000000000000 R09: 0000=
+000000000001
+>> >   [   10.774008] R10: 00007f9da2acaf10 R11: 0000000000000246 R12: 0000=
+000000000003
+>> >   [   10.774009] R13: 0000000000000001 R14: 0000000000000000 R15: 0000=
+5625de8b38d0
+>> >   [   10.774014]  </TASK>
+>> >   [   10.866584] perf: interrupt took too long (6193 > 6190), lowering=
+ kernel.perf_event_max_sample_rate to 32000
+>> >   [   16.630663] kauditd_printk_skb: 30 callbacks suppressed
+>> >
+>> > I can give the reproducer if wished.
+>> >
+>> > You can see the path involves bpf_obj_drop and not any map methods at
+>> > all.
+>> >
+>> > But basically this makes the whole mechanism of relying on map allocat=
+ors to
+>> > recycle and free objects in irqs_disabled contexts unsound because kpt=
+rs
+>> > can live and be released outside map contexts.
+>>
+>> The approach in this version is still different than what I had proposed=
+. For
+>> the particular case you highlighted, we should just reject bpf_obj_drop(=
+) in
+>> is_tracing_prog_type() once the object has kptr fields etc. If someone s=
+till
+>> wants it they should just use bpf_wq to defer manually.
+>>
+> Would you be opposed to me submitting a fix for *just* the bpf_obj_drop c=
+ase?
+>
+> Since your proposed solution for that is just a tiny verifier fix w/ btf_=
+record_has_field and a prog_type check and is mostly unrelated to this fix =
+for the map cases.
+>
+> It's a small fix, but just don't want to be rude and submit anything if
+> you're working on that too in your patch. :)
+>
+> Thanks for your guidance with this fix in general and apologize for my
+> misinterpretation of the intended route.
 
-Hi,
+Unfortunately I already prepared it, though for both fixes I already kept y=
+our
+authorship since you've put in so much effort in reporting, reproducing, an=
+d
+testing various fixes, the adjustments might as well have been done by you
+rather than me.
 
-skhawaja@google.com is working on next version of this.
-
-I will ignore the sashiko error in this patch, as it is just to make sure
-the series has its base requirement. This patch is being developed as part =
-other
-series. So I will pull latest/merged version as soon as we get.
+I will send it later today, once I do, please help in reviewing and testing
+corner cases in the fixes. Reviewing code will be more appreciated than cra=
+nking
+out new code, there are few people who can do that.
 
 Thanks
-sashiko-bot@kernel.org writes:
 
-> Thank you for your contribution! Sashiko AI review found 2 potential issu=
-e(s) to consider:
-> - [High] Nested acquisition of `luo_file->mutex` causes a lockdep splat w=
-hen subsystems retrieve files programmatically.
-> - [Low] Missing EXPORT_SYMBOL_GPL for `liveupdate_get_token_outgoing` and=
- `liveupdate_get_file_incoming` causes module build failures.
-> --
 >
-> commit 3b62824c5e4a0e08095576efe5b452875a92a685
-> Author: Pasha Tatashin <pasha.tatashin@soleen.com>
->
-> liveupdate: luo_file: Add internal APIs for file preservation
->
-> This commit introduces internal APIs to allow kernel subsystems to
-> programmatically preserve and retrieve file descriptors during a live upd=
-ate.
-> This enables subsystems managing struct file objects directly to particip=
-ate
-> without solely relying on userspace interaction.
->
->> diff --git a/kernel/liveupdate/luo_file.c b/kernel/liveupdate/luo_file.c
->> index a0a419085e283..0aa0b4e5339f3 100644
->> --- a/kernel/liveupdate/luo_file.c
->> +++ b/kernel/liveupdate/luo_file.c
-> [ ... ]
->> @@ -924,3 +931,65 @@ void liveupdate_unregister_file_handler(struct live=
-update_file_handler *fh)
->>  	luo_flb_unregister_all(fh);
->>  	list_del(&ACCESS_PRIVATE(fh, list));
->>  }
->> +EXPORT_SYMBOL_GPL(liveupdate_unregister_file_handler);
->> +
->> +/**
->> + * liveupdate_get_token_outgoing - Get the token for a preserved file.
-> [ ... ]
->> + */
->> +int liveupdate_get_token_outgoing(struct liveupdate_session *s,
->> +				  struct file *file, u64 *tokenp)
->> +{
->
-> [Severity: Low]
-> Should this function be exported?
->
-> Since this API is intended for kernel subsystems that might be built as
-> loadable modules, will leaving out EXPORT_SYMBOL_GPL() cause module link
-> errors?
->
->> +	struct luo_file_set *file_set =3D luo_file_set_from_session_locked(s);
->> +	struct luo_file *luo_file;
->> +	int err =3D -ENOENT;
->> +
->> +	list_for_each_entry(luo_file, &file_set->files_list, list) {
->> +		if (luo_file->file =3D=3D file) {
->> +			if (tokenp)
->> +				*tokenp =3D luo_file->token;
->> +			err =3D 0;
->> +			break;
->> +		}
->> +	}
->> +
->> +	return err;
->> +}
->> +
->> +/**
->> + * liveupdate_get_file_incoming - Retrieves a preserved file for in-ker=
-nel use.
-> [ ... ]
->> + */
->> +int liveupdate_get_file_incoming(struct liveupdate_session *s, u64 toke=
-n,
->> +				 struct file **filep)
->> +{
->
-> [Severity: Low]
-> Similar to liveupdate_get_token_outgoing(), should this function also be
-> exported with EXPORT_SYMBOL_GPL() to allow loadable modules to use it?
->
->> +	return luo_retrieve_file(luo_file_set_from_session_locked(s),
->> +				 token, filep);
->
-> [Severity: High]
-> Will this cause a lockdep splat if a subsystem uses this API during retri=
-eval?
->
-> When a subsystem's .retrieve() callback is invoked from luo_retrieve_file=
-(),
-> it already holds the target file's luo_file->mutex:
->
-> luo_retrieve_file() {
->     ...
->     guard(mutex)(&luo_file->mutex);
->     ...
->     err =3D luo_file->fh->ops->retrieve(&args);
-> }
->
-> If the subsystem callback then calls liveupdate_get_file_incoming(), it
-> recursively calls luo_retrieve_file() for the dependency file, attempting
-> to acquire a second luo_file->mutex.
->
-> Since all luo_file->mutex instances share the same lock class, won't this
-> trigger a 'possible recursive locking detected' warning?
->
->> +}
->
-> --=20
-> Sashiko AI review =C2=B7 https://sashiko.dev/#/patchset/cover.1780676742.=
-git.tarunsahu@google.com?part=3D1
+> Kind Regards,
+> Justin
+>> The whole prealloc related change to the map is unnecessary, as I said b=
+efore.
+>> It's an orthogonal change. We should also not use irqs_disabled() and ju=
+st do
+>> the skipping unconditionally.
+>>
+>> Let me work on a patch, since the nuance is obviously getting lost in em=
+ail.
+
