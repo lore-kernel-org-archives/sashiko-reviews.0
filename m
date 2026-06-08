@@ -1,183 +1,162 @@
-Received: from mail-dl1-f53.google.com (mail-dl1-f53.google.com [74.125.82.53])
+Received: from mail-yx1-f42.google.com (mail-yx1-f42.google.com [74.125.224.42])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3F78125B0A5
-	for <sashiko-reviews@lists.linux.dev>; Mon,  8 Jun 2026 16:31:44 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=74.125.82.53
-ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1780936305; cv=none; b=A/8D4BrP/Tp41llGOA/FycZ76wiaVmhKiELUmN3hfNctCOp68JQ90UozO6uU6ADDgtr0V9ayGCqt6SPzuYrbvXse8lB980OqNckG2Chz0O/ceLuj1svdFhO+2JLnoC/AkZIA6qoq4MgrodhnLRezypbiG4kDyY1KATAoLa9Epbs=
-ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1780936305; c=relaxed/simple;
-	bh=AgOAHgkMpIHvXnG4ionYgb96XvfEVLDR9FeDACc3j+8=;
-	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=JwOreOFCKFHdqRULHd+FlPdd/kDSAB2Rarqe8rqUhxssYVTTyZtp01bhXVUUqTP9j0DUE3rQIdB9EwzkyMbpeqDOlyz8rpM/w5g4mn++V4PkwmoUxPDJUaa2pNY5Tf9X/UGRvxGd6XHSgeMqI+d7LnFHNPSizzCxx8vAeqMADR0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=roeck-us.net; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=hgm7pRmp; arc=none smtp.client-ip=74.125.82.53
-Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=roeck-us.net
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 39D2A367B81
+	for <sashiko-reviews@lists.linux.dev>; Mon,  8 Jun 2026 18:08:08 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=pass smtp.client-ip=74.125.224.42
+ARC-Seal:i=2; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
+	t=1780942089; cv=pass; b=TOyDzeB4nps4PZTPA/APymgjZpRl3gX8RWQrAscpnKciipgEoi/5Nqrwjwz98b+2C2U4enLg6LAAK8RmMOoJQE7p69sWXUIOAp33kDs0m1IR3j2zeujYXeqAjbIE64iRFIytTbYqDwcmoV7XZfbyYrQX0RQGMs9Pi6aBVqAgLxw=
+ARC-Message-Signature:i=2; a=rsa-sha256; d=subspace.kernel.org;
+	s=arc-20240116; t=1780942089; c=relaxed/simple;
+	bh=af15f6HxtpFPuSN9bctDtLH0URZFfK/vsHExebARsmk=;
+	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
+	 To:Cc:Content-Type; b=dGeK0nL9+EYsACCcMmZFEDo1KtYTznTeK4RbVeSFJaApEESNhV8L5U5Fka/tE15HS784en5RSWu5S9HfBknEe4nlswUoY9klTzxLGBwe48bIYcQVs8FmjK0d4d+pbI4NJSoFf2+TeIsune6zBtXDKX+JHpxEC6rdtJAYOD5H0Ac=
+ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=jwJJHp2R; arc=pass smtp.client-ip=74.125.224.42
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="hgm7pRmp"
-Received: by mail-dl1-f53.google.com with SMTP id a92af1059eb24-137dd523634so7095661c88.1
-        for <sashiko-reviews@lists.linux.dev>; Mon, 08 Jun 2026 09:31:44 -0700 (PDT)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="jwJJHp2R"
+Received: by mail-yx1-f42.google.com with SMTP id 956f58d0204a3-66049669d78so4019038d50.0
+        for <sashiko-reviews@lists.linux.dev>; Mon, 08 Jun 2026 11:08:07 -0700 (PDT)
+ARC-Seal: i=1; a=rsa-sha256; t=1780942087; cv=none;
+        d=google.com; s=arc-20240605;
+        b=G4e4ohfEDrdzBbgYXqXuIXBoYOFTP/ZEtiSkmRn3EuYQqFFehXVs9C1qhE610b4Pvj
+         k0zP8Axl0IghJKsQ0Zjgt/ly+rFnFz3i/T+3TT3/UYeegZ9W5F40cjALPpBoBaeAjA6H
+         idnGJRvi3KT8/s0d8Fr4ui33Kh2K76RHpHYDP9frcf7WvrUWqec1UwfyItVBavdczvbd
+         WQg5QNsYUYwRCHuOEd431pxTL1oDVEqOrG2GrYRtq5naoWri5Wv8eApS1aa3688ZwN40
+         0AwA1VK6/7a/6eKFYzapA5caKa3/Nr+CJE5tGuBpDFwVTMVE5gdZMSIXOFAm8qLal/Xv
+         jv2Q==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com; s=arc-20240605;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:dkim-signature;
+        bh=i6LAXhhHuwnflAJcQthLO161IRLRgGSYNeprsC2Irfo=;
+        fh=rEbUDeSlRDHDClN5FFB/8opoJgSDYGApSTj8TnPxcCE=;
+        b=Qp6niWjrx3leM/A1aIWKuDwZXgo6ZU7WhfuzBfiSN2+3iUZe+K1/PjaAgLSJ8qES4a
+         hB8Fo/8mQqrK7hrp1X9AOGvFa1MCIGTMKTN6Vn2CS3Uz/UpN8lfOCUfoArLwOISGIreX
+         JZdHOkEj8iQ0HL0kC6hn6STCikPOXUtqCvzj8WHmSspVIChgRjivi1iO/JFM+fjvtK61
+         HKXf0OfmwgaRKOSb9fWRvwrdbdTL7pd1U8N+4M8bV3cFOe2xnjmButvdPnFGjnSGBKk6
+         9VCADZVnD7USva/A+EthM9CXBye0KsqL2HFrKgawkVaRYGSrG1UB6PLZsmOO67KWIq1m
+         gUZA==;
+        darn=lists.linux.dev
+ARC-Authentication-Results: i=1; mx.google.com; arc=none
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20251104; t=1780936303; x=1781541103; darn=lists.linux.dev;
-        h=content-transfer-encoding:in-reply-to:autocrypt:from
-         :content-language:references:cc:to:subject:user-agent:mime-version
-         :date:message-id:sender:from:to:cc:subject:date:message-id:reply-to;
-        bh=5BKy7hcNH0tq6+/srIEo3sBbzY2ejx5gBIEKniIcNIM=;
-        b=hgm7pRmp1qCwcHp9JcDmVyK2NizDIIjrBdLXFarscbc7kigdUqPq+AzntgL/xX0BdD
-         A81alHjEUwczke9/AsDwy+00tpyqnvYWgSV0GRHEBCpSJN0a+Yo+IAoyHacjNz5txgSG
-         dqdZsBW//HHMi9hirLYNylJg84drmISmHhzBPBYn0ZMSWewhkoYl67e0E+jH07P6y67q
-         WQpeIm2+xr7xLDb3dvZkwxgHP8uQnWYIaX8u57eKCos9e52hnpCYp40HLVQjGSunnqlJ
-         q/HjjHXlYEDSQl1vy5ZrrcLX5tpNV7nHfTQw5JP6saqhrsPiiv93LiirFRTJdAIkSNSF
-         MWKg==
+        d=gmail.com; s=20251104; t=1780942087; x=1781546887; darn=lists.linux.dev;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=i6LAXhhHuwnflAJcQthLO161IRLRgGSYNeprsC2Irfo=;
+        b=jwJJHp2R45wcMC8+dgfyocaqnPc2zuCu3wTzAdPqDdlpVSMmQTu12EBb80LJp2/JYx
+         NW5+dvYIoiCnbh4vA8Hqy4Mm5QFFQ17RK1xPzlEmptBSbE0p06F+VkKgnrY097lUwB8r
+         gVfORHvxcT2ALlGASqEmJ+Mgy1/zxBnaI5ozR2ae69KEXVY1q4AWUpubdqJXAIdnh2ox
+         WL0UGwJ5qqbh6CgDGd0MKcXbWl3VEIO8crZUxwbUlXp/zyZ4pDzeteRjhGk0PY063oAn
+         B85lqZ+8/LPHl+OQ12PsILYnc+09ZCtzRBVxdZ96ek6M/yRMnZIshOd8aWDW0/QJak88
+         JXaA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20251104; t=1780936303; x=1781541103;
-        h=content-transfer-encoding:in-reply-to:autocrypt:from
-         :content-language:references:cc:to:subject:user-agent:mime-version
-         :date:message-id:sender:x-gm-gg:x-gm-message-state:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=5BKy7hcNH0tq6+/srIEo3sBbzY2ejx5gBIEKniIcNIM=;
-        b=XH3J5IbPS6RfmGq25hLMz+UMGfDTTLaEZHrDP8hyES5xcIsborl18AYRDWu+Xx4Arv
-         f/08NRjSB0Qg/IgZgq31RNKcQH31IDb+i4z07EltjWD5iGF/MQhygVq/Z9qkaQ2ukSoq
-         Ck0yqLTjA4v/Nk2k34b/Qnkj6vW1zF/4gEQbFIyD8dgx//xrJym/HqpZWlskLcfDkUZn
-         M0kJLaadxpwk+Ju7c1hxLj0rBPTgNak0B7YbyTnnaldosCP2rmLeYku5+ZxDINaf9M/r
-         83sEU4VUGMXOhpXo/r5oNHv14pSBvQJ+dDU/h2MdJqJiahkltTwZ+7c64ia0NF0DlyWG
-         Atiw==
-X-Gm-Message-State: AOJu0YwACHshgY6PGpsCjTB73rbyQax9FpBAWSGbQHyDyS4igwnUowSs
-	Or3a3Ratiqf53eD/tlOwlDlsBQ+9hLy0wK4Vue1f5zwT0gRnhQCFoS7SKwt9aNRk
-X-Gm-Gg: Acq92OGEWuD+T95BycoFdcQK1IqXXJ17BEuVp9Qw4lD6wOjuiMdRy4AyINcabmAwoUX
-	IBtNfNBbjpZqNcSRnhRGWpPcySgmj3oPfuJ6fr2UPnv4ZsoEdOtc6mKMdiwpMk1fQMK5ybVNGMV
-	TuL5KGamq/jp8GFTifZuRNlY9psBwaiQsEBCnr8P3HwolJqzrxI4n1ccZyNtaDhdjoE+IAwpH9J
-	2X2uAp/U+EryXeN/tj0WgcyDc5s/3HhdibqyrJYa444MoTWotmhWSqkr+IiCrDSV4BmehNvL2CU
-	0kJscX9MdymvXL/BmaHoxjX59LvoQlNzgRIOswBzflVly/N5NJUUhD4Jt0hcBdj9/ie0nNlBFqs
-	CJnHaokEuicDIWw06rU4Dqxb9jV2gsh0/7uJcDsBnhRmhDBAdCFfmZbiLxAmH0AIPxhX387fU4s
-	PYufsC4aJ6gnhKM1zYDTc2csRlhukWcmHc+uzFfzjyb9v0Dk9Ay+aQKeT7JpNajJithvSId5qOh
-	dCnk7oc5Js=
-X-Received: by 2002:a05:7300:6c9e:b0:2f2:5c68:5074 with SMTP id 5a478bee46e88-3077af66474mr7826964eec.13.1780936303110;
-        Mon, 08 Jun 2026 09:31:43 -0700 (PDT)
-Received: from ?IPV6:2600:1700:e321:62f0:da43:aeff:fecc:bfd5? ([2600:1700:e321:62f0:da43:aeff:fecc:bfd5])
-        by smtp.gmail.com with ESMTPSA id 5a478bee46e88-3074df191d0sm25737757eec.21.2026.06.08.09.31.42
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Mon, 08 Jun 2026 09:31:42 -0700 (PDT)
-Sender: Guenter Roeck <groeck7@gmail.com>
-Message-ID: <bbb0b077-f59d-4d15-9437-2d46a1dc4ec1@roeck-us.net>
-Date: Mon, 8 Jun 2026 09:31:41 -0700
+        d=1e100.net; s=20251104; t=1780942087; x=1781546887;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:x-gm-gg:x-gm-message-state:from
+         :to:cc:subject:date:message-id:reply-to;
+        bh=i6LAXhhHuwnflAJcQthLO161IRLRgGSYNeprsC2Irfo=;
+        b=r+gTVrTXmuQnVLVr5OO8AtiAeeY1IBXJ/c8KnG5R3EnxmxSIECK5dmP3nHaTVvhngO
+         EVrCuJgtT1mbnemqR6ux6d78RqptbtbJH0OHnBl98vsEPPT/tnI3IglzQ9FqMJbu1jaU
+         hlNBB6gQvRm5Li9ZBtBH8XBQWtU4DahxmCqZoNqcpqzjwdnb4MjIG2B2j7AH5uYPk/rw
+         CZOtpG4PuzSNMfnIqi6aFeUEoV0IQZ5+NV1KgSHAYHRdvx1+VU81cR4NdeDP5qsIVV+a
+         cK90MEi7bTNvnlQd1mTr9lErK2pTgGkGS1u5o1iAnFdYtmgFDZfE0W00guSM8VU92VrW
+         n+8A==
+X-Gm-Message-State: AOJu0YxvJK/gQ3V0UldBWmLGhfvqdoFdc6IY+cbZRHYUyUijsUAKkpqJ
+	jGcVu4WDdL65yiQQz6VUE5e/xi07mgXV804NigTWaUagQdrj6iT8DyaeiKSlT6CJiMytNvl3SHR
+	sBHMGPdFtftP3/CxVKT7IwgsIpdftz2NWszrN
+X-Gm-Gg: Acq92OGVn4MLtjGNG29iC7qWEMuupbn7ktSpbzrhaWNPFL1a/zswgpUNy6bsg3LdX2l
+	RO7RQbPoLV1PkpdSsGaOv/tZ/wjefAfOiZ1hkGxCJ1C5on+IkbJ+5hwspgMXzzDsEHY0xEnRkTU
+	8z+jUqZIzXdROB9stGilfNfKOFeR9Q0ATxYR11EMjvG4rxFCSyVONCZE+Ar9s4gq4NRlGOhSOED
+	SlnY6DTlmkYEG7TIv6JKwiFYO02Cl2GDKZCZ5K59hDSrjPQla05EwC3jmiOWflVXjJthoeFKzka
+	cLyA/pCYxnoWWYG2jQ8=
+X-Received: by 2002:a05:690e:d51:b0:65c:2404:ac3d with SMTP id
+ 956f58d0204a3-66106e0368amr13808719d50.13.1780942087017; Mon, 08 Jun 2026
+ 11:08:07 -0700 (PDT)
 Precedence: bulk
 X-Mailing-List: sashiko-reviews@lists.linux.dev
 List-Id: <sashiko-reviews.lists.linux.dev>
 List-Subscribe: <mailto:sashiko-reviews+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:sashiko-reviews+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v2 1/3] hwmon: ina238: add support for samples and
- update_interval
-To: sashiko-reviews@lists.linux.dev,
- Ferdinand Schwenk via B4 Relay
- <devnull+ferdinand.schwenk.advastore.com@kernel.org>
-Cc: linux-hwmon@vger.kernel.org
-References: <20260608-hwmon-ina238-update-interval-us-v2-v2-1-2d939fbb2ea1@advastore.com>
- <20260608131209.1EBD81F00893@smtp.kernel.org>
-Content-Language: en-US
-From: Guenter Roeck <linux@roeck-us.net>
-Autocrypt: addr=linux@roeck-us.net; keydata=
- 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
- np3900V20aS7eD9K8GTU0TGC1pyz6IVJwIE=
-In-Reply-To: <20260608131209.1EBD81F00893@smtp.kernel.org>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
+References: <20260608175418.1936892-3-tmaimon77@gmail.com> <20260608180132.863CF1F00893@smtp.kernel.org>
+In-Reply-To: <20260608180132.863CF1F00893@smtp.kernel.org>
+From: Tomer Maimon <tmaimon77@gmail.com>
+Date: Mon, 8 Jun 2026 21:07:55 +0300
+X-Gm-Features: AVVi8CcuMMLCFtphMXjKmrQiODvMliWOxLXr8dtDj0MRlfjKwC6J-Leqe9kLek8
+Message-ID: <CAP6Zq1ggj5+Gko5VY+GmGVrJWcCz8k-WigvtWiL1kwTYXcC9wQ@mail.gmail.com>
+Subject: Re: [PATCH v2 2/2] spi: dt-bindings: nuvoton,npcm-fiu: Convert to DT schema
+To: sashiko-reviews@lists.linux.dev
+Cc: conor+dt@kernel.org, devicetree@vger.kernel.org, robh@kernel.org
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 
-On 6/8/26 06:12, sashiko-bot@kernel.org wrote:
-> Thank you for your contribution! Sashiko AI review found 1 potential issue(s) to consider:
-> - [Medium] Integer truncation from u64 to u32 in `ina238_interval_us_to_conv_time` causes large user inputs to wrap around, resulting in incorrect hardware configuration on 64-bit platforms.
+Thanks for the review.
+
+On Mon, 8 Jun 2026 at 21:01, <sashiko-bot@kernel.org> wrote:
+>
+> Thank you for your contribution! Sashiko AI review found 1 potential issu=
+e(s) to consider:
+> - [Low] The alias mapping convention for NPCM8XX was corrupted during the=
+ conversion to YAML.
 > --
-> 
-> commit 4bfb82fb9bb164125fe0facd52cce87c1d8b248e
-> Author: Ferdinand Schwenk <ferdinand.schwenk@advastore.com>
-> 
-> hwmon: ina238: add support for samples and update_interval
-> 
-> This commit exposes the INA238 ADC averaging count and conversion timing
-> through samples and update_interval hwmon attributes. It caches ADC_CONFIG
-> to optimize read-modify-write operations. The conversion times are derived
-> using per-chip lookup tables.
-> 
->> diff --git a/drivers/hwmon/ina238.c b/drivers/hwmon/ina238.c
->> index ff67b03189f73..667f78d43a6a8 100644
->> --- a/drivers/hwmon/ina238.c
->> +++ b/drivers/hwmon/ina238.c
-> 
+>
+> commit 04ac00da42e73e1f171a2c2d3fdb84bc4768096a
+> Author: Tomer Maimon <tmaimon77@gmail.com>
+>
+> spi: dt-bindings: nuvoton,npcm-fiu: Convert to DT schema
+>
+> This commit converts the Nuvoton NPCM FIU binding to the DT schema format=
+.
+>
+> > diff --git a/Documentation/devicetree/bindings/spi/nuvoton,npcm-fiu.yam=
+l b/Documentation/devicetree/bindings/spi/nuvoton,npcm-fiu.yaml
+> > new file mode 100644
+> > index 0000000000000..0f95def019105
+> > --- /dev/null
+> > +++ b/Documentation/devicetree/bindings/spi/nuvoton,npcm-fiu.yaml
+>
 > [ ... ]
-> 
->> @@ -261,6 +296,97 @@ static int ina228_read_voltage(struct ina238_data *data, int channel, long *val)
-> 
-> [ ... ]
-> 
->> +static inline u32 ina238_interval_ms_to_conv_time(long interval, u32 samples)
->> +{
->> +	u64 interval_us;
->> +
->> +	interval = clamp_val(interval, 0, LONG_MAX / 1000);
->> +	interval_us = (u64)interval * 1000;
->> +
->> +	/*
->> +	 * update_interval reports the ADC cycle time including averaging.
->> +	 * The target per-field conversion time is interval_us / (samples * 3).
->> +	 */
->> +	return DIV_ROUND_CLOSEST_ULL(interval_us, samples * 3);
->> +}
-> 
-> [Severity: Medium]
-> Does returning a u32 here cause integer truncation for large user inputs on
-> 64-bit platforms? Since interval is clamped to LONG_MAX / 1000, interval_us
-> can be extremely large. The DIV_ROUND_CLOSEST_ULL macro evaluates to an
-> unsigned long long, but returning it as u32 will silently truncate results
-> exceeding 4294967295.
-> 
+>
+> > +description: |
+> > +  NPCM FIU supports single, dual and quad communication interface.
+> > +
+> > +  The NPCM7XX supports three FIU modules:
+> > +    FIU0 and FIUx support two chip selects
+> > +    FIU3 supports four chip selects.
+> > +
+> > +  The NPCM8XX supports four FIU modules:
+> > +    FIU0 and FIUx support two chip selects
+> > +    FIU1 and FIU3 support four chip selects.
+> > +
+> > +  Alias convention:
+> > +    The '/aliases' node should define:
+> > +      For NPCM7xx:  fiu0=3D&fiu0; fiu1=3D&fiu3; fiu2=3D&fiux;
+> > +      For NPCM8xx:  fiu0=3D&fiu0; fiu1=3D&fiu3; fiu2=3D&fiux; fiu3=3D&=
+fiu1;
+>
+> [Severity: Low]
+> Does this new alias mapping for NPCM8xx correctly match the original text
+> binding?
+>
+> The original text binding in nuvoton,npcm-fiu.txt mapped the aliases as:
+>
+> In the NPCM8XX BMC:
+>         fiu0 represent fiu 0 controller
+>         fiu1 represent fiu 1 controller
+>         fiu2 represent fiu 3 controller
+>         fiu3 represent fiu x controller
+>
+> The converted documentation maps fiu1 to fiu3, fiu2 to fiux, and fiu3 to
+> fiu1. Could you confirm if this change in the documentation was intention=
+al?
+Yes, it is intentional; the map in the text document file was wrong.
+>
+> --
+> Sashiko AI review =C2=B7 https://sashiko.dev/#/patchset/20260608175418.19=
+36892-1-tmaimon77@gmail.com?part=3D2
 
-I think Sashiko has a point here. Please make sure that there are no
-truncation issues. It should be sufficient to clamp the original value
-against (0, INT_MAX / 1000).
+Best regards,
 
-Thanks,
-Guenter
-
+Tomer
