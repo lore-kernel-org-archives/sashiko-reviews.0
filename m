@@ -1,185 +1,157 @@
-Received: from mail-pj1-f45.google.com (mail-pj1-f45.google.com [209.85.216.45])
+Received: from mail-pl1-f181.google.com (mail-pl1-f181.google.com [209.85.214.181])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 877C233F5AB
-	for <sashiko-reviews@lists.linux.dev>; Mon,  8 Jun 2026 20:43:20 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.216.45
-ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1780951401; cv=none; b=L/kmwA4jcbwH4JZXRfeGUqMIGOGZ/7KpWAKPqXltv8srfa+aqbq9DFJfSWY3Osb8aRsv1cn6Jh5yYLoKgUmkEFBwrp8fbu6BQPriynQpsTlKZ3depySrOEI9SXFgRXMaoK0Ee/HLscc4XTx7BcOeqsAzkURVjZTZZWu1GBxYqFE=
-ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1780951401; c=relaxed/simple;
-	bh=MmypxDkV9WidFdoiNyUarK5RO4529BdDXNB7K8CTTjc=;
-	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=dgcLOORBkfK6G5gtmLUYX0xJNTB2hZRj4MIv/c6nZSgnpTsURNkMJ4KPFF399fdYTWUZvXZNY5jsu7ptytgC/xyhg7xoXE9IiF/J2QKZ8+0vdRnMKeGJGgABwW+a442PkR3jsvP4dM/TywXqpFhBaftRd0NgDVI/BEuyLXnKk14=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=roeck-us.net; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=klkR9KUt; arc=none smtp.client-ip=209.85.216.45
-Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=roeck-us.net
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E8C703630B2
+	for <sashiko-reviews@lists.linux.dev>; Mon,  8 Jun 2026 22:03:25 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=pass smtp.client-ip=209.85.214.181
+ARC-Seal:i=2; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
+	t=1780956207; cv=pass; b=kXBFl2BP3JMepQOaVTiAy2/UGm5NYiALIJYL7wiAlWkdBR9X0z0ZZIb5kVp8bGfodCUihqbqVmMcggyKHkbqJ3tSe6C90ddSFlylkjuFGgT3A4EyxFWlhry5R8T4y6WPAvLpC5pe6YainUzBiDyW6WuVLi1bQXghWIN+b+Gk6sI=
+ARC-Message-Signature:i=2; a=rsa-sha256; d=subspace.kernel.org;
+	s=arc-20240116; t=1780956207; c=relaxed/simple;
+	bh=GnezBpdD+ckp8obmbhW5EYyO47hkUHBLAMCqTa7Fa8o=;
+	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
+	 To:Cc:Content-Type; b=ii4jhIOvynf0byQilENm7rQ9A46T8Nwjm7xm1AcaLqj1RXuPswVxoJaHS2S++xLttwHdzePOfMiyjWyZL6aSm4++fXVxoTgyajzvbdSimVz4mSdBqjHVB2RhpLbYYBTzPqeap3w8nljBCn77Ds+3Vshalrk+A75vnLIVxiq0Axk=
+ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=google.com; spf=pass smtp.mailfrom=google.com; dkim=pass (2048-bit key) header.d=google.com header.i=@google.com header.b=U/ruXVbQ; arc=pass smtp.client-ip=209.85.214.181
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=google.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=google.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="klkR9KUt"
-Received: by mail-pj1-f45.google.com with SMTP id 98e67ed59e1d1-36d5fd50d20so3094112a91.1
-        for <sashiko-reviews@lists.linux.dev>; Mon, 08 Jun 2026 13:43:20 -0700 (PDT)
+	dkim=pass (2048-bit key) header.d=google.com header.i=@google.com header.b="U/ruXVbQ"
+Received: by mail-pl1-f181.google.com with SMTP id d9443c01a7336-2c0b1a48855so444045ad.0
+        for <sashiko-reviews@lists.linux.dev>; Mon, 08 Jun 2026 15:03:25 -0700 (PDT)
+ARC-Seal: i=1; a=rsa-sha256; t=1780956205; cv=none;
+        d=google.com; s=arc-20240605;
+        b=dLNFBsS1pVvEAjCoR8bKmkP+Zg2AoYWQRx83WT8cBK31lgTJkCfdxrOiLs7PRVf7Dj
+         JuMWFb4CoEgwxeS3ilMogj3qbu+8WlKseirBknzpntrXCcgdim5BYDt0Vex6LGjkCWGl
+         QpAGSUZxdfPO4DEyRA9e5gztEhOUi5rvHYXtLpX53XzmuHP5qGyy5vxbI72f1DoK9AK1
+         4nisOaqQyRZmc/EL44boeSCp6+K/TslLu1Ry6qNbJuZkFCl85dVbsshVF4PmLEXLcpn2
+         VdiBfHAn5GR0NIeyD+kQtLafnr5eNw7iuIMYu0ypwSX+obr7ESXuR6h/ypYWRzIzqvUk
+         oemw==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com; s=arc-20240605;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:dkim-signature;
+        bh=Td9/E5f9V6aXQ0cuox27S5GUKVxy5gX2ycYw8xHBNKc=;
+        fh=t8A9dPfrPNT5ibK7Ec6z8jBEDhCNM+VF+O+EufSncJU=;
+        b=M1m8zJfWSzuLewBKG2GNArruC1EXocWWPxy2bH3FRjAr3ECqc7DzjUTfLM+WPkIQb/
+         +niHKbAmlxBEn9CK7reVMqvCbWesxU48ApFhyMdv6VvQUuo+sbemQJwOmFcRr59pK/jA
+         PDYPa9jwSAKa04Wzlg1JOVypxX+s21Zj9cUzY8TcT9O2AwXewfHGtBnz9v8D3uQSADwt
+         IfHOnJde+3PlJkyJ4T2eRUbripfzlsv9ZHE3xIiG9Q8AMhgTgKRsTLcJpmkyQquoehpN
+         jLCvXBXFhbuhANKeA9eOIlxDvToDSOm/Az07Y6Ra5emQKwBELOVjZH2saJx4LcaZOf0y
+         SqFw==;
+        darn=lists.linux.dev
+ARC-Authentication-Results: i=1; mx.google.com; arc=none
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20251104; t=1780951400; x=1781556200; darn=lists.linux.dev;
-        h=content-transfer-encoding:in-reply-to:autocrypt:from
-         :content-language:references:cc:to:subject:user-agent:mime-version
-         :date:message-id:sender:from:to:cc:subject:date:message-id:reply-to;
-        bh=v397rAc4nLW0basLyJyPzlrgoP80PAn+u/BhLVjss90=;
-        b=klkR9KUtF45yuOKlYqHC8IHJ/MnzZhSJoldGwMOnj5bAefeFMt6s5xpPhKCOsD4dKo
-         9zVY62sAdE0zJxd4Scflry5FtneoYhJPAPCUA9tkR4vItaVeu8D+kaqZHyljZzQ2HBGY
-         1R7dth0n+bTstSivzHFhS0xCX1GhN19njJ08QIf8GxqmR3Wnt/1n3zc+li7ndTAJKfW9
-         sJ5dKgqZNxIwsrqIABzAtI5GPr2cM98KgMJjv3/+0gn3K9IMFQjZKAKspwl4m8m1E8H1
-         264ZUn5rofJ/s6BChRnWOkXfeRTgl0XVCLL9cAKGZ2RhZ9xtyvEOB2wubkSeguHQ1MBr
-         bZeA==
+        d=google.com; s=20251104; t=1780956205; x=1781561005; darn=lists.linux.dev;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=Td9/E5f9V6aXQ0cuox27S5GUKVxy5gX2ycYw8xHBNKc=;
+        b=U/ruXVbQjw3Uu3RUtU1MgfaDuR81aRuOCHUWclZ2eydpZ4QP8VFtPJgYYLf5zibsCf
+         Hzlte6A/6uH6Q7IMaCYcVZENiFyZHCITrAbItqBCySG9vS+hCF22vJiqXGPBgUt4OzlB
+         7eyjMQ7IyaUC6IhtJSY251jWWM/aIZfw3ibONpuRY1G2kYDJdfDPRRg52pITxaKnvnY3
+         nZRykS/fpKR3e9pnOj9o7qBV+oxKn9UzrFB/UrTK2I2vRyEiN52uQZLWGvu8r16/LGJS
+         ipWwS+ztRDJDJ/wxUo6mKtDbUmPCEg6dzYEHp3o6GKIidOS3CUMCd/kVSGxIQY8rt5/1
+         ceqg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20251104; t=1780951400; x=1781556200;
-        h=content-transfer-encoding:in-reply-to:autocrypt:from
-         :content-language:references:cc:to:subject:user-agent:mime-version
-         :date:message-id:sender:x-gm-gg:x-gm-message-state:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=v397rAc4nLW0basLyJyPzlrgoP80PAn+u/BhLVjss90=;
-        b=es1hyiaIZ4yUZpsF6C7ugJiENIMDkdSBuD8IFWwV0rBgA/F5iiF8MkRVRIYVb0JNWO
-         VexjAmxU9ZlUAABH5DoXpnVNrJ3yW8ANapLIc7VEcpGMwvnqQRx8LqDEBFpFoiAkfKWM
-         soU3z64H9fhlLi8xMYA0v2kZp6BUWgs3a8lChqQSeJ83BiNwX4g1LmVmhbryKWf+X4M4
-         h5TxYIpaHXtKPqyjESWnR70MpWYEEPbNgS63BaL7cFwUigjwXwdkrrJ+bmFzWILhQ5rw
-         ePtyXckqxW2n1vvXQnlpZI5Ywe+5kfF/0RWQFUbgR1Fo66zrJW1tlpWNIP1wylLcX5HP
-         3joQ==
-X-Gm-Message-State: AOJu0Yz/IptA8rwRlKc3qOJ+ptvhR4+UukKoJ+wj0Ti7CCPCTVrecdH4
-	d8vB9hMv8y9eWSxAgBiUhzd01SFyuEbptZQQXzanP7g2//Gq8Kd+9KH6
-X-Gm-Gg: Acq92OEoxO/Zo0BfbGR6/LqF3YmxNcWjgnuqoa4nSCZiW+172XPxp9Mo7f6W4Rloy+T
-	tIOLy++CuLkpGK4LgYCCfVSx/vBY5U2ayo/F4uRH7uJVqEgimGUoOHzXUceKpFWIrNeOu03S2oD
-	4EIZbnmeJTavne2NWNSBSWkJ0mz+gWl5YhxzrIeuXeFA9fYXv/lBxJ/5dZLeb/5lTsW9JjIp6DA
-	aGOO28l33LIB+1BL0Wa7Fu6qWJkHlOkIEBN4id5LQ/bs0LgjFWJqYWSRPyOQhgBZ4rQp9T6ETSS
-	tg+SCfe9K+g13PD/cr/Ids5Lm4Qg+t3bhwMs31pH9t9aaT9xEKUpwFSDd6BZm2xSQFWXdTLCWkR
-	vm4MhIcO7HuD69P5d0sqqIX19Kcd8d4k5uYwLAHEf+70db4hifMytB44F+Oqqzwy0nYlxRJtyku
-	tRqt6xCAChw5I5btr2DuISDCIC9Y5+dkZ0sjdfesNFxxkFAy+3h2xbPxTHBh65vaOAk9CelRVBJ
-	lR5Rx9jLkA=
-X-Received: by 2002:a17:90b:38c8:b0:36d:b12f:613c with SMTP id 98e67ed59e1d1-370ef2f0208mr18085500a91.10.1780951399887;
-        Mon, 08 Jun 2026 13:43:19 -0700 (PDT)
-Received: from ?IPV6:2600:1700:e321:62f0:da43:aeff:fecc:bfd5? ([2600:1700:e321:62f0:da43:aeff:fecc:bfd5])
-        by smtp.gmail.com with ESMTPSA id 98e67ed59e1d1-36f6c668e98sm17382723a91.5.2026.06.08.13.43.19
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Mon, 08 Jun 2026 13:43:19 -0700 (PDT)
-Sender: Guenter Roeck <groeck7@gmail.com>
-Message-ID: <d2e5196f-415f-4948-9c7f-6c567a4b2000@roeck-us.net>
-Date: Mon, 8 Jun 2026 13:43:18 -0700
+        d=1e100.net; s=20251104; t=1780956205; x=1781561005;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:x-gm-gg:x-gm-message-state:from
+         :to:cc:subject:date:message-id:reply-to;
+        bh=Td9/E5f9V6aXQ0cuox27S5GUKVxy5gX2ycYw8xHBNKc=;
+        b=RMLaxoDNrUqfJQwj68RUrwPdaFt2khWJ6Ticg6w5PVV+jb8bAJPGAf1F0NIqkwrKQw
+         /2bxv6u15dLmwuRjDq2p3Rmr60gnU5m8G4oeEviLTUgOJGgIiWbYRkCtIMYKGxHv5OY/
+         DXQcbDvoAM4sVX3grdMdBttIbz9o4z1SxSi8DN9ggXCOwzpAMLz6cAbt45Ej3uakshjq
+         hLiiUmI65bCV4dTxDlXlCkX1BHWcMKzckR1c9LuX8hZnEW5sCuzdBrKdRhzcLYr9iuLQ
+         NSHLf4OJQkgA/CRfDxkW7xsVmPCpGWRNzZcmGCqrEozNHFEs86j+J2B678sRZ8oBnwTj
+         g7IA==
+X-Gm-Message-State: AOJu0YyEn9/EmYuMu5ZytN4v3pPZlSYlmov2GWpa8sFFlsdjsrxBPKU6
+	t5m/7+rEBYaRm/goG2vwATI5+rtaTS5Xm88nM6dtmbefCCMgbjxwyRGHjv6G3LgHN356UIIqm95
+	ZS9Je58wXODrf8E2DrvaAO/jKM4Lhxq/Q5eQpdd7yAi1EnbRSd6epKZUM
+X-Gm-Gg: Acq92OFcZQJp/yYB2FXSOL2rYF2EdcUsOLOEOYkxM9aySPgYG18RiLk4FwrlBzHHJPV
+	mjRbn9PU45jorb5LKE31XzZHrGh2qzuX1Y90OlFjE7abjexZrqU3+yvT6A21F3Um1vhg3KyAmLS
+	uMZjj2Dz1GMJtbeyVQpxd4op1mgQlFCCtfhRV1/lZPla/nbNrD4v5jyx5lWILW6b/bfa4QoUopt
+	kAvUQLKi67YJ2IpDQ4LcrGFAi4jVyIZQxvQb2fFAC/9T0OYiL2DAZynxP+ChYxlDDvi8HaImzzo
+	hBNnaSfzo2a51vZJpc0KVkgsK8z5beOrxDxPofNMfdzY8YfN
+X-Received: by 2002:a17:902:d583:b0:2b9:a39a:e5db with SMTP id
+ d9443c01a7336-2c1eb742bf1mr6324125ad.7.1780956204854; Mon, 08 Jun 2026
+ 15:03:24 -0700 (PDT)
 Precedence: bulk
 X-Mailing-List: sashiko-reviews@lists.linux.dev
 List-Id: <sashiko-reviews.lists.linux.dev>
 List-Subscribe: <mailto:sashiko-reviews+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:sashiko-reviews+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH] watchdog: sama5d4_wdt: use platform_get_irq()
-To: Rosen Penev <rosenp@gmail.com>
-Cc: sashiko-reviews@lists.linux.dev, linux-watchdog@vger.kernel.org
-References: <20260603005409.226774-1-rosenp@gmail.com>
- <20260603010104.56C0C1F00893@smtp.kernel.org>
- <19f5c865-0ec6-4079-bb77-cf6f203723fa@roeck-us.net>
- <CAKxU2N8SwOzGqjoVrOGQm3fwrhp8M_Q7JGwPFQjOv8y2ubJeTw@mail.gmail.com>
-Content-Language: en-US
-From: Guenter Roeck <linux@roeck-us.net>
-Autocrypt: addr=linux@roeck-us.net; keydata=
- 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
- np3900V20aS7eD9K8GTU0TGC1pyz6IVJwIE=
-In-Reply-To: <CAKxU2N8SwOzGqjoVrOGQm3fwrhp8M_Q7JGwPFQjOv8y2ubJeTw@mail.gmail.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 8bit
+References: <20260608201753.1979464-11-acme@kernel.org> <20260608205059.7ECD01F00898@smtp.kernel.org>
+In-Reply-To: <20260608205059.7ECD01F00898@smtp.kernel.org>
+From: Ian Rogers <irogers@google.com>
+Date: Mon, 8 Jun 2026 15:03:13 -0700
+X-Gm-Features: AVVi8CfD2DVec-bEtIZMfcyfb1m__IqqI3l50f4Ca8Zyxp3CE1PRAkHyt_q-Td0
+Message-ID: <CAP-5=fW80NxOXjDRUJsn9Z35CahcXxwUs8sug=eTBxA_n3--Rw@mail.gmail.com>
+Subject: Re: [PATCH 10/11] perf tools: Use scnprintf() in build_id__snprintf()
+ and hwmon read_events()
+To: sashiko-reviews@lists.linux.dev
+Cc: Arnaldo Carvalho de Melo <acme@kernel.org>, linux-perf-users@vger.kernel.org
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 
-On 6/8/26 13:11, Rosen Penev wrote:
-> On Mon, Jun 8, 2026 at 12:26 PM Guenter Roeck <linux@roeck-us.net> wrote:
->>
->> On 6/2/26 18:01, sashiko-bot@kernel.org wrote:
->>> Thank you for your contribution! Sashiko AI review found 3 potential issue(s) to consider:
->>>
->>> New issues:
->>> - [High] Assigning the signed result of `platform_get_irq()` to an unsigned `u32` variable causes the `irq < 0` error check to always evaluate to false, breaking the driver's fallback mechanism.
->>> - [Medium] Using `platform_get_irq()` instead of `platform_get_irq_optional()` for an optional IRQ causes spurious error messages to be logged.
->>>
->>> Pre-existing issues:
->>> - [High] The driver registers a shared interrupt handler (`IRQF_SHARED`) before setting the platform driver data, creating a race condition that can lead to a NULL pointer dereference.
->>> --
->>>
->>> commit 7ff7f2de154616b7a42f6e5710f322b20ff6152e
->>> Author: Rosen Penev <rosenp@gmail.com>
->>>
->>> watchdog: sama5d4_wdt: use platform_get_irq()
->>>
->>> irq_of_parse_and_map() requires irq_dispose_mapping() on failure. Don't
->>> bother with it as platform_get_irq doesn't need it.
->>>
->>>> diff --git a/drivers/watchdog/sama5d4_wdt.c b/drivers/watchdog/sama5d4_wdt.c
->>>> index 13e72918338a2..d9b212557ce36 100644
->>>> --- a/drivers/watchdog/sama5d4_wdt.c
->>>> +++ b/drivers/watchdog/sama5d4_wdt.c
->>>> @@ -286,8 +286,8 @@ static int sama5d4_wdt_probe(struct platform_device *pdev)
->>>>               return ret;
->>>>
->>>>       if (wdt->need_irq) {
->>>> -            irq = irq_of_parse_and_map(dev->of_node, 0);
->>>> -            if (!irq) {
->>>> +            irq = platform_get_irq(pdev, 0);
->>>> +            if (irq < 0) {
->>>
->>> [Severity: High]
->>> Since irq is declared as an unsigned u32 earlier in sama5d4_wdt_probe(), won't
->>> this irq < 0 check always evaluate to false?
->>>
->>> platform_get_irq() returns a negative error code (like -ENXIO) on failure,
->>> which will be implicitly cast to a large positive integer. Instead of
->>> gracefully falling back by setting wdt->need_irq = false, won't the driver
->>> proceed to call devm_request_irq() with an invalid IRQ number and fail the
->>> probe?
->>>
->>
->> Please fix the problems reported by Sashiko. That applies to all your patches.
-> Done for the reported ones. Sent as a series.
->>
->> Since it appears that you are fixing bugs based on issues reported by AI agents,
-> Difficult to do given how late in the merge window this is. The other
-> issue is every time I fix bugs reported by sashiko, it complains about
-> new pre-existing ones. Cat and Mouse game at best.
+On Mon, Jun 8, 2026 at 1:51=E2=80=AFPM <sashiko-bot@kernel.org> wrote:
+>
+> Thank you for your contribution! Sashiko AI review found 1 potential issu=
+e(s) to consider:
+> - [Low] The early termination condition `offs < bf_size` is rendered inef=
+fective by the switch to `scnprintf`.
+> --
+>
+> commit 0dbaa7b9065f01d9d8a6117248bffa97b3021ddf
+> Author: Arnaldo Carvalho de Melo <acme@redhat.com>
+>
+> perf tools: Use scnprintf() in build_id__snprintf() and hwmon read_events=
+()
+>
+> This commit replaces snprintf() with scnprintf() in build_id__snprintf()
+> and hwmon_pmu__describe_items() to prevent accumulated lengths from excee=
+ding
+> the allocated buffer size and underflowing the remaining size.
+>
+> > diff --git a/tools/perf/util/build-id.c b/tools/perf/util/build-id.c
+> > index 8c0a9ae932aa5..a3b92108f9626 100644
+> > --- a/tools/perf/util/build-id.c
+> > +++ b/tools/perf/util/build-id.c
+> > @@ -94,7 +94,7 @@ int build_id__snprintf(const struct build_id *build_i=
+d, char *bf, size_t bf_size
+> >       }
+> >
+> >       for (size_t i =3D 0; i < build_id->size && offs < bf_size; ++i)
+> > -             offs +=3D snprintf(bf + offs, bf_size - offs, "%02x", bui=
+ld_id->data[i]);
+> > +             offs +=3D scnprintf(bf + offs, bf_size - offs, "%02x", bu=
+ild_id->data[i]);
+>
+> [Severity: Low]
+> Does this change neutralize the early termination condition in the loop?
+>
+> Since scnprintf() returns the number of characters written excluding the =
+null
+> terminator, `offs` will reach at most `bf_size - 1` and never equals `bf_=
+size`.
+>
+> Once the buffer is full (`bf_size - offs =3D=3D 1`), scnprintf() will onl=
+y write a
+> null terminator, returning 0. Because `offs` stops increasing, the condit=
+ion
+> `offs < bf_size` remains true. This causes the loop to continue writing n=
+othing
+> for the remaining `build_id->size` iterations instead of exiting early.
 
-That can not be helped. Also, bug fixes do not depend on commit windows.
+Looks like a "-1" is needed to address this.
 
-Guenter
+Thanks,
+Ian
 
+> >
+> >       return offs;
+> >  }
+>
+> --
+> Sashiko AI review =C2=B7 https://sashiko.dev/#/patchset/20260608201753.19=
+79464-1-acme@kernel.org?part=3D10
+>
