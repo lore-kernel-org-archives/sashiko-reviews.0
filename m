@@ -1,325 +1,215 @@
-Received: from OSPPR02CU001.outbound.protection.outlook.com (mail-norwayeastazon11013027.outbound.protection.outlook.com [40.107.159.27])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-pg1-f172.google.com (mail-pg1-f172.google.com [209.85.215.172])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 83148370D45
-	for <sashiko-reviews@lists.linux.dev>; Mon,  8 Jun 2026 12:03:23 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=fail smtp.client-ip=40.107.159.27
-ARC-Seal:i=2; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1780920205; cv=fail; b=NnluNKT3hshiRJhOsdoc4X2ZDrDeEVhSkPg1g94b9BrmTm6nsza2bQAXpUAEH48VzYde9nje4FZZGeD1dXirt7PY/UFy1MWN3g+ypsc8Tt8efeKSGa3h6d64eWTOe5v1RkB9w4jYN1lYiWeMV5Kw/Gi6tW3N8L2AhO5bD8fuYDQ=
-ARC-Message-Signature:i=2; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1780920205; c=relaxed/simple;
-	bh=IbX6bGe0c7CZMxncTiWCwHIOO4IBIqu7S1d6FQupcL0=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:Content-Type:
-	 Content-Disposition:In-Reply-To:MIME-Version; b=cWssZKPGi57GziAai/PHZM9zmX/EqWwE//bIh7I9BcyzI9GeZHN6p53Fc2aorz8z5MCXSmQAcOvGX7CnDHbim/yLP05imltnp8zmYMw0VqFLFtkXOG2FO+ea+BZjqetUWLvFywgrNoARexGysUB8WnbzbHbBT42rqQb5cIGiPUM=
-ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=nxp.com; spf=pass smtp.mailfrom=nxp.com; dkim=pass (2048-bit key) header.d=nxp.com header.i=@nxp.com header.b=fdguwH6P; arc=fail smtp.client-ip=40.107.159.27
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=nxp.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=nxp.com
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4C9752E54A3
+	for <sashiko-reviews@lists.linux.dev>; Mon,  8 Jun 2026 13:01:48 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.215.172
+ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
+	t=1780923709; cv=none; b=T1n/ovcIF3b5fhr2troEQEwZQovxBTfaZqHR7vjO85RgNey1dMpcdXBifBUZCMsvF1QKTfoUZG0ZTyGegWQfCzJo4yqJPtgDNo8HM7mZLEE1wXFh/F/CtEXvKAfSe1UUwoOx7zU+b5vbqOktTVW0MCBsx0Q5RXRM3GaQojr4g64=
+ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
+	s=arc-20240116; t=1780923709; c=relaxed/simple;
+	bh=eYQroF+hz1sPCFgXW5zWcKDi94tK3SmEBjPEWUHLREg=;
+	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
+	 In-Reply-To:Content-Type; b=PQWgEHo3wyzLGCMVlN1Mga4BBg47DnahsQDGQx5NsG6o+aayPptToz31T5BENXd2yTA1hSOPVzwt8ITVtsDgqff9GxAm1tSSKfthZ8xhNFtD+s3G/Eso4vy1OLToJ7vPGEVipSbLmEebAeRlp1eKgKynb1qEd7x9Xu0EBBxdkU4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=roeck-us.net; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=sqtaQnoE; arc=none smtp.client-ip=209.85.215.172
+Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=roeck-us.net
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=nxp.com header.i=@nxp.com header.b="fdguwH6P"
-ARC-Seal: i=1; a=rsa-sha256; s=arcselector10001; d=microsoft.com; cv=none;
- b=JPFcsrQJxwsaiTInTrk1nHQwC2AqyM0FO+64JS1CpPzCQce1yLjKY5VUKffBSuZ52HHRf2nuOQxUwMitzGXvXcdKJbfk2Z47oGXKfRHPDTosbLdYqFp2q3HuQ4O7WKwP/aFLUNdr8/zwGFea5WpQeG/G+PUFuzjTyWAmAIYDopt/7kgsY2bKGa6YP+K/nLmbF16zrNPSLETnFXTcQusvRieibJvHA+NvegkDNcd592ZrqFH0DlN53QrHdMDj2JfssMeoQH5JA0w63ZS3zgifUyWoxESXOitt6cGsB+LrCibgp+5tCfO3cu10BPWzPmJq6UShw/QbZ8Nc9fr9qRCZ1A==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com;
- s=arcselector10001;
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
- bh=bfeVth7SkbxZ27Jo0GRaNXe4Kk7NsReQq7swIUPMFHM=;
- b=pRaTZ7nFPQfUNcdM62EP+SULttH4y2P1UnvR5jfPWHve6r49pslYfT3aPLlYQfYKgxN1bpcFJ04LHaM0sZK7wOY5gbAFCExcWcj9ih0l8LKmWxHo/0RcMnXzuuKRtbYE/wTgrQbStHO0BY3j3M+D47Rp9pHuWvlfHG4fObDAFp7T0xV1JKjEMXp0VezcQArv8WPIknqfTdEt70zBfzUSuvYqR1J2I2G0GU3ck4ssISRoLk1E5Q51BZViBemjELUkOu2HpsvanHlOd3gkh2T+X+sBWcgEXVYDeZJiK8QpwCRQ4SVJ2pSj37sLF2hl5UpSlK0l32jErGD/5cIiyWJp1g==
-ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
- smtp.mailfrom=nxp.com; dmarc=pass action=none header.from=nxp.com; dkim=pass
- header.d=nxp.com; arc=none
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=nxp.com; s=selector1;
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
- bh=bfeVth7SkbxZ27Jo0GRaNXe4Kk7NsReQq7swIUPMFHM=;
- b=fdguwH6PBKhQCEIwCb4xaHHIYDaufRAzvjZUK1G/eNgsImw8GqSgBt3YHK9t9hxoN18vfqticwR7EZUA6ZholCVFzTceJ3YBWwDiuTASP1UWdCWNjoP9Y+BtfoGbXmAAze9xYUkReLX4YS40ElRwKABOTNAk3jXNR/ir5j6PT7JyRy1aDs09GK48BbLsHb+tiR8zitqqLgfkuw/EA45bmMD9tKITpTTo8UGVfsp6SIErbzFzWoIp0zWKoNqfzkX7rSChf1/vNk8Y0AnTYihxHJmXtT5c1dv1v7SnXo6utbX1AmECaDe/VQDD4/McFL7gIbugeohO+AAXeHmpfbmdxA==
-Authentication-Results: dkim=none (message not signed)
- header.d=none;dmarc=none action=none header.from=nxp.com;
-Received: from AM0PR04MB6900.eurprd04.prod.outlook.com (2603:10a6:208:17d::10)
- by AM8PR04MB7907.eurprd04.prod.outlook.com (2603:10a6:20b:237::10) with
- Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.21.92.12; Mon, 8 Jun 2026
- 12:03:20 +0000
-Received: from AM0PR04MB6900.eurprd04.prod.outlook.com
- ([fe80::7fda:8431:ca1b:b023]) by AM0PR04MB6900.eurprd04.prod.outlook.com
- ([fe80::7fda:8431:ca1b:b023%5]) with mapi id 15.21.0092.011; Mon, 8 Jun 2026
- 12:03:20 +0000
-Date: Mon, 8 Jun 2026 15:03:16 +0300
-From: Vladimir Oltean <vladimir.oltean@nxp.com>
-To: Rob Herring <robh@kernel.org>
-Cc: Conor Dooley <conor@kernel.org>, sashiko-reviews@lists.linux.dev,
-	vkoul@kernel.org, neil.armstrong@linaro.org, conor+dt@kernel.org,
-	linux-phy@lists.infradead.org, devicetree@vger.kernel.org,
-	olteanv@gmail.com
-Subject: Re: [PATCH v3 phy-next 14/16] dt-bindings: phy: lynx-10g: initial
- document
-Message-ID: <20260608120316.km3qcjleehcxpzdi@skbuf>
-References: <20260603132059.503527-1-vladimir.oltean@nxp.com>
- <20260603133350.9FA271F00893@smtp.kernel.org>
- <20260603133825.l544tnmtn2pqfrzh@skbuf>
- <20260603-numerate-unbundle-ef259832006d@spud>
- <20260605083737.yryq2a763zhnkjyq@skbuf>
- <20260605202458.GA6304-robh@kernel.org>
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <20260605202458.GA6304-robh@kernel.org>
-X-ClientProxiedBy: VI1PR07CA0296.eurprd07.prod.outlook.com
- (2603:10a6:800:130::24) To AM0PR04MB6900.eurprd04.prod.outlook.com
- (2603:10a6:208:17d::10)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="sqtaQnoE"
+Received: by mail-pg1-f172.google.com with SMTP id 41be03b00d2f7-c858014845aso1701722a12.1
+        for <sashiko-reviews@lists.linux.dev>; Mon, 08 Jun 2026 06:01:48 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20251104; t=1780923707; x=1781528507; darn=lists.linux.dev;
+        h=content-transfer-encoding:in-reply-to:autocrypt:from
+         :content-language:references:cc:to:subject:user-agent:mime-version
+         :date:message-id:sender:from:to:cc:subject:date:message-id:reply-to;
+        bh=Tk09PdaozbLBYoylQHl5ZtVjU8sfgb2d5kfgNmIhJY0=;
+        b=sqtaQnoEa805e06hqagyFgchkGahVV8v5J8CZAu4X1kP5MxaQSJEu+hPpa8PrCsUb7
+         lkTbAI3VOFJb21wGzAyMD7LIKguS1mOUXj+THOkJy+fSTMPSb2Txo97aQJq08yVpxVsd
+         /xvwa6pknBIKT/y8RwIHL2rZqejoD/bGXsh99hDtSMHSKYa5Cgbr4n4gR0RpctMu8HP+
+         YoykwcjWc6rvpZkJ0H9V/rGnYFSEST6qTsvwwvKf7xapddWkkmp/KLoqUM2bRxPqT4PH
+         TaCQgpcbNtaKMs7itYCzOtwsraFT2eB8rF5rZAgXSExWE6jrBWDS6pwTRr6C4CeDJ2fe
+         XK+A==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20251104; t=1780923707; x=1781528507;
+        h=content-transfer-encoding:in-reply-to:autocrypt:from
+         :content-language:references:cc:to:subject:user-agent:mime-version
+         :date:message-id:sender:x-gm-gg:x-gm-message-state:from:to:cc
+         :subject:date:message-id:reply-to;
+        bh=Tk09PdaozbLBYoylQHl5ZtVjU8sfgb2d5kfgNmIhJY0=;
+        b=pwKSG+lAp3foy1twt1cgHjeSe6WFOxbA+U6xdvxJas9lUeJ7yN0GYBus9juXZGOPiM
+         ietslvfVbss4wPKUKDiGN54UbowrvELjXwOJFD1btXOtj567WvmgPsQ5hSQTaEkmx82G
+         7krSDZB8Lf+KFMhlbmhYDCznpdwVX6dyLf1DacJLWGVhGnVllG7Pbg7gV2ik2rz6dLJU
+         /aTM7BT8IkPxnrdUVLykIKPKpM4JUMxsTisWZsDrqleFR7ubuhLsyULp5XifjrvrcCPC
+         yJtpp0xYLJyvFZZwiGgC09vF1vUyCzdf/D/VOBsR2MAKXraEMKQ9jQs6sGl7H6+z/Mi4
+         0OBw==
+X-Gm-Message-State: AOJu0YwGeNpSbaw0M5dkjFe0pa4LWvWoMDrT3T+ByrpMxhFngx9z2Wjl
+	XyCEB2diz5p1G9pNIh/f6wSjJS296jjaAdHQNbP+5C+5Xe4sKlc1ZpQ1dof48VAc
+X-Gm-Gg: Acq92OHXt5kwCEc+9ASnFdAx5EH9Dq84+Jk4bdjOKT7AtTyeEkGsUlb9jUw5h6wFjE7
+	UNzbNET96Iwq32ffvnykk1UE2nxV+GbrTBx3jDjIUJx9xbcYKdJm7IdkfJE6gIkUcqA9Q/jcbsD
+	LtGpl9P9bMVQDtjV3g8nw4tlJR7ybqbO939QJt/IDe19CZaJ7aYi3wIrsT8wk5iO3cH1YCBQG40
+	nVdp3OpC9Q/+Bzlgo9p6A7e2YnAxm4e900Pc6XOQvcruedF6s4IxQlGZdgQ/zKdkCKsTyfl9hRe
+	tWLKsfYfnHS3QGTXbb64CY9ODOf8WNplyJhtyvx9wBDQ8D95OFkshQi8Gk8BY5oXSQWOUQTSNBH
+	wnDAieGdM3EFwmtO3G7542UH8kE2DaAiCm1h0pmKkJcYeRxzd3VBR/W+1qkh1m6NvSoXvgDz5b1
+	rtYqVo1PeBYDtfHeLLY4Xg380qsI+8GgTfftLa0RLxyI6JELXrfdDd63hnuQZ9ZWNY2GkezHUJu
+	NJYh8rWpwc=
+X-Received: by 2002:a05:6a21:390:b0:3b4:731e:6fad with SMTP id adf61e73a8af0-3b4d3a5723fmr12311277637.16.1780923707038;
+        Mon, 08 Jun 2026 06:01:47 -0700 (PDT)
+Received: from ?IPV6:2600:1700:e321:62f0:da43:aeff:fecc:bfd5? ([2600:1700:e321:62f0:da43:aeff:fecc:bfd5])
+        by smtp.gmail.com with ESMTPSA id 41be03b00d2f7-c85df0a4e59sm16084682a12.16.2026.06.08.06.01.46
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Mon, 08 Jun 2026 06:01:46 -0700 (PDT)
+Sender: Guenter Roeck <groeck7@gmail.com>
+Message-ID: <415d47b8-3c41-4c86-b0fb-51a1dae0577f@roeck-us.net>
+Date: Mon, 8 Jun 2026 06:01:45 -0700
 Precedence: bulk
 X-Mailing-List: sashiko-reviews@lists.linux.dev
 List-Id: <sashiko-reviews.lists.linux.dev>
 List-Subscribe: <mailto:sashiko-reviews+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:sashiko-reviews+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-X-MS-PublicTrafficType: Email
-X-MS-TrafficTypeDiagnostic: AM0PR04MB6900:EE_|AM8PR04MB7907:EE_
-X-MS-Office365-Filtering-Correlation-Id: db489f74-518f-4c07-beeb-08dec555eeb3
-X-MS-Exchange-SenderADCheck: 1
-X-MS-Exchange-AntiSpam-Relay: 0
-X-Microsoft-Antispam:
-	BCL:0;ARA:13230040|376014|10070799003|366016|1800799024|19092799006|11063799006|4143699003|56012099006|18002099003|22082099003|3023799007;
-X-Microsoft-Antispam-Message-Info:
-	HjQY7cNznQPs1tcUMRaf11aaaM5LuNPzP2rLM5orwzlDi8Rb6GVzvcJI28RbwC+pGJDrZosPkPzmo6ASi7Ax401EJWVzEkobG40N0d/lfEEmBcsQ0h2p+4BtkL8/TTUdOd4sRA6zdvtMfMRz2qgLHZYK/4cIh7fDX4IBf9CJem8s1AXQFK8RLTj2BSZzwtsY0DA4i4/sLHsXNQokaQUQ8y4/K6w92ZTma4/Y7zoED5SBsw6OaStP07VimqncbonzI4bFTHhJty1tkZRHj4rd94lNZwSqNg2i/HLYVeYvETKZn4nTfXL19QcuNMKtlYlI2E7eBqS/TcioDUEdTGZ7yUlxDohE5CznsDqUc7cDBK+RhkuhH7dKVUFkad2IxHMKDQGGBw9w7+K3GIp0PZMA2cUu1FG5K4WDB0Vk4GHYHDxe9Gu7i8aaostr9IbD2y+WeSdiN5kOW28VwkB2rxUbVtNWPg9MPTElNGzc8VFUlTj9W4Jj6mjKHRJTW306FzLjLH7tf+yIHbmJxRZv4SDb7XKCcorQjtYvGAjniPNW2VS2bYmHNutbhBTW1ZSf6U8Xg1fAwMwRIFjTUukbz63/Xk45D5wwbV0YnURuOJfeRCTJuuHWm8H78x/umbT9QqDRyABRYih3aUNLZopjzihwBQ==
-X-Forefront-Antispam-Report:
-	CIP:255.255.255.255;CTRY:;LANG:en;SCL:1;SRV:;IPV:NLI;SFV:NSPM;H:AM0PR04MB6900.eurprd04.prod.outlook.com;PTR:;CAT:NONE;SFS:(13230040)(376014)(10070799003)(366016)(1800799024)(19092799006)(11063799006)(4143699003)(56012099006)(18002099003)(22082099003)(3023799007);DIR:OUT;SFP:1101;
-X-MS-Exchange-AntiSpam-MessageData-ChunkCount: 2
-X-MS-Exchange-AntiSpam-MessageData-0:
-	=?us-ascii?Q?vy9mlQD1u6IG9bo9jSlfwmuoyqrp1/Q+KTcghGRN85r5yD4oAnlyTB7ta0QC?=
- =?us-ascii?Q?4fqtfO5C3xIefYYsaqvmcKZdkhjHy/5TI1Hxxri+7O6kVK03nNV+Wzx+0b0z?=
- =?us-ascii?Q?HX07cFdluk+sZr8mGHJQjA2md7jiSNMAIIHsP7A6xSKcLmxhY7+255hRjbFR?=
- =?us-ascii?Q?gK/M3T4lGVsUmgJtzS0B20drD6SmPXM47bTwytfQ3IuEGfMB5CBppVpLTrS/?=
- =?us-ascii?Q?Gf7rSo2AbDmZhoxB2JqeMe5ZXAQ3+2JAMNzekbh0EpPO5/O/G3wfeMEEhNhb?=
- =?us-ascii?Q?r+quocChltpRPNK1H8GvKLlNNFshoMx0f2ggD9gJ34OfwXm9UYZaOzZO6duo?=
- =?us-ascii?Q?b+o31i555u7Rp1kcCYR2wX3aVfTsHyOjbZgy2oaiGCHd/5yBLH1Vq3qx/fgv?=
- =?us-ascii?Q?kgX6JA1ReylRuaKYBkQyeDZlY7BkWS21CAtMeeSgHCd95HwLYt2m113E2UJi?=
- =?us-ascii?Q?bq56w/j3TCw28OWDjahJQqt2aORSa9Uf4CzDnux0qODA486YHNt1rsCxhEij?=
- =?us-ascii?Q?hx/opqPKMS2dNdjNKT4bjvjJLZDi0xnrMZUo4UlSK8m9IBRcBxGEhxGrX3Ls?=
- =?us-ascii?Q?8CINkdrl71B9zfmSgyePhmCn/0fHWdtltOnrlwwQNXNAkoZDEn/g05aB1JNe?=
- =?us-ascii?Q?ZPkSWyIN+6/qdSqM9PySLb2lSwzkc6VOMlb+YBghFg2Va91MfL0yoiSYW79V?=
- =?us-ascii?Q?PdDy6cADbBrmCuHnnzy1HaISgPU9A3oUfG2t8Cp2TKx061Z3yij0U7UBBF8c?=
- =?us-ascii?Q?IdYTrHutd4ouEEIJXHh39sTnJavTWJCoJIN9CkIk+vGh+zVw3fW7LrtmJfy4?=
- =?us-ascii?Q?3v6W9zin/BuKFi/u8jD3uJ+P92TsruZcHDhmM6d8SOfySCA5pIDoA3foFtEV?=
- =?us-ascii?Q?C/vHyrHf6LUgjLbC1OFCpbSl7mtfSz0bCImSBAgHL9BVDkkmFORlduXmmLoU?=
- =?us-ascii?Q?F63mBS/rWRblWwHWPgbx92lpTSVvKPY15rHtDn15pNM2f6UfGeKF0dIjrnwO?=
- =?us-ascii?Q?PCnzOylsHEjfKedSQC730nVIhmHnjFxPRpP5EgA78t5s313DnMf/JtG/9z6h?=
- =?us-ascii?Q?fDa5Ihq78wOBMc7I3WhMIXEANSnT5gUPpe6I/zU0R4IFGt5YIlVvwySdOVKb?=
- =?us-ascii?Q?D32QyloPy5A0xgiqfS9bIpRNDXIEyJUr8GuuJMrySHzG5TMDs2VW8H2rOrYa?=
- =?us-ascii?Q?pzA6X0ljpOY22X8kCj4VtTTap8BNu9p9cz+BPX/OvEBRqbF9giGPwtxp7omy?=
- =?us-ascii?Q?q8PUJQ18BDwzE4kPNVH/I1uk2dCJgv4zs10hGgoKgCN56Nf+P2xyJlr9+f/S?=
- =?us-ascii?Q?mMe/Kgb5kSuv9yCSi6pAA3rntdMqpcxVmi9ekIMdvZfN/kr5CpfQpK+w2on6?=
- =?us-ascii?Q?/7xNuEEQqXawGMqBMUTudF8xNE1rVZjcuN2GWMk3E8p2AZwwgiRaExJhIuXF?=
- =?us-ascii?Q?t20MkPNCIz4okAcf6wWK0vwfPlUzwKg7em5BJnXjinZJMqxsdT0pXKLQ//33?=
- =?us-ascii?Q?fkGZS4TnF8yPTpYni92r/kHLZb8W4tTTjxTFuGfKp/4OdS/U2oQTFF4j4sIl?=
- =?us-ascii?Q?gpzmMDYc1kT+dd9UoeMp14Y4+QjAoPWsZMW96wsr0s3s7WdzqKMq5Ej+4ReT?=
- =?us-ascii?Q?At669V+yb9cASPXx92B+HUFjVfr2vquNb6yWgPUx3eszbrO9XWPAgk2lzcEV?=
- =?us-ascii?Q?ize+S9nRNd+AyAKqfuHHZIttDhx6ev+J4LQflSOyCIFMGGUrvB22DwWQmwXO?=
- =?us-ascii?Q?0rXfil4auJUb8EL9itzilBciJitl2WfYx6ASSsSSH8maArXeFoq6X0vJEJJb?=
-X-MS-Exchange-AntiSpam-MessageData-1: GXbWE1h8zUYS0yKhSvIIVkjI9BCefsGon9s=
-X-OriginatorOrg: nxp.com
-X-MS-Exchange-CrossTenant-Network-Message-Id: db489f74-518f-4c07-beeb-08dec555eeb3
-X-MS-Exchange-CrossTenant-AuthSource: AM0PR04MB6900.eurprd04.prod.outlook.com
-X-MS-Exchange-CrossTenant-AuthAs: Internal
-X-MS-Exchange-CrossTenant-OriginalArrivalTime: 08 Jun 2026 12:03:20.2969
- (UTC)
-X-MS-Exchange-CrossTenant-FromEntityHeader: Hosted
-X-MS-Exchange-CrossTenant-Id: 686ea1d3-bc2b-4c6f-a92c-d99c5c301635
-X-MS-Exchange-CrossTenant-MailboxType: HOSTED
-X-MS-Exchange-CrossTenant-UserPrincipalName: xS8Gno19IKAuyxeAI5By4DwnkCooRpUQXcEUC4xtnW10C9lXW6SsJMURrru5u5AIKlOUSWWY545rMD4jnVYU1Q==
-X-MS-Exchange-Transport-CrossTenantHeadersStamped: AM8PR04MB7907
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH v3 2/4] hwmon: (gpd-fan): Initialize EC before registering
+ hwmon device
+To: sashiko-reviews@lists.linux.dev, xiaopeitux@foxmail.com
+Cc: linux-hwmon@vger.kernel.org
+References: <tencent_BEAA4E485EAFA713FF395F57AC083EEE3507@qq.com>
+ <20260608015308.166CF1F00893@smtp.kernel.org>
+Content-Language: en-US
+From: Guenter Roeck <linux@roeck-us.net>
+Autocrypt: addr=linux@roeck-us.net; keydata=
+ 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
+ np3900V20aS7eD9K8GTU0TGC1pyz6IVJwIE=
+In-Reply-To: <20260608015308.166CF1F00893@smtp.kernel.org>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
 
-On Fri, Jun 05, 2026 at 03:24:58PM -0500, Rob Herring wrote:
-> On Fri, Jun 05, 2026 at 11:37:37AM +0300, Vladimir Oltean wrote:
-> > On Wed, Jun 03, 2026 at 04:50:39PM +0100, Conor Dooley wrote:
-> > > On Wed, Jun 03, 2026 at 04:38:25PM +0300, Vladimir Oltean wrote:
-> > > > On Wed, Jun 03, 2026 at 01:33:50PM +0000, sashiko-bot@kernel.org wrote:
-> > > > > Thank you for your contribution! Sashiko AI review found 1 potential issue(s) to consider:
-> > > > > - [Medium] The `if` condition for enforcing the `big-endian` property incorrectly matches the `compatible` string array directly against an `enum`, which will always evaluate to false and cause the requirement to silently fail.
-> > > > > --
-> > > > > 
-> > > > > commit 8bd3982a89722b20a3686e42d4ab3b9f0711ae11
-> > > > > Author: Vladimir Oltean <vladimir.oltean@nxp.com>
-> > > > > 
-> > > > > dt-bindings: phy: lynx-10g: initial document
-> > > > > 
-> > > > > This commit adds the schema for the 10G Lynx SerDes used on most QorIQ and
-> > > > > Layerscape SoCs. It defines the valid compatible strings, PHY cell requirements,
-> > > > > and enforces SoC-specific constraints such as lane counts and endianness.
-> > > > > 
-> > > > > > diff --git a/Documentation/devicetree/bindings/phy/fsl,lynx-10g.yaml b/Documentation/devicetree/bindings/phy/fsl,lynx-10g.yaml
-> > > > > > new file mode 100644
-> > > > > > index 0000000000000..8cf6027a75b91
-> > > > > > --- /dev/null
-> > > > > > +++ b/Documentation/devicetree/bindings/phy/fsl,lynx-10g.yaml
-> > > > > > +  - if:
-> > > > > > +      properties:
-> > > > > > +        compatible:
-> > > > > > +          enum:
-> > > > > > +            - fsl,ls1046a-serdes1
-> > > > > > +            - fsl,ls1046a-serdes2
-> > > > > 
-> > > > > [Severity: Medium]
-> > > > > Does this conditional correctly enforce the big-endian property? 
-> > > > > 
-> > > > > Since the compatible property is a string array in device trees, evaluating it
-> > > > > directly against an enum always returns false. Should this use "contains:" 
-> > > > > with the enum, similar to the preceding if block, so dt_binding_check 
-> > > > > correctly enforces the requirement?
-> > > > 
-> > > > The tests I did suggest that it does enforce the requirement.
-> > > 
-> > > Yeah, sashiko just doesn't understand how this works without "contains".
-> > > "contains" is only actually required for validation purposes if there's
-> > > fallback compatibles and you're trying to get a partial match.
+On 6/7/26 18:53, sashiko-bot@kernel.org wrote:
+> Thank you for your contribution! Sashiko AI review found 2 potential issue(s) to consider:
 > 
-> Not exactly. The missing part is the schema is fixed up so the above is 
-> converted to:
+> Pre-existing issues:
+> - [High] Reading a PWM value of 0 from the EC results in an integer underflow, causing sysfs reads to return a spurious error code.
+> - [High] The driver statically and exclusively requests standard Super I/O ports, preventing dynamic resource sharing and risking I/O collisions.
+> --
 > 
-> compatible:
->   minItems: 1
->   maxItems: 1
->   items:
->      - enum:
->          - fsl,ls1046a-serdes1
->          - fsl,ls1046a-serdes2
+> commit 56dbaa61ebc060459a8d3ef1f7c952d1f935af40
+> Author: Pei Xiao <xiaopei01@kylinos.cn>
+> Subject: hwmon: (gpd-fan): Initialize EC before registering hwmon device
 > 
-> If we didn't do that, the above is not what we want here, but 'contains' 
-> is as that's the loosest condition and works regardless of how many 
-> entries compatible has. That's what you should do here.
+> This patch moves the EC initialization before the hardware monitoring
+> device registration. This prevents a race condition where sysfs reads
+> could return invalid values before the EC is properly initialized.
 > 
-> This fixup used to be a lot more widespread when we used the DT YAML 
-> format and everything was decoded to an an array or matrix. The fixups 
-> saved a lot of boilerplate. That's less true now, so maybe getting rid 
-> of more fixups like this case would be better.
-
-Thanks for the explanation, it makes sense now.
-
-I ran "dt-mk-schema -j Documentation/devicetree/bindings/phy/fsl,lynx-10g.yaml"
-and I can see the following, which seems to check out:
-
-    "http://devicetree.org/schemas/phy/fsl,lynx-10g.yaml": {
-        "$filename": "/opt/linux/net-phy-upstreaming/Documentation/devicetree/bindings/phy/fsl,lynx-10g.yaml",
-        "$id": "http://devicetree.org/schemas/phy/fsl,lynx-10g.yaml#",
-        "$schema": "http://devicetree.org/meta-schemas/core.yaml#",
-        "additionalProperties": false,
-        "allOf": [
-            {
-               {
-                "if": {
-                    "properties": {
-                        "compatible": {
-                            "items": [
-                                {
-                                    "enum": [
-                                        "fsl,ls1046a-serdes1",
-                                        "fsl,ls1046a-serdes2"
-                                    ]
-                                }
-                            ],
-                            "maxItems": 1,
-                            "minItems": 1,
-                            "type": "array"
-                        }
-                    }
-                },
-                "then": {
-                    "required": [
-                        "big-endian"
-                    ]
-                }
-               }
-            }
-        ]
-    }
-
-I can send a v4 replacing the constraint with:
-
-allOf:
-  - if:
-      properties:
-        compatible:
-          contains:
-            enum:
-              - fsl,ls1028a-serdes
-              - fsl,ls1046a-serdes1
-              - fsl,ls1046a-serdes2
-              - fsl,ls1088a-serdes1
-              - fsl,ls1088a-serdes2
-    then:
-      patternProperties:
-        "^phy@[0-7]$":
-          properties:
-            reg:
-              minimum: 0
-              maximum: 3
-  - if:
-      properties:
-        compatible:
-          contains:
-            enum:
-              - fsl,ls1046a-serdes1
-              - fsl,ls1046a-serdes2
-    then:
-      properties:
-        big-endian: true
-      required:
-        - big-endian
-
-since you've said that we shouldn't rely on this fixup anymore. I see
-you gave me a Reviewed-by and I deliberately am not adding a fallback
-compatible, but I can do so anyway.
-
-> > Yeah, I have no clear understanding of the json-schema syntax either, I
-> > just copied from another place where it was clear that the intention was
-> > to have multiple matches on nodes having a single compatible string each.
-> > 
-> > But maybe it would be good from DT bindings maintainers to teach LLMs
-> > where they get things wrong in this repo?
-> > https://github.com/masoncl/review-prompts/blob/main/kernel/subsystem/dt-bindings.md
+>> Some buggy firmware won't initialize EC properly on boot. Before its
+>> initialization, reading RPM will always return 0, and writing PWM will have
+>> no effect. So move gpd_init_ec to before hwmon device register.
 > 
-> Yes, there's a few things it consistently gets wrong. I've looked at 
-> this and I can go write more instructions (and fix some things that seem 
-> wrong), but how do I know if it really works? First, I'd be testing with 
-> a different LLM as that's what I have access to. Second, how do I know 
-> if no warning is just the indeterminate nature of LLMs?
+> [Severity: High]
+> This is a pre-existing issue, but does the driver handle a valid PWM read
+> of 0 correctly?
+> 
+> Looking at gpd_wm2_read_pwm(), the raw PWM value 'var' is an unsigned 8-bit
+> integer. If the EC returns 0 (e.g., when the fan is stopped), the expression
+> '(var - 1)' mathematically underflows and promotes to a signed integer (-1).
+> Multiplying by 255 and passing it to DIV_ROUND_CLOSEST yields a negative value:
+> 
+> gpd_wm2_read_pwm() {
+>      ...
+>      return DIV_ROUND_CLOSEST((var - 1) * 255, (drvdata->pwm_max - 1));
+> }
+> 
+> This negative return value propagates up to gpd_fan_hwmon_read(), which
+> interprets it as an error code (-1 mapping to -EPERM), causing the sysfs read
+> for pwm1 to fail. Can this be updated to safely handle a PWM value of 0?
+> 
 
-If you have a lot of time on your hands, the question "was this concern
-considered and dismissed, or not considered?" should be able to be
-answered.
+Series applied, but you might want to have a look into the problems reported here
+(especially this one).
 
-In the sashiko web UI for the patch set, there is a "View Raw Log" link
-for each patch:
-https://sashiko.dev/#/patchset/20260603131914.503053-1-vladimir.oltean%40nxp.com
-This gives you its reasoning process and its internal findings (which it
-tries to dismiss again in a later stage, before reporting them):
-https://sashiko.dev/#/log/67856
-```json
-{
-  "findings": [
-    {
-      "problem": "The `if` condition for enforcing the `big-endian` property incorrectly matches the `compatible` string array directly against an `enum`, which will always evaluate to false and cause the requirement to silently fail.",
-      "severity": "Medium",
-      "severity_explanation": "In Device Tree schema validation, the `compatible` property is processed as a JSON string array. Inside an `if` block, standard JSON schema rules apply. Using `properties: compatible: enum:` evaluates whether the array itself exactly equals one of the scalar strings in the enum, which is structurally impossible. As a result, the condition will always evaluate to false, and the `big-endian` requirement for `fsl,ls1046a-serdes1` and `fsl,ls1046a-serdes2` will never be enforced by `dt_binding_check`. The check must be updated to use `properties: compatible: contains: enum:` to correctly evaluate the elements within the array, similar to the preceding `if` block.",
-      "preexisting": false,
-      "locations": [
-        {
-          "file": "Documentation/devicetree/bindings/phy/fsl,lynx-10g.yaml",
-          "function_or_symbol": null,
-          "line": 91,
-          "code_snippet": "  - if:\n      properties:\n        compatible:\n          enum:\n            - fsl,ls1046a-serdes1\n            - fsl,ls1046a-serdes2\n    then:\n      required:\n        - big-endian",
-          "why_this_location_matters": "This conditional block incorrectly omits `contains:`, rendering the entire schema validation rule for the `big-endian` property ineffective."
-        }
-      ]
-    }
-  ]
-}
-```
+Thanks,
+Guenter
 
-> What's really needed is for sashiko to incorporate feedback like any
-> other developer.  Otherwise, it's going to be like some certain
-> reviewers we've banned.
 
-I don't think that process is in place right now - the learning process
-from mailing list discussions is human driven and not autonomous.
-Nor would it be immediately obvious how to automate it, if you consider
-the risk of pollution from certain reviewers, which you've also pointed
-out. But as a reviewer and maintainer, I think you are in a good
-position to write your experience down in the dt-schema skill and see
-how it goes from there.
+>> diff --git a/drivers/hwmon/gpd-fan.c b/drivers/hwmon/gpd-fan.c
+>> index 7284babd4f5c9..745b3fb9e3a49 100644
+>> --- a/drivers/hwmon/gpd-fan.c
+>> +++ b/drivers/hwmon/gpd-fan.c
+>> @@ -643,6 +643,7 @@ static int gpd_fan_probe(struct platform_device *pdev)
+>>   
+>>   	dev_set_drvdata(dev, data);
+>>   
+>> +	gpd_init_ec(data);
+>>   	hwdev = devm_hwmon_device_register_with_info(dev,
+>>   						     DRIVER_NAME,
+> 
+> [Severity: High]
+> This isn't a bug introduced by this patch, but does this probe function
+> exclusively claim globally shared Super I/O ports?
+> 
+> Looking earlier in gpd_fan_probe(), the driver statically requests standard
+> Super I/O address and data ports exclusively for the lifetime of the module:
+> 
+> gpd_fan_probe() {
+>      ...
+>      region = devm_request_region(dev, res->start,
+>                                   resource_size(res), DRIVER_NAME);
+>      ...
+> }
+> 
+> Because Super I/O ports are globally shared, permanently claiming them prevents
+> other drivers (like watchdogs or RTCs) from probing. Should this use
+> request_muxed_region() to dynamically lock the ports around each I/O sequence
+> instead?
+> 
+>>   						     data,
+>> @@ -651,9 +652,6 @@ static int gpd_fan_probe(struct platform_device *pdev)
+>>   	if (IS_ERR(hwdev))
+>>   		return dev_err_probe(dev, PTR_ERR(hwdev),
+>>   				     "Failed to register hwmon device\n");
+>> -
+>> -	gpd_init_ec(data);
+>> -
+>>   	return 0;
+>>   }
+> 
+
