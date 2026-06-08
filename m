@@ -1,157 +1,157 @@
-Received: from mail-pl1-f181.google.com (mail-pl1-f181.google.com [209.85.214.181])
+Received: from mail-pl1-f182.google.com (mail-pl1-f182.google.com [209.85.214.182])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E8C703630B2
-	for <sashiko-reviews@lists.linux.dev>; Mon,  8 Jun 2026 22:03:25 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=pass smtp.client-ip=209.85.214.181
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8AFF43537F6
+	for <sashiko-reviews@lists.linux.dev>; Mon,  8 Jun 2026 22:04:53 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=pass smtp.client-ip=209.85.214.182
 ARC-Seal:i=2; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1780956207; cv=pass; b=kXBFl2BP3JMepQOaVTiAy2/UGm5NYiALIJYL7wiAlWkdBR9X0z0ZZIb5kVp8bGfodCUihqbqVmMcggyKHkbqJ3tSe6C90ddSFlylkjuFGgT3A4EyxFWlhry5R8T4y6WPAvLpC5pe6YainUzBiDyW6WuVLi1bQXghWIN+b+Gk6sI=
+	t=1780956295; cv=pass; b=eqRfpr9+MotEm0AdUFUqGDUOs0tV86FoB9bRH/dO33IQaYGiVOuNhwBrJVNUxkQNqO1OLw8yt1NzV1oKj36KNwXVi4E1mRNngOJRh9/2/Dc5TSWCxlcek+b3sqcesiW+e9JzCHyXtiA0NeiAeknYPRFfqjtAy+tWWRk89jDbTNQ=
 ARC-Message-Signature:i=2; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1780956207; c=relaxed/simple;
-	bh=GnezBpdD+ckp8obmbhW5EYyO47hkUHBLAMCqTa7Fa8o=;
+	s=arc-20240116; t=1780956295; c=relaxed/simple;
+	bh=96Bl2Le2SrDLYs7lwbXp5ggsEebB71g/kJ2r9eR2AWg=;
 	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
-	 To:Cc:Content-Type; b=ii4jhIOvynf0byQilENm7rQ9A46T8Nwjm7xm1AcaLqj1RXuPswVxoJaHS2S++xLttwHdzePOfMiyjWyZL6aSm4++fXVxoTgyajzvbdSimVz4mSdBqjHVB2RhpLbYYBTzPqeap3w8nljBCn77Ds+3Vshalrk+A75vnLIVxiq0Axk=
-ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=google.com; spf=pass smtp.mailfrom=google.com; dkim=pass (2048-bit key) header.d=google.com header.i=@google.com header.b=U/ruXVbQ; arc=pass smtp.client-ip=209.85.214.181
+	 To:Cc:Content-Type; b=ODY9zGtB5GzRx4OXl9ikiw0ZnSlo1oZ2HXmDpcbJRHC70vJj5prCJBojjgJCpNmvFlCRefVKswGYjOWuCdgJvJ5gNypOavBiCndeHCFJELQdFYsYZEAh826R5ugNzq5Rh3W+kfrzuKavKEgoL84Ow8J57X5qFbnJgjGd2gYhWiU=
+ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=google.com; spf=pass smtp.mailfrom=google.com; dkim=pass (2048-bit key) header.d=google.com header.i=@google.com header.b=G2JNfAP5; arc=pass smtp.client-ip=209.85.214.182
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=google.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=google.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=google.com header.i=@google.com header.b="U/ruXVbQ"
-Received: by mail-pl1-f181.google.com with SMTP id d9443c01a7336-2c0b1a48855so444045ad.0
-        for <sashiko-reviews@lists.linux.dev>; Mon, 08 Jun 2026 15:03:25 -0700 (PDT)
-ARC-Seal: i=1; a=rsa-sha256; t=1780956205; cv=none;
+	dkim=pass (2048-bit key) header.d=google.com header.i=@google.com header.b="G2JNfAP5"
+Received: by mail-pl1-f182.google.com with SMTP id d9443c01a7336-2bf2d865383so371555ad.1
+        for <sashiko-reviews@lists.linux.dev>; Mon, 08 Jun 2026 15:04:53 -0700 (PDT)
+ARC-Seal: i=1; a=rsa-sha256; t=1780956293; cv=none;
         d=google.com; s=arc-20240605;
-        b=dLNFBsS1pVvEAjCoR8bKmkP+Zg2AoYWQRx83WT8cBK31lgTJkCfdxrOiLs7PRVf7Dj
-         JuMWFb4CoEgwxeS3ilMogj3qbu+8WlKseirBknzpntrXCcgdim5BYDt0Vex6LGjkCWGl
-         QpAGSUZxdfPO4DEyRA9e5gztEhOUi5rvHYXtLpX53XzmuHP5qGyy5vxbI72f1DoK9AK1
-         4nisOaqQyRZmc/EL44boeSCp6+K/TslLu1Ry6qNbJuZkFCl85dVbsshVF4PmLEXLcpn2
-         VdiBfHAn5GR0NIeyD+kQtLafnr5eNw7iuIMYu0ypwSX+obr7ESXuR6h/ypYWRzIzqvUk
-         oemw==
+        b=FmHdTMFkgshozQjm9ybygvDSw6GfAAIPkxmDB0OOfXTLvHGBCMDtbmaY/Aj9Ogs20e
+         YOPaHvlMjmzQUNiv9iSExyKDLfiC6m+A2kXMIO5kleIPk5T+ogbvNtb4fPesNVjMaCVS
+         B8ZWfNQ2OiBI0gDDqxulntuuN+I69BOutVQUoxwTCTjgiMgStgcDFIxCilKU4R4SLVTw
+         iDFJyEsZKWyJ4XelCklgVFlsKNqEMY4HsduCSyW1cuEEzi9659cJ2vnztY1fiysC/jUC
+         Xj/FtreNUQaFzpCjagQHPOk7EaWCUJ9dFPHXz1+ffoHeA8UvlyL21uoiFzm36Kv4MOvs
+         Aqow==
 ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com; s=arc-20240605;
         h=content-transfer-encoding:cc:to:subject:message-id:date:from
          :in-reply-to:references:mime-version:dkim-signature;
-        bh=Td9/E5f9V6aXQ0cuox27S5GUKVxy5gX2ycYw8xHBNKc=;
+        bh=dknO3aOZ4qOTvh6ubTcjTOWHYovHPuYZpoxCCZ0yRgw=;
         fh=t8A9dPfrPNT5ibK7Ec6z8jBEDhCNM+VF+O+EufSncJU=;
-        b=M1m8zJfWSzuLewBKG2GNArruC1EXocWWPxy2bH3FRjAr3ECqc7DzjUTfLM+WPkIQb/
-         +niHKbAmlxBEn9CK7reVMqvCbWesxU48ApFhyMdv6VvQUuo+sbemQJwOmFcRr59pK/jA
-         PDYPa9jwSAKa04Wzlg1JOVypxX+s21Zj9cUzY8TcT9O2AwXewfHGtBnz9v8D3uQSADwt
-         IfHOnJde+3PlJkyJ4T2eRUbripfzlsv9ZHE3xIiG9Q8AMhgTgKRsTLcJpmkyQquoehpN
-         jLCvXBXFhbuhANKeA9eOIlxDvToDSOm/Az07Y6Ra5emQKwBELOVjZH2saJx4LcaZOf0y
-         SqFw==;
+        b=RXR0Xe3+LvUKDonD0ZFA+qmC5v6h5vnpKU4Wg745MY8NrMEGlosPiP9P48HfHDIniY
+         TiGJZDtfCLWNQz0yrs1aQ4fHlYrP7SrYyNU7TQvtNAM/Jvwgqk7FtseurFtIvw6JeUXy
+         KXvhMnr+mdeepLaeyfFvqAzy1Epca53U+hCFDEldSKfGtGQPCoJvw6pvGBSYNtagweUP
+         R4kb5zQWxmd8rMDzUYVR6nY6MrVn9kDnGYCv4+j8gcz73Bdqnpp5YUqchYfuo/BZfktT
+         aY6+ezHDAU1Kf3hqydzH4OoGRBk2f86WCF9DRrL7OjEdy7IWaFwvntxqdw7xdTsO7jyo
+         3rFQ==;
         darn=lists.linux.dev
 ARC-Authentication-Results: i=1; mx.google.com; arc=none
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=google.com; s=20251104; t=1780956205; x=1781561005; darn=lists.linux.dev;
+        d=google.com; s=20251104; t=1780956293; x=1781561093; darn=lists.linux.dev;
         h=content-transfer-encoding:cc:to:subject:message-id:date:from
          :in-reply-to:references:mime-version:from:to:cc:subject:date
          :message-id:reply-to;
-        bh=Td9/E5f9V6aXQ0cuox27S5GUKVxy5gX2ycYw8xHBNKc=;
-        b=U/ruXVbQjw3Uu3RUtU1MgfaDuR81aRuOCHUWclZ2eydpZ4QP8VFtPJgYYLf5zibsCf
-         Hzlte6A/6uH6Q7IMaCYcVZENiFyZHCITrAbItqBCySG9vS+hCF22vJiqXGPBgUt4OzlB
-         7eyjMQ7IyaUC6IhtJSY251jWWM/aIZfw3ibONpuRY1G2kYDJdfDPRRg52pITxaKnvnY3
-         nZRykS/fpKR3e9pnOj9o7qBV+oxKn9UzrFB/UrTK2I2vRyEiN52uQZLWGvu8r16/LGJS
-         ipWwS+ztRDJDJ/wxUo6mKtDbUmPCEg6dzYEHp3o6GKIidOS3CUMCd/kVSGxIQY8rt5/1
-         ceqg==
+        bh=dknO3aOZ4qOTvh6ubTcjTOWHYovHPuYZpoxCCZ0yRgw=;
+        b=G2JNfAP5b+vh0yL5nC+2jPtVrCvKGksyTrpFjOmUA+hgZVioFSmT0oPd+UicO75r0m
+         rwzO3m81J7o/TWi4Jo5V42oZRpABnGJBVOV4NZxDN5tmqKMaqKjh+iweo1gVbh5mkOR6
+         U55m4cUptOIUxpqgLQSN6MwqOX4idZjd33LYD4uRtDIdg329rBpL9ntDnyiJgJrHSGHe
+         lYKJTOIyaQuAFcRYKRnrssED/4XymWFiVf+Rccs9GgKZ5mgg5w8Jt5VHE7BXsUjnvbfA
+         a+tcYQYMzmEWGgmR8WoHzuV8nx4E4jxhgOwP8X//ksHOMZjTB9ndhyYrifECRJgawt8d
+         IIOw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20251104; t=1780956205; x=1781561005;
+        d=1e100.net; s=20251104; t=1780956293; x=1781561093;
         h=content-transfer-encoding:cc:to:subject:message-id:date:from
          :in-reply-to:references:mime-version:x-gm-gg:x-gm-message-state:from
          :to:cc:subject:date:message-id:reply-to;
-        bh=Td9/E5f9V6aXQ0cuox27S5GUKVxy5gX2ycYw8xHBNKc=;
-        b=RMLaxoDNrUqfJQwj68RUrwPdaFt2khWJ6Ticg6w5PVV+jb8bAJPGAf1F0NIqkwrKQw
-         /2bxv6u15dLmwuRjDq2p3Rmr60gnU5m8G4oeEviLTUgOJGgIiWbYRkCtIMYKGxHv5OY/
-         DXQcbDvoAM4sVX3grdMdBttIbz9o4z1SxSi8DN9ggXCOwzpAMLz6cAbt45Ej3uakshjq
-         hLiiUmI65bCV4dTxDlXlCkX1BHWcMKzckR1c9LuX8hZnEW5sCuzdBrKdRhzcLYr9iuLQ
-         NSHLf4OJQkgA/CRfDxkW7xsVmPCpGWRNzZcmGCqrEozNHFEs86j+J2B678sRZ8oBnwTj
-         g7IA==
-X-Gm-Message-State: AOJu0YyEn9/EmYuMu5ZytN4v3pPZlSYlmov2GWpa8sFFlsdjsrxBPKU6
-	t5m/7+rEBYaRm/goG2vwATI5+rtaTS5Xm88nM6dtmbefCCMgbjxwyRGHjv6G3LgHN356UIIqm95
-	ZS9Je58wXODrf8E2DrvaAO/jKM4Lhxq/Q5eQpdd7yAi1EnbRSd6epKZUM
-X-Gm-Gg: Acq92OFcZQJp/yYB2FXSOL2rYF2EdcUsOLOEOYkxM9aySPgYG18RiLk4FwrlBzHHJPV
-	mjRbn9PU45jorb5LKE31XzZHrGh2qzuX1Y90OlFjE7abjexZrqU3+yvT6A21F3Um1vhg3KyAmLS
-	uMZjj2Dz1GMJtbeyVQpxd4op1mgQlFCCtfhRV1/lZPla/nbNrD4v5jyx5lWILW6b/bfa4QoUopt
-	kAvUQLKi67YJ2IpDQ4LcrGFAi4jVyIZQxvQb2fFAC/9T0OYiL2DAZynxP+ChYxlDDvi8HaImzzo
-	hBNnaSfzo2a51vZJpc0KVkgsK8z5beOrxDxPofNMfdzY8YfN
-X-Received: by 2002:a17:902:d583:b0:2b9:a39a:e5db with SMTP id
- d9443c01a7336-2c1eb742bf1mr6324125ad.7.1780956204854; Mon, 08 Jun 2026
- 15:03:24 -0700 (PDT)
+        bh=dknO3aOZ4qOTvh6ubTcjTOWHYovHPuYZpoxCCZ0yRgw=;
+        b=DxVfpe7ayRBUSr93+MatUR1boLSs2p2GREAGVurSqTGqiMtwdjUHRTsTg1fYnlDFhG
+         LD66b4WBcRR8479zll03IOpnc3TsNguh+JWjYmE++0e5zshfrueyci4YmhQhqZVC/dDY
+         4+3XcW9AeFKq1oOhIfnVc9pdJZSGSWV7ajtAl9sgMvQrIweyTpfzF9JLoh+TR/SGXocm
+         N1EOOin43rDg6maR65VbNEnMNCFiNpGaBdM3M+otInGFPIrIFxew5okD+H+r47dGyb5I
+         sxfUmLuJKkCDRryNYLePR5mQtG/iomUPpLGB3UjAcmLyWQ+kWDpgR5h9xT8at77U/gCt
+         FGPA==
+X-Gm-Message-State: AOJu0Yw4c7W7ifCF2kHpa8x0LCmAgqFr/LrC3OjLS5TlTL5i+Sr7MzLT
+	2iPH5p3uZoAALHErikhOnhrHJ2HNSniNxeQtw72yGfgZUlPwr7MprGFa2xlmNOAYo5cynagwRfb
+	Et2EF+e3paWpLduVOT+B6aR63azljqY1/itTjUIT7A6VVv4JQr5yhGUWU
+X-Gm-Gg: Acq92OGHSZfy8zIbe/n4yafxEP4WR+vQ30KFyxxMZ3FoU6t7fss1aD3k5AYbltghrFO
+	nx9HoACWk1yuu4vVkcCwaQQDSg4gHLbDhccGMdpVMK0FUv9b7V8w5PZPCHnhWskRHDsTGApXv1a
+	YSo9ULt88A1VjhTn1iWMohmkxOL2z+MgKFpHAKLSmKPEdzNSGQOQMU7bWuDs5ZuRrw6qfuomrRr
+	grVONo8hxdEZnBKbrlmuCAYQtLwFg82TL9WwgjwsTy9P6AaNcF5rw7YX+Uvhvm+J/hQNqfeyFtp
+	VSmLIjIRo3gyrVty7EkGIwro42zFvajgtU/aqL3nuIrl67Fi
+X-Received: by 2002:a17:903:1aed:b0:2b9:e831:5e5c with SMTP id
+ d9443c01a7336-2c1eb72a130mr5883515ad.4.1780956292384; Mon, 08 Jun 2026
+ 15:04:52 -0700 (PDT)
 Precedence: bulk
 X-Mailing-List: sashiko-reviews@lists.linux.dev
 List-Id: <sashiko-reviews.lists.linux.dev>
 List-Subscribe: <mailto:sashiko-reviews+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:sashiko-reviews+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-References: <20260608201753.1979464-11-acme@kernel.org> <20260608205059.7ECD01F00898@smtp.kernel.org>
-In-Reply-To: <20260608205059.7ECD01F00898@smtp.kernel.org>
+References: <20260608201753.1979464-12-acme@kernel.org> <20260608204539.0E0C91F00893@smtp.kernel.org>
+In-Reply-To: <20260608204539.0E0C91F00893@smtp.kernel.org>
 From: Ian Rogers <irogers@google.com>
-Date: Mon, 8 Jun 2026 15:03:13 -0700
-X-Gm-Features: AVVi8CfD2DVec-bEtIZMfcyfb1m__IqqI3l50f4Ca8Zyxp3CE1PRAkHyt_q-Td0
-Message-ID: <CAP-5=fW80NxOXjDRUJsn9Z35CahcXxwUs8sug=eTBxA_n3--Rw@mail.gmail.com>
-Subject: Re: [PATCH 10/11] perf tools: Use scnprintf() in build_id__snprintf()
- and hwmon read_events()
+Date: Mon, 8 Jun 2026 15:04:40 -0700
+X-Gm-Features: AVVi8CcVd-nogTnr5Rt3DF724JTHentVjWsxZLchea7M2K-aDoqhaR-7Mh_XVyo
+Message-ID: <CAP-5=fV+trJGAEKhS2YTea0A39VgoYUxbcp=E0csPepD751N3A@mail.gmail.com>
+Subject: Re: [PATCH 11/11] libperf: Document code simplification case for
+ widening struct perf_cpu
 To: sashiko-reviews@lists.linux.dev
 Cc: Arnaldo Carvalho de Melo <acme@kernel.org>, linux-perf-users@vger.kernel.org
 Content-Type: text/plain; charset="UTF-8"
 Content-Transfer-Encoding: quoted-printable
 
-On Mon, Jun 8, 2026 at 1:51=E2=80=AFPM <sashiko-bot@kernel.org> wrote:
+On Mon, Jun 8, 2026 at 1:50=E2=80=AFPM <sashiko-bot@kernel.org> wrote:
 >
 > Thank you for your contribution! Sashiko AI review found 1 potential issu=
 e(s) to consider:
-> - [Low] The early termination condition `offs < bf_size` is rendered inef=
-fective by the switch to `scnprintf`.
+> - [Low] The documentation added to `tools/lib/perf/TODO` incorrectly stat=
+es that narrowing values > 32767 to `int16_t` wraps them to 'small positive=
+ numbers'. In two's complement arithmetic, values from 32768 to 65535 wrap =
+to negative numbers (-32768 to -1) when truncated to a signed 16-bit intege=
+r.
 > --
 >
-> commit 0dbaa7b9065f01d9d8a6117248bffa97b3021ddf
+> commit e8f5b26d672396c3173a77e6aaeee613f6d309bd
 > Author: Arnaldo Carvalho de Melo <acme@redhat.com>
 >
-> perf tools: Use scnprintf() in build_id__snprintf() and hwmon read_events=
-()
+> libperf: Document code simplification case for widening struct perf_cpu
 >
-> This commit replaces snprintf() with scnprintf() in build_id__snprintf()
-> and hwmon_pmu__describe_items() to prevent accumulated lengths from excee=
-ding
-> the allocated buffer size and underflowing the remaining size.
+> Add a bullet point to the libperf ABI TODO explaining the code
+> simplification benefit of widening struct perf_cpu.cpu from int16_t
+> to int.
 >
-> > diff --git a/tools/perf/util/build-id.c b/tools/perf/util/build-id.c
-> > index 8c0a9ae932aa5..a3b92108f9626 100644
-> > --- a/tools/perf/util/build-id.c
-> > +++ b/tools/perf/util/build-id.c
-> > @@ -94,7 +94,7 @@ int build_id__snprintf(const struct build_id *build_i=
-d, char *bf, size_t bf_size
-> >       }
-> >
-> >       for (size_t i =3D 0; i < build_id->size && offs < bf_size; ++i)
-> > -             offs +=3D snprintf(bf + offs, bf_size - offs, "%02x", bui=
-ld_id->data[i]);
-> > +             offs +=3D scnprintf(bf + offs, bf_size - offs, "%02x", bu=
-ild_id->data[i]);
->
-> [Severity: Low]
-> Does this change neutralize the early termination condition in the loop?
->
-> Since scnprintf() returns the number of characters written excluding the =
-null
-> terminator, `offs` will reach at most `bf_size - 1` and never equals `bf_=
-size`.
->
-> Once the buffer is full (`bf_size - offs =3D=3D 1`), scnprintf() will onl=
-y write a
-> null terminator, returning 0. Because `offs` stops increasing, the condit=
-ion
-> `offs < bf_size` remains true. This causes the loop to continue writing n=
-othing
-> for the remaining `build_id->size` iterations instead of exiting early.
+> > diff --git a/tools/lib/perf/TODO b/tools/lib/perf/TODO
+> > index 486dd95dc5720..1a3644aa1f38d 100644
+> > --- a/tools/lib/perf/TODO
+> > +++ b/tools/lib/perf/TODO
+> > @@ -11,6 +11,13 @@ together.
+> >       (x86_64 max is 8192, arm64 is 4096), but NR_CPUS limits keep
+> >       growing.  perf clamps to INT16_MAX in set_max_cpu_num() as a
+> >       safety net.
+> > +   - Code simplification: the int16_t forces defensive truncation
 
-Looks like a "-1" is needed to address this.
+I think Sashiko just wants this to be uint16_t :-)
 
 Thanks,
 Ian
 
-> >
-> >       return offs;
-> >  }
+> > +     checks at every boundary where a wider CPU index (int from
+> > +     sample->cpu, al->cpu, etc.) is narrowed into struct perf_cpu.
+> > +     Without these checks, values > 32767 silently wrap to small
+> > +     positive numbers, bypassing bounds validation.  Widening to int
+>        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+>
+> [Severity: Low]
+> This isn't a bug, but is the arithmetic description accurate here?
+>
+> In two's complement arithmetic, truncating values between 32768 and 65535
+> into a signed 16-bit integer (int16_t) wraps them to negative numbers
+> (-32768 to -1), rather than small positive numbers.
+>
+> The overall conclusion remains correct since negative values trivially
+> bypass bounds checks, but the description of the wrapping behavior appear=
+s
+> mathematically inaccurate.
+>
+> > +     eliminates this entire class of silent truncation bugs and
+> > +     removes the need for the INT16_MAX clamp in set_max_cpu_num().
+> >     - Scope: struct perf_cpu is embedded everywhere =E2=80=94 perf_cpu_=
+map__cpu(),
 >
 > --
 > Sashiko AI review =C2=B7 https://sashiko.dev/#/patchset/20260608201753.19=
-79464-1-acme@kernel.org?part=3D10
+79464-1-acme@kernel.org?part=3D11
 >
