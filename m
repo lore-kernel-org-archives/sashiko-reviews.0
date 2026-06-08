@@ -1,221 +1,60 @@
-Received: from mail-pl1-f181.google.com (mail-pl1-f181.google.com [209.85.214.181])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B57B13D47D4
-	for <sashiko-reviews@lists.linux.dev>; Mon,  8 Jun 2026 19:26:18 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.214.181
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7370F31F9B4;
+	Mon,  8 Jun 2026 20:08:36 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1780946779; cv=none; b=hfQFovnUfZ3G+dU47RIGLv3jdMzgvvwnMp4PmYUvj2fQ/OcOxV+YuYSljBDjSohmVXZf42osfEWV7OR4w50sSg5H1SjmKYjMEQ1i3HGgozU62HGNtvAMBJBusvkZZhjCb5ly4XBuE3pY+GAH3Byncq6sao1vduISPQthxS83uyg=
+	t=1780949317; cv=none; b=XzQA2OTT09WicYncxx4nfNnbUmXc9B1UxVlpIO2STOBaALJoTzgiMZ/V0rszQ7eiGQq9T3rs7n9CRSJGequ70gT7w7B1vBre7TmM2SH3NMj4+a/g0SqZejhWUsmTmyTA+R2q7pWjJchtrO67U7sxBoPyB7CvIHidgIoilYOhnEs=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1780946779; c=relaxed/simple;
-	bh=blS6R/iqXN8Elh/yFOETBp49d4SpeMBUoXNM3tJ+L4E=;
-	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=e0trGpVpq3d6Y9pAHCnpMb6O81TQShkMXMFZt8sa1XX1AkNzxTdPJLJaZ4Kl46dSHjIax7NN8+dpA/MMGzdjhJBHp1zF9A+s3fmIPuEVYvwFCQbY20bRLIG3rGSeVCpDHd6/pSpq54zn0pmhkV1RMfGKW0JlDtQM8xDLoqjhLE0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=roeck-us.net; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=GTDkV92w; arc=none smtp.client-ip=209.85.214.181
-Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=roeck-us.net
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+	s=arc-20240116; t=1780949317; c=relaxed/simple;
+	bh=fMjM5wg8cX+907PUCBHky1U1a7zB/P3Dh4DUM/xUIb8=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=GONj2lXmf6GoWPLqppSpp5bG2GSWUvO/xqr6qKspKA30GecaK0SuZTSTqnOHalpO7fO7p9ZusDY08Xv6J0gVgiu6lieBBPWzMU4+gxH0zTJB8VYlJzuHknvoSzded3GSfJ/Ppd+qKqecFU2yMQgJK3jA9DtWVpGhNSRPkBMx1zs=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=ji6fq2wF; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="GTDkV92w"
-Received: by mail-pl1-f181.google.com with SMTP id d9443c01a7336-2c0c2c7e0c5so32421135ad.1
-        for <sashiko-reviews@lists.linux.dev>; Mon, 08 Jun 2026 12:26:18 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20251104; t=1780946778; x=1781551578; darn=lists.linux.dev;
-        h=content-transfer-encoding:in-reply-to:autocrypt:from
-         :content-language:references:cc:to:subject:user-agent:mime-version
-         :date:message-id:sender:from:to:cc:subject:date:message-id:reply-to;
-        bh=K6EtStCAzZXkOFxJ4vFBzgNIF3Za4FB4llRwrKTUx2A=;
-        b=GTDkV92wAX5NmMWWpkjL/ypJbG2d5nrDPcbdJBzB487ZKuNsyi3Fr7uRtfGPNF/B1s
-         6o3cz8+WjZiqJJdTl9nCUHOHzCcgTAryV/h/rYfKzxuXWMFgEVs/3C+unz/10pgHZwlZ
-         D4WhLx1lr6e8whGbqRUz2vEe+4ZUlNbKnzKawbl76iiZ8uOoGrWxta81H6bm+d09wxbH
-         20cxEEmpmgF3sODPBHF8v+N2ta2vHpFTSaZtOeKPhSWEp1bcqAQFMI08cRVWX1CCz/0O
-         fq+S63MqDA898AU2UFNsymMzoh463UsicrWV0XkETU6QrKJBolZTo4zVUhAHN0EwHCMH
-         IQug==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20251104; t=1780946778; x=1781551578;
-        h=content-transfer-encoding:in-reply-to:autocrypt:from
-         :content-language:references:cc:to:subject:user-agent:mime-version
-         :date:message-id:sender:x-gm-gg:x-gm-message-state:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=K6EtStCAzZXkOFxJ4vFBzgNIF3Za4FB4llRwrKTUx2A=;
-        b=J+8YthoWUh2L4Ig1Kk9Kyq2l8YYvajKOZCHTAM9Zo4OWuVLjjQLYXVTcwflruriKOU
-         H4LIfsMfzvBaeemTehfXe03yJJKeRwihDewGCfBRb061etN1KOb/mLCgBOoWYxtcfRtK
-         lrEfFpeOgME335p4AhD3DRDa4BAt64ZWZ/5oKOL9RkwQYaNmACsc+JEe3gAAIRjJqCKu
-         JLjiSvANm1qcsIzP1ZC9lx8n/FQe1udmRIMjD9TFW63N9Rk/AELaxKYgjR7g7m+Axtoo
-         YNElBdPWQF169N5Eb0xvDGyND0eSHTobcR6lhaTGf9fzGWvkRTguf0vSOXvcakUI9oOp
-         dCNw==
-X-Gm-Message-State: AOJu0YyC6j0Cix5upMdYeWKMO8EZcMh9z446Y2+georNwQd/8F+z7xEl
-	LiZwHFaipvMQnlqHdSKMT/pBgxjr6XFAAzgElhKxJTKX2TuCpZbru8hYhtsgPgSv
-X-Gm-Gg: Acq92OHivzcyns75H08YRYweVfUYK2A/cHT1gPCOlQt2F47wxeRutcbXtvA6kJfneE+
-	WsOFajvXd6v38r6VgvMMleU1lOXbSchPRwlqHHJz8sC8JwcJJt0PTB4hsYzoyhMO4vQ8QanUYrw
-	c8sFN9xM33JT1ucWrJvXJovMm+YVtSYCqU9RON3wiNmzSOurPIODS8t4P7XTMw1aShxgdP0AxlA
-	nrjhF0I8HFs00QHni/5575iv2Xg1YDVkFPpm/FtNw+SWs9s3LVQZ8cYGtNnCLswehZKxhJAtzA/
-	CLGM9J8TALUJykG457LkE0jzKn3cZWzXnEx9ocFakrv+WjZAQRYw6QXKeA/78rmCtk1Gq0/iU++
-	W1v+iXh91bnfo8RAQBpaQhphpjMRZFymJu1eeyUb8UyATtVCNhsjF/JENIkq9kTgdjGN4/p4dVt
-	ci6tx2NN/ye/f2dm1oOGAHIPVXyzfD7WSEJ0Kbs490YY6P33JpmTEBSDb1XL9LstXvnXgB6gkAh
-	ju57CNvesw=
-X-Received: by 2002:a17:903:248:b0:2b7:975c:dacc with SMTP id d9443c01a7336-2c1e7b4158dmr193585585ad.1.1780946778023;
-        Mon, 08 Jun 2026 12:26:18 -0700 (PDT)
-Received: from ?IPV6:2600:1700:e321:62f0:da43:aeff:fecc:bfd5? ([2600:1700:e321:62f0:da43:aeff:fecc:bfd5])
-        by smtp.gmail.com with ESMTPSA id d9443c01a7336-2c16609e096sm193156945ad.44.2026.06.08.12.26.17
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Mon, 08 Jun 2026 12:26:17 -0700 (PDT)
-Sender: Guenter Roeck <groeck7@gmail.com>
-Message-ID: <19f5c865-0ec6-4079-bb77-cf6f203723fa@roeck-us.net>
-Date: Mon, 8 Jun 2026 12:26:16 -0700
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="ji6fq2wF"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id ABDE61F00893;
+	Mon,  8 Jun 2026 20:08:34 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=kernel.org;
+	s=k20260515; t=1780949316;
+	bh=fMjM5wg8cX+907PUCBHky1U1a7zB/P3Dh4DUM/xUIb8=;
+	h=Date:From:To:Cc:Subject:References:In-Reply-To;
+	b=ji6fq2wFo1VzsLXlE0V1IxLasIXC/gnpX5fTXMb/0XXUim9S/xSO/jlG+JN4Ueh3S
+	 kS/iDB/RlLZv1jD7Kfau3gAmbpMySsN9codrKKnZay45XpzJ6Eu+H+wx+NP6VTu20t
+	 RIn39JBRGY9HafquR46/2kO/6idHVRHwfxIjitcL5A3PONgI44PkE3nYrT8BzlySD7
+	 /gDNbkcLRCpo9tG20xzk/R895Gy5hTkIiom+UWjhVs/cdobSwRu91cTPV0fGdxMCzn
+	 au0QEcND01I8UM8s9VRZxgtGV7IB9hOHYNfRKoevOGmZrh1lPQC1Ofa8/6nn644fHp
+	 KqV98sgsiS6uQ==
+Date: Mon, 8 Jun 2026 22:08:30 +0200
+From: Krzysztof Kozlowski <krzk@kernel.org>
+To: sashiko-reviews@lists.linux.dev
+Cc: Krzysztof Kozlowski <krzysztof.kozlowski@oss.qualcomm.com>, 
+	conor+dt@kernel.org, wsa+renesas@sang-engineering.com, robh@kernel.org, 
+	devicetree@vger.kernel.org
+Subject: Re: [PATCH v2 1/4] dt-bindings: mfd: syscon: Disallow simple-bus
+ with syscon
+Message-ID: <20260608-alluring-melodic-jaguarundi-f86bf5@quoll>
+References: <20260608-n-dt-bindings-simple-bus-syscon-v2-1-0203e6c249dc@oss.qualcomm.com>
+ <20260608140650.CF8DE1F00893@smtp.kernel.org>
 Precedence: bulk
 X-Mailing-List: sashiko-reviews@lists.linux.dev
 List-Id: <sashiko-reviews.lists.linux.dev>
 List-Subscribe: <mailto:sashiko-reviews+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:sashiko-reviews+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH] watchdog: sama5d4_wdt: use platform_get_irq()
-To: sashiko-reviews@lists.linux.dev, Rosen Penev <rosenp@gmail.com>
-Cc: linux-watchdog@vger.kernel.org
-References: <20260603005409.226774-1-rosenp@gmail.com>
- <20260603010104.56C0C1F00893@smtp.kernel.org>
-Content-Language: en-US
-From: Guenter Roeck <linux@roeck-us.net>
-Autocrypt: addr=linux@roeck-us.net; keydata=
- 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
- np3900V20aS7eD9K8GTU0TGC1pyz6IVJwIE=
-In-Reply-To: <20260603010104.56C0C1F00893@smtp.kernel.org>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+In-Reply-To: <20260608140650.CF8DE1F00893@smtp.kernel.org>
 
-On 6/2/26 18:01, sashiko-bot@kernel.org wrote:
-> Thank you for your contribution! Sashiko AI review found 3 potential issue(s) to consider:
-> 
-> New issues:
-> - [High] Assigning the signed result of `platform_get_irq()` to an unsigned `u32` variable causes the `irq < 0` error check to always evaluate to false, breaking the driver's fallback mechanism.
-> - [Medium] Using `platform_get_irq()` instead of `platform_get_irq_optional()` for an optional IRQ causes spurious error messages to be logged.
-> 
-> Pre-existing issues:
-> - [High] The driver registers a shared interrupt handler (`IRQF_SHARED`) before setting the platform driver data, creating a race condition that can lead to a NULL pointer dereference.
-> --
-> 
-> commit 7ff7f2de154616b7a42f6e5710f322b20ff6152e
-> Author: Rosen Penev <rosenp@gmail.com>
-> 
-> watchdog: sama5d4_wdt: use platform_get_irq()
-> 
-> irq_of_parse_and_map() requires irq_dispose_mapping() on failure. Don't
-> bother with it as platform_get_irq doesn't need it.
-> 
->> diff --git a/drivers/watchdog/sama5d4_wdt.c b/drivers/watchdog/sama5d4_wdt.c
->> index 13e72918338a2..d9b212557ce36 100644
->> --- a/drivers/watchdog/sama5d4_wdt.c
->> +++ b/drivers/watchdog/sama5d4_wdt.c
->> @@ -286,8 +286,8 @@ static int sama5d4_wdt_probe(struct platform_device *pdev)
->>   		return ret;
->>   
->>   	if (wdt->need_irq) {
->> -		irq = irq_of_parse_and_map(dev->of_node, 0);
->> -		if (!irq) {
->> +		irq = platform_get_irq(pdev, 0);
->> +		if (irq < 0) {
-> 
-> [Severity: High]
-> Since irq is declared as an unsigned u32 earlier in sama5d4_wdt_probe(), won't
-> this irq < 0 check always evaluate to false?
-> 
-> platform_get_irq() returns a negative error code (like -ENXIO) on failure,
-> which will be implicitly cast to a large positive integer. Instead of
-> gracefully falling back by setting wdt->need_irq = false, won't the driver
-> proceed to call devm_request_irq() with an invalid IRQ number and fail the
-> probe?
-> 
+On Mon, Jun 08, 2026 at 02:06:50PM +0000, sashiko-bot@kernel.org wrote:
+> Thank you for your contribution! Sashiko AI review found 1 potential issue(s) to consider:
+> - [Medium] DT Binding Violation: Undocumented Compatibles and Validation Breakage
 
-Please fix the problems reported by Sashiko. That applies to all your patches.
+No breakage although compatibles could be documented if we cared. The
+DTS already had existing issue - missing specific compatibles, so this
+patch is not making things worse.
 
-Since it appears that you are fixing bugs based on issues reported by AI agents,
-I would kindly ask you to fix _all_ problems in the drivers you are modifying,
-not just a selected subset. In this specific case, the problem below is much more
-serious than the problem you are trying to fix. On top of that, the fix introduces
-two new problems while trying to fix one. That is not really helpful.
-
-Thanks,
-Guenter
-
-> [Severity: Medium]
-> Will this log spurious error messages when the IRQ is genuinely absent?
-> 
-> The driver treats the IRQ as optional and handles its absence gracefully.
-> However, platform_get_irq() internally calls dev_err_probe(), printing a
-> core-level error message to the kernel log when an IRQ is not found. Should
-> this use platform_get_irq_optional() instead to avoid confusing user-visible
-> error logs during boot?
-> 
->>   			dev_warn(dev, "failed to get IRQ from DT\n");
->>   			wdt->need_irq = false;
->>   		}
-> 
-> [Severity: High]
-> This is a pre-existing issue, but does requesting a shared IRQ before setting
-> the platform driver data create a race condition?
-> 
-> A few lines later in sama5d4_wdt_probe(), the driver requests the IRQ:
-> 
-> 	if (wdt->need_irq) {
-> 		ret = devm_request_irq(dev, irq, sama5d4_wdt_irq_handler,
-> 				       IRQF_SHARED | IRQF_IRQPOLL |
-> 				       IRQF_NO_SUSPEND, pdev->name, pdev);
-> 
-> Because the IRQ is requested with IRQF_SHARED, another device sharing the line
-> or a spurious interrupt could cause sama5d4_wdt_irq_handler() to execute
-> immediately.
-> 
-> The interrupt handler calls platform_get_drvdata() and dereferences it:
-> 
-> drivers/watchdog/sama5d4_wdt.c:sama5d4_wdt_irq_handler() {
-> 	struct sama5d4_wdt *wdt = platform_get_drvdata(dev_id);
-> 	...
-> 	if (wdt->sam9x60_support)
-> 	...
-> }
-> 
-> However, platform_set_drvdata(pdev, wdt) is only called at the very end of
-> sama5d4_wdt_probe(). If the interrupt fires within this window, won't
-> platform_get_drvdata() return NULL and cause a NULL pointer dereference?
-> 
+Best regards,
+Krzysztof
 
