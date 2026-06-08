@@ -1,158 +1,149 @@
-Received: from mail-pj1-f48.google.com (mail-pj1-f48.google.com [209.85.216.48])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from out199-5.us.a.mail.aliyun.com (out199-5.us.a.mail.aliyun.com [47.90.199.5])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3D1B633F5B0
-	for <sashiko-reviews@lists.linux.dev>; Mon,  8 Jun 2026 11:11:27 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=pass smtp.client-ip=209.85.216.48
-ARC-Seal:i=2; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1780917089; cv=pass; b=e8PObL8NQeFB5FfWmZaI2T3EVVMflSzYa/n6EoiFKVV5bDd1xWUPWjlY/nfIC1hk7dovYeXRrPn3n3HHzl507L7kYvPhulv8IFQgjag1I00+1lr/2Ir4NsYnQbrqXIlbCB1HSwdJVKaF+IuRKbOkld1wsDBqzIdJUpodvSYCV6E=
-ARC-Message-Signature:i=2; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1780917089; c=relaxed/simple;
-	bh=OKAvcLw4cVnHLWqBGIC1hLC9PId30JwifAN6/6lExq4=;
-	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
-	 To:Cc:Content-Type; b=mn8XtIYlShUQzLBfFrlLtDoT1WYwIWf0N3OqsGqAhfbPBkBX5rD22FGyb0+55DEtdVd2j3Tv3rmYpzSZTJCmb5n5POFC4gd+KAXoUCeTsfuqlhEH6EoPnhAMqkwRfafh/JqrnykOuGeAaBZo4oVKynqM+da1HXSjCZo5QJk9o+Y=
-ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=PbbajdBa; arc=pass smtp.client-ip=209.85.216.48
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0EB8133DED9
+	for <sashiko-reviews@lists.linux.dev>; Mon,  8 Jun 2026 11:21:37 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=47.90.199.5
+ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
+	t=1780917699; cv=none; b=pXXQ0waP6eOT+Ahe4mh+c/BKNT/WgE3zFmz5aNmdvZVBQ1xnUfZM+4l0aXNH0REBlF6jCMnQsXTUfgLELBHti8d26Ai9Q5wWxFisbLk4IdmcJtyMg8IPAg7SpOyHVQNG3i4xXU8VDiwmvaCIhlVzg5wTZvB9seaFe1gkfjSV/Mo=
+ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
+	s=arc-20240116; t=1780917699; c=relaxed/simple;
+	bh=i82Wa0OjN9LoMec/STqov5h1McfGZ3LAfLVoLSn9kzY=;
+	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
+	 In-Reply-To:Content-Type; b=bmn7WTJN4xT3y0pWKggYo/gV94pszrpVWmKiPwQ90aAwL3wIzLpasfUKBm0DdTGtjA2DaVU/68Kh3M71Mw0wMbkcfGxd+qSzGtVRbUjMGde2/gNhLHe3g+8gDLvBSaF8MUuD+PaxZSKNNpVboXyn5jgO6HHCybnkRcnTGCFYD94=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linux.alibaba.com; spf=pass smtp.mailfrom=linux.alibaba.com; dkim=pass (1024-bit key) header.d=linux.alibaba.com header.i=@linux.alibaba.com header.b=UskSP6in; arc=none smtp.client-ip=47.90.199.5
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linux.alibaba.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linux.alibaba.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="PbbajdBa"
-Received: by mail-pj1-f48.google.com with SMTP id 98e67ed59e1d1-36d98b68d68so2703986a91.2
-        for <sashiko-reviews@lists.linux.dev>; Mon, 08 Jun 2026 04:11:27 -0700 (PDT)
-ARC-Seal: i=1; a=rsa-sha256; t=1780917086; cv=none;
-        d=google.com; s=arc-20240605;
-        b=iHi59mt/Caae+gG82FDCunlcmKren1eHbvYZ+EqKwjgE/GflpZvL5ASmekDeHtGgx1
-         Q4UVssWFJ+Ydsm4BOfHo16laaNkp0xONB145BJfd1EAXHCIHfs9L8Em4elyyowZBtdo6
-         hSqPHn0IuuxHVDK36nlt8hORkntojQdppy+ERSvdqjfkBcYBQ2kFZ1BjAN5ZSUwKoaKu
-         0TMgfcsNXMx4SDH9vzW20/VyM/2ULj0+9MZks207WGSsp+2jEx4TkCjrobsIhWPxUfe4
-         k3DwWTFmRWFAIZBuhKSxd/YZZnm1THhJbRsfV0/4NemFrO73C6lAhgCm7H6w92AwRqrM
-         U5GQ==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com; s=arc-20240605;
-        h=cc:to:subject:message-id:date:from:in-reply-to:references
-         :mime-version:dkim-signature;
-        bh=wcRJm9Mj5HN9MDIGpueIj3AGF7buVGW3wX3A5PTznAs=;
-        fh=XBOPQ3X6Qb5smFHfwOBHVpR+PN6XHuOYgtFR56NFUho=;
-        b=OlTJo0T9BigBK/i1KBcQgNzww24VmkPbSUg3x08saVAtjgbb4FMmhRXLgUiKi4P0Qa
-         r5PeousZI9zC5kl2SALsXhNJxQwsF4bDx5nHlpHtahz+f5BpWw0LxYDGtxPraydxTE6x
-         76Kpad0McOyxkzP0JnvFvmQvOgt1yX86st+rVTNM0XZQYE+ffmMCVJKVwdgXWTfyjeX4
-         VYrl6qgS2xXA/Z2NBwtC1uaQjipYIkw660wO7qcYWrADXcuxH3EB0wQmxkQwO7xQwxOl
-         +6FlvgGShebaOfVHNUsYg3KjRrYZzATAqAmfY8cDnYJjX4yn7va35W+Ex3oCTGTFdbhP
-         zI1w==;
-        darn=lists.linux.dev
-ARC-Authentication-Results: i=1; mx.google.com; arc=none
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20251104; t=1780917086; x=1781521886; darn=lists.linux.dev;
-        h=cc:to:subject:message-id:date:from:in-reply-to:references
-         :mime-version:from:to:cc:subject:date:message-id:reply-to;
-        bh=wcRJm9Mj5HN9MDIGpueIj3AGF7buVGW3wX3A5PTznAs=;
-        b=PbbajdBatVVPBzKJf83ZiwGfxG/4B+TlkiPV7oIa5z8oiQT69AREunlklJlCR0K4U9
-         6ciLT3qBvRDBy2b1vH2iT4fIiAz1dJ4QYZd/8ky2gqrqneDcgESh88KD0wxqtC84CN1u
-         V9h7P1t/GYVgmVGwP6MZXa0MiXWBLl0WLK5iUznMsg+E3s4V2cw9AHLF+UvzrLS/FK7A
-         xF/9sK9OlT64PqutK1U/eH0kPGH4FHUL73hvc4lik1wHNPI1bw6i5PO0L7yocHrbqJoe
-         kjZPsxj1QjGfwV8E1j+xcE11frg0A9LkktHzBXVRPdIr67IrJ870+80IUk9pVvRsMXAA
-         O2VA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20251104; t=1780917086; x=1781521886;
-        h=cc:to:subject:message-id:date:from:in-reply-to:references
-         :mime-version:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=wcRJm9Mj5HN9MDIGpueIj3AGF7buVGW3wX3A5PTznAs=;
-        b=rBGLvwfYvaqyrXnhoKu5P5/N01yQocHeQ3Hf9rZaqQIHp69hOlwG1zfT1NRkx/Wa6d
-         9laghG7asibPcRUVdghxQClQjZbzEoOx+gAwbWi02HDjlM6gKzhB7CxIiAycLTa2Umqr
-         hsIl7Bs5YmS2AcOln5MUIaoLpXKuKV8HCgdpWtfmR4mNJ8FOszJ3GwZDw/TMmUR4rfNu
-         NU06x59yxJrXrWBm8amqXw2uRj92Sy8kOL7etIQjNBlulso25Frtczl1UasLMfnLdRL4
-         248QIaPJ+ReJ1tlTYN1DNJMGQJZqaUEnLMuPp+kSK9CC/o2K75I9l1eTpjVm/f6kynFb
-         88sA==
-X-Gm-Message-State: AOJu0YzdXNeWgRe7j3iw/ICSRztAc9+4tDagkWNeO/XWncGFT0ean7fc
-	nDg0jGG+DmPaOT0DqeRQD1FBidlVOO566SU0FNw0uVvAML1TlN4reRX2AmzQnbg7H7VA8Hxr9NS
-	1PD+kCOTB0tungyFHyuArVRRttveXOFjGpSc1
-X-Gm-Gg: Acq92OFC7pBkQh3JcP4y8B8R96M4GnUsWjv68p8iue3ZMr4miRyQ10qzriGUeFxy8KR
-	PftYGrUF4mQoUsytwmC4BWnQyQms/k3RKZFX1sj+p1aQqEoEszP2UU/Z6LTqizv0qNrTYe73v6f
-	swU8ujNuMZdP9PjHIYHpFTLBeFOaQbhXij3xTnwyKMJp6k/FdjRQoAvCIMUbsXzKC/VBnbe0QBi
-	qjSjymvNtOY5uj6+vx+rwKUz0wh4wgaTksl0tfpl2jcYdf2GkZK2g815BrHMyKhhXMbkQ73l7q3
-	i8UWKdqagy1hC7CzNANnLuX639iOcz9meIBocAauBVMArbqR
-X-Received: by 2002:a05:6a21:390:b0:3b4:9027:712 with SMTP id
- adf61e73a8af0-3b4ccdcedecmr18063543637.20.1780917086441; Mon, 08 Jun 2026
- 04:11:26 -0700 (PDT)
+	dkim=pass (1024-bit key) header.d=linux.alibaba.com header.i=@linux.alibaba.com header.b="UskSP6in"
+DKIM-Signature:v=1; a=rsa-sha256; c=relaxed/relaxed;
+	d=linux.alibaba.com; s=default;
+	t=1780917683; h=Message-ID:Date:MIME-Version:Subject:To:From:Content-Type;
+	bh=gKMt+Ky/d2x82olWAe6C2MA6id7rljSF8aL33aSERes=;
+	b=UskSP6inHBWjPxzJKa7N+Xdu1aUL9hN9SMdMXq0Z0LWRckQIJD9VFxR82raUHvicEwknhkHbRuW6O1VCEmdDNHK3fb0WbKOlTElFy2b6s14Bh/SafGcrLHpHZmqZldpBoBGCD7gcBo9mjFGdN6ABH4C2cRo+eszMnHHaHJ+VRQo=
+X-Alimail-AntiSpam:AC=PASS;BC=-1|-1;BR=01201311R151e4;CH=green;DM=||false|;DS=||;FP=0|-1|-1|-1|0|-1|-1|-1;HT=maildocker-contentspam033032089153;MF=libaokun@linux.alibaba.com;NM=1;PH=DS;RN=3;SR=0;TI=SMTPD_---0X4O-KcD_1780917682;
+Received: from 30.221.148.53(mailfrom:libaokun@linux.alibaba.com fp:SMTPD_---0X4O-KcD_1780917682 cluster:ay36)
+          by smtp.aliyun-inc.com;
+          Mon, 08 Jun 2026 19:21:23 +0800
+Message-ID: <60d15c65-8fe2-4982-8711-02ce6f5167f5@linux.alibaba.com>
+Date: Mon, 8 Jun 2026 19:21:22 +0800
 Precedence: bulk
 X-Mailing-List: sashiko-reviews@lists.linux.dev
 List-Id: <sashiko-reviews.lists.linux.dev>
 List-Subscribe: <mailto:sashiko-reviews+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:sashiko-reviews+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-References: <20260605121955.105661-9-phucduc.bui@gmail.com> <20260605140412.CB2A81F00898@smtp.kernel.org>
-In-Reply-To: <20260605140412.CB2A81F00898@smtp.kernel.org>
-From: Bui Duc Phuc <phucduc.bui@gmail.com>
-Date: Mon, 8 Jun 2026 18:11:15 +0700
-X-Gm-Features: AVVi8Cfj24AI7Q02Va6L_5BIzBfLSjfFWoU6OIzNmPm5u6Uc3Eq4xA22OJ0Hpkg
-Message-ID: <CAABR9nEpbhK6L2xkSGUaFKw0NtefzjaX9sAUG8sNamokzjR+MA@mail.gmail.com>
-Subject: Re: [PATCH v4 08/10] ASoC: renesas: fsi: refactor clock initialization
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH] ext4: reject mount if clusters/inodes per group are not
+ 8-aligned
 To: sashiko-reviews@lists.linux.dev
-Cc: devicetree@vger.kernel.org, wsa+renesas@sang-engineering.com, 
-	robh@kernel.org, conor+dt@kernel.org
-Content-Type: text/plain; charset="UTF-8"
+Cc: tytso@mit.edu, Ext4 Developers List <linux-ext4@vger.kernel.org>
+References: <20260608061112.392391-1-libaokun@linux.alibaba.com>
+ <20260608063318.266E61F00893@smtp.kernel.org>
+From: Baokun Li <libaokun@linux.alibaba.com>
+In-Reply-To: <20260608063318.266E61F00893@smtp.kernel.org>
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 7bit
 
-Thank you for pointing this out.
 
-> > @@ -898,6 +904,11 @@ static int fsi_clk_set_rate_cpg(struct device *dev,
-> >       int ackmd, bpfmd;
-> >       int ret = -EINVAL;
-> >
-> > +     if (!ick || !div) {
-> > +             dev_err(dev, "ick clock or div clock is missing\n");
-> > +             return -EINVAL;
-> > +     }
-> > +
+I've sent a V2 that includes two additional patches to address the issues
+Sashiko reported:
+
+https://patch.msgid.link/20260608111150.827117-1-libaokun@linux.alibaba.com
+
+
+Thanks,
+Baokun
+
+On 2026/6/8 14:33, sashiko-bot@kernel.org wrote:
+> Thank you for your contribution! Sashiko AI review found 2 potential issue(s) to consider:
 >
+> Pre-existing issues:
+> - [Critical] Missing alignment check allows integer truncation in s_itb_per_group, leading to out-of-bounds inode table access and potential local privilege escalation via forged inodes.
+> - [High] Integer overflow in bigalloc cluster consistency check on 32-bit systems allows mounting filesystems with arbitrary cross-group overlaps.
+> --
+>
+> commit 063bdba3eb2bd319656b0b2534e820244460e17a
+> Author: Baokun Li <libaokun@linux.alibaba.com>
+>
+> ext4: reject mount if clusters/inodes per group are not 8-aligned
+>
+> The block and inode bitmap checksums are computed over a whole number of
+> bytes. If s_inodes_per_group or s_clusters_per_group is not a multiple of
+> 8, the trailing fractional bits are excluded from the checksum. Reject such
+> filesystems at mount time by adding the missing bitwise alignment checks.
+>
+> Link: https://patch.msgid.link/h3n7jlfhyna64dn5o76qxcspnhxdddcs6crpxftmy7gnl7b3sx@jenszfpcsnit
+>
+>> diff --git a/fs/ext4/super.c b/fs/ext4/super.c
+>> index 245f67d10ded3..98f1cefbc6880 100644
+>> --- a/fs/ext4/super.c
+>> +++ b/fs/ext4/super.c
+>> @@ -4475,8 +4475,9 @@ static int ext4_handle_clustersize(struct super_block *sb)
+>>  		sbi->s_cluster_bits = 0;
+>>  	}
+>>  	sbi->s_clusters_per_group = le32_to_cpu(es->s_clusters_per_group);
+>> -	if (sbi->s_clusters_per_group > sb->s_blocksize * 8) {
+>> -		ext4_msg(sb, KERN_ERR, "#clusters per group too big: %lu",
+>> +	if (sbi->s_clusters_per_group > sb->s_blocksize * 8 ||
+>> +	    sbi->s_clusters_per_group & 7) {
+>> +		ext4_msg(sb, KERN_ERR, "invalid #clusters per group: %lu",
+>>  			 sbi->s_clusters_per_group);
+>>  		return -EINVAL;
+>>  	}
 > [Severity: High]
-> This isn't a bug introduced by this patch, but does this clock initialization
-> path ultimately lead to sleeping while atomic?
+> This isn't a bug introduced by this patch, but while we are validating
+> s_clusters_per_group, could the bigalloc consistency check slightly below
+> this in ext4_handle_clustersize() overflow on 32-bit systems?
 >
-> The ASoC framework invokes fsi_dai_trigger() in an atomic context with the
-> PCM stream spinlock held and IRQs disabled. For the start command, the call
-> chain executes:
+> The check does:
 >
-> fsi_dai_trigger()
->   fsi_hw_startup()
->     fsi_clk_enable()
->       fsi_clk_set_rate_cpg()
->         clk_set_rate()
+>     if (sbi->s_blocks_per_group !=
+>         (sbi->s_clusters_per_group * (clustersize / sb->s_blocksize))) {
 >
-> clk_set_rate() attempts to acquire the global prepare_lock mutex in the common
-> clock framework, which will trigger a scheduling-while-atomic panic when
-> called from the atomic trigger path.
+> Since unsigned long is 32 bits on 32-bit systems, the multiplication can wrap
+> around modulo 2^32. For example, if an image has 16392 clusters and a ratio
+> of 262144, the product evaluates to 2^32 + 2097152, matching an
+> s_blocks_per_group of 2097152.
 >
-
-I agree that moving `clk_set_rate()` to `.hw_params()` would be a
-cleaner design.
-However, this is a pre-existing behavior and outside the scope of this series.
-I would prefer to address it separately in a future cleanup.
-
+> Because bigalloc bypasses the usual s_blocks_per_group size limits, the
+> wrapped validation would succeed. The block allocator could then allocate
+> blocks far outside the truncated group, overwriting metadata of subsequent
+> groups. Should this multiplication be cast to a 64-bit type to prevent
+> the overflow?
+>
 > [ ... ]
 >
-> > @@ -1985,6 +2000,9 @@ static int fsi_probe(struct platform_device *pdev)
-> >       fsi->master     = master;
-> >       fsi_port_info_init(fsi, &info.port_b);
-> >       fsi_handler_init(fsi, &info.port_b);
-> > +     ret = fsi_clk_init(&pdev->dev, fsi);
-> > +     if (ret)
-> > +             return ret;
-> >       ret = fsi_stream_probe(fsi, &pdev->dev);
-> >       if (ret < 0) {
-> >               dev_err(&pdev->dev, "FSIB stream probe failed\n");
+>> @@ -5308,7 +5309,8 @@ static int ext4_block_group_meta_init(struct super_block *sb, int silent)
+>>  		return -EINVAL;
+>>  	}
+>>  	if (sbi->s_inodes_per_group < sbi->s_inodes_per_block ||
+>> -	    sbi->s_inodes_per_group > sb->s_blocksize * 8) {
+>> +	    sbi->s_inodes_per_group > sb->s_blocksize * 8 ||
+>> +	    sbi->s_inodes_per_group & 7) {
+>>  		ext4_msg(sb, KERN_ERR, "invalid inodes per group: %lu\n",
+>>  			 sbi->s_inodes_per_group);
+>>  		return -EINVAL;
+> [Severity: Critical]
+> This is a pre-existing issue, but does adding the & 7 check go far enough
+> to prevent integer truncation here?
 >
-> [Severity: High]
-> If this fails, does the direct return bypass the cleanup for FSIA?
+> A few lines below this check in ext4_block_group_meta_init(), the code does:
 >
-> Earlier in fsi_probe(), FSIA is probed and successfully allocates
-> non-devres managed DMA channels. If fsi_clk_init() subsequently fails for
-> FSIB (for example, returning -EPROBE_DEFER for an unavailable clock), the
-> error path directly returns instead of executing the cleanup routine.
+>     sbi->s_itb_per_group = sbi->s_inodes_per_group / sbi->s_inodes_per_block;
 >
-> Would this lead to a permanent leak of the DMA channels and other stream
-> resources allocated for FSIA? Might a goto statement targeting the exit_fsia
-> label be needed here so that fsi_stream_remove() can safely clean up?
+> Since s_inodes_per_group is now guaranteed to be a multiple of 8, but
+> s_inodes_per_block can be 16, 32, etc., this division can still truncate.
+>
+> Could this truncation lead to out-of-bounds accesses? Looking at
+> __ext4_get_inode_loc() in fs/ext4/inode.c, the block is calculated without
+> checking against the truncated s_itb_per_group:
+>
+>     block += (inode_offset / inodes_per_block);
+>
+> This could allow reading or writing to the block following the truncated
+> inode table, potentially allowing local privilege escalation via forged
+> inodes if that block is allocated to a user file. Should we also ensure
+> that s_inodes_per_group is a multiple of s_inodes_per_block here?
 >
 
-Good catch. I will update the error handling path to ensure proper
-cleanup and include the
-fix in the next version of the patch.
