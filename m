@@ -1,205 +1,221 @@
-Received: from mout.gmx.net (mout.gmx.net [212.227.17.21])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-pl1-f181.google.com (mail-pl1-f181.google.com [209.85.214.181])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 905803DDDB2
-	for <sashiko-reviews@lists.linux.dev>; Mon,  8 Jun 2026 18:39:46 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=212.227.17.21
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B57B13D47D4
+	for <sashiko-reviews@lists.linux.dev>; Mon,  8 Jun 2026 19:26:18 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.214.181
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1780943988; cv=none; b=IX2rqpEtfnEu5NeOv8XpOY5Bzc5d/HYe/OPVLloVvwkETUJ3WFgyMmNyocZ466w8tcbFqSVB0obp6XVMGYn5fcidvjb5z1wvVkIHaw7KWUDzre1V/lUTj8CsPquOanRh1MmAuwPt6M62B1J3d+rMqoDa+7drqoNZ8NfqWjoRDU8=
+	t=1780946779; cv=none; b=hfQFovnUfZ3G+dU47RIGLv3jdMzgvvwnMp4PmYUvj2fQ/OcOxV+YuYSljBDjSohmVXZf42osfEWV7OR4w50sSg5H1SjmKYjMEQ1i3HGgozU62HGNtvAMBJBusvkZZhjCb5ly4XBuE3pY+GAH3Byncq6sao1vduISPQthxS83uyg=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1780943988; c=relaxed/simple;
-	bh=BgqaAOdMbdNfmZwY2lEKuSPdbP8uuMDcXr371tSfw6s=;
-	h=From:To:Cc:References:In-Reply-To:Subject:Date:Message-ID:
-	 MIME-Version:Content-Type; b=XXmQ2/+KoQ5kf4BJWcTuVr6de080kzk7Wj1r+GdXqjggCt0Fa+hF7na9pakQBxJhUV+lHUThMMeAjXD4Si67zl/LtBfHOWbPp+fi/UYUTWJ5f36uSGibo4x8RKglZb1k1fyKiv42L8VSHXAI5evzb5d4h1NQWLzx8qejlNIAu80=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=gmx.de; spf=pass smtp.mailfrom=gmx.de; dkim=pass (2048-bit key) header.d=gmx.de header.i=markus.stockhausen@gmx.de header.b=kAfpW42r; arc=none smtp.client-ip=212.227.17.21
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=gmx.de
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmx.de
+	s=arc-20240116; t=1780946779; c=relaxed/simple;
+	bh=blS6R/iqXN8Elh/yFOETBp49d4SpeMBUoXNM3tJ+L4E=;
+	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
+	 In-Reply-To:Content-Type; b=e0trGpVpq3d6Y9pAHCnpMb6O81TQShkMXMFZt8sa1XX1AkNzxTdPJLJaZ4Kl46dSHjIax7NN8+dpA/MMGzdjhJBHp1zF9A+s3fmIPuEVYvwFCQbY20bRLIG3rGSeVCpDHd6/pSpq54zn0pmhkV1RMfGKW0JlDtQM8xDLoqjhLE0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=roeck-us.net; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=GTDkV92w; arc=none smtp.client-ip=209.85.214.181
+Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=roeck-us.net
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmx.de header.i=markus.stockhausen@gmx.de header.b="kAfpW42r"
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=gmx.de;
-	s=s31663417; t=1780943984; x=1781548784;
-	i=markus.stockhausen@gmx.de;
-	bh=YzV4M9eiBRxlfZeEY5tJ3IhHlr30Kfj8k1+0Rw1qCvg=;
-	h=X-UI-Sender-Class:From:To:Cc:References:In-Reply-To:Subject:Date:
-	 Message-ID:MIME-Version:Content-Type:Content-Transfer-Encoding:cc:
-	 content-transfer-encoding:content-type:date:from:message-id:
-	 mime-version:reply-to:subject:to;
-	b=kAfpW42r8UdsWxh338mjen3XXT0GqOOWa68BOjK5AHF1T4X98RQkvw9m7GcmeY5L
-	 9Fjzk/2aJOZ0hiPE357vEQBfq3g3PaaS1xzl10+di1kOzzxckcQcIB0OLZeM7K4jr
-	 5y7AQj+IZ8CqyM49SIga/oFInZmzmfPzzLr1uR7XV5S2twiCc+wbn3fhHC4SzRoCr
-	 6SkDkwkTOkKIGoqH4LQKbdEfimna1b5crw68UM6qLMytSRW88nqOfOO5RSKBwCzbx
-	 +wRHi2AMAbIZngOf/X5aGgk2ICL7pVgOAqsm/y37/KlnHbafxMwDgizL1GI6fx5Lk
-	 hPHniMjp03JmiS/KGA==
-X-UI-Sender-Class: 724b4f7f-cbec-4199-ad4e-598c01a50d3a
-Received: from client.hidden.invalid by mail.gmx.net (mrgmx105
- [212.227.17.168]) with ESMTPSA (Nemesis) id 1MybGX-1xStLB1KyD-011TQz; Mon, 08
- Jun 2026 20:39:44 +0200
-From: "Markus Stockhausen" <markus.stockhausen@gmx.de>
-To: <robh@kernel.org>,
-	<conor+dt@kernel.org>
-Cc: <devicetree@vger.kernel.org>,
-	<sashiko-reviews@lists.linux.dev>,
-	"'Thomas Gleixner'" <tglx@kernel.org>
-References: <20260605211646.2101652-2-markus.stockhausen@gmx.de> <20260605212533.75D231F00893@smtp.kernel.org>
-In-Reply-To: <20260605212533.75D231F00893@smtp.kernel.org>
-Subject: AW: [PATCH 1/7] dt-bindings: interrupt-controller: realtek,rtl-intc: Allow 2 interrupt cells
-Date: Mon, 8 Jun 2026 20:39:43 +0200
-Message-ID: <064801dcf776$2cbb8280$86328780$@gmx.de>
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="GTDkV92w"
+Received: by mail-pl1-f181.google.com with SMTP id d9443c01a7336-2c0c2c7e0c5so32421135ad.1
+        for <sashiko-reviews@lists.linux.dev>; Mon, 08 Jun 2026 12:26:18 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20251104; t=1780946778; x=1781551578; darn=lists.linux.dev;
+        h=content-transfer-encoding:in-reply-to:autocrypt:from
+         :content-language:references:cc:to:subject:user-agent:mime-version
+         :date:message-id:sender:from:to:cc:subject:date:message-id:reply-to;
+        bh=K6EtStCAzZXkOFxJ4vFBzgNIF3Za4FB4llRwrKTUx2A=;
+        b=GTDkV92wAX5NmMWWpkjL/ypJbG2d5nrDPcbdJBzB487ZKuNsyi3Fr7uRtfGPNF/B1s
+         6o3cz8+WjZiqJJdTl9nCUHOHzCcgTAryV/h/rYfKzxuXWMFgEVs/3C+unz/10pgHZwlZ
+         D4WhLx1lr6e8whGbqRUz2vEe+4ZUlNbKnzKawbl76iiZ8uOoGrWxta81H6bm+d09wxbH
+         20cxEEmpmgF3sODPBHF8v+N2ta2vHpFTSaZtOeKPhSWEp1bcqAQFMI08cRVWX1CCz/0O
+         fq+S63MqDA898AU2UFNsymMzoh463UsicrWV0XkETU6QrKJBolZTo4zVUhAHN0EwHCMH
+         IQug==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20251104; t=1780946778; x=1781551578;
+        h=content-transfer-encoding:in-reply-to:autocrypt:from
+         :content-language:references:cc:to:subject:user-agent:mime-version
+         :date:message-id:sender:x-gm-gg:x-gm-message-state:from:to:cc
+         :subject:date:message-id:reply-to;
+        bh=K6EtStCAzZXkOFxJ4vFBzgNIF3Za4FB4llRwrKTUx2A=;
+        b=J+8YthoWUh2L4Ig1Kk9Kyq2l8YYvajKOZCHTAM9Zo4OWuVLjjQLYXVTcwflruriKOU
+         H4LIfsMfzvBaeemTehfXe03yJJKeRwihDewGCfBRb061etN1KOb/mLCgBOoWYxtcfRtK
+         lrEfFpeOgME335p4AhD3DRDa4BAt64ZWZ/5oKOL9RkwQYaNmACsc+JEe3gAAIRjJqCKu
+         JLjiSvANm1qcsIzP1ZC9lx8n/FQe1udmRIMjD9TFW63N9Rk/AELaxKYgjR7g7m+Axtoo
+         YNElBdPWQF169N5Eb0xvDGyND0eSHTobcR6lhaTGf9fzGWvkRTguf0vSOXvcakUI9oOp
+         dCNw==
+X-Gm-Message-State: AOJu0YyC6j0Cix5upMdYeWKMO8EZcMh9z446Y2+georNwQd/8F+z7xEl
+	LiZwHFaipvMQnlqHdSKMT/pBgxjr6XFAAzgElhKxJTKX2TuCpZbru8hYhtsgPgSv
+X-Gm-Gg: Acq92OHivzcyns75H08YRYweVfUYK2A/cHT1gPCOlQt2F47wxeRutcbXtvA6kJfneE+
+	WsOFajvXd6v38r6VgvMMleU1lOXbSchPRwlqHHJz8sC8JwcJJt0PTB4hsYzoyhMO4vQ8QanUYrw
+	c8sFN9xM33JT1ucWrJvXJovMm+YVtSYCqU9RON3wiNmzSOurPIODS8t4P7XTMw1aShxgdP0AxlA
+	nrjhF0I8HFs00QHni/5575iv2Xg1YDVkFPpm/FtNw+SWs9s3LVQZ8cYGtNnCLswehZKxhJAtzA/
+	CLGM9J8TALUJykG457LkE0jzKn3cZWzXnEx9ocFakrv+WjZAQRYw6QXKeA/78rmCtk1Gq0/iU++
+	W1v+iXh91bnfo8RAQBpaQhphpjMRZFymJu1eeyUb8UyATtVCNhsjF/JENIkq9kTgdjGN4/p4dVt
+	ci6tx2NN/ye/f2dm1oOGAHIPVXyzfD7WSEJ0Kbs490YY6P33JpmTEBSDb1XL9LstXvnXgB6gkAh
+	ju57CNvesw=
+X-Received: by 2002:a17:903:248:b0:2b7:975c:dacc with SMTP id d9443c01a7336-2c1e7b4158dmr193585585ad.1.1780946778023;
+        Mon, 08 Jun 2026 12:26:18 -0700 (PDT)
+Received: from ?IPV6:2600:1700:e321:62f0:da43:aeff:fecc:bfd5? ([2600:1700:e321:62f0:da43:aeff:fecc:bfd5])
+        by smtp.gmail.com with ESMTPSA id d9443c01a7336-2c16609e096sm193156945ad.44.2026.06.08.12.26.17
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Mon, 08 Jun 2026 12:26:17 -0700 (PDT)
+Sender: Guenter Roeck <groeck7@gmail.com>
+Message-ID: <19f5c865-0ec6-4079-bb77-cf6f203723fa@roeck-us.net>
+Date: Mon, 8 Jun 2026 12:26:16 -0700
 Precedence: bulk
 X-Mailing-List: sashiko-reviews@lists.linux.dev
 List-Id: <sashiko-reviews.lists.linux.dev>
 List-Subscribe: <mailto:sashiko-reviews+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:sashiko-reviews+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain;
-	charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
-X-Mailer: Microsoft Outlook 16.0
-Thread-Index: AQHqUs1KcdCpshtoVUC2zC+3ejsSbAKy5F5HtgSuk0A=
-Content-Language: de
-X-Provags-ID: V03:K1:K94lXi2zKZCN0ayzDlBaRmgyUusyc8zchz6avg25VAeCtnHjJVS
- QlkgaGmTQCFFoQcWriGvgPs4rx5l6aWrjPuNwZrnUB6IGJD331SsR7I4bEmOEWyWgud+pbI
- 0RMswGdN5Hd+bY353p13tlOPtvk6XGSyb2WYHgaVj9eDe/UYwJdsimCa3Uy0tLSohnfFaDB
- Mnulln1ynTM6xknIyAPOA==
-X-Spam-Flag: NO
-UI-OutboundReport: notjunk:1;M01:P0:wEs0jzWmk5Q=;rTvg4GO3AfJPKjvP/2ToRRr6VjC
- SLU/LvRrtQ49IZEukUxYpx0RD8INMh9WGgyagfY5UsVi7kWY4h2VoMjEw7YDkPoV32MBFjAdq
- 2amo9eNf6KFiMS6vZkMUzfk2Rc+wdFD5Hd26VH64PezGYX7WyKEoJojt+3UulyfGWgjx/dLjT
- 8uyoAEe/IX8t1XD45MIVgdHBSrVAtXPubEvuilNfr79wpzel2pbMKdNC/MxnAFtPoTKvubr4C
- 20qKPgpFcLz1Jvesmi6UPAlGq1cDOtyfAoN0vCrDhWLtTZmtbv1NKWKpHJ8O7MHT2Jn+FMAqM
- TEUcElGWBkdOT+XBhD8XWtIrStZSy0cy3cSBC2DekGkq9OFoDQDcDdKMU01a1bxQA6fIQpJwN
- oizAvz3P/O7EvMo9GEBuIVVKsu1i6nh9UhiK9IyZ2OkhTowspUOu47WtunIkiLY8wQCm8OiV7
- 42V+AHwT9ia1i3cdZcUWQvRsS9401o+ZT1qHWk3z8XNiKEdOo2Vh1dwveSP2+vmlzt8ZKq9re
- wKtqIDRc6fT3IL7viURoNsDNBBcmYkgDiRqtIeiKYQZ4yjH3RYEluEmu1A4X9YecAEQH/VPB1
- JP1EM6iVq+TZA7HoHmLzoYtYEsk8O2f/hRECdSGcumcn8XtW+Q4P6AaXRYJ9UlzJY3eurqDdY
- zQ0wAQdR98Ow/NV0OG3Bbjfn7sT7B80n48N09OES1owI2TtQJuzkvTxAGSocd4d2Pv0GffFWC
- yXIFC5DmmcABb/dakjyg8NxHqcGO/DPG9KkkqgzcNgDCigiXHphUtVSbR4vB3/Hxz8Mg7q89J
- tw5fHOz7qVgYzAFfS3iGIeiR+NQ07j9JPVY1BCCu/YcPwLefc+Xd7aPeh9VwT9EHaWppcnhzR
- OA9DAXeXc0+64sBKNVQGRyadNND7gFOP/KBl5seuEUF5ZZtpV0aYxpjpvqaYZTtZqPHtbT9+L
- /hRH3hu83XUw0G7q/U/eMI982boJiTT3WvcifQA68LjUmLK41idxTkpJqaEDLeYNDa1p09R+r
- esCIFQ3dtpx58BOP6aaVDzsRvha1wgVKi8+anVjLBMxMQ2SWJIfTVHAMx85tkTfhVX91NxMRC
- 19nY8Z/5ZXLLVxQrUu4jtC3n1cgtjgHJYJyWSMRrSvChkMWSgyyEiyLmUxQHNYy8gHRxaO54a
- Zbnw4ByIcTt6U4Y2kOJoHR4ZOvCYQpNc9xsHQRm1KrEGV7gNe+0E6WFiLF9RF7bENlxeRNk24
- EGbjZ9FujHg29OpLbdTzrVqCPLToWj8g1MS34aQIgM+aaJX83zMqWlFWv2IGpnWQmDv3+JbNh
- b6VBOQcr4Mk2YaQ1kgZD70zTSeUjwXLqWXeBTxZ1QK4MZrfS/V/QNY2l3tdgYrNrnkUVLdNhj
- 4HbdThjdYUbHokNVsIS11qnGgajOQaaO9FhxNhFGyOEVQRy4b1V0Y/WUqTePL2ecJ/oC2nIHA
- SuYi9tqH2clM6N3J2AydTSkhp3T0oQT4mlB8BOQS2hUhJwPdoWCSJc0CRyf1jaAI7pgKs83i/
- AFNjNYyBlf/AihagykUtUOEGXk/jplNre32dXEJWxuYvbmkkInS+ToJdAO5XFqFYiw6Tb/Bvi
- Yc49UJgxInQzNVs9FDEuenEPEGaP87CExCUJddNE9PbeqsEEz1yzFCEjnTT0um9kULG+PI446
- wQT80EsrNdA6gtNT6fq2r9TqtQcycNuikZjG4Qio3NOl0PQfHYR6IQJpcvt8MEA4Hhd3yS6bS
- wtEEa+a2LXcVCaqI/iUOtPLI5Cnc32qCE8s2fl5fx3AyahfiBv7BuBVGAzZLVrZYv8qtuPVu2
- ufXpqjf7SvYAAcBKGLtKPDcW4m/m2drCi7sPwdm91q14P9D9n2LiDKszdtMNwWHgRCVIUHkWg
- adPiTSQCZv25n6MgUlqyGtCLAgIF4WFK16HLwxeuKDodO3CEhvTWhlwWBR13L6LMScBIDXlIH
- 0BMDKMtZ5JROTxbhe36KpHgWLhDO5ngCCXEbVNwppzFPeq9L0MhPFv6tW6Rh3z86jSNVA2zE6
- TTiPMijG4jX81EPahtK/mbPjwqE2moKzXXRhPHGnsCnvjmWuHbZwRlPoIRyzR9gvspthXIMX5
- dNR4PlIyJQuiGUfvHF8VRNabSwOALlL5/PWLmq9s02jvSAY6O7yKwerYXfsacsK28wBcYeT+t
- 16hSbhZu/w7UVQXAMZn2mgW6VcQwSk2/w2umJ5Ugunq17iDJSo/hyrV+3xctdIgWEI3GhXJQz
- 802IjDvHjffMsV3va3MTjzTgXydJHmYR0k9PKW3uuWbFVU1V4oNsEUjjZFPA87qnqoLeFFQaw
- 6LWU3+/dd09q20lggeK4YFiAzNzCDG6RKPuRYktkw21LJuL4+kxtadmpWX20spA3zxRkvTJFU
- 5pg6wljvmoceLq8mUKZrQIA4Em+s4yaIDPE9dK6//O5T3sqcWhrrbqjjTk6qIfNKuH4ZM+l2G
- 3+Fyy3uGAOJL/GDmP0eOgQ68udztEeonIL0MrIb2vkgZeFZreVLYmcPgxQtH/uILxz+ljSgGF
- ATqnAJEWf3tS43vEP6a2HI8gN2ADq0re4E22mHNGz59lEWzbY1aR4wtQ6S81/PrVZH+66Dgp8
- tArzCy3+0yjHnwWVn/L/6gHFOVMJoq0X/GmrselbSJ8M/Pv2x2qaiZ9JGw6VCDeuGj99/AXNZ
- 9KSlBELYxaQrWheRr+FiucvqGKeOQYqRd0RVTa7l4CqGpYodpRwMIBhutGKTe8Zht1zNmdZ8b
- KYrUefGNtlA8ligDq/be5RQQOAOor3KmQP0tgEZSIfReZQSAUOPXfzC701XR7/842brOqncRz
- zTfJ5XIx7RoNbpmaLs39mrH75G0znJXwTKvLqY4t6XWALTgjRjSrtjJtVK/nh7ESE/kUUDSb+
- iNKd1hO6cr/XxR5YA1Sxx+BslQXX4zVl/DklvLL4UpYJidObt3cbg+g9JJ2HB6tBX0MiMWs35
- fJaOGK4cTlwgEzWCQRPKfXuTm10uR58ZcJff/fC2Bdq/XLw4q9H6UqOCvqZznbJB7xQuIfFKP
- sqS6spOOEZDriLCVvm4RGqASXeknXIMK6lNG+C0WDuYrc6aGRJMvwuQ5nqAOAVzrveMxquw4B
- WIkjDriz57wsl1F7oA75YR3tjArhnNtQ2YiLzU/X99PwcOZMvpcvGQJNHySxh2cGUscac/8Oh
- IbcBC1/jgrR/2Z5GdIp2uTqHSTepnMVyBjM+4ptCGPBOUXLnQ3zqb/4ScPkji6cWfLYnpv5bi
- lmZ00SlheBL/uPj6SELgKeQdwx3sH7pUow2BqwolqV+UseOBfgiJ5QGyLkTWu+g0HG/8faJ8b
- Gfqktwo81JS/YxT+Tiv5GLXU8MUzK6skJgf2hi2Z6OBJz4Qm/kn9GCgLS+0MJYkfsuUejYi+j
- oXDW6geoOGKi84nGB6qvB7opJ96ErSY9QnUz0QGpcBNppC7NRdkhfP+CbaFlVDMGerCSIyaJm
- 7AfIC3Y75DlAVGuS9+fFRr//7ZLsxK66HFgImUdt3ymMmg7FlxG/vbnslgBYnQdDWzFOQ6w7B
- 0MilZOTsm2CGPWS09evSQwVyfmtH3YupSZjvM2b4gxlbs8hqecU7LOGOtGUGAD8Da42401EmC
- AN24nGadTsEyfLRBUcLtKObTm9x4kmEstqEyaxnXrFt+RhnI7pMtXPnL6XjO/2X1iiuXhdD0u
- 40OLVBsRqk7RxlZbZgcPdG1FUce5g3ilEg4agt+AD7aRtRhnEtkVWr6josBqH0RzQeIb3j1yR
- XWnrEilAUa617qgXF4YIBLsUCB6zI2SpBcYnrKYOW9bdhwZjZU0B38zrSzLLyI0FDiZnmO39h
- EmPUQGS8Nv8O8BHNtotwZS7v/R1tnYdnRRaYZ3iS68M+X8enb09Tc79XmJGisnQsEy6Falm1C
- OEMREQ1xqe8NFcZ/Hh7aCzyYsC5PQwXesjNaG/Md9XlmSYPI1gbv0q2zJvfwNXxdIqGBD1NWC
- 11Uf4RpomGsyoK+hDbjIcq1Efv8fQbVCWCyVDZiopG9Xpr06yCxmcQJh0LZXjKPGpFGTJGg9m
- Jh1Ro53YyazkXk2yhFhkLAx9ZS0t7nwyisjBuMMnl1eDqRepA6lp2Em+8u/PVPwU/YKw/DCst
- o2NKFM9pio0/tmmiWID7ST63NiUUc7MuCgq+DIl0HflVFUPKkV46700nBhE6NFOKl5nmw0SeA
- CcPj1G31+1pXucJ20MmVbfdc6jaWSgaLUxJlALZcEW71DheKxmOjmmE0jSFYgKpT6ynqdXVyt
- wqb9xowNcxX5Mlr9rjZXpQQVKocmX1TTOWfxs9aOd0yfXuh8NBQC8snfmHrd630XU1+0Jsni1
- 0h/+xTCcf8EojB+UM/8ir84Bg4SA1qvZamdFUq6qpOglC++syYAIBBZIkXAsyJz9Z/doLIOtG
- Ihckul0SQvtVGBBLeszpdof2SgUIYy2/e/vN3GR7Rfd0BQru6SxQKGn8X6kKn5a7Fr8N2/NBk
- 6cRPvS4oLUYTC9QsXxco7y68ohNNKjYwsraLAHfk0yVczitGuQuRSFMLey4KIbFl4EmtTSmO6
- iaMkLI7jLNmfhtlVRo/pSrTGMfwkejQhW49zj2bElC1eTX7fNqkmlKwa+AUKqf9rI4wPAtg3T
- gn5gbRTLToyjBpBnmTWJyYabuCDfGthtEZOeGinUxjeFMiBe1oKSQrlIU6VMSb0FA4jPxO6n0
- eDqMEKuGZ2d5kXwetZSLlgkAzTRX+GviOjEqhvYB09EZAc0T3Bwd06l0khwz4cdCNVqSsEk5H
- Tfq2sq8eUMGXxKKmGQRcraGsqqVX/zalXJZUO8kNxBX/ayUw6uJzyHFiASXfMBEMfUWO/HY83
- zvXa+VLAVQj/wlPXVmA1q7R+kdLXXhb09GmTxGC2B4rfe8smT07zt+jLEjOrehUYA/7a3h2kZ
- uXAmk7HF5n5awkifLUgTyxZgRBmgjTfWoZ3Io4tOpy5dgwWI8aolBDLj9+/Vv/OvDoIFVkNNI
- DxRuihy3zEYL/s77olCo7dXFewPaHkuYYaMz4r1RAjXWb1nEg3fi2rV9xXMeNwZlPPcjpFhsy
- bzJjP+SL6z80KXV9J/jgnndHEmAdYsECRSDYu58ez/dKbOR2PnyW4jb6YBmJUEeS20oxm9tCm
- c9/XcbElRQL2JzlCHTu5vfFL8IPQh1CyitXQ2IXHPkqRsEPjnYxgAF3MsqqzOWRJTWAbmPbax
- KMXRf2P5HcYvHx2lNTDQIll1W+/umqeVNDaBG15TcJ9vF13tEr0rhAE9/QGXiF2hcyCjZEPth
- OUl/s8Ud2M6uJ28XyMAnPot9rU0TjJZk6W+izx4tcrXs2pRdAwKPxm+lXkm4jmq7cn0mjWBIu
- jhV432eFikt/Is11uW2wmMWUOxeIG9sBeaT4cuw9I4GpLVct3AI22RIhTFNczv0YztC9k4OT3
- gyFUz+BiUST0cs3jJl6NNaVOOtnlxxnGNs0w9zqWctr0yIZ+tcF8UQvkCwm7mmzgGXF5CqXGO
- ZKkB+GGNwrMfHPNhphb0tkxRjGjNWt9dgk705OzGVXthHFEcYd/LKuVm7dNPOk+/mtLdOjF/J
- UFDnHqZHgZ5KnYtlMkJr3NghLEf9Ow+snb/H33NAhj0Wfp2B+SmfH4EMRCbqtV52NCjjHPV14
- cxfLyacVa0C6OJBMBW5WM2ERaO5QC7bAjOR39Wz/I/FVPgsfkkbtxAXX8sg6Q==
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH] watchdog: sama5d4_wdt: use platform_get_irq()
+To: sashiko-reviews@lists.linux.dev, Rosen Penev <rosenp@gmail.com>
+Cc: linux-watchdog@vger.kernel.org
+References: <20260603005409.226774-1-rosenp@gmail.com>
+ <20260603010104.56C0C1F00893@smtp.kernel.org>
+Content-Language: en-US
+From: Guenter Roeck <linux@roeck-us.net>
+Autocrypt: addr=linux@roeck-us.net; keydata=
+ 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
+ np3900V20aS7eD9K8GTU0TGC1pyz6IVJwIE=
+In-Reply-To: <20260603010104.56C0C1F00893@smtp.kernel.org>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
 
-Hi,
-
-> Von: sashiko-bot@kernel.org <sashiko-bot@kernel.org>=20
-> Gesendet: Freitag, 5. Juni 2026 23:26
-> An: Markus Stockhausen <markus.stockhausen@gmx.de>
-> Cc: devicetree@vger.kernel.org; robh@kernel.org; conor+dt@kernel.org
-> Betreff: Re: [PATCH 1/7] dt-bindings: interrupt-controller: =
-realtek,rtl-intc: Allow 2 interrupt cells
->=20
-> Thank you for your contribution! Sashiko AI review found 1 potential =
-issue(s) to consider:
-> - [Medium] The cell-count property `#interrupt-cells` uses an `enum` =
-constraint instead of a `const` constraint, violating dt-bindings =
-subsystem rules.
+On 6/2/26 18:01, sashiko-bot@kernel.org wrote:
+> Thank you for your contribution! Sashiko AI review found 3 potential issue(s) to consider:
+> 
+> New issues:
+> - [High] Assigning the signed result of `platform_get_irq()` to an unsigned `u32` variable causes the `irq < 0` error check to always evaluate to false, breaking the driver's fallback mechanism.
+> - [Medium] Using `platform_get_irq()` instead of `platform_get_irq_optional()` for an optional IRQ causes spurious error messages to be logged.
+> 
+> Pre-existing issues:
+> - [High] The driver registers a shared interrupt handler (`IRQF_SHARED`) before setting the platform driver data, creating a race condition that can lead to a NULL pointer dereference.
 > --
->
-> commit 11a7c1b034a74e6212dca3ea81cd1ec7e513c49c
-> Author: Markus Stockhausen <markus.stockhausen@gmx.de>
->
-> dt-bindings: interrupt-controller: realtek,rtl-intc: Allow 2 interrupt =
-cells
->
-> This commit updates the #interrupt-cells property to accept either 1 =
-or 2
-> cells to support explicit hardware interrupt routing to multiple =
-parent CPU
-> interrupt lines.
->
-> > diff --git =
-a/Documentation/devicetree/bindings/interrupt-controller/realtek,rtl-intc=
-.yaml =
-b/Documentation/devicetree/bindings/interrupt-controller/realtek,rtl-intc=
-.yaml
-> > --- =
-a/Documentation/devicetree/bindings/interrupt-controller/realtek,rtl-intc=
-.yaml
-> > +++ =
-b/Documentation/devicetree/bindings/interrupt-controller/realtek,rtl-intc=
-.yaml
-> > @@ -32,8 +32,9 @@ properties:
-> > =20
-> >    "#interrupt-cells":
-> >      description:
-> > -      SoC interrupt line index.
-> > -    const: 1
-> > +      First cell is the SoC interrupt line index. Optional second =
-cell
-> > +      specifies the parent interrupt index to route to.
-> > +    enum: [1, 2]
->
+> 
+> commit 7ff7f2de154616b7a42f6e5710f322b20ff6152e
+> Author: Rosen Penev <rosenp@gmail.com>
+> 
+> watchdog: sama5d4_wdt: use platform_get_irq()
+> 
+> irq_of_parse_and_map() requires irq_dispose_mapping() on failure. Don't
+> bother with it as platform_get_irq doesn't need it.
+> 
+>> diff --git a/drivers/watchdog/sama5d4_wdt.c b/drivers/watchdog/sama5d4_wdt.c
+>> index 13e72918338a2..d9b212557ce36 100644
+>> --- a/drivers/watchdog/sama5d4_wdt.c
+>> +++ b/drivers/watchdog/sama5d4_wdt.c
+>> @@ -286,8 +286,8 @@ static int sama5d4_wdt_probe(struct platform_device *pdev)
+>>   		return ret;
+>>   
+>>   	if (wdt->need_irq) {
+>> -		irq = irq_of_parse_and_map(dev->of_node, 0);
+>> -		if (!irq) {
+>> +		irq = platform_get_irq(pdev, 0);
+>> +		if (irq < 0) {
+> 
+> [Severity: High]
+> Since irq is declared as an unsigned u32 earlier in sama5d4_wdt_probe(), won't
+> this irq < 0 check always evaluate to false?
+> 
+> platform_get_irq() returns a negative error code (like -ENXIO) on failure,
+> which will be implicitly cast to a large positive integer. Instead of
+> gracefully falling back by setting wdt->need_irq = false, won't the driver
+> proceed to call devm_request_irq() with an invalid IRQ number and fail the
+> probe?
+> 
+
+Please fix the problems reported by Sashiko. That applies to all your patches.
+
+Since it appears that you are fixing bugs based on issues reported by AI agents,
+I would kindly ask you to fix _all_ problems in the drivers you are modifying,
+not just a selected subset. In this specific case, the problem below is much more
+serious than the problem you are trying to fix. On top of that, the fix introduces
+two new problems while trying to fix one. That is not really helpful.
+
+Thanks,
+Guenter
+
 > [Severity: Medium]
-> Does this change violate the subsystem requirements for cell-count =
-properties?
-
-Is switching form const:1 to const: 2 the right way here?
-Even if the driver changes handle the old 1 cell syntax=20
-gracefully?
-
-Markus
+> Will this log spurious error messages when the IRQ is genuinely absent?
+> 
+> The driver treats the IRQ as optional and handles its absence gracefully.
+> However, platform_get_irq() internally calls dev_err_probe(), printing a
+> core-level error message to the kernel log when an IRQ is not found. Should
+> this use platform_get_irq_optional() instead to avoid confusing user-visible
+> error logs during boot?
+> 
+>>   			dev_warn(dev, "failed to get IRQ from DT\n");
+>>   			wdt->need_irq = false;
+>>   		}
+> 
+> [Severity: High]
+> This is a pre-existing issue, but does requesting a shared IRQ before setting
+> the platform driver data create a race condition?
+> 
+> A few lines later in sama5d4_wdt_probe(), the driver requests the IRQ:
+> 
+> 	if (wdt->need_irq) {
+> 		ret = devm_request_irq(dev, irq, sama5d4_wdt_irq_handler,
+> 				       IRQF_SHARED | IRQF_IRQPOLL |
+> 				       IRQF_NO_SUSPEND, pdev->name, pdev);
+> 
+> Because the IRQ is requested with IRQF_SHARED, another device sharing the line
+> or a spurious interrupt could cause sama5d4_wdt_irq_handler() to execute
+> immediately.
+> 
+> The interrupt handler calls platform_get_drvdata() and dereferences it:
+> 
+> drivers/watchdog/sama5d4_wdt.c:sama5d4_wdt_irq_handler() {
+> 	struct sama5d4_wdt *wdt = platform_get_drvdata(dev_id);
+> 	...
+> 	if (wdt->sam9x60_support)
+> 	...
+> }
+> 
+> However, platform_set_drvdata(pdev, wdt) is only called at the very end of
+> sama5d4_wdt_probe(). If the interrupt fires within this window, won't
+> platform_get_drvdata() return NULL and cause a NULL pointer dereference?
+> 
 
