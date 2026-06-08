@@ -1,104 +1,179 @@
-Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-ed1-f74.google.com (mail-ed1-f74.google.com [209.85.208.74])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 304713D349E;
-	Mon,  8 Jun 2026 14:07:52 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B49533321D4
+	for <sashiko-reviews@lists.linux.dev>; Mon,  8 Jun 2026 16:13:32 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.208.74
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1780927674; cv=none; b=FUsedGtoepD6qTi5ULUsgC1RLBOx05f8XlOv2dy1CgKfQz1GEERux/6vSlqu9aGfiwNqM5dIpZWGb/y14mYmk8pk/j3rCPyNMXPB2hgqAkJHMT5cBFPJI32z908Nmqwvufypik8a8KnfTxWdUt+6xPBm5yskpoecUCsv1OS/Qdc=
+	t=1780935214; cv=none; b=X0qkhsOhxysTu6TRgSUeHSVQvBtM3otj+GrkzvINbSpjaRIabN8kYCNix2JFqUVJkkVGmGuabO8cjDA3XgnDoDl56iSA1vYDgwnRs2wMVT/hTHFU/3eNSG4L4iSyl+Amqmu1UerkqN1q/llEYTF042CkrT/+6L35lbtgjhvOwkg=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1780927674; c=relaxed/simple;
-	bh=IiDBgEWBuHEv074ME+h2nO6TDtChGrOV9k6YP9C1WxU=;
-	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=Z3ZCL71OQ6IVHBRdjvWeY6P0fcUO/Wnou3srmE+WLHEHmSiETeluXt4BbLiZPSQSryiAWCQasaVFVNFZUR+LDApQ5vMe0ooM66AUKW5bqqOkAEtBzRDArDMqxS3da32UhaCj2GMlz8iXBOESHA7LPmKspZrVp9kX5c93KIa2sys=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=b8fS3t9q; arc=none smtp.client-ip=100.103.45.18
+	s=arc-20240116; t=1780935214; c=relaxed/simple;
+	bh=n2pFqhOeZHDe/xMcy5agbg/pMto8LhEIEHQ/6wijhlc=;
+	h=Date:In-Reply-To:Mime-Version:References:Message-ID:Subject:From:
+	 To:Cc:Content-Type; b=cWtXXQmYa+zEAXxlphx/xwMLgLy9iU6x5bSdyTc19VTJDY90qt8SCmKjFkXoYAp5mA6p0dSyHmQWcyi2yyz7aV9NIFWc5X8NjyDrhOOo7zIADVHIwz17nKdzZXODSu8KUnbeZ6/mOcFml283HP6weW4EvKdop6oa+1qzIAGd5j0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=google.com; spf=pass smtp.mailfrom=flex--tarunsahu.bounces.google.com; dkim=pass (2048-bit key) header.d=google.com header.i=@google.com header.b=SMILbPPG; arc=none smtp.client-ip=209.85.208.74
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=google.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=flex--tarunsahu.bounces.google.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="b8fS3t9q"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 747941F00893;
-	Mon,  8 Jun 2026 14:07:51 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=kernel.org;
-	s=k20260515; t=1780927672;
-	bh=IiDBgEWBuHEv074ME+h2nO6TDtChGrOV9k6YP9C1WxU=;
-	h=Date:Subject:To:Cc:References:From:In-Reply-To;
-	b=b8fS3t9qsgIFjU5syQrm0YOOeJAblfbQmmfFD+25YGN3O89qd0f4ux2MIT3ZOwnQf
-	 4uXKMKbe8BNlJLxdR64j5uERhFTW9gqWapDKUL5CdMUhRbL3ad8XQGAQpZQSvsLZre
-	 P+pxPsd//Zkx0VPPzNKhz4GD0dW1VMbw65xAego/lthpcXT77yylSD+/kbVM1u9UIM
-	 dsyJzvcJLZh/UMIgu8EGJwxnKDPZlhDtLMZmURz7xY8YMMFvrIlPLXJdbBSRtbJCCs
-	 6yT1xTQzC8U9vLdGZID2B0W1W06Q+U6LsVC+idGPhsErOQyqWayk7VZDsSZy5Q2Qgl
-	 hEDCA8CD2R4mA==
-Message-ID: <fd36b700-4db0-4f45-9ed7-d2b4131de882@kernel.org>
-Date: Mon, 8 Jun 2026 16:07:49 +0200
+	dkim=pass (2048-bit key) header.d=google.com header.i=@google.com header.b="SMILbPPG"
+Received: by mail-ed1-f74.google.com with SMTP id 4fb4d7f45d1cf-67e32a60b39so6453142a12.0
+        for <sashiko-reviews@lists.linux.dev>; Mon, 08 Jun 2026 09:13:32 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=google.com; s=20251104; t=1780935211; x=1781540011; darn=lists.linux.dev;
+        h=content-transfer-encoding:cc:to:from:subject:message-id:references
+         :mime-version:in-reply-to:date:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=xL7fKZb0tbUDjFUdPWFnb0YOE1teoOM2ki+nlFuHpDE=;
+        b=SMILbPPGALmUx0xV4iesGnhb7ZqV67fXk07PYEQM5RrqdyGCh6az/ADiwC4tw4c3b9
+         bZEhgOVQgI37DYWZVdLjnDzfs6X7RGFQvmfcqYNMKI56BZ31de3Q8QSt/iYv8NO9QDJh
+         p8an05V+N47ZfqNfz1sM212KTv+Q0y4y7KWFBT33Hwisl2C3BrvkBZbfl8iXOWTDJegs
+         DJa59pDWiyr/nwbPpqfafd6JD/NsdUkvglp+ROiZ+l530pg0xHneLysLl5KmbewygZkB
+         p8jcTt+fnify5FNswx+4KAnPtwdJvZacxiVjyJr9mk1BQzhxvUKcIBNmW6l8a1Zwe7ww
+         robw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20251104; t=1780935211; x=1781540011;
+        h=content-transfer-encoding:cc:to:from:subject:message-id:references
+         :mime-version:in-reply-to:date:x-gm-message-state:from:to:cc:subject
+         :date:message-id:reply-to;
+        bh=xL7fKZb0tbUDjFUdPWFnb0YOE1teoOM2ki+nlFuHpDE=;
+        b=Uw8Nh4FHHQpNDuMoKkGAnr+ykP1jQo5dQNwpYOjsbwAmO8Lq8ot2Pk2ZKyGJrrNsAg
+         Qq/J+aNOT1zyziREspqEhab4SuUJEGf2a9mnQckb5Olq5i/0JrwTPGfo9CJDHZaP9fqa
+         13AeeS+u30boFpunT9vFsclHt7QujuX7aIr4YF7CKyP1Yjx2iHaPO1Dm0kT1SkVN8AAf
+         Qec8Ka/fgdCMhWKcBc5+MrYPsxMYDNgh/8yIe0mqE9se5fGBj8di3kde7OavWo8HRtTS
+         GxgcDuB5viAMfECBrd6bvIYq93Rjykf/ywnXsFqOTaK/9byJx0Ggv5NyfPjPM75Pp3wJ
+         hyeg==
+X-Gm-Message-State: AOJu0YyFgZilMn5RJTxA7Nus22UUcq8vKmGcyxnMbPv4LgbdU+KS75L2
+	6DqXFNZOpjt1zxB4X0NME3h989d6h+02XCPkU/bC8QUd2iRHfqZlTGvg/jQIfvHBPKCQ6IY16z1
+	40rkcwb5D3F1A7W9EqIrBBdTEctAB0OWjgs+1fW66J/riwqVPxgHmuHHwQVVL30x8qP/uhx0Yg8
+	Q8VvnlmifbVp2ZyBvaG+G905U6XcNTyVVxeP3bKzepqucFHHEu/4lyjlLvAkqJJbCF
+X-Received: from edag15.prod.google.com ([2002:a05:6402:320f:b0:691:acc4:471e])
+ (user=tarunsahu job=prod-delivery.src-stubby-dispatcher) by
+ 2002:a05:6402:12c1:b0:691:6fb6:dada with SMTP id 4fb4d7f45d1cf-6916fb6deb3mr2797490a12.4.1780935210801;
+ Mon, 08 Jun 2026 09:13:30 -0700 (PDT)
+Date: Mon, 08 Jun 2026 16:13:29 +0000
+In-Reply-To: <20260605172634.95C811F00893@smtp.kernel.org>
 Precedence: bulk
 X-Mailing-List: sashiko-reviews@lists.linux.dev
 List-Id: <sashiko-reviews.lists.linux.dev>
 List-Subscribe: <mailto:sashiko-reviews+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:sashiko-reviews+unsubscribe@lists.linux.dev>
-MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v2 3/4] dt-bindings: mfd: syscon: Drop custom select for
- older dtschema
+Mime-Version: 1.0
+References: <8730c0e11acbd0d645a8b7187cd5cd7de373380e.1780676742.git.tarunsahu@google.com>
+ <20260605172634.95C811F00893@smtp.kernel.org>
+Message-ID: <9huzbjdlxb6e.fsf@tarunix.c.googlers.com>
+Subject: Re: [RFC PATCH v2 04/10] kvm: kvm_luo: Allow kvm preservation with LUO
+From: tarunsahu@google.com
 To: sashiko-reviews@lists.linux.dev
-Cc: robh@kernel.org, wsa+renesas@sang-engineering.com,
- devicetree@vger.kernel.org, conor+dt@kernel.org
-References: <20260608-n-dt-bindings-simple-bus-syscon-v2-3-0203e6c249dc@oss.qualcomm.com>
- <20260608140157.C38A81F00893@smtp.kernel.org>
-From: Krzysztof Kozlowski <krzk@kernel.org>
-Content-Language: en-US
-Autocrypt: addr=krzk@kernel.org; keydata=
- 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
-In-Reply-To: <20260608140157.C38A81F00893@smtp.kernel.org>
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 7bit
+Cc: kvm@vger.kernel.org
+Content-Type: text/plain; charset="utf-8"
+Content-Transfer-Encoding: quoted-printable
 
-On 08/06/2026 16:01, sashiko-bot@kernel.org wrote:
-> Thank you for your contribution! Sashiko AI review found 1 potential issue(s) to consider:
-> - [Medium] Removal of the custom `select` block breaks device tree validation for `dtschema` versions older than 2024.02, which are still permitted by the kernel build system.
 
-Rob,
+Hi,
 
-Shall I bump kernel's requirement of dtschema version?
+sashiko-bot@kernel.org writes:
 
-Best regards,
-Krzysztof
+> [ ... ]
+>> +#ifdef CONFIG_X86
+>> +	ser->type =3D kvm->arch.vm_type;
+>> +#else
+>> +	ser->type =3D 0;
+>
+> [Severity: High]
+> Does hardcoding the VM type to 0 on non-x86 architectures discard require=
+d
+> state?=20
+>
+> For instance, on ARM64, the VM type parameter encodes architectural
+> information such as the Intermediate Physical Address (IPA) size and
+> protection flags.=20
+>
+> Will restoring the VM with type 0 cause the new kernel to initialize the
+> VM with default settings, potentially leading to a mismatched memory layo=
+ut?
+>
+Ack. Other than x86_64 arch, vm_type field is not part of struct
+kvm_arch. But the type is used in creating the new kvm which we will
+need on retrieval path. Currently only ARM64 supports the guest_memfd
+other than x86_64, So I suggest the following:
 
+-#ifdef CONFIG_X86
++#if defined(CONFIG_X86)
+ 	ser->type =3D kvm->arch.vm_type;
++#elif defined(CONFIG_ARM64)
++	ser->type =3D kvm_phys_shift(&kvm->arch.mmu);
++	if (kvm_vm_is_protected(kvm))
++		ser->type |=3D KVM_VM_TYPE_ARM_PROTECTED;
+ #else
+ 	ser->type =3D 0;
+ #endif
+
+>> +
+>> +static atomic_t restored_vm_id =3D ATOMIC_INIT(0);
+>> +
+>> +static int kvm_luo_retrieve(struct liveupdate_file_op_args *args)
+>> +{
+>> +	char fdname[ITOA_MAX_LEN + 1];
+> [ ... ]
+>> +	snprintf(fdname, sizeof(fdname), "%d",
+>> +		 atomic_inc_return(&restored_vm_id));
+>
+> [Severity: Medium]
+> Since standard VMs use their native file descriptor numbers as fdname, an=
+d
+> those typically start from low numbers, will this auto-incrementing count=
+er
+> guarantee namespace collisions?=20
+>
+> A collision here would result in a duplicate directory error in
+> kvm_create_vm_debugfs(), which would cause debugfs statistics for newly
+> created VMs to be skipped.
+>
+Yes, I agree, I have a comment in cover letter, Would be happy to
+discuss alternative, if this is really an issue.
+
+>> +
+>> +	file =3D kvm_create_vm_file(ser->type, fdname);
+> [ ... ]
+>> +static void kvm_luo_finish(struct liveupdate_file_op_args *args)
+>> +{
+>> +	struct kvm_luo_ser *ser;
+>> +
+>> +	/*
+>> +	 * If retrieve_status is true or set to error, nothing to do here.
+>> +	 * Already cleaned up in kvm_luo_retrieve().
+>> +	 */
+>> +	if (args->retrieve_status)
+>> +		return;
+>> +
+>> +	if (!args->serialized_data)
+>> +		return;
+>> +
+>> +	ser =3D phys_to_virt(args->serialized_data);
+>> +	kho_restore_free(ser);
+>
+> [Severity: High]
+> Can this result in a double-free on the successful retrieve path?
+>
+> In kvm_luo_retrieve(), kho_restore_free() is explicitly called on success
+> before returning 0:
+>
+> 	args->file =3D file;
+> 	kho_restore_free(ser);
+>
+> 	kvm_uevent_notify_vm_create(kvm);
+> 	return 0;
+>
+> Since the retrieve is successful, args->retrieve_status will be 0 here,
+> and this function will call kho_restore_free() again on the same
+> serialized data.
+
+This is incorrect: retrieve_status is 1 when it is successful. So this
+review comment is incorrect.
+
+>
+>> +}
+>
+> --=20
+> Sashiko AI review =C2=B7 https://sashiko.dev/#/patchset/cover.1780676742.=
+git.tarunsahu@google.com?part=3D4
