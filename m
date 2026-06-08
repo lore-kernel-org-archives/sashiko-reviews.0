@@ -1,150 +1,141 @@
-Received: from us-smtp-delivery-124.mimecast.com (us-smtp-delivery-124.mimecast.com [170.10.129.124])
+Received: from shrimp.cherry.relay.mailchannels.net (shrimp.cherry.relay.mailchannels.net [23.83.223.164])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 765CD336ECF
-	for <sashiko-reviews@lists.linux.dev>; Sun,  7 Jun 2026 23:55:28 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=170.10.129.124
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 38C04A59
+	for <sashiko-reviews@lists.linux.dev>; Mon,  8 Jun 2026 00:02:44 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=23.83.223.164
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1780876529; cv=none; b=Be8+Lm8FgJCmSy1Pnk/E/9iyGEnzrfLQtKHX/pBvzGzgXqxpPovjCOcXJiBgX6Bq32sGB7FV1VnQpRfuTdOP2WqyfgLgGmhRMvKIqhKL4iJ6+m2EhbVQ0H8srQc95STTIA7w0LVZW2uXp3aj/UOM46jdArleLU97sqNzPAhng08=
+	t=1780876965; cv=none; b=n1PGDoLu0z4OF70fJHg/u3nSMJa2mhwkMTIZIhQO3n2QK2hwLqdnAQemxxy6lTBYoYMDXcXSMD+f4iqil5XxDRH2OgYVLrT66MOM8gP6y4xYee4t7wvYoOchICYA9F1C9iAg58uZhRlGmvuR9Te0cO4+p/W/NorEp7YjOKkoP/E=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1780876529; c=relaxed/simple;
-	bh=cH+nBD5+lmWPsH8F5RUUCmD4YEo9lH4Hm5Wwlk05A64=;
-	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=M6weog0Sc3iIEZMGr+kzJWZbLLTdwwPYi73NgrgYi9E5BoVXwCPeN7kR/SFNY68PJKyjEal69T9u43HLBtu+Lb6xpwnKN6ftJt3dsHpvp5of33FdFZdbZRVS5ZOU3GTJ6rNLgAd8uIzWz9dp0dhE1uZPnGy/iu/9xNzyxQ5EO2w=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=redhat.com; spf=pass smtp.mailfrom=redhat.com; dkim=pass (1024-bit key) header.d=redhat.com header.i=@redhat.com header.b=PTF2TS/w; arc=none smtp.client-ip=170.10.129.124
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=redhat.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=redhat.com
+	s=arc-20240116; t=1780876965; c=relaxed/simple;
+	bh=BE2Otd9tgxY0yQNOBmfh41MjRzzPW04UeNQi4OAAgfc=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=ZkM30mob9upQETu4XtA4USW6rCBAYxerdIKsRIqUWR45A138SyWzMWHXNqUx9efq81U5awdEbTYk5EEiPRaQcUglcom6BoiRh9D5R656Uvhu7+oneK4+LbiqwG3mr0/pMHbmNe0t8ImRe4D6+8uMXYZkliF0pYc2vHO/ZrQHd1M=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=stgolabs.net; spf=fail smtp.mailfrom=stgolabs.net; dkim=pass (2048-bit key) header.d=stgolabs.net header.i=@stgolabs.net header.b=SCLFI12C; arc=none smtp.client-ip=23.83.223.164
+Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=stgolabs.net
+Authentication-Results: smtp.subspace.kernel.org; spf=fail smtp.mailfrom=stgolabs.net
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=redhat.com header.i=@redhat.com header.b="PTF2TS/w"
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
-	s=mimecast20190719; t=1780876527;
-	h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
-	 to:to:cc:cc:mime-version:mime-version:content-type:content-type:
-	 content-transfer-encoding:content-transfer-encoding:
-	 in-reply-to:in-reply-to:references:references;
-	bh=UdRc0TPpX14AW/HtwGItvSrXl/DVs2P0pWud8MsakpQ=;
-	b=PTF2TS/wJIvE6EGTSnZQR5/o9NX3DdHrHB6chl363tnvU2CNIwdog4Cstffol8dcddNnCx
-	/l1oX8lFsNG9n9GWAoUGk1lSM76RtSQvirE+EgErEgr/A3uSHPS0ftEtjWgDiTd59D9gLN
-	IVDlJzQSAGFhRQbq2TiqYLC74UdyuzQ=
-Received: from mx-prod-mc-06.mail-002.prod.us-west-2.aws.redhat.com
- (ec2-35-165-154-97.us-west-2.compute.amazonaws.com [35.165.154.97]) by
- relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-493-_LqvAoF6NDWFFFBlyp-I6Q-1; Sun,
- 07 Jun 2026 19:55:23 -0400
-X-MC-Unique: _LqvAoF6NDWFFFBlyp-I6Q-1
-X-Mimecast-MFC-AGG-ID: _LqvAoF6NDWFFFBlyp-I6Q_1780876523
-Received: from mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com (mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.4])
+	dkim=pass (2048-bit key) header.d=stgolabs.net header.i=@stgolabs.net header.b="SCLFI12C"
+X-Sender-Id: dreamhost|x-authsender|dave@stgolabs.net
+Received: from relay.mailchannels.net (localhost [127.0.0.1])
+	by relay.mailchannels.net (Postfix) with ESMTP id 1263516208C;
+	Mon, 08 Jun 2026 00:02:37 +0000 (UTC)
+Received: from pdx1-sub0-mail-a252.dreamhost.com (trex-green-7.trex.outbound.svc.cluster.local [100.116.150.114])
+	(Authenticated sender: dreamhost)
+	by relay.mailchannels.net (Postfix) with ESMTPA id 40D5E161EFE;
+	Mon, 08 Jun 2026 00:02:36 +0000 (UTC)
+X-Sender-Id: dreamhost|x-authsender|dave@stgolabs.net
+X-MC-Relay: Neutral
+X-MailChannels-SenderId: dreamhost|x-authsender|dave@stgolabs.net
+X-MailChannels-Auth-Id: dreamhost
+X-Thread-Language: 1267c80d75fa5c13_1780876956880_1076883641
+X-MC-Loop-Signature: 1780876956880:3184346716
+X-MC-Ingress-Time: 1780876956879
+Received: from pdx1-sub0-mail-a252.dreamhost.com (pop.dreamhost.com
+ [64.90.62.162])
+	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384)
+	by 100.116.150.114 (trex/7.1.5);
+	Mon, 08 Jun 2026 00:02:36 +0000
+Received: from offworld (186-79-212-212.fo.baf.movistar.cl [186.79.212.212])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
-	 key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
+	 key-exchange ECDHE (P-256) server-signature RSA-PSS (2048 bits) server-digest SHA256)
 	(No client certificate requested)
-	by mx-prod-mc-06.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS id E181C180034A;
-	Sun,  7 Jun 2026 23:55:22 +0000 (UTC)
-Received: from [10.22.88.52] (unknown [10.22.88.52])
-	by mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP id 7A20B3000232;
-	Sun,  7 Jun 2026 23:55:22 +0000 (UTC)
-Message-ID: <06cc7492-0261-4b4a-a92f-96962fb23da7@redhat.com>
-Date: Sun, 7 Jun 2026 19:55:21 -0400
+	(Authenticated sender: dave@stgolabs.net)
+	by pdx1-sub0-mail-a252.dreamhost.com (Postfix) with ESMTPSA id 4gYXKl0f0jzyrG;
+	Sun,  7 Jun 2026 17:02:34 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=stgolabs.net;
+	s=dreamhost; t=1780876956;
+	bh=dJwUZ88fXyOLj08N8CriGgxR4Id4P6BeA1zZW5y89sI=;
+	h=Date:From:To:Cc:Subject:Content-Type;
+	b=SCLFI12CGo2N0StxPMQdlHi6X6+CUj9yx8bW6ugRNn99uQmaqW/I01lnTQfGEb3n6
+	 6qTLGokO04jT3tllNEQZ+YLcJqAgDmKm6Nps0cVi03Hm01PwyMAkETHO0wskELtszP
+	 bFtFLPb/rXEExdFtJcx0uEzAMBxCVcz+XtUeSBjjIYIIlZFikNrOH4PtOFU0j29EbO
+	 9K3mmUwBZyLpQjZmWcklkCk4DUhJuhSpuiwqFEJwcj5goTAYf6dK+wlM0JyPoFn9An
+	 SQteJuPpdr2l/f5a6ey5tTRXBIRRzNxf3AdEEde7TL7sEpsBDsk9ifOvZduapXRymj
+	 eegeZ6r0YZwLA==
+Date: Sun, 7 Jun 2026 17:02:26 -0700
+From: Davidlohr Bueso <dave@stgolabs.net>
+To: Richard Cheng <icheng@nvidia.com>
+Cc: sashiko-reviews@lists.linux.dev, linux-cxl@vger.kernel.org
+Subject: Re: [PATCH 2/5] cxl/pci: Add BI topology enable/disable
+Message-ID: <20260608000226.jb2ploxc5nkjestk@offworld>
+References: <20260605003329.2584012-3-dave@stgolabs.net>
+ <20260605012940.1A1EC1F00898@smtp.kernel.org>
+ <aiIu9vtpOldAX3nu@MWDK4CY14F>
 Precedence: bulk
 X-Mailing-List: sashiko-reviews@lists.linux.dev
 List-Id: <sashiko-reviews.lists.linux.dev>
 List-Subscribe: <mailto:sashiko-reviews+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:sashiko-reviews+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v3] PCI: Call local_pci_probe() directly if current CPU is
- in the right node
-To: sashiko-reviews@lists.linux.dev
-Cc: linux-pci@vger.kernel.org
-References: <20260607221103.703133-1-longman@redhat.com>
- <20260607222035.E05961F00893@smtp.kernel.org>
-From: Waiman Long <longman@redhat.com>
-In-Reply-To: <20260607222035.E05961F00893@smtp.kernel.org>
-X-Scanned-By: MIMEDefang 3.4.1 on 10.30.177.4
-X-Mimecast-MFC-PROC-ID: FMQcUc_qtknKdDMCt0MjJVshbquCULzhMB3TPSB3YhA_1780876523
-X-Mimecast-Originator: redhat.com
-Content-Language: en-US
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
+Content-Type: text/plain; charset=us-ascii; format=flowed
+Content-Disposition: inline
+In-Reply-To: <aiIu9vtpOldAX3nu@MWDK4CY14F>
+User-Agent: NeoMutt/20220429
 
-On 6/7/26 6:20 PM, sashiko-bot@kernel.org wrote:
-> Thank you for your contribution! Sashiko AI review found 1 potential issue(s) to consider:
->
-> Pre-existing issues:
-> - [High] Incomplete fix for workqueue recursive locking deadlock hazard due to conflating NUMA affinity optimization with deadlock avoidance.
-> --
->
-> commit 00ce8bc63ea5f4dc858bb9687e393f23de7912a4
-> Author: Waiman Long <longman@redhat.com>
->
-> PCI: Call local_pci_probe() directly if current CPU is in the right node
->
-> This commit attempts to fix a lockdep recursive warning in pci_call_probe()
-> by directly calling local_pci_probe() when the current task is a kworker
-> executing on the desired NUMA node.
->
->> --- a/drivers/pci/pci-driver.c
->> +++ b/drivers/pci/pci-driver.c
-> [ ... ]
->
->> @@ -376,14 +378,27 @@ static int pci_call_probe(struct pci_driver *drv, struct pci_dev *dev,
->>   	 */
->>   	node = dev_to_node(&dev->dev);
->>   	dev->is_probed = 1;
->> +	node_invalid = node < 0 || node >= MAX_NUMNODES || !node_online(node);
->> +	node_cpus = node_invalid ? cpu_online_mask : cpumask_of_node(node);
->> +
->> +	/*
->> +	 * If the current task is a wq kworker activated by queue_work_on()
->> +	 * below, the kworker is affined to a designated CPU and won't be
->> +	 * switched to another one. So the current CPU can be checked to see
->> +	 * if it is in the right node.
->> +	 */
->> +	if (current->flags & PF_WQ_WORKER) {
->> +		cpu_in_node = cpumask_test_cpu(get_cpu(), node_cpus);
->> +		put_cpu();
->> +	}
->>   
->>   	cpu_hotplug_disable();
->>   	/*
->>   	 * Prevent nesting work_on_cpu() for the case where a Virtual Function
->> -	 * device is probed from work_on_cpu() of the Physical device.
->> +	 * device is probed from work_on_cpu() of the Physical device or when
->> +	 * the current CPU is in the desired node.
->>   	 */
->> -	if (node < 0 || node >= MAX_NUMNODES || !node_online(node) ||
->> -	    pci_physfn_is_probed(dev)) {
->> +	if (node_invalid || cpu_in_node || pci_physfn_is_probed(dev)) {
-> [Severity: High]
-> This is a pre-existing issue, but does using NUMA locality as a proxy for
-> deadlock avoidance provide an incomplete fix for the workqueue recursive
-> locking hazard?
-Yes, it is an incomplete fix, but this patch should prevent this 
-recursive locking hazard in most cases.
->
-> While this suppresses the lockdep warning for typical setups where a parent
-> and child share the same NUMA node, what happens if a nested probe occurs
-> for a device assigned to a different NUMA node?
-This should be unlikely, though I can't say it won't happen.
->
-> If cpu_in_node evaluates to false during a cross-node nested probe, it
-> appears the code will fall through to the else block, queue a new work item
-> to pci_probe_wq, and call flush_work() on it.
->
-> If this nested probe is initiated from a work item already executing on
-> pci_probe_wq, wouldn't waiting on a new work item queued to the same
-> workqueue trigger the exact same recursive lockdep warning, and potentially
-> deadlock if the workqueue's max_active workers are exhausted?
+On Fri, 05 Jun 2026, Richard Cheng wrote:
 
-The WQ_MAX_ACTIVE is 2048, WQ_DFL_ACTIVE is 1024. They are large enough 
-that I don't think it is possible to exhaust all the workers.
+>On Fri, Jun 05, 2026 at 01:29:39AM +0800, sashiko-bot@kernel.org wrote:
+>> > +static int __cxl_bi_ctrl_dport(struct cxl_dport *dport, bool enable)
+>> > +{
+>> > +	struct pci_dev *pdev = to_pci_dev(dport->dport_dev);
+>> > +	void __iomem *bi = dport->regs.bi_decoder;
+>> > +	struct cxl_port *port = dport->port;
+>> > +	u32 ctrl, value;
+>> > +	int rc;
+>> > +
+>> > +	guard(device)(&port->dev);
+>> > +	if (!bi)
+>> > +		return -EINVAL;
+>> > +
+>> > +	ctrl = readl(bi + CXL_BI_DECODER_CTRL_OFFSET);
+>> > +
+>> > +	switch (pci_pcie_type(pdev)) {
+>> > +	case PCI_EXP_TYPE_ROOT_PORT:
+>> > +		if (enable) {
+>> > +			/*
+>> > +			 * There is no point of failure from here on,
+>> > +			 * BI will be enabled on the endpoint device.
+>> > +			 */
+>> > +			dport->nr_bi++;
+>>
+>> [ ... ]
+>>
+>> > +	case PCI_EXP_TYPE_DOWNSTREAM:
+>> > +		if (enable) {
+>> > +			value = ctrl & ~CXL_BI_DECODER_CTRL_BI_FW;
+>> > +			value |= CXL_BI_DECODER_CTRL_BI_ENABLE;
+>> > +		} else {
+>> > +			if (!FIELD_GET(CXL_BI_DECODER_CTRL_BI_ENABLE, ctrl))
+>> > +				return 0;
+>> > +			value = ctrl & ~(CXL_BI_DECODER_CTRL_BI_FW |
+>> > +					 CXL_BI_DECODER_CTRL_BI_ENABLE);
+>> > +		}
+>>
+>> [Severity: High]
+>> Should this case maintain a reference count for the downstream port similar
+>> to how dport->nr_bi is used in the PCI_EXP_TYPE_ROOT_PORT case?
+>>
+>> In cascaded switch topologies, an upstream switch's downstream port can be
+>> shared by multiple downstream endpoints. If one endpoint is unbound,
+>> cxl_bi_dealloc will clear the BI_ENABLE bit on the shared downstream port
+>> unconditionally.
+>>
+>> Could this silently break Back-Invalidate for all other active endpoints
+>> relying on that same path?
+>>
+>
+>Acked on sashiko-bot's finding, 2 BI-capable endpoints behind
+>the same DSP can break it, first unbind breaks the second.
+>Switch DSP unconditionally clear BI_ENABLE on the first memdev unbind.
 
-If other PCI developers have any suggestion, I would like to hear it.
+So this had crossed my mind (for both cascading switches and MLDs), but
+wanted to keep things close to what the spec was explicit about and just
+cover the RP:
+
+"If the previous steps were successful, and no other devices in this
+VCS have been assigned a BI-ID, configure the Root Port that is directly
+connected to Switch S"...
 
 Thanks,
-Longman
-
->
->>   		error = local_pci_probe(&ddi);
->>   	} else {
->>   		struct pci_probe_arg arg = { .ddi = &ddi };
-
+Davidlohr
