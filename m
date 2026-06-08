@@ -1,67 +1,67 @@
-Received: from shrimp.cherry.relay.mailchannels.net (shrimp.cherry.relay.mailchannels.net [23.83.223.164])
+Received: from siberian.tulip.relay.mailchannels.net (siberian.tulip.relay.mailchannels.net [23.83.218.246])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 38C04A59
-	for <sashiko-reviews@lists.linux.dev>; Mon,  8 Jun 2026 00:02:44 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=23.83.223.164
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A04822F872
+	for <sashiko-reviews@lists.linux.dev>; Mon,  8 Jun 2026 00:42:38 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=23.83.218.246
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1780876965; cv=none; b=n1PGDoLu0z4OF70fJHg/u3nSMJa2mhwkMTIZIhQO3n2QK2hwLqdnAQemxxy6lTBYoYMDXcXSMD+f4iqil5XxDRH2OgYVLrT66MOM8gP6y4xYee4t7wvYoOchICYA9F1C9iAg58uZhRlGmvuR9Te0cO4+p/W/NorEp7YjOKkoP/E=
+	t=1780879359; cv=none; b=nYEWUl2P1pe9hpaAPz6ylDUBPUcZmsygIleS+opDXnpS6gJpE51KhAR/9I93IhrxjK4IoGpZyN2DdnztTZjjuSbB576CURPsQ41mK9+1rWkLeIyG0oMQb0SaxxIt2lSay8WEPpdDLOHwqe9ZX1uYNgu9WpG+D7pBT0GlKsEzE/s=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1780876965; c=relaxed/simple;
-	bh=BE2Otd9tgxY0yQNOBmfh41MjRzzPW04UeNQi4OAAgfc=;
+	s=arc-20240116; t=1780879359; c=relaxed/simple;
+	bh=yXMg9NNRaAzwiz5SkATg+Ly+ZP1dU3Vw/Zg3xpTDwY4=;
 	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=ZkM30mob9upQETu4XtA4USW6rCBAYxerdIKsRIqUWR45A138SyWzMWHXNqUx9efq81U5awdEbTYk5EEiPRaQcUglcom6BoiRh9D5R656Uvhu7+oneK4+LbiqwG3mr0/pMHbmNe0t8ImRe4D6+8uMXYZkliF0pYc2vHO/ZrQHd1M=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=stgolabs.net; spf=fail smtp.mailfrom=stgolabs.net; dkim=pass (2048-bit key) header.d=stgolabs.net header.i=@stgolabs.net header.b=SCLFI12C; arc=none smtp.client-ip=23.83.223.164
+	 Content-Type:Content-Disposition:In-Reply-To; b=oMIKb66/WP3LV3Tzu/U3FRzHfqEYoK41owD21gs5MVrqVmgqSiYB7M6gX3C7HRLM5RUkGNkfG848SpqLKtilUnYsGTUYhBMN09wmR9C4hH7f6AM4KflzvSCPHM9pCdldNnESojA6kHIyHsESw8wfLq2Ftpa+uPQ+CFPowjShliA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=stgolabs.net; spf=fail smtp.mailfrom=stgolabs.net; dkim=pass (2048-bit key) header.d=stgolabs.net header.i=@stgolabs.net header.b=oi95RGO3; arc=none smtp.client-ip=23.83.218.246
 Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=stgolabs.net
 Authentication-Results: smtp.subspace.kernel.org; spf=fail smtp.mailfrom=stgolabs.net
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=stgolabs.net header.i=@stgolabs.net header.b="SCLFI12C"
+	dkim=pass (2048-bit key) header.d=stgolabs.net header.i=@stgolabs.net header.b="oi95RGO3"
 X-Sender-Id: dreamhost|x-authsender|dave@stgolabs.net
 Received: from relay.mailchannels.net (localhost [127.0.0.1])
-	by relay.mailchannels.net (Postfix) with ESMTP id 1263516208C;
-	Mon, 08 Jun 2026 00:02:37 +0000 (UTC)
-Received: from pdx1-sub0-mail-a252.dreamhost.com (trex-green-7.trex.outbound.svc.cluster.local [100.116.150.114])
+	by relay.mailchannels.net (Postfix) with ESMTP id 6A008941747;
+	Mon, 08 Jun 2026 00:33:31 +0000 (UTC)
+Received: from pdx1-sub0-mail-a252.dreamhost.com (trex-green-4.trex.outbound.svc.cluster.local [100.116.171.68])
 	(Authenticated sender: dreamhost)
-	by relay.mailchannels.net (Postfix) with ESMTPA id 40D5E161EFE;
-	Mon, 08 Jun 2026 00:02:36 +0000 (UTC)
+	by relay.mailchannels.net (Postfix) with ESMTPA id 0DD8C9416D9;
+	Mon, 08 Jun 2026 00:33:31 +0000 (UTC)
 X-Sender-Id: dreamhost|x-authsender|dave@stgolabs.net
 X-MC-Relay: Neutral
 X-MailChannels-SenderId: dreamhost|x-authsender|dave@stgolabs.net
 X-MailChannels-Auth-Id: dreamhost
-X-Thread-Language: 1267c80d75fa5c13_1780876956880_1076883641
-X-MC-Loop-Signature: 1780876956880:3184346716
-X-MC-Ingress-Time: 1780876956879
+X-Quick-Power: 304673fb7ee62df2_1780878811278_3752733523
+X-MC-Loop-Signature: 1780878811278:3653208989
+X-MC-Ingress-Time: 1780878811277
 Received: from pdx1-sub0-mail-a252.dreamhost.com (pop.dreamhost.com
  [64.90.62.162])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384)
-	by 100.116.150.114 (trex/7.1.5);
-	Mon, 08 Jun 2026 00:02:36 +0000
+	by 100.116.171.68 (trex/7.1.5);
+	Mon, 08 Jun 2026 00:33:31 +0000
 Received: from offworld (186-79-212-212.fo.baf.movistar.cl [186.79.212.212])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange ECDHE (P-256) server-signature RSA-PSS (2048 bits) server-digest SHA256)
 	(No client certificate requested)
 	(Authenticated sender: dave@stgolabs.net)
-	by pdx1-sub0-mail-a252.dreamhost.com (Postfix) with ESMTPSA id 4gYXKl0f0jzyrG;
-	Sun,  7 Jun 2026 17:02:34 -0700 (PDT)
+	by pdx1-sub0-mail-a252.dreamhost.com (Postfix) with ESMTPSA id 4gYY1P3J7SzyrG;
+	Sun,  7 Jun 2026 17:33:29 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=stgolabs.net;
-	s=dreamhost; t=1780876956;
-	bh=dJwUZ88fXyOLj08N8CriGgxR4Id4P6BeA1zZW5y89sI=;
+	s=dreamhost; t=1780878810;
+	bh=teJnluGo6zFTpPmNlw8CFvduNjORzm806J372k0Jg0w=;
 	h=Date:From:To:Cc:Subject:Content-Type;
-	b=SCLFI12CGo2N0StxPMQdlHi6X6+CUj9yx8bW6ugRNn99uQmaqW/I01lnTQfGEb3n6
-	 6qTLGokO04jT3tllNEQZ+YLcJqAgDmKm6Nps0cVi03Hm01PwyMAkETHO0wskELtszP
-	 bFtFLPb/rXEExdFtJcx0uEzAMBxCVcz+XtUeSBjjIYIIlZFikNrOH4PtOFU0j29EbO
-	 9K3mmUwBZyLpQjZmWcklkCk4DUhJuhSpuiwqFEJwcj5goTAYf6dK+wlM0JyPoFn9An
-	 SQteJuPpdr2l/f5a6ey5tTRXBIRRzNxf3AdEEde7TL7sEpsBDsk9ifOvZduapXRymj
-	 eegeZ6r0YZwLA==
-Date: Sun, 7 Jun 2026 17:02:26 -0700
+	b=oi95RGO3tt3wXw5Jg8MX2o3SBmNylaN0pEwSuOevSSDOAC/FCtouZ6EVvVWELx8wz
+	 mdlCwN/DqDeAy/X8qOFvu8odf97BjT745aWLDfZJFIO9HS3EfM9AM2LzBy9cvFCUZT
+	 EDIN/ZMBak8yl7WngoD5gvaKqXuttGf9o8wZxOvTVtmz7vBopI4laRBAgEAtJW6Y0z
+	 eqnPBkgYor50cMBWEZVuPa2QmoLg7C1EgP1bu3P1fy3vwHdKBO9ZipsOWMK9FuZhuz
+	 GVE3wScxHeGgvpSSM7IwpRfwH/jSrrb/dKLMgE8LEgNr3/c9agfqBbwJYzbx86kMYj
+	 9qslV6GKE3lcQ==
+Date: Sun, 7 Jun 2026 17:33:23 -0700
 From: Davidlohr Bueso <dave@stgolabs.net>
 To: Richard Cheng <icheng@nvidia.com>
 Cc: sashiko-reviews@lists.linux.dev, linux-cxl@vger.kernel.org
-Subject: Re: [PATCH 2/5] cxl/pci: Add BI topology enable/disable
-Message-ID: <20260608000226.jb2ploxc5nkjestk@offworld>
-References: <20260605003329.2584012-3-dave@stgolabs.net>
- <20260605012940.1A1EC1F00898@smtp.kernel.org>
- <aiIu9vtpOldAX3nu@MWDK4CY14F>
+Subject: Re: [PATCH 1/5] cxl: Add BI register probing and port initialization
+Message-ID: <20260608003323.lsja233dvqltwjqm@offworld>
+References: <20260605003329.2584012-2-dave@stgolabs.net>
+ <20260605013307.DA9421F00898@smtp.kernel.org>
+ <aiItL9wmNPDafyFG@MWDK4CY14F>
 Precedence: bulk
 X-Mailing-List: sashiko-reviews@lists.linux.dev
 List-Id: <sashiko-reviews.lists.linux.dev>
@@ -70,72 +70,64 @@ List-Unsubscribe: <mailto:sashiko-reviews+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=us-ascii; format=flowed
 Content-Disposition: inline
-In-Reply-To: <aiIu9vtpOldAX3nu@MWDK4CY14F>
+In-Reply-To: <aiItL9wmNPDafyFG@MWDK4CY14F>
 User-Agent: NeoMutt/20220429
 
 On Fri, 05 Jun 2026, Richard Cheng wrote:
 
->On Fri, Jun 05, 2026 at 01:29:39AM +0800, sashiko-bot@kernel.org wrote:
->> > +static int __cxl_bi_ctrl_dport(struct cxl_dport *dport, bool enable)
->> > +{
->> > +	struct pci_dev *pdev = to_pci_dev(dport->dport_dev);
->> > +	void __iomem *bi = dport->regs.bi_decoder;
->> > +	struct cxl_port *port = dport->port;
->> > +	u32 ctrl, value;
->> > +	int rc;
->> > +
->> > +	guard(device)(&port->dev);
->> > +	if (!bi)
->> > +		return -EINVAL;
->> > +
->> > +	ctrl = readl(bi + CXL_BI_DECODER_CTRL_OFFSET);
->> > +
->> > +	switch (pci_pcie_type(pdev)) {
->> > +	case PCI_EXP_TYPE_ROOT_PORT:
->> > +		if (enable) {
->> > +			/*
->> > +			 * There is no point of failure from here on,
->> > +			 * BI will be enabled on the endpoint device.
->> > +			 */
->> > +			dport->nr_bi++;
->>
->> [ ... ]
->>
->> > +	case PCI_EXP_TYPE_DOWNSTREAM:
->> > +		if (enable) {
->> > +			value = ctrl & ~CXL_BI_DECODER_CTRL_BI_FW;
->> > +			value |= CXL_BI_DECODER_CTRL_BI_ENABLE;
->> > +		} else {
->> > +			if (!FIELD_GET(CXL_BI_DECODER_CTRL_BI_ENABLE, ctrl))
->> > +				return 0;
->> > +			value = ctrl & ~(CXL_BI_DECODER_CTRL_BI_FW |
->> > +					 CXL_BI_DECODER_CTRL_BI_ENABLE);
->> > +		}
->>
->> [Severity: High]
->> Should this case maintain a reference count for the downstream port similar
->> to how dport->nr_bi is used in the PCI_EXP_TYPE_ROOT_PORT case?
->>
->> In cascaded switch topologies, an upstream switch's downstream port can be
->> shared by multiple downstream endpoints. If one endpoint is unbound,
->> cxl_bi_dealloc will clear the BI_ENABLE bit on the shared downstream port
->> unconditionally.
->>
->> Could this silently break Back-Invalidate for all other active endpoints
->> relying on that same path?
->>
+>On Fri, Jun 05, 2026 at 01:33:07AM +0800, sashiko-bot@kernel.org wrote:
+>Hi Davidlohr,
 >
->Acked on sashiko-bot's finding, 2 BI-capable endpoints behind
->the same DSP can break it, first unbind breaks the second.
->Switch DSP unconditionally clear BI_ENABLE on the first memdev unbind.
+>cxl_port_map_bi() is called here before any dport exists.
+>Component register discovery happends later in cxl_port_add_dport() and then
+>cxl_port_setup_regs() on the first dport.
+>
+>So for switch USP, bi_rt.valid is false at probe time, mapping is skipped
+>and never retried. I saw from your cover letter's dmesg
+>
+>"""
+>cxl_port port2: BI RT registers not found   ??? probe-time map_bi
+>...
+>cxl_port port2: found BI RT capability      ??? later, on first dport
+>"""
+>
+>Endpoints and RP/DSP paths are fine, but switch BI RT mapping might
+>be the gap.
+>
+>Let me know what you think, please correct me if I'm wrong, thanks
 
-So this had crossed my mind (for both cascading switches and MLDs), but
-wanted to keep things close to what the spec was explicit about and just
-cover the RP:
+Bleh, indeed, thanks! I moved this from an earlier version.
+The below fixes this, and we now get:
 
-"If the previous steps were successful, and no other devices in this
-VCS have been assigned a BI-ID, configure the Root Port that is directly
-connected to Switch S"...
+[    0.760688] cxl_core:cxl_probe_component_regs:102: cxl_pci 0000:0f:00.0: found BI Decoder capability (0xab4)
+[    0.872325] cxl_core:cxl_probe_component_regs:102: pcieport 0000:0c:00.0: found BI Decoder capability (0xab4)
+[    0.888387] cxl_core:cxl_probe_component_regs:96: cxl_port port2: found BI RT capability (0xaa8)
+[    0.924125] cxl_core:cxl_probe_component_regs:102: pcieport 0000:0e:00.0: found BI Decoder capability (0xab4)
+[    1.087716] cxl_core:__cxl_bi_wait_commit:995: pcieport 0000:0e:00.0: BI-ID commit wait took 114533us
+[    1.288190] cxl_core:__cxl_bi_wait_commit:995: cxl_port port2: BI-ID commit wait took 200377us
+[    1.292282] cxl_core:__cxl_bi_ctrl_endpoint:1164: cxl_pci 0000:0f:00.0: BI requests enabled
 
-Thanks,
-Davidlohr
+
+diff --git a/drivers/cxl/port.c b/drivers/cxl/port.c
+index 2dd712c5d312..ca8d8c14b787 100644
+--- a/drivers/cxl/port.c
++++ b/drivers/cxl/port.c
+@@ -122,8 +122,6 @@ static int cxl_switch_port_probe(struct cxl_port *port)
+         /* Cache the data early to ensure is_visible() works */
+         read_cdat_data(port);
+  
+-       cxl_port_map_bi(port);
+-
+         return 0;
+  }
+  
+@@ -312,6 +310,8 @@ static struct cxl_dport *cxl_port_add_dport(struct cxl_port *port,
+                  * on failure, or the device does not implement RAS registers.
+                  */
+                 devm_cxl_port_ras_setup(port);
++
++               cxl_port_map_bi(port);
+         }
+  
+         dport = devm_cxl_add_dport_by_dev(port, dport_dev);
+
