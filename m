@@ -1,133 +1,179 @@
-Received: from siberian.tulip.relay.mailchannels.net (siberian.tulip.relay.mailchannels.net [23.83.218.246])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-pl1-f174.google.com (mail-pl1-f174.google.com [209.85.214.174])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A04822F872
-	for <sashiko-reviews@lists.linux.dev>; Mon,  8 Jun 2026 00:42:38 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=23.83.218.246
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 00321347BD9
+	for <sashiko-reviews@lists.linux.dev>; Mon,  8 Jun 2026 03:11:31 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.214.174
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1780879359; cv=none; b=nYEWUl2P1pe9hpaAPz6ylDUBPUcZmsygIleS+opDXnpS6gJpE51KhAR/9I93IhrxjK4IoGpZyN2DdnztTZjjuSbB576CURPsQ41mK9+1rWkLeIyG0oMQb0SaxxIt2lSay8WEPpdDLOHwqe9ZX1uYNgu9WpG+D7pBT0GlKsEzE/s=
+	t=1780888295; cv=none; b=KQ+bUDE1xeG0+veSGEyXn3Z4vQKzDZx1MsGCt8yLEUrOHHiWWSUIQ7AqjGubVtX8xR8/T5F5B33VJVif+KYp8XMRSO9ZdiYSUr/MU/rxZUJK23NCImznhGEaymtQ3WsdgP8TagmDRazP/CasSzY0pq0cdaLsZG3yTXBu0MJzo18=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1780879359; c=relaxed/simple;
-	bh=yXMg9NNRaAzwiz5SkATg+Ly+ZP1dU3Vw/Zg3xpTDwY4=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=oMIKb66/WP3LV3Tzu/U3FRzHfqEYoK41owD21gs5MVrqVmgqSiYB7M6gX3C7HRLM5RUkGNkfG848SpqLKtilUnYsGTUYhBMN09wmR9C4hH7f6AM4KflzvSCPHM9pCdldNnESojA6kHIyHsESw8wfLq2Ftpa+uPQ+CFPowjShliA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=stgolabs.net; spf=fail smtp.mailfrom=stgolabs.net; dkim=pass (2048-bit key) header.d=stgolabs.net header.i=@stgolabs.net header.b=oi95RGO3; arc=none smtp.client-ip=23.83.218.246
-Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=stgolabs.net
-Authentication-Results: smtp.subspace.kernel.org; spf=fail smtp.mailfrom=stgolabs.net
+	s=arc-20240116; t=1780888295; c=relaxed/simple;
+	bh=eMMFZ7PoTVFU+HtZAfAiBJKr6ct6C46CfD1rFsryOhY=;
+	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
+	 In-Reply-To:Content-Type; b=gXddmjo1AH8cJ97nkT65Q9G6TNEbawdI6fnDtKSq9d2zebLxv/Y97XyfReMwMDt9b8A1zUNLJM/seRXSTxGeUTrcVgDGcHjC7UTv3byxm8LnozFLAmjkzFhenGqw2m+QBc35hkF0mhHqmHfKNR6j+wos4C8eKK+aveRBSHj+kO8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=roeck-us.net; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=QneXjYav; arc=none smtp.client-ip=209.85.214.174
+Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=roeck-us.net
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=stgolabs.net header.i=@stgolabs.net header.b="oi95RGO3"
-X-Sender-Id: dreamhost|x-authsender|dave@stgolabs.net
-Received: from relay.mailchannels.net (localhost [127.0.0.1])
-	by relay.mailchannels.net (Postfix) with ESMTP id 6A008941747;
-	Mon, 08 Jun 2026 00:33:31 +0000 (UTC)
-Received: from pdx1-sub0-mail-a252.dreamhost.com (trex-green-4.trex.outbound.svc.cluster.local [100.116.171.68])
-	(Authenticated sender: dreamhost)
-	by relay.mailchannels.net (Postfix) with ESMTPA id 0DD8C9416D9;
-	Mon, 08 Jun 2026 00:33:31 +0000 (UTC)
-X-Sender-Id: dreamhost|x-authsender|dave@stgolabs.net
-X-MC-Relay: Neutral
-X-MailChannels-SenderId: dreamhost|x-authsender|dave@stgolabs.net
-X-MailChannels-Auth-Id: dreamhost
-X-Quick-Power: 304673fb7ee62df2_1780878811278_3752733523
-X-MC-Loop-Signature: 1780878811278:3653208989
-X-MC-Ingress-Time: 1780878811277
-Received: from pdx1-sub0-mail-a252.dreamhost.com (pop.dreamhost.com
- [64.90.62.162])
-	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384)
-	by 100.116.171.68 (trex/7.1.5);
-	Mon, 08 Jun 2026 00:33:31 +0000
-Received: from offworld (186-79-212-212.fo.baf.movistar.cl [186.79.212.212])
-	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
-	 key-exchange ECDHE (P-256) server-signature RSA-PSS (2048 bits) server-digest SHA256)
-	(No client certificate requested)
-	(Authenticated sender: dave@stgolabs.net)
-	by pdx1-sub0-mail-a252.dreamhost.com (Postfix) with ESMTPSA id 4gYY1P3J7SzyrG;
-	Sun,  7 Jun 2026 17:33:29 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=stgolabs.net;
-	s=dreamhost; t=1780878810;
-	bh=teJnluGo6zFTpPmNlw8CFvduNjORzm806J372k0Jg0w=;
-	h=Date:From:To:Cc:Subject:Content-Type;
-	b=oi95RGO3tt3wXw5Jg8MX2o3SBmNylaN0pEwSuOevSSDOAC/FCtouZ6EVvVWELx8wz
-	 mdlCwN/DqDeAy/X8qOFvu8odf97BjT745aWLDfZJFIO9HS3EfM9AM2LzBy9cvFCUZT
-	 EDIN/ZMBak8yl7WngoD5gvaKqXuttGf9o8wZxOvTVtmz7vBopI4laRBAgEAtJW6Y0z
-	 eqnPBkgYor50cMBWEZVuPa2QmoLg7C1EgP1bu3P1fy3vwHdKBO9ZipsOWMK9FuZhuz
-	 GVE3wScxHeGgvpSSM7IwpRfwH/jSrrb/dKLMgE8LEgNr3/c9agfqBbwJYzbx86kMYj
-	 9qslV6GKE3lcQ==
-Date: Sun, 7 Jun 2026 17:33:23 -0700
-From: Davidlohr Bueso <dave@stgolabs.net>
-To: Richard Cheng <icheng@nvidia.com>
-Cc: sashiko-reviews@lists.linux.dev, linux-cxl@vger.kernel.org
-Subject: Re: [PATCH 1/5] cxl: Add BI register probing and port initialization
-Message-ID: <20260608003323.lsja233dvqltwjqm@offworld>
-References: <20260605003329.2584012-2-dave@stgolabs.net>
- <20260605013307.DA9421F00898@smtp.kernel.org>
- <aiItL9wmNPDafyFG@MWDK4CY14F>
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="QneXjYav"
+Received: by mail-pl1-f174.google.com with SMTP id d9443c01a7336-2c0c1e0d00bso37619255ad.0
+        for <sashiko-reviews@lists.linux.dev>; Sun, 07 Jun 2026 20:11:31 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20251104; t=1780888291; x=1781493091; darn=lists.linux.dev;
+        h=content-transfer-encoding:in-reply-to:autocrypt:from
+         :content-language:references:cc:to:subject:user-agent:mime-version
+         :date:message-id:sender:from:to:cc:subject:date:message-id:reply-to;
+        bh=o6AQpyw9cz+Q5RmbdlhznksmZIhCHg9E+Gub5iwssz8=;
+        b=QneXjYavVx/vbrvsg214hIcf4Kuv/nr+duqJpM+SSnNpH/yuQj6XrFwAuX2FMRBEFS
+         sXEk89Op5wpLw0WvA+3T61rQKd/k9dXOakNoPWu3kA0hXaJnFFt2UjEZiQt3btle2SZa
+         t8iG5NwshSpG6U8GWl4hSyqXkZ3WTDVA2sbuVu7Sv8c1IhIWw4t3AXDbpvoB5tHOP562
+         cYHg9wTEmMEzT0leoFTn+Caznti6T6G7CMoX+JI41gpPLltyuPTQuH1fy1oKCtoq/giR
+         ChulnL0YN1aOGovQ5ybFUGTv7BmHRNlncAAE5F7lRBDK6cKSbzKBW7b7q6mnkQ27Ks0A
+         hdCw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20251104; t=1780888291; x=1781493091;
+        h=content-transfer-encoding:in-reply-to:autocrypt:from
+         :content-language:references:cc:to:subject:user-agent:mime-version
+         :date:message-id:sender:x-gm-gg:x-gm-message-state:from:to:cc
+         :subject:date:message-id:reply-to;
+        bh=o6AQpyw9cz+Q5RmbdlhznksmZIhCHg9E+Gub5iwssz8=;
+        b=dqhdCVYVdvh4ddYvtOK5FY3+ipU0sSeAkwB9PQsbAHxrcKWb/S0QjsAltzJMOBMnH+
+         iCrM65lOU6raNRZf+1YaEqGJ3GpWehWetM9EgdtEizkT9P25LO9mwZCq+dkefmx1Mrob
+         59aSxkP/pxuQTCA13P/NP7xnsIgsS4hN0OpASOmjGdWtQkWNeFm5M07QgBnYj2+sId6g
+         vN1NmTifarq8L2Q42HO2nsaSJ8dQ24NCVFGtxWnIxigjLwyDLiSzJfv5i9Hcj8V/prDB
+         x6Ej0wpKgQL8x4Y4VxM03uSCwe68Bb3qRWgTQi0heZceCbMmMa+h7vJYWWreDsmBsmDO
+         2uBg==
+X-Gm-Message-State: AOJu0YyXzjz8p4EHItxvSqYKwGpTrkHFkKck35BOaNmSMt5HD/h8ca2W
+	cgaSCdsdGGG7PMSHiS0sswWv2fXHhKqKT2rHiDRl9MxqhROIDllGJwW/rNVpzAdh
+X-Gm-Gg: Acq92OG9uzes3Qe2K9dwHxCvlvLN4VxxI4LF+vwbGMWTSi8TwWIf9JPKKmcDX2cEU0g
+	8MjAjE24um7yIbuevGP828XaXPQCiSImZ6GrJS6OHUosBr6eHYbe3u6ssw1npYqoe3ZhIAjHuRZ
+	liByC6zFQNFczz0RBa971oO5/ZVUSMvrxtQXBjd/alPdbYIh5vKdC0dJ/uWE6AAcKU0JX+WWab4
+	eKHzD7tzeW4fF4Y0BpxgGMnvf4D7MfaNc+p3WsuMWLND1ZUl+IhC+XZB8YpRRumGXWleO+dUdUv
+	pSqyPcE/e+Nd/K5uDuij9MRlnmiWZkx5WeiWAD4M45FtvEU10ZOJRLRXDPV7Ga7YZSDofFGq4sU
+	t0DJGnyNnddzgr208du4I5/lQUWsFgE/w/k3BgL4QiCZCPIUCqdoT2/kCgaUJCT+zgbcBQfSNjK
+	afXRCWjF4IKujzK0ZNS78rE8XCbT8kLDR6VMV+bnlBbihJi6u5TTsPGEekuSCN9OTiKFMYEpKGj
+	shzK36Uqqw=
+X-Received: by 2002:a17:902:f711:b0:2c0:ab82:6ba7 with SMTP id d9443c01a7336-2c1e85ad8d7mr154959505ad.33.1780888290954;
+        Sun, 07 Jun 2026 20:11:30 -0700 (PDT)
+Received: from ?IPV6:2600:1700:e321:62f0:da43:aeff:fecc:bfd5? ([2600:1700:e321:62f0:da43:aeff:fecc:bfd5])
+        by smtp.gmail.com with ESMTPSA id d9443c01a7336-2c164f6d395sm218827905ad.17.2026.06.07.20.11.30
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Sun, 07 Jun 2026 20:11:30 -0700 (PDT)
+Sender: Guenter Roeck <groeck7@gmail.com>
+Message-ID: <3ed9e0ed-d6fe-4b9f-aca9-590290a78f4a@roeck-us.net>
+Date: Sun, 7 Jun 2026 20:11:29 -0700
 Precedence: bulk
 X-Mailing-List: sashiko-reviews@lists.linux.dev
 List-Id: <sashiko-reviews.lists.linux.dev>
 List-Subscribe: <mailto:sashiko-reviews+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:sashiko-reviews+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii; format=flowed
-Content-Disposition: inline
-In-Reply-To: <aiItL9wmNPDafyFG@MWDK4CY14F>
-User-Agent: NeoMutt/20220429
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH 2/2] hwmon: (adt7462) Add of_match_table to support
+ devicetree
+To: sashiko-reviews@lists.linux.dev,
+ Romain Gantois <romain.gantois@bootlin.com>
+Cc: robh@kernel.org, conor+dt@kernel.org, linux-hwmon@vger.kernel.org,
+ devicetree@vger.kernel.org
+References: <20260603-adt7462-bindings-v1-2-301304bcf774@bootlin.com>
+ <20260603114026.709611F00893@smtp.kernel.org>
+Content-Language: en-US
+From: Guenter Roeck <linux@roeck-us.net>
+Autocrypt: addr=linux@roeck-us.net; keydata=
+ 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
+ np3900V20aS7eD9K8GTU0TGC1pyz6IVJwIE=
+In-Reply-To: <20260603114026.709611F00893@smtp.kernel.org>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
 
-On Fri, 05 Jun 2026, Richard Cheng wrote:
+On 6/3/26 04:40, sashiko-bot@kernel.org wrote:
+> Thank you for your contribution! Sashiko AI review found 1 potential issue(s) to consider:
+> - [Low] Using `of_match_ptr()` prevents the driver from being matched via ACPI PRP0001 when `CONFIG_OF` is disabled.
+> --
+> 
+> commit c2691e00dcd763957c6a2291880ea9079be2bbda
+> Author: Kory Maincent <kory.maincent@bootlin.com>
+> 
+> hwmon: (adt7462) Add of_match_table to support devicetree
+> 
+> This commit adds an of_match_table to the adt7462 driver to enable
+> devicetree probing.
+> 
+>> diff --git a/drivers/hwmon/adt7462.c b/drivers/hwmon/adt7462.c
+>> index 174dfee47f7a7..ef6e5252dc0a4 100644
+>> --- a/drivers/hwmon/adt7462.c
+>> +++ b/drivers/hwmon/adt7462.c
+> [ ... ]
+>> @@ -1814,10 +1814,17 @@ static const struct i2c_device_id adt7462_id[] = {
+>>   };
+>>   MODULE_DEVICE_TABLE(i2c, adt7462_id);
+>>   
+>> +static const struct of_device_id __maybe_unused adt7462_of_match[] = {
+>> +	{ .compatible = "adi,adt7462" },
+>> +	{ },
+>> +};
+>> +MODULE_DEVICE_TABLE(of, adt7462_of_match);
+>> +
+>>   static struct i2c_driver adt7462_driver = {
+>>   	.class		= I2C_CLASS_HWMON,
+>>   	.driver = {
+>>   		.name	= "adt7462",
+>> +		.of_match_table = of_match_ptr(adt7462_of_match),
+> 
+> [Severity: Low]
+> Does using of_match_ptr() here prevent the driver from being matched via
+> ACPI PRP0001 when CONFIG_OF is disabled?
+> 
+> When CONFIG_OF is disabled, of_match_ptr() evaluates to NULL, hiding the
+> of_match_table from the driver core. This prevents the driver from being
+> matched using ACPI PRP0001, which relies on OF compatible strings even on
+> systems without Device Tree.
+> 
+> Would it be better to drop of_match_ptr() and assign the table directly,
+> along with removing the __maybe_unused attribute from adt7462_of_match?
+> 
 
->On Fri, Jun 05, 2026 at 01:33:07AM +0800, sashiko-bot@kernel.org wrote:
->Hi Davidlohr,
->
->cxl_port_map_bi() is called here before any dport exists.
->Component register discovery happends later in cxl_port_add_dport() and then
->cxl_port_setup_regs() on the first dport.
->
->So for switch USP, bi_rt.valid is false at probe time, mapping is skipped
->and never retried. I saw from your cover letter's dmesg
->
->"""
->cxl_port port2: BI RT registers not found   ??? probe-time map_bi
->...
->cxl_port port2: found BI RT capability      ??? later, on first dport
->"""
->
->Endpoints and RP/DSP paths are fine, but switch BI RT mapping might
->be the gap.
->
->Let me know what you think, please correct me if I'm wrong, thanks
+I agree.
 
-Bleh, indeed, thanks! I moved this from an earlier version.
-The below fixes this, and we now get:
-
-[    0.760688] cxl_core:cxl_probe_component_regs:102: cxl_pci 0000:0f:00.0: found BI Decoder capability (0xab4)
-[    0.872325] cxl_core:cxl_probe_component_regs:102: pcieport 0000:0c:00.0: found BI Decoder capability (0xab4)
-[    0.888387] cxl_core:cxl_probe_component_regs:96: cxl_port port2: found BI RT capability (0xaa8)
-[    0.924125] cxl_core:cxl_probe_component_regs:102: pcieport 0000:0e:00.0: found BI Decoder capability (0xab4)
-[    1.087716] cxl_core:__cxl_bi_wait_commit:995: pcieport 0000:0e:00.0: BI-ID commit wait took 114533us
-[    1.288190] cxl_core:__cxl_bi_wait_commit:995: cxl_port port2: BI-ID commit wait took 200377us
-[    1.292282] cxl_core:__cxl_bi_ctrl_endpoint:1164: cxl_pci 0000:0f:00.0: BI requests enabled
-
-
-diff --git a/drivers/cxl/port.c b/drivers/cxl/port.c
-index 2dd712c5d312..ca8d8c14b787 100644
---- a/drivers/cxl/port.c
-+++ b/drivers/cxl/port.c
-@@ -122,8 +122,6 @@ static int cxl_switch_port_probe(struct cxl_port *port)
-         /* Cache the data early to ensure is_visible() works */
-         read_cdat_data(port);
-  
--       cxl_port_map_bi(port);
--
-         return 0;
-  }
-  
-@@ -312,6 +310,8 @@ static struct cxl_dport *cxl_port_add_dport(struct cxl_port *port,
-                  * on failure, or the device does not implement RAS registers.
-                  */
-                 devm_cxl_port_ras_setup(port);
-+
-+               cxl_port_map_bi(port);
-         }
-  
-         dport = devm_cxl_add_dport_by_dev(port, dport_dev);
+Guenter
 
