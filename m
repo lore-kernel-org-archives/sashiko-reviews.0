@@ -1,147 +1,381 @@
-Received: from sender4-pp-f112.zoho.com (sender4-pp-f112.zoho.com [136.143.188.112])
+Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6745F3101D4
-	for <sashiko-reviews@lists.linux.dev>; Mon,  8 Jun 2026 11:46:35 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=pass smtp.client-ip=136.143.188.112
-ARC-Seal:i=2; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1780919196; cv=pass; b=Q/O9hH74/1wDlTiOzUrOByqP1ivJZ6BxcWwi5QZ+s8BfvDjUo2W7ha98bQPrRRVvyhZmgW2rFTdPWBX5Nzh4TnSyT0VVvuTGyA2xwyz+A/P0Vs5qDQLBFqoQjYFZwhMYBBdaGPcivkBSbu1TZTE9JExL383+7MM5z7Mo3IB3/jA=
-ARC-Message-Signature:i=2; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1780919196; c=relaxed/simple;
-	bh=m5sBQbsGnCYpKoOs0vgIuKHTR/adBgh9tS2QB3LnWik=;
-	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=o5ZgRkXDvzrV6OkGpOpc/wV+jNNNX2w58TogV27koUoWqJNQVo+FIDIbx73DryHu3Bs4QDJaJF6OjYPfMYZ6EJWm8okpqpNsoEjEwd0Js3O5uiF/z8v5T97dP74iqDLM+DJJkj+O2OJvQbZ6rFET1KYEjhnBztxsRwbcAahe+Aw=
-ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=collabora.com; spf=pass smtp.mailfrom=collabora.com; dkim=pass (1024-bit key) header.d=collabora.com header.i=nicolas.frattaroli@collabora.com header.b=Cl82lHQk; arc=pass smtp.client-ip=136.143.188.112
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=collabora.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=collabora.com
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 52CC0368264;
+	Mon,  8 Jun 2026 11:48:52 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
+ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
+	t=1780919335; cv=none; b=aaiDAdUX+yAx/uV2DyBcCcB2amFDb+XVcWrmDx43FQ2e8czRg865FbrZaqEYD9g0bfqL5+uVg6OS507N5WzFz/jsl7C3r87Y2CkY1P1S4V0uD1LZqbnkwY2RNgakYEQg6k6r5IQ/pjWGGD3mQ1Te1y8yvYgd5/EPNshWaD0phLs=
+ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
+	s=arc-20240116; t=1780919335; c=relaxed/simple;
+	bh=Qi//ki3Q/E3NLB0GsPwVcIYY6QCDBWacgogwtORSrVI=;
+	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
+	 In-Reply-To:Content-Type; b=lsVR1tEA7jXZI7uYOV6d8/VTudDIbV10S5OWzoFKkgiPSr17dPzHusPW5qIzLU3ygRtvelqugWXKv0IrjwkuVvi1zWhkL+f+VnZWmtsYQubKndtuFpKPdf0mwFjZX/jbwwmVHgKysqwVC9PfSUMY1u3MuGeNtXBG4AJR+zKxWhk=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=QHpZyv+b; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=collabora.com header.i=nicolas.frattaroli@collabora.com header.b="Cl82lHQk"
-ARC-Seal: i=1; a=rsa-sha256; t=1780919192; cv=none; 
-	d=zohomail.com; s=zohoarc; 
-	b=IZnK2esWM0HeOWRj3yx5gkyStBBtajBWiqmaUsCjO52urHadfjRXH0YqXZ4WNnXUQ9OV8juCa3JLu6EhC1hwK7sjfRiYyxVKbNcDLOWBvvvAntjx2a1vMEYHUJVPKyjZkkINklMpJKRnd05vbKSO0aLW8o3giROdKevaFw2/3I4=
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=zohomail.com; s=zohoarc; 
-	t=1780919192; h=Content-Type:Content-Transfer-Encoding:Cc:Cc:Date:Date:From:From:In-Reply-To:MIME-Version:Message-ID:References:Subject:Subject:To:To:Message-Id:Reply-To; 
-	bh=Gpm9tofYuThT3DdGwbZoDTaTeH3rNfgAGSRNVApSjTA=; 
-	b=MjLMHJMJsiX3qU8m/0Hea+0zzwe7Tun5Wucb6WaG9sOnvcMkr8RCO3he/BKwNMLAZBb7m1JoVSzWQDpFn/boy4KO4xuwVokXVaY7KeiXOr5IL6OJi41aAke1gqRTW/xP+XoXkekHDGCew9Fm44oboBOo+T7Jp/2/efL6gY8fekM=
-ARC-Authentication-Results: i=1; mx.zohomail.com;
-	dkim=pass  header.i=collabora.com;
-	spf=pass  smtp.mailfrom=nicolas.frattaroli@collabora.com;
-	dmarc=pass header.from=<nicolas.frattaroli@collabora.com>
-DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed; t=1780919192;
-	s=zohomail; d=collabora.com; i=nicolas.frattaroli@collabora.com;
-	h=From:From:To:To:Cc:Cc:Subject:Subject:Date:Date:Message-ID:In-Reply-To:References:MIME-Version:Content-Transfer-Encoding:Content-Type:Message-Id:Reply-To;
-	bh=Gpm9tofYuThT3DdGwbZoDTaTeH3rNfgAGSRNVApSjTA=;
-	b=Cl82lHQk7yZPYok+4QE6Mte20DyBADBoLssm/B+KOJH+STu91OCSkc/s1lyB7D/N
-	GUQ+UPmgspfbzQTonfskiaEFKJiPj/f7jSQa6FcTXv/t+DLLmYpv0fiCp+BJTRvrvkS
-	pHLiMtRJL7ahRcpgooRxtlveXBA3KSEGF8esCsaQ=
-Received: by mx.zohomail.com with SMTPS id 178091919124684.90521949997265;
-	Mon, 8 Jun 2026 04:46:31 -0700 (PDT)
-From: Nicolas Frattaroli <nicolas.frattaroli@collabora.com>
-To: sashiko-reviews@lists.linux.dev
-Cc: dri-devel@lists.freedesktop.org
-Subject: Re: [PATCH 1/2] drm/display: hdmi: Only allow BPC values of 8, 10,
- 12 and 16
-Date: Mon, 08 Jun 2026 13:46:27 +0200
-Message-ID: <ySc94bL0TleBGnFIdX95hg@collabora.com>
-In-Reply-To: <20260608113023.67AFB1F00893@smtp.kernel.org>
-References:
- <20260608-hdmi-max-bpc-fix-v1-1-6e8dcebc7274@collabora.com>
- <20260608113023.67AFB1F00893@smtp.kernel.org>
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="QHpZyv+b"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 34E171F00893;
+	Mon,  8 Jun 2026 11:48:50 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=kernel.org;
+	s=k20260515; t=1780919331;
+	bh=xLs1p+raQgffK9Erx17DIOFVPHuc24WDfCOYC0oaqYU=;
+	h=Date:Subject:To:Cc:References:From:In-Reply-To;
+	b=QHpZyv+bYQmmtEbXoRNmk6rV1w7q4lThupTRIp/v56GNTV8DAzE7VpnHjoIkM4aVv
+	 vE3Q4W8n/Q+E4UOElfh7H8zy1JGzNFRrNSOAMFKkLPVWyQRrWCKRPexB25VbbWiPLZ
+	 HGS9gg/R58/r4XCFBn8rhtqyHMvWc0erMsV25efRLhnta7uglNd9vNKhmrUWl3WTxl
+	 JyODYlZ2FPxLxuojXSJkE9e7jpNxiuOBvELV+cGbxgOekAU3RHJ+tP02IMkAR2C6NL
+	 oXGNG9S+tWdP+FRbX7aBqESDCo2US7o5BWEFA69DJLFT5NY/z7igGCcl7Jnt2cLzfL
+	 pghIAKQkQ/oNA==
+Message-ID: <52c113ef-e81e-476a-a62c-3cd09e7fdcbf@kernel.org>
+Date: Mon, 8 Jun 2026 13:48:47 +0200
 Precedence: bulk
 X-Mailing-List: sashiko-reviews@lists.linux.dev
 List-Id: <sashiko-reviews.lists.linux.dev>
 List-Subscribe: <mailto:sashiko-reviews+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:sashiko-reviews+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Transfer-Encoding: 7Bit
-Content-Type: text/plain; charset="utf-8"
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH v3] HID: i2c-hid: Refactor _DSM helper and add
+ i2c-hid-acpi-prp0001 driver
+To: =?UTF-8?B?6LCi6Ie06YKmIChYSUUgWmhpYmFuZyk=?= <Yeking@Red54.com>,
+ linux-input@vger.kernel.org, dmitry.torokhov@gmail.com, bentiss@kernel.org
+Cc: dianders@chromium.org, jikos@kernel.org, linux-kernel@vger.kernel.org,
+ sashiko-bot@kernel.org, sashiko-reviews@lists.linux.dev, superm1@kernel.org
+References: <tencent_3310584FFECD3CBBB563FC8C079ED072F40A@qq.com>
+ <tencent_E0B44D3DB1D67A7F20CF82ED6D3F0881FE08@qq.com>
+From: Hans de Goede <hansg@kernel.org>
+Content-Language: en-US, nl
+In-Reply-To: <tencent_E0B44D3DB1D67A7F20CF82ED6D3F0881FE08@qq.com>
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
 
-On Monday, 8 June 2026 13:30:22 Central European Summer Time sashiko-bot@kernel.org wrote:
-> Thank you for your contribution! Sashiko AI review found 1 potential issue(s) to consider:
-> 
-> Pre-existing issues:
-> - [High] The function `sink_supports_format_bpc` explicitly permits 16 BPC for RGB444 and YCBCR444 formats without verifying if the sink's EDID actually supports 48-bit deep color.
-> --
-> 
-> commit 767fa3cc832e8b93f697ad91bcc66e5b3b1ed85d
-> Author: Nicolas Frattaroli <nicolas.frattaroli@collabora.com>
-> 
-> drm/display: hdmi: Only allow BPC values of 8, 10, 12 and 16
-> 
-> As per the comment in sink_supports_format_bpc(), CTA-861-F defines that
-> only bits-per-channel values of 8, 10, 12 and 16 are allowed for HDMI.
-> Allowing more than this has surprising consequences for the atomic check
-> phase.
-> 
-> > diff --git a/drivers/gpu/drm/display/drm_hdmi_state_helper.c b/drivers/gpu/drm/display/drm_hdmi_state_helper.c
-> > index 4867edbf2622b..b06499dbfe8b3 100644
-> > --- a/drivers/gpu/drm/display/drm_hdmi_state_helper.c
-> > +++ b/drivers/gpu/drm/display/drm_hdmi_state_helper.c
-> > @@ -419,6 +419,16 @@ sink_supports_format_bpc(const struct drm_connector *connector,
-> >  		return false;
-> >  	}
-> >  
-> > +	switch (bpc) {
-> > +	case 8:
-> > +	case 10:
-> > +	case 12:
-> > +	case 16:
-> 
-> [Severity: High]
-> This is a pre-existing issue, but does explicitly allowing 16 BPC here
-> expose a missing validation check for 48-bit deep color further down in
-> sink_supports_format_bpc()?
-> 
-> When checking DRM_OUTPUT_COLOR_FORMAT_RGB444 and
-> DRM_OUTPUT_COLOR_FORMAT_YCBCR444, the code validates 10 BPC and 12 BPC
-> against the EDID flags, but completely omits checking 16 BPC against
-> DRM_EDID_HDMI_DC_48:
-> 
-> drivers/gpu/drm/display/drm_hdmi_state_helper.c:sink_supports_format_bpc() {
-> 	...
-> 	case DRM_OUTPUT_COLOR_FORMAT_RGB444:
-> 		...
-> 		if (bpc == 10 && !(info->edid_hdmi_rgb444_dc_modes & DRM_EDID_HDMI_DC_30)) {
-> 			drm_dbg_kms(dev, "10 BPC but sink doesn't support Deep Color 30.\n");
-> 			return false;
-> 		}
-> 
-> 		if (bpc == 12 && !(info->edid_hdmi_rgb444_dc_modes & DRM_EDID_HDMI_DC_36)) {
-> 			drm_dbg_kms(dev, "12 BPC but sink doesn't support Deep Color 36.\n");
-> 			return false;
-> 		}
-> 
-> 		drm_dbg_kms(dev, "RGB format supported in that configuration.\n");
-> 		return true;
-> 	...
-> }
-> 
-> If the TMDS clock limit permits it, the driver might incorrectly conclude
-> that the sink supports 16 BPC and program the hardware accordingly, which
-> could result in a black screen if the monitor doesn't actually support
-> 48-bit deep color.
-> 
-> Should a check for (info->edid_hdmi_rgb444_dc_modes & DRM_EDID_HDMI_DC_48)
-> be added for the RGB444 and YCBCR444 cases?
+Hi,
 
-Finally, we have automated the ultimate Linux kernel review response:
-"while you're at it, can you fix everything else wrong in this code?"
+On 6-Jun-26 6:06 PM, 谢致邦 (XIE Zhibang) wrote:
+> Move the _DSM call that gets the HID descriptor address from
+> i2c-hid-acpi.c into i2c-hid-acpi.h as a static inline so both the ACPI
+> and the new PRP0001 driver can use it. While refactoring, move the
+> blacklist check and the _DSM call to the top of probe() to avoid a
+> pointless alloc when the device is blacklisted or does not implement the
+> _DSM.
+> 
+> Some devices, for example the Lenovo KaiTian N60d and Inspur CP300L3,
+> are declared with _HID "PRP0001" and _DSD compatible "hid-over-i2c" but
+> lack "hid-descr-addr" from the _DSD and provide the HID descriptor
+> address only through an ACPI _DSM. The OF driver fails to probe them
+> because it requires hid-descr-addr. Add a new driver that handles these
+> devices by calling the shared _DSM helper.
+> 
+> Fixes: b33752c30023 ("HID: i2c-hid: Reorganize so ACPI and OF are separate modules")
+> Signed-off-by: 谢致邦 (XIE Zhibang) <Yeking@Red54.com>
 
-(No, this does not expose any pre-existing issue; the validation is
-more restrictive than it was before. That it's still not restrictive
-enough in all cases does not introduce a new problem.)
+Thank you for the new version.
 
+> ---
+> v2: Name the unused parameter and document why
+> acpi_device_fix_up_power() is skipped.
+> v3: Add a dev_warn() asking users to contact vendors for firmware
+> updates, and use existing locals in devm_kzalloc() and
+> acpi_device_fix_up_power().
 > 
-> > +		break;
-> > +	default:
-> > +		return false;
-> > +	}
-> > +
-> >  	if (!info->is_hdmi &&
-> >  	    (format != DRM_OUTPUT_COLOR_FORMAT_RGB444 || bpc != 8)) {
-> >  		drm_dbg_kms(dev, "DVI Monitors require an RGB output at 8 bpc\n");
+>  drivers/hid/i2c-hid/Kconfig                | 18 ++++
+>  drivers/hid/i2c-hid/Makefile               |  1 +
+>  drivers/hid/i2c-hid/i2c-hid-acpi-prp0001.c | 98 ++++++++++++++++++++++
+>  drivers/hid/i2c-hid/i2c-hid-acpi.c         | 52 ++++--------
+>  drivers/hid/i2c-hid/i2c-hid-acpi.h         | 32 +++++++
+>  5 files changed, 163 insertions(+), 38 deletions(-)
+>  create mode 100644 drivers/hid/i2c-hid/i2c-hid-acpi-prp0001.c
+>  create mode 100644 drivers/hid/i2c-hid/i2c-hid-acpi.h
 > 
-> 
+> diff --git a/drivers/hid/i2c-hid/Kconfig b/drivers/hid/i2c-hid/Kconfig
+> index e8d51f410cc1..7db8b2abff78 100644
+> --- a/drivers/hid/i2c-hid/Kconfig
+> +++ b/drivers/hid/i2c-hid/Kconfig
+> @@ -22,6 +22,24 @@ config I2C_HID_ACPI
+>  	  will be called i2c-hid-acpi.  It will also build/depend on the
+>  	  module i2c-hid.
+>  
+> +config I2C_HID_ACPI_PRP0001
+> +	tristate "Driver for PRP0001 devices missing hid-descr-addr"
+> +	depends on ACPI
+> +	depends on DRM || !DRM
+> +	select I2C_HID_CORE
+> +	help
+> +	  Say Y here if you want support for I2C HID touchpads that
+> +	  are declared with _HID "PRP0001" and _DSD compatible
+> +	  "hid-over-i2c" but lack the "hid-descr-addr" property from
+> +	  the _DSD. The HID descriptor address is instead provided
+> +	  through an ACPI _DSM. Known affected devices include the
+> +	  Lenovo KaiTian N60d and Inspur CP300L3.
+> +
+> +	  If unsure, say N.
+> +
+> +	  This support is also available as a module. If so, the
+> +	  module will be called i2c-hid-acpi-prp0001.
+> +
+>  config I2C_HID_OF
+>  	tristate "HID over I2C transport layer Open Firmware driver"
+>  	# No "depends on OF" because this can also be used for manually
+> diff --git a/drivers/hid/i2c-hid/Makefile b/drivers/hid/i2c-hid/Makefile
+> index 55bd5e0f35af..da420c1a8ec6 100644
+> --- a/drivers/hid/i2c-hid/Makefile
+> +++ b/drivers/hid/i2c-hid/Makefile
+> @@ -9,6 +9,7 @@ i2c-hid-objs					=  i2c-hid-core.o
+>  i2c-hid-$(CONFIG_DMI)				+= i2c-hid-dmi-quirks.o
+>  
+>  obj-$(CONFIG_I2C_HID_ACPI)			+= i2c-hid-acpi.o
+> +obj-$(CONFIG_I2C_HID_ACPI_PRP0001)		+= i2c-hid-acpi-prp0001.o
+>  obj-$(CONFIG_I2C_HID_OF)			+= i2c-hid-of.o
+>  obj-$(CONFIG_I2C_HID_OF_ELAN)			+= i2c-hid-of-elan.o
+>  obj-$(CONFIG_I2C_HID_OF_GOODIX)			+= i2c-hid-of-goodix.o
+> diff --git a/drivers/hid/i2c-hid/i2c-hid-acpi-prp0001.c b/drivers/hid/i2c-hid/i2c-hid-acpi-prp0001.c
+> new file mode 100644
+> index 000000000000..b54370a938ab
+> --- /dev/null
+> +++ b/drivers/hid/i2c-hid/i2c-hid-acpi-prp0001.c
+> @@ -0,0 +1,98 @@
+> +// SPDX-License-Identifier: GPL-2.0-only
+> +/*
+> + * HID over I2C driver for PRP0001 devices missing hid-descr-addr
+> + *
+> + * Some devices, for example the Lenovo KaiTian N60d and Inspur CP300L3, use
+> + * _HID "PRP0001" with _DSD compatible "hid-over-i2c" but lack "hid-descr-addr"
+> + * from the _DSD. The HID descriptor address is provided only through an ACPI
+> + * _DSM. The TPD0 node in the DSDT shows _DSM Function 1 returning 0x20.
+> + *
+> + * Copyright (C) 2026 谢致邦 (XIE Zhibang) <Yeking@Red54.com>
+> + */
+> +
+> +#include <linux/delay.h>
+> +#include <linux/device.h>
+> +#include <linux/i2c.h>
+> +#include <linux/module.h>
+> +#include <linux/of.h>
+> +
+> +#include "i2c-hid.h"
+> +#include "i2c-hid-acpi.h"
+> +
+> +static int i2c_hid_acpi_prp0001_power_up(struct i2chid_ops *ops)
+> +{
+> +	/* give the device time to power up */
+> +	msleep(250);
+> +	return 0;
+> +}
+> +
+> +static struct i2chid_ops i2c_hid_acpi_prp0001_ops = {
+> +	.power_up = i2c_hid_acpi_prp0001_power_up,
+> +	/*
+> +	 * No .restore_sequence needed: the _DSM on these devices returns a
+> +	 * constant (0x20) with no side effects, unlike some PNP0C50 _DSM
+> +	 * implementations that switch the hardware between PS/2 and I2C modes.
+> +	 */
+> +};
+> +
+> +static int i2c_hid_acpi_prp0001_probe(struct i2c_client *client)
+> +{
+> +	struct device *dev = &client->dev;
+> +	struct acpi_device *adev;
+> +	u16 hid_descriptor_address;
+> +	int ret;
+> +
+> +	/* If hid-descr-addr is present, let i2c-hid-of handle it */
+> +	if (device_property_present(dev, "hid-descr-addr"))
+> +		return -ENODEV;
+> +
+> +	adev = ACPI_COMPANION(dev);
+> +	if (!adev)
+> +		return -ENODEV;
+> +
+> +	ret = i2c_hid_acpi_get_descriptor(adev);
+> +	if (ret < 0)
+> +		return ret;
+> +	dev_warn(dev,
+> +		 "hid-descr-addr device property NOT found, using ACPI _DSM fallback. Contact vendor for firmware update!\n");
+> +	hid_descriptor_address = ret;
+> +
+> +	/*
+> +	 * No acpi_device_fix_up_power() needed: TPD0 has no _PS0, _PS3, _PSC
+> +	 * or _PRx methods and follows I2C bus power.
+> +	 */
+> +	return i2c_hid_core_probe(client, &i2c_hid_acpi_prp0001_ops,
+> +				  hid_descriptor_address, 0);
+> +}
+> +
+> +static const struct of_device_id i2c_hid_acpi_prp0001_of_match[] = {
+> +	{ .compatible = "hid-over-i2c" },
+> +	{},
+> +};
+> +MODULE_DEVICE_TABLE(of, i2c_hid_acpi_prp0001_of_match);
+> +
+> +static const struct i2c_device_id i2c_hid_acpi_prp0001_id[] = {
+> +	{ .name = "hid-over-i2c" },
+> +	{ }
+> +};
+> +MODULE_DEVICE_TABLE(i2c, i2c_hid_acpi_prp0001_id);
+> +
+> +static struct i2c_driver i2c_hid_acpi_prp0001_driver = {
+> +	.driver = {
+> +		.name	= "i2c_hid_acpi_prp0001",
+> +		.pm	= &i2c_hid_core_pm,
+> +		.probe_type = PROBE_PREFER_ASYNCHRONOUS,
+> +		.of_match_table = of_match_ptr(i2c_hid_acpi_prp0001_of_match),
+> +	},
+> +
+> +	.probe		= i2c_hid_acpi_prp0001_probe,
+> +	.remove		= i2c_hid_core_remove,
+> +	.shutdown	= i2c_hid_core_shutdown,
+> +	.id_table	= i2c_hid_acpi_prp0001_id,
+> +};
+> +
+> +module_i2c_driver(i2c_hid_acpi_prp0001_driver);
+> +
+> +MODULE_DESCRIPTION("HID over I2C driver for PRP0001 devices missing hid-descr-addr");
+> +MODULE_AUTHOR("谢致邦 (XIE Zhibang) <Yeking@Red54.com>");
+> +MODULE_LICENSE("GPL");
+> diff --git a/drivers/hid/i2c-hid/i2c-hid-acpi.c b/drivers/hid/i2c-hid/i2c-hid-acpi.c
+> index abd700a101f4..13f977d6aab6 100644
+> --- a/drivers/hid/i2c-hid/i2c-hid-acpi.c
+> +++ b/drivers/hid/i2c-hid/i2c-hid-acpi.c
+> @@ -25,9 +25,9 @@
+>  #include <linux/kernel.h>
+>  #include <linux/module.h>
+>  #include <linux/pm.h>
+> -#include <linux/uuid.h>
+>  
+>  #include "i2c-hid.h"
+> +#include "i2c-hid-acpi.h"
+>  
+>  struct i2c_hid_acpi {
+>  	struct i2chid_ops ops;
+> @@ -48,39 +48,11 @@ static const struct acpi_device_id i2c_hid_acpi_blacklist[] = {
+>  	{ }
+>  };
+>  
+> -/* HID I²C Device: 3cdff6f7-4267-4555-ad05-b30a3d8938de */
+> -static guid_t i2c_hid_guid =
+> -	GUID_INIT(0x3CDFF6F7, 0x4267, 0x4555,
+> -		  0xAD, 0x05, 0xB3, 0x0A, 0x3D, 0x89, 0x38, 0xDE);
+> -
+> -static int i2c_hid_acpi_get_descriptor(struct i2c_hid_acpi *ihid_acpi)
+> -{
+> -	struct acpi_device *adev = ihid_acpi->adev;
+> -	acpi_handle handle = acpi_device_handle(adev);
+> -	union acpi_object *obj;
+> -	u16 hid_descriptor_address;
+> -
+> -	if (acpi_match_device_ids(adev, i2c_hid_acpi_blacklist) == 0)
+> -		return -ENODEV;
+> -
+> -	obj = acpi_evaluate_dsm_typed(handle, &i2c_hid_guid, 1, 1, NULL,
+> -				      ACPI_TYPE_INTEGER);
+> -	if (!obj) {
+> -		acpi_handle_err(handle, "Error _DSM call to get HID descriptor address failed\n");
+> -		return -ENODEV;
+> -	}
+> -
+> -	hid_descriptor_address = obj->integer.value;
+> -	ACPI_FREE(obj);
+> -
+> -	return hid_descriptor_address;
+> -}
+> -
+
+Instead of moving this to i2c-hid-acpi.h, please make it non static an
+export it using EXPORT_SYMBOL_GPL() and only put a prototype in i2c-hid-acpi.h .
+
+The change to make it take an acpi_device pointer instead of i2c_hid_acpi *ihid_acpi
+should be kept, but without moving the function to the .h file.
+
+Regards,
+
+Hans
+
+
+
+>  static void i2c_hid_acpi_restore_sequence(struct i2chid_ops *ops)
+>  {
+>  	struct i2c_hid_acpi *ihid_acpi = container_of(ops, struct i2c_hid_acpi, ops);
+>  
+> -	i2c_hid_acpi_get_descriptor(ihid_acpi);
+> +	i2c_hid_acpi_get_descriptor(ihid_acpi->adev);
+>  }
+>  
+>  static void i2c_hid_acpi_shutdown_tail(struct i2chid_ops *ops)
+> @@ -93,24 +65,28 @@ static void i2c_hid_acpi_shutdown_tail(struct i2chid_ops *ops)
+>  static int i2c_hid_acpi_probe(struct i2c_client *client)
+>  {
+>  	struct device *dev = &client->dev;
+> +	struct acpi_device *adev = ACPI_COMPANION(dev);
+>  	struct i2c_hid_acpi *ihid_acpi;
+>  	u16 hid_descriptor_address;
+>  	int ret;
+>  
+> -	ihid_acpi = devm_kzalloc(&client->dev, sizeof(*ihid_acpi), GFP_KERNEL);
+> +	if (acpi_match_device_ids(adev, i2c_hid_acpi_blacklist) == 0)
+> +		return -ENODEV;
+> +
+> +	ret = i2c_hid_acpi_get_descriptor(adev);
+> +	if (ret < 0)
+> +		return ret;
+> +	hid_descriptor_address = ret;
+> +
+> +	ihid_acpi = devm_kzalloc(dev, sizeof(*ihid_acpi), GFP_KERNEL);
+>  	if (!ihid_acpi)
+>  		return -ENOMEM;
+>  
+> -	ihid_acpi->adev = ACPI_COMPANION(dev);
+> +	ihid_acpi->adev = adev;
+>  	ihid_acpi->ops.shutdown_tail = i2c_hid_acpi_shutdown_tail;
+>  	ihid_acpi->ops.restore_sequence = i2c_hid_acpi_restore_sequence;
+>  
+> -	ret = i2c_hid_acpi_get_descriptor(ihid_acpi);
+> -	if (ret < 0)
+> -		return ret;
+> -	hid_descriptor_address = ret;
+> -
+> -	acpi_device_fix_up_power(ihid_acpi->adev);
+> +	acpi_device_fix_up_power(adev);
+>  
+>  	return i2c_hid_core_probe(client, &ihid_acpi->ops,
+>  				  hid_descriptor_address, 0);
+> diff --git a/drivers/hid/i2c-hid/i2c-hid-acpi.h b/drivers/hid/i2c-hid/i2c-hid-acpi.h
+> new file mode 100644
+> index 000000000000..8cebbeebcc23
+> --- /dev/null
+> +++ b/drivers/hid/i2c-hid/i2c-hid-acpi.h
+> @@ -0,0 +1,32 @@
+> +/* SPDX-License-Identifier: GPL-2.0-only */
+> +
+> +#ifndef _I2C_HID_ACPI_H
+> +#define _I2C_HID_ACPI_H
+> +
+> +#include <linux/acpi.h>
+> +#include <linux/uuid.h>
+> +
+> +static inline int i2c_hid_acpi_get_descriptor(struct acpi_device *adev)
+> +{
+> +	/* HID I²C Device: 3cdff6f7-4267-4555-ad05-b30a3d8938de */
+> +	static const guid_t i2c_hid_guid =
+> +		GUID_INIT(0x3CDFF6F7, 0x4267, 0x4555,
+> +			  0xAD, 0x05, 0xB3, 0x0A, 0x3D, 0x89, 0x38, 0xDE);
+> +
+> +	acpi_handle handle = acpi_device_handle(adev);
+> +	union acpi_object *obj;
+> +	u16 addr;
+> +
+> +	obj = acpi_evaluate_dsm_typed(handle, &i2c_hid_guid,
+> +				      1, 1, NULL, ACPI_TYPE_INTEGER);
+> +	if (!obj) {
+> +		acpi_handle_err(handle, "Error _DSM call to get HID descriptor address failed\n");
+> +		return -ENODEV;
+> +	}
+> +
+> +	addr = obj->integer.value;
+> +	ACPI_FREE(obj);
+> +	return addr;
+> +}
+> +
+> +#endif
 
 
 
