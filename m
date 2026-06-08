@@ -1,200 +1,146 @@
 Received: from mail-ej1-f73.google.com (mail-ej1-f73.google.com [209.85.218.73])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9E5B03DA5C3
-	for <sashiko-reviews@lists.linux.dev>; Mon,  8 Jun 2026 18:20:24 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8D9363C4574
+	for <sashiko-reviews@lists.linux.dev>; Mon,  8 Jun 2026 18:22:58 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.218.73
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1780942827; cv=none; b=W7h1GdCFCvCDwLACJfbT1HzgKCpD2opmu3B8f63ktsvxE+3u1dtyQSaeII8yWsaZ+ggvYEOHjO2vm+NJi8s6CaySVDXo3ABUx1OjTIZSwQG4/gtnOfDzHVP2of2mTCmoqakg5b1O/Q7srWDZMXk5OxeL8i3yd19EWqfvK4a9//g=
+	t=1780942979; cv=none; b=roOF5kpNyrcvTD3RCe+0XcvGQOqjTMpYs1Fp1zIF6Wzf97PG6loblIVCds4We4uFsF4alffY0MrrbGH/+POS57HdHP4z5UNGHJRGAPOq3YOMV1c7NwDVfcpwJOMayn0Z66IjpUKYV5U9FpEh6j1i/k6fi6Fncemk2wRFyyFeXwM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1780942827; c=relaxed/simple;
-	bh=uDlD/Bu/PQ0e61cH+SHapBI07ybnECSXHATY9NVPzQY=;
+	s=arc-20240116; t=1780942979; c=relaxed/simple;
+	bh=v6Y3fa7kX8cOD75Cvz/PmmMEKU1iHPrCF8yX1Opx2XE=;
 	h=Date:In-Reply-To:Mime-Version:References:Message-ID:Subject:From:
-	 To:Cc:Content-Type; b=IL9HZFoX6PkHa6y/Ds79Fk3YpkgFFG86ge/1rXFwQb9TqCwA2HFXvTWnZpyFsh2hkksc5kSiq8t4UWtqTx2PGWbtLoMuq/D2LL9Rf3WtEXaZluyxAtHxEIqvzLK2SrLYvrs+p+QqSUeyOuVZxtZXw02d4dboKZO9caJuGrPhwqk=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=google.com; spf=pass smtp.mailfrom=flex--tarunsahu.bounces.google.com; dkim=pass (2048-bit key) header.d=google.com header.i=@google.com header.b=knSJvTU5; arc=none smtp.client-ip=209.85.218.73
+	 To:Cc:Content-Type; b=oaw2JzElRR7IuJWS9/WaG+QpTwVAI8IN0VKHOvm8CtCPkJM7hv1NNWKsNaUdMmFbanT5ec0aGw0qXL4ImEHn6zEfqoxX2WosrzaqskaoanCk/2BiaWMMQJ9fR3wXJ85DKNzWPM0XKYDBd4rRpi8mhUUfn/uf+PwZticLtj7k8o8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=google.com; spf=pass smtp.mailfrom=flex--tarunsahu.bounces.google.com; dkim=pass (2048-bit key) header.d=google.com header.i=@google.com header.b=LyhgVpJZ; arc=none smtp.client-ip=209.85.218.73
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=google.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=flex--tarunsahu.bounces.google.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=google.com header.i=@google.com header.b="knSJvTU5"
-Received: by mail-ej1-f73.google.com with SMTP id a640c23a62f3a-becd1c46294so449762566b.2
-        for <sashiko-reviews@lists.linux.dev>; Mon, 08 Jun 2026 11:20:24 -0700 (PDT)
+	dkim=pass (2048-bit key) header.d=google.com header.i=@google.com header.b="LyhgVpJZ"
+Received: by mail-ej1-f73.google.com with SMTP id a640c23a62f3a-bf5ea9d140eso203893166b.1
+        for <sashiko-reviews@lists.linux.dev>; Mon, 08 Jun 2026 11:22:58 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=google.com; s=20251104; t=1780942823; x=1781547623; darn=lists.linux.dev;
-        h=content-transfer-encoding:cc:to:from:subject:message-id:references
-         :mime-version:in-reply-to:date:from:to:cc:subject:date:message-id
-         :reply-to;
-        bh=pXH/4dC+kvIrN8dyPSz1oRdGYg1mvWltQA3ulgK7Yz4=;
-        b=knSJvTU5Le4PWT7jLjeUlXoj3d/COfOvpQ9SFpGD9QhbPAbFVrizpId1j6wcPwEYCt
-         aSKp/GGIrM+z9ayvLNyeMaE8NjtrFg+GOASD6R/GJsReGlTICLla/l6xcCZOSDyz/ivS
-         oz1ZdcrQv/St9iE+rcT6mQJJ5+wAwqNkeYujwO9VIeiC5awsbwZ0tmE28VfxJURvetTs
-         s6O9wwUP5VfKJueLlbZg3ku2Zs2GHDViaIXw5b6n1PhyJpGGF5pw9DVsiJp6e4d/OE/4
-         xJd2hjHNigUlbAbx/dgBBtWYMrIAb+Rs8qPRMsA/c7xTOVT/LWGkqB/26tUjzllJWzfM
-         7fCg==
+        d=google.com; s=20251104; t=1780942977; x=1781547777; darn=lists.linux.dev;
+        h=cc:to:from:subject:message-id:references:mime-version:in-reply-to
+         :date:from:to:cc:subject:date:message-id:reply-to;
+        bh=SosLKBVvUMZz/rhhs2ynRuPONsMChlqS4SGtsVqD34c=;
+        b=LyhgVpJZ9Fa7HF12f22NHUH3W9UI8iwBvf1ohgRhO8XnpRQLM9Vv/foZDP6PCodQlz
+         rwt1BIQRLP94ena8DdpS3KK1eXK5qy0O2c8aRFSJQMOjENmXZoSy/GlJnvXlg2sI/4Kh
+         6lHL2xwsLqE3gy/iXvcTwidm+9gEOhhhYV+aj4aOAAThpJm0OL3H50NpC6Uv8Pxn1/u2
+         JOYhnajsknCh8xHLm1QX7BN5GF5Y31FgW29nnYrHFiKkgWuRhZja/hL2eb6gdVpEQexI
+         g8RXVz9frA94LJpqkBWu3BTpe/EEXxhf6LrGHIT84KpwVbYr2KTeOHlCZw2M4Owm3xny
+         C96A==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20251104; t=1780942823; x=1781547623;
-        h=content-transfer-encoding:cc:to:from:subject:message-id:references
-         :mime-version:in-reply-to:date:x-gm-message-state:from:to:cc:subject
-         :date:message-id:reply-to;
-        bh=pXH/4dC+kvIrN8dyPSz1oRdGYg1mvWltQA3ulgK7Yz4=;
-        b=WmUANBvXIASij4iWOu8tZ/9cNgE60LLX6QjdhoR7/OpwesCOS3Y7iiDraeANViWU7U
-         BCYNmOAPpVMyHkXOXa15eo1IDS3/NQKyPRHCkd8KxIf8eFaHpOU/9IaytQymxYquzk41
-         nns5D2V8R752LhePFckHDPuNGzvzAZ0UAnYhsYGt+x4FgdSbBt3L1t1qa/0m2eghoxzU
-         Vv2SNuheufavXm3VG+AiqCr3pyY/cTPWWeB2B4q73uBhj75+1795lytLUNoqYAtJEoXi
-         /DVlGAQI12UGeB1u+GdLtNm3EBl2iWKelA545uxWkNSeOtgH8wmluvuziw7Vz2Bv50oN
-         VCsA==
-X-Gm-Message-State: AOJu0Yyz2Ck8IDfhgBHPBpGbyro9F9gBLemvIZVXkUGo+HC/1GapnjKs
-	0G4mx1+9wgxgwTLzaRD3RdKKNJeggKVieFybAysUkxPwFIXDPCcXju7T7DGZoaPQbbS9kSZRbxO
-	yMe4n0wNAPANjD6iFuI1p5gZBcn3nGQ7nfI7DQ4XLFgCbR66zOf42FZzbJtk6ZNXxM8FPuV8kkw
-	m2YzsM3B5xVvml7p2a97fIuMMQFgoGUMOKCc+/+yqDlj0qUx4TidLgvKUDVgo5wjBC
-X-Received: from ejbze21.prod.google.com ([2002:a17:906:ef95:b0:bf7:f52e:7ba0])
+        d=1e100.net; s=20251104; t=1780942977; x=1781547777;
+        h=cc:to:from:subject:message-id:references:mime-version:in-reply-to
+         :date:x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+        bh=SosLKBVvUMZz/rhhs2ynRuPONsMChlqS4SGtsVqD34c=;
+        b=aTsx/wdsgwVW50icbMbSAW55ljJkR2YZ2ITSMx9zoCdEQ3b/w6G8uMRwx4rlqI6Nqg
+         onk6GpM1y5BtuQTjlBeJbMbdxMOdR3IpSTrhRqP9I0KUUGI9ZCG1OcM0aHTco0ENfQir
+         mXCXKf2mW4RQzewbad7lpGIktD8lzfcq5t2DZfPKgMyX9iWlrZga91TDb8yFnap7t/Gs
+         R9Np+R3Umuv2AI+r/941r/SmijYccrgZwuHXDzoxDtETeGrGJDrV6SyLYj0ST4Mu+fhW
+         9AaEEan4qTjB6SW3V149ovbloEgOU8UPB8oRxEjykjWRlZXBrwedKD20G6YNzevfu1WF
+         MF6A==
+X-Gm-Message-State: AOJu0YzzNybKduTQUNv2ScJn9fRIV3+NOxGIEOxL0X6Wle0TMIeNuDsJ
+	DDsKRlclDrGMJAYwzgmrUfBp+CZ6KExiWTA7cdlZxdL6DLVPvPdCw3OJciqIpmAKhGyhFGsUyy+
+	jVRLXVW3iBSewMhPQLLKTBE8rV96tb96fhC0jmMxXReXgLmQKfvddG3fIS6UNuKg5cOS+uTs4cx
+	D1WLEemvtf+qPPkOpSwY3D3s6u0W53Xl0GRnOyzsDJxlbwQZ7Ct0cEaR2E1+1MBwtC
+X-Received: from ejet27.prod.google.com ([2002:a17:906:179b:b0:bf0:cf6e:c85])
  (user=tarunsahu job=prod-delivery.src-stubby-dispatcher) by
- 2002:a17:907:a70b:b0:bec:b4e3:e930 with SMTP id a640c23a62f3a-bf370477ec4mr849247466b.12.1780942822361;
- Mon, 08 Jun 2026 11:20:22 -0700 (PDT)
-Date: Mon, 08 Jun 2026 18:20:21 +0000
-In-Reply-To: <20260605172142.B18F51F00898@smtp.kernel.org>
+ 2002:a17:907:2d89:b0:bee:72b9:f5a4 with SMTP id a640c23a62f3a-bf3a70fdd2emr636456966b.13.1780942976837;
+ Mon, 08 Jun 2026 11:22:56 -0700 (PDT)
+Date: Mon, 08 Jun 2026 18:22:56 +0000
+In-Reply-To: <20260605172557.DC6A71F00898@smtp.kernel.org>
 Precedence: bulk
 X-Mailing-List: sashiko-reviews@lists.linux.dev
 List-Id: <sashiko-reviews.lists.linux.dev>
 List-Subscribe: <mailto:sashiko-reviews+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:sashiko-reviews+unsubscribe@lists.linux.dev>
 Mime-Version: 1.0
-References: <48777f4749fa43d5648085dbb2037aa99c144a88.1780676742.git.tarunsahu@google.com>
- <20260605172142.B18F51F00898@smtp.kernel.org>
-Message-ID: <9huz8q8oyjve.fsf@tarunix.c.googlers.com>
-Subject: Re: [RFC PATCH v2 06/10] kvm: guest_memfd: Add support for freezing
- and unfreezing mappings
+References: <4b2216f5c459fe699a3f62464cbc765624e20ae6.1780676742.git.tarunsahu@google.com>
+ <20260605172557.DC6A71F00898@smtp.kernel.org>
+Message-ID: <9huz5x3syjr3.fsf@tarunix.c.googlers.com>
+Subject: Re: [RFC PATCH v2 07/10] kvm: guest_memfd_luo: add support for
+ guest_memfd preservation
 From: tarunsahu@google.com
 To: sashiko-reviews@lists.linux.dev
 Cc: kvm@vger.kernel.org
-Content-Type: text/plain; charset="utf-8"
-Content-Transfer-Encoding: quoted-printable
+Content-Type: text/plain; charset="UTF-8"
 
 sashiko-bot@kernel.org writes:
 
-> Thank you for your contribution! Sashiko AI review found 1 potential issu=
-e(s) to consider:
-> - [High] A malicious tenant can inflict a cross-tenant denial-of-service =
-by holding the global `kvm_gmem_freeze_srcu` read lock during massive, unbo=
-unded `fallocate()` operations, blocking `kvm_gmem_freeze()` for other VMs.
-> --
->
-> commit 5ee5700d9538d9bd5f29f00de6d11fcc22d28ecc
-> Author: Tarun Sahu <tarunsahu@google.com>
->
-> kvm: guest_memfd: Add support for freezing and unfreezing mappings
->
-> This commit introduces freezing and unfreezing for guest_memfd mappings t=
-o
-> prevent fallocate and page fault allocations during preservation. It uses=
- a
-> global SRCU structure to synchronize read-side operations with
-> kvm_gmem_freeze().
->
->> diff --git a/virt/kvm/guest_memfd.c b/virt/kvm/guest_memfd.c
->> index 6740ae2bf948d..b94639cdf3126 100644
->> --- a/virt/kvm/guest_memfd.c
->> +++ b/virt/kvm/guest_memfd.c
 > [ ... ]
->> @@ -273,16 +284,30 @@ static long kvm_gmem_allocate(struct inode *inode,=
- loff_t offset, loff_t len)
->>  static long kvm_gmem_fallocate(struct file *file, int mode, loff_t offs=
-et,
->>  			       loff_t len)
->>  {
->> +	struct inode *inode =3D file_inode(file);
->>  	int ret;
->> +	int idx;
->> =20
->> -	if (!(mode & FALLOC_FL_KEEP_SIZE))
->> -		return -EOPNOTSUPP;
->> +	idx =3D srcu_read_lock(&kvm_gmem_freeze_srcu);
->> +	if (kvm_gmem_is_frozen(inode)) {
->> +		srcu_read_unlock(&kvm_gmem_freeze_srcu, idx);
->> +		return -EPERM;
->> +	}
->> =20
-> [ ... ]
->> +	if (!PAGE_ALIGNED(offset) || !PAGE_ALIGNED(len)) {
->> +		ret =3D -EINVAL;
->> +		goto out;
->> +	}
->> =20
->>  	if (mode & FALLOC_FL_PUNCH_HOLE)
->>  		ret =3D kvm_gmem_punch_hole(file_inode(file), offset, len);
->>  	else
->>  		ret =3D kvm_gmem_allocate(file_inode(file), offset, len);
->
-> [Severity: High]
-> Does this code allow a malicious tenant to inflict a cross-tenant denial =
-of
-> service?
->
-> The srcu_read_lock() is acquired at the beginning of kvm_gmem_fallocate()=
- and
-> held across the entire kvm_gmem_punch_hole() or kvm_gmem_allocate() execu=
-tion.
-> Because a guest_memfd can be terabytes in size, these operations could it=
-erate
-> over millions of pages and take a long time to complete.
->
-> During this entire time, the global SRCU read lock is held uninterruptibl=
-y
-> (yielding via cond_resched() in kvm_gmem_allocate() does not drop SRCU).
->
->> =20
->>  	if (!ret)
->>  		file_modified(file);
->> +
->> +out:
->> +	srcu_read_unlock(&kvm_gmem_freeze_srcu, idx);
->>  	return ret;
->>  }
-> [ ... ]
->> @@ -1014,5 +1053,61 @@ void kvm_gmem_exit(void)
-> [ ... ]
->> +void kvm_gmem_freeze(struct inode *inode, bool freeze)
+>> +static bool kvm_gmem_luo_can_preserve(struct liveupdate_file_handler *handler, struct file *file)
 >> +{
->> +	u64 flags =3D READ_ONCE(GMEM_I(inode)->flags);
+>> +	struct inode *inode = file_inode(file);
+>> +	struct gmem_file *gmem_file = file->private_data;
+>> +	struct kvm *kvm = gmem_file->kvm;
+>
+> [Severity: Critical]
+> Does this code dereference file->private_data before confirming the file
+> is actually a guest_memfd?
+>
+> The LUO framework might pass unrelated file descriptors where
+> private_data is NULL. By extracting gmem_file->kvm before checking
+> inode->i_sb->s_magic, could this cause a NULL pointer dereference
+> when evaluating unrelated files?
+
+Oops, This is a bug, I will update it.
+
+>
 >> +
->> +	if (freeze)
->> +		flags |=3D GUEST_MEMFD_F_MAPPING_FROZEN;
->> +	else
->> +		flags &=3D ~GUEST_MEMFD_F_MAPPING_FROZEN;
+>> +	if (inode->i_sb->s_magic != GUEST_MEMFD_MAGIC)
+>> +		return 0;
 >> +
->> +	WRITE_ONCE(GMEM_I(inode)->flags, flags);
+> [ ... ]
+>> +static int kvm_gmem_luo_preserve(struct liveupdate_file_op_args *args)
+>> +{
+> [ ... ]
+>> +	end_index = size >> PAGE_SHIFT;
 >> +
->> +	if (freeze)
->> +		synchronize_srcu(&kvm_gmem_freeze_srcu);
+>> +	ser = kho_alloc_preserve(sizeof(*ser));
 >
 > [Severity: High]
-> Can this synchronize_srcu() block indefinitely waiting on another tenant?
+> Could this call trigger a NULL pointer dereference if the KHO subsystem
+> is disabled?
 >
-> Since the SRCU is global, calling kvm_gmem_freeze() on a completely unrel=
-ated
-> VM will invoke synchronize_srcu(&kvm_gmem_freeze_srcu). This will wait fo=
-r the
-> first tenant's massive fallocate() to finish.
+> According to the KHO subsystem guidelines, all callers must explicitly
+> gate KHO usage on kho_is_enabled(). It looks like kvm_gmem_luo_init()
+> registers the file handler unconditionally, and this path invokes
+> kho_alloc_preserve() and other KHO serialization APIs without checking.
 >
-> The loop in kvm_gmem_allocate() checks kvm_gmem_is_frozen(inode) on its o=
-wn
-> inode, so it will not abort when a different inode is frozen. This effect=
-ively
-> allows an unprivileged tenant to stall live updates and preservation
-> system-wide.
+> Should this function (or the initialization) verify kho_is_enabled()
+> before interacting with the KHO subsystem?
 
-Agree. With having per-cpu have a problem with the per-cpu structure for
-the inode freeze as it is not tracked in cgroup (IIUC). which might result =
-in
-OOM on host when a lot of guest_memfd allocation are triggered.
+Luo already does the check, this review in incorrect.
 
-We can use per inode rw_semaphore, but they will not be per-cpu, so
-there will be cache line bouncing. Which will affect only slow path
-(page fault allocation, fallocate). I would like to discuss on the best
-strategy.
+> [ ... ]
+>> +static void kvm_gmem_luo_finish(struct liveupdate_file_op_args *args)
+>> +{
+>> +	struct guest_memfd_luo_ser *ser;
+>> +	struct guest_memfd_luo_folio_ser *folios_ser;
+>> +
+>> +	/* Nothing to be done here, if retrieve_status was successful or errored,
+>> +	 * Cleanup is taken care of in retrieval call.
+>> +	 */
+>> +	if (args->retrieve_status)
+>> +		return;
+>
+> [Severity: High]
+> Does this logic inversion cause a double-free on successful retrieval?
+>
+> In kvm_gmem_luo_retrieve(), a successful retrieval frees the ser struct
+> but leaves args->serialized_data intact:
+>
+> kvm_gmem_luo_retrieve()
+>     kho_restore_free(ser);
+>     return 0;
+>
+> Because standard Linux error handling uses 0 for success,
+> if (args->retrieve_status) evaluates to false on success, causing this
+> function to fall through instead of returning.
+>
+> Could this lead to accessing the freed ser struct, erroneously putting
+> active folios, and calling kho_restore_free() a second time?
 
->
->> +}
->
-> --=20
-> Sashiko AI review =C2=B7 https://sashiko.dev/#/patchset/cover.1780676742.=
-git.tarunsahu@google.com?part=3D6
+retrieve_status is 1 when successful not 0, this review is incorrect.
+
