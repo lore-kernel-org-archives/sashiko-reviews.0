@@ -1,32 +1,40 @@
-Received: from out199-5.us.a.mail.aliyun.com (out199-5.us.a.mail.aliyun.com [47.90.199.5])
+Received: from bali.collaboradmins.com (bali.collaboradmins.com [148.251.105.195])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0EB8133DED9
-	for <sashiko-reviews@lists.linux.dev>; Mon,  8 Jun 2026 11:21:37 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=47.90.199.5
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C87743655F1
+	for <sashiko-reviews@lists.linux.dev>; Mon,  8 Jun 2026 11:27:38 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=148.251.105.195
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1780917699; cv=none; b=pXXQ0waP6eOT+Ahe4mh+c/BKNT/WgE3zFmz5aNmdvZVBQ1xnUfZM+4l0aXNH0REBlF6jCMnQsXTUfgLELBHti8d26Ai9Q5wWxFisbLk4IdmcJtyMg8IPAg7SpOyHVQNG3i4xXU8VDiwmvaCIhlVzg5wTZvB9seaFe1gkfjSV/Mo=
+	t=1780918060; cv=none; b=oPWNxlbOMKwUsfOfw9EW4UxSSow07zNofQ20gUaFGc2Khdn5HO99UYbRiYZFHuDxigenDn6C8jjfh4/dH859FM0JjKP6VcMptjALrC9yTpXxz2Yb9tr/l/K6kZDoyyA6DrijWzG+SZIZxCrjpLZxWlCQHdrBxVez4cNyk8yHRdQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1780917699; c=relaxed/simple;
-	bh=i82Wa0OjN9LoMec/STqov5h1McfGZ3LAfLVoLSn9kzY=;
+	s=arc-20240116; t=1780918060; c=relaxed/simple;
+	bh=BVgNL2Scc7HA0dTUomAYlWHRe68aCERMc+uShc4P6Pk=;
 	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=bmn7WTJN4xT3y0pWKggYo/gV94pszrpVWmKiPwQ90aAwL3wIzLpasfUKBm0DdTGtjA2DaVU/68Kh3M71Mw0wMbkcfGxd+qSzGtVRbUjMGde2/gNhLHe3g+8gDLvBSaF8MUuD+PaxZSKNNpVboXyn5jgO6HHCybnkRcnTGCFYD94=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linux.alibaba.com; spf=pass smtp.mailfrom=linux.alibaba.com; dkim=pass (1024-bit key) header.d=linux.alibaba.com header.i=@linux.alibaba.com header.b=UskSP6in; arc=none smtp.client-ip=47.90.199.5
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linux.alibaba.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linux.alibaba.com
+	 In-Reply-To:Content-Type; b=SuzdRUSumbOlybYbZd+b6+GjzEgz9ajECOd9EIz//wogpVr7eSC2b1QBX7bS/tLy3aX82bOfW3cVgjWa/gQUPBoGX7HbBc+kE0LtrJxDVvuMB+ATDFGC3MuRxvy2HR0mqKXadG763ToaXs2VMBHbGhLxb9fWeC20MOS5Hgq3orI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=collabora.com; spf=pass smtp.mailfrom=collabora.com; dkim=pass (2048-bit key) header.d=collabora.com header.i=@collabora.com header.b=LD7WP7wx; arc=none smtp.client-ip=148.251.105.195
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=collabora.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=collabora.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linux.alibaba.com header.i=@linux.alibaba.com header.b="UskSP6in"
-DKIM-Signature:v=1; a=rsa-sha256; c=relaxed/relaxed;
-	d=linux.alibaba.com; s=default;
-	t=1780917683; h=Message-ID:Date:MIME-Version:Subject:To:From:Content-Type;
-	bh=gKMt+Ky/d2x82olWAe6C2MA6id7rljSF8aL33aSERes=;
-	b=UskSP6inHBWjPxzJKa7N+Xdu1aUL9hN9SMdMXq0Z0LWRckQIJD9VFxR82raUHvicEwknhkHbRuW6O1VCEmdDNHK3fb0WbKOlTElFy2b6s14Bh/SafGcrLHpHZmqZldpBoBGCD7gcBo9mjFGdN6ABH4C2cRo+eszMnHHaHJ+VRQo=
-X-Alimail-AntiSpam:AC=PASS;BC=-1|-1;BR=01201311R151e4;CH=green;DM=||false|;DS=||;FP=0|-1|-1|-1|0|-1|-1|-1;HT=maildocker-contentspam033032089153;MF=libaokun@linux.alibaba.com;NM=1;PH=DS;RN=3;SR=0;TI=SMTPD_---0X4O-KcD_1780917682;
-Received: from 30.221.148.53(mailfrom:libaokun@linux.alibaba.com fp:SMTPD_---0X4O-KcD_1780917682 cluster:ay36)
-          by smtp.aliyun-inc.com;
-          Mon, 08 Jun 2026 19:21:23 +0800
-Message-ID: <60d15c65-8fe2-4982-8711-02ce6f5167f5@linux.alibaba.com>
-Date: Mon, 8 Jun 2026 19:21:22 +0800
+	dkim=pass (2048-bit key) header.d=collabora.com header.i=@collabora.com header.b="LD7WP7wx"
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=collabora.com;
+	s=mail; t=1780918056;
+	bh=BVgNL2Scc7HA0dTUomAYlWHRe68aCERMc+uShc4P6Pk=;
+	h=Date:Subject:To:Cc:References:From:In-Reply-To:From;
+	b=LD7WP7wxbqQqdESTfN1oyzWZIRb1S7gsJXj7ynpmz2QNSGdJefeqku3XgjPhGxOyo
+	 0eY2TnDjcCntL7l092BCMwN7krXhQ2sW8uuBNCD0MQVve/LOjY2lciOcR+4eVeRxTc
+	 8onh/qjxUn05AHY15XEJ7bH3lhOmYN/RXgWiTyDuRcUyib1oA53iv14uaAUYqqtjw2
+	 T0UsFT7AulfHQpJnxYOmBa4PDJ5LN4hwVE5y/5Yl9J1fvXGxEDctBtk6bgRbUYUsfX
+	 SMqhSNtqURF7fR95v/VdvpUHSi5w3+TE3nc7dxRw1NKYGJv5aJTJV+TD9k+gsmtS/0
+	 MncFLSoSkf6Fg==
+Received: from [100.64.1.21] (unknown [100.64.1.21])
+	(using TLSv1.3 with cipher TLS_AES_128_GCM_SHA256 (128/128 bits)
+	 key-exchange X25519 server-signature RSA-PSS (4096 bits) server-digest SHA256)
+	(No client certificate requested)
+	(Authenticated sender: kholk11)
+	by bali.collaboradmins.com (Postfix) with ESMTPSA id 7899217E04BA;
+	Mon,  8 Jun 2026 13:27:36 +0200 (CEST)
+Message-ID: <c3bb3004-72b0-4559-847c-0ad0353f239e@collabora.com>
+Date: Mon, 8 Jun 2026 13:27:35 +0200
 Precedence: bulk
 X-Mailing-List: sashiko-reviews@lists.linux.dev
 List-Id: <sashiko-reviews.lists.linux.dev>
@@ -34,116 +42,88 @@ List-Subscribe: <mailto:sashiko-reviews+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:sashiko-reviews+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH] ext4: reject mount if clusters/inodes per group are not
- 8-aligned
-To: sashiko-reviews@lists.linux.dev
-Cc: tytso@mit.edu, Ext4 Developers List <linux-ext4@vger.kernel.org>
-References: <20260608061112.392391-1-libaokun@linux.alibaba.com>
- <20260608063318.266E61F00893@smtp.kernel.org>
-From: Baokun Li <libaokun@linux.alibaba.com>
-In-Reply-To: <20260608063318.266E61F00893@smtp.kernel.org>
-Content-Type: text/plain; charset=UTF-8
+Subject: Re: [PATCH v9 04/10] spmi: Implement spmi_subdevice_alloc_and_add()
+ and devm variant
+To: Stephen Boyd <sboyd@kernel.org>, Jonathan Cameron <jic23@kernel.org>
+Cc: linux-phy@lists.infradead.org, vkoul@kernel.org, olteanv@gmail.com,
+ neil.armstrong@linaro.org, sashiko-reviews@lists.linux.dev
+References: <20260608100949.36309-5-angelogioacchino.delregno@collabora.com>
+ <20260608104323.3B15D1F00893@smtp.kernel.org>
+From: AngeloGioacchino Del Regno <angelogioacchino.delregno@collabora.com>
+Content-Language: en-US
+In-Reply-To: <20260608104323.3B15D1F00893@smtp.kernel.org>
+Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 7bit
 
+On 6/8/26 12:43, sashiko-bot@kernel.org wrote:
+> Thank you for your contribution! Sashiko AI review found 1 potential issue(s) to consider:
+> - [Low] dev_set_name() uses the '%d' format specifier for a variable of type 'unsigned int', which will cause a -Wformat compiler warning.
+> --
+> 
+> commit 35ac69140b9b2d8a3b0e2aa01fe5f5ac3ffe4d02
+> Author: AngeloGioacchino Del Regno <angelogioacchino.delregno@collabora.com>
+> 
+> spmi: Implement spmi_subdevice_alloc_and_add() and devm variant
+> 
+> This commit introduces functions for managing sub-devices of an SPMI
+> device, including spmi_subdevice_alloc_and_add() and its devm
+> variant. These allow complex PMICs with multiple sub-devices to be
+> properly modeled and managed via the SPMI bus.
+> 
+>> diff --git a/drivers/spmi/spmi.c b/drivers/spmi/spmi.c
+>> index 91a40ea8031ad..7945cacf6d655 100644
+>> --- a/drivers/spmi/spmi.c
+>> +++ b/drivers/spmi/spmi.c
+> 
+> [ ... ]
+> 
+>> @@ -428,6 +454,58 @@ struct spmi_device *spmi_device_alloc(struct spmi_controller *ctrl)
+>>   }
+>>   EXPORT_SYMBOL_GPL(spmi_device_alloc);
+>>   
+>> +/**
+>> + * spmi_subdevice_alloc_and_add(): Allocate and add a new SPMI sub-device
+>> + * @sparent:	SPMI parent device with previously registered SPMI controller
+>> + *
+>> + * Returns:
+>> + * Pointer to newly allocated SPMI sub-device for success or error pointer.
+>> + */
+>> +struct spmi_subdevice *spmi_subdevice_alloc_and_add(struct spmi_device *sparent)
+>> +{
+>> +	struct spmi_subdevice *sub_sdev;
+>> +	struct spmi_device *sdev;
+>> +	int ret;
+>> +
+>> +	sub_sdev = kzalloc(sizeof(*sub_sdev), GFP_KERNEL);
+>> +	if (!sub_sdev)
+>> +		return ERR_PTR(-ENOMEM);
+>> +
+>> +	sdev = &sub_sdev->sdev;
+>> +	sdev->ctrl = sparent->ctrl;
+>> +	sdev->usid = sparent->usid;
+>> +
+>> +	ret = ida_alloc(&spmi_subdevice_ida, GFP_KERNEL);
+>> +	if (ret < 0) {
+>> +		kfree(sub_sdev);
+>> +		return ERR_PTR(ret);
+>> +	}
+>> +	sub_sdev->devid = ret;
+>> +
+>> +	device_initialize(&sdev->dev);
+>> +	sdev->dev.parent = &sparent->dev;
+>> +	sdev->dev.bus = &spmi_bus_type;
+>> +	sdev->dev.type = &spmi_subdev_type;
+>> +
+>> +	ret = dev_set_name(&sdev->dev, "%u-%02x.%d.auto",
+>> +			   sdev->ctrl->nr, sdev->usid, sub_sdev->devid);
+> 
+> [Severity: Low]
+> This isn't a bug, but should this use %u instead of %d for the format
+> specifier? The devid field in struct spmi_subdevice is defined as an
+> unsigned int, which can cause a -Wformat compiler warning here.
+> 
 
-I've sent a V2 that includes two additional patches to address the issues
-Sashiko reported:
-
-https://patch.msgid.link/20260608111150.827117-1-libaokun@linux.alibaba.com
-
+I wonder if this can be fixed while applying please?
 
 Thanks,
-Baokun
-
-On 2026/6/8 14:33, sashiko-bot@kernel.org wrote:
-> Thank you for your contribution! Sashiko AI review found 2 potential issue(s) to consider:
->
-> Pre-existing issues:
-> - [Critical] Missing alignment check allows integer truncation in s_itb_per_group, leading to out-of-bounds inode table access and potential local privilege escalation via forged inodes.
-> - [High] Integer overflow in bigalloc cluster consistency check on 32-bit systems allows mounting filesystems with arbitrary cross-group overlaps.
-> --
->
-> commit 063bdba3eb2bd319656b0b2534e820244460e17a
-> Author: Baokun Li <libaokun@linux.alibaba.com>
->
-> ext4: reject mount if clusters/inodes per group are not 8-aligned
->
-> The block and inode bitmap checksums are computed over a whole number of
-> bytes. If s_inodes_per_group or s_clusters_per_group is not a multiple of
-> 8, the trailing fractional bits are excluded from the checksum. Reject such
-> filesystems at mount time by adding the missing bitwise alignment checks.
->
-> Link: https://patch.msgid.link/h3n7jlfhyna64dn5o76qxcspnhxdddcs6crpxftmy7gnl7b3sx@jenszfpcsnit
->
->> diff --git a/fs/ext4/super.c b/fs/ext4/super.c
->> index 245f67d10ded3..98f1cefbc6880 100644
->> --- a/fs/ext4/super.c
->> +++ b/fs/ext4/super.c
->> @@ -4475,8 +4475,9 @@ static int ext4_handle_clustersize(struct super_block *sb)
->>  		sbi->s_cluster_bits = 0;
->>  	}
->>  	sbi->s_clusters_per_group = le32_to_cpu(es->s_clusters_per_group);
->> -	if (sbi->s_clusters_per_group > sb->s_blocksize * 8) {
->> -		ext4_msg(sb, KERN_ERR, "#clusters per group too big: %lu",
->> +	if (sbi->s_clusters_per_group > sb->s_blocksize * 8 ||
->> +	    sbi->s_clusters_per_group & 7) {
->> +		ext4_msg(sb, KERN_ERR, "invalid #clusters per group: %lu",
->>  			 sbi->s_clusters_per_group);
->>  		return -EINVAL;
->>  	}
-> [Severity: High]
-> This isn't a bug introduced by this patch, but while we are validating
-> s_clusters_per_group, could the bigalloc consistency check slightly below
-> this in ext4_handle_clustersize() overflow on 32-bit systems?
->
-> The check does:
->
->     if (sbi->s_blocks_per_group !=
->         (sbi->s_clusters_per_group * (clustersize / sb->s_blocksize))) {
->
-> Since unsigned long is 32 bits on 32-bit systems, the multiplication can wrap
-> around modulo 2^32. For example, if an image has 16392 clusters and a ratio
-> of 262144, the product evaluates to 2^32 + 2097152, matching an
-> s_blocks_per_group of 2097152.
->
-> Because bigalloc bypasses the usual s_blocks_per_group size limits, the
-> wrapped validation would succeed. The block allocator could then allocate
-> blocks far outside the truncated group, overwriting metadata of subsequent
-> groups. Should this multiplication be cast to a 64-bit type to prevent
-> the overflow?
->
-> [ ... ]
->
->> @@ -5308,7 +5309,8 @@ static int ext4_block_group_meta_init(struct super_block *sb, int silent)
->>  		return -EINVAL;
->>  	}
->>  	if (sbi->s_inodes_per_group < sbi->s_inodes_per_block ||
->> -	    sbi->s_inodes_per_group > sb->s_blocksize * 8) {
->> +	    sbi->s_inodes_per_group > sb->s_blocksize * 8 ||
->> +	    sbi->s_inodes_per_group & 7) {
->>  		ext4_msg(sb, KERN_ERR, "invalid inodes per group: %lu\n",
->>  			 sbi->s_inodes_per_group);
->>  		return -EINVAL;
-> [Severity: Critical]
-> This is a pre-existing issue, but does adding the & 7 check go far enough
-> to prevent integer truncation here?
->
-> A few lines below this check in ext4_block_group_meta_init(), the code does:
->
->     sbi->s_itb_per_group = sbi->s_inodes_per_group / sbi->s_inodes_per_block;
->
-> Since s_inodes_per_group is now guaranteed to be a multiple of 8, but
-> s_inodes_per_block can be 16, 32, etc., this division can still truncate.
->
-> Could this truncation lead to out-of-bounds accesses? Looking at
-> __ext4_get_inode_loc() in fs/ext4/inode.c, the block is calculated without
-> checking against the truncated s_itb_per_group:
->
->     block += (inode_offset / inodes_per_block);
->
-> This could allow reading or writing to the block following the truncated
-> inode table, potentially allowing local privilege escalation via forged
-> inodes if that block is allocated to a user file. Should we also ensure
-> that s_inodes_per_group is a multiple of s_inodes_per_block here?
->
-
+Angelo
