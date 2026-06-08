@@ -1,67 +1,67 @@
-Received: from mail-pl1-f174.google.com (mail-pl1-f174.google.com [209.85.214.174])
+Received: from mail-pj1-f45.google.com (mail-pj1-f45.google.com [209.85.216.45])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 00321347BD9
-	for <sashiko-reviews@lists.linux.dev>; Mon,  8 Jun 2026 03:11:31 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.214.174
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 46E1C34B40F
+	for <sashiko-reviews@lists.linux.dev>; Mon,  8 Jun 2026 03:34:45 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.216.45
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1780888295; cv=none; b=KQ+bUDE1xeG0+veSGEyXn3Z4vQKzDZx1MsGCt8yLEUrOHHiWWSUIQ7AqjGubVtX8xR8/T5F5B33VJVif+KYp8XMRSO9ZdiYSUr/MU/rxZUJK23NCImznhGEaymtQ3WsdgP8TagmDRazP/CasSzY0pq0cdaLsZG3yTXBu0MJzo18=
+	t=1780889686; cv=none; b=BiC2nQkg2qSEXWWTN65S9Y2K3IwA4tB2652onqYLm1t7qAwp7Eo6MtCz2nubEWLGZwFIAJN2UHcHWNO83jB4FE0hm0eVilEeSjXDS+T0kQDf0ZNXVCziOxfMTw4BlYT/I0/zoMcDqgUMq66265p7xFvCh78SIurzwh+HUXqnPyE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1780888295; c=relaxed/simple;
-	bh=eMMFZ7PoTVFU+HtZAfAiBJKr6ct6C46CfD1rFsryOhY=;
+	s=arc-20240116; t=1780889686; c=relaxed/simple;
+	bh=rnWGZiGa7zATv6HKuoipsg7FGKMd4hpfpbk4TsMTr1I=;
 	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=gXddmjo1AH8cJ97nkT65Q9G6TNEbawdI6fnDtKSq9d2zebLxv/Y97XyfReMwMDt9b8A1zUNLJM/seRXSTxGeUTrcVgDGcHjC7UTv3byxm8LnozFLAmjkzFhenGqw2m+QBc35hkF0mhHqmHfKNR6j+wos4C8eKK+aveRBSHj+kO8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=roeck-us.net; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=QneXjYav; arc=none smtp.client-ip=209.85.214.174
+	 In-Reply-To:Content-Type; b=fK1GWNtpsEW1J5E6q2who6CC9oQ68/XOULUOSFql1aMOI0PvmL1PMoSwE1VkTsOaNQwaJvVxr8qekIIguCzkysynbsIa8RqN2/Qxie2homeJMHzdN4d5B6tQZvTt+i43JMazO4WGqXRVsI2o2ve9c3riGSEi+4Kc0+xysRP75j4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=roeck-us.net; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=qjZFt/cZ; arc=none smtp.client-ip=209.85.216.45
 Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=roeck-us.net
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="QneXjYav"
-Received: by mail-pl1-f174.google.com with SMTP id d9443c01a7336-2c0c1e0d00bso37619255ad.0
-        for <sashiko-reviews@lists.linux.dev>; Sun, 07 Jun 2026 20:11:31 -0700 (PDT)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="qjZFt/cZ"
+Received: by mail-pj1-f45.google.com with SMTP id 98e67ed59e1d1-36dd65b95f2so2592733a91.0
+        for <sashiko-reviews@lists.linux.dev>; Sun, 07 Jun 2026 20:34:45 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20251104; t=1780888291; x=1781493091; darn=lists.linux.dev;
+        d=gmail.com; s=20251104; t=1780889685; x=1781494485; darn=lists.linux.dev;
         h=content-transfer-encoding:in-reply-to:autocrypt:from
          :content-language:references:cc:to:subject:user-agent:mime-version
          :date:message-id:sender:from:to:cc:subject:date:message-id:reply-to;
-        bh=o6AQpyw9cz+Q5RmbdlhznksmZIhCHg9E+Gub5iwssz8=;
-        b=QneXjYavVx/vbrvsg214hIcf4Kuv/nr+duqJpM+SSnNpH/yuQj6XrFwAuX2FMRBEFS
-         sXEk89Op5wpLw0WvA+3T61rQKd/k9dXOakNoPWu3kA0hXaJnFFt2UjEZiQt3btle2SZa
-         t8iG5NwshSpG6U8GWl4hSyqXkZ3WTDVA2sbuVu7Sv8c1IhIWw4t3AXDbpvoB5tHOP562
-         cYHg9wTEmMEzT0leoFTn+Caznti6T6G7CMoX+JI41gpPLltyuPTQuH1fy1oKCtoq/giR
-         ChulnL0YN1aOGovQ5ybFUGTv7BmHRNlncAAE5F7lRBDK6cKSbzKBW7b7q6mnkQ27Ks0A
-         hdCw==
+        bh=jYU1XWOTZriAF8A1LNJVkKH7SxBNc/5+Xt7U3MwFkk0=;
+        b=qjZFt/cZRkpLzT9j+TCwDE2K9giGfapjUOmUWv/h+uwj1urKzEb+qxxaQyoXGkG0Bi
+         wfdJr6FfQ2lMED1kNkLdesC9NZ31XL1m4lyqrfs5FQzT7yyAHzl5284ydvGgiE8ExYXr
+         ctAF86zixHD6bm/i8MRgq5SnjNdpSRI26gmqCpzGK7KJXxEiZvLLYfmwiqRgASUv9/RB
+         1z6OVA34XvUTw2BmGTGhaczjd3ArgB/BrP7c6ar5d44Mx33Q699VqICWXQZolk3fLpY3
+         EW1nx5PkzCp8jHoyF2fSUdYBkMXtfh/Kq9siEbFmKhC1qUUJOIQkFRCZP3xW8YANbOIr
+         c+oQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20251104; t=1780888291; x=1781493091;
+        d=1e100.net; s=20251104; t=1780889685; x=1781494485;
         h=content-transfer-encoding:in-reply-to:autocrypt:from
          :content-language:references:cc:to:subject:user-agent:mime-version
          :date:message-id:sender:x-gm-gg:x-gm-message-state:from:to:cc
          :subject:date:message-id:reply-to;
-        bh=o6AQpyw9cz+Q5RmbdlhznksmZIhCHg9E+Gub5iwssz8=;
-        b=dqhdCVYVdvh4ddYvtOK5FY3+ipU0sSeAkwB9PQsbAHxrcKWb/S0QjsAltzJMOBMnH+
-         iCrM65lOU6raNRZf+1YaEqGJ3GpWehWetM9EgdtEizkT9P25LO9mwZCq+dkefmx1Mrob
-         59aSxkP/pxuQTCA13P/NP7xnsIgsS4hN0OpASOmjGdWtQkWNeFm5M07QgBnYj2+sId6g
-         vN1NmTifarq8L2Q42HO2nsaSJ8dQ24NCVFGtxWnIxigjLwyDLiSzJfv5i9Hcj8V/prDB
-         x6Ej0wpKgQL8x4Y4VxM03uSCwe68Bb3qRWgTQi0heZceCbMmMa+h7vJYWWreDsmBsmDO
-         2uBg==
-X-Gm-Message-State: AOJu0YyXzjz8p4EHItxvSqYKwGpTrkHFkKck35BOaNmSMt5HD/h8ca2W
-	cgaSCdsdGGG7PMSHiS0sswWv2fXHhKqKT2rHiDRl9MxqhROIDllGJwW/rNVpzAdh
-X-Gm-Gg: Acq92OG9uzes3Qe2K9dwHxCvlvLN4VxxI4LF+vwbGMWTSi8TwWIf9JPKKmcDX2cEU0g
-	8MjAjE24um7yIbuevGP828XaXPQCiSImZ6GrJS6OHUosBr6eHYbe3u6ssw1npYqoe3ZhIAjHuRZ
-	liByC6zFQNFczz0RBa971oO5/ZVUSMvrxtQXBjd/alPdbYIh5vKdC0dJ/uWE6AAcKU0JX+WWab4
-	eKHzD7tzeW4fF4Y0BpxgGMnvf4D7MfaNc+p3WsuMWLND1ZUl+IhC+XZB8YpRRumGXWleO+dUdUv
-	pSqyPcE/e+Nd/K5uDuij9MRlnmiWZkx5WeiWAD4M45FtvEU10ZOJRLRXDPV7Ga7YZSDofFGq4sU
-	t0DJGnyNnddzgr208du4I5/lQUWsFgE/w/k3BgL4QiCZCPIUCqdoT2/kCgaUJCT+zgbcBQfSNjK
-	afXRCWjF4IKujzK0ZNS78rE8XCbT8kLDR6VMV+bnlBbihJi6u5TTsPGEekuSCN9OTiKFMYEpKGj
-	shzK36Uqqw=
-X-Received: by 2002:a17:902:f711:b0:2c0:ab82:6ba7 with SMTP id d9443c01a7336-2c1e85ad8d7mr154959505ad.33.1780888290954;
-        Sun, 07 Jun 2026 20:11:30 -0700 (PDT)
+        bh=jYU1XWOTZriAF8A1LNJVkKH7SxBNc/5+Xt7U3MwFkk0=;
+        b=bw1rVd5cdJnqcqHgOMh9UFUGf3FFVBNh0G+hNXMnJNPrcuJuDzf3gMIXaM+bqW+MnY
+         T7ANIZS7oDerxlNVHKLRUJ+VkM761NwddgVC0lTeRJbqMRMWn69jQawYJOsd7KnuBRen
+         vfFZrMNh7q8uxXO64++WKX5lrg8Qgmka1h4MlKt3Kd/5GAKVPAnx1OULYIkY+U2JlOGm
+         o38jKqLr1fhdasEWngzZX2Vq9Hfak0Oe3IXgOd3A/mpdtmI1VCq+Xnap0r2IOgV9aeny
+         HboAXDgfsdZJlW0pgdAjGayABB0yyS1woaw202Y0L7itopuC2EZwQNT/d+A4byfsAYZt
+         VVqA==
+X-Gm-Message-State: AOJu0YzrScPUOFj8u6wc1pABTbjk5mES8a6ajQKTROhSbmC1FlOo9OIl
+	fOcVLU9WrQu555LoX9/xh99uQUHF89lFgTxzvdMvHehTulqScLplp7zxVivBpH+o
+X-Gm-Gg: Acq92OG6OWDfkkYC5MDkxzh96UuNPVFnNB81r/byxI5BPQs4IZwr60VbL5Sl3XM1Ukt
+	TV+8TLayHfUVRumFgIJoSizyFbMtwafnjjkoHfFy3S/PwKAz/1PY6PT2Hq9SMgZr+WmNtSYho0h
+	zRUlB1uiWWbdQ7fI7IgN1azM3fnb0b4cV32CQSxPJa0v+ZjY6fNodpJbxLMdu710Dgxf0ZsnZbs
+	oH4t+kdfkXnK9yaX+IW2fPyaxk/15T/0x/tQ3f3hRuiGy6jHhzhQeErGkFktnTkgw9HyvmJoqiC
+	g0yTvTkJtxSC/47mzafQyYH5s5OD4HXes3NJLqJ1Rm+LYmvhEdlqHOba9APFI2MKrJjNS4UxXe0
+	JyelQ2f4mKAwEO5T755+F6zEnamSaaRNgDRgyI8X2dnJiD5ltbnG40h1WMejGY/kAyimylVh1vd
+	huEN3bwdjQsN2r7cVrZs+oOZCBQZtUFLzOT5+cnZPN2q35AMNbPb+BiIlqKStJsh1I0q5R34hmt
+	/P2w79QowU=
+X-Received: by 2002:a17:90b:2b86:b0:36a:8519:a4e9 with SMTP id 98e67ed59e1d1-37133569a9bmr10439285a91.18.1780889684637;
+        Sun, 07 Jun 2026 20:34:44 -0700 (PDT)
 Received: from ?IPV6:2600:1700:e321:62f0:da43:aeff:fecc:bfd5? ([2600:1700:e321:62f0:da43:aeff:fecc:bfd5])
-        by smtp.gmail.com with ESMTPSA id d9443c01a7336-2c164f6d395sm218827905ad.17.2026.06.07.20.11.30
+        by smtp.gmail.com with ESMTPSA id d9443c01a7336-2c16629d240sm171798535ad.58.2026.06.07.20.34.43
         (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Sun, 07 Jun 2026 20:11:30 -0700 (PDT)
+        Sun, 07 Jun 2026 20:34:44 -0700 (PDT)
 Sender: Guenter Roeck <groeck7@gmail.com>
-Message-ID: <3ed9e0ed-d6fe-4b9f-aca9-590290a78f4a@roeck-us.net>
-Date: Sun, 7 Jun 2026 20:11:29 -0700
+Message-ID: <23ed51ae-cc91-46c3-b5bb-250f0655d850@roeck-us.net>
+Date: Sun, 7 Jun 2026 20:34:43 -0700
 Precedence: bulk
 X-Mailing-List: sashiko-reviews@lists.linux.dev
 List-Id: <sashiko-reviews.lists.linux.dev>
@@ -69,14 +69,12 @@ List-Subscribe: <mailto:sashiko-reviews+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:sashiko-reviews+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 2/2] hwmon: (adt7462) Add of_match_table to support
- devicetree
-To: sashiko-reviews@lists.linux.dev,
- Romain Gantois <romain.gantois@bootlin.com>
-Cc: robh@kernel.org, conor+dt@kernel.org, linux-hwmon@vger.kernel.org,
- devicetree@vger.kernel.org
-References: <20260603-adt7462-bindings-v1-2-301304bcf774@bootlin.com>
- <20260603114026.709611F00893@smtp.kernel.org>
+Subject: Re: [PATCH v2 3/3] hwmon: Add documentation for SQ24860
+To: sashiko-reviews@lists.linux.dev, Ziming Zhu <zmzhu0630@163.com>
+Cc: linux-hwmon@vger.kernel.org, robh@kernel.org, devicetree@vger.kernel.org,
+ conor+dt@kernel.org
+References: <20260605063042.91776-4-zmzhu0630@163.com>
+ <20260605063612.B760B1F00893@smtp.kernel.org>
 Content-Language: en-US
 From: Guenter Roeck <linux@roeck-us.net>
 Autocrypt: addr=linux@roeck-us.net; keydata=
@@ -122,58 +120,49 @@ Autocrypt: addr=linux@roeck-us.net; keydata=
  F0WaMvQMNrk9UAUziVcUkLU52NS9SXqpVg8vgrO0JKx97IXFPcNh0DWsSj/0Y8HO/RDkGXYn
  FDMj7fZSPKyPQPmEHg+W/KzxSSfdgWIHF2QaQ0b2q1wOSec4Rti52ohmNSY+KNIW/zODhugJ
  np3900V20aS7eD9K8GTU0TGC1pyz6IVJwIE=
-In-Reply-To: <20260603114026.709611F00893@smtp.kernel.org>
+In-Reply-To: <20260605063612.B760B1F00893@smtp.kernel.org>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 7bit
 
-On 6/3/26 04:40, sashiko-bot@kernel.org wrote:
+On 6/4/26 23:36, sashiko-bot@kernel.org wrote:
 > Thank you for your contribution! Sashiko AI review found 1 potential issue(s) to consider:
-> - [Low] Using `of_match_ptr()` prevents the driver from being matched via ACPI PRP0001 when `CONFIG_OF` is disabled.
+> - [Low] The 'Hardware Monitoring Kernel Drivers' index list in `Documentation/hwmon/index.rst` is maintained in alphabetical order. The commit incorrectly inserts `sq24860` between `sparx5-temp` and `spd5118`. Alphabetically, 'sq' comes after 'sp', so `sq24860` should be placed after `spd5118` and before `stpddc60`.
 > --
 > 
-> commit c2691e00dcd763957c6a2291880ea9079be2bbda
-> Author: Kory Maincent <kory.maincent@bootlin.com>
+> commit 65caf89dcee60b08d75fdadfaa3541e74096b753
+> Author: Ziming Zhu <ziming.zhu@silergycorp.com>
 > 
-> hwmon: (adt7462) Add of_match_table to support devicetree
+> hwmon: Add documentation for SQ24860
 > 
-> This commit adds an of_match_table to the adt7462 driver to enable
-> devicetree probing.
+> This commit documents the supported sysfs attributes for the Silergy SQ24860
+> PMBus hwmon driver.
 > 
->> diff --git a/drivers/hwmon/adt7462.c b/drivers/hwmon/adt7462.c
->> index 174dfee47f7a7..ef6e5252dc0a4 100644
->> --- a/drivers/hwmon/adt7462.c
->> +++ b/drivers/hwmon/adt7462.c
-> [ ... ]
->> @@ -1814,10 +1814,17 @@ static const struct i2c_device_id adt7462_id[] = {
->>   };
->>   MODULE_DEVICE_TABLE(i2c, adt7462_id);
->>   
->> +static const struct of_device_id __maybe_unused adt7462_of_match[] = {
->> +	{ .compatible = "adi,adt7462" },
->> +	{ },
->> +};
->> +MODULE_DEVICE_TABLE(of, adt7462_of_match);
->> +
->>   static struct i2c_driver adt7462_driver = {
->>   	.class		= I2C_CLASS_HWMON,
->>   	.driver = {
->>   		.name	= "adt7462",
->> +		.of_match_table = of_match_ptr(adt7462_of_match),
+>> diff --git a/Documentation/hwmon/index.rst b/Documentation/hwmon/index.rst
+>> index 8b655e5d6b68b..1888905cd2349 100644
+>> --- a/Documentation/hwmon/index.rst
+>> +++ b/Documentation/hwmon/index.rst
+>> @@ -242,6 +242,7 @@ Hardware Monitoring Kernel Drivers
+>>      smsc47m192
+>>      smsc47m1
+>>      sparx5-temp
+>> +   sq24860
+>>      spd5118
 > 
 > [Severity: Low]
-> Does using of_match_ptr() here prevent the driver from being matched via
-> ACPI PRP0001 when CONFIG_OF is disabled?
+> This isn't a bug, but the Hardware Monitoring Kernel Drivers index list is
+> typically maintained in alphabetical order.
 > 
-> When CONFIG_OF is disabled, of_match_ptr() evaluates to NULL, hiding the
-> of_match_table from the driver core. This prevents the driver from being
-> matched using ACPI PRP0001, which relies on OF compatible strings even on
-> systems without Device Tree.
-> 
-> Would it be better to drop of_match_ptr() and assign the table directly,
-> along with removing the __maybe_unused attribute from adt7462_of_match?
+> Since sq comes after sp, should sq24860 be placed after spd5118 and before
+> stpddc60 to maintain this sorting?
 > 
 
-I agree.
+Very much so.
 
 Guenter
+
+>>      stpddc60
+>>      surface_fan
+> 
+> [ ... ]
+> 
 
