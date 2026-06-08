@@ -1,184 +1,158 @@
-Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-pj1-f48.google.com (mail-pj1-f48.google.com [209.85.216.48])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6BB5D3A7591;
-	Mon,  8 Jun 2026 09:41:25 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
-ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1780911687; cv=none; b=tb16uMP2fiVIf0jddmkEJczws2eAZGd6kMkaNiJIp7v2oXbOkwmD8dYZYwwj6KO7CvosSVOZuzz6Ezy+d/jFNH2YRvJN31va84tQbbebcAd42CpPFafEjia2Fg1vFvv9UVNJownt4/gtqDnaj/Cl0ZRBG2kBm6ruBe7rO6iofbA=
-ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1780911687; c=relaxed/simple;
-	bh=e9VGB3RzJNeMtY5Q7FpVM9If4E09QwmbsI6rjIqlMbA=;
-	h=Date:Message-ID:From:To:Cc:Subject:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=BqUKyWYyluiV+Yq1U5bH5N5HXH/RZt8RYIH1iyKhUw1aom6KqQxQCmhG9D9kYNYqjB3GxreDMZNcd9wDf58pRccrVmuX5Kx4howxcm3isaj4OSPwTQ9MB6wVSzCG+MaDUT01zQLUaAdcx8CJnpU6haIf+YpqyIGW2nYwn5EI+I8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=gCl2iP1r; arc=none smtp.client-ip=100.103.45.18
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3D1B633F5B0
+	for <sashiko-reviews@lists.linux.dev>; Mon,  8 Jun 2026 11:11:27 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=pass smtp.client-ip=209.85.216.48
+ARC-Seal:i=2; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
+	t=1780917089; cv=pass; b=e8PObL8NQeFB5FfWmZaI2T3EVVMflSzYa/n6EoiFKVV5bDd1xWUPWjlY/nfIC1hk7dovYeXRrPn3n3HHzl507L7kYvPhulv8IFQgjag1I00+1lr/2Ir4NsYnQbrqXIlbCB1HSwdJVKaF+IuRKbOkld1wsDBqzIdJUpodvSYCV6E=
+ARC-Message-Signature:i=2; a=rsa-sha256; d=subspace.kernel.org;
+	s=arc-20240116; t=1780917089; c=relaxed/simple;
+	bh=OKAvcLw4cVnHLWqBGIC1hLC9PId30JwifAN6/6lExq4=;
+	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
+	 To:Cc:Content-Type; b=mn8XtIYlShUQzLBfFrlLtDoT1WYwIWf0N3OqsGqAhfbPBkBX5rD22FGyb0+55DEtdVd2j3Tv3rmYpzSZTJCmb5n5POFC4gd+KAXoUCeTsfuqlhEH6EoPnhAMqkwRfafh/JqrnykOuGeAaBZo4oVKynqM+da1HXSjCZo5QJk9o+Y=
+ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=PbbajdBa; arc=pass smtp.client-ip=209.85.216.48
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="gCl2iP1r"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id C07611F00898;
-	Mon,  8 Jun 2026 09:41:24 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=kernel.org;
-	s=k20260515; t=1780911684;
-	bh=+sKBIXnDcUDiKipp4dXaJfavVK02CQvHaodclEeqrTM=;
-	h=Date:From:To:Cc:Subject:In-Reply-To:References;
-	b=gCl2iP1rK5kBMVwYVpj1i15Uep2qUGOmKN4PdWLCQ2tb0MpsP0cMYUU4BAl8rm6SG
-	 zn1anTo8dZqC6to6HLnwfsZslT76uvFxD2pVow6hOHAagMEO8GlgdULXwWfc3rEIyX
-	 X73VKVr5BauzY3y6pNldxJBHyFAtT13BsBN0g8VtppZ3k9W5Rv6kEIyGxzhj2fi8sp
-	 hiY+2+yaxAR7pKyhgp6y+ha6bGrkg8x36YGcT6+2XyDSZmG4hFlAb7k0yFeSRmjGXz
-	 ar5hvF4ajT6m7YfMO4AZ8n82lz/5YuLDaM0K9vERCMLGq/UEWkR/ifOhoygYBlzXsD
-	 VeGSFGsvAJPZg==
-Received: from sofa.misterjones.org ([185.219.108.64] helo=goblin-girl.misterjones.org)
-	by disco-boy.misterjones.org with esmtpsa  (TLS1.3) tls TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384
-	(Exim 4.98.2)
-	(envelope-from <maz@kernel.org>)
-	id 1wWWTz-0000000APSs-02nj;
-	Mon, 08 Jun 2026 09:41:23 +0000
-Date: Mon, 08 Jun 2026 10:41:22 +0100
-Message-ID: <86tsrdtlml.wl-maz@kernel.org>
-From: Marc Zyngier <maz@kernel.org>
-To: sashiko-reviews@lists.linux.dev
-Cc: kvm@vger.kernel.org
-Subject: Re: [PATCH] KVM: arm64: Hold kvm->mmu_lock while initialising vcpu->arch.vncr_tlb
-In-Reply-To: <20260608082603.16AEC1F00893@smtp.kernel.org>
-References: <20260608081108.2244133-1-maz@kernel.org>
-	<20260608082603.16AEC1F00893@smtp.kernel.org>
-User-Agent: Wanderlust/2.15.9 (Almost Unreal) SEMI-EPG/1.14.7 (Harue)
- FLIM-LB/1.14.9 (=?UTF-8?B?R29qxY0=?=) APEL-LB/10.8 EasyPG/1.0.0 Emacs/30.1
- (aarch64-unknown-linux-gnu) MULE/6.0 (HANACHIRUSATO)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="PbbajdBa"
+Received: by mail-pj1-f48.google.com with SMTP id 98e67ed59e1d1-36d98b68d68so2703986a91.2
+        for <sashiko-reviews@lists.linux.dev>; Mon, 08 Jun 2026 04:11:27 -0700 (PDT)
+ARC-Seal: i=1; a=rsa-sha256; t=1780917086; cv=none;
+        d=google.com; s=arc-20240605;
+        b=iHi59mt/Caae+gG82FDCunlcmKren1eHbvYZ+EqKwjgE/GflpZvL5ASmekDeHtGgx1
+         Q4UVssWFJ+Ydsm4BOfHo16laaNkp0xONB145BJfd1EAXHCIHfs9L8Em4elyyowZBtdo6
+         hSqPHn0IuuxHVDK36nlt8hORkntojQdppy+ERSvdqjfkBcYBQ2kFZ1BjAN5ZSUwKoaKu
+         0TMgfcsNXMx4SDH9vzW20/VyM/2ULj0+9MZks207WGSsp+2jEx4TkCjrobsIhWPxUfe4
+         k3DwWTFmRWFAIZBuhKSxd/YZZnm1THhJbRsfV0/4NemFrO73C6lAhgCm7H6w92AwRqrM
+         U5GQ==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com; s=arc-20240605;
+        h=cc:to:subject:message-id:date:from:in-reply-to:references
+         :mime-version:dkim-signature;
+        bh=wcRJm9Mj5HN9MDIGpueIj3AGF7buVGW3wX3A5PTznAs=;
+        fh=XBOPQ3X6Qb5smFHfwOBHVpR+PN6XHuOYgtFR56NFUho=;
+        b=OlTJo0T9BigBK/i1KBcQgNzww24VmkPbSUg3x08saVAtjgbb4FMmhRXLgUiKi4P0Qa
+         r5PeousZI9zC5kl2SALsXhNJxQwsF4bDx5nHlpHtahz+f5BpWw0LxYDGtxPraydxTE6x
+         76Kpad0McOyxkzP0JnvFvmQvOgt1yX86st+rVTNM0XZQYE+ffmMCVJKVwdgXWTfyjeX4
+         VYrl6qgS2xXA/Z2NBwtC1uaQjipYIkw660wO7qcYWrADXcuxH3EB0wQmxkQwO7xQwxOl
+         +6FlvgGShebaOfVHNUsYg3KjRrYZzATAqAmfY8cDnYJjX4yn7va35W+Ex3oCTGTFdbhP
+         zI1w==;
+        darn=lists.linux.dev
+ARC-Authentication-Results: i=1; mx.google.com; arc=none
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20251104; t=1780917086; x=1781521886; darn=lists.linux.dev;
+        h=cc:to:subject:message-id:date:from:in-reply-to:references
+         :mime-version:from:to:cc:subject:date:message-id:reply-to;
+        bh=wcRJm9Mj5HN9MDIGpueIj3AGF7buVGW3wX3A5PTznAs=;
+        b=PbbajdBatVVPBzKJf83ZiwGfxG/4B+TlkiPV7oIa5z8oiQT69AREunlklJlCR0K4U9
+         6ciLT3qBvRDBy2b1vH2iT4fIiAz1dJ4QYZd/8ky2gqrqneDcgESh88KD0wxqtC84CN1u
+         V9h7P1t/GYVgmVGwP6MZXa0MiXWBLl0WLK5iUznMsg+E3s4V2cw9AHLF+UvzrLS/FK7A
+         xF/9sK9OlT64PqutK1U/eH0kPGH4FHUL73hvc4lik1wHNPI1bw6i5PO0L7yocHrbqJoe
+         kjZPsxj1QjGfwV8E1j+xcE11frg0A9LkktHzBXVRPdIr67IrJ870+80IUk9pVvRsMXAA
+         O2VA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20251104; t=1780917086; x=1781521886;
+        h=cc:to:subject:message-id:date:from:in-reply-to:references
+         :mime-version:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=wcRJm9Mj5HN9MDIGpueIj3AGF7buVGW3wX3A5PTznAs=;
+        b=rBGLvwfYvaqyrXnhoKu5P5/N01yQocHeQ3Hf9rZaqQIHp69hOlwG1zfT1NRkx/Wa6d
+         9laghG7asibPcRUVdghxQClQjZbzEoOx+gAwbWi02HDjlM6gKzhB7CxIiAycLTa2Umqr
+         hsIl7Bs5YmS2AcOln5MUIaoLpXKuKV8HCgdpWtfmR4mNJ8FOszJ3GwZDw/TMmUR4rfNu
+         NU06x59yxJrXrWBm8amqXw2uRj92Sy8kOL7etIQjNBlulso25Frtczl1UasLMfnLdRL4
+         248QIaPJ+ReJ1tlTYN1DNJMGQJZqaUEnLMuPp+kSK9CC/o2K75I9l1eTpjVm/f6kynFb
+         88sA==
+X-Gm-Message-State: AOJu0YzdXNeWgRe7j3iw/ICSRztAc9+4tDagkWNeO/XWncGFT0ean7fc
+	nDg0jGG+DmPaOT0DqeRQD1FBidlVOO566SU0FNw0uVvAML1TlN4reRX2AmzQnbg7H7VA8Hxr9NS
+	1PD+kCOTB0tungyFHyuArVRRttveXOFjGpSc1
+X-Gm-Gg: Acq92OFC7pBkQh3JcP4y8B8R96M4GnUsWjv68p8iue3ZMr4miRyQ10qzriGUeFxy8KR
+	PftYGrUF4mQoUsytwmC4BWnQyQms/k3RKZFX1sj+p1aQqEoEszP2UU/Z6LTqizv0qNrTYe73v6f
+	swU8ujNuMZdP9PjHIYHpFTLBeFOaQbhXij3xTnwyKMJp6k/FdjRQoAvCIMUbsXzKC/VBnbe0QBi
+	qjSjymvNtOY5uj6+vx+rwKUz0wh4wgaTksl0tfpl2jcYdf2GkZK2g815BrHMyKhhXMbkQ73l7q3
+	i8UWKdqagy1hC7CzNANnLuX639iOcz9meIBocAauBVMArbqR
+X-Received: by 2002:a05:6a21:390:b0:3b4:9027:712 with SMTP id
+ adf61e73a8af0-3b4ccdcedecmr18063543637.20.1780917086441; Mon, 08 Jun 2026
+ 04:11:26 -0700 (PDT)
 Precedence: bulk
 X-Mailing-List: sashiko-reviews@lists.linux.dev
 List-Id: <sashiko-reviews.lists.linux.dev>
 List-Subscribe: <mailto:sashiko-reviews+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:sashiko-reviews+unsubscribe@lists.linux.dev>
-MIME-Version: 1.0 (generated by SEMI-EPG 1.14.7 - "Harue")
-Content-Type: text/plain; charset=US-ASCII
-X-SA-Exim-Connect-IP: 185.219.108.64
-X-SA-Exim-Rcpt-To: sashiko-reviews@lists.linux.dev, kvm@vger.kernel.org
-X-SA-Exim-Mail-From: maz@kernel.org
-X-SA-Exim-Scanned: No (on disco-boy.misterjones.org); SAEximRunCond expanded to false
+MIME-Version: 1.0
+References: <20260605121955.105661-9-phucduc.bui@gmail.com> <20260605140412.CB2A81F00898@smtp.kernel.org>
+In-Reply-To: <20260605140412.CB2A81F00898@smtp.kernel.org>
+From: Bui Duc Phuc <phucduc.bui@gmail.com>
+Date: Mon, 8 Jun 2026 18:11:15 +0700
+X-Gm-Features: AVVi8Cfj24AI7Q02Va6L_5BIzBfLSjfFWoU6OIzNmPm5u6Uc3Eq4xA22OJ0Hpkg
+Message-ID: <CAABR9nEpbhK6L2xkSGUaFKw0NtefzjaX9sAUG8sNamokzjR+MA@mail.gmail.com>
+Subject: Re: [PATCH v4 08/10] ASoC: renesas: fsi: refactor clock initialization
+To: sashiko-reviews@lists.linux.dev
+Cc: devicetree@vger.kernel.org, wsa+renesas@sang-engineering.com, 
+	robh@kernel.org, conor+dt@kernel.org
+Content-Type: text/plain; charset="UTF-8"
 
-On Mon, 08 Jun 2026 09:26:02 +0100,
-sashiko-bot@kernel.org wrote:
-> 
-> Thank you for your contribution! Sashiko AI review found 3 potential issue(s) to consider:
-> 
-> Pre-existing issues:
-> - [Critical] Missing NULL check for `vcpu->arch.vncr_tlb` in `invalidate_vncr_va()` causes a host kernel panic when iterating over uninitialized vCPUs.
-> - [High] The lazily allocated `vncr_tlb` structure leaves the `cpu` field zero-initialized, causing it to inadvertently unmap CPU 0's VNCR fixmap on the first fault.
-> - [High] Resource leak of `struct page` references on error paths in `kvm_translate_vncr()`.
-> --
-> 
-> commit cf6d236759b9eb5ba69620ec32a536af7c15a9a2
-> Author: Marc Zyngier <maz@kernel.org>
-> 
-> KVM: arm64: Hold kvm->mmu_lock while initialising vcpu->arch.vncr_tlb
-> 
-> This commit fixes a race condition and memory leak in the initialization
-> of vncr_tlb by taking the mmu_lock during assignment and verifying it is
-> NULL beforehand.
-> 
-> Link: https://lore.kernel.org/r/20260607180815.85FBC1F00893@smtp.kernel.org
-> 
-> > diff --git a/arch/arm64/kvm/nested.c b/arch/arm64/kvm/nested.c
-> > index 883b6c1008fbb..21c9d1f07d7a8 100644
-> > --- a/arch/arm64/kvm/nested.c
-> > +++ b/arch/arm64/kvm/nested.c
-> > @@ -1248,8 +1248,14 @@ int kvm_vcpu_allocate_vncr_tlb(struct kvm_vcpu *vcpu)
-> >  	if (!kvm_has_feat(vcpu->kvm, ID_AA64MMFR4_EL1, NV_frac, NV2_ONLY))
-> >  		return 0;
-> >  
-> > -	vcpu->arch.vncr_tlb = kzalloc_obj(*vcpu->arch.vncr_tlb,
-> > -					  GFP_KERNEL_ACCOUNT);
-> > +	if (!vcpu->arch.vncr_tlb) {
-> > +		struct vncr_tlb *vt = kzalloc_obj(*vcpu->arch.vncr_tlb,
-> > +						  GFP_KERNEL_ACCOUNT);
-> 
+Thank you for pointing this out.
+
+> > @@ -898,6 +904,11 @@ static int fsi_clk_set_rate_cpg(struct device *dev,
+> >       int ackmd, bpfmd;
+> >       int ret = -EINVAL;
+> >
+> > +     if (!ick || !div) {
+> > +             dev_err(dev, "ick clock or div clock is missing\n");
+> > +             return -EINVAL;
+> > +     }
+> > +
+>
 > [Severity: High]
-> This is a pre-existing issue, but since we are allocating the vncr_tlb here
-> using kzalloc_obj(), vt->cpu will be zero-initialized.
-> 
-> Looking at invalidate_vncr(), if a vCPU encounters its first VNCR fault,
-> kvm_translate_vncr() calls invalidate_vncr(vt). Because vt->cpu is 0
-> instead of -1, the following check passes:
-> 
-> arch/arm64/kvm/nested.c:invalidate_vncr() {
->         ...
->         if (vt->cpu != -1)
->                 clear_fixmap(vncr_fixmap(vt->cpu));
->         ...
-> }
-> 
-> Does this inadvertently unmap CPU 0's fixmap, potentially corrupting the
-> translation state if another vCPU is actively mapped on CPU 0? Could we
-> initialize vt->cpu to -1 right after this allocation?
-
-This is only evaluated when valid is true, and this is checked in the
-calling context. Since valid is initialised to false by virtue of the
-structure being 0-initialised, this path doesn't look possible.
-
-> 
-> > +
-> > +		scoped_guard(write_lock, &vcpu->kvm->mmu_lock)
-> > +			vcpu->arch.vncr_tlb = vt;
-> > +	}
-> > +
-> >  	if (!vcpu->arch.vncr_tlb)
-> >  		return -ENOMEM;
-> 
-> [Severity: Critical]
-> This isn't a bug introduced by this patch, but while reviewing the vncr_tlb
-> lifecycle, I noticed a potential issue in invalidate_vncr_va() when
-> iterating over uninitialized vCPUs.
-> 
-> If an online vCPU triggers an EL2 TLBI instruction before another vCPU in
-> the same VM has run, could this lead to a NULL pointer dereference?
-> 
-> arch/arm64/kvm/nested.c:invalidate_vncr_va() {
->         ...
->         kvm_for_each_vcpu(i, vcpu, kvm) {
->                 struct vncr_tlb *vt = vcpu->arch.vncr_tlb;
-> 
->                 if (!vt->valid)
->                         continue;
->         ...
-> }
-> 
-> Since vncr_tlb is allocated lazily on the first run, vt could be NULL here.
-> Does this path need a NULL check before accessing vt->valid?
+> This isn't a bug introduced by this patch, but does this clock initialization
+> path ultimately lead to sleeping while atomic?
+>
+> The ASoC framework invokes fsi_dai_trigger() in an atomic context with the
+> PCM stream spinlock held and IRQs disabled. For the start command, the call
+> chain executes:
+>
+> fsi_dai_trigger()
+>   fsi_hw_startup()
+>     fsi_clk_enable()
+>       fsi_clk_set_rate_cpg()
+>         clk_set_rate()
+>
+> clk_set_rate() attempts to acquire the global prepare_lock mutex in the common
+> clock framework, which will trigger a scheduling-while-atomic panic when
+> called from the atomic trigger path.
 >
 
-This is already fixed by a separate patch
-(https://lore.kernel.org/all/20260607175745.297793-1-maz@kernel.org/)
+I agree that moving `clk_set_rate()` to `.hw_params()` would be a
+cleaner design.
+However, this is a pre-existing behavior and outside the scope of this series.
+I would prefer to address it separately in a future cleanup.
 
-
+> [ ... ]
+>
+> > @@ -1985,6 +2000,9 @@ static int fsi_probe(struct platform_device *pdev)
+> >       fsi->master     = master;
+> >       fsi_port_info_init(fsi, &info.port_b);
+> >       fsi_handler_init(fsi, &info.port_b);
+> > +     ret = fsi_clk_init(&pdev->dev, fsi);
+> > +     if (ret)
+> > +             return ret;
+> >       ret = fsi_stream_probe(fsi, &pdev->dev);
+> >       if (ret < 0) {
+> >               dev_err(&pdev->dev, "FSIB stream probe failed\n");
+>
 > [Severity: High]
-> This is also a pre-existing issue, but I noticed a potential page reference
-> leak in kvm_translate_vncr() on the error paths.
-> 
-> When __kvm_faultin_pfn() successfully pins a page, the early return for a
-> write fault without a writable page bypasses kvm_release_faultin_page():
-> 
-> arch/arm64/kvm/nested.c:kvm_translate_vncr() {
->         ...
->         if (is_error_noslot_pfn(pfn) || (write_fault && !writable))
->                 return -EFAULT;
->         ...
-> }
+> If this fails, does the direct return bypass the cleanup for FSIA?
+>
+> Earlier in fsi_probe(), FSIA is probed and successfully allocates
+> non-devres managed DMA channels. If fsi_clk_init() subsequently fails for
+> FSIB (for example, returning -EPROBE_DEFER for an unavailable clock), the
+> error path directly returns instead of executing the cleanup routine.
+>
+> Would this lead to a permanent leak of the DMA channels and other stream
+> resources allocated for FSIA? Might a goto statement targeting the exit_fsia
+> label be needed here so that fsi_stream_remove() can safely clean up?
+>
 
-This looks like a real issue indeed.
-
-> Similarly, the MMU retry check also returns directly:
-> 
-> arch/arm64/kvm/nested.c:kvm_translate_vncr() {
->         ...
->         if (mmu_invalidate_retry(vcpu->kvm, mmu_seq))
->                 return -EAGAIN;
->         ...
-> }
-
-This one has been fixed already:
-https://patch.msgid.link/20260602235450.103057-2-oupton@kernel.org
-
-	M.
-
--- 
-Without deviation from the norm, progress is not possible.
+Good catch. I will update the error handling path to ensure proper
+cleanup and include the
+fix in the next version of the patch.
