@@ -1,59 +1,185 @@
-Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-pj1-f45.google.com (mail-pj1-f45.google.com [209.85.216.45])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C18C636BCFB;
-	Mon,  8 Jun 2026 20:17:23 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 877C233F5AB
+	for <sashiko-reviews@lists.linux.dev>; Mon,  8 Jun 2026 20:43:20 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.216.45
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1780949844; cv=none; b=VV22LgrAmiujJaoDZ/Fvd5MuRX4A4+p6fLChbKZFG36eqACSQ31u4xHsTQGM4XyENsSDfyxEehbsln69jLLlr3P2beuedFclwIBU9ytsMRxR826AZjBV9/O1cUTC7BI6pmuiJoTq1EJ/Aw5IJVYSqI5Vqqmve5Vd3a5FpqVqGJI=
+	t=1780951401; cv=none; b=L/kmwA4jcbwH4JZXRfeGUqMIGOGZ/7KpWAKPqXltv8srfa+aqbq9DFJfSWY3Osb8aRsv1cn6Jh5yYLoKgUmkEFBwrp8fbu6BQPriynQpsTlKZ3depySrOEI9SXFgRXMaoK0Ee/HLscc4XTx7BcOeqsAzkURVjZTZZWu1GBxYqFE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1780949844; c=relaxed/simple;
-	bh=7WCbsP7oNgYRZKNLcDmBqkiT/LXHZ4cU4nSTEWa+I0Q=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=MipmBfL8fNdAecaVLPD3H+n6LxtW2US7ITr4ayML3JkJbKn9u1j3so8uV+k0WgMoI8gROLZ06AyvF1xsZs0VUGHrVboMavhHWpvLqCHQOp/6pSKPIHwzMENeYvcHspJpYAjhpMz97I6urt1piFvW4i0rwZhBFZbMFaXU8R4aPNU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=LR2IjAQh; arc=none smtp.client-ip=100.103.45.18
+	s=arc-20240116; t=1780951401; c=relaxed/simple;
+	bh=MmypxDkV9WidFdoiNyUarK5RO4529BdDXNB7K8CTTjc=;
+	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
+	 In-Reply-To:Content-Type; b=dgcLOORBkfK6G5gtmLUYX0xJNTB2hZRj4MIv/c6nZSgnpTsURNkMJ4KPFF399fdYTWUZvXZNY5jsu7ptytgC/xyhg7xoXE9IiF/J2QKZ8+0vdRnMKeGJGgABwW+a442PkR3jsvP4dM/TywXqpFhBaftRd0NgDVI/BEuyLXnKk14=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=roeck-us.net; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=klkR9KUt; arc=none smtp.client-ip=209.85.216.45
+Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=roeck-us.net
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="LR2IjAQh"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 728511F00898;
-	Mon,  8 Jun 2026 20:17:22 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=kernel.org;
-	s=k20260515; t=1780949843;
-	bh=7WCbsP7oNgYRZKNLcDmBqkiT/LXHZ4cU4nSTEWa+I0Q=;
-	h=Date:From:To:Cc:Subject:References:In-Reply-To;
-	b=LR2IjAQh2yGaOUUu+HJ1GeRB1tlkVUgChZ/FpQrhNbMZFaRswfO/+hBbtd+LShT+a
-	 mI/dvOAwmZalf1HdL5OKQcWabUj6+NV37caAITv5Vt90g+c22dPDv8+khzMl9zAgie
-	 wNDF9upCdS8UANWijhVreLADPR1fEta9Zf1HGGJO8S6lKYlQmm1nRIIP0eT9ODegGF
-	 kTpX4n4naCQcMLzvPjJYfFq342e3FZ3dYkXxD0lQayv/IOalZPSnaHH7rCtG63G916
-	 4/XD/YqaLWfPgx4WISdDX/FXfkFLJ0bBQ9hgsuUHEH2bRtbvR39nuCTZk3OMGpBGVi
-	 R5qe0U4woB4gg==
-Date: Mon, 8 Jun 2026 22:17:19 +0200
-From: Krzysztof Kozlowski <krzk@kernel.org>
-To: sashiko-reviews@lists.linux.dev
-Cc: Krzysztof Kozlowski <krzysztof.kozlowski@oss.qualcomm.com>, 
-	devicetree@vger.kernel.org, wsa+renesas@sang-engineering.com, robh@kernel.org, 
-	conor+dt@kernel.org
-Subject: Re: [PATCH v2 4/4] ARM: dts: ti: Add specific compatibles for SCM
- conf nodes
-Message-ID: <20260608-alluring-holistic-chamois-babd95@quoll>
-References: <20260608-n-dt-bindings-simple-bus-syscon-v2-4-0203e6c249dc@oss.qualcomm.com>
- <20260608141135.BB3121F00893@smtp.kernel.org>
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="klkR9KUt"
+Received: by mail-pj1-f45.google.com with SMTP id 98e67ed59e1d1-36d5fd50d20so3094112a91.1
+        for <sashiko-reviews@lists.linux.dev>; Mon, 08 Jun 2026 13:43:20 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20251104; t=1780951400; x=1781556200; darn=lists.linux.dev;
+        h=content-transfer-encoding:in-reply-to:autocrypt:from
+         :content-language:references:cc:to:subject:user-agent:mime-version
+         :date:message-id:sender:from:to:cc:subject:date:message-id:reply-to;
+        bh=v397rAc4nLW0basLyJyPzlrgoP80PAn+u/BhLVjss90=;
+        b=klkR9KUtF45yuOKlYqHC8IHJ/MnzZhSJoldGwMOnj5bAefeFMt6s5xpPhKCOsD4dKo
+         9zVY62sAdE0zJxd4Scflry5FtneoYhJPAPCUA9tkR4vItaVeu8D+kaqZHyljZzQ2HBGY
+         1R7dth0n+bTstSivzHFhS0xCX1GhN19njJ08QIf8GxqmR3Wnt/1n3zc+li7ndTAJKfW9
+         sJ5dKgqZNxIwsrqIABzAtI5GPr2cM98KgMJjv3/+0gn3K9IMFQjZKAKspwl4m8m1E8H1
+         264ZUn5rofJ/s6BChRnWOkXfeRTgl0XVCLL9cAKGZ2RhZ9xtyvEOB2wubkSeguHQ1MBr
+         bZeA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20251104; t=1780951400; x=1781556200;
+        h=content-transfer-encoding:in-reply-to:autocrypt:from
+         :content-language:references:cc:to:subject:user-agent:mime-version
+         :date:message-id:sender:x-gm-gg:x-gm-message-state:from:to:cc
+         :subject:date:message-id:reply-to;
+        bh=v397rAc4nLW0basLyJyPzlrgoP80PAn+u/BhLVjss90=;
+        b=es1hyiaIZ4yUZpsF6C7ugJiENIMDkdSBuD8IFWwV0rBgA/F5iiF8MkRVRIYVb0JNWO
+         VexjAmxU9ZlUAABH5DoXpnVNrJ3yW8ANapLIc7VEcpGMwvnqQRx8LqDEBFpFoiAkfKWM
+         soU3z64H9fhlLi8xMYA0v2kZp6BUWgs3a8lChqQSeJ83BiNwX4g1LmVmhbryKWf+X4M4
+         h5TxYIpaHXtKPqyjESWnR70MpWYEEPbNgS63BaL7cFwUigjwXwdkrrJ+bmFzWILhQ5rw
+         ePtyXckqxW2n1vvXQnlpZI5Ywe+5kfF/0RWQFUbgR1Fo66zrJW1tlpWNIP1wylLcX5HP
+         3joQ==
+X-Gm-Message-State: AOJu0Yz/IptA8rwRlKc3qOJ+ptvhR4+UukKoJ+wj0Ti7CCPCTVrecdH4
+	d8vB9hMv8y9eWSxAgBiUhzd01SFyuEbptZQQXzanP7g2//Gq8Kd+9KH6
+X-Gm-Gg: Acq92OEoxO/Zo0BfbGR6/LqF3YmxNcWjgnuqoa4nSCZiW+172XPxp9Mo7f6W4Rloy+T
+	tIOLy++CuLkpGK4LgYCCfVSx/vBY5U2ayo/F4uRH7uJVqEgimGUoOHzXUceKpFWIrNeOu03S2oD
+	4EIZbnmeJTavne2NWNSBSWkJ0mz+gWl5YhxzrIeuXeFA9fYXv/lBxJ/5dZLeb/5lTsW9JjIp6DA
+	aGOO28l33LIB+1BL0Wa7Fu6qWJkHlOkIEBN4id5LQ/bs0LgjFWJqYWSRPyOQhgBZ4rQp9T6ETSS
+	tg+SCfe9K+g13PD/cr/Ids5Lm4Qg+t3bhwMs31pH9t9aaT9xEKUpwFSDd6BZm2xSQFWXdTLCWkR
+	vm4MhIcO7HuD69P5d0sqqIX19Kcd8d4k5uYwLAHEf+70db4hifMytB44F+Oqqzwy0nYlxRJtyku
+	tRqt6xCAChw5I5btr2DuISDCIC9Y5+dkZ0sjdfesNFxxkFAy+3h2xbPxTHBh65vaOAk9CelRVBJ
+	lR5Rx9jLkA=
+X-Received: by 2002:a17:90b:38c8:b0:36d:b12f:613c with SMTP id 98e67ed59e1d1-370ef2f0208mr18085500a91.10.1780951399887;
+        Mon, 08 Jun 2026 13:43:19 -0700 (PDT)
+Received: from ?IPV6:2600:1700:e321:62f0:da43:aeff:fecc:bfd5? ([2600:1700:e321:62f0:da43:aeff:fecc:bfd5])
+        by smtp.gmail.com with ESMTPSA id 98e67ed59e1d1-36f6c668e98sm17382723a91.5.2026.06.08.13.43.19
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Mon, 08 Jun 2026 13:43:19 -0700 (PDT)
+Sender: Guenter Roeck <groeck7@gmail.com>
+Message-ID: <d2e5196f-415f-4948-9c7f-6c567a4b2000@roeck-us.net>
+Date: Mon, 8 Jun 2026 13:43:18 -0700
 Precedence: bulk
 X-Mailing-List: sashiko-reviews@lists.linux.dev
 List-Id: <sashiko-reviews.lists.linux.dev>
 List-Subscribe: <mailto:sashiko-reviews+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:sashiko-reviews+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-In-Reply-To: <20260608141135.BB3121F00893@smtp.kernel.org>
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH] watchdog: sama5d4_wdt: use platform_get_irq()
+To: Rosen Penev <rosenp@gmail.com>
+Cc: sashiko-reviews@lists.linux.dev, linux-watchdog@vger.kernel.org
+References: <20260603005409.226774-1-rosenp@gmail.com>
+ <20260603010104.56C0C1F00893@smtp.kernel.org>
+ <19f5c865-0ec6-4079-bb77-cf6f203723fa@roeck-us.net>
+ <CAKxU2N8SwOzGqjoVrOGQm3fwrhp8M_Q7JGwPFQjOv8y2ubJeTw@mail.gmail.com>
+Content-Language: en-US
+From: Guenter Roeck <linux@roeck-us.net>
+Autocrypt: addr=linux@roeck-us.net; keydata=
+ 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
+ np3900V20aS7eD9K8GTU0TGC1pyz6IVJwIE=
+In-Reply-To: <CAKxU2N8SwOzGqjoVrOGQm3fwrhp8M_Q7JGwPFQjOv8y2ubJeTw@mail.gmail.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 8bit
 
-On Mon, Jun 08, 2026 at 02:11:34PM +0000, sashiko-bot@kernel.org wrote:
-> Thank you for your contribution! Sashiko AI review found 1 potential issue(s) to consider:
-> - [Low] The compatible `ti,omap5-scm-conf` is incorrectly and generically assigned to the `omap5_padconf_global` node instead of a dedicated padconf compatible.
-> --
+On 6/8/26 13:11, Rosen Penev wrote:
+> On Mon, Jun 8, 2026 at 12:26 PM Guenter Roeck <linux@roeck-us.net> wrote:
+>>
+>> On 6/2/26 18:01, sashiko-bot@kernel.org wrote:
+>>> Thank you for your contribution! Sashiko AI review found 3 potential issue(s) to consider:
+>>>
+>>> New issues:
+>>> - [High] Assigning the signed result of `platform_get_irq()` to an unsigned `u32` variable causes the `irq < 0` error check to always evaluate to false, breaking the driver's fallback mechanism.
+>>> - [Medium] Using `platform_get_irq()` instead of `platform_get_irq_optional()` for an optional IRQ causes spurious error messages to be logged.
+>>>
+>>> Pre-existing issues:
+>>> - [High] The driver registers a shared interrupt handler (`IRQF_SHARED`) before setting the platform driver data, creating a race condition that can lead to a NULL pointer dereference.
+>>> --
+>>>
+>>> commit 7ff7f2de154616b7a42f6e5710f322b20ff6152e
+>>> Author: Rosen Penev <rosenp@gmail.com>
+>>>
+>>> watchdog: sama5d4_wdt: use platform_get_irq()
+>>>
+>>> irq_of_parse_and_map() requires irq_dispose_mapping() on failure. Don't
+>>> bother with it as platform_get_irq doesn't need it.
+>>>
+>>>> diff --git a/drivers/watchdog/sama5d4_wdt.c b/drivers/watchdog/sama5d4_wdt.c
+>>>> index 13e72918338a2..d9b212557ce36 100644
+>>>> --- a/drivers/watchdog/sama5d4_wdt.c
+>>>> +++ b/drivers/watchdog/sama5d4_wdt.c
+>>>> @@ -286,8 +286,8 @@ static int sama5d4_wdt_probe(struct platform_device *pdev)
+>>>>               return ret;
+>>>>
+>>>>       if (wdt->need_irq) {
+>>>> -            irq = irq_of_parse_and_map(dev->of_node, 0);
+>>>> -            if (!irq) {
+>>>> +            irq = platform_get_irq(pdev, 0);
+>>>> +            if (irq < 0) {
+>>>
+>>> [Severity: High]
+>>> Since irq is declared as an unsigned u32 earlier in sama5d4_wdt_probe(), won't
+>>> this irq < 0 check always evaluate to false?
+>>>
+>>> platform_get_irq() returns a negative error code (like -ENXIO) on failure,
+>>> which will be implicitly cast to a large positive integer. Instead of
+>>> gracefully falling back by setting wdt->need_irq = false, won't the driver
+>>> proceed to call devm_request_irq() with an invalid IRQ number and fail the
+>>> probe?
+>>>
+>>
+>> Please fix the problems reported by Sashiko. That applies to all your patches.
+> Done for the reported ones. Sent as a series.
+>>
+>> Since it appears that you are fixing bugs based on issues reported by AI agents,
+> Difficult to do given how late in the merge window this is. The other
+> issue is every time I fix bugs reported by sashiko, it complains about
+> new pre-existing ones. Cat and Mouse game at best.
 
-Correct, this should be ti,omap5-sysc-padconf-global.
+That can not be helped. Also, bug fixes do not depend on commit windows.
 
-Best regards,
-Krzysztof
+Guenter
 
