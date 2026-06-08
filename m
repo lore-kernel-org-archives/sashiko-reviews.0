@@ -1,211 +1,104 @@
-Received: from mail-dl1-f51.google.com (mail-dl1-f51.google.com [74.125.82.51])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F01513803F9
-	for <sashiko-reviews@lists.linux.dev>; Mon,  8 Jun 2026 13:37:58 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=74.125.82.51
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 304713D349E;
+	Mon,  8 Jun 2026 14:07:52 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1780925881; cv=none; b=rpqqxSDJgp9BGfZ4tP/Sad6uUTPq+KdvpJHpNjC2CAZkQIl3LOjzWmFFF6Nr8wkE8S7rgk/tbRp88wpf1tO8XQGIPsiNMZTGz8JR5IkVGj+HeH9RlT/r474UJz+quH8kewzkVEuPDI54ghD1Iy3sCXvB9HCVIcVZF37VLMjrQOE=
+	t=1780927674; cv=none; b=FUsedGtoepD6qTi5ULUsgC1RLBOx05f8XlOv2dy1CgKfQz1GEERux/6vSlqu9aGfiwNqM5dIpZWGb/y14mYmk8pk/j3rCPyNMXPB2hgqAkJHMT5cBFPJI32z908Nmqwvufypik8a8KnfTxWdUt+6xPBm5yskpoecUCsv1OS/Qdc=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1780925881; c=relaxed/simple;
-	bh=bGxBOEX5vtxnGJu0C1CO9jYwtrMiWuaWtlMe7HyJXGA=;
-	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=L/3Z5O+ZDWT0Uwi3T3/bEZiTtGchOp+2oZ8K9Wck1n8RqOuoi/dlmrjfSsCwhuJhtVxgm3iZVLhB28acRUwGIGvBkiAz/HyG9krWNbeuH6XdQkTXfhI61Qun0CaQEA+/NwLrm99jfyDTsdlwvZqaBbzXk/B9971KLcnnWUkpB7Y=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=IQn1jLv0; arc=none smtp.client-ip=74.125.82.51
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+	s=arc-20240116; t=1780927674; c=relaxed/simple;
+	bh=IiDBgEWBuHEv074ME+h2nO6TDtChGrOV9k6YP9C1WxU=;
+	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
+	 In-Reply-To:Content-Type; b=Z3ZCL71OQ6IVHBRdjvWeY6P0fcUO/Wnou3srmE+WLHEHmSiETeluXt4BbLiZPSQSryiAWCQasaVFVNFZUR+LDApQ5vMe0ooM66AUKW5bqqOkAEtBzRDArDMqxS3da32UhaCj2GMlz8iXBOESHA7LPmKspZrVp9kX5c93KIa2sys=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=b8fS3t9q; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="IQn1jLv0"
-Received: by mail-dl1-f51.google.com with SMTP id a92af1059eb24-1363e78746eso4593492c88.1
-        for <sashiko-reviews@lists.linux.dev>; Mon, 08 Jun 2026 06:37:58 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20251104; t=1780925878; x=1781530678; darn=lists.linux.dev;
-        h=content-transfer-encoding:mime-version:references:in-reply-to
-         :message-id:date:subject:cc:to:from:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=ZwULGS4h8PnN6MHIOVwi83xoDC88zB8a4vjNWuQ1Pus=;
-        b=IQn1jLv0it7D9Ao4mv8mtHpq+tw7nSElRK+91TKhBzRR/rujzIe7P5c91GYklZU5CT
-         xSn4NnNgo0EAROZkw0auM0Txv2MM6sQ9ZidtPmrJ1l+QiX3qg1AQ4XQflAC/Mx9FTPSX
-         5prRtdLMnyBVi0TcmnvyrqPBL+0uuUCcdgVQKcMoSWxfVYIVtMxkWCwjSjdNps7K2W5r
-         mWfoDb0VbqLurSZdhbGU1T2DeED5w3f2639n5nNVTkWK6t334rBCJLASAfu677t/QmI3
-         ipLmQZVw5Wc3m1UkgTEsCaDZKXgfb5FlfAEiph+FUm1rz/w3/x65co+Ime27KNlhixdm
-         EDxQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20251104; t=1780925878; x=1781530678;
-        h=content-transfer-encoding:mime-version:references:in-reply-to
-         :message-id:date:subject:cc:to:from:x-gm-gg:x-gm-message-state:from
-         :to:cc:subject:date:message-id:reply-to;
-        bh=ZwULGS4h8PnN6MHIOVwi83xoDC88zB8a4vjNWuQ1Pus=;
-        b=FdC+/Xny19g1YkETebTBelUAVRr8smfqRjvPhs1TE25k+xYy+ag+tmp2VkSOBm9t1v
-         M97wXYAN8YY5f5pYwicRUdzUB7hd98mklX7pOniOo02OGCTlmm5bLgb9yNgZ/3kYBpm7
-         eDz20HwrvDK3M2eEJmeds9b3eYvTMynQIqrbM0f+GjU6XyK/+ZYVedRQq3EhI8aAQNV4
-         RaoyDjqam5pxEGBIcIA5rg6qXzuoOdGrfs/0CqFsL/IAxktepEBGYuaY6ivf8LTMYRwN
-         9fozNwxN6iLGPWngVTApGUMPi1C1QrhofPqCdxFUTs6SXeBNduKkd9MkO2AypK/LWsUy
-         ftYQ==
-X-Forwarded-Encrypted: i=1; AFNElJ+/ZMCgVuHuKLmBiE0VSrDjkM1ugJ8Oe6iHjSXjnOHxRMC8JtgVElMoYjmDUUE5x8LERoQWsodV+1mCi1ux720=@lists.linux.dev
-X-Gm-Message-State: AOJu0YzlVERsPvNf06XR/Lnbev3ftowtQISYisuIWmz92XDxSDX+SSt3
-	RGLM1bKP8xtIyGGBnum24PcoO7ARF0YHIvgBbwRNDXHMuDqgjOwK2jldVPTvEwWeJSc=
-X-Gm-Gg: Acq92OEmdnraCgAdKT7hXz2n2bRoXHbCepyS82HgeJQ+6FaETetEdWzlr4m60X52bd8
-	zu/1k0JAnga7X9NsO8Vi9K0/N1BXSumxO+r+tm9kLjtVCpewT5aM57ex9j4x5DIQ0w0RaqOzEsd
-	6BxgENJ7LBvoLKvgthm8vIMBIxzS8RXu1sStCMa+FEg22e+KRrye+riUh6fVC9OLdZOopmf5wMo
-	JT7Q2tiCtmCm/M253RWnl1JHucx+XP+5CfIc1p+7vrsdQfEurnsKA/PYhPEtA3M1lMdmzyiZH9K
-	5T0YuccTBY9DuWg2TU5u42pS/QQUl1jAt2Nb5JQcHL1Weg9VOM7TiLScV8023upSNaqc7FK5Jzi
-	7Qrt2lSX0jZvKV0aZtDy0y4Jg8Oh9svBfffKyiRk/n6CE7rmmJhIrKDlgPPaqd4z7otpbpj4DTg
-	TqyNjdlAH9okH4W0EZYJ8Z8xBVIUdbzT+JPUWohCPtAbVvRCdb1QEpgheneT6e
-X-Received: by 2002:a05:7022:fd0c:b0:138:3d7:e8b1 with SMTP id a92af1059eb24-13806699169mr6430796c88.10.1780925877674;
-        Mon, 08 Jun 2026 06:37:57 -0700 (PDT)
-Received: from arch.localdomain ([2409:8a28:a54:e741:3a5a:3245:d3dc:4b5d])
-        by smtp.gmail.com with ESMTPSA id a92af1059eb24-137f5539432sm14333495c88.9.2026.06.08.06.37.53
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Mon, 08 Jun 2026 06:37:57 -0700 (PDT)
-From: Jun Yan <jerrysteve1101@gmail.com>
-To: sashiko-bot@kernel.org
-Cc: conor+dt@kernel.org,
-	devicetree@vger.kernel.org,
-	dmitry.torokhov@gmail.com,
-	jerrysteve1101@gmail.com,
-	linux-input@vger.kernel.org,
-	robh@kernel.org,
-	sashiko-reviews@lists.linux.dev
-Subject: Re: [PATCH 8/8] Input: cap11xx - add support for CAP1114
-Date: Mon,  8 Jun 2026 21:37:49 +0800
-Message-ID: <20260608133749.555523-1-jerrysteve1101@gmail.com>
-X-Mailer: git-send-email 2.54.0
-In-Reply-To: <20260606152056.B77161F00893@smtp.kernel.org>
-References: <20260606152056.B77161F00893@smtp.kernel.org>
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="b8fS3t9q"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 747941F00893;
+	Mon,  8 Jun 2026 14:07:51 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=kernel.org;
+	s=k20260515; t=1780927672;
+	bh=IiDBgEWBuHEv074ME+h2nO6TDtChGrOV9k6YP9C1WxU=;
+	h=Date:Subject:To:Cc:References:From:In-Reply-To;
+	b=b8fS3t9qsgIFjU5syQrm0YOOeJAblfbQmmfFD+25YGN3O89qd0f4ux2MIT3ZOwnQf
+	 4uXKMKbe8BNlJLxdR64j5uERhFTW9gqWapDKUL5CdMUhRbL3ad8XQGAQpZQSvsLZre
+	 P+pxPsd//Zkx0VPPzNKhz4GD0dW1VMbw65xAego/lthpcXT77yylSD+/kbVM1u9UIM
+	 dsyJzvcJLZh/UMIgu8EGJwxnKDPZlhDtLMZmURz7xY8YMMFvrIlPLXJdbBSRtbJCCs
+	 6yT1xTQzC8U9vLdGZID2B0W1W06Q+U6LsVC+idGPhsErOQyqWayk7VZDsSZy5Q2Qgl
+	 hEDCA8CD2R4mA==
+Message-ID: <fd36b700-4db0-4f45-9ed7-d2b4131de882@kernel.org>
+Date: Mon, 8 Jun 2026 16:07:49 +0200
 Precedence: bulk
 X-Mailing-List: sashiko-reviews@lists.linux.dev
 List-Id: <sashiko-reviews.lists.linux.dev>
 List-Subscribe: <mailto:sashiko-reviews+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:sashiko-reviews+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH v2 3/4] dt-bindings: mfd: syscon: Drop custom select for
+ older dtschema
+To: sashiko-reviews@lists.linux.dev
+Cc: robh@kernel.org, wsa+renesas@sang-engineering.com,
+ devicetree@vger.kernel.org, conor+dt@kernel.org
+References: <20260608-n-dt-bindings-simple-bus-syscon-v2-3-0203e6c249dc@oss.qualcomm.com>
+ <20260608140157.C38A81F00893@smtp.kernel.org>
+From: Krzysztof Kozlowski <krzk@kernel.org>
+Content-Language: en-US
+Autocrypt: addr=krzk@kernel.org; keydata=
+ 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
+In-Reply-To: <20260608140157.C38A81F00893@smtp.kernel.org>
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 7bit
 
-> Thank you for your contribution! Sashiko AI review found 3 potential issue(=
-> s) to consider:
-> - [High] Buffer overflow when reading the 'microchip,calib-sensitivity' dev=
-> ice tree property for devices with >8 channels.
-> - [High] Failure to mask `STATUS1` before ORing `STATUS2` can cause phantom=
->  key presses for channels 7 and 8.
-> - [Low] Bitmask calculation for 'microchip,signal-guard' truncates settings=
->  for channels 8 and above.
-> --
-> 
-> commit 8885b1d0f98cb8d5ca53ba5fd9a458743481d5be
-> Author: Jun Yan <jerrysteve1101@gmail.com>
-> 
-> Input: cap11xx - add support for CAP1114
-> 
-> CAP1114 is a 14-channel capacitive touch sensor with 11 LED outputs
-> and hardware reset support. The CAP1114 uses two separate control registers
-> for LED output management and requires two button status registers for touch
-> input state reporting.
-> 
-> > diff --git a/drivers/input/keyboard/cap11xx.c b/drivers/input/keyboard/ca=
-> p11xx.c
-> > index 408880cf65167..2aba3b508947d 100644
-> > --- a/drivers/input/keyboard/cap11xx.c
-> > +++ b/drivers/input/keyboard/cap11xx.c
-> 
-> [ ... ]
-> 
-> > @@ -311,6 +337,20 @@ static irqreturn_t cap11xx_thread_func(int irq_num, =
-> void *data)
-> >  	if (ret < 0)
-> >  		goto out;
-> > =20
-> > +	if (priv->model->num_channels > 8) {
-> > +		unsigned int status2;
-> > +
-> > +		ret =3D regmap_read(priv->regmap, priv->model->sensor_input_reg_base +=
->  1, &status2);
-> > +		if (ret < 0)
-> > +			goto out;
-> > +
-> > +		/*
-> > +		 * CAP1114 STATUS1 register only contains data for the first 6 channel=
-> s.
-> > +		 * the remaining channels is stored in STATUS2.
-> > +		 */
-> > +		status |=3D FIELD_PREP(GENMASK(13, 6), status2);
-> 
-> [Severity: High]
-> If the hardware sets reserved bits 6 or 7 in the first status register to 1,
-> will they be preserved and incorrectly reported as touch events for channels
-> 7 and 8?
-> 
-> Since the status variable (which holds STATUS1) is not masked before this OR
-> operation, any reserved bits set in STATUS1 could overlap with the shifted
-> status2 values.
-> 
-> Should the status variable be masked to clear bits 6 and 7 before ORing in
-> status2?
-> 
+On 08/06/2026 16:01, sashiko-bot@kernel.org wrote:
+> Thank you for your contribution! Sashiko AI review found 1 potential issue(s) to consider:
+> - [Medium] Removal of the custom `select` block breaks device tree validation for `dtschema` versions older than 2024.02, which are still permitted by the kernel build system.
 
-Thanks. Will mask bits 6/7 via status &= GENMASK(5, 0) after reading STATUS1 in v2.
+Rob,
 
-> > +	}
-> > +
-> >  	for (i =3D 0; i < priv->idev->keycodemax; i++)
-> 
-> [ ... ]
-> 
-> > @@ -572,6 +625,14 @@ static const struct cap11xx_hw_model cap1106_model =
-> =3D {
-> >  	.has_repeat_en =3D true,
-> >  };
-> > =20
-> > +static const struct cap11xx_hw_model cap1114_model =3D {
-> > +	.product_id =3D 0x3a,
-> > +	.led_output_control_reg_base =3D CAP1114_REG_LED_OUTPUT_CONTROL1,
-> > +	.sensor_input_reg_base =3D CAP1114_REG_BUTTON_STATUS1,
-> > +	.num_channels =3D 14, .num_leds =3D 11, .num_sensor_thresholds =3D 8,
-> 
-> [Severity: High]
-> Does configuring num_channels to 14 cause a buffer overflow when parsing the
-> device tree?
-> 
-> In struct cap11xx_priv, calib_sensitivities is defined as a fixed 8-element
-> array:
-> 
-> struct cap11xx_priv {
->         ...
->         u32 calib_sensitivities[8];
->         u32 keycodes[];
-> };
-> 
-> When cap11xx_init_keys() parses the microchip,calib-sensitivity property, it
-> requests num_channels elements:
-> 
-> of_property_read_u32_array(node, "microchip,calib-sensitivity",
->                            priv->calib_sensitivities,
->                            priv->model->num_channels)
-> 
-> If the device tree provides 14 elements, won't this write 56 bytes into the
-> 32-byte array, overflowing into the adjacent keycodes flexible array?
-> 
-> [Severity: Low]
-> Additionally, does setting num_channels to 14 cause truncation in the
-> microchip,signal-guard bitmask logic?
-> 
-> In cap11xx_init_keys(), priv->signal_guard_inputs_mask is typed as a u8, but
-> the initialization loop runs up to num_channels:
+Shall I bump kernel's requirement of dtschema version?
 
-I will exclude CAP1114 from using microchip,calib-sensitivity and microchip,
-signal-guard in the dt-bindings to resolve these two issues in V2.
-
-> 
-> if (u32_val)
->         priv->signal_guard_inputs_mask |=3D 0x01 << i;
-> 
-> For i >=3D 8, does the shifted bit exceed the 8-bit width and get silently
-> truncated to 0 during the assignment?
-> 
-> > +	.has_grouped_sensors =3D true,
-> > +};
-> > +
-> 
-> --=20
-> Sashiko AI review =C2=B7 https://sashiko.dev/#/patchset/20260606150458.2506=
-> 06-1-jerrysteve1101@gmail.com?part=3D8
+Best regards,
+Krzysztof
 
