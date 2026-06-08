@@ -1,45 +1,45 @@
 Received: from casper.infradead.org (casper.infradead.org [90.155.50.34])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2F1B032B13F;
-	Mon,  8 Jun 2026 23:29:13 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DC45D3403F7;
+	Mon,  8 Jun 2026 23:43:11 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=90.155.50.34
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1780961357; cv=none; b=qRPnI6d2AbkCLrz9Pl3jd3BqDtTBCHwrDpp5D6eOfDTJ7kd60+HitSHtNLYHo58bD2mUaU713eQLgTeZZX/CbXudx891eIFXkQw7rDtXtsKfCCjh7Pj9zfSiGiFt8vUxWUlQO0wozjCI+K0Hb1jrE55y/04i65/6hKRvxVSEeu4=
+	t=1780962195; cv=none; b=NlMzJSjJZO6BbepNWlwugY6UDVxLPpLzv8iUzUk7r8d/GWoWM6dWrLtyke/v/yy7EfgUBk1WIBUUv9LFtZocEO3S7KcX1Qwo7wU0HoW5odPwiaWkdy1I86DuNS3sFzKMVyz6y+SDYV6BbRzV/fuSJradTH9mMcc8w2iTvdV2/fw=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1780961357; c=relaxed/simple;
-	bh=oBxjz/fQv5NENmvsHzK7bIfWg3xYlofz0EOJrHY972A=;
+	s=arc-20240116; t=1780962195; c=relaxed/simple;
+	bh=qRUW/KewRl20mnS/PXDBvhfHxrC5MGjlQoxHKVV6fTQ=;
 	h=Message-ID:Subject:From:To:Cc:Date:In-Reply-To:Content-Type:
-	 MIME-Version; b=pLXb2cj+LauZwVDmF/QY7sYXM0/9RVhuTfkSMYUJK4eP9ICVowlUPHqlonnQtDR0spUbtaS48nZo9meQeiVkcEFtbbzbR4GNGd3pRqa7aeWWpkQB545KK4JFaQznnsyIa6oAgzljeLClg0U+ranUoyuo9+ex/s/bsIF7/lJThCg=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=infradead.org; spf=none smtp.mailfrom=casper.srs.infradead.org; dkim=pass (2048-bit key) header.d=infradead.org header.i=@infradead.org header.b=Ym80X/bF; arc=none smtp.client-ip=90.155.50.34
+	 MIME-Version; b=s8Vkouu7u7lIg66nOBFz9MPVHtOEPfka0+V0gR5bqtp6kkB4QsvMcAtPHyDJ/S4GFVZjKoGUmS62SRPxPYQyWzKF6y6JL6OAT71Qb/oBfXiO9VJEpt+hFIx0sUzKkeGj2zQ8gR4LaRaQ0jUli8GwOfqZjFgYG6nE83D44EKp330=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=infradead.org; spf=none smtp.mailfrom=casper.srs.infradead.org; dkim=pass (2048-bit key) header.d=infradead.org header.i=@infradead.org header.b=SwoS04iP; arc=none smtp.client-ip=90.155.50.34
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=infradead.org
 Authentication-Results: smtp.subspace.kernel.org; spf=none smtp.mailfrom=casper.srs.infradead.org
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=infradead.org header.i=@infradead.org header.b="Ym80X/bF"
+	dkim=pass (2048-bit key) header.d=infradead.org header.i=@infradead.org header.b="SwoS04iP"
 DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed;
 	d=infradead.org; s=casper.20170209; h=MIME-Version:Content-Type:In-Reply-To:
 	Date:Cc:To:From:Subject:Message-ID:Sender:Reply-To:Content-Transfer-Encoding:
 	Content-ID:Content-Description:References;
-	bh=oBxjz/fQv5NENmvsHzK7bIfWg3xYlofz0EOJrHY972A=; b=Ym80X/bFbBKH/P9luepQcpV5Zi
-	s4fQu80fXDNeIwWgVQ5oN11JdoMxFl21oxSDVSqFfil9j8sMonCqsIObZAVd2a9KZvBQOskqwphtc
-	6XAIPS5XmAZhrGjShCLfpGkBr6u0DLLBlvCV6pyGOCwd9+Z3VKSGnd6Dq55z5P6jdi1NqL6NGDn7c
-	fTPyyR6kdRdKQrjgeFWuPT3YOrDcLLHEGZZDM4V1WieczsTqf0cQ4L1nVYcgTP8b1Bgl4GCNHupAe
-	OK2YCiYzKS1VnY+k1JD0QIZkhYXMRbC1KqNlgvpZXH40swEzg8PxPNit6Holn9JcNsRYI2eeX/zZ7
-	+P+WWDWQ==;
+	bh=qRUW/KewRl20mnS/PXDBvhfHxrC5MGjlQoxHKVV6fTQ=; b=SwoS04iPbDOt3V9xCvOog/kwJP
+	DegPwerobs6XZOzDuCszB5aEnPU6ffl87174Tgn2vSVerXxoMunbuOup3JHeRMEGF6GkidH+L39lQ
+	ozwL/Y5FL3Tzau81f6kTYuu1VRfNEyp3TtBIisWluouKy17XFhhVPoyi+t2JbHiJ5BCMjoAeLOQd7
+	JT0B3+VZfbq5Nbm1M+7wQJJx5nu4iVcYHAgIez70QGXcRkHkZoMhzboCv4txf00HjVtCsDeF9YsYw
+	He9vfgN4VL8rWtVduh39pF3OzRr2RJLG8gnwxihWlrTF6UWAAkbV91r4hytI6DckIqwBAIvxAO2nB
+	LAs6anrQ==;
 Received: from [2001:8b0:10b:5:30c7:a671:e76:6796] (helo=u09cd745991455d.ant.amazon.com)
 	by casper.infradead.org with esmtpsa (Exim 4.99.1 #2 (Red Hat Linux))
-	id 1wWjP4-0000000Eako-0kdI;
-	Mon, 08 Jun 2026 23:29:10 +0000
-Message-ID: <c1f6ae6779d6475d6ad86a6a721a1ae080dad015.camel@infradead.org>
-Subject: Re: [PATCH v5 07/34] KVM: x86: Activate master clock immediately on
- vCPU creation
+	id 1wWjcb-0000000Ec0o-0nK7;
+	Mon, 08 Jun 2026 23:43:09 +0000
+Message-ID: <70c3b262711a4936405afb796f907f3ba5f7cf48.camel@infradead.org>
+Subject: Re: [PATCH v5 12/34] KVM: x86: Fix KVM clock precision in
+ get_kvmclock() with TSC scaling
 From: David Woodhouse <dwmw2@infradead.org>
 To: sashiko-bot@kernel.org
 Cc: dwmw2@infradead.org, kvm@vger.kernel.org, sashiko-reviews@lists.linux.dev
-Date: Tue, 09 Jun 2026 00:29:10 +0100
-In-Reply-To: <20260608162707.39CA21F00893@smtp.kernel.org>
+Date: Tue, 09 Jun 2026 00:43:07 +0100
+In-Reply-To: <20260608173927.7F7CE1F00893@smtp.kernel.org>
 Content-Type: multipart/signed; micalg="sha-256"; protocol="application/pkcs7-signature";
-	boundary="=-rJVbqIELOsPaImM2Xv70"
+	boundary="=-BW7TZR7n7z0HO+W1qP3I"
 User-Agent: Evolution 3.60.3 
 Precedence: bulk
 X-Mailing-List: sashiko-reviews@lists.linux.dev
@@ -50,26 +50,25 @@ MIME-Version: 1.0
 X-SRS-Rewrite: SMTP reverse-path rewritten from <dwmw2@infradead.org> by casper.infradead.org. See http://www.infradead.org/rpr.html
 
 
---=-rJVbqIELOsPaImM2Xv70
+--=-BW7TZR7n7z0HO+W1qP3I
 Content-Type: text/plain; charset="UTF-8"
 Content-Transfer-Encoding: quoted-printable
 
-On Mon, 2026-06-08 at 16:27 +0000, sashiko-bot@kernel.org wrote:
+On Mon, 2026-06-08 at 17:39 +0000, sashiko-bot@kernel.org wrote:
 > [Severity: High]
-> Does this cause an O(N=C2=B2) scaling issue during VM creation if the hos=
-t
-> clocksource doesn't support the masterclock?
+> Does calculating tsc_hz by multiplying by 1000 before scaling create
+> a precision discrepancy with the guest's pvclock?
 
-Good catch. Fixed in v6 by replacing the synchronous
-kvm_update_masterclock() call with a simple
-kvm_make_request(KVM_REQ_MASTERCLOCK_UPDATE, vcpu).
+No. Patch 02 in this series ("Improve accuracy of KVM clock when TSC
+scaling is in force") already changed kvm_guest_time_update() to use
+the same order of operations: multiply to Hz first, then scale.
 
-The vCPU will process the request on its first run,
-avoiding the O(N) iteration over all existing vCPUs
-that made vCPU creation O(N=C2=B2) on archaic hardware
-without a TSC-based clocksource.
+The old code did kvm_scale_tsc(khz) then multiplied by 1000, which
+loses up to 999 Hz of precision from the >>48 truncation. Both this
+patch and patch 02 now compute khz * 1000 first then scale, so they
+match exactly.
 
---=-rJVbqIELOsPaImM2Xv70
+--=-BW7TZR7n7z0HO+W1qP3I
 Content-Type: application/pkcs7-signature; name="smime.p7s"
 Content-Disposition: attachment; filename="smime.p7s"
 Content-Transfer-Encoding: base64
@@ -148,21 +147,21 @@ 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
-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
+ggE3MBgGCSqGSIb3DQEJAzELBgkqhkiG9w0BBwEwHAYJKoZIhvcNAQkFMQ8XDTI2MDYwODIzNDMw
+N1owLwYJKoZIhvcNAQkEMSIEIKjHv2RX9ov4XFElYDNQCeHVd6UcqtgirWzvthZz1iN7MGQGCSsG
 AQQBgjcQBDFXMFUwQTELMAkGA1UEBhMCQVUxEDAOBgNVBAoTB1Zlcm9rZXkxIDAeBgNVBAMTF1Zl
 cm9rZXkgU2VjdXJlIEVtYWlsIEcyAhAH5JEPagNRXYDiRPdlc1vgMGYGCyqGSIb3DQEJEAILMVeg
 VTBBMQswCQYDVQQGEwJBVTEQMA4GA1UEChMHVmVyb2tleTEgMB4GA1UEAxMXVmVyb2tleSBTZWN1
-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
+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
 
 
---=-rJVbqIELOsPaImM2Xv70--
+--=-BW7TZR7n7z0HO+W1qP3I--
