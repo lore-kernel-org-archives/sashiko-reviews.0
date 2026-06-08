@@ -1,119 +1,184 @@
-Received: from m16.mail.163.com (m16.mail.163.com [117.135.210.4])
+Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 29C612E718F
-	for <sashiko-reviews@lists.linux.dev>; Mon,  8 Jun 2026 07:07:37 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=117.135.210.4
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6BB5D3A7591;
+	Mon,  8 Jun 2026 09:41:25 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1780902462; cv=none; b=FEjqeI4fqKYpZxYX1QZ/6JTgorS9xuL4k6BOwNq7iZKheQuGfNcEdvsEtPrHmLYDDdk/bX73vOjo3jpxWaGYc9OlFgkfZTn7HrhEujYDuJ/PioAs6K+QY/ZkoQ0uxKgM5ZxaedIWTIQPfljo1Gq5AlVmV3fBDK0cYC18LJKdlQY=
+	t=1780911687; cv=none; b=tb16uMP2fiVIf0jddmkEJczws2eAZGd6kMkaNiJIp7v2oXbOkwmD8dYZYwwj6KO7CvosSVOZuzz6Ezy+d/jFNH2YRvJN31va84tQbbebcAd42CpPFafEjia2Fg1vFvv9UVNJownt4/gtqDnaj/Cl0ZRBG2kBm6ruBe7rO6iofbA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1780902462; c=relaxed/simple;
-	bh=1wn43ZuIJiwUzVbbPvNg2bm0i/arHRHXQPG01WrCRNU=;
-	h=Message-ID:Date:MIME-Version:Subject:To:References:From:
-	 In-Reply-To:Content-Type; b=uATsiiJyaby59oJOIUXRYyhVZAMx501cBuI8gWdZamj5f1BNuBb/nMLQhwiY2JSUauzSQiKG2IuTk8BlUppVNFz/67eqFGbg+gpMc+uGZXXbHl5ImWr6831jAp7lo226qdX0owKCGvp9Z8MDdduFhXiJgcm53Vv6MgK/sqF3ejE=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=163.com; spf=pass smtp.mailfrom=163.com; dkim=pass (1024-bit key) header.d=163.com header.i=@163.com header.b=oqKWwDI/; arc=none smtp.client-ip=117.135.210.4
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=163.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=163.com
+	s=arc-20240116; t=1780911687; c=relaxed/simple;
+	bh=e9VGB3RzJNeMtY5Q7FpVM9If4E09QwmbsI6rjIqlMbA=;
+	h=Date:Message-ID:From:To:Cc:Subject:In-Reply-To:References:
+	 MIME-Version:Content-Type; b=BqUKyWYyluiV+Yq1U5bH5N5HXH/RZt8RYIH1iyKhUw1aom6KqQxQCmhG9D9kYNYqjB3GxreDMZNcd9wDf58pRccrVmuX5Kx4howxcm3isaj4OSPwTQ9MB6wVSzCG+MaDUT01zQLUaAdcx8CJnpU6haIf+YpqyIGW2nYwn5EI+I8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=gCl2iP1r; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=163.com header.i=@163.com header.b="oqKWwDI/"
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=163.com;
-	s=s110527; h=Message-ID:Date:MIME-Version:Subject:To:From:
-	Content-Type; bh=jPcPNNOpYwHC0y4pNS/Fc5s9m6xjjQ82cSzGcxKLQGQ=;
-	b=oqKWwDI/TPhhoJsXtAPAwC2O6P/zpdtBWEj4OwH2qEEWl27C/naMs39z116kwd
-	ATgERf7DxeWMY4PDX5xxatBk5S0V+OSa0MHEsdcLPl+E7BujVHQz4iJcrnfe8o+z
-	vLaci/o3xES+D3JkX6d9W6oZT3w88FvCdwwX0DWnmff2U=
-Received: from [10.42.12.206] (unknown [])
-	by gzga-smtp-mtada-g0-3 (Coremail) with SMTP id _____wAXHhgvaiZqFmajCA--.47572S2;
-	Mon, 08 Jun 2026 15:07:28 +0800 (CST)
-Message-ID: <dccd78a3-f311-4617-a227-bc1da9f6af95@163.com>
-Date: Mon, 8 Jun 2026 15:07:26 +0800
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="gCl2iP1r"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id C07611F00898;
+	Mon,  8 Jun 2026 09:41:24 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=kernel.org;
+	s=k20260515; t=1780911684;
+	bh=+sKBIXnDcUDiKipp4dXaJfavVK02CQvHaodclEeqrTM=;
+	h=Date:From:To:Cc:Subject:In-Reply-To:References;
+	b=gCl2iP1rK5kBMVwYVpj1i15Uep2qUGOmKN4PdWLCQ2tb0MpsP0cMYUU4BAl8rm6SG
+	 zn1anTo8dZqC6to6HLnwfsZslT76uvFxD2pVow6hOHAagMEO8GlgdULXwWfc3rEIyX
+	 X73VKVr5BauzY3y6pNldxJBHyFAtT13BsBN0g8VtppZ3k9W5Rv6kEIyGxzhj2fi8sp
+	 hiY+2+yaxAR7pKyhgp6y+ha6bGrkg8x36YGcT6+2XyDSZmG4hFlAb7k0yFeSRmjGXz
+	 ar5hvF4ajT6m7YfMO4AZ8n82lz/5YuLDaM0K9vERCMLGq/UEWkR/ifOhoygYBlzXsD
+	 VeGSFGsvAJPZg==
+Received: from sofa.misterjones.org ([185.219.108.64] helo=goblin-girl.misterjones.org)
+	by disco-boy.misterjones.org with esmtpsa  (TLS1.3) tls TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384
+	(Exim 4.98.2)
+	(envelope-from <maz@kernel.org>)
+	id 1wWWTz-0000000APSs-02nj;
+	Mon, 08 Jun 2026 09:41:23 +0000
+Date: Mon, 08 Jun 2026 10:41:22 +0100
+Message-ID: <86tsrdtlml.wl-maz@kernel.org>
+From: Marc Zyngier <maz@kernel.org>
+To: sashiko-reviews@lists.linux.dev
+Cc: kvm@vger.kernel.org
+Subject: Re: [PATCH] KVM: arm64: Hold kvm->mmu_lock while initialising vcpu->arch.vncr_tlb
+In-Reply-To: <20260608082603.16AEC1F00893@smtp.kernel.org>
+References: <20260608081108.2244133-1-maz@kernel.org>
+	<20260608082603.16AEC1F00893@smtp.kernel.org>
+User-Agent: Wanderlust/2.15.9 (Almost Unreal) SEMI-EPG/1.14.7 (Harue)
+ FLIM-LB/1.14.9 (=?UTF-8?B?R29qxY0=?=) APEL-LB/10.8 EasyPG/1.0.0 Emacs/30.1
+ (aarch64-unknown-linux-gnu) MULE/6.0 (HANACHIRUSATO)
 Precedence: bulk
 X-Mailing-List: sashiko-reviews@lists.linux.dev
 List-Id: <sashiko-reviews.lists.linux.dev>
 List-Subscribe: <mailto:sashiko-reviews+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:sashiko-reviews+unsubscribe@lists.linux.dev>
-MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH] sched_ext/scx_flatcg: Fix cvtime_delta race and add
- hweight scaling to bypass charging
-To: sashiko-reviews@lists.linux.dev
-References: <20260608042230.3-1-liwanwu9113@163.com>
- <20260608043558.ECBCE1F00893@smtp.kernel.org>
-Content-Language: en-US
-From: liwanwu9113 <liwanwu9113@163.com>
-In-Reply-To: <20260608043558.ECBCE1F00893@smtp.kernel.org>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
-X-CM-TRANSID:_____wAXHhgvaiZqFmajCA--.47572S2
-X-Coremail-Antispam: 1Uf129KBjvJXoWxuryDZw48tF47GFyfZF48tFb_yoW5Ar43pF
-	ZYq3W7tF48tF4vgFnrZF1kXry0gw4vy3yUGr45tw4fZrnxW3WrtF12yF43WFsIyrsakF42
-	vrZYk3W8C3W0y3DanT9S1TB71UUUUU7qnTZGkaVYY2UrUUUUjbIjqfuFe4nvWSU5nxnvy2
-	9KBjDUYxBIdaVFxhVjvjDU0xZFpf9x0ziOJ5xUUUUU=
-X-CM-SenderInfo: polzt01zxziiqt6rljoofrz/xtbC3BDKU2omajAVEwAA3F
+MIME-Version: 1.0 (generated by SEMI-EPG 1.14.7 - "Harue")
+Content-Type: text/plain; charset=US-ASCII
+X-SA-Exim-Connect-IP: 185.219.108.64
+X-SA-Exim-Rcpt-To: sashiko-reviews@lists.linux.dev, kvm@vger.kernel.org
+X-SA-Exim-Mail-From: maz@kernel.org
+X-SA-Exim-Scanned: No (on disco-boy.misterjones.org); SAEximRunCond expanded to false
 
-
-
-On 2026/6/8 12:35, sashiko-bot@kernel.org wrote:
-> Thank you for your contribution! Sashiko AI review found 1 potential issue(s) to consider:
+On Mon, 08 Jun 2026 09:26:02 +0100,
+sashiko-bot@kernel.org wrote:
+> 
+> Thank you for your contribution! Sashiko AI review found 3 potential issue(s) to consider:
 > 
 > Pre-existing issues:
-> - [High] Incorrect tracking of cgroup virtual time delta in `fcg_dispatch` leads to double charging on early yield and permanent starvation on slice overrun due to sign inversion and unsigned division of negative values.
+> - [Critical] Missing NULL check for `vcpu->arch.vncr_tlb` in `invalidate_vncr_va()` causes a host kernel panic when iterating over uninitialized vCPUs.
+> - [High] The lazily allocated `vncr_tlb` structure leaves the `cpu` field zero-initialized, causing it to inadvertently unmap CPU 0's VNCR fixmap on the first fault.
+> - [High] Resource leak of `struct page` references on error paths in `kvm_translate_vncr()`.
 > --
 > 
-> commit 26a5b29cfee7b890fe54a82847b9652c4700912d
-> Author: Wanwu Li <liwanwu@kylinos.cn>
+> commit cf6d236759b9eb5ba69620ec32a536af7c15a9a2
+> Author: Marc Zyngier <maz@kernel.org>
 > 
-> sched_ext/scx_flatcg: Fix cvtime_delta race and add hweight scaling to bypass charging
+> KVM: arm64: Hold kvm->mmu_lock while initialising vcpu->arch.vncr_tlb
 > 
-> This commit fixes a double-charging race condition in cgrp_cap_budget() by
-> using __sync_fetch_and_and() to read and clear cvtime_delta atomically. It
-> also updates the bypass charging path in fcg_stopping() to scale the raw
-> execution time by the inverse of the cgroup hweight before adding it to
-> cvtime_delta.
+> This commit fixes a race condition and memory leak in the initialization
+> of vncr_tlb by taking the mmu_lock during assignment and verifying it is
+> NULL beforehand.
 > 
->> diff --git a/tools/sched_ext/scx_flatcg.bpf.c b/tools/sched_ext/scx_flatcg.bpf.c
->> index fec3595818269..0fd214cc61dae 100644
->> --- a/tools/sched_ext/scx_flatcg.bpf.c
->> +++ b/tools/sched_ext/scx_flatcg.bpf.c
+> Link: https://lore.kernel.org/r/20260607180815.85FBC1F00893@smtp.kernel.org
 > 
-> [ ... ]
-> 
->> @@ -570,7 +570,8 @@ void BPF_STRUCT_OPS(fcg_stopping, struct task_struct *p, bool runnable)
->>   	cgc = find_cgrp_ctx(cgrp);
->>   	if (cgc) {
->>   		__sync_fetch_and_add(&cgc->cvtime_delta,
->> -				     p->se.sum_exec_runtime - taskc->bypassed_at);
->> +				     (p->se.sum_exec_runtime - taskc->bypassed_at) *
->> +				     FCG_HWEIGHT_ONE / (cgc->hweight ?: 1));
+> > diff --git a/arch/arm64/kvm/nested.c b/arch/arm64/kvm/nested.c
+> > index 883b6c1008fbb..21c9d1f07d7a8 100644
+> > --- a/arch/arm64/kvm/nested.c
+> > +++ b/arch/arm64/kvm/nested.c
+> > @@ -1248,8 +1248,14 @@ int kvm_vcpu_allocate_vncr_tlb(struct kvm_vcpu *vcpu)
+> >  	if (!kvm_has_feat(vcpu->kvm, ID_AA64MMFR4_EL1, NV_frac, NV2_ONLY))
+> >  		return 0;
+> >  
+> > -	vcpu->arch.vncr_tlb = kzalloc_obj(*vcpu->arch.vncr_tlb,
+> > -					  GFP_KERNEL_ACCOUNT);
+> > +	if (!vcpu->arch.vncr_tlb) {
+> > +		struct vncr_tlb *vt = kzalloc_obj(*vcpu->arch.vncr_tlb,
+> > +						  GFP_KERNEL_ACCOUNT);
 > 
 > [Severity: High]
-> This is a pre-existing issue, but seeing the hweight scaling logic added
-> here brings to mind a potential bug with the same pattern in fcg_dispatch().
-> Does the tracking of the cgroup virtual time delta in fcg_dispatch() suffer
-> from double-charging and underflow issues?
+> This is a pre-existing issue, but since we are allocating the vncr_tlb here
+> using kzalloc_obj(), vt->cpu will be zero-initialized.
 > 
-> In fcg_dispatch(), the unused slice time is calculated as:
+> Looking at invalidate_vncr(), if a vCPU encounters its first VNCR fault,
+> kvm_translate_vncr() calls invalidate_vncr(vt). Because vt->cpu is 0
+> instead of -1, the following check passes:
 > 
-> (cpuc->cur_at + cgrp_slice_ns - now)
+> arch/arm64/kvm/nested.c:invalidate_vncr() {
+>         ...
+>         if (vt->cpu != -1)
+>                 clear_fixmap(vncr_fixmap(vt->cpu));
+>         ...
+> }
 > 
-> Because the cgroup is charged a full slice upfront in try_pick_next_cgroup(),
-> should this unused time be refunded by subtracting it from cvtime_delta? The
-> current code uses __sync_fetch_and_add() which adds the positive unused time
-> and penalizes the cgroup a second time when it yields early.
-> 
-> Also, if the cgroup overruns its slice (now > cur_at + slice), the
-> calculation underflows. Because FCG_HWEIGHT_ONE is an unsigned value
-> (1LLU << 16), does the subsequent multiplication and division by cgc->hweight
-> destroy the two's complement representation of the negative value?
-> 
-> This unsigned division would shift zeros into the most significant bits,
-> resulting in a huge positive number being added to cvtime_delta. Could this
-> push the cgroup's virtual time days into the future and cause permanent
-> starvation?
-> 
-Yes, These issues indeed exist. I will send another patch to fix them soon.
->>   		taskc->bypassed_at = 0;
->>   	}
->>   	bpf_cgroup_release(cgrp);
-> 
+> Does this inadvertently unmap CPU 0's fixmap, potentially corrupting the
+> translation state if another vCPU is actively mapped on CPU 0? Could we
+> initialize vt->cpu to -1 right after this allocation?
 
+This is only evaluated when valid is true, and this is checked in the
+calling context. Since valid is initialised to false by virtue of the
+structure being 0-initialised, this path doesn't look possible.
+
+> 
+> > +
+> > +		scoped_guard(write_lock, &vcpu->kvm->mmu_lock)
+> > +			vcpu->arch.vncr_tlb = vt;
+> > +	}
+> > +
+> >  	if (!vcpu->arch.vncr_tlb)
+> >  		return -ENOMEM;
+> 
+> [Severity: Critical]
+> This isn't a bug introduced by this patch, but while reviewing the vncr_tlb
+> lifecycle, I noticed a potential issue in invalidate_vncr_va() when
+> iterating over uninitialized vCPUs.
+> 
+> If an online vCPU triggers an EL2 TLBI instruction before another vCPU in
+> the same VM has run, could this lead to a NULL pointer dereference?
+> 
+> arch/arm64/kvm/nested.c:invalidate_vncr_va() {
+>         ...
+>         kvm_for_each_vcpu(i, vcpu, kvm) {
+>                 struct vncr_tlb *vt = vcpu->arch.vncr_tlb;
+> 
+>                 if (!vt->valid)
+>                         continue;
+>         ...
+> }
+> 
+> Since vncr_tlb is allocated lazily on the first run, vt could be NULL here.
+> Does this path need a NULL check before accessing vt->valid?
+>
+
+This is already fixed by a separate patch
+(https://lore.kernel.org/all/20260607175745.297793-1-maz@kernel.org/)
+
+
+> [Severity: High]
+> This is also a pre-existing issue, but I noticed a potential page reference
+> leak in kvm_translate_vncr() on the error paths.
+> 
+> When __kvm_faultin_pfn() successfully pins a page, the early return for a
+> write fault without a writable page bypasses kvm_release_faultin_page():
+> 
+> arch/arm64/kvm/nested.c:kvm_translate_vncr() {
+>         ...
+>         if (is_error_noslot_pfn(pfn) || (write_fault && !writable))
+>                 return -EFAULT;
+>         ...
+> }
+
+This looks like a real issue indeed.
+
+> Similarly, the MMU retry check also returns directly:
+> 
+> arch/arm64/kvm/nested.c:kvm_translate_vncr() {
+>         ...
+>         if (mmu_invalidate_retry(vcpu->kvm, mmu_seq))
+>                 return -EAGAIN;
+>         ...
+> }
+
+This one has been fixed already:
+https://patch.msgid.link/20260602235450.103057-2-oupton@kernel.org
+
+	M.
+
+-- 
+Without deviation from the norm, progress is not possible.
