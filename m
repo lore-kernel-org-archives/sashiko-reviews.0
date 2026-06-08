@@ -1,191 +1,183 @@
-Received: from SA9PR02CU001.outbound.protection.outlook.com (mail-southcentralusazon11013030.outbound.protection.outlook.com [40.93.196.30])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-dl1-f53.google.com (mail-dl1-f53.google.com [74.125.82.53])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3BA09348C56;
-	Mon,  8 Jun 2026 16:23:39 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=fail smtp.client-ip=40.93.196.30
-ARC-Seal:i=2; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1780935820; cv=fail; b=bZdTwKBkGsbvMdPOpc7gGXWlXFxo7ijZSwaun4yT+b191k7t2k+U1OKhTUYI8yoxLusmAswc8e0MuBXBqPF+Yq2nzUHq//cWQuTuLbSlS9dbppFcWH0zDkzH2AuBCXZywO3nz2yhx3yVTMWaSOnENot7XngWtGmJD+PldtnXF64=
-ARC-Message-Signature:i=2; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1780935820; c=relaxed/simple;
-	bh=WRtEtA2wINU0nPhNddH6TwVO12qCsY8VD/f7akdwM5k=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:Content-Type:
-	 Content-Disposition:In-Reply-To:MIME-Version; b=trI6nUDLnnzWGWQhEpmKlm7UDxs+yzXEkRsMW6QNI6QP22csi5YBUr0bbVUNe2/GAWg5hB0xwX0iyevZf3ki4ZoJEKb/PAOQ4rvdujzRCMQtx/Gppt4cXTcLIZpw3pgNkgq66mw9ByTzUUAAuRI37yufvTYr4Iq5TPmKUjZzAVw=
-ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=nvidia.com; spf=fail smtp.mailfrom=nvidia.com; dkim=pass (2048-bit key) header.d=Nvidia.com header.i=@Nvidia.com header.b=bojdYGdv; arc=fail smtp.client-ip=40.93.196.30
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=nvidia.com
-Authentication-Results: smtp.subspace.kernel.org; spf=fail smtp.mailfrom=nvidia.com
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3F78125B0A5
+	for <sashiko-reviews@lists.linux.dev>; Mon,  8 Jun 2026 16:31:44 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=74.125.82.53
+ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
+	t=1780936305; cv=none; b=A/8D4BrP/Tp41llGOA/FycZ76wiaVmhKiELUmN3hfNctCOp68JQ90UozO6uU6ADDgtr0V9ayGCqt6SPzuYrbvXse8lB980OqNckG2Chz0O/ceLuj1svdFhO+2JLnoC/AkZIA6qoq4MgrodhnLRezypbiG4kDyY1KATAoLa9Epbs=
+ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
+	s=arc-20240116; t=1780936305; c=relaxed/simple;
+	bh=AgOAHgkMpIHvXnG4ionYgb96XvfEVLDR9FeDACc3j+8=;
+	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
+	 In-Reply-To:Content-Type; b=JwOreOFCKFHdqRULHd+FlPdd/kDSAB2Rarqe8rqUhxssYVTTyZtp01bhXVUUqTP9j0DUE3rQIdB9EwzkyMbpeqDOlyz8rpM/w5g4mn++V4PkwmoUxPDJUaa2pNY5Tf9X/UGRvxGd6XHSgeMqI+d7LnFHNPSizzCxx8vAeqMADR0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=roeck-us.net; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=hgm7pRmp; arc=none smtp.client-ip=74.125.82.53
+Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=roeck-us.net
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=Nvidia.com header.i=@Nvidia.com header.b="bojdYGdv"
-ARC-Seal: i=1; a=rsa-sha256; s=arcselector10001; d=microsoft.com; cv=none;
- b=kDldDqIequvt9P3Z2xVSF7SCB6ahb6JEltKvMwRipNLmvs9cCeGFFchgp+RIShooYompB/yfT5ezpb5eXZASbv9/9VJ5GK1ZLCNfr9U0vm7lyMbbSzkiAH3Wlhm1E38AeI0FY2UN5/S2jDhFgprngTwFbc2vS488H+gudOpSHKHNMx3K22Zh9d+6lcuXdCZhjhY1FVINDDFnO8P8yAhwuULmhntm5hj2YboKezmlr2p8c+knsqWw/gOPARQvidOTVioPYBqCYDkpOhYY/6spFgx4g/wTGq5ydCU3lNBoICfg6MbWATo+Y2GHd7johJIWyGrM4kR2fq63sRsPQvK+3A==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com;
- s=arcselector10001;
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
- bh=hRqf9qTKGg/Tla4wAAQXRLYO5QMS92LP1zjux7JZIdM=;
- b=Eakm+9XLjDUdKOQgpIqbuKgcNc0wrqiBFM4S3M01PztLUCO9PC8+T7syy/pOuVj6Fc7PSKpz3XCwhGR9KMCRKyl+EY+KbTrxo0fQYwRllISem4dNCs+Avy+fxZyfwLZY8zNaTMKkFTFKG/Fph5g3APfP4wLQKqPo8hCJj/Md/drbnHLpuJlr5/fSxl8R3C1Gg2+slau428HxzjSBzwjrNvf6eCu6TwJLyqaFbi8L9LGmOfBrqsZ7dUQ0wB1Tr1csMeN/XqkD8hEz50YArGzw5BHh0pwu/TayAG13yvSEom3eM3f4Qo1WET/u7pxY3FRyd/dJsbt+NdcIgeHOZRSHPw==
-ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
- smtp.mailfrom=nvidia.com; dmarc=pass action=none header.from=nvidia.com;
- dkim=pass header.d=nvidia.com; arc=none
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=Nvidia.com;
- s=selector2;
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
- bh=hRqf9qTKGg/Tla4wAAQXRLYO5QMS92LP1zjux7JZIdM=;
- b=bojdYGdvsbAZhHXPevOnfmgfT3kyGvCRaCa8yWmdMgqzy65EI402uZKm1VzAEQlcgZj1QMgoMoTGXjtS138xEnBL3ppfP3btWKJBC09Yp4LVc2dXCSitX21B/cC/Ybh0b6neDLppcfR71c6x2SIeRL/KOU503eL/jhsaLwld2NYjZwjR9gPABHv74PYTVnbpBGS0cM35P04qb3BFs6CuQIlltsrNylIY9ii8qwYSqr+4EEoFwnCWnFXobN8prBg4KzmHoPzv611UkjV3SpvoMglFLzChfDua7HJXoRb2WDhNKxIbJc/WDa3cTBEg7E9Na9CBoclrRasUY+B5f78zIw==
-Authentication-Results: dkim=none (message not signed)
- header.d=none;dmarc=none action=none header.from=nvidia.com;
-Received: from DM6PR12MB4827.namprd12.prod.outlook.com (2603:10b6:5:1d6::14)
- by SJ5PPFDDE56F72B.namprd12.prod.outlook.com (2603:10b6:a0f:fc02::9a5) with
- Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.21.92.12; Mon, 8 Jun 2026
- 16:23:35 +0000
-Received: from DM6PR12MB4827.namprd12.prod.outlook.com
- ([fe80::6261:3040:864b:159c]) by DM6PR12MB4827.namprd12.prod.outlook.com
- ([fe80::6261:3040:864b:159c%3]) with mapi id 15.21.0092.011; Mon, 8 Jun 2026
- 16:23:33 +0000
-Date: Mon, 8 Jun 2026 18:23:23 +0200
-From: Andrea Righi <arighi@nvidia.com>
-To: sashiko-reviews@lists.linux.dev
-Cc: sched-ext@lists.linux.dev
-Subject: Re: [PATCH sched_ext/for-7.1-fixes] sched_ext: Reset dsq_vtime and
- slice when a task leaves SCX
-Message-ID: <aibse9eipMHn8Cb7@gpd4>
-References: <20260608134908.3232097-1-arighi@nvidia.com>
- <20260608141112.56A621F00893@smtp.kernel.org>
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <20260608141112.56A621F00893@smtp.kernel.org>
-X-ClientProxiedBy: MI1P293CA0001.ITAP293.PROD.OUTLOOK.COM (2603:10a6:290:2::8)
- To DM6PR12MB4827.namprd12.prod.outlook.com (2603:10b6:5:1d6::14)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="hgm7pRmp"
+Received: by mail-dl1-f53.google.com with SMTP id a92af1059eb24-137dd523634so7095661c88.1
+        for <sashiko-reviews@lists.linux.dev>; Mon, 08 Jun 2026 09:31:44 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20251104; t=1780936303; x=1781541103; darn=lists.linux.dev;
+        h=content-transfer-encoding:in-reply-to:autocrypt:from
+         :content-language:references:cc:to:subject:user-agent:mime-version
+         :date:message-id:sender:from:to:cc:subject:date:message-id:reply-to;
+        bh=5BKy7hcNH0tq6+/srIEo3sBbzY2ejx5gBIEKniIcNIM=;
+        b=hgm7pRmp1qCwcHp9JcDmVyK2NizDIIjrBdLXFarscbc7kigdUqPq+AzntgL/xX0BdD
+         A81alHjEUwczke9/AsDwy+00tpyqnvYWgSV0GRHEBCpSJN0a+Yo+IAoyHacjNz5txgSG
+         dqdZsBW//HHMi9hirLYNylJg84drmISmHhzBPBYn0ZMSWewhkoYl67e0E+jH07P6y67q
+         WQpeIm2+xr7xLDb3dvZkwxgHP8uQnWYIaX8u57eKCos9e52hnpCYp40HLVQjGSunnqlJ
+         q/HjjHXlYEDSQl1vy5ZrrcLX5tpNV7nHfTQw5JP6saqhrsPiiv93LiirFRTJdAIkSNSF
+         MWKg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20251104; t=1780936303; x=1781541103;
+        h=content-transfer-encoding:in-reply-to:autocrypt:from
+         :content-language:references:cc:to:subject:user-agent:mime-version
+         :date:message-id:sender:x-gm-gg:x-gm-message-state:from:to:cc
+         :subject:date:message-id:reply-to;
+        bh=5BKy7hcNH0tq6+/srIEo3sBbzY2ejx5gBIEKniIcNIM=;
+        b=XH3J5IbPS6RfmGq25hLMz+UMGfDTTLaEZHrDP8hyES5xcIsborl18AYRDWu+Xx4Arv
+         f/08NRjSB0Qg/IgZgq31RNKcQH31IDb+i4z07EltjWD5iGF/MQhygVq/Z9qkaQ2ukSoq
+         Ck0yqLTjA4v/Nk2k34b/Qnkj6vW1zF/4gEQbFIyD8dgx//xrJym/HqpZWlskLcfDkUZn
+         M0kJLaadxpwk+Ju7c1hxLj0rBPTgNak0B7YbyTnnaldosCP2rmLeYku5+ZxDINaf9M/r
+         83sEU4VUGMXOhpXo/r5oNHv14pSBvQJ+dDU/h2MdJqJiahkltTwZ+7c64ia0NF0DlyWG
+         Atiw==
+X-Gm-Message-State: AOJu0YwACHshgY6PGpsCjTB73rbyQax9FpBAWSGbQHyDyS4igwnUowSs
+	Or3a3Ratiqf53eD/tlOwlDlsBQ+9hLy0wK4Vue1f5zwT0gRnhQCFoS7SKwt9aNRk
+X-Gm-Gg: Acq92OGEWuD+T95BycoFdcQK1IqXXJ17BEuVp9Qw4lD6wOjuiMdRy4AyINcabmAwoUX
+	IBtNfNBbjpZqNcSRnhRGWpPcySgmj3oPfuJ6fr2UPnv4ZsoEdOtc6mKMdiwpMk1fQMK5ybVNGMV
+	TuL5KGamq/jp8GFTifZuRNlY9psBwaiQsEBCnr8P3HwolJqzrxI4n1ccZyNtaDhdjoE+IAwpH9J
+	2X2uAp/U+EryXeN/tj0WgcyDc5s/3HhdibqyrJYa444MoTWotmhWSqkr+IiCrDSV4BmehNvL2CU
+	0kJscX9MdymvXL/BmaHoxjX59LvoQlNzgRIOswBzflVly/N5NJUUhD4Jt0hcBdj9/ie0nNlBFqs
+	CJnHaokEuicDIWw06rU4Dqxb9jV2gsh0/7uJcDsBnhRmhDBAdCFfmZbiLxAmH0AIPxhX387fU4s
+	PYufsC4aJ6gnhKM1zYDTc2csRlhukWcmHc+uzFfzjyb9v0Dk9Ay+aQKeT7JpNajJithvSId5qOh
+	dCnk7oc5Js=
+X-Received: by 2002:a05:7300:6c9e:b0:2f2:5c68:5074 with SMTP id 5a478bee46e88-3077af66474mr7826964eec.13.1780936303110;
+        Mon, 08 Jun 2026 09:31:43 -0700 (PDT)
+Received: from ?IPV6:2600:1700:e321:62f0:da43:aeff:fecc:bfd5? ([2600:1700:e321:62f0:da43:aeff:fecc:bfd5])
+        by smtp.gmail.com with ESMTPSA id 5a478bee46e88-3074df191d0sm25737757eec.21.2026.06.08.09.31.42
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Mon, 08 Jun 2026 09:31:42 -0700 (PDT)
+Sender: Guenter Roeck <groeck7@gmail.com>
+Message-ID: <bbb0b077-f59d-4d15-9437-2d46a1dc4ec1@roeck-us.net>
+Date: Mon, 8 Jun 2026 09:31:41 -0700
 Precedence: bulk
 X-Mailing-List: sashiko-reviews@lists.linux.dev
 List-Id: <sashiko-reviews.lists.linux.dev>
 List-Subscribe: <mailto:sashiko-reviews+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:sashiko-reviews+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-X-MS-PublicTrafficType: Email
-X-MS-TrafficTypeDiagnostic: DM6PR12MB4827:EE_|SJ5PPFDDE56F72B:EE_
-X-MS-Office365-Filtering-Correlation-Id: c6533f9e-889b-4354-9db2-08dec57a4913
-X-MS-Exchange-SenderADCheck: 1
-X-MS-Exchange-AntiSpam-Relay: 0
-X-Microsoft-Antispam:
-	BCL:0;ARA:13230040|366016|1800799024|376014|18002099003|22082099003|6133799003|4143699003|11063799006|56012099006|5023799004;
-X-Microsoft-Antispam-Message-Info:
-	Pej+ueW8sKLz/UkqGQRnfwxA3IlPzUZZq7lE62T++z+AnhSVsUN9uIdSwbdbjTQZavYL7o1J+9XqhREAlw8TWcZ2sWbz2yH+4TbWVJ4U+2tXkOLWH3CbAoTjUvQEshGaGYdNZWN7UGseoyoEWuTBbhq97TDEZdUH5++stWTUCKyh4kJX/Or1p0Lc71CfesrmBqkKWnxKn0E4o/n9IcQkNIVZqaLfnXLWj/bcV6+HAXB02XHzCna2CWqVCz08pG66yjJMMHeTVzgCe5rDdTVrlRpVhkAvS2rRqeUA7TA2zOARefvJ87KtpHubzz5YhpD/iGm1Bwn7lrtTAJoO1zhQMp7Nubys4Am1l9vAmrZP7Cg4U+6/ShAsZzG1vb8/ZaLlCxLzpZgILR3IsfgraaE4GK7OchQjcfChWTZ+EGLiB5/gElFcAv4y6re84UT2IcBXY6VBbEXNLTxGeOMbGBifHCMR5zvk2rswq8KKUQM4u7drNgCKPepk26pGVor0UzPeLM8d0KjRGu8341nFv9NaGpyzCb9urY4m9vYPZtWXrBufqHy5SkklrVfNV33VaJcHxnFNrxUm1hi00VJt6lJ5HMMdUpNgbaC10HBar8gv8t+XQYTkXWUbzVtJeCoUgEeb4vc0A1VZe1afVwmCCiW1evZg3XHnKqtW2tOlcxwqTbkxU12zdyV5P96PBHvH0LyS
-X-Forefront-Antispam-Report:
-	CIP:255.255.255.255;CTRY:;LANG:en;SCL:1;SRV:;IPV:NLI;SFV:NSPM;H:DM6PR12MB4827.namprd12.prod.outlook.com;PTR:;CAT:NONE;SFS:(13230040)(366016)(1800799024)(376014)(18002099003)(22082099003)(6133799003)(4143699003)(11063799006)(56012099006)(5023799004);DIR:OUT;SFP:1101;
-X-MS-Exchange-AntiSpam-MessageData-ChunkCount: 1
-X-MS-Exchange-AntiSpam-MessageData-0:
-	=?us-ascii?Q?uNl2+usktJ3xnDikVVreaO30w9qf3SzEYEhY8r6HPL8GNGMPPw5m1cLV08gS?=
- =?us-ascii?Q?sBjSsvXavd1T9Q6NTBT1TyDUBUQ5C3nCsCcnOyOJNbCZryFx7jJK3XH/BTXS?=
- =?us-ascii?Q?3cRSRmyADzf8BR04FRgzOtC4mdRrMtIBSPKVand+AikyWClE3v3gazEaRlyt?=
- =?us-ascii?Q?LArxQXDxs6LAXVGHCABJZrKeexuMxCLWMd1N1SyrGRVudhSOmR/eiHHQFwNP?=
- =?us-ascii?Q?ytpC/tIOyL3U2Rp9cpR63DdcIIlpor683hstLYD/gVQomGhURo/G38b4be49?=
- =?us-ascii?Q?OnPT8GwyQkYAY9Zr6Tf16CKSWFqnQcBpw2A74zAmu8P4HpdGq5j+uGkVcxpW?=
- =?us-ascii?Q?xEIYR9pVS6dh2iWXQdI20LS9HxV6cBGVQa+Ad3dbFv5S6zSgvo+aRR0j8GeJ?=
- =?us-ascii?Q?0azhe6HUv22m80a4szJAEZfgh3SXh53c0WAR7CZv20gPmSDkasFZOhCCVW6s?=
- =?us-ascii?Q?xta8J8xBSsXsE1VCAb+UnFjy+H4LF2v2KmtDHrRkXcU71DvpUjo0MZ0CyreL?=
- =?us-ascii?Q?sdOOcoFWUITdvdyuFybsE64X5x8vF/OQDnwWcDSt7QO4FT/PNjdFBODC5X8z?=
- =?us-ascii?Q?ktW85hKjwHlANjy0C1+WbJ4xgcIcUxTjvXPjwESlGcBx92JJBmj9/wuS1IjB?=
- =?us-ascii?Q?QXaJWnSAMaRx/BtXESX1Jgl9hWe1HQEUMrYQUdsIqMUH09llM/G/+tXSLuM7?=
- =?us-ascii?Q?Zeuqa/a1CrFTFdDl9yyysZ6epZpu6YOs2vgPtGFBtaEARksLk2E6a15DGI5Y?=
- =?us-ascii?Q?6VEw0gNwTC0ft3qkgd2qy+xnshrAH0LEGuPGY/zzxDdTaKNUi0FFME/nNvyb?=
- =?us-ascii?Q?D3q05TBcJHsE/Dj9VVBr4Het2udIBJRvIWH6wPwCiSBgRYjAf2ujQrQT6Olv?=
- =?us-ascii?Q?TufqiX4nyt9M6aqJA7aoEHjKgAn5K/HwGUVlIT5/y4rBKkUh3iqOPUCT/RNS?=
- =?us-ascii?Q?hQb7YjYq3zbLBtSUzpAeBEgSNkYNytwVUwRwF0oVxLUBUrrABeuAwn0M0LL8?=
- =?us-ascii?Q?81V9K+agYVJKJGiVgVamFHcpqAiVeVZFed0wy1dpk8dh36BVxzL9mQ/VAOLy?=
- =?us-ascii?Q?qOg2JmkZ/wnONpBYwiFqlMHuUx1zZSDnlvhCa4lCoBi7G4lICOKy+w9Ht2T3?=
- =?us-ascii?Q?0lhpU25U288QNmy8q7gUaf5RVECsjA1IZeYniw8HPIKPo79j5sI44KzQfVmR?=
- =?us-ascii?Q?tGmlGnwMGHt8H/xXyVdBOIf2UBjCZgCZk1Y5La93zoCbVX0LuW4/FFSSnIU0?=
- =?us-ascii?Q?Clp4aviMGxNc+g+hW808LG0Nekf0nCHdamO+kYWSsfVbEnJBkHhdyIeQ/0LT?=
- =?us-ascii?Q?6t4yG1478HKUJN/phLUrYOHg8zx9rIxryw6OBmqtrZkM5zOPMPDN0UC7Rmd5?=
- =?us-ascii?Q?OGahkWDgEa6N1L0MF70HDTZum1NXR1XdkQ+VCqP1WeubRHt6rTR9Ic5JrPbm?=
- =?us-ascii?Q?dL2q+gJOzKcRRGssszEZi9IwRbXuk4IIBw7J5WI9wvsLuWqlEQolaUCJjshB?=
- =?us-ascii?Q?ZAQguQlqpMGBoWrH6Yh1tVRbqr5/R8MIwKFwyBFCOs0eOnX6N6t81aw34D7l?=
- =?us-ascii?Q?tE36LcWH1ct3OKrhYTMUs+rVx5T7AntZQNhroW0GBAoGLlCLYO/HEAmCSaBE?=
- =?us-ascii?Q?cGYPX6IOETQv4UNlB423gbkyUUcdMIXlGSUcrlHpcXu74Q9qk2fW5f7OBS+q?=
- =?us-ascii?Q?rR1BwG7kDdB0yLAAR9wvFYRyb021r6cQ+B0MFJIITfG3T3dM?=
-X-OriginatorOrg: Nvidia.com
-X-MS-Exchange-CrossTenant-Network-Message-Id: c6533f9e-889b-4354-9db2-08dec57a4913
-X-MS-Exchange-CrossTenant-AuthSource: DM6PR12MB4827.namprd12.prod.outlook.com
-X-MS-Exchange-CrossTenant-AuthAs: Internal
-X-MS-Exchange-CrossTenant-OriginalArrivalTime: 08 Jun 2026 16:23:33.7935
- (UTC)
-X-MS-Exchange-CrossTenant-FromEntityHeader: Hosted
-X-MS-Exchange-CrossTenant-Id: 43083d15-7273-40c1-b7db-39efd9ccc17a
-X-MS-Exchange-CrossTenant-MailboxType: HOSTED
-X-MS-Exchange-CrossTenant-UserPrincipalName: jXPpzltIZ7E9sA6hKo1HCff8byQmVfBrYOisRIYvhYVsVdrD5MznKkNl62ww4ROelLnv4zSTmRooidIb8Ifd4A==
-X-MS-Exchange-Transport-CrossTenantHeadersStamped: SJ5PPFDDE56F72B
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH v2 1/3] hwmon: ina238: add support for samples and
+ update_interval
+To: sashiko-reviews@lists.linux.dev,
+ Ferdinand Schwenk via B4 Relay
+ <devnull+ferdinand.schwenk.advastore.com@kernel.org>
+Cc: linux-hwmon@vger.kernel.org
+References: <20260608-hwmon-ina238-update-interval-us-v2-v2-1-2d939fbb2ea1@advastore.com>
+ <20260608131209.1EBD81F00893@smtp.kernel.org>
+Content-Language: en-US
+From: Guenter Roeck <linux@roeck-us.net>
+Autocrypt: addr=linux@roeck-us.net; keydata=
+ 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
+ np3900V20aS7eD9K8GTU0TGC1pyz6IVJwIE=
+In-Reply-To: <20260608131209.1EBD81F00893@smtp.kernel.org>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
 
-On Mon, Jun 08, 2026 at 02:11:11PM +0000, sashiko-bot@kernel.org wrote:
-> Thank you for your contribution! Sashiko AI review found 2 potential issue(s) to consider:
-> 
-> New issues:
-> - [High] Tasks returning to the SCX scheduling class receive a zero slice, violating the intended baseline and causing immediate slice expiration.
-> 
-> Pre-existing issues:
-> - [High] Tasks with an explicit SCHED_EXT policy retain a stale `dsq_vtime` across global BPF scheduler unloads and reloads, leading to corrupted task prioritization.
+On 6/8/26 06:12, sashiko-bot@kernel.org wrote:
+> Thank you for your contribution! Sashiko AI review found 1 potential issue(s) to consider:
+> - [Medium] Integer truncation from u64 to u32 in `ina238_interval_us_to_conv_time` causes large user inputs to wrap around, resulting in incorrect hardware configuration on 64-bit platforms.
 > --
 > 
-> commit 7f8eecaba1a8e23922f489ed563df593e55f3478
-> Author: Andrea Righi <arighi@nvidia.com>
+> commit 4bfb82fb9bb164125fe0facd52cce87c1d8b248e
+> Author: Ferdinand Schwenk <ferdinand.schwenk@advastore.com>
 > 
-> sched_ext: Reset dsq_vtime and slice when a task leaves SCX
+> hwmon: ina238: add support for samples and update_interval
 > 
-> When a task switches out of the sched_ext class, p->scx.dsq_vtime and
-> p->scx.slice keep whatever values they last held. This patch zeroes
-> dsq_vtime and slice in switched_from_scx() after scx_disable_task() so
-> the fields are reset to the same baseline a freshly forked task has.
+> This commit exposes the INA238 ADC averaging count and conversion timing
+> through samples and update_interval hwmon attributes. It caches ADC_CONFIG
+> to optimize read-modify-write operations. The conversion times are derived
+> using per-chip lookup tables.
 > 
-> > diff --git a/kernel/sched/ext.c b/kernel/sched/ext.c
-> > index bd8a3332999f4..38157af00fb77 100644
-> > --- a/kernel/sched/ext.c
-> > +++ b/kernel/sched/ext.c
+>> diff --git a/drivers/hwmon/ina238.c b/drivers/hwmon/ina238.c
+>> index ff67b03189f73..667f78d43a6a8 100644
+>> --- a/drivers/hwmon/ina238.c
+>> +++ b/drivers/hwmon/ina238.c
+> 
 > [ ... ]
-> > @@ -4097,10 +4097,11 @@ static void switched_from_scx(struct rq *rq, struct task_struct *p)
-> >  	 * scx_disable_task() would WARN on the non-%ENABLED state and trigger a
-> >  	 * NONE -> READY validation failure.
-> >  	 */
-> > -	if (scx_get_task_state(p) == SCX_TASK_NONE)
-> > -		return;
-> > +	if (scx_get_task_state(p) != SCX_TASK_NONE)
-> > +		scx_disable_task(scx_task_sched(p), p);
-> >  
-> > -	scx_disable_task(scx_task_sched(p), p);
-> > +	p->scx.dsq_vtime = 0;
-> > +	p->scx.slice = 0;
 > 
-> [Severity: High]
-> Does zeroing the slice here mean a task returning to the SCX scheduling class
-> will receive a zero slice?
+>> @@ -261,6 +296,97 @@ static int ina228_read_voltage(struct ina238_data *data, int channel, long *val)
 > 
-> If neither switched_to_scx() nor __scx_enable_task() resets it to
-> SCX_SLICE_DFL, it seems this violates the commit's intent of restoring the
-> baseline of a freshly forked task.
+> [ ... ]
 > 
-> Will entering the BPF scheduler with a 0 slice cause the core to emit a
-> warned_zero_slice warning and trigger immediate slice exhaustion upon
-> dispatch (falling back to a 1 nanosecond slice)?
+>> +static inline u32 ina238_interval_ms_to_conv_time(long interval, u32 samples)
+>> +{
+>> +	u64 interval_us;
+>> +
+>> +	interval = clamp_val(interval, 0, LONG_MAX / 1000);
+>> +	interval_us = (u64)interval * 1000;
+>> +
+>> +	/*
+>> +	 * update_interval reports the ADC cycle time including averaging.
+>> +	 * The target per-field conversion time is interval_us / (samples * 3).
+>> +	 */
+>> +	return DIV_ROUND_CLOSEST_ULL(interval_us, samples * 3);
+>> +}
+> 
+> [Severity: Medium]
+> Does returning a u32 here cause integer truncation for large user inputs on
+> 64-bit platforms? Since interval is clamped to LONG_MAX / 1000, interval_us
+> can be extremely large. The DIV_ROUND_CLOSEST_ULL macro evaluates to an
+> unsigned long long, but returning it as u32 will silently truncate results
+> exceeding 4294967295.
+> 
 
-This looks like a false positive. And I think it's semantically correct to reset
-the slice to zero when a task exits the SCHED_EXT class. I'll rephrase the
-"freshly forked task" part, which might be confusing.
+I think Sashiko has a point here. Please make sure that there are no
+truncation issues. It should be sufficient to clamp the original value
+against (0, INT_MAX / 1000).
 
-> 
-> [Severity: High]
-> This isn't a bug introduced by this patch, but does the approach of clearing
-> dsq_vtime here miss tasks during global BPF scheduler unloads and reloads?
-> 
-> If tasks have an explicit SCHED_EXT policy, they remain in the ext_sched_class
-> when a custom BPF scheduler is unloaded. During scx_root_disable() and
-> scx_root_enable(), old_class == new_class evaluates to true, so
-> switched_from_scx() is never invoked and dsq_vtime is never cleared.
-> 
-> When the new BPF scheduler is loaded, will these tasks retain the dsq_vtime
-> from the previous scheduler, causing incorrect sorting and prioritization in
-> vtime-sorted dispatch queues?
+Thanks,
+Guenter
 
-This one instead looks legit, we should probably reset dsq_vtime and slice in
-scx_disable_task() after ops.disable() has observed their final values. I'll fix
-this in v2.
-
--Andrea
