@@ -1,158 +1,111 @@
-Received: from mail.loongson.cn (mail.loongson.cn [114.242.206.163])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id F2CD13E2765
-	for <sashiko-reviews@lists.linux.dev>; Tue,  9 Jun 2026 07:57:37 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=114.242.206.163
+Received: from canpmsgout06.his.huawei.com (canpmsgout06.his.huawei.com [113.46.200.221])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+	(No client certificate requested)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 40DFA3F1ACC;
+	Tue,  9 Jun 2026 08:41:31 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=113.46.200.221
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1780991860; cv=none; b=Hrcthk2EqK7Vfp4aXTwLRmcRhFkjpMZA2lUueIFx0ySwp/047rmK0/BtAbborXijujmdEvxNJcaIaz5EszLvTZalEHvcA6aiOF4aXn7dQMjp0oG58Jv+oxZ0YQxCEHnF+P3DF7NWTeX05XsFE6cGb1k4FWhoD4C9pdu9j8weJ6A=
+	t=1780994497; cv=none; b=W78jeA3tRCdLlAG8zB6ayql0QY6NCwdY+odXiB1w0CUAFk5bBFlNuvcnLmUygoTGN1W/fypO82yZOU7BdeptksUTPYA53vkg5MR45J7Z6rJPKOmsY1F4XjtQdd9iMEvPXG+wOYsNNbTTqhVV+TnyC2SXBFyVwzSA7G9J1tAwqBw=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1780991860; c=relaxed/simple;
-	bh=0xsYWNRyz0n9Lm085AVd/EIkLvs88LLzW9fO/x/oDWQ=;
-	h=Subject:To:Cc:References:From:Message-ID:Date:MIME-Version:
-	 In-Reply-To:Content-Type; b=K1/5OdDs6YYJGOdF5WsHhSEButO/CKHljEnCT+mAp+dCasTZuhTq4Z9rtxSJpq5u7VV47PghfmMt4o7+Eyv73xbw4ziTMFK9BLbEPp0DYlXbwWuW2CD+GpfD5vPT3NR5cGt/E/3JBAjyiMffmFH/zX8S+SAljx7ooUMoVoxt6LU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=loongson.cn; spf=pass smtp.mailfrom=loongson.cn; arc=none smtp.client-ip=114.242.206.163
-Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=loongson.cn
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=loongson.cn
-Received: from loongson.cn (unknown [10.20.42.62])
-	by gateway (Coremail) with SMTP id _____8DxsOpvxydqESsSAA--.48446S3;
-	Tue, 09 Jun 2026 15:57:35 +0800 (CST)
-Received: from [10.20.42.62] (unknown [10.20.42.62])
-	by front1 (Coremail) with SMTP id qMiowJBxLMJuxydqII+gAA--.41451S3;
-	Tue, 09 Jun 2026 15:57:35 +0800 (CST)
-Subject: Re: [PATCH v2 2/2] KVM: LoongArch: selftests: Add FPU test case
-To: sashiko-reviews@lists.linux.dev
-Cc: kvm@vger.kernel.org
-References: <20260609072715.1005923-3-maobibo@loongson.cn>
- <20260609073957.3865C1F00893@smtp.kernel.org>
-From: Bibo Mao <maobibo@loongson.cn>
-Message-ID: <a37de928-431f-05d6-549b-6edac646444e@loongson.cn>
-Date: Tue, 9 Jun 2026 15:54:27 +0800
-User-Agent: Mozilla/5.0 (X11; Linux loongarch64; rv:68.0) Gecko/20100101
- Thunderbird/68.7.0
+	s=arc-20240116; t=1780994497; c=relaxed/simple;
+	bh=4xrNWA9Ks1iv+lD9xPqAXwA3kXOGIgwDcHam3AcrKlU=;
+	h=Subject:To:CC:References:From:Message-ID:Date:MIME-Version:
+	 In-Reply-To:Content-Type; b=WAXrmLqWHyz5E76bUBAFMd7oQ+AgBIz55aMWOGQE/HPWISEcDCQ+1+ue69KZ6p2OKr9YhvPJV8z0cEAgoz7vM92Vg2vgTN+ehjHPs618uBMRPF1oqK36Q4gNUNErAe4tNp7vvsZh6Ju8qEoLK6+DAlr0tkbIEO62JyUTCzSswyc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=huawei.com; spf=pass smtp.mailfrom=huawei.com; dkim=pass (1024-bit key) header.d=huawei.com header.i=@huawei.com header.b=CmS6njnl; arc=none smtp.client-ip=113.46.200.221
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=huawei.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=huawei.com
+Authentication-Results: smtp.subspace.kernel.org;
+	dkim=pass (1024-bit key) header.d=huawei.com header.i=@huawei.com header.b="CmS6njnl"
+dkim-signature: v=1; a=rsa-sha256; d=huawei.com; s=dkim;
+	c=relaxed/relaxed; q=dns/txt;
+	h=From;
+	bh=ghUVemxhgRYnJ8dPOsRwXzQbm1ScEjX+fz5LyHNyjY4=;
+	b=CmS6njnlw8VdOQlc2lsbvoIR9OgxjC3s9By/aZGOHNF9f2AiIk538wSHL+MaJyOKyI/vdFBeu
+	2u0s8+BcawFWQKkZqJYfAZ2lMQS4BECPkJpIBhhB2NBKnPzxs7oRxWrq180h3JqHhHGGEmAXqZb
+	poroy4puwS3sE7tPTGtmbC0=
+Received: from mail.maildlp.com (unknown [172.19.162.140])
+	by canpmsgout06.his.huawei.com (SkyGuard) with ESMTPS id 4gZMcv1BJSzRhRh;
+	Tue,  9 Jun 2026 16:33:35 +0800 (CST)
+Received: from kwepemk200017.china.huawei.com (unknown [7.202.194.83])
+	by mail.maildlp.com (Postfix) with ESMTPS id 6C02A20333;
+	Tue,  9 Jun 2026 16:41:28 +0800 (CST)
+Received: from [10.174.178.219] (10.174.178.219) by
+ kwepemk200017.china.huawei.com (7.202.194.83) with Microsoft SMTP Server
+ (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
+ 15.2.1544.11; Tue, 9 Jun 2026 16:41:27 +0800
+Subject: Re: [PATCH v2] samples/damon/mtier: fail early if address range
+ parameters are invalid
+To: <sashiko-reviews@lists.linux.dev>
+CC: <damon@lists.linux.dev>, SeongJae Park <sj@kernel.org>
+References: <20260609064653.1829-1-yuzenghui@huawei.com>
+ <20260609065829.6CBAC1F00893@smtp.kernel.org>
+From: Zenghui Yu <yuzenghui@huawei.com>
+Message-ID: <0922dcf7-fbc5-276b-d2d5-844299b6f9ff@huawei.com>
+Date: Tue, 9 Jun 2026 16:41:26 +0800
+User-Agent: Mozilla/5.0 (Windows NT 10.0; WOW64; rv:68.0) Gecko/20100101
+ Thunderbird/68.12.1
 Precedence: bulk
 X-Mailing-List: sashiko-reviews@lists.linux.dev
 List-Id: <sashiko-reviews.lists.linux.dev>
 List-Subscribe: <mailto:sashiko-reviews+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:sashiko-reviews+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-In-Reply-To: <20260609073957.3865C1F00893@smtp.kernel.org>
-Content-Type: text/plain; charset=utf-8; format=flowed
+In-Reply-To: <20260609065829.6CBAC1F00893@smtp.kernel.org>
+Content-Type: text/plain; charset="utf-8"
 Content-Language: en-US
-Content-Transfer-Encoding: 8bit
-X-CM-TRANSID:qMiowJBxLMJuxydqII+gAA--.41451S3
-X-CM-SenderInfo: xpdruxter6z05rqj20fqof0/
-X-Coremail-Antispam: 1Uk129KBj93XoWxurWUCr1rAFy7JF4kJFyfKrX_yoW5uFy7p3
-	y8K3Z0gF4ktF4aqr4xZw4UuFWfK3WUGF17Zw45KFWDAr4YkrZ7tF4DG3yjqws3ur4FqF18
-	Zr4rJan0yFWDZacCm3ZEXasCq-sJn29KB7ZKAUJUUUUU529EdanIXcx71UUUUU7KY7ZEXa
-	sCq-sGcSsGvfJ3Ic02F40EFcxC0VAKzVAqx4xG6I80ebIjqfuFe4nvWSU5nxnvy29KBjDU
-	0xBIdaVrnRJUUUv2b4IE77IF4wAFF20E14v26r1j6r4UM7CY07I20VC2zVCF04k26cxKx2
-	IYs7xG6rWj6s0DM7CIcVAFz4kK6r106r15M28lY4IEw2IIxxk0rwA2F7IY1VAKz4vEj48v
-	e4kI8wA2z4x0Y4vE2Ix0cI8IcVAFwI0_JFI_Gr1l84ACjcxK6xIIjxv20xvEc7CjxVAFwI
-	0_Gr0_Cr1l84ACjcxK6I8E87Iv67AKxVW8Jr0_Cr1UM28EF7xvwVC2z280aVCY1x0267AK
-	xVW8Jr0_Cr1UM2AIxVAIcxkEcVAq07x20xvEncxIr21l57IF6xkI12xvs2x26I8E6xACxx
-	1l5I8CrVACY4xI64kE6c02F40Ex7xfMcIj6xIIjxv20xvE14v26r1j6r18McIj6I8E87Iv
-	67AKxVWUJVW8JwAm72CE4IkC6x0Yz7v_Jr0_Gr1lF7xvr2IY64vIr41lc7I2V7IY0VAS07
-	AlzVAYIcxG8wCF04k20xvY0x0EwIxGrwCFx2IqxVCFs4IE7xkEbVWUJVW8JwC20s026c02
-	F40E14v26r1j6r18MI8I3I0E7480Y4vE14v26r106r1rMI8E67AF67kF1VAFwI0_Jrv_JF
-	1lIxkGc2Ij64vIr41lIxAIcVC0I7IYx2IY67AKxVWUJVWUCwCI42IY6xIIjxv20xvEc7Cj
-	xVAFwI0_Jr0_Gr1lIxAIcVCF04k26cxKx2IYs7xG6r1j6r1xMIIF0xvEx4A2jsIE14v26r
-	1j6r4UMIIF0xvEx4A2jsIEc7CjxVAFwI0_Jr0_GrUvcSsGvfC2KfnxnUUI43ZEXa7IU8cz
-	VUUUUUU==
+Content-Transfer-Encoding: 7bit
+X-ClientProxiedBy: kwepems200002.china.huawei.com (7.221.188.68) To
+ kwepemk200017.china.huawei.com (7.202.194.83)
 
-
-
-On 2026/6/9 下午3:39, sashiko-bot@kernel.org wrote:
-> Thank you for your contribution! Sashiko AI review found 1 potential issue(s) to consider:
-> - [Medium] The selftest fails to actually verify that `vcpu_fpu_set()` modifies the guest's FPU state, silently passing even if the SET API is a complete no-op.
+On 2026/6/9 14:58, sashiko-bot@kernel.org wrote:
+> Thank you for your contribution! Sashiko AI review found 2 potential issue(s) to consider:
+> 
+> Pre-existing issues:
+> - [High] Memory leak of `damon_ctx` structures and potential orphaned `kdamond` threads when `damon_start()` fails.
+> - [High] Incomplete fix allowing integer overflow and resulting in `WARN_ONCE()` and massive region size.
 > --
 > 
-> commit d53e91be78e2fb09e2650551dd5ea13d9268274c
-> Author: Bibo Mao <maobibo@loongson.cn>
+> commit 567b4e8a4b1811419a6203e400b62d93a47bfe84
+> Author: Zenghui Yu <yuzenghui@huawei.com>
 > 
-> KVM: LoongArch: selftests: Add FPU test case
+> samples/damon/mtier: fail early if address range parameters are invalid
 > 
-> Add FPU test case and verify FPU register get and set APIs, the
-> FPU width supports 64/128/256 bits.
+> This commit adds an early check in damon_sample_mtier_build_ctx() to ensure
+> the address range parameters are valid. This is intended to prevent a
+> WARN_ONCE() that occurs when the node address bounds are not properly
+> initialized before the module is enabled.
 > 
->> diff --git a/tools/testing/selftests/kvm/loongarch/fpu_test.c b/tools/testing/selftests/kvm/loongarch/fpu_test.c
->> new file mode 100644
->> index 0000000000000..5bccce9db5d01
->> --- /dev/null
->> +++ b/tools/testing/selftests/kvm/loongarch/fpu_test.c
+> > diff --git a/samples/damon/mtier.c b/samples/damon/mtier.c
+> > index eb1143de8df17..3785b0c7ffb17 100644
+> > --- a/samples/damon/mtier.c
+> > +++ b/samples/damon/mtier.c
+> > @@ -120,6 +120,9 @@ static struct damon_ctx *damon_sample_mtier_build_ctx(bool promote)
+> >  		addr.end = promote ? node1_end_addr : node0_end_addr;
+> >  	}
+> >  
+> > +	if (addr.start >= addr.end)
+> > +		goto free_out;
+> > +
 > 
-> [ ... ]
+> [Severity: High]
+> This isn't a bug introduced by this patch, but does this incomplete fix still
+> allow an integer overflow?
 > 
->> +	fpu.fpr[0].val64[0] += random();
->> +	vcpu_fpu_set(vcpu, &fpu);
->> +	run_vcpu(vcpu);
->> +	vcpu_fpu_get(vcpu, &fpu);
->> +	sync_global_from_guest(vm, *fp);
->> +	TEST_ASSERT(!memcmp(fpu.fpr, fp, 8), "Wanted 0x%llx from f0, got 0x%llx",
->> +			fp->val64[0], fpu.fpr[0].val64[0]);
+> If addr.end is set to ULONG_MAX via sysfs and addr.start is a valid address,
+> this check passes. Later, damon_set_regions() calls ALIGN():
 > 
-> [Severity: Medium]
-> Does this logic actually verify that vcpu_fpu_set() successfully modifies the
-> vCPU's state?
+> mm/damon/core.c:damon_set_regions() {
+>     ...
+>     ranges[i].end = ALIGN(ranges[i].end, min_region_sz);
+>     ...
+> }
 > 
-> If vcpu_fpu_set() is a complete no-op and fails to update the state, the vCPU
-> would retain its original state. The guest would store this original state, and
-> vcpu_fpu_get() would retrieve it. Thus, both fpu.fpr and fp will contain the
-> old un-mutated values, and the memcmp() will evaluate to 0, falsely reporting a
-> pass.
-Here is function vcpu_ioctl() in file 
-tools/testing/selftests/kvm/include/kvm_util.h, it will check return 
-value and assure that vcpu_fpu_set() returns successfully.
+> The ALIGN macro will add min_region_sz - 1 to ULONG_MAX, causing an integer
+> overflow that wraps the value to 0. This results in calling
+> damon_new_region(start, 0), which triggers the exact WARN_ONCE() this
+> patch intended to fix.
 
-#define vcpu_ioctl(vcpu, cmd, arg)                              \
-({                                                              \
-         int ret = __vcpu_ioctl(vcpu, cmd, arg);                 \
-                                                                 \
-         __TEST_ASSERT_VM_VCPU_IOCTL(!ret, #cmd, ret, (vcpu)->vm);       \
-})
+Yeah! I can reproduce the WARN() by: (with the "incomplete fix" applied)
 
-Regards
-Bibo Mao
-
-> 
-> Should this test also assert that fp (or fpu.fpr) matches the mutated value we
-> intended to set?
-> 
->> +
->> +	fpu.fpr[0].val64[0] += random();
->> +	fpu.fpr[0].val64[1] += random();
->> +	vcpu_fpu_set(vcpu, &fpu);
->> +	run_vcpu(vcpu);
->> +	vcpu_fpu_get(vcpu, &fpu);
->> +	sync_global_from_guest(vm, *fp);
->> +	TEST_ASSERT(!memcmp(fpu.fpr, fp, 16), "Wanted 0x%llx %llx from vr0, got 0x%llx %llx",
->> +			fp->val64[0], fp->val64[1],
->> +			fpu.fpr[0].val64[0], fpu.fpr[0].val64[1]);
-> 
-> [Severity: Medium]
-> Does this have the same validation flaw as the previous check for the 128-bit
-> vr0 registers?
-> 
->> +
->> +	fpu.fpr[0].val64[0] += random();
->> +	fpu.fpr[0].val64[1] += random();
->> +	fpu.fpr[0].val64[2] += random();
->> +	fpu.fpr[0].val64[3] += random();
->> +	vcpu_fpu_set(vcpu, &fpu);
->> +	run_vcpu(vcpu);
->> +	vcpu_fpu_get(vcpu, &fpu);
->> +	sync_global_from_guest(vm, *fp);
->> +	TEST_ASSERT(!memcmp(fpu.fpr, fp, 32),
->> +			"Wanted 0x%llx %llx %llx %llx from xr0, got 0x%llx %llx %llx %llx",
->> +			fp->val64[0], fp->val64[1], fp->val64[2], fp->val64[3],
->> +			fpu.fpr[0].val64[0], fpu.fpr[0].val64[1],
->> +			fpu.fpr[0].val64[2], fpu.fpr[0].val64[3]);
-> 
-> [Severity: Medium]
-> Does this also have the same validation flaw for the 256-bit xr0 registers?
-> 
->> +
->> +	run_vcpu(vcpu);
->> +	kvm_vm_free(vm);
->> +	return 0;
->> +}
-> 
-
+    $ echo 0xffffffffffffffff > /sys/module/damon_sample_mtier/parameters/node0_end_addr
+    $ echo Y > /sys/module/damon_sample_mtier/parameters/enabled
