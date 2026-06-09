@@ -1,89 +1,121 @@
-Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-ej1-f42.google.com (mail-ej1-f42.google.com [209.85.218.42])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D302B4219FC;
-	Tue,  9 Jun 2026 13:07:57 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
-ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1781010480; cv=none; b=QC6mEgBQPcv09+rzRPUqJ/+lnVgep2HHm5RGrp71SqV9EH9V6f+jfdM3gd2TgExgpbV0IDJs7HEPhV9tM6zkvU2v+azzKDu9zQj80As3yenwY826WDthbFnrXYNlux90+9C+VzwydxSFBeRhnRonBXHxtuCWRRs57z2QuN0XDqM=
-ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1781010480; c=relaxed/simple;
-	bh=cZ3YoPU1KdjQfuVoB0XaHeA+gakgEYUtMHMlWhmhUtM=;
-	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=c6KACmlbgt5AAO+dCazDaaq0lFyPEjdRgOjySPt3z18/ud9kO009lu/EfKWyAdoLaHGwX1iTxuUmtXviI3YRlCnHEvu2b7/FNR4z+8+8+ipRoyycT+0FoegA7ceUct16sc4oiUEgDdBHHqVUjiuWtMeNM+J1CDdfIeM7EkJT1Gc=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=HVrQyOc4; arc=none smtp.client-ip=100.103.45.18
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 825B940BCD0
+	for <sashiko-reviews@lists.linux.dev>; Tue,  9 Jun 2026 13:08:42 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=pass smtp.client-ip=209.85.218.42
+ARC-Seal:i=2; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
+	t=1781010523; cv=pass; b=empFOQNW4EHgC/OvLsdlWakAzl7zH30h0zUtqQypLx6gBbFLf+hQ/KHTkayTryM1KKtVtFTUi/fmyNcvGyKNbbAsFiqbxJ4M63CzerFcSN2/PDPrlA7yd1s3jn32kkvTbIxIhlUVKkA83HflJJsF96/iWLOl2XMTkuZTBstWHPM=
+ARC-Message-Signature:i=2; a=rsa-sha256; d=subspace.kernel.org;
+	s=arc-20240116; t=1781010523; c=relaxed/simple;
+	bh=p1w4dDG43UhRDLwUBFWbpr/Q0ulJgmdjjjGOiAAhk8Y=;
+	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
+	 To:Cc:Content-Type; b=arTxzpbNYmlT4Ds/bzKpPX132hBVvtNlFH7OXLqZv7/hSMw+5I2Y4qsenty6zUlRsc//3C5//Fb9KghHsbnyhH6Oh9n+qscPon52k3gzz9xzCjadh5pfWi59fxCcUpWErGG2ts2Wjc5TB7dTRMKjTVoS36zaf9wy0klJ+SYc27o=
+ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=jGPLrxMr; arc=pass smtp.client-ip=209.85.218.42
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="HVrQyOc4"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7B0391F00893;
-	Tue,  9 Jun 2026 13:07:55 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=kernel.org;
-	s=k20260515; t=1781010477;
-	bh=ez3WxGAHVVf0FbYYiKidwStYFHct7M0L+zp+aZhxhXc=;
-	h=Date:Subject:To:Cc:References:From:In-Reply-To;
-	b=HVrQyOc4QGkbaB0ZenJBTxM/SfqiWkToPk0CoqsNwU3ENrnDSG/O2rzysT9+e7gPq
-	 JG12LCCHOexMfLOR811nv2KiLwB9ZI9fhqHafFxurH3sZUBMR9NLr6DVbG5DxMayuR
-	 LZB9hmet/KTNyKj7lpWuRBsVy/wNEc5A9SR2fG2bEXJJ/rnEDQGrU1qFgtTVUJ+3uk
-	 jUeBE1k4IHiLMqIzWEaEN+aASZNEy6tgsXzROO72H/xFR7cRjfYGGc18cEMP48/s71
-	 ZG5lT8bx2KENOpyu05LGrRhDCtEMYi82A0z4636G1Tvb1fh1+n8DkZUavZyq1TkZ8E
-	 C7XUmy1OE6prg==
-Message-ID: <0ff827b8-4690-4ec7-9025-6816befd1d7b@kernel.org>
-Date: Tue, 9 Jun 2026 15:07:53 +0200
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="jGPLrxMr"
+Received: by mail-ej1-f42.google.com with SMTP id a640c23a62f3a-bec449d0af2so635149666b.2
+        for <sashiko-reviews@lists.linux.dev>; Tue, 09 Jun 2026 06:08:42 -0700 (PDT)
+ARC-Seal: i=1; a=rsa-sha256; t=1781010521; cv=none;
+        d=google.com; s=arc-20240605;
+        b=P4+TO8ahdJaNOq3hoNsyMkS9MT0ydiUSibdjanZmpYzOPNWeE4g0zpKPxKoW9P/lhj
+         fNCEoKe8d0D4awI9X4lF+BLJYfBPE6sxF2ERqOXK9QKArOGy7ZwRuEcKF3vCVajRWWke
+         ChYUVz3GpZA4B8hhmYTAJ4PsorpR6elc4ESntLY1bRrhnwEwkMHqbusfnwdmhuP5YVuV
+         hyMYsgjsyJ+xY8EG39aMU/WNLGaV2kqdBsAMnRPC9W49ogLugbZPK79xYxVbHWm7RRPE
+         H5SaXAuLnRAkVYrKDYaFjM1bnD9oIJOZyTY33ZH7HiTScQVlFuaHkF7gCbNwkg2L0N+x
+         CerA==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com; s=arc-20240605;
+        h=cc:to:subject:message-id:date:from:in-reply-to:references
+         :mime-version:dkim-signature;
+        bh=p1w4dDG43UhRDLwUBFWbpr/Q0ulJgmdjjjGOiAAhk8Y=;
+        fh=U7/jdAgfLOojPauQEifSq9rl8JaQF9bA8n7pmYZ3YKk=;
+        b=VeCOu5bl119K88K+bC+OhRhvQOwc4PlhJVYUv0wJRBAe4Uc/APt8porpylK3TuJaEs
+         9irTL6G2QIpSPLOmhds9xMCLoYHsACi8xU/i8teLzotx5U2EeP3aODM99pOrBidXMndq
+         H+w+yK2cp8AWCnCE4LarSVV5ydbOkE1IxEXUZdPkvSxmUrWL6RcTxzWQRT2vW2tUE+Kf
+         KD1yHjhm/p78cmj4rCa2rRx0qOh8IhxKhd8YGMjn7oe/syDXE6zK2dx17ac3qTLNk4Xf
+         DsH5uIOXcvhs5BRwE1yhBGLnpICIE5CZpUxw+quBDSzgDT9tABQUqgMRcRswe3XtA7EF
+         RrmQ==;
+        darn=lists.linux.dev
+ARC-Authentication-Results: i=1; mx.google.com; arc=none
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20251104; t=1781010521; x=1781615321; darn=lists.linux.dev;
+        h=cc:to:subject:message-id:date:from:in-reply-to:references
+         :mime-version:from:to:cc:subject:date:message-id:reply-to;
+        bh=p1w4dDG43UhRDLwUBFWbpr/Q0ulJgmdjjjGOiAAhk8Y=;
+        b=jGPLrxMr4z3Qj0eiNGX0OulTe5NqRvT6tfC++vBP3fFUV1/yDP184bLRDO8UnlD4Pc
+         Wx9/eWE8rxifliQb1zg/Q8etXfvASpGKHmrMWE8p6uoC7FF6bDMleAA2wEOFzS5mPvDB
+         sD9bA2z1FksuBCgrak5I2NOJxyT0ZsZ9rxSxFqWLTkWE4kUirzNzbPguy/k5DV/2R7nl
+         Yy/B8gvPm+f51K2l5gBgRtgEzjTBQo5NbmFPc1ZLhd4wSwnFs/WorsGSTa/Gi1FugUx+
+         qQueCaR231ZQ/NfC+Kwumr4QgJShTqLSfVsw3kEkHAHoAiPHmu/S6BRPZY63HQP3GcQ5
+         n1jw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20251104; t=1781010521; x=1781615321;
+        h=cc:to:subject:message-id:date:from:in-reply-to:references
+         :mime-version:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=p1w4dDG43UhRDLwUBFWbpr/Q0ulJgmdjjjGOiAAhk8Y=;
+        b=edhhMbMZlj3sADasZe1OQAyQpDh6wo8XqoII96eOmdezn0sRQTc/ToYwfq9a3H3r/x
+         FKYA8TaI+Bd+id9Nwz9VyziQxh1fb8AmPY8EtC6v9bnbicj3v4OE0dUxicvI977HZi+M
+         w606/HxS7+K5RiAOHjAEqSWLjhdBOYEqr2ndiKmEiYU7NAWRksp7YPh8rhQk7kn+1EGR
+         e9qt8nBGexmLSsM2u7R92GFXz7af0bHqR1Qtd4sZery1wpxWLaboLFx6Y7ko40VL36cf
+         s7Zuo8YipheGtSFJhs0ULebVnbg9EG1h59YQ0KxB6x8uOJ8f/aCi7ZpyRmApzHJCVvYQ
+         rDHQ==
+X-Forwarded-Encrypted: i=1; AFNElJ/esXaASPd/yzWs5Z8nP4FRuyAI+pbJnOiIgy0arE1Cd5MUk+7l0EZbnUyc8CHcAZaYoGDNXhPnDSkdD+vwSxI=@lists.linux.dev
+X-Gm-Message-State: AOJu0YwArKNQaBr/tBG0jlo0HqsKUHr+kXQyXPBVFZSBwSr9+W3OVT/n
+	sLnXIisAchH9hjMfiGpvMxuG5z/Vn5RkjdRVicn+bl+oQLSYUzpR9mtRD2oVydIydUl4GCQAUJN
+	lX9EBlHsFTbtx/yViBnhGL791VyP091QthpGZm0odWA==
+X-Gm-Gg: Acq92OEBhUMG0EomC0zQ5xrWv2KubX3qSCVWvi88YhmtlzBA387sAOo4VqUBiawv665
+	dYtLT3jPwHtbl0Pmmgzb7SBhGIGee/6NRQhAoA+C7NLpTcSkLmeA8R0olZsPSpxndXMg0TVL1k/
+	E3+ZDXKFlbJB/sSMqPNmQA9J2zL1yXiaH8GVLpOxzuuAiM+SBbdz+Prj+wfGxH9+A0kpXPT7X59
+	3XDVF+VRPEFlhsIv/wWH3yAUPp77dlC3lF0CGqCyfLlojDxyPQ32CaHrqyC/lLqore3UN0IMbh7
+	VaQTWfMrjguIv23PKR4V3B9CN/WXXhILBHChQjffOH8kw3mG9A==
+X-Received: by 2002:a17:907:3f07:b0:bdc:ac75:73b9 with SMTP id
+ a640c23a62f3a-bf373a032a0mr1102504066b.43.1781010520517; Tue, 09 Jun 2026
+ 06:08:40 -0700 (PDT)
 Precedence: bulk
 X-Mailing-List: sashiko-reviews@lists.linux.dev
 List-Id: <sashiko-reviews.lists.linux.dev>
 List-Subscribe: <mailto:sashiko-reviews+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:sashiko-reviews+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v3] HID: i2c-hid: Refactor _DSM helper and add
- i2c-hid-acpi-prp0001 driver
-To: =?UTF-8?B?6LCi6Ie06YKmIChYSUUgWmhpYmFuZyk=?= <Yeking@Red54.com>,
- linux-input@vger.kernel.org, dmitry.torokhov@gmail.com, bentiss@kernel.org
-Cc: dianders@chromium.org, jikos@kernel.org, linux-kernel@vger.kernel.org,
- sashiko-bot@kernel.org, sashiko-reviews@lists.linux.dev, superm1@kernel.org
-References: <4243c594-6535-4111-86cb-69784b0a34b7@kernel.org>
- <tencent_C2BEF7C0584BFE713DC7B41FFD7007B6D30A@qq.com>
-From: Hans de Goede <hansg@kernel.org>
-Content-Language: en-US, nl
-In-Reply-To: <tencent_C2BEF7C0584BFE713DC7B41FFD7007B6D30A@qq.com>
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8bit
+References: <20260609062005.1702-1-aditya.ansh182@gmail.com> <o3k4wongcbuacu4rjsb7h2utzsrhpnun55vzdnp46imnlbn5x6@matvyu6j2xhc>
+In-Reply-To: <o3k4wongcbuacu4rjsb7h2utzsrhpnun55vzdnp46imnlbn5x6@matvyu6j2xhc>
+From: Aditya Prakash Srivastava <aditya.ansh182@gmail.com>
+Date: Tue, 9 Jun 2026 18:38:27 +0530
+X-Gm-Features: AVVi8CfZC1RqwwBADreq6qsprBnJ703dxJwRvA8K-MP701ezqTH9LpeReoFjIWQ
+Message-ID: <CAK5ssPPArwEQyU1+icZXJMrd2zmkJwzOSov-0iQ+TVRpU-g9yw@mail.gmail.com>
+Subject: Re: [PATCH v4] ext4: fix kernel BUG in ext4_write_inline_data_end
+To: Jan Kara <jack@suse.cz>
+Cc: "Theodore Ts'o" <tytso@mit.edu>, Andreas Dilger <adilger.kernel@dilger.ca>, 
+	Baokun Li <libaokun@linux.alibaba.com>, Ojaswin Mujoo <ojaswin@linux.ibm.com>, 
+	Ritesh Harjani <ritesh.list@gmail.com>, Zhang Yi <yi.zhang@huawei.com>, 
+	sashiko-reviews@lists.linux.dev, linux-ext4@vger.kernel.org, 
+	linux-kernel@vger.kernel.org, 
+	syzbot+0c89d865531d053abb2d@syzkaller.appspotmail.com
+Content-Type: text/plain; charset="UTF-8"
 
-Hi,
+Hi Jan,
 
-On 9-Jun-26 12:10, 谢致邦 (XIE Zhibang) wrote:
-> Hi Hans,
-> 
-> Thanks for the review.
-> 
-> The current header-based approach lets i2c-hid-acpi-prp0001.c work
-> independently by just including a header for the _DSM helper. Switching
-> to EXPORT_SYMBOL_GPL would force prp0001 to depend on i2c-hid-acpi —
-> a Kconfig "depends on I2C_HID_ACPI", plus module-level dependency at
-> load time — all for sharing a single function. I find that hard to
-> accept.
-> 
-> I understand that adding a new header for one prototype is unusual,
-> though it contains only a single static inline function and introduces
-> no runtime dependency between the two drivers.
-> 
-> Looking back at the full discussion: Benjamin made it clear from the
-> start that he doesn't want i2c-hid-of.c handling ACPI _DSM fallback.
-> His line is that ACPI devices and OF devices should each go through
-> their own drivers without cross-contamination. If you still prefer
-> exporting the function from i2c-hid-acpi.c, then prp0001 would have to
-> drag i2c-hid-acpi along with it — an independent leaf driver turned
-> into something that can't stand alone.
+Thank you very much for the incredibly detailed review and the design
+insights!
 
-Well it is a special case/version of the ACPI driver so depending
-on it seems fine to me.
+I completely agree with your suggestion. Rushing too many fixes for
+complex, concurrent race conditions into a single patch makes the
+code harder to review and risks introducing subtle regressions.
 
-Anyways if you prefer the inline function in header solution that is
-fine with me.
+Let's go ahead with the simple and straightforward v1 patch (which
+has your Reviewed-by) to fix the original syzbot crash for now.
 
-Lets see what bentiss has to say about this.
+I will take your excellent suggestion to use fsdata for state
+communication between write_begin and write_end, and I will work on
+formulating a separate, cleaner patch series in the future to
+address the remaining concurrent locking races you mentioned.
 
-Regards,
+I will withdraw this v4 thread for now.
 
-Hans
+Thanks again for your guidance!
 
+Best regards,
+Aditya Prakash Srivastava
