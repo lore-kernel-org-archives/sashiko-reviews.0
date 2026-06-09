@@ -1,197 +1,204 @@
-Received: from mail-pl1-f181.google.com (mail-pl1-f181.google.com [209.85.214.181])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from mx0b-001b2d01.pphosted.com (mx0b-001b2d01.pphosted.com [148.163.158.5])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 452CF2DE6F8
-	for <sashiko-reviews@lists.linux.dev>; Tue,  9 Jun 2026 05:00:23 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.214.181
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 255983ACA5D;
+	Tue,  9 Jun 2026 05:11:49 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=148.163.158.5
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1780981224; cv=none; b=Oi4GL+oheAxo0apAbaw0WAUL7TPLcemr00LrUG4KX4a6MfYZLHsT7un7ORLx6LQJlbG3abkayk1aaY7AvDstmZ85QkAEwg7QKuybY2Mp1XacoZhyySSq9n+n051JDe5N9esQ5P8/C1iukoxJ3DKb8aLzxq9KB+uVYMLAP/l8XDI=
+	t=1780981911; cv=none; b=jhdEje1boyyv9SdXHIYtYzeJCeL7xHmeUd9RXAbWhOX2pxYwTRZI4fWaOBG1ZtmCj7uzFbaqHEmidJQ1JNpB72xRNmoHpoqZT8wR3+Eog0+hsHw3FykcVq3MnWB/rfegtw+DzYFaCwYnO+lkn5AvFbuDS1rD+mOM/4z30AV7Yls=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1780981224; c=relaxed/simple;
-	bh=yaKP7/UvUzQTM1UAwBovHUg+etg/wRkptdb8tOq3nbY=;
-	h=From:To:Cc:Subject:Date:Message-ID:MIME-Version; b=hgaVUiRCcmKWxxh+2b2s7qiCT3DFlCHSKcVoIlk1FrAq920XX1PpG/gxCsj/6T6JstWgLndfS/JtrUVTOkmHvoETemqBJgsKRWK/fDhipDKYv+jNbkgd1xsZUcuWQVM8buG7695Qi4ITcapaEFT2Bbf+PSlJT3VXvLUH/hA5WBs=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=Vvf5MQDL; arc=none smtp.client-ip=209.85.214.181
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+	s=arc-20240116; t=1780981911; c=relaxed/simple;
+	bh=Ekdj8csd/Z47gl9OxUyZNrIx6pkiqBtQLQ5bt+pDHiA=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=sSssgvUlCdp5qdixqo87hbI2vPOSbMehpp39Hv1So6I6bD+9wmCKHKe+dw5It5TuV30pkyQ1dSqVHte3rtP6vCcY38zSPjGmDDlla0y/oFeo366MbT0gnQAMtN+Nnk2oS01kd7nzmkrFjog670RhwPmWB0hsn+KHNnnolYjmn8k=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linux.ibm.com; spf=pass smtp.mailfrom=linux.ibm.com; dkim=pass (2048-bit key) header.d=ibm.com header.i=@ibm.com header.b=nhRzzKq3; arc=none smtp.client-ip=148.163.158.5
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linux.ibm.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linux.ibm.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="Vvf5MQDL"
-Received: by mail-pl1-f181.google.com with SMTP id d9443c01a7336-2bf30d530bdso51660655ad.3
-        for <sashiko-reviews@lists.linux.dev>; Mon, 08 Jun 2026 22:00:23 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20251104; t=1780981222; x=1781586022; darn=lists.linux.dev;
-        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
-         :to:from:from:to:cc:subject:date:message-id:reply-to;
-        bh=fBlgRbs5zbK19LMQRjJDNeRT5MSpRwsmVLifXE9+D5M=;
-        b=Vvf5MQDLl53pFsb50OxteA0GebcygcO+pB3wNJR3bZ/lOoal6KO8qW+yfzLok5A9VY
-         yL2jeIK4Yf4CpLxU09qeFUiD7jfTFp8q4P/nk8IGpfLEGeyqT9Q44z+Lcw4oWh5WE5Ns
-         cL9XP/+YEK+e0zPh5bJMpWcsPvivv+THSYo/pLm2LCYqIYy0T1uZ2fPB1xHnZHwE2G/Y
-         nE/UibWActh2KbpDAWhlos6wWoRBzhdw6DuMHxuvegyvXBfMwmoqF676tcfmwVqmM16k
-         DmLYndbYQDQF7JXjRb4RrUiaGndxo5xd0GiplLj4ZfJdkdocqeyYnrbumzTgSD4YivWk
-         e+Ww==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20251104; t=1780981222; x=1781586022;
-        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
-         :to:from:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=fBlgRbs5zbK19LMQRjJDNeRT5MSpRwsmVLifXE9+D5M=;
-        b=k14av+ubtu7D/7Q9g/7M3NpE2a+s9YJQYZf9Osx72RGyyL9in9M0u17XcCJvdFOGFb
-         8P4k1R1V9WZd6G11yWIKbOOlnSCFeZ6DVSTBuixMdkKc7SKQj9wuTNcuaGCowSbJeT56
-         osz5wyFNnfPFakaycubIRrYmGbMx2/hVLVxFydVotYumPfiYdsiQVlkipi2Tb3c6K0X+
-         7gk7H1AX7R1b+KsPKnmI7051m+StQuaA+KDaaDKtVN4bjDxZq+f7XlF9rBkKkLQzeYRf
-         VHqQRu3Avh8H0FZV3T8h1xG5wVVwRaUsEyYju+Y5UG9uyNZH+QwNx1i5IHL0MD4BujlM
-         T1Iw==
-X-Forwarded-Encrypted: i=1; AFNElJ/9V5RD9MlF02qWqkX1LTk7Gv4PCO7SPtm6OA9E3diKx0oUc0qVoVpfPyMEGmqGiW9qiQ+MKijO2XMGZiNjKJI=@lists.linux.dev
-X-Gm-Message-State: AOJu0YwSiCoekM9ACrYYrGttfKHT2KaZ7i1UZ2UT+yCuXOzcsos2CrD8
-	vwu8F4EZpEojFMO5We76UnGK6caCb53+IW/BQOqE8Wa6fnX8w8ViBLb2
-X-Gm-Gg: Acq92OEfr937yIvLDFTSHf3DXrEqSrVqJB52M8i3PgzQ6FvemldugRdf9fYrO4RtPGk
-	BCaAw0ejSV9ym5fvvjdT4e+p/O7kCkEzGfp5h+CpKoGM1Cra3Ckeeoa4gMhCCkboX94fccp4EpM
-	Glnr4y79WT0a+o3A7tTeL+OjckomSjNzJGn0p52ZigSCym/5PWjoglQy9I434UeHPISa+ef2w7C
-	HlYh5YTkkOQ4PRo3w5xXZ+CSeYOvYD66SMWcCUz8l24PBHN20v+cu4NX7hnkpoyiKNDQlNiv3kt
-	pk25uT+HMdLM3q0pTuklnZoxba59rq6pJKvzA317DEB8JP556rQukgJFWrlci04fB9K+KhCiIIB
-	PY25lREPOIU8CB0NtjA7OCatyqT0cHrvXRyES0mPKBYVBm+q3E2kllpz1oM/PVrgk1t3QesvgHw
-	j2DeEWHGoy+lGX4Sa74+TW7tXcwnffKhX24Ee6zthRrR5miMMm//bH0oDT1l+2DjtQ9DC/g2+yq
-	SfDO7n7HwYW6gU9H7C4/zAF86uACW7+E2Hi6ZC+ad9lOa/YZ+nzOWkljMZPdR9HeCsebcaDrRep
-	4VuvqpYWRpv7vPAGbfh3kLrOwFoyplEZ7IxY8WINSYXenjVngA==
-X-Received: by 2002:a17:902:fc4c:b0:2c2:1982:527a with SMTP id d9443c01a7336-2c2198254f0mr152300195ad.16.1780981222155;
-        Mon, 08 Jun 2026 22:00:22 -0700 (PDT)
-Received: from cs-1047136853211-default.asia-southeast1-b.c.d33bddc1d573818c7-tp.internal (192.152.126.34.bc.googleusercontent.com. [34.126.152.192])
-        by smtp.gmail.com with ESMTPSA id d9443c01a7336-2c166391d53sm254648635ad.65.2026.06.08.22.00.18
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Mon, 08 Jun 2026 22:00:21 -0700 (PDT)
-From: Aditya Prakash Srivastava <aditya.ansh182@gmail.com>
-To: Theodore Ts'o <tytso@mit.edu>,
-	Andreas Dilger <adilger.kernel@dilger.ca>
-Cc: Jan Kara <jack@suse.cz>,
-	Baokun Li <libaokun@linux.alibaba.com>,
-	Ojaswin Mujoo <ojaswin@linux.ibm.com>,
-	Ritesh Harjani <ritesh.list@gmail.com>,
-	Zhang Yi <yi.zhang@huawei.com>,
-	sashiko-reviews@lists.linux.dev,
-	linux-ext4@vger.kernel.org,
-	linux-kernel@vger.kernel.org,
-	Aditya Prakash Srivastava <aditya.ansh182@gmail.com>,
-	syzbot+0c89d865531d053abb2d@syzkaller.appspotmail.com
-Subject: [PATCH v3] ext4: fix kernel BUG in ext4_write_inline_data_end
-Date: Tue,  9 Jun 2026 04:59:55 +0000
-Message-ID: <20260609045956.1910-1-aditya.ansh182@gmail.com>
-X-Mailer: git-send-email 2.43.0
+	dkim=pass (2048-bit key) header.d=ibm.com header.i=@ibm.com header.b="nhRzzKq3"
+Received: from pps.filterd (m0353725.ppops.net [127.0.0.1])
+	by mx0a-001b2d01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id 658Kg8px3420508;
+	Tue, 9 Jun 2026 05:11:49 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=ibm.com; h=cc
+	:content-transfer-encoding:content-type:date:from:in-reply-to
+	:message-id:mime-version:references:subject:to; s=pp1; bh=ZESugM
+	OhTaltoGi7S5b9tGg+zWmprJ8SdomDsrK9xjI=; b=nhRzzKq3XWRMzV1OBxfq6o
+	xhWMkKCECG0p/n/kThMJwhQ+d2ETCQDHZX/HaF0wJt1uFpqLiI4DXkLZbyRRLxJa
+	JtWr4RZZnbWiHmATWPSKsNAnHANQZlskpA8GsfBNKqzRiCaw4eUh163AZCazZpEg
+	1eEW3NYJi1xsG+B1eiHYIc26PDra2rqasOLGAH4EoCI3Ny3mjXf465tQTi2zhQv8
+	i/V/l6gBd8cJeRuTrLd2/ecC71gI8SYPb3qtR1e88Aa+D1dfgNWFMMHwkDxa8aYt
+	bQaKmU2y/FkaSBIKVnKkI9JsrH35oOlpP/NnCD/9BOB1lOdSa9Q4JhDxRuEpXbSg
+	==
+Received: from ppma21.wdc07v.mail.ibm.com (5b.69.3da9.ip4.static.sl-reverse.com [169.61.105.91])
+	by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 4em9ye2dgc-1
+	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+	Tue, 09 Jun 2026 05:11:48 +0000 (GMT)
+Received: from pps.filterd (ppma21.wdc07v.mail.ibm.com [127.0.0.1])
+	by ppma21.wdc07v.mail.ibm.com (8.18.1.7/8.18.1.7) with ESMTP id 65954fkI032061;
+	Tue, 9 Jun 2026 05:11:48 GMT
+Received: from smtprelay05.fra02v.mail.ibm.com ([9.218.2.225])
+	by ppma21.wdc07v.mail.ibm.com (PPS) with ESMTPS id 4emxvjrfnn-1
+	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+	Tue, 09 Jun 2026 05:11:48 +0000 (GMT)
+Received: from smtpav02.fra02v.mail.ibm.com (smtpav02.fra02v.mail.ibm.com [10.20.54.101])
+	by smtprelay05.fra02v.mail.ibm.com (8.14.9/8.14.9/NCO v10.0) with ESMTP id 6595BiZX49611196
+	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
+	Tue, 9 Jun 2026 05:11:44 GMT
+Received: from smtpav02.fra02v.mail.ibm.com (unknown [127.0.0.1])
+	by IMSVA (Postfix) with ESMTP id 5284620043;
+	Tue,  9 Jun 2026 05:11:44 +0000 (GMT)
+Received: from smtpav02.fra02v.mail.ibm.com (unknown [127.0.0.1])
+	by IMSVA (Postfix) with ESMTP id 893C820040;
+	Tue,  9 Jun 2026 05:11:43 +0000 (GMT)
+Received: from fedora (unknown [9.5.7.39])
+	by smtpav02.fra02v.mail.ibm.com (Postfix) with ESMTPS;
+	Tue,  9 Jun 2026 05:11:43 +0000 (GMT)
+Date: Tue, 9 Jun 2026 10:41:55 +0530
+From: Amit Machhiwal <amachhiw@linux.ibm.com>
+To: sashiko-reviews@lists.linux.dev
+Cc: Amit Machhiwal <amachhiw@linux.ibm.com>, kvm@vger.kernel.org
+Subject: Re: [PATCH v2] KVM: PPC: Book3S HV: Validate arch_compat against
+ host compatibility mode
+Message-ID: <20260609103124.a7827206-22-amachhiw@linux.ibm.com>
+Mail-Followup-To: sashiko-reviews@lists.linux.dev, kvm@vger.kernel.org
+References: <20260608201001.65760-1-amachhiw@linux.ibm.com>
+ <20260608202747.E521A1F00893@smtp.kernel.org>
 Precedence: bulk
 X-Mailing-List: sashiko-reviews@lists.linux.dev
 List-Id: <sashiko-reviews.lists.linux.dev>
 List-Subscribe: <mailto:sashiko-reviews+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:sashiko-reviews+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=iso-8859-1
+Content-Disposition: inline
 Content-Transfer-Encoding: 8bit
+In-Reply-To: <20260608202747.E521A1F00893@smtp.kernel.org>
+X-TM-AS-GCONF: 00
+X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwNjA5MDA0NCBTYWx0ZWRfXzJuSyb9WYWiu
+ fALS1LiVWXLxzDUWmbc1UoxDL2r3WJZDQPz4AeZ5sxRp+UEErsE9Ar+NaHO5e0wkruZ8Jwm+Uuo
+ 8k0udb0MqXn7iTqJrZsuX4RawGlHngddq7cZlOSno4M+qL8UHyP4+OnYCYQ3+fUhfHsT9Gxu5U+
+ ftFQEbS2u4gcaUr+rc+J5+ZKll3i3oVYzKsljW2Ba5ePIpKopblhyz8Tnz2KmC2XcJ8+Kr0KvVF
+ OmNnT1wJLJn/nipXbicRQPvGOsz7kNSTFS8c+bRH9JacT4wQHyxoxEsATRt4vmHjiwas4EPTjaE
+ tnIhUG25CBaBVzkyK462eOa5xv/GVyTzTMBJUl153G5Qzbtjk+E1WnEy94mjhdtO0SRbqKJl45O
+ 1DiaKmViWsLfP8qJhC7bS1W16J0QjTp8hTsMDCmAN9m0Gea3bBHk/p7WpdkEjrZB4PQhSWnpmmX
+ 1LEVp48MwCxV7o+v+jw==
+X-Authority-Analysis: v=2.4 cv=QKhYgALL c=1 sm=1 tr=0 ts=6a27a094 cx=c_pps
+ a=GFwsV6G8L6GxiO2Y/PsHdQ==:117 a=GFwsV6G8L6GxiO2Y/PsHdQ==:17
+ a=8nJEP1OIZ-IA:10 a=FelO9ux0wxsA:10 a=VkNPw1HP01LnGYTKEx00:22
+ a=RnoormkPH1_aCDwRdu11:22 a=V8glGbnc2Ofi9Qvn3v5h:22 a=c92rfblmAAAA:8
+ a=VnNF1IyMAAAA:8 a=VwQbUJbxAAAA:8 a=jqxJ-K0nebAUikD8VG0A:9 a=3ZKOabzyN94A:10
+ a=wPNLvfGTeEIA:10 a=GvGzcOZaWPEFPQC_NcjD:22
+X-Proofpoint-GUID: mM95Ee9CypC8p-gd4J-6pTkuVq78-kj3
+X-Proofpoint-ORIG-GUID: mM95Ee9CypC8p-gd4J-6pTkuVq78-kj3
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.293,Aquarius:18.0.1143,Hydra:6.1.125,FMLib:17.12.100.49
+ definitions=2026-06-09_01,2026-06-09_01,2025-10-01_01
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
+ priorityscore=1501 lowpriorityscore=0 bulkscore=0 adultscore=0 phishscore=0
+ malwarescore=0 impostorscore=0 suspectscore=0 spamscore=0 clxscore=1015
+ classifier=typeunknown authscore=0 authtc= authcc= route=outbound adjust=0
+ reason=mlx scancount=1 engine=8.22.0-2605210000 definitions=main-2606090044
 
-When the data=journal mount option is used, the ext4_journalled_write_end()
-function incorrectly calls ext4_write_inline_data_end() without checking
-if the EXT4_STATE_MAY_INLINE_DATA flag is still set on the inode.
+On 2026/06/08 08:27 PM, sashiko-bot@kernel.org wrote:
+> Thank you for your contribution! Sashiko AI review found 2 potential issue(s) to consider:
+> - [High] Unconditional dereference of `vcpu->arch.vcore` in `kvmppc_sanity_check()` causes a deterministic kernel panic for Book3S PR and BookE KVM guests.
+> - [Medium] Bypassing PCR capability checks corrupts shared VCORE state on older architectures and inconsistently blocks sibling VCPUs.
+> --
+> 
+> commit 8aae14bd53c26cd9bec6b3a9d75dc94d32e6e296
+> Author: Amit Machhiwal <amachhiw@linux.ibm.com>
+> 
+> KVM: PPC: Book3S HV: Validate arch_compat against host compatibility mode
+> 
+> This commit detects unsupported arch_compat values early in the guest
+> initialization path. It sets arch_compat to PVR_ARCH_INVALID and marks
+> the vCPU as invalid, preventing the guest from running with an invalid
+> processor compatibility configuration.
+> 
+> Cc: stable@vger.kernel.org # v6.13+
+> 
+> > diff --git a/arch/powerpc/kvm/book3s_hv.c b/arch/powerpc/kvm/book3s_hv.c
+> > index 61dbeea317f3b..f9380ef657500 100644
+> > --- a/arch/powerpc/kvm/book3s_hv.c
+> > +++ b/arch/powerpc/kvm/book3s_hv.c
+> [ ... ]
+> > @@ -446,7 +446,19 @@ static int kvmppc_set_arch_compat(struct kvm_vcpu *vcpu, u32 arch_compat)
+> >  			guest_pcr_bit = PCR_ARCH_300;
+> >  			break;
+> >  		case PVR_ARCH_31:
+> > +			guest_pcr_bit = PCR_ARCH_31;
+> > +			break;
+> >  		case PVR_ARCH_31_P11:
+> > +			/*
+> > +			 * Need to check this for ISA 3.1, as Power10 and
+> > +			 * Power11 share the same PCR. For any subsequent ISA
+> > +			 * versions, this will be taken care of by the guest vs
+> > +			 * host PCR comparison below.
+> > +			 */
+> > +			if (!cpu_has_feature(CPU_FTR_P11_PVR)) {
+> > +				arch_compat = PVR_ARCH_INVALID;
+> > +				goto out;
+> 
+> [Severity: Medium]
+> When jumping to the out label, the code applies the invalid arch_compat and
+> a restricted pcr to the shared vcore structure before returning an error.
+> Since vcore can be shared among multiple vCPUs on older Power architectures,
+> does this state affect sibling vCPUs?
 
-If a previous attempt to convert the inline data to an extent failed (e.g.
-due to ENOSPC), the EXT4_STATE_MAY_INLINE_DATA flag is cleared, but
-the EXT4_INODE_INLINE_DATA flag remains set. In this scenario, the next
-call to ext4_write_begin() will not prepare the inline data xattr for
-writing, but ext4_journalled_write_end() will incorrectly attempt to write
-to it, triggering a BUG_ON(pos + len > EXT4_I(inode)->i_inline_size) in
-ext4_write_inline_data() since i_inline_size was not expanded.
+Setting arch_compat to PVR_ARCH_INVALID is intentional. The value is
+stored in the shared vcore so that all vCPUs associated with the VM
+observe the invalid compatibility state. Subsequent calls to
+kvmppc_sanity_check() fail and prevent any vCPU from entering the guest.
 
-Additionally, a concurrent ext4_page_mkwrite() can execute
-ext4_convert_inline_data() between ext4_write_begin() and ext4_write_end()
-since it only takes xattr_sem. This concurrent path converts the inline
-data to an extent and clears both the EXT4_INODE_INLINE_DATA and
-EXT4_STATE_MAY_INLINE_DATA flags. Since the block buffers were not
-allocated in ext4_write_begin(), falling through to the block fallback path
-causes a NULL pointer dereference because folio_buffers(folio) is NULL.
+> 
+> While kvmppc_sanity_check() marks the current vCPU as insane, sibling vCPUs
+> might retain sane == true. Could they then execute the guest using the
+> updated pcr and invalid arch_compat state?
+> 
+> > +			}
+> >  			guest_pcr_bit = PCR_ARCH_31;
+> >  			break;
+> >  		default:
+> [ ... ]
+> > diff --git a/arch/powerpc/kvm/powerpc.c b/arch/powerpc/kvm/powerpc.c
+> > index 00302399fc37b..7e2d489af6423 100644
+> > --- a/arch/powerpc/kvm/powerpc.c
+> > +++ b/arch/powerpc/kvm/powerpc.c
+> > @@ -258,6 +258,9 @@ int kvmppc_sanity_check(struct kvm_vcpu *vcpu)
+> >  	if (!vcpu->arch.pvr)
+> >  		goto out;
+> >  
+> > +	if (vcpu->arch.vcore->arch_compat == PVR_ARCH_INVALID)
+> > +		goto out;
+> > +
+> 
+> [Severity: High]
+> Does this code introduce a null pointer dereference for Book3S PR and BookE
+> guests?
+> 
+> kvmppc_sanity_check() is a generic helper used across Book3S HV, PR, and
+> BookE KVM implementations. While vcpu->arch.vcore is populated for Book3S HV,
+> it remains null for Book3S PR and BookE guests.
 
-Fix this by ensuring that the write_end functions (including
-ext4_write_end() and ext4_da_do_write_end()) safely return 0 to trigger
-a VFS retry if they detect folio_buffers(folio) is NULL after falling
-through from the inline data check. Returning 0 signals
-generic_perform_write() to revert the write iterator and retry the
-entire write operation, which will then properly allocate block buffers.
+Good catch! I see vcore is only set for KVM-HV and may cause a null
+deref on PR and BookE. I'll introduce a NULL check in the next version.
 
-To prevent transaction handle leaks and subsequent filesystem hangs during
-retries, we stop any active journal handle via ext4_journal_stop() before
-returning 0. We also explicitly check that the retrieved handle is non-NULL
-prior to stopping it, preventing a potential NULL pointer crash inside
-ext4_put_nojournal().
+# git grep "arch.vcore.*="
+[...]
+arch/powerpc/kvm/book3s_hv.c:   vcpu->arch.vcore = vcore;
 
-Reported-by: syzbot+0c89d865531d053abb2d@syzkaller.appspotmail.com
-Closes: https://syzkaller.appspot.com/bug?extid=0c89d865531d053abb2d
-Fixes: 3fdcfb668fd7 ("ext4: add journalled write support for inline data")
-Signed-off-by: Aditya Prakash Srivastava <aditya.ansh182@gmail.com>
----
-v3:
-  - Fix journal handle leak in ext4_da_do_write_end() by stopping the active
-    handle before returning 0 on the fallback path.
-  - Safely check if the retrieved handle is non-NULL before calling
-    ext4_journal_stop() in ext4_write_end() and ext4_journalled_write_end()
-    to prevent a kernel crash inside ext4_put_nojournal().
-v2:
-  - Address TOCTOU race condition (reported by Sashiko AI review):
-    A concurrent ext4_page_mkwrite() can execute ext4_convert_inline_data()
-    which takes xattr_sem and converts the inline data to extents, clearing
-    both EXT4_INODE_INLINE_DATA and EXT4_STATE_MAY_INLINE_DATA flags between
-    ext4_write_begin() and write_end().
-  - Safely return 0 from write_end functions if folio_buffers(folio) is NULL
-    to trigger a VFS retry. This prevents a NULL pointer dereference in
-    ext4_journalled_zero_new_buffers() and ext4_walk_page_buffers().
-  - Add check for ext4_write_end() and ext4_da_do_write_end().
- fs/ext4/inode.c | 24 ++++++++++++++++++++++--
- 1 file changed, 22 insertions(+), 2 deletions(-)
+Thanks,
+Amit
 
-diff --git a/fs/ext4/inode.c b/fs/ext4/inode.c
-index c2c2d6ac7f3d..bc2688e03c19 100644
---- a/fs/ext4/inode.c
-+++ b/fs/ext4/inode.c
-@@ -1455,6 +1455,14 @@ static int ext4_write_end(const struct kiocb *iocb,
- 		return ext4_write_inline_data_end(inode, pos, len, copied,
- 						  folio);
- 
-+	if (unlikely(!folio_buffers(folio))) {
-+		folio_unlock(folio);
-+		folio_put(folio);
-+		if (handle)
-+			ext4_journal_stop(handle);
-+		return 0;
-+	}
-+
- 	copied = block_write_end(pos, len, copied, folio);
- 	/*
- 	 * it's important to update i_size while still holding folio lock:
-@@ -1560,10 +1568,19 @@ static int ext4_journalled_write_end(const struct kiocb *iocb,
- 
- 	BUG_ON(!ext4_handle_valid(handle));
- 
--	if (ext4_has_inline_data(inode))
-+	if (ext4_has_inline_data(inode) &&
-+	    ext4_test_inode_state(inode, EXT4_STATE_MAY_INLINE_DATA))
- 		return ext4_write_inline_data_end(inode, pos, len, copied,
- 						  folio);
- 
-+	if (unlikely(!folio_buffers(folio))) {
-+		folio_unlock(folio);
-+		folio_put(folio);
-+		if (handle)
-+			ext4_journal_stop(handle);
-+		return 0;
-+	}
-+
- 	if (unlikely(copied < len) && !folio_test_uptodate(folio)) {
- 		copied = 0;
- 		ext4_journalled_zero_new_buffers(handle, inode, folio,
-@@ -3231,7 +3248,10 @@ static int ext4_da_do_write_end(struct address_space *mapping,
- 	if (unlikely(!folio_buffers(folio))) {
- 		folio_unlock(folio);
- 		folio_put(folio);
--		return -EIO;
-+		handle = ext4_journal_current_handle();
-+		if (handle)
-+			ext4_journal_stop(handle);
-+		return 0;
- 	}
- 	/*
- 	 * block_write_end() will mark the inode as dirty with I_DIRTY_PAGES
--- 
-2.47.3
-
+> 
+> During vCPU creation for PR or BookE, the initialization sequence sets
+> vcpu->arch.pvr and calls kvmppc_sanity_check(). Because pvr is non-zero,
+> execution will reach this check and dereference the null vcore pointer,
+> which can cause a host panic.
+> 
+> >  	/* PAPR only works with book3s_64 */
+> >  	if ((vcpu->arch.cpu_type != KVM_CPU_3S_64) && vcpu->arch.papr_enabled)
+> >  		goto out;
+> 
+> -- 
+> Sashiko AI review · https://sashiko.dev/#/patchset/20260608201001.65760-1-amachhiw@linux.ibm.com?part=1
