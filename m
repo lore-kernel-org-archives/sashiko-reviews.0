@@ -1,122 +1,136 @@
-Received: from mail-dy1-f171.google.com (mail-dy1-f171.google.com [74.125.82.171])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from fout-b1-smtp.messagingengine.com (fout-b1-smtp.messagingengine.com [202.12.124.144])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 53DA040D597
-	for <sashiko-reviews@lists.linux.dev>; Tue,  9 Jun 2026 19:28:25 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=pass smtp.client-ip=74.125.82.171
-ARC-Seal:i=2; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1781033306; cv=pass; b=bGp8ciMEAEo8iQXgeVpYTui3Sm8CJbAv0G15F60Ty9+jTDXMgVmHWhCC35FBVB6kwL86L+SdM1ArEUPMPKAm8hfb69yZ0V4DSO8eECEgXmVxuEDVTjGBvQ0/1WrVVK/AcIbEJmf+J1RV1vwqyju4IkNK9eWyz3RBVJdBkooMiK0=
-ARC-Message-Signature:i=2; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1781033306; c=relaxed/simple;
-	bh=i/OACinFgLu0muBhFCcLI6Uw9QvwUuOTqJaKEKBoL/o=;
-	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
-	 To:Cc:Content-Type; b=XyTV+Wmo7f8au/Hxa5quhOykDqcEFtF4CGokw4J6ZWnksdZyRi/Z1fPVTLttICyFbzCkStd1vpFk/inydRR0YatWcvIY1U4GGSwyrjBI9VfJL4aYlZhVFYQ/WERt8mVj1kbj8uAX/G6J87ucmmX1swJssmvBWvzEIxSHI4kHQ50=
-ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=sYjbVnyE; arc=pass smtp.client-ip=74.125.82.171
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E5FF6352C3C;
+	Tue,  9 Jun 2026 19:36:49 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=202.12.124.144
+ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
+	t=1781033811; cv=none; b=OJEERlsP37rbgQHW1nnfV0RmMBxQb3vXzVWJA2d20FQxKMRs7B2E2ZmxXDSLFAT/vRWlWNkEUEsWbtOfQRYe9bMzaqCZU5IiCAKjKQ47oanjr0P460ntDQVtVZ5BJEm68ER540iZI5gj7vYd3m+zoSxYaCU2C+OI64wPilIltjc=
+ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
+	s=arc-20240116; t=1781033811; c=relaxed/simple;
+	bh=zFZII69Eq2prIZegSL8lHN/AbHGFlMpWwGM3nvgDLA4=;
+	h=MIME-Version:Date:From:To:Cc:Message-Id:In-Reply-To:References:
+	 Subject:Content-Type; b=dCkT9vS4IF9mMp6bFmdrWyStBBY3K3DDPPdi5r4gPLZuSrrUebQI7qY+K/VT8JmMt9vFxrnt8F2xsXAENGAA5FFSSrv3LzZEjSaHsXqCLn3C2UR40zN+q7Hkat6tBGevBewTuT2UjUXVoUnfRcKig+sxXzm9wquLp59DycG5d4M=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=arndb.de; spf=pass smtp.mailfrom=arndb.de; dkim=pass (2048-bit key) header.d=arndb.de header.i=@arndb.de header.b=IKGs9H//; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=SdZel8UK; arc=none smtp.client-ip=202.12.124.144
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=arndb.de
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=arndb.de
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="sYjbVnyE"
-Received: by mail-dy1-f171.google.com with SMTP id 5a478bee46e88-304cf9a02f9so322049eec.1
-        for <sashiko-reviews@lists.linux.dev>; Tue, 09 Jun 2026 12:28:25 -0700 (PDT)
-ARC-Seal: i=1; a=rsa-sha256; t=1781033304; cv=none;
-        d=google.com; s=arc-20240605;
-        b=IlToMaLZ8OQ5tNdON0hIfcaxoC5h8bnjAp6jvyt9nO5n4l99rgrIE9l1knuoluo5r9
-         4NqchLDG0maJASqNjLVOCoqJrdtHuFdvwwqfAyHYy/642Kl8oWKWTQFHU5r3HcW5gEqn
-         M+SnHTXKPvw33ymlt3dTtPR0lMHfK1ThQMUQYmIhLdQsn8ptz5B6T70oLs2L0tGFlHXY
-         gRFoC0oJ4rUt3yixat24sKu5kLC9qgbiPY97mvBP1CJA58RsTHjYu3wPY4oGZkN7pP1e
-         4fwknFzzPE8GBsE9ycZgdIiUWnY+E8qA+bfwPx1NbnRm14wTADnNrGVqS5B9mI9sT2g0
-         ScKQ==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com; s=arc-20240605;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:dkim-signature;
-        bh=OJg9nwIv9ACqjDswvJZaERxDdDEAwRUfl02ZMVnz9zo=;
-        fh=54Wv5Z1StEH8pb9vxCj4wzF9QrPAK0+Ysq6NknNKCIc=;
-        b=gY3BuW89KlMh0/E5yDpkBy3vYBGIQ7WhLIBf5KabJelc52uZO0/hPi8ohT37ojGK6q
-         Te3WS9AkqL/8Ei0UzZNZF3XXQdVQUOnoUw/4D6zpkrFBv5lcCKU2+Acr9UEI79HJSihM
-         Z/ixT8nDeAyObw/QKdUcZJo0z/AXM1NfWnXMm+qBAAimuXNwu8C/xw5xBDd3h8AbWko+
-         Ry6nWOt051qokq8R2zwu8osQCcxIM7s8MjEYf36jNC3B6zk0oIWmrW1nkFzkw1dWdWlP
-         rY0xn/BkZ4ZFtmGNlL05pLph0nnPI2ih8n1D6XNOV66uCD3D+3f9ZrPF8rbiw6LGjBvf
-         2tdw==;
-        darn=lists.linux.dev
-ARC-Authentication-Results: i=1; mx.google.com; arc=none
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20251104; t=1781033304; x=1781638104; darn=lists.linux.dev;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=OJg9nwIv9ACqjDswvJZaERxDdDEAwRUfl02ZMVnz9zo=;
-        b=sYjbVnyEkvAnfm+rb0gZGYYlzuoTtzRL7M0oaNOuZldxQgrZ7WT65IdiN9AezJaqwj
-         XTQGCJFebrzKQRFLGgIGkfTgcX3W2cexo2OfeI1AsKa72Pol+baii9JRMtprS1oXafsM
-         wB1QEaDjGxKPOI8Fat6CLVwqsQ5VEJg0nipQhaRXc9OxXvxiqH2L7YkoHYKN62aJYhfH
-         s2Z78t3ST1xkuBCdHVAo1wohrG/zc7iBkCKZ9z69VrvKiroDwdXuaH6vAC/BZIqcnYz3
-         saL2O+wUmQKkTAx57sQHIev578TgKKdjvMljyZL5YhRNHPVjtfmfBTszG1lJyalnkKfx
-         UDfA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20251104; t=1781033304; x=1781638104;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:x-gm-gg:x-gm-message-state:from
-         :to:cc:subject:date:message-id:reply-to;
-        bh=OJg9nwIv9ACqjDswvJZaERxDdDEAwRUfl02ZMVnz9zo=;
-        b=HuOuJHrP6+cTltm5s65IkPj14FIKwGF0H7kWBfzIzY5vUdpbzy0nfRuOe4ktO2Wabo
-         XMN1TU8F1pwzFNnOke+YvDfNwjeKT908Oxt0beVLcsm1rmIPluMyBQo1av68cfKg0wCp
-         pFhglTgrNAZKJKjY4cnQajlzTnjq+RG+antSeRxJPFpZ3Qn+QxhV91lXfSiyFDCIxRb8
-         ua20yALItlhlEWOBYYxBDk5OIVnG+wdRoLY4SiJ3o6uRtdsymgMQ4MkFAx9l0fxp7CQg
-         YtiGWKMsyUf2HfD6yjq4cSoTnO2Bk6Yn+q57Z9QHQsZFjdZzLCCJmWIWH2QioJ5crbzx
-         hXng==
-X-Gm-Message-State: AOJu0YwEHofSY6y5rnrVt6exxKYKLxGUMlIgVz2S0OYM/YSyEBtPIYQD
-	yn27IrLXWl0mlGh/yrgNvUDrj1SuzwCft1lmxoHPdqrX/4eFsf1NiaCLG1a5Y8eM+UTY9XUjhRV
-	YKgvvKi5MVDO5SCGUZqPy0lKrkCgfAdg=
-X-Gm-Gg: Acq92OHDkcBwz55Wax+yUyGYglZZAkmwLddt6gjndIW34ElzNbGAOD2kxb4RwnLLjxk
-	/7NV1pcXKBH824cDm4ndLR0x6InmkywBTLcGWx4rr36ZLHpuwisOxyrdsmPfKSdSXzVGJnaLwsS
-	qIj0rjZlTMwvosYQU45FKX4mlbr4BGwsgNjnYStpvZWURb9Ghi9q+cA7+rDEtaIB2Wu62ZCDL6u
-	E27eYcS/J6Kn1rGvJhg7SJwW/yG5akGqkjU7Utz/KWhN5kSqiErAfVmO548eOz9VwA8iXhdWbj7
-	69/IGMGS+lZ+7zbZNh1k0pcM7Vy76YbAC7d7ZEFv9cMhgBUurddHd5dBC7xuoib2MRcztTz3btI
-	TjxHdcv9+EA7f+7xFRR38svhMUAXx/zUKEKSv+oI2ndoL
-X-Received: by 2002:a05:7300:a509:b0:304:f860:3ae3 with SMTP id
- 5a478bee46e88-307d5cf2045mr1484875eec.1.1781033304355; Tue, 09 Jun 2026
- 12:28:24 -0700 (PDT)
+	dkim=pass (2048-bit key) header.d=arndb.de header.i=@arndb.de header.b="IKGs9H//";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="SdZel8UK"
+Received: from phl-compute-04.internal (phl-compute-04.internal [10.202.2.44])
+	by mailfout.stl.internal (Postfix) with ESMTP id DFBF81D000E5;
+	Tue,  9 Jun 2026 15:36:48 -0400 (EDT)
+Received: from phl-imap-05 ([10.202.2.95])
+  by phl-compute-04.internal (MEProxy); Tue, 09 Jun 2026 15:36:49 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=arndb.de; h=cc
+	:cc:content-transfer-encoding:content-type:content-type:date
+	:date:from:from:in-reply-to:in-reply-to:message-id:mime-version
+	:references:reply-to:subject:subject:to:to; s=fm3; t=1781033808;
+	 x=1781120208; bh=dRIB5MXKcGJPe1YfyLPI7erRS4l2n6FfDbqcCvQYxQI=; b=
+	IKGs9H//jLOV06siFLpxnoKcb4U0AZ6ESwghF39UMgqThoIijrpTT2ygFScijNwo
+	pAvFF3STbhT9W0omnhHVWELPhp+a5qnQm/Wl6QkPpVJ2KQel6JpgYYt/GApdDCtK
+	khw1LhVZTKN+ZmEeqKTWCkUEnjnSd64DFDmnmqwPS6tVXeoq/5TjDowF5UJx6t8f
+	CY4xE023o0wg3MdB5jRgV8xj2nuRG5kAFSHUmKP+bbzGd8Pdip9BhrKZuIRf7Yw5
+	CeHqH07FfrVa2+zmtJyi6yW22cStg45R/nFUt4anqZYlGIZDMr5/0TA8r+D6n79w
+	kH6TNYBtXfmVLXS3w+LhEA==
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
+	messagingengine.com; h=cc:cc:content-transfer-encoding
+	:content-type:content-type:date:date:feedback-id:feedback-id
+	:from:from:in-reply-to:in-reply-to:message-id:mime-version
+	:references:reply-to:subject:subject:to:to:x-me-proxy
+	:x-me-sender:x-me-sender:x-sasl-enc; s=fm1; t=1781033808; x=
+	1781120208; bh=dRIB5MXKcGJPe1YfyLPI7erRS4l2n6FfDbqcCvQYxQI=; b=S
+	dZel8UKF/YG+eex9z+wB2htjg/3AJ7olnhvPM2RvmuPKuPKBfIiCZ/SsbYS/1UIG
+	36yh91tyvjxGJsFUWmIZT+ppuKXpUhneWTCW4zelIunMY/syRpSArFoN+ZCjHJXE
+	wHTeo5yiN1XSXVRusxFttNoqTB432hd1VZgjthNKl8+/CaRy64I+jYk2yV5jbaRo
+	m9r9VpEMztrQ8ytJTHTtWVSMoUcSFAXRJQg4xgy791WiPG1+Am+we6xgSkngrugv
+	xTNkxQDXBmqr7/8TmEfH46+un9YTM1OxeYzprC1fhUlcIOEtYBM/W4EgkomRDKEq
+	NdEa46eTElkAOKWW1+URg==
+X-ME-Sender: <xms:UGsoan0UEQUfbogsyTY6d1BPPTKIw_EiWJmN4VrZJrEgA735XDwo-Q>
+    <xme:UGsoag7beKUHcItbtsTayuHthEuWYGvmGPgMglaaYm4iDSDmguVyMi6AfwwLk7NhQ
+    q3uW81BbPiUrC8luZrnDLDpdhRohy-gVWpYkZ0ygT8C19hB-UBu_C4>
+X-ME-Proxy-Cause: dmFkZTEgh9xNDHP6fqOx9jgSWS2R7jMhtYEp9f/kld5p8Rbhqk5lyvbGRl+gVKqBKjZCj0
+    GxaMZ/1HtSk3rCzpND5IyhTjLtQpsfjY5AbAdDIsG9jDZd41guLkN27u7CaRXKjvEDnFdy
+    Ss9vV4i6bn2I06uayLVg3MHkVCkt+15dWnDvl9ileE9+MvdXc1VGcSyc+BdtVLmzAjMWqS
+    ePhUw264K8v9Zs9PmWsEtDxFfi4Dcvu167vuu1i/K1u6Yx5qsMcWcG7j/WGC7FkceDnxYK
+    J6mhuHdrD2edukYJWts8I9EH/1Fqi6fDwnFs8QRYvd5yggNUSPmYExXVS597/B9jdsyER5
+    y5g0HxPc3iK7NDeivgJ5jIVrWzX344B43G+cl1TGTZM5If3n5s6+mMuxeoMtFqRJYd1ibi
+    RJdDpdMtr2LQAxNtSBJnMolf0kt+doDU/K/PSPzWxisnmq2rjd6JhzSJIyERuYzxKQiSrU
+    uSdG5wgYi0BRDF7T/j+QmRYTmIxaW9V7yn7k0hHyOMrlUegsV930iW5G6pBXIi02xER9HZ
+    pFo71I2+EjBmFNR0LUW1RDvXxxsnGR+h5ruOWNYWH00J8yNgYfN+LC6/kThJtyt9FK3myQ
+    3rbCNrYh/OAM0it7AMU+olZ/agpkFEcHyLwQeO3L/b6gcMIHw5adCi/hUqpQ
+X-ME-Proxy: <xmx:UGsoaqQ6NXp_JHynDGJ3M21UVvXCNkw5M3EMkgmEWLX2cN4hABrobA>
+    <xmx:UGsoaksFFjC8nLBJLXAki-sRAVDxGy3Q_dwL-sx2ZsuEKvgwVB6p6g>
+    <xmx:UGsoasHSxa76xEndlPuUnu8orUbmAPeVdcyIm07cO_6s4zda4DJn7A>
+    <xmx:UGsoalzYId-aP8SW701Zt6N-BkTBYB3ML_Q47GVyHNqxxUzKABIV2g>
+    <xmx:UGsoakAK-6rg0USdrVGlGsJIzi8KiAitqoU1pyO4UzL5HSGfZ-2655je>
+Feedback-ID: i56a14606:Fastmail
+Received: by mailuser.phl.internal (Postfix, from userid 501)
+	id 71B67182007E; Tue,  9 Jun 2026 15:36:48 -0400 (EDT)
+X-Mailer: MessagingEngine.com Webmail Interface
 Precedence: bulk
 X-Mailing-List: sashiko-reviews@lists.linux.dev
 List-Id: <sashiko-reviews.lists.linux.dev>
 List-Subscribe: <mailto:sashiko-reviews+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:sashiko-reviews+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-References: <20260608183057.2001376-2-lyude@redhat.com> <20260608184329.0BF6C1F00893@smtp.kernel.org>
- <8898fc261aded12d8adf4c5a74cc6bd830072f27.camel@redhat.com>
-In-Reply-To: <8898fc261aded12d8adf4c5a74cc6bd830072f27.camel@redhat.com>
-From: Miguel Ojeda <miguel.ojeda.sandonis@gmail.com>
-Date: Tue, 9 Jun 2026 21:28:10 +0200
-X-Gm-Features: AVVi8CfVgY4o06ZxMCThAreiMyLunTvD8jssVSLsOSZ1KkZvxyFM72Kt74QKoKE
-Message-ID: <CANiq72=_t6wc1mx-AmiOCQKf0i0VvvjFLf29uCBgbgS1PmPU3g@mail.gmail.com>
-Subject: Re: [PATCH v19 1/4] rust: drm: gem: shmem: Add DmaResvGuard helper
-To: lyude@redhat.com, Gary Guo <gary@kernel.org>
-Cc: sashiko-reviews@lists.linux.dev, dri-devel@lists.freedesktop.org, 
-	ojeda@kernel.org
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
+X-ThreadId: AdNNzaliM6k3
+Date: Tue, 09 Jun 2026 21:36:18 +0200
+From: "Arnd Bergmann" <arnd@arndb.de>
+To: "Frank Li" <frank.li@oss.nxp.com>, "Josua Mayer" <josua@solid-run.com>,
+ "sashiko-reviews@lists.linux.dev" <sashiko-reviews@lists.linux.dev>
+Cc: "Conor Dooley" <conor+dt@kernel.org>, "Rob Herring" <robh@kernel.org>,
+ "Frank Li" <Frank.Li@kernel.org>,
+ "devicetree@vger.kernel.org" <devicetree@vger.kernel.org>,
+ "imx@lists.linux.dev" <imx@lists.linux.dev>
+Message-Id: <72087d5c-c6f9-4452-b4bd-a9f086700e62@app.fastmail.com>
+In-Reply-To: <023aa47c-6fbc-486f-b5c7-5145ddf8e8fe@oss.nxp.com>
+References: <20260524-lx2160-pci-v7-1-09370c23b952@solid-run.com>
+ <20260524151347.BD92A1F000E9@smtp.kernel.org>
+ <3528dc91-1ffc-42f9-94ea-a27c6c1d6a50@solid-run.com>
+ <9e6326f6-dad1-4169-a63c-e62ee5b341f2@app.fastmail.com>
+ <023aa47c-6fbc-486f-b5c7-5145ddf8e8fe@oss.nxp.com>
+Subject: Re: [PATCH v7 1/9] arm64: dts: lx2160a-rev2: extend 32-bit, and add 64-bit pci
+ regions
+Content-Type: text/plain
+Content-Transfer-Encoding: 7bit
 
-On Tue, Jun 9, 2026 at 8:19=E2=80=AFPM <lyude@redhat.com> wrote:
+On Tue, Jun 9, 2026, at 20:01, Frank Li wrote:
+> On 6/9/2026 12:24 PM, Arnd Bergmann wrote:
+>> [You don't often get email from arnd@arndb.de. Learn why this is important at https://aka.ms/LearnAboutSenderIdentification ]
+>>>>> -   ranges = <0x81000000 0x0 0x00000000 0x80 0x00010000 0x0 0x00010000
+>>>>> -             0x82000000 0x0 0x40000000 0x80 0x40000000 0x0 0x40000000>;
+>>>>> +   ranges = <0x81000000 0x00 0x00000000 0x80 0x00010000 0x00 0x00010000>, /* 16-Bit IO Window */
+>>>>> +            <0x82000000 0x00 0x40000000 0x80 0x40000000 0x00 0xc0000000>, /* 32-Bit - non-prefetchable */
+>>>>> +            <0xC3000000 0x84 0x00000000 0x84 0x00000000 0x04 0x00000000>; /* 64-Bit - prefetchable - 16GB */
+>>>>
+>>>> If a PCIe device requests a large 32-bit BAR, the kernel might allocate it
+>>>> within this 0x40000000-0xffffffff range. This causes the Root Port's
+>>>> downstream bridge Memory Limit register to be programmed to a value >=
+>>>> 0x80000000.
+>>>>
+>> 
+>> I noticed the same thing while reading through the pull request
+>> for 7.2, and I think the bot message is correct here. The SMMU
+>> does not help here because addresses on the same bus are routed
+>> inside of the PCIe host bridge rather than directed to the host
+>> side. If the non-prefetchable ranges ever get assigned to an
+>> address 0x80000000, this definitely breaks.
 >
-> Looks like the magic 8 ball is either hallucinating or this needs to be
-> added to the documentation, because there's clearly nothing about this
-> in the documentation. Ugh.
+> The address and size is 64bit,
+> 	0x80_40000000..0x80_FFFFFFFF for 32bit non-non-prefetchable
+>          0x84_00000000..0x87_FFFFFFFF for 64bit prefetchable memory
 >
-> If anyone can correct me here let me know, otherwise I just assume
-> hallucination from the hallucination machine
+> AI Bot wrong think it is 32bit address and size.
 
-This is the the prompts we currently have to guide the AI:
+No, this is about the bus address, not the CPU address, and this
+is given as '0x82000000 0x00 0x40000000' above. non-prefetchable
+addresses on PCI are by definition 32-bit, so the middle cell
+is zero.
 
-  https://github.com/masoncl/review-prompts/blob/main/kernel/subsystem/rust=
-.md
+On the CPU side, this is mapped to physical '0x80 0x40000000',
+which does not overlap with CPUs view of RAM, but the
+bus view of 0x40000000-0xffffffff does overlap with the
+DMA address for the lower 2GB of RAM at 0x80000000-0xffffffff.
 
-The goal is to eventually have a single source of truth for this.
-
-Having said that, it is a slight hallucination in the sense that we
-don't say `inline(always)` is "reserved" just for `build_assert!`.
-
-Cc'ing Gary.
-
-I hope that clarifies.
-
-Cheers,
-Miguel
+     Arnd
