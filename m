@@ -1,173 +1,194 @@
-Received: from fhigh-b1-smtp.messagingengine.com (fhigh-b1-smtp.messagingengine.com [202.12.124.152])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-dl1-f47.google.com (mail-dl1-f47.google.com [74.125.82.47])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 347CA40E8D6;
-	Tue,  9 Jun 2026 21:33:58 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=202.12.124.152
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 105FA36F91F
+	for <sashiko-reviews@lists.linux.dev>; Tue,  9 Jun 2026 21:49:52 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=74.125.82.47
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1781040842; cv=none; b=mk7bBuYy3QlUp14XKIE/6lSf4qPJxnaNNdg8wJxA6GKRu1zdrDvqru7Wh/t+H6RAd9a11aIhM4HUI9KBt0FlWyMmgfudQSXRRtOUROieXEmrFO2f1xo1I97Kh3Wv+WEBDC4rnz/kltOTiw0xer7frl09ZEJfcJo3x9VoX1iYAQ0=
+	t=1781041796; cv=none; b=tqdbDdNb8exnLQaEew91L6Vn6hGruM/wt+nInxchIT5L4gaMTt+y1kiudGvzgTWN1QGi2XMwtQX5jxk9lNX5Pb46KEZE+5tnAHdb2oLRF8c4oyP1fPqw1QmIdAsZwB5S9HjSPFb9ay0lrECh0mTgs/ExzroQqsOOyfhTZo4PGqg=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1781040842; c=relaxed/simple;
-	bh=68f3tEJ4RvsPNK6vYyLuZQDHo+BqeYSp+TyfgcMrYgo=;
-	h=MIME-Version:Date:From:To:Cc:Message-Id:In-Reply-To:References:
-	 Subject:Content-Type; b=kISJUNqhZ6brYtAAFzlyH6Azad9ltm8DN7nb8rWhaz33+kuBlgop4vzz9IkcIOPLgMDGOJdBvYr3bV4N65MMidSi+8ikeQJm1OaPyN2yts59J3WJ1woJvozPD0z+S+Zs2uPYf6QpbtKKgvtkfwZvN5szsHsHvK8wDJZ88iOQgFo=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=arndb.de; spf=pass smtp.mailfrom=arndb.de; dkim=pass (2048-bit key) header.d=arndb.de header.i=@arndb.de header.b=Pd1Ib3FO; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=R6V7P8dW; arc=none smtp.client-ip=202.12.124.152
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=arndb.de
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=arndb.de
+	s=arc-20240116; t=1781041796; c=relaxed/simple;
+	bh=rjQq9J4Z9IRuW6j1KbXmx1VYe6G0FqjI1V/g5qaCbdk=;
+	h=Mime-Version:Content-Type:Date:Message-Id:Cc:Subject:From:To:
+	 References:In-Reply-To; b=Z0wu8esj21AQrM+0ggxXiGtiatp85i6yPqAZ5FeWMXMB048TV9xwCMFpOvAGBZkOA1NDpF1D2ziffy0CdctvULNoZE9ouUc7m+tB03voiVz6l2MGpwesYzg2ZVj3wFKxFjbuRph0Lc77LYbvgCGGcjWFNC2a2zH8vJ/ns9y03ug=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=etsalapatis.com; spf=pass smtp.mailfrom=etsalapatis.com; dkim=pass (2048-bit key) header.d=etsalapatis-com.20251104.gappssmtp.com header.i=@etsalapatis-com.20251104.gappssmtp.com header.b=fi4IE1rm; arc=none smtp.client-ip=74.125.82.47
+Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=etsalapatis.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=etsalapatis.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=arndb.de header.i=@arndb.de header.b="Pd1Ib3FO";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="R6V7P8dW"
-Received: from phl-compute-04.internal (phl-compute-04.internal [10.202.2.44])
-	by mailfhigh.stl.internal (Postfix) with ESMTP id 0EE957A0102;
-	Tue,  9 Jun 2026 17:33:57 -0400 (EDT)
-Received: from phl-imap-05 ([10.202.2.95])
-  by phl-compute-04.internal (MEProxy); Tue, 09 Jun 2026 17:33:58 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=arndb.de; h=cc
-	:cc:content-transfer-encoding:content-type:content-type:date
-	:date:from:from:in-reply-to:in-reply-to:message-id:mime-version
-	:references:reply-to:subject:subject:to:to; s=fm3; t=1781040837;
-	 x=1781127237; bh=+sRCkdrKVdlyQZ8syYN2rh2xkRUTq5nCFIqvDcDinYE=; b=
-	Pd1Ib3FO4PiSmnrAeS9uQ29yauC6iHznAf7BzCmh7WCVrHlzjk4NGCydqpIgvTYN
-	MwK9poHmf7i8un5BiodsFYKgtM41yeGPjm5bbxjtCtfECdUdtbxEn2wYrVx/XdKK
-	HVy8JdYNauWp0rD1vC6uHTy/J67flJ56ZSeCln0qOfD6sd3wYcpExMGx7DXCJCZh
-	aa/euOaK6CJ0GNVEauJu6pM9SIzZgCeLfobyplIB+m6KjMcBzZfNqYya0p5l3fN+
-	URgwK9g9vuSAHu/p0Gljti6faudxO/uOuInsPD2KyRNn29apTRKer53ZH09Lh3wd
-	2bnsa/ouw5dJDYp1t9bh3Q==
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
-	messagingengine.com; h=cc:cc:content-transfer-encoding
-	:content-type:content-type:date:date:feedback-id:feedback-id
-	:from:from:in-reply-to:in-reply-to:message-id:mime-version
-	:references:reply-to:subject:subject:to:to:x-me-proxy
-	:x-me-sender:x-me-sender:x-sasl-enc; s=fm1; t=1781040837; x=
-	1781127237; bh=+sRCkdrKVdlyQZ8syYN2rh2xkRUTq5nCFIqvDcDinYE=; b=R
-	6V7P8dWVy4GCkvfMHYyrywk5IxBqJ7vKXmGRHbjwrm/9qrJReikja0NzXaZKWW/Q
-	AaJ/N/RHfou9hCLmn3fTjQaKdBpDGUw61kP6rIN7+7rxGr1q9ZDAIfw6S3KP08o9
-	xjdanfNcvokZ6vGZIlcAOtYbytWh0pRe0vVicrfjCcUzG58nA49a+JLHGTSV1OtU
-	DHJ4Y2t9esOoXBa0hDp9rT/c6mgecr7GAf7TfzVfbozx9DH/T8rkkyR/qFvD2VkJ
-	Zw2TpapU9pijGkJDzngWOZSrY0pZLFuVHKkvmemX5i/zwH2vSXLPIlOg/DvSOzyE
-	jR7xDDzb2ZTY/TB8MFhmQ==
-X-ME-Sender: <xms:xYYoasF5f6yrdL3l26okGCQnoEV8LwHJ3PX_nltg41vC-LF-ARD_vw>
-    <xme:xYYoagIRJXHU17ikNyouazka3T8iBasji88Gfk_3rr0T3W89sXUONRwuGJ-y7mOj4
-    dciJ7tRW9jGZGgaKdiqWZiSlW7X8LnumMyLccCk13hYY1VOo9ioKZM>
-X-ME-Proxy-Cause: dmFkZTFWzSg71zkyjntcC2C9AKF5dP6OKh4y9HMUPW4f3E8wrowKdqoNyvD8um0m/bREkn
-    BNWaoGUUofvXeJTf/+ZngisWfcSwHlFTr9rOSL4Wa7i1COKhx8RvniqHB9GGKOjYg6fZ8d
-    dk26+cfKTH8OZe6+6NjqH2BSKK0nIwrZAwqYU2GUnjC9w4Z/W9QR5i1ELE22tJUL4NTp23
-    iG2QyNqwSvcFEpoftIbd+v72TBgGBSckXfrYtbqv10sOknEBNkM97hpiSWUIakpS2tmRYM
-    ZY2DVwf0hPXRY+nIuyfHw10xa1l5HU69x8plAJmEyiGOPi8F4kgu+nYGBNhb2TQiGgjMal
-    LnUrSISkMxbjiRzqhf52phK3PNrv0mXw1zjRE2hYNjNoXcqbHLRKVKb8pGf3yf3yczZaUO
-    GcO4AD9Vh6D3Q4D13GYuMV+c9QoVOI8RxqZog6t+aHRdZamP2ArAqdN//kps577rBJh1VY
-    5hTbuLI3UnvTV1otozyMRUrmVoXoz3qnkp1wO8eCDuvJKdBtpS0tF5W6JJozrcFoM15rdj
-    PoFQNWSgl9ZmxKeZ3pXVePLSMBfN0Bb/QQnOla0N1r2xQHZStsn3JLsilurs9noMYCWkqs
-    QUCqq3jP5h0iRtUjZyfBsLJ/X19ijY7RATwqU1IvcbvKTx3ANcf2psWz2kVg
-X-ME-Proxy: <xmx:xYYoaghHz8ho0W3Y-fGYYUJ_1PBZBlGjeicVgnV-4ZtNuFy3buLOFw>
-    <xmx:xYYoat8j_zLTGxvJ42mmjxBBcDZwi7V_KS49RtvocPV4gVs3NAUVKQ>
-    <xmx:xYYoasXP8OU_5P3nq2nHUeYYOK0h-HIPV1DCe0dI2hTL7NwKiGdKkA>
-    <xmx:xYYoahArcbN5Smper6RHEi4gYus6u79pMDxYS1Ff3orFDRm846900A>
-    <xmx:xYYoapSbn4UzF6Ful1hhyhPfca9sM_O78Gv7c8IEaXBGT0SRJ1TyrZvc>
-Feedback-ID: i56a14606:Fastmail
-Received: by mailuser.phl.internal (Postfix, from userid 501)
-	id 4FDA11820086; Tue,  9 Jun 2026 17:33:57 -0400 (EDT)
-X-Mailer: MessagingEngine.com Webmail Interface
+	dkim=pass (2048-bit key) header.d=etsalapatis-com.20251104.gappssmtp.com header.i=@etsalapatis-com.20251104.gappssmtp.com header.b="fi4IE1rm"
+Received: by mail-dl1-f47.google.com with SMTP id a92af1059eb24-13827115452so345372c88.0
+        for <sashiko-reviews@lists.linux.dev>; Tue, 09 Jun 2026 14:49:52 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=etsalapatis-com.20251104.gappssmtp.com; s=20251104; t=1781041792; x=1781646592; darn=lists.linux.dev;
+        h=in-reply-to:references:to:from:subject:cc:message-id:date
+         :content-transfer-encoding:mime-version:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=Ykgrngf0RMYTi2ZIUhUxKrQbnkWLDpe8Dsbbr92vEWs=;
+        b=fi4IE1rmabm5pg7fdNUt1gAWrB7ykiLjtAsBnoAjb5bKiyZRE0H7FT9ad2JbVUfbns
+         rvM2LHyVBKBx0a2A4VsTwTuvUK0jCkKce5bmnvFKAo3QDAxvnQb9En1FOBOZKU4lmw4T
+         L8NHrNDO3IPIauAGys9TuRqFzctNOzuwSGq6TJl3XEJ5Fuw1zrvpahnb3tWChlHrK7lo
+         CjQee7WJ/vyIeAN5vZjTrN9TxLxD4iiI+6tGiY1aVSR87YldcHfBG024FSEFEdOVHMsx
+         G5Gufe7dc7jM7NbBE+pxYVynFiMxrn7PEjvdHBsuqFiwXw+/5fQOosvn/jV1yiiYGORZ
+         F8pA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20251104; t=1781041792; x=1781646592;
+        h=in-reply-to:references:to:from:subject:cc:message-id:date
+         :content-transfer-encoding:mime-version:x-gm-gg:x-gm-message-state
+         :from:to:cc:subject:date:message-id:reply-to;
+        bh=Ykgrngf0RMYTi2ZIUhUxKrQbnkWLDpe8Dsbbr92vEWs=;
+        b=J5CKEHzooazjZphp8pD42DfHdV3G8wGRdAFX7pvqmqtX3M6d+uovN5DbOuF5rnYY/A
+         bXpeA6bd8ZiDBbyoGYRReJ4Qo4q7CMoIAQq1tyAR5Faofwl7caNW+GPSuVaX6rmXkfC4
+         IhAmVKb30rNqaPswMCcUApOKAghoFXzXjXtQHGe4GEldGoRsU90C4rVVMzYGzKPvnO9/
+         nq6TFkF9Wum7UFaeAxwxa7s7WMsjiUnA7Zdd0jwkqpnVpiO/wOWajtec6cqEZHG6L0Wr
+         ua4tVL5z/BO0y/8c3P3CtNQM4Hjn+5ICQpFnO6Lh5cy6WDgv4LAOnLUalH1qcoQqLkDB
+         CHbA==
+X-Gm-Message-State: AOJu0YzPTyuiw4M+/VKQxbrVbZyiFRneZ6IaaV090Qiwj1VjMzBSg3Mj
+	6TEQtCXF31V0e3bLaBXZXw3Xr7wV83t8DyNWYjtILk9oQArq3OordGkIkyJkY7sbX6N66GCBpiy
+	6gqmh+JQGNg==
+X-Gm-Gg: Acq92OEn5bNQ3uYrQICBdMFpr+azCyN4sEkHhgx5dLA60JiO8hS2mA5hhxrJHIGS2V5
+	iCZu/I//EXNgrYDu8W4z2kGL3fQ5/jXRWYxqYigf2g8yYv2gIY6EKx40VpIHINNxGXYeYFM4C+2
+	NNHkjA0rbv+HDKDUDck/EVBhm6JIXHk6dbqmLAr0bLsD887B1RaYT16IKyCol/xbWVlcpuzA00g
+	X8EVDCQMJOEseFHoLaQV58qOd+KuJr0M1p9YhTVDeHjVuRiD6F/TIMOByVMGF8ayFUD97qxPqf/
+	CnzBIHMhnk9p8D9+ZuDGDXQ0oIs4/mkCEyHVoSS0CJvNP7oxHiO4ZyxgpKtcNHH5R9CJz77DVzx
+	K5pTjRO+9a9AqeDVixuc6j5gGHE2AHQNBJj+GYox9bYyhKabFTxSIIYY9fUYlGHL09oAnHkxxZe
+	9cywShHaL9lJmxcFk=
+X-Received: by 2002:a05:7301:2923:b0:2ed:e12:3773 with SMTP id 5a478bee46e88-3077b38a42fmr14652456eec.35.1781041791712;
+        Tue, 09 Jun 2026 14:49:51 -0700 (PDT)
+Received: from localhost ([2620:10d:c090:600::3297])
+        by smtp.gmail.com with ESMTPSA id 5a478bee46e88-3074df9bbd4sm20804510eec.30.2026.06.09.14.49.50
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Tue, 09 Jun 2026 14:49:51 -0700 (PDT)
 Precedence: bulk
 X-Mailing-List: sashiko-reviews@lists.linux.dev
 List-Id: <sashiko-reviews.lists.linux.dev>
 List-Subscribe: <mailto:sashiko-reviews+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:sashiko-reviews+unsubscribe@lists.linux.dev>
-MIME-Version: 1.0
-X-ThreadId: AdNNzaliM6k3
-Date: Tue, 09 Jun 2026 23:31:44 +0200
-From: "Arnd Bergmann" <arnd@arndb.de>
-To: "Frank Li" <frank.li@oss.nxp.com>, "Josua Mayer" <josua@solid-run.com>,
- "sashiko-reviews@lists.linux.dev" <sashiko-reviews@lists.linux.dev>
-Cc: "Conor Dooley" <conor+dt@kernel.org>, "Rob Herring" <robh@kernel.org>,
- "Frank Li" <Frank.Li@kernel.org>,
- "devicetree@vger.kernel.org" <devicetree@vger.kernel.org>,
- "imx@lists.linux.dev" <imx@lists.linux.dev>
-Message-Id: <753fca23-c3eb-45e3-aeac-b7b248fa723a@app.fastmail.com>
-In-Reply-To: <48248207-7b4f-43c9-85e9-64e8440fab10@oss.nxp.com>
-References: <20260524-lx2160-pci-v7-1-09370c23b952@solid-run.com>
- <20260524151347.BD92A1F000E9@smtp.kernel.org>
- <3528dc91-1ffc-42f9-94ea-a27c6c1d6a50@solid-run.com>
- <9e6326f6-dad1-4169-a63c-e62ee5b341f2@app.fastmail.com>
- <023aa47c-6fbc-486f-b5c7-5145ddf8e8fe@oss.nxp.com>
- <72087d5c-c6f9-4452-b4bd-a9f086700e62@app.fastmail.com>
- <48248207-7b4f-43c9-85e9-64e8440fab10@oss.nxp.com>
-Subject: Re: [PATCH v7 1/9] arm64: dts: lx2160a-rev2: extend 32-bit, and add 64-bit pci
- regions
-Content-Type: text/plain
-Content-Transfer-Encoding: 7bit
+Mime-Version: 1.0
+Content-Transfer-Encoding: quoted-printable
+Content-Type: text/plain; charset=UTF-8
+Date: Tue, 09 Jun 2026 17:49:49 -0400
+Message-Id: <DJ4UMEV0NQE2.14XTJKL239Z4Y@etsalapatis.com>
+Cc: <bpf@vger.kernel.org>
+Subject: Re: [PATCH bpf] bpf, sockmap: fix integer overflow in
+ bpf_msg_pop_data() bounds check
+From: "Emil Tsalapatis" <emil@etsalapatis.com>
+To: <sashiko-reviews@lists.linux.dev>, "Sechang Lim" <rhkrqnwk98@gmail.com>
+X-Mailer: aerc 0.21.0-0-g5549850facc2
+References: <20260609183927.4021802-1-rhkrqnwk98@gmail.com>
+ <20260609185257.A09111F00893@smtp.kernel.org>
+In-Reply-To: <20260609185257.A09111F00893@smtp.kernel.org>
 
-On Tue, Jun 9, 2026, at 22:34, Frank Li wrote:
-> On 6/9/2026 2:36 PM, Arnd Bergmann wrote:
->> On Tue, Jun 9, 2026, at 20:01, Frank Li wrote:
->>> On 6/9/2026 12:24 PM, Arnd Bergmann wrote:
->>>> [You don't often get email from arnd@arndb.de. Learn why this is important at https://aka.ms/LearnAboutSenderIdentification ]
->>>>>>> -   ranges = <0x81000000 0x0 0x00000000 0x80 0x00010000 0x0 0x00010000
->>>>>>> -             0x82000000 0x0 0x40000000 0x80 0x40000000 0x0 0x40000000>;
->>>>>>> +   ranges = <0x81000000 0x00 0x00000000 0x80 0x00010000 0x00 0x00010000>, /* 16-Bit IO Window */
->>>>>>> +            <0x82000000 0x00 0x40000000 0x80 0x40000000 0x00 0xc0000000>, /* 32-Bit - non-prefetchable */
->>>>>>> +            <0xC3000000 0x84 0x00000000 0x84 0x00000000 0x04 0x00000000>; /* 64-Bit - prefetchable - 16GB */
->>>>>>
->>>>>> If a PCIe device requests a large 32-bit BAR, the kernel might allocate it
->>>>>> within this 0x40000000-0xffffffff range. This causes the Root Port's
->>>>>> downstream bridge Memory Limit register to be programmed to a value >=
->>>>>> 0x80000000.
->>>>>>
->>>>
->>>> I noticed the same thing while reading through the pull request
->>>> for 7.2, and I think the bot message is correct here. The SMMU
->>>> does not help here because addresses on the same bus are routed
->>>> inside of the PCIe host bridge rather than directed to the host
->>>> side. If the non-prefetchable ranges ever get assigned to an
->>>> address 0x80000000, this definitely breaks.
->>>
->>> The address and size is 64bit,
->>>        0x80_40000000..0x80_FFFFFFFF for 32bit non-non-prefetchable
->>>           0x84_00000000..0x87_FFFFFFFF for 64bit prefetchable memory
->>>
->>> AI Bot wrong think it is 32bit address and size.
->> 
->> No, this is about the bus address, not the CPU address, and this
->> is given as '0x82000000 0x00 0x40000000' above. non-prefetchable
->> addresses on PCI are by definition 32-bit, so the middle cell
->> is zero.
->> 
->> On the CPU side, this is mapped to physical '0x80 0x40000000',
->> which does not overlap with CPUs view of RAM, but the
->> bus view of 0x40000000-0xffffffff does overlap with the
->> DMA address for the lower 2GB of RAM at 0x80000000-0xffffffff.
+On Tue Jun 9, 2026 at 2:52 PM EDT, sashiko-bot wrote:
+> Thank you for your contribution! Sashiko AI review found 2 potential issu=
+e(s) to consider:
 >
-> This is pci TLP bus address, which will not appear in internal fabric at
-> all.  That is PCI TLP address, which is totally separated addr space and 
-> can be any address.
+> Pre-existing issues:
+> - [High] Unbounded `len` parameter in `bpf_msg_push_data` causes a 32-bit=
+ integer overflow when calculating the page allocation size (`copy + len`),=
+ resulting in an out-of-bounds heap write.
+> - [High] Incorrect scatterlist element offset calculation when splitting =
+an element in `bpf_msg_push_data` inflates the page offset, leading to out-=
+of-bounds memory accesses.
+> --
 >
->
->         in SOC                                  |  PCB boards rx/tx
-> ==================================================================
-> CPU address                 PCI controller     |   PCI bus
-> 80_40000000..0x80_FFFFFFFF    ATU              |    0x4000_0000
->
-> writel(80_40000000), PCIe controller will convert to 0x4000_0000 and
-> sendout TLP package memw addr 0x4000_0000, which already go out SoC. EP 
-> device like wifi, will decode 0x4000_0000 to do related work.
->
-> In side SoC, no one can see tlp:0x4000_0000, which only visual by PCI EP
-> devices, which means only connect EP device decode this address.
->
-> Additional information:
-> In bound address space (from EP to RC) is not controlled by ranges, but
-> dma-ranges.
+> commit 619f5b1d1aebdbd6457c3ac6e3a92bc45be7278c
+> Author: Sechang Lim <rhkrqnwk98@gmail.com>
 
-The scenario I'm describing is a device initiated TLP that is directed
-at memory in the first 4GiB of addresses, e.g. 0x8000_0000.  If any
-PCIe function on the same host bridge has a non-prefetchable BAR
-assigned to 0x8000_0000, the transfer should normally hit this
-BAR as a P2P transfer, unless ACS forces the transfer out towards
-the IOMMU.
+The change seems solid, the error is apparent from code inspection
+alone (though a repro wouldn't hurt). Can you also turn pop from an int
+to a u32? It should never be negative AFAICT, and we assign to it from
+a u32 so since we're fixing int types...
 
-If ACS is guaranteed to always be enabled on this machine, it's
-probably fine, as that would route (intentional) P2P transfers through 
-the IOMMU, which can remap the destination BAR to an available
-bus address.
+>
+> bpf, sockmap: fix integer overflow in bpf_msg_pop_data() bounds check
+>
+> start and len are u32, so start + len evaluates in 32-bit and wraps befor=
+e
+> storing it in last. The bounds check can then be passed with an out-of-ra=
+nge
+> start/len.
+>
+>> diff --git a/net/core/filter.c b/net/core/filter.c
+>> index 9590877b0714f..31467c0b4279e 100644
+>> --- a/net/core/filter.c
+>> +++ b/net/core/filter.c
+>> @@ -2974,7 +2974,7 @@ BPF_CALL_4(bpf_msg_pop_data, struct sk_msg *, msg,=
+ u32, start,
+>>  	   u32, len, u64, flags)
+>>  {
+>>  	u32 i =3D 0, l =3D 0, space, offset =3D 0;
+>> -	u64 last =3D start + len;
+>> +	u64 last =3D (u64)start + len;
+>
+> [Severity: High]
+> This isn't a bug introduced by this patch, but while fixing the integer
+> overflow in bpf_msg_pop_data(), could a similar overflow occur in
+> bpf_msg_push_data()?
+>
+> Looking at net/core/filter.c:bpf_msg_push_data(), both copy and len are u=
+32:
+>
+> 	page =3D alloc_pages(__GFP_NOWARN | GFP_ATOMIC | __GFP_COMP,
+> 			   get_order(copy + len));
+>
 
-    Arnd
+This seems like a valid concern. Can you add it to the patch? Making
+copy a u64 should do it.
+
+> If a large len is provided, copy + len could wrap around to a small value=
+,
+> resulting in a much smaller allocation than required.
+>
+> Later in the same function:
+>
+> 			to =3D raw + front + len;
+>
+> 			memcpy(to, from, back);
+>
+> Since len is zero-extended to a 64-bit pointer offset, to evaluates to an
+> address far outside the allocated page. Could this result in an out-of-bo=
+unds
+> write if a BPF program provides a maliciously large len?
+>
+
+As for hte other:
+
+> [Severity: High]
+> This is another pre-existing issue in bpf_msg_push_data(), but does the
+> scatterlist element split calculate the offset correctly?
+>
+> When splitting an element into psge and rsge:
+>
+> 		psge->length =3D start - offset;
+> 		rsge.length -=3D psge->length;
+> 		rsge.offset +=3D start;
+>
+> Is start the absolute byte offset from the beginning of the entire messag=
+e?
+
+It is.
+
+> If the split element is not the first one in the message, wouldn't rsge.o=
+ffset
+> be inflated by the cumulative length of all previous elements instead of =
+the
+> relative offset (start - offset)?
+
+It does, this seems like a real bug. AFAICT the offset of rsge should be=20
+
+rsge.offset =3D start + len.
+
+Can you confirm and add to the next version?
+
+>
+> When the network stack eventually reads or writes to this element via sg_=
+virt(),
+> could this cause an out-of-bounds access past the end of the physical pag=
+e?
+
+
+>
+>>  	int pop;
+>> =20
+>>  	if (unlikely(flags))
+
