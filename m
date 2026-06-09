@@ -1,299 +1,186 @@
-Received: from casper.infradead.org (casper.infradead.org [90.155.50.34])
+Received: from mx0a-0031df01.pphosted.com (mx0a-0031df01.pphosted.com [205.220.168.131])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C6B9C36F41C;
-	Tue,  9 Jun 2026 16:14:05 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=90.155.50.34
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8A28B37C107
+	for <sashiko-reviews@lists.linux.dev>; Tue,  9 Jun 2026 16:25:21 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.168.131
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1781021649; cv=none; b=hUykCkRdx39Uzx/XanDyepwDHx958HsG805oPdQxTeznY8Zag6k6npiUOvHOUrYICSw/WrTks8z7ySkGekgCE7HdoHYfIKw7zhWjHzKzstbQ4eW1aZGj05vVUPCtN25hnig2ZD8pV3KiHGTkOxgrDI60u8AqYpre9tceRhH93UE=
+	t=1781022322; cv=none; b=U8x1CGLRV78pbjymORAplFodUicnlORYYYn6PwY4iqi1I9KPeersGEyrisvyIzzkrLCkM2Hi4yAYdW/+0/iWIQcVvThxCyItEAWkej7oIKfDFRf5OBmHyXw3HLszPY3sL8iCo84xhgfuWUqKDlJlSN03sUfuzelO6+v6S3lGzQc=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1781021649; c=relaxed/simple;
-	bh=hEGIYmg99T959Mj+q/QmmbCVht/dFQK7i6Smhw3uozE=;
-	h=Message-ID:Subject:From:To:Cc:Date:In-Reply-To:References:
-	 Content-Type:MIME-Version; b=YP9liG9PHUaKZBCz6lpl8B6bvtA5zu+EARoDC12827TLpnizAiFoI82V3E+OVU1i6G3b8bGcJx+K/5b+QcYEjm67WIvkSX8kxns0xaJFGA5KWWlFqMy2rb0o8mmMwaLeg2Xch+Qk4dLNNvkJw9OeCoKmFbZJUE2NeejJrbaYCuI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=infradead.org; spf=none smtp.mailfrom=casper.srs.infradead.org; dkim=pass (2048-bit key) header.d=infradead.org header.i=@infradead.org header.b=epRW6HV6; arc=none smtp.client-ip=90.155.50.34
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=infradead.org
-Authentication-Results: smtp.subspace.kernel.org; spf=none smtp.mailfrom=casper.srs.infradead.org
+	s=arc-20240116; t=1781022322; c=relaxed/simple;
+	bh=zle7y3M4QVODtmVpss10Mqe3V9cSUnTbYMWNvBDGhWU=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=GbTlV0tc+I6H5wl+Nz+T5bSxcR81y2Ef10JB3dLuogT1faFKWfEuU2f+zKnJCoaccpLiPL5CXd/BFRtpABhxdnCPVoV/sKEJN1BecIw7FppMXBrpUYFn6SQiZ8SF9AenaCYg84Pa8qYAxC58b7KdqH6DkWTqV5G9Gof1cSit2qU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com; spf=pass smtp.mailfrom=oss.qualcomm.com; dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b=d2VCpcjM; dkim=pass (2048-bit key) header.d=oss.qualcomm.com header.i=@oss.qualcomm.com header.b=bjIGu48N; arc=none smtp.client-ip=205.220.168.131
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=oss.qualcomm.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=infradead.org header.i=@infradead.org header.b="epRW6HV6"
-DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed;
-	d=infradead.org; s=casper.20170209; h=MIME-Version:Content-Type:References:
-	In-Reply-To:Date:Cc:To:From:Subject:Message-ID:Sender:Reply-To:
-	Content-Transfer-Encoding:Content-ID:Content-Description;
-	bh=FG9ACw88AF4qrzNjpLIHq5swESHvtf5TUmSvHSTULSw=; b=epRW6HV63WxnKwjXgdsSHbN51f
-	kCnmMQNyR5QVnnNHSq9aX29CyuvC3X4+WNqtfqDhP/wf4CKvohCWqqpH9hrqO1UAjiz0SstUITTvV
-	v3JaJZGd3ZLvaKjQ9mxkRr7SMfLBtBprzFrYhPlfphfeK7G8NV6UpHPWqTziHM2eFpiJ6mUCr/eTJ
-	iND45liugGPBHwd0gy7BN+DIVGAv1R4DSd+mTTGMGkDJ4emHtYHYtmoVlRiPLcGPU8nKCCa6y6Q1u
-	Gb5wrIPiB188jbN34J3sReyFWQ4zjVC98qW5d9/VLsnyB3v/GDKUaOlYDChWyV9mkS8iIOVJK7h0u
-	bHNdvxpQ==;
-Received: from [2001:8b0:10b:5:6142:9ddd:3a45:5d21] (helo=u09cd745991455d.ant.amazon.com)
-	by casper.infradead.org with esmtpsa (Exim 4.99.1 #2 (Red Hat Linux))
-	id 1wWz5W-0000000G0cY-49WB;
-	Tue, 09 Jun 2026 16:14:03 +0000
-Message-ID: <58c5a521b94e8d90e101602cfe160d1fb128a5dd.camel@infradead.org>
-Subject: Re: [PATCH v5 07/34] KVM: x86: Activate master clock immediately on
- vCPU creation
-From: David Woodhouse <dwmw2@infradead.org>
-To: sashiko-bot@kernel.org
-Cc: kvm@vger.kernel.org, sashiko-reviews@lists.linux.dev
-Date: Tue, 09 Jun 2026 17:14:02 +0100
-In-Reply-To: <c1f6ae6779d6475d6ad86a6a721a1ae080dad015.camel@infradead.org>
-References: <c1f6ae6779d6475d6ad86a6a721a1ae080dad015.camel@infradead.org>
-Content-Type: multipart/signed; micalg="sha-256"; protocol="application/pkcs7-signature";
-	boundary="=-60Y8BU3YYwhTLPRhBNp4"
-User-Agent: Evolution 3.60.3 
+	dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b="d2VCpcjM";
+	dkim=pass (2048-bit key) header.d=oss.qualcomm.com header.i=@oss.qualcomm.com header.b="bjIGu48N"
+Received: from pps.filterd (m0279866.ppops.net [127.0.0.1])
+	by mx0a-0031df01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id 659GOACO2748434
+	for <sashiko-reviews@lists.linux.dev>; Tue, 9 Jun 2026 16:25:21 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=qualcomm.com; h=
+	cc:content-type:date:from:in-reply-to:message-id:mime-version
+	:references:subject:to; s=qcppdkim1; bh=XMoLKRw5r6fZppx05VZeAYkl
+	8r/wHRIiOFUZe20opBg=; b=d2VCpcjMPL29RzdhADlJJFcHK5ZHD9wjqNuszUYA
+	QZO1+JS3hHEwkypjo/6mnEtnvG3isDt8fiW0R6DR+zEpre3CFKf21jHGHu9oVeaj
+	5L4oYZIYbZ8w4qX++9AqPR44qOXfhI0IhPZf65ZWkgSKy3PlT+6lrclFefVfLQ9F
+	ajLGuUlQgiVw6JXjNYKiOJKpfDFDADtttZgisn8iouNkSTwQ9D1sAtJVLxKFAl4u
+	PpnkKi0zNSviSLXIPsUrlTSIXzsGgVOUicCKundRma6OmvVJU+NNLZettNbo+o3H
+	F8SePkB6FenZcYgoEFOD388w2pwk31nNMW8fl2PhreSuSQ==
+Received: from mail-pg1-f200.google.com (mail-pg1-f200.google.com [209.85.215.200])
+	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 4epdeetugd-1
+	(version=TLSv1.3 cipher=TLS_AES_128_GCM_SHA256 bits=128 verify=NOT)
+	for <sashiko-reviews@lists.linux.dev>; Tue, 09 Jun 2026 16:25:20 +0000 (GMT)
+Received: by mail-pg1-f200.google.com with SMTP id 41be03b00d2f7-c8581f7723aso3333242a12.0
+        for <sashiko-reviews@lists.linux.dev>; Tue, 09 Jun 2026 09:25:20 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=oss.qualcomm.com; s=google; t=1781022320; x=1781627120; darn=lists.linux.dev;
+        h=in-reply-to:content-disposition:mime-version:references:message-id
+         :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
+        bh=XMoLKRw5r6fZppx05VZeAYkl8r/wHRIiOFUZe20opBg=;
+        b=bjIGu48Ns3zjRXrfRYxpEhIvGW+9kinsZ+usW9/bTHi+E3D1UvavkTcLHO+uMKMoR6
+         opkOurB1ScZ+sUsRFOrtwfNlWzkWzaLcHi2GCo4MbNKmWvw34njUVPdLiTnEE9DW4EnO
+         g1ck3RTqV2WvDbG5spJiWQFb8UHd5u8+L6bi2HDc36ZJpVvHNmCtQie+0DEdIbMhaTNP
+         TNcmf6hjaUk9TX5QJHc3nbFd01GnQ7JyrGAIS9p3yVT82nOZeWvtTDHur3oAxkqqLw0b
+         f/OYThFRUisXhGvBS2rykVgFArw29Brf8hXTFgvuDriD30SuXE/gFsWY+xZCydvxCCeR
+         BwZw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20251104; t=1781022320; x=1781627120;
+        h=in-reply-to:content-disposition:mime-version:references:message-id
+         :subject:cc:to:from:date:x-gm-gg:x-gm-message-state:from:to:cc
+         :subject:date:message-id:reply-to;
+        bh=XMoLKRw5r6fZppx05VZeAYkl8r/wHRIiOFUZe20opBg=;
+        b=paOw44RkhLPa5Xq+g/pU0RRqWEGzq1vbQmakw1cv0CxRXui5mQAOmMm990K04xeLbl
+         BH9BU0exEUMILD1Dv0WxbL4nmK/ZPUYs7wMM+tihodYoW/lEMbB5OUSFOCWAmq+t22Mo
+         rCmVnCddRB6cQczL3j9RCBF9k/bmJ6iiQmpvj5HP6cAFdgcutUxq72VtoTLsbynZ5O6p
+         M82NT8J43D4qITrXLKUM99Wt9G/lN0g/BmSdPvpq9tyjRs11LOA8JVdb0rWm95DAIUjn
+         AfC2qtUUc63xKmc7m/Em1udSDptCHbKFvYMMXcRhsj0xPve91AW0TXlT2aJKv4t4kocK
+         l7Zg==
+X-Gm-Message-State: AOJu0YzteL/e6QxY8yJVN9fhtow7Vbu0qz/8iagfKdNYLvrUYEGX0K4X
+	OqeCdvN+bOKrPeJ7Y3nqEcfZXGD3QUPgbuppKtCqjDKAkcF+QpD6eWXZuv0E6Ial7wmLJDPJzWV
+	jtEiuhBxo+9QiwHMRsw0oWjcJfd4dldHdxLdynjF3zawjzXXOz1WMLJE1+a683vHvJj6eXJw=
+X-Gm-Gg: Acq92OFs5Z2gvlk5Lp95pcReUykq2pPlFcZnRld4ldN1c7olqJ4og23G7QMNjT8oXaE
+	wNnqPpWGKvtVyXg8R0U8LQdR8pD+rmoqU3Fhnx6xJ7KrifiNC5T70Jo6sS5DjIESx5LM5/F38nj
+	VI3m12V/kJ2eF/gq/SST6BpP5+ny7cWToqNQwl/62/wQkv+zrhCAx1iQzMYhFTNlN57YX2eK82I
+	bp0rjglp/Z1AyprTTTsbl2ZWkIHOOm0uhKUs6gpLVPQKmQwA0yt+EpWfrCPVnhRuVUC/IoHi4pq
+	RBTuEyXnINGjdOd4QyEVh2CY+k83y12DUOeNs+e4t2NB7+un2ew9t/XsXE3MTQQdw/0gjqASjky
+	2ZT3X3z5c2QuzpbvV7cwObe4Rcci3Yru6x+neT4LsZ7Op1uW9WbroOxYKKQU=
+X-Received: by 2002:a05:6a20:12d5:b0:3b4:895f:6ac8 with SMTP id adf61e73a8af0-3b4ccd1b4f2mr26166670637.3.1781022319971;
+        Tue, 09 Jun 2026 09:25:19 -0700 (PDT)
+X-Received: by 2002:a05:6a20:12d5:b0:3b4:895f:6ac8 with SMTP id adf61e73a8af0-3b4ccd1b4f2mr26166599637.3.1781022319240;
+        Tue, 09 Jun 2026 09:25:19 -0700 (PDT)
+Received: from hu-mojha-hyd.qualcomm.com ([202.46.23.25])
+        by smtp.gmail.com with ESMTPSA id 41be03b00d2f7-c85df0a61b3sm19162834a12.17.2026.06.09.09.25.17
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Tue, 09 Jun 2026 09:25:18 -0700 (PDT)
+Date: Tue, 9 Jun 2026 21:55:14 +0530
+From: Mukesh Ojha <mukesh.ojha@oss.qualcomm.com>
+To: Rob Herring <robh@kernel.org>
+Cc: sashiko-reviews@lists.linux.dev, devicetree@vger.kernel.org,
+        conor+dt@kernel.org
+Subject: Re: [PATCH v2 14/24] arm64: dts: qcom: sm4450: Reduce OS PDC DRV
+ span to 0x10000
+Message-ID: <20260609162514.2jwiar6wodlyy6cw@hu-mojha-hyd.qualcomm.com>
+References: <20260527094333.2311731-15-mukesh.ojha@oss.qualcomm.com>
+ <20260527095343.9192E1F000E9@smtp.kernel.org>
+ <20260602163821.GA464439-robh@kernel.org>
 Precedence: bulk
 X-Mailing-List: sashiko-reviews@lists.linux.dev
 List-Id: <sashiko-reviews.lists.linux.dev>
 List-Subscribe: <mailto:sashiko-reviews+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:sashiko-reviews+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-X-SRS-Rewrite: SMTP reverse-path rewritten from <dwmw2@infradead.org> by casper.infradead.org. See http://www.infradead.org/rpr.html
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <20260602163821.GA464439-robh@kernel.org>
+X-Authority-Analysis: v=2.4 cv=H+DrBeYi c=1 sm=1 tr=0 ts=6a283e70 cx=c_pps
+ a=oF/VQ+ItUULfLr/lQ2/icg==:117 a=ZePRamnt/+rB5gQjfz0u9A==:17
+ a=kj9zAlcOel0A:10 a=FelO9ux0wxsA:10 a=s4-Qcg_JpJYA:10
+ a=VkNPw1HP01LnGYTKEx00:22 a=u7WPNUs3qKkmUXheDGA7:22 a=YMgV9FUhrdKAYTUUvYB2:22
+ a=VwQbUJbxAAAA:8 a=EUspDBNiAAAA:8 a=_blq5yYnQAhNC7mzMlwA:9 a=CjuIK1q_8ugA:10
+ a=3WC7DwWrALyhR5TkjVHa:22
+X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwNjA5MDE1NSBTYWx0ZWRfX4pAdMPzBYAV8
+ NgqfYcGv3CbbcJCoq0rvAxej28fvZNNLIwcaOGp0MCXafJsYz5j7hFZQ8h7QnqEjNrUlQoSKD83
+ of0IkOS21abroBgs8gvKgaXC/sEg5ais3U6xOlVIrvZ0428c7XWiRkDq2qHZ5CieVA+mX+poiLJ
+ QVza7GbwX4grD7gYNdYaVShh/OdQBPSpz7MeEOvFcJ7qMxIz/Lv5TJ2pa1u32LXvsbPyrwaYH59
+ z7DHFMkB8O4tmX48ZIHaLrzT0GQ2yv9VwsBXcCJ/x+KfaT8kQC+HevWveZz5YjYh4ZInX24GXNk
+ GV9ADqnGYW9exlQ31+YOgGMqhzMZi/jJykmy+i83tBvmRJTwCsPqdyYvYikSPK0AErUzZcVAZJe
+ ikPJqPiv3a6uyCbKyn0PR3hDN7FECqW0eGGTb6sOT1hd2fz5twtp26tKW/q6ad8qgUmCQ/lJsO/
+ hMhkjIQQSA3LAY3xC3Q==
+X-Proofpoint-ORIG-GUID: pDDqUuRGphNwvSff9ely8hM95TWYLAJf
+X-Proofpoint-GUID: pDDqUuRGphNwvSff9ely8hM95TWYLAJf
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.293,Aquarius:18.0.1143,Hydra:6.1.125,FMLib:17.12.100.49
+ definitions=2026-06-09_04,2026-06-09_02,2025-10-01_01
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
+ suspectscore=0 bulkscore=0 clxscore=1011 adultscore=0 malwarescore=0
+ spamscore=0 lowpriorityscore=0 priorityscore=1501 impostorscore=0
+ phishscore=0 classifier=typeunknown authscore=0 authtc= authcc=
+ route=outbound adjust=0 reason=mlx scancount=1 engine=8.22.0-2605210000
+ definitions=main-2606090155
 
+On Tue, Jun 02, 2026 at 11:38:21AM -0500, Rob Herring wrote:
+> On Wed, May 27, 2026 at 09:53:42AM +0000, sashiko-bot@kernel.org wrote:
+> > Thank you for your contribution! Sashiko AI review found 1 potential issue(s) to consider:
+> > - [Medium] Reducing the `reg` span to 0x10000 in the device tree is futile without an accompanying driver change and will intentionally trigger a boot warning.
+> > --
+> > 
+> > commit befb5e3c3aa5e0f54a7fff3d0f4a5e96013f4a7e
+> > Author: Mukesh Ojha <mukesh.ojha@oss.qualcomm.com>
+> > 
+> > arm64: dts: qcom: sm4450: Reduce OS PDC DRV span to 0x10000
+> > 
+> > The OS PDC DRV register window on sm4450 spans 0x10000 bytes, so this
+> > commit reduces the size of the first reg entry from 0x30000 to 0x10000.
+> > 
+> > > diff --git a/arch/arm64/boot/dts/qcom/sm4450.dtsi b/arch/arm64/boot/dts/qcom/sm4450.dtsi
+> > > --- a/arch/arm64/boot/dts/qcom/sm4450.dtsi
+> > > +++ b/arch/arm64/boot/dts/qcom/sm4450.dtsi
+> > > @@ -464,7 +464,7 @@ dispcc: clock-controller@af00000 {
+> > >  
+> > >  		pdc: interrupt-controller@b220000 {
+> > >  			compatible = "qcom,sm4450-pdc", "qcom,pdc";
+> > > -			reg = <0 0x0b220000 0 0x30000>, <0 0x174000f0 0 0x64>;
+> > > +			reg = <0 0x0b220000 0 0x10000>, <0 0x174000f0 0 0x64>;
+> > 
+> > [Severity: Medium]
+> > Will this change cause a boot warning and fail to actually reduce the mapping
+> > size?
+> > 
+> > Looking at the qcom-pdc driver in drivers/irqchip/qcom-pdc.c, it enforces a
+> > minimum mapping size of QCOM_PDC_SIZE (0x30000) for all devices to maintain
+> > backward compatibility. In qcom_pdc_probe(), it calculates the size as:
+> > 
+> > 	res_size = max_t(resource_size_t, resource_size(&res), QCOM_PDC_SIZE);
+> > 
+> > If the device tree provides a size smaller than 0x30000 (like 0x10000), the
+> > driver automatically expands the mapping back to 0x30000 and logs a warning:
+> > "%pOF: invalid reg size, please fix DT".
+> > 
+> > Since there are no accompanying driver changes to gracefully accept the smaller
+> > size for newer compatibles like "qcom,sm4450-pdc", does this patch introduce a
+> > spurious warning on every boot without achieving the intended mapping
+> > reduction?
+> 
+> Seems valid to me. Even if you did change the driver, it would be an ABI 
+> break (though if only introducing a spurious warning for existing OS).
+>
 
---=-60Y8BU3YYwhTLPRhBNp4
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
+Yes, it would cause warning but I think, we should correct the size.
+there are multiple SoC like Glymur, Kaanapali, sm8750 where the size is
+correctly mentioned as 0x10000 while for all other SoC it is 0x30000.,
+it is inconsistent. For Glymur, Kaanapali, sm8750 as well existing OS
+emiting this warning.
 
-On Tue, 2026-06-09 at 00:29 +0100, David Woodhouse wrote:
-> On Mon, 2026-06-08 at 16:27 +0000, sashiko-bot@kernel.org=C2=A0wrote:
-> > [Severity: High]
-> > Does this cause an O(N=C2=B2) scaling issue during VM creation if the h=
-ost
-> > clocksource doesn't support the masterclock?
->=20
-> Good catch. Fixed in v6 by replacing the synchronous
-> kvm_update_masterclock() call with a simple
-> kvm_make_request(KVM_REQ_MASTERCLOCK_UPDATE, vcpu).
->=20
-> The vCPU will process the request on its first run,
-> avoiding the O(N) iteration over all existing vCPUs
-> that made vCPU creation O(N=C2=B2) on archaic hardware
-> without a TSC-based clocksource.
+> Please reply to sashiko reports because the maintainers are not going to 
+> analyze them for you.
 
-Hm... that actually isn't sufficient. Some of the test cases do use
-KVM_GET_CLOCK{,_GUEST} without running the vCPU first.=C2=A0And arguably it
-*ought* to work.
+Sure.
 
-By the end of the series it's actually fairly reasonable to just
-initialize the masterclock *and* the TSC synchronization generation in
-kvm_arch_init_vm(). Patch below.
+> 
+> Rob
 
-I've tried working that into the series earlier though, and it's a lot
-more painful. So I think I'll leave this patch as-is  to make things
-sane and bisectable through the series, and then do it more cleanly at
-the end, thus:
-
-=46rom 747468e6fc743d39f9ac31488f943c073b655e63 Mon Sep 17 00:00:00 2001
-From: David Woodhouse <dwmw@amazon.co.uk>
-Date: Tue, 9 Jun 2026 11:23:12 +0100
-Subject: [PATCH] KVM: x86: Activate master clock from kvm_arch_init_vm()
-
-Initialize the TSC generation and master clock state at VM creation
-time, rather than relying on kvm_update_masterclock() from
-kvm_arch_vcpu_postcreate().
-
-Set cur_tsc_generation=3D1, cur_tsc_khz, cur_tsc_scaling_ratio,
-cur_tsc_offset, cur_tsc_nsec and kvmclock_offset from an atomic
-ktime/TSC snapshot. This establishes a coherent epoch so that:
-
- - The first vCPU synchronizes to the existing generation (getting
-   the pre-computed TSC offset) rather than computing its own.
- - pvclock_update_vm_gtod_copy() succeeds immediately (no zero
-   tsc_hz from uninitialized cur_tsc_scaling_ratio).
- - KVM_GET_CLOCK returns valid {host_tsc, realtime} fields as soon
-   as any vCPU exists.
- - KVM_[GS]ET_CLOCK_GUEST works without a prior KVM_RUN.
- - No O(N) iteration of all vCPUs on each vCPU creation.
-
-This replaces the kvm_update_masterclock() call that was added to
-kvm_arch_vcpu_postcreate() to work around the missing initialization.
-
-Signed-off-by: David Woodhouse <dwmw@amazon.co.uk>
-Assisted-by: Kiro (claude-opus-4.6-1m)
----
- arch/x86/kvm/x86.c | 45 +++++++++++++++++++++++++++++++++++++--------
- 1 file changed, 37 insertions(+), 8 deletions(-)
-
-diff --git a/arch/x86/kvm/x86.c b/arch/x86/kvm/x86.c
-index 6a541483a77d..dc64a5bf4711 100644
---- a/arch/x86/kvm/x86.c
-+++ b/arch/x86/kvm/x86.c
-@@ -13174,8 +13174,6 @@ void kvm_arch_vcpu_postcreate(struct kvm_vcpu *vcpu=
-)
- 		return;
- 	vcpu_load(vcpu);
- 	kvm_synchronize_tsc(vcpu, NULL);
--	if (!vcpu->kvm->arch.use_master_clock)
--		kvm_update_masterclock(vcpu->kvm, NULL);
- 	vcpu_put(vcpu);
-=20
- 	/* poll control enabled by default */
-@@ -13585,6 +13583,8 @@ int kvm_arch_init_vm(struct kvm *kvm, unsigned long=
- type)
- {
- 	int ret;
- 	unsigned long flags;
-+	u64 kvmclock_host_tsc;
-+	s64 kvmclock_ns;
-=20
- 	if (!kvm_is_vm_type_supported(type))
- 		return -EINVAL;
-@@ -13614,18 +13614,47 @@ int kvm_arch_init_vm(struct kvm *kvm, unsigned lo=
-ng type)
- 	raw_spin_lock_init(&kvm->arch.tsc_write_lock);
- 	mutex_init(&kvm->arch.apic_map_lock);
- 	seqcount_raw_spinlock_init(&kvm->arch.pvclock_sc, &kvm->arch.tsc_write_lo=
-ck);
--	kvm->arch.kvmclock_offset =3D -get_kvmclock_base_ns();
--	kvm->arch.all_vcpus_matched_freq =3D true;
--
--	raw_spin_lock_irqsave(&kvm->arch.tsc_write_lock, flags);
--	pvclock_update_vm_gtod_copy(kvm);
--	raw_spin_unlock_irqrestore(&kvm->arch.tsc_write_lock, flags);
-=20
- 	kvm->arch.default_tsc_khz =3D max_tsc_khz ? : tsc_khz;
- 	kvm->arch.apic_bus_cycle_ns =3D APIC_BUS_CYCLE_NS_DEFAULT;
- 	kvm->arch.guest_can_read_msr_platform_info =3D true;
- 	kvm->arch.enable_pmu =3D enable_pmu;
-=20
-+	kvm->arch.all_vcpus_matched_freq =3D true;
-+	kvm->arch.all_vcpus_matched_tsc =3D true;
-+	kvm->arch.cur_tsc_scaling_ratio =3D kvm_caps.default_tsc_scaling_ratio;
-+	kvm->arch.cur_tsc_khz =3D kvm->arch.default_tsc_khz;
-+
-+	raw_spin_lock_irqsave(&kvm->arch.tsc_write_lock, flags);
-+
-+	/*
-+	 * Establish the initial TSC generation for synchronization logic.
-+	 * The first vCPU will sync to this, starting its guest TSC at the
-+	 * number of cycles elapsed since VM creation rather than at zero.
-+	 * This ensures coherence with the kvmclock epoch (also set here)
-+	 * and means the master clock snapshot taken below is immediately
-+	 * valid =E2=80=94 no need to redo it at first vCPU creation.
-+	 */
-+#ifdef CONFIG_X86_64
-+	if (!kvm_get_time_and_clockread(&kvmclock_ns, &kvmclock_host_tsc))
-+#endif
-+	{
-+		/*
-+		 * If not simultaneous, we want the TSC to be zero slightly
-+		 * *after* the kvmclock is zero.
-+		 */
-+		kvmclock_ns =3D get_kvmclock_base_ns();
-+		kvmclock_host_tsc =3D rdtsc();
-+	}
-+	kvm->arch.cur_tsc_write =3D 0;
-+	kvm->arch.cur_tsc_offset =3D -(s64)kvmclock_host_tsc;
-+	kvm->arch.cur_tsc_nsec =3D kvmclock_ns;
-+	kvm->arch.cur_tsc_generation =3D 1;
-+	kvm->arch.kvmclock_offset =3D -kvmclock_ns;
-+
-+	pvclock_update_vm_gtod_copy(kvm);
-+	raw_spin_unlock_irqrestore(&kvm->arch.tsc_write_lock, flags);
-+
- #if IS_ENABLED(CONFIG_HYPERV)
- 	spin_lock_init(&kvm->arch.hv_root_tdp_lock);
- 	kvm->arch.hv_root_tdp =3D INVALID_PAGE;
---=20
-2.43.0
-
-
-
---=-60Y8BU3YYwhTLPRhBNp4
-Content-Type: application/pkcs7-signature; name="smime.p7s"
-Content-Disposition: attachment; filename="smime.p7s"
-Content-Transfer-Encoding: base64
-
-MIAGCSqGSIb3DQEHAqCAMIACAQExDzANBglghkgBZQMEAgEFADCABgkqhkiG9w0BBwEAAKCCD9Aw
-ggSOMIIDdqADAgECAhAOmiw0ECVD4cWj5DqVrT9PMA0GCSqGSIb3DQEBCwUAMGUxCzAJBgNVBAYT
-AlVTMRUwEwYDVQQKEwxEaWdpQ2VydCBJbmMxGTAXBgNVBAsTEHd3dy5kaWdpY2VydC5jb20xJDAi
-BgNVBAMTG0RpZ2lDZXJ0IEFzc3VyZWQgSUQgUm9vdCBDQTAeFw0yNDAxMzAwMDAwMDBaFw0zMTEx
-MDkyMzU5NTlaMEExCzAJBgNVBAYTAkFVMRAwDgYDVQQKEwdWZXJva2V5MSAwHgYDVQQDExdWZXJv
-a2V5IFNlY3VyZSBFbWFpbCBHMjCCASIwDQYJKoZIhvcNAQEBBQADggEPADCCAQoCggEBAMjvgLKj
-jfhCFqxYyRiW8g3cNFAvltDbK5AzcOaR7yVzVGadr4YcCVxjKrEJOgi7WEOH8rUgCNB5cTD8N/Et
-GfZI+LGqSv0YtNa54T9D1AWJy08ZKkWvfGGIXN9UFAPMJ6OLLH/UUEgFa+7KlrEvMUupDFGnnR06
-aDJAwtycb8yXtILj+TvfhLFhafxroXrflspavejQkEiHjNjtHnwbZ+o43g0/yxjwnarGI3kgcak7
-nnI9/8Lqpq79tLHYwLajotwLiGTB71AGN5xK+tzB+D4eN9lXayrjcszgbOv2ZCgzExQUAIt98mre
-8EggKs9mwtEuKAhYBIP/0K6WsoMnQCcCAwEAAaOCAVwwggFYMBIGA1UdEwEB/wQIMAYBAf8CAQAw
-HQYDVR0OBBYEFIlICOogTndrhuWByNfhjWSEf/xwMB8GA1UdIwQYMBaAFEXroq/0ksuCMS1Ri6en
-IZ3zbcgPMA4GA1UdDwEB/wQEAwIBhjAdBgNVHSUEFjAUBggrBgEFBQcDBAYIKwYBBQUHAwIweQYI
-KwYBBQUHAQEEbTBrMCQGCCsGAQUFBzABhhhodHRwOi8vb2NzcC5kaWdpY2VydC5jb20wQwYIKwYB
-BQUHMAKGN2h0dHA6Ly9jYWNlcnRzLmRpZ2ljZXJ0LmNvbS9EaWdpQ2VydEFzc3VyZWRJRFJvb3RD
-QS5jcnQwRQYDVR0fBD4wPDA6oDigNoY0aHR0cDovL2NybDMuZGlnaWNlcnQuY29tL0RpZ2lDZXJ0
-QXNzdXJlZElEUm9vdENBLmNybDARBgNVHSAECjAIMAYGBFUdIAAwDQYJKoZIhvcNAQELBQADggEB
-ACiagCqvNVxOfSd0uYfJMiZsOEBXAKIR/kpqRp2YCfrP4Tz7fJogYN4fxNAw7iy/bPZcvpVCfe/H
-/CCcp3alXL0I8M/rnEnRlv8ItY4MEF+2T/MkdXI3u1vHy3ua8SxBM8eT9LBQokHZxGUX51cE0kwa
-uEOZ+PonVIOnMjuLp29kcNOVnzf8DGKiek+cT51FvGRjV6LbaxXOm2P47/aiaXrDD5O0RF5SiPo6
-xD1/ClkCETyyEAE5LRJlXtx288R598koyFcwCSXijeVcRvBB1cNOLEbg7RMSw1AGq14fNe2cH1HG
-W7xyduY/ydQt6gv5r21mDOQ5SaZSWC/ZRfLDuEYwggWbMIIEg6ADAgECAhAH5JEPagNRXYDiRPdl
-c1vgMA0GCSqGSIb3DQEBCwUAMEExCzAJBgNVBAYTAkFVMRAwDgYDVQQKEwdWZXJva2V5MSAwHgYD
-VQQDExdWZXJva2V5IFNlY3VyZSBFbWFpbCBHMjAeFw0yNDEyMzAwMDAwMDBaFw0yODAxMDQyMzU5
-NTlaMB4xHDAaBgNVBAMME2R3bXcyQGluZnJhZGVhZC5vcmcwggIiMA0GCSqGSIb3DQEBAQUAA4IC
-DwAwggIKAoICAQDali7HveR1thexYXx/W7oMk/3Wpyppl62zJ8+RmTQH4yZeYAS/SRV6zmfXlXaZ
-sNOE6emg8WXLRS6BA70liot+u0O0oPnIvnx+CsMH0PD4tCKSCsdp+XphIJ2zkC9S7/yHDYnqegqt
-w4smkqUqf0WX/ggH1Dckh0vHlpoS1OoxqUg+ocU6WCsnuz5q5rzFsHxhD1qGpgFdZEk2/c//ZvUN
-i12vPWipk8TcJwHw9zoZ/ZrVNybpMCC0THsJ/UEVyuyszPtNYeYZAhOJ41vav1RhZJzYan4a1gU0
-kKBPQklcpQEhq48woEu15isvwWh9/+5jjh0L+YNaN0I//nHSp6U9COUG9Z0cvnO8FM6PTqsnSbcc
-0j+GchwOHRC7aP2t5v2stVx3KbptaYEzi4MQHxm/0+HQpMEVLLUiizJqS4PWPU6zfQTOMZ9uLQRR
-ci+c5xhtMEBszlQDOvEQcyEG+hc++fH47K+MmZz21bFNfoBxLP6bjR6xtPXtREF5lLXxp+CJ6KKS
-blPKeVRg/UtyJHeFKAZXO8Zeco7TZUMVHmK0ZZ1EpnZbnAhKE19Z+FJrQPQrlR0gO3lBzuyPPArV
-hvWxjlO7S4DmaEhLzarWi/ze7EGwWSuI2eEa/8zU0INUsGI4ywe7vepQz7IqaAovAX0d+f1YjbmC
-VsAwjhLmveFjNwIDAQABo4IBsDCCAawwHwYDVR0jBBgwFoAUiUgI6iBOd2uG5YHI1+GNZIR//HAw
-HQYDVR0OBBYEFFxiGptwbOfWOtMk5loHw7uqWUOnMDAGA1UdEQQpMCeBE2R3bXcyQGluZnJhZGVh
-ZC5vcmeBEGRhdmlkQHdvb2Rob3Uuc2UwFAYDVR0gBA0wCzAJBgdngQwBBQEBMA4GA1UdDwEB/wQE
-AwIF4DAdBgNVHSUEFjAUBggrBgEFBQcDAgYIKwYBBQUHAwQwewYDVR0fBHQwcjA3oDWgM4YxaHR0
-cDovL2NybDMuZGlnaWNlcnQuY29tL1Zlcm9rZXlTZWN1cmVFbWFpbEcyLmNybDA3oDWgM4YxaHR0
-cDovL2NybDQuZGlnaWNlcnQuY29tL1Zlcm9rZXlTZWN1cmVFbWFpbEcyLmNybDB2BggrBgEFBQcB
-AQRqMGgwJAYIKwYBBQUHMAGGGGh0dHA6Ly9vY3NwLmRpZ2ljZXJ0LmNvbTBABggrBgEFBQcwAoY0
-aHR0cDovL2NhY2VydHMuZGlnaWNlcnQuY29tL1Zlcm9rZXlTZWN1cmVFbWFpbEcyLmNydDANBgkq
-hkiG9w0BAQsFAAOCAQEAQXc4FPiPLRnTDvmOABEzkIumojfZAe5SlnuQoeFUfi+LsWCKiB8Uextv
-iBAvboKhLuN6eG/NC6WOzOCppn4mkQxRkOdLNThwMHW0d19jrZFEKtEG/epZ/hw/DdScTuZ2m7im
-8ppItAT6GXD3aPhXkXnJpC/zTs85uNSQR64cEcBFjjoQDuSsTeJ5DAWf8EMyhMuD8pcbqx5kRvyt
-JPsWBQzv1Dsdv2LDPLNd/JUKhHSgr7nbUr4+aAP2PHTXGcEBh8lTeYea9p4d5k969pe0OHYMV5aL
-xERqTagmSetuIwolkAuBCzA9vulg8Y49Nz2zrpUGfKGOD0FMqenYxdJHgDCCBZswggSDoAMCAQIC
-EAfkkQ9qA1FdgOJE92VzW+AwDQYJKoZIhvcNAQELBQAwQTELMAkGA1UEBhMCQVUxEDAOBgNVBAoT
-B1Zlcm9rZXkxIDAeBgNVBAMTF1Zlcm9rZXkgU2VjdXJlIEVtYWlsIEcyMB4XDTI0MTIzMDAwMDAw
-MFoXDTI4MDEwNDIzNTk1OVowHjEcMBoGA1UEAwwTZHdtdzJAaW5mcmFkZWFkLm9yZzCCAiIwDQYJ
-KoZIhvcNAQEBBQADggIPADCCAgoCggIBANqWLse95HW2F7FhfH9bugyT/danKmmXrbMnz5GZNAfj
-Jl5gBL9JFXrOZ9eVdpmw04Tp6aDxZctFLoEDvSWKi367Q7Sg+ci+fH4KwwfQ8Pi0IpIKx2n5emEg
-nbOQL1Lv/IcNiep6Cq3DiyaSpSp/RZf+CAfUNySHS8eWmhLU6jGpSD6hxTpYKye7PmrmvMWwfGEP
-WoamAV1kSTb9z/9m9Q2LXa89aKmTxNwnAfD3Ohn9mtU3JukwILRMewn9QRXK7KzM+01h5hkCE4nj
-W9q/VGFknNhqfhrWBTSQoE9CSVylASGrjzCgS7XmKy/BaH3/7mOOHQv5g1o3Qj/+cdKnpT0I5Qb1
-nRy+c7wUzo9OqydJtxzSP4ZyHA4dELto/a3m/ay1XHcpum1pgTOLgxAfGb/T4dCkwRUstSKLMmpL
-g9Y9TrN9BM4xn24tBFFyL5znGG0wQGzOVAM68RBzIQb6Fz758fjsr4yZnPbVsU1+gHEs/puNHrG0
-9e1EQXmUtfGn4InoopJuU8p5VGD9S3Ikd4UoBlc7xl5yjtNlQxUeYrRlnUSmdlucCEoTX1n4UmtA
-9CuVHSA7eUHO7I88CtWG9bGOU7tLgOZoSEvNqtaL/N7sQbBZK4jZ4Rr/zNTQg1SwYjjLB7u96lDP
-sipoCi8BfR35/ViNuYJWwDCOEua94WM3AgMBAAGjggGwMIIBrDAfBgNVHSMEGDAWgBSJSAjqIE53
-a4blgcjX4Y1khH/8cDAdBgNVHQ4EFgQUXGIam3Bs59Y60yTmWgfDu6pZQ6cwMAYDVR0RBCkwJ4ET
-ZHdtdzJAaW5mcmFkZWFkLm9yZ4EQZGF2aWRAd29vZGhvdS5zZTAUBgNVHSAEDTALMAkGB2eBDAEF
-AQEwDgYDVR0PAQH/BAQDAgXgMB0GA1UdJQQWMBQGCCsGAQUFBwMCBggrBgEFBQcDBDB7BgNVHR8E
-dDByMDegNaAzhjFodHRwOi8vY3JsMy5kaWdpY2VydC5jb20vVmVyb2tleVNlY3VyZUVtYWlsRzIu
-Y3JsMDegNaAzhjFodHRwOi8vY3JsNC5kaWdpY2VydC5jb20vVmVyb2tleVNlY3VyZUVtYWlsRzIu
-Y3JsMHYGCCsGAQUFBwEBBGowaDAkBggrBgEFBQcwAYYYaHR0cDovL29jc3AuZGlnaWNlcnQuY29t
-MEAGCCsGAQUFBzAChjRodHRwOi8vY2FjZXJ0cy5kaWdpY2VydC5jb20vVmVyb2tleVNlY3VyZUVt
-YWlsRzIuY3J0MA0GCSqGSIb3DQEBCwUAA4IBAQBBdzgU+I8tGdMO+Y4AETOQi6aiN9kB7lKWe5Ch
-4VR+L4uxYIqIHxR7G2+IEC9ugqEu43p4b80LpY7M4KmmfiaRDFGQ50s1OHAwdbR3X2OtkUQq0Qb9
-6ln+HD8N1JxO5nabuKbymki0BPoZcPdo+FeRecmkL/NOzzm41JBHrhwRwEWOOhAO5KxN4nkMBZ/w
-QzKEy4PylxurHmRG/K0k+xYFDO/UOx2/YsM8s138lQqEdKCvudtSvj5oA/Y8dNcZwQGHyVN5h5r2
-nh3mT3r2l7Q4dgxXlovERGpNqCZJ624jCiWQC4ELMD2+6WDxjj03PbOulQZ8oY4PQUyp6djF0keA
-MYIDuzCCA7cCAQEwVTBBMQswCQYDVQQGEwJBVTEQMA4GA1UEChMHVmVyb2tleTEgMB4GA1UEAxMX
-VmVyb2tleSBTZWN1cmUgRW1haWwgRzICEAfkkQ9qA1FdgOJE92VzW+AwDQYJYIZIAWUDBAIBBQCg
-ggE3MBgGCSqGSIb3DQEJAzELBgkqhkiG9w0BBwEwHAYJKoZIhvcNAQkFMQ8XDTI2MDYwOTE2MTQw
-MlowLwYJKoZIhvcNAQkEMSIEIHeO6fLvaqRl17wxGuTNaq0CRP+mopWe5HE8k+tfs//FMGQGCSsG
-AQQBgjcQBDFXMFUwQTELMAkGA1UEBhMCQVUxEDAOBgNVBAoTB1Zlcm9rZXkxIDAeBgNVBAMTF1Zl
-cm9rZXkgU2VjdXJlIEVtYWlsIEcyAhAH5JEPagNRXYDiRPdlc1vgMGYGCyqGSIb3DQEJEAILMVeg
-VTBBMQswCQYDVQQGEwJBVTEQMA4GA1UEChMHVmVyb2tleTEgMB4GA1UEAxMXVmVyb2tleSBTZWN1
-cmUgRW1haWwgRzICEAfkkQ9qA1FdgOJE92VzW+AwDQYJKoZIhvcNAQEBBQAEggIAjlQKtjXbo5IB
-hkYL9yP6zRJ1OjzA17dkLXsVYHtNGBRhGbtHOZP661WR6uwJbHjOckLASERaPHtZS/gmNWh/0Oac
-CO1YAsmU/W/ly6CqkyocKYCsMBelYYfh5u0THtis3D8pbkbGsgKe9XWjRIjVVrEiXaLefuuJnnvx
-WUa5TJN4JQ79rZWW1VFVJNqpgfG2b1DsSF/Te6/PKLj9KD0MMX46QncNXELUZexKGJRTFgdf53Mq
-tiiOy9fbTtz2Fd5W6cRLhEKHk94HjtK+ZxHuwKntTd7nRqcrTV67My/Et+xLfjoaCtYm3ssd4X4a
-8Sz8wXX34nworuzufwTX34pH+YaVp+jQEfqGbB9X9WdlKTI9hS8LBcdiWQlIz3+DKal2EwXEd2kz
-MX7tEpfpxvDfLElC6Z8hRm5HKPgkKAcTCnAvwxX9dC/hutHlD5SqSSIby7pC1pVcsviXgV35H/CW
-tF1Xjc+Cp1XqkcyvgyOGM1ztlx3ZQ6K4dv5OcJn6GfigztXVklUnWVhKvPqciSGyGl1v6xBoFoDU
-t/c3b04HRXjyAjuPKcqxyWOf6Gsh8x/Ed4ayV/sGZxgpcAraD/KWiCC9ek45KYFVHe2m6y//SaL3
-QmS5tttqKA4cjWktxpicPQ+LURnTqO0NBgjspku96efqLoN9Q3yRqIaKyUeWyIkAAAAAAAA=
-
-
---=-60Y8BU3YYwhTLPRhBNp4--
+-- 
+-Mukesh Ojha
