@@ -1,170 +1,125 @@
-Received: from mail-wm1-f52.google.com (mail-wm1-f52.google.com [209.85.128.52])
+Received: from mail-dy1-f170.google.com (mail-dy1-f170.google.com [74.125.82.170])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0ADC4263F44
-	for <sashiko-reviews@lists.linux.dev>; Tue,  9 Jun 2026 13:23:11 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.52
-ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1781011393; cv=none; b=Z+JLcIblKCdeMJFSrFuSf2L4A7TzQpRsDqgyQJ93rjihrEbcEnAQFDv7qLW+UMYk6JV7sZBkuy1itYVNyt1Rtnh4RhCpDgO9OcEqBohni0/XCOGXMIHgwqiQ5XVoye7am1KaXabNzx0xI0ZE6O3ypPSxNeJNIYVHX3gh0NXN+h8=
-ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1781011393; c=relaxed/simple;
-	bh=aBhiQJaYmOwVyxz82eYRazavqn1zkyHxz3lTj0dRthQ=;
-	h=From:Date:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=blPjO9LnfRMhxAM0va+08PxhzYuVrP6XrEPLW63fzRefs8+OTnCwX5IWbfKD2HPn76arqGQj+7HH1pnm/YVtT9X00CB2N/ZJ5eRi4Nq+nqEXa4f/XDd06m8pwxP4mKNmxmYokdNhZOoQ9lDlML+oT2/Up3iVUiA/MwnldjPo0Ok=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=efqBpWMW; arc=none smtp.client-ip=209.85.128.52
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1630F416CE6
+	for <sashiko-reviews@lists.linux.dev>; Tue,  9 Jun 2026 13:41:56 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=pass smtp.client-ip=74.125.82.170
+ARC-Seal:i=2; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
+	t=1781012518; cv=pass; b=mEuUJr24zfuseEak1NNT86v1xrjTN8sYDHHxpecyMZ99HaQt6PyhxKGdE73Os7w/MhiPJu2ZM0Sg7b5NC8kWcSzxL1iHoVi4/76p10/X9hNDzINvYX98SRjLsBDfpRe06WamWXffOJL9vAYVrEevdUi6r8JpdGE2lBC8Sf6ltp4=
+ARC-Message-Signature:i=2; a=rsa-sha256; d=subspace.kernel.org;
+	s=arc-20240116; t=1781012518; c=relaxed/simple;
+	bh=r82KdvGOXCm72vJVs+4ZIB9FFKLh8sHJ5Wzpu8vu38c=;
+	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
+	 To:Cc:Content-Type; b=tzALesdbTkSw342/N51UlJS96cbnGsSIh0I0YT6RZutv+l3jlcY2Gc+qQyeKPU1NuVf0JqNKGuSl/ly+Q9HGxwvHWSkwVeSQmDj1AqG9MDkygcssruFBlxwQ5UG5Y0UpkGs3nqm4lAVE1A3j5EoO0SLLNEOUhtoGalEQInnw3KY=
+ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=S7zpt7vg; arc=pass smtp.client-ip=74.125.82.170
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="efqBpWMW"
-Received: by mail-wm1-f52.google.com with SMTP id 5b1f17b1804b1-490ac357c55so60565335e9.1
-        for <sashiko-reviews@lists.linux.dev>; Tue, 09 Jun 2026 06:23:11 -0700 (PDT)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="S7zpt7vg"
+Received: by mail-dy1-f170.google.com with SMTP id 5a478bee46e88-304f9bc869aso674482eec.2
+        for <sashiko-reviews@lists.linux.dev>; Tue, 09 Jun 2026 06:41:56 -0700 (PDT)
+ARC-Seal: i=1; a=rsa-sha256; t=1781012516; cv=none;
+        d=google.com; s=arc-20240605;
+        b=Zpu0XhwYEUcoSIsCPJXHOB3+K9kvSZPC1yAv8f17UEQmT/CrD1SKSnQ02JE0Dn6iJ0
+         /ElQ6vbSm1DjodqUtPpyD+IyLhyTBG9W2ZznM6l6jcn+JpETZinDALR6eUnvCLscdVeE
+         FZ5yjpbnVj4GhjrYQfz07+yBcpViLf6fS2iwcOiucWTOV60jCKpz3xmpqZUa3wFAPD4u
+         WfhTq7v4MDz0cCRB/INWHk3QvedWjc73zCk+gp9l1XlhIz39rKRVP+iokxYuVF/+m5Gp
+         kVEQsWJFQAJZIoPA0AN7nCOq8beQiI8f0svQg3qGHVLih+iJtMGZJGrm1AjVs/UHwC7w
+         9+Kw==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com; s=arc-20240605;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:dkim-signature;
+        bh=zZfH3PDo1pXIJiKrv1MWO7+7Lsn4OALbzs4MUBrez8U=;
+        fh=LtK+H3Wls8eVChrw894lAKMfXP5YJQ7RIS6jvjjCkwQ=;
+        b=JruV2FQ7fEvjPRoJnQ+/Lk9FzQy4qtglg37LlXMyRx6NxPfQx5O4YepDKxqJ2NHaII
+         tZ3rg8mmzONay7Kjn8mBTebX7VJhyI/d0L10e2NZw1WNqvsW20g/TIVwup24Py0aXyf0
+         GDHsDkNbTBqfojC7SNXOgpedAAcEBcVmzdZBonf8Ms3j9rmtsLYnF5YWxud5prgGi3by
+         kil4j1Vc2wXTIVsOVklwAJi441CnZhremhLWOA48woeKpbOQ8e6ax82fA3FVeh5sT+M8
+         mf+6RYq9p2jjcwUbY6cVdEaEZSq2eORUoBwQMo7shXTRXyhARFjxYDWvyG6421NtUGJn
+         UYIQ==;
+        darn=lists.linux.dev
+ARC-Authentication-Results: i=1; mx.google.com; arc=none
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20251104; t=1781011390; x=1781616190; darn=lists.linux.dev;
-        h=in-reply-to:content-transfer-encoding:content-disposition
-         :mime-version:references:message-id:subject:cc:to:date:from:from:to
-         :cc:subject:date:message-id:reply-to;
-        bh=/ZV6RsZExqbpNR2Ks/4acYQkYZtNf2DRP83lBEHNlGM=;
-        b=efqBpWMW0P+of93C2+w0b6LkN63nqqoUfZ/f2/i7XJO94Yd7gM8JXWTVSUglVlom52
-         jN+cDono8ir5A+2T9Tnx6VKEh/sjtHx0UEdckj5Tb9SwYH+nGa+arjisVW+3d6r4DVid
-         UexsTC99XhtB71Q6xddSnk2xHcg1BkWQyF4V2oKbCt6cwfMzzfPPZaFrDnjI4DCiuPAa
-         FXgpnU/K7Ty+swuay3enHes1S2rsoDZFDQ4Us9UJ66a42lFLgVj8sBHy3BHrcSyPYogW
-         gE+CSAnE2TgkMX0C7waUHXX+4k4whcreR3hzZwbNHy/GS3Y/kjCdhn8a8DgVyzjhqmCS
-         54rw==
+        d=gmail.com; s=20251104; t=1781012516; x=1781617316; darn=lists.linux.dev;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=zZfH3PDo1pXIJiKrv1MWO7+7Lsn4OALbzs4MUBrez8U=;
+        b=S7zpt7vgSXFWWTW3XfdMTmH5t7t10pIG3LR2nmpGb4LtQGaWBqkgAlcCL8Pq6zlJeO
+         7tRtr9j+VSSOXzpldaE5GIoqYWJe3DJRB38jJGEyl0kE7Ivca8wjMg37MJm2M0imoz40
+         zj7XJL8wjBHi+C06xg5U4U1LPXNWrtnccYqkHiW06ExD0NCsqHJwTeKWx5a6Yziq9TDh
+         UF+2IWVN2SbNO3CLBOTWSRvsO2ubrXoRClEqzqiaxjAeEbjqh0nNXha6FBSSfcrWVcef
+         xNxZExvdyHbOPuo6/XQpYxCSMzIhl6M3oHhb+hRgA0y0qoVFfwc33wgjF39aXAfOXE1P
+         KF2A==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20251104; t=1781011390; x=1781616190;
-        h=in-reply-to:content-transfer-encoding:content-disposition
-         :mime-version:references:message-id:subject:cc:to:date:from:x-gm-gg
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=/ZV6RsZExqbpNR2Ks/4acYQkYZtNf2DRP83lBEHNlGM=;
-        b=UYkuuoDanAI3YEocrh3F2+rYQEsSZikN37ymkEGet8H7Z48Vsk0G5VRpDOytLfOOuy
-         MNwlSD0b2wFWXtkxlVjrmUSOcKh5cTW/yeeaugR2IT9OAqBVLSvwVHvsbmg506czXsn8
-         0MpShC4qejz/jiy8cT6oJ4olO2gd0hPvvjDp/vZfvi4tJUpDBspNMWSKPcuZ3JzyOTBB
-         yDRGZiKdAXsEPKDZ5oNcAZUkwl6L3jNWNMdyIBY4QrgveW2v4ATVFrB0uPwi6tf31rZR
-         10hwzvxRNlgnfiMeeMcbXVN4hEuP/2E39tNvxLbpaNzIouMG324Fj0WYwbPYpJfFDXBj
-         0+AQ==
-X-Gm-Message-State: AOJu0YwPGnChktPc97wf39/WtEyBtTUXmn/FQ2U8PMhkzpCSf30a+gHb
-	S3ipR85J9B/crtAzKUv/4LHLHWExgY4rhhuzZBgsISr9Cb+XUaMeydi4pUI4PQ==
-X-Gm-Gg: Acq92OHR60kUbc7LdSRg7SriHqf89771z4T5I2VTms+ScPj8XoShsQjbOSI3QT5o0Fg
-	Lba2tXw7Aj8aXIy5w3QQKUitlXikbOZnogEf0Uy8U5Y9ZT2qVV8oJ4L5/bWcybHn7mLViNcYnP4
-	F1tl9vZATyz3veCCrPofwFEW8GysUOyjdQ/6mxz60FbQH1APZ6JFyGRYc5nVY6ZXCZTQOib+g+G
-	kQ0woXmK3zp9tasC4efjQ6ihAT4CYZvlHxAVTN7SYiNCPS7/XthaZ2hMEHu/Qo7zLrhbq130nqC
-	mdKESJbFuG0PvErtcavD3JezyO2mIreQcsaMx9O4N2Y/tDDAoXj1iEZKjA1fdtQginixSgeSyTi
-	8ARmeK9CnrI9N5uYJL1idKfqZLigpjgt+ffKpu71aMsOg27Yc72QFhxTNunxJO9IsPMOIkxSQII
-	sNr0HFrUpH673JyUgCRy8JTQ5PX+EUiXwFY2pR
-X-Received: by 2002:a05:600c:608e:b0:490:b355:9c8c with SMTP id 5b1f17b1804b1-490c25f3f00mr306947365e9.23.1781011390145;
-        Tue, 09 Jun 2026 06:23:10 -0700 (PDT)
-Received: from krava ([2a02:8308:a00c:e200:b655:ff13:e355:16a3])
-        by smtp.gmail.com with ESMTPSA id ffacd0b85a97d-4601f2dcbe3sm57972104f8f.8.2026.06.09.06.23.09
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Tue, 09 Jun 2026 06:23:09 -0700 (PDT)
-From: Jiri Olsa <olsajiri@gmail.com>
-X-Google-Original-From: Jiri Olsa <jolsa@kernel.org>
-Date: Tue, 9 Jun 2026 15:23:07 +0200
-To: sashiko-reviews@lists.linux.dev
-Cc: bpf@vger.kernel.org
-Subject: Re: [PATCH bpf-next 2/6] bpf: Add support to specify uprobe_multi
- target via file descriptor
-Message-ID: <aigTuxypMn07LnIz@krava>
-References: <20260609104244.588321-3-jolsa@kernel.org>
- <20260609105723.311541F00898@smtp.kernel.org>
+        d=1e100.net; s=20251104; t=1781012516; x=1781617316;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:x-gm-gg:x-gm-message-state:from
+         :to:cc:subject:date:message-id:reply-to;
+        bh=zZfH3PDo1pXIJiKrv1MWO7+7Lsn4OALbzs4MUBrez8U=;
+        b=Ao80A8Dleb5Mz2ZAj/NXqOT8x3brBQeibscxRfb/sBQNHV3IugOF8Lj0BO2vM90K8Q
+         eR/GOr8kCLrqn51k4xTFd25jb6zrwWYSOjqoe9YZ/ML6B7RzJfhU6W9HKeDE4QNyoqAe
+         mEb34fvDkUplAGMBoK1rdnWKLtX5wdRClMjMTdV9S+Rak2ubzq72HU+M5T3R+TVt+v7l
+         oL1IDGv4m47p2DdYmEPlmXBUy5/EWMWd+5pVynqtpcfmT0COtEl8GrrZVRC/TbMdsdv5
+         EFn3uuxNT+TrxrpdOHOEifbKh0/3Tx+CB4rnHGZJUZfVvnmgosTj0aQ+KGTdFnd/MJnQ
+         fSZg==
+X-Gm-Message-State: AOJu0Yy1cGvoTQbTXTyG7s54KGlTp36BMUOWnX+3lFIXSwMZJNBvIk3f
+	NmqEttsTWHyRSNz23VaN3m9dXOYKJdOuSFyCVBGXW+MMNMeyuWr+p7BMH/RwbJ0ZCo1GfTMvp4G
+	iJg+0wgYX8BCgAXdUy+sNut8KK4T7Mc5izplB
+X-Gm-Gg: Acq92OHLMHfUUthmv4py38ovyxCzDP8ceaJfc7ECG0olpAt/DchpWjx33gdT74uALqF
+	xzBOX4nMxvHMVI9fCPZpnLFBEMu/iInzsbPZYtzkz+aqdH8wfp0mF1F1HPlLIrk+ztGUKbv9oLu
+	eZiduhMszwp5gfWW13sp5izlYLyHJAq/pqfZLwUEOIHC2aMLTzinBdQ+a+/2VtOTS8R64C6KGfa
+	qqmxjD5wsN/R5r47jzEAdS+RYrRwrsvA0b1HWJqxkF4RujWqD7Bhv1A+JKt43dO2A9eNIyGciHU
+	4eRYOIxueQEEJpsA5VGX+8vnUQakg2hDVvOYURO3uQmDQjdsyEtKkc/cfeEax0jv0x0p+hyR8gv
+	muA0skU7lBGk5RS14YgE/q3wgRe6alRFd6w==
+X-Received: by 2002:a05:693c:3749:b0:304:8860:74d6 with SMTP id
+ 5a478bee46e88-3077b21ea10mr6154960eec.1.1781012516028; Tue, 09 Jun 2026
+ 06:41:56 -0700 (PDT)
 Precedence: bulk
 X-Mailing-List: sashiko-reviews@lists.linux.dev
 List-Id: <sashiko-reviews.lists.linux.dev>
 List-Subscribe: <mailto:sashiko-reviews+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:sashiko-reviews+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=iso-8859-1
-Content-Disposition: inline
-Content-Transfer-Encoding: 8bit
-In-Reply-To: <20260609105723.311541F00898@smtp.kernel.org>
+References: <20260609120325.233721-1-gary@kernel.org> <20260609121103.385001F00898@smtp.kernel.org>
+In-Reply-To: <20260609121103.385001F00898@smtp.kernel.org>
+From: Miguel Ojeda <miguel.ojeda.sandonis@gmail.com>
+Date: Tue, 9 Jun 2026 15:41:43 +0200
+X-Gm-Features: AVVi8CfZSPIAPxqYozAs8Co6IrGZUe2AfCIH-4zT-hfCRMC7eSFBNsK3oVTDyWY
+Message-ID: <CANiq72kAvoGgG2jG+bHs56z0C=Gk6UUHKQTcuTAK4+WqnVePzg@mail.gmail.com>
+Subject: Re: [PATCH] rust: mem: add `Align` type
+To: sashiko-reviews@lists.linux.dev
+Cc: Gary Guo <gary@kernel.org>, ojeda@kernel.org
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 
-On Tue, Jun 09, 2026 at 10:57:22AM +0000, sashiko-bot@kernel.org wrote:
-> Thank you for your contribution! Sashiko AI review found 2 potential issue(s) to consider:
-> - [Medium] Missing strict zero-validation for the unused `path_fd` field when the `BPF_F_UPROBE_MULTI_PATH_FD` flag is not set.
-> - [Low] Mixing scope-based cleanup (`CLASS()`) with `goto`-based error handling in `bpf_uprobe_multi_link_attach`.
-> --
-> 
-> commit f7958ff1ce57c1ab456d3f134881a0081a58b8ed
-> Author: Jiri Olsa <jolsa@kernel.org>
-> 
-> bpf: Add support to specify uprobe_multi target via file descriptor
-> 
-> This commit adds the BPF_F_UPROBE_MULTI_PATH_FD flag to allow uprobe_multi
-> links to specify the target binary using an already opened file descriptor
-> instead of a path string.
-> 
-> > diff --git a/kernel/trace/bpf_trace.c b/kernel/trace/bpf_trace.c
-> > index 970ce7bbf99e1..4965006d58ee6 100644
-> > --- a/kernel/trace/bpf_trace.c
-> > +++ b/kernel/trace/bpf_trace.c
-> [ ... ]
-> > @@ -3240,29 +3241,51 @@ int bpf_uprobe_multi_link_attach(const union bpf_attr *attr, struct bpf_prog *pr
-> [ ... ]
-> >  	uref_ctr_offsets = u64_to_user_ptr(attr->link_create.uprobe_multi.ref_ctr_offsets);
-> >  	ucookies = u64_to_user_ptr(attr->link_create.uprobe_multi.cookies);
-> > +	upath = u64_to_user_ptr(attr->link_create.uprobe_multi.path);
-> >  
-> > -	err = user_path_at(AT_FDCWD, upath, LOOKUP_FOLLOW, &path);
-> > -	if (err)
-> > -		return err;
-> > +	if (flags & BPF_F_UPROBE_MULTI_PATH_FD) {
-> > +		/*
-> > +		 * When BPF_F_UPROBE_MULTI_PATH_FD is set, the executable is identified
-> > +		 * by path_fd, and upath must be NULL.
-> > +		 */
-> > +		if (upath)
-> > +			return -EINVAL;
-> > +
-> > +		CLASS(fd, f)(attr->link_create.uprobe_multi.path_fd);
-> 
+On Tue, Jun 9, 2026 at 2:11=E2=80=AFPM <sashiko-bot@kernel.org> wrote:
+>
+> > +/// # Examples
+> > +///
+> > +/// ```
+> > +/// # use kernel::mem::Align;
+> > +/// const ALIGN: usize =3D 128;
+> > +/// struct MyStruct {
+> > +///     align: Align<ALIGN>,
+> > +/// }
+> > +/// assert_eq!(align_of::<MyStruct>(), ALIGN);
+>
 > [Severity: Low]
-> Does this code violate the cleanup subsystem guidelines by mixing scope-based
-> cleanup with goto-based error handling?
-> 
-> The bpf_uprobe_multi_link_attach() function relies heavily on goto labels
-> for error paths (e.g., error_path_put, error_free, error_unregister). The
-> kernel guidelines state that goto-based cleanup and scope-based cleanup
-> helpers (like CLASS) should never be mixed in the same function.
-> 
-> Should this function be fully converted to scope-based cleanup, or should it
-> use explicit fdget()/fdput() without CLASS() instead?
+> Does this doctest fail to compile during documentation testing?
+>
+> Because align_of is a function from core::mem and is not in the standard
+> Rust prelude, it looks like it needs an explicit import, such as
+> # use core::mem::align_of; to avoid a build failure.
 
-ah true, I'll unwind the fd retrieval or perhaps move the path retrival
-into separate function, will check
+Ok, I added a section about the prelude for Sashiko:
 
-> > +		if (fd_empty(f))
-> > +			return -EBADF;
-> > +		path = fd_file(f)->f_path;
-> > +		path_get(&path);
-> > +	} else {
-> > +		/*
-> > +		 * When BPF_F_UPROBE_MULTI_PATH_FD is not set, the path is resolved
-> > +		 * relative to the cwd (AT_FDCWD) or absolute  using the upath string.
-> > +		 */
-> > +		if (!upath)
-> > +			return -EINVAL;
-> 
-> [Severity: Medium]
-> Should there be strict zero-validation for the unused path_fd field here?
-> 
-> When the BPF_F_UPROBE_MULTI_PATH_FD flag is not set, this branch is taken
-> and attr->link_create.uprobe_multi.path_fd is ignored without being
-> validated as zero.
-> 
-> If userspace passes uninitialized garbage in this field, it won't be
-> rejected. Could this break forward compatibility if path_fd needs to be
-> assigned a new meaning in the future?
+  https://github.com/masoncl/review-prompts/pull/75
 
-right, I'll add the path_fd check in here
+I also noticed we can clean up the prelude nowadays, i.e. essentially
+undo commit 72b04a8af7fb ("rust: prelude: re-export
+`core::mem::{align,size}_of{,_val}`") and clean a few other cases. I
+will send a quick patch.
 
-jirka
-
-> 
-> > +
-> > +		err = user_path_at(AT_FDCWD, upath, LOOKUP_FOLLOW, &path);
-> > +		if (err)
-> > +			return err;
-> > +	}
-> 
-> -- 
-> Sashiko AI review · https://sashiko.dev/#/patchset/20260609104244.588321-1-jolsa@kernel.org?part=2
+Cheers,
+Miguel
