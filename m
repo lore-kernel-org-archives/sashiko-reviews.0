@@ -1,156 +1,107 @@
-Received: from mgamail.intel.com (mgamail.intel.com [198.175.65.19])
+Received: from out162-62-58-216.mail.qq.com (out162-62-58-216.mail.qq.com [162.62.58.216])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 65D1F1E260C
-	for <sashiko-reviews@lists.linux.dev>; Tue,  9 Jun 2026 10:05:03 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=198.175.65.19
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 092683793B0
+	for <sashiko-reviews@lists.linux.dev>; Tue,  9 Jun 2026 10:11:16 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=162.62.58.216
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1780999506; cv=none; b=RE7Cq8UAlcK7S/YxQiebZdQAZuQaPzD+kE2ADSkds93A35swGtnCbL5gmDGM2QOpslh0ux/6YhOBoeTIOyxaecN+F0+ZnADb+glQQ1QafHXN5lhpXVZ0fbxF2RG+vzCjspF0wQ5NpLpGlTfHSeNxcLecpW+TmtLbmEkedDwwKKg=
+	t=1780999879; cv=none; b=B28oKobiUDYV1ZYq/+eclvVXPm9OpJNn/kJRsoEFVRKhSWXvE93baoOZ0F350K51ogl86m8eC/iw2oklVryn7xqhUzU12FcPIvL9ndG3A5/5hVsihtR6LWSTcH4wDMA/bbkP1VLXX+5TlgYMh9+16orf+migaffbXXXk/LoFTmg=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1780999506; c=relaxed/simple;
-	bh=BkhIivdHeU4QY0h86fTfJnU/MLRtmhPNTqfkaqcTDh4=;
-	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=nwPMQxSgtuMmE1BzeKrNdeljwgmPlHmZCRpCoW1vDRw4QQxRSCdN7TviTqLcLi1nVPHN/lLTGu8PVUdxsA51wb5oCeeYdb29ZcleuZW1I/2NVkjBzAMVaPt6rkPbZJkHOYWphWiwsPatDkz8ozX5wFGeG7INLvYVsmX0wLrc0vY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linux.intel.com; spf=pass smtp.mailfrom=linux.intel.com; dkim=pass (2048-bit key) header.d=intel.com header.i=@intel.com header.b=Jar51Sr3; arc=none smtp.client-ip=198.175.65.19
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linux.intel.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linux.intel.com
+	s=arc-20240116; t=1780999879; c=relaxed/simple;
+	bh=9bZuQ4kq4VGaEO8PaaudLtOZvGMjXwHJs1ftQas7yFg=;
+	h=Message-ID:From:To:Cc:Subject:Date:In-Reply-To:References:
+	 MIME-Version:Content-Type; b=nJNc/wSM7QUsjrx3wF/8xh8CZ/t+4jc35/lgDBSvnLsNQW+p9L4C59u8Vxo1LPremUn2fDO0lgeX8MYokmHjunzhlLoEBlT9cUghS9znxnzmRW7LBZK06fKW3XOZvrxBHIDgCYQxBzmgdljsN4RP/hE652X0dRGIa2lkWFOZrzE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=Red54.com; spf=pass smtp.mailfrom=red54.com; dkim=pass (1024-bit key) header.d=qq.com header.i=@qq.com header.b=E1bJ/tN0; arc=none smtp.client-ip=162.62.58.216
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=Red54.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=red54.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=intel.com header.i=@intel.com header.b="Jar51Sr3"
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
-  d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
-  t=1780999504; x=1812535504;
-  h=message-id:date:mime-version:subject:to:cc:references:
-   from:in-reply-to:content-transfer-encoding;
-  bh=BkhIivdHeU4QY0h86fTfJnU/MLRtmhPNTqfkaqcTDh4=;
-  b=Jar51Sr3jFsRRK5Nw32FsVU8gg+0Wop96kAkbQoZNDd0xtsVFCbGcdO0
-   e4XnQchGIyKxbpolILnE8BuD00sKr89Z5/YUm//mBw4cljJVQ30pHTJyx
-   7JfQjUv50VXN1+L0q668cbep9dHVhBq6lgDASYZ28HYM8kiznhyvbkss2
-   7n9eDGgAaucfvLIqQZ/lcstkOeo27Tz2Bh+Vs89CL3ZqZTjEAYvMZieaN
-   Iq38vMqnqyuvbnOZuED2FOJFBbIvshglRroU1aVNNvJwLp9BbHqWjW0Nx
-   CBh0dLObYL1f+5oldcYFW2nlffH6Gugofg4myItZBcm70Fzf9AJhmblcO
-   g==;
-X-CSE-ConnectionGUID: XYecSNGoTW6QwbwgRWe8+g==
-X-CSE-MsgGUID: YkzMXhDbTAOT/NH8ru1QrA==
-X-IronPort-AV: E=McAfee;i="6800,10657,11811"; a="81732851"
-X-IronPort-AV: E=Sophos;i="6.24,195,1774335600"; 
-   d="scan'208";a="81732851"
-Received: from orviesa008.jf.intel.com ([10.64.159.148])
-  by orvoesa111.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 09 Jun 2026 03:05:03 -0700
-X-CSE-ConnectionGUID: /pxEQJLbRge9OW/nPdNoEg==
-X-CSE-MsgGUID: voQOouT5R/iSneKBCKTbOA==
-X-ExtLoop1: 1
-X-IronPort-AV: E=Sophos;i="6.24,195,1774335600"; 
-   d="scan'208";a="245664382"
-Received: from dapengmi-mobl1.ccr.corp.intel.com (HELO [10.124.241.147]) ([10.124.241.147])
-  by orviesa008-auth.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 09 Jun 2026 03:05:02 -0700
-Message-ID: <22c9ceea-5bd3-4e50-8ee4-d7c668c52ec2@linux.intel.com>
-Date: Tue, 9 Jun 2026 18:04:59 +0800
+	dkim=pass (1024-bit key) header.d=qq.com header.i=@qq.com header.b="E1bJ/tN0"
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=qq.com; s=s201512;
+	t=1780999866; bh=9bZuQ4kq4VGaEO8PaaudLtOZvGMjXwHJs1ftQas7yFg=;
+	h=From:To:Cc:Subject:Date:In-Reply-To:References;
+	b=E1bJ/tN0XDsx/6hP1j4dNoxUQ6H1nv9ZzNoE7MWwenzVP34VPwjoLO9k+vVT00Ugj
+	 oI1ZBUwMIGC/cuOLiV9oayLp1J3q5ZQbn2cvZ4d+bR7MKoV1p9uX40iaYMcRju8krl
+	 D6tPG3+b+fmJ2XlnGNFQuBNl9kOG7y+G15GKFO6Y=
+Received: from mail.red54.com ([139.99.8.57])
+	by newxmesmtplogicsvrsza73-0.qq.com (NewEsmtp) with SMTP
+	id 2B13D22C; Tue, 09 Jun 2026 18:10:49 +0800
+X-QQ-mid: xmsmtpt1780999849t6ghuw5q4
+Message-ID: <tencent_C2BEF7C0584BFE713DC7B41FFD7007B6D30A@qq.com>
+X-QQ-XMAILINFO: MZtEYADUG4AgPA3YretqFCwk/SJKq49tIQXAOeaPisRev7ofmcvwQ17WtOEK60
+	 AZ95Ntzi63IAxXNnafm2jPCjhwGXbBZrXiI84RLgNukaDxiH60MY1rs9RYFly1zsyvQQq3xmtX+K
+	 5U7G4FN4HpjFh4VngS1/DxeMdGvkLR/oUrZEWsB8GkQ2OXXv9G4R0mjToA+p20+TTJBMYNY/9SeC
+	 PCsnwFQTWif/szjmLUluR3wrz8wz7ZPt8cMboL5o3brc50RqVFdJSIVYjnUm9mfXuFO0enHXLCLm
+	 8MOHpMr5UGiGUjAt2MIoyCoHNRLgxew1gXJ3Bl2YwNqLoJa1Rn7jRCwzXOC+YDks+Lq9urnydanD
+	 8pxQbmKv0hXGJYCTibQMjKzciDCY6vkGLp6wd72BwAJgQ8CA1QBaVPg0xwztdzD5wRbhqvu2vPdW
+	 EBxMM21y9xpGbBoQMDHfSx6aDBE9+jYvOOc+uGC0uTE7rTZuHgGceq42XbTdfOdr0S9zwY25AXJY
+	 65GWrVQRf3HsOg/fFUTC9mD4YwjMG0PMzro5LzLY8/9GDy0bwmgA+KPfbE0zJav3I8WTFfhCPZqK
+	 5c9+2oS82I+pUhHunWeg6h0S4tbPPcEtiPNUUQqE++Ryy0/MK0H7t5XZ81btD4P+3Gl4BTSrarM/
+	 z72MZYns0HQxsxiXTntcOd+/vlaaG9wTEpSqrlse2OFvoaIcmL4hHIFMDASNHiJPx3x+/vK0IHCW
+	 fIu+yH52/g3TB8d78F8KqppXShzkPhuxUreu0kry/ZTigpoWmf56MRhE3iZPjZ+qT3MgGR6mp2RK
+	 xx/dWNqbrJvoBqAr3WoJCX07qsQ2vGZvLYBbxUN8mfMik4hXCJc/b5oHXBDwOuTcFMd481Y1FPkp
+	 Nvi8RhA768L6bD1vBZ1786TiZ0ebMRpWlhf3LgTv7uOnvgRnB+bLOT/W98nupKjlmk1zEYEYU6DS
+	 xnSV+C5z4cJ0p3ZyxKXK/h6txaJ8BdyRkSaAqItrnrN0FCXTiA/vLymBgP2/SZeJVWb4uKjC/+NQ
+	 nGNZdlktmiM2ncfN6Di/SCegOa+iBzuc6HssIF0A==
+X-QQ-XMRINFO: OD9hHCdaPRBwH5bRRRw8tsiH4UAatJqXfg==
+Sender: yeking@red54.com
+From: =?UTF-8?q?=E8=B0=A2=E8=87=B4=E9=82=A6=20=28XIE=20Zhibang=29?= <Yeking@Red54.com>
+To: linux-input@vger.kernel.org,
+	hansg@kernel.org,
+	dmitry.torokhov@gmail.com,
+	bentiss@kernel.org
+Cc: Yeking@Red54.com,
+	dianders@chromium.org,
+	jikos@kernel.org,
+	linux-kernel@vger.kernel.org,
+	sashiko-bot@kernel.org,
+	sashiko-reviews@lists.linux.dev,
+	superm1@kernel.org
+Subject: Re: [PATCH v3] HID: i2c-hid: Refactor _DSM helper and add i2c-hid-acpi-prp0001 driver
+Date: Tue,  9 Jun 2026 10:10:35 +0000
+X-OQ-MSGID: <20260609101036.106013-1-Yeking@Red54.com>
+X-Mailer: git-send-email 2.43.0
+In-Reply-To: <4243c594-6535-4111-86cb-69784b0a34b7@kernel.org>
+References: <4243c594-6535-4111-86cb-69784b0a34b7@kernel.org>
 Precedence: bulk
 X-Mailing-List: sashiko-reviews@lists.linux.dev
 List-Id: <sashiko-reviews.lists.linux.dev>
 List-Subscribe: <mailto:sashiko-reviews+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:sashiko-reviews+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [Patch v2 4/9] perf/x86/intel: Fallback to sw branch type
- decoding if no hw decoding
-To: sashiko-reviews@lists.linux.dev
-Cc: linux-perf-users@vger.kernel.org
-References: <20260609050222.2458129-5-dapeng1.mi@linux.intel.com>
- <20260609052405.4A50C1F00898@smtp.kernel.org>
-Content-Language: en-US
-From: "Mi, Dapeng" <dapeng1.mi@linux.intel.com>
-In-Reply-To: <20260609052405.4A50C1F00898@smtp.kernel.org>
 Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 7bit
+Content-Transfer-Encoding: 8bit
 
+Hi Hans,
 
-On 6/9/2026 1:24 PM, sashiko-bot@kernel.org wrote:
-> Thank you for your contribution! Sashiko AI review found 2 potential issue(s) to consider:
->
-> New issues:
-> - [High] The fallback to software branch decoding causes massive NMI overhead and drops valid LBR entries when user memory is paged out.
->
-> Pre-existing issues:
-> - [Critical] Page fault in NMI context due to an out-of-bounds direct memory read into unmapped guard pages during LBR software branch type decoding.
-> --
->
-> commit 11f8cb2dc702b7450f8fbb74de9eaa30a63a9248
-> Author: Dapeng Mi <dapeng1.mi@linux.intel.com>
-> Subject: perf/x86/intel: Fallback to sw branch type decoding if no hw decoding
->
-> This commit updates intel_pmu_lbr_filter() to use software branch-type
-> decoding when hardware branch-type decoding is unavailable (i.e.
-> x86_lbr_type is not enabled). This aims to keep branch classification and
-> filtering behavior correct across Arch LBR configurations.
->
->> diff --git a/arch/x86/events/intel/lbr.c b/arch/x86/events/intel/lbr.c
->> index cae2e02fe6cc4..171fdf1962ade 100644
->> --- a/arch/x86/events/intel/lbr.c
->> +++ b/arch/x86/events/intel/lbr.c
->> @@ -1233,6 +1233,7 @@ intel_pmu_lbr_filter(struct cpu_hw_events *cpuc)
->>  		 * OTHER_BRANCH branch type still rely on software decoding.
->>  		 */
->>  		if (static_cpu_has(X86_FEATURE_ARCH_LBR) &&
->> +		    static_branch_likely(&x86_lbr_type) &&
-> [Severity: High]
-> When x86_lbr_type is not enabled, this falls back to software decoding via
-> branch_type(). Because intel_pmu_setup_hw_lbr_filter() unconditionally sets
-> X86_BR_TYPE_SAVE for Arch LBR CPUs:
->
-> arch/x86/events/intel/lbr.c:intel_pmu_setup_hw_lbr_filter() {
->     ...
->     if (static_cpu_has(X86_FEATURE_ARCH_LBR)) {
->         ...
->         reg->reg |= X86_BR_TYPE_SAVE;
->     ...
-> }
->
-> the early return fast-path in intel_pmu_lbr_filter() is bypassed. Does this
-> cause intel_pmu_lbr_filter() to iterate over all LBR entries and perform
-> high-overhead instruction decoding in NMI context even for generic branch
-> requests?
+Thanks for the review.
 
-Generally speaking, the x86_lbr_type should always be true for arch-LBR.
-Even it's not true in some corner cases (like guest environment), high
-overhead is better than wrong branch decoding.
+The current header-based approach lets i2c-hid-acpi-prp0001.c work
+independently by just including a header for the _DSM helper. Switching
+to EXPORT_SYMBOL_GPL would force prp0001 to depend on i2c-hid-acpi —
+a Kconfig "depends on I2C_HID_ACPI", plus module-level dependency at
+load time — all for sharing a single function. I find that hard to
+accept.
 
+I understand that adding a new header for one prototype is unusual,
+though it contains only a single static inline function and introduces
+no runtime dependency between the two drivers.
 
->
-> Additionally, if user memory is paged out, copy_from_user_nmi() will fail,
-> causing branch_type() to return X86_BR_NONE. Does this result in valid LBR
-> entries being silently dropped?
+Looking back at the full discussion: Benjamin made it clear from the
+start that he doesn't want i2c-hid-of.c handling ACPI _DSM fallback.
+His line is that ACPI devices and OF devices should each go through
+their own drivers without cross-contamination. If you still prefer
+exporting the function from i2c-hid-acpi.c, then prp0001 would have to
+drag i2c-hid-acpi along with it — an independent leaf driver turned
+into something that can't stand alone.
 
-I doubt if the issue could really be seeb. Even it happens, it seems there
-is nothing to do except dropping them.
+If you still prefer the export approach, then I'd rather take a simpler
+approach: add an of_match directly to
+i2c-hid-acpi.c, and return -ENODEV silently at the top of probe if
+hid-descr-addr is present. Same logic as the prp0001 driver, but one
+fewer file, no module dependency, no extra Kconfig entry, and no OF
+driver touching ACPI devices — which should also satisfy Benjamin's
+concern.
 
-Thanks.
+Regards,
+Zhibang
 
-
->
-> [Severity: Critical]
-> This is a pre-existing issue, but falling back to software decoding exposes
-> a vulnerability in get_branch_type() when processing LBR entries in NMI context:
->
-> arch/x86/events/utils.c:get_branch_type() {
->     ...
->     if (kernel_text_address(from) && !in_gate_area_no_mm(from)) {
->         addr = (void *)from;
->         bytes_read = MAX_INSN_SIZE;
->     ...
->     insn_init(&insn, addr, bytes_read, is64);
->     ret = decode_branch_type(&insn);
->     ...
-> }
->
-> If the from address (which is controlled by the LBR hardware recording a
-> faulting RIP) points to the very last byte of a mapped page, bytes_read is
-> set to 15. The instruction decoder will blindly read past the page boundary
-> into an unmapped guard page without exception table handlers.
->
-> Can this trigger a kernel page fault (#PF) and Oops in NMI context when
-> processing the PMU interrupt?
->
->>  		    type <= ARCH_LBR_BR_TYPE_KNOWN_MAX) {
->>  			to_plm = kernel_ip(to) ? X86_BR_KERNEL : X86_BR_USER;
->>  			type = arch_lbr_br_type_map[type] | to_plm;
