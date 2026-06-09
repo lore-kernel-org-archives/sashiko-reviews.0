@@ -1,50 +1,50 @@
-Received: from mgamail.intel.com (mgamail.intel.com [198.175.65.9])
+Received: from mgamail.intel.com (mgamail.intel.com [198.175.65.19])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EE33B299931
-	for <sashiko-reviews@lists.linux.dev>; Tue,  9 Jun 2026 09:49:21 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=198.175.65.9
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 65D1F1E260C
+	for <sashiko-reviews@lists.linux.dev>; Tue,  9 Jun 2026 10:05:03 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=198.175.65.19
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1780998563; cv=none; b=MK/cZqiMiG6zhjJDvqBbsDqj9TVkSK7XUuqjdCexkzemjhIOdu+u7bS0CGZPIEeHcd5dHCg0cV/DEhJGp+q5n9E7GZ9L2KbArmxqNTpeRZrbCFylFv5CihJB4RYnbWEhV6VT04GpIPX0sa0qZBdNH2mnr/nHFALbGO3vEKkB6OY=
+	t=1780999506; cv=none; b=RE7Cq8UAlcK7S/YxQiebZdQAZuQaPzD+kE2ADSkds93A35swGtnCbL5gmDGM2QOpslh0ux/6YhOBoeTIOyxaecN+F0+ZnADb+glQQ1QafHXN5lhpXVZ0fbxF2RG+vzCjspF0wQ5NpLpGlTfHSeNxcLecpW+TmtLbmEkedDwwKKg=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1780998563; c=relaxed/simple;
-	bh=phdtJNTQWC96uIuARoZ4xWUGydl4LKMX/SYCP1rw5k0=;
+	s=arc-20240116; t=1780999506; c=relaxed/simple;
+	bh=BkhIivdHeU4QY0h86fTfJnU/MLRtmhPNTqfkaqcTDh4=;
 	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=Gw8rcCzJx4cAJngckvYq77sPVAiJhURE/LMyitpH7O8FhPdeAXpoQ42HJbk5CUVWoOH6eSuXkGNkjoH6Z62tDAXwbp4HUT6tx4Tf1sCdnT59Hnds7tDM6XQaaA+JWUKepp92lZBft6Skc4s6mCfVGUGEiz7uvzakPfycklc8abk=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linux.intel.com; spf=pass smtp.mailfrom=linux.intel.com; dkim=pass (2048-bit key) header.d=intel.com header.i=@intel.com header.b=ai4tk0XM; arc=none smtp.client-ip=198.175.65.9
+	 In-Reply-To:Content-Type; b=nwPMQxSgtuMmE1BzeKrNdeljwgmPlHmZCRpCoW1vDRw4QQxRSCdN7TviTqLcLi1nVPHN/lLTGu8PVUdxsA51wb5oCeeYdb29ZcleuZW1I/2NVkjBzAMVaPt6rkPbZJkHOYWphWiwsPatDkz8ozX5wFGeG7INLvYVsmX0wLrc0vY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linux.intel.com; spf=pass smtp.mailfrom=linux.intel.com; dkim=pass (2048-bit key) header.d=intel.com header.i=@intel.com header.b=Jar51Sr3; arc=none smtp.client-ip=198.175.65.19
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linux.intel.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linux.intel.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=intel.com header.i=@intel.com header.b="ai4tk0XM"
+	dkim=pass (2048-bit key) header.d=intel.com header.i=@intel.com header.b="Jar51Sr3"
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
   d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
-  t=1780998562; x=1812534562;
+  t=1780999504; x=1812535504;
   h=message-id:date:mime-version:subject:to:cc:references:
    from:in-reply-to:content-transfer-encoding;
-  bh=phdtJNTQWC96uIuARoZ4xWUGydl4LKMX/SYCP1rw5k0=;
-  b=ai4tk0XMcp+dCpl7/o3fiE0wIbEdnOkgQ5CBGV3ffltfJ1YXge387efu
-   ObzpSBTv9GXyKQ70w4EToZd2B/SOPSEbsnilkawyeZYBEhZSNlMABPaVW
-   3OrDBG6Xh9mgGtgWUkvXI6bFC7w0U55XhOvFNUvZb31CnReB360udt7fp
-   d8xZi8oehsjyBQNgE80NBxo/fQsDZwWuNRQjylCBW7Nq+btMt7ImW/L+P
-   O//inuhHRxmp1we4MWrFd8Ej7xQ3u6uJ++opp53WvXJh8BN6i6XJjqsuu
-   /cLuBbGRi0ATQ41d9XVfX420GSXxMPiSAmkBBceYTlT9pVBIAyHOeJBy7
+  bh=BkhIivdHeU4QY0h86fTfJnU/MLRtmhPNTqfkaqcTDh4=;
+  b=Jar51Sr3jFsRRK5Nw32FsVU8gg+0Wop96kAkbQoZNDd0xtsVFCbGcdO0
+   e4XnQchGIyKxbpolILnE8BuD00sKr89Z5/YUm//mBw4cljJVQ30pHTJyx
+   7JfQjUv50VXN1+L0q668cbep9dHVhBq6lgDASYZ28HYM8kiznhyvbkss2
+   7n9eDGgAaucfvLIqQZ/lcstkOeo27Tz2Bh+Vs89CL3ZqZTjEAYvMZieaN
+   Iq38vMqnqyuvbnOZuED2FOJFBbIvshglRroU1aVNNvJwLp9BbHqWjW0Nx
+   CBh0dLObYL1f+5oldcYFW2nlffH6Gugofg4myItZBcm70Fzf9AJhmblcO
    g==;
-X-CSE-ConnectionGUID: d16PiVt5Qy+Mol/HuFyQDA==
-X-CSE-MsgGUID: HvwbBl+zQX+b5zAr/3rALw==
-X-IronPort-AV: E=McAfee;i="6800,10657,11811"; a="104418280"
+X-CSE-ConnectionGUID: XYecSNGoTW6QwbwgRWe8+g==
+X-CSE-MsgGUID: YkzMXhDbTAOT/NH8ru1QrA==
+X-IronPort-AV: E=McAfee;i="6800,10657,11811"; a="81732851"
 X-IronPort-AV: E=Sophos;i="6.24,195,1774335600"; 
-   d="scan'208";a="104418280"
-Received: from orviesa007.jf.intel.com ([10.64.159.147])
-  by orvoesa101.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 09 Jun 2026 02:49:22 -0700
-X-CSE-ConnectionGUID: AHIwObfnTYuaO3KqmMtc6Q==
-X-CSE-MsgGUID: pl+CDBHNQGejFiTAKA8ZtA==
+   d="scan'208";a="81732851"
+Received: from orviesa008.jf.intel.com ([10.64.159.148])
+  by orvoesa111.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 09 Jun 2026 03:05:03 -0700
+X-CSE-ConnectionGUID: /pxEQJLbRge9OW/nPdNoEg==
+X-CSE-MsgGUID: voQOouT5R/iSneKBCKTbOA==
 X-ExtLoop1: 1
 X-IronPort-AV: E=Sophos;i="6.24,195,1774335600"; 
-   d="scan'208";a="245913352"
+   d="scan'208";a="245664382"
 Received: from dapengmi-mobl1.ccr.corp.intel.com (HELO [10.124.241.147]) ([10.124.241.147])
-  by orviesa007-auth.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 09 Jun 2026 02:49:21 -0700
-Message-ID: <4834851e-0a08-4120-8ebe-b0efc19e6788@linux.intel.com>
-Date: Tue, 9 Jun 2026 17:49:18 +0800
+  by orviesa008-auth.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 09 Jun 2026 03:05:02 -0700
+Message-ID: <22c9ceea-5bd3-4e50-8ee4-d7c668c52ec2@linux.intel.com>
+Date: Tue, 9 Jun 2026 18:04:59 +0800
 Precedence: bulk
 X-Mailing-List: sashiko-reviews@lists.linux.dev
 List-Id: <sashiko-reviews.lists.linux.dev>
@@ -52,78 +52,105 @@ List-Subscribe: <mailto:sashiko-reviews+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:sashiko-reviews+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [Patch v2 9/9] perf/core: Check kernel access when kernel
- callchains are requested
+Subject: Re: [Patch v2 4/9] perf/x86/intel: Fallback to sw branch type
+ decoding if no hw decoding
 To: sashiko-reviews@lists.linux.dev
 Cc: linux-perf-users@vger.kernel.org
-References: <20260609050222.2458129-10-dapeng1.mi@linux.intel.com>
- <20260609052411.1CCD61F00893@smtp.kernel.org>
+References: <20260609050222.2458129-5-dapeng1.mi@linux.intel.com>
+ <20260609052405.4A50C1F00898@smtp.kernel.org>
 Content-Language: en-US
 From: "Mi, Dapeng" <dapeng1.mi@linux.intel.com>
-In-Reply-To: <20260609052411.1CCD61F00893@smtp.kernel.org>
+In-Reply-To: <20260609052405.4A50C1F00898@smtp.kernel.org>
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 7bit
 
 
 On 6/9/2026 1:24 PM, sashiko-bot@kernel.org wrote:
-> Thank you for your contribution! Sashiko AI review found 1 potential issue(s) to consider:
-> - [Critical] The patch breaks `perf record -g` for unprivileged users with existing `perf` binaries.
+> Thank you for your contribution! Sashiko AI review found 2 potential issue(s) to consider:
+>
+> New issues:
+> - [High] The fallback to software branch decoding causes massive NMI overhead and drops valid LBR entries when user memory is paged out.
+>
+> Pre-existing issues:
+> - [Critical] Page fault in NMI context due to an out-of-bounds direct memory read into unmapped guard pages during LBR software branch type decoding.
 > --
 >
-> commit ac223ffdf5e79c1aa96a91deecdff94004bbe30f
+> commit 11f8cb2dc702b7450f8fbb74de9eaa30a63a9248
 > Author: Dapeng Mi <dapeng1.mi@linux.intel.com>
+> Subject: perf/x86/intel: Fallback to sw branch type decoding if no hw decoding
 >
-> perf/core: Check kernel access when kernel callchains are requested
+> This commit updates intel_pmu_lbr_filter() to use software branch-type
+> decoding when hardware branch-type decoding is unavailable (i.e.
+> x86_lbr_type is not enabled). This aims to keep branch classification and
+> filtering behavior correct across Arch LBR configurations.
 >
-> This commit updates perf_event_open to verify kernel access permissions
-> when kernel callchains are requested, even if exclude_kernel is set.
-> This is intended to prevent unprivileged capture of kernel callchains.
+>> diff --git a/arch/x86/events/intel/lbr.c b/arch/x86/events/intel/lbr.c
+>> index cae2e02fe6cc4..171fdf1962ade 100644
+>> --- a/arch/x86/events/intel/lbr.c
+>> +++ b/arch/x86/events/intel/lbr.c
+>> @@ -1233,6 +1233,7 @@ intel_pmu_lbr_filter(struct cpu_hw_events *cpuc)
+>>  		 * OTHER_BRANCH branch type still rely on software decoding.
+>>  		 */
+>>  		if (static_cpu_has(X86_FEATURE_ARCH_LBR) &&
+>> +		    static_branch_likely(&x86_lbr_type) &&
+> [Severity: High]
+> When x86_lbr_type is not enabled, this falls back to software decoding via
+> branch_type(). Because intel_pmu_setup_hw_lbr_filter() unconditionally sets
+> X86_BR_TYPE_SAVE for Arch LBR CPUs:
 >
->> diff --git a/kernel/events/core.c b/kernel/events/core.c
->> --- a/kernel/events/core.c
->> +++ b/kernel/events/core.c
-> [ ... ]
->> @@ -13904,7 +13904,9 @@ SYSCALL_DEFINE5(perf_event_open,
->>  	if (err)
->>  		return err;
->>  
->> -	if (!attr.exclude_kernel) {
->> +	if (!attr.exclude_kernel ||
->> +	    ((attr.sample_type & PERF_SAMPLE_CALLCHAIN) &&
->> +	     !attr.exclude_callchain_kernel)) {
->>  		err = perf_allow_kernel();
-> [Severity: Critical]
-> Does this change break perf record -g for unprivileged users using
-> existing perf binaries?
->
-> When an unprivileged user runs perf record -g, the initial syscall
-> request fails with -EACCES. The perf tool's existing fallback logic
-> retries by setting exclude_kernel = 1, but it leaves
-> exclude_callchain_kernel = 0.
->
-> Because this new check enforces the privilege requirement for callchains
-> even when exclude_kernel is set, the retried syscall will fail a second
-> time with -EACCES.
->
-> Looking at the perf tool's fallback handler:
->
-> tools/perf/util/evsel.c:evsel__fallback() {
+> arch/x86/events/intel/lbr.c:intel_pmu_setup_hw_lbr_filter() {
 >     ...
-> 	} else if (err == EACCES && !evsel->core.attr.exclude_kernel &&
-> 		   (paranoid = perf_event_paranoid()) > 1) {
+>     if (static_cpu_has(X86_FEATURE_ARCH_LBR)) {
+>         ...
+>         reg->reg |= X86_BR_TYPE_SAVE;
 >     ...
 > }
 >
-> Since exclude_kernel was set to 1 during the first fallback, the tool
-> cannot handle the second -EACCES failure. Will this cause the tool to
-> abort entirely with a permission denied error rather than falling back
-> to user-only callchains?
+> the early return fast-path in intel_pmu_lbr_filter() is bypassed. Does this
+> cause intel_pmu_lbr_filter() to iterate over all LBR entries and perform
+> high-overhead instruction decoding in NMI context even for generic branch
+> requests?
 
-Yes, this is the expected behavior, we need the similar fallback for
-exclude_callchain_kernel attribute. The perf tools patch would be posted
-separately.
+Generally speaking, the x86_lbr_type should always be true for arch-LBR.
+Even it's not true in some corner cases (like guest environment), high
+overhead is better than wrong branch decoding.
+
+
+>
+> Additionally, if user memory is paged out, copy_from_user_nmi() will fail,
+> causing branch_type() to return X86_BR_NONE. Does this result in valid LBR
+> entries being silently dropped?
+
+I doubt if the issue could really be seeb. Even it happens, it seems there
+is nothing to do except dropping them.
 
 Thanks.
 
 
 >
+> [Severity: Critical]
+> This is a pre-existing issue, but falling back to software decoding exposes
+> a vulnerability in get_branch_type() when processing LBR entries in NMI context:
+>
+> arch/x86/events/utils.c:get_branch_type() {
+>     ...
+>     if (kernel_text_address(from) && !in_gate_area_no_mm(from)) {
+>         addr = (void *)from;
+>         bytes_read = MAX_INSN_SIZE;
+>     ...
+>     insn_init(&insn, addr, bytes_read, is64);
+>     ret = decode_branch_type(&insn);
+>     ...
+> }
+>
+> If the from address (which is controlled by the LBR hardware recording a
+> faulting RIP) points to the very last byte of a mapped page, bytes_read is
+> set to 15. The instruction decoder will blindly read past the page boundary
+> into an unmapped guard page without exception table handlers.
+>
+> Can this trigger a kernel page fault (#PF) and Oops in NMI context when
+> processing the PMU interrupt?
+>
+>>  		    type <= ARCH_LBR_BR_TYPE_KNOWN_MAX) {
+>>  			to_plm = kernel_ip(to) ? X86_BR_KERNEL : X86_BR_USER;
+>>  			type = arch_lbr_br_type_map[type] | to_plm;
