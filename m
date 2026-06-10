@@ -1,153 +1,185 @@
-Received: from mail-pf1-f176.google.com (mail-pf1-f176.google.com [209.85.210.176])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from mx0b-0064b401.pphosted.com (mx0b-0064b401.pphosted.com [205.220.178.238])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DC88B1DE4EF
-	for <sashiko-reviews@lists.linux.dev>; Wed, 10 Jun 2026 04:24:32 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.210.176
-ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1781065474; cv=none; b=Gv6SGGMztC5GuyZtU/eVkETzAoNxo1bMZ9ohpekqDTSapfnBC6ienWjK1ZgkX8sbkMgDZnZVHtw4cQmUvqd4C77d88HqFTfZlXiH4yTm3JfX7l5tSA3zhWsQsR+KaR2iuaK7Z5dsgLd7oKVsuu/2l/JXDg4P34ErbdkwDOxcnV0=
-ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1781065474; c=relaxed/simple;
-	bh=2CqF8p5dw/XxEAz11Zh8DDYuf1c9GnMd4+BGC6W4CqA=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=ufmzzwB5AuTp+ixZI6UbUYk7Z+EuS4smLfQLIjfAwuePrcxFPZ2ej/o5+DnzEVJ3O85Rqwk9v/Yc6Z2lEGy7mM66JocVF8kF8qrlcABrSMyDDG8flqfjvFGCfvsi19ST+vnxeztBW+X+kOH6AEkk2QVo+RRY8Cvpl/BF3rW5lCg=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=CDXbVOWI; arc=none smtp.client-ip=209.85.210.176
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 27DE9209F43
+	for <sashiko-reviews@lists.linux.dev>; Wed, 10 Jun 2026 04:43:00 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=fail smtp.client-ip=205.220.178.238
+ARC-Seal:i=2; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
+	t=1781066583; cv=fail; b=C5XGD45+b5tu2tHjMA2t/EfhhgXKMXtuXNWryicNwH2MkTvChCH/X/GLVmRuLAyI/Ut0zGfxlid6hkkMP/hel+D+o2yDeDJmFIPsgqsnaL201SCG3Na1WKv+xNTcz7qPaNrVCn2niec/E2u4+37XyZhn4dG5CIAyN9YACh78TT4=
+ARC-Message-Signature:i=2; a=rsa-sha256; d=subspace.kernel.org;
+	s=arc-20240116; t=1781066583; c=relaxed/simple;
+	bh=PLAX1dykzN+G1gvQT84pGfQjYm+FXsu09XxOGnQbzjs=;
+	h=Message-ID:Date:Subject:To:Cc:References:From:In-Reply-To:
+	 Content-Type:MIME-Version; b=C0QFAMmJ6Q4qw+cEIvxWRqnI3TWWh5ABMNwnFYDvbrqTZ9ajjl+jx0Eb7vDcx6dkOCeW3ZymXL6mLRtAIJ/sUHhKkynEcrbMoxAiaCduWYUl+FmGCy9s7BpU8EjLugvT1cmTis1UFzQXch5ct/F3kKUQ16Sz/5UVDmdAoGZrcsA=
+ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=windriver.com; spf=pass smtp.mailfrom=windriver.com; dkim=pass (2048-bit key) header.d=windriver.com header.i=@windriver.com header.b=nXKFnq12; arc=fail smtp.client-ip=205.220.178.238
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=windriver.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=windriver.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="CDXbVOWI"
-Received: by mail-pf1-f176.google.com with SMTP id d2e1a72fcca58-842848fd613so5290395b3a.3
-        for <sashiko-reviews@lists.linux.dev>; Tue, 09 Jun 2026 21:24:32 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20251104; t=1781065472; x=1781670272; darn=lists.linux.dev;
-        h=in-reply-to:content-disposition:mime-version:references:message-id
-         :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
-        bh=wwS2XQIcEgtV0x4G9OnLh7cNs9kyFtmykvsZ/mlbH4Q=;
-        b=CDXbVOWIvljj8xxc+gGlUaRjiIKD3hKUj6/68u+yUW8m6cuhEZwvaVtJZxPT2sWJVF
-         izrwY+mDa36V1+zmVBVLVFIyt1G9zLw23faQrYa3ytqJ9pb0I5JrFLYfvzlpmWbBpUAH
-         TVrRXUA/C+WbSmYV4G/31EqxCg1LpquarkGRHMXaTM8BWO0J1v4KzrnV2XA2dKwk7657
-         BM6NOTaPpqYeH/RMi9A9W5WfagOM9A1Z3Xz30eOTq8qhUlryyF7We4fvXl7klXjDHJa/
-         OUriTZEtq1EwUlvdwP/0Jmm5MXF0yLdJn0MlEj7zHEVK069jElGBgyJ3QCqARzkNrawe
-         9W+g==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20251104; t=1781065472; x=1781670272;
-        h=in-reply-to:content-disposition:mime-version:references:message-id
-         :subject:cc:to:from:date:x-gm-gg:x-gm-message-state:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=wwS2XQIcEgtV0x4G9OnLh7cNs9kyFtmykvsZ/mlbH4Q=;
-        b=Z8Pz3zviZ3VZt2hqpgvJCrzw97IUFLl3jTxncCUZgzjBNtQs5KtFvu0o5AKU0FruWB
-         GZ/QNPpNyTurxqC7riA04llhX0deJpAjyAM3qRfCVVC9t32Ke8nxDfk+nWz66/q+n6Lq
-         iH0FSgGJLYwxcMBVtb7rSZctwPyJbTjGnK445zDd1GV/JRHHafb+nVRjAxngZon9lkLB
-         LWBkbB/W3NLOyyp62Qz7JRgxmZnvXDS8rkutRMqd7Suhy8NqxJcAgpFcquJI2y+Bcinx
-         yNxpS/Zli14erT3G/nFLeKWGWqFDPGp71f5APrm7VB4Ie3qWDRi1ZDMGhTWZvZHdfbTD
-         4q9w==
-X-Gm-Message-State: AOJu0Yw7uHC18QZ57BRZvPo02r7xyBB/UMk92tG1Hhg6IY4vB8MnjQwz
-	E9nLxulEyTTX6ZCWJ+H6vXi3VWY+vsWxfiulfduwbJbihXVWnelb2LWW
-X-Gm-Gg: Acq92OHvOJoDXwZhVCltvQkqemrpRmtXZGu36V1pXmN2WWKrEEmG80SolRdj1B1i6Qw
-	YKI20pnnoQY1qrk4C/HY6PY/OxWRih2LNOvttEYU/vM03WDrJ2gpEpNDrvY4w6KBDzSU+jbvyWF
-	MHkvayUoAqZWnNreuDqNiqrGJbZU4mximFcYBeaA4WYYRMvCyZHagWNQBx1jA4WSwnhanmbb/8Z
-	gFzbF4pq3xtrMURV6Ve4ONkW9aIM2+UYp3PITF4FR4Wd2xjPD7yaK1FShqLG6YIuTE+hhdkXCmE
-	t7ecOQKO0kZ95fNVqzZMDQuPtTp0aAMO+Pa4HQHh5H6HrrdrFerHgitd2kSBNWJoQqtF9DC2Sks
-	xSGfaanmwUrN+WPBnwLe53Jo1G65GVEnGRuHZK/JRAe7gaYh0CjS5GXiyNezqNKPIG25M+8ZDYA
-	738FJio0pp/9W69opnZ5FV/1f9hSTzpPtq78b1ntuKd2oAqEinNdRaohiI9AP5fboOaFvSMEk+W
-	fY0NrS9
-X-Received: by 2002:a05:6a20:729b:b0:3b5:28d1:8bb5 with SMTP id adf61e73a8af0-3b53bc5c1f4mr7697024637.11.1781065472043;
-        Tue, 09 Jun 2026 21:24:32 -0700 (PDT)
-Received: from cps-manycore-1 ([147.46.174.222])
-        by smtp.gmail.com with ESMTPSA id 41be03b00d2f7-c85df0bdbe4sm20002858a12.32.2026.06.09.21.24.30
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Tue, 09 Jun 2026 21:24:31 -0700 (PDT)
-Date: Wed, 10 Jun 2026 04:24:13 +0000
-From: Sechang Lim <rhkrqnwk98@gmail.com>
-To: Emil Tsalapatis <emil@etsalapatis.com>
-Cc: sashiko-reviews@lists.linux.dev, bpf@vger.kernel.org
-Subject: Re: [PATCH bpf] bpf, sockmap: fix integer overflow in
- bpf_msg_pop_data() bounds check
-Message-ID: <ffogb2v2lpkznolxyxqzpa2semo74gytqgznuqs3zzjirjmjul@eezstkfy65d2>
-References: <20260609183927.4021802-1-rhkrqnwk98@gmail.com>
- <20260609185257.A09111F00893@smtp.kernel.org>
- <DJ4UMEV0NQE2.14XTJKL239Z4Y@etsalapatis.com>
+	dkim=pass (2048-bit key) header.d=windriver.com header.i=@windriver.com header.b="nXKFnq12"
+Received: from pps.filterd (m0250812.ppops.net [127.0.0.1])
+	by mx0a-0064b401.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id 65A4aF4a4073148;
+	Wed, 10 Jun 2026 04:42:59 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=windriver.com;
+	 h=cc:content-transfer-encoding:content-type:date:from
+	:in-reply-to:message-id:mime-version:references:subject:to; s=
+	PPS06212021; bh=PLAX1dykzN+G1gvQT84pGfQjYm+FXsu09XxOGnQbzjs=; b=
+	nXKFnq1221TXnN2HHDCgs3bjoDE8JhwSgacjmNoDMZrQQtGrZgnWx43RUGD6K7Gp
+	Edjp1gOUydrKM7NvQPd0dJcGUfLSv1LRaUY+8YIalc/wKbS0+9NDhPQWPM27q8WR
+	34PmoBC4cpD2t0c8X5DgLxGhvqQe9rP40TsFMvBRpmqI+aQQaNNLofoIT0fNsQKJ
+	6fHhuL/5Yflunx3Fpk5GArPdFYl9ep039of6WRNsn5dbgFKd21Q9uwTHxcrz6fZc
+	8JqVocU1sUCqdiIDh8XxIc4bu58bmEwzNs1Myk6gKPu6ZDqCNOE2lsNVp+X9GTD5
+	f/BMtgj/X4jFrTE6UuopoA==
+Received: from sj2pr03cu001.outbound.protection.outlook.com (mail-westusazon11012001.outbound.protection.outlook.com [52.101.43.1])
+	by mx0a-0064b401.pphosted.com (PPS) with ESMTPS id 4epwms05xb-1
+	(version=TLSv1.3 cipher=TLS_AES_256_GCM_SHA384 bits=256 verify=NOT);
+	Wed, 10 Jun 2026 04:42:59 +0000 (GMT)
+ARC-Seal: i=1; a=rsa-sha256; s=arcselector10001; d=microsoft.com; cv=none;
+ b=gbDClIdF77Io09vd2C/q6C0qkUAIFoAATkL1HYf4XzAns67YSV4JTOwUatxaOTeXbd33peKPD2mMpgwyYc1pkGzq3b66LN9Q2rWUIEm5Jk2a+43qz3LFFFdEhYNDpcusCuzC4zOOuXeDjAsaGHISf5smlvdCQMQNGp52RHVE87kgxVVP68m5XkFJRKnoO5t98eMtug9oHRTv/TFf8udYfgxYn0IzQOTT0eNyfe7KqZZxdWy+FSroP6mO9hXw0YjCwUrUU9He20qa74QpDO8AcO5VtQvD7eBGjyFfkl15P4RINg0lvgqvtzCQSAkH6tlefeMxf3UOe9rbhWYecRQJWQ==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com;
+ s=arcselector10001;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
+ bh=PLAX1dykzN+G1gvQT84pGfQjYm+FXsu09XxOGnQbzjs=;
+ b=E6uwM5b46IBPUrSOYaw/DehIhcBetYfE9oGoQBdy/bPNN5uIIYdXfOqpT1WU1ShvMW3fvSsz1y+Rd6rP0RZhB0iP08n+sFw5eVamY55TyoC2kg2u9zYstdUDMTfLPttDyfBQ/iTL/p/ySL3n4Of44a0Ursi5xhziIS4bF46ycfEX/AzzKDyrctFsJBZPlCgkyKPHb9T4iFtZp+S37lNGsJ21btC/dXed4p5JPVvQPv9H37f0Z2K8Xg2xADkJHisNl97TGATSppyMuimtsJd5W/3g+QktUVuAQVfXNbw+6rGzzh8LQbeN7LVrxDsfp5pssfMtDmh1IQ4TNGMhFOCEzw==
+ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
+ smtp.mailfrom=windriver.com; dmarc=pass action=none
+ header.from=windriver.com; dkim=pass header.d=windriver.com; arc=none
+Received: from CH0PR11MB5332.namprd11.prod.outlook.com (2603:10b6:610:bf::17)
+ by DS4PPF990BCE628.namprd11.prod.outlook.com (2603:10b6:f:fc02::3d) with
+ Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.21.92.14; Wed, 10 Jun
+ 2026 04:42:56 +0000
+Received: from CH0PR11MB5332.namprd11.prod.outlook.com
+ ([fe80::8f86:8d08:45bf:ec13]) by CH0PR11MB5332.namprd11.prod.outlook.com
+ ([fe80::8f86:8d08:45bf:ec13%6]) with mapi id 15.21.0092.011; Wed, 10 Jun 2026
+ 04:42:56 +0000
+Message-ID: <bcf21497-0c4e-410c-9b3a-17ab63fcb782@windriver.com>
+Date: Wed, 10 Jun 2026 12:42:50 +0800
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH] ext4: move inline data cleanup to ext4_writepages to fix
+ deadlock
+To: sashiko-reviews@lists.linux.dev
+Cc: tytso@mit.edu
+References: <20260609154505.2104659-1-yun.zhou@windriver.com>
+ <20260609160329.B671B1F00898@smtp.kernel.org>
+Content-Language: en-US
+From: "Zhou, Yun" <yun.zhou@windriver.com>
+In-Reply-To: <20260609160329.B671B1F00898@smtp.kernel.org>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
+X-ClientProxiedBy: SL2P216CA0180.KORP216.PROD.OUTLOOK.COM
+ (2603:1096:101:1a::15) To CH0PR11MB5332.namprd11.prod.outlook.com
+ (2603:10b6:610:bf::17)
 Precedence: bulk
 X-Mailing-List: sashiko-reviews@lists.linux.dev
 List-Id: <sashiko-reviews.lists.linux.dev>
 List-Subscribe: <mailto:sashiko-reviews+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:sashiko-reviews+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii; format=flowed
-Content-Disposition: inline
-In-Reply-To: <DJ4UMEV0NQE2.14XTJKL239Z4Y@etsalapatis.com>
+X-MS-PublicTrafficType: Email
+X-MS-TrafficTypeDiagnostic: CH0PR11MB5332:EE_|DS4PPF990BCE628:EE_
+X-MS-Office365-Filtering-Correlation-Id: fc2076ba-6a82-4dfc-f2b0-08dec6aabd72
+X-MS-Exchange-SenderADCheck: 1
+X-MS-Exchange-AntiSpam-Relay: 0
+X-Microsoft-Antispam:
+	BCL:0;ARA:13230040|23010399003|366016|1800799024|376014|56012099006|22082099003|18002099003|4143699003|11063799006;
+X-Microsoft-Antispam-Message-Info:
+	2bT4gnm+s1ds8wXu9XhwDva3Ceqpxt8HuYZLe5a2YYFlqguRu/4C2a6yOc5kywORgP5yWi0IaTto4Yr2lMhZWIEWIxO8KPoJGVv4Xx/07RfazI6UT0OHMMI5IX/IMU3rvVNDaeNobbDOqUm8GgCRuWEqtJ/LBF1ON4Jj8Z6ExZl0rr0JIZQdDf1/ooSq5U/9np2NPRWHsl6Bx0CsJmaXiu9PDeAUJlFf7QupNmzzZMu6n24fB5a5g6BfGzIxILnOQBwHqnw7KLtJDyqapyBdk/NZLjMINStvcJQ3AbLSfWwwAgBBTM+2fbbH+aj8JRQJ7W94nB2DMRMOs3x5PbUNH0lHvA/1TEt/wSziEWPjMKMklqkdA18NI4pHpU0dV9yqTLSmvbNTiGj1jZkBmENGarP6WdIt8fUmSr9TD2Q08UsERBjZNDiZi8wILf1ddcvyf99ykoKgfQF3t7RrvVo6e4DBcd/Pim9YHLuDzZ/t/+tosk5yw9AH5R4rZ1+gH6DiTiZNNof24PhM+XGrBShBZ54rpJzlpGGNdife0wgdEnRaGYuhMf1HgbCkJBalN2eN3T4omnuH44HRPa9AfVzq4Ld2j6qoFD5XKuYoaUJOW7i2I3cpHCypKXQ8+ZfVi+9quUQGjAuQdUliu0riW7fL6dwyKsnswaYlEDDAUU3lFRcqANRh5c/9FOaMsZdA4vhU
+X-Forefront-Antispam-Report:
+	CIP:255.255.255.255;CTRY:;LANG:en;SCL:1;SRV:;IPV:NLI;SFV:NSPM;H:CH0PR11MB5332.namprd11.prod.outlook.com;PTR:;CAT:NONE;SFS:(13230040)(23010399003)(366016)(1800799024)(376014)(56012099006)(22082099003)(18002099003)(4143699003)(11063799006);DIR:OUT;SFP:1101;
+X-MS-Exchange-AntiSpam-MessageData-ChunkCount: 1
+X-MS-Exchange-AntiSpam-MessageData-0:
+	=?utf-8?B?RElQY2h1cUpHRW56K3hvOXNQeklYd2x5akJxd3IyMDhCMjRvN1VGYjREV0o5?=
+ =?utf-8?B?ZENUd2NZYXF4VVMzV2VMaCtEV0swQXRvdzlkbmt1enEvUjhGZHVkREFMaXVK?=
+ =?utf-8?B?NkpqYzFaejlvM3RycFUvSUQ0THVYU2RreitmSE9UM3JqRTJKVmlzalMxZDEz?=
+ =?utf-8?B?Q3lrZEx1cmp5enZ4SFRtbC9JV2U2amdKQzR2RXhlOVdBa2swSmV6dGhqYmx6?=
+ =?utf-8?B?NFdqbndtN2Jka1R2ZEtuMFVXck1FNEJLNmNzNGlFam0vcU5pUWJaQjlYUm1K?=
+ =?utf-8?B?eFRNc0pSK1grVWcxSTVQTWRHY0xXbzRxMzI1a3BnQkdOa3MwMU4wLzJ4SDZu?=
+ =?utf-8?B?dldhbXZ0bnZDK2dzUTBVZHVXNWxKTWRmbTMyTEFZcmcyeGJ6Y3doWmtsZW1R?=
+ =?utf-8?B?WGdtUXl6UlF5d2J0V1NVYlhXTWdxVzd2S3p4UjM3Y2MyQWdBYnkzekVnL2M1?=
+ =?utf-8?B?ZHpsaTFMT3JERVB0VFducHJhd2VaYkQxTzFXYjVrcnZ0eUlBQ2l1QVNpVXBo?=
+ =?utf-8?B?QzlrYkI3WGF2dWdjK1FVVU14V3VPMGl5eHdXbmNMaktTTGxjN2pMdWd6V1Bl?=
+ =?utf-8?B?cE9yRGE5bHBHMUZuUVlNdkZBR2FmM1NMY3VEWmhwcTgwR3RzZ2hKSEx2am1G?=
+ =?utf-8?B?V1p1RzRucEVpYldZUWtjOVZuMWJIc1NSQjAzU2RselQ2VEk1QVFSSStvNlFQ?=
+ =?utf-8?B?S1ZCUzhXK0ZtT3M1Z0FXWkQyMy81bHJ4QXFPU1ZmekMwU1VUWlA4T0N4WTY3?=
+ =?utf-8?B?VVhDbk16OTVBNFBQQmtsd21uditCbUxpbXRaaTE4YmlsVW9kNE85TzlKdy83?=
+ =?utf-8?B?ODJnbS9saENWc0NzNHprVUk4QmNFbVBsRllUK1FDMTlmYXNMOGJzNzZ6Q1BK?=
+ =?utf-8?B?dFI5akFQSFRtdXFFZTJWdVJmczRZcmloczQvSDB1S1pRcnY5cHNnVHkrYy9y?=
+ =?utf-8?B?R092d1RpMm5GYWRRSTBqQWc4V3NjdXpVekc0TXVxL3BPQnowdjlCbUJVZS9w?=
+ =?utf-8?B?YXJpWllmYVl6MmhUYXdoQ080bnptWTBMVkFnRkZQNDdyMzFkcFdiaDZ1WHN2?=
+ =?utf-8?B?Skx5Z3AvYU1kUXJ0enZjaDlxSnpBS2ZXQndBSEdDb1IzUG1Nd3RLalhBU0F0?=
+ =?utf-8?B?ZnJLdkt2R09KbklGM0YxQ2c3RUZYRFZtYnIwdE1IRlFXQ2p4bmJWUFRISUFL?=
+ =?utf-8?B?bHZ5OHpjenFuVXUxVTM4TWZSaytsSmxLVjdGWDV0VjhKMFoySWx4TnhEZ3RV?=
+ =?utf-8?B?Um9QdDRNbTVyM1gwaHdkR1pwZUtSUEpkemhzbEZSUitDQUxha1UyVXNxOGQ1?=
+ =?utf-8?B?MllMTjR4NTlsM3RZU0lmQ0VLaUlmWi9mNW5lekkyTWs5WUZMeFBlVVFsTjVI?=
+ =?utf-8?B?NGpjYXkwSDJISzBSWWYwekI5MXEzcTB0M3R4ZzZkT1FSckwyT1hDTkY0NmVM?=
+ =?utf-8?B?RmRLcUl1ZEFkZytWZDc5VEdpSjF0VmVpQ09GNVhzc1VLdTJpQ05tYmNLTVVx?=
+ =?utf-8?B?SzJHU3Z1VkVFeUhmb2JIbE1PUld1ZFJXZEpXRHIvU0lBSFRucmZVVmxsV2I4?=
+ =?utf-8?B?bjVaNTRJdnVhOHkxazZ6cE15dlovOUgrRUtqb3FKTGsrTTI0YWlPSWFWS0Ro?=
+ =?utf-8?B?QTVSME01WDR3SitjTGh6WW1IN3M1VDlZS0pMY1hjOUgrM0lzZHk0b1VlYnZP?=
+ =?utf-8?B?M0JocE55WUFrdEFKQUhYMzlJeCtaSnRlOTRNRWU5U3Zoc1RkTkxxRWNOZC9S?=
+ =?utf-8?B?NVhEd2VaYlNKVzFyMnJZdjVFL3c0bFN4S1k5cTA5a2ppZU15encraUhsNWto?=
+ =?utf-8?B?b3d4THZGOVFrTnYxc3BXMnhLamZGUHF4SkF1MEE3Z0hiSWJmU29VWTFtWCsx?=
+ =?utf-8?B?eWxERUw0eEtQN0twd3MybEplNUF2YUw3aW9VMW9Bd0RTdEFiZ2FKK0lGSGY5?=
+ =?utf-8?B?MHNtakRsYjRnSGl1eGFLSS96ZTlKYUYrYkdBVWZZdE1qOWtrcnhudjNoNGZn?=
+ =?utf-8?B?bTRyL2d4SVFyOTdjaEZEdEl4dkFINFZTVitTSkV0YUVuWlA2bEJWNHFldStR?=
+ =?utf-8?B?WUIwVG1MSnZHdXF3ZnBtM3JvN1JHaXl2VGpPRHVBRXBuZ241OGNGOU15MjFM?=
+ =?utf-8?B?cVc2MUd4WjJ0bzJYQjRnQXF6SFErM0t1TnUzb3JTeDFTOThTbmF0NTdKK1U4?=
+ =?utf-8?B?RnZpY1FYK21oR0FBS0JVWis1aGp6Z21sTVpxSkJCS2JqTXJIY1FKS3cxbDdk?=
+ =?utf-8?B?VjcrT2k2Qmtvd0RWeDRGWVN6UTlvemEvUWFaanFVbzdVVUxzMXlFRUo3WHVM?=
+ =?utf-8?B?bWFpZFY5MDBjWVdvUlZaQU5sSzROYk51dGFiZG1wQXk0cWl3b2ViZz09?=
+X-Exchange-RoutingPolicyChecked:
+	WKyzpXUw3lQ/T8xd1aJ9VxUiBAoVD3f+6ip+MPzq50vuw2Acj2+O0c0n7+6sBgR3uypRFsllICG4AVW0/ZGkdhg6rlHgXJWuBEDhUfnYUMgJ8IHgtlAvseOCPX6lJuB4vXFrL9cdubYKYXqNXy0PFH2Xza4XQ1zHwafxFfmyo1/2u3ccHKSIqUlGfgr0uKuAsWkRBv8PeUMIgjAXggTq1y1jXjm8RJxRrwHQr0dMLziylD3DzQmUqwgcHM/M6q7PzHHm1X1lU3NX611P4wBIil6O42nQMuwDWSef2DRJVYsshp3kFfKka8Z31bHeqM5oTZuePcuGqr3xVl8Zoa1QWg==
+X-OriginatorOrg: windriver.com
+X-MS-Exchange-CrossTenant-Network-Message-Id: fc2076ba-6a82-4dfc-f2b0-08dec6aabd72
+X-MS-Exchange-CrossTenant-AuthSource: CH0PR11MB5332.namprd11.prod.outlook.com
+X-MS-Exchange-CrossTenant-AuthAs: Internal
+X-MS-Exchange-CrossTenant-OriginalArrivalTime: 10 Jun 2026 04:42:56.4193
+ (UTC)
+X-MS-Exchange-CrossTenant-FromEntityHeader: Hosted
+X-MS-Exchange-CrossTenant-Id: 8ddb2873-a1ad-4a18-ae4e-4644631433be
+X-MS-Exchange-CrossTenant-MailboxType: HOSTED
+X-MS-Exchange-CrossTenant-UserPrincipalName: i4M89aAnQawzI9rsUSeRSX3i+MbXxVZVAHUA9ivernzl2f04BpKWCO/dh+CBL/qf7iX1hzNHhA0wdz4o0Sm7MA==
+X-MS-Exchange-Transport-CrossTenantHeadersStamped: DS4PPF990BCE628
+X-Authority-Analysis: v=2.4 cv=NOPlPU6g c=1 sm=1 tr=0 ts=6a28eb53 cx=c_pps
+ a=JgVaYur/QNM9XUS2zzqRTA==:117 a=6eWqkTHjU83fiwn7nKZWdM+Sl24=:19
+ a=z/mQ4Ysz8XfWz/Q5cLBRGdckG28=:19 a=lCpzRmAYbLLaTzLvsPZ7Mbvzbb8=:19
+ a=xqWC_Br6kY4A:10 a=IkcTkHD0fZMA:10 a=FelO9ux0wxsA:10
+ a=VkNPw1HP01LnGYTKEx00:22 a=bi6dqmuHe4P4UrxVR6um:22 a=fTW__CHxibyLmBMfj2wP:22
+ a=VwQbUJbxAAAA:8 a=4IOU7M2EybTnVo8F4bwA:9 a=QEXdDO2ut3YA:10 a=zgiPjhLxNE0A:10
+X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwNjEwMDAzOSBTYWx0ZWRfX4vSAWluCXrsp
+ aGJeSE+uZfuIT1mq+ts54TFBqlQeD8juVgrI8xP1I5sgfSyNZ9W21MNkNAYCAz1mXghsLk3I1eK
+ Hvu2HVT58QCHvtyYoC7wTsTEl+zkOxz3fnz2MuRNXxU8H5ZYxgPwIUd2T04cNEN2eRKhWQydFYB
+ 5LndUwEJ2UQKgfYgZdAxDsq3gRu48o+W4R2qQko9Ui3mN/U22pSFXHMsjAsYHDH9dqVIW2blDxb
+ lr/P0iT6HxjiiU5y3quq1A4oSMg3cmFkDN4lL4aQ/0vKf6PgCjSw52g+6EzAKlvd5oA+0/9YK8c
+ e6SMTGKN9/OtV0MYLyFBcgnpTVrc0rB9DyvrmIRwmG4GdVjbWrRAoSVV5GNRw/BVkIJR/8WuoQX
+ gas5EXvuNjtcTvcZDqaLjSWelsBCfKRGxWAVZOQ7lQy/C+F87CDgiO7KBp0SpgLrmt/BNVs+xcx
+ 2xTDm1/884LF7fa4lCg==
+X-Proofpoint-GUID: rcDksED1OwrycxWWPNJvgiemNLkWesOR
+X-Proofpoint-ORIG-GUID: rcDksED1OwrycxWWPNJvgiemNLkWesOR
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.293,Aquarius:18.0.1143,Hydra:6.1.125,FMLib:17.12.100.49
+ definitions=2026-06-10_01,2026-06-09_02,2025-10-01_01
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
+ suspectscore=0 bulkscore=0 adultscore=0 lowpriorityscore=0 priorityscore=1501
+ phishscore=0 spamscore=0 clxscore=1011 impostorscore=0 malwarescore=0
+ classifier=typeunknown authscore=0 authtc= authcc= route=outbound adjust=0
+ reason=mlx scancount=1 engine=8.22.0-2605210000 definitions=main-2606100039
 
-On Tue, Jun 09, 2026 at 05:49:49PM -0400, Emil Tsalapatis wrote:
->On Tue Jun 9, 2026 at 2:52 PM EDT, sashiko-bot wrote:
->> Thank you for your contribution! Sashiko AI review found 2 potential issue(s) to consider:
->>
->> Pre-existing issues:
->> - [High] Unbounded `len` parameter in `bpf_msg_push_data` causes a 32-bit integer overflow when calculating the page allocation size (`copy + len`), resulting in an out-of-bounds heap write.
->> - [High] Incorrect scatterlist element offset calculation when splitting an element in `bpf_msg_push_data` inflates the page offset, leading to out-of-bounds memory accesses.
->> --
->>
->> commit 619f5b1d1aebdbd6457c3ac6e3a92bc45be7278c
->> Author: Sechang Lim <rhkrqnwk98@gmail.com>
->
->The change seems solid, the error is apparent from code inspection
->alone (though a repro wouldn't hurt). Can you also turn pop from an int
->to a u32? It should never be negative AFAICT, and we assign to it from
->a u32 so since we're fixing int types...
->
 
-Will do in v2.
 
->>
->> bpf, sockmap: fix integer overflow in bpf_msg_pop_data() bounds check
->>
->> start and len are u32, so start + len evaluates in 32-bit and wraps before
->> storing it in last. The bounds check can then be passed with an out-of-range
->> start/len.
->>
->>> diff --git a/net/core/filter.c b/net/core/filter.c
->>> index 9590877b0714f..31467c0b4279e 100644
->>> --- a/net/core/filter.c
->>> +++ b/net/core/filter.c
->>> @@ -2974,7 +2974,7 @@ BPF_CALL_4(bpf_msg_pop_data, struct sk_msg *, msg, u32, start,
->>>  	   u32, len, u64, flags)
->>>  {
->>>  	u32 i = 0, l = 0, space, offset = 0;
->>> -	u64 last = start + len;
->>> +	u64 last = (u64)start + len;
->>
->> [Severity: High]
->> This isn't a bug introduced by this patch, but while fixing the integer
->> overflow in bpf_msg_pop_data(), could a similar overflow occur in
->> bpf_msg_push_data()?
->>
->> Looking at net/core/filter.c:bpf_msg_push_data(), both copy and len are u32:
->>
->> 	page = alloc_pages(__GFP_NOWARN | GFP_ATOMIC | __GFP_COMP,
->> 			   get_order(copy + len));
->>
+On 6/10/26 00:03, sashiko-bot@kernel.org wrote:
+> CAUTION: This email comes from a non Wind River email account!
+> Do not click links or open attachments unless you recognize the sender and know the content is safe.
 >
->This seems like a valid concern. Can you add it to the patch? Making
->copy a u64 should do it.
+> Thank you for your contribution! Sashiko AI review found 2 potential issue(s) to consider:
 >
+> New issues:
+> - [Critical] Unconditional inline data destruction and BUG_ON evaluation in `ext4_writepages()` causes a guaranteed kernel panic or silent data corruption for clean or metadata-only inline data files.
+>
+> Pre-existing issues:
+> - [Critical] The return value of `ext4_destroy_inline_data()` is silently ignored in `ext4_writepages()`. If inline data destruction fails (e.g., due to ENOMEM or EIO), `ext4_do_writepages()` will proceed, mapping blocks over the inode's `i_block`, silently corrupting the inline data.
+> --
+>
+>
+This is indeed a new issue. I will redo the patch and fix it in v2.
 
-Already handled by Weiming Shi:
-https://lore.kernel.org/bpf/20260424191602.1522411-3-bestswngs@gmail.com/
-
->> If the split element is not the first one in the message, wouldn't rsge.offset
->> be inflated by the cumulative length of all previous elements instead of the
->> relative offset (start - offset)?
->
->It does, this seems like a real bug. AFAICT the offset of rsge should be
->
->rsge.offset = start + len.
->
->Can you confirm and add to the next version?
->
-
-Already fixed upstream:
-https://lore.kernel.org/bpf/8b129d10566aa3eb43f61a8f9757bcf51707d324.1779636774.git.xuyq21@lenovo.com/
-
-So I'll keep v2 to the bpf_msg_pop_data() fix plus the pop type change.
-
-Thanks,
-Sechang
