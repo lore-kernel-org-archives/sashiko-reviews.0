@@ -1,68 +1,30 @@
-Received: from mail-pl1-f170.google.com (mail-pl1-f170.google.com [209.85.214.170])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from dggsgout12.his.huawei.com (dggsgout12.his.huawei.com [45.249.212.56])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 49F6B409134
-	for <sashiko-reviews@lists.linux.dev>; Wed, 10 Jun 2026 13:22:18 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.214.170
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CB7AB222582
+	for <sashiko-reviews@lists.linux.dev>; Wed, 10 Jun 2026 13:26:18 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=45.249.212.56
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1781097739; cv=none; b=VZwKikYcikLDsssy6cYrXeWCFOGXu1i6LvJBFozS4oztiq2e8mVWpE3s/HkRAx/DjBYwy1TNKaK2EpKy+WEVHQc0lS+lDAyA9VyweQDx37DbBZtyz6jE3OGQWaq/WjmsmE1x80QzzADqjOiNFqGxalev5G3poVMcUfnc7TurH7s=
+	t=1781097983; cv=none; b=l5x3g+Thw2PRp1Ww/gwnlVPHpasvySjlPhqVY9qsfjFvr2xlTMgNNSI76W5g+Oeghxi5NRWZCuYSgX+EgGdWiUbF3N5EK4o6W02X/QXSD3FotXf3liNiYbF7rTfnIaL+06zP6td7J7doQ6kYau+x/cyoo1XMqkIVCbdyk+Rpd98=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1781097739; c=relaxed/simple;
-	bh=pJOegzbxXHxCQFaBtNelmTjWNZJJ08xVtrXxVwSa2ns=;
+	s=arc-20240116; t=1781097983; c=relaxed/simple;
+	bh=6P+H/HQ+8mnb3tkMt2N8IGh0Zs45/Ss0T+8CYdzKf2Q=;
 	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=PwHqcrbxgemXdlHmRXZUQMNSZp4gx8QLtr2H1vtVZUgSc8ol56zbdLrffKJarwZMiZ7yVHmES6NvbY8+FK2GgjYqId+Wtv/tjUZxoZheHZkwpdSXSSMyo3lQrUFvZbNDIi8MR7OPfyrgFgX1sW0QBk62dMW0vBSOWFnsMxfdaO4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=roeck-us.net; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=e5wrCimn; arc=none smtp.client-ip=209.85.214.170
-Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=roeck-us.net
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
-Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="e5wrCimn"
-Received: by mail-pl1-f170.google.com with SMTP id d9443c01a7336-2bf125989f2so50049925ad.3
-        for <sashiko-reviews@lists.linux.dev>; Wed, 10 Jun 2026 06:22:18 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20251104; t=1781097738; x=1781702538; darn=lists.linux.dev;
-        h=content-transfer-encoding:in-reply-to:autocrypt:from
-         :content-language:references:cc:to:subject:user-agent:mime-version
-         :date:message-id:sender:from:to:cc:subject:date:message-id:reply-to;
-        bh=Vakc+qhS6W2a+oJ9YI9y/ml+NiTipsztKUXDMw/wA5c=;
-        b=e5wrCimn9WzmCHfaSiphJqtIdp3oqBVMF54vWHIva74EUPFIBF1+UU7/ByXBcvLlgO
-         cJiPy3v6GrtszESgaaB6jcqWb8me/q0b9fMjHMmgTJnrNH9NOFieqW0GuGdChyIR8Vk0
-         FBmwikHpyuq2tTHmgCVMIclStQVu6+njMRT9MuH6a2+iZjYAMXcV3mlcY+JNlHP8Jqja
-         McP0mTNbYJTGkOkqE9YVq8KTg0flPxTsUgUuIDjxo+WDJpenx48ANl0GGjLMm9zWtyJY
-         j+CP09fC0oulGX40IRU1HyOWRgK90/9ZZWl/hKZpitaUQoJcnS9MipR7enshbMlzIqCt
-         lx4A==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20251104; t=1781097738; x=1781702538;
-        h=content-transfer-encoding:in-reply-to:autocrypt:from
-         :content-language:references:cc:to:subject:user-agent:mime-version
-         :date:message-id:sender:x-gm-gg:x-gm-message-state:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=Vakc+qhS6W2a+oJ9YI9y/ml+NiTipsztKUXDMw/wA5c=;
-        b=RAiZJnWz0g+JitMu2pu54l6XAWd2+93wTitXjhvJvXj+LlFKdINQBuN3Ji40Qzy86n
-         D1EBhobcHPAVXNyTbJB5ZFPMvOtTPZAGqeIiqF5VRR6Ck6Q5RNGfoof5gWR9Od5s1Ek6
-         aUKsob37J/lnqadEVpgh+HOHP6Dp8yyi48reWQHsNewGFCyC++qalrhjK12wwXFve/qf
-         BNW0U9CCgdNQL25S4BJQK/4+ln+LrKSQ7heA+Tj+ru3CBSbq5573KckeX3ZulnCeCaJB
-         E95HyOFYBd50K5Rvd+lRrD7hfU8Tm4us080ilFmNtambe6BPoVf5fuG8YwPWrEK0t6nz
-         4uzA==
-X-Forwarded-Encrypted: i=1; AFNElJ+KNC7zls/kJtWuNvM3TscnShd+59dR2TpoVpBVk28lfO/p+jw1K6uNRtmjNbWj0IycRuavSGHU4xmp/YAiUCg=@lists.linux.dev
-X-Gm-Message-State: AOJu0YysVIX5cjhLurUR9aD9JuaZQ8WbJN4vzdZNlw1ZJpP/zz5yp2Ex
-	MWa74ujRCyUwZ9GPerv5LUd7F8NPBpgG+8S+9f+VJm59ORJPSAw3H/JZQ2dubCQn
-X-Gm-Gg: Acq92OF/GSFS5nVZdSpTCxT8I346EzyYFgOsq7xqW4kd8wOLTmwSDGDeKzZXS0H7YWl
-	g9RH21S5oIEIliecPS8tgch/8QvWAM46pnZWM95BtJMGWmgibZnq6klk0szEZcFCHHgNsKnOLgX
-	nytdrFntg0yeC5ktvhHCLdAmgmtxMaYVzCwuTy1ukPC53M1V412EIcwKYzky1RObZMByKF3pwRw
-	+9JyOgIiwN9VJLeu7hCbU9rk0fMnjcOcbPtpu327GFlMa/TpJrYugvhmMS28KodtSV0PkZliMES
-	eBnLUryPMybV31wovHgHXiUfPePw68j6Lm6TtIOZ2glXZjAVLcgvq6CnP532Q1F00o1T784S4tx
-	tsz5VLroWWautbQ+WMCS0Z9cV2ho9+IcR9GVa9ym8YC6WDfdsW7Kw4PpVa7it/cpRRnVQUZOA2d
-	axRzDynvfAJOwrLnkq9AyQbUBhv9/HGlj+DQ3whJwTk7C7/+YzOVKbAqQq6fmFfltHZmmBvC9T1
-	aC2pkq7CY4=
-X-Received: by 2002:a17:902:cf11:b0:2c1:ea95:8297 with SMTP id d9443c01a7336-2c1ea958447mr301104505ad.7.1781097737680;
-        Wed, 10 Jun 2026 06:22:17 -0700 (PDT)
-Received: from ?IPV6:2600:1700:e321:62f0:da43:aeff:fecc:bfd5? ([2600:1700:e321:62f0:da43:aeff:fecc:bfd5])
-        by smtp.gmail.com with ESMTPSA id d9443c01a7336-2c16609e636sm248435625ad.51.2026.06.10.06.22.16
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Wed, 10 Jun 2026 06:22:17 -0700 (PDT)
-Sender: Guenter Roeck <groeck7@gmail.com>
-Message-ID: <e5d0760a-6107-4b9d-8d36-5b321e67077c@roeck-us.net>
-Date: Wed, 10 Jun 2026 06:22:16 -0700
+	 In-Reply-To:Content-Type; b=RfW4v4JmQy7yD4RJ2d+49HjkbAc7ffTGDuZtZrhSdD3zuxfVgm+nFiNLbADz2cYxHTLxEUFPjijKmTpaOjXOqaXLEQYMMdPLpq/zrZBG3jzGrl0Fw8XevQFHEnMuLb0dYMmKomhFT+A0SZ4z3LBPknrt/chbhF7MYL6ojUtL0tw=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=huaweicloud.com; spf=pass smtp.mailfrom=huaweicloud.com; arc=none smtp.client-ip=45.249.212.56
+Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=huaweicloud.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=huaweicloud.com
+Received: from mail.maildlp.com (unknown [172.19.163.198])
+	by dggsgout12.his.huawei.com (SkyGuard) with ESMTPS id 4gb63K6PV8zKHLv7
+	for <sashiko-reviews@lists.linux.dev>; Wed, 10 Jun 2026 21:25:33 +0800 (CST)
+Received: from mail02.huawei.com (unknown [10.116.40.112])
+	by mail.maildlp.com (Postfix) with ESMTP id 1778F40573
+	for <sashiko-reviews@lists.linux.dev>; Wed, 10 Jun 2026 21:26:11 +0800 (CST)
+Received: from [10.67.111.192] (unknown [10.67.111.192])
+	by APP1 (Coremail) with SMTP id cCh0CgA3Oj_xZSlqU_U3BQ--.31492S2;
+	Wed, 10 Jun 2026 21:26:11 +0800 (CST)
+Message-ID: <2a7af5be-17b9-4357-8955-5497aa6fce1a@huaweicloud.com>
+Date: Wed, 10 Jun 2026 21:26:09 +0800
 Precedence: bulk
 X-Mailing-List: sashiko-reviews@lists.linux.dev
 List-Id: <sashiko-reviews.lists.linux.dev>
@@ -70,85 +32,97 @@ List-Subscribe: <mailto:sashiko-reviews+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:sashiko-reviews+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 2/3] hwmon: ina2xx: support ina232
-To: Loic Poulain <loic.poulain@oss.qualcomm.com>,
- sashiko-reviews@lists.linux.dev
-Cc: linux-hwmon@vger.kernel.org, robh@kernel.org, conor+dt@kernel.org,
- devicetree@vger.kernel.org
-References: <20260610-monza-ina232-v1-2-925b0d12771b@oss.qualcomm.com>
- <20260610084357.C62271F00893@smtp.kernel.org>
- <CAFEp6-3C0-g7P1m_0xNJj+uEqKJKKuoGk+LspzJgHxh8PKnfFQ@mail.gmail.com>
+Subject: Re: [PATCH bpf-next 1/2] bpf: Fix setting retval to -EPERM for cgroup
+ hooks not returning errno
 Content-Language: en-US
-From: Guenter Roeck <linux@roeck-us.net>
-Autocrypt: addr=linux@roeck-us.net; keydata=
- xsFNBE6H1WcBEACu6jIcw5kZ5dGeJ7E7B2uweQR/4FGxH10/H1O1+ApmcQ9i87XdZQiB9cpN
- RYHA7RCEK2dh6dDccykQk3bC90xXMPg+O3R+C/SkwcnUak1UZaeK/SwQbq/t0tkMzYDRxfJ7
- nyFiKxUehbNF3r9qlJgPqONwX5vJy4/GvDHdddSCxV41P/ejsZ8PykxyJs98UWhF54tGRWFl
- 7i1xvaDB9lN5WTLRKSO7wICuLiSz5WZHXMkyF4d+/O5ll7yz/o/JxK5vO/sduYDIlFTvBZDh
- gzaEtNf5tQjsjG4io8E0Yq0ViobLkS2RTNZT8ICq/Jmvl0SpbHRvYwa2DhNsK0YjHFQBB0FX
- IdhdUEzNefcNcYvqigJpdICoP2e4yJSyflHFO4dr0OrdnGLe1Zi/8Xo/2+M1dSSEt196rXaC
- kwu2KgIgmkRBb3cp2vIBBIIowU8W3qC1+w+RdMUrZxKGWJ3juwcgveJlzMpMZNyM1jobSXZ0
- VHGMNJ3MwXlrEFPXaYJgibcg6brM6wGfX/LBvc/haWw4yO24lT5eitm4UBdIy9pKkKmHHh7s
- jfZJkB5fWKVdoCv/omy6UyH6ykLOPFugl+hVL2Prf8xrXuZe1CMS7ID9Lc8FaL1ROIN/W8Vk
- BIsJMaWOhks//7d92Uf3EArDlDShwR2+D+AMon8NULuLBHiEUQARAQABzTJHdWVudGVyIFJv
- ZWNrIChMaW51eCBhY2NvdW50KSA8bGludXhAcm9lY2stdXMubmV0PsLBgQQTAQIAKwIbAwYL
- CQgHAwIGFQgCCQoLBBYCAwECHgECF4ACGQEFAmgrMyQFCSbODQkACgkQyx8mb86fmYGcWRAA
- oRwrk7V8fULqnGGpBIjp7pvR187Yzx+lhMGUHuM5H56TFEqeVwCMLWB2x1YRolYbY4MEFlQg
- VUFcfeW0OknSr1s6wtrtQm0gdkolM8OcCL9ptTHOg1mmXa4YpW8QJiL0AVtbpE9BroeWGl9v
- 2TGILPm9mVp+GmMQgkNeCS7Jonq5f5pDUGumAMguWzMFEg+Imt9wr2YA7aGen7KPSqJeQPpj
- onPKhu7O/KJKkuC50ylxizHzmGx+IUSmOZxN950pZUFvVZH9CwhAAl+NYUtcF5ry/uSYG2U7
- DCvpzqOryJRemKN63qt1bjF6cltsXwxjKOw6CvdjJYA3n6xCWLuJ6yk6CAy1Ukh545NhgBAs
- rGGVkl6TUBi0ixL3EF3RWLa9IMDcHN32r7OBhw6vbul8HqyTFZWY2ksTvlTl+qG3zV6AJuzT
- WdXmbcKN+TdhO5XlxVlbZoCm7ViBj1+PvIFQZCnLAhqSd/DJlhaq8fFXx1dCUPgQDcD+wo65
- qulV/NijfU8bzFfEPgYP/3LP+BSAyFs33y/mdP8kbMxSCjnLEhimQMrSSo/To1Gxp5C97fw5
- 3m1CaMILGKCmfI1B8iA8zd8ib7t1Rg0qCwcAnvsM36SkrID32GfFbv873bNskJCHAISK3Xkz
- qo7IYZmjk/IJGbsiGzxUhvicwkgKE9r7a1rOwU0ETofVZwEQALlLbQeBDTDbwQYrj0gbx3bq
- 7kpKABxN2MqeuqGr02DpS9883d/t7ontxasXoEz2GTioevvRmllJlPQERVxM8gQoNg22twF7
- pB/zsrIjxkE9heE4wYfN1AyzT+AxgYN6f8hVQ7Nrc9XgZZe+8IkuW/Nf64KzNJXnSH4u6nJM
- J2+Dt274YoFcXR1nG76Q259mKwzbCukKbd6piL+VsT/qBrLhZe9Ivbjq5WMdkQKnP7gYKCAi
- pNVJC4enWfivZsYupMd9qn7Uv/oCZDYoBTdMSBUblaLMwlcjnPpOYK5rfHvC4opxl+P/Vzyz
- 6WC2TLkPtKvYvXmdsI6rnEI4Uucg0Au/Ulg7aqqKhzGPIbVaL+U0Wk82nz6hz+WP2ggTrY1w
- ZlPlRt8WM9w6WfLf2j+PuGklj37m+KvaOEfLsF1v464dSpy1tQVHhhp8LFTxh/6RWkRIR2uF
- I4v3Xu/k5D0LhaZHpQ4C+xKsQxpTGuYh2tnRaRL14YMW1dlI3HfeB2gj7Yc8XdHh9vkpPyuT
- nY/ZsFbnvBtiw7GchKKri2gDhRb2QNNDyBnQn5mRFw7CyuFclAksOdV/sdpQnYlYcRQWOUGY
- HhQ5eqTRZjm9z+qQe/T0HQpmiPTqQcIaG/edgKVTUjITfA7AJMKLQHgp04Vylb+G6jocnQQX
- JqvvP09whbqrABEBAAHCwWUEGAECAA8CGwwFAmgrMyQFCSbODQkACgkQyx8mb86fmYHlgg/9
- H5JeDmB4jsreE9Bn621wZk7NMzxy9STxiVKSh8Mq4pb+IDu1RU2iLyetCY1TiJlcxnE362kj
- njrfAdqyPteHM+LU59NtEbGwrfcXdQoh4XdMuPA5ADetPLma3YiRa3VsVkLwpnR7ilgwQw6u
- dycEaOxQ7LUXCs0JaGVVP25Z2hMkHBwx6BlW6EZLNgzGI2rswSZ7SKcsBd1IRHVf0miwIFYy
- j/UEfAFNW+tbtKPNn3xZTLs3quQN7GdYLh+J0XxITpBZaFOpwEKV+VS36pSLnNl0T5wm0E/y
- scPJ0OVY7ly5Vm1nnoH4licaU5Y1nSkFR/j2douI5P7Cj687WuNMC6CcFd6j72kRfxklOqXw
- zvy+2NEcXyziiLXp84130yxAKXfluax9sZhhrhKT6VrD45S6N3HxJpXQ/RY/EX35neH2/F7B
- RgSloce2+zWfpELyS1qRkCUTt1tlGV2p+y2BPfXzrHn2vxvbhEn1QpQ6t+85FKN8YEhJEygJ
- F0WaMvQMNrk9UAUziVcUkLU52NS9SXqpVg8vgrO0JKx97IXFPcNh0DWsSj/0Y8HO/RDkGXYn
- FDMj7fZSPKyPQPmEHg+W/KzxSSfdgWIHF2QaQ0b2q1wOSec4Rti52ohmNSY+KNIW/zODhugJ
- np3900V20aS7eD9K8GTU0TGC1pyz6IVJwIE=
-In-Reply-To: <CAFEp6-3C0-g7P1m_0xNJj+uEqKJKKuoGk+LspzJgHxh8PKnfFQ@mail.gmail.com>
+To: sashiko-reviews@lists.linux.dev
+Cc: bpf@vger.kernel.org
+References: <20260610201724.733943-2-xukuohai@huaweicloud.com>
+ <20260610124544.3EE211F00898@smtp.kernel.org>
+From: Xu Kuohai <xukuohai@huaweicloud.com>
+In-Reply-To: <20260610124544.3EE211F00898@smtp.kernel.org>
 Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 8bit
+Content-Transfer-Encoding: 7bit
+X-CM-TRANSID:cCh0CgA3Oj_xZSlqU_U3BQ--.31492S2
+X-Coremail-Antispam: 1UD129KBjvJXoWxuryDGr43Jr4rWr43AF48tFb_yoW5Ar1UpF
+	43AFZ8Gw4qgrZrG34kJ3y0vw4Fyrs5try5Xr1DXr1xZa9xXrW7JryIqryY9ayavr4Igr1S
+	vFWYvFZakas0ya7anT9S1TB71UUUUU7qnTZGkaVYY2UrUUUUjbIjqfuFe4nvWSU5nxnvy2
+	9KBjDU0xBIdaVrnRJUUUgmb4IE77IF4wAFF20E14v26r1j6r4UM7CY07I20VC2zVCF04k2
+	6cxKx2IYs7xG6rWj6s0DM7CIcVAFz4kK6r1j6r18M28lY4IEw2IIxxk0rwA2F7IY1VAKz4
+	vEj48ve4kI8wA2z4x0Y4vE2Ix0cI8IcVAFwI0_tr0E3s1l84ACjcxK6xIIjxv20xvEc7Cj
+	xVAFwI0_Gr1j6F4UJwA2z4x0Y4vEx4A2jsIE14v26rxl6s0DM28EF7xvwVC2z280aVCY1x
+	0267AKxVW0oVCq3wAS0I0E0xvYzxvE52x082IY62kv0487Mc02F40EFcxC0VAKzVAqx4xG
+	6I80ewAv7VC0I7IYx2IY67AKxVWUJVWUGwAv7VC2z280aVAFwI0_Jr0_Gr1lOx8S6xCaFV
+	Cjc4AY6r1j6r4UM4x0Y48IcVAKI48JMxAIw28IcxkI7VAKI48JMxC20s026xCaFVCjc4AY
+	6r1j6r4UMI8I3I0E5I8CrVAFwI0_Jr0_Jr4lx2IqxVCjr7xvwVAFwI0_JrI_JrWlx4CE17
+	CEb7AF67AKxVWUXVWUAwCIc40Y0x0EwIxGrwCI42IY6xIIjxv20xvE14v26r1j6r1xMIIF
+	0xvE2Ix0cI8IcVCY1x0267AKxVWUJVW8JwCI42IY6xAIw20EY4v20xvaj40_Jr0_JF4lIx
+	AIcVC2z280aVAFwI0_Jr0_Gr1lIxAIcVC2z280aVCY1x0267AKxVW8JVW8JrUvcSsGvfC2
+	KfnxnUUI43ZEXa7IU1CPfJUUUUU==
+X-CM-SenderInfo: 50xn30hkdlqx5xdzvxpfor3voofrz/
 
-On 6/10/26 02:26, Loic Poulain wrote:
-> On Wed, Jun 10, 2026 at 10:44 AM <sashiko-bot@kernel.org> wrote:
-...
->> New issues:
->> - [Medium] The INA232 configuration implicitly omits `.has_update_interval = true`, silently disabling sysfs update interval configuration.
->>
-...
->>
->> [Severity: Medium]
->> Does this configuration intentionally omit the update interval?
->>
->> Because has_update_interval is not explicitly set, it defaults to false.
->> This hides the hwmon_chip_update_interval sysfs attribute, preventing
->> adjustments to the averaging time despite the INA232 sharing the INA226
->> register layout.
+On 6/10/2026 8:45 PM, sashiko-bot@kernel.org wrote:
+> Thank you for your contribution! Sashiko AI review found 1 potential issue(s) to consider:
+> - [High] The patch breaks cgroup BPF boolean LSM hooks by ignoring a BPF program's denial (exit code 0). It leaves `run_ctx.retval` unmodified for boolean hooks, which fails to enforce denials, ignores overrides from previous programs in the cgroup array, and causes the trampoline to incorrectly fall back to the original kernel function.
+> --
 > 
-> These are pre-existing issues related to out-of-scope voltage and
-> power values. They will not be addressed in this series.
+> commit b6b16c6bf2bc0b50b22feebf85585b33ce70965a
+> Author: Xu Kuohai <xukuohai@huawei.com>
 > 
+> bpf: Fix setting retval to -EPERM for cgroup hooks not returning errno
+> 
+> This commit modifies bpf_prog_run_array_cg() to avoid setting the hook return
+> value to -EPERM when a cgroup BPF program exits with 0 for non-errno hooks
+> (such as boolean or void LSM hooks).
+> 
+>> diff --git a/kernel/bpf/cgroup.c b/kernel/bpf/cgroup.c
+>> index 35d1f1428ef39..83ce66296ac19 100644
+>> --- a/kernel/bpf/cgroup.c
+>> +++ b/kernel/bpf/cgroup.c
+> 
+> [ ... ]
+> 
+>> @@ -83,7 +105,8 @@ bpf_prog_run_array_cg(const struct cgroup_bpf *cgrp,
+>>   			*(ret_flags) |= (func_ret >> 1);
+>>   			func_ret &= 1;
+>>   		}
+>> -		if (!func_ret && !IS_ERR_VALUE((long)run_ctx.retval))
+>> +		if (!func_ret && cgroup_bpf_hook_returns_errno(atype) &&
+>> +		    !IS_ERR_VALUE((long)run_ctx.retval))
+>>   			run_ctx.retval = -EPERM;
+> 
+> [Severity: High]
+> Could this change cause BPF program denials to be ignored for boolean hooks?
+> 
+> In cgroup BPF, a program returning 0 typically signifies a denial. By
+> requiring cgroup_bpf_hook_returns_errno() to be true here, a func_ret of 0
+> is ignored for boolean hooks, leaving run_ctx.retval unmodified.
+> 
+> If a prior program in the cgroup array called bpf_set_retval(1), and the
+> current program returns 0 (denial), run_ctx.retval remains 1. Doesn't this
+> break cgroup hierarchy semantics where a denial must override an allow?
+> 
+> Additionally, if run_ctx.retval remains 0, the fmod_ret trampoline interprets
+> 0 as an instruction to call the original kernel function rather than skipping
+> it. If the underlying kernel function returns 1, the operation ends up being
+> allowed. Does this unintentionally bypass the BPF program's intent to deny
+> the operation?
+>
 
-INA232 does support configuring the update interval. The missing
-" `.has_update_interval = true`" is not a pre-existing issue.
+The key problem is that, boolean hooks do not have deny/allow semantics.
 
-Guenter
+There are 3 boolean hooks, each has its own meaning of the return value:
+1. inode_xattr_skipcap:  1 is "skip capability check", 0 is "not skip"
+2. audit_rule_known:  1 is "rule is known", 0 is "rule not known"
+3. xfrm_state_pol_flow_match: 1 is "match", 0 is "not match"
+
+None of them has deny/allow semantics.
+
+So for a boolean hook, we do not know whether 0 or 1 is the correct value
+to translate the return value to when bpf prog exits with 0. I prefer to
+not translate it at all, just leave the return value untouched.
+
+>>   		item++;
+>>   	}
+> 
 
