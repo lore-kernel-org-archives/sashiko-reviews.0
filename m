@@ -1,128 +1,218 @@
-Received: from dggsgout12.his.huawei.com (dggsgout12.his.huawei.com [45.249.212.56])
+Received: from bali.collaboradmins.com (bali.collaboradmins.com [148.251.105.195])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CB7AB222582
-	for <sashiko-reviews@lists.linux.dev>; Wed, 10 Jun 2026 13:26:18 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=45.249.212.56
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A1D5A227EB9;
+	Wed, 10 Jun 2026 14:00:56 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=148.251.105.195
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1781097983; cv=none; b=l5x3g+Thw2PRp1Ww/gwnlVPHpasvySjlPhqVY9qsfjFvr2xlTMgNNSI76W5g+Oeghxi5NRWZCuYSgX+EgGdWiUbF3N5EK4o6W02X/QXSD3FotXf3liNiYbF7rTfnIaL+06zP6td7J7doQ6kYau+x/cyoo1XMqkIVCbdyk+Rpd98=
+	t=1781100058; cv=none; b=huQoFm8UUg1PwO6E892jqNlqb7+rCmA0mnFmG02SjtkMTkBulLaBJYBsfcClDY1UJAbKy5bdCSFZ6DtbxiNCgP93RiZGRFZmC6cEZyv8u2E6rhtkDgFZAabcc2L4mGqSMtO6DHG+lWnxtApMqtlLZ4c6hVrcsg25SSBpxzoFDDM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1781097983; c=relaxed/simple;
-	bh=6P+H/HQ+8mnb3tkMt2N8IGh0Zs45/Ss0T+8CYdzKf2Q=;
-	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=RfW4v4JmQy7yD4RJ2d+49HjkbAc7ffTGDuZtZrhSdD3zuxfVgm+nFiNLbADz2cYxHTLxEUFPjijKmTpaOjXOqaXLEQYMMdPLpq/zrZBG3jzGrl0Fw8XevQFHEnMuLb0dYMmKomhFT+A0SZ4z3LBPknrt/chbhF7MYL6ojUtL0tw=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=huaweicloud.com; spf=pass smtp.mailfrom=huaweicloud.com; arc=none smtp.client-ip=45.249.212.56
-Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=huaweicloud.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=huaweicloud.com
-Received: from mail.maildlp.com (unknown [172.19.163.198])
-	by dggsgout12.his.huawei.com (SkyGuard) with ESMTPS id 4gb63K6PV8zKHLv7
-	for <sashiko-reviews@lists.linux.dev>; Wed, 10 Jun 2026 21:25:33 +0800 (CST)
-Received: from mail02.huawei.com (unknown [10.116.40.112])
-	by mail.maildlp.com (Postfix) with ESMTP id 1778F40573
-	for <sashiko-reviews@lists.linux.dev>; Wed, 10 Jun 2026 21:26:11 +0800 (CST)
-Received: from [10.67.111.192] (unknown [10.67.111.192])
-	by APP1 (Coremail) with SMTP id cCh0CgA3Oj_xZSlqU_U3BQ--.31492S2;
-	Wed, 10 Jun 2026 21:26:11 +0800 (CST)
-Message-ID: <2a7af5be-17b9-4357-8955-5497aa6fce1a@huaweicloud.com>
-Date: Wed, 10 Jun 2026 21:26:09 +0800
+	s=arc-20240116; t=1781100058; c=relaxed/simple;
+	bh=87RRLeVKnzgD8o5adULajQe28VNRxsT1N+lRjMQcSVI=;
+	h=Message-ID:Subject:From:To:Cc:Date:In-Reply-To:References:
+	 Content-Type:MIME-Version; b=ftmtCQmqpncdEQEfnWFqjn1aISSZSx/0+JM13HPoA/ZbErdOXCyWA5L88705aTnk/LQ9VvDANtVwwxLFj9aU2ywHFt7+b246bPH96X//VS4oPdXE6ouhYicNbKhrBFDCXa5twyO+c/NOa/3vafyXD3u4hyfxN9c+LYB+OnQ90F8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=collabora.com; spf=pass smtp.mailfrom=collabora.com; dkim=pass (2048-bit key) header.d=collabora.com header.i=@collabora.com header.b=lO1brDfs; arc=none smtp.client-ip=148.251.105.195
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=collabora.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=collabora.com
+Authentication-Results: smtp.subspace.kernel.org;
+	dkim=pass (2048-bit key) header.d=collabora.com header.i=@collabora.com header.b="lO1brDfs"
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=collabora.com;
+	s=mail; t=1781100054;
+	bh=87RRLeVKnzgD8o5adULajQe28VNRxsT1N+lRjMQcSVI=;
+	h=Subject:From:To:Cc:Date:In-Reply-To:References:From;
+	b=lO1brDfs48kbRWi12zXffzIFMZTwUcsLzgrqE8mMVBJvWXO7zc0yKlxTJf+QtWL+4
+	 AdaziWcAtfgdnLy0u1YvSOefWtwPX3luKad2igGu+nboKNIfhgKK7MkCpQYjhL+lIZ
+	 P3TgC/BqAuYJSckoI4RYrziXQklO5qyDNYez6D6/RYUF5VpHpkSjZn6Habv0R02lof
+	 jFrLOzc+m/CDsMkbRRvyGoJjWENQEH1joqrHS5JMo/LLnDm901XGSgrskLNC/5vhgz
+	 7YBXSUrlbVyf7Lil3ZcyHmhIwv0iI9KipaagA994XOvvbzr9uwUbWXb9p363ETtSnt
+	 BjlRFNIPky+NQ==
+Received: from [100.64.0.214] (unknown [100.64.0.214])
+	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+	 key-exchange ECDHE (prime256v1) server-signature RSA-PSS (4096 bits) server-digest SHA256)
+	(No client certificate requested)
+	(Authenticated sender: nicolas)
+	by bali.collaboradmins.com (Postfix) with ESMTPSA id 79DC917E013E;
+	Wed, 10 Jun 2026 16:00:53 +0200 (CEST)
+Message-ID: <a199bf51ac0d7123ba360bec5f47bf3f1ad5a3e3.camel@collabora.com>
+Subject: Re: [PATCH RFC 1/2] media: docs: Clarify
+ V4L2_FMT_FLAG_DYN_RESOLUTION usage
+From: Nicolas Dufresne <nicolas.dufresne@collabora.com>
+To: Hans Verkuil <hverkuil+cisco@kernel.org>, "Ming Qian(OSS)"
+	 <ming.qian@oss.nxp.com>
+Cc: "sashiko-reviews@lists.linux.dev" <sashiko-reviews@lists.linux.dev>, 
+ "hverkuil@kernel.org"	 <hverkuil@kernel.org>, "mchehab@kernel.org"
+ <mchehab@kernel.org>,  "imx@lists.linux.dev"	 <imx@lists.linux.dev>,
+ "Frank.Li@kernel.org" <Frank.Li@kernel.org>,  "linux-media@vger.kernel.org"
+	 <linux-media@vger.kernel.org>, Eagle Zhou <eagle.zhou@nxp.com>, Elliot
+ Chen	 <elliot.chen@nxp.com>, Frank Li <frank.li@nxp.com>, 
+ "linux-kernel@vger.kernel.org"	 <linux-kernel@vger.kernel.org>
+Date: Wed, 10 Jun 2026 10:00:51 -0400
+In-Reply-To: <349d6d48-9996-4791-833c-5c01e07883fd@kernel.org>
+References: <20260608-flag-dyn-resolution-v1-1-44dc65516148@oss.nxp.com>
+	 <20260608040616.1A3EE1F00893@smtp.kernel.org>
+	 <AM9PR04MB857068E0FE59DD8ECB27A9AAE71C2@AM9PR04MB8570.eurprd04.prod.outlook.com>
+	 <e689df21c92861e35b6d11e391bea3404321484d.camel@collabora.com>
+	 <aijOPSFPEDsVlYFY@lsvm11u0000189.swis.ap-northeast-2.aws.nxp.com>
+	 <aijayrdr_rrz2x4B@lsvm11u0000189.swis.ap-northeast-2.aws.nxp.com>
+	 <349d6d48-9996-4791-833c-5c01e07883fd@kernel.org>
+Autocrypt: addr=nicolas.dufresne@collabora.com; prefer-encrypt=mutual;
+ keydata=mDMEaCN2ixYJKwYBBAHaRw8BAQdAM0EHepTful3JOIzcPv6ekHOenE1u0vDG1gdHFrChD
+ /e0J05pY29sYXMgRHVmcmVzbmUgPG5pY29sYXNAbmR1ZnJlc25lLmNhPoicBBMWCgBEAhsDBQsJCA
+ cCAiICBhUKCQgLAgQWAgMBAh4HAheABQkJZfd1FiEE7w1SgRXEw8IaBG8S2UGUUSlgcvQFAmibrjo
+ CGQEACgkQ2UGUUSlgcvQlQwD/RjpU1SZYcKG6pnfnQ8ivgtTkGDRUJ8gP3fK7+XUjRNIA/iXfhXMN
+ abIWxO2oCXKf3TdD7aQ4070KO6zSxIcxgNQFtDFOaWNvbGFzIER1ZnJlc25lIDxuaWNvbGFzLmR1Z
+ nJlc25lQGNvbGxhYm9yYS5jb20+iJkEExYKAEECGwMFCwkIBwICIgIGFQoJCAsCBBYCAwECHgcCF4
+ AWIQTvDVKBFcTDwhoEbxLZQZRRKWBy9AUCaCyyxgUJCWX3dQAKCRDZQZRRKWBy9ARJAP96pFmLffZ
+ smBUpkyVBfFAf+zq6BJt769R0al3kHvUKdgD9G7KAHuioxD2v6SX7idpIazjzx8b8rfzwTWyOQWHC
+ AAS0LU5pY29sYXMgRHVmcmVzbmUgPG5pY29sYXMuZHVmcmVzbmVAZ21haWwuY29tPoiZBBMWCgBBF
+ iEE7w1SgRXEw8IaBG8S2UGUUSlgcvQFAmibrGYCGwMFCQll93UFCwkIBwICIgIGFQoJCAsCBBYCAw
+ ECHgcCF4AACgkQ2UGUUSlgcvRObgD/YnQjfi4+L8f4fI7p1pPMTwRTcaRdy6aqkKEmKsCArzQBAK8
+ bRLv9QjuqsE6oQZra/RB4widZPvphs78H0P6NmpIJ
+Organization: Collabora Canada
+Content-Type: multipart/signed; micalg="pgp-sha512";
+	protocol="application/pgp-signature"; boundary="=-+gB4QBD4Sg+rOb4wvVUk"
+User-Agent: Evolution 3.60.2 (3.60.2-1.fc44) 
 Precedence: bulk
 X-Mailing-List: sashiko-reviews@lists.linux.dev
 List-Id: <sashiko-reviews.lists.linux.dev>
 List-Subscribe: <mailto:sashiko-reviews+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:sashiko-reviews+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH bpf-next 1/2] bpf: Fix setting retval to -EPERM for cgroup
- hooks not returning errno
-Content-Language: en-US
-To: sashiko-reviews@lists.linux.dev
-Cc: bpf@vger.kernel.org
-References: <20260610201724.733943-2-xukuohai@huaweicloud.com>
- <20260610124544.3EE211F00898@smtp.kernel.org>
-From: Xu Kuohai <xukuohai@huaweicloud.com>
-In-Reply-To: <20260610124544.3EE211F00898@smtp.kernel.org>
-Content-Type: text/plain; charset=UTF-8; format=flowed
+
+
+--=-+gB4QBD4Sg+rOb4wvVUk
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
+
+Le mercredi 10 juin 2026 =C3=A0 08:15 +0200, Hans Verkuil a =C3=A9crit=C2=
+=A0:
+> > The more natural fix would be to add V4L2_EVENT_SOURCE_CHANGE for the
+> > initial resolution case as well, then properly report
+> > V4L2_FMT_FLAG_DYN_RESOLUTION through VIDIOC_ENUM_FMT. If all existing
+> > drivers that support mid-stream DRC can similarly be updated to fire th=
+e
+> > event for initial resolution, then perhaps the spec change to split the
+> > flag isn't strictly necessary - drivers just need to be fixed to comply
+> > with the current definition.
+> >=20
+> > I'd appreciate hearing others' thoughts on whether this unified approac=
+h
+> > is practical across all existing drivers.
+>=20
+> Just a quick reply to mention that the s5p-mfc driver predates a lot of t=
+he
+> newer uAPIs for stateful codecs. It's why it behaves in a not-quite-stand=
+ard
+> way. So there is history here. The resolution change support was added in
+> commit 0520e4cc3bb9d back in 2014, three years after the driver was first
+> added to the kernel. The stateful decoder spec as we have today was only
+> introduced in 2019.
+
+Fair point. Now, some clarification about the initial event. When this was =
+re-
+implemented in GStreamer, we explicitly don't prepare the capture queue (no
+REQBUFS/CREATE_BUF, its not streaming). So effectively, the driver is force=
+d to
+start with only the output queue, and that was assumed to force the initial
+event. The src_ch event indicates that the driver is stuck until the captur=
+e
+queue has been reconfigured (or configured in this cased).
+
+I think you make a good point that this is not very clearly stated, but it =
+was
+also intentional to use that flag as a boundary before expecting this very
+strict behaviour. From a HW stand point, it does make quite some sense, sin=
+ce
+the parsing of header and discovery should happen separately from the captu=
+re
+buffer requirement. This is the main difference between stateless and state=
+ful.
+In userspace, this workflow allowed to better decouple the output and captu=
+re
+threads, which very typically is a independent threads (true for GStreamer =
+and
+Chromium at minimum).
+
+In the legacy path in gstreamer, the capture queue format is guessed, alloc=
+ated
+and set to streaming. In that case, the driver only have to emit the initia=
+l
+event if the capture queue configuration miss-match its requirements. I bel=
+ieve
+that was done so it aligned with some legacy flow. In theory this should wo=
+rk
+with earlier implementation of SOURCE_CHANGE, but remains a best effort. CO=
+DA960
+being the only legacy implementation I kept testing over time. With CODA to=
+day,
+if the guessed allocation failed, everything fails, which seems to be a bug=
+ or
+limitation from you analyses. Fixing it can be tricky, as we need to ensure=
+ we
+maintain backward compatibility with older userspace. Specially for CODA wh=
+ich
+is massively deployed. A lot of strangeness in CODA comes from its reversed
+engineered nature. Note that, I do have spec for this one these days, and c=
+an
+answer questions. I do know that we actually get a subset of the SPS, which
+should fully cover the needs for the DYN_RESOLUTION.
+
+The thing that also comes with V4L2_FMT_FLAG_DYN_RESOLUTION, is also the dr=
+ain
+flow. There was just no drain flow prior to this and the matching decoder s=
+pec.
+So to drain the capture queue on SOURCE_CHANGE, we had to track the state o=
+f the
+queue, and avoid going back into polling once the queue was drained (since
+polling previously blocked). That tracking have simply never been implement=
+ed in
+GStreamer. The only legacy draining flow we had, was the infamous zero size=
+d
+buffer, which was ambiguous, since there was 3 possibilities instead of 2:
+
+- Failed decode
+- Failed decode and drained
+- Drained
+
+If a decode failed at entropy decode, the resulting failed buffer would be
+signalled and confused with the drain. And so the other infamous LAST flag =
+was
+added. But then MFC signals the drain state independently, not at the same =
+time
+as the last buffer, and so EPIPE on DQBUF was introduced. With the new spec=
+, we
+forced this drain flow onto both draining on end-of-stream (CMD_STOP) and t=
+o
+happen somewhere after any SOURCE_CHANGE, and if you use
+V4L2_FMT_FLAG_DYN_RESOLUTION you must follow the DRC flow from the new spec=
+.
+
+I don't know if sharing the drain mechanism for DRC and actual CMD_STOP was=
+ the
+best idea in the world, but it is what is it now, and for sure, old or
+unmaintained drivers endup with highly inconsistent state. I'm happy with t=
+he
+idea to improve the spec, and to improve the drivers concistency too, as lo=
+ng as
+we can actually test, since it too complex to change without testing. I thi=
+nk,
+if something could help, it would be to implement couple of the legacy flow=
+ in
+vivid driver, so we could test virtually.
+
+Nicolas
+
+--=-+gB4QBD4Sg+rOb4wvVUk
+Content-Type: application/pgp-signature; name="signature.asc"
+Content-Description: This is a digitally signed message part
 Content-Transfer-Encoding: 7bit
-X-CM-TRANSID:cCh0CgA3Oj_xZSlqU_U3BQ--.31492S2
-X-Coremail-Antispam: 1UD129KBjvJXoWxuryDGr43Jr4rWr43AF48tFb_yoW5Ar1UpF
-	43AFZ8Gw4qgrZrG34kJ3y0vw4Fyrs5try5Xr1DXr1xZa9xXrW7JryIqryY9ayavr4Igr1S
-	vFWYvFZakas0ya7anT9S1TB71UUUUU7qnTZGkaVYY2UrUUUUjbIjqfuFe4nvWSU5nxnvy2
-	9KBjDU0xBIdaVrnRJUUUgmb4IE77IF4wAFF20E14v26r1j6r4UM7CY07I20VC2zVCF04k2
-	6cxKx2IYs7xG6rWj6s0DM7CIcVAFz4kK6r1j6r18M28lY4IEw2IIxxk0rwA2F7IY1VAKz4
-	vEj48ve4kI8wA2z4x0Y4vE2Ix0cI8IcVAFwI0_tr0E3s1l84ACjcxK6xIIjxv20xvEc7Cj
-	xVAFwI0_Gr1j6F4UJwA2z4x0Y4vEx4A2jsIE14v26rxl6s0DM28EF7xvwVC2z280aVCY1x
-	0267AKxVW0oVCq3wAS0I0E0xvYzxvE52x082IY62kv0487Mc02F40EFcxC0VAKzVAqx4xG
-	6I80ewAv7VC0I7IYx2IY67AKxVWUJVWUGwAv7VC2z280aVAFwI0_Jr0_Gr1lOx8S6xCaFV
-	Cjc4AY6r1j6r4UM4x0Y48IcVAKI48JMxAIw28IcxkI7VAKI48JMxC20s026xCaFVCjc4AY
-	6r1j6r4UMI8I3I0E5I8CrVAFwI0_Jr0_Jr4lx2IqxVCjr7xvwVAFwI0_JrI_JrWlx4CE17
-	CEb7AF67AKxVWUXVWUAwCIc40Y0x0EwIxGrwCI42IY6xIIjxv20xvE14v26r1j6r1xMIIF
-	0xvE2Ix0cI8IcVCY1x0267AKxVWUJVW8JwCI42IY6xAIw20EY4v20xvaj40_Jr0_JF4lIx
-	AIcVC2z280aVAFwI0_Jr0_Gr1lIxAIcVC2z280aVCY1x0267AKxVW8JVW8JrUvcSsGvfC2
-	KfnxnUUI43ZEXa7IU1CPfJUUUUU==
-X-CM-SenderInfo: 50xn30hkdlqx5xdzvxpfor3voofrz/
 
-On 6/10/2026 8:45 PM, sashiko-bot@kernel.org wrote:
-> Thank you for your contribution! Sashiko AI review found 1 potential issue(s) to consider:
-> - [High] The patch breaks cgroup BPF boolean LSM hooks by ignoring a BPF program's denial (exit code 0). It leaves `run_ctx.retval` unmodified for boolean hooks, which fails to enforce denials, ignores overrides from previous programs in the cgroup array, and causes the trampoline to incorrectly fall back to the original kernel function.
-> --
-> 
-> commit b6b16c6bf2bc0b50b22feebf85585b33ce70965a
-> Author: Xu Kuohai <xukuohai@huawei.com>
-> 
-> bpf: Fix setting retval to -EPERM for cgroup hooks not returning errno
-> 
-> This commit modifies bpf_prog_run_array_cg() to avoid setting the hook return
-> value to -EPERM when a cgroup BPF program exits with 0 for non-errno hooks
-> (such as boolean or void LSM hooks).
-> 
->> diff --git a/kernel/bpf/cgroup.c b/kernel/bpf/cgroup.c
->> index 35d1f1428ef39..83ce66296ac19 100644
->> --- a/kernel/bpf/cgroup.c
->> +++ b/kernel/bpf/cgroup.c
-> 
-> [ ... ]
-> 
->> @@ -83,7 +105,8 @@ bpf_prog_run_array_cg(const struct cgroup_bpf *cgrp,
->>   			*(ret_flags) |= (func_ret >> 1);
->>   			func_ret &= 1;
->>   		}
->> -		if (!func_ret && !IS_ERR_VALUE((long)run_ctx.retval))
->> +		if (!func_ret && cgroup_bpf_hook_returns_errno(atype) &&
->> +		    !IS_ERR_VALUE((long)run_ctx.retval))
->>   			run_ctx.retval = -EPERM;
-> 
-> [Severity: High]
-> Could this change cause BPF program denials to be ignored for boolean hooks?
-> 
-> In cgroup BPF, a program returning 0 typically signifies a denial. By
-> requiring cgroup_bpf_hook_returns_errno() to be true here, a func_ret of 0
-> is ignored for boolean hooks, leaving run_ctx.retval unmodified.
-> 
-> If a prior program in the cgroup array called bpf_set_retval(1), and the
-> current program returns 0 (denial), run_ctx.retval remains 1. Doesn't this
-> break cgroup hierarchy semantics where a denial must override an allow?
-> 
-> Additionally, if run_ctx.retval remains 0, the fmod_ret trampoline interprets
-> 0 as an instruction to call the original kernel function rather than skipping
-> it. If the underlying kernel function returns 1, the operation ends up being
-> allowed. Does this unintentionally bypass the BPF program's intent to deny
-> the operation?
->
+-----BEGIN PGP SIGNATURE-----
 
-The key problem is that, boolean hooks do not have deny/allow semantics.
+iHUEABYKAB0WIQTvDVKBFcTDwhoEbxLZQZRRKWBy9AUCailuEwAKCRDZQZRRKWBy
+9Ln4AQD2Mp1EVR+oTYzzPh6u7yEg0CgiyLjBS++dpF/ZVakIeAD8CUKFKVo7m4t8
+PIW9OF4ZIBBtZ1I3h94ZZleofSD5lAY=
+=0sm3
+-----END PGP SIGNATURE-----
 
-There are 3 boolean hooks, each has its own meaning of the return value:
-1. inode_xattr_skipcap:  1 is "skip capability check", 0 is "not skip"
-2. audit_rule_known:  1 is "rule is known", 0 is "rule not known"
-3. xfrm_state_pol_flow_match: 1 is "match", 0 is "not match"
-
-None of them has deny/allow semantics.
-
-So for a boolean hook, we do not know whether 0 or 1 is the correct value
-to translate the return value to when bpf prog exits with 0. I prefer to
-not translate it at all, just leave the return value untouched.
-
->>   		item++;
->>   	}
-> 
-
+--=-+gB4QBD4Sg+rOb4wvVUk--
