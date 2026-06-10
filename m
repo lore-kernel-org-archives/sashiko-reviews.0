@@ -1,190 +1,134 @@
-Received: from mo4-p01-ob.smtp.rzone.de (mo4-p01-ob.smtp.rzone.de [85.215.255.54])
+Received: from fout-b6-smtp.messagingengine.com (fout-b6-smtp.messagingengine.com [202.12.124.149])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id ADD4430C60C
-	for <sashiko-reviews@lists.linux.dev>; Wed, 10 Jun 2026 07:35:03 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=pass smtp.client-ip=85.215.255.54
-ARC-Seal:i=2; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1781076905; cv=pass; b=l1wJTKUv3Ew+LPFpbblf5onNflsk+k1CkSqB8j4XbDFrU8xJ0FtuEvKoEBX9VZPMbGVsIb6PXpxf29XIHfLpl0nnKfaEF5dONC9+CMWRY6kWP4a8IXC46/DdMtMxoTT3Ws1pHAxN+iqTJ2k56LTK5Y6L8BAXe8NeLosXLb85k50=
-ARC-Message-Signature:i=2; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1781076905; c=relaxed/simple;
-	bh=o7FURnSktLhHtEfqsY9K1anzDJIfOBZs8bi+OH29um4=;
-	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=P5LGOZGKAxLqN7vlNtDMjtyqmO2LAay2HZOQet9G9+4+n+n/j2HYncztePOrNsMsfCLXk+J9pxXFvmT7OKcOrF/HnbqjALP0aOCfk3YINrqLdhmvX+bPVwWRRSw8AEfTdgVh36U4fQoh120V7c1n9/VLvoVlTHc4BD1LerKPH4Y=
-ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=hartkopp.net; spf=fail smtp.mailfrom=hartkopp.net; dkim=pass (2048-bit key) header.d=hartkopp.net header.i=@hartkopp.net header.b=pVKY3l0f; dkim=permerror (0-bit key) header.d=hartkopp.net header.i=@hartkopp.net header.b=6BP2pCkQ; arc=pass smtp.client-ip=85.215.255.54
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=hartkopp.net
-Authentication-Results: smtp.subspace.kernel.org; spf=fail smtp.mailfrom=hartkopp.net
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 322E2318EF4;
+	Wed, 10 Jun 2026 07:43:35 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=202.12.124.149
+ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
+	t=1781077416; cv=none; b=kSBITxDImdaLQmKkBjdUGVgXysHcDgOp6ygV846hG7poW/vLeVSlDIoJ2oM4PDJsxRct+FpLohPwTokTz0ZAV/2KsyTdyLrzwF/KBIEyIXu3WZxdHbCCTdyrnhL3ykErccfIQInIzNx6IvbpGS+idzxmblmByvAz5oI7LTfmPXk=
+ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
+	s=arc-20240116; t=1781077416; c=relaxed/simple;
+	bh=URQJCTbAJIoCNSIMY8IOF/aYzgKA33LcT/MKWu2oEfE=;
+	h=MIME-Version:Date:From:To:Cc:Message-Id:In-Reply-To:References:
+	 Subject:Content-Type; b=ebiY+1pbFtC+oR+sj1jbSr4s/TzwKz7V/DFS9oU/Ex9ur4EQKYBCHPjUuCRIbORlqyUfPK30ahLlQJTQszvsF7XUGsGo+XtQajVjnS9yqIVmn/rGt22dWp88HgChnwqXdBIjGBo3liwzMMYn1FTblZ0TbK/bJmq98bFDWpvSHeA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=arndb.de; spf=pass smtp.mailfrom=arndb.de; dkim=pass (2048-bit key) header.d=arndb.de header.i=@arndb.de header.b=QAJx81ER; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=HqWux+Vj; arc=none smtp.client-ip=202.12.124.149
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=arndb.de
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=arndb.de
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=hartkopp.net header.i=@hartkopp.net header.b="pVKY3l0f";
-	dkim=permerror (0-bit key) header.d=hartkopp.net header.i=@hartkopp.net header.b="6BP2pCkQ"
-ARC-Seal: i=1; a=rsa-sha256; t=1781076872; cv=none;
-    d=strato.com; s=strato-dkim-0002;
-    b=ma5YKUeH+73cPEw7wyxIeRVxhUnvdi75E9oCQR92wLahdQpNjU2eorGXKtYTOmVGx3
-    OUAZkuqI9vrZ18x13Ko6s+Trq8JDVJJN/cjsIISHQ1A/WO4S2Ns863H8WkpcyCm9e5Ll
-    9jsqzDUzQgBNMJSb5JxZICUO4bpmQaUFmMCgAh8QvZR1snlk5BA9PqxsTD6xgjK6qQgI
-    0zBjRXB1uNrMpXu6/X0C+0LEJoTHnum1EOLmvRl9ZJ0k4mECZaMNAYvB0X+i1eNFs4R1
-    3usDysnfY4B7BESG3WGIe5ay07bYFlFVLJ3RLNFAV6idg8zPbmJ8s+K6ZSRspcJzAEDc
-    I06A==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; t=1781076872;
-    s=strato-dkim-0002; d=strato.com;
-    h=In-Reply-To:From:References:Cc:To:Subject:Date:Message-ID:Cc:Date:
-    From:Subject:Sender;
-    bh=FbmbWX4P52oBfXTOG1yQekYMpshcDC+1bZt9a+Lkt84=;
-    b=d3kS63bdCkkQzeSaOvtS+MzrhDOJ8WoAi8p4BirpOsWTZKVRjaxBPwhNCRFuU8J6u9
-    fjBt1h8iyQ3LOknp9VZwTTyYbPl1TpOFFsFa+C3Jkw5NbwjuQLaNJ8+rzZVV7lt2ljvp
-    7sFWuufSwK8oAaKCa1hTXYPocheq/ltIjjVJxUneLZfXOIN9KdsJdhJXNbyXz/MdkQ7T
-    +C9fYYiIUM9Nqc+F6B8jZavXQ5b8mbuDcqKZCz09emTK9YhtEAfNZ/Ng9EBXMcDc206V
-    +A0KeSXuGzljrBACJOqb8EX5E0JWO7P32rfN5DbEHzCtooUBvMc7wFiuQPNS0xn+HFu8
-    pKKQ==
-ARC-Authentication-Results: i=1; strato.com;
-    arc=none;
-    dkim=none
-X-RZG-CLASS-ID: mo01
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; t=1781076872;
-    s=strato-dkim-0002; d=hartkopp.net;
-    h=In-Reply-To:From:References:Cc:To:Subject:Date:Message-ID:Cc:Date:
-    From:Subject:Sender;
-    bh=FbmbWX4P52oBfXTOG1yQekYMpshcDC+1bZt9a+Lkt84=;
-    b=pVKY3l0fPE/c8Z0FmCQC1KZXW9+n1BW3vjorvClfMu3rLOSwJQbV1mUPhwSVaO8/bE
-    iKvQ7rHYcIvm44qax/x1tggf0ceQWP3gMOQlpipqaRQRMrradvo/ZmsvUk0eX/Q9pnU1
-    /o53NyHsuWdYagtwQaIF0Ik584wPkVh2ZlqzGKK9r5jVeB7ZRTNcyM8ULCciP/T9tGt7
-    UhCnZ2Fe3tRHMrGN0wJ22SBGd073pQIkEgjyUNNzo6LYHPYgnOnUPwbRVHOiSQrG8lo7
-    tj70/8MVsgckNCrnrXTFm0lakLJZHhFLq+XPMr1I4AXQw9d/HaeZApztgnh2qjsFCljn
-    kPxw==
-DKIM-Signature: v=1; a=ed25519-sha256; c=relaxed/relaxed; t=1781076872;
-    s=strato-dkim-0003; d=hartkopp.net;
-    h=In-Reply-To:From:References:Cc:To:Subject:Date:Message-ID:Cc:Date:
-    From:Subject:Sender;
-    bh=FbmbWX4P52oBfXTOG1yQekYMpshcDC+1bZt9a+Lkt84=;
-    b=6BP2pCkQV0ro4AeP89oJoz4aNKvqAPgZYD4ss/M8GKZqDIDep8jFVniJa5N7uCf3Wn
-    rNtgm4TXJ+4OQxw9UUBQ==
-X-RZG-AUTH: ":P2MHfkW8eP4Mre39l357AZT/I7AY/7nT2yrDxb8mjH4JKvMdQv2tTUsMrZpkO3Mw3lZ/t54cFxeEQ7s8bDup0Q=="
-Received: from [IPV6:2a00:6020:4a38:6810::989]
-    by smtp.strato.de (RZmta 55.0.1 AUTH)
-    with ESMTPSA id Kba96d25A7YWhJr
-	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256 bits))
-	(Client did not present a certificate);
-    Wed, 10 Jun 2026 09:34:32 +0200 (CEST)
-Message-ID: <4345af11-bf74-4e19-9ded-174a7fa8be02@hartkopp.net>
-Date: Wed, 10 Jun 2026 09:34:31 +0200
+	dkim=pass (2048-bit key) header.d=arndb.de header.i=@arndb.de header.b="QAJx81ER";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="HqWux+Vj"
+Received: from phl-compute-04.internal (phl-compute-04.internal [10.202.2.44])
+	by mailfout.stl.internal (Postfix) with ESMTP id 4C2261D000A9;
+	Wed, 10 Jun 2026 03:43:34 -0400 (EDT)
+Received: from phl-imap-05 ([10.202.2.95])
+  by phl-compute-04.internal (MEProxy); Wed, 10 Jun 2026 03:43:34 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=arndb.de; h=cc
+	:cc:content-transfer-encoding:content-type:content-type:date
+	:date:from:from:in-reply-to:in-reply-to:message-id:mime-version
+	:references:reply-to:subject:subject:to:to; s=fm3; t=1781077414;
+	 x=1781163814; bh=Bdspv/mWgnec4IJT6Knjkn3iUexEa46V5UFr5fP0nw4=; b=
+	QAJx81ERBEu/VvCfwMYUPfKqkCjRZqAjfnRIYQBn9gLAikBrpvNbUnpFeYz52suf
+	mDQhfsO4msLMs7fZmqWzxMn7150kSu2yqHECVtTuBmS2D3Lhp4v0fbS175kmtBPx
+	o2nU04zklH9Obvv7h8zKyu+xhKxjM/xwogZ8lbpq8+STmq474CBPcXbsBr9kBKts
+	yT7D6zzR2cOhGqGi/geWOC8BsV3Bg9NvyiqMr8okPsJX4BH8elw6Yj1ZBvjFlGUC
+	fyxu9WprD4Lcj+Hs5xn4dkKHNd44VmZqGThJ8SaP7cTqf7/Jv7aDLDFqKXVY4UwP
+	uXl8KXzcbjkPHtcdLXaMdQ==
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
+	messagingengine.com; h=cc:cc:content-transfer-encoding
+	:content-type:content-type:date:date:feedback-id:feedback-id
+	:from:from:in-reply-to:in-reply-to:message-id:mime-version
+	:references:reply-to:subject:subject:to:to:x-me-proxy
+	:x-me-sender:x-me-sender:x-sasl-enc; s=fm1; t=1781077414; x=
+	1781163814; bh=Bdspv/mWgnec4IJT6Knjkn3iUexEa46V5UFr5fP0nw4=; b=H
+	qWux+VjW2aMM8s9XAUjdJ9AobrpVwjpEevmTBeAvJHsS9vrfEuPnW4lSEet8PCjy
+	if+1rBg5Tp8lqzoS/VzPg+JbT5YOPKZOBqNvWKBSC1tvD8UhidTVNTwxr/mMNF6S
+	udmNjHjXbeZrTryc2w3tLKSE7K08P5Ha6yMS/uqUuU3+7BP38y+aW2BfuDCn49+a
+	zUwaE6IbOZePEtlYE4Ao7TpkFhDhJoBvlB/5X4mT8Y2pOd04s5P5ePQ3JvarvEIW
+	3V8fM2WzxU5NwS2RyHMAG31qnucQCfGEf04i5d7N/ksIGAOtLzRDZcAwIrajRuEH
+	VypOAQifEDE++v1LDwoMg==
+X-ME-Sender: <xms:pRUpamki4cP4W8Mo9wQTtvR1f0mMNHhKaysWivrPr4YLHMxwQU7D5g>
+    <xme:pRUpaorQIE4WsIu3QQq-FLHEdp3zfD2pklNjGwymQlVih6mlSit-YRM9Pa1ePvyJ1
+    hwLDy66qtDrRwVyJwpAvchiUAbmZjXthb2nHMMsgWcpGS2PugUAc3k>
+X-ME-Proxy-Cause: dmFkZTEbSF9yCd3WJfzOG54G2rTUXrqdwsJ0Ppx5q3iCXeGOyJQmUssYWR1FWpFCTWNFX7
+    6CPxLBSxVhu4KIJl5Is1ZoRSxQBxktbZPieOHRcUSKt+ejPzGIdP5vQd7Vx+NGuLRWLAuN
+    ujthz3X+tkgi/Qqq7jiCIRqZ+Cammqb4oASt3li4MYVi6yDCoNPr1iMksy2VwyP08H4Siq
+    j21kffMuz5vubv75vkPLXnmg2Q0J6Ij4EXYfYpEh5MS2oCgxY6c7dYpbbK21IIUXgAq8v3
+    HZsFbPa9KOu7+HwqP4M2ePvRsE/He1a18o1oFPEuuFgSuxwrinysMRDZpNvkBL37CLOjLA
+    UUMXs7AufTgu1PmlZNZwSAO9Zda3G4bfDqZDLvV6mA5xktgqRcANTgNrNUJMi7obj/63uD
+    jwgr/aB1sP//I3GOp0Jqjy36z2eyZiA2o96n3PSqrBs6Txao55f5wcnK43007PHVlXZ/ZQ
+    8wzMJEabdS9eXzuZBkZLFldwISwUnyHkrGDtTwamWSQko8Kz4BBxJ3yMq22PvSHQrKcqHz
+    6Uy7B85NYacqEKi70aNzG/EDBpXd0/VtPYtEqT+sm6rVmc11mLvJ3cXTkwHmgr0/iJ3hGx
+    VxBsvbcYg6Llo5Lx9Kv4g02Gr6Ytvlax9kAqzapmz58qWTjZoaQoaf/T9iHw
+X-ME-Proxy: <xmx:pRUpavAW3P8J60cIOWImZFiuzBNrPYCOBcZhG-aWr3Cu0Soj5Fd2xA>
+    <xmx:pRUpaqcZHgDBifQ4UleK_8w9_D7F7URJympnZdHAOZ_Jq_38fHUo8A>
+    <xmx:pRUpau0lURFWHuaGItLban6Xy3u9AmP0ij6Vg9uFfEIEJ9Y3PM4cLA>
+    <xmx:pRUpahjKvdUZl0vh8-jPlDpLR2iVddxAjDG-1Ien3QI43nTzg21mqw>
+    <xmx:phUpatzMQNIvJMwnOFu1LSJBUDvvVRF9L3xYWYCJFnSR-u-HovqBRdx9>
+Feedback-ID: i56a14606:Fastmail
+Received: by mailuser.phl.internal (Postfix, from userid 501)
+	id C4E40182008A; Wed, 10 Jun 2026 03:43:33 -0400 (EDT)
+X-Mailer: MessagingEngine.com Webmail Interface
 Precedence: bulk
 X-Mailing-List: sashiko-reviews@lists.linux.dev
 List-Id: <sashiko-reviews.lists.linux.dev>
 List-Subscribe: <mailto:sashiko-reviews+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:sashiko-reviews+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH can-next] can: bcm: mark intentional lockless read of
- bo->bound for KCSAN
-To: sashiko-reviews@lists.linux.dev
-Cc: Marc Kleine-Budde <mkl@pengutronix.de>,
- Vincent Mailhol <mailhol@kernel.org>,
- Oleksij Rempel <o.rempel@pengutronix.de>, linux-can@vger.kernel.org
-References: <20260601181915.71862-1-socketcan@hartkopp.net>
- <20260609185138.E76CE1F00893@smtp.kernel.org>
-Content-Language: en-US
-From: Oliver Hartkopp <socketcan@hartkopp.net>
-In-Reply-To: <20260609185138.E76CE1F00893@smtp.kernel.org>
-Content-Type: text/plain; charset=UTF-8; format=flowed
+X-ThreadId: AdNNzaliM6k3
+Date: Wed, 10 Jun 2026 09:43:12 +0200
+From: "Arnd Bergmann" <arnd@arndb.de>
+To: "Frank Li" <frank.li@oss.nxp.com>, "Josua Mayer" <josua@solid-run.com>,
+ "sashiko-reviews@lists.linux.dev" <sashiko-reviews@lists.linux.dev>
+Cc: "Conor Dooley" <conor+dt@kernel.org>, "Rob Herring" <robh@kernel.org>,
+ "Frank Li" <Frank.Li@kernel.org>,
+ "devicetree@vger.kernel.org" <devicetree@vger.kernel.org>,
+ "imx@lists.linux.dev" <imx@lists.linux.dev>
+Message-Id: <4f7cc399-785f-4967-adec-714ccc69ada8@app.fastmail.com>
+In-Reply-To: <177431ea-c4ba-4424-b17e-9d2e2884d466@oss.nxp.com>
+References: <20260524-lx2160-pci-v7-1-09370c23b952@solid-run.com>
+ <20260524151347.BD92A1F000E9@smtp.kernel.org>
+ <3528dc91-1ffc-42f9-94ea-a27c6c1d6a50@solid-run.com>
+ <9e6326f6-dad1-4169-a63c-e62ee5b341f2@app.fastmail.com>
+ <023aa47c-6fbc-486f-b5c7-5145ddf8e8fe@oss.nxp.com>
+ <72087d5c-c6f9-4452-b4bd-a9f086700e62@app.fastmail.com>
+ <48248207-7b4f-43c9-85e9-64e8440fab10@oss.nxp.com>
+ <753fca23-c3eb-45e3-aeac-b7b248fa723a@app.fastmail.com>
+ <177431ea-c4ba-4424-b17e-9d2e2884d466@oss.nxp.com>
+Subject: Re: [PATCH v7 1/9] arm64: dts: lx2160a-rev2: extend 32-bit, and add 64-bit pci
+ regions
+Content-Type: text/plain
 Content-Transfer-Encoding: 7bit
 
+On Wed, Jun 10, 2026, at 00:13, Frank Li wrote:
+> On 6/9/2026 4:31 PM, Arnd Bergmann wrote:
+>
+> If EP itself is PCIe bridge, it may be problem. It'd better to
+> keep 32bit range unchange.
 
+Ok. It is not uncommon to have PCIe bridges either in physical
+form, or inside of devices that have multiple PCIe functions,
+so this does seem like a real problem to me even when more commonly
+you'd only have a single PCIe function with a single memory BAR
+on each host bridge.
 
-On 09.06.26 20:51, sashiko-bot@kernel.org wrote:
-> Thank you for your contribution! Sashiko AI review found 1 potential issue(s) to consider:
-> 
-> Pre-existing issues:
-> - [High] Lockless TOCTOU race in bcm_sendmsg() leads to unintended Global CAN Filter Leak.
-> --
-> 
-> commit 7f7ce41fd35425d40c8342127156c8195ff2363e
-> Author: Oliver Hartkopp <socketcan@hartkopp.net>
-> 
-> can: bcm: mark intentional lockless read of bo->bound for KCSAN
-> 
-> The commit marks the lockless read of bo->bound in bcm_sendmsg() and the
-> corresponding write in bcm_notify() with READ_ONCE() and WRITE_ONCE() to
-> resolve KCSAN warnings. It asserts this lockless read is functionally safe
-> and will safely drop downstream operations.
-> 
-> Closes: https://lore.kernel.org/linux-can/CAGp+u1aBK8QVjsvAxM2Ldzep4rEbsP9x_pV3At4g=h1kVEtyhA@mail.gmail.com/
-> 
->> Once the lock is acquired, any subsequent attempts to configure BCM
->> jobs (like RX_SETUP) will safely fail because bcm_notify() has
->> already cleared bo->ifindex to 0. While a user-defined ifindex of 0
->> is normally a valid feature to listen on "all" CAN interfaces,
->> bcm_notify() only triggers for specific real CAN devices. In this
->> unregister context, the combination of bound=0 and ifindex=0 effectively
->> invalidates the socket binding. This prevents the registration of
->> stale CAN filters and drops downstream operations safely without any
->> memory corruption or stale state exploitation.
-> 
-> [Severity: High]
-> Is this description accurate regarding safely failing and preventing the
-> registration of stale CAN filters?
-> 
-> This is a pre-existing issue, but if bcm_notify() unregisters the device
-> concurrently, couldn't a race occur where bcm_sendmsg() caches ifindex == 0
-> while still observing bo->bound == 1?
+> Do you need rework pull request?  Or you can drop this patch.
 
-No. bcm_notify() can only be invoked for real interfaces which have an 
-ifindex > 0
+I can't easily drop the commit without losing your signed tag
+on the pull request. Please update the pull request to either
+drop this on your end or add a fixup patch on top that reverts
+to a 1GB non-prefetchable window for each of the controllers.
 
-> 
-> Since bo->ifindex is a plain read at the top of bcm_sendmsg(), the compiler
-> can defer it until after the volatile read of bo->bound and the potentially
-> sleeping memcpy_from_msg().
-> 
-> If this happens, bcm_sendmsg() could observe bo->bound == 1, but cache
-> bo->ifindex == 0.
-> 
->> diff --git a/net/can/bcm.c b/net/can/bcm.c
->> index fd9fa072881e2..6c93c57212b49 100644
->> --- a/net/can/bcm.c
->> +++ b/net/can/bcm.c
->> @@ -1379,7 +1379,8 @@ static int bcm_sendmsg(struct socket *sock, struct msghdr *msg, size_t size)
->>   	int cfsiz;
->>   	int ret; /* read bytes or error codes as return value */
->>   
->> -	if (!bo->bound)
->> +	/* Lockless fast-path check for bound socket */
->> +	if (!READ_ONCE(bo->bound))
->>   		return -ENOTCONN;
->>   
->>   	/* check for valid message length from userspace */
-> 
-> [Severity: High]
-> This isn't a bug introduced by this patch, but doesn't bcm_sendmsg() then
-> pass the cached ifindex == 0 to bcm_rx_setup() under the socket lock?
-> 
-> net/can/bcm.c:bcm_sendmsg() {
->      ...
->      lock_sock(sk);
-> 
->      switch (msg_head.opcode) {
->      ...
->      case RX_SETUP:
->          ret = bcm_rx_setup(&msg_head, msg, ifindex, sk);
->          break;
->      ...
-> }
-> 
-> Does bcm_rx_setup() ever re-validate bo->bound while holding the lock?
-> 
-> If it doesn't, wouldn't bcm_rx_setup() interpret ifindex == 0 as an explicit
-> request to listen on all CAN interfaces?
-> 
-> net/can/bcm.c:bcm_rx_setup() {
->      ...
->      } else
->          err = can_rx_register(sock_net(sk), NULL, op->can_id,
->                                REGMASK(op->can_id),
->                                bcm_rx_handler, op, "bcm", sk);
->      ...
-> }
-> 
-> Could this actively register a global filter on an unbound socket, leaking
-> traffic from all CAN buses into a process that was only authorized to
-> monitor a specific, now-deleted interface?
-> 
+On a related note, please make sure that you don't send
+a large series like this late in the development cycle
+so we have enough time to resolve any issues that may come
+up. You can also send a follow-up pull request with last
+minute fixups and changes that were still waiting for
+review. The bulk of the branch contents look like they 
+have been stable for a while, so the best thing would have
+been to send those in a first PR.
 
+If everything goes well otherwise, this PR should still make
+it in time, but it would be nice to avoid such minute
+excitement in the future.
+
+       Arnd
