@@ -1,218 +1,133 @@
-Received: from bali.collaboradmins.com (bali.collaboradmins.com [148.251.105.195])
+Received: from mgamail.intel.com (mgamail.intel.com [192.198.163.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A1D5A227EB9;
-	Wed, 10 Jun 2026 14:00:56 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=148.251.105.195
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8F29A358363
+	for <sashiko-reviews@lists.linux.dev>; Wed, 10 Jun 2026 14:45:51 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=192.198.163.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1781100058; cv=none; b=huQoFm8UUg1PwO6E892jqNlqb7+rCmA0mnFmG02SjtkMTkBulLaBJYBsfcClDY1UJAbKy5bdCSFZ6DtbxiNCgP93RiZGRFZmC6cEZyv8u2E6rhtkDgFZAabcc2L4mGqSMtO6DHG+lWnxtApMqtlLZ4c6hVrcsg25SSBpxzoFDDM=
+	t=1781102752; cv=none; b=ptLUA+NOe5OcpLZBlP0hKH2tNWka1xyBOrBkr/16h7UYtAshYPxtaVnxYfoKHD4NmnULiYCgKMVd/P0ZmSboGbhrurrAZH0vXFf10yXDgjRc4nAnQ3YsSSsKuLBxX0nrJqjk2bMvBBbtgY46EFtqIbmaCfSIAVwa+kNXUWM1s5g=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1781100058; c=relaxed/simple;
-	bh=87RRLeVKnzgD8o5adULajQe28VNRxsT1N+lRjMQcSVI=;
-	h=Message-ID:Subject:From:To:Cc:Date:In-Reply-To:References:
-	 Content-Type:MIME-Version; b=ftmtCQmqpncdEQEfnWFqjn1aISSZSx/0+JM13HPoA/ZbErdOXCyWA5L88705aTnk/LQ9VvDANtVwwxLFj9aU2ywHFt7+b246bPH96X//VS4oPdXE6ouhYicNbKhrBFDCXa5twyO+c/NOa/3vafyXD3u4hyfxN9c+LYB+OnQ90F8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=collabora.com; spf=pass smtp.mailfrom=collabora.com; dkim=pass (2048-bit key) header.d=collabora.com header.i=@collabora.com header.b=lO1brDfs; arc=none smtp.client-ip=148.251.105.195
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=collabora.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=collabora.com
+	s=arc-20240116; t=1781102752; c=relaxed/simple;
+	bh=tkOzyDdrsQBrIpjjWDbFuiQH0jDBEtUyXu5Q0Kdtqbg=;
+	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
+	 MIME-Version:Content-Type; b=s32OcGYXBCt7M/4XFvZFkkGS9UST13Htv0CVdY/iganBFYtxblGvZ/DRFKJ1YuKS+T83vvh5EgBKqLCvaZcOmYkz0sWMOSBQ4ALnjCQgxSTzTTKMl9r8OV5y8GtSjtIfLn6EPgtq0eRFDAPnTbvYLckXaWeLjc/Guov9Di+PN2s=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=intel.com; spf=pass smtp.mailfrom=intel.com; dkim=pass (2048-bit key) header.d=intel.com header.i=@intel.com header.b=krCm0IZj; arc=none smtp.client-ip=192.198.163.18
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=intel.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=intel.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=collabora.com header.i=@collabora.com header.b="lO1brDfs"
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=collabora.com;
-	s=mail; t=1781100054;
-	bh=87RRLeVKnzgD8o5adULajQe28VNRxsT1N+lRjMQcSVI=;
-	h=Subject:From:To:Cc:Date:In-Reply-To:References:From;
-	b=lO1brDfs48kbRWi12zXffzIFMZTwUcsLzgrqE8mMVBJvWXO7zc0yKlxTJf+QtWL+4
-	 AdaziWcAtfgdnLy0u1YvSOefWtwPX3luKad2igGu+nboKNIfhgKK7MkCpQYjhL+lIZ
-	 P3TgC/BqAuYJSckoI4RYrziXQklO5qyDNYez6D6/RYUF5VpHpkSjZn6Habv0R02lof
-	 jFrLOzc+m/CDsMkbRRvyGoJjWENQEH1joqrHS5JMo/LLnDm901XGSgrskLNC/5vhgz
-	 7YBXSUrlbVyf7Lil3ZcyHmhIwv0iI9KipaagA994XOvvbzr9uwUbWXb9p363ETtSnt
-	 BjlRFNIPky+NQ==
-Received: from [100.64.0.214] (unknown [100.64.0.214])
-	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
-	 key-exchange ECDHE (prime256v1) server-signature RSA-PSS (4096 bits) server-digest SHA256)
-	(No client certificate requested)
-	(Authenticated sender: nicolas)
-	by bali.collaboradmins.com (Postfix) with ESMTPSA id 79DC917E013E;
-	Wed, 10 Jun 2026 16:00:53 +0200 (CEST)
-Message-ID: <a199bf51ac0d7123ba360bec5f47bf3f1ad5a3e3.camel@collabora.com>
-Subject: Re: [PATCH RFC 1/2] media: docs: Clarify
- V4L2_FMT_FLAG_DYN_RESOLUTION usage
-From: Nicolas Dufresne <nicolas.dufresne@collabora.com>
-To: Hans Verkuil <hverkuil+cisco@kernel.org>, "Ming Qian(OSS)"
-	 <ming.qian@oss.nxp.com>
-Cc: "sashiko-reviews@lists.linux.dev" <sashiko-reviews@lists.linux.dev>, 
- "hverkuil@kernel.org"	 <hverkuil@kernel.org>, "mchehab@kernel.org"
- <mchehab@kernel.org>,  "imx@lists.linux.dev"	 <imx@lists.linux.dev>,
- "Frank.Li@kernel.org" <Frank.Li@kernel.org>,  "linux-media@vger.kernel.org"
-	 <linux-media@vger.kernel.org>, Eagle Zhou <eagle.zhou@nxp.com>, Elliot
- Chen	 <elliot.chen@nxp.com>, Frank Li <frank.li@nxp.com>, 
- "linux-kernel@vger.kernel.org"	 <linux-kernel@vger.kernel.org>
-Date: Wed, 10 Jun 2026 10:00:51 -0400
-In-Reply-To: <349d6d48-9996-4791-833c-5c01e07883fd@kernel.org>
-References: <20260608-flag-dyn-resolution-v1-1-44dc65516148@oss.nxp.com>
-	 <20260608040616.1A3EE1F00893@smtp.kernel.org>
-	 <AM9PR04MB857068E0FE59DD8ECB27A9AAE71C2@AM9PR04MB8570.eurprd04.prod.outlook.com>
-	 <e689df21c92861e35b6d11e391bea3404321484d.camel@collabora.com>
-	 <aijOPSFPEDsVlYFY@lsvm11u0000189.swis.ap-northeast-2.aws.nxp.com>
-	 <aijayrdr_rrz2x4B@lsvm11u0000189.swis.ap-northeast-2.aws.nxp.com>
-	 <349d6d48-9996-4791-833c-5c01e07883fd@kernel.org>
-Autocrypt: addr=nicolas.dufresne@collabora.com; prefer-encrypt=mutual;
- keydata=mDMEaCN2ixYJKwYBBAHaRw8BAQdAM0EHepTful3JOIzcPv6ekHOenE1u0vDG1gdHFrChD
- /e0J05pY29sYXMgRHVmcmVzbmUgPG5pY29sYXNAbmR1ZnJlc25lLmNhPoicBBMWCgBEAhsDBQsJCA
- cCAiICBhUKCQgLAgQWAgMBAh4HAheABQkJZfd1FiEE7w1SgRXEw8IaBG8S2UGUUSlgcvQFAmibrjo
- CGQEACgkQ2UGUUSlgcvQlQwD/RjpU1SZYcKG6pnfnQ8ivgtTkGDRUJ8gP3fK7+XUjRNIA/iXfhXMN
- abIWxO2oCXKf3TdD7aQ4070KO6zSxIcxgNQFtDFOaWNvbGFzIER1ZnJlc25lIDxuaWNvbGFzLmR1Z
- nJlc25lQGNvbGxhYm9yYS5jb20+iJkEExYKAEECGwMFCwkIBwICIgIGFQoJCAsCBBYCAwECHgcCF4
- AWIQTvDVKBFcTDwhoEbxLZQZRRKWBy9AUCaCyyxgUJCWX3dQAKCRDZQZRRKWBy9ARJAP96pFmLffZ
- smBUpkyVBfFAf+zq6BJt769R0al3kHvUKdgD9G7KAHuioxD2v6SX7idpIazjzx8b8rfzwTWyOQWHC
- AAS0LU5pY29sYXMgRHVmcmVzbmUgPG5pY29sYXMuZHVmcmVzbmVAZ21haWwuY29tPoiZBBMWCgBBF
- iEE7w1SgRXEw8IaBG8S2UGUUSlgcvQFAmibrGYCGwMFCQll93UFCwkIBwICIgIGFQoJCAsCBBYCAw
- ECHgcCF4AACgkQ2UGUUSlgcvRObgD/YnQjfi4+L8f4fI7p1pPMTwRTcaRdy6aqkKEmKsCArzQBAK8
- bRLv9QjuqsE6oQZra/RB4widZPvphs78H0P6NmpIJ
-Organization: Collabora Canada
-Content-Type: multipart/signed; micalg="pgp-sha512";
-	protocol="application/pgp-signature"; boundary="=-+gB4QBD4Sg+rOb4wvVUk"
-User-Agent: Evolution 3.60.2 (3.60.2-1.fc44) 
+	dkim=pass (2048-bit key) header.d=intel.com header.i=@intel.com header.b="krCm0IZj"
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
+  d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
+  t=1781102751; x=1812638751;
+  h=from:to:cc:subject:in-reply-to:references:date:
+   message-id:mime-version;
+  bh=tkOzyDdrsQBrIpjjWDbFuiQH0jDBEtUyXu5Q0Kdtqbg=;
+  b=krCm0IZjlAxUIXtAYc/MNz8jY57+dHscX1jQcozHzacZljGTNQYyXUDz
+   +w/gJAVKP81X6YZz2ogr2gJFYZG6Hi53S6VYqQ4Q+eYBlolMrIT7gn+mP
+   yTSFywFf9Oj4u2mM1+wZ/VkrU4/b9qd1051Zp0tIktUb0oSVRPfVZH23W
+   /BVx9D2rk74vN0SIRKo0MRlOou95/EZVB5VnRDmok2wveL09BO+NKsuNf
+   gLlIw7vqPDubDhJOAto8bM7zh45CQHemMMP3f8OnM7jNtVGBjeFzRDavH
+   nMKUb/K3uoE2TL5i7PinsghwuGaBnDfwGCptkP34/96b0zJgjZYU+Hafc
+   g==;
+X-CSE-ConnectionGUID: dPK+JQX9TyOVJ75mQ20a6w==
+X-CSE-MsgGUID: HQRtBK6KTvaQxN53ni/p8w==
+X-IronPort-AV: E=McAfee;i="6800,10657,11813"; a="81027986"
+X-IronPort-AV: E=Sophos;i="6.24,197,1774335600"; 
+   d="scan'208";a="81027986"
+Received: from fmviesa008.fm.intel.com ([10.60.135.148])
+  by fmvoesa112.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 10 Jun 2026 07:45:51 -0700
+X-CSE-ConnectionGUID: siS0FlX3QkKQt5vi8NPjZQ==
+X-CSE-MsgGUID: GRIgeYagT9GKyI3duiWHpQ==
+X-ExtLoop1: 1
+X-IronPort-AV: E=Sophos;i="6.24,197,1774335600"; 
+   d="scan'208";a="243727800"
+Received: from fpallare-mobl4.ger.corp.intel.com (HELO localhost) ([10.245.244.3])
+  by fmviesa008-auth.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 10 Jun 2026 07:45:50 -0700
+From: Jani Nikula <jani.nikula@intel.com>
+To: sashiko-reviews@lists.linux.dev
+Cc: dri-devel@lists.freedesktop.org
+Subject: Re: [PATCH] drm/displayid: fix Tiled Display Topology ID size
+In-Reply-To: <20260610143258.324C21F00893@smtp.kernel.org>
+Organization: Intel Finland Oy - BIC 0357606-4 - c/o Alberga Business Park,
+ 6 krs Bertel Jungin Aukio 5, 02600 Espoo, Finland
+References: <20260610141549.555605-1-jani.nikula@intel.com>
+ <20260610143258.324C21F00893@smtp.kernel.org>
+Date: Wed, 10 Jun 2026 17:45:47 +0300
+Message-ID: <7f2d51d75ff70c1d2f46658d162c54d0bbe46da7@intel.com>
 Precedence: bulk
 X-Mailing-List: sashiko-reviews@lists.linux.dev
 List-Id: <sashiko-reviews.lists.linux.dev>
 List-Subscribe: <mailto:sashiko-reviews+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:sashiko-reviews+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
+Content-Type: text/plain
+
+On Wed, 10 Jun 2026, sashiko-bot@kernel.org wrote:
+> Thank you for your contribution! Sashiko AI review found 1 potential issue(s) to consider:
+>
+> Pre-existing issues:
+> - [High] Missing payload size validation in `drm_parse_tiled_block` allows an out-of-bounds read of the EDID buffer when parsing malformed DisplayID tiled display blocks.
+> --
+>
+> commit 3a0b5d7c7c564335f99c7d692448de9241f67bbd
+> Author: Jani Nikula <jani.nikula@intel.com>
+>
+> drm/displayid: fix Tiled Display Topology ID size
+>
+> This commit updates the Tiled Display Topology ID size from 8 to 9 bytes
+> in the DRM subsystem structures.
+>
+>> diff --git a/drivers/gpu/drm/drm_connector.c b/drivers/gpu/drm/drm_connector.c
+>> index 3fa4d2082cd72..11646453aaac9 100644
+>> --- a/drivers/gpu/drm/drm_connector.c
+>> +++ b/drivers/gpu/drm/drm_connector.c
+> [ ... ]
+>> @@ -3579,14 +3579,14 @@ EXPORT_SYMBOL(drm_mode_put_tile_group);
+>>   * tile group or NULL if not found.
+>>   */
+>>  struct drm_tile_group *drm_mode_get_tile_group(struct drm_device *dev,
+>> -					       const char topology[8])
+>> +					       const char topology_id[9])
+>>  {
+>>  	struct drm_tile_group *tg;
+>>  	int id;
+>>  
+>>  	mutex_lock(&dev->mode_config.idr_mutex);
+>>  	idr_for_each_entry(&dev->mode_config.tile_idr, tg, id) {
+>> -		if (!memcmp(tg->group_data, topology, 8)) {
+>> +		if (!memcmp(tg->group_data, topology_id, sizeof(tg->group_data))) {
+>
+> [Severity: High]
+> This isn't a bug introduced by this patch, but could this lead to an
+> out-of-bounds read of the EDID buffer when parsing malformed DisplayID tiled
+> display blocks?
+>
+> Looking at drm_parse_tiled_block() in drivers/gpu/drm/drm_edid.c, the generic
+> block is cast to a displayid_tiled_block without validating that the payload
+> size (block->num_bytes) is large enough:
+>
+> drivers/gpu/drm/drm_edid.c:drm_parse_tiled_block() {
+>     ...
+>     const struct displayid_tiled_block *tile =
+>         (struct displayid_tiled_block *)block;
+>     ...
+>     tg = drm_mode_get_tile_group(connector->dev, tile->topology_id);
+> }
+>
+> If a malformed EDID provides a tiled block with a short length near the end
+> of the allocated EDID buffer, comparing 9 bytes here (or copying them down in
+> drm_mode_create_tile_group()) might read past the bounds of the EDID buffer.
+
+Yeah, maybe you should start reading the mailing list [1]. This patch is
+in response to the fix for that very issue.
+
+BR,
+Jani.
 
 
---=-+gB4QBD4Sg+rOb4wvVUk
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
+[1] https://lore.kernel.org/r/4e784cad86c91595b6d5da64ca854dab38357658@intel.com
 
-Le mercredi 10 juin 2026 =C3=A0 08:15 +0200, Hans Verkuil a =C3=A9crit=C2=
-=A0:
-> > The more natural fix would be to add V4L2_EVENT_SOURCE_CHANGE for the
-> > initial resolution case as well, then properly report
-> > V4L2_FMT_FLAG_DYN_RESOLUTION through VIDIOC_ENUM_FMT. If all existing
-> > drivers that support mid-stream DRC can similarly be updated to fire th=
-e
-> > event for initial resolution, then perhaps the spec change to split the
-> > flag isn't strictly necessary - drivers just need to be fixed to comply
-> > with the current definition.
-> >=20
-> > I'd appreciate hearing others' thoughts on whether this unified approac=
-h
-> > is practical across all existing drivers.
->=20
-> Just a quick reply to mention that the s5p-mfc driver predates a lot of t=
-he
-> newer uAPIs for stateful codecs. It's why it behaves in a not-quite-stand=
-ard
-> way. So there is history here. The resolution change support was added in
-> commit 0520e4cc3bb9d back in 2014, three years after the driver was first
-> added to the kernel. The stateful decoder spec as we have today was only
-> introduced in 2019.
 
-Fair point. Now, some clarification about the initial event. When this was =
-re-
-implemented in GStreamer, we explicitly don't prepare the capture queue (no
-REQBUFS/CREATE_BUF, its not streaming). So effectively, the driver is force=
-d to
-start with only the output queue, and that was assumed to force the initial
-event. The src_ch event indicates that the driver is stuck until the captur=
-e
-queue has been reconfigured (or configured in this cased).
 
-I think you make a good point that this is not very clearly stated, but it =
-was
-also intentional to use that flag as a boundary before expecting this very
-strict behaviour. From a HW stand point, it does make quite some sense, sin=
-ce
-the parsing of header and discovery should happen separately from the captu=
-re
-buffer requirement. This is the main difference between stateless and state=
-ful.
-In userspace, this workflow allowed to better decouple the output and captu=
-re
-threads, which very typically is a independent threads (true for GStreamer =
-and
-Chromium at minimum).
-
-In the legacy path in gstreamer, the capture queue format is guessed, alloc=
-ated
-and set to streaming. In that case, the driver only have to emit the initia=
-l
-event if the capture queue configuration miss-match its requirements. I bel=
-ieve
-that was done so it aligned with some legacy flow. In theory this should wo=
-rk
-with earlier implementation of SOURCE_CHANGE, but remains a best effort. CO=
-DA960
-being the only legacy implementation I kept testing over time. With CODA to=
-day,
-if the guessed allocation failed, everything fails, which seems to be a bug=
- or
-limitation from you analyses. Fixing it can be tricky, as we need to ensure=
- we
-maintain backward compatibility with older userspace. Specially for CODA wh=
-ich
-is massively deployed. A lot of strangeness in CODA comes from its reversed
-engineered nature. Note that, I do have spec for this one these days, and c=
-an
-answer questions. I do know that we actually get a subset of the SPS, which
-should fully cover the needs for the DYN_RESOLUTION.
-
-The thing that also comes with V4L2_FMT_FLAG_DYN_RESOLUTION, is also the dr=
-ain
-flow. There was just no drain flow prior to this and the matching decoder s=
-pec.
-So to drain the capture queue on SOURCE_CHANGE, we had to track the state o=
-f the
-queue, and avoid going back into polling once the queue was drained (since
-polling previously blocked). That tracking have simply never been implement=
-ed in
-GStreamer. The only legacy draining flow we had, was the infamous zero size=
-d
-buffer, which was ambiguous, since there was 3 possibilities instead of 2:
-
-- Failed decode
-- Failed decode and drained
-- Drained
-
-If a decode failed at entropy decode, the resulting failed buffer would be
-signalled and confused with the drain. And so the other infamous LAST flag =
-was
-added. But then MFC signals the drain state independently, not at the same =
-time
-as the last buffer, and so EPIPE on DQBUF was introduced. With the new spec=
-, we
-forced this drain flow onto both draining on end-of-stream (CMD_STOP) and t=
-o
-happen somewhere after any SOURCE_CHANGE, and if you use
-V4L2_FMT_FLAG_DYN_RESOLUTION you must follow the DRC flow from the new spec=
-.
-
-I don't know if sharing the drain mechanism for DRC and actual CMD_STOP was=
- the
-best idea in the world, but it is what is it now, and for sure, old or
-unmaintained drivers endup with highly inconsistent state. I'm happy with t=
-he
-idea to improve the spec, and to improve the drivers concistency too, as lo=
-ng as
-we can actually test, since it too complex to change without testing. I thi=
-nk,
-if something could help, it would be to implement couple of the legacy flow=
- in
-vivid driver, so we could test virtually.
-
-Nicolas
-
---=-+gB4QBD4Sg+rOb4wvVUk
-Content-Type: application/pgp-signature; name="signature.asc"
-Content-Description: This is a digitally signed message part
-Content-Transfer-Encoding: 7bit
-
------BEGIN PGP SIGNATURE-----
-
-iHUEABYKAB0WIQTvDVKBFcTDwhoEbxLZQZRRKWBy9AUCailuEwAKCRDZQZRRKWBy
-9Ln4AQD2Mp1EVR+oTYzzPh6u7yEg0CgiyLjBS++dpF/ZVakIeAD8CUKFKVo7m4t8
-PIW9OF4ZIBBtZ1I3h94ZZleofSD5lAY=
-=0sm3
------END PGP SIGNATURE-----
-
---=-+gB4QBD4Sg+rOb4wvVUk--
+-- 
+Jani Nikula, Intel
