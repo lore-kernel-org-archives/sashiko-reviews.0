@@ -1,342 +1,193 @@
-Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
+Received: from smtpbg151.qq.com (smtpbg151.qq.com [18.169.211.239])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8CFB335FF6E;
-	Wed, 10 Jun 2026 06:15:46 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7D68731F99B
+	for <sashiko-reviews@lists.linux.dev>; Wed, 10 Jun 2026 07:08:35 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=18.169.211.239
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1781072148; cv=none; b=XyMrPnQheC/0AZi0UdN0ONFjllaSjLRpB+AVGamlrvOp8YiK/aLRLFQ3IjNVc9OqxKm80EYXl6RFpSMXzL8Tv3I45DbESrSatRZr96aR3VnOw0SScFzxRSSb+zM7PR3A9z794ggno6HqLwyP0tTIlTIui0Nyz2TqoHTJ0YGws2Q=
+	t=1781075321; cv=none; b=KxZ0jYZmNllPEEU6Re8WYugFky4e+8sTrd25wLD1LA1tJKm+U5rLsl6FjODTzN8FPfzJpEwlK45MtTvqiFrRR6QE4EX/RWj478X/dxybzVKgFeyMhdxpiRZO58un0KrhMIKzWs3BnzRL3xp1t2aw1Z6tcF37nr8ATV3LHvoEu9g=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1781072148; c=relaxed/simple;
-	bh=zUePosTIJHAQcCM2es+uBUsouLCrC8kCtLKkcCn95MM=;
-	h=Message-ID:Date:MIME-Version:From:Subject:To:Cc:References:
-	 In-Reply-To:Content-Type; b=nnZQjdbXuiQONg4vfkgIKYjtmvdMWggw+zX7Ni9TrFsbYpY5INz6X0cK/xJYbOFbYhYfJjKfIF2ZeEFpmUi3fFZ/P/fIzaKmrYR6N4qLV78o0bVx0rhe5dYrUswiGoV+afq/9fkCzZYgL6b2HhPqZ5U3EiSY/M6AKJf5SPmwxnQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=N2V7mD17; arc=none smtp.client-ip=100.103.45.18
+	s=arc-20240116; t=1781075321; c=relaxed/simple;
+	bh=zvKytJ58T/chWpp24xm4A9/cDcPHoU4w4qBHxE0/tfQ=;
+	h=Date:From:To:Cc:Subject:References:Mime-Version:Message-ID:
+	 Content-Type; b=VGR7q/pd3AU0x/Frmc5gvVpwEytLGgTGuToQGkl7Dxt3ZJRQCWrsF57zeT6L59g7DdHEd7MsMELlggMX767o0DUHQqaq67kyrFAyeRIhz6igffxUY30vRHClE2dCUgEe1ZX/Wed2bYmZ4PbwrGll9FcE5LDAXiiJp9wV+BuRzMo=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=uniontech.com; spf=pass smtp.mailfrom=uniontech.com; dkim=pass (1024-bit key) header.d=uniontech.com header.i=@uniontech.com header.b=laSVrF+i; arc=none smtp.client-ip=18.169.211.239
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=uniontech.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=uniontech.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="N2V7mD17"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 93FEF1F00893;
-	Wed, 10 Jun 2026 06:15:43 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=kernel.org;
-	s=k20260515; t=1781072146;
-	bh=DrELCtHjhS82cKerG8sWq7g/ZPXCT14EwT4cwsAvqmk=;
-	h=Date:From:Subject:To:Cc:References:In-Reply-To;
-	b=N2V7mD17zsyJom8eBA4HEeRybzKOBzxZXaLFBcT6NAy39q69mie3MsemTzWIHHNC1
-	 tyMIJ1gmzy3rK/TBts6hlSPlH7xZRRydNd/Y5oWc1PdJt9ZQvxO72vjlnoMbjVCLq8
-	 FX9bB5KTDn8CdnOW2H4Hg/Z86mOco17hLO5xUwuhMg6BvJT2V9MVbq/M1gyuCZP2rJ
-	 CTp0KmcFax4dao9wMCS/sugWfzeVqWMjJPXAdIDURxWJ/sFsu+wwLtllF+ZJuzFNuj
-	 /ZmLMLS/IvrRccdBW/4J6eE23SbSpvgK5sJti9NrwQ58cVALc/9S2a2RMz/ssuc3o+
-	 2d6F1ypWt1QlA==
-Message-ID: <349d6d48-9996-4791-833c-5c01e07883fd@kernel.org>
-Date: Wed, 10 Jun 2026 08:15:41 +0200
+	dkim=pass (1024-bit key) header.d=uniontech.com header.i=@uniontech.com header.b="laSVrF+i"
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=uniontech.com;
+	s=onoh2408; t=1781075302;
+	bh=zvKytJ58T/chWpp24xm4A9/cDcPHoU4w4qBHxE0/tfQ=;
+	h=Date:From:To:Subject:Mime-Version:Message-ID;
+	b=laSVrF+iqYLs3ZcnnmsnitWRMdx4Cy7Um8OsrFATdtZdJcBvGzlzeR7Z+r232NF3i
+	 P0NKPYKpkyWz5AqruSR/5DkSMfWsicT801MZMIyZIKXVjNrMRGat4qdyU8E3E/HRMD
+	 6D0LzDtzxVC/n+wWV00zFQDEXaFTZABg05WrXTR4=
+X-QQ-mid: zesmtpsz3t1781075297tf0a746f2
+X-QQ-Originating-IP: n5AAiXA+maG+AP4yA7ZO7SnW+9aOqpN+vqkbX+vaBfU=
+Received: from PEN002676 ( [124.126.19.250])
+	by bizesmtp.qq.com (ESMTP) with 
+	id ; Wed, 10 Jun 2026 15:08:15 +0800 (CST)
+X-QQ-SSF: 0000000000000000000000000000000
+X-QQ-GoodBg: 0
+X-BIZMAIL-ID: 16299428127603928625
+Date: Wed, 10 Jun 2026 15:08:16 +0800
+From: =?GB2312?B?1dS98MP3?= <zhaojinming@uniontech.com>
+To: sashiko-reviews <sashiko-reviews@lists.linux.dev>
+Cc: dri-devel <dri-devel@lists.freedesktop.org>
+Subject: Re: Re: [PATCH v5 2/2] accel/rocket: Fix iommu_group leak and unsafe IRQ register access
+References: <20260610060132.3239648-2-zhaojinming@uniontech.com>, 
+	<20260610061915.1CA281F00893@smtp.kernel.org>
+X-Priority: 3
+X-GUID: 0633139B-E067-4908-8126-AAB895F2707B
+X-Has-Attach: no
+X-Mailer: Foxmail 7.2.25.542[cn]
 Precedence: bulk
 X-Mailing-List: sashiko-reviews@lists.linux.dev
 List-Id: <sashiko-reviews.lists.linux.dev>
 List-Subscribe: <mailto:sashiko-reviews+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:sashiko-reviews+unsubscribe@lists.linux.dev>
-MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-From: Hans Verkuil <hverkuil+cisco@kernel.org>
-Subject: Re: [PATCH RFC 1/2] media: docs: Clarify V4L2_FMT_FLAG_DYN_RESOLUTION
- usage
-To: "Ming Qian(OSS)" <ming.qian@oss.nxp.com>,
- Nicolas Dufresne <nicolas.dufresne@collabora.com>
-Cc: "sashiko-reviews@lists.linux.dev" <sashiko-reviews@lists.linux.dev>,
- "hverkuil@kernel.org" <hverkuil@kernel.org>,
- "mchehab@kernel.org" <mchehab@kernel.org>,
- "imx@lists.linux.dev" <imx@lists.linux.dev>,
- "Frank.Li@kernel.org" <Frank.Li@kernel.org>,
- "linux-media@vger.kernel.org" <linux-media@vger.kernel.org>,
- Eagle Zhou <eagle.zhou@nxp.com>, Elliot Chen <elliot.chen@nxp.com>,
- Frank Li <frank.li@nxp.com>,
- "linux-kernel@vger.kernel.org" <linux-kernel@vger.kernel.org>
-References: <20260608-flag-dyn-resolution-v1-1-44dc65516148@oss.nxp.com>
- <20260608040616.1A3EE1F00893@smtp.kernel.org>
- <AM9PR04MB857068E0FE59DD8ECB27A9AAE71C2@AM9PR04MB8570.eurprd04.prod.outlook.com>
- <e689df21c92861e35b6d11e391bea3404321484d.camel@collabora.com>
- <aijOPSFPEDsVlYFY@lsvm11u0000189.swis.ap-northeast-2.aws.nxp.com>
- <aijayrdr_rrz2x4B@lsvm11u0000189.swis.ap-northeast-2.aws.nxp.com>
-Content-Language: en-US, nl
-In-Reply-To: <aijayrdr_rrz2x4B@lsvm11u0000189.swis.ap-northeast-2.aws.nxp.com>
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8bit
+Mime-Version: 1.0
+Message-ID: <D23A28C3959804D9+202606101508151030321@uniontech.com>
+Content-Type: text/plain;
+	charset="GB2312"
+Content-Transfer-Encoding: base64
+X-QQ-SENDSIZE: 520
+Feedback-ID: zesmtpsz:uniontech.com:qybglogicsvrsz:qybglogicsvrsz4b-0
+X-QQ-XMAILINFO: NUDY11p76rEh0nJqIjXSTINt5rhMf1tdRfOmhhL7rtSPS2D9N9n7vNBm
+	iD3hA37YbSRZ24P99XW8LpcT2TVgbyQyYsC2F+vDV51nQTOSMY1azR1MgUBNHpSWKdswrm/
+	YW33C0qivYD8Sy/A7z24Fyd9Vvg7PCOLsJ+/2oNMlJphoOs9MdnZCEQPng2LqxTK5AkoviV
+	OAi4OrxNWZ6CI+qr1afnsNVRCSkfYIBKf8uIHIzua7kzkal/89LP66JO31etQ3VlQrUTCuY
+	YS8uVnfL5E9zKk7gXyVc2Mq7seIwyJWrtkgMaVkJtPWbIpB5p9STDislfleHtZaZmkmnuJ1
+	M/f60RL+228/C2CIFgo4HHm+iOYPo25ObEoJF2t4JDhXUzwRuMgwzz/+niUkkUOfpNqO4M/
+	aUcvFlgk/9D9KCoJ0LHJE/hQ+nHHNEfEGT8bQaCau+RB1snb0WAlK4FxQAo35uSL3NwcvxV
+	j4hx16O7SrxR1iahDcJ4tCXvRgZ6kRGf0soE0Sj7FtpSN/a+4cFKxtXXdwWYET4mRDfNoIt
+	lPFKjYoz8T5VNgW4KuahZSyAoPVx1h9tOULORLlXdVAMM6rpYNMPrJnpW4NbAYj7HuhK+xZ
+	bLcCgGSKnPuTRSRrBVQaMhWvSkJO45zQZ5/ECmkI0DDtkpnCDOEdtSuJ9dekIxwLKyM7/jv
+	QCCRHmaiXBqdYV2LICu3M9//wSWhn4gJU+TdPXyIOS7CM740k7BcaeAZnsuxd/KNX8+N4os
+	hJBtTexZ77/Tcle4kwm4sTnXgyXiMQsyYUy/1OEaWmNZ0o82vU7XcCTZLg7K9hBnuWMVqk1
+	ceuIsRo0YxSam1+OVSUooXcBGLBkYGVRpzH2BRGps2/DRWWIJLmb+1YlDpWgQMNS6xHl38Q
+	Bdhupjv5ruXwz58UC7iAMqeNnIVRhc4WG9zgs5Lwfe7iHP3xnLE8bGJuio69wqcsnd/wU3I
+	g0aPzX+e2tMCIrvYz+p08NcxE3L55SQYpS8n9Fz9A1EgYIi/Pvm/i+HnLBx0gHeryLABcbE
+	pHbzS+cXfZSYLJrCiE
+X-QQ-XMRINFO: Mp0Kj//9VHAxzExpfF+O8yhSrljjwrznVg==
+X-QQ-RECHKSPAM: 0
 
-On 10/06/2026 05:36, Ming Qian(OSS) wrote:
-> On Wed, Jun 10, 2026 at 11:49:06AM +0900, Ming Qian(OSS) wrote:
->> On Tue, Jun 09, 2026 at 02:00:02PM -0400, Nicolas Dufresne wrote:
->>
->> Hi Nicolas,
-> 
->>> Hi Ming,
->>>
->>> Le lundi 08 juin 2026 à 06:26 +0000, Ming Qian (OSS) a écrit :
->>>>
->>>>
->>>>> -----Original Message-----
->>>>> From: sashiko-bot@kernel.org <sashiko-bot@kernel.org>
->>>>> Sent: Monday, June 8, 2026 12:06 PM
->>>>> To: Ming Qian (OSS) <ming.qian@oss.nxp.com>
->>>>> Cc: imx@lists.linux.dev; Frank.Li@kernel.org; linux-media@vger.kernel.org
->>>>> Subject: Re: [PATCH RFC 1/2] media: docs: Clarify
->>>>> V4L2_FMT_FLAG_DYN_RESOLUTION usage
->>>>>
->>>>> Thank you for your contribution! Sashiko AI review found 1 potential
->>>>> issue(s)
->>>>> to consider:
->>>>> - [High] The added documentation conflates
->>>>> `V4L2_FMT_FLAG_DYN_RESOLUTION` (which designates mid-stream dynamic
->>>>> resolution switching capability) with the mandatory initial
->>>>> `V4L2_EVENT_SOURCE_CHANGE` event. By stating "Clients can use this flag to
->>>>> determine whether the decoder will signal the initial resolution", it
->>>>> explicitly
->>>>> legitimizes a flawed userspace heuristic that violates the V4L2 stateful
->>>>> decoder
->>>>> specification. The specification mandates that for coded formats containing
->>>>> resolution info, the decoder MUST parse the stream and emit an initial
->>>>> `V4L2_EVENT_SOURCE_CHANGE` event (Initialization Step 4). Compliant drivers
->>>>> (e.g., `coda`) correctly emit this initial event but do NOT set
->>>>> `V4L2_FMT_FLAG_DYN_RESOLUTION` because they lack mid-stream switching
->>>>> capabilities. If userspace follows this documented advice, it will
->>>>> erroneously
->>>>> skip waiting for the initial event on these drivers, breaking Capture Setup
->>>>> and
->>>>> stream decoding.
->>>>> --
->>>>>
->>>>> commit ec9c0583334c246f7813132b55724e42622e8edd
->>>>> Author: Ming Qian <ming.qian@oss.nxp.com>
->>>>>
->>>>> media: docs: Clarify V4L2_FMT_FLAG_DYN_RESOLUTION usage
->>>>>
->>>>> This commit updates the V4L2 stateful decoder documentation to clarify the
->>>>> usage of the V4L2_FMT_FLAG_DYN_RESOLUTION flag. It adds a note stating
->>>>> that decoders setting this flag will always emit an initial source change
->>>>> event.
->>>>> The documentation suggests clients can use this flag to decide whether to
->>>>> wait
->>>>> for the initial resolution signal.
->>>>>
->>>>>> diff --git a/Documentation/userspace-api/media/v4l/dev-decoder.rst
->>>>>> b/Documentation/userspace-api/media/v4l/dev-decoder.rst
->>>>>> --- a/Documentation/userspace-api/media/v4l/dev-decoder.rst
->>>>>> +++ b/Documentation/userspace-api/media/v4l/dev-decoder.rst
->>>>>> @@ -361,6 +361,14 @@ Initialization
->>>>> [ ... ]
->>>>>> +    .. note::
->>>>>> +
->>>>>> +       Decoders that set the ``V4L2_FMT_FLAG_DYN_RESOLUTION`` flag for
->>>>> the
->>>>>> +       coded format will always emit an initial
->>>>> ``V4L2_EVENT_SOURCE_CHANGE``
->>>>>> +       event with ``V4L2_EVENT_SRC_CH_RESOLUTION`` during this phase.
->>>>> Clients
->>>>>> +       can use this flag to determine whether the decoder will signal the
->>>>>> +       initial resolution before producing decoded frames.
->>>>>
->>>>> [Severity: High]
->>>>> Does this guidance conflate the V4L2_FMT_FLAG_DYN_RESOLUTION flag,
->>>>> which designates mid-stream dynamic resolution switching, with the
->>>>> mandatory initial V4L2_EVENT_SOURCE_CHANGE event?
->>>>>
->>>>> The V4L2 Stateful Decoder API requires an initial
->>>>> V4L2_EVENT_SOURCE_CHANGE event during the Initialization phase for stream
->>>>> parsing, irrespective of dynamic resolution support.
->>>>>
->>>>> Compliant drivers like coda correctly emit this initial event but do not set
->>>>> V4L2_FMT_FLAG_DYN_RESOLUTION because they lack mid-stream switching
->>>>> capabilities.
->>>>>
->>>>> If userspace follows this documented advice, wouldn't it erroneously skip
->>>>> waiting for the initial event on these drivers, potentially breaking capture
->>>>> setup
->>>>> and stream decoding?
->>>>>
->>>>> --
->>>>> Sashiko AI review · https://sashiko.dev/#/patchset/20260608-flag-dyn-
->>>>> resolution-v1-0-44dc65516148@oss.nxp.com?part=1
->>>>
->>>> Hi,
->>>>
->>>> Thanks for the review.
->>>>
->>>> You are right that the V4L2 stateful decoder specification states the initial
->>>> V4L2_EVENT_SOURCE_CHANGE is mandatory for coded formats that contain
->>>> resolution information in the stream (Initialization Step 4).
->>>
->>> Be aware that Sashiko is an AI bot, llm words things with extreme conviction,
->>> and it this case forget about backward compatibility from pre-spec.
->>>
->>>>
->>>> However, in practice, GStreamer's v4l2 stateful decoder implementation uses
->>>> V4L2_FMT_FLAG_DYN_RESOLUTION to determine whether to subscribe and wait for
->>>> the initial source change event. The reasoning from the GStreamer side, as
->>>> Nicolas explained [1]:
->>>>
->>>>   
->>>> "
->>>> https://docs.kernel.org/userspace-api/media/v4l/dev-decoder.html#dynamic-resolu
->>>> tion-change
->>>>     Says:
->>>>         Not all decoders can detect resolution changes. Those that do set the
->>>>         V4L2_FMT_FLAG_DYN_RESOLUTION flag.
->>>>
->>>>     So normally that wording should prevent requiring an initial SRC_CH,
->>>>     or emitting later SRC_CH. Your driver don't have this flag, then your
->>>>     driver can't emit this event. But a measure we should take into
->>>>     GStreamer would be to not register (or mark) this event."
->>>>
->>>> @Nicolas, could you elaborate on why GStreamer needs
->>>> V4L2_FMT_FLAG_DYN_RESOLUTION to handle the initial source change event?
->>>> Is this something that should be fixed on the GStreamer side (i.e., always
->>>> wait for the initial event), or is the current heuristic intentional due to
->>>> legacy drivers that don't emit the event?
->>>
->>> The coda source_change notification is completely fake. It does not dependent on
->>> the bitstream content. So the event is left there, since its kind of part of the
->>> ABI, but it does not behave like other implementation, or pre-spec drivers.
->>>
->>> So what we do in GStreamer, is that for legacy driver (no
->>> V4L2_FMT_FLAG_DYN_RESOLUTION), we pre-allocate both queues, based on our guessed
->>> dimensions. If it happens that the conformance windows is small enough, it often
->>> works. DRC will only work if the display dimension changes.
->>>
->>> For any modern driver, that implement V4L2_FMT_FLAG_DYN_RESOLUTION, we strictly
->>> wait for the event, and on DRC, even if the display resolution changes, we let
->>> the driver tell us when to actually reconfigure. The legacy method was kept to
->>> not break coda and older driver, the new method is a lot more reliable, and
->>> avoid allocating twice the capture queue (wrong guess).
->>>
->>> The userspace implementation is also a bit more flexible, as normally the legacy
->>> way should kind of work for any drivers, and we still subscribe it seems. But
->>> the implication is just strange and shouldn't be needed in drivers with
->>> V4L2_FMT_FLAG_DYN_RESOLUTION support.
->>>
->>> Nicolas
->>>
->>>
->>
->> Thanks for the detailed explanation of GStreamer's approach.
->>
->> I have a couple of follow-up questions:
->>
->> 1. Regarding coda's source change being "completely fake":
->>
->>    Looking at the coda driver code, its seq_init_work does parse the
->>    bitstream via hardware (SEQ_INIT command), and the source change event
->>    is only emitted after ctx->initialized is set — which requires the
->>    hardware to successfully parse the stream headers. After the event,
->>    userspace can call G_SELECTION to retrieve the actual display crop
->>    rectangle parsed from the bitstream.
->>
->>    The limitation is that coda requires userspace to set a sufficiently
->>    large resolution via S_FMT(OUTPUT) beforehand (since it validates
->>    stream dimensions fit within the pre-configured buffer size rather
->>    than updating G_FMT with parsed dimensions). But the event itself
->>    does depend on bitstream content and carries useful information
->>    (visible resolution via selection API).
->>
->>    So it seems coda could work with the standard init flow — the source
->>    change event is real, just the information delivery is partial (crop
->>    via G_SELECTION rather than full coded resolution via G_FMT). Would
->>    you agree, or is there another reason GStreamer treats it as legacy?
->>
->> 2. Regarding s5p-mfc:
->>
->>    Interestingly, s5p-mfc sets V4L2_FMT_FLAG_DYN_RESOLUTION but does
->>    NOT emit an initial source change event. After SEQ_DONE, it simply
->>    transitions to MFCINST_HEAD_PARSED state and wakes up waiters —
->>    userspace discovers the resolution by calling G_FMT(CAPTURE) which
->>    internally blocks until header parsing completes.
->>
->>    The source change event is only emitted during mid-stream resolution
->>    changes (RES_CHANGE_FLUSH path). How does GStreamer handle this case?
->>    Does it timeout waiting for the initial event and fall back, or does
->>    it use some other mechanism?
->>
->> Overall, I agree that using V4L2_FMT_FLAG_DYN_RESOLUTION to unify the
->> behavior (both initial source change and mid-stream DRC) is the right
->> direction. But the current state has some inconsistencies:
->>
->>   - coda: emits initial source change, but does NOT set DYN_RESOLUTION
->>   - s5p-mfc: sets DYN_RESOLUTION, but does NOT emit initial source change
->>
->> If we want to document that "DYN_RESOLUTION implies initial source change
->> event will be emitted", s5p-mfc would need to be fixed to comply. Does
->> that seem reasonable, or should we take a different approach?
-> 
-> Hi,
-> 
-> I'd like to follow up with a correction regarding the s5p-mfc driver.
-> 
-> I apologize for the confusion in my earlier analysis. The s5p-mfc driver
-> does define V4L2_FMT_FLAG_DYN_RESOLUTION in its internal formats[]
-> table. However, the vidioc_enum_fmt() implementation never copies these
-> flags to userspace:
-> 
->   f->pixelformat = formats[i].fourcc;
->   return 0;  /* f->flags is never set! */
-> 
-> This is a bug - from userspace's perspective, VIDIOC_ENUM_FMT always
-> returns flags = 0, which is why GStreamer treats s5p-mfc via the legacy
-> path.
-> 
-> Looking at the driver's actual behavior:
-> 
-> - Initial resolution: After header parsing, the driver wakes up the
->   waiting context but does not send V4L2_EVENT_SOURCE_CHANGE. Userspace
->   discovers the resolution by calling G_FMT after STREAMON.
-> 
-> - Mid-stream resolution change: The driver does send
->   V4L2_EVENT_SOURCE_CHANGE with V4L2_EVENT_SRC_CH_RESOLUTION.
-> 
-> So if V4L2_FMT_FLAG_DYN_RESOLUTION is defined to cover both initial and
-> mid-stream resolution changes:
-> 
-> - It should not set the flag - because it doesn't fire the event for
->   initial resolution.
-> - It should set the flag - because it supports mid-stream DRC via the
->   event.
-> 
-> Neither setting nor clearing the flag accurately describes the driver's
-> current behavior.
-> 
-> The more natural fix would be to add V4L2_EVENT_SOURCE_CHANGE for the
-> initial resolution case as well, then properly report
-> V4L2_FMT_FLAG_DYN_RESOLUTION through VIDIOC_ENUM_FMT. If all existing
-> drivers that support mid-stream DRC can similarly be updated to fire the
-> event for initial resolution, then perhaps the spec change to split the
-> flag isn't strictly necessary - drivers just need to be fixed to comply
-> with the current definition.
-> 
-> I'd appreciate hearing others' thoughts on whether this unified approach
-> is practical across all existing drivers.
-
-Just a quick reply to mention that the s5p-mfc driver predates a lot of the
-newer uAPIs for stateful codecs. It's why it behaves in a not-quite-standard
-way. So there is history here. The resolution change support was added in
-commit 0520e4cc3bb9d back in 2014, three years after the driver was first
-added to the kernel. The stateful decoder spec as we have today was only
-introduced in 2019.
-
-Regards,
-
-	Hans
-
-> 
-> Best regards,
-> Ming
-> 
->>
->> Regards,
->> Ming
->>
->>>
->>>>
->>>> [1] https://gitlab.freedesktop.org/gstreamer/gstreamer/-/work_items/5126
->>>>
->>>> Best regards,
->>>> Ming
->>
->>
->>
-> 
+CgoKCj5UaGFuayB5b3UgZm9yIHlvdXIgY29udHJpYnV0aW9uISBTYXNoaWtvIEFJIHJldmlldyBm
+b3VuZCA0IHBvdGVudGlhbCBpc3N1ZShzKSB0byBjb25zaWRlcjoKCgoKPgoKCgo+TmV3IGlzc3Vl
+czoKCgoKPi0gW0hpZ2hdIFVuaGFuZGxlZCBpbnRlcnJ1cHQgc3Rvcm0gZHVyaW5nIGRldmljZSBy
+ZW1vdmFsIGR1ZSB0byBgcG1fcnVudGltZV9nZXRfaWZfYWN0aXZlKClgLgpJIHRyeSB0byBmaXgg
+aXQgIGluIG5leHQgdmVyc2lvbiBvZiBwYXRjaGVzLgoKCj4tIFtIaWdoXSBOVUxMIHBvaW50ZXIg
+ZGVyZWZlcmVuY2UgaW4gdGhlIElSUSB0aHJlYWQgZHVyaW5nIHRlYXJkb3duIChVc2UtQWZ0ZXIt
+RnJlZSkuCgoKClJlZ2FyZGluZyB0aGUgTlVMTCBwb2ludGVyIGRlcmVmZXJlbmNlIGR1cmluZyB0
+ZWFyZG93biBjb25jZXJuOgoKVGhpcyBjYW5ub3Qgb2NjdXIgaW4gdGhlIGN1cnJlbnQgcGF0Y2gu
+IFRoZSB0aHJlYWRlZCBJUlEgaGFuZGxlciBoYXMgdGhyZWUgbGF5ZXJzIG9mIHByb3RlY3Rpb246
+CgpwbV9ydW50aW1lX2dldF9pZl9hY3RpdmUoKSA9PSAxIChsaW5lIDQyMyk6IEluIHJvY2tldF9j
+b3JlX2ZpbmkoKSwgcG1fcnVudGltZV9kaXNhYmxlKCkgaXMgY2FsbGVkIGJlZm9yZSBjb3JlLT5p
+b21tdV9ncm91cCA9IE5VTEwuIEFmdGVyIHBtX3J1bnRpbWVfZGlzYWJsZSgpLCBkaXNhYmxlX2Rl
+cHRoID4gMCwgc28gcG1fcnVudGltZV9nZXRfaWZfYWN0aXZlKCkgcmV0dXJucyAtRUlOVkFMLiBT
+aW5jZSAtRUlOVkFMICE9IDEgaXMgZmFsc2UsIHRoZSB0aHJlYWRlZCBoYW5kbGVyIG5ldmVyIGNh
+bGxzIHJvY2tldF9qb2JfaGFuZGxlX2lycSgpIGFuZCB0aHVzIG5ldmVyIGFjY2Vzc2VzIGNvcmUt
+PmlvbW11X2dyb3VwLiBUaGlzIGhvbGRzIGV2ZW4gaWYgdGhlIHRocmVhZCBpcyB3b2tlbiBieSBj
+b2FsZXNjaW5nIGFmdGVyIHBtX3J1bnRpbWVfZGlzYWJsZSgpLgpzY29wZWRfZ3VhcmQobXV0ZXgs
+ICZjb3JlLT5qb2JfbG9jaykgd2l0aCBpbl9mbGlnaHRfam9iIGNoZWNrIChsaW5lIDM0NSk6IEV2
+ZW4gaWYgdGhlIGZpcnN0IGNoZWNrIHdlcmUgc29tZWhvdyBieXBhc3NlZCwgcm9ja2V0X2pvYl9o
+YW5kbGVfaXJxKCkgb25seSBhY2Nlc3NlcyBjb3JlLT5pb21tdV9ncm91cCBpbnNpZGUgYSBzY29w
+ZWRfZ3VhcmQgdGhhdCBjaGVja3MgY29yZS0+aW5fZmxpZ2h0X2pvYiAhPSBOVUxMLiBCeSB0aGUg
+dGltZSByb2NrZXRfY29yZV9maW5pKCkgcnVucywgZHJtX3NjaGVkX2ZpbmkoKSBoYXMgYWxyZWFk
+eSBiZWVuIGNhbGxlZCAodmlhIHJvY2tldF9qb2JfZmluaSgpKSwgd2hpY2ggc3RvcHMgdGhlIHNj
+aGVkdWxlciBhbmQgcmVsZWFzZXMgYWxsIGpvYnMsIGxlYXZpbmcgaW5fZmxpZ2h0X2pvYiBhcyBO
+VUxMLgpFeGVjdXRpb24gb3JkZXJpbmcgZ3VhcmFudGVlOiByb2NrZXRfY29yZV9maW5pKCkgY2Fs
+bHMgcG1fcnVudGltZV9kaXNhYmxlKCkgYmVmb3JlIHNldHRpbmcgaW9tbXVfZ3JvdXAgPSBOVUxM
+LiBUaGUgcG1fcnVudGltZV9nZXRfaWZfYWN0aXZlKCkgY2hlY2sgaW4gdGhlIHRocmVhZCBoYW5k
+bGVyIGlzIGV2YWx1YXRlZCB1bmRlciBzcGluX2xvY2tfaXJxc2F2ZSAoc2VlIHBtX3J1bnRpbWVf
+Z2V0X2NvbmRpdGlvbmFsKCkgYXQgcnVudGltZS5jOjEyMzMpLCB3aGljaCBwcm92aWRlcyB0aGUg
+aGFwcGVucy1iZWZvcmUgZ3VhcmFudGVlIHdpdGggcmVzcGVjdCB0byBkaXNhYmxlX2RlcHRoIG1v
+ZGlmaWNhdGlvbiBpbiBfX3BtX3J1bnRpbWVfZGlzYWJsZSgpLgpObyBjb2RlIHBhdGggZXhpc3Rz
+IHdoZXJlIHRoZSB0aHJlYWRlZCBoYW5kbGVyIGNhbiByZWFjaCBpb21tdV9kZXRhY2hfZ3JvdXAo
+TlVMTCwgY29yZS0+aW9tbXVfZ3JvdXApIGFmdGVyIGNvcmUtPmlvbW11X2dyb3VwIGhhcyBiZWVu
+IHNldCB0byBOVUxMLgoKCgoKPlByZS1leGlzdGluZyBpc3N1ZXM6CgoKCj4tIFtDcml0aWNhbF0g
+RG91YmxlIGZyZWUgb2YgYHJqb2ItPnRhc2tzYCBhcnJheSBkdXJpbmcgam9iIHN1Ym1pc3Npb24g
+ZXJyb3IgaGFuZGxpbmcuCgoKCj4tIFtIaWdoXSBOVUxMIHBvaW50ZXIgZGVyZWZlcmVuY2Ugd2hl
+biBmcmVlaW5nIGFuIHVuaW5pdGlhbGl6ZWQgYGpvYi0+ZG9tYWluYC4KCgoKPi0tCgoKCj4KCgoK
+PmNvbW1pdCA3YzU5YTRkNWUyZTc0MjY0YmNmZTdiYzhhYTdjOTAzNTE2YjFjMWMwCgoKCj5BdXRo
+b3I6IFpoYW9KaW5taW5nIDx6aGFvamlubWluZ0B1bmlvbnRlY2guY29tPgoKCgo+CgoKCj5hY2Nl
+bC9yb2NrZXQ6IEZpeCBpb21tdV9ncm91cCBsZWFrIGFuZCB1bnNhZmUgSVJRIHJlZ2lzdGVyIGFj
+Y2VzcwoKCgo+CgoKCj5UaGlzIGNvbW1pdCByZXBsYWNlcyBpb21tdV9ncm91cF9nZXQoKSB3aXRo
+IHRoZSBjYWNoZWQgY29yZS0+aW9tbXVfZ3JvdXAKCgoKPnRvIHByZXZlbnQgYSByZWZlcmVuY2Ug
+bGVhay4gSXQgYWxzbyBhZGRzIHBtX3J1bnRpbWVfZ2V0X2lmX2FjdGl2ZSgpIGNoZWNrcwoKCgo+
+aW4gdGhlIElSUSBoYW5kbGVyIGFuZCB0aHJlYWQgdG8gcHJldmVudCB1bnNhZmUgaGFyZHdhcmUg
+cmVnaXN0ZXIgYWNjZXNzZXMKCgoKPndoZW4gdGhlIGRldmljZSBpcyBzdXNwZW5kZWQuCgoKCj4K
+CgoKPj4gZGlmZiAtLWdpdCBhL2RyaXZlcnMvYWNjZWwvcm9ja2V0L3JvY2tldF9qb2IuYyBiL2Ry
+aXZlcnMvYWNjZWwvcm9ja2V0L3JvY2tldF9qb2IuYwoKCgo+PiBpbmRleCBjZjlmNjE2ODJkZDhi
+Li4yMWI0MzM4MjZiNDc5IDEwMDY0NAoKCgo+PiAtLS0gYS9kcml2ZXJzL2FjY2VsL3JvY2tldC9y
+b2NrZXRfam9iLmMKCgoKPj4gKysrIGIvZHJpdmVycy9hY2NlbC9yb2NrZXQvcm9ja2V0X2pvYi5j
+CgoKCj4+IEBAIC0zNDksNyArMzQ5LDcgQEAgc3RhdGljIHZvaWQgcm9ja2V0X2pvYl9oYW5kbGVf
+aXJxKHN0cnVjdCByb2NrZXRfY29yZSAqY29yZSkKCgoKPj4/IAkJCQlyZXR1cm47CgoKCj4+PyAJ
+CQl9CgoKCj4+PyAKCgoKPj4gLQkJCWlvbW11X2RldGFjaF9ncm91cChOVUxMLCBpb21tdV9ncm91
+cF9nZXQoY29yZS0+ZGV2KSk7CgoKCj4+ICsJCQlpb21tdV9kZXRhY2hfZ3JvdXAoTlVMTCwgY29y
+ZS0+aW9tbXVfZ3JvdXApOwoKCgo+CgoKCj5bU2V2ZXJpdHk6IEhpZ2hdCgoKCj5Db3VsZCB0aGlz
+IGxlYWQgdG8gYSBOVUxMIHBvaW50ZXIgZGVyZWZlcmVuY2UgZHVyaW5nIGRldmljZSB0ZWFyZG93
+bj8KCgoKPgoKCgo+SW4gcm9ja2V0X2NvcmVfZmluaSgpLCBjb3JlLT5pb21tdV9ncm91cCBpcyBz
+ZXQgdG8gTlVMTCB3aXRob3V0IGFjcXVpcmluZwoKCgo+Y29yZS0+am9iX2xvY2sgb3Igd2FpdGlu
+ZyBmb3IgdGhlIElSUSB0aHJlYWQgdG8gZmluaXNoOgoKCgo+CgoKCj5yb2NrZXRfY29yZV9maW5p
+KCkKCgoKPj8/PyAuLi4KCgoKPj8/PyBjb3JlLT5pb21tdV9ncm91cCA9IE5VTEw7CgoKCj4KCgoK
+PklmIHRoZSB0aHJlYWRlZCBJUlEgaGFuZGxlciBydW5zIGNvbmN1cnJlbnRseSBhZnRlciBwYXNz
+aW5nIHRoZSBydW50aW1lIFBNCgoKCj5jaGVjaywgaXQgd2lsbCBwYXNzIHRoaXMgbmV3bHkgbnVs
+bGVkIHBvaW50ZXIgdG8gaW9tbXVfZGV0YWNoX2dyb3VwKCksCgoKCj5jYXVzaW5nIHRoZSBJT01N
+VSBjb3JlIHRvIGRlcmVmZXJlbmNlIGEgTlVMTCBwb2ludGVyIHdoZW4gYWNxdWlyaW5nIHRoZQoK
+Cgo+Z3JvdXAncyBtdXRleC4KCgoKPgoKCgo+Pj8gCQkJZG1hX2ZlbmNlX3NpZ25hbChjb3JlLT5p
+bl9mbGlnaHRfam9iLT5kb25lX2ZlbmNlKTsKCgoKPj4/IAkJCXBtX3J1bnRpbWVfcHV0X2F1dG9z
+dXNwZW5kKGNvcmUtPmRldik7CgoKCj4+PyAJCQljb3JlLT5pbl9mbGlnaHRfam9iID0gTlVMTDsK
+CgoKPgoKCgo+WyAuLi4gXQoKCgo+CgoKCj4+IEBAIC00MjgsMTYgKzQzMSwyNCBAQCBzdGF0aWMg
+aXJxcmV0dXJuX3Qgcm9ja2V0X2pvYl9pcnFfaGFuZGxlcl90aHJlYWQoaW50IGlycSwgdm9pZCAq
+ZGF0YSkKCgoKPj4/IHN0YXRpYyBpcnFyZXR1cm5fdCByb2NrZXRfam9iX2lycV9oYW5kbGVyKGlu
+dCBpcnEsIHZvaWQgKmRhdGEpCgoKCj4+PyB7CgoKCj4+PyAJc3RydWN0IHJvY2tldF9jb3JlICpj
+b3JlID0gZGF0YTsKCgoKPj4gLQl1MzIgcmF3X3N0YXR1cyA9IHJvY2tldF9wY19yZWFkbChjb3Jl
+LCBJTlRFUlJVUFRfUkFXX1NUQVRVUyk7CgoKCj4+ICsJdTMyIHJhd19zdGF0dXM7CgoKCj4+ICsK
+CgoKPj4gKwlpZiAocG1fcnVudGltZV9nZXRfaWZfYWN0aXZlKGNvcmUtPmRldikgIT0gMSkKCgoK
+Pj4gKwkJcmV0dXJuIElSUV9OT05FOwoKCgo+CgoKCj5bU2V2ZXJpdHk6IEhpZ2hdCgoKCj5XaWxs
+IHRoaXMgY2F1c2UgYW4gdW5oYW5kbGVkIGludGVycnVwdCBzdG9ybSBkdXJpbmcgbW9kdWxlIHJl
+bW92YWw/CgoKCj4KCgoKPkR1cmluZyBtb2R1bGUgcmVtb3ZhbCwgcm9ja2V0X2NvcmVfZmluaSgp
+IGRpc2FibGVzIHJ1bnRpbWUgUE06CgoKCj4KCgoKPnJvY2tldF9jb3JlX2ZpbmkoKQoKCgo+Pz8/
+IHBtX3J1bnRpbWVfZGlzYWJsZShjb3JlLT5kZXYpOwoKCgo+CgoKCj5UaGlzIGhhcHBlbnMgYmVm
+b3JlIHRoZSBoYXJkd2FyZSBpcyBzdG9wcGVkLiBJZiBhIGhhcmR3YXJlIGpvYiBjb21wbGV0ZXMK
+CgoKPnN1YnNlcXVlbnRseSwgdGhlIGRldmljZSByYWlzZXMgYSBsZXZlbC10cmlnZ2VyZWQgaW50
+ZXJydXB0LiBTaW5jZSBydW50aW1lCgoKCj5QTSBpcyBkaXNhYmxlZCwgcG1fcnVudGltZV9nZXRf
+aWZfYWN0aXZlKCkgcmV0dXJucyAtRUlOVkFMLgoKCgo+CgoKCj5UaGUgaGFuZGxlciB0aGVuIHVu
+Y29uZGl0aW9uYWxseSByZXR1cm5zIElSUV9OT05FIHdpdGhvdXQgY2xlYXJpbmcgdGhlCgoKCj5p
+bnRlcnJ1cHQuIEJlY2F1c2UgdGhlIElSUSBpcyBsZXZlbC10cmlnZ2VyZWQsIHRoZSB1bmFja25v
+d2xlZGdlZCBpbnRlcnJ1cHQKCgoKPndpbGwgaW1tZWRpYXRlbHkgcmVmaXJlIHVwb24gaGFuZGxl
+ciBleGl0LCBwb3RlbnRpYWxseSBjYXVzaW5nIGFuIGluZmluaXRlCgoKCj5pbnRlcnJ1cHQgc3Rv
+cm0gdGhhdCBkZWFkbG9ja3MgdGhlIENQVS4KCgoKPgoKCgo+W1NldmVyaXR5OiBDcml0aWNhbF0K
+CgoKPlRoaXMgaXNuJ3QgYSBidWcgaW50cm9kdWNlZCBieSB0aGlzIHBhdGNoLCBidXQgZG9lcyB0
+aGUgZXJyb3IgaGFuZGxpbmcgaW4KCgoKPnJvY2tldF9jb3B5X3Rhc2tzKCkgY2F1c2UgYSBkb3Vi
+bGUgZnJlZSBvZiB0aGUgdGFza3MgYXJyYXk/CgoKCj4KCgoKPklmIHZhbGlkYXRpb24gb2YgdGhl
+IGluY29taW5nIHRhc2tzIGZhaWxzLCB0aGUgYXJyYXkgaXMgZnJlZWQgYnV0IHRoZQoKCgo+cG9p
+bnRlciBpcyBub3QgY2xlYXJlZDoKCgoKPgoKCgo+cm9ja2V0X2NvcHlfdGFza3MoKSB7CgoKCj4/
+Pz8gLi4uCgoKCj5mYWlsOgoKCgo+Pz8/IGt2ZnJlZShyam9iLT50YXNrcyk7CgoKCj4/Pz8gcmV0
+dXJuIHJldDsKCgoKPn0KCgoKPgoKCgo+VGhlIGNhbGxlciB0aGVuIGp1bXBzIHRvIHRoZSBlcnJv
+ciBsYWJlbCBhbmQgaW52b2tlcyByb2NrZXRfam9iX3B1dCgpLAoKCgo+d2hpY2ggdHJpZ2dlcnMg
+cm9ja2V0X2pvYl9jbGVhbnVwKCkuIFRoaXMgY2xlYW51cCBmdW5jdGlvbiBmcmVlcyB0aGUKCgoK
+PmRhbmdsaW5nIHBvaW50ZXIgYWdhaW46CgoKCj4KCgoKPnJvY2tldF9qb2JfY2xlYW51cCgpIHsK
+CgoKPj8/PyAuLi4KCgoKPj8/PyBrdmZyZWUoam9iLT50YXNrcyk7CgoKCj59CgoKCj4KCgoKPkNh
+biBhIGxvY2FsIHVucHJpdmlsZWdlZCBhdHRhY2tlciBleHBsb2l0IHRoaXMgdmlhIHRoZSBzdWJt
+aXQgaW9jdGwgdG8KCgoKPmNvcnJ1cHQga2VybmVsIG1lbW9yeT8KCgoKPgoKCgo+W1NldmVyaXR5
+OiBIaWdoXQoKCgo+VGhpcyBpc24ndCBhIGJ1ZyBpbnRyb2R1Y2VkIGJ5IHRoaXMgcGF0Y2gsIGJ1
+dCBpcyB0aGVyZSBhIE5VTEwgcG9pbnRlcgoKCgo+ZGVyZWZlcmVuY2Ugd2hlbiBmcmVlaW5nIGFu
+IHVuaW5pdGlhbGl6ZWQgZG9tYWluPwoKCgo+CgoKCj5XaGVuIHRoZSBqb2Igc3RydWN0dXJlIGlz
+IGFsbG9jYXRlZCwgYWxsIGZpZWxkcyBhcmUgaW5pdGlhbGl6ZWQgdG8gemVyby4KCgoKPklmIHNl
+dHVwIGZhaWxzIGVhcmx5IChmb3IgZXhhbXBsZSwgaW4gZHJtX3NjaGVkX2pvYl9pbml0KCkgb3IK
+CgoKPnJvY2tldF9jb3B5X3Rhc2tzKCkpLCBqb2ItPmRvbWFpbiByZW1haW5zIE5VTEwuCgoKCj4K
+CgoKPlRoZSBlcnJvciBoYW5kbGluZyBwYXRoIGludm9rZXMgcm9ja2V0X2pvYl9jbGVhbnVwKCks
+IHdoaWNoIHVuY29uZGl0aW9uYWxseQoKCgo+cmVsZWFzZXMgdGhlIGRvbWFpbjoKCgoKPgoKCgo+
+cm9ja2V0X2pvYl9jbGVhbnVwKCkgewoKCgo+Pz8/IC4uLgoKCgo+Pz8/IHJvY2tldF9pb21tdV9k
+b21haW5fcHV0KGpvYi0+ZG9tYWluKTsKCgoKPn0KCgoKPgoKCgo+VGhpcyBmdW5jdGlvbiBpbW1l
+ZGlhdGVseSBkZXJlZmVyZW5jZXMgdGhlIHBvaW50ZXI6CgoKCj4KCgoKPnJvY2tldF9pb21tdV9k
+b21haW5fcHV0KCkgewoKCgo+Pz8/IC4uLgoKCgo+Pz8/IGtyZWZfcHV0KCZkb21haW4tPmtyZWYs
+IHJvY2tldF9pb21tdV9kb21haW5fZGVzdHJveSk7CgoKCj59CgoKCj4KCgoKPkNvdWxkIHRoaXMg
+Y2F1c2UgYSBrZXJuZWwgcGFuaWMgaWYgYW4gdW5wcml2aWxlZ2VkIHVzZXIgcGFzc2VzIGludmFs
+aWQKCgoKPmFyZ3VtZW50cz8KCgoKPgoKCgo+LS0gCgoKCj5TYXNoaWtvIEFJIHJldmlldyChpCBo
+dHRwczovL3Nhc2hpa28uZGV2LyMvcGF0Y2hzZXQvMjAyNjA2MTAwNjAxMzIuMzIzOTY0OC0xLXpo
+YW9qaW5taW5nQHVuaW9udGVjaC5jb20/cGFydD0yCgoKCj4KCgo=
 
