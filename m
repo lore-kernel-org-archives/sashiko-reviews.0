@@ -1,89 +1,110 @@
-Received: from mail-pg1-f202.google.com (mail-pg1-f202.google.com [209.85.215.202])
+Received: from mail-pl1-f202.google.com (mail-pl1-f202.google.com [209.85.214.202])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7BEC837268B
-	for <sashiko-reviews@lists.linux.dev>; Wed, 10 Jun 2026 19:20:34 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.215.202
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 55B5026C39E
+	for <sashiko-reviews@lists.linux.dev>; Wed, 10 Jun 2026 19:35:32 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.214.202
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1781119235; cv=none; b=IgFqmTOcmxMF/51Gp/Fh6MQHDXVcRcJP8XzKgu7ynkmfsa8Vew2Kpgk7vnLL0Q4XE16JRMEFNr7AkmWd3mXYcjbue96CAP6AAWB7XjJch9ZW9BXXfj2QLjAptHqS+LKaoD83tmncvDjY61HRY6UfDREp9H1t8NMayW4kwjaWZ4M=
+	t=1781120134; cv=none; b=tf+DT7t5by2/HfiYAqeOkqsCjQiGS7wI0jt5x4icRy1JjklaXYivMT01vfb6IABief/l6YOpRFYZ8F4gWTeC3DJASiKUWRPOkke8tXOcNUvoqFKyIp+A1SBCdzDo+7njipc6LA9iOVlPHpAurv51Dtl59sLjlMQzrDB9ZZpHA7w=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1781119235; c=relaxed/simple;
-	bh=ibXY4lUk2DRCYZ1FGiZekl7s7+d7c+g3KmcX+nfztQM=;
+	s=arc-20240116; t=1781120134; c=relaxed/simple;
+	bh=LK7uQDvrcQgh523UutGordIYjAMZa9A3xyiaK41syLY=;
 	h=Date:In-Reply-To:Mime-Version:References:Message-ID:Subject:From:
-	 To:Cc:Content-Type; b=Cuo4DhhRLtheqiKC2XhfGWhXEHIMImYUo3km8IVKczEx7Egm3DNOVvHAK5TXDRXRsf3fwktDmh2IJxOSYaSYJsoWuonDTrzO/3g2AzpeQG2zquPZjsMGf1WbjYJufmkaU9mkh/0IVnQVOyTDxvdP6HCQnUvn8c175C7xijAEG/I=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=google.com; spf=pass smtp.mailfrom=flex--seanjc.bounces.google.com; dkim=pass (2048-bit key) header.d=google.com header.i=@google.com header.b=vGtmFNmQ; arc=none smtp.client-ip=209.85.215.202
+	 To:Cc:Content-Type; b=fIO1pnj9L5e+x3geXsXlKZR7FxeOziDye+jJN6R8nKBt/C29/abx+FUvUCUBb2A/GEBvmc3grSfwvuRM+irE3U7x5UqQ9d5Yryj0L3a+Kux41EWnSjnXLxDbNeBowQljdOIhdlE4QJO5WntD+70Evlr0b74A5Gswag4D1ONayFk=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=google.com; spf=pass smtp.mailfrom=flex--seanjc.bounces.google.com; dkim=pass (2048-bit key) header.d=google.com header.i=@google.com header.b=I59oyXGy; arc=none smtp.client-ip=209.85.214.202
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=google.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=flex--seanjc.bounces.google.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=google.com header.i=@google.com header.b="vGtmFNmQ"
-Received: by mail-pg1-f202.google.com with SMTP id 41be03b00d2f7-c85a2c129b3so3368145a12.1
-        for <sashiko-reviews@lists.linux.dev>; Wed, 10 Jun 2026 12:20:34 -0700 (PDT)
+	dkim=pass (2048-bit key) header.d=google.com header.i=@google.com header.b="I59oyXGy"
+Received: by mail-pl1-f202.google.com with SMTP id d9443c01a7336-2c0bf6904a6so105135465ad.1
+        for <sashiko-reviews@lists.linux.dev>; Wed, 10 Jun 2026 12:35:32 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=google.com; s=20251104; t=1781119234; x=1781724034; darn=lists.linux.dev;
+        d=google.com; s=20251104; t=1781120132; x=1781724932; darn=lists.linux.dev;
         h=cc:to:from:subject:message-id:references:mime-version:in-reply-to
          :date:from:to:cc:subject:date:message-id:reply-to;
-        bh=rXbhmrrYImUQv4H/dhcmoVKM/0EEFpXQX6uTvjIXuTw=;
-        b=vGtmFNmQIi9oSitUXpDQx30PXOyTff/B7Jfi+B2iIbr3qoXn/wJWlNjLGRugxYfJiT
-         IhiueWdpwnQaggNf71sTZDK5evehDKZJ2lpaja4NpH5+YK8U7CSxVMGI1iChPdcCqh5Y
-         WRGLrBF777dRUzv81LjNDV9yoxn7GJmPQfEA6yegxQOCsFoh9jPpV6YJivh/wPt8knsV
-         H1s1wZIZiV2ullhsRyIuu1ZJEa74/Rl9L7WfpCFD4AD6SewGgdWUZmTgtiVi4PwaSHU9
-         9ej6Rsq6uH4ij9aWBpL7fhvk8bWaF5jVY8rEUmBJ0Rf8euYtOFNRl3qgSUpCdWFhqGNw
-         yJBw==
+        bh=EEoSZc/Ri3Fj9efC7RN3D4uVzworhU8OsOiH614JgHk=;
+        b=I59oyXGyaCdYwGNZwUTXrAGP66z1h51wfMRXLVTeE3TyjjXX2h7zfp3br9UrHXC8q+
+         EvamsWyKoTZyLqcRVgHGVESMhhZCq827ZsZomaYERuYQDaDELJCjD9cXBKRXT53xPKSL
+         jdzkZuU6TySCJQRDNNu97F3cGO81bWgZiWiLlPxiKe4Ep6WHC3QDLm+ll9H9DZlcEUnv
+         YNDt5rbN9VD1L0DzSSdoU1rMEb2GnkMEYdyiSYqfu+KQ68NJDvxV3MbfiM3c4fHqqhMw
+         3ypL+0gkca89aTWGx8ANvM8zJ2TuDnzwGbKJNSjx51r64jRwxHNX0akfavyK3rK8gzVL
+         ahug==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20251104; t=1781119234; x=1781724034;
+        d=1e100.net; s=20251104; t=1781120132; x=1781724932;
         h=cc:to:from:subject:message-id:references:mime-version:in-reply-to
          :date:x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=rXbhmrrYImUQv4H/dhcmoVKM/0EEFpXQX6uTvjIXuTw=;
-        b=IzZi1Sq81LnbY3x4z9279lH82IoLcoa7UXkIWXTWXLYX1PhWVSCGN7vYdHWExWd5L7
-         icRsAQDTbD9tEf93/o8R7791mT3WixGn6DP7vRpMsGF+dShnbLkt+arWdjBIpukp5Z5r
-         /GWOUGEiTtGEQorrq/N2hXcVBbMK6G5qFIiUa5YP8eAOXc2eMlMPVyhMKFsmEvok+34j
-         MS2CcL4Su1f0vEWO853X3vYabob2iF1XXlZxnX/5GlQ2vOgVATMsmfQQuPh1aTS4oI/6
-         Yg1iVLYndljvGjfz01BWNrxDiFzhTzLYAlmJxmsgoVz0FyV38ecv3DjNpBuUvEd1WlzX
-         wmAQ==
-X-Gm-Message-State: AOJu0Yzmz4gqxnINcdgQmTwlCbrDlodXa9wsZLIo0/Na32mlr1DMl2e3
-	JUgyD8R2ql2Sapsz90YVLa+7OkvZ3tFl+KSYlNKtuAQZfJuof6Aqn/O7db/qQ4qr+OG3UYMYBed
-	QKe0COWCUVjv7X4gsmDS9YQPT3A1lPG77RGRSzfm2ghL1b4kShlixJENWeCogKANAHW/UrVikia
-	hRZrKLqgQqAeOPQ7kHCMpBVdKALY9k/88LwB/mUs66cpDLQIH8
-X-Received: from pjyt18.prod.google.com ([2002:a17:90a:e512:b0:36a:8554:a396])
- (user=seanjc job=prod-delivery.src-stubby-dispatcher) by 2002:a17:90b:5747:b0:368:3d3e:efa6
- with SMTP id 98e67ed59e1d1-375212a2eebmr9794823a91.20.1781119233493; Wed, 10
- Jun 2026 12:20:33 -0700 (PDT)
-Date: Wed, 10 Jun 2026 12:20:32 -0700
-In-Reply-To: <20260610010658.1E0501F00898@smtp.kernel.org>
+        bh=EEoSZc/Ri3Fj9efC7RN3D4uVzworhU8OsOiH614JgHk=;
+        b=QvKaDM3hoH/mizEom0Inyz1MBkW89FIZW+JbExpLu0szvWQpvNJ00JpsCarKTmpOBj
+         h5UinswuSyvlJnYMGTwDxAdlvogsUCCUCjq6mz98fgtulrMqLllUhDXZDUZt9CXxk0kY
+         lF1fY2gu0rQfiQCduOcLPMnXy6uskHlRaFhG4ZspN9fEFf9Za7/QF3y3yZCZmXPuf50Z
+         9LXoX8O2m5FQMdP5mpCgiFVKCdGSeSKmnsUa/WmfKHW63HI0himYG72KYARAXY620G5e
+         2hklJoGb3WZyXXwK4fFnvrP0iil0fqNmbjucr4c4CzuFmNLDupet3bXOfwVmVcoing/G
+         wL+Q==
+X-Gm-Message-State: AOJu0YzBwk4fhqO5/nU2KTScD7dOemGP6FF1A0JXwPzx+NOdrNbIMN3+
+	ESD6Ek2rjkeuMlTolY8b0CWygE/hH8cM7X8u0Ry5uy7IQZoK+qZApt8AvwPPupGiodQJwrhpkSx
+	6Vl6igrkXcP4NTK+mWS8XXonWYaEPgT6IwQ4RnEYXE0RJmuyf/Wno8LoAmyeaT/moEXOHl6Ygaj
+	Eyf/lcUdKohqIItF8EM9Ht/JsSlw29iFPKJv9JpoHIEDDiZzqr
+X-Received: from plbiy23.prod.google.com ([2002:a17:903:1317:b0:2ba:1011:efb7])
+ (user=seanjc job=prod-delivery.src-stubby-dispatcher) by 2002:a17:903:3847:b0:2c0:c262:b917
+ with SMTP id d9443c01a7336-2c1e80e429amr312731605ad.5.1781120131430; Wed, 10
+ Jun 2026 12:35:31 -0700 (PDT)
+Date: Wed, 10 Jun 2026 12:35:30 -0700
+In-Reply-To: <20260610010824.47A0D1F00893@smtp.kernel.org>
 Precedence: bulk
 X-Mailing-List: sashiko-reviews@lists.linux.dev
 List-Id: <sashiko-reviews.lists.linux.dev>
 List-Subscribe: <mailto:sashiko-reviews+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:sashiko-reviews+unsubscribe@lists.linux.dev>
 Mime-Version: 1.0
-References: <20260610005338.2967132-10-seanjc@google.com> <20260610010658.1E0501F00898@smtp.kernel.org>
-Message-ID: <aim5AGJwj6tlkigX@google.com>
-Subject: Re: [PATCH v6 09/18] KVM: selftests: Verify interrupts are received
- when IRQ affinity changes in IRQ test
+References: <20260610005338.2967132-6-seanjc@google.com> <20260610010824.47A0D1F00893@smtp.kernel.org>
+Message-ID: <aim8giv0brgyIuv-@google.com>
+Subject: Re: [PATCH v6 05/18] KVM: selftests: Add an irqfd send+receive (and
+ later IRQ bypass) test
 From: Sean Christopherson <seanjc@google.com>
 To: sashiko-reviews@lists.linux.dev
 Cc: kvm@vger.kernel.org
 Content-Type: text/plain; charset="us-ascii"
 
 On Wed, Jun 10, 2026, sashiko-bot@kernel.org wrote:
-> > @@ -192,7 +198,12 @@ int main(int argc, char **argv)
-> >  		printf("Using device %s MSI-X[%d] (IRQ-%u)\n", device_bdf, msix,
-> >  		       irq);
-> >  	} else {
-> > +		TEST_ASSERT(!irq_affinity,
-> > +			    "Setting IRQ affinity (-a) requires a backing device (-d)");
-> > +
-> >  		eventfd = kvm_new_eventfd();
-> > +		irq = -1;
-> > +		irq_cpu = -1;
-> >  	}
+> > diff --git a/tools/testing/selftests/kvm/irq_test.c b/tools/testing/selftests/kvm/irq_test.c
+> > new file mode 100644
+> > index 0000000000000..9f8895b898214
+> > --- /dev/null
+> > +++ b/tools/testing/selftests/kvm/irq_test.c
 > 
-> [Severity: Low]
-> Is irq_cpu used uninitialized here when the test is run with -d but without -a?
+> [ ... ]
 > 
-> When a backing device is specified (-d), the code enters the if (device_bdf)
-> block and irq_cpu remains uninitialized. If a vCPU times out waiting for an
-> interrupt, the TEST_ASSERT macro evaluates and passes the uninitialized
-> irq_cpu to the variadic format string, printing garbage values.
+> > +int main(int argc, char **argv)
+> > +{
+> > +	/*
+> > +	 * Pick a random vector and a random GSI to use for device IRQ.
+> > +	 *
+> > +	 * Pick an IRQ vector in range [32, UINT8_MAX]. Min value is 32 because
+> > +	 * Linux/x86 reserves vectors 0-31 for exceptions and architecture
+> > +	 * defined NMIs and interrupts.
+> > +	 *
+> > +	 * Pick a GSI in range [24, KVM_MAX_IRQ_ROUTES - 1]. The min value is 24
+> > +	 * because KVM reserves GSIs 0-15 for legacy ISA IRQs and 16-23 only go
+> > +	 * to the IOAPIC. The max is KVM_MAX_IRQ_ROUTES - 1, because
+> > +	 * KVM_MAX_IRQ_ROUTES is exclusive.
+> > +	 */
+> > +	u32 gsi = kvm_random_u64_in_range(&kvm_rng, 24, KVM_MAX_IRQ_ROUTES - 1);
+> > +	u8 vector = kvm_random_u64_in_range(&kvm_rng, 32, UINT8_MAX);
+> 
+> [Severity: Medium]
+> Is kvm_rng initialized before it is used here?
+> 
+> It appears that kvm_random_u64_in_range() is being called before
+> vm_create_with_vcpus() executes later in this function, which is where
+> kvm_rng normally gets initialized.
+> 
+> Because kvm_rng is a global variable and zero-initialized, the RNG algorithm
+> will consistently yield 0. This causes the variables to always evaluate to
+> their minimum bounds (24 for gsi and 32 for vector).
+> 
+> Does this defeat the intended randomization for this test?
 
-Gah, I meant to initialize it to -1 (hence the signed %d instead of %u).
+Yeah, I'll add a patch to properly initialize kvm_rng.  I'll also add a patch to
+seed libc's RNG before calling random(), because as-is, every x86 test uses
+0x6b8b4567 to seed KVM's pRNG (and I assume the same holds true for all other
+architectures).
