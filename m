@@ -1,164 +1,90 @@
-Received: from mx0a-001b2d01.pphosted.com (mx0a-001b2d01.pphosted.com [148.163.156.1])
+Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5AC451F4C8E
-	for <sashiko-reviews@lists.linux.dev>; Wed, 10 Jun 2026 21:56:52 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=148.163.156.1
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9B5C1233954;
+	Wed, 10 Jun 2026 22:16:42 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1781128613; cv=none; b=lHPgn7RypP69b1UxyE72hdRY7szYf3eXM7o/zXeQuOOTh6vHoeczNMM9/dtVhTnpTPsSu5n2mgPyFTh5s9HkgK2X1tihQYIek8SN11N/k1EWw5mb3Zi4QRW+T4PSbEl6v0hCO+/GivS3KfkO6fgtrZyR7JKQlnEFN5+QGw4CtkI=
+	t=1781129803; cv=none; b=Rig0pecnTobRzMTJbHAfhlBVI3VhMwqNQjBNHiZJN3O9FlYPbVWHxQJu7INR14hnrN9iMkwModarr1ezt2fWzbN0eFa7F80Gl5kz/+UaKYhSOiL02paroFiutkq5ap8TDHePl6i3hov7iC/FC47cq4JVBHWE0wQ03nNSvBAGE9w=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1781128613; c=relaxed/simple;
-	bh=7C0NhotO/ct92vsmQM84HeVr0jWz7wq5ePgEtOqQBso=;
-	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=H1YWJ4WzkAAcZw8/Hqcvlbsf67p69Do31X6Fmr6r+FBf/ji54KkAdn5jamDg5+6EoGaHRYNjdP+picyxO+O2+9CtiavaMSMhW9U+99YYXv7kjsgHmgpHr0wTXNDBniri6GQbAEroN6P6Y41OgH5UZT14SaErdff4PtddsHpjqRI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linux.ibm.com; spf=pass smtp.mailfrom=linux.ibm.com; dkim=pass (2048-bit key) header.d=ibm.com header.i=@ibm.com header.b=k/Lr07SU; arc=none smtp.client-ip=148.163.156.1
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linux.ibm.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linux.ibm.com
+	s=arc-20240116; t=1781129803; c=relaxed/simple;
+	bh=fuiNKKPc7lmrCax+7CqrsRNg0tW3q/vQ+Gr8MEvYkSA=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=ktbWaWATollNk7RRVAyBTrM0bE677vRFbUySsJ0ec/UYKH2Q8Fih853aGhdltRN8y8uV7SwqWd3Seg4CaaLiKhHCc5Gr0yrM/4kIb2eEl4nOdlrrPF+JIk9xDY2Q6TdpzVswZqgHnTxa5OU1L+9VQBIFgMt3bbRMlvVhetpPe4I=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=MXKWWxn7; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=ibm.com header.i=@ibm.com header.b="k/Lr07SU"
-Received: from pps.filterd (m0353729.ppops.net [127.0.0.1])
-	by mx0a-001b2d01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id 65AJu6834146619;
-	Wed, 10 Jun 2026 21:56:50 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=ibm.com; h=cc
-	:content-transfer-encoding:content-type:date:from:in-reply-to
-	:message-id:mime-version:references:subject:to; s=pp1; bh=qB6cAt
-	h/KRZuXG3KU4XmHSoiE44CuZfxcJe9UF9jpN8=; b=k/Lr07SUPHEvvQAZZsCOpJ
-	7CkhApHXwwPKXTOpGz9du+CROo723WR7LFJD0zngsFLb4vircHym6pNnl9hNirM4
-	FDX+PauyQIRTUiDoHPoJWYoA2A5kmjfgn02M29vAvfbHocBEoufxcXoafPjb4erT
-	loFoptsLF/eaiL/OOkj0RQ7uIBHg3EKCPBucSbq9xDc4TGSx7u0tlNKapGAV2R/K
-	nsMAviDNkrDNCPwbgD+QzEox/IKpjeNxxeQEFKBEz+fDQdHxQhKntJxwVZ6aKJrJ
-	5gUKvzAVWLTpwHSjhg3gHrZ6Lkf2zVfCHtKnHlZXgKtf23xzC5BMuelf7Xb2TDpg
-	==
-Received: from ppma12.dal12v.mail.ibm.com (dc.9e.1632.ip4.static.sl-reverse.com [50.22.158.220])
-	by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 4eqe8c0e3j-1
-	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Wed, 10 Jun 2026 21:56:50 +0000 (GMT)
-Received: from pps.filterd (ppma12.dal12v.mail.ibm.com [127.0.0.1])
-	by ppma12.dal12v.mail.ibm.com (8.18.1.7/8.18.1.7) with ESMTP id 65ALnfn7009800;
-	Wed, 10 Jun 2026 21:56:49 GMT
-Received: from smtprelay02.dal12v.mail.ibm.com ([172.16.1.4])
-	by ppma12.dal12v.mail.ibm.com (PPS) with ESMTPS id 4eqe09ggvn-1
-	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Wed, 10 Jun 2026 21:56:49 +0000 (GMT)
-Received: from smtpav01.dal12v.mail.ibm.com (smtpav01.dal12v.mail.ibm.com [10.241.53.100])
-	by smtprelay02.dal12v.mail.ibm.com (8.14.9/8.14.9/NCO v10.0) with ESMTP id 65ALumRD10420980
-	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
-	Wed, 10 Jun 2026 21:56:48 GMT
-Received: from smtpav01.dal12v.mail.ibm.com (unknown [127.0.0.1])
-	by IMSVA (Postfix) with ESMTP id C23A258058;
-	Wed, 10 Jun 2026 21:56:48 +0000 (GMT)
-Received: from smtpav01.dal12v.mail.ibm.com (unknown [127.0.0.1])
-	by IMSVA (Postfix) with ESMTP id 639F058057;
-	Wed, 10 Jun 2026 21:56:48 +0000 (GMT)
-Received: from [9.61.241.23] (unknown [9.61.241.23])
-	by smtpav01.dal12v.mail.ibm.com (Postfix) with ESMTP;
-	Wed, 10 Jun 2026 21:56:48 +0000 (GMT)
-Message-ID: <49059c51-e61b-48b2-81a9-2e164e0bd763@linux.ibm.com>
-Date: Wed, 10 Jun 2026 14:56:48 -0700
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="MXKWWxn7"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 795811F00893;
+	Wed, 10 Jun 2026 22:16:41 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=kernel.org;
+	s=k20260515; t=1781129802;
+	bh=JDmVUl+kqZiFDt/eGk7Ew8Cl/bFJ/LnjqKWASCJcX2w=;
+	h=Date:From:To:Cc:Subject:References:In-Reply-To;
+	b=MXKWWxn7H3Q369wjc+YaLOkzT5USByx6OIEAvaMWOSxMxl1Iu94GcTBUbbDT0OY/I
+	 X56OmZATHtEIHIe42VkPsigg1u3M/PbyHl2n5QjOyZxuYLuIFmiu3xGUfmdvcCoyrZ
+	 OjrDoZKdWtMhdadaCmkwrIuC5IlKphXNi1cUQi1t5uN1eYEuA0VA1jIQEJifYhrlP3
+	 jiHXEHD/y4abd+eWD100GR5y7zsZn5waf/6hVfZr2JgaX3p2SB7PIxtHFHij40zo02
+	 a1fHGUgug4oz306Ivk77fTvdkrTeSq31XOX/jJDFgnaRnS8kNOQvrhgOgdDZuqnAVT
+	 eu3TBmoIPvYpA==
+Date: Wed, 10 Jun 2026 19:16:38 -0300
+From: Arnaldo Carvalho de Melo <acme@kernel.org>
+To: Namhyung Kim <namhyung@kernel.org>
+Cc: Adrian Hunter <adrian.hunter@intel.com>,
+	Ian Rogers <irogers@google.com>,
+	James Clark <james.clark@linaro.org>, Jiri Olsa <jolsa@kernel.org>,
+	sashiko-reviews@lists.linux.dev, linux-perf-users@vger.kernel.org
+Subject: Re: [PATCH 13/23] perf tools: Fix uninitialized pathname on
+ uncompressed fallback in filename__decompress()
+Message-ID: <ainiRoo-dVtkaQbS@x1>
+References: <20260610195157.2091137-14-acme@kernel.org>
+ <20260610200810.8D93F1F00893@smtp.kernel.org>
+ <aincj3a3BDJ22jfq@x1>
 Precedence: bulk
 X-Mailing-List: sashiko-reviews@lists.linux.dev
 List-Id: <sashiko-reviews.lists.linux.dev>
 List-Subscribe: <mailto:sashiko-reviews+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:sashiko-reviews+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v18 3/3] PCI: Fail FLR when config space is inaccessible
-To: Bjorn Helgaas <helgaas@kernel.org>
-Cc: sashiko-reviews@lists.linux.dev, linux-pci@vger.kernel.org,
-        Alex Williamson <alex@shazbot.org>
-References: <20260610200249.GA388221@bhelgaas>
-Content-Language: en-US
-From: Farhan Ali <alifm@linux.ibm.com>
-In-Reply-To: <20260610200249.GA388221@bhelgaas>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
-X-TM-AS-GCONF: 00
-X-Proofpoint-Spam-Info: AW1haW4tMjYwNjEwMDIwOCBTYWx0ZWRfX77q6sYhY06Wt
- Kf+JbuXPUxhA+Etoq+AzOTpDfSuLOBqmmRJBx1mwJI5wbfXCpBKbCg5hjB2KWfhAxH1dWnulJsh
- 20xG2t+cUzP9Kpr2FteeZhS4RB0EBF4=
-X-Authority-Analysis: v=2.4 cv=AYCB2XXG c=1 sm=1 tr=0 ts=6a29dda2 cx=c_pps
- a=bLidbwmWQ0KltjZqbj+ezA==:117 a=bLidbwmWQ0KltjZqbj+ezA==:17
- a=IkcTkHD0fZMA:10 a=FelO9ux0wxsA:10 a=VkNPw1HP01LnGYTKEx00:22
- a=RnoormkPH1_aCDwRdu11:22 a=uAbxVGIbfxUO_5tXvNgY:22 a=VwQbUJbxAAAA:8
- a=whdsKiS9fNiBw4FZXBUA:9 a=QEXdDO2ut3YA:10
-X-Proofpoint-GUID: X3WdM7nHMXNKvfmwHjUYVjMgl7kTSNhG
-X-Proofpoint-ORIG-GUID: X3WdM7nHMXNKvfmwHjUYVjMgl7kTSNhG
-X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwNjEwMDIwOCBTYWx0ZWRfXzmObRcbR7Pbb
- agISDvbpupAHoSABHzx0VgAVGpdRdXf0vwBBShDJEKdAydlceRPGEV+1F7x7G7bjLV1nC+OSW4t
- Kq+/55iGio+lCYY1nXMdkSTHpjbxOjhf2obRWlhd/NfQtwcYCuDTfZmFM1IjfoqYBOIO+huh7AE
- nM35JPmHbaq63sdcNIcu5sfhvyOwxiIlbKxXlcJkeX8xSVH3lPgadNQFHXg0Pb/rZaw1ZfOClU0
- lSYezBi66xAeWKZGwKGzHztbAVwyhQqCo/CDDlFM1zbiANJt5DcXChSL4rUqoQdU/matLg2Bg6o
- /8lixU3uUcueD3TFYpVX3zs20gizgW6G/q4v5h14T0tBGMqIppEEenOS0p0CYMWLnuIzrkMUW21
- CHTEg6iagpgKbWp3XCXHEqjuADyFaIP9jCLabmanErfDdhcHBjc5b53C7zi+uYYWsXvBKEck9XY
- HfLq7vCmUua1KHVx30g==
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.293,Aquarius:18.0.1143,Hydra:6.1.125,FMLib:17.12.100.49
- definitions=2026-06-10_04,2026-06-09_02,2025-10-01_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
- impostorscore=0 suspectscore=0 malwarescore=0 spamscore=0 phishscore=0
- lowpriorityscore=0 bulkscore=0 adultscore=0 priorityscore=1501 clxscore=1015
- classifier=typeunknown authscore=0 authtc= authcc= route=outbound adjust=0
- reason=mlx scancount=1 engine=8.22.0-2606040000 definitions=main-2606100208
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <aincj3a3BDJ22jfq@x1>
 
+On Wed, Jun 10, 2026 at 06:52:20PM -0300, Arnaldo Carvalho de Melo wrote:
+> On Wed, Jun 10, 2026 at 08:08:10PM +0000, sashiko-bot@kernel.org wrote:
+> > New issues:
+> > - [Medium] The commit message explicitly describes a logic flow that would cause a severe data-loss bug, while the code implements the opposite (safe) logic.
+> > 
+> > Pre-existing issues:
+> > - [High] Missing error code propagation and improper negative error handling cause `__open_dso` to mistakenly return valid file descriptors on failure.
+> > --
+> > 
+> > commit 5ae85aedfdb730a58a0d285fd77526ec0c92c20e
+> > Author: Arnaldo Carvalho de Melo <acme@redhat.com>
+> > 
+> > perf tools: Fix uninitialized pathname on uncompressed fallback in filename__decompress()
+> > 
+> > This commit addresses an issue where filename__decompress() left the
+> > pathname parameter uninitialized on the early return path for uncompressed
+> > files. The code is updated to set an empty string in this case, and
+> > callers are modified to check for this empty string condition.
+> > 
+> > > Fix by copying the original filename to pathname before the early return,
+> > > matching the behavior of the normal decompression path.
+> > 
+> > [Severity: Medium]
+> > Does this commit message accurately describe the implementation?
+> > 
+> > The code below sets pathname[0] = '\0' instead of copying the filename. If
+> > the code had copied the original filename as described here, wouldn't callers
+> > assume the populated pathname was a newly created temporary file and call
+> > unlink() on it, deleting the user's uncompressed kernel module or binary?
+> 
+> So this was the only non pre-existing issue found in this series, I
+> rebased it on top of the 28 patches I merged in perf-tools-next while
+> waiting for this last series to be reviewed and will do a full container
+> suite test build, then push everything publicly.
 
-On 6/10/2026 1:02 PM, Bjorn Helgaas wrote:
-> [+cc Alex]
->
-> On Wed, Jun 10, 2026 at 09:51:55AM -0700, Farhan Ali wrote:
->> On 6/9/2026 3:33 PM, Bjorn Helgaas wrote:
->>> On Wed, Jun 03, 2026 at 06:57:36PM +0000, sashiko-bot@kernel.org wrote:
->>>> Thank you for your contribution! Sashiko AI review found 2 potential issue(s) to consider:
->>>>
->>>> Pre-existing issues:
->> ...
->>>>> +++ b/drivers/pci/pci.c
->>>>> @@ -4396,6 +4396,9 @@ int pcie_reset_flr(struct pci_dev *dev, bool probe)
->>>>>    	if (!(dev->devcap & PCI_EXP_DEVCAP_FLR))
->>>>>    		return -ENOTTY;
->>>>> +	if (!pci_dev_config_accessible(dev, "FLR"))
->>>>> +		return -ENOTTY;
->>>>> +
->>>> [Severity: High]
->>>> This isn't a bug introduced by this patch, but does placing this
->>>> check in pcie_reset_flr() leave direct callers of pcie_flr()
->>>> exposed to 60-second hangs?
->>>>
->>>> Direct callers of pcie_flr() (like network and storage drivers
->>>> during error recovery) bypass this wrapper. They will still
->>>> experience a stall in pci_dev_wait() when attempting to reset a
->>>> device with an inaccessible config space. Should this
->>>> accessibility check be moved into pcie_flr() instead to protect
->>>> all callers?
->>> I can't remember why we have both pcie_reset_flr() and pcie_flr(),
->>> other than the fact that callers don't need to supply a "probe"
->>> argument to pcie_flr().
->>>
->>> Is there a reason to call pci_dev_config_accessible() here rather
->>> than in pcie_flr()?
->> The reason we wanted the check in pcie_reset_flr() was so to be able
->> to escalate to bus reset method if we can't do an FLR. I think the
->> check could be moved to pcie_flr(). Is that more preferable?
-> What if we added a preliminary patch that folds the body of pcie_flr()
-> into pcie_reset_flr() and adds:
->
->    #define pcie_flr(dev)	pcie_reset_flr(dev, PCI_RESET_DO_RESET)
->
-> That would mean pcie_flr() users would start paying attention to
-> PCI_DEV_FLAGS_NO_FLR_RESET and PCI_EXP_DEVCAP_FLR, which seems like a
-> good thing.
+Ah, there was a patch for replacing snprintf with scnprintf by Athira
+that made one of the patches in my series to be dropped, same changes.
 
-Looking at the history, it seems commit 56f107d7813f ("PCI: Add 
-pcie_reset_flr() with 'probe' argument") added pcie_reset_flr() to add 
-the probe and remove pcie_has_flr(). It also notes that callers of 
-pcie_flr() that didn't call pcie_has_flr() remain. I guess it didn't 
-want to change the drivers that called pcie_flr() unconditionally?
-
-There is also reset_intel_82599_sfp_virtfn() that mentions the need to 
-FLR without checking for FLR support due to some quirk. So I wonder if 
-there were genuine reasons to avoid doing the check for 
-PCI_DEV_FLAGS_NO_FLR_RESET and PCI_EXP_DEVCAP_FLR?
-
-Thanks
-
-Farhan
-
+- Arnaldo
