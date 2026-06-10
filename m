@@ -1,103 +1,151 @@
-Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
+Received: from out-174.mta0.migadu.com (out-174.mta0.migadu.com [91.218.175.174])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3A48829C328;
-	Wed, 10 Jun 2026 18:28:05 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A2E67357D0C
+	for <sashiko-reviews@lists.linux.dev>; Wed, 10 Jun 2026 18:29:07 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=91.218.175.174
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1781116087; cv=none; b=T7XEmE3eZ439DYf9+mGw8nDDNJmz8SnZzT0wMr7o3EYnJMxx9iQRKvhTjy6cJRoDMj4SsmktsL/oTHHseZcgIQj+E2LlvymyGKVhCvPOKDqF1RZ/wOkIua8nsJVPlGFIoCmFcCgnt330QJyFSY+D+Ca1jIlraN6709CvmM86Krw=
+	t=1781116149; cv=none; b=grWsLcUcOOr2FV6HivBUK7MygbD1tmrUyMKefzKliajGo7Sn3AupQ2JSlM4B94jz+QOHoHl9PbdkbX6jrAi7npC6mtRJ9WKbBnmkl51a0a6QeMZkTGnZ9YaEZZtPYuuVJyE+qfDf7fKiIhmoRpG/SJ1EkiEaxYFgwOHsn6B6s9k=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1781116087; c=relaxed/simple;
-	bh=LQMoWoVksnkFllqaCsGvrEV9KrxZuQ5A08D/MNSUGYY=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=lEwlULBvr8Tpa+RdcPm/Iiy4zWKuiA4HKFZQYY3Ol5UumC8sz31Qm8WAmOfoJh6ekfpvvcVAihXH10VIE3uVjHSvLaaK++6ZWyHhcXP42aRhQFdjtnkKnvwNPmxzNp9fsqGRAlJVrmqwO6u5lLOvTyedHlUCmU8YVEfJvvliQvk=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=Syco/DdV; arc=none smtp.client-ip=100.103.45.18
+	s=arc-20240116; t=1781116149; c=relaxed/simple;
+	bh=vq893cOoOr0gmJwGksL9/IPCxUYijv8aAcMAtsu7ZdM=;
+	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
+	 In-Reply-To:Content-Type; b=VpbdU6t9/8mTMiTuA9xiUj3WNls4mGeVQJa/Csw/1up2l5ju1ysTDXa5uCWt3k5KFSoqDLdG63zxoVjU2ByjOtw+knTT8+Wz/mv+tVfLV+lzc8l1dS0EzONAZ3dVAfvvkMVKLRnHHtLdMItYeAMGosDOpGqjjj1ftAOP57WmxOc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linux.dev; spf=pass smtp.mailfrom=linux.dev; dkim=pass (1024-bit key) header.d=linux.dev header.i=@linux.dev header.b=TeZRgg04; arc=none smtp.client-ip=91.218.175.174
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linux.dev
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linux.dev
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="Syco/DdV"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1BF3D1F00893;
-	Wed, 10 Jun 2026 18:28:04 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=kernel.org;
-	s=k20260515; t=1781116085;
-	bh=6mwDDkamQC7TNW5CKmpG9XSWcIcf1yy0lxFIvVkvUSs=;
-	h=Date:From:To:Cc:Subject:References:In-Reply-To;
-	b=Syco/DdVmroDrrciiA1rsgGSbgYKBFeSrMSB3NncIivNYhIjuZu7NbkioAYH939IS
-	 LgZQ/AcxD4e6Lq4ngAtTcJxSkVwCyDDa/JW3meAlQ89tE+esjEravxylxD73gpRWCc
-	 lvEtc9bXP1j04bglffg9eRAay9//aFQ/PIsXOHNwtnX7g3aFUmYYRHH+bq613Al6oB
-	 LSi++wwcyHeJJG/QBU+XSew++LiKR4abZDURc8wNaVLEYWWePcIDQFoQuMPsQACu/i
-	 mJuQ5iwEQzD0OLvJyxb1WUt1Nw7IatLJOWLWgjrkiDChQgXKvujfilbMWSo6dPV9i8
-	 4fWc7LqCNuGBA==
-Date: Wed, 10 Jun 2026 15:28:00 -0300
-From: Arnaldo Carvalho de Melo <acme@kernel.org>
-To: sashiko-reviews@lists.linux.dev
-Cc: linux-perf-users@vger.kernel.org
-Subject: Re: [PATCH 05/11] perf sched: Bounds-check prio before test_bit() in
- timehist
-Message-ID: <aimssBwELS-gZjlc@x1>
-References: <20260610165207.2077258-6-acme@kernel.org>
- <20260610170401.1B5091F00893@smtp.kernel.org>
+	dkim=pass (1024-bit key) header.d=linux.dev header.i=@linux.dev header.b="TeZRgg04"
+Message-ID: <7b6d449f-c70c-4e8e-bfc4-a2f75517395c@linux.dev>
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linux.dev; s=key1;
+	t=1781116145;
+	h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+	 to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+	 content-transfer-encoding:content-transfer-encoding:
+	 in-reply-to:in-reply-to:references:references;
+	bh=yXkcVBBhkoIwVA3JoPxsNhVcRJ8opaaDptjillfXcwU=;
+	b=TeZRgg04L4P22kmKlGOqqUeha4QGT0mcVOGrY9mmaHcjfK5JD/R3LAbGjT4m2VXJCfYaGZ
+	qMkMNFuIaxY7oNxTl+Upwj5RZjHb9v8PikutOHsjkABctjr9tcbssfFHVf2/u+q/mAMWQ8
+	2bDD4ghbdRzz236h5TmLH+/1IYsO6HE=
+Date: Wed, 10 Jun 2026 11:28:56 -0700
 Precedence: bulk
 X-Mailing-List: sashiko-reviews@lists.linux.dev
 List-Id: <sashiko-reviews.lists.linux.dev>
 List-Subscribe: <mailto:sashiko-reviews+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:sashiko-reviews+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-Content-Transfer-Encoding: 8bit
-In-Reply-To: <20260610170401.1B5091F00893@smtp.kernel.org>
+Subject: Re: [PATCH v1] kasan: Fix false-positive wild-memory-access on x86
+ under 5-level paging
+To: sashiko-reviews@lists.linux.dev
+Cc: bpf@vger.kernel.org
+References: <20260610175651.647515-1-ihor.solodrai@linux.dev>
+ <20260610181729.7F44C1F00893@smtp.kernel.org>
+Content-Language: en-US
+X-Report-Abuse: Please report any abuse attempt to abuse@migadu.com and include these headers.
+From: Ihor Solodrai <ihor.solodrai@linux.dev>
+In-Reply-To: <20260610181729.7F44C1F00893@smtp.kernel.org>
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 7bit
+X-Migadu-Flow: FLOW_OUT
 
-On Wed, Jun 10, 2026 at 05:04:00PM +0000, sashiko-bot@kernel.org wrote:
-> Thank you for your contribution! Sashiko AI review found 1 potential issue(s) to consider:
-> - [Low] The patch introduces a logic error that causes invalid negative priorities (<-1) to bypass the `--prio` filter.
+On 6/10/26 11:17 AM, sashiko-bot@kernel.org wrote:
+> Thank you for your contribution! Sashiko AI review found 2 potential issue(s) to consider:
+> 
+> New issues:
+> - [Medium] Incomplete fix and architectural layering violation via x86-specific macro in generic KASAN code.
+> 
+> Pre-existing issues:
+> - [High] Unhandled root cause: CPU feature flags are non-atomically cleared while interrupts are enabled.
 > --
 > 
-> commit 3165982942697d89513b8b104d95d745a4412391
-> Author: Arnaldo Carvalho de Melo <acme@redhat.com>
+> commit 5a28adbdf7cd811d1903c7692ad3799adc4606f3
+> Author: Ihor Solodrai <ihor.solodrai@linux.dev>
 > 
-> perf sched: Bounds-check prio before test_bit() in timehist
+> kasan: Fix false-positive wild-memory-access on x86 under 5-level paging
 > 
-> This commit adds a bounds check to timehist_skip_sample() to ensure that
-> priority values from untrusted tracepoint data do not exceed MAX_PRIO before
-> calling test_bit(). It also updates the sentinel check from != -1 to >= 0.
+> This commit attempts to fix a flaky false-positive KASAN splat on x86_64
+> with 5-level paging. It addresses a race where the LA57 CPU feature is
+> temporarily cleared during boot by defining USE_EARLY_PGTABLE_L5 in the
+> generic KASAN code.
 > 
-> > diff --git a/tools/perf/builtin-sched.c b/tools/perf/builtin-sched.c
-> > index 1ff01f03d2ad1..ded511d851880 100644
-> > --- a/tools/perf/builtin-sched.c
-> > +++ b/tools/perf/builtin-sched.c
-> > @@ -2645,7 +2645,9 @@ static bool timehist_skip_sample(struct perf_sched *sched,
-> >  		else if (evsel__name_is(sample->evsel, "sched:sched_switch"))
-> >  			prio = perf_sample__intval(sample, "prev_prio");
-> >  
-> > -		if (prio != -1 && !test_bit(prio, sched->prio_bitmap)) {
-> > +		/* prio comes from untrusted tracepoint data — bounds-check before test_bit */
+>> diff --git a/mm/kasan/generic.c b/mm/kasan/generic.c
+>> index 2b8e73f5f6a70..b5f430f2dbb68 100644
+>> --- a/mm/kasan/generic.c
+>> +++ b/mm/kasan/generic.c
+>> @@ -9,6 +9,13 @@
+>>   *        Andrey Konovalov <andreyknvl@gmail.com>
+>>   */
+>>  
+>> +/*
+>> + * check_region_inline() and addr_has_metadata() can run very early.
+>> + * For example, in an interrupt taken while identify_cpu() has the CPU
+>> + * capability bits temporarily cleared.
+>> + */
+>> +#define USE_EARLY_PGTABLE_L5
+> 
+> [Severity: Medium]
+> Is it appropriate to place the x86-specific USE_EARLY_PGTABLE_L5 macro in
+> the generic KASAN code?
+> 
+> Since this macro is only defined locally in generic.c, other generic KASAN
+> files like mm/kasan/report.c remain unaware of it.
 
-Updated the comment to:
+Correct. Setting USE_EARLY_PGTABLE_L5 only fixes the particular issue that I
+stumbled on. AFAIU there may be a slight runtime performance hit when using
+this flag, so we might not want to set it more widely.
 
--               /* prio comes from untrusted tracepoint data — bounds-check before test_bit */
-+               /* negative prio means no info; out-of-range prio can't match the filter */
+I'll defer to KASAN maintainers to comment on this.
 
-To address the comment below.
+> 
+> If a genuine KASAN bug occurs during the race window, wouldn't print_report()
+> miscalculate the shadow memory addresses:
+> 
+> mm/kasan/report.c:print_report() {
+>     ...
+>     if (addr_has_metadata(addr)) {
+>     ...
+> }
+> 
+> and fail to print the memory metadata because it uses the 4-level paging
+> start address instead of the 5-level one?
+> 
+> [ ... ]
+> 
+>> The root cause is in generic KASAN not seeing
+>> cpu_feature_enabled(X86_FEATURE_LA57) set, because the bit is cleared
+>> in identify_cpu() when the offending interrupt happens [1]:
+>>
+>>   memset(&c->x86_capability, 0, ...);   /* clears X86_FEATURE_LA57 */
+>>   ...
+>>   get_cpu_cap(c);                       /* re-reads CPUID, restores it */
+> 
+> [Severity: High]
+> This is a pre-existing issue, but does this approach leave the underlying
+> race condition unhandled?
 
-- Arnaldo
+Yes, the underlying caveat that x86_capability is cleared within an 
+interruptable window remains. Potentially any other interrupt handler that
+checks for any other CPU capability may run into similar problem.
 
-> > +		if (prio >= 0 &&
-> > +		    (prio >= MAX_PRIO || !test_bit(prio, sched->prio_bitmap))) {
+That said, LA57 and KASAN feel like a special case. And I don't see an obvious
+way to fix this on identify_cpu() side. Disabling IRQ is clearly an overkill.
+
+I'm very open to alternative solutions though, I am a tourist here.
+
 > 
-> [Severity: Low]
-> Does this logic inadvertently allow invalid negative priorities (less than -1)
-> to bypass the --prio filter?
+> In arch/x86/kernel/cpu/common.c:identify_cpu(), boot_cpu_data.x86_capability
+> is cleared non-atomically while local interrupts are still enabled. This
+> can occur because arch_cpu_finalize_init() runs after local_irq_enable().
 > 
-> By explicitly replacing the prio != -1 sentinel check with prio >= 0, the new
-> logic evaluates to false for any priority less than -1. This causes the block
-> to be bypassed, meaning rc remains false and the invalid negative priority is
-> not skipped by the filter.
+> Because alternative instructions have not yet been patched at this point in
+> the boot sequence, cpu_feature_enabled() dynamically checks
+> boot_cpu_data.x86_capability.
 > 
-> Should the check be restructured to ensure that invalid negative priorities
-> from crafted or corrupted perf.data files are also properly skipped?
+> Could any interrupt handler that fires during this window and checks a CPU
+> feature spuriously see it as disabled, potentially causing core subsystems
+> to execute incorrect fallback paths? 
 > 
-> >  			rc = true;
-> >  			sched->skipped_samples++;
-> >  		}
+> Would it be safer to disable local interrupts during the boot_cpu_data
+> initialization in identify_cpu() instead?
 > 
-> -- 
-> Sashiko AI review · https://sashiko.dev/#/patchset/20260610165207.2077258-1-acme@kernel.org?part=5
+
