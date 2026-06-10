@@ -1,41 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 79C5A2772D;
-	Wed, 10 Jun 2026 17:11:45 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C60B13446C7;
+	Wed, 10 Jun 2026 17:28:46 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1781111506; cv=none; b=Z9394Tt80PIhAYg6Kif2e9h1THUaYCYBju3FF15DIPtmoYMH06OvnWFzh/ZpDQqKSDi1Hb24dt3ibIV/mkigJGqb8/i8XBOKm87NkoVGkJmfNs+eU0Bz7qxqhyiMQJdoSkoYsHFI0b8zp7XajJR8iPpOiko8xVTEMmHzZoc8Zig=
+	t=1781112527; cv=none; b=qCxqUF7BooG6/2P+1SqHio0+l1+gPcB1e9iaIAfPIdUJiD2bMkwuC983yCdXULmU4IxKQMdaoW84Brl4jAENBK3KUmWuLD+O/9j1i0GPeyoC1XAGNuZ7ZchsNZ4qodRH8O9Wcz0nAmCs0gG/MLSJAWECoyLSBdlmV5X7FqrGZzo=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1781111506; c=relaxed/simple;
-	bh=g0lPI33FFStkDP5akD+vHEUI6PMrKVCDJLQoCFxxA3M=;
+	s=arc-20240116; t=1781112527; c=relaxed/simple;
+	bh=Q9WQirJVF4aqZ32jEMvsLOPaqWt6o09PIbeKmH/wKJs=;
 	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=l5hYQMKeylCVA76eSmNV6BJHI4ar53ESigXqys/xXNa15FclRPibtyelNtG6KOiJ7urYgxNI+aWmnAguVlNrO06HSStGXNQlI51z4OuCjgX29jTSjE00hUWeCxWbz9nj29LtaMtMZE0EM7per8uZ9Wd6lecF9/+OdU1u6iFx2vo=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=ShkatzLG; arc=none smtp.client-ip=100.103.45.18
+	 Content-Type:Content-Disposition:In-Reply-To; b=uumyk7IznwhGInazLvEjel+fYz00Zfrhm6FOQjDEBKwtmA5w06nSPRCo0WSd8Su5B9+/RIro6KX5KZaF16VpK/FHZHekhm51Kq+E9Fh6nyB7YWaLqhiXxyk0oVWL+jge/VN8rbjB2Fj1u7KWgzajL8hSyAubWnyUxc0K1CPZ3C4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=FyzEWFyQ; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="ShkatzLG"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 742A71F00893;
-	Wed, 10 Jun 2026 17:11:43 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="FyzEWFyQ"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1F2631F00893;
+	Wed, 10 Jun 2026 17:28:44 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=kernel.org;
-	s=k20260515; t=1781111505;
-	bh=6+Dicx3yBkDHwtXXRtcAYCHgv9tNUOFr3xgglRO7RnM=;
+	s=k20260515; t=1781112526;
+	bh=tZlE3BHAUYAhd7eSi9AydCCRFItUw8s+poNZbb1yMxE=;
 	h=Date:From:To:Cc:Subject:References:In-Reply-To;
-	b=ShkatzLGlQ5IBc5D2gHFyPodsfO1EcWA4dn0TvBIIP9U3u4rkwDzx+LKdO8F7QQ1s
-	 OrGCyOZpEiZfMSGK7Ct//XiX/9SX9rEwTY7ezZ5DZIQauTGMljklOsN+XVHahpdf7d
-	 5Z2gbcBKb1MIltXqd0N7xV/FzVeoWKAK/kxFAEje3qXthEyNhPNkBZrhRGX5idtvIy
-	 4OMMFKhvvbS9poYHFrUNSngdaLy3y8UbdnAsO1l/qcqxoBTYiQwTrydTYyWOT//6ZZ
-	 Et447+DfPkoapV+tU/rWqv0PR8OBQCltMunnknbtlUlv4pR1xFKmanaQ7jZiXdbkXD
-	 vMd9bR79xf/fw==
-Date: Wed, 10 Jun 2026 19:11:39 +0200
+	b=FyzEWFyQY3Lmf+4fEJggqKbz965JaUBRyo6K/HKbz9mi5IW8MnpuUS+nRXKHbjWS1
+	 R49KlNnID/NJVDKtpCB8ewwhP6dFjdghJZhxJBmdXGAEj0vxYQ7tPt61cZiY60qcR3
+	 lVCWv66Py9rcZPf/6D9tQCs7JTjL3U6qop8wXxo1iVpJQnEQGZgCkraOj99/3EKnKH
+	 +O4bRG855IpXoYd4o9Pjw1ZN1worJLXwv6OG+9ILSucQTiuvTrVcOz+wjFpO752Hvh
+	 ytnwoZkTRumuTjWlIzb6bpY2kMpnNTjSzkcPxxi2DSgnVyZOC7oKN7N2N15XOaqGqK
+	 IzJilJ+rzl7qA==
+Date: Wed, 10 Jun 2026 19:28:41 +0200
 From: Manivannan Sadhasivam <mani@kernel.org>
-To: Marek Vasut <marek.vasut+renesas@mailbox.org>, 
-	sashiko-reviews@lists.linux.dev
-Cc: wsa+renesas@sang-engineering.com, linux-pci@vger.kernel.org
-Subject: Re: [PATCH v2] PCI: rcar-gen4: Limit Max_Read_Request_Size and
- Max_Payload_Size to 256 Bytes
-Message-ID: <orrpfub5f2hkrgkmxrdtykhzmxyuclnky4dn6vnz3cgvvbdcvb@5altvzufcq53>
-References: <20260519195219.189323-1-marek.vasut+renesas@mailbox.org>
- <20260519202037.8BD001F000E9@smtp.kernel.org>
+To: sashiko-reviews@lists.linux.dev
+Cc: Hans Zhang <18255117159@163.com>, linux-pci@vger.kernel.org
+Subject: Re: [PATCH 8/9] PCI: vmd: Protect root bus removal with rescan lock
+Message-ID: <r5vwd573ydynlrrax5iy6jt25dc2yiqkvlciqy366zsxxu4d7f@hyvqgsdj4ulw>
+References: <20260521161822.132996-9-18255117159@163.com>
+ <20260521212024.8689D1F000E9@smtp.kernel.org>
 Precedence: bulk
 X-Mailing-List: sashiko-reviews@lists.linux.dev
 List-Id: <sashiko-reviews.lists.linux.dev>
@@ -45,108 +43,56 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=utf-8
 Content-Disposition: inline
 Content-Transfer-Encoding: 8bit
-In-Reply-To: <20260519202037.8BD001F000E9@smtp.kernel.org>
+In-Reply-To: <20260521212024.8689D1F000E9@smtp.kernel.org>
 
-On Tue, May 19, 2026 at 08:20:36PM +0000, sashiko-bot@kernel.org wrote:
-> Thank you for your contribution! Sashiko AI review found 3 potential issue(s) to consider:
-> - [High] Dynamically modifying a device's Max_Payload_Size (MPS) in the enable_device hook breaks PCIe fabric consistency and causes Malformed TLP errors.
-> - [High] Endpoint drivers can bypass the Max_Read_Request_Size (MRRS) limitation because the bridge's no_inc_mrrs flag is not set.
-> - [Medium] Ignoring the return values of pcie_set_mps() and pcie_set_readrq() allows devices to operate in an unsafe state if the limits cannot be applied.
+On Thu, May 21, 2026 at 09:20:24PM +0000, sashiko-bot@kernel.org wrote:
+> Thank you for your contribution! Sashiko AI review found 2 potential issue(s) to consider:
+> 
+> New issues:
+> - [High] Acquiring `pci_rescan_remove_lock` in `vmd_remove()` introduces self-deadlocks and AB-BA lock inversions.
+> 
+> Pre-existing issues:
+> - [High] SRCU structures are destroyed in `vmd_remove()` while their corresponding interrupt handlers are still registered and active, leading to a Use-After-Free in interrupt context.
 > --
 > 
-> commit a6b8290401b7fa98e699e975574f47bfb1d20609
-> Author: Marek Vasut <marek.vasut+renesas@mailbox.org>
+> commit 8d5d06b67e6b02d2cc99f2151e90ba61c0d16662
+> Author: Hans Zhang <18255117159@163.com>
 > 
-> PCI: rcar-gen4: Limit Max_Read_Request_Size and Max_Payload_Size to 256 Bytes
+> PCI: vmd: Protect root bus removal with rescan lock
 > 
-> This patch introduces a workaround for an R-Car Gen4 PCIe controller 
-> hardware limitation where the Max_Payload_Size (MPS) and 
-> Max_Read_Request_Size (MRRS) must not exceed 256 bytes. It implements 
-> an enable_device hook to force limit these values to prevent data 
-> corruption with certain NVMe SSDs.
+> This commit acquires the pci_rescan_remove_global_lock while stopping
+> and removing the VMD root bus in vmd_remove(). This is intended to
+> prevent races with concurrent PCI rescan operations.
 > 
-> Cc: stable@vger.kernel.org
-> 
-> > diff --git a/drivers/pci/controller/dwc/pcie-rcar-gen4.c b/drivers/pci/controller/dwc/pcie-rcar-gen4.c
-> > index 8b03c42f8c84c..9fe34ca7ce532 100644
-> > --- a/drivers/pci/controller/dwc/pcie-rcar-gen4.c
-> > +++ b/drivers/pci/controller/dwc/pcie-rcar-gen4.c
-> [ ... ]
-> > +static int rcar_gen4_pcie_enable_device(struct pci_host_bridge *bridge,
-> > +					struct pci_dev *dev)
-> > +{
-> [ ... ]
-> > +	if (pcie_get_mps(dev) > 256) {
-> > +		pci_info(dev, "Limiting MPS to 256 bytes\n");
-> > +		pcie_set_mps(dev, 256);
-> 
-> [Severity: High]
-> Will modifying the Max_Payload_Size locally in the enable_device hook 
-> desynchronize it from the rest of the PCIe fabric? 
-> 
-> The PCIe specification and Linux PCI core generally manage MPS uniformly 
-> across the hierarchy during boot via pcie_bus_configure_settings(). 
-> Because this hook runs later during driver probe via pci_enable_device(), 
-> if the upstream Root Port or Switch retains a larger MPS and transmits a 
-> TLP exceeding 256 bytes, could the downstream device drop it as a Malformed 
-> TLP and cause a fatal link error? 
-> 
-> Would it be safer to restrict the Root Port's MPS capabilities before 
-> enumeration so the core logic correctly scales the entire fabric?
-> 
-
-Marek, you said that Root Port's MPSS is fixed to 256B. So this means, PCI core
-will only set the endpoint's MPS to <=256B. So I don't see a need to limit MPS
-here.
-
-> > +	}
-> > +
-> [ ... ]
-> > +	if (pcie_get_readrq(dev) > 256) {
-> > +		pci_info(dev, "Limiting MRRS to 256 bytes\n");
-> > +		pcie_set_readrq(dev, 256);
-> > +	}
-> > +
-> > +	return 0;
-> 
-> [Severity: Medium]
-> Should the return values of pcie_set_mps() and pcie_set_readrq() be 
-> checked and propagated here? 
-> 
-> Both functions can return negative error codes on failure. By ignoring 
-> these return values and unconditionally returning 0, the device could 
-> be fully enabled even if the configuration writes fail, leaving the system 
-> silently vulnerable to the data corruption described in the commit message.
-> 
-
-I don't think this function call can fail.
-
-> > +}
-> > +
-> >  /* Host mode */
-> >  static int rcar_gen4_pcie_host_init(struct dw_pcie_rp *pp)
+> > diff --git a/drivers/pci/controller/vmd.c b/drivers/pci/controller/vmd.c
+> > index d4ae250d4bc6d..9565567026cf0 100644
+> > --- a/drivers/pci/controller/vmd.c
+> > +++ b/drivers/pci/controller/vmd.c
+> > @@ -1056,9 +1056,11 @@ static void vmd_remove(struct pci_dev *dev)
 > >  {
-> > @@ -313,6 +361,9 @@ static int rcar_gen4_pcie_host_init(struct dw_pcie_rp *pp)
-> >  	int ret;
-> >  	u32 val;
+> >  	struct vmd_dev *vmd = pci_get_drvdata(dev);
 > >  
-> > +	if (pp->bridge)
-> > +		pp->bridge->enable_device = rcar_gen4_pcie_enable_device;
+> > +	pci_lock_rescan_remove();
 > 
 > [Severity: High]
-> Could endpoint drivers (like high-performance network or storage drivers) or 
-> userspace via sysfs subsequently increase the MRRS above 256 bytes? 
+> Can acquiring pci_rescan_remove_lock here cause self-deadlocks or AB-BA lock
+> inversions?
 > 
-> Because the host bridge's no_inc_mrrs flag is not set, a downstream 
-> driver can call pcie_set_readrq() and silently bypass this workaround, 
-> re-enabling the data corruption vulnerability. 
+> When a VMD device is removed via PCI hotplug or sysfs remove node, the PCI
+> core calls pci_stop_and_remove_bus_device_locked(), which acquires
+> pci_rescan_remove_lock and eventually triggers vmd_remove(). Because
+> pci_rescan_remove_lock is a non-recursive mutex, won't attempting to acquire
+> it again immediately self-deadlock?
 > 
-> Should pp->bridge->no_inc_mrrs = 1 be set during this initialization 
-> to enforce the limit permanently?
+> Also, when unbound via sysfs, the core holds device_lock and calls
+> vmd_remove(), which then waits for pci_rescan_remove_lock. Since normal PCI
+> rescans acquire pci_rescan_remove_lock first, then attempt to acquire
+> device_lock, does this create an AB-BA lock inversion?
 > 
 
-This is a valid concern. I believe you should set 'pp->bridge->no_inc_mrrs = 1'
-in the Rcar driver to prevent client drivers from increasing MRRS.
+This is a valid concern. Since VMD is registered as a PCI driver, removing the
+VMD device through sysfs will trigger vmd_remove() callback and it will result
+in deadlock. The AB-BA lock inversion is also valid.
 
 - Mani
 
