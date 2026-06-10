@@ -1,185 +1,168 @@
-Received: from AS8PR04CU009.outbound.protection.outlook.com (mail-westeuropeazon11011046.outbound.protection.outlook.com [52.101.70.46])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-wr1-f65.google.com (mail-wr1-f65.google.com [209.85.221.65])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A6A3C3C10A6;
-	Wed, 10 Jun 2026 10:30:14 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=fail smtp.client-ip=52.101.70.46
-ARC-Seal:i=2; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1781087416; cv=fail; b=MlWh33ubLeqKy3L3maID9YMjET+kY0b4XZKmziUMbXSic7oR1J05KMYmqrlSQERF4miJo66F0txsUSJHAegLq8at/NQ22RbfrYi/9nzXnxOXcU6HKcWjDYvvTodggApcRd41bp4Eorq8PjStWkAWIu8B1T497CrXKUcAzZtGbAc=
-ARC-Message-Signature:i=2; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1781087416; c=relaxed/simple;
-	bh=d6R94Dr3TboVGVqnjDwQyG4NKfvbvVXfSMh57HuP2NM=;
-	h=From:To:CC:Subject:Date:Message-ID:References:In-Reply-To:
-	 Content-Type:MIME-Version; b=je+I5jRp50U4I0a0jp0LVtzd180Ajzoq4euMWFTzY+TQNYDjmuBlzYQAxd5ayxxFRuHfeUTSkSNFpJa2xWqOo2LZt4VXK9tOt2GZy+kIVpUL9Fl1FLdMk7kN6iU3MER+XlpqPSs6FP3KEMUtJx1/mv/QoqZJCb2LPU1y8CzptmY=
-ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=oss.nxp.com; spf=pass smtp.mailfrom=oss.nxp.com; dkim=pass (2048-bit key) header.d=NXP1.onmicrosoft.com header.i=@NXP1.onmicrosoft.com header.b=JWBlFhHS; arc=fail smtp.client-ip=52.101.70.46
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=oss.nxp.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=oss.nxp.com
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A98723EAC61
+	for <sashiko-reviews@lists.linux.dev>; Wed, 10 Jun 2026 10:31:34 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.221.65
+ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
+	t=1781087496; cv=none; b=DXR27WNW3Xfv0kAxmxWcY5MEwA/iRFFExumUnCV7FmYKq7qlTbPRqIU19/miU77fBQ1L5ikZzXLoDKOj1roVkAqOIaCocME9pg55FVmS3+SDeaBnFLvqXlifSnOzApmbnqKLPG7YqEhsOIkp1spuaj0wqnxnUxQ63uuxjgfwEGc=
+ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
+	s=arc-20240116; t=1781087496; c=relaxed/simple;
+	bh=XbSYp7JQkZVOB9T33+JNyFC3UuskBxLulRs78wndIbA=;
+	h=Mime-Version:Content-Type:Date:Message-Id:Cc:Subject:From:To:
+	 References:In-Reply-To; b=YPttHwx15bCSkgYjkISjbGcGXfCmGu7AU7LpZ4BwqHNREihDz2MlyFkJU09CJKMC/t8e53pBLw25z7xI5s99MgJQZLSMJAnwM5U+HPjOymmm/NwjldZOdHiCuz8Ey5QNSxPw4SgZR3Wd8vutck5mlcn1BOP1VBoFR9KWfBI07y8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=XYAfPNIb; arc=none smtp.client-ip=209.85.221.65
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=NXP1.onmicrosoft.com header.i=@NXP1.onmicrosoft.com header.b="JWBlFhHS"
-ARC-Seal: i=1; a=rsa-sha256; s=arcselector10001; d=microsoft.com; cv=none;
- b=n5GvHJMGjGRe+Qp5B4WFApRL6ebEhixOGLXRodN3iCbYoZdG4S+N72ghtwis/+OkpZ6uek8KukZP7BQTzpGnWED/rAiWkzjsxV4QaJg9rqeyZWHzabIuRgreK4yvBk6Ed5PUvN5jR9Ac0NWRpP4+Hc4RjRTuzirbtq6WH31YaeuZQo4Q5lx51o4VePVt0+8+poik6OZuZ7uM7EF31kdQGxBNdgN1FSQa42m0hY30Q6EyCE4ppIHSvJMRAkaojaZ42Bqzs7+29EyOUCXIufDn+9bX7WtsHpZ/e/Ny8Qi0W8o4fLbkwrijPpsEmz0F6b3Itdyr8FAb23c8Yyj1cp4Esw==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com;
- s=arcselector10001;
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
- bh=d6R94Dr3TboVGVqnjDwQyG4NKfvbvVXfSMh57HuP2NM=;
- b=QYj8nh9q/zIh1inT8DLk9hrJlFSeMejQHdOiz/YMUp7XihUbCgGGpwzpXbu0ghj8Cth6F8fKr+S/sZjMRIGl3tauoKWybFAHLK6UcmA1Mi6mfkfAvcvptInixWxoyGI+PioQKyT09Vm1Yt//6YODaR4HCSmUqNTbrYdTVlTGJyjm/w2ejqUmWV1A3RA8j5lMrwLJAE/pHgXow6A+q/+wZUcDZ1OE9ZuZ5+nlhrmzwBR60N1G0syvc5RWgWZGB6+tJfr/w8UZdWEgqyrWZNvOdG0sqTv3Wnhl6eIJ6brogqZEfAYr9CGg1nv0jaIg01MRXUttSICQ9jErWofJfOF01A==
-ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
- smtp.mailfrom=oss.nxp.com; dmarc=pass action=none header.from=oss.nxp.com;
- dkim=pass header.d=oss.nxp.com; arc=none
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=NXP1.onmicrosoft.com;
- s=selector1-NXP1-onmicrosoft-com;
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
- bh=d6R94Dr3TboVGVqnjDwQyG4NKfvbvVXfSMh57HuP2NM=;
- b=JWBlFhHSiTxzSDUP1ii+RTb8foD2YVmMg/1LVok0gQLkBv8fusnsWqgA4huKAoiuse9BnNa5pdmoRiVI/0WLtBvEGp+cn9tqbVCa9TTv0ufNLDtkJsQgkai3flZEMIObioEmBicA8nNsXzGB8Ae7entA3PgexoXZRJebRvnAga2JbINTgZgcV0hLStWH8+r2A3wkYoMPbnRN7yDOOZByaCT7b44+9qW4tDe8Dtl3vLTMHd5WcRiBdyb8UxyVKdMW7BamsotTyvOLyx9D/1nmwHzmmsr2Z+EhvTH/IA1D0DoPmVcsAY1M+TLWMXeJLieP8rJVCTq3Xwx8+b9jXo0uvg==
-Received: from DU2PR04MB8629.eurprd04.prod.outlook.com (2603:10a6:10:2dc::6)
- by DU4PR04MB12084.eurprd04.prod.outlook.com (2603:10a6:10:63f::20) with
- Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.21.92.14; Wed, 10 Jun
- 2026 10:30:09 +0000
-Received: from DU2PR04MB8629.eurprd04.prod.outlook.com
- ([fe80::9d04:7526:a901:fe47]) by DU2PR04MB8629.eurprd04.prod.outlook.com
- ([fe80::9d04:7526:a901:fe47%6]) with mapi id 15.21.0113.011; Wed, 10 Jun 2026
- 10:30:09 +0000
-From: "Wei Fang (OSS)" <wei.fang@oss.nxp.com>
-To: "sashiko-reviews@lists.linux.dev" <sashiko-reviews@lists.linux.dev>
-CC: "imx@lists.linux.dev" <imx@lists.linux.dev>, "Frank.Li@kernel.org"
-	<Frank.Li@kernel.org>, network dev <netdev@vger.kernel.org>
-Subject: RE: [PATCH v4 net-next 8/9] net: dsa: netc: add bridge mode support
-Thread-Topic: [PATCH v4 net-next 8/9] net: dsa: netc: add bridge mode support
-Thread-Index: AQHc97/w0Go1wFMDHUm01FXLKIauvLY3IsYAgAB17/A=
-Date: Wed, 10 Jun 2026 10:30:09 +0000
-Message-ID:
- <DU2PR04MB86295096E35D58102EF5548E881A2@DU2PR04MB8629.eurprd04.prod.outlook.com>
-References: <20260609032955.2066089-9-wei.fang@oss.nxp.com>
- <20260610032801.07C8C1F00893@smtp.kernel.org>
-In-Reply-To: <20260610032801.07C8C1F00893@smtp.kernel.org>
-Accept-Language: en-US
-Content-Language: en-US
-X-MS-Has-Attach:
-X-MS-TNEF-Correlator:
-authentication-results: dkim=none (message not signed)
- header.d=none;dmarc=none action=none header.from=oss.nxp.com;
-x-ms-exchange-messagesentrepresentingtype: 1
-x-ms-publictraffictype: Email
-x-ms-traffictypediagnostic: DU2PR04MB8629:EE_|DU4PR04MB12084:EE_
-x-ms-office365-filtering-correlation-id: bff93bbf-df8d-4ef6-8ebd-08dec6db3f39
-x-ms-exchange-sharedmailbox-routingagent-processed: True
-x-ms-exchange-senderadcheck: 1
-x-ms-exchange-antispam-relay: 0
-x-microsoft-antispam:
- BCL:0;ARA:13230040|19092799006|23010399003|366016|376014|1800799024|38070700021|56012099006|4143699003|11063799006|18002099003|22082099003;
-x-microsoft-antispam-message-info:
- cIuRkIZU4hLDcnQDG4gBkieyWUo5F6yb9/TlPGPon9jl+D+gqLS/UQsNpWbv/RhMdfyJKpADUUFbf3qaoJwIn6kxaG7s2sJrA3Juc6pqwnsZhbwYLPeBQcOWPA0zdqnunOapJob3AIpGxiC+157T7GYwFyu+UmUHanf8VTX16Ica12UTmJj42qkzZwbTBy4/4CrjP5N8PdfplfGDm/wi1MJoV+9Opmfby4Uqgc5UFyjIRM2HmcEkTwNZQDytncpde+WJ7JJQ579bMnvDGv1PeJDktCdF8JA86VUa/c7XTI41lNyMlfUf5vTgbbd22kKWIIdVlSop6ik64i9yxAS1+Rcqn4ex8xOP/fh2Ttbs6V6lgxk1J6xbH6qsQ3Fq/dp2YkFJrj2e0CdHgspDK+AswKmoWFb+TTfbUDZaCJkjrZeB2b54Baj5Gw0bnzOfXmZacM5kkBAELoHVk3ap+SHvy3OTR6dR9TSiagvUL+/ykfs2C6fQI5nI/TRsNPYyNj8fxPP+UVjAF/h6y2QCZBYFaw+ziYduopKXa9gk7zYQdroy9fR5SVEaWuCZlRzk16cduKRhyCydwZIrR2UdDF0NQ0SsD2Jm/OS+YPzwZe/noI/mome7uM7Bp3Bs0pWiwGghtNPREYIm36Djmdlx8npNqezOK4KiHvtjc8DTRGQxfU4+ElChuz5KPmdfmk/uaIhszrhYrOFWKDzuBhgzdeD8UM2d2EVKhdLHKwrSqcNoQhXm3ofM+7cy+ZVAgHmAk8R7
-x-forefront-antispam-report:
- CIP:255.255.255.255;CTRY:;LANG:en;SCL:1;SRV:;IPV:NLI;SFV:NSPM;H:DU2PR04MB8629.eurprd04.prod.outlook.com;PTR:;CAT:NONE;SFS:(13230040)(19092799006)(23010399003)(366016)(376014)(1800799024)(38070700021)(56012099006)(4143699003)(11063799006)(18002099003)(22082099003);DIR:OUT;SFP:1101;
-x-ms-exchange-antispam-messagedata-chunkcount: 1
-x-ms-exchange-antispam-messagedata-0:
- =?utf-8?B?TFg5TDhycCtwS01ldWpFZ2FZQ1JkUGlqeGpGUng0WG9mK0paV3JwQWpNVGpO?=
- =?utf-8?B?TEx5RUdwSmt6c2Jqdzh3MzByc09FU1RwTVI5R0FEQXFJbEhzZUVSNFE2S200?=
- =?utf-8?B?NFFlNWtkTU5vUExlVmV1VHNDV0IrYXlMWTE1YjlPWUIyWG1zT3g0dWZtcisv?=
- =?utf-8?B?UHVJbkwrYVczeUNkRWVoaUxUVWNtb0ZSSUo0NjdHa0pENk5TZHZvQkNOLzg4?=
- =?utf-8?B?QmxJZWpnWElySVF1RHNyWnhzWHQ0dm1jQ3hBNTI1WEVkOTNVVXZsak5PT2RF?=
- =?utf-8?B?aWVPVEdNRjNqMVprTHlLYjFIOFI2ZUlENFhsVlB4TXdCK1NHNzcyM3Bpa05v?=
- =?utf-8?B?TXh4Mis1VURLb3Zlck9BT1ZqWkRKTUluV0dtTU5mNEdNTEJPUFpvZnNrM3hT?=
- =?utf-8?B?bWFLZ3A0Mzk4amZwVjVQUTVCSDVyWGVzSXZ4VEQzUFNOZldVVm1Ecm1tMVVq?=
- =?utf-8?B?UmlGMTBweU9kU1pVRXd0Sm5mdGF3clpuRWpya1prci9BVGhzSkF6cjMrUGE1?=
- =?utf-8?B?Q2s3OGJneGlsRGZtSldYZkhJRkdqVUdOQXBCbWNBeDk0RFdKc09RbHl3RUd3?=
- =?utf-8?B?MnB4c0tDYkJNOFp2RnMyWmV2TWUyL2lIa0tXdGhET1Y5eDhBelpaVUl2OEE5?=
- =?utf-8?B?TkE0UThoU3JZM1Nnd0ZUaXFiTE5TWm5zU1A1Ty9PS2NnQkVOZHQ4Z29OMVVj?=
- =?utf-8?B?TFg5WXBTdXBONTl2a0w3a2pQdk9IZUpHRXd1Y2djWk0ycTFSTklaR1ZOQnht?=
- =?utf-8?B?a3UrbHo4eFJ6Qm1sQlpKMTRXenVnQXNhTnUweDBlOENuTHB5TkJiYVRZS3ZN?=
- =?utf-8?B?eFdFa0N2Zk85MDk1YmZYcVl3Wi9WWVpOOHZVZHJzZFRYbTgrRUs0UFpUak0w?=
- =?utf-8?B?VGNJZHc2QWpnLzlkQ3dRN2ovUW0wamFvWEdCeHhKSDFTcHNmL3lXeHU5cUY1?=
- =?utf-8?B?NFcyZEpNT210NkFxN3FFeE1UNXRWMytZc3M1M0U2d1J3bkdROG1ETDZrVGlQ?=
- =?utf-8?B?TldKbDdzOHpmQjZlNVgrMG1HZjdnZHZ4dWoxYmZrcS95aXdFR2puTjFrMEM3?=
- =?utf-8?B?aW5YdUFWYkVoVzkyTjlMRXhBZWFHYlJCWWxOakkvcmJSY2JUdHNEbExVeU9T?=
- =?utf-8?B?R2hpYUl4TzFBbjdZc2c0UVBOQ1FuSnVBaXcrSmtFZmliSGQzbGVIeE0xWDdM?=
- =?utf-8?B?elRYcDI5MFJncHZWUlcrVnRUMmNDbVlUaEtyREFzUmIyaDBpNWZjWWJxOVg5?=
- =?utf-8?B?UUNOYU9IZ3NDWVBOWUpGZUZEcW1hRWl5ZU5DYWJUaGZoL2wvV013ZnA1OTE0?=
- =?utf-8?B?OTFsVnc0UUIzMGdYOVZNU1RubkVTZ0QzS2paYTBPNys3cFc5NzhJMklLdm5w?=
- =?utf-8?B?K2VkTFd1V0RWMFNDbEkvck9wTDNHREg3VjhBUllkbXRYMGd1UDM2RG9YN1U0?=
- =?utf-8?B?Y1RTakhkUnYxQXpYdzhBblJlMkpuc2ZvbFFKTjRHNjhQK05RVnJzWXR6TDJH?=
- =?utf-8?B?eEJpTjVRVHlxMFJaU2FvSWdTajFFTVJMVXpVVXVhYXM1ZEtnc2dNenBUTGp3?=
- =?utf-8?B?L3ZkWnY3Zmd0eC9SZm56Z0JJTnE1ckJrNVE3OWhPbW9tRDFoUlBCRzRwTzFP?=
- =?utf-8?B?cnp1Y205aDc4WnNvZ0hRMXNKQy90alIwN2ZqZnZ5c0NEdE0zWjBnUnU4ak1Y?=
- =?utf-8?B?VDc0Y2tOR05iZTA0SlZqM0swOXdJV0ZrM3hYQzRPTktZUmVuNW5WbzlsOXRo?=
- =?utf-8?B?Q1dGd1FoYUVFbWViVExPZVl6RS9maWhVdkd0U2c4dHg0KzkrbkIvVlNsN1FK?=
- =?utf-8?B?SDdqV0lJYnU4UlpFN1ZKQ2V3TkVWMzRxeTlTRjNmOGk5WGJEN2Y0NGdCcTFo?=
- =?utf-8?B?K3piZS9KeEtaMFg3TU1xMjRNNk9HYUNtSjBCV1lyL3lvSy83U2QwNHpySDM5?=
- =?utf-8?B?UHdwaE1YcFhYL04yWFFDRjh3bkczMDR6SnhaYnB0QVBnbnV4bnlGdGFqeU8y?=
- =?utf-8?B?bkNmcGtnNXM4eDB5OUhyOHYra3VqWkdKWjRxVG5VZEtIei8wVnFSK0pwNm1i?=
- =?utf-8?B?S2s5TERMSkdVZHlZMU1iQTFTck50clVQdGx1dm93VjF5THJQeW9BTGd5VHUr?=
- =?utf-8?B?MTdWeXE2R0FzaEJKZFlqVTdxalJ5YkRTdyt6cVhVclZEQlNkWGV1ZS9IV2t2?=
- =?utf-8?B?S0VUbGJIVGRJcExqdnJHUTB6ai9UZUUwckQwVW52NWcvUVJJWWw1anp3MnhT?=
- =?utf-8?B?VWg5VTJBRjBDSXJtTjh1ZFczM0lqa3ZvMHduR2kvWU9hSVU1a2dhL0k5MFQz?=
- =?utf-8?Q?FYIw8be6brp6TJYuqU?=
-Content-Type: text/plain; charset="utf-8"
-Content-Transfer-Encoding: base64
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="XYAfPNIb"
+Received: by mail-wr1-f65.google.com with SMTP id ffacd0b85a97d-45eeba68948so4711987f8f.1
+        for <sashiko-reviews@lists.linux.dev>; Wed, 10 Jun 2026 03:31:34 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20251104; t=1781087493; x=1781692293; darn=lists.linux.dev;
+        h=in-reply-to:references:to:from:subject:cc:message-id:date
+         :content-transfer-encoding:mime-version:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=1IyIE/9EwwGwBSMypNHlFqQrU/upNBUE0sY83YzNexo=;
+        b=XYAfPNIb4WMXZst+iGF/Um2DK/zYbb+XKT9Y/4WEYb0KyUPkTF3fqaiGNpkM4xF1sc
+         FU02R+Zscjq6HX36knQbAC3q2BjhGH+EpENoYjpuAmbDQZFNiytjvw0sA+Le/kXchD9w
+         4AkFi9JVQpu3XIL+lDvquCD+97MCivOQrZWxWuXSR/A/xwlgxYVXhiw7FItdl0DJDo0E
+         AZisTkFUMmnGPl5n1n2TFEzbk2Duxr7W7UMeMiRL9COHCKwJMuKX4XVvw3dGdUQ+feCE
+         aZHz0KiFqSVmnMZiI7kIjtPzxDF5UW89cuQGZfUh0Z43gvUxCA2IfSrQOPzNzQe+0j5k
+         NnvQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20251104; t=1781087493; x=1781692293;
+        h=in-reply-to:references:to:from:subject:cc:message-id:date
+         :content-transfer-encoding:mime-version:x-gm-gg:x-gm-message-state
+         :from:to:cc:subject:date:message-id:reply-to;
+        bh=1IyIE/9EwwGwBSMypNHlFqQrU/upNBUE0sY83YzNexo=;
+        b=InMPegGzb/Ea7VCejwMP+bBKX3oyLnIn+tJPtu0Bsk6HiPB9IJXiQfCblFCeCgdlr8
+         8GWY9WJXcHKjgFQQDMIHex7W3VPYXe7qRI8gz97rBI9/NqOz2+j85uIqLBOQTnZMsRtq
+         iZv3j1UH+PEXVRLo4t5N7LJ1yRQ3LhTCM2Q+n6ls+oM0GNn1WM4tTtcw5eXZvSXUvqRZ
+         7fQoBmfqR9KwBMjzvWsRYqaf+1z2Gd4TNFwfNn8iT3YACjett2pOVmvlT68yO+h6oawQ
+         d9wUF+umb3hcUE/sO1B1xgp6kRjOpD/6BAmz52DyA4+N51lLkuRaLcFM7JaQUcWdkSrj
+         AvDA==
+X-Gm-Message-State: AOJu0Yx3iNgDHWHfkprFcYnmVl1VneUWDhAI9f0RkiaNUyXg0tf9YVGo
+	54Gg0RaSX0yWPd08PyoPwz+CMvk3ve3p1qLUy/WiF+hfYWBoposGpbauR2kssSiZ
+X-Gm-Gg: Acq92OEOum5yVYWaAUTUro0GVtqR2DRNuQAoI9mv4hcLEfqqPoxnvqI3KV5e+NUW25/
+	EpU8QOcc7l93cTB6l/yOtwXxzFepGzRw8CDFYcnNhKUDqBcPpuo0W8t+bwBtAg4StSyvTs6nmTg
+	7pB0AfPqz2EPslZjt1LyQragnJQKXDl0pMJMnjyQtuuUvxxQEYH2nWiax2zfhkV0EIMYQGjXoap
+	29rcax+Fu1rNuBZdLO6Om8yNApmDyvsNAHsf0C/ZsWHAbEirEvB2hiC6YdsT5JhITMuM4UUKKFq
+	Ei/w8ut0d02npn8g0STI4vNBDQt57iH5cmZTfN3cK4nOQ/lMEnsLt4n618YQ1DIHJm2vUGbpkQN
+	Kz7fQ4MN4+PEKAVoo7UqNj34+bHPqHRdVF7q4SySjkN5CUJ1C8adxFh0uMfzpWt1Tb1R1nc8kCN
+	tlbCGAD5qpJG5s4kEWNoipN8grNpAbp/VpUMJBJLdxhiUSR8RHD9Ij7UcG62pNKWPKCt/VjfjAK
+	Um/cnoUudUggBQk4FrAz81bQJcw6a2pMgYUwcORZZovrPYLxQXXND3XBkcoFzIAwKezbcFqz0md
+X-Received: by 2002:adf:e00a:0:20b0:43d:6fb7:fedb with SMTP id ffacd0b85a97d-46030623307mr26149361f8f.36.1781087492616;
+        Wed, 10 Jun 2026 03:31:32 -0700 (PDT)
+Received: from localhost (nat-icclus-192-26-29-3.epfl.ch. [192.26.29.3])
+        by smtp.gmail.com with ESMTPSA id ffacd0b85a97d-4601f351ac0sm124308489f8f.27.2026.06.10.03.31.32
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Wed, 10 Jun 2026 03:31:32 -0700 (PDT)
 Precedence: bulk
 X-Mailing-List: sashiko-reviews@lists.linux.dev
 List-Id: <sashiko-reviews.lists.linux.dev>
 List-Subscribe: <mailto:sashiko-reviews+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:sashiko-reviews+unsubscribe@lists.linux.dev>
-MIME-Version: 1.0
-X-OriginatorOrg: oss.nxp.com
-X-MS-Exchange-CrossTenant-AuthAs: Internal
-X-MS-Exchange-CrossTenant-AuthSource: DU2PR04MB8629.eurprd04.prod.outlook.com
-X-MS-Exchange-CrossTenant-Network-Message-Id: bff93bbf-df8d-4ef6-8ebd-08dec6db3f39
-X-MS-Exchange-CrossTenant-originalarrivaltime: 10 Jun 2026 10:30:09.3137
- (UTC)
-X-MS-Exchange-CrossTenant-fromentityheader: Hosted
-X-MS-Exchange-CrossTenant-id: 686ea1d3-bc2b-4c6f-a92c-d99c5c301635
-X-MS-Exchange-CrossTenant-mailboxtype: HOSTED
-X-MS-Exchange-CrossTenant-userprincipalname: Vo2+KD9S65DXCaM1HmKJVAqjochhwe5FhjbXhx2+m7IiG20WTQ6XzPVsW75K83w23E4UtU7xwTS5Ou1AnQOoKg==
-X-MS-Exchange-Transport-CrossTenantHeadersStamped: DU4PR04MB12084
+Mime-Version: 1.0
+Content-Transfer-Encoding: quoted-printable
+Content-Type: text/plain; charset=UTF-8
+Date: Wed, 10 Jun 2026 12:31:31 +0200
+Message-Id: <DJ5ATM1R9KGE.18HBGC4MWTYU2@gmail.com>
+Cc: <bpf@vger.kernel.org>
+Subject: Re: [PATCH bpf-next] rqspinlock: Fix order in
+ raw_res_spin_(un)lock_irq to allow schedule
+From: "Kumar Kartikeya Dwivedi" <memxor@gmail.com>
+To: <sashiko-reviews@lists.linux.dev>, "Gabriele Monaco"
+ <gmonaco@redhat.com>
+X-Mailer: aerc 0.21.0
+References: <20260610090431.32427-1-gmonaco@redhat.com>
+ <20260610091602.318C01F00893@smtp.kernel.org>
+In-Reply-To: <20260610091602.318C01F00893@smtp.kernel.org>
 
-PiA+ICBzdGF0aWMgaW50IG5ldGNfcG9ydF9mZGJfYWRkKHN0cnVjdCBkc2Ffc3dpdGNoICpkcywg
-aW50IHBvcnQsDQo+ID4gIAkJCSAgICAgY29uc3QgdW5zaWduZWQgY2hhciAqYWRkciwgdTE2IHZp
-ZCwNCj4gPiAgCQkJICAgICBzdHJ1Y3QgZHNhX2RiIGRiKQ0KPiA+ICB7DQo+ID4gKwlzdHJ1Y3Qg
-bmV0X2RldmljZSAqYnJfbmRldiA9IG5ldGNfY2xhc3NpZnlfZGIoZGIpOw0KPiA+ICAJc3RydWN0
-IG5ldGNfcG9ydCAqbnAgPSBORVRDX1BPUlQoZHMsIHBvcnQpOw0KPiA+DQo+ID4gLQkvKiBDdXJy
-ZW50bHksIG9ubHkgc3VwcG9ydCBzdGFuZGFsb25lIHBvcnQgbW9kZSwgc28gb25seQ0KPiA+IC0J
-ICogTkVUQ19TVEFOREFMT05FX1BWSUQgKD0gMCkgaXMgc3VwcG9ydGVkIGhlcmUuDQo+ID4gLQkg
-Ki8NCj4gPiAtCWlmICh2aWQgIT0gTkVUQ19TVEFOREFMT05FX1BWSUQpDQo+ID4gLQkJcmV0dXJu
-IC1FT1BOT1RTVVBQOw0KPiA+ICsJaWYgKElTX0VSUihicl9uZGV2KSkNCj4gPiArCQlyZXR1cm4g
-UFRSX0VSUihicl9uZGV2KTsNCj4gPiArDQo+ID4gKwlpZiAoIXZpZCkNCj4gPiArCQl2aWQgPSBu
-ZXRjX3ZsYW5fdW5hd2FyZV9wdmlkKGJyX25kZXYgPyAmZGIuYnJpZGdlIDogTlVMTCk7DQo+IA0K
-PiBbU2V2ZXJpdHk6IEhpZ2hdDQo+IFdpbGwgdGhpcyB1bmNvbmRpdGlvbmFsbHkgbWFwIFZJRCAw
-IGVudHJpZXMgdG8gdGhlIGJyaWRnZSdzIGludGVybmFsDQo+IFZMQU4tdW5hd2FyZSBQVklELCBl
-dmVuIGlmIHRoZSBicmlkZ2UgaGFzIFZMQU4gZmlsdGVyaW5nIGVuYWJsZWQ/DQo+IA0KPiBXaGVu
-IGFuIEZEQiBlbnRyeSBpcyBhZGRlZCB3aXRob3V0IGEgc3BlY2lmaWMgVkxBTiAoVklEIDApIC0g
-c3VjaCBhcyBsb2NhbA0KPiBwb3J0IE1BQyBhZGRyZXNzZXMgYXV0b21hdGljYWxseSBhZGRlZCBi
-eSB0aGUgYnJpZGdlIGNvcmUgLSBpdCBhcHBlYXJzIHRoaXMNCj4gY29kZSB0cmFuc2xhdGVzIGl0
-IHRvIHRoZSB1bmF3YXJlIFBWSUQgKGUuZy4sIDQwOTUpLiBIb3dldmVyLCBpZiB0aGUgYnJpZGdl
-DQo+IGlzIFZMQU4tYXdhcmUsIHRoZSBwb3J0J3MgaW5ncmVzcyB0cmFmZmljIHVzZXMgdGhlIHVz
-ZXItY29uZmlndXJlZCBQVklEIG9yDQo+IGV4cGxpY2l0bHkgdGFnZ2VkIFZMQU5zLCBub3QgdGhl
-IHVuYXdhcmUgUFZJRC4NCj4gDQo+IFNpbmNlIHRoaXMgcGF0Y2ggYWxzbyByZW1vdmVzIHRoZSBo
-b3N0IGZsb29kIHJ1bGUgd2hlbiBhIHBvcnQgam9pbnMgYSBicmlkZ2UsDQo+IHRyYWZmaWMgZGVz
-dGluZWQgdG8gdGhlIGxvY2FsIG1hY2hpbmUgd291bGQgbWlzcyB0aGUgRkRCIGxvb2t1cCBhbmQg
-YmUgdHJlYXRlZA0KPiBhcyB1bmtub3duIHVuaWNhc3QuIENvdWxkIHRoaXMgcmVzdWx0IGluIGxv
-Y2FsIHRyYWZmaWMgYmVpbmcgbGVha2VkIHRvIG90aGVyDQo+IHBvcnRzIHZpYSBmbG9vZGluZywg
-b3IgZHJvcHBlZCBlbnRpcmVseSBpZiB1bmtub3duIHVuaWNhc3QgZmxvb2RpbmcgaXMNCj4gZGlz
-YWJsZWQ/DQoNCldlIGRvIG5vdCBzdXBwb3J0IGNvbmZpZ3VyaW5nIFZJRCAwIGZyb20gdXBwZXIg
-bGF5ZXIsIHNlZToNCg0Kc3RhdGljIGludCBuZXRjX3BvcnRfdmxhbl9hZGQoc3RydWN0IGRzYV9z
-d2l0Y2ggKmRzLCBpbnQgcG9ydCwNCgkJCSAgICAgIGNvbnN0IHN0cnVjdCBzd2l0Y2hkZXZfb2Jq
-X3BvcnRfdmxhbiAqdmxhbiwNCgkJCSAgICAgIHN0cnVjdCBuZXRsaW5rX2V4dF9hY2sgKmV4dGFj
-aykNCnsNCglbLi4uXQ0KCS8qIFRoZSA4MDIxcSBsYXllciBtYXkgYXR0ZW1wdCB0byBjaGFuZ2Ug
-TkVUQ19TVEFOREFMT05FX1BWSUQNCgkgKiAoVklEIDApLCBzbyB3ZSBuZWVkIHRvIGlnbm9yZSBp
-dC4NCgkgKi8NCglpZiAodmxhbi0+dmlkID09IE5FVENfU1RBTkRBTE9ORV9QVklEKQ0KCQlyZXR1
-cm4gMDsNCglbLi4uXQ0KfQ0KDQpTbyBWSUQgMCBjYW5ub3QgYmUgdXNlZCBhcyBhIFBWSUQgb2Yg
-YSBWTEFOLWF3YXJlIGJyaWRnZSBwb3J0Lg0KDQo+IA0KPiA+DQo+ID4gIAlyZXR1cm4gbmV0Y19w
-b3J0X3NldF9mZGJfZW50cnkobnAsIGFkZHIsIHZpZCk7DQo+ID4gIH0NCj4gPiBAQCAtMTUyOSwx
-MCArMTYwNiwxNCBAQCBzdGF0aWMgaW50IG5ldGNfcG9ydF9mZGJfZGVsKHN0cnVjdCBkc2Ffc3dp
-dGNoDQo+ICpkcywgaW50IHBvcnQsDQo+ID4gIAkJCSAgICAgY29uc3QgdW5zaWduZWQgY2hhciAq
-YWRkciwgdTE2IHZpZCwNCj4gPiAgCQkJICAgICBzdHJ1Y3QgZHNhX2RiIGRiKQ0KPiA+ICB7DQo+
-ID4gKwlzdHJ1Y3QgbmV0X2RldmljZSAqYnJfbmRldiA9IG5ldGNfY2xhc3NpZnlfZGIoZGIpOw0K
-PiA+ICAJc3RydWN0IG5ldGNfcG9ydCAqbnAgPSBORVRDX1BPUlQoZHMsIHBvcnQpOw0KPiA+DQo+
-ID4gLQlpZiAodmlkICE9IE5FVENfU1RBTkRBTE9ORV9QVklEKQ0KPiA+IC0JCXJldHVybiAtRU9Q
-Tk9UU1VQUDsNCj4gPiArCWlmIChJU19FUlIoYnJfbmRldikpDQo+ID4gKwkJcmV0dXJuIFBUUl9F
-UlIoYnJfbmRldik7DQo+ID4gKw0KPiA+ICsJaWYgKCF2aWQpDQo+ID4gKwkJdmlkID0gbmV0Y192
-bGFuX3VuYXdhcmVfcHZpZChicl9uZGV2ID8gJmRiLmJyaWRnZSA6IE5VTEwpOw0KPiANCj4gW1Nl
-dmVyaXR5OiBIaWdoXQ0KPiBEb2VzIHRoZSBzYW1lIHVuY29uZGl0aW9uYWwgdHJhbnNsYXRpb24g
-aGFwcGVuIGhlcmUgZHVyaW5nIEZEQiBlbnRyeQ0KPiBkZWxldGlvbiwNCj4gcG90ZW50aWFsbHkg
-cHJldmVudGluZyBWSUQgMCBlbnRyaWVzIGZyb20gYmVpbmcgcmVtb3ZlZCBmcm9tIHRoZSBoYXJk
-d2FyZSBpZg0KPiB0aGUgYnJpZGdlIGlzIFZMQU4tYXdhcmU/DQoNCkxpa2V3aXNlLg0KDQpUaGVz
-ZSBhcmUgZmFsc2UgcG9zaXRpdmVzLg0KDQo=
+On Wed Jun 10, 2026 at 11:16 AM CEST, sashiko-bot wrote:
+> Thank you for your contribution! Sashiko AI review found 1 potential issu=
+e(s) to consider:
+>
+> Pre-existing issues:
+> - [High] kernel/locking/locktorture.c ignores the return value of raw_res=
+_spin_lock and raw_res_spin_lock_irqsave, proceeding to modify shared state=
+ without holding the lock on failure.
+> --
+>
+> commit 92f88363aff605830b5600d6bc2a3ec351170c8e
+> Author: Gabriele Monaco <gmonaco@redhat.com>
+>
+> rqspinlock: Fix order in raw_res_spin_(un)lock_irq to allow schedule
+>
+> This commit fixes the preemption enabling order in the resilient spinlock
+> unlock macros. It ensures interrupts are enabled before preemption to
+> allow scheduling, maintaining consistency with other spinlock implementat=
+ions.
+>
+>> diff --git a/include/asm-generic/rqspinlock.h b/include/asm-generic/rqsp=
+inlock.h
+>> index 151d267a496b3..4d46643f46cbc 100644
+>> --- a/include/asm-generic/rqspinlock.h
+>> +++ b/include/asm-generic/rqspinlock.h
+>> @@ -243,12 +243,20 @@ static __always_inline void res_spin_unlock(rqspin=
+lock_t *lock)
+>>  	({                                        \
+>>  		int __ret;                        \
+>>  		local_irq_save(flags);            \
+>> -		__ret =3D raw_res_spin_lock(lock);  \
+>> -		if (__ret)                        \
+>> +		preempt_disable();                \
+>> +		__ret =3D res_spin_lock(lock);      \
+>> +		if (__ret) {                      \
+>>  			local_irq_restore(flags); \
+>> +			preempt_enable();         \
+>> +		}                                 \
+>>  		__ret;                            \
+>>  	})
+>>
+>> -#define raw_res_spin_unlock_irqrestore(lock, flags) ({ raw_res_spin_unl=
+ock(lock); local_irq_restore(flags); })
+>> +#define raw_res_spin_unlock_irqrestore(lock, flags) \
+>> +	({                                          \
+>> +		res_spin_unlock(lock);              \
+>> +		local_irq_restore(flags);           \
+>> +		preempt_enable();                   \
+>> +	})
+>
+> [Severity: High]
+> This isn't a bug introduced by this patch, but while reviewing the resili=
+ent
+> spinlock changes, I noticed a pre-existing issue in the locktorture modul=
+e.
+>
+> Does locktorture correctly handle the return values from the resilient
+> spinlock API?
+>
+> In kernel/locking/locktorture.c:torture_raw_res_spin_write_lock(), the
+> return value is discarded:
+>
+>     raw_res_spin_lock(&rqspinlock);
+>     return 0;
+>
+> Similarly, in torture_raw_res_spin_write_lock_irq():
+>
+>     raw_res_spin_lock_irqsave(&rqspinlock, flags);
+>     cxt.cur_ops->flags =3D flags;
+>     return 0;
+>
+> Since raw_res_spin_lock and raw_res_spin_lock_irqsave can fail and return
+> an error code like -EDEADLK or -ETIMEDOUT, ignoring the return value
+> allows the caller to proceed unlocked into the critical section.
+>
+> When the torture thread later calls raw_res_spin_unlock(), it will cause
+> an unbalanced preempt_enable() because the failed lock acquisition path
+> already restored preemption.
+>
+> Furthermore, it forcibly clears the lock state, which could unlock a lock
+> legitimately held by another thread, potentially causing lock state
+> corruption and panics.
+
+In case of locktorture, error checking is skipped because it does not exerc=
+ise
+deadlocks, it's only for locking scalability and correctness checks.
+
