@@ -1,102 +1,103 @@
-Received: from mail-pl1-f201.google.com (mail-pl1-f201.google.com [209.85.214.201])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D1E46351C1E
-	for <sashiko-reviews@lists.linux.dev>; Wed, 10 Jun 2026 18:25:40 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.214.201
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3A48829C328;
+	Wed, 10 Jun 2026 18:28:05 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1781115941; cv=none; b=p7RcHPZdhp4kTvWi+5cZFg13TA/QA91yz8ivZvamn/mD4665tF4YLjPb3+i4fsyXnlSZ38Exvo0he5itC94T3uFJ+SimrcMWdW25HBdwEaTMqb9U2ZwCoA4UepPsDBhLCgM0xUO/A2646x/myWB5Zqnr1q7m6k5oEApfNTpLrB0=
+	t=1781116087; cv=none; b=T7XEmE3eZ439DYf9+mGw8nDDNJmz8SnZzT0wMr7o3EYnJMxx9iQRKvhTjy6cJRoDMj4SsmktsL/oTHHseZcgIQj+E2LlvymyGKVhCvPOKDqF1RZ/wOkIua8nsJVPlGFIoCmFcCgnt330QJyFSY+D+Ca1jIlraN6709CvmM86Krw=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1781115941; c=relaxed/simple;
-	bh=yKq2Ui00JXDy2Up9TpO1zuormhAd0uRGnQ1pNcg5FBk=;
-	h=Date:In-Reply-To:Mime-Version:References:Message-ID:Subject:From:
-	 To:Cc:Content-Type; b=nM3BCs15f2HlIxiGhr4dt6IO2AtMxZwb2MQxB8JzW1nPKw20GNi6OkcUoVpwtAik308VEtvvSqqWRYqe7IxRF14f5hFLBt96lvNfLJnpnqShI78kj8rfgJvoOl6mNTzeGVlNGq7QbVIqdq1MDgh84RuTgGjMBElo6XTeBbzoQgw=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=google.com; spf=pass smtp.mailfrom=flex--seanjc.bounces.google.com; dkim=pass (2048-bit key) header.d=google.com header.i=@google.com header.b=cCXmpKdn; arc=none smtp.client-ip=209.85.214.201
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=google.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=flex--seanjc.bounces.google.com
+	s=arc-20240116; t=1781116087; c=relaxed/simple;
+	bh=LQMoWoVksnkFllqaCsGvrEV9KrxZuQ5A08D/MNSUGYY=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=lEwlULBvr8Tpa+RdcPm/Iiy4zWKuiA4HKFZQYY3Ol5UumC8sz31Qm8WAmOfoJh6ekfpvvcVAihXH10VIE3uVjHSvLaaK++6ZWyHhcXP42aRhQFdjtnkKnvwNPmxzNp9fsqGRAlJVrmqwO6u5lLOvTyedHlUCmU8YVEfJvvliQvk=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=Syco/DdV; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=google.com header.i=@google.com header.b="cCXmpKdn"
-Received: by mail-pl1-f201.google.com with SMTP id d9443c01a7336-2bd04e4fe3dso117357425ad.3
-        for <sashiko-reviews@lists.linux.dev>; Wed, 10 Jun 2026 11:25:40 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=google.com; s=20251104; t=1781115940; x=1781720740; darn=lists.linux.dev;
-        h=cc:to:from:subject:message-id:references:mime-version:in-reply-to
-         :date:from:to:cc:subject:date:message-id:reply-to;
-        bh=kB5UUPePlwgpE8nklgBfMtK83uf+7umzGBRIUNT+CTg=;
-        b=cCXmpKdnbj2TlkPu0sHu519njX37QDawZbxnpKZth+0BpWqwYem6fOlMT4PUFuAT4q
-         nF4tflSk9BzLcvPuVFlP/pI5GJi7OCEAarFc8nGIWdJURyfRNJVN1H4g3rBOVzEvWLhU
-         pUg4BK4zOxqC3e691ksyJsvMa5DEBhuE3zzUj0o2DrPcFbLS9mQbVxeZLLVr1+NDs6Pv
-         +Fbr+R7LTsZvJhOYRYVxK/QeBknba6np5heMhUjWjIzkew1Rtc3A8xW9o+voMzb7tEwD
-         5/3gW5aRhrveaZn1QzV6wRmCJkMswHkFtyLDAsJ+HjM5W+oLexVLnbPCEYgjxGOdT+nI
-         g8MQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20251104; t=1781115940; x=1781720740;
-        h=cc:to:from:subject:message-id:references:mime-version:in-reply-to
-         :date:x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=kB5UUPePlwgpE8nklgBfMtK83uf+7umzGBRIUNT+CTg=;
-        b=Nox5EfN9ANdCeQ1fyAg3MtY0cyTxsK0Z4W9uXcOdkneumUBwfT2cLYtt/GwoRznjeg
-         fJpz7omywDT32kZQRgV0ven1Qxj3xj6KBVj4fpFYtcfXpUcUyRsS0l8JYLCEpIyWOKrX
-         qhjVP4Maa7qUExyjToWGtxC2la6r4G7ig9Qg+PnBfcjpPsbIIsM7BEbuwxELSnmpOZUh
-         7XBUuxtBJRLrD5irrPStDA8Hk46HZAT83m06/W6FmVpkTzw3M5clTYqi6TNPT0aOUW6E
-         d1/NFf7QtIpmuZHTL+tw77esE7SnMKZ6VV89F7nZhXEqmD4JVlOQzDJFgQbwbVErhm2b
-         CaiA==
-X-Gm-Message-State: AOJu0YweMKwpRuX5OnK9SjzEZFchbxq4fxFD47UJod7rY+AydH6jFa2v
-	iqY4maCScjV5W9gq6ngGXu1MXlnHn3mhI49YhWotn7qNVPYWz1JeGzZ/aWNk0WS+4drLHxYca4L
-	8bpcnKxDebUaVK0ry8nzKiwDzxI+ErhZPHJOMgh8LDNuOieLiMQHvK3oav6ht/A4S+opX4Ob7lY
-	HTE6BM9J1pqIGgAv58eJPEhPa+MRZijJOYjVJ2AaOhlqMts0HY
-X-Received: from plbmp5.prod.google.com ([2002:a17:902:fd05:b0:2bd:c925:e1dc])
- (user=seanjc job=prod-delivery.src-stubby-dispatcher) by 2002:a17:903:1247:b0:2c0:b35d:ed54
- with SMTP id d9443c01a7336-2c1e85e04c7mr306277645ad.35.1781115940004; Wed, 10
- Jun 2026 11:25:40 -0700 (PDT)
-Date: Wed, 10 Jun 2026 11:25:39 -0700
-In-Reply-To: <20260610162623.061BA1F00898@smtp.kernel.org>
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="Syco/DdV"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1BF3D1F00893;
+	Wed, 10 Jun 2026 18:28:04 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=kernel.org;
+	s=k20260515; t=1781116085;
+	bh=6mwDDkamQC7TNW5CKmpG9XSWcIcf1yy0lxFIvVkvUSs=;
+	h=Date:From:To:Cc:Subject:References:In-Reply-To;
+	b=Syco/DdVmroDrrciiA1rsgGSbgYKBFeSrMSB3NncIivNYhIjuZu7NbkioAYH939IS
+	 LgZQ/AcxD4e6Lq4ngAtTcJxSkVwCyDDa/JW3meAlQ89tE+esjEravxylxD73gpRWCc
+	 lvEtc9bXP1j04bglffg9eRAay9//aFQ/PIsXOHNwtnX7g3aFUmYYRHH+bq613Al6oB
+	 LSi++wwcyHeJJG/QBU+XSew++LiKR4abZDURc8wNaVLEYWWePcIDQFoQuMPsQACu/i
+	 mJuQ5iwEQzD0OLvJyxb1WUt1Nw7IatLJOWLWgjrkiDChQgXKvujfilbMWSo6dPV9i8
+	 4fWc7LqCNuGBA==
+Date: Wed, 10 Jun 2026 15:28:00 -0300
+From: Arnaldo Carvalho de Melo <acme@kernel.org>
+To: sashiko-reviews@lists.linux.dev
+Cc: linux-perf-users@vger.kernel.org
+Subject: Re: [PATCH 05/11] perf sched: Bounds-check prio before test_bit() in
+ timehist
+Message-ID: <aimssBwELS-gZjlc@x1>
+References: <20260610165207.2077258-6-acme@kernel.org>
+ <20260610170401.1B5091F00893@smtp.kernel.org>
 Precedence: bulk
 X-Mailing-List: sashiko-reviews@lists.linux.dev
 List-Id: <sashiko-reviews.lists.linux.dev>
 List-Subscribe: <mailto:sashiko-reviews+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:sashiko-reviews+unsubscribe@lists.linux.dev>
-Mime-Version: 1.0
-References: <aimMWzAf5b3luM0b@v4bel> <20260610162623.061BA1F00898@smtp.kernel.org>
-Message-ID: <aimsI-8mcO9oCq_q@google.com>
-Subject: Re: [PATCH] KVM: SEV: Don't return a still-assigned gmem page to the host
-From: Sean Christopherson <seanjc@google.com>
-To: sashiko-reviews@lists.linux.dev
-Cc: Hyunwoo Kim <imv4bel@gmail.com>, kvm@vger.kernel.org
-Content-Type: text/plain; charset="us-ascii"
+MIME-Version: 1.0
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+Content-Transfer-Encoding: 8bit
+In-Reply-To: <20260610170401.1B5091F00893@smtp.kernel.org>
 
-On Wed, Jun 10, 2026, sashiko-bot@kernel.org wrote:
-> > diff --git a/arch/x86/kvm/svm/sev.c b/arch/x86/kvm/svm/sev.c
-> > index f59c65abe3cfa..dbde6dce79b76 100644
-> > --- a/arch/x86/kvm/svm/sev.c
-> > +++ b/arch/x86/kvm/svm/sev.c
-> [ ... ]
-> > @@ -5036,8 +5036,12 @@ void sev_gmem_invalidate(kvm_pfn_t start, kvm_pfn_t end)
+On Wed, Jun 10, 2026 at 05:04:00PM +0000, sashiko-bot@kernel.org wrote:
+> Thank you for your contribution! Sashiko AI review found 1 potential issue(s) to consider:
+> - [Low] The patch introduces a logic error that causes invalid negative priorities (<-1) to bypass the `--prio` filter.
+> --
+> 
+> commit 3165982942697d89513b8b104d95d745a4412391
+> Author: Arnaldo Carvalho de Melo <acme@redhat.com>
+> 
+> perf sched: Bounds-check prio before test_bit() in timehist
+> 
+> This commit adds a bounds check to timehist_skip_sample() to ensure that
+> priority values from untrusted tracepoint data do not exceed MAX_PRIO before
+> calling test_bit(). It also updates the sentinel check from != -1 to >= 0.
+> 
+> > diff --git a/tools/perf/builtin-sched.c b/tools/perf/builtin-sched.c
+> > index 1ff01f03d2ad1..ded511d851880 100644
+> > --- a/tools/perf/builtin-sched.c
+> > +++ b/tools/perf/builtin-sched.c
+> > @@ -2645,7 +2645,9 @@ static bool timehist_skip_sample(struct perf_sched *sched,
+> >  		else if (evsel__name_is(sample->evsel, "sched:sched_switch"))
+> >  			prio = perf_sample__intval(sample, "prev_prio");
 > >  
-> >  		rc = rmp_make_shared(pfn, use_2m_update ? PG_LEVEL_2M : PG_LEVEL_4K);
-> >  		if (WARN_ONCE(rc, "SEV: Failed to update RMP entry for PFN 0x%llx error %d\n",
-> > -			      pfn, rc))
-> > +			      pfn, rc)) {
-> > +			/* Still assigned to the guest; pin and leak rather than freeing. */
-> > +			folio_get(page_folio(pfn_to_page(pfn)));
-> > +			snp_leak_pages(pfn, use_2m_update ? PTRS_PER_PMD : 1);
-> 
-> [Severity: Critical]
-> Does calling snp_leak_pages() on a pinned guest_memfd folio corrupt the
-> system-wide LRU list?
-> 
-> Memory allocated by guest_memfd is added to the page cache, which
-> unconditionally places the memory on the global unevictable LRU list. When
-> guest_memfd memory is freed, the folio has been removed from the page cache
-> but is still actively linked in the global LRU list until its reference
-> count drops to zero.
-> 
-> By calling folio_get() here, the reference count is elevated, keeping the
-> folio on the LRU list. Then, snp_leak_pages() unconditionally links the
-> page into a tracking list via list_add_tail(&page->buddy_list, ...).
-> 
-> Because buddy_list and lru share the exact same union inside struct page
-> and struct folio, modifying buddy_list silently overwrites the lru.next and
-> lru.prev pointers of the folio, severing the global LRU linked list.
+> > -		if (prio != -1 && !test_bit(prio, sched->prio_bitmap)) {
+> > +		/* prio comes from untrusted tracepoint data — bounds-check before test_bit */
 
-Yeah, trying to prevent a folio/page from being freed from within ->free_folio()
-seems like a fool's errand.
+Updated the comment to:
+
+-               /* prio comes from untrusted tracepoint data — bounds-check before test_bit */
++               /* negative prio means no info; out-of-range prio can't match the filter */
+
+To address the comment below.
+
+- Arnaldo
+
+> > +		if (prio >= 0 &&
+> > +		    (prio >= MAX_PRIO || !test_bit(prio, sched->prio_bitmap))) {
+> 
+> [Severity: Low]
+> Does this logic inadvertently allow invalid negative priorities (less than -1)
+> to bypass the --prio filter?
+> 
+> By explicitly replacing the prio != -1 sentinel check with prio >= 0, the new
+> logic evaluates to false for any priority less than -1. This causes the block
+> to be bypassed, meaning rc remains false and the invalid negative priority is
+> not skipped by the filter.
+> 
+> Should the check be restructured to ensure that invalid negative priorities
+> from crafted or corrupted perf.data files are also properly skipped?
+> 
+> >  			rc = true;
+> >  			sched->skipped_samples++;
+> >  		}
+> 
+> -- 
+> Sashiko AI review · https://sashiko.dev/#/patchset/20260610165207.2077258-1-acme@kernel.org?part=5
