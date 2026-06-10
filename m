@@ -1,133 +1,139 @@
-Received: from mgamail.intel.com (mgamail.intel.com [192.198.163.18])
+Received: from smtpout-02.galae.net (smtpout-02.galae.net [185.246.84.56])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8F29A358363
-	for <sashiko-reviews@lists.linux.dev>; Wed, 10 Jun 2026 14:45:51 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=192.198.163.18
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 18E894183DE
+	for <sashiko-reviews@lists.linux.dev>; Wed, 10 Jun 2026 15:40:12 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=185.246.84.56
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1781102752; cv=none; b=ptLUA+NOe5OcpLZBlP0hKH2tNWka1xyBOrBkr/16h7UYtAshYPxtaVnxYfoKHD4NmnULiYCgKMVd/P0ZmSboGbhrurrAZH0vXFf10yXDgjRc4nAnQ3YsSSsKuLBxX0nrJqjk2bMvBBbtgY46EFtqIbmaCfSIAVwa+kNXUWM1s5g=
+	t=1781106015; cv=none; b=f7UbUkpKFMorWgIN5Ax2dhB+mkLRTfRE1GVdo9mFUWhzljKsPz6pxySDCQ4T9jZLDbc2Lf5FAd1Y1wYNuW/djcEUKJtj5euq38WfQnWw3YDkfn8agiMLTyHm6ae3y8APxJDnwbGELgOZW8IYCizvq/CJLAZnUpn7jJ/Le70UqsY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1781102752; c=relaxed/simple;
-	bh=tkOzyDdrsQBrIpjjWDbFuiQH0jDBEtUyXu5Q0Kdtqbg=;
-	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
-	 MIME-Version:Content-Type; b=s32OcGYXBCt7M/4XFvZFkkGS9UST13Htv0CVdY/iganBFYtxblGvZ/DRFKJ1YuKS+T83vvh5EgBKqLCvaZcOmYkz0sWMOSBQ4ALnjCQgxSTzTTKMl9r8OV5y8GtSjtIfLn6EPgtq0eRFDAPnTbvYLckXaWeLjc/Guov9Di+PN2s=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=intel.com; spf=pass smtp.mailfrom=intel.com; dkim=pass (2048-bit key) header.d=intel.com header.i=@intel.com header.b=krCm0IZj; arc=none smtp.client-ip=192.198.163.18
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=intel.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=intel.com
+	s=arc-20240116; t=1781106015; c=relaxed/simple;
+	bh=SZo+09VJxPe0aRxDHQZ37YCIqZpsDi3j6Pm9Twc42yE=;
+	h=Mime-Version:Content-Type:Date:Message-Id:Subject:Cc:From:To:
+	 References:In-Reply-To; b=fgRKsJ5Kx3Gx2S9zXO+hVUr0trUvIuJOZT4bjdfTfQELfJYTpsXeqpCiWuRcFbuzcsgLXMZMKaZBujJXz0/yJpzbQ2JtVbztpH4ku2isVCBVmR0nXaeJpl2fK5/YMNU+DBotgfwxFjzmQppsD6I/Kbx8eH/M/rpLycea6TT0TOs=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=bootlin.com; spf=pass smtp.mailfrom=bootlin.com; dkim=pass (2048-bit key) header.d=bootlin.com header.i=@bootlin.com header.b=JkPoYF/G; arc=none smtp.client-ip=185.246.84.56
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=bootlin.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=bootlin.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=intel.com header.i=@intel.com header.b="krCm0IZj"
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
-  d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
-  t=1781102751; x=1812638751;
-  h=from:to:cc:subject:in-reply-to:references:date:
-   message-id:mime-version;
-  bh=tkOzyDdrsQBrIpjjWDbFuiQH0jDBEtUyXu5Q0Kdtqbg=;
-  b=krCm0IZjlAxUIXtAYc/MNz8jY57+dHscX1jQcozHzacZljGTNQYyXUDz
-   +w/gJAVKP81X6YZz2ogr2gJFYZG6Hi53S6VYqQ4Q+eYBlolMrIT7gn+mP
-   yTSFywFf9Oj4u2mM1+wZ/VkrU4/b9qd1051Zp0tIktUb0oSVRPfVZH23W
-   /BVx9D2rk74vN0SIRKo0MRlOou95/EZVB5VnRDmok2wveL09BO+NKsuNf
-   gLlIw7vqPDubDhJOAto8bM7zh45CQHemMMP3f8OnM7jNtVGBjeFzRDavH
-   nMKUb/K3uoE2TL5i7PinsghwuGaBnDfwGCptkP34/96b0zJgjZYU+Hafc
-   g==;
-X-CSE-ConnectionGUID: dPK+JQX9TyOVJ75mQ20a6w==
-X-CSE-MsgGUID: HQRtBK6KTvaQxN53ni/p8w==
-X-IronPort-AV: E=McAfee;i="6800,10657,11813"; a="81027986"
-X-IronPort-AV: E=Sophos;i="6.24,197,1774335600"; 
-   d="scan'208";a="81027986"
-Received: from fmviesa008.fm.intel.com ([10.60.135.148])
-  by fmvoesa112.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 10 Jun 2026 07:45:51 -0700
-X-CSE-ConnectionGUID: siS0FlX3QkKQt5vi8NPjZQ==
-X-CSE-MsgGUID: GRIgeYagT9GKyI3duiWHpQ==
-X-ExtLoop1: 1
-X-IronPort-AV: E=Sophos;i="6.24,197,1774335600"; 
-   d="scan'208";a="243727800"
-Received: from fpallare-mobl4.ger.corp.intel.com (HELO localhost) ([10.245.244.3])
-  by fmviesa008-auth.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 10 Jun 2026 07:45:50 -0700
-From: Jani Nikula <jani.nikula@intel.com>
-To: sashiko-reviews@lists.linux.dev
-Cc: dri-devel@lists.freedesktop.org
-Subject: Re: [PATCH] drm/displayid: fix Tiled Display Topology ID size
-In-Reply-To: <20260610143258.324C21F00893@smtp.kernel.org>
-Organization: Intel Finland Oy - BIC 0357606-4 - c/o Alberga Business Park,
- 6 krs Bertel Jungin Aukio 5, 02600 Espoo, Finland
-References: <20260610141549.555605-1-jani.nikula@intel.com>
- <20260610143258.324C21F00893@smtp.kernel.org>
-Date: Wed, 10 Jun 2026 17:45:47 +0300
-Message-ID: <7f2d51d75ff70c1d2f46658d162c54d0bbe46da7@intel.com>
+	dkim=pass (2048-bit key) header.d=bootlin.com header.i=@bootlin.com header.b="JkPoYF/G"
+Received: from smtpout-01.galae.net (smtpout-01.galae.net [212.83.139.233])
+	by smtpout-02.galae.net (Postfix) with ESMTPS id 6AD331A383D;
+	Wed, 10 Jun 2026 15:40:11 +0000 (UTC)
+Received: from mail.galae.net (mail.galae.net [212.83.136.155])
+	by smtpout-01.galae.net (Postfix) with ESMTPS id 3F0155FFC9;
+	Wed, 10 Jun 2026 15:40:11 +0000 (UTC)
+Received: from [127.0.0.1] (localhost [127.0.0.1]) by localhost (Mailerdaemon) with ESMTPSA id 58747106B97E1;
+	Wed, 10 Jun 2026 17:40:10 +0200 (CEST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=bootlin.com; s=dkim;
+	t=1781106010; h=from:subject:date:message-id:to:cc:mime-version:content-type:
+	 content-transfer-encoding:in-reply-to:references;
+	bh=5duFWAYGS7rkhiNuj3l/wN6KVWVUG4NZ+MvKqmTsnpw=;
+	b=JkPoYF/GLe+scz7jLExUUOGBmNQDG+GFoMQDpYarEdJu/5vDgmW9wsraL4eYZ+o9NvQvM3
+	kvJYPSbbCwUJDspxGKdL6VQXZubtPGaBjBuywpEJrWc7RgDDyXuPXKMVOQUigOuWzpLLbf
+	8jJLbM60gll9em2/jTlrHhyO6SKYpRNEXUO0MxsxyFiC2cpLMP4Rx3JgnA0l0IN8TMc1pB
+	PWcCHWcpZjIKtdJcP+lbIwTj66J6SeLgXMKKG/GA0bYNTMHNAmTDrX7v5Dcr3UI2SI+Z94
+	0mrpBlTFut7Jkz28M1KguonIsgrk8+ovGccPEq0HtKHJXMtexT9JO6Gi+EusRg==
 Precedence: bulk
 X-Mailing-List: sashiko-reviews@lists.linux.dev
 List-Id: <sashiko-reviews.lists.linux.dev>
 List-Subscribe: <mailto:sashiko-reviews+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:sashiko-reviews+unsubscribe@lists.linux.dev>
-MIME-Version: 1.0
-Content-Type: text/plain
+Mime-Version: 1.0
+Content-Transfer-Encoding: quoted-printable
+Content-Type: text/plain; charset=UTF-8
+Date: Wed, 10 Jun 2026 17:40:09 +0200
+Message-Id: <DJ5HDX2K5CTF.YRZ9TDI6QCII@bootlin.com>
+Subject: Re: [PATCH bpf-next v2 3/8] bpf, x86: add helper to emit kasan
+ checks in x86 JITed programs
+Cc: <bpf@vger.kernel.org>
+From: =?utf-8?q?Alexis_Lothor=C3=A9?= <alexis.lothore@bootlin.com>
+To: <sashiko-reviews@lists.linux.dev>
+X-Mailer: aerc 0.21.0-0-g5549850facc2
+References: <20260604-kasan-v2-3-c066e627fda8@bootlin.com>
+ <20260604205035.CF9C91F00893@smtp.kernel.org>
+In-Reply-To: <20260604205035.CF9C91F00893@smtp.kernel.org>
+X-Last-TLS-Session-Version: TLSv1.3
 
-On Wed, 10 Jun 2026, sashiko-bot@kernel.org wrote:
-> Thank you for your contribution! Sashiko AI review found 1 potential issue(s) to consider:
->
-> Pre-existing issues:
-> - [High] Missing payload size validation in `drm_parse_tiled_block` allows an out-of-bounds read of the EDID buffer when parsing malformed DisplayID tiled display blocks.
+On Thu Jun 4, 2026 at 10:50 PM CEST, sashiko-bot wrote:
+> Thank you for your contribution! Sashiko AI review found 1 potential issu=
+e(s) to consider:
+> - [Critical] `emit_kasan_check` fails to save and restore the x86-64 call=
+er-saved registers `%r10` and `%r11`, which are actively used by the BPF JI=
+T as `BPF_REG_AX` and `AUX_REG`.
 > --
 >
-> commit 3a0b5d7c7c564335f99c7d692448de9241f67bbd
-> Author: Jani Nikula <jani.nikula@intel.com>
+> commit 77bd053eee8b8130b5fe38c11b29a99d8c12317a
+> Author: Alexis Lothor=C3=A9 (eBPF Foundation) <alexis.lothore@bootlin.com=
 >
-> drm/displayid: fix Tiled Display Topology ID size
 >
-> This commit updates the Tiled Display Topology ID size from 8 to 9 bytes
-> in the DRM subsystem structures.
+> bpf, x86: add helper to emit kasan checks in x86 JITed programs
 >
->> diff --git a/drivers/gpu/drm/drm_connector.c b/drivers/gpu/drm/drm_connector.c
->> index 3fa4d2082cd72..11646453aaac9 100644
->> --- a/drivers/gpu/drm/drm_connector.c
->> +++ b/drivers/gpu/drm/drm_connector.c
+> This commit adds the emit_kasan_check() function to insert KASAN shadow
+> memory checks before memory accesses in JIT-compiled BPF programs. It wor=
+ks
+> by saving caller-saved registers, computing the accessed address, invokin=
+g
+> the relevant KASAN function, and then restoring the registers.
+>
+>> diff --git a/arch/x86/net/bpf_jit_comp.c b/arch/x86/net/bpf_jit_comp.c
+>> index a0c541a441cfa..0981791014eb3 100644
+>> --- a/arch/x86/net/bpf_jit_comp.c
+>> +++ b/arch/x86/net/bpf_jit_comp.c
 > [ ... ]
->> @@ -3579,14 +3579,14 @@ EXPORT_SYMBOL(drm_mode_put_tile_group);
->>   * tile group or NULL if not found.
->>   */
->>  struct drm_tile_group *drm_mode_get_tile_group(struct drm_device *dev,
->> -					       const char topology[8])
->> +					       const char topology_id[9])
->>  {
->>  	struct drm_tile_group *tg;
->>  	int id;
->>  
->>  	mutex_lock(&dev->mode_config.idr_mutex);
->>  	idr_for_each_entry(&dev->mode_config.tile_idr, tg, id) {
->> -		if (!memcmp(tg->group_data, topology, 8)) {
->> +		if (!memcmp(tg->group_data, topology_id, sizeof(tg->group_data))) {
+>> @@ -1330,6 +1343,86 @@ static void emit_store_stack_imm64(u8 **pprog, in=
+t reg, int stack_off, u64 imm64
+>>  	emit_stx(pprog, BPF_DW, BPF_REG_FP, reg, stack_off);
+>>  }
+>> =20
+>> +static int emit_kasan_check(u8 **pprog, u32 addr_reg, struct bpf_insn *=
+insn,
+>> +			    u8 *ip, bool is_write, bool accesses_stack_only)
+>> +{
+> [ ... ]
+>> +	/* Save r8 */
+>> +	EMIT2(0x41, 0x50);
+>> +	/* Save r9 */
+>> +	EMIT2(0x41, 0x51);
+>> +
 >
-> [Severity: High]
-> This isn't a bug introduced by this patch, but could this lead to an
-> out-of-bounds read of the EDID buffer when parsing malformed DisplayID tiled
-> display blocks?
+> [Severity: Critical]
+> Does this code fail to save and restore %r10 and %r11?
 >
-> Looking at drm_parse_tiled_block() in drivers/gpu/drm/drm_edid.c, the generic
-> block is cast to a displayid_tiled_block without validating that the payload
-> size (block->num_bytes) is large enough:
->
-> drivers/gpu/drm/drm_edid.c:drm_parse_tiled_block() {
->     ...
->     const struct displayid_tiled_block *tile =
->         (struct displayid_tiled_block *)block;
->     ...
->     tg = drm_mode_get_tile_group(connector->dev, tile->topology_id);
-> }
->
-> If a malformed EDID provides a tiled block with a short length near the end
-> of the allocated EDID buffer, comparing 9 bytes here (or copying them down in
-> drm_mode_create_tile_group()) might read past the bounds of the EDID buffer.
+> These registers are caller-saved in the x86-64 System V ABI, and the call=
+ed
+> C KASAN functions (like __asan_store8) are permitted to clobber them. In
+> the BPF JIT, %r10 maps to BPF_REG_AX and %r11 maps to AUX_REG, which are
+> actively used as temporary registers right before memory operations. If t=
+hey
+> are clobbered by the KASAN check, it could lead to corrupted operands or
+> invalid memory accesses.
 
-Yeah, maybe you should start reading the mailing list [1]. This patch is
-in response to the fix for that very issue.
+This point has been discussed a bit in the RFC: Alexei suggested to
+get rid of it. In theory, r10 and r11 _should_ indeed be saved, as JIT
+comp can indeed use BPF_REG_RAX and AUX_REG (eg: simple BPF_ATOMIC insn
+with BPF_FETCH). But here, the list of called functions is pretty
+limited (__asan_{load,store}{1,2,4,8}), and so we can try to optimize a
+bit by skipping those. Those kernel asan functions, when checking on my
+vmlinux file, do not touch r10 or r11:
 
-BR,
-Jani.
+  for i in 1 2 3 4
+  do
+          for j in load store
+          do
+                  objdump --disassemble=3D__asan_${j}${i} vmlinux|grep -e r=
+10 -e r11
+          done
+  done
 
+but here, it is just proving that those registers are not clobbered _in
+the nominal asan path_ (ie not fault) and _in my kernel, with my
+toolchain_. I think dropping those registers is worth, considering the
+gain (two less push and two less pop per x86 load or store insn).
 
-[1] https://lore.kernel.org/r/4e784cad86c91595b6d5da64ca854dab38357658@intel.com
+Alexis
 
+--=20
+Alexis Lothor=C3=A9, Bootlin
+Embedded Linux and Kernel engineering
+https://bootlin.com
 
-
--- 
-Jani Nikula, Intel
