@@ -1,118 +1,119 @@
-Received: from mail-pf1-f201.google.com (mail-pf1-f201.google.com [209.85.210.201])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 55709261B71
-	for <sashiko-reviews@lists.linux.dev>; Wed, 10 Jun 2026 18:06:06 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.210.201
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3A4E031AF07;
+	Wed, 10 Jun 2026 18:12:15 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1781114768; cv=none; b=riQUYdgxfB/Gg/+mD9oe+kMQtWteOuwRybZWw8qTy5ov3fX8tKQsyseg85A6B0JFR76QoJiopmSapf/bA5KQFXzLAIc1ncspryXIwt1cKfIpdkOfO0imtGnf2+wl/OLtPqU8bHrvqzxMryN7bcGNNd/Ip37E2Niv2J3Lw9dNugI=
+	t=1781115136; cv=none; b=bIv6L35koaBj03S2A4B1DAaMNvNDjfHcZ1m9EsItD7t30wca3A1pyKFC1cShApiyRJRnYGuyEg2tgsPU4zRRETBWvfpHgSrIY6yH10KeSXoImfGajKPGnI5MYcz2vjZVZ8+19KIpcRm1AzSiWYDBM89D6qYL+EAPu8Gwzdsra04=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1781114768; c=relaxed/simple;
-	bh=k6GjeYxgByZDSIuzADvt///QHoQS2Zd6HyjRvMqVz9k=;
-	h=Date:In-Reply-To:Mime-Version:References:Message-ID:Subject:From:
-	 To:Cc:Content-Type; b=Nd+x0+SEVUMNl6qLbjW/Bl/qmIC57X7fi/hoPArvPq15gV2/vfo06Az+veDpdK92QIUci5wQmqe9H2S8WrO+u5JT1Biaqvkex6KmJVPcwQ/pKW2qZ7xedcpnpJi+dOB8VgJeuBf3iy1LXVcPFaq+zUlNh4CJAx9PnaT9pcXFRMA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=google.com; spf=pass smtp.mailfrom=flex--seanjc.bounces.google.com; dkim=pass (2048-bit key) header.d=google.com header.i=@google.com header.b=MCiSlvEM; arc=none smtp.client-ip=209.85.210.201
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=google.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=flex--seanjc.bounces.google.com
+	s=arc-20240116; t=1781115136; c=relaxed/simple;
+	bh=lQDdqxaaOQg3Un6brDdu15WtZczLHshM7hDywgUBRMY=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=J1VdykK2T5e8Z90JiZC5yuNwn6PJ8yOG6UFv3GZcR/JmfBu8zYuw0zgtbqQUcTF3DbFEhkz2W4GGSlvR2NRlFpdJDqBbERaSHMxlcLo9YH5AlIWgcc+bU/jU9/1nb9dvYmZ4AyjSDEyc1l7ZKwt2AqLKjtl9H6Bv3+f0LVBQEME=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=Qlgfw5W9; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=google.com header.i=@google.com header.b="MCiSlvEM"
-Received: by mail-pf1-f201.google.com with SMTP id d2e1a72fcca58-84238e83851so4434475b3a.1
-        for <sashiko-reviews@lists.linux.dev>; Wed, 10 Jun 2026 11:06:06 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=google.com; s=20251104; t=1781114766; x=1781719566; darn=lists.linux.dev;
-        h=cc:to:from:subject:message-id:references:mime-version:in-reply-to
-         :date:from:to:cc:subject:date:message-id:reply-to;
-        bh=xkFkBgd+xuByNIegpgrKJZN9LP1SaVEtSyMl1cJUNS0=;
-        b=MCiSlvEMNWKzI9MxU/QsPKnyqhP6oBOL6amkiQz3diNCiyE3uVOMvcXglLXCT3dkrB
-         BAQ1XkFht57xzyqw3prtt1ErmVhlQ97tEi8rjpXTR2S7td7aYyphuNS7+ihPseXjJDzv
-         sbMPsXZk+yVG6QMIxWKfCHoY+pHyy4ZwZkVtm+TvTgk/+WH8Nie0mJofk064oDDgCLwe
-         uC4nTQorx5PYFN3iRctxo6gHnpqxR68H3tl6dQEdZgUvg2FnksoBv315cInocKAJUq51
-         4BcjZUCGbSlS+mtwsCDbf5xKHH2O048vJwJ7ueofr1afE26Qj1ac7XNOyjfxQEYyUnbc
-         naZA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20251104; t=1781114766; x=1781719566;
-        h=cc:to:from:subject:message-id:references:mime-version:in-reply-to
-         :date:x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=xkFkBgd+xuByNIegpgrKJZN9LP1SaVEtSyMl1cJUNS0=;
-        b=DqnUUdC4DdyUF0Y6hl736Os8YJbf9bPQFvZIP/diNCevYtUjOSxlA88uvKiAOeXMtm
-         fCUoS27DJ/sVL9dg7Eap+O2vzrwaNY83Opy9WHXKTcO2xr5GU4SmkkAPAFlaVyddBCsa
-         LtmHXu4aHB5tNppQbhhztuN2gZR8fHoWXxlOCmJyQj1D+NtMMv41+KQnf8ZV9N1yPtfD
-         DD/3LSGSA9EP6ZoJvHqUs0QT/85mux8+f/la8tGYMD3Z7BXN5yE1C5DCkeVFEJpMEAa1
-         mb/vtPumAYt3wEIZA0dmtsc+JZjLpwbYxHLIATEEqSdSq3HYAkfjOTvlIE3ETppIR1rk
-         9c6A==
-X-Gm-Message-State: AOJu0Yzlo4CH7Qxpx/MJt0aLEXRXFRF06686nDG2VALaq0foXQ3GmCIV
-	OwRFjLeRHHHJ7RfxfuuTnZF2LB7GxDkbd+FM8vNzc9QvjePdFT5Anh9IkD4mC7mh7hfw6ujyXh5
-	0nPljxKf6jlzuQDperuqMiBywTbiFibR2yrKTFzcz7vFuZjNJYihDQ311m1dmatJ1/FHWIOxdtm
-	k8PZ0vOhgrb9hpM8xM1xXyvcz8N2p4FqsLKoRaejQ4snKZKh/0
-X-Received: from pfob8.prod.google.com ([2002:aa7:8708:0:b0:842:47f8:d51d])
- (user=seanjc job=prod-delivery.src-stubby-dispatcher) by 2002:a05:6a00:2303:b0:842:3be7:4d55
- with SMTP id d2e1a72fcca58-842b0e588c9mr27119419b3a.11.1781114765452; Wed, 10
- Jun 2026 11:06:05 -0700 (PDT)
-Date: Wed, 10 Jun 2026 11:06:04 -0700
-In-Reply-To: <20260610010517.1333F1F00893@smtp.kernel.org>
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="Qlgfw5W9"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8110F1F00893;
+	Wed, 10 Jun 2026 18:12:14 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=kernel.org;
+	s=k20260515; t=1781115135;
+	bh=sRVVUio2ofSz9c4VQ7KleR5VpQtUJIpCMjMpTWAjjcc=;
+	h=Date:From:To:Cc:Subject:References:In-Reply-To;
+	b=Qlgfw5W99zxpa0fa8dm5AsIU2sczonb0XyznE1WgTPusWqVlb1sTfUywWZvMQhbn2
+	 ksWhCLL6IqroOOuweHtV+YvHcVSnRUCD75xXM4rss+apynZZOTktCd75wXmK+NdoEL
+	 klaM6v52opquVFu8z+gklQumorREPKJajitYG/dmJRtB52OWT7vc0hYW/w5/HqSC4x
+	 zXu+8GaRjYaU45FYerzKELxVnREYXd5Eepo19t/Q0AyH2ia9P+Mkqbb/UOXqwZeYLD
+	 xLNxGfSBLH3iiVQpRpML0KtzfP9hoEUTJ07N32hAvbtV9JQz7uwrPsbQSPbvhrZ4po
+	 YA9S0I9bxNIQA==
+Date: Wed, 10 Jun 2026 15:12:11 -0300
+From: Arnaldo Carvalho de Melo <acme@kernel.org>
+To: sashiko-reviews@lists.linux.dev
+Cc: linux-perf-users@vger.kernel.org
+Subject: Re: [PATCH 10/11] perf tools: Use scnprintf() in
+ build_id__snprintf() and hwmon read_events()
+Message-ID: <aimo-19X5W24ttaf@x1>
+References: <20260610165207.2077258-11-acme@kernel.org>
+ <20260610171727.6AD111F00893@smtp.kernel.org>
 Precedence: bulk
 X-Mailing-List: sashiko-reviews@lists.linux.dev
 List-Id: <sashiko-reviews.lists.linux.dev>
 List-Subscribe: <mailto:sashiko-reviews+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:sashiko-reviews+unsubscribe@lists.linux.dev>
-Mime-Version: 1.0
-References: <20260610005338.2967132-8-seanjc@google.com> <20260610010517.1333F1F00893@smtp.kernel.org>
-Message-ID: <aimnjHurnYPMI5ii@google.com>
-Subject: Re: [PATCH v6 07/18] KVM: selftests: Add VFIO device support to
- eventfd IRQ test
-From: Sean Christopherson <seanjc@google.com>
-To: sashiko-reviews@lists.linux.dev
-Cc: kvm@vger.kernel.org
-Content-Type: text/plain; charset="us-ascii"
+MIME-Version: 1.0
+Content-Type: text/plain; charset=iso-8859-1
+Content-Disposition: inline
+Content-Transfer-Encoding: 8bit
+In-Reply-To: <20260610171727.6AD111F00893@smtp.kernel.org>
 
-On Wed, Jun 10, 2026, sashiko-bot@kernel.org wrote:
-> > diff --git a/tools/testing/selftests/kvm/irq_test.c b/tools/testing/selftests/kvm/irq_test.c
-> > index 9f8895b898214..6888be54ee4a9 100644
-> > --- a/tools/testing/selftests/kvm/irq_test.c
-> > +++ b/tools/testing/selftests/kvm/irq_test.c
+On Wed, Jun 10, 2026 at 05:17:26PM +0000, sashiko-bot@kernel.org wrote:
+> Thank you for your contribution! Sashiko AI review found 1 potential issue(s) to consider:
 > 
-> [ ... ]
+> Pre-existing issues:
+> - [High] Off-by-one stack buffer overflow when reading sysfs files without reserving space for the null terminator.
+> --
 > 
-> > @@ -74,11 +107,29 @@ static void kvm_route_msi(struct kvm_vm *vm, u32 gsi, struct kvm_vcpu *vcpu,
-> >  	vm_ioctl(vm, KVM_SET_GSI_ROUTING, &routing.header);
-> >  }
+> commit e6063aeb686d4d547e9272a51fc950e7a84f13a8
+> Author: Arnaldo Carvalho de Melo <acme@redhat.com>
+> 
+> perf tools: Use scnprintf() in build_id__snprintf() and hwmon read_events()
+> 
+> build_id__snprintf() and hwmon_pmu__read_events() accumulate formatted
+> output via snprintf(), which returns the would-have-been-written count
+> on truncation.
+> 
+> > diff --git a/tools/perf/util/hwmon_pmu.c b/tools/perf/util/hwmon_pmu.c
+> > index fb3ffa8d32ad2..dbf6a71af47f9 100644
+> > --- a/tools/perf/util/hwmon_pmu.c
+> > +++ b/tools/perf/util/hwmon_pmu.c
+> > @@ -442,12 +442,12 @@ static size_t hwmon_pmu__describe_items(struct hwmon_pmu *hwm, char *out_buf, si
 > >  
-> > +static const char *probe_iommu_type(void)
-> > +{
-> > +	int io_fd;
-> > +
-> > +	io_fd = open("/dev/iommu", O_RDONLY);
-> > +	if (io_fd >= 0) {
-> > +		close(io_fd);
-> > +		return MODE_IOMMUFD;
-> > +	}
-> > +
-> > +	io_fd = __open_path_or_exit("/dev/vfio", O_RDONLY,
-> > +				    "Is VFIO (or IOMMUFD) loaded and enabled?");
-> > +	close(io_fd);
+> >  				buf[read_len] = '\0';
 > 
-> [Severity: Medium]
-> The commit message states that the test will auto-probe IOMMUFD vs legacy
-> VFIO and skip the test if neither is available. However, probe_iommu_type()
-> calls __open_path_or_exit() on /dev/vfio.
+> [Severity: High]
+> This isn't a bug introduced by this patch, but could this lead to an
+> off-by-one stack buffer overflow?
 > 
-> Because /dev/vfio is a directory, open() with O_RDONLY will succeed if the
-> directory exists (e.g., created by udev or left over after a module unload),
-> even if the VFIO module is not loaded and the character device is absent.
-> Opening a directory does not trigger the kernel's character device module
-> autoloading.
+> Looking at hwmon_pmu__describe_items() in tools/perf/util/hwmon_pmu.c, we
+> read up to sizeof(buf) bytes:
 > 
-> If this occurs, probe_iommu_type() incorrectly assumes VFIO is available and
-> returns MODE_VFIO_TYPE1_IOMMU. The test then calls iommu_init(), which attempts
-> to open /dev/vfio/vfio and will fatally abort, resulting in a test crash rather
-> than a clean skip.
+>     ssize_t read_len = read(fd, buf, sizeof(buf));
 > 
-> Additionally, using __open_path_or_exit() will cause the test to exit rather
-> than skip if the path does not exist.
+> If the sysfs file contains exactly the capacity of the buffer (64 bytes) and
+> does not end with a newline, read_len will be 64.
 > 
-> Should this probe instead check for the /dev/vfio/vfio character device and
-> use open() instead of __open_path_or_exit() to allow the test to gracefully
-> skip and trigger module autoloading?
+> When terminating the string here:
+> 
+>     buf[read_len] = '\0';
 
-No, "probe" here means guessing which flavor of VFIO vs. IOMMUFD, it doesn't
-mean probing a kernel module.
+This is fixed in the following series, acting on your comments.
+
+- Arnaldo
+ 
+> Does this write a null byte exactly one byte past the end of the buf array?
+> It appears similar patterns exist in hwmon_pmu__read_events() and
+> evsel__hwmon_pmu_read() as well, where reading the full buffer size
+> leads to an out-of-bounds null termination.
+> 
+> Should we reserve space for the null terminator by reading sizeof(buf) - 1
+> instead?
+> 
+> >  				val = strtoll(buf, /*endptr=*/NULL, 10);
+> > -				len += snprintf(out_buf + len, out_buf_len - len, "%s%s%s=%g%s",
+> > -						len == 0 ? " " : ", ",
+> > -						hwmon_item_strs[bit],
+> > -						is_alarm ? "_alarm" : "",
+> > -						(double)val / 1000.0,
+> > -						hwmon_units[key.type]);
+> > +				len += scnprintf(out_buf + len, out_buf_len - len, "%s%s%s=%g%s",
+> > +						 len == 0 ? " " : ", ",
+> > +						 hwmon_item_strs[bit],
+> > +						 is_alarm ? "_alarm" : "",
+> > +						 (double)val / 1000.0,
+> > +						 hwmon_units[key.type]);
+> >  			}
+> >  			close(fd);
+> >  		}
+> 
+> -- 
+> Sashiko AI review · https://sashiko.dev/#/patchset/20260610165207.2077258-1-acme@kernel.org?part=10
