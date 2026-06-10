@@ -1,142 +1,147 @@
-Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
+Received: from mx0b-001b2d01.pphosted.com (mx0b-001b2d01.pphosted.com [148.163.158.5])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BC56429BD87;
-	Wed, 10 Jun 2026 16:49:42 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B982133986F;
+	Wed, 10 Jun 2026 16:52:04 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=148.163.158.5
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1781110183; cv=none; b=UnsGhxGkhg9w7pm5qWXFknPATR9+sTPC1bDRgSE5+9smQaV1M5hK0HovotZ9rGItn5/rcGnmF/0EgZqEwMQTiomK+WI2Nd9m5y1ysFTDhNXS5PeZUGTVf/OBeTUKSO1KawJp/PuEpzHdtSj+IFpCLNoad82bnWz/LjpLqtGRWCQ=
+	t=1781110326; cv=none; b=AAMVu7ijk39wiw7m+JSf/iHL9R0Bo+G8EFc4jnOcCXGJZPKAjAF3MIvGcjGOUlATQy1Oq2rNcjgdX1s59SAT/a3NZd+uBYNEMykooq0OpoFgWZPBNYYXcsnWzLZUUwSNMZTkxxyJ9BI/ALpBmzlEVvCiuvkAJgODqXqbVEEiyXk=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1781110183; c=relaxed/simple;
-	bh=O83XDOgikWm/aHQxtAdPOrc3rrnDEv1cE/AhbTEUy9k=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=Na+y2IXq6O0LWlgMQyc/6y+H+jOU6fKcTi7eZLrtaGdoWrjn49zem98bc4kTK4LY5fgZFsj927nAgTWhW/CaX8AFykrpJ4J6+IxgNdOy9OdtSAgum/FyJuLdizsKqza7AUhv7GJOB11LTxVM2r/oHp63RHJt2uQYgZVCaPFwscQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=F2Lvnip7; arc=none smtp.client-ip=100.103.45.18
+	s=arc-20240116; t=1781110326; c=relaxed/simple;
+	bh=9g3LnZnhZXVLFc+bSSI8JunJ3AORIelItZfpL0q6hSo=;
+	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
+	 In-Reply-To:Content-Type; b=OU8j5IA5Ja2++k/bhGmKZEDl5kgj3X/QS2CH66Q7PMxt8fapDnfejM2UGdZ+vwFAX/MpdQTokWhs6cNmT0nwzWUZfYaD0lOjQyvt+RTiqXTPDsNoiN2S4HqeL4QizQz3KW/hEww0VxJJzlVzhejBXt143IT+LvFpapZ0LjUyB/s=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linux.ibm.com; spf=pass smtp.mailfrom=linux.ibm.com; dkim=pass (2048-bit key) header.d=ibm.com header.i=@ibm.com header.b=Q8rfECLb; arc=none smtp.client-ip=148.163.158.5
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linux.ibm.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linux.ibm.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="F2Lvnip7"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8CB221F00893;
-	Wed, 10 Jun 2026 16:49:41 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=kernel.org;
-	s=k20260515; t=1781110182;
-	bh=1K4C5cPKeYBdJTzXedsW1nCTfxrxNHI7dcozTp6DT1c=;
-	h=Date:From:To:Cc:Subject:References:In-Reply-To;
-	b=F2Lvnip7EbfPISM9okFIkEP3k/JuVV/mi5jQjJMdpqRP598a7cwItWjA3UcSVqn9B
-	 LnePM/QC/qThnGvBw23vPIqr5fsOCzoQEG9u2eziLsHEXfZDuRpef2JGVaL6XAsmy1
-	 6WYzTenlEuLDmqmS19lInwBMlJoaGeqqc0kXBLE8R7/BTpjhxqZYbnPEXItLvnHQ/5
-	 3fSS5ogoFanq8uFf0VsYZrRS+Fserz2CM+XycOr4/SPH9dtwgAwjZApmcYuYea2q64
-	 fFzOopGjVgoi3L4dSjK72UcHa4901HrDmSmU9DTrzwWx/30d5R57CfNfG6D/F7Ljm3
-	 h+t2XmzVUumPw==
-Date: Wed, 10 Jun 2026 13:49:37 -0300
-From: Arnaldo Carvalho de Melo <acme@kernel.org>
-To: sashiko-reviews@lists.linux.dev
-Cc: linux-perf-users@vger.kernel.org
-Subject: Re: [PATCH 07/11] perf tools: Add O_CLOEXEC to open() calls in DSO
- and ELF code
-Message-ID: <aimVobFTV8MZ0pFy@x1>
-References: <20260609010526.1998472-8-acme@kernel.org>
- <20260609011626.DE73D1F00893@smtp.kernel.org>
+	dkim=pass (2048-bit key) header.d=ibm.com header.i=@ibm.com header.b="Q8rfECLb"
+Received: from pps.filterd (m0353725.ppops.net [127.0.0.1])
+	by mx0a-001b2d01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id 65AF4UXV3420508;
+	Wed, 10 Jun 2026 16:51:57 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=ibm.com; h=cc
+	:content-transfer-encoding:content-type:date:from:in-reply-to
+	:message-id:mime-version:references:subject:to; s=pp1; bh=NPXuHq
+	vvYLt5zWP6sN8XsQdOsZoUKtQYj9UDQIL396I=; b=Q8rfECLb7ng4FO7a2Ct/U8
+	WGGo/WreNPwb0KA7CvdVii0JL+zxnJ6zsVnvKGBr+CqN22wK1YAT45IIGepvRIfd
+	ALYtNEobOMpH3guQ1FEFcKI0C5989xkZ/TqtTz6eU+AdcD2AI1EASm26KZJr4u18
+	ma86JmtkD3rSrwFtWK1P27E582qjmCsd0LR2aGxFWR2jtlThby4WeliIoCOwNX/t
+	J/ijTbHp09iOZyg9Hm+ZESnQGEXmIEop+3DB1xiQapj+GekIKcRwRo23BDw1Ch/f
+	EwQW8cGf//DUVirQqJ8YtgmInt4NTWf4fNb6q1SaPNDyhpEx8qbp74bqEtuASGuQ
+	==
+Received: from ppma21.wdc07v.mail.ibm.com (5b.69.3da9.ip4.static.sl-reverse.com [169.61.105.91])
+	by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 4em9ye9s0d-1
+	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+	Wed, 10 Jun 2026 16:51:56 +0000 (GMT)
+Received: from pps.filterd (ppma21.wdc07v.mail.ibm.com [127.0.0.1])
+	by ppma21.wdc07v.mail.ibm.com (8.18.1.7/8.18.1.7) with ESMTP id 65AGneIg013516;
+	Wed, 10 Jun 2026 16:51:56 GMT
+Received: from smtprelay05.wdc07v.mail.ibm.com ([172.16.1.72])
+	by ppma21.wdc07v.mail.ibm.com (PPS) with ESMTPS id 4emxvjygma-1
+	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+	Wed, 10 Jun 2026 16:51:56 +0000 (GMT)
+Received: from smtpav03.wdc07v.mail.ibm.com (smtpav03.wdc07v.mail.ibm.com [10.39.53.230])
+	by smtprelay05.wdc07v.mail.ibm.com (8.14.9/8.14.9/NCO v10.0) with ESMTP id 65AGptHL34341394
+	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
+	Wed, 10 Jun 2026 16:51:56 GMT
+Received: from smtpav03.wdc07v.mail.ibm.com (unknown [127.0.0.1])
+	by IMSVA (Postfix) with ESMTP id E3CDD58054;
+	Wed, 10 Jun 2026 16:51:55 +0000 (GMT)
+Received: from smtpav03.wdc07v.mail.ibm.com (unknown [127.0.0.1])
+	by IMSVA (Postfix) with ESMTP id 77CFE5805A;
+	Wed, 10 Jun 2026 16:51:55 +0000 (GMT)
+Received: from [9.61.251.150] (unknown [9.61.251.150])
+	by smtpav03.wdc07v.mail.ibm.com (Postfix) with ESMTP;
+	Wed, 10 Jun 2026 16:51:55 +0000 (GMT)
+Message-ID: <66cb5988-ce72-4acf-8e1c-0eb72b4fbd41@linux.ibm.com>
+Date: Wed, 10 Jun 2026 09:51:55 -0700
 Precedence: bulk
 X-Mailing-List: sashiko-reviews@lists.linux.dev
 List-Id: <sashiko-reviews.lists.linux.dev>
 List-Subscribe: <mailto:sashiko-reviews+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:sashiko-reviews+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=iso-8859-1
-Content-Disposition: inline
-Content-Transfer-Encoding: 8bit
-In-Reply-To: <20260609011626.DE73D1F00893@smtp.kernel.org>
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH v18 3/3] PCI: Fail FLR when config space is inaccessible
+To: Bjorn Helgaas <helgaas@kernel.org>, sashiko-reviews@lists.linux.dev
+Cc: linux-pci@vger.kernel.org
+References: <20260609223351.GA157386@bhelgaas>
+Content-Language: en-US
+From: Farhan Ali <alifm@linux.ibm.com>
+In-Reply-To: <20260609223351.GA157386@bhelgaas>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
+X-TM-AS-GCONF: 00
+X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwNjEwMDE1NiBTYWx0ZWRfX7B1YizrRt5b+
+ Kyb1g0HY5VfQ/AVrrgoEorB7WE1iooQHEXWdz6qvdtgbJ/XDyw05OdBCmkOKPH7DNb8J2y3U3/n
+ SylaBXPAhDMmLkGszahrB+e908ulzBflFo8z9ErsyZa/a1VYBr8O5W1EJVzEGuO6MI7JJaha6Nz
+ 7Wu0Z0/xn+4cl8PFf7WprgfcS6E0DxHYuAq406nXKDRToZnmFwwXNj/KgFLY/V1Hx7NcZbefaMH
+ hbjVIwe3BQMp/V3c37qgjG+UAXdsvjLpU5tmUuEkKbRAOP5TIFdv/Q9I9uJpm+ZlQ5sNbwvgtDn
+ Pd18ZqyKsifJarteF8kxoBXb5SCpBsDnhm/syrImGyiohZm7sJXjiilLwkd0k/AcHBkwzrx25pj
+ UE2c+f9GIapSzvYBNsY01EkOm9nKeYH2CvmlSkQMV21/KFJudk/LLbR8rgUkdXp99IaZiB/AqqR
+ SxlWV9iwRpE8xcStbyw==
+X-Authority-Analysis: v=2.4 cv=QKhYgALL c=1 sm=1 tr=0 ts=6a29962c cx=c_pps
+ a=GFwsV6G8L6GxiO2Y/PsHdQ==:117 a=GFwsV6G8L6GxiO2Y/PsHdQ==:17
+ a=IkcTkHD0fZMA:10 a=FelO9ux0wxsA:10 a=VkNPw1HP01LnGYTKEx00:22
+ a=RnoormkPH1_aCDwRdu11:22 a=V8glGbnc2Ofi9Qvn3v5h:22 a=VwQbUJbxAAAA:8
+ a=U98x94yJvRYjzxI7CFwA:9 a=QEXdDO2ut3YA:10
+X-Proofpoint-GUID: DNNNCkJXf0NT4DOD7sBkiB5bI8nsPi5B
+X-Proofpoint-ORIG-GUID: DNNNCkJXf0NT4DOD7sBkiB5bI8nsPi5B
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.293,Aquarius:18.0.1143,Hydra:6.1.125,FMLib:17.12.100.49
+ definitions=2026-06-10_03,2026-06-09_02,2025-10-01_01
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
+ priorityscore=1501 lowpriorityscore=0 bulkscore=0 adultscore=0 phishscore=0
+ malwarescore=0 impostorscore=0 suspectscore=0 spamscore=0 clxscore=1011
+ classifier=typeunknown authscore=0 authtc= authcc= route=outbound adjust=0
+ reason=mlx scancount=1 engine=8.22.0-2605210000 definitions=main-2606100156
 
-On Tue, Jun 09, 2026 at 01:16:26AM +0000, sashiko-bot@kernel.org wrote:
-> Thank you for your contribution! Sashiko AI review found 2 potential issue(s) to consider:
-> 
-> New issues:
-> - [High] Incomplete fix for file descriptor leaks in DSO and ELF code.
-> 
-> Pre-existing issues:
-> - [Critical] Stack buffer overflow in sysfs__read_build_id when skipping non-matching GNU notes.
-> --
-> 
-> commit 66274b4049c9a2092defa7caf237fe0295853d9c
-> Author: Arnaldo Carvalho de Melo <acme@redhat.com>
-> 
-> perf tools: Add O_CLOEXEC to open() calls in DSO and ELF code
-> 
-> The commit adds O_CLOEXEC to open() calls in dso.c and symbol-elf.c to
-> prevent leaking file descriptors to child processes during symbol
-> resolution.
-> 
-> > diff --git a/tools/perf/util/dso.c b/tools/perf/util/dso.c
-> > index 7dced896c64ea..fb2e78fe2aa8e 100644
-> > --- a/tools/perf/util/dso.c
-> > +++ b/tools/perf/util/dso.c
-> > @@ -344,7 +344,7 @@ int filename__decompress(const char *name, char *pathname,
-> >  	 * descriptor to the uncompressed file.
-> >  	 */
-> >  	if (!compressions[comp].is_compressed(name))
-> > -		return open(name, O_RDONLY);
-> > +		return open(name, O_RDONLY | O_CLOEXEC);
-> >  
-> >  	fd = mkstemp(tmpbuf);
-> 
-> [Severity: High]
-> Since the goal of this patch is to prevent leaking file descriptors to child
-> processes, should we also address the mkstemp() calls in these files?
-> 
-> mkstemp() creates file descriptors without O_CLOEXEC. For instance, here in
-> filename__decompress(), the temporary file descriptor will still be leaked.
-> Should mkostemp(tmpbuf, O_CLOEXEC) be used instead?
 
-This is fixed in the next patch series.
- 
-> [ ... ]
-> > diff --git a/tools/perf/util/symbol-elf.c b/tools/perf/util/symbol-elf.c
-> > index 186e6d92ac3d7..c2bdfd0003df2 100644
-> > --- a/tools/perf/util/symbol-elf.c
-> > +++ b/tools/perf/util/symbol-elf.c
-> [ ... ]
-> > @@ -935,7 +935,7 @@ int sysfs__read_build_id(const char *filename, struct build_id *bid)
-> >  	size_t size = sizeof(bid->data);
-> >  	int fd, err = -1;
-> >  
-> > -	fd = open(filename, O_RDONLY);
-> > +	fd = open(filename, O_RDONLY | O_CLOEXEC);
-> >  	if (fd < 0)
-> >  		goto out;
-> 
-> [Severity: Critical]
-> This is a pre-existing issue, but while reviewing this function, could
-> an unbounded read() happen later in sysfs__read_build_id() when skipping
-> non-matching GNU notes?
-> 
-> If a crafted sysfs note has a maliciously large nhdr.n_descsz, the code does:
-> 
->     } else if (read(fd, bf, descsz) != (ssize_t)descsz)
-> 
-> Since bf is a fixed-size stack array (char bf[BUFSIZ]), could this read past
-> the end of bf and overwrite the stack frame if descsz exceeds BUFSIZ?
+On 6/9/2026 3:33 PM, Bjorn Helgaas wrote:
+> On Wed, Jun 03, 2026 at 06:57:36PM +0000, sashiko-bot@kernel.org wrote:
+>> Thank you for your contribution! Sashiko AI review found 2 potential issue(s) to consider:
+>>
+>> Pre-existing issues:
+>> - [High] The config space accessibility check is placed in pcie_reset_flr() instead of pcie_flr(), leaving direct callers of pcie_flr() exposed to 60-second hangs.
+>> ...
+> I don't know why sashiko calls this a "pre-existing" issue.  This
+> patch *adds* the config space accessibility check, so it looks like an
+> issue with this patch to me.
 
-Ditto, as several other issues you reported in this series and in other
-series.
+The way I interpreted it was, this issue in pcie_flr() of 60 second hang 
+would hit with or without this patch if config space in inaccessible.
 
-- Arnaldo
- 
-> [ ... ]
-> > @@ -1985,7 +1985,7 @@ static int kcore__init(struct kcore *kcore, char *filename, int elfclass,
-> >  	if (temp)
-> >  		kcore->fd = mkstemp(filename);
-> >  	else
-> > -		kcore->fd = open(filename, O_WRONLY | O_CREAT | O_EXCL, 0400);
-> > +		kcore->fd = open(filename, O_WRONLY | O_CREAT | O_EXCL | O_CLOEXEC, 0400);
-> >  	if (kcore->fd == -1)
-> >  		return -1;
-> 
-> [Severity: High]
-> Similarly to the issue in filename__decompress(), if temp is true here,
-> mkstemp() is called without O_CLOEXEC.
-> 
-> There is also a similar mkstemp() call in read_gnu_debugdata() in this file
-> that extracts debug data without O_CLOEXEC. Should all of these be updated
-> to prevent leaking file descriptors?
-> 
-> -- 
-> Sashiko AI review · https://sashiko.dev/#/patchset/20260609010526.1998472-1-acme@kernel.org?part=7
+
+>>> +++ b/drivers/pci/pci.c
+>>> @@ -4396,6 +4396,9 @@ int pcie_reset_flr(struct pci_dev *dev, bool probe)
+>>>   	if (!(dev->devcap & PCI_EXP_DEVCAP_FLR))
+>>>   		return -ENOTTY;
+>>>   
+>>> +	if (!pci_dev_config_accessible(dev, "FLR"))
+>>> +		return -ENOTTY;
+>>> +
+>> [Severity: High]
+>> This isn't a bug introduced by this patch, but does placing this check in
+>> pcie_reset_flr() leave direct callers of pcie_flr() exposed to 60-second
+>> hangs?
+>>
+>> Direct callers of pcie_flr() (like network and storage drivers during error
+>> recovery) bypass this wrapper. They will still experience a stall in
+>> pci_dev_wait() when attempting to reset a device with an inaccessible config
+>> space. Should this accessibility check be moved into pcie_flr() instead to
+>> protect all callers?
+> I can't remember why we have both pcie_reset_flr() and pcie_flr(),
+> other than the fact that callers don't need to supply a "probe"
+> argument to pcie_flr().
+>
+> Is there a reason to call pci_dev_config_accessible() here rather than
+> in pcie_flr()?
+
+The reason we wanted the check in pcie_reset_flr() was so to be able to 
+escalate to bus reset method if we can't do an FLR. I think the check 
+could be moved to pcie_flr(). Is that more preferable?
+
+Thanks
+
+Farhan
+
