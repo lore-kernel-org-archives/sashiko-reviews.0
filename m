@@ -1,150 +1,89 @@
-Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-pg1-f202.google.com (mail-pg1-f202.google.com [209.85.215.202])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E5EF2356773;
-	Wed, 10 Jun 2026 19:19:30 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7BEC837268B
+	for <sashiko-reviews@lists.linux.dev>; Wed, 10 Jun 2026 19:20:34 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.215.202
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1781119172; cv=none; b=c74poGqhk0jSFGuDdi7fHuGd8VHSVlvXuTXrvBluG3TkPlpBeLnZKUMNBXHLBYWB2QJ0LDAeF8FUIdAhYB5UTbWBTCJL7kIKP63vMj6SHw+3B4jNv3mdQRGZdHP6wX7XJaMGdL43MC+siCdvGFhra68xTRrtJUrR5jr/tpIiPLI=
+	t=1781119235; cv=none; b=IgFqmTOcmxMF/51Gp/Fh6MQHDXVcRcJP8XzKgu7ynkmfsa8Vew2Kpgk7vnLL0Q4XE16JRMEFNr7AkmWd3mXYcjbue96CAP6AAWB7XjJch9ZW9BXXfj2QLjAptHqS+LKaoD83tmncvDjY61HRY6UfDREp9H1t8NMayW4kwjaWZ4M=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1781119172; c=relaxed/simple;
-	bh=+ohC2m3lunPe2kDC19X2zynsTw4zYYR9U8nZ3UMjr/8=;
-	h=Date:From:To:Cc:Subject:Message-ID:MIME-Version:Content-Type:
-	 Content-Disposition:In-Reply-To; b=ZRQb2lQsWIMybiwv54D+j6rcfYFYmtg+9PCRYrIcfnMh0ihdyHRJRl4vf1y80ox3tA0G9s/b7hg7f29R2b1XTYRVi6pIT8RvuxEGnTSCr76ys0w6J+ZIUamW4viUYpVw6XCWaE/Ix9gp6xSymPpdmqxd69mCtBSB0G8qMEoFVlo=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=K2q2jUNo; arc=none smtp.client-ip=100.103.45.18
+	s=arc-20240116; t=1781119235; c=relaxed/simple;
+	bh=ibXY4lUk2DRCYZ1FGiZekl7s7+d7c+g3KmcX+nfztQM=;
+	h=Date:In-Reply-To:Mime-Version:References:Message-ID:Subject:From:
+	 To:Cc:Content-Type; b=Cuo4DhhRLtheqiKC2XhfGWhXEHIMImYUo3km8IVKczEx7Egm3DNOVvHAK5TXDRXRsf3fwktDmh2IJxOSYaSYJsoWuonDTrzO/3g2AzpeQG2zquPZjsMGf1WbjYJufmkaU9mkh/0IVnQVOyTDxvdP6HCQnUvn8c175C7xijAEG/I=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=google.com; spf=pass smtp.mailfrom=flex--seanjc.bounces.google.com; dkim=pass (2048-bit key) header.d=google.com header.i=@google.com header.b=vGtmFNmQ; arc=none smtp.client-ip=209.85.215.202
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=google.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=flex--seanjc.bounces.google.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="K2q2jUNo"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 566701F00893;
-	Wed, 10 Jun 2026 19:19:30 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=kernel.org;
-	s=k20260515; t=1781119170;
-	bh=u+OFX4ShvIerpDOzkkMG4kqhjwCu9CbuQ9Bmbry73tg=;
-	h=Date:From:To:Cc:Subject:In-Reply-To;
-	b=K2q2jUNomfj2HJhbM3mQRyVWTlOWEa5HLmho6mBUc21MLPhjptzkIzoUnDORuyXJU
-	 sWU5ChG1T/NU2ot9x/e9gzcptCrPW4abiaV6B9mxJiAIxuurHA0zNzoJXQpwCL6GvR
-	 XPT1Dm44aiPi99Py+y7O9tS7Dgc/eR9IjF1WRAeOz/MI5MgJdzzBSPNF0oMNupaK2o
-	 EWHooUGlVhqt5OQYPHlROi16pgw0loQenJNgWC/RYZq/Eyt+vzdurlgZ/bMUjG+Ez2
-	 wcReK9Jy0rCIpnymTuIO8Ubqgl9gSy6Td2VkN+KKf4pusf0u/czL+8v1+EdI7DLs71
-	 GdsWDK/gi36tA==
-Date: Wed, 10 Jun 2026 14:19:29 -0500
-From: Bjorn Helgaas <helgaas@kernel.org>
-To: sashiko-reviews@lists.linux.dev
-Cc: Jose Ignacio Tornos Martinez <jtornosm@redhat.com>,
-	linux-pci@vger.kernel.org, "Rafael J. Wysocki" <rafael@kernel.org>
-Subject: Re: [PATCH v7 1/3] PCI: Add d3cold as general reset method
-Message-ID: <20260610191929.GA196607@bhelgaas>
+	dkim=pass (2048-bit key) header.d=google.com header.i=@google.com header.b="vGtmFNmQ"
+Received: by mail-pg1-f202.google.com with SMTP id 41be03b00d2f7-c85a2c129b3so3368145a12.1
+        for <sashiko-reviews@lists.linux.dev>; Wed, 10 Jun 2026 12:20:34 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=google.com; s=20251104; t=1781119234; x=1781724034; darn=lists.linux.dev;
+        h=cc:to:from:subject:message-id:references:mime-version:in-reply-to
+         :date:from:to:cc:subject:date:message-id:reply-to;
+        bh=rXbhmrrYImUQv4H/dhcmoVKM/0EEFpXQX6uTvjIXuTw=;
+        b=vGtmFNmQIi9oSitUXpDQx30PXOyTff/B7Jfi+B2iIbr3qoXn/wJWlNjLGRugxYfJiT
+         IhiueWdpwnQaggNf71sTZDK5evehDKZJ2lpaja4NpH5+YK8U7CSxVMGI1iChPdcCqh5Y
+         WRGLrBF777dRUzv81LjNDV9yoxn7GJmPQfEA6yegxQOCsFoh9jPpV6YJivh/wPt8knsV
+         H1s1wZIZiV2ullhsRyIuu1ZJEa74/Rl9L7WfpCFD4AD6SewGgdWUZmTgtiVi4PwaSHU9
+         9ej6Rsq6uH4ij9aWBpL7fhvk8bWaF5jVY8rEUmBJ0Rf8euYtOFNRl3qgSUpCdWFhqGNw
+         yJBw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20251104; t=1781119234; x=1781724034;
+        h=cc:to:from:subject:message-id:references:mime-version:in-reply-to
+         :date:x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+        bh=rXbhmrrYImUQv4H/dhcmoVKM/0EEFpXQX6uTvjIXuTw=;
+        b=IzZi1Sq81LnbY3x4z9279lH82IoLcoa7UXkIWXTWXLYX1PhWVSCGN7vYdHWExWd5L7
+         icRsAQDTbD9tEf93/o8R7791mT3WixGn6DP7vRpMsGF+dShnbLkt+arWdjBIpukp5Z5r
+         /GWOUGEiTtGEQorrq/N2hXcVBbMK6G5qFIiUa5YP8eAOXc2eMlMPVyhMKFsmEvok+34j
+         MS2CcL4Su1f0vEWO853X3vYabob2iF1XXlZxnX/5GlQ2vOgVATMsmfQQuPh1aTS4oI/6
+         Yg1iVLYndljvGjfz01BWNrxDiFzhTzLYAlmJxmsgoVz0FyV38ecv3DjNpBuUvEd1WlzX
+         wmAQ==
+X-Gm-Message-State: AOJu0Yzmz4gqxnINcdgQmTwlCbrDlodXa9wsZLIo0/Na32mlr1DMl2e3
+	JUgyD8R2ql2Sapsz90YVLa+7OkvZ3tFl+KSYlNKtuAQZfJuof6Aqn/O7db/qQ4qr+OG3UYMYBed
+	QKe0COWCUVjv7X4gsmDS9YQPT3A1lPG77RGRSzfm2ghL1b4kShlixJENWeCogKANAHW/UrVikia
+	hRZrKLqgQqAeOPQ7kHCMpBVdKALY9k/88LwB/mUs66cpDLQIH8
+X-Received: from pjyt18.prod.google.com ([2002:a17:90a:e512:b0:36a:8554:a396])
+ (user=seanjc job=prod-delivery.src-stubby-dispatcher) by 2002:a17:90b:5747:b0:368:3d3e:efa6
+ with SMTP id 98e67ed59e1d1-375212a2eebmr9794823a91.20.1781119233493; Wed, 10
+ Jun 2026 12:20:33 -0700 (PDT)
+Date: Wed, 10 Jun 2026 12:20:32 -0700
+In-Reply-To: <20260610010658.1E0501F00898@smtp.kernel.org>
 Precedence: bulk
 X-Mailing-List: sashiko-reviews@lists.linux.dev
 List-Id: <sashiko-reviews.lists.linux.dev>
 List-Subscribe: <mailto:sashiko-reviews+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:sashiko-reviews+unsubscribe@lists.linux.dev>
-MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-Content-Transfer-Encoding: 8bit
-In-Reply-To: <20260603112018.97AA41F00893@smtp.kernel.org>
+Mime-Version: 1.0
+References: <20260610005338.2967132-10-seanjc@google.com> <20260610010658.1E0501F00898@smtp.kernel.org>
+Message-ID: <aim5AGJwj6tlkigX@google.com>
+Subject: Re: [PATCH v6 09/18] KVM: selftests: Verify interrupts are received
+ when IRQ affinity changes in IRQ test
+From: Sean Christopherson <seanjc@google.com>
+To: sashiko-reviews@lists.linux.dev
+Cc: kvm@vger.kernel.org
+Content-Type: text/plain; charset="us-ascii"
 
-[+cc Rafael, D3cold->D0 delays]
+On Wed, Jun 10, 2026, sashiko-bot@kernel.org wrote:
+> > @@ -192,7 +198,12 @@ int main(int argc, char **argv)
+> >  		printf("Using device %s MSI-X[%d] (IRQ-%u)\n", device_bdf, msix,
+> >  		       irq);
+> >  	} else {
+> > +		TEST_ASSERT(!irq_affinity,
+> > +			    "Setting IRQ affinity (-a) requires a backing device (-d)");
+> > +
+> >  		eventfd = kvm_new_eventfd();
+> > +		irq = -1;
+> > +		irq_cpu = -1;
+> >  	}
+> 
+> [Severity: Low]
+> Is irq_cpu used uninitialized here when the test is run with -d but without -a?
+> 
+> When a backing device is specified (-d), the code enters the if (device_bdf)
+> block and irq_cpu remains uninitialized. If a vCPU times out waiting for an
+> interrupt, the TEST_ASSERT macro evaluates and passes the uninitialized
+> irq_cpu to the variadic format string, printing garbage values.
 
-On Wed, Jun 03, 2026 at 11:20:18AM +0000, sashiko-bot@kernel.org wrote:
-> Thank you for your contribution! Sashiko AI review found 2 potential issue(s) to consider:
-> - [High] pci_d3cold_reset() fails to wait for device readiness after transitioning from D3cold to D0, leading to immediate config read failures and state corruption.
-> - [High] pci_d3cold_reset() does not prevent execution on single-function bridges, leading to permanent state corruption and physical data loss of all subordinate devices.
-> --
-> 
-> commit c7a8523521475c131fd83bc43a00b0cc028fc9a1
-> Author: Jose Ignacio Tornos Martinez <jtornosm@redhat.com>
-> 
-> PCI: Add d3cold as general reset method
-> 
-> This patch adds D3cold power cycling as a reset method for single-function
-> devices via ACPI _PR3, placing it at the end of the reset hierarchy.
-> 
-> > diff --git a/drivers/pci/pci.c b/drivers/pci/pci.c
-> > index 8f7cfcc000901..096868f80cd4c 100644
-> > --- a/drivers/pci/pci.c
-> > +++ b/drivers/pci/pci.c
-> 
-> [ ... ]
-> 
-> > +static int pci_d3cold_reset(struct pci_dev *dev, bool probe)
-> > +{
-> > +	int ret;
-> > +
-> > +	if (dev->multifunction)
-> > +		return -ENOTTY;
-> > +
-> 
-> [Severity: High]
-> Does this allow execution on single-function bridges, such as PCIe Root
-> Ports?
-> 
-> If pci_set_power_state(dev, PCI_D3cold) is called on a bridge, it recursively
-> updates all subordinate devices' tracking state to D3cold via
-> __pci_bus_set_current_state() and physically removes power from them.
-> 
-> The subsequent transition back to D0 only updates the bridge itself. This
-> leaves all downstream devices tracked as PCI_D3cold indefinitely, and they
-> lose all their configuration and BARs since the reset framework only saves
-> and restores the bridge's configuration state. 
-
-Secondary Bus Reset has a similar issue: the hot reset on the
-secondary side is propagated to downstream devices.
-pci_parent_bus_reset() returns -ENOTTY if we try to use SBR to reset a
-bridge.  I wonder if that check should be moved up to
-pci_reset_bus_function() we don't try to use pci_reset_hotplug_slot()
-on bridges either.
-
-So I think it *is* a problem if we put a bridge in D3cold because
-that's also a reset of any downstream devices.
-
-> > +	if (!pci_pr3_present(dev))
-> > +		return -ENOTTY;
-> > +
-> > +	if (probe)
-> > +		return 0;
-> > +
-> > +	if (dev->current_state != PCI_D0)
-> > +		return -EINVAL;
-> > +
-> > +	ret = pci_dev_reset_iommu_prepare(dev);
-> > +	if (ret) {
-> > +		pci_err(dev, "failed to stop IOMMU for a PCI reset: %d\n", ret);
-> > +		return ret;
-> > +	}
-> > +
-> > +	ret = pci_set_power_state(dev, PCI_D3cold);
-> > +	if (ret)
-> > +		goto done;
-> > +
-> > +	ret = pci_set_power_state(dev, PCI_D0);
-> 
-> [Severity: High]
-> Does this sequence fail to account for the mandatory wait time before the
-> device is responsive to config space accesses?
-> 
-> A D3cold to D0 transition acts as a fundamental reset. pci_set_power_state()
-> internally invokes pci_power_up(), which applies power and immediately
-> attempts to read PCI_PM_CTRL without waiting for link training or handling
-> Configuration Request Retry Status (CRS).
-
-I don't think sashiko can infer this from the code, but my
-understanding is that platform_pci_set_power_state(PCI_D0) is
-responsible for delays after a D3cold -> D0 transition, so I don't
-think this one is actually an issue:
-
-  https://lore.kernel.org/all/CAJZ5v0iZN5NtUztqe=MxCRcXdBaaqzZ749OqSUkadwwBy0ugUQ@mail.gmail.com/
-
-> Because the device is unready, this read can return 0xFFFF (Unsupported
-> Request) and cause pci_power_up() to spuriously fail with -EIO. Should this
-> include a polling delay, similar to pci_dev_wait(), to prevent the reset
-> framework from blindly failing or restoring state to an uninitialized device?
-> 
-> > +
-> > +done:
-> > +	pci_dev_reset_iommu_done(dev);
-> > +	return ret;
-> > +}
-> 
-> -- 
-> Sashiko AI review · https://sashiko.dev/#/patchset/20260603105853.326290-1-jtornosm@redhat.com?part=1
+Gah, I meant to initialize it to -1 (hence the signed %d instead of %u).
