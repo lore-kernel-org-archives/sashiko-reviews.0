@@ -1,140 +1,217 @@
-Received: from mail-pl1-f174.google.com (mail-pl1-f174.google.com [209.85.214.174])
+Received: from mail-wr1-f46.google.com (mail-wr1-f46.google.com [209.85.221.46])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0F49F403AF7
-	for <sashiko-reviews@lists.linux.dev>; Wed, 10 Jun 2026 13:08:38 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.214.174
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 43CE93C553B
+	for <sashiko-reviews@lists.linux.dev>; Wed, 10 Jun 2026 13:11:55 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.221.46
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1781096920; cv=none; b=pLS0PA6VtF5vOLZPj/YHzpqJss3B/h+bHPBREwZWRUddFudg/ahSscvlrC2lrKScBQuf7Czb2g4MUN+lHyoR7Ut5rBgzj1JYU75fM27SSpWCmfNKqPitNL3H/AYXM6Yk/tWH3oRVNF+7yOXHc3ZpwowbjacFti25g3T6Cmu4HPY=
+	t=1781097117; cv=none; b=hPKrILdMqwHVWjmFgT5SHpB94GcYokoB2MVZQli1OFioWM69DX0fI1BYwxQKdPdN2lMW6qoOBtEfZXhCieqySsE3rPtLmur3gVrkQciiPobYoWQzokMUb62wIhJEpgSf9QUHJN6LKRxLqeE3iKFOGNWsQvF7gzQALhD89DIs73g=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1781096920; c=relaxed/simple;
-	bh=EEOinw6CGZW45SAkE1xhJG+ynpqqAjNakg6bnKB2A/Q=;
-	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=gUnCIUehgT72ddspUMGpjOrbDQCg75ioGdmvmvw/cGKlaGFBods46S2FYFZcRQFx5Z80k9453j0Jr66+YQ6oerpX+cGf76kj6tz9sWXaHghhRJG04oZ8LcgsRWd4loF2oWCUqq7GLL8NJmskGCFh4t2HmAfilcPPZSO6Y9xeX9Y=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=roeck-us.net; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=pTagpkcw; arc=none smtp.client-ip=209.85.214.174
-Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=roeck-us.net
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+	s=arc-20240116; t=1781097117; c=relaxed/simple;
+	bh=2/eE0fazUYajYfJzaAkc4jsBSjU3Oo8lYalVnmNRxu0=;
+	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
+	 MIME-Version:Content-Type; b=FVfgQEHUgnq59z+Fmt1UxzQ7LjQagJUL6dQz6wU0fVIN8RVGqaPXCcS8mTbIWeMiTttNlDR733tmWxeYIsUR52rvmt+VIRRfCDA2ouz3SP27CLbDV6ILVl8Hl8dnR0C272k47rsBM9SaT1q82kkxnTdBkIko9/d+jVsAwPK+Zyk=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=baylibre.com; spf=pass smtp.mailfrom=baylibre.com; dkim=pass (2048-bit key) header.d=baylibre.com header.i=@baylibre.com header.b=n188snse; arc=none smtp.client-ip=209.85.221.46
+Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=baylibre.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=baylibre.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="pTagpkcw"
-Received: by mail-pl1-f174.google.com with SMTP id d9443c01a7336-2c0c1e0d00bso64890455ad.0
-        for <sashiko-reviews@lists.linux.dev>; Wed, 10 Jun 2026 06:08:38 -0700 (PDT)
+	dkim=pass (2048-bit key) header.d=baylibre.com header.i=@baylibre.com header.b="n188snse"
+Received: by mail-wr1-f46.google.com with SMTP id ffacd0b85a97d-46019b190b6so5066893f8f.3
+        for <sashiko-reviews@lists.linux.dev>; Wed, 10 Jun 2026 06:11:55 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20251104; t=1781096918; x=1781701718; darn=lists.linux.dev;
-        h=content-transfer-encoding:in-reply-to:autocrypt:from
-         :content-language:references:cc:to:subject:user-agent:mime-version
-         :date:message-id:sender:from:to:cc:subject:date:message-id:reply-to;
-        bh=JqJZ+prysRbXkAdz3gPAp6FWqtuUCNOsHZgjBYdDszw=;
-        b=pTagpkcwtMba56Bkc/kevDwzbwoPmsv7pXqF+m5PO4EsagvNM8W6qzQxcztdTgaXfG
-         bDaIut1esvnIzPcv0Ld+QtqMtA+CfgUM+HvHOv2ln8kHWSOAEoQJQp0x87gglwF/rXSy
-         hDrTeorkgMNI5o8PV5tVzpqN60rKeSIS0jC7U2p9zdjAYaOUpKVVWZcIgrswKQu7geXP
-         HpAx5K0bqwUXtco3jrGtbox+M34uqi3EqCvTxMtrGwc9gmQteLMnV14PYlIXJVXAMMhq
-         xw7J5NyJmSkqpPeIqbBzKjx060fJlpK/na8NwhsGN/vJRbFYxsFP6kuz6iAg08eMbXJR
-         kvpg==
+        d=baylibre.com; s=google; t=1781097113; x=1781701913; darn=lists.linux.dev;
+        h=mime-version:message-id:date:user-agent:references:in-reply-to
+         :subject:cc:to:from:from:to:cc:subject:date:message-id:reply-to;
+        bh=nWeLdZGLAbv8traSRmiJQZdTRZXFTjlEWYlcA7s+fFg=;
+        b=n188snsemdpZ+MSKVbYU/J3efLT1RC3njHiX0JCsg40wuI5APgD4rln6IPx85Oo52X
+         lrVYiWjwj+foGVdizDwYQ56bUXv6ogc/QTOArHTUNSzvxSjlhtzfi0jCm/3Qau8AXwm1
+         QXlWTPrV+GxkbUp4yLz1Ewx0Uup7AqkXZKSdgmc0OqokFqKPlUjVbTfXDhveIM5ORojs
+         cyhoehXwl1d3nbMkXsgkwi7PPC8q/7nu65+y2vJs5lifee+pqGNrbV/bkUgRwLO2l6hR
+         7kPVO8FGXUPWJyNTDtj3I0YPJSAsYQUhuJsl+8dOjtm9DNzRStVlqdhrBRDiygp/S2K7
+         3WHQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20251104; t=1781096918; x=1781701718;
-        h=content-transfer-encoding:in-reply-to:autocrypt:from
-         :content-language:references:cc:to:subject:user-agent:mime-version
-         :date:message-id:sender:x-gm-gg:x-gm-message-state:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=JqJZ+prysRbXkAdz3gPAp6FWqtuUCNOsHZgjBYdDszw=;
-        b=h1UlAtOmk0AjLOZnZ46FEE2HSupHY0bdpTwpwf9Ci4eg899Sn57FFq1o9D1mzbrzol
-         pfKfYaeuseCNCn1Z1R64hi9Ps9LI1DbRcZ9OBqus7T/YmrQ+vMW9F6Wzwfa1F62bEY6s
-         Zvaqpjad5BJuzuGtjSfz2cTrZ7Usw7jOb2IWpqFLOmoQLS5SYfw557eIHLbecF7I38DN
-         z+ndTBXaoJ/3+eYg7xCrpvOXZrEwPI00/jTfSDkmh3D63kH4IqiO90Rj+d6LR9tCPnh5
-         WaqteWxV3tUDkPN6RdT7egBBdjtfdKi4S3s0x8JhDrq7E5lTYJ6VO/14BREb0ZEUSEYu
-         iG3Q==
-X-Gm-Message-State: AOJu0Ywtgf8i1ZOgWj8Ndg2n5aW1saqWIOEOke1jPrupZDqi6d2xN8oL
-	x+7I29P8Yk186AtX2rGJMb5EicCbJ0PprZDMAs7nuUhSr/H0iEsqwQ9K
-X-Gm-Gg: Acq92OGte4Yukg5lt/IYeOoapKn8lsxhb7qDvWu9BgqSq9nx6gwQGk7w9X8H4THjGuZ
-	SynKo7JAoiMjvLDAJj1BnvbUssT/rvgLzFwJjD7upSlX3VRc5R2zr8j7QMFwb8TBk0nolvixO2S
-	lXlFBos8ajZYiVoCdGmMZeTCv0nBzxaPQFvYhtpWxoRMGutrRvMaRLGwdTx5ozi0ac1ss7jIx8n
-	YvnqsngD6rk71eP2Q1L+RpIPivvgf7/m9gn97wRnW9B8h7N9pRxtA3PhE+r0lQXrLx+E1/GjEbn
-	BfAjJQl7bZHCq4lPnyaw8nadA+NVbPAZJ6TFZEybpW7s+SRwWuIYQyQitB4Fd8cmoCcin1kLOzH
-	BuGUfjlWuGxawCgBhm9EvM/ylBs4MW1zopN4Ie9lXIRGHTDyM11WCO0XPkxw/UIWmuDpdKDQGNW
-	twOxhfq9mnbAzpxYUWZIMuusk9gWgTljP3DaAF5lZER7sgl0peapWJUPR+9u1Vup6Dzrriuz1LM
-	Bgno5BOoCU=
-X-Received: by 2002:a17:903:2348:b0:2c2:33a4:aaa2 with SMTP id d9443c01a7336-2c233a4adcemr215193425ad.35.1781096918304;
-        Wed, 10 Jun 2026 06:08:38 -0700 (PDT)
-Received: from ?IPV6:2600:1700:e321:62f0:da43:aeff:fecc:bfd5? ([2600:1700:e321:62f0:da43:aeff:fecc:bfd5])
-        by smtp.gmail.com with ESMTPSA id d9443c01a7336-2c164f8bc5asm258608485ad.27.2026.06.10.06.08.37
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Wed, 10 Jun 2026 06:08:37 -0700 (PDT)
-Sender: Guenter Roeck <groeck7@gmail.com>
-Message-ID: <bd3085f3-3797-4bca-8520-bed0d67684e0@roeck-us.net>
-Date: Wed, 10 Jun 2026 06:08:36 -0700
+        d=1e100.net; s=20251104; t=1781097113; x=1781701913;
+        h=mime-version:message-id:date:user-agent:references:in-reply-to
+         :subject:cc:to:from:x-gm-gg:x-gm-message-state:from:to:cc:subject
+         :date:message-id:reply-to;
+        bh=nWeLdZGLAbv8traSRmiJQZdTRZXFTjlEWYlcA7s+fFg=;
+        b=hxNncgYOzgKLKQGiNyhZTg0mIwJI8rUQAnJ05hB578AoiL/5q4uJk/cnU55UIAPMKF
+         4q+3bcfXR42mr8YbTHf0+GC2bds77iqwXwVKflg7mDgdHbMDxNt6JGcZ3C28KHB+pOLH
+         FX0MxL0wVUkOJ6H5NY2pj62dFXN8vcc8NOpEuJu7OitEytYDqm7nbnWocsgvV0Mp0iQU
+         LqUd+l9WPH/Nm5Pl7Elbns8KMiU1zE1S6q4kT8rRGNvALkIVP4/e6di3p8mpWhqTb//a
+         4+cDIr0ggt49S3lzPVvmIvrax1WfuHBS8G2XUJtfnpgDM4qd9MKal+PUUUPFo8BGzGaI
+         ipmA==
+X-Forwarded-Encrypted: i=1; AFNElJ+0HXV+7af83/Ah0On/CkQptdaxQPDWmS9+RufCtSxnyfNYrUospNxQ8BBaXiSgpRHZfQVvsOwIliD2YA+p9xw=@lists.linux.dev
+X-Gm-Message-State: AOJu0Yx1NvOiG0tcGUKLw+Z4tyojPamSc9ZPru0F2lX1RkGcbWbvdqDT
+	dqg+I6URbL4a8sh2AzvZ069YwgJJR2iixUETdBfEV+RG2kz7HBK+4SfqWrAAdjahACE=
+X-Gm-Gg: Acq92OF9BfiVwPfaEOJnSQ+Fgm2MkXL4A2CXn4qXC9307xgQ4FR0YSj56avkeaXv3NQ
+	AdBYoLAq5MOLxv2jxqK0I7rmQNRzFPt1M3pRB4bnLFlfgDVffUlM/n5g/63oD+BlPa267opW2Es
+	TYztN8AAVHtTftQmn32y/BAhkiqTQvjDE1i1dABoG502ksfTXZgnwX8I0qBwKn7YJv1lV43hJfW
+	Lc0SwWiIFBB6crASSXvVJ99X2llYqn1jZBVCMZdTq9PBB0unZuz4S1YJrFd9SfSSAtwLdlJ8D6M
+	IiCMEFVmpFzUHURudfxRy5e0KXkoRhHBAFs0VZehwfiwBU8KNpME+9S7tRAuxSNgxxJffa0fQta
+	1WtawihTBpRaIwWcgbjGTb8UNfPynTTmgEFK/Of7sVm63/SqOjjJTvPU/lLjlQcnmipSVIRXUfd
+	e34bpzL/YA71cXRsyRyIiuXdzkrWOGLbhl
+X-Received: by 2002:a5d:604b:0:b0:43d:69ff:6898 with SMTP id ffacd0b85a97d-460302e6f06mr31561787f8f.9.1781097113561;
+        Wed, 10 Jun 2026 06:11:53 -0700 (PDT)
+Received: from localhost ([2a01:e0a:3c5:5fb1:c371:18ed:9599:7f5f])
+        by smtp.gmail.com with UTF8SMTPSA id ffacd0b85a97d-4601f344558sm68667084f8f.18.2026.06.10.06.11.52
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Wed, 10 Jun 2026 06:11:53 -0700 (PDT)
+From: Jerome Brunet <jbrunet@baylibre.com>
+To: sashiko-bot@kernel.org
+Cc: phucduc.bui@gmail.com,  sashiko-reviews@lists.linux.dev,
+  neil.armstrong@linaro.org,  linux-amlogic@lists.infradead.org
+Subject: Re: [PATCH] ASoC: meson: axg-tdm-formatter: Use guard() for mutex
+ locks
+In-Reply-To: <20260610103210.2ACAC1F00893@smtp.kernel.org>
+	(sashiko-bot@kernel.org's message of "Wed, 10 Jun 2026 10:32:09
+	+0000")
+References: <20260610102153.83367-1-phucduc.bui@gmail.com>
+	<20260610103210.2ACAC1F00893@smtp.kernel.org>
+User-Agent: mu4e 1.12.9; emacs 30.1
+Date: Wed, 10 Jun 2026 15:11:51 +0200
+Message-ID: <1j33yufsko.fsf@starbuckisacylon.baylibre.com>
 Precedence: bulk
 X-Mailing-List: sashiko-reviews@lists.linux.dev
 List-Id: <sashiko-reviews.lists.linux.dev>
 List-Subscribe: <mailto:sashiko-reviews+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:sashiko-reviews+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 5/5] hwmon: (cros_ec) Allow modification of fan curves
-To: =?UTF-8?Q?Thomas_Wei=C3=9Fschuh?= <linux@weissschuh.net>
-Cc: sashiko-reviews@lists.linux.dev, linux-hwmon@vger.kernel.org
-References: <20260529-cros_ec-hwmon-fan-curve-v1-5-da6792b3830f@weissschuh.net>
- <20260529213842.354A51F00893@smtp.kernel.org>
- <20159ced-3959-47da-9245-8d562d656f43@t-8ch.de>
- <81dc547c-7c62-4e34-aa90-5a48ebe46b9b@roeck-us.net>
- <263a9a98-c427-4d3a-8971-b42a27dab976@t-8ch.de>
-Content-Language: en-US
-From: Guenter Roeck <linux@roeck-us.net>
-Autocrypt: addr=linux@roeck-us.net; keydata=
- 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
- np3900V20aS7eD9K8GTU0TGC1pyz6IVJwIE=
-In-Reply-To: <263a9a98-c427-4d3a-8971-b42a27dab976@t-8ch.de>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 8bit
+Content-Type: text/plain
 
-On 6/10/26 05:02, Thomas Weißschuh wrote:
+On mer. 10 juin 2026 at 10:32, sashiko-bot@kernel.org wrote:
 
-> 
-> Given that patch 1 of this series introduces a compiler warning,
-> could you drop the whole series and I'll resend it after -rc1?
-> (I'll have to doublecheck why I didn't notice the warning before)
-> 
+> Thank you for your contribution! Sashiko AI review found 2 potential issue(s) to consider:
+>
+> Pre-existing issues:
+> - [High] If `axg_tdm_formatter_attach()` fails to enable the formatter
+> (e.g. when trying to catch up to an already running stream), it returns an
+> error and skips `list_add_tail()`. However, the DAPM framework will log the
+> error but still mark the widget as powered up. Later, during teardown or
+> routing changes, DAPM will call `axg_tdm_formatter_dettach()`, which
+> blindly executes `list_del(&formatter->list)`. Since the list head is
+> zero-initialized by `devm_kzalloc` and was never added to the list,
+> `list_del()` will dereference NULL pointers, causing a kernel crash.
+> - [High] The return value of `axg_tdm_stream_start()` is completely ignored
+> in `axg_tdm_iface_trigger()`. If the stream fails to start (for example,
+> due to a failure in `axg_tdm_formatter_enable()`), `axg_tdm_stream_start()`
+> correctly returns an error code. However, `axg_tdm_iface_trigger()` drops
+> this error and unconditionally returns 0.
+> --
+>
+> commit d9e23c7e7ade1061d83943c614a45fe952dec33d
+> Author: bui duc phuc <phucduc.bui@gmail.com>
+>
+> ASoC: meson: axg-tdm-formatter: Use guard() for mutex locks
+>
+> Clean up the code using guard() for mutex locks.
+> Merely code refactoring, and no behavior change.
+>
+>> diff --git a/sound/soc/meson/axg-tdm-formatter.c b/sound/soc/meson/axg-tdm-formatter.c
+>> --- a/sound/soc/meson/axg-tdm-formatter.c
+>> +++ b/sound/soc/meson/axg-tdm-formatter.c
+>> @@ -157,20 +157,19 @@ static int axg_tdm_formatter_attach(struct axg_tdm_formatter *formatter)
+>>  	struct axg_tdm_stream *ts = formatter->stream;
+>>  	int ret = 0;
+>>  
+>> -	mutex_lock(&ts->lock);
+>> +	guard(mutex)(&ts->lock);
+>>  
+>>  	/* Catch up if the stream is already running when we attach */
+>>  	if (ts->ready) {
+>>  		ret = axg_tdm_formatter_enable(formatter);
+>>  		if (ret) {
+>>  			pr_err("failed to enable formatter\n");
+>> -			goto out;
+>> +			return ret;
+>>  		}
+>>  	}
+>>  
+>>  	list_add_tail(&formatter->list, &ts->formatter_list);
+>> -out:
+>> -	mutex_unlock(&ts->lock);
+>> +
+>>  	return ret;
+>>  }
+>
+> [Severity: High]
+> This is a pre-existing issue, but if axg_tdm_formatter_enable() fails,
+> this error path returns early and skips list_add_tail().
 
-I already dropped it.
+This is path the very few have tested since it only happens when
+someone is playing around the routing kcontrol on a running
+stream. Still it is supposed to work.
 
-Guenter
+>
+> If the DAPM framework logs the error but still marks the widget as powered
+> up, it might later call axg_tdm_formatter_dettach() during teardown or
+> routing changes.
 
+Ok but the IF is important here.
+
+A widget that failed PRE_PMU event should not receive a PRE_PMD one.
+so it makes to unwind anything on error.
+
+>
+> Since axg_tdm_formatter_dettach() blindly executes:
+>
+>     scoped_guard(mutex, &ts->lock)
+>         list_del(&formatter->list);
+>
+> Does this result in a NULL pointer dereference because the list head is
+> zero-initialized and was never actually added to the list?
+>
+> [ ... ]
+>> @@ -330,7 +328,7 @@ int axg_tdm_stream_start(struct axg_tdm_stream *ts)
+>>  	struct axg_tdm_formatter *formatter;
+>>  	int ret = 0;
+>>  
+>> -	mutex_lock(&ts->lock);
+>> +	guard(mutex)(&ts->lock);
+>>  	ts->ready = true;
+>>  
+>>  	/* Start all the formatters attached to the stream */
+>> @@ -338,12 +336,10 @@ int axg_tdm_stream_start(struct axg_tdm_stream *ts)
+>>  		ret = axg_tdm_formatter_enable(formatter);
+>>  		if (ret) {
+>>  			pr_err("failed to start tdm stream\n");
+>> -			goto out;
+>> +			return ret;
+>>  		}
+>>  	}
+>>  
+>> -out:
+>> -	mutex_unlock(&ts->lock);
+>>  	return ret;
+>>  }
+>
+> [Severity: High]
+> This isn't a bug introduced by this patch, but is it possible for the
+> return value of axg_tdm_stream_start() to be lost?
+>
+> Looking at axg_tdm_iface_trigger() in sound/soc/meson/axg-tdm-interface.c:
+>
+>     switch (cmd) {
+>     case SNDRV_PCM_TRIGGER_START:
+>     case SNDRV_PCM_TRIGGER_RESUME:
+>     case SNDRV_PCM_TRIGGER_PAUSE_RELEASE:
+>         axg_tdm_stream_start(ts);
+>         break;
+>
+> If axg_tdm_stream_start() returns an error code here, the error isn't
+> propagated back to ALSA. Does this mask the initialization failure and
+> cause the framework to silently fail, leaving applications to hang while
+> waiting for period elapsed events?
+
+2 things here:
+
+1) This is a DPCM backend so no "period elapsed events" here. This would
+happen on the FIFO frontends
+
+2) The return code is a grey area here. There could be multiple
+formatters attached, this is mostly why the error code is ignored, so a
+working backend would continue to operate if another fail. That's the
+idea at least. 
+
+-- 
+Jerome
