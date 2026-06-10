@@ -1,123 +1,181 @@
-Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
+Received: from mo4-p00-ob.smtp.rzone.de (mo4-p00-ob.smtp.rzone.de [81.169.146.160])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AD50A1A683E;
-	Wed, 10 Jun 2026 16:29:51 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
-ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1781108992; cv=none; b=pkGXQ5eEnKh6hqXihJCsFWVp1VY7c+ve4SD/ZwytL2re5Nk3QbmidpdCd35IG7MQj0rIXOLHiUEd63Yp1ox9oWO7NEuHFs5qNLmrfDx4Dp4fInOt2BLIlxSmH9ql1gtYnKVtBjcPdtACmDkhEKUaS5xfCAAyCyCLXJV+sx47h/8=
-ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1781108992; c=relaxed/simple;
-	bh=J9fDtTY/S1t42qKo8xW/SEJzVRf8B34wLgAeVLKfcDI=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=ZimlUQ3SDiZ3aAU4cLQwu/dfKnW3B4xJGlX9CFUzRa9RME3GEDQENiSJ7ZMY1Z3rpjDXjQT9Ww1b0NAKfXJKArL20Qzluf6tOy9My/iJLgwGiYvIek17tliEm3Wvo6H7mNPPehj0pmWYqo5+d1/a6fP5iycXnw2uYFI7C8cfRcU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=jkDfUGmM; arc=none smtp.client-ip=100.103.45.18
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BA7A9342538
+	for <sashiko-reviews@lists.linux.dev>; Wed, 10 Jun 2026 16:40:59 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=pass smtp.client-ip=81.169.146.160
+ARC-Seal:i=2; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
+	t=1781109664; cv=pass; b=Z0SAPMdIC9HZWcD7k/ErljX2mCGF4o8RWEA7OBBZmQPdppue1d+jB66Kaw5IBDdW3zJ8VD7Ubd4JPWMznWgS5dp57AEteT78SaJjs2IM9sPvyuWBCvkFpMyp+oBsM/8SArutstydH4+9Ox2dOzrN3gSDNO07EOclBtsSJNhAJyM=
+ARC-Message-Signature:i=2; a=rsa-sha256; d=subspace.kernel.org;
+	s=arc-20240116; t=1781109664; c=relaxed/simple;
+	bh=aCSBqIFmOS+0t1PvbmHCMB6+khCj3ctP2l9Onk0vNS4=;
+	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
+	 MIME-Version:Content-Type; b=uBnZrrt7y5lBuuUspbkBNoEF2pKjEXQLWbYSgdRP+Xbtw9CzOV2d4ui5KNTFjMhtioYNe8WTp0OTaUMr2woy/4nKeADXPEhb9UZKzpG5HO26i58u/H3M+KFYdHnwlJqYs1ORoOAKuvLQUZGe23r062AVM/SF6HYqxyUaao4x6oE=
+ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=hartkopp.net; spf=fail smtp.mailfrom=hartkopp.net; dkim=pass (2048-bit key) header.d=hartkopp.net header.i=@hartkopp.net header.b=fN0YnURR; dkim=permerror (0-bit key) header.d=hartkopp.net header.i=@hartkopp.net header.b=Vcy1/ZmX; arc=pass smtp.client-ip=81.169.146.160
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=hartkopp.net
+Authentication-Results: smtp.subspace.kernel.org; spf=fail smtp.mailfrom=hartkopp.net
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="jkDfUGmM"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 818D01F00893;
-	Wed, 10 Jun 2026 16:29:50 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=kernel.org;
-	s=k20260515; t=1781108991;
-	bh=5/nSBTrYlMpqaFGOlGvnc3S2H5d2hvsraiqd4mLdn1g=;
-	h=Date:From:To:Cc:Subject:References:In-Reply-To;
-	b=jkDfUGmMRPohuH5BFCDS3lPPo/TWjpJafkJJGu1SM1elHmJxgl230qOKm+MOLCopA
-	 0S2ruRysgD3bHiWzIRN+tkL9HkiQR8ZG1/OcYhQr7V+I6BDiUO/9SGt73jc5t30LOO
-	 KTRH7aQofypYMGV5g67/yn8K3ibGDkWd7SqpHR5DPpJcqHjFvE7J8ZBBOsPfZRVVNS
-	 IZOW1gLQnqXvDV7M5EuCd3vYfRdCvz9uo6Ai70+F5eBYCt+WDM3iaIAgFCSjP6t0H/
-	 wO2Wpww2IXTLqEEU1JmKN+E3vnPdsPlgMW4isgAQiZK8eKcH5x9suZP9AWt8AX8a1f
-	 /FDXxFfx+R6eg==
-Date: Wed, 10 Jun 2026 13:29:46 -0300
-From: Arnaldo Carvalho de Melo <acme@kernel.org>
-To: sashiko-reviews@lists.linux.dev
-Cc: linux-perf-users@vger.kernel.org
-Subject: Re: [PATCH 10/11] perf tools: Use scnprintf() in
- build_id__snprintf() and hwmon read_events()
-Message-ID: <aimQ-pXYUnPBmeqy@x1>
-References: <20260609010526.1998472-11-acme@kernel.org>
- <20260609011717.79A371F00893@smtp.kernel.org>
+	dkim=pass (2048-bit key) header.d=hartkopp.net header.i=@hartkopp.net header.b="fN0YnURR";
+	dkim=permerror (0-bit key) header.d=hartkopp.net header.i=@hartkopp.net header.b="Vcy1/ZmX"
+ARC-Seal: i=1; a=rsa-sha256; t=1781109489; cv=none;
+    d=strato.com; s=strato-dkim-0002;
+    b=k8eYWcOF2E4f8vQahyfSBQhZAkkCUWVtn/ddqL2RUiPbqknnq42CeSNvrwPWIWwLcf
+    joLpgBRP/J8XJG1EKWFwDr3G7toqP8K7qeNV6GMTf5r2IKJc5Y/Dvzcs4ZRslQpBimZV
+    orni/Dhg1XLq7zYIwFjN4f4FOQysSXBVsOIvkAgZDBUuWNExvmF9Qqu6diCiZ52s2J7S
+    St337bLhyeNMMKjm0KUO/WTwgdxRJiC47/xpIqn3o0xvIvbsReRTL3zxDn7bjRvcFugI
+    pNYFgTwXYa1e5RXSB00NXqUnnFj2X7upR5RlozIm9UM55SLdRhBL28+9syEw0CYI/UD8
+    sqag==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; t=1781109489;
+    s=strato-dkim-0002; d=strato.com;
+    h=References:In-Reply-To:Message-ID:Date:Subject:Cc:To:From:Cc:Date:
+    From:Subject:Sender;
+    bh=YGa0+GcGPpO532H5Nd3/Pe429emU/ohbvkYX9EZDdTo=;
+    b=RPbbm2JUeB8C07aR0LOKigYA3GiAJ9shPwMIh5kC5L4yOeGoGciD4snT5ZSwJUjqvq
+    ZTrO8w/TSSIR36wzvG7n2ocp8wSMPtll9yt5zx57EvNqWZxk5wQog5OF8cyTmIBk70FP
+    1zeDk5v90oGMwFDi/XHkR+xzzvk3VWpIT9DxTSvA+YexCq+LKWAimCLSsuMenh8xJDAy
+    0asmp2XWNGTaLFrJkb4u2cOS2PH0vt/Q1jHgq0GYQ0+ZFGyyrvGY4LBJDbSx14fk5i5K
+    X6H2thXnXz7y17eI1Mt4R+MT1ZoKbTMsipEIKAbZJoRxKdBuoETw0QZo8cb/4P5Y/3VR
+    n55w==
+ARC-Authentication-Results: i=1; strato.com;
+    arc=none;
+    dkim=none
+X-RZG-CLASS-ID: mo00
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; t=1781109489;
+    s=strato-dkim-0002; d=hartkopp.net;
+    h=References:In-Reply-To:Message-ID:Date:Subject:Cc:To:From:Cc:Date:
+    From:Subject:Sender;
+    bh=YGa0+GcGPpO532H5Nd3/Pe429emU/ohbvkYX9EZDdTo=;
+    b=fN0YnURRckULG5s0CXARezmMGUSXUHZASwf9IhMkrhGe6igRwxPw4WPkxQOEmEnhsR
+    RPMdLYfibzehEJBWFbe8QR7rXu/GPGa/7v8SnfCaF3mry/dxvVgI1cGgUncU8TFgk66b
+    5V3BbjKIP012E2+5nT36UVy4yldnL/MXps9mqHJM5czbMlirOfrYxD7enk7SKiH8/SQx
+    tMnDWWLOsiFa4W0cwanhmJD38tJAXqjtM2sio6iEKxy72/iJTLSrwoCaiO6rJPFJtww4
+    blQ0zTqnzeEPER16wjd57o1qBKWMK9F3nGObVVQeBKD4sRiDVyjtMykp0AaSIY5uGq1p
+    pKwA==
+DKIM-Signature: v=1; a=ed25519-sha256; c=relaxed/relaxed; t=1781109489;
+    s=strato-dkim-0003; d=hartkopp.net;
+    h=References:In-Reply-To:Message-ID:Date:Subject:Cc:To:From:Cc:Date:
+    From:Subject:Sender;
+    bh=YGa0+GcGPpO532H5Nd3/Pe429emU/ohbvkYX9EZDdTo=;
+    b=Vcy1/ZmXs67DV+KTTq1DH19oj0ETUnE5thI4jgtwBfeUqZKiRZ6acVX2UPfp/uJPod
+    5QkLOpBzO89njkNbp0BA==
+X-RZG-AUTH: ":P2MHfkW8eP4Mre39l357AZT/I7AY/7nT2yrDxb8mjH4JKvMdQv2tTUsMrZpkO3Mw3lZ/t54cFxeEQ7s8bDup0Q=="
+Received: from vivo.lan
+    by smtp.strato.de (RZmta 55.0.1 AUTH)
+    with ESMTPSA id Kba96d25AGc9rfo
+	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256 bits))
+	(Client did not present a certificate);
+    Wed, 10 Jun 2026 18:38:09 +0200 (CEST)
+From: Oliver Hartkopp <socketcan@hartkopp.net>
+To: linux-can@vger.kernel.org
+Cc: Oliver Hartkopp <socketcan@hartkopp.net>,
+	sashiko-reviews@lists.linux.dev
+Subject: [PATCH] can: bcm: use list_add_rcu() in bcm_[rx|tx]_setup()
+Date: Wed, 10 Jun 2026 18:37:44 +0200
+Message-ID: <20260610163744.51980-2-socketcan@hartkopp.net>
+X-Mailer: git-send-email 2.53.0
+In-Reply-To: <20260610163744.51980-1-socketcan@hartkopp.net>
+References: <20260610163744.51980-1-socketcan@hartkopp.net>
 Precedence: bulk
 X-Mailing-List: sashiko-reviews@lists.linux.dev
 List-Id: <sashiko-reviews.lists.linux.dev>
 List-Subscribe: <mailto:sashiko-reviews+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:sashiko-reviews+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <20260609011717.79A371F00893@smtp.kernel.org>
+Content-Transfer-Encoding: 8bit
+Content-Type: text/plain; charset="us-ascii"
 
-On Tue, Jun 09, 2026 at 01:17:17AM +0000, sashiko-bot@kernel.org wrote:
-> Thank you for your contribution! Sashiko AI review found 2 potential issue(s) to consider:
-> - [Medium] build_id__snprintf() fails to null-terminate the output buffer when bf_size is 1.
-> - [Low] hwmon_pmu__describe_items() spins doing useless sysfs operations once the output buffer fills.
-> --
-> 
-> commit 0f670823c7b8e81b469db29dc89cf4b4de7e4cad
-> Author: Arnaldo Carvalho de Melo <acme@redhat.com>
-> 
-> perf tools: Use scnprintf() in build_id__snprintf() and hwmon read_events()
-> 
-> This commit switches build_id__snprintf() and hwmon_pmu__describe_items()
-> to use scnprintf() instead of snprintf() to prevent out-of-bounds length
-> tracking. It also modifies the loop guard in build_id__snprintf() to
-> prevent useless zero-byte writes once the buffer is full.
-> 
-> > diff --git a/tools/perf/util/build-id.c b/tools/perf/util/build-id.c
-> > index 8c0a9ae932aa5..82af3dca7e2fb 100644
-> > --- a/tools/perf/util/build-id.c
-> > +++ b/tools/perf/util/build-id.c
-> > @@ -93,8 +93,8 @@ int build_id__snprintf(const struct build_id *build_id, char *bf, size_t bf_size
-> >  		return 0;
-> >  	}
-> >  
-> > -	for (size_t i = 0; i < build_id->size && offs < bf_size; ++i)
-> > -		offs += snprintf(bf + offs, bf_size - offs, "%02x", build_id->data[i]);
-> > +	for (size_t i = 0; i < build_id->size && offs + 1 < bf_size; ++i)
-> > +		offs += scnprintf(bf + offs, bf_size - offs, "%02x", build_id->data[i]);
-> 
-> [Severity: Medium]
-> If bf_size is 1, does this new loop condition skip execution entirely?
-> 
-> If build_id->size > 0 and bf_size == 1, the offs + 1 < bf_size condition
-> is false on the first iteration. Because scnprintf is never called, would
-> bf[0] be left un-null-terminated?
+sashiko-bot remarked the missing use of list_add_rcu() in
+bcm_[rx|tx]_setup() to have a proper initialized bcm_op structure
+when bcm_proc_show() traverses the bcm_op's under rcu_read_lock().
 
-Addressing this one in v5.
-> 
-> > +++ b/tools/perf/util/hwmon_pmu.c
-> [ ... ]
-> > @@ -442,12 +442,12 @@ static size_t hwmon_pmu__describe_items(struct hwmon_pmu *hwm, char *out_buf, si
-> >  
-> >  				buf[read_len] = '\0';
-> >  				val = strtoll(buf, /*endptr=*/NULL, 10);
-> > -				len += snprintf(out_buf + len, out_buf_len - len, "%s%s%s=%g%s",
-> > -						len == 0 ? " " : ", ",
-> > -						hwmon_item_strs[bit],
-> > -						is_alarm ? "_alarm" : "",
-> > -						(double)val / 1000.0,
-> > -						hwmon_units[key.type]);
-> > +				len += scnprintf(out_buf + len, out_buf_len - len, "%s%s%s=%g%s",
-> > +						 len == 0 ? " " : ", ",
-> > +						 hwmon_item_strs[bit],
-> > +						 is_alarm ? "_alarm" : "",
-> > +						 (double)val / 1000.0,
-> > +						 hwmon_units[key.type]);
-> >  			}
-> >  			close(fd);
-> >  		}
-> 
-> [Severity: Low]
-> Does this loop also need an early break condition once the buffer fills?
+To cover all initial settings of the bcm_op's the list_add_rcu() calls
+are moved to the end of the setup code.
+
+Reported-by: sashiko-reviews@lists.linux.dev
+Closes: https://lore.kernel.org/linux-can/20260610094654.A1FFE1F00893@smtp.kernel.org/
+Fixes: dac5e6249159 ("can: bcm: add missing rcu read protection for procfs content")
+Signed-off-by: Oliver Hartkopp <socketcan@hartkopp.net>
+---
+ net/can/bcm.c | 15 +++++++++------
+ 1 file changed, 9 insertions(+), 6 deletions(-)
+
+diff --git a/net/can/bcm.c b/net/can/bcm.c
+index e5db4dca8d5a..76d1e067e156 100644
+--- a/net/can/bcm.c
++++ b/net/can/bcm.c
+@@ -954,10 +954,11 @@ static int bcm_tx_setup(struct bcm_msg_head *msg_head, struct msghdr *msg,
+ 			int ifindex, struct sock *sk)
+ {
+ 	struct bcm_sock *bo = bcm_sk(sk);
+ 	struct bcm_op *op;
+ 	struct canfd_frame *cf;
++	bool add_op_to_list = false;
+ 	unsigned int i;
+ 	int err;
  
-> The commit message notes that build_id__snprintf() was updated to avoid
-> spinning doing zero-byte writes once the buffer fills. 
+ 	/* we need a real device to send frames */
+ 	if (!ifindex)
+@@ -1094,12 +1095,11 @@ static int bcm_tx_setup(struct bcm_msg_head *msg_head, struct msghdr *msg,
  
-> In hwmon_pmu__describe_items(), once len reaches out_buf_len - 1, scnprintf
-> will return 0. Does this mean the loop continues for all remaining hardware
-> monitor items, performing unnecessary sysfs file open, read, and close
-> operations only to do a 0-byte scnprintf write?
+ 		/* currently unused in tx_ops */
+ 		hrtimer_setup(&op->thrtimer, hrtimer_dummy_timeout, CLOCK_MONOTONIC,
+ 			      HRTIMER_MODE_REL_SOFT);
+ 
+-		/* add this bcm_op to the list of the tx_ops */
+-		list_add(&op->list, &bo->tx_ops);
++		add_op_to_list = true;
+ 
+ 	} /* if ((op = bcm_find_op(&bo->tx_ops, msg_head->can_id, ifindex))) */
+ 
+ 	if (op->flags & SETTIMER) {
+ 		/* set timer values */
+@@ -1117,10 +1117,14 @@ static int bcm_tx_setup(struct bcm_msg_head *msg_head, struct msghdr *msg,
+ 		hrtimer_cancel(&op->timer);
+ 		/* spec: send CAN frame when starting timer */
+ 		op->flags |= TX_ANNOUNCE;
+ 	}
+ 
++	/* add this bcm_op to the list of the tx_ops? */
++	if (add_op_to_list)
++		list_add_rcu(&op->list, &bo->tx_ops);
++
+ 	if (op->flags & TX_ANNOUNCE)
+ 		bcm_can_tx(op);
+ 
+ 	if (op->flags & STARTTIMER)
+ 		bcm_tx_start_timer(op);
+@@ -1278,13 +1282,10 @@ static int bcm_rx_setup(struct bcm_msg_head *msg_head, struct msghdr *msg,
+ 		hrtimer_setup(&op->timer, bcm_rx_timeout_handler, CLOCK_MONOTONIC,
+ 			      HRTIMER_MODE_REL_SOFT);
+ 		hrtimer_setup(&op->thrtimer, bcm_rx_thr_handler, CLOCK_MONOTONIC,
+ 			      HRTIMER_MODE_REL_SOFT);
+ 
+-		/* add this bcm_op to the list of the rx_ops */
+-		list_add(&op->list, &bo->rx_ops);
+-
+ 		/* call can_rx_register() */
+ 		do_rx_register = 1;
+ 
+ 	} /* if ((op = bcm_find_op(&bo->rx_ops, msg_head->can_id, ifindex))) */
+ 
+@@ -1359,14 +1360,16 @@ static int bcm_rx_setup(struct bcm_msg_head *msg_head, struct msghdr *msg,
+ 			err = can_rx_register(sock_net(sk), NULL, op->can_id,
+ 					      REGMASK(op->can_id),
+ 					      bcm_rx_handler, op, "bcm", sk);
+ 		if (err) {
+ 			/* this bcm rx op is broken -> remove it */
+-			list_del_rcu(&op->list);
+ 			bcm_remove_op(op);
+ 			return err;
+ 		}
++
++		/* add this bcm_op to the list of the rx_ops */
++		list_add_rcu(&op->list, &bo->rx_ops);
+ 	}
+ 
+ 	return msg_head->nframes * op->cfsiz + MHSIZ;
+ }
+ 
+-- 
+2.53.0
 
-I've added this to a cleanups TODO file for future work, nice
-observation, the same pattern may happen in other places, worth a
-series.
-
-- Arnaldo
