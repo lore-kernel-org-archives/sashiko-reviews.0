@@ -1,149 +1,323 @@
-Received: from mail-oi1-f169.google.com (mail-oi1-f169.google.com [209.85.167.169])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 97370480DCD
-	for <sashiko-reviews@lists.linux.dev>; Wed, 10 Jun 2026 20:43:22 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.167.169
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 967353BBFC1;
+	Wed, 10 Jun 2026 21:15:30 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1781124205; cv=none; b=JR7R36SrQIXihjtwmOqehLVN5tGdn1IYzDooDphk5zZpsUsfUrW+YgPxbubCM3TgsenqL1JUt1J52Dy5xET9Snma04i1fH217NZDRCcdNVAtIqNHEZoP5eANUATdHaLiPnsLoHlpSCN1je27a5gxPfEo1N2a/pJ39e4eR/FZvQ0=
+	t=1781126132; cv=none; b=PzGSzaYLLRnZV83rP8UGKppfGK7qJWFhAaeDXgFXxMX3YVnhbxNxJ1p65iaIVEYHxRnMEbEYz3znbcYyiwTsI3D4DOKH4o95iPIeVCT7B6CiJhSn1JIPxTU7UGAvq1aP/NOzfsZFVbWIDQh5Mac6pVmU0NZvTV1SFe8TjotP/Y8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1781124205; c=relaxed/simple;
-	bh=eECEFWKviFGovSY8dv4YhSbKFI3KHDczqXjfIHtU4KI=;
-	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=KHTeqgjhvSiHYJ0JIaUXcyPDQORI+NQbmw564s9RtSU/hWctYia4weeeLiZz4FR6CqWNoYX/tMneV+/xxuEgrswpyKN0r9n92VScl6YIQmyXbnA1ufZup6NG5Tj2rskmDIpyyaFojLj+B74RCbXKcWA4dXXN2UgFEv7XoAp0ltU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=SSNlAr5x; arc=none smtp.client-ip=209.85.167.169
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+	s=arc-20240116; t=1781126132; c=relaxed/simple;
+	bh=uyFoOeDkztxeOhWQIOSvBUBBJ9P8DcYMVvC9TzzoksM=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=gONiW6fKG3PvelTT4EpJtVD5x0awkub+3oY1spU82P9fgfbRYU9yNHQEYzPmxkTRu+lFYnYr5PKE9+FEWVSIoLo1lstS+SErkOCkaDE0+Kv94RZ/+yBK87yjZVIMbBhtzMGtTCQkpxyNJSzbiBxcyZwg/TVHUvVhgj/xhc6YArk=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=Xt5vc8BB; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="SSNlAr5x"
-Received: by mail-oi1-f169.google.com with SMTP id 5614622812f47-4865e953031so266479b6e.0
-        for <sashiko-reviews@lists.linux.dev>; Wed, 10 Jun 2026 13:43:22 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20251104; t=1781124201; x=1781729001; darn=lists.linux.dev;
-        h=content-transfer-encoding:in-reply-to:from:content-language
-         :references:cc:to:subject:user-agent:mime-version:date:message-id
-         :from:to:cc:subject:date:message-id:reply-to;
-        bh=NpiWNaJanDKRHuWCGrhJcww0s9XnS0dPsuz5e44KkOA=;
-        b=SSNlAr5xmTerl19NcYw+X7n1rT7Z/qMwY53uynd5I47bnGq1YWG5yqWEKlqzy+C7Qg
-         6b8d2HXWKHzsY/H12Oa1OaDI2CbQ3MGvxTF1596ejcoGj/E1XVGEv4hvJsj7igoDGCEP
-         pLVo5F5wwKsR3FeEPACWdbGyKf9kN67DXpJkzwNXNR9Ad0eg3SlijJS2XtAMfwvSZ0zt
-         8PXLjAsDy8p32bIwB9QGnCbLuT9KL5AAg4+Pjpt+FhtVzn/wS9Xr4esdFPT6/u7PaACG
-         94iEc1gLXlByNl2lcvnPwCPFpiJ2P9SN/gY7AFyd9zl0eCxARrxPf4iVDkKhW7npgZhU
-         Hoaw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20251104; t=1781124201; x=1781729001;
-        h=content-transfer-encoding:in-reply-to:from:content-language
-         :references:cc:to:subject:user-agent:mime-version:date:message-id
-         :x-gm-gg:x-gm-message-state:from:to:cc:subject:date:message-id
-         :reply-to;
-        bh=NpiWNaJanDKRHuWCGrhJcww0s9XnS0dPsuz5e44KkOA=;
-        b=GdTwSjsLhaMD7MTBRFzKDvRBGyz0POanWjPHFiPlzHXZ7+K7jAMtx+WmRMsATuzcdQ
-         BfpW3XBjCaejn/UMFFgBEpMr01QaV/gn4T0nSBvHFJshuwRP744wppRsVwbhfuMUkeLC
-         FrEs7ihQ0Nh7zkTgCnIi8w2/xLBqeq+61Wet59onKqhVE/2m0n1//GSf4uPb3YSD/IQt
-         rhwSbUjxBIzXzGCIWexsnDX0fGK7vCAsHmFDQCBI+wRBNWU0DE+WxOPZukQjoJhyKp1S
-         lbP31H7ZEhRs3Sgh/O5uIKDzZyrwPGhFuvqNQHzkWMSek2yABdNVb08sYr+jk1WFEFzD
-         DNzw==
-X-Gm-Message-State: AOJu0YyLAHkUdc7CM62FgXB3LXAJi9jWrZn75PlnSkjqJxN+2nI3/Fn4
-	c8RpxfeGwC6CBE9+CHOyr/yskXWrwAV6PBfHHs2bsAjmL/NANidWCUlSciXLpA==
-X-Gm-Gg: Acq92OETRQkds16D1Um/aAi6mNnEzujSblnhzH9aOWsxe+h3mnAeyoju93073x6+TFg
-	AKYmQ5iSTJqkuTvXc0a3HiGIaPzil0eWFv+yQAjqCrM2ZEFqq5r06BZmI2nL1f51z2KOD1htkHx
-	aby+Dt7jmBZ34KqicICfequg9wkt21fGgsU/UUTEnnK1B7gR4bEIvWVEFOpg14Y9iS0gWGsTsvf
-	98vpGwqNt4JDJJKjJy82aQtAWzlO9ZetO5r/yZjjSkaXHN1EsmVBFUx4vXKTOWFYNHf9Jl6oTP9
-	LYTpGFrQkxOp2yxcfhhX7BCtGRmQJ7fflGCSuI186DbbuTjN2YpW5et8cTn3g2Wn5BwTs0vTFxP
-	FvUAtybHyVLLP+cl7SRaQMrwCQs9PoLKq3QYfebzo29zcRUkyW9ZS9DyaMZiQICEgZj32fZT29b
-	7TraRduvcl3buJuA//njsvsUw2KocQaqOn1Dv85pS/V1gmw6YT3gLBfNGet263BdgA1AKCVwei5
-	3mx0ZwxtKDuY0jrC6WREcM=
-X-Received: by 2002:a05:6808:2f08:b0:479:eead:df9 with SMTP id 5614622812f47-48717b1f6a9mr224413b6e.4.1781124201362;
-        Wed, 10 Jun 2026 13:43:21 -0700 (PDT)
-Received: from ?IPV6:2605:a601:aab9:5000:dc49:41fd:5d54:871a? ([2605:a601:aab9:5000:dc49:41fd:5d54:871a])
-        by smtp.gmail.com with ESMTPSA id 5614622812f47-4865b5a53bcsm19419533b6e.3.2026.06.10.13.43.20
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Wed, 10 Jun 2026 13:43:20 -0700 (PDT)
-Message-ID: <ca27f17a-d95e-471b-ad4f-ecbf6be1104d@gmail.com>
-Date: Wed, 10 Jun 2026 15:43:19 -0500
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="Xt5vc8BB"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 664B01F0089C;
+	Wed, 10 Jun 2026 21:15:29 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=kernel.org;
+	s=k20260515; t=1781126130;
+	bh=eZdnUgWPSfAfQ9vt+3lHMdRpdvzQnO1/6XjsRBGQ1jg=;
+	h=Date:From:To:Cc:Subject:References:In-Reply-To;
+	b=Xt5vc8BBqbZqXZM+hMo0xg7BD+s6UfInU0TlMREtJ5VPmOrg3dx7JqbBWqaS4hIzf
+	 yf6DjMah1ttTqLzQaGytc/raJlf8e0vZ775UAeTQrTXYgEezLpv/dcyqH1DQ9Q0hfB
+	 xWhy1rX0nDOJR2zo9xnTepOOfkRndi/+6It/IJQFS9D8ATCZMtSA01IH3E8OTVHQka
+	 U/ozbJLAK/hoT8KX5Zdx319bOftN0i3b7UhG8r3HCwJTjR36TpB2uDE63EiUvlDT2A
+	 dhKKuoWhPtCze7iidHDbRXIPQWhruoinm7Bfhm5GJeKLtltjgeMgWS5n1W4ZQWPrCC
+	 s5codP+N/j1ZQ==
+Date: Wed, 10 Jun 2026 18:15:25 -0300
+From: Arnaldo Carvalho de Melo <acme@kernel.org>
+To: Namhyung Kim <namhyung@kernel.org>
+Cc: sashiko-reviews@lists.linux.dev, linux-perf-users@vger.kernel.org
+Subject: Re: [PATCH] perf jitdump: Fix a build error with ASAN
+Message-ID: <ainT7Y11z6zTsrf-@x1>
+References: <20260605064932.34316-1-namhyung@kernel.org>
+ <20260605070349.E27A41F00893@smtp.kernel.org>
+ <aiNaLKTyJWg9sEtb@google.com>
 Precedence: bulk
 X-Mailing-List: sashiko-reviews@lists.linux.dev
 List-Id: <sashiko-reviews.lists.linux.dev>
 List-Subscribe: <mailto:sashiko-reviews+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:sashiko-reviews+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v2] scsi: target: Allow FUA if no write cache enabled
-To: sashiko-reviews@lists.linux.dev,
- "Martin K. Petersen" <martin.petersen@oracle.com>
-Cc: linux-scsi@vger.kernel.org
-References: <20260609202156.90700-1-stuart.w.hayes@gmail.com>
- <20260609203953.154771F00898@smtp.kernel.org>
-Content-Language: en-US
-From: stuart hayes <stuart.w.hayes@gmail.com>
-In-Reply-To: <20260609203953.154771F00898@smtp.kernel.org>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
+Content-Type: text/plain; charset=iso-8859-1
+Content-Disposition: inline
+Content-Transfer-Encoding: 8bit
+In-Reply-To: <aiNaLKTyJWg9sEtb@google.com>
 
-On 6/9/2026 3:39 PM, sashiko-bot@kernel.org wrote:
-> Thank you for your contribution! Sashiko AI review found 1 potential issue(s) to consider:
-> - [Critical] Silently dropping the FUA bit when WCE=0 prevents the backend from honoring the FUA request, causing silent data loss in the fileio AIO backend.
-> --
+On Fri, Jun 05, 2026 at 04:22:20PM -0700, Namhyung Kim wrote:
+> On Fri, Jun 05, 2026 at 07:03:49AM +0000, sashiko-bot@kernel.org wrote:
+> > Thank you for your contribution! Sashiko AI review found 10 potential issue(s) to consider:
+> > 
+> > Pre-existing issues:
+> > - [High] Unlocking an unlocked stream on the error path causes undefined behavior.
+> > - [High] Incorrect logic for skipping extended jitdump headers leads to parsing failure.
+> > - [High] Ignoring the return value of `dirname()` breaks directory extraction and causes ENOTDIR failures.
+> > - [High] If the generated JIT ELF path exceeds PATH_MAX, snprintf truncation causes size underflow resulting in a heap buffer overflow.
+> > - [High] Cross-endian byte swapping of JIT_CODE_DEBUG_INFO records corrupts data by ignoring the flexible array member.
+> > - [High] Lack of validation on `code_size` enables arbitrary out-of-bounds read and memory leakage.
+> > - [Medium] Memory leak of `debug_data` and `unwinding_data` pointers.
+> > - [Medium] Memory leak of `event` in `jit_repipe_code_move`.
+> > - [Medium] Ineffective inter-process synchronization using `flockfile`.
+> > - [Medium] Integer underflow leading to massive malloc in `jit_repipe_debug_info`.
 > 
-> commit 5cb17faff566c1313276f5a67af675e43649d8d6
-> Author: Stuart Hayes <stuart.w.hayes@gmail.com>
-> 
-> scsi: target: Allow FUA if no write cache enabled
-> 
-> This commit modifies the target core code to ignore the FUA bit in SCSI
-> commands for targets without an enabled write cache. This allows systems
-> with firmware that aggressively sets the FUA bit to successfully boot
-> without failing due to unsupported FUA write errors.
-> 
->> diff --git a/drivers/target/target_core_sbc.c b/drivers/target/target_core_sbc.c
->> index 21f5cb86d70c0..ffd2b6c9bd231 100644
->> --- a/drivers/target/target_core_sbc.c
->> +++ b/drivers/target/target_core_sbc.c
->> @@ -754,6 +754,12 @@ sbc_check_dpofua(struct se_device *dev, struct se_cmd *cmd, unsigned char *cdb)
->>   	}
->>   	if (cdb[1] & 0x8) {
->>   		if (!target_check_fua(dev)) {
->> +			/*
->> +			 * Silently ignore FUA if there's no write cache.
->> +			 */
->> +			if (!target_check_wce(dev))
->> +				return 0;
->> +
-> 
-> [Severity: Critical]
-> Does returning early here prevent the command from receiving the SCF_FUA flag?
-> 
-> By returning 0, this bypasses the cmd->se_cmd_flags |= SCF_FUA; assignment
-> that happens further down in sbc_check_dpofua().
-> 
-> While WCE=0 implies no write cache, the fileio AIO backend relies entirely
-> on the SCF_FUA flag to ensure synchronous writes:
-> 
-> drivers/target/target_core_file.c:fd_execute_rw_aio() {
-> ...
-> 	aio_cmd->iocb.ki_flags = IOCB_DIRECT;
-> 
-> 	if (is_write && (cmd->se_cmd_flags & SCF_FUA))
-> 		aio_cmd->iocb.ki_flags |= IOCB_DSYNC;
-> ...
-> }
-> 
-> Without the SCF_FUA flag, fd_execute_rw_aio() will issue asynchronous
-> writes without flushing the cache, as it ignores the O_DSYNC flag set on
-> the underlying file descriptor.
-> 
-> Could this regression lead to silent data loss on power failure, since
-> what used to be rejected as an unsupported FUA write will now complete
-> asynchronously without a disk cache flush?
-> 
+> I don't plan to touch any of these issues, at least in the near future.
 
-Valid point, yes. I will fix.
+LOL, Sashiko... I'll ask Claude to add these in my TODOs,
 
-Also, I accidentally submitted this as V2 when it should have been V3, 
-sorry.
+Thanks, applied to perf-tools-next, for v7.2.
 
->>   			pr_err("Got CDB: 0x%02x with FUA bit set, but device"
->>   			       " does not advertise support for FUA write\n",
->>   			       cdb[0]);
+- Arnaldo
+ 
+> Thanks,
+> Namhyung
 > 
-
+> > --
+> > 
+> > commit f314399f4edf9366c3ee4d529f45cb2d7e7d454d
+> > Author: Namhyung Kim <namhyung@kernel.org>
+> > 
+> > perf jitdump: Fix a build error with ASAN
+> > 
+> > This patch resolves a stringop-truncation build error when compiling perf
+> > with ASAN on GCC 16. It reduces the strncpy bound by one byte to avoid
+> > truncation warnings.
+> > 
+> > > diff --git a/tools/perf/util/jitdump.c b/tools/perf/util/jitdump.c
+> > > index e0ce8b9047298..16390e7f9062d 100644
+> > > --- a/tools/perf/util/jitdump.c
+> > > +++ b/tools/perf/util/jitdump.c
+> > > @@ -234,7 +234,7 @@ jit_open(struct jit_buf_desc *jd, const char *name)
+> > >  	/*
+> > >  	 * keep dirname for generating files and mmap records
+> > >  	 */
+> > > -	strncpy(jd->dir, name, PATH_MAX);
+> > > +	strncpy(jd->dir, name, PATH_MAX - 1);
+> > >  	jd->dir[PATH_MAX - 1] = '\0';
+> > >  	dirname(jd->dir);
+> > 
+> > [Severity: High]
+> > This isn't a bug introduced by this patch, but is it correct to ignore the
+> > return value of dirname()?
+> > 
+> > If jd->dir contains no slashes, glibc dirname() returns a pointer to "." but
+> > leaves the original string unmodified. Since the return value is discarded,
+> > jd->dir retains the full filename instead of becoming ".". This could cause
+> > later snprintf calls to use the target file as a directory component, leading
+> > to ENOTDIR failures.
+> > 
+> > >  	free(buf);
+> > 
+> > [Severity: High]
+> > This is a pre-existing issue, but does the error handling path incorrectly
+> > unlock an unlocked stream?
+> > 
+> > If malloc() fails early in jit_open(), it jumps to the error label:
+> > 
+> > tools/perf/util/jitdump.c:jit_open() {
+> >     ...
+> > 	buf = malloc(bsz);
+> > 	if (!buf)
+> > 		goto error;
+> > 
+> > 	/*
+> > 	 * protect from writer modifying the file while we are reading it
+> > 	 */
+> > 	flockfile(jd->in);
+> >     ...
+> > error:
+> > 	free(buf);
+> > 	funlockfile(jd->in);
+> > 	fclose(jd->in);
+> > 	return retval;
+> > }
+> > 
+> > Since flockfile() is only called after malloc() succeeds, calling funlockfile()
+> > here results in undefined behavior on an unlocked stream.
+> > 
+> > [Severity: High]
+> > This is a pre-existing issue, but does this logic break extended header reads?
+> > 
+> > In jit_open(), when handling extended headers, bsz is updated to bs right
+> > before calculating the read size:
+> > 
+> > tools/perf/util/jitdump.c:jit_open() {
+> >     ...
+> > 	if (bs > bsz) {
+> > 		n = realloc(buf, bs);
+> > 		if (!n)
+> > 			goto error;
+> > 		bsz = bs;
+> > 		buf = n;
+> > 		/* read extra we do not know about */
+> > 		ret = fread(buf, bs - bsz, 1, jd->in);
+> > 		if (ret != 1)
+> > 			goto error;
+> > 	}
+> >     ...
+> > }
+> > 
+> > Because bsz = bs, the read size bs - bsz is always 0. fread() will return 0,
+> > causing the ret != 1 check to fail and unconditionally jump to the error path.
+> > 
+> > [Severity: High]
+> > This is a pre-existing issue, but could snprintf() truncation cause an
+> > out-of-bounds pointer calculation?
+> > 
+> > In jit_repipe_code_load(), snprintf() calculates a path:
+> > 
+> > tools/perf/util/jitdump.c:jit_repipe_code_load() {
+> >     ...
+> > 	filename = event->mmap2.filename;
+> > 	size = snprintf(filename, PATH_MAX, "%s/jitted-%d-%" PRIu64 ".so",
+> > 			jd->dir,
+> > 			nspid,
+> > 			count);
+> > 
+> > 	size++; /* for \0 */
+> > 
+> > 	size = PERF_ALIGN(size, sizeof(u64));
+> >     ...
+> > 	event->mmap2.header.size = (sizeof(event->mmap2) -
+> > 			(sizeof(event->mmap2.filename) - size) + idr_size);
+> >     ...
+> > 	id = (void *)((unsigned long)event + event->mmap.header.size - idr_size);
+> > 	if (jd->sample_type & PERF_SAMPLE_TID) {
+> > 		id->pid  = pid;
+> >     ...
+> > }
+> > 
+> > If the string exceeds PATH_MAX, snprintf() returns the untruncated length. The
+> > expression sizeof(event->mmap2.filename) - size will then underflow because size
+> > is greater than PATH_MAX, resulting in a massively inflated header.size. The
+> > pointer id will point outside the allocated bounds, leading to heap corruption
+> > when id->pid is assigned.
+> > 
+> > [Severity: High]
+> > This isn't a bug introduced by this patch, but does the byte-swapping logic
+> > corrupt data by ignoring a flexible array member?
+> > 
+> > In jit_get_next_entry():
+> > 
+> > tools/perf/util/jitdump.c:jit_get_next_entry() {
+> >     ...
+> > 	case JIT_CODE_DEBUG_INFO:
+> > 		if (jd->needs_bswap) {
+> > 			uint64_t n;
+> > 			jr->info.code_addr = bswap_64(jr->info.code_addr);
+> > 			jr->info.nr_entry  = bswap_64(jr->info.nr_entry);
+> > 			for (n = 0 ; n < jr->info.nr_entry; n++) {
+> > 				jr->info.entries[n].addr    = bswap_64(jr->info.entries[n].addr);
+> > 				jr->info.entries[n].lineno  = bswap_32(jr->info.entries[n].lineno);
+> > 				jr->info.entries[n].discrim = bswap_32(jr->info.entries[n].discrim);
+> > 			}
+> > 		}
+> > 		break;
+> >     ...
+> > }
+> > 
+> > struct debug_entry contains a flexible array member (const char name[]). Using
+> > array indexing (jr->info.entries[n]) assumes fixed-size elements. This will
+> > calculate incorrect offsets that land inside the variable-length strings of
+> > earlier entries, overwriting them with byte-swapped data.
+> > 
+> > [Severity: Medium]
+> > This is a pre-existing issue, but do jd->debug_data and jd->unwinding_data leak?
+> > 
+> > In jit_repipe_debug_info(), memory is allocated and assigned:
+> > 
+> > tools/perf/util/jitdump.c:jit_repipe_debug_info() {
+> >     ...
+> > 	data = malloc(sz);
+> > 	if (!data)
+> > 		return -1;
+> > 
+> > 	memcpy(data, &jr->info.entries, sz);
+> > 
+> > 	jd->debug_data       = data;
+> >     ...
+> > }
+> > 
+> > While these are freed during jit_repipe_code_load(), if a JIT dump terminates
+> > early, lacks trailing load records, or contains consecutive debug records, the
+> > previously allocated buffers are overwritten or never freed. Neither jit_close()
+> > nor jit_process() cleans up jd->debug_data or jd->unwinding_data.
+> > 
+> > [Severity: Medium]
+> > This isn't a bug introduced by this patch, but does jit_repipe_code_move() leak
+> > its event allocation?
+> > 
+> > tools/perf/util/jitdump.c:jit_repipe_code_move() {
+> >     ...
+> > 	event = calloc(1, sizeof(*event) + 16);
+> > 	if (!event)
+> > 		return -1;
+> >     ...
+> > out:
+> > 	perf_sample__exit(&sample);
+> > 	return ret;
+> > }
+> > 
+> > The event buffer is dynamically allocated but there is no free(event) in the
+> > cleanup block, leaking the memory for every JIT_CODE_MOVE record processed.
+> > 
+> > [Severity: Medium]
+> > This is a pre-existing issue, but is flockfile() being used incorrectly for
+> > inter-process synchronization?
+> > 
+> > In jit_open():
+> > 
+> > tools/perf/util/jitdump.c:jit_open() {
+> >     ...
+> > 	/*
+> > 	 * protect from writer modifying the file while we are reading it
+> > 	 */
+> > 	flockfile(jd->in);
+> >     ...
+> > }
+> > 
+> > flockfile() is a POSIX thread mutex that provides no OS-level file locking.
+> > It cannot prevent an external process from modifying the file concurrently,
+> > making this synchronization completely ineffective against external writers.
+> > 
+> > [Severity: Medium]
+> > This isn't a bug introduced by this patch, but could this allocation size calculation
+> > underflow?
+> > 
+> > In jit_repipe_debug_info():
+> > 
+> > tools/perf/util/jitdump.c:jit_repipe_debug_info() {
+> >     ...
+> > 	sz  = jr->prefix.total_size - sizeof(jr->info);
+> > 	data = malloc(sz);
+> >     ...
+> > }
+> > 
+> > If total_size is smaller than sizeof(jr->info), the unsigned subtraction will
+> > underflow to a massive value, leading to a guaranteed malloc() failure or
+> > instability if memory is overcommitted.
+> > 
+> > [Severity: High]
+> > This is a pre-existing issue, but does lack of validation on code_size allow
+> > out-of-bounds reads?
+> > 
+> > In jit_repipe_code_load():
+> > 
+> > tools/perf/util/jitdump.c:jit_repipe_code_load() {
+> >     ...
+> > 	csize = jr->load.code_size;
+> >     ...
+> > 	code  = (unsigned long)jr + jr->load.p.total_size - csize;
+> >     ...
+> > 	ret = jit_emit_elf(jd, filename, sym, addr, (const void *)uaddr, csize, ...
+> >     ...
+> > }
+> > 
+> > If an artificially large csize is parsed from the file without being bounds
+> > checked against total_size, the code pointer calculation will underflow and
+> > point into earlier heap memory. jit_emit_elf() will then dump csize bytes
+> > from this out-of-bounds memory into the ELF file.
+> > 
+> > -- 
+> > Sashiko AI review · https://sashiko.dev/#/patchset/20260605064932.34316-1-namhyung@kernel.org?part=1
