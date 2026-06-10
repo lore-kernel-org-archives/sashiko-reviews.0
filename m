@@ -1,100 +1,118 @@
-Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-pf1-f201.google.com (mail-pf1-f201.google.com [209.85.210.201])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C60B13446C7;
-	Wed, 10 Jun 2026 17:28:46 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 55709261B71
+	for <sashiko-reviews@lists.linux.dev>; Wed, 10 Jun 2026 18:06:06 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.210.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1781112527; cv=none; b=qCxqUF7BooG6/2P+1SqHio0+l1+gPcB1e9iaIAfPIdUJiD2bMkwuC983yCdXULmU4IxKQMdaoW84Brl4jAENBK3KUmWuLD+O/9j1i0GPeyoC1XAGNuZ7ZchsNZ4qodRH8O9Wcz0nAmCs0gG/MLSJAWECoyLSBdlmV5X7FqrGZzo=
+	t=1781114768; cv=none; b=riQUYdgxfB/Gg/+mD9oe+kMQtWteOuwRybZWw8qTy5ov3fX8tKQsyseg85A6B0JFR76QoJiopmSapf/bA5KQFXzLAIc1ncspryXIwt1cKfIpdkOfO0imtGnf2+wl/OLtPqU8bHrvqzxMryN7bcGNNd/Ip37E2Niv2J3Lw9dNugI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1781112527; c=relaxed/simple;
-	bh=Q9WQirJVF4aqZ32jEMvsLOPaqWt6o09PIbeKmH/wKJs=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=uumyk7IznwhGInazLvEjel+fYz00Zfrhm6FOQjDEBKwtmA5w06nSPRCo0WSd8Su5B9+/RIro6KX5KZaF16VpK/FHZHekhm51Kq+E9Fh6nyB7YWaLqhiXxyk0oVWL+jge/VN8rbjB2Fj1u7KWgzajL8hSyAubWnyUxc0K1CPZ3C4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=FyzEWFyQ; arc=none smtp.client-ip=100.103.45.18
+	s=arc-20240116; t=1781114768; c=relaxed/simple;
+	bh=k6GjeYxgByZDSIuzADvt///QHoQS2Zd6HyjRvMqVz9k=;
+	h=Date:In-Reply-To:Mime-Version:References:Message-ID:Subject:From:
+	 To:Cc:Content-Type; b=Nd+x0+SEVUMNl6qLbjW/Bl/qmIC57X7fi/hoPArvPq15gV2/vfo06Az+veDpdK92QIUci5wQmqe9H2S8WrO+u5JT1Biaqvkex6KmJVPcwQ/pKW2qZ7xedcpnpJi+dOB8VgJeuBf3iy1LXVcPFaq+zUlNh4CJAx9PnaT9pcXFRMA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=google.com; spf=pass smtp.mailfrom=flex--seanjc.bounces.google.com; dkim=pass (2048-bit key) header.d=google.com header.i=@google.com header.b=MCiSlvEM; arc=none smtp.client-ip=209.85.210.201
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=google.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=flex--seanjc.bounces.google.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="FyzEWFyQ"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1F2631F00893;
-	Wed, 10 Jun 2026 17:28:44 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=kernel.org;
-	s=k20260515; t=1781112526;
-	bh=tZlE3BHAUYAhd7eSi9AydCCRFItUw8s+poNZbb1yMxE=;
-	h=Date:From:To:Cc:Subject:References:In-Reply-To;
-	b=FyzEWFyQY3Lmf+4fEJggqKbz965JaUBRyo6K/HKbz9mi5IW8MnpuUS+nRXKHbjWS1
-	 R49KlNnID/NJVDKtpCB8ewwhP6dFjdghJZhxJBmdXGAEj0vxYQ7tPt61cZiY60qcR3
-	 lVCWv66Py9rcZPf/6D9tQCs7JTjL3U6qop8wXxo1iVpJQnEQGZgCkraOj99/3EKnKH
-	 +O4bRG855IpXoYd4o9Pjw1ZN1worJLXwv6OG+9ILSucQTiuvTrVcOz+wjFpO752Hvh
-	 ytnwoZkTRumuTjWlIzb6bpY2kMpnNTjSzkcPxxi2DSgnVyZOC7oKN7N2N15XOaqGqK
-	 IzJilJ+rzl7qA==
-Date: Wed, 10 Jun 2026 19:28:41 +0200
-From: Manivannan Sadhasivam <mani@kernel.org>
-To: sashiko-reviews@lists.linux.dev
-Cc: Hans Zhang <18255117159@163.com>, linux-pci@vger.kernel.org
-Subject: Re: [PATCH 8/9] PCI: vmd: Protect root bus removal with rescan lock
-Message-ID: <r5vwd573ydynlrrax5iy6jt25dc2yiqkvlciqy366zsxxu4d7f@hyvqgsdj4ulw>
-References: <20260521161822.132996-9-18255117159@163.com>
- <20260521212024.8689D1F000E9@smtp.kernel.org>
+	dkim=pass (2048-bit key) header.d=google.com header.i=@google.com header.b="MCiSlvEM"
+Received: by mail-pf1-f201.google.com with SMTP id d2e1a72fcca58-84238e83851so4434475b3a.1
+        for <sashiko-reviews@lists.linux.dev>; Wed, 10 Jun 2026 11:06:06 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=google.com; s=20251104; t=1781114766; x=1781719566; darn=lists.linux.dev;
+        h=cc:to:from:subject:message-id:references:mime-version:in-reply-to
+         :date:from:to:cc:subject:date:message-id:reply-to;
+        bh=xkFkBgd+xuByNIegpgrKJZN9LP1SaVEtSyMl1cJUNS0=;
+        b=MCiSlvEMNWKzI9MxU/QsPKnyqhP6oBOL6amkiQz3diNCiyE3uVOMvcXglLXCT3dkrB
+         BAQ1XkFht57xzyqw3prtt1ErmVhlQ97tEi8rjpXTR2S7td7aYyphuNS7+ihPseXjJDzv
+         sbMPsXZk+yVG6QMIxWKfCHoY+pHyy4ZwZkVtm+TvTgk/+WH8Nie0mJofk064oDDgCLwe
+         uC4nTQorx5PYFN3iRctxo6gHnpqxR68H3tl6dQEdZgUvg2FnksoBv315cInocKAJUq51
+         4BcjZUCGbSlS+mtwsCDbf5xKHH2O048vJwJ7ueofr1afE26Qj1ac7XNOyjfxQEYyUnbc
+         naZA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20251104; t=1781114766; x=1781719566;
+        h=cc:to:from:subject:message-id:references:mime-version:in-reply-to
+         :date:x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+        bh=xkFkBgd+xuByNIegpgrKJZN9LP1SaVEtSyMl1cJUNS0=;
+        b=DqnUUdC4DdyUF0Y6hl736Os8YJbf9bPQFvZIP/diNCevYtUjOSxlA88uvKiAOeXMtm
+         fCUoS27DJ/sVL9dg7Eap+O2vzrwaNY83Opy9WHXKTcO2xr5GU4SmkkAPAFlaVyddBCsa
+         LtmHXu4aHB5tNppQbhhztuN2gZR8fHoWXxlOCmJyQj1D+NtMMv41+KQnf8ZV9N1yPtfD
+         DD/3LSGSA9EP6ZoJvHqUs0QT/85mux8+f/la8tGYMD3Z7BXN5yE1C5DCkeVFEJpMEAa1
+         mb/vtPumAYt3wEIZA0dmtsc+JZjLpwbYxHLIATEEqSdSq3HYAkfjOTvlIE3ETppIR1rk
+         9c6A==
+X-Gm-Message-State: AOJu0Yzlo4CH7Qxpx/MJt0aLEXRXFRF06686nDG2VALaq0foXQ3GmCIV
+	OwRFjLeRHHHJ7RfxfuuTnZF2LB7GxDkbd+FM8vNzc9QvjePdFT5Anh9IkD4mC7mh7hfw6ujyXh5
+	0nPljxKf6jlzuQDperuqMiBywTbiFibR2yrKTFzcz7vFuZjNJYihDQ311m1dmatJ1/FHWIOxdtm
+	k8PZ0vOhgrb9hpM8xM1xXyvcz8N2p4FqsLKoRaejQ4snKZKh/0
+X-Received: from pfob8.prod.google.com ([2002:aa7:8708:0:b0:842:47f8:d51d])
+ (user=seanjc job=prod-delivery.src-stubby-dispatcher) by 2002:a05:6a00:2303:b0:842:3be7:4d55
+ with SMTP id d2e1a72fcca58-842b0e588c9mr27119419b3a.11.1781114765452; Wed, 10
+ Jun 2026 11:06:05 -0700 (PDT)
+Date: Wed, 10 Jun 2026 11:06:04 -0700
+In-Reply-To: <20260610010517.1333F1F00893@smtp.kernel.org>
 Precedence: bulk
 X-Mailing-List: sashiko-reviews@lists.linux.dev
 List-Id: <sashiko-reviews.lists.linux.dev>
 List-Subscribe: <mailto:sashiko-reviews+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:sashiko-reviews+unsubscribe@lists.linux.dev>
-MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-Content-Transfer-Encoding: 8bit
-In-Reply-To: <20260521212024.8689D1F000E9@smtp.kernel.org>
+Mime-Version: 1.0
+References: <20260610005338.2967132-8-seanjc@google.com> <20260610010517.1333F1F00893@smtp.kernel.org>
+Message-ID: <aimnjHurnYPMI5ii@google.com>
+Subject: Re: [PATCH v6 07/18] KVM: selftests: Add VFIO device support to
+ eventfd IRQ test
+From: Sean Christopherson <seanjc@google.com>
+To: sashiko-reviews@lists.linux.dev
+Cc: kvm@vger.kernel.org
+Content-Type: text/plain; charset="us-ascii"
 
-On Thu, May 21, 2026 at 09:20:24PM +0000, sashiko-bot@kernel.org wrote:
-> Thank you for your contribution! Sashiko AI review found 2 potential issue(s) to consider:
+On Wed, Jun 10, 2026, sashiko-bot@kernel.org wrote:
+> > diff --git a/tools/testing/selftests/kvm/irq_test.c b/tools/testing/selftests/kvm/irq_test.c
+> > index 9f8895b898214..6888be54ee4a9 100644
+> > --- a/tools/testing/selftests/kvm/irq_test.c
+> > +++ b/tools/testing/selftests/kvm/irq_test.c
 > 
-> New issues:
-> - [High] Acquiring `pci_rescan_remove_lock` in `vmd_remove()` introduces self-deadlocks and AB-BA lock inversions.
+> [ ... ]
 > 
-> Pre-existing issues:
-> - [High] SRCU structures are destroyed in `vmd_remove()` while their corresponding interrupt handlers are still registered and active, leading to a Use-After-Free in interrupt context.
-> --
-> 
-> commit 8d5d06b67e6b02d2cc99f2151e90ba61c0d16662
-> Author: Hans Zhang <18255117159@163.com>
-> 
-> PCI: vmd: Protect root bus removal with rescan lock
-> 
-> This commit acquires the pci_rescan_remove_global_lock while stopping
-> and removing the VMD root bus in vmd_remove(). This is intended to
-> prevent races with concurrent PCI rescan operations.
-> 
-> > diff --git a/drivers/pci/controller/vmd.c b/drivers/pci/controller/vmd.c
-> > index d4ae250d4bc6d..9565567026cf0 100644
-> > --- a/drivers/pci/controller/vmd.c
-> > +++ b/drivers/pci/controller/vmd.c
-> > @@ -1056,9 +1056,11 @@ static void vmd_remove(struct pci_dev *dev)
-> >  {
-> >  	struct vmd_dev *vmd = pci_get_drvdata(dev);
+> > @@ -74,11 +107,29 @@ static void kvm_route_msi(struct kvm_vm *vm, u32 gsi, struct kvm_vcpu *vcpu,
+> >  	vm_ioctl(vm, KVM_SET_GSI_ROUTING, &routing.header);
+> >  }
 > >  
-> > +	pci_lock_rescan_remove();
+> > +static const char *probe_iommu_type(void)
+> > +{
+> > +	int io_fd;
+> > +
+> > +	io_fd = open("/dev/iommu", O_RDONLY);
+> > +	if (io_fd >= 0) {
+> > +		close(io_fd);
+> > +		return MODE_IOMMUFD;
+> > +	}
+> > +
+> > +	io_fd = __open_path_or_exit("/dev/vfio", O_RDONLY,
+> > +				    "Is VFIO (or IOMMUFD) loaded and enabled?");
+> > +	close(io_fd);
 > 
-> [Severity: High]
-> Can acquiring pci_rescan_remove_lock here cause self-deadlocks or AB-BA lock
-> inversions?
+> [Severity: Medium]
+> The commit message states that the test will auto-probe IOMMUFD vs legacy
+> VFIO and skip the test if neither is available. However, probe_iommu_type()
+> calls __open_path_or_exit() on /dev/vfio.
 > 
-> When a VMD device is removed via PCI hotplug or sysfs remove node, the PCI
-> core calls pci_stop_and_remove_bus_device_locked(), which acquires
-> pci_rescan_remove_lock and eventually triggers vmd_remove(). Because
-> pci_rescan_remove_lock is a non-recursive mutex, won't attempting to acquire
-> it again immediately self-deadlock?
+> Because /dev/vfio is a directory, open() with O_RDONLY will succeed if the
+> directory exists (e.g., created by udev or left over after a module unload),
+> even if the VFIO module is not loaded and the character device is absent.
+> Opening a directory does not trigger the kernel's character device module
+> autoloading.
 > 
-> Also, when unbound via sysfs, the core holds device_lock and calls
-> vmd_remove(), which then waits for pci_rescan_remove_lock. Since normal PCI
-> rescans acquire pci_rescan_remove_lock first, then attempt to acquire
-> device_lock, does this create an AB-BA lock inversion?
+> If this occurs, probe_iommu_type() incorrectly assumes VFIO is available and
+> returns MODE_VFIO_TYPE1_IOMMU. The test then calls iommu_init(), which attempts
+> to open /dev/vfio/vfio and will fatally abort, resulting in a test crash rather
+> than a clean skip.
 > 
+> Additionally, using __open_path_or_exit() will cause the test to exit rather
+> than skip if the path does not exist.
+> 
+> Should this probe instead check for the /dev/vfio/vfio character device and
+> use open() instead of __open_path_or_exit() to allow the test to gracefully
+> skip and trigger module autoloading?
 
-This is a valid concern. Since VMD is registered as a PCI driver, removing the
-VMD device through sysfs will trigger vmd_remove() callback and it will result
-in deadlock. The AB-BA lock inversion is also valid.
-
-- Mani
-
--- 
-மணிவண்ணன் சதாசிவம்
+No, "probe" here means guessing which flavor of VFIO vs. IOMMUFD, it doesn't
+mean probing a kernel module.
