@@ -1,192 +1,120 @@
-Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-pf1-f174.google.com (mail-pf1-f174.google.com [209.85.210.174])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7683838E5C8
-	for <sashiko-reviews@lists.linux.dev>; Wed, 10 Jun 2026 20:04:27 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4F45E3955CA
+	for <sashiko-reviews@lists.linux.dev>; Wed, 10 Jun 2026 20:15:03 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.210.174
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1781121873; cv=none; b=N0mp7LZMNjIzOcYbvYsp5SSWnPFw7iE9x5cYYni/yLygXSMMWTl9QIfW5HYvku5UAg1kakqM/B0JvfisFQMMOyZMsLAWXje7cEO157pA18dSz5yU9SVfgOglaPjATU+INYCpRamtXcwns4bxXpyUOpSs/ZBh2ls6fmsznSU0r+Y=
+	t=1781122504; cv=none; b=LNrrTgWuxiJkK642IpeSgg1rHnJXSh7lHeCr6CzBN87OIf8pnkXxbrsMbI9pooXyaNcdkMT00YFR7voU3WzRxYsoz8bgZ4yzkiUD3bJkJIXVabRy5CbMgidV2sWpQi5I/olMFsxwfBb6bc7CteSNBuXr5YKhDYcHJwoOPXHzeSs=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1781121873; c=relaxed/simple;
-	bh=CQV/3/wnLgXrS+Hbzk0yPlUDeuZQjMiLX60w2A/e4AY=;
-	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
-	 To:Cc:Content-Type; b=R4yEpOe2c8/8pXCZd1NG/sf5On1P4orhxptkRqxzqd5RWGweFeKe/XIzXWzjm3GcjMXEAU/VbPoOfqwogPrQq8ITHD2kuBb/zonzcRQsnhOgBMZAlZ+toBx+LB2aYBqDGDP3lc1ZxZjmGS2agsN0pwZBzIOcialIP4r1lTLy/M8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=Z0Wc78qX; arc=none smtp.client-ip=100.103.45.18
+	s=arc-20240116; t=1781122504; c=relaxed/simple;
+	bh=0/TGp3mL/zf8reME5kYkhYaPhOH91jl/0E7euIeuEBQ=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=rEYBF0gNsoP+BqiqCtWAJCltVkydRtdZ99F9UgkcpLIaxQffVoSla8qvvPzj55EXHALCRIi9FTmxnxIN5KbbZiDyzuVMj1JMi9OB/ngElfqj+D5jQ0HEKwvV62GNrOpo9gAYYrQbTwcXLb74JUbp8MCrYFh7q6Ak7terinVrB+w=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=google.com; spf=pass smtp.mailfrom=google.com; dkim=pass (2048-bit key) header.d=google.com header.i=@google.com header.b=vyl3434U; arc=none smtp.client-ip=209.85.210.174
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=google.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=google.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="Z0Wc78qX"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 399BC1F00899
-	for <sashiko-reviews@lists.linux.dev>; Wed, 10 Jun 2026 20:04:27 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=kernel.org;
-	s=k20260515; t=1781121867;
-	bh=XjTq1oOP/feqMLNEtr+6lW6g9yxstuMtmIXdvnkxczI=;
-	h=References:In-Reply-To:From:Date:Subject:To:Cc;
-	b=Z0Wc78qXdLXfJL6PQD8BM0rMZc/hzCusrGaa9hDB7ASZbnEgYs4zAdBvCT+3OPV8k
-	 OOHBv4us40TsodyYMryReA4dnLjxIO4sghmWeW5kslVHCsEwfD1EP0OxoD+ToX/MLm
-	 O4KdkDBkMb5weKSvm1tjHUJOeLs3IOTOtUngYCzugKRgsjWI4PwESk3YUexEKQtgBf
-	 dFnWrAewSFfGJBPjbBEO+aVrrqz6Hb5GerjmxSQnrYUNatF/mrh2SPNybD6TpOj4Ix
-	 qMDhVy5WAhUgSOxBREeMNDh8+W3NatDL2OIS/sPQZ50hXjWMgu2xwNC3x8rw1/IF4n
-	 L1E7jjB/bvUoA==
-Received: by mail-lj1-f172.google.com with SMTP id 38308e7fff4ca-396669329fbso2324731fa.0
-        for <sashiko-reviews@lists.linux.dev>; Wed, 10 Jun 2026 13:04:27 -0700 (PDT)
-X-Gm-Message-State: AOJu0Ywzz36b2R1EQeLsLzjlwgorRUkKf5R6B/KSqrSVS7+o9l8P1UHg
-	e9xzYcqGLRT5NbZ2DhCssVfYlMnH7AJROtDX43yjWnlmIntZdZzIXzi1Lf5ST3NRS8D+J1Oua2t
-	e5lfgrJIGZ9d+af64VveRnQlYIwoaY5I=
-X-Received: by 2002:a05:6512:10cd:b0:5aa:5edf:3311 with SMTP id
- 2adb3069b0e04-5ad275bb099mr35944e87.12.1781121865663; Wed, 10 Jun 2026
- 13:04:25 -0700 (PDT)
+	dkim=pass (2048-bit key) header.d=google.com header.i=@google.com header.b="vyl3434U"
+Received: by mail-pf1-f174.google.com with SMTP id d2e1a72fcca58-8423f1e2f8eso5552756b3a.1
+        for <sashiko-reviews@lists.linux.dev>; Wed, 10 Jun 2026 13:15:03 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=google.com; s=20251104; t=1781122503; x=1781727303; darn=lists.linux.dev;
+        h=in-reply-to:content-disposition:mime-version:references:message-id
+         :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
+        bh=xNT9caAsP3Naf8qE0f2/dE5BKFFF9+5h248zDPqxkMc=;
+        b=vyl3434UNLCePyS6L3lVbdROgnYnOm7qKcadBU6piu/aygZEcw+v3CHGhX0GOsFUf2
+         jbHTFx+0a50enezJxB6KxxZereASxqK8tAnAZWb6GrxIvYlMTUakDlXmMcCbhDiMQ1KP
+         M8WBKmRbZjfBbzfnq9MyPaywftW4NQmHpwe+7uhS/eDk4yLspYoSfhdXRYqvKS7Zp9jV
+         HHTpsOr8yevyerK6NdV7Hp8dOEmUhHNbVUBI1rxbdUIHCxOoKbZOB3+W2xWMnAmdF3dW
+         RjkpOqytSrjXeMQR6I8lOFcSjRacwlAQm00OePzLGc/6foRDbX5AMgZNEpQTzGdWMraz
+         xJoA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20251104; t=1781122503; x=1781727303;
+        h=in-reply-to:content-disposition:mime-version:references:message-id
+         :subject:cc:to:from:date:x-gm-gg:x-gm-message-state:from:to:cc
+         :subject:date:message-id:reply-to;
+        bh=xNT9caAsP3Naf8qE0f2/dE5BKFFF9+5h248zDPqxkMc=;
+        b=bN8dPJ3bvhPd47yWWUcclbDm5Zf/AyrUWqjGF3im2xI3AwxoWUSIlUM9nOamsNIpQF
+         DlMagXobJYgER3zdOcgFV9Vis8Z9I6uQxj9aWg8kUKKMWHpjBPowadwOj2tRKVJ73Jur
+         5KLmEcd586ojEDZ9AoQg9vJfVo0RAr4HJwCwNtFMAAiNRXiH7T0dvMnjMEk2IZpU1zCo
+         afHi9EpiekN1yyCypKM6EK8TDuQx2OjMIXVOf6KkHy8hHqGK9gv3RD1uuoxJIB2GnDwA
+         0e1aueo1X3sTaQsPYmI4kgKuAicSpggfcDWu8QDLdiVx+1a4WW2b4pVuQJUvwQmgNsjs
+         E9Dg==
+X-Gm-Message-State: AOJu0YzNXMl+kAuHqvyCGj3uaeBSe7xcFWsJZfQyEDjEdtlAzK7Gk9F7
+	EU0vjDHMjXPKK01BoRKl9Ea4EYeXDpXmrNKSZAfL6BOAqWqzIjrbEE6sy+m+SbSJWA==
+X-Gm-Gg: Acq92OE4qDJAFwJPJ1WrH+7XoeuNaxmBOwBqTcyJ8GDlNYIRE3gVbWPPMWUHh5Eqs0r
+	AKadkqwPeA+McGMXoqdt1jpdhi0xFGAS9irdCts1RyTGvj/Ko2hGZ6/a3jnorVr7VTUzOkjkxlv
+	b+msXiKz+r0M3/dVUe72ztKmC24koU4buhzVD60hvfP3vG7U2EhjPp5uhwiujfzE9Tj67IPTElk
+	X0NkmBFcWBlqV2J9vM92CanajZXRPaxE0+f5E9AgV0HHK8HczapGjF5l+84ymVjjBfkUQspPOy4
+	Ezsu3mSfWgeoWLi042iMbjj1kItxSF4DqRapfsXVcWl+tGR8uhFFtqSKUQ93z5kVoEoC4nsCElH
+	r1ILZhbRxqon/8jcokvX6tDkLVpANGU27L2WALgBJKf1JxF5lBcNizQUownRocPCIJ9qWyB9ksS
+	d4vtJcUsjNLkW43SMk8CAe27WfeWVZm67jw1OV2AxKLZfYJoBRiJ7rK1E/EX9MjDI03M3nwLh5
+X-Received: by 2002:a05:6a00:b90b:b0:82f:280a:d888 with SMTP id d2e1a72fcca58-842b0db894cmr26207134b3a.12.1781122502162;
+        Wed, 10 Jun 2026 13:15:02 -0700 (PDT)
+Received: from google.com (56.149.168.34.bc.googleusercontent.com. [34.168.149.56])
+        by smtp.gmail.com with ESMTPSA id d2e1a72fcca58-842828e21c8sm30824970b3a.49.2026.06.10.13.15.01
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Wed, 10 Jun 2026 13:15:01 -0700 (PDT)
+Date: Wed, 10 Jun 2026 20:14:57 +0000
+From: David Matlack <dmatlack@google.com>
+To: Sean Christopherson <seanjc@google.com>
+Cc: sashiko-reviews@lists.linux.dev, kvm@vger.kernel.org,
+	Josh Hilke <jrhilke@google.com>
+Subject: Re: [PATCH v6 01/18] KVM: selftests: Build and link
+ selftests/vfio/lib into KVM selftests
+Message-ID: <ainFwSTb5-8itT9y@google.com>
+References: <20260610005338.2967132-2-seanjc@google.com>
+ <20260610010314.DB8861F00893@smtp.kernel.org>
+ <aim4lld49oqLrthg@google.com>
 Precedence: bulk
 X-Mailing-List: sashiko-reviews@lists.linux.dev
 List-Id: <sashiko-reviews.lists.linux.dev>
 List-Subscribe: <mailto:sashiko-reviews+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:sashiko-reviews+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-References: <20260603112018.97AA41F00893@smtp.kernel.org> <20260610191929.GA196607@bhelgaas>
-In-Reply-To: <20260610191929.GA196607@bhelgaas>
-From: "Rafael J. Wysocki" <rafael@kernel.org>
-Date: Wed, 10 Jun 2026 22:04:14 +0200
-X-Gmail-Original-Message-ID: <CAJZ5v0jwK2tFfiP5fyOEupC8rLgCC-BwKy8qEuj5w6mphfZMhQ@mail.gmail.com>
-X-Gm-Features: AVVi8CeslDPHAJCcJ5ZxiEJCYgQpdYUc4G9YUkttFdyGtkUUjlKPeyI-vQtxsSk
-Message-ID: <CAJZ5v0jwK2tFfiP5fyOEupC8rLgCC-BwKy8qEuj5w6mphfZMhQ@mail.gmail.com>
-Subject: Re: [PATCH v7 1/3] PCI: Add d3cold as general reset method
-To: Bjorn Helgaas <helgaas@kernel.org>
-Cc: sashiko-reviews@lists.linux.dev, 
-	Jose Ignacio Tornos Martinez <jtornosm@redhat.com>, linux-pci@vger.kernel.org, 
-	"Rafael J. Wysocki" <rafael@kernel.org>
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <aim4lld49oqLrthg@google.com>
 
-On Wed, Jun 10, 2026 at 9:19=E2=80=AFPM Bjorn Helgaas <helgaas@kernel.org> =
-wrote:
->
-> [+cc Rafael, D3cold->D0 delays]
->
-> On Wed, Jun 03, 2026 at 11:20:18AM +0000, sashiko-bot@kernel.org wrote:
-> > Thank you for your contribution! Sashiko AI review found 2 potential is=
-sue(s) to consider:
-> > - [High] pci_d3cold_reset() fails to wait for device readiness after tr=
-ansitioning from D3cold to D0, leading to immediate config read failures an=
-d state corruption.
-> > - [High] pci_d3cold_reset() does not prevent execution on single-functi=
-on bridges, leading to permanent state corruption and physical data loss of=
- all subordinate devices.
-> > --
-> >
-> > commit c7a8523521475c131fd83bc43a00b0cc028fc9a1
-> > Author: Jose Ignacio Tornos Martinez <jtornosm@redhat.com>
-> >
-> > PCI: Add d3cold as general reset method
-> >
-> > This patch adds D3cold power cycling as a reset method for single-funct=
-ion
-> > devices via ACPI _PR3, placing it at the end of the reset hierarchy.
-> >
-> > > diff --git a/drivers/pci/pci.c b/drivers/pci/pci.c
-> > > index 8f7cfcc000901..096868f80cd4c 100644
-> > > --- a/drivers/pci/pci.c
-> > > +++ b/drivers/pci/pci.c
-> >
-> > [ ... ]
-> >
-> > > +static int pci_d3cold_reset(struct pci_dev *dev, bool probe)
-> > > +{
-> > > +   int ret;
-> > > +
-> > > +   if (dev->multifunction)
-> > > +           return -ENOTTY;
-> > > +
-> >
-> > [Severity: High]
-> > Does this allow execution on single-function bridges, such as PCIe Root
-> > Ports?
-> >
-> > If pci_set_power_state(dev, PCI_D3cold) is called on a bridge, it recur=
-sively
-> > updates all subordinate devices' tracking state to D3cold via
-> > __pci_bus_set_current_state() and physically removes power from them.
-> >
-> > The subsequent transition back to D0 only updates the bridge itself. Th=
-is
-> > leaves all downstream devices tracked as PCI_D3cold indefinitely, and t=
-hey
-> > lose all their configuration and BARs since the reset framework only sa=
-ves
-> > and restores the bridge's configuration state.
->
-> Secondary Bus Reset has a similar issue: the hot reset on the
-> secondary side is propagated to downstream devices.
-> pci_parent_bus_reset() returns -ENOTTY if we try to use SBR to reset a
-> bridge.  I wonder if that check should be moved up to
-> pci_reset_bus_function() we don't try to use pci_reset_hotplug_slot()
-> on bridges either.
->
-> So I think it *is* a problem if we put a bridge in D3cold because
-> that's also a reset of any downstream devices.
+On 2026-06-10 12:18 PM, Sean Christopherson wrote:
+> On Wed, Jun 10, 2026, sashiko-bot@kernel.org wrote:
+> > > diff --git a/tools/testing/selftests/kvm/Makefile.kvm b/tools/testing/selftests/kvm/Makefile.kvm
+> > > index e0ddd3ff9472d..14316358fd9fb 100644
+> > > --- a/tools/testing/selftests/kvm/Makefile.kvm
+> > > +++ b/tools/testing/selftests/kvm/Makefile.kvm
+> > > @@ -257,6 +257,7 @@ OVERRIDE_TARGETS = 1
+> > >  # which causes the environment variable to override the makefile).
+> > >  include ../lib.mk
+> > >  include ../cgroup/lib/libcgroup.mk
+> > > +include ../vfio/lib/libvfio.mk
+> > 
+> > [Severity: Low]
+> > Does including libvfio.mk here break the "make clean all" sequence for KVM 
+> > selftests?
+> 
+> David and/or Josh, can you verify whether Sashiko is hallucinating or has a
+> legitimate concern?
 
-It would also be quite confusing for the drivers of the downstream
-devices, especially if they support runtime PM and use the reference
-counting thereof to ensure no power loss.
+That is a legitimate bug in libvfio.mk. Want me to send a separate patch
+to fix (see below) or do you want to include as part of your series?
 
-It looks like such a reset would require unbinding all of the drivers
-from the devices below the bridge.
+diff --git a/tools/testing/selftests/vfio/lib/libvfio.mk b/tools/testing/selftests/vfio/lib/libvfio.mk
+index 9f47bceed16f..1f1ab180f42d 100644
+--- a/tools/testing/selftests/vfio/lib/libvfio.mk
++++ b/tools/testing/selftests/vfio/lib/libvfio.mk
+@@ -21,9 +21,12 @@ LIBVFIO_O := $(patsubst %.c, $(LIBVFIO_OUTPUT)/%.o, $(LIBVFIO_C))
+ LIBVFIO_O_DIRS := $(shell dirname $(LIBVFIO_O) | uniq)
+ $(shell mkdir -p $(LIBVFIO_O_DIRS))
 
-> > > +   if (!pci_pr3_present(dev))
-> > > +           return -ENOTTY;
-> > > +
-> > > +   if (probe)
-> > > +           return 0;
-> > > +
-> > > +   if (dev->current_state !=3D PCI_D0)
-> > > +           return -EINVAL;
-> > > +
-> > > +   ret =3D pci_dev_reset_iommu_prepare(dev);
-> > > +   if (ret) {
-> > > +           pci_err(dev, "failed to stop IOMMU for a PCI reset: %d\n"=
-, ret);
-> > > +           return ret;
-> > > +   }
-> > > +
-> > > +   ret =3D pci_set_power_state(dev, PCI_D3cold);
-> > > +   if (ret)
-> > > +           goto done;
-> > > +
-> > > +   ret =3D pci_set_power_state(dev, PCI_D0);
-> >
-> > [Severity: High]
-> > Does this sequence fail to account for the mandatory wait time before t=
-he
-> > device is responsive to config space accesses?
-> >
-> > A D3cold to D0 transition acts as a fundamental reset. pci_set_power_st=
-ate()
-> > internally invokes pci_power_up(), which applies power and immediately
-> > attempts to read PCI_PM_CTRL without waiting for link training or handl=
-ing
-> > Configuration Request Retry Status (CRS).
->
-> I don't think sashiko can infer this from the code, but my
-> understanding is that platform_pci_set_power_state(PCI_D0) is
-> responsible for delays after a D3cold -> D0 transition, so I don't
-> think this one is actually an issue:
->
->   https://lore.kernel.org/all/CAJZ5v0iZN5NtUztqe=3DMxCRcXdBaaqzZ749OqSUka=
-dwwBy0ugUQ@mail.gmail.com/
++$(LIBVFIO_O_DIRS):
++       mkdir -p $@
++
+ CFLAGS += -I$(LIBVFIO_SRCDIR)/include
 
-Right.
+-$(LIBVFIO_O): $(LIBVFIO_OUTPUT)/%.o : $(LIBVFIO_SRCDIR)/%.c
++$(LIBVFIO_O): $(LIBVFIO_OUTPUT)/%.o : $(LIBVFIO_SRCDIR)/%.c $(LIBVFIO_O_DIRS)
+        $(CC) $(CFLAGS) $(CPPFLAGS) $(TARGET_ARCH) -c $< -o $@
 
-> > Because the device is unready, this read can return 0xFFFF (Unsupported
-> > Request) and cause pci_power_up() to spuriously fail with -EIO. Should =
-this
-> > include a polling delay, similar to pci_dev_wait(), to prevent the rese=
-t
-> > framework from blindly failing or restoring state to an uninitialized d=
-evice?
-> >
-> > > +
-> > > +done:
-> > > +   pci_dev_reset_iommu_done(dev);
-> > > +   return ret;
-> > > +}
-> >
-> > --
-> > Sashiko AI review =C2=B7 https://sashiko.dev/#/patchset/20260603105853.=
-326290-1-jtornosm@redhat.com?part=3D1
+ EXTRA_CLEAN += $(LIBVFIO_OUTPUT)
+
