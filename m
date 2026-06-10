@@ -1,181 +1,142 @@
-Received: from mo4-p00-ob.smtp.rzone.de (mo4-p00-ob.smtp.rzone.de [81.169.146.160])
+Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BA7A9342538
-	for <sashiko-reviews@lists.linux.dev>; Wed, 10 Jun 2026 16:40:59 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=pass smtp.client-ip=81.169.146.160
-ARC-Seal:i=2; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1781109664; cv=pass; b=Z0SAPMdIC9HZWcD7k/ErljX2mCGF4o8RWEA7OBBZmQPdppue1d+jB66Kaw5IBDdW3zJ8VD7Ubd4JPWMznWgS5dp57AEteT78SaJjs2IM9sPvyuWBCvkFpMyp+oBsM/8SArutstydH4+9Ox2dOzrN3gSDNO07EOclBtsSJNhAJyM=
-ARC-Message-Signature:i=2; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1781109664; c=relaxed/simple;
-	bh=aCSBqIFmOS+0t1PvbmHCMB6+khCj3ctP2l9Onk0vNS4=;
-	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=uBnZrrt7y5lBuuUspbkBNoEF2pKjEXQLWbYSgdRP+Xbtw9CzOV2d4ui5KNTFjMhtioYNe8WTp0OTaUMr2woy/4nKeADXPEhb9UZKzpG5HO26i58u/H3M+KFYdHnwlJqYs1ORoOAKuvLQUZGe23r062AVM/SF6HYqxyUaao4x6oE=
-ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=hartkopp.net; spf=fail smtp.mailfrom=hartkopp.net; dkim=pass (2048-bit key) header.d=hartkopp.net header.i=@hartkopp.net header.b=fN0YnURR; dkim=permerror (0-bit key) header.d=hartkopp.net header.i=@hartkopp.net header.b=Vcy1/ZmX; arc=pass smtp.client-ip=81.169.146.160
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=hartkopp.net
-Authentication-Results: smtp.subspace.kernel.org; spf=fail smtp.mailfrom=hartkopp.net
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BC56429BD87;
+	Wed, 10 Jun 2026 16:49:42 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
+ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
+	t=1781110183; cv=none; b=UnsGhxGkhg9w7pm5qWXFknPATR9+sTPC1bDRgSE5+9smQaV1M5hK0HovotZ9rGItn5/rcGnmF/0EgZqEwMQTiomK+WI2Nd9m5y1ysFTDhNXS5PeZUGTVf/OBeTUKSO1KawJp/PuEpzHdtSj+IFpCLNoad82bnWz/LjpLqtGRWCQ=
+ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
+	s=arc-20240116; t=1781110183; c=relaxed/simple;
+	bh=O83XDOgikWm/aHQxtAdPOrc3rrnDEv1cE/AhbTEUy9k=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=Na+y2IXq6O0LWlgMQyc/6y+H+jOU6fKcTi7eZLrtaGdoWrjn49zem98bc4kTK4LY5fgZFsj927nAgTWhW/CaX8AFykrpJ4J6+IxgNdOy9OdtSAgum/FyJuLdizsKqza7AUhv7GJOB11LTxVM2r/oHp63RHJt2uQYgZVCaPFwscQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=F2Lvnip7; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=hartkopp.net header.i=@hartkopp.net header.b="fN0YnURR";
-	dkim=permerror (0-bit key) header.d=hartkopp.net header.i=@hartkopp.net header.b="Vcy1/ZmX"
-ARC-Seal: i=1; a=rsa-sha256; t=1781109489; cv=none;
-    d=strato.com; s=strato-dkim-0002;
-    b=k8eYWcOF2E4f8vQahyfSBQhZAkkCUWVtn/ddqL2RUiPbqknnq42CeSNvrwPWIWwLcf
-    joLpgBRP/J8XJG1EKWFwDr3G7toqP8K7qeNV6GMTf5r2IKJc5Y/Dvzcs4ZRslQpBimZV
-    orni/Dhg1XLq7zYIwFjN4f4FOQysSXBVsOIvkAgZDBUuWNExvmF9Qqu6diCiZ52s2J7S
-    St337bLhyeNMMKjm0KUO/WTwgdxRJiC47/xpIqn3o0xvIvbsReRTL3zxDn7bjRvcFugI
-    pNYFgTwXYa1e5RXSB00NXqUnnFj2X7upR5RlozIm9UM55SLdRhBL28+9syEw0CYI/UD8
-    sqag==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; t=1781109489;
-    s=strato-dkim-0002; d=strato.com;
-    h=References:In-Reply-To:Message-ID:Date:Subject:Cc:To:From:Cc:Date:
-    From:Subject:Sender;
-    bh=YGa0+GcGPpO532H5Nd3/Pe429emU/ohbvkYX9EZDdTo=;
-    b=RPbbm2JUeB8C07aR0LOKigYA3GiAJ9shPwMIh5kC5L4yOeGoGciD4snT5ZSwJUjqvq
-    ZTrO8w/TSSIR36wzvG7n2ocp8wSMPtll9yt5zx57EvNqWZxk5wQog5OF8cyTmIBk70FP
-    1zeDk5v90oGMwFDi/XHkR+xzzvk3VWpIT9DxTSvA+YexCq+LKWAimCLSsuMenh8xJDAy
-    0asmp2XWNGTaLFrJkb4u2cOS2PH0vt/Q1jHgq0GYQ0+ZFGyyrvGY4LBJDbSx14fk5i5K
-    X6H2thXnXz7y17eI1Mt4R+MT1ZoKbTMsipEIKAbZJoRxKdBuoETw0QZo8cb/4P5Y/3VR
-    n55w==
-ARC-Authentication-Results: i=1; strato.com;
-    arc=none;
-    dkim=none
-X-RZG-CLASS-ID: mo00
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; t=1781109489;
-    s=strato-dkim-0002; d=hartkopp.net;
-    h=References:In-Reply-To:Message-ID:Date:Subject:Cc:To:From:Cc:Date:
-    From:Subject:Sender;
-    bh=YGa0+GcGPpO532H5Nd3/Pe429emU/ohbvkYX9EZDdTo=;
-    b=fN0YnURRckULG5s0CXARezmMGUSXUHZASwf9IhMkrhGe6igRwxPw4WPkxQOEmEnhsR
-    RPMdLYfibzehEJBWFbe8QR7rXu/GPGa/7v8SnfCaF3mry/dxvVgI1cGgUncU8TFgk66b
-    5V3BbjKIP012E2+5nT36UVy4yldnL/MXps9mqHJM5czbMlirOfrYxD7enk7SKiH8/SQx
-    tMnDWWLOsiFa4W0cwanhmJD38tJAXqjtM2sio6iEKxy72/iJTLSrwoCaiO6rJPFJtww4
-    blQ0zTqnzeEPER16wjd57o1qBKWMK9F3nGObVVQeBKD4sRiDVyjtMykp0AaSIY5uGq1p
-    pKwA==
-DKIM-Signature: v=1; a=ed25519-sha256; c=relaxed/relaxed; t=1781109489;
-    s=strato-dkim-0003; d=hartkopp.net;
-    h=References:In-Reply-To:Message-ID:Date:Subject:Cc:To:From:Cc:Date:
-    From:Subject:Sender;
-    bh=YGa0+GcGPpO532H5Nd3/Pe429emU/ohbvkYX9EZDdTo=;
-    b=Vcy1/ZmXs67DV+KTTq1DH19oj0ETUnE5thI4jgtwBfeUqZKiRZ6acVX2UPfp/uJPod
-    5QkLOpBzO89njkNbp0BA==
-X-RZG-AUTH: ":P2MHfkW8eP4Mre39l357AZT/I7AY/7nT2yrDxb8mjH4JKvMdQv2tTUsMrZpkO3Mw3lZ/t54cFxeEQ7s8bDup0Q=="
-Received: from vivo.lan
-    by smtp.strato.de (RZmta 55.0.1 AUTH)
-    with ESMTPSA id Kba96d25AGc9rfo
-	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256 bits))
-	(Client did not present a certificate);
-    Wed, 10 Jun 2026 18:38:09 +0200 (CEST)
-From: Oliver Hartkopp <socketcan@hartkopp.net>
-To: linux-can@vger.kernel.org
-Cc: Oliver Hartkopp <socketcan@hartkopp.net>,
-	sashiko-reviews@lists.linux.dev
-Subject: [PATCH] can: bcm: use list_add_rcu() in bcm_[rx|tx]_setup()
-Date: Wed, 10 Jun 2026 18:37:44 +0200
-Message-ID: <20260610163744.51980-2-socketcan@hartkopp.net>
-X-Mailer: git-send-email 2.53.0
-In-Reply-To: <20260610163744.51980-1-socketcan@hartkopp.net>
-References: <20260610163744.51980-1-socketcan@hartkopp.net>
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="F2Lvnip7"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8CB221F00893;
+	Wed, 10 Jun 2026 16:49:41 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=kernel.org;
+	s=k20260515; t=1781110182;
+	bh=1K4C5cPKeYBdJTzXedsW1nCTfxrxNHI7dcozTp6DT1c=;
+	h=Date:From:To:Cc:Subject:References:In-Reply-To;
+	b=F2Lvnip7EbfPISM9okFIkEP3k/JuVV/mi5jQjJMdpqRP598a7cwItWjA3UcSVqn9B
+	 LnePM/QC/qThnGvBw23vPIqr5fsOCzoQEG9u2eziLsHEXfZDuRpef2JGVaL6XAsmy1
+	 6WYzTenlEuLDmqmS19lInwBMlJoaGeqqc0kXBLE8R7/BTpjhxqZYbnPEXItLvnHQ/5
+	 3fSS5ogoFanq8uFf0VsYZrRS+Fserz2CM+XycOr4/SPH9dtwgAwjZApmcYuYea2q64
+	 fFzOopGjVgoi3L4dSjK72UcHa4901HrDmSmU9DTrzwWx/30d5R57CfNfG6D/F7Ljm3
+	 h+t2XmzVUumPw==
+Date: Wed, 10 Jun 2026 13:49:37 -0300
+From: Arnaldo Carvalho de Melo <acme@kernel.org>
+To: sashiko-reviews@lists.linux.dev
+Cc: linux-perf-users@vger.kernel.org
+Subject: Re: [PATCH 07/11] perf tools: Add O_CLOEXEC to open() calls in DSO
+ and ELF code
+Message-ID: <aimVobFTV8MZ0pFy@x1>
+References: <20260609010526.1998472-8-acme@kernel.org>
+ <20260609011626.DE73D1F00893@smtp.kernel.org>
 Precedence: bulk
 X-Mailing-List: sashiko-reviews@lists.linux.dev
 List-Id: <sashiko-reviews.lists.linux.dev>
 List-Subscribe: <mailto:sashiko-reviews+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:sashiko-reviews+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=iso-8859-1
+Content-Disposition: inline
 Content-Transfer-Encoding: 8bit
-Content-Type: text/plain; charset="us-ascii"
+In-Reply-To: <20260609011626.DE73D1F00893@smtp.kernel.org>
 
-sashiko-bot remarked the missing use of list_add_rcu() in
-bcm_[rx|tx]_setup() to have a proper initialized bcm_op structure
-when bcm_proc_show() traverses the bcm_op's under rcu_read_lock().
+On Tue, Jun 09, 2026 at 01:16:26AM +0000, sashiko-bot@kernel.org wrote:
+> Thank you for your contribution! Sashiko AI review found 2 potential issue(s) to consider:
+> 
+> New issues:
+> - [High] Incomplete fix for file descriptor leaks in DSO and ELF code.
+> 
+> Pre-existing issues:
+> - [Critical] Stack buffer overflow in sysfs__read_build_id when skipping non-matching GNU notes.
+> --
+> 
+> commit 66274b4049c9a2092defa7caf237fe0295853d9c
+> Author: Arnaldo Carvalho de Melo <acme@redhat.com>
+> 
+> perf tools: Add O_CLOEXEC to open() calls in DSO and ELF code
+> 
+> The commit adds O_CLOEXEC to open() calls in dso.c and symbol-elf.c to
+> prevent leaking file descriptors to child processes during symbol
+> resolution.
+> 
+> > diff --git a/tools/perf/util/dso.c b/tools/perf/util/dso.c
+> > index 7dced896c64ea..fb2e78fe2aa8e 100644
+> > --- a/tools/perf/util/dso.c
+> > +++ b/tools/perf/util/dso.c
+> > @@ -344,7 +344,7 @@ int filename__decompress(const char *name, char *pathname,
+> >  	 * descriptor to the uncompressed file.
+> >  	 */
+> >  	if (!compressions[comp].is_compressed(name))
+> > -		return open(name, O_RDONLY);
+> > +		return open(name, O_RDONLY | O_CLOEXEC);
+> >  
+> >  	fd = mkstemp(tmpbuf);
+> 
+> [Severity: High]
+> Since the goal of this patch is to prevent leaking file descriptors to child
+> processes, should we also address the mkstemp() calls in these files?
+> 
+> mkstemp() creates file descriptors without O_CLOEXEC. For instance, here in
+> filename__decompress(), the temporary file descriptor will still be leaked.
+> Should mkostemp(tmpbuf, O_CLOEXEC) be used instead?
 
-To cover all initial settings of the bcm_op's the list_add_rcu() calls
-are moved to the end of the setup code.
+This is fixed in the next patch series.
+ 
+> [ ... ]
+> > diff --git a/tools/perf/util/symbol-elf.c b/tools/perf/util/symbol-elf.c
+> > index 186e6d92ac3d7..c2bdfd0003df2 100644
+> > --- a/tools/perf/util/symbol-elf.c
+> > +++ b/tools/perf/util/symbol-elf.c
+> [ ... ]
+> > @@ -935,7 +935,7 @@ int sysfs__read_build_id(const char *filename, struct build_id *bid)
+> >  	size_t size = sizeof(bid->data);
+> >  	int fd, err = -1;
+> >  
+> > -	fd = open(filename, O_RDONLY);
+> > +	fd = open(filename, O_RDONLY | O_CLOEXEC);
+> >  	if (fd < 0)
+> >  		goto out;
+> 
+> [Severity: Critical]
+> This is a pre-existing issue, but while reviewing this function, could
+> an unbounded read() happen later in sysfs__read_build_id() when skipping
+> non-matching GNU notes?
+> 
+> If a crafted sysfs note has a maliciously large nhdr.n_descsz, the code does:
+> 
+>     } else if (read(fd, bf, descsz) != (ssize_t)descsz)
+> 
+> Since bf is a fixed-size stack array (char bf[BUFSIZ]), could this read past
+> the end of bf and overwrite the stack frame if descsz exceeds BUFSIZ?
 
-Reported-by: sashiko-reviews@lists.linux.dev
-Closes: https://lore.kernel.org/linux-can/20260610094654.A1FFE1F00893@smtp.kernel.org/
-Fixes: dac5e6249159 ("can: bcm: add missing rcu read protection for procfs content")
-Signed-off-by: Oliver Hartkopp <socketcan@hartkopp.net>
----
- net/can/bcm.c | 15 +++++++++------
- 1 file changed, 9 insertions(+), 6 deletions(-)
+Ditto, as several other issues you reported in this series and in other
+series.
 
-diff --git a/net/can/bcm.c b/net/can/bcm.c
-index e5db4dca8d5a..76d1e067e156 100644
---- a/net/can/bcm.c
-+++ b/net/can/bcm.c
-@@ -954,10 +954,11 @@ static int bcm_tx_setup(struct bcm_msg_head *msg_head, struct msghdr *msg,
- 			int ifindex, struct sock *sk)
- {
- 	struct bcm_sock *bo = bcm_sk(sk);
- 	struct bcm_op *op;
- 	struct canfd_frame *cf;
-+	bool add_op_to_list = false;
- 	unsigned int i;
- 	int err;
+- Arnaldo
  
- 	/* we need a real device to send frames */
- 	if (!ifindex)
-@@ -1094,12 +1095,11 @@ static int bcm_tx_setup(struct bcm_msg_head *msg_head, struct msghdr *msg,
- 
- 		/* currently unused in tx_ops */
- 		hrtimer_setup(&op->thrtimer, hrtimer_dummy_timeout, CLOCK_MONOTONIC,
- 			      HRTIMER_MODE_REL_SOFT);
- 
--		/* add this bcm_op to the list of the tx_ops */
--		list_add(&op->list, &bo->tx_ops);
-+		add_op_to_list = true;
- 
- 	} /* if ((op = bcm_find_op(&bo->tx_ops, msg_head->can_id, ifindex))) */
- 
- 	if (op->flags & SETTIMER) {
- 		/* set timer values */
-@@ -1117,10 +1117,14 @@ static int bcm_tx_setup(struct bcm_msg_head *msg_head, struct msghdr *msg,
- 		hrtimer_cancel(&op->timer);
- 		/* spec: send CAN frame when starting timer */
- 		op->flags |= TX_ANNOUNCE;
- 	}
- 
-+	/* add this bcm_op to the list of the tx_ops? */
-+	if (add_op_to_list)
-+		list_add_rcu(&op->list, &bo->tx_ops);
-+
- 	if (op->flags & TX_ANNOUNCE)
- 		bcm_can_tx(op);
- 
- 	if (op->flags & STARTTIMER)
- 		bcm_tx_start_timer(op);
-@@ -1278,13 +1282,10 @@ static int bcm_rx_setup(struct bcm_msg_head *msg_head, struct msghdr *msg,
- 		hrtimer_setup(&op->timer, bcm_rx_timeout_handler, CLOCK_MONOTONIC,
- 			      HRTIMER_MODE_REL_SOFT);
- 		hrtimer_setup(&op->thrtimer, bcm_rx_thr_handler, CLOCK_MONOTONIC,
- 			      HRTIMER_MODE_REL_SOFT);
- 
--		/* add this bcm_op to the list of the rx_ops */
--		list_add(&op->list, &bo->rx_ops);
--
- 		/* call can_rx_register() */
- 		do_rx_register = 1;
- 
- 	} /* if ((op = bcm_find_op(&bo->rx_ops, msg_head->can_id, ifindex))) */
- 
-@@ -1359,14 +1360,16 @@ static int bcm_rx_setup(struct bcm_msg_head *msg_head, struct msghdr *msg,
- 			err = can_rx_register(sock_net(sk), NULL, op->can_id,
- 					      REGMASK(op->can_id),
- 					      bcm_rx_handler, op, "bcm", sk);
- 		if (err) {
- 			/* this bcm rx op is broken -> remove it */
--			list_del_rcu(&op->list);
- 			bcm_remove_op(op);
- 			return err;
- 		}
-+
-+		/* add this bcm_op to the list of the rx_ops */
-+		list_add_rcu(&op->list, &bo->rx_ops);
- 	}
- 
- 	return msg_head->nframes * op->cfsiz + MHSIZ;
- }
- 
--- 
-2.53.0
-
+> [ ... ]
+> > @@ -1985,7 +1985,7 @@ static int kcore__init(struct kcore *kcore, char *filename, int elfclass,
+> >  	if (temp)
+> >  		kcore->fd = mkstemp(filename);
+> >  	else
+> > -		kcore->fd = open(filename, O_WRONLY | O_CREAT | O_EXCL, 0400);
+> > +		kcore->fd = open(filename, O_WRONLY | O_CREAT | O_EXCL | O_CLOEXEC, 0400);
+> >  	if (kcore->fd == -1)
+> >  		return -1;
+> 
+> [Severity: High]
+> Similarly to the issue in filename__decompress(), if temp is true here,
+> mkstemp() is called without O_CLOEXEC.
+> 
+> There is also a similar mkstemp() call in read_gnu_debugdata() in this file
+> that extracts debug data without O_CLOEXEC. Should all of these be updated
+> to prevent leaking file descriptors?
+> 
+> -- 
+> Sashiko AI review · https://sashiko.dev/#/patchset/20260609010526.1998472-1-acme@kernel.org?part=7
