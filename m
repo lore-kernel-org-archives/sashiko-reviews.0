@@ -1,72 +1,66 @@
-Received: from mo4-p00-ob.smtp.rzone.de (mo4-p00-ob.smtp.rzone.de [85.215.255.20])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-ed1-f50.google.com (mail-ed1-f50.google.com [209.85.208.50])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 164303BCD34
-	for <sashiko-reviews@lists.linux.dev>; Wed, 10 Jun 2026 09:38:50 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=pass smtp.client-ip=85.215.255.20
-ARC-Seal:i=2; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1781084333; cv=pass; b=FMvaqI8LSW0ameQRiH0e5chYjJG6VQO6F97c50jWgjW18IDJCuvoJSZw5WbF1yr5FvJAByZ2yMbyRTrWdgduC/Doedv2RzjAy4ZT+XG6Mh5RJAKE3pdj+BRLGH5Y8gikL7JMHz0T+vc+HwA9CQ3yMMnYmneVSMxF2CyIGCk6uig=
-ARC-Message-Signature:i=2; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1781084333; c=relaxed/simple;
-	bh=8Yj9BL+VGOezf97W3O1Kt6gfGUYs5mN7Fe5e4AaDoGg=;
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2FFEB37AA7F
+	for <sashiko-reviews@lists.linux.dev>; Wed, 10 Jun 2026 09:51:18 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.208.50
+ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
+	t=1781085079; cv=none; b=dEEq8wLB6VrZWyM1Zf0vK/pnyXygPDxtetktRb2OFRTiNaovjnoCQxTMdAgaQ4WL8fYY78UUZNU8hwZQqVayFzxhLjwgbWUfZK6wYZktpR3ZgqHL6XOFutnIFl589t1ddnpN+aEzbEL9gcpWMobYW2tGOeVUfRSy5NmQBDdFTco=
+ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
+	s=arc-20240116; t=1781085079; c=relaxed/simple;
+	bh=pKA7DpH46SjVAcJNqrwdZ4g9oy71Af6s+blMUhkRXPA=;
 	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=D5pJICUMFnNiqurdWwVOgDoX3Y5K7nVTdmANnzx7umwKp97PwGsLp08LTfF+z6vSHg/xDV6N8cJofwNxL7gwo03A34r+0tPor9UFJ41yVRMoDPPZ9SejJ/yuuppRSpIX0l5vFkJ2Br5Yu3qwzqd0pK16cbhJuNKAUVNrTUu0Mmg=
-ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=hartkopp.net; spf=fail smtp.mailfrom=hartkopp.net; dkim=pass (2048-bit key) header.d=hartkopp.net header.i=@hartkopp.net header.b=b/jq4KOy; dkim=permerror (0-bit key) header.d=hartkopp.net header.i=@hartkopp.net header.b=dc7lYnXn; arc=pass smtp.client-ip=85.215.255.20
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=hartkopp.net
-Authentication-Results: smtp.subspace.kernel.org; spf=fail smtp.mailfrom=hartkopp.net
+	 In-Reply-To:Content-Type; b=P58lpjl59cSlfwu08J4KgS8b0Uxw8qoTcMZQmarCbTAbuKKeoABjgjMO/TUFKWq5bn9ENUxqiqClBfiH02BZ42p/7t1NVI5AnSnNmJt73fasK4TQljQNdNr/Gw0Sv7aYc9t88CmEREmZrCp/xk00SjRNtkPlvxAEpzcWan1XXjY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=bRsTw2yL; arc=none smtp.client-ip=209.85.208.50
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=hartkopp.net header.i=@hartkopp.net header.b="b/jq4KOy";
-	dkim=permerror (0-bit key) header.d=hartkopp.net header.i=@hartkopp.net header.b="dc7lYnXn"
-ARC-Seal: i=1; a=rsa-sha256; t=1781084292; cv=none;
-    d=strato.com; s=strato-dkim-0002;
-    b=G6BoehJk8ZhZgnD8zsjm+JycyPdp9m729uE1M5gWS6SOmdHP+fQ6g2Bc8LmceYXFiA
-    2/8kquoFkwqcGtJl8GBUuoTxX8HrfIrw/24OOldY6s7gtlyMqsu16a3obcmS74F6ogOB
-    fPeWl4yI0e6C47oZgvY6cKsAq4xAwnoh4nvT3c87dUFf1ot8WvUUMb4piIg0mtWh8k8v
-    6Zbwvo+7DYXoO2KtTH9uO15U0yWwpMMpwo78xHl54WhCc4NcpOOQFHCdFs3Mu4yArT7t
-    2fBBNkt0ZYFVrM1xEbqP5hQI/AaO4HfwUWLWuMGikTy7I3CCu/YEjtqMspftp9QJTQuq
-    XNyA==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; t=1781084292;
-    s=strato-dkim-0002; d=strato.com;
-    h=In-Reply-To:From:References:Cc:To:Subject:Date:Message-ID:Cc:Date:
-    From:Subject:Sender;
-    bh=eCSZZTqg0i2WylJCJaAbIzJktfm2LqzwOrcOBnvL8Qo=;
-    b=X/tmyx0f7DyidxPDV1wsQveu2pnEOq+gjLDOSNfIU+ONxeddOqiyN74/70vh8k+Y8U
-    nxfrnYsj43kLd1O5h+Rw2HSCWx9q/TJ607ZGvMw17CvAjgskwKLg3B1x03TXmZSSHZT/
-    bXGxOgUV+K7j3gpQc++jAppmr6qpoeFGNDztJWms2kxwqzFY75yoyTPjtev/STWugnAB
-    yaIIhVJhaqsM6lVbU93ZSxta4qrzR6zl/SkdRAm+mmRcQRntbh+bLcNzovJsFqJMIPNA
-    u+czwtZqMQ9dgnayvvqljVVQWo7YvKqH1TrzPN1M5EUo8r0FOX3WJdtRWW8NU/nDqIlE
-    HLAQ==
-ARC-Authentication-Results: i=1; strato.com;
-    arc=none;
-    dkim=none
-X-RZG-CLASS-ID: mo00
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; t=1781084292;
-    s=strato-dkim-0002; d=hartkopp.net;
-    h=In-Reply-To:From:References:Cc:To:Subject:Date:Message-ID:Cc:Date:
-    From:Subject:Sender;
-    bh=eCSZZTqg0i2WylJCJaAbIzJktfm2LqzwOrcOBnvL8Qo=;
-    b=b/jq4KOy1SkJ/zJDWhSz2Avxd/E0T1PR7qvJ6hUtwO/6yTjvNnca3emEq/iNPsZtFw
-    d52bA21V5+JbzIqs/sODnK4ojvnEsfSqjQ/vpLNJf3IIxYgOBF81RLefx1eQw8FFbOFf
-    MhWOML/RjV/J+eGN4MnXcuKkm0k2TiXS8P12r//uvVhbbdiLB50Mbbizq4A5MaUuxqFq
-    dO5kPSaivTeZUvsPic0NAgw7t0mmrtzBhw7I5sU3FpoM/QvFLM+j5V99IKQ1IpANTnH1
-    BsOpAw/Wz3SPaL16s5avBl4P6lxX9X0cApeHRH1oyFm6FQwp0biUv3d0jTdFEH1h2U3D
-    WpRA==
-DKIM-Signature: v=1; a=ed25519-sha256; c=relaxed/relaxed; t=1781084292;
-    s=strato-dkim-0003; d=hartkopp.net;
-    h=In-Reply-To:From:References:Cc:To:Subject:Date:Message-ID:Cc:Date:
-    From:Subject:Sender;
-    bh=eCSZZTqg0i2WylJCJaAbIzJktfm2LqzwOrcOBnvL8Qo=;
-    b=dc7lYnXnHD5e+lAIqDVUSx3LM8Sf82N+NLk6vtZ1JCCbfXiwImSNkyE+OI2/VNxQtt
-    9iZRGjT/4T84rlcmAMDw==
-X-RZG-AUTH: ":P2MHfkW8eP4Mre39l357AZT/I7AY/7nT2yrDxb8mjH4JKvMdQv2tTUsMrZpkO3Mw3lZ/t54cFxeEQ7s8bDup0Q=="
-Received: from [IPV6:2a00:6020:4a38:6810::989]
-    by smtp.strato.de (RZmta 55.0.1 AUTH)
-    with ESMTPSA id Kba96d25A9cBi5m
-	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256 bits))
-	(Client did not present a certificate);
-    Wed, 10 Jun 2026 11:38:11 +0200 (CEST)
-Message-ID: <3ac08afc-a1a5-419a-a221-5e719fb08cf7@hartkopp.net>
-Date: Wed, 10 Jun 2026 11:38:11 +0200
+	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="bRsTw2yL"
+Received: by mail-ed1-f50.google.com with SMTP id 4fb4d7f45d1cf-6919f40a0c8so7041995a12.0
+        for <sashiko-reviews@lists.linux.dev>; Wed, 10 Jun 2026 02:51:18 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linaro.org; s=google; t=1781085077; x=1781689877; darn=lists.linux.dev;
+        h=content-transfer-encoding:in-reply-to:from:content-language
+         :references:cc:to:subject:user-agent:mime-version:date:message-id
+         :from:to:cc:subject:date:message-id:reply-to;
+        bh=VE3z35ezp2x26/gLg2UFK03+neYzzdYMzs/N6bRl8v0=;
+        b=bRsTw2yLNEl2WsGlhRrzf5X0L3GMytv+Vst0qv9sc1qWimMFv09FjINXXeoSRc9n9G
+         2uuB685liQjn2irb7xfMo5oLAFjfINE0jSTc5mt9rYueVUtvC7acOvUVZqrdfkLhplv/
+         dq6V2vq1X1jpYBGlaUCfTB/fF1mkuATtvTuwWTcJAB95i/zfvR8mzVX4CxmYoKC4Uxdn
+         7cGozjrU1B7gHpe5luO/Zztp9+LEdGBvxy2M03p9lePkF0uYbUcKGC3fKDP5gDOyKJuX
+         mHlrElPftIanSCszBTnDYnImNv2/f6MLvcZNtSgbeL7aJ9aQ2MhcF1GEt+kLvE+GBUyN
+         09Fw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20251104; t=1781085077; x=1781689877;
+        h=content-transfer-encoding:in-reply-to:from:content-language
+         :references:cc:to:subject:user-agent:mime-version:date:message-id
+         :x-gm-gg:x-gm-message-state:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=VE3z35ezp2x26/gLg2UFK03+neYzzdYMzs/N6bRl8v0=;
+        b=rXhEdi+ATfIMd1bjALTan2oEVBYkBAUol8BdBqOYBxc5T2uHWrHd4qUC2ffPsndaMI
+         jDGo5rUTm4kPetfo51pKY6DgV3+FfzBX6SU+nwMV/DEpxPUEN5YCsvD4j3WN33//T6Td
+         Xun9s/kZxCGrhD0XDHV54/q9Gp44qGzZKbsdrDRFpSmKoelvNAK3g+EYaAPIg2NF0OEz
+         U+dcov8w5WbvIbnA7LmrpJpMLJf8844WB+GvFboNBsxi0v+O28z+u49InNE2D6p+Abnu
+         sbvl6mxOiS88DutgCuDVhSrkycn19kGjznFH4r2vSutGSzTfNHEVDnMCCBjG2swdglRX
+         83pQ==
+X-Gm-Message-State: AOJu0Yy6GENSOkcuSO6pEZDjlWQoS3m2p4tDqdV5xMh3DviCAWJ7b0At
+	YVDIUuSEiflr1j/J4xAfr/n0Q+acp9ATW/5lpSd2SQYYKks4s3LmPMTLV3enQB7Vh09T8qaZFsz
+	3L69iqiY=
+X-Gm-Gg: Acq92OHJXWjaeE+fuCNjcfmsx8SyhfrbJjzAnItRc4PxvLlXlkIMdO95vygbLSTFdun
+	ERfqIKk4tWUKq1VD7YRoCN0dqoVWc7aoMggB8YUJzHdlIkN/cgXky1Dq1H1HVyfLGxUYw5THbrW
+	J382QL+udRUjJmVvaObjTZrfWuMRWrY6PXMmdMwzO2Y2/VEczwRXzoRnxzGUxhseu9wtIiLi2zk
+	kqDzxKXK98JUseAvuUcBOn6e3ntBIIQBnynhtiYUF7DYYAEQ7XUDSVc5GKr+vbg6opa3wmz1a/4
+	MMd4kJeXMbdOPq/esgCvG9rtO2qL2/a9G73gA96S+hSPdfWTYhHZz/Iac5DZrQn6umKz0fpw0Ok
+	+S31b92Rcm3TwxdHzQoMKTiqTI5YqKgers0Wj5WIc71+j6sosD5dqAg//VR6/lxpjEo7EY2CJ6o
+	k8lJ0EZefBEO6aacNIkYldi8dBbuh3bhJ5FAfpJJQGp2v0kOZ2eQ==
+X-Received: by 2002:a17:907:3f14:b0:bed:a7d7:82c8 with SMTP id a640c23a62f3a-bf3737eebd6mr1303429866b.37.1781085076640;
+        Wed, 10 Jun 2026 02:51:16 -0700 (PDT)
+Received: from [192.168.1.3] ([185.48.77.170])
+        by smtp.gmail.com with ESMTPSA id a640c23a62f3a-bf0517721e5sm1176091666b.9.2026.06.10.02.51.15
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Wed, 10 Jun 2026 02:51:16 -0700 (PDT)
+Message-ID: <be7c5ecc-3fe4-4eff-a850-132a2be89753@linaro.org>
+Date: Wed, 10 Jun 2026 10:51:15 +0100
 Precedence: bulk
 X-Mailing-List: sashiko-reviews@lists.linux.dev
 List-Id: <sashiko-reviews.lists.linux.dev>
@@ -74,122 +68,63 @@ List-Subscribe: <mailto:sashiko-reviews+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:sashiko-reviews+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v2 2/2] can: bcm: use atomic access in receive statistics
+Subject: Re: [PATCH v4 02/19] perf test: Add workload-ctl option
 To: sashiko-reviews@lists.linux.dev
-Cc: Oleksij Rempel <o.rempel@pengutronix.de>,
- Vincent Mailhol <mailhol@kernel.org>, linux-can@vger.kernel.org,
- Marc Kleine-Budde <mkl@pengutronix.de>
-References: <20260522180758.51128-3-socketcan@hartkopp.net>
- <20260609184528.405221F0089B@smtp.kernel.org>
+Cc: linux-perf-users@vger.kernel.org
+References: <20260609-james-cs-context-tracking-fix-v4-2-44f9fb9e5c42@linaro.org>
+ <20260609144018.2D77E1F00893@smtp.kernel.org>
 Content-Language: en-US
-From: Oliver Hartkopp <socketcan@hartkopp.net>
-In-Reply-To: <20260609184528.405221F0089B@smtp.kernel.org>
+From: James Clark <james.clark@linaro.org>
+In-Reply-To: <20260609144018.2D77E1F00893@smtp.kernel.org>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 7bit
 
 
 
-On 09.06.26 20:45, sashiko-bot@kernel.org wrote:
-> Thank you for your contribution! Sashiko AI review found 2 potential issue(s) to consider:
-> 
-> New issues:
-> - [Medium] Converting `frames_filtered` to `atomic_long_t` introduces a signed integer overflow on 32-bit systems during procfs statistics calculation, producing bogus corrupted percentages.
-> 
-> Pre-existing issues:
-> - [High] A Time-of-Check to Time-of-Use (TOCTOU) race condition in `bcm_proc_show()` can cause a division by zero and kernel panic due to multiple lockless reads of `op->frames_abs`.
+On 09/06/2026 3:40 pm, sashiko-bot@kernel.org wrote:
+> Thank you for your contribution! Sashiko AI review found 1 potential issue(s) to consider:
+> - [Medium] The commit message claims to add a `--workload-ctl` option, but the implementation actually adds a `--record-ctl` option.
 > --
 > 
-
-Correct!
-
-This patch is now superseded by:
-
-[PATCH] can: bcm: fix CAN frame rx/tx statistics
-
-https://lore.kernel.org/linux-can/20260610093422.39847-1-socketcan@hartkopp.net/
-
-which addresses the found issues.
-
-Many thanks,
-Oliver
-
-> commit 6749d4fcb2595ae8bc232f3dd041a194ebd9a9f4
-> Author: Oliver Hartkopp <socketcan@hartkopp.net>
+> commit be5e10b3228f286fe50c54ca1ba231a4a933afc1
+> Author: James Clark <james.clark@linaro.org>
 > 
-> can: bcm: use atomic access in receive statistics
+> perf test: Add workload-ctl option
 > 
-> This commit modifies the CAN broadcast manager (bcm) protocol to use atomic
-> operations for rx statistics. This prevents a data race detected by KCSAN when
-> multiple CAN frames are processed simultaneously by different CPUs.
+> This commit adds an option to 'perf test' to open a named FIFO and send
+> enable and disable commands before and after invoking a builtin workload.
+> This allows syncing with a 'perf record' session to limit the recording
+> scope.
 > 
->> diff --git a/net/can/bcm.c b/net/can/bcm.c
->> index dbdf5d4f4ed7b..8a2cb766603dc 100644
->> --- a/net/can/bcm.c
->> +++ b/net/can/bcm.c
->> @@ -228,7 +229,7 @@ static int bcm_proc_show(struct seq_file *m, void *v)
->>   		unsigned long reduction;
->>   
->>   		/* print only active entries & prevent division by zero */
->> -		if (!op->frames_abs)
->> +		if (!atomic_long_read(&op->frames_abs))
->>   			continue;
->>   
->>   		seq_printf(m, "rx_op: %03X %-5s ", op->can_id,
-> 
-> [ ... ]
-> 
->> @@ -250,9 +251,12 @@ static int bcm_proc_show(struct seq_file *m, void *v)
->>   				   (long long)ktime_to_us(op->kt_ival2));
->>   
->>   		seq_printf(m, "# recv %ld (%ld) => reduction: ",
->> -			   op->frames_filtered, op->frames_abs);
->> +			   atomic_long_read(&op->frames_filtered),
->> +			   atomic_long_read(&op->frames_abs));
->>   
->> -		reduction = 100 - (op->frames_filtered * 100) / op->frames_abs;
->> +		reduction = 100 -
->> +			(atomic_long_read(&op->frames_filtered) * 100) /
->> +			atomic_long_read(&op->frames_abs);
-> 
-> [Severity: High]
-> This isn't a bug introduced by this patch, but does reading op->frames_abs
-> multiple times introduce a Time-of-Check to Time-of-Use race here?
-> 
-> bcm_proc_show() in net/can/bcm.c first ensures op->frames_abs is not zero.
-> However, concurrently, bcm_rx_changed() can hit the overflow threshold and
-> reset it:
-> 
-> net/can/bcm.c:bcm_rx_changed() {
->      ...
-> 	if (atomic_long_read(&op->frames_filtered) > ULONG_MAX / 100) {
-> 		atomic_long_set(&op->frames_filtered, 0);
-> 		atomic_long_set(&op->frames_abs, 0);
-> 	}
->      ...
-> }
-> 
-> If this reset occurs precisely between the initial non-zero check and the
-> division above, could the denominator evaluate to 0 and cause a divide-by-zero
-> kernel panic?
-> 
-> Would it be safer to read the atomic values exactly once into local variables
-> at the beginning of the iteration?
+>> perf test: Add workload-ctl option
+>>
+>> Add a --workload-ctl=fifo:ctl-fifo[,ack-fifo] option for 'perf test
+>> -w'.
 > 
 > [Severity: Medium]
-> Does changing the statistics variables to atomic_long_t introduce a signed
-> integer overflow on 32-bit systems?
+> This isn't a bug in the code, but there is a mismatch between the commit
+> message and the implemented option. The commit title and message specify
+> '--workload-ctl', but the documentation and code implement '--record-ctl'.
 > 
-> atomic_long_read() returns a signed long. The expression
-> atomic_long_read(&op->frames_filtered) * 100 in bcm_proc_show() now evaluates
-> using signed 32-bit integer arithmetic on 32-bit systems.
+> Could the commit message be updated to match the implementation, or should
+> the option be renamed to '--workload-ctl' in the code?
 > 
-> While the overflow prevention in bcm_rx_changed() caps frames_filtered at
-> ULONG_MAX / 100, multiplying by 100 when frames_filtered exceeds LONG_MAX / 100
-> will overflow the maximum positive value for a signed 32-bit integer.
+
+Will fix.
+
+>> diff --git a/tools/perf/tests/builtin-test.c b/tools/perf/tests/builtin-test.c
+>> --- a/tools/perf/tests/builtin-test.c
+>> +++ b/tools/perf/tests/builtin-test.c
+> [ ... ]
+>> @@ -1486,6 +1664,8 @@ int cmd_test(int argc, const char **argv)
+>>   	OPT_UINTEGER('r', "runs-per-test", &runs_per_test,
+>>   		     "Run each test the given number of times, default 1"),
+>>   	OPT_STRING('w', "workload", &workload, "work", "workload to run for testing, use '--list-workloads' to list the available ones."),
+>> +	OPT_STRING(0, "record-ctl", &workload_control, "fifo:ctl-fifo[,ack-fifo]",
+>> +		   "Write enable to the fifo just before running the workload and disable after, with optional ack from ack-fifo"),
 > 
-> Dividing this negative intermediate result by frames_abs yields a negative
-> number, which corrupts the final reduction percentage.
-> 
-> Should the reads be cast to unsigned long before the calculation?
+> [Severity: Medium]
+> This is where the option is defined as "record-ctl" in cmd_test() instead
+> of the promised "workload-ctl". Does this option name need to be updated?
 > 
 
