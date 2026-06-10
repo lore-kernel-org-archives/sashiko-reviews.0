@@ -1,151 +1,105 @@
-Received: from out-174.mta0.migadu.com (out-174.mta0.migadu.com [91.218.175.174])
+Received: from mail.sms-medipool.de (mail.sms-medipool.de [178.63.14.108])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A2E67357D0C
-	for <sashiko-reviews@lists.linux.dev>; Wed, 10 Jun 2026 18:29:07 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=91.218.175.174
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B9AB734E75C
+	for <sashiko-reviews@lists.linux.dev>; Wed, 10 Jun 2026 18:44:59 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=178.63.14.108
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1781116149; cv=none; b=grWsLcUcOOr2FV6HivBUK7MygbD1tmrUyMKefzKliajGo7Sn3AupQ2JSlM4B94jz+QOHoHl9PbdkbX6jrAi7npC6mtRJ9WKbBnmkl51a0a6QeMZkTGnZ9YaEZZtPYuuVJyE+qfDf7fKiIhmoRpG/SJ1EkiEaxYFgwOHsn6B6s9k=
+	t=1781117101; cv=none; b=bUfyTHEYG0BmFvsbPoT2/WgZ4lx5itLEBR83Lm/n1j6vNgmE59pZTAsaRvMJ6SRRJ8j4ESjl4KgvSJCzj2VOltqiK/s1aQHvj9fZn5UlW70yXHBy1qy4iyZWnTYLUSYV2jRCB7HWHH/SOcIJfF372ApV/6xD3r4L8l0wR/kFdqE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1781116149; c=relaxed/simple;
-	bh=vq893cOoOr0gmJwGksL9/IPCxUYijv8aAcMAtsu7ZdM=;
-	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=VpbdU6t9/8mTMiTuA9xiUj3WNls4mGeVQJa/Csw/1up2l5ju1ysTDXa5uCWt3k5KFSoqDLdG63zxoVjU2ByjOtw+knTT8+Wz/mv+tVfLV+lzc8l1dS0EzONAZ3dVAfvvkMVKLRnHHtLdMItYeAMGosDOpGqjjj1ftAOP57WmxOc=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linux.dev; spf=pass smtp.mailfrom=linux.dev; dkim=pass (1024-bit key) header.d=linux.dev header.i=@linux.dev header.b=TeZRgg04; arc=none smtp.client-ip=91.218.175.174
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linux.dev
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linux.dev
+	s=arc-20240116; t=1781117101; c=relaxed/simple;
+	bh=W6FxcmvZc7O9uWrU0PcbRqzEAh2J4RoXnjElLIAkQk8=;
+	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
+	 MIME-Version; b=bOOnsCe8jNk1cf56rad+sMl/TukKfJLZ5e1OnfVBsRPnRrnGuFhziT3rgD4oxyIZEYOczdVU/5ZhypWO6vZCUuhAKLgdi4KYvNWokrLEIp2GfmJs5xqQDj+74eHTD6m/xuTlBhSBaEKjRooEKktXtWV8z0wiMTkyd6hq2sYuVYU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=sms-medipool.de; spf=pass smtp.mailfrom=sms-medipool.de; dkim=pass (2048-bit key) header.d=sms-medipool.de header.i=@sms-medipool.de header.b=JG5F+hcS; arc=none smtp.client-ip=178.63.14.108
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=sms-medipool.de
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=sms-medipool.de
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linux.dev header.i=@linux.dev header.b="TeZRgg04"
-Message-ID: <7b6d449f-c70c-4e8e-bfc4-a2f75517395c@linux.dev>
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linux.dev; s=key1;
-	t=1781116145;
-	h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
-	 to:to:cc:cc:mime-version:mime-version:content-type:content-type:
-	 content-transfer-encoding:content-transfer-encoding:
-	 in-reply-to:in-reply-to:references:references;
-	bh=yXkcVBBhkoIwVA3JoPxsNhVcRJ8opaaDptjillfXcwU=;
-	b=TeZRgg04L4P22kmKlGOqqUeha4QGT0mcVOGrY9mmaHcjfK5JD/R3LAbGjT4m2VXJCfYaGZ
-	qMkMNFuIaxY7oNxTl+Upwj5RZjHb9v8PikutOHsjkABctjr9tcbssfFHVf2/u+q/mAMWQ8
-	2bDD4ghbdRzz236h5TmLH+/1IYsO6HE=
-Date: Wed, 10 Jun 2026 11:28:56 -0700
+	dkim=pass (2048-bit key) header.d=sms-medipool.de header.i=@sms-medipool.de header.b="JG5F+hcS"
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=sms-medipool.de;
+	s=mail; t=1781117098;
+	bh=W6FxcmvZc7O9uWrU0PcbRqzEAh2J4RoXnjElLIAkQk8=;
+	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
+	b=JG5F+hcSVf1vQj8f77tOvQd4+XyAcTNN/DZFCIcnbElk9ntyMKC2AQuBIQw+qVguo
+	 lh1RkohVtLFglEBWusBcb06MA3Yny7z8fhZbDWnLCyX5dpmF0buY8dhqNroUB7XwE7
+	 nZZyXMYwmnjbe5oBgfjiSnelrK1Nbzqakx/2RmP/LixtS4HOznceU07akjTY150Whg
+	 uP7jk1dKszWteF/oyDQwbMEmO8UsLAuHP56rTOpPi8kRvS7wisx02mXJJJtbspc8nh
+	 SyEZoW9BxUgByXXP4TMjxYpaE4oC9r2rXyUu6TnS1F0bS20RCYO+ddC3+e8M05ZMAL
+	 6tFt83zZXC65Q==
+Received: from mail.stoss-medica.de (mail.stoss-medica.de [213.147.17.40])
+	by mail.sms-medipool.de (Postfix) with ESMTPS id E543C11F58;
+	Wed, 10 Jun 2026 20:44:57 +0200 (CEST)
+Received: from NUC16-Linux.sb.golima.de ([95.88.98.111])
+	by mail.stoss-medica.de (Kerio Connect 10.0.8 patch 2) with ESMTP;
+	Wed, 10 Jun 2026 20:44:57 +0200
+From: Alexander Kaplan <alexander.kaplan@sms-medipool.de>
+To: sashiko-reviews@lists.linux.dev
+Cc: dri-devel@lists.freedesktop.org,
+	intel-gfx@lists.freedesktop.org,
+	intel-xe@lists.freedesktop.org,
+	=?UTF-8?q?Ville=20Syrj=C3=A4l=C3=A4?= <ville.syrjala@linux.intel.com>,
+	Ankit Nautiyal <ankit.k.nautiyal@intel.com>,
+	Imre Deak <imre.deak@intel.com>,
+	Maarten Lankhorst <maarten.lankhorst@linux.intel.com>,
+	Jani Nikula <jani.nikula@linux.intel.com>,
+	Rodrigo Vivi <rodrigo.vivi@intel.com>,
+	alexander.kaplan@sms-medipool.de
+Subject: Re: [PATCH] drm/dp: Read the PCON max FRL bandwidth only for HDMI DFPs
+Date: Wed, 10 Jun 2026 20:44:56 +0200
+Message-ID: <20260610184456.8424-1-alexander.kaplan@sms-medipool.de>
+X-Mailer: git-send-email 2.54.0
+In-Reply-To: <20260610180312.374901F00893@smtp.kernel.org>
+References: <20260610180312.374901F00893@smtp.kernel.org>
 Precedence: bulk
 X-Mailing-List: sashiko-reviews@lists.linux.dev
 List-Id: <sashiko-reviews.lists.linux.dev>
 List-Subscribe: <mailto:sashiko-reviews+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:sashiko-reviews+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Subject: Re: [PATCH v1] kasan: Fix false-positive wild-memory-access on x86
- under 5-level paging
-To: sashiko-reviews@lists.linux.dev
-Cc: bpf@vger.kernel.org
-References: <20260610175651.647515-1-ihor.solodrai@linux.dev>
- <20260610181729.7F44C1F00893@smtp.kernel.org>
-Content-Language: en-US
-X-Report-Abuse: Please report any abuse attempt to abuse@migadu.com and include these headers.
-From: Ihor Solodrai <ihor.solodrai@linux.dev>
-In-Reply-To: <20260610181729.7F44C1F00893@smtp.kernel.org>
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 7bit
-X-Migadu-Flow: FLOW_OUT
+Content-Transfer-Encoding: 8bit
 
-On 6/10/26 11:17 AM, sashiko-bot@kernel.org wrote:
-> Thank you for your contribution! Sashiko AI review found 2 potential issue(s) to consider:
-> 
-> New issues:
-> - [Medium] Incomplete fix and architectural layering violation via x86-specific macro in generic KASAN code.
-> 
-> Pre-existing issues:
-> - [High] Unhandled root cause: CPU feature flags are non-atomically cleared while interrupts are enabled.
-> --
-> 
-> commit 5a28adbdf7cd811d1903c7692ad3799adc4606f3
-> Author: Ihor Solodrai <ihor.solodrai@linux.dev>
-> 
-> kasan: Fix false-positive wild-memory-access on x86 under 5-level paging
-> 
-> This commit attempts to fix a flaky false-positive KASAN splat on x86_64
-> with 5-level paging. It addresses a race where the LA57 CPU feature is
-> temporarily cleared during boot by defining USE_EARLY_PGTABLE_L5 in the
-> generic KASAN code.
-> 
->> diff --git a/mm/kasan/generic.c b/mm/kasan/generic.c
->> index 2b8e73f5f6a70..b5f430f2dbb68 100644
->> --- a/mm/kasan/generic.c
->> +++ b/mm/kasan/generic.c
->> @@ -9,6 +9,13 @@
->>   *        Andrey Konovalov <andreyknvl@gmail.com>
->>   */
->>  
->> +/*
->> + * check_region_inline() and addr_has_metadata() can run very early.
->> + * For example, in an interrupt taken while identify_cpu() has the CPU
->> + * capability bits temporarily cleared.
->> + */
->> +#define USE_EARLY_PGTABLE_L5
-> 
-> [Severity: Medium]
-> Is it appropriate to place the x86-specific USE_EARLY_PGTABLE_L5 macro in
-> the generic KASAN code?
-> 
-> Since this macro is only defined locally in generic.c, other generic KASAN
-> files like mm/kasan/report.c remain unaware of it.
+On Wed, 10 Jun 2026, sashiko-bot@kernel.org wrote:
+> If detailed capability info is not available, downstream_ports contains 1-byte
+> descriptors per port. Doesn't this mean downstream_ports[2] would represent
+> the third downstream port rather than byte 2 of Port 0?
 
-Correct. Setting USE_EARLY_PGTABLE_L5 only fixes the particular issue that I
-stumbled on. AFAIU there may be a slight runtime performance hit when using
-this flag, so we might not want to set it more widely.
+The DPCD addressing concern is valid.
+Without DP_DETAILED_CAP_INFO_AVAILABLE the registers at DPCD 0x80 hold
+one byte per port, so downstream_ports[2] is the descriptor of port 2
+and not byte 2 of the port 0 descriptor.
+Bit 5 can even be legitimately set in that format, where it is part of
+the non-EDID format bits (DP_DS_NON_EDID_720x480i_50).
+So intel_dp_check_frl_training() evaluating DP_PCON_SOURCE_CTL_MODE on
+that byte is indeed unguarded.
 
-I'll defer to KASAN maintainers to comment on this.
+The practical exposure is small, though.
+The same condition also requires intel_dp_is_hdmi_2_1_sink(), so the
+EDID of the attached sink must additionally advertise HDMI FRL rates
+in the HF-VSDB.
+drm_dp_read_downstream_info() zeroes descriptor bytes beyond the
+advertised port count, so hitting the bogus bit takes a branch device
+that exposes three or more downstream ports without detailed
+capability info while driving an HDMI 2.1 sink, which should be a
+rare combination.
 
-> 
-> If a genuine KASAN bug occurs during the race window, wouldn't print_report()
-> miscalculate the shadow memory addresses:
-> 
-> mm/kasan/report.c:print_report() {
->     ...
->     if (addr_has_metadata(addr)) {
->     ...
-> }
-> 
-> and fail to print the memory metadata because it uses the 4-level paging
-> start address instead of the 5-level one?
-> 
-> [ ... ]
-> 
->> The root cause is in generic KASAN not seeing
->> cpu_feature_enabled(X86_FEATURE_LA57) set, because the bit is cleared
->> in identify_cpu() when the offending interrupt happens [1]:
->>
->>   memset(&c->x86_capability, 0, ...);   /* clears X86_FEATURE_LA57 */
->>   ...
->>   get_cpu_cap(c);                       /* re-reads CPUID, restores it */
-> 
-> [Severity: High]
-> This is a pre-existing issue, but does this approach leave the underlying
-> race condition unhandled?
+> Should intel_dp_check_frl_training() be updated with similar checks to ensure
+> we only evaluate DP_PCON_SOURCE_CTL_MODE when appropriate?
 
-Yes, the underlying caveat that x86_capability is cleared within an 
-interruptable window remains. Potentially any other interrupt handler that
-checks for any other CPU capability may run into similar problem.
+This patch also narrows the remaining window.
+With it, dfp.pcon_max_frl_bw is only non-zero for a branch device with
+detailed capability info and an HDMI downstream port, so in the
+scenario above intel_dp_pcon_start_frl_training() now fails the
+max_frl_bw check before any FRL DPCD access happens.
 
-That said, LA57 and KASAN feel like a special case. And I don't see an obvious
-way to fix this on identify_cpu() side. Disabling IRQ is clearly an overkill.
+What remains is the TMDS fallback write to DP_PCON_HDMI_LINK_CONFIG_1
+in the error path of intel_dp_check_frl_training().
+Gating the function on intel_dp->dfp.pcon_max_frl_bw, which after this
+patch encodes exactly the checks added here, would close that.
+That is an i915 change and out of scope for this helper patch.
+If the maintainers think it is worth closing, I am happy to send a
+separate follow-up patch for that.
 
-I'm very open to alternative solutions though, I am a tourist here.
+Thanks,
 
-> 
-> In arch/x86/kernel/cpu/common.c:identify_cpu(), boot_cpu_data.x86_capability
-> is cleared non-atomically while local interrupts are still enabled. This
-> can occur because arch_cpu_finalize_init() runs after local_irq_enable().
-> 
-> Because alternative instructions have not yet been patched at this point in
-> the boot sequence, cpu_feature_enabled() dynamically checks
-> boot_cpu_data.x86_capability.
-> 
-> Could any interrupt handler that fires during this window and checks a CPU
-> feature spuriously see it as disabled, potentially causing core subsystems
-> to execute incorrect fallback paths? 
-> 
-> Would it be safer to disable local interrupts during the boot_cpu_data
-> initialization in identify_cpu() instead?
-> 
+Alexander
 
