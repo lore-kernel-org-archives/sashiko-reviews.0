@@ -1,150 +1,149 @@
-Received: from mail-lj1-f176.google.com (mail-lj1-f176.google.com [209.85.208.176])
+Received: from mail-oi1-f169.google.com (mail-oi1-f169.google.com [209.85.167.169])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7738747A0B2
-	for <sashiko-reviews@lists.linux.dev>; Wed, 10 Jun 2026 20:16:31 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=pass smtp.client-ip=209.85.208.176
-ARC-Seal:i=2; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1781122593; cv=pass; b=QcKznLRo+3gvzxwgLOg71m8ABtSDZcVp5rEL1QsP/1oxFiytiyFPK4ZxLd9zxa7kuVluNBvig10DfaUpc72r5GP9flZPr3Ixi1V7GgeoKgbn+HaAig8F6a4GNEyx7zdeP+otci5S4Zr16Gm9mf5KMgQOUav3geKZxVAxoQqE7GU=
-ARC-Message-Signature:i=2; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1781122593; c=relaxed/simple;
-	bh=72mJCZ5KYYsVgkuAU6zlxPtbNTq33Q6bG2i5dEnXg4I=;
-	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
-	 To:Cc:Content-Type; b=k7C+qed3zQzjIpSDO17ijEz3uANN0RSJ7oO1RdxzDzg+xYiRnIG1MiFK9MPJgwYFrez9OnX35MX2jBFPy2YWjm86UZK2iX2zMkJik0J+xFWrjqMnd5JXFQQcjvTwCGaYee0covI+nA3gusGHtcAAoNw9QW1SpjNcNGlpRWSAxqc=
-ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=google.com; spf=pass smtp.mailfrom=google.com; dkim=pass (2048-bit key) header.d=google.com header.i=@google.com header.b=C20ThkwL; arc=pass smtp.client-ip=209.85.208.176
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=google.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=google.com
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 97370480DCD
+	for <sashiko-reviews@lists.linux.dev>; Wed, 10 Jun 2026 20:43:22 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.167.169
+ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
+	t=1781124205; cv=none; b=JR7R36SrQIXihjtwmOqehLVN5tGdn1IYzDooDphk5zZpsUsfUrW+YgPxbubCM3TgsenqL1JUt1J52Dy5xET9Snma04i1fH217NZDRCcdNVAtIqNHEZoP5eANUATdHaLiPnsLoHlpSCN1je27a5gxPfEo1N2a/pJ39e4eR/FZvQ0=
+ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
+	s=arc-20240116; t=1781124205; c=relaxed/simple;
+	bh=eECEFWKviFGovSY8dv4YhSbKFI3KHDczqXjfIHtU4KI=;
+	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
+	 In-Reply-To:Content-Type; b=KHTeqgjhvSiHYJ0JIaUXcyPDQORI+NQbmw564s9RtSU/hWctYia4weeeLiZz4FR6CqWNoYX/tMneV+/xxuEgrswpyKN0r9n92VScl6YIQmyXbnA1ufZup6NG5Tj2rskmDIpyyaFojLj+B74RCbXKcWA4dXXN2UgFEv7XoAp0ltU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=SSNlAr5x; arc=none smtp.client-ip=209.85.167.169
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=google.com header.i=@google.com header.b="C20ThkwL"
-Received: by mail-lj1-f176.google.com with SMTP id 38308e7fff4ca-3966c0d5ac9so66550361fa.2
-        for <sashiko-reviews@lists.linux.dev>; Wed, 10 Jun 2026 13:16:31 -0700 (PDT)
-ARC-Seal: i=1; a=rsa-sha256; t=1781122590; cv=none;
-        d=google.com; s=arc-20240605;
-        b=Go8IAzdpMCLTiPFgvq7nXhZcqSXld6EIm3WPN1TaLt7IlWUTPX45WEtfcARy10J7HM
-         qXkob51hFKiMd1t28Qq4Mpto+MDuYOfaVZM0WNPmRn12sk/oIWfnGym60wIOY9qNN3Jq
-         HvF0KwK5jspdtb9z+PISry3AS7pg+kllhRQ4SG2vIuGnNOUxBbIHFYaLpkRGYASq8deh
-         2zIGwecI3GVDptqZhwALL4+Sa8B17rownowZm1k3/D70CwgKp3kCD9/2Uj0UXOc6yB+d
-         U1d35Sh98j+KTY2LqSKu0npt2LfYQgPQv/Tbo+xryl72DfttN9Rpf9iKaDzMjBLFs5r2
-         bO+g==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com; s=arc-20240605;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:dkim-signature;
-        bh=gDuIdBL6V7SP+lBacx19DNCO4e4v3ySUd9kgTjKOFe4=;
-        fh=wqYu1lGltArXwteD7WYVag+cmyKKmwUIlTY51VAadtQ=;
-        b=FQxXkzu8sy8nJjACFLTZ2uz5BNv6dGYTJyvzQg+y+8TTafnLLPknhwC8+LApTyr6DL
-         PIWtIjfKVMoio9pwx4TjjhKbuv2xYjVQzgwzKr+J996izKbm1q1An+MBPjFxBPsjFgA5
-         lydjc1mJFJL1+HEWrUTlFrq2Oo9rdkt7mVKNxZVp527qZDRue/j++NQD8nbac8SpMUPo
-         6Od4qrPHO5tLKeozc4SUzJqKCFG34tTqduZ/GbcnGCoVeTd84sMT6LyhJfMtXdy0Ey4B
-         z5G5viqvU0MwFtaKnsdIoCwnWU3J4jpUWaFlv8Y/L6tYVYAZiH2fAyNH6EJFnSjufSYP
-         itKw==;
-        darn=lists.linux.dev
-ARC-Authentication-Results: i=1; mx.google.com; arc=none
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="SSNlAr5x"
+Received: by mail-oi1-f169.google.com with SMTP id 5614622812f47-4865e953031so266479b6e.0
+        for <sashiko-reviews@lists.linux.dev>; Wed, 10 Jun 2026 13:43:22 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=google.com; s=20251104; t=1781122590; x=1781727390; darn=lists.linux.dev;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=gDuIdBL6V7SP+lBacx19DNCO4e4v3ySUd9kgTjKOFe4=;
-        b=C20ThkwLiMTxSz91aCHT0f4jIG1XIfHXUCScGZNjpCkv+2wAQp+ShmkQM0bjunhWIu
-         QueILUp8T8dkOvzfka1kBK/2WGUJA5Z1Hf3kKsnolj2L/hlGujgYkrszuxgtp8CknNVF
-         hqwPZm/W5iSqpdFUWhKou00Gjd27c4j0BItMg84HKhJAlDygvlsrN9m7tfEe+bXOa3H3
-         DN+xOVHn+5Fkq9/pk5wSpKu/zqxavtOMgYsdYRTelheHnKe19Srgs7H3KUf5/udkNMhQ
-         Lx6ecibBM7GBQLLqOOQfAZR57ACVO04lvT51AhfmUbDp9qwLMIKClNINi76fL6GpGPDc
-         NeEw==
+        d=gmail.com; s=20251104; t=1781124201; x=1781729001; darn=lists.linux.dev;
+        h=content-transfer-encoding:in-reply-to:from:content-language
+         :references:cc:to:subject:user-agent:mime-version:date:message-id
+         :from:to:cc:subject:date:message-id:reply-to;
+        bh=NpiWNaJanDKRHuWCGrhJcww0s9XnS0dPsuz5e44KkOA=;
+        b=SSNlAr5xmTerl19NcYw+X7n1rT7Z/qMwY53uynd5I47bnGq1YWG5yqWEKlqzy+C7Qg
+         6b8d2HXWKHzsY/H12Oa1OaDI2CbQ3MGvxTF1596ejcoGj/E1XVGEv4hvJsj7igoDGCEP
+         pLVo5F5wwKsR3FeEPACWdbGyKf9kN67DXpJkzwNXNR9Ad0eg3SlijJS2XtAMfwvSZ0zt
+         8PXLjAsDy8p32bIwB9QGnCbLuT9KL5AAg4+Pjpt+FhtVzn/wS9Xr4esdFPT6/u7PaACG
+         94iEc1gLXlByNl2lcvnPwCPFpiJ2P9SN/gY7AFyd9zl0eCxARrxPf4iVDkKhW7npgZhU
+         Hoaw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20251104; t=1781122590; x=1781727390;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:x-gm-gg:x-gm-message-state:from
-         :to:cc:subject:date:message-id:reply-to;
-        bh=gDuIdBL6V7SP+lBacx19DNCO4e4v3ySUd9kgTjKOFe4=;
-        b=WmXwg/VCN8XffhXWQVEuzxJFAHbqIrzCzAW6RWTEsP0T1dpkyyUeHREFLhfdRdc7Aq
-         yxcrHqA3Fejt0wUYLqNdJ44KUiemtnH7DCipIRJ32fM7UwQyV8t+FBQhHjPtFbrnPFIC
-         GWGYBF+qpUydbKjbCyfj0ZAcSrO9cBkH2e+M5W8czesmjVqZp61eZ4TmCJgUrkrSB3QM
-         9eeWrI1QhPjfyBz9wnjCCIKBkUvyXVSR/kRb4ZIzIia8ftChFvq78N0vxAThiuyiMfER
-         7ESRJiIcHURAI4ATNjRtRQq8/5Jl+HJqHMQSKI5+Q3OkFFd5nDUCe53KStryKJ2LPIc9
-         Q47Q==
-X-Gm-Message-State: AOJu0Yyfe4tDDt9DQq6NVTlwv9Coo++U62IXh9eNmOmrEwBByiYa4noa
-	x8+LAidrd23s5l+hsdcJSCLqxrL96BkMr4kor2StOBBfuy0GCESXkfCNUZtuA/XyFg4mG9p6Ymz
-	xHOx1DzHO6fZz8lYlwNdzMjSNdzaqMxULyhdVrztl
-X-Gm-Gg: Acq92OE7QWpKt/Q2Zn5+Q7VhYU7CelJJNktmUqbXS2xPJgBr0j06C0BIXcplSkTwOgf
-	wnz9J4jHlfWGt5gmQ1w5ZL+dHq3YDbgcDIDArfAxR3T/2pO6qi9UkYc/5Nv3J1HNJXgh9oO4WKf
-	pCufY2pbvZMwC4VAGCatkYFJKKV29YE1uJTc6K5epz0ukXiwGnaAC+CwlDUJ+JcnustusjWUdSb
-	WxarxDAjPtYyGcaJ/U7w1n8TwnpFQyuUPj+kbFB0ayT7MQxr11y7qTG3Nga47krpDFylYOrmR9i
-	lDUIM+ybjIirvogPbA==
-X-Received: by 2002:a2e:be28:0:b0:394:8fc:8c44 with SMTP id
- 38308e7fff4ca-396d05b79d6mr69423151fa.0.1781122589145; Wed, 10 Jun 2026
- 13:16:29 -0700 (PDT)
+        d=1e100.net; s=20251104; t=1781124201; x=1781729001;
+        h=content-transfer-encoding:in-reply-to:from:content-language
+         :references:cc:to:subject:user-agent:mime-version:date:message-id
+         :x-gm-gg:x-gm-message-state:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=NpiWNaJanDKRHuWCGrhJcww0s9XnS0dPsuz5e44KkOA=;
+        b=GdTwSjsLhaMD7MTBRFzKDvRBGyz0POanWjPHFiPlzHXZ7+K7jAMtx+WmRMsATuzcdQ
+         BfpW3XBjCaejn/UMFFgBEpMr01QaV/gn4T0nSBvHFJshuwRP744wppRsVwbhfuMUkeLC
+         FrEs7ihQ0Nh7zkTgCnIi8w2/xLBqeq+61Wet59onKqhVE/2m0n1//GSf4uPb3YSD/IQt
+         rhwSbUjxBIzXzGCIWexsnDX0fGK7vCAsHmFDQCBI+wRBNWU0DE+WxOPZukQjoJhyKp1S
+         lbP31H7ZEhRs3Sgh/O5uIKDzZyrwPGhFuvqNQHzkWMSek2yABdNVb08sYr+jk1WFEFzD
+         DNzw==
+X-Gm-Message-State: AOJu0YyLAHkUdc7CM62FgXB3LXAJi9jWrZn75PlnSkjqJxN+2nI3/Fn4
+	c8RpxfeGwC6CBE9+CHOyr/yskXWrwAV6PBfHHs2bsAjmL/NANidWCUlSciXLpA==
+X-Gm-Gg: Acq92OETRQkds16D1Um/aAi6mNnEzujSblnhzH9aOWsxe+h3mnAeyoju93073x6+TFg
+	AKYmQ5iSTJqkuTvXc0a3HiGIaPzil0eWFv+yQAjqCrM2ZEFqq5r06BZmI2nL1f51z2KOD1htkHx
+	aby+Dt7jmBZ34KqicICfequg9wkt21fGgsU/UUTEnnK1B7gR4bEIvWVEFOpg14Y9iS0gWGsTsvf
+	98vpGwqNt4JDJJKjJy82aQtAWzlO9ZetO5r/yZjjSkaXHN1EsmVBFUx4vXKTOWFYNHf9Jl6oTP9
+	LYTpGFrQkxOp2yxcfhhX7BCtGRmQJ7fflGCSuI186DbbuTjN2YpW5et8cTn3g2Wn5BwTs0vTFxP
+	FvUAtybHyVLLP+cl7SRaQMrwCQs9PoLKq3QYfebzo29zcRUkyW9ZS9DyaMZiQICEgZj32fZT29b
+	7TraRduvcl3buJuA//njsvsUw2KocQaqOn1Dv85pS/V1gmw6YT3gLBfNGet263BdgA1AKCVwei5
+	3mx0ZwxtKDuY0jrC6WREcM=
+X-Received: by 2002:a05:6808:2f08:b0:479:eead:df9 with SMTP id 5614622812f47-48717b1f6a9mr224413b6e.4.1781124201362;
+        Wed, 10 Jun 2026 13:43:21 -0700 (PDT)
+Received: from ?IPV6:2605:a601:aab9:5000:dc49:41fd:5d54:871a? ([2605:a601:aab9:5000:dc49:41fd:5d54:871a])
+        by smtp.gmail.com with ESMTPSA id 5614622812f47-4865b5a53bcsm19419533b6e.3.2026.06.10.13.43.20
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Wed, 10 Jun 2026 13:43:20 -0700 (PDT)
+Message-ID: <ca27f17a-d95e-471b-ad4f-ecbf6be1104d@gmail.com>
+Date: Wed, 10 Jun 2026 15:43:19 -0500
 Precedence: bulk
 X-Mailing-List: sashiko-reviews@lists.linux.dev
 List-Id: <sashiko-reviews.lists.linux.dev>
 List-Subscribe: <mailto:sashiko-reviews+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:sashiko-reviews+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-References: <20260610005338.2967132-2-seanjc@google.com> <20260610010314.DB8861F00893@smtp.kernel.org>
- <aim4lld49oqLrthg@google.com> <ainFwSTb5-8itT9y@google.com>
-In-Reply-To: <ainFwSTb5-8itT9y@google.com>
-From: David Matlack <dmatlack@google.com>
-Date: Wed, 10 Jun 2026 13:15:38 -0700
-X-Gm-Features: AVVi8Ceu1fH4ea1Sf9BGjtK5ZsWJ_KP_7z1Uoi3G2FEJ6paSuzfa9CjW3fkYlgk
-Message-ID: <CALzav=fUfhGP-DMsDR=4ZX2Cap=-L=c-1kwxTaUxSdknC_ir5Q@mail.gmail.com>
-Subject: Re: [PATCH v6 01/18] KVM: selftests: Build and link
- selftests/vfio/lib into KVM selftests
-To: Sean Christopherson <seanjc@google.com>
-Cc: sashiko-reviews@lists.linux.dev, kvm@vger.kernel.org, 
-	Josh Hilke <jrhilke@google.com>
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH v2] scsi: target: Allow FUA if no write cache enabled
+To: sashiko-reviews@lists.linux.dev,
+ "Martin K. Petersen" <martin.petersen@oracle.com>
+Cc: linux-scsi@vger.kernel.org
+References: <20260609202156.90700-1-stuart.w.hayes@gmail.com>
+ <20260609203953.154771F00898@smtp.kernel.org>
+Content-Language: en-US
+From: stuart hayes <stuart.w.hayes@gmail.com>
+In-Reply-To: <20260609203953.154771F00898@smtp.kernel.org>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
 
-On Wed, Jun 10, 2026 at 1:15=E2=80=AFPM David Matlack <dmatlack@google.com>=
- wrote:
->
-> On 2026-06-10 12:18 PM, Sean Christopherson wrote:
-> > On Wed, Jun 10, 2026, sashiko-bot@kernel.org wrote:
-> > > > diff --git a/tools/testing/selftests/kvm/Makefile.kvm b/tools/testi=
-ng/selftests/kvm/Makefile.kvm
-> > > > index e0ddd3ff9472d..14316358fd9fb 100644
-> > > > --- a/tools/testing/selftests/kvm/Makefile.kvm
-> > > > +++ b/tools/testing/selftests/kvm/Makefile.kvm
-> > > > @@ -257,6 +257,7 @@ OVERRIDE_TARGETS =3D 1
-> > > >  # which causes the environment variable to override the makefile).
-> > > >  include ../lib.mk
-> > > >  include ../cgroup/lib/libcgroup.mk
-> > > > +include ../vfio/lib/libvfio.mk
-> > >
-> > > [Severity: Low]
-> > > Does including libvfio.mk here break the "make clean all" sequence fo=
-r KVM
-> > > selftests?
-> >
-> > David and/or Josh, can you verify whether Sashiko is hallucinating or h=
-as a
-> > legitimate concern?
->
-> That is a legitimate bug in libvfio.mk. Want me to send a separate patch
-> to fix (see below) or do you want to include as part of your series?
->
-> diff --git a/tools/testing/selftests/vfio/lib/libvfio.mk b/tools/testing/=
-selftests/vfio/lib/libvfio.mk
-> index 9f47bceed16f..1f1ab180f42d 100644
-> --- a/tools/testing/selftests/vfio/lib/libvfio.mk
-> +++ b/tools/testing/selftests/vfio/lib/libvfio.mk
-> @@ -21,9 +21,12 @@ LIBVFIO_O :=3D $(patsubst %.c, $(LIBVFIO_OUTPUT)/%.o, =
-$(LIBVFIO_C))
->  LIBVFIO_O_DIRS :=3D $(shell dirname $(LIBVFIO_O) | uniq)
->  $(shell mkdir -p $(LIBVFIO_O_DIRS))
+On 6/9/2026 3:39 PM, sashiko-bot@kernel.org wrote:
+> Thank you for your contribution! Sashiko AI review found 1 potential issue(s) to consider:
+> - [Critical] Silently dropping the FUA bit when WCE=0 prevents the backend from honoring the FUA request, causing silent data loss in the fileio AIO backend.
+> --
+> 
+> commit 5cb17faff566c1313276f5a67af675e43649d8d6
+> Author: Stuart Hayes <stuart.w.hayes@gmail.com>
+> 
+> scsi: target: Allow FUA if no write cache enabled
+> 
+> This commit modifies the target core code to ignore the FUA bit in SCSI
+> commands for targets without an enabled write cache. This allows systems
+> with firmware that aggressively sets the FUA bit to successfully boot
+> without failing due to unsupported FUA write errors.
+> 
+>> diff --git a/drivers/target/target_core_sbc.c b/drivers/target/target_core_sbc.c
+>> index 21f5cb86d70c0..ffd2b6c9bd231 100644
+>> --- a/drivers/target/target_core_sbc.c
+>> +++ b/drivers/target/target_core_sbc.c
+>> @@ -754,6 +754,12 @@ sbc_check_dpofua(struct se_device *dev, struct se_cmd *cmd, unsigned char *cdb)
+>>   	}
+>>   	if (cdb[1] & 0x8) {
+>>   		if (!target_check_fua(dev)) {
+>> +			/*
+>> +			 * Silently ignore FUA if there's no write cache.
+>> +			 */
+>> +			if (!target_check_wce(dev))
+>> +				return 0;
+>> +
+> 
+> [Severity: Critical]
+> Does returning early here prevent the command from receiving the SCF_FUA flag?
+> 
+> By returning 0, this bypasses the cmd->se_cmd_flags |= SCF_FUA; assignment
+> that happens further down in sbc_check_dpofua().
+> 
+> While WCE=0 implies no write cache, the fileio AIO backend relies entirely
+> on the SCF_FUA flag to ensure synchronous writes:
+> 
+> drivers/target/target_core_file.c:fd_execute_rw_aio() {
+> ...
+> 	aio_cmd->iocb.ki_flags = IOCB_DIRECT;
+> 
+> 	if (is_write && (cmd->se_cmd_flags & SCF_FUA))
+> 		aio_cmd->iocb.ki_flags |= IOCB_DSYNC;
+> ...
+> }
+> 
+> Without the SCF_FUA flag, fd_execute_rw_aio() will issue asynchronous
+> writes without flushing the cache, as it ignores the O_DSYNC flag set on
+> the underlying file descriptor.
+> 
+> Could this regression lead to silent data loss on power failure, since
+> what used to be rejected as an unsupported FUA write will now complete
+> asynchronously without a disk cache flush?
+> 
 
-(Forgot to delete this line but you get the idea.)
+Valid point, yes. I will fix.
 
->
-> +$(LIBVFIO_O_DIRS):
-> +       mkdir -p $@
-> +
->  CFLAGS +=3D -I$(LIBVFIO_SRCDIR)/include
->
-> -$(LIBVFIO_O): $(LIBVFIO_OUTPUT)/%.o : $(LIBVFIO_SRCDIR)/%.c
-> +$(LIBVFIO_O): $(LIBVFIO_OUTPUT)/%.o : $(LIBVFIO_SRCDIR)/%.c $(LIBVFIO_O_=
-DIRS)
->         $(CC) $(CFLAGS) $(CPPFLAGS) $(TARGET_ARCH) -c $< -o $@
->
->  EXTRA_CLEAN +=3D $(LIBVFIO_OUTPUT)
->
+Also, I accidentally submitted this as V2 when it should have been V3, 
+sorry.
+
+>>   			pr_err("Got CDB: 0x%02x with FUA bit set, but device"
+>>   			       " does not advertise support for FUA write\n",
+>>   			       cdb[0]);
+> 
+
