@@ -1,33 +1,33 @@
-Received: from out-186.mta0.migadu.com (out-186.mta0.migadu.com [91.218.175.186])
+Received: from out-170.mta1.migadu.com (out-170.mta1.migadu.com [95.215.58.170])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CC2332C11CA
-	for <sashiko-reviews@lists.linux.dev>; Wed, 10 Jun 2026 03:41:42 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=91.218.175.186
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id ED7C120C029
+	for <sashiko-reviews@lists.linux.dev>; Wed, 10 Jun 2026 04:06:14 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=95.215.58.170
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1781062904; cv=none; b=KAVK056LTc3lQUjNvxDwz+2i7PTRQjTSo9lqeCXar6wWzvRsP/f4+CsK+I5QEowLNAQI0bV9YxYDCe7c0WFD5prdU2+Q4JRhFlbvwY7K7DuImhYsSuMWBb/CLYZ9USxfruMptLdlTXawK1H53CZx9rHJykfxcRO4rUrDfFjjvqc=
+	t=1781064378; cv=none; b=Nxi+MgWtXrNzsEqblJOS9bjMbHSLG3/bymbgCzy2fsrLzAjvgK7jP7QmuRTNfJJ0I27TSVTtLSkDvLDYYO3DOP0U9tEdI4yBBMbhF793n4jv6ZN6k0cV5adL0J2KBFKB8iDSC8pkg6idkJeGQZ11hofUvuXXN68NM6wYSqEa9zY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1781062904; c=relaxed/simple;
-	bh=tXbFrbokO5RZwDmSC5TllgPNjYOVFJgh0OQ/kUbi8xY=;
+	s=arc-20240116; t=1781064378; c=relaxed/simple;
+	bh=JZrw7ysi0X7Inh0EvXclsD+NnRcIFeXSOLauRDEH2VM=;
 	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=RGEhddpQ5eQoR8fesfLhKZB3xZpLuXY/J8XHX+Fp8YNklA5aNTDci8vW9r0QOS8hnKLpHJyQiAP5bmpkQggn2MO5GeDM1WX8kxGUTXOcZ5xaFSOvnRHIwal9svaPAatmbv6jIIvywzhZPYeQmvJP18zyNA2MWhYZyuFxzScaGmQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linux.dev; spf=pass smtp.mailfrom=linux.dev; dkim=pass (1024-bit key) header.d=linux.dev header.i=@linux.dev header.b=HaSvH6w7; arc=none smtp.client-ip=91.218.175.186
+	 In-Reply-To:Content-Type; b=s1k193t5ynSoEBos1chyknExBT88TGvYbZrG0gzdVLqr+JhftEXKBF90dYJzHSLCiNFOF/7y3JLat8n2lRktxwfqUN6lhC5H1tlWBMBuX+dAF9la02KktyGe+uFGDL8Xy5WwA7gXOnbYWiLl13Ob99QSk2LpnmwJhGtnHkWrmFg=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linux.dev; spf=pass smtp.mailfrom=linux.dev; dkim=pass (1024-bit key) header.d=linux.dev header.i=@linux.dev header.b=Y75w65Uv; arc=none smtp.client-ip=95.215.58.170
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linux.dev
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linux.dev
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linux.dev header.i=@linux.dev header.b="HaSvH6w7"
-Message-ID: <862565aa-a5c3-47ec-ad9d-a6c64c61d150@linux.dev>
+	dkim=pass (1024-bit key) header.d=linux.dev header.i=@linux.dev header.b="Y75w65Uv"
+Message-ID: <e0c62992-30a3-4491-8eac-691235a123f4@linux.dev>
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linux.dev; s=key1;
-	t=1781062900;
+	t=1781064373;
 	h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
 	 to:to:cc:cc:mime-version:mime-version:content-type:content-type:
 	 content-transfer-encoding:content-transfer-encoding:
 	 in-reply-to:in-reply-to:references:references;
-	bh=rsPmWvfwQSOjTS6cBu2jrJ8w2ejWLn3A0JR8MmqOkUc=;
-	b=HaSvH6w7hldLcwyWH/baAYc+XHulhMAP3lSVQZzKosObpocWxCEeosljZGthdLOuBA5InH
-	iyPpfWqhWOJ0Ck9GCypn0HudfPB2SjJL3+jVzroW1kMrKWjj9RPyV169ZVUZZ18jSFclNQ
-	o0CvozPXZ0GQ5OJfBnI3TFzC9eJF14Q=
-Date: Tue, 9 Jun 2026 20:41:36 -0700
+	bh=rdn+kNcU6xZomowNKeAN8NVKeZeF0fLdtvPfgntQFAA=;
+	b=Y75w65Uv1mNCcp27qdtb1UL+JKZlD4m79y+0xvWW1siBk8R59+nU9k4SA9Fmmw0zqCQ6ao
+	AlgEf2/KWC+YqyRZ/trB0RJvTOZ+9SpOhR0fQMepHYuxXqxQ5LKsSOnPxRRM2kbP5aPJ6w
+	ojOM3DTR6mYaj52yZBrxwPVQZe/uTaU=
+Date: Tue, 9 Jun 2026 21:06:06 -0700
 Precedence: bulk
 X-Mailing-List: sashiko-reviews@lists.linux.dev
 List-Id: <sashiko-reviews.lists.linux.dev>
@@ -114,25 +114,8 @@ On 6/9/26 4:42 PM, sashiko-bot@kernel.org wrote:
 > potentially leave the code fragile to LLVM optimizations that might create a
 > void-returning clone of subprog_tail0() specifically for classifier_0().
 
-We should be fine. In the same file, we have  SEC("tc")
-  int tailcall_bpf2bpf_hierarchy_2(struct __sk_buff *skb)
-  {
--	int ret = 0;
-+	int ret = 0, ret1, ret2;
-  
-  	clobber_regs_stack();
-  
--	subprog_tail0(skb);
--	subprog_tail1(skb);
--
-+	ret1 = subprog_tail0(skb);
-+	ret2 = subprog_tail1(skb);
-+	__sink(ret1);
-+	__sink(ret2);
-  	__sink(ret);
-  	return (count1 << 16) | count0;
-  }
-
-This will guarantee subprog_tail0() will have a return value.
+clone is possible. But I would say it is extremely unlikely.
+In https://github.com/llvm/llvm-project/pull/165310, for all kernel functions,
+I only find one clone (specialization) with thin-lto mode.
 
 
