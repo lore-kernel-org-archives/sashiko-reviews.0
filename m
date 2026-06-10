@@ -1,105 +1,118 @@
-Received: from mail.sms-medipool.de (mail.sms-medipool.de [178.63.14.108])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-pj1-f74.google.com (mail-pj1-f74.google.com [209.85.216.74])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B9AB734E75C
-	for <sashiko-reviews@lists.linux.dev>; Wed, 10 Jun 2026 18:44:59 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=178.63.14.108
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0070C369D55
+	for <sashiko-reviews@lists.linux.dev>; Wed, 10 Jun 2026 19:18:47 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.216.74
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1781117101; cv=none; b=bUfyTHEYG0BmFvsbPoT2/WgZ4lx5itLEBR83Lm/n1j6vNgmE59pZTAsaRvMJ6SRRJ8j4ESjl4KgvSJCzj2VOltqiK/s1aQHvj9fZn5UlW70yXHBy1qy4iyZWnTYLUSYV2jRCB7HWHH/SOcIJfF372ApV/6xD3r4L8l0wR/kFdqE=
+	t=1781119129; cv=none; b=VQRLIPcxbX3WiynsS60ygfp1vndkfsbOr9ZVKuJEnqJvNKXTnEpl2Z0+wZ+nEjOHrkm32hLCS64ApOsJioXmv3xpQpqXt+oIb1Eai1g7ieduFIr3/DJW2gnXk4d8z48hPsIzeNfM7swRokS+5GaHzJkpdsOXef1KffuJzqBi1jw=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1781117101; c=relaxed/simple;
-	bh=W6FxcmvZc7O9uWrU0PcbRqzEAh2J4RoXnjElLIAkQk8=;
-	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=bOOnsCe8jNk1cf56rad+sMl/TukKfJLZ5e1OnfVBsRPnRrnGuFhziT3rgD4oxyIZEYOczdVU/5ZhypWO6vZCUuhAKLgdi4KYvNWokrLEIp2GfmJs5xqQDj+74eHTD6m/xuTlBhSBaEKjRooEKktXtWV8z0wiMTkyd6hq2sYuVYU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=sms-medipool.de; spf=pass smtp.mailfrom=sms-medipool.de; dkim=pass (2048-bit key) header.d=sms-medipool.de header.i=@sms-medipool.de header.b=JG5F+hcS; arc=none smtp.client-ip=178.63.14.108
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=sms-medipool.de
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=sms-medipool.de
+	s=arc-20240116; t=1781119129; c=relaxed/simple;
+	bh=bWOieN7hFnS5AkVT6IUrpQaoTZ6d+J/rfYok78HffKw=;
+	h=Date:In-Reply-To:Mime-Version:References:Message-ID:Subject:From:
+	 To:Cc:Content-Type; b=MFdlueLbW5gw7Zt/xr4wD8Sfz0CCQI4TU3p5LhcOP1E8fycByWvD91KUjEfDWqEzb8nrbKhZnG38dBNSgdUqkgJNp1TqeBn57E3nXrPS6biN0YmfNZoK6cmpXrup0rlfM/xMX39rdEip5GXVVEGXpr0az8lOkGZjTSwgS93QTe8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=google.com; spf=pass smtp.mailfrom=flex--seanjc.bounces.google.com; dkim=pass (2048-bit key) header.d=google.com header.i=@google.com header.b=aYeNaPrv; arc=none smtp.client-ip=209.85.216.74
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=google.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=flex--seanjc.bounces.google.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=sms-medipool.de header.i=@sms-medipool.de header.b="JG5F+hcS"
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=sms-medipool.de;
-	s=mail; t=1781117098;
-	bh=W6FxcmvZc7O9uWrU0PcbRqzEAh2J4RoXnjElLIAkQk8=;
-	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=JG5F+hcSVf1vQj8f77tOvQd4+XyAcTNN/DZFCIcnbElk9ntyMKC2AQuBIQw+qVguo
-	 lh1RkohVtLFglEBWusBcb06MA3Yny7z8fhZbDWnLCyX5dpmF0buY8dhqNroUB7XwE7
-	 nZZyXMYwmnjbe5oBgfjiSnelrK1Nbzqakx/2RmP/LixtS4HOznceU07akjTY150Whg
-	 uP7jk1dKszWteF/oyDQwbMEmO8UsLAuHP56rTOpPi8kRvS7wisx02mXJJJtbspc8nh
-	 SyEZoW9BxUgByXXP4TMjxYpaE4oC9r2rXyUu6TnS1F0bS20RCYO+ddC3+e8M05ZMAL
-	 6tFt83zZXC65Q==
-Received: from mail.stoss-medica.de (mail.stoss-medica.de [213.147.17.40])
-	by mail.sms-medipool.de (Postfix) with ESMTPS id E543C11F58;
-	Wed, 10 Jun 2026 20:44:57 +0200 (CEST)
-Received: from NUC16-Linux.sb.golima.de ([95.88.98.111])
-	by mail.stoss-medica.de (Kerio Connect 10.0.8 patch 2) with ESMTP;
-	Wed, 10 Jun 2026 20:44:57 +0200
-From: Alexander Kaplan <alexander.kaplan@sms-medipool.de>
-To: sashiko-reviews@lists.linux.dev
-Cc: dri-devel@lists.freedesktop.org,
-	intel-gfx@lists.freedesktop.org,
-	intel-xe@lists.freedesktop.org,
-	=?UTF-8?q?Ville=20Syrj=C3=A4l=C3=A4?= <ville.syrjala@linux.intel.com>,
-	Ankit Nautiyal <ankit.k.nautiyal@intel.com>,
-	Imre Deak <imre.deak@intel.com>,
-	Maarten Lankhorst <maarten.lankhorst@linux.intel.com>,
-	Jani Nikula <jani.nikula@linux.intel.com>,
-	Rodrigo Vivi <rodrigo.vivi@intel.com>,
-	alexander.kaplan@sms-medipool.de
-Subject: Re: [PATCH] drm/dp: Read the PCON max FRL bandwidth only for HDMI DFPs
-Date: Wed, 10 Jun 2026 20:44:56 +0200
-Message-ID: <20260610184456.8424-1-alexander.kaplan@sms-medipool.de>
-X-Mailer: git-send-email 2.54.0
-In-Reply-To: <20260610180312.374901F00893@smtp.kernel.org>
-References: <20260610180312.374901F00893@smtp.kernel.org>
+	dkim=pass (2048-bit key) header.d=google.com header.i=@google.com header.b="aYeNaPrv"
+Received: by mail-pj1-f74.google.com with SMTP id 98e67ed59e1d1-36d98b5a68fso12208860a91.2
+        for <sashiko-reviews@lists.linux.dev>; Wed, 10 Jun 2026 12:18:47 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=google.com; s=20251104; t=1781119127; x=1781723927; darn=lists.linux.dev;
+        h=content-transfer-encoding:cc:to:from:subject:message-id:references
+         :mime-version:in-reply-to:date:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=EEBmDx98caEzFpRXeIqJTAyOlpfmMPXYTcbS9AlAlm8=;
+        b=aYeNaPrvkBP2RktM9qXUz/WQ6tucHeJyaabydxdZBFEFOW3qgLxvDU7gmqo4VQlTjq
+         4JmJL1iMB19QPwt/a0BP3C/Nz/87H+hTDWHKhdeVMVPa9bhS3bqmF4GiqBPaVLK96kLN
+         SzX3fByG5qb1mLyLSr5SVqxPQjX2CYanHsGFDth5WA8Xp3DMNSq639nPnHErsU/ppDhC
+         hXBgm6RtI9RiIRVBrM0BW/8v/vC16xOz/jgMlIsCnKHmrt5RJBQUO/RCYOSGsGxDYf7E
+         p3UlrEL05/eOTj0zZYlqtgW5Syn9sycONbkKSTdnF+d29lnfkMwuStObsgXPpQGn9NC4
+         xbmA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20251104; t=1781119127; x=1781723927;
+        h=content-transfer-encoding:cc:to:from:subject:message-id:references
+         :mime-version:in-reply-to:date:x-gm-message-state:from:to:cc:subject
+         :date:message-id:reply-to;
+        bh=EEBmDx98caEzFpRXeIqJTAyOlpfmMPXYTcbS9AlAlm8=;
+        b=qOz9iDwNuR3bgrVV3eQjbe061bd1X2eGCp2m77G31cT6sxXyRHv8lJ5llwTgQCBikN
+         Ut/393jNDCQ2xmvC4syoVU4/s2ngeGJDUPx4c5DBQaW+dxWG/OWGZEUWCmRlHkOXq3Gu
+         DovtaKNRnZ11EhcOFwJzkhMsW1hWHsgXA40T1PBGQpcTg22MaTHjajUSo6BaYInkbs/Y
+         XV/74Kb2UvLPa7MkZmZY2Y3hz/7hQwK+TS3LC2qQAOIMsmBxLc21FDg4LRBswph9rVu5
+         Pea1TfW9DhLjkoFyyDJFsUA4zMEB1jP6bBCvyNDmVZs640PNnksaBgvP4s+emzN1bt+g
+         ALnw==
+X-Gm-Message-State: AOJu0Yxrd3eUtLx/nrgopq7nWvOLt1dp1EzvE5dLq125E5mKp5mMq9bL
+	vvhkOiNZvacjuXxHg8FML/VcuzOJKMKH1P++Aigk3QD11niCWEZx1tUokmOdY9o3h01qkJiwnUW
+	BPkQS80O9Hy7KUUNullq3/72jCYihTWHCDFtytL90VWRTYSgbTaJ0SehEoEIFfigpMVHKOWF5lQ
+	XJDkzvqFJp96Vb28kHLE6QuaZCHSAk40fIAsdBsbi3e6jPK1+9
+X-Received: from pjji9.prod.google.com ([2002:a17:90a:6509:b0:36b:cf62:6827])
+ (user=seanjc job=prod-delivery.src-stubby-dispatcher) by 2002:a17:90b:2741:b0:366:10f1:3d86
+ with SMTP id 98e67ed59e1d1-370f0b55ebbmr28954281a91.22.1781119126862; Wed, 10
+ Jun 2026 12:18:46 -0700 (PDT)
+Date: Wed, 10 Jun 2026 12:18:46 -0700
+In-Reply-To: <20260610010314.DB8861F00893@smtp.kernel.org>
 Precedence: bulk
 X-Mailing-List: sashiko-reviews@lists.linux.dev
 List-Id: <sashiko-reviews.lists.linux.dev>
 List-Subscribe: <mailto:sashiko-reviews+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:sashiko-reviews+unsubscribe@lists.linux.dev>
-MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
+Mime-Version: 1.0
+References: <20260610005338.2967132-2-seanjc@google.com> <20260610010314.DB8861F00893@smtp.kernel.org>
+Message-ID: <aim4lld49oqLrthg@google.com>
+Subject: Re: [PATCH v6 01/18] KVM: selftests: Build and link
+ selftests/vfio/lib into KVM selftests
+From: Sean Christopherson <seanjc@google.com>
+To: sashiko-reviews@lists.linux.dev
+Cc: kvm@vger.kernel.org, David Matlack <dmatlack@google.com>, 
+	Josh Hilke <jrhilke@google.com>
+Content-Type: text/plain; charset="utf-8"
+Content-Transfer-Encoding: quoted-printable
 
-On Wed, 10 Jun 2026, sashiko-bot@kernel.org wrote:
-> If detailed capability info is not available, downstream_ports contains 1-byte
-> descriptors per port. Doesn't this mean downstream_ports[2] would represent
-> the third downstream port rather than byte 2 of Port 0?
+On Wed, Jun 10, 2026, sashiko-bot@kernel.org wrote:
+> > diff --git a/tools/testing/selftests/kvm/Makefile.kvm b/tools/testing/s=
+elftests/kvm/Makefile.kvm
+> > index e0ddd3ff9472d..14316358fd9fb 100644
+> > --- a/tools/testing/selftests/kvm/Makefile.kvm
+> > +++ b/tools/testing/selftests/kvm/Makefile.kvm
+> > @@ -257,6 +257,7 @@ OVERRIDE_TARGETS =3D 1
+> >  # which causes the environment variable to override the makefile).
+> >  include ../lib.mk
+> >  include ../cgroup/lib/libcgroup.mk
+> > +include ../vfio/lib/libvfio.mk
+>=20
+> [Severity: Low]
+> Does including libvfio.mk here break the "make clean all" sequence for KV=
+M=20
+> selftests?
 
-The DPCD addressing concern is valid.
-Without DP_DETAILED_CAP_INFO_AVAILABLE the registers at DPCD 0x80 hold
-one byte per port, so downstream_ports[2] is the descriptor of port 2
-and not byte 2 of the port 0 descriptor.
-Bit 5 can even be legitimately set in that format, where it is part of
-the non-EDID format bits (DP_DS_NON_EDID_720x480i_50).
-So intel_dp_check_frl_training() evaluating DP_PCON_SOURCE_CTL_MODE on
-that byte is indeed unguarded.
+David and/or Josh, can you verify whether Sashiko is hallucinating or has a
+legitimate concern?
 
-The practical exposure is small, though.
-The same condition also requires intel_dp_is_hdmi_2_1_sink(), so the
-EDID of the attached sink must additionally advertise HDMI FRL rates
-in the HF-VSDB.
-drm_dp_read_downstream_info() zeroes descriptor bytes beyond the
-advertised port count, so hitting the bogus bit takes a branch device
-that exposes three or more downstream ports without detailed
-capability info while driving an HDMI 2.1 sink, which should be a
-rare combination.
-
-> Should intel_dp_check_frl_training() be updated with similar checks to ensure
-> we only evaluate DP_PCON_SOURCE_CTL_MODE when appropriate?
-
-This patch also narrows the remaining window.
-With it, dfp.pcon_max_frl_bw is only non-zero for a branch device with
-detailed capability info and an HDMI downstream port, so in the
-scenario above intel_dp_pcon_start_frl_training() now fails the
-max_frl_bw check before any FRL DPCD access happens.
-
-What remains is the TMDS fallback write to DP_PCON_HDMI_LINK_CONFIG_1
-in the error path of intel_dp_check_frl_training().
-Gating the function on intel_dp->dfp.pcon_max_frl_bw, which after this
-patch encodes exactly the checks added here, would close that.
-That is an i915 change and out of scope for this helper patch.
-If the maintainers think it is worth closing, I am happy to send a
-separate follow-up patch for that.
-
-Thanks,
-
-Alexander
-
+> In tools/testing/selftests/vfio/lib/libvfio.mk, the output directory is
+> eagerly created at parse time:
+>=20
+> LIBVFIO_O_DIRS :=3D $(shell dirname $(LIBVFIO_O) | uniq)
+> $(shell mkdir -p $(LIBVFIO_O_DIRS))
+>=20
+> The directory is also added to EXTRA_CLEAN.=20
+>=20
+> If a developer runs "make clean all", Make will parse the included libvfi=
+o.mk=20
+> and run the shell mkdir command at parse time. Then it executes the clean=
+=20
+> target, which deletes the newly created libvfio directory. Finally, it=20
+> executes the all target, but the compilation fails with a "No such file o=
+r=20
+> directory" error because the output directory was deleted and isn't recre=
+ated
+> in the build recipe.
+>=20
+> > =20
+> >  INSTALL_HDR_PATH =3D $(top_srcdir)/usr
+>=20
+> [ ... ]
+>=20
+> --=20
+> Sashiko AI review =C2=B7 https://sashiko.dev/#/patchset/20260610005338.29=
+67132-1-seanjc@google.com?part=3D1
