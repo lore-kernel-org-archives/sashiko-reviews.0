@@ -1,50 +1,51 @@
-Received: from mgamail.intel.com (mgamail.intel.com [198.175.65.9])
+Received: from xmbghk7.mail.qq.com (xmbghk7.mail.qq.com [43.163.128.48])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E9C0D408601
-	for <sashiko-reviews@lists.linux.dev>; Thu, 11 Jun 2026 15:41:29 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=198.175.65.9
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DE8B7376BE4
+	for <sashiko-reviews@lists.linux.dev>; Thu, 11 Jun 2026 15:53:49 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=43.163.128.48
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1781192491; cv=none; b=BhwxJs/IY8TFgpCgNL+zLsEqZaPWwwQxIuqXpHrS+/4OAwWiR2L412bQiiyRHNUbII2+VqhB1Lrh6hl0FtUWnrlyuQa9xaHy5ubFJm7VyimboGQzsLS/y7IET0GKViQpScOxv2W78mN8IESe+VvVUoV47VWv3Yg+sQAQuyAe2KM=
+	t=1781193233; cv=none; b=ONI2UC5yeESyyeAZE59lljzh/Z5CBimapgaPQrvZDzjVhPlFGE2H6JWtP6eWujMUTw2mrpvDALvwOoCBVVYehSl7k2fD3WQ6kXYMwUdlY6ZhFt6wMZUIz1JkVyFDoLg7NQKEfqxp4z1QVCSsEMz72XQk2Q099US+Ud+5M/Ac3VU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1781192491; c=relaxed/simple;
-	bh=8rapZTi8F+11Ci/kQ6UASbqnB6Wa+4Y3kaONLs2Y9Cg=;
+	s=arc-20240116; t=1781193233; c=relaxed/simple;
+	bh=UrJHc1zn5cYBOLn3pfidw1o3oMR7LpIRvrhqMQ2KYss=;
 	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=tS1iRWXEKyWEbnpXR0ES3lC50m8XkbMjR6PKFPxIgZwfezrqLTT9M3O4kuAiE0SN3Y3MzKDdkj1MhAalyH1DDnaIz5KnLHEGCEuD+uxE04CnnkMTG4MgIZ8V2c0cWcs2Bxg8e0aKiZnhs0H9xqfSthvgoRjOdrKzoakNp2uN1wE=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=intel.com; spf=pass smtp.mailfrom=intel.com; dkim=pass (2048-bit key) header.d=intel.com header.i=@intel.com header.b=PSmoV1hG; arc=none smtp.client-ip=198.175.65.9
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=intel.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=intel.com
+	 In-Reply-To:Content-Type; b=Xa/ZOzOw3ewM95l6d4C7sc7Bh6xwOleMqNk6nQXIVZezjOP5TBG3VRMx9xYHw/DiZJFvr3Mffwbp2ajsVrr2bCy26hhJHJl157vFs29Qbi53rpkj3V9R0X62HbD5zjvKZX1FlJyhHitVy3uW8FLE1MQyMcOiG5qlmVlC+KP/PDw=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=qq.com; spf=pass smtp.mailfrom=qq.com; dkim=pass (1024-bit key) header.d=qq.com header.i=@qq.com header.b=T9qhJN6f; arc=none smtp.client-ip=43.163.128.48
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=qq.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=qq.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=intel.com header.i=@intel.com header.b="PSmoV1hG"
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
-  d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
-  t=1781192490; x=1812728490;
-  h=message-id:date:mime-version:subject:to:cc:references:
-   from:in-reply-to:content-transfer-encoding;
-  bh=8rapZTi8F+11Ci/kQ6UASbqnB6Wa+4Y3kaONLs2Y9Cg=;
-  b=PSmoV1hGj8+xDgaWoRUoVUDYym/rpySaPS+pEjtGcV8B0VFW/U67i3rE
-   oszUxjody3/VCICPSsFFm6MaQGSMqygYj5nqUEu8YfBQdCuaYDVaAw3rv
-   p+eDIFxilVU3YKc0O6WcoQQ/4vpwXixciO4M4OubZqgDe55Peraz3QPWJ
-   OIxUl8rxdYxd9gAXcJLXFYWznY46cMc1Q9n6amHOQlJs9LuMKoEn0/eZ7
-   pPMIh6QS9fCALDSu6iQK7YpPknqCGeTl2tpOAvkisfgvQu59++zxu2hCi
-   hRYSjN+x7DDj2wT7UrMUjuTOswGRaB0dsMwegpCSk26cq+nNG7UQBXw6l
-   A==;
-X-CSE-ConnectionGUID: CAA6chVzT8i4vQyAYTtuMA==
-X-CSE-MsgGUID: WlMdOQooSvmt9acZRy+3+g==
-X-IronPort-AV: E=McAfee;i="6800,10657,11813"; a="104676326"
-X-IronPort-AV: E=Sophos;i="6.24,199,1774335600"; 
-   d="scan'208";a="104676326"
-Received: from orviesa007.jf.intel.com ([10.64.159.147])
-  by orvoesa101.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 11 Jun 2026 08:41:30 -0700
-X-CSE-ConnectionGUID: JRnlg7SmQwOg6Xz7ePJDIA==
-X-CSE-MsgGUID: 1AOTgHwoR3ia9IdwSzAFNw==
-X-ExtLoop1: 1
-X-IronPort-AV: E=Sophos;i="6.24,199,1774335600"; 
-   d="scan'208";a="246598148"
-Received: from gabaabhi-mobl2.amr.corp.intel.com (HELO [10.125.110.105]) ([10.125.110.105])
-  by orviesa007-auth.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 11 Jun 2026 08:41:29 -0700
-Message-ID: <69ca9378-749e-43ce-afbe-435c66076b4d@intel.com>
-Date: Thu, 11 Jun 2026 08:41:28 -0700
+	dkim=pass (1024-bit key) header.d=qq.com header.i=@qq.com header.b="T9qhJN6f"
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=qq.com; s=s201512;
+	t=1781193220; bh=Nrg0CX+AfSNCklWRxpBZUAyyoBEK3zoOzsw4h82GBHE=;
+	h=Date:Subject:To:Cc:References:From:In-Reply-To;
+	b=T9qhJN6fFIYnBsGdpPs95AImsj+H8S2OBh9h2c3KYbcJ7bqAouYoie3muQYZ1q+1+
+	 MXxKCVlJk+jrM2ejLquZyfs4fGhWBdBPQL9M6JpkYfbXKPOpR8wiwJCepsW/q81A6p
+	 ET/NUwFRTHSYrJalU2yJgIJBBYVDdeSNTLcV7Of0=
+Received: from [198.18.0.1] ([115.156.144.140])
+	by newxmesmtplogicsvrszb51-0.qq.com (NewEsmtp) with SMTP
+	id D648B8D7; Thu, 11 Jun 2026 23:53:36 +0800
+X-QQ-mid: xmsmtpt1781193216t1z857ko9
+Message-ID: <tencent_3D17DC5BE32C8A51D938AF50F221321F6206@qq.com>
+X-QQ-XMAILINFO: Ni33zkRHTF0SUyz31tuduCr0g1uuxDh1oPuI80M+5VBJzF12nEa6muyJP55grL
+	 KjSpTdu11In2x9su/6krDW4pcfXb3YTLQrwJO8gOmQtufkMkRkUU6Ke3+FV2MV4SNZc4owd3pLu/
+	 LDsL8mIzg9Jpj/2g5JLoDLYJ1RHChf81fN60rU9lWYgaTukoiTYI+faH/52UAn1ymQ/0lprV6Eoy
+	 rrE8Mjxq42lz7oFvLrpyAq4Fbe/Q4c7EfIWEYvE7L7M69DzyGtqU4sHmwh5JK/hnJkrAmO74ga3h
+	 vQ+m3Ddnj6PxYdodBkXyHthqkaVXypS+jn59naSyy4V3DB4IRAIMNYGINdtJYCVOGepIzu1NjiDW
+	 +3ePUHv8vO0ojiKFMC6xjcJE0PUIJPnc74ATDUE3X9XLw+8NPgI/LFttM44hKQZBKX5lxIhULBn2
+	 pGws7xTJP28vv1zafG3BdK5RrvIYMiJKG8l8IcYGfHmn/PJ/7PQ6oDedQuxV7v7jSnp7TWn5Ojpi
+	 DUFTt/fHBRDRc09dRE/X3slZI1SswQA2zhXpqa07H6hDyCSXSzlTqBRZ+Tixzvh8cmOkE/uNkme0
+	 k0objsyW/55b+EhMjsAQ/pEQJJQx1RgsAf/rSy0DBdVew5RGM1ga7FWKaKa/DnyU7jvvgLFn30Xn
+	 Tq6P7grJXnWDAqNkvnnJoeibvQsEK20BgHAgYyLBK9aerejYiNzu68KOkO/+aiyWYILAOrR20OVs
+	 WYxZfoHTSJ4WLhJ64CxcW4UHT0Ji1KKoz43atCdExKNHGBfCHD4ptOIhZlTcCMqYN/37umLeZMk3
+	 usdK+kJ5Y4L4DZWnKaALMOX+4M6s1+/UN+mXUE3DcIUPCX0WkoweDZ4UVElTuhfSMnr2eBRXPwIm
+	 n5iBFgvaGZAZG/KvDApSL2WtQeMVw6YbUp51G+hCm3xghcR+8M+GzfZ+201cTNL3ve8ZlN1ZVE2P
+	 srh872CeuB7EjBaINMJhyhb4KOiDuAMANyPLywXvZcPymMWepbd+gJ6vFHmqa3GGRvCMnKBNVaiB
+	 ZgdnOo48afxCW/8T/QY9T5NeuKyU3DD7oVNvTVEJUgLB13Mzf+0riNvv0U+f5R7rK0hbVl4gbLKS
+	 E2FsfGMIyyCWA4JnI=
+X-QQ-XMRINFO: Nq+8W0+stu50tPAe92KXseR0ZZmBTk3gLg==
+X-OQ-MSGID: <c02dbbe3-c2d6-4505-a028-a9e1bf297c00@qq.com>
+Date: Thu, 11 Jun 2026 23:53:36 +0800
 Precedence: bulk
 X-Mailing-List: sashiko-reviews@lists.linux.dev
 List-Id: <sashiko-reviews.lists.linux.dev>
@@ -52,59 +53,285 @@ List-Subscribe: <mailto:sashiko-reviews+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:sashiko-reviews+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v4 6/6] cxl/test: Add cxl_test accelerator driver
-To: sashiko-reviews@lists.linux.dev
-Cc: linux-cxl@vger.kernel.org
-References: <20260611152124.3656434-7-dave.jiang@intel.com>
- <20260611153241.33B931F00898@smtp.kernel.org>
-Content-Language: en-US
-From: Dave Jiang <dave.jiang@intel.com>
-In-Reply-To: <20260611153241.33B931F00898@smtp.kernel.org>
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 7bit
+Subject: Re: [PATCH v4] rethook: Remove the running task check in
+ rethook_find_ret_addr()
+To: sashiko-reviews@lists.linux.dev, Masami Hiramatsu <mhiramat@kernel.org>,
+ Petr Mladek <pmladek@suse.com>, Peter Zijlstra <peterz@infradead.org>
+Cc: Tengda Wu <wutengda@huaweicloud.com>,
+ Mathieu Desnoyers <mathieu.desnoyers@efficios.com>,
+ Alexei Starovoitov <ast@kernel.org>, Steven Rostedt <rostedt@goodmis.org>,
+ linux-kernel@vger.kernel.org, linux-trace-kernel@vger.kernel.org,
+ live-patching@vger.kernel.org
+References: <20260610013658.1837963-1-wutengda@huaweicloud.com>
+ <20260610015032.4BFAA1F00893@smtp.kernel.org>
+From: XIAO WU <xiaowu.417@qq.com>
+In-Reply-To: <20260610015032.4BFAA1F00893@smtp.kernel.org>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 8bit
 
+Hi Tengda,
 
+Sashiko [1] reviewed this patch and found that removing the
+task_is_running() check exposes stack unwinders to real crashes — not
+just "invalid information."  A PoC confirms this: a KASAN panic triggers
+within seconds when /proc/<pid>/stack reads the stack of a task that is
+concurrently running a kretprobe.
 
-On 6/11/26 8:32 AM, sashiko-bot@kernel.org wrote:
-> Thank you for your contribution! Sashiko AI review found 1 potential issue(s) to consider:
-> - [Low] Undeclared API Usage / Build Failure due to missing functions `cxl_set_capacity` and `devm_cxl_probe_mem`.
+[1] 
+https://sashiko.dev/#/patchset/20260610013658.1837963-1-wutengda%40huaweicloud.com
 
-False positive
+ > diff --git a/kernel/trace/rethook.c b/kernel/trace/rethook.c
+ > index 5a8bdf88999a..1e7fdebe3cd5 100644
+ > --- a/kernel/trace/rethook.c
+ > +++ b/kernel/trace/rethook.c
+ > @@ -250,9 +251,6 @@ unsigned long rethook_find_ret_addr(struct 
+task_struct *tsk, unsigned long frame
+ >      if (WARN_ON_ONCE(!cur))
+ >          return 0;
+ >
+ > -    if (tsk != current && task_is_running(tsk))
+ > -        return 0;
+ > -
+ >      do {
+ >          ret = __rethook_find_ret_addr(tsk, cur);
+ >          if (!ret)
 
-> --
-> 
-> commit fd0aec5a2701e0475907c9138fa0ea33cfb68569
-> Author: Dave Jiang <dave.jiang@intel.com>
-> 
-> cxl/test: Add cxl_test accelerator driver
-> 
-> This commit adds a mock platform driver simulating a CXL type 2 accelerator
-> device. It is designed to test minimal API calls required by real CXL type 2
-> drivers.
-> 
->> diff --git a/tools/testing/cxl/test/accel.c b/tools/testing/cxl/test/accel.c
->> new file mode 100644
->> index 0000000000000..9c8235f9d97b7
->> --- /dev/null
->> +++ b/tools/testing/cxl/test/accel.c
-> [ ... ]
->> +static int cxl_mock_accel_probe(struct platform_device *pdev)
->> +{
-> [ ... ]
->> +	cxlds = &cxl_accel->cxlds;
->> +	cxlds->media_ready = true;
->> +	rc = cxl_set_capacity(cxlds, SZ_512M);
->> +	if (rc)
->> +		return rc;
->> +
->> +	cxlmd = devm_cxl_probe_mem(cxlds, &mock_range);
-> 
-> [Severity: Low]
-> Are the cxl_set_capacity and devm_cxl_probe_mem functions defined anywhere in
-> the kernel source tree?
-> 
-> It appears these functions do not exist, which causes an implicit declaration
-> error and undefined references during compilation. Will this lead to an
-> immediate build failure for the test module?
-> 
+The commit message states:
+
+ > The iteration is already safe from crashes because
+ > unwind_next_frame() holds RCU and rethook_node structures are
+ > RCU-freed; even if the iteration goes off the rails and returns
+ > invalid information, it will not crash.
+
+There are two problems with this claim, both reproducible.
+
+**Problem 1: stack-out-of-bounds in unwind_next_frame itself**
+
+The PoC below reliably triggers the following KASAN panic — not in the
+rethook list traversal, but inside unwind_next_frame():
+
+[ 1833.494623] BUG: KASAN: stack-out-of-bounds in 
+unwind_next_frame+0x861/0x2080
+[ 1833.494651] Read of size 2 at addr ffffc90003e6f5f0 by task poc/9854
+[ 1833.494707] Call Trace:
+[ 1833.494719]  dump_stack_lvl+0x116/0x1f0
+[ 1833.494743]  print_report+0xf4/0x600
+[ 1833.494788]  kasan_report+0xe0/0x110
+[ 1833.494836]  unwind_next_frame+0x861/0x2080
+[ 1833.494948]  arch_stack_walk+0x99/0x100
+[ 1833.495000]  stack_trace_save_tsk+0x16a/0x200
+[ 1833.495054]  proc_pid_stack+0x173/0x2b0
+[ 1833.495103]  seq_read_iter+0x519/0x12d0
+[ 1833.495166]  seq_read+0x3b7/0x590
+[ 1833.495297]  vfs_read+0x1f5/0xd20
+[ 1833.495497]  ksys_read+0x135/0x250
+[ 1833.495549]  do_syscall_64+0x129/0x850
+[ 1833.495566]  entry_SYSCALL_64_after_hwframe+0x77/0x7f
+[ 1833.498894] Kernel panic - not syncing: KASAN: panic_on_warn set ...
+
+page last free pid 9737 tgid 9737 stack trace:
+  do_sys_openat2+0xbf/0x260          <-- target task inside kretprobe
+  __x64_sys_openat+0x179/0x210
+
+This crash has nothing to do with rethook_node lifetimes or RCU.  It
+happens because the ORC unwinder reads stack memory while the target
+task concurrently executes a kretprobe trampoline that modifies return
+addresses.  The unwinder follows corrupted frame data past valid stack
+boundaries.  RCU protection of rethook_node structures is irrelevant —
+this crash occurs at the stack frame interpretation level, before any
+rethook list traversal.
+
+The old task_is_running() check prevented the unwinder from attempting
+to unwind a running task's stack in the first place.
+
+**Problem 2: use-after-free via rethook_node recycling**
+
+Even if the stack-out-of-bounds above were addressed, a second crash
+path exists in the rethook list traversal itself.
+
+rethook_recycle() immediately pushes nodes back to the objpool without
+an RCU grace period:
+
+   kernel/trace/rethook.c:
+   void rethook_recycle(struct rethook_node *node)
+   {
+           ...
+           objpool_push(node, &node->rethook->pool);
+   }
+
+Meanwhile, unwind_next_frame() in arch/x86/kernel/unwind_orc.c drops
+RCU between frames while the cursor (*cur) persists across iterations:
+
+   arch/x86/kernel/unwind_orc.c:
+   bool unwind_next_frame(...)
+   {
+           ...
+           guard(rcu)();    // RCU held for one frame
+           ...
+   }                        // RCU dropped here
+
+When the unwinder calls __rethook_find_ret_addr() in the next frame
+iteration, it does:
+
+   struct llist_node *first = tsk->rethooks.first;
+   ...
+   *cur = first;
+   ...
+   node = node->next;       // node may have been recycled
+
+If the target task returns from a probed function between frames, its
+rethook_node is recycled and can be instantly reallocated to another
+task.  The unwinder's stale cursor then dereferences a freed pointer,
+leading to use-after-free.
+
+## Reproducer
+
+The PoC sets up a kretprobe on do_sys_openat2, creates hot-loop threads
+calling open(), and concurrently reads /proc/<tid>/stack.  The race
+triggers within seconds (Problem 1 above; Problem 2 may reproduce on
+kernels without KASAN or with different timing).
+
+Build:  gcc -static -pthread -o poc poc.c
+Run:    ./poc [runtime_seconds]
+Needs:  root, CONFIG_KASAN=y
+
+#define _GNU_SOURCE
+#include <stdio.h>
+#include <stdlib.h>
+#include <string.h>
+#include <unistd.h>
+#include <sys/types.h>
+#include <sys/stat.h>
+#include <sys/wait.h>
+#include <sys/syscall.h>
+#include <sched.h>
+#include <fcntl.h>
+#include <errno.h>
+#include <signal.h>
+#include <pthread.h>
+#include <dirent.h>
+
+#define TRACE "/sys/kernel/tracing"
+
+volatile int stop = 0;
+
+static int tfs(const char *f, const char *b)
+{
+     char p[256]; int fd, r;
+     snprintf(p, 256, "%s/%s", TRACE, f);
+     fd = open(p, O_WRONLY | O_TRUNC);
+     if (fd < 0) {
+         system("mount -t tracefs tracefs /sys/kernel/tracing 2>/dev/null");
+         usleep(50000);
+         fd = open(p, O_WRONLY | O_TRUNC);
+     }
+     if (fd < 0) return -1;
+     r = write(fd, b, strlen(b));
+     close(fd);
+     return r < 0 ? -1 : 0;
+}
+
+void *hot_thread(void *arg)
+{
+     while (!__atomic_load_n(&stop, __ATOMIC_RELAXED)) {
+         int fd = open("/dev/null", O_RDONLY);
+         if (fd >= 0) close(fd);
+     }
+     return NULL;
+}
+
+void *reader_thread(void *arg)
+{
+     pid_t target = *(pid_t *)arg;
+     char path[64], buf[8192];
+     snprintf(path, 64, "/proc/%d/stack", target);
+     while (!__atomic_load_n(&stop, __ATOMIC_RELAXED)) {
+         int fd = open(path, O_RDONLY);
+         if (fd >= 0) { read(fd, buf, 8191); close(fd); }
+     }
+     return NULL;
+}
+
+void sigh(int s) { stop = 1; }
+
+int main(int argc, char *argv[])
+{
+     int runtime = 120;
+     if (argc > 1) runtime = atoi(argv[1]);
+
+     printf("rethook race PoC\n");
+     if (geteuid()) { printf("root needed\n"); return 1; }
+     signal(SIGINT, sigh);
+
+     pthread_t hot[4], rdr[4];
+     pid_t hot_tids[4];
+     int pairs = 4;
+
+     for (int c = 0; c < runtime / 5 && !stop; c++) {
+         tfs("events/kprobes/myretprobe/enable", "0");
+         tfs("kprobe_events", "-:myretprobe");
+         usleep(100);
+         tfs("kprobe_events", "r:myretprobe do_sys_openat2 $retval");
+         tfs("events/kprobes/myretprobe/enable", "1");
+
+         pid_t main_tid = syscall(SYS_gettid);
+
+         for (int i = 0; i < pairs; i++)
+             pthread_create(&hot[i], NULL, hot_thread, NULL);
+
+         usleep(300000);
+
+         {
+             DIR *d = opendir("/proc/self/task");
+             int cnt = 0;
+             if (d) {
+                 struct dirent *de;
+                 while ((de = readdir(d)) != NULL && cnt < pairs) {
+                     pid_t t = atoi(de->d_name);
+                     if (t > 0 && t != main_tid)
+                         hot_tids[cnt++] = t;
+                 }
+                 closedir(d);
+             }
+             for (int i = 0; i < cnt; i++)
+                 pthread_create(&rdr[i], NULL, reader_thread, &hot_tids[i]);
+         }
+
+         printf("round %d\n", c);
+         sleep(5);
+
+         stop = 1;
+         usleep(100000);
+
+         for (int i = 0; i < pairs; i++) pthread_join(hot[i], NULL);
+         for (int i = 0; i < pairs; i++) pthread_join(rdr[i], NULL);
+
+         stop = 0;
+         usleep(1000);
+     }
+
+     tfs("events/kprobes/myretprobe/enable", "0");
+     tfs("kprobe_events", "-:myretprobe");
+     printf("Done\n");
+     return 0;
+}
+
+## Summary
+
+The v4 commit message claims the iteration "will not crash," but the PoC
+demonstrates a reproducible KASAN panic:
+
+1. stack-out-of-bounds in unwind_next_frame (ORC unwinder reads
+    concurrently-modified stack frames of a running task)
+
+2. Potential use-after-free in __rethook_find_ret_addr (rethook nodes
+    recycled without RCU grace period, cursor persists across RCU drops)
+
+The old task_is_running() check was racy but served as a practical
+safety net.  Removing it without adding equivalent protection in the
+callers (proc_pid_stack, BPF stack walkers) exposes users to kernel
+panics via /proc/<pid>/stack on any task running a kretprobe.
+
+Thanks,
+Xiao
 
