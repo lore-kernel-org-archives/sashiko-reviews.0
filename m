@@ -1,149 +1,111 @@
-Received: from mail-wm1-f50.google.com (mail-wm1-f50.google.com [209.85.128.50])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from www62.your-server.de (www62.your-server.de [213.133.104.62])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BC22234CFAB
-	for <sashiko-reviews@lists.linux.dev>; Thu, 11 Jun 2026 09:37:40 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.50
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5CEA821B9F6;
+	Thu, 11 Jun 2026 09:43:56 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=213.133.104.62
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1781170662; cv=none; b=GfHbLUMEeZmT5HRbPGrzYpRXbU6XCHP+pT3NIm/OAGyln6s6mHzUhZcV5Tk7w5h5q11YmjR0iviwIeLQUdLDnZgYw1oIKjJs+5Rox0BikGq9fSYt1R4AykoMMq3xSjFh/oxMsUyWwTLzV6F+1DNAULSr4Rn3F2uwhYcxbg6H800=
+	t=1781171038; cv=none; b=tyj9sc+65OBuCjhx3u3P04MrFSNnyPK9Bmeh4wJU5zeC5nBsStmRa2he3ECI3Rt4A3Rl2/2XoHBUWKTPN+GdbnTnSs7ApIcE8BMZ/CH+rAIa4aUEa23rB3KfpqUqNr68gu2XzOwdoBHdaXyABE4Wzo1Hyrhd7EeyHchp/QihM2s=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1781170662; c=relaxed/simple;
-	bh=PU98PknZMnvOtEXRkJ7cg9UcsU4aKjZWeVdvA+PVoXU=;
-	h=From:Date:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=Zp8hBugq9da5Ri1zwKf57Erwc8hiQ8zxNYB3iQCdhqPXwJE792IgdDsb5bg5tuwgaBx1qa8i2mte/AUFTrOSNDL6ZeHrf4tb1f8ET1LnH/xcR2eSo7pOlOkU1AxbaD22EidJyWxRr106Ody26/3eZp+Zo4iWZCgVXYPBC3ueMfE=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=DmzYTa4L; arc=none smtp.client-ip=209.85.128.50
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+	s=arc-20240116; t=1781171038; c=relaxed/simple;
+	bh=1MepmHpEqiGXVB0ZIIpMsMiBc/qqFMzdXeGVIBUXVcs=;
+	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
+	 In-Reply-To:Content-Type; b=qyqX7oWRHkTaERZdmitbq3c495m5RrhgU7kjpsN0+ojoh2r1HqmyjpD/bgppBayRJYCC/yG/ZfNa3CMx33c3s2RX/7x5BJDIyW8a9ywYoVXU8/tZyQviLcJQiv5z8nUT4VZ/BRJUw7rXDq4DGqfKr9UB3lChQQBq4f4UUgQGeSk=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=iogearbox.net; spf=pass smtp.mailfrom=iogearbox.net; dkim=pass (2048-bit key) header.d=iogearbox.net header.i=@iogearbox.net header.b=RLDLxxZa; arc=none smtp.client-ip=213.133.104.62
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=iogearbox.net
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=iogearbox.net
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="DmzYTa4L"
-Received: by mail-wm1-f50.google.com with SMTP id 5b1f17b1804b1-490abf12f0fso3851455e9.0
-        for <sashiko-reviews@lists.linux.dev>; Thu, 11 Jun 2026 02:37:40 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20251104; t=1781170659; x=1781775459; darn=lists.linux.dev;
-        h=in-reply-to:content-disposition:mime-version:references:message-id
-         :subject:cc:to:date:from:from:to:cc:subject:date:message-id:reply-to;
-        bh=zruVWqFGgpp7NEcooTDP5im8iVaG/yBcmkbIj0gbxBg=;
-        b=DmzYTa4L5TsMdy7CnbH0JskpNqESl8x2/JZtY75impTQp/foM9v/IFSiCfrCUd0G7R
-         PokWQ4MjKnMC0wVfdeBeVu7KmXlTkICr0VMP5PQTzpGfjovPIwG0iieCcLviv3ZMG+Ij
-         s/iFfWItFbyvKkol+AiR2mbEhvVVdl+s77t7FOr/O5+Pm/fwEkedRlr2DxITte1axHxk
-         Wsj07u6Q4XN+tjKZbn/u/B1xzO7Q0cftPvHAiZFgA6mAuY0ovznItP/r+xIJIC/t12O2
-         OI2/mOIFUN8LLiF9lLZeMqnuGqua3xgeiNTkwpuK6onsRnfKpf6kN9D1FU7hs76EWeTG
-         g+pg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20251104; t=1781170659; x=1781775459;
-        h=in-reply-to:content-disposition:mime-version:references:message-id
-         :subject:cc:to:date:from:x-gm-gg:x-gm-message-state:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=zruVWqFGgpp7NEcooTDP5im8iVaG/yBcmkbIj0gbxBg=;
-        b=RuyBBonj/KhuZu1KJ1UdvO1bQtvFTOsXByCAMDM7gecaCMPm+bXuggU73kU3bd8U7+
-         TYFbKd+rO7l5tmLXSJmorkgFIqydNrss6bUJtEGwx612GcAfMr12u5NY+thssuzT2l0u
-         nvfCK5sm0nTrliFRbtmId4L0X3LmThcFPUU/XOiW4856AjAJwj3NMPoHxVpQBD9etqfZ
-         oj7MQdBfrQXOicdpMUKhLmxT6wHMnWDZrcHZQZlrgGcuHxiwH1zKbTds+xcYygFCoVXj
-         KBrDP47satNPQpCOm4iAYcxinrNJ0ys4C9/hPvOt+flk328/Vk53I0iLaVzokCslMQSU
-         i0xA==
-X-Gm-Message-State: AOJu0YwGGyQi8PDOrDBjsheE39EjRj/4JvSKhHITZu8r2Yu+5JV79lq5
-	VcLJ+cKVZxfi5kf/h7UDgIut+IMIFmDNBrnHQk0UC57lFHE8mIWjG3NyUHZYIw==
-X-Gm-Gg: Acq92OGlSKbgM9KslXF2l+moy3F8hs4BZz+Ml6e9VYJe0Sk+yFOtImhHRjdOZw14y2i
-	hGanmyx7j0dZAS9Ez6gav1UldP6TfJf1rT5cT7CPDYOsxDrXdn2s+b37rvZL/zZIH5NLZbUvQi2
-	dW9SeQGH7kTAJKuEHqPphevFQyCI3Tiwi16NmDLSBpDXpi3VZy+KXtNL/S59qDHh47g4gIvdd4N
-	peI3pRWHM7wNfoI29PDTQP/Ez8tDO6NDArq4mxNlko9qXdGMP0Ljy4eoA8B/o1wZknGRNMUAmVO
-	Kgj1DMr3oMzQ7M3+xxB9sEtUYaOBXqtUOBwZTIbpD3SInkjln1af5V2jFpLEcd3mMfTzLaAb5zQ
-	nrxrfdUOlpazSgc23JuoyhnGL/TuVdo7WDzIt9KEb29MtJ0KFoKZPl0LhXC29z0gaPZC7vvJaKp
-	L+CHknlTy+3DyL8nU7e3Zh/0jzBA==
-X-Received: by 2002:a05:600c:4f47:b0:490:b26c:64ad with SMTP id 5b1f17b1804b1-490e52d5bfdmr20909335e9.5.1781170659085;
-        Thu, 11 Jun 2026 02:37:39 -0700 (PDT)
-Received: from krava ([2a02:8308:a00c:e200:b655:ff13:e355:16a3])
-        by smtp.gmail.com with ESMTPSA id 5b1f17b1804b1-490e52acb98sm37556865e9.5.2026.06.11.02.37.38
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Thu, 11 Jun 2026 02:37:38 -0700 (PDT)
-From: Jiri Olsa <olsajiri@gmail.com>
-X-Google-Original-From: Jiri Olsa <jolsa@kernel.org>
-Date: Thu, 11 Jun 2026 11:37:37 +0200
-To: sashiko-reviews@lists.linux.dev
-Cc: bpf@vger.kernel.org
-Subject: Re: [PATCHv2 bpf-next 1/6] bpf: Use user_path_at for path resolution
- in uprobe_multi
-Message-ID: <aiqB4eSTxR4Aw9YJ@krava>
-References: <20260610143627.804790-2-jolsa@kernel.org>
- <20260610145235.CB1441F00893@smtp.kernel.org>
+	dkim=pass (2048-bit key) header.d=iogearbox.net header.i=@iogearbox.net header.b="RLDLxxZa"
+DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed;
+	d=iogearbox.net; s=default2302; h=Content-Transfer-Encoding:Content-Type:
+	In-Reply-To:From:References:Cc:To:Subject:MIME-Version:Date:Message-ID:Sender
+	:Reply-To:Content-ID:Content-Description:Resent-Date:Resent-From:
+	Resent-Sender:Resent-To:Resent-Cc:Resent-Message-ID;
+	bh=1MepmHpEqiGXVB0ZIIpMsMiBc/qqFMzdXeGVIBUXVcs=; b=RLDLxxZa303ymDNguSqlZ2z02d
+	Dw9XW25Mi9xYpGJreehW0kupfFKlZ/eqC+/EiaSV5NKnKldsLSw6Dd/+XpH/MMeK3bBRLOTI4f05U
+	6PsioTWvltoLrvw5RTdMubslPGOCmD+Hh8YDEJIQJtjweSxnS90N3D+8xiePlrjSC0eY5s8y4nqau
+	BwnyU+uUN0/QOnMk1hjCDhzsqI5h2FaV+Qzj1nUXO/OsPeYE3amap6S58sF68AOly3KEe0ReaAE3j
+	iUNDBCecppsx9Diom57WQshErEJ0uyWSSGVyVAZa5MGoxgtIqvf52LZ7cIGB8z8vQkpJURkRupBsW
+	4q7u2/Vw==;
+Received: from sslproxy01.your-server.de ([78.46.139.224])
+	by www62.your-server.de with esmtpsa  (TLS1.3) tls TLS_AES_256_GCM_SHA384
+	(Exim 4.96.2)
+	(envelope-from <daniel@iogearbox.net>)
+	id 1wXbx4-000LiT-02;
+	Thu, 11 Jun 2026 11:43:54 +0200
+Received: from localhost ([127.0.0.1])
+	by sslproxy01.your-server.de with esmtpsa  (TLS1.3) tls TLS_AES_256_GCM_SHA384
+	(Exim 4.96)
+	(envelope-from <daniel@iogearbox.net>)
+	id 1wXbx3-000FtE-2n;
+	Thu, 11 Jun 2026 11:43:53 +0200
+Message-ID: <c1b618c8-b944-4c58-9af4-3597905020f8@iogearbox.net>
+Date: Thu, 11 Jun 2026 11:43:53 +0200
 Precedence: bulk
 X-Mailing-List: sashiko-reviews@lists.linux.dev
 List-Id: <sashiko-reviews.lists.linux.dev>
 List-Subscribe: <mailto:sashiko-reviews+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:sashiko-reviews+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <20260610145235.CB1441F00893@smtp.kernel.org>
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH bpf-next 1/5] bpf: Verify signed loader metadata at load
+ time
+To: sashiko-reviews@lists.linux.dev
+Cc: bpf@vger.kernel.org
+References: <20260610230329.727075-2-daniel@iogearbox.net>
+ <20260610232129.5E29C1F00893@smtp.kernel.org>
+Content-Language: en-US
+From: Daniel Borkmann <daniel@iogearbox.net>
+Autocrypt: addr=daniel@iogearbox.net; keydata=
+ xsFNBGNAkI0BEADiPFmKwpD3+vG5nsOznvJgrxUPJhFE46hARXWYbCxLxpbf2nehmtgnYpAN
+ 2HY+OJmdspBntWzGX8lnXF6eFUYLOoQpugoJHbehn9c0Dcictj8tc28MGMzxh4aK02H99KA8
+ VaRBIDhmR7NJxLWAg9PgneTFzl2lRnycv8vSzj35L+W6XT7wDKoV4KtMr3Szu3g68OBbp1TV
+ HbJH8qe2rl2QKOkysTFRXgpu/haWGs1BPpzKH/ua59+lVQt3ZupePpmzBEkevJK3iwR95TYF
+ 06Ltpw9ArW/g3KF0kFUQkGXYXe/icyzHrH1Yxqar/hsJhYImqoGRSKs1VLA5WkRI6KebfpJ+
+ RK7Jxrt02AxZkivjAdIifFvarPPu0ydxxDAmgCq5mYJ5I/+BY0DdCAaZezKQvKw+RUEvXmbL
+ 94IfAwTFA1RAAuZw3Rz5SNVz7p4FzD54G4pWr3mUv7l6dV7W5DnnuohG1x6qCp+/3O619R26
+ 1a7Zh2HlrcNZfUmUUcpaRPP7sPkBBLhJfqjUzc2oHRNpK/1mQ/+mD9CjVFNz9OAGD0xFzNUo
+ yOFu/N8EQfYD9lwntxM0dl+QPjYsH81H6zw6ofq+jVKcEMI/JAgFMU0EnxrtQKH7WXxhO4hx
+ 3DFM7Ui90hbExlFrXELyl/ahlll8gfrXY2cevtQsoJDvQLbv7QARAQABzSZEYW5pZWwgQm9y
+ a21hbm4gPGRhbmllbEBpb2dlYXJib3gubmV0PsLBkQQTAQoAOxYhBCrUdtCTcZyapV2h+93z
+ cY/jfzlXBQJjQJCNAhsDBQkHhM4ACAsJCAcNDAsKBRUKCQgLAh4BAheAAAoJEN3zcY/jfzlX
+ dkUQAIFayRgjML1jnwKs7kvfbRxf11VI57EAG8a0IvxDlNKDcz74mH66HMyhMhPqCPBqphB5
+ ZUjN4N5I7iMYB/oWUeohbuudH4+v6ebzzmgx/EO+jWksP3gBPmBeeaPv7xOvN/pPDSe/0Ywp
+ dHpl3Np2dS6uVOMnyIsvmUGyclqWpJgPoVaXrVGgyuer5RpE/a3HJWlCBvFUnk19pwDMMZ8t
+ 0fk9O47HmGh9Ts3O8pGibfdREcPYeGGqRKRbaXvcRO1g5n5x8cmTm0sQYr2xhB01RJqWrgcj
+ ve1TxcBG/eVMmBJefgCCkSs1suriihfjjLmJDCp9XI/FpXGiVoDS54TTQiKQinqtzP0jv+TH
+ 1Ku+6x7EjLoLH24ISGyHRmtXJrR/1Ou22t0qhCbtcT1gKmDbTj5TcqbnNMGWhRRTxgOCYvG0
+ 0P2U6+wNj3HFZ7DePRNQ08bM38t8MUpQw4Z2SkM+jdqrPC4f/5S8JzodCu4x80YHfcYSt+Jj
+ ipu1Ve5/ftGlrSECvy80ZTKinwxj6lC3tei1bkI8RgWZClRnr06pirlvimJ4R0IghnvifGQb
+ M1HwVbht8oyUEkOtUR0i0DMjk3M2NoZ0A3tTWAlAH8Y3y2H8yzRrKOsIuiyKye9pWZQbCDu4
+ ZDKELR2+8LUh+ja1RVLMvtFxfh07w9Ha46LmRhpCzsFNBGNAkI0BEADJh65bNBGNPLM7cFVS
+ nYG8tqT+hIxtR4Z8HQEGseAbqNDjCpKA8wsxQIp0dpaLyvrx4TAb/vWIlLCxNu8Wv4W1JOST
+ wI+PIUCbO/UFxRy3hTNlb3zzmeKpd0detH49bP/Ag6F7iHTwQQRwEOECKKaOH52tiJeNvvyJ
+ pPKSKRhmUuFKMhyRVK57ryUDgowlG/SPgxK9/Jto1SHS1VfQYKhzMn4pWFu0ILEQ5x8a0RoX
+ k9p9XkwmXRYcENhC1P3nW4q1xHHlCkiqvrjmWSbSVFYRHHkbeUbh6GYuCuhqLe6SEJtqJW2l
+ EVhf5AOp7eguba23h82M8PC4cYFl5moLAaNcPHsdBaQZznZ6NndTtmUENPiQc2EHjHrrZI5l
+ kRx9hvDcV3Xnk7ie0eAZDmDEbMLvI13AvjqoabONZxra5YcPqxV2Biv0OYp+OiqavBwmk48Z
+ P63kTxLddd7qSWbAArBoOd0wxZGZ6mV8Ci/ob8tV4rLSR/UOUi+9QnkxnJor14OfYkJKxot5
+ hWdJ3MYXjmcHjImBWplOyRiB81JbVf567MQlanforHd1r0ITzMHYONmRghrQvzlaMQrs0V0H
+ 5/sIufaiDh7rLeZSimeVyoFvwvQPx5sXhjViaHa+zHZExP9jhS/WWfFE881fNK9qqV8pi+li
+ 2uov8g5yD6hh+EPH6wARAQABwsF8BBgBCgAmFiEEKtR20JNxnJqlXaH73fNxj+N/OVcFAmNA
+ kI0CGwwFCQeEzgAACgkQ3fNxj+N/OVfFMhAA2zXBUzMLWgTm6iHKAPfz3xEmjtwCF2Qv/TT3
+ KqNUfU3/0VN2HjMABNZR+q3apm+jq76y0iWroTun8Lxo7g89/VDPLSCT0Nb7+VSuVR/nXfk8
+ R+OoXQgXFRimYMqtP+LmyYM5V0VsuSsJTSnLbJTyCJVu8lvk3T9B0BywVmSFddumv3/pLZGn
+ 17EoKEWg4lraXjPXnV/zaaLdV5c3Olmnj8vh+14HnU5Cnw/dLS8/e8DHozkhcEftOf+puCIl
+ Awo8txxtLq3H7KtA0c9kbSDpS+z/oT2S+WtRfucI+WN9XhvKmHkDV6+zNSH1FrZbP9FbLtoE
+ T8qBdyk//d0GrGnOrPA3Yyka8epd/bXA0js9EuNknyNsHwaFrW4jpGAaIl62iYgb0jCtmoK/
+ rCsv2dqS6Hi8w0s23IGjz51cdhdHzkFwuc8/WxI1ewacNNtfGnorXMh6N0g7E/r21pPeMDFs
+ rUD9YI1Je/WifL/HbIubHCCdK8/N7rblgUrZJMG3W+7vAvZsOh/6VTZeP4wCe7Gs/cJhE2gI
+ DmGcR+7rQvbFQC4zQxEjo8fNaTwjpzLM9NIp4vG9SDIqAm20MXzLBAeVkofixCsosUWUODxP
+ owLbpg7pFRJGL9YyEHpS7MGPb3jSLzucMAFXgoI8rVqoq6si2sxr2l0VsNH5o3NgoAgJNIg=
+In-Reply-To: <20260610232129.5E29C1F00893@smtp.kernel.org>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
+X-Virus-Scanned: Clear (ClamAV 1.4.3/28028/Thu Jun 11 08:27:22 2026)
 
-On Wed, Jun 10, 2026 at 02:52:35PM +0000, sashiko-bot@kernel.org wrote:
-> Thank you for your contribution! Sashiko AI review found 1 potential issue(s) to consider:
-> 
-> Pre-existing issues:
-> - [Critical] Missing `access_ok()` checks before calling `__get_user()` on user-controlled arrays, leading to arbitrary kernel memory read.
-> --
-> 
-> commit e18574361f20d4f27005e4d927610e3ce16986dd
-> Author: Jiri Olsa <jolsa@kernel.org>
-> 
-> bpf: Use user_path_at for path resolution in uprobe_multi
-> 
-> Resolve the uprobe_multi user path with user_path_at() instead of copying
-> the string with strndup_user() and passing it to kern_path(). This removes
-> the temporary allocation and keeps the lookup logic in one helper.
-> 
-> > diff --git a/kernel/trace/bpf_trace.c b/kernel/trace/bpf_trace.c
-> > index 90432f0fc2a8e..970ce7bbf99e1 100644
-> > --- a/kernel/trace/bpf_trace.c
-> > +++ b/kernel/trace/bpf_trace.c
-> 
-> [ ... ]
-> 
-> > @@ -3261,14 +3260,7 @@ int bpf_uprobe_multi_link_attach(const union bpf_attr *attr, struct bpf_prog *pr
-> >  	uref_ctr_offsets = u64_to_user_ptr(attr->link_create.uprobe_multi.ref_ctr_offsets);
-> >  	ucookies = u64_to_user_ptr(attr->link_create.uprobe_multi.cookies);
-> >  
-> > -	name = strndup_user(upath, PATH_MAX);
-> > -	if (IS_ERR(name)) {
-> > -		err = PTR_ERR(name);
-> > -		return err;
-> > -	}
-> > -
-> > -	err = kern_path(name, LOOKUP_FOLLOW, &path);
-> > -	kfree(name);
-> > +	err = user_path_at(AT_FDCWD, upath, LOOKUP_FOLLOW, &path);
-> >  	if (err)
-> >  		return err;
-> >  
-> 
-> [Severity: Critical]
-> This isn't a bug introduced by this patch, but while looking at
-> bpf_uprobe_multi_link_attach(), I noticed the user-provided arrays
-> uoffsets, uref_ctr_offsets, and ucookies are accessed shortly after this
-> path resolution:
-> 
-> kernel/trace/bpf_trace.c:bpf_uprobe_multi_link_attach() {
->     ...
->     if (__get_user(uprobes[i].offset, uoffsets + i)) {
->     ...
->     if (uref_ctr_offsets && __get_user(uprobes[i].ref_ctr_offset, uref_ctr_offsets + i)) {
->     ...
->     if (ucookies && __get_user(uprobes[i].cookie, ucookies + i)) {
->     ...
-> }
-> 
-> Are these arrays validated with access_ok() before __get_user() is called?
-> 
-> Because __get_user() bypasses the access_ok() address-space bounds check
-> on most architectures, could an attacker supply kernel addresses for these
-> arrays, causing the kernel to read arbitrary memory and store it into the
-> uprobes structures?
-> 
-> If an attacker retrieves these contents by querying the link info via
-> bpf_obj_get_info_by_fd() (which calls bpf_uprobe_multi_link_fill_link_info()
-> and copies the memory back to user space), could this act as an arbitrary
-> kernel memory read primitive to bypass kernel lockdown and KASLR?
-
-ugh right.. will include fix for this in next version
-
-jirka
+On 6/11/26 1:21 AM, sashiko-bot@kernel.org wrote:
+> Thank you for your contribution! Sashiko AI review found 2 potential issue(s) to consider:
+> - [Critical] A Time-Of-Check to Time-Of-Use vulnerability in fd_array processing allows an attacker to bypass BPF signature verification by substituting an exclusive map with a non-exclusive map.
+> - [High] bpf_prog_verify_signature() improperly uses map_direct_value_addr() to fetch map contents, leading to kernel panics or out-of-bounds reads when BPF_MAP_TYPE_ARENA or BPF_MAP_TYPE_INSN_ARRAY maps are used.
+I'll look into both reports (the latter fwiw is pinning down to BPF_MAP_TYPE_ARRAY).
