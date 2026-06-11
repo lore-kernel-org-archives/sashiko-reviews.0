@@ -1,93 +1,115 @@
-Received: from out-173.mta1.migadu.com (out-173.mta1.migadu.com [95.215.58.173])
+Received: from out-173.mta0.migadu.com (out-173.mta0.migadu.com [91.218.175.173])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C8DEA371CE2
-	for <sashiko-reviews@lists.linux.dev>; Thu, 11 Jun 2026 05:08:37 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=95.215.58.173
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0A76A2ED870
+	for <sashiko-reviews@lists.linux.dev>; Thu, 11 Jun 2026 05:09:19 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=91.218.175.173
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1781154524; cv=none; b=AqOZbnkNdOXUBC6Vkzb9agtpppJvySH55mFMZ0P9BY11QsqTGk6OZ95REvlsB0SKqXn/cEa8+pR4P1qBpxL4j86GyIvIVs5ODMyV0Ko597IZsHxQNHCSMxbytf/2pB96Fb+4Ri9YmZSPvuNIMrSzFbzi2StYFZ9v1P277RXM14Y=
+	t=1781154567; cv=none; b=GtnEpvMFEbQwarVaUzAVNPuP0M219NPWhol1bAolvAbsmCkHtRENrx6RSQ4wCU348lxnBLacRx8fjqpEToM+jRVwEamGNlRQAZxxwAKycR40JcMUgT+osnFcRvTvx1QCIZQEDobY5IsfTqN9KfAUcrln5uwwq0eh6Cql8RBocCs=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1781154524; c=relaxed/simple;
-	bh=5sDmEJqyFTiT2f3zMgVH5Cj9Yf030IUzPRA8B5rGdaQ=;
+	s=arc-20240116; t=1781154567; c=relaxed/simple;
+	bh=EIkQpsi0hIfaWwwQ8lXEVPLC+tHG5I9Y2bhf4TlkfPs=;
 	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=C1Woqlh9SAPCBBQSmx3FSpZT8kWl0TIy2Eq1klFV0rGbnpMQSJDeSR7AsJFGE4uVDsBLekCbDAmnEYA2Pl56/fNd6sK43ajsl3mPcVMpYh30zgzEJuOKTa2UE8pKFaLx7EtfDhpMVgUPzv7K7N7AeZVI6YbHtdLj7YIEucjejn8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linux.dev; spf=pass smtp.mailfrom=linux.dev; dkim=pass (1024-bit key) header.d=linux.dev header.i=@linux.dev header.b=VSxIg/Au; arc=none smtp.client-ip=95.215.58.173
+	 In-Reply-To:Content-Type; b=PM1T5kkFBIfUkF3tvxNMmPg98Vx/9/qE9Cn05HO5Z3+N9LqZf3KvX3eD/sd6aoxJUtwFd6xec+R2HlUMSG/bi8/5b+scwL+atGVDiGhaQbfcnsO13OpSFKWeZdda16OfjdoJ1q4NOitGW8B5zF52BGL7IZWcve0etljxxzRI1tQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linux.dev; spf=pass smtp.mailfrom=linux.dev; dkim=pass (1024-bit key) header.d=linux.dev header.i=@linux.dev header.b=EyNmpyrN; arc=none smtp.client-ip=91.218.175.173
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linux.dev
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linux.dev
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linux.dev header.i=@linux.dev header.b="VSxIg/Au"
-Message-ID: <66d40066-94a7-4710-8e0f-d18f8c1bf21f@linux.dev>
+	dkim=pass (1024-bit key) header.d=linux.dev header.i=@linux.dev header.b="EyNmpyrN"
+Message-ID: <76112c8e-e9c2-463d-80a3-171fae5a98c3@linux.dev>
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linux.dev; s=key1;
-	t=1781154505;
+	t=1781154557;
 	h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
 	 to:to:cc:cc:mime-version:mime-version:content-type:content-type:
 	 content-transfer-encoding:content-transfer-encoding:
 	 in-reply-to:in-reply-to:references:references;
-	bh=wXMN5wFGs7L43zU11I1CN+my4H6XWB6YkQg7qQpqlcY=;
-	b=VSxIg/AuLksTvmi+4J7366M9hPMbdE4V29gwicAT1LSU93uaPY/SJAoitx3o5WRCPEWVbe
-	2/fW9az5kRT/hDChIFPy/SaURT5N5NsdBZdd7/nct17G0WBjcVpSyfu/vffn3qZWx409KT
-	lz8wMqB48xaC6mCQjmlz9LFK9FTji4I=
-Date: Thu, 11 Jun 2026 13:08:14 +0800
+	bh=Ot0PB1cUCdj59LIuhmYBgeIah0KgI7O/WS+FeWAXis8=;
+	b=EyNmpyrNSu2xXjU2nOw2haYmPO/Xydg34ABcgp0GRd34Bx7W2csRt4hfmHGhEkZjzAkueW
+	+pfoQ0DLF1x4va22mVd0RhjkeXb0t6LHLAnx1SYFrSXEHNxruPNQcO0UUgepHRdVtoVcFr
+	BwSpUSIoun/hs4jZYf4psxrZD/dw+m8=
+Date: Thu, 11 Jun 2026 13:09:10 +0800
 Precedence: bulk
 X-Mailing-List: sashiko-reviews@lists.linux.dev
 List-Id: <sashiko-reviews.lists.linux.dev>
 List-Subscribe: <mailto:sashiko-reviews+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:sashiko-reviews+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Subject: Re: [PATCH bpf-next v5 3/9] libbpf: Probe percpu data feature
+Subject: Re: [PATCH bpf-next v5 5/9] bpftool: Generate skeleton for global
+ percpu data
 Content-Language: en-US
 To: sashiko-reviews@lists.linux.dev
 Cc: bpf@vger.kernel.org
-References: <20260608145113.65857-4-leon.hwang@linux.dev>
- <20260608150554.0B02E1F00893@smtp.kernel.org>
+References: <20260608145113.65857-6-leon.hwang@linux.dev>
+ <20260608151109.D0A701F00893@smtp.kernel.org>
 X-Report-Abuse: Please report any abuse attempt to abuse@migadu.com and include these headers.
 From: Leon Hwang <leon.hwang@linux.dev>
-In-Reply-To: <20260608150554.0B02E1F00893@smtp.kernel.org>
+In-Reply-To: <20260608151109.D0A701F00893@smtp.kernel.org>
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 7bit
 X-Migadu-Flow: FLOW_OUT
 
-On 8/6/26 23:05, sashiko-bot@kernel.org wrote:
+On 8/6/26 23:11, sashiko-bot@kernel.org wrote:
 [...]
->> +static int probe_kern_percpu_data(int token_fd)
->> +{
->> +	struct bpf_insn insns[] = {
->> +		BPF_LD_MAP_VALUE(BPF_REG_1, 0, 0),
->> +		BPF_LDX_MEM(BPF_DW, BPF_REG_0, BPF_REG_1, 0),
->> +		BPF_EXIT_INSN(),
->> +	};
->> +	LIBBPF_OPTS(bpf_map_create_opts, map_opts,
->> +		.token_fd = token_fd,
->> +		.map_flags = token_fd ? BPF_F_TOKEN_FD : 0,
->> +	);
->> +	LIBBPF_OPTS(bpf_prog_load_opts, prog_opts,
->> +		.token_fd = token_fd,
->> +		.prog_flags = token_fd ? BPF_F_TOKEN_FD : 0,
->> +	);
->> +	int ret, map, insn_cnt = ARRAY_SIZE(insns);
->> +
->> +	map = bpf_map_create(BPF_MAP_TYPE_PERCPU_ARRAY, "libbpf_percpu", sizeof(int), 8, 1,
->> +			     &map_opts);
->> +	if (map < 0) {
->> +		pr_warn("Error in %s(): %s. Couldn't create simple percpu_array map.\n",
->> +			__func__, errstr(map));
->> +		return map;
->> +	}
+>> @@ -263,13 +268,12 @@ static bool is_mmapable_map(const struct bpf_map *map, char *buf, size_t sz)
+>>  		return true;
+>>  	}
+>>  
+>> -	if (!bpf_map__is_internal(map) || !(bpf_map__map_flags(map) & BPF_F_MMAPABLE))
+>> -		return false;
+>> -
+>> -	if (!get_map_ident(map, buf, sz))
+>> -		return false;
+>> +	if (bpf_map__is_internal(map) &&
+>> +	    ((bpf_map__map_flags(map) & BPF_F_MMAPABLE) || bpf_map_is_percpu_data(map)) &&
+>> +	    get_map_ident(map, buf, sz))
+>> +		return true;
+>>  
+>> -	return true;
+>> +	return false;
+>>  }
 > 
-> [Severity: Low]
-> Does this unconditional warning and negative return value cause log spam on
-> older kernels or for unprivileged users?
+> [Severity: High]
+> Does forcibly treating the percpu maps as mmapable here break subskeletons?
 > 
-> When bpf_map_create() fails, returning the negative error code causes
-> feat_supported() to log a second "Detection of kernel ... support failed"
-> warning. Returning 0 instead would correctly signal that the feature is
-> missing without the additional log output, similar to how other probes
-> handle expected failures.
+> Since subskeletons operate on an already-loaded BPF object to read or write
+> live state, this change might cause do_subskeleton() to export pointers to
+> disconnected user-space memory.
 > 
-Nope, I don't think so.
+> If they point to the disconnected PROT_READ initialization buffer instead of
+> live state, would reads always return stale initial data and fail to reflect
+> live kernel modifications?
+> 
 
-Since percpu_array map is a basic map in bpf, this map creation should
-likely succeed. If it fails, the kernels are too old to use such new libbpf.
+Do subskeletons operate on an already-loaded BPF object to read or write
+live state?
+
+If true, will skip percpu data variables for subskeleton.
+
+> [ ... ]
+> 
+>> @@ -847,7 +851,7 @@ static int gen_trace(struct bpf_object *obj, const char *obj_name, const char *h
+>>  	bpf_object__for_each_map(map, obj) {
+>>  		const char *mmap_flags;
+>>  
+>> -		if (!is_mmapable_map(map, ident, sizeof(ident)))
+>> +		if (!is_mmapable_map(map, ident, sizeof(ident)) || bpf_map_is_percpu_data(map))
+>>  			continue;
+>>  
+>>  		if (bpf_map__map_flags(map) & BPF_F_RDONLY_PROG)
+> 
+> [Severity: High]
+> Does skipping map finalization for percpu maps in light skeletons leave the
+> user-space initialization buffer mapped as PROT_READ | PROT_WRITE?
+> 
+> In standard skeletons managed by libbpf, the buffer is protected with
+> PROT_READ to explicitly crash on invalid writes.
+> 
+> If we skip finalization here in gen_trace(), it seems writes to lskel->percpu
+> after load() might silently succeed without actually updating the kernel map.
+> 
+
+The buffer should be protected with PROT_READ in light skeletons. Will
+do it.
 
 Thanks,
 Leon
