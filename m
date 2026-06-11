@@ -1,139 +1,146 @@
-Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
+Received: from mgamail.intel.com (mgamail.intel.com [192.198.163.11])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A8A4E2BD58A;
-	Thu, 11 Jun 2026 06:10:13 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3AEE13594A
+	for <sashiko-reviews@lists.linux.dev>; Thu, 11 Jun 2026 06:19:46 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=192.198.163.11
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1781158214; cv=none; b=rh09aZZ0P4RiI5bw5YJ0h5788qiV2UdJwkOtrdByWLFiAtrP+xcfJA9CHF9GrzT435IbsSoT8JY8f/quFL+KTqYNVp5pUAFPJ0lUg1pNPhpIBhVCdoXGomz6EA9MFT/85vpEjPD22LiZk51oZ5mhjk92x8ueRKYZGqSmMybkk0I=
+	t=1781158788; cv=none; b=QynNlNJZBneGtFxTZWnuqZXmpFBavAU2Nkruc1TD9kDlVftMp3zLhyvDAUAbzxgy4s9lQGPo6SDPnQ5zNqRuHXfWZk0iSfaSQbS4mnppT9K9VXHaFgV/rFxWMoMB9a8IUNTyQJiY23lvYJfIV2p0qcZpdNWg7jqlzuAbCKYIAio=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1781158214; c=relaxed/simple;
-	bh=t2WRqjUsFELcSyHpuIYWTBzanLaf8gP8z46IW8xDkiE=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=Bh8aSBOl2KCjRxB60WNlwD9cMB7aRhOYTHTihDbxxPbVEtB0b6k2I2KNV65qCxIVLUF9D5nwfYoGnEEf7nxvHncYAFnSQZmt73MD78mDRazfrDgfeBmRJnret5pNCq70/ZGjYXpE8rPKeEp4CHMvIrr6SemAe36snzuiiyuQQuY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=JEK4OmPQ; arc=none smtp.client-ip=100.103.45.18
+	s=arc-20240116; t=1781158788; c=relaxed/simple;
+	bh=hBXnRB0R6yHxKRHRTif1KRxBcy29ysP13P8/VY89VG4=;
+	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
+	 In-Reply-To:Content-Type; b=hjhO4U2EHM/HFhjhrli4veewnz38MWB9Q7IOSmwBjnQDvurBhfa2TML+k/G3s1teRiBg0PWyfaaTlckt9IVIWy+L5pewmhjNxTCGZ5PCA9U54UjtiMeMsloCzIZAdimwv0e/clx2MvqZjwSBbBVpmF8q/jc9rQS/1zHo6BWjEHw=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linux.intel.com; spf=pass smtp.mailfrom=linux.intel.com; dkim=pass (2048-bit key) header.d=intel.com header.i=@intel.com header.b=Gp3goM3s; arc=none smtp.client-ip=192.198.163.11
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linux.intel.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linux.intel.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="JEK4OmPQ"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id E87C91F00898;
-	Thu, 11 Jun 2026 06:10:09 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=kernel.org;
-	s=k20260515; t=1781158213;
-	bh=rKMmMKeuz2fRooQhiP60q8uhlHxR04FyvuIbk8BELm0=;
-	h=Date:From:To:Cc:Subject:References:In-Reply-To;
-	b=JEK4OmPQqu/AINjDWh7OeWFdsCKnRRBZo7pwUtVTSgBjwfAZE9reBqrQgsIt/TAJk
-	 3Ydb8VFZ+SGE02xeyV1gmLiJSx6uwkJ5s4bUXbOA2Eimf+0rr5vWXuTYdpCYWfMN0M
-	 V9OSJ6QdNopMijhZuxeFw2jRrS8RYfuwCKm8aseLa0c9V0vTDdZik09+FLH6UfbiJX
-	 oX3B4jFQeO8VIMjvLnz/nyGXoTaeHMSQWjvB7knj/lb4wX3xU0a2mjWLzrwfHedFoy
-	 TUEVe/wWovnQii8IgaJz66lLraFMn+Zc0kE5QvRLYGiluoaXF5YHobmUSyRaujyned
-	 YjxYpEXktqICA==
-Date: Thu, 11 Jun 2026 08:10:05 +0200
-From: Manivannan Sadhasivam <mani@kernel.org>
-To: Sherry Sun <sherry.sun@nxp.com>
-Cc: Krzysztof Kozlowski <krzk@kernel.org>, 
-	"sashiko-reviews@lists.linux.dev" <sashiko-reviews@lists.linux.dev>, 
-	"manivannan.sadhasivam@oss.qualcomm.com" <manivannan.sadhasivam@oss.qualcomm.com>, "linux-pci@vger.kernel.org" <linux-pci@vger.kernel.org>, 
-	"robh@kernel.org" <robh@kernel.org>, "Frank.Li@kernel.org" <Frank.Li@kernel.org>, 
-	"conor+dt@kernel.org" <conor+dt@kernel.org>, "devicetree@vger.kernel.org" <devicetree@vger.kernel.org>, 
-	"imx@lists.linux.dev" <imx@lists.linux.dev>
-Subject: Re: [PATCH 1/2] dt-bindings: connector: pcie-m2-e: Add 3.3Vaux
- supply support
-Message-ID: <6ouch5ybqk7gws3yrvc2sylq67nioqva6klc7o7wcgbpobs2lu@ioscmsg6ufyx>
-References: <20260609033840.2006078-2-sherry.sun@oss.nxp.com>
- <20260609034408.BC69D1F00893@smtp.kernel.org>
- <20260609-unique-magnificent-eel-eb623f@quoll>
- <VI0PR04MB121140EFB8E614326D799503A921A2@VI0PR04MB12114.eurprd04.prod.outlook.com>
- <mvxoynvocxcalxcwogbiovg5yurjczxqfu2fqkji33bunmlplz@zxqjsdjts65j>
- <VI0PR04MB12114DBDD65F25FB615EA8967921A2@VI0PR04MB12114.eurprd04.prod.outlook.com>
- <ihrmgh6etb2n5zqjbrykfjjms4a6zgpzwjgrd3rvy24jufbss7@f4nfxrp7jksy>
- <VI0PR04MB12114DA25D08329D3DC2C3ADA921B2@VI0PR04MB12114.eurprd04.prod.outlook.com>
+	dkim=pass (2048-bit key) header.d=intel.com header.i=@intel.com header.b="Gp3goM3s"
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
+  d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
+  t=1781158787; x=1812694787;
+  h=message-id:date:mime-version:subject:to:cc:references:
+   from:in-reply-to:content-transfer-encoding;
+  bh=hBXnRB0R6yHxKRHRTif1KRxBcy29ysP13P8/VY89VG4=;
+  b=Gp3goM3sZyvobOy7AUXxr+S2qODcdGxalqaagw80Fex2fCxUT8Dl+sE0
+   hESjqBuUi8PktiJOu/PxNSDZ/gQTYEoNQBIEYTciMP9uG8w9XkHYwhXHu
+   98ziOdA4P1zhxngySQJQCZ1BKH/ShOCp/FjVWIVKOly+oXV1fLT2FpzFz
+   GqeXmhyl4yjWYj5/mc55YnD9XtXAj8vdVd3ezEmv3lASo13KVdYakBMoC
+   SxhbkHHCA+/gWdLIQPTQTWiYnTX0czaekFWiouudZ3aZbT/bYFOc8p5U/
+   d8LJ2SzQcG8KepClpNiMH9CP8t0zURPuGdq2+P+Se7MLzSQ2gstbA8NyM
+   w==;
+X-CSE-ConnectionGUID: SXXKcQOJTn2tMWZIxxE7MQ==
+X-CSE-MsgGUID: yu8T/XkISoeIFWVrKbSuEA==
+X-IronPort-AV: E=McAfee;i="6800,10657,11813"; a="92530305"
+X-IronPort-AV: E=Sophos;i="6.24,198,1774335600"; 
+   d="scan'208";a="92530305"
+Received: from fmviesa008.fm.intel.com ([10.60.135.148])
+  by fmvoesa105.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 10 Jun 2026 23:19:46 -0700
+X-CSE-ConnectionGUID: alTVU2sRRi++BD0esf5TMQ==
+X-CSE-MsgGUID: aY8JGNmXTtOhXy6bQyEtKg==
+X-ExtLoop1: 1
+X-IronPort-AV: E=Sophos;i="6.24,198,1774335600"; 
+   d="scan'208";a="243932571"
+Received: from jkollber-mobl1.ger.corp.intel.com (HELO [10.246.16.106]) ([10.246.16.106])
+  by fmviesa008-auth.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 10 Jun 2026 23:19:46 -0700
+Message-ID: <79ea7cf7-e1e1-4bcf-a431-d82f538d7e5c@linux.intel.com>
+Date: Thu, 11 Jun 2026 08:19:43 +0200
 Precedence: bulk
 X-Mailing-List: sashiko-reviews@lists.linux.dev
 List-Id: <sashiko-reviews.lists.linux.dev>
 List-Subscribe: <mailto:sashiko-reviews+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:sashiko-reviews+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-Content-Transfer-Encoding: 8bit
-In-Reply-To: <VI0PR04MB12114DA25D08329D3DC2C3ADA921B2@VI0PR04MB12114.eurprd04.prod.outlook.com>
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH] accel/ivpu: Use threaded IRQ for IPC callback processing
+To: sashiko-reviews@lists.linux.dev
+Cc: dri-devel@lists.freedesktop.org
+References: <20260611055201.948726-1-karol.wachowski@linux.intel.com>
+ <20260611060901.6D9AC1F00893@smtp.kernel.org>
+Content-Language: en-US
+From: "Wachowski, Karol" <karol.wachowski@linux.intel.com>
+In-Reply-To: <20260611060901.6D9AC1F00893@smtp.kernel.org>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
 
-On Thu, Jun 11, 2026 at 03:59:28AM +0000, Sherry Sun wrote:
-> > On Wed, Jun 10, 2026 at 10:13:00AM +0000, Sherry Sun wrote:
-> > > > On Wed, Jun 10, 2026 at 08:40:54AM +0000, Sherry Sun wrote:
-> > > > > > On Tue, Jun 09, 2026 at 03:44:08AM +0000, sashiko-bot@kernel.org
-> > wrote:
-> > > > > > > Thank you for your contribution! Sashiko AI review found 1
-> > > > > > > potential
-> > > > > > issue(s) to consider:
-> > > > > > > - [Medium] The `vpcie3v3aux-supply` property describes a
-> > > > > > > non-existent
-> > > > > > hardware feature on the M.2 Key E connector to work around a
-> > > > > > software policy.
-> > > > > >
-> > > > > > Feels valid. Describe which pin on M2 connector are you representing.
-> > > > > >
-> > > > >
-> > > > > Refer to PCI Express M.2 Specification r5.1 sec3.1.1 Power Sources
-> > > > > and Grounds.
-> > > > >
-> > > > > PCI Express M.2 Socket 1 utilizes a 3.3 V power source. The
-> > > > > voltage source, 3.3 V, is expected to be available during the
-> > > > > system’s stand-by/suspend state to support wake event processing
-> > > > > on the communications card.
-> > > > >
-> > > > > But the current vpcie3v3-supply may be gated off during system
-> > suspend.
-> > > > > So I  tried to add vpcie3v3aux-supply to let this 3.3 V power
-> > > > > source always on for PCIe M.2 Key E connector. That means
-> > > > > vpcie3v3aux-supply and vpcie3v3-supply actually refer to the same 3.3 V
-> > power source.
-> > > > >
-> > > > > @Mani, do you think this is reasonable? Or do you have any other
-> > > > > better solutions? Thanks!
-> > > > >
-> > > >
-> > > > There is no Vaux defined in the M.2 spec. So you cannot define that
-> > > > supply in the binding. You can define the custom Vaux supply as a
-> > > > fixed regulator in DT and mark it always on so that it is keeps supplying
-> > 3.3v to the card.
-> > > >
-> > >
-> > > Hi Mani, thanks for the suggestion, but adding an always on regulator
-> > > may cause board power waste, current solution ensures the 3.3v
-> > > regulator is only enabled when M.2 connector needs to work .
-> > >
-> > 
-> > What do you mean by 'need to work'? For getting the M.2 card to work, you
-> > already have 3.3v supply. If you want the board to be always ON, then you
-> > need to supply 3.3Vaux, which should be always ON too.
-> > 
-> > But who is turning off vpcie3v3-supply? M.2 connector driver or the
-> > platform?
-> > 
+On 11-Jun-26 8:09, sashiko-bot@kernel.org wrote:
+> Thank you for your contribution! Sashiko AI review found 1 potential issue(s) to consider:
+> - [High] Firmware command queue leak and duplicate hardware initialization on the retry path in `ivpu_job_submit`.
+> --
+
+This is pre-existing issue that will exhibit even without this patch.
+It is already addressed with:
+https://lore.kernel.org/all/20260611055140.948684-1-karol.wachowski@linux.intel.com/
+
+Karol
+
 > 
-> Hi Mani,
-> I'm not sure if I understand your question correctly, actually it's the platform
-> driver that calls the M.2 connector driver to turn off vpcie3v3-supply.
-> Take i.MX pci device as an example, 
-> pm_suspend() -> imx_pcie_suspend_noirq() -> imx_pcie_host_exit() ->
-> pci_pwrctrl_power_off_devices() -> pwrseq_power_off() ->
-> pwrseq_unit_disable() -> pwrseq_pcie_m2_vregs_disable()
+> commit 91623d3f3cc1b38781bd2f9f2354ef0fa3591d50
+> Author: Karol Wachowski <karol.wachowski@linux.intel.com>
 > 
-> Taking back to M.2 Specification:
-> PCI Express M.2 Socket 1 utilizes a 3.3 V power source. The
-> voltage source, 3.3 V, is expected to be available during the
-> system’s stand-by/suspend state to support wake event processing
-> on the communications card.
+> accel/ivpu: Use threaded IRQ for IPC callback processing
 > 
-> Per my understanding of the above, the M.2 Spec actually suggest the
-> 3.3 V power source should not be turned off.
-> Should we simply enable the 3.3 V power source in pwrseq_pcie_m2_probe()
-> and remove the pwrseq_pcie_m2_vregs_unit_data?
+> Dispatching IPC callbacks from system_percpu_wq adds scheduling latency
+> that is neither bounded nor predictable, which hurts job completion
+> turnaround. Handle them from a threaded IRQ instead, and defer job
+> resource teardown to a dedicated unbounded workqueue.
+> 
+>> diff --git a/drivers/accel/ivpu/ivpu_job.c b/drivers/accel/ivpu/ivpu_job.c
+>> index 521931d1f7fca..7320c97762832 100644
+>> --- a/drivers/accel/ivpu/ivpu_job.c
+>> +++ b/drivers/accel/ivpu/ivpu_job.c
+> [ ... ]
+>> @@ -709,6 +748,14 @@ static int ivpu_job_submit(struct ivpu_job *job, u8 priority, u32 cmdq_id)
+>>   	}
+>>   
+>>   	ret = ivpu_cmdq_register(file_priv, cmdq);
+>> +	if (ret == -EBUSY && !flushed) {
+>> +		/* Doorbell may be held by jobs pending deferred cleanup */
+>> +		mutex_unlock(&file_priv->lock);
+>> +		mutex_unlock(&vdev->submitted_jobs_lock);
+>> +		flush_work(&vdev->job_destroy_work);
+>> +		flushed = true;
+>> +		goto retry;
+>> +	}
+> 
+> [Severity: High]
+> Does this retry loop cause duplicate firmware queue initialization and leak
+> resources?
+> 
+> If ivpu_cmdq_register() successfully calls ivpu_hws_cmdq_init() but then
+> ivpu_register_db() fails with -EBUSY, the function returns -EBUSY without
+> undoing the firmware queue initialization and leaves cmdq->db_id as 0:
+> 
+> drivers/accel/ivpu/ivpu_job.c:ivpu_cmdq_register() {
+>      ...
+> 	if (vdev->fw->sched_mode == VPU_SCHEDULING_MODE_HW) {
+> 		ret = ivpu_hws_cmdq_init(file_priv, cmdq, VPU_ENGINE_COMPUTE, cmdq->priority);
+> 		if (ret)
+> 			return ret;
+> 	}
+> 
+> 	ret = ivpu_register_db(file_priv, cmdq);
+> 	if (ret)
+> 		return ret;  // Returns -EBUSY here, db_id is 0
+>      ...
+> }
+> 
+> When the goto retry path is taken, ivpu_cmdq_register() is called again
+> with the same cmdq. Because cmdq->db_id is still 0, the early bailout is
+> skipped, and ivpu_hws_cmdq_init() is called a second time.
+> 
+> Furthermore, if the retry also fails (or is not attempted), will this
+> leak the firmware resource? The unregister path seems to bail early if
+> db_id is 0:
+> 
+> drivers/accel/ivpu/ivpu_job.c:ivpu_cmdq_unregister() {
+> 	if (!cmdq->db_id)
+> 		return 0;
+>      ... // ivpu_jsm_hws_destroy_cmdq() is skipped
+> }
+> 
+>>   	if (ret) {
+>>   		ivpu_err(vdev, "Failed to register command queue: %d\n", ret);
+>>   		goto err_unlock;
 > 
 
-Just don't call pci_pwrctrl_power_off_devices() from the suspend path.
-
-- Mani
-
--- 
-மணிவண்ணன் சதாசிவம்
