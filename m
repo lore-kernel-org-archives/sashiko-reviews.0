@@ -1,14 +1,14 @@
 Received: from mail.8bytes.org (mail.8bytes.org [85.214.250.239])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 1C35C30DEB2
-	for <sashiko-reviews@lists.linux.dev>; Thu, 11 Jun 2026 14:43:14 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id C583440BCB6
+	for <sashiko-reviews@lists.linux.dev>; Thu, 11 Jun 2026 15:23:09 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=85.214.250.239
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1781188998; cv=none; b=ZNjh8Hyyd6p/dKeYfT4fderokjHtSrK+HUoJExm3146OVaDsdEjbqS0ajezep7ZfkGavQd73qLSWwRBs1R+KnINKkISnpSPAA7QaRKmq4FTXTnYpp3DYjdBlwu6O9GRImwYuKIUIHMc1aHBUOWzvnbMjTqYASCMpbT4OM1ogIK0=
+	t=1781191391; cv=none; b=Kn2oKZKWgR8X5la/uAMgyy7qpBaXdis/3lUW/Dp6V30nVA1l7tlRxKmjJtwQ+zbdeGhRbRzIQesCFy7d3qDuYdjiK1rd4F86bxxVZJRhE+9J9qKX2fmNZJMTnCLZ5pQlRGAiItTZ0u3KK9GHIzOmYtbg3CwDSjCEu9LrnKF2VPg=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1781188998; c=relaxed/simple;
-	bh=bRofaJRsnksH8cATrOOkcwxqID3f5J5np/Wz2r+wzaA=;
+	s=arc-20240116; t=1781191391; c=relaxed/simple;
+	bh=eTpQfbLcqqj819+kBcAMgXhw/4WgxMKJxSH+HkbeMuQ=;
 	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=WxlEzJu4Ev1080mtybwFN5UeTHsL/wHg2JIbUz2X/vhI4ItIVrJleG7Duu7p7yYpjgiw+Q73GCi3JBug7ovqJOhh+CUH9wK8qKQf+zG3W4QVemnTw2EiibuDeYUPeXe4yzDhiE1+mFKtBcKJNwbIeKWPDf4lvO+vSyooWDbjCvY=
+	 Content-Type:Content-Disposition:In-Reply-To; b=EnFEezj9PjqA7cVxgzOPZh5oXhfMKNzOrcwNlgq1Zl7eKqnOSMmDuSv1NUotv5nO4BxgYhk5zpDFdkLSaunPMxWyqm35v7LEtrDYBQ/Cu8LKFHw1BL/EnyW7NoJypILlQHDzVPkP3Y+MBjC0b022+LzwrWFK45gziTtX4klhr4g=
 ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=8bytes.org; spf=pass smtp.mailfrom=8bytes.org; arc=none smtp.client-ip=85.214.250.239
 Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=8bytes.org
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=8bytes.org
@@ -16,16 +16,17 @@ Received: from 8bytes.org (p4ffe1d30.dip0.t-ipconnect.de [79.254.29.48])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange ECDHE (prime256v1) server-signature RSA-PSS (2048 bits) server-digest SHA256)
 	(No client certificate requested)
-	by mail.8bytes.org (Postfix) with ESMTPSA id C42341C1C3A;
-	Thu, 11 Jun 2026 16:43:13 +0200 (CEST)
-Date: Thu, 11 Jun 2026 16:43:12 +0200
+	by mail.8bytes.org (Postfix) with ESMTPSA id 5F4911C1C3A;
+	Thu, 11 Jun 2026 17:23:08 +0200 (CEST)
+Date: Thu, 11 Jun 2026 17:23:07 +0200
 From: =?utf-8?B?SsO2cmcgUsO2ZGVs?= <joro@8bytes.org>
 To: sashiko-reviews@lists.linux.dev
 Cc: kvm@vger.kernel.org
-Subject: Re: [PATCH 3/4] kvm: svm: Support guest-provided VMSA for launching
-Message-ID: <airHPsVxHlAsUiFc@8bytes.org>
-References: <20260611123528.572255-4-joro@8bytes.org>
- <20260611130537.216371F00893@smtp.kernel.org>
+Subject: Re: [PATCH 4/4] kvm: svm: Support KVM_SEV_SNP_PAGE_TYPE_VMSA at
+ SNP_LAUNCH_UPDATE
+Message-ID: <airKLGYTBK2gRbIJ@8bytes.org>
+References: <20260611123528.572255-5-joro@8bytes.org>
+ <20260611125849.9ED631F00893@smtp.kernel.org>
 Precedence: bulk
 X-Mailing-List: sashiko-reviews@lists.linux.dev
 List-Id: <sashiko-reviews.lists.linux.dev>
@@ -34,71 +35,34 @@ List-Unsubscribe: <mailto:sashiko-reviews+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-In-Reply-To: <20260611130537.216371F00893@smtp.kernel.org>
+In-Reply-To: <20260611125849.9ED631F00893@smtp.kernel.org>
 
-On Thu, Jun 11, 2026 at 01:05:36PM +0000, sashiko-bot@kernel.org wrote:
-> [Severity: Critical]
-> This is a pre-existing issue, but can unprivileged userspace panic the host
-> kernel by punching a hole in the guest_memfd file backing the guest-provided
-> VMSA pages?
-> 
-> Guest-provided VMSA pages are placed into the VMSA (Firmware) RMP state.
-> However, KVM drops its page reference immediately after lookup:
-> 
-> arch/x86/kvm/svm/sev.c:sev_es_vmsa_pa() {
->     ...
->     kvm_release_page_clean(page);
->     ...
-> }
+On Thu, Jun 11, 2026 at 12:58:49PM +0000, sashiko-bot@kernel.org wrote:
+> [Severity: Low]
+> Is the sev_features variable necessary? It gets assigned below when
+> processing a KVM_SEV_SNP_PAGE_TYPE_VMSA page but doesn't appear to be
+> used anywhere else in this function.
 
-There is at least not a reference counting issue here, as GMEM still holds a
-reference to the page.
-
-> If userspace triggers a page release, the page is freed by the core MM
-> subsystem. During freeing, sev_gmem_invalidate() attempts to transition the
-> page via rmp_make_shared(), which architecturally fails on VMSA-state pages:
-
-Not sure about that, I havn't checked whether GMEM allows these kinds of
-page-state changes before LAUNCH_FINISH. After LAUNCH_FINISH it is not problem
-anymore because VMSA address in the VMCB does not point to a valid VMSA page,
-then VMRUN will fail.
+Yes, that is a left-over and can be removed.
 
 > [Severity: High]
-> This is a pre-existing issue, but does KVM permanently leak successfully 
-> launched SNP VM VMSA pages during VM teardown?
+> This is a pre-existing issue, but does this violate the LIFO unmapping
+> requirement of the highmem API?
 > 
-> During normal teardown of an SNP guest, KVM attempts to transition its
-> allocated VMSA pages to shared state via kvm_rmp_make_shared():
-> 
-> arch/x86/kvm/svm/sev.c:sev_es_vcpu_free_vmsa() {
->     ...
->     if (kvm_rmp_make_shared(vcpu->kvm, pfn, PG_LEVEL_4K)) {
->         pr_err("Failed to make VMSA page shared - leaking it to avoid re-use\n");
->         goto out;
->     }
->     ...
-> }
-> 
-> kvm_rmp_make_shared() uses the RMPUPDATE instruction, which architecturally
-> fails on pages that are in the VMSA state. The function detects the failure,
-> logs the error, and permanently leaks the page. Because VMs are destroyed
-> routinely, this will eventually exhaust host memory. KVM must use
-> snp_page_reclaim() instead of kvm_rmp_make_shared() for pages in the VMSA
-> state.
+> The kmap_local_page() documentation requires mappings to be unmapped in the
+> exact reverse order. Here src_vaddr is mapped first, then dst_vaddr, but
+> they are unmapped in the same order instead of reverse. Could this corrupt
+> the internal stack on the next kmap/kunmap operations?
 
-Wrong, VMSA pages are freed when they are KVM owned, when they are guest owned
-they are freed via gmem. This is all fine if it happens after LAUNCH_FINISH and
-no VCPU of the VM is still running.
+Right, I will fix it in this patch.
 
 > [Severity: High]
-> Does this code call sev_es_vmsa_pa() without holding kvm->srcu or 
-> kvm->slots_lock?
+> Will this new VMSA initialization path expose a use-after-free of KVM
+> memslots during launch finish?
 > 
-> Looking at the execution path immediately following this comment in 
-> snp_launch_update_vmsa():
-> 
->         /* VMSA encrypted - put it into the VMCB */
->         svm->vmcb->control.vmsa_pa = sev_es_vmsa_pa(vcpu);
+> By setting sev->initial_vmsa_gpa to a valid page here, the ioctl path
+> KVM_SEV_SNP_LAUNCH_FINISH can now call sev_es_vmsa_pa(), which looks up the
+> slot:
 > 
 > arch/x86/kvm/svm/sev.c:sev_es_vmsa_pa() {
 >     ...
@@ -106,12 +70,48 @@ no VCPU of the VM is still running.
 >     ...
 > }
 > 
-> gfn_to_memslot() dereferences the KVM memslots array. Since this is called 
-> without SRCU or slots_lock, a concurrent thread executing 
-> KVM_SET_USER_MEMORY_REGION can swap and free the memslots array while 
-> gfn_to_memslot() is accessing it, leading to a use-after-free.
+> Since the launch finish ioctl takes kvm->lock and vcpu->mutex, but not
+> srcu_read_lock(), could a concurrent memslot update swap and free the
+> memslot before it is accessed in kvm_gmem_get_pfn()?
 
-Not sure if this is an issue. If it is then it is pre-existing. I think the
-worst that can happen is a failed VMRUN because the VMSAs become invalid, no?
+Will further investigate this. If there is an issue it is independent of this
+series.
+
+> [Severity: Critical]
+> This isn't a bug introduced by this patch, but does the error recovery path
+> for KVM_SEV_SNP_PAGE_TYPE_CPUID write to a potentially read-only page?
+> 
+> When handling the CPUID type, kvm_gmem_populate() calls get_user_pages_fast()
+> with gup_flags = 0, requesting read-only access. If userspace mapped a
+> read-only page like the global zero page, GUP will succeed.
+> 
+> If the firmware returns SEV_RET_INVALID_PARAM, sev_gmem_post_populate() maps
+> the page with kmap_local_page() and copies the expected values into it:
+> 
+> memcpy(src_vaddr, dst_vaddr, PAGE_SIZE);
+> 
+> Could this illegally overwrite read-only memory and corrupt the global zero
+> page?
+
+Looks like this can happen, but not introduced by this series. It needs a
+separate fix.
+
+> [Severity: High]
+> This is a pre-existing issue, but can a host userspace process trigger a
+> kernel warning by passing a NULL user address (uaddr = 0) here?
+> 
+> If params.uaddr is 0, src becomes NULL and passes the PAGE_ALIGNED(src)
+> check. kvm_gmem_populate() skips fetching the user page and passes
+> src_page = NULL to sev_gmem_post_populate().
+> 
+> That function then unconditionally evaluates:
+> 
+> WARN_ON_ONCE(sev_populate_args->type != KVM_SEV_SNP_PAGE_TYPE_ZERO &&
+>              !src_page)
+> 
+> Since the type isn't ZERO, won't this allow an unprivileged user to spam
+> the kernel log?
+
+This is correct, we will send a separate fix.
 
 -Joerg
