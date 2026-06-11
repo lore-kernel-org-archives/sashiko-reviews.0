@@ -1,134 +1,149 @@
-Received: from mail-wr1-f54.google.com (mail-wr1-f54.google.com [209.85.221.54])
+Received: from mail-wm1-f50.google.com (mail-wm1-f50.google.com [209.85.128.50])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5AE743AC0C0
-	for <sashiko-reviews@lists.linux.dev>; Thu, 11 Jun 2026 09:37:32 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.221.54
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BC22234CFAB
+	for <sashiko-reviews@lists.linux.dev>; Thu, 11 Jun 2026 09:37:40 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.50
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1781170653; cv=none; b=NJtXfG24Tn3HJFTGj+ok6aPcG1u3waGvQjpDonj8JknHXwYz0Jisx1i3SsX8R4YPYRaSNSBItfVJGu01ub5o/I5gisDVyAz+Q0+YkbaXIqdKoMrnD4N17nVdIsE0H8UTkLjVNB/iAK0bg7Ly21BBIE8QTaUu8hjhsKAAqZ49npM=
+	t=1781170662; cv=none; b=GfHbLUMEeZmT5HRbPGrzYpRXbU6XCHP+pT3NIm/OAGyln6s6mHzUhZcV5Tk7w5h5q11YmjR0iviwIeLQUdLDnZgYw1oIKjJs+5Rox0BikGq9fSYt1R4AykoMMq3xSjFh/oxMsUyWwTLzV6F+1DNAULSr4Rn3F2uwhYcxbg6H800=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1781170653; c=relaxed/simple;
-	bh=wA+twUEFzsAdwFg4SjCBQ9q3jy94DJz5Ve4/QlurBos=;
+	s=arc-20240116; t=1781170662; c=relaxed/simple;
+	bh=PU98PknZMnvOtEXRkJ7cg9UcsU4aKjZWeVdvA+PVoXU=;
 	h=From:Date:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=DPNvWEskmt9fG3yoz61YEoFxeTqXjCzB0ItP6DAYB7Uz1iKXf4zBEwgpTGK7w1q13LOK2R1BmONCxJTULbwyQ2dCLfOirUbhAibP9JsEZok+si0sqLmBBXRbyDfnC44fXGOoZV3dW/0L7LlZgiz3DdVb+UUi4JovESm8mlolo9o=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=Q1P5rfg7; arc=none smtp.client-ip=209.85.221.54
+	 Content-Type:Content-Disposition:In-Reply-To; b=Zp8hBugq9da5Ri1zwKf57Erwc8hiQ8zxNYB3iQCdhqPXwJE792IgdDsb5bg5tuwgaBx1qa8i2mte/AUFTrOSNDL6ZeHrf4tb1f8ET1LnH/xcR2eSo7pOlOkU1AxbaD22EidJyWxRr106Ody26/3eZp+Zo4iWZCgVXYPBC3ueMfE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=DmzYTa4L; arc=none smtp.client-ip=209.85.128.50
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="Q1P5rfg7"
-Received: by mail-wr1-f54.google.com with SMTP id ffacd0b85a97d-45efa80e0afso6054258f8f.2
-        for <sashiko-reviews@lists.linux.dev>; Thu, 11 Jun 2026 02:37:32 -0700 (PDT)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="DmzYTa4L"
+Received: by mail-wm1-f50.google.com with SMTP id 5b1f17b1804b1-490abf12f0fso3851455e9.0
+        for <sashiko-reviews@lists.linux.dev>; Thu, 11 Jun 2026 02:37:40 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20251104; t=1781170651; x=1781775451; darn=lists.linux.dev;
-        h=in-reply-to:content-transfer-encoding:content-disposition
-         :mime-version:references:message-id:subject:cc:to:date:from:from:to
-         :cc:subject:date:message-id:reply-to;
-        bh=vEO8kje9kYrRQU/+kV8ArVqyL99RuYg/7cQwFotLr28=;
-        b=Q1P5rfg7qfWaLZfv1IuEams3o0+ZGgaZKMMNKozr707G+iVnVgL9cXTGRIrfi1FG/f
-         hVVqwpm31xsS/b/Jf8BwvHMEHfaFNt2e2/B92mZ1FA0Bcjo33ecMWSOVsKQnO1Sv9g6b
-         qNHtcKuMrt8ZR58iKc44fN8zKZ0khdd4FhewYCmwAldXn8NoYi+VE7iDlP0NT/PVJQ0x
-         XQBsSxh0pKCCzhNaBZIGGAac10IgOt17gIkCnCJA19/Ks0fF+vDdafio37+Fdg7oMQyX
-         oL2QxkBJCGjFOaICpKnE9ZS3WR/JXxKIodOXU6ipA81tJzeEdQnKLBAYmiN9FEnZXhre
-         PGag==
+        d=gmail.com; s=20251104; t=1781170659; x=1781775459; darn=lists.linux.dev;
+        h=in-reply-to:content-disposition:mime-version:references:message-id
+         :subject:cc:to:date:from:from:to:cc:subject:date:message-id:reply-to;
+        bh=zruVWqFGgpp7NEcooTDP5im8iVaG/yBcmkbIj0gbxBg=;
+        b=DmzYTa4L5TsMdy7CnbH0JskpNqESl8x2/JZtY75impTQp/foM9v/IFSiCfrCUd0G7R
+         PokWQ4MjKnMC0wVfdeBeVu7KmXlTkICr0VMP5PQTzpGfjovPIwG0iieCcLviv3ZMG+Ij
+         s/iFfWItFbyvKkol+AiR2mbEhvVVdl+s77t7FOr/O5+Pm/fwEkedRlr2DxITte1axHxk
+         Wsj07u6Q4XN+tjKZbn/u/B1xzO7Q0cftPvHAiZFgA6mAuY0ovznItP/r+xIJIC/t12O2
+         OI2/mOIFUN8LLiF9lLZeMqnuGqua3xgeiNTkwpuK6onsRnfKpf6kN9D1FU7hs76EWeTG
+         g+pg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20251104; t=1781170651; x=1781775451;
-        h=in-reply-to:content-transfer-encoding:content-disposition
-         :mime-version:references:message-id:subject:cc:to:date:from:x-gm-gg
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=vEO8kje9kYrRQU/+kV8ArVqyL99RuYg/7cQwFotLr28=;
-        b=BTffqNrqW/muzAlAdVyztFVIzZXkEQrh70TWksvQdNpco7UCYeup7a81iL8Pj+ePIx
-         mNmasKCMtcUV5Hlz8JvAiPx3iWrCw6NrkUi37qFv0FrWmZavXbhq1Ru+tauGOfrUBEs+
-         1G1ijkKN5SpBrntB+ybPtVShUUoahPVL2HMG9+VFTQKd15BTnWM6L2P/6ScFfOOYwM/c
-         ee1iSUPfWuMJuIyMGLk/tX/czwqhJuxV/5EDKFGNLo4UeRmDRrOnkRVcxEjAjaTy+yHp
-         J92UBT7Hb8YZViS2ossTxXAKq7ou/Vx+D99F/8ma8j5PxytTQFZyWPblC3GkrAlp5siS
-         8JuQ==
-X-Gm-Message-State: AOJu0YzmOJJ6Nd6ixkeHpX/snxHDahp/1tcs4WQ6bq8u0NA2R6+/2ajZ
-	ZSiUxN6MebbPA8gXJmBhYzVxfjA9dQSWVHPjKzBrm6k98l9kdClvF7XHGEBbdg==
-X-Gm-Gg: Acq92OHki1kwqm7HwT0Ejg6Js7BEYw28JZSt+UgJaEK0RWc5PNDSiz6fKduxnWI7TiC
-	9gu+WluIRv9GY1Vj92V1EOmWo4REq0gpqpUEmZdYVXcwxKklzzUA2SGZI+mHllYUMPj2V0a5Diw
-	WL5+H8+bhYNBLilRyZQJfzAGLMhPLAKnt9TsJCWTvaC2TpsYPl91VEy0aIri7LxSXIwEtBanZCl
-	in+G+UCcm9uewg8ZFokvfu33ggtcl9wB4FZQndHra/IvvheqjQ5J3bqd25vI/0Djo9yddo4tuKj
-	+TC02xdPiOo0VjWJ0HKl95aZJpDbSsC2PAARfDvm5kTbWbLB+wXmuwO4YniS2It4J6Alma5UbCH
-	UHA0jZ5Y582EhOEsx/ef16IepH1gaqunMVYuuVzOXklqS+Iqx16YynuouyAev0izhtkvJPGaDDm
-	8s7cE84LEQdwM55QQ+eAOMZWyvtg==
-X-Received: by 2002:a05:6000:1862:b0:45e:edcc:f6dc with SMTP id ffacd0b85a97d-4606746a03fmr3334435f8f.6.1781170650676;
-        Thu, 11 Jun 2026 02:37:30 -0700 (PDT)
+        d=1e100.net; s=20251104; t=1781170659; x=1781775459;
+        h=in-reply-to:content-disposition:mime-version:references:message-id
+         :subject:cc:to:date:from:x-gm-gg:x-gm-message-state:from:to:cc
+         :subject:date:message-id:reply-to;
+        bh=zruVWqFGgpp7NEcooTDP5im8iVaG/yBcmkbIj0gbxBg=;
+        b=RuyBBonj/KhuZu1KJ1UdvO1bQtvFTOsXByCAMDM7gecaCMPm+bXuggU73kU3bd8U7+
+         TYFbKd+rO7l5tmLXSJmorkgFIqydNrss6bUJtEGwx612GcAfMr12u5NY+thssuzT2l0u
+         nvfCK5sm0nTrliFRbtmId4L0X3LmThcFPUU/XOiW4856AjAJwj3NMPoHxVpQBD9etqfZ
+         oj7MQdBfrQXOicdpMUKhLmxT6wHMnWDZrcHZQZlrgGcuHxiwH1zKbTds+xcYygFCoVXj
+         KBrDP47satNPQpCOm4iAYcxinrNJ0ys4C9/hPvOt+flk328/Vk53I0iLaVzokCslMQSU
+         i0xA==
+X-Gm-Message-State: AOJu0YwGGyQi8PDOrDBjsheE39EjRj/4JvSKhHITZu8r2Yu+5JV79lq5
+	VcLJ+cKVZxfi5kf/h7UDgIut+IMIFmDNBrnHQk0UC57lFHE8mIWjG3NyUHZYIw==
+X-Gm-Gg: Acq92OGlSKbgM9KslXF2l+moy3F8hs4BZz+Ml6e9VYJe0Sk+yFOtImhHRjdOZw14y2i
+	hGanmyx7j0dZAS9Ez6gav1UldP6TfJf1rT5cT7CPDYOsxDrXdn2s+b37rvZL/zZIH5NLZbUvQi2
+	dW9SeQGH7kTAJKuEHqPphevFQyCI3Tiwi16NmDLSBpDXpi3VZy+KXtNL/S59qDHh47g4gIvdd4N
+	peI3pRWHM7wNfoI29PDTQP/Ez8tDO6NDArq4mxNlko9qXdGMP0Ljy4eoA8B/o1wZknGRNMUAmVO
+	Kgj1DMr3oMzQ7M3+xxB9sEtUYaOBXqtUOBwZTIbpD3SInkjln1af5V2jFpLEcd3mMfTzLaAb5zQ
+	nrxrfdUOlpazSgc23JuoyhnGL/TuVdo7WDzIt9KEb29MtJ0KFoKZPl0LhXC29z0gaPZC7vvJaKp
+	L+CHknlTy+3DyL8nU7e3Zh/0jzBA==
+X-Received: by 2002:a05:600c:4f47:b0:490:b26c:64ad with SMTP id 5b1f17b1804b1-490e52d5bfdmr20909335e9.5.1781170659085;
+        Thu, 11 Jun 2026 02:37:39 -0700 (PDT)
 Received: from krava ([2a02:8308:a00c:e200:b655:ff13:e355:16a3])
-        by smtp.gmail.com with ESMTPSA id ffacd0b85a97d-4601f2dcae2sm85188717f8f.6.2026.06.11.02.37.30
+        by smtp.gmail.com with ESMTPSA id 5b1f17b1804b1-490e52acb98sm37556865e9.5.2026.06.11.02.37.38
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Thu, 11 Jun 2026 02:37:30 -0700 (PDT)
+        Thu, 11 Jun 2026 02:37:38 -0700 (PDT)
 From: Jiri Olsa <olsajiri@gmail.com>
 X-Google-Original-From: Jiri Olsa <jolsa@kernel.org>
-Date: Thu, 11 Jun 2026 11:37:28 +0200
+Date: Thu, 11 Jun 2026 11:37:37 +0200
 To: sashiko-reviews@lists.linux.dev
 Cc: bpf@vger.kernel.org
-Subject: Re: [PATCHv2 bpf-next 3/6] libbpf: Add path_fd to struct
- bpf_link_create_opts
-Message-ID: <aiqB2PK0ZzuJNIG9@krava>
-References: <20260610143627.804790-4-jolsa@kernel.org>
- <20260610145019.7F4791F00893@smtp.kernel.org>
+Subject: Re: [PATCHv2 bpf-next 1/6] bpf: Use user_path_at for path resolution
+ in uprobe_multi
+Message-ID: <aiqB4eSTxR4Aw9YJ@krava>
+References: <20260610143627.804790-2-jolsa@kernel.org>
+ <20260610145235.CB1441F00893@smtp.kernel.org>
 Precedence: bulk
 X-Mailing-List: sashiko-reviews@lists.linux.dev
 List-Id: <sashiko-reviews.lists.linux.dev>
 List-Subscribe: <mailto:sashiko-reviews+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:sashiko-reviews+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=iso-8859-1
+Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-Content-Transfer-Encoding: 8bit
-In-Reply-To: <20260610145019.7F4791F00893@smtp.kernel.org>
+In-Reply-To: <20260610145235.CB1441F00893@smtp.kernel.org>
 
-On Wed, Jun 10, 2026 at 02:50:18PM +0000, sashiko-bot@kernel.org wrote:
+On Wed, Jun 10, 2026 at 02:52:35PM +0000, sashiko-bot@kernel.org wrote:
 > Thank you for your contribution! Sashiko AI review found 1 potential issue(s) to consider:
-> - [Low] Compilation fails due to missing `path_fd` in the `uprobe_multi` UAPI struct.
+> 
+> Pre-existing issues:
+> - [Critical] Missing `access_ok()` checks before calling `__get_user()` on user-controlled arrays, leading to arbitrary kernel memory read.
 > --
 > 
-> commit c73ec6f8d6c5a6bb4c8a75f70c333cac0d6d30d4
+> commit e18574361f20d4f27005e4d927610e3ce16986dd
 > Author: Jiri Olsa <jolsa@kernel.org>
 > 
-> libbpf: Add path_fd to struct bpf_link_create_opts
+> bpf: Use user_path_at for path resolution in uprobe_multi
 > 
-> This commit adds the path_fd field to struct bpf_link_create_opts for
-> uprobe_multi. It passes this new field through the kernel attribute interface.
+> Resolve the uprobe_multi user path with user_path_at() instead of copying
+> the string with strndup_user() and passing it to kern_path(). This removes
+> the temporary allocation and keeps the lookup logic in one helper.
 > 
-> > diff --git a/tools/lib/bpf/bpf.c b/tools/lib/bpf/bpf.c
-> > index f37e3416f61a5..96819c082c772 100644
-> > --- a/tools/lib/bpf/bpf.c
-> > +++ b/tools/lib/bpf/bpf.c
-> > @@ -842,6 +842,7 @@ int bpf_link_create(int prog_fd, int target_fd,
-> >  		attr.link_create.uprobe_multi.ref_ctr_offsets = ptr_to_u64(OPTS_GET(opts, uprobe_multi.ref_ctr_offsets, 0));
-> >  		attr.link_create.uprobe_multi.cookies = ptr_to_u64(OPTS_GET(opts, uprobe_multi.cookies, 0));
-> >  		attr.link_create.uprobe_multi.pid = OPTS_GET(opts, uprobe_multi.pid, 0);
-> > +		attr.link_create.uprobe_multi.path_fd = OPTS_GET(opts, uprobe_multi.path_fd, 0);
+> > diff --git a/kernel/trace/bpf_trace.c b/kernel/trace/bpf_trace.c
+> > index 90432f0fc2a8e..970ce7bbf99e1 100644
+> > --- a/kernel/trace/bpf_trace.c
+> > +++ b/kernel/trace/bpf_trace.c
 > 
-> [Severity: Low]
-> Will this assignment cause a build failure?
+> [ ... ]
 > 
-> Looking at the UAPI header in tools/include/uapi/linux/bpf.h, the
-> uprobe_multi struct inside union bpf_attr doesn't appear to have a path_fd
-> member:
+> > @@ -3261,14 +3260,7 @@ int bpf_uprobe_multi_link_attach(const union bpf_attr *attr, struct bpf_prog *pr
+> >  	uref_ctr_offsets = u64_to_user_ptr(attr->link_create.uprobe_multi.ref_ctr_offsets);
+> >  	ucookies = u64_to_user_ptr(attr->link_create.uprobe_multi.cookies);
+> >  
+> > -	name = strndup_user(upath, PATH_MAX);
+> > -	if (IS_ERR(name)) {
+> > -		err = PTR_ERR(name);
+> > -		return err;
+> > -	}
+> > -
+> > -	err = kern_path(name, LOOKUP_FOLLOW, &path);
+> > -	kfree(name);
+> > +	err = user_path_at(AT_FDCWD, upath, LOOKUP_FOLLOW, &path);
+> >  	if (err)
+> >  		return err;
+> >  
+> 
+> [Severity: Critical]
+> This isn't a bug introduced by this patch, but while looking at
+> bpf_uprobe_multi_link_attach(), I noticed the user-provided arrays
+> uoffsets, uref_ctr_offsets, and ucookies are accessed shortly after this
+> path resolution:
+> 
+> kernel/trace/bpf_trace.c:bpf_uprobe_multi_link_attach() {
+>     ...
+>     if (__get_user(uprobes[i].offset, uoffsets + i)) {
+>     ...
+>     if (uref_ctr_offsets && __get_user(uprobes[i].ref_ctr_offset, uref_ctr_offsets + i)) {
+>     ...
+>     if (ucookies && __get_user(uprobes[i].cookie, ucookies + i)) {
+>     ...
+> }
+> 
+> Are these arrays validated with access_ok() before __get_user() is called?
+> 
+> Because __get_user() bypasses the access_ok() address-space bounds check
+> on most architectures, could an attacker supply kernel addresses for these
+> arrays, causing the kernel to read arbitrary memory and store it into the
+> uprobes structures?
+> 
+> If an attacker retrieves these contents by querying the link info via
+> bpf_obj_get_info_by_fd() (which calls bpf_uprobe_multi_link_fill_link_info()
+> and copies the memory back to user space), could this act as an arbitrary
+> kernel memory read primitive to bypass kernel lockdown and KASLR?
 
-compiles fine, path_fd was added in previous patch
+ugh right.. will include fix for this in next version
 
 jirka
-
-
-> 
-> 	struct {
-> 		__aligned_u64	path;
-> 		__aligned_u64	offsets;
-> 		__aligned_u64	ref_ctr_offsets;
-> 		__aligned_u64	cookies;
-> 		__u32		cnt;
-> 		__u32		flags;
-> 		__u32		pid;
-> 	} uprobe_multi;
-> 
-> Should the path_fd member be added to the UAPI bpf_attr union as well?
-> 
-> >  		if (!OPTS_ZEROED(opts, uprobe_multi))
-> >  			return libbpf_err(-EINVAL);
-> >  		break;
-> 
-> -- 
-> Sashiko AI review · https://sashiko.dev/#/patchset/20260610143627.804790-4-jolsa@kernel.org?part=1
