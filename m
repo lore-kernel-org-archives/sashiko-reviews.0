@@ -1,120 +1,134 @@
-Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-wr1-f51.google.com (mail-wr1-f51.google.com [209.85.221.51])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 35DF3347BC1;
-	Thu, 11 Jun 2026 09:24:31 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7AF123BADA9
+	for <sashiko-reviews@lists.linux.dev>; Thu, 11 Jun 2026 09:37:20 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.221.51
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1781169873; cv=none; b=YcRL4uiTEOIVLgpiAqKmaKmnKg1LiNh4RVANdKpyc8cRpau+Kys16+OrS7CZ74dcNDEm1Ly7eiLD3jMloGDhA543nf1GpsfOKjnajT6mlnz9pO7Mj4ZlL95usLSJGE97rL8j3/+dwa2OOfkRPhkqsHs0QCOUvYORHWjSidmvbm0=
+	t=1781170641; cv=none; b=MLadNv7cuKBrBF74Vv/bs4vKGyzctMDrChrJbPTFcaMcu3d/W7gpbYpeZWnpI6K5OBCuv1SZ8JPaWqaesJQP73Rn3mtrWVh6uZ+uqra9UAsdEBko/22uxfRRzrxwXAmn4lmQyrGwCS+c+a7fKokGXezNG+A3l6mlQhgwY/fEYoI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1781169873; c=relaxed/simple;
-	bh=NVWiIJT/7VAsozIULKC9M8FeT0cPIZ4RVnRZNNF7FGo=;
-	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=dysJHe0ZmuKSgIf9ve8rxv6mcvDmVo+wJi/kSBBwwh9cYEy3T0RbuzCXCIMPmxrxlwjl8JL6dFCmw5UT3Ao8a7LGj9O+d2eTjA12xOuLck5tBqt84h54nsEytB47iYjddZi0jWf7D/hIzk0mN1A9Zt0GZeDoCwQFnl3MICNFuII=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=TkM1yr05; arc=none smtp.client-ip=100.103.45.18
+	s=arc-20240116; t=1781170641; c=relaxed/simple;
+	bh=Mr4/aftxKuwV6KPHbOr6owQqRVBsrMmBIBI8SgmcPmk=;
+	h=From:Date:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=SuRbw1g/pGwgHnqQ/bNJjlfRajDqcBgfiQYu9AMbtlosDr9TJ+DVZe6C2MUztEmDkvx31gv2tN0zDA7afXLqWmjwCPtqJUxzBS3j/uDQDztcWIUognRAgQefmH/UUMtoLWM4bLEeYIkHW6qwOfQqLpJ2vbIdHi4tB0Fw/gvcM9w=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=i1Q+EONN; arc=none smtp.client-ip=209.85.221.51
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="TkM1yr05"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id C75A61F00899;
-	Thu, 11 Jun 2026 09:24:29 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=kernel.org;
-	s=k20260515; t=1781169871;
-	bh=7ZqG1Kuu1Hqp3ozxFW8pzKB7sswpKS1lrkRvC0eSUbE=;
-	h=Date:Subject:To:Cc:References:From:In-Reply-To;
-	b=TkM1yr055E9sopkEmkE7CWjhdMvkmRhCDakkcoKkmFkThH8A2PF6D+jVtjdu+aEvu
-	 sLmxPOSoA9keXrho7QN/4+ynVVk+TsiceKCRKkqrN8A0CjA8Gcrgt5b6L46aahazN8
-	 tMa8eBIvMTrED0ukD+FWMW7DpnKHMZxh9ILtNv9ETs5PkNLrRTwy7o2jS49DDn7MAu
-	 ccNTSHds4NpFb4RkxeyjHWstUO7193Wc6EnpB+x1buyJ4rGiVetAxDRU80rAy7SGBz
-	 p/HpDzmjQJRbIBw5i41oPRr9+fOMmMyjsbXpmddO0uyv/XYqMhR/E+MZPzHPeceNWM
-	 YOUWygnMHIqVw==
-Message-ID: <81632f61-9db2-4b26-9a2a-96013d799e14@kernel.org>
-Date: Thu, 11 Jun 2026 11:24:28 +0200
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="i1Q+EONN"
+Received: by mail-wr1-f51.google.com with SMTP id ffacd0b85a97d-45f3cf907ceso4046899f8f.2
+        for <sashiko-reviews@lists.linux.dev>; Thu, 11 Jun 2026 02:37:20 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20251104; t=1781170639; x=1781775439; darn=lists.linux.dev;
+        h=in-reply-to:content-disposition:mime-version:references:message-id
+         :subject:cc:to:date:from:from:to:cc:subject:date:message-id:reply-to;
+        bh=pqHKc0YMAqihL2p8VoSHp+WXE0TvBBK0sq69OmFdgVc=;
+        b=i1Q+EONNiQtNjdYNVXRDmEesiYcL5QURXCgi80LftdeWtjdBL84CfW8R/ZzuizM9Do
+         L9TjThkO9UJvjvrVDCGSr6ehvwcxzIdKU2GyVLlLXhC2d+bvu351Cl5MJTlbpIjARIqo
+         FPgwzKKV92MjEBUx+J3cXXMUPwZvdfElyjLfhvMzaTZ4Zr5U8BsZIWQFmT5zQS471ETM
+         Vwk4yCmmDVJCVp2v76R4I2kbSu9mH7rFjBDTuZexYp1xjeNcLo81ZukTE6cPzIZDcr9R
+         aiZViJojMluV8mM/g7a0KBcOmAzn6Sk3DRMdaJ3Y00wc97clRIIOQuvCMiawRDxFdGfX
+         l+HQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20251104; t=1781170639; x=1781775439;
+        h=in-reply-to:content-disposition:mime-version:references:message-id
+         :subject:cc:to:date:from:x-gm-gg:x-gm-message-state:from:to:cc
+         :subject:date:message-id:reply-to;
+        bh=pqHKc0YMAqihL2p8VoSHp+WXE0TvBBK0sq69OmFdgVc=;
+        b=aSb6ChflYBFm0Uh7MsNR0nix9pme8BFWNepajZnUouGwTdl6JaqN7nIgiDKMU/WG7x
+         ZZZ2Y265IAnIG/Hx/ySFNEU59G2iXWOzDZpMBJipd7QVCgelUYSCjSP3j5ESNo7DcLXu
+         G8BlO2Dap0JohLraGp8CfhEms9okMG920uRwloX+2bS0p+CK+R3n+Isa5E1q/FQU0uSj
+         ZebrBOcJWJ5UT1hU0s0vfMQX69TLnQMjtxuPe5C+jSeUl3DXp1LGiExD23r2+V8VzeEr
+         K62m7CERFe4DO5FjjRlZsubJhndR8FAtK3w5rJYfEt+4Onj2+iK55oIGG7wsMiZp65wO
+         qykg==
+X-Gm-Message-State: AOJu0Yzx7SGtiAPDgkSVk+/r+Ou8IGC1+ZoB/fi374UmVdtr1fsDHm8y
+	oSyIPiG0/pz5ehy9tHil6RnpjQ/Z1fvrK77hjtqJVX6GrHwnL64iExmiGUdiXA==
+X-Gm-Gg: Acq92OG0j2LmEENQFuTTVF6pCRBBvT/MX5UAFoUrEieMcmkm0knMiCOaFYId/HKUYOB
+	BbAsOCLrQlreQ9K8tk2SZlD0UTs6bxNzyOk7tRb9GvbW5ww0UsXBLhioQtZ9AIO+8ovVq5TmZo/
+	xFUaRb+2anOjNeimjD32HY1iD3/n9qDFtN+3WwJqNm73cDypwCkORp+bEGlbZWAYPpbzG4BKDle
+	cSeJNX3mhTbAHWWKqtAm8SnsFXIJw04sBgHzvlKqFzhX6zB19VpaT49Prr19b+gstZBZ5ZnEVS6
+	PeV9avoJjNi/RREq9G24RmFL9hIIz4eW8bvV91AE3pccTZoozF3Etz4bu82BUviz1YXE8mgXBdI
+	KUjnLNlTJladuhbawfbA8ca2qp3cHVJd3m4XGKT1XRTI7mZYYEqprTigoNeCaGNzuxmmsCbRjPP
+	yUoM/voiLRjCjoWYb3nBaBUurU/8myYxwjzIxY
+X-Received: by 2002:a5d:5e8f:0:b0:460:3234:77d5 with SMTP id ffacd0b85a97d-460677eeb0cmr3137647f8f.43.1781170638608;
+        Thu, 11 Jun 2026 02:37:18 -0700 (PDT)
+Received: from krava ([2a02:8308:a00c:e200:b655:ff13:e355:16a3])
+        by smtp.gmail.com with ESMTPSA id ffacd0b85a97d-4601f2dcae2sm85187040f8f.6.2026.06.11.02.37.18
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Thu, 11 Jun 2026 02:37:18 -0700 (PDT)
+From: Jiri Olsa <olsajiri@gmail.com>
+X-Google-Original-From: Jiri Olsa <jolsa@kernel.org>
+Date: Thu, 11 Jun 2026 11:37:16 +0200
+To: sashiko-reviews@lists.linux.dev
+Cc: bpf@vger.kernel.org
+Subject: Re: [PATCHv2 bpf-next 4/6] selftests/bpf: Add uprobe_multi path_fd
+ test
+Message-ID: <aiqBzKbxqi1nN1lk@krava>
+References: <20260610143627.804790-5-jolsa@kernel.org>
+ <20260610145046.1D3D11F00893@smtp.kernel.org>
 Precedence: bulk
 X-Mailing-List: sashiko-reviews@lists.linux.dev
 List-Id: <sashiko-reviews.lists.linux.dev>
 List-Subscribe: <mailto:sashiko-reviews+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:sashiko-reviews+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH] arm64: defconfig: Enable USB_UAS in arm64 configuration
-To: sashiko-reviews@lists.linux.dev,
- Akash Kumar <akash.kumar@oss.qualcomm.com>
-Cc: robh@kernel.org, conor+dt@kernel.org, devicetree@vger.kernel.org,
- linux-arm-msm <linux-arm-msm@vger.kernel.org>,
- Bjorn Andersson <andersson@kernel.org>,
- Konrad Dybcio <konradybcio@kernel.org>
-References: <20260611090946.2790631-1-akash.kumar@oss.qualcomm.com>
- <20260611091509.6E09F1F00898@smtp.kernel.org>
-From: Krzysztof Kozlowski <krzk@kernel.org>
-Content-Language: en-US
-Autocrypt: addr=krzk@kernel.org; keydata=
- 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
-In-Reply-To: <20260611091509.6E09F1F00898@smtp.kernel.org>
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 7bit
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <20260610145046.1D3D11F00893@smtp.kernel.org>
 
-On 11/06/2026 11:15, sashiko-bot@kernel.org wrote:
+On Wed, Jun 10, 2026 at 02:50:45PM +0000, sashiko-bot@kernel.org wrote:
 > Thank you for your contribution! Sashiko AI review found 1 potential issue(s) to consider:
-> - [Low] Mismatch between Author email and Signed-off-by email.
+> - [Low] The selftest references a nonexistent struct member `path_fd` and an undeclared flag `BPF_F_UPROBE_MULTI_PATH_FD`, which will cause a compilation error.
 > --
 > 
-> commit 8dd2d2a3035d6deca9f623e43d26b74e60f0f6d7
-> Author: Akash Kumar <akash.kumar@oss.qualcomm.com>
+> commit e5937d581d08ece9671b371d37fb6cd0d497b692
+> Author: Jiri Olsa <jolsa@kernel.org>
 > 
-> arm64: defconfig: Enable USB_UAS in arm64 configuration
+> selftests/bpf: Add uprobe_multi path_fd test
 > 
-> This commit enables CONFIG_USB_UAS=y in the default arm64 configuration
-> to provide better out-of-the-box performance for USB storage devices.
+> This commit adds a uprobe_multi link API selftest that opens /proc/self/exe
+> and passes the resulting descriptor through opts.uprobe_multi.path_fd with
+> BPF_F_UPROBE_MULTI_PATH_FD set.
 > 
->> Author: Akash Kumar <akash.kumar@oss.qualcomm.com>
+> > diff --git a/tools/testing/selftests/bpf/prog_tests/uprobe_multi_test.c b/tools/testing/selftests/bpf/prog_tests/uprobe_multi_test.c
+> > index 56cbea280fbd2..ffcf3c92f0474 100644
+> > --- a/tools/testing/selftests/bpf/prog_tests/uprobe_multi_test.c
+> > +++ b/tools/testing/selftests/bpf/prog_tests/uprobe_multi_test.c
+> 
 > [ ... ]
->>     Signed-off-by: Akash Kumar <akakum@qti.qualcomm.com>
+> 
+> > @@ -757,6 +758,65 @@ static void test_link_api(void)
+> >  	__test_link_api(&child);
+> >  }
+> >  
+> > +static void test_link_api_path_fd(void)
+> > +{
+> > +	LIBBPF_OPTS(bpf_link_create_opts, opts);
+> > +	const char *resolve_path = "/proc/self/exe";
+> > +	int prog_fd, link_fd = -1, path_fd = -1;
+> 
+> [ ... ]
+> 
+> > +	path_fd = open(resolve_path, O_RDONLY);
+> > +	if (!ASSERT_GE(path_fd, 0, "path_fd"))
+> > +		goto cleanup;
+> > +
+> > +	opts.uprobe_multi.path_fd = path_fd;
+> > +	opts.uprobe_multi.offsets = offsets;
+> > +	opts.uprobe_multi.cnt = ARRAY_SIZE(syms);
+> > +	opts.uprobe_multi.flags = BPF_F_UPROBE_MULTI_PATH_FD;
 > 
 > [Severity: Low]
-> This isn't a bug, but there is a mismatch between the Author email and the
-> Signed-off-by email. 
+> Does this code reference an API that hasn't been introduced yet?
+> 
+> The struct field path_fd is not a valid member of uprobe_multi within
+> struct bpf_link_create_opts in the libbpf headers, and the
+> BPF_F_UPROBE_MULTI_PATH_FD macro is undeclared.
+> 
+> Because the patch doesn't include the corresponding kernel or libbpf
+> changes, it looks like this will cause a compilation error.
 
-This is a bug... DCO email must match.
+compiles fine, it was introduced in:
+  bpf: Add support to specify uprobe_multi target via file descriptor
 
-Best regards,
-Krzysztof
+jirka
