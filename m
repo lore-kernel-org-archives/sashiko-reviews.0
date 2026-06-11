@@ -1,225 +1,193 @@
-Received: from mail-yx1-f44.google.com (mail-yx1-f44.google.com [74.125.224.44])
+Received: from mail-yx1-f51.google.com (mail-yx1-f51.google.com [74.125.224.51])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 89C8D3B42E3
-	for <sashiko-reviews@lists.linux.dev>; Thu, 11 Jun 2026 07:10:46 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=pass smtp.client-ip=74.125.224.44
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3A7493B5847
+	for <sashiko-reviews@lists.linux.dev>; Thu, 11 Jun 2026 07:14:28 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=pass smtp.client-ip=74.125.224.51
 ARC-Seal:i=2; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1781161848; cv=pass; b=uPs07CsoKcMfAOqrMRXUU4aDf55QFwZk1X6BtboiBErxJcdrMin6/4qfgI7Q91FbyMHL+zKZsFYpPoEYbcOgcQO4796hx5EknKYdG5pL9gMS+Ue8cALvdW15QHilU/QxPvtHwyUiTU4SbV1/FkrmlT83JUAmElvjeIIb+GWOnzA=
+	t=1781162069; cv=pass; b=P939/VOM81v4a0RjjghBExsflFxPXQY0F3tkeyg5ilRnhG4osAC+io+ZmdEmUGkdksD0g+M03OmU5BsPYMPh3zqk9yeOu+SAlAf/HHpQW5U2HEbtIx+aiqmaYqrYySJJu2D8MFFVNOgbCdFq3k/eXR1PvNNPVfVLJ9bdMdf0Qko=
 ARC-Message-Signature:i=2; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1781161848; c=relaxed/simple;
-	bh=SDrj9QLyrkFNYM/bIRWCwbK7r7eFm1ZtCfLFN6N91Mw=;
+	s=arc-20240116; t=1781162069; c=relaxed/simple;
+	bh=LaLu0ei2yC0WN2S4l4Sm1HIA5UTS3G0Rf2gbgD78kYM=;
 	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
-	 To:Cc:Content-Type; b=c402fbh9WxTYnUhexOsIK39JeQ/hhAElYBOvSIY4YIcsZtVI18rQ7NoLlbqB+9aQOca/KcCAQoNKjedhjtwhjVm3VZlAJa2JF6CxO7VW8asKAsQPmZXrFvKO8ZhWdmLBLQcK+1Vi8do6ZDRjrDABpnld6JbOeWc4xZwPBZYqmEY=
-ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=P8g+B0LD; arc=pass smtp.client-ip=74.125.224.44
+	 To:Cc:Content-Type; b=U0OYrN7N4sxR59p3mHU+54RfsxEK39nBlwb/ULnWdIaB5ojesZSgkiODXylJhf8JQCKXISmdwqf2jE37Flrx8oxwaMhrDdPqKSDwA6I39lK/lFDqCjVnMQ6EkaUe7bQ2rR9O8/Cot7ScARUHGQefoiZRTbeDzb8V11p1/eqRaf8=
+ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=qrz4v9O0; arc=pass smtp.client-ip=74.125.224.51
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="P8g+B0LD"
-Received: by mail-yx1-f44.google.com with SMTP id 956f58d0204a3-6606d5900dbso2961059d50.2
-        for <sashiko-reviews@lists.linux.dev>; Thu, 11 Jun 2026 00:10:46 -0700 (PDT)
-ARC-Seal: i=1; a=rsa-sha256; t=1781161845; cv=none;
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="qrz4v9O0"
+Received: by mail-yx1-f51.google.com with SMTP id 956f58d0204a3-66062a414fcso8474856d50.1
+        for <sashiko-reviews@lists.linux.dev>; Thu, 11 Jun 2026 00:14:28 -0700 (PDT)
+ARC-Seal: i=1; a=rsa-sha256; t=1781162067; cv=none;
         d=google.com; s=arc-20240605;
-        b=FBJG6jxPKgn71KAo9p/mic5A9/M/zArH+f7cJrIn7JQcEYvMC27hVPyUlcAHM4IQqH
-         lE3CkHK/hsfwUc3CZOkIvuwHtFJ8RZgvIpVMIM7pveoitHSkbfH5Qox99Q3yuk3JVZhG
-         tmku/BRi1hXopwJhIBSpnN0fC5qlp1l/8yCyRaR8OwLVVUV2hSz8XXEj8gNTJMApaGKa
-         5aaQasyzI0q2/YljhRZ9B7AsyK0gfK7OlfUbgkoiwoR81a/5zbMfVGTMC1z/+4WJvMkW
-         wl2XJCweDXFEbVPimEXei6E6YzNwMxK5ixPgDj0JpOnum11EhUmh6kGm3YHgpOtkyHaL
-         J1aw==
+        b=FjpyrTNv2lhSIgWV8Gh3mOy04B4oaG7R8cKvhLVEgQXe/dSQrjz3yNqJkgEDSAoBxi
+         SSxfcD4rhhehLSyFYDlEkhVfSe3I1ATelwLaNEKcEsoznjBN3E2a5jVn15YMsjwmXsCp
+         iU/o9W/bEj/F3Did8WGHS0VnERNT5xQ9hmLZEORq6g2NvJUW04A22/2w/oD87yQumd8S
+         JjgL3QBpYwGdYkrd6iHx6I+X0d+3Ebt5gBUnYE+d7r2ki2zrm3pr6lzvREgubtX6tRol
+         lbZbnxhs7nNvyUlzVF52S2cckAtffqKCFQPMuo4Fzmun7bU2LNnKFw/SxL+pZmqlbLM+
+         gYFA==
 ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com; s=arc-20240605;
         h=content-transfer-encoding:cc:to:subject:message-id:date:from
          :in-reply-to:references:mime-version:dkim-signature;
-        bh=/lURB3/LzIdITeZ1AKaYes4tHMeiGZ75b15AvCb6ZJ4=;
+        bh=GjwvHah3OGukX9xzSqK99XscYrnIt8dls7UMLocE7GE=;
         fh=uA360uvxR9S0K/Y4Lovo7aIaGlBwzVBnnb2BKWupr/4=;
-        b=d1fOjGabYNHZjDLlBELYxn3jcJoCUwtQvBuNB2lztCKfweXLx+DfkOHnJU21/vdu9u
-         bxVXViWYZPWWVwXIu2vRBK6p2VmS/cAgm5t2hFBU+Cs73P+CDe9pHVxlEn6DpmxRM4lK
-         R/6q2Pkf+nfHZliblKuz6llY/2VJMQ5fu2BxRypHw2mxXr54NYOZHwJJh7gtfkA9/UG1
-         CDs2zTLAp42n2bAIA2fbv02/JtzJR0gLaBCpeLzxE6HHq+4bGwycyEV0F0PEI2M4hk1A
-         G2DaGz+tJxS4THRqFiIs1B09X6OhjwQRTxiSBAclgyfwQlpTWx2l7PcqSC4JYAfh6uA/
-         e8TQ==;
+        b=lhKb3cjrS9gnV1W/BA31FnQctYb0DqM9JniGJO5Rp2x843oqsmO6F5C51afO1bueXO
+         gnYqBv4BJn6YyEQ4C5Z4gSqUUQxs0TAgkgOvn3zRh2yUXjK7Ba52tGVt1vd3KKptGT+s
+         XY18aP/dO9wd0inE7I5waJjAarZ8emlcq+MTjEuBXNqQLAIKSpo28M6Wjr050F+XPyu4
+         sScBISFGxHLAexG3+BTGuvtotcOF/MuWP5Yq8j6lCH12f9OgsmMvQ6SGI11xCWhEukHg
+         lcDRJ5hc8l62IAmLJdlFG6tRUJhoIiMF9k24NOHWx26jaPKymEb5bJwlpfGyVF7MuJvd
+         l57A==;
         darn=lists.linux.dev
 ARC-Authentication-Results: i=1; mx.google.com; arc=none
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20251104; t=1781161845; x=1781766645; darn=lists.linux.dev;
+        d=gmail.com; s=20251104; t=1781162067; x=1781766867; darn=lists.linux.dev;
         h=content-transfer-encoding:cc:to:subject:message-id:date:from
          :in-reply-to:references:mime-version:from:to:cc:subject:date
          :message-id:reply-to;
-        bh=/lURB3/LzIdITeZ1AKaYes4tHMeiGZ75b15AvCb6ZJ4=;
-        b=P8g+B0LDWeEB2iXx43DYD413kPq+e6Btv/HFsWkkaM1DfPzbSdSJXhOWgW8bIUf8Mg
-         5s2yDlLfmBXlZMaOOm2DFt2Mx7jk0Rk2GGX4fQ+C5D+QOo67QdXGECI7KuTFGtvy5z+m
-         Vt8LenkyT45+YfzDbIkkCYu+RQvaAaIRVX/QnivowUzoy9C3ilG4DjW51yAZVpr3G/Qs
-         6Z8Eob+sBDIzNmhoRIfkxBFdq1jDbWXRhPm7DVqd8HF8+c2kI6djVaBMecs04RdRhiNF
-         skHOTBx07AaIyGlP9Kv416vzSp5nafaiv6NWkqaO18O7V8E8jS644jTQowZCi0EZR/5y
-         Ah5A==
+        bh=GjwvHah3OGukX9xzSqK99XscYrnIt8dls7UMLocE7GE=;
+        b=qrz4v9O0mLzM/MQjlX++OoqG2nmG4HjPPn3AOBXznWSdiK17x/lTqiAQKxf/t4TNwn
+         goQDD+cyFrz5j7216+zVXFCg/a2z0kAGzNF6AKeSH9vQpgpHfFZIXZARcJMlbxKlXLJ3
+         1CVDlvJqf5NHg0G8ljsNjodV9Iw14OLg91LX+YkFaGkVMQxYRewh8MAdPM8mhHB27x/s
+         oBUT4dGCkjpEhU+NGbxXPziefZqxbKu0HLYdopLL7lkgebP8gddjIqNKhoFVkxMHR+mp
+         Mq5fU+EgvDAGS4w/l+aTO7kcqYegaM1UetxKyd2MLxnHlFbMZWM2sXBh8sdLuFFjVxI/
+         wHfg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20251104; t=1781161845; x=1781766645;
+        d=1e100.net; s=20251104; t=1781162067; x=1781766867;
         h=content-transfer-encoding:cc:to:subject:message-id:date:from
          :in-reply-to:references:mime-version:x-gm-gg:x-gm-message-state:from
          :to:cc:subject:date:message-id:reply-to;
-        bh=/lURB3/LzIdITeZ1AKaYes4tHMeiGZ75b15AvCb6ZJ4=;
-        b=L1hZJ4SGlwpvfHZl7HtbJDwZe9z0rzESIBlx/Q5NZ8gP/2lmXs0NIMMYPjpgmrevzb
-         IC6Xbf+cRS/jg43PuY85VRbMJOgZYk0khiLGOlmp6rRdHwK4Kz6G0gTiLNQUVl7J5oZ8
-         XSYaj2Fv803Dd/2jFnfl8jhN5lyKl8av3FuLPO0esX63aQQ8MgDAyq6Ohb8S3jpv1gQF
-         bkTLnrQHJBsjVO2l7qaIkPX4yYNnMvxxpAFCnNzmQS8Qy6QyFRf+bbIB5ecXKfvsJdHH
-         c/JzdvEDzemRV+lpk2dXRxwKhRel6vGuVMtt0QhIzA7EAnncv43EZwKzIrUnr5COAxs9
-         gUyQ==
-X-Gm-Message-State: AOJu0YzsGsWUzPGr7ZAD1G5AX6OkesaTZktTPG1j+Fdr2Dqe9hBR7Osi
-	22ezYu6CVSb/L6cq8CoIqW+oAc4Bzxo4nyZPqTE3DBOVVcP2I/CISrZiWrr784Z27PozoAquW2t
-	9779GYlJYsC5hwNnbab7h5n2aqG4LphtMgM55lmlN/w==
-X-Gm-Gg: Acq92OGRHy7fQmKocYTabX+tFjdwFubIpWJKlvrgw8+/UyRXtiZVNTxmSjSs+invDGS
-	nMZYsdsaMeLCQbIXufEX7UMpfbOWpjSpBR1eQET4btoMKZ53GOF2Qz8r4WwPiGyGi/W+BXGoOda
-	qR6Xzv3nxXb6Emd6N4nwXww8zA3ulhynJ/5Nmaw6lMCGcKJnpyKWDXt7Xga7h8PL4bPxyWBs+zy
-	ejzbP4Dd07A2KNVlJiwuQeOuH+/HyQSTVMUvATulf1UgW1xcsrRYft/P23gsvMwNYl/uqfeYV9J
-	T3EIeCgs5XB4IBVkejV+gVTCel33a22ZaZnznN9Dwsv93ptDJw1YaiA6Xx5t9gQpE6YcDw==
-X-Received: by 2002:a05:690e:bc5:b0:65c:7129:5c66 with SMTP id
- 956f58d0204a3-6626d1487c4mr392669d50.41.1781161845515; Thu, 11 Jun 2026
- 00:10:45 -0700 (PDT)
+        bh=GjwvHah3OGukX9xzSqK99XscYrnIt8dls7UMLocE7GE=;
+        b=SG0HJJ7QYBSgSP1r3LbAHYme3Hl4qNJzkkGMZxYyCjkhRfyjkOa4tp9EbQZWYUGyrb
+         gu0YFq/bl9MQKADze+XRidjxuqjmpNQ+gAc2sELWOh/CKGvZwht4KHzERDN+GScg4gL4
+         cS/dSjC+SY/Gn3NdUaprINyt5y5ZMcKjrIiOuzUV6bxGpiywltQQfX2McW3KU4VPlHDS
+         +PCqO/2sta94bVTRpu5Bfdpagk06JFE3AbtmMaSMivgjn4vBkUm72jtueLaZYxsbb5r6
+         zO/6XAmBOfwtdZ2JUjo6tHBFpfDuDs6F8QO0EWLwiFzDg6U6TF+sGgECHaS54xUmLzfo
+         pX1g==
+X-Gm-Message-State: AOJu0Yzy9H18+b0cTiUqihr1zHiBpfpIwmAjCeLSPs25K511vxnMeFXr
+	NV+W/S0RPKihGG7XrrkBKtYTUnn2RTG51sUnTemuFXj+ro4uxYaHTGq3bNHWH9dk4+u2IIwXlGf
+	9Zlr4kjNfFqvxX18NWdEug8mK1MiTcLiSjv4FEj5W1w==
+X-Gm-Gg: Acq92OGhJ1m/aSwmkk8t7yNcixSZzf6/2jWZcBZxWXB3UXnqBvfXR5ai+AEzvuKmEZr
+	9QnMHz3hWvQgvwfc4bI4Ji9zr5/cid8hB/UMbXyCUmo9IYQcJ8UMwrVobRYWRhCCqecf81wq3w3
+	4lhxrdcSkKrpSGqx5CHH6Tkt+aKwmQPT5sPDtVqLYtDP+hoUucY1/GJA9WlY1st+Ld2/pKWEk4L
+	lALCbBso4eI3f2XkX5L14E7gKZb39mRLepGHa0KzOmj2AC8zlEprmypnx4XhIY924jncZoKjISz
+	B0eE0Dc0XK7Lu3rZWdmSaY73Ub2PBno9l1Gvxb3dBeAMi0xA0c8YmLEzeih4v7F+YywcYvTGK+x
+	xjfUj
+X-Received: by 2002:a05:690e:480c:b0:65e:20b1:e963 with SMTP id
+ 956f58d0204a3-6626986c14amr839447d50.34.1781162067120; Thu, 11 Jun 2026
+ 00:14:27 -0700 (PDT)
 Precedence: bulk
 X-Mailing-List: sashiko-reviews@lists.linux.dev
 List-Id: <sashiko-reviews.lists.linux.dev>
 List-Subscribe: <mailto:sashiko-reviews+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:sashiko-reviews+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-References: <20260611043317.512843-2-sun.jian.kdev@gmail.com> <20260611045842.7A5B71F00898@smtp.kernel.org>
-In-Reply-To: <20260611045842.7A5B71F00898@smtp.kernel.org>
+References: <20260611043317.512843-3-sun.jian.kdev@gmail.com> <20260611044722.174351F00893@smtp.kernel.org>
+In-Reply-To: <20260611044722.174351F00893@smtp.kernel.org>
 From: sun jian <sun.jian.kdev@gmail.com>
-Date: Thu, 11 Jun 2026 15:10:34 +0800
-X-Gm-Features: AVVi8CdiSOLVCehH25tG7w7TBAKHBVE1AWI-I4Fj09Gt1yRAE0iIiUg_XBa2Gaw
-Message-ID: <CABFUUZFQXxYVdi_QqhGG8WTTf=F1BqOmroYj50mv0w70Acf5Bw@mail.gmail.com>
-Subject: Re: [PATCH bpf v3 1/2] bpf: Run generic devmap egress prog on private skb
+Date: Thu, 11 Jun 2026 15:14:16 +0800
+X-Gm-Features: AVVi8CdTMjhN_TbxNVF-V5AimCd7-pfZXPvv7Jc7KtCcCcWlkevfdchOdbxr8so
+Message-ID: <CABFUUZFGa205D7hAQiOK6h=Y6iLaiDvBU=8TjQObtcqhf0=Lig@mail.gmail.com>
+Subject: Re: [PATCH bpf v3 2/2] selftests/bpf: Cover generic devmap egress
+ last-dst rewrite
 To: sashiko-reviews@lists.linux.dev
 Cc: bpf@vger.kernel.org
 Content-Type: text/plain; charset="UTF-8"
 Content-Transfer-Encoding: quoted-printable
 
-On Thu, Jun 11, 2026 at 12:58=E2=80=AFPM <sashiko-bot@kernel.org> wrote:
+On Thu, Jun 11, 2026 at 12:47=E2=80=AFPM <sashiko-bot@kernel.org> wrote:
 >
-> Thank you for your contribution! Sashiko AI review found 2 potential issu=
+> Thank you for your contribution! Sashiko AI review found 1 potential issu=
 e(s) to consider:
-> - [Critical] A maliciously crafted or buggy BPF devmap egress program can=
- cause a double free of an skb by returning an action code that implicitly =
-casts to a negative integer.
-> - [High] skb_copy() zeroes out skb->mac_len, causing generic XDP to opera=
-te on the wrong skb->data offset and potentially read garbage from uninitia=
-lized headroom.
+>
+> Pre-existing issues:
+> - [High] Uninitialized `net_config` is passed to `cleanup_network()` on e=
+arly error paths, causing arbitrary shell commands to be executed via `syst=
+em()`.
 > --
 >
-> commit b95ebb55a25ce44657b1e9ee2add3b1177f06853
+> commit 60bbc3bd1e74368d2d682d8956f86b733750dfd9
 > Author: Sun Jian <sun.jian.kdev@gmail.com>
+> selftests/bpf: Cover generic devmap egress last-dst rewrite
 >
-> bpf: Run generic devmap egress prog on private skb
+> This patch strengthens xdp_veth_egress to check that destinations observe
+> the correct MAC address for their own egress ifindex. It also adds a new
+> generic XDP last-destination test to cover cases where earlier destinatio=
+ns
+> do not have a devmap egress program.
 >
-> This commit introduces a fix to prevent multiple destinations from sharin=
-g
-> the same packet data in generic devmap egress programs by copying cloned
-> skbs before running the program.
->
-> > diff --git a/kernel/bpf/devmap.c b/kernel/bpf/devmap.c
-> > index cc0a43ebab6b9..14506834345aa 100644
-> > --- a/kernel/bpf/devmap.c
-> > +++ b/kernel/bpf/devmap.c
-> > @@ -512,8 +512,10 @@ static inline int __xdp_enqueue(struct net_device =
-*dev, struct xdp_frame *xdpf,
-> >       return 0;
-> >  }
-> >
-> > -static u32 dev_map_bpf_prog_run_skb(struct sk_buff *skb, struct bpf_dt=
-ab_netdev *dst)
-> > +static int dev_map_bpf_prog_run_skb(struct sk_buff **pskb,
-> > +                                 struct bpf_dtab_netdev *dst)
->
-> [Severity: Critical]
-> The return type here was changed from u32 to int. Because xdp action code=
-s
-> returned by bpf programs are unconstrained 32-bit unsigned integers, what
-> happens if a program returns a value with the highest bit set?
->
-> Could this arbitrary unsigned action code be implicitly cast to a negativ=
-e
-> integer, causing callers to mistakenly interpret it as a kernel error?
->
-> >  {
-> > +     struct sk_buff *skb =3D *pskb;
-> >       struct xdp_txq_info txq =3D { .dev =3D dst->dev };
-> >       struct xdp_buff xdp;
->
+> > diff --git a/tools/testing/selftests/bpf/prog_tests/test_xdp_veth.c b/t=
+ools/testing/selftests/bpf/prog_tests/test_xdp_veth.c
+> > index 3e98a16659362..681415cacb75c 100644
+> > --- a/tools/testing/selftests/bpf/prog_tests/test_xdp_veth.c
+> > +++ b/tools/testing/selftests/bpf/prog_tests/test_xdp_veth.c
 > [ ... ]
->
-> > @@ -521,6 +523,18 @@ static u32 dev_map_bpf_prog_run_skb(struct sk_buff=
- *skb, struct bpf_dtab_netdev
-> >       if (!dst->xdp_prog)
-> >               return XDP_PASS;
-> >
-> > +     if (skb_cloned(skb)) {
-> > +             struct sk_buff *nskb;
+> > +static void xdp_veth_egress_last_dst(u32 flags)
+> > +{
+> [ ... ]
+> > +     struct net_configuration net_config;
+> > +     int mac_map, egress_map, res_map;
+> > +     struct nstoken *nstoken =3D NULL;
+> > +     struct xdp_dummy *xdp_dummy;
+> > +     __be64 last_mac =3D 0;
+> > +     bool found =3D false;
+> > +     int err;
+> > +     int i;
 > > +
-> > +             nskb =3D skb_copy(skb, GFP_ATOMIC);
+> > +     xdp_dummy =3D xdp_dummy__open_and_load();
+> > +     if (!ASSERT_OK_PTR(xdp_dummy, "xdp_dummy__open_and_load"))
+> > +             return;
+> > +
+> > +     xdp_redirect_multi_kern =3D xdp_redirect_multi_kern__open_and_loa=
+d();
+> > +     if (!ASSERT_OK_PTR(xdp_redirect_multi_kern, "xdp_redirect_multi_k=
+ern__open_and_load"))
+> > +             goto destroy_xdp_dummy;
+> > +
+> > +     xdp_redirect_map =3D xdp_redirect_map__open_and_load();
+> > +     if (!ASSERT_OK_PTR(xdp_redirect_map, "xdp_redirect_map__open_and_=
+load"))
+> > +             goto destroy_xdp_redirect_multi_kern;
+> > +
+> > +     if (!ASSERT_OK(create_network(&net_config), "create network"))
+> > +             goto destroy_xdp_redirect_map;
+> [ ... ]
+> > +destroy_xdp_redirect_map:
+> > +     close_netns(nstoken);
+> > +     xdp_redirect_map__destroy(xdp_redirect_map);
+> > +destroy_xdp_redirect_multi_kern:
+> > +     xdp_redirect_multi_kern__destroy(xdp_redirect_multi_kern);
+> > +destroy_xdp_dummy:
+> > +     xdp_dummy__destroy(xdp_dummy);
+> > +
+> > +     cleanup_network(&net_config);
 >
 > [Severity: High]
-> Does skb_copy preserve the mac_len field?
+> This isn't a bug introduced by this patch, but does this early error
+> handling path pass uninitialized stack memory to cleanup_network()?
 >
-> Because skb_copy allocates a new skb and zeroes out the structure up to t=
-he
-> headers, mac_len is left as 0.
+> If xdp_redirect_multi_kern__open_and_load() or
+> xdp_redirect_map__open_and_load() fail before create_network() is called,
+> the goto labels eventually reach cleanup_network(&net_config).
 >
-> > +             if (!nskb)
-> > +                     return -ENOMEM;
-> > +
-> > +             consume_skb(skb);
-> > +             skb =3D nskb;
-> > +             *pskb =3D nskb;
-> > +     }
-> > +
-> >       __skb_pull(skb, skb->mac_len);
+> Since cleanup_network() passes net_config fields like ns0_name to SYS_NOF=
+AIL
+> which executes system commands, could passing uninitialized stack garbage
+> here lead to unpredictable shell command execution as root?
 >
-> [Severity: High]
-> Following up on the skb_copy question above, if mac_len is 0, will this
-> pull 0 bytes instead of the expected header length?
+> Would it be safer to zero-initialize net_config with `=3D {}` when declar=
+ing it?
 >
-> If so, the data pointer would remain at the mac header instead of the
-> network header. If an egress program later modifies the ethernet header
-> and triggers the mac update path, could this push the data pointer
-> backwards into uninitialized headroom, leading to protocol corruption
-> or leaked kernel memory?
->
-> [ ... ]
->
-> > @@ -710,7 +724,10 @@ int dev_map_generic_redirect(struct bpf_dtab_netde=
-v *dst, struct sk_buff *skb,
-> >        * return 0 even if packet is dropped. Helper below takes care of
-> >        * freeing skb.
-> >        */
-> > -     if (dev_map_bpf_prog_run_skb(skb, dst) !=3D XDP_PASS)
-> > +     err =3D dev_map_bpf_prog_run_skb(&skb, dst);
-> > +     if (err < 0)
-> > +             return err;
->
-> [Severity: Critical]
-> If dev_map_bpf_prog_run_skb returns a negative integer due to an implicit=
-ly
-> cast unsigned action code as mentioned above, will it hit this error path=
-?
->
-> If dev_map_bpf_prog_run_skb already dropped the packet via kfree_skb, wil=
-l
-> propagating this negative value cause higher level callers to execute the=
-ir
-> own error paths and free the identical skb a second time?
+> > +}
 >
 > --
 > Sashiko AI review =C2=B7 https://sashiko.dev/#/patchset/20260611043317.51=
-2843-1-sun.jian.kdev@gmail.com?part=3D1
+2843-1-sun.jian.kdev@gmail.com?part=3D2
 
 Thanks for the review.
 
-I checked the skb_copy() path and this concern is valid. skb_copy()
-calls skb_copy_header(), which does not copy mac_len. I will preserve
-mac_len explicitly after skb_copy() in v4.
-
-I will also avoid mixing errno and XDP action values in the helper return
-value. The helper will return only errno and pass the XDP action back
-through an output argument, so invalid action values cannot be interpreted
-as negative errors by the caller.
+I will zero-initialize net_config in the new test in v4, so the cleanup
+path is safe even if an earlier setup step fails before create_network()
+initializes it.
 
 Thanks,
-sun jian
+Jian
