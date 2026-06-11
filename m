@@ -1,135 +1,163 @@
-Received: from mgamail.intel.com (mgamail.intel.com [192.198.163.14])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
-	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 903FD34D4F9
-	for <sashiko-reviews@lists.linux.dev>; Thu, 11 Jun 2026 07:58:13 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=192.198.163.14
+Received: from mail.loongson.cn (mail.loongson.cn [114.242.206.163])
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 01F4921CC58
+	for <sashiko-reviews@lists.linux.dev>; Thu, 11 Jun 2026 08:37:44 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=114.242.206.163
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1781164695; cv=none; b=gC+l6Rrk5OmhhI2htoFZH8kKsnRvCNVgIa8m57BQC+Kw3CqZWdeRJTa8v4BrrRpXJY0k16Omjzm0/Jc1gEQVAwv86m+ibhGytTfPye+KHyHpLjttsxT+WXL9UJ4yBsmu+TKul4XPCD7yOVQhZaGVr6hFYjNnAJcgpDU1EeJxBH0=
+	t=1781167068; cv=none; b=SCAwOzhc5on0OXa/fe6I9ZoiP83ia4tzyQtK6tL6CDAnS7YHgWlTjmbQd7DcI5n2aPfBn4y6VDitjN/RYB+AUQIbZ0ScaLgraEcMGkc+HfkJ/zIINXZecxSgD6MEkMiicd990ddMyGytaDDLr6ceOEJ8GCVJ1uqMLG4H0Drc5YA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1781164695; c=relaxed/simple;
-	bh=TFvoUxxZrergDNxRSBivXTrpWKdYR7ci7bGVdqx0nKs=;
-	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=lbZMfq2NRvQ0hadE6aB90sg9Ze1QkTotHpneqIkTf/a50x6gaXcrtq9V8O5KGlz2Jwmn6JuHvHES/VFYf/8Ec2eVpXEc43xFjnauoCflCP3YI/8VhIjg50CvxK110ZkBjvdQHGkZw3wB5H7hPzgefRB/lo93LNN+2vmuqWS0ys0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linux.intel.com; spf=pass smtp.mailfrom=linux.intel.com; dkim=pass (2048-bit key) header.d=intel.com header.i=@intel.com header.b=b1xwuPh0; arc=none smtp.client-ip=192.198.163.14
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linux.intel.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linux.intel.com
-Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=intel.com header.i=@intel.com header.b="b1xwuPh0"
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
-  d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
-  t=1781164694; x=1812700694;
-  h=message-id:date:mime-version:subject:to:cc:references:
-   from:in-reply-to:content-transfer-encoding;
-  bh=TFvoUxxZrergDNxRSBivXTrpWKdYR7ci7bGVdqx0nKs=;
-  b=b1xwuPh0Q95pWMriQO58FxktiG+kk1Ovh65k8xc7Eyz7KHp+9wUAjjIH
-   AU99zFNaG/zXtD6vWFRvHCoyiYcXH7SrlZyG5j/ubm0ZEMV656u5Ele64
-   M14grCzEzd7KU6WjIoZHFGdPpWzuDfRFAW4uAbPMTYuilamR3WBFnsG/O
-   TCJDUoFuJBFI21Rlm4EKSTXogSbS+6QdOwgNxp8J3WZEvW4LOM44hRORr
-   wEG0/I9CpUJ1iIR+BtmkvlJj/KbtRZC33WOGiyjWRCWVL8jiRYAdEcxJg
-   bUxZ4xIHlhBL4d+XxSgSrTiXnbgZ2yIpuk3fw7UqgRjrzW+BmhD31/hFW
-   g==;
-X-CSE-ConnectionGUID: uif8wVL1RX29swQQrDQ5rQ==
-X-CSE-MsgGUID: 0SLyGvtZQiy9qlPeFjxKJQ==
-X-IronPort-AV: E=McAfee;i="6800,10657,11813"; a="82016488"
-X-IronPort-AV: E=Sophos;i="6.24,198,1774335600"; 
-   d="scan'208";a="82016488"
-Received: from fmviesa002.fm.intel.com ([10.60.135.142])
-  by fmvoesa108.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 11 Jun 2026 00:58:13 -0700
-X-CSE-ConnectionGUID: Q3zC1mlzQeqi5UxJ6S5MCA==
-X-CSE-MsgGUID: vPbwuaiNSL2HAIx5/E3enA==
-X-ExtLoop1: 1
-X-IronPort-AV: E=Sophos;i="6.24,198,1774335600"; 
-   d="scan'208";a="270081244"
-Received: from jkollber-mobl1.ger.corp.intel.com (HELO [10.246.16.106]) ([10.246.16.106])
-  by fmviesa002-auth.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 11 Jun 2026 00:58:12 -0700
-Message-ID: <7d335fd9-8911-48fb-9765-95aa637b5c67@linux.intel.com>
-Date: Thu, 11 Jun 2026 09:58:09 +0200
+	s=arc-20240116; t=1781167068; c=relaxed/simple;
+	bh=SlXS4po6XQg1j575v8xfgxW21ndMClG45vNxGbuajfs=;
+	h=Subject:To:Cc:References:From:Message-ID:Date:MIME-Version:
+	 In-Reply-To:Content-Type; b=HzhyVt6ibjI2tvn7xlF0AKnyDRJGjKKrTTnkT0kOuYLj3fAcRahJ2mn42fK8G4kz4KgxY8Klm5+XJPMnD2InzPT1iJPFd7kGMDD0MOSEjhrELtSUxcQZh1mc4v0eM1XKlQeXI0TzgqOrl/KpNgS4n7guZjCvQKoTxQoUds8U7KU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=loongson.cn; spf=pass smtp.mailfrom=loongson.cn; arc=none smtp.client-ip=114.242.206.163
+Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=loongson.cn
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=loongson.cn
+Received: from loongson.cn (unknown [113.200.148.30])
+	by gateway (Coremail) with SMTP id _____8DxRenQcypqIQMTAA--.44322S3;
+	Thu, 11 Jun 2026 16:37:36 +0800 (CST)
+Received: from [10.130.40.83] (unknown [113.200.148.30])
+	by front1 (Coremail) with SMTP id qMiowJCx2+DHcypqPbqiAA--.47474S3;
+	Thu, 11 Jun 2026 16:37:27 +0800 (CST)
+Subject: Re: [PATCH bpf-next v1] bpf: Fix unaligned interpreter panic on JIT
+ fallback path
+To: sashiko-reviews@lists.linux.dev
+Cc: bpf@vger.kernel.org
+References: <20260611070009.26257-1-yangtiezhu@loongson.cn>
+ <20260611071828.8C8DF1F00893@smtp.kernel.org>
+From: Tiezhu Yang <yangtiezhu@loongson.cn>
+Message-ID: <fed2e4ef-f96b-6e6e-0f89-6c7fc04a5d37@loongson.cn>
+Date: Thu, 11 Jun 2026 16:37:26 +0800
+User-Agent: Mozilla/5.0 (X11; Linux loongarch64; rv:68.0) Gecko/20100101
+ Thunderbird/68.7.0
 Precedence: bulk
 X-Mailing-List: sashiko-reviews@lists.linux.dev
 List-Id: <sashiko-reviews.lists.linux.dev>
 List-Subscribe: <mailto:sashiko-reviews+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:sashiko-reviews+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH] accel/ivpu: use kmem_cache for IPC rx_msg allocations
-To: sashiko-reviews@lists.linux.dev
-Cc: dri-devel@lists.freedesktop.org
-References: <20260611055214.948748-1-karol.wachowski@linux.intel.com>
- <20260611060448.197F71F00893@smtp.kernel.org>
+In-Reply-To: <20260611071828.8C8DF1F00893@smtp.kernel.org>
+Content-Type: text/plain; charset=utf-8; format=flowed
 Content-Language: en-US
-From: "Wachowski, Karol" <karol.wachowski@linux.intel.com>
-In-Reply-To: <20260611060448.197F71F00893@smtp.kernel.org>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
+Content-Transfer-Encoding: 8bit
+X-CM-TRANSID:qMiowJCx2+DHcypqPbqiAA--.47474S3
+X-CM-SenderInfo: p1dqw3xlh2x3gn0dqz5rrqw2lrqou0/
+X-Coremail-Antispam: 1Uk129KBj93XoWxGw18try8Ww48KFW7XFWxZrc_yoWrJFW8pF
+	95Gr4jkw4DXFZ7u39rJw1vq3W5Xw48Ga48Gas5KryFkanIvrn3CF15Kw48WanxGr48ur1a
+	vw42yF17C3Z5GFXCm3ZEXasCq-sJn29KB7ZKAUJUUUUU529EdanIXcx71UUUUU7KY7ZEXa
+	sCq-sGcSsGvfJ3Ic02F40EFcxC0VAKzVAqx4xG6I80ebIjqfuFe4nvWSU5nxnvy29KBjDU
+	0xBIdaVrnRJUUU9Sb4IE77IF4wAFF20E14v26r1j6r4UM7CY07I20VC2zVCF04k26cxKx2
+	IYs7xG6rWj6s0DM7CIcVAFz4kK6r1j6r18M28lY4IEw2IIxxk0rwA2F7IY1VAKz4vEj48v
+	e4kI8wA2z4x0Y4vE2Ix0cI8IcVAFwI0_JFI_Gr1l84ACjcxK6xIIjxv20xvEc7CjxVAFwI
+	0_Jr0_Gr1l84ACjcxK6I8E87Iv67AKxVW8Jr0_Cr1UM28EF7xvwVC2z280aVCY1x0267AK
+	xVW8Jr0_Cr1UM2AIxVAIcxkEcVAq07x20xvEncxIr21l57IF6xkI12xvs2x26I8E6xACxx
+	1l5I8CrVACY4xI64kE6c02F40Ex7xfMcIj6xIIjxv20xvE14v26r1j6r18McIj6I8E87Iv
+	67AKxVW8JVWxJwAm72CE4IkC6x0Yz7v_Jr0_Gr1lF7xvr2IY64vIr41lc7I2V7IY0VAS07
+	AlzVAYIcxG8wCF04k20xvY0x0EwIxGrwCFx2IqxVCFs4IE7xkEbVWUJVW8JwCFI7km07C2
+	67AKxVWUXVWUAwC20s026c02F40E14v26r1j6r18MI8I3I0E7480Y4vE14v26r106r1rMI
+	8E67AF67kF1VAFwI0_Jrv_JF1lIxkGc2Ij64vIr41lIxAIcVC0I7IYx2IY67AKxVWUJVWU
+	CwCI42IY6xIIjxv20xvEc7CjxVAFwI0_Jr0_Gr1lIxAIcVCF04k26cxKx2IYs7xG6r1j6r
+	1xMIIF0xvEx4A2jsIE14v26r4j6F4UMIIF0xvEx4A2jsIEc7CjxVAFwI0_Gr0_Gr1UYxBI
+	daVFxhVjvjDU0xZFpf9x07j8sqAUUUUU=
 
-On 11-Jun-26 8:04, sashiko-bot@kernel.org wrote:
+On 2026/6/11 下午3:18, sashiko-bot@kernel.org wrote:
 > Thank you for your contribution! Sashiko AI review found 1 potential issue(s) to consider:
-> - [Medium] Duplicate kmem_cache name on multi-device systems
+> - [High] Type confusion between BPF helper enum IDs and address offsets in `bpf_fixup_fallback_inline_helpers()` leads to potential silent instruction corruption.
 > --
 > 
-> commit 41c16409be6704d2ef5ab21270390fee65dcf7aa
-> Author: Karol Wachowski <karol.wachowski@linux.intel.com>
+> commit e06144ee47e54fe6934472bff4024530f26b7737
+> Author: Tiezhu Yang <yangtiezhu@loongson.cn>
 > 
-> accel/ivpu: use kmem_cache for IPC rx_msg allocations
+> bpf: Fix unaligned interpreter panic on JIT fallback path
 > 
-> This commit introduces a dedicated kmem_cache for allocating IPC rx_msg
-> objects to reduce allocator overhead in IRQ handlers.
+> This commit introduces a fallback fixup phase to rewrite the call offsets
+> for inlined helpers when JIT compilation fails or is skipped. This prevents
+> unaligned memory access panics when falling back to the interpreter.
 > 
->> diff --git a/drivers/accel/ivpu/ivpu_ipc.c b/drivers/accel/ivpu/ivpu_ipc.c
->> --- a/drivers/accel/ivpu/ivpu_ipc.c
->> +++ b/drivers/accel/ivpu/ivpu_ipc.c
-> 
+>> diff --git a/kernel/bpf/core.c b/kernel/bpf/core.c
+>> index 649cce41e13f3..de0c46b495b40 100644
+>> --- a/kernel/bpf/core.c
+>> +++ b/kernel/bpf/core.c
 > [ ... ]
-> 
->> @@ -490,10 +490,18 @@ int ivpu_ipc_init(struct ivpu_device *vdev)
->>   	struct ivpu_ipc_info *ipc = vdev->ipc;
->>   	int ret;
+>> @@ -2608,6 +2608,30 @@ static struct bpf_prog *bpf_prog_jit_compile(struct bpf_verifier_env *env, struc
+>>   	return prog;
+>>   }
 >>   
->> +	ipc->rx_msg_cache = kmem_cache_create("ivpu_ipc_rx_msg", sizeof(struct ivpu_ipc_rx_msg), 0,
->> +					      SLAB_HWCACHE_ALIGN, NULL);
-> 
-> [Severity: Medium]
-> Will this cause a name collision if there are multiple ivpu devices in the
-> same system?
-
-In practice, no:
-    1. There is a single NPU instance per system, so ivpu_ipc_init() 
-runs once and the cache is created once
-
-    2. Even with multiple instances it's safe, because the cache is 
-mergeable (only SLAB_HWCACHE_ALIGN flag). On the merge path the name is 
-registered only as a sysfs alias via sysfs_slab_alias(). So the 
-CONFIG_DEBUG_VM duplicate-name check (which scans slab_caches by name) 
-shouldn't fire.
-
-   The WARN and sysfs collision require slab_nomerge and more than one 
-device which doesn't occur for this driver.
-
-> 
-> Since this is initialized per-device in ivpu_ipc_init(), calling
-> kmem_cache_create() multiple times with the same hardcoded string
-> "ivpu_ipc_rx_msg" can trigger a kernel WARN in kmem_cache_sanity_check()
-> when CONFIG_DEBUG_VM is enabled.
-> 
-> Furthermore, if SLUB merging is disabled via boot parameters or config,
-> the duplicate name causes a sysfs kobject collision, leading to a sysfs
-> warning and a failure to register the cache in sysfs.
-> 
-> Should this cache name be made unique per device using dev_name(), or
-> should the cache be a global singleton?
-> 
->> +	if (!ipc->rx_msg_cache) {
->> +		ivpu_err(vdev, "Failed to create rx_msg_cache\n");
->> +		return -ENOMEM;
->> +	}
+>> +/*
+>> + * Rewrite the helper call offset for inlined helpers when fallback to
+>> + * the interpreter happens due to JIT compilation failure or JIT disabled.
+>> + */
+>> +static void bpf_fixup_fallback_inline_helpers(struct bpf_verifier_env *env, struct bpf_prog *fp)
+>> +{
+>> +	struct bpf_insn *insn = fp->insnsi;
+>> +	const struct bpf_func_proto *fn;
+>> +	int i;
 >> +
->>   	ipc->mem_tx = ivpu_bo_create_global(vdev, SZ_16K, DRM_IVPU_BO_WC | DRM_IVPU_BO_MAPPABLE);
->>   	if (!ipc->mem_tx) {
->>   		ivpu_err(vdev, "Failed to allocate mem_tx\n");
->> -		return -ENOMEM;
->> +		ret = -ENOMEM;
->> +		goto err_destroy_cache;
->>   	}
+>> +	if (!env || !env->ops->get_func_proto)
+>> +		return;
+>> +
+>> +	for (i = 0; i < fp->len; i++, insn++) {
+>> +		if (insn->code == (BPF_JMP | BPF_CALL) && insn->src_reg == 0) {
+>> +			if (bpf_jit_inlines_helper_call(insn->imm)) {
 > 
+> [Severity: High]
+> Could this cause a type confusion where a patched address offset is
+> misinterpreted as a helper enum ID?
+> 
+> Since bpf_do_misc_fixups() already patches insn->imm with a 32-bit address
+> offset (fn->func - __bpf_call_base) for helpers that are NOT expected to be
+> inlined by the JIT, insn->imm will already be an offset when reaching this
+> loop for non-inlined helpers.
+> 
+> If the distance between a non-inlined helper and __bpf_call_base happens to
+> match the enum ID of an inlined helper (for example,
+> BPF_FUNC_get_smp_processor_id = 8), wouldn't bpf_jit_inlines_helper_call()
+> falsely return true?
+> 
+>> +				fn = env->ops->get_func_proto(insn->imm, fp);
+>> +				if (fn && fn->func)
+>> +					insn->imm = fn->func - __bpf_call_base;
+> 
+> If the type confusion triggers, it seems this line would overwrite the
+> original, correct offset with the offset of an entirely different helper
+> function, potentially causing the interpreter to execute the wrong helper.
+
+To address the type confusion risk between raw helper enum IDs and
+already-patched massive 32-bit address offsets (since regular helper
+conversions leave src_reg at 0), I will apply a strict bounds check
+against __BPF_FUNC_MAX_ID to safely isolate and filter out previously
+fixed-up helper calls. Also, I have replaced fp with env->prog for
+better type safety when calling get_func_proto().
+
+Here is the updated function:
+
+static void bpf_fixup_fallback_inline_helpers(struct bpf_verifier_env 
+*env, struct bpf_prog *fp)
+{
+         struct bpf_insn *insn = fp->insnsi;
+         const struct bpf_func_proto *fn;
+         int i;
+
+         if (!env || !env->ops->get_func_proto)
+                 return;
+
+         for (i = 0; i < fp->len; i++, insn++) {
+                 if (insn->code == (BPF_JMP | BPF_CALL) && insn->src_reg 
+== 0) {
+                         /* Filter out already-patched address offsets. */
+                         if (insn->imm >= __BPF_FUNC_MAX_ID)
+                                 continue;
+
+                         if (bpf_jit_inlines_helper_call(insn->imm)) {
+                                 fn = 
+env->ops->get_func_proto(insn->imm, env->prog);
+                                 if (fn && fn->func)
+                                         insn->imm = fn->func - 
+__bpf_call_base;
+                         }
+                 }
+         }
+}
+
+Thanks,
+Tiezhu
 
