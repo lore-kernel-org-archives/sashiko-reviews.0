@@ -1,172 +1,180 @@
-Received: from mailgw02.mediatek.com (unknown [210.61.82.184])
+Received: from bali.collaboradmins.com (bali.collaboradmins.com [148.251.105.195])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 62B99371D04
-	for <sashiko-reviews@lists.linux.dev>; Thu, 11 Jun 2026 23:45:25 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=fail smtp.client-ip=210.61.82.184
-ARC-Seal:i=2; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1781221532; cv=fail; b=rGdTSOFQf8qSsMNSRQFRwkYr1f8a2ntrUySU2fE10yjukECCF2HualbOZo31fG/ufgpFgY49fYjnSUaoQT3WsFknrS+gya1JRrpQahyRmMmEK6Bibs0Ht9k4z0mKTjBeTSwqyXD4TwdPY6U9xWHxjGMznqYHzAGhR5IdJ3nIIDc=
-ARC-Message-Signature:i=2; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1781221532; c=relaxed/simple;
-	bh=0NN5M26uUtDajELPipmUxIZtPGRR0iiKy6/gdV9tAiU=;
-	h=From:To:CC:Subject:Date:Message-ID:References:In-Reply-To:
-	 Content-Type:MIME-Version; b=aTJ3kzFNpOOM/vjuNNdNW1ihbZz35Vh7798ZIF1Jt9iV7MwTEhk4vuuLlILn3YRjLL/JT05KGnHrq5zGTV3WuzxeBLwVFoAnR4HyQqvf1eo1EEkli9toW3tUuYjTxu7PW/bbYGuJRi7eHQpzDhuCyRTU6++5TMP8hwgy+yAl4Wk=
-ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=mediatek.com; spf=pass smtp.mailfrom=mediatek.com; dkim=pass (1024-bit key) header.d=mediatek.com header.i=@mediatek.com header.b=rAbecIcv; dkim=pass (1024-bit key) header.d=mediateko365.onmicrosoft.com header.i=@mediateko365.onmicrosoft.com header.b=oTidParc; arc=fail smtp.client-ip=210.61.82.184
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=mediatek.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=mediatek.com
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A5B06380FFA
+	for <sashiko-reviews@lists.linux.dev>; Thu, 11 Jun 2026 23:54:53 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=148.251.105.195
+ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
+	t=1781222095; cv=none; b=bC6Bayl9BfruczwunfnerXUtWdgkrvFJuCh1vawq1303/Ca1Y1EZyXGL1SgHQGckMiGvMcPIsmTeUDfKpRB4R18NdPelDW90ESmdHdLMgTQPz+5msid0/Y3i+12lu0yNTCla0Xd0XtGy0Uzu83pMynEbnAM7vJqxyzEVxHzjLyU=
+ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
+	s=arc-20240116; t=1781222095; c=relaxed/simple;
+	bh=IKjZ6L247TPL4+PUB7DXIDxyOQQw5lXuhwoYvV/uinI=;
+	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
+	 In-Reply-To:Content-Type; b=Jzuw6pKXCZu2ZGpUF+kZEB42fb9/UOavngvKjTj3Ra/4/CK3K8kmQssB1V+IvpjvIlRwvuiGQ9bJVCGfwqJ22cLaW1kJkHof/KD2Ym2emKKmfoGIXTDkIWYAXb2D8lnJOe62uSsZAMBc40kRdcojRWag5IgBdRLpwGB48ImJrIM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=collabora.com; spf=pass smtp.mailfrom=collabora.com; dkim=pass (2048-bit key) header.d=collabora.com header.i=@collabora.com header.b=HWab/51B; arc=none smtp.client-ip=148.251.105.195
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=collabora.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=collabora.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=mediatek.com header.i=@mediatek.com header.b="rAbecIcv";
-	dkim=pass (1024-bit key) header.d=mediateko365.onmicrosoft.com header.i=@mediateko365.onmicrosoft.com header.b="oTidParc"
-X-UUID: 9b84b17265ef11f18dc8c9802ae25ab1-20260612
-DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed; d=mediatek.com; s=dk;
-	h=MIME-Version:Content-Transfer-Encoding:Content-ID:Content-Type:In-Reply-To:References:Message-ID:Date:Subject:CC:To:From; bh=0NN5M26uUtDajELPipmUxIZtPGRR0iiKy6/gdV9tAiU=;
-	b=rAbecIcvgDaUIiOwJEYk203sQtXJzPW3AdkPRgUUHq1VOVDDgTSR/3POLswXD76xwSuWPygy/qbTwXopSrjW4x54EBnG4+WRSmOvb57yUG37EAzntUCBn5b7E2+AQAi6moSqBTTebPpj60i2o303l/BsXYMtBi8FFtR5UkQsdVY=;
-X-CID-P-RULE: Release_Ham
-X-CID-O-INFO: VERSION:1.3.15,REQID:fa09519d-c79e-4010-ad55-2b9a548816d5,IP:0,U
-	RL:0,TC:0,Content:0,EDM:0,RT:0,SF:0,FILE:0,BULK:0,RULE:Release_Ham,ACTION:
-	release,TS:0
-X-CID-META: VersionHash:e276073,CLOUDID:08f4f8a4-9ef7-4489-861a-e83b251ece46,B
-	ulkID:nil,BulkQuantity:0,Recheck:0,SF:80|81|82|83|102|110|111|836|865|888|
-	898,TC:-5,Content:0|15|50,EDM:-3,IP:nil,URL:0,File:130,RT:0,Bulk:nil,QS:ni
-	l,BEC:-1,COL:0,OSI:0,OSA:0,AV:0,LES:1,SPR:NO,DKR:0,DKP:0,BRR:0,BRE:0,ARC:0
-X-CID-BVR: 2,SSN|SDN
-X-CID-BAS: 2,SSN|SDN,0,_
-X-CID-FACTOR: TF_CID_SPAM_SNR
-X-CID-RHF: D41D8CD98F00B204E9800998ECF8427E
-X-UUID: 9b84b17265ef11f18dc8c9802ae25ab1-20260612
-Received: from mtkmbs09n1.mediatek.inc [(172.21.101.35)] by mailgw02.mediatek.com
-	(envelope-from <ed.tsai@mediatek.com>)
-	(Generic MTA with TLSv1.2 ECDHE-RSA-AES256-GCM-SHA384 256/256)
-	with ESMTP id 1559659669; Fri, 12 Jun 2026 07:45:20 +0800
-Received: from mtkmbs10n2.mediatek.inc (172.21.101.183) by
- mtkmbs13n2.mediatek.inc (172.21.101.108) with Microsoft SMTP Server
- (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
- 15.2.2562.29; Fri, 12 Jun 2026 07:45:19 +0800
-Received: from SI4PR04CU001.outbound.protection.outlook.com (172.21.101.237)
- by mtkmbs10n2.mediatek.inc (172.21.101.183) with Microsoft SMTP Server id
- 15.2.2562.29 via Frontend Transport; Fri, 12 Jun 2026 07:45:19 +0800
-ARC-Seal: i=1; a=rsa-sha256; s=arcselector10001; d=microsoft.com; cv=none;
- b=HcEOORdko3PK9KUhIO1HE/Dgr0+WAERwNKnAm00ocboLsBVYEtSLVjDWJT0F5YD4bSmeeYcVLzBK+jSSxl5Dg7iefBX4VPadQTmZp4mmqyi0WS09ItOk5IdRf2QlI1sMoX4BDNZk2rt2K1HSqDYqRA8sP44OZ5LEXUczGo/Nlo07jk7VnHhcVCaAzt+54/iyg4tSWFYHhK777WtVj4vmBll2OIfaN6lEzLhR4ozSQe5XXoNZIUT7Pnuj/cM4qkd9wWiOm/QyYp/81o9vOHYDC8z/0MnXVFnC2yrzM9pYziHcMV8YoHBNqevDGdM2/WMeBRxU/SWSAf/ElFLFovJ19g==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com;
- s=arcselector10001;
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
- bh=0NN5M26uUtDajELPipmUxIZtPGRR0iiKy6/gdV9tAiU=;
- b=Jad1tt0fwSp6hTxFthcDhsz6cJGbolJo8zxY+HQZA7Gp3VVx3vXtbixjZpjiGwXslu5GWPJDzec6DoRHUf888bZ55cxrl6HRPgY3PbcPbU33kELTwlbjvTtB0bzTibQFUCGq0akB6GrSORO3kkmVCNy+0W1ZSjneD+2fOqhzdg+9YL0ilSr3TMSi6cfGXvPLJZ5ZfWBHpYJZ9ifhU+nFBoN0Io3B6xGCM4Ec0dTLErpUNQDB53tlyyDiQNs5sEvVJgXk7dLsLPByGishon948ktyzEHjrATImHi5Sg+TNVsFFkmDE46BNBSt8VkNrJNib8tNIrls+Pz/mTUQ4TSiuQ==
-ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
- smtp.mailfrom=mediatek.com; dmarc=pass action=none header.from=mediatek.com;
- dkim=pass header.d=mediatek.com; arc=none
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=mediateko365.onmicrosoft.com; s=selector2-mediateko365-onmicrosoft-com;
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
- bh=0NN5M26uUtDajELPipmUxIZtPGRR0iiKy6/gdV9tAiU=;
- b=oTidParcuRars/fQVcvmFKTQrCtM+HUqO+IR1PBBvh6jBVZWI+WkTi5k0sji8gTcOh7XDQ1svWOUje8InUNhwBvNIpBdDOhsyq2rRt3njge7fKWMu8ArHPo3VHy3lK6ro81hFFhP3vRELq0uz325/iBymVBsjX/fEIxnm8Z1V9E=
-Received: from SI2PR03MB5545.apcprd03.prod.outlook.com (2603:1096:4:131::9) by
- TYZPR03MB6447.apcprd03.prod.outlook.com (2603:1096:400:1cc::14) with
- Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.21.113.14; Thu, 11 Jun
- 2026 23:45:16 +0000
-Received: from SI2PR03MB5545.apcprd03.prod.outlook.com
- ([fe80::42a2:bb5:d1fd:3ac6]) by SI2PR03MB5545.apcprd03.prod.outlook.com
- ([fe80::42a2:bb5:d1fd:3ac6%6]) with mapi id 15.21.0113.013; Thu, 11 Jun 2026
- 23:45:16 +0000
-From: =?utf-8?B?RWQgVHNhaSAo6JSh5a6X6LuSKQ==?= <Ed.Tsai@mediatek.com>
-To: "sashiko-reviews@lists.linux.dev" <sashiko-reviews@lists.linux.dev>
-CC: "linux-scsi@vger.kernel.org" <linux-scsi@vger.kernel.org>
-Subject: Re: [PATCH v2 3/3] ufs: core: Remove max_num_rtt field from
- ufs_hba_variant_ops
-Thread-Topic: [PATCH v2 3/3] ufs: core: Remove max_num_rtt field from
- ufs_hba_variant_ops
-Thread-Index: AQHc+fnQAsVGPswchUyJiOHc0Vx9rbY6AY6AgAADMQA=
-Date: Thu, 11 Jun 2026 23:45:16 +0000
-Message-ID: <ad34cb0527688ed0eba7040606a71d52641c155a.camel@mediatek.com>
-References: <20260611232632.2324422-4-ed.tsai@mediatek.com>
-	 <20260611233350.199321F000E9@smtp.kernel.org>
-In-Reply-To: <20260611233350.199321F000E9@smtp.kernel.org>
-Accept-Language: zh-TW, en-US
-Content-Language: en-US
-X-MS-Has-Attach:
-X-MS-TNEF-Correlator:
-authentication-results: dkim=none (message not signed)
- header.d=none;dmarc=none action=none header.from=mediatek.com;
-x-ms-publictraffictype: Email
-x-ms-traffictypediagnostic: SI2PR03MB5545:EE_|TYZPR03MB6447:EE_
-x-ms-office365-filtering-correlation-id: 43e4767a-e750-4f3a-9d5f-08dec8137d6e
-x-ms-exchange-senderadcheck: 1
-x-ms-exchange-antispam-relay: 0
-x-microsoft-antispam: BCL:0;ARA:13230040|23010399003|366016|376014|1800799024|56012099006|6133799003|11063799006|4143699003|18002099003|22082099003|38070700021;
-x-microsoft-antispam-message-info: 4NmGNbM8KGaJN/zjFJTwXiTIF3sLNtBGGsErp1hcakOZo7kLMqzQDdsfD0uMrNn9o9lw85u1q5bDNKrEZVJ1HC4vUsWTtchTBB1cRn51OjBlotOq2uWbcgCjvatr+OdKhKkfIQEgl4GZcxO/PoQyapmw8wz7LIYRgaLAibx3FBQf7Duo0fuIaLSV5gVNqhmsRa5NRgLBCkdZOLXAzo1m7/DxtDaMEQ2gXVUVHTdF06fHmGuGh12Pdc32IuQ6oqSL2oHrMW2Rc4Q/o1A4dEDx7gKHto9G2lNOYoa0NTtypGSkXl4CyQcfWcjbT4AirGKqcObH/xXtisH6aRUDujimb16y9TyKekM+wja0UaGsjf77qYxSWsGqCR11+YO0KjJlRORCjhT4a61SsojQ2IE5rXe7qniN7pLBA5Msq9FvD1DEaNUk9WaQCC+uQW/G64ogWCtrclCwCTaeSTsxeDx0M1zroE1SDKJeF+48QZWFUTrl5KCvaxHdB25Jlj+4a8ccy7oEFBH6wyAYp/NW/YBNaBV0p3dYK+LtLTOYmMSWTrL2oStJ9eopZXZZ1HzaUO6ph2fy88CgPQIKAgdOdIldj2Gth35b6NGJiC3aetdH7MhfU/pTG4nDvvMwZAalu6taXlfK+VN4vqeYqX+e63X1d8AX70ldJcQVS6JBA79yGI9SMdlNv+50TpxjkmQRX/cwuCyFIyT2DTeMtrk45iitdCsqQy4PlcpkjwUvUwsVHDvheIoJPLqaBNyXRh5J/F3r
-x-forefront-antispam-report: CIP:255.255.255.255;CTRY:;LANG:en;SCL:1;SRV:;IPV:NLI;SFV:NSPM;H:SI2PR03MB5545.apcprd03.prod.outlook.com;PTR:;CAT:NONE;SFS:(13230040)(23010399003)(366016)(376014)(1800799024)(56012099006)(6133799003)(11063799006)(4143699003)(18002099003)(22082099003)(38070700021);DIR:OUT;SFP:1101;
-x-ms-exchange-antispam-messagedata-chunkcount: 1
-x-ms-exchange-antispam-messagedata-0: =?utf-8?B?YmFVVjhuSC93bFhkR3Ribk5rRFA4YnBxcnBlNjZyNEFML0F0UE9aUis1U1d1?=
- =?utf-8?B?K0FCbFBpSVphblpxVzJlQXFoN2FHM1JYZTMrcXFrTGR3NHVIcllpL3dHS3RS?=
- =?utf-8?B?Zi9HZE5YVnBydU5td1RQVVlLTzY1czErK291akZma2wxdVk5K2h2RllFT09I?=
- =?utf-8?B?SUJMcmJsd2RSc3FkbTNlR1lMNWtsbzk2enU1cjA0aXgvaVU0anM0S1ZuM2dX?=
- =?utf-8?B?ZDhpT0dKWk9LYSszQ2loSm9lekxZclJEOThxT2tMK2JraHpRMnliWGlJOXox?=
- =?utf-8?B?ZU1RRXYxejM4RUluNHB5T09ucm5GSmYwc3AveWVaZjBYYnFFamFhM2hJM3pW?=
- =?utf-8?B?WXlYNFpTY2dnMHN1V2x6aktoOUJWQWloVk51VC9qMEJGQ2xGNkZkTUwwNUNy?=
- =?utf-8?B?WDl0UDNhRzNTQ1FJSHFRZFJsMktQcVhSRldlN0RIYnZzMG9QNnpnejhETktF?=
- =?utf-8?B?QkNkN1J0MG5YT25HU2VPbVlxcTl5NjZrNFVaSjh3NVlpeVNEcFo1Nm15RlFz?=
- =?utf-8?B?SjZGdlpkb2UwclZRVXg0TGxlR1h6QkpiTEE4OXlVOHJsNlUyS2NQc3pYNnNQ?=
- =?utf-8?B?WVdmZWtHYTJUeU5WcTF3ZDNkOVJUY3crSUEvaDFPekpXcm5WSWJWQmVlM2xa?=
- =?utf-8?B?U1BoN1gwbVlLVHgwZVUwQ2tIYzgvOVIxblhRd3FHb2hWUUp2dVZlT0x6N1J6?=
- =?utf-8?B?QTZNZGorWHlUdUxHYXlXcXBSdGtMSE5VVnNtSmU2RHROZWRtZ1BiTEVSVm1W?=
- =?utf-8?B?Qk9RWDBPV2VmczRJS0dqdHBPR214eFVIREgwVHFzK0pFNkdRc3F1dGg1cW43?=
- =?utf-8?B?VVovZW9WK05tTC9DOGFDWSt4ZHRyU3FLUDgwLzdMYkJZd2JlMHd0cUtyYkFs?=
- =?utf-8?B?YlVxdm95YjRtMXJWU2Z0dDliSEhmK3g4Y0tlM3FHcFFpQWwrS3RnWm1odHBB?=
- =?utf-8?B?Tm1uOUUrM0xPUlZhdU1jMkR1ckN5akszdHB2T2RBa1FyUXZ4dXc1NTFFY3pP?=
- =?utf-8?B?NDF4djhGMWRUQlp4dlVYa3JwMzlWQWMzaTVVZ1haQWNvK1BjMGduN0hyd3Ev?=
- =?utf-8?B?ZE0rY1lTby9MNXNBcExJdmZQTmY0c0FnbjlxbHJHYzlDdlRtQjNMTEh3anQ2?=
- =?utf-8?B?aDNSald0VTg3YTJxSmVwOXlQeDhseXpKOUdjQVFyUU5BNm8vUUw1MWFqbEJx?=
- =?utf-8?B?UzMyUVpydnRlNWI4TnlXd2NySmNTNHplOGdTL0Y5NWltWnJkMk05RE9mZVoz?=
- =?utf-8?B?REdzNTFuSjlhb0VvZEZKZHhMVlMyQzJYbit2NEhyaXRvQ0g0OEMzT2QwNWdr?=
- =?utf-8?B?b2NvYUtIUE9KZkQ0cjlRVFBmNlNJZVhKQ2FoYU1hVVFJbDg5MEJlZE9RSUR6?=
- =?utf-8?B?ZVlRUlRkOGlYZVRudHBQcEtWQ0x5TngrUXUxZzhuZ3JXSGtCemluZmJhZTZ6?=
- =?utf-8?B?bDVEVjNCaGZUSXF2dXhhL3NZZXpjNktRNGhpNmNqdzYrLzBmVnRiUFlhSEFE?=
- =?utf-8?B?cjZtdjhNalRLOG9aL2w1S1NoNVNjZEd4b3NqLy90RVNYSWNEUlh2QlhUS3Za?=
- =?utf-8?B?b1RPSi82U3p4VFVZYW8zK2Y2NC9Wdkx5cVVMeXYyTFJoektKTFhPd1V4dm8r?=
- =?utf-8?B?VHFDcGpqVURIaW15S0JLZW9LY25pSDhkNVQrajFlcVRzaHkvaGFqcy9hbGhz?=
- =?utf-8?B?SzN3ZExEWGJxdTc1TU1QRHphQWgzNTg2R1p3azMrbmdhTUtXUnpzdlVqcWxa?=
- =?utf-8?B?bERuZThjOWZvTXlsamtkKzRrcDcwTEpYVVBXKy9pcDFEV0xaNzFpMmZUYjJX?=
- =?utf-8?B?ZnRCTzdnbmI3eHVkMXBqRnJwQkZiRzYvSGdxTnJCRVJBZXRwVHU0ZXIrdE8x?=
- =?utf-8?B?dXM0bUZIdWFTTktoVlZwUTdiWlVuaHVhbXJwY0NBTW5tdG8yencxYzhBL3JI?=
- =?utf-8?B?cS81M1JzQ0dobUFHMHozQnkrZWI2ZjN5T2ROQzBWQ0J3emV3aVNEQVQyQith?=
- =?utf-8?B?VnpVK1phdWVRWHNCSjl0WmhPZ3JpMHJFbWNtVkExNy9uVS95cXBNUmJoSzU3?=
- =?utf-8?B?VFk4VXYxVENUU2NjZFVTT2xaNGEyNzNCZGUvVGhSQUNOM0txNmVqT3hCSVR5?=
- =?utf-8?B?bmw2L1UxK3lZUDZpQ254R3dTVjk5U1ZsWHlLQytJdFpROVdDQS80OGVVUThO?=
- =?utf-8?B?R29ZWU1lZnlWdTdwd2dBbjVMdzRTbXRHbmd6SUVQcXdqRUxIcm5rUVRtaTFa?=
- =?utf-8?B?OStyUmxNL3I2bU5CbTMxNWFYRGlmdjdHaDErVG9zT2RzUVgyVGxhbXdQNVFj?=
- =?utf-8?B?SGJMQ0d0dnZ4dXJNUk9LSFF5a3haL0x2a0IrbjMwZ1NoMmhPeXZiQT09?=
-Content-Type: text/plain; charset="utf-8"
-Content-ID: <CE60D1963F9FC148A3838643505467C9@apcprd03.prod.outlook.com>
-Content-Transfer-Encoding: base64
+	dkim=pass (2048-bit key) header.d=collabora.com header.i=@collabora.com header.b="HWab/51B"
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=collabora.com;
+	s=mail; t=1781222091;
+	bh=IKjZ6L247TPL4+PUB7DXIDxyOQQw5lXuhwoYvV/uinI=;
+	h=Date:Subject:To:Cc:References:From:In-Reply-To:From;
+	b=HWab/51B5I2v4yAof7DF0lfJgb9lrxGvUxkih+FGVe+d2u8rdW7aSbADEj7/D+6OW
+	 KKnaaJsBEtItZJTCnuo9fHyefNMKB40sQhYm7a9GwnLFckf6CpGTfI1edGAkB6IWUw
+	 dFinHECgS92uxIEylD+DBpcCyT/rmfCsh74PggGZCiKFSV1kIqndDbUZjCBN5aq703
+	 1Y7YjuQM/eFVwj6BgYFoGnRv3P1FdnEMSoH1+X2NEsL32Y0l7USK9jCKruTnt2/it+
+	 30m4XdIjGnlbYpsn2TA5JRPkmpuRFaYpd44bUt14HZ9sFp8gSeOjZTb5PMgzBFJX/z
+	 586FwHTyMeTBA==
+Received: from [100.64.0.241] (unknown [100.64.0.241])
+	(using TLSv1.3 with cipher TLS_AES_128_GCM_SHA256 (128/128 bits)
+	 key-exchange X25519 server-signature RSA-PSS (4096 bits) server-digest SHA256)
+	(No client certificate requested)
+	(Authenticated sender: cristicc)
+	by bali.collaboradmins.com (Postfix) with ESMTPSA id 8272E17E091C;
+	Fri, 12 Jun 2026 01:54:51 +0200 (CEST)
+Message-ID: <93c36e34-f63e-43ed-9284-82104629b72c@collabora.com>
+Date: Fri, 12 Jun 2026 02:54:51 +0300
 Precedence: bulk
 X-Mailing-List: sashiko-reviews@lists.linux.dev
 List-Id: <sashiko-reviews.lists.linux.dev>
 List-Subscribe: <mailto:sashiko-reviews+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:sashiko-reviews+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-X-Exchange-RoutingPolicyChecked: UehX8MrVCmq01TYrEu7QsdMOA2M2s4DKMsjHuKM793iorsNjq7U6pK1DytcEfqasQYfOsD6/4jskwHgsjwHevXlvHhyX4ZR1Jiky5YmamG1gWEsSczGcbZ7QzDBdGMeh7uWsJrldAXGMR5Q7IY+tL90Cu7+rLSFBFS33jbYPgrbniCWwtosPsfnlwbTNNT50JHG/dJd05l8kFEoCAvWJsiCubKrzGqybqEs2JJzMGetd7ymDO5eOT9bFEj7XyDzZm8OdWGx6rW8hOXZQ5j1X3Ew4N8bX4+CINMPQ4mp209FWh96pnU3R9dqfcAKjh4Q1chGx2KVMwcHfNdSF36+2IA==
-X-MS-Exchange-CrossTenant-AuthAs: Internal
-X-MS-Exchange-CrossTenant-AuthSource: SI2PR03MB5545.apcprd03.prod.outlook.com
-X-MS-Exchange-CrossTenant-Network-Message-Id: 43e4767a-e750-4f3a-9d5f-08dec8137d6e
-X-MS-Exchange-CrossTenant-originalarrivaltime: 11 Jun 2026 23:45:16.7139
- (UTC)
-X-MS-Exchange-CrossTenant-fromentityheader: Hosted
-X-MS-Exchange-CrossTenant-id: a7687ede-7a6b-4ef6-bace-642f677fbe31
-X-MS-Exchange-CrossTenant-mailboxtype: HOSTED
-X-MS-Exchange-CrossTenant-userprincipalname: eNh1TWqFxBSa5Ul7z29K9ayC5oFE+UvZfHU577VUjWyM1/ybEhA7VwPTqLW3Btxv46bNWJjslbBKEYyWBQITqg==
-X-MS-Exchange-Transport-CrossTenantHeadersStamped: TYZPR03MB6447
-X-MTK: N
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH v3 1/6] phy: rockchip: samsung-hdptx: Fix rate
+ recalculation for high bpc
+To: sashiko-reviews@lists.linux.dev
+Cc: neil.armstrong@linaro.org, vkoul@kernel.org, olteanv@gmail.com,
+ linux-phy@lists.infradead.org
+References: <20260611-hdptx-clk-fixes-v3-1-67b1b0c00e16@collabora.com>
+ <20260611144311.561861F00893@smtp.kernel.org>
+Content-Language: en-US
+From: Cristian Ciocaltea <cristian.ciocaltea@collabora.com>
+In-Reply-To: <20260611144311.561861F00893@smtp.kernel.org>
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
 
-T24gVGh1LCAyMDI2LTA2LTExIGF0IDIzOjMzICswMDAwLCBzYXNoaWtvLWJvdEBrZXJuZWwub3Jn
-IHdyb3RlOg0KPiBbU2V2ZXJpdHk6IE1lZGl1bV0NCj4gVGhlIGNvbW1pdCBtZXNzYWdlIHN0YXRl
-cyB0aGUgbWF4X251bV9ydHQgZmllbGQgaXMgcmVtb3ZlZCBmcm9tDQo+IHVmc19oYmFfdmFyaWFu
-dF9vcHMsIGJ1dCB0aGlzIGh1bmsgb25seSByZW1vdmVzIGl0cyBrZXJuZWxkb2MNCj4gY29tbWVu
-dC4NCj4gDQo+IERpZCB0aGlzIG1pc3MgcmVtb3ZpbmcgdGhlIGFjdHVhbCBtYXhfbnVtX3J0dCBm
-aWVsZCBmdXJ0aGVyIGRvd24gaW4NCj4gaW5jbHVkZS91ZnMvdWZzaGNkLmggaW5zaWRlIHN0cnVj
-dCB1ZnNfaGJhX3ZhcmlhbnRfb3BzPw0KPiANCj4gwqDCoMKgIGNvbnN0IGNoYXIgKm5hbWU7DQo+
-IMKgwqDCoCBpbnTCoMKgwqAgbWF4X251bV9ydHQ7DQo+IMKgwqDCoCBpbnTCoMKgwqAgKCppbml0
-KShzdHJ1Y3QgdWZzX2hiYSAqKTsNCj4gDQo+IExlYXZpbmcgdGhlIGZpZWxkIGJlaGluZCBhcyBk
-ZWFkIGNvZGUgd2l0aG91dCBhIGtlcm5lbGRvYyBjb21tZW50DQo+IG1pZ2h0DQo+IHRyaWdnZXIg
-YSBrZXJuZWxkb2Mgd2FybmluZy4NCj4gDQoNClNvcnJ5LCB0aGlzIGlzIHdyb25nIHZlcnNpb24u
-IEkgd2lsbCByZS1zZW5kIGEgbmV3IHZlcnNpb24gYWJvdXQgdGhpcw0Kd2FybmluZy4NCg==
+On 6/11/26 5:43 PM, sashiko-bot@kernel.org wrote:
+> Thank you for your contribution! Sashiko AI review found 2 potential issue(s) to consider:
+> 
+> Pre-existing issues:
+> - [High] Potential divide-by-zero when computing SDM fraction if bootloader leaves specific PLL registers uninitialized or misconfigured.
+> - [High] FRL_8G4L_RATE (3.2GHz) cascade mode is not handled correctly in clock rate recalculation, causing it to return 0.
+
+It looks like Sashiko is improving, as it didn’t flag these issues during the previous reviews.
+
+I addressed them in v4:
+
+https://lore.kernel.org/all/20260612-hdptx-clk-fixes-v4-0-ce5e1d456cda@collabora.com/
+
+Regards,
+Cristian
+
+> --
+> 
+> commit 7c989d5f5cf68e3aea19b9dd58be7c8b907619aa
+> Author: Cristian Ciocaltea <cristian.ciocaltea@collabora.com>
+> 
+> phy: rockchip: samsung-hdptx: Fix rate recalculation for high bpc
+> 
+> This patch updates the rate recalculation logic to read the bpc value directly
+> from hardware registers instead of relying on the uninitialized HDMI PHY
+> configuration. This resolves incorrect rate calculations when bpc is higher
+> than 8.
+> 
+>> diff --git a/drivers/phy/rockchip/phy-rockchip-samsung-hdptx.c b/drivers/phy/rockchip/phy-rockchip-samsung-hdptx.c
+>> index 2d973bc37f076..710603afff866 100644
+>> --- a/drivers/phy/rockchip/phy-rockchip-samsung-hdptx.c
+>> +++ b/drivers/phy/rockchip/phy-rockchip-samsung-hdptx.c
+>> @@ -2168,7 +2168,7 @@ static u64 rk_hdptx_phy_clk_calc_rate_from_pll_cfg(struct rk_hdptx_phy *hdptx)
+>>  	struct lcpll_config lcpll_hw;
+>>  	struct ropll_config ropll_hw;
+>>  	u64 fout, sdm;
+>> -	u32 mode, val;
+>> +	u32 mode, bpc, val;
+>>  	int ret, i;
+>>  
+>>  	ret = regmap_read(hdptx->regmap, CMN_REG(0008), &mode);
+> 
+> [Severity: High]
+> This is a pre-existing issue, but does 
+> rk_hdptx_phy_clk_calc_rate_from_pll_cfg() fail to handle cascade mode for the
+> 3.2GHz FRL_8G4L_RATE?
+> 
+> When the hardware is configured in cascade mode using both LCPLL and ROPLL,
+> CMN_REG(0008) has LCPLL_LCVCO_MODE_EN_MASK set.
+> 
+> The function sees this bit and assumes the rate must be determined solely
+> from the rk_hdptx_frl_lcpll_cfg array:
+> 
+> drivers/phy/rockchip/phy-rockchip-samsung-hdptx.c:rk_hdptx_phy_clk_calc_rate_from_pll_cfg() {
+>     ...
+>     if (mode & LCPLL_LCVCO_MODE_EN_MASK) {
+>         ...
+>         for (i = 0; i < ARRAY_SIZE(rk_hdptx_frl_lcpll_cfg); i++) {
+>             ...
+>                 return cfg->rate;
+>         }
+> 
+>         dev_dbg(hdptx->dev, "%s no FRL match found\n", __func__);
+>         return 0;
+>     }
+>     ...
+> }
+> 
+> For the 3.2GHz config, it searches the array for an entry with pms_mdiv of
+> 107, finds no match, and returns 0 instead of falling through to the ROPLL
+> calculation.
+> 
+> Could this bypass the ROPLL calculation and cause the clock framework to
+> register a 0 Hz rate for the 3.2GHz HDMI mode?
+> 
+> [ ... ]
+> 
+>> @@ -2266,6 +2266,7 @@ static u64 rk_hdptx_phy_clk_calc_rate_from_pll_cfg(struct rk_hdptx_phy *hdptx)
+>>  	if (ret)
+>>  		return 0;
+>>  	ropll_hw.pms_sdiv = ((val & PLL_PCG_POSTDIV_SEL_MASK) >> 4) + 1;
+>> +	bpc = (FIELD_GET(PLL_PCG_CLK_SEL_MASK, val) << 1) + 8;
+>>  
+>>  	fout = PLL_REF_CLK * ropll_hw.pms_mdiv;
+>>  	if (ropll_hw.sdm_en) {
+> 
+> [Severity: High]
+> This is a pre-existing issue, but could this division trigger a
+> divide-by-zero panic if the bootloader leaves the PLL registers
+> uninitialized or misconfigured?
+> 
+> The calculation uses div_u64() with a denominator read directly from hardware:
+> 
+> drivers/phy/rockchip/phy-rockchip-samsung-hdptx.c:rk_hdptx_phy_clk_calc_rate_from_pll_cfg() {
+>     ...
+>     if (ropll_hw.sdm_en) {
+>         sdm = div_u64(PLL_REF_CLK * ropll_hw.sdc_deno *
+>                       ropll_hw.pms_mdiv * ropll_hw.sdm_num,
+>                       16 * ropll_hw.sdm_deno *
+>                       (ropll_hw.sdc_deno * ropll_hw.sdc_n - ropll_hw.sdc_num));
+>     ...
+> }
+> 
+> The values ropll_hw.sdm_deno, ropll_hw.sdc_deno, ropll_hw.sdc_n, and
+> ropll_hw.sdc_num are populated from CMN_REG(0060), CMN_REG(0070), etc.,
+> without any zero-checks.
+> 
+> If the PLL is enabled but these registers evaluate to 0, it appears this
+> would cause a panic during driver probe or when the clock framework queries
+> the rate.
+> 
+> Is it safe to directly trust the hardware register state for this denominator
+> without sanitization?
+> 
+>> @@ -2280,7 +2281,7 @@ static u64 rk_hdptx_phy_clk_calc_rate_from_pll_cfg(struct rk_hdptx_phy *hdptx)
+>>  			fout = fout + sdm;
+>>  	}
+>>  
+>> -	return div_u64(fout * 2, ropll_hw.pms_sdiv * 10);
+>> +	return DIV_ROUND_CLOSEST_ULL(fout * 2 * 8, ropll_hw.pms_sdiv * 10 * bpc);
+>>  }
+> 
+
