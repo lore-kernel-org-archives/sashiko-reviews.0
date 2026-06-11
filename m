@@ -1,72 +1,72 @@
-Received: from mail-wm1-f41.google.com (mail-wm1-f41.google.com [209.85.128.41])
+Received: from mail-wr1-f54.google.com (mail-wr1-f54.google.com [209.85.221.54])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C547E3BED75
-	for <sashiko-reviews@lists.linux.dev>; Thu, 11 Jun 2026 09:37:26 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.41
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5AE743AC0C0
+	for <sashiko-reviews@lists.linux.dev>; Thu, 11 Jun 2026 09:37:32 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.221.54
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1781170648; cv=none; b=TEicqIdul7AAfXKxgxchMjjNrUXsY2vM2pjYPfJHt1qHuXKPpU+B0xsynFvQysdKDYBSIOhWpV7WpJL9Lab7dk6XvdCJPqArPkP5aZHTs3ViOnuZfx0ZSQ+alxQ9qW7p9z8kLRZJ4nxadSu9mADwcKOodcZ2wFVsuD8slH0AHGQ=
+	t=1781170653; cv=none; b=NJtXfG24Tn3HJFTGj+ok6aPcG1u3waGvQjpDonj8JknHXwYz0Jisx1i3SsX8R4YPYRaSNSBItfVJGu01ub5o/I5gisDVyAz+Q0+YkbaXIqdKoMrnD4N17nVdIsE0H8UTkLjVNB/iAK0bg7Ly21BBIE8QTaUu8hjhsKAAqZ49npM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1781170648; c=relaxed/simple;
-	bh=AvLJ837o6aFpuSBrNftC0C9tXvgnUSWePVBKcwDdPDM=;
+	s=arc-20240116; t=1781170653; c=relaxed/simple;
+	bh=wA+twUEFzsAdwFg4SjCBQ9q3jy94DJz5Ve4/QlurBos=;
 	h=From:Date:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=hMEPr8/hR1WApr0/1OCTDPzrjxYR/d0h2QZP7itah86KqD+okCD5OVF6ZxEI/ZRTWPBgoCfR8CGekwK/1FF0ACXqqh0ChzRhND7y/vifekeR+fqPWp0PGkZmD4QbCkoU6G2DpjSHFbQrxbx47Qaa+9dOfoG2HqNC7yehDvbPamc=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=e7ehjQB+; arc=none smtp.client-ip=209.85.128.41
+	 Content-Type:Content-Disposition:In-Reply-To; b=DPNvWEskmt9fG3yoz61YEoFxeTqXjCzB0ItP6DAYB7Uz1iKXf4zBEwgpTGK7w1q13LOK2R1BmONCxJTULbwyQ2dCLfOirUbhAibP9JsEZok+si0sqLmBBXRbyDfnC44fXGOoZV3dW/0L7LlZgiz3DdVb+UUi4JovESm8mlolo9o=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=Q1P5rfg7; arc=none smtp.client-ip=209.85.221.54
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="e7ehjQB+"
-Received: by mail-wm1-f41.google.com with SMTP id 5b1f17b1804b1-490ac357c55so80660865e9.1
-        for <sashiko-reviews@lists.linux.dev>; Thu, 11 Jun 2026 02:37:26 -0700 (PDT)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="Q1P5rfg7"
+Received: by mail-wr1-f54.google.com with SMTP id ffacd0b85a97d-45efa80e0afso6054258f8f.2
+        for <sashiko-reviews@lists.linux.dev>; Thu, 11 Jun 2026 02:37:32 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20251104; t=1781170645; x=1781775445; darn=lists.linux.dev;
+        d=gmail.com; s=20251104; t=1781170651; x=1781775451; darn=lists.linux.dev;
         h=in-reply-to:content-transfer-encoding:content-disposition
          :mime-version:references:message-id:subject:cc:to:date:from:from:to
          :cc:subject:date:message-id:reply-to;
-        bh=Oi59QYzjJTpaQKbI3rmZuInCWoY2kOoYQVRZZMK0fYI=;
-        b=e7ehjQB+Fg69KM46Ax0O2Frmhgi3HOHpZH2fdakm8L+9meGlXxhGy5UWbyk+/nz1zA
-         vSZa8YEsY0OlXR9ZfAykowNKf3EkZMfYFlhSgB1dFiTL0zYBWSQCKdZvugbWkkjR+FaX
-         0yd9TAdGi1mANGS4fC7aUxtHj49YuJOuVCeIYa92ra+ROEAdXX+RSxx4KNUH/UTf72bi
-         AJyH55nkSdMF9t7JSXWUs/KpxLBzJCHupmLdV1CjS4gcskT6zwKgpzchib+QgLYTOpjF
-         BpytxUMrErLalQIMaJQB9Joy3RolJXzwZzJo1Qucn8BYHuSXavVkMlW0SR32FtFLThGU
-         sW7A==
+        bh=vEO8kje9kYrRQU/+kV8ArVqyL99RuYg/7cQwFotLr28=;
+        b=Q1P5rfg7qfWaLZfv1IuEams3o0+ZGgaZKMMNKozr707G+iVnVgL9cXTGRIrfi1FG/f
+         hVVqwpm31xsS/b/Jf8BwvHMEHfaFNt2e2/B92mZ1FA0Bcjo33ecMWSOVsKQnO1Sv9g6b
+         qNHtcKuMrt8ZR58iKc44fN8zKZ0khdd4FhewYCmwAldXn8NoYi+VE7iDlP0NT/PVJQ0x
+         XQBsSxh0pKCCzhNaBZIGGAac10IgOt17gIkCnCJA19/Ks0fF+vDdafio37+Fdg7oMQyX
+         oL2QxkBJCGjFOaICpKnE9ZS3WR/JXxKIodOXU6ipA81tJzeEdQnKLBAYmiN9FEnZXhre
+         PGag==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20251104; t=1781170645; x=1781775445;
+        d=1e100.net; s=20251104; t=1781170651; x=1781775451;
         h=in-reply-to:content-transfer-encoding:content-disposition
          :mime-version:references:message-id:subject:cc:to:date:from:x-gm-gg
          :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=Oi59QYzjJTpaQKbI3rmZuInCWoY2kOoYQVRZZMK0fYI=;
-        b=fPAeLnNLpeGIX0zJmvsdkHyh15rDdKx0LxTTFymVOHxSqxK63szF/+I7nFLVOTmSuX
-         qByi8DlQ6wt3UOpjrypSUFJModN5ps2mGbqWvHy+XdGsl6MjC02+k5gUkVHJ/37sVMYD
-         UozYZqWm8qxHbIe/A1s9JGBvJ6Y/SLTzppewOxVYiS8Xo93aF5HIo53ihnnrBsf7pzf+
-         +h7tRxPCys5JgGzkOCM1Rwj/1kKT3K6rfm/MWvlXL0VlkkuSF0eedIlFYCB80OvbSxPJ
-         dplHcX3ilsNCGzrtI1tzJS2hlMYxu2ztLkfnpYNkO2ajFooVBixNpBCifKr6aEeBFiWs
-         +qhA==
-X-Gm-Message-State: AOJu0YwAZPvr7TWg3oAdExEmRKXLPti1PklVeDmQup5RChjIEwF8hl/5
-	Dpab4IFvYauMp1eWfLKo6oIfnP5V1uid2HHnPQTAS87Qd0EQNEg4pAKt6TNLrA==
-X-Gm-Gg: Acq92OH4O7XmQetWVSGU1cLJySkTL2ROutJm+hXI9wdLZuGchnF9slXfNDrdFB71gkC
-	LjwmSzGAOUZk4SbjrQ6aNQFFHro7ljCk9lv8IIHahU9Dh9DkBC5akpl+/GW8q5qhhJgb64MBydZ
-	2jFd+pulWlenakIivmEC0ZDYLVhize9fQcicTxeFNHhtsAUTIi+njCKYpT6IzYXH368M9NH+XcJ
-	i9JIVqSdwXmO7YPt22PSNCRaqRhI9uRFYq5tY9hvwqh+kKv6+4pxrp7YcLMHXNKbf44t3sFDX2a
-	ijlUn8CahxLSJe1PfotiRXsGTwfm/OpkWnGResuJLZGgSG4mDF0NXNi8ntU9ki8o6bxA7LB6Sik
-	cYwe9VkA+5ToPMi/ii1VTFKoVGCJvqPU/4MnRtL0I8bMdq6dQjUrysGxfjcBGYCOMRwR434NZmi
-	NFvIB9JNTIbhBUKC+D35EUPlXg3F8LM4bOViLg
-X-Received: by 2002:a05:600c:c0c6:b0:490:958f:2a5e with SMTP id 5b1f17b1804b1-490e55fbd74mr23400285e9.13.1781170644815;
-        Thu, 11 Jun 2026 02:37:24 -0700 (PDT)
+        bh=vEO8kje9kYrRQU/+kV8ArVqyL99RuYg/7cQwFotLr28=;
+        b=BTffqNrqW/muzAlAdVyztFVIzZXkEQrh70TWksvQdNpco7UCYeup7a81iL8Pj+ePIx
+         mNmasKCMtcUV5Hlz8JvAiPx3iWrCw6NrkUi37qFv0FrWmZavXbhq1Ru+tauGOfrUBEs+
+         1G1ijkKN5SpBrntB+ybPtVShUUoahPVL2HMG9+VFTQKd15BTnWM6L2P/6ScFfOOYwM/c
+         ee1iSUPfWuMJuIyMGLk/tX/czwqhJuxV/5EDKFGNLo4UeRmDRrOnkRVcxEjAjaTy+yHp
+         J92UBT7Hb8YZViS2ossTxXAKq7ou/Vx+D99F/8ma8j5PxytTQFZyWPblC3GkrAlp5siS
+         8JuQ==
+X-Gm-Message-State: AOJu0YzmOJJ6Nd6ixkeHpX/snxHDahp/1tcs4WQ6bq8u0NA2R6+/2ajZ
+	ZSiUxN6MebbPA8gXJmBhYzVxfjA9dQSWVHPjKzBrm6k98l9kdClvF7XHGEBbdg==
+X-Gm-Gg: Acq92OHki1kwqm7HwT0Ejg6Js7BEYw28JZSt+UgJaEK0RWc5PNDSiz6fKduxnWI7TiC
+	9gu+WluIRv9GY1Vj92V1EOmWo4REq0gpqpUEmZdYVXcwxKklzzUA2SGZI+mHllYUMPj2V0a5Diw
+	WL5+H8+bhYNBLilRyZQJfzAGLMhPLAKnt9TsJCWTvaC2TpsYPl91VEy0aIri7LxSXIwEtBanZCl
+	in+G+UCcm9uewg8ZFokvfu33ggtcl9wB4FZQndHra/IvvheqjQ5J3bqd25vI/0Djo9yddo4tuKj
+	+TC02xdPiOo0VjWJ0HKl95aZJpDbSsC2PAARfDvm5kTbWbLB+wXmuwO4YniS2It4J6Alma5UbCH
+	UHA0jZ5Y582EhOEsx/ef16IepH1gaqunMVYuuVzOXklqS+Iqx16YynuouyAev0izhtkvJPGaDDm
+	8s7cE84LEQdwM55QQ+eAOMZWyvtg==
+X-Received: by 2002:a05:6000:1862:b0:45e:edcc:f6dc with SMTP id ffacd0b85a97d-4606746a03fmr3334435f8f.6.1781170650676;
+        Thu, 11 Jun 2026 02:37:30 -0700 (PDT)
 Received: from krava ([2a02:8308:a00c:e200:b655:ff13:e355:16a3])
-        by smtp.gmail.com with ESMTPSA id 5b1f17b1804b1-490e532c778sm35669155e9.14.2026.06.11.02.37.24
+        by smtp.gmail.com with ESMTPSA id ffacd0b85a97d-4601f2dcae2sm85188717f8f.6.2026.06.11.02.37.30
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Thu, 11 Jun 2026 02:37:24 -0700 (PDT)
+        Thu, 11 Jun 2026 02:37:30 -0700 (PDT)
 From: Jiri Olsa <olsajiri@gmail.com>
 X-Google-Original-From: Jiri Olsa <jolsa@kernel.org>
-Date: Thu, 11 Jun 2026 11:37:22 +0200
+Date: Thu, 11 Jun 2026 11:37:28 +0200
 To: sashiko-reviews@lists.linux.dev
 Cc: bpf@vger.kernel.org
-Subject: Re: [PATCHv2 bpf-next 5/6] selftests/bpf: Add uprobe_multi path_fd
- fail tests
-Message-ID: <aiqB0mSXsFTryaYz@krava>
-References: <20260610143627.804790-6-jolsa@kernel.org>
- <20260610144822.32E831F00893@smtp.kernel.org>
+Subject: Re: [PATCHv2 bpf-next 3/6] libbpf: Add path_fd to struct
+ bpf_link_create_opts
+Message-ID: <aiqB2PK0ZzuJNIG9@krava>
+References: <20260610143627.804790-4-jolsa@kernel.org>
+ <20260610145019.7F4791F00893@smtp.kernel.org>
 Precedence: bulk
 X-Mailing-List: sashiko-reviews@lists.linux.dev
 List-Id: <sashiko-reviews.lists.linux.dev>
@@ -76,70 +76,59 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=iso-8859-1
 Content-Disposition: inline
 Content-Transfer-Encoding: 8bit
-In-Reply-To: <20260610144822.32E831F00893@smtp.kernel.org>
+In-Reply-To: <20260610145019.7F4791F00893@smtp.kernel.org>
 
-On Wed, Jun 10, 2026 at 02:48:21PM +0000, sashiko-bot@kernel.org wrote:
+On Wed, Jun 10, 2026 at 02:50:18PM +0000, sashiko-bot@kernel.org wrote:
 > Thank you for your contribution! Sashiko AI review found 1 potential issue(s) to consider:
-> - [Low] The patch references an undefined struct member `path_fd` and an undeclared macro `BPF_F_UPROBE_MULTI_PATH_FD`, which will cause compilation to fail.
+> - [Low] Compilation fails due to missing `path_fd` in the `uprobe_multi` UAPI struct.
 > --
 > 
-> commit 0e3f7d4f9ed46a64d02a1c29acb4f8e2215cb7c0
+> commit c73ec6f8d6c5a6bb4c8a75f70c333cac0d6d30d4
 > Author: Jiri Olsa <jolsa@kernel.org>
 > 
-> selftests/bpf: Add uprobe_multi path_fd fail tests
+> libbpf: Add path_fd to struct bpf_link_create_opts
 > 
-> This commit adds tests to the attach_api_fails suite to verify that
-> invalid setups using the new path_fd feature in uprobe_multi fail as
-> expected.
+> This commit adds the path_fd field to struct bpf_link_create_opts for
+> uprobe_multi. It passes this new field through the kernel attribute interface.
 > 
-> > diff --git a/tools/testing/selftests/bpf/prog_tests/uprobe_multi_test.c b/tools/testing/selftests/bpf/prog_tests/uprobe_multi_test.c
-> > --- a/tools/testing/selftests/bpf/prog_tests/uprobe_multi_test.c
-> > +++ b/tools/testing/selftests/bpf/prog_tests/uprobe_multi_test.c
-> > @@ -536,7 +536,37 @@ static void test_attach_api_fails(void)
-> 
-> [ ... ]
-> 
-> > -	ASSERT_EQ(link_fd, -EINVAL, "pid_is_wrong");
-> > +	if (!ASSERT_EQ(link_fd, -EINVAL, "pid_is_wrong"))
-> > +		goto cleanup;
-> > +
-> > +	/* wrong path_fd */
-> > +	LIBBPF_OPTS_RESET(opts,
-> > +		.uprobe_multi.path = NULL,
-> > +		.uprobe_multi.path_fd = -1,
-> > +		.uprobe_multi.flags = BPF_F_UPROBE_MULTI_PATH_FD,
+> > diff --git a/tools/lib/bpf/bpf.c b/tools/lib/bpf/bpf.c
+> > index f37e3416f61a5..96819c082c772 100644
+> > --- a/tools/lib/bpf/bpf.c
+> > +++ b/tools/lib/bpf/bpf.c
+> > @@ -842,6 +842,7 @@ int bpf_link_create(int prog_fd, int target_fd,
+> >  		attr.link_create.uprobe_multi.ref_ctr_offsets = ptr_to_u64(OPTS_GET(opts, uprobe_multi.ref_ctr_offsets, 0));
+> >  		attr.link_create.uprobe_multi.cookies = ptr_to_u64(OPTS_GET(opts, uprobe_multi.cookies, 0));
+> >  		attr.link_create.uprobe_multi.pid = OPTS_GET(opts, uprobe_multi.pid, 0);
+> > +		attr.link_create.uprobe_multi.path_fd = OPTS_GET(opts, uprobe_multi.path_fd, 0);
 > 
 > [Severity: Low]
-> Does this commit depend on a missing prerequisite patch? 
+> Will this assignment cause a build failure?
 > 
-> The path_fd member and BPF_F_UPROBE_MULTI_PATH_FD macro do not appear to be
-> defined in the current tree's bpf_link_create_opts struct or UAPI headers,
-> which will cause a compilation failure here.
+> Looking at the UAPI header in tools/include/uapi/linux/bpf.h, the
+> uprobe_multi struct inside union bpf_attr doesn't appear to have a path_fd
+> member:
 
-it compiles fine, it was added in this commit:
-  bpf: Add support to specify uprobe_multi target via file descriptor
+compiles fine, path_fd was added in previous patch
 
 jirka
 
+
 > 
-> > +		.uprobe_multi.offsets = (unsigned long *)&offset,
-> > +		.uprobe_multi.cnt = 1,
-> > +	);
-> > +
-> > +	link_fd = bpf_link_create(prog_fd, 0, BPF_TRACE_UPROBE_MULTI, &opts);
-> > +	if (!ASSERT_ERR(link_fd, "link_fd"))
-> > +		goto cleanup;
-> > +	if (!ASSERT_EQ(link_fd, -EBADF, "path_fd_is_wrong"))
-> > +		goto cleanup;
-> > +
-> > +	/* path and path_fd both set with BPF_F_UPROBE_MULTI_PATH_FD flag */
-> > +	LIBBPF_OPTS_RESET(opts,
-> > +		.uprobe_multi.path = path,
-> > +		.uprobe_multi.path_fd = 1,
-> > +		.uprobe_multi.flags = BPF_F_UPROBE_MULTI_PATH_FD,
-> > +		.uprobe_multi.offsets = (unsigned long *)&offset,
-> > +		.uprobe_multi.cnt = 1,
-> > +	);
+> 	struct {
+> 		__aligned_u64	path;
+> 		__aligned_u64	offsets;
+> 		__aligned_u64	ref_ctr_offsets;
+> 		__aligned_u64	cookies;
+> 		__u32		cnt;
+> 		__u32		flags;
+> 		__u32		pid;
+> 	} uprobe_multi;
+> 
+> Should the path_fd member be added to the UAPI bpf_attr union as well?
+> 
+> >  		if (!OPTS_ZEROED(opts, uprobe_multi))
+> >  			return libbpf_err(-EINVAL);
+> >  		break;
 > 
 > -- 
-> Sashiko AI review · https://sashiko.dev/#/patchset/20260610143627.804790-6-jolsa@kernel.org?part=1
+> Sashiko AI review · https://sashiko.dev/#/patchset/20260610143627.804790-4-jolsa@kernel.org?part=1
