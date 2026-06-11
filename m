@@ -1,259 +1,206 @@
-Received: from mgamail.intel.com (mgamail.intel.com [198.175.65.18])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-pf1-f177.google.com (mail-pf1-f177.google.com [209.85.210.177])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0162C3290C7
-	for <sashiko-reviews@lists.linux.dev>; Thu, 11 Jun 2026 17:42:59 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=fail smtp.client-ip=198.175.65.18
-ARC-Seal:i=2; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1781199781; cv=fail; b=fQQGA9xR3TnKK2u0alE1tKRIw04HFGAPlN37se424MzFG+x+ZMP7ZOhN3/VSGChIk0bql/xwTxKDu4uLrwDB6ar67xIhURrNf8hQY6xFpQ2BdsJ7V2i2JbdBBqSk/ecLffQbh7mi/7hkAglJvSalo5o+cBicfO6YsfWSrz4s8KY=
-ARC-Message-Signature:i=2; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1781199781; c=relaxed/simple;
-	bh=8naJOTZhM6x/wqqHbyqH9UU9MLixZ+e3y+DsF27iR00=;
-	h=Date:From:To:CC:Subject:Message-ID:References:Content-Type:
-	 Content-Disposition:In-Reply-To:MIME-Version; b=rNjL+o5uCJB91+OBcj3vNsxoSr4HLWJtbugK13jLEXBvxBuEjvjN9kA7G+8bhioPwYJRTTo64TJxQihEIo/iNhLyz62sYw8n1asti9kU4TL9FBPrc3qXvTsYes7D0n1GTT6raKzqi3X3LMndQsgNPcI7AGijU1rpHws2lQqa8as=
-ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=intel.com; spf=pass smtp.mailfrom=intel.com; dkim=pass (2048-bit key) header.d=intel.com header.i=@intel.com header.b=nabndgqr; arc=fail smtp.client-ip=198.175.65.18
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=intel.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=intel.com
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 22F8A391E6D
+	for <sashiko-reviews@lists.linux.dev>; Thu, 11 Jun 2026 17:44:26 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.210.177
+ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
+	t=1781199868; cv=none; b=K/6IchzCPaAJA6iYQDd67Wwoytplom4RZl0OQZwUUSe7ScZQwyT82dxE3l4/gE0hAK3S4GAlWGFxBmemJsizqZiZ7+SkJg3iYToHrBd3luWwGQMXfFpnABaHNSGw2G1sl2e30J7xv6q16lzUcKw1gNJq+Yw3uwLNwdduoIeXdR4=
+ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
+	s=arc-20240116; t=1781199868; c=relaxed/simple;
+	bh=9eF9y6klp9yUkeVGfh/71CAzDVsb592/NSi8sGVGmAg=;
+	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
+	 In-Reply-To:Content-Type; b=DnNAAJXZ/Buxm5EzHwnsd0ZAKQae+eOoUSJ5WUZsBO88LtvoZday8VxMhxft/vdCzG9ethYk+/tIpkNZEYSLuJsQvqRlTjKZm/ucSeuOjnrEC2A+3HehC/XimDqaROH/CEZhLFzz9InBtG+xzxZs0bkwNU3yXU/yJ+kqC/2qu5k=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=roeck-us.net; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=LkMnBz36; arc=none smtp.client-ip=209.85.210.177
+Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=roeck-us.net
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=intel.com header.i=@intel.com header.b="nabndgqr"
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
-  d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
-  t=1781199780; x=1812735780;
-  h=date:from:to:cc:subject:message-id:references:
-   content-transfer-encoding:in-reply-to:mime-version;
-  bh=8naJOTZhM6x/wqqHbyqH9UU9MLixZ+e3y+DsF27iR00=;
-  b=nabndgqruROwsF8NAwWamOUrYeGjKTEMAIGOJJXzgTqiDtJOoGwTv7jb
-   zY6CvfX52Ms9tH+8gz0zruayW8CtM1luHqUKG1rrRWgPVoOy+gM2clREp
-   4ETiH0ZiSbTz0J9Y2Id78/LoemkGGMfijWHU/ZMtaYMvXHycvpxAliLzh
-   kPoy/b8d1oe6vBp9PL8yjpJYT+YSxUxxv1onmwlnBzpJxMjlWQF3fgNx/
-   y215zDZs3rB7NCsVPEUyMuXy+9eHXpSs6bOQ14Bta3WcrqVtNts8JnCus
-   InG+qL8raQudblQOUjlIheZ9R1MzNOHrXFWH7wpSBM0VYytHQL98Dv+9s
-   A==;
-X-CSE-ConnectionGUID: sBE0ESPoQ9W+r8AsL4z1Yw==
-X-CSE-MsgGUID: m7J9IOv6R/y5GqjfoaYMoA==
-X-IronPort-AV: E=McAfee;i="6800,10657,11813"; a="82083898"
-X-IronPort-AV: E=Sophos;i="6.24,199,1774335600"; 
-   d="scan'208";a="82083898"
-Received: from fmviesa005.fm.intel.com ([10.60.135.145])
-  by orvoesa110.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 11 Jun 2026 10:43:00 -0700
-X-CSE-ConnectionGUID: EJxz/wVlSK2eBBWRKoDmyQ==
-X-CSE-MsgGUID: R9ROnrTvQ3OdrPFW9ktn6w==
-X-ExtLoop1: 1
-X-IronPort-AV: E=Sophos;i="6.24,199,1774335600"; 
-   d="scan'208";a="251643366"
-Received: from fmsmsx903.amr.corp.intel.com ([10.18.126.92])
-  by fmviesa005.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 11 Jun 2026 10:42:59 -0700
-Received: from FMSMSX903.amr.corp.intel.com (10.18.126.92) by
- fmsmsx903.amr.corp.intel.com (10.18.126.92) with Microsoft SMTP Server
- (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
- 15.2.2562.37; Thu, 11 Jun 2026 10:42:59 -0700
-Received: from fmsedg901.ED.cps.intel.com (10.1.192.143) by
- FMSMSX903.amr.corp.intel.com (10.18.126.92) with Microsoft SMTP Server
- (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
- 15.2.2562.37 via Frontend Transport; Thu, 11 Jun 2026 10:42:59 -0700
-Received: from BL0PR03CU003.outbound.protection.outlook.com (52.101.53.0) by
- edgegateway.intel.com (192.55.55.81) with Microsoft SMTP Server
- (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
- 15.2.2562.37; Thu, 11 Jun 2026 10:42:58 -0700
-ARC-Seal: i=1; a=rsa-sha256; s=arcselector10001; d=microsoft.com; cv=none;
- b=uzoKbc71L4oVNjiPT+07IGs5dM/zbReRPe/okN3MzAvFXMj5Np/fU4uVq/cUjDAkf4ec7M8J/Mbx14j0Z7iLitr1uHIPpacID24778CJrt1xp9PK25nyBSjMJwyNpo6CSBNPuyAqK6JdqvneSDqk10GQepvsUl9+VeRAJi9BCwSJur8+HWpMIs6Pff+guZVNFHYUokhkI6MinHYtzO1SYu1sxtrKLqr4/kq2hPzESxJxklCG6QkOr+4V5zzr+DfxxcSHzoeFI7vuldqmlJvnMqLxbyWTF3Srf5URIwM79o6/OEoqgBU4tWdW8WcCgxy0FTGeUeuk/UHsca5agwzLTQ==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com;
- s=arcselector10001;
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
- bh=K1imyn5+BXCj4wKdRYHVpRXmv0/82Jh8xDpN6qkSj5w=;
- b=wElOb2tU8OoCmOH7cK21Q6GcrS6FwKwyWMxDvs50zR5Zz/eY9Y4jLSZwlrRtVRy13aka1dYtTJqXgA15kzO/dQZc0JNfsMy1O0b+1cd9k73lw8cxFk/ugcTlWlnsgamGEIThqSMrSnJjYnbuMFK+2izje7AEkCZuXHANUjvVoFtcF9TPlbHJvZhJs/p18EoolFmRVgYhg/tlIYqbJGSx1vx/dkSCotDHDLich9QdVtNdjpFRnuBKFFxdukoys5nhaxmvwn8O4uH7vURwX/g+Vl+VPUqyqYJ+AlS+2RZ7K4BunVjHpBAe/7kPxIJoW9fE0fUHRAjwnROOff51BOjr2g==
-ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
- smtp.mailfrom=intel.com; dmarc=pass action=none header.from=intel.com;
- dkim=pass header.d=intel.com; arc=none
-Authentication-Results: dkim=none (message not signed)
- header.d=none;dmarc=none action=none header.from=intel.com;
-Received: from DS4PPF0BAC23327.namprd11.prod.outlook.com (2603:10b6:f:fc02::9)
- by CH3PR11MB7772.namprd11.prod.outlook.com (2603:10b6:610:120::5) with
- Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.21.113.13; Thu, 11 Jun
- 2026 17:42:50 +0000
-Received: from DS4PPF0BAC23327.namprd11.prod.outlook.com
- ([fe80::a195:49d4:38c5:3891]) by DS4PPF0BAC23327.namprd11.prod.outlook.com
- ([fe80::a195:49d4:38c5:3891%4]) with mapi id 15.21.0092.016; Thu, 11 Jun 2026
- 17:42:50 +0000
-Date: Thu, 11 Jun 2026 10:42:47 -0700
-From: Alison Schofield <alison.schofield@intel.com>
-To: <sashiko-reviews@lists.linux.dev>
-CC: <linux-cxl@vger.kernel.org>
-Subject: Re: [PATCH 1/6] cxl/region: Validate interleave selector bits
-Message-ID: <airzlycL59Eij39H@aschofie-mobl2.lan>
-References: <1a8a115cee9eddf5511e4a75f6dcb86783f0fa1e.1780095671.git.alison.schofield@intel.com>
- <20260530001915.7A7B21F00893@smtp.kernel.org>
-Content-Type: text/plain; charset="iso-8859-1"
-Content-Disposition: inline
-Content-Transfer-Encoding: 8bit
-In-Reply-To: <20260530001915.7A7B21F00893@smtp.kernel.org>
-X-ClientProxiedBy: SJ0PR13CA0089.namprd13.prod.outlook.com
- (2603:10b6:a03:2c4::34) To DS4PPF0BAC23327.namprd11.prod.outlook.com
- (2603:10b6:f:fc02::9)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="LkMnBz36"
+Received: by mail-pf1-f177.google.com with SMTP id d2e1a72fcca58-842cd900ee0so113181b3a.2
+        for <sashiko-reviews@lists.linux.dev>; Thu, 11 Jun 2026 10:44:26 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20251104; t=1781199866; x=1781804666; darn=lists.linux.dev;
+        h=content-transfer-encoding:in-reply-to:autocrypt:from
+         :content-language:references:cc:to:subject:user-agent:mime-version
+         :date:message-id:sender:from:to:cc:subject:date:message-id:reply-to;
+        bh=W93Z3lycQScXGmRNGQfKjAdgicdhZggI74rQJaRLrE4=;
+        b=LkMnBz36VWZUBJt556RiREF8SVEoBBef8ymNd5UP3UWd5PGTbyU9fjlVN02/09V0td
+         CIST5g0GMAJEvXBm3XPY7HIEm6jE/SD0XpabDg+YkUlPe+V7q2vg9mLYY+vvZamA3R0I
+         3E2zUM1zGNAZ+Qif1CY1N0yHRsqEyKcotTxThOwCUgE0/6SNO1zDlbdzXNnB9MWJegVB
+         fPg0hlV9PmeKKA79gyDj+veCxAvoFr9rLmuikwzhw/DcQFjIU/LiaM9+1OVyCX+1K5Z/
+         dI8d5ydNkueIa3RtfF768ytPcGuph1vAmIrjsctcbTKuHQI8Iva/dlbMJAHoaI/ybq+s
+         Z/og==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20251104; t=1781199866; x=1781804666;
+        h=content-transfer-encoding:in-reply-to:autocrypt:from
+         :content-language:references:cc:to:subject:user-agent:mime-version
+         :date:message-id:sender:x-gm-gg:x-gm-message-state:from:to:cc
+         :subject:date:message-id:reply-to;
+        bh=W93Z3lycQScXGmRNGQfKjAdgicdhZggI74rQJaRLrE4=;
+        b=NDes2JzoflCtA9xOLjYbRzUydWXObASrQ+sfRL8wZgqWHcYpR8sW/QnbviUU8DBgiP
+         ETNm+sh7WdKlv6mZ2CxB3Z8xQmjwNb/pFN+FgRIBfaspv0Pr9iqdnv29CHfzfVBVRE9s
+         5vk6KDUd/03bPfqEUmWpqg3P2lRUqRj3K5SXl0omEOkl3lOmyxi4xptZAqZ+OAcDgRU8
+         OVdhAMoCDQY3wAq1TE+8+RM3NiD+9FrWaRa+AqWGJtLcjk0Cppy0+oATmulhLo4ime+l
+         vsiMtLcgHLRWc71N1/hmc65KgvKziM0RfvdOI9APCph7nOJ6xY0RSGZ+mGMf8EklwweM
+         KoUQ==
+X-Gm-Message-State: AOJu0Ywz/bkFsKrk4Bf8Aqhl6/jLemdI9kNY/6F7bTN0yHr5tTafW5Tf
+	HZ+1ujNQ1ebJe0+mhN0I2K5sjAvkeNlU25vyqBVQfakXdY4pWizfVIhejiuJjOVk
+X-Gm-Gg: Acq92OGK3RbrOg2DZhTkkn4c+Qknbs9uyLlWcGGGjziBpUFiSuyPrWKj3DO0rWi4VV1
+	q10ntbdreQ5VypKYQXL7Y2DSXa4LlS54s29vPTtvG+pl5tMJgA7aBjY+yxACjtRVGFu+IJEZ107
+	iHj32ki325KGCiqzzA2rpKiKBHTZF1CfZxjwimXh83SPD1gwyzH+MQOQXbhm5KAKjKPOXIpJEGy
+	GPcuAVa35gs07H8SShxnGoNkRcw6m1itys/AbeKsYzv6zuyq2nfzXPfPSqQkLFWDBVi6APN8y18
+	0gAq8HHhTDnxyLd+psOCym4Q9BhplUIzDolGi2qTDPPbDt1lsu/LgHMg4o7I4w6t4h4kbPKKv2t
+	P51YjEOJmI+/ITA6SzcfCSUWDzIH3lM3Cx2D+1O/x1uuLgM1v8vzK4j+aZF3NqKU+g4ugptaBjD
+	G2fM6IPBAEt/hwv+ZBPp/pVKKTxKi8JjX0TUWAUAlABMxEWJpp56RxfXGsplna9j1spD6jIOFR
+X-Received: by 2002:a05:6a20:3d09:b0:3a1:90ef:7e46 with SMTP id adf61e73a8af0-3b5e33a2586mr4609567637.33.1781199866394;
+        Thu, 11 Jun 2026 10:44:26 -0700 (PDT)
+Received: from ?IPV6:2600:1700:e321:62f0:da43:aeff:fecc:bfd5? ([2600:1700:e321:62f0:da43:aeff:fecc:bfd5])
+        by smtp.gmail.com with ESMTPSA id 41be03b00d2f7-c8658811b30sm2340615a12.25.2026.06.11.10.44.25
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Thu, 11 Jun 2026 10:44:25 -0700 (PDT)
+Sender: Guenter Roeck <groeck7@gmail.com>
+Message-ID: <5bb4e945-7030-48b0-9cdd-4cf4a3866a07@roeck-us.net>
+Date: Thu, 11 Jun 2026 10:44:24 -0700
 Precedence: bulk
 X-Mailing-List: sashiko-reviews@lists.linux.dev
 List-Id: <sashiko-reviews.lists.linux.dev>
 List-Subscribe: <mailto:sashiko-reviews+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:sashiko-reviews+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-X-MS-PublicTrafficType: Email
-X-MS-TrafficTypeDiagnostic: DS4PPF0BAC23327:EE_|CH3PR11MB7772:EE_
-X-MS-Office365-Filtering-Correlation-Id: f852db4c-86a3-4ff8-8f8d-08dec7e0dbaa
-X-MS-Exchange-SenderADCheck: 1
-X-MS-Exchange-AntiSpam-Relay: 0
-X-Microsoft-Antispam: BCL:0;ARA:13230040|1800799024|376014|23010399003|366016|4143699003|56012099006|11063799006|22082099003|18002099003;
-X-Microsoft-Antispam-Message-Info: BJoyqScS/5wyIqM1W2w9lLKY9yBwftNBcSO1nMo28pkprcwoN2y+iu8Roy29sZ8JupkEX315ucEjpGnxijuhfVlAkCrhLpv3ZQJQ2utHhR/BnPLn9HHlO5sqwi7GrOYxeiU1MJ6PKIej3vsOLS6uChcZ6di8XqYF5iNCT3u7LRTl7mwru+qF57vE4vXFyAVVtBalbHi0HCXR0L/9DfdvuZ/XfMsNijQvhKBbiET03iqur8gN5KGkDkO+lKxqEpdEyAs6BypkCCtqi8sJVJ0R/y5l27Iw9V04eqjoJcT/RnTtGlJsFY+MtTjsFSkZq/VJ6NWIsMKu0bxGQ1C6rUbgJLewa14MTq3doMwLp+sF3FPuBx/6m6223tkqlt6HPAwd4/vXAm4nJezEmGT5V1VahOErSSebjHvCqx6Q/bT+pddpYH6fBMq09l7mrTk+hm1b13KnmT4OcmfS36DRtALQ9pT3lvm4D1y/tRVxBXhDJkr+Vqiw6eyR18f+5Gdp7INtpm6kn5t8zKlI3dZAbNDhhS1oVp7Cn4ZCG3h12WRfaK8j7p1WoSAT558l0nFQzYB/FmKYZyg6R2Y8bIm1fz81DO3KJopLqAv/DoWYCvBKmkGl047Ep3JK0Xxm9CjK9oUbPn1/qGM2wO782N4gISASEg==
-X-Forefront-Antispam-Report: CIP:255.255.255.255;CTRY:;LANG:en;SCL:1;SRV:;IPV:NLI;SFV:NSPM;H:DS4PPF0BAC23327.namprd11.prod.outlook.com;PTR:;CAT:NONE;SFS:(13230040)(1800799024)(376014)(23010399003)(366016)(4143699003)(56012099006)(11063799006)(22082099003)(18002099003);DIR:OUT;SFP:1101;
-X-MS-Exchange-AntiSpam-MessageData-ChunkCount: 1
-X-MS-Exchange-AntiSpam-MessageData-0: =?iso-8859-1?Q?IeAmPTLsmbQliK/4Gm7mj7t4i4/KLobryjKmuZhlXV94SuttXzyq/0qtjg?=
- =?iso-8859-1?Q?/76Pic+BwLhxdZ6AtlhVgEgc+rVn0+8kgLSv7kpzBhv+iK4zz+q46H9Sql?=
- =?iso-8859-1?Q?c5jwEwKKbZnlqJONAa0vuuSjPtARG5AtRAvkbd7J0wP6tXuC1BczPpyeD9?=
- =?iso-8859-1?Q?0qkqIHujiX3wYGsDqYH3s4PlrV5tGNQAYgMCA+D9hv73NbvEO/8gNfjAPz?=
- =?iso-8859-1?Q?TGvpizD5dETarEOudLAbYSIafDah+335W9MU49ON74pkB4hlEfEPYiohth?=
- =?iso-8859-1?Q?SX19bT/qL1UVpjr8uh6EIsU2J8MzEWf/wDP5sU58p42f0qOvRGy9LDgCO1?=
- =?iso-8859-1?Q?MxBzbMBjtM3nn7o+0c2oP1tX9C08Y0U8mFpkbWRH913aoJ0JkbioldThMz?=
- =?iso-8859-1?Q?cTqIRhLJ56EBAr+gjp2KaxUPMT0zVG4LVp7HqxL14ygNOwPKCoHDNRX25d?=
- =?iso-8859-1?Q?ssVoYb16SDUrlLwwGKZgy7lSDnMNFqeulp3YITM+4A8Gou2sYJecmN9USe?=
- =?iso-8859-1?Q?ECVwcLU/W6xHfx5XyKAgQJzLl19FkTkpn8DvP63EFT3RuiNZURdcCVl9H2?=
- =?iso-8859-1?Q?taqgCRF/CdDwKwqQP/AufVH++8BUH1MRxSn5dtqeTgHwkvWwaxmPVkH9me?=
- =?iso-8859-1?Q?T4BASBuX6IcIAfVsXT9iT47p/rnjnO9uVPOTkMCyisG4XD82f8hli8COv6?=
- =?iso-8859-1?Q?j2QRD7O3kxx5MBa8k97tOliQkDI2eHCPZ4GZvI+gGaUydomZSeV77xQx3f?=
- =?iso-8859-1?Q?HoRLWp6Vo3Kh2Ly7WKm0XFQrwlbTapIs5aS1Q9Ie1ykrw8lW6wjTFc14u+?=
- =?iso-8859-1?Q?qhSL5il7Hr/O+GbxK7POjtSRtNr5A074jUn0kHuPJryVtVxivC1enJhaGF?=
- =?iso-8859-1?Q?WHKmzICYItJdr0ML4Snz+jm+/jPa5et4vuuKyB+1vjFnq0vhlPxLJHxU2G?=
- =?iso-8859-1?Q?WtQ3UlJNfqg46M1yshY14p5hKT4AyplXsqSojBl/fU5UTCaeFIUNIQPQAn?=
- =?iso-8859-1?Q?eQN3rBcb4lJdogkLr/3PYRz6gywMabuU1f3qWt8vI8uvSO8DJujsYQANaT?=
- =?iso-8859-1?Q?U5DmPHEGKrAh1ExgIqlQIeZjhdEo/fhbhG5z9AbLelo+QLNz41ofEn39kO?=
- =?iso-8859-1?Q?rLWgDL/APWBSwFglidcvd4RmomOz9aN/l0lWwzt4pocrIAK+77dSPcvDyh?=
- =?iso-8859-1?Q?IOyNATmIhmZ66wzDmFI14MyYwpNSuImdDRNNG3QMQGWg1Xqe/xKQsQcGQA?=
- =?iso-8859-1?Q?DgmtVyk/jAuFptWwoT79PC3kkg+ezKIO9Df5ODrWHagDuAzodRecT8bhhW?=
- =?iso-8859-1?Q?1qkyTMFbdC7lhyYunNaTiXheINOWpydTLLECJ8NRfhSH+JeFak4hXs48oI?=
- =?iso-8859-1?Q?qx6ulK2myPoFIPJXtjs9QBVgxPGQHhHmhLPxtQgDzZeUugYcN/8/IeOKQj?=
- =?iso-8859-1?Q?LZbuJaHw+cGaKUN7cgaESg/s8+4TTlCGYHukG0gIr8jV91Z93agGwLDday?=
- =?iso-8859-1?Q?dx4lclnRtlmEqIw/0E0kKGQauKaKOTe7CbPjgGj9RNdgFI8uQ9j7IjPkjt?=
- =?iso-8859-1?Q?IpT+e5SG5YnkMkM9PY+xhh1cE8W15VViueyx9JoXpsU33Y4937QIyWyJGe?=
- =?iso-8859-1?Q?x7FVF58dIOFYjCIZX/0y8w/Wbns9WFibzUgue9zvMvzByu+sYP5VNn44SF?=
- =?iso-8859-1?Q?mZkL5PmgHS/Gycyb0/OZ9px5THgMo0+B2Gg1oCIMDBlLFsE0NepyplXio1?=
- =?iso-8859-1?Q?pqwCqDHMU9VgohPPG8+PgBpqIuEbZmwVwoJdgnesS/yUfAi+EWxhIh9E65?=
- =?iso-8859-1?Q?cslrppUdwLo39aA93AWCW6tE39+ka6A=3D?=
-X-Exchange-RoutingPolicyChecked: Em1+VPPi3sC6w9R+q0w6F7A2a005gQ81pyyIOqvKOO4vw3YPlQa7cVwEjs8n61ER1uqDRdddyzHYfD0R/KRrGJR3/GZs93tHZH/lbHAqSxW/KaFx80HqAtJybmYTjcg9bkpSwCOsNitOqA+shEnBRkvW07yIBa8jkiCBIjwAJ7fExq4riWbp3yE92aK6Hgxse3BG4FJyxYxUn3U5sO4z46aZI0UcM0iaHhk8J5hnvspnm+3blVRuxxQkxJnnU/AF+4Tb6p3FY/Z21Q64Ooq5X6RmrXPai1KU904SBvbA6qp4f4lJMnuBN/jbIu++FcIz1hdbZzUQLY0XUoMgPZoQxQ==
-X-MS-Exchange-CrossTenant-Network-Message-Id: f852db4c-86a3-4ff8-8f8d-08dec7e0dbaa
-X-MS-Exchange-CrossTenant-AuthSource: DS4PPF0BAC23327.namprd11.prod.outlook.com
-X-MS-Exchange-CrossTenant-AuthAs: Internal
-X-MS-Exchange-CrossTenant-OriginalArrivalTime: 11 Jun 2026 17:42:50.6437
- (UTC)
-X-MS-Exchange-CrossTenant-FromEntityHeader: Hosted
-X-MS-Exchange-CrossTenant-Id: 46c98d88-e344-4ed4-8496-4ed7712e255d
-X-MS-Exchange-CrossTenant-MailboxType: HOSTED
-X-MS-Exchange-CrossTenant-UserPrincipalName: OO6HnJFAD8e5B0dUdOmyTz51Qq7xUNw7ZuMw1a9mFdzfWTEq8mgVx6ghdmukzH30lYXq0tCIIlhhvoYpXG8Ezm1ysL5y1/731lUjsONtrJc=
-X-MS-Exchange-Transport-CrossTenantHeadersStamped: CH3PR11MB7772
-X-OriginatorOrg: intel.com
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH v3] hwmon: add a driver for the temp/voltage sensor on
+ PolarFire SoC
+To: Conor Dooley <conor@kernel.org>
+Cc: sashiko-reviews@lists.linux.dev, linux-hwmon@vger.kernel.org
+References: <20260611-blank-footprint-5504b819baec@spud>
+ <20260611151316.685561F00893@smtp.kernel.org>
+ <20260611-disaster-cadmium-91745bc1931d@spud>
+ <4a5f47d6-90ac-4365-b4ae-02d4ca4d31d4@roeck-us.net>
+ <20260611-strained-cadet-7ea5fd2cba19@spud>
+Content-Language: en-US
+From: Guenter Roeck <linux@roeck-us.net>
+Autocrypt: addr=linux@roeck-us.net; keydata=
+ xsFNBE6H1WcBEACu6jIcw5kZ5dGeJ7E7B2uweQR/4FGxH10/H1O1+ApmcQ9i87XdZQiB9cpN
+ RYHA7RCEK2dh6dDccykQk3bC90xXMPg+O3R+C/SkwcnUak1UZaeK/SwQbq/t0tkMzYDRxfJ7
+ nyFiKxUehbNF3r9qlJgPqONwX5vJy4/GvDHdddSCxV41P/ejsZ8PykxyJs98UWhF54tGRWFl
+ 7i1xvaDB9lN5WTLRKSO7wICuLiSz5WZHXMkyF4d+/O5ll7yz/o/JxK5vO/sduYDIlFTvBZDh
+ gzaEtNf5tQjsjG4io8E0Yq0ViobLkS2RTNZT8ICq/Jmvl0SpbHRvYwa2DhNsK0YjHFQBB0FX
+ IdhdUEzNefcNcYvqigJpdICoP2e4yJSyflHFO4dr0OrdnGLe1Zi/8Xo/2+M1dSSEt196rXaC
+ kwu2KgIgmkRBb3cp2vIBBIIowU8W3qC1+w+RdMUrZxKGWJ3juwcgveJlzMpMZNyM1jobSXZ0
+ VHGMNJ3MwXlrEFPXaYJgibcg6brM6wGfX/LBvc/haWw4yO24lT5eitm4UBdIy9pKkKmHHh7s
+ jfZJkB5fWKVdoCv/omy6UyH6ykLOPFugl+hVL2Prf8xrXuZe1CMS7ID9Lc8FaL1ROIN/W8Vk
+ BIsJMaWOhks//7d92Uf3EArDlDShwR2+D+AMon8NULuLBHiEUQARAQABzTJHdWVudGVyIFJv
+ ZWNrIChMaW51eCBhY2NvdW50KSA8bGludXhAcm9lY2stdXMubmV0PsLBgQQTAQIAKwIbAwYL
+ CQgHAwIGFQgCCQoLBBYCAwECHgECF4ACGQEFAmgrMyQFCSbODQkACgkQyx8mb86fmYGcWRAA
+ oRwrk7V8fULqnGGpBIjp7pvR187Yzx+lhMGUHuM5H56TFEqeVwCMLWB2x1YRolYbY4MEFlQg
+ VUFcfeW0OknSr1s6wtrtQm0gdkolM8OcCL9ptTHOg1mmXa4YpW8QJiL0AVtbpE9BroeWGl9v
+ 2TGILPm9mVp+GmMQgkNeCS7Jonq5f5pDUGumAMguWzMFEg+Imt9wr2YA7aGen7KPSqJeQPpj
+ onPKhu7O/KJKkuC50ylxizHzmGx+IUSmOZxN950pZUFvVZH9CwhAAl+NYUtcF5ry/uSYG2U7
+ DCvpzqOryJRemKN63qt1bjF6cltsXwxjKOw6CvdjJYA3n6xCWLuJ6yk6CAy1Ukh545NhgBAs
+ rGGVkl6TUBi0ixL3EF3RWLa9IMDcHN32r7OBhw6vbul8HqyTFZWY2ksTvlTl+qG3zV6AJuzT
+ WdXmbcKN+TdhO5XlxVlbZoCm7ViBj1+PvIFQZCnLAhqSd/DJlhaq8fFXx1dCUPgQDcD+wo65
+ qulV/NijfU8bzFfEPgYP/3LP+BSAyFs33y/mdP8kbMxSCjnLEhimQMrSSo/To1Gxp5C97fw5
+ 3m1CaMILGKCmfI1B8iA8zd8ib7t1Rg0qCwcAnvsM36SkrID32GfFbv873bNskJCHAISK3Xkz
+ qo7IYZmjk/IJGbsiGzxUhvicwkgKE9r7a1rOwU0ETofVZwEQALlLbQeBDTDbwQYrj0gbx3bq
+ 7kpKABxN2MqeuqGr02DpS9883d/t7ontxasXoEz2GTioevvRmllJlPQERVxM8gQoNg22twF7
+ pB/zsrIjxkE9heE4wYfN1AyzT+AxgYN6f8hVQ7Nrc9XgZZe+8IkuW/Nf64KzNJXnSH4u6nJM
+ J2+Dt274YoFcXR1nG76Q259mKwzbCukKbd6piL+VsT/qBrLhZe9Ivbjq5WMdkQKnP7gYKCAi
+ pNVJC4enWfivZsYupMd9qn7Uv/oCZDYoBTdMSBUblaLMwlcjnPpOYK5rfHvC4opxl+P/Vzyz
+ 6WC2TLkPtKvYvXmdsI6rnEI4Uucg0Au/Ulg7aqqKhzGPIbVaL+U0Wk82nz6hz+WP2ggTrY1w
+ ZlPlRt8WM9w6WfLf2j+PuGklj37m+KvaOEfLsF1v464dSpy1tQVHhhp8LFTxh/6RWkRIR2uF
+ I4v3Xu/k5D0LhaZHpQ4C+xKsQxpTGuYh2tnRaRL14YMW1dlI3HfeB2gj7Yc8XdHh9vkpPyuT
+ nY/ZsFbnvBtiw7GchKKri2gDhRb2QNNDyBnQn5mRFw7CyuFclAksOdV/sdpQnYlYcRQWOUGY
+ HhQ5eqTRZjm9z+qQe/T0HQpmiPTqQcIaG/edgKVTUjITfA7AJMKLQHgp04Vylb+G6jocnQQX
+ JqvvP09whbqrABEBAAHCwWUEGAECAA8CGwwFAmgrMyQFCSbODQkACgkQyx8mb86fmYHlgg/9
+ H5JeDmB4jsreE9Bn621wZk7NMzxy9STxiVKSh8Mq4pb+IDu1RU2iLyetCY1TiJlcxnE362kj
+ njrfAdqyPteHM+LU59NtEbGwrfcXdQoh4XdMuPA5ADetPLma3YiRa3VsVkLwpnR7ilgwQw6u
+ dycEaOxQ7LUXCs0JaGVVP25Z2hMkHBwx6BlW6EZLNgzGI2rswSZ7SKcsBd1IRHVf0miwIFYy
+ j/UEfAFNW+tbtKPNn3xZTLs3quQN7GdYLh+J0XxITpBZaFOpwEKV+VS36pSLnNl0T5wm0E/y
+ scPJ0OVY7ly5Vm1nnoH4licaU5Y1nSkFR/j2douI5P7Cj687WuNMC6CcFd6j72kRfxklOqXw
+ zvy+2NEcXyziiLXp84130yxAKXfluax9sZhhrhKT6VrD45S6N3HxJpXQ/RY/EX35neH2/F7B
+ RgSloce2+zWfpELyS1qRkCUTt1tlGV2p+y2BPfXzrHn2vxvbhEn1QpQ6t+85FKN8YEhJEygJ
+ F0WaMvQMNrk9UAUziVcUkLU52NS9SXqpVg8vgrO0JKx97IXFPcNh0DWsSj/0Y8HO/RDkGXYn
+ FDMj7fZSPKyPQPmEHg+W/KzxSSfdgWIHF2QaQ0b2q1wOSec4Rti52ohmNSY+KNIW/zODhugJ
+ np3900V20aS7eD9K8GTU0TGC1pyz6IVJwIE=
+In-Reply-To: <20260611-strained-cadet-7ea5fd2cba19@spud>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
 
-On Sat, May 30, 2026 at 12:19:14AM +0000, sashiko-bot@kernel.org wrote:
-> Thank you for your contribution! Sashiko AI review found 1 potential issue(s) to consider:
-> - [High] The patch removes interleave granularity validation for auto-discovered regions, leaving the current port's granularity completely unvalidated.
-> --
+On 6/11/26 09:57, Conor Dooley wrote:
+> On Thu, Jun 11, 2026 at 09:41:49AM -0700, Guenter Roeck wrote:
+>> On Thu, Jun 11, 2026 at 05:21:41PM +0100, Conor Dooley wrote:
+>>> On Thu, Jun 11, 2026 at 03:13:16PM +0000, sashiko-bot@kernel.org wrote:
+>>>> Thank you for your contribution! Sashiko AI review found 3 potential issue(s) to consider:
+>>>> - [Medium] Negative values written to `update_interval` are incorrectly clamped to the maximum interval instead of returning an error or clamping to 0.
+>>>> - [Medium] Reading `update_interval` inconsistently under-reports the configured value due to integer division truncation.
+>>>> - [Medium] Hardware sensors are enabled in `probe` but are not disabled on probe failure or driver unbind.
+>>>> --
+>>>>
+>>>> commit 91a403f5c5eef9fbcfcab3857179dc2f03ad3c89
+>>>> Author: Lars Randers <lranders@mail.dk>
+>>>>
+>>>> hwmon: add a driver for the temp/voltage sensor on PolarFire SoC
+>>>>
+>>>> Add a driver for the temperature and voltage sensors on PolarFire SoC.
+>>>> The temperature reports how hot the die is, and the voltages are the
+>>>> SoC's 1.05, 1.8 and 2.5 volt rails respectively.
+>>>>
+>>>>> diff --git a/drivers/hwmon/tvs-mpfs.c b/drivers/hwmon/tvs-mpfs.c
+>>>>> new file mode 100644
+>>>>> index 0000000000000..48de8d98b3444
+>>>>> --- /dev/null
+>>>>> +++ b/drivers/hwmon/tvs-mpfs.c
+>>>>
+>>>> [ ... ]
+>>>>
+>>>>> +static int mpfs_tvs_interval_read(struct mpfs_tvs *data, u32 attr, long *val)
+>>>>> +{
+>>>>> +	u32 tmp;
+>>>>> +
+>>>>> +	if (attr != hwmon_chip_update_interval)
+>>>>> +		return -EOPNOTSUPP;
+>>>>> +
+>>>>> +	regmap_read(data->regmap, MPFS_TVS_CTRL, &tmp);
+>>>>> +	*val = FIELD_GET(MPFS_TVS_INTERVAL_MASK, tmp);
+>>>>> +	*val *= MPFS_TVS_INTERVAL_SCALE;
+>>>>> +	*val /= 1000;
+>>>>
+>>>> [Severity: Medium]
+>>>> Will this return an incorrectly truncated value for certain intervals?
+>>>>
+>>>> Since integer division is used both here and in mpfs_tvs_interval_write(),
+>>>> the truncation can cause the readback value to be lower than what was written.
+>>>> For example, writing 7 ms calculates `(7 * 1000) / 32 = 218`. Reading it back
+>>>> computes `(218 * 32) / 1000 = 6` ms.
+>>>>
+>>>> Should DIV_ROUND_CLOSEST be used for these conversions to ensure the value
+>>>> survives the round trip?
+>>>
+>>> Hmm, this is actually a good point that I overlooked.
+>>> What is the desired rounding behaviour here?
+>>> IOW, should asking for 7 ms produce the closest interval less than 7 ms or
+>>> the closest interval greater than 7 ms?
+>>>
+>>> A consistent rounding is better than rounding to the closest IMO, if both
+>>> update_interval and update_interval_us are going to be supported
+>>>
+>>
+>> Not sure what you mean with "consistent rounding". Effectively the current
+> 
+> What I meant was that it would round to an interval that would either be
+> at least (always down) or at most (always up) as frequently as requested.
+> If, for example, the interval was set to 7400 or 7600 us via
+> update_interval_us, and then read back from update_interval, that the
+> rounding used for that would do the same thing as operating entirely via
+> update_interval and always display an interval that was at least as or
+> as most as frequent as the configured value.
+> Rounding closest would of course produce different results for 7400 and
+> 7600, with one being more frequent and one less frequent than reality.
+> 
 
-This will appear fixed in v2:
-- Patch 1,2: Defer the unused selector var store to keep P1 bisectable (Sashiko)
+I must admit that I don't understand what you are trying to say. Either
+case, your driver, your decision to make if and how you want to round.
 
+Thanks,
+Guenter
 
-
-> 
-> commit a2adec3549842d4a09c81232586828cb3b57099d
-> Author: Alison Schofield <alison.schofield@intel.com>
-> 
-> cxl/region: Validate interleave selector bits
-> 
-> This commit updates multi-level interleave validation to account for
-> selector bits from the root toward the current port. It accumulates
-> selector bits, rejects overlaps, and removes the auto-region granularity
-> equality check, relying on the new selector walk instead.
-> 
-> > diff --git a/drivers/cxl/core/region.c b/drivers/cxl/core/region.c
-> > index e50dc716d4e82..87fb1a9f2683f 100644
-> > --- a/drivers/cxl/core/region.c
-> > +++ b/drivers/cxl/core/region.c
-> 
-> [ ... ]
-> 
-> > @@ -1452,28 +1475,69 @@ static int cxl_port_setup_targets(struct cxl_port *port,
-> >  	}
-> >  
-> >  	cxlsd = to_cxl_switch_decoder(&cxld->dev);
-> > -	if (cxl_rr->nr_targets_set) {
-> > -		int i, distance = 1;
-> > -		struct cxl_region_ref *cxl_rr_iter;
-> > +	iw = cxl_rr->nr_targets;
-> 
-> [ ... ]
-> 
-> > +	/* Accumulated bits must fit within the region selector */
-> > +	cxlr_sel = get_selector(p->interleave_ways, p->interleave_granularity);
-> > +	if ((cxlr_sel & selector) != selector) {
-> > +		dev_dbg(&cxlr->dev,
-> > +			"%s:%s: invalid selectors: cxlr %#llx accum %#llx\n",
-> > +			dev_name(port->uport_dev), dev_name(&port->dev),
-> > +			cxlr_sel, selector);
-> > +		return -ENXIO;
-> > +	}
-> >  
-> > -		for (i = 0; i < cxl_rr->nr_targets_set; i++)
-> > +	/* Selector bits still available to this port. */
-> > +	selector = cxlr_sel & ~selector;
-> 
-> [Severity: High]
-> Does this code leave the current port's granularity unvalidated?
-> 
-> The available selector bits are calculated here, but the selector variable
-> appears to act as a dead store and is never used to validate the current
-> port's granularity.
-> 
-> I understand this is fixed in a later patch in the series (commit
-> 0b56c23b98964cba7ba9487773eeb9e989d957d3 cxl/region: Derive port
-> granularity from selector bits). However, shouldn't each patch in the
-> series be self-contained to avoid introducing temporary regressions
-> during bisection?
-> 
-> > +
-> > +	if (cxl_rr->nr_targets_set) {
-> > +		for (int i = 0; i < cxl_rr->nr_targets_set; i++)
-> 
-> [ ... ]
-> 
-> > @@ -1484,87 +1548,20 @@ static int cxl_port_setup_targets(struct cxl_port *port,
-> >  		goto add_target;
-> >  	}
-> 
-> [ ... ]
-> 
-> > -	if (iw > 8 || iw > cxlsd->nr_targets) {
-> > -		dev_dbg(&cxlr->dev,
-> > -			"%s:%s:%s: ways: %d overflows targets: %d\n",
-> > -			dev_name(port->uport_dev), dev_name(&port->dev),
-> > -			dev_name(&cxld->dev), iw, cxlsd->nr_targets);
-> > -		return -ENXIO;
-> > -	}
-> > -
-> >  	if (test_bit(CXL_REGION_F_AUTO, &cxlr->flags)) {
-> >  		if (cxld->interleave_ways != iw ||
-> > -		    (iw > 1 && cxld->interleave_granularity != ig) ||
-> >  		    !spa_maps_hpa(p, &cxld->hpa_range) ||
-> >  		    ((cxld->flags & CXL_DECODER_F_ENABLE) == 0)) {
-> >  			dev_err(&cxlr->dev,
-> 
-> [Severity: High]
-> Is the removal of this explicit granularity check intentional before the
-> functional replacement using the selector mask is fully implemented?
-> 
-> By removing this check and not using the calculated selector mask
-> for the current port in cxl_port_setup_targets(), the lowest switch port's
-> firmware-programmed granularity goes completely unvalidated.
-> 
-> Could this silently accept overlapping or mismatched interleave
-> granularities, potentially causing incorrect CXL memory region routing?
-> 
-> -- 
-> Sashiko AI review · https://sashiko.dev/#/patchset/cover.1780095671.git.alison.schofield@intel.com?part=1
-> 
