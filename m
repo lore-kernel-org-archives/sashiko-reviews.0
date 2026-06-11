@@ -1,117 +1,113 @@
-Received: from m16.mail.163.com (m16.mail.163.com [220.197.31.4])
+Received: from out-172.mta1.migadu.com (out-172.mta1.migadu.com [95.215.58.172])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 661DE33D6F7
-	for <sashiko-reviews@lists.linux.dev>; Thu, 11 Jun 2026 04:43:08 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=220.197.31.4
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 523CC368D7F
+	for <sashiko-reviews@lists.linux.dev>; Thu, 11 Jun 2026 05:05:24 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=95.215.58.172
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1781152992; cv=none; b=PPNmgX4ylzOgArRGaTzonewDTp1dVyC/f8vLbwfyLPUEHPkh6hoY7LbBVqklRk2nZtUbxtPzjQhe5Vj0tXfkerriYvD8vm++9n+0NO4Rb5RC6LXETmhDM9aogeclKFm3Hdnpk5X5MKaOKUHzP/RpyyYbDYRm0EtwaPsL6IvozU8=
+	t=1781154332; cv=none; b=HgB9ky3AcjwTSH1nppzv44onLIeMnULUaGCfw7UZzMSrLemiq5wR2eOtQjY8GL8j+AFHmY7LFH6KWpWLHYXjsAWTxoKT3TUL+umkcTlCXP6o6uOzHZBDuVs4sCPgMj6jqMp1lIAmtTVhkvkG+9hRkF2PJ1OFCIeV/HqhamCzWlQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1781152992; c=relaxed/simple;
-	bh=51fwaAf64FzofFfgwzNCWoO/6ksD1+r+yYyCpLXZNBE=;
+	s=arc-20240116; t=1781154332; c=relaxed/simple;
+	bh=0Vp/CkXo4f4LibD/XuKyhEXDGKM30ok/hlm85tBQI14=;
 	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=RseIQJiSFjhZKSMcORt7d02kvTvA3c6NVdaCvpPT6fS4zRCCKT7s535DENMIsIy5IuQw5jwodH69YwIn8dU5rWHHYN7z8udMHFCxSwL4dp6KTCQ3chWnKSdF1KumCOraP1JmMAvKXAyO5zhzrtw0ntRB+Aj7VRz7DgeTiAioQAk=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=163.com; spf=pass smtp.mailfrom=163.com; dkim=pass (1024-bit key) header.d=163.com header.i=@163.com header.b=i7jLg2Us; arc=none smtp.client-ip=220.197.31.4
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=163.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=163.com
+	 In-Reply-To:Content-Type; b=Ui4xbYpgl7uSnjwu1LmELHasWbR3Mg1MXOOWrZCHPxOppSyBmIFC244+iqW/DuSiJaVRvozpG82ClpPBTpkU5+A2Speu46VKHJoRGtpLUEW2zSaQtaQdymw0AvoK1fzkfOB8SdK180IXiIeVeN+oA3w5Rzk/9IcafqKrDNWph08=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linux.dev; spf=pass smtp.mailfrom=linux.dev; dkim=pass (1024-bit key) header.d=linux.dev header.i=@linux.dev header.b=OG3nAYAq; arc=none smtp.client-ip=95.215.58.172
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linux.dev
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linux.dev
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=163.com header.i=@163.com header.b="i7jLg2Us"
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=163.com;
-	s=s110527; h=Message-ID:Date:MIME-Version:Subject:To:From:
-	Content-Type; bh=wbbAdaq+l2HzeM3t/FWYy9MmfznYHb7o3G8GQlqGv80=;
-	b=i7jLg2UsCLHRKSBa/pCA2WHKYWHwcF0sW40AEM4GWOWJhoh1asdgWwRWr2xba8
-	mXKOi3NC8rZM5NrCjWEd7yV6CL4cJDn0D0r+ijslxtZ1py2Fz4X/vcriYxY4t+Kh
-	xlw0+j3U++VqO8yAsidwW5vbT546f1kakv0KZNYWmSFs8=
-Received: from [192.168.50.71] (unknown [])
-	by gzga-smtp-mtada-g0-2 (Coremail) with SMTP id _____wD334_PPCpq34DzCg--.22715S2;
-	Thu, 11 Jun 2026 12:42:56 +0800 (CST)
-Message-ID: <7e46fd05-b190-42ed-8e5e-78c8a0a6bc20@163.com>
-Date: Thu, 11 Jun 2026 12:42:52 +0800
+	dkim=pass (1024-bit key) header.d=linux.dev header.i=@linux.dev header.b="OG3nAYAq"
+Message-ID: <c00b2e74-c1eb-4441-a090-0d68fffe4376@linux.dev>
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linux.dev; s=key1;
+	t=1781154322;
+	h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+	 to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+	 content-transfer-encoding:content-transfer-encoding:
+	 in-reply-to:in-reply-to:references:references;
+	bh=qUVFqqm/60zjtt88IvfjuOrD2ZoPKjcgjmqQ+Vm2pzk=;
+	b=OG3nAYAqEO05JuERQx1Bwg0tQgFRQen+Y+/YGIwMG68s6S4TNE1R50s5lp7rIbIYEkb/AB
+	W05R1ZMH1wGf2/v1q1P8jljiykDyq2umWmbM2JPCAKpmqW0xhW3JmgijMd8RQCfTyimn3f
+	TpGEg3EdNBlL30JL+5+7nigLjSAmi2M=
+Date: Thu, 11 Jun 2026 13:04:47 +0800
 Precedence: bulk
 X-Mailing-List: sashiko-reviews@lists.linux.dev
 List-Id: <sashiko-reviews.lists.linux.dev>
 List-Subscribe: <mailto:sashiko-reviews+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:sashiko-reviews+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 8/9] PCI: vmd: Protect root bus removal with rescan lock
-To: Manivannan Sadhasivam <mani@kernel.org>, sashiko-reviews@lists.linux.dev
-Cc: linux-pci@vger.kernel.org
-References: <20260521161822.132996-9-18255117159@163.com>
- <20260521212024.8689D1F000E9@smtp.kernel.org>
- <r5vwd573ydynlrrax5iy6jt25dc2yiqkvlciqy366zsxxu4d7f@hyvqgsdj4ulw>
+Subject: Re: [PATCH bpf-next v5 2/9] bpf: Introduce global percpu data
 Content-Language: en-US
-From: Hans Zhang <18255117159@163.com>
-In-Reply-To: <r5vwd573ydynlrrax5iy6jt25dc2yiqkvlciqy366zsxxu4d7f@hyvqgsdj4ulw>
-Content-Type: text/plain; charset=UTF-8; format=flowed
+To: sashiko-reviews@lists.linux.dev
+Cc: bpf@vger.kernel.org
+References: <20260608145113.65857-3-leon.hwang@linux.dev>
+ <20260608151347.2C77D1F00893@smtp.kernel.org>
+X-Report-Abuse: Please report any abuse attempt to abuse@migadu.com and include these headers.
+From: Leon Hwang <leon.hwang@linux.dev>
+In-Reply-To: <20260608151347.2C77D1F00893@smtp.kernel.org>
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 7bit
-X-CM-TRANSID:_____wD334_PPCpq34DzCg--.22715S2
-X-Coremail-Antispam: 1Uf129KBjvJXoWxGr1kZF47KFyUCFyUZFWxtFb_yoW5Gw1DpF
-	ZxXa45ur18JrySvws2va18Zr90vwn7GrW5Xw1fWrnrWFy3Z342vrWYyFWjvF90gFsFva1Y
-	vr1kt3yftrs8AaDanT9S1TB71UUUUU7qnTZGkaVYY2UrUUUUjbIjqfuFe4nvWSU5nxnvy2
-	9KBjDUYxBIdaVFxhVjvjDU0xZFpf9x0zRO18PUUUUU=
-X-CM-SenderInfo: rpryjkyvrrlimvzbiqqrwthudrp/xtbC6xBoDGoqPNAOZQAA3Y
+X-Migadu-Flow: FLOW_OUT
 
-
-
-On 6/11/26 01:28, Manivannan Sadhasivam wrote:
-> On Thu, May 21, 2026 at 09:20:24PM +0000, sashiko-bot@kernel.org wrote:
->> Thank you for your contribution! Sashiko AI review found 2 potential issue(s) to consider:
->>
->> New issues:
->> - [High] Acquiring `pci_rescan_remove_lock` in `vmd_remove()` introduces self-deadlocks and AB-BA lock inversions.
->>
->> Pre-existing issues:
->> - [High] SRCU structures are destroyed in `vmd_remove()` while their corresponding interrupt handlers are still registered and active, leading to a Use-After-Free in interrupt context.
->> --
->>
->> commit 8d5d06b67e6b02d2cc99f2151e90ba61c0d16662
->> Author: Hans Zhang <18255117159@163.com>
->>
->> PCI: vmd: Protect root bus removal with rescan lock
->>
->> This commit acquires the pci_rescan_remove_global_lock while stopping
->> and removing the VMD root bus in vmd_remove(). This is intended to
->> prevent races with concurrent PCI rescan operations.
->>
->>> diff --git a/drivers/pci/controller/vmd.c b/drivers/pci/controller/vmd.c
->>> index d4ae250d4bc6d..9565567026cf0 100644
->>> --- a/drivers/pci/controller/vmd.c
->>> +++ b/drivers/pci/controller/vmd.c
->>> @@ -1056,9 +1056,11 @@ static void vmd_remove(struct pci_dev *dev)
->>>   {
->>>   	struct vmd_dev *vmd = pci_get_drvdata(dev);
->>>   
->>> +	pci_lock_rescan_remove();
->>
->> [Severity: High]
->> Can acquiring pci_rescan_remove_lock here cause self-deadlocks or AB-BA lock
->> inversions?
->>
->> When a VMD device is removed via PCI hotplug or sysfs remove node, the PCI
->> core calls pci_stop_and_remove_bus_device_locked(), which acquires
->> pci_rescan_remove_lock and eventually triggers vmd_remove(). Because
->> pci_rescan_remove_lock is a non-recursive mutex, won't attempting to acquire
->> it again immediately self-deadlock?
->>
->> Also, when unbound via sysfs, the core holds device_lock and calls
->> vmd_remove(), which then waits for pci_rescan_remove_lock. Since normal PCI
->> rescans acquire pci_rescan_remove_lock first, then attempt to acquire
->> device_lock, does this create an AB-BA lock inversion?
->>
+On 8/6/26 23:13, sashiko-bot@kernel.org wrote:
+[...]
+>> +
+>> +			aux = &env->insn_aux_data[i + delta];
+>> +			map = env->used_maps[aux->map_index];
+>> +			if (map->map_type != BPF_MAP_TYPE_PERCPU_ARRAY)
+>> +				goto next_insn;
+>> +
+>> +			/*
+>> +			 * Reuse the original ld_imm64 insn, and add one
+>> +			 * mov64_percpu_reg insn.
+>> +			 */
+>> +
+>> +			insn_buf[0] = insn[1];
+>> +			insn_buf[1] = BPF_MOV64_PERCPU_REG(insn->dst_reg, insn->dst_reg);
 > 
-> This is a valid concern. Since VMD is registered as a PCI driver, removing the
-> VMD device through sysfs will trigger vmd_remove() callback and it will result
-> in deadlock. The AB-BA lock inversion is also valid.
+> [Severity: Critical]
+> Can this crash the kernel if JIT compilation fails dynamically and falls back
+> to the BPF interpreter?
+
+
+Sounds reasonable.
+
+I think it is a pre-existing issue, because the interpreter does not
+support BPF_MOV64_PERCPU_REG() insn.
+
+Also, the interpreter does not support user addr_space_cast insn.
+
+Will fix them btw.
+
+> 
+> While env->prog->jit_requested checks if JIT was requested, it doesn't
+> guarantee JIT success. If the interpreter (___bpf_prog_run()) executes this
+> BPF_MOV64_PERCPU_REG instruction, it ignores the special BPF_ADDR_PERCPU
+> offset (-1) for ALU64_MOV_X:
+> 
+[...]> kernel/bpf/verifier.c:check_mem_access() {
+> ...
+> 			if (tnum_is_const(reg->var_off) &&
+> 			    bpf_map_is_rdonly(map) &&
+> 			    map->ops->map_direct_value_addr &&
+> 			    map->map_type != BPF_MAP_TYPE_INSN_ARRAY) {
+> ...
+> }
+> 
+> returning -EINVAL here propagates the error back up to check_mem_access()
+> and aborts verification.
 > 
 
-Hi Mani,
+Correct.
 
-Thank you for your reply. I checked it and found that this is indeed the 
-registered PCI driver. This patch will be dropped from this series. I 
-wonder if you have any further comments or opinions regarding the 
-remaining patches. Do I need to send the next version?
+I've added a test to verify it that it will return -EINVAL for rdonly
+percpu_array map.
 
-Best regards,
-Hans
+Will exclude BPF_MAP_TYPE_PERCPU_ARRAY here, and add a test.
+
+Thanks,
+Leon
+
+>>  	err = map->ops->map_direct_value_addr(map, &addr, off);
+>>  	if (err)
+>>  		return err;
+> 
 
