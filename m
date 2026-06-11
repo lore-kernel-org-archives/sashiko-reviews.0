@@ -1,51 +1,60 @@
-Received: from xmbghk7.mail.qq.com (xmbghk7.mail.qq.com [43.163.128.48])
+Received: from mx0b-001b2d01.pphosted.com (mx0b-001b2d01.pphosted.com [148.163.158.5])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DE8B7376BE4
-	for <sashiko-reviews@lists.linux.dev>; Thu, 11 Jun 2026 15:53:49 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=43.163.128.48
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9A5C538331F;
+	Thu, 11 Jun 2026 15:58:59 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=148.163.158.5
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1781193233; cv=none; b=ONI2UC5yeESyyeAZE59lljzh/Z5CBimapgaPQrvZDzjVhPlFGE2H6JWtP6eWujMUTw2mrpvDALvwOoCBVVYehSl7k2fD3WQ6kXYMwUdlY6ZhFt6wMZUIz1JkVyFDoLg7NQKEfqxp4z1QVCSsEMz72XQk2Q099US+Ud+5M/Ac3VU=
+	t=1781193542; cv=none; b=gpCVGqhsq8EnlpZCBcyYScxRtgIPEt6AcDH97xR5NtwvSUnQyEANgYYMZFv0mOnpuIBabfZ7T37eryfhbY7TbFqd1lBXtT1szaUBa6S/ABhPiVnLnqFRaXluUYWC9IcyfNuqcNa5EocTSshpSUjZ2B+AozF90Ped4eZwh1VLi1s=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1781193233; c=relaxed/simple;
-	bh=UrJHc1zn5cYBOLn3pfidw1o3oMR7LpIRvrhqMQ2KYss=;
+	s=arc-20240116; t=1781193542; c=relaxed/simple;
+	bh=sx9AournhQHTNF7fKJWJ1VgdTtO+KQAZAQbKmR05WR4=;
 	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=Xa/ZOzOw3ewM95l6d4C7sc7Bh6xwOleMqNk6nQXIVZezjOP5TBG3VRMx9xYHw/DiZJFvr3Mffwbp2ajsVrr2bCy26hhJHJl157vFs29Qbi53rpkj3V9R0X62HbD5zjvKZX1FlJyhHitVy3uW8FLE1MQyMcOiG5qlmVlC+KP/PDw=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=qq.com; spf=pass smtp.mailfrom=qq.com; dkim=pass (1024-bit key) header.d=qq.com header.i=@qq.com header.b=T9qhJN6f; arc=none smtp.client-ip=43.163.128.48
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=qq.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=qq.com
+	 In-Reply-To:Content-Type; b=tRGkkgMQnQgvCQLV0ksfohd9pLQETRQ8civ33oGuEhgLIkPwry+EwCb0XvZm/ZEOM2e0MRrUGD4xJDxcn9K/SnWZhkb39GXRU6vsk89/0/TGwgtfq+n1Au7BL/Qry9xPacrt8/0WIdCGHqBFBFFUZXgLf9OQOOKFEZP/AvZTp1Y=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linux.ibm.com; spf=pass smtp.mailfrom=linux.ibm.com; dkim=pass (2048-bit key) header.d=ibm.com header.i=@ibm.com header.b=PhOkQVLw; arc=none smtp.client-ip=148.163.158.5
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linux.ibm.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linux.ibm.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=qq.com header.i=@qq.com header.b="T9qhJN6f"
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=qq.com; s=s201512;
-	t=1781193220; bh=Nrg0CX+AfSNCklWRxpBZUAyyoBEK3zoOzsw4h82GBHE=;
-	h=Date:Subject:To:Cc:References:From:In-Reply-To;
-	b=T9qhJN6fFIYnBsGdpPs95AImsj+H8S2OBh9h2c3KYbcJ7bqAouYoie3muQYZ1q+1+
-	 MXxKCVlJk+jrM2ejLquZyfs4fGhWBdBPQL9M6JpkYfbXKPOpR8wiwJCepsW/q81A6p
-	 ET/NUwFRTHSYrJalU2yJgIJBBYVDdeSNTLcV7Of0=
-Received: from [198.18.0.1] ([115.156.144.140])
-	by newxmesmtplogicsvrszb51-0.qq.com (NewEsmtp) with SMTP
-	id D648B8D7; Thu, 11 Jun 2026 23:53:36 +0800
-X-QQ-mid: xmsmtpt1781193216t1z857ko9
-Message-ID: <tencent_3D17DC5BE32C8A51D938AF50F221321F6206@qq.com>
-X-QQ-XMAILINFO: Ni33zkRHTF0SUyz31tuduCr0g1uuxDh1oPuI80M+5VBJzF12nEa6muyJP55grL
-	 KjSpTdu11In2x9su/6krDW4pcfXb3YTLQrwJO8gOmQtufkMkRkUU6Ke3+FV2MV4SNZc4owd3pLu/
-	 LDsL8mIzg9Jpj/2g5JLoDLYJ1RHChf81fN60rU9lWYgaTukoiTYI+faH/52UAn1ymQ/0lprV6Eoy
-	 rrE8Mjxq42lz7oFvLrpyAq4Fbe/Q4c7EfIWEYvE7L7M69DzyGtqU4sHmwh5JK/hnJkrAmO74ga3h
-	 vQ+m3Ddnj6PxYdodBkXyHthqkaVXypS+jn59naSyy4V3DB4IRAIMNYGINdtJYCVOGepIzu1NjiDW
-	 +3ePUHv8vO0ojiKFMC6xjcJE0PUIJPnc74ATDUE3X9XLw+8NPgI/LFttM44hKQZBKX5lxIhULBn2
-	 pGws7xTJP28vv1zafG3BdK5RrvIYMiJKG8l8IcYGfHmn/PJ/7PQ6oDedQuxV7v7jSnp7TWn5Ojpi
-	 DUFTt/fHBRDRc09dRE/X3slZI1SswQA2zhXpqa07H6hDyCSXSzlTqBRZ+Tixzvh8cmOkE/uNkme0
-	 k0objsyW/55b+EhMjsAQ/pEQJJQx1RgsAf/rSy0DBdVew5RGM1ga7FWKaKa/DnyU7jvvgLFn30Xn
-	 Tq6P7grJXnWDAqNkvnnJoeibvQsEK20BgHAgYyLBK9aerejYiNzu68KOkO/+aiyWYILAOrR20OVs
-	 WYxZfoHTSJ4WLhJ64CxcW4UHT0Ji1KKoz43atCdExKNHGBfCHD4ptOIhZlTcCMqYN/37umLeZMk3
-	 usdK+kJ5Y4L4DZWnKaALMOX+4M6s1+/UN+mXUE3DcIUPCX0WkoweDZ4UVElTuhfSMnr2eBRXPwIm
-	 n5iBFgvaGZAZG/KvDApSL2WtQeMVw6YbUp51G+hCm3xghcR+8M+GzfZ+201cTNL3ve8ZlN1ZVE2P
-	 srh872CeuB7EjBaINMJhyhb4KOiDuAMANyPLywXvZcPymMWepbd+gJ6vFHmqa3GGRvCMnKBNVaiB
-	 ZgdnOo48afxCW/8T/QY9T5NeuKyU3DD7oVNvTVEJUgLB13Mzf+0riNvv0U+f5R7rK0hbVl4gbLKS
-	 E2FsfGMIyyCWA4JnI=
-X-QQ-XMRINFO: Nq+8W0+stu50tPAe92KXseR0ZZmBTk3gLg==
-X-OQ-MSGID: <c02dbbe3-c2d6-4505-a028-a9e1bf297c00@qq.com>
-Date: Thu, 11 Jun 2026 23:53:36 +0800
+	dkim=pass (2048-bit key) header.d=ibm.com header.i=@ibm.com header.b="PhOkQVLw"
+Received: from pps.filterd (m0353725.ppops.net [127.0.0.1])
+	by mx0a-001b2d01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id 65BBj3JX1741947;
+	Thu, 11 Jun 2026 15:58:51 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=ibm.com; h=cc
+	:content-transfer-encoding:content-type:date:from:in-reply-to
+	:message-id:mime-version:references:subject:to; s=pp1; bh=QLi9Gb
+	rXHsKz/1fopsLHCuYdF0LQ+nJMGcgV5r3sUVE=; b=PhOkQVLwkoG9Sfk+j6nEbo
+	7yShRzJjfLJVfQOSIu21KSocNllNWzm3O2ITOZzS+6M1Fxg3GQwv7O+yN3yPMbOt
+	jU8mvwOWCTcruibPfyCTm+m4JAyqL3bqPHO8AQjrZO7a324PTNMsdyQ8MS35Hw9x
+	lQu3hVFznJFi6ZiNmQU7G3/nn51HPkp23wqQ7Ym9sJeq9PmbGdP1q3ntpr1W7Ggp
+	pnlXvm2c5lY2BZg+6bN1GgC+mKIXiuMXx6Dn8LUjznAKlT9gsAd/P1qdJ7bQR6z0
+	FxBR1qcMDZ26VFDWmEGQ2kGkaKSpg4k/MyPZXsbpfFmSibqtl6EwNXtH5uqXgeoA
+	==
+Received: from ppma22.wdc07v.mail.ibm.com (5c.69.3da9.ip4.static.sl-reverse.com [169.61.105.92])
+	by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 4eqe8bmj6d-1
+	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+	Thu, 11 Jun 2026 15:58:50 +0000 (GMT)
+Received: from pps.filterd (ppma22.wdc07v.mail.ibm.com [127.0.0.1])
+	by ppma22.wdc07v.mail.ibm.com (8.18.1.7/8.18.1.7) with ESMTP id 65BFnuBP000369;
+	Thu, 11 Jun 2026 15:58:49 GMT
+Received: from smtprelay03.fra02v.mail.ibm.com ([9.218.2.224])
+	by ppma22.wdc07v.mail.ibm.com (PPS) with ESMTPS id 4eqe08uvjx-1
+	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+	Thu, 11 Jun 2026 15:58:49 +0000 (GMT)
+Received: from smtpav01.fra02v.mail.ibm.com (smtpav01.fra02v.mail.ibm.com [10.20.54.100])
+	by smtprelay03.fra02v.mail.ibm.com (8.14.9/8.14.9/NCO v10.0) with ESMTP id 65BFwlNC57344340
+	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
+	Thu, 11 Jun 2026 15:58:47 GMT
+Received: from smtpav01.fra02v.mail.ibm.com (unknown [127.0.0.1])
+	by IMSVA (Postfix) with ESMTP id C41D02004B;
+	Thu, 11 Jun 2026 15:58:47 +0000 (GMT)
+Received: from smtpav01.fra02v.mail.ibm.com (unknown [127.0.0.1])
+	by IMSVA (Postfix) with ESMTP id 95CA420040;
+	Thu, 11 Jun 2026 15:58:47 +0000 (GMT)
+Received: from [9.224.91.136] (unknown [9.224.91.136])
+	by smtpav01.fra02v.mail.ibm.com (Postfix) with ESMTP;
+	Thu, 11 Jun 2026 15:58:47 +0000 (GMT)
+Message-ID: <7890fc57-f250-4bab-916b-f5855eb38b33@linux.ibm.com>
+Date: Thu, 11 Jun 2026 17:58:47 +0200
 Precedence: bulk
 X-Mailing-List: sashiko-reviews@lists.linux.dev
 List-Id: <sashiko-reviews.lists.linux.dev>
@@ -53,285 +62,127 @@ List-Subscribe: <mailto:sashiko-reviews+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:sashiko-reviews+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v4] rethook: Remove the running task check in
- rethook_find_ret_addr()
-To: sashiko-reviews@lists.linux.dev, Masami Hiramatsu <mhiramat@kernel.org>,
- Petr Mladek <pmladek@suse.com>, Peter Zijlstra <peterz@infradead.org>
-Cc: Tengda Wu <wutengda@huaweicloud.com>,
- Mathieu Desnoyers <mathieu.desnoyers@efficios.com>,
- Alexei Starovoitov <ast@kernel.org>, Steven Rostedt <rostedt@goodmis.org>,
- linux-kernel@vger.kernel.org, linux-trace-kernel@vger.kernel.org,
- live-patching@vger.kernel.org
-References: <20260610013658.1837963-1-wutengda@huaweicloud.com>
- <20260610015032.4BFAA1F00893@smtp.kernel.org>
-From: XIAO WU <xiaowu.417@qq.com>
-In-Reply-To: <20260610015032.4BFAA1F00893@smtp.kernel.org>
-Content-Type: text/plain; charset=UTF-8; format=flowed
+Subject: Re: [PATCH v11 3/6] x86/asm: Use CFI_* macros in SYM_FUNC_* macros so
+ they can be added to VDSO
+To: sashiko-reviews@lists.linux.dev, Steven Rostedt <rostedt@kernel.org>,
+        Josh Poimboeuf <jpoimboe@kernel.org>
+Cc: bpf@vger.kernel.org, Indu Bhagat <ibhagatgnu@gmail.com>
+References: <20260522110427.2816637-4-jremus@linux.ibm.com>
+ <20260522115844.9BEEB1F000E9@smtp.kernel.org>
+Content-Language: en-US
+From: Jens Remus <jremus@linux.ibm.com>
+Organization: IBM Deutschland Research & Development GmbH
+In-Reply-To: <20260522115844.9BEEB1F000E9@smtp.kernel.org>
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
+X-TM-AS-GCONF: 00
+X-Proofpoint-Reinject: loops=2 maxloops=12
+X-Authority-Analysis: v=2.4 cv=Xfa5Co55 c=1 sm=1 tr=0 ts=6a2adb3a cx=c_pps
+ a=5BHTudwdYE3Te8bg5FgnPg==:117 a=5BHTudwdYE3Te8bg5FgnPg==:17
+ a=HSAZBKcgB-AHDwtM:21 a=IkcTkHD0fZMA:10 a=FelO9ux0wxsA:10
+ a=VkNPw1HP01LnGYTKEx00:22 a=RnoormkPH1_aCDwRdu11:22 a=V8glGbnc2Ofi9Qvn3v5h:22
+ a=VwQbUJbxAAAA:8 a=VnNF1IyMAAAA:8 a=4nY6BhhXb-sw2prgwzAA:9 a=3ZKOabzyN94A:10
+ a=QEXdDO2ut3YA:10
+X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwNjExMDE1NyBTYWx0ZWRfX2lzCUKERLALc
+ 4LT5CDJKS4a6JWw+U5G3DJU8TBnP16OVVr8QlciAtfZoJD/DCQHeSH5di7KzCYfrluLAeFIcjWA
+ bGPrwKy5Q/xTYe8YgcLKsfRwNI9tNLr+KwhxjI+ziNvl5605naB1YLSgY0ODIKZqvc/0a6E3/Qu
+ 4t3DFhHouwDrkvKH/AjhjANEEpT+zVv8/oftFgsKYE3c6H1CNoM14smMxsbe7RgfF4DoW7+ElPB
+ BrTGxsLoOelE+pSmgpnKimfOWJM7qmnCmJnjHP6i3bum3ytGj59NCYLd32/zZZ64rBDVeUztuhV
+ bYOw/AfViz+oM9RCqBmtYTcRfzxIidVeKL+9pNsoxwyteKZ7wYvYjaRPyq1EBw7jhNay0dZHaYs
+ o/VoRWyYUHw372dCr5bgGoz/BMCXQsPoPRR5bFJ3UpauyiApBRncFl557XXsCpRvpQi9LUUm0tQ
+ FVEITObT1rUzGVxLKgQ==
+X-Proofpoint-Spam-Info: AW1haW4tMjYwNjExMDE1NyBTYWx0ZWRfXziTrJ70aHG4X
+ C0A4ihSDY+JRsztXwwGsKvaKFn5v1r1Q1LWTlFVXEqIuBbXTWNWpe0AcWtbzRo05kriJsD5itIT
+ zpb8vFsPx1k+mUAx/lnVY/zu0w35gVY=
+X-Proofpoint-ORIG-GUID: X-3WjSLoMWiCd0r2i0r4NLPMfZlMB0K5
+X-Proofpoint-GUID: D7u7ZnjLUv9j9D3x9dQYiYvcFeO9ojWu
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.293,Aquarius:18.0.1143,Hydra:6.1.125,FMLib:17.12.100.49
+ definitions=2026-06-11_03,2026-06-11_01,2025-10-01_01
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
+ malwarescore=0 spamscore=0 bulkscore=0 priorityscore=1501 lowpriorityscore=0
+ impostorscore=0 suspectscore=0 clxscore=1015 phishscore=0 adultscore=0
+ classifier=typeunknown authscore=0 authtc= authcc= route=outbound adjust=0
+ reason=mlx scancount=1 engine=8.22.0-2606040000 definitions=main-2606110157
 
-Hi Tengda,
+On 5/22/2026 1:58 PM, sashiko-bot@kernel.org wrote:
+> Thank you for your contribution! Sashiko AI review found 1 potential issue(s) to consider:
+> - [Low] The `__CFI_TYPE` macro in `arch/x86/include/asm/linkage.h` creates unbalanced CFI directives because it uses `SYM_START` but closes with `SYM_FUNC_END`.
+> --
+> 
+> commit 2769cdf2ca16b1b56aace01ab1acf0951b91be1f
+> Author: Josh Poimboeuf <jpoimboe@kernel.org>
+> 
+> x86/asm: Use CFI_* macros in SYM_FUNC_* macros so they can be added to VDSO
+> 
+> This commit adds CFI_STARTPROC and CFI_ENDPROC annotations to the SYM_FUNC_*
+> macros. This allows VDSO asm functions to avoid adding them manually, while
+> leaving the macros empty for the kernel proper.
+> 
+>> diff --git a/arch/x86/include/asm/linkage.h b/arch/x86/include/asm/linkage.h
+>> index a7294656ad908..c2ca8117376fb 100644
+>> --- a/arch/x86/include/asm/linkage.h
+>> +++ b/arch/x86/include/asm/linkage.h
+>> @@ -112,34 +116,51 @@
+>>  # define SYM_FUNC_ALIAS_MEMFUNC	SYM_FUNC_ALIAS
+>>  #endif
+>>  
+>> +#define __SYM_FUNC_START				\
+>> +	CFI_STARTPROC ASM_NL
+>> +
+>> +#define __SYM_FUNC_END					\
+>> +	CFI_ENDPROC ASM_NL
+> 
+> [ ... ]
+> 
+>> +#define SYM_FUNC_END(name)				\
+>> +	__SYM_FUNC_END					\
+>> +	SYM_END(name, SYM_T_FUNC)
+> 
+> [Severity: Low]
+> Does this change to SYM_FUNC_END() create unbalanced CFI directives when
+> used with __CFI_TYPE()?
+> 
+> The __CFI_TYPE() macro is defined earlier in this file to expand to a
+> block that starts with SYM_START() and ends with SYM_FUNC_END():
+> 
+> #define __CFI_TYPE(name)                                        \
+>         SYM_START(__cfi_##name, SYM_L_LOCAL, SYM_A_NONE)        \
+>         ...                                                     \
+>         SYM_FUNC_END(__cfi_##name)
 
-Sashiko [1] reviewed this patch and found that removing the
-task_is_running() check exposes stack unwinders to real crashes — not
-just "invalid information."  A PoC confirms this: a KASAN panic triggers
-within seconds when /proc/<pid>/stack reads the stack of a task that is
-concurrently running a kretprobe.
+	SYM_END(__cfi_##name, SYM_T_FUNC)
 
-[1] 
-https://sashiko.dev/#/patchset/20260610013658.1837963-1-wutengda%40huaweicloud.com
+> 
+> Because SYM_START() does not emit CFI_STARTPROC (unlike SYM_FUNC_START()),
+> code expanding __CFI_TYPE() will now emit a CFI_ENDPROC directive without
+> a corresponding CFI_STARTPROC.
+> 
+> While this might not break the build today since CFI_ENDPROC evaluates to an
+> empty nocfi macro outside VDSO and __CFI_TYPE() is not used in VDSO code,
+> will this cause issues if KCFI or typed symbols are ever used in VDSO builds?
 
- > diff --git a/kernel/trace/rethook.c b/kernel/trace/rethook.c
- > index 5a8bdf88999a..1e7fdebe3cd5 100644
- > --- a/kernel/trace/rethook.c
- > +++ b/kernel/trace/rethook.c
- > @@ -250,9 +251,6 @@ unsigned long rethook_find_ret_addr(struct 
-task_struct *tsk, unsigned long frame
- >      if (WARN_ON_ONCE(!cur))
- >          return 0;
- >
- > -    if (tsk != current && task_is_running(tsk))
- > -        return 0;
- > -
- >      do {
- >          ret = __rethook_find_ret_addr(tsk, cur);
- >          if (!ret)
+IIUC kCFI would never be used in VDSO builds.  But CFI_STARTPROC and
+CFI_ENDPROC could evaluate to the actual DWARF CFI directives outside
+of VDSO in the future.
 
-The commit message states:
+> 
+> Should __CFI_TYPE() pair SYM_START() with SYM_END() instead?
 
- > The iteration is already safe from crashes because
- > unwind_next_frame() holds RCU and rethook_node structures are
- > RCU-freed; even if the iteration goes off the rails and returns
- > invalid information, it will not crash.
+Makes sense, as any future changes that require SYM_FUNC_START*() to be 
+paired with SYM_FUNC_END() would cause to __CFI_TYPE() to break.
 
-There are two problems with this claim, both reproducible.
+I have sent a separate patch:
+[PATCH] x86/cfi: Use symmetric SYM_START and SYM_END in __CFI_TYPE()
+https://lore.kernel.org/all/20260611155716.830563-1-jremus@linux.ibm.com/
 
-**Problem 1: stack-out-of-bounds in unwind_next_frame itself**
+Regards,
+Jens
+-- 
+Jens Remus
+Linux on Z Development (D3303)
+jremus@de.ibm.com / jremus@linux.ibm.com
 
-The PoC below reliably triggers the following KASAN panic — not in the
-rethook list traversal, but inside unwind_next_frame():
-
-[ 1833.494623] BUG: KASAN: stack-out-of-bounds in 
-unwind_next_frame+0x861/0x2080
-[ 1833.494651] Read of size 2 at addr ffffc90003e6f5f0 by task poc/9854
-[ 1833.494707] Call Trace:
-[ 1833.494719]  dump_stack_lvl+0x116/0x1f0
-[ 1833.494743]  print_report+0xf4/0x600
-[ 1833.494788]  kasan_report+0xe0/0x110
-[ 1833.494836]  unwind_next_frame+0x861/0x2080
-[ 1833.494948]  arch_stack_walk+0x99/0x100
-[ 1833.495000]  stack_trace_save_tsk+0x16a/0x200
-[ 1833.495054]  proc_pid_stack+0x173/0x2b0
-[ 1833.495103]  seq_read_iter+0x519/0x12d0
-[ 1833.495166]  seq_read+0x3b7/0x590
-[ 1833.495297]  vfs_read+0x1f5/0xd20
-[ 1833.495497]  ksys_read+0x135/0x250
-[ 1833.495549]  do_syscall_64+0x129/0x850
-[ 1833.495566]  entry_SYSCALL_64_after_hwframe+0x77/0x7f
-[ 1833.498894] Kernel panic - not syncing: KASAN: panic_on_warn set ...
-
-page last free pid 9737 tgid 9737 stack trace:
-  do_sys_openat2+0xbf/0x260          <-- target task inside kretprobe
-  __x64_sys_openat+0x179/0x210
-
-This crash has nothing to do with rethook_node lifetimes or RCU.  It
-happens because the ORC unwinder reads stack memory while the target
-task concurrently executes a kretprobe trampoline that modifies return
-addresses.  The unwinder follows corrupted frame data past valid stack
-boundaries.  RCU protection of rethook_node structures is irrelevant —
-this crash occurs at the stack frame interpretation level, before any
-rethook list traversal.
-
-The old task_is_running() check prevented the unwinder from attempting
-to unwind a running task's stack in the first place.
-
-**Problem 2: use-after-free via rethook_node recycling**
-
-Even if the stack-out-of-bounds above were addressed, a second crash
-path exists in the rethook list traversal itself.
-
-rethook_recycle() immediately pushes nodes back to the objpool without
-an RCU grace period:
-
-   kernel/trace/rethook.c:
-   void rethook_recycle(struct rethook_node *node)
-   {
-           ...
-           objpool_push(node, &node->rethook->pool);
-   }
-
-Meanwhile, unwind_next_frame() in arch/x86/kernel/unwind_orc.c drops
-RCU between frames while the cursor (*cur) persists across iterations:
-
-   arch/x86/kernel/unwind_orc.c:
-   bool unwind_next_frame(...)
-   {
-           ...
-           guard(rcu)();    // RCU held for one frame
-           ...
-   }                        // RCU dropped here
-
-When the unwinder calls __rethook_find_ret_addr() in the next frame
-iteration, it does:
-
-   struct llist_node *first = tsk->rethooks.first;
-   ...
-   *cur = first;
-   ...
-   node = node->next;       // node may have been recycled
-
-If the target task returns from a probed function between frames, its
-rethook_node is recycled and can be instantly reallocated to another
-task.  The unwinder's stale cursor then dereferences a freed pointer,
-leading to use-after-free.
-
-## Reproducer
-
-The PoC sets up a kretprobe on do_sys_openat2, creates hot-loop threads
-calling open(), and concurrently reads /proc/<tid>/stack.  The race
-triggers within seconds (Problem 1 above; Problem 2 may reproduce on
-kernels without KASAN or with different timing).
-
-Build:  gcc -static -pthread -o poc poc.c
-Run:    ./poc [runtime_seconds]
-Needs:  root, CONFIG_KASAN=y
-
-#define _GNU_SOURCE
-#include <stdio.h>
-#include <stdlib.h>
-#include <string.h>
-#include <unistd.h>
-#include <sys/types.h>
-#include <sys/stat.h>
-#include <sys/wait.h>
-#include <sys/syscall.h>
-#include <sched.h>
-#include <fcntl.h>
-#include <errno.h>
-#include <signal.h>
-#include <pthread.h>
-#include <dirent.h>
-
-#define TRACE "/sys/kernel/tracing"
-
-volatile int stop = 0;
-
-static int tfs(const char *f, const char *b)
-{
-     char p[256]; int fd, r;
-     snprintf(p, 256, "%s/%s", TRACE, f);
-     fd = open(p, O_WRONLY | O_TRUNC);
-     if (fd < 0) {
-         system("mount -t tracefs tracefs /sys/kernel/tracing 2>/dev/null");
-         usleep(50000);
-         fd = open(p, O_WRONLY | O_TRUNC);
-     }
-     if (fd < 0) return -1;
-     r = write(fd, b, strlen(b));
-     close(fd);
-     return r < 0 ? -1 : 0;
-}
-
-void *hot_thread(void *arg)
-{
-     while (!__atomic_load_n(&stop, __ATOMIC_RELAXED)) {
-         int fd = open("/dev/null", O_RDONLY);
-         if (fd >= 0) close(fd);
-     }
-     return NULL;
-}
-
-void *reader_thread(void *arg)
-{
-     pid_t target = *(pid_t *)arg;
-     char path[64], buf[8192];
-     snprintf(path, 64, "/proc/%d/stack", target);
-     while (!__atomic_load_n(&stop, __ATOMIC_RELAXED)) {
-         int fd = open(path, O_RDONLY);
-         if (fd >= 0) { read(fd, buf, 8191); close(fd); }
-     }
-     return NULL;
-}
-
-void sigh(int s) { stop = 1; }
-
-int main(int argc, char *argv[])
-{
-     int runtime = 120;
-     if (argc > 1) runtime = atoi(argv[1]);
-
-     printf("rethook race PoC\n");
-     if (geteuid()) { printf("root needed\n"); return 1; }
-     signal(SIGINT, sigh);
-
-     pthread_t hot[4], rdr[4];
-     pid_t hot_tids[4];
-     int pairs = 4;
-
-     for (int c = 0; c < runtime / 5 && !stop; c++) {
-         tfs("events/kprobes/myretprobe/enable", "0");
-         tfs("kprobe_events", "-:myretprobe");
-         usleep(100);
-         tfs("kprobe_events", "r:myretprobe do_sys_openat2 $retval");
-         tfs("events/kprobes/myretprobe/enable", "1");
-
-         pid_t main_tid = syscall(SYS_gettid);
-
-         for (int i = 0; i < pairs; i++)
-             pthread_create(&hot[i], NULL, hot_thread, NULL);
-
-         usleep(300000);
-
-         {
-             DIR *d = opendir("/proc/self/task");
-             int cnt = 0;
-             if (d) {
-                 struct dirent *de;
-                 while ((de = readdir(d)) != NULL && cnt < pairs) {
-                     pid_t t = atoi(de->d_name);
-                     if (t > 0 && t != main_tid)
-                         hot_tids[cnt++] = t;
-                 }
-                 closedir(d);
-             }
-             for (int i = 0; i < cnt; i++)
-                 pthread_create(&rdr[i], NULL, reader_thread, &hot_tids[i]);
-         }
-
-         printf("round %d\n", c);
-         sleep(5);
-
-         stop = 1;
-         usleep(100000);
-
-         for (int i = 0; i < pairs; i++) pthread_join(hot[i], NULL);
-         for (int i = 0; i < pairs; i++) pthread_join(rdr[i], NULL);
-
-         stop = 0;
-         usleep(1000);
-     }
-
-     tfs("events/kprobes/myretprobe/enable", "0");
-     tfs("kprobe_events", "-:myretprobe");
-     printf("Done\n");
-     return 0;
-}
-
-## Summary
-
-The v4 commit message claims the iteration "will not crash," but the PoC
-demonstrates a reproducible KASAN panic:
-
-1. stack-out-of-bounds in unwind_next_frame (ORC unwinder reads
-    concurrently-modified stack frames of a running task)
-
-2. Potential use-after-free in __rethook_find_ret_addr (rethook nodes
-    recycled without RCU grace period, cursor persists across RCU drops)
-
-The old task_is_running() check was racy but served as a practical
-safety net.  Removing it without adding equivalent protection in the
-callers (proc_pid_stack, BPF stack walkers) exposes users to kernel
-panics via /proc/<pid>/stack on any task running a kretprobe.
-
-Thanks,
-Xiao
+IBM Deutschland Research & Development GmbH; Vorsitzender des Aufsichtsrats: Wolfgang Wendt; Geschäftsführung: David Faller; Sitz der Gesellschaft: Ehningen; Registergericht: Amtsgericht Stuttgart, HRB 243294
+IBM Data Privacy Statement: https://www.ibm.com/privacy/
 
