@@ -1,162 +1,204 @@
-Received: from mail-pg1-f174.google.com (mail-pg1-f174.google.com [209.85.215.174])
+Received: from mail-wm1-f54.google.com (mail-wm1-f54.google.com [209.85.128.54])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 71714376BE8
-	for <sashiko-reviews@lists.linux.dev>; Thu, 11 Jun 2026 10:23:27 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.215.174
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 078A73C5848
+	for <sashiko-reviews@lists.linux.dev>; Thu, 11 Jun 2026 10:49:39 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.54
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1781173408; cv=none; b=liLcNENGgu00dplR/nSxAcz4Pexo/+KDhOPt9GQAbBLuqTOLJn07PFU22PCbjlfbgryn76Gox7+3c7FVtuScPcbHLV+CoikLVLoth1mJPauCq1wi6oBt4g7DQeT1oLqBhFKXC4pvfWVag6sGrGW/l0NX3VBQ7yYi8hlQiYxQRww=
+	t=1781174981; cv=none; b=cNn3chpB4+z9MoC5OdVFJGGLXjg3Eq5vKfPTIzSBpvzg/Z3wpiO6iy34xESOfvNOHT8DMXVcW1xvfOpdBeZZLyL/RsdsZZEVTL6QynthZ0+q8pbanBGGi4KVKqEQQwkMi/q6OiXkzdjWGGsTVeXlfalkVwWIXzIdgIPvkmwMOxc=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1781173408; c=relaxed/simple;
-	bh=eD31NaAQdrh/zu+6IbhMqo/U/Qb0bYpibROp5yWND8Y=;
-	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=U+iAC6RYTDfP+lzWD1ay9oIHmnsRsSUFjABY44iCIIYAyuPSTri8tTt/bJ2H+FuJ983E0VZgRpN52qpxkLUGAMEEDBOliMwFnqZXz6jaSaJSwElvaDqiO/J1gjU6+BLZgAUUA/lf9bX088TyZyYpjaKFBJy93gtYVj7Z3HGOrME=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=KEICe75V; arc=none smtp.client-ip=209.85.215.174
+	s=arc-20240116; t=1781174981; c=relaxed/simple;
+	bh=QxGt/qZpuh428S/K37oa/qKWhwxFOqVXN3XsqIbVzE4=;
+	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
+	 MIME-Version:Content-Type; b=Lfjn+AEphc3udIwwvKy90WKbns552ghugqqxBTioe20S4O+O3BE58C4C//n9ekb2L/qjDFV5ovDmgJ0rs/7MxxC+wbCYIanA5cMZjktOCqqdHqT7d0+s0APnF4lT8PljZPzGWHGvrLHtCRnvDrTTLJFuWqMXOWFVsjvybxDnXl4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=ssInbDwn; arc=none smtp.client-ip=209.85.128.54
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="KEICe75V"
-Received: by mail-pg1-f174.google.com with SMTP id 41be03b00d2f7-c857fba35cfso3872626a12.1
-        for <sashiko-reviews@lists.linux.dev>; Thu, 11 Jun 2026 03:23:27 -0700 (PDT)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="ssInbDwn"
+Received: by mail-wm1-f54.google.com with SMTP id 5b1f17b1804b1-490b915ded5so69301475e9.3
+        for <sashiko-reviews@lists.linux.dev>; Thu, 11 Jun 2026 03:49:39 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20251104; t=1781173407; x=1781778207; darn=lists.linux.dev;
-        h=content-transfer-encoding:in-reply-to:from:references:cc:to:subject
-         :user-agent:mime-version:date:message-id:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=QTQLbrDptBniTVJpw5ZWV9E0sbp4op67GXB1lfNz+Nc=;
-        b=KEICe75VDGfSswauKIjrUnq98HX9ohLVKcV/PjXWfqnhup9dF96Q1D+aTriOFXG/Md
-         km0qpOwHl8yLJ0i2bnZ9GSOwh05anGGnu6vPe4AIvaCwuOHTOd9emKRYxiT/twT7pdDG
-         9rxRg/CbCMBky0ifX/BW6M3TxFUOq0d9LdmVZzuAAGoowEMsIwOxaSN2rhl9yBWWr+RQ
-         X0MiqIfQLJbUvem5GhQaUVHKKuyzj7g4huoemjEwqMuxo1dFg2VcRZ2luOskdV9PIic8
-         Yg+c0A95UKiAPtkcbuRvpOrQotT18IH3zPobT4/j9OaNvXYZbTuAh0VGQxo/QejitBtC
-         so5w==
+        d=gmail.com; s=20251104; t=1781174978; x=1781779778; darn=lists.linux.dev;
+        h=content-transfer-encoding:mime-version:message-id:date:references
+         :in-reply-to:subject:cc:to:from:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=SwscJafaBugtAFcCVftAtVPNwhT6yYdKLLF+cCtGgwU=;
+        b=ssInbDwn42+pzqhcoiDDlrlYKaZMA3G6a5uLo72xNYt0n84zokTIa294O7qReNYWVp
+         CUKLIYrmFPiY1A37YNLJ6Z9EEU3tylFFOSOnG+h2lGl2pE4hB8y4XyGMlbV2nAe1CJB+
+         hHJ+NRqhcoe6EAnPwP1pbeFvtkq6HhIr0q8XfiQ7BQqJuUClplH2QTiZBOGZJ48guaWr
+         nkJMGdZM0HGWS/tSCkNp14o8QN7Ire+4rl6iYz7cavXRUAKNwuG9+vGGoxr9TpaVozHD
+         7PjKuxzNdQNP5hMRPHoRtryjZxX1CD24twacqbw/8qXohRkOFy1gsIWAn6+tUp4Jz0m6
+         LD4Q==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20251104; t=1781173407; x=1781778207;
-        h=content-transfer-encoding:in-reply-to:from:references:cc:to:subject
-         :user-agent:mime-version:date:message-id:x-gm-gg:x-gm-message-state
-         :from:to:cc:subject:date:message-id:reply-to;
-        bh=QTQLbrDptBniTVJpw5ZWV9E0sbp4op67GXB1lfNz+Nc=;
-        b=kHK0TdUMy2eozQ6y4f5RSIGv5x4Buwr0gwKnvTmq2drxlAnQSXrRx3J+klOOxxuM8b
-         Mxp0X98QqxPays3VP23p/qofmPyKQ/crWMw4ZTbnttqWEB97NRtRfKqF3/6clZzwq8Wk
-         88QVdAwx/hekpoyK9YskoowHa+/ainEz2wGtxjpNrgkOEzSkMRuEZ7cgkamc1DnDy9q5
-         QAY8rwgYV9gLVwWg5LUoyW87OZ089a6ZU+SupEUyvJE2rNVGWzuPk7WMhKHEZFUiT8cx
-         vU252V+nqf46Jt9+zDS/xxkuPlF14llFcEBFHQPNrEHRvPz6ADBUstFB1T/j+TWzy9Vy
-         HOOQ==
-X-Gm-Message-State: AOJu0YwRYDrXy5ejG++6HUW2aCfNC0C+UCO3vJcFHRZ6MzCv9t9klSzP
-	n1f+NZmYeUBjgDFm4wLA0J5hON/G2KMPe63N439tBW4WKshBJjojrDjCpr5l4uqxStY=
-X-Gm-Gg: Acq92OFHX4qmr2me6MO0Mr/g3hOEM9tf9fnI0bD7LObMN2O11TbzKb4h4psgZkgPuZL
-	sknErIIYMa9tZvv8BwCoapP2WszFBNoRlWxxvc/NlfHPzo2ZUGIkr4tNE1XGQQ7m9x80qT3LQ7a
-	5YPFUBdoi3PUpWp6cpdPUcW6UE3Bq6V73y1d+GGZR3s/P/nIdahz3TbgT2hRm6q1PDXb0enSZmG
-	layx9l9gbLRU7oi4kMZzn+bwuqu2uk+/zMM+t+2lZZ8UWu9t/mzWXfYQpTQBV4LYnph6eG/wQ+I
-	snCLQh+xK4Wpk2sDEIihStp5Ty0C3p8A26aY8/MdYr8Xb7zqR7q2O4z3uzeOjNRfA95Jnf+JC5P
-	Jdxs9wLy1FDKPCPszAps6vaQFfYyNGMVF7Rykeg1RNotF7FbDYOJb28ufhC1825l4vYbnwGvwp8
-	s9DuT2T1IdhTX+Yhn1tc0OBgCFNV4=
-X-Received: by 2002:a05:6a20:160f:b0:3b4:8268:23e8 with SMTP id adf61e73a8af0-3b5e334dd4bmr2445120637.21.1781173406766;
-        Thu, 11 Jun 2026 03:23:26 -0700 (PDT)
-Received: from [10.253.74.50] ([115.108.63.147])
-        by smtp.gmail.com with ESMTPSA id 41be03b00d2f7-c865861226fsm1473268a12.15.2026.06.11.03.23.24
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Thu, 11 Jun 2026 03:23:26 -0700 (PDT)
-Message-ID: <5f1cfbc0-8358-4f8e-86d1-85d160a31ea9@gmail.com>
-Date: Thu, 11 Jun 2026 18:23:21 +0800
+        d=1e100.net; s=20251104; t=1781174978; x=1781779778;
+        h=content-transfer-encoding:mime-version:message-id:date:references
+         :in-reply-to:subject:cc:to:from:x-gm-gg:x-gm-message-state:from:to
+         :cc:subject:date:message-id:reply-to;
+        bh=SwscJafaBugtAFcCVftAtVPNwhT6yYdKLLF+cCtGgwU=;
+        b=Ntnz6dJtOA8W14G48Xz+JPMRTIBZj9vzShIUFreB8Besoidx38cuPYCBJc5gGGC2bO
+         XWHPFlVo/3Kvu/0SiT9u4UZ6jRVT2NctWM2tpo4SdeMWwshVzbiEFmhOWmV78KLus1vC
+         hl1bLqdYC6pbippOHHYv8S6pZh3LbFTZJtsBnAtdGRY/laX5DrPqx92rhd8iWtjJ5qLG
+         J3l+/KXuUuRRtkKJ6zJ8jaDqvFLQAG8pVwDB6+sM510USkh2IF6/NaEIutPzaCoC98ff
+         KGaa5y2q7tysQrimGTngEpGMxatyX3aOuPE7HYjS/U0Y3GB92YEMbVQxv/EFt5YEZKBC
+         YTsA==
+X-Gm-Message-State: AOJu0YzYAO1UGgfFhWAhE238Wz2F1+FPtz/RIv6CbZJN1eSTWxsv8jlQ
+	lkvvxr4YwiUet4KXChwFHcliG17dWZKsSPQMbfQcALM1tS0ESNM+TwU5ZU8YCQ==
+X-Gm-Gg: Acq92OH9PFr64c85+nKW2jYj/X5qd2Wwec97EI3Xojn+/qtR8qi6PreGsaIBr+x+j5k
+	mlTEl1OBQUUYKgNkTPYQ6heQpn13V4JryRM2mOzLEaCuylvrPPglo7Ft2T32GeCQX+TEdhAFhro
+	6g/wqWkUOWv/Zl1iJ2a0ok4HTm2kEXwYXN2xnSxGjY4YMfboazQxpysBhJqcjH++vTj6JhQTlz3
+	vd0XqikZkyZHy07yBYI94/8kspfpwnE0y4S/WShwtOJ8w+UcYq+CpjUicbae/2kblnla95Qk0tl
+	K1fKN5WGobhmPpwqkbQL22GCFFjb/HxwkT/EjH/YIzfSLmJwtptgcVYI8LW9drm2H289c/InNVd
+	naYSECFzwNkGkRuT4FNDI/7QiK6/mP9cBEJdrol+2HJxdWlr7CwzRwE463dQj4YaukklThbIJgU
+	RCjUA6/xOk/Bf8bk3/7cE09Qf6SdT1UKx+lDbHzbBvKUv6uzoUHLYY8PZ7Vs0WpFzvSaI=
+X-Received: by 2002:a05:600c:4e0c:b0:490:bb45:79ee with SMTP id 5b1f17b1804b1-490e5379dbbmr34829715e9.0.1781174978208;
+        Thu, 11 Jun 2026 03:49:38 -0700 (PDT)
+Received: from Abds-MacBook-Air.local ([141.2.113.162])
+        by smtp.gmail.com with ESMTPSA id 5b1f17b1804b1-490e2cf582bsm60351095e9.10.2026.06.11.03.49.37
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Thu, 11 Jun 2026 03:49:37 -0700 (PDT)
+From: Abd-Alrhman Masalkhi <abd.masalkhi@gmail.com>
+To: sashiko-reviews@lists.linux.dev
+Cc: yukuai@fygo.io, linux-raid@vger.kernel.org
+Subject: Re: [PATCH] md/raid1: honor REQ_NOWAIT when waiting for behind writes
+In-Reply-To: <20260611084953.E078E1F00898@smtp.kernel.org>
+References: <20260611083514.754922-1-abd.masalkhi@gmail.com>
+ <20260611084953.E078E1F00898@smtp.kernel.org>
+Date: Thu, 11 Jun 2026 12:49:30 +0200
+Message-ID: <m2y0gll5c5.fsf@gmail.com>
 Precedence: bulk
 X-Mailing-List: sashiko-reviews@lists.linux.dev
 List-Id: <sashiko-reviews.lists.linux.dev>
 List-Subscribe: <mailto:sashiko-reviews+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:sashiko-reviews+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 2/2] KVM: arm64: Skip unreset vCPUs in MPIDR lookup table
-To: sashiko-reviews@lists.linux.dev
-Cc: Oliver Upton <oupton@kernel.org>, Marc Zyngier <maz@kernel.org>,
- kvmarm@lists.linux.dev
-References: <20260611090934.84469-3-fuqiang.wng@gmail.com>
- <20260611092823.6E5201F00893@smtp.kernel.org>
-From: fuqiang wang <fuqiang.wng@gmail.com>
-In-Reply-To: <20260611092823.6E5201F00893@smtp.kernel.org>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: quoted-printable
 
+On Thu, Jun 11, 2026 at 08:49 +0000, sashiko-bot@kernel.org wrote:
+> Thank you for your contribution! Sashiko AI review found 3 potential issu=
+e(s) to consider:
+>
+> Pre-existing issues:
+> - [High] Leaking pre-allocated `r1_bio` when `REQ_NOWAIT` reads fail `wai=
+t_read_barrier()` during retry.
+> - [High] Permanent barrier leak if a REQ_NOWAIT write encounters a blocke=
+d device.
+> - [Medium] REQ_NOWAIT semantics violation: memory allocations use GFP_NOI=
+O unconditionally.
 
+These appear to be pre-existing issues rather than being introduced by
+this patch. I plan to address them in separate patches.
 
-On 6/11/26 5:28 PM, sashiko-bot@kernel.org wrote:
-> Thank you for your contribution! Sashiko AI review found 1 potential issue(s) to consider:
-> - [High] The `kvm_vcpu_mpidr_is_reset()` check unconditionally evaluates to false due to bitmasking and sign-extension bugs, causing the MPIDR lookup table to remain unpopulated and forcing a slow linear-search fallback for almost all vCPUs.
 > --
-> 
-> commit 492eed93a0927af5d722a777b1e148b77bf39d93
-> Author: fuqiang wang <fuqiang.wng@gmail.com>
-> 
-> KVM: arm64: Skip unreset vCPUs in MPIDR lookup table
-> 
-> This commit attempts to fix an issue where unreset vCPUs overwrite the MPIDR
-> lookup table index for vCPU0 by skipping vCPUs that do not have the RES1 bit
-> set in their MPIDR_EL1 value.
-> 
->> diff --git a/arch/arm64/include/asm/kvm_emulate.h b/arch/arm64/include/asm/kvm_emulate.h
->> --- a/arch/arm64/include/asm/kvm_emulate.h
->> +++ b/arch/arm64/include/asm/kvm_emulate.h
+>
+> commit 7fed7389f4fe20e79eece974eaf3b8d317519e27
+> Author: Abd-Alrhman Masalkhi <abd.masalkhi@gmail.com>
+>
+> md/raid1: honor REQ_NOWAIT when waiting for behind writes
+>
+> This commit ensures that raid1 consistently honors REQ_NOWAIT reads
+> across paths that may otherwise wait for behind writes. It modifies
+> bitmap_wait_behind_writes() to return early instead of sleeping if
+> the nowait flag is set.
+>
+>> diff --git a/drivers/md/raid1.c b/drivers/md/raid1.c
+>> index 5b9368bd9e700..d03da046a5920 100644
+>> --- a/drivers/md/raid1.c
+>> +++ b/drivers/md/raid1.c
 > [ ... ]
->> @@ -506,6 +506,15 @@ static inline unsigned long kvm_vcpu_get_mpidr_aff(struct kvm_vcpu *vcpu)
->>   	return __vcpu_sys_reg(vcpu, MPIDR_EL1) & MPIDR_HWID_BITMASK;
->>   }
->>   
->> +/*
->> + * Check if MPIDR matches hardware reset value. RES1 bits are set after reset,
->> + * while a zero default indicates a vCPU that has not been reset.
->> + */
->> +static inline bool kvm_vcpu_mpidr_is_reset(u64 val)
->> +{
->> +	return (val & MIDR_RES1_MASK) == MIDR_RES1_MASK;
->> +}
-> 
+>> @@ -1360,8 +1361,7 @@ static void raid1_read_request(struct mddev *mddev=
+, struct bio *bio,
+>>  	 * Still need barrier for READ in case that whole
+>>  	 * array is frozen.
+>>  	 */
+>> -	if (!wait_read_barrier(conf, bio->bi_iter.bi_sector,
+>> -				bio->bi_opf & REQ_NOWAIT)) {
+>> +	if (!wait_read_barrier(conf, bio->bi_iter.bi_sector, nowait)) {
+>>  		bio_wouldblock_error(bio);
+>>  		return;
+>>  	}
+>
 > [Severity: High]
-> Does this check always evaluate to false due to sign-extension? MIDR_RES1_MASK
-> is defined as (1 << 31), which evaluates to a signed 32-bit int. When compared
-> against the unsigned 64-bit integer val, the mask is sign-extended to
-> 0xffffffff80000000ULL.
-> 
-> Since val only contains the lower 32 bits, the bitwise AND will never match
-> the sign-extended mask.
-> 
-> [ ... ]
->> diff --git a/arch/arm64/kvm/arm.c b/arch/arm64/kvm/arm.c
->> --- a/arch/arm64/kvm/arm.c
->> +++ b/arch/arm64/kvm/arm.c
-> [ ... ]
->> @@ -884,6 +884,16 @@ static void kvm_init_mpidr_data(struct kvm *kvm)
->>   		u64 aff = kvm_vcpu_get_mpidr_aff(vcpu);
->>   		u16 index = kvm_mpidr_index(data, aff);
->>   
->> +		/*
->> +		 * In the CPU hot-plug scenario, the kvm_for_each_vcpu() macro
->> +		 * iterates over all possible vcpus. For vcpus that are not
->> +		 * reset, kvm_vcpu_get_mpidr_aff() returns 0, then the index
->> +		 * computed by kvm_mpidr_index() will also be 0, thereby
->> +		 * overwriting the original value of vcpu0.
->> +		 */
->> +		if (!kvm_vcpu_mpidr_is_reset(aff))
->> +			continue;
-> 
+> This is a pre-existing issue, but does this early return leak the=20
+> pre-allocated r1_bio when wait_read_barrier() fails during a retry?
+>
+> When a REQ_NOWAIT read fails its initial attempt, it is queued to the=20
+> retry_list and handled by the raid1d thread via handle_read_error().
+>
+> That function passes the existing, pre-allocated r1_bio back to=20
+> raid1_read_request():
+>
+> drivers/md/raid1.c:handle_read_error() {
+>     ...
+>     raid1_read_request(mddev, bio, r1_bio->sectors, r1_bio);
+>     allow_barrier(conf, sector);
+>     ...
+> }
+>
+> If the array is concurrently frozen, wait_read_barrier() returns false=20
+> since REQ_NOWAIT is still set on the master bio. The code handles this=20
+> by returning immediately, bypassing the err_handle cleanup path and=20
+> failing to call raid_end_bio_io().
+>
+> Since handle_read_error() assumes ownership was taken and only releases=20
+> its old barrier, does this result in a permanent memory leak of the=20
+> r1_bio from the r1bio_pool mempool?
+>
+> [Severity: Medium]
+> This is another pre-existing issue, but does the allocation path for=20
+> REQ_NOWAIT bios violate block layer non-blocking semantics by=20
+> unconditionally using GFP_NOIO?
+>
+> Even when REQ_NOWAIT is requested, alloc_r1bio() uses GFP_NOIO=20
+> unconditionally:
+>
+> drivers/md/raid1.c:alloc_r1bio() {
+>     ...
+>     r1_bio =3D mempool_alloc(conf->r1bio_pool, GFP_NOIO);
+>     ...
+> }
+>
+> Similarly, bio_alloc_clone() in raid1_read_request() unconditionally=20
+> uses gfp flags that include __GFP_DIRECT_RECLAIM.
+>
+> Since mempool-backed allocations will sleep under memory pressure=20
+> instead of failing immediately when these flags are used, will this=20
+> cause unexpected high latencies and potential priority inversion in=20
+> asynchronous contexts?
+>
 > [Severity: High]
-> Will this unconditionally skip all vCPUs?
-> 
-> The aff argument passed here is obtained from kvm_vcpu_get_mpidr_aff(), which
-> masks the raw MPIDR value with MPIDR_HWID_BITMASK (0xff00ffffff). This
-> explicitly clears bits 24-31, stripping the RES1 bit (bit 31) from the
-> returned value before the check even occurs.
-> 
-> Because the check will always fail, the continue statement executes for
-> every vCPU, leaving the cmpidr_to_idx table completely zero-initialized.
-> This causes all MPIDR lookups to fail the cache verification check and
-> permanently fall back to the slow linear search.
-> 
->>   		data->cmpidr_to_idx[index] = c;
->>   	}
-> 
+> This isn't a bug introduced by this patch, but does=20
+> raid1_write_request() permanently leak the barrier if a REQ_NOWAIT=20
+> write encounters a blocked device?
+>
+> In raid1_write_request(), the code successfully acquires a barrier by=20
+> calling wait_barrier(), which internally increments conf->nr_pending.
+>
+> Immediately after, it calls wait_blocked_rdev():
+>
+> drivers/md/raid1.c:raid1_write_request() {
+>     ...
+>     if (!wait_blocked_rdev(mddev, bio)) {
+>         bio_wouldblock_error(bio);
+>         return;
+>     }
+>     ...
+> }
+>
+> If the device is blocked and the request is REQ_NOWAIT,=20
+> wait_blocked_rdev() returns false and the function returns early.=20
+> However, it fails to call allow_barrier() before returning to drop=20
+> the previously acquired barrier increment.
+>
+> Because freeze_array() waits for nr_pending to reach 0, could this=20
+> permanently prevent the array from ever freezing again, deadlocking=20
+> resyncs, reconfiguration, and array teardown?
+>
+> --=20
+> Sashiko AI review =C2=B7 https://sashiko.dev/#/patchset/20260611083514.75=
+4922-1-abd.masalkhi@gmail.com?part=3D1
 
-I'm very sorry. I made a very low-level mistake and will fix it in the next
-patch and also do sufficient checks and tests before sending out the patch...
-
-fuqiang
-
+--=20
+Best Regards,
+Abd-Alrhman
