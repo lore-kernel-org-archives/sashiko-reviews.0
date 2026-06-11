@@ -1,67 +1,86 @@
-Received: from mail-pj1-f50.google.com (mail-pj1-f50.google.com [209.85.216.50])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from mx0a-0031df01.pphosted.com (mx0a-0031df01.pphosted.com [205.220.168.131])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9EF683D47A7
-	for <sashiko-reviews@lists.linux.dev>; Thu, 11 Jun 2026 12:06:45 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.216.50
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0911C3ED5D0
+	for <sashiko-reviews@lists.linux.dev>; Thu, 11 Jun 2026 12:24:41 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.168.131
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1781179606; cv=none; b=V8GyNE5Oi5B8PsKIbrUh48s3TNOwpNjvfocHnRbmxUV0ul2TM9wx/AqtZ8Hehd9aryp1Cz1ZWXUuiyBWPIgnpnbhlKGQgyrTry5MJ2fFoZu7+53kjZ13SOgIKXZMQ9VnXmzFYmmIhV5/mTA5YwDonB93Jj4RqTFsQ0S8ZH/q0iw=
+	t=1781180683; cv=none; b=j+TNvViPSEbjg1zBsjiKNtBqlRb6IA/dKdASehtKLryzacf4U5xtFYLlkgNE1RZkgNcmyQNfWh2P3u6gkRiHQTI7y6ESKYojPxmEmVdxVtBACW3DfarZM2XkiElF+c3/f5uXfzhr986OIGNIdjvzfVjDaGjOvSprwzSg8BeojjI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1781179606; c=relaxed/simple;
-	bh=wlwhQdkGb5D5EOr9Nwp4TREnWfUfgJpQ3LhnjufL8pU=;
+	s=arc-20240116; t=1781180683; c=relaxed/simple;
+	bh=ejMIJ7K4AL/QbCIEwHN2FxoTF03Jlrkv3OEcOoovak8=;
 	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=uZzdxqIZyyNpN4Rh/zigfRZ0cMCg0k4CYkGBUE45S4XO4/F54pEf2yaJycgf1llXPW2yfbFVRoedVZvF9Tcd3VhEK5bceX1TqEv1GHGFq2IUNCr3cq3W+GIwCHWUSA9GoQV8huD773MpCIf8d8hWC6cemhhJ2iQzNTdA6NGcQDE=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=roeck-us.net; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=cTbGtFdT; arc=none smtp.client-ip=209.85.216.50
-Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=roeck-us.net
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+	 In-Reply-To:Content-Type; b=TURBwLHF0AV4ak8D1oAREc4WLaPu0hus9PekE6JCXwZ6otBTFltuOeOQyUGkgNAx53zUja66R+hID5zSKN1OvuZjWZEF7po1fNVltdXqp0fGhj0Irl5o2tNhJCMGu4JvIatHEtTS46OgKubCYm24d1F93nDO6lSxiG+bhsQROjg=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com; spf=pass smtp.mailfrom=oss.qualcomm.com; dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b=dIeL0d+5; dkim=pass (2048-bit key) header.d=oss.qualcomm.com header.i=@oss.qualcomm.com header.b=Qt40/yyI; arc=none smtp.client-ip=205.220.168.131
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=oss.qualcomm.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="cTbGtFdT"
-Received: by mail-pj1-f50.google.com with SMTP id 98e67ed59e1d1-36d9794d82aso5379044a91.0
-        for <sashiko-reviews@lists.linux.dev>; Thu, 11 Jun 2026 05:06:45 -0700 (PDT)
+	dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b="dIeL0d+5";
+	dkim=pass (2048-bit key) header.d=oss.qualcomm.com header.i=@oss.qualcomm.com header.b="Qt40/yyI"
+Received: from pps.filterd (m0279864.ppops.net [127.0.0.1])
+	by mx0a-0031df01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id 65B9xJ8X284156
+	for <sashiko-reviews@lists.linux.dev>; Thu, 11 Jun 2026 12:24:41 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=qualcomm.com; h=
+	cc:content-transfer-encoding:content-type:date:from:in-reply-to
+	:message-id:mime-version:references:subject:to; s=qcppdkim1; bh=
+	ZeWhGImrUpweTj328cp7G1Tu66UT4CIZ+/iFBqCdvfU=; b=dIeL0d+5048vaw/M
+	toCCMUDpgxvu7eqRxY+2cvsABB5QcbNhQFHn7ox/DbZNwDkBucUugiaNcBtsG/5s
+	3wqFT1whzwBE3LbOkfiIpUFzuw+SbvLL/Rz8wdOTDn+KQ9vOa5//kzV3xJpGMtVP
+	TKxtfYExsp2JNBihmJXTnjsie0iICCVPRDeiva4hq/RS7Eh1DXCGlRiypJr5mRcX
+	NChs5iOegpifzh7TB0j2PaJ77qhZd24jii+yHIaJtJyspCHvaKiDXEtxrZcb4tLn
+	zBYPALisl0nf/NL56BP/7/oavF54TJSsXdVZs5HWobPiEUW4/xA//YmY+d8qzbdT
+	Klruhg==
+Received: from mail-qt1-f200.google.com (mail-qt1-f200.google.com [209.85.160.200])
+	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 4eqe6tkcdw-1
+	(version=TLSv1.3 cipher=TLS_AES_128_GCM_SHA256 bits=128 verify=NOT)
+	for <sashiko-reviews@lists.linux.dev>; Thu, 11 Jun 2026 12:24:41 +0000 (GMT)
+Received: by mail-qt1-f200.google.com with SMTP id d75a77b69052e-51768072950so108447741cf.1
+        for <sashiko-reviews@lists.linux.dev>; Thu, 11 Jun 2026 05:24:40 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20251104; t=1781179605; x=1781784405; darn=lists.linux.dev;
-        h=content-transfer-encoding:in-reply-to:autocrypt:from
-         :content-language:references:cc:to:subject:user-agent:mime-version
-         :date:message-id:sender:from:to:cc:subject:date:message-id:reply-to;
-        bh=YOESj/vm8UEXKqEt301U2+lEFuGwhlHJIvdQRFOion4=;
-        b=cTbGtFdTmkCsZQ2Z0+gNKuZ23lnnwZT9OyFK2WaYFdz4ACSqK+QIdqrPOrKprbBMNv
-         GPl05ANu7UXuc1xbIjb7RYJ/tZEHgw/YfOvyxukkFcV3DLYgp2fV7Di7IdIosK24Gkbq
-         GnTUTO0Lu56NPAFNpyIWaEnuzMSmYM4mYGzK2O4wZi8SmefEolBrXrSC+aTI4/LXsfaE
-         teRyR85YfrOvbZDCCMlW8u1vzGyyh68G2ja3TSoKSSw8eIqg51R7tdvnTzKidHe5Cdzy
-         2XXswLIWOf96uYciflKzMgm+nUjQ6ks3PmWSR4vcKv4Gn6E8IC0JEieKi6LkaYbXhnjw
-         JlrA==
+        d=oss.qualcomm.com; s=google; t=1781180680; x=1781785480; darn=lists.linux.dev;
+        h=content-transfer-encoding:in-reply-to:content-language:from
+         :references:cc:to:subject:user-agent:mime-version:date:message-id
+         :from:to:cc:subject:date:message-id:reply-to;
+        bh=ZeWhGImrUpweTj328cp7G1Tu66UT4CIZ+/iFBqCdvfU=;
+        b=Qt40/yyIlffCRaOxXC2PbmnrO8JbgkIi/276PyIS3umvSIkCtAcvp1rCrWbiMhoAYz
+         CGyhqsXIzZgYudmR3y4t7UUky7/fabmgDlACZONaABI81HBEkNPcuglFI57rwszqS8ap
+         sHD2Q0xsq8En+x/Qp3qRgYKOu11xo/boj1C5nSSHIYbbJOdrrtoiqGCX9iv/VX5nUkVT
+         bgm7FFz0M5VaMmec/70GU75iahPCWY+axINItFHTSmKo6QqyLJdVQeGNU/dUt8toIZzH
+         D3uEmHBJLShYZQpTxp19/+rZYBcWtS9Alv3XOYluU1lcnsMl2oyPJ7kMmfBBzrPe1P9F
+         pHoA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20251104; t=1781179605; x=1781784405;
-        h=content-transfer-encoding:in-reply-to:autocrypt:from
-         :content-language:references:cc:to:subject:user-agent:mime-version
-         :date:message-id:sender:x-gm-gg:x-gm-message-state:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=YOESj/vm8UEXKqEt301U2+lEFuGwhlHJIvdQRFOion4=;
-        b=DruDp4ywOK+/9hqvlujW4i9QkwA7x8Yv2alWufHEBYh63B/oz6UeKtlHv37mJSIrZ0
-         7LwXt0EcIq0+1UgXjn1/av7oEY50KFuOAIICcaEnH2wsuznoq6Tb70vk78IbY7iY/NVy
-         Wy8oDMGzrECZjmU9eLzhzPYUmJocA0CzaTJJvIBzSrL/6ETCPuHE24GgN6cAO1fRZtnE
-         3b0KTzh+sGSiY2cVGZw+ALyk4cqjp0hMcEACQ5PMyNjJmgXlgZo+fEhVUaVyx4PG3jFN
-         0i81zC7syi9o0rry2PceNmXPs041FUsOvEjd3gKsezVu+Esz/zF0RMTTk2R2kCafqZxx
-         bf0Q==
-X-Gm-Message-State: AOJu0YxmLTsa68HTciB+TAp+hhf3GCIWrnibsOrBFMivp+hf0yZRzTT1
-	TEp76QjwmYkh5aBP5VTSw6e5J8nPeBEZvufxgKHxqSNUUIgmDzTKQUjdLkjsKAGO
-X-Gm-Gg: Acq92OGi+xgh8bQI5TZN0b3xwS3MaM02MMGz5ouLc4zBOiSUXK61leICy49Iq+Wb/7i
-	r5uwUuZ/Yi9frkWMPEd0whz2j0vNVy1N7seLsInm1laIVSNyAvRJcnW92kUoL0YwrM20XxVCodL
-	p65z7y0VnOo0cwFTUPLAjufHqNFJhCqEL8nlpKNHrrEnSpMTpmLjeuSuawF1lXxGm7sOCfF3YON
-	4zFhcWMtEF8OWrqCuEjRvGBTrN5hfuiJ+Q5AdUW4B5bsKDhgRIXbRZ9fD2zMGWUqFZdogWhRUoa
-	QOk8QIwJxkmlS1qNk1NP9XtaOqihoZaJQsDsMnXp5lOWzyaACnnwpSWnafAe/w6xURbgxW3iQCN
-	MpxehS4vdNxKwrMJ1kl9GneuBA/Hwo6Ik3gH/70BPSe7eOm1Q6bmo+Dy5nvI8MMe9qdjA4ffV2k
-	vuB4lUfpJ0j9kWzo1168nOkHOW3rI7RcMCWBSliPOHFH9NJsY4F5pZJEprUnRGontGynk1CVGbD
-	3EyF8jwBbU=
-X-Received: by 2002:a17:90b:1c0e:b0:36d:cc9b:2f67 with SMTP id 98e67ed59e1d1-377a76c21bemr3289918a91.19.1781179604887;
-        Thu, 11 Jun 2026 05:06:44 -0700 (PDT)
-Received: from ?IPV6:2600:1700:e321:62f0:da43:aeff:fecc:bfd5? ([2600:1700:e321:62f0:da43:aeff:fecc:bfd5])
-        by smtp.gmail.com with ESMTPSA id 98e67ed59e1d1-37753d02ca4sm2521809a91.12.2026.06.11.05.06.43
+        d=1e100.net; s=20251104; t=1781180680; x=1781785480;
+        h=content-transfer-encoding:in-reply-to:content-language:from
+         :references:cc:to:subject:user-agent:mime-version:date:message-id
+         :x-gm-gg:x-gm-message-state:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=ZeWhGImrUpweTj328cp7G1Tu66UT4CIZ+/iFBqCdvfU=;
+        b=Ubup8JltmHrEN7N6ugKTVnxPV+ntjeQ3B28tMs98/4naTV0EMk+ZKOPM8KqHJgdWtC
+         rYzygckNdQyelVqYOHC9B4vvd0kRuAMm8IrjB9DEcUVqLurdGdZY8v3z9qFsWujO959I
+         vxV/zcbRriKzh50FvgmPN7yTIC2iivFsW3/Ef7amq8I+06sh1DjIydfIA9X3W4Kj2TA/
+         2LjV/1J+cmYhWfYDw2lLprYXtBA0/uC2jlLTHdWtugWd5oViVGqaNleUuSvDjOZfBGCy
+         Nn0WmmXRz5Qscpupco5w8h73jRM+D1c6nj7uE9prkEvY0JSqhMh7yP9HIq2Kb8ZfzeYP
+         4BQQ==
+X-Gm-Message-State: AOJu0YwYxvPOM0+o07Nq/9ojlvUaak/sovS/5ZSfNExOdYMZcUpplE1x
+	bYIuoH/lSuV63zLNCoHBxXqeC97MlwmtazXeNaMQTtLr/PNf7XJhJd0cfWalDnyYafKC793X1jp
+	Jc6VVn8naVDwE3+Hl+I7w7UercTMVPTeMTSiJgxnSb7yt+EMUCld/F52y01K+41p4n4ledkO/zA
+	Vwy5c=
+X-Gm-Gg: Acq92OEQ48klQW92TtxjzA3aJNwUVvW60kA1nsCgWESyqx2RaUVtTNkkCUT5JtV/Lb/
+	kVusI0pz2qw9v/F6snlx2pak6KR4/XkMFwsIUKgRhROYHLYtXS0+pqUCGMg/8u694KzJzNTudGZ
+	h1xaATkCgZHsR4nleMo970WMk8kZ6NfTrwIGzvH+zUTJIEfJ3lXz00rfY5u1kw8c4mizol2PdhK
+	EJ/2TtADm/+P7oJ6I5rwiC+lnGMei5m7CaFHXkEIg91eXpn1FKMuwgstRkK8+qYqif9v8jUnkhQ
+	/9jRUL+KUsE+3X9Dk10P333JGUJ9QI2NJ0Em0KoZXLl95Yz6wQtbG/bnsQMYZHny957baN3469l
+	ehoHdMNxIdeZrdHX1zcsV8WDhUEZFLwnLSM6T5uTDDboldsk+q34Nx020ZqwC
+X-Received: by 2002:a05:622a:178f:b0:517:c38c:74b2 with SMTP id d75a77b69052e-517ee26b1ccmr35463921cf.54.1781180680051;
+        Thu, 11 Jun 2026 05:24:40 -0700 (PDT)
+X-Received: by 2002:a05:622a:178f:b0:517:c38c:74b2 with SMTP id d75a77b69052e-517ee26b1ccmr35463321cf.54.1781180679563;
+        Thu, 11 Jun 2026 05:24:39 -0700 (PDT)
+Received: from [192.168.1.29] ([178.197.222.150])
+        by smtp.gmail.com with ESMTPSA id 5b1f17b1804b1-490e47a9284sm39963185e9.1.2026.06.11.05.24.37
         (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Thu, 11 Jun 2026 05:06:44 -0700 (PDT)
-Sender: Guenter Roeck <groeck7@gmail.com>
-Message-ID: <811d784d-00a8-4a31-8872-e481a30e81a6@roeck-us.net>
-Date: Thu, 11 Jun 2026 05:06:43 -0700
+        Thu, 11 Jun 2026 05:24:37 -0700 (PDT)
+Message-ID: <f9d9c630-50fb-4491-921c-0c296ec9922f@oss.qualcomm.com>
+Date: Thu, 11 Jun 2026 14:24:36 +0200
 Precedence: bulk
 X-Mailing-List: sashiko-reviews@lists.linux.dev
 List-Id: <sashiko-reviews.lists.linux.dev>
@@ -69,159 +88,69 @@ List-Subscribe: <mailto:sashiko-reviews+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:sashiko-reviews+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v3 2/3] hwmon: pmbus: Add support for Silergy SQ24860
-To: sashiko-reviews@lists.linux.dev, Ziming Zhu <zmzhu0630@163.com>
-Cc: robh@kernel.org, linux-hwmon@vger.kernel.org, conor+dt@kernel.org,
- devicetree@vger.kernel.org
-References: <20260611074335.4415-3-zmzhu0630@163.com>
- <20260611075433.325CB1F00893@smtp.kernel.org>
+Subject: Re: [PATCH v2] dt-bindings: pinctrl: qcom,pmic-gpio: Add Qualcomm
+ PMK7750
+To: sashiko-reviews@lists.linux.dev
+Cc: robh@kernel.org, devicetree@vger.kernel.org, conor+dt@kernel.org
+References: <20260611110708.69234-2-krzysztof.kozlowski@oss.qualcomm.com>
+ <20260611111232.EF6541F00893@smtp.kernel.org>
+From: Krzysztof Kozlowski <krzysztof.kozlowski@oss.qualcomm.com>
 Content-Language: en-US
-From: Guenter Roeck <linux@roeck-us.net>
-Autocrypt: addr=linux@roeck-us.net; keydata=
- xsFNBE6H1WcBEACu6jIcw5kZ5dGeJ7E7B2uweQR/4FGxH10/H1O1+ApmcQ9i87XdZQiB9cpN
- RYHA7RCEK2dh6dDccykQk3bC90xXMPg+O3R+C/SkwcnUak1UZaeK/SwQbq/t0tkMzYDRxfJ7
- nyFiKxUehbNF3r9qlJgPqONwX5vJy4/GvDHdddSCxV41P/ejsZ8PykxyJs98UWhF54tGRWFl
- 7i1xvaDB9lN5WTLRKSO7wICuLiSz5WZHXMkyF4d+/O5ll7yz/o/JxK5vO/sduYDIlFTvBZDh
- gzaEtNf5tQjsjG4io8E0Yq0ViobLkS2RTNZT8ICq/Jmvl0SpbHRvYwa2DhNsK0YjHFQBB0FX
- IdhdUEzNefcNcYvqigJpdICoP2e4yJSyflHFO4dr0OrdnGLe1Zi/8Xo/2+M1dSSEt196rXaC
- kwu2KgIgmkRBb3cp2vIBBIIowU8W3qC1+w+RdMUrZxKGWJ3juwcgveJlzMpMZNyM1jobSXZ0
- VHGMNJ3MwXlrEFPXaYJgibcg6brM6wGfX/LBvc/haWw4yO24lT5eitm4UBdIy9pKkKmHHh7s
- jfZJkB5fWKVdoCv/omy6UyH6ykLOPFugl+hVL2Prf8xrXuZe1CMS7ID9Lc8FaL1ROIN/W8Vk
- BIsJMaWOhks//7d92Uf3EArDlDShwR2+D+AMon8NULuLBHiEUQARAQABzTJHdWVudGVyIFJv
- ZWNrIChMaW51eCBhY2NvdW50KSA8bGludXhAcm9lY2stdXMubmV0PsLBgQQTAQIAKwIbAwYL
- CQgHAwIGFQgCCQoLBBYCAwECHgECF4ACGQEFAmgrMyQFCSbODQkACgkQyx8mb86fmYGcWRAA
- oRwrk7V8fULqnGGpBIjp7pvR187Yzx+lhMGUHuM5H56TFEqeVwCMLWB2x1YRolYbY4MEFlQg
- VUFcfeW0OknSr1s6wtrtQm0gdkolM8OcCL9ptTHOg1mmXa4YpW8QJiL0AVtbpE9BroeWGl9v
- 2TGILPm9mVp+GmMQgkNeCS7Jonq5f5pDUGumAMguWzMFEg+Imt9wr2YA7aGen7KPSqJeQPpj
- onPKhu7O/KJKkuC50ylxizHzmGx+IUSmOZxN950pZUFvVZH9CwhAAl+NYUtcF5ry/uSYG2U7
- DCvpzqOryJRemKN63qt1bjF6cltsXwxjKOw6CvdjJYA3n6xCWLuJ6yk6CAy1Ukh545NhgBAs
- rGGVkl6TUBi0ixL3EF3RWLa9IMDcHN32r7OBhw6vbul8HqyTFZWY2ksTvlTl+qG3zV6AJuzT
- WdXmbcKN+TdhO5XlxVlbZoCm7ViBj1+PvIFQZCnLAhqSd/DJlhaq8fFXx1dCUPgQDcD+wo65
- qulV/NijfU8bzFfEPgYP/3LP+BSAyFs33y/mdP8kbMxSCjnLEhimQMrSSo/To1Gxp5C97fw5
- 3m1CaMILGKCmfI1B8iA8zd8ib7t1Rg0qCwcAnvsM36SkrID32GfFbv873bNskJCHAISK3Xkz
- qo7IYZmjk/IJGbsiGzxUhvicwkgKE9r7a1rOwU0ETofVZwEQALlLbQeBDTDbwQYrj0gbx3bq
- 7kpKABxN2MqeuqGr02DpS9883d/t7ontxasXoEz2GTioevvRmllJlPQERVxM8gQoNg22twF7
- pB/zsrIjxkE9heE4wYfN1AyzT+AxgYN6f8hVQ7Nrc9XgZZe+8IkuW/Nf64KzNJXnSH4u6nJM
- J2+Dt274YoFcXR1nG76Q259mKwzbCukKbd6piL+VsT/qBrLhZe9Ivbjq5WMdkQKnP7gYKCAi
- pNVJC4enWfivZsYupMd9qn7Uv/oCZDYoBTdMSBUblaLMwlcjnPpOYK5rfHvC4opxl+P/Vzyz
- 6WC2TLkPtKvYvXmdsI6rnEI4Uucg0Au/Ulg7aqqKhzGPIbVaL+U0Wk82nz6hz+WP2ggTrY1w
- ZlPlRt8WM9w6WfLf2j+PuGklj37m+KvaOEfLsF1v464dSpy1tQVHhhp8LFTxh/6RWkRIR2uF
- I4v3Xu/k5D0LhaZHpQ4C+xKsQxpTGuYh2tnRaRL14YMW1dlI3HfeB2gj7Yc8XdHh9vkpPyuT
- nY/ZsFbnvBtiw7GchKKri2gDhRb2QNNDyBnQn5mRFw7CyuFclAksOdV/sdpQnYlYcRQWOUGY
- HhQ5eqTRZjm9z+qQe/T0HQpmiPTqQcIaG/edgKVTUjITfA7AJMKLQHgp04Vylb+G6jocnQQX
- JqvvP09whbqrABEBAAHCwWUEGAECAA8CGwwFAmgrMyQFCSbODQkACgkQyx8mb86fmYHlgg/9
- H5JeDmB4jsreE9Bn621wZk7NMzxy9STxiVKSh8Mq4pb+IDu1RU2iLyetCY1TiJlcxnE362kj
- njrfAdqyPteHM+LU59NtEbGwrfcXdQoh4XdMuPA5ADetPLma3YiRa3VsVkLwpnR7ilgwQw6u
- dycEaOxQ7LUXCs0JaGVVP25Z2hMkHBwx6BlW6EZLNgzGI2rswSZ7SKcsBd1IRHVf0miwIFYy
- j/UEfAFNW+tbtKPNn3xZTLs3quQN7GdYLh+J0XxITpBZaFOpwEKV+VS36pSLnNl0T5wm0E/y
- scPJ0OVY7ly5Vm1nnoH4licaU5Y1nSkFR/j2douI5P7Cj687WuNMC6CcFd6j72kRfxklOqXw
- zvy+2NEcXyziiLXp84130yxAKXfluax9sZhhrhKT6VrD45S6N3HxJpXQ/RY/EX35neH2/F7B
- RgSloce2+zWfpELyS1qRkCUTt1tlGV2p+y2BPfXzrHn2vxvbhEn1QpQ6t+85FKN8YEhJEygJ
- F0WaMvQMNrk9UAUziVcUkLU52NS9SXqpVg8vgrO0JKx97IXFPcNh0DWsSj/0Y8HO/RDkGXYn
- FDMj7fZSPKyPQPmEHg+W/KzxSSfdgWIHF2QaQ0b2q1wOSec4Rti52ohmNSY+KNIW/zODhugJ
- np3900V20aS7eD9K8GTU0TGC1pyz6IVJwIE=
-In-Reply-To: <20260611075433.325CB1F00893@smtp.kernel.org>
-Content-Type: text/plain; charset=UTF-8; format=flowed
+In-Reply-To: <20260611111232.EF6541F00893@smtp.kernel.org>
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 7bit
+X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwNjExMDEyNSBTYWx0ZWRfX07ujq3ut0sob
+ ftz22VlJanIcVxh5fXwNy5bihtLY0hx6XxBiRMYkNfd4rsZJoa1jPkOMOpygbxmaDe+hZFkidqq
+ xfdMEtqo+h+smJMydDMZMXCedN7TESG4NBGNIc6qgot7Kc+/uv5NJ/vwQtjR22VgFzXgam1lF+F
+ LZGyK9fEbVXA3voDUN1iq6/HQCgvyDNW7D+eycaqRGIkEWDEqyKftb3UbheNsBujq5VHEaesYzp
+ 3/uMWxacVPLOjadIWnf2hmZwKeIZwQ6iFM+GygYm4u3RQzuiA2oWOEgQjGld49IZgaJMLNtroLj
+ jO2ojd/Z0fIImQ5l427ImtiZ/rn5suSQwJDy8tC0ZLlJnHLrxnCs6BlBMO2z3UnKDgbnk8J7rx2
+ Rb5Yvh2L9gptpBVkENd8/K8ymBNneHNdhAgXMyhfhOx8tOkowQqdlcCfu3vVYttgmT1RWu2e3J7
+ ovnG89/nPLKKmp89lrA==
+X-Proofpoint-Spam-Info: AW1haW4tMjYwNjExMDEyNSBTYWx0ZWRfX9pi6G2KCCpeg
+ 2HRVRKTE/rrZrPE8jSCCjYZxnjadjAO67R9APA/Fk2O7lcPoQ/os860b4/HXEkpQg26z9Gwnite
+ quszZQacJy9GP57ada3ibB2L2rKdAGE=
+X-Authority-Analysis: v=2.4 cv=AaiB2XXG c=1 sm=1 tr=0 ts=6a2aa909 cx=c_pps
+ a=JbAStetqSzwMeJznSMzCyw==:117 a=jO6dYz2E5lbJ9Xj+xBc9tQ==:17
+ a=IkcTkHD0fZMA:10 a=FelO9ux0wxsA:10 a=s4-Qcg_JpJYA:10
+ a=VkNPw1HP01LnGYTKEx00:22 a=u7WPNUs3qKkmUXheDGA7:22 a=DJpcGTmdVt4CTyJn9g5Z:22
+ a=VwQbUJbxAAAA:8 a=GKwtICyI_p2dLrIBI0YA:9 a=QEXdDO2ut3YA:10
+ a=uxP6HrT_eTzRwkO_Te1X:22
+X-Proofpoint-ORIG-GUID: UNsEf4RM4qJdDOWft5BgYf4JH6kDeDT6
+X-Proofpoint-GUID: UNsEf4RM4qJdDOWft5BgYf4JH6kDeDT6
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.293,Aquarius:18.0.1143,Hydra:6.1.125,FMLib:17.12.100.49
+ definitions=2026-06-11_02,2026-06-09_02,2025-10-01_01
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
+ malwarescore=0 phishscore=0 impostorscore=0 priorityscore=1501 bulkscore=0
+ clxscore=1015 adultscore=0 suspectscore=0 lowpriorityscore=0 spamscore=0
+ classifier=typeunknown authscore=0 authtc= authcc= route=outbound adjust=0
+ reason=mlx scancount=1 engine=8.22.0-2606040000 definitions=main-2606110125
 
-On 6/11/26 00:54, sashiko-bot@kernel.org wrote:
-> Thank you for your contribution! Sashiko AI review found 2 potential issue(s) to consider:
-> - [High] Missing signedness check on PMBus limits causes negative inputs to silently set maximum hardware limits.
-> - [Medium] Returns -EINVAL instead of clamping for out-of-bounds lower limits in PMBUS_IIN_OC_FAULT_LIMIT.
-> --
-> 
-> commit 1edf6322da1b629fce9b16a96496a18863aacef8
-> Author: Ziming Zhu <ziming.zhu@silergycorp.com>
-> 
-> hwmon: pmbus: Add support for Silergy SQ24860
->      
-> Add PMBus hwmon support for the Silergy SQ24860 eFuse. The driver reports
-> voltage, current, power, and temperature, along with history attributes
-> and over-current fault limits.
-> 
->> diff --git a/drivers/hwmon/pmbus/sq24860.c b/drivers/hwmon/pmbus/sq24860.c
->> new file mode 100644
->> index 0000000000000..f16f650ff7ba2
->> --- /dev/null
->> +++ b/drivers/hwmon/pmbus/sq24860.c
+On 11/06/2026 13:12, sashiko-bot@kernel.org wrote:
+>>  
+>>  properties:
+>>    compatible:
+>> -    items:
+>> -      - enum:
 > [ ... ]
->> +static int sq24860_write_word_data(struct i2c_client *client,
->> +				    int page, int reg, u16 value)
->> +{
->> +	int ret;
->> +
->> +	switch (reg) {
->> +	case PMBUS_VIN_UV_WARN_LIMIT:
->> +	case PMBUS_VIN_UV_FAULT_LIMIT:
->> +	case PMBUS_VIN_OV_WARN_LIMIT:
->> +	case PMBUS_VIN_OV_FAULT_LIMIT:
->> +	case PMBUS_VOUT_UV_WARN_LIMIT:
->> +	case PMBUS_IIN_OC_WARN_LIMIT:
->> +	case PMBUS_OT_WARN_LIMIT:
->> +	case PMBUS_OT_FAULT_LIMIT:
->> +	case PMBUS_PIN_OP_WARN_LIMIT:
->> +		value >>= SQ24860_8B_SHIFT;
->> +		value = clamp_val(value, 0, 0xff);
+>> +    oneOf:
+>> +      - items:
+>> +          - enum:
+> [ ... ]
+>> +              - qcom,pmiv0104-gpio
+>> +              - qcom,pmk8350-gpio
+>> +              - qcom,pmk7750-gpio
 > 
-> [Severity: High]
-> Does this handle negative user inputs correctly?
-> 
-> The PMBus core converts limit values into 16-bit 2's complement integers
-> (s16), but passes them as u16 to sq24860_write_word_data(). Because this
-> driver treats value as an unsigned u16, a negative user limit written via
-> sysfs will become a large positive value (e.g., 0xFFFF).
-> 
-> When this large value is logically right-shifted and clamped here, it
-> results in setting the maximum possible hardware limit (0xff) instead of
-> clamping to the minimum limit (0).
-> 
-
-Without a datasheet it is all but impossible to determine how to handle
-this. Is the 8-bit value signed or not ? Who knows. The read function
-suggests that it is unsigned, given that the sign bit is not extended,
-but that is just a guess. If the value is unsigned, negative values
-(0x8000 and higher) would have to be set to 0 prior to shifting and
-clamping. However, that really depends on the chip.
-
->> +		ret = pmbus_write_word_data(client, page, reg, value);
->> +		break;
->> +
->> +	case PMBUS_IIN_OC_FAULT_LIMIT:
->> +		if (value < SQ24860_IIN_OCF_OFF)
->> +			return -EINVAL;
-> 
-> [Severity: High]
-> Could a negative user limit bypass this bounds check?
-> 
-> Since value is unsigned, a negative limit (e.g., 0xFFFF) will evaluate
-> as greater than SQ24860_IIN_OCF_OFF (165). This bypasses the check below
-> and overflows the 32-bit unsigned calculation, effectively disabling
-> over-current protection by incorrectly setting the hardware limit to its
-> maximum.
-> 
-Same as above.
-
 > [Severity: Medium]
-> Should this clamp the value instead of returning an error?
-> 
-> The hwmon sysfs ABI convention requires drivers to silently clamp
-> out-of-range user limits to the nearest supported hardware value rather
-> than returning an error.
-> 
-> If the requested limit translates to a value below SQ24860_IIN_OCF_OFF,
-> returning -EINVAL violates this convention. Would it be better to clamp
-> the limit to SQ24860_IIN_OCF_OFF so the underlying register is set to 0?
-> 
-Yes.
+> Since qcom,pmk7750-gpio is added here to the standalone enum list, won't
+> standalone usage bypass the generation-specific constraints (such as the
+> gpio-line-names limit) defined in the allOf conditional block for the
+> PMK8550 generation?
 
-Thanks,
-Guenter
+I should have removed pmk7750 here :(
 
->> +		value -= SQ24860_IIN_OCF_OFF;
->> +		value = DIV_ROUND_CLOSEST(((unsigned int)value) * SQ24860_IIN_OCF_DIV,
->> +					  SQ24860_IIN_OCF_NUM);
->> +		value = clamp_val(value, 0, 0x3f);
->> +		ret = pmbus_write_byte_data(client, page, SQ24860_VIREF, value);
->> +		break;
-> 
+Oh, I hate these YAML block re-indentations.
 
+Best regards,
+Krzysztof
