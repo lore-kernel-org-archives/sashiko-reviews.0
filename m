@@ -1,302 +1,222 @@
-Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
+Received: from LO0P265CU003.outbound.protection.outlook.com (mail-uksouthazon11022117.outbound.protection.outlook.com [52.101.96.117])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1EB134C77DF
-	for <sashiko-reviews@lists.linux.dev>; Thu, 11 Jun 2026 18:30:05 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
-ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1781202609; cv=none; b=vCtJH3TsiGA4vzL66HbVmLcWaZPIGzRZF3o0j0igHsdcrU9oaJPgoyn+dFauYCetNoT5H48hvrHzEjUwFiCzQ6Statlm7AT5IoqQ+WAX2DgWMmDF9qAp3k8agUILQlblSwHY2ksb5efc7XyAD9s6/vtb6ZHu8IwXhKcxHvc6sT4=
-ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1781202609; c=relaxed/simple;
-	bh=yk8gj4POIwSsvmW0MWmAGSwrG3oWaTWO93WVYRX4P18=;
-	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=HSuoj8wDcOQeE0vGnek1dHn/wNKDdAzaHHCDLR3ZJcC5YmIdD4vrjSKOXw901m8x63YmOB56KhWe0ko53/GyrI6Y1bsVQ8p9FZfssHFK7Enb4t84zgLD8donHcROXWdRzgMZJsq1WTjrI+VKQSfegIEVxF3t4KmXp3P/VRVR338=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=lMPWpjD+; arc=none smtp.client-ip=100.103.45.18
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E1C6448AE15
+	for <sashiko-reviews@lists.linux.dev>; Thu, 11 Jun 2026 18:34:53 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=fail smtp.client-ip=52.101.96.117
+ARC-Seal:i=2; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
+	t=1781202895; cv=fail; b=ZBcAW5XsoF08LWeHjCrd8ee3toPt+NOI/IzOhLieh7FuuAKOjpllHovuVxRtCpIwBYB32TVIS2WpHomxDbTPxwEtNU6cA2z4c/LbXCfcV5ayBB0ZW/h9qLBoEY4IgO7Bsm2BjD8M2EXMRkKrz7BOFNPvO5u9hD3BgwvfzxkbGYY=
+ARC-Message-Signature:i=2; a=rsa-sha256; d=subspace.kernel.org;
+	s=arc-20240116; t=1781202895; c=relaxed/simple;
+	bh=m1AP2jI+ymqp5seL1IhHh+8GrQ1u+p0ylZLlJfLBC48=;
+	h=Content-Type:Date:Message-Id:Cc:Subject:From:To:References:
+	 In-Reply-To:MIME-Version; b=txpPckcISla+J3CChc0l2bNfpfINc+f9BsMSjHnFWBpG0pT6CUJYx+yZuxrm6Avd1twwqbiXp9vG7P8pZsYocCzJ4dazQq7bJ8Xt/ME9KQ/F9KGFjUt2pQW80Mlln2JevS0jMerdIK7wl0crmOCCUdt/Cr8HQXUUfidrH97TG6w=
+ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=garyguo.net; spf=pass smtp.mailfrom=garyguo.net; dkim=pass (1024-bit key) header.d=garyguo.net header.i=@garyguo.net header.b=i/IFJPj8; arc=fail smtp.client-ip=52.101.96.117
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=garyguo.net
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=garyguo.net
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="lMPWpjD+"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 298891F000E9;
-	Thu, 11 Jun 2026 18:30:03 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=kernel.org;
-	s=k20260515; t=1781202605;
-	bh=mUdMsvLpjD4bDeo9zF2p27HyJ781fK2RAxjZ/HWcvNs=;
-	h=Date:Subject:To:Cc:References:From:In-Reply-To;
-	b=lMPWpjD+jl3yplPYks0xMz3rgksD99nvDAyNjtKOFM72Rz5tvSdNTDLFdZ4zpUJ0K
-	 iaLvqUSgoSVyxaPxBikGb35E/ueZutra41ruPs/vMxNYSyqlktZOr2TAdD9XK3C/G1
-	 PBKy1bzYZuXphe1w11kebZXGmpKkS2htSrkaTm23uB4IgleuAKNuyB2XEeHg6BcsK5
-	 qAAgLFXHOArlCRepSpBg9f71dk6G6XVNlmZW4QXoagAp4yipRUe0vebyz6bvIOtf2M
-	 ls07mQg1HZf9UVdIho+DsM7/rUwBtTWaEwr1PQ3ewxrWN1MdGxxuTa7z+XRER7MFMS
-	 ONJ4o0SK9leWg==
-Message-ID: <0b01eebc-ba16-48ff-9b42-eec07dd372ef@kernel.org>
-Date: Thu, 11 Jun 2026 21:30:01 +0300
+	dkim=pass (1024-bit key) header.d=garyguo.net header.i=@garyguo.net header.b="i/IFJPj8"
+ARC-Seal: i=1; a=rsa-sha256; s=arcselector10001; d=microsoft.com; cv=none;
+ b=Ci7LcpeILu9IRzwiwE4pXQcNfaI7WUT6Z87YSdcPv0JC6k08hRXtdtttEZqT4fc50HKTPLp7TcwMXB3jZyXouOahZBDPfgN/0DJllG9lEeOjjG00CIiJ+iHfmw8BIdbRO3QWBH7galOrFPuNDvywcUl/qrggvgX+dufkJWTsjhrE7jdOI6eotOwmOyych4v5V/mTZ8RQquI38NDLWeyGvLvCwE8i4UqnW13DnLcJyQj3YMsC+Ex7Q6LWUF+qWLMyXwRjBUbnhbq7ZNRfIfng8V9FYAVsbCymDpoolcdTjIeDhYQO+Xfc+LBAerYD4TXRNdxqVRYaTf9diazqA5L09Q==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com;
+ s=arcselector10001;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
+ bh=/GjlRHIGhg8Li6VCmUCEVnJnHUzGIOi/zPAMiFDs8Hk=;
+ b=WnA4TBNrA1WUXxGuEVKoqzaRxZ7o2QgIyFpNhx9wcKjbC+92268b0uZvAoVSuDXtb96UmL6QUHw+ksgNCmoxySJS1xNzY0capym0YQjQdI69Ahv3jtdeDyRawtQouVLtz8yC8K7pfUsQQHBkW8Ct2god2wk3+x5I9PkDwMswmdqST+39wnfCMXSSYv3Jz9RkTJgZXszpqFdLdL3IlYHTd4sR9urPY0Vvcgu/qfoysLi80E4DepH/ivSb0x5HBYNIPry9KR+zmTPwl+nmGorPVSWBDDZlgoqmnG53eYRr18AU+yA7A4iObTO7QNYe16pqespij+HRuRgZQrqNGe5Jow==
+ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
+ smtp.mailfrom=garyguo.net; dmarc=pass action=none header.from=garyguo.net;
+ dkim=pass header.d=garyguo.net; arc=none
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=garyguo.net;
+ s=selector1;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
+ bh=/GjlRHIGhg8Li6VCmUCEVnJnHUzGIOi/zPAMiFDs8Hk=;
+ b=i/IFJPj8Ioh/Q+DBQc2zGHosFliA+WMDdD/wDmUFMmRi2Se5t56Cg3pd/dKwRTr8vAqTWvJbE4jTelnfR9QP6IHB9zqnoNJdq8FCG2lrGQEncfvTRIlXXmLbS1I9yQTTqxgYpa3A3ly/+Z3wwPZYF6kNb23e2TXDoUVoueDQ3jM=
+Authentication-Results: dkim=none (message not signed)
+ header.d=none;dmarc=none action=none header.from=garyguo.net;
+Received: from CW1P265MB8877.GBRP265.PROD.OUTLOOK.COM (2603:10a6:400:27c::13)
+ by CWXP265MB2248.GBRP265.PROD.OUTLOOK.COM (2603:10a6:400:79::6) with
+ Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.21.113.14; Thu, 11 Jun
+ 2026 18:34:50 +0000
+Received: from CW1P265MB8877.GBRP265.PROD.OUTLOOK.COM
+ ([fe80::6c9e:93c8:10db:e995]) by CW1P265MB8877.GBRP265.PROD.OUTLOOK.COM
+ ([fe80::6c9e:93c8:10db:e995%6]) with mapi id 15.21.0113.011; Thu, 11 Jun 2026
+ 18:34:50 +0000
+Content-Transfer-Encoding: quoted-printable
+Content-Type: text/plain; charset=UTF-8
+Date: Thu, 11 Jun 2026 19:34:49 +0100
+Message-Id: <DJ6FQ72JD6EC.3TU9TJVDGL3ZV@garyguo.net>
+Cc: <dri-devel@lists.freedesktop.org>, "Alexandre Courbot"
+ <acourbot@nvidia.com>, <ojeda@kernel.org>, <linux-pci@vger.kernel.org>,
+ "Danilo Krummrich" <dakr@kernel.org>, <rust-for-linux@vger.kernel.org>
+Subject: Re: [PATCH v4 13/20] rust: io: add projection macro and methods
+From: "Gary Guo" <gary@garyguo.net>
+To: <sashiko-reviews@lists.linux.dev>, "Gary Guo" <gary@garyguo.net>
+X-Mailer: aerc 0.21.0
+References: <20260611-io_projection-v4-13-1f7224b02dcb@garyguo.net>
+ <20260611181418.1052D1F000E9@smtp.kernel.org>
+In-Reply-To: <20260611181418.1052D1F000E9@smtp.kernel.org>
+X-ClientProxiedBy: LO4P123CA0264.GBRP123.PROD.OUTLOOK.COM
+ (2603:10a6:600:194::17) To CW1P265MB8877.GBRP265.PROD.OUTLOOK.COM
+ (2603:10a6:400:27c::13)
 Precedence: bulk
 X-Mailing-List: sashiko-reviews@lists.linux.dev
 List-Id: <sashiko-reviews.lists.linux.dev>
 List-Subscribe: <mailto:sashiko-reviews+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:sashiko-reviews+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v3 06/17] i3c: renesas: Perform Dynamic Address Assignment
- on resume
-To: sashiko-reviews@lists.linux.dev
-Cc: linux-i3c@lists.infradead.org, Frank.Li@kernel.org,
- wsa+renesas@sang-engineering.com
-References: <20260608201543.804902-7-claudiu.beznea@kernel.org>
- <20260608203648.CAC451F00893@smtp.kernel.org>
-Content-Language: en-US
-From: Claudiu Beznea <claudiu.beznea@kernel.org>
-In-Reply-To: <20260608203648.CAC451F00893@smtp.kernel.org>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
+X-MS-PublicTrafficType: Email
+X-MS-TrafficTypeDiagnostic: CW1P265MB8877:EE_|CWXP265MB2248:EE_
+X-MS-Office365-Filtering-Correlation-Id: 52161c12-19d1-406e-5cf5-08dec7e81f04
+X-MS-Exchange-SenderADCheck: 1
+X-MS-Exchange-AntiSpam-Relay: 0
+X-Microsoft-Antispam:
+	BCL:0;ARA:13230040|23010399003|1800799024|10070799003|366016|376014|3023799007|56012099006|4143699003|5023799004|18002099003|22082099003;
+X-Microsoft-Antispam-Message-Info:
+	Ny5G4Ebetn5VDHvkMNqBKZ3YFAIj4Q71daPiVZf6Upgt0SK8Im+n8Zht2e+DOSolh/2AjCsFlARcxt2bJGWzU7ICuSFpFofFmkCRbyGFNRn98cMUai8qV4XOKvcoCpFGDM5e4dZYu3G3hU/QV7ZnNAn1Ac9XLCIIcO7oRkRYkqUEYqTPh6EG3mFVGOOwb9P6zcZp2sRJEyMyOGLQuY9GMZ6vr6YTq15Z7SPhpfsVYZQJuY15KItrgcufTeuol5JgkdOErWqdBRHDu0T3Owhos78hR4Ar9Kvyh27f+aT5psSqw8hNFsqFEPOLdZVWVGvRZHW8H57RXlJQXHOL1Yaejs2B1LmgqQV3QLbXsMk2zAD/lfj3DtjU9jt/J2wMi8jTTq22ndhvbzIBjTtIGwUBbdVBY8t/wntTC/cOGdfSzZIiBDK9O7+aX9CrTLGzpGijLf24XwwaLSaGstuZAeGKCxnSjO4E1xdtmlOgkoSkFJtv3ojzGpaEe+5zGgmw4oZJHClE+/TK7o7TNAl6rpFbS2Go0a4ZgNqYtRNjmYJMjs6r7vViryEImuAi6DwpXy/O1xiZEbR7Ujwes/nPAAFMxsq1nIXnTvI+OL2GfNkt3HMiJN6NXfMN4RrHQ5mGQyz4FfK5v9LOKIEu9Q3+JLiml28DaiuSqo/GeaO4Ed6wNC5QZkJp82Bh2w8xO7HKDcFM
+X-Forefront-Antispam-Report:
+	CIP:255.255.255.255;CTRY:;LANG:en;SCL:1;SRV:;IPV:NLI;SFV:NSPM;H:CW1P265MB8877.GBRP265.PROD.OUTLOOK.COM;PTR:;CAT:NONE;SFS:(13230040)(23010399003)(1800799024)(10070799003)(366016)(376014)(3023799007)(56012099006)(4143699003)(5023799004)(18002099003)(22082099003);DIR:OUT;SFP:1102;
+X-MS-Exchange-AntiSpam-MessageData-ChunkCount: 1
+X-MS-Exchange-AntiSpam-MessageData-0:
+	=?utf-8?B?NVoyaWQ2aXZ0aFlYbG1GbE9jdmJZYytDT1luanlvQ0hqM3I2bS9xYVA1UkxY?=
+ =?utf-8?B?Ky9reU9pT3NOUVBTa0owTzJqelMvbHlJQ2p1SDBMQkJLUU1vejV1MzEyNGZw?=
+ =?utf-8?B?Y1dxUVFHN1lPbjNCL2YvNUZCcEs2ZUZ5ZGpTVE4zWlR3bVp6TktZeHpXa3RG?=
+ =?utf-8?B?V2F3QWpzYVhzWnBUWm91TVd6SVpzdGFEa0Z6MkVQbFpzVUEzYU9GZVR5WHlm?=
+ =?utf-8?B?NENEWUJCa2ZZRlRSWDVrOEt3clNyK3lLKzF0U1dndW9uQjdQcUNXS3NEcEQx?=
+ =?utf-8?B?RkpMUFh1ZUxhUXhUYzBhaHhKcHZoNDBqSUxjTndLVUw4NGQwRWQvMDQ1VUxw?=
+ =?utf-8?B?ekJKM3pmTFdicnlycnduWmRURHpGY3ZVMUpOZ2NpR3lVN0ZDckVkeTVIR1Rv?=
+ =?utf-8?B?NG5kUmlOK0VKSHk2TGtMaGdUeEFqWk9iUUhFRFNoNUpaR3poRERZanI1dUl5?=
+ =?utf-8?B?L2szU1BVUkZyaFRGejJ4RTgzTFJNYnBFd21DVjNpSDJkd1hmSk5VSWJtZ2VM?=
+ =?utf-8?B?YmZLMC9YSnEvc2Y3VmhqMDAvcVpUd3lqMTZMaFpqQXMvZ1pHRVVFRk9uaUNx?=
+ =?utf-8?B?NU1xcU8zZVdyMU5ySE84Y29rMU1YTDVYMWE4ZzYxekRlRTdONCtQbllETnFM?=
+ =?utf-8?B?WXlwQzEya3ZFVTBnMWh1WmxJVWplbGZuWGdOalpwcjEzQWExTURrWjhPN3V5?=
+ =?utf-8?B?TUkzV2lpTWFZS2NBcWxRYkJvZWJDeVhVc3Bja3NFVVFwMndiOXFxbmVOTnJy?=
+ =?utf-8?B?SzZqWlh2ZGNOL1dRUFB2M2V2bytWZVVNN1NJVG1sVWhZT0xQaXVya0FSbkg1?=
+ =?utf-8?B?NDBhdSswYmlSZXNyQVp5WnI4ckNzRzYydi9YcUdFNDlhU01JTGNqRmlDdDhr?=
+ =?utf-8?B?S0NXUTNCOFRjaldoU2ZsMWV6UTdiUk1OcjFSVnBvS0VZekYzREFvWlFBQTEy?=
+ =?utf-8?B?VlhieDhwajZpQ0xUMk91dHFYU25EdFJHUnVjeHNlWXNjc2VGYTliV3NGMjE2?=
+ =?utf-8?B?NmtDK3BXWTdsTlNCYkpuRUpaNjZqWUpWRzUrMU4rdkFxMnc0Vk9LL2F2MnFn?=
+ =?utf-8?B?NFFJRjRKNytUQXhwNjZOc1Vwcm9pSkIzR1dMYzZOMVhyZ1h3V01CQUdMR1hs?=
+ =?utf-8?B?ZHMrVCtpZllnZi9iTmg5WTd2aVhkVWpSdWhiMitBL29keDV0QW9LZTJyeVpS?=
+ =?utf-8?B?SGJWaW5ZS0xjcWVQeXFpQlcrUnp4SGFLMnBROGJ2VDNqLzFCNjU5VDdycGpR?=
+ =?utf-8?B?cWFnMithYkUvQ1FtTG15ZEEyYXRtRFZXRUtoVUc2T2JrWnNGS0ltanlrUXll?=
+ =?utf-8?B?eFR5TlQreG1GYVRQZHNUanF3RlJWR095ZDZ2L080R2dleWJBSGRkdVFHRU40?=
+ =?utf-8?B?aHZrcE4yUnpKckwyOVZpSC9QM20vRkRBUDhVbHdWd2QvQWxJaUp5MzdFcUJm?=
+ =?utf-8?B?bEJVZnJVSmRyRE5GbDR1ODNPcWxXMWplU1M1M212UHFaUkF4ZVNOem0yaFFJ?=
+ =?utf-8?B?cVcxcTcrNFhUNEdGMExvWjRrUzlPZmI1UFFuYm9NcjBkTG9ibU5sWUVoM0hw?=
+ =?utf-8?B?SnQwcStBam9wRDR2Wk4yTjM2MHlEQkdoaFIzc3RTc2pZRFo5d3R5eVBEcnZv?=
+ =?utf-8?B?RTVGelVPbThoZ2o3ZXVVdFZQd204b05SRXRIYlU4QitmMGJnczNjdDVFVVox?=
+ =?utf-8?B?ZXRJTmcxMHU3U1BvK2NSSDM5UThWRUVvNm1hdWRDVmZ1MGxJOG5CdmcwSTJ1?=
+ =?utf-8?B?T0VLTUFCRGZYbUhJN3NGcFpkNU9qMnRjckczcU5HaWJTRG1JcmxCellnU08y?=
+ =?utf-8?B?ZktGK05zR29WbzcvYklVdjFBbVVyUWo4Mmk5eHNUb2VtV0YrUjdGN2JQaWJ4?=
+ =?utf-8?B?T0F1Y0NRcEhkbVlWTFUvaDN1WHFUeHNMaHlVdnFTOW10WnhDeFVUYkVKQ09U?=
+ =?utf-8?B?NDlzQS9waEx3eGkyTzFldXFSRW5RZkJLUkRhUEtFMEsvWVh3cXlKTDM0aFZh?=
+ =?utf-8?B?L0Z0VDEyelRNV0p4aFVZZWVPLzg3VWlWTEdGblVKTFV5RWdsd2dvZ05pQ25R?=
+ =?utf-8?B?SnFMZEczZnpRblJWVkx2c3hvMGxYSjVKaUpDeHNQbEt2R2JYUWNBbUpOd0dR?=
+ =?utf-8?B?M0o5UmV0MzRpcTJHZkZVMERoUGxXSDVNSEM1bmdEUmx5dDdmQ0o4ak1mWjFn?=
+ =?utf-8?B?dm5SbUl5eDJ0Y2dVU3FlemxpMGNGM28xZTU5cW92clRqSUJlMlpYWTJ0bzlN?=
+ =?utf-8?B?ODFCeU1uRmhJd0pKZE1SUm1yWWYyb1BVMFRkOW84NkVYRmZZYnEzcFVCd240?=
+ =?utf-8?B?VXI1eEVPRzJzZ2o5d0Z4QmM3c2JkbkdxamQvNHFqeXYvWGFWQlpOdz09?=
+X-OriginatorOrg: garyguo.net
+X-MS-Exchange-CrossTenant-Network-Message-Id: 52161c12-19d1-406e-5cf5-08dec7e81f04
+X-MS-Exchange-CrossTenant-AuthSource: CW1P265MB8877.GBRP265.PROD.OUTLOOK.COM
+X-MS-Exchange-CrossTenant-AuthAs: Internal
+X-MS-Exchange-CrossTenant-OriginalArrivalTime: 11 Jun 2026 18:34:50.0584
+ (UTC)
+X-MS-Exchange-CrossTenant-FromEntityHeader: Hosted
+X-MS-Exchange-CrossTenant-Id: bbc898ad-b10f-4e10-8552-d9377b823d45
+X-MS-Exchange-CrossTenant-MailboxType: HOSTED
+X-MS-Exchange-CrossTenant-UserPrincipalName: tEt0avZ/PINXrypoNV3ZkuzzFDLSawErjs+xHOB73RJFwBUWMTIRKttYYToUljg4igwWY9Rjjs+vxwn4TAA49w==
+X-MS-Exchange-Transport-CrossTenantHeadersStamped: CWXP265MB2248
 
+(Cc list)
 
-
-On 6/8/26 23:36, sashiko-bot@kernel.org wrote:
-> Thank you for your contribution! Sashiko AI review found 7 potential issue(s) to consider:
-> 
-> New issues:
-> - [Critical] `renesas_i3c_group_devs_in_slots()` crashes on free slots and fails to update the `free_pos` bitmask.
-> - [Critical] Typo in array swapping logic duplicates I2C devices and corrupts driver state.
-> - [High] Call to undefined function `i3c_master_reattach_i3c_dev_locked` and logically invalid usage of the reattach API.
-> - [High] Bypassing `i3c_master_add_i3c_dev_locked()` on resume ignores UID arbitration order, breaking device isolation.
-> - [High] Redundant and unsafe dereference of `->dev->desc` when retrieving master data.
-> - [High] Stale `olddevs` mask corrupts DATBAS registers for relocated I2C devices.
-> 
-> Pre-existing issues:
-> - [High] Integer underflow in `GENMASK` calculation in `renesas_i3c_daa()` causes undefined behavior.
+On Thu Jun 11, 2026 at 7:14 PM BST, sashiko-bot wrote:
+> Thank you for your contribution! Sashiko AI review found 2 potential issu=
+e(s) to consider:
+> - [High] Deriving `FromBytes` on `Region<const SIZE: usize>` allows safe =
+code to bypass the struct's documented `SIZE` invariant.
+> - [Low] Removal of trailing `//` on the vertical import block closing bra=
+ce violates kernel Rust formatting rules.
 > --
-> 
-> commit 3b3dbe672a58e6c80b4a3c7aad942c61076f9cd2
-> Author: Claudiu Beznea <claudiu.beznea.uj@bp.renesas.com>
-> 
-> i3c: renesas: Perform Dynamic Address Assignment on resume
-> 
-> The patch modifies the Renesas I3C driver to run Dynamic Address Assignment
-> (DAA) in the controller resume path to restore communication with I3C devices
-> that lose power during suspend. It groups I2C and I3C devices during resume
-> and re-runs ENTDAA for I3C devices.
-> 
->> diff --git a/drivers/i3c/master/renesas-i3c.c b/drivers/i3c/master/renesas-i3c.c
->> --- a/drivers/i3c/master/renesas-i3c.c
->> +++ b/drivers/i3c/master/renesas-i3c.c
-> 
-> [ ... ]
-> 
->> +static u8 renesas_i3c_group_devs_in_slots(struct renesas_i3c *i3c)
->> +{
->> +	struct renesas_i3c_i2c_dev_data *new_i2c_data, *new_i3c_data;
->> +	struct renesas_i3c_addr i2c_addr, i3c_addr;
->> +	struct i3c_dev_desc *i3c_dev;
->> +	struct i2c_dev_desc *i2c_dev;
->> +	u8 i2c_pos = 0;
-> 
-> [ ... ]
-> 
->> +	for (u8 pos = 0; pos < i3c->maxdevs; pos++) {
->> +		if (i3c->free_pos & BIT(pos))
->> +			continue;
->> +
->> +		if (!i3c->addrs[pos].is_i2c)
->> +			continue;
->> +
->> +		if (pos == i2c_pos) {
->> +			i2c_pos++;
->> +			continue;
->> +		}
->> +
->> +		/*
->> +		 * Swap the I3C device on i2c_pos slot with the I2C dev
->> +		 * on pos slot.
->> +		 */
->> +		i3c_addr = i3c->addrs[i2c_pos];
->> +		i3c_dev = i3c_addr.i3c_dev;
->> +
->> +		i2c_addr = i3c->addrs[pos];
-> 
-> [Severity: Critical]
-> If i2c_pos points to a free slot because earlier iterations skipped free
-> slots without advancing i2c_pos, won't i3c_dev be NULL?
-
-Since, as of my code inspection, the detach could happen only though a 
-re-attachment procedure, this should lead to continuous slots allocation in 
-free_pos. Thus, at the point this code is executed there should be no gaps in 
-free_pos, unless I'm missing something.
-
-> 
-> Furthermore, does this function need to update i3c->free_pos when swapping
-> slots to ensure the bitmask stays synchronized with the array layout?
-
-Since, as of my code inspection, the detach could happen only though a 
-re-attachment procedure, this should lead to continuous slots allocation in 
-free_pos. Thus, at the point this code is executed there should be no gaps in 
-free_pos, swapping positions in i3c->addrs[] wouldn't need updating free_pos.
-
-> 
->> +		i2c_dev = i2c_addr.i2c_dev;
->> +
->> +		new_i2c_data = i3c_dev_get_master_data(i3c_dev->dev->desc);
-> 
+>
+> commit 0616e76ffd1d8525b38835ead9f29afeae45c2ed
+> Author: Gary Guo <gary@garyguo.net>
+> Subject: Add an io_project!() macro allows projection from Io to a subvie=
+w
+>
+> This commit introduces an io_project!() macro that allows projection from=
+ Io
+> to a subview using compile-time checks. It also adds a try_cast() functio=
+n
+> to perform size and alignment checks at runtime when type-casting is need=
+ed.
+>
+>> diff --git a/rust/kernel/io.rs b/rust/kernel/io.rs
+>> index 470ee2ed9849..c7a9952af995 100644
+>> --- a/rust/kernel/io.rs
+>> +++ b/rust/kernel/io.rs
+>> @@ -44,12 +44,12 @@
+>>  /// This type can be used when an I/O region without known type informa=
+tion has a compile-time known
+>>  /// minimum size (and a runtime known actual size).
+>>  ///
+>> -/// This must be 4-byte aligned.
+>> -///
+>>  /// # Invariants
+>>  ///
+>> -/// Size of the region is at least as large as the `SIZE` generic param=
+eter.
+>> +/// - Size of the region is at least as large as the `SIZE` generic par=
+ameter.
+>> +/// - Size of the region is multiple of 4.
+>>  #[repr(C, align(4))]
+>> +#[derive(FromBytes)]
+>>  pub struct Region<const SIZE: usize =3D 0> {
+>>      inner: [u8],
+>>  }
+>
 > [Severity: High]
-> Is the ->dev->desc dereference here safe?
+> Does deriving FromBytes on Region allow safe code to bypass the documente=
+d
+> SIZE invariant?
+>
+> By implementing zerocopy::FromBytes, safe code could use ref_from() to ca=
+st
+> any 4-byte aligned byte slice into a &Region. Since zerocopy only checks
+> that the slice length matches the dynamically computed layout size, which
+> for inner: [u8] is just the length of the slice, it appears safe code cou=
+ld
+> cast a 4-byte slice into a &Region<1024>.
+>
+> Could this lead to out-of-bounds reads or writes if unsafe code
+> subsequently relies on the SIZE parameter for bounds checking?
 
-At the point this code is executed the devices should have already been
-properly allocated.
+It looks like the model is using background knowledge on v0.7 of zerocopy.
+ref_from in v0.7 has `Self: Sized` bound, so it doesn't apply to `Region` w=
+hich
+is guaranteed DST.
 
-> Since i3c_dev is already a struct i3c_dev_desc *, the dev field might
-> be NULL if the device was only partially attached or memory allocation failed,
-> causing a crash. i3c_dev_get_master_data() can accept i3c_dev directly.
-> 
->> +		new_i3c_data = i2c_dev_get_master_data(i2c_dev);
->> +
->> +		i3c->addrs[i2c_pos] = i3c->addrs[pos];
->> +		i3c->addrs[i2c_pos].is_i2c = true;
->> +		i3c->addrs[i2c_pos].i2c_dev = i2c_dev;
->> +
->> +		i3c->addrs[pos] = i2c_addr;
-> 
-> [Severity: Critical]
-> Since i2c_addr was initialized to i3c->addrs[pos] above, doesn't this
-> assign the entry to itself?
+This is similar for v0.8, ref_from_* methods would require `KnownLayout` wh=
+ich
+is not true for `Region`. So everything is sound here.
 
-Indeed, this looks wrong.
+Technically, we *could* derive `KnownLayout` for `Region` by doing this:
 
-> 
-> This would duplicate the I2C device into both slots, destroy the original I3C
-> device's dynamic address state, and cross-assign private data structures.
-> Should i3c_addr be used instead?
-> 
->> +		i3c->addrs[pos].is_i2c = false;
->> +		i3c->addrs[pos].i3c_dev = i3c_dev;
->> +
->> +		new_i2c_data->index = i2c_pos++;
->> +		new_i3c_data->index = pos;
->> +
->> +		i2c_dev_set_master_data(i2c_dev, new_i2c_data);
->> +		i3c_dev_set_master_data(i3c_dev, new_i3c_data);
-> 
-> [ ... ]
-> 
->>   static int renesas_i3c_daa(struct i3c_master_controller *m)
->>   {
->>   	struct renesas_i3c *i3c = to_renesas_i3c(m);
->>   	struct renesas_i3c_cmd *cmd;
->>   	u32 olddevs, newdevs;
->>   	u8 last_addr = 0, pos;
->> +	u8 first_i3c_pos = 0;
->>   	int ret;
-> 
-> [ ... ]
-> 
->> @@ -655,16 +732,25 @@ static int renesas_i3c_daa(struct i3c_master_controller *m)
->>   	olddevs = ~(i3c->free_pos);
->>   	i3c->internal_state = I3C_INTERNAL_STATE_CONTROLLER_ENTDAA;
->>   
->> +	if (i3c->resuming)
->> +		first_i3c_pos = renesas_i3c_group_devs_in_slots(i3c);
-> 
-> [Severity: High]
-> Since olddevs is computed from i3c->free_pos before calling
-> renesas_i3c_group_devs_in_slots(), which shuffles the array but doesn't
-> update i3c->free_pos, is it possible for olddevs to be stale?
+    pub struct Region<const SIZE: usize =3D 0> {
+        fixed: [u8; SIZE],
+        additional: [u8],
+    }
 
-As of the current code base, the i2c slots in free_pos should be continuous
-and this should not happen.
+but this means that the size computation actually needs to perform an addit=
+ional
+arithmetic operation rather than just the metadata. This is also the reason=
+ why
+I didn't change the `inner` to be `[u32]` but rather make it an invariant t=
+o
+guarantee size alignment, because it would otherwise require a shift to get=
+ the
+size.
 
-> 
-> If an I2C device is relocated into an empty slot where the stale mask is 0,
-> the subsequent DAA loop might fall through and overwrite the I2C device's slot
-> with a new I3C dynamic address.
-> 
->> +
->>   	/* Setting DATBASn registers for target devices. */
->>   	for (pos = 0; pos < i3c->maxdevs; pos++) {
-> 
-> [ ... ]
-> 
->> @@ -689,12 +780,38 @@ static int renesas_i3c_daa(struct i3c_master_controller *m)
->>   
->>   	renesas_i3c_wait_xfer(i3c, xfer);
->>   
->> -	newdevs = GENMASK(i3c->maxdevs - cmd->rx_count - 1, 0);
->> -	newdevs &= ~olddevs;
->> +	newdevs = GENMASK(i3c->maxdevs - cmd->rx_count - 1, first_i3c_pos);
-> 
-> [Severity: High]
-> This is a pre-existing issue, but if cmd->rx_count equals i3c->maxdevs
-> (e.g., when no devices are assigned), the first argument to GENMASK becomes
-> -1.
-> 
-> Doesn't this invoke undefined behavior via an invalid shift count in the
-> GENMASK macro, returning garbage values?
-> 
->> +	/* Re-attach all the I3C devices on resume. */
->> +	if (!i3c->resuming)
->> +		newdevs &= ~olddevs;
->>   
->>   	for (pos = 0; pos < i3c->maxdevs; pos++) {
->> -		if (newdevs & BIT(pos))
->> -			i3c_master_add_i3c_dev_locked(m, i3c->addrs[pos]);
->> +		if (!(newdevs & BIT(pos)))
->> +			continue;
->> +
->> +		/*
->> +		 * If the bus was fully occupied before suspend, re-attach the
->> +		 * devices and update the addresses tracked by the subsystem.
->> +		 * Without this, i3c_master_add_i3c_dev_locked() returns errors
->> +		 * due to a lack of free slots (as reported by
->> +		 * renesas_i3c_get_free_pos()), causing the attachment to fail.
->> +		 *
->> +		 * Otherwise, follow the normal
->> +		 * i3c_master_add_i3c_dev_locked() path, which will re-attach the
->> +		 * devices, keep the subsystem state and driver addresses in sync,
->> +		 * and perform all the required internal bookkeeping.
->> +		 */
->> +		if (!i3c->free_pos && i3c->resuming) {
->> +			struct i3c_dev_desc *dev = i3c->addrs[pos].i3c_dev->dev->desc;
-> 
-> [Severity: High]
-> Is it safe to dereference i3c_dev->dev->desc here?
-> 
-> If dev is NULL due to partial attachment or memory allocation failure prior
-> to suspend, this will cause a kernel crash.
-
-This should not happen since at this point the devices should be properly 
-attached. Moreover, using directly i3c->addrs[pos].i3c_dev doesn't
-work for the case here.
-
-> 
->> +			u8 old_dyn_addr;
->> +
->> +			old_dyn_addr = dev->info.dyn_addr;
->> +			dev->info.dyn_addr = i3c->addrs[pos].addr;
->> +
->> +			i3c_master_reattach_i3c_dev_locked(dev, old_dyn_addr);
-> 
-> [Severity: High]
-> Does i3c_master_reattach_i3c_dev_locked() exist in the kernel?
-> 
-> Calling a non-existent function will result in a build failure. Additionally,
-> even if this was intended to be i3c_master_reattach_i3c_dev(), that API
-> sends a SETNEWDA CCC to the device's old dynamic address. Since ENTDAA just
-> assigned a new dynamic address via hardware, won't the device NACK the
-> command?
-
-The API is part of the series pointed out in the cover letter of this series.
-
-> 
-> Furthermore, by bypassing i3c_master_add_i3c_dev_locked(), does this ignore
-> the PID arbitration order? ENTDAA assigns addresses based on PID arbitration,
-> so the device that won arbitration might not correspond to the descriptor at
-> i3c->addrs[pos], breaking device isolation.
-> 
->> +		} else {
->> +			i3c_master_add_i3c_dev_locked(m, i3c->addrs[pos].addr);
->> +		}
->>   	}
->>   
->>   	return 0;
-> 
-
--- 
-Thank you,
-Claudiu
-
+Best,
+Gary
