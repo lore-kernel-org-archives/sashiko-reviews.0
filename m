@@ -1,207 +1,172 @@
-Received: from mx0a-001b2d01.pphosted.com (mx0a-001b2d01.pphosted.com [148.163.156.1])
+Received: from mailgw02.mediatek.com (unknown [210.61.82.184])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6E04C315D46
-	for <sashiko-reviews@lists.linux.dev>; Thu, 11 Jun 2026 23:29:09 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=148.163.156.1
-ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1781220550; cv=none; b=H1Vz/JXJoiHG2vStz3c3fG+HBQTCw9M+acT1RlXv6wqyPAXgEyUC1H7OcAB7Vkx0W1P/Z8auiRmRMzhC3xi5kUaGvDJsei4qWIPlXjvhVsq63zRJwWq5qi3zKAjkxFUTTOM04OGCbjr9nJRoEi0oi4BiBktYeUYBZu5l01fCIqQ=
-ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1781220550; c=relaxed/simple;
-	bh=Pm7af7dLqeMPNCSZwLOFmr582pPUG+LONo0RlZhWmuk=;
-	h=Message-ID:Date:MIME-Version:From:Subject:To:Cc:References:
-	 In-Reply-To:Content-Type; b=ryL95Fm+pa0PGoo+vdW2vjecrwhCxZ7kSkSIoJ1V1LA51iUoiyJGbCqy9PQ8ir+OArfoMWF2AasNszli4XZ3+CDRkDcorDQZR2iY9xH5/tzD6vCXCirK4keKqH8TJG773pPGZF2LsK93dyK78WBHW1dmxNWeuKou4LoVG5Msysg=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linux.ibm.com; spf=pass smtp.mailfrom=linux.ibm.com; dkim=pass (2048-bit key) header.d=ibm.com header.i=@ibm.com header.b=X7SZ0Pzn; arc=none smtp.client-ip=148.163.156.1
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linux.ibm.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linux.ibm.com
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 62B99371D04
+	for <sashiko-reviews@lists.linux.dev>; Thu, 11 Jun 2026 23:45:25 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=fail smtp.client-ip=210.61.82.184
+ARC-Seal:i=2; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
+	t=1781221532; cv=fail; b=rGdTSOFQf8qSsMNSRQFRwkYr1f8a2ntrUySU2fE10yjukECCF2HualbOZo31fG/ufgpFgY49fYjnSUaoQT3WsFknrS+gya1JRrpQahyRmMmEK6Bibs0Ht9k4z0mKTjBeTSwqyXD4TwdPY6U9xWHxjGMznqYHzAGhR5IdJ3nIIDc=
+ARC-Message-Signature:i=2; a=rsa-sha256; d=subspace.kernel.org;
+	s=arc-20240116; t=1781221532; c=relaxed/simple;
+	bh=0NN5M26uUtDajELPipmUxIZtPGRR0iiKy6/gdV9tAiU=;
+	h=From:To:CC:Subject:Date:Message-ID:References:In-Reply-To:
+	 Content-Type:MIME-Version; b=aTJ3kzFNpOOM/vjuNNdNW1ihbZz35Vh7798ZIF1Jt9iV7MwTEhk4vuuLlILn3YRjLL/JT05KGnHrq5zGTV3WuzxeBLwVFoAnR4HyQqvf1eo1EEkli9toW3tUuYjTxu7PW/bbYGuJRi7eHQpzDhuCyRTU6++5TMP8hwgy+yAl4Wk=
+ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=mediatek.com; spf=pass smtp.mailfrom=mediatek.com; dkim=pass (1024-bit key) header.d=mediatek.com header.i=@mediatek.com header.b=rAbecIcv; dkim=pass (1024-bit key) header.d=mediateko365.onmicrosoft.com header.i=@mediateko365.onmicrosoft.com header.b=oTidParc; arc=fail smtp.client-ip=210.61.82.184
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=mediatek.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=mediatek.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=ibm.com header.i=@ibm.com header.b="X7SZ0Pzn"
-Received: from pps.filterd (m0360083.ppops.net [127.0.0.1])
-	by mx0a-001b2d01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id 65BBABDU722462;
-	Thu, 11 Jun 2026 23:29:07 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=ibm.com; h=cc
-	:content-transfer-encoding:content-type:date:from:in-reply-to
-	:message-id:mime-version:references:subject:to; s=pp1; bh=HvUAM8
-	uB+jIourDZyyJ+heUVI3gU1WxmGWRC/FX1fpM=; b=X7SZ0PznZUVRJS4a5EoOa1
-	uOa6nVCvXqrnZQqwTqP2jWJxdmhkQfcvYlD1o8beDUGgcW2DIc4s57W6Wac8BLLS
-	pyYw2RXyO0PZ2W9TXBa8+ROZki7prbM4JO1zd2R2nFmYGJb5SOo+So/Cl0oHBijA
-	NsyWliDvDlPlvjt+sPXq/57EDiPoKA//L4Fu2G6MR8lNgaNKogs1JPs/acEfiFXn
-	M+3xPbGZ/MsnpCTsqFWMB0aQlr9IRhBYFcpRZGhqpXVfQDi2fkG60PnxvYui8StK
-	oiNGPbni0Fox3XIYk5kXKqEqZKBxUe6KPQPBtvHFef0wHzJRyskwZ4imvdvTLhzQ
-	==
-Received: from ppma13.dal12v.mail.ibm.com (dd.9e.1632.ip4.static.sl-reverse.com [50.22.158.221])
-	by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 4eqe8debua-1
-	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Thu, 11 Jun 2026 23:29:07 +0000 (GMT)
-Received: from pps.filterd (ppma13.dal12v.mail.ibm.com [127.0.0.1])
-	by ppma13.dal12v.mail.ibm.com (8.18.1.7/8.18.1.7) with ESMTP id 65BNK8X3005982;
-	Thu, 11 Jun 2026 23:29:06 GMT
-Received: from smtprelay03.dal12v.mail.ibm.com ([172.16.1.5])
-	by ppma13.dal12v.mail.ibm.com (PPS) with ESMTPS id 4eqe09wd2n-1
-	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Thu, 11 Jun 2026 23:29:06 +0000 (GMT)
-Received: from smtpav02.dal12v.mail.ibm.com (smtpav02.dal12v.mail.ibm.com [10.241.53.101])
-	by smtprelay03.dal12v.mail.ibm.com (8.14.9/8.14.9/NCO v10.0) with ESMTP id 65BNT5s455771460
-	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
-	Thu, 11 Jun 2026 23:29:06 GMT
-Received: from smtpav02.dal12v.mail.ibm.com (unknown [127.0.0.1])
-	by IMSVA (Postfix) with ESMTP id DE6085805A;
-	Thu, 11 Jun 2026 23:29:05 +0000 (GMT)
-Received: from smtpav02.dal12v.mail.ibm.com (unknown [127.0.0.1])
-	by IMSVA (Postfix) with ESMTP id 8015758051;
-	Thu, 11 Jun 2026 23:29:05 +0000 (GMT)
-Received: from [9.61.248.230] (unknown [9.61.248.230])
-	by smtpav02.dal12v.mail.ibm.com (Postfix) with ESMTP;
-	Thu, 11 Jun 2026 23:29:05 +0000 (GMT)
-Message-ID: <1edb130d-8db5-4d48-8f26-1ed24dc544c8@linux.ibm.com>
-Date: Thu, 11 Jun 2026 16:29:05 -0700
+	dkim=pass (1024-bit key) header.d=mediatek.com header.i=@mediatek.com header.b="rAbecIcv";
+	dkim=pass (1024-bit key) header.d=mediateko365.onmicrosoft.com header.i=@mediateko365.onmicrosoft.com header.b="oTidParc"
+X-UUID: 9b84b17265ef11f18dc8c9802ae25ab1-20260612
+DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed; d=mediatek.com; s=dk;
+	h=MIME-Version:Content-Transfer-Encoding:Content-ID:Content-Type:In-Reply-To:References:Message-ID:Date:Subject:CC:To:From; bh=0NN5M26uUtDajELPipmUxIZtPGRR0iiKy6/gdV9tAiU=;
+	b=rAbecIcvgDaUIiOwJEYk203sQtXJzPW3AdkPRgUUHq1VOVDDgTSR/3POLswXD76xwSuWPygy/qbTwXopSrjW4x54EBnG4+WRSmOvb57yUG37EAzntUCBn5b7E2+AQAi6moSqBTTebPpj60i2o303l/BsXYMtBi8FFtR5UkQsdVY=;
+X-CID-P-RULE: Release_Ham
+X-CID-O-INFO: VERSION:1.3.15,REQID:fa09519d-c79e-4010-ad55-2b9a548816d5,IP:0,U
+	RL:0,TC:0,Content:0,EDM:0,RT:0,SF:0,FILE:0,BULK:0,RULE:Release_Ham,ACTION:
+	release,TS:0
+X-CID-META: VersionHash:e276073,CLOUDID:08f4f8a4-9ef7-4489-861a-e83b251ece46,B
+	ulkID:nil,BulkQuantity:0,Recheck:0,SF:80|81|82|83|102|110|111|836|865|888|
+	898,TC:-5,Content:0|15|50,EDM:-3,IP:nil,URL:0,File:130,RT:0,Bulk:nil,QS:ni
+	l,BEC:-1,COL:0,OSI:0,OSA:0,AV:0,LES:1,SPR:NO,DKR:0,DKP:0,BRR:0,BRE:0,ARC:0
+X-CID-BVR: 2,SSN|SDN
+X-CID-BAS: 2,SSN|SDN,0,_
+X-CID-FACTOR: TF_CID_SPAM_SNR
+X-CID-RHF: D41D8CD98F00B204E9800998ECF8427E
+X-UUID: 9b84b17265ef11f18dc8c9802ae25ab1-20260612
+Received: from mtkmbs09n1.mediatek.inc [(172.21.101.35)] by mailgw02.mediatek.com
+	(envelope-from <ed.tsai@mediatek.com>)
+	(Generic MTA with TLSv1.2 ECDHE-RSA-AES256-GCM-SHA384 256/256)
+	with ESMTP id 1559659669; Fri, 12 Jun 2026 07:45:20 +0800
+Received: from mtkmbs10n2.mediatek.inc (172.21.101.183) by
+ mtkmbs13n2.mediatek.inc (172.21.101.108) with Microsoft SMTP Server
+ (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
+ 15.2.2562.29; Fri, 12 Jun 2026 07:45:19 +0800
+Received: from SI4PR04CU001.outbound.protection.outlook.com (172.21.101.237)
+ by mtkmbs10n2.mediatek.inc (172.21.101.183) with Microsoft SMTP Server id
+ 15.2.2562.29 via Frontend Transport; Fri, 12 Jun 2026 07:45:19 +0800
+ARC-Seal: i=1; a=rsa-sha256; s=arcselector10001; d=microsoft.com; cv=none;
+ b=HcEOORdko3PK9KUhIO1HE/Dgr0+WAERwNKnAm00ocboLsBVYEtSLVjDWJT0F5YD4bSmeeYcVLzBK+jSSxl5Dg7iefBX4VPadQTmZp4mmqyi0WS09ItOk5IdRf2QlI1sMoX4BDNZk2rt2K1HSqDYqRA8sP44OZ5LEXUczGo/Nlo07jk7VnHhcVCaAzt+54/iyg4tSWFYHhK777WtVj4vmBll2OIfaN6lEzLhR4ozSQe5XXoNZIUT7Pnuj/cM4qkd9wWiOm/QyYp/81o9vOHYDC8z/0MnXVFnC2yrzM9pYziHcMV8YoHBNqevDGdM2/WMeBRxU/SWSAf/ElFLFovJ19g==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com;
+ s=arcselector10001;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
+ bh=0NN5M26uUtDajELPipmUxIZtPGRR0iiKy6/gdV9tAiU=;
+ b=Jad1tt0fwSp6hTxFthcDhsz6cJGbolJo8zxY+HQZA7Gp3VVx3vXtbixjZpjiGwXslu5GWPJDzec6DoRHUf888bZ55cxrl6HRPgY3PbcPbU33kELTwlbjvTtB0bzTibQFUCGq0akB6GrSORO3kkmVCNy+0W1ZSjneD+2fOqhzdg+9YL0ilSr3TMSi6cfGXvPLJZ5ZfWBHpYJZ9ifhU+nFBoN0Io3B6xGCM4Ec0dTLErpUNQDB53tlyyDiQNs5sEvVJgXk7dLsLPByGishon948ktyzEHjrATImHi5Sg+TNVsFFkmDE46BNBSt8VkNrJNib8tNIrls+Pz/mTUQ4TSiuQ==
+ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
+ smtp.mailfrom=mediatek.com; dmarc=pass action=none header.from=mediatek.com;
+ dkim=pass header.d=mediatek.com; arc=none
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=mediateko365.onmicrosoft.com; s=selector2-mediateko365-onmicrosoft-com;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
+ bh=0NN5M26uUtDajELPipmUxIZtPGRR0iiKy6/gdV9tAiU=;
+ b=oTidParcuRars/fQVcvmFKTQrCtM+HUqO+IR1PBBvh6jBVZWI+WkTi5k0sji8gTcOh7XDQ1svWOUje8InUNhwBvNIpBdDOhsyq2rRt3njge7fKWMu8ArHPo3VHy3lK6ro81hFFhP3vRELq0uz325/iBymVBsjX/fEIxnm8Z1V9E=
+Received: from SI2PR03MB5545.apcprd03.prod.outlook.com (2603:1096:4:131::9) by
+ TYZPR03MB6447.apcprd03.prod.outlook.com (2603:1096:400:1cc::14) with
+ Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.21.113.14; Thu, 11 Jun
+ 2026 23:45:16 +0000
+Received: from SI2PR03MB5545.apcprd03.prod.outlook.com
+ ([fe80::42a2:bb5:d1fd:3ac6]) by SI2PR03MB5545.apcprd03.prod.outlook.com
+ ([fe80::42a2:bb5:d1fd:3ac6%6]) with mapi id 15.21.0113.013; Thu, 11 Jun 2026
+ 23:45:16 +0000
+From: =?utf-8?B?RWQgVHNhaSAo6JSh5a6X6LuSKQ==?= <Ed.Tsai@mediatek.com>
+To: "sashiko-reviews@lists.linux.dev" <sashiko-reviews@lists.linux.dev>
+CC: "linux-scsi@vger.kernel.org" <linux-scsi@vger.kernel.org>
+Subject: Re: [PATCH v2 3/3] ufs: core: Remove max_num_rtt field from
+ ufs_hba_variant_ops
+Thread-Topic: [PATCH v2 3/3] ufs: core: Remove max_num_rtt field from
+ ufs_hba_variant_ops
+Thread-Index: AQHc+fnQAsVGPswchUyJiOHc0Vx9rbY6AY6AgAADMQA=
+Date: Thu, 11 Jun 2026 23:45:16 +0000
+Message-ID: <ad34cb0527688ed0eba7040606a71d52641c155a.camel@mediatek.com>
+References: <20260611232632.2324422-4-ed.tsai@mediatek.com>
+	 <20260611233350.199321F000E9@smtp.kernel.org>
+In-Reply-To: <20260611233350.199321F000E9@smtp.kernel.org>
+Accept-Language: zh-TW, en-US
+Content-Language: en-US
+X-MS-Has-Attach:
+X-MS-TNEF-Correlator:
+authentication-results: dkim=none (message not signed)
+ header.d=none;dmarc=none action=none header.from=mediatek.com;
+x-ms-publictraffictype: Email
+x-ms-traffictypediagnostic: SI2PR03MB5545:EE_|TYZPR03MB6447:EE_
+x-ms-office365-filtering-correlation-id: 43e4767a-e750-4f3a-9d5f-08dec8137d6e
+x-ms-exchange-senderadcheck: 1
+x-ms-exchange-antispam-relay: 0
+x-microsoft-antispam: BCL:0;ARA:13230040|23010399003|366016|376014|1800799024|56012099006|6133799003|11063799006|4143699003|18002099003|22082099003|38070700021;
+x-microsoft-antispam-message-info: 4NmGNbM8KGaJN/zjFJTwXiTIF3sLNtBGGsErp1hcakOZo7kLMqzQDdsfD0uMrNn9o9lw85u1q5bDNKrEZVJ1HC4vUsWTtchTBB1cRn51OjBlotOq2uWbcgCjvatr+OdKhKkfIQEgl4GZcxO/PoQyapmw8wz7LIYRgaLAibx3FBQf7Duo0fuIaLSV5gVNqhmsRa5NRgLBCkdZOLXAzo1m7/DxtDaMEQ2gXVUVHTdF06fHmGuGh12Pdc32IuQ6oqSL2oHrMW2Rc4Q/o1A4dEDx7gKHto9G2lNOYoa0NTtypGSkXl4CyQcfWcjbT4AirGKqcObH/xXtisH6aRUDujimb16y9TyKekM+wja0UaGsjf77qYxSWsGqCR11+YO0KjJlRORCjhT4a61SsojQ2IE5rXe7qniN7pLBA5Msq9FvD1DEaNUk9WaQCC+uQW/G64ogWCtrclCwCTaeSTsxeDx0M1zroE1SDKJeF+48QZWFUTrl5KCvaxHdB25Jlj+4a8ccy7oEFBH6wyAYp/NW/YBNaBV0p3dYK+LtLTOYmMSWTrL2oStJ9eopZXZZ1HzaUO6ph2fy88CgPQIKAgdOdIldj2Gth35b6NGJiC3aetdH7MhfU/pTG4nDvvMwZAalu6taXlfK+VN4vqeYqX+e63X1d8AX70ldJcQVS6JBA79yGI9SMdlNv+50TpxjkmQRX/cwuCyFIyT2DTeMtrk45iitdCsqQy4PlcpkjwUvUwsVHDvheIoJPLqaBNyXRh5J/F3r
+x-forefront-antispam-report: CIP:255.255.255.255;CTRY:;LANG:en;SCL:1;SRV:;IPV:NLI;SFV:NSPM;H:SI2PR03MB5545.apcprd03.prod.outlook.com;PTR:;CAT:NONE;SFS:(13230040)(23010399003)(366016)(376014)(1800799024)(56012099006)(6133799003)(11063799006)(4143699003)(18002099003)(22082099003)(38070700021);DIR:OUT;SFP:1101;
+x-ms-exchange-antispam-messagedata-chunkcount: 1
+x-ms-exchange-antispam-messagedata-0: =?utf-8?B?YmFVVjhuSC93bFhkR3Ribk5rRFA4YnBxcnBlNjZyNEFML0F0UE9aUis1U1d1?=
+ =?utf-8?B?K0FCbFBpSVphblpxVzJlQXFoN2FHM1JYZTMrcXFrTGR3NHVIcllpL3dHS3RS?=
+ =?utf-8?B?Zi9HZE5YVnBydU5td1RQVVlLTzY1czErK291akZma2wxdVk5K2h2RllFT09I?=
+ =?utf-8?B?SUJMcmJsd2RSc3FkbTNlR1lMNWtsbzk2enU1cjA0aXgvaVU0anM0S1ZuM2dX?=
+ =?utf-8?B?ZDhpT0dKWk9LYSszQ2loSm9lekxZclJEOThxT2tMK2JraHpRMnliWGlJOXox?=
+ =?utf-8?B?ZU1RRXYxejM4RUluNHB5T09ucm5GSmYwc3AveWVaZjBYYnFFamFhM2hJM3pW?=
+ =?utf-8?B?WXlYNFpTY2dnMHN1V2x6aktoOUJWQWloVk51VC9qMEJGQ2xGNkZkTUwwNUNy?=
+ =?utf-8?B?WDl0UDNhRzNTQ1FJSHFRZFJsMktQcVhSRldlN0RIYnZzMG9QNnpnejhETktF?=
+ =?utf-8?B?QkNkN1J0MG5YT25HU2VPbVlxcTl5NjZrNFVaSjh3NVlpeVNEcFo1Nm15RlFz?=
+ =?utf-8?B?SjZGdlpkb2UwclZRVXg0TGxlR1h6QkpiTEE4OXlVOHJsNlUyS2NQc3pYNnNQ?=
+ =?utf-8?B?WVdmZWtHYTJUeU5WcTF3ZDNkOVJUY3crSUEvaDFPekpXcm5WSWJWQmVlM2xa?=
+ =?utf-8?B?U1BoN1gwbVlLVHgwZVUwQ2tIYzgvOVIxblhRd3FHb2hWUUp2dVZlT0x6N1J6?=
+ =?utf-8?B?QTZNZGorWHlUdUxHYXlXcXBSdGtMSE5VVnNtSmU2RHROZWRtZ1BiTEVSVm1W?=
+ =?utf-8?B?Qk9RWDBPV2VmczRJS0dqdHBPR214eFVIREgwVHFzK0pFNkdRc3F1dGg1cW43?=
+ =?utf-8?B?VVovZW9WK05tTC9DOGFDWSt4ZHRyU3FLUDgwLzdMYkJZd2JlMHd0cUtyYkFs?=
+ =?utf-8?B?YlVxdm95YjRtMXJWU2Z0dDliSEhmK3g4Y0tlM3FHcFFpQWwrS3RnWm1odHBB?=
+ =?utf-8?B?Tm1uOUUrM0xPUlZhdU1jMkR1ckN5akszdHB2T2RBa1FyUXZ4dXc1NTFFY3pP?=
+ =?utf-8?B?NDF4djhGMWRUQlp4dlVYa3JwMzlWQWMzaTVVZ1haQWNvK1BjMGduN0hyd3Ev?=
+ =?utf-8?B?ZE0rY1lTby9MNXNBcExJdmZQTmY0c0FnbjlxbHJHYzlDdlRtQjNMTEh3anQ2?=
+ =?utf-8?B?aDNSald0VTg3YTJxSmVwOXlQeDhseXpKOUdjQVFyUU5BNm8vUUw1MWFqbEJx?=
+ =?utf-8?B?UzMyUVpydnRlNWI4TnlXd2NySmNTNHplOGdTL0Y5NWltWnJkMk05RE9mZVoz?=
+ =?utf-8?B?REdzNTFuSjlhb0VvZEZKZHhMVlMyQzJYbit2NEhyaXRvQ0g0OEMzT2QwNWdr?=
+ =?utf-8?B?b2NvYUtIUE9KZkQ0cjlRVFBmNlNJZVhKQ2FoYU1hVVFJbDg5MEJlZE9RSUR6?=
+ =?utf-8?B?ZVlRUlRkOGlYZVRudHBQcEtWQ0x5TngrUXUxZzhuZ3JXSGtCemluZmJhZTZ6?=
+ =?utf-8?B?bDVEVjNCaGZUSXF2dXhhL3NZZXpjNktRNGhpNmNqdzYrLzBmVnRiUFlhSEFE?=
+ =?utf-8?B?cjZtdjhNalRLOG9aL2w1S1NoNVNjZEd4b3NqLy90RVNYSWNEUlh2QlhUS3Za?=
+ =?utf-8?B?b1RPSi82U3p4VFVZYW8zK2Y2NC9Wdkx5cVVMeXYyTFJoektKTFhPd1V4dm8r?=
+ =?utf-8?B?VHFDcGpqVURIaW15S0JLZW9LY25pSDhkNVQrajFlcVRzaHkvaGFqcy9hbGhz?=
+ =?utf-8?B?SzN3ZExEWGJxdTc1TU1QRHphQWgzNTg2R1p3azMrbmdhTUtXUnpzdlVqcWxa?=
+ =?utf-8?B?bERuZThjOWZvTXlsamtkKzRrcDcwTEpYVVBXKy9pcDFEV0xaNzFpMmZUYjJX?=
+ =?utf-8?B?ZnRCTzdnbmI3eHVkMXBqRnJwQkZiRzYvSGdxTnJCRVJBZXRwVHU0ZXIrdE8x?=
+ =?utf-8?B?dXM0bUZIdWFTTktoVlZwUTdiWlVuaHVhbXJwY0NBTW5tdG8yencxYzhBL3JI?=
+ =?utf-8?B?cS81M1JzQ0dobUFHMHozQnkrZWI2ZjN5T2ROQzBWQ0J3emV3aVNEQVQyQith?=
+ =?utf-8?B?VnpVK1phdWVRWHNCSjl0WmhPZ3JpMHJFbWNtVkExNy9uVS95cXBNUmJoSzU3?=
+ =?utf-8?B?VFk4VXYxVENUU2NjZFVTT2xaNGEyNzNCZGUvVGhSQUNOM0txNmVqT3hCSVR5?=
+ =?utf-8?B?bmw2L1UxK3lZUDZpQ254R3dTVjk5U1ZsWHlLQytJdFpROVdDQS80OGVVUThO?=
+ =?utf-8?B?R29ZWU1lZnlWdTdwd2dBbjVMdzRTbXRHbmd6SUVQcXdqRUxIcm5rUVRtaTFa?=
+ =?utf-8?B?OStyUmxNL3I2bU5CbTMxNWFYRGlmdjdHaDErVG9zT2RzUVgyVGxhbXdQNVFj?=
+ =?utf-8?B?SGJMQ0d0dnZ4dXJNUk9LSFF5a3haL0x2a0IrbjMwZ1NoMmhPeXZiQT09?=
+Content-Type: text/plain; charset="utf-8"
+Content-ID: <CE60D1963F9FC148A3838643505467C9@apcprd03.prod.outlook.com>
+Content-Transfer-Encoding: base64
 Precedence: bulk
 X-Mailing-List: sashiko-reviews@lists.linux.dev
 List-Id: <sashiko-reviews.lists.linux.dev>
 List-Subscribe: <mailto:sashiko-reviews+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:sashiko-reviews+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-From: Farhan Ali <alifm@linux.ibm.com>
-Subject: Re: [PATCH v18 3/3] PCI: Fail FLR when config space is inaccessible
-To: Bjorn Helgaas <helgaas@kernel.org>
-Cc: sashiko-reviews@lists.linux.dev, linux-pci@vger.kernel.org,
-        Alex Williamson <alex@shazbot.org>
-References: <20260611192217.GA405982@bhelgaas>
-Content-Language: en-US
-In-Reply-To: <20260611192217.GA405982@bhelgaas>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
-X-TM-AS-GCONF: 00
-X-Proofpoint-Spam-Info: AW1haW4tMjYwNjExMDIzMiBTYWx0ZWRfXzpS6ct/b/CNc
- eUlrIed966Tkh8eR7WUvmPb6Xj8GcQ9MKZyaTwrKrAXOJKRZCL/4ARO67jnoijkwUF7AxBGKk5w
- IzItkTyW8kWaGhCWpWqwZTf21OSp3BA=
-X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwNjExMDIzMiBTYWx0ZWRfXxBayqoU8j6Gv
- Ye9WSFxnPKpnKmreCDqmwTnfil5J3/i7h7ncoS6KEe5JVZ3c4/q+V8Rx5w2SREw9N1du4h2nAeO
- Enm6YzbBqF5siG/2iIZFtO+oHjrVfHvYafCDF3cdUPYFSKUWkKT3f5MVnBZkOzuvATAjtI8sVoS
- uJ33cuA3ZFx4MX320v7DNVwyZyjpfVJXLMKGlNXp/ykyezstFgumSSm1zQU365cL80nOM+vl5b0
- 5DVuE8F18rxctZ9bAHLo8vsjAdpNwX+vG6ZhiTpalGzdbRXl0eoMRHRCIPWC9SvyqJT3ZCvlZ1X
- qGkT7fP6GHZ2LOK0p9P7UGCnCGM8oSlaaNljS34xYMjJ0tGcKcp05vTwzxKWe1yBV23owShecBO
- 3cpegD1qK7Bg5QVfThOZWn5EzwWUadzO5kHBLVXoS/nJIR97Clhh5mEKj8YhAXr0XjZ4B9XI5Tb
- FkoY6DYbzncblRqf+gA==
-X-Proofpoint-ORIG-GUID: ueFsAY4KOXun1-40pakHIVjo4dDwbnxP
-X-Authority-Analysis: v=2.4 cv=GIM41ONK c=1 sm=1 tr=0 ts=6a2b44c3 cx=c_pps
- a=AfN7/Ok6k8XGzOShvHwTGQ==:117 a=AfN7/Ok6k8XGzOShvHwTGQ==:17
- a=IkcTkHD0fZMA:10 a=FelO9ux0wxsA:10 a=VkNPw1HP01LnGYTKEx00:22
- a=RnoormkPH1_aCDwRdu11:22 a=iQ6ETzBq9ecOQQE5vZCe:22 a=VwQbUJbxAAAA:8
- a=Lg2p-DhD3Fgrwe0m5VcA:9 a=QEXdDO2ut3YA:10
-X-Proofpoint-GUID: ueFsAY4KOXun1-40pakHIVjo4dDwbnxP
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.293,Aquarius:18.0.1143,Hydra:6.1.125,FMLib:17.12.100.49
- definitions=2026-06-11_05,2026-06-11_01,2025-10-01_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
- clxscore=1015 suspectscore=0 impostorscore=0 spamscore=0 phishscore=0
- adultscore=0 lowpriorityscore=0 bulkscore=0 priorityscore=1501 malwarescore=0
- classifier=typeunknown authscore=0 authtc= authcc= route=outbound adjust=0
- reason=mlx scancount=1 engine=8.22.0-2606040000 definitions=main-2606110232
+X-Exchange-RoutingPolicyChecked: UehX8MrVCmq01TYrEu7QsdMOA2M2s4DKMsjHuKM793iorsNjq7U6pK1DytcEfqasQYfOsD6/4jskwHgsjwHevXlvHhyX4ZR1Jiky5YmamG1gWEsSczGcbZ7QzDBdGMeh7uWsJrldAXGMR5Q7IY+tL90Cu7+rLSFBFS33jbYPgrbniCWwtosPsfnlwbTNNT50JHG/dJd05l8kFEoCAvWJsiCubKrzGqybqEs2JJzMGetd7ymDO5eOT9bFEj7XyDzZm8OdWGx6rW8hOXZQ5j1X3Ew4N8bX4+CINMPQ4mp209FWh96pnU3R9dqfcAKjh4Q1chGx2KVMwcHfNdSF36+2IA==
+X-MS-Exchange-CrossTenant-AuthAs: Internal
+X-MS-Exchange-CrossTenant-AuthSource: SI2PR03MB5545.apcprd03.prod.outlook.com
+X-MS-Exchange-CrossTenant-Network-Message-Id: 43e4767a-e750-4f3a-9d5f-08dec8137d6e
+X-MS-Exchange-CrossTenant-originalarrivaltime: 11 Jun 2026 23:45:16.7139
+ (UTC)
+X-MS-Exchange-CrossTenant-fromentityheader: Hosted
+X-MS-Exchange-CrossTenant-id: a7687ede-7a6b-4ef6-bace-642f677fbe31
+X-MS-Exchange-CrossTenant-mailboxtype: HOSTED
+X-MS-Exchange-CrossTenant-userprincipalname: eNh1TWqFxBSa5Ul7z29K9ayC5oFE+UvZfHU577VUjWyM1/ybEhA7VwPTqLW3Btxv46bNWJjslbBKEYyWBQITqg==
+X-MS-Exchange-Transport-CrossTenantHeadersStamped: TYZPR03MB6447
+X-MTK: N
 
-
-On 6/11/2026 12:22 PM, Bjorn Helgaas wrote:
-> On Wed, Jun 10, 2026 at 02:56:48PM -0700, Farhan Ali wrote:
->> On 6/10/2026 1:02 PM, Bjorn Helgaas wrote:
->>> On Wed, Jun 10, 2026 at 09:51:55AM -0700, Farhan Ali wrote:
->>>> On 6/9/2026 3:33 PM, Bjorn Helgaas wrote:
->>>>> On Wed, Jun 03, 2026 at 06:57:36PM +0000,sashiko-bot@kernel.org wrote:
->>>>>> Thank you for your contribution! Sashiko AI review found 2 potential issue(s) to consider:
->>>>>>
->>>>>> Pre-existing issues:
->>>> ...
->>>>>>> +++ b/drivers/pci/pci.c
->>>>>>> @@ -4396,6 +4396,9 @@ int pcie_reset_flr(struct pci_dev *dev, bool probe)
->>>>>>>     	if (!(dev->devcap & PCI_EXP_DEVCAP_FLR))
->>>>>>>     		return -ENOTTY;
->>>>>>> +	if (!pci_dev_config_accessible(dev, "FLR"))
->>>>>>> +		return -ENOTTY;
->>>>>>> +
->>>>>> [Severity: High]
->>>>>> This isn't a bug introduced by this patch, but does placing this
->>>>>> check in pcie_reset_flr() leave direct callers of pcie_flr()
->>>>>> exposed to 60-second hangs?
->>>>>>
->>>>>> Direct callers of pcie_flr() (like network and storage drivers
->>>>>> during error recovery) bypass this wrapper. They will still
->>>>>> experience a stall in pci_dev_wait() when attempting to reset a
->>>>>> device with an inaccessible config space. Should this
->>>>>> accessibility check be moved into pcie_flr() instead to protect
->>>>>> all callers?
->>>>> I can't remember why we have both pcie_reset_flr() and pcie_flr(),
->>>>> other than the fact that callers don't need to supply a "probe"
->>>>> argument to pcie_flr().
->>>>>
->>>>> Is there a reason to call pci_dev_config_accessible() here rather
->>>>> than in pcie_flr()?
->>>> The reason we wanted the check in pcie_reset_flr() was so to be able
->>>> to escalate to bus reset method if we can't do an FLR. I think the
->>>> check could be moved to pcie_flr(). Is that more preferable?
->>> What if we added a preliminary patch that folds the body of pcie_flr()
->>> into pcie_reset_flr() and adds:
->>>
->>>     #define pcie_flr(dev)	pcie_reset_flr(dev, PCI_RESET_DO_RESET)
->>>
->>> That would mean pcie_flr() users would start paying attention to
->>> PCI_DEV_FLAGS_NO_FLR_RESET and PCI_EXP_DEVCAP_FLR, which seems like a
->>> good thing.
->> Looking at the history, it seems commit 56f107d7813f ("PCI: Add
->> pcie_reset_flr() with 'probe' argument") added pcie_reset_flr() to
->> add the probe and remove pcie_has_flr(). It also notes that callers
->> of pcie_flr() that didn't call pcie_has_flr() remain. I guess it
->> didn't want to change the drivers that called pcie_flr()
->> unconditionally?
-> I think it's a mistake that we expose both pcie_reset_flr() and
-> pcie_flr() to drivers.  It's unnecessary complication and may lead to
-> pcie_flr() being used to work around device defects, e.g., the 82599
-> issue, without any explanation.
->
-> Ideally I think we should convert the dozen or so callers of
-> pcie_flr() to pcie_reset_flr().  Since they never called
-> pcie_has_flr(), they initiate an FLR without checking for FLR support,
-> so they *could* have the same defect as 82599, i.e., they don't
-> advertise PCI_EXP_DEVCAP_FLR but FLR does actually work.
->
-> So converting would be slightly risky but I think the number is small
-> enough to be manageable, though it would be out of scope for *this*
-> series, of course.
->
->> There is also reset_intel_82599_sfp_virtfn() that mentions the need
->> to FLR without checking for FLR support due to some quirk. So I
->> wonder if there were genuine reasons to avoid doing the check for
->> PCI_DEV_FLAGS_NO_FLR_RESET and PCI_EXP_DEVCAP_FLR?
-> Yes.  That device looks defective in that FLR is mandatory for PFs and
-> VFs and PCI_EXP_DEVCAP_FLR must be set, but it is not set for 82599
-> VFs.
->
-> When c763e7b58f71 ("PCI: add Intel 82599 Virtual Function
-> specific reset method") added reset_intel_82599_sfp_virtfn(),
-> pcie_flr() read PCI_EXP_DEVCAP to check for PCI_EXP_DEVCAP_FLR every
-> time it was called.
->
-> PCI_EXP_DEVCAP is a read-only register that is now cached in
-> dev->devcap by set_pcie_port_type(), and pcie_reset_flr() checks the
-> cached value for PCI_EXP_DEVCAP_FLR.
->
-> So I think reset_intel_82599_sfp_virtfn() could be reworked to be an
-> early quirk that sets PCI_EXP_DEVCAP_FLR in dev->devcap, instead of
-> being a device-specific reset method.  Then pcie_reset_flr() should
-> just work.
-
-I do agree exposing both pcie_flr() and pcie_reset_flr() is not ideal, 
-and having single API with all the checks would be good. I can take a 
-stab at it (separate from this series) and look into either folding the 
-contents of pcie_flr() to pcie_reset_flr() or converting all pcie_flr() 
-caller to pcie_reset_flr(). AFAICT reset_intel_82599_sfp_virtfn() could 
-be the only caller that actually needed to avoid the PCI_EXP_DEVCAP_FLR 
-check.
-
-
-FWIW when trying on s390x with the limited set of supported PCI devices, 
-I didn't see any issues.
-
-Thanks
-
-Farhan
-
+T24gVGh1LCAyMDI2LTA2LTExIGF0IDIzOjMzICswMDAwLCBzYXNoaWtvLWJvdEBrZXJuZWwub3Jn
+IHdyb3RlOg0KPiBbU2V2ZXJpdHk6IE1lZGl1bV0NCj4gVGhlIGNvbW1pdCBtZXNzYWdlIHN0YXRl
+cyB0aGUgbWF4X251bV9ydHQgZmllbGQgaXMgcmVtb3ZlZCBmcm9tDQo+IHVmc19oYmFfdmFyaWFu
+dF9vcHMsIGJ1dCB0aGlzIGh1bmsgb25seSByZW1vdmVzIGl0cyBrZXJuZWxkb2MNCj4gY29tbWVu
+dC4NCj4gDQo+IERpZCB0aGlzIG1pc3MgcmVtb3ZpbmcgdGhlIGFjdHVhbCBtYXhfbnVtX3J0dCBm
+aWVsZCBmdXJ0aGVyIGRvd24gaW4NCj4gaW5jbHVkZS91ZnMvdWZzaGNkLmggaW5zaWRlIHN0cnVj
+dCB1ZnNfaGJhX3ZhcmlhbnRfb3BzPw0KPiANCj4gwqDCoMKgIGNvbnN0IGNoYXIgKm5hbWU7DQo+
+IMKgwqDCoCBpbnTCoMKgwqAgbWF4X251bV9ydHQ7DQo+IMKgwqDCoCBpbnTCoMKgwqAgKCppbml0
+KShzdHJ1Y3QgdWZzX2hiYSAqKTsNCj4gDQo+IExlYXZpbmcgdGhlIGZpZWxkIGJlaGluZCBhcyBk
+ZWFkIGNvZGUgd2l0aG91dCBhIGtlcm5lbGRvYyBjb21tZW50DQo+IG1pZ2h0DQo+IHRyaWdnZXIg
+YSBrZXJuZWxkb2Mgd2FybmluZy4NCj4gDQoNClNvcnJ5LCB0aGlzIGlzIHdyb25nIHZlcnNpb24u
+IEkgd2lsbCByZS1zZW5kIGEgbmV3IHZlcnNpb24gYWJvdXQgdGhpcw0Kd2FybmluZy4NCg==
