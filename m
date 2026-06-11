@@ -1,213 +1,150 @@
 Received: from mx0a-00082601.pphosted.com (mx0a-00082601.pphosted.com [67.231.145.42])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DC072175A7E
-	for <sashiko-reviews@lists.linux.dev>; Thu, 11 Jun 2026 23:02:38 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 727632E7F39
+	for <sashiko-reviews@lists.linux.dev>; Thu, 11 Jun 2026 23:06:14 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=fail smtp.client-ip=67.231.145.42
 ARC-Seal:i=2; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1781218960; cv=fail; b=jXTLBbHLAHbWX1hySerHWRK9aB3vHhAlrff84pQ99P+h/S8IRlKr0RmTb6uaM2r3PzfSVNjobmbFlVITdjPOIsbta64h+RFNqKEtzwnjeK5eUnvcbLsEXDWXKHHHQ6tRK6rCxZFoAcEYenUX6VeRmQmcmIom9AUNU9HS4YpzT/o=
+	t=1781219176; cv=fail; b=jy1udxoKayLDAVw3LBC7wIRcaquHmJBO246ICQTpxQoqWahJMivhA49KT71N1b0epB+V4Yp8lj//MRpq3W0iUvBJI2q3Y/vNr3AT07fEbfja3nEQuQUbOnOxyqPitX+qNMKl6mjYs0F2dCa0ArVRp+a+LZ2Uce2pmuqrTky1Fv4=
 ARC-Message-Signature:i=2; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1781218960; c=relaxed/simple;
-	bh=KmwjCJkcGhr9SpyfvITozRaH7etw0dkoyx0aMoQc8E4=;
+	s=arc-20240116; t=1781219176; c=relaxed/simple;
+	bh=8tl/mJ3jeelSsPisncFYTPJxxSNwXHFa0O0MaGwSjBs=;
 	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
-	 To:Cc:Content-Type; b=K+9On4AIn7Ic1sXXvf/co5Vd51qFRadJnnGvBev4sck97vwPnTWhuQr98zDtAypiRXXkO0NdPonwg6bsQHIeCUGYBcosII5lbsMjuqdXzN9ScDalfiF2hPoxkBuuV6dZ8eYas9WcFi1lGyKCWulXKS5yX17lRr/4njnS70tklrM=
-ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=meta.com; spf=pass smtp.mailfrom=meta.com; dkim=pass (2048-bit key) header.d=meta.com header.i=@meta.com header.b=md1FMUhb; arc=fail smtp.client-ip=67.231.145.42
+	 To:Cc:Content-Type; b=BdNLQDmj2DrRwIaqHZAV+BNg2TLRmpHsLAWtHUdMUZg4G9HMJ5ogpgGTsVaBKjUbFDTIEIFyi63S471lNh67UNR2NlIgumOD5cwAY12fLJboomn0xrrPhP00sz6izhawDwrgevJ9vy3NQ9YJFQ+6D6nylsuOMg9G6winhb/rJe0=
+ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=meta.com; spf=pass smtp.mailfrom=meta.com; dkim=pass (2048-bit key) header.d=meta.com header.i=@meta.com header.b=aAliD7hP; arc=fail smtp.client-ip=67.231.145.42
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=meta.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=meta.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=meta.com header.i=@meta.com header.b="md1FMUhb"
+	dkim=pass (2048-bit key) header.d=meta.com header.i=@meta.com header.b="aAliD7hP"
 Received: from pps.filterd (m0109334.ppops.net [127.0.0.1])
-	by mx0a-00082601.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id 65BLxADI2912596
-	for <sashiko-reviews@lists.linux.dev>; Thu, 11 Jun 2026 16:02:38 -0700
+	by mx0a-00082601.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id 65BETtPs1664485
+	for <sashiko-reviews@lists.linux.dev>; Thu, 11 Jun 2026 16:06:14 -0700
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=meta.com; h=cc
 	:content-transfer-encoding:content-type:date:from:in-reply-to
 	:message-id:mime-version:references:subject:to; s=s2048-2025-q2;
-	 bh=ob92Tq2R57wAiMWenfqpV0H25NaZcFwlwctuc69C3Js=; b=md1FMUhbMLo8
-	Fh894GG//O50My3HeLIl+N1moRtgU28J41XgC7IeNjtkXzdqb3Q4pJbloUb0sI57
-	9jVz7NnQpwJ5bDPV4npoEbwYzhg4rgAl9HiKES6OFpGviFE4XpNWf6+El9J9dJ7B
-	Yo/EOv0vO3lg0CKH0IeKIWviH2o6Ji1sS4icJbrVsodYNItHLNAjRW6ZraJMViyk
-	n/FyvaceZSOsCn5SwSysZB4DgzxdCuNLNoHpkBe5q1vDh++JPpSH4eLPJhsKjRSE
-	bq0UWdRUpM7b1KbePNQSfzI9YgeqCUP1xW5dgvSck3N00OzgCLYF3SsitjHsc7bI
-	ag85db8yRw==
-Received: from mail-ot1-f72.google.com (mail-ot1-f72.google.com [209.85.210.72])
-	by mx0a-00082601.pphosted.com (PPS) with ESMTPS id 4eqe7uha2m-1
+	 bh=efsnF3+1jWR8pvzMYJfBE7lVlQMbzzxbwMqOReRrznE=; b=aAliD7hP4Pnb
+	sDHga9w9vOIaX4gPrLDH9CxWfUDul6tHQH4Xi0x95taVkfEY+GcuJ5llY9o7rdU/
+	6IxhrOtNRPf0TZXzirIqsi4bvN0RdnQAebO3TXTwQ1ciy0nZK/Rpu2xM5w244SPJ
+	RXgJk7lo9T1WisKqszJAd+5MNgI/KlpyBjNrdHxIF9RMJjY3r8Q959ivZHAEzgoG
+	khu0ku8hPaoN7AYRRbn9WFZIlTuHEdyYgbXmb7kn2o0lgBqUwRaYgCIBG8ogF9SH
+	Vazr4Xq0IrMxhXUedk59GhVrJIceY2weOoGa+2aM1YsFU9fskt3OQlTECK6T/8pJ
+	mXSX9Zuhtw==
+Received: from mail-oi1-f199.google.com (mail-oi1-f199.google.com [209.85.167.199])
+	by mx0a-00082601.pphosted.com (PPS) with ESMTPS id 4eqe7uhayj-1
 	(version=TLSv1.3 cipher=TLS_AES_128_GCM_SHA256 bits=128 verify=NOT)
-	for <sashiko-reviews@lists.linux.dev>; Thu, 11 Jun 2026 16:02:38 -0700 (PDT)
-Received: by mail-ot1-f72.google.com with SMTP id 46e09a7af769-7e6db540d17so813940a34.0
-        for <sashiko-reviews@lists.linux.dev>; Thu, 11 Jun 2026 16:02:37 -0700 (PDT)
-ARC-Seal: i=1; a=rsa-sha256; t=1781218957; cv=none;
+	for <sashiko-reviews@lists.linux.dev>; Thu, 11 Jun 2026 16:06:13 -0700 (PDT)
+Received: by mail-oi1-f199.google.com with SMTP id 5614622812f47-4856ecace68so484889b6e.1
+        for <sashiko-reviews@lists.linux.dev>; Thu, 11 Jun 2026 16:06:13 -0700 (PDT)
+ARC-Seal: i=1; a=rsa-sha256; t=1781219173; cv=none;
         d=google.com; s=arc-20240605;
-        b=gadTKvrVvyIwo89qvjZNjOA5OVyas5Qg/fDGVou8e7A9pALhZwKXEDp3utbL12UGE7
-         6JQuim/sPpnS3+hSCoP5yfBkEd6O4uZO+Tm2F5kzl4q5jF50vabitS6+UhSjkYMBlRSR
-         Z9v20eXOxXdMGwUZKU5EZ2JzWE53psUoiTm2IKLtjwAk/yLbBcwn2CVBbVwHD2JaDlfZ
-         g38rzCEfM3NLMcGti9xcWZSDuLQv1SLpeWhX4QqYXrUdNM6Iztecc/QlrQ/w+IZpPGMJ
-         CVlNjUfrq8NYXYuqgCxkA5La3kH38ibNCICeGY1nf7VgrgSEkk53z+0OJOK17tQmtpHO
-         vX5A==
+        b=ZDJGDT6Vj84DptBWM53eWMR0WzEHsB7XMBeT+oW14tt6WPj9X4CA6S3bTXaTtPGqT5
+         7pCcuHxYx08HvpOSAVP7YI+uPQkPThPIKK0RBNBcIIE/MrEIgzX/X3/VKRm3imKjME/e
+         /YdIKelKdKaoS+XbKuyo+9cGWy67+o0qlmi7POV5z9irOdQreXTSSnrDUP1MZDqKvOMu
+         1wvV0AOzs51+Bwlz2mBxKYM5UJe0Rq5kUBiDOkfctu3iXJ76RiL2rjPNzkgZckAcSjhI
+         p2a6A5DJb2h3alAuroGKrtSYerH5ekDcjoo/XTYIspUROxQmXgIKSOkVVHupj6rgAAXL
+         N7sA==
 ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com; s=arc-20240605;
         h=content-transfer-encoding:cc:to:subject:message-id:date:from
          :in-reply-to:references:mime-version;
-        bh=WY5Yrlv2Sc7Wnv9jSySuWH/Jl8+9GO4Ig0Gi7133UjE=;
-        fh=sImXpcRDPx5U58yDC/2Ri7tG8zC0m2k+SZgE0QR0TMU=;
-        b=KxPkuk7pJBovK4xG68zukXQ4sX5BpKMLM9rZ4Pr+pEJ1QciBLou3vkVdRrUZxhGQM6
-         vZMdyGCy1Rj/9BPtRrkm0wKrzHGz4TwDZH3f343esp/WpCB1mjtXCBpGxmpasDO04eU+
-         esWa/MmqDMpzce0uDdry2GzSwen5QbBLSCOzyA29LoykNrVifUXGuo2POxPDsbrCdvbh
-         Ab6L9NBzY5wOX7Uvh96UhIceNDBR5+YyXYhU3K1CAaXvvwdtfFyqYTzAdcAlQRa/QUO2
-         Dd4yzzWZ1WQeZuzC+D6uI8p9V4Nd4KQR1oGloeg8F+fLRoI/w2cU2xuO/AtPs3i0tKVB
-         85JQ==;
+        bh=5o88lgTdR3UljadKJlYcq0XYptrmydXykEVU7qCr7g8=;
+        fh=Y+KYivgtax/z85gVt76uyK1ORwE9fQMGlYAlHdz9B0Y=;
+        b=f0aYwXUwrythkRxbEZcR/zs5AlW9eqKLy9T89t5ruUmJfezQRTTYso3h3U23rukrae
+         yVwmd/2mpW3zWE6aVkZC4oHVg0HACmhHNavu2XInPz050YWlQsU99dJl4iytquIarqnf
+         Ya5vzedlHSbiH2DWs4rpcmctHvJJ+VBGM1MLdnOwEirEO3CIMdZxR6ogVGylv35uj8mU
+         9r7ZT54+G5fowLc+cJWrUj6Ch2iL6Iz2noMmt8P8rv3fCOerX/gxFohIEtpt7pD3Xupo
+         v9+JtcvOkw57rKaz7Amz5HLBqOZ5k8USloP34R4AacZrdm7+po3UZeFfFty8uecM8bR7
+         QZog==;
         darn=lists.linux.dev
 ARC-Authentication-Results: i=1; mx.google.com; arc=none
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20251104; t=1781218957; x=1781823757;
+        d=1e100.net; s=20251104; t=1781219173; x=1781823973;
         h=content-transfer-encoding:cc:to:subject:message-id:date:from
          :in-reply-to:references:mime-version:x-gm-gg:x-gm-message-state:from
          :to:cc:subject:date:message-id:reply-to;
-        bh=WY5Yrlv2Sc7Wnv9jSySuWH/Jl8+9GO4Ig0Gi7133UjE=;
-        b=GDOxUwLsbQcB0FAfKIhSTYgPKdrHE1oR3bFASJQlUgkqxc9bLadEEwFsIR424aenxv
-         LLDWr521ee0dTnsruQ59t6Zi8NsMHJoCkx6qyU8Ez4O4qv7WvOsEanI8QZ/V7/l3xIm6
-         JBg0xS8/m8rya89r8KqlGU9F8xledJvew/yNcTPXksIWJ8FQWLNcFhZdYvVvvqrvjYSD
-         AIY0maEUq9cF7O647uQ1PXa6hvo+Yw2o4vnVlVkQuIARu0UqkH4Sv26T4DnGD0AcwSG2
-         uqjknoQo1606WTlP8zuvm5WnST7lQGPtMxOOxRWrqcXrWZrLe9SM5bIQlHLrf94l/UuJ
-         g8Bg==
-X-Gm-Message-State: AOJu0YwdM7ogvTlR3uJ0aT2T0fb4CPb4Tr3EYmwlikKEiNcOvcMpJ5Yx
-	ChY5WZPZgeIJT7emKsRk90tsQQBxK4vN9T58efMWVjIMZGUxumOAdQ9i9t8tcZbb+a8MyGtTHml
-	hR0+qWZJ4uprLHwIDbcv+tq4rX9lteZBL2Hjkg/wLljYZ05TDcznE05RjsjimQmMPrV6NxK5u38
-	LXkfA7N5oTjuIfkdZ7dd7hZGGZEuuiJRqRSXP0WgHRJSWnh/WfRW2+3Q==
-X-Gm-Gg: Acq92OGKU8RnG9O/j8nfZGOA6fi8QJEV//yr3jsmVlxb2uxN/mUKApi6uRXCbVUrfXE
-	Bl0vaPZaerXgynhHRTwd5Zl7IB6HGBo6t2AxKaF8k4Tci5yLVi9CFL9FnEg0PqKNb/1W65I5Klv
-	807VlMXkLdRLa2gwhrfJsXZSHTAtOtLHMiFbjeadEOD1tk0VA7nc7FQWQ735Izcd0QDzfi62xYr
-	G3x1c4U9Hd1/S3Our6e4g==
-X-Received: by 2002:a05:6830:4411:b0:7dc:cd0b:58bc with SMTP id 46e09a7af769-7e78473e9a9mr114903a34.7.1781218957176;
-        Thu, 11 Jun 2026 16:02:37 -0700 (PDT)
-X-Received: by 2002:a05:6830:4411:b0:7dc:cd0b:58bc with SMTP id
- 46e09a7af769-7e78473e9a9mr114839a34.7.1781218956672; Thu, 11 Jun 2026
- 16:02:36 -0700 (PDT)
+        bh=5o88lgTdR3UljadKJlYcq0XYptrmydXykEVU7qCr7g8=;
+        b=qKkSfSgayOobR8d8kraacoa2b0LrXh6ANnSRZsGbQAf9+0OIo8fxHDCeVKbkKk0VUV
+         Az4e+hVtvQ1l7gzjdb1yKm/nvm+XnadvnzWZEr2VaWVNiwdepD4wHG6cWF2cdrRx3oMD
+         1tqfxh1bkSjIWqEFfW8SLJZC2QbkLs6IT9UG2YAliQirbqG4i9w2gU/Kjc1QFXCLnomk
+         DEOfrZxTqWT11QqBtlymoz4XDz6KGoDvjQS6Ue8KG3i90s1DhyeUsgMjycWytgerN9G0
+         TBw7MKgaW5+agAHWzhcdbT/F0ZiaC0bFANCVeBDVOUnmeZ4MJRqcUWkkDUdk7DigDcU6
+         0AWQ==
+X-Gm-Message-State: AOJu0YzGd3TupttWXfRH/NHD3R1crPEmvyU2pQN7LxmCcrW9gA2dAuzr
+	zcKbrloWOdbvHEC+5G16zkVYkEoRK5JVPq3hxOyJcez69CszTMFxuAve4e4P+LHO/WNcHbqNIKQ
+	lz33tbDipIUnpdnNvN9SsxI+GYHuUpZNS6CBkgeznCqm0fQHneF60GEXM2qRTVIUld0Vtva8S8U
+	Dn5i+pR+bvyEkPKuptK6oPke4AKhxl6xcSiHmOaP8vvKihxYHByEk30g==
+X-Gm-Gg: Acq92OGhn/WioqwXLBvaCxxpua/fuh9kkseOS7pS+ELoAP+3jAkIrgSKQbB2ujyYaXt
+	xO5Zat6mRzmjjUl3r22rHJIjVaphWnWSq0is1aEmkonYRFAGSCJLO+LrQF8D3KQSxreEd4EH4Ga
+	cJvkxEeXlZ/2/m2C0Z7TyznZGZ81b1mYDoI6egqP3nPG0h/j/sJdmF2Crl+YaZtzbF9Eax4i1UP
+	EvEA7E5BjnGz7AA+0ccSQ==
+X-Received: by 2002:a05:6808:3089:b0:486:3498:d1ae with SMTP id 5614622812f47-4872f397045mr351961b6e.18.1781219173058;
+        Thu, 11 Jun 2026 16:06:13 -0700 (PDT)
+X-Received: by 2002:a05:6808:3089:b0:486:3498:d1ae with SMTP id
+ 5614622812f47-4872f397045mr351942b6e.18.1781219172624; Thu, 11 Jun 2026
+ 16:06:12 -0700 (PDT)
 Precedence: bulk
 X-Mailing-List: sashiko-reviews@lists.linux.dev
 List-Id: <sashiko-reviews.lists.linux.dev>
 List-Subscribe: <mailto:sashiko-reviews+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:sashiko-reviews+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-References: <20260610193158.2614209-5-zhipingz@meta.com> <20260611202555.B0FE31F000E9@smtp.kernel.org>
-In-Reply-To: <20260611202555.B0FE31F000E9@smtp.kernel.org>
+References: <20260610193158.2614209-3-zhipingz@meta.com> <20260611202558.09C691F00A3A@smtp.kernel.org>
+In-Reply-To: <20260611202558.09C691F00A3A@smtp.kernel.org>
 From: Zhiping Zhang <zhipingz@meta.com>
-Date: Thu, 11 Jun 2026 16:02:25 -0700
-X-Gm-Features: AVVi8CelQJPHsRb_TsddVOxCGdtZJzAKJ67zmwHKr7MIkmqZ8rgse99DfYGSmhU
-Message-ID: <CAH3zFs3FjiCfOceVRin0ytKNdZ7Pgyv4ds=Dd_GhrRC_XcbNOg@mail.gmail.com>
-Subject: Re: [PATCH v7 4/5] vfio/pci: implement get_tph and DMA_BUF_TPH feature
+Date: Thu, 11 Jun 2026 16:06:01 -0700
+X-Gm-Features: AVVi8CeJj9q0ez37YfrPTO2KXyhyeT-bv8zCIdToMWZsgp_4cN-UqKdyKzNGj7A
+Message-ID: <CAH3zFs24Gs6MSccrNoP-UmowvpcV8PmweegczKU7Ymq+kMtdxw@mail.gmail.com>
+Subject: Re: [PATCH v7 2/5] PCI/TPH: Add requester/completer type helpers
 To: sashiko-reviews@lists.linux.dev
-Cc: linux-pci@vger.kernel.org, kvm@vger.kernel.org,
+Cc: kvm@vger.kernel.org, linux-pci@vger.kernel.org,
         dri-devel@lists.freedesktop.org
 Content-Type: text/plain; charset="UTF-8"
 Content-Transfer-Encoding: quoted-printable
-X-Proofpoint-Spam-Info: AW1haW4tMjYwNjExMDIzMSBTYWx0ZWRfXx2r6/dDlUcL5
- cpJxyqPGniz5A45NVIfatsueLJPo3d02qENwrQMhmV6T/S3zWdgsQc5p/XBkUxg81AITHAg737i
- LIWkMD5j2cNfpirWqfGQX4IEovHoH/0=
-X-Authority-Analysis: v=2.4 cv=UK/t2ify c=1 sm=1 tr=0 ts=6a2b3e8e cx=c_pps
- a=+3WqYijBVYhDct2f5Fivkw==:117 a=IkcTkHD0fZMA:10 a=FelO9ux0wxsA:10
+X-Proofpoint-Spam-Info: AW1haW4tMjYwNjExMDIzMSBTYWx0ZWRfX1PjdFICMEPFd
+ d2TwXqKDfJWqmVEO1UxfWC+aBJRq4TK5E5nVdGOhT7wBZRinVNcmsGBtkGZ8t3BEa0NbO+UeWuW
+ lCqvRmzkzNZJHMfmaLh9Quo380H7ZR4=
+X-Authority-Analysis: v=2.4 cv=UK/t2ify c=1 sm=1 tr=0 ts=6a2b3f65 cx=c_pps
+ a=yymyAM/LQ7lj/HqAiIiKTw==:117 a=IkcTkHD0fZMA:10 a=FelO9ux0wxsA:10
  a=VkNPw1HP01LnGYTKEx00:22 a=7x6HtfJdh03M6CCDgxCd:22 a=crHB47gyY4rKiduisYu9:22
- a=VwQbUJbxAAAA:8 a=VabnemYjAAAA:8 a=vvh9Qk1aVFpNxidmG9UA:9 a=QEXdDO2ut3YA:10
- a=eYe2g0i6gJ5uXG_o6N4q:22 a=gKebqoRLp9LExxC7YDUY:22
-X-Proofpoint-GUID: ahGKTZI5eFPxX9PrryTgO4mKHzvdv8kt
-X-Proofpoint-ORIG-GUID: ahGKTZI5eFPxX9PrryTgO4mKHzvdv8kt
-X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwNjExMDIzMSBTYWx0ZWRfX/kaXBCv74oFs
- bbJiO/8+90XL1IEjFRl6yGD5yVPoUIIMiYXMuKcRUnkggMGtjljTK7pxHJjuxfHw1qzUOfcrRt8
- mVdoFWTFOMKLSbsUWe1SjABZW67E7NfgyWgtntMhBx6nVX/mwZE1X+qj2emCJhh2MfVjdeUw7mJ
- 6f8OrhX4o78c6wDUSoZOHuGzXYuNg/yH4Div+UKZcA75OWM++Nayfw/DPxyOUOLXPccVeNdP9b9
- 7b0wCE5BlrHl5o7YzQlLJ/YcUXdjT1cY70seriy97RN19JYNrTkIEcP3Q7GRDVsyniv5CMFlXi6
- w7Dpfo7lIRkuTMyKl68exMLexaLrOgMywO5LQufBYNpikxkbzBVFnMgSRfQ5HqVPmu1TDKJrb26
- CkAuh6h4VrHoVLNEctcA1wOySovdbMvXIMDGauz2OlNso5DHJcXB1fdIDiK89dq/4DeM3nQYgrA
- OSMSvpuOi5EypncK7rw==
+ a=VwQbUJbxAAAA:8 a=4OgE2WNpP8yww339eGMA:9 a=QEXdDO2ut3YA:10
+ a=efpaJB4zofY2dbm2aIRb:22
+X-Proofpoint-GUID: pc3jgdZIOnUwigv_xiRO5l0rxBLfAxiB
+X-Proofpoint-ORIG-GUID: pc3jgdZIOnUwigv_xiRO5l0rxBLfAxiB
+X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwNjExMDIzMSBTYWx0ZWRfX3oKV6lSlvoo+
+ Mwkj/Bot5+4wTG6iQCTJMPWplFNA201iMjZLDWmpV2J2pP1YPOFsl4rD/99diY6nTba6LiVjPEo
+ SCN3wd15qRQ8nL098VpTE+XSn7v0pVKjjQmbo5xnC41YmcqjBZelhR2tBw0xwHg1zUHpX7zhZlC
+ vk8zV9RKtFt4jEdCDKVKSGHsoAhDqoi5ybrnhtvjd6wdfkv6UOFOzEWe89M3x1ZSXch8Kmlyryk
+ 4+a2HUpVyuKNrKdUrIEjA6Ihth3l+S9hbu8OS6EGmMC+3xVdrIeJIpkTIdcwWESG+uzBvVlCnma
+ yNzcSB956sukBYdHltyxDTg4jxQZVgpwiByQNL2elGAjoekBfp/9AtcZTOClJM72IJX//p7nyCE
+ wJO3710Xq+MG4RqmR1Us9yneYWS/SzvEXAL9mwShIPrTXo0Ow6j6Ngl63QCaPlEwC6bxie+JITd
+ ga0CQEmxd/ty7n5pvTA==
 X-Proofpoint-Virus-Version: vendor=baseguard
  engine=ICAP:2.0.293,Aquarius:18.0.1143,Hydra:6.1.125,FMLib:17.12.100.49
  definitions=2026-06-11_05,2026-06-11_01,2025-10-01_01
 
-On Thu, Jun 11, 2026 at 1:25=E2=80=AFPM <sashiko-bot@kernel.org> wrote:
+On Thu, Jun 11, 2026 at 1:26=E2=80=AFPM <sashiko-bot@kernel.org> wrote:
 >
 > >
-> Thank you for your contribution! Sashiko AI review found 2 potential issu=
-e(s) to consider:
-> - [Medium] Unconditional validation of the flag-gated 'ph' parameter can =
-lead to spurious -EINVAL errors, breaking the syscall trust boundary.
-> - [Medium] VFIO_DEVICE_FEATURE_PROBE falsely reports that VFIO_DEVICE_FEA=
-TURE_DMA_BUF_TPH is supported even if the hardware lacks TPH support.
-> --
->
-> commit d57637d667ca6dc95def77a0a5bd339d62d4f506
-> Author: Zhiping Zhang <zhipingz@meta.com>
->
-> vfio/pci: implement get_tph and DMA_BUF_TPH feature
->
-> This commit implements dma-buf get_tph for vfio-pci exported dma-bufs and
-> adds the VFIO_DEVICE_FEATURE_DMA_BUF_TPH feature. This allows userspace to
-> publish TPH metadata for a VFIO-owned device. It checks completer support
-> and protects the metadata under dmabuf->resv.
->
-> > diff --git a/drivers/vfio/pci/vfio_pci_dmabuf.c b/drivers/vfio/pci/vfio=
-_pci_dmabuf.c
-> > index 1a177ce7de546..0a0705c8dbea6 100644
-> > --- a/drivers/vfio/pci/vfio_pci_dmabuf.c
-> > +++ b/drivers/vfio/pci/vfio_pci_dmabuf.c
->
+
+> > diff --git a/drivers/pci/tph.c b/drivers/pci/tph.c
+> > index 91145e8d9d951..4fe076bba953a 100644
+> > --- a/drivers/pci/tph.c
+> > +++ b/drivers/pci/tph.c
 > [ ... ]
->
-> > @@ -333,6 +360,71 @@ int vfio_pci_core_feature_dma_buf(struct vfio_pci_=
-core_device *vdev, u32 flags,
-> >       return ret;
-> >  }
-> >
-> > +int vfio_pci_core_feature_dma_buf_tph(struct vfio_pci_core_device *vde=
-v,
-> > +                                   u32 flags,
-> > +                                   struct vfio_device_feature_dma_buf_=
-tph __user *arg,
-> > +                                   size_t argsz)
+> > +u8 pcie_tph_completer_type(struct pci_dev *pdev)
 > > +{
-> > +     struct vfio_device_feature_dma_buf_tph set_tph;
-> > +     struct vfio_pci_dma_buf *priv;
-> > +     struct dma_buf *dmabuf;
-> > +     u8 comp;
-> > +     int ret;
+> > +     u32 reg;
 > > +
-> > +     ret =3D vfio_check_feature(flags, argsz, VFIO_DEVICE_FEATURE_SET,
-> > +                              sizeof(set_tph));
-> > +     if (ret !=3D 1)
-> > +             return ret;
+> > +     if (pcie_capability_read_dword(pdev, PCI_EXP_DEVCAP2, &reg))
+> > +             return PCI_EXP_DEVCAP2_TPH_COMP_NONE;
+> > +
+> > +     switch (FIELD_GET(PCI_EXP_DEVCAP2_TPH_COMP_MASK, reg)) {
 >
 > [Severity: Medium]
-> vfio_check_feature() returns 0 for VFIO_DEVICE_FEATURE_PROBE, causing an
-> early return of success.
->
-> Should the hardware capability check (pcie_tph_completer_type) occur befo=
-re
-> checking the feature flags, to avoid falsely reporting that the feature is
-> supported on devices that lack TPH?
+> If the device is hot-removed, pcie_capability_read_dword() returns succes=
+s (0)
+> but can leave reg as 0xFFFFFFFF (PCI_ERROR_RESPONSE due to master abort).
 >
 
-Will fix it with a change like below:
- -     if (ret !=3D 1)
-+     if (ret !=3D 1) {
-+             if (ret =3D=3D 0 &&
-+                 pcie_tph_completer_type(vdev->pdev) =3D=3D
-+                     PCI_EXP_DEVCAP2_TPH_COMP_NONE)
-+                     return -EOPNOTSUPP;
-                return ret;
-+     }
-
-> > +
-> > +     if (copy_from_user(&set_tph, arg, sizeof(set_tph)))
-> > +             return -EFAULT;
-> > +
-> > +     if (set_tph.flags & ~(VFIO_DMA_BUF_TPH_ST | VFIO_DMA_BUF_TPH_ST_E=
-XT))
-> > +             return -EINVAL;
-> > +
-> > +     if (set_tph.ph & ~0x3)
-> > +             return -EINVAL;
->
-> [Severity: Medium]
-> When userspace clears the TPH metadata by passing flags =3D=3D 0, is it r=
-equired
-> to zero-fill the unused ph field?
->
-
-Not an issue.
+will fix this one with check like below before the switch statement:
+ +     if (PCI_POSSIBLE_ERROR(reg))
+ +             return PCI_EXP_DEVCAP2_TPH_COMP_NONE;
