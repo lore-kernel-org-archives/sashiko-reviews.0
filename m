@@ -1,171 +1,88 @@
-Received: from smtp-out1.suse.de (smtp-out1.suse.de [195.135.223.130])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from us-smtp-delivery-124.mimecast.com (us-smtp-delivery-124.mimecast.com [170.10.129.124])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 55C741F5821
-	for <sashiko-reviews@lists.linux.dev>; Thu, 11 Jun 2026 07:21:49 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=195.135.223.130
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B1EFE368D4F
+	for <sashiko-reviews@lists.linux.dev>; Thu, 11 Jun 2026 07:38:31 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=170.10.129.124
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1781162510; cv=none; b=iZMQk7DbwwNBGWWb7NoBZ3YZipsTqynrJsspxJzftJEj9c586tXmKnyx0di1t1b0LJ7MSwTHZk+xrq03NNJWwy/5T7WaadiJ2xScAUtKguXiuZvRgLYYIrsOZObo+N6ECCu3ZNqyQ3E7VzC8aatQHZwgI6t4wgjZ86nWRw2Tytk=
+	t=1781163513; cv=none; b=JA+biRlN6qDICpwf6RWQnD7qBaZbUo19ZhBgsxdXUZEOwES2mS8HeYCwmKDp359AwP4+0p6moxyuSDd4PPY+yczc6jIrKXfcbmqu+ufCaUAE/3sBdNbABvPIXAFfW6UYbzWrypZDjMyEZjFXcSD5lqzeszNvO8Qf8YZTMpagvsQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1781162510; c=relaxed/simple;
-	bh=CsmCQfbIV9rO+B4DRtlFDS3TyLAvy97K3sNKfYoxYqg=;
+	s=arc-20240116; t=1781163513; c=relaxed/simple;
+	bh=C5mX9v1e2554nFDQUJ1964OtjRu5W595wtAl6bEnsMc=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=pikwRvDds9ZGl7S+TB5fojtJYlb6eth/IHEvLpAdBepO0s+/KY8Qv98//J5hwko3icWjJs2SVj8y0j9zgL8tuleO8VWpks+NmooX5Pd4StAJy0jV+aJzN1JCG1LDbIry0H0cDFTQOWJJqfyaDAp8WvwOXbt81jTxNNFTyzNxkzk=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=suse.de; spf=pass smtp.mailfrom=suse.de; dkim=pass (1024-bit key) header.d=suse.de header.i=@suse.de header.b=oiqd8Eg0; dkim=permerror (0-bit key) header.d=suse.de header.i=@suse.de header.b=LtcNgLwi; dkim=pass (1024-bit key) header.d=suse.de header.i=@suse.de header.b=oiqd8Eg0; dkim=permerror (0-bit key) header.d=suse.de header.i=@suse.de header.b=LtcNgLwi; arc=none smtp.client-ip=195.135.223.130
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=suse.de
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=suse.de
+	 MIME-Version:content-type; b=NT4powex7jAKJJ5H2I4pPqBYtcyowqpOFAtbIsFZ909Bn96hifucWyXbpU/+1e8klxdtqKU7S7LOilb54eHc4+iX10x5LzHxYpNi0Vvfe1hRrKAaz8aFlLkxelLFZT4+i4RLdtPW07/LC8SJ0ZbgRjugaeIGTHnwpFmWddYTxTQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=redhat.com; spf=pass smtp.mailfrom=redhat.com; dkim=pass (1024-bit key) header.d=redhat.com header.i=@redhat.com header.b=gMH7sC6n; arc=none smtp.client-ip=170.10.129.124
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=redhat.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=redhat.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=suse.de header.i=@suse.de header.b="oiqd8Eg0";
-	dkim=permerror (0-bit key) header.d=suse.de header.i=@suse.de header.b="LtcNgLwi";
-	dkim=pass (1024-bit key) header.d=suse.de header.i=@suse.de header.b="oiqd8Eg0";
-	dkim=permerror (0-bit key) header.d=suse.de header.i=@suse.de header.b="LtcNgLwi"
-Received: from imap1.dmz-prg2.suse.org (unknown [10.150.64.97])
+	dkim=pass (1024-bit key) header.d=redhat.com header.i=@redhat.com header.b="gMH7sC6n"
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+	s=mimecast20190719; t=1781163510;
+	h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+	 to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+	 content-transfer-encoding:content-transfer-encoding:
+	 in-reply-to:in-reply-to:references:references;
+	bh=+1jvBu/gNshBYn/PmFXEmIdSqbgEPhIIYtTxZ9hA8YE=;
+	b=gMH7sC6nmlYQpdYbxUoUCqZ634HpiYRM6/4V4BNxe0kAR7gUS7n1CJHfxd0Bx8akIj0vc3
+	PQ6y0tV2VwzUbbOifhwQBS27TK3WwvtjRo4zvQ/8DMLAyMki65xmrhvb4/NpoqNWKsTlE+
+	09rpYq0PKXBlgjzioLNlevmSc+dVMWA=
+Received: from mx-prod-mc-08.mail-002.prod.us-west-2.aws.redhat.com
+ (ec2-35-165-154-97.us-west-2.compute.amazonaws.com [35.165.154.97]) by
+ relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-385-IOCK1u_-OGWmXZvbXrXNDg-1; Thu,
+ 11 Jun 2026 03:38:24 -0400
+X-MC-Unique: IOCK1u_-OGWmXZvbXrXNDg-1
+X-Mimecast-MFC-AGG-ID: IOCK1u_-OGWmXZvbXrXNDg_1781163503
+Received: from mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com (mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.4])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
-	 key-exchange X25519 server-signature RSA-PSS (4096 bits) server-digest SHA256)
+	 key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
 	(No client certificate requested)
-	by smtp-out1.suse.de (Postfix) with ESMTPS id 355236AF1A;
-	Thu, 11 Jun 2026 07:21:28 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=suse.de; s=susede2_rsa;
-	t=1781162488; h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
-	 mime-version:mime-version:
-	 content-transfer-encoding:content-transfer-encoding:
-	 in-reply-to:in-reply-to:references:references;
-	bh=qakiofYhKcESnKCrdto0FQXS6xwjtj4MCZT4kXoO/mo=;
-	b=oiqd8Eg0SaZ2Bp8KlmCkcpXxvzWf/2COrOfyLgQMfavZLFjLM92NxeJKluF2YDnVQ8Tvxu
-	hBT0Njj0z4K1gIMIdKOd66oaccHBSoIwz2gEjLXj6QBgn9aLSHCzdzhi5DIZqKVF1K6X7a
-	o9tlYQjL6g5Q59usdGUXMo06JbtjNUI=
-DKIM-Signature: v=1; a=ed25519-sha256; c=relaxed/relaxed; d=suse.de;
-	s=susede2_ed25519; t=1781162488;
-	h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
-	 mime-version:mime-version:
-	 content-transfer-encoding:content-transfer-encoding:
-	 in-reply-to:in-reply-to:references:references;
-	bh=qakiofYhKcESnKCrdto0FQXS6xwjtj4MCZT4kXoO/mo=;
-	b=LtcNgLwicW2kb8rDtzs53C0i6sN5JL6qXGRa3Msf7BMs1y5wWCzE/C2tRfJlNyzWzU9TGF
-	CWI44Oy0nq4SltDw==
-Authentication-Results: smtp-out1.suse.de;
-	none
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=suse.de; s=susede2_rsa;
-	t=1781162488; h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
-	 mime-version:mime-version:
-	 content-transfer-encoding:content-transfer-encoding:
-	 in-reply-to:in-reply-to:references:references;
-	bh=qakiofYhKcESnKCrdto0FQXS6xwjtj4MCZT4kXoO/mo=;
-	b=oiqd8Eg0SaZ2Bp8KlmCkcpXxvzWf/2COrOfyLgQMfavZLFjLM92NxeJKluF2YDnVQ8Tvxu
-	hBT0Njj0z4K1gIMIdKOd66oaccHBSoIwz2gEjLXj6QBgn9aLSHCzdzhi5DIZqKVF1K6X7a
-	o9tlYQjL6g5Q59usdGUXMo06JbtjNUI=
-DKIM-Signature: v=1; a=ed25519-sha256; c=relaxed/relaxed; d=suse.de;
-	s=susede2_ed25519; t=1781162488;
-	h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
-	 mime-version:mime-version:
-	 content-transfer-encoding:content-transfer-encoding:
-	 in-reply-to:in-reply-to:references:references;
-	bh=qakiofYhKcESnKCrdto0FQXS6xwjtj4MCZT4kXoO/mo=;
-	b=LtcNgLwicW2kb8rDtzs53C0i6sN5JL6qXGRa3Msf7BMs1y5wWCzE/C2tRfJlNyzWzU9TGF
-	CWI44Oy0nq4SltDw==
-Received: from imap1.dmz-prg2.suse.org (localhost [127.0.0.1])
-	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
-	 key-exchange X25519 server-signature RSA-PSS (4096 bits) server-digest SHA256)
-	(No client certificate requested)
-	by imap1.dmz-prg2.suse.org (Postfix) with ESMTPS id F029C779A9;
-	Thu, 11 Jun 2026 07:21:27 +0000 (UTC)
-Received: from dovecot-director2.suse.de ([2a07:de40:b281:106:10:150:64:167])
-	by imap1.dmz-prg2.suse.org with ESMTPSA
-	id iLxtOfdhKmqKKAAAD6G6ig
-	(envelope-from <tzimmermann@suse.de>); Thu, 11 Jun 2026 07:21:27 +0000
-From: Thomas Zimmermann <tzimmermann@suse.de>
-To: linux@armlinux.org.uk,
-	airlied@gmail.com,
-	simona@ffwll.ch,
-	mripard@kernel.org,
-	maarten.lankhorst@linux.intel.com
-Cc: dri-devel@lists.freedesktop.org,
-	sashiko-reviews@lists.linux.dev,
-	Thomas Zimmermann <tzimmermann@suse.de>
-Subject: [PATCH v2 3/3] drm/armada: Make armada_framebuffer_create() an internal interface
-Date: Thu, 11 Jun 2026 09:20:13 +0200
-Message-ID: <20260611072121.71492-4-tzimmermann@suse.de>
-X-Mailer: git-send-email 2.54.0
-In-Reply-To: <20260611072121.71492-1-tzimmermann@suse.de>
-References: <20260611072121.71492-1-tzimmermann@suse.de>
+	by mx-prod-mc-08.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS id 8DB9E180AE04;
+	Thu, 11 Jun 2026 07:38:23 +0000 (UTC)
+Received: from fedora.redhat.com (unknown [10.44.48.63])
+	by mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP id 3267530001A1;
+	Thu, 11 Jun 2026 07:38:20 +0000 (UTC)
+From: Jose Ignacio Tornos Martinez <jtornosm@redhat.com>
+To: rafael@kernel.org
+Cc: helgaas@kernel.org,
+	jtornosm@redhat.com,
+	linux-pci@vger.kernel.org,
+	sashiko-reviews@lists.linux.dev
+Subject: Re: [PATCH v7 1/3] PCI: Add d3cold as general reset method
+Date: Thu, 11 Jun 2026 09:38:19 +0200
+Message-ID: <20260611073819.22865-1-jtornosm@redhat.com>
+In-Reply-To: <CAJZ5v0jwK2tFfiP5fyOEupC8rLgCC-BwKy8qEuj5w6mphfZMhQ@mail.gmail.com>
+References: <CAJZ5v0jwK2tFfiP5fyOEupC8rLgCC-BwKy8qEuj5w6mphfZMhQ@mail.gmail.com>
 Precedence: bulk
 X-Mailing-List: sashiko-reviews@lists.linux.dev
 List-Id: <sashiko-reviews.lists.linux.dev>
 List-Subscribe: <mailto:sashiko-reviews+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:sashiko-reviews+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
+X-Scanned-By: MIMEDefang 3.4.1 on 10.30.177.4
+X-Mimecast-MFC-PROC-ID: 7PXfJwXzkE6eOiacbrnP4mjsYzMzCtllR7nKejFhqK0_1781163503
+X-Mimecast-Originator: redhat.com
 Content-Transfer-Encoding: 8bit
-X-Spam-Flag: NO
-X-Spamd-Result: default: False [-6.80 / 50.00];
-	REPLY(-4.00)[];
-	BAYES_HAM(-3.00)[100.00%];
-	MID_CONTAINS_FROM(1.00)[];
-	NEURAL_HAM_LONG(-1.00)[-1.000];
-	R_MISSING_CHARSET(0.50)[];
-	NEURAL_HAM_SHORT(-0.20)[-0.996];
-	MIME_GOOD(-0.10)[text/plain];
-	FUZZY_RATELIMITED(0.00)[rspamd.com];
-	RCVD_VIA_SMTP_AUTH(0.00)[];
-	MIME_TRACE(0.00)[0:+];
-	ARC_NA(0.00)[];
-	TO_DN_SOME(0.00)[];
-	FREEMAIL_TO(0.00)[armlinux.org.uk,gmail.com,ffwll.ch,kernel.org,linux.intel.com];
-	RCPT_COUNT_SEVEN(0.00)[8];
-	DKIM_SIGNED(0.00)[suse.de:s=susede2_rsa,suse.de:s=susede2_ed25519];
-	FROM_EQ_ENVFROM(0.00)[];
-	FROM_HAS_DN(0.00)[];
-	R_RATELIMIT(0.00)[to_ip_from(RLeer19tzumyaughgdh7h6uhe9)];
-	RCVD_TLS_ALL(0.00)[];
-	TO_MATCH_ENVRCPT_ALL(0.00)[];
-	DBL_BLOCKED_OPENRESOLVER(0.00)[suse.de:email,suse.de:mid,imap1.dmz-prg2.suse.org:helo];
-	RCVD_COUNT_TWO(0.00)[2];
-	FREEMAIL_ENVRCPT(0.00)[gmail.com]
-X-Spam-Level: 
-X-Spam-Score: -6.80
+content-type: text/plain; charset="US-ASCII"; x-default=true
 
-The only caller of armada_framebuffer_create() is armada_fb_create()
-from the same source file. Declare the former as static.
+Hi Bjorn and Rafael,
 
-Signed-off-by: Thomas Zimmermann <tzimmermann@suse.de>
----
- drivers/gpu/drm/armada/armada_fb.c | 9 +++++----
- drivers/gpu/drm/armada/armada_fb.h | 3 ---
- 2 files changed, 5 insertions(+), 7 deletions(-)
+Thanks for the detailed feedback on the d3cold approach. Based on Alex's
+suggestion and your concerns (ACPI portability, bridge issues, runtime PM
+complications), I'm dropping the general d3cold infrastructure entirely.
 
-diff --git a/drivers/gpu/drm/armada/armada_fb.c b/drivers/gpu/drm/armada/armada_fb.c
-index b828bba419bf..2f2348d543fd 100644
---- a/drivers/gpu/drm/armada/armada_fb.c
-+++ b/drivers/gpu/drm/armada/armada_fb.c
-@@ -18,10 +18,11 @@ static const struct drm_framebuffer_funcs armada_fb_funcs = {
- 	.create_handle	= drm_gem_fb_create_handle,
- };
- 
--struct armada_framebuffer *armada_framebuffer_create(struct drm_device *dev,
--						     const struct drm_format_info *info,
--						     const struct drm_mode_fb_cmd2 *mode,
--						     struct armada_gem_object *obj)
-+static struct armada_framebuffer *
-+armada_framebuffer_create(struct drm_device *dev,
-+			  const struct drm_format_info *info,
-+			  const struct drm_mode_fb_cmd2 *mode,
-+			  struct armada_gem_object *obj)
- {
- 	struct armada_framebuffer *dfb;
- 	uint8_t format, config;
-diff --git a/drivers/gpu/drm/armada/armada_fb.h b/drivers/gpu/drm/armada/armada_fb.h
-index f2b990f055a2..0ba358ff9147 100644
---- a/drivers/gpu/drm/armada/armada_fb.h
-+++ b/drivers/gpu/drm/armada/armada_fb.h
-@@ -16,9 +16,6 @@ struct armada_framebuffer {
- 	container_of(dfb, struct armada_framebuffer, fb)
- #define drm_fb_obj(fb) drm_to_armada_gem((fb)->obj[0])
- 
--struct armada_framebuffer *armada_framebuffer_create(struct drm_device *,
--	const struct drm_format_info *info,
--	const struct drm_mode_fb_cmd2 *, struct armada_gem_object *);
- struct drm_framebuffer *armada_fb_create(struct drm_device *dev,
- 	struct drm_file *dfile, const struct drm_format_info *info,
- 	const struct drm_mode_fb_cmd2 *mode);
--- 
-2.54.0
+I don't have enough hardware with _PR3 support for proper d3cold testing -
+all my platforms for testing the Qualcomm devices lack _PR3 (desktop M.2 
+adapters), and even less for testing all the scenarios you've mentioned
+(bridges, multifunction devices, runtime PM interactions).
+
+For v9 I'll simplify to a D3hot-only device-specific reset for the specific
+Qualcomm devices (WCN6855, WCN7850, SDX62/SDX65) where testing shows D3hot
+provides sufficient reset for VFIO reuse despite NoSoftRst+. This avoids the
+d3cold concerns and focuses on the proven, tested solution.
+
+Thanks
+
+Best regards
+Jose Ignacio
 
