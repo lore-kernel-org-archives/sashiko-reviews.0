@@ -1,21 +1,32 @@
-Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
+Received: from m16.mail.163.com (m16.mail.163.com [220.197.31.5])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 123A630BF6D;
-	Thu, 11 Jun 2026 13:35:06 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9BFB4233922
+	for <sashiko-reviews@lists.linux.dev>; Thu, 11 Jun 2026 14:00:12 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=220.197.31.5
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1781184908; cv=none; b=XeyfJa6WLU+VjYgRAKT0cmpol0wYe8mpmOzZ+q7OR072oq2NiON0Z+62qJkfpw/pOA7+bFD+MKXJYNLb6r/u/iNFILUcHuqD8vLcSJR6d4vrC27i30a+ECpYNf+Pi8yG/gUyB1ttYJ1nqaqq0tSLoyaPqlR8V7YcTWkvNf18uZ4=
+	t=1781186416; cv=none; b=LTjvIgwfw8jLj9VWSLGIyHrWmQF3UIYi7eMFCX77fVGzn1bN47aeunLLbfJOqlAEdNjlSFYHV8/6V6PShm3NLbEoTW/JFFECpKF/xV8LdCXgEu7v9WWDLWsaAE4bFkENg3RrpuW8/6LEgE19x57dShO7owgN9rHBFMD2qb3UkOQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1781184908; c=relaxed/simple;
-	bh=FYwxNJ0xHvKX+gcSgo8bX/DOL+pH5bvSGrjcXnMehGI=;
+	s=arc-20240116; t=1781186416; c=relaxed/simple;
+	bh=SCUQExsNaKgQr1fmVwFsFmI56g0dyNlPL9PaiRxSUuk=;
 	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=iQzWyK9XrRVl65OcwOfLz+gGbYcJ63ApchYcBA4KlvvA04P/MJViCCOmoybJJL6WSnCL5UCX6VH7OxBXQP1KyTOW/zj5hO229cGtzixHpS+cbug7kbRbqQwSvWGDsWDE27Qol+AdkwgWcKpT7+b1M0VQuzlK1KUHYoncu04M8Wo=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id D12831F00893;
-	Thu, 11 Jun 2026 13:35:04 +0000 (UTC)
-Message-ID: <937086f1-5158-41e9-9194-b6d1feaee17f@linux-m68k.org>
-Date: Thu, 11 Jun 2026 23:35:02 +1000
+	 In-Reply-To:Content-Type; b=mV/tffkqRp8EarT56n2re4+UfvRDGirjx9A7mfbZqTA2lkGfgHPbb21nmYV32Cm6r65CGzOdOGncxkeAymz065YT5JmreKeLPEJxa1Q2ngpfc+jOu+7LIu06u/Stplu4pF9pc3HWw2AzDoEBYVY3QbFURWN/8QsoVWAr3pT8oLw=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=163.com; spf=pass smtp.mailfrom=163.com; dkim=pass (1024-bit key) header.d=163.com header.i=@163.com header.b=XcHF7yL3; arc=none smtp.client-ip=220.197.31.5
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=163.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=163.com
+Authentication-Results: smtp.subspace.kernel.org;
+	dkim=pass (1024-bit key) header.d=163.com header.i=@163.com header.b="XcHF7yL3"
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=163.com;
+	s=s110527; h=Message-ID:Date:MIME-Version:Subject:To:From:
+	Content-Type; bh=oOEikyuy4If26TMDHDYd8i3/PyjxUv7AZdvb+eEgKeg=;
+	b=XcHF7yL3WSpqyN2fYCiH92zr0jXZ0uhrvsf3BsTogwYraqQqLIJvkzB6FfT6cc
+	M4+tA8owuQa74/y7zxgjT+j/CzvAtrTOr3qwhjs0xvLQZz8CWUTu83j/RJFVV8zA
+	zpjqXvjNpSr9dBs3Mde8Z5kUne0qtWBLjrrYM85kc4RVE=
+Received: from [192.168.50.71] (unknown [])
+	by gzsmtp5 (Coremail) with SMTP id QCgvCgB3siFhvypqufqXBg--.40968S2;
+	Thu, 11 Jun 2026 22:00:01 +0800 (CST)
+Message-ID: <314c3a1d-fd82-4614-a9fd-8a126845b881@163.com>
+Date: Thu, 11 Jun 2026 22:00:01 +0800
 Precedence: bulk
 X-Mailing-List: sashiko-reviews@lists.linux.dev
 List-Id: <sashiko-reviews.lists.linux.dev>
@@ -23,166 +34,95 @@ List-Subscribe: <mailto:sashiko-reviews+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:sashiko-reviews+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCHv2 4/4] m68k: coldfire: fix non-standard readX()/writeX()
- functions
-To: sashiko-reviews@lists.linux.dev
-Cc: Oliver Hartkopp <socketcan@hartkopp.net>,
- Vincent Mailhol <mailhol@kernel.org>, linux-can@vger.kernel.org,
- Frank.Li@kernel.org, Oleksij Rempel <o.rempel@pengutronix.de>,
- Marc Kleine-Budde <mkl@pengutronix.de>, imx@lists.linux.dev,
- Angelo Dureghello <adureghello@baylibre.com>
-References: <20260609142139.1563360-6-gerg@linux-m68k.org>
- <20260610142725.031C31F0089A@smtp.kernel.org>
+Subject: Re: [PATCH 8/9] PCI: vmd: Protect root bus removal with rescan lock
+To: Manivannan Sadhasivam <mani@kernel.org>
+Cc: sashiko-reviews@lists.linux.dev, linux-pci@vger.kernel.org
+References: <20260521161822.132996-9-18255117159@163.com>
+ <20260521212024.8689D1F000E9@smtp.kernel.org>
+ <r5vwd573ydynlrrax5iy6jt25dc2yiqkvlciqy366zsxxu4d7f@hyvqgsdj4ulw>
+ <7e46fd05-b190-42ed-8e5e-78c8a0a6bc20@163.com>
+ <xj42mezfer3jxlku3rg244skqpbxrf5dn47txnippxxsgan6mq@qhtmpolifzyv>
 Content-Language: en-US
-From: Greg Ungerer <gerg@linux-m68k.org>
-In-Reply-To: <20260610142725.031C31F0089A@smtp.kernel.org>
+From: Hans Zhang <18255117159@163.com>
+In-Reply-To: <xj42mezfer3jxlku3rg244skqpbxrf5dn47txnippxxsgan6mq@qhtmpolifzyv>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 7bit
-
-Hi Sashiko-bot,
-
-On 11/6/26 00:27, sashiko-bot@kernel.org wrote:
-> Thank you for your contribution! Sashiko AI review found 3 potential issue(s) to consider:
-> 
-> New issues:
-> - [High] The transition to asm-generic readX()/writeX() changes the endianness of ColdFire internal IO accesses, breaking unpatched ColdFire drivers.
-> 
-> Pre-existing issues:
-> - [High] Undefined behavior when shifting 1 by 32 or more using `BIT(ch)` in `mcf_edma_tx_handler`.
-> - [High] The error interrupt handler incorrectly skips handling high channels and returns `IRQ_NONE` after servicing low channels.
-> --
-> 
-> commit 25193db3eba89f780b6dc534f2f72e16f3429571
-> Author: Greg Ungerer <gerg@linux-m68k.org>
-> 
-> m68k: coldfire: fix non-standard readX()/writeX() functions
-> 
-> Remove the local ColdFire definitions of readb()/readw()/readl() and
-> writeb()/writew()/writel() and use the asm-generic versions of them.
-> 
->> diff --git a/arch/m68k/include/asm/io_no.h b/arch/m68k/include/asm/io_no.h
->> index 4f0f34b06e37c..2f12f4ed0da54 100644
->> --- a/arch/m68k/include/asm/io_no.h
->> +++ b/arch/m68k/include/asm/io_no.h
-> 
-> [ ... ]
-> 
->> -#define writel writel
->> -static inline void writel(u32 value, volatile void __iomem *addr)
->> -{
->> -	if (cf_internalio(addr))
->> -		__raw_writel(value, addr);
->> -	else
->> -		__raw_writel(swab32(value), addr);
->> -}
-> 
-> [Severity: High]
-> Does replacing the local readX()/writeX() with the asm-generic versions
-> change the endianness of unpatched ColdFire drivers?
-> 
-> The old ColdFire implementation detected internal IO memory using
-> cf_internalio() and bypassed byte-swapping to provide native big-endian
-> access. The asm-generic accessors always assume little-endian devices and
-> perform byte-swapping.
-> 
-> Will unpatched drivers relying on readX()/writeX() for internal IO
-> (such as spi-coldfire-qspi.c, sdhci-esdhc-mcf.c, or fec_main.c) now read
-> and write byte-swapped values and malfunction?
-
-This is of course a real problem, and much effort has been expended to
-find and fix affected drivers. Specifically here:
-
-     patch 1 in this series fixes fec_main.c
-     patch 3 in this series fixes sdhci-esdhc-mcf.c
-     patch 4 (this patch) fixes spi-coldfire-qspi.c with the endian change to spi-fsl-dspi.c
-
-Not mentioned here, but patch 2 in this series fixes the smc91x driver.
-
-It is not believed at this time that any other drivers are affected.
-
-
-> [ ... ]
-> 
->> diff --git a/drivers/dma/mcf-edma-main.c b/drivers/dma/mcf-edma-main.c
->> index 9e1c6400c77be..4ed0ce644e37e 100644
->> --- a/drivers/dma/mcf-edma-main.c
->> +++ b/drivers/dma/mcf-edma-main.c
->> @@ -21,9 +21,9 @@ static irqreturn_t mcf_edma_tx_handler(int irq, void *dev_id)
->>   	unsigned int ch;
->>   	u64 intmap;
->>   
->> -	intmap = ioread32(regs->inth);
->> +	intmap = ioread32be(regs->inth);
->>   	intmap <<= 32;
->> -	intmap |= ioread32(regs->intl);
->> +	intmap |= ioread32be(regs->intl);
->>   	if (!intmap)
->>   		return IRQ_NONE;
-> 
-> [Severity: High]
-> This is a pre-existing issue, but does this shift invoke undefined behavior
-> for higher channels?
-> 
-> Looking at the loop immediately following this in mcf_edma_tx_handler():
-> 
-> 	for (ch = 0; ch < mcf_edma->n_chans; ch++) {
-> 		if (intmap & BIT(ch)) {
-> 			...
-> 
-> On a 32-bit architecture like m68k, BIT(ch) expands to a 32-bit unsigned
-> long. Since ch can be up to 64, shifting by 32 or more would be undefined,
-> potentially causing channels 32-63 to be improperly processed or missing
-> their interrupts entirely.
-> 
-> Should this use BIT_ULL(ch) when testing against the 64-bit intmap?
-> 
-> [ ... ]
-> 
->> @@ -43,7 +43,7 @@ static irqreturn_t mcf_edma_err_handler(int irq, void *dev_id)
->>   	struct edma_regs *regs = &mcf_edma->regs;
->>   	unsigned int err, ch;
->>   
->> -	err = ioread32(regs->errl);
->> +	err = ioread32be(regs->errl);
->>   	if (!err)
->>   		return IRQ_NONE;
-> 
-> [Severity: High]
-> This is a pre-existing issue, but does this early return incorrectly skip
-> handling high channels?
-> 
-> If regs->errl is zero, it returns IRQ_NONE immediately, ignoring any errors
-> in regs->errh. This could leave errors in higher channels uncleared.
-> 
-> [ ... ]
-> 
->> @@ -55,7 +55,7 @@ static irqreturn_t mcf_edma_err_handler(int irq, void *dev_id)
->>   		}
->>   	}
->>   
->> -	err = ioread32(regs->errh);
->> +	err = ioread32be(regs->errh);
->>   	if (!err)
->>   		return IRQ_NONE;
-> 
-> [Severity: High]
-> This is a pre-existing issue, but does this return the wrong IRQ status if
-> low channel errors were already handled?
-> 
-> If errl was non-zero (so some errors were handled) but errh is zero,
-> returning IRQ_NONE here instead of IRQ_HANDLED might incorrectly signal
-> to the IRQ subsystem that the interrupt wasn't handled at all.
-
-At casual inspection these may well be real problems. I will have to defer
-to the driver author and current maintainers for them to fix. The changes
-to fix ColdFire readl()/writel() have no effect on these, and are really
-outside of the scope of this series.
-
-Thanks for the review!
-
-Regards
-Greg
+X-CM-TRANSID:QCgvCgB3siFhvypqufqXBg--.40968S2
+X-Coremail-Antispam: 1Uf129KBjvJXoWxZr4kGryxAryUXFWkXw1xuFg_yoW5ArW8pF
+	Z8Xa45CF18JrWSvrs2va18ZryYqw1xGry5Xw1fWrnruFnIvw12qrWjyFWUur98WFsFya1Y
+	vw18t3ySqrs8AaDanT9S1TB71UUUUU7qnTZGkaVYY2UrUUUUjbIjqfuFe4nvWSU5nxnvy2
+	9KBjDUYxBIdaVFxhVjvjDU0xZFpf9x0zRO18PUUUUU=
+X-CM-SenderInfo: rpryjkyvrrlimvzbiqqrwthudrp/xtbCxAIt0Goqv2ISywAA3-
 
 
 
+On 6/11/26 14:30, Manivannan Sadhasivam wrote:
+> On Thu, Jun 11, 2026 at 12:42:52PM +0800, Hans Zhang wrote:
+>>
+>>
+>> On 6/11/26 01:28, Manivannan Sadhasivam wrote:
+>>> On Thu, May 21, 2026 at 09:20:24PM +0000, sashiko-bot@kernel.org wrote:
+>>>> Thank you for your contribution! Sashiko AI review found 2 potential issue(s) to consider:
+>>>>
+>>>> New issues:
+>>>> - [High] Acquiring `pci_rescan_remove_lock` in `vmd_remove()` introduces self-deadlocks and AB-BA lock inversions.
+>>>>
+>>>> Pre-existing issues:
+>>>> - [High] SRCU structures are destroyed in `vmd_remove()` while their corresponding interrupt handlers are still registered and active, leading to a Use-After-Free in interrupt context.
+>>>> --
+>>>>
+>>>> commit 8d5d06b67e6b02d2cc99f2151e90ba61c0d16662
+>>>> Author: Hans Zhang <18255117159@163.com>
+>>>>
+>>>> PCI: vmd: Protect root bus removal with rescan lock
+>>>>
+>>>> This commit acquires the pci_rescan_remove_global_lock while stopping
+>>>> and removing the VMD root bus in vmd_remove(). This is intended to
+>>>> prevent races with concurrent PCI rescan operations.
+>>>>
+>>>>> diff --git a/drivers/pci/controller/vmd.c b/drivers/pci/controller/vmd.c
+>>>>> index d4ae250d4bc6d..9565567026cf0 100644
+>>>>> --- a/drivers/pci/controller/vmd.c
+>>>>> +++ b/drivers/pci/controller/vmd.c
+>>>>> @@ -1056,9 +1056,11 @@ static void vmd_remove(struct pci_dev *dev)
+>>>>>    {
+>>>>>    	struct vmd_dev *vmd = pci_get_drvdata(dev);
+>>>>> +	pci_lock_rescan_remove();
+>>>>
+>>>> [Severity: High]
+>>>> Can acquiring pci_rescan_remove_lock here cause self-deadlocks or AB-BA lock
+>>>> inversions?
+>>>>
+>>>> When a VMD device is removed via PCI hotplug or sysfs remove node, the PCI
+>>>> core calls pci_stop_and_remove_bus_device_locked(), which acquires
+>>>> pci_rescan_remove_lock and eventually triggers vmd_remove(). Because
+>>>> pci_rescan_remove_lock is a non-recursive mutex, won't attempting to acquire
+>>>> it again immediately self-deadlock?
+>>>>
+>>>> Also, when unbound via sysfs, the core holds device_lock and calls
+>>>> vmd_remove(), which then waits for pci_rescan_remove_lock. Since normal PCI
+>>>> rescans acquire pci_rescan_remove_lock first, then attempt to acquire
+>>>> device_lock, does this create an AB-BA lock inversion?
+>>>>
+>>>
+>>> This is a valid concern. Since VMD is registered as a PCI driver, removing the
+>>> VMD device through sysfs will trigger vmd_remove() callback and it will result
+>>> in deadlock. The AB-BA lock inversion is also valid.
+>>>
+>>
+>> Hi Mani,
+>>
+>> Thank you for your reply. I checked it and found that this is indeed the
+>> registered PCI driver. This patch will be dropped from this series. I wonder
+>> if you have any further comments or opinions regarding the remaining
+>> patches. Do I need to send the next version?
+>>
+> 
+> I will skip this patch and apply the rest.
+> 
+
+Thank you.
+
+> - Mani
+> 
 
