@@ -1,163 +1,120 @@
-Received: from mail.loongson.cn (mail.loongson.cn [114.242.206.163])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 01F4921CC58
-	for <sashiko-reviews@lists.linux.dev>; Thu, 11 Jun 2026 08:37:44 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=114.242.206.163
+Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+	(No client certificate requested)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 35DF3347BC1;
+	Thu, 11 Jun 2026 09:24:31 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1781167068; cv=none; b=SCAwOzhc5on0OXa/fe6I9ZoiP83ia4tzyQtK6tL6CDAnS7YHgWlTjmbQd7DcI5n2aPfBn4y6VDitjN/RYB+AUQIbZ0ScaLgraEcMGkc+HfkJ/zIINXZecxSgD6MEkMiicd990ddMyGytaDDLr6ceOEJ8GCVJ1uqMLG4H0Drc5YA=
+	t=1781169873; cv=none; b=YcRL4uiTEOIVLgpiAqKmaKmnKg1LiNh4RVANdKpyc8cRpau+Kys16+OrS7CZ74dcNDEm1Ly7eiLD3jMloGDhA543nf1GpsfOKjnajT6mlnz9pO7Mj4ZlL95usLSJGE97rL8j3/+dwa2OOfkRPhkqsHs0QCOUvYORHWjSidmvbm0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1781167068; c=relaxed/simple;
-	bh=SlXS4po6XQg1j575v8xfgxW21ndMClG45vNxGbuajfs=;
-	h=Subject:To:Cc:References:From:Message-ID:Date:MIME-Version:
-	 In-Reply-To:Content-Type; b=HzhyVt6ibjI2tvn7xlF0AKnyDRJGjKKrTTnkT0kOuYLj3fAcRahJ2mn42fK8G4kz4KgxY8Klm5+XJPMnD2InzPT1iJPFd7kGMDD0MOSEjhrELtSUxcQZh1mc4v0eM1XKlQeXI0TzgqOrl/KpNgS4n7guZjCvQKoTxQoUds8U7KU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=loongson.cn; spf=pass smtp.mailfrom=loongson.cn; arc=none smtp.client-ip=114.242.206.163
-Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=loongson.cn
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=loongson.cn
-Received: from loongson.cn (unknown [113.200.148.30])
-	by gateway (Coremail) with SMTP id _____8DxRenQcypqIQMTAA--.44322S3;
-	Thu, 11 Jun 2026 16:37:36 +0800 (CST)
-Received: from [10.130.40.83] (unknown [113.200.148.30])
-	by front1 (Coremail) with SMTP id qMiowJCx2+DHcypqPbqiAA--.47474S3;
-	Thu, 11 Jun 2026 16:37:27 +0800 (CST)
-Subject: Re: [PATCH bpf-next v1] bpf: Fix unaligned interpreter panic on JIT
- fallback path
-To: sashiko-reviews@lists.linux.dev
-Cc: bpf@vger.kernel.org
-References: <20260611070009.26257-1-yangtiezhu@loongson.cn>
- <20260611071828.8C8DF1F00893@smtp.kernel.org>
-From: Tiezhu Yang <yangtiezhu@loongson.cn>
-Message-ID: <fed2e4ef-f96b-6e6e-0f89-6c7fc04a5d37@loongson.cn>
-Date: Thu, 11 Jun 2026 16:37:26 +0800
-User-Agent: Mozilla/5.0 (X11; Linux loongarch64; rv:68.0) Gecko/20100101
- Thunderbird/68.7.0
+	s=arc-20240116; t=1781169873; c=relaxed/simple;
+	bh=NVWiIJT/7VAsozIULKC9M8FeT0cPIZ4RVnRZNNF7FGo=;
+	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
+	 In-Reply-To:Content-Type; b=dysJHe0ZmuKSgIf9ve8rxv6mcvDmVo+wJi/kSBBwwh9cYEy3T0RbuzCXCIMPmxrxlwjl8JL6dFCmw5UT3Ao8a7LGj9O+d2eTjA12xOuLck5tBqt84h54nsEytB47iYjddZi0jWf7D/hIzk0mN1A9Zt0GZeDoCwQFnl3MICNFuII=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=TkM1yr05; arc=none smtp.client-ip=100.103.45.18
+Authentication-Results: smtp.subspace.kernel.org;
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="TkM1yr05"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id C75A61F00899;
+	Thu, 11 Jun 2026 09:24:29 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=kernel.org;
+	s=k20260515; t=1781169871;
+	bh=7ZqG1Kuu1Hqp3ozxFW8pzKB7sswpKS1lrkRvC0eSUbE=;
+	h=Date:Subject:To:Cc:References:From:In-Reply-To;
+	b=TkM1yr055E9sopkEmkE7CWjhdMvkmRhCDakkcoKkmFkThH8A2PF6D+jVtjdu+aEvu
+	 sLmxPOSoA9keXrho7QN/4+ynVVk+TsiceKCRKkqrN8A0CjA8Gcrgt5b6L46aahazN8
+	 tMa8eBIvMTrED0ukD+FWMW7DpnKHMZxh9ILtNv9ETs5PkNLrRTwy7o2jS49DDn7MAu
+	 ccNTSHds4NpFb4RkxeyjHWstUO7193Wc6EnpB+x1buyJ4rGiVetAxDRU80rAy7SGBz
+	 p/HpDzmjQJRbIBw5i41oPRr9+fOMmMyjsbXpmddO0uyv/XYqMhR/E+MZPzHPeceNWM
+	 YOUWygnMHIqVw==
+Message-ID: <81632f61-9db2-4b26-9a2a-96013d799e14@kernel.org>
+Date: Thu, 11 Jun 2026 11:24:28 +0200
 Precedence: bulk
 X-Mailing-List: sashiko-reviews@lists.linux.dev
 List-Id: <sashiko-reviews.lists.linux.dev>
 List-Subscribe: <mailto:sashiko-reviews+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:sashiko-reviews+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-In-Reply-To: <20260611071828.8C8DF1F00893@smtp.kernel.org>
-Content-Type: text/plain; charset=utf-8; format=flowed
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH] arm64: defconfig: Enable USB_UAS in arm64 configuration
+To: sashiko-reviews@lists.linux.dev,
+ Akash Kumar <akash.kumar@oss.qualcomm.com>
+Cc: robh@kernel.org, conor+dt@kernel.org, devicetree@vger.kernel.org,
+ linux-arm-msm <linux-arm-msm@vger.kernel.org>,
+ Bjorn Andersson <andersson@kernel.org>,
+ Konrad Dybcio <konradybcio@kernel.org>
+References: <20260611090946.2790631-1-akash.kumar@oss.qualcomm.com>
+ <20260611091509.6E09F1F00898@smtp.kernel.org>
+From: Krzysztof Kozlowski <krzk@kernel.org>
 Content-Language: en-US
-Content-Transfer-Encoding: 8bit
-X-CM-TRANSID:qMiowJCx2+DHcypqPbqiAA--.47474S3
-X-CM-SenderInfo: p1dqw3xlh2x3gn0dqz5rrqw2lrqou0/
-X-Coremail-Antispam: 1Uk129KBj93XoWxGw18try8Ww48KFW7XFWxZrc_yoWrJFW8pF
-	95Gr4jkw4DXFZ7u39rJw1vq3W5Xw48Ga48Gas5KryFkanIvrn3CF15Kw48WanxGr48ur1a
-	vw42yF17C3Z5GFXCm3ZEXasCq-sJn29KB7ZKAUJUUUUU529EdanIXcx71UUUUU7KY7ZEXa
-	sCq-sGcSsGvfJ3Ic02F40EFcxC0VAKzVAqx4xG6I80ebIjqfuFe4nvWSU5nxnvy29KBjDU
-	0xBIdaVrnRJUUU9Sb4IE77IF4wAFF20E14v26r1j6r4UM7CY07I20VC2zVCF04k26cxKx2
-	IYs7xG6rWj6s0DM7CIcVAFz4kK6r1j6r18M28lY4IEw2IIxxk0rwA2F7IY1VAKz4vEj48v
-	e4kI8wA2z4x0Y4vE2Ix0cI8IcVAFwI0_JFI_Gr1l84ACjcxK6xIIjxv20xvEc7CjxVAFwI
-	0_Jr0_Gr1l84ACjcxK6I8E87Iv67AKxVW8Jr0_Cr1UM28EF7xvwVC2z280aVCY1x0267AK
-	xVW8Jr0_Cr1UM2AIxVAIcxkEcVAq07x20xvEncxIr21l57IF6xkI12xvs2x26I8E6xACxx
-	1l5I8CrVACY4xI64kE6c02F40Ex7xfMcIj6xIIjxv20xvE14v26r1j6r18McIj6I8E87Iv
-	67AKxVW8JVWxJwAm72CE4IkC6x0Yz7v_Jr0_Gr1lF7xvr2IY64vIr41lc7I2V7IY0VAS07
-	AlzVAYIcxG8wCF04k20xvY0x0EwIxGrwCFx2IqxVCFs4IE7xkEbVWUJVW8JwCFI7km07C2
-	67AKxVWUXVWUAwC20s026c02F40E14v26r1j6r18MI8I3I0E7480Y4vE14v26r106r1rMI
-	8E67AF67kF1VAFwI0_Jrv_JF1lIxkGc2Ij64vIr41lIxAIcVC0I7IYx2IY67AKxVWUJVWU
-	CwCI42IY6xIIjxv20xvEc7CjxVAFwI0_Jr0_Gr1lIxAIcVCF04k26cxKx2IYs7xG6r1j6r
-	1xMIIF0xvEx4A2jsIE14v26r4j6F4UMIIF0xvEx4A2jsIEc7CjxVAFwI0_Gr0_Gr1UYxBI
-	daVFxhVjvjDU0xZFpf9x07j8sqAUUUUU=
+Autocrypt: addr=krzk@kernel.org; keydata=
+ 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
+In-Reply-To: <20260611091509.6E09F1F00898@smtp.kernel.org>
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 7bit
 
-On 2026/6/11 下午3:18, sashiko-bot@kernel.org wrote:
+On 11/06/2026 11:15, sashiko-bot@kernel.org wrote:
 > Thank you for your contribution! Sashiko AI review found 1 potential issue(s) to consider:
-> - [High] Type confusion between BPF helper enum IDs and address offsets in `bpf_fixup_fallback_inline_helpers()` leads to potential silent instruction corruption.
+> - [Low] Mismatch between Author email and Signed-off-by email.
 > --
 > 
-> commit e06144ee47e54fe6934472bff4024530f26b7737
-> Author: Tiezhu Yang <yangtiezhu@loongson.cn>
+> commit 8dd2d2a3035d6deca9f623e43d26b74e60f0f6d7
+> Author: Akash Kumar <akash.kumar@oss.qualcomm.com>
 > 
-> bpf: Fix unaligned interpreter panic on JIT fallback path
+> arm64: defconfig: Enable USB_UAS in arm64 configuration
 > 
-> This commit introduces a fallback fixup phase to rewrite the call offsets
-> for inlined helpers when JIT compilation fails or is skipped. This prevents
-> unaligned memory access panics when falling back to the interpreter.
+> This commit enables CONFIG_USB_UAS=y in the default arm64 configuration
+> to provide better out-of-the-box performance for USB storage devices.
 > 
->> diff --git a/kernel/bpf/core.c b/kernel/bpf/core.c
->> index 649cce41e13f3..de0c46b495b40 100644
->> --- a/kernel/bpf/core.c
->> +++ b/kernel/bpf/core.c
+>> Author: Akash Kumar <akash.kumar@oss.qualcomm.com>
 > [ ... ]
->> @@ -2608,6 +2608,30 @@ static struct bpf_prog *bpf_prog_jit_compile(struct bpf_verifier_env *env, struc
->>   	return prog;
->>   }
->>   
->> +/*
->> + * Rewrite the helper call offset for inlined helpers when fallback to
->> + * the interpreter happens due to JIT compilation failure or JIT disabled.
->> + */
->> +static void bpf_fixup_fallback_inline_helpers(struct bpf_verifier_env *env, struct bpf_prog *fp)
->> +{
->> +	struct bpf_insn *insn = fp->insnsi;
->> +	const struct bpf_func_proto *fn;
->> +	int i;
->> +
->> +	if (!env || !env->ops->get_func_proto)
->> +		return;
->> +
->> +	for (i = 0; i < fp->len; i++, insn++) {
->> +		if (insn->code == (BPF_JMP | BPF_CALL) && insn->src_reg == 0) {
->> +			if (bpf_jit_inlines_helper_call(insn->imm)) {
+>>     Signed-off-by: Akash Kumar <akakum@qti.qualcomm.com>
 > 
-> [Severity: High]
-> Could this cause a type confusion where a patched address offset is
-> misinterpreted as a helper enum ID?
-> 
-> Since bpf_do_misc_fixups() already patches insn->imm with a 32-bit address
-> offset (fn->func - __bpf_call_base) for helpers that are NOT expected to be
-> inlined by the JIT, insn->imm will already be an offset when reaching this
-> loop for non-inlined helpers.
-> 
-> If the distance between a non-inlined helper and __bpf_call_base happens to
-> match the enum ID of an inlined helper (for example,
-> BPF_FUNC_get_smp_processor_id = 8), wouldn't bpf_jit_inlines_helper_call()
-> falsely return true?
-> 
->> +				fn = env->ops->get_func_proto(insn->imm, fp);
->> +				if (fn && fn->func)
->> +					insn->imm = fn->func - __bpf_call_base;
-> 
-> If the type confusion triggers, it seems this line would overwrite the
-> original, correct offset with the offset of an entirely different helper
-> function, potentially causing the interpreter to execute the wrong helper.
+> [Severity: Low]
+> This isn't a bug, but there is a mismatch between the Author email and the
+> Signed-off-by email. 
 
-To address the type confusion risk between raw helper enum IDs and
-already-patched massive 32-bit address offsets (since regular helper
-conversions leave src_reg at 0), I will apply a strict bounds check
-against __BPF_FUNC_MAX_ID to safely isolate and filter out previously
-fixed-up helper calls. Also, I have replaced fp with env->prog for
-better type safety when calling get_func_proto().
+This is a bug... DCO email must match.
 
-Here is the updated function:
-
-static void bpf_fixup_fallback_inline_helpers(struct bpf_verifier_env 
-*env, struct bpf_prog *fp)
-{
-         struct bpf_insn *insn = fp->insnsi;
-         const struct bpf_func_proto *fn;
-         int i;
-
-         if (!env || !env->ops->get_func_proto)
-                 return;
-
-         for (i = 0; i < fp->len; i++, insn++) {
-                 if (insn->code == (BPF_JMP | BPF_CALL) && insn->src_reg 
-== 0) {
-                         /* Filter out already-patched address offsets. */
-                         if (insn->imm >= __BPF_FUNC_MAX_ID)
-                                 continue;
-
-                         if (bpf_jit_inlines_helper_call(insn->imm)) {
-                                 fn = 
-env->ops->get_func_proto(insn->imm, env->prog);
-                                 if (fn && fn->func)
-                                         insn->imm = fn->func - 
-__bpf_call_base;
-                         }
-                 }
-         }
-}
-
-Thanks,
-Tiezhu
-
+Best regards,
+Krzysztof
