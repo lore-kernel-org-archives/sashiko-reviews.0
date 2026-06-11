@@ -1,173 +1,203 @@
-Received: from mgamail.intel.com (mgamail.intel.com [198.175.65.16])
+Received: from mgamail.intel.com (mgamail.intel.com [192.198.163.14])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9E119481FBF
-	for <sashiko-reviews@lists.linux.dev>; Thu, 11 Jun 2026 17:28:24 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=198.175.65.16
-ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1781198907; cv=none; b=PHI1Ahxl36OjmYTjdSuglky6lammwydpaYEOgv6HWc4AscCp5EOOrOyXH9C6O+BsVlUyn0o2tsB+sJ4klp9XlC76WcGkyLErrD2oOlADySP3s/x4mA0spujyvuK/7xoerZ09KUl2YXGrX4jVBxnVBC+8h1wQKUh5X6KWwmbbjmk=
-ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1781198907; c=relaxed/simple;
-	bh=OSyOTvYZVIsRSlVImx5LXmF0iwx9aNop6VsItRtuHkk=;
-	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=IImkg2axwuxHQO+o308RlAjNEkb9vSZXJZa3bR+MaaJ01IcZ/hZdVQhBJrU/oBEFZE3Az9niqhBuMHldwnp5SCOMJxw4M3+U1HN1UbzgQBNb8XkZHk+0JlwI/T1j2sUr5Nja+KUMLLNsLxL0ukhn0Q6l6O+SvE8t31MaPrIp9Q0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linux.intel.com; spf=pass smtp.mailfrom=linux.intel.com; dkim=pass (2048-bit key) header.d=intel.com header.i=@intel.com header.b=Ntjl7xp9; arc=none smtp.client-ip=198.175.65.16
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linux.intel.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linux.intel.com
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 963CB364959
+	for <sashiko-reviews@lists.linux.dev>; Thu, 11 Jun 2026 17:41:13 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=fail smtp.client-ip=192.198.163.14
+ARC-Seal:i=2; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
+	t=1781199676; cv=fail; b=l+fkP/cpWpdyu5wTXpi6HlQ58twTORQ1JrvbMNDKK3BeCW0as96fwg8DlQB7ZnkPIh9BSaXwlGH6NzK4SWzxoXcB5097alApWZrh3M0PSSLIkJzf9OfFE3NsHryGrLMowSN6wHQC3volZy3W/2TbcQ0nz1XGeuNaf9yxwlCh8jo=
+ARC-Message-Signature:i=2; a=rsa-sha256; d=subspace.kernel.org;
+	s=arc-20240116; t=1781199676; c=relaxed/simple;
+	bh=Ul1kAmbGIdrQ5KmcyICSG3vSJNbcA3iXksw9HhWyoS8=;
+	h=Date:From:To:CC:Subject:Message-ID:References:Content-Type:
+	 Content-Disposition:In-Reply-To:MIME-Version; b=UnAZqgcQQcfsJ9u7n+Bmxvys4u7AQ/F9cBJr0YS06WsbS88dcGhId9IuVLXNi+poXGUoD3JkTTcvcfPOj/6MxgGRglUd7HJ7fY5tONSP1qD3WhzgDYwSr5kw/gVMJMsCHe845X1LNj4MkSYKY2Uh/F2VDns2qqf4imMXInMS3ak=
+ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=intel.com; spf=pass smtp.mailfrom=intel.com; dkim=pass (2048-bit key) header.d=intel.com header.i=@intel.com header.b=D17w6MGO; arc=fail smtp.client-ip=192.198.163.14
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=intel.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=intel.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=intel.com header.i=@intel.com header.b="Ntjl7xp9"
+	dkim=pass (2048-bit key) header.d=intel.com header.i=@intel.com header.b="D17w6MGO"
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
   d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
-  t=1781198905; x=1812734905;
-  h=message-id:date:mime-version:subject:to:cc:references:
-   from:in-reply-to:content-transfer-encoding;
-  bh=OSyOTvYZVIsRSlVImx5LXmF0iwx9aNop6VsItRtuHkk=;
-  b=Ntjl7xp9BZha5zI6k/gA6k8U/Nx6F6HDxZP0C/CMc5geAQqR+Ssea+YI
-   TwFp/Amf/8QLC9LAl4RbZ8V0wt2zETTkIdnn6dnJ6/GJ3P4ATRO7dVVJo
-   S+Gj15RQ4iNBQx9l8eUZXb2rFTT4LCroTY6nLG0jdodNnUPuMiR5fz+H9
-   5kW1RftO+KZ6/mqTz9cfCorFUHQggfggv2/pp5U1nuJAX4uwnczY39f6/
-   alhjAlH68E1mgT2iI9jctRGudCz7n40Mz75xeyc2P11FtrB6l99qEUSwR
-   1Tg3laAYRysPq5rBp8R2AtT7cOrrvBTIWD3Q5ZIWqYH1sLrhG878uOk8/
+  t=1781199673; x=1812735673;
+  h=date:from:to:cc:subject:message-id:references:
+   content-transfer-encoding:in-reply-to:mime-version;
+  bh=Ul1kAmbGIdrQ5KmcyICSG3vSJNbcA3iXksw9HhWyoS8=;
+  b=D17w6MGOjs5+k3wNMUFrFaKNTehl7Mr7uF/sQLcZnQ0x/fBAk6oWsd0/
+   7Op6xYwwBFsYoXlz6WbmGh8iLtAl/4d0VDr2llInpiBcX5QWXpZwPbLLD
+   X5eS+nIJ4OY+tg5CxW9BKqqN3IUP5e2sUoWlZ5XsUdU/GJf/F9q7qhj9Q
+   t18WgwOdAS4qITM3iPiRPkqkj4+ulqx4jwynkXf3hq1oWCv3Y+m/Z3J5l
+   8IXeibrqDOvJdYroHrgf00e6r5wILFL5GaIKUz96HoOomCztr0ulN5987
+   CSMYu4HdQ7klba+Xm9vqCbOHIbCQ/isBLOMJi7de8zajCkPfjgjSgN4//
    w==;
-X-CSE-ConnectionGUID: iVAEtp9cRvaLrqXB0dnmyA==
-X-CSE-MsgGUID: eL9xQJxvQDy0+y4DERakBw==
-X-IronPort-AV: E=McAfee;i="6800,10657,11813"; a="82212920"
+X-CSE-ConnectionGUID: 8GL2vHQ/QXidXhVmAnQnfA==
+X-CSE-MsgGUID: 8kHTgPMcQoqanzsbdNrG2g==
+X-IronPort-AV: E=McAfee;i="6800,10657,11813"; a="82066379"
 X-IronPort-AV: E=Sophos;i="6.24,199,1774335600"; 
-   d="scan'208";a="82212920"
-Received: from fmviesa001.fm.intel.com ([10.60.135.141])
-  by orvoesa108.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 11 Jun 2026 10:28:24 -0700
-X-CSE-ConnectionGUID: tjOzBj1ATxa7Us8+Mf8n1A==
-X-CSE-MsgGUID: CzHy/GBCR6WQdUNrcMqlxA==
+   d="scan'208";a="82066379"
+Received: from orviesa003.jf.intel.com ([10.64.159.143])
+  by fmvoesa108.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 11 Jun 2026 10:41:13 -0700
+X-CSE-ConnectionGUID: 5c91zNKiR+2kaBEQxP9/tg==
+X-CSE-MsgGUID: rpOYPDH6TAKMcidl9IKQwA==
 X-ExtLoop1: 1
 X-IronPort-AV: E=Sophos;i="6.24,199,1774335600"; 
-   d="scan'208";a="270576977"
-Received: from amilburn-desk.amilburn-desk (HELO [10.245.244.169]) ([10.245.244.169])
-  by smtpauth.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 11 Jun 2026 10:28:22 -0700
-Message-ID: <e123dfee-632c-430b-8673-4a135cad5046@linux.intel.com>
-Date: Thu, 11 Jun 2026 19:28:20 +0200
+   d="scan'208";a="250488853"
+Received: from fmsmsx902.amr.corp.intel.com ([10.18.126.91])
+  by orviesa003.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 11 Jun 2026 10:41:13 -0700
+Received: from FMSMSX901.amr.corp.intel.com (10.18.126.90) by
+ fmsmsx902.amr.corp.intel.com (10.18.126.91) with Microsoft SMTP Server
+ (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
+ 15.2.2562.37; Thu, 11 Jun 2026 10:41:12 -0700
+Received: from fmsedg903.ED.cps.intel.com (10.1.192.145) by
+ FMSMSX901.amr.corp.intel.com (10.18.126.90) with Microsoft SMTP Server
+ (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
+ 15.2.2562.37 via Frontend Transport; Thu, 11 Jun 2026 10:41:12 -0700
+Received: from DM1PR04CU001.outbound.protection.outlook.com (52.101.61.23) by
+ edgegateway.intel.com (192.55.55.83) with Microsoft SMTP Server
+ (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
+ 15.2.2562.37; Thu, 11 Jun 2026 10:41:12 -0700
+ARC-Seal: i=1; a=rsa-sha256; s=arcselector10001; d=microsoft.com; cv=none;
+ b=fdA0U1/UBE58eAIebf7Ma3MCLdLlrOQ73OXWpSyoGQvP8eQsvWLYplO3kNwW33IMjoUDAoDzG+2v3qeORXN6K4M+pNIm3ULngdU9YqBKY4PPtYrVuJaUwO+uV8Ap2TQFIfpIoAgt31gQCRbnE4muCGySJsDVFL4H8aspRmMtaBVRqgCecR5Hz18thkdA0NtOf8mY4lSxWP82TXLBwSaMAERmTKtWkyUfP/yahBIGfj0+Ae72oUUfx9emCagJek9+fdMNt0AgEsXzOCytdJeoqi1qHxPhpnIFysgy9ixHsKo6d+ROsO/ym05b6G+2FC2Z1AngPM4cQ+hDSppG9gmWOw==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com;
+ s=arcselector10001;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
+ bh=5syWjC9/cxFq+ZmfnGdvKdT5u/QBKnsoFE0979nyhQw=;
+ b=tG3ejziedow3ZacdmWuhU0mt1fBx32A1cm0UPdMnOBv2O5bTVgf3lW934mZdr5AQfuU7mh3KxSlRvvhAbw8ffqLChQJScpzhCH4QuJXOy7nKEoI07izqC7pd0Mmdebr2cnkYIXBSSkhQhF7vVV4IJVn7+FVzQ5xCuz5v1rzHyNcRGbDVc+vJU5XfjiT7zIYXaVWL+ymFoyBn8d8gJDzAftqoy0dbne6C048L5LwAUn2LlyVxvHcxe+zXKu4Jn7k3H3M8yislbuZ/uREkVUBHctNMylbTTYSGsnqVnb4+1Bob/SaZ6FLRbobPZtrRxywBu1DOo41XWLQOz2mrzqhQXg==
+ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
+ smtp.mailfrom=intel.com; dmarc=pass action=none header.from=intel.com;
+ dkim=pass header.d=intel.com; arc=none
+Authentication-Results: dkim=none (message not signed)
+ header.d=none;dmarc=none action=none header.from=intel.com;
+Received: from DS4PPF0BAC23327.namprd11.prod.outlook.com (2603:10b6:f:fc02::9)
+ by IA3PR11MB9351.namprd11.prod.outlook.com (2603:10b6:208:57c::15) with
+ Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.21.92.17; Thu, 11 Jun
+ 2026 17:41:04 +0000
+Received: from DS4PPF0BAC23327.namprd11.prod.outlook.com
+ ([fe80::a195:49d4:38c5:3891]) by DS4PPF0BAC23327.namprd11.prod.outlook.com
+ ([fe80::a195:49d4:38c5:3891%4]) with mapi id 15.21.0092.016; Thu, 11 Jun 2026
+ 17:41:04 +0000
+Date: Thu, 11 Jun 2026 10:41:01 -0700
+From: Alison Schofield <alison.schofield@intel.com>
+To: <sashiko-reviews@lists.linux.dev>
+CC: <linux-cxl@vger.kernel.org>
+Subject: Re: [PATCH 5/6] cxl/test: Add a topology to test mixed-granularity
+ regions
+Message-ID: <airzLU3EZdTb4Y-0@aschofie-mobl2.lan>
+References: <2ab2466fafa96f07df65ee5f6b4f8511240f4c93.1780095671.git.alison.schofield@intel.com>
+ <20260530051731.9A75D1F00898@smtp.kernel.org>
+Content-Type: text/plain; charset="iso-8859-1"
+Content-Disposition: inline
+Content-Transfer-Encoding: 8bit
+In-Reply-To: <20260530051731.9A75D1F00898@smtp.kernel.org>
+X-ClientProxiedBy: SJ0PR03CA0154.namprd03.prod.outlook.com
+ (2603:10b6:a03:338::9) To DS4PPF0BAC23327.namprd11.prod.outlook.com
+ (2603:10b6:f:fc02::9)
 Precedence: bulk
 X-Mailing-List: sashiko-reviews@lists.linux.dev
 List-Id: <sashiko-reviews.lists.linux.dev>
 List-Subscribe: <mailto:sashiko-reviews+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:sashiko-reviews+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v5 3/6] cgroup/dmem: Add reclaim callback for lowering max
- below current usage
-To: sashiko-reviews@lists.linux.dev
-Cc: tj@kernel.org, mkoutny@suse.com, dri-devel@lists.freedesktop.org,
- hannes@cmpxchg.org
-References: <20260611142242.2529-4-thomas.hellstrom@linux.intel.com>
- <20260611144046.E1EF91F00893@smtp.kernel.org>
-Content-Language: en-US
-From: =?UTF-8?Q?Thomas_Hellstr=C3=B6m?= <thomas.hellstrom@linux.intel.com>
-In-Reply-To: <20260611144046.E1EF91F00893@smtp.kernel.org>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 8bit
+X-MS-PublicTrafficType: Email
+X-MS-TrafficTypeDiagnostic: DS4PPF0BAC23327:EE_|IA3PR11MB9351:EE_
+X-MS-Office365-Filtering-Correlation-Id: 7a39ce3a-5519-42cd-af4c-08dec7e09c70
+X-MS-Exchange-SenderADCheck: 1
+X-MS-Exchange-AntiSpam-Relay: 0
+X-Microsoft-Antispam: BCL:0;ARA:13230040|376014|366016|23010399003|1800799024|6133799003|18002099003|22082099003|11063799006|4143699003|56012099006;
+X-Microsoft-Antispam-Message-Info: u6542+A1JMe/KMArT807pgmtwRY/4oTMI+oqrxhGWcpzVCCD4U11CWQxiosJZC8lxeNAcGTIe6EPxbZjEYzVkS0VQlofz2+tyzDN3hvnvaQnSpww2fx8Hno9KsGxBaqGl1bUGmp+4biJ2NcWV/O0uhaA/KeWADFFet7EOeOVf9x0jbMX2WKS/rt6T1YIKfQoNsCYDoCEnz5qnD13DXeQn9sOaGTeVJsc/mEQ5rF/z2BbyBpp8PbvFX4j8vetqrEfj3sEXcObaDUg6+XwgUqkhaoUlup2DbdgOZXzlC960p0ea03ih+Jgf4lxMuwnsfrb3731i43Vv04NOPfvnlnLwAcRYE2BcYs1rA2pBA7tEmXEMikQ5jhC44xsg3BRjye7oOIoN24vZCGDJ9trPC9e8N8JYKbe7qPaFmn6xi11ve5mU5jrUFXGK8gbZT4DG05Qlz85SOXTdUZkMXKMz2QeCpvCvHeLR3SRvh3LeTTT16Qx5d76InepfzfUzM3xvw6NAAUcLJh5l/wJsTumnk9aTzcp10MF+fMhExJGt30JmREjG3NanE7659NduedDKTRqhOo1CGl8ySamGEy9v/CjnskkO74quNQ4PVAtzNJI03qTD2yLAR3ECfXDG+TLuUELQkSkiFo1FnPgmfIkWbo9/A==
+X-Forefront-Antispam-Report: CIP:255.255.255.255;CTRY:;LANG:en;SCL:1;SRV:;IPV:NLI;SFV:NSPM;H:DS4PPF0BAC23327.namprd11.prod.outlook.com;PTR:;CAT:NONE;SFS:(13230040)(376014)(366016)(23010399003)(1800799024)(6133799003)(18002099003)(22082099003)(11063799006)(4143699003)(56012099006);DIR:OUT;SFP:1101;
+X-MS-Exchange-AntiSpam-MessageData-ChunkCount: 1
+X-MS-Exchange-AntiSpam-MessageData-0: =?iso-8859-1?Q?pU4oLGY5Vy2KiNhSX8cqkNKlfzuTUB+cgSEWcK8eS7eE2h/LWtUPQwsPFS?=
+ =?iso-8859-1?Q?C0K7el8hi1zU9pvfqM2AYKJlmBKU2EVrYbvOQ07/ji44bWjQTYj8/6qSP9?=
+ =?iso-8859-1?Q?NL6vlM221AYR9ujP9nZcf+zOiRdD1HIpK/wxZP3ZCeWz9F8cxdT5rLSthG?=
+ =?iso-8859-1?Q?NuoPTKS/B3IVV6dH/0zKgt4WFT/T9E4PxCJ9IqHD+k1VdhDwKFgUZb9z/i?=
+ =?iso-8859-1?Q?A70UNJgUmyc/igjQeKvqkFwZJemPvFPRHn8v7jBAsFJGDHRvWDONA2zCrg?=
+ =?iso-8859-1?Q?xV2DtkbnjJcTB6Q8p8SrjgoxAIiQ4P8NqbkTSHq1P47ZYBWWcKsrZH+euE?=
+ =?iso-8859-1?Q?ot0CUIFKXLK60AsMbEWXCR4QHM7FthFj9xEAIsL0HDMx8Ym98YgnzXr9Wd?=
+ =?iso-8859-1?Q?/MJLvdViQkY4ey76/FYbMX2+5AM1uPsMlIt2R/0J1pAUkHFvsuTibfStLD?=
+ =?iso-8859-1?Q?jORmx+mtz7PRfUrJfUnWHe4BamdmrfAMHwtL9YqDUAT9LZDS5aWFtax704?=
+ =?iso-8859-1?Q?Sy/KJdmGvSR1gYDgfrk8pfu1qoYCl18QhKOBV/8W4gWMEVsRb/deW18gzk?=
+ =?iso-8859-1?Q?Ea9xR2O/VSOMAGXVitKdvlQCvwZ+JQTOBAD8dD7wNXVcq974jj2p8dAHIJ?=
+ =?iso-8859-1?Q?HA/DlShNMWikmYUGqwDobT6k+JVWWWxZhfaZaDyc/ScxxzitYvP2Hh9+53?=
+ =?iso-8859-1?Q?gEugpoJYhkmfKP81KOpnBSuElnoGVOH7Vv37tAk2SH45Syqr6Nvo8mHBBK?=
+ =?iso-8859-1?Q?L7jkJ2wQVtc/HElL8Spb+5kFmVQ3XDRsGFPMJFYV/iRuxLF+lvkJSU+y93?=
+ =?iso-8859-1?Q?vY0eYsWSJrQavg7KDSGMK+/GbH3eR6dbJnLvc7bzN2dqiJXo7jyDv8vbEx?=
+ =?iso-8859-1?Q?/EYzBKjkBVB/l+RCLwYQ3b/gcVOzajLNODnQZ+2MX5lf8j9SIUrMQscKaF?=
+ =?iso-8859-1?Q?SZzniuXSs/XpXQWyONLPAEF9gQZuZGhApsk9jx+4s2cNl6hABeTUe1znzB?=
+ =?iso-8859-1?Q?JoZB6loaqBtHmDSnJ/aNkyd0CIhQHVIeRAGhRNVTAt/mLc/Y3rVD5HCpTA?=
+ =?iso-8859-1?Q?JbPJe000fRfY/M9pbg60TXATa1fDpTC1edumUF36QoF0uynVMRvcvrrCjM?=
+ =?iso-8859-1?Q?R1FukM4gBSVIw5BVK/ACY0hJcyZdDZq47+a3j9pZIe677Focce/iaTOByC?=
+ =?iso-8859-1?Q?sW9sf1GLtvtCnBlB9lffXoUYAwkan3YCl0Vha3QEm2/TjnMOaU0W2FjmWd?=
+ =?iso-8859-1?Q?+pOi0pIC1df1J5ndawKjsG4kP9HtMN8/c8vklKDSKOkNgpV6S7djsHc0+U?=
+ =?iso-8859-1?Q?SfLLGKbVos5GS9NlRfJe2xpR948EdnLqxwlykHKELp1ad7ImXaWmxqhAvq?=
+ =?iso-8859-1?Q?bvKjfrCrD0Aw5tl1Z1Gr4crcqsgyJCM948Bf0DRFRPFV3Izmq5nj5IlRgf?=
+ =?iso-8859-1?Q?PXksJBPIVAkFYNO9hsT1h9AaND98422d+PynXaYmqBIGtXLAaEnOdU6yC3?=
+ =?iso-8859-1?Q?Qi+ASgf4I1lPr4PoN9if9OhxxGM0+FJE0maKAp7VFXqtqisbtTILl8bSeM?=
+ =?iso-8859-1?Q?46ILLsgIggdNYX2+T8LmTnq48d457fNRIu30q8Du26Ucq7VjKdyxlA5YiA?=
+ =?iso-8859-1?Q?DeQofkazw5V1iS6xUouZvUIIhltqw3Uk5W70NfZRWo03ZasyspJQbuCZM3?=
+ =?iso-8859-1?Q?1Y6RogB2I3ADrnLSazunMOoi8TGHbKU0W/IFuPUgDkMPyQxVS/1eKqlj/B?=
+ =?iso-8859-1?Q?V+8T6VMaWmQQbxJ9LE44pDgg+KE1X2GQHmKgT7w9SLytx9Wvr7WHg96S8R?=
+ =?iso-8859-1?Q?/HbTIbt7VB0Zoz55Zs43xu9qLU3B630=3D?=
+X-Exchange-RoutingPolicyChecked: Hs7BtG312Ff2zKuYXVe+pMJLhoz2nrcTWm8Ga4VNZgQLIThFmR0xrjU2v7fDyVZ5iCq6xs49VnrA2RUpIJ4kRTBI0bD+veUDgPOhpWHwCNDNi3FzWw93W/YvobwsQ3W7mS4M7q/G5/CaeaxwigXvoSnZeIyc5fRBSVUqk+PilYq0I3GDRfxs1aXReCJou46l0dGsf9HjuIxQmC4d7K53Eh+T1cru/3BZofK+JJsqSCQ/rDD/Of5cRvFHFo4T/gfGFO3R7KjQ+0NKu3bxj6iDKJDp8e3hI3mEAEnm9kpZNR/x/K5sE8Aei9zbom7BfwvlTc4TWrZr3dC7XwjNgccylw==
+X-MS-Exchange-CrossTenant-Network-Message-Id: 7a39ce3a-5519-42cd-af4c-08dec7e09c70
+X-MS-Exchange-CrossTenant-AuthSource: DS4PPF0BAC23327.namprd11.prod.outlook.com
+X-MS-Exchange-CrossTenant-AuthAs: Internal
+X-MS-Exchange-CrossTenant-OriginalArrivalTime: 11 Jun 2026 17:41:04.7084
+ (UTC)
+X-MS-Exchange-CrossTenant-FromEntityHeader: Hosted
+X-MS-Exchange-CrossTenant-Id: 46c98d88-e344-4ed4-8496-4ed7712e255d
+X-MS-Exchange-CrossTenant-MailboxType: HOSTED
+X-MS-Exchange-CrossTenant-UserPrincipalName: OtZUo2wEcJw+d+/9VkjakxmPTx7qYBiI9tbxuIfcFcW/uxWISN/hTKyAFe79cVvRJY/YMuSrU50IcFxnE5q/nBF2dgRsLeDkPdeM28MmspI=
+X-MS-Exchange-Transport-CrossTenantHeadersStamped: IA3PR11MB9351
+X-OriginatorOrg: intel.com
 
+On Sat, May 30, 2026 at 05:17:31AM +0000, sashiko-bot@kernel.org wrote:
+> Thank you for your contribution! Sashiko AI review found 1 potential issue(s) to consider:
+> - [Medium] Evaluating `&array[i]->dev` on uninitialized legacy topology arrays causes Undefined Behavior when `mixed_gran_regions=1`.
 
-On 6/11/26 16:40, sashiko-bot@kernel.org wrote:
-> Thank you for your contribution! Sashiko AI review found 2 potential issue(s) to consider:
->
-> New issues:
-> - [Medium] The docstring for `struct dmem_cgroup_ops->reclaim` explicitly contradicts the implementation for `-ENOSPC` return values.
-
-Fixed in v6.
-
-
->
-> Pre-existing issues:
-> - [High] On 32-bit systems, `dmemcg` limits tracked in bytes are truncated to 32-bit `unsigned long`, leading to overflows and artificially severe constraints.
-
-Pre-existing issues are out of scope.
-
-/Thomas
+This will appear fixed in v2.
+- Patch 5: Add NULL checks on unused mock arrays (Sashiko)
 
 
 > --
->
-> commit ccfc580d266b8b80afec154f819853307351d98a
-> Author: Thomas Hellstr√∂m <thomas.hellstrom@linux.intel.com>
->
-> cgroup/dmem: Add reclaim callback for lowering max below current usage
->
-> Add an optional reclaim callback to struct dmem_cgroup_region. When
-> dmem.max is set below the current usage of a cgroup pool, the new limit
-> is applied immediately and then the driver is asked to evict memory.
->
->> diff --git a/include/linux/cgroup_dmem.h b/include/linux/cgroup_dmem.h
->> index d9eab8a2c1ee6..d705e94d8784d 100644
->> --- a/include/linux/cgroup_dmem.h
->> +++ b/include/linux/cgroup_dmem.h
->> @@ -14,12 +14,33 @@ struct dmem_cgroup_pool_state;
->>   /* Opaque definition of a cgroup region, used internally */
->>   struct dmem_cgroup_region;
->>   
->> +/**
->> + * struct dmem_cgroup_ops - Operations for a dmem cgroup region.
->> + * @reclaim: Optional callback invoked when dmem.max is set below the current
->> + *           usage of a pool. The driver should attempt to free at least
->> + *           @target_bytes from @pool. May be called multiple times if usage
->> + *           remains above the limit after returning.
->> + *
->> + *           Return: 0 if some progress was made (even if less than
->> + *           @target_bytes was freed), -ENOSPC if no progress could be made,
->> + *           or another negative error code if a fatal error occurred.
->> + *           Any non-zero return stops further reclaim attempts.
+> 
+> commit 8ff651f212fbb657c03e4fc54d032f721af040e6
+> Author: Alison Schofield <alison.schofield@intel.com>
+> 
+> cxl/test: Add a topology to test mixed-granularity regions
+> 
+> This commit adds a cxl_test topology for mixed-granularity region coverage.
+> Setting the module parameter mixed_gran_regions=1 creates three host bridges
+> with two switch levels below each bridge and twelve endpoints total.
+> 
+> > diff --git a/tools/testing/cxl/test/cxl.c b/tools/testing/cxl/test/cxl.c
+> > index 418669927fb00..b44db749873f3 100644
+> > --- a/tools/testing/cxl/test/cxl.c
+> > +++ b/tools/testing/cxl/test/cxl.c
+> 
+> [ ... ]
+> 
+> > @@ -130,6 +172,9 @@ static bool is_mock_dev(struct device *dev)
+> >  	for (i = 0; i < ARRAY_SIZE(cxl_rcd); i++)
+> >  		if (dev == &cxl_rcd[i]->dev)
+> >  			return true;
+> 
 > [Severity: Medium]
-> Is the documentation accurate regarding the -ENOSPC return code?
->
-> The docstring here explicitly states that any non-zero return stops further
-> reclaim attempts. However, the implementation in set_resource_max() appears
-> to intercept -ENOSPC and will retry up to 16 times:
->
->      if (ret && (ret != -ENOSPC || !retries--))
->          break;
->
-> Could this mislead driver authors into assuming -ENOSPC is a terminal
-> return code that aborts the loop immediately, when it actually subjects
-> the driver to continuous retries?
->
->> + */
->> +struct dmem_cgroup_ops {
->> +	int (*reclaim)(struct dmem_cgroup_pool_state *pool,
->> +		       u64 target_bytes, void *priv);
->> +};
-> [ ... ]
->
->> diff --git a/kernel/cgroup/dmem.c b/kernel/cgroup/dmem.c
->> index 373ad04d289d5..f7166b8255c7b 100644
->> --- a/kernel/cgroup/dmem.c
->> +++ b/kernel/cgroup/dmem.c
-> [ ... ]
->
->>   static void
->> -set_resource_max(struct dmem_cgroup_pool_state *pool, u64 val)
->> +set_resource_max(struct dmem_cgroup_pool_state *pool, u64 val, bool nonblock)
->>   {
->> -	page_counter_set_max(&pool->cnt, val);
->> +	struct dmem_cgroup_region *region = pool->region;
->> +	unsigned long limit = (unsigned long)val;
-> [Severity: High]
-> This is a pre-existing issue, but does this truncation to unsigned long cause
-> severe limitations on 32-bit systems?
->
-> The dmemcg subsystem accounts for memory limits in bytes, but integrates with
-> the page_counter infrastructure which tracks limits using unsigned long. The
-> 64-bit byte limit is truncated here, wrapping values larger than 4GB on 32-bit
-> architectures.
->
-> Additionally, when setting the limit to 'max' via dmemcg_parse_limit() or
-> reset_all_resource_limits(), it translates to PAGE_COUNTER_MAX (which is
-> ~524,287 on 32-bit). Because dmem_cgroup_try_charge() passes the allocation
-> size in bytes to page_counter_try_charge(), a limit of 'max' restricts usage
-> to ~512KB instead of being unlimited. Will this cause 32-bit workloads to OOM
-> on allocations larger than ~512KB?
->
->> +
->> +	/*
->> +	 * Always update the limit, even if usage currently exceeds it.
->> +	 * Concurrent allocations will be throttled against the new limit
->> +	 * while reclaim is in progress.
->> +	 */
->> +	xchg(&pool->cnt.max, limit);
+> When mixed_gran_regions is enabled, cxl_test_init() skips initializing the
+> legacy topology arrays by jumping to the topo_done label. Could evaluating
+> &cxl_rcd[i]->dev (and similar legacy arrays like cxl_mem, cxl_host_bridge)
+> cause undefined behavior here since those arrays are now left filled with
+> NULL pointers?
+> 
+> > +	for (i = 0; i < ARRAY_SIZE(cxl_mem_mix_gran); i++)
+> > +		if (cxl_mem_mix_gran[i] && dev == &cxl_mem_mix_gran[i]->dev)
+> > +			return true;
+> 
+> The new arrays correctly check for NULL before evaluating the dev pointer
+> offset, but the legacy array loops preceding it in is_mock_dev(),
+> is_mock_bridge(), and is_mock_port() do not. This also affects functions
+> like mock_init_hdm_decoder() which unconditionally checks against
+> &cxl_host_bridge[0]->dev.
+> 
+> -- 
+> Sashiko AI review ∑ https://sashiko.dev/#/patchset/cover.1780095671.git.alison.schofield@intel.com?part=5
