@@ -1,60 +1,33 @@
-Received: from mx0a-001b2d01.pphosted.com (mx0a-001b2d01.pphosted.com [148.163.156.1])
+Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 062A620C00C;
-	Thu, 11 Jun 2026 18:22:20 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=148.163.156.1
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1EB134C77DF
+	for <sashiko-reviews@lists.linux.dev>; Thu, 11 Jun 2026 18:30:05 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1781202142; cv=none; b=g6k0l8n9Fp98XAQ0y6icURUKGGjxCJ0zKP27SsVd0JYqj6lB2IRwLzaLxr9t3+RS8CRuq1N1pbe88ChO3oVCKXupWdMqFBXnIuAhZZagWzP8rzpjzZhuQVMOdFszv/DCLL3ArHUaFXsgB4qQTshEvXnJeIgwHfkShMS2IgGFfUY=
+	t=1781202609; cv=none; b=vCtJH3TsiGA4vzL66HbVmLcWaZPIGzRZF3o0j0igHsdcrU9oaJPgoyn+dFauYCetNoT5H48hvrHzEjUwFiCzQ6Statlm7AT5IoqQ+WAX2DgWMmDF9qAp3k8agUILQlblSwHY2ksb5efc7XyAD9s6/vtb6ZHu8IwXhKcxHvc6sT4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1781202142; c=relaxed/simple;
-	bh=gHkXvJcW0MpBjfxeU5up/TdIelQaUXi91vDSO7IlnRg=;
+	s=arc-20240116; t=1781202609; c=relaxed/simple;
+	bh=yk8gj4POIwSsvmW0MWmAGSwrG3oWaTWO93WVYRX4P18=;
 	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=RGXoSsKJoGQWzTlS/XgJz8FASwJsGYAbLOsZmpWfQOt2WiYLYQC2VErSqFgAvOZaOY9sYgJ0aeL/MlZiQ5uTmqRZ+2J2zMwEUpZtJJNn8htzjJwR/BcgHap2bSTopQ/TNwairubJIih0z15MHlrQ6XnTmIhXLiXckXhSdTNDEj4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linux.ibm.com; spf=pass smtp.mailfrom=linux.ibm.com; dkim=pass (2048-bit key) header.d=ibm.com header.i=@ibm.com header.b=qMYzOvkD; arc=none smtp.client-ip=148.163.156.1
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linux.ibm.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linux.ibm.com
+	 In-Reply-To:Content-Type; b=HSuoj8wDcOQeE0vGnek1dHn/wNKDdAzaHHCDLR3ZJcC5YmIdD4vrjSKOXw901m8x63YmOB56KhWe0ko53/GyrI6Y1bsVQ8p9FZfssHFK7Enb4t84zgLD8donHcROXWdRzgMZJsq1WTjrI+VKQSfegIEVxF3t4KmXp3P/VRVR338=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=lMPWpjD+; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=ibm.com header.i=@ibm.com header.b="qMYzOvkD"
-Received: from pps.filterd (m0353729.ppops.net [127.0.0.1])
-	by mx0a-001b2d01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id 65BBpTvk4146518;
-	Thu, 11 Jun 2026 18:22:19 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=ibm.com; h=cc
-	:content-transfer-encoding:content-type:date:from:in-reply-to
-	:message-id:mime-version:references:subject:to; s=pp1; bh=WOCkPp
-	vkJfgO8iHa83T2Vo+PY8doscANaw3MWOsqTVs=; b=qMYzOvkD2pj2430lzCFlm6
-	QIfgbrM6QEl7+v78kSIdlD4YMryETbfaht4tbtdQ/yAc8iOuIURWEOGuA6FNvhVl
-	PxvwCdAYk7KUcuIfcGoxa/UIEs1ijDmRU3JoGECbK2AAjUKvKTmuJEZzAdJDfW29
-	t+DDgR1Ir2Cz2WiGqoDPMhvLi8amu2dsXEbAx0C1R+NrGkOrton/NWQ6EmP8G92h
-	JUs5PR0Wmr1qbEwFV1Lnv3G+3iH14X0aXzywk3A0GUTUP2bIFmfaSixwmab8o+5j
-	qjIT+IGYppYFfS7ux8dsL9LP3xGMkG3tpQ0Sp416J32vN4mRSudRph035L7hTNjw
-	==
-Received: from ppma11.dal12v.mail.ibm.com (db.9e.1632.ip4.static.sl-reverse.com [50.22.158.219])
-	by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 4eqe8c5awm-1
-	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Thu, 11 Jun 2026 18:22:18 +0000 (GMT)
-Received: from pps.filterd (ppma11.dal12v.mail.ibm.com [127.0.0.1])
-	by ppma11.dal12v.mail.ibm.com (8.18.1.7/8.18.1.7) with ESMTP id 65BIJcdJ019976;
-	Thu, 11 Jun 2026 18:22:18 GMT
-Received: from smtprelay02.dal12v.mail.ibm.com ([172.16.1.4])
-	by ppma11.dal12v.mail.ibm.com (PPS) with ESMTPS id 4eqe09mdh3-1
-	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Thu, 11 Jun 2026 18:22:18 +0000 (GMT)
-Received: from smtpav04.wdc07v.mail.ibm.com (smtpav04.wdc07v.mail.ibm.com [10.39.53.231])
-	by smtprelay02.dal12v.mail.ibm.com (8.14.9/8.14.9/NCO v10.0) with ESMTP id 65BIMHHu27984516
-	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
-	Thu, 11 Jun 2026 18:22:17 GMT
-Received: from smtpav04.wdc07v.mail.ibm.com (unknown [127.0.0.1])
-	by IMSVA (Postfix) with ESMTP id 729F75805F;
-	Thu, 11 Jun 2026 18:22:17 +0000 (GMT)
-Received: from smtpav04.wdc07v.mail.ibm.com (unknown [127.0.0.1])
-	by IMSVA (Postfix) with ESMTP id 0E17558052;
-	Thu, 11 Jun 2026 18:22:17 +0000 (GMT)
-Received: from [9.61.249.138] (unknown [9.61.249.138])
-	by smtpav04.wdc07v.mail.ibm.com (Postfix) with ESMTP;
-	Thu, 11 Jun 2026 18:22:16 +0000 (GMT)
-Message-ID: <8f679b6b-7a7b-42fb-806a-edf096f88bc4@linux.ibm.com>
-Date: Thu, 11 Jun 2026 11:22:16 -0700
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="lMPWpjD+"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 298891F000E9;
+	Thu, 11 Jun 2026 18:30:03 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=kernel.org;
+	s=k20260515; t=1781202605;
+	bh=mUdMsvLpjD4bDeo9zF2p27HyJ781fK2RAxjZ/HWcvNs=;
+	h=Date:Subject:To:Cc:References:From:In-Reply-To;
+	b=lMPWpjD+jl3yplPYks0xMz3rgksD99nvDAyNjtKOFM72Rz5tvSdNTDLFdZ4zpUJ0K
+	 iaLvqUSgoSVyxaPxBikGb35E/ueZutra41ruPs/vMxNYSyqlktZOr2TAdD9XK3C/G1
+	 PBKy1bzYZuXphe1w11kebZXGmpKkS2htSrkaTm23uB4IgleuAKNuyB2XEeHg6BcsK5
+	 qAAgLFXHOArlCRepSpBg9f71dk6G6XVNlmZW4QXoagAp4yipRUe0vebyz6bvIOtf2M
+	 ls07mQg1HZf9UVdIho+DsM7/rUwBtTWaEwr1PQ3ewxrWN1MdGxxuTa7z+XRER7MFMS
+	 ONJ4o0SK9leWg==
+Message-ID: <0b01eebc-ba16-48ff-9b42-eec07dd372ef@kernel.org>
+Date: Thu, 11 Jun 2026 21:30:01 +0300
 Precedence: bulk
 X-Mailing-List: sashiko-reviews@lists.linux.dev
 List-Id: <sashiko-reviews.lists.linux.dev>
@@ -62,84 +35,268 @@ List-Subscribe: <mailto:sashiko-reviews+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:sashiko-reviews+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v18 3/3] PCI: Fail FLR when config space is inaccessible
-To: Bjorn Helgaas <helgaas@kernel.org>
-Cc: sashiko-reviews@lists.linux.dev, linux-pci@vger.kernel.org
-References: <20260610234428.GA433532@bhelgaas>
+Subject: Re: [PATCH v3 06/17] i3c: renesas: Perform Dynamic Address Assignment
+ on resume
+To: sashiko-reviews@lists.linux.dev
+Cc: linux-i3c@lists.infradead.org, Frank.Li@kernel.org,
+ wsa+renesas@sang-engineering.com
+References: <20260608201543.804902-7-claudiu.beznea@kernel.org>
+ <20260608203648.CAC451F00893@smtp.kernel.org>
 Content-Language: en-US
-From: Farhan Ali <alifm@linux.ibm.com>
-In-Reply-To: <20260610234428.GA433532@bhelgaas>
+From: Claudiu Beznea <claudiu.beznea@kernel.org>
+In-Reply-To: <20260608203648.CAC451F00893@smtp.kernel.org>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 7bit
-X-TM-AS-GCONF: 00
-X-Proofpoint-Spam-Info: AW1haW4tMjYwNjExMDE4MiBTYWx0ZWRfXx5ecl1UMGNjW
- YcvxUYOFGhDiB4SfBz+elz/zhPuGmwI0PpBwqkjkgrTiokOeMHMOnEDJdLr/vaHfQ4D5Kq681PS
- QI+K6zy3G9yBSszNfRkcja1HSiSXfJk=
-X-Authority-Analysis: v=2.4 cv=AYCB2XXG c=1 sm=1 tr=0 ts=6a2afcdb cx=c_pps
- a=aDMHemPKRhS1OARIsFnwRA==:117 a=aDMHemPKRhS1OARIsFnwRA==:17
- a=IkcTkHD0fZMA:10 a=FelO9ux0wxsA:10 a=VkNPw1HP01LnGYTKEx00:22
- a=RnoormkPH1_aCDwRdu11:22 a=uAbxVGIbfxUO_5tXvNgY:22 a=VwQbUJbxAAAA:8
- a=daHPmBgdeHGlrMCtzkIA:9 a=QEXdDO2ut3YA:10
-X-Proofpoint-GUID: v0RMbCJcQyXD4v0mEz_xyTSLFv7FRurJ
-X-Proofpoint-ORIG-GUID: v0RMbCJcQyXD4v0mEz_xyTSLFv7FRurJ
-X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwNjExMDE4MiBTYWx0ZWRfX4bJh1n99/a3L
- gauGJ1wjdSlCYEsiDhiEY9Qn1flGZ+HMa245gPJpAQ0fu2POlvRblxO6GDk1KtGb3Qn7QOWKqCr
- H4NFq/LkIggg+GGFFdyTK8vOCampSGdsxWdyrFM9CsHlnBaD1geHtP859WDCxadxPzNCl6imWFN
- C/1GJ+uPbWmpsrq5Xo2fokDM/N8+B+RuAMbCL+RXsfmmcBVMCBNl4aX4yfpXxQ+Wbkn/rIwwNJI
- SJEcJvuztdSnSYAWOt+z+hEjVi9QuB0Z+M+q0CRK2fTDzGKQHtsjHvmh616Tx6XoVD+AhJZ3pBf
- UneTSsjXUGlclpkOTEO0ZBsv2chD6cvFXMxRJNBxDT8d6jSp+hP871ijfh3YqgJc+Ibp8LvvW0/
- x5mVMcSoLAcd7g+K/eg0lgEu0C0NxQpJSlD0v8LLuq7XQL1JPPbmkFG0DczmfdKqiNn75ZOTAnS
- A94S+yjmV5dNRj5yBtg==
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.293,Aquarius:18.0.1143,Hydra:6.1.125,FMLib:17.12.100.49
- definitions=2026-06-11_03,2026-06-11_01,2025-10-01_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
- impostorscore=0 suspectscore=0 malwarescore=0 spamscore=0 phishscore=0
- lowpriorityscore=0 bulkscore=0 adultscore=0 priorityscore=1501 clxscore=1015
- classifier=typeunknown authscore=0 authtc= authcc= route=outbound adjust=0
- reason=mlx scancount=1 engine=8.22.0-2606040000 definitions=main-2606110182
 
 
-On 6/10/2026 4:44 PM, Bjorn Helgaas wrote:
-> On Wed, Jun 10, 2026 at 09:51:55AM -0700, Farhan Ali wrote:
->> On 6/9/2026 3:33 PM, Bjorn Helgaas wrote:
->>> On Wed, Jun 03, 2026 at 06:57:36PM +0000, sashiko-bot@kernel.org wrote:
->>>> Thank you for your contribution! Sashiko AI review found 2 potential issue(s) to consider:
->>>>
->>>> Pre-existing issues:
->> ...
->>>>> +++ b/drivers/pci/pci.c
->>>>> @@ -4396,6 +4396,9 @@ int pcie_reset_flr(struct pci_dev *dev, bool probe)
->>>>>    	if (!(dev->devcap & PCI_EXP_DEVCAP_FLR))
->>>>>    		return -ENOTTY;
->>>>> +	if (!pci_dev_config_accessible(dev, "FLR"))
->>>>> +		return -ENOTTY;
->>>>> +
->>>> [Severity: High]
->>>> This isn't a bug introduced by this patch, but does placing this
->>>> check in pcie_reset_flr() leave direct callers of pcie_flr()
->>>> exposed to 60-second hangs?
->>>>
->>>> Direct callers of pcie_flr() (like network and storage drivers
->>>> during error recovery) bypass this wrapper. They will still
->>>> experience a stall in pci_dev_wait() when attempting to reset a
->>>> device with an inaccessible config space. Should this
->>>> accessibility check be moved into pcie_flr() instead to protect
->>>> all callers?
->> ...
->>> Is there a reason to call pci_dev_config_accessible() here rather
->>> than in pcie_flr()?
->> The reason we wanted the check in pcie_reset_flr() was so to be able
->> to escalate to bus reset method if we can't do an FLR. I think the
->> check could be moved to pcie_flr(). Is that more preferable?
-> I think so.  Doesn't the escalation still work if the check is in
-> pcie_flr()?
 
-Yes it would still work. I will move the check to pcie_flr() in the next 
-revision.
+On 6/8/26 23:36, sashiko-bot@kernel.org wrote:
+> Thank you for your contribution! Sashiko AI review found 7 potential issue(s) to consider:
+> 
+> New issues:
+> - [Critical] `renesas_i3c_group_devs_in_slots()` crashes on free slots and fails to update the `free_pos` bitmask.
+> - [Critical] Typo in array swapping logic duplicates I2C devices and corrupts driver state.
+> - [High] Call to undefined function `i3c_master_reattach_i3c_dev_locked` and logically invalid usage of the reattach API.
+> - [High] Bypassing `i3c_master_add_i3c_dev_locked()` on resume ignores UID arbitration order, breaking device isolation.
+> - [High] Redundant and unsafe dereference of `->dev->desc` when retrieving master data.
+> - [High] Stale `olddevs` mask corrupts DATBAS registers for relocated I2C devices.
+> 
+> Pre-existing issues:
+> - [High] Integer underflow in `GENMASK` calculation in `renesas_i3c_daa()` causes undefined behavior.
+> --
+> 
+> commit 3b3dbe672a58e6c80b4a3c7aad942c61076f9cd2
+> Author: Claudiu Beznea <claudiu.beznea.uj@bp.renesas.com>
+> 
+> i3c: renesas: Perform Dynamic Address Assignment on resume
+> 
+> The patch modifies the Renesas I3C driver to run Dynamic Address Assignment
+> (DAA) in the controller resume path to restore communication with I3C devices
+> that lose power during suspend. It groups I2C and I3C devices during resume
+> and re-runs ENTDAA for I3C devices.
+> 
+>> diff --git a/drivers/i3c/master/renesas-i3c.c b/drivers/i3c/master/renesas-i3c.c
+>> --- a/drivers/i3c/master/renesas-i3c.c
+>> +++ b/drivers/i3c/master/renesas-i3c.c
+> 
+> [ ... ]
+> 
+>> +static u8 renesas_i3c_group_devs_in_slots(struct renesas_i3c *i3c)
+>> +{
+>> +	struct renesas_i3c_i2c_dev_data *new_i2c_data, *new_i3c_data;
+>> +	struct renesas_i3c_addr i2c_addr, i3c_addr;
+>> +	struct i3c_dev_desc *i3c_dev;
+>> +	struct i2c_dev_desc *i2c_dev;
+>> +	u8 i2c_pos = 0;
+> 
+> [ ... ]
+> 
+>> +	for (u8 pos = 0; pos < i3c->maxdevs; pos++) {
+>> +		if (i3c->free_pos & BIT(pos))
+>> +			continue;
+>> +
+>> +		if (!i3c->addrs[pos].is_i2c)
+>> +			continue;
+>> +
+>> +		if (pos == i2c_pos) {
+>> +			i2c_pos++;
+>> +			continue;
+>> +		}
+>> +
+>> +		/*
+>> +		 * Swap the I3C device on i2c_pos slot with the I2C dev
+>> +		 * on pos slot.
+>> +		 */
+>> +		i3c_addr = i3c->addrs[i2c_pos];
+>> +		i3c_dev = i3c_addr.i3c_dev;
+>> +
+>> +		i2c_addr = i3c->addrs[pos];
+> 
+> [Severity: Critical]
+> If i2c_pos points to a free slot because earlier iterations skipped free
+> slots without advancing i2c_pos, won't i3c_dev be NULL?
 
-Thanks
+Since, as of my code inspection, the detach could happen only though a 
+re-attachment procedure, this should lead to continuous slots allocation in 
+free_pos. Thus, at the point this code is executed there should be no gaps in 
+free_pos, unless I'm missing something.
 
-Farhan
+> 
+> Furthermore, does this function need to update i3c->free_pos when swapping
+> slots to ensure the bitmask stays synchronized with the array layout?
 
+Since, as of my code inspection, the detach could happen only though a 
+re-attachment procedure, this should lead to continuous slots allocation in 
+free_pos. Thus, at the point this code is executed there should be no gaps in 
+free_pos, swapping positions in i3c->addrs[] wouldn't need updating free_pos.
+
+> 
+>> +		i2c_dev = i2c_addr.i2c_dev;
+>> +
+>> +		new_i2c_data = i3c_dev_get_master_data(i3c_dev->dev->desc);
+> 
+> [Severity: High]
+> Is the ->dev->desc dereference here safe?
+
+At the point this code is executed the devices should have already been
+properly allocated.
+
+> Since i3c_dev is already a struct i3c_dev_desc *, the dev field might
+> be NULL if the device was only partially attached or memory allocation failed,
+> causing a crash. i3c_dev_get_master_data() can accept i3c_dev directly.
+> 
+>> +		new_i3c_data = i2c_dev_get_master_data(i2c_dev);
+>> +
+>> +		i3c->addrs[i2c_pos] = i3c->addrs[pos];
+>> +		i3c->addrs[i2c_pos].is_i2c = true;
+>> +		i3c->addrs[i2c_pos].i2c_dev = i2c_dev;
+>> +
+>> +		i3c->addrs[pos] = i2c_addr;
+> 
+> [Severity: Critical]
+> Since i2c_addr was initialized to i3c->addrs[pos] above, doesn't this
+> assign the entry to itself?
+
+Indeed, this looks wrong.
+
+> 
+> This would duplicate the I2C device into both slots, destroy the original I3C
+> device's dynamic address state, and cross-assign private data structures.
+> Should i3c_addr be used instead?
+> 
+>> +		i3c->addrs[pos].is_i2c = false;
+>> +		i3c->addrs[pos].i3c_dev = i3c_dev;
+>> +
+>> +		new_i2c_data->index = i2c_pos++;
+>> +		new_i3c_data->index = pos;
+>> +
+>> +		i2c_dev_set_master_data(i2c_dev, new_i2c_data);
+>> +		i3c_dev_set_master_data(i3c_dev, new_i3c_data);
+> 
+> [ ... ]
+> 
+>>   static int renesas_i3c_daa(struct i3c_master_controller *m)
+>>   {
+>>   	struct renesas_i3c *i3c = to_renesas_i3c(m);
+>>   	struct renesas_i3c_cmd *cmd;
+>>   	u32 olddevs, newdevs;
+>>   	u8 last_addr = 0, pos;
+>> +	u8 first_i3c_pos = 0;
+>>   	int ret;
+> 
+> [ ... ]
+> 
+>> @@ -655,16 +732,25 @@ static int renesas_i3c_daa(struct i3c_master_controller *m)
+>>   	olddevs = ~(i3c->free_pos);
+>>   	i3c->internal_state = I3C_INTERNAL_STATE_CONTROLLER_ENTDAA;
+>>   
+>> +	if (i3c->resuming)
+>> +		first_i3c_pos = renesas_i3c_group_devs_in_slots(i3c);
+> 
+> [Severity: High]
+> Since olddevs is computed from i3c->free_pos before calling
+> renesas_i3c_group_devs_in_slots(), which shuffles the array but doesn't
+> update i3c->free_pos, is it possible for olddevs to be stale?
+
+As of the current code base, the i2c slots in free_pos should be continuous
+and this should not happen.
+
+> 
+> If an I2C device is relocated into an empty slot where the stale mask is 0,
+> the subsequent DAA loop might fall through and overwrite the I2C device's slot
+> with a new I3C dynamic address.
+> 
+>> +
+>>   	/* Setting DATBASn registers for target devices. */
+>>   	for (pos = 0; pos < i3c->maxdevs; pos++) {
+> 
+> [ ... ]
+> 
+>> @@ -689,12 +780,38 @@ static int renesas_i3c_daa(struct i3c_master_controller *m)
+>>   
+>>   	renesas_i3c_wait_xfer(i3c, xfer);
+>>   
+>> -	newdevs = GENMASK(i3c->maxdevs - cmd->rx_count - 1, 0);
+>> -	newdevs &= ~olddevs;
+>> +	newdevs = GENMASK(i3c->maxdevs - cmd->rx_count - 1, first_i3c_pos);
+> 
+> [Severity: High]
+> This is a pre-existing issue, but if cmd->rx_count equals i3c->maxdevs
+> (e.g., when no devices are assigned), the first argument to GENMASK becomes
+> -1.
+> 
+> Doesn't this invoke undefined behavior via an invalid shift count in the
+> GENMASK macro, returning garbage values?
+> 
+>> +	/* Re-attach all the I3C devices on resume. */
+>> +	if (!i3c->resuming)
+>> +		newdevs &= ~olddevs;
+>>   
+>>   	for (pos = 0; pos < i3c->maxdevs; pos++) {
+>> -		if (newdevs & BIT(pos))
+>> -			i3c_master_add_i3c_dev_locked(m, i3c->addrs[pos]);
+>> +		if (!(newdevs & BIT(pos)))
+>> +			continue;
+>> +
+>> +		/*
+>> +		 * If the bus was fully occupied before suspend, re-attach the
+>> +		 * devices and update the addresses tracked by the subsystem.
+>> +		 * Without this, i3c_master_add_i3c_dev_locked() returns errors
+>> +		 * due to a lack of free slots (as reported by
+>> +		 * renesas_i3c_get_free_pos()), causing the attachment to fail.
+>> +		 *
+>> +		 * Otherwise, follow the normal
+>> +		 * i3c_master_add_i3c_dev_locked() path, which will re-attach the
+>> +		 * devices, keep the subsystem state and driver addresses in sync,
+>> +		 * and perform all the required internal bookkeeping.
+>> +		 */
+>> +		if (!i3c->free_pos && i3c->resuming) {
+>> +			struct i3c_dev_desc *dev = i3c->addrs[pos].i3c_dev->dev->desc;
+> 
+> [Severity: High]
+> Is it safe to dereference i3c_dev->dev->desc here?
+> 
+> If dev is NULL due to partial attachment or memory allocation failure prior
+> to suspend, this will cause a kernel crash.
+
+This should not happen since at this point the devices should be properly 
+attached. Moreover, using directly i3c->addrs[pos].i3c_dev doesn't
+work for the case here.
+
+> 
+>> +			u8 old_dyn_addr;
+>> +
+>> +			old_dyn_addr = dev->info.dyn_addr;
+>> +			dev->info.dyn_addr = i3c->addrs[pos].addr;
+>> +
+>> +			i3c_master_reattach_i3c_dev_locked(dev, old_dyn_addr);
+> 
+> [Severity: High]
+> Does i3c_master_reattach_i3c_dev_locked() exist in the kernel?
+> 
+> Calling a non-existent function will result in a build failure. Additionally,
+> even if this was intended to be i3c_master_reattach_i3c_dev(), that API
+> sends a SETNEWDA CCC to the device's old dynamic address. Since ENTDAA just
+> assigned a new dynamic address via hardware, won't the device NACK the
+> command?
+
+The API is part of the series pointed out in the cover letter of this series.
+
+> 
+> Furthermore, by bypassing i3c_master_add_i3c_dev_locked(), does this ignore
+> the PID arbitration order? ENTDAA assigns addresses based on PID arbitration,
+> so the device that won arbitration might not correspond to the descriptor at
+> i3c->addrs[pos], breaking device isolation.
+> 
+>> +		} else {
+>> +			i3c_master_add_i3c_dev_locked(m, i3c->addrs[pos].addr);
+>> +		}
+>>   	}
+>>   
+>>   	return 0;
+> 
+
+-- 
+Thank you,
+Claudiu
 
