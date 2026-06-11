@@ -1,222 +1,227 @@
-Received: from LO0P265CU003.outbound.protection.outlook.com (mail-uksouthazon11022117.outbound.protection.outlook.com [52.101.96.117])
+Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E1C6448AE15
-	for <sashiko-reviews@lists.linux.dev>; Thu, 11 Jun 2026 18:34:53 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=fail smtp.client-ip=52.101.96.117
-ARC-Seal:i=2; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1781202895; cv=fail; b=ZBcAW5XsoF08LWeHjCrd8ee3toPt+NOI/IzOhLieh7FuuAKOjpllHovuVxRtCpIwBYB32TVIS2WpHomxDbTPxwEtNU6cA2z4c/LbXCfcV5ayBB0ZW/h9qLBoEY4IgO7Bsm2BjD8M2EXMRkKrz7BOFNPvO5u9hD3BgwvfzxkbGYY=
-ARC-Message-Signature:i=2; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1781202895; c=relaxed/simple;
-	bh=m1AP2jI+ymqp5seL1IhHh+8GrQ1u+p0ylZLlJfLBC48=;
-	h=Content-Type:Date:Message-Id:Cc:Subject:From:To:References:
-	 In-Reply-To:MIME-Version; b=txpPckcISla+J3CChc0l2bNfpfINc+f9BsMSjHnFWBpG0pT6CUJYx+yZuxrm6Avd1twwqbiXp9vG7P8pZsYocCzJ4dazQq7bJ8Xt/ME9KQ/F9KGFjUt2pQW80Mlln2JevS0jMerdIK7wl0crmOCCUdt/Cr8HQXUUfidrH97TG6w=
-ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=garyguo.net; spf=pass smtp.mailfrom=garyguo.net; dkim=pass (1024-bit key) header.d=garyguo.net header.i=@garyguo.net header.b=i/IFJPj8; arc=fail smtp.client-ip=52.101.96.117
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=garyguo.net
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=garyguo.net
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F31D246AF38
+	for <sashiko-reviews@lists.linux.dev>; Thu, 11 Jun 2026 18:51:44 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
+ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
+	t=1781203908; cv=none; b=HHIjiu4qhqpgF3+lZh27/vOyyagbB5IjR5Ycnrv8ECvgd5JlzS9sTM113VWqJYzqzI2+njlgDiOh1jCu2GOJicmQAc7i10wWhw0xKwin8hKBB/qH6TZjCjpjkCLlFphvHNbWdqjyOrXJxjrULijWzJW+ZnY97x98WOMEjWQ7Fe0=
+ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
+	s=arc-20240116; t=1781203908; c=relaxed/simple;
+	bh=r1U8qC1GUeWfX4g/hxuoEnIXwVxxz3xCZmLmYVrHx2Q=;
+	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
+	 In-Reply-To:Content-Type; b=m8sjMnYblUQcPuqPHs7JsM3BVTjX/KMQpEXdnwaMUSRpf9fw60AhOdJuSTDhBLykOZdNNlg8X4PUX5U8GFGHphCfhpDCuJ/7EynSMb8BUy2LlIu9qQp6nPBvukLvMvOBxXI8u75TrL9ClK1g0TsdodHAPuJBA/kAf+Ce0PEOVA4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=ilWPUrEF; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=garyguo.net header.i=@garyguo.net header.b="i/IFJPj8"
-ARC-Seal: i=1; a=rsa-sha256; s=arcselector10001; d=microsoft.com; cv=none;
- b=Ci7LcpeILu9IRzwiwE4pXQcNfaI7WUT6Z87YSdcPv0JC6k08hRXtdtttEZqT4fc50HKTPLp7TcwMXB3jZyXouOahZBDPfgN/0DJllG9lEeOjjG00CIiJ+iHfmw8BIdbRO3QWBH7galOrFPuNDvywcUl/qrggvgX+dufkJWTsjhrE7jdOI6eotOwmOyych4v5V/mTZ8RQquI38NDLWeyGvLvCwE8i4UqnW13DnLcJyQj3YMsC+Ex7Q6LWUF+qWLMyXwRjBUbnhbq7ZNRfIfng8V9FYAVsbCymDpoolcdTjIeDhYQO+Xfc+LBAerYD4TXRNdxqVRYaTf9diazqA5L09Q==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com;
- s=arcselector10001;
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
- bh=/GjlRHIGhg8Li6VCmUCEVnJnHUzGIOi/zPAMiFDs8Hk=;
- b=WnA4TBNrA1WUXxGuEVKoqzaRxZ7o2QgIyFpNhx9wcKjbC+92268b0uZvAoVSuDXtb96UmL6QUHw+ksgNCmoxySJS1xNzY0capym0YQjQdI69Ahv3jtdeDyRawtQouVLtz8yC8K7pfUsQQHBkW8Ct2god2wk3+x5I9PkDwMswmdqST+39wnfCMXSSYv3Jz9RkTJgZXszpqFdLdL3IlYHTd4sR9urPY0Vvcgu/qfoysLi80E4DepH/ivSb0x5HBYNIPry9KR+zmTPwl+nmGorPVSWBDDZlgoqmnG53eYRr18AU+yA7A4iObTO7QNYe16pqespij+HRuRgZQrqNGe5Jow==
-ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
- smtp.mailfrom=garyguo.net; dmarc=pass action=none header.from=garyguo.net;
- dkim=pass header.d=garyguo.net; arc=none
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=garyguo.net;
- s=selector1;
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
- bh=/GjlRHIGhg8Li6VCmUCEVnJnHUzGIOi/zPAMiFDs8Hk=;
- b=i/IFJPj8Ioh/Q+DBQc2zGHosFliA+WMDdD/wDmUFMmRi2Se5t56Cg3pd/dKwRTr8vAqTWvJbE4jTelnfR9QP6IHB9zqnoNJdq8FCG2lrGQEncfvTRIlXXmLbS1I9yQTTqxgYpa3A3ly/+Z3wwPZYF6kNb23e2TXDoUVoueDQ3jM=
-Authentication-Results: dkim=none (message not signed)
- header.d=none;dmarc=none action=none header.from=garyguo.net;
-Received: from CW1P265MB8877.GBRP265.PROD.OUTLOOK.COM (2603:10a6:400:27c::13)
- by CWXP265MB2248.GBRP265.PROD.OUTLOOK.COM (2603:10a6:400:79::6) with
- Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.21.113.14; Thu, 11 Jun
- 2026 18:34:50 +0000
-Received: from CW1P265MB8877.GBRP265.PROD.OUTLOOK.COM
- ([fe80::6c9e:93c8:10db:e995]) by CW1P265MB8877.GBRP265.PROD.OUTLOOK.COM
- ([fe80::6c9e:93c8:10db:e995%6]) with mapi id 15.21.0113.011; Thu, 11 Jun 2026
- 18:34:50 +0000
-Content-Transfer-Encoding: quoted-printable
-Content-Type: text/plain; charset=UTF-8
-Date: Thu, 11 Jun 2026 19:34:49 +0100
-Message-Id: <DJ6FQ72JD6EC.3TU9TJVDGL3ZV@garyguo.net>
-Cc: <dri-devel@lists.freedesktop.org>, "Alexandre Courbot"
- <acourbot@nvidia.com>, <ojeda@kernel.org>, <linux-pci@vger.kernel.org>,
- "Danilo Krummrich" <dakr@kernel.org>, <rust-for-linux@vger.kernel.org>
-Subject: Re: [PATCH v4 13/20] rust: io: add projection macro and methods
-From: "Gary Guo" <gary@garyguo.net>
-To: <sashiko-reviews@lists.linux.dev>, "Gary Guo" <gary@garyguo.net>
-X-Mailer: aerc 0.21.0
-References: <20260611-io_projection-v4-13-1f7224b02dcb@garyguo.net>
- <20260611181418.1052D1F000E9@smtp.kernel.org>
-In-Reply-To: <20260611181418.1052D1F000E9@smtp.kernel.org>
-X-ClientProxiedBy: LO4P123CA0264.GBRP123.PROD.OUTLOOK.COM
- (2603:10a6:600:194::17) To CW1P265MB8877.GBRP265.PROD.OUTLOOK.COM
- (2603:10a6:400:27c::13)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="ilWPUrEF"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 37B351F000E9;
+	Thu, 11 Jun 2026 18:51:43 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=kernel.org;
+	s=k20260515; t=1781203904;
+	bh=jhuzA1G4jTb+hQU3036PmWT90HMt35YKLv0VztRedsI=;
+	h=Date:Subject:To:Cc:References:From:In-Reply-To;
+	b=ilWPUrEFuWikABMhoLFPrL4DU/39xPCRsvCGtcwQ7lKVPKM1M1gTy+vWQqGJhNfDi
+	 8A/VT8I44T/vmk6th8eIEdFc+iom0U8EqldOI6xKdiZOZyErYPwaXE7dDYz91+iKOr
+	 9EHuJjLzSzxMsTmuXwNcUE9Cjrq+jCYeTk4oNw8cNqamrlV5l/QD5zkTxmqu7xP+8v
+	 9Sxyez3X+cDZVrOnT5xGA4jMAhX8K8SlklcVtZhBh0kdRhjkMsXsdVdAEgacRGPs3E
+	 hXkD0kp01CJgolEcYXGOWaY+N0UozO4Exh3CG56MYAnV+A0Ws9RQ5SYMR0wpCwIWI2
+	 gwrBdO6wuIl0g==
+Message-ID: <502bf7c9-afc6-4904-9d49-05b5f0455c2f@kernel.org>
+Date: Thu, 11 Jun 2026 21:51:41 +0300
 Precedence: bulk
 X-Mailing-List: sashiko-reviews@lists.linux.dev
 List-Id: <sashiko-reviews.lists.linux.dev>
 List-Subscribe: <mailto:sashiko-reviews+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:sashiko-reviews+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-X-MS-PublicTrafficType: Email
-X-MS-TrafficTypeDiagnostic: CW1P265MB8877:EE_|CWXP265MB2248:EE_
-X-MS-Office365-Filtering-Correlation-Id: 52161c12-19d1-406e-5cf5-08dec7e81f04
-X-MS-Exchange-SenderADCheck: 1
-X-MS-Exchange-AntiSpam-Relay: 0
-X-Microsoft-Antispam:
-	BCL:0;ARA:13230040|23010399003|1800799024|10070799003|366016|376014|3023799007|56012099006|4143699003|5023799004|18002099003|22082099003;
-X-Microsoft-Antispam-Message-Info:
-	Ny5G4Ebetn5VDHvkMNqBKZ3YFAIj4Q71daPiVZf6Upgt0SK8Im+n8Zht2e+DOSolh/2AjCsFlARcxt2bJGWzU7ICuSFpFofFmkCRbyGFNRn98cMUai8qV4XOKvcoCpFGDM5e4dZYu3G3hU/QV7ZnNAn1Ac9XLCIIcO7oRkRYkqUEYqTPh6EG3mFVGOOwb9P6zcZp2sRJEyMyOGLQuY9GMZ6vr6YTq15Z7SPhpfsVYZQJuY15KItrgcufTeuol5JgkdOErWqdBRHDu0T3Owhos78hR4Ar9Kvyh27f+aT5psSqw8hNFsqFEPOLdZVWVGvRZHW8H57RXlJQXHOL1Yaejs2B1LmgqQV3QLbXsMk2zAD/lfj3DtjU9jt/J2wMi8jTTq22ndhvbzIBjTtIGwUBbdVBY8t/wntTC/cOGdfSzZIiBDK9O7+aX9CrTLGzpGijLf24XwwaLSaGstuZAeGKCxnSjO4E1xdtmlOgkoSkFJtv3ojzGpaEe+5zGgmw4oZJHClE+/TK7o7TNAl6rpFbS2Go0a4ZgNqYtRNjmYJMjs6r7vViryEImuAi6DwpXy/O1xiZEbR7Ujwes/nPAAFMxsq1nIXnTvI+OL2GfNkt3HMiJN6NXfMN4RrHQ5mGQyz4FfK5v9LOKIEu9Q3+JLiml28DaiuSqo/GeaO4Ed6wNC5QZkJp82Bh2w8xO7HKDcFM
-X-Forefront-Antispam-Report:
-	CIP:255.255.255.255;CTRY:;LANG:en;SCL:1;SRV:;IPV:NLI;SFV:NSPM;H:CW1P265MB8877.GBRP265.PROD.OUTLOOK.COM;PTR:;CAT:NONE;SFS:(13230040)(23010399003)(1800799024)(10070799003)(366016)(376014)(3023799007)(56012099006)(4143699003)(5023799004)(18002099003)(22082099003);DIR:OUT;SFP:1102;
-X-MS-Exchange-AntiSpam-MessageData-ChunkCount: 1
-X-MS-Exchange-AntiSpam-MessageData-0:
-	=?utf-8?B?NVoyaWQ2aXZ0aFlYbG1GbE9jdmJZYytDT1luanlvQ0hqM3I2bS9xYVA1UkxY?=
- =?utf-8?B?Ky9reU9pT3NOUVBTa0owTzJqelMvbHlJQ2p1SDBMQkJLUU1vejV1MzEyNGZw?=
- =?utf-8?B?Y1dxUVFHN1lPbjNCL2YvNUZCcEs2ZUZ5ZGpTVE4zWlR3bVp6TktZeHpXa3RG?=
- =?utf-8?B?V2F3QWpzYVhzWnBUWm91TVd6SVpzdGFEa0Z6MkVQbFpzVUEzYU9GZVR5WHlm?=
- =?utf-8?B?NENEWUJCa2ZZRlRSWDVrOEt3clNyK3lLKzF0U1dndW9uQjdQcUNXS3NEcEQx?=
- =?utf-8?B?RkpMUFh1ZUxhUXhUYzBhaHhKcHZoNDBqSUxjTndLVUw4NGQwRWQvMDQ1VUxw?=
- =?utf-8?B?ekJKM3pmTFdicnlycnduWmRURHpGY3ZVMUpOZ2NpR3lVN0ZDckVkeTVIR1Rv?=
- =?utf-8?B?NG5kUmlOK0VKSHk2TGtMaGdUeEFqWk9iUUhFRFNoNUpaR3poRERZanI1dUl5?=
- =?utf-8?B?L2szU1BVUkZyaFRGejJ4RTgzTFJNYnBFd21DVjNpSDJkd1hmSk5VSWJtZ2VM?=
- =?utf-8?B?YmZLMC9YSnEvc2Y3VmhqMDAvcVpUd3lqMTZMaFpqQXMvZ1pHRVVFRk9uaUNx?=
- =?utf-8?B?NU1xcU8zZVdyMU5ySE84Y29rMU1YTDVYMWE4ZzYxekRlRTdONCtQbllETnFM?=
- =?utf-8?B?WXlwQzEya3ZFVTBnMWh1WmxJVWplbGZuWGdOalpwcjEzQWExTURrWjhPN3V5?=
- =?utf-8?B?TUkzV2lpTWFZS2NBcWxRYkJvZWJDeVhVc3Bja3NFVVFwMndiOXFxbmVOTnJy?=
- =?utf-8?B?SzZqWlh2ZGNOL1dRUFB2M2V2bytWZVVNN1NJVG1sVWhZT0xQaXVya0FSbkg1?=
- =?utf-8?B?NDBhdSswYmlSZXNyQVp5WnI4ckNzRzYydi9YcUdFNDlhU01JTGNqRmlDdDhr?=
- =?utf-8?B?S0NXUTNCOFRjaldoU2ZsMWV6UTdiUk1OcjFSVnBvS0VZekYzREFvWlFBQTEy?=
- =?utf-8?B?VlhieDhwajZpQ0xUMk91dHFYU25EdFJHUnVjeHNlWXNjc2VGYTliV3NGMjE2?=
- =?utf-8?B?NmtDK3BXWTdsTlNCYkpuRUpaNjZqWUpWRzUrMU4rdkFxMnc0Vk9LL2F2MnFn?=
- =?utf-8?B?NFFJRjRKNytUQXhwNjZOc1Vwcm9pSkIzR1dMYzZOMVhyZ1h3V01CQUdMR1hs?=
- =?utf-8?B?ZHMrVCtpZllnZi9iTmg5WTd2aVhkVWpSdWhiMitBL29keDV0QW9LZTJyeVpS?=
- =?utf-8?B?SGJWaW5ZS0xjcWVQeXFpQlcrUnp4SGFLMnBROGJ2VDNqLzFCNjU5VDdycGpR?=
- =?utf-8?B?cWFnMithYkUvQ1FtTG15ZEEyYXRtRFZXRUtoVUc2T2JrWnNGS0ltanlrUXll?=
- =?utf-8?B?eFR5TlQreG1GYVRQZHNUanF3RlJWR095ZDZ2L080R2dleWJBSGRkdVFHRU40?=
- =?utf-8?B?aHZrcE4yUnpKckwyOVZpSC9QM20vRkRBUDhVbHdWd2QvQWxJaUp5MzdFcUJm?=
- =?utf-8?B?bEJVZnJVSmRyRE5GbDR1ODNPcWxXMWplU1M1M212UHFaUkF4ZVNOem0yaFFJ?=
- =?utf-8?B?cVcxcTcrNFhUNEdGMExvWjRrUzlPZmI1UFFuYm9NcjBkTG9ibU5sWUVoM0hw?=
- =?utf-8?B?SnQwcStBam9wRDR2Wk4yTjM2MHlEQkdoaFIzc3RTc2pZRFo5d3R5eVBEcnZv?=
- =?utf-8?B?RTVGelVPbThoZ2o3ZXVVdFZQd204b05SRXRIYlU4QitmMGJnczNjdDVFVVox?=
- =?utf-8?B?ZXRJTmcxMHU3U1BvK2NSSDM5UThWRUVvNm1hdWRDVmZ1MGxJOG5CdmcwSTJ1?=
- =?utf-8?B?T0VLTUFCRGZYbUhJN3NGcFpkNU9qMnRjckczcU5HaWJTRG1JcmxCellnU08y?=
- =?utf-8?B?ZktGK05zR29WbzcvYklVdjFBbVVyUWo4Mmk5eHNUb2VtV0YrUjdGN2JQaWJ4?=
- =?utf-8?B?T0F1Y0NRcEhkbVlWTFUvaDN1WHFUeHNMaHlVdnFTOW10WnhDeFVUYkVKQ09U?=
- =?utf-8?B?NDlzQS9waEx3eGkyTzFldXFSRW5RZkJLUkRhUEtFMEsvWVh3cXlKTDM0aFZh?=
- =?utf-8?B?L0Z0VDEyelRNV0p4aFVZZWVPLzg3VWlWTEdGblVKTFV5RWdsd2dvZ05pQ25R?=
- =?utf-8?B?SnFMZEczZnpRblJWVkx2c3hvMGxYSjVKaUpDeHNQbEt2R2JYUWNBbUpOd0dR?=
- =?utf-8?B?M0o5UmV0MzRpcTJHZkZVMERoUGxXSDVNSEM1bmdEUmx5dDdmQ0o4ak1mWjFn?=
- =?utf-8?B?dm5SbUl5eDJ0Y2dVU3FlemxpMGNGM28xZTU5cW92clRqSUJlMlpYWTJ0bzlN?=
- =?utf-8?B?ODFCeU1uRmhJd0pKZE1SUm1yWWYyb1BVMFRkOW84NkVYRmZZYnEzcFVCd240?=
- =?utf-8?B?VXI1eEVPRzJzZ2o5d0Z4QmM3c2JkbkdxamQvNHFqeXYvWGFWQlpOdz09?=
-X-OriginatorOrg: garyguo.net
-X-MS-Exchange-CrossTenant-Network-Message-Id: 52161c12-19d1-406e-5cf5-08dec7e81f04
-X-MS-Exchange-CrossTenant-AuthSource: CW1P265MB8877.GBRP265.PROD.OUTLOOK.COM
-X-MS-Exchange-CrossTenant-AuthAs: Internal
-X-MS-Exchange-CrossTenant-OriginalArrivalTime: 11 Jun 2026 18:34:50.0584
- (UTC)
-X-MS-Exchange-CrossTenant-FromEntityHeader: Hosted
-X-MS-Exchange-CrossTenant-Id: bbc898ad-b10f-4e10-8552-d9377b823d45
-X-MS-Exchange-CrossTenant-MailboxType: HOSTED
-X-MS-Exchange-CrossTenant-UserPrincipalName: tEt0avZ/PINXrypoNV3ZkuzzFDLSawErjs+xHOB73RJFwBUWMTIRKttYYToUljg4igwWY9Rjjs+vxwn4TAA49w==
-X-MS-Exchange-Transport-CrossTenantHeadersStamped: CWXP265MB2248
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH v3 17/17] i3c: renesas: Add runtime PM support
+To: sashiko-reviews@lists.linux.dev
+Cc: wsa+renesas@sang-engineering.com, linux-i3c@lists.infradead.org,
+ Frank.Li@kernel.org
+References: <20260608201543.804902-18-claudiu.beznea@kernel.org>
+ <20260608204650.5A13C1F00893@smtp.kernel.org>
+Content-Language: en-US
+From: Claudiu Beznea <claudiu.beznea@kernel.org>
+In-Reply-To: <20260608204650.5A13C1F00893@smtp.kernel.org>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
 
-(Cc list)
 
-On Thu Jun 11, 2026 at 7:14 PM BST, sashiko-bot wrote:
-> Thank you for your contribution! Sashiko AI review found 2 potential issu=
-e(s) to consider:
-> - [High] Deriving `FromBytes` on `Region<const SIZE: usize>` allows safe =
-code to bypass the struct's documented `SIZE` invariant.
-> - [Low] Removal of trailing `//` on the vertical import block closing bra=
-ce violates kernel Rust formatting rules.
+
+On 6/8/26 23:46, sashiko-bot@kernel.org wrote:
+> Thank you for your contribution! Sashiko AI review found 4 potential issue(s) to consider:
+> 
+> New issues:
+> - [High] Async Runtime PM put during driver unbind leaves the clock enabled.
+> - [High] Newly added renesas_i3c_abort_xfer clears the abort bit instead of setting it, leaving hardware stuck.
+> 
+> Pre-existing issues:
+> - [High] Timeout handling in transfer loops fails to break the loop, ignores the timeout, and incorrectly returns success.
+> - [High] I3C RX buffer is not advanced during FIFO reads, leaving buffer tails uninitialized.
 > --
->
-> commit 0616e76ffd1d8525b38835ead9f29afeae45c2ed
-> Author: Gary Guo <gary@garyguo.net>
-> Subject: Add an io_project!() macro allows projection from Io to a subvie=
-w
->
-> This commit introduces an io_project!() macro that allows projection from=
- Io
-> to a subview using compile-time checks. It also adds a try_cast() functio=
-n
-> to perform size and alignment checks at runtime when type-casting is need=
-ed.
->
->> diff --git a/rust/kernel/io.rs b/rust/kernel/io.rs
->> index 470ee2ed9849..c7a9952af995 100644
->> --- a/rust/kernel/io.rs
->> +++ b/rust/kernel/io.rs
->> @@ -44,12 +44,12 @@
->>  /// This type can be used when an I/O region without known type informa=
-tion has a compile-time known
->>  /// minimum size (and a runtime known actual size).
->>  ///
->> -/// This must be 4-byte aligned.
->> -///
->>  /// # Invariants
->>  ///
->> -/// Size of the region is at least as large as the `SIZE` generic param=
-eter.
->> +/// - Size of the region is at least as large as the `SIZE` generic par=
-ameter.
->> +/// - Size of the region is multiple of 4.
->>  #[repr(C, align(4))]
->> +#[derive(FromBytes)]
->>  pub struct Region<const SIZE: usize =3D 0> {
->>      inner: [u8],
->>  }
->
+> 
+> commit 810cc3873a9dc52a932c03376330719f06d17de0
+> Author: Claudiu Beznea <claudiu.beznea.uj@bp.renesas.com>
+> 
+> i3c: renesas: Add runtime PM support
+> 
+> This commit adds runtime PM support to the Renesas I3C driver, replacing
+> explicit clock management with runtime PM APIs. It updates controller
+> operations with PM guards and introduces a transfer abort mechanism to handle
+> timeouts asynchronously.
+> 
+>> diff --git a/drivers/i3c/master/renesas-i3c.c b/drivers/i3c/master/renesas-i3c.c
+>> index b6c282c53a541..d6121ca869908 100644
+>> --- a/drivers/i3c/master/renesas-i3c.c
+>> +++ b/drivers/i3c/master/renesas-i3c.c
+> [ ... ]
+>> @@ -443,7 +442,24 @@ static void renesas_i3c_enqueue_xfer(struct renesas_i3c *i3c, struct renesas_i3c
+>>   	}
+>>   }
+>>   
+>> -static void renesas_i3c_wait_xfer(struct renesas_i3c *i3c, struct renesas_i3c_xfer *xfer)
+>> +static void renesas_i3c_abort_xfer(struct renesas_i3c *i3c)
+>> +{
+>> +	guard(spinlock_irqsave)(&i3c->xferqueue.lock);
+>> +
+>> +	/* Disable all the interrupts */
+>> +	renesas_writel(i3c->regs, BIE, 0);
+>> +	renesas_writel(i3c->regs, NTIE, 0);
+>> +
+>> +	/* Clear normal transfer status flags. */
+>> +	renesas_clear_bit(i3c->regs, NTST, NTST_TDBEF0 | NTST_RDBFF0 | NTST_RSPQFF |
+>> +					   NTST_TEF | NTST_TABTF);
+>> +	/* Clear bus status flags. */
+>> +	renesas_clear_bit(i3c->regs, BST, BST_NACKDF | BST_TENDF | BST_SPCNDDF);
+>> +	/* Clear error flags. */
+>> +	renesas_clear_bit(i3c->regs, BCTL, BCTL_ABT);
+> 
 > [Severity: High]
-> Does deriving FromBytes on Region allow safe code to bypass the documente=
-d
-> SIZE invariant?
->
-> By implementing zerocopy::FromBytes, safe code could use ref_from() to ca=
-st
-> any 4-byte aligned byte slice into a &Region. Since zerocopy only checks
-> that the slice length matches the dynamically computed layout size, which
-> for inner: [u8] is just the length of the slice, it appears safe code cou=
-ld
-> cast a 4-byte slice into a &Region<1024>.
->
-> Could this lead to out-of-bounds reads or writes if unsafe code
-> subsequently relies on the SIZE parameter for bounds checking?
+> Does this clear the abort bit instead of setting it?
+> 
+> Hardware abort bits like BCTL_ABT typically must be written as 1 to trigger
+> an abort. If we only clear the bit, will the hardware controller be left
+> running the timed-out transfer in the background and get stuck?
 
-It looks like the model is using background knowledge on v0.7 of zerocopy.
-ref_from in v0.7 has `Self: Sized` bound, so it doesn't apply to `Region` w=
-hich
-is guaranteed DST.
+The role of the renesas_i3c_abort_xfer() is just to avoid triggering any new 
+interrupt in case a transfer times out. The handler disables the interrupts and 
+clear any status bits along with the BCTL.ABT bit.
 
-This is similar for v0.8, ref_from_* methods would require `KnownLayout` wh=
-ich
-is not true for `Region`. So everything is sound here.
+Maybe a different name for the function would have been better.
 
-Technically, we *could* derive `KnownLayout` for `Region` by doing this:
+> 
+>> +}
+>> +
+> [ ... ]
+>> @@ -975,9 +1027,14 @@ static int renesas_i3c_i3c_xfers(struct i3c_dev_desc *dev, struct i3c_xfer *i3c_
+>>   				renesas_set_bit(i3c->regs, NTIE, NTIE_TDBEIE0);
+>>   		}
+>>   
+>> -		renesas_i3c_wait_xfer(i3c, xfer);
+>> +		time_left = renesas_i3c_wait_xfer(i3c, xfer);
+>> +		if (!time_left)
+>> +			abort_xfer = true;
+> 
+> [Severity: High]
+> This isn't a bug introduced by this patch, but does the lack of a break here
+> cause the loop to continue iterating?
+> 
+> If the transfer times out, it sets abort_xfer = true but continues to the
+> next command, overwriting the shared cmd descriptor.
+> 
+> Also, since renesas_i3c_i3c_xfers() unconditionally returns 0 at the end,
+> will this hide the timeout from the subsystem and potentially cause it to
+> read uninitialized RX buffers?
+> 
+>>   	}
+>>   
+>> +	if (abort_xfer)
+>> +		renesas_i3c_abort_xfer(i3c);
+>> +
+>>   	return 0;
+>>   }
+> [ ... ]
+>> @@ -1045,8 +1112,12 @@ static void renesas_i3c_detach_i3c_dev(struct i3c_dev_desc *dev)
+>>   	struct renesas_i3c_i2c_dev_data *data = i3c_dev_get_master_data(dev);
+>>   	struct i3c_master_controller *m = i3c_dev_get_master(dev);
+>>   	struct renesas_i3c *i3c = to_renesas_i3c(m);
+>> +	int ret;
+>>   
+>> -	renesas_writel(i3c->regs, DATBAS(data->index), 0);
+>> +	PM_RUNTIME_ACQUIRE_IF_ENABLED_AUTOSUSPEND(i3c->dev, pm);
+>> +	ret = PM_RUNTIME_ACQUIRE_ERR(&pm);
+>> +	if (!ret)
+>> +		renesas_writel(i3c->regs, DATBAS(data->index), 0);
+>>   
+>>   	i3c_dev_set_master_data(dev, NULL);
+>>   	i3c->addrs[data->index].addr = 0;
+> 
+> [Severity: High]
+> Does this asynchronously put the runtime PM usage counter without a
+> synchronous suspend before driver teardown completes?
+> 
+> During driver unbind, renesas_i3c_remove() unregisters the I3C master, which
+> detaches devices. The PM_RUNTIME_ACQUIRE_IF_ENABLED_AUTOSUSPEND macro releases
+> the device asynchronously via pm_runtime_put_autosuspend().
+> 
+> Right after remove returns, devres calls pm_runtime_disable(), which cancels
+> the pending autosuspend work. 
 
-    pub struct Region<const SIZE: usize =3D 0> {
-        fixed: [u8; SIZE],
-        additional: [u8],
-    }
+Before calling pm_runtime_disable() the devres helper 
+(pm_runtime_disable_action()) call:
 
-but this means that the size computation actually needs to perform an addit=
-ional
-arithmetic operation rather than just the metadata. This is also the reason=
- why
-I didn't change the `inner` to be `[u32]` but rather make it an invariant t=
-o
-guarantee size alignment, because it would otherwise require a shift to get=
- the
-size.
+pm_runtime_dont_use_autosuspend() ->
+   __pm_runtime_use_autosuspend(dev, false) ->
+     update_autosuspend(dev, old_delay, old_use) ->
+        rpm_idle(dev, RPM_AUTO)
 
-Best,
-Gary
+which should end up calling the idle and suspend callbacks.
+
+> Could this leave the hardware permanently in
+> the RPM_ACTIVE state and leak resources by never disabling the clocks?
+> 
+> [ ... ]
+>> @@ -1102,7 +1180,9 @@ static int renesas_i3c_i2c_xfers(struct i2c_dev_desc *dev,
+>>   
+>>   		renesas_set_bit(i3c->regs, NTSTE, NTSTE_TDBEE0);
+>>   
+>> -		wait_for_completion_timeout(&xfer->comp, m->i2c.timeout);
+>> +		time_left = wait_for_completion_timeout(&xfer->comp, m->i2c.timeout);
+>> +		if (!time_left)
+>> +			abort_xfer = true;
+>>   
+>>   		if (cmd->err)
+>>   			break;
+> 
+> [Severity: High]
+> This is a pre-existing issue, but similar to I3C transfers above, does this
+> fail to break the loop when wait_for_completion_timeout() times out?
+> 
+> Since cmd->err remains 0 on timeout, the loop continues and eventually returns
+> 0, hiding the timeout from the subsystem.
+> 
+> 
+> Additionally, I noticed a pre-existing issue outside the immediate scope of
+> this patch:
+> 
+> [Severity: High]
+> This is a pre-existing issue, but in renesas_i3c_rx_isr() and
+> renesas_i3c_resp_isr(), do the I3C FIFO reads copy data into cmd->rx_buf
+> without advancing the buffer pointer?
+> 
+> renesas_i3c_rx_isr() does:
+> 
+>      i3c_readl_fifo(i3c->regs + NTDTBP0, cmd->rx_buf, read_bytes);
+>      cmd->rx_count = read_bytes;
+> 
+> Since cmd->rx_buf is not incremented and rx_count is overwritten rather than
+> accumulated, will multiple interrupts overwrite the beginning of the buffer?
+> Could this leave the tail of the buffer uninitialized, leading to information
+> leaks or data corruption when the subsystem reads it?
+> 
+
+-- 
+Thank you,
+Claudiu
+
