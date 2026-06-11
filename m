@@ -1,146 +1,116 @@
-Received: from mgamail.intel.com (mgamail.intel.com [192.198.163.11])
+Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3AEE13594A
-	for <sashiko-reviews@lists.linux.dev>; Thu, 11 Jun 2026 06:19:46 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=192.198.163.11
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CE4F23537FF;
+	Thu, 11 Jun 2026 06:30:26 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1781158788; cv=none; b=QynNlNJZBneGtFxTZWnuqZXmpFBavAU2Nkruc1TD9kDlVftMp3zLhyvDAUAbzxgy4s9lQGPo6SDPnQ5zNqRuHXfWZk0iSfaSQbS4mnppT9K9VXHaFgV/rFxWMoMB9a8IUNTyQJiY23lvYJfIV2p0qcZpdNWg7jqlzuAbCKYIAio=
+	t=1781159427; cv=none; b=UcpY5Okd+aOyhEo97HrYfQqJi0BfOAWXh0Nph8ryCOSHkPWr04ShdJBtDWjDntJKzhP+ok0+6kOl6A3kk5ndfZQOmJSFM9KX/VGedFbpZWm4XQukf7Rr6elhJV26fjYLTCwf27FSeXxsWsgBr037AVZrLybpEdp1lx+KI4cff3s=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1781158788; c=relaxed/simple;
-	bh=hBXnRB0R6yHxKRHRTif1KRxBcy29ysP13P8/VY89VG4=;
-	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=hjhO4U2EHM/HFhjhrli4veewnz38MWB9Q7IOSmwBjnQDvurBhfa2TML+k/G3s1teRiBg0PWyfaaTlckt9IVIWy+L5pewmhjNxTCGZ5PCA9U54UjtiMeMsloCzIZAdimwv0e/clx2MvqZjwSBbBVpmF8q/jc9rQS/1zHo6BWjEHw=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linux.intel.com; spf=pass smtp.mailfrom=linux.intel.com; dkim=pass (2048-bit key) header.d=intel.com header.i=@intel.com header.b=Gp3goM3s; arc=none smtp.client-ip=192.198.163.11
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linux.intel.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linux.intel.com
+	s=arc-20240116; t=1781159427; c=relaxed/simple;
+	bh=Qin7AmylYBHMatUlL2WeyObb4kwcfsiyxzoYvrLofws=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=Iyh3wntcOoWFe/mL+TwIL2ltw41WFOadA1aJnaUMNvSzW2NItv1WBspFUgwZxBube3kUaJFOJMJFammluZx2N4J0U/Na+RI9MJWwnt1RVysoctYlid5iWo2c+iOIxuaPpUG4ybVIRfQr8sUsr6WFvXGwhlFgcx7qhnzUJ1eIL+4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=ASukD95u; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=intel.com header.i=@intel.com header.b="Gp3goM3s"
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
-  d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
-  t=1781158787; x=1812694787;
-  h=message-id:date:mime-version:subject:to:cc:references:
-   from:in-reply-to:content-transfer-encoding;
-  bh=hBXnRB0R6yHxKRHRTif1KRxBcy29ysP13P8/VY89VG4=;
-  b=Gp3goM3sZyvobOy7AUXxr+S2qODcdGxalqaagw80Fex2fCxUT8Dl+sE0
-   hESjqBuUi8PktiJOu/PxNSDZ/gQTYEoNQBIEYTciMP9uG8w9XkHYwhXHu
-   98ziOdA4P1zhxngySQJQCZ1BKH/ShOCp/FjVWIVKOly+oXV1fLT2FpzFz
-   GqeXmhyl4yjWYj5/mc55YnD9XtXAj8vdVd3ezEmv3lASo13KVdYakBMoC
-   SxhbkHHCA+/gWdLIQPTQTWiYnTX0czaekFWiouudZ3aZbT/bYFOc8p5U/
-   d8LJ2SzQcG8KepClpNiMH9CP8t0zURPuGdq2+P+Se7MLzSQ2gstbA8NyM
-   w==;
-X-CSE-ConnectionGUID: SXXKcQOJTn2tMWZIxxE7MQ==
-X-CSE-MsgGUID: yu8T/XkISoeIFWVrKbSuEA==
-X-IronPort-AV: E=McAfee;i="6800,10657,11813"; a="92530305"
-X-IronPort-AV: E=Sophos;i="6.24,198,1774335600"; 
-   d="scan'208";a="92530305"
-Received: from fmviesa008.fm.intel.com ([10.60.135.148])
-  by fmvoesa105.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 10 Jun 2026 23:19:46 -0700
-X-CSE-ConnectionGUID: alTVU2sRRi++BD0esf5TMQ==
-X-CSE-MsgGUID: aY8JGNmXTtOhXy6bQyEtKg==
-X-ExtLoop1: 1
-X-IronPort-AV: E=Sophos;i="6.24,198,1774335600"; 
-   d="scan'208";a="243932571"
-Received: from jkollber-mobl1.ger.corp.intel.com (HELO [10.246.16.106]) ([10.246.16.106])
-  by fmviesa008-auth.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 10 Jun 2026 23:19:46 -0700
-Message-ID: <79ea7cf7-e1e1-4bcf-a431-d82f538d7e5c@linux.intel.com>
-Date: Thu, 11 Jun 2026 08:19:43 +0200
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="ASukD95u"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 21BC11F00893;
+	Thu, 11 Jun 2026 06:30:24 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=kernel.org;
+	s=k20260515; t=1781159426;
+	bh=Wd+byHBtYHSZdGGsBdy6n7QYm7gzRXImaoOcpxvi45g=;
+	h=Date:From:To:Cc:Subject:References:In-Reply-To;
+	b=ASukD95uTzFQBBEm0r/FjUg+3E2HjL60voOzB2GtaPS7H+WiZyr2GJypzdIfenDdz
+	 qi0ekOGmQyVqmuExbGIAVNDIYYR+NagPCaP4myJOoyE99TeL4P1GS5trzYBEn4bUWz
+	 6wXBZeZ/cXuMLlMNJPQf46Da5jmc9Im9ZBRJD4r2DWIF8wfs7DfDGDlQ+8rihv5gv2
+	 XxD/y8Pj+4zX6mHrqHL/fCFxK8VENVQ+LvRhCeOcKTD/sJsH7xRQCUnQuaCiQ0DwIf
+	 Zx8J7xpWGTdBkYIkBuJ1EdbkmHgSqdkrepZ+4dbneTHMtFyKtAIsjl09KtB7QhQxSI
+	 YQArurZe7UPJA==
+Date: Thu, 11 Jun 2026 08:30:20 +0200
+From: Manivannan Sadhasivam <mani@kernel.org>
+To: Hans Zhang <18255117159@163.com>
+Cc: sashiko-reviews@lists.linux.dev, linux-pci@vger.kernel.org
+Subject: Re: [PATCH 8/9] PCI: vmd: Protect root bus removal with rescan lock
+Message-ID: <xj42mezfer3jxlku3rg244skqpbxrf5dn47txnippxxsgan6mq@qhtmpolifzyv>
+References: <20260521161822.132996-9-18255117159@163.com>
+ <20260521212024.8689D1F000E9@smtp.kernel.org>
+ <r5vwd573ydynlrrax5iy6jt25dc2yiqkvlciqy366zsxxu4d7f@hyvqgsdj4ulw>
+ <7e46fd05-b190-42ed-8e5e-78c8a0a6bc20@163.com>
 Precedence: bulk
 X-Mailing-List: sashiko-reviews@lists.linux.dev
 List-Id: <sashiko-reviews.lists.linux.dev>
 List-Subscribe: <mailto:sashiko-reviews+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:sashiko-reviews+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH] accel/ivpu: Use threaded IRQ for IPC callback processing
-To: sashiko-reviews@lists.linux.dev
-Cc: dri-devel@lists.freedesktop.org
-References: <20260611055201.948726-1-karol.wachowski@linux.intel.com>
- <20260611060901.6D9AC1F00893@smtp.kernel.org>
-Content-Language: en-US
-From: "Wachowski, Karol" <karol.wachowski@linux.intel.com>
-In-Reply-To: <20260611060901.6D9AC1F00893@smtp.kernel.org>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+Content-Transfer-Encoding: 8bit
+In-Reply-To: <7e46fd05-b190-42ed-8e5e-78c8a0a6bc20@163.com>
 
-On 11-Jun-26 8:09, sashiko-bot@kernel.org wrote:
-> Thank you for your contribution! Sashiko AI review found 1 potential issue(s) to consider:
-> - [High] Firmware command queue leak and duplicate hardware initialization on the retry path in `ivpu_job_submit`.
-> --
-
-This is pre-existing issue that will exhibit even without this patch.
-It is already addressed with:
-https://lore.kernel.org/all/20260611055140.948684-1-karol.wachowski@linux.intel.com/
-
-Karol
-
+On Thu, Jun 11, 2026 at 12:42:52PM +0800, Hans Zhang wrote:
 > 
-> commit 91623d3f3cc1b38781bd2f9f2354ef0fa3591d50
-> Author: Karol Wachowski <karol.wachowski@linux.intel.com>
 > 
-> accel/ivpu: Use threaded IRQ for IPC callback processing
+> On 6/11/26 01:28, Manivannan Sadhasivam wrote:
+> > On Thu, May 21, 2026 at 09:20:24PM +0000, sashiko-bot@kernel.org wrote:
+> > > Thank you for your contribution! Sashiko AI review found 2 potential issue(s) to consider:
+> > > 
+> > > New issues:
+> > > - [High] Acquiring `pci_rescan_remove_lock` in `vmd_remove()` introduces self-deadlocks and AB-BA lock inversions.
+> > > 
+> > > Pre-existing issues:
+> > > - [High] SRCU structures are destroyed in `vmd_remove()` while their corresponding interrupt handlers are still registered and active, leading to a Use-After-Free in interrupt context.
+> > > --
+> > > 
+> > > commit 8d5d06b67e6b02d2cc99f2151e90ba61c0d16662
+> > > Author: Hans Zhang <18255117159@163.com>
+> > > 
+> > > PCI: vmd: Protect root bus removal with rescan lock
+> > > 
+> > > This commit acquires the pci_rescan_remove_global_lock while stopping
+> > > and removing the VMD root bus in vmd_remove(). This is intended to
+> > > prevent races with concurrent PCI rescan operations.
+> > > 
+> > > > diff --git a/drivers/pci/controller/vmd.c b/drivers/pci/controller/vmd.c
+> > > > index d4ae250d4bc6d..9565567026cf0 100644
+> > > > --- a/drivers/pci/controller/vmd.c
+> > > > +++ b/drivers/pci/controller/vmd.c
+> > > > @@ -1056,9 +1056,11 @@ static void vmd_remove(struct pci_dev *dev)
+> > > >   {
+> > > >   	struct vmd_dev *vmd = pci_get_drvdata(dev);
+> > > > +	pci_lock_rescan_remove();
+> > > 
+> > > [Severity: High]
+> > > Can acquiring pci_rescan_remove_lock here cause self-deadlocks or AB-BA lock
+> > > inversions?
+> > > 
+> > > When a VMD device is removed via PCI hotplug or sysfs remove node, the PCI
+> > > core calls pci_stop_and_remove_bus_device_locked(), which acquires
+> > > pci_rescan_remove_lock and eventually triggers vmd_remove(). Because
+> > > pci_rescan_remove_lock is a non-recursive mutex, won't attempting to acquire
+> > > it again immediately self-deadlock?
+> > > 
+> > > Also, when unbound via sysfs, the core holds device_lock and calls
+> > > vmd_remove(), which then waits for pci_rescan_remove_lock. Since normal PCI
+> > > rescans acquire pci_rescan_remove_lock first, then attempt to acquire
+> > > device_lock, does this create an AB-BA lock inversion?
+> > > 
+> > 
+> > This is a valid concern. Since VMD is registered as a PCI driver, removing the
+> > VMD device through sysfs will trigger vmd_remove() callback and it will result
+> > in deadlock. The AB-BA lock inversion is also valid.
+> > 
 > 
-> Dispatching IPC callbacks from system_percpu_wq adds scheduling latency
-> that is neither bounded nor predictable, which hurts job completion
-> turnaround. Handle them from a threaded IRQ instead, and defer job
-> resource teardown to a dedicated unbounded workqueue.
+> Hi Mani,
 > 
->> diff --git a/drivers/accel/ivpu/ivpu_job.c b/drivers/accel/ivpu/ivpu_job.c
->> index 521931d1f7fca..7320c97762832 100644
->> --- a/drivers/accel/ivpu/ivpu_job.c
->> +++ b/drivers/accel/ivpu/ivpu_job.c
-> [ ... ]
->> @@ -709,6 +748,14 @@ static int ivpu_job_submit(struct ivpu_job *job, u8 priority, u32 cmdq_id)
->>   	}
->>   
->>   	ret = ivpu_cmdq_register(file_priv, cmdq);
->> +	if (ret == -EBUSY && !flushed) {
->> +		/* Doorbell may be held by jobs pending deferred cleanup */
->> +		mutex_unlock(&file_priv->lock);
->> +		mutex_unlock(&vdev->submitted_jobs_lock);
->> +		flush_work(&vdev->job_destroy_work);
->> +		flushed = true;
->> +		goto retry;
->> +	}
-> 
-> [Severity: High]
-> Does this retry loop cause duplicate firmware queue initialization and leak
-> resources?
-> 
-> If ivpu_cmdq_register() successfully calls ivpu_hws_cmdq_init() but then
-> ivpu_register_db() fails with -EBUSY, the function returns -EBUSY without
-> undoing the firmware queue initialization and leaves cmdq->db_id as 0:
-> 
-> drivers/accel/ivpu/ivpu_job.c:ivpu_cmdq_register() {
->      ...
-> 	if (vdev->fw->sched_mode == VPU_SCHEDULING_MODE_HW) {
-> 		ret = ivpu_hws_cmdq_init(file_priv, cmdq, VPU_ENGINE_COMPUTE, cmdq->priority);
-> 		if (ret)
-> 			return ret;
-> 	}
-> 
-> 	ret = ivpu_register_db(file_priv, cmdq);
-> 	if (ret)
-> 		return ret;  // Returns -EBUSY here, db_id is 0
->      ...
-> }
-> 
-> When the goto retry path is taken, ivpu_cmdq_register() is called again
-> with the same cmdq. Because cmdq->db_id is still 0, the early bailout is
-> skipped, and ivpu_hws_cmdq_init() is called a second time.
-> 
-> Furthermore, if the retry also fails (or is not attempted), will this
-> leak the firmware resource? The unregister path seems to bail early if
-> db_id is 0:
-> 
-> drivers/accel/ivpu/ivpu_job.c:ivpu_cmdq_unregister() {
-> 	if (!cmdq->db_id)
-> 		return 0;
->      ... // ivpu_jsm_hws_destroy_cmdq() is skipped
-> }
-> 
->>   	if (ret) {
->>   		ivpu_err(vdev, "Failed to register command queue: %d\n", ret);
->>   		goto err_unlock;
+> Thank you for your reply. I checked it and found that this is indeed the
+> registered PCI driver. This patch will be dropped from this series. I wonder
+> if you have any further comments or opinions regarding the remaining
+> patches. Do I need to send the next version?
 > 
 
+I will skip this patch and apply the rest.
+
+- Mani
+
+-- 
+மணிவண்ணன் சதாசிவம்
