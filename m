@@ -1,138 +1,175 @@
-Received: from mail-wm1-f45.google.com (mail-wm1-f45.google.com [209.85.128.45])
+Received: from mail-qt1-f176.google.com (mail-qt1-f176.google.com [209.85.160.176])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 88F4F3DBD48
-	for <sashiko-reviews@lists.linux.dev>; Fri, 12 Jun 2026 07:10:25 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.45
-ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1781248231; cv=none; b=kewDZgIixf10NsWxk7zsXOtVSw7Y4Nk8PjRmX9oPEjLYncY0V9s/hgTOd6sznsUexBmEdA4LewZPORX5hVZDWCdjPkrHiSG1nhaO/pCd/GzZSNqPaGx7w4pNPyiot4D35EnlSpe8XRcYEIIKWRCltOBwiME1GFvdygnvLBDRj7Y=
-ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1781248231; c=relaxed/simple;
-	bh=ZygED/TgcSaqbUiAwx8S4bYpGHo6x10dsCPWD/CLMT4=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=i0Y5ZokS65STFw/YffpLvGxC+nYhVV6hs5iQo6TJ+W7sPWa18TjKC0vxM/DVXKMrb1X3du5js15ylOB6JmKSgr2LnrE8mb83xRyKlXZ6WlepKjcK4bodDKc1X1YcwILKj4Pw4Znv8uhT553To3bwfhreRF9M11VY7XD0A1dUFEg=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=baylibre.com; spf=pass smtp.mailfrom=baylibre.com; dkim=pass (2048-bit key) header.d=baylibre.com header.i=@baylibre.com header.b=WB+j5kB/; arc=none smtp.client-ip=209.85.128.45
-Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=baylibre.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=baylibre.com
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 34D4F27FB05
+	for <sashiko-reviews@lists.linux.dev>; Fri, 12 Jun 2026 07:16:38 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=pass smtp.client-ip=209.85.160.176
+ARC-Seal:i=2; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
+	t=1781248599; cv=pass; b=Sf6Vjy+HeFXzrni4zTeCtPGJ7tJ8d2jOzZiAjiDW11yfc/YjcyEF29K+VCKg3X8+ad+09ZUtCPnrOzeF95HUgXnBBlJTsRoFAV5/Pgd1Fv1ZfSdzCVQSByZkmFlHsC93M6lXJb4anHk6+xaynkpxRoMD9JttaTisJFKawxibCX4=
+ARC-Message-Signature:i=2; a=rsa-sha256; d=subspace.kernel.org;
+	s=arc-20240116; t=1781248599; c=relaxed/simple;
+	bh=2RpOwM356Ra4heRzlkvIzismb6CAlUXXw50OyZYWnD0=;
+	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
+	 To:Cc:Content-Type; b=L5ZL1NA/GwPdiUbeG2dwGf+uQ/xXZkKcJLiQw2jHTfn8Uf8Pfxp4wZYYunsu5RQX93/EIe8CCN6tfOyGOxDlqkloPio4k0HSSyFkCqyW2uZZEvstmaK/3EuimXj+tkom2uCwb/5BaY5FVXGV/3MnnD/xgXDQgRqb21ne9+OTsOU=
+ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=google.com; spf=pass smtp.mailfrom=google.com; dkim=pass (2048-bit key) header.d=google.com header.i=@google.com header.b=RejBmRsH; arc=pass smtp.client-ip=209.85.160.176
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=google.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=google.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=baylibre.com header.i=@baylibre.com header.b="WB+j5kB/"
-Received: by mail-wm1-f45.google.com with SMTP id 5b1f17b1804b1-490b3637b90so4366295e9.3
-        for <sashiko-reviews@lists.linux.dev>; Fri, 12 Jun 2026 00:10:25 -0700 (PDT)
+	dkim=pass (2048-bit key) header.d=google.com header.i=@google.com header.b="RejBmRsH"
+Received: by mail-qt1-f176.google.com with SMTP id d75a77b69052e-5175d339e8bso388461cf.0
+        for <sashiko-reviews@lists.linux.dev>; Fri, 12 Jun 2026 00:16:38 -0700 (PDT)
+ARC-Seal: i=1; a=rsa-sha256; t=1781248597; cv=none;
+        d=google.com; s=arc-20240605;
+        b=RL3ym84IQP5py7SBcHGO9vgR4snNiKqpAqxLi9XQGysYJIuVFXQB2Pa3A/yb6FpBZ6
+         pvlEGbFZ9oQ353GsOGotD9KfmxQWQzdvSPbTiCdXoC2VmVN/WOS22vctinH3+jW49vI6
+         JMdIGghDZc+82TGoHo3iyIxqBvACMIZl1TLvAJo21ResSr7PMcL51d/iizvTrP/az0wP
+         K8QulNDwFRSwFlEspPKDD8W6GGyxbYNFhpxDNB7qEf5U7CVOySDsfVwdeEFXdu12j+34
+         R5RVkFNfzIFnLyV9dE5rDGta6pEHXIWx6vff5yBQWxVxivERNjCGi9kcFuUuN52VFtse
+         Yf8A==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com; s=arc-20240605;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:dkim-signature;
+        bh=jndZWBgvBmvORiRm7Is8CyoTvdeDfrMHLX0XtX0TpEs=;
+        fh=KaiTqpEov7fPUST8FOXshJlDgv4m4eInFY6jXbsH8OQ=;
+        b=kjwYVgUjwQlGEI9DTJhsA6zhRU3SFbyrPx/2va9RPzcfVj3hPV5BvJVVH6geDEanLd
+         pZrVx8H7YADuYcnxDE8vG960isg0mysKT2C++wb0AgzikdaLC15yrTl2lin4Pp8zMMgU
+         l8MQKk+rVoBECClwD81hAN2JYS97s+ZCEOoi0KI4e5o+BB1bIvta824AHxyuvMzwHVgP
+         IvDMT/wPjnxsVayNvAY8oLEIx6ThqnSo1CeJqFINPqH4mq+xQdYsexVQR4zM3CwtBpjF
+         1hGdo8FbUfMwI2eqrUPApf2YetT4kA5V1FOX7g+ZEjtbhP2CjW25HefcI1fhrIeUYJUb
+         lpMA==;
+        darn=lists.linux.dev
+ARC-Authentication-Results: i=1; mx.google.com; arc=none
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=baylibre.com; s=google; t=1781248223; x=1781853023; darn=lists.linux.dev;
-        h=in-reply-to:content-disposition:mime-version:references:message-id
-         :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
-        bh=ZygED/TgcSaqbUiAwx8S4bYpGHo6x10dsCPWD/CLMT4=;
-        b=WB+j5kB/jzDffStg4tgDyLoJq4JN0ZKur7vpAMf8s7x/4gD2U7Ok8Ig7zglZ4VL+JT
-         5bRi0hve1qBTdrTeg01jKmc+q5jPkgRe3nPUm3k7Rtu/Bp4hThPnA7P/at67c7Ah3aG4
-         Md9EMJP+3Zwp2dsdXg0fkNT1INoCaluZGJ75QoStmLwGtnweqhrY25OUcY6ToR8wPJAx
-         rL5DzEh3plsSOgBrUFLc8ODDE+o9AXWuKDaU8sD8PY1mLUCz9Jq97/CvukkO3OVjpmqP
-         aQmUZe5gPDn57pytUMvDH+44E4LBUgNYJSvCIH/GH5/616+ju6uz+0gzcePcZPUWL/mN
-         HSkA==
+        d=google.com; s=20251104; t=1781248597; x=1781853397; darn=lists.linux.dev;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=jndZWBgvBmvORiRm7Is8CyoTvdeDfrMHLX0XtX0TpEs=;
+        b=RejBmRsHWkd89VBX/mLk4ur8mMEGJ5TkBAfQwTihaknDRdFkF4bXJ6Yf/QjxdyrY1A
+         bSrujN9kI2ap7gx2L19pzb0oK5VjrnDp466sG1Ohq/GWFKIJJrQrU8hdlaRiHMbJluhH
+         vFBiYPw1ptYT3Ss2+xi2/8NDdDepanlKqLMdM+HTl5pmF55bLguCqfT4GL86sg9NTgiW
+         W+claYvcZmgQQod3E4EqXn5P7BqQdkrV+oHONGnY2bOxl0vCP8EJ43FNW6B58HCBgDa2
+         69hWDhZ6DNZWij7ZgDX8H8WV6kDHqwqo9x+Du6fpWGD7OoaXhBfHA2K+v5b5/bJXfoVn
+         k54Q==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20251104; t=1781248223; x=1781853023;
-        h=in-reply-to:content-disposition:mime-version:references:message-id
-         :subject:cc:to:from:date:x-gm-gg:x-gm-message-state:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=ZygED/TgcSaqbUiAwx8S4bYpGHo6x10dsCPWD/CLMT4=;
-        b=BkXHDgQykOylSRLpVWP6TxOnid260gI5xcKNTJumH3U6iyNe1U4VscLwScbKEmvFad
-         WA3+7n7JT8OTZ5cgs+NNt/jp1MGt1nVG9BghP94z2juLKrlHUGl5+Ih+GVxebwoEosQE
-         cc8eLFpxcW3oNgsRKZzVXrbAGmFNj9xtGp5sDwOfoZmtX7mLT3kDpIboaoH54qBgKsCc
-         k0aghDYAFKnaUho6UPQ63L6BBo7s9M3izUs/wU4lIz7kJwd1evhONGvtDLQg3hSxwV4S
-         axasA/9v2oNbq1a+KGrHeIGiX1zM2r0B8rlL+Ab+fUf51oNySwH4iVXhes3GuaQfa6Fe
-         wyjw==
-X-Forwarded-Encrypted: i=1; AFNElJ81vhML65jduIL5Iz7UvxB9QO6jC18ihg8CY/XgBPQnlaneHamCmxLvQ9o4J9kPGlFDjdSMAdCA1PeG80p7prQ=@lists.linux.dev
-X-Gm-Message-State: AOJu0YykUmElKWOpbl9T9hQYuedcx4yTlc1LwV9w9zQf9Nn5TiSMIxyD
-	zhqcdilZqrgR7lRrdipBIh7w+0kCDDMZ6I7gLzv6u9RbtWbnHvMHzBkm5wfClm3kd54=
-X-Gm-Gg: Acq92OE4xt9XYk981/l2qNgVz/RP4dV0eKUoyqJhz/e3AZbDSmyI3Xm5h37H1BtX5uQ
-	vjTl7La8dt+kx8/FIqhmgdKA+UR4bPWBIhYxq6D56rroUYQyqkzq7tN7mpO+wUBtDpLuz45GgpQ
-	2liX2/fj+imWlEtHfEu5Qm4UQGreNYNHjNtMSU2jp8SgkChT6breKncha3DjYl7vLR3mJAySy42
-	E06WMg84YQpxeuD/cvFEWser9WaEtSyfWUo9iOzbQy9uQB4AAUeZHzsCJRQ4+98DxgI5rlSBvpL
-	ZADJivY1siZ9+dK3u4ypYeQZJ+e4tVEozL9+5LqkgHd3DmYr/6R2jmJUaNXYdhPAWsRIPLeYpoo
-	Bv17nhxEIVpMwjk4rMjVMwpmWp9ykgtWi88a5pT6s8x7eLc4ybRMqSX7S/mHpR0XMo8KOwcBjFu
-	0U3vFoh8q3XIWxPYL0Khu5F7ENOvsBZqd1pN2vas85vnhDx4G4Om/TILLQFpiI/0ZykmzzphVLE
-	vBW88wHx0a3kaZQfyh5G8kK
-X-Received: by 2002:a05:600c:83ce:b0:490:e18f:d112 with SMTP id 5b1f17b1804b1-490ec4df0b4mr15052315e9.21.1781248223452;
-        Fri, 12 Jun 2026 00:10:23 -0700 (PDT)
-Received: from localhost (p200300f65f47db040e4e5c1e98e7f0ff.dip0.t-ipconnect.de. [2003:f6:5f47:db04:e4e:5c1e:98e7:f0ff])
-        by smtp.gmail.com with UTF8SMTPSA id 5b1f17b1804b1-490e2c7ead0sm139245145e9.3.2026.06.12.00.10.22
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Fri, 12 Jun 2026 00:10:22 -0700 (PDT)
-Date: Fri, 12 Jun 2026 09:10:21 +0200
-From: Uwe =?utf-8?Q?Kleine-K=C3=B6nig?= <u.kleine-koenig@baylibre.com>
-To: vkoul@kernel.org, Frank.Li@kernel.org
-Cc: dmaengine@vger.kernel.org, sashiko-reviews@lists.linux.dev
-Subject: Re: [PATCH v2 1/2] dmaengine: hsu: Drop unused platform driver data
-Message-ID: <aiuwi9amtiyoppxZ@monoceros>
-References: <86a23025da12369034dc7444f43a7763f2e515fb.1781161455.git.ukleinek@kernel.org>
- <20260611081105.863831F00893@smtp.kernel.org>
+        d=1e100.net; s=20251104; t=1781248597; x=1781853397;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:x-gm-gg:x-gm-message-state:from
+         :to:cc:subject:date:message-id:reply-to;
+        bh=jndZWBgvBmvORiRm7Is8CyoTvdeDfrMHLX0XtX0TpEs=;
+        b=smR/WvcrPQ9YzVcTzCM8sXFmQ+T77rExezT5IjjCsB5Gq5nFKV+l7IY/Yap3GbUTC9
+         CxrG+2/PlYajpU0wfAu9OPnFqFtt01smPANOI/jEOM8YXgJ+BgkPgG34TNJzjHndorcE
+         qXqm+dJegbeCWy/EE71f8LM57jvpVdpDa9fpdq031sxJx7JFAxGwSLuazZWck6sVNcXx
+         T6USL1ZscW8rD8bbvvCxlICkgJ64+zihZ5QaAok41xH293Va4OBahPz0OCn90QJ5CC8R
+         /EDFw1mG6OvQ+I3C1qR/6HKsY7YGSUrHmJrSVwoi1A8R1fwAnONVjkSxxnB1DVnBaveO
+         r9zw==
+X-Gm-Message-State: AOJu0Yw6BNFEc9zZbbsdgmQp5HgYP1MOTYgxMRDt3HUPKrBYbwXMrN4l
+	GsoMThkLee1iyoRY3jNMtcq9T26oqp9KoxJl4t5u4IwANiAq/fGlo0zkdjasmSl85TlJG7bpJbY
+	gznEBjnh4GD3KFXE9CRSJ4S/3Lj4a+AvjqApwMd+JtH8KRXIPT5Q2vxYc4oA=
+X-Gm-Gg: Acq92OGK/ftB8EK+C5PTRJfjyr1bLsq29apBrMtuLd4Sp13VtwmGlqRngf035rnm0bf
+	obu/rZNY0GBxx0WCxn6qoAzd27q2baDIYks7NWk5K80V3bIctjTOSr0a95tFU7A5JhCGtzbKFa+
+	KtlTyPtN5B6DpmsalZUq8BwK16HkH3y1n9Ou+aHHxvygEmuFzarP8dAl+5IdqxrL7rw8sWg+M7A
+	XLG5wee7nDXggm/l57wkFfKXDIgK6Fbee0hLdKMBKZqk8Wz2iac6lrPbg0eJ9rKSpTOZLuPHNeP
+	rW9O3CQwlQpKX/iOAik=
+X-Received: by 2002:ac8:7d0a:0:b0:516:4f62:85ef with SMTP id
+ d75a77b69052e-517fb16d601mr5942741cf.20.1781248596399; Fri, 12 Jun 2026
+ 00:16:36 -0700 (PDT)
 Precedence: bulk
 X-Mailing-List: sashiko-reviews@lists.linux.dev
 List-Id: <sashiko-reviews.lists.linux.dev>
 List-Subscribe: <mailto:sashiko-reviews+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:sashiko-reviews+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: multipart/signed; micalg=pgp-sha512;
-	protocol="application/pgp-signature"; boundary="v6zxtse6fli25xdv"
-Content-Disposition: inline
-In-Reply-To: <20260611081105.863831F00893@smtp.kernel.org>
-
-
---v6zxtse6fli25xdv
-Content-Type: text/plain; protected-headers=v1; charset=iso-8859-1
-Content-Disposition: inline
+References: <20260612065925.755562-9-tabba@google.com> <20260612070819.64FE01F000E9@smtp.kernel.org>
+In-Reply-To: <20260612070819.64FE01F000E9@smtp.kernel.org>
+From: Fuad Tabba <tabba@google.com>
+Date: Fri, 12 Jun 2026 08:15:59 +0100
+X-Gm-Features: AVVi8Cc4RzJaP_zaKC2c5KRc_qZk_c-svVjRGNeO-CiUJOo8hWtSYF-SB8GrSfI
+Message-ID: <CA+EHjTzVBXakaKnjAqABOBmnqtk5T2-Z9kr3TcWSkPVoAo4O4Q@mail.gmail.com>
+Subject: Re: [PATCH v1 08/11] KVM: arm64: Add host and hypervisor vCPU lookup primitives
+To: sashiko-reviews@lists.linux.dev
+Cc: kvmarm@lists.linux.dev, Oliver Upton <oupton@kernel.org>, 
+	Marc Zyngier <maz@kernel.org>, Will Deacon <will@kernel.org>
+Content-Type: text/plain; charset="UTF-8"
 Content-Transfer-Encoding: quoted-printable
-Subject: Re: [PATCH v2 1/2] dmaengine: hsu: Drop unused platform driver data
-MIME-Version: 1.0
 
-Hello,
+Hello Sashiko my old friend,
 
-On Thu, Jun 11, 2026 at 08:11:05AM +0000, sashiko-bot@kernel.org wrote:
+I came prepared for you...
+
+On Fri, 12 Jun 2026 at 08:08, <sashiko-bot@kernel.org> wrote:
+>
 > Thank you for your contribution! Sashiko AI review found 1 potential issu=
 e(s) to consider:
-> - [Low] The commit message incorrectly states that it modifies struct pnp=
-_device_id instead of struct pci_device_id.
+>
+> Pre-existing issues:
+> - [High] flush_hyp_vcpu() incorrectly copies MDCR_EL2 from the untrusted =
+host context for protected VMs, violating EL2 security guidelines.
 > --
->=20
-> commit 5cb66572eea17e218716d84ce22cd0b73ee38c30
-> Author: Uwe Kleine-K=F6nig (The Capable Hub) <u.kleine-koenig@baylibre.co=
-m>
->=20
-> dmaengine: hsu: Drop unused platform driver data
->=20
-> This patch drops the unused .driver_data assignments from the
-> hsu_pci_id_table array. It only modifies the source code representation
-> and does not affect the compiled output.
->=20
-> > The driver explicitly sets the .driver_data member of struct
-> > pnp_device_id to zero without relying on that value. Drop these unused
-> > assignments.
->=20
-> [Severity: Low]
-> This isn't a bug, but the commit message states that the driver sets the
-> member of struct pnp_device_id, while the patch actually modifies an
-> array of struct pci_device_id in drivers/dma/hsu/pci.c. Should the
-> commit message be updated to reference the correct struct?
+>
+> commit 11498ed516d4ebc65b4ad00086974239ee0e2eb4
+> Author: Marc Zyngier <maz@kernel.org>
+> KVM: arm64: Add host and hypervisor vCPU lookup primitives
+>
+> This commit introduces primitives to translate a host vCPU into the
+> hypervisor's address space. It refactors handle___kvm_vcpu_run() to use
+> these new lookup primitives.
+>
+> > diff --git a/arch/arm64/kvm/hyp/nvhe/hyp-main.c b/arch/arm64/kvm/hyp/nv=
+he/hyp-main.c
+> > --- a/arch/arm64/kvm/hyp/nvhe/hyp-main.c
+> > +++ b/arch/arm64/kvm/hyp/nvhe/hyp-main.c
+> [ ... ]
+> > @@ -214,23 +245,16 @@ static void handle___kvm_vcpu_run(struct kvm_cpu_=
+context *host_ctxt)
+> >                       goto out;
+> >               }
+> >
+> > -             if (!hyp_vcpu) {
+> > -                     ret =3D -EINVAL;
+> > -                     goto out;
+> > -             }
+> > -
+> >               flush_hyp_vcpu(hyp_vcpu);
+>
+> [Severity: High]
+> This is a pre-existing issue, but does flush_hyp_vcpu() incorrectly copy
+> mdcr_el2 from the untrusted host context for protected VMs?
+>
+> Looking at flush_hyp_vcpu() in arch/arm64/kvm/hyp/nvhe/hyp-main.c:
+>
+> static void flush_hyp_vcpu(struct pkvm_hyp_vcpu *hyp_vcpu)
+> {
+>         struct kvm_vcpu *host_vcpu =3D hyp_vcpu->host_vcpu;
+>         [ ... ]
+>         hyp_vcpu->vcpu.arch.mdcr_el2 =3D host_vcpu->arch.mdcr_el2;
+>         [ ... ]
+> }
+>
+> According to the pKVM EL2 Security and Trust Boundary guidelines, trap
+> configuration registers like mdcr_el2 must be initialized in an EL2-priva=
+te
+> context for protected VMs. They must not rely on values written by the ho=
+st.
+>
+> Because host_vcpu resides in untrusted host memory, this unconditional
+> assignment could allow a compromised host to overwrite the mdcr_el2
+> configuration of a protected VM. This could potentially allow the host to
+> manipulate guest debug exceptions and break guest confidentiality or
+> hypervisor isolation.
 
-Should I resent for that? If now, doing s/pnp/pci/ on the commit log
-whan applying would be great.
+The assignment is not unconditional. It is inside the
+`if (!pkvm_hyp_vcpu_is_protected(hyp_vcpu))` guard (line 607) and only
+executes for non-protected VMs.
 
-Best regards
-Uwe
+For protected VMs, mdcr_el2 is initialized at vCPU-init time by
+pvm_init_traps_mdcr() (pkvm.c) and is never overwritten from host
+memory on the flush path.
 
---v6zxtse6fli25xdv
-Content-Type: application/pgp-signature; name="signature.asc"
+Cheers,
+/fuad
 
------BEGIN PGP SIGNATURE-----
-
-iQEzBAABCgAdFiEEP4GsaTp6HlmJrf7Tj4D7WH0S/k4FAmorsNEACgkQj4D7WH0S
-/k5VTggAnQMbpuIjjXuyeTA+SehAUaSHYsiNRBA74BCHsQQf02RPbJtTmJUywI7g
-XCQmC1+9M3o8qP3dCC+2Ii/S1grqPyuKllQclUy0zUIcWhiKZXKC/ULhALI4jVyo
-c2WwptI/ghLVLmjfIO4WgY1CNHFqKG5AjJO/GQaLmACTTh3xKM6+z+pDa9ZxxzFW
-B/8hWOAiiDvrqnRaehBmGcHTIAQQmauZDZglL9CXCEYkyPlrn/ywHyTgPvxu1xgh
-1haly4K1LDxHlOataGDX36KPMhHXEmlZcqfWj0Vt57ysTILEMYcmtHHmdLsYhbkp
-re16aIueLFbBwAXB56A2yIeyoUl+hQ==
-=Ldv9
------END PGP SIGNATURE-----
-
---v6zxtse6fli25xdv--
+>
+> --
+> Sashiko AI review =C2=B7 https://sashiko.dev/#/patchset/20260612065925.75=
+5562-1-tabba@google.com?part=3D8
