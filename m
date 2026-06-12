@@ -1,166 +1,187 @@
-Received: from PA4PR04CU001.outbound.protection.outlook.com (mail-francecentralazon11013049.outbound.protection.outlook.com [40.107.162.49])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-wm1-f49.google.com (mail-wm1-f49.google.com [209.85.128.49])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 02510339B41;
-	Fri, 12 Jun 2026 03:28:15 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=fail smtp.client-ip=40.107.162.49
-ARC-Seal:i=2; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1781234897; cv=fail; b=AhJwwqttsCLkBhEUVRhxehSW7/ql1b/rB2yKIl8q5aPcb+Gm5LvIjjhJIUZaMfvj0X9Fz2+1Gg6h2OHLq/Jfv89Ip1s3bTocTWsciUcnxMCApUWPO4bZZMPj2tajG7Dw65Dk9EfC/zrS0f6MybxPSil5qRSzC3YhQuE8X3kbROM=
-ARC-Message-Signature:i=2; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1781234897; c=relaxed/simple;
-	bh=0e3/qPParh9UN+/Y0nxbAPg5zw0wUkA2JFEgf3wkoIg=;
-	h=From:To:CC:Subject:Date:Message-ID:References:In-Reply-To:
-	 Content-Type:MIME-Version; b=YOCwBDe3GSZFY6GbeqK+wneCbxFtI7rJW+J5GnfKp6AKITOvWfL8drIpTUemlIU1YYa+5cjrm1gsL/k6QkOa/41NA7P8rnlZyUrQSM+u3iO7j/vyaIw8HuTdr1U+gMqRxcryCgWOIBoxIelRSj2FHh63fVvn1UkjHSzAhQQRTvg=
-ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=oss.nxp.com; spf=pass smtp.mailfrom=oss.nxp.com; dkim=pass (2048-bit key) header.d=NXP1.onmicrosoft.com header.i=@NXP1.onmicrosoft.com header.b=YlQpRG/T; arc=fail smtp.client-ip=40.107.162.49
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=oss.nxp.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=oss.nxp.com
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4CEAF3A6405
+	for <sashiko-reviews@lists.linux.dev>; Fri, 12 Jun 2026 05:28:01 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.49
+ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
+	t=1781242082; cv=none; b=LZeYGSysJX8VZNGOYRJtKntOwavHPA/yX1QOrLm3GPLY+6y0OVRlwAmnd9pvVJ2NjWBA0B0Pd/aN78YupPfGL82cWslyvBjT3Z6gjzpQ8GCxsrdfHfx/Z5NEoq9kfb3VOagRE3CEfbbnGQ+q/hOaW+69arnTvJz0fhVj4/oH3jY=
+ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
+	s=arc-20240116; t=1781242082; c=relaxed/simple;
+	bh=rdXPLTFUgYIy0frkdpv9H0elzJlKyrrYcklSjkxA7DE=;
+	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
+	 MIME-Version:Content-Type; b=rBPe1AZ7rJ9SM9NDTGPS3b1tXjNBLEgzvxWpwKUm+u66GZfarj4crbmSz7bzdgGiEr0rJciYr54PB63//FjzD9uEZRSzPdGysptBvDt7LmeEhRSRHhocT2HDPEDCruPH3r+6VGn6d6qKMSH90b5+7bUrGT2ms5JPKPOP/dDno8M=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=aY1/N3+R; arc=none smtp.client-ip=209.85.128.49
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=NXP1.onmicrosoft.com header.i=@NXP1.onmicrosoft.com header.b="YlQpRG/T"
-ARC-Seal: i=1; a=rsa-sha256; s=arcselector10001; d=microsoft.com; cv=none;
- b=unVOmxXXX0GCkLoXNcCtus/bWnYlLSYpQAW5E7Ok/1ILkDwzwEDZkBPPhQj9oEh/q2dt4sDgiT/MyZKodwq4ZjprMEQUH8ZK0KZ2Y1jaHr81/nPghGcl+tPxmqliSZphVU/m4+HqbPwIWhorIOwJnXx6JXMhrVRrzpAEUljcF4k2zZBmXenqk9NTDMwVRQBX+3c6QRnpQjQDoLU+hbuvEdaCZq+Gr0RY+TgFMRE1zntP7AaJ/2n8nKfNw1r+D6juiblq40m/0Z57NzC5ge6NxrpOmS1Y5Zwo8oN1X8rMxCEXPNvjlds4E/nC1+e59dNhMp99vDj1TWG90tc8pTOCKA==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com;
- s=arcselector10001;
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
- bh=0e3/qPParh9UN+/Y0nxbAPg5zw0wUkA2JFEgf3wkoIg=;
- b=ctVTbX98/CmjYnx0d7EI6xUQQe6W61whvDy+f+BLX0EZUcEfm0LMliOXRSNCOTNc1X9GX+jH/h6URpe/ee6h+pokXM4mVGFgitL/KRnuYIJUYvxsT+gKUI5KpqqMoymhR2Yk9bTx4JfyrdwozYbIRVbpBda5Z28rvH4Q2GXKbnggN8AFhkFG+/DsDI4uGaNMyR+iJsuoATym1znBUsIhI5y+4ZR4VYv0Ti+wRJOZSZ6xpcxO6ztE7rYV2bPbWauYRZwSPtOVULD/T2OYRNpoSsgDh+lCikcT8qSb2wvMKRdzwIxB1j5sxUxyLReWveWQHsvCl+80d7wuiyvBN9Hb2g==
-ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
- smtp.mailfrom=oss.nxp.com; dmarc=pass action=none header.from=oss.nxp.com;
- dkim=pass header.d=oss.nxp.com; arc=none
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=NXP1.onmicrosoft.com;
- s=selector1-NXP1-onmicrosoft-com;
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
- bh=0e3/qPParh9UN+/Y0nxbAPg5zw0wUkA2JFEgf3wkoIg=;
- b=YlQpRG/T6G9A93oaUD1DbuLbY/rGxDtCUBwd2e0O231rh9MeouXEJv58Nr5XaQryzqgE6DtbJGzbu+9aZCObpE/XFaSvM7hpwylawOC1g4wpIjbjco+uoLAgVh0MbDqJPH1ZQ29um37qjh7VthlO8FRcvpvIRYLG2QO4t6TJ1xBQqP05g3cS91eNaTQV+CkEN37jm+zjaqUzKnCAfaZcaVRtqZr2GLp1ZX6PMzSNCi41luTwVF2FwDJ8Cdtkb8dJXoapUogC0toASqiSeE2Cjbd+n0qUyz4Oc09HlmBrGkyeur4OVuu1WjIp4bPCPaD/inm2XRK4KNEl1SSZI586mA==
-Received: from DU2PR04MB8629.eurprd04.prod.outlook.com (2603:10a6:10:2dc::6)
- by DB8PR04MB6938.eurprd04.prod.outlook.com (2603:10a6:10:117::14) with
- Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.21.113.13; Fri, 12 Jun
- 2026 03:28:09 +0000
-Received: from DU2PR04MB8629.eurprd04.prod.outlook.com
- ([fe80::9d04:7526:a901:fe47]) by DU2PR04MB8629.eurprd04.prod.outlook.com
- ([fe80::9d04:7526:a901:fe47%6]) with mapi id 15.21.0113.013; Fri, 12 Jun 2026
- 03:28:09 +0000
-From: "Wei Fang (OSS)" <wei.fang@oss.nxp.com>
-To: "sashiko-reviews@lists.linux.dev" <sashiko-reviews@lists.linux.dev>
-CC: "imx@lists.linux.dev" <imx@lists.linux.dev>, "Frank.Li@kernel.org"
-	<Frank.Li@kernel.org>, network dev <netdev@vger.kernel.org>
-Subject: RE: [PATCH v2 net-next 04/15] net: enetc: add link speed message
- support to PF driver
-Thread-Topic: [PATCH v2 net-next 04/15] net: enetc: add link speed message
- support to PF driver
-Thread-Index: AQHc+L4AymIDCKMg802O1H2f1XvU3bY5HSqAgAEoUiA=
-Date: Fri, 12 Jun 2026 03:28:09 +0000
-Message-ID:
- <DU2PR04MB8629864749895D4C604DF26888182@DU2PR04MB8629.eurprd04.prod.outlook.com>
-References: <20260610091844.3423693-5-wei.fang@oss.nxp.com>
- <20260611094734.43EBE1F00898@smtp.kernel.org>
-In-Reply-To: <20260611094734.43EBE1F00898@smtp.kernel.org>
-Accept-Language: en-US
-Content-Language: en-US
-X-MS-Has-Attach:
-X-MS-TNEF-Correlator:
-authentication-results: dkim=none (message not signed)
- header.d=none;dmarc=none action=none header.from=oss.nxp.com;
-x-ms-exchange-messagesentrepresentingtype: 1
-x-ms-publictraffictype: Email
-x-ms-traffictypediagnostic: DU2PR04MB8629:EE_|DB8PR04MB6938:EE_
-x-ms-office365-filtering-correlation-id: 5fa1eb08-02ca-42f7-2483-08dec832a058
-x-ms-exchange-sharedmailbox-routingagent-processed: True
-x-ms-exchange-senderadcheck: 1
-x-ms-exchange-antispam-relay: 0
-x-microsoft-antispam:
- BCL:0;ARA:13230040|19092799006|23010399003|1800799024|366016|376014|11063799006|4143699003|56012099006|38070700021|18002099003|22082099003;
-x-microsoft-antispam-message-info:
- YUS3QZa+5lY37aqGkW57DuYlwjl4lKdj7WKPSLu1Z04fUe+SrTCAD/m+2SNXUgifGkgltNZgjQKklG7UOZOg4nyZv+t8qDTkYX1b1/okWnfsmi+jyR4I/NPMcGWepTjLn/iqfepMyxc4Lk+HwPCb7rcE2AVQxkmlZND3/az02jTmn+xsV0dFG9Mj/Nf/+gz43ZlA5/v/1G7DG66yx+cqql1H1LeXEvgzRzrGjZXb3eAzysRk4BU7DlMtTumEqEaC8arQPtLw7cmgJO8Fe//0qtGWXOVJeuqDiQF7/jQZlRvChmlP71twUbYrSaX52hXyA+QIsY31KDoye0Znph9QYknCTdy9amw3cApzG259J/K9PP0R2yXwDvJ9A+OLGMNLatiH0Uttev5UtnXNqmOQiO2C6MjVamMLJx+V5AA52jRXd1BBua80t7hU3H856sXXa9Qo9KZ/55QQ59etX8xnUGuvU4rkwDHSTyHeAh9TKNL0Bcd94DC+zE0iagjXH4KnLVcyr2tR7ei6tZi/pS2gCsI59HQ2t6su7iQD8/OjLhOrjpj1+pIEr+w+Y/+zWGdId7egom7YywpHTC/wI1HIobfwe2uW09BeuQ5N5GeDds6tJcge+IXLUiWa5oBAatyqT76qVYkXX/+SuCbJmVwMrI+BBWFq+R0R+DvVhucV+tbcIfDFrUT7BOwntmBgr3MA2BkKHCqsI/OheOFXMFeiKTnrG++EMNPg62HLGVxJWaYUovCLuDwdEgRzbMymE77A
-x-forefront-antispam-report:
- CIP:255.255.255.255;CTRY:;LANG:en;SCL:1;SRV:;IPV:NLI;SFV:NSPM;H:DU2PR04MB8629.eurprd04.prod.outlook.com;PTR:;CAT:NONE;SFS:(13230040)(19092799006)(23010399003)(1800799024)(366016)(376014)(11063799006)(4143699003)(56012099006)(38070700021)(18002099003)(22082099003);DIR:OUT;SFP:1101;
-x-ms-exchange-antispam-messagedata-chunkcount: 1
-x-ms-exchange-antispam-messagedata-0:
- =?utf-8?B?b0QwTndrczVGSENBTHM2M2hxU28yWDJ6Sno1enFDOXNXT0FCSkRTd2QvMFVw?=
- =?utf-8?B?L1hpWHRCTmxKTkFDZnhyeFF6b2ZOT0w5Tm44UU93U3F2Yzg1eDM2OWxRWFh0?=
- =?utf-8?B?K0JXOSs0V3U5cm5Jd3duRld5Q1E5UGhueExDaGF6Y21qNGlqRzBDdUtNVUdh?=
- =?utf-8?B?WU5KNlliZVVuRUhZSkxKcjlTMXZiUGRoNHlaZVZrVDdISjBDVXBTT3FIK0Y5?=
- =?utf-8?B?TGhiNmFnQnhISU9GclpVRU5JdW8yVE1VdHdhdDZ4eGdTQjE1Rll3dlo2UzZh?=
- =?utf-8?B?QUdtVzlYMjJUdzVWZnJaVnBNeE1wT0Z0ZFRmbCtoYVhPbWhnRXFrZnRhRDR3?=
- =?utf-8?B?K2pNTFVxYlJsZVNHQ2d2d3VZWEpIQkoxNXdLclVydmhCRDh5eVBNc1dqMlMr?=
- =?utf-8?B?d1U5VURDdmNvQkNURXRaaFNKb05EK2NrY3BqREpibFFaaTJiWTZuazNsSkI4?=
- =?utf-8?B?Z3FsNlF4WDV0eGdRQkttTEdheTFMMjRyWDErK0dwUkNoZlJacU8wK2l0V3JZ?=
- =?utf-8?B?ZWR6Q0xNK2sxTTIxalRiY0taTUUrQ1Joa2dwa0NMU2l3aTVvMzFvbTY0OGpC?=
- =?utf-8?B?N2VyeHN0OWFKbzVFQWtncGxJNlRVR2x1RW16S2RBSmlzeXFUVlVjSjBzREpi?=
- =?utf-8?B?SWNCQU53alYxMDgvYkp4RWdGQnU5Y0UxQ2llRlVNbWRBT3RFWWNCeXdEZlRE?=
- =?utf-8?B?VXR1QThXVHEzb2NKTG9iQlQrd0ZtcHRZL09lS3Q1QlgwbUxWdHBkSzhreHJZ?=
- =?utf-8?B?WjNZK051eWRVUXlIVUlyY3UyeFpKTExieVljd1AyU1ZzUUJWRW14dFdjUFVk?=
- =?utf-8?B?VGkzUUJXUEVidmdtdjZ6N1hVZ1dnQ1FHK1pyMHl0a1VvdU44WmNhVi9EdUhq?=
- =?utf-8?B?N2FzVWJxM3R3OVZadzJpdUJQNTlPSzFEcWJIVDM4N1hNNEU0YmtTZ3J1T3pX?=
- =?utf-8?B?a0xTNERlSHVmc3VBYVBkeWdaVzhQZWJObCtUUUtKaStreVZSdnU1TDNwcDFo?=
- =?utf-8?B?ZGFlNUVtcWptaitXMVNqM3RBZ0pqYzBmSmVnNVlNL05PbHo4SE9jS204L3JK?=
- =?utf-8?B?Q1dxRUxOaTUvU29WYzY4MSt3aElmZlR5akZCTHdHL1lRQzVwMlMreXRrSHB0?=
- =?utf-8?B?VU0zbEM3Um83OE5aeXBWSndqUWNFQkJkYytXQVZwZFZ3dWJ1R00wNzFlTUhv?=
- =?utf-8?B?aWhnUm5QTVhtbWxoQXhLemxHdVJTaEl6bVhwU3RiRFBwRWdTOXV4Q0FFRHpW?=
- =?utf-8?B?ZzU0VitZRDNOM3NJNlgvdUVoVFNqb3BCQ3VDWWxoS0o1VTFpZ3RKd3dHRGxo?=
- =?utf-8?B?a1lCbHZZd0hyNTI4WC9WdThYVkNQRkEzd1ovMWp1emVsQmRmcFh0SEY2UlBC?=
- =?utf-8?B?YUhpMjRmRUhZSWU5WkVmMExURDAxUklsV1NabVVEd1RjWE9naStXaUpXN1Iy?=
- =?utf-8?B?ZFV5bUJYWlRneFhZblZOb0xyVEJ0TTlEZktiY3FDVVFYN2txLzZHUWZlQ1Rx?=
- =?utf-8?B?K2RDNTY5WERDOEh1blVXMzZyYXYvditYVjNDdDlnUEZRMnoza0ZpNTkwRDFi?=
- =?utf-8?B?ZWhRaGV2RVpiNGVJdzZUOTJOZG1EM3pTeERVYm5OeFN6NVQ1T3F6bnZkc0VO?=
- =?utf-8?B?cStUU1Y0M01CUnJRNktLRzk4UkxoOTlhbzE2MW5wS3U4SnlweTdhczdseUZU?=
- =?utf-8?B?ejFvM0ZiQmZnNkdnYWJ4L1lRTnM3MEhwYXA4VHZ3dzB1WWlKTk4zQUQ2RWRQ?=
- =?utf-8?B?MkNiUTBTZWdaaFdrV3hBdTg4WXhFRW1yd2FHNEpvaVNPMUtidHd0QStjNG5w?=
- =?utf-8?B?VEtJVWpFczBaZzhSTm9JWithVDhPbEY2WWxJY2x1bmxyWDV0cGYzRkMvdEpD?=
- =?utf-8?B?Ym9nOEgrQ1llWlJ2cFJmbnJwSTZ5WVJ1ekN0Mm41NDV6VWpONnltNkRBWU5y?=
- =?utf-8?B?eDI4WTllcC9YNVZ6ZjVQbnoySFVMR1JkY1FlY1hKVnhaZFRQcXJWWVFOamFS?=
- =?utf-8?B?aVlBK2drdW5SRlVSUHplTk4xMTFGNW42NXN5cjdFRGVzVUw2TXB6ODlENHFS?=
- =?utf-8?B?a0lnL05obS9YUi9kZ1RpbkpKY1hYaGEvMkx5Q0NPd1hFS0loZUdEdGhST001?=
- =?utf-8?B?R1IzMGlSc1YvcUZ0YjNKdUR4cmNQZmE2QitUTTRIS3Fxd3lKNzFKdFlhS2Ra?=
- =?utf-8?B?QUh1N2h3OTR2SUl1VUY3cFJzVFpzQ2ZsZDZtekpuZnh2cXM5OE5YTTJjbmo1?=
- =?utf-8?B?NTdNWlRSaU5HNWo2OTk1SjFxYWpwOXcrM2xsTXFvQVdMWkU3bldkUUk5QXd3?=
- =?utf-8?Q?dIBAWDhkc8m3b7ikM+?=
-Content-Type: text/plain; charset="utf-8"
-Content-Transfer-Encoding: base64
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="aY1/N3+R"
+Received: by mail-wm1-f49.google.com with SMTP id 5b1f17b1804b1-490b9318997so3789345e9.2
+        for <sashiko-reviews@lists.linux.dev>; Thu, 11 Jun 2026 22:28:01 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20251104; t=1781242080; x=1781846880; darn=lists.linux.dev;
+        h=content-transfer-encoding:mime-version:message-id:date:references
+         :in-reply-to:subject:cc:to:from:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=V2amOK/xSJHghV7y5jK8dUWQNl2Cve6eXEqKCPHjYc0=;
+        b=aY1/N3+R9v9k+rM/etOxIj4vR+OgqrbPcEw5BGtcsDlKjTqiTT2CS8Rjk5DjFp1pxQ
+         wpuQXDkPDCn2/4U/cSbXx01r64AeCYC0wO++ZTFQdpjjtHDk347upCLzauKcr00dp5wC
+         1b4rbubCJBY0yAtSxia1okEc083TvmEURkg39dMwwRVkvJaPRwKijU9tPtb8auXiguRe
+         5Ke7t5+Og+pRIfi7MfcP7oAXoUd7vhHzUYmPuq9TuO8VRZ17jOHLL5UKhx4oT8AqAOm1
+         Wb3zRZ2pjN4ls247MUxfI1P1saPKlYgz8pHIWVHs13OGSfj8sE0w+20LPacDof0yAUxR
+         EQCw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20251104; t=1781242080; x=1781846880;
+        h=content-transfer-encoding:mime-version:message-id:date:references
+         :in-reply-to:subject:cc:to:from:x-gm-gg:x-gm-message-state:from:to
+         :cc:subject:date:message-id:reply-to;
+        bh=V2amOK/xSJHghV7y5jK8dUWQNl2Cve6eXEqKCPHjYc0=;
+        b=pK/DnQpG/ASU97pXTxjpJoc3oipTSsAXcdLxx13zdg6Rp3DR9o1+evk+i3fzGcEcup
+         Y6LZNiXk639KKRTGjK5KAOadErHZVRbQDo/ZoaxGfewErXFVJLWMh54aVv9cIz8xvj+U
+         jQLcCHSLWOXm5xwh3kGvb6AXkK+hM/JCwgmyjp+HVuugPbvzY3KUd049tmVpAHdKJHAM
+         fsWjguIXgVKY4yOOvo71rXR6zP6Upg+P6PDfs2sxFaKe29UcdqbuVu7QeXVH76FGMWuM
+         0P6aO8bZAMwAEVvy1koFcu30yVvnw2LkjlBJzdtpYRDJWm3oFyuZ8cICQTwDKi6tTbpk
+         Ftbg==
+X-Gm-Message-State: AOJu0Yxmuxc56Fz9kZA3v2nVF9kQoqiGRrhSnJm7ZdYbz7CBfOTdUSUr
+	xA7X/ylogXBY0eRQMscHZul9PLVr9p2PZTBpiWFDo0vIwLZWQK+1Oyei
+X-Gm-Gg: Acq92OGLeAuRE8KLYbWEyNS398hEpjxWZA6+i2J9b8DF3W2onLE+ZgetegsoKEQpDpw
+	+pMvOdo+DYu1JV0+70kq8dia5BTeG0S02GNGRanZEcX9Q8U8eP45M0jVpm0iSAO8WDh1KOnPCfJ
+	oZB2Y619yReZrx0REDfTD7V13hGRQmJt3d3QnYZevMH+Ek/z+owtbKFkHVyqkRECPZ84x14tUSm
+	HdbFdFM0+L57+K4bV0P9HmiKnEtoGU2IT853JhYL99Rr/XnM/3+yxcNBShu0LdipaskkwXLRD2a
+	K6R7ufLl0Skeu0MCOYcDjTwCzxav4lp14li3e6aFbFsPgqlCA0iWPjaw8Pg1zSWe6LxhESyILrW
+	UmnCob1ElXBtEYOeVN2GOzRiAIws8d3LEmUTWJ1xBFyCNfb6APz1wuHjLofsYG8pNUaBuMdLm+V
+	SyF4OxhlpFbCie45/Xa2q32hhm6MpVsbhrhFEy4PBke+ZMGYn6fgAdTFFiFLnqyydT
+X-Received: by 2002:a05:600d:6451:10b0:485:3abe:ab86 with SMTP id 5b1f17b1804b1-490ec480989mr7282255e9.4.1781242079515;
+        Thu, 11 Jun 2026 22:27:59 -0700 (PDT)
+Received: from Abds-MacBook-Air.local ([2a02:3037:612:1ff:bc98:79f0:79a6:5f77])
+        by smtp.gmail.com with ESMTPSA id 5b1f17b1804b1-490ea7c0960sm33027605e9.3.2026.06.11.22.27.58
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Thu, 11 Jun 2026 22:27:59 -0700 (PDT)
+From: Abd-Alrhman Masalkhi <abd.masalkhi@gmail.com>
+To: sashiko-reviews@lists.linux.dev
+Cc: yukuai@fygo.io, linux-raid@vger.kernel.org
+Subject: Re: [PATCH] md/raid1: release barrier when REQ_NOWAIT write would
+ block
+In-Reply-To: <20260611134130.B4E911F00893@smtp.kernel.org>
+References: <20260611132500.763528-1-abd.masalkhi@gmail.com>
+ <20260611134130.B4E911F00893@smtp.kernel.org>
+Date: Fri, 12 Jun 2026 07:27:54 +0200
+Message-ID: <m24ij8xr8l.fsf@gmail.com>
 Precedence: bulk
 X-Mailing-List: sashiko-reviews@lists.linux.dev
 List-Id: <sashiko-reviews.lists.linux.dev>
 List-Subscribe: <mailto:sashiko-reviews+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:sashiko-reviews+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-X-OriginatorOrg: oss.nxp.com
-X-MS-Exchange-CrossTenant-AuthAs: Internal
-X-MS-Exchange-CrossTenant-AuthSource: DU2PR04MB8629.eurprd04.prod.outlook.com
-X-MS-Exchange-CrossTenant-Network-Message-Id: 5fa1eb08-02ca-42f7-2483-08dec832a058
-X-MS-Exchange-CrossTenant-originalarrivaltime: 12 Jun 2026 03:28:09.6727
- (UTC)
-X-MS-Exchange-CrossTenant-fromentityheader: Hosted
-X-MS-Exchange-CrossTenant-id: 686ea1d3-bc2b-4c6f-a92c-d99c5c301635
-X-MS-Exchange-CrossTenant-mailboxtype: HOSTED
-X-MS-Exchange-CrossTenant-userprincipalname: JDS6G8GaiCIwoE9/zyWv6F9QHtFFsAWeqg3KmjiBtZtSPi24teF0oINoSKlX+f6pNmI7M1DOo9Q58a+es+zy1A==
-X-MS-Exchange-Transport-CrossTenantHeadersStamped: DB8PR04MB6938
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: quoted-printable
 
-PiA+ICtzdGF0aWMgdTE2IGVuZXRjX21zZ19oYW5kbGVfbGlua19zcGVlZChzdHJ1Y3QgZW5ldGNf
-cGYgKnBmLCBpbnQgdmZfaWQsDQo+ID4gKwkJCQkgICAgICAgdm9pZCAqdmZfbXNnKQ0KPiA+ICt7
-DQo+ID4gKwlzdHJ1Y3QgZW5ldGNfbXNnX2hlYWRlciAqbXNnX2hkciA9IHZmX21zZzsNCj4gDQo+
-IFtTZXZlcml0eTogSGlnaF0NCj4gVGhpcyBpc24ndCBhIGJ1ZyBpbnRyb2R1Y2VkIGJ5IHRoaXMg
-cGF0Y2gsIGJ1dCBjb3VsZCB1bnZhbGlkYXRlZCBtZXNzYWdlDQo+IGxlbmd0aHMgbGVhZCB0byBv
-dXQtb2YtYm91bmRzIGhlYXAgcmVhZHMgaW4gbWFpbGJveCBoYW5kbGVycz8NCj4gDQo+IEluIGV4
-aXN0aW5nIGhhbmRsZXJzLCB0aGUgUEYgZHJpdmVyIGNhbGN1bGF0ZXMgdGhlIGFsbG9jYXRpb24g
-c2l6ZSBiYXNlZCBvbg0KPiBtc2dfaGRyLT5sZW4gKGUuZy4sIG1zZ19zaXplID0gMTYgKyBsZW4p
-IGFuZCBhbGxvY2F0ZXMgYSBidWZmZXIuIElmIGEgdHJ1c3RlZA0KPiBWRiBzZW5kcyBhIG1lc3Nh
-Z2Ugd2l0aCBhbiBhcnRpZmljaWFsbHkgc21hbGwgbGVuZ3RoIGxpa2UgMCwgb25seSAxNiBieXRl
-cw0KPiBhcmUgYWxsb2NhdGVkLg0KPiANCj4gSG93ZXZlciwgaGFuZGxlcnMgY2FzdCB0aGlzIGJ1
-ZmZlciB0byBsYXJnZXIgc3RydWN0dXJlcyBhbmQgcmVhZCBmaWVsZHMNCj4gb3V0c2lkZSB0aGUg
-Ym91bmRzOg0KPiANCj4gZW5ldGNfbXNnX3NldF92Zl9wcmltYXJ5X21hY19hZGRyKCkgew0KPiAg
-ICAgLi4uDQo+ICAgICBjaGFyICphZGRyID0gbXNnLT5tYWNbMF0uYWRkcjsNCj4gICAgIC4uLg0K
-PiAgICAgaWYgKCFpc192YWxpZF9ldGhlcl9hZGRyKGFkZHIpKSB7DQo+ICAgICAuLi4NCj4gICAg
-ICAgICBlbmV0Y19zZXRfc2lfaHdfYWRkcihwZiwgdmZfaWQgKyAxLCBhZGRyKTsNCj4gICAgIC4u
-Lg0KPiB9DQo+IA0KPiBTaW5jZSBtc2ctPm1hY1swXS5hZGRyIHN0YXJ0cyBhdCBvZmZzZXQgMjAs
-IHJlYWRpbmcgaXQgZnJvbSBhIDE2LWJ5dGUNCj4gYnVmZmVyIGNhdXNlcyBhbiBvdXQtb2YtYm91
-bmRzIGhlYXAgcmVhZCwgd2hpY2ggY291bGQgbGVhayBzZW5zaXRpdmUga2VybmVsDQo+IG1lbW9y
-eSBpbnRvIHRoZSBkZXZpY2UgTUFDIGFkZHJlc3MgcmVnaXN0ZXJzIG9yIGNyYXNoIHRoZSBob3N0
-IGtlcm5lbC4gU2hvdWxkDQo+IG1lc3NhZ2UgbGVuZ3RocyBiZSB2YWxpZGF0ZWQgYWdhaW5zdCB0
-aGUgZXhwZWN0ZWQgc3RydWN0dXJlIHNpemUgYmVmb3JlDQo+IHByb2Nlc3NpbmcgdGhlIG1lc3Nh
-Z2VzPw0KDQpUaGlzIGlzIGEgZmFsc2UgcG9zaXRpdmUuDQpUaGUgUEYgYWxsb2NhdGVzIDEwMjQg
-Ynl0ZXMgdG8gdGhlIERNQSBidWZmZXIgZm9yIG1lc3NhZ2VzLiBFdmVuIGlmIHRoZSBWRg0Kc2Vu
-ZHMgYSBtZXNzYWdlIG9mIDAgb3IgbGVzcyB0aGFuIHRoZSBleHBlY3RlZCBsZW5ndGgsIGl0IHdp
-bGwgbm90IGNhdXNlIGFuDQpvdXQtb2YtYm91bmRzIHByb2JsZW0gYmVjYXVzZSB0aGUgUEYgYWx3
-YXlzIGNvcGllcyB0aGUgZXhwZWN0ZWQgbGVuZ3RoDQptZXNzYWdlIGZyb20gdGhlIERNQSBidWZm
-ZXIuIEFkZGl0aW9uYWxseSwgdGhlIFBGIHBlcmZvcm1zIGEgQ1JDIGNoZWNrDQpvbiB0aGUgbWVz
-c2FnZXMuDQoNCg==
+On Thu, Jun 11, 2026 at 13:41 +0000, sashiko-bot@kernel.org wrote:
+> Thank you for your contribution! Sashiko AI review found 3 potential issu=
+e(s) to consider:
+>
+> Pre-existing issues:
+> - [Critical] Missing RCU read lock around `conf->mirrors[i].rdev` access =
+in `wait_blocked_rdev()`.
+I'm not quite sure whether this is a real bug.
+
+> - [High] Early failure paths in `raid1_write_request()` leak the `mddev->=
+writes_pending` reference.
+I'll submit a v2 containing this fix, along with the fix for the
+mddev->writes_pending
+
+> - [High] Allocating bios and r1bios can sleep even when the `REQ_NOWAIT` =
+flag is set.
+@kuai, Should I handle this issue as well, or should I just ignore it
+for now?
+
+> --
+>
+> commit 3db9da0ec804800aa3afb93361ccd18de39ce5f0
+> Author: Abd-Alrhman Masalkhi <abd.masalkhi@gmail.com>
+>
+> md/raid1: release barrier when REQ_NOWAIT write would block
+>
+> raid1_write_request() leaks the barrier reference taken by wait_barrier()
+> if wait_blocked_rdev() fails for a REQ_NOWAIT write. This patch releases
+> the barrier on this failure path to prevent array freeze hangs.
+>
+> Closes: https://sashiko.dev/#/patchset/20260611083514.754922-1-abd.masalk=
+hi@gmail.com?part=3D1
+>
+>> diff --git a/drivers/md/raid1.c b/drivers/md/raid1.c
+>> index 5b9368bd9e700..f3cc30932ba2b 100644
+>> --- a/drivers/md/raid1.c
+>> +++ b/drivers/md/raid1.c
+>> @@ -1512,6 +1512,7 @@ static void raid1_write_request(struct mddev *mdde=
+v, struct bio *bio,
+>>  	int max_sectors;
+>>  	bool write_behind =3D false;
+>>  	bool is_discard =3D (bio_op(bio) =3D=3D REQ_OP_DISCARD);
+>> +	sector_t sector =3D bio->bi_iter.bi_sector;
+>>=20=20
+>>  	if (mddev_is_clustered(mddev) &&
+>>  	    mddev->cluster_ops->area_resyncing(mddev, WRITE,
+>> @@ -1540,6 +1541,7 @@ static void raid1_write_request(struct mddev *mdde=
+v, struct bio *bio,
+>>=20=20
+>>  	if (!wait_blocked_rdev(mddev, bio)) {
+>>  		bio_wouldblock_error(bio);
+>> +		allow_barrier(conf, sector);
+>
+> [Severity: High]
+> This is a pre-existing issue, but does this early return path also leak t=
+he
+> mddev->writes_pending reference?
+>
+> In raid1_make_request(), md_write_start() unconditionally takes a per-cpu
+> reference on mddev->writes_pending before calling raid1_write_request().
+> Normally, this is released via md_write_end() inside close_write().
+>
+> By directly returning here after bio_wouldblock_error(bio), we never call
+> md_write_end(). Does this permanently leak the writes_pending counter and
+> prevent the array from transitioning to a clean state?
+>
+> It looks like this same leak exists on the clustered area_resyncing and
+> wait_barrier REQ_NOWAIT failure paths earlier in this function, as well as
+> the err_handle path if bio_submit_split_bioset() fails.
+>
+>>  		return;
+>>  	}
+>
+> [Severity: Critical]
+> This is a pre-existing issue, but is it safe to call wait_blocked_rdev()
+> here without holding the RCU read lock?
+>
+> Looking at wait_blocked_rdev():
+>
+> 	for (i =3D 0; i < disks; i++) {
+> 		struct md_rdev *rdev =3D conf->mirrors[i].rdev;
+>
+> 		if (!rdev)
+> 			continue;
+>
+> 		/* don't write here until the bad block is acknowledged */
+> 		if (test_bit(WriteErrorSeen, &rdev->flags) &&
+>
+> It accesses the rdev pointer and its fields without rcu_read_lock().
+> Could a concurrent device removal (via md_ioctl -> raid1_remove_conf)
+> replace the pointer with NULL and free the rdev structure while we are
+> dereferencing it here, resulting in a use-after-free?
+>
+> [Severity: High]
+> This is also a pre-existing issue, but if we proceed past this point for a
+> REQ_NOWAIT bio, we call alloc_r1bio() and eventually bio_alloc_clone(),
+> both of which use GFP_NOIO.
+>
+> Since memory pool allocations with GFP_NOIO can block when the mempool is
+> exhausted under memory pressure, could this cause REQ_NOWAIT writes to
+> sleep, defeating the purpose of the REQ_NOWAIT flag?
+>
+> --=20
+> Sashiko AI review =C2=B7 https://sashiko.dev/#/patchset/20260611132500.76=
+3528-1-abd.masalkhi@gmail.com?part=3D1
+
+--=20
+Best Regards,
+Abd-Alrhman
