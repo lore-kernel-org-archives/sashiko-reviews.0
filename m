@@ -1,163 +1,184 @@
-Received: from mail.loongson.cn (mail.loongson.cn [114.242.206.163])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 1FF51372056;
-	Fri, 12 Jun 2026 02:02:51 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=114.242.206.163
-ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1781229777; cv=none; b=JE6oPCn0XGmn652qhkzYOc7RuI6JWcKaKsvn11Tl2LCkHLW29Ydhxnq1jHFTjmBY3oiyyjHBLn9iFrsI+mZF0TMkYbTLLOmdSZ1DRdISto4VtBa3XYSehsS2YCStpdiGQHhPqvg/m1LGU7b7svIP9O7x9K+0dOSs/lETvzZmiAA=
-ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1781229777; c=relaxed/simple;
-	bh=EYg/L3M5bcDmxoGhkwP6K60O0aaKPTs2U6yI2h7Q6Hw=;
-	h=Subject:To:Cc:References:From:Message-ID:Date:MIME-Version:
-	 In-Reply-To:Content-Type; b=RkJZvRaxXz1/AZErshPwr0i/OvZCzcP4/HQu+7hgUZjMhdfz+CMGhCmEYn5mrSJNMQrD1yupU+qGbKvUUOQ732nhzJktx2umfvzc+8LOtHdlhjio5ii2TlvAvreM1v8H3AUGD5azvWTKEod0l9O/+Sbi1+tSEywZp47K5Jn2Qcg=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=loongson.cn; spf=pass smtp.mailfrom=loongson.cn; arc=none smtp.client-ip=114.242.206.163
-Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=loongson.cn
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=loongson.cn
-Received: from loongson.cn (unknown [113.200.148.30])
-	by gateway (Coremail) with SMTP id _____8AxVunEaCtqKVATAA--.45328S3;
-	Fri, 12 Jun 2026 10:02:45 +0800 (CST)
-Received: from [10.130.40.83] (unknown [113.200.148.30])
-	by front1 (Coremail) with SMTP id qMiowJAx28G_aCtq7HijAA--.47351S3;
-	Fri, 12 Jun 2026 10:02:41 +0800 (CST)
-Subject: Re: [PATCH v3 1/3] LoongArch: Implement CONFIG_THREAD_INFO_IN_TASK
-To: sashiko-reviews@lists.linux.dev
-Cc: bpf@vger.kernel.org, Huacai Chen <chenhuacai@kernel.org>,
- loongarch@lists.linux.dev, WANG Rui <wangrui@loongson.cn>
-References: <20260612011616.27771-2-yangtiezhu@loongson.cn>
- <20260612012945.1CB951F000E9@smtp.kernel.org>
-From: Tiezhu Yang <yangtiezhu@loongson.cn>
-Message-ID: <05dce31c-91e1-117f-07b5-5c480d25d55d@loongson.cn>
-Date: Fri, 12 Jun 2026 10:02:39 +0800
-User-Agent: Mozilla/5.0 (X11; Linux loongarch64; rv:68.0) Gecko/20100101
- Thunderbird/68.7.0
+Received: from OSPPR02CU001.outbound.protection.outlook.com (mail-norwayeastazon11013033.outbound.protection.outlook.com [40.107.159.33])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+	(No client certificate requested)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CB3CE2FF66A;
+	Fri, 12 Jun 2026 02:29:30 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=fail smtp.client-ip=40.107.159.33
+ARC-Seal:i=2; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
+	t=1781231372; cv=fail; b=GPbgFu9fuVYyV3cBbELauHhkwVhHsSSvThESugxCo9pXyywSPaFfl3F/5n9vlks06V/qR704Cjaryj5z5BHknacQGjutjhxYLnPLM2RY1V3v/cYkli/V4uJM53p29tb3YUNNSh5mb6T/lThFp26nsfMgd+cb/m4zmg3tbyBW+1o=
+ARC-Message-Signature:i=2; a=rsa-sha256; d=subspace.kernel.org;
+	s=arc-20240116; t=1781231372; c=relaxed/simple;
+	bh=j62QPZ3HFr+NYV+q3vo+gCQdrMhVI2NCvLgp1W8uGbw=;
+	h=From:To:CC:Subject:Date:Message-ID:References:In-Reply-To:
+	 Content-Type:MIME-Version; b=tk8mjBuNumhghEBpD8XBYowExdCaq11lEC0m7rQIFstYd8/fYMFddvAa4/68+XstSIKse2RHiapCU8TgyK/h+x8IOMa0lu/+4C1rK1LI6M4Qji9xKKgWJAN3QkmxxAv9tfJkWyNbUUixrlNlDb/RHrTCHa7MIjCThZ/lNkF49rE=
+ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=oss.nxp.com; spf=pass smtp.mailfrom=oss.nxp.com; dkim=pass (2048-bit key) header.d=NXP1.onmicrosoft.com header.i=@NXP1.onmicrosoft.com header.b=BMZs+FPq; arc=fail smtp.client-ip=40.107.159.33
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=oss.nxp.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=oss.nxp.com
+Authentication-Results: smtp.subspace.kernel.org;
+	dkim=pass (2048-bit key) header.d=NXP1.onmicrosoft.com header.i=@NXP1.onmicrosoft.com header.b="BMZs+FPq"
+ARC-Seal: i=1; a=rsa-sha256; s=arcselector10001; d=microsoft.com; cv=none;
+ b=buWERC6fXf160krytoFHVQ1xdGYUuTauhf490j1+uB2TG6aeqR9bKoOBFe9+Q0KSDYIxWHHXKvx5kTAUuk8Qb6iqkFvppCan3zVnOfSceaapEoZ8Y7fEN+Up/nOBMIxJ9nKAkGhpSDa1Sfzaq/5IthvP6aXQzNW1Z63CP255t/Qv7djmnC3ElqVrpTcjrOpbMdwuB8ZQP6eLmIg+o806CAnWmnZFCz8ul7y6/SBtaHiSno3Gs3CZk18sN0om47BTfefc8+tD6jtrDYuMdK9atwVeM6Vvm4XhUio9nrbZH8no4JJf1+3z8W/A8SpueOvzhAqylvNr1tehXqcukwSL3g==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com;
+ s=arcselector10001;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
+ bh=j62QPZ3HFr+NYV+q3vo+gCQdrMhVI2NCvLgp1W8uGbw=;
+ b=thrql+p6C6G4CHawcm6R0MoITMol6NV7LzSUylF63Wj2YyiPt+P+FknlbjwtM3ePmdPjVswJHX/ciRk0rd0AzRpA7Xs3marqbroI2Bc6LZQaCaWCH9LBrBYRywbxkUM1pNC3HiQvEOGNfsrceTWxtd5/8gjumeHbh9p5+N9xaFTLPh1zTcKs38o7lJgquiUmQDHO8w4EcwH649hO4gnO9rwq/SWPBBRejlks2idrNahUPYBGCe1WHWcW8ji3eVFOpVawcykUWSkrOCBusCqT/94r1FUH3oj3xMwGSrdZXWs2MiD/VOzNDKAZ9HMS5rjg1/+gMlRk/ucod1LiqAKs5Q==
+ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
+ smtp.mailfrom=oss.nxp.com; dmarc=pass action=none header.from=oss.nxp.com;
+ dkim=pass header.d=oss.nxp.com; arc=none
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=NXP1.onmicrosoft.com;
+ s=selector1-NXP1-onmicrosoft-com;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
+ bh=j62QPZ3HFr+NYV+q3vo+gCQdrMhVI2NCvLgp1W8uGbw=;
+ b=BMZs+FPq54atS+0kDZ0A40/ZTswkEWbpydHdbAjlXRn4UgWe82nAQBJCnI27HjRvV1D65b5h69PzkJZ3sRfRkzy+5aDYXakb3feYSpYh8lo7kIGxvyK/w4szQ4viU351S2x069WsmGnvucE4VBMkxL3Tn2cOdczaQVNziUrKhETv4n1LQd1c95nll17g+u42qrH20AjbMc9F954NuHUzC45hN2sY19y/HJ8mmv1QF0NfMFFO6+J9ViZmHSIvb83oDkX4ngKbAWPW4iymzeHOQGaoFNANTCf8ESV++nYWADQGxLnV6+FWNp8D5PhcRoLQ6qdvYmk0LWLfpczK9Lu18w==
+Received: from DU2PR04MB8629.eurprd04.prod.outlook.com (2603:10a6:10:2dc::6)
+ by AM9PR04MB8585.eurprd04.prod.outlook.com (2603:10a6:20b:438::13) with
+ Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.21.113.14; Fri, 12 Jun
+ 2026 02:29:26 +0000
+Received: from DU2PR04MB8629.eurprd04.prod.outlook.com
+ ([fe80::9d04:7526:a901:fe47]) by DU2PR04MB8629.eurprd04.prod.outlook.com
+ ([fe80::9d04:7526:a901:fe47%6]) with mapi id 15.21.0113.013; Fri, 12 Jun 2026
+ 02:29:26 +0000
+From: "Wei Fang (OSS)" <wei.fang@oss.nxp.com>
+To: "sashiko-reviews@lists.linux.dev" <sashiko-reviews@lists.linux.dev>
+CC: "Frank.Li@kernel.org" <Frank.Li@kernel.org>, "imx@lists.linux.dev"
+	<imx@lists.linux.dev>, network dev <netdev@vger.kernel.org>
+Subject: RE: [PATCH v5 net-next 5/9] net: dsa: netc: initialize the group
+ bitmap of ETT and ECT
+Thread-Topic: [PATCH v5 net-next 5/9] net: dsa: netc: initialize the group
+ bitmap of ETT and ECT
+Thread-Index: AQHc+Ue+Wx9OOMRDokWe7UmqSRcU5bY6L3oAgAAEhCA=
+Date: Fri, 12 Jun 2026 02:29:26 +0000
+Message-ID:
+ <DU2PR04MB862906517C7D1D2BB82E134188182@DU2PR04MB8629.eurprd04.prod.outlook.com>
+References: <20260611021458.2629145-6-wei.fang@oss.nxp.com>
+ <20260612021313.0C5651F00A3F@smtp.kernel.org>
+In-Reply-To: <20260612021313.0C5651F00A3F@smtp.kernel.org>
+Accept-Language: en-US
+Content-Language: en-US
+X-MS-Has-Attach:
+X-MS-TNEF-Correlator:
+authentication-results: dkim=none (message not signed)
+ header.d=none;dmarc=none action=none header.from=oss.nxp.com;
+x-ms-exchange-messagesentrepresentingtype: 1
+x-ms-publictraffictype: Email
+x-ms-traffictypediagnostic: DU2PR04MB8629:EE_|AM9PR04MB8585:EE_
+x-ms-office365-filtering-correlation-id: dfbf7600-3e3a-4fe8-db2b-08dec82a6c70
+x-ms-exchange-sharedmailbox-routingagent-processed: True
+x-ms-exchange-senderadcheck: 1
+x-ms-exchange-antispam-relay: 0
+x-microsoft-antispam:
+ BCL:0;ARA:13230040|19092799006|1800799024|366016|23010399003|376014|38070700021|18002099003|22082099003|6133799003|56012099006|11063799006|4143699003;
+x-microsoft-antispam-message-info:
+ D5QX9f8zCxcEFBSmW+9mtpXiwyeArr1E72/StVdW16hr+9jRLHoG8oMNahXZGtFoDwZAJuIYuIwnzdOlZ4++0B54GX0Gp47oA1TgF7KvAsGa4YnH42/Fiy71ZfUTu93vy9QCn1pcp54whQgnM6MLGuHQMvGWqaPhMmWXi6STlLUrvvsVTvPwa2IA9qVud/FS6odEH0X/iShjbaGzumuS0bCQs9r1zqdZtO0tzWvXTQsZtnDcTo1HqGnSLd+TnwkGnFZKT1TUT09n9T+HPSwOSvHaV3IIT+8GVJAACtmS8GB1oDKwYn+K6+EUw2cXFMJg1HJ+7+hCrDmzZmojbGpclVGwuAvZeBaGXXhWT0nrADOb0lJ8d0Vos+RPvr+S8nWP4rNG9LkUd9JXnxJu3Lhs3METjCWHZidWIsSX6JV+5vT+1jGWgH52bNp6juQl0oR3eD9955d4PJ9YmH7evaxoPR0gw4+D/IZA+YZ30ZG1va6b+MTucOK5MvOf9EScXPiFmyu9EoNcONUNTZ7t3fSK1FbnDHD5yj1Pn1pv7TG1xU59S51zvU9bgcsX9ijOLJsiviLn4nn+bLgJ4RlLJJEDgDLWGxaI9B98SsYyph4+iG9/YWo4GIWVd2nqGZr8zik0LSjNQ9zjnQPmMeMHGFdhq+Nvd6Jv7NTpT3MRIWv2PhsfPOkoUeNsmOkTE9aPPNpYJ/ePV9ziK0yIQXBgvCbV09z049XeOnpt4+qKT2d48GENgFNU7y+2+yIyCCkSlItA
+x-forefront-antispam-report:
+ CIP:255.255.255.255;CTRY:;LANG:en;SCL:1;SRV:;IPV:NLI;SFV:NSPM;H:DU2PR04MB8629.eurprd04.prod.outlook.com;PTR:;CAT:NONE;SFS:(13230040)(19092799006)(1800799024)(366016)(23010399003)(376014)(38070700021)(18002099003)(22082099003)(6133799003)(56012099006)(11063799006)(4143699003);DIR:OUT;SFP:1101;
+x-ms-exchange-antispam-messagedata-chunkcount: 1
+x-ms-exchange-antispam-messagedata-0:
+ =?utf-8?B?L05oMnB5YkFXNnl4YUVBVjlib2ZvSjFNVkRzSlBzbnBNV0dTaVVUNzB2bTQ0?=
+ =?utf-8?B?U1BNZGFoZEptMWIxUFpmWFdWdWE4cGF2cjlJU0p1dnpjNmFBbzF3RXBqR0NT?=
+ =?utf-8?B?Wnc4UndrbWhqb0pSb0tzUlRjVURNYU5PakNDRzh2ZjMwVzk4TmhqSVh5ZTZx?=
+ =?utf-8?B?SkdRUnBqN2ZFdW5Ua0pLNER3T2duOU16aVdRbTlHT3c1MERPb3ROcm53OWs5?=
+ =?utf-8?B?bUp6MlFVb0YzN0Q3dldab2dYcWM2WFQ4SjgySGx1NGF1aDJYYjh6YUhlUHUr?=
+ =?utf-8?B?bjRxTnlyRzBMRkdpUWpVbUtuTmxhdmlmcGpsOFZ3Qmd3bGQ4Z2ZzcVJEVHk0?=
+ =?utf-8?B?TGpDczZNTGdqaW53UUlkbGk3NTVsZXdObWlrTk5WaWhIb3pDQXZYWkxOaEl1?=
+ =?utf-8?B?ZGNhNVZkeHhVRnBEUlE0MzlVeXp6eDYvdXFxQnlJMm5SRmN4ZnA2U1pBMUNE?=
+ =?utf-8?B?UlNDWDJ6YkVZbnZBMHZKWjlVQmRxajk5THFZS3FnRCtWb2pyeEE5SElOTjMr?=
+ =?utf-8?B?UmVVU1g5dzdmRmpLVUVUb1hWaEJqWVA0aHBFOE9FWUJkMzVuNWROeEtsUHND?=
+ =?utf-8?B?SE9KWFR5QksxcUg3b1VDbU0rUDNDOCtOTzRpcjlwayszMVZzZmxjM2xKTnZQ?=
+ =?utf-8?B?VVNNdTd2TCthbG5qV1V0Tk5BMkgxckxaSmFBWSt5ZEFSUDdGZFltdjlEc0FP?=
+ =?utf-8?B?dXE0V3JvWk4xb0Q4WDU3eDVYM0w5MGE2eHhNVDBaMExvV25ZV0R5VkZPNlha?=
+ =?utf-8?B?R1lTTGJtWWJBSUhMbTFQMm9yUW10clBuRE9NeUlzUGN3MjM2bkJMdFdmWklZ?=
+ =?utf-8?B?a1J3cWNaWVMrM1ljdzgwUHN6cUFpeDl6S1dyakU3VzJ3RmxncW5BYTlUaW9U?=
+ =?utf-8?B?aGUwM2JEbnozZU9ORFlQMjNCOFB2eFNRTTZ6ZzdTREhPNGtWYkNFOGR0ZWhl?=
+ =?utf-8?B?TzFYWmVoWXFDdzdhNC9lMklwS3h6ZEwycWZNN2wydW95YXNGbUhyZDRGZENy?=
+ =?utf-8?B?MitOTktGN3RKS0tibFFTWElhb1lPeVZub1RkU3E1RkxOUy9CNkxxV0szendj?=
+ =?utf-8?B?ZzZHUm5kTWFWckkvbExEVk00eHMwWjlBRWtRUFA4Y0g5ZW9aUktxOGlZVUhj?=
+ =?utf-8?B?MVZSbTVPQjRMTTNsc1QrT2d4dGd0NnJzd3N2Yi8zRGxtY0cxdEZFVVpyVzRY?=
+ =?utf-8?B?VlJPM0kwQUJWVTdWelZhUnhySXNQNTY0QXI3bTYzMzYweDMwc0k3TjhSWGJY?=
+ =?utf-8?B?UkRzbmxBMmwzOFJIcnFMeGdtQWR6ZnJzOGZlMGROcENNVFB1SktqRHpDV045?=
+ =?utf-8?B?Ny95eHgxbDcyaVlJY1VZcTdjQ05Memd4QUhoTlNydGd5M3JmNDFSTzNhZEp3?=
+ =?utf-8?B?TzJIY1dBbFhHNzdHNWthdWhLanA3Z0RTdW9WQTdMaDllTXpzeXhmUE5PV0Iw?=
+ =?utf-8?B?UDVraHZlOUtGYUJENjVSOXMxVE0rSHNsUEJubW9meW1KSjFFNjZYeU5BMDE3?=
+ =?utf-8?B?MWNRZWc4emNwdk1EZVdFK2MwbEFOVlFiVGVDbjlnTnh5eGdZN25WRGp2YnU2?=
+ =?utf-8?B?SEt1TUdsVTJKNmh3OGRwN1VRZWFxbWhCdGdsWWRaZjM3RitHVG8xTk9ydTJm?=
+ =?utf-8?B?Rlo3bEh2M094VGVSSEkrNmJ3Si9wUXo4VWJtS2ZITHp2MTBvMmliVGs4NitS?=
+ =?utf-8?B?Z3kySFRnNHRwZkRMNHdFZC8yY2phNmNoNVVIWWpmZnN4WFA3V0MrUGpmaDk3?=
+ =?utf-8?B?TlhVbVUrNW81VXJUa1ZwMHNyT3ZISmhXNFFZN29IZXc5ZW8vWnc5YkNaeFpU?=
+ =?utf-8?B?VlJWQnVHVFhjRUx6ZjJCODZwY1pKaHFSd0dmeW4wOEdGWENKRS8vditwUktE?=
+ =?utf-8?B?ZFBXeWQ5YVREb09CUHcweGo4VkZ5SVAzMENZNjEwNWVtYlRQK0NmV2VEWUlR?=
+ =?utf-8?B?QXUya3FoeExOem1BbGEvbTdFajBGVFBYL3NacmZNMGs3ampncEMyRCtoQWV5?=
+ =?utf-8?B?anNSbEVoQS9BaE1yRi9LbHNrV1lKUjlreGhmbUVkbkZwcjA4QmkrbmpDL25y?=
+ =?utf-8?B?L2g2cHRaSkRUZDZSanlDUEdObzQyeXJCYjVkZmloUVFsVlFpekQxcTRlN0NP?=
+ =?utf-8?B?dnlwMnpHMDc1ZDVLdithdkdPQkl2UUlFMVZobTVhU0psK0ZVS0IvUWcyakw3?=
+ =?utf-8?B?a2Zlb3R2cjY5cUdtQTdrVE1sSXVkQTZPRmNGbXBkQllVbnQxdW9SM09zVTR5?=
+ =?utf-8?B?Y2pxQ3A5eEtkVHV1b0U5TmVtYUNXNkltak9aZFErMlBoNkc5SUxVOWtQZHda?=
+ =?utf-8?Q?ltAr80CfcwuOkM4Kms?=
+Content-Type: text/plain; charset="utf-8"
+Content-Transfer-Encoding: base64
 Precedence: bulk
 X-Mailing-List: sashiko-reviews@lists.linux.dev
 List-Id: <sashiko-reviews.lists.linux.dev>
 List-Subscribe: <mailto:sashiko-reviews+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:sashiko-reviews+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-In-Reply-To: <20260612012945.1CB951F000E9@smtp.kernel.org>
-Content-Type: text/plain; charset=utf-8; format=flowed
-Content-Language: en-US
-Content-Transfer-Encoding: 8bit
-X-CM-TRANSID:qMiowJAx28G_aCtq7HijAA--.47351S3
-X-CM-SenderInfo: p1dqw3xlh2x3gn0dqz5rrqw2lrqou0/
-X-Coremail-Antispam: 1Uk129KBj93XoWxurykGFWxKFWxAw47ZFy5GFX_yoWrWF48p3
-	4akr17tr48Jr1Iv3W8Cw48ZFyrC397Ar13Gr4kCFyrt3Z0yrnYqr4Iqas5Zw15uw1fK34S
-	vrWqyr929a1DJagCm3ZEXasCq-sJn29KB7ZKAUJUUUU5529EdanIXcx71UUUUU7KY7ZEXa
-	sCq-sGcSsGvfJ3Ic02F40EFcxC0VAKzVAqx4xG6I80ebIjqfuFe4nvWSU5nxnvy29KBjDU
-	0xBIdaVrnRJUUU92b4IE77IF4wAFF20E14v26r1j6r4UM7CY07I20VC2zVCF04k26cxKx2
-	IYs7xG6rWj6s0DM7CIcVAFz4kK6r1j6r18M28lY4IEw2IIxxk0rwA2F7IY1VAKz4vEj48v
-	e4kI8wA2z4x0Y4vE2Ix0cI8IcVAFwI0_JFI_Gr1l84ACjcxK6xIIjxv20xvEc7CjxVAFwI
-	0_Gr0_Cr1l84ACjcxK6I8E87Iv67AKxVW8JVWxJwA2z4x0Y4vEx4A2jsIEc7CjxVAFwI0_
-	Gr0_Gr1UM2AIxVAIcxkEcVAq07x20xvEncxIr21l57IF6xkI12xvs2x26I8E6xACxx1l5I
-	8CrVACY4xI64kE6c02F40Ex7xfMcIj6xIIjxv20xvE14v26r1Y6r17McIj6I8E87Iv67AK
-	xVW8JVWxJwAm72CE4IkC6x0Yz7v_Jr0_Gr1lF7xvr2IY64vIr41lc7I2V7IY0VAS07AlzV
-	AYIcxG8wCF04k20xvY0x0EwIxGrwCFx2IqxVCFs4IE7xkEbVWUJVW8JwCFI7km07C267AK
-	xVWUXVWUAwC20s026c02F40E14v26r1j6r18MI8I3I0E7480Y4vE14v26r106r1rMI8E67
-	AF67kF1VAFwI0_JF0_Jw1lIxkGc2Ij64vIr41lIxAIcVC0I7IYx2IY67AKxVWUJVWUCwCI
-	42IY6xIIjxv20xvEc7CjxVAFwI0_Jr0_Gr1lIxAIcVCF04k26cxKx2IYs7xG6r1j6r1xMI
-	IF0xvEx4A2jsIE14v26r4j6F4UMIIF0xvEx4A2jsIEc7CjxVAFwI0_Gr0_Gr1UYxBIdaVF
-	xhVjvjDU0xZFpf9x07jb_-PUUUUU=
+X-OriginatorOrg: oss.nxp.com
+X-MS-Exchange-CrossTenant-AuthAs: Internal
+X-MS-Exchange-CrossTenant-AuthSource: DU2PR04MB8629.eurprd04.prod.outlook.com
+X-MS-Exchange-CrossTenant-Network-Message-Id: dfbf7600-3e3a-4fe8-db2b-08dec82a6c70
+X-MS-Exchange-CrossTenant-originalarrivaltime: 12 Jun 2026 02:29:26.6491
+ (UTC)
+X-MS-Exchange-CrossTenant-fromentityheader: Hosted
+X-MS-Exchange-CrossTenant-id: 686ea1d3-bc2b-4c6f-a92c-d99c5c301635
+X-MS-Exchange-CrossTenant-mailboxtype: HOSTED
+X-MS-Exchange-CrossTenant-userprincipalname: 7o1YGPV6BLCp1GIw7CGhHfjUgBBprw9hvVo1BwFwRAxqi3ziwjfOWZb6Trk57ZL4dA7fK+Wibmn20UUI6zpizg==
+X-MS-Exchange-Transport-CrossTenantHeadersStamped: AM9PR04MB8585
 
-On 2026/6/12 上午9:29, sashiko-bot@kernel.org wrote:
-> Thank you for your contribution! Sashiko AI review found 1 potential issue(s) to consider:
-> - [High] Temporary biased `$tp` on 32-bit LoongArch causes infinite recursive faults during panic/exceptions, breaking stack traces and debuggability.
-> --
-> 
-> commit 031d5abd58aa95ea089ae24763bb03c5e684dbc3
-> Author: Tiezhu Yang <yangtiezhu@loongson.cn>
-> 
-> LoongArch: Implement CONFIG_THREAD_INFO_IN_TASK
-> 
-> Select THREAD_INFO_IN_TASK for LoongArch to move thread_info off the
-> stack into task_struct. This updates the thread pointer recovery path
-> and context switch logic to adapt to the new layout.
-> 
->> In the context of __switch_to(), local interrupts are disabled, and the
->> kernel is in a critical switching phase where handling any synchronous
->> exception is practically impossible and prohibited.
->>
->> If any synchronous exception or watchpoint does trigger in this narrow
->> window, it constitutes a fatal double fault and the kernel is expected
->> to die/panic immediately anyway. Therefore, the temporary biased value
->> in $tp is safe and acceptable here.
-> 
-> [Severity: High]
-> Could this temporary biased value in $tp on 32-bit kernels prevent the
-> system from printing the expected panic trace and instead cause an
-> infinite recursive fault?
-> 
-> If an exception like a hardware watchpoint, NMI watchdog, or machine
-> check triggers in this window, the unwinder calls show_stacktrace(),
-> which defaults to current:
-> 
-> arch/loongarch/kernel/traps.c:show_stacktrace() {
->          if (!task)
->                  task = current;
-> 
->          if (!try_get_task_stack(task))
->                  return;
-> ...
-> 
-> Because current is derived from $tp, and $tp is offset by 2000 bytes
-> (TASK_STRUCT_OFFSET), accessing the task stack refcount inside
-> try_get_task_stack() will trigger a page fault.
-> 
-> The page fault handler then calls die(), which calls show_stacktrace()
-> again. This creates an infinite recursive fault and stack overflow
-> without printing the intended panic trace.
-> 
->> diff --git a/arch/loongarch/kernel/switch.S b/arch/loongarch/kernel/switch.S
->> index f377d8f5c51a6..d6e0d05d6fd39 100644
->> --- a/arch/loongarch/kernel/switch.S
->> +++ b/arch/loongarch/kernel/switch.S
-> [ ... ]
->> @@ -33,11 +33,12 @@ SYM_FUNC_START(__switch_to)
->>   	LONG_SPTR	t8, t7, 0
->>   #endif
->>   
->> -	move	tp, a2
->> +	move		tp, a1
->>   	cpu_restore_nonscratch a1
-> 
-> [Severity: High]
-> Is there an alternative way to handle the structural pointer bias for
-> 32-bit kernels without temporarily storing an invalid pointer in $tp,
-> so that panic handling and debuggability remain intact?
-
-Thanks for your review comments, I prefer to use
-"PTR_ADDI        tp, a1, -TASK_STRUCT_OFFSET"
-for both 64-bit and 32-bit here rather than use
-"move		tp, a1"
-for only 64-bit here.
-
-But I discussed with the LoongArch maintainer Huacai, here is his
-opinion in the previous v2:
-
-"As I said before, even if you use "PTR_ADDI        tp, a1,
--TASK_STRUCT_OFFSET", it is impossible to handle exceptions in
-__switch_to().
-
-It is a type of "double fault" if exceptions really happen, "double
-fault" means to die. So just keep it."
-
-In the commit message, there is a corresponding description:
-
-"To preserve the optimal and clean "move tp, a1" path for 64-bit kernels,
-the thread pointer ($tp) is assigned directly from a1 in the core path.
-For 32-bit kernels, where a1 carries a 2000-byte structural pointer bias
-at entry, an explicit adjustment "PTR_ADDI tp, tp, -TASK_STRUCT_OFFSET"
-is introduced at the function exit.
-
-In the context of __switch_to(), local interrupts are disabled, and the
-kernel is in a critical switching phase where handling any synchronous
-exception is practically impossible and prohibited.
-
-If any synchronous exception or watchpoint does trigger in this narrow
-window, it constitutes a fatal double fault and the kernel is expected
-to die/panic immediately anyway. Therefore, the temporary biased value
-in $tp is safe and acceptable here."
-
-Thanks,
-Tiezhu
-
+PiA+IGRpZmYgLS1naXQgYS9kcml2ZXJzL25ldC9kc2EvbmV0Yy9uZXRjX21haW4uYw0KPiBiL2Ry
+aXZlcnMvbmV0L2RzYS9uZXRjL25ldGNfbWFpbi5jDQo+ID4gaW5kZXggZmE3ZGQzMDdjZTEzMC4u
+ZDQ0NzVhZDdlZDZjMiAxMDA2NDQNCj4gPiAtLS0gYS9kcml2ZXJzL25ldC9kc2EvbmV0Yy9uZXRj
+X21haW4uYw0KPiA+ICsrKyBiL2RyaXZlcnMvbmV0L2RzYS9uZXRjL25ldGNfbWFpbi5jDQo+IFsg
+Li4uIF0NCj4gPiArc3RhdGljIHUzMiBuZXRjX251bV9hdmFpbGFibGVfcG9ydHMoc3RydWN0IG5l
+dGNfc3dpdGNoICpwcml2KQ0KPiA+ICt7DQo+ID4gKwlzdHJ1Y3QgZHNhX3BvcnQgKmRwOw0KPiA+
+ICsJdTMyIG51bV9wb3J0cyA9IDA7DQo+ID4gKw0KPiA+ICsJZHNhX3N3aXRjaF9mb3JfZWFjaF9h
+dmFpbGFibGVfcG9ydChkcCwgcHJpdi0+ZHMpDQo+ID4gKwkJbnVtX3BvcnRzKys7DQo+ID4gKw0K
+PiA+ICsJcmV0dXJuIG51bV9wb3J0czsNCj4gPiArfQ0KPiA+ICsNCj4gPiArc3RhdGljIGludCBu
+ZXRjX2luaXRfbnRtcF9iaXRtYXBfc2l6ZXMoc3RydWN0IG5ldGNfc3dpdGNoICpwcml2KQ0KPiA+
+ICt7DQo+ID4gKwl1MzIgbnVtX3BvcnRzID0gbmV0Y19udW1fYXZhaWxhYmxlX3BvcnRzKHByaXYp
+Ow0KPiA+ICsJc3RydWN0IG5ldGNfc3dpdGNoX3JlZ3MgKnJlZ3MgPSAmcHJpdi0+cmVnczsNCj4g
+PiArCXN0cnVjdCBudG1wX3VzZXIgKm50bXAgPSAmcHJpdi0+bnRtcDsNCj4gPiArCXUzMiB2YWw7
+DQo+ID4gKw0KPiA+ICsJaWYgKCFudW1fcG9ydHMpDQo+ID4gKwkJcmV0dXJuIC1FSU5WQUw7DQo+
+ID4gKw0KPiA+ICsJdmFsID0gbmV0Y19iYXNlX3JkKHJlZ3MsIE5FVENfRVRUQ0FQUik7DQo+ID4g
+KwludG1wLT5ldHRfYml0bWFwX3NpemUgPSBORVRDX0dFVF9OVU1fRU5UUklFUyh2YWwpIC8gbnVt
+X3BvcnRzOw0KPiANCj4gW1NldmVyaXR5OiBIaWdoXQ0KPiBEb2VzIGNhbGN1bGF0aW5nIHRoZSBn
+cm91cCBzaXplIGJhc2VkIG9uIHRoZSBudW1iZXIgb2YgYXZhaWxhYmxlIHBvcnRzIHJhdGhlcg0K
+PiB0aGFuIHRoZSB0b3RhbCBwaHlzaWNhbCBoYXJkd2FyZSBwb3J0cyBjcmVhdGUgYW4gaXNzdWUg
+aWYgc29tZSBwb3J0cyBhcmUNCj4gZGlzYWJsZWQ/DQo+IA0KPiBJZiBhIGJvYXJkIGhhcyBkaXNh
+YmxlZCBwb3J0cywgdGhpcyB3aWxsIHByb2R1Y2UgYSBzbWFsbGVyIGdyb3VwIHNpemUuIFNpbmNl
+DQo+IHRoZSBoYXJkd2FyZSBpbmhlcmVudGx5IHVzZXMgdGhlIHVuY29tcHJlc3NlZCBwaHlzaWNh
+bCBwb3J0IElEIHRvIGluZGV4IGludG8NCj4gdGhlIEVUVC9FQ1QgZHVyaW5nIHBhY2tldCBlZ3Jl
+c3MsIGNvdWxkIHRoaXMgbGVhZCB0byBjcm9zcy1ncm91cCB0YWJsZQ0KPiBvdmVybGFwPw0KPiAN
+Cj4gRm9yIGV4YW1wbGUsIGlmIHBvcnQgMSBpcyBkaXNhYmxlZCBvbiBhIDQtcG9ydCBzd2l0Y2gs
+IHRoZSBncm91cCBzaXplIGJlY29tZXMNCj4gMy4gSWYgc29mdHdhcmUgcHJvZ3JhbXMgcG9ydCAz
+J3MgY29uZmlndXJhdGlvbiBhdCBiYXNlICsgMiwgYnV0IHRoZSBoYXJkd2FyZQ0KPiBhY2Nlc3Nl
+cyBiYXNlICsgMyBvbiBwYWNrZXQgZWdyZXNzLCB3b24ndCB0aGlzIG92ZXJsYXAgd2l0aCB0aGUg
+c3RhcnQgb2YgdGhlDQo+IG5leHQgZ3JvdXAsIHBvdGVudGlhbGx5IGFwcGx5aW5nIGluY29ycmVj
+dCBlZ3Jlc3MgdHJlYXRtZW50cz8NCg0KVGhpcyBpcyBhIGZhbHNlIHBvc2l0aXZlLg0KDQpUbyBj
+b25zZXJ2ZSBFZ3Jlc3MgVHJlYXRtZW50IHRhYmxlIGVudHJpZXMsIGFuIEVncmVzcyBUcmVhdG1l
+bnQgZ3JvdXAgY2FuDQpvbWl0IHRhYmxlIGVudHJpZXMgZm9yIHBvcnRzIGZvciB3aGljaCB0aGVy
+ZSBpcyBubyBzcGVjaWFsIHRyZWF0bWVudCBmb3IgdGhhdA0Kc2NvcGUgb2YgcGFja2V0cy4gVGhl
+cmVmb3JlIHdpdGhpbiB0aGUgaGFyZHdhcmUsIGFuIEVncmVzcyBUcmVhdG1lbnQgZ3JvdXANCmlz
+IGRldGVybWluZWQgYnkgYSBiYXNlIGluZGV4IChmaXJzdCBFZ3Jlc3MgVHJlYXRtZW50IHRhYmxl
+IGVudHJ5IG9mIHRoZSBncm91cCkNCmFuZCBhbiBhcHBsaWNhYmlsaXR5IHBvcnQgYml0bWFwIChh
+IGJpdG1hcCBjb3JyZXNwb25kaW5nIHRvIGFsbCBwb3J0cyBvZiB0aGUNCnN3aXRjaCkgd2hpY2gg
+aW5kaWNhdGVzICh3aXRoIGEgMSkgd2hpY2ggcG9ydHMgaGF2ZSBFZ3Jlc3MgVHJlYXRtZW50IHRh
+YmxlDQplbnRyaWVzLiBJbiBjdXJyZW50IGltcGxlbWVudGF0aW9uLCBvbmx5IHRoZSBhdmFpbGFi
+bGUgcG9ydHMgd2lsbCBiZSBzZXQgaW4gdGhlDQpldGFfcG9ydF9iaXRtYXAuDQoNCj4gDQo+ID4g
+KwlpZiAoIW50bXAtPmV0dF9iaXRtYXBfc2l6ZSkNCj4gPiArCQlyZXR1cm4gLUVJTlZBTDsNCj4g
+PiArDQo+ID4gKwl2YWwgPSBuZXRjX2Jhc2VfcmQocmVncywgTkVUQ19FQ1RDQVBSKTsNCj4gPiAr
+CW50bXAtPmVjdF9iaXRtYXBfc2l6ZSA9IE5FVENfR0VUX05VTV9FTlRSSUVTKHZhbCkgLyBudW1f
+cG9ydHM7DQo+IA0KPiBbU2V2ZXJpdHk6IEhpZ2hdDQo+IFNpbWlsYXJseSwgd2lsbCB1c2luZyB0
+aGUgYXZhaWxhYmxlIHBvcnRzIGNvdW50IGhlcmUgY2F1c2UgdGhlIHNhbWUgY3Jvc3MtZ3JvdXAN
+Cj4gYm91bmRhcnkgb3ZlcmxhcCBpc3N1ZSBmb3IgdGhlIEVDVCBncm91cCBzaXplIGR1cmluZyBo
+YXJkd2FyZSBhY2Nlc3Nlcz8NCg0KU2F2ZSBhcyBhYm92ZS4NCg0K
