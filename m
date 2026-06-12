@@ -1,342 +1,138 @@
-Received: from mail-dl1-f53.google.com (mail-dl1-f53.google.com [74.125.82.53])
+Received: from mail-wm1-f45.google.com (mail-wm1-f45.google.com [209.85.128.45])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6ABCF33F361
-	for <sashiko-reviews@lists.linux.dev>; Fri, 12 Jun 2026 06:03:59 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=pass smtp.client-ip=74.125.82.53
-ARC-Seal:i=2; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1781244240; cv=pass; b=ba7Gmt0VbyHuFkk6a5n4k+ZGVHp5K4Yqb3GLqzfsZMcUY6Fs0Fd4YYAt5JBBrh4tSXPdGXESlehQ0qmKx7eWXrSYfPfk1/R/pQpEn4gw+On41KgUjscQxOz7hGajhdBtYeApq0d37qa/PZzXGopZrwtIY+avehoQkyu1wSofCJk=
-ARC-Message-Signature:i=2; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1781244240; c=relaxed/simple;
-	bh=JChxOKHDMlUFH/AxUTSlme3Q4ZuCazL1Ek5LsdO+e+c=;
-	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
-	 To:Cc:Content-Type; b=QyeGoiCqQm7GGNL6xQMZ3faPr+i/FTPJXLXIFEFbskOhWlS5UXfmMMFuZSjL23MiNEK2V2nW9OHyDz6TnxIU2PgLGwG+SSqTpP5ugJjCuIYODTROpUlPLqjRALrdhpBdOs2eI9rA1EVLPkODXARMDw4sOjKoKZWqe3dhzC/wbRw=
-ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=google.com; spf=pass smtp.mailfrom=google.com; dkim=pass (2048-bit key) header.d=google.com header.i=@google.com header.b=K/OroR1T; arc=pass smtp.client-ip=74.125.82.53
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=google.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=google.com
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 88F4F3DBD48
+	for <sashiko-reviews@lists.linux.dev>; Fri, 12 Jun 2026 07:10:25 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.45
+ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
+	t=1781248231; cv=none; b=kewDZgIixf10NsWxk7zsXOtVSw7Y4Nk8PjRmX9oPEjLYncY0V9s/hgTOd6sznsUexBmEdA4LewZPORX5hVZDWCdjPkrHiSG1nhaO/pCd/GzZSNqPaGx7w4pNPyiot4D35EnlSpe8XRcYEIIKWRCltOBwiME1GFvdygnvLBDRj7Y=
+ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
+	s=arc-20240116; t=1781248231; c=relaxed/simple;
+	bh=ZygED/TgcSaqbUiAwx8S4bYpGHo6x10dsCPWD/CLMT4=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=i0Y5ZokS65STFw/YffpLvGxC+nYhVV6hs5iQo6TJ+W7sPWa18TjKC0vxM/DVXKMrb1X3du5js15ylOB6JmKSgr2LnrE8mb83xRyKlXZ6WlepKjcK4bodDKc1X1YcwILKj4Pw4Znv8uhT553To3bwfhreRF9M11VY7XD0A1dUFEg=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=baylibre.com; spf=pass smtp.mailfrom=baylibre.com; dkim=pass (2048-bit key) header.d=baylibre.com header.i=@baylibre.com header.b=WB+j5kB/; arc=none smtp.client-ip=209.85.128.45
+Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=baylibre.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=baylibre.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=google.com header.i=@google.com header.b="K/OroR1T"
-Received: by mail-dl1-f53.google.com with SMTP id a92af1059eb24-13807d2f898so681010c88.0
-        for <sashiko-reviews@lists.linux.dev>; Thu, 11 Jun 2026 23:03:59 -0700 (PDT)
-ARC-Seal: i=1; a=rsa-sha256; t=1781244238; cv=none;
-        d=google.com; s=arc-20240605;
-        b=hsRWWcWGZRx0y1x3bjKX2B/gJ1DW9pcolWF3wswLyR7jpJ8uDEfD7EBD9mcibmHSEw
-         xJtLjBy7Cr4Ihtk207bBx8YHgQ0lQvpjV5OFYDJqqy6HayzvL5Na+V4xek7GSkbvZLO8
-         geZblgxebOewFH4gAxtwtmuc76cxcp4OJAEjE0gnyh2s4XdJXDq/TaFYRTedm7U7+RqR
-         QOv2Z2T4bkrcTX4sS3roh6W1Q3DG5Pn0rAVXeVD8R3k1ID5zdTrkf08biur+zhwYyFbW
-         a1mqn0Adp/3xEc0Cve6yYQrfgt4xZOR1W8N1EmgZe15lMUjh2S5ZHtmEnv3xQwbWg+AW
-         vmcg==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com; s=arc-20240605;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:dkim-signature;
-        bh=wp35KpTh1/XiSIGSqXjoBqF9JP9w4suhLRUG1qQ2nnY=;
-        fh=uA360uvxR9S0K/Y4Lovo7aIaGlBwzVBnnb2BKWupr/4=;
-        b=lOrGCcGRCh7qa8QZEFFsbGwpEFXh12eTkQePO087Rc0IvTiRoOEugjujrsUYSzsAyY
-         6RO3MDn/juT1Y9KQidt7pSPBIaoJYD9RcZaXicGZ+x81PcrT5dvWodzYzsJXTszjiGhX
-         AsyATXT+wxJFYBoCcvXYUE3L/SefatcAzYsHkbpiGb6pw7M23yGaniuWlqpT0hbAuY3i
-         D7HWu6DvxF61Oj+TVFa/QuM0u/X5agZK4VMFL+qgvvDgVKalkOf4GIvNY+S0MJZsXtxF
-         mBTIPnDbTXCrGsXlYNMFccHsTbazKlw1mHjJsksZvwfj33EWe1zpDbV5a30cWdFnLuhm
-         5jiA==;
-        darn=lists.linux.dev
-ARC-Authentication-Results: i=1; mx.google.com; arc=none
+	dkim=pass (2048-bit key) header.d=baylibre.com header.i=@baylibre.com header.b="WB+j5kB/"
+Received: by mail-wm1-f45.google.com with SMTP id 5b1f17b1804b1-490b3637b90so4366295e9.3
+        for <sashiko-reviews@lists.linux.dev>; Fri, 12 Jun 2026 00:10:25 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=google.com; s=20251104; t=1781244238; x=1781849038; darn=lists.linux.dev;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=wp35KpTh1/XiSIGSqXjoBqF9JP9w4suhLRUG1qQ2nnY=;
-        b=K/OroR1TNzqU/jP3rzn4CDxPb0+uEP8cBqGYbdH4zVNjUlKGh0qv5Rto6CVfxRGkN1
-         5pa4EJIXUUU4q+SDz3mTOzWmIM5kQX4CXzzjYDUyhJHG5lDxNLeiOxsqaUG+mKWntHcD
-         NFqByuv+HcdUB+8F+ofoWdU/WCTllZNgBQvl6cK4Ed3B4Y0bUVKKFGdP+UAKYb/JSuO/
-         +3LHsYrloEA4QhZfqanB9nmUacr7QDeMDfCz6XyboqTFYET1wOXgd3arPoVLUiBvfvZi
-         zQsWXcyxwMGPdHvgDkEy2LItVyzxUQRu4vHgLHJhYUevRaozq1ojJKZxzUw3QghLq+j6
-         QX9Q==
+        d=baylibre.com; s=google; t=1781248223; x=1781853023; darn=lists.linux.dev;
+        h=in-reply-to:content-disposition:mime-version:references:message-id
+         :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
+        bh=ZygED/TgcSaqbUiAwx8S4bYpGHo6x10dsCPWD/CLMT4=;
+        b=WB+j5kB/jzDffStg4tgDyLoJq4JN0ZKur7vpAMf8s7x/4gD2U7Ok8Ig7zglZ4VL+JT
+         5bRi0hve1qBTdrTeg01jKmc+q5jPkgRe3nPUm3k7Rtu/Bp4hThPnA7P/at67c7Ah3aG4
+         Md9EMJP+3Zwp2dsdXg0fkNT1INoCaluZGJ75QoStmLwGtnweqhrY25OUcY6ToR8wPJAx
+         rL5DzEh3plsSOgBrUFLc8ODDE+o9AXWuKDaU8sD8PY1mLUCz9Jq97/CvukkO3OVjpmqP
+         aQmUZe5gPDn57pytUMvDH+44E4LBUgNYJSvCIH/GH5/616+ju6uz+0gzcePcZPUWL/mN
+         HSkA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20251104; t=1781244238; x=1781849038;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:x-gm-gg:x-gm-message-state:from
-         :to:cc:subject:date:message-id:reply-to;
-        bh=wp35KpTh1/XiSIGSqXjoBqF9JP9w4suhLRUG1qQ2nnY=;
-        b=Ze/JeywzEgNOEG8cHi+s6uPhNf/v0Y0RBZPnmA9DTlVJwmyQAZ39u+0HjH04Sdh7rK
-         wZCsxL4g5oubEpsGf/Q0kEMqY2bDyOVyg5lDdlq8Igx0j6qLmTAAYlubZRebW/gKIkSD
-         jI05f7NaMYGDfeR2JXfMByV+RiyhPyhEIUjeWjkjK4oRVXWHWrdTgfnkpFAN9vXtmnt3
-         xPy1uWXFOeo0XoNP9QEYWYbm0t/oiYTZxwXmJAkjn3HrUUi9AkOTIUhxzCZqo8x3kmJt
-         9k8/HDL8eg9Q7QNUj1kfcaR/5f6hd56rPr26flDh1Y6VUKQyt0T301C8CW505WufIn++
-         iVug==
-X-Gm-Message-State: AOJu0YwB3haJ+7q7H/LX2wAC5N/uzgAEl1mFaEBWMJJ33o0OwUD39k6h
-	v1nnbWs0l79Cl/rufpl1nFMt3nAb8CrTDpsYwslh2EIUXugtbdm8tgnmlzxThB+MPcdEAoh6XIk
-	k47XZog0C72zDwTvHGXsGbbHUOjPCZ8Q9T8+IuNbQj2qL17uaPg6j5eBrBaqrMQ==
-X-Gm-Gg: Acq92OHt4B/jKNkXPFSNE6XWE67/RsQRkUKJAWcWwzywaq+zdKe1uyuZ+zxSKbwx5oZ
-	Nebh1PDt+68Kr5hDmTLcD4Q4wNH6uLQsIY3e5EKt7oxti3M0nsqJbEmZlJXUCRHluQUBE1WaYJn
-	9eIEfviO+n83QjqCYJpMIc3TWQI05QF052sVawTQEVxUmcGggpYk8mxw/c+9bTxaNhlAzHsoj9j
-	RQP/kinCQBiRT+chuq4zHBsUXXWRYsEg79dLi5BHkv/A9+AoI0kcywTt0YsJRJc65PxL1yLVI5o
-	Gg+qh5wEXnmKpIezUIcal4rEm4x9BxX20/B37MsPNP30xW+WdxuTAMII1gpTPgBbaDcK/fxg/C/
-	RhOpodOxVQBYBLaDTsVVtVX6XIxado4gnp1Zo6ccqhmf7W6G6Lm5B
-X-Received: by 2002:a05:7022:6b82:b0:138:49ea:f468 with SMTP id
- a92af1059eb24-1384baef0eamr614232c88.2.1781244237568; Thu, 11 Jun 2026
- 23:03:57 -0700 (PDT)
+        d=1e100.net; s=20251104; t=1781248223; x=1781853023;
+        h=in-reply-to:content-disposition:mime-version:references:message-id
+         :subject:cc:to:from:date:x-gm-gg:x-gm-message-state:from:to:cc
+         :subject:date:message-id:reply-to;
+        bh=ZygED/TgcSaqbUiAwx8S4bYpGHo6x10dsCPWD/CLMT4=;
+        b=BkXHDgQykOylSRLpVWP6TxOnid260gI5xcKNTJumH3U6iyNe1U4VscLwScbKEmvFad
+         WA3+7n7JT8OTZ5cgs+NNt/jp1MGt1nVG9BghP94z2juLKrlHUGl5+Ih+GVxebwoEosQE
+         cc8eLFpxcW3oNgsRKZzVXrbAGmFNj9xtGp5sDwOfoZmtX7mLT3kDpIboaoH54qBgKsCc
+         k0aghDYAFKnaUho6UPQ63L6BBo7s9M3izUs/wU4lIz7kJwd1evhONGvtDLQg3hSxwV4S
+         axasA/9v2oNbq1a+KGrHeIGiX1zM2r0B8rlL+Ab+fUf51oNySwH4iVXhes3GuaQfa6Fe
+         wyjw==
+X-Forwarded-Encrypted: i=1; AFNElJ81vhML65jduIL5Iz7UvxB9QO6jC18ihg8CY/XgBPQnlaneHamCmxLvQ9o4J9kPGlFDjdSMAdCA1PeG80p7prQ=@lists.linux.dev
+X-Gm-Message-State: AOJu0YykUmElKWOpbl9T9hQYuedcx4yTlc1LwV9w9zQf9Nn5TiSMIxyD
+	zhqcdilZqrgR7lRrdipBIh7w+0kCDDMZ6I7gLzv6u9RbtWbnHvMHzBkm5wfClm3kd54=
+X-Gm-Gg: Acq92OE4xt9XYk981/l2qNgVz/RP4dV0eKUoyqJhz/e3AZbDSmyI3Xm5h37H1BtX5uQ
+	vjTl7La8dt+kx8/FIqhmgdKA+UR4bPWBIhYxq6D56rroUYQyqkzq7tN7mpO+wUBtDpLuz45GgpQ
+	2liX2/fj+imWlEtHfEu5Qm4UQGreNYNHjNtMSU2jp8SgkChT6breKncha3DjYl7vLR3mJAySy42
+	E06WMg84YQpxeuD/cvFEWser9WaEtSyfWUo9iOzbQy9uQB4AAUeZHzsCJRQ4+98DxgI5rlSBvpL
+	ZADJivY1siZ9+dK3u4ypYeQZJ+e4tVEozL9+5LqkgHd3DmYr/6R2jmJUaNXYdhPAWsRIPLeYpoo
+	Bv17nhxEIVpMwjk4rMjVMwpmWp9ykgtWi88a5pT6s8x7eLc4ybRMqSX7S/mHpR0XMo8KOwcBjFu
+	0U3vFoh8q3XIWxPYL0Khu5F7ENOvsBZqd1pN2vas85vnhDx4G4Om/TILLQFpiI/0ZykmzzphVLE
+	vBW88wHx0a3kaZQfyh5G8kK
+X-Received: by 2002:a05:600c:83ce:b0:490:e18f:d112 with SMTP id 5b1f17b1804b1-490ec4df0b4mr15052315e9.21.1781248223452;
+        Fri, 12 Jun 2026 00:10:23 -0700 (PDT)
+Received: from localhost (p200300f65f47db040e4e5c1e98e7f0ff.dip0.t-ipconnect.de. [2003:f6:5f47:db04:e4e:5c1e:98e7:f0ff])
+        by smtp.gmail.com with UTF8SMTPSA id 5b1f17b1804b1-490e2c7ead0sm139245145e9.3.2026.06.12.00.10.22
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Fri, 12 Jun 2026 00:10:22 -0700 (PDT)
+Date: Fri, 12 Jun 2026 09:10:21 +0200
+From: Uwe =?utf-8?Q?Kleine-K=C3=B6nig?= <u.kleine-koenig@baylibre.com>
+To: vkoul@kernel.org, Frank.Li@kernel.org
+Cc: dmaengine@vger.kernel.org, sashiko-reviews@lists.linux.dev
+Subject: Re: [PATCH v2 1/2] dmaengine: hsu: Drop unused platform driver data
+Message-ID: <aiuwi9amtiyoppxZ@monoceros>
+References: <86a23025da12369034dc7444f43a7763f2e515fb.1781161455.git.ukleinek@kernel.org>
+ <20260611081105.863831F00893@smtp.kernel.org>
 Precedence: bulk
 X-Mailing-List: sashiko-reviews@lists.linux.dev
 List-Id: <sashiko-reviews.lists.linux.dev>
 List-Subscribe: <mailto:sashiko-reviews+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:sashiko-reviews+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-References: <20260612001803.23341-6-kuniyu@google.com> <20260612003138.E67A01F00A3A@smtp.kernel.org>
-In-Reply-To: <20260612003138.E67A01F00A3A@smtp.kernel.org>
-From: Kuniyuki Iwashima <kuniyu@google.com>
-Date: Thu, 11 Jun 2026 23:03:46 -0700
-X-Gm-Features: AVVi8Cczhkg6FtQurw1RZf7Wbte6Zx7PIZp3NplQ_r9NgdxVKnA1DXiiKKGAc1E
-Message-ID: <CAAVpQUCRU1ie22PbegWgGnfyWw9V0wSTjgQpw=5Wwb2RZ=su+w@mail.gmail.com>
-Subject: Re: [PATCH v1 bpf-next/net 5/5] selftest: bpf: Add test for hwtstamp proxy.
-To: sashiko-reviews@lists.linux.dev
-Cc: bpf@vger.kernel.org
-Content-Type: text/plain; charset="UTF-8"
+Content-Type: multipart/signed; micalg=pgp-sha512;
+	protocol="application/pgp-signature"; boundary="v6zxtse6fli25xdv"
+Content-Disposition: inline
+In-Reply-To: <20260611081105.863831F00893@smtp.kernel.org>
+
+
+--v6zxtse6fli25xdv
+Content-Type: text/plain; protected-headers=v1; charset=iso-8859-1
+Content-Disposition: inline
 Content-Transfer-Encoding: quoted-printable
+Subject: Re: [PATCH v2 1/2] dmaengine: hsu: Drop unused platform driver data
+MIME-Version: 1.0
 
-On Thu, Jun 11, 2026 at 5:31=E2=80=AFPM <sashiko-bot@kernel.org> wrote:
->
-> Thank you for your contribution! Sashiko AI review found 5 potential issu=
+Hello,
+
+On Thu, Jun 11, 2026 at 08:11:05AM +0000, sashiko-bot@kernel.org wrote:
+> Thank you for your contribution! Sashiko AI review found 1 potential issu=
 e(s) to consider:
-> - [High] Comparing a potentially negative return value to `sizeof()` caus=
-es failure handling to be skipped, erroneously dropping packets.
-> - [Medium] Incorrect struct cast for SO_TIMESTAMPING_NEW cmsg data causes=
- test failures on 32-bit systems.
-> - [Medium] Typo in the test assertion prevents verification of TX timesta=
-mp keys.
-> - [Low] Multi-line comments violate the BPF subsystem comment style.
-> - [Low] The `buf_cmsg` array is not fully initialized before being passed=
- to `sendmsg()`, passing uninitialized stack data to the kernel.
+> - [Low] The commit message incorrectly states that it modifies struct pnp=
+_device_id instead of struct pci_device_id.
 > --
->
-> commit e747f30190af013f6f5cc858f0dacb86e902e2d2
-> Author: Kuniyuki Iwashima <kuniyu@google.com>
->
-> selftest: bpf: Add test for hwtstamp proxy.
->
-> This selftest simulates the hardware timestamp proxy scenario using two
-> UDP sockets, simulating a userspace proxy via a GENEVE device.
->
-> > diff --git a/tools/testing/selftests/bpf/prog_tests/proxy_hwtstamp.c b/=
-tools/testing/selftests/bpf/prog_tests/proxy_hwtstamp.c
-> > new file mode 100644
-> > index 0000000000000..d0f90f22bea22
-> > --- /dev/null
-> > +++ b/tools/testing/selftests/bpf/prog_tests/proxy_hwtstamp.c
-> [ ... ]
-> > +char *ipv4_commands[] =3D {
-> > +     "ip link set dev lo up",
-> > +     "ip link add geneve0 type geneve local " APP_SRC_IPV4 " external"=
-,
-> > +     "ip addr add " APP_SRC_IPV4 "/24 dev geneve0",
-> > +     "ip link set dev geneve0 address aa:bb:cc:dd:ee:ff",
-> > +     "ip link set dev geneve0 up",
-> > +     "ip route add " APP_DST_IPV4 "/32 dev geneve0",
-> > +     /* We do not forward ARP to the wire in this test,
-> > +      * so a static neighbour entry is needed for APP_DST_IPV4.
-> > +      */
->
+>=20
+> commit 5cb66572eea17e218716d84ce22cd0b73ee38c30
+> Author: Uwe Kleine-K=F6nig (The Capable Hub) <u.kleine-koenig@baylibre.co=
+m>
+>=20
+> dmaengine: hsu: Drop unused platform driver data
+>=20
+> This patch drops the unused .driver_data assignments from the
+> hsu_pci_id_table array. It only modifies the source code representation
+> and does not affect the compiled output.
+>=20
+> > The driver explicitly sets the .driver_data member of struct
+> > pnp_device_id to zero without relying on that value. Drop these unused
+> > assignments.
+>=20
 > [Severity: Low]
-> Does this multi-line comment format violate the BPF subsystem comment sty=
-le?
-> It seems the subsystem guidelines prefer the opening /* on its own line f=
-or
-> multi-line comments.
+> This isn't a bug, but the commit message states that the driver sets the
+> member of struct pnp_device_id, while the patch actually modifies an
+> array of struct pci_device_id in drivers/dma/hsu/pci.c. Should the
+> commit message be updated to reference the correct struct?
 
-Gray zone, this is rather net one :)
+Should I resent for that? If now, doing s/pnp/pci/ on the commit log
+whan applying would be great.
 
->
-> > +     "ip neigh add " APP_DST_IPV4 " lladdr ab:bc:cd:de:ef:fa dev genev=
-e0",
-> > +};
-> [ ... ]
-> > +static int check_tstamp(struct proxy_hwtstamp_test_case *test_case, bo=
-ol tx)
-> > +{
-> [ ... ]
-> > +     for (cmsg =3D CMSG_FIRSTHDR(&msg); cmsg; cmsg =3D CMSG_NXTHDR(&ms=
-g, cmsg)) {
-> > +             if (cmsg->cmsg_level =3D=3D SOL_SOCKET && cmsg->cmsg_type=
- =3D=3D SO_TIMESTAMPING_NEW) {
-> > +                     struct scm_timestamping *ts;
-> > +
-> > +                     ts =3D (struct scm_timestamping *)CMSG_DATA(cmsg)=
-;
-> > +                     ASSERT_EQ(ts->ts[2].tv_sec, 0, "tv_sec");
-> > +                     ASSERT_EQ(ts->ts[2].tv_nsec, HWTSTAMP, "tv_nsec")=
-;
->
-> [Severity: Medium]
-> Since the test requests SO_TIMESTAMPING_NEW, the kernel will return times=
-tamps
-> using the 64-bit time architecture (via struct scm_timestamping64). Could
-> casting CMSG_DATA(cmsg) to struct scm_timestamping * cause issues on 32-b=
-it
-> architectures where time_t is 32-bit?
+Best regards
+Uwe
 
-Indeed, I'll use scm_timestamping64 here.
+--v6zxtse6fli25xdv
+Content-Type: application/pgp-signature; name="signature.asc"
 
+-----BEGIN PGP SIGNATURE-----
 
->
-> It looks like this might misalign the array access, reading the zeroed
-> software timestamp ts[1] instead of the hardware timestamp, potentially
-> causing the test to fail.
->
-> > +
-> > +                     saw_tstamp =3D true;
-> > +             } else if ((cmsg->cmsg_level =3D=3D SOL_IP && cmsg->cmsg_=
-type =3D=3D IP_RECVERR) ||
-> > +                        (cmsg->cmsg_level =3D=3D SOL_IPV6 && cmsg->cms=
-g_type =3D=3D IPV6_RECVERR)) {
-> > +                     struct sock_extended_err *ee;
-> > +
-> > +                     ee =3D (struct sock_extended_err *)CMSG_DATA(cmsg=
-);
-> > +
-> > +                     if (ee->ee_origin =3D=3D SO_EE_ORIGIN_TIMESTAMPIN=
-G) {
-> > +                             ASSERT_EQ(ee->ee_data, TSKEY, "tskey");
-> > +                             saw_tskey =3D true;
-> > +                     }
-> > +             }
-> > +     }
-> > +
-> > +     ASSERT_TRUE(saw_tstamp && (!tx || saw_tstamp), "no timestamp");
->
-> [Severity: Medium]
-> Should this check validate saw_tskey instead of checking saw_tstamp twice=
-?
+iQEzBAABCgAdFiEEP4GsaTp6HlmJrf7Tj4D7WH0S/k4FAmorsNEACgkQj4D7WH0S
+/k5VTggAnQMbpuIjjXuyeTA+SehAUaSHYsiNRBA74BCHsQQf02RPbJtTmJUywI7g
+XCQmC1+9M3o8qP3dCC+2Ii/S1grqPyuKllQclUy0zUIcWhiKZXKC/ULhALI4jVyo
+c2WwptI/ghLVLmjfIO4WgY1CNHFqKG5AjJO/GQaLmACTTh3xKM6+z+pDa9ZxxzFW
+B/8hWOAiiDvrqnRaehBmGcHTIAQQmauZDZglL9CXCEYkyPlrn/ywHyTgPvxu1xgh
+1haly4K1LDxHlOataGDX36KPMhHXEmlZcqfWj0Vt57ysTILEMYcmtHHmdLsYhbkp
+re16aIueLFbBwAXB56A2yIeyoUl+hQ==
+=Ldv9
+-----END PGP SIGNATURE-----
 
-Yes, will update the latter check.
-
-
-> It looks like if the kernel fails to deliver the timestamp key, this chec=
-k
-> will silently pass, potentially hiding regressions.
->
-> > +
-> > +     return ret;
-> > +}
-> > +
-> > +static int test_proxy_hwtstamp_tx(struct proxy_hwtstamp_test_case *tes=
-t_case)
-> > +{
-> > +     char h_source_dummy[ETH_HLEN] =3D {0xFF, 0xEE, 0xDD, 0xCC, 0xBB, =
-0xAA};
-> > +     char buf_cmsg[CMSG_SPACE(sizeof(u32))];
-> > +     struct proxy_header *phdr;
-> > +     struct msghdr msg =3D {};
-> > +     struct iovec iov =3D {};
-> > +     struct cmsghdr *cmsg;
-> > +     int ret;
-> > +
-> > +     memset(test_case->app_payload, 0xAB, sizeof(test_case->app_payloa=
-d));
-> > +     iov.iov_base =3D test_case->app_payload;
-> > +     iov.iov_len =3D sizeof(test_case->app_payload);
-> > +
-> > +     msg.msg_iov =3D &iov;
-> > +     msg.msg_iovlen =3D 1;
-> > +     msg.msg_control =3D buf_cmsg;
-> > +     msg.msg_controllen =3D sizeof(buf_cmsg);
-> > +
-> > +     cmsg =3D CMSG_FIRSTHDR(&msg);
-> > +     cmsg->cmsg_level =3D SOL_SOCKET;
-> > +     cmsg->cmsg_type =3D SCM_TS_OPT_ID;
-> > +     cmsg->cmsg_len =3D CMSG_LEN(sizeof(u32));
-> > +     *(u32 *)CMSG_DATA(cmsg) =3D TSKEY;
-> > +
-> > +     ret =3D sendmsg(test_case->app_fd, &msg, 0);
->
-> [Severity: Low]
-> Is it possible that uninitialized stack memory from buf_cmsg is being pas=
-sed
-> to the kernel here?
-
-No.  All fields are initialised here.
-
->
-> Only the first CMSG_LEN bytes are initialized, but msg_controllen is set =
-to
-> the full CMSG_SPACE size which includes uninitialized alignment padding.
-> Could this trigger MemorySanitizer warnings?
->
-> > +     if (!ASSERT_EQ(ret, sizeof(test_case->app_payload), "send"))
-> > +             return -1;
-> [ ... ]
-> > diff --git a/tools/testing/selftests/bpf/progs/proxy_hwtstamp.c b/tools=
-/testing/selftests/bpf/progs/proxy_hwtstamp.c
-> > new file mode 100644
-> > index 0000000000000..c15428e4c20f6
-> > --- /dev/null
-> > +++ b/tools/testing/selftests/bpf/progs/proxy_hwtstamp.c
-> [ ... ]
-> > +SEC("tcx/egress")
-> > +int proxy_hwtstamp_egress(struct __sk_buff *skb)
-> > +{
-> [ ... ]
-> > +     kskb =3D bpf_cast_to_kern_ctx(skb);
-> > +     shared_info =3D bpf_core_cast(kskb->head + kskb->end, struct skb_=
-shared_info);
-> > +     if (!shared_info->tx_flags) {
-> > +             /* If TX tstamp is not needed, don't insert the GENEVE op=
-tion.
-> > +              * The proxy socket will see genevehdr.opt_len =3D=3D 0.
-> > +              */
->
-> [Severity: Low]
-> Does this multi-line comment format violate the BPF subsystem comment sty=
-le?
-> It seems the subsystem guidelines prefer the opening /* on its own line f=
-or
-> multi-line comments.
-
-Same.
-
->
-> > +             goto pass;
-> > +     }
-> [ ... ]
-> > +SEC("tcx/ingress")
-> > +int proxy_hwtstamp_ingress(struct __sk_buff *skb)
-> > +{
-> > +     struct proxy_hwtstamp_opt opt;
-> > +     struct bpf_tunnel_key key;
-> > +     int ret;
-> > +
-> > +     /* Get the GENEVE header. */
-> > +     ret =3D bpf_skb_get_tunnel_key(skb, &key, sizeof(key), tunnel_rx_=
-flags);
-> > +     if (ret < 0)
-> > +             goto drop;
-> > +
-> > +     if (key.tunnel_id !=3D GENEVE_VNI)
-> > +             goto drop;
-> > +
-> > +     /* Get the GENEVE option. */
-> > +     ret =3D bpf_skb_get_tunnel_opt(skb, &opt, sizeof(opt));
-> > +     if (ret < sizeof(opt)) {
->
-> [Severity: High]
-> Can this check drop packets without a GENEVE option?
->
-> bpf_skb_get_tunnel_opt() returns a signed integer, but sizeof(opt) is
-> unsigned. If the return value is negative (e.g., -ENOENT), it will be
-> promoted to a large unsigned integer during the comparison.
->
-> Would this cause ret < sizeof(opt) to evaluate to false and skip the fail=
-ure
-> handling, inadvertently dropping legitimate traffic?
-
-Ugh, I'll cast sizeof() to int.
-
-
->
-> > +              /* If TX/RX tstamp is not needed, the proxy socket
-> > +               * does not insert the GENEVE option.
-> > +               */
-> > +             goto pass;
-> > +     }
->
-> --
-> Sashiko AI review =C2=B7 https://sashiko.dev/#/patchset/20260612001803.23=
-341-1-kuniyu@google.com?part=3D5
+--v6zxtse6fli25xdv--
