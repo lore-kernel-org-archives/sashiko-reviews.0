@@ -1,209 +1,189 @@
-Received: from mail-qt1-f176.google.com (mail-qt1-f176.google.com [209.85.160.176])
+Received: from mail-wm1-f54.google.com (mail-wm1-f54.google.com [209.85.128.54])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 49C463EDE77
-	for <sashiko-reviews@lists.linux.dev>; Fri, 12 Jun 2026 13:19:49 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=pass smtp.client-ip=209.85.160.176
-ARC-Seal:i=2; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1781270391; cv=pass; b=sE5pDmbpP1wsG5BT1Kru9lH6K8A03FigX8sUZi5sHpiIgGRzCV8fHkETTL6YWXZ2FS0XCNw/Vyp0wEOvlfeB/Pdld6hKoDqbvCKIEujucoWIQdih1qiqZCK8qkJOIHJGGhbv4fF2o+p/2M8l3EnWJMZbl2YoSjhWKoa0Qr6/UzI=
-ARC-Message-Signature:i=2; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1781270391; c=relaxed/simple;
-	bh=nFyh8t7EajDFt4ntCcUZcAhFL09Lu/fiOAfEpgamjcE=;
-	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
-	 To:Cc:Content-Type; b=ZpEvJTToengi3ISNv4e/bdRY2swqRxWlGlXrVxIMuBv44HTHwWUKq8F70dirqhHCJJ635Lh3C6cTMksH7wdkKZVLA60EX0gQr4+Qp0tHmvgCbEt5S7KdDC2wwEIF1n67a5do5P3InHcem+ywMMiP2UwZCzjixVlu2P1LOZL48NI=
-ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=google.com; spf=pass smtp.mailfrom=google.com; dkim=pass (2048-bit key) header.d=google.com header.i=@google.com header.b=auhoh0Ee; arc=pass smtp.client-ip=209.85.160.176
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=google.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=google.com
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 50618331EBF
+	for <sashiko-reviews@lists.linux.dev>; Fri, 12 Jun 2026 13:48:25 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.54
+ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
+	t=1781272107; cv=none; b=RW0LbAnms5nWp1/EDM3O+iv+jiF/7x5mxQL0Oxdb8NaxxbWdkMrPNRX8v3S8CGaAvsy6hTWZzpWlqqZiIE+uztWmMO60nvTtK82Ru2ABHzrPdbUVYjCq3AooY75oFIparGPvxgJ3XXsjfyc8NFcJkmJOInMA8avJiSouk/DI1/Y=
+ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
+	s=arc-20240116; t=1781272107; c=relaxed/simple;
+	bh=Nm/CFb+Dox2Afi7pYSuOi5ckPQL3p9sapoD96313IHI=;
+	h=From:Date:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=iInBkmlNhPuEzXnrgCB5ODY0YCG6+xsr5PTk0HbiDFvZPL2hgJl+cKVBx9f99OOlIZEF+cTFk+1RDSmK0CR1AK9yddQf3kAkfGrEdfBjaEYklZejvy84WCGqJItJyrByAlJahdO9Qf9o5OGXqyjSErXLwglnmEEsaMSBI0/TCoE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=suse.com; spf=pass smtp.mailfrom=suse.com; dkim=pass (2048-bit key) header.d=suse.com header.i=@suse.com header.b=EbrH51w9; arc=none smtp.client-ip=209.85.128.54
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=suse.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=suse.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=google.com header.i=@google.com header.b="auhoh0Ee"
-Received: by mail-qt1-f176.google.com with SMTP id d75a77b69052e-51765331535so428631cf.1
-        for <sashiko-reviews@lists.linux.dev>; Fri, 12 Jun 2026 06:19:49 -0700 (PDT)
-ARC-Seal: i=1; a=rsa-sha256; t=1781270388; cv=none;
-        d=google.com; s=arc-20240605;
-        b=GiGuQsCOvv4PN1Z7d3xNLqrvy6hJHWTNTmwU1Lmy/m2whV4x1WIQC9Dj8Fuj/6AOuE
-         sxtgogszY8bvDuZPytHHK9o9agmNXxHRiU79TXgc6jvxpGsqyXaC68+OZBDAqymBGVah
-         CdKGslqBGRKNeywMykkulY3x7wW3jVulr1FN5ZrfsRk723iUjyyELBgZFtB2c3JA8OEQ
-         WAc2cYPLaKT5LzRLEiLmgDidtwkBWYvV05FUs1TUaYGDoMg0I1SFd2AvyTACPIcWgNT0
-         H0677n82UMuspHOmlaNG3MoSMmVX/jUJ9HSfRb5xEV3p9PX3xHXf+dQNIeqwDTyx48H1
-         yejA==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com; s=arc-20240605;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:dkim-signature;
-        bh=jeBSFCbpglspfyD74FVX/lua1owJC/8kPxNkA+8dxq0=;
-        fh=h+WE9q7lgZFreOaywdXTa1MCUSslC04cjSpn0jGc7Lc=;
-        b=E8Shj6O7uMt53dJPL7S2ov8pJk1REIxwVXpVHdGkeZSRiP7gaUjmST6HhGMVfGjs77
-         pGGDWSvXgrkew456M19yALUDsydM6MENFom+IyzkyKuKVI76i82sY7qXkumn97NTL+V1
-         AOnpCrfavSc9JXuFacSrcLNKImr6ZHju5QJLQCId0HHF++FZGHmo5Tm25KWucyg6I7SC
-         wKrdMzUR6MxnooxCS7x7f6TP9/Qh7qvcKyIWNxkg7RDGapIESwSpx/swIcxqxL3XVz3E
-         SFi+uqQ0ja1OkW+M9ke0/xrSOi0VQg5ybCGpoCn+dLVCNDQKhiokZCSls9E3JnVfuqI9
-         TzsA==;
-        darn=lists.linux.dev
-ARC-Authentication-Results: i=1; mx.google.com; arc=none
+	dkim=pass (2048-bit key) header.d=suse.com header.i=@suse.com header.b="EbrH51w9"
+Received: by mail-wm1-f54.google.com with SMTP id 5b1f17b1804b1-490bb83a3f6so7912695e9.0
+        for <sashiko-reviews@lists.linux.dev>; Fri, 12 Jun 2026 06:48:25 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=google.com; s=20251104; t=1781270388; x=1781875188; darn=lists.linux.dev;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=jeBSFCbpglspfyD74FVX/lua1owJC/8kPxNkA+8dxq0=;
-        b=auhoh0Eecl3WjzlOLIe2JN5a83kxLm6XuipO7A9Z0ZQ14dAHLi7d5iikX+z5PMaxqL
-         e9+i+WHuQiSbtKxNujA47Gj+G9tuCLnB7kVJ8JgxA5OUoX61edm/3K1r5H/4pEXNnR0K
-         sYoGxSOHIC201J8amU3JxUHo7xH9KgnlX1fEI7u3ws3auKvw7f3LnLetXph0C6stb32R
-         Dx9ljw5ov+FDExodedph/ggOBg4A1TAISWYGSDwXTXaeq0x54LBH+sZsEtcUxzc2nQBh
-         bNVXnpBe+0YiwLqP+oLC8ZbbGJWch3P7lQvlJxt+QVHs9LB87c0sJZUw/v3IoC38WpVz
-         rsTA==
+        d=suse.com; s=google; t=1781272104; x=1781876904; darn=lists.linux.dev;
+        h=in-reply-to:content-transfer-encoding:content-disposition
+         :mime-version:references:message-id:subject:cc:to:date:from:from:to
+         :cc:subject:date:message-id:reply-to;
+        bh=mipHo0l7RBc0zEMhF8Fz8QvRJ7oAxrgIKC4nNESKUfg=;
+        b=EbrH51w9HvT9JcpodvkSIQU58xIu58NH6E2hEOdJC+eLwm1xH2UTWiZM6l4ZEshFv1
+         h5CXHw2iYPUUTWTveb7ZCmYtmmak4XP09641wqpKQfzfnmlVxQqeFE6Jm5XycVf1fBfu
+         uaNJg5aq0zFvIdFYENpV+ZxNc27SPqNT218v3hxmt0WZYSslHaScHDXLhcQNkp2nBjSh
+         FoZtskEi0T+LHrq7Xl+Gx8dxdd9MH0/Kz7OIvCsFYL+aGruMShB0nunl/ijHsbsZGTNZ
+         bF2N8UhrIlVAkfMSL3K8Jc877XZ/vhTRm3wpENuOYkMu19Sm8YIpmOjnvwcuaGR7nMPt
+         X9uw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20251104; t=1781270388; x=1781875188;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:x-gm-gg:x-gm-message-state:from
-         :to:cc:subject:date:message-id:reply-to;
-        bh=jeBSFCbpglspfyD74FVX/lua1owJC/8kPxNkA+8dxq0=;
-        b=WQrh28Eh2H+rpxdSxhDbiJGQs2+W0AnkpbJIx0W3qYYJQWCoqATOSqihmbcc5XcbgZ
-         BwNWsprjr/47CHGzm796dXqN0GF2lLrdfOrOvZc7lCkxIkh59UwxYbN0wTOgi8LLnoV6
-         iCuSDDH6REc3HySnr/AQ5JjfntohXU2FStENbE9i1R/fgtbS1XJ6WO3YLj7/bTY5Nukp
-         t3jLD2JwcLWhUhuOEclAjqP83wrPde7hiW551KguJ7zGuo+2myWJqxCaKv4r1txBedby
-         /qgzriwgjecWp8CjjeYhf6NjTpU9wKlAvpMo4QVgKbCA68mQDshW7Uq+M4bVJAs5CrBo
-         XZdQ==
-X-Gm-Message-State: AOJu0Yw409o3zP8WMqXBOnsX9JRjh34DzDTQT6tXZj2dl5IOVuNW7T2S
-	SjGU0YIIde1QwB3t39t1UYVOxgv7fIY17yqk/mu9w0rS320Ubyl+GZAApql+OTK25utVU7Ube1K
-	YQ3BryYytagyKRcy6HAtK/EKbDjEjWCobLV217xpdBFKGnyWsN+7zP1E0b9o=
-X-Gm-Gg: Acq92OEjpYLtRXHWw/xVqj1S0x4r+Z1ANsI4gPGya0sxAge3HWvUeWo+f7D6wV0030n
-	SrlEWpJmrPLW4T6AmZP8BEkK5fLqInBnRVrkKNTZKitg2VIEcsjTCEgJf5eZeVaueNTegrCOB6C
-	3TVCTJCSWoh0SLWRK8QoAI1VID812PoCERm0QL7fkuoWiaDfKhmBhnRrsE/Bb2nI2Pi4teHeDUw
-	XOBt1pSjkRI3VRxGGkf4cYO0AJWAJ6rh7w5rm0yfHj0MHNiOTQiefKJlNrfdFVVjzsdDk47kPGH
-	Q7Tf3XV6
-X-Received: by 2002:ac8:5c84:0:b0:516:4f62:85ee with SMTP id
- d75a77b69052e-517fc539337mr7163811cf.19.1781270387386; Fri, 12 Jun 2026
- 06:19:47 -0700 (PDT)
+        d=1e100.net; s=20251104; t=1781272104; x=1781876904;
+        h=in-reply-to:content-transfer-encoding:content-disposition
+         :mime-version:references:message-id:subject:cc:to:date:from:x-gm-gg
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+        bh=mipHo0l7RBc0zEMhF8Fz8QvRJ7oAxrgIKC4nNESKUfg=;
+        b=edWpEACNtwpCATxgLIobG6qQfsY9EDVglcFvir9jihIIw52TBFY4vEGLbutEd/+n86
+         cbtySRdwu/NAzG0Rlx/NoeMD7cgkwx27u9QiAbaPfRHsKuBx58SqZdzYrFSz7WUrspxM
+         Kcy8r+qgUa0sEFqAO2B+8hQpabNQD1/PF00QpsrsCYKjx6e5rdoJ5IKJ8pl/uyvEYRe3
+         xWnDATM++qnQPYf2Rv2c4040yjQHryAnYjEg2FxKD4CqSLsfynMid/lkMuzcYoTelXQw
+         091EPlhNucvI6G3Vz1X5jLN7zywrLGmDXZeLRM0HgK1MwJHu/9kP6GPfsvDrmG+ylby/
+         tTVw==
+X-Forwarded-Encrypted: i=1; AFNElJ91ZRAzamvDT5TIaKHvvgic0fBV1mmF69tUs/N935ThO3vtZVAnJxdyYTqFGLkL60tkuGyqlKrJMPIbY4y4urk=@lists.linux.dev
+X-Gm-Message-State: AOJu0YwvWhEaZsfrbqc/Fqw4ZkeJHibKyhv9CjUkm/wrjU81crbfRNAf
+	oFwLVgAvYBz9s47MjIkpuRQMtcRX8Sus1pFV/ycHTaKCg/I4U5FHDTH924MAhZWTQQ4=
+X-Gm-Gg: Acq92OEA3e3pOGWk/3uvrqh4Xfh1aZaK6YYP99z3iiFOZXfvoczmdu+oincrXKOjGCV
+	cVrrjzTt+UfSS2DS/ms0LufkNtRr0rCbwBbjWuMlQgSFfO/M6MizYYfEezlbKjeeKOHMCvKv7qo
+	Uq4C6OyMyMszo1HTEX+FSWpDB6vEntl6NMX3tyQ4wmTPtK5v7y/c9+J1RAWYMWPmmZPJ8c6GApD
+	/Gn495y43B/HSwHnzply0TFtaTCOySjdUs0004K/H0aSUaWWdUWMNnI8Q9GK9dL1jtWw/VtkYjh
+	7w9zbWVWYYGQ+37+px95WGY37lh5VwvYjslyrMJq6U68TLeTckXTCj3znqqvLMxc32rVsExnJCA
+	7PS8feDUZr79RWEAiL/K2ASyHrEmxgiKKgRRecJKIHh5lfhvpc8CgXfLU3RsDv8mNwj7wClNQ4c
+	MuAqjdahP5YWiz2S3svyqh
+X-Received: by 2002:a05:600c:3b15:b0:490:b189:212d with SMTP id 5b1f17b1804b1-490ec522d44mr40387895e9.33.1781272103620;
+        Fri, 12 Jun 2026 06:48:23 -0700 (PDT)
+Received: from localhost ([195.94.146.6])
+        by smtp.gmail.com with ESMTPSA id 5b1f17b1804b1-490ea843cbbsm76137075e9.13.2026.06.12.06.48.22
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Fri, 12 Jun 2026 06:48:22 -0700 (PDT)
+From: Andrea della Porta <andrea.porta@suse.com>
+X-Google-Original-From: Andrea della Porta <aporta@suse.de>
+Date: Fri, 12 Jun 2026 15:51:44 +0200
+To: Uwe =?iso-8859-1?Q?Kleine-K=F6nig?= <u.kleine-koenig@baylibre.com>
+Cc: Andrea della Porta <andrea.porta@suse.com>,
+	sashiko-reviews@lists.linux.dev, conor+dt@kernel.org,
+	devicetree@vger.kernel.org, robh@kernel.org,
+	Kevin Hilman <khilman@baylibre.com>
+Subject: Re: [PATCH v4 2/3] pwm: rp1: Add RP1 PWM controller driver
+Message-ID: <aiwO8Ac6btqSes8x@apocalypse>
+References: <8eef956a5eb473f051bbda89ec4c9991c1b47de2.1780498640.git.andrea.porta@suse.com>
+ <20260603154716.1B5C41F00893@smtp.kernel.org>
+ <aiGAINsTG8VZLn28@apocalypse>
+ <aiHn5-gQMbjttrR6@monoceros>
+ <aiL-DWqU5bnIPL8B@apocalypse>
+ <aiM0VlVXAWs54v-G@monoceros>
 Precedence: bulk
 X-Mailing-List: sashiko-reviews@lists.linux.dev
 List-Id: <sashiko-reviews.lists.linux.dev>
 List-Subscribe: <mailto:sashiko-reviews+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:sashiko-reviews+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-References: <20260612113414.1022901-1-tabba@google.com> <20260612115044.16E3B1F000E9@smtp.kernel.org>
-In-Reply-To: <20260612115044.16E3B1F000E9@smtp.kernel.org>
-From: Fuad Tabba <tabba@google.com>
-Date: Fri, 12 Jun 2026 14:19:10 +0100
-X-Gm-Features: AVVi8CeZAvlVseat-uw7HL7_ZEkG6zTq14eM1kOd7oylk537wMpvUkPkSyGidyQ
-Message-ID: <CA+EHjTyFFf__9iGFAyAkechiX+gaiK9ksdfgxLSFe8RcAY=HGA@mail.gmail.com>
-Subject: Re: [PATCH] KVM: arm64: Sync SPSR_EL1 when injecting an exception
- into a pVM
-To: sashiko-reviews@lists.linux.dev, Marc Zyngier <maz@kernel.org>
-Cc: Oliver Upton <oupton@kernel.org>, kvmarm@lists.linux.dev, 
-	Will Deacon <will@kernel.org>
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
+Content-Type: text/plain; charset=iso-8859-1
+Content-Disposition: inline
+Content-Transfer-Encoding: 8bit
+In-Reply-To: <aiM0VlVXAWs54v-G@monoceros>
 
-On Fri, 12 Jun 2026 at 12:50, <sashiko-bot@kernel.org> wrote:
->
-> Thank you for your contribution! Sashiko AI review found 2 potential issu=
-e(s) to consider:
->
-> Pre-existing issues:
-> - [High] Stale `SCTLR_EL1` used during synchronous exception injection in=
- protected VMs leads to incorrect `PSTATE` computation.
-> - [High] pKVM's `inject_undef64()` injects an undefined instruction excep=
-tion with the `IL` (Instruction Length) bit cleared in `ESR_EL1`, incorrect=
-ly indicating a 16-bit instruction to an AArch64 guest.
-> --
->
-> commit 5157ad995c29fa359271604075525691515c2f95
-> Author: Fuad Tabba <tabba@google.com>
->
-> KVM: arm64: Sync SPSR_EL1 when injecting an exception into a pVM
->
-> When pKVM injects a synchronous exception into a protected guest, it
-> re-enters without restoring the guest's EL1 sysregs. This commit ensures
-> SPSR_EL1 is written alongside the other exception registers to avoid
-> restoring a stale PSTATE on eret.
->
-> > diff --git a/arch/arm64/kvm/hyp/nvhe/sys_regs.c b/arch/arm64/kvm/hyp/nv=
-he/sys_regs.c
-> > index 8c3fbb413a06d..1a7d5cd16d723 100644
-> > --- a/arch/arm64/kvm/hyp/nvhe/sys_regs.c
-> > +++ b/arch/arm64/kvm/hyp/nvhe/sys_regs.c
-> > @@ -268,6 +268,7 @@ static void inject_sync64(struct kvm_vcpu *vcpu, u6=
-4 esr)
-> >
-> >       write_sysreg_el1(esr, SYS_ESR);
-> >       write_sysreg_el1(read_sysreg_el2(SYS_ELR), SYS_ELR);
->
-> [Severity: High]
-> This isn't a bug introduced by this patch, but since we are fixing sysreg
-> synchronization in inject_sync64(), is there also a missing synchronizati=
-on
-> for SCTLR_EL1 before pending the exception?
+Hi Uwe,
 
-How quickly you forget my AI friend. I submitted a fix here, when you
-flagged this very issue:
-https://lore.kernel.org/all/20260612102347.914994-1-tabba@google.com/
+On 22:51 Fri 05 Jun     , Uwe Kleine-König wrote:
+> Hello Andrea,
+> 
+> On Fri, Jun 05, 2026 at 06:49:17PM +0200, Andrea della Porta wrote:
+> > On 23:28 Thu 04 Jun     , Uwe Kleine-König wrote:
+> > > Thinking again, the tohw() callback could be a bit more clever and also
+> > > use period_ticks = 0xffffffff, as this fine if duty_ticks is less than
+> > > this value and if duty_ticks = period_ticks = 0xffffffff you can still
+> > > configure the hardware using period_ticks = 0xfffffffe to achieve the
+> > > 100% relative dutycycle. (But keeping the current behaviour is fine for
+> > > me, too.)
+> > 
+> > I think this is what it's currently doing in this patch iteration. I stand
+> > corrected here when I said that period_ticks should be at max U32_MAX-1: logically
+> > it can be U32_MAX but it's getting 'translated' into U32_MAX-1 as the value which 
+> > is fed to the register. So the period is still U32_MAX, accounting for the extra
+> > tick at the end. So I guess we're on the same page.
+> 
+> Not sure you got what I wrote. You can use the maximal value possible in
+> hardware, because for all but 100% relative duty cycle it works as
+> expected. You only need to map 100% relative duty cycle with that
+> maximal period to a different 100% relative duty cycle setting. I think
+> PWM_DEBUG even doesn't yell at you for that. (And if it does, that needs
+> fixing.)
 
->
-> Earlier in inject_sync64(), VBAR_EL1 is explicitly synchronized to memory
-> because traps are handled early:
->
-> arch/arm64/kvm/hyp/nvhe/sys_regs.c:inject_sync64()
->         /*
->          * Make sure we have the latest update to VBAR_EL1, as pKVM
->          * handles traps very early, before sysregs are resync'ed
->          */
->         __vcpu_assign_sys_reg(vcpu, VBAR_EL1, read_sysreg_el1(SYS_VBAR));
->
->         kvm_pend_exception(vcpu, EXCEPT_AA64_EL1_SYNC);
->
->         __kvm_adjust_pc(vcpu);
->
-> However, when __kvm_adjust_pc() eventually invokes enter_exception64(), i=
-t
-> reads SCTLR_EL1 from memory to compute the new PSTATE:
->
-> arch/arm64/kvm/hyp/exception.c:enter_exception64()
->         sctlr =3D __vcpu_read_sys_reg(vcpu, SCTLR_EL1);
->
-> Because SCTLR_EL1 wasn't synchronized from hardware like VBAR_EL1 was,
-> could the guest's exception handler end up executing with a stale PSTATE.=
-PAN
-> and PSTATE.SSBS?
->
-> > +     write_sysreg_el1(read_sysreg_el2(SYS_SPSR), SYS_SPSR);
-> >       write_sysreg_el2(*vcpu_pc(vcpu), SYS_ELR);
-> >       write_sysreg_el2(*vcpu_cpsr(vcpu), SYS_SPSR);
-> >  }
->
-> [Severity: High]
-> This is a pre-existing issue, but looking at the related inject_undef64()
-> function located just below inject_sync64():
->
-> arch/arm64/kvm/hyp/nvhe/sys_regs.c:inject_undef64()
-> static void inject_undef64(struct kvm_vcpu *vcpu)
-> {
->         inject_sync64(vcpu, (ESR_ELx_EC_UNKNOWN << ESR_ELx_EC_SHIFT));
-> }
->
-> Does this need to set the ESR_ELx_IL bit?
->
-> According to the ARM Architecture Reference Manual, for an Unknown reason
-> exception (EC =3D 0x00) originating from AArch64, the Instruction Length =
-(IL)
-> bit must be set to 1 to indicate a 32-bit instruction.
->
-> Unconditionally leaving it as 0 by only bit-shifting ESR_ELx_EC_UNKNOWN
-> exposes an architecturally invalid exception syndrome register to the gue=
-st.
->
-> Could this cause the guest kernel's exception decoding logic to fail or
-> panic?
+I see. Since you said that teh current behaviour is also fine, I'd prefer
+to stick with it to avoid complicating the code.
 
-You're right -- the architecture mandates setting IL here. Like you
-said, this is pre-existing, and I'll submit a separate patch to fix
-it. But first, Marc: was there a specific reason for not setting it,
-or is it just an omission?
+> 
+> > > > I'm not sure whether an inverted polarity pin shoudl stay low when disabled.
+> > > > After all, the inactive state for a reversed pin is high.
+> > > 
+> > > Sashiko's concern is correctly stated, if you go from
+> > > 
+> > > 	polarity = inversed, enabled
+> > > 
+> > > to
+> > > 
+> > > 	polarity = normal, disabled
+> > > 
+> > > the output stays high, which is active for polarity = normal.
+> > 
+> > Ack. I'll set the polarity first so there will be no uncovered corner
+> > case.
+> 
+> You can, but as I wrote below, being lazy is also fine.
 
-Cheers,
-/fuad
+Already done :)
+
+>  
+> > > However the behaviour of a disabled PWM isn't specified, so any
+> > > behaviour is fine, the only objective is to save power. And if the
+> > > consumer relies on a constant inactive output, it's supposed to not
+> > > disable it.
+> > > 
+> > > For me both behaviours are fine. Making the hardware emit the inactive
+> > > level might prevent a surprise if the consumer isn't aware of the
+> > > missing guarantee, but being lazy and so surprise the consumer is also
+> > > fine as this might uncover that wrong assumption and allow the consumer
+> > > to be fixed.
+> > > 
+> > > (And not all PWM implementations allow to configure the output level, so
+> > > a guarantee cannot be given. Some go to 0 irrespective of the configured
+> > > polarity, some go to High-Z.)
+> > 
+> > I was just curious about sashiko saying it's violating the pwm framework
+> > expectations, while according to your words it seems there's no constraints.
+> 
+> In doubt trust me :-)
+
+Sure!
+
+> 
+> > BTW, I've tried to install sashiko and use it on my patches but it's obvious
+> > that some custom settings are in order, since all I can get is some error
+> > aborting the review after 3 attempts. Any chance you can share your Settings.toml
+> > or any customization so I can test it in advance before submitting the new patchset
+> > or do you recommend just throwing the new V5 at your script?
+> 
+> Note that sashiko is not "my script", it was setup by Google engineers
+> and I have nothing to do with it (apart from benefitting from its review
+> feedback). Kevin (added to Cc) tried to setup a local instance with his
+> Claude plan, but (IIUC) it quickly ate his day's amount of tokens before
+> completing review of a series of only 4 patches.
+> 
+> So without knowing the size of Kevin's or your AI plan, probably it's
+> easier to just rely on the public instance. (And IMHO that's nothing to
+> be afraid of, just handle it like a human reviewer. For these you also
+> don't know what they will reply for your next revision.)
+
+Ack.
+
+Regards,
+Andrea
+
+> 
+> Best regards
+> Uwe
 
 
->
-> --
-> Sashiko AI review =C2=B7 https://sashiko.dev/#/patchset/20260612113414.10=
-22901-1-tabba@google.com?part=3D1
