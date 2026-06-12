@@ -1,243 +1,352 @@
-Received: from mgamail.intel.com (mgamail.intel.com [198.175.65.10])
+Received: from dggsgout11.his.huawei.com (dggsgout11.his.huawei.com [45.249.212.51])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 42C63348453
-	for <sashiko-reviews@lists.linux.dev>; Fri, 12 Jun 2026 01:19:07 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=fail smtp.client-ip=198.175.65.10
-ARC-Seal:i=2; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1781227150; cv=fail; b=j2l6lk+UH4Q5EtEXdOK+SloomRbkB/hXQa+kwhJgdZh2Ie4XFARxPEcxwFjwiPlU9Z9LidFKGDhEOkdM/c7EL+AuksWRoXdPR49ppOT51rUkwhT9IVnlPV+3S0pNtoCchN4tNv9zamllNZvd06XjqYYYZz/ZmqWqm8AnXHrt2QU=
-ARC-Message-Signature:i=2; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1781227150; c=relaxed/simple;
-	bh=Pr86e3jo9aeqDExmTrIDwXe/Ecb8TAOKBhIN5U0sZL4=;
-	h=Date:From:To:CC:Subject:Message-ID:References:Content-Type:
-	 Content-Disposition:In-Reply-To:MIME-Version; b=B5m+Kdxbuy0Bz197ZhRT3Gb/obpXqyIoGNTEzYZFgxIbGD37uRV4vQuQoOnYURgB1KYgcDhnoBv2E3kZ30jO2TudAYpVobq0XVvq7N8YFMzlPGDF64pX8KWcgei14v0PeOm0t3TqNT1UlS9WBixqTeit41czwayYYJm4CZw52hA=
-ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=intel.com; spf=pass smtp.mailfrom=intel.com; dkim=pass (2048-bit key) header.d=intel.com header.i=@intel.com header.b=gV1CMmF9; arc=fail smtp.client-ip=198.175.65.10
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=intel.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=intel.com
-Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=intel.com header.i=@intel.com header.b="gV1CMmF9"
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
-  d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
-  t=1781227147; x=1812763147;
-  h=date:from:to:cc:subject:message-id:references:
-   in-reply-to:mime-version;
-  bh=Pr86e3jo9aeqDExmTrIDwXe/Ecb8TAOKBhIN5U0sZL4=;
-  b=gV1CMmF9HnFHPXElemJzmCkSPKDo8DWsjtJr7cg3Zre3+reS2gwT3uX6
-   uKOErb9sOE779b4V6qDxgHMEjj1X4xG7kocmx8FlUcEQalxmpfJRGpwyx
-   4BC6t2OY85on6g/h3SEV+9btDgPctWvcE58UeCLUuLRs7L6rG7dXjJqL9
-   KXgttrcPk+QDitCSUKL5m2Y4u3qiAfD7r8B3dfab3A8miW3ArYYl2uMsJ
-   iCEkHr1Oqd4b7wgNVJimoHqn4HSZufNWxtEmVrTK89RyJXnFZ+dTKT18i
-   ZVywXYRUOsF2/SvT67nDabqFWUjp/OkZEy3Tij6wWdtChjSkOj5vPgia6
-   w==;
-X-CSE-ConnectionGUID: Og2nkqhzTOKXNig5NYET8A==
-X-CSE-MsgGUID: 1d3zRrYzRnOzAVlcV1fHfQ==
-X-IronPort-AV: E=McAfee;i="6800,10657,11813"; a="99475923"
-X-IronPort-AV: E=Sophos;i="6.24,199,1774335600"; 
-   d="scan'208";a="99475923"
-Received: from fmviesa010.fm.intel.com ([10.60.135.150])
-  by orvoesa102.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 11 Jun 2026 18:19:06 -0700
-X-CSE-ConnectionGUID: cxRgoW3YQT6Zfs5wnzBaYA==
-X-CSE-MsgGUID: O+hb6/R0QBek/bTVEzZT5A==
-X-ExtLoop1: 1
-X-IronPort-AV: E=Sophos;i="6.24,199,1774335600"; 
-   d="scan'208";a="242544657"
-Received: from orsmsx902.amr.corp.intel.com ([10.22.229.24])
-  by fmviesa010.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 11 Jun 2026 18:19:06 -0700
-Received: from ORSMSX902.amr.corp.intel.com (10.22.229.24) by
- ORSMSX902.amr.corp.intel.com (10.22.229.24) with Microsoft SMTP Server
- (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
- 15.2.2562.37; Thu, 11 Jun 2026 18:19:05 -0700
-Received: from ORSEDG901.ED.cps.intel.com (10.7.248.11) by
- ORSMSX902.amr.corp.intel.com (10.22.229.24) with Microsoft SMTP Server
- (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
- 15.2.2562.37 via Frontend Transport; Thu, 11 Jun 2026 18:19:05 -0700
-Received: from DM5PR21CU001.outbound.protection.outlook.com (52.101.62.10) by
- edgegateway.intel.com (134.134.137.111) with Microsoft SMTP Server
- (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
- 15.2.2562.37; Thu, 11 Jun 2026 18:19:05 -0700
-ARC-Seal: i=1; a=rsa-sha256; s=arcselector10001; d=microsoft.com; cv=none;
- b=MZ5zxbeT6T2Gvpukpxt9lm0c0kK0sFsHQnt1DLdA19qI1Lt4p7Yf0HAknDZBMgmwIFk5k6tqPl02cQJWHiNUZY2QN3j4k5Ckqd0s/2diVdvmVBeusEcTxu18WB5sy+//4oxpPgMxRti3SiXGASoZ4CcQnVpNXbAWtc8mxfqJuGtbNgHMlt8PSKxDF+/IW8W43O5y2SgM2Gja+389fQ0AabERmRrD6+wVuZvqBuJqFVvGXEh01BhWj/76pc68HJl6Y2tHCZdzmfJrTP/sB7ux/Zh1hHdIFO1/vBk7O8axmc/hYrHZ0JykITdQP68ncDJiZtFKclKa/OWUFqnTCgxwfg==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com;
- s=arcselector10001;
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
- bh=pCTbRBoCSCvCUY+Ogwtsm/IM85JbeYDcmUBUT5ikNdU=;
- b=tQsvXC8FWRBqlzZQYygRNK4pdfropwJQaPxEWLOAg9E/GWT1IJcSZchW+a33GCNrXlOAkwBF6Dc3AwzDpI0m0I9/bSOKjWu9rFF4AT7aj1n8676KY6KFQheRc8Pg9SXNavgKXAlyqGWwGu49FkZO1vZUUviS0u7MOuCB4ZwsYkYHkzqfCBRAF32/boliqvw2rq5kLAvdHX2WVzaNTN5j0sY98NiYCH7X6zANAwQIjGAaHndyjB6GfTTpyC7KZhoVeF2thiCmbFC/h03Vk1EDYrNEE9GQ1KibmbaUqKGITQHfkrDphR8Kj4ToSQ68loj03pHvxd08dNgYQmH4cVo1KA==
-ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
- smtp.mailfrom=intel.com; dmarc=pass action=none header.from=intel.com;
- dkim=pass header.d=intel.com; arc=none
-Authentication-Results: dkim=none (message not signed)
- header.d=none;dmarc=none action=none header.from=intel.com;
-Received: from DS4PPF0BAC23327.namprd11.prod.outlook.com (2603:10b6:f:fc02::9)
- by MW3PR11MB4586.namprd11.prod.outlook.com (2603:10b6:303:5e::15) with
- Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.21.113.14; Fri, 12 Jun
- 2026 01:19:03 +0000
-Received: from DS4PPF0BAC23327.namprd11.prod.outlook.com
- ([fe80::a195:49d4:38c5:3891]) by DS4PPF0BAC23327.namprd11.prod.outlook.com
- ([fe80::a195:49d4:38c5:3891%4]) with mapi id 15.21.0092.016; Fri, 12 Jun 2026
- 01:19:03 +0000
-Date: Thu, 11 Jun 2026 18:19:00 -0700
-From: Alison Schofield <alison.schofield@intel.com>
-To: Li Ming <ming.li@zohomail.com>
-CC: <sashiko-reviews@lists.linux.dev>, <linux-cxl@vger.kernel.org>
-Subject: Re: [PATCH 2/2] cxl/region: Fill first free targets[] slot during
- auto-discovery
-Message-ID: <aitehJe5yth4yaEB@aschofie-mobl2.lan>
-References: <20260606-fix_two_issues_introduced_by_cxl_cancel_auto_attach-v1-2-5d94ca06c4e4@zohomail.com>
- <20260606081149.1B0F11F00893@smtp.kernel.org>
- <0df43a4c-cdb1-443e-a424-33ecc63d6c1d@zohomail.com>
-Content-Type: text/plain; charset="us-ascii"
-Content-Disposition: inline
-In-Reply-To: <0df43a4c-cdb1-443e-a424-33ecc63d6c1d@zohomail.com>
-X-ClientProxiedBy: SJ0PR03CA0004.namprd03.prod.outlook.com
- (2603:10b6:a03:33a::9) To DS4PPF0BAC23327.namprd11.prod.outlook.com
- (2603:10b6:f:fc02::9)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 40B762DB795
+	for <sashiko-reviews@lists.linux.dev>; Fri, 12 Jun 2026 01:55:07 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=45.249.212.51
+ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
+	t=1781229310; cv=none; b=YvimVhjSE9zbX5Qpu47ibx5oZsx1kDdhHe8bKuWGIEWVYYX491G266zcVnQuGm7eFGqA28rT5+Q5aTqyrHof80zl6+J7E4b3Lrn3wLK6siaWCS3GaZ2yfqCn9nWnOOjoUnKhTbMl+98pYUogbxYMcTTAfDS2HnZvL6Rco0vW9UI=
+ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
+	s=arc-20240116; t=1781229310; c=relaxed/simple;
+	bh=9xA22wVJimg+XD28C2L+cY+sHz1FGSAX+RAwoc/grds=;
+	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
+	 In-Reply-To:Content-Type; b=GQGVwRzC7R7bAldNqmDbnRSjBe71t11JOoKzLbGgVGA0T7lVQOCbKZntgYzUSK33iSGuGbq/0YgfYorAQvUBFou3vYZJsvyOfjLfxcLQcG6j9Budhvj8X4KMtaucn6jqgAmpdNRgtNKJG6xC5+fYgIxsOpM2USE76eg4YpEn35k=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=huaweicloud.com; spf=none smtp.mailfrom=huaweicloud.com; arc=none smtp.client-ip=45.249.212.51
+Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=huaweicloud.com
+Authentication-Results: smtp.subspace.kernel.org; spf=none smtp.mailfrom=huaweicloud.com
+Received: from mail.maildlp.com (unknown [172.19.163.177])
+	by dggsgout11.his.huawei.com (SkyGuard) with ESMTPS id 4gc2d62B8xzYQtp3
+	for <sashiko-reviews@lists.linux.dev>; Fri, 12 Jun 2026 09:54:34 +0800 (CST)
+Received: from mail02.huawei.com (unknown [10.116.40.75])
+	by mail.maildlp.com (Postfix) with ESMTP id 77D194058D
+	for <sashiko-reviews@lists.linux.dev>; Fri, 12 Jun 2026 09:54:55 +0800 (CST)
+Received: from [10.67.110.36] (unknown [10.67.110.36])
+	by APP2 (Coremail) with SMTP id Syh0CgAHy4DtZitqxOPwBQ--.20143S2;
+	Fri, 12 Jun 2026 09:54:54 +0800 (CST)
+Message-ID: <6df6e707-0d79-4bc9-95c0-7f2c4896a229@huaweicloud.com>
+Date: Fri, 12 Jun 2026 09:54:52 +0800
 Precedence: bulk
 X-Mailing-List: sashiko-reviews@lists.linux.dev
 List-Id: <sashiko-reviews.lists.linux.dev>
 List-Subscribe: <mailto:sashiko-reviews+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:sashiko-reviews+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-X-MS-PublicTrafficType: Email
-X-MS-TrafficTypeDiagnostic: DS4PPF0BAC23327:EE_|MW3PR11MB4586:EE_
-X-MS-Office365-Filtering-Correlation-Id: e0eded82-2286-4543-9562-08dec8209700
-X-MS-Exchange-SenderADCheck: 1
-X-MS-Exchange-AntiSpam-Relay: 0
-X-Microsoft-Antispam: BCL:0;ARA:13230040|1800799024|376014|23010399003|366016|18002099003|22082099003|4143699003|56012099006|11063799006;
-X-Microsoft-Antispam-Message-Info: oNL1uEiMf6eQI4KgdwTt9pOuYtAtTrzU0GrkfAmShJWXf1e5/umRN1DdKVPdyPg/4LHC4o3Xo0PwxtOSN63fSOkSdudqDMGSIrv6xxCsj6M5IYOlPZk8bf0eDfUJEmMOdE2qdCeWVhIqBTuI4rLU/Zs6DfaQYo6Bm5IEklZK50ESdcwz5Grcze1IWpbmp2hS+7s/ms0Q806THOO7gu9plmpp5Y3bfqPp7thq0iui+3pqIsIBR2eCv61FnQtRos9FUusqjXqf9cwtxXwCmZBRC9mfG5iuhTQl4o2zDDdKuIHt6FMNJqvBxzP29JF+oq/Mv6LKgz8cVoYSb3pMTTNznQf8C9yGrA3yV6zMmca4VrRuw8aTTP0wycsvqmW0C+hHr1TweFGNKg9a6R5t1LVmDJh+teSN0spOKwJb5HTUMLLQclBDRn0c4pjYVi5a4WHPOAtfeL0KvQ8d5LTqZg2G8/uRRP8ucQZFzlQ+HHE/90mkm5uRcF2CZPunfSZNfParnqxbhyFTW/eLkSBrnwpcD0wNe+x4B4WHGiXN1nncp2CYoTWmTUfD9jgPgs9TlJxZMwc5sKlQW4WfTL51YVqAcXX96q9jJbEloCmcb1Ts/iVG3pY8lVXlgepokXBx6ss8/hemKkWVJ4q5V9f07AidFDPYR0K2JewNl+5y5yBNzqQ09tNHybydaZRMq9DhO4+N
-X-Forefront-Antispam-Report: CIP:255.255.255.255;CTRY:;LANG:en;SCL:1;SRV:;IPV:NLI;SFV:NSPM;H:DS4PPF0BAC23327.namprd11.prod.outlook.com;PTR:;CAT:NONE;SFS:(13230040)(1800799024)(376014)(23010399003)(366016)(18002099003)(22082099003)(4143699003)(56012099006)(11063799006);DIR:OUT;SFP:1101;
-X-MS-Exchange-AntiSpam-MessageData-ChunkCount: 1
-X-MS-Exchange-AntiSpam-MessageData-0: =?us-ascii?Q?i5W75vMJVz/aE9f9xzn6jfInxtSWUMU49uPLSo70h6UVK5hWeEmYvuAE2o1O?=
- =?us-ascii?Q?DAFCTBbK0Mbx5RZ2mAFqwps8vgjLwh5oSBFcSP0q024CA2nAXIL3+E7EN+OE?=
- =?us-ascii?Q?p4/7x7x0mKS+xX+CFKM8ZJldzKYQbziDgn9vLC3lochlKfTy5Byl+nu51ogq?=
- =?us-ascii?Q?sA922+ddJBN5+W1k0/qkqfT0hxBWl48b/Yq19NRXDToQ60EJXjRnMnHGQZyp?=
- =?us-ascii?Q?1/WBRhjM1ZCOAeWo8TLQPoa9wa+8KizIVEZ5+913+ChjJecoyOiQGYDfPnMO?=
- =?us-ascii?Q?gYoNtIlsgqM9EUGJ8YW2PuK/9Zpg37h2ZDw1AlBUOh5UMMEyBYouEyDS//M4?=
- =?us-ascii?Q?k7F2JLzG4fHemfHyZPW4rNB8CUlGQwr8g4teGdIc47eUTamc73JSHrg7y5fy?=
- =?us-ascii?Q?Tdz0MjTfHHhJkXzHDgzL8UDm1OlSGOqU3+C+g2dCJrx8accP/Uxcwwf8t4F8?=
- =?us-ascii?Q?D7CBDvOfR/+ugHFXh7ZOpCyxK/f8AYYYugDD1GylhbpvKS5VrZLbVCweaXiz?=
- =?us-ascii?Q?36yU+FfTzI0ceB6cW6pqkzANpCfHrHgyYcwWfax8sgovVp6+kmsEtcxYGber?=
- =?us-ascii?Q?FfEWavMtgiw+MHn6bnvmOrzEhev0tlAHo/7AN53xyRwQsXaZNwJOy9OPXqH7?=
- =?us-ascii?Q?4unT5oq4qnCkz5rUz1J8t77OSoTrhiS4XC2ZAVGhNoGlliZLEml/XsUN+SG9?=
- =?us-ascii?Q?9x2tTh44sF/vlW9lL/EXK5M460GQ5Bjz2gg5sj1NvslphfynfThkhDFTMIkF?=
- =?us-ascii?Q?VLog+AcUAwKPijqrd2C08tc1FSXMgJTBcdcBJ7Sv3TiF57+L6q0EOEC4a6mG?=
- =?us-ascii?Q?ILcZTxuiIuwLETkxb6DRvaMmey33BNdbVsFVXdsyEjv4CINSXFiTqBZEAvQc?=
- =?us-ascii?Q?61/MeO+SCERL+hj3UVh5G8nF/2AXHudRtcqotju93MuCsU/XZFTOzeJqc6kO?=
- =?us-ascii?Q?+nwbjTWxdoUz1qYPKCHxVaCCHODifP5qGzugAWy9EO2La1jUY4l7idxJGmh+?=
- =?us-ascii?Q?99HnfyCCFcXFD+326USMgdJCWQeZa6RYMzQGd4C5djz5tj2TjtKmNxBP602f?=
- =?us-ascii?Q?Z+gKXn1zm5AW7wmVRoHlh1UFsPizq11ffGpcauuRuQ9ZEpeXCh69/SFIH8NX?=
- =?us-ascii?Q?f9JK+carQizLW/7b+KNwcM6bto9qgJX5gmUtln7Bn/cpKpA/96qBMHwvSd/m?=
- =?us-ascii?Q?7stTnWIzSTiUNItOfG0Ezyn/GYtXRVTvQO9xdm2kPATUkHWG0Zv/1jr68bLk?=
- =?us-ascii?Q?PlQ2HnMlKFUwL683Yz+r+dDurrNvPitc0l9GIOUiiFF5zfVuiCnpPUK2O+IK?=
- =?us-ascii?Q?p+IHLgtLi3FG8RGGsAD/VNffpzOkR/KrhXiviypDBqrkqpgtwmIr0B/HQLgz?=
- =?us-ascii?Q?yrXsSEq4QKdZLtnZaCMe/tWTowQ4KPAM09fC/NFN3uhktqCsSUqyhL4vgGlD?=
- =?us-ascii?Q?dMy2FsRTevLJBv3Nt2vT4T7IglN9CW0bbjbVRi7y/lEh2leA8t2WvkTFUKzs?=
- =?us-ascii?Q?H44QGDh7AytpS0q90y+P9b0c/ssE3YztgXYdK3mXpq/wb5vwlZuQNsh5tzpX?=
- =?us-ascii?Q?2xCTrVD49xQR2qmAIdzktYNtiCy00R2CRmak8pHF9zttS6X0d38g8ufYJxbC?=
- =?us-ascii?Q?HtiVV89MH2Rf1GCAOZsfXYCJ538S5cNey1WuCPL+LjC+68oDdyl6G07bPh0w?=
- =?us-ascii?Q?0afU2QyefPoV6G7wG6oZKIcBONXc5U+JClwDSAYZ46aTGXv9bRTOpX3xbrUZ?=
- =?us-ascii?Q?zyvhHmQ3CK6/Fx/Hj4AFfudAwRXr6Pw=3D?=
-X-Exchange-RoutingPolicyChecked: IlZUCsh5IbDVbQEu2qOwtqMgozvOlpHWKrx9/ixTmtRS1gffquQfxheRsk99s0dCvY8I8CJ3TWMNlNCxFOhZfVLasJuBAFjbl1SkoFDmxemUmvH9vF3nSH8aN0Fnpu5dvwNJyRrC6z6gF5AbWm3w6qDGf5iWtwnEzsGil1/Dp3wSYJQF774oPWethkl1VCUKsyNZCtVrqZN+V9Uiy1n9N77o5DUjcEPUsywwAhrFsl/3+0uXoGYnC1oqgfBEw+icAHjR7L1lpeTLZt9wjBknAb54E06cfbRODhW/I5kILB09BockW8U1CM0rnuEY+UvRZG/6JEJVNpXI8BfzHerJ+A==
-X-MS-Exchange-CrossTenant-Network-Message-Id: e0eded82-2286-4543-9562-08dec8209700
-X-MS-Exchange-CrossTenant-AuthSource: DS4PPF0BAC23327.namprd11.prod.outlook.com
-X-MS-Exchange-CrossTenant-AuthAs: Internal
-X-MS-Exchange-CrossTenant-OriginalArrivalTime: 12 Jun 2026 01:19:03.2953
- (UTC)
-X-MS-Exchange-CrossTenant-FromEntityHeader: Hosted
-X-MS-Exchange-CrossTenant-Id: 46c98d88-e344-4ed4-8496-4ed7712e255d
-X-MS-Exchange-CrossTenant-MailboxType: HOSTED
-X-MS-Exchange-CrossTenant-UserPrincipalName: g3OYLIq9sNEF01LGBXV3Pvo1l+ObajBfbCsvpIx4ZHomR+C4AHa9q7dA6vtO1gtZrqLoj9FBvKOUjTqK/m44FueL3GKPIQgtdBMCN8rWqMM=
-X-MS-Exchange-Transport-CrossTenantHeadersStamped: MW3PR11MB4586
-X-OriginatorOrg: intel.com
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH v4] rethook: Remove the running task check in
+ rethook_find_ret_addr()
+To: XIAO WU <xiaowu.417@qq.com>, sashiko-reviews@lists.linux.dev,
+ Masami Hiramatsu <mhiramat@kernel.org>, Petr Mladek <pmladek@suse.com>,
+ Peter Zijlstra <peterz@infradead.org>
+Cc: Mathieu Desnoyers <mathieu.desnoyers@efficios.com>,
+ Alexei Starovoitov <ast@kernel.org>, Steven Rostedt <rostedt@goodmis.org>,
+ linux-kernel@vger.kernel.org, linux-trace-kernel@vger.kernel.org,
+ live-patching@vger.kernel.org
+References: <20260610013658.1837963-1-wutengda@huaweicloud.com>
+ <20260610015032.4BFAA1F00893@smtp.kernel.org>
+ <tencent_3D17DC5BE32C8A51D938AF50F221321F6206@qq.com>
+Content-Language: en-US
+From: Tengda Wu <wutengda@huaweicloud.com>
+In-Reply-To: <tencent_3D17DC5BE32C8A51D938AF50F221321F6206@qq.com>
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
+X-CM-TRANSID:Syh0CgAHy4DtZitqxOPwBQ--.20143S2
+X-Coremail-Antispam: 1UD129KBjvJXoW3JF1UWw48ArWxGr45CrWfZrb_yoWDJrWrpF
+	Z7trZ0yF95Aryvyr1DJr1UZFyrJrsYqw4UGr1kGFyUAa1UAr1jqrWSqr4Y9F45Cr4kGr15
+	GF4jqr9rursrAFJanT9S1TB71UUUUU7qnTZGkaVYY2UrUUUUjbIjqfuFe4nvWSU5nxnvy2
+	9KBjDU0xBIdaVrnRJUUUv0b4IE77IF4wAFF20E14v26r4j6ryUM7CY07I20VC2zVCF04k2
+	6cxKx2IYs7xG6rWj6s0DM7CIcVAFz4kK6r1j6r18M28lY4IEw2IIxxk0rwA2F7IY1VAKz4
+	vEj48ve4kI8wA2z4x0Y4vE2Ix0cI8IcVAFwI0_tr0E3s1l84ACjcxK6xIIjxv20xvEc7Cj
+	xVAFwI0_Gr1j6F4UJwA2z4x0Y4vEx4A2jsIE14v26rxl6s0DM28EF7xvwVC2z280aVCY1x
+	0267AKxVW0oVCq3wAS0I0E0xvYzxvE52x082IY62kv0487Mc02F40EFcxC0VAKzVAqx4xG
+	6I80ewAv7VC0I7IYx2IY67AKxVWUJVWUGwAv7VC2z280aVAFwI0_Jr0_Gr1lOx8S6xCaFV
+	Cjc4AY6r1j6r4UM4x0Y48IcVAKI48JM4IIrI8v6xkF7I0E8cxan2IY04v7MxkF7I0En4kS
+	14v26r1q6r43MxAIw28IcxkI7VAKI48JMxC20s026xCaFVCjc4AY6r1j6r4UMI8I3I0E5I
+	8CrVAFwI0_Jr0_Jr4lx2IqxVCjr7xvwVAFwI0_JrI_JrWlx4CE17CEb7AF67AKxVWUtVW8
+	ZwCIc40Y0x0EwIxGrwCI42IY6xIIjxv20xvE14v26r1j6r1xMIIF0xvE2Ix0cI8IcVCY1x
+	0267AKxVW8JVWxJwCI42IY6xAIw20EY4v20xvaj40_Jr0_JF4lIxAIcVC2z280aVAFwI0_
+	Jr0_Gr1lIxAIcVC2z280aVCY1x0267AKxVW8JVW8JrUvcSsGvfC2KfnxnUUI43ZEXa7IU1
+	7KsUUUUUU==
+X-CM-SenderInfo: pzxwv0hjgdqx5xdzvxpfor3voofrz/
 
-On Mon, Jun 08, 2026 at 12:38:42PM +0800, Li Ming wrote:
-> On 6/6/2026 4:11 PM, sashiko-bot@kernel.org wrote:
-> > Thank you for your contribution! Sashiko AI review found 1 potential issue(s) to consider:
-> >
-> > Pre-existing issues:
-> > - [High] Loops iterating over the `p->targets` array up to `p->nr_targets` unconditionally dereference elements, leading to NULL pointer dereferences because the array can be sparse.
-> > --
-> >
-> > commit bf78125f1b0b7a811b9b200d37ed57cc96619a00
-> > Author: Li Ming <ming.li@zohomail.com>
-> >
-> > cxl/region: Fill first free targets[] slot during auto-discovery
-> >
-> > This commit adjusts the cxl_region_attach_auto logic to find the first free
-> > target slot for endpoint decoder attachment, rather than appending to the tail.
-> > This ensures NULL holes in the target array are filled to avoid accessing an
-> > endpoint decoder via a NULL pointer and miscounting valid endpoint decoders.
-> >
-> >> diff --git a/drivers/cxl/core/region.c b/drivers/cxl/core/region.c
-> >> index c4335ebf19f7f..532dac77bd003 100644
-> >> --- a/drivers/cxl/core/region.c
-> >> +++ b/drivers/cxl/core/region.c
-> >> @@ -1848,8 +1848,21 @@ static int cxl_region_attach_auto(struct cxl_region *cxlr,
-> >>  	 * this means that userspace can view devices in the wrong position
-> >>  	 * before the region activates, and must be careful to understand when
-> >>  	 * it might be racing region autodiscovery.
-> >> +	 *
-> >> +	 * The endpoint decoder will be recorded into the first free slot of
-> >> +	 * the target array.
-> >>  	 */
-> >> -	pos = p->nr_targets;
-> >> +	for (pos = 0; pos < p->interleave_ways; pos++) {
-> >> +		if (!p->targets[pos])
-> >> +			break;
-> >> +	}
-> >> +
-> >> +	if (pos == p->interleave_ways) {
-> >> +		dev_err(&cxlr->dev, "%s: unable to find a free target slot\n",
-> >> +			dev_name(&cxled->cxld.dev));
-> >> +		return -ENXIO;
-> >> +	}
-> >> +
-> >>  	p->targets[pos] = cxled;
-> > [Severity: High]
-> > This is a pre-existing issue, but since __cxl_decoder_detach() can leave
-> > sparse holes in p->targets without compacting the array, are the loops
-> > that iterate up to p->nr_targets still susceptible to NULL pointer
-> > dereferences?
-> >
-> > For instance, in drivers/cxl/core/region.c:cxl_dpa_to_hpa():
-> >
-> >     for (int i = 0; i < p->nr_targets; i++) {
-> >         if (cxlmd == cxled_to_memdev(p->targets[i])) {
-> >
-> > If there is a hole at an index less than p->nr_targets, wouldn't
-> > cxled_to_memdev() dereference a NULL pointer?
-> >
-> > Similar unprotected iterations seem to exist in
-> > cxl_scrub_get_attrbs_region(), unaligned_region_offset_to_dpa_result(),
-> > and region_offset_to_dpa_result().
-> >
-> > Does the array need to be compacted upon detach, or should these loops be
-> > updated to check for NULL pointers before dereferencing p->targets[i]?
+Hi Xiao,
+
+Thank you very much for your detailed analysis and verification.
+
+On 2026/6/11 23:53, XIAO WU wrote:
+> Hi Tengda,
 > 
-> It is not a bug here.
+> Sashiko [1] reviewed this patch and found that removing the
+> task_is_running() check exposes stack unwinders to real crashes — not
+> just "invalid information."  A PoC confirms this: a KASAN panic triggers
+> within seconds when /proc/<pid>/stack reads the stack of a task that is
+> concurrently running a kretprobe.
 > 
-> cxl driver always calls cxl_dpa_to_region() for a cxl region checking before involving cxl_dpa_to_hpa(), but if a cxl region is not bound to cxl region driver, driver will not involve cxl_dpa_to_hpa().
+> [1] https://sashiko.dev/#/patchset/20260610013658.1837963-1-wutengda%40huaweicloud.com
 > 
-> But maybe adding cxlr->driver checking in cxl_dpa_to_hpa() is a choice.
+>> diff --git a/kernel/trace/rethook.c b/kernel/trace/rethook.c
+>> index 5a8bdf88999a..1e7fdebe3cd5 100644
+>> --- a/kernel/trace/rethook.c
+>> +++ b/kernel/trace/rethook.c
+>> @@ -250,9 +251,6 @@ unsigned long rethook_find_ret_addr(struct task_struct *tsk, unsigned long frame
+>>      if (WARN_ON_ONCE(!cur))
+>>          return 0;
+>>
+>> -    if (tsk != current && task_is_running(tsk))
+>> -        return 0;
+>> -
+>>      do {
+>>          ret = __rethook_find_ret_addr(tsk, cur);
+>>          if (!ret)
+> 
+> The commit message states:
+> 
+>> The iteration is already safe from crashes because
+>> unwind_next_frame() holds RCU and rethook_node structures are
+>> RCU-freed; even if the iteration goes off the rails and returns
+>> invalid information, it will not crash.
+> 
+> There are two problems with this claim, both reproducible.
+> 
+> **Problem 1: stack-out-of-bounds in unwind_next_frame itself**
+> 
+> The PoC below reliably triggers the following KASAN panic — not in the
+> rethook list traversal, but inside unwind_next_frame():
+> 
+> [ 1833.494623] BUG: KASAN: stack-out-of-bounds in unwind_next_frame+0x861/0x2080
+> [ 1833.494651] Read of size 2 at addr ffffc90003e6f5f0 by task poc/9854
+> [ 1833.494707] Call Trace:
+> [ 1833.494719]  dump_stack_lvl+0x116/0x1f0
+> [ 1833.494743]  print_report+0xf4/0x600
+> [ 1833.494788]  kasan_report+0xe0/0x110
+> [ 1833.494836]  unwind_next_frame+0x861/0x2080
+> [ 1833.494948]  arch_stack_walk+0x99/0x100
+> [ 1833.495000]  stack_trace_save_tsk+0x16a/0x200
+> [ 1833.495054]  proc_pid_stack+0x173/0x2b0
+> [ 1833.495103]  seq_read_iter+0x519/0x12d0
+> [ 1833.495166]  seq_read+0x3b7/0x590
+> [ 1833.495297]  vfs_read+0x1f5/0xd20
+> [ 1833.495497]  ksys_read+0x135/0x250
+> [ 1833.495549]  do_syscall_64+0x129/0x850
+> [ 1833.495566]  entry_SYSCALL_64_after_hwframe+0x77/0x7f
+> [ 1833.498894] Kernel panic - not syncing: KASAN: panic_on_warn set ...
+> 
+> page last free pid 9737 tgid 9737 stack trace:
+>  do_sys_openat2+0xbf/0x260          <-- target task inside kretprobe
+>  __x64_sys_openat+0x179/0x210
+> 
+> This crash has nothing to do with rethook_node lifetimes or RCU.  It
+> happens because the ORC unwinder reads stack memory while the target
+> task concurrently executes a kretprobe trampoline that modifies return
+> addresses.  The unwinder follows corrupted frame data past valid stack
+> boundaries.  RCU protection of rethook_node structures is irrelevant —
+> this crash occurs at the stack frame interpretation level, before any
+> rethook list traversal.
+> 
+> The old task_is_running() check prevented the unwinder from attempting
+> to unwind a running task's stack in the first place.
 > 
 
-Hi Ming, 
-I'm in agreemnet that there is not a reachable NULL deref path here.
-With this patch, the hole is gone by the time those loops run.
+Yes, I was able to reproduce the issue locally using your PoC. The problem
+does exist as you described. I need to take a deeper look and figure out how
+to properly fix it.
 
-A hole only exists transiently between a detach and the next stage,
-while the region is not comitted. The windows suggested aren't real.
-
-I'm kind of against adding an explicit check in cxl_dpa_to_hpa(), as
-'hardening' because that undercuts this whole point here.
-
--- Alison
-
-
-
-> >
-> >>  	cxled->pos = pos;
-> >>  	cxled->state = CXL_DECODER_STATE_AUTO_STAGED;
+> **Problem 2: use-after-free via rethook_node recycling**
 > 
+> Even if the stack-out-of-bounds above were addressed, a second crash
+> path exists in the rethook list traversal itself.
 > 
+> rethook_recycle() immediately pushes nodes back to the objpool without
+> an RCU grace period:
 > 
+>   kernel/trace/rethook.c:
+>   void rethook_recycle(struct rethook_node *node)
+>   {
+>           ...
+>           objpool_push(node, &node->rethook->pool);
+>   }
+> 
+> Meanwhile, unwind_next_frame() in arch/x86/kernel/unwind_orc.c drops
+> RCU between frames while the cursor (*cur) persists across iterations:
+> 
+>   arch/x86/kernel/unwind_orc.c:
+>   bool unwind_next_frame(...)
+>   {
+>           ...
+>           guard(rcu)();    // RCU held for one frame
+>           ...
+>   }                        // RCU dropped here
+> 
+> When the unwinder calls __rethook_find_ret_addr() in the next frame
+> iteration, it does:
+> 
+>   struct llist_node *first = tsk->rethooks.first;
+>   ...
+>   *cur = first;
+>   ...
+>   node = node->next;       // node may have been recycled
+> 
+> If the target task returns from a probed function between frames, its
+> rethook_node is recycled and can be instantly reallocated to another
+> task.  The unwinder's stale cursor then dereferences a freed pointer,
+> leading to use-after-free.
+> 
+
+Yes, Sashiko also pointed this out. You have opened this issue for further
+analysis to clarify its fault model. It appears to be a pre-existing issue
+that may require a separate patch to resolve.
+
+> ## Reproducer
+> 
+> The PoC sets up a kretprobe on do_sys_openat2, creates hot-loop threads
+> calling open(), and concurrently reads /proc/<tid>/stack.  The race
+> triggers within seconds (Problem 1 above; Problem 2 may reproduce on
+> kernels without KASAN or with different timing).
+> 
+> Build:  gcc -static -pthread -o poc poc.c
+> Run:    ./poc [runtime_seconds]
+> Needs:  root, CONFIG_KASAN=y
+> 
+> #define _GNU_SOURCE
+> #include <stdio.h>
+> #include <stdlib.h>
+> #include <string.h>
+> #include <unistd.h>
+> #include <sys/types.h>
+> #include <sys/stat.h>
+> #include <sys/wait.h>
+> #include <sys/syscall.h>
+> #include <sched.h>
+> #include <fcntl.h>
+> #include <errno.h>
+> #include <signal.h>
+> #include <pthread.h>
+> #include <dirent.h>
+> 
+> #define TRACE "/sys/kernel/tracing"
+> 
+> volatile int stop = 0;
+> 
+> static int tfs(const char *f, const char *b)
+> {
+>     char p[256]; int fd, r;
+>     snprintf(p, 256, "%s/%s", TRACE, f);
+>     fd = open(p, O_WRONLY | O_TRUNC);
+>     if (fd < 0) {
+>         system("mount -t tracefs tracefs /sys/kernel/tracing 2>/dev/null");
+>         usleep(50000);
+>         fd = open(p, O_WRONLY | O_TRUNC);
+>     }
+>     if (fd < 0) return -1;
+>     r = write(fd, b, strlen(b));
+>     close(fd);
+>     return r < 0 ? -1 : 0;
+> }
+> 
+> void *hot_thread(void *arg)
+> {
+>     while (!__atomic_load_n(&stop, __ATOMIC_RELAXED)) {
+>         int fd = open("/dev/null", O_RDONLY);
+>         if (fd >= 0) close(fd);
+>     }
+>     return NULL;
+> }
+> 
+> void *reader_thread(void *arg)
+> {
+>     pid_t target = *(pid_t *)arg;
+>     char path[64], buf[8192];
+>     snprintf(path, 64, "/proc/%d/stack", target);
+>     while (!__atomic_load_n(&stop, __ATOMIC_RELAXED)) {
+>         int fd = open(path, O_RDONLY);
+>         if (fd >= 0) { read(fd, buf, 8191); close(fd); }
+>     }
+>     return NULL;
+> }
+> 
+> void sigh(int s) { stop = 1; }
+> 
+> int main(int argc, char *argv[])
+> {
+>     int runtime = 120;
+>     if (argc > 1) runtime = atoi(argv[1]);
+> 
+>     printf("rethook race PoC\n");
+>     if (geteuid()) { printf("root needed\n"); return 1; }
+>     signal(SIGINT, sigh);
+> 
+>     pthread_t hot[4], rdr[4];
+>     pid_t hot_tids[4];
+>     int pairs = 4;
+> 
+>     for (int c = 0; c < runtime / 5 && !stop; c++) {
+>         tfs("events/kprobes/myretprobe/enable", "0");
+>         tfs("kprobe_events", "-:myretprobe");
+>         usleep(100);
+>         tfs("kprobe_events", "r:myretprobe do_sys_openat2 $retval");
+>         tfs("events/kprobes/myretprobe/enable", "1");
+> 
+>         pid_t main_tid = syscall(SYS_gettid);
+> 
+>         for (int i = 0; i < pairs; i++)
+>             pthread_create(&hot[i], NULL, hot_thread, NULL);
+> 
+>         usleep(300000);
+> 
+>         {
+>             DIR *d = opendir("/proc/self/task");
+>             int cnt = 0;
+>             if (d) {
+>                 struct dirent *de;
+>                 while ((de = readdir(d)) != NULL && cnt < pairs) {
+>                     pid_t t = atoi(de->d_name);
+>                     if (t > 0 && t != main_tid)
+>                         hot_tids[cnt++] = t;
+>                 }
+>                 closedir(d);
+>             }
+>             for (int i = 0; i < cnt; i++)
+>                 pthread_create(&rdr[i], NULL, reader_thread, &hot_tids[i]);
+>         }
+> 
+>         printf("round %d\n", c);
+>         sleep(5);
+> 
+>         stop = 1;
+>         usleep(100000);
+> 
+>         for (int i = 0; i < pairs; i++) pthread_join(hot[i], NULL);
+>         for (int i = 0; i < pairs; i++) pthread_join(rdr[i], NULL);
+> 
+>         stop = 0;
+>         usleep(1000);
+>     }
+> 
+>     tfs("events/kprobes/myretprobe/enable", "0");
+>     tfs("kprobe_events", "-:myretprobe");
+>     printf("Done\n");
+>     return 0;
+> }
+> 
+> ## Summary
+> 
+> The v4 commit message claims the iteration "will not crash," but the PoC
+> demonstrates a reproducible KASAN panic:
+> 
+> 1. stack-out-of-bounds in unwind_next_frame (ORC unwinder reads
+>    concurrently-modified stack frames of a running task)
+> 
+> 2. Potential use-after-free in __rethook_find_ret_addr (rethook nodes
+>    recycled without RCU grace period, cursor persists across RCU drops)
+> 
+> The old task_is_running() check was racy but served as a practical
+> safety net.  Removing it without adding equivalent protection in the
+> callers (proc_pid_stack, BPF stack walkers) exposes users to kernel
+> panics via /proc/<pid>/stack on any task running a kretprobe.
+
+Once again, I truly appreciate your thorough review and testing.
+I'm not sure if I can fully resolve these issues, but if I succeed, I will
+send out a v5.
+
+Best regards,
+Tengda
+
