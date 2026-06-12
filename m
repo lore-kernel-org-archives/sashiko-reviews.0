@@ -1,229 +1,342 @@
-Received: from mail-dy1-f175.google.com (mail-dy1-f175.google.com [74.125.82.175])
+Received: from mail-dl1-f53.google.com (mail-dl1-f53.google.com [74.125.82.53])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 76AB9312807
-	for <sashiko-reviews@lists.linux.dev>; Fri, 12 Jun 2026 05:59:26 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=pass smtp.client-ip=74.125.82.175
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6ABCF33F361
+	for <sashiko-reviews@lists.linux.dev>; Fri, 12 Jun 2026 06:03:59 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=pass smtp.client-ip=74.125.82.53
 ARC-Seal:i=2; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1781243967; cv=pass; b=abyg9DLnwX4/AXU5MUD0mCyFc4U9AcBTHwSt5NwtNVPMnytweK0b+zo69uVqKTvuZzoqSBSVv2RMQERN7Boa0kMmdr1tSQLenmQyxBn0k5xUAScqY2MmqjhUwOILaXK8r23jVsHm+IvoFv1ipIQ6Xx4PjfEWyakWiCa77mneUxA=
+	t=1781244240; cv=pass; b=ba7Gmt0VbyHuFkk6a5n4k+ZGVHp5K4Yqb3GLqzfsZMcUY6Fs0Fd4YYAt5JBBrh4tSXPdGXESlehQ0qmKx7eWXrSYfPfk1/R/pQpEn4gw+On41KgUjscQxOz7hGajhdBtYeApq0d37qa/PZzXGopZrwtIY+avehoQkyu1wSofCJk=
 ARC-Message-Signature:i=2; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1781243967; c=relaxed/simple;
-	bh=NCMOSv8PebqwPmrSyGCA5at/gCV9usFfd7wYj6j8PWc=;
+	s=arc-20240116; t=1781244240; c=relaxed/simple;
+	bh=JChxOKHDMlUFH/AxUTSlme3Q4ZuCazL1Ek5LsdO+e+c=;
 	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
-	 To:Cc:Content-Type; b=iHXuOmpsITZIe5rGsUbhHLD8X9dhVEQbgGLPrqDjGcFvxirwrCFtfDRxHtipuqOIPhWrhz4k5oRte0aZdCtmAg0mxi53Ary0GxbG1YLmAo+CAVhDbgtKsHpLrprbdupXpi9IkfHaRTO8/OCABS8CZ08FtSvQUuV9hfE3hbOaJNs=
-ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=google.com; spf=pass smtp.mailfrom=google.com; dkim=pass (2048-bit key) header.d=google.com header.i=@google.com header.b=DY1I8PlI; arc=pass smtp.client-ip=74.125.82.175
+	 To:Cc:Content-Type; b=QyeGoiCqQm7GGNL6xQMZ3faPr+i/FTPJXLXIFEFbskOhWlS5UXfmMMFuZSjL23MiNEK2V2nW9OHyDz6TnxIU2PgLGwG+SSqTpP5ugJjCuIYODTROpUlPLqjRALrdhpBdOs2eI9rA1EVLPkODXARMDw4sOjKoKZWqe3dhzC/wbRw=
+ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=google.com; spf=pass smtp.mailfrom=google.com; dkim=pass (2048-bit key) header.d=google.com header.i=@google.com header.b=K/OroR1T; arc=pass smtp.client-ip=74.125.82.53
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=google.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=google.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=google.com header.i=@google.com header.b="DY1I8PlI"
-Received: by mail-dy1-f175.google.com with SMTP id 5a478bee46e88-304c520fe9aso1464290eec.0
-        for <sashiko-reviews@lists.linux.dev>; Thu, 11 Jun 2026 22:59:26 -0700 (PDT)
-ARC-Seal: i=1; a=rsa-sha256; t=1781243965; cv=none;
+	dkim=pass (2048-bit key) header.d=google.com header.i=@google.com header.b="K/OroR1T"
+Received: by mail-dl1-f53.google.com with SMTP id a92af1059eb24-13807d2f898so681010c88.0
+        for <sashiko-reviews@lists.linux.dev>; Thu, 11 Jun 2026 23:03:59 -0700 (PDT)
+ARC-Seal: i=1; a=rsa-sha256; t=1781244238; cv=none;
         d=google.com; s=arc-20240605;
-        b=ZvV+/6Ng3gODYBIZANQ439C+PbQtToe4lIHh5MnvVxxX2mo3QWwzmKUwffooo+72rC
-         qCCz5SMw75os8eU5OFlYgaImAb/85scFboZD8vrsxS/J1FnkowV9phLgvAqP2c/7p1zj
-         Q4LfiguLv6pY6skFT/Qd6ckMUhMaNzXyC0JKWIZSlZ2/Yd3TRixa6Mqt2aWWWjjleRTf
-         aC9385lVyaklFduCFkHIgPRji4bwLD/0L46D/xw9PY8w89cx5OI6Tj+rYe19XcmGKcMO
-         cweXRuopLKouTvTuW0/LdYl2zKgHd1UC3H4hQjDJg93Tt4YcrvDLg5tbj/g0p/UglX8N
-         PgUQ==
+        b=hsRWWcWGZRx0y1x3bjKX2B/gJ1DW9pcolWF3wswLyR7jpJ8uDEfD7EBD9mcibmHSEw
+         xJtLjBy7Cr4Ihtk207bBx8YHgQ0lQvpjV5OFYDJqqy6HayzvL5Na+V4xek7GSkbvZLO8
+         geZblgxebOewFH4gAxtwtmuc76cxcp4OJAEjE0gnyh2s4XdJXDq/TaFYRTedm7U7+RqR
+         QOv2Z2T4bkrcTX4sS3roh6W1Q3DG5Pn0rAVXeVD8R3k1ID5zdTrkf08biur+zhwYyFbW
+         a1mqn0Adp/3xEc0Cve6yYQrfgt4xZOR1W8N1EmgZe15lMUjh2S5ZHtmEnv3xQwbWg+AW
+         vmcg==
 ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com; s=arc-20240605;
         h=content-transfer-encoding:cc:to:subject:message-id:date:from
          :in-reply-to:references:mime-version:dkim-signature;
-        bh=PX3ObJ6hAnulchFlbqVK9HnQncb17pHwM8Q1uYSdLsA=;
+        bh=wp35KpTh1/XiSIGSqXjoBqF9JP9w4suhLRUG1qQ2nnY=;
         fh=uA360uvxR9S0K/Y4Lovo7aIaGlBwzVBnnb2BKWupr/4=;
-        b=A10hUvWWacKNs097dLv1GU51Mp0+n27FeR6aOt9tdd1keNljjrcAMRLtgQqekYzcYp
-         +a1BcaAD3wk0OKfU47AnAMaru49h+7XP3HbRR6TEokFQqP0S+SAFDBLUZc8d/P/V1e05
-         U0gw8jd6ah64t10Vt0yH9M/bZNkfnAH2ioMkWtTZCALkS/6TfMsbfXQV64Hg+xHcGpzX
-         Bk2IgGNWSaPZLLkmEoDkrHDUkGiahGSik3wZGMM+/tYqeZQQaFZU9whNRzR6rgG4gcXy
-         +DSllmCOnSqrE6AMZOwx4FLSvuPskoG2wUT2Xe6uM19bwxOHwxuQLEQ7UDC7fbiWhOBx
-         MDnQ==;
+        b=lOrGCcGRCh7qa8QZEFFsbGwpEFXh12eTkQePO087Rc0IvTiRoOEugjujrsUYSzsAyY
+         6RO3MDn/juT1Y9KQidt7pSPBIaoJYD9RcZaXicGZ+x81PcrT5dvWodzYzsJXTszjiGhX
+         AsyATXT+wxJFYBoCcvXYUE3L/SefatcAzYsHkbpiGb6pw7M23yGaniuWlqpT0hbAuY3i
+         D7HWu6DvxF61Oj+TVFa/QuM0u/X5agZK4VMFL+qgvvDgVKalkOf4GIvNY+S0MJZsXtxF
+         mBTIPnDbTXCrGsXlYNMFccHsTbazKlw1mHjJsksZvwfj33EWe1zpDbV5a30cWdFnLuhm
+         5jiA==;
         darn=lists.linux.dev
 ARC-Authentication-Results: i=1; mx.google.com; arc=none
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=google.com; s=20251104; t=1781243965; x=1781848765; darn=lists.linux.dev;
+        d=google.com; s=20251104; t=1781244238; x=1781849038; darn=lists.linux.dev;
         h=content-transfer-encoding:cc:to:subject:message-id:date:from
          :in-reply-to:references:mime-version:from:to:cc:subject:date
          :message-id:reply-to;
-        bh=PX3ObJ6hAnulchFlbqVK9HnQncb17pHwM8Q1uYSdLsA=;
-        b=DY1I8PlIoG81FTcCefJGbtGRT+jYUGxZVsff7TQ3o0fnkdNXj+GgBxjbqGbm8YCVJi
-         EZNI05jlqHCmeY1byD/ZoxKderWHV15UY3gXFVH+pUibGFbgKqaKk0g6kquTKKcmtrcz
-         VX2alIQu51MAsmzt41tLQDlJ9AqylT4lBHfILB0Ptop6LssXD+0FPEC+i56r+eIqUe8k
-         HnP/xmhxq06M1aQhUrX9Mf0itPpe3nltlGxplYMSGd4SAvPRh2gJZUnlklrwFghXSo+w
-         I0Fkpa5hLnONnG9JqklmGW6MfMHFm30lQ6y5U0nklZRf7mrbUlpIlp0ZeoMvhoF7Ooxm
-         yHZA==
+        bh=wp35KpTh1/XiSIGSqXjoBqF9JP9w4suhLRUG1qQ2nnY=;
+        b=K/OroR1TNzqU/jP3rzn4CDxPb0+uEP8cBqGYbdH4zVNjUlKGh0qv5Rto6CVfxRGkN1
+         5pa4EJIXUUU4q+SDz3mTOzWmIM5kQX4CXzzjYDUyhJHG5lDxNLeiOxsqaUG+mKWntHcD
+         NFqByuv+HcdUB+8F+ofoWdU/WCTllZNgBQvl6cK4Ed3B4Y0bUVKKFGdP+UAKYb/JSuO/
+         +3LHsYrloEA4QhZfqanB9nmUacr7QDeMDfCz6XyboqTFYET1wOXgd3arPoVLUiBvfvZi
+         zQsWXcyxwMGPdHvgDkEy2LItVyzxUQRu4vHgLHJhYUevRaozq1ojJKZxzUw3QghLq+j6
+         QX9Q==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20251104; t=1781243965; x=1781848765;
+        d=1e100.net; s=20251104; t=1781244238; x=1781849038;
         h=content-transfer-encoding:cc:to:subject:message-id:date:from
          :in-reply-to:references:mime-version:x-gm-gg:x-gm-message-state:from
          :to:cc:subject:date:message-id:reply-to;
-        bh=PX3ObJ6hAnulchFlbqVK9HnQncb17pHwM8Q1uYSdLsA=;
-        b=IifV8xsU4TVHSV+AL6Xq/MtT2tuZqtYdTuslpR+c/EvsXk6eZ6rxq1JM1PR9QUdgcB
-         sj3J1Qo/QY9EYezUaIe8nE2m7XpK6hfKbP2LftKaHCZaCqxNhRKa3O2ggEgfUKbSELS0
-         lfAK6Vqm+ivwa/KkQtzTn6p6bEuDinE8RE6M5IoJE2Ggsc7STyavwC5+vjiLQbYKMgpA
-         jxFj0FJIidH4FwjNcuZsUjYvjXaue964IWwqcRPnO/Ci49ZuagTplha+Hpl9Vj1TaWiw
-         61+vfRDkXrCFa2+bm5vU5Y9KIomNdQijFrYu4ZKfvW0i1v1WT8WAEM7ha65QtgGj+s8X
-         I74Q==
-X-Gm-Message-State: AOJu0YzpdMLJ0KisWPHlsXbGeYoBE1Dxx0o/lUUS+UoEe7M1gl9owI00
-	9/uM2sRfyICRrW8e9GWbCGguyQaWqZfHByiDRDqOSDzdkPpoRCx3VbEp6hi2kTOrSwcZL5Fptuo
-	Kda7wTfE2rqdwofHjUTLfpbxfFZeVpMQKRMWYgaE1R19nPo1+4QAeX5Umw6kpow==
-X-Gm-Gg: Acq92OGJrnveE55xkksTqsaj4dpZhqXQvoXPogi6t/S9nruGjkD48MhvQjs6oJQxTvG
-	eqNzW14CED3w4yxPGYnDl25hl5PbiVwxAbemD19lybUDBbwQom5KC3sjxX33hf6f+6x82jjZb1c
-	j7thzplJC7EI49nnflOV6BiDFZsu46cv6QLwU1ZA0qSeKESSBWP0FHgT/zmp1yy27gAbgeLirGO
-	HZdqISel13h3S6bfG3YoTHOyq42vIx9g1t6FBv9RzvEayT4EQn8hQ1QF890GglC6o8QUh7sPUSX
-	z5/3MC+AgvwCwY/GzL5vtZMZeqNPJYXX2sIfZ7uuMtP9q+DhLTuVPglur0Lps0jU8iaCIkQ8z4g
-	5KUqzqKVl/XZJbFia8rvj/P/y5Q1KEB364w3Dk3myKIhdK+6hsWcj
-X-Received: by 2002:a05:7300:578e:b0:304:b15:17d6 with SMTP id
- 5a478bee46e88-3081ff63c68mr958282eec.6.1781243964671; Thu, 11 Jun 2026
- 22:59:24 -0700 (PDT)
+        bh=wp35KpTh1/XiSIGSqXjoBqF9JP9w4suhLRUG1qQ2nnY=;
+        b=Ze/JeywzEgNOEG8cHi+s6uPhNf/v0Y0RBZPnmA9DTlVJwmyQAZ39u+0HjH04Sdh7rK
+         wZCsxL4g5oubEpsGf/Q0kEMqY2bDyOVyg5lDdlq8Igx0j6qLmTAAYlubZRebW/gKIkSD
+         jI05f7NaMYGDfeR2JXfMByV+RiyhPyhEIUjeWjkjK4oRVXWHWrdTgfnkpFAN9vXtmnt3
+         xPy1uWXFOeo0XoNP9QEYWYbm0t/oiYTZxwXmJAkjn3HrUUi9AkOTIUhxzCZqo8x3kmJt
+         9k8/HDL8eg9Q7QNUj1kfcaR/5f6hd56rPr26flDh1Y6VUKQyt0T301C8CW505WufIn++
+         iVug==
+X-Gm-Message-State: AOJu0YwB3haJ+7q7H/LX2wAC5N/uzgAEl1mFaEBWMJJ33o0OwUD39k6h
+	v1nnbWs0l79Cl/rufpl1nFMt3nAb8CrTDpsYwslh2EIUXugtbdm8tgnmlzxThB+MPcdEAoh6XIk
+	k47XZog0C72zDwTvHGXsGbbHUOjPCZ8Q9T8+IuNbQj2qL17uaPg6j5eBrBaqrMQ==
+X-Gm-Gg: Acq92OHt4B/jKNkXPFSNE6XWE67/RsQRkUKJAWcWwzywaq+zdKe1uyuZ+zxSKbwx5oZ
+	Nebh1PDt+68Kr5hDmTLcD4Q4wNH6uLQsIY3e5EKt7oxti3M0nsqJbEmZlJXUCRHluQUBE1WaYJn
+	9eIEfviO+n83QjqCYJpMIc3TWQI05QF052sVawTQEVxUmcGggpYk8mxw/c+9bTxaNhlAzHsoj9j
+	RQP/kinCQBiRT+chuq4zHBsUXXWRYsEg79dLi5BHkv/A9+AoI0kcywTt0YsJRJc65PxL1yLVI5o
+	Gg+qh5wEXnmKpIezUIcal4rEm4x9BxX20/B37MsPNP30xW+WdxuTAMII1gpTPgBbaDcK/fxg/C/
+	RhOpodOxVQBYBLaDTsVVtVX6XIxado4gnp1Zo6ccqhmf7W6G6Lm5B
+X-Received: by 2002:a05:7022:6b82:b0:138:49ea:f468 with SMTP id
+ a92af1059eb24-1384baef0eamr614232c88.2.1781244237568; Thu, 11 Jun 2026
+ 23:03:57 -0700 (PDT)
 Precedence: bulk
 X-Mailing-List: sashiko-reviews@lists.linux.dev
 List-Id: <sashiko-reviews.lists.linux.dev>
 List-Subscribe: <mailto:sashiko-reviews+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:sashiko-reviews+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-References: <20260612001803.23341-5-kuniyu@google.com> <20260612003305.53D791F000E9@smtp.kernel.org>
-In-Reply-To: <20260612003305.53D791F000E9@smtp.kernel.org>
+References: <20260612001803.23341-6-kuniyu@google.com> <20260612003138.E67A01F00A3A@smtp.kernel.org>
+In-Reply-To: <20260612003138.E67A01F00A3A@smtp.kernel.org>
 From: Kuniyuki Iwashima <kuniyu@google.com>
-Date: Thu, 11 Jun 2026 22:59:12 -0700
-X-Gm-Features: AVVi8Cem_OB6wuchwynjCt5I59aMSQZ4TgN3C5ww0DubhLFIYFCj_2Bzyd1nYB0
-Message-ID: <CAAVpQUBhoxYNst2FnTZ+NpnPp5YRLDC0+petEyObjrf7OK4QaA@mail.gmail.com>
-Subject: Re: [PATCH v1 bpf-next/net 4/5] bpf: Add kfunc to proxy TX HW Timestamp.
+Date: Thu, 11 Jun 2026 23:03:46 -0700
+X-Gm-Features: AVVi8Cczhkg6FtQurw1RZf7Wbte6Zx7PIZp3NplQ_r9NgdxVKnA1DXiiKKGAc1E
+Message-ID: <CAAVpQUCRU1ie22PbegWgGnfyWw9V0wSTjgQpw=5Wwb2RZ=su+w@mail.gmail.com>
+Subject: Re: [PATCH v1 bpf-next/net 5/5] selftest: bpf: Add test for hwtstamp proxy.
 To: sashiko-reviews@lists.linux.dev
 Cc: bpf@vger.kernel.org
 Content-Type: text/plain; charset="UTF-8"
 Content-Transfer-Encoding: quoted-printable
 
-On Thu, Jun 11, 2026 at 5:33=E2=80=AFPM <sashiko-bot@kernel.org> wrote:
+On Thu, Jun 11, 2026 at 5:31=E2=80=AFPM <sashiko-bot@kernel.org> wrote:
 >
-> Thank you for your contribution! Sashiko AI review found 2 potential issu=
+> Thank you for your contribution! Sashiko AI review found 5 potential issu=
 e(s) to consider:
->
-> New issues:
-> - [High] The TC_ACT_ERRQUEUE action is unhandled in sch_handle_egress(), =
-causing packets to be silently transmitted instead of queued or dropped.
->
-> Pre-existing issues:
-> - [High] bpf_net_ctx_get_ri() will dereference a NULL pointer if bpf_skb_=
-complete_tx_tstamp is called from a qdisc where bpf_net_ctx is not set.
+> - [High] Comparing a potentially negative return value to `sizeof()` caus=
+es failure handling to be skipped, erroneously dropping packets.
+> - [Medium] Incorrect struct cast for SO_TIMESTAMPING_NEW cmsg data causes=
+ test failures on 32-bit systems.
+> - [Medium] Typo in the test assertion prevents verification of TX timesta=
+mp keys.
+> - [Low] Multi-line comments violate the BPF subsystem comment style.
+> - [Low] The `buf_cmsg` array is not fully initialized before being passed=
+ to `sendmsg()`, passing uninitialized stack data to the kernel.
 > --
 >
-> commit 532ea1ea43e08b0ed268837eba11a8d463c7b97b
+> commit e747f30190af013f6f5cc858f0dacb86e902e2d2
 > Author: Kuniyuki Iwashima <kuniyu@google.com>
 >
-> bpf: Add kfunc to proxy TX HW Timestamp.
+> selftest: bpf: Add test for hwtstamp proxy.
 >
-> This patch introduces two new kfuncs, bpf_skb_scrub_tx_tstamp() and
-> bpf_skb_complete_tx_tstamp(), to proxy TX hardware timestamps for socket
-> applications using SCM_TIMESTAMPING. It also introduces the TCX_ERRQUEUE
-> action to enqueue the modified packet to the socket's error queue.
+> This selftest simulates the hardware timestamp proxy scenario using two
+> UDP sockets, simulating a userspace proxy via a GENEVE device.
 >
-> > diff --git a/net/core/dev.c b/net/core/dev.c
-> > index 0c6c270d9f7d1..a86d10659cbbc 100644
-> > --- a/net/core/dev.c
-> > +++ b/net/core/dev.c
+> > diff --git a/tools/testing/selftests/bpf/prog_tests/proxy_hwtstamp.c b/=
+tools/testing/selftests/bpf/prog_tests/proxy_hwtstamp.c
+> > new file mode 100644
+> > index 0000000000000..d0f90f22bea22
+> > --- /dev/null
+> > +++ b/tools/testing/selftests/bpf/prog_tests/proxy_hwtstamp.c
 > [ ... ]
-> > @@ -4504,6 +4539,10 @@ sch_handle_ingress(struct sk_buff *skb, struct p=
-acket_type **pt_prev, int *ret,
-> >               *ret =3D NET_RX_DROP;
-> >               bpf_net_ctx_clear(bpf_net_ctx);
-> >               return NULL;
-> > +     case TC_ACT_ERRQUEUE:
-> > +             *ret =3D skb_do_completion(skb);
-> > +             bpf_net_ctx_clear(bpf_net_ctx);
-> > +             return NULL;
->
-> [Severity: High]
-> Does TC_ACT_ERRQUEUE also need to be handled in sch_handle_egress()?
-
-This is intentional.  I'll add !skb_at_tc_ingress() check
-in bpf_skb_complete_tx_tstamp () instead.
-
->
-> If a BPF program returns TCX_ERRQUEUE on egress, the switch statement in
-> sch_handle_egress() will fall through. This clears the BPF network contex=
-t
-> and returns the skb for transmission instead of queueing or dropping it,
-> which seems to bypass the intended error queue behavior.
->
-> [ ... ]
-> > diff --git a/net/core/filter.c b/net/core/filter.c
-> > index ab7adef9c0159..0bb8122f9f2eb 100644
-> > --- a/net/core/filter.c
-> > +++ b/net/core/filter.c
-> [ ... ]
-> > +__bpf_kfunc int bpf_skb_complete_tx_tstamp(struct __sk_buff *s,
-> > +                                        struct bpf_tx_tstamp_cmpl *att=
-rs,
-> > +                                        int attrs__sz)
-> > +{
-> > +     struct sk_buff *skb =3D (struct sk_buff *)s;
-> > +     struct bpf_redirect_info *ri;
-> > +     struct sock *sk =3D skb->sk;
-> > +     s32 delta;
-> > +
-> > +     if (attrs__sz !=3D sizeof(*attrs) || attrs->reserved)
-> > +             return -EINVAL;
-> > +
-> > +     if (!sk || !sk_fullsock(sk))
-> > +             return -EINVAL;
->
-> [Severity: High]
-> Should this function verify it is only called on ingress?
-
-Right, I'll add it.
-
->
-> Without checking skb_at_tc_ingress(skb), bpf_skb_complete_tx_tstamp() cou=
-ld
-> be called on egress. If that happens and the program returns TCX_ERRQUEUE=
+> > +char *ipv4_commands[] =3D {
+> > +     "ip link set dev lo up",
+> > +     "ip link add geneve0 type geneve local " APP_SRC_IPV4 " external"=
 ,
-> the completion state would be silently discarded and the packet transmitt=
-ed
-> because sch_handle_egress() does not currently handle TC_ACT_ERRQUEUE.
+> > +     "ip addr add " APP_SRC_IPV4 "/24 dev geneve0",
+> > +     "ip link set dev geneve0 address aa:bb:cc:dd:ee:ff",
+> > +     "ip link set dev geneve0 up",
+> > +     "ip route add " APP_DST_IPV4 "/32 dev geneve0",
+> > +     /* We do not forward ARP to the wire in this test,
+> > +      * so a static neighbour entry is needed for APP_DST_IPV4.
+> > +      */
+>
+> [Severity: Low]
+> Does this multi-line comment format violate the BPF subsystem comment sty=
+le?
+> It seems the subsystem guidelines prefer the opening /* on its own line f=
+or
+> multi-line comments.
+
+Gray zone, this is rather net one :)
+
+>
+> > +     "ip neigh add " APP_DST_IPV4 " lladdr ab:bc:cd:de:ef:fa dev genev=
+e0",
+> > +};
+> [ ... ]
+> > +static int check_tstamp(struct proxy_hwtstamp_test_case *test_case, bo=
+ol tx)
+> > +{
+> [ ... ]
+> > +     for (cmsg =3D CMSG_FIRSTHDR(&msg); cmsg; cmsg =3D CMSG_NXTHDR(&ms=
+g, cmsg)) {
+> > +             if (cmsg->cmsg_level =3D=3D SOL_SOCKET && cmsg->cmsg_type=
+ =3D=3D SO_TIMESTAMPING_NEW) {
+> > +                     struct scm_timestamping *ts;
+> > +
+> > +                     ts =3D (struct scm_timestamping *)CMSG_DATA(cmsg)=
+;
+> > +                     ASSERT_EQ(ts->ts[2].tv_sec, 0, "tv_sec");
+> > +                     ASSERT_EQ(ts->ts[2].tv_nsec, HWTSTAMP, "tv_nsec")=
+;
+>
+> [Severity: Medium]
+> Since the test requests SO_TIMESTAMPING_NEW, the kernel will return times=
+tamps
+> using the 64-bit time architecture (via struct scm_timestamping64). Could
+> casting CMSG_DATA(cmsg) to struct scm_timestamping * cause issues on 32-b=
+it
+> architectures where time_t is 32-bit?
+
+Indeed, I'll use scm_timestamping64 here.
+
+
+>
+> It looks like this might misalign the array access, reading the zeroed
+> software timestamp ts[1] instead of the hardware timestamp, potentially
+> causing the test to fail.
 >
 > > +
-> > +     if (attrs->payload_offset > skb->len)
-> > +             return -EINVAL;
+> > +                     saw_tstamp =3D true;
+> > +             } else if ((cmsg->cmsg_level =3D=3D SOL_IP && cmsg->cmsg_=
+type =3D=3D IP_RECVERR) ||
+> > +                        (cmsg->cmsg_level =3D=3D SOL_IPV6 && cmsg->cms=
+g_type =3D=3D IPV6_RECVERR)) {
+> > +                     struct sock_extended_err *ee;
 > > +
-> > +     delta =3D attrs->payload_offset - attrs->network_offset;
-> > +     switch (attrs->protocol) {
-> > +     case htons(ETH_P_IP):
-> > +             if (delta < (s32)sizeof(struct iphdr) || !sk_is_inet(sk))
-> > +                     return -EINVAL;
-> > +             break;
-> > +     case htons(ETH_P_IPV6):
-> > +             if (delta < (s32)sizeof(struct ipv6hdr) || sk->sk_family =
-!=3D AF_INET6)
-> > +                     return -EINVAL;
-> > +             break;
-> > +     default:
-> > +             return -EAFNOSUPPORT;
+> > +                     ee =3D (struct sock_extended_err *)CMSG_DATA(cmsg=
+);
+> > +
+> > +                     if (ee->ee_origin =3D=3D SO_EE_ORIGIN_TIMESTAMPIN=
+G) {
+> > +                             ASSERT_EQ(ee->ee_data, TSKEY, "tskey");
+> > +                             saw_tskey =3D true;
+> > +                     }
+> > +             }
 > > +     }
 > > +
-> > +     ri =3D bpf_net_ctx_get_ri();
+> > +     ASSERT_TRUE(saw_tstamp && (!tx || saw_tstamp), "no timestamp");
+>
+> [Severity: Medium]
+> Should this check validate saw_tskey instead of checking saw_tstamp twice=
+?
+
+Yes, will update the latter check.
+
+
+> It looks like if the kernel fails to deliver the timestamp key, this chec=
+k
+> will silently pass, potentially hiding regressions.
+>
+> > +
+> > +     return ret;
+> > +}
+> > +
+> > +static int test_proxy_hwtstamp_tx(struct proxy_hwtstamp_test_case *tes=
+t_case)
+> > +{
+> > +     char h_source_dummy[ETH_HLEN] =3D {0xFF, 0xEE, 0xDD, 0xCC, 0xBB, =
+0xAA};
+> > +     char buf_cmsg[CMSG_SPACE(sizeof(u32))];
+> > +     struct proxy_header *phdr;
+> > +     struct msghdr msg =3D {};
+> > +     struct iovec iov =3D {};
+> > +     struct cmsghdr *cmsg;
+> > +     int ret;
+> > +
+> > +     memset(test_case->app_payload, 0xAB, sizeof(test_case->app_payloa=
+d));
+> > +     iov.iov_base =3D test_case->app_payload;
+> > +     iov.iov_len =3D sizeof(test_case->app_payload);
+> > +
+> > +     msg.msg_iov =3D &iov;
+> > +     msg.msg_iovlen =3D 1;
+> > +     msg.msg_control =3D buf_cmsg;
+> > +     msg.msg_controllen =3D sizeof(buf_cmsg);
+> > +
+> > +     cmsg =3D CMSG_FIRSTHDR(&msg);
+> > +     cmsg->cmsg_level =3D SOL_SOCKET;
+> > +     cmsg->cmsg_type =3D SCM_TS_OPT_ID;
+> > +     cmsg->cmsg_len =3D CMSG_LEN(sizeof(u32));
+> > +     *(u32 *)CMSG_DATA(cmsg) =3D TSKEY;
+> > +
+> > +     ret =3D sendmsg(test_case->app_fd, &msg, 0);
+>
+> [Severity: Low]
+> Is it possible that uninitialized stack memory from buf_cmsg is being pas=
+sed
+> to the kernel here?
+
+No.  All fields are initialised here.
+
+>
+> Only the first CMSG_LEN bytes are initialized, but msg_controllen is set =
+to
+> the full CMSG_SPACE size which includes uninitialized alignment padding.
+> Could this trigger MemorySanitizer warnings?
+>
+> > +     if (!ASSERT_EQ(ret, sizeof(test_case->app_payload), "send"))
+> > +             return -1;
+> [ ... ]
+> > diff --git a/tools/testing/selftests/bpf/progs/proxy_hwtstamp.c b/tools=
+/testing/selftests/bpf/progs/proxy_hwtstamp.c
+> > new file mode 100644
+> > index 0000000000000..c15428e4c20f6
+> > --- /dev/null
+> > +++ b/tools/testing/selftests/bpf/progs/proxy_hwtstamp.c
+> [ ... ]
+> > +SEC("tcx/egress")
+> > +int proxy_hwtstamp_egress(struct __sk_buff *skb)
+> > +{
+> [ ... ]
+> > +     kskb =3D bpf_cast_to_kern_ctx(skb);
+> > +     shared_info =3D bpf_core_cast(kskb->head + kskb->end, struct skb_=
+shared_info);
+> > +     if (!shared_info->tx_flags) {
+> > +             /* If TX tstamp is not needed, don't insert the GENEVE op=
+tion.
+> > +              * The proxy socket will see genevehdr.opt_len =3D=3D 0.
+> > +              */
+>
+> [Severity: Low]
+> Does this multi-line comment format violate the BPF subsystem comment sty=
+le?
+> It seems the subsystem guidelines prefer the opening /* on its own line f=
+or
+> multi-line comments.
+
+Same.
+
+>
+> > +             goto pass;
+> > +     }
+> [ ... ]
+> > +SEC("tcx/ingress")
+> > +int proxy_hwtstamp_ingress(struct __sk_buff *skb)
+> > +{
+> > +     struct proxy_hwtstamp_opt opt;
+> > +     struct bpf_tunnel_key key;
+> > +     int ret;
+> > +
+> > +     /* Get the GENEVE header. */
+> > +     ret =3D bpf_skb_get_tunnel_key(skb, &key, sizeof(key), tunnel_rx_=
+flags);
+> > +     if (ret < 0)
+> > +             goto drop;
+> > +
+> > +     if (key.tunnel_id !=3D GENEVE_VNI)
+> > +             goto drop;
+> > +
+> > +     /* Get the GENEVE option. */
+> > +     ret =3D bpf_skb_get_tunnel_opt(skb, &opt, sizeof(opt));
+> > +     if (ret < sizeof(opt)) {
 >
 > [Severity: High]
-> This is a pre-existing issue, but can bpf_net_ctx_get_ri() trigger a NULL
-> pointer dereference here under certain conditions?
+> Can this check drop packets without a GENEVE option?
+>
+> bpf_skb_get_tunnel_opt() returns a signed integer, but sizeof(opt) is
+> unsigned. If the return value is negative (e.g., -ENOENT), it will be
+> promoted to a large unsigned integer during the comparison.
+>
+> Would this cause ret < sizeof(opt) to evaluate to false and skip the fail=
+ure
+> handling, inadvertently dropping legitimate traffic?
 
-This is orthogonal to this series.
-
-Also, bpf_redirect() etc do not have NULL check too.
+Ugh, I'll cast sizeof() to int.
 
 
 >
-> When a BPF program runs via tcf_classify() from a traditional classful qd=
-isc
-> enqueue callback (like HTB), sch_handle_egress() has already cleared the
-> bpf_net_ctx. Calling this kfunc in that scenario would cause
-> bpf_net_ctx_get_ri() to dereference a NULL pointer.
->
-> > +     ri->kern_flags |=3D BPF_RI_F_TX_TS_CMPL;
-> > +     ri->txtscmpl =3D *attrs;
-> > +
-> > +     return 0;
-> > +}
+> > +              /* If TX/RX tstamp is not needed, the proxy socket
+> > +               * does not insert the GENEVE option.
+> > +               */
+> > +             goto pass;
+> > +     }
 >
 > --
 > Sashiko AI review =C2=B7 https://sashiko.dev/#/patchset/20260612001803.23=
-341-1-kuniyu@google.com?part=3D4
+341-1-kuniyu@google.com?part=3D5
