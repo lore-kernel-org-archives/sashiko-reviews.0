@@ -1,63 +1,63 @@
-Received: from OSPPR02CU001.outbound.protection.outlook.com (mail-norwayeastazon11013021.outbound.protection.outlook.com [40.107.159.21])
+Received: from DUZPR83CU001.outbound.protection.outlook.com (mail-northeuropeazon11012053.outbound.protection.outlook.com [52.101.66.53])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DE2F23932DB
-	for <sashiko-reviews@lists.linux.dev>; Fri, 12 Jun 2026 19:53:10 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=fail smtp.client-ip=40.107.159.21
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D7E923148DA
+	for <sashiko-reviews@lists.linux.dev>; Fri, 12 Jun 2026 19:59:21 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=fail smtp.client-ip=52.101.66.53
 ARC-Seal:i=2; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1781293992; cv=fail; b=XWu9/aE/H7N/93Hs4t1ODuumAgG/HSwjZRgMxAmItE5BaY0aozcEIWwVtFCigga6GxCEF138tHH2isF0RpHcSSlIk6qe98PhaqtTcqxH1LXIfpAb65a7UMTz8RApikjarS0pC0CjXgYlvoRJvxPKPJpr+SaOrp0q5umAtVUoUOM=
+	t=1781294363; cv=fail; b=eHS9SmKOb2ET8hlhXDsqt2uLLJTepTJxOUZM9vkIvo4Jr+ZzJT8Jq319bJLRAWu9x23NG8712NEI/K8CvKhGPlNMg3qAPvNVq9AKIh3C7aT6qG88sw0+i0j6VlmhAYjw+ipNBDh0D4I42pDCd+xIIPp01MnMDlNfLJcP4MYH56U=
 ARC-Message-Signature:i=2; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1781293992; c=relaxed/simple;
-	bh=U10vq7p/18JfVYSL921+hXyLNBxRd8Qz6wDOuatUrZc=;
+	s=arc-20240116; t=1781294363; c=relaxed/simple;
+	bh=izHPH0dl6GYcdvjsDU9MuaLGcMeusS1f+Lz5jC0Y6w0=;
 	h=Date:From:To:Cc:Subject:Message-ID:References:Content-Type:
-	 Content-Disposition:In-Reply-To:MIME-Version; b=UmGInZl6W0AKeg/1C1aAfXueSIDPvDyZq5NEcZ0mkpC0fxlaWPARXv6hn/h7LtE7u2BF9g7692RaJ+u/D2LJDFv8hxR3lg9zhWE42CDZtX6gDb3wACWKWg3M22YY0Y6yrrAZF7MnJQlyZ7+HHWDGhE3t9+WI6Qys2XXMfbt3MQ4=
-ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=oss.nxp.com; spf=pass smtp.mailfrom=oss.nxp.com; dkim=fail (2048-bit key) header.d=NXP1.onmicrosoft.com header.i=@NXP1.onmicrosoft.com header.b=YjzcsZpz reason="signature verification failed"; arc=fail smtp.client-ip=40.107.159.21
+	 Content-Disposition:In-Reply-To:MIME-Version; b=k+CvjsbNijBHAlB+d5RqL4v5391A3FGbyPARc6M9+ungcB9eN6bl2tEgETxLMD9T216q367yRMOYuXbFhdxzmdCttHlppHJEBGIruzcDdSBzGrGxeovsE1WtuObMaXRgnVjdjg9VJnR5KZUWvgsHzPRoG0FPvWdwSvrjwxGoqrk=
+ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=oss.nxp.com; spf=pass smtp.mailfrom=oss.nxp.com; dkim=fail (2048-bit key) header.d=NXP1.onmicrosoft.com header.i=@NXP1.onmicrosoft.com header.b=cWui8usv reason="signature verification failed"; arc=fail smtp.client-ip=52.101.66.53
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=oss.nxp.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=oss.nxp.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=fail reason="signature verification failed" (2048-bit key) header.d=NXP1.onmicrosoft.com header.i=@NXP1.onmicrosoft.com header.b="YjzcsZpz"
+	dkim=fail reason="signature verification failed" (2048-bit key) header.d=NXP1.onmicrosoft.com header.i=@NXP1.onmicrosoft.com header.b="cWui8usv"
 ARC-Seal: i=1; a=rsa-sha256; s=arcselector10001; d=microsoft.com; cv=none;
- b=YWfqIm1Xd62Jkz+tHQWYWSH8ZxpHnpGfnnzY55Q9Y8yn9sKVdElHI+qBSBSNSyW7QR29qY05BTL+3stK/pu/nx3NE8Otdxl51YGjTk/kZQ10hfQ16/zXwOVW+1KGT7SlSbAv7IkIJzHjYU4gO5u8iFItg0lo2kqSJXu/YgNUE2k+RtsJEUzc1kFrK1u7ZITiVc3NYcb+typoIFxxUgFePbSL8J1FpsUEilb176T+SnZW20MKkHXCXn1RShui+AbINYQGgu5EtoSKAilF3gL+R+6k1EuDSXCJh2dsyjcAY4ag/7qGhY5nRoJPuxH3OGT4TAwoBmXbMtoIaWdqp783Dw==
+ b=ekaCOSmxRd+aoBE/7JqlVnntNUwh5UuNavPjWKzUaKtXM2Pbtd+NJtlj/aUHDMg4CODQa1PctVyPRD/gUB8xDRltILlQffBQJdEXC4T4Lz3T3qnxreAVjwlk683Ze6WoNroyYGHl/ioxjXr/jrtTjWpB7Nnbv93XhP0jSaBWOWZ9tHOdK8VylSnnvBxPrzOiDOuiPsijcuRsFKYIJvecNlqhKHHLbg8uDTGbIlySyxwioN6cokxxelJHuxczgTLhscaZH3l6dGs3Lb6ctLcx2FbfEBGpyDP9tpjtfN6hOeQS/xlN1454G2W5iOB/Dh6lT9BcfbVtMpqtabjBPJddfQ==
 ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com;
  s=arcselector10001;
  h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
- bh=o1h0AdBXO/DEQYZDBYvSTR8P3qm56mOQvITD95wdxvg=;
- b=UDxMv0/b5Rb21HAgr4VvEEQYcy2pPCyyVJWKEQf4gwxzG82xb+Z786fgkhImpWXwQdcSDXvMpU8KVfwgZEca/+4W7SrcRPdC5TBYF9TpVOwPdss9GSMBeSg8sP3whljQIl+YV3oIbJTFEjqinchcihXRuy2TUdygHKG5TYMVvjk+xwGbQut3ug/v9sdNM+sL+BIwhzsWbdTzxhMhLm735czd58y0aaTi2NWNPHSSnfkI2RRW1A9Rz799Tqcb5jHyygL++s76tsMNU3KG8KuhOCPOJj6ve9/j0usYz8gCAOguADUq8pquJlhLGcoajG7XCAf5F5jWROylhHU06rSgog==
+ bh=mZ24KEly2MI4qVAYjOT/dEEB8iDyhRL6o8Ks4IsuAmI=;
+ b=T2fkbmDgwFy2uQ80btQb6R7PrYirX7sqOOS8WOK01RHCDth/LlQyexm6ZrCDQpwlnKd1zIWFZLhb9Ifz+4P3a2S41UtA/7j0e9mkbTfLJ7F6zOwl7yp2PVRcl4c3SbIceNPqD4KJtlzCLZYVL57jtQExpqEC7H8BaO5KfG5IAEhKwUdp5PwC2qHd04lJRNDGRlayWnNqjqpGWhjPGlShrjccGwmEzgOzmTRYQ3iOo/7TDTYKGFsRros3pu11HX/fPQ/dg1sM6ImQOMIjgmBZExvxCgVD+P1Nc7YwYn79qbKLiG8pLYfxmd4v3mZnsth9ka6R9LAlN73n6RaUnJIu6Q==
 ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
  smtp.mailfrom=oss.nxp.com; dmarc=pass action=none header.from=oss.nxp.com;
  dkim=pass header.d=oss.nxp.com; arc=none
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=NXP1.onmicrosoft.com;
  s=selector1-NXP1-onmicrosoft-com;
  h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
- bh=o1h0AdBXO/DEQYZDBYvSTR8P3qm56mOQvITD95wdxvg=;
- b=YjzcsZpzGW77apFGVDVKrF4cRZ55LG1bE0eeoHDIi1cRHTU2rdebe22MIjwTZTNTeByOadl8M8hRNyjbCdjVsNviy8svAgsHXbqUcx7cTQOzlcWg9dPFFkckkl/2pTAMGlbZWA6VeSwcHCAs3YVhLTAfURo4TK/YecqnEzGSV1px1SB1+hxd3iwfs0D9yAyLU2NkX9WGz8bzvHSofYr7ZOqCwEW7w5teisUGWEmNgZGu242te+nAWrn0xclupj787PSXz1C1+TCtb28fEwLb4JLhGA9Zg2tSH7Y4tpk3ip1kzZtTnyur9B5iEG31z8ctKK+VoHJNUkITmkELhb0FRA==
+ bh=mZ24KEly2MI4qVAYjOT/dEEB8iDyhRL6o8Ks4IsuAmI=;
+ b=cWui8usvTtP6tw/PPiw4pfm4FAUrMJvYFLpAl/9h/SpaCHoQda8UwZtCopvdPy14Sb6Fs7C7I4IrrUlwtR16FDVntiSQrfSjvneVsIB9pazwqDnljsRxLIB7FwzhpODR50Y3BxnlYioqde+8DqxHhn1SzLWU5IoCPPDvWaGPBU/+zgpjjoc+d/NnZMe0jI07dcAAfgKs3ZzOD2oATj+MNUxkVkfEAWcpIkY1poJA0DkeAx/mECxoY1vlkyvAiGFbr/K7vFBVlhI/zmY2X6CHO0J6VkehTi3Bw1bcHQoyaSk+kV4ZlbG+RQyj+NEVx4WoByd152AGWcKN1h/Kpih0YA==
 Authentication-Results: dkim=none (message not signed)
  header.d=none;dmarc=none action=none header.from=oss.nxp.com;
 Received: from GV2PR04MB11799.eurprd04.prod.outlook.com (2603:10a6:150:2cf::9)
- by GV1PR04MB10306.eurprd04.prod.outlook.com (2603:10a6:150:1c9::22) with
+ by PA4PR04MB8013.eurprd04.prod.outlook.com (2603:10a6:102:c4::21) with
  Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.21.113.15; Fri, 12 Jun
- 2026 19:53:06 +0000
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.21.113.13; Fri, 12 Jun
+ 2026 19:59:18 +0000
 Received: from GV2PR04MB11799.eurprd04.prod.outlook.com
  ([fe80::2146:83a2:5329:b7c]) by GV2PR04MB11799.eurprd04.prod.outlook.com
  ([fe80::2146:83a2:5329:b7c%6]) with mapi id 15.21.0113.013; Fri, 12 Jun 2026
- 19:53:05 +0000
-Date: Fri, 12 Jun 2026 15:52:59 -0400
+ 19:59:18 +0000
+Date: Fri, 12 Jun 2026 15:59:11 -0400
 From: Frank Li <Frank.li@oss.nxp.com>
 To: sashiko-reviews@lists.linux.dev
-Cc: Lakshay Piplani <lakshay.piplani@nxp.com>, devicetree@vger.kernel.org,
-	Frank.Li@kernel.org, linux-i3c@lists.infradead.org,
-	conor+dt@kernel.org, robh@kernel.org
-Subject: Re: [PATCH v11 2/9] i3c: master: Expose the APIs to support I3C hub
-Message-ID: <aixjm9eImJhrUU2O@lizhi-Precision-Tower-5810>
-References: <20260612111816.3688240-3-lakshay.piplani@nxp.com>
- <20260612114421.2BEE31F000E9@smtp.kernel.org>
+Cc: Lakshay Piplani <lakshay.piplani@nxp.com>,
+	linux-i3c@lists.infradead.org, devicetree@vger.kernel.org,
+	conor+dt@kernel.org, Frank.Li@kernel.org, robh@kernel.org
+Subject: Re: [PATCH v11 3/9] i3c: master: Add APIs for I3C hub support
+Message-ID: <aixlD3OTAhdVP12-@lizhi-Precision-Tower-5810>
+References: <20260612111816.3688240-4-lakshay.piplani@nxp.com>
+ <20260612114844.5D7B71F000E9@smtp.kernel.org>
 Content-Type: text/plain; charset=iso-8859-1
 Content-Disposition: inline
 Content-Transfer-Encoding: 8bit
-In-Reply-To: <20260612114421.2BEE31F000E9@smtp.kernel.org>
-X-ClientProxiedBy: SN6PR2101CA0014.namprd21.prod.outlook.com
- (2603:10b6:805:106::24) To GV2PR04MB11799.eurprd04.prod.outlook.com
+In-Reply-To: <20260612114844.5D7B71F000E9@smtp.kernel.org>
+X-ClientProxiedBy: PH7P220CA0051.NAMP220.PROD.OUTLOOK.COM
+ (2603:10b6:510:32b::13) To GV2PR04MB11799.eurprd04.prod.outlook.com
  (2603:10a6:150:2cf::9)
 Precedence: bulk
 X-Mailing-List: sashiko-reviews@lists.linux.dev
@@ -66,204 +66,136 @@ List-Subscribe: <mailto:sashiko-reviews+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:sashiko-reviews+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 X-MS-PublicTrafficType: Email
-X-MS-TrafficTypeDiagnostic: GV2PR04MB11799:EE_|GV1PR04MB10306:EE_
-X-MS-Office365-Filtering-Correlation-Id: 76a52d0d-2de2-42b8-4bcd-08dec8bc3817
+X-MS-TrafficTypeDiagnostic: GV2PR04MB11799:EE_|PA4PR04MB8013:EE_
+X-MS-Office365-Filtering-Correlation-Id: 95e0936f-f8a8-4760-cffd-08dec8bd168a
 X-MS-Exchange-SenderADCheck: 1
 X-MS-Exchange-AntiSpam-Relay: 0
 X-Microsoft-Antispam:
-	BCL:0;ARA:13230040|1800799024|376014|19092799006|23010399003|366016|3023799007|22082099003|18002099003|6133799003|4143699003|11063799006|56012099006;
+	BCL:0;ARA:13230040|1800799024|376014|366016|19092799006|23010399003|6133799003|18002099003|22082099003|3023799007|56012099006|5023799004|11063799006|4143699003;
 X-Microsoft-Antispam-Message-Info:
-	8M8ZUWGgEj2EReM1c1g2b0YOKRGIjBKuhZrFsjX9BCUgNgf6i1KTvt09c+BNzFqNjixFOpB5jomvlmB8gWn6Pr++PyAhtVoByuvYZUmfsIHK4q1e6MHAxPboaHP1t6j81IDzw15nIMKEmYBNcd8P0VxSbTcwUzIFcHtReFEJjHLwvzulJCNXHa/ZMMK4MliSnEdOgxlAhYkkc8p8AWTE+U3WjJQKi1Z0dEJ2PsR5aHr6whHQ9nua3olDWv0RIuQFHuBzerJrg9/jyHP4HsRpKGPocDMXxDfAu6DCo29gEJoRC0V+Tzh2+qhQGIE/mB307hVsmlCPEPQcofu8qlWF+cbAPhJMDzztpVpPk1kAoQg/cQsrlDKSprn2yx4n2SzAf7gZSoAc1izIbzRqrorkL51/Y9eBJLr8S41bw0sUpRNu8JG0vVD5KIsr1zxFySNMNoWFXRVacsJuS0618EHrR71JugQGpYBtoIJBxytispPpHiHLGPzMGVzd4URq5PBsk4/RM95fkZ2sl2E52o3+AyPJHmQxnctxFjdRlkXXDPnQcfEnnroT1hbxXIUDfALr8aHXRrbErKKptdIpBr9mICtn0N4NpE9pyArgzdGoGkBhE4oOycb4Sf6BvI3WoobcSWuH+E7GhzzmMQkVk7S66A==
+	sg3m44hmBNBSviryQX/WZr0K6WxVKO+9RnXlqxaX3/Al5VnsmW3P+q5FuAkLQJzrQYQ+Xvssrmdn9VbC/zeT8+BAF599xNB4AnGbu7SJQiCC8TfF7nGYDNBMrVXMw/PXCnV2PpRg+1LCRgevAIwDE6qh58KUytjCsJHgqzvMRjP8FPq/lm8r2ZWWlZ1uxOTWBBo0LNo7Wpj7Pz+J+Gn/Bi8Bxg85j7cnCONUuzy8wjL0oIhhfHRuGg7ZlXo1fUIDGg3Cp3MsG0g2+r7otREo4ZdAF6InKf6X8LM5iqGchYo6hOQ31gpJ3n8WpkfB2qDPWBmkPDD3f2hPf02dDFZy6xS3WxkkRt/j4rHcDXHEn8S57SUFT7R9MAvjWj/EdcBDCIJFTO+uPCPrk7bl5iWh21FEApHcTecnlUs1+5ujoLmTC9TM3Q+ujxaQ8L7oJ3/7/RU7M3aY8e/aeplAG4SJ8EnhRsw5IWN7oQP8U+dxHQD9la77yCPDsbuwdjM1mhkexBGKN6m2PVFGUk2OdxTfT0ROkO3e7kWHT47IQp38ZnX1W0MqIL1yqjKrDiG7LMD0v1ilFOSi9I99P4QrtPchjfstqdvQ2qmsSLTifk6FQtqYTp9KCZ/1rVwCvkEGgTX4cI9k9uIcNQ7cCq0sDT4WQQ==
 X-Forefront-Antispam-Report:
-	CIP:255.255.255.255;CTRY:;LANG:en;SCL:1;SRV:;IPV:NLI;SFV:NSPM;H:GV2PR04MB11799.eurprd04.prod.outlook.com;PTR:;CAT:NONE;SFS:(13230040)(1800799024)(376014)(19092799006)(23010399003)(366016)(3023799007)(22082099003)(18002099003)(6133799003)(4143699003)(11063799006)(56012099006);DIR:OUT;SFP:1101;
+	CIP:255.255.255.255;CTRY:;LANG:en;SCL:1;SRV:;IPV:NLI;SFV:NSPM;H:GV2PR04MB11799.eurprd04.prod.outlook.com;PTR:;CAT:NONE;SFS:(13230040)(1800799024)(376014)(366016)(19092799006)(23010399003)(6133799003)(18002099003)(22082099003)(3023799007)(56012099006)(5023799004)(11063799006)(4143699003);DIR:OUT;SFP:1101;
 X-MS-Exchange-AntiSpam-MessageData-ChunkCount: 1
 X-MS-Exchange-AntiSpam-MessageData-0:
-	=?iso-8859-1?Q?5W87FbM5G0yZrCZ0As4PJvm6bDJAQ3JijjMPXCgrTCya0hTBx5JAV3yBet?=
- =?iso-8859-1?Q?7Y1APimxBL6SxImlBqcwj69YBXBWmjrxKYbXNkE2crTqgnTno6VuGWr9KS?=
- =?iso-8859-1?Q?goM8fNKculd/hUKG8YNcOQ/sZnh1i7preb8ebM0MMH+WKYR6du7HURABrm?=
- =?iso-8859-1?Q?xnkJshLBYAXL10YyBIdpiBdfcl4QzLTxsDzl7A5SXpQMWbaDwvswRJp4lr?=
- =?iso-8859-1?Q?ifFY2nqvowgKnfQc2eSxY0sYsgEV4VAPKNz2NjiSA5dEcdyQr8ZFoF1Ng5?=
- =?iso-8859-1?Q?GvohfU/HaErZeID/FMyzSnX+gU5TYpxE2FnIuFjTRjq5LRS4FrAIp10YQI?=
- =?iso-8859-1?Q?SYYMg5YVpn0h0SoY5Afp6YL9Ywx5NW4eDvaHl5vYefjhDorRt6i8hNWIQ2?=
- =?iso-8859-1?Q?QxNnK44dubJ1yGeQ8xMZ3wGcHzyGeDfWg4tVRPsTadOCOINL1faWrXQVHI?=
- =?iso-8859-1?Q?uH6pJniPrq4jSnBmEYvcgF9UDhHDH7s0IPAL0tf7IPDRdpvMeovBvP8H+d?=
- =?iso-8859-1?Q?WV9hWAiVL/BU5PV+cQe52C2s1FrrCVnRm5WkKeqHgQdfdJclRQJsB1zdbX?=
- =?iso-8859-1?Q?UQVH8MFwJbWcml6Kn5gi90zFz+UsSgsDgt9Bxem0DhWVKDYislnPMU9IC9?=
- =?iso-8859-1?Q?ZfVKPY9AIXFxE5xrxhhJH5XtCE3P7Zh5wyUJTd7uKHSu5pOjDgVTQpnsT8?=
- =?iso-8859-1?Q?2FHBAHlP0vlqMQMJC09deaFdvWoFjrBTVh6Hle/ydSYwJ2nXrZ7Aufz13+?=
- =?iso-8859-1?Q?Bi55EntUckw78I+Wd9RZ/yNafKHVYHe7j/odSweK5kYHvx51zg3rcBIMu3?=
- =?iso-8859-1?Q?Ai1OtrUzIYdXktG5lyprWdNJL85QGIOSP5D1B14Obgzt91DH5KUQx1XBo8?=
- =?iso-8859-1?Q?w4QpoDd0MTniDfYi6BMHKegTH6K2zqv26QlRiea5pBIW+5TeAIVvDuXfBy?=
- =?iso-8859-1?Q?p7rEg+5bDhVeOsXTyNj9U6b8rjbHCkWvka4swG4q/uq5DL5HUGCYIyivjz?=
- =?iso-8859-1?Q?t6/xy24s95I3/oWfqKCL2fFuNpD3FFWk5cAJceXUWdZmYi+JDL1jjWm5+W?=
- =?iso-8859-1?Q?z4QQt/LZryN/u5neSlcNiKKVvZ/ZZu8c1GpnqO8ge3Ce5CaBvgDgnWX/Ti?=
- =?iso-8859-1?Q?WlZOlT1jtRh9PR2/g7v7nWwCXNhSKZ8W0TOsbQaiz4EKtL5p0IWvMIAwBt?=
- =?iso-8859-1?Q?rmUhVf/6xF1h5/vSzvaxiUk7HVKj/D0/Loj4fym0iC6seEKi5AYWZ7bbXm?=
- =?iso-8859-1?Q?hPBqMj+c0H+X2XYrCRgDdTBT6EQDtQzt3uqRuBgkbi+V+7uBBpC/y2o1xf?=
- =?iso-8859-1?Q?C9e/KD+vjf+zJn9sN1X3aNOItitT9hH8liCPSO5nKGKBRGWEQ4XFsBL33n?=
- =?iso-8859-1?Q?dZ3MGFQ8LVCaXnr/tn9DVwZsJ0civZaaLrmKNswfC/oMGycZH3xqHsmh10?=
- =?iso-8859-1?Q?2tiLDkhHbJxrGBTlP3zr5+w2NjCWwjEKW+BTD6sCbb3n5U8bUAzew9Yqjs?=
- =?iso-8859-1?Q?WbRbCP2xmhxwgDxktbVdcSHQb0SoCm0N1cHK/lVoUpinRsJ3HyxdX9qn8w?=
- =?iso-8859-1?Q?rnAfCZBkQHbqLKkW+5qr0rlMrutvfhnf5+E6i4WJnrvJ7y0KE4ohsAe+pY?=
- =?iso-8859-1?Q?T3OLn+uFrkSBHvisykeZ7nT8LEY8aClon7ePp0x4ddshey64WYZYrDAaoh?=
- =?iso-8859-1?Q?5WRVYMtWrn4MSFvq4hTMyg3idB8tOEXA8WKJOJCg95LopDtG4E7lNf3ih1?=
- =?iso-8859-1?Q?SX+HaqhHolyfcIomkzB5y7OVVdcke7B3VpOGObTK7L0GhCn9tydSaaz0o8?=
- =?iso-8859-1?Q?ACPvfLtV2s5CYeILJxzIrUFZt/+AdF74SBbuUJyTtO7rFLkHSANr?=
+	=?iso-8859-1?Q?BsElhB/DuZafM1JLLiKGUP1jpNJtMJBH1dnd/PPZJ7r0aa+TxubvB+2D/s?=
+ =?iso-8859-1?Q?QVVeVGxyJuE0gwQjDS4emw3F/kkripQpPHPAsFl4UQX5LTEBQg+H8GGAWN?=
+ =?iso-8859-1?Q?vFU2OD6du4l+XIfFdA0GRyfzpK0iZ7v+mtYXxzgkfURLcMUcSgcr5BvXf/?=
+ =?iso-8859-1?Q?oHsl556+Gy9O0MtSp387w2z4S4f0EN48uEJgNZXkzEFbgM86O5348WNtzF?=
+ =?iso-8859-1?Q?GeAvLcqntYuhpJSh8oJbjFCVSxcFizE1uG13TBx/iRY7hPKEvuOo93HZGv?=
+ =?iso-8859-1?Q?fc7FZDejKVVvnexvR6a7TQhEk8Mju7+/CjgA1NCE2V8g9XBJYNnzdj3waS?=
+ =?iso-8859-1?Q?Cj66JhtlNTNB0n7lDZ3R/w+G/+7trhcU5rSiOlF42vCjKm519P1ZZ5BZyq?=
+ =?iso-8859-1?Q?to4OqzRD82QZV2PySfCNER6zWXD+sMfqYmPdLe2HdQqfWMGXS2SIlhH8SA?=
+ =?iso-8859-1?Q?X7QiVhCYnMKNCi0KcSRWEh5lBzFkIRSlwhCXObl2YoQ8q2YGffEOkdtj+S?=
+ =?iso-8859-1?Q?O2c2Nef/kZSKIEGVfXz0ChZVnOFvswF1MxqZsS8ictouj62OtClgOLvOa9?=
+ =?iso-8859-1?Q?iEF7VbWarXzPMZQguu7k/ciXKV0DMPUsgRiTRBLwPV4zXqTW4aurDQfl4i?=
+ =?iso-8859-1?Q?V4WJPypUy5fU9KITmGmfQUF5TLVGdMseoTG/IBRh+SMnNA6wyUaflgweWR?=
+ =?iso-8859-1?Q?8NIn5OJ2qAQ8xJ6omj6vlvfYeyW5XWsow/pWVKm/JURbPb5Gz7jKU28OmQ?=
+ =?iso-8859-1?Q?/fHJKD0euFmr+zSK8dYFzuOydtD18sX3Y7xe/Ezlgoo2Fv3oa8h0DouWoQ?=
+ =?iso-8859-1?Q?09otoi8eR2q3jGLpRw758eXjP6T1bi/SbHV4VtoS/LtXq4w8glwtIdNVB1?=
+ =?iso-8859-1?Q?4H4IORD4q9XsyEjnIx0zA4vryRNfnsRHk5IDAuh/iEuAYovUZIyXB3qL/U?=
+ =?iso-8859-1?Q?XmJKwh+A+3ikTZY6fhvWwas656JRw1jSvX5If1MIjTraagKwIoHSTGbLpB?=
+ =?iso-8859-1?Q?+9qTG2k0aTlQdQHC+9Q9L8GL+X4/PjOJllwR1Vc0+iSP/TYUCiU137F5Qw?=
+ =?iso-8859-1?Q?RJ/3m73NML0AeNeHJv9GpfiNr0r7GTHElLsiX3hATlxrW9yVPjMRMHb7YA?=
+ =?iso-8859-1?Q?cjQDgHvl4dCBGdWct9xb4CZuKjKuEktDJ2uZcrQcd/AbNyNvz2OKARwDis?=
+ =?iso-8859-1?Q?AsERgHo5loj/UiCqjEmpkeLRF19URQL3myOjaArwcQJUmbHQmN/Ywb5shT?=
+ =?iso-8859-1?Q?NtLKBKc6qTnitfY7nE6T754J9psPM6jH40LiD0nNM9aEI6foRDa9RLOix5?=
+ =?iso-8859-1?Q?vCbi9qrOgd5ALX1mWE7rHwGPU12qp9dxOTFFvHOVAuyrcC8srcKMPQLRoC?=
+ =?iso-8859-1?Q?CLcRRlFuGZw2kiLX3jqrQXqmngP7Oq2+lbOsM28TuKhMrvn+osMJHSHahj?=
+ =?iso-8859-1?Q?HL5WChxhSxGDqyw9zClOOF0VqdIh5wOWxA8e21oCnWI97EgzvMK7S2STdO?=
+ =?iso-8859-1?Q?H+a00sM7AzwRsyd8s5X+Fr8ZysnsO0I18opCJtnltIN1QsAoqWjjcHWTxl?=
+ =?iso-8859-1?Q?giXg1BkgKTGyokG5GhqBCEm7ZqE27+V3fZyZAPzE+IEyuwgXiujUFA6MAx?=
+ =?iso-8859-1?Q?gSmPQ49IcQANoGtcNdtMiGktF48TqxtPx5ZZ1SAQjC+6MrfgsSmWaiti9X?=
+ =?iso-8859-1?Q?lmyXUY5oca2f/JNAbVNEyDYZ4jQHR92ZvpD34xfXCCFOJk9FnJQKOaq+c2?=
+ =?iso-8859-1?Q?tgxCr0IWEqFSIWtu9/jObUS4U45P2KN9iwW9tlV7KY2V7frSVpdmUS2QT9?=
+ =?iso-8859-1?Q?8RSYMfYkM/I11lLng8wQM/a17+A1lq9SU6eD0oI2AjV0RXfTtL8B?=
 X-OriginatorOrg: oss.nxp.com
-X-MS-Exchange-CrossTenant-Network-Message-Id: 76a52d0d-2de2-42b8-4bcd-08dec8bc3817
+X-MS-Exchange-CrossTenant-Network-Message-Id: 95e0936f-f8a8-4760-cffd-08dec8bd168a
 X-MS-Exchange-CrossTenant-AuthSource: GV2PR04MB11799.eurprd04.prod.outlook.com
 X-MS-Exchange-CrossTenant-AuthAs: Internal
-X-MS-Exchange-CrossTenant-OriginalArrivalTime: 12 Jun 2026 19:53:05.7609
+X-MS-Exchange-CrossTenant-OriginalArrivalTime: 12 Jun 2026 19:59:18.7145
  (UTC)
 X-MS-Exchange-CrossTenant-FromEntityHeader: Hosted
 X-MS-Exchange-CrossTenant-Id: 686ea1d3-bc2b-4c6f-a92c-d99c5c301635
 X-MS-Exchange-CrossTenant-MailboxType: HOSTED
-X-MS-Exchange-CrossTenant-UserPrincipalName: wZGs9V1R6VGZPqSfSAgnA9MYZT+rz6C3/9YWAQ4cScc3y136yTM5Wcrrk0UHRBp/6mort1PqERdPuOqKUzSPlAHg0M+VeGW4b+oEFvHmB6ldI7jaeFHNR4aaia/dwX5M
-X-MS-Exchange-Transport-CrossTenantHeadersStamped: GV1PR04MB10306
+X-MS-Exchange-CrossTenant-UserPrincipalName: ou8qUo58eFC8mIo1eG9rd0eiMOYLa1XsdsoMYvnFFiH9HCz8eL9aSy9Lc3a4lKwJ2vUU5WNliCc4VlTCHXc8qGIRlmPW/AZSHu9FOmzV9omNETZQ2hlJpMUnEVoSAftB
+X-MS-Exchange-Transport-CrossTenantHeadersStamped: PA4PR04MB8013
 
-On Fri, Jun 12, 2026 at 11:44:20AM +0000, sashiko-bot@kernel.org wrote:
-> Thank you for your contribution! Sashiko AI review found 4 potential issue(s) to consider:
->
-> New issues:
-> - [Medium] API documentation mismatch: i3c_master_reattach_i3c_dev_locked() claims to return -EBUSY on collision, but unconditionally overwrites slot status.
-> - [Low] Invalid lock context expressions and typos in newly added IBI kernel-doc.
->
-> Pre-existing issues:
-> - [Critical] Multiple Use-After-Free vulnerabilities in i3c_dev_free_ibi_locked() due to improper synchronization and teardown order.
-> - [High] Unbalanced release of address slots in i3c_master_reattach_i3c_dev_locked() failure path leads to bus corruption.
+On Fri, Jun 12, 2026 at 11:48:43AM +0000, sashiko-bot@kernel.org wrote:
+> Thank you for your contribution! Sashiko AI review found 1 potential issue(s) to consider:
+> - [High] i3c_master_direct_detach_i3c_dev_locked lacks the unaddressable device check present in its attach counterpart, leading to a NULL pointer dereference in controller drivers.
 > --
 >
-> commit 13a1ff5c64b48ceff03545ae3bebd5e60a136c1e
+> commit a7f74140d15672b8f2824666071ce06e3051e0d8
 > Author: Aman Kumar Pandey <aman.kumarpandey@nxp.com>
 >
-> i3c: master: Expose the APIs to support I3C hub
+> i3c: master: Add APIs for I3C hub support
 >
-> This patch exposes several internal I3C master functions to allow new I3C
-> hub drivers to use them. It adds kernel-doc comments and exports symbols
-> like i3c_master_reattach_i3c_dev_locked and various IBI handling functions.
+> Add helpers for attaching and detaching I3C devices and CCC helpers
+> to check CCC support and send CCC commands to prepare for I3C hub support.
 >
 > > diff --git a/drivers/i3c/master.c b/drivers/i3c/master.c
-> > index c45b450af319d..ec3547f75469e 100644
+> > index ec3547f75469e..59e0f82de6ebd 100644
 > > --- a/drivers/i3c/master.c
 > > +++ b/drivers/i3c/master.c
-> > @@ -1652,8 +1652,23 @@ static int i3c_master_attach_i3c_dev(struct i3c_master_controller *master,
-> >  	return 0;
-> >  }
-> >
-> > -static int i3c_master_reattach_i3c_dev_locked(struct i3c_dev_desc *dev,
-> > -					      u8 old_dyn_addr)
-> > +/**
-> > + * i3c_master_reattach_i3c_dev_locked() - reattach an I3C device with a new address
-> > + * @dev: I3C device descriptor to reattach
-> > + * @old_dyn_addr: previous dynamic address of the device
-> > + *
-> > + * This function reattaches an existing I3C device to the bus when its dynamic
-> > + * address has changed. It updates the bus address slot status accordingly:
-> > + * - Marks the new dynamic address as occupied by an I3C device.
-> > + * - Frees the old dynamic address slot if applicable.
-> > + *
-> > + * This function must be called with the bus lock held in write mode.
-> > + *
-> > + * Return: 0 on success, or a negative error code if reattachment fails
-> > + *         (e.g. -EBUSY if the new address slot is not free).
-> > + */
-> > +int i3c_master_reattach_i3c_dev_locked(struct i3c_dev_desc *dev,
-> > +				       u8 old_dyn_addr)
-> >  {
 >
-> [Severity: Medium]
-> The kernel-doc states this returns -EBUSY if the new address slot is not free,
-> but does the implementation actually check this?
+> [ ... ]
 >
-> Looking at the rest of i3c_master_reattach_i3c_dev_locked(), it appears
-> i3c_bus_set_addr_slot_status() is called unconditionally to set
-> I3C_ADDR_SLOT_I3C_DEV without first checking if the slot is available.
+> > +int i3c_master_direct_attach_i3c_dev_locked(struct i3c_master_controller *master,
+> > +					    struct i3c_dev_desc *dev)
+> > +{
+> > +	int ret = 0;
+> > +
+> > +	/*
+> > +	 * We don't attach devices to the controller until they are
+> > +	 * addressable on the bus.
+> > +	 */
+> > +
+> > +	if (!dev->info.static_addr && !dev->info.dyn_addr)
+> > +		return 0;
+> > +
+> > +	/* Do not attach the master device itself. */
+> > +	if (master->this != dev && master->ops->attach_i3c_dev)
+> > +		ret = master->ops->attach_i3c_dev(dev);
+> > +
+> > +	return ret;
+> > +}
+> > +EXPORT_SYMBOL_GPL(i3c_master_direct_attach_i3c_dev_locked);
 >
-> Could this silently overwrite an existing occupied slot if an external driver
-> relies on the documented failure behavior?
+> [ ... ]
+>
+> > +void i3c_master_direct_detach_i3c_dev_locked(struct i3c_dev_desc *dev)
+> > +{
+> > +	struct i3c_master_controller *master = i3c_dev_get_master(dev);
+> > +
+> > +	/* Do not detach the master device itself. */
+> > +	if (master->this != dev && master->ops->detach_i3c_dev)
+> > +		master->ops->detach_i3c_dev(dev);
 >
 > [Severity: High]
-> This is a pre-existing issue, but does the error path safely handle a failure
-> from master->ops->reattach_i3c_dev()?
+> Does this missing address check in the detach helper lead to a NULL pointer
+> dereference in controller drivers?
 >
-> When the reattach operation fails, i3c_master_put_i3c_addrs(dev) is called,
-> which marks the address slots as free. However, it doesn't appear to revert
-> the hardware device's assigned address.
+> The attach helper i3c_master_direct_attach_i3c_dev_locked() gracefully skips
+> attaching devices without a static or dynamic address and returns 0 (success).
+> Because it returns success, callers might naturally invoke this companion
+> detach API during teardown for these same devices.
 >
-> Since callers like i3c_master_add_i3c_dev_locked() completely ignore the
-> return value of this function, could this leave the bus manager out of sync
-> with the hardware state and cause severe address collisions if the slot is
-> subsequently reassigned?
+> However, since this helper lacks the corresponding address check, it
+> unconditionally invokes the controller's detach callback. Controller drivers
+> often retrieve the device's private data and immediately dereference it. Since
+> the attach phase was skipped, this private data would be NULL.
 >
-> [ ... ]
->
-> > @@ -3195,6 +3211,16 @@ int i3c_dev_do_xfers_locked(struct i3c_dev_desc *dev, struct i3c_xfer *xfers,
-> >  	return master->ops->i3c_xfers(dev, xfers, nxfers, mode);
-> >  }
-> >
-> > +/**
-> > + * i3c_dev_disable_ibi_locked() - Disable IBIs coming from a specific device
-> > + * @dev: device on which IBIs should be disabled
-> > + *
-> > + * This function disable IBIs coming from a specific device and wait for
-> > + * all pending IBIs to be processed.
-> > + *
-> > + * Context: Must be called with mutex_lock(&dev->desc->ibi_lock) held.
-> > + * Return: 0 in case of success, a negative error core otherwise.
-> > + */
->
-> [Severity: Low]
-> Is the lock context expression correct here?
->
-> The parameter is of type struct i3c_dev_desc, which does not have a desc
-> member, so &dev->desc->ibi_lock appears to be structurally invalid.
-> Should this be &dev->ibi_lock instead?
+> Should this function also check if the device has an address before calling
+> the detach callback?
 
-Make sense, please fix it
-
->
-> Also, there is a minor typo: "error core" should likely be "error code".
-
-Please this typo
+Make sense, please fix it.
 
 Frank
+
 >
-> [ ... ]
->
-> > +/**
-> > + * i3c_dev_free_ibi_locked() - Free all resources needed for IBI handling
-> > + * @dev: device on which you want to release IBI resources
-> > + *
-> > + * This function is responsible for de-allocating resources previously
-> > + * allocated by i3c_device_request_ibi(). It should be called after disabling
-> > + * IBIs with i3c_device_disable_ibi().
-> > + *
-> > + * Context: Must be called with mutex_lock(&dev->desc->ibi_lock) held.
-> > + */
-> >  void i3c_dev_free_ibi_locked(struct i3c_dev_desc *dev)
->
-> [Severity: Critical]
-> This is a pre-existing issue, but does this teardown order introduce a
-> use-after-free regression when exposed to external drivers?
->
-> Looking at the body of i3c_dev_free_ibi_locked(), the function calls
-> master->ops->free_ibi(dev) before destroy_workqueue(dev->ibi->wq).
->
-> If free_ibi() frees the underlying IBI pool memory, and destroy_workqueue()
-> subsequently flushes pending async work items, could those work items
-> execute and dereference the already freed pool?
->
-> Additionally, if i3c_dev_disable_ibi_locked() had failed to disable the
-> hardware interrupt, could a firing interrupt access dev->ibi after it is
-> unconditionally freed by kfree(dev->ibi) at the end of this function?
->
-> >  {
-> >  	struct i3c_master_controller *master = i3c_dev_get_master(dev);
-> > @@ -3301,6 +3366,7 @@ void i3c_dev_free_ibi_locked(struct i3c_dev_desc *dev)
-> >  	kfree(dev->ibi);
-> >  	dev->ibi = NULL;
-> >  }
-> > +EXPORT_SYMBOL_GPL(i3c_dev_free_ibi_locked);
+> > +}
+> > +EXPORT_SYMBOL_GPL(i3c_master_direct_detach_i3c_dev_locked);
 >
 > --
-> Sashiko AI review · https://sashiko.dev/#/patchset/20260612111816.3688240-1-lakshay.piplani@nxp.com?part=2
+> Sashiko AI review · https://sashiko.dev/#/patchset/20260612111816.3688240-1-lakshay.piplani@nxp.com?part=3
