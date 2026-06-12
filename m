@@ -1,187 +1,171 @@
-Received: from mail-wm1-f49.google.com (mail-wm1-f49.google.com [209.85.128.49])
+Received: from mail-dl1-f48.google.com (mail-dl1-f48.google.com [74.125.82.48])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4CEAF3A6405
-	for <sashiko-reviews@lists.linux.dev>; Fri, 12 Jun 2026 05:28:01 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.49
-ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1781242082; cv=none; b=LZeYGSysJX8VZNGOYRJtKntOwavHPA/yX1QOrLm3GPLY+6y0OVRlwAmnd9pvVJ2NjWBA0B0Pd/aN78YupPfGL82cWslyvBjT3Z6gjzpQ8GCxsrdfHfx/Z5NEoq9kfb3VOagRE3CEfbbnGQ+q/hOaW+69arnTvJz0fhVj4/oH3jY=
-ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1781242082; c=relaxed/simple;
-	bh=rdXPLTFUgYIy0frkdpv9H0elzJlKyrrYcklSjkxA7DE=;
-	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
-	 MIME-Version:Content-Type; b=rBPe1AZ7rJ9SM9NDTGPS3b1tXjNBLEgzvxWpwKUm+u66GZfarj4crbmSz7bzdgGiEr0rJciYr54PB63//FjzD9uEZRSzPdGysptBvDt7LmeEhRSRHhocT2HDPEDCruPH3r+6VGn6d6qKMSH90b5+7bUrGT2ms5JPKPOP/dDno8M=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=aY1/N3+R; arc=none smtp.client-ip=209.85.128.49
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CD70238E11C
+	for <sashiko-reviews@lists.linux.dev>; Fri, 12 Jun 2026 05:42:09 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=pass smtp.client-ip=74.125.82.48
+ARC-Seal:i=2; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
+	t=1781242932; cv=pass; b=r8ohKuTigtkgkmvmoyVmoakt1cI6DCxYjXvTTnpTSlHtUt3Ii7+Z1TrnhkiPecYyAFrCRzrQ3zEgIkr363pwiYYjYAtlrvCmAdmuN7z/L02a3WLxn/T2CoLB8HKzdu8e4EGCWmELix3oVr6ClzE5UsYEirythvqe9kqRggjJVgI=
+ARC-Message-Signature:i=2; a=rsa-sha256; d=subspace.kernel.org;
+	s=arc-20240116; t=1781242932; c=relaxed/simple;
+	bh=b7ssKyEPRr2Vb5DDqAHfIT1SDpMFdyWHnpD92KViFkA=;
+	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
+	 To:Cc:Content-Type; b=J9zvipxEwZ4pqkOHkwkUqCXaeSIFXrOLQiD9NRWrOui6jPf2cszapMi9emGQ8gYaGybjc0utv61ff5QYY6lan0OQd5JHJ1FiDxX+jmjsG9i/DLu1W79qh3n3x3G6vhbVVCAFkc9DqJXo/V2mrESjmjSRd4/57sYd/n/WnOBgUkI=
+ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=google.com; spf=pass smtp.mailfrom=google.com; dkim=pass (2048-bit key) header.d=google.com header.i=@google.com header.b=WDyxg+50; arc=pass smtp.client-ip=74.125.82.48
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=google.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=google.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="aY1/N3+R"
-Received: by mail-wm1-f49.google.com with SMTP id 5b1f17b1804b1-490b9318997so3789345e9.2
-        for <sashiko-reviews@lists.linux.dev>; Thu, 11 Jun 2026 22:28:01 -0700 (PDT)
+	dkim=pass (2048-bit key) header.d=google.com header.i=@google.com header.b="WDyxg+50"
+Received: by mail-dl1-f48.google.com with SMTP id a92af1059eb24-137335bc3caso771537c88.0
+        for <sashiko-reviews@lists.linux.dev>; Thu, 11 Jun 2026 22:42:09 -0700 (PDT)
+ARC-Seal: i=1; a=rsa-sha256; t=1781242929; cv=none;
+        d=google.com; s=arc-20240605;
+        b=kINsPrijEnvDO3HPf3bmrT1x77pvkYHy7NLXhQYpDsIZNOG0xBL5EE2MJKBsKPLGVP
+         NumbiyzQvMQH+hQVzCyp1sH65Nni3dnb4t0ShHs6AOLgSE2XWMg/McpP1cxOJiBWyES1
+         W0I3e+20TKGYwXZwlGNyzneVyFaoBQ46rDXn8HYVqStGRYvyUcyYp4+OX1aaMeE2jlOi
+         Aelf0vFTcDA/7OoboQIyJtM+l9BSwFoQ317wyc0utroWyCkZyyN1drG+06PP+C5C4KPV
+         NVLamzMUymdFvA2XNFQaxCOKm4oXbqtPdQa40kFX1KFcM9zKuMfUywOM2Tq7lnlJXd4x
+         ZwCw==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com; s=arc-20240605;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:dkim-signature;
+        bh=TJ1nugW/8fu1vZ5ssTBZ0A1vU90yVL1AO+VaIOxrxis=;
+        fh=uA360uvxR9S0K/Y4Lovo7aIaGlBwzVBnnb2BKWupr/4=;
+        b=YzO3jiVG7z+v5vocn8Z9T6y3pjIrLGhjzW2zH4kCPYqpIz+gbTEcWaJHx6ZKuIV+sd
+         nDX9jYM3wmfktat1P/gncVd4YDrIfHWtGCt2wZL/1rNxmmPGVZo2D0W683yxwqvhUcIP
+         R1dny6/8YuUSgB2EB2XsOLvjjBYqZuIG2o/GD8Xsx+BmozO1cNDEdSHG6n07PoUI+md/
+         n/7dy7nQbShZpawlBH/csLCNqoixGCfiYX8fYNmBdOTUfHJ2Lrxs3J8W2T2YQ3SuYoYP
+         X2qSWbNTiogoUhokDmkOYRKI7Sg4TZJz6Hbp/+/zSeKXtbDmg9NK3Iq4iN+C9CDZxW3P
+         Wc4g==;
+        darn=lists.linux.dev
+ARC-Authentication-Results: i=1; mx.google.com; arc=none
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20251104; t=1781242080; x=1781846880; darn=lists.linux.dev;
-        h=content-transfer-encoding:mime-version:message-id:date:references
-         :in-reply-to:subject:cc:to:from:from:to:cc:subject:date:message-id
-         :reply-to;
-        bh=V2amOK/xSJHghV7y5jK8dUWQNl2Cve6eXEqKCPHjYc0=;
-        b=aY1/N3+R9v9k+rM/etOxIj4vR+OgqrbPcEw5BGtcsDlKjTqiTT2CS8Rjk5DjFp1pxQ
-         wpuQXDkPDCn2/4U/cSbXx01r64AeCYC0wO++ZTFQdpjjtHDk347upCLzauKcr00dp5wC
-         1b4rbubCJBY0yAtSxia1okEc083TvmEURkg39dMwwRVkvJaPRwKijU9tPtb8auXiguRe
-         5Ke7t5+Og+pRIfi7MfcP7oAXoUd7vhHzUYmPuq9TuO8VRZ17jOHLL5UKhx4oT8AqAOm1
-         Wb3zRZ2pjN4ls247MUxfI1P1saPKlYgz8pHIWVHs13OGSfj8sE0w+20LPacDof0yAUxR
-         EQCw==
+        d=google.com; s=20251104; t=1781242929; x=1781847729; darn=lists.linux.dev;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=TJ1nugW/8fu1vZ5ssTBZ0A1vU90yVL1AO+VaIOxrxis=;
+        b=WDyxg+50Kd2fL5cg2kwi81BC9xBQtFnsipInu8qtO2WbtGcWsvEzsRFFD8pYW2ibIs
+         ag251uAjOqYVWJw6zC50qjeclVt7rNMETZHfHI6Q/t0ha7J+3QVR25sNkLtwivFaZSql
+         MqKxMpLToddCd/tPPAUT+v1XtyaeZzyHFYDszPCRCJNJB/VctTBFAuDDBypj1qmG1Cjf
+         6GTczOlec459HOL0IFLzIVYN3MoYS8k3ESRh+/TNq33zxd8aaE0H5FE+getZJlSQRrSb
+         hVSoMzCVPiYCHVZZ/zcBMaCaDZxU6vDwl1d9jXLf64Zjpe0GYt/pZnMEatj8/KIOKzK/
+         8lRA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20251104; t=1781242080; x=1781846880;
-        h=content-transfer-encoding:mime-version:message-id:date:references
-         :in-reply-to:subject:cc:to:from:x-gm-gg:x-gm-message-state:from:to
-         :cc:subject:date:message-id:reply-to;
-        bh=V2amOK/xSJHghV7y5jK8dUWQNl2Cve6eXEqKCPHjYc0=;
-        b=pK/DnQpG/ASU97pXTxjpJoc3oipTSsAXcdLxx13zdg6Rp3DR9o1+evk+i3fzGcEcup
-         Y6LZNiXk639KKRTGjK5KAOadErHZVRbQDo/ZoaxGfewErXFVJLWMh54aVv9cIz8xvj+U
-         jQLcCHSLWOXm5xwh3kGvb6AXkK+hM/JCwgmyjp+HVuugPbvzY3KUd049tmVpAHdKJHAM
-         fsWjguIXgVKY4yOOvo71rXR6zP6Upg+P6PDfs2sxFaKe29UcdqbuVu7QeXVH76FGMWuM
-         0P6aO8bZAMwAEVvy1koFcu30yVvnw2LkjlBJzdtpYRDJWm3oFyuZ8cICQTwDKi6tTbpk
-         Ftbg==
-X-Gm-Message-State: AOJu0Yxmuxc56Fz9kZA3v2nVF9kQoqiGRrhSnJm7ZdYbz7CBfOTdUSUr
-	xA7X/ylogXBY0eRQMscHZul9PLVr9p2PZTBpiWFDo0vIwLZWQK+1Oyei
-X-Gm-Gg: Acq92OGLeAuRE8KLYbWEyNS398hEpjxWZA6+i2J9b8DF3W2onLE+ZgetegsoKEQpDpw
-	+pMvOdo+DYu1JV0+70kq8dia5BTeG0S02GNGRanZEcX9Q8U8eP45M0jVpm0iSAO8WDh1KOnPCfJ
-	oZB2Y619yReZrx0REDfTD7V13hGRQmJt3d3QnYZevMH+Ek/z+owtbKFkHVyqkRECPZ84x14tUSm
-	HdbFdFM0+L57+K4bV0P9HmiKnEtoGU2IT853JhYL99Rr/XnM/3+yxcNBShu0LdipaskkwXLRD2a
-	K6R7ufLl0Skeu0MCOYcDjTwCzxav4lp14li3e6aFbFsPgqlCA0iWPjaw8Pg1zSWe6LxhESyILrW
-	UmnCob1ElXBtEYOeVN2GOzRiAIws8d3LEmUTWJ1xBFyCNfb6APz1wuHjLofsYG8pNUaBuMdLm+V
-	SyF4OxhlpFbCie45/Xa2q32hhm6MpVsbhrhFEy4PBke+ZMGYn6fgAdTFFiFLnqyydT
-X-Received: by 2002:a05:600d:6451:10b0:485:3abe:ab86 with SMTP id 5b1f17b1804b1-490ec480989mr7282255e9.4.1781242079515;
-        Thu, 11 Jun 2026 22:27:59 -0700 (PDT)
-Received: from Abds-MacBook-Air.local ([2a02:3037:612:1ff:bc98:79f0:79a6:5f77])
-        by smtp.gmail.com with ESMTPSA id 5b1f17b1804b1-490ea7c0960sm33027605e9.3.2026.06.11.22.27.58
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Thu, 11 Jun 2026 22:27:59 -0700 (PDT)
-From: Abd-Alrhman Masalkhi <abd.masalkhi@gmail.com>
-To: sashiko-reviews@lists.linux.dev
-Cc: yukuai@fygo.io, linux-raid@vger.kernel.org
-Subject: Re: [PATCH] md/raid1: release barrier when REQ_NOWAIT write would
- block
-In-Reply-To: <20260611134130.B4E911F00893@smtp.kernel.org>
-References: <20260611132500.763528-1-abd.masalkhi@gmail.com>
- <20260611134130.B4E911F00893@smtp.kernel.org>
-Date: Fri, 12 Jun 2026 07:27:54 +0200
-Message-ID: <m24ij8xr8l.fsf@gmail.com>
+        d=1e100.net; s=20251104; t=1781242929; x=1781847729;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:x-gm-gg:x-gm-message-state:from
+         :to:cc:subject:date:message-id:reply-to;
+        bh=TJ1nugW/8fu1vZ5ssTBZ0A1vU90yVL1AO+VaIOxrxis=;
+        b=E/KRVHe6iH9D14Q9xI8yBlPtEwQwg8IaxqvFtjvdamSRrlclW7qlzw8dwn31jjGUdO
+         C3wXnupHE7nuW0mCLnjaM1h9n09KictUY/yNm9MUKOtMkuaWsM1pzN5eA5+07p9ZE+5X
+         YzeYVapd6dvnBT1NjIazKzKtqyhi3UDRgec+/RFGBY0ZUl0n53qI5ZAyFN78rcPD6aGk
+         bU/Cc46lCy8qfWKI+1w57sYGmRZOLhCkZW0hwLmEa84vs5inJuK6/q1WJ0Couhw3qoHH
+         h6nCFGfObTvWTToXM+j3IzgjgiJ76OWLHpIPS0dQYv5bYdi9hiQe9+psCeU/pqkS17i6
+         YafQ==
+X-Gm-Message-State: AOJu0Yz8y2MmUf+APAUgwIPuhRnIB+9vDXK3HbSYnXjnL7tjv/GZTwsn
+	A82vBS6XjxxrZIwOaBlvQUE4WUx0RAKtTtbMcjp+anm+PYYrB1RypijcJMbrpvlohTHBmGdX4jl
+	XXcHplyehQkU/HMGmg2cnDjfnu3vQdiq2frQ5my1h/DP2zVWOLQVnx/cTkWEuGw==
+X-Gm-Gg: Acq92OH7nDS1llhkDy3f0qSM5EahEWvPos0ikxaTKuf5/W3UkjH8EEXIoc9UUlcs6pC
+	R4u3QpmWgIzAnBbjyuHuqreCymGWV1UE5B7ZsxWD8TXn6b596sJ9AxMocbbuedLwlOj7JXsjAmk
+	NatK5MFSmbn80Ip/EJ+tau5dPAOGhQC2qwfUyf2nxmbv8laW7mFJLNG5A4bmISQOWEI2spn3Omi
+	4nJIiV//bGpdjFlAk2yJTZNTB7qn5+7Qmha+9VNIE1disE6CQKeRw7dXENJeR4W3i9BWB0DLU6/
+	+nlbQc/FECcw72JeFeQEhqCatycx4Cchu+foN0YrwOzSH+/2wEhdVWVOp3ezqCOmyBSCBVaJVtX
+	ETfn0ZsNVyIXzwPP/CYEQpZcwDtjYsK3wG2A/YOdfubWlSo9tLjnL
+X-Received: by 2002:a05:7022:5f12:b0:137:f532:e34a with SMTP id
+ a92af1059eb24-1384bb2d069mr412838c88.8.1781242928052; Thu, 11 Jun 2026
+ 22:42:08 -0700 (PDT)
 Precedence: bulk
 X-Mailing-List: sashiko-reviews@lists.linux.dev
 List-Id: <sashiko-reviews.lists.linux.dev>
 List-Subscribe: <mailto:sashiko-reviews+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:sashiko-reviews+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
+References: <20260612001803.23341-4-kuniyu@google.com> <20260612003353.4977F1F000E9@smtp.kernel.org>
+In-Reply-To: <20260612003353.4977F1F000E9@smtp.kernel.org>
+From: Kuniyuki Iwashima <kuniyu@google.com>
+Date: Thu, 11 Jun 2026 22:41:56 -0700
+X-Gm-Features: AVVi8CfEiVFr0M6hRN3rfWkjVoSVyBffGMIcU1eHrMLX4u0ZU-ew2qj-mdydr5k
+Message-ID: <CAAVpQUDTfftqVVSrX25S=Rq=gWoJ5pgsHuf7xW-v_Pqtdm7cMA@mail.gmail.com>
+Subject: Re: [PATCH v1 bpf-next/net 3/5] bpf: Add bpf_skb_set_hwtstamp().
+To: sashiko-reviews@lists.linux.dev
+Cc: bpf@vger.kernel.org
+Content-Type: text/plain; charset="UTF-8"
 Content-Transfer-Encoding: quoted-printable
 
-On Thu, Jun 11, 2026 at 13:41 +0000, sashiko-bot@kernel.org wrote:
-> Thank you for your contribution! Sashiko AI review found 3 potential issu=
-e(s) to consider:
+On Thu, Jun 11, 2026 at 5:33=E2=80=AFPM <sashiko-bot@kernel.org> wrote:
 >
-> Pre-existing issues:
-> - [Critical] Missing RCU read lock around `conf->mirrors[i].rdev` access =
-in `wait_blocked_rdev()`.
-I'm not quite sure whether this is a real bug.
-
-> - [High] Early failure paths in `raid1_write_request()` leak the `mddev->=
-writes_pending` reference.
-I'll submit a v2 containing this fix, along with the fix for the
-mddev->writes_pending
-
-> - [High] Allocating bios and r1bios can sleep even when the `REQ_NOWAIT` =
-flag is set.
-@kuai, Should I handle this issue as well, or should I just ignore it
-for now?
-
+> Thank you for your contribution! Sashiko AI review found 1 potential issu=
+e(s) to consider:
+> - [High] Unsafe modification of shared SKB data (skb_shinfo) via insuffic=
+ient uncloning
 > --
 >
-> commit 3db9da0ec804800aa3afb93361ccd18de39ce5f0
-> Author: Abd-Alrhman Masalkhi <abd.masalkhi@gmail.com>
+> commit 96bf1885d42f4593da3e164388ab66653eb4e518
+> Author: Kuniyuki Iwashima <kuniyu@google.com>
 >
-> md/raid1: release barrier when REQ_NOWAIT write would block
+> bpf: Add bpf_skb_set_hwtstamp().
 >
-> raid1_write_request() leaks the barrier reference taken by wait_barrier()
-> if wait_blocked_rdev() fails for a REQ_NOWAIT write. This patch releases
-> the barrier on this failure path to prevent array freeze hangs.
+> Adds a kfunc to update skb_hwtstamps(skb)->hwtstamp at tc/ingress. This
+> allows transparent proxying of RX hardware timestamps via SCM_TIMESTAMPIN=
+G to
+> socket applications.
 >
-> Closes: https://sashiko.dev/#/patchset/20260611083514.754922-1-abd.masalk=
-hi@gmail.com?part=3D1
+> > diff --git a/net/core/filter.c b/net/core/filter.c
+> > index acdc66aa4f27c..ab7adef9c0159 100644
+> > --- a/net/core/filter.c
+> > +++ b/net/core/filter.c
 >
->> diff --git a/drivers/md/raid1.c b/drivers/md/raid1.c
->> index 5b9368bd9e700..f3cc30932ba2b 100644
->> --- a/drivers/md/raid1.c
->> +++ b/drivers/md/raid1.c
->> @@ -1512,6 +1512,7 @@ static void raid1_write_request(struct mddev *mdde=
-v, struct bio *bio,
->>  	int max_sectors;
->>  	bool write_behind =3D false;
->>  	bool is_discard =3D (bio_op(bio) =3D=3D REQ_OP_DISCARD);
->> +	sector_t sector =3D bio->bi_iter.bi_sector;
->>=20=20
->>  	if (mddev_is_clustered(mddev) &&
->>  	    mddev->cluster_ops->area_resyncing(mddev, WRITE,
->> @@ -1540,6 +1541,7 @@ static void raid1_write_request(struct mddev *mdde=
-v, struct bio *bio,
->>=20=20
->>  	if (!wait_blocked_rdev(mddev, bio)) {
->>  		bio_wouldblock_error(bio);
->> +		allow_barrier(conf, sector);
+> [ ... ]
 >
-> [Severity: High]
-> This is a pre-existing issue, but does this early return path also leak t=
-he
-> mddev->writes_pending reference?
->
-> In raid1_make_request(), md_write_start() unconditionally takes a per-cpu
-> reference on mddev->writes_pending before calling raid1_write_request().
-> Normally, this is released via md_write_end() inside close_write().
->
-> By directly returning here after bio_wouldblock_error(bio), we never call
-> md_write_end(). Does this permanently leak the writes_pending counter and
-> prevent the array from transitioning to a clean state?
->
-> It looks like this same leak exists on the clustered area_resyncing and
-> wait_barrier REQ_NOWAIT failure paths earlier in this function, as well as
-> the err_handle path if bio_submit_split_bioset() fails.
->
->>  		return;
->>  	}
->
-> [Severity: Critical]
-> This is a pre-existing issue, but is it safe to call wait_blocked_rdev()
-> here without holding the RCU read lock?
->
-> Looking at wait_blocked_rdev():
->
-> 	for (i =3D 0; i < disks; i++) {
-> 		struct md_rdev *rdev =3D conf->mirrors[i].rdev;
->
-> 		if (!rdev)
-> 			continue;
->
-> 		/* don't write here until the bad block is acknowledged */
-> 		if (test_bit(WriteErrorSeen, &rdev->flags) &&
->
-> It accesses the rdev pointer and its fields without rcu_read_lock().
-> Could a concurrent device removal (via md_ioctl -> raid1_remove_conf)
-> replace the pointer with NULL and free the rdev structure while we are
-> dereferencing it here, resulting in a use-after-free?
+> > @@ -12372,6 +12372,28 @@ __bpf_kfunc int bpf_sock_ops_enable_tx_tstamp(=
+struct bpf_sock_ops_kern *skops,
+> >       return 0;
+> >  }
+> >
+> > +__bpf_kfunc int bpf_skb_set_hwtstamp(struct __sk_buff *s,
+> > +                                  struct bpf_hwtstamp *attrs, int attr=
+s__sz)
+> > +{
+> > +     struct sk_buff *skb =3D (struct sk_buff *)s;
+> > +
+> > +     if (attrs__sz !=3D sizeof(*attrs) || attrs->reserved)
+> > +             return -EINVAL;
+> > +
+> > +     if (!skb_at_tc_ingress(skb))
+> > +             return -EINVAL;
+> > +
+> > +     if (skb_header_unclone(skb, GFP_ATOMIC))
+> > +             return -ENOMEM;
+> > +
+> > +     skb_clear_tstamp(skb);
+> > +     skb_hwtstamps(skb)->hwtstamp =3D attrs->hwtstamp;
 >
 > [Severity: High]
-> This is also a pre-existing issue, but if we proceed past this point for a
-> REQ_NOWAIT bio, we call alloc_r1bio() and eventually bio_alloc_clone(),
-> both of which use GFP_NOIO.
+> Does using skb_header_unclone() safely protect against modifying a shared
+> skb_shinfo(skb) here?
 >
-> Since memory pool allocations with GFP_NOIO can block when the mempool is
-> exhausted under memory pressure, could this cause REQ_NOWAIT writes to
-> sleep, defeating the purpose of the REQ_NOWAIT flag?
+> For TCP transmit clones, the header is released and skb->nohdr is set to =
+1.
+> This makes skb_header_cloned() return false, even though the data buffer =
+and
+> skb_shinfo are still shared with the original packet in the TCP write que=
+ue.
 >
-> --=20
-> Sashiko AI review =C2=B7 https://sashiko.dev/#/patchset/20260611132500.76=
-3528-1-abd.masalkhi@gmail.com?part=3D1
+> When these packets loop back to TC ingress, such as via veth or loopback,
+> and are modified by the BPF program, skb_header_unclone() will skip
+> reallocation.
 
---=20
-Best Regards,
-Abd-Alrhman
+I missed this loopback scenario.
+
+Actually I have another patch to avoid skb_header_unclone() in
+bpf_skb_scrub_tx_tstamp() for TCP skb (skb->destructor =3D=3D
+tcp_wfree()).
+
+
+>
+> Could this lead to silent data corruption of the original socket buffer's
+> skb_shinfo? Would using skb_unclone() instead be necessary to prevent thi=
+s?
+
+Will use skb_unclone().
