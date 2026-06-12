@@ -1,299 +1,150 @@
-Received: from mail-qt1-f180.google.com (mail-qt1-f180.google.com [209.85.160.180])
+Received: from mail-wm1-f47.google.com (mail-wm1-f47.google.com [209.85.128.47])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AE71439903E
-	for <sashiko-reviews@lists.linux.dev>; Fri, 12 Jun 2026 09:52:02 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=pass smtp.client-ip=209.85.160.180
-ARC-Seal:i=2; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1781257925; cv=pass; b=QrSrw16NNV9kvnrSl2TyhrwHDp5KMACuZsxdwHPAsTIJmUlVhRPrA6lJ77Exi4P1x4whf5+ZFAGaH6qWCegOTP6zHU61viE6HdnFfXMoVnnPsZ2pZpAss5nGRIOF8qLSZbNHjUplwIbM+26tTJPt6oPfBpGysmqQR0gjTWLzOK8=
-ARC-Message-Signature:i=2; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1781257925; c=relaxed/simple;
-	bh=yaNMuV9UdaBji84hWn7pBPFUiDauO11i4mtg1wVBcdg=;
-	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
-	 To:Cc:Content-Type; b=BqAnDiqS2hsKLS5NZj1x1HnpUa1swd8CekiMJHEiSmnvrmlNBHrGcmZ+Cxxbo4tWJZznYObbWBFlGeyOHYJHq7KMlshsVOVJjHEcc/VaWD1/KihBMLGY/XP7KkgDGbiMs/uZ2+aTTBEtYhC8ZI9Klv6jYcjvuPAL+7I8w60jOjE=
-ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=google.com; spf=pass smtp.mailfrom=google.com; dkim=pass (2048-bit key) header.d=google.com header.i=@google.com header.b=bMlhcaMW; arc=pass smtp.client-ip=209.85.160.180
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=google.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=google.com
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3F9FF38839D
+	for <sashiko-reviews@lists.linux.dev>; Fri, 12 Jun 2026 10:10:40 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.47
+ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
+	t=1781259042; cv=none; b=g3LL36lthAfhhxt2vCPdO/JMsSdgCXV/0yKYCw2XcZwdc8/dh2eOfNjnUA1JKWBmdpGgj6iNhaLhNGFIbBxUZYMSBND4ibVj1Jjo56XEuaWy/3oFpKxTVb+DkHKYDLhvdu8JNluJSwlgZyiOgdOeDYEv9pY6RRVQgRIJRiDPqrs=
+ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
+	s=arc-20240116; t=1781259042; c=relaxed/simple;
+	bh=VfOBVwW66cmgqEpPpdTVfIk63d6iMSbC90a3mU+fYhI=;
+	h=Message-ID:Date:From:To:Cc:Subject:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=PI2c6fvpiykcN+T+vtLclm26kOCr+95DCjZl6JLLVaKHuAJ3Xhn6dsYdu3DoGb9PIbEupBvr2kQ7RnqVokmIJ9iVe2P3PKRQ/SlLtOAiHYHAUJ/ZeQCkdOMxVz8s94c/C0k71qXaTnjFvF691BP1TPOO5S4JnuRMxMxXp+V/ai8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=d+wijumF; arc=none smtp.client-ip=209.85.128.47
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=google.com header.i=@google.com header.b="bMlhcaMW"
-Received: by mail-qt1-f180.google.com with SMTP id d75a77b69052e-5177d1ff061so340891cf.1
-        for <sashiko-reviews@lists.linux.dev>; Fri, 12 Jun 2026 02:52:02 -0700 (PDT)
-ARC-Seal: i=1; a=rsa-sha256; t=1781257921; cv=none;
-        d=google.com; s=arc-20240605;
-        b=QGkJO869H1AXX2fSM+4BDSfOXsQQYNM+RH6vPCDB8ecwT+aZddwX69zR49QikFNCJ8
-         +ejylYtAOrdWBH+puiSFLYDpybTIvlGYT/ZZ1n7Oy5OXjfApfEAVPzUNu9Kcdswm75/X
-         HoCOEijlGR1HYac2cjHWa5p5Zs9QZCOGrMb4wMgvmYhqzODPsPTfbl9sAzVbsfZNcGIP
-         wY8kPAkebAjSrwlvidDSxtqwlLNf0gbANO1Qy4dvt3h638zIV0qcxj96R+yBMcRNvGk8
-         jFfSKzIuTaIrsSzUwWky6OfT7zN70ZrJTLnki2d5MF//FnpyWE8tm7QIIhK2sHEZOxkS
-         +a5Q==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com; s=arc-20240605;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:dkim-signature;
-        bh=s4SpZQpjEPljxy/WgjoqC1DpMQWlgwRuaSSFW97SwTk=;
-        fh=NgYvy1kDsW4wf8pyPsB8sBTIaLWXPgov/QeAIJv8NPU=;
-        b=JLOwC0LzPfvY6rVtsSq179/jy7VusyThyImtZN46b9ttWq8b20p+H65e2Vg9BS5Me+
-         hx8kkKWIwyJmtWI+FSPVpxASNeDQn/m+8gyZdqrKkXD36u+qYkdr63hA6KhXvHIHWj7y
-         3yL6j7tzcyRkrxSnBPm9FdW1B8HdudBtmx3W7jZkh7tBMHQ0JFqHT3NxAlq44Hh1Q4gF
-         HKNEXtpb0o91XWfElmTw8RePzsi53Lo9iqIIKJjlLY9ShlJxdxlYEbGnrqZsIAFiN36M
-         rj0qSszeipNRMDYYpf6aVamo06CoRUI+SErJEn5PnKPOFx8yWQerJOBPNP1wsnLTQ3uk
-         3+Tw==;
-        darn=lists.linux.dev
-ARC-Authentication-Results: i=1; mx.google.com; arc=none
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="d+wijumF"
+Received: by mail-wm1-f47.google.com with SMTP id 5b1f17b1804b1-491b390f9e9so1173165e9.0
+        for <sashiko-reviews@lists.linux.dev>; Fri, 12 Jun 2026 03:10:40 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=google.com; s=20251104; t=1781257921; x=1781862721; darn=lists.linux.dev;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=s4SpZQpjEPljxy/WgjoqC1DpMQWlgwRuaSSFW97SwTk=;
-        b=bMlhcaMWJ44a4OWzXPNw1rBUOi/6EFF9SxW4NF4jfDLDdj7s/1SExVZGIlNLZ70och
-         TjHff3UGFLPfARCGyvsaMwhEGjavOEtVOtE2BTCC6kKq5tLmb5lfLb+iqTzTF77dMR4W
-         SbybwUo4uMuTnSuATXC7OYplsdXP+BJ4/pd3mJHwEZXSLMrSXOyXxp1YvAzvXnuDmFI2
-         Bz+G+i/jKj7WN12WV2aaIhMMATGL0Y/nfedqxpL8KnJxakvOVflO5pjjuqQO5weJ6kuf
-         JCcXwwdSJMyh8XwgCDBzQXTxH9Uy27oHpigtZAsATzsF/ZU+os8HuCt0bYgYy+5QYgOl
-         AZ8Q==
+        d=gmail.com; s=20251104; t=1781259039; x=1781863839; darn=lists.linux.dev;
+        h=in-reply-to:content-transfer-encoding:content-disposition
+         :mime-version:references:subject:cc:to:from:date:message-id:from:to
+         :cc:subject:date:message-id:reply-to;
+        bh=C9wZyoU1v8zpuY6BFJ/ACEsATO/OwOtgF75ffj8qI+Q=;
+        b=d+wijumFKvv3EL1ddL4octJq9HerlcIbpBKuNdVc46P4uToEDSagCFRfnUnIaXtFf6
+         AkV13gjn1CdPR1rRsh00obe1Rl+3XYFmurTEd43D2kPTzxnk0ATYg+k+raBnIN805jqK
+         YVBMViiWPIbKZF48Q36MGfASHUgDTSUwUi0kjaj0FbwN5yOgyeHTZCg9ZRgaxZhnxpR5
+         RN6OCaMqgKg+fN9ZWICyyknx4Mm8EGBk0d8b/sH+eueiJiB83GXb1Uzmxndm+jGS8zsO
+         qEXxyKDVj8/+pw+Xe8DwA8F/0LT9Wukxn+HimJN2nnjUVd8fr9uliwss3z2B04/IeAFv
+         gdEA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20251104; t=1781257921; x=1781862721;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:x-gm-gg:x-gm-message-state:from
-         :to:cc:subject:date:message-id:reply-to;
-        bh=s4SpZQpjEPljxy/WgjoqC1DpMQWlgwRuaSSFW97SwTk=;
-        b=oP823O4QVUhsnLiZzgP2b8VgiQHmFKnP3szVKkINzAj3F41cX7eyONt4sWwTm5IfXb
-         CwIESm2bcUSsV+xvCkcNi2LSprwQsY/a6jvHS4Ex+lNdejbqXYXi6mSG0IibHYxTwUin
-         6xi12xtSswyqTgp9g70uca7nFxKeYkaXwmSvuzS3CL2ylQt+uumZ0ExLIPiojMPQKsv2
-         rm9I5mmZJogX2k7MmYVSRp+kX7NAJje6R57a/vS00aVDVh2aX19xGJEvXajZHPAdG1MB
-         B06MnZS4d8e+jHIu3xV9BAwWK6/zBJdETUvu28clG8neowcrg3fXc0QrUkTE1A9vVfY/
-         ZF4g==
-X-Gm-Message-State: AOJu0YwxjmZrLqCLP98R8e/LIvlyn+RQrchk9WwChZWIVTDTQZRnkeF9
-	Rjuesdb+6hP/6aGrl0ySFwj9+pjoqh4mBkFaTJuv4iRSWuGoO27I7zgZjkSOCbf2VYBdIsZ3BIQ
-	jowncR1om6KwnT8xP1y3iqiQlrVzCK9lN+N2NLeddEOZn1+JWplO1AnY+ZKQ=
-X-Gm-Gg: Acq92OEkiePc8Co2GVaybJiVnovqU+y3IUvxlr8OWE003qki9gdQ0tbnZriZO0Xk1lP
-	39J68JeQhRJ8wuoAzssm4nyB4Rley1pWOVKBdmBJA87WxAF9ENjRQl8Z0C6jCjvPmeZAW3bBKYV
-	m7Ou66BCW/RzLqZl7QrZ8GnhyYEJ/3TnV9R+EZu+wpihSKqep5KP31gSQVty0oJE9jODWiokIU6
-	3GFv7CJu7elnbLs7tvTZhYyijYAhgnV1bqnebGXG7PQ2vgRg6M8TddQ8uS16DRxfhCMB/RDhEeo
-	zN73fpfU
-X-Received: by 2002:a05:622a:4187:b0:4ff:cb75:2a22 with SMTP id
- d75a77b69052e-517fc3bb2fdmr5346851cf.3.1781257920800; Fri, 12 Jun 2026
- 02:52:00 -0700 (PDT)
+        d=1e100.net; s=20251104; t=1781259039; x=1781863839;
+        h=in-reply-to:content-transfer-encoding:content-disposition
+         :mime-version:references:subject:cc:to:from:date:message-id:x-gm-gg
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+        bh=C9wZyoU1v8zpuY6BFJ/ACEsATO/OwOtgF75ffj8qI+Q=;
+        b=p8bhBL5Ov4JubDlETUkCjmLooZRF2NDkSiuA6fIQWgXblCXgjPDCnMbKZpxmpIF+3i
+         E9B3ikdD0Lx5s8LAf8buFuN8eHsZirTfW08nk/RmDxbSQGGTRQ3c98H3PANSs5Wnj89e
+         5GbFgMwuastBfl0AdXO6y23PcfOK0lGRVXQE7hJdhthoDYPhXKT3+gVvZwILrLtZ/BBt
+         s2CIy+/Qu6ZQvXUrnjShqMQgFPykrGIvRV+99hF9/HH1SYGLVvxx64gLbHkJQ/HQzx9t
+         Kyg5tl1a+PX+dx0eRFd15MTC9/r9YU33rmOh8M/A8SK7iNwHvnRQng/mHF8mB3Rzbtc6
+         SYKQ==
+X-Gm-Message-State: AOJu0Yxpb5b1jmby7FT1LeGg56gm6A375wM0mAgWHfniitp7FFsbVqNG
+	30qlmbQqNaVUBH8uuJTVFNiUJMr30jkwt4nIGJMqTU/w5XXeJizGRlDNHN2dyw==
+X-Gm-Gg: Acq92OH2VB0jOwEwyABjYh+zDowm2kQSUCg46zbGBP7n3zZ9d+Dqxczn7IxRfUpMiRv
+	lEYkGewcgldlLzIL5v8I/bLJ1yHSNpplsIAbxp3WFb16Gyil8x7w4rwYivdDjhoTrVZqzfRCw+9
+	M3nmJndQI2WxvQZBCVPsAqW24Y8OECVZQbPr893DUvILf/5Ngw8BaOUVjS9GYKL7/p1gxCaDpvY
+	3VQqXIO7dNh3Tk3U3AVx2iO4DcrNMhI0bKSPtPA/9R7qMth+FWVIr3TQqg6kdxe/9yK05vIOnrC
+	uJys48nYvz+lGKQCZB3G4ro9ARf9nVu3zXRmtb6pRjkbugaKx7pp3qYgEoz1I19/pR8j1X2QD9u
+	kmlBu986AS2zCNA6pMoN296ToRt3YXgEhMQZMemMJhwzPcxfjQ7EihUXgl+lc731t7HzeoSWPQQ
+	kn8HYUon6CiItD+6jyly2d5w==
+X-Received: by 2002:a05:600c:3b16:b0:491:e3be:1363 with SMTP id 5b1f17b1804b1-491e3be13b3mr3289185e9.0.1781259038325;
+        Fri, 12 Jun 2026 03:10:38 -0700 (PDT)
+Received: from Ansuel-XPS. ([176.200.123.4])
+        by smtp.gmail.com with ESMTPSA id 5b1f17b1804b1-490ea83d8dasm70261225e9.11.2026.06.12.03.10.37
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Fri, 12 Jun 2026 03:10:37 -0700 (PDT)
+Message-ID: <6a2bdb1d.dc59d6a3.e1f11.8388@mx.google.com>
+X-Google-Original-Message-ID: <aivbG2gNq60N68uc@Ansuel-XPS.>
+Date: Fri, 12 Jun 2026 12:10:35 +0200
+From: Christian Marangi <ansuelsmth@gmail.com>
+To: sashiko-reviews@lists.linux.dev
+Cc: devicetree@vger.kernel.org, conor+dt@kernel.org, robh@kernel.org
+Subject: Re: [PATCH net-next v6 01/12] net: phylink: keep and use MAC
+ supported_interfaces in phylink struct
+References: <20260609151212.29469-2-ansuelsmth@gmail.com>
+ <20260610161620.99C121F00893@smtp.kernel.org>
 Precedence: bulk
 X-Mailing-List: sashiko-reviews@lists.linux.dev
 List-Id: <sashiko-reviews.lists.linux.dev>
 List-Subscribe: <mailto:sashiko-reviews+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:sashiko-reviews+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-References: <20260612065925.755562-12-tabba@google.com> <20260612071924.480E41F000E9@smtp.kernel.org>
-In-Reply-To: <20260612071924.480E41F000E9@smtp.kernel.org>
-From: Fuad Tabba <tabba@google.com>
-Date: Fri, 12 Jun 2026 10:51:24 +0100
-X-Gm-Features: AVVi8CfPcYgp60KT4bL0q7MbY4Iy6KmpKwrk7cw2_AY80hFmnxZbh8EnRgpLpNI
-Message-ID: <CA+EHjTxLVo=GwderoFxqsOEFXV+DrD17nQCkPbnKZPA6mRNxhg@mail.gmail.com>
-Subject: Re: [PATCH v1 11/11] KVM: arm64: Implement lazy vCPU state sync for
- non-protected guests
-To: sashiko-reviews@lists.linux.dev
-Cc: kvmarm@lists.linux.dev, Marc Zyngier <maz@kernel.org>, 
-	Oliver Upton <oupton@kernel.org>, Will Deacon <will@kernel.org>
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
+Content-Type: text/plain; charset=iso-8859-1
+Content-Disposition: inline
+Content-Transfer-Encoding: 8bit
+In-Reply-To: <20260610161620.99C121F00893@smtp.kernel.org>
 
-You finally got me Sashiko... you finally got me (and on the last patch)...
-
-Will fix in the respin. Details below...
-
-On Fri, 12 Jun 2026 at 08:19, <sashiko-bot@kernel.org> wrote:
->
-> Thank you for your contribution! Sashiko AI review found 3 potential issu=
-e(s) to consider:
->
-> New issues:
-> - [High] Lazy vCPU state sync bypasses vcpu_mode_is_bad_32bit() check on =
-non-trap VM exits due to stale CPSR.
-> - [High] Exceptions injected by the host and other context modifications =
-during the KVM_RUN loop are silently dropped, causing infinite VM exit loop=
-s or ignored requests.
->
-> Pre-existing issues:
-> - [Critical] Protected VM register state is unconditionally copied betwee=
-n the hypervisor and untrusted host, violating pKVM confidentiality and int=
-egrity guarantees.
+On Wed, Jun 10, 2026 at 04:16:20PM +0000, sashiko-bot@kernel.org wrote:
+> Thank you for your contribution! Sashiko AI review found 1 potential issue(s) to consider:
+> - [High] Late modification to `config->supported_interfaces` by drivers is silently ignored due to by-value copying in `phylink_create()`, breaking support for devices like MTK GMAC2.
 > --
->
-> commit 96ecd36038c29097f333a40bf0eebd7b62bffc92
-> Author: tabba@google.com <tabba@google.com>
-> Subject: KVM: arm64: Implement lazy vCPU state sync for non-protected gue=
-sts
->
-> This commit implements lazy synchronization of vCPU register state for
-> non-protected guests running under pKVM. It defers copying the context fr=
-om
-> the host to the hypervisor until the host marks it dirty, and from the
-> hypervisor to the host until the host requires it. The PC is synced on ev=
-ery
-> exit to maintain accurate tracepoints.
->
-> > diff --git a/arch/arm64/kvm/handle_exit.c b/arch/arm64/kvm/handle_exit.=
-c
-> > index 54aedf93c78b6..dccc3786548b0 100644
-> > --- a/arch/arm64/kvm/handle_exit.c
-> > +++ b/arch/arm64/kvm/handle_exit.c
+> 
+> commit eaea53b185dbdc4c75406c542c97543c4c451c9d
+> Author: Christian Marangi <ansuelsmth@gmail.com>
+> 
+> net: phylink: keep and use MAC supported_interfaces in phylink struct
+> 
+> This patch copies supported_interfaces from phylink_config into the phylink
+> structure to prepare for internal PCS handling. The internal copy is then
+> used in place of the config structure's bitmap.
+> 
+> > diff --git a/drivers/net/phy/phylink.c b/drivers/net/phy/phylink.c
+> > index 087ac63f9193d..4d59c0dd78dbf 100644
+> > --- a/drivers/net/phy/phylink.c
+> > +++ b/drivers/net/phy/phylink.c
 > [ ... ]
-> > @@ -489,6 +504,13 @@ int handle_exit(struct kvm_vcpu *vcpu, int excepti=
-on_index)
-> >  /* For exit types that need handling before we can be preempted */
-> >  void handle_exit_early(struct kvm_vcpu *vcpu, int exception_index)
-> >  {
-> > +     /*
-> > +      * We just exited, so the state is clean from a hypervisor
-> > +      * perspective.
-> > +      */
-> > +     if (is_protected_kvm_enabled())
-> > +             vcpu_clear_flag(vcpu, PKVM_HOST_STATE_DIRTY);
+> > @@ -1868,6 +1873,9 @@ struct phylink *phylink_create(struct phylink_config *config,
+> >  	mutex_init(&pl->state_mutex);
+> >  	INIT_WORK(&pl->resolve, phylink_resolve);
+> >  
+> > +	phy_interface_copy(pl->supported_interfaces,
+> > +			   config->supported_interfaces);
 > > +
->
+> 
 > [Severity: High]
-> When a guest exits (such as for ARM_EXCEPTION_IL or an IRQ), this clears =
-the
-> PKVM_HOST_STATE_DIRTY flag.
+> Will this by-value copy break drivers that modify supported_interfaces after
+> calling phylink_create()?
+> 
+> For example, looking at the mtk_eth_soc driver in mtk_add_mac(), the
+> supported_interfaces bitmap is modified after phylink_create() returns:
+> 
+> drivers/net/ethernet/mediatek/mtk_eth_soc.c:mtk_add_mac() {
+>         ...
+>         mac->phylink = phylink_create(&mac->phylink_config, ...);
+>         ...
+>         if (MTK_HAS_CAPS(mac->hw->soc->caps, MTK_2P5GPHY) &&
+>             id == MTK_GMAC2_ID)
+>                 __set_bit(PHY_INTERFACE_MODE_INTERNAL,
+>                           mac->phylink_config.supported_interfaces);
+>         ...
+> }
+> 
+> Since phylink_create() has already taken a snapshot of the interfaces,
+> this late addition of PHY_INTERFACE_MODE_INTERNAL will be dropped. 
+> Could this cause phylink_validate() to incorrectly reject the internal PHY
+> capability for the MTK GMAC2?
+> 
+> >  	pl->config = config;
+> >  	if (config->type == PHYLINK_NETDEV) {
+> >  		pl->netdev = to_net_dev(config->dev);
 >
-> If the host handles the exit or processes pending requests (like
-> KVM_REQ_VCPU_RESET or injecting undefined/SErrors), those operations modi=
-fy
-> the host's copy of the guest register context (vcpu->arch.ctxt).
->
-> However, since these paths bypass handle_trap_exceptions(), the
-> PKVM_HOST_STATE_DIRTY flag is never set again.
->
-> On the next guest entry, flush_hyp_vcpu() at EL2 will see the dirty flag =
-is
-> clear and skip calling __flush_hyp_vcpu().
->
-> Will this cause exceptions injected by the host and other context modific=
-ations
-> made during the KVM_RUN loop to be silently dropped? For ARM_EXCEPTION_IL=
-,
-> does this mean the hypervisor will re-enter the guest using the old,
-> unmodified register state, causing an instant re-trap?
 
-No loop: PENDING_EXCEPTION rides in iflags (flushed unconditionally),
-so EL2 re-derives and
-delivers the exception on re-entry. It did surface one real gap:
-enter_exception64() doesn't
-write ESR, so an unmasked SError's ESR_EL1 syndrome was dropped under
-lazy sync. Fixed in the
-respin (sync + dirty before host-side SError injection).
+I was with the idea that value of phylink_config should be used only for
+phylink_create and then in theory they should not be changed.
 
->
-> >       if (ARM_SERROR_PENDING(exception_index)) {
-> >               if (this_cpu_has_cap(ARM64_HAS_RAS_EXTN)) {
-> >                       u64 disr =3D kvm_vcpu_get_disr(vcpu);
-> > diff --git a/arch/arm64/kvm/hyp/nvhe/hyp-main.c b/arch/arm64/kvm/hyp/nv=
-he/hyp-main.c
-> > index 23e644c24a03a..02383b372258f 100644
-> > --- a/arch/arm64/kvm/hyp/nvhe/hyp-main.c
-> > +++ b/arch/arm64/kvm/hyp/nvhe/hyp-main.c
-> [ ... ]
-> > @@ -168,7 +211,17 @@ static void flush_hyp_vcpu(struct pkvm_hyp_vcpu *h=
-yp_vcpu)
-> >       fpsimd_sve_flush();
-> >       flush_debug_state(hyp_vcpu);
-> >
-> > -     hyp_vcpu->vcpu.arch.ctxt        =3D host_vcpu->arch.ctxt;
-> > +     /*
-> > +      * If we deal with a non-protected guest and the state is potenti=
-ally
-> > +      * dirty (from a host perspective), copy the state back into the =
-hyp
-> > +      * vcpu.
-> > +      */
-> > +     if (!pkvm_hyp_vcpu_is_protected(hyp_vcpu)) {
-> > +             if (vcpu_get_flag(host_vcpu, PKVM_HOST_STATE_DIRTY))
-> > +                     __flush_hyp_vcpu(hyp_vcpu);
-> > +     } else {
-> > +             hyp_vcpu->vcpu.arch.ctxt =3D host_vcpu->arch.ctxt;
->
-> [Severity: Critical]
-> This is a pre-existing issue, but I have a question about this copy opera=
-tion.
->
-> This executes at EL2 and copies the entire vcpu.arch.ctxt from host_vcpu
-> (memory accessible to the untrusted host EL1) into the protected VM's
-> private state.
->
-> Could this violate guest integrity by allowing the host to hijack the VM'=
-s
-> control flow?
+Isn't this a bug in MTK code to modify the phylink_config AFTER
+phylink_create?
 
-Existing upstream behaviour, unchanged here. The follow-up series
-replaces this copy with
-per-field marshalling, which is what establishes protected vCPU-state isola=
-tion.
+It was never a problem since it's it's INTERNAL interface mode and a PCS is
+not needed for it but still I feel this should be fixed and this change
+doesn't introduce some kind of regression.
+ 
+> -- 
+> Sashiko AI review · https://sashiko.dev/#/patchset/20260609151212.29469-1-ansuelsmth@gmail.com?part=1
 
->
-> > +     }
-> >
-> >       hyp_vcpu->vcpu.arch.mdcr_el2    =3D host_vcpu->arch.mdcr_el2;
-> >       hyp_vcpu->vcpu.arch.hcr_el2 &=3D ~(HCR_TWI | HCR_TWE);
-> [ ... ]
-> > @@ -191,9 +244,11 @@ static void sync_hyp_vcpu(struct pkvm_hyp_vcpu *hy=
-p_vcpu)
-> >       fpsimd_sve_sync(&hyp_vcpu->vcpu);
-> >       sync_debug_state(hyp_vcpu);
-> >
-> > -     host_vcpu->arch.ctxt            =3D hyp_vcpu->vcpu.arch.ctxt;
-> > -
-> > -     host_vcpu->arch.hcr_el2         =3D hyp_vcpu->vcpu.arch.hcr_el2;
-> > +     if (pkvm_hyp_vcpu_is_protected(hyp_vcpu))
-> > +             host_vcpu->arch.ctxt =3D hyp_vcpu->vcpu.arch.ctxt;
->
-> [Severity: Critical]
-> This is a pre-existing issue, but I have a similar question about copying
-> the protected guest's register state back to the host here.
->
-> Does copying hyp_vcpu->vcpu.arch.ctxt back into the untrusted
-> host_vcpu->arch.ctxt violate pKVM confidentiality guarantees by leaking
-> the state to the host?
-
-Same as the flush side: unchanged here, established by the follow-up
-series' marshalling.
-
->
-> > +     else
-> > +             /* Keep the PC current for the kvm_exit tracepoint (lazy =
-ctxt sync). */
-> > +             host_vcpu->arch.ctxt.regs.pc =3D hyp_vcpu->vcpu.arch.ctxt=
-.regs.pc;
->
-> [Severity: High]
-> Since handle_trap_exceptions() is only called for traps, an exit like
-> ARM_EXCEPTION_IRQ won't trigger the __pkvm_vcpu_sync_state hypercall.
->
-> Because this code only synchronizes the pc field for non-protected guests=
-,
-> vcpu->arch.ctxt.regs.pstate (CPSR) remains stale in the host vCPU context=
-.
->
-> Does this lazy synchronization leave the host with a stale CPSR on non-tr=
-ap
-> exits?
->
-> If the guest transitioned to an illegal 32-bit mode immediately before th=
-e
-> IRQ was taken, would the KVM_RUN inner loop evaluate vcpu_mode_is_bad_32b=
-it()
-> using this stale CPSR, bypassing KVM's architectural protection against i=
-llegal
-> AArch32 execution?
-
-Yes: stale PSTATE on non-trap exits, non-protected only. Fixed in the
-respin (PSTATE synced
-alongside PC every exit).
-
-Cheers,
-/fuad
-
->
-> >
-> >       host_vcpu->arch.fault           =3D hyp_vcpu->vcpu.arch.fault;
-> >
->
-> --
-> Sashiko AI review =C2=B7 https://sashiko.dev/#/patchset/20260612065925.75=
-5562-1-tabba@google.com?part=3D11
+-- 
+	Ansuel
