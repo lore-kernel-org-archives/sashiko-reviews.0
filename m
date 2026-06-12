@@ -1,352 +1,163 @@
-Received: from dggsgout11.his.huawei.com (dggsgout11.his.huawei.com [45.249.212.51])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
-	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 40B762DB795
-	for <sashiko-reviews@lists.linux.dev>; Fri, 12 Jun 2026 01:55:07 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=45.249.212.51
+Received: from mail.loongson.cn (mail.loongson.cn [114.242.206.163])
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 1FF51372056;
+	Fri, 12 Jun 2026 02:02:51 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=114.242.206.163
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1781229310; cv=none; b=YvimVhjSE9zbX5Qpu47ibx5oZsx1kDdhHe8bKuWGIEWVYYX491G266zcVnQuGm7eFGqA28rT5+Q5aTqyrHof80zl6+J7E4b3Lrn3wLK6siaWCS3GaZ2yfqCn9nWnOOjoUnKhTbMl+98pYUogbxYMcTTAfDS2HnZvL6Rco0vW9UI=
+	t=1781229777; cv=none; b=JE6oPCn0XGmn652qhkzYOc7RuI6JWcKaKsvn11Tl2LCkHLW29Ydhxnq1jHFTjmBY3oiyyjHBLn9iFrsI+mZF0TMkYbTLLOmdSZ1DRdISto4VtBa3XYSehsS2YCStpdiGQHhPqvg/m1LGU7b7svIP9O7x9K+0dOSs/lETvzZmiAA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1781229310; c=relaxed/simple;
-	bh=9xA22wVJimg+XD28C2L+cY+sHz1FGSAX+RAwoc/grds=;
-	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=GQGVwRzC7R7bAldNqmDbnRSjBe71t11JOoKzLbGgVGA0T7lVQOCbKZntgYzUSK33iSGuGbq/0YgfYorAQvUBFou3vYZJsvyOfjLfxcLQcG6j9Budhvj8X4KMtaucn6jqgAmpdNRgtNKJG6xC5+fYgIxsOpM2USE76eg4YpEn35k=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=huaweicloud.com; spf=none smtp.mailfrom=huaweicloud.com; arc=none smtp.client-ip=45.249.212.51
-Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=huaweicloud.com
-Authentication-Results: smtp.subspace.kernel.org; spf=none smtp.mailfrom=huaweicloud.com
-Received: from mail.maildlp.com (unknown [172.19.163.177])
-	by dggsgout11.his.huawei.com (SkyGuard) with ESMTPS id 4gc2d62B8xzYQtp3
-	for <sashiko-reviews@lists.linux.dev>; Fri, 12 Jun 2026 09:54:34 +0800 (CST)
-Received: from mail02.huawei.com (unknown [10.116.40.75])
-	by mail.maildlp.com (Postfix) with ESMTP id 77D194058D
-	for <sashiko-reviews@lists.linux.dev>; Fri, 12 Jun 2026 09:54:55 +0800 (CST)
-Received: from [10.67.110.36] (unknown [10.67.110.36])
-	by APP2 (Coremail) with SMTP id Syh0CgAHy4DtZitqxOPwBQ--.20143S2;
-	Fri, 12 Jun 2026 09:54:54 +0800 (CST)
-Message-ID: <6df6e707-0d79-4bc9-95c0-7f2c4896a229@huaweicloud.com>
-Date: Fri, 12 Jun 2026 09:54:52 +0800
+	s=arc-20240116; t=1781229777; c=relaxed/simple;
+	bh=EYg/L3M5bcDmxoGhkwP6K60O0aaKPTs2U6yI2h7Q6Hw=;
+	h=Subject:To:Cc:References:From:Message-ID:Date:MIME-Version:
+	 In-Reply-To:Content-Type; b=RkJZvRaxXz1/AZErshPwr0i/OvZCzcP4/HQu+7hgUZjMhdfz+CMGhCmEYn5mrSJNMQrD1yupU+qGbKvUUOQ732nhzJktx2umfvzc+8LOtHdlhjio5ii2TlvAvreM1v8H3AUGD5azvWTKEod0l9O/+Sbi1+tSEywZp47K5Jn2Qcg=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=loongson.cn; spf=pass smtp.mailfrom=loongson.cn; arc=none smtp.client-ip=114.242.206.163
+Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=loongson.cn
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=loongson.cn
+Received: from loongson.cn (unknown [113.200.148.30])
+	by gateway (Coremail) with SMTP id _____8AxVunEaCtqKVATAA--.45328S3;
+	Fri, 12 Jun 2026 10:02:45 +0800 (CST)
+Received: from [10.130.40.83] (unknown [113.200.148.30])
+	by front1 (Coremail) with SMTP id qMiowJAx28G_aCtq7HijAA--.47351S3;
+	Fri, 12 Jun 2026 10:02:41 +0800 (CST)
+Subject: Re: [PATCH v3 1/3] LoongArch: Implement CONFIG_THREAD_INFO_IN_TASK
+To: sashiko-reviews@lists.linux.dev
+Cc: bpf@vger.kernel.org, Huacai Chen <chenhuacai@kernel.org>,
+ loongarch@lists.linux.dev, WANG Rui <wangrui@loongson.cn>
+References: <20260612011616.27771-2-yangtiezhu@loongson.cn>
+ <20260612012945.1CB951F000E9@smtp.kernel.org>
+From: Tiezhu Yang <yangtiezhu@loongson.cn>
+Message-ID: <05dce31c-91e1-117f-07b5-5c480d25d55d@loongson.cn>
+Date: Fri, 12 Jun 2026 10:02:39 +0800
+User-Agent: Mozilla/5.0 (X11; Linux loongarch64; rv:68.0) Gecko/20100101
+ Thunderbird/68.7.0
 Precedence: bulk
 X-Mailing-List: sashiko-reviews@lists.linux.dev
 List-Id: <sashiko-reviews.lists.linux.dev>
 List-Subscribe: <mailto:sashiko-reviews+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:sashiko-reviews+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v4] rethook: Remove the running task check in
- rethook_find_ret_addr()
-To: XIAO WU <xiaowu.417@qq.com>, sashiko-reviews@lists.linux.dev,
- Masami Hiramatsu <mhiramat@kernel.org>, Petr Mladek <pmladek@suse.com>,
- Peter Zijlstra <peterz@infradead.org>
-Cc: Mathieu Desnoyers <mathieu.desnoyers@efficios.com>,
- Alexei Starovoitov <ast@kernel.org>, Steven Rostedt <rostedt@goodmis.org>,
- linux-kernel@vger.kernel.org, linux-trace-kernel@vger.kernel.org,
- live-patching@vger.kernel.org
-References: <20260610013658.1837963-1-wutengda@huaweicloud.com>
- <20260610015032.4BFAA1F00893@smtp.kernel.org>
- <tencent_3D17DC5BE32C8A51D938AF50F221321F6206@qq.com>
+In-Reply-To: <20260612012945.1CB951F000E9@smtp.kernel.org>
+Content-Type: text/plain; charset=utf-8; format=flowed
 Content-Language: en-US
-From: Tengda Wu <wutengda@huaweicloud.com>
-In-Reply-To: <tencent_3D17DC5BE32C8A51D938AF50F221321F6206@qq.com>
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-X-CM-TRANSID:Syh0CgAHy4DtZitqxOPwBQ--.20143S2
-X-Coremail-Antispam: 1UD129KBjvJXoW3JF1UWw48ArWxGr45CrWfZrb_yoWDJrWrpF
-	Z7trZ0yF95Aryvyr1DJr1UZFyrJrsYqw4UGr1kGFyUAa1UAr1jqrWSqr4Y9F45Cr4kGr15
-	GF4jqr9rursrAFJanT9S1TB71UUUUU7qnTZGkaVYY2UrUUUUjbIjqfuFe4nvWSU5nxnvy2
-	9KBjDU0xBIdaVrnRJUUUv0b4IE77IF4wAFF20E14v26r4j6ryUM7CY07I20VC2zVCF04k2
-	6cxKx2IYs7xG6rWj6s0DM7CIcVAFz4kK6r1j6r18M28lY4IEw2IIxxk0rwA2F7IY1VAKz4
-	vEj48ve4kI8wA2z4x0Y4vE2Ix0cI8IcVAFwI0_tr0E3s1l84ACjcxK6xIIjxv20xvEc7Cj
-	xVAFwI0_Gr1j6F4UJwA2z4x0Y4vEx4A2jsIE14v26rxl6s0DM28EF7xvwVC2z280aVCY1x
-	0267AKxVW0oVCq3wAS0I0E0xvYzxvE52x082IY62kv0487Mc02F40EFcxC0VAKzVAqx4xG
-	6I80ewAv7VC0I7IYx2IY67AKxVWUJVWUGwAv7VC2z280aVAFwI0_Jr0_Gr1lOx8S6xCaFV
-	Cjc4AY6r1j6r4UM4x0Y48IcVAKI48JM4IIrI8v6xkF7I0E8cxan2IY04v7MxkF7I0En4kS
-	14v26r1q6r43MxAIw28IcxkI7VAKI48JMxC20s026xCaFVCjc4AY6r1j6r4UMI8I3I0E5I
-	8CrVAFwI0_Jr0_Jr4lx2IqxVCjr7xvwVAFwI0_JrI_JrWlx4CE17CEb7AF67AKxVWUtVW8
-	ZwCIc40Y0x0EwIxGrwCI42IY6xIIjxv20xvE14v26r1j6r1xMIIF0xvE2Ix0cI8IcVCY1x
-	0267AKxVW8JVWxJwCI42IY6xAIw20EY4v20xvaj40_Jr0_JF4lIxAIcVC2z280aVAFwI0_
-	Jr0_Gr1lIxAIcVC2z280aVCY1x0267AKxVW8JVW8JrUvcSsGvfC2KfnxnUUI43ZEXa7IU1
-	7KsUUUUUU==
-X-CM-SenderInfo: pzxwv0hjgdqx5xdzvxpfor3voofrz/
+X-CM-TRANSID:qMiowJAx28G_aCtq7HijAA--.47351S3
+X-CM-SenderInfo: p1dqw3xlh2x3gn0dqz5rrqw2lrqou0/
+X-Coremail-Antispam: 1Uk129KBj93XoWxurykGFWxKFWxAw47ZFy5GFX_yoWrWF48p3
+	4akr17tr48Jr1Iv3W8Cw48ZFyrC397Ar13Gr4kCFyrt3Z0yrnYqr4Iqas5Zw15uw1fK34S
+	vrWqyr929a1DJagCm3ZEXasCq-sJn29KB7ZKAUJUUUU5529EdanIXcx71UUUUU7KY7ZEXa
+	sCq-sGcSsGvfJ3Ic02F40EFcxC0VAKzVAqx4xG6I80ebIjqfuFe4nvWSU5nxnvy29KBjDU
+	0xBIdaVrnRJUUU92b4IE77IF4wAFF20E14v26r1j6r4UM7CY07I20VC2zVCF04k26cxKx2
+	IYs7xG6rWj6s0DM7CIcVAFz4kK6r1j6r18M28lY4IEw2IIxxk0rwA2F7IY1VAKz4vEj48v
+	e4kI8wA2z4x0Y4vE2Ix0cI8IcVAFwI0_JFI_Gr1l84ACjcxK6xIIjxv20xvEc7CjxVAFwI
+	0_Gr0_Cr1l84ACjcxK6I8E87Iv67AKxVW8JVWxJwA2z4x0Y4vEx4A2jsIEc7CjxVAFwI0_
+	Gr0_Gr1UM2AIxVAIcxkEcVAq07x20xvEncxIr21l57IF6xkI12xvs2x26I8E6xACxx1l5I
+	8CrVACY4xI64kE6c02F40Ex7xfMcIj6xIIjxv20xvE14v26r1Y6r17McIj6I8E87Iv67AK
+	xVW8JVWxJwAm72CE4IkC6x0Yz7v_Jr0_Gr1lF7xvr2IY64vIr41lc7I2V7IY0VAS07AlzV
+	AYIcxG8wCF04k20xvY0x0EwIxGrwCFx2IqxVCFs4IE7xkEbVWUJVW8JwCFI7km07C267AK
+	xVWUXVWUAwC20s026c02F40E14v26r1j6r18MI8I3I0E7480Y4vE14v26r106r1rMI8E67
+	AF67kF1VAFwI0_JF0_Jw1lIxkGc2Ij64vIr41lIxAIcVC0I7IYx2IY67AKxVWUJVWUCwCI
+	42IY6xIIjxv20xvEc7CjxVAFwI0_Jr0_Gr1lIxAIcVCF04k26cxKx2IYs7xG6r1j6r1xMI
+	IF0xvEx4A2jsIE14v26r4j6F4UMIIF0xvEx4A2jsIEc7CjxVAFwI0_Gr0_Gr1UYxBIdaVF
+	xhVjvjDU0xZFpf9x07jb_-PUUUUU=
 
-Hi Xiao,
-
-Thank you very much for your detailed analysis and verification.
-
-On 2026/6/11 23:53, XIAO WU wrote:
-> Hi Tengda,
+On 2026/6/12 上午9:29, sashiko-bot@kernel.org wrote:
+> Thank you for your contribution! Sashiko AI review found 1 potential issue(s) to consider:
+> - [High] Temporary biased `$tp` on 32-bit LoongArch causes infinite recursive faults during panic/exceptions, breaking stack traces and debuggability.
+> --
 > 
-> Sashiko [1] reviewed this patch and found that removing the
-> task_is_running() check exposes stack unwinders to real crashes — not
-> just "invalid information."  A PoC confirms this: a KASAN panic triggers
-> within seconds when /proc/<pid>/stack reads the stack of a task that is
-> concurrently running a kretprobe.
+> commit 031d5abd58aa95ea089ae24763bb03c5e684dbc3
+> Author: Tiezhu Yang <yangtiezhu@loongson.cn>
 > 
-> [1] https://sashiko.dev/#/patchset/20260610013658.1837963-1-wutengda%40huaweicloud.com
+> LoongArch: Implement CONFIG_THREAD_INFO_IN_TASK
 > 
->> diff --git a/kernel/trace/rethook.c b/kernel/trace/rethook.c
->> index 5a8bdf88999a..1e7fdebe3cd5 100644
->> --- a/kernel/trace/rethook.c
->> +++ b/kernel/trace/rethook.c
->> @@ -250,9 +251,6 @@ unsigned long rethook_find_ret_addr(struct task_struct *tsk, unsigned long frame
->>      if (WARN_ON_ONCE(!cur))
->>          return 0;
+> Select THREAD_INFO_IN_TASK for LoongArch to move thread_info off the
+> stack into task_struct. This updates the thread pointer recovery path
+> and context switch logic to adapt to the new layout.
+> 
+>> In the context of __switch_to(), local interrupts are disabled, and the
+>> kernel is in a critical switching phase where handling any synchronous
+>> exception is practically impossible and prohibited.
 >>
->> -    if (tsk != current && task_is_running(tsk))
->> -        return 0;
->> -
->>      do {
->>          ret = __rethook_find_ret_addr(tsk, cur);
->>          if (!ret)
+>> If any synchronous exception or watchpoint does trigger in this narrow
+>> window, it constitutes a fatal double fault and the kernel is expected
+>> to die/panic immediately anyway. Therefore, the temporary biased value
+>> in $tp is safe and acceptable here.
 > 
-> The commit message states:
+> [Severity: High]
+> Could this temporary biased value in $tp on 32-bit kernels prevent the
+> system from printing the expected panic trace and instead cause an
+> infinite recursive fault?
 > 
->> The iteration is already safe from crashes because
->> unwind_next_frame() holds RCU and rethook_node structures are
->> RCU-freed; even if the iteration goes off the rails and returns
->> invalid information, it will not crash.
+> If an exception like a hardware watchpoint, NMI watchdog, or machine
+> check triggers in this window, the unwinder calls show_stacktrace(),
+> which defaults to current:
 > 
-> There are two problems with this claim, both reproducible.
+> arch/loongarch/kernel/traps.c:show_stacktrace() {
+>          if (!task)
+>                  task = current;
 > 
-> **Problem 1: stack-out-of-bounds in unwind_next_frame itself**
+>          if (!try_get_task_stack(task))
+>                  return;
+> ...
 > 
-> The PoC below reliably triggers the following KASAN panic — not in the
-> rethook list traversal, but inside unwind_next_frame():
+> Because current is derived from $tp, and $tp is offset by 2000 bytes
+> (TASK_STRUCT_OFFSET), accessing the task stack refcount inside
+> try_get_task_stack() will trigger a page fault.
 > 
-> [ 1833.494623] BUG: KASAN: stack-out-of-bounds in unwind_next_frame+0x861/0x2080
-> [ 1833.494651] Read of size 2 at addr ffffc90003e6f5f0 by task poc/9854
-> [ 1833.494707] Call Trace:
-> [ 1833.494719]  dump_stack_lvl+0x116/0x1f0
-> [ 1833.494743]  print_report+0xf4/0x600
-> [ 1833.494788]  kasan_report+0xe0/0x110
-> [ 1833.494836]  unwind_next_frame+0x861/0x2080
-> [ 1833.494948]  arch_stack_walk+0x99/0x100
-> [ 1833.495000]  stack_trace_save_tsk+0x16a/0x200
-> [ 1833.495054]  proc_pid_stack+0x173/0x2b0
-> [ 1833.495103]  seq_read_iter+0x519/0x12d0
-> [ 1833.495166]  seq_read+0x3b7/0x590
-> [ 1833.495297]  vfs_read+0x1f5/0xd20
-> [ 1833.495497]  ksys_read+0x135/0x250
-> [ 1833.495549]  do_syscall_64+0x129/0x850
-> [ 1833.495566]  entry_SYSCALL_64_after_hwframe+0x77/0x7f
-> [ 1833.498894] Kernel panic - not syncing: KASAN: panic_on_warn set ...
+> The page fault handler then calls die(), which calls show_stacktrace()
+> again. This creates an infinite recursive fault and stack overflow
+> without printing the intended panic trace.
 > 
-> page last free pid 9737 tgid 9737 stack trace:
->  do_sys_openat2+0xbf/0x260          <-- target task inside kretprobe
->  __x64_sys_openat+0x179/0x210
+>> diff --git a/arch/loongarch/kernel/switch.S b/arch/loongarch/kernel/switch.S
+>> index f377d8f5c51a6..d6e0d05d6fd39 100644
+>> --- a/arch/loongarch/kernel/switch.S
+>> +++ b/arch/loongarch/kernel/switch.S
+> [ ... ]
+>> @@ -33,11 +33,12 @@ SYM_FUNC_START(__switch_to)
+>>   	LONG_SPTR	t8, t7, 0
+>>   #endif
+>>   
+>> -	move	tp, a2
+>> +	move		tp, a1
+>>   	cpu_restore_nonscratch a1
 > 
-> This crash has nothing to do with rethook_node lifetimes or RCU.  It
-> happens because the ORC unwinder reads stack memory while the target
-> task concurrently executes a kretprobe trampoline that modifies return
-> addresses.  The unwinder follows corrupted frame data past valid stack
-> boundaries.  RCU protection of rethook_node structures is irrelevant —
-> this crash occurs at the stack frame interpretation level, before any
-> rethook list traversal.
-> 
-> The old task_is_running() check prevented the unwinder from attempting
-> to unwind a running task's stack in the first place.
-> 
+> [Severity: High]
+> Is there an alternative way to handle the structural pointer bias for
+> 32-bit kernels without temporarily storing an invalid pointer in $tp,
+> so that panic handling and debuggability remain intact?
 
-Yes, I was able to reproduce the issue locally using your PoC. The problem
-does exist as you described. I need to take a deeper look and figure out how
-to properly fix it.
+Thanks for your review comments, I prefer to use
+"PTR_ADDI        tp, a1, -TASK_STRUCT_OFFSET"
+for both 64-bit and 32-bit here rather than use
+"move		tp, a1"
+for only 64-bit here.
 
-> **Problem 2: use-after-free via rethook_node recycling**
-> 
-> Even if the stack-out-of-bounds above were addressed, a second crash
-> path exists in the rethook list traversal itself.
-> 
-> rethook_recycle() immediately pushes nodes back to the objpool without
-> an RCU grace period:
-> 
->   kernel/trace/rethook.c:
->   void rethook_recycle(struct rethook_node *node)
->   {
->           ...
->           objpool_push(node, &node->rethook->pool);
->   }
-> 
-> Meanwhile, unwind_next_frame() in arch/x86/kernel/unwind_orc.c drops
-> RCU between frames while the cursor (*cur) persists across iterations:
-> 
->   arch/x86/kernel/unwind_orc.c:
->   bool unwind_next_frame(...)
->   {
->           ...
->           guard(rcu)();    // RCU held for one frame
->           ...
->   }                        // RCU dropped here
-> 
-> When the unwinder calls __rethook_find_ret_addr() in the next frame
-> iteration, it does:
-> 
->   struct llist_node *first = tsk->rethooks.first;
->   ...
->   *cur = first;
->   ...
->   node = node->next;       // node may have been recycled
-> 
-> If the target task returns from a probed function between frames, its
-> rethook_node is recycled and can be instantly reallocated to another
-> task.  The unwinder's stale cursor then dereferences a freed pointer,
-> leading to use-after-free.
-> 
+But I discussed with the LoongArch maintainer Huacai, here is his
+opinion in the previous v2:
 
-Yes, Sashiko also pointed this out. You have opened this issue for further
-analysis to clarify its fault model. It appears to be a pre-existing issue
-that may require a separate patch to resolve.
+"As I said before, even if you use "PTR_ADDI        tp, a1,
+-TASK_STRUCT_OFFSET", it is impossible to handle exceptions in
+__switch_to().
 
-> ## Reproducer
-> 
-> The PoC sets up a kretprobe on do_sys_openat2, creates hot-loop threads
-> calling open(), and concurrently reads /proc/<tid>/stack.  The race
-> triggers within seconds (Problem 1 above; Problem 2 may reproduce on
-> kernels without KASAN or with different timing).
-> 
-> Build:  gcc -static -pthread -o poc poc.c
-> Run:    ./poc [runtime_seconds]
-> Needs:  root, CONFIG_KASAN=y
-> 
-> #define _GNU_SOURCE
-> #include <stdio.h>
-> #include <stdlib.h>
-> #include <string.h>
-> #include <unistd.h>
-> #include <sys/types.h>
-> #include <sys/stat.h>
-> #include <sys/wait.h>
-> #include <sys/syscall.h>
-> #include <sched.h>
-> #include <fcntl.h>
-> #include <errno.h>
-> #include <signal.h>
-> #include <pthread.h>
-> #include <dirent.h>
-> 
-> #define TRACE "/sys/kernel/tracing"
-> 
-> volatile int stop = 0;
-> 
-> static int tfs(const char *f, const char *b)
-> {
->     char p[256]; int fd, r;
->     snprintf(p, 256, "%s/%s", TRACE, f);
->     fd = open(p, O_WRONLY | O_TRUNC);
->     if (fd < 0) {
->         system("mount -t tracefs tracefs /sys/kernel/tracing 2>/dev/null");
->         usleep(50000);
->         fd = open(p, O_WRONLY | O_TRUNC);
->     }
->     if (fd < 0) return -1;
->     r = write(fd, b, strlen(b));
->     close(fd);
->     return r < 0 ? -1 : 0;
-> }
-> 
-> void *hot_thread(void *arg)
-> {
->     while (!__atomic_load_n(&stop, __ATOMIC_RELAXED)) {
->         int fd = open("/dev/null", O_RDONLY);
->         if (fd >= 0) close(fd);
->     }
->     return NULL;
-> }
-> 
-> void *reader_thread(void *arg)
-> {
->     pid_t target = *(pid_t *)arg;
->     char path[64], buf[8192];
->     snprintf(path, 64, "/proc/%d/stack", target);
->     while (!__atomic_load_n(&stop, __ATOMIC_RELAXED)) {
->         int fd = open(path, O_RDONLY);
->         if (fd >= 0) { read(fd, buf, 8191); close(fd); }
->     }
->     return NULL;
-> }
-> 
-> void sigh(int s) { stop = 1; }
-> 
-> int main(int argc, char *argv[])
-> {
->     int runtime = 120;
->     if (argc > 1) runtime = atoi(argv[1]);
-> 
->     printf("rethook race PoC\n");
->     if (geteuid()) { printf("root needed\n"); return 1; }
->     signal(SIGINT, sigh);
-> 
->     pthread_t hot[4], rdr[4];
->     pid_t hot_tids[4];
->     int pairs = 4;
-> 
->     for (int c = 0; c < runtime / 5 && !stop; c++) {
->         tfs("events/kprobes/myretprobe/enable", "0");
->         tfs("kprobe_events", "-:myretprobe");
->         usleep(100);
->         tfs("kprobe_events", "r:myretprobe do_sys_openat2 $retval");
->         tfs("events/kprobes/myretprobe/enable", "1");
-> 
->         pid_t main_tid = syscall(SYS_gettid);
-> 
->         for (int i = 0; i < pairs; i++)
->             pthread_create(&hot[i], NULL, hot_thread, NULL);
-> 
->         usleep(300000);
-> 
->         {
->             DIR *d = opendir("/proc/self/task");
->             int cnt = 0;
->             if (d) {
->                 struct dirent *de;
->                 while ((de = readdir(d)) != NULL && cnt < pairs) {
->                     pid_t t = atoi(de->d_name);
->                     if (t > 0 && t != main_tid)
->                         hot_tids[cnt++] = t;
->                 }
->                 closedir(d);
->             }
->             for (int i = 0; i < cnt; i++)
->                 pthread_create(&rdr[i], NULL, reader_thread, &hot_tids[i]);
->         }
-> 
->         printf("round %d\n", c);
->         sleep(5);
-> 
->         stop = 1;
->         usleep(100000);
-> 
->         for (int i = 0; i < pairs; i++) pthread_join(hot[i], NULL);
->         for (int i = 0; i < pairs; i++) pthread_join(rdr[i], NULL);
-> 
->         stop = 0;
->         usleep(1000);
->     }
-> 
->     tfs("events/kprobes/myretprobe/enable", "0");
->     tfs("kprobe_events", "-:myretprobe");
->     printf("Done\n");
->     return 0;
-> }
-> 
-> ## Summary
-> 
-> The v4 commit message claims the iteration "will not crash," but the PoC
-> demonstrates a reproducible KASAN panic:
-> 
-> 1. stack-out-of-bounds in unwind_next_frame (ORC unwinder reads
->    concurrently-modified stack frames of a running task)
-> 
-> 2. Potential use-after-free in __rethook_find_ret_addr (rethook nodes
->    recycled without RCU grace period, cursor persists across RCU drops)
-> 
-> The old task_is_running() check was racy but served as a practical
-> safety net.  Removing it without adding equivalent protection in the
-> callers (proc_pid_stack, BPF stack walkers) exposes users to kernel
-> panics via /proc/<pid>/stack on any task running a kretprobe.
+It is a type of "double fault" if exceptions really happen, "double
+fault" means to die. So just keep it."
 
-Once again, I truly appreciate your thorough review and testing.
-I'm not sure if I can fully resolve these issues, but if I succeed, I will
-send out a v5.
+In the commit message, there is a corresponding description:
 
-Best regards,
-Tengda
+"To preserve the optimal and clean "move tp, a1" path for 64-bit kernels,
+the thread pointer ($tp) is assigned directly from a1 in the core path.
+For 32-bit kernels, where a1 carries a 2000-byte structural pointer bias
+at entry, an explicit adjustment "PTR_ADDI tp, tp, -TASK_STRUCT_OFFSET"
+is introduced at the function exit.
+
+In the context of __switch_to(), local interrupts are disabled, and the
+kernel is in a critical switching phase where handling any synchronous
+exception is practically impossible and prohibited.
+
+If any synchronous exception or watchpoint does trigger in this narrow
+window, it constitutes a fatal double fault and the kernel is expected
+to die/panic immediately anyway. Therefore, the temporary biased value
+in $tp is safe and acceptable here."
+
+Thanks,
+Tiezhu
 
