@@ -1,116 +1,158 @@
-Received: from out-186.mta1.migadu.com (out-186.mta1.migadu.com [95.215.58.186])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-pf1-f170.google.com (mail-pf1-f170.google.com [209.85.210.170])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7C4D437F74B
-	for <sashiko-reviews@lists.linux.dev>; Sat, 13 Jun 2026 01:37:48 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=95.215.58.186
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6B8B534E75A
+	for <sashiko-reviews@lists.linux.dev>; Sat, 13 Jun 2026 07:20:59 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.210.170
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1781314670; cv=none; b=TMSOhFqOgt73GnTkuTtU36E1J7BMX177wHeU1fb73Nb7hip6GEOENtCFD8q5LIlHQT1gzdSJu9ZzRH7JmylHmsVlvnRjEX/WRVqAchuV1UrOR88Ksm6c1oFPA4oH6nHXPSYyBSJMm1cgma2JTHhKDH1+3ja3y3jywjPSLmkgdLs=
+	t=1781335261; cv=none; b=MQXLfqmTkdua+Qg9BMTfpa0tzkSrV25PW1z73OHvk6Sk/Wi0n1wM2bC/Vv7ivz0VG7x8ekZpQtnRXK+Pc3SlR9DYhrrz2WsrYrBhUJ15oKacQME+TZ4rKa0VEUmhmFEKfUBDHZxmvrOWUyk9HGSFREANRJGGFrHUaUaczpX91Sg=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1781314670; c=relaxed/simple;
-	bh=wyRW+o+K9Uf+0kugpOd3omwV5O/TbuKRz09EC5B6QvE=;
+	s=arc-20240116; t=1781335261; c=relaxed/simple;
+	bh=qcp8Hgwj7d1i1tkEvvTQR8k2iNss2g1VzQekPD+R4+w=;
 	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=GP9gqTlo1ziUsBYrc3D3ACtGMBzd1yLJbi/IKxKXCgeI/r9REvwLr/cTBvrJc6BeSJSyW3egggIkkre2dH5IazymKcRrzlwlRz8ZTgDyVwAYLbEhu2GTnoM3O7QQGf6LAfmUp7KCMfeeFJWw4fjYJGFLnHKBE2zbYRoXWaL8FsI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linux.dev; spf=pass smtp.mailfrom=linux.dev; dkim=pass (1024-bit key) header.d=linux.dev header.i=@linux.dev header.b=wnsNuCAQ; arc=none smtp.client-ip=95.215.58.186
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linux.dev
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linux.dev
+	 In-Reply-To:Content-Type; b=ab0HJgCWOI9BkaFReCkkVxNf+YyL7RQJU3wFSsObYvpx5PymflKHNiOyDrAaazPCbyz98iEtZkEMZ4gvnaeDT7nZxXqLfF2TYVLSvPjlFcpWS2IUZWw1tP8nOZkL/LRxJLoEK7UTFZflNAtYPxO0IzfqdwGbSPVmiwnIXRCWoiA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=FKZmhRhk; arc=none smtp.client-ip=209.85.210.170
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linux.dev header.i=@linux.dev header.b="wnsNuCAQ"
-Message-ID: <1ea86cfa-14ea-474b-9884-86de6bc8c7d3@linux.dev>
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linux.dev; s=key1;
-	t=1781314666;
-	h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
-	 to:to:cc:cc:mime-version:mime-version:content-type:content-type:
-	 content-transfer-encoding:content-transfer-encoding:
-	 in-reply-to:in-reply-to:references:references;
-	bh=dWqJ+Yor9x1TVbO4K0fThHQuzGVz/l6QY0CQs8Lh+6I=;
-	b=wnsNuCAQGsX2H/yjgHmaUtt/0+66qQg5KUVEYx5FBQ7I1uIwUVH/D0Qa37NMDygV+9FLav
-	5BrWHRhZoZEdRvMJzwcnqE3C6iq4x/O1qln6Dh233LVTv3lumCIeqQt/JmCUMxV17CmKeV
-	6EBAtSXwp9oeNjyvv75zylcBHVpLtBA=
-Date: Fri, 12 Jun 2026 18:37:28 -0700
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="FKZmhRhk"
+Received: by mail-pf1-f170.google.com with SMTP id d2e1a72fcca58-8422f395a4aso1202092b3a.0
+        for <sashiko-reviews@lists.linux.dev>; Sat, 13 Jun 2026 00:20:59 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20251104; t=1781335258; x=1781940058; darn=lists.linux.dev;
+        h=content-transfer-encoding:in-reply-to:from:content-language
+         :references:cc:to:subject:user-agent:mime-version:date:message-id
+         :from:to:cc:subject:date:message-id:reply-to;
+        bh=yFlPsHECvjKKFoSYlqGhFvJ+I6A2Zwo1fKqJVG+6sUs=;
+        b=FKZmhRhktI9AxOBeoTaUe571GZB8j5h3QQt2xOwc3WXEOOLqmDUvRYtdsCoMhe0K4A
+         kfwCjra+jM1Z6fLvXSRCe2rCBM57IWOMUfkqJyL7eeAwNT48yoFEyYdGYUby8WvgfRnF
+         pHJHk35HhD5TyylIBG6zUi5BZKOunl8C1XNy6nYAeReRO3poVXmTi3BXebxJDnFjj5wH
+         eoas2Krt6ueHVCxzXtI0s3aJ+EFC8GSnmfuOSrxVR2wmeS8VpRTEcDP66QjK/1WcwdmS
+         N4oyZtyvD0lr6SChB6Phu7PJDjy9TwRdlkCetaZ5ne3d9A9GpV9ie8Hkg+ktT9MZf4w9
+         NE1Q==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20251104; t=1781335258; x=1781940058;
+        h=content-transfer-encoding:in-reply-to:from:content-language
+         :references:cc:to:subject:user-agent:mime-version:date:message-id
+         :x-gm-gg:x-gm-message-state:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=yFlPsHECvjKKFoSYlqGhFvJ+I6A2Zwo1fKqJVG+6sUs=;
+        b=o8eh1u4lv8pMBTsBAFZg1PWHv7cyJq1XFhr16UYy7BDpO4S6fxwLs0e3qQat9Jvzzd
+         TqOf0U1n43mMcHuH8vjRuiT6A0CakvMU+gEfVtj+KbI2xf2aA0jI3S3BpB+H25MQ1shu
+         PbSVWKnQLkTsH2DxIjQm9v5HWXuybtFHJ6rgd03BdNH6XnIaPWLdzFQ0j+8Q64p27Fuf
+         5Bw8/V2UaUjIBpsTOF4HoobPpO/B9fTxYWspWjnc6cQ/T/N9KimMEl90EF5V8nuFz49Q
+         ZXqVptW9wjdX53miIGLGT+74Zo2N3ZyGCSZ3VnSPKYfBEdoxi0RZRGi+bCE8iPGQ4mO9
+         rjzQ==
+X-Gm-Message-State: AOJu0YxTjehB7XnaJvpkcIvPWz/+UHGoqXcuSLrBBXP1z+hVixlIry/2
+	Ht0ln5COuLmo2HiJCWyzouY5uZwdXQlPfHtYo0KhC6H63je+GPKxCCkNHPQhZw==
+X-Gm-Gg: Acq92OEYxvY397WJ/EHJpg+nkpWblVaPlAxiIIIbaUWR/4e/x908kMZP9xpewCNym2k
+	QI15q3fRycBMXnx3YusGZSRGC8llySMlB3orc91tBkbM1urs97I9lCvQjIfDEMzLNyhusEs4a4a
+	WoH0X8TF4hw0qUNGbVUdLlkSyrB/DV94khDhpX301+kKwYchFlLa3ks1WvlQSDX1XVTM9zyDevX
+	bKM5CXDd1cMzjhs4mB9icShCYe0z2KRhN1l3Tpzt8JjvFWy9nZ2ktJ0SBETd/jUEM8LLXGgMqVc
+	y9eoWryp9sJP7V69eHCnP9BSN58YXjmHYabv+/GfThWxa6u0m+9asaIEYbtzGfz5aXhUcNoNAYw
+	A7N9QrOszGarDym3BKRdVMQunAS186f659f/mOCIaeoUu0K50+xe3X/y3zUMscRhSaV0UfxGpXb
+	rmJyyTKi+8TbqB2sDpLwf1K6xFa8ENtH5Oc4hwCb7l5od7
+X-Received: by 2002:a05:6a00:2995:b0:82f:4725:f6d0 with SMTP id d2e1a72fcca58-843497b8ab4mr5387757b3a.29.1781335258570;
+        Sat, 13 Jun 2026 00:20:58 -0700 (PDT)
+Received: from [192.168.0.8] ([49.207.61.84])
+        by smtp.gmail.com with ESMTPSA id d2e1a72fcca58-8434ac9df57sm4216413b3a.7.2026.06.13.00.20.56
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Sat, 13 Jun 2026 00:20:58 -0700 (PDT)
+Message-ID: <84be047f-350f-470c-9680-179805152e1a@gmail.com>
+Date: Sat, 13 Jun 2026 12:50:54 +0530
 Precedence: bulk
 X-Mailing-List: sashiko-reviews@lists.linux.dev
 List-Id: <sashiko-reviews.lists.linux.dev>
 List-Subscribe: <mailto:sashiko-reviews+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:sashiko-reviews+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Subject: Re: [PATCH bpf-next v2 7/8] selftests/bpf: Use common CFLAGS for
- urandom_read
-To: sashiko-reviews@lists.linux.dev, Leo Yan <leo.yan@arm.com>
-Cc: bpf@vger.kernel.org
-References: <20260602-tools_build_fix_zero_init_bpf_only-v2-7-c76e5250ea1c@arm.com>
- <20260602172559.B3A1D1F00898@smtp.kernel.org>
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH] dt-bindings: pwm: st,pwm: convert to DT schema
+To: sashiko-reviews@lists.linux.dev
+Cc: conor+dt@kernel.org, devicetree@vger.kernel.org, robh@kernel.org
+References: <20260613-st-pwm-v1-1-458c2c89709a@gmail.com>
+ <20260613071327.BE3101F000E9@smtp.kernel.org>
 Content-Language: en-US
-X-Report-Abuse: Please report any abuse attempt to abuse@migadu.com and include these headers.
-From: Ihor Solodrai <ihor.solodrai@linux.dev>
-In-Reply-To: <20260602172559.B3A1D1F00898@smtp.kernel.org>
+From: Charan Pedumuru <charan.pedumuru@gmail.com>
+In-Reply-To: <20260613071327.BE3101F000E9@smtp.kernel.org>
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 7bit
-X-Migadu-Flow: FLOW_OUT
 
-On 6/2/26 10:25 AM, sashiko-bot@kernel.org wrote:
+
+
+On 13-06-2026 12:43, sashiko-bot@kernel.org wrote:
 > Thank you for your contribution! Sashiko AI review found 1 potential issue(s) to consider:
-> - [Low] Replacing CFLAGS with COMMON_CFLAGS for urandom_read breaks cross-compilation with Clang.
+> - [Medium] The `interrupts` property is unconditionally required by the driver but omitted from the YAML schema's required list.
 > --
 > 
-> commit 537d69efefb1121c195758d9362eba3f31c54f36
-> Author: Leo Yan <leo.yan@arm.com>
+> commit b16a62dff3236ec8b123a99775f6c90dbfd9912f
+> Author: Charan Pedumuru <charan.pedumuru@gmail.com>
 > 
-> selftests/bpf: Use common CFLAGS for urandom_read
+> dt-bindings: pwm: st,pwm: convert to DT schema
 > 
-> This commit introduces a COMMON_CFLAGS variable to separate general flags
-> from CC-specific ones that might be incompatible with CLANG when building
-> urandom_read and its shared library.
+> Convert STMicroelectronics STiH41x PWM/Capture controller binding
+> to DT schema.
 > 
->> diff --git a/tools/testing/selftests/bpf/Makefile b/tools/testing/selftests/bpf/Makefile
->> index bc049620c7745..1e47e29ba4214 100644
->> --- a/tools/testing/selftests/bpf/Makefile
->> +++ b/tools/testing/selftests/bpf/Makefile
->> @@ -51,7 +51,7 @@ srctree := $(patsubst %/,%,$(dir $(srctree)))
->>  srctree := $(patsubst %/,%,$(dir $(srctree)))
->>  endif
->>  
->> -CFLAGS += -g $(OPT_FLAGS) -rdynamic -std=gnu11				\
->> +COMMON_CFLAGS = -g $(OPT_FLAGS) -rdynamic -std=gnu11				\
-> 
-> [Severity: Low]
-> Does this change break cross-compilation with Clang?
-
-Please check this, looks plausible.
-
-> 
-> By defining COMMON_CFLAGS from scratch without including the pre-existing
-> CFLAGS, this drops any earlier contents from the urandom_read build.
-> This strips CLANG_CROSS_FLAGS (which is appended to CFLAGS earlier by
-> tools/scripts/Makefile.include), depriving Clang of essential
-> cross-compilation arguments like --sysroot and --gcc-toolchain.
-> 
-> Does this also inadvertently ignore any user-provided CFLAGS?
+>> diff --git a/Documentation/devicetree/bindings/pwm/pwm-st.txt b/Documentation/devicetree/bindings/pwm/pwm-st.txt
+>> deleted file mode 100644
+>> index 19fce774cafad..0000000000000
+>> --- a/Documentation/devicetree/bindings/pwm/pwm-st.txt
+>> +++ /dev/null
 > 
 > [ ... ]
 > 
->> @@ -261,7 +261,7 @@ endif
->>  $(OUTPUT)/liburandom_read.so: urandom_read_lib1.c urandom_read_lib2.c liburandom_read.map
->>  	$(call msg,LIB,,$@)
->>  	$(Q)$(CLANG) $(CLANG_TARGET_ARCH) \
->> -		     $(filter-out -static,$(CFLAGS) $(LDFLAGS)) \
->> +		     $(filter-out -static,$(COMMON_CFLAGS) $(LDFLAGS)) \
-> 
-> [Severity: Low]
-> When replacing CFLAGS with COMMON_CFLAGS here for the shared library build,
-> does this remove the required sysroot and toolchain cross-compilation flags?
+>> -Required parameters:
 > 
 > [ ... ]
 > 
->> @@ -271,7 +271,7 @@ $(OUTPUT)/liburandom_read.so: urandom_read_lib1.c urandom_read_lib2.c liburandom
->>  $(OUTPUT)/urandom_read: urandom_read.c urandom_read_aux.c $(OUTPUT)/liburandom_read.so
->>  	$(call msg,BINARY,,$@)
->>  	$(Q)$(CLANG) $(CLANG_TARGET_ARCH) \
->> -		     $(filter-out -static,$(CFLAGS) $(LDFLAGS)) $(filter %.c,$^) \
->> +		     $(filter-out -static,$(COMMON_CFLAGS) $(LDFLAGS)) $(filter %.c,$^) \
+>> -- interrupts:		IRQ for the Capture device
+
+Okay, I will define and add interrupts to the required.
+
 > 
-> [Severity: Low]
-> Similarly, does the urandom_read build rule also lose these required
-> cross-compilation flags when using COMMON_CFLAGS?
+> [ ... ]
 > 
+>> diff --git a/Documentation/devicetree/bindings/pwm/st,pwm.yaml b/Documentation/devicetree/bindings/pwm/st,pwm.yaml
+>> new file mode 100644
+>> index 0000000000000..2c10f54b5caf3
+>> --- /dev/null
+>> +++ b/Documentation/devicetree/bindings/pwm/st,pwm.yaml
+> 
+> [ ... ]
+> 
+>> +required:
+>> +  - reg
+>> +  - compatible
+>> +  - "#pwm-cells"
+>> +  - pinctrl-names
+>> +  - clock-names
+>> +  - clocks
+> 
+> [Severity: Medium]
+> Should interrupts be included in this required list?
+> 
+> The original text binding listed interrupts under the required parameters,
+> and the driver unconditionally requests it during probe:
+> 
+> drivers/pwm/pwm-sti.c:sti_pwm_probe() {
+>     ...
+>     irq = platform_get_irq(pdev, 0);
+>     if (irq < 0)
+>         return irq;
+> 
+>     ret = devm_request_irq(&pdev->dev, irq, sti_pwm_interrupt, 0,
+>                            pdev->name, pc);
+>     ...
+> }
+> 
+> Without interrupts in the required list, incomplete device trees will pass
+> schema validation but fail deterministically at runtime.
+
+Okay. I will add interrupts to my next revision.
+
+> 
+
+-- 
+Best Regards,
+Charan.
 
