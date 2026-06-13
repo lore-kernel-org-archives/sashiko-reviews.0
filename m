@@ -1,152 +1,169 @@
-Received: from out-173.mta0.migadu.com (out-173.mta0.migadu.com [91.218.175.173])
+Received: from leonov.paulk.fr (leonov.paulk.fr [185.233.101.22])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C8B031547C0
-	for <sashiko-reviews@lists.linux.dev>; Sat, 13 Jun 2026 13:22:49 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=91.218.175.173
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6ED0530C172;
+	Sat, 13 Jun 2026 14:12:12 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=185.233.101.22
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1781356972; cv=none; b=RDw57UVuBtvEYEj+nqsotxkifLsI+0TH2BwNjq+pusKQ4tTRYEL0XmwyKsxpE22qfJQZztzRRdRJUkGkYGA0wkZoiXurykf/wlcqEfIKMtCTXZY3QYvRWR7WBbAD+21rMG7memaT5bWdguF0lJRCXvKjxOfgnM9dxWdbKcYx+uM=
+	t=1781359934; cv=none; b=j8JBuf2vxb92A9e/923Z19HDV54dyP/DPv0bWRueO9VPOXXbl6VCEZr4AUyllAYFCPWRIKP7uq/O5xCn7NF5HLN82f6wMghnzxNYx1O8ZykUsEgz1GaWUnYHYo2lt3Pdwmy57dE0Y4dtmaww/h7jTE7w95ROAP0jNxpryMZhp/o=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1781356972; c=relaxed/simple;
-	bh=ODEPmkKVKtxpPAUFrRuu3NE+FBbPlq1pQkblCOYwlJA=;
-	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=KiBFHMm7VQBlklujVOBx6cMRJgC4If9xGyEJl57/dT7ImB80Cp+3UaGjn7lHSi7taXryixHNbeoha8nZEAX7KEYykYSyGQbGoyrKXvrVaukfk5DLLO6lESAXDQIS3RVd+gbMkFo1fndnnikHMQ8LbQ9ApSM+pd6XFndc6dyQlmE=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linux.dev; spf=pass smtp.mailfrom=linux.dev; dkim=pass (1024-bit key) header.d=linux.dev header.i=@linux.dev header.b=pnLkjW7M; arc=none smtp.client-ip=91.218.175.173
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linux.dev
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linux.dev
-Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linux.dev header.i=@linux.dev header.b="pnLkjW7M"
-Message-ID: <4f46e056-cf67-499b-9143-03f56037eb81@linux.dev>
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linux.dev; s=key1;
-	t=1781356967;
-	h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
-	 to:to:cc:cc:mime-version:mime-version:content-type:content-type:
-	 content-transfer-encoding:content-transfer-encoding:
-	 in-reply-to:in-reply-to:references:references;
-	bh=YMfSVphkl0vo9/M/QN+2NsVgJugdL0ODybYMjubWebo=;
-	b=pnLkjW7MmarzEuYWiOpvFEeSw2GmsMThnalzIeJAILYD8H5uK4E7L92IIEqZJNG4CLvKUn
-	QXi/FIgowbT3x/221nl2aXVu6O8rJHorvrNxcdqz5ZA3rgS/W4kyLb4ttQ7Wwrn4p7RKxf
-	JEbqTRMU11sVq+40WD4zBfVjjDCJCeo=
-Date: Sat, 13 Jun 2026 15:22:44 +0200
+	s=arc-20240116; t=1781359934; c=relaxed/simple;
+	bh=9sf5RX76Qg3Fsb9LsJOdbwZYhik9BU5n/mmgrjEARWw=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=l4Idk8Xkh/r+8co6VrcR5b5bDhBF+9c9sTmNmRDhfDPL33yNcpw7v4GqXZ8Ktz5pdfNz/SVjwr++RJviyor+6Dxqj8o1va9hK4m2aoJyE71l7vFcjHf82M/XBuK4Xi/MTK0RG1VOPvBxAv6aMmfKYlHtH8G5cIeJ3nmVgf00I3w=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=sys-base.io; spf=pass smtp.mailfrom=sys-base.io; arc=none smtp.client-ip=185.233.101.22
+Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=sys-base.io
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=sys-base.io
+Received: from laika.paulk.fr (12.234.24.109.rev.sfr.net [109.24.234.12])
+	by leonov.paulk.fr (Postfix) with ESMTPS id 407FD37002F0;
+	Sat, 13 Jun 2026 14:12:03 +0000 (UTC)
+Received: by laika.paulk.fr (Postfix, from userid 65534)
+	id 510C8B45508; Sat, 13 Jun 2026 14:12:02 +0000 (UTC)
+X-Spam-Level: 
+Received: from collins (unknown [192.168.1.1])
+	by laika.paulk.fr (Postfix) with ESMTPSA id A3469B45501;
+	Sat, 13 Jun 2026 14:12:01 +0000 (UTC)
+Date: Sat, 13 Jun 2026 16:11:59 +0200
+From: Paul Kocialkowski <paulk@sys-base.io>
+To: Chen-Yu Tsai <wens@kernel.org>
+Cc: linux-sunxi@lists.linux.dev, conor+dt@kernel.org, robh@kernel.org,
+	devicetree@vger.kernel.org, sashiko-reviews@lists.linux.dev
+Subject: Re: [PATCH v9 5/9] ARM: dts: sun8i: v3s: Add nodes for MIPI CSI-2
+ support
+Message-ID: <ai1lLxu9rFYfeUEF@collins>
+References: <20260518153339.619947-6-paulk@sys-base.io>
+ <20260518161130.F0A4CC2BCB7@smtp.kernel.org>
+ <CAGb2v65+JwwU2p5TQ6hrqonYNUgVgZQMPY6D=ROqWJu=xy=drQ@mail.gmail.com>
+ <ahWqcWy_6QuNIOi-@shepard>
 Precedence: bulk
 X-Mailing-List: sashiko-reviews@lists.linux.dev
 List-Id: <sashiko-reviews.lists.linux.dev>
 List-Subscribe: <mailto:sashiko-reviews+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:sashiko-reviews+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Subject: Re: [PATCH v2 4/4] HID: asus: add i2c entry for FA808UM and other
- TUFs
-To: sashiko-reviews@lists.linux.dev
-Cc: dmitry.torokhov@gmail.com, linux-input@vger.kernel.org,
- connorbelli2003@gmail.com, Jiri Kosina <jikos@kernel.org>,
- Benjamin Tissoires <bentiss@kernel.org>
-References: <20260612142326.1704858-5-denis.benato@linux.dev>
- <20260612143750.26B531F000E9@smtp.kernel.org>
-Content-Language: en-US
-X-Report-Abuse: Please report any abuse attempt to abuse@migadu.com and include these headers.
-From: Denis Benato <denis.benato@linux.dev>
-In-Reply-To: <20260612143750.26B531F000E9@smtp.kernel.org>
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8bit
-X-Migadu-Flow: FLOW_OUT
+Content-Type: multipart/signed; micalg=pgp-sha512;
+	protocol="application/pgp-signature"; boundary="BmBfy00rvIVsUu+z"
+Content-Disposition: inline
+In-Reply-To: <ahWqcWy_6QuNIOi-@shepard>
 
 
-On 6/12/26 16:37, sashiko-bot@kernel.org wrote:
-> Thank you for your contribution! Sashiko AI review found 3 potential issue(s) to consider:
->
-> Pre-existing issues:
-> - [Critical] Improper Workqueue Initialization / Memory Corruption via Re-initialization
-> - [High] Use-After-Free due to Race Condition in `asus_remove()`
-> - [High] Missing NULL check for `devm_kasprintf` allocation leading to Kernel Oops
-> --
->
-> commit ee67627a03893a0ccf0a7653ac62191a687b7821
-> Author: Denis Benato <denis.benato@linux.dev>
->
-> HID: asus: add i2c entry for FA808UM and other TUFs
->
-> On newer TUF laptops the keyboard HID device uses the same PID/VID of a
-> USB device that was found in ROG laptops: add it to hid-asus as i2c too.
->
->> diff --git a/drivers/hid/hid-asus.c b/drivers/hid/hid-asus.c
->> index 0f78242b6a1db..7964fc96196e5 100644
->> --- a/drivers/hid/hid-asus.c
->> +++ b/drivers/hid/hid-asus.c
->> @@ -1565,6 +1565,9 @@ static const struct hid_device_id asus_devices[] = {
->>  	{ HID_USB_DEVICE(USB_VENDOR_ID_ASUSTEK,
->>  	    USB_DEVICE_ID_ASUSTEK_ROG_NKEY_KEYBOARD2),
->>  	  QUIRK_USE_KBD_BACKLIGHT | QUIRK_ROG_NKEY_KEYBOARD | QUIRK_HID_FN_LOCK },
->> +	{ HID_I2C_DEVICE(USB_VENDOR_ID_ASUSTEK,
->> +	    USB_DEVICE_ID_ASUSTEK_ROG_NKEY_KEYBOARD2),
->> +	  QUIRK_USE_KBD_BACKLIGHT | QUIRK_ROG_NKEY_KEYBOARD | QUIRK_HID_FN_LOCK },
-> [Severity: Critical]
-> This is a pre-existing issue, but since this patch enables QUIRK_HID_FN_LOCK
-> for a new device, could the fn_lock_sync_work initialization cause workqueue
-> corruption?
->
-> In asus_input_configured(), INIT_WORK(&drvdata->fn_lock_sync_work, ...) is
-> called per-input. For devices with multiple inputs, if hid_hw_start() enables
-> interrupts before all inputs are configured, an early KEY_FN_ESC event could
-> schedule the work before the next input is configured. 
->
-> The next call to asus_input_configured() would then re-execute INIT_WORK() on
-> the already queued work item, clearing its list pointers and causing a panic. 
->
-> Additionally, for devices with 0 inputs, it is never initialized, causing a
-> warning in cancel_work_sync().
-This is implemented in f631011e36b87b173b71c7592b558ad05d791228
+--BmBfy00rvIVsUu+z
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+Content-Transfer-Encoding: quoted-printable
 
-("HID: hid-asus: Implement fn lock for Asus ProArt P16")  and I see a
+Hi Chen-Yu,
 
-asus_kbd_set_fn_lock(hdev, true);
+Le Tue 26 May 26, 16:13, Paul Kocialkowski a =C3=A9crit :
+> > > > +                     reg =3D <0x01cb2000 0x1000>;
+> > > > +                     clocks =3D <&ccu CLK_BUS_CSI>,
+> > > > +                              <&ccu CLK_MIPI_CSI>;
+> > > > +                     clock-names =3D "bus", "mod";
+> > > > +                     resets =3D <&ccu RST_BUS_CSI>;
+> > >
+> > > Will this node fail dtbs_check schema validation? The existing device=
+ tree
+> > > binding schema for "allwinner,sun6i-a31-mipi-dphy" requires an interr=
+upts
+> > > property, which appears to be missing here.
+> >=20
+> > Yeah, this is definitely going to fail validation.
+>=20
+> To be very clear about this, the interrupt is absolutely not required for
+> proper operation of the unit and there's a chance we might eventually see
+> a SoC that doesn't have it wired.
+>=20
+> I could just hook the interrupt for now and we could make it optional if =
+ever
+> needed, but I could also mark is as optional now if you prefer.
+>=20
+> > > If the V3s hardware physically lacks a D-PHY interrupt, would it be b=
+etter
+> > > to add the V3s-specific compatible string and update the binding sche=
+ma
+> > > to make the interrupts property conditionally optional for the V3s?
+> >=20
+> > FWIW the vendor kernel has some code for the D-PHY's interrupt bits [1].
+> > Could you add the interrupt (I'm guessing the MIPI-CSI interrupt?) and
+> > give it a quick test?
+>=20
+> Thanks for digging this up! It really looks like it's just used for debug
+> purposes.
+>=20
+> I have previously used the mipi csi-2 interrupt for the mipi csi-2 contro=
+ller
+> and never for the d-phy. There's a chance it's the same interrupt that is=
+ wired
+> to both units (like it is for isp/csi).
+>=20
+> I'll give it a try when I get back home. If it doesn't trigger, it probba=
+ly
+> means it's not wired to the d-phy and should really be made optional.
 
-things
+I just tested it: the interrupt is wired to both the mipi csi-2 and d-phy
+units and triggers when interrupt enable bits are set on the d-phy.
 
-asus_kbd_set_fn_lock(hdev, true);
+So I will just add it to the d-phy node and keep the property marked as
+mandatory in the binding.
 
-Shouldn't one of the two (probably the latest) be:
+All the best,
 
-asus_kbd_set_fn_lock(hdev, false);
+Paul
+
+> > Thanks
+> > ChenYu
+> >=20
+> > [1] https://github.com/gediz/v3s-linux-sdk/blob/master/linux-3.4/driver=
+s/media/video/sunxi-vfe/mipi_csi/dphy/dphy_reg.c
+> >=20
+> >=20
+> > > > +                     allwinner,direction =3D "rx";
+> > > > +                     status =3D "disabled";
+> > > > +                     #phy-cells =3D <0>;
+> > > > +             };
+> > > > +
+> > >
+> > > --
+> > > Sashiko AI review =C2=B7 https://sashiko.dev/#/patchset/2026051815333=
+9.619947-1-paulk@sys-base.io?part=3D5
+> > >
+>=20
+> --=20
+> Paul Kocialkowski,
+>=20
+> Independent contractor - sys-base - https://www.sys-base.io/
+> Free software developer - https://www.paulk.fr/
+>=20
+> Expert in multimedia, graphics and embedded hardware support with Linux.
 
 
-Moreover I see from the commit message that this implementation has
-been copied from hid-lenovo, so does hid-lenovo suffers from the same issue?
 
-Since I don't have the affected hardware and I'm much confused by this double true
-I won't try to fix it in this patchset unless absolutely necessary or I have more info,
-but ideally I would like the patch to come from who can actually test the fix.
+--=20
+Paul Kocialkowski,
 
-> [Severity: High]
-> This is a pre-existing issue, but is there a potential use-after-free during
-> device removal when QUIRK_HID_FN_LOCK is enabled?
->
-> In asus_remove(), cancel_work_sync(&drvdata->fn_lock_sync_work) is called
-> before hid_hw_stop(hdev). Since the hardware is still active, a late
-> KEY_FN_ESC event can trigger asus_event() and unconditionally call
-> schedule_work() after the work was supposedly canceled. 
->
-> Once the driver is removed and drvdata is freed by devres, could the
-> workqueue execute asus_sync_fn_lock() and dereference the freed drvdata?
->
-> [Severity: High]
-> This is a pre-existing issue, but does the XGM LED name allocation need a
-> NULL check?
->
-> In asus_probe(), devm_kasprintf() is used to allocate the name for
-> drvdata->xgm_led->cdev.name:
->
-> 	drvdata->xgm_led->cdev.name = devm_kasprintf(&hdev->dev, GFP_KERNEL,
-> 			"asus:xgm-%s:led",
-> 			strlen(hdev->uniq) ?
-> 			hdev->uniq : dev_name(&hdev->dev));
-> 	drvdata->xgm_led->cdev.brightness = 1;
->
-> If devm_kasprintf() fails under memory pressure, it returns NULL. This NULL
-> pointer is then passed to led_classdev_register(), which passes it to
-> led_classdev_next_name() and eventually to strscpy() as the source string. 
-> Since strscpy() does not check for a NULL source, this would cause an
-> immediate NULL pointer dereference.
->
->>  	{ HID_USB_DEVICE(USB_VENDOR_ID_ASUSTEK,
->>  	    USB_DEVICE_ID_ASUSTEK_ROG_Z13_LIGHTBAR),
->>  	  QUIRK_USE_KBD_BACKLIGHT | QUIRK_ROG_NKEY_KEYBOARD },
+Independent contractor - sys-base - https://www.sys-base.io/
+Free software developer - https://www.paulk.fr/
+
+Expert in multimedia, graphics and embedded hardware support with Linux.
+
+--BmBfy00rvIVsUu+z
+Content-Type: application/pgp-signature; name=signature.asc
+
+-----BEGIN PGP SIGNATURE-----
+
+iQIzBAEBCgAdFiEEAbcMXZQMtj1fphLChP3B6o/ulQwFAmotZS8ACgkQhP3B6o/u
+lQw1ChAAiF20uGxNDOycrnVDBnuiX+febC+MQJwpqrGMHH3EoqxmnThKrh0zJMpk
+s5ijPNG+qdPTIHIRVzOFYRY1nGa1c3H1IRua1yOx6Ipi3z+Q6Ex/IbLOKoRRsF1m
+Z5USsjvqGJ3++c/8Wlqf0Lp9W7+Vs8QuQLQmUi3aZ7l8BjG16OsPzXqapUPuR3zK
+tljeOJrDzoqg2pwIj/WyPnxHQIruS4T8DiOBfXfkTjBzZk1uBvZkE7XLAEPNFUDG
+AAolAO3cgTEJjESa3nFQnFdNI27fZ7ebuMHevIbc5ukkO8KRszuh1+VlISgmAY+C
+gte/JnkwQl6azdizs715N0V7yDg1h13mtgDRWf9GqLFveY8SIKU/s3DHhQ9H8ca9
+LCN9AX+8qE7kjv5BnA1BcyrEawrjOO37c4ogUm6dg6P7Gjr4OjU1+FqZXfausUw0
+ksjMUrArPrHV1ff406HeiJ2OnyO6CI6gPtTQfzpdaxOp9Il3wsBugl/O8ZPjqdLC
+KQmQMVt2RNTM2fGQXtG/Sv8Px+8XVmyfHGH/ioR85HAQf6vmO2aO8rdsK7RCrmWm
+E/BfS0JGas31C92BRQ2QqYtujonEcMAQqDSRW5GtBDEqxiF0sJDET+tPraXoNql6
+X5xipjSOClXd/fvntRPYDs6YXwWpGp0bIpl02JhxEqTTU1nhFag=
+=caES
+-----END PGP SIGNATURE-----
+
+--BmBfy00rvIVsUu+z--
