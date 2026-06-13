@@ -1,166 +1,116 @@
-Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-pf1-f202.google.com (mail-pf1-f202.google.com [209.85.210.202])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2BFC417736;
-	Sat, 13 Jun 2026 00:19:02 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D3179175A70
+	for <sashiko-reviews@lists.linux.dev>; Sat, 13 Jun 2026 00:20:28 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.210.202
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1781309944; cv=none; b=k/f3LzqvcxFkDrgKELxodiiD2sgOUcyeq8O15yDgGgDR704x1oaeu1A4ycuSOwwgX5Tonhi/f8XRUvPIKrSCdr5cU8aYHDxcTbyyf0uxrQrXSSipO0zYFWU2ViESMlXuQhDKbj4AqQgb4uxys5UyWox/cP+G9sZMHemB4qaneOo=
+	t=1781310029; cv=none; b=dBladFyLzfoc+XNl7Z9G0eYC9o675eI2cY5FlcuZ1C7C17kGlTYpY/h9VnF8omfpBqDTp1O72r0KG+chSeM+P60SQuPjfXEQYghm7Yqbvo6WFc6aMa9SnclzuvicdFwZsjE2opo+EqXXsOJOPhXSydadLMFNg9xjAOnqIYnc2YE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1781309944; c=relaxed/simple;
-	bh=s9wEgyjdhRfjH5C13CwDAayeGuBy1soYrmTfgHHAGOU=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=HF15ckJOAytbzDf5bN8uXNUbnOGrczK7HZaA3gWmtuXMwatjvhXRAVLGlk6UmSJkZiG9tVGELU567afjguidwN5t+Nbi0dWyztE9jTW6Pv/8QI5eiOnOGZ/HIO7NrJgrMLRSG7EumHLajeyL5agFK4nWMUGXoRwYhRUjSpwcGV4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=cdbZYmEH; arc=none smtp.client-ip=100.103.45.18
+	s=arc-20240116; t=1781310029; c=relaxed/simple;
+	bh=pFzcrLzSWkUP1eJvW3lGG2DvcARF6j1tkN7/i7nSNgc=;
+	h=Date:In-Reply-To:Mime-Version:References:Message-ID:Subject:From:
+	 To:Cc:Content-Type; b=EdPZpMRAZZX37dGxJC3ZLDqKYt4cXxHZAwc8YWeLTNbKo+4wXyamfasUFBrW2xQdgDsvwVH36Yydavh5TqZrYgyXiZZPcops87wySs4LVDZb0MK/lkm/UG87oIw6WIayB2Q9C6JQ1rACWj56xrgmqf14YKEbO7OQXODVEnHxPLM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=google.com; spf=pass smtp.mailfrom=flex--seanjc.bounces.google.com; dkim=pass (2048-bit key) header.d=google.com header.i=@google.com header.b=OQj1M9wp; arc=none smtp.client-ip=209.85.210.202
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=google.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=flex--seanjc.bounces.google.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="cdbZYmEH"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 54AB21F000E9;
-	Sat, 13 Jun 2026 00:19:02 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=kernel.org;
-	s=k20260515; t=1781309942;
-	bh=1+W/nE4Enrv8b0fiQweSEVaYEqxXed0vyvV8mWsyMyU=;
-	h=Date:From:To:Cc:Subject:References:In-Reply-To;
-	b=cdbZYmEHq/You/7EjCW8eeyHtbBVLm9Wm/OwaT1IYZgqWkInawKQMSgG1cOSlCqMR
-	 YtleIInoq6Rx0hyxTeaM5aX4n8sCJSk1mgvSCMweGJzp9oN7z/NQ+ebjLHSXV3Wqq3
-	 AsdograxtjsOXDY2u+1VfU2XErZWuCHuX3aJB8BOQSpRrIIPVA7RJV4SoIV8z08Bpl
-	 L4zxlCRhk6lenlh3vvWPddCwH/rjyndwdJmG43DDJJtqFc2W9V9rTcSUDRS62hFbbj
-	 VjrlP3wWG2i3aRnBUxcGIAQndnAUlgkHBdEtBdqCkBxDyHruHVKpeK5GpEXkaZMojt
-	 tlOZwgTMy0UBw==
-Date: Fri, 12 Jun 2026 21:18:59 -0300
-From: Arnaldo Carvalho de Melo <acme@kernel.org>
-To: sashiko-reviews@lists.linux.dev
-Cc: Ian Rogers <irogers@google.com>, linux-perf-users@vger.kernel.org
-Subject: Re: [PATCH v20 2/5] perf inject/aslr: Add ASLR tool infrastructure
- and MMAP tracking
-Message-ID: <aiyh8wqvs81vdxeu@x1>
-References: <20260611164122.3974068-3-irogers@google.com>
- <20260611172823.1999F1F00893@smtp.kernel.org>
+	dkim=pass (2048-bit key) header.d=google.com header.i=@google.com header.b="OQj1M9wp"
+Received: by mail-pf1-f202.google.com with SMTP id d2e1a72fcca58-842692bf60aso2021464b3a.1
+        for <sashiko-reviews@lists.linux.dev>; Fri, 12 Jun 2026 17:20:28 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=google.com; s=20251104; t=1781310028; x=1781914828; darn=lists.linux.dev;
+        h=cc:to:from:subject:message-id:references:mime-version:in-reply-to
+         :date:from:to:cc:subject:date:message-id:reply-to;
+        bh=31IiaAqN5Ew/pmLAdduQflk0iW5H/bc3usr/zVzw4k0=;
+        b=OQj1M9wpKVjuBKqeEBRIMz7al/abMrvkYAYyVqtt/Rc5qJFGXzqTfpAAzn5rLfpxtj
+         mq5ev1YjBOQhV1FG2i8cprlNnnwdlFgs1s3XbbBGra/5OqgzipJWfDFa/S4+K/u8cgYT
+         enFzN2O80ivwXlf073XImk8/ySbvq+F2HwofflJ4L+GaWIQ+fUDZf3UjjUY6C0w8yBiZ
+         PyTCRsw/ZpCo6ZS2Rd/8Wzr8shlJ0FQw2OSezhuO2fywrFYVwGaUBpY9BKCfkKsZJQ6G
+         hO3Pw2SdZI3JmW/TexzSq8/DvFAQ66oenqdZhf/IV1btbTpGkPDiLtmU8c2ky6MNtEYu
+         eHEQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20251104; t=1781310028; x=1781914828;
+        h=cc:to:from:subject:message-id:references:mime-version:in-reply-to
+         :date:x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+        bh=31IiaAqN5Ew/pmLAdduQflk0iW5H/bc3usr/zVzw4k0=;
+        b=HketONvDPQ1lvcsMhjbwq5sJtCH954kqInYHMz8YEeKoJQA56Y39UdCyS8XP21hPdD
+         dCjGudGOFqgHP3cQrawlxMdFlhnrYUmI0BjsSIZk0A1XR0WaJSO8DdPLPk1CkH1TU5fm
+         HbEbRjhnoEgNPgCQ5G2R6fQDF7/cMGzQlfHc0OlOAHr8XpBfB8LCMdwa2lzO9uB2IVIl
+         ES6hR0HEfwjMhTogbGMJdEUdPwIJJtK5G6y6u8vYfxPZLVmGkbZzmR2VM13HGm/I/42p
+         M+B0MOPGbYG1grGbtLqio78kH4amNv3YJfssUArUt1EFEdxPLDayabH9UyEssdXFX9hv
+         Fsnw==
+X-Gm-Message-State: AOJu0YyTMcFqvRABenb45uaiqn+iwljO7edAas229MxeJw6uO+M7onMR
+	CP6Xo/WiryBLp+2LiKULI5R3F0jYY7KSW+9hdhzLP+W6VVujlCdVHGSw55dA2GZG4ydu32WOC39
+	ikLaL6zFhlVDqs0Q4gKaD9LhLpjJ+2JnGrkAOkLYASIDF9qZhV9Fc/HlCiwKNOC1DBmgzwjaHPB
+	NWA+9vflrwkU7q2atjLqfEq6TKnCtaeDfwfevAqQNmHDwheNcE
+X-Received: from pfnu8.prod.google.com ([2002:aa7:8488:0:b0:82f:790c:3922])
+ (user=seanjc job=prod-delivery.src-stubby-dispatcher) by 2002:aa7:888e:0:b0:842:4612:55f6
+ with SMTP id d2e1a72fcca58-844e1a29d48mr1958075b3a.21.1781310027838; Fri, 12
+ Jun 2026 17:20:27 -0700 (PDT)
+Date: Fri, 12 Jun 2026 17:20:27 -0700
+In-Reply-To: <20260612232258.0D9131F000E9@smtp.kernel.org>
 Precedence: bulk
 X-Mailing-List: sashiko-reviews@lists.linux.dev
 List-Id: <sashiko-reviews.lists.linux.dev>
 List-Subscribe: <mailto:sashiko-reviews+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:sashiko-reviews+unsubscribe@lists.linux.dev>
-MIME-Version: 1.0
-Content-Type: text/plain; charset=iso-8859-1
-Content-Disposition: inline
-Content-Transfer-Encoding: 8bit
-In-Reply-To: <20260611172823.1999F1F00893@smtp.kernel.org>
+Mime-Version: 1.0
+References: <20260612230622.687665-4-seanjc@google.com> <20260612232258.0D9131F000E9@smtp.kernel.org>
+Message-ID: <aiyiSyTu4xzCN3hL@google.com>
+Subject: Re: [PATCH v2 3/8] KVM: x86/hyperv: Ensure vCPU's Hyper-V object is
+ initialized on cross-vCPU accesses
+From: Sean Christopherson <seanjc@google.com>
+To: sashiko-reviews@lists.linux.dev
+Cc: kvm@vger.kernel.org
+Content-Type: text/plain; charset="us-ascii"
 
-On Thu, Jun 11, 2026 at 05:28:22PM +0000, sashiko-bot@kernel.org wrote:
-> Thank you for your contribution! Sashiko AI review found 1 potential issue(s) to consider:
-> - [Medium] Heap out-of-bounds read/write in `perf_event__repipe_attr` via TOCTOU race condition
-> --
-> 
-> commit 0ecff6d57b51709063f6cde26a7febea45ab1d6a
-> Author: Ian Rogers <irogers@google.com>
-> 
-> perf inject: Add ASLR virtual address remapping
-> 
-> This patch introduces the core ASLR remapping tool infrastructure and
-> implements remapping/tracking for metadata events. Sample events are
-> delegated without remapping for now.
-> 
-> > diff --git a/tools/perf/builtin-inject.c b/tools/perf/builtin-inject.c
-> > index 75ffe31d03fe..8bb37095e2de 100644
-> > --- a/tools/perf/builtin-inject.c
-> > +++ b/tools/perf/builtin-inject.c
-> > @@ -234,20 +237,36 @@ static int perf_event__repipe_attr(const struct perf_tool *tool,
-> >  	u64 *ids;
-> >  	int ret;
+On Fri, Jun 12, 2026, sashiko-bot@kernel.org wrote:
+> > diff --git a/arch/x86/kvm/hyperv.h b/arch/x86/kvm/hyperv.h
+> > index e6c74cfbb1cb6..821b586ed7464 100644
+> > --- a/arch/x86/kvm/hyperv.h
+> > +++ b/arch/x86/kvm/hyperv.h
+> > @@ -61,6 +61,18 @@ static inline struct kvm_hv *to_kvm_hv(struct kvm *kvm)
+> >  	return &kvm->arch.hyperv;
+> >  }
 > >  
-> > +	union perf_event *aslr_event = NULL;
-> > +
-> >  	ret = perf_event__process_attr(tool, event, pevlist);
-> >  	if (ret)
-> >  		return ret;
-> >  
-> > +	if (inject->aslr) {
-> > +		aslr_event = malloc(event->header.size);
-> > +		if (!aslr_event)
-> > +			return -ENOMEM;
-> > +		memcpy(aslr_event, event, event->header.size);
-
-Don't we have memdup? I.e.
-
-		aslr_event = memdup(event, event->header.size);
-		if (!aslr_event)
-			return -ENOMEM;
-
-> > +		aslr_tool__strip_attr_event(aslr_event, pevlist);
-> > +		event = aslr_event;
-> > +	}
-> 
-> [Severity: Medium]
-> Could this introduce a TOCTOU (Time-Of-Check to Time-Of-Use) race condition?
-> 
-> Since event points directly to the memory-mapped perf.data file contents,
-> reading event->header.size multiple times without READ_ONCE allows a
-> concurrent modification to change the size between the malloc() and memcpy()
-> calls.
-> 
-> This could result in a heap buffer overflow during memcpy(), or bypass the
-> earlier size validation done in perf_event__process_attr(). This would leave
-> malicious sizes in the copied event->attr.attr.size for
-> aslr_tool__strip_attr_event() to blindly trust.
-> 
-> > diff --git a/tools/perf/util/aslr.c b/tools/perf/util/aslr.c
-> > new file mode 100644
-> > index 000000000000..56fc444fbf54
-> > --- /dev/null
-> > +++ b/tools/perf/util/aslr.c
-> [ ... ]
-> > +void aslr_tool__strip_attr_event(union perf_event *event, struct evlist **pevlist __maybe_unused)
+> > +static inline struct kvm_vcpu_hv *to_hv_vcpu_safe(struct kvm_vcpu *vcpu)
 > > +{
-> > +	u32 attr_size;
-> > +
-> > +	attr_size = event->attr.attr.size ?: PERF_ATTR_SIZE_VER0;
-
-Not for now, but this is a common pattern, we should eventually have:
-
-	u32 attr_size = perf_event_attr__size(&event->attr);
-
-acme@x1:~/git/perf-tools-next$ git grep '?: PERF_ATTR_SIZE_VER0'
-tools/perf/builtin-inject.c:    attr_size = raw_attr_size ?: PERF_ATTR_SIZE_VER0;
-tools/perf/util/header.c:       attr_size = raw_attr_size ?: PERF_ATTR_SIZE_VER0;
-tools/perf/util/perf_event_attr_fprintf.c:      u32 attr_size = attr->size ?: PERF_ATTR_SIZE_VER0;
-acme@x1:~/git/perf-tools-next$
-
-And now the one in this series.
-
-> > +	if (attr_size >= (offsetof(struct perf_event_attr, sample_type) + sizeof(u64))) {
-> > +		event->attr.attr.sample_type &= ASLR_SUPPORTED_SAMPLE_TYPE;
-> > +	}
-> > +
-> > +	if (attr_size >= (offsetof(struct perf_event_attr, type) + sizeof(u32))) {
-> > +		u32 type = event->attr.attr.type;
-> > +
-> > +		if (type == PERF_TYPE_BREAKPOINT &&
-> > +		    attr_size >= (offsetof(struct perf_event_attr, bp_addr) + sizeof(u64))) {
-> > +			event->attr.attr.bp_addr = 0;
-> > +		} else if (type >= PERF_TYPE_MAX) {
-> > +			struct perf_pmu *pmu;
-> > +
-> > +			pmu = perf_pmus__find_by_type(type);
-> > +			if (pmu && (!strcmp(pmu->name, "kprobe") ||
-> > +				    !strcmp(pmu->name, "uprobe"))) {
-> > +				if (attr_size >= (offsetof(struct perf_event_attr, config1) + sizeof(u64)))
-> > +					event->attr.attr.config1 = 0;
-> > +				if (attr_size >= (offsetof(struct perf_event_attr, config2) + sizeof(u64)))
-> > +					event->attr.attr.config2 = 0;
-> 
-> [Severity: Medium]
-> If a malicious size is copied into the heap buffer due to the TOCTOU race in
-> perf_event__repipe_attr(), does this code perform an out-of-bounds write?
-> 
-> Since aslr_tool__strip_attr_event() implicitly trusts the attr_size read
-> from the heap copy, clearing config1 and config2 could overwrite adjacent
-> heap memory if attr_size is large, but the actual allocated
-> event->header.size was small.
-> 
-> > +			}
-> > +		}
-> > +	}
+> > +	/*
+> > +	 * Ensure the HyperV structure is fully initialized when accessing it
+> > +	 * without holding vcpu->mutex (or some other guarantee that KVM can't
+> > +	 * concurrently instantiate the structure).
+> > +	 *
+> > +	 * Pairs with the smp_store_release() in kvm_hv_vcpu_init().
+> > +	 */
+> > +	return smp_load_acquire(&vcpu->arch.hyperv);
 > > +}
+> > +
 > 
-> -- 
-> Sashiko AI review · https://sashiko.dev/#/patchset/20260611164122.3974068-1-irogers@google.com?part=2
+> [Severity: High]
+> This isn't a bug introduced by this patch, but should 
+> kvm_hv_has_stimer_pending() also be updated to use to_hv_vcpu_safe()?
+> 
+> It currently still uses the unsafe to_hv_vcpu() accessor:
+> 
+> static inline bool kvm_hv_has_stimer_pending(struct kvm_vcpu *vcpu)
+> {
+> 	struct kvm_vcpu_hv *hv_vcpu = to_hv_vcpu(vcpu);
+> 	...
+> 
+> Since kvm_hv_has_stimer_pending() can be reached cross-vCPU without holding
+> the target vcpu->mutex via the spin-loop yield path:
+> 
+> kvm_vcpu_on_spin() -> vcpu_dy_runnable() -> kvm_arch_dy_runnable() ->
+> kvm_arch_vcpu_runnable() -> kvm_vcpu_has_events() ->
+> kvm_hv_has_stimer_pending()
+> 
+> Could this bypass the necessary memory barriers and result in reading an
+> uninitialized stimer_pending_bitmap?
+> 
+> Also, won't using the unsafe accessor here unconditionally trigger the lockdep
+> assertion introduced later in the series when accessed cross-vCPU?
+
+*sigh*
+
+Yes and yes.
