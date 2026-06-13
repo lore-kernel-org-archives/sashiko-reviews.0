@@ -1,218 +1,182 @@
-Received: from mx0a-00082601.pphosted.com (mx0a-00082601.pphosted.com [67.231.145.42])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-pf1-f180.google.com (mail-pf1-f180.google.com [209.85.210.180])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7CB90175A87
-	for <sashiko-reviews@lists.linux.dev>; Sat, 13 Jun 2026 22:32:29 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=fail smtp.client-ip=67.231.145.42
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DCE4C175A87
+	for <sashiko-reviews@lists.linux.dev>; Sat, 13 Jun 2026 22:35:13 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=pass smtp.client-ip=209.85.210.180
 ARC-Seal:i=2; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1781389950; cv=fail; b=lgoYN/zy5mrtYNN0SwPzIg/OkskJoBX+m5Pg82FKxVg4vumFQL81AdGe+Wu/yxozUBK0pxFhpkSullB/Jh9VJAReORhUcpQeZjRAPnzX4ltJ+DZRcczQW+kLj8gUEEQb9x679Vvpv7r6TJTBh0mA2pG09z4hRnZ9NZ2FS3nQTPw=
+	t=1781390115; cv=pass; b=MSQhDKeJ7+1OGMnDEPlvrRtODbx11W4fzTVasZH4GTtnIniPnHDiGalXoHfl5zP3IoAeCOod9K/aIffuy4KvfTqWaKwIM1Ik0XijizD4rR7JMYaC05Q52P980NPuyJ9UiYOJ8eGqM9PcduupxHfChTiTchJr+T3l/7iK9K1ncnc=
 ARC-Message-Signature:i=2; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1781389950; c=relaxed/simple;
-	bh=QTx9041dhhMcKfJPsP1m79Vn1j8B0I/HYNpHnE5xa8Q=;
+	s=arc-20240116; t=1781390115; c=relaxed/simple;
+	bh=PyW8c4IHb4/lwYVktBQ2fDeXw7Jxfc1/fkBB1aB9O9Q=;
 	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
-	 To:Cc:Content-Type; b=ZKNmxxsC+2fygxSCEFfR2K7kP1KsHgr1fekMSt7yup+CXkJ0WbSGqs3jPrK+6SBcFlCZeVp3Du8QutJWY/fZd52k7s7ZFI7/GdDslZpnhHV3mrwA2kB2uYd+Q84egoZABOG3tRPIetHsdnu0ainWRNl3oiEVIZnagJQ9xLQsa9o=
-ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=meta.com; spf=pass smtp.mailfrom=meta.com; dkim=pass (2048-bit key) header.d=meta.com header.i=@meta.com header.b=rsF2tE+d; arc=fail smtp.client-ip=67.231.145.42
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=meta.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=meta.com
+	 To:Content-Type; b=kOYAmzXrcQlzngiikcXC+7ZuVyyj0FQ1RRPu4ypkLanXTxYg6fCGcqGytlFjUEGY5ihej4qQ6kqvq9hNPsIX95cbVM2ZZRyaYdLXYAWXobn6CrkmCzMn84IK5HsMlXNDd7mDNZYVgaQV4Y3u5TM9+IGkYseCT0vbIgmnB4Pg98s=
+ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=asu.edu; spf=pass smtp.mailfrom=asu.edu; dkim=pass (2048-bit key) header.d=asu.edu header.i=@asu.edu header.b=oGqtEDHD; arc=pass smtp.client-ip=209.85.210.180
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=asu.edu
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=asu.edu
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=meta.com header.i=@meta.com header.b="rsF2tE+d"
-Received: from pps.filterd (m0528009.ppops.net [127.0.0.1])
-	by mx0a-00082601.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id 65DKPwTR1586427
-	for <sashiko-reviews@lists.linux.dev>; Sat, 13 Jun 2026 15:32:28 -0700
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=meta.com; h=cc
-	:content-transfer-encoding:content-type:date:from:in-reply-to
-	:message-id:mime-version:references:subject:to; s=s2048-2025-q2;
-	 bh=92RmcGHbhf5Dgq7ILHGOiuMda6Ei+OUfewhzqJcCUNQ=; b=rsF2tE+dN2jV
-	8eSKu+oUcO7wcwlrfJk9Pn+sNPKnf6ltXg8x/OTwIZ84uT53mMdFnfRTfogreJTl
-	ux59CUebsLYlnA7MhUawpqRbFwNyIqdqkq9zLr1FwMv9slGPLI1CNtJ24Lfu0llZ
-	Rk6XPtUNx43hUJLKH+gKhMifA2LssSZ6uKuYy5WjsYzmHXE78JtBry5Pbeqw52kW
-	ejazSNvM4mpnSf8D3usXWACDowFONzH008jjUEsbGk43T1GWP2zxiWOlql5NU9iX
-	kSspyuuh/5nlyZq/g+/vZoFqs8rDYdQb1QLQUgbtulXEJrCOyULq00O3JLm4c3KM
-	aNoVDcyGww==
-Received: from mail-ot1-f70.google.com (mail-ot1-f70.google.com [209.85.210.70])
-	by mx0a-00082601.pphosted.com (PPS) with ESMTPS id 4es2bbjggt-1
-	(version=TLSv1.3 cipher=TLS_AES_128_GCM_SHA256 bits=128 verify=NOT)
-	for <sashiko-reviews@lists.linux.dev>; Sat, 13 Jun 2026 15:32:28 -0700 (PDT)
-Received: by mail-ot1-f70.google.com with SMTP id 46e09a7af769-7e6d439842bso3359919a34.0
-        for <sashiko-reviews@lists.linux.dev>; Sat, 13 Jun 2026 15:32:28 -0700 (PDT)
-ARC-Seal: i=1; a=rsa-sha256; t=1781389948; cv=none;
+	dkim=pass (2048-bit key) header.d=asu.edu header.i=@asu.edu header.b="oGqtEDHD"
+Received: by mail-pf1-f180.google.com with SMTP id d2e1a72fcca58-842848fd613so1995899b3a.3
+        for <sashiko-reviews@lists.linux.dev>; Sat, 13 Jun 2026 15:35:13 -0700 (PDT)
+ARC-Seal: i=1; a=rsa-sha256; t=1781390113; cv=none;
         d=google.com; s=arc-20240605;
-        b=jWCqP9qOel8V74DHQvNx6EqF09H51nOukkxm9kxQ0/XaZeiDmOHTL4kgGnnlF02tSM
-         dlIdx+DaId5o5SN4SxzL5uxovkbI2tW4gfTs9iWrDrpXJmSFQ8kujozsgbL4SpHFaln/
-         iavrLlTlDcM3JUfUcNbFwZlHxCrXFjbYdZwChsxgG4M2zqPrTxzha1OvRARDcB5iQVvd
-         zFftLUAFpbP8Zema021v9naDL26pSauAn0pyLcoLfafq/2RAgZVgyyPlQa/gI3kWtW2C
-         Slucx641/n0GdnRaIDm2KSKuzqL0ABSsZian8kbnNlPeB5+OEdi9JLDjUFbmpJMKn27M
-         9/WA==
+        b=DDRsDtEwo9vSYOxcxecQXDUpYFgVHCYaQ7tTWfQPvVLOR3FiCysrb+6Fz8Hu2qH0rn
+         0q1z8ijsgCam+VhH48VAAU3xuREmCNl2B+OCBkJjbQARhEzxyRw029EtfmEvhid2i6xz
+         4lKCUH/2+spOLs2pB1urOIRZ2wpViRkxqBUPs03Xf24q7Bx4uBzEFEJB81clAq7cVSAR
+         kHJokObtnTXlw2tupjN0pcIXrAM/akItMsDgEGOWGyjTV6t9rAbz/nblFZBOzr0GMl99
+         DOgJJCUVCXAkysjrptbKNqQODDcZYw85tvUWnQCY1L3uO7Z0MGjYEwb/rzty9BavOGUz
+         72Kw==
 ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com; s=arc-20240605;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version;
-        bh=PY5KrR9iMJ26IpdWUfDs9HsxqKRAuKri6MmYIkjb96M=;
-        fh=HU7Q7rqC3NFQb3h0gh/h4Wy2dR7ichYbMntmJIEj9QY=;
-        b=atTcqFpSwELv06Z077VvC5qaJI0fRYhYpR9xyiaPVPM1pXhQQXU7qi/cKxVxdDMuux
-         WrMDVcGLLL3/7V/u8G8IdgeLhoVFcV9iSf9Kv+fXndPWUfgj87l+kgyGHK6vAhGIbkDS
-         LHMLcxJEu7nsY5/ETlPVnEMYXZqv3CnLD5SXAe/H3ErNq9ICnyMqsT+WlX8z+jIDlg6E
-         tB9Xk3Ld5LT96lA1mdKJ9vndF1/zzKS5MkfV/SfKtj/wYhFdSFlQO0dVizwTGtAKcwnS
-         6o9/Nrqbc7Yi2qhnpnPEOrgWlNIKi1Nz2+od6DNaMrFBhLwVeps8VN1qcNUYlSN9Y0OK
-         I8AA==;
+        h=content-transfer-encoding:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:dkim-signature;
+        bh=ZD8mBjz6SmNDiIy/mCSAY1ATfOXbm8Ads6dFOsHWTe8=;
+        fh=UuEIBvKRIq7mzKoTdrHfg8oBqEUwLmUXvEdzs9U2/e8=;
+        b=BWn83Cp8Lujy8e5s1Z2ZhNF3DYvZpo9n7lAGoGmQPE3ol7YOrGWHWnAJzfI4yFnBGc
+         bKjxeBvrYbJ0m5Y/sKpb8rogL5Klaf6IaQk5iztkCjYtWB6425UbPD83+ivVQlmccjsB
+         +q91nGX9OBDrJLvxBf6er/SeOqsiQ79cIuWNbFhA0WMo559n2PkLYgw7GhiBNXcjV8Qp
+         AZZJpZ1yriDHC7u0YNnWq9J+kF4tJKByUzk9qIP6GA2V9Km6a9T96nkahp2Z4Rc9ThGK
+         x++D1gYyVRuCRqs/WCaQ+aX0U9r4KA9MI+rOMc45vCShwT0QZ+gEkicPB/01FRwL+10o
+         LRyQ==;
         darn=lists.linux.dev
 ARC-Authentication-Results: i=1; mx.google.com; arc=none
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=asu.edu; s=google; t=1781390113; x=1781994913; darn=lists.linux.dev;
+        h=content-transfer-encoding:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=ZD8mBjz6SmNDiIy/mCSAY1ATfOXbm8Ads6dFOsHWTe8=;
+        b=oGqtEDHD3LGUmvRq24RvZptXvJ/yWvUeyLTo871oi3oCQaILAq1ryebcY9l9sipdjN
+         lqr2L44lB4BvE+fJOjc/TO7qayT2zf3diSf3ZnDObHoPw4L5RT7P1eZ8OujMt6nBQp2C
+         +OQHAXT1C8fELAExRJaV/AFHvlXa45KadeP81mPna8e+FaD/TDeGsQpi7xpM3eFvfbVO
+         ym9ywbnnx7+MFUN9tipyvopyLxopyCaR0S7RkKn1YB3P06uXtY46lo/qJwxD9QjXmKpU
+         8ZucHE3BZvpZddhOAQVWbPyEmtT3d/hNnXwPDZWhW1FBF7Fp7khBIUhD7ESeyqqqZ9rY
+         kMFQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20251104; t=1781389948; x=1781994748;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+        d=1e100.net; s=20251104; t=1781390113; x=1781994913;
+        h=content-transfer-encoding:to:subject:message-id:date:from
          :in-reply-to:references:mime-version:x-gm-gg:x-gm-message-state:from
          :to:cc:subject:date:message-id:reply-to;
-        bh=PY5KrR9iMJ26IpdWUfDs9HsxqKRAuKri6MmYIkjb96M=;
-        b=GLGr8pXwOItivHEOY2mmbNCom9ttUTtSrBafyR5Drw/Hw1swH3EA/YJUgUn1Oa8yEz
-         L+09VoZnD6xw66PBmfa4zMAl7SZQeUzP6W8gTmTRabiVLwo5NV7QPn+ilmah57KFWLEq
-         Jwik9IE1j+Yp/h3y0EQSVg7KQw4oL5R3H7bGyvTFgrZN3UmbcNuB27mgyzPyKpwdfOw5
-         5rknjRpx8GFz2vpnih4oveyNLnDQV27FxfoQd0k61gDXoZ/nbPYABy/hjo+EecLKKB0P
-         jhaNOV5q1AKCjwpXrfaQnF28kJBR9U/ysoCy/Ad/7yz+ulw9Ne9nnB91MTVV+cQIT7HZ
-         20lQ==
-X-Gm-Message-State: AOJu0YyWr4u//t/PmWf8mdJ9AYVSnISq60Am/z8y3qsPxE/MgxkkHPDk
-	Rgeex1XDgsEFN8FtuTwh70hftlxFq3xxAqgYJdjsWNvBStTXLYXfgw8MgdsNr50MqnEvQvin6Id
-	qMQgeGjt5LTeVb53jxOGX+OkMxCxNppoR0cxOtz5GlP2hWGmIDRlO+MeV3V2GKouhrTEgvr9l9a
-	A+21Ip/8YW2KtIszhCxgBmjWM9eiwpdFcrRITscakn6fE=
-X-Gm-Gg: Acq92OGTXXAwne7CuJBZkPbFjwD/1u6bT0uOiFcIgnmgE8A1z9FvnNodDxakgPxMkYG
-	HUS09cZRTfExQPKhl1RSN3q2bs8LmUiIrCp+dS4/VPW40LqtA1fBBASMoPvGGZi6hgF/UurFiGz
-	eE9cnFxUNUtQlOq4AP8kMsbTUVgbAh7zwqfQgvHt4sOx/NgXatFpYjZpi9Y1SgEKTiReFLpFjmf
-	Z3gHtBr09RqEvTb3EPC4A==
-X-Received: by 2002:a05:6830:2e03:b0:7e6:f7fb:9682 with SMTP id 46e09a7af769-7e7846efe32mr7148467a34.2.1781389947805;
-        Sat, 13 Jun 2026 15:32:27 -0700 (PDT)
-X-Received: by 2002:a05:6830:2e03:b0:7e6:f7fb:9682 with SMTP id
- 46e09a7af769-7e7846efe32mr7148455a34.2.1781389947375; Sat, 13 Jun 2026
- 15:32:27 -0700 (PDT)
+        bh=ZD8mBjz6SmNDiIy/mCSAY1ATfOXbm8Ads6dFOsHWTe8=;
+        b=AL9671gRR7OtpDVVbpf56Jb7HNHuFuMvmtmSwOUmdmFSL5AbqFqXLrCLVjNgiaw5Gq
+         YqsuMjyACa4l2dGZJUcolvbEz3mnVcJAXVHaYdK3SWvrGX1QrFcW2afveBc4dspbCd/D
+         arACnePwlv/oGlThYZPyGxPjMwA/marvuZMpIqPs9Fay9vlEnU2zBN1us7puEuhMM6z5
+         SM4JkUqRPRbmSvFE0CfBSen3FYcTMO+09AxC+QprDJIZia+zH5E+quC0XCY3WI4fbTql
+         HkVj6H9bCSythHxjJ7RtOVz+CeVihDrLgD6lrvmYxGYu8pswCv4Aut9Qpo9GqymlVhHq
+         Ph8g==
+X-Gm-Message-State: AOJu0Yw/l9jkb2Va1fx1MNyRTlhFIpCa85sKTU1IbDJtJ62KlV16LSSb
+	xR3dDWL76QfB/TGOnKQbo1Ysz0TgoLgJDrGBfnW6IgH1rpmEqvX6DQM6RvxlbH1XWnKQj6y6oyA
+	IJDzQ9jV4NNGR/xYfpOCZa3G0PjPPYL7AIQ+4M0LnP50IuB1tW/Y1gEBh
+X-Gm-Gg: Acq92OEVRCLlNO3CW5cngdYcgOiPxZm/X9CnQ3aymuzxPoi1LjdRngFw36/Vbr2IA3t
+	2/ImP3qxcXZURfZqqoaT85BIwBTF6rY/mfwYyqsuPoqvCdUx6uJzO/VFcTM6HUr8yMgWKF+vilp
+	7/LMIyLuOWeZNNt0cXhjyB24HpOoDwnkBJavq4ED/cOcuTQL/k3QLti+wV4nCSUAiKnkiaNMsbR
+	uGGBHQcjCLjLPwlWpFEEEn3Cz3hcDrtSrcBBCoWtElpnwkfS1K/VWdpUmQJ78ftGPQt6rGuWgRK
+	GFJ4oL/VwmTjKFON3qul1NijAUCoUJquun1Vdxw=
+X-Received: by 2002:a05:6a00:1d21:b0:842:7992:bdd3 with SMTP id
+ d2e1a72fcca58-8434ce50e94mr8080859b3a.4.1781390113092; Sat, 13 Jun 2026
+ 15:35:13 -0700 (PDT)
 Precedence: bulk
 X-Mailing-List: sashiko-reviews@lists.linux.dev
 List-Id: <sashiko-reviews.lists.linux.dev>
 List-Subscribe: <mailto:sashiko-reviews+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:sashiko-reviews+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-References: <20260610193158.2614209-5-zhipingz@meta.com> <20260611202555.B0FE31F000E9@smtp.kernel.org>
- <CAH3zFs3FjiCfOceVRin0ytKNdZ7Pgyv4ds=Dd_GhrRC_XcbNOg@mail.gmail.com> <20260612105928.200220b8@shazbot.org>
-In-Reply-To: <20260612105928.200220b8@shazbot.org>
-From: Zhiping Zhang <zhipingz@meta.com>
-Date: Sat, 13 Jun 2026 15:32:15 -0700
-X-Gm-Features: AVVi8CcMGigExPKR8IpfZtGzrLOFWz5YTcGVhRoJFgHdM9ZEhG5IiCIsvSLW0hM
-Message-ID: <CAH3zFs0nGMXV2N=6epd2-40D0tyxcXs8K0E7zX8-H1DcaDOj=Q@mail.gmail.com>
-Subject: Re: [PATCH v7 4/5] vfio/pci: implement get_tph and DMA_BUF_TPH feature
-To: Alex Williamson <alex@shazbot.org>
-Cc: sashiko-reviews@lists.linux.dev, linux-pci@vger.kernel.org,
-        kvm@vger.kernel.org, dri-devel@lists.freedesktop.org
+References: <20260613221836.556019-1-xmei5@asu.edu> <20260613223322.345171F000E9@smtp.kernel.org>
+In-Reply-To: <20260613223322.345171F000E9@smtp.kernel.org>
+From: Xiang Mei <xmei5@asu.edu>
+Date: Sat, 13 Jun 2026 15:35:02 -0700
+X-Gm-Features: AVVi8CdKV3E51WdsxSpFba2gyRTXAuoJSuGQ3FkoMW7hwJS5bYU_uAZFFK-fY-8
+Message-ID: <CAPpSM+TGZK+E6OJAoUquKwFCT42Sc7xr-9hJxG-UUWrGOwYp8g@mail.gmail.com>
+Subject: Re: [PATCH ext4 v3] ext4: fix out-of-bounds read in ext4_read_inline_dir()
+To: sashiko-reviews@lists.linux.dev
 Content-Type: text/plain; charset="UTF-8"
 Content-Transfer-Encoding: quoted-printable
-X-Authority-Analysis: v=2.4 cv=IZC3n2qa c=1 sm=1 tr=0 ts=6a2dda7c cx=c_pps
- a=7uPEO8VhqeOX8vTJ3z8K6Q==:117 a=IkcTkHD0fZMA:10 a=FelO9ux0wxsA:10
- a=VkNPw1HP01LnGYTKEx00:22 a=7x6HtfJdh03M6CCDgxCd:22 a=U_y8lYiYyhHBU5rMqhb2:22
- a=r1p2_3pzAAAA:8 a=VabnemYjAAAA:8 a=VwQbUJbxAAAA:8 a=vvh9Qk1aVFpNxidmG9UA:9
- a=QEXdDO2ut3YA:10 a=EXS-LbY8YePsIyqnH6vw:22 a=r_pkcD-q9-ctt7trBg_g:22
- a=gKebqoRLp9LExxC7YDUY:22
-X-Proofpoint-GUID: 2TrfuHfxKFL9AtDXbgge3tGknRcS0-sU
-X-Proofpoint-Spam-Info: AW1haW4tMjYwNjEzMDIzNSBTYWx0ZWRfX61Nyrz/hkfyk
- de1V+8l9VEhYN6h4wya9mhLkCzlXnxTgTFdeNWQ/t3D/nbkTzB8VMwtmwK1A3kwEcMXPr+NqXd0
- FL6iV0Nb6nG/rL+br+ykH4JFe1oO4Uk=
-X-Proofpoint-ORIG-GUID: 2TrfuHfxKFL9AtDXbgge3tGknRcS0-sU
-X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwNjEzMDIzNSBTYWx0ZWRfX9a+mBHpmDxl7
- 1FpmvA6BzVQBu53Q30/dq12EbtsluNddbTBW2W04PohW9aUImDPXhMF6vt4h9XRLPt98wjPcFR4
- vizIdf5EPDsYsBUcTOh/UqO6qYuNAP/RrBP12XSZZ6GYswYmx2iltki0GFpkjGsMJBqklVMLCrm
- LhYL8vLCRkoobw5u1DqiFbDFD0UVZRnzKmeFH4IpQrNsPMpgq6pd03kvyTnxsOtyD+zACcRVGy8
- OgMyjrzFmas/X0pWbOZr/EuMVuT8NpIYpNVJtQsstF9SULzTjWUs1I8HzUWqE7Pn6RbhYD56TA4
- 7e5L7HkLh/SvlQxa5edM8IfjxVaTD79czHIqtTHf2D4ghDMmVdGjUPK5iuK5rMzGMO7hSRuiKrE
- TM/ilw64lGvedtS7gqvFRzPuCnS2lPZmFld4X2sNf4sZWO1ljJ96oS/oPbWdV/D0FkKhCctHeQf
- JkWpP0JoBG2Lu17Yg9w==
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.293,Aquarius:18.0.1143,Hydra:6.1.125,FMLib:17.12.100.49
- definitions=2026-06-13_04,2026-06-12_03,2025-10-01_01
 
-On Fri, Jun 12, 2026 at 9:59=E2=80=AFAM Alex Williamson <alex@shazbot.org> =
-wrote:
+You are wrong. The function exists.
+
+-- Xiang
+
+On Sat, Jun 13, 2026 at 3:33=E2=80=AFPM <sashiko-bot@kernel.org> wrote:
 >
+> Thank you for your contribution! Sashiko AI review found 1 potential issu=
+e(s) to consider:
+> - [Low] The patch introduces calls to an undeclared and non-existent func=
+tion `ext4_dir_rec_len()`, resulting in a fatal compilation error.
+> --
+>
+> commit a8a90225b0fd734b3d0ab45a6beb15fb4207d8fd
+> Author: Xiang Mei <xmei5@asu.edu>
+>
+> ext4: fix out-of-bounds read in ext4_read_inline_dir()
+>
+> This commit bounds the dirent header by inline_size in both the rescan
+> loop and the main loop of ext4_read_inline_dir() to prevent an out-of-bou=
+nds
+> read. It aims to ensure that the dirent header fits within the allocated
+> buffer before dereferencing it.
+>
+> > diff --git a/fs/ext4/inline.c b/fs/ext4/inline.c
+> > index caa51473207d7..fdbc7c43f6964 100644
+> > --- a/fs/ext4/inline.c
+> > +++ b/fs/ext4/inline.c
+>
+> [ ... ]
+>
+> > @@ -1515,6 +1515,9 @@ int ext4_read_inline_dir(struct file *file,
+> >                       /* for other entry, the real offset in
+> >                        * the buf has to be tuned accordingly.
+> >                        */
+> > +                     if (i - extra_offset + ext4_dir_rec_len(1, NULL) =
+>
+> > +                         inline_size)
+> > +                             break;
+>
+> [Severity: Low]
+> Does the function ext4_dir_rec_len() actually exist in the kernel tree?
+> It appears this will cause a compilation error in ext4_read_inline_dir() =
+due
+> to an implicit function declaration. Would using the EXT4_DIR_REC_LEN(1) =
+macro
+> be the correct approach here to calculate the directory entry length inst=
+ead?
+>
+> >                       de =3D (struct ext4_dir_entry_2 *)
+> >                               (dir_buf + i - extra_offset);
+> >                       /* It's too expensive to do a full
+>
+> [ ... ]
+>
+> > @@ -1549,10 +1552,18 @@ int ext4_read_inline_dir(struct file *file,
+> >                       continue;
+> >               }
 > >
-> On Thu, 11 Jun 2026 16:02:25 -0700
-> Zhiping Zhang <zhipingz@meta.com> wrote:
+> > +             /*
+> > +              * de lives at dir_buf + ctx->pos - extra_offset, within =
+the
+> > +              * kmalloc(inline_size) buffer.  Make sure its header fit=
+s before
+> > +              * ext4_check_dir_entry() dereferences de->rec_len.
+> > +              */
+> > +             if (ctx->pos - extra_offset + ext4_dir_rec_len(1, NULL) >
+> > +                 inline_size)
+> > +                     goto out;
 >
-> > On Thu, Jun 11, 2026 at 1:25=E2=80=AFPM <sashiko-bot@kernel.org> wrote:
-> > >
-> > > >
-> > > Thank you for your contribution! Sashiko AI review found 2 potential =
-issue(s) to consider:
-> > > - [Medium] Unconditional validation of the flag-gated 'ph' parameter =
-can lead to spurious -EINVAL errors, breaking the syscall trust boundary.
-> > > - [Medium] VFIO_DEVICE_FEATURE_PROBE falsely reports that VFIO_DEVICE=
-_FEATURE_DMA_BUF_TPH is supported even if the hardware lacks TPH support.
-> > > --
-> > >
-> > > commit d57637d667ca6dc95def77a0a5bd339d62d4f506
-> > > Author: Zhiping Zhang <zhipingz@meta.com>
-> > >
-> > > vfio/pci: implement get_tph and DMA_BUF_TPH feature
-> > >
-> > > This commit implements dma-buf get_tph for vfio-pci exported dma-bufs=
- and
-> > > adds the VFIO_DEVICE_FEATURE_DMA_BUF_TPH feature. This allows userspa=
-ce to
-> > > publish TPH metadata for a VFIO-owned device. It checks completer sup=
-port
-> > > and protects the metadata under dmabuf->resv.
-> > >
-> > > > diff --git a/drivers/vfio/pci/vfio_pci_dmabuf.c b/drivers/vfio/pci/=
-vfio_pci_dmabuf.c
-> > > > index 1a177ce7de546..0a0705c8dbea6 100644
-> > > > --- a/drivers/vfio/pci/vfio_pci_dmabuf.c
-> > > > +++ b/drivers/vfio/pci/vfio_pci_dmabuf.c
-> > >
-> > > [ ... ]
-> > >
-> > > > @@ -333,6 +360,71 @@ int vfio_pci_core_feature_dma_buf(struct vfio_=
-pci_core_device *vdev, u32 flags,
-> > > >       return ret;
-> > > >  }
-> > > >
-> > > > +int vfio_pci_core_feature_dma_buf_tph(struct vfio_pci_core_device =
-*vdev,
-> > > > +                                   u32 flags,
-> > > > +                                   struct vfio_device_feature_dma_=
-buf_tph __user *arg,
-> > > > +                                   size_t argsz)
-> > > > +{
-> > > > +     struct vfio_device_feature_dma_buf_tph set_tph;
-> > > > +     struct vfio_pci_dma_buf *priv;
-> > > > +     struct dma_buf *dmabuf;
-> > > > +     u8 comp;
-> > > > +     int ret;
-> > > > +
-> > > > +     ret =3D vfio_check_feature(flags, argsz, VFIO_DEVICE_FEATURE_=
-SET,
-> > > > +                              sizeof(set_tph));
-> > > > +     if (ret !=3D 1)
-> > > > +             return ret;
-> > >
-> > > [Severity: Medium]
-> > > vfio_check_feature() returns 0 for VFIO_DEVICE_FEATURE_PROBE, causing=
- an
-> > > early return of success.
-> > >
-> > > Should the hardware capability check (pcie_tph_completer_type) occur =
-before
-> > > checking the feature flags, to avoid falsely reporting that the featu=
-re is
-> > > supported on devices that lack TPH?
-> > >
-> >
-> > Will fix it with a change like below:
-> >  -     if (ret !=3D 1)
-> > +     if (ret !=3D 1) {
-> > +             if (ret =3D=3D 0 &&
-> > +                 pcie_tph_completer_type(vdev->pdev) =3D=3D
-> > +                     PCI_EXP_DEVCAP2_TPH_COMP_NONE)
-> > +                     return -EOPNOTSUPP;
-> >                 return ret;
-> > +     }
+> [Severity: Low]
+> Similar to the issue in the rescan loop above, will this call to the unde=
+clared
+> ext4_dir_rec_len() function break the build? The EXT4_DIR_REC_LEN(1) macr=
+o
+> might be what was intended for the main directory iteration loop as well.
 >
-> Typically this is done before the check feature call.  Thanks,
+> >               de =3D (struct ext4_dir_entry_2 *)
+> >                       (dir_buf + ctx->pos - extra_offset);
+> >               if (ext4_check_dir_entry(inode, file, de, iloc.bh, dir_bu=
+f,
+> > -                                      extra_size, ctx->pos))
+> > +                                      inline_size, ctx->pos))
+> >                       goto out;
+> >               if (le32_to_cpu(de->inode)) {
+> >                       if (!dir_emit(ctx, de->name, de->name_len,
 >
-> Alex
-
-Sure will do =E2=80=94 move the completer check to the top in v8.
-
-Thanks,
-Zhiping
+> --
+> Sashiko AI review =C2=B7 https://sashiko.dev/#/patchset/20260613221836.55=
+6019-1-xmei5@asu.edu?part=3D1
