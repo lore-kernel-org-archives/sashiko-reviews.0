@@ -1,289 +1,218 @@
-Received: from mail-ed1-f43.google.com (mail-ed1-f43.google.com [209.85.208.43])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from mx0a-00082601.pphosted.com (mx0a-00082601.pphosted.com [67.231.145.42])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5BEEF2F3614
-	for <sashiko-reviews@lists.linux.dev>; Sat, 13 Jun 2026 22:03:34 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=pass smtp.client-ip=209.85.208.43
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7CB90175A87
+	for <sashiko-reviews@lists.linux.dev>; Sat, 13 Jun 2026 22:32:29 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=fail smtp.client-ip=67.231.145.42
 ARC-Seal:i=2; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1781388215; cv=pass; b=Vw/lUxRUTQLALXmYWU8b1BjgJbmrlpF0PrUJwMbM2Cdj/vgzpW+K91ZtXS5ka+F/kLsKOF4QcM34spmBf9tEOLRrT5nFhrSJoChCNLUUBEdZ+2K3HQ57wQuK/5pW8mueINiVuf0wOBFkmIqemSfBY9iBzmZlD1GrLwE8ktTvsiw=
+	t=1781389950; cv=fail; b=lgoYN/zy5mrtYNN0SwPzIg/OkskJoBX+m5Pg82FKxVg4vumFQL81AdGe+Wu/yxozUBK0pxFhpkSullB/Jh9VJAReORhUcpQeZjRAPnzX4ltJ+DZRcczQW+kLj8gUEEQb9x679Vvpv7r6TJTBh0mA2pG09z4hRnZ9NZ2FS3nQTPw=
 ARC-Message-Signature:i=2; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1781388215; c=relaxed/simple;
-	bh=CC2KOyzJo9c2S8ETDKWxWGYPm6Xl7L/vh9sZj+qsAq0=;
+	s=arc-20240116; t=1781389950; c=relaxed/simple;
+	bh=QTx9041dhhMcKfJPsP1m79Vn1j8B0I/HYNpHnE5xa8Q=;
 	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
-	 To:Cc:Content-Type; b=t5MLsN8B3HmagDY3DvvAmK+Rmd77690eAoj5TCBK6K+0r5goC6oF5KJLWK5MfwyaHWM+4iuFmTxPV8eolH26FhZLeMmtvpJz6cICLCkPzMIp5E6j4KPuJs2alEuN210Q3wGbjaHeMvE4llQ65XEclqF1CxQ0sw/Kfj7xIFQ5IXI=
-ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=google.com; spf=pass smtp.mailfrom=google.com; dkim=pass (2048-bit key) header.d=google.com header.i=@google.com header.b=Zx9Uqx7K; arc=pass smtp.client-ip=209.85.208.43
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=google.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=google.com
+	 To:Cc:Content-Type; b=ZKNmxxsC+2fygxSCEFfR2K7kP1KsHgr1fekMSt7yup+CXkJ0WbSGqs3jPrK+6SBcFlCZeVp3Du8QutJWY/fZd52k7s7ZFI7/GdDslZpnhHV3mrwA2kB2uYd+Q84egoZABOG3tRPIetHsdnu0ainWRNl3oiEVIZnagJQ9xLQsa9o=
+ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=meta.com; spf=pass smtp.mailfrom=meta.com; dkim=pass (2048-bit key) header.d=meta.com header.i=@meta.com header.b=rsF2tE+d; arc=fail smtp.client-ip=67.231.145.42
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=meta.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=meta.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=google.com header.i=@google.com header.b="Zx9Uqx7K"
-Received: by mail-ed1-f43.google.com with SMTP id 4fb4d7f45d1cf-6919f40a0c8so3848301a12.0
-        for <sashiko-reviews@lists.linux.dev>; Sat, 13 Jun 2026 15:03:34 -0700 (PDT)
-ARC-Seal: i=1; a=rsa-sha256; t=1781388213; cv=none;
+	dkim=pass (2048-bit key) header.d=meta.com header.i=@meta.com header.b="rsF2tE+d"
+Received: from pps.filterd (m0528009.ppops.net [127.0.0.1])
+	by mx0a-00082601.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id 65DKPwTR1586427
+	for <sashiko-reviews@lists.linux.dev>; Sat, 13 Jun 2026 15:32:28 -0700
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=meta.com; h=cc
+	:content-transfer-encoding:content-type:date:from:in-reply-to
+	:message-id:mime-version:references:subject:to; s=s2048-2025-q2;
+	 bh=92RmcGHbhf5Dgq7ILHGOiuMda6Ei+OUfewhzqJcCUNQ=; b=rsF2tE+dN2jV
+	8eSKu+oUcO7wcwlrfJk9Pn+sNPKnf6ltXg8x/OTwIZ84uT53mMdFnfRTfogreJTl
+	ux59CUebsLYlnA7MhUawpqRbFwNyIqdqkq9zLr1FwMv9slGPLI1CNtJ24Lfu0llZ
+	Rk6XPtUNx43hUJLKH+gKhMifA2LssSZ6uKuYy5WjsYzmHXE78JtBry5Pbeqw52kW
+	ejazSNvM4mpnSf8D3usXWACDowFONzH008jjUEsbGk43T1GWP2zxiWOlql5NU9iX
+	kSspyuuh/5nlyZq/g+/vZoFqs8rDYdQb1QLQUgbtulXEJrCOyULq00O3JLm4c3KM
+	aNoVDcyGww==
+Received: from mail-ot1-f70.google.com (mail-ot1-f70.google.com [209.85.210.70])
+	by mx0a-00082601.pphosted.com (PPS) with ESMTPS id 4es2bbjggt-1
+	(version=TLSv1.3 cipher=TLS_AES_128_GCM_SHA256 bits=128 verify=NOT)
+	for <sashiko-reviews@lists.linux.dev>; Sat, 13 Jun 2026 15:32:28 -0700 (PDT)
+Received: by mail-ot1-f70.google.com with SMTP id 46e09a7af769-7e6d439842bso3359919a34.0
+        for <sashiko-reviews@lists.linux.dev>; Sat, 13 Jun 2026 15:32:28 -0700 (PDT)
+ARC-Seal: i=1; a=rsa-sha256; t=1781389948; cv=none;
         d=google.com; s=arc-20240605;
-        b=hs3AlypKVcDcB91p3oAltBzU1SpuxqlY7cXfYv9oX66joj735gbw11UjV6l8BoVzNL
-         cIHu2fwJ5WDHNHgTtbxElveW3G5yIPd81Ngg8uzvHqvi7uKN3J5QAI4aI4nPjCRE2og8
-         7jWQSXYIZUSNziVbFbLf8aQWLITNL3ZjUR3eGy0S3FTvlFLcZ+x6nweXRjdZ7sTXD1el
-         G7gXMgXRt4yZYjTiZHyxpFxYZep52y9cZEcIK7QTjUiuZgIt7CduIeXMgx6XnTQ295xv
-         jqWybTU0irYx/4r80rvEsyL9k2ZgYVnmR7a8ugmYaRvuiRwyumtnAYpBXJq+1pZt0Vt3
-         nIag==
+        b=jWCqP9qOel8V74DHQvNx6EqF09H51nOukkxm9kxQ0/XaZeiDmOHTL4kgGnnlF02tSM
+         dlIdx+DaId5o5SN4SxzL5uxovkbI2tW4gfTs9iWrDrpXJmSFQ8kujozsgbL4SpHFaln/
+         iavrLlTlDcM3JUfUcNbFwZlHxCrXFjbYdZwChsxgG4M2zqPrTxzha1OvRARDcB5iQVvd
+         zFftLUAFpbP8Zema021v9naDL26pSauAn0pyLcoLfafq/2RAgZVgyyPlQa/gI3kWtW2C
+         Slucx641/n0GdnRaIDm2KSKuzqL0ABSsZian8kbnNlPeB5+OEdi9JLDjUFbmpJMKn27M
+         9/WA==
 ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com; s=arc-20240605;
         h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:dkim-signature;
-        bh=qysF8lJhFwPgtIThDB7gwFIAI+ONbPrwLoXuG9PR2+A=;
-        fh=uA360uvxR9S0K/Y4Lovo7aIaGlBwzVBnnb2BKWupr/4=;
-        b=kW8fmcWNOiNVfH7OKrE52KmNf0xeIpXgdCfpJHJKrAM9pxPczTphjMNlxpv4bpXgt+
-         1US+y5NcWDhgNCiY9j0yS63ahoc4sNxvvtqOW1FZpPSQmYJwMwHAcmrQKYsSO+QfctC7
-         6wCRAjW8kwnz/N4/94ZnFx2vfXZYH+lKyYOLDvXGPuId8GOx8TXUUo6yl0aPLQPgJVyY
-         txO33jrFBSF5mUGrkBFz17i4dinFGoJcg3LkiKOINJtnotox4k2Mzkz0iqOdtWwdyirD
-         2f3492wfO5cXI2MPDNUyi7WVnxDGdOhGGBikp3UH7JzI3yg8G3+hm9Ud5+J/l+Q3c175
-         WiEg==;
+         :in-reply-to:references:mime-version;
+        bh=PY5KrR9iMJ26IpdWUfDs9HsxqKRAuKri6MmYIkjb96M=;
+        fh=HU7Q7rqC3NFQb3h0gh/h4Wy2dR7ichYbMntmJIEj9QY=;
+        b=atTcqFpSwELv06Z077VvC5qaJI0fRYhYpR9xyiaPVPM1pXhQQXU7qi/cKxVxdDMuux
+         WrMDVcGLLL3/7V/u8G8IdgeLhoVFcV9iSf9Kv+fXndPWUfgj87l+kgyGHK6vAhGIbkDS
+         LHMLcxJEu7nsY5/ETlPVnEMYXZqv3CnLD5SXAe/H3ErNq9ICnyMqsT+WlX8z+jIDlg6E
+         tB9Xk3Ld5LT96lA1mdKJ9vndF1/zzKS5MkfV/SfKtj/wYhFdSFlQO0dVizwTGtAKcwnS
+         6o9/Nrqbc7Yi2qhnpnPEOrgWlNIKi1Nz2+od6DNaMrFBhLwVeps8VN1qcNUYlSN9Y0OK
+         I8AA==;
         darn=lists.linux.dev
 ARC-Authentication-Results: i=1; mx.google.com; arc=none
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=google.com; s=20251104; t=1781388213; x=1781993013; darn=lists.linux.dev;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=qysF8lJhFwPgtIThDB7gwFIAI+ONbPrwLoXuG9PR2+A=;
-        b=Zx9Uqx7KBOyttINfQBwbgwHN0A2gMo5znlU6WK+YdvNxYuJC6unUgISy+hhVOZuV1s
-         CHz5J3RGCs51pLAU5Z/RC9hll8G3iEqa3EbWrrjrqlOV6MIBez/NoBS691B0S4Qj5Yd/
-         tJDDMsy0UeKSYG/TQ+1Rjqv6sQwrLannWHNefus8CnIKJ5kbaXNKVRhptalAF+fMiplO
-         BQYd1w2vVuPh4GyouNZ8l32fDy1LL02NRY02Y6ZF7+t5f1MKy3QVt98VeUkmvIEY/Hu7
-         FSy4B8hBKosKnjWUHkkADWPebfWM8Ycji1Op26gWlWxIYZ5dptUWIxSZGMzqQjyQmtjO
-         2EYw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20251104; t=1781388213; x=1781993013;
+        d=1e100.net; s=20251104; t=1781389948; x=1781994748;
         h=content-transfer-encoding:cc:to:subject:message-id:date:from
          :in-reply-to:references:mime-version:x-gm-gg:x-gm-message-state:from
          :to:cc:subject:date:message-id:reply-to;
-        bh=qysF8lJhFwPgtIThDB7gwFIAI+ONbPrwLoXuG9PR2+A=;
-        b=d2Mz8vNeJ/oLVtbj0Tpu6El3/vXs6rJSzmiBGZcN/KXY+xuT+YJJ0RxCPTz9xhAy1S
-         7kQBCwWR/DBRz5n/jFG0QKycdmrJGyuA8c5mKnYLCzM8SLGnM2qbeKGL/gA6AYeiMA3O
-         72K+3Gz+2nqWoL88mqqeEChNYTuQUy70wF92DVxV57NOJH5mp/7T3m19z8NVlO/TmGr3
-         Xh+vdwi3JBYDcKPkADDf1CIAwUE9hGA69XmN16JF86x0BBfLsjDIbU1DgBQH/BSW3l/d
-         ceF8oXY5roh2b+sqFLwyu1G4ie7vYlsBQ+74c4yitOnFlDidYl/kRlDTGHzkpai7B5/g
-         iHBA==
-X-Gm-Message-State: AOJu0YwoqnOsXOLw4WBaYE96UdIU4jBSuVwQYLgtmUyrBeYW6YJUdlHv
-	qVKQcrnP2XcfMQihroeYM78ZmstuOKlRe/YTEFeSK4ss460nApLZ8HDuOCPFd2mjMTkedVgTRy+
-	jnN75ELU22sY0mYMI5aU9C/5fDorr5ITrUz/xOwm0Lvne+7ubbV0lGFW/zHo68Q==
-X-Gm-Gg: Acq92OHZN+AQcHQRDlCP4CMovY2vBd9180/HCZgfisskXJhtuXB/99acQGoTinCAJrs
-	Rz0JG2WSLS1VWuq4+74fw/+1J1XG9m+9sJjU2wM2nU5644JW0k7ODhUeJIhgqc2w3rvlQEz83D+
-	9GDcSvcBTaZOgQhXi6Yb4wNioWiHvkGbFXHRPhk0d+R66TvFSgpjfD7zcRHyCjd64j9L1zR8QNE
-	JRQQOvGGUdP875PnGRkgidifts4xr1CCPQt1mAX0tGnSwQb2nwRwwEc0mQPjIH/yj4ka9jUS2EK
-	aNtdawK6DBtisaVvGhABMxTgpuN3LW2gBLLn0sHrCuPLhUtfOXVChRUVXJr927HlpjCOsYYGbBb
-	KoyrvgzmYXHMpsjMX0t5MkSxoVcYzBa9gLA+sW/ocBihLadLROeXd
-X-Received: by 2002:a05:6402:3982:b0:691:b5aa:5a5c with SMTP id
- 4fb4d7f45d1cf-693c6a838ecmr1690850a12.20.1781388212377; Sat, 13 Jun 2026
- 15:03:32 -0700 (PDT)
+        bh=PY5KrR9iMJ26IpdWUfDs9HsxqKRAuKri6MmYIkjb96M=;
+        b=GLGr8pXwOItivHEOY2mmbNCom9ttUTtSrBafyR5Drw/Hw1swH3EA/YJUgUn1Oa8yEz
+         L+09VoZnD6xw66PBmfa4zMAl7SZQeUzP6W8gTmTRabiVLwo5NV7QPn+ilmah57KFWLEq
+         Jwik9IE1j+Yp/h3y0EQSVg7KQw4oL5R3H7bGyvTFgrZN3UmbcNuB27mgyzPyKpwdfOw5
+         5rknjRpx8GFz2vpnih4oveyNLnDQV27FxfoQd0k61gDXoZ/nbPYABy/hjo+EecLKKB0P
+         jhaNOV5q1AKCjwpXrfaQnF28kJBR9U/ysoCy/Ad/7yz+ulw9Ne9nnB91MTVV+cQIT7HZ
+         20lQ==
+X-Gm-Message-State: AOJu0YyWr4u//t/PmWf8mdJ9AYVSnISq60Am/z8y3qsPxE/MgxkkHPDk
+	Rgeex1XDgsEFN8FtuTwh70hftlxFq3xxAqgYJdjsWNvBStTXLYXfgw8MgdsNr50MqnEvQvin6Id
+	qMQgeGjt5LTeVb53jxOGX+OkMxCxNppoR0cxOtz5GlP2hWGmIDRlO+MeV3V2GKouhrTEgvr9l9a
+	A+21Ip/8YW2KtIszhCxgBmjWM9eiwpdFcrRITscakn6fE=
+X-Gm-Gg: Acq92OGTXXAwne7CuJBZkPbFjwD/1u6bT0uOiFcIgnmgE8A1z9FvnNodDxakgPxMkYG
+	HUS09cZRTfExQPKhl1RSN3q2bs8LmUiIrCp+dS4/VPW40LqtA1fBBASMoPvGGZi6hgF/UurFiGz
+	eE9cnFxUNUtQlOq4AP8kMsbTUVgbAh7zwqfQgvHt4sOx/NgXatFpYjZpi9Y1SgEKTiReFLpFjmf
+	Z3gHtBr09RqEvTb3EPC4A==
+X-Received: by 2002:a05:6830:2e03:b0:7e6:f7fb:9682 with SMTP id 46e09a7af769-7e7846efe32mr7148467a34.2.1781389947805;
+        Sat, 13 Jun 2026 15:32:27 -0700 (PDT)
+X-Received: by 2002:a05:6830:2e03:b0:7e6:f7fb:9682 with SMTP id
+ 46e09a7af769-7e7846efe32mr7148455a34.2.1781389947375; Sat, 13 Jun 2026
+ 15:32:27 -0700 (PDT)
 Precedence: bulk
 X-Mailing-List: sashiko-reviews@lists.linux.dev
 List-Id: <sashiko-reviews.lists.linux.dev>
 List-Subscribe: <mailto:sashiko-reviews+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:sashiko-reviews+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-References: <20260613010039.1362312-5-kuniyu@google.com> <20260613012052.C30831F000E9@smtp.kernel.org>
-In-Reply-To: <20260613012052.C30831F000E9@smtp.kernel.org>
-From: Kuniyuki Iwashima <kuniyu@google.com>
-Date: Sat, 13 Jun 2026 15:03:18 -0700
-X-Gm-Features: AVVi8Cd2fngs2ft348K_ehIGvxfiiaA919q7ioHY0qEDUuYMap8QhqfoyVbRUDQ
-Message-ID: <CAAVpQUAJ9s8DXVnt2Kxyga3HLqDcp+Jh0AvzhzrK0m3t1qg3OQ@mail.gmail.com>
-Subject: Re: [PATCH v2 bpf-next/net 4/5] bpf: Add kfunc to proxy TX HW Timestamp.
-To: sashiko-reviews@lists.linux.dev
-Cc: bpf@vger.kernel.org
+References: <20260610193158.2614209-5-zhipingz@meta.com> <20260611202555.B0FE31F000E9@smtp.kernel.org>
+ <CAH3zFs3FjiCfOceVRin0ytKNdZ7Pgyv4ds=Dd_GhrRC_XcbNOg@mail.gmail.com> <20260612105928.200220b8@shazbot.org>
+In-Reply-To: <20260612105928.200220b8@shazbot.org>
+From: Zhiping Zhang <zhipingz@meta.com>
+Date: Sat, 13 Jun 2026 15:32:15 -0700
+X-Gm-Features: AVVi8CcMGigExPKR8IpfZtGzrLOFWz5YTcGVhRoJFgHdM9ZEhG5IiCIsvSLW0hM
+Message-ID: <CAH3zFs0nGMXV2N=6epd2-40D0tyxcXs8K0E7zX8-H1DcaDOj=Q@mail.gmail.com>
+Subject: Re: [PATCH v7 4/5] vfio/pci: implement get_tph and DMA_BUF_TPH feature
+To: Alex Williamson <alex@shazbot.org>
+Cc: sashiko-reviews@lists.linux.dev, linux-pci@vger.kernel.org,
+        kvm@vger.kernel.org, dri-devel@lists.freedesktop.org
 Content-Type: text/plain; charset="UTF-8"
 Content-Transfer-Encoding: quoted-printable
+X-Authority-Analysis: v=2.4 cv=IZC3n2qa c=1 sm=1 tr=0 ts=6a2dda7c cx=c_pps
+ a=7uPEO8VhqeOX8vTJ3z8K6Q==:117 a=IkcTkHD0fZMA:10 a=FelO9ux0wxsA:10
+ a=VkNPw1HP01LnGYTKEx00:22 a=7x6HtfJdh03M6CCDgxCd:22 a=U_y8lYiYyhHBU5rMqhb2:22
+ a=r1p2_3pzAAAA:8 a=VabnemYjAAAA:8 a=VwQbUJbxAAAA:8 a=vvh9Qk1aVFpNxidmG9UA:9
+ a=QEXdDO2ut3YA:10 a=EXS-LbY8YePsIyqnH6vw:22 a=r_pkcD-q9-ctt7trBg_g:22
+ a=gKebqoRLp9LExxC7YDUY:22
+X-Proofpoint-GUID: 2TrfuHfxKFL9AtDXbgge3tGknRcS0-sU
+X-Proofpoint-Spam-Info: AW1haW4tMjYwNjEzMDIzNSBTYWx0ZWRfX61Nyrz/hkfyk
+ de1V+8l9VEhYN6h4wya9mhLkCzlXnxTgTFdeNWQ/t3D/nbkTzB8VMwtmwK1A3kwEcMXPr+NqXd0
+ FL6iV0Nb6nG/rL+br+ykH4JFe1oO4Uk=
+X-Proofpoint-ORIG-GUID: 2TrfuHfxKFL9AtDXbgge3tGknRcS0-sU
+X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwNjEzMDIzNSBTYWx0ZWRfX9a+mBHpmDxl7
+ 1FpmvA6BzVQBu53Q30/dq12EbtsluNddbTBW2W04PohW9aUImDPXhMF6vt4h9XRLPt98wjPcFR4
+ vizIdf5EPDsYsBUcTOh/UqO6qYuNAP/RrBP12XSZZ6GYswYmx2iltki0GFpkjGsMJBqklVMLCrm
+ LhYL8vLCRkoobw5u1DqiFbDFD0UVZRnzKmeFH4IpQrNsPMpgq6pd03kvyTnxsOtyD+zACcRVGy8
+ OgMyjrzFmas/X0pWbOZr/EuMVuT8NpIYpNVJtQsstF9SULzTjWUs1I8HzUWqE7Pn6RbhYD56TA4
+ 7e5L7HkLh/SvlQxa5edM8IfjxVaTD79czHIqtTHf2D4ghDMmVdGjUPK5iuK5rMzGMO7hSRuiKrE
+ TM/ilw64lGvedtS7gqvFRzPuCnS2lPZmFld4X2sNf4sZWO1ljJ96oS/oPbWdV/D0FkKhCctHeQf
+ JkWpP0JoBG2Lu17Yg9w==
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.293,Aquarius:18.0.1143,Hydra:6.1.125,FMLib:17.12.100.49
+ definitions=2026-06-13_04,2026-06-12_03,2025-10-01_01
 
-On Fri, Jun 12, 2026 at 6:20=E2=80=AFPM <sashiko-bot@kernel.org> wrote:
+On Fri, Jun 12, 2026 at 9:59=E2=80=AFAM Alex Williamson <alex@shazbot.org> =
+wrote:
 >
-> Thank you for your contribution! Sashiko AI review found 2 potential issu=
-e(s) to consider:
-> - [High] Incompatible `payload_offset` semantics and bounds checking betw=
-een `tcx`, `cls_bpf`, and `bpf_skb_complete_tx_tstamp()` leads to false rej=
-ections or packet corruption.
-> - [High] Blindly clearing skb_shinfo(skb)->tx_flags destroys the SKBTX_DE=
-V_ZEROCOPY flag, causing a permanent memory leak and application hang.
-> --
->
-> commit 07c148630f8e93ce45f5ce41dcd9ee675f05a799
-> Author: Kuniyuki Iwashima <kuniyu@google.com>
->
-> bpf: Add kfunc to proxy TX HW Timestamp.
->
-> The commit adds two kfuncs, bpf_skb_scrub_tx_tstamp() and
-> bpf_skb_complete_tx_tstamp(), to proxy TX hardware timestamps. This allow=
-s
-> socket applications to receive TX hardware timestamps via SCM_TIMESTAMPIN=
-G.
->
-> > diff --git a/net/core/dev.c b/net/core/dev.c
-> > index 0c6c270d9f7d1..a45cdf38616ac 100644
-> > --- a/net/core/dev.c
-> > +++ b/net/core/dev.c
-> > @@ -4456,6 +4456,41 @@ tcx_run(const struct bpf_mprog_entry *entry, str=
-uct sk_buff *skb,
-> >       return tcx_action_code(skb, ret);
-> >  }
 > >
-> > +static int skb_do_completion(struct sk_buff *skb)
-> > +{
-> > +     enum skb_drop_reason drop_reason =3D SKB_DROP_REASON_TC_INGRESS;
-> > +     struct bpf_redirect_info *ri =3D bpf_net_ctx_get_ri();
-> > +     struct bpf_tx_tstamp_cmpl *txtscmpl;
-> > +
-> > +     if (!(ri->kern_flags & BPF_RI_F_TX_TS_CMPL))
-> > +             goto drop;
-> > +
-> > +     if (skb_unclone(skb, GFP_ATOMIC))
-> > +             goto drop;
-> > +
-> > +     __skb_push(skb, skb->mac_len);
-> > +
-> > +     txtscmpl =3D &ri->txtscmpl;
-> > +
-> > +     drop_reason =3D pskb_may_pull_reason(skb, txtscmpl->payload_offse=
-t);
-> > +     if (drop_reason)
-> > +             goto drop;
-> > +
-> > +     skb->protocol =3D txtscmpl->protocol;
-> > +     skb_set_network_header(skb, txtscmpl->network_offset);
-> > +     __skb_pull(skb, txtscmpl->payload_offset);
-> > +
-> > +     skb_shinfo(skb)->tskey =3D txtscmpl->tskey;
-> > +     skb_shinfo(skb)->tx_flags =3D SKBTX_HW_TSTAMP_NOBPF;
+> On Thu, 11 Jun 2026 16:02:25 -0700
+> Zhiping Zhang <zhipingz@meta.com> wrote:
 >
-> [Severity: High]
-> Does this direct assignment cause a memory leak if the packet was sent wi=
-th
-> MSG_ZEROCOPY?
->
-> If the user application sends a packet with MSG_ZEROCOPY, tx_flags contai=
-ns
-> SKBTX_DEV_ZEROCOPY
-
-This is pure hallucination.  No such flag exists.
-
-
-> and a reference to ubuf_info is held. Blindly overwriting
-> tx_flags here erases SKBTX_DEV_ZEROCOPY. This prevents skb_release_data()
-> from calling skb_zcopy_clear() when the SKB is freed, leaking the ubuf_in=
-fo
-> reference and causing the userspace socket to hang indefinitely waiting f=
-or
-> the completion notification.
->
-> Can we mask out only the timestamp flags or preserve SKBTX_DEV_ZEROCOPY?
->
-> > +     __skb_tstamp_tx(skb, NULL, skb_hwtstamps(skb), skb->sk, SCM_TSTAM=
-P_SND);
-> > +
-> > +     consume_skb(skb);
-> > +     return NET_RX_SUCCESS;
->
-> [ ... ]
->
-> > diff --git a/net/core/filter.c b/net/core/filter.c
-> > index bee1e7eee5eae..fce2d24aad487 100644
-> > --- a/net/core/filter.c
-> > +++ b/net/core/filter.c
-> > @@ -12396,6 +12396,67 @@ __bpf_kfunc int bpf_skb_set_hwtstamp(struct __=
-sk_buff *s,
-> >       return 0;
-> >  }
+> > On Thu, Jun 11, 2026 at 1:25=E2=80=AFPM <sashiko-bot@kernel.org> wrote:
+> > >
+> > > >
+> > > Thank you for your contribution! Sashiko AI review found 2 potential =
+issue(s) to consider:
+> > > - [Medium] Unconditional validation of the flag-gated 'ph' parameter =
+can lead to spurious -EINVAL errors, breaking the syscall trust boundary.
+> > > - [Medium] VFIO_DEVICE_FEATURE_PROBE falsely reports that VFIO_DEVICE=
+_FEATURE_DMA_BUF_TPH is supported even if the hardware lacks TPH support.
+> > > --
+> > >
+> > > commit d57637d667ca6dc95def77a0a5bd339d62d4f506
+> > > Author: Zhiping Zhang <zhipingz@meta.com>
+> > >
+> > > vfio/pci: implement get_tph and DMA_BUF_TPH feature
+> > >
+> > > This commit implements dma-buf get_tph for vfio-pci exported dma-bufs=
+ and
+> > > adds the VFIO_DEVICE_FEATURE_DMA_BUF_TPH feature. This allows userspa=
+ce to
+> > > publish TPH metadata for a VFIO-owned device. It checks completer sup=
+port
+> > > and protects the metadata under dmabuf->resv.
+> > >
+> > > > diff --git a/drivers/vfio/pci/vfio_pci_dmabuf.c b/drivers/vfio/pci/=
+vfio_pci_dmabuf.c
+> > > > index 1a177ce7de546..0a0705c8dbea6 100644
+> > > > --- a/drivers/vfio/pci/vfio_pci_dmabuf.c
+> > > > +++ b/drivers/vfio/pci/vfio_pci_dmabuf.c
+> > >
+> > > [ ... ]
+> > >
+> > > > @@ -333,6 +360,71 @@ int vfio_pci_core_feature_dma_buf(struct vfio_=
+pci_core_device *vdev, u32 flags,
+> > > >       return ret;
+> > > >  }
+> > > >
+> > > > +int vfio_pci_core_feature_dma_buf_tph(struct vfio_pci_core_device =
+*vdev,
+> > > > +                                   u32 flags,
+> > > > +                                   struct vfio_device_feature_dma_=
+buf_tph __user *arg,
+> > > > +                                   size_t argsz)
+> > > > +{
+> > > > +     struct vfio_device_feature_dma_buf_tph set_tph;
+> > > > +     struct vfio_pci_dma_buf *priv;
+> > > > +     struct dma_buf *dmabuf;
+> > > > +     u8 comp;
+> > > > +     int ret;
+> > > > +
+> > > > +     ret =3D vfio_check_feature(flags, argsz, VFIO_DEVICE_FEATURE_=
+SET,
+> > > > +                              sizeof(set_tph));
+> > > > +     if (ret !=3D 1)
+> > > > +             return ret;
+> > >
+> > > [Severity: Medium]
+> > > vfio_check_feature() returns 0 for VFIO_DEVICE_FEATURE_PROBE, causing=
+ an
+> > > early return of success.
+> > >
+> > > Should the hardware capability check (pcie_tph_completer_type) occur =
+before
+> > > checking the feature flags, to avoid falsely reporting that the featu=
+re is
+> > > supported on devices that lack TPH?
+> > >
 > >
-> > +__bpf_kfunc int bpf_skb_scrub_tx_tstamp(struct __sk_buff *s)
-> > +{
-> > +     struct sk_buff *skb =3D (struct sk_buff *)s;
-> > +
-> > +     if (skb_at_tc_ingress(skb))
-> > +             return -EINVAL;
-> > +
-> > +     if (skb_unclone(skb, GFP_ATOMIC))
-> > +             return -ENOMEM;
-> > +
-> > +     skb_shinfo(skb)->tx_flags =3D 0;
+> > Will fix it with a change like below:
+> >  -     if (ret !=3D 1)
+> > +     if (ret !=3D 1) {
+> > +             if (ret =3D=3D 0 &&
+> > +                 pcie_tph_completer_type(vdev->pdev) =3D=3D
+> > +                     PCI_EXP_DEVCAP2_TPH_COMP_NONE)
+> > +                     return -EOPNOTSUPP;
+> >                 return ret;
+> > +     }
 >
-> [Severity: High]
-> Does clearing tx_flags here also destroy SKBTX_DEV_ZEROCOPY?
+> Typically this is done before the check feature call.  Thanks,
+>
+> Alex
 
-Same here.
+Sure will do =E2=80=94 move the completer check to the top in v8.
 
->
-> Similar to skb_do_completion(), if a user application sends a packet with
-> MSG_ZEROCOPY, blindly clearing tx_flags to 0 erases SKBTX_DEV_ZEROCOPY.
-> When the SKB is ultimately freed after transmission, skb_release_data()
-> will not call skb_zcopy_clear(), leading to a leaked ubuf_info reference
-> and hanging the userspace socket waiting for completion.
->
-> > +
-> > +     bpf_compute_data_pointers(skb);
-> > +
-> > +     return 0;
-> > +}
-> > +
-> > +__bpf_kfunc int bpf_skb_complete_tx_tstamp(struct __sk_buff *s,
-> > +                                        struct bpf_tx_tstamp_cmpl *att=
-rs,
-> > +                                        int attrs__sz)
-> > +{
-> > +     int defined_sz =3D offsetofend(struct bpf_tx_tstamp_cmpl, payload=
-_offset);
-> > +     struct sk_buff *skb =3D (struct sk_buff *)s;
-> > +     struct bpf_redirect_info *ri;
-> > +     struct sock *sk =3D skb->sk;
-> > +     s32 delta;
-> > +
-> > +     if (attrs__sz !=3D sizeof(*attrs) ||
-> > +         memchr_inv((char *)attrs + defined_sz, 0, sizeof(u16)))
-> > +             return -EINVAL;
-> > +
-> > +     if (!sk || !sk_fullsock(sk))
-> > +             return -EINVAL;
-> > +
-> > +     if (!skb_at_tc_ingress(skb))
-> > +             return -EINVAL;
-> > +
-> > +     if (attrs->payload_offset > skb->len)
->
-> [Severity: High]
-> Are there incompatible payload_offset semantics between here and legacy T=
-C?
-
-No, both are offsets from the ethhdr.
-
-
->
-> In skb_do_completion(), skb->mac_len is unconditionally pushed before pul=
-ling
-> txtscmpl->payload_offset:
->
->         __skb_push(skb, skb->mac_len);
->         txtscmpl =3D &ri->txtscmpl;
->         drop_reason =3D pskb_may_pull_reason(skb, txtscmpl->payload_offse=
-t);
->
-> This structurally requires payload_offset to be relative to the MAC heade=
-r.
-> However, for BPF programs attached via legacy TC (cls_bpf), the MAC heade=
-r
-> is not pushed prior to ingress execution, meaning skb->len excludes mac_l=
-en.
->
-> If a MAC-relative offset is provided, it will exceed skb->len for small
-> payloads (e.g., empty TCP ACKs where mac_len + offset > total_len - mac_l=
-en),
-> causing a false -EINVAL rejection.
->
-> Conversely, if a BPF program compensates by sending a network-relative of=
-fset
-> to pass this validation, it will cause skb_do_completion() to pull from t=
-he
-> MAC header incorrectly, corrupting the packet.
->
-> > +             return -EINVAL;
-> > +
-> > +     delta =3D attrs->payload_offset - attrs->network_offset;
->
-> --
-> Sashiko AI review =C2=B7 https://sashiko.dev/#/patchset/20260613010039.13=
-62312-1-kuniyu@google.com?part=3D4
+Thanks,
+Zhiping
