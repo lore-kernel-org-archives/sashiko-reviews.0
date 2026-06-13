@@ -1,191 +1,177 @@
-Received: from LO0P265CU003.outbound.protection.outlook.com (mail-uksouthazon11022143.outbound.protection.outlook.com [52.101.96.143])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-ed1-f48.google.com (mail-ed1-f48.google.com [209.85.208.48])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8C2823002DD
-	for <sashiko-reviews@lists.linux.dev>; Sat, 13 Jun 2026 20:05:01 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=fail smtp.client-ip=52.101.96.143
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B701A27B353
+	for <sashiko-reviews@lists.linux.dev>; Sat, 13 Jun 2026 22:01:56 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=pass smtp.client-ip=209.85.208.48
 ARC-Seal:i=2; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1781381102; cv=fail; b=O7pq5m+gIBymBTi/eSWEJ4UbjJC9ukhUt40Rs+kQ5F5/wr54oI8+YwNV1ilyBGbTmEiEVDgLB6ymgp67nPrsOidnvVhN21cOFnHttXalMNUG5saIR2DOG/P67B78hXBKB9v3NKgT2gq9QCEIyDZK18iAazjDXuSmsberEq9Y59E=
+	t=1781388118; cv=pass; b=MsaBIdtyZe3DKMkQkwBcAWV7zaNelBO6+JJ7T6BCAg3FQbxb2/JhIXmlp5xuXYZccSBbVJO//FhwwbtmPKqLb2oAM8iEO+sSmf/aUsHbeC67aZShJ1BxxLgmMAdIGw3bt6O5xBwX4aRTCsay7jaG6yO1U6v2rZ3lmkNOKhlNtTM=
 ARC-Message-Signature:i=2; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1781381102; c=relaxed/simple;
-	bh=tAxDCbrsvUyU2VK4foojMsxy13YpccWrlBFVJ83vRFI=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:Content-Type:
-	 Content-Disposition:In-Reply-To:MIME-Version; b=K1cVzIQ3lVU+MsIyHkmiTme8mQxQvQeHuRFozhqsdrHevXrla7nQHDmq7Bm0bw9h4Dnq79D9m6eYsS4lL8spWSf/V+sW7NCLAgYrI2Fj70Q4IanhGtotVbLNrLO27WN9uQXI1IEOVgvkQNBgE8xlnKSI8ao38MrQLV7iamJ1Ot0=
-ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=atomlin.com; spf=pass smtp.mailfrom=atomlin.com; arc=fail smtp.client-ip=52.101.96.143
-Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=atomlin.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=atomlin.com
-ARC-Seal: i=1; a=rsa-sha256; s=arcselector10001; d=microsoft.com; cv=none;
- b=GLopAe4ARtgjlQbaRfDzHNKyiULMOFdG5RDeh3dr5vVOVD67fxXdVNL9e6cfioNvuRKrBomJT0d+NplF3a0MtuejUMTKgCDQbKEif7geMIyttSSMigPqvhmC1dyMd/LI17KVZqgn9mYBJzjk410sC5dW5Hncl4uzy5LGZYbSunLWXja6LDABzv92Wllh6CybEV1WOp+cCiLo0HnXRhJx/4PuabojLA6MT+YzknDI9E+LfLlacgg45KxJ/RI3wnhchLHTgU76TQG/giajknrkWKto5GHcDpb4aoN1v3+zYpamIgOYa+tcYQm59yj+d/UP6WoHMUAdY+e2V7ODGLbV4w==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com;
- s=arcselector10001; h=From:Date:Subject:Message-ID:MIME-Version;
- bh=iTCnnb4i+g3reXwsOv5JpCqNda4V0cIx5my6jjRlCGw=;
- b=scB5EwFlucn6ekv0K4VOZntIOWMWpIJ/a9/gAAHnSymXTRkEV4BC8SN4Upb9M+/uYIhz0ehu/RjLe+6kJk59W+Ps+IdqgG22obfJ8uJ/arosln36XbUQFiahxZ2KjgW9v50HUnXOFYPNpM29/EDnVVxza7Sy/SCsOfuuzvdZ1iH0q4ecDN3Dm09fgBZSwI8vgi+M6gvDD+grD24tGcWjIXxKtJcQsZfLzEphgaeIPiB6lkegGV1V22HkwKEmOu5a/GMz9ijUJ3Aw9dr6GT6BnVGj5zs5KaGFH7TBQurfcyWq42v/Cgdg0PViY2qqigMc3eUwNJZNY8WUtk2O8/PDtQ==
-ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
- smtp.mailfrom=atomlin.com; dmarc=pass action=none header.from=atomlin.com;
- dkim=pass header.d=atomlin.com; arc=none
-Authentication-Results: dkim=none (message not signed)
- header.d=none;dmarc=none action=none header.from=atomlin.com;
-Received: from CWLP123MB6607.GBRP123.PROD.OUTLOOK.COM (2603:10a6:400:183::5)
- by CWLP123MB6084.GBRP123.PROD.OUTLOOK.COM (2603:10a6:400:1b8::14) with
- Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.21.113.16; Sat, 13 Jun
- 2026 20:04:57 +0000
-Received: from CWLP123MB6607.GBRP123.PROD.OUTLOOK.COM
- ([fe80::cec4:77ab:262e:d230]) by CWLP123MB6607.GBRP123.PROD.OUTLOOK.COM
- ([fe80::cec4:77ab:262e:d230%4]) with mapi id 15.21.0113.015; Sat, 13 Jun 2026
- 20:04:57 +0000
-Date: Sat, 13 Jun 2026 16:04:55 -0400
-From: Aaron Tomlin <atomlin@atomlin.com>
-To: Arnaldo Carvalho de Melo <acme@kernel.org>
-Cc: sashiko-reviews@lists.linux.dev, linux-perf-users@vger.kernel.org
-Subject: Re: [PATCH] perf trace: Fix noise and signed formatting of
- __probe_ip in bare dynamic probes
-Message-ID: <kqz7pkmdhs36bfu7vo2p75ypynosejhubjgnq5g3zcrhbgqwbm@66jf3c74ef2t>
-References: <20260612220843.1320348-1-atomlin@atomlin.com>
- <20260612221602.4886D1F000E9@smtp.kernel.org>
- <aiykBASNHYv-MR_M@x1>
-Content-Type: multipart/signed; micalg=pgp-sha512;
-	protocol="application/pgp-signature"; boundary="7pmqqdda2g44buu2"
-Content-Disposition: inline
-In-Reply-To: <aiykBASNHYv-MR_M@x1>
-X-ClientProxiedBy: LO4P265CA0139.GBRP265.PROD.OUTLOOK.COM
- (2603:10a6:600:2c4::14) To CWLP123MB6607.GBRP123.PROD.OUTLOOK.COM
- (2603:10a6:400:183::5)
+	s=arc-20240116; t=1781388118; c=relaxed/simple;
+	bh=f0dboT9HbEPgztSvCb5V2Mo86m1g8/W+EO+6oIonMYc=;
+	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
+	 To:Cc:Content-Type; b=H3o2OFmt4rv1W+H5YzZT3e1R+kLGZ6MUvyX2bmtKzaBH5ZbKEte2kitV2FYCBWorf03QaluNJXVIhCvVuACOY3jP7ZPmkEQhGacAOziAZyGw+VQFDhZ7xU4mavHm5FM3yqZJ6RF+9Uy/+8EE8/K/8wRKfmnUL0ndDan+pPBDtlY=
+ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=google.com; spf=pass smtp.mailfrom=google.com; dkim=pass (2048-bit key) header.d=google.com header.i=@google.com header.b=vOAByUw0; arc=pass smtp.client-ip=209.85.208.48
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=google.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=google.com
+Authentication-Results: smtp.subspace.kernel.org;
+	dkim=pass (2048-bit key) header.d=google.com header.i=@google.com header.b="vOAByUw0"
+Received: by mail-ed1-f48.google.com with SMTP id 4fb4d7f45d1cf-68d233bf083so2902269a12.1
+        for <sashiko-reviews@lists.linux.dev>; Sat, 13 Jun 2026 15:01:56 -0700 (PDT)
+ARC-Seal: i=1; a=rsa-sha256; t=1781388115; cv=none;
+        d=google.com; s=arc-20240605;
+        b=DRl1y1hstWr2tgSG7J4z6q0CDpjD61rqU2gGylhHeVpuvpcBqn93oCf8Z/UOxxNPjL
+         J8ZhwGMbJc1J+bUZcb2j9Wnne4WAf8SG8bLOHv3gabn9r/RqoJ4oCQmEQlj4QihWVV9w
+         OHpH0FyD089K9W4VIbyDjxxpYcU9KSzpThsnlGGaipk/Gey2I53o/7iToXJqc0lakyF2
+         9V1DFBAVsvSQBrooyY2j7C1GeABjUYfAs4V5thDp4yuXe3b5ii6O4NUJphLnXsV8jDbb
+         R78ijkfnm575AI6pGY11QI0hHP8bMNiGZeVuAhDzpTxGyPqYYW6a82xVxUGrWxefwupG
+         1Bgg==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com; s=arc-20240605;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:dkim-signature;
+        bh=pOyPLd+VCfIBQPcIBHqp74G9VvIByXO6xAOgWcyyZtk=;
+        fh=uA360uvxR9S0K/Y4Lovo7aIaGlBwzVBnnb2BKWupr/4=;
+        b=G9L05tXnjh8xGj+5c0JhOBg0vCiK/XVDAHISo17p7ToUTv4J0SXjhta288OaTOa8Om
+         QOjtmtzS6l9gEpBwIhmjN/uSycOssDdV1XkfbYCBjBMMG2nvz8lmZ0Eb9Yyf2fJnxgtf
+         jcsAOlO9R8dGOPtLuOLNXYtfKTf2ovqULnYZruQz5sNd+RQHWnigyQ8RmPTbTXufvnvh
+         2qNfuIPz6YHNre6vFjmKWZvStZJcK0Wc3QX03afiF+hytnYNDu36/6Go1q78zh3G2sjx
+         6Hp/WxhdEteUYrDYBEYjECAq53XkkLAly5iTmRAIHz4stme/PEcGRfCf6T4RCDmi6VfC
+         dd5Q==;
+        darn=lists.linux.dev
+ARC-Authentication-Results: i=1; mx.google.com; arc=none
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=google.com; s=20251104; t=1781388115; x=1781992915; darn=lists.linux.dev;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=pOyPLd+VCfIBQPcIBHqp74G9VvIByXO6xAOgWcyyZtk=;
+        b=vOAByUw0GG99Et6hJ9MBLPv2OPSzp3P/INHoMVJqvrY/QQQJyYsQjJobBDEC97HsiI
+         bOkH/JQJpqv2f7NV85IdiPd2j36eD0/HixNjp5srFLhC1J+dBrMX8gIY54OXJCPZDKBI
+         4wSLO9nFazJpnSasQb1FQPvNEacFQhheUnSWp+TU3w8MIlXA9NG3+JMZHsE+GwOYjYWA
+         gqBf2vADbN1/1X75x1guiB7DfQvdJYPyXFTBwlL9ciMmy2NTwJ5CQ1FxpigW81FVyU8P
+         wo6gE8GsFaIkaQLhIY5jaEGNvJxo5IWkaTX6YkrEinwZ52EEytlyWja7kQ1GxCr25NR2
+         ZnFQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20251104; t=1781388115; x=1781992915;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:x-gm-gg:x-gm-message-state:from
+         :to:cc:subject:date:message-id:reply-to;
+        bh=pOyPLd+VCfIBQPcIBHqp74G9VvIByXO6xAOgWcyyZtk=;
+        b=sLf91/mXX3zadMHOyE/RlcMzGewfyeQ5RUqSqJXOyli+LGV6rURkH0jGzhdmE1Exn0
+         O2U4eup0hDSV5oYER14cLLP9M+SqYNUkvlzoAEjODlIHi1/DdtQiFazim6V4p9/mc23Y
+         wXKzMTyKEItvwBICb3WIS61hNsdmhp82MWKuqE96omyiA6j1OLZO3Yfuusct6UB/E+Pu
+         bPCQqlGId8OTwEOXfa/iAQbZ4K/N5HbiW3QqQW0w490a/WF2xxCjyew8/K+XBIgwQ6Ew
+         bPCLO5A2p9s7P6S0zoRkc0ekp1PrrzQUkSLV/vWJnlByUUlY6MvYiEtW4K5OKZq154S1
+         sroA==
+X-Gm-Message-State: AOJu0YyJ99ukhspwOiKXrSGTomipZ3hPhLNd0vEEetF+QVLsLmqTRyFK
+	RKFNCLCesF28CIq/Up9oNjd2HX2wI3UCzTVdwbyyRXEBDyoJ3rUlGSxa0v2YrVDwXqr4y4LQ4pp
+	eul0aVJL/Xu4RlJVpPi5UvXAmR9ugnDGAF1HO3o21p82/eEzHi2mZvw3pEBk=
+X-Gm-Gg: Acq92OGTqu7YNY2YNTif/10AN1uYqwwhfsWYZkjuJMzD4tIrSXMz8+gIFPsdhjZjJkM
+	0UQpyisBAQkd5pa1FMM56mKF+Dr7Kr4Zzz1rUuvUntxtuq7AC9UqR5R4WAWRUZiaGgoiNrYEQnH
+	ZmydoNkJZ0GQJXgBIKC3SQQDBQ4hizSxHP55aQsc5pEbmH5jqTb0ZX0EYKy7DwV+2wl/wC2OLVL
+	+ZwbJXFFEZ8m0K7adNYFfxgAbWWFFUGgi4FzViIwNMo3yXnfs4aJN7Eo7Uoa+YXgQvnD5zdISRY
+	9oWymw8l0tplpYpYmsggCKDcNkq1A4HRvI0nXPINK9XsVFYQagIB8PT0tKGWT2DGNGxxpGeSzW0
+	+kikUAA3goQOy8hwJek7GgbUq77cyFJExxLpFPTasU24FaLVUWulq
+X-Received: by 2002:a05:6402:3201:b0:691:55d9:fff5 with SMTP id
+ 4fb4d7f45d1cf-693787ed9d8mr3849204a12.10.1781388114606; Sat, 13 Jun 2026
+ 15:01:54 -0700 (PDT)
 Precedence: bulk
 X-Mailing-List: sashiko-reviews@lists.linux.dev
 List-Id: <sashiko-reviews.lists.linux.dev>
 List-Subscribe: <mailto:sashiko-reviews+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:sashiko-reviews+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-X-MS-PublicTrafficType: Email
-X-MS-TrafficTypeDiagnostic: CWLP123MB6607:EE_|CWLP123MB6084:EE_
-X-MS-Office365-Filtering-Correlation-Id: b52639dc-686a-4978-44e6-08dec9870aa5
-X-MS-Exchange-SenderADCheck: 1
-X-MS-Exchange-AntiSpam-Relay: 0
-X-Microsoft-Antispam:
-	BCL:0;ARA:13230040|366016|1800799024|376014|23010399003|18002099003|22082099003|56012099006|4143699003|6133799003;
-X-Microsoft-Antispam-Message-Info:
-	xIYwR9i8xwgYISOqa56lfvkIyxWdmcALAoyujNcdohWIiqKkRcTCEz1Bydzqr4GpFWYlI2dWiqyxaiRc4rPEf3+1gBOKCppihvm6c90TEYI+BqtCRKmgfy9397cbFC07nThULFx/RbCEHnkEAc6FX/Q6xyd+gczpYDwU5QYf3trvxOEGnyohUlj7E5L9+31/il+nTsElSE+XGps5rMN1eduYjfkHjGDMuawgW90sik11K/s9T4kBF+gTfMaSPEPU8sOFv+1ooiH74OfHj+hR1ZiQhvsy4MkhW5rNljvwwDbHL07fKCZ8W8eC+OCKbhN+E3OMtfmKqx3Ua5cxTeAhh+Wl4DOdVhoZ4a9yyrT7XWOplESgfnttHO0gR5XY3lB+0LKEjQelpGh1j+oPFqYlHJM8fFzF4l0DIDZaldQPpaiK5G5n1xXNt8Bwt1GQe8eeCkKOE8yxgqrh7gtctzWIAX83/Hb+GYMinb1a2AnwJZ38cmpODIUWoFnqzzlmkmwI7EuDxIZxE71zNSEM7BdR3NtT4lnf69cDm3MPNPoJOjCZf+PBTa7BENG9BKOF1wF5OyANlHAV0TFaGLz15qmqPK8qR63vszeP+mT1O90mKungTOIjk3o1vyya9HovBFeaPpqH0o8kCqlPIEcFWTEW1bHTJ8twd3VehyyXEUq0/snRHKBk9Ee0U0Quaf0XZCRV
-X-Forefront-Antispam-Report:
-	CIP:255.255.255.255;CTRY:;LANG:en;SCL:1;SRV:;IPV:NLI;SFV:NSPM;H:CWLP123MB6607.GBRP123.PROD.OUTLOOK.COM;PTR:;CAT:NONE;SFS:(13230040)(366016)(1800799024)(376014)(23010399003)(18002099003)(22082099003)(56012099006)(4143699003)(6133799003);DIR:OUT;SFP:1102;
-X-MS-Exchange-AntiSpam-MessageData-ChunkCount: 1
-X-MS-Exchange-AntiSpam-MessageData-0:
-	=?utf-8?B?RXd0b0Y4RWFqWWs1N1UyQXJJU1JMc3NOV1ZJOHhSWXlhcWpFSW5oNHJDWnF4?=
- =?utf-8?B?Z3picURDT25ZbzF3bXlXSzVFWTkvdG45OWJUdDQzWVBDcCtUcEcvajkyMHFG?=
- =?utf-8?B?VnJBWWpZdC90V3Q3R3V3U0lMV05HNVM3dTk0S2tWWjJuR2pMZy9tVEVvUjJu?=
- =?utf-8?B?VjVtaG1pU1NpMFdXc0hKaDNkQ1E3bEJ0ZUlMbWswR3VwcVhmczhFK2ZhMzV2?=
- =?utf-8?B?VUZCUVljeTVnUVhla0RvenFyRnUxendsSloweDdHandUeVNEM0kwck5ub29J?=
- =?utf-8?B?eGdMUWpqOGo3Yk5MdVFDN0RhNlVsRU9sRFhnV2d4dkN5RlhGUko2OGYyR2p5?=
- =?utf-8?B?MEkyVG9zVHRCYzVFT2VFR05Gc0RHSVpRMVZ0VlMweEJ2NHR6V0RDY2FpMTRz?=
- =?utf-8?B?QXRkeHZDbDc0ZDJUQjRIRHFnQnVQQ040bTR5eS9jR002N2xHaEZJR2ZFYndm?=
- =?utf-8?B?akU2ZHNOQmRlNGQ1NHNIQTdWSDI1dDZudWZkTlV3WG9JL1BSbGxNOHBQaVQ1?=
- =?utf-8?B?NXEyTXo4S3FGT0tGbjA3TitHYUFXZU5lUVpOUXRBbStwL3ZPQTZwN25PZzBJ?=
- =?utf-8?B?bHhldlRMSlNvYzBWS3ZWWlA3WXhJSjJSL3hBc2JUQ3ZVUmNqQVVtOVJwS0Rs?=
- =?utf-8?B?T1VUVzVMajY5VFlJTzFaZUV4eWNMWmFBcFlYMHVHNWg1bDVzVjM1NGFyQ0pF?=
- =?utf-8?B?VlZSci9UTXNtWGlVamZDYWxDaS9waFB0eXRYR29PTWZUdktoTUtweENYVnZX?=
- =?utf-8?B?QzRJamNhS1BLZ3IrQk9MSzVOTWUrUVR6K09BekN1RjgrOTFIKzNtaEVoaHJO?=
- =?utf-8?B?QVd5MnNPNmhPSExSeEhxclA5SDloNVpHQ2FiRlF0eTgxVWgvOWFZMTRPZFVD?=
- =?utf-8?B?aFhscy81TFBZM2tSNElYV1BVbjhIQ1ZEL3h3QTFYZ2lVenhKWjRPNVBLaXF3?=
- =?utf-8?B?enJ2cjNsNlpQTXEvMlova21ydUlVbThCSmhNSTgzbVltRGtjc29wSU1jb0VU?=
- =?utf-8?B?NHFmRkVGU2ExcXM0MlJ0U2NBWnVQMTNDWThNd2xTcmpIZWVyVEM0VVBEQ3hW?=
- =?utf-8?B?eXo2RWVleWdzOUFZTGZ2dmlHWUVPZGpuL0txSjRUaVNONEFtUkpGUGN5RWtv?=
- =?utf-8?B?UG9EKzNlbE5KM0J1Q3l5Q1lrZDYyaXpER21XUEsxUTdsTTkyRFQ1L0k0TzlO?=
- =?utf-8?B?MFpXdTQrV0V1WUoxazFwdnpvZTdYMlVEZ1EvUVNHL2Y2dTB4UzduMmxCWnk1?=
- =?utf-8?B?cjl6ZU9xdGF4L0VFWTZlbVIzWENIL3NHVUdjOXhrY2RmNlo4ZG5pRUtZdEly?=
- =?utf-8?B?c1BNamJrdUNmV0wvdjhoaWNFWGtOcUY4eVpuc3hsKzVTcm5mSVhLK1c5eDBn?=
- =?utf-8?B?Wk5lODBnWVZCUHZSS3E0NUQxd3VZMit0QzRwQkhnQVhhZDZHalpDM05RWGJy?=
- =?utf-8?B?RnRmcXFIdGdGYmR6M1RrbHlJTW42eTBwMEN6UmMyN29hY2w2cy9VNFBoTXV3?=
- =?utf-8?B?OUJpUzRTaGtMeXNDQlh4NkRsamdUNTZ6Q2NqNUd1YWQwOG91Q1pncEVRa0Yv?=
- =?utf-8?B?TjYrSFFHWXFFbG84cHZyMWJoU2hJTXBmYVlNOUttcGpSQVhHOG5zWTJISjJX?=
- =?utf-8?B?ZTArMGJSSGdJZ0hqSUNGYW53bnBFUjlJT04wMWpYRHhTbFJ2WmFtQUI4djdQ?=
- =?utf-8?B?L0ducGZGNExGQXgwY3JCcUdMWFdiZnBlTHYvVDJQSWRENHFxVlBWQzRKMjdD?=
- =?utf-8?B?YTZLL2FWK3F0R1dpNFVYeW5MSEFXL2dYbmxCQ0FxK1JkTWk1YnZ2dlUyWkUv?=
- =?utf-8?B?ZmlnNDlWRk1nOEQyZW5xVVBzSVlRMUoxWnhENEprUFZVWXJXSldQdkpWUWNi?=
- =?utf-8?B?Z1hmejN6OVpEZXhqME9iaW43Syt4YTg1N050T0pqWTBraDd1Y1hxaUdFKzh2?=
- =?utf-8?B?QmJ4bWFIeWtGNDJncUdKMWI5WUFaak9PZ0gyeVFRMGdLMWF6dG1NeHl2MFZi?=
- =?utf-8?B?aThtZmFobDlHYWlablc0aDdTM0MvUFpMbFQ3SVNyUUhZNkZhNHZOUEh1L1Vi?=
- =?utf-8?B?enVLem1TUHB3bHpXNXM3MnZwVEE0TXhsZW5uRVdpRXR6N1plR2pNamxyTDdt?=
- =?utf-8?B?d0lBTGJ3dnhCVFJlc1EyTklWQVAxZzBQR0JTeDRZSXNvaFR4bHgyWllDTU5F?=
- =?utf-8?B?SVg2Q1phdVFlYjI2V0hBcmt5cTAyeFBPblRuNm4wRlBDSFpLUHIyOC9jN1Rk?=
- =?utf-8?B?TEtzYktyNEZrYWpwQUZRUlhnTHRoR29uNVNhUnNKVEh6ejhDQVljeUJVblB3?=
- =?utf-8?Q?s85jyZSILAxwGiq85W?=
-X-OriginatorOrg: atomlin.com
-X-MS-Exchange-CrossTenant-Network-Message-Id: b52639dc-686a-4978-44e6-08dec9870aa5
-X-MS-Exchange-CrossTenant-AuthSource: CWLP123MB6607.GBRP123.PROD.OUTLOOK.COM
-X-MS-Exchange-CrossTenant-AuthAs: Internal
-X-MS-Exchange-CrossTenant-OriginalArrivalTime: 13 Jun 2026 20:04:57.2414
- (UTC)
-X-MS-Exchange-CrossTenant-FromEntityHeader: Hosted
-X-MS-Exchange-CrossTenant-Id: e6a32402-7d7b-4830-9a2b-76945bbbcb57
-X-MS-Exchange-CrossTenant-MailboxType: HOSTED
-X-MS-Exchange-CrossTenant-UserPrincipalName: OATNxfkvoB3MzyF4CC2QK/1/ZjvrLHPyUtNwdf6KlfGNICGhBKpr2CZTGMXHJXvnh/Qo1hhwJEEKvUyXN+zxeA==
-X-MS-Exchange-Transport-CrossTenantHeadersStamped: CWLP123MB6084
-
---7pmqqdda2g44buu2
-Content-Type: text/plain; protected-headers=v1; charset=utf-8
-Content-Disposition: inline
+References: <20260613010039.1362312-4-kuniyu@google.com> <20260613011253.0CA741F000E9@smtp.kernel.org>
+In-Reply-To: <20260613011253.0CA741F000E9@smtp.kernel.org>
+From: Kuniyuki Iwashima <kuniyu@google.com>
+Date: Sat, 13 Jun 2026 15:01:41 -0700
+X-Gm-Features: AVVi8CdJkQbKL-C5Y5-uoOtUriwMeFA2JPv7tNM8BMVCLfY0s6pJBg3acXP3_6E
+Message-ID: <CAAVpQUBSsAOj68rwwKLGpdu_5GHZZYdL=3n9-CuAksgzh+u93A@mail.gmail.com>
+Subject: Re: [PATCH v2 bpf-next/net 3/5] bpf: Add bpf_skb_set_hwtstamp().
+To: sashiko-reviews@lists.linux.dev
+Cc: bpf@vger.kernel.org
+Content-Type: text/plain; charset="UTF-8"
 Content-Transfer-Encoding: quoted-printable
-Subject: Re: [PATCH] perf trace: Fix noise and signed formatting of
- __probe_ip in bare dynamic probes
-MIME-Version: 1.0
 
-On Fri, Jun 12, 2026 at 09:27:48PM -0300, Arnaldo Carvalho de Melo wrote:
-> > [Severity: Medium]
-> > Does this hardcoded format string bypass the trace->show_arg_names
-> > configuration?
-> >=20
-> > In trace__fprintf_tp_fields(), other arguments dynamically check if the=
-ir
-> > names should be printed:
-> >=20
-> >         if (trace->show_arg_names)
-> >                 printed +=3D scnprintf(bf + printed, size - printed, "%=
-s: ", field->name);
-> >=20
-> > By explicitly formatting "%s%s: %#016llx" using field->name, it looks l=
-ike
-> > __probe_ip will always print its argument name here, even if perf trace
-> > is executed with --no-arg-names alongside --verbose.
->=20
-> I think this is a valid concern, please make it follow the
-> trace->show_arg_names for consistency.
->=20
-> This is a nice improvement, thanks for working on it,
+On Fri, Jun 12, 2026 at 6:12=E2=80=AFPM <sashiko-bot@kernel.org> wrote:
+>
+> Thank you for your contribution! Sashiko AI review found 1 potential issu=
+e(s) to consider:
+> - [High] Potential use-after-free read of `attrs->hwtstamp` if the BPF pr=
+ogram passes a pointer to the packet payload.
+> --
+>
+> commit 41caec1764c831fb81388c5eab46d122318a01be
+> Author: Kuniyuki Iwashima <kuniyu@google.com>
+>
+> bpf: Add bpf_skb_set_hwtstamp().
+>
+> This commit adds a new kfunc, bpf_skb_set_hwtstamp(), to allow BPF progra=
+ms
+> at TC ingress to update the hardware timestamp of an skb. This enables us=
+er
+> space proxies to encapsulate and pass hardware timestamps to socket
+> applications bypassing the kernel networking stack.
+>
+> > diff --git a/net/core/filter.c b/net/core/filter.c
+> > index acdc66aa4f27c..bee1e7eee5eae 100644
+> > --- a/net/core/filter.c
+> > +++ b/net/core/filter.c
+> [ ... ]
+> > @@ -12372,6 +12372,30 @@ __bpf_kfunc int bpf_sock_ops_enable_tx_tstamp(=
+struct bpf_sock_ops_kern *skops,
+> >       return 0;
+> >  }
+> >
+> > +__bpf_kfunc int bpf_skb_set_hwtstamp(struct __sk_buff *s,
+> > +                                  struct bpf_hwtstamp *attrs, int attr=
+s__sz)
+> > +{
+> > +     int defined_sz =3D offsetofend(struct bpf_hwtstamp, hwtstamp);
+> > +     struct sk_buff *skb =3D (struct sk_buff *)s;
+> > +
+> > +     if (attrs__sz !=3D sizeof(*attrs) ||
+> > +         memchr_inv((char *)attrs + defined_sz, 0, sizeof(u64)))
+> > +             return -EINVAL;
+> > +
+> > +     if (!skb_at_tc_ingress(skb))
+> > +             return -EINVAL;
+> > +
+> > +     if (skb_unclone(skb, GFP_ATOMIC))
+> > +             return -ENOMEM;
+> > +
+> > +     skb_clear_tstamp(skb);
+> > +     skb_hwtstamps(skb)->hwtstamp =3D attrs->hwtstamp;
+>
+> [Severity: High]
+> Could this result in a use-after-free if the BPF program passes a pointer
+> to the packet payload as the attrs argument?
 
-Hi Arnaldo,
-
-Thanks for the prompt review and feedback.
-
-I've addressed the 'show_arg_names' consistency in the next iteration.
-You can find the updated version here [1].
-
-[1] https://lore.kernel.org/lkml/20260612225610.1326644-1-atomlin@atomlin.c=
-om/
+This requires bpf_skb_store_bytes() to build attrs on skb,
+which does not make sense.  Passing sane local variable
+is bpf prog responsibility.
 
 
-Kind regards,
-
---=20
-Aaron Tomlin
-
---7pmqqdda2g44buu2
-Content-Type: application/pgp-signature; name="signature.asc"
-
------BEGIN PGP SIGNATURE-----
-
-iQIzBAEBCgAdFiEEeQaE6/qKljiNHm6b4t6WWBnMd9YFAmott+AACgkQ4t6WWBnM
-d9ZN9A//Ru8rgjl/+v1hMA4sepJN/evRDcLI6HVPprNFu3oBmzZBOyOnAiZ2uaj1
-/pZfVRseJvcyOhe8AUNwieZpK4vkH05/CCjRX2dkCxGiaFiv+9Tq12zRLz8DD0c4
-xzYWUKAbE9sSYP4bdrEwDWpvjEodToZyzNcP0WFA6NLSnHAPziS0QVvCfhqfELAL
-eNk+/a2h/XGTyZeDgwDmVT2diWza1RcWMKX0DmEqc7IaklYH/P2OKwe62Ms5nWKX
-ZRkb3S9QYGCgXMkxZLNNC29aQbEjPQ96kYXdrTzFkaUEc9uUbkMt+8LbUbUmql2g
-bSni/jslAYd9E2BX0B7N+y9Hm8Uo6yf2zNNln15JD/nU2/zoAD4ear6iZZoesTRL
-onY3N+1EVoCl9TwFYkoUPxbhRQe1sSuf+Wwgqcy65lTtAZWOi73DEJBqnq5N5Wz+
-mkNgr06zJtyrq4gSBG6xV1K07u9QthM8x5nt1No80y6PI5c8dLn4t6jd68v7sTf0
-USPLeMGoc+4VzhOB9Yf3H27NgTcq4LhRwNdIX8IP/fGqCuuuUqStHmlENk//gO9l
-l4tOGE7+ZJR9bPUD6aIBvb8XNu69YRVQvGLUwokHI0ATZrvjaYMKjTJ5/lAOZqBn
-eUcRdmsC+JgpvlsAs5D4j9bZ6lvUHf7lJsNixdUvD0Ci4368/74=
-=Bypp
------END PGP SIGNATURE-----
-
---7pmqqdda2g44buu2--
+>
+> The BPF verifier allows passing a packet pointer to a kfunc argument that
+> has an associated size parameter (attrs__sz). If the attrs pointer points
+> into the packet's payload (skb->data) and the skb happens to be cloned,
+> skb_unclone() will invoke pskb_expand_head().
+>
+> This reallocation frees the original packet buffer, meaning the attrs
+> pointer becomes dangling. The subsequent read of attrs->hwtstamp would th=
+en
+> dereference freed memory.
+>
+> Would it be safer to read the attrs->hwtstamp value into a local variable
+> before calling skb_unclone()?
+>
+> > +
+> > +     bpf_compute_data_pointers(skb);
+> > +
+> > +     return 0;
+> > +}
+>
+> --
+> Sashiko AI review =C2=B7 https://sashiko.dev/#/patchset/20260613010039.13=
+62312-1-kuniyu@google.com?part=3D3
