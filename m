@@ -1,233 +1,152 @@
-Received: from mail-pl1-f172.google.com (mail-pl1-f172.google.com [209.85.214.172])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from out-173.mta0.migadu.com (out-173.mta0.migadu.com [91.218.175.173])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F38BD35E955
-	for <sashiko-reviews@lists.linux.dev>; Sat, 13 Jun 2026 11:12:18 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.214.172
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C8B031547C0
+	for <sashiko-reviews@lists.linux.dev>; Sat, 13 Jun 2026 13:22:49 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=91.218.175.173
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1781349140; cv=none; b=qgJGVeZSih5UJ9cpYBgEBMWSphCsHXHzgrjqYWqtgJyJ882jSnRkX14cjlUNuZyzXA2S2NqK2FjII6Csftwsja99ffbLCBVrGQjFfOHQcmJ9IoMZ4k6rYgHPvo1Cl19tgYGRKWESlJHOXrHlyNuhO1ydwbSPCy7hRCezymQhYjc=
+	t=1781356972; cv=none; b=RDw57UVuBtvEYEj+nqsotxkifLsI+0TH2BwNjq+pusKQ4tTRYEL0XmwyKsxpE22qfJQZztzRRdRJUkGkYGA0wkZoiXurykf/wlcqEfIKMtCTXZY3QYvRWR7WBbAD+21rMG7memaT5bWdguF0lJRCXvKjxOfgnM9dxWdbKcYx+uM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1781349140; c=relaxed/simple;
-	bh=Mxk9izfmJ1iYm8ASdn+hegoHoCOC54G9INbOprZmXnE=;
-	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=J/23JOwQYlyNB/L1Y/OqX7w4CQLfr+qvKNDWFVphIRL2nWJJfav+A1xBOPDRDgO5mg7ntdd4svM8wDbkdZcVXayr5YqrjhsO6O/+hEfTqfWzr5e+XJQK/r1mIwWG/ClJFL/31VsVrA25N1pKlNqwEI+pmdDqWpf+PfL377H9WGg=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=OJ7YeYIV; arc=none smtp.client-ip=209.85.214.172
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+	s=arc-20240116; t=1781356972; c=relaxed/simple;
+	bh=ODEPmkKVKtxpPAUFrRuu3NE+FBbPlq1pQkblCOYwlJA=;
+	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
+	 In-Reply-To:Content-Type; b=KiBFHMm7VQBlklujVOBx6cMRJgC4If9xGyEJl57/dT7ImB80Cp+3UaGjn7lHSi7taXryixHNbeoha8nZEAX7KEYykYSyGQbGoyrKXvrVaukfk5DLLO6lESAXDQIS3RVd+gbMkFo1fndnnikHMQ8LbQ9ApSM+pd6XFndc6dyQlmE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linux.dev; spf=pass smtp.mailfrom=linux.dev; dkim=pass (1024-bit key) header.d=linux.dev header.i=@linux.dev header.b=pnLkjW7M; arc=none smtp.client-ip=91.218.175.173
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linux.dev
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linux.dev
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="OJ7YeYIV"
-Received: by mail-pl1-f172.google.com with SMTP id d9443c01a7336-2c0c1e0d00bso16620915ad.0
-        for <sashiko-reviews@lists.linux.dev>; Sat, 13 Jun 2026 04:12:18 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20251104; t=1781349138; x=1781953938; darn=lists.linux.dev;
-        h=content-transfer-encoding:mime-version:references:in-reply-to
-         :message-id:date:subject:cc:to:from:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=Jv/S7oGdPwlP4CzZrwOTO68eimVH3uL1uxQlQb3wY7k=;
-        b=OJ7YeYIVR6WqACbHuSNxMXW+8d2wpYy2us4IdYF6kFnRKcZ91Nm7Jb4zUHZpjsGmCN
-         vOUYiryWLODIv24O+9JOrpFFItR0TBj+4W4LyaYKTZBphMpxUk5TYVibTvrBU5anEdEu
-         3BwHZ3h8w0Ro91Uu9bow97G4LqDhpCV8EfApdjHJM1JwtYnHnRwBXDZ+c8peSQfwZuw2
-         FjEAhf1sGZ+klzIkJXN6FAtbOouXcwu6IsJI4+ry9XaP8ukKzxXhFGqT4016tr3H0Ovd
-         7mXSKYbfq9GXG3zIsKaxcKQlriac35BJGbK0TZI1ZzuR1trjwDidACWmyNSA/Sa5UIG+
-         Kjbw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20251104; t=1781349138; x=1781953938;
-        h=content-transfer-encoding:mime-version:references:in-reply-to
-         :message-id:date:subject:cc:to:from:x-gm-gg:x-gm-message-state:from
-         :to:cc:subject:date:message-id:reply-to;
-        bh=Jv/S7oGdPwlP4CzZrwOTO68eimVH3uL1uxQlQb3wY7k=;
-        b=Zy+quDHgwafI9b4heNW+jwlIgzEe+ZQSf9JWSufLmWEnvZsrp3gEemjE4vH0GGbQ4x
-         /YU35ggAJBoxtD0G5XBjtz1GkhpILD+UZq01+CsV7jnpTcBBs96MEjAXRm2MD9rqlt2n
-         WoteNOm+0KvgRpl1aE2D5mrkCEx3dxhiBPh1lK49ypwb5YJIDuu7l7+wCNmKOwt/r+Oq
-         DX+975/1YF4f+4siynDh4q4aGg4TTlhMTjrPPcpwZUcWspBybiPfrPO80MZEXRfRntGL
-         sX+m7VLrJzIU5Y1EJIVFnqDDuRX7mgi/7bOD4uT7g4Gc5Cj6G9pHsJNXEWTP3c6fzJgg
-         JmYQ==
-X-Forwarded-Encrypted: i=1; AFNElJ9q11OSZnfxzQ1Qbj2MzSf+Jqg190YK5fUzcsbo/AZHzQFNE9VvCr1q3uX3rYUA98kQvQP10+M7ABZJiHp39SI=@lists.linux.dev
-X-Gm-Message-State: AOJu0YzlmBTQh57Uv0XXsaXYfwPj+KOLKui8LCNkGIvHpwk0wyDj4Cn1
-	4n0wOyJIEiAqndFivbH61cQx19+4bX2m1Jrm25QCqzlNQHst9mRAS1ph
-X-Gm-Gg: Acq92OExTpSGOCYCF3zcu90f1ynoDmSjIvkcQaR7YIDEz0xcP9P9gMrqlxn9HYZxCCg
-	SKhdDLF6qm93QK5ledR7s+d4jXhI+z6K0+4Zfwu11e1So3Wz7eWXAn9MiGjTUEXuBvnU7GQeOjK
-	qNECDb5c2hPonXL7l1C2uNXyHQeWAO+KpFR48KLkngcLIuXnSUKu0bJWnWF5fex8YQEyw3GjPJ2
-	9wQ8fgdREs/KA4dNNWvh6KjOhVNlVzO9ZkuaN2ZeerAJEs7KYCoU8RV6dPh8EVbobo8w2M6HqYI
-	xbUPY/Sz/YlGzEtpFF/jRPay0tjHZTXk39fo4Us93OJpWe0yAKJwrbLUkJYu8946JB6qfCupbk9
-	oj7ZP7Tg+YtcF8+CipDvQPbc1DopCwqvWdzLi/uioTDW5KBP+zvInOn345Mk4n7gwJIGyQWeUxx
-	Nh22LEaIHDtB88Yfdexgyp
-X-Received: by 2002:a17:902:e750:b0:2c1:e04d:7cb5 with SMTP id d9443c01a7336-2c412841372mr79321145ad.34.1781349138173;
-        Sat, 13 Jun 2026 04:12:18 -0700 (PDT)
-Received: from arch.localdomain ([2409:8a28:a54:e741::1003])
-        by smtp.gmail.com with ESMTPSA id d9443c01a7336-2c42f7c58c3sm47466445ad.23.2026.06.13.04.12.16
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Sat, 13 Jun 2026 04:12:17 -0700 (PDT)
-From: Jun Yan <jerrysteve1101@gmail.com>
-To: sashiko-bot@kernel.org
-Cc: conor+dt@kernel.org,
-	devicetree@vger.kernel.org,
-	dmitry.torokhov@gmail.com,
-	jerrysteve1101@gmail.com,
-	linux-input@vger.kernel.org,
-	robh@kernel.org,
-	sashiko-reviews@lists.linux.dev
-Subject: Re: [PATCH v2 9/9] Input: cap11xx - add support for CAP1114
-Date: Sat, 13 Jun 2026 19:12:14 +0800
-Message-ID: <20260613111214.17097-1-jerrysteve1101@gmail.com>
-X-Mailer: git-send-email 2.54.0
-In-Reply-To: <20260612074238.4C3371F000E9@smtp.kernel.org>
-References: <20260612074238.4C3371F000E9@smtp.kernel.org>
+	dkim=pass (1024-bit key) header.d=linux.dev header.i=@linux.dev header.b="pnLkjW7M"
+Message-ID: <4f46e056-cf67-499b-9143-03f56037eb81@linux.dev>
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linux.dev; s=key1;
+	t=1781356967;
+	h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+	 to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+	 content-transfer-encoding:content-transfer-encoding:
+	 in-reply-to:in-reply-to:references:references;
+	bh=YMfSVphkl0vo9/M/QN+2NsVgJugdL0ODybYMjubWebo=;
+	b=pnLkjW7MmarzEuYWiOpvFEeSw2GmsMThnalzIeJAILYD8H5uK4E7L92IIEqZJNG4CLvKUn
+	QXi/FIgowbT3x/221nl2aXVu6O8rJHorvrNxcdqz5ZA3rgS/W4kyLb4ttQ7Wwrn4p7RKxf
+	JEbqTRMU11sVq+40WD4zBfVjjDCJCeo=
+Date: Sat, 13 Jun 2026 15:22:44 +0200
 Precedence: bulk
 X-Mailing-List: sashiko-reviews@lists.linux.dev
 List-Id: <sashiko-reviews.lists.linux.dev>
 List-Subscribe: <mailto:sashiko-reviews+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:sashiko-reviews+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
+Subject: Re: [PATCH v2 4/4] HID: asus: add i2c entry for FA808UM and other
+ TUFs
+To: sashiko-reviews@lists.linux.dev
+Cc: dmitry.torokhov@gmail.com, linux-input@vger.kernel.org,
+ connorbelli2003@gmail.com, Jiri Kosina <jikos@kernel.org>,
+ Benjamin Tissoires <bentiss@kernel.org>
+References: <20260612142326.1704858-5-denis.benato@linux.dev>
+ <20260612143750.26B531F000E9@smtp.kernel.org>
+Content-Language: en-US
+X-Report-Abuse: Please report any abuse attempt to abuse@migadu.com and include these headers.
+From: Denis Benato <denis.benato@linux.dev>
+In-Reply-To: <20260612143750.26B531F000E9@smtp.kernel.org>
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
+X-Migadu-Flow: FLOW_OUT
 
-> Thank you for your contribution! Sashiko AI review found 4 potential issue(=
-> s) to consider:
-> - [High] Buffer overflow when parsing the 'microchip,calib-sensitivity' dev=
-> ice tree property for devices with more than 8 channels.
-> - [Medium] Integer truncation silently drops signal guard configurations fo=
-> r channels 8-13.
-> - [Low] Out-of-bounds `GENMASK` generates an 11-bit mask for an 8-bit LED c=
-> ontrol register.
-> - [Low] Unnecessary 9th threshold register added to regmap defaults.
+
+On 6/12/26 16:37, sashiko-bot@kernel.org wrote:
+> Thank you for your contribution! Sashiko AI review found 3 potential issue(s) to consider:
+>
+> Pre-existing issues:
+> - [Critical] Improper Workqueue Initialization / Memory Corruption via Re-initialization
+> - [High] Use-After-Free due to Race Condition in `asus_remove()`
+> - [High] Missing NULL check for `devm_kasprintf` allocation leading to Kernel Oops
 > --
-> 
-> commit a843fc20f78c2766e479b33ffb3dcd6238d1f3f0
-> Author: Jun Yan <jerrysteve1101@gmail.com>
-> 
-> Input: cap11xx - add support for CAP1114
-> 
-> CAP1114 is a 14-channel capacitive touch sensor with 11 LED outputs
-> and hardware reset support. The CAP1114 uses two control registers
-> for LED output management and requires two button status registers
-> for touch input state reporting.
-> 
-> > diff --git a/drivers/input/keyboard/cap11xx.c b/drivers/input/keyboard/ca=
-> p11xx.c
-> > index d45bb231d7a1f..e4da0e26c34a8 100644
-> > --- a/drivers/input/keyboard/cap11xx.c
-> > +++ b/drivers/input/keyboard/cap11xx.c
-> [ ... ]
-> > @@ -98,6 +105,9 @@ static const struct reg_default cap11xx_reg_defaults[]=
->  =3D {
-> >  	{ CAP11XX_REG_SENSOR_THRESH(3),		0x40 },
-> >  	{ CAP11XX_REG_SENSOR_THRESH(4),		0x40 },
-> >  	{ CAP11XX_REG_SENSOR_THRESH(5),		0x40 },
-> > +	{ CAP11XX_REG_SENSOR_THRESH(6),		0x40 },
-> > +	{ CAP11XX_REG_SENSOR_THRESH(7),		0x40 },
-> > +	{ CAP11XX_REG_SENSOR_THRESH(8),		0x40 },
-> 
-> [Severity: Low]
-> Does this code inadvertently add a 9th threshold register?
-> 
-> Since the indexing is 0-based, an 8-threshold device should only need indic=
-> es
-> 0 through 7.
-> 
-> Register index 8 appears to map to an unused register.
+>
+> commit ee67627a03893a0ccf0a7653ac62191a687b7821
+> Author: Denis Benato <denis.benato@linux.dev>
+>
+> HID: asus: add i2c entry for FA808UM and other TUFs
+>
+> On newer TUF laptops the keyboard HID device uses the same PID/VID of a
+> USB device that was found in ROG laptops: add it to hid-asus as i2c too.
+>
+>> diff --git a/drivers/hid/hid-asus.c b/drivers/hid/hid-asus.c
+>> index 0f78242b6a1db..7964fc96196e5 100644
+>> --- a/drivers/hid/hid-asus.c
+>> +++ b/drivers/hid/hid-asus.c
+>> @@ -1565,6 +1565,9 @@ static const struct hid_device_id asus_devices[] = {
+>>  	{ HID_USB_DEVICE(USB_VENDOR_ID_ASUSTEK,
+>>  	    USB_DEVICE_ID_ASUSTEK_ROG_NKEY_KEYBOARD2),
+>>  	  QUIRK_USE_KBD_BACKLIGHT | QUIRK_ROG_NKEY_KEYBOARD | QUIRK_HID_FN_LOCK },
+>> +	{ HID_I2C_DEVICE(USB_VENDOR_ID_ASUSTEK,
+>> +	    USB_DEVICE_ID_ASUSTEK_ROG_NKEY_KEYBOARD2),
+>> +	  QUIRK_USE_KBD_BACKLIGHT | QUIRK_ROG_NKEY_KEYBOARD | QUIRK_HID_FN_LOCK },
+> [Severity: Critical]
+> This is a pre-existing issue, but since this patch enables QUIRK_HID_FN_LOCK
+> for a new device, could the fn_lock_sync_work initialization cause workqueue
+> corruption?
+>
+> In asus_input_configured(), INIT_WORK(&drvdata->fn_lock_sync_work, ...) is
+> called per-input. For devices with multiple inputs, if hid_hw_start() enables
+> interrupts before all inputs are configured, an early KEY_FN_ESC event could
+> schedule the work before the next input is configured. 
+>
+> The next call to asus_input_configured() would then re-execute INIT_WORK() on
+> the already queued work item, clearing its list pointers and causing a panic. 
+>
+> Additionally, for devices with 0 inputs, it is never initialized, causing a
+> warning in cancel_work_sync().
+This is implemented in f631011e36b87b173b71c7592b558ad05d791228
 
-Good catch, CAP11XX_REG_SENSOR_THRESH(8) should be dropped.
+("HID: hid-asus: Implement fn lock for Asus ProArt P16")  and I see a
 
-> 
-> >  	{ CAP11XX_REG_CONFIG2,			0x40 },
-> >  };
-> [ ... ]
-> > @@ -394,6 +442,14 @@ static int cap11xx_init_leds(struct device *dev,
-> >  	if (error)
-> >  		return error;
-> > =20
-> > +	if (num_leds > 8) {
-> > +		error =3D regmap_update_bits(priv->regmap,
-> > +					   priv->model->led_output_control_reg_base + 1,
-> > +					   GENMASK(num_leds - 8 - 1, 0), 0);
-> 
-> [Severity: Low]
-> Can this result in an out-of-bounds mask generation when num_leds > 8?
-> 
-> In cap11xx_init_leds() just prior to this addition, the code calls:
-> 
->     error =3D regmap_update_bits(priv->regmap,
->                    priv->model->led_output_control_reg_base,
->                    GENMASK(num_leds - 1, 0), 0);
-> 
-> When num_leds is 11 for the CAP1114 model, this generates an 11-bit mask
-> to update an 8-bit register.
-> 
-> While the regmap core safely masks this, should the mask be clamped to
-> min(num_leds, 8) to accurately reflect the hardware register's capacity?
+asus_kbd_set_fn_lock(hdev, true);
 
-Agreed, thanks for the correction.
+things
 
-> 
-> > +		if (error)
-> > +			return error;
-> > +	}
-> [ ... ]
-> > @@ -572,6 +628,14 @@ static const struct cap11xx_hw_model cap1106_model =
-> =3D {
-> >  	.has_repeat_en =3D true,
-> >  };
-> > =20
-> > +static const struct cap11xx_hw_model cap1114_model =3D {
-> > +	.product_id =3D 0x3a,
-> > +	.num_channels =3D 14, .num_leds =3D 11, .num_sensor_thresholds =3D 8,
-> 
+asus_kbd_set_fn_lock(hdev, true);
+
+Shouldn't one of the two (probably the latest) be:
+
+asus_kbd_set_fn_lock(hdev, false);
+
+
+Moreover I see from the commit message that this implementation has
+been copied from hid-lenovo, so does hid-lenovo suffers from the same issue?
+
+Since I don't have the affected hardware and I'm much confused by this double true
+I won't try to fix it in this patchset unless absolutely necessary or I have more info,
+but ideally I would like the patch to come from who can actually test the fix.
+
 > [Severity: High]
-> Does this code overflow the calib_sensitivities array during initialization?
-> 
-> In struct cap11xx_priv, the array is rigidly sized to 8 elements:
-> 
->     u32 calib_sensitivities[8];
->     u32 keycodes[];
-> 
-> During cap11xx_init_keys(), when parsing "microchip,calib-sensitivity", the
-> driver reads priv->model->num_channels elements:
-> 
->     of_property_read_u32_array(node, "microchip,calib-sensitivity",
->                                priv->calib_sensitivities,
->                                priv->model->num_channels)
-> 
-> With num_channels set to 14, won't this write 14 elements into an 8-element
-> array, clobbering the adjacent keycodes flexible array member and potential=
-> ly
-> causing memory corruption or a kernel panic?
-
-Good point, I'll fix that in v3.
-
-> 
-> 
-> [Severity: Medium]
-> Will this configuration lead to integer truncation when parsing the
-> "microchip,signal-guard" property?
-> 
-> In struct cap11xx_priv, the mask is defined as an 8-bit value:
-> 
->     u8 signal_guard_inputs_mask;
-> 
-> During cap11xx_init_keys(), a loop iterates up to num_channels (14) and shi=
-> fts
-> the bits:
-> 
->     priv->signal_guard_inputs_mask |=3D 0x01 << i;
-> 
-> For channels 8 to 13, won't this bitwise shift exceed the 8-bit variable wi=
-> dth
-> and silently truncate to 0?
-
-Good point, I'll fix that in v3.
-
-> 
-> Even if the CAP1114 doesn't support signal guards, this drops the bitmask f=
-> or
-> the upper channels, bypassing the capability check and failing to emit the
-> intended 'unsupported' warning.
-> 
-> > +	.led_output_control_reg_base =3D CAP1114_REG_LED_OUTPUT_CONTROL1,
-> > +	.sensor_input_reg_base =3D CAP1114_REG_BUTTON_STATUS1,
-> > +	.has_grouped_sensors =3D true,
-> > +};
-> 
-> --=20
-> Sashiko AI review =C2=B7 https://sashiko.dev/#/patchset/20260612072237.1177=
-> 304-1-jerrysteve1101@gmail.com?part=3D9
-> 
+> This is a pre-existing issue, but is there a potential use-after-free during
+> device removal when QUIRK_HID_FN_LOCK is enabled?
+>
+> In asus_remove(), cancel_work_sync(&drvdata->fn_lock_sync_work) is called
+> before hid_hw_stop(hdev). Since the hardware is still active, a late
+> KEY_FN_ESC event can trigger asus_event() and unconditionally call
+> schedule_work() after the work was supposedly canceled. 
+>
+> Once the driver is removed and drvdata is freed by devres, could the
+> workqueue execute asus_sync_fn_lock() and dereference the freed drvdata?
+>
+> [Severity: High]
+> This is a pre-existing issue, but does the XGM LED name allocation need a
+> NULL check?
+>
+> In asus_probe(), devm_kasprintf() is used to allocate the name for
+> drvdata->xgm_led->cdev.name:
+>
+> 	drvdata->xgm_led->cdev.name = devm_kasprintf(&hdev->dev, GFP_KERNEL,
+> 			"asus:xgm-%s:led",
+> 			strlen(hdev->uniq) ?
+> 			hdev->uniq : dev_name(&hdev->dev));
+> 	drvdata->xgm_led->cdev.brightness = 1;
+>
+> If devm_kasprintf() fails under memory pressure, it returns NULL. This NULL
+> pointer is then passed to led_classdev_register(), which passes it to
+> led_classdev_next_name() and eventually to strscpy() as the source string. 
+> Since strscpy() does not check for a NULL source, this would cause an
+> immediate NULL pointer dereference.
+>
+>>  	{ HID_USB_DEVICE(USB_VENDOR_ID_ASUSTEK,
+>>  	    USB_DEVICE_ID_ASUSTEK_ROG_Z13_LIGHTBAR),
+>>  	  QUIRK_USE_KBD_BACKLIGHT | QUIRK_ROG_NKEY_KEYBOARD },
