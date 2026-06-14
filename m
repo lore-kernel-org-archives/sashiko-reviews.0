@@ -1,223 +1,124 @@
-Received: from mail-yw1-f180.google.com (mail-yw1-f180.google.com [209.85.128.180])
+Received: from mail-ua1-f41.google.com (mail-ua1-f41.google.com [209.85.222.41])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D73002EEE7B
-	for <sashiko-reviews@lists.linux.dev>; Sun, 14 Jun 2026 14:46:22 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=pass smtp.client-ip=209.85.128.180
-ARC-Seal:i=2; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1781448385; cv=pass; b=pQUUonUHSOL337XkeN//YE8nAdDWVc0hnmPf/27rz8mh5Tt82+bukxDeJE3YMUjYFsVsJXMUKO8II0eGPAJK+v08pE45NXBRwxLfBlRE/DqdAoQxD3xW/DDqD6PnAksp0oBSmH3Jj1qopXPpmwZ9DA7MT3XH54AUtSUiprXLOA4=
-ARC-Message-Signature:i=2; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1781448385; c=relaxed/simple;
-	bh=2Q3Gmrvzmq5g0KgbCK921fwbHOfDSFNnhYBIbs+uioM=;
-	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
-	 To:Cc:Content-Type; b=KqoYtFHEVXpx5cWImcTUXwbqbNSxE9IdDXxjQGiseswiinZQ1Ih4TGJc24hU1Cws+9pu+0XXLouZy2e9nZQKTPh+gQWLbtQHxhi2UtpK8Wb5URX/c5Jpz/jEMlCQX0+mXzwrjRlWVgYh5dtPMBI3LLpQAdY1RIql6GY4CgGuOjs=
-ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=DnX07AI2; arc=pass smtp.client-ip=209.85.128.180
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3283832ED27
+	for <sashiko-reviews@lists.linux.dev>; Sun, 14 Jun 2026 20:58:40 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.222.41
+ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
+	t=1781470721; cv=none; b=tEnmYNf4SC6btNBSeIU8bAiJbAlb+GUi5e26RbfylbF75ZlMx1wl+Vq6Frxhz4d5Lz88ZdoxTjQSACtoicqSHZemgVHU6qklDNAkk2uRddXGIDaNqiX9xGRSImKOLvtVTziqCA7Ht9lJdJKayPEsf1cGQl1O60WBKqLCrc1PADU=
+ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
+	s=arc-20240116; t=1781470721; c=relaxed/simple;
+	bh=lBTPnN9uHjEIpqMJLv78Zrf4kbGuYs2/tRFB+GgGmJA=;
+	h=Mime-Version:Content-Type:Date:Message-Id:Cc:Subject:From:To:
+	 References:In-Reply-To; b=QzssgjzsMFokrDzzAcTTzUn3GucbbHDKn3jQaYJQQDiGi5wY90ahwBW3sM20nntiz7wTk7WvUrjc15L1h22sjE2byEu3/Obpq0CGeIUV+zL1nzI87JROZhESP6KvMlXkW0SCWkQ92z15xzPDMmYYHLc7ibq0QPhflLoEmwJt81Y=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=HGmULgnY; arc=none smtp.client-ip=209.85.222.41
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="DnX07AI2"
-Received: by mail-yw1-f180.google.com with SMTP id 00721157ae682-7e2f3646c10so27380807b3.0
-        for <sashiko-reviews@lists.linux.dev>; Sun, 14 Jun 2026 07:46:22 -0700 (PDT)
-ARC-Seal: i=1; a=rsa-sha256; t=1781448382; cv=none;
-        d=google.com; s=arc-20240605;
-        b=YD4De8xtU+LkK2EiW1ujZC3+S5Ynoz80hTsMwZM1iUK9fPcB625TKieT6SHTyDVg+f
-         MKWkoOnlBnH2KJJOAhtQ+UcCNNbKw3GWuQ4BHXcBf2jeJXzuUPd5sU1IFIS/+3alqO82
-         kFlnXBwQuZtPMA/W8HPFywLOudkL0/zPEYCAie0V0luuqNerEjTH31gh8I7fzT13uPgI
-         lMPA2CLQWQ+LQWVkPqJdVqdtBsoHDCHkfj91dGA/FeKnflkp1E+Co4NhAP102mHqWP25
-         xpan4nd5sH8ws6NvAHqKumI4zLwtb9A/dA9Wsxc50j0uJvh+Pj5sofC0aOInzvEq5hgp
-         V70Q==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com; s=arc-20240605;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:dkim-signature;
-        bh=+/n6Ztw9j4lBHgOeYByo7kNKAZf5o9zTt9xSxYBEC0c=;
-        fh=+Kn94FVzl6rE7mDhn4pFvEHlRshbQ57dQ5o19v04Oyg=;
-        b=HWX7dOdPXkF7vErM3zUJlxME6grSPaSCXVlEsztk90WtxPLb0TC7wjwvfmTLuOC5MQ
-         2IGoAUl6Mmv+cpnVP29BUYIDO2OiRsdM3xE3G/hKOGIQzTqylBiJ2xmGZ4Y9MIxcy6e0
-         /TBA6Hsk6LwwnIH54mnRPmDWH7/3kSKLIQb69l/+CYdMV10GOY8xSkxoU5rdnwNmW4fQ
-         j8J9PHKp26D6SuR9vMLaHlQhvFlc4XRbYSyJ1rwhSgwxUv1ymfWSLOamOilcuOCF1Vo9
-         4q9nNwoFa/x3D6sJWx38lw+ljZX1lUTqkQZ/MLdMx3Gl8vLdw9bgcF3jLpJokmjPFCod
-         WbjA==;
-        darn=lists.linux.dev
-ARC-Authentication-Results: i=1; mx.google.com; arc=none
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="HGmULgnY"
+Received: by mail-ua1-f41.google.com with SMTP id a1e0cc1a2514c-9639474a0c1so2122663241.2
+        for <sashiko-reviews@lists.linux.dev>; Sun, 14 Jun 2026 13:58:40 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20251104; t=1781448382; x=1782053182; darn=lists.linux.dev;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:from:to:cc:subject:date
+        d=gmail.com; s=20251104; t=1781470719; x=1782075519; darn=lists.linux.dev;
+        h=in-reply-to:references:to:from:subject:cc:message-id:date
+         :content-transfer-encoding:mime-version:from:to:cc:subject:date
          :message-id:reply-to;
-        bh=+/n6Ztw9j4lBHgOeYByo7kNKAZf5o9zTt9xSxYBEC0c=;
-        b=DnX07AI2c5yj07d+At+zn9xxy8w+zQKzQ4+idJOETqYRHet8oQ7s/uNwnZN1mFjmGW
-         ce07O6DHYAWpBZM220IwyEJIaoab7p4j3sNCBSqH/gOtbm040ouJy3eLXiEqA8ZA9l9k
-         D/Ig+X8RKrRD10Te7BKd/bjem6xfkh8jfRsZUm1IIv9K4Aa7S0xC59rikfVGgtXzbEp2
-         ECv7+r5cuiAN2iWrSHDsFAus3Mv5u1cN17jtbgzGOieHAo9496jwRacbxPmvL6qQ0QKO
-         9BTpjjisH19bCDrlq1694cxSFa2Iyjug0dldDe5tet6ynC2lHq2g62IPtnIW6vIJZj4r
-         XqOQ==
+        bh=lBTPnN9uHjEIpqMJLv78Zrf4kbGuYs2/tRFB+GgGmJA=;
+        b=HGmULgnYlhdtqL/0I/dF1IPNEE9XhGqzHXbM0ocD2amH5t7dm+tG7yXz9xwjEFkM7f
+         uSkrHzoV8kgFYLDsisCECZ2rHiY5Owfyb8CB0GIbFK5jbE93bDJqE+juqMJX8rLcu+jb
+         XX72AyZ5w7lNwQfqdaRvd2lB64arkK5mesw5BdtjIBXR0Nx8V5lohXVCnojEw/kOwCc/
+         8XBRFXwBA/YZCHZQvLLIcwMelmR50Qy8BtfD15SC4LFMBLFOXGwdEPIWCDYnm1K7Jo7h
+         VBR+A6jZeolph3tvA+li4BXuQHE4t5lGC1LhiT9KgVMu0sjp+pcTIk+fV38ayUn6KBYd
+         nICw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20251104; t=1781448382; x=1782053182;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:x-gm-gg:x-gm-message-state:from
-         :to:cc:subject:date:message-id:reply-to;
-        bh=+/n6Ztw9j4lBHgOeYByo7kNKAZf5o9zTt9xSxYBEC0c=;
-        b=HAxglIVDgXESiogoiG9IXYWcmuAmyY55mY+xclb9CeqFJk86KLq8swDDSq2Od140t5
-         m5w7YVgaNB6RVruvwPAYQtMeirlMG6iH50UDQ4w8gC27zsZKi2DUEfxHMSbGc8uKMKVk
-         ZURja3zgYo/JWsCuonw0xUkTQZj9alJkn1pq3byve+jdkgIL2qo6zZHY2oAk/nTkzl76
-         np555nTWGtP9/sykUKofDf/sFE7LyCo0iRaFpIYdAopgQPYFLKeYV1whycRCGzimVJjs
-         gKaLpByFNVq4eUAFN4bdKFlWTOYNisrCRDWVe8bi5bwBYFGJlw49MG/SXntAtHS8bXUr
-         Odsg==
-X-Gm-Message-State: AOJu0Yx/sDoM2uue6c4CaFNPxn7B+7OqawvOeYwJJkob1g74xeC/O+kw
-	YIYskBLF04pCl1Fs1lFuZkx0sfzMNiNm9xGRPptkMbp3Xv1iOwVKqu/J1ucjJPjAAJ6K6QULvaV
-	VsmRo1blJjgJUQCyDHmUMhMpyS+Bg3DxSrK5M
-X-Gm-Gg: Acq92OGKgpaMJJQydE4M6G1MBCb23S/49mcsN+7mcZNdwxrpFQhxbWcntwOfk1mm+Bh
-	APodSPZ0I3kcluZM1FhGB2R7edPd7LfamRkK03gRwevwvby6R8ccdPFzc066m6eRDo9TTin8JAu
-	muYFUyN0mHp4ib7zyCE6MlrRBVToXb74ypMfUY+rC0NseeiwaxEE4MSWZHh3mY3rpD9C34OLxZx
-	kZ3UyFWQb6AivnaUz1i9Bw1NvrlCuTCd1IsqqMbHto2nmg341lJHY73pHFIo9PEv7Ozc7HoB8lr
-	Ll6/
-X-Received: by 2002:a05:690e:4146:b0:651:bf58:446b with SMTP id
- 956f58d0204a3-66277f5479dmr8835081d50.10.1781448381613; Sun, 14 Jun 2026
- 07:46:21 -0700 (PDT)
+        d=1e100.net; s=20251104; t=1781470719; x=1782075519;
+        h=in-reply-to:references:to:from:subject:cc:message-id:date
+         :content-transfer-encoding:mime-version:x-gm-gg:x-gm-message-state
+         :from:to:cc:subject:date:message-id:reply-to;
+        bh=lBTPnN9uHjEIpqMJLv78Zrf4kbGuYs2/tRFB+GgGmJA=;
+        b=Z2DzbTeXzweSK8U7j+Chotw1TaIlQRh1le1iUnF+ItaR4DE7J7/TPjXPhoSVbgG9Ei
+         DbsQllKcT6EaUQVf4BJIx9KprjPs2rmKT7886yRZabVw+Kae20r9TfSms3JWpQUSly9w
+         eYdJNvmjidHufeRrleRKG4rhkp+PpCuZ6+rdGvkrJUDAB9R71N1koS0La8a8tPVadwze
+         U9GbM7hnAuRV4FTBarYte9QvuL4Wys7xG2GATFTWFkFeFaO023DhPSiNSMJczKPeypRk
+         tyf2xfh0QivwOOS+B6E5S6FlV/8c5nHisD32BaDO3y0V/mno4X0rs/3hT97dDplqHwah
+         FBHQ==
+X-Forwarded-Encrypted: i=1; AFNElJ8lHQVTKEOb1RpPK5/qLsbFyfS1VGfSvSq/fEjN/78CBZKfvKafD9riRYJDEw4GcGdXqiX6h4tBrqzTSGC/xTc=@lists.linux.dev
+X-Gm-Message-State: AOJu0YxxfKJgczs/hDrPl+IdWKICHU4HjjTLWX0aVVNg6gyQZfR8yLBy
+	g0nYMPZZ0Ane/scq1spGJXpNLYlF3z/KG1ZajSpZa3ULb1EJWc8XPD8y
+X-Gm-Gg: Acq92OHeBAyrXRD0qL5tjAxNEkmodpat8UjERJq9ei74vwJ50fKp04CpZhDkf6AUIbe
+	8dZVzbuewtUoRG2VSLbFBAaaungw57LhNGzkHo4lH2DJNrE/RQKTO4yrMDibrxUodmZuLjywygb
+	h0VkuVNQWndrt4UGlejZumHn+rva/XdquqztLKF0tQwvvwKO8Gd072JkFTqtF0U1+MIeXt65SFY
+	KgZByUNVhTdiCjpxjBS2W/jVKZ0TbE4vgmAgxC3uV3lKXrpNYaMeAuZ+4NVF1rc80WCJfTltacW
+	/t1DryJ7lMi3xVbM/r5bYWyoAlvTFi0mONnDFqWoaBqe4Xc6r1aaQUilKK01rQUd75S+Csg4ZLP
+	hcnFFi7UFGP7Ee4BrImEE/NUZbWWTclq/cjWVUwfKEwgjxVO5v+sOwSKTqd+jah2YhHAMu7nzwd
+	xC93lz5F0pi9fZbw==
+X-Received: by 2002:a05:6102:5693:b0:631:26f6:7022 with SMTP id ada2fe7eead31-71e88dcef1emr6025602137.23.1781470719221;
+        Sun, 14 Jun 2026 13:58:39 -0700 (PDT)
+Received: from localhost ([2800:bf0:82:11a2:7ac4:1f2:947b:2b6])
+        by smtp.gmail.com with ESMTPSA id a1e0cc1a2514c-966a03767eesm1754284241.3.2026.06.14.13.58.38
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Sun, 14 Jun 2026 13:58:38 -0700 (PDT)
 Precedence: bulk
 X-Mailing-List: sashiko-reviews@lists.linux.dev
 List-Id: <sashiko-reviews.lists.linux.dev>
 List-Subscribe: <mailto:sashiko-reviews+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:sashiko-reviews+unsubscribe@lists.linux.dev>
-MIME-Version: 1.0
-References: <20260614133807.2165124-3-ekffu200098@gmail.com> <20260614135041.D944B1F000E9@smtp.kernel.org>
-In-Reply-To: <20260614135041.D944B1F000E9@smtp.kernel.org>
-From: Sang-Heon Jeon <ekffu200098@gmail.com>
-Date: Sun, 14 Jun 2026 23:46:10 +0900
-X-Gm-Features: AVVi8CcBo1nTDfvjkovV-__M8a02nNzFI7DIjnYIoWPk9xTRUu7QjWwIjJiydSI
-Message-ID: <CABFDxMEhOJ1nrmWcyO6FVfxQHbahKiJ_O_QKPf0Q-VMzT5pdEg@mail.gmail.com>
-Subject: Re: [PATCH v2 2/2] of: reserved_mem: print skipped node name when too
- many regions are defined
-To: sashiko-reviews@lists.linux.dev
-Cc: devicetree@vger.kernel.org, robh@kernel.org, conor+dt@kernel.org
-Content-Type: text/plain; charset="UTF-8"
+Mime-Version: 1.0
 Content-Transfer-Encoding: quoted-printable
+Content-Type: text/plain; charset=UTF-8
+Date: Sun, 14 Jun 2026 15:58:32 -0500
+Message-Id: <DJ92NVDRAKQY.1RQQVGA7FSK03@gmail.com>
+Cc: "Kurt Borja" <kuurtb@gmail.com>, <robh@kernel.org>,
+ <conor+dt@kernel.org>, <devicetree@vger.kernel.org>
+Subject: Re: [PATCH 2/5] iio: adc: Add ti-ads1262 driver
+From: "Kurt Borja" <kuurtb@gmail.com>
+To: "Krzysztof Kozlowski" <krzk@kernel.org>,
+ <sashiko-reviews@lists.linux.dev>
+X-Mailer: aerc 0.21.0-0-g5549850facc2
+References: <20260612-ads126x-v1-2-894c788d03ed@gmail.com>
+ <20260612230132.E04DB1F000E9@smtp.kernel.org>
+ <20260613-graceful-berserk-rook-cc5ecb@quoll>
+In-Reply-To: <20260613-graceful-berserk-rook-cc5ecb@quoll>
 
-On Sun, Jun 14, 2026 at 10:50=E2=80=AFPM <sashiko-bot@kernel.org> wrote:
+On Sat Jun 13, 2026 at 2:00 PM -05, Krzysztof Kozlowski wrote:
+> On Fri, Jun 12, 2026 at 11:01:32PM +0000, sashiko-bot@kernel.org wrote:
+>> Thank you for your contribution! Sashiko AI review found 15 potential is=
+sue(s) to consider:
+>> - [High] Architecture Compatibility / Undefined Behavior due to direct b=
+itfield mapping.
+>> - [High] Out-of-Bounds Memory Access / Hardware Misconfiguration during =
+active channel iteration.
+>> - [High] Infinite Loop / Denial of Service in IDAC microamp parsing.
+>> - [High] Logic Error: Inverted bounds check rejects valid pin numbers.
+>> - [High] Race Condition / Lost Wakeup due to reinitializing completion a=
+fter hardware trigger.
+>> - [High] Missing Error Handling / Type Mismatch: Unsigned check of negat=
+ive error code.
+>> - [High] DMA Memory Corruption: Unaligned DMA buffer in union.
+>> - [High] Uninitialized Memory Read (KMSAN) on stack variable.
+>> - [High] Illegal DMA from Stack in regmap bus implementation.
+>> - [High] Logic Error: GPIO get_multiple returns pin states incorrectly.
+>> - [High] Hardware State / Timing violation during device reset.
+>> - [High] Logic Error / Performance: Unconditional stall without IRQ.
+>> - [Medium] Memory Leak of fwnode_handle reference on the error path.
+>> - [Medium] Resource Leak of runtime PM usage counter on the error path.
+>> - [Medium] API Contract Violation: Buffer mode lock released with direct=
+ mode API.
 >
-> Thank you for your contribution! Sashiko AI review found 3 potential issu=
-e(s) to consider:
->
-> Pre-existing issues:
-> - [High] Out-of-bounds write to the static `reserved_mem_array` if `membl=
-ock_alloc` fails during dynamic array reallocation.
-> - [High] Ignored memory reservation failures allow unreserved memory to b=
-e successfully registered and handed out as exclusive reserved memory.
-> - [Medium] Dynamically allocated `no-map` reserved memory regions are lea=
-ked from `memblock.reserved` if their initialization fails.
-> --
->
-> commit f95986ab58870e3d79cb320c6dc73ef80982357e
-> Author: Sang-Heon Jeon <ekffu200098@gmail.com>
->
-> of: reserved_mem: print skipped node name when too many regions are defin=
-ed
->
-> When too many reserved memory regions are defined,
-> fdt_init_reserved_mem_node() logs an error and skips the region without
-> naming the node.
->
-> Print the node name so the skipped node can be identified, matching
-> fdt_scan_reserved_mem().
->
-> > diff --git a/drivers/of/of_reserved_mem.c b/drivers/of/of_reserved_mem.=
-c
-> > index 499b769e98096..df3d90cb8dbe1 100644
-> > --- a/drivers/of/of_reserved_mem.c
-> > +++ b/drivers/of/of_reserved_mem.c
-> > @@ -623,7 +623,8 @@ static void __init fdt_init_reserved_mem_node(unsig=
-ned long node, const char *un
-> >       struct reserved_mem *rmem =3D &reserved_mem[reserved_mem_count];
-> >
-> >       if (reserved_mem_count =3D=3D total_reserved_mem_cnt) {
-> > -             pr_err("not enough space for all defined regions.\n");
-> > +             pr_err("not enough space for all defined regions, skip '%=
-s'\n",
-> > +                    uname);
-> >               return;
-> >       }
->
-> [Severity: High]
-> This isn't a bug introduced by this patch, but does alloc_reserved_mem_ar=
-ray()
-> fail to reset total_reserved_mem_cnt on error?
->
-> If memblock_alloc() fails during dynamic array reallocation, it returns e=
-arly
-> without resetting total_reserved_mem_cnt back to its original value. When=
- the
-> bounds check in fdt_init_reserved_mem_node() is reached later,
-> reserved_mem_count can increment beyond the statically-sized
-> reserved_mem_array limit, potentially causing an out-of-bounds write:
->
-> drivers/of/of_reserved_mem.c:alloc_reserved_mem_array() {
->     ...
->         new_array =3D memblock_alloc(alloc_size, SMP_CACHE_BYTES);
->         if (!new_array) {
->                 pr_err("Failed to allocate memory for reserved_mem array.=
-..");
->                 return;
->         }
->     ...
-> }
->
-> [Severity: High]
-> This is a pre-existing issue, but does __reserved_mem_reserve_reg()
-> unconditionally return 0 even if early_init_dt_reserve_memory() fails?
->
-> If memory reservation fails, it logs an error but returns success, allowi=
-ng
-> unreserved memory to be successfully registered and later handed out as
-> exclusive reserved memory:
->
-> drivers/of/of_reserved_mem.c:__reserved_mem_reserve_reg() {
->     ...
->                 if (early_init_dt_reserve_memory(base, size, nomap)) {
->                         pr_err("Reserved memory: failed to reserve...");
->                 }
->         }
->         return 0;
-> }
+> Amount of findings is horrifying. You should probably involve some
+> internal review before posting next version.
 
-These areas are affected by the ongoing series [1], so it might be
-better not to touch them until it is merged.
+I'll set a local Sashiko instance before submitting the next version.
 
-[1] https://lore.kernel.org/all/20260527032917.3385849-1-chenwandun1@gmail.=
-com/
+Also my local testing is a bit loose. I definitely need to take care of
+it.
 
-> [Severity: Medium]
-> This is a pre-existing issue, but does fdt_init_reserved_mem_node() leak
-> dynamically allocated no-map regions if initialization fails?
 >
-> If __reserved_mem_init_node() returns an error, the cleanup path for no-m=
-ap
-> regions clears the MEMBLOCK_NOMAP flag but skips calling memblock_phys_fr=
-ee(),
-> which permanently leaks the physical memory from memblock.reserved:
->
-> drivers/of/of_reserved_mem.c:fdt_init_reserved_mem_node() {
->     ...
->         err =3D __reserved_mem_init_node(rmem, node);
->         if (err !=3D 0 && err !=3D -ENODEV) {
->                 pr_info("node %s compatible matching fail\n", rmem->name)=
-;
->                 rmem->name =3D NULL;
->
->                 if (nomap)
->                         memblock_clear_nomap(rmem->base, rmem->size);
->                 else
->                         memblock_phys_free(rmem->base, rmem->size);
->                 return;
->     ...
-> }
+> Best regards,
+> Krzysztof
 
-It should be rare, but looks correct to me. BTW, it is not directly
-related to this patchset, so I think it is better to fix it in a
-separate patch.
+Thanks for your feedback!
 
-> --
-> Sashiko AI review =C2=B7 https://sashiko.dev/#/patchset/20260614133807.21=
-65124-1-ekffu200098@gmail.com?part=3D2
-
-Best Regards,
-Sang-Heon Jeon
+--=20
+Thanks,
+ ~ Kurt
