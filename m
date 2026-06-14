@@ -1,130 +1,223 @@
-Received: from mail-qt1-f169.google.com (mail-qt1-f169.google.com [209.85.160.169])
+Received: from mail-yw1-f180.google.com (mail-yw1-f180.google.com [209.85.128.180])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 075A937DAA3
-	for <sashiko-reviews@lists.linux.dev>; Sun, 14 Jun 2026 10:36:42 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=pass smtp.client-ip=209.85.160.169
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D73002EEE7B
+	for <sashiko-reviews@lists.linux.dev>; Sun, 14 Jun 2026 14:46:22 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=pass smtp.client-ip=209.85.128.180
 ARC-Seal:i=2; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1781433405; cv=pass; b=qzGiXCpfYpc0tm9vKl9fUq9ArZ0gzVUEa00dJCfV/O4rpyO/zY9IKDFJWGhn19psnr4X/DgKu60hbqAy24uyhNhC2OPJzYyUjTC3SLeB88xJJ9CcHQRwPYjGDXAqomxlSqD3qkzqgQa6RWUap5/IRcTuX3TqM7Xy7VHeKWy9y7Y=
+	t=1781448385; cv=pass; b=pQUUonUHSOL337XkeN//YE8nAdDWVc0hnmPf/27rz8mh5Tt82+bukxDeJE3YMUjYFsVsJXMUKO8II0eGPAJK+v08pE45NXBRwxLfBlRE/DqdAoQxD3xW/DDqD6PnAksp0oBSmH3Jj1qopXPpmwZ9DA7MT3XH54AUtSUiprXLOA4=
 ARC-Message-Signature:i=2; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1781433405; c=relaxed/simple;
-	bh=LNZzSVh5t+Rz1ZtSfa+00Lh6/l3vF/F0/XGMgP1krc0=;
+	s=arc-20240116; t=1781448385; c=relaxed/simple;
+	bh=2Q3Gmrvzmq5g0KgbCK921fwbHOfDSFNnhYBIbs+uioM=;
 	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
-	 To:Cc:Content-Type; b=Jh0A2oCidYlsMSwxlH0Vfuy/P6fHNiKkbVEIbzVC4ihxLGvYKro6kdjQhlCDB+LudAHqdYTyodAa7XzIA6qVNr+ofjoppQmwq9WFFmLkDt/l+dMgqaYRd7jRR+tjETk2CfgZDQF0slaYM/6EV8CO5uqu2qIYPjVeMaoeGK2SYOQ=
-ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=google.com; spf=pass smtp.mailfrom=google.com; dkim=pass (2048-bit key) header.d=google.com header.i=@google.com header.b=IxFom/dm; arc=pass smtp.client-ip=209.85.160.169
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=google.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=google.com
+	 To:Cc:Content-Type; b=KqoYtFHEVXpx5cWImcTUXwbqbNSxE9IdDXxjQGiseswiinZQ1Ih4TGJc24hU1Cws+9pu+0XXLouZy2e9nZQKTPh+gQWLbtQHxhi2UtpK8Wb5URX/c5Jpz/jEMlCQX0+mXzwrjRlWVgYh5dtPMBI3LLpQAdY1RIql6GY4CgGuOjs=
+ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=DnX07AI2; arc=pass smtp.client-ip=209.85.128.180
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=google.com header.i=@google.com header.b="IxFom/dm"
-Received: by mail-qt1-f169.google.com with SMTP id d75a77b69052e-51765531803so635121cf.0
-        for <sashiko-reviews@lists.linux.dev>; Sun, 14 Jun 2026 03:36:42 -0700 (PDT)
-ARC-Seal: i=1; a=rsa-sha256; t=1781433402; cv=none;
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="DnX07AI2"
+Received: by mail-yw1-f180.google.com with SMTP id 00721157ae682-7e2f3646c10so27380807b3.0
+        for <sashiko-reviews@lists.linux.dev>; Sun, 14 Jun 2026 07:46:22 -0700 (PDT)
+ARC-Seal: i=1; a=rsa-sha256; t=1781448382; cv=none;
         d=google.com; s=arc-20240605;
-        b=Y5Mp9lLMCDQla6G1A6CkK5fuNOLTc+xBXqQOIrP9g/f6sqbEl4ufIrrcvlaw679TVZ
-         Ia7gXrQqhnDdu6Z445ZqaZRU7wQZfmWk/GYjCCRLCqIeUG2Ik739qoZ9XUtSDsbszfGH
-         CZ0gz5ORSMkRw4TtzM53cSJvpbDDWoWSlBKuMDm8Mjy9ALeZw2D2EIfejehgm939WKv1
-         k2Dz4CH1twMEAgK2TZ+F2KDAdKlEP02q5KugRBJmO+T60mnWyLdO1dAgHI+Y6mrqtwk5
-         LkiR/CITRTTOGq1rMFRyjQB2Bbqxyvs6Cdn8iTQ9Q8EdNjuMnnLE8bHu64OyWNV+rUGL
-         l4EA==
+        b=YD4De8xtU+LkK2EiW1ujZC3+S5Ynoz80hTsMwZM1iUK9fPcB625TKieT6SHTyDVg+f
+         MKWkoOnlBnH2KJJOAhtQ+UcCNNbKw3GWuQ4BHXcBf2jeJXzuUPd5sU1IFIS/+3alqO82
+         kFlnXBwQuZtPMA/W8HPFywLOudkL0/zPEYCAie0V0luuqNerEjTH31gh8I7fzT13uPgI
+         lMPA2CLQWQ+LQWVkPqJdVqdtBsoHDCHkfj91dGA/FeKnflkp1E+Co4NhAP102mHqWP25
+         xpan4nd5sH8ws6NvAHqKumI4zLwtb9A/dA9Wsxc50j0uJvh+Pj5sofC0aOInzvEq5hgp
+         V70Q==
 ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com; s=arc-20240605;
-        h=cc:to:subject:message-id:date:from:in-reply-to:references
-         :mime-version:dkim-signature;
-        bh=zsDo/ZOVPfEdPqS3LglFyoYCxHooaqSGHDtP1XDlcEk=;
-        fh=48fClBHdmU35asEny+HL0o+N4HhYgrcZUyMCnQtBrfs=;
-        b=SRXFDZBXZtn6Lb1e6m4SQJYvnG11Pzyup/hB8RQqUXWHJ0/pU35vioxhkUJjm6xtBV
-         +cFVfPHamwYg9TjgoOWJ72QtBZLT+AEsinByeR4a4R+/G3HeyBdMW1/KB1sb9PTUFe3R
-         3Qfv8WbceJIVklFdpZzv8DV2VdP81DwgrGkb3NvVdqLfWkDlYhcmjOlcp1sseVuOJNx+
-         9e2qx1CJ4nvNQ8n6ij2u5asoEkC8OJtPjyAUZfKPOfvfeqZbRshq1fxpKtNmd5nC3aqd
-         uWWCVO78dN5Fif2fQHKeixQWTpYf5Vgm4z1FaQVJbkrdqGB8X0v9mXgMf7XEeTfJQ34V
-         fI4w==;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:dkim-signature;
+        bh=+/n6Ztw9j4lBHgOeYByo7kNKAZf5o9zTt9xSxYBEC0c=;
+        fh=+Kn94FVzl6rE7mDhn4pFvEHlRshbQ57dQ5o19v04Oyg=;
+        b=HWX7dOdPXkF7vErM3zUJlxME6grSPaSCXVlEsztk90WtxPLb0TC7wjwvfmTLuOC5MQ
+         2IGoAUl6Mmv+cpnVP29BUYIDO2OiRsdM3xE3G/hKOGIQzTqylBiJ2xmGZ4Y9MIxcy6e0
+         /TBA6Hsk6LwwnIH54mnRPmDWH7/3kSKLIQb69l/+CYdMV10GOY8xSkxoU5rdnwNmW4fQ
+         j8J9PHKp26D6SuR9vMLaHlQhvFlc4XRbYSyJ1rwhSgwxUv1ymfWSLOamOilcuOCF1Vo9
+         4q9nNwoFa/x3D6sJWx38lw+ljZX1lUTqkQZ/MLdMx3Gl8vLdw9bgcF3jLpJokmjPFCod
+         WbjA==;
         darn=lists.linux.dev
 ARC-Authentication-Results: i=1; mx.google.com; arc=none
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=google.com; s=20251104; t=1781433402; x=1782038202; darn=lists.linux.dev;
-        h=cc:to:subject:message-id:date:from:in-reply-to:references
-         :mime-version:from:to:cc:subject:date:message-id:reply-to;
-        bh=zsDo/ZOVPfEdPqS3LglFyoYCxHooaqSGHDtP1XDlcEk=;
-        b=IxFom/dmFGNj1vtWVpzvQu1fHBIBNDx3oabg+Ada7r+ovFGOLjKh/ed7fAfIW02lto
-         76kZhMpxr1tn2/y0h3KLW1Sd6PEV30uJ/fqk02Rvm2t29BvZuxCgU4EGMxlpC1+EPxqP
-         AEK7UT/vCdg29l9e8tyWS63BsnAUbnJCP43NnLyceJkagtzHXZarw4QF4SnNGiTG7R/U
-         N9j2r0ydZaHJdbqCLu+Z5Gk1sKYLeCySV3aLw3WcAPU/E7/wcOmYFRM/EMQ3uuZxgY02
-         MSFFO0wIJiZTYRUZ1FitnTDH7cFbrvo/UUwcJFuZNZpeI1QpHFedXA70yHf57nBawhN1
-         rl5Q==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20251104; t=1781433402; x=1782038202;
-        h=cc:to:subject:message-id:date:from:in-reply-to:references
-         :mime-version:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
+        d=gmail.com; s=20251104; t=1781448382; x=1782053182; darn=lists.linux.dev;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:from:to:cc:subject:date
          :message-id:reply-to;
-        bh=zsDo/ZOVPfEdPqS3LglFyoYCxHooaqSGHDtP1XDlcEk=;
-        b=Fedr0thc1onU9as6X8K+7ebZ6Q/0WVDdMu/kqPTmOlbIH8kSJ91YodJCeaUs/0eDt7
-         koniSTdaObuNQPeMRw3yyJRBIm7TFAbmc06w+NU9a+MXdZdKFQcWhqTY+f28X7v14Pay
-         fdvExo8eaclf1O8W12WibT5UetkgcQygTsxjd5dTDCBJmCEB0o3Ar8ylo7QWZpGwarIp
-         YYmSNtHNT9cVmsgzrwxxK9Eka/MuYGOTrqLFn9F0nLZY8MiYUAFFkWmiJxV/7fNp39/U
-         Jbi/cI+MTYn2F5Rl+7P8QQxjOiEwKZN3I9s0Kufbj7bG6e/j0mmj0ZMkxJHtiGcD5BHZ
-         yPmA==
-X-Gm-Message-State: AOJu0YxIWF4JFieQT6PYfoUMC8wtrqgvJpSjwH9dmUA0SEA5FYM+1hHH
-	9YqHUH5HycZbJlxaOuA0lqpaJpLcPdrCDbZQ2OnJMoPp96XaQidZiDgodZPL4OreVePSHSvwwzO
-	MJvZlu3pF2HTrygOT+5FVodv9amPXSay8XIk/w2Ls
-X-Gm-Gg: Acq92OEjUjlbX268wJnBUMfkU40HTpkpUHaZ+x3hPgsYt8Jw4FiDM4pymqYn+BfwpXf
-	QYiI6iOGwEcA3pVzeDYCufQBWb75TJWW5knuF1MWcQ0XlT97lSfx0M0gI1DvaALp0ZPsB3KToqZ
-	hZdrl0dA1IJprDYffQQYhzPypALx2APWBFAnz2ux+GHUytyFSDMM0db1EWicQ3zIKGgT/Lzvw5y
-	k1j2RaKdHBMnXxnUzop7sh9lrgztNe3hqwgdV2iC4PlzLxDZDUM9KV66js3MTXYiRgOa0tdW9Nb
-	j/QPkPTb
-X-Received: by 2002:ac8:5c83:0:b0:517:5e32:2d14 with SMTP id
- d75a77b69052e-519549b2989mr10393391cf.10.1781433401238; Sun, 14 Jun 2026
- 03:36:41 -0700 (PDT)
+        bh=+/n6Ztw9j4lBHgOeYByo7kNKAZf5o9zTt9xSxYBEC0c=;
+        b=DnX07AI2c5yj07d+At+zn9xxy8w+zQKzQ4+idJOETqYRHet8oQ7s/uNwnZN1mFjmGW
+         ce07O6DHYAWpBZM220IwyEJIaoab7p4j3sNCBSqH/gOtbm040ouJy3eLXiEqA8ZA9l9k
+         D/Ig+X8RKrRD10Te7BKd/bjem6xfkh8jfRsZUm1IIv9K4Aa7S0xC59rikfVGgtXzbEp2
+         ECv7+r5cuiAN2iWrSHDsFAus3Mv5u1cN17jtbgzGOieHAo9496jwRacbxPmvL6qQ0QKO
+         9BTpjjisH19bCDrlq1694cxSFa2Iyjug0dldDe5tet6ynC2lHq2g62IPtnIW6vIJZj4r
+         XqOQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20251104; t=1781448382; x=1782053182;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:x-gm-gg:x-gm-message-state:from
+         :to:cc:subject:date:message-id:reply-to;
+        bh=+/n6Ztw9j4lBHgOeYByo7kNKAZf5o9zTt9xSxYBEC0c=;
+        b=HAxglIVDgXESiogoiG9IXYWcmuAmyY55mY+xclb9CeqFJk86KLq8swDDSq2Od140t5
+         m5w7YVgaNB6RVruvwPAYQtMeirlMG6iH50UDQ4w8gC27zsZKi2DUEfxHMSbGc8uKMKVk
+         ZURja3zgYo/JWsCuonw0xUkTQZj9alJkn1pq3byve+jdkgIL2qo6zZHY2oAk/nTkzl76
+         np555nTWGtP9/sykUKofDf/sFE7LyCo0iRaFpIYdAopgQPYFLKeYV1whycRCGzimVJjs
+         gKaLpByFNVq4eUAFN4bdKFlWTOYNisrCRDWVe8bi5bwBYFGJlw49MG/SXntAtHS8bXUr
+         Odsg==
+X-Gm-Message-State: AOJu0Yx/sDoM2uue6c4CaFNPxn7B+7OqawvOeYwJJkob1g74xeC/O+kw
+	YIYskBLF04pCl1Fs1lFuZkx0sfzMNiNm9xGRPptkMbp3Xv1iOwVKqu/J1ucjJPjAAJ6K6QULvaV
+	VsmRo1blJjgJUQCyDHmUMhMpyS+Bg3DxSrK5M
+X-Gm-Gg: Acq92OGKgpaMJJQydE4M6G1MBCb23S/49mcsN+7mcZNdwxrpFQhxbWcntwOfk1mm+Bh
+	APodSPZ0I3kcluZM1FhGB2R7edPd7LfamRkK03gRwevwvby6R8ccdPFzc066m6eRDo9TTin8JAu
+	muYFUyN0mHp4ib7zyCE6MlrRBVToXb74ypMfUY+rC0NseeiwaxEE4MSWZHh3mY3rpD9C34OLxZx
+	kZ3UyFWQb6AivnaUz1i9Bw1NvrlCuTCd1IsqqMbHto2nmg341lJHY73pHFIo9PEv7Ozc7HoB8lr
+	Ll6/
+X-Received: by 2002:a05:690e:4146:b0:651:bf58:446b with SMTP id
+ 956f58d0204a3-66277f5479dmr8835081d50.10.1781448381613; Sun, 14 Jun 2026
+ 07:46:21 -0700 (PDT)
 Precedence: bulk
 X-Mailing-List: sashiko-reviews@lists.linux.dev
 List-Id: <sashiko-reviews.lists.linux.dev>
 List-Subscribe: <mailto:sashiko-reviews+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:sashiko-reviews+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-References: <20260612113414.1022901-1-tabba@google.com> <20260612115044.16E3B1F000E9@smtp.kernel.org>
- <CA+EHjTyFFf__9iGFAyAkechiX+gaiK9ksdfgxLSFe8RcAY=HGA@mail.gmail.com> <87pl1t8q24.wl-maz@kernel.org>
-In-Reply-To: <87pl1t8q24.wl-maz@kernel.org>
-From: Fuad Tabba <tabba@google.com>
-Date: Sun, 14 Jun 2026 11:36:03 +0100
-X-Gm-Features: AVVi8Cf25BgmHVzixnH72Pp4x2je53tjyX44xbNfRJni2U2FbMN2z1y0gR_1GS0
-Message-ID: <CA+EHjTzNPabfo3bnuMuBKKz5T3w=BdTdSkZ7eD3VGZAiyrhJNA@mail.gmail.com>
-Subject: Re: [PATCH] KVM: arm64: Sync SPSR_EL1 when injecting an exception
- into a pVM
-To: Marc Zyngier <maz@kernel.org>
-Cc: sashiko-reviews@lists.linux.dev, Oliver Upton <oupton@kernel.org>, 
-	kvmarm@lists.linux.dev, Will Deacon <will@kernel.org>
+References: <20260614133807.2165124-3-ekffu200098@gmail.com> <20260614135041.D944B1F000E9@smtp.kernel.org>
+In-Reply-To: <20260614135041.D944B1F000E9@smtp.kernel.org>
+From: Sang-Heon Jeon <ekffu200098@gmail.com>
+Date: Sun, 14 Jun 2026 23:46:10 +0900
+X-Gm-Features: AVVi8CcBo1nTDfvjkovV-__M8a02nNzFI7DIjnYIoWPk9xTRUu7QjWwIjJiydSI
+Message-ID: <CABFDxMEhOJ1nrmWcyO6FVfxQHbahKiJ_O_QKPf0Q-VMzT5pdEg@mail.gmail.com>
+Subject: Re: [PATCH v2 2/2] of: reserved_mem: print skipped node name when too
+ many regions are defined
+To: sashiko-reviews@lists.linux.dev
+Cc: devicetree@vger.kernel.org, robh@kernel.org, conor+dt@kernel.org
 Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 
-On Sun, 14 Jun 2026 at 09:46, Marc Zyngier <maz@kernel.org> wrote:
+On Sun, Jun 14, 2026 at 10:50=E2=80=AFPM <sashiko-bot@kernel.org> wrote:
 >
-> On Fri, 12 Jun 2026 14:19:10 +0100,
-> Fuad Tabba <tabba@google.com> wrote:
-> >
-> > On Fri, 12 Jun 2026 at 12:50, <sashiko-bot@kernel.org> wrote:
-> > >
-> > > Could this cause the guest kernel's exception decoding logic to fail or
-> > > panic?
-> >
-> > You're right -- the architecture mandates setting IL here. Like you
-> > said, this is pre-existing, and I'll submit a separate patch to fix
-> > it. But first, Marc: was there a specific reason for not setting it,
-> > or is it just an omission?
+> Thank you for your contribution! Sashiko AI review found 3 potential issu=
+e(s) to consider:
 >
-> Just a plain bug. The normal KVM code is usually careful to construct
-> the new ESR based on the source of the exception, meaning that we
-> always convert ESR_EL2 into ESR_EL1, and propagate IL amongst other
-> things. This is obviously not the case here.
->
-> It'd be worth auditing the rest of the code and make sure this is the
-> only case of IL not being correctly set.
-
-Thanks Marc. I'll do that and fix it on the respin.
-
-Cheers,
-/fuad
-
->
-> Thanks,
->
->         M.
->
+> Pre-existing issues:
+> - [High] Out-of-bounds write to the static `reserved_mem_array` if `membl=
+ock_alloc` fails during dynamic array reallocation.
+> - [High] Ignored memory reservation failures allow unreserved memory to b=
+e successfully registered and handed out as exclusive reserved memory.
+> - [Medium] Dynamically allocated `no-map` reserved memory regions are lea=
+ked from `memblock.reserved` if their initialization fails.
 > --
-> Jazz isn't dead. It just smells funny.
+>
+> commit f95986ab58870e3d79cb320c6dc73ef80982357e
+> Author: Sang-Heon Jeon <ekffu200098@gmail.com>
+>
+> of: reserved_mem: print skipped node name when too many regions are defin=
+ed
+>
+> When too many reserved memory regions are defined,
+> fdt_init_reserved_mem_node() logs an error and skips the region without
+> naming the node.
+>
+> Print the node name so the skipped node can be identified, matching
+> fdt_scan_reserved_mem().
+>
+> > diff --git a/drivers/of/of_reserved_mem.c b/drivers/of/of_reserved_mem.=
+c
+> > index 499b769e98096..df3d90cb8dbe1 100644
+> > --- a/drivers/of/of_reserved_mem.c
+> > +++ b/drivers/of/of_reserved_mem.c
+> > @@ -623,7 +623,8 @@ static void __init fdt_init_reserved_mem_node(unsig=
+ned long node, const char *un
+> >       struct reserved_mem *rmem =3D &reserved_mem[reserved_mem_count];
+> >
+> >       if (reserved_mem_count =3D=3D total_reserved_mem_cnt) {
+> > -             pr_err("not enough space for all defined regions.\n");
+> > +             pr_err("not enough space for all defined regions, skip '%=
+s'\n",
+> > +                    uname);
+> >               return;
+> >       }
+>
+> [Severity: High]
+> This isn't a bug introduced by this patch, but does alloc_reserved_mem_ar=
+ray()
+> fail to reset total_reserved_mem_cnt on error?
+>
+> If memblock_alloc() fails during dynamic array reallocation, it returns e=
+arly
+> without resetting total_reserved_mem_cnt back to its original value. When=
+ the
+> bounds check in fdt_init_reserved_mem_node() is reached later,
+> reserved_mem_count can increment beyond the statically-sized
+> reserved_mem_array limit, potentially causing an out-of-bounds write:
+>
+> drivers/of/of_reserved_mem.c:alloc_reserved_mem_array() {
+>     ...
+>         new_array =3D memblock_alloc(alloc_size, SMP_CACHE_BYTES);
+>         if (!new_array) {
+>                 pr_err("Failed to allocate memory for reserved_mem array.=
+..");
+>                 return;
+>         }
+>     ...
+> }
+>
+> [Severity: High]
+> This is a pre-existing issue, but does __reserved_mem_reserve_reg()
+> unconditionally return 0 even if early_init_dt_reserve_memory() fails?
+>
+> If memory reservation fails, it logs an error but returns success, allowi=
+ng
+> unreserved memory to be successfully registered and later handed out as
+> exclusive reserved memory:
+>
+> drivers/of/of_reserved_mem.c:__reserved_mem_reserve_reg() {
+>     ...
+>                 if (early_init_dt_reserve_memory(base, size, nomap)) {
+>                         pr_err("Reserved memory: failed to reserve...");
+>                 }
+>         }
+>         return 0;
+> }
+
+These areas are affected by the ongoing series [1], so it might be
+better not to touch them until it is merged.
+
+[1] https://lore.kernel.org/all/20260527032917.3385849-1-chenwandun1@gmail.=
+com/
+
+> [Severity: Medium]
+> This is a pre-existing issue, but does fdt_init_reserved_mem_node() leak
+> dynamically allocated no-map regions if initialization fails?
+>
+> If __reserved_mem_init_node() returns an error, the cleanup path for no-m=
+ap
+> regions clears the MEMBLOCK_NOMAP flag but skips calling memblock_phys_fr=
+ee(),
+> which permanently leaks the physical memory from memblock.reserved:
+>
+> drivers/of/of_reserved_mem.c:fdt_init_reserved_mem_node() {
+>     ...
+>         err =3D __reserved_mem_init_node(rmem, node);
+>         if (err !=3D 0 && err !=3D -ENODEV) {
+>                 pr_info("node %s compatible matching fail\n", rmem->name)=
+;
+>                 rmem->name =3D NULL;
+>
+>                 if (nomap)
+>                         memblock_clear_nomap(rmem->base, rmem->size);
+>                 else
+>                         memblock_phys_free(rmem->base, rmem->size);
+>                 return;
+>     ...
+> }
+
+It should be rare, but looks correct to me. BTW, it is not directly
+related to this patchset, so I think it is better to fix it in a
+separate patch.
+
+> --
+> Sashiko AI review =C2=B7 https://sashiko.dev/#/patchset/20260614133807.21=
+65124-1-ekffu200098@gmail.com?part=3D2
+
+Best Regards,
+Sang-Heon Jeon
