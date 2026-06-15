@@ -1,213 +1,287 @@
-Received: from mail-wr1-f45.google.com (mail-wr1-f45.google.com [209.85.221.45])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from mx0a-0031df01.pphosted.com (mx0a-0031df01.pphosted.com [205.220.168.131])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D7A922C08DC
-	for <sashiko-reviews@lists.linux.dev>; Mon, 15 Jun 2026 08:11:27 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.221.45
-ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1781511089; cv=none; b=Fi0E4L66a58G5SOrVfYuKxFHPYHwrNcJDYprRQUE1BIJvGcJNkMW7SYc4QvSBnibGyAgCUkzMkP1Ocp+o4twQWrEU73LgzRikbT8DBysvWcmKCIpKBICsNtVtZCe2CroXWPROE0zU1VQ4FmPtOj5CM1GOVzAPHV34AOmn/yTYBQ=
-ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1781511089; c=relaxed/simple;
-	bh=vkAjOTN2OSxQ3NT6LfnmMdKXifOjLa41qAT64P/56SY=;
-	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
-	 MIME-Version:Content-Type; b=U95dCBDhhahWwEf3PWr9da/gu08Z1SRn6Me5Ih+ppHGxmpG6GlElKxG02mCSvL5GB2tMDyaE83n7sT2iweHq3mZmJ2XNl8+278PRwtJcJ2tplrMCsGsoBsCDYgkIZ1ylXLQFrCsDE0qI/DzifQ53rEJO4dFgPR+YZTetnEA2FKM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=F5k8CARg; arc=none smtp.client-ip=209.85.221.45
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 60C5B3D25B4
+	for <sashiko-reviews@lists.linux.dev>; Mon, 15 Jun 2026 08:46:12 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=pass smtp.client-ip=205.220.168.131
+ARC-Seal:i=2; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
+	t=1781513174; cv=pass; b=SrinNW6yww8dOB1G9HcFmQNCKv9yuJsUCLgouocZ65UDMHkfTdKdrpAa59qSxl6F+ihzu5dVd4y+kc+vRk6cGHYuyRminbsI0x1M+TfUKQd40Y/fwJ0szYoQdzebbHqgNuABsEE4l/uvSyFl2xi5lJGYgpwVhwUsT0Jx6+P9jeg=
+ARC-Message-Signature:i=2; a=rsa-sha256; d=subspace.kernel.org;
+	s=arc-20240116; t=1781513174; c=relaxed/simple;
+	bh=G+cF0IxDadI/1hGqsBf3e7nqm/g4Oiqdukiz1JknZIA=;
+	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
+	 To:Cc:Content-Type; b=f6LZWAklyVEvjM8NFcBvNKytMBLbuQnrNl2I3sjC26zmfEmzPJPh+KOxPi0suKMId7j1A90JnDUmbGEYa2Aj4t75b8NOSAbfpr1j2SvEJjZUddskqRTu2Ag01dQYM0B2rHeYBrB5lnGYi3dSslriJLkyyqHGqdXyZc89LUT+3Jc=
+ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com; spf=pass smtp.mailfrom=oss.qualcomm.com; dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b=exaY9ntP; dkim=pass (2048-bit key) header.d=oss.qualcomm.com header.i=@oss.qualcomm.com header.b=beBSQmAi; arc=pass smtp.client-ip=205.220.168.131
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=oss.qualcomm.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="F5k8CARg"
-Received: by mail-wr1-f45.google.com with SMTP id ffacd0b85a97d-45ee5cdbd28so2439560f8f.1
-        for <sashiko-reviews@lists.linux.dev>; Mon, 15 Jun 2026 01:11:27 -0700 (PDT)
+	dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b="exaY9ntP";
+	dkim=pass (2048-bit key) header.d=oss.qualcomm.com header.i=@oss.qualcomm.com header.b="beBSQmAi"
+Received: from pps.filterd (m0279864.ppops.net [127.0.0.1])
+	by mx0a-0031df01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id 65F6J1xG3327540
+	for <sashiko-reviews@lists.linux.dev>; Mon, 15 Jun 2026 08:46:11 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=qualcomm.com; h=
+	cc:content-transfer-encoding:content-type:date:from:in-reply-to
+	:message-id:mime-version:references:subject:to; s=qcppdkim1; bh=
+	ANXk5j5i2gDoO7wl8434YbaFQH6GiIPUxoXl2iGVH5U=; b=exaY9ntPlzFvLvPH
+	3h+sTguxT2Ktoakt9Q4xLp/Q2FJkwG6/Ge/BzS75xQsOjrqX1gl29DkSWJ9TXiPC
+	BqhO4iEkIgsWV3x4xTbnxFPXFMlM4fXR1L4uemU+TnXYVWPjI8cQq4pNYU/UxxL9
+	nzc4RRhDHq+AwK4MsckuipPn/DHBRLaUJyO626GD1120DQ5wV1aPcNfPA70WzST3
+	u7W30/7N97UZfLS7PBbQmBgF++moA/e2Clwe9ySq6d9NRvwWUZLBHHiWvac6B4Wr
+	ycZx18ntXMZstp8bPr+b/3Cjag2Ngc8Aamy411uipxs5BEHEowI58kMlK3pwOrRv
+	cDRxNg==
+Received: from mail-qk1-f200.google.com (mail-qk1-f200.google.com [209.85.222.200])
+	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 4es0cgpbfk-1
+	(version=TLSv1.3 cipher=TLS_AES_128_GCM_SHA256 bits=128 verify=NOT)
+	for <sashiko-reviews@lists.linux.dev>; Mon, 15 Jun 2026 08:46:11 +0000 (GMT)
+Received: by mail-qk1-f200.google.com with SMTP id af79cd13be357-9158f07f5eeso516406585a.0
+        for <sashiko-reviews@lists.linux.dev>; Mon, 15 Jun 2026 01:46:11 -0700 (PDT)
+ARC-Seal: i=1; a=rsa-sha256; t=1781513170; cv=none;
+        d=google.com; s=arc-20240605;
+        b=LbJrbNeJn8ajV8fzt6hZgkgWTpfwAI3WWHLxRaVCBgD6s10LhFWK2n0uzIJapTAd8z
+         lePAIvKiKhcbbRjl5Ez73Qi66PII3PS26g4pOWsyvlid6AvPlU99LdfRA0tVHDEj2kLU
+         EussZi4UYd/4Ps58Rn4nSIcPvUGn5NJo3vyg9sbAWpgL3Hm7cYAgbjuWWth77ZGHRz79
+         rVzIk115zWXLnU6dJTMV5wa4I+18EnjrfqIFu0CZgXTlNXYYPu835nO1X7yEKLRa3j62
+         anY9bunPlFh5jt8zim6p/qYKyNqx0W7nIuxSjUaQtySIfqPS5BlIuP+58MlTNxiubpMa
+         llDw==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com; s=arc-20240605;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:dkim-signature;
+        bh=ANXk5j5i2gDoO7wl8434YbaFQH6GiIPUxoXl2iGVH5U=;
+        fh=+Kn94FVzl6rE7mDhn4pFvEHlRshbQ57dQ5o19v04Oyg=;
+        b=HI7Ex8EEv1eap+cDLMhHKmasLtWWRABHpjMM7k42wRz1E26Sxc0CK35kZy4ZybtWs9
+         FgL0unaUT/wkefADi+XhZCYZ/GxUS18nQYmr0f+Q1svgR6S4sowGbXkNmGDC4jyXdA0L
+         mIcEPI3SqkPAm39gss8AfksuHWmeLaQPzc7QBzj+5jT9Kwu0PG+4uQeFDPgGXUqkaK+l
+         kyVWG/9xpF6W0DkIw8rVC5LfvtuDNDCgPceGYSqCac3DO8I60FA7/N81JUjHHExJfZGz
+         3O4PxqoK6az+EEtNM/XEN4oNcay0cjzWL0aWi+6ZjGao4CeDErErxS3HO0+ieQ0uNc79
+         LDGw==;
+        darn=lists.linux.dev
+ARC-Authentication-Results: i=1; mx.google.com; arc=none
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20251104; t=1781511086; x=1782115886; darn=lists.linux.dev;
-        h=content-transfer-encoding:mime-version:message-id:date:references
-         :in-reply-to:subject:cc:to:from:from:to:cc:subject:date:message-id
-         :reply-to;
-        bh=MHKH4L1yXonvQGqJbkYblMaxDoWz9KlhZVMxCLtZwmI=;
-        b=F5k8CARg1kNcKo8HQIYuZTRi7WYowbZSsaSzahtYhS6R4bjDPD+930pO0D7hkrpv7D
-         NBb1AcvFAbR+e/oCOvnmcuqnS1sTPXk+8sqybFUI9OG7+QjvZOSmSeuMQHXMOmcgYDkW
-         tOwr03lKLj5KAlGw5NJtoktuwec3Vg4H8mXMVM4wqvh3Xqx6ZRx5L1SrnHIPHd+WTk1h
-         F+zq/xuSCe0OwKY+z4r/CaU/TaFcvqsaXaJfNjNXBqpgBQCue6wxOKqGif68puyAnvyD
-         bWvuzcXtwLz5+1N4Jmw7V3+qBqJegztcB0n4Ue6LiYnKw0tHTyBtP3ElVWSPzq/gqucV
-         ms3A==
+        d=oss.qualcomm.com; s=google; t=1781513170; x=1782117970; darn=lists.linux.dev;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=ANXk5j5i2gDoO7wl8434YbaFQH6GiIPUxoXl2iGVH5U=;
+        b=beBSQmAio0plwCdAznU6RbZ6pkMo2lmklKNJPfH8NJo8SMk5iF1xO8azRqxDq1W7PN
+         2Xz8uZ/YH3Qk7VvodnU2oYGEvl5do7AprZz1Y5uXJrslkp74NphVxNMmsg4/kNQHkfW4
+         j30qunGKvsaQ5+6MV/T0no4g2FHZ3Aa857rz/nzNuuypfcvHp1ZWbkcj73xA4BSiXrcr
+         k2kSFFKpsONbjEWOQkDASX89aMQJZL3WNgcsEypKte0nbc+FsHfbucc5g/HAkfKBQ3s9
+         4R5iW950SgCJW028Eh/0RD/o99c60WE5pSi5CLMupxM41tGBXfEblIhSQyBZjZKl8cka
+         BXXQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20251104; t=1781511086; x=1782115886;
-        h=content-transfer-encoding:mime-version:message-id:date:references
-         :in-reply-to:subject:cc:to:from:x-gm-gg:x-gm-message-state:from:to
-         :cc:subject:date:message-id:reply-to;
-        bh=MHKH4L1yXonvQGqJbkYblMaxDoWz9KlhZVMxCLtZwmI=;
-        b=o36oJvVyZLlXBL7TEIj+9W/BmXg5u/dRL7ddbRrhcTqH1c7ArWi4QW+d+Sn/xDpgT+
-         LdZXJonqxr04xsn1a96jxAHTVJkVmK24zIBaTQpVrEEV9yq/9vSL6YPD4NYDxS7pwAIm
-         EH64U0iR3dLKBabXD7bMkXc4DiVnYHuPkrGE8qW9n8OI1Z151B0Epk1nzyAWEeeOS3po
-         jz26gL0RPDWWuGqYBJjMZlVhPJjJUl4Z9kPi5GqU+3Z9UeWq/MXSi3iPQHAHEAD0cbE4
-         HOCEtVx8Jf+Tlt1iFXUQOTzdwJx5TYeRBPKkBFGetNAhfKeULbAzhfcl4JeL2kIj7/Iz
-         5XTQ==
-X-Gm-Message-State: AOJu0YwhiRN0KP7pxuLP6Wd2oZ3wv7CJhHgy3sZYFFMtBfbbElAOXiPW
-	j0NIr6+FDzDwkO/M2xiKAOHVfQmhgta/9V+pZqwIcnk+N19u/XjNytc2
-X-Gm-Gg: Acq92OEYK5PWs0TU1QWwJImyC23aT1uvl53ookPJ2NkQZrp4RycdeTRS/PTtA9ZuQnU
-	OZXNsyg/zsi47yZdgervJTh0/vK3efPVnkRc/cBF/rli4wutzJXYbqzcUm+Ap4PioHrj9n6oHvx
-	VsKWOwGrcODFaChn9/gZoqWiKLvSp0AAjx8WDkDXzfHTkwy/9CfpgxtuXysh8MP20IfEgRUDptv
-	hwD4gLmSX2qDMvfuNswG90BUoXWp/Na6Fkvc3wnRQMzyZO9w8IspFPJIsVVrOtdUAheOasWfxbK
-	+g23DMUwOUVjz8xrb1bmDR0eUX/ZBRYeTkmnMCD9DkOOHmuA3CDNjRr5bAxxskEOwDb4QQNxWSZ
-	6WhWWDumomg+Itu0LNtVKdJG5NZ8JVYLk74IBCFcon/D973Wj1Dyxm7oerEA2h663PctqK2cdKT
-	TU87nIL6SV9OYCUg8awr9JvTt2AWK6hOIjQlBu2ncGoBQbTDYQA/oEkiDFmq1kpcZNZC8=
-X-Received: by 2002:a05:6000:38f:b0:460:6a3d:a114 with SMTP id ffacd0b85a97d-4606d140526mr14759830f8f.30.1781511085719;
-        Mon, 15 Jun 2026 01:11:25 -0700 (PDT)
-Received: from Abds-MacBook-Air.local ([141.2.113.131])
-        by smtp.gmail.com with ESMTPSA id ffacd0b85a97d-4606f2e6a8fsm32626107f8f.37.2026.06.15.01.11.24
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Mon, 15 Jun 2026 01:11:25 -0700 (PDT)
-From: Abd-Alrhman Masalkhi <abd.masalkhi@gmail.com>
-To: sashiko-reviews@lists.linux.dev
-Cc: linux-raid@vger.kernel.org, yukuai@fygo.io
-Subject: Re: [PATCH v2 4/4] md/raid1: simplify raid1_write_request() error
- handling
-In-Reply-To: <20260613184757.57BC51F000E9@smtp.kernel.org>
-References: <20260613182810.1317258-5-abd.masalkhi@gmail.com>
- <20260613184757.57BC51F000E9@smtp.kernel.org>
-Date: Mon, 15 Jun 2026 10:11:24 +0200
-Message-ID: <m21pe8xlxv.fsf@gmail.com>
+        d=1e100.net; s=20251104; t=1781513170; x=1782117970;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:x-gm-gg:x-gm-message-state:from
+         :to:cc:subject:date:message-id:reply-to;
+        bh=ANXk5j5i2gDoO7wl8434YbaFQH6GiIPUxoXl2iGVH5U=;
+        b=jKcLg+LnhZOWKy+EqD+8J1+Lem7NVDIr9ugV1/JV4SaQrvvGdTREgZe3ty8WQlUwgt
+         JH2FY74F7SUGNII4HJO5DsqsTXCfh9c3K4C7T/YrGRlgAIRrCJLCgPCiZDurzReXJfEd
+         knqpYZdKgLcLPusK/LniEhUUYd6z/+hQdRmKg8G+iUmk0nvT7ooD4oyom2O4TlWe+UwC
+         xUtbsFOqkJ2fLFV9CuRL+lmtCtBYAzMegEP+EP93+Mcikl6E9P9OziQMtTae3wGXR/r7
+         gi13nScS6NzEAuV1kbjfgRzOCbRWhulIUDUAbwbHg558OfRg9ReGCVuohWSjHKN/Jwho
+         rDUQ==
+X-Gm-Message-State: AOJu0YzZYMMYd75No9fPIhUPuNq+aH3D4RxT+6+x7N31++5zkoqBewvY
+	DsKlK3IXsQU/MPOUJHd9r4UkBLZ2svH2tLHAhLIo/u91qs0yJPoj2nyaaBZy4YCByUUNJHirWNh
+	U1ipfjXGORkl+NJFA1NfynZ/RYXZ6zVwh+zVJCtxGNeFwnC1m+NPoxp4fOlzTM8UCdOotvxb7sy
+	Tr1KJL3Fl/sH5Xfd6cVH6+Z557+nr46MrRxkXZZY/EjFVzH3FND84njwkS0lc=
+X-Gm-Gg: Acq92OGKMm8pH3UAC45fUCVnWTaSQAOIpV1R4rAPopfRaThpXLFJ1Pkr9pyjKX6pGX+
+	c6uIPOIRabQRLc24rP+yyPXifIq6E01qBTw93bC6FSMqA4oc7PEVvrqjRoQruOu81pzF+WwYubu
+	S7PB3RYamjInws+FlEnMKpeRYUT0CX9C0IRa7xI0k0iN76ALRYwM+dvDmHMovjam1j2gZC8u1Py
+	NnB/7wLLQBCYD6/uoKolFSWR6AuN+D5sdYwQ71kq6feTBQTQv584plhJBpdF2nNpMtaqTRkGFJc
+	dv1tt3unUwE6yxDpo7WE
+X-Received: by 2002:a05:620a:2b81:b0:915:9de3:2260 with SMTP id af79cd13be357-9161bc33be9mr1890951285a.24.1781513170427;
+        Mon, 15 Jun 2026 01:46:10 -0700 (PDT)
+X-Received: by 2002:a05:620a:2b81:b0:915:9de3:2260 with SMTP id
+ af79cd13be357-9161bc33be9mr1890949085a.24.1781513169962; Mon, 15 Jun 2026
+ 01:46:09 -0700 (PDT)
 Precedence: bulk
 X-Mailing-List: sashiko-reviews@lists.linux.dev
 List-Id: <sashiko-reviews.lists.linux.dev>
 List-Subscribe: <mailto:sashiko-reviews+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:sashiko-reviews+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
+References: <20260612-block-as-nvmem-v5-5-95e0b30fff90@oss.qualcomm.com> <20260613132137.D65B51F000E9@smtp.kernel.org>
+In-Reply-To: <20260613132137.D65B51F000E9@smtp.kernel.org>
+From: Loic Poulain <loic.poulain@oss.qualcomm.com>
+Date: Mon, 15 Jun 2026 10:45:58 +0200
+X-Gm-Features: AVVi8CeDff4OXv7mqejTZ695MjPWmJonhJ73uNZONFk1NL8EWlRfGcjBTCzwzAA
+Message-ID: <CAFEp6-2x7HFA1Yejzcr8DS9RAd5dVunKC2iKnt_rFyNDy=HeyA@mail.gmail.com>
+Subject: Re: [PATCH v5 5/9] block: implement NVMEM provider
+To: sashiko-reviews@lists.linux.dev
+Cc: devicetree@vger.kernel.org, robh@kernel.org, conor+dt@kernel.org
+Content-Type: text/plain; charset="UTF-8"
 Content-Transfer-Encoding: quoted-printable
+X-Proofpoint-ORIG-GUID: U3p0jMXwiP47n4pywtOSrCeLOEhDBTz2
+X-Authority-Analysis: v=2.4 cv=NPLlPU6g c=1 sm=1 tr=0 ts=6a2fbbd3 cx=c_pps
+ a=hnmNkyzTK/kJ09Xio7VxxA==:117 a=IkcTkHD0fZMA:10 a=FelO9ux0wxsA:10
+ a=s4-Qcg_JpJYA:10 a=VkNPw1HP01LnGYTKEx00:22 a=u7WPNUs3qKkmUXheDGA7:22
+ a=DJpcGTmdVt4CTyJn9g5Z:22 a=c92rfblmAAAA:8 a=EUspDBNiAAAA:8 a=VwQbUJbxAAAA:8
+ a=VT4XjZGOAAAA:8 a=KVhDDZ7ALf19dExUH8oA:9 a=QEXdDO2ut3YA:10
+ a=PEH46H7Ffwr30OY-TuGO:22 a=GvGzcOZaWPEFPQC_NcjD:22 a=6CpsfURP9XNmmWg3j1mJ:22
+X-Proofpoint-GUID: U3p0jMXwiP47n4pywtOSrCeLOEhDBTz2
+X-Proofpoint-Spam-Info: AW1haW4tMjYwNjE1MDA5MSBTYWx0ZWRfX3XIEsW4YrOXv
+ lnY9RXfPg5ARq6fr/u4rDycl7NblojsZg0fli/U465RgfY+FMt0mFt7KBU5mtgp8tZOwjIGPIaB
+ TlMtSzSfEknVFRRF7ote15s4+5EzRqE=
+X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwNjE1MDA5MSBTYWx0ZWRfX9hWMx96k+Z2d
+ T/PCfy/49ThefSkvEc+ZsHbJ/uxktdBrhgF2xdonw6XKRvbTT6Y2umalb0IGSadpVg1VZ2u8pVR
+ PNwtMiqiKd9Zaiy/m7mpf8laSWzzdQjd/AcVHTSvk3Ty9VesXvsmzwLMp1CRZjtLrSDxQnyiXLH
+ pF6FdqRPfAvIpkWgoE0miZ/yCbMi3Aa1BPS4K0aQil/qcAlVAm11StTo5EmqfgtCdHktq1Fi1Sh
+ CiqOilHqURVYpJSpBkq3fWML0J79uw0XuzQ4zG5FbbNgLW/QKHbOssDtcb4n8u1Qbvhy5TeOqFI
+ lDjGDXeJl0l4HiU5O0Pj+EjAl8rVs1Ezn6ZoqAXqNjEYyOTm2tp797sQNhgJ/6y20/7VsZOtpFh
+ VOcxbk83buxeroSHSVH/knHg6/fwLNi5XPr/hsoMgYOWf41R6qVYZC4R2LkjGth1sE3ZPd9Kd+L
+ GutlQCJLHr/vGHNp8VA==
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.293,Aquarius:18.0.1143,Hydra:6.1.125,FMLib:17.12.100.49
+ definitions=2026-06-15_02,2026-06-12_03,2025-10-01_01
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
+ spamscore=0 lowpriorityscore=0 suspectscore=0 malwarescore=0 bulkscore=0
+ adultscore=0 impostorscore=0 phishscore=0 clxscore=1015 priorityscore=1501
+ classifier=typeunknown authscore=0 authtc= authcc= route=outbound adjust=0
+ reason=mlx scancount=1 engine=8.22.0-2606040000 definitions=main-2606150091
 
-
-Hi Kuai,
-
-On Sat, Jun 13, 2026 at 18:47 +0000, sashiko-bot@kernel.org wrote:
-> Thank you for your contribution! Sashiko AI review found 2 potential issu=
+On Sat, Jun 13, 2026 at 3:21=E2=80=AFPM <sashiko-bot@kernel.org> wrote:
+>
+> Thank you for your contribution! Sashiko AI review found 5 potential issu=
 e(s) to consider:
->
-> New issues:
-> - [Critical] Moving `atomic_inc(&rdev->nr_pending)` down opens a race win=
-dow with `hot_remove_disk`, leading to a NULL pointer dereference during er=
-ror handling or a Use-After-Free in clustered configurations.
->
-
-I don't think this can happen. the array must be suspended before any
-disk can be removed.
-
-> Pre-existing issues:
-> - [High] A `REQ_ATOMIC` write can be silently split if a bad block overla=
-ps the start of the write, violating atomicity guarantees.
-
-I don't think this is possible. bio_submit_split_bioset() will fail
-rather than split the bio.
-
+> - [High] NVMEM provider opens the block device with exclusive write restr=
+iction, causing conflicts on mounted systems.
+> - [High] Hardcoded 4GB size limit incorrectly rejects modern eMMC devices=
+.
+> - [High] Integer overflow in size assignment exposes massive out-of-bound=
+s size.
+> - [High] Stale `dev_t` reference can cause data leaks across block device=
+ hotplugs (ABA problem).
+> - [High] Using `__free(fput)` defers block device claim release, creating=
+ race conditions.
 > --
 >
-> commit c334f57d91677f32131f21e50bb32b83136e5a60
-> Author: Abd-Alrhman Masalkhi <abd.masalkhi@gmail.com>
+> commit 459b659c960efdc8a9e2177c5bc4f832e7ee5730
+> Author: Daniel Golle <daniel@makrotopia.org>
 >
-> md/raid1: simplify raid1_write_request() error handling
+> block: implement NVMEM provider
 >
-> This commit delays the rdev->nr_pending increment until after badblocks
-> are checked to avoid incrementing and immediately decrementing on skipped
-> devices. It also consolidates error handling paths and modifies REQ_ATOMIC
-> failures to complete with BLK_STS_NOTSUPP instead of I/O errors.
+> On embedded devices using an eMMC it is common that one or more partition=
+s
+> on the eMMC are used to store MAC addresses and Wi-Fi calibration EEPROM
+> data. Allow referencing the partition in device tree for the kernel and
+> Wi-Fi drivers accessing it via the NVMEM layer.
 >
->> diff --git a/drivers/md/raid1.c b/drivers/md/raid1.c
->> index 632d72607e11e..86d4f224ffb11 100644
->> --- a/drivers/md/raid1.c
->> +++ b/drivers/md/raid1.c
+> > diff --git a/block/blk-nvmem.c b/block/blk-nvmem.c
+> > new file mode 100644
+> > index 0000000000000..c005f059d9fe5
+> > --- /dev/null
+> > +++ b/block/blk-nvmem.c
+> > @@ -0,0 +1,109 @@
+> > +// SPDX-License-Identifier: GPL-2.0-or-later
 > [ ... ]
->> @@ -1576,23 +1573,21 @@ static bool raid1_write_request(struct mddev *md=
-dev, struct bio *bio,
->>  		if (!rdev || test_bit(Faulty, &rdev->flags))
->>  			continue;
->>=20=20
->> -		atomic_inc(&rdev->nr_pending);
->>  		if (test_bit(WriteErrorSeen, &rdev->flags)) {
->>  			sector_t first_bad;
->>  			sector_t bad_sectors;
->>  			int is_bad;
->>=20=20
->> -			is_bad =3D is_badblock(rdev, r1_bio->sector, max_sectors,
->> +			is_bad =3D is_badblock(rdev, sector, max_sectors,
->>  					     &first_bad, &bad_sectors);
->> -			if (is_bad && first_bad <=3D r1_bio->sector) {
->> +			if (is_bad && first_bad <=3D sector) {
->>  				/* Cannot write here at all */
->> -				bad_sectors -=3D (r1_bio->sector - first_bad);
->> +				bad_sectors -=3D (sector - first_bad);
->>  				if (bad_sectors < max_sectors)
->>  					/* mustn't write more than bad_sectors
->>  					 * to other devices yet
->>  					 */
->>  					max_sectors =3D bad_sectors;
->> -				rdev_dec_pending(rdev, mddev);
->>  				continue;
+> > +static int blk_nvmem_reg_read(void *priv, unsigned int from, void *val=
+, size_t bytes)
+> > +{
+> > +     blk_mode_t mode =3D BLK_OPEN_READ | BLK_OPEN_RESTRICT_WRITES;
 >
 > [Severity: High]
-> This is a pre-existing issue, but does this logic skip the rejection of
-> REQ_ATOMIC bios if a bad block overlaps the start of the write?
+> Since the NVMEM provider claims the whole disk (disk->part0), will openin=
+g it
+> with BLK_OPEN_RESTRICT_WRITES and an exclusive holder (priv) return -EBUS=
+Y if
+> any partition on the disk is already mounted or opened for writing?
+
+It only blocks writes on part0, not on its logical partition block
+devices. That said, I don=E2=80=99t see a strong reason to use
+BLK_OPEN_RESTRICT_WRITES here.
+
 >
-> When is_badblock() finds a bad block at or before the write sector, the
-> code shrinks max_sectors to force a split at the boundary and then calls
-> continue. Because of the continue, the REQ_ATOMIC bio skips the rejection
-> logic below.
+> > +     dev_t devt =3D (dev_t)(uintptr_t)priv;
+> > +     size_t bytes_left =3D bytes;
+> > +     loff_t pos =3D from;
+> > +     int ret =3D 0;
+> > +
+> > +     struct file *bdev_file __free(fput) =3D bdev_file_open_by_dev(dev=
+t, mode, priv, NULL);
 >
-> Could this silently split an atomic write into smaller pieces and submit
-> them to the healthy mirrors via bio_submit_split_bioset(), violating
-> block-level atomicity guarantees?
+> [Severity: High]
+> Does using __free(fput) defer the release of the block device claim? Beca=
+use
+> fput() schedules the file release asynchronously, could another subsystem
+> trying to mount or claim the device immediately after an NVMEM read
+> sporadically fail with -EBUSY?
 >
->>  			}
->>  			if (is_bad) {
+> Should this use bdev_fput() instead to synchronously yield the claim befo=
+re
+> the rest of the file release?
+
+Here, we're ok with the deferred file release.
+
+>
+> > +     if (IS_ERR(bdev_file))
+> > +             return PTR_ERR(bdev_file);
 > [ ... ]
->>  				if (bio->bi_opf & REQ_ATOMIC) {
->> -					rdev_dec_pending(rdev, mddev);
->> -					goto err_handle;
->> +					bio->bi_status =3D BLK_STS_NOTSUPP;
->> +					bio_endio(bio);
+> > +void blk_nvmem_add(struct block_device *bdev)
+> > +{
+> [ ... ]
+> > +     /*
+> > +      * skip block device too large to be represented as NVMEM devices=
+,
+> > +      * the NVMEM reg_read callback uses an unsigned int offset
+> > +      */
+> > +     if (bdev_nr_bytes(bdev) > UINT_MAX) {
+>
+> [Severity: High]
+> Since the NVMEM provider is registered against the whole disk rather than=
+ the
+> individual NVMEM partition, does this 4GB limit incorrectly reject most m=
+odern
+> eMMC devices?
 
-I misunderstood the comment. it should call bio_io_error(bio) instead.
-I'll fix this in v3.
+No, most of them have hardware partitions such as boot partition or
+custom raw-user partitions separated from the main 'large' user area.
 
->> +					goto err_dec_pending;
->>  				}
->>=20=20
->> -				good_sectors =3D first_bad - r1_bio->sector;
->> +				good_sectors =3D first_bad - sector;
->>  				if (good_sectors < max_sectors)
->>  					max_sectors =3D good_sectors;
->>  			}
->>  		}
->> +
->> +		atomic_inc(&rdev->nr_pending);
 >
-> [Severity: Critical]
-> Does moving atomic_inc(&rdev->nr_pending) down open a race window with
-> hot_remove_disk()?
+> > +             dev_warn(dev, "block device too large to be an NVMEM prov=
+ider\n");
+> > +             return;
+> > +     }
+> > +
+> > +     config.id =3D NVMEM_DEVID_NONE;
+> > +     config.dev =3D dev;
+> > +     config.name =3D dev_name(dev);
+> > +     config.owner =3D THIS_MODULE;
+> > +     config.priv =3D (void *)(uintptr_t)dev->devt;
 >
-> Because nr_pending acts as an existence lock that prevents the device from
-> being removed from the array configuration by raid1_remove_conf(),
-> incrementing it after the is_badblock() and test_bit(WriteErrorSeen, ...)
-> checks means md_check_recovery() could evaluate rdev_removeable() while
-> nr_pending is 0 and call hot_remove_disk().
+> [Severity: High]
+> Can storing the ephemeral dev_t identifier without holding a pinned block
+> device reference cause an ABA problem?
 >
-> If raid1_remove_conf() unlinks the device by setting
-> conf->mirrors[i].rdev =3D NULL, when this thread resumes and the I/O
-> eventually fails, would the error handling path (handle_write_finished()
-> calling narrow_write_error()) read conf->mirrors[i].rdev and dereference a
-> NULL pointer?
->
-> Additionally, in clustered configurations, if the unlinked rdev is
-> immediately freed by md_kick_rdev_from_array(), could this lead to a
-> use-after-free directly in raid1_write_request() when evaluating
-> test_bit(WriteErrorSeen, &rdev->flags) or is_badblock()?
->
->>  		r1_bio->bios[i] =3D bio;
->>  	}
->
-> --=20
-> Sashiko AI review =C2=B7 https://sashiko.dev/#/patchset/20260613182810.13=
-17258-1-abd.masalkhi@gmail.com?part=3D4
+> If the block device is removed, blk_nvmem_del() calls nvmem_unregister()
+> which drops a reference but does not synchronously wait for consumers to
+> close. If a new device is plugged in and reuses the same dev_t, could a
+> consumer reading from the still-alive NVMEM device inadvertently access t=
+he
+> unrelated new block device?
 
---=20
-Best Regards,
-Abd-Alrhman
+Not, It's fixed in another Bartosz series.
+
+>
+> > +     config.reg_read =3D blk_nvmem_reg_read;
+> > +     config.size =3D bdev_nr_bytes(bdev);
+>
+> [Severity: High]
+> Can this assignment cause an integer overflow?
+>
+> The config.size field in struct nvmem_config is a signed 32-bit int, so d=
+isk
+> sizes between 2GB and 4GB will overflow to a negative value. When
+> nvmem_register() sign-extends this into its 64-bit size_t field, won't it
+> result in a massive out-of-bounds size being exposed via sysfs?
+
+Yes we need to change the above guard to INT_MAX.
+
+>
+> > +     config.word_size =3D 1;
+> > +     config.stride =3D 1;
+> > +     config.read_only =3D true;
+>
+> --
+> Sashiko AI review =C2=B7 https://sashiko.dev/#/patchset/20260612-block-as=
+-nvmem-v5-0-95e0b30fff90@oss.qualcomm.com?part=3D5
