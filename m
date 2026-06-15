@@ -1,160 +1,213 @@
-Received: from mail-wm1-f47.google.com (mail-wm1-f47.google.com [209.85.128.47])
+Received: from mail-wr1-f45.google.com (mail-wr1-f45.google.com [209.85.221.45])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DCA643BFE38
-	for <sashiko-reviews@lists.linux.dev>; Mon, 15 Jun 2026 07:59:02 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.47
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D7A922C08DC
+	for <sashiko-reviews@lists.linux.dev>; Mon, 15 Jun 2026 08:11:27 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.221.45
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1781510344; cv=none; b=iU4KOE2N2iww4sQV94UmRIdPQUrzAv8zyMROuPU7Y4LYBbWCAoCrAT7xBUkqUTFiqAbvuYzkpXTGFvJV1LfgUb6SdkV+F1+mOzrDz7RIR5fMXKGMIqoDDcDfbDURmuzdNaxNsn16mDNhePCflBYVGUqR4LC51I6Q0iEWIsW2elw=
+	t=1781511089; cv=none; b=Fi0E4L66a58G5SOrVfYuKxFHPYHwrNcJDYprRQUE1BIJvGcJNkMW7SYc4QvSBnibGyAgCUkzMkP1Ocp+o4twQWrEU73LgzRikbT8DBysvWcmKCIpKBICsNtVtZCe2CroXWPROE0zU1VQ4FmPtOj5CM1GOVzAPHV34AOmn/yTYBQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1781510344; c=relaxed/simple;
-	bh=QRFykM/dRrqvda6J19hWdhbvvCSJWoUxH6upTIIoa7Y=;
-	h=From:Date:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=LSmLwjkhu7X+Skg0OJ4+UPX9iuCecECFCPzHV09m29ar7IXO402ZSZbG6EbdDrEtV8mGU4od2EX46+01Jm1zf0nuMowUKQefNenNOWrNCp5ExiluyVBQQgQH8iNzaBEAqliXLQALjSEZ8EHADb4T/dVyItyBOfhXSabvHmX2Vog=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=bPGlAOHr; arc=none smtp.client-ip=209.85.128.47
+	s=arc-20240116; t=1781511089; c=relaxed/simple;
+	bh=vkAjOTN2OSxQ3NT6LfnmMdKXifOjLa41qAT64P/56SY=;
+	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
+	 MIME-Version:Content-Type; b=U95dCBDhhahWwEf3PWr9da/gu08Z1SRn6Me5Ih+ppHGxmpG6GlElKxG02mCSvL5GB2tMDyaE83n7sT2iweHq3mZmJ2XNl8+278PRwtJcJ2tplrMCsGsoBsCDYgkIZ1ylXLQFrCsDE0qI/DzifQ53rEJO4dFgPR+YZTetnEA2FKM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=F5k8CARg; arc=none smtp.client-ip=209.85.221.45
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="bPGlAOHr"
-Received: by mail-wm1-f47.google.com with SMTP id 5b1f17b1804b1-490b8ac62baso29092595e9.0
-        for <sashiko-reviews@lists.linux.dev>; Mon, 15 Jun 2026 00:59:02 -0700 (PDT)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="F5k8CARg"
+Received: by mail-wr1-f45.google.com with SMTP id ffacd0b85a97d-45ee5cdbd28so2439560f8f.1
+        for <sashiko-reviews@lists.linux.dev>; Mon, 15 Jun 2026 01:11:27 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20251104; t=1781510341; x=1782115141; darn=lists.linux.dev;
-        h=in-reply-to:content-disposition:mime-version:references:message-id
-         :subject:cc:to:date:from:from:to:cc:subject:date:message-id:reply-to;
-        bh=DJ2yQjvmZ3fwNrdGj/6ndgBVMLizxNTABMhDzt/9sHI=;
-        b=bPGlAOHrVXb+HgvsazhaC6if3OmoCcJOvoEruwuBkh6njGfw1TsX1Jgoy2nF4cqvjD
-         G5YUbt1SytFSJJ/v3gJjM3tViMTzpfYh/3u5vEw35qjjHfiqmsVtjl+ZnZts6lvaMwka
-         ULBoSLcOvgiqNQplyVM298+2fhAoks3WG9Kc/rrJZboWkkGEV3HdNc+r1eE09LDLLvPj
-         y/dTtom260bG2C54P5vo2u2YAZPDS4vL6tcET0i3Sqf4ebjeuK01R7wGP/xwqNYnaDQS
-         11J3VwrYHd7QUsk1VS8PsbHhBV0uLkLpOG5vtDC2yfzZuVIiOWToo6F810wBb6Q//FDn
-         Yvmw==
+        d=gmail.com; s=20251104; t=1781511086; x=1782115886; darn=lists.linux.dev;
+        h=content-transfer-encoding:mime-version:message-id:date:references
+         :in-reply-to:subject:cc:to:from:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=MHKH4L1yXonvQGqJbkYblMaxDoWz9KlhZVMxCLtZwmI=;
+        b=F5k8CARg1kNcKo8HQIYuZTRi7WYowbZSsaSzahtYhS6R4bjDPD+930pO0D7hkrpv7D
+         NBb1AcvFAbR+e/oCOvnmcuqnS1sTPXk+8sqybFUI9OG7+QjvZOSmSeuMQHXMOmcgYDkW
+         tOwr03lKLj5KAlGw5NJtoktuwec3Vg4H8mXMVM4wqvh3Xqx6ZRx5L1SrnHIPHd+WTk1h
+         F+zq/xuSCe0OwKY+z4r/CaU/TaFcvqsaXaJfNjNXBqpgBQCue6wxOKqGif68puyAnvyD
+         bWvuzcXtwLz5+1N4Jmw7V3+qBqJegztcB0n4Ue6LiYnKw0tHTyBtP3ElVWSPzq/gqucV
+         ms3A==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20251104; t=1781510341; x=1782115141;
-        h=in-reply-to:content-disposition:mime-version:references:message-id
-         :subject:cc:to:date:from:x-gm-gg:x-gm-message-state:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=DJ2yQjvmZ3fwNrdGj/6ndgBVMLizxNTABMhDzt/9sHI=;
-        b=Z3rTYvuFvaToh/NmgSM3yi027UlM/jbiJn2N2ZmjxxdQlZTW0amsyZPW1thFTvPkFY
-         FcWzu+TFE6QEZ69MQIa82K5hcNvFm3nkFCfX2voyMwYL78B9m8v6dRnn2TKxncFjye2t
-         EoRmFKhaDQ6NizVqEhnwA3nAY3VM8FftFPDN3zyqNaKbCgtQssVZVQvqBOkEzx84oHyf
-         ABQlFKf1o+/hGaljB5NNmZbPNFOUM2egKbBT4k0pqjd787xBkLbIcpYvXpJElDK2tq8l
-         xAAdz3yOcIyDVC9O+Iq9TSNoOmwyV1MxETPfEwVIoDJJtZElCBBOD5hkf+BlFyIqYFDf
-         kCxQ==
-X-Gm-Message-State: AOJu0YxuLhYY5owrgJDJJnja2BuxJryp3RjHBabfMBV+6xzJldokvRPU
-	CG/XigxBwq3qc/1AOnsBpR698Xmn34TNQlo8ZLIE2h5XpWgo9cSpeBVgdRjRNw==
-X-Gm-Gg: Acq92OFGJucljREtcTOAu3vnXNDWckfeLfSuFLlYDE6hAEXHipcD0x/MMNgOc6Uu9A5
-	RsFYTQaL12WTGPJawb3xuFDpuyxM5x+6Y/8yuikH6mRzR8gvP84IdOwowHPlcXf66Y0MXTaWRUw
-	q/+4N8bCziTQ65TL0gl13o+nki6ttbQg+A0RNH2cRS/4C+Wk/LCOD7hw8rVdTPKGpvojhsaHLuo
-	kSIrGfve7YD3Yo0f4VTbfn74YvejekVmxQctJq2GjTsV3/flUpX5lt3b1Sr43tiRSSBpKhx0cQL
-	yzOPEKXL9tbiA1jYscJKebJIqYxRT5m6oQ2GDXCR1OZXD+kc+GkGeZYDS5vF1wYpVoPGhAfu0IU
-	xjFChcq8F3dduObqxxhbCQVUnTSkhrQitQ1gYqU4G4kKgd37/A/svNF+1uPu3FbngFg9LWyiPjs
-	v43c0yNRVpVwU=
-X-Received: by 2002:a05:600c:1595:b0:48e:8eb0:4957 with SMTP id 5b1f17b1804b1-490ea9ace2bmr97919875e9.2.1781510340941;
-        Mon, 15 Jun 2026 00:59:00 -0700 (PDT)
-Received: from krava ([176.74.159.170])
-        by smtp.gmail.com with ESMTPSA id ffacd0b85a97d-4606f2e6a8fsm32532456f8f.37.2026.06.15.00.59.00
+        d=1e100.net; s=20251104; t=1781511086; x=1782115886;
+        h=content-transfer-encoding:mime-version:message-id:date:references
+         :in-reply-to:subject:cc:to:from:x-gm-gg:x-gm-message-state:from:to
+         :cc:subject:date:message-id:reply-to;
+        bh=MHKH4L1yXonvQGqJbkYblMaxDoWz9KlhZVMxCLtZwmI=;
+        b=o36oJvVyZLlXBL7TEIj+9W/BmXg5u/dRL7ddbRrhcTqH1c7ArWi4QW+d+Sn/xDpgT+
+         LdZXJonqxr04xsn1a96jxAHTVJkVmK24zIBaTQpVrEEV9yq/9vSL6YPD4NYDxS7pwAIm
+         EH64U0iR3dLKBabXD7bMkXc4DiVnYHuPkrGE8qW9n8OI1Z151B0Epk1nzyAWEeeOS3po
+         jz26gL0RPDWWuGqYBJjMZlVhPJjJUl4Z9kPi5GqU+3Z9UeWq/MXSi3iPQHAHEAD0cbE4
+         HOCEtVx8Jf+Tlt1iFXUQOTzdwJx5TYeRBPKkBFGetNAhfKeULbAzhfcl4JeL2kIj7/Iz
+         5XTQ==
+X-Gm-Message-State: AOJu0YwhiRN0KP7pxuLP6Wd2oZ3wv7CJhHgy3sZYFFMtBfbbElAOXiPW
+	j0NIr6+FDzDwkO/M2xiKAOHVfQmhgta/9V+pZqwIcnk+N19u/XjNytc2
+X-Gm-Gg: Acq92OEYK5PWs0TU1QWwJImyC23aT1uvl53ookPJ2NkQZrp4RycdeTRS/PTtA9ZuQnU
+	OZXNsyg/zsi47yZdgervJTh0/vK3efPVnkRc/cBF/rli4wutzJXYbqzcUm+Ap4PioHrj9n6oHvx
+	VsKWOwGrcODFaChn9/gZoqWiKLvSp0AAjx8WDkDXzfHTkwy/9CfpgxtuXysh8MP20IfEgRUDptv
+	hwD4gLmSX2qDMvfuNswG90BUoXWp/Na6Fkvc3wnRQMzyZO9w8IspFPJIsVVrOtdUAheOasWfxbK
+	+g23DMUwOUVjz8xrb1bmDR0eUX/ZBRYeTkmnMCD9DkOOHmuA3CDNjRr5bAxxskEOwDb4QQNxWSZ
+	6WhWWDumomg+Itu0LNtVKdJG5NZ8JVYLk74IBCFcon/D973Wj1Dyxm7oerEA2h663PctqK2cdKT
+	TU87nIL6SV9OYCUg8awr9JvTt2AWK6hOIjQlBu2ncGoBQbTDYQA/oEkiDFmq1kpcZNZC8=
+X-Received: by 2002:a05:6000:38f:b0:460:6a3d:a114 with SMTP id ffacd0b85a97d-4606d140526mr14759830f8f.30.1781511085719;
+        Mon, 15 Jun 2026 01:11:25 -0700 (PDT)
+Received: from Abds-MacBook-Air.local ([141.2.113.131])
+        by smtp.gmail.com with ESMTPSA id ffacd0b85a97d-4606f2e6a8fsm32626107f8f.37.2026.06.15.01.11.24
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Mon, 15 Jun 2026 00:59:00 -0700 (PDT)
-From: Jiri Olsa <olsajiri@gmail.com>
-X-Google-Original-From: Jiri Olsa <jolsa@kernel.org>
-Date: Mon, 15 Jun 2026 09:58:58 +0200
+        Mon, 15 Jun 2026 01:11:25 -0700 (PDT)
+From: Abd-Alrhman Masalkhi <abd.masalkhi@gmail.com>
 To: sashiko-reviews@lists.linux.dev
-Cc: bpf@vger.kernel.org
-Subject: Re: [PATCHv3 bpf-next 1/7] bpf: Guard __get_user acesss with
- access_ok for uprobe_multi data
-Message-ID: <ai-wwq183bfjoxkg@krava>
-References: <20260611114230.950379-2-jolsa@kernel.org>
- <20260611115503.AC16D1F00893@smtp.kernel.org>
+Cc: linux-raid@vger.kernel.org, yukuai@fygo.io
+Subject: Re: [PATCH v2 4/4] md/raid1: simplify raid1_write_request() error
+ handling
+In-Reply-To: <20260613184757.57BC51F000E9@smtp.kernel.org>
+References: <20260613182810.1317258-5-abd.masalkhi@gmail.com>
+ <20260613184757.57BC51F000E9@smtp.kernel.org>
+Date: Mon, 15 Jun 2026 10:11:24 +0200
+Message-ID: <m21pe8xlxv.fsf@gmail.com>
 Precedence: bulk
 X-Mailing-List: sashiko-reviews@lists.linux.dev
 List-Id: <sashiko-reviews.lists.linux.dev>
 List-Subscribe: <mailto:sashiko-reviews+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:sashiko-reviews+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <20260611115503.AC16D1F00893@smtp.kernel.org>
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: quoted-printable
 
-On Thu, Jun 11, 2026 at 11:55:02AM +0000, sashiko-bot@kernel.org wrote:
-> Thank you for your contribution! Sashiko AI review found 1 potential issue(s) to consider:
-> 
+
+Hi Kuai,
+
+On Sat, Jun 13, 2026 at 18:47 +0000, sashiko-bot@kernel.org wrote:
+> Thank you for your contribution! Sashiko AI review found 2 potential issu=
+e(s) to consider:
+>
+> New issues:
+> - [Critical] Moving `atomic_inc(&rdev->nr_pending)` down opens a race win=
+dow with `hot_remove_disk`, leading to a NULL pointer dereference during er=
+ror handling or a Use-After-Free in clustered configurations.
+>
+
+I don't think this can happen. the array must be suspended before any
+disk can be removed.
+
 > Pre-existing issues:
-> - [High] Missing access_ok() check for the usyms array in bpf_kprobe_multi_link_attach() allows arbitrary kernel memory read.
+> - [High] A `REQ_ATOMIC` write can be silently split if a bad block overla=
+ps the start of the write, violating atomicity guarantees.
+
+I don't think this is possible. bio_submit_split_bioset() will fail
+rather than split the bio.
+
 > --
-> 
-> commit e5440667240e003d50bb838ad4b19e526ef6c703
-> Author: Jiri Olsa <jolsa@kernel.org>
-> 
-> bpf: Guard __get_user acesss with access_ok for uprobe_multi data
-> 
-> This patch adds access_ok checks for uprobe_multi arrays before calling
-> __get_user. It ensures that the user space data bounds are safe.
-> 
-> Link: https://lore.kernel.org/bpf/20260610145235.CB1441F00893@smtp.kernel.org/
-> 
-> > diff --git a/kernel/trace/bpf_trace.c b/kernel/trace/bpf_trace.c
-> > --- a/kernel/trace/bpf_trace.c
-> > +++ b/kernel/trace/bpf_trace.c
-> 
+>
+> commit c334f57d91677f32131f21e50bb32b83136e5a60
+> Author: Abd-Alrhman Masalkhi <abd.masalkhi@gmail.com>
+>
+> md/raid1: simplify raid1_write_request() error handling
+>
+> This commit delays the rdev->nr_pending increment until after badblocks
+> are checked to avoid incrementing and immediately decrementing on skipped
+> devices. It also consolidates error handling paths and modifies REQ_ATOMIC
+> failures to complete with BLK_STS_NOTSUPP instead of I/O errors.
+>
+>> diff --git a/drivers/md/raid1.c b/drivers/md/raid1.c
+>> index 632d72607e11e..86d4f224ffb11 100644
+>> --- a/drivers/md/raid1.c
+>> +++ b/drivers/md/raid1.c
 > [ ... ]
-> 
-> > @@ -3261,6 +3262,16 @@ int bpf_uprobe_multi_link_attach(const union bpf_attr *attr, struct bpf_prog *pr
-> >  	uref_ctr_offsets = u64_to_user_ptr(attr->link_create.uprobe_multi.ref_ctr_offsets);
-> >  	ucookies = u64_to_user_ptr(attr->link_create.uprobe_multi.cookies);
-> >  
-> > +	/*
-> > +	 * All uoffsets/uref_ctr_offsets/ucookies arrays have the same value
-> > +	 * size, we need to check their address range is safe for __get_user
-> > +	 * calls.
-> > +	 */
-> > +	size = sizeof(*uoffsets) * cnt;
-> > +	if (!access_ok(uoffsets, size) || !access_ok(uref_ctr_offsets, size) ||
-> > +	    !access_ok(ucookies, size))
-> > +		return -EFAULT;
-> 
+>> @@ -1576,23 +1573,21 @@ static bool raid1_write_request(struct mddev *md=
+dev, struct bio *bio,
+>>  		if (!rdev || test_bit(Faulty, &rdev->flags))
+>>  			continue;
+>>=20=20
+>> -		atomic_inc(&rdev->nr_pending);
+>>  		if (test_bit(WriteErrorSeen, &rdev->flags)) {
+>>  			sector_t first_bad;
+>>  			sector_t bad_sectors;
+>>  			int is_bad;
+>>=20=20
+>> -			is_bad =3D is_badblock(rdev, r1_bio->sector, max_sectors,
+>> +			is_bad =3D is_badblock(rdev, sector, max_sectors,
+>>  					     &first_bad, &bad_sectors);
+>> -			if (is_bad && first_bad <=3D r1_bio->sector) {
+>> +			if (is_bad && first_bad <=3D sector) {
+>>  				/* Cannot write here at all */
+>> -				bad_sectors -=3D (r1_bio->sector - first_bad);
+>> +				bad_sectors -=3D (sector - first_bad);
+>>  				if (bad_sectors < max_sectors)
+>>  					/* mustn't write more than bad_sectors
+>>  					 * to other devices yet
+>>  					 */
+>>  					max_sectors =3D bad_sectors;
+>> -				rdev_dec_pending(rdev, mddev);
+>>  				continue;
+>
 > [Severity: High]
-> This is a pre-existing issue, but while you are adding these access checks
-> for uprobes, does bpf_kprobe_multi_link_attach() have an identical missing
-> check for the usyms array?
-> 
-> Looking at bpf_kprobe_multi_link_attach(), it calls copy_user_syms() with
-> the unchecked user pointer usyms:
-> 
-> kernel/trace/bpf_trace.c:bpf_kprobe_multi_link_attach() {
->     ...
-> 		struct user_syms us;
-> 
-> 		err = copy_user_syms(&us, usyms, cnt);
-> 		if (err)
-> 			goto error;
->     ...
-> }
-> 
-> And copy_user_syms() iteratively calls __get_user(usymbol, usyms + i)
-> without any prior access checks on the array:
-> 
-> kernel/trace/bpf_trace.c:copy_user_syms() {
->     ...
-> 	for (p = buf, i = 0; i < cnt; i++) {
-> 		if (__get_user(usymbol, usyms + i)) {
-> 			err = -EFAULT;
-> 			goto error;
-> 		}
->     ...
-> }
-> 
-> Since __get_user() bypasses bounds checking, couldn't an attacker provide
-> a kernel address for usyms and read arbitrary kernel memory into usymbol?
-> 
-> A subsequent strncpy_from_user() call would use usymbol as its source
-> pointer, potentially acting as a side-channel oracle to leak kernel
-> information or bypass kernel address layout randomization.
-> 
-> Should copy_user_syms() or bpf_kprobe_multi_link_attach() also include
-> an access_ok() check for the usyms array?
+> This is a pre-existing issue, but does this logic skip the rejection of
+> REQ_ATOMIC bios if a bad block overlaps the start of the write?
+>
+> When is_badblock() finds a bad block at or before the write sector, the
+> code shrinks max_sectors to force a split at the boundary and then calls
+> continue. Because of the continue, the REQ_ATOMIC bio skips the rejection
+> logic below.
+>
+> Could this silently split an atomic write into smaller pieces and submit
+> them to the healthy mirrors via bio_submit_split_bioset(), violating
+> block-level atomicity guarantees?
+>
+>>  			}
+>>  			if (is_bad) {
+> [ ... ]
+>>  				if (bio->bi_opf & REQ_ATOMIC) {
+>> -					rdev_dec_pending(rdev, mddev);
+>> -					goto err_handle;
+>> +					bio->bi_status =3D BLK_STS_NOTSUPP;
+>> +					bio_endio(bio);
 
-I'm not sure it's possible to exploit it, but the contract for __get_user is
-clear, so I think we should call access_ok also in here, I'll send the fix
+I misunderstood the comment. it should call bio_io_error(bio) instead.
+I'll fix this in v3.
 
-jirka
+>> +					goto err_dec_pending;
+>>  				}
+>>=20=20
+>> -				good_sectors =3D first_bad - r1_bio->sector;
+>> +				good_sectors =3D first_bad - sector;
+>>  				if (good_sectors < max_sectors)
+>>  					max_sectors =3D good_sectors;
+>>  			}
+>>  		}
+>> +
+>> +		atomic_inc(&rdev->nr_pending);
+>
+> [Severity: Critical]
+> Does moving atomic_inc(&rdev->nr_pending) down open a race window with
+> hot_remove_disk()?
+>
+> Because nr_pending acts as an existence lock that prevents the device from
+> being removed from the array configuration by raid1_remove_conf(),
+> incrementing it after the is_badblock() and test_bit(WriteErrorSeen, ...)
+> checks means md_check_recovery() could evaluate rdev_removeable() while
+> nr_pending is 0 and call hot_remove_disk().
+>
+> If raid1_remove_conf() unlinks the device by setting
+> conf->mirrors[i].rdev =3D NULL, when this thread resumes and the I/O
+> eventually fails, would the error handling path (handle_write_finished()
+> calling narrow_write_error()) read conf->mirrors[i].rdev and dereference a
+> NULL pointer?
+>
+> Additionally, in clustered configurations, if the unlinked rdev is
+> immediately freed by md_kick_rdev_from_array(), could this lead to a
+> use-after-free directly in raid1_write_request() when evaluating
+> test_bit(WriteErrorSeen, &rdev->flags) or is_badblock()?
+>
+>>  		r1_bio->bios[i] =3D bio;
+>>  	}
+>
+> --=20
+> Sashiko AI review =C2=B7 https://sashiko.dev/#/patchset/20260613182810.13=
+17258-1-abd.masalkhi@gmail.com?part=3D4
+
+--=20
+Best Regards,
+Abd-Alrhman
