@@ -1,219 +1,157 @@
-Received: from mail-yx1-f44.google.com (mail-yx1-f44.google.com [74.125.224.44])
+Received: from mail-pl1-f201.google.com (mail-pl1-f201.google.com [209.85.214.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 305AE21C16A
-	for <sashiko-reviews@lists.linux.dev>; Mon, 15 Jun 2026 14:11:33 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=pass smtp.client-ip=74.125.224.44
-ARC-Seal:i=2; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1781532694; cv=pass; b=sgo20zBj5mYInGVnBMmW3j9peA6szJZSMi5GiNT5MGK+pcyCoTBWuR44XDB/YMZ7QSuncVZePrn8pHM3WzFO1cIQQ1G7EDon9QxffR6ImhV7mC1fpPHNK+gMzTM2msfRybSnponCdzKeoxpxYw8YFc1aziQla47dqeDy82GmsLU=
-ARC-Message-Signature:i=2; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1781532694; c=relaxed/simple;
-	bh=UKZhWeWAfm91Tl34gD1jUYGw1Gj8LP6juUfsejBIZXg=;
-	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
-	 To:Cc:Content-Type; b=PBWrUyITTd6ock5+HX6f+2k8Jr5B5CRcxq4jvCr2k4/Ohk14bRz9FkNe8rp9puu840vJ62zp9FIqanDS6OGGZCJx54R5nOHFU58TdKyW+pRug6sQSZA12rw7k2QI6z8835lS0AzBzpyQ3cucXq6JJgYTKOiBOV0QvjgiiDudeis=
-ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=feyThw10; arc=pass smtp.client-ip=74.125.224.44
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 742243F65FB
+	for <sashiko-reviews@lists.linux.dev>; Mon, 15 Jun 2026 14:12:11 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.214.201
+ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
+	t=1781532732; cv=none; b=GznbpPhYJDNsF8Err+AQElg7MJ7nykEa/2lcFI9b4bHB9PP4CLTj1VCnxAogqzM+OjUkV7FmEk+RbDlNvJORoGNAyf/Z06d/Qoxt8/2C80YOFUYMxQzs6Z8gnRK7UbB97vL0xWjFYjQddiUezu9F3NGwEREzMnNjnjl1p7uoftw=
+ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
+	s=arc-20240116; t=1781532732; c=relaxed/simple;
+	bh=bVKKlqMoMZT7ZIqI/tShpktD7NbvFFwWIAcipGBu0As=;
+	h=Date:In-Reply-To:Mime-Version:References:Message-ID:Subject:From:
+	 To:Cc:Content-Type; b=hiqscf9PcqXLlJ1e8up2DWfvjQQLCp8Lu1WEJ6GAJPi3IXAw2WI/2xQpzSFSTvX1Bo+qxHmscP1Q9h4XrTDkKGa9wpevbd6xN+TdBbAlPwwUdEw5ugXpa3dBmf8rrexGxyE83PFkPGeyX9ZkYv+R6buw4BVBsS6j55tvda0muUc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=google.com; spf=pass smtp.mailfrom=flex--seanjc.bounces.google.com; dkim=pass (2048-bit key) header.d=google.com header.i=@google.com header.b=v0vG1sJb; arc=none smtp.client-ip=209.85.214.201
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=google.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=flex--seanjc.bounces.google.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="feyThw10"
-Received: by mail-yx1-f44.google.com with SMTP id 956f58d0204a3-660512d80b4so3306777d50.1
-        for <sashiko-reviews@lists.linux.dev>; Mon, 15 Jun 2026 07:11:33 -0700 (PDT)
-ARC-Seal: i=1; a=rsa-sha256; t=1781532692; cv=none;
-        d=google.com; s=arc-20240605;
-        b=Xiuo1ZiFTbp8AIGO70o5/vbaDe3PcoDhWycyvpaYfOnkwwAoJIGw3cmw6gHFhJb7Ce
-         KyMOzLP+7HscYN/Qm/S2jj5KgE2Y+xaKQf5/b6g7Lx1q7bqgAGocSfgESvtNP48tN8ER
-         FUhHuu2xGQyzGTJaJTDWn9oG8ry8a5yDIedNxkJZwqReaDLH5AlsW6XeO6DHMZtVL4sg
-         w59DS9cCGX3WUAPXNPUHAuKvQO6bUxcLPDPXDUYsNjnXBcdb97zHbpjLqf3vh2mBbJGU
-         AWeVlrRkiJ8yY5w1DUT6EgC5JE48/1Wc4haQsxThAgBzvZ6QYQwqnOdzGWktyO88D82n
-         38ig==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com; s=arc-20240605;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:dkim-signature;
-        bh=UrGpYc7EZ2BDTKPv+yN+W6g0qTS6gFnZcs1t2tSQ68g=;
-        fh=+Kn94FVzl6rE7mDhn4pFvEHlRshbQ57dQ5o19v04Oyg=;
-        b=f4DPUi4psN5xl1FWzW2ILYBp1thK2ffx5Jpg4f2amnbOffRq+39YILE8DgY3biV9Dj
-         O+4F465pSSemmms2gCHT38G0IHBLUp5j4FgeOZY7pFJPkb16HDQOwNKE8j10SzooyEYM
-         sOhQNzVRI5UozOuFvR5Ba6hCk5YtkbzTRvwfXPmIXBKBKaMh0sJmthd+9g6ar0PQyIE6
-         PiQ/B4lldbrHvDyvtd5+2xepw6eBiHUPkv4ci44IH3AYrDkyt9jVGy0bq6y2obmE6t8+
-         IdBMuo3OOJEQqtw0ufnb6V/J1OHSe8coHY8XZ+H6XjXjlPOvulOI7mJ7eqY4yBc7j5kQ
-         /Ekg==;
-        darn=lists.linux.dev
-ARC-Authentication-Results: i=1; mx.google.com; arc=none
+	dkim=pass (2048-bit key) header.d=google.com header.i=@google.com header.b="v0vG1sJb"
+Received: by mail-pl1-f201.google.com with SMTP id d9443c01a7336-2bf3636d6c0so34377205ad.2
+        for <sashiko-reviews@lists.linux.dev>; Mon, 15 Jun 2026 07:12:11 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20251104; t=1781532692; x=1782137492; darn=lists.linux.dev;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=UrGpYc7EZ2BDTKPv+yN+W6g0qTS6gFnZcs1t2tSQ68g=;
-        b=feyThw10WBI+9wInQhPvTrs22T4GDx+Y18j01y7PGkpelDayxxpoPUhaT9ampG4iXU
-         CLnflQ6uknfp9+YGB6mCD0WDl0ORuv/oo1NC6+g6u51hvHcM52WSEl0EMs7btM8y7fqG
-         /wgkIMzGiXV68pi82NI9RlJ2URluGIqQ7ipL77xizXi9/DnY2HXly/1oLDZrf+oGUEwY
-         EYP4s/RmzoriJGPvsZ4YL5z0Cvebho6GOue3OUVkHMQCyw9FWhHPY+eZTNV7eDq5sdNQ
-         uhHxng+wgHgbWuNEM+ieRrvicCFG0t/i+aLCFa331FLlTV0jLrLKd0okMlTqy9LPwm+S
-         S5Dg==
+        d=google.com; s=20251104; t=1781532731; x=1782137531; darn=lists.linux.dev;
+        h=content-transfer-encoding:cc:to:from:subject:message-id:references
+         :mime-version:in-reply-to:date:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=Sf6ZRxRXE3E/hdonYM+tz1sS9z/iGh2J0kw14Af6L3c=;
+        b=v0vG1sJbwBe8xKKuAR8hbXAZYTZ0WPNPYmGSCJPILx2j0L9QNsn4ZRKqt4vrKaihOy
+         7/PrgpnxV1iZx4YBvO1jLOEkpJNTr21nZVs2zdXe0Ed63EmfGKlZBA6Gay4+0LqT6xzC
+         CE2fzKU9LI0JD4qxvyjp5gyuv5jOSpCIBZgMzhuIZzdIFPD9ZLU2Xoboa19RNt7xDjNm
+         Ftnsx2LkqP6LIgV65vbBPglCqpjhWoVfnpyJwA7oSJiyjcjJU5EVidExEF0Vu/qOpMCP
+         o9aaQ/MSrD4AuIGn+brJ/Rb0eIFRIho4Qws8QKFijUp0GZqTubHajF/LU0FBSoUUeAUO
+         aiqg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20251104; t=1781532692; x=1782137492;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:x-gm-gg:x-gm-message-state:from
-         :to:cc:subject:date:message-id:reply-to;
-        bh=UrGpYc7EZ2BDTKPv+yN+W6g0qTS6gFnZcs1t2tSQ68g=;
-        b=PTVgbxJckf/9dgvtw/npGAmEWlifMiaGnyUlPJhH0raoP8K3ymEVxG6ihXpPTu+nPT
-         9zH2wZ6AZfPpPQybPMuTv7Hq5InCr+b0i8oYUDdGEyGLAOJWwleB6AogGAFz2wnziqDC
-         Eh8sx0z+EVelf2PLhiYok53AAGQCQ2t1Uhij92esctWzhf9Q6UJElBRClcwysazuUS43
-         +KxHXvIeRNiTxH2FXeg5oXYBJRjqNleKX1n1WQXmgFU1LfCPLACDIrOcz4Fy0Dw2uOZL
-         YOzZlijxLbEHkTSeAj1MH4XkuxriLIMga1mWCXStPLRUUcGFyuFBKXqFttsBTp1fncer
-         gFPw==
-X-Gm-Message-State: AOJu0YzD6e+gJ5zWeI4HJ6cpCVBOQZnsqIka2eTgPs5dXpHKJQGTxlg+
-	VJUVgzQbmy+JOqoZMuBS/z7MgOmuL6Ws2femjB+3/U7yuNN9j1i2IRDMHzmpchHDWDAjmjAt7mf
-	S2OS8cgGlsrhXodFkImccy83r+OK8y2euTRBW
-X-Gm-Gg: Acq92OHPKMeIT4tXx19UAjci/SMQnEKCeldaItAjEwRlcjcbEmmVy+YlQyBYnxoc8id
-	ha4SL/YKtMDbQQAGL8PrZs4x38CCGHDeFq7gI14qStHyEngma7Wl0PpWoaDNkpO7rmk17Pz4Ht3
-	wrZViarDano3rJ2Hf5uDKukqjjdJK4DEM03tr48wy9hoOfl4gNaZCe+jXBxYzyDmaIKcWlvm58p
-	qEV4rsaPkw5up4Swkuz/l05nen//sxqtZ+GhCr0hWmbO8/b69fLHfWWCXKgWNz/7DgIik82Jn4A
-	PoN5fOTU0g==
-X-Received: by 2002:a05:690e:1443:b0:65c:6bf0:fad4 with SMTP id
- 956f58d0204a3-66278d4f1f8mr7941983d50.27.1781532692254; Mon, 15 Jun 2026
- 07:11:32 -0700 (PDT)
+        d=1e100.net; s=20251104; t=1781532731; x=1782137531;
+        h=content-transfer-encoding:cc:to:from:subject:message-id:references
+         :mime-version:in-reply-to:date:x-gm-message-state:from:to:cc:subject
+         :date:message-id:reply-to;
+        bh=Sf6ZRxRXE3E/hdonYM+tz1sS9z/iGh2J0kw14Af6L3c=;
+        b=HBxDAS2T6lL8/xDr9z5ddqrixBqIX5xN4Rg3hTZAdOfy/+Nd3WivQXJhEQYevnUc4L
+         +18ua4m00Z/WzdUBfOPUfBYU805WDjsWB4zzfQDbejZr8XigDQqma8yIkdFO4Fln3yUD
+         mxSghUFVC5xLW4UlRS9AGBCZdZjKKO09HT0X++idEpcPijVbOhC6v1qGF5f+IDQkUWre
+         FXnM8DnjBWEGZTrIVVbUfZx2JlTAOuy36XLQhljtTvl3qe7kLCYfnuqZzYm6o1ujJ5n1
+         OT8Oz5/TufDQ8pcsqHLVcl9/k+5lJeOnuGnD1mub4U6zsvi8HvhzId5+U2VxTRLpDXAC
+         W6NQ==
+X-Gm-Message-State: AOJu0YwWntu07Od6W6QrfbHNWhdhkUmm/7l41QvSzCS+wll7mcCWDpBp
+	qL1dDPT0sNdmolcNzgbq6tDMEpTopymvKqLVFnkhp5x/hzCmWVFbw/3ztaCZ5t+haWKHYX94s9v
+	S2jXHbA==
+X-Received: from plbli14.prod.google.com ([2002:a17:903:294e:b0:2c0:a7f8:c132])
+ (user=seanjc job=prod-delivery.src-stubby-dispatcher) by 2002:a17:903:4587:b0:2c2:8659:da3a
+ with SMTP id d9443c01a7336-2c4132039cbmr162587015ad.31.1781532730565; Mon, 15
+ Jun 2026 07:12:10 -0700 (PDT)
+Date: Mon, 15 Jun 2026 07:12:09 -0700
+In-Reply-To: <a8eefe40b2b0a0a3d4afd675ed4fea6762934fdc.camel@infradead.org>
 Precedence: bulk
 X-Mailing-List: sashiko-reviews@lists.linux.dev
 List-Id: <sashiko-reviews.lists.linux.dev>
 List-Subscribe: <mailto:sashiko-reviews+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:sashiko-reviews+unsubscribe@lists.linux.dev>
-MIME-Version: 1.0
-References: <20260610160816.2828713-3-tmaimon77@gmail.com> <20260610162038.304A01F00893@smtp.kernel.org>
-In-Reply-To: <20260610162038.304A01F00893@smtp.kernel.org>
-From: Tomer Maimon <tmaimon77@gmail.com>
-Date: Mon, 15 Jun 2026 17:11:20 +0300
-X-Gm-Features: AVVi8CfEc81qkCQBN8OJtoQ-_JIGYWvllSrsq9M306zQn2ux9pWdHNpYV0tje48
-Message-ID: <CAP6Zq1iC_sLfZtBkXGB-3CEodftR1hNnq8BfRx8mYc5_Je7FNQ@mail.gmail.com>
-Subject: Re: [PATCH v4 2/3] arm64: dts: nuvoton: npcm845: Add peripheral nodes
-To: sashiko-reviews@lists.linux.dev
-Cc: devicetree@vger.kernel.org, robh@kernel.org, conor+dt@kernel.org
-Content-Type: text/plain; charset="UTF-8"
+Mime-Version: 1.0
+References: <20260612230622.687665-5-seanjc@google.com> <20260612233017.1F9771F000E9@smtp.kernel.org>
+ <aiyY8twOOlRKgQre@google.com> <a8eefe40b2b0a0a3d4afd675ed4fea6762934fdc.camel@infradead.org>
+Message-ID: <ajAIOVLzf6AriO5r@google.com>
+Subject: Re: [PATCH v2 4/8] KVM: Initialize a vCPU's index to '-1' while it's
+ being created
+From: Sean Christopherson <seanjc@google.com>
+To: David Woodhouse <dwmw2@infradead.org>
+Cc: sashiko-reviews@lists.linux.dev, kvm@vger.kernel.org, 
+	Paul Durrant <paul@xen.org>
+Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: quoted-printable
 
-Hi,
+On Sat, Jun 13, 2026, David Woodhouse wrote:
+> On Fri, 2026-06-12 at 16:40 -0700, Sean Christopherson wrote:
+> > >=20
+> > > arch/x86/kvm/xen.c:kvm_xen_init_vcpu() {
+> > > =C2=A0=C2=A0=C2=A0 ...
+> > > =C2=A0=C2=A0=C2=A0 vcpu->arch.xen.vcpu_id =3D vcpu->vcpu_idx;
+> >=20
+> > I don't see how the existing code can be correct.=C2=A0 David/Paul, is =
+this supposed
+> > to be vcpu->vcpu_id?
+>=20
+> No, vcpu->vcpu_id is the APIC ID.=20
+>=20
+> But xen.vcpu_id is the Xen/ACPI ID. The kernel needs to know it in
+> order to accelerate timer hypercalls. The vcpu->vcpu_idx is a
+> reasonable default for that.
 
-On Wed, 10 Jun 2026 at 19:20, <sashiko-bot@kernel.org> wrote:
->
-> Thank you for your contribution! Sashiko AI review found 2 potential issu=
-e(s) to consider:
-> - [Low] DTC Warning (unit_address_vs_reg): The `apb` node includes a unit=
- address but lacks a `reg` property.
-> - [Low] DT Binding Schema Violation: `nuvoton,sysgcr` property is undocum=
-ented and forbidden by the ChipIdea USB2 schema.
-> --
->
-> commit b1b96db36d76cd5dd1f935613798ed29aade275d
-> Author: Tomer Maimon <tmaimon77@gmail.com>
->
-> arm64: dts: nuvoton: npcm845: Add peripheral nodes
->
-> Extend the NPCM845 SoC DTSI with the peripheral controller nodes needed
-> by the evaluation board and downstream platforms. Add the Ethernet MACs,
-> USB device controllers and PHY, MMC controller, FIU controllers, memory
-> controller, RNG, ADC, PWM/FAN controller, and I2C buses. Also add the
-> OP-TEE firmware node needed to describe these blocks.
->
-> > diff --git a/arch/arm64/boot/dts/nuvoton/nuvoton-common-npcm8xx.dtsi b/=
-arch/arm64/boot/dts/nuvoton/nuvoton-common-npcm8xx.dtsi
-> > index 7976baafb9942..1e21b2704784f 100644
-> > --- a/arch/arm64/boot/dts/nuvoton/nuvoton-common-npcm8xx.dtsi
-> > +++ b/arch/arm64/boot/dts/nuvoton/nuvoton-common-npcm8xx.dtsi
-> [ ... ]
-> > @@ -51,7 +57,255 @@ clk: rstc: reset-controller@f0801000 {
-> >                       #clock-cells =3D <1>;
-> >               };
-> >
-> > -             apb {
-> > +             gmac1: ethernet@f0804000 {
-> [ ... ]
-> > +             udc8: usb@f0838000 {
-> > +                     compatible =3D "nuvoton,npcm845-udc", "nuvoton,np=
-cm750-udc";
-> > +                     reg =3D <0x0 0xf0838000 0x0 0x1000
-> > +                            0x0 0xfffef000 0x0 0x800>;
-> > +                     interrupts =3D <GIC_SPI 59 IRQ_TYPE_LEVEL_HIGH>;
-> > +                     clocks =3D <&clk NPCM8XX_CLK_SU>;
-> > +                     clock-names =3D "clk_usb_bridge";
-> > +
-> > +                     nuvoton,sysgcr =3D <&gcr 0x9C 0xC000 0xC000>;
->
-> [Severity: Low]
-> Does this undocumented nuvoton,sysgcr property cause a dtbs_check warning=
-?
->
-> The USB Device Controllers bind to "nuvoton,npcm750-udc", which is evalua=
-ted
-> against Documentation/devicetree/bindings/usb/ci-hdrc-usb2.yaml. This sch=
-ema
-> specifies unevaluatedProperties: false but does not document nuvoton,sysg=
-cr
-> internally or in any dependencies.
-will be removed at V5
->
-> > +                     phys =3D <&udc0_phy>;
-> > +                     phy_type =3D "utmi_wide";
-> > +                     dr_mode =3D "peripheral";
-> > +                     status =3D "disabled";
-> > +             };
-> > +
-> > +             udc9: usb@f0839000 {
-> > +                     compatible =3D "nuvoton,npcm845-udc", "nuvoton,np=
-cm750-udc";
-> > +                     reg =3D <0x0 0xf0839000 0x0 0x1000
-> > +                            0x0 0xfffef800 0x0 0x800>;
-> > +                     interrupts =3D <GIC_SPI 60 IRQ_TYPE_LEVEL_HIGH>;
-> > +                     clocks =3D <&clk NPCM8XX_CLK_SU>;
-> > +                     clock-names =3D "clk_usb_bridge";
-> > +
-> > +                     nuvoton,sysgcr =3D <&gcr 0x9C 0x3000 0x3000>;
->
-> [Severity: Low]
-> Is this the same undocumented property issue as seen above in udc8?
-will be removed at V5
->
-> > +                     phys =3D <&udc0_phy>;
-> > +                     phy_type =3D "utmi_wide";
-> > +                     dr_mode =3D "peripheral";
-> > +                     status =3D "disabled";
-> > +             };
-> > +
-> [ ... ]
-> > +             fiux: spi@fb001000 {
-> > +                     compatible =3D "nuvoton,npcm845-fiu";
-> > +                     #address-cells =3D <1>;
-> > +                     #size-cells =3D <0>;
-> > +                     reg =3D <0x0 0xfb001000 0x0 0x1000>,
-> > +                     <0x0 0xf8000000 0x0 0x2000000>;
-> > +                     reg-names =3D "control", "memory";
-> > +                     clocks =3D  <&clk NPCM8XX_CLK_SPIX>;
-> > +                     status =3D "disabled";
-> > +             };
-> > +
-> > +             apb: bus@f0000000 {
->
-> [Severity: Low]
-> Will changing this node name to include the @f0000000 unit address
-> trigger a unit_address_vs_reg DTC warning?
->
-> According to the Devicetree specification, if a node name includes a
-> unit-address, the node must also have a reg property where the first
-> address matches the unit-address. Because the apb node defines ranges
-> but lacks a reg property, this might introduce build noise.
-would be back to apb in V5
->
-> >                       #address-cells =3D <1>;
-> >                       #size-cells =3D <1>;
-> >                       compatible =3D "simple-bus";
-> > @@ -59,14 +313,6 @@ apb {
-> >                       ranges =3D <0x0 0x0 0xf0000000 0x00300000>,
-> >                               <0xfff00000 0x0 0xfff00000 0x00016000>;
->
-> --
-> Sashiko AI review =C2=B7 https://sashiko.dev/#/patchset/20260610160816.28=
-28713-1-tmaimon77@gmail.com?part=3D2
+Right, but isn't vcpu_id also a reasonable default?  Ugh, never mind.  Even=
+ if
+it's conceptually a reasonable default, in practice using vcpu_id would lea=
+d to
+creating an illegal xen.vcpu_id since KVM_XEN_VCPU_ATTR_TYPE_VCPU_ID restri=
+cts
+the ID to KVM_MAX_VCPUS, not KVM_MAX_VCPU_IDS (which is KVM_MAX_VCPUS * 4).
 
-Thanks,
+	case KVM_XEN_VCPU_ATTR_TYPE_VCPU_ID:
+		if (data->u.vcpu_id >=3D KVM_MAX_VCPUS)
+			r =3D -EINVAL;
+		else {
+			vcpu->arch.xen.vcpu_id =3D data->u.vcpu_id;
+			r =3D 0;
+		}
+		break;
 
-Tomer
+> (As if this wasn't confusing enough, note ACPI !=3D APIC and neither of
+> those are typos)
+>=20
+> > > =C2=A0=C2=A0=C2=A0 ...
+> > > }
+> > >=20
+> > > Since the actual vcpu_idx isn't assigned until later in
+> > > kvm_vm_ioctl_create_vcpu(), this leaves vcpu->arch.xen.vcpu_id as -1 =
+instead
+> > > of its previous default of 0.
+> > >=20
+> > > Could this cause guest hypercalls, such as VCPUOP_set_singleshot_time=
+r,
+> > > to fail with -EINVAL if a VMM relies on the previous default of 0 for=
+ vCPU 0
+> > > and doesn't explicitly invoke KVM_XEN_VCPU_SET_ATTR?
+>=20
+> Yeah, but it would be tolerable to just return !handled for the -1 case
+> instead of "I handled that and it got -EINVAL". Then the hypercall gets
+> punted to userspace.
+
+Are you thinking this?
+
+diff --git arch/x86/kvm/xen.c arch/x86/kvm/xen.c
+index 694b31c1fcc9..7a94b84f6492 100644
+--- arch/x86/kvm/xen.c
++++ arch/x86/kvm/xen.c
+@@ -1607,7 +1607,7 @@ static bool kvm_xen_hcall_vcpu_op(struct kvm_vcpu *vc=
+pu, bool longmode, int cmd,
+        struct vcpu_set_singleshot_timer oneshot;
+        struct x86_exception e;
+=20
+-       if (!kvm_xen_timer_enabled(vcpu))
++       if (!kvm_xen_timer_enabled(vcpu) || vcpu->arch.xen.vcpu_id < 0)
+                return false;
+=20
+        switch (cmd) {
+
+> I'd slightly prefer a deferred initialization, but I believe all known
+> userspace explicitly *sets* the ID via KVM_XEN_VCPU_ATTR_TYPE_VCPU_ID
+
+Yeah, userspace pretty much has to, otherwise only vCPU0 could do
+VCPUOP_set_singleshot_timer.  If we were implementing this for the first ti=
+me,
+I would be 100% in favor of deferred initialization, but since this will be=
+ an
+ABI change, explicitly initializing xen.vcpu_id to -1 feels "safer", becaus=
+e at
+least then there will be a fairly noisy failure (exit to userspace), versus=
+ the
+guest silently getting different behavior.
+
