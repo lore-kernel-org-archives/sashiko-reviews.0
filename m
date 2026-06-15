@@ -1,50 +1,51 @@
-Received: from mgamail.intel.com (mgamail.intel.com [198.175.65.9])
+Received: from szxga01-in.huawei.com (szxga01-in.huawei.com [45.249.212.187])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3C2831D8E01
-	for <sashiko-reviews@lists.linux.dev>; Mon, 15 Jun 2026 01:08:51 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=198.175.65.9
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 05799155757
+	for <sashiko-reviews@lists.linux.dev>; Mon, 15 Jun 2026 01:26:40 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=45.249.212.187
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1781485732; cv=none; b=HyVqV0AYg5ZbuZwiGo6eH9es9o1FcJju8IEmNKJWn+PLAP2UzpjmWsanWU3KtBdhY9czBmeC2MZ3XIkbieeCajFptJjF/hAB3mcvQTBAiDu8nXBwOnLiTxkCSlm49YZBHh58VrT1DCOPxy/CdGQ4EeEE3woEe9dRkO10Q07Mxls=
+	t=1781486803; cv=none; b=oJtxoPdhd29LHLBPu3mRKjktyVNbbkrg2CMwHERdmr7aG1mTDvvaQyZc6Y/CnCx6OJIF2DT/7t7t7eT+gcHFsPCJlyge4R3Hhusx4oDJQl34QY/d94MAYp5osRHi4XqmCZ4MRP57rReSCMcDCTdpNIxgLVXU6gOLE4+9rvFTmWU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1781485732; c=relaxed/simple;
-	bh=2cIcsCvKnwMKqPtykZo2xdOIhv/jORdM497BMTBjIvU=;
-	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=cLP2+n/87i8CxRmperawam3Wc+6BHFrfiwyxUm+lChE05/ReV50Fvsj9COk7yBpPOvCvqXMNoRfiq2nnhH5+s65HINtgxQl2/c0G7pql4CUM8Nyu0Tt0eMIM36MgHAF9ahhq0JWAJT3jNC/k8YJxtJfk+w9VF50r/VJ3V2E648Q=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linux.intel.com; spf=pass smtp.mailfrom=linux.intel.com; dkim=pass (2048-bit key) header.d=intel.com header.i=@intel.com header.b=Xv0jccvW; arc=none smtp.client-ip=198.175.65.9
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linux.intel.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linux.intel.com
+	s=arc-20240116; t=1781486803; c=relaxed/simple;
+	bh=MynTN/j/Elu7Isl5o1OmE54sQkEEZuFIOdk5QNWTtok=;
+	h=Message-ID:Date:MIME-Version:Subject:To:CC:References:From:
+	 In-Reply-To:Content-Type; b=fGDIj9JIPAxFmOjdtjG5g3pfdpBzNos4Dk4i6IQa+i78HZ7c/S/xsYWGyL6OGwQqv23bqQBVABJ+4reFlBArEpz5EbjAkTvtNyvVqWk/y5jJbKD/bN6ilEV0hnD5NPSKYaXj6OUG7OlbVEeZvQUbSELUuQoyJo0GIBDKZLV/oww=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=huawei.com; spf=pass smtp.mailfrom=huawei.com; dkim=pass (1024-bit key) header.d=huawei.com header.i=@huawei.com header.b=HZJYxjak; dkim=pass (1024-bit key) header.d=huawei.com header.i=@huawei.com header.b=HZJYxjak; arc=none smtp.client-ip=45.249.212.187
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=huawei.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=huawei.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=intel.com header.i=@intel.com header.b="Xv0jccvW"
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
-  d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
-  t=1781485731; x=1813021731;
-  h=message-id:date:mime-version:subject:to:cc:references:
-   from:in-reply-to:content-transfer-encoding;
-  bh=2cIcsCvKnwMKqPtykZo2xdOIhv/jORdM497BMTBjIvU=;
-  b=Xv0jccvWGlqvLlFD0WJ7tOf94IWnMxShOrxYjLVq3/zKrgtlXT2UxCxU
-   7C4FJGO5AmOzxfY+TMmYbnqMrmjveLYiRVX+qFu65WuIVlcmoSAEKIjcn
-   aFB8GnACxIdl9qDe88hjCNFkZ8DH0coEjDgUE0C77T/g80SPnZ4e7EcZ9
-   1p9MPxKx4WSjD99AWKevuiWygtMp1wb99FIEDvWfyMeoJwKg+7QvYhegV
-   9NUJOTRqiBIdq8fmYAbtXT5AQvZCx+5Oqinr10zFPsaKKbmwZvMGdq/eK
-   7qcJjAaT/pnNkPWTRGfdUYQ5ucW4ZVHs54Av3sY+pUA//1GQ3FZlttFBI
-   Q==;
-X-CSE-ConnectionGUID: D3+zp71nSPCprgBv+C2jvg==
-X-CSE-MsgGUID: klUQLTkeQri7qN5/KFHjPQ==
-X-IronPort-AV: E=McAfee;i="6800,10657,11817"; a="104892755"
-X-IronPort-AV: E=Sophos;i="6.24,205,1774335600"; 
-   d="scan'208";a="104892755"
-Received: from fmviesa002.fm.intel.com ([10.60.135.142])
-  by orvoesa101.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 14 Jun 2026 18:08:50 -0700
-X-CSE-ConnectionGUID: K58lDKO/R3WPXSlcVdcZ/Q==
-X-CSE-MsgGUID: hVf3muYuT/ehm6d1B46lAQ==
-X-ExtLoop1: 1
-X-IronPort-AV: E=Sophos;i="6.24,205,1774335600"; 
-   d="scan'208";a="271007189"
-Received: from dapengmi-mobl1.ccr.corp.intel.com (HELO [10.124.241.147]) ([10.124.241.147])
-  by fmviesa002-auth.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 14 Jun 2026 18:08:50 -0700
-Message-ID: <45c6a869-6e61-467f-9904-5b21a4164e93@linux.intel.com>
-Date: Mon, 15 Jun 2026 09:08:47 +0800
+	dkim=pass (1024-bit key) header.d=huawei.com header.i=@huawei.com header.b="HZJYxjak";
+	dkim=pass (1024-bit key) header.d=huawei.com header.i=@huawei.com header.b="HZJYxjak"
+dkim-signature: v=1; a=rsa-sha256; d=huawei.com; s=dkim;
+	c=relaxed/relaxed; q=dns/txt;
+	h=From;
+	bh=wHjq3Q9Ijh0RF30tM2eiUI7AhlsnKbUAGXPI8uhsb68=;
+	b=HZJYxjak66cgxCAyEZGIAYq5HxeMdU6qUQcx0AR13MujXq0WoLBWlO5XcBA7MfD1/euzD3C5o
+	I2olO/+0Ss3JAkEFjeVIstbu16EjIZnzR117SmFVFvvfOyKxZ9TsJHO2dp+wwEjDWlHpvBJ0nj6
+	hiefLD1MmoOpebZKNl0tW78=
+Received: from canpmsgout03.his.huawei.com (unknown [172.19.92.159])
+	by szxga01-in.huawei.com (SkyGuard) with ESMTPS id 4gdss03F3nz1BFMY
+	for <sashiko-reviews@lists.linux.dev>; Mon, 15 Jun 2026 09:26:12 +0800 (CST)
+dkim-signature: v=1; a=rsa-sha256; d=huawei.com; s=dkim;
+	c=relaxed/relaxed; q=dns/txt;
+	h=From;
+	bh=wHjq3Q9Ijh0RF30tM2eiUI7AhlsnKbUAGXPI8uhsb68=;
+	b=HZJYxjak66cgxCAyEZGIAYq5HxeMdU6qUQcx0AR13MujXq0WoLBWlO5XcBA7MfD1/euzD3C5o
+	I2olO/+0Ss3JAkEFjeVIstbu16EjIZnzR117SmFVFvvfOyKxZ9TsJHO2dp+wwEjDWlHpvBJ0nj6
+	hiefLD1MmoOpebZKNl0tW78=
+Received: from mail.maildlp.com (unknown [172.19.162.223])
+	by canpmsgout03.his.huawei.com (SkyGuard) with ESMTPS id 4gdsh30nWXzpTKG;
+	Mon, 15 Jun 2026 09:18:27 +0800 (CST)
+Received: from kwepemk500009.china.huawei.com (unknown [7.202.194.94])
+	by mail.maildlp.com (Postfix) with ESMTPS id 1551540672;
+	Mon, 15 Jun 2026 09:26:26 +0800 (CST)
+Received: from [10.67.121.161] (10.67.121.161) by
+ kwepemk500009.china.huawei.com (7.202.194.94) with Microsoft SMTP Server
+ (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
+ 15.2.1544.11; Mon, 15 Jun 2026 09:26:25 +0800
+Message-ID: <42b0a9ac-f384-4129-b718-636fd392a703@huawei.com>
+Date: Mon, 15 Jun 2026 09:26:25 +0800
 Precedence: bulk
 X-Mailing-List: sashiko-reviews@lists.linux.dev
 List-Id: <sashiko-reviews.lists.linux.dev>
@@ -52,94 +53,122 @@ List-Subscribe: <mailto:sashiko-reviews+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:sashiko-reviews+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [Patch v3 5/8] perf/x86/intel: Validate the return value of
- intel_pmu_init_hybrid()
-To: sashiko-reviews@lists.linux.dev
-Cc: linux-perf-users@vger.kernel.org
-References: <20260612090114.3188886-6-dapeng1.mi@linux.intel.com>
- <20260612093119.7FA3E1F000E9@smtp.kernel.org>
+Subject: Re: [PATCH v16 09/12] vfio/pci: Add TPH_ENABLE feature skeleton and
+ unsafe module parameter
+To: <sashiko-reviews@lists.linux.dev>
+CC: <kvm@vger.kernel.org>, <linux-pci@vger.kernel.org>
+References: <20260604132804.28678-10-fengchengwen@huawei.com>
+ <20260604135424.750F21F0089A@smtp.kernel.org>
 Content-Language: en-US
-From: "Mi, Dapeng" <dapeng1.mi@linux.intel.com>
-In-Reply-To: <20260612093119.7FA3E1F000E9@smtp.kernel.org>
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8bit
+From: fengchengwen <fengchengwen@huawei.com>
+In-Reply-To: <20260604135424.750F21F0089A@smtp.kernel.org>
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: 7bit
+X-ClientProxiedBy: kwepems100001.china.huawei.com (7.221.188.238) To
+ kwepemk500009.china.huawei.com (7.202.194.94)
 
+On 6/4/2026 9:54 PM, sashiko-bot@kernel.org wrote:
+> Thank you for your contribution! Sashiko AI review found 2 potential issue(s) to consider:
+> - [High] Lockless modification of the `tph_permit` bitfield causes a C11 data race with adjacent bitfields, potentially corrupting device state.
+> - [Medium] The `tph_permit` flag is not cleared when the device is closed, leaking the enabled state to subsequent users of the device.
 
-On 6/12/2026 5:31 PM, sashiko-bot@kernel.org wrote:
-> Thank you for your contribution! Sashiko AI review found 1 potential issue(s) to consider:
-> - [Medium] Relocating `intel_pmu_arch_lbr_init()` below `intel_pmu_check_event_constraints_all()` bypasses the dynamic constraint validation for branch counters.
+Thanks for the feedback.
+
+I'll address these two points in v17:
+- Change tph_permit to a standalone bool to fix the bitfield data race, no lock needed.
+- Reset tph_permit on device close to prevent state leakage across sessions.
+
+Thanks
+
 > --
->
-> commit 4ceb25a65fdf63fe8fa33e932139cf0a5d28e924
-> Author: Dapeng Mi <dapeng1.mi@linux.intel.com>
->
-> perf/x86/intel: Validate the return value of intel_pmu_init_hybrid()
->
-> This patch validates the return value of intel_pmu_init_hybrid() to avoid a
-> null-pointer dereference. It also defers intel_pmu_arch_lbr_init() until after
-> hybrid PMU initialization succeeds to avoid destroying the kmem cache on
-> failure.
->
->> diff --git a/arch/x86/events/intel/core.c b/arch/x86/events/intel/core.c
->> index db52e7e53a6cd..74dbf24b0ab63 100644
->> --- a/arch/x86/events/intel/core.c
->> +++ b/arch/x86/events/intel/core.c
+> 
+> commit d0a7c28453cdbf1699133633ce00cd13507a2648
+> Author: Chengwen Feng <fengchengwen@huawei.com>
+> 
+> vfio/pci: Add TPH_ENABLE feature skeleton and unsafe module parameter
+> 
+> This commit introduces the framework for PCIe TPH (Transaction Processing
+> Hints) support in VFIO. It adds a global enable_unsafe_tph module parameter
+> and a new VFIO_DEVICE_FEATURE_TPH_ENABLE uapi to allow userspace to set a
+> per-device tph_permit flag.
+> 
+>> diff --git a/drivers/vfio/pci/vfio_pci_core.c b/drivers/vfio/pci/vfio_pci_core.c
+>> index 3f8d093aacf8a..ae05343701f76 100644
+>> --- a/drivers/vfio/pci/vfio_pci_core.c
+>> +++ b/drivers/vfio/pci/vfio_pci_core.c
+> 
 > [ ... ]
->> @@ -8829,6 +8842,9 @@ __init int intel_pmu_init(void)
+> 
+>> @@ -1516,6 +1517,24 @@ static int vfio_pci_core_feature_token(struct vfio_pci_core_device *vdev,
+>>  	return 0;
+>>  }
 >>  
->>  	intel_pmu_check_event_constraints_all(NULL);
->>  
->> +	if (boot_cpu_has(X86_FEATURE_ARCH_LBR))
->> +		intel_pmu_arch_lbr_init();
+>> +static int vfio_pci_core_feature_tph_enable(struct vfio_pci_core_device *vdev,
+>> +					    u32 flags, size_t argsz)
+>> +{
+>> +	int ret;
 >> +
+>> +	if (!enable_unsafe_tph)
+>> +		return -EOPNOTSUPP;
+>> +
+>> +	ret = vfio_check_feature(flags, argsz, VFIO_DEVICE_FEATURE_SET, 0);
+>> +	if (ret <= 0)
+>> +		return ret;
+>> +
+>> +	if (!vdev->tph_permit)
+>> +		vdev->tph_permit = 1;
+> 
+> [Severity: High]
+> Does setting this bitfield without a lock cause a read-modify-write data
+> race with adjacent bitfields?
+> 
+> Looking at struct vfio_pci_core_device, tph_permit shares the same memory
+> word as pm_intx_masked and pm_runtime_engaged. Since C compilers implement
+> bitfield assignments via read-modify-write operations, could a concurrent
+> lockless update here overwrite a state change made elsewhere?
+> 
+> For example, vfio_pci_core_runtime_suspend() updates vdev->pm_intx_masked
+> without holding any locks. If the ioctl and runtime PM suspend execute
+> concurrently, it seems one could overwrite the other's state change, which
+> could cause the kernel to fail to unmask INTx interrupts during resume.
+> 
 > [Severity: Medium]
-> Does moving intel_pmu_arch_lbr_init() below
-> intel_pmu_check_event_constraints_all() bypass the dynamic constraint
-> validation for branch counters?
->
-> When intel_pmu_check_event_constraints_all() runs, it eventually calls
-> intel_pmu_check_dyn_constr(). This check relies on the PMU_FL_BR_CNTR flag
-> and the x86_pmu.lbr_counters mask:
->
-> arch/x86/events/intel/core.c:intel_pmu_check_dyn_constr() {
->     ...
-> 		case DYN_CONSTR_BR_CNTR:
-> 			if (x86_pmu.flags & PMU_FL_BR_CNTR)
-> 				mask = x86_pmu.lbr_counters;
-> 			break;
->     ...
-> }
->
-> Because intel_pmu_arch_lbr_init() is now deferred until after this validation,
-> the PMU_FL_BR_CNTR flag hasn't been set yet. Will this cause the dynamic
-> constraint check for branch counters to evaluate to false and be skipped?
+> Is there a mechanism to clear this flag when the device is closed?
+> 
+> Because struct vfio_pci_core_device is tied to the PCI device lifetime and
+> is not reallocated between sessions, it appears a subsequent user opening
+> the device will inherit tph_permit = 1.
+> 
+> While hardware state might be cleaned up on close in functions like
+> vfio_pci_core_disable() or vfio_pci_tph_deinit(), could failing to clear
+> vdev->tph_permit bypass the userspace opt-in requirement for future sessions,
+> allowing a VMM that never called VFIO_DEVICE_FEATURE_TPH_ENABLE to configure
+> ST tables?
+> 
+>> +
+>> +	return 0;
+>> +}
+>> +
+>>  int vfio_pci_core_ioctl_feature(struct vfio_device *device, u32 flags,
+>>  				void __user *arg, size_t argsz)
+>>  {
+> 
+> [ ... ]
+> 
+>> diff --git a/include/linux/vfio_pci_core.h b/include/linux/vfio_pci_core.h
+>> index 2ebba746c18f7..5f32830766a0f 100644
+>> --- a/include/linux/vfio_pci_core.h
+>> +++ b/include/linux/vfio_pci_core.h
+> 
+> [ ... ]
+> 
+>> @@ -127,6 +127,7 @@ struct vfio_pci_core_device {
+>>  	bool			needs_pm_restore:1;
+>>  	bool			pm_intx_masked:1;
+>>  	bool			pm_runtime_engaged:1;
+>> +	bool			tph_permit:1;
+>>  	struct pci_saved_state	*pci_saved_state;
+>>  	struct pci_saved_state	*pm_save;
+>>  	int			ioeventfds_nr;
+> 
 
-That's right, should move intel_pmu_arch_lbr_init() just before
-intel_pmu_check_event_constraints_all(), just like this,
-
-diff --git a/arch/x86/events/intel/core.c b/arch/x86/events/intel/core.c
-index 74dbf24b0ab6..edf6f8732234 100644
---- a/arch/x86/events/intel/core.c
-+++ b/arch/x86/events/intel/core.c
-@@ -8840,11 +8840,11 @@ __init int intel_pmu_init(void)
-                pr_cont("AnyThread deprecated, ");
-        }
-
--       intel_pmu_check_event_constraints_all(NULL);
--
-        if (boot_cpu_has(X86_FEATURE_ARCH_LBR))
-                intel_pmu_arch_lbr_init();
-
-+       intel_pmu_check_event_constraints_all(NULL);
-+
-        /*
-         * Access LBR MSR may cause #GP under certain circumstances.
-         * Check all LBR MSR here.
-
-Thanks.
-
-
->
->>  	/*
->>  	 * Access LBR MSR may cause #GP under certain circumstances.
->>  	 * Check all LBR MSR here.
