@@ -1,124 +1,127 @@
-Received: from mail-wm1-f50.google.com (mail-wm1-f50.google.com [209.85.128.50])
+Received: from mail-wr1-f42.google.com (mail-wr1-f42.google.com [209.85.221.42])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 150B621D3F5
-	for <sashiko-reviews@lists.linux.dev>; Mon, 15 Jun 2026 02:00:25 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=pass smtp.client-ip=209.85.128.50
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B24DF2CCC5
+	for <sashiko-reviews@lists.linux.dev>; Mon, 15 Jun 2026 02:03:01 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=pass smtp.client-ip=209.85.221.42
 ARC-Seal:i=2; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1781488831; cv=pass; b=KiFk11ChctZBcd8Wfa0mpuAmT2Q/B8bAuHR+ZPQ/tNTol8Dkk0G4Men98hJzkZlwrCd/nacOjerUGqdsrei4r6K4OELFnGpnI/vLJqdaenxH+QwngHuvC/WC1gpH+mgs1Szlaq6C7LCoPqjJ0LM58ECkGiojXAXVr2mmSDFkev0=
+	t=1781488986; cv=pass; b=ezvVLgNKN+hfrZF8Ie088PY/Q4B0vodBvJUMKSK4z2ONhBne4BSBLATBmxmPhcJZJtBVN68e+z+USEJQX+HlZDy1hIbMvto4oZ99X8pv+t/BLcprMjgALOGvplVx36HkXU8Chn7II0kZxhG+PZ5Tg4zU0IWjOJ2yS0H6UOMwR1k=
 ARC-Message-Signature:i=2; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1781488831; c=relaxed/simple;
-	bh=KgjjAM/+u+dPbDFVxObvOG3fcUzOv7CPnrkLCUHTgIs=;
+	s=arc-20240116; t=1781488986; c=relaxed/simple;
+	bh=q7ZHAmS0APGjMZ2UEjMMdEuI69pi2FKaXpdMSyK5Y8k=;
 	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
-	 To:Cc:Content-Type; b=UJy88pLSLZmsw5Qdh7T3SkfGzviO/J1wE+f3XnRvC8ZIaT0YS+KwYoFqNsQq/p7qvzKClD8GZoH2eF0jdOsYoeLBVGCtVNduXEwulEOHhEQMRnj2JbEqqsH9riZBhg3ens7821v9Gsze6aOYgZ/foo/Jg5Y/mFmZ2oKuYSbs/dA=
-ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=VFLhT+0J; arc=pass smtp.client-ip=209.85.128.50
+	 To:Cc:Content-Type; b=caovt6zYnYvNgt6YkrM2UgwHIIE527QLfne6/naoBBx6v1dsSTtTrK5nLbFkYO4If8ARmOdSI7liCyXHEuAxn8nitfYY7iSlSOKB3QfGvLY2J2Xpv8O8yfBvG2Y38Cqlyh5EsIpSNnY6ObvXD9M56ygzG0gzTVvKeurtubStJO4=
+ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=X5kgw0PF; arc=pass smtp.client-ip=209.85.221.42
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="VFLhT+0J"
-Received: by mail-wm1-f50.google.com with SMTP id 5b1f17b1804b1-4905529b933so28226525e9.0
-        for <sashiko-reviews@lists.linux.dev>; Sun, 14 Jun 2026 19:00:25 -0700 (PDT)
-ARC-Seal: i=1; a=rsa-sha256; t=1781488824; cv=none;
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="X5kgw0PF"
+Received: by mail-wr1-f42.google.com with SMTP id ffacd0b85a97d-45eedcdaeaaso1863497f8f.3
+        for <sashiko-reviews@lists.linux.dev>; Sun, 14 Jun 2026 19:03:01 -0700 (PDT)
+ARC-Seal: i=1; a=rsa-sha256; t=1781488980; cv=none;
         d=google.com; s=arc-20240605;
-        b=RShF0skFn0iaOe1jWnx8jw7NGRr3DOpjKPMwL7W89lp7xUgutqt41cwSZVqxSLUAd3
-         g2mJDnoto7tTv15J9ZbcpXIH44yywaP8s+at8CoWpTqXKQz0SK48JXkPKUJcnXeEn+Pz
-         Va1m4lOYJrhq9XMgNal/EWBSFwbw9Sn80cSRrKZSFhFFkFzOmS+XiYabBbMv5d8ahmxE
-         aWdMUsJzxYlsHzRRRcV52WLfdI/oLmDfcUHL9Z8I8VUreZz+tk5K66eWu9Cv5IK4Mk83
-         WLGQxtJQZqneMKW1+0AO7WX/c54IV008ob2ZMZlthiUue5iNBV0Iu/Bds4gSwRUm0HF5
-         0w5w==
+        b=Mn5DFBDnJUS7DHoJ1YQBmooTWKyLzrXsYLbWzhFplYg4gD/Bs8xSrJBJoUR/nq9cQv
+         60Dk7ouXaUi3qtonQU4pC7NZOEQAKWZXqVbJqM+wfPrh0z4LoXxeeetmMQpCldYJQyU4
+         0a4XztSxAata1YYP6BJO5CkE5zUeZx0VH8IzomOo0VhuFJnxXq0LIsGU49YCITHuP9UW
+         oIGDAc9oBnF8tNtVcIKQiBCCfNn9qZ14J9S9bcoJI1W7T0o8Nqq6Ll5QY62vwjGVI2rN
+         JELi53TuEYp1x0jO4se82c9OdSBtmboOhT1XkqEiQbq4B0DJ7EiheATznes/lsNc+8rh
+         lnUA==
 ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com; s=arc-20240605;
         h=content-transfer-encoding:cc:to:subject:message-id:date:from
          :in-reply-to:references:mime-version:dkim-signature;
-        bh=qeIjIUBlbxcxSnWc6641z5CvcWAgKc4zbS4bMQ46+jE=;
-        fh=gj73vF7gfHpskuYo4ZPaNGDMo9r8lFxbvv5q5QAWYg8=;
-        b=OBhyKCEK5HOIQRccu+GRbPZY3h7P0LZQB4U3YfKjnpftPDBWxHyQ9gX313uB3VCo+X
-         T1axcx664xG9XvMbsPjrKdqPC+kDPlDydhRc9cpOFXJ60VvwFl+V9J0zYb0lOmEW452o
-         5w8oaflOc8ZAUvRvOpxfXwRZmz9E2f9HSZyloL7jnjfkIm58iAiNQPJAk5k0BwFpak9y
-         /8VQxY8qAWbFvsZh0SCt1KNKkm26f8uSaAxybmKqjR2t+tYEGaOHgW0M1Xe6gyJuO50A
-         ZmJ2QIQQIocpT1EbOK4tqin3tqDS+fKefoVNeSL5Ix78Kpc55toSyBwo0jl6nbgsfNri
-         Oa/Q==;
+        bh=q7ZHAmS0APGjMZ2UEjMMdEuI69pi2FKaXpdMSyK5Y8k=;
+        fh=CvI/CQm1w/T2awhAvXRM77KvHxvJuf/F+hTvEsd4hW4=;
+        b=MWadcthrqOs1BmeA1ovbHseuric96W6Rs2RJK1O+v3HczbLdI0tievocJohlOMOfRB
+         L5mTSdknPmO956N65CR+Lesf2tjrYiV1mzO2L4EcbOZb8Y7IVZclM4xU81p4daDfLANT
+         edDgIF1LTWPk5hjGbapVoHJrP1P/hS/UCC372sW+alIyel4vV8fRdPVQH4wP0YCp6Ygq
+         HX5+tdVB2tahUi/gZqrmaXVhjHgxW0CSZandJVOJglgDsiX8KYBBjZJReZ6mJMVxhkLr
+         idXZ+hwmBGvsw+t1W9/kdsyVVZkzSN8pGVs5lpIBZoC30/vIHVYUvj2jIuJeYZTwYyan
+         iBTA==;
         darn=lists.linux.dev
 ARC-Authentication-Results: i=1; mx.google.com; arc=none
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20251104; t=1781488824; x=1782093624; darn=lists.linux.dev;
+        d=gmail.com; s=20251104; t=1781488980; x=1782093780; darn=lists.linux.dev;
         h=content-transfer-encoding:cc:to:subject:message-id:date:from
          :in-reply-to:references:mime-version:from:to:cc:subject:date
          :message-id:reply-to;
-        bh=qeIjIUBlbxcxSnWc6641z5CvcWAgKc4zbS4bMQ46+jE=;
-        b=VFLhT+0J8egnzoO5jbcy/RxD6Z7adsV5gfXA4pefyJopL6mPKZ/yghnVOdYJckeWoo
-         pHZ0bpqFB8JHG0Fhw5biNeodwQa7tnaZCQUY/et0h+2dobGqGs5j1k6IAoeNVuN1IBA3
-         CVokC3R0pY12Vi3/3l2E5diNm+Ia5czJNWja4i6q72q8oHoDH2sKRecWku2z5km24QOg
-         1SJoXp/71Gz7KSYClG+ma3Lne4j3ci/h8pwdLh64ikW9runWMGQ6+Rv8X4icYLRrfn+i
-         5fga0L4BOiraSHPcAOOavA3c+lTfTEgBC02EwiIqfQHc4q/E09DCRc5CjVXbNNudTSdh
-         MOxg==
+        bh=q7ZHAmS0APGjMZ2UEjMMdEuI69pi2FKaXpdMSyK5Y8k=;
+        b=X5kgw0PFW+SFCrDXEsIyAs3zqAW34+J9D4PwW4zs6ZmrjF8+8to+AWdrtYX1EPZMnP
+         r/CBNeP6GuH2xrgK2GNweqp9wnP1sjm7Y99+HO3lodf5hZIIOGCYF74wjyyeI2SdgzNz
+         j8+N9t25XlBFgRz52gKvIUMIGrFBVcVbUOZ+QkFp06HOQ8mtTuSvVFuLr5+H96UlgYHc
+         ImJi4UMKrj7RaEXNAsuiC7n/SwkLLlGGtIyFVDESfku9A/wMzd2qKElEpId322Z5zJyH
+         dSEkgWCN6q8PIMKQKnSSoN8qQpV2RZysWFJVrWUc+ng448eTcQOt+KdK4u40tDo20S1f
+         Ezbw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20251104; t=1781488824; x=1782093624;
+        d=1e100.net; s=20251104; t=1781488980; x=1782093780;
         h=content-transfer-encoding:cc:to:subject:message-id:date:from
          :in-reply-to:references:mime-version:x-gm-gg:x-gm-message-state:from
          :to:cc:subject:date:message-id:reply-to;
-        bh=qeIjIUBlbxcxSnWc6641z5CvcWAgKc4zbS4bMQ46+jE=;
-        b=ea8kSohJgt1btQzCv4M6Sw+VkilkDZAD11Y1B4MdKxwU0az2R/WoCEuu+RgPHE2mbx
-         +0uuW5J0BbhebydGGW1kVMjNt1cq+S2kfHIGTyx7tXJStkFSPs5VHDeJWa9YLFg4LXdF
-         jyIRcd4bAE9C0sf1P0bZUs6B1j3QTfukTtdDmSH/xuFtVcOEJE3peqMSeLmPor3hIXZV
-         7ywFmvYQMxNQCLViAkk4x0trSV9fT4esKRTpmB3ZikrSafgesVa9pHMf9XsP8QEreQ1B
-         TRn9EBAuEj28dhdLcGpYtGuksMxfxbGT6s5FB45z3SfVyXl3sbXyFxp/kF2e3arta7D8
-         SqBA==
-X-Gm-Message-State: AOJu0YyDHF7fC7arsh3couc0ErRnRt2jkVELNmLi6slQzLXjcGNnRgsk
-	f6Wshwk/OEowKPMxuWfKMRNHrnl8susrz88dSXj3KQB7ctIdMsgQGZjXCNBq35WUNVmnmN4BXbK
-	pLC57huwjDsvj5vcRbMDOMKFoUTD1DCpN60C5
-X-Gm-Gg: Acq92OFRluD/M2wuHgsv7dEklIBh97iAixljKVdFJ89XveIpyVZ9UOc6q99eSxj38A+
-	FHJ9AmlIiR1GItiT6WbobM0HHar81gGLN2iQsZdw6OVt2YfwtjV5+YKH5+MnauC+wVVt+dj5s1s
-	jAvy52DRvUwfC7vLZOvDqZB43NBNdYI2R6wD6bpvne6oY0f2Zpof0RyUSPh+WLj4ArSlHn1T3Ov
-	LW6hYjcUlfmG16v3SNk1wEaGlQhgOe4O8UuKSyrfuIPaH/+e0r+Q0nyHbGgSFXVEwnbTtE6Fz33
-	kBQGVxPEQqgRXl+DAmWl9YWotS5D9jPSqFMvhw==
-X-Received: by 2002:a05:6000:25f7:b0:43d:7868:21f0 with SMTP id
- ffacd0b85a97d-4606da57dd1mr16019997f8f.9.1781488824357; Sun, 14 Jun 2026
- 19:00:24 -0700 (PDT)
+        bh=q7ZHAmS0APGjMZ2UEjMMdEuI69pi2FKaXpdMSyK5Y8k=;
+        b=Y8EQg/hFKaXi2NwT6qhUQMp4qlotLoDzbupfaYCOkKnMDBTyUb1yHEjYWUbINbZ33V
+         1qVTmAsIkqolk0Dx8Q4Hmqz4C/FNnTBXLLdLj1wnKh8xeDmDLZdVIIkcAWNc+LnMR2P1
+         otXwFDTiXWTsEvP+xGCtCWGPh2IwouEGusa3zQPUnHqjf0ArVm3y7U693lSRrXOLkNIl
+         NDc+Ts9cq2eXaZ3NuK/a000F9Pp0vJUVnDvkFh3HDqTCyFC4HzysqPHOkzZMOEMoSUO/
+         j08G6J01u9bvLc+K7O/nbcoLyGGv4spZglZICX7HR36jO7h7pCTlZ6kKPFQ+Fy3gca6r
+         QFaQ==
+X-Gm-Message-State: AOJu0YxhK5SbiCHK8tVwWXAUoJxaYky8YHlRPpeJA5FqnySbU3bVEZWI
+	D4LZO5hOXO3+jDYEopIa3fDbUdaKVs2dWXEvUIg0b6Dl1zUBPlbejzU2yyn1pBmaXsCpohhNav7
+	gCDmysL8S8PMqw0zP49IauMOHEO3Ozn5QJNNl
+X-Gm-Gg: Acq92OEvgSwmV6o04YMWt7VMM8pwEPFvEnzPGWPHbA0iU6WdBSn6qzlC4gc3m7sfCDz
+	aE+HaU3WnRmM+n4koXgcKC1lKY9+Php5vTZzwsRQb09d7BnWiOZMfdQ12eKrtcoDQk0i073rdfP
+	abFGubrk1KxWGGutrSIQGbFzRYNJM0ms9q1psZ9wlO6Zm7USnhyDOed+L3ZaXZa+p2cckDDLUhy
+	MqqD0AWxwO3ubtHye7g5wcwy7R04rmTUQKaXpkrrot+RjhpX89jBvI0oocmztCl7cnvzLfZ4itI
+	EAbTiuAyZdlo1QZ7HZuJvy2bCYR/4HAGvecSEQ==
+X-Received: by 2002:a05:6000:2087:b0:452:6aaf:76cb with SMTP id
+ ffacd0b85a97d-4606da57b8fmr15312696f8f.1.1781488980029; Sun, 14 Jun 2026
+ 19:03:00 -0700 (PDT)
 Precedence: bulk
 X-Mailing-List: sashiko-reviews@lists.linux.dev
 List-Id: <sashiko-reviews.lists.linux.dev>
 List-Subscribe: <mailto:sashiko-reviews+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:sashiko-reviews+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-References: <20260612193738.2183968-2-nphamcs@gmail.com> <20260612200234.93CAA1F000E9@smtp.kernel.org>
-In-Reply-To: <20260612200234.93CAA1F000E9@smtp.kernel.org>
+References: <20260612193738.2183968-7-nphamcs@gmail.com> <20260612200002.9933A1F000E9@smtp.kernel.org>
+In-Reply-To: <20260612200002.9933A1F000E9@smtp.kernel.org>
 From: Nhat Pham <nphamcs@gmail.com>
-Date: Sun, 14 Jun 2026 22:00:12 -0400
-X-Gm-Features: AVVi8CeBboNpYssU25ojNOxnTY94QiMaMqzA1T6X7OZsH2_len7MxYqDu_iYH-I
-Message-ID: <CAKEwX=M1OE5Rjcs15ZJUJe7ymiQ4VbCfwtkRPu1+8PcKA_wCyA@mail.gmail.com>
-Subject: Re: [RFC PATCH v2 1/7] mm, swap: add virtual swap device infrastructure
+Date: Sun, 14 Jun 2026 22:02:48 -0400
+X-Gm-Features: AVVi8CcP_2rb0QJOJkH_1PHhtgm5AkJaxbAeQLDzU7cxaVQPuAVLE9NlFot68vI
+Message-ID: <CAKEwX=NkuY8aoMewVp31qDa0Wdd9z0-i1_E5T1jb_A+U2kYZ2g@mail.gmail.com>
+Subject: Re: [RFC PATCH v2 6/7] mm, swap: defer memcg_table allocation on
+ physical clusters
 To: sashiko-reviews@lists.linux.dev
-Cc: hannes@cmpxchg.org, tj@kernel.org, mkoutny@suse.com
+Cc: hannes@cmpxchg.org, mkoutny@suse.com, tj@kernel.org
 Content-Type: text/plain; charset="UTF-8"
 Content-Transfer-Encoding: quoted-printable
 
-On Fri, Jun 12, 2026 at 4:02=E2=80=AFPM <sashiko-bot@kernel.org> wrote:
+On Fri, Jun 12, 2026 at 1:00=E2=80=AFPM <sashiko-bot@kernel.org> wrote:
 >
 > Thank you for your contribution! Sashiko AI review found 1 potential issu=
 e(s) to consider:
-> - [Low] Dead code in `swap_type_str`: VSWAP devices are never displayed i=
-n `/proc/swaps`.
-> >
-> > +static const char *swap_type_str(struct swap_info_struct *si)
-> > +{
-> > +     struct file *file =3D si->swap_file;
-> > +
-> > +     if (si->flags & SWP_VSWAP)
-> > +             return "vswap\t";
+> - [High] Lazy GFP_ATOMIC allocation of memcg_table causes swap-out failur=
+es and lock recursion under memory pressure.
+> --
 >
-> [Severity: Low]
-> Is this branch actually reachable?
+> [Severity: High]
+> Will this GFP_ATOMIC allocation reliably succeed under memory pressure?
 >
-> Looking at swap_start() and swap_next() in mm/swapfile.c, the seq_file
-> iterator skips any swap device where si->swap_file is NULL. Since the
-> vswap_si created at boot has no backing file, it seems the vswap device
-> will never be yielded to swap_show(), making this dead code.
+> Because swap allocation occurs during reclaim when free memory is already
+> scarce, a non-blocking allocation seems highly likely to fail. This would
+> abort the swap slot allocation and could potentially lead to premature OO=
+Ms.
 >
-> Additionally, if the device were somehow yielded to swap_show() without
-> addressing the file check, would seq_file_path(swap, file, ...) crash
-> by dereferencing the NULL file pointer?
+> Furthermore, does this violate locking rules for preemption-disabled sect=
+ions?
 
-Looks correct yeah. I think this was a hold-over from older version of this=
-.
+We're holding a lock, so GFP_ATOMIC seems like the right choice. And I
+haven't observed swap slot allocation failure in my testing yet FWIW.
 
-I'll fix this.
+If it proves to be a problem then we can retry with the lock dropped
+and a more lenient GFP flag.
+
+>
+> alloc_swap_scan_cluster() runs with ci->lock held and preemption disabled=
+ via
+> local_lock(). The GFP_ATOMIC flag includes __GFP_KSWAPD_RECLAIM, which
+> can trigger wakeup_kswapd() and enter the scheduler.
+
+This doesn't sound correct to me...
