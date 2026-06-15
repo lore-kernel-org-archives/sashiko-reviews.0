@@ -1,173 +1,109 @@
-Received: from out-176.mta1.migadu.com (out-176.mta1.migadu.com [95.215.58.176])
+Received: from out-171.mta0.migadu.com (out-171.mta0.migadu.com [91.218.175.171])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CAF2636655C
-	for <sashiko-reviews@lists.linux.dev>; Mon, 15 Jun 2026 20:59:10 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=95.215.58.176
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 23E27302CD5
+	for <sashiko-reviews@lists.linux.dev>; Mon, 15 Jun 2026 21:04:18 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=91.218.175.171
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1781557153; cv=none; b=lXGMJeVzGtFa3Pl65KySsmzv6MmRs65X8iLGmS/51+400V3rLPdK7DrvqiUmrgO++BP0pld57oGs67OkwVGxCq9c24qKQY4IXUgZF02rehOs6lXafdAchvS0Y4DZGxRljhTn1LFeBk4uI9y9K0c8LTNlQOPxHdtgCakKfQxnhcY=
+	t=1781557460; cv=none; b=q0jKWx0oZnix8Dqdk6YLQN5gkYFsDmzkM75QgVfBrWSI+P0cjdH/hootHesiLTKU/jiF4jx7GE3Fq6LZJae3CfPnhuO+DqiEI5vJzjfDoYBKJIQXzNnqU9N3TObKWxVbPt6FigypjAJiVfGfCc/jA1Diyd5RQD5RABv5sm5jS7c=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1781557153; c=relaxed/simple;
-	bh=mkiPMrXB7/Gh7E4lIUmvjyTu0uUmkvjCr2zM1fhHLlM=;
+	s=arc-20240116; t=1781557460; c=relaxed/simple;
+	bh=4vh1j6T/ZeMwRqoBeNUlx2x0FlrQwsadp3G2RyPAqdU=;
 	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=YaM3VN4S9V5jBz4LSxPKJIZaVonrCobc4/VQ1AZqsSl7GPMRpRFY8mx+ajLAD3M+69QF0B1m5Z5TujRVc1M0FeMP9dbw6GiD14R0A9kBttXU1GJDqgqfNMFOE7qamUG1cRQHNLdFB0wO8Xr34i6FxaESUhVprO2jqGwGGO9zg3U=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linux.dev; spf=pass smtp.mailfrom=linux.dev; dkim=pass (1024-bit key) header.d=linux.dev header.i=@linux.dev header.b=Y6LLlC/d; arc=none smtp.client-ip=95.215.58.176
+	 In-Reply-To:Content-Type; b=myd0X932+WVP7KzxlCwi6iM3A+FYYDSrjpdXaqw/ik3+pwDkAjgBlXXtldFqScC8g9j4BPrSUjWIm2jfEi4On3bNHS3sO1QzP9DO+tL2votCafS7WYxQie+Jkw8DSvQiUMLL+ATllaX7QXKXwzMnN6y3IcuMyAVPZcW2TyI5Qaw=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linux.dev; spf=pass smtp.mailfrom=linux.dev; dkim=pass (1024-bit key) header.d=linux.dev header.i=@linux.dev header.b=nYdYHiLj; arc=none smtp.client-ip=91.218.175.171
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linux.dev
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linux.dev
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linux.dev header.i=@linux.dev header.b="Y6LLlC/d"
-Message-ID: <a70f9213-234c-45cc-9232-8222241b3c99@linux.dev>
+	dkim=pass (1024-bit key) header.d=linux.dev header.i=@linux.dev header.b="nYdYHiLj"
+Message-ID: <dbe1fa76-4275-4d98-956b-1f76ae64dc5c@linux.dev>
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linux.dev; s=key1;
-	t=1781557148;
+	t=1781557456;
 	h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
 	 to:to:cc:cc:mime-version:mime-version:content-type:content-type:
 	 content-transfer-encoding:content-transfer-encoding:
 	 in-reply-to:in-reply-to:references:references;
-	bh=vodv0UI7KNaAIE2z/Qhv2BVPuyor2Z9avmyczVTiA4M=;
-	b=Y6LLlC/dT1M5CStT7dyBFuGRfj3IfWAS3YzBetMyYqSTxUW7MvumLsFiLfVDT2hu56A1KS
-	6xMrD2Yvh7pnFmNS0ChPxgyz7HDXeqp5t1PceGdU3Mi71lGWtEw599QZpfU3lGl7ZdL9cs
-	YwlwXkHgKSqr1PAH/V/SPaC7kQYEq2M=
-Date: Mon, 15 Jun 2026 22:59:00 +0200
+	bh=BPpNYPZJ7QROTHcAADboOieTHbGsZ81Lygo8gpfzvM4=;
+	b=nYdYHiLjBo5bXgSMevvNjwEAWW3WE3e+vY9xhIptEebg/uDgSqAgMks22RqsApEfACUbf1
+	XpXdrjseQVAcFWBLKdO60jDPJUHAjB6KOJ+peJHTgQvd/nYm3E06Hh5m0ho/M4goo1Y1ZV
+	lhAECzI4VxBRi2hWFwGf31MXxLujmBc=
+Date: Mon, 15 Jun 2026 14:04:07 -0700
 Precedence: bulk
 X-Mailing-List: sashiko-reviews@lists.linux.dev
 List-Id: <sashiko-reviews.lists.linux.dev>
 List-Subscribe: <mailto:sashiko-reviews+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:sashiko-reviews+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Subject: Re: [PATCH v4 4/5] HID: asus: add support for xgm led
+Subject: Re: [PATCH bpf-next v3] bpf: Better build_id caching in
+ stack_map_get_build_id_offset()
 To: sashiko-reviews@lists.linux.dev
-Cc: linux-input@vger.kernel.org, dmitry.torokhov@gmail.com
-References: <20260615165058.3845-5-denis.benato@linux.dev>
- <20260615170045.AF91E1F000E9@smtp.kernel.org>
+Cc: bpf@vger.kernel.org
+References: <20260615195536.1065107-1-ihor.solodrai@linux.dev>
+ <20260615201250.D2B0C1F000E9@smtp.kernel.org>
 Content-Language: en-US
 X-Report-Abuse: Please report any abuse attempt to abuse@migadu.com and include these headers.
-From: Denis Benato <denis.benato@linux.dev>
-In-Reply-To: <20260615170045.AF91E1F000E9@smtp.kernel.org>
+From: Ihor Solodrai <ihor.solodrai@linux.dev>
+In-Reply-To: <20260615201250.D2B0C1F000E9@smtp.kernel.org>
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 7bit
 X-Migadu-Flow: FLOW_OUT
 
-
-On 6/15/26 19:00, sashiko-bot@kernel.org wrote:
-> Thank you for your contribution! Sashiko AI review found 3 potential issue(s) to consider:
-> - [High] Propagating cosmetic LED restore errors during system resume causes the entire device resume to fail.
-> - [High] Failing to initialize the auxiliary XG Mobile LED aborts the entire HID device probe.
-> - [High] Manual call to `hid_hw_stop()` while using `devm_led_classdev_register()` leads to a use-after-teardown bug during device removal and probe error paths.
+On 6/15/26 1:12 PM, sashiko-bot@kernel.org wrote:
+> Thank you for your contribution! Sashiko AI review found 1 potential issue(s) to consider:
+> 
+> Pre-existing issues:
+> - [High] The non-sleepable path uses `find_vma()` without verifying if the requested `ip` actually falls within the returned VMA, leading to bogus file offsets and leaking the build ID of adjacent mappings.
 > --
->
-> commit 26f82fa14c4bebc817bb5d79a1cdcdc34bb503d3
-> Author: Denis Benato <denis.benato@linux.dev>
->
-> HID: asus: add support for xgm led
->
-> XG mobile stations have very bright leds behind the fan that can be
-> turned either ON or OFF: add a cled interface to allow controlling the
-> brightness of those red leds.
->
->> diff --git a/drivers/hid/hid-asus.c b/drivers/hid/hid-asus.c
->> index 6896730efafca..e68a6d93369d8 100644
->> --- a/drivers/hid/hid-asus.c
->> +++ b/drivers/hid/hid-asus.c
+> 
+> commit 61bb9d39eaa120b04f78291638b9b3dcc5b364d9
+> Author: Ihor Solodrai <ihor.solodrai@linux.dev>
+> 
+> bpf: Better build_id caching in stack_map_get_build_id_offset()
+> 
+> This patch refactors the build ID caching logic in
+> stack_map_get_build_id_offset and its sleepable variant into a shared
+> structure. It uses two independent slots to cache the last resolved and
+> unresolved VMAs, avoiding cache eviction when alternating between regions.
+> 
+> Link: https://lore.kernel.org/bpf/20260525223948.1920986-1-ihor.solodrai@linux.dev/
+> Link: https://lore.kernel.org/bpf/CAEf4Bza2fRDGhLQoPE-EzM7F34xaEJfi5Exmxb-iWVUN3F06=g@mail.gmail.com/
+> Link: https://lore.kernel.org/bpf/CAEf4BzZXJFr=1iiVx937ht=4PYQkQHg=eFk810zhMDzXQG3ihw@mail.gmail.com/
+> 
+>> diff --git a/kernel/bpf/stackmap.c b/kernel/bpf/stackmap.c
+>> --- a/kernel/bpf/stackmap.c
+>> +++ b/kernel/bpf/stackmap.c
+> 
 > [ ... ]
->> @@ -1343,9 +1371,52 @@ static int asus_start_multitouch(struct hid_device *hdev)
->>  	return 0;
->>  }
+> 
+>> @@ -365,27 +439,30 @@ static void stack_map_get_build_id_offset(struct bpf_stack_build_id *id_offs,
 >>  
->> +static int asus_xgm_init(struct hid_device *hdev, struct asus_drvdata *drvdata)
->> +{
-> [ ... ]
->> +	drvdata->xgm_led->cdev.brightness_set_blocking = asus_xgm_led_set;
+>>  	for (i = 0; i < trace_nr; i++) {
+>>  		u64 ip = READ_ONCE(id_offs[i].ip);
+>>  
+>> -		if (prev_build_id && range_in_vma(prev_vma, ip, ip)) {
+>> -			vma = prev_vma;
+>> -			offset = stack_map_build_id_offset(vma->vm_pgoff, vma->vm_start, ip);
+>> -			stack_map_build_id_set_valid(&id_offs[i], offset, prev_build_id);
+>> +		if (!stack_map_build_id_set_from_cache(&cache, &id_offs[i], ip))
+>>  			continue;
+>> -		}
 >> +
->> +	/* LED state is arbitrary on boot, set a default */
->> +	ret = asus_xgm_led_set(&drvdata->xgm_led->cdev, drvdata->xgm_led->cdev.brightness);
->> +	if (ret) {
->> +		hid_err(hdev, "Asus failed to set xgm led: %d\n", ret);
->> +		goto asus_xgm_init_err;
->> +	}
->> +
->> +	ret = devm_led_classdev_register(&hdev->dev, &drvdata->xgm_led->cdev);
+>>  		vma = find_vma(current->mm, ip);
+>>  		if (!vma || vma_is_anonymous(vma) ||
+>>  		    fetch_build_id(vma, id_offs[i].build_id, may_fault)) {
+> 
 > [Severity: High]
-> Because this LED is registered using devm_led_classdev_register(), its
-> unregistration happens during the devres cleanup phase. This phase runs after
-> the driver's remove callback (or probe error path) finishes.
->
-> If the probe error path or asus_remove() manually calls hid_hw_stop(hdev),
-> the HID transport is shut down. During the subsequent devres cleanup,
-> led_classdev_unregister() is called and sets the LED to LED_OFF. This invokes
-> asus_xgm_led_set(), which calls hid_hw_raw_request() on a stopped interface.
->
-> Could this lead to a use-after-teardown bug?
->
->> +	if (ret) {
->> +		hid_err(hdev, "Asus failed to register xgm led: %d\n", ret);
->> +		goto asus_xgm_init_err;
->> +	}
->> +
->> +	return 0;
->> +asus_xgm_init_err:
->> +	drvdata->xgm_led = NULL;
->> +	return ret;
->> +}
->> +
->>  static int __maybe_unused asus_resume(struct hid_device *hdev)
->>  {
->>  	struct asus_drvdata *drvdata = hid_get_drvdata(hdev);
->> +	int ret;
->>  
->>  	/*
->>  	 * If we have a backlight listener registered, restore the previous state,
->> @@ -1355,7 +1426,17 @@ static int __maybe_unused asus_resume(struct hid_device *hdev)
->>  	if (drvdata->listener.brightness_set)
->>  		asus_kbd_backlight_set(&drvdata->listener, drvdata->kbd_backlight_brightness);
->>  
->> +	if (drvdata->xgm_led) {
->> +		ret = asus_xgm_led_set(&drvdata->xgm_led->cdev, drvdata->xgm_led->cdev.brightness);
->> +		if (ret) {
->> +			hid_err(hdev, "Asus failed to restore xgm brightness: %d\n", ret);
->> +			goto asus_resume_err;
-> [Severity: High]
-> If asus_xgm_led_set() fails to restore the LED state (e.g., due to an I/O
-> error or timeout), this returns the error code directly to the PM core.
-> A failed resume callback causes the PM subsystem to treat the device resume as
-> failed, potentially leaving primary features like the keyboard and touchpad
-> unresponsive.
->
-> Would it be better for the failure of a cosmetic LED restore to log a warning
-> instead of aborting the entire device resume?
-No: xg mobile device controllers are just that: not an input device: if it fails
-there it's right to tear down the whole thing.
->> +		}
->> +	}
->> +
->>  	return 0;
->> +asus_resume_err:
->> +	return ret;
->>  }
->>  
->>  static int __maybe_unused asus_reset_resume(struct hid_device *hdev)
-> [ ... ]
->> @@ -1484,6 +1565,16 @@ static int asus_probe(struct hid_device *hdev, const struct hid_device_id *id)
->>  		}
->>  	}
->>  
->> +	if (asus_has_report_id(hdev, FEATURE_KBD_REPORT_ID) &&
->> +	    ((hdev->product == USB_DEVICE_ID_ASUSTEK_XGM_2022) ||
->> +	     (hdev->product == USB_DEVICE_ID_ASUSTEK_XGM_2023))) {
->> +		ret = asus_xgm_init(hdev, drvdata);
->> +		if (ret) {
->> +			hid_err(hdev, "Failed to initialize xg mobile: %d\n", ret);
->> +			goto err_stop_hw;
-> [Severity: High]
-> If asus_xgm_init() fails, the code jumps to err_stop_hw, failing the entire
-> device probe.
->
-> Does this make a non-critical aesthetic feature a hard dependency for the
-> entire device? Might it be safer to log the failure rather than preventing
-> the keyboard and touchpad from working?
-Ditto. Won't resolve these as it would only make the code more confusing.
->> +		}
->> +	}
->> +
->>  	/* Laptops keyboard backlight is always at 0x5a */
->>  	if (is_vendor && (drvdata->quirks & QUIRK_USE_KBD_BACKLIGHT) &&
->>  	    (asus_has_report_id(hdev, FEATURE_KBD_REPORT_ID)) &&
+> This isn't a bug introduced by this patch, but does the use of find_vma()
+> here without a bounds check allow an unmapped ip to underflow the offset?
+> 
+> find_vma() returns the first VMA whose vm_end > ip, but it does not
+> guarantee that ip >= vma->vm_start.
+> 
+> If an unmapped ip is queried, could find_vma() return the next adjacent VMA,
+> causing the offset calculation ip - vma->vm_start to underflow? This appears
+> like it would report a bogus file offset and leak the build ID of the
+> adjacent mapping.
+> 
+
+This was raised in v1, ignoring as it's not relevant to the patch.
+
