@@ -1,334 +1,124 @@
-Received: from mail-wr1-f46.google.com (mail-wr1-f46.google.com [209.85.221.46])
+Received: from mail-wm1-f50.google.com (mail-wm1-f50.google.com [209.85.128.50])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4F07D2CCC5
-	for <sashiko-reviews@lists.linux.dev>; Mon, 15 Jun 2026 01:57:38 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=pass smtp.client-ip=209.85.221.46
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 150B621D3F5
+	for <sashiko-reviews@lists.linux.dev>; Mon, 15 Jun 2026 02:00:25 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=pass smtp.client-ip=209.85.128.50
 ARC-Seal:i=2; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1781488659; cv=pass; b=uX9eiBgsypaHbquSXTHaZLqImAe7tINS/lTUiss3lz/lUv+IgwsvvyNOKzNoQ6XDC8Uu8AC1/mwuBfq8WRH1z1j2VWH8oYC+xmcfBiDPZn5i+MP10H1z6SRWas/YCsUlQsFmx4K8QGomQiH5QiLkrdY8vfqcB2iPzb3u3vtrgoU=
+	t=1781488831; cv=pass; b=KiFk11ChctZBcd8Wfa0mpuAmT2Q/B8bAuHR+ZPQ/tNTol8Dkk0G4Men98hJzkZlwrCd/nacOjerUGqdsrei4r6K4OELFnGpnI/vLJqdaenxH+QwngHuvC/WC1gpH+mgs1Szlaq6C7LCoPqjJ0LM58ECkGiojXAXVr2mmSDFkev0=
 ARC-Message-Signature:i=2; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1781488659; c=relaxed/simple;
-	bh=CzC/V+4jcNmnTRmdctoRmvaTlWMLr+ZrICXIbxA7hSA=;
+	s=arc-20240116; t=1781488831; c=relaxed/simple;
+	bh=KgjjAM/+u+dPbDFVxObvOG3fcUzOv7CPnrkLCUHTgIs=;
 	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
-	 To:Cc:Content-Type; b=JE0Gx9eKY8tVz2FVAlMKZx3SO1+l86i0hCz2M0Bol1ml4K/TA/HVZ6TZK4jGVwcqEbtocXKWqu5grv/UPsvmtGhfZbHVHGEPubnRs6cA6JLPoPIy1uaVrvSZ0uSA7X0xZy+sgXeBh+qH+wkb4y1C+hLrVPW8vLOwmap4EfDRQfs=
-ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=MF0ENPLb; arc=pass smtp.client-ip=209.85.221.46
+	 To:Cc:Content-Type; b=UJy88pLSLZmsw5Qdh7T3SkfGzviO/J1wE+f3XnRvC8ZIaT0YS+KwYoFqNsQq/p7qvzKClD8GZoH2eF0jdOsYoeLBVGCtVNduXEwulEOHhEQMRnj2JbEqqsH9riZBhg3ens7821v9Gsze6aOYgZ/foo/Jg5Y/mFmZ2oKuYSbs/dA=
+ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=VFLhT+0J; arc=pass smtp.client-ip=209.85.128.50
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="MF0ENPLb"
-Received: by mail-wr1-f46.google.com with SMTP id ffacd0b85a97d-45ef29c5561so1360021f8f.0
-        for <sashiko-reviews@lists.linux.dev>; Sun, 14 Jun 2026 18:57:38 -0700 (PDT)
-ARC-Seal: i=1; a=rsa-sha256; t=1781488657; cv=none;
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="VFLhT+0J"
+Received: by mail-wm1-f50.google.com with SMTP id 5b1f17b1804b1-4905529b933so28226525e9.0
+        for <sashiko-reviews@lists.linux.dev>; Sun, 14 Jun 2026 19:00:25 -0700 (PDT)
+ARC-Seal: i=1; a=rsa-sha256; t=1781488824; cv=none;
         d=google.com; s=arc-20240605;
-        b=EvbZsy0rZX8PcHAJ5HkObRKCYHpbLYN2tScA6ZbsPuYl0EkAaSrt7v1P6shbr//DDr
-         A7ntjTqc8V5JsYgotIiWktiY7nGanWUHzn5zD8qLgdHcbgiFqEbx7Fq/Qt9DcQ06vhHd
-         NvTtfNZ8OLYAkdRhtez3wb9C7WFtck7uFg0AT2pWOH/64quNVhzF3RGcy8J008jjGZuF
-         mdwkKq8pyoJRFs9PxfXeqFzbtBEGetpEe3g/qVJ+4vTsPEZz8QNNIWcwVEkuE5CYBq/4
-         P1MPe7TUz7+QdL5KisJCp6AXqle1BySQVwut4j8GxV/mDe78WUjyEFQ04I/7WZzlgJ3Y
-         uT5w==
+        b=RShF0skFn0iaOe1jWnx8jw7NGRr3DOpjKPMwL7W89lp7xUgutqt41cwSZVqxSLUAd3
+         g2mJDnoto7tTv15J9ZbcpXIH44yywaP8s+at8CoWpTqXKQz0SK48JXkPKUJcnXeEn+Pz
+         Va1m4lOYJrhq9XMgNal/EWBSFwbw9Sn80cSRrKZSFhFFkFzOmS+XiYabBbMv5d8ahmxE
+         aWdMUsJzxYlsHzRRRcV52WLfdI/oLmDfcUHL9Z8I8VUreZz+tk5K66eWu9Cv5IK4Mk83
+         WLGQxtJQZqneMKW1+0AO7WX/c54IV008ob2ZMZlthiUue5iNBV0Iu/Bds4gSwRUm0HF5
+         0w5w==
 ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com; s=arc-20240605;
         h=content-transfer-encoding:cc:to:subject:message-id:date:from
          :in-reply-to:references:mime-version:dkim-signature;
-        bh=maIPZfDX3YaHTnaR4G/V8bfdxyMA4s2VoxD9gaZrsNI=;
-        fh=3h+Ryrkk/MpJ2Y9rQOwX1HtDQkNxyeXOOCRZExzc+J8=;
-        b=fXzvlYYUhahHVPU5gC/MOlttyJ6vjedV5B+FAgDeftGRxwJ02q2sNLsa0EAy5ry+Ng
-         lpDv2SKzc7SW8cbVAexg2c1tHV53zqdEhD2Zle72xYLEvHLAr96/lmsPw/QIq9N6dEwF
-         WDJU21IjiwGpflAGPW6aTOj1j7xuNLV778KzgR/VuFvr1yGqhe15Bjlcqyo8H5NZhyRM
-         fpMsYaZHCpH2tCUHf/l+UPpcFXCkcPJjINwQwfWcDyeONFkuEK2WK540pMk6zOBVaUYu
-         0bcCVNWaORXjCEdZ/uIleukKX3xh4sOajGnOT5YWD5oMTmHCWhUZAh8uUgUNr1wTsoL8
-         3E+w==;
+        bh=qeIjIUBlbxcxSnWc6641z5CvcWAgKc4zbS4bMQ46+jE=;
+        fh=gj73vF7gfHpskuYo4ZPaNGDMo9r8lFxbvv5q5QAWYg8=;
+        b=OBhyKCEK5HOIQRccu+GRbPZY3h7P0LZQB4U3YfKjnpftPDBWxHyQ9gX313uB3VCo+X
+         T1axcx664xG9XvMbsPjrKdqPC+kDPlDydhRc9cpOFXJ60VvwFl+V9J0zYb0lOmEW452o
+         5w8oaflOc8ZAUvRvOpxfXwRZmz9E2f9HSZyloL7jnjfkIm58iAiNQPJAk5k0BwFpak9y
+         /8VQxY8qAWbFvsZh0SCt1KNKkm26f8uSaAxybmKqjR2t+tYEGaOHgW0M1Xe6gyJuO50A
+         ZmJ2QIQQIocpT1EbOK4tqin3tqDS+fKefoVNeSL5Ix78Kpc55toSyBwo0jl6nbgsfNri
+         Oa/Q==;
         darn=lists.linux.dev
 ARC-Authentication-Results: i=1; mx.google.com; arc=none
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20251104; t=1781488657; x=1782093457; darn=lists.linux.dev;
+        d=gmail.com; s=20251104; t=1781488824; x=1782093624; darn=lists.linux.dev;
         h=content-transfer-encoding:cc:to:subject:message-id:date:from
          :in-reply-to:references:mime-version:from:to:cc:subject:date
          :message-id:reply-to;
-        bh=maIPZfDX3YaHTnaR4G/V8bfdxyMA4s2VoxD9gaZrsNI=;
-        b=MF0ENPLb8XqC3cOsj5okbCMiYFWJ1xzpnCsfOxgNLZh7GWtBVt3e4kDASZysABq8xl
-         wYP/bP4MZvm/MuEMyE7GTnYeWhasexJaeAThJn+k3ZxhU/pU2713QWi1BaPXUh/bioAz
-         lVv3ILjhvDcMwUCCAIi9Y2paxOLsRYmv+WKfW4hGIDN4L0Oj0Ru5QQ5sY9UMF+B0HoAo
-         jaHIMo1ukhxP6AmtnW7LJwh3R8xy/QKFo8YEyoQbG/EKSPnt0Vb4FLcUj7PBMPetwueh
-         BATHJ3gJJi2ZNBbTe/FeHkcUe7jLI5L3PjJgsbgX1vIf4EnYUYDn4nHoYw4I6PINcDIx
-         6ZAg==
+        bh=qeIjIUBlbxcxSnWc6641z5CvcWAgKc4zbS4bMQ46+jE=;
+        b=VFLhT+0J8egnzoO5jbcy/RxD6Z7adsV5gfXA4pefyJopL6mPKZ/yghnVOdYJckeWoo
+         pHZ0bpqFB8JHG0Fhw5biNeodwQa7tnaZCQUY/et0h+2dobGqGs5j1k6IAoeNVuN1IBA3
+         CVokC3R0pY12Vi3/3l2E5diNm+Ia5czJNWja4i6q72q8oHoDH2sKRecWku2z5km24QOg
+         1SJoXp/71Gz7KSYClG+ma3Lne4j3ci/h8pwdLh64ikW9runWMGQ6+Rv8X4icYLRrfn+i
+         5fga0L4BOiraSHPcAOOavA3c+lTfTEgBC02EwiIqfQHc4q/E09DCRc5CjVXbNNudTSdh
+         MOxg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20251104; t=1781488657; x=1782093457;
+        d=1e100.net; s=20251104; t=1781488824; x=1782093624;
         h=content-transfer-encoding:cc:to:subject:message-id:date:from
          :in-reply-to:references:mime-version:x-gm-gg:x-gm-message-state:from
          :to:cc:subject:date:message-id:reply-to;
-        bh=maIPZfDX3YaHTnaR4G/V8bfdxyMA4s2VoxD9gaZrsNI=;
-        b=mW+D4WPBKoJWPr4hqHtSTz/SVwcpfXIHFHX3gbNydKkWQjVatiZOlZjjn3x7eZHMfo
-         wQRxDBvortv4J/HD8MrVhU6kVueLWuQhEtfJXRzSFgnKdJgBIt3qP7iNScTxHPAkjUee
-         5iYewHU9NK5tz53Ej52SZAdyMSo2sKAXFdOkeAJkgGhDcgkH1nlVYTKDejvhZXG8ebAD
-         Y8Y5Gm6uJQ88om3Pkg2xo6Cnyy2nqfyXSBCdIQ2nvAqUmqhnua9FF1j7TiGSck3T7sF2
-         8BcMRoNv+2WubFRFnl3hy5uAkH+lJXu8MwKGtngUEPvCjGY28drTBoZW8men9rOCTZx3
-         vNNg==
-X-Gm-Message-State: AOJu0YwCEzOtwkWLQIkZiDdZTNXi9W8s/9GQ1rY6+zJrowu9QNji4A8D
-	piZGjH3/GdoSstyrOTw9VB2F8QqB3DNy50OAaiaL+BRDK/gOjYpjCSy8uljHrhAAAEWlVsUghig
-	iEROLQcEhUBQKcTZ5foC75mo+4V+VQwcY3yUuS6E=
-X-Gm-Gg: Acq92OEV31scu2s3nUiMDFpJI9eaG9EYXpq7wmpqrlYdC4ONYqwDDAg7FlMaBb+7fQw
-	dSMiDVRbx+q8r5bGEbEkvVA0haYTIrxF0ypiN2AHp5OxdmbKAx+jNJVG00NiNOJ3YO7keBcSy2c
-	uGOxCrwJABAJpMFhGCqFQtbEHOBk0aSWmRoBmD+4KmlDbs6f3fZRD8ZJnl/UwVYh95OVqTxZ6Vo
-	bMYUSzqLDTRouX42oShb3BvrIoQ5qnsz8U4XVBxVaE/FvPZYbYQJ2xbzEsAmH0IeY0IKBIJZtyM
-	8ZOdqz+8WvBG41ZaTA+GVzS/Rt1mgWmCh+uneR8FANLkJOw3
-X-Received: by 2002:a05:6000:4305:b0:460:1301:dec8 with SMTP id
- ffacd0b85a97d-46074a802d0mr11817805f8f.3.1781488656353; Sun, 14 Jun 2026
- 18:57:36 -0700 (PDT)
+        bh=qeIjIUBlbxcxSnWc6641z5CvcWAgKc4zbS4bMQ46+jE=;
+        b=ea8kSohJgt1btQzCv4M6Sw+VkilkDZAD11Y1B4MdKxwU0az2R/WoCEuu+RgPHE2mbx
+         +0uuW5J0BbhebydGGW1kVMjNt1cq+S2kfHIGTyx7tXJStkFSPs5VHDeJWa9YLFg4LXdF
+         jyIRcd4bAE9C0sf1P0bZUs6B1j3QTfukTtdDmSH/xuFtVcOEJE3peqMSeLmPor3hIXZV
+         7ywFmvYQMxNQCLViAkk4x0trSV9fT4esKRTpmB3ZikrSafgesVa9pHMf9XsP8QEreQ1B
+         TRn9EBAuEj28dhdLcGpYtGuksMxfxbGT6s5FB45z3SfVyXl3sbXyFxp/kF2e3arta7D8
+         SqBA==
+X-Gm-Message-State: AOJu0YyDHF7fC7arsh3couc0ErRnRt2jkVELNmLi6slQzLXjcGNnRgsk
+	f6Wshwk/OEowKPMxuWfKMRNHrnl8susrz88dSXj3KQB7ctIdMsgQGZjXCNBq35WUNVmnmN4BXbK
+	pLC57huwjDsvj5vcRbMDOMKFoUTD1DCpN60C5
+X-Gm-Gg: Acq92OFRluD/M2wuHgsv7dEklIBh97iAixljKVdFJ89XveIpyVZ9UOc6q99eSxj38A+
+	FHJ9AmlIiR1GItiT6WbobM0HHar81gGLN2iQsZdw6OVt2YfwtjV5+YKH5+MnauC+wVVt+dj5s1s
+	jAvy52DRvUwfC7vLZOvDqZB43NBNdYI2R6wD6bpvne6oY0f2Zpof0RyUSPh+WLj4ArSlHn1T3Ov
+	LW6hYjcUlfmG16v3SNk1wEaGlQhgOe4O8UuKSyrfuIPaH/+e0r+Q0nyHbGgSFXVEwnbTtE6Fz33
+	kBQGVxPEQqgRXl+DAmWl9YWotS5D9jPSqFMvhw==
+X-Received: by 2002:a05:6000:25f7:b0:43d:7868:21f0 with SMTP id
+ ffacd0b85a97d-4606da57dd1mr16019997f8f.9.1781488824357; Sun, 14 Jun 2026
+ 19:00:24 -0700 (PDT)
 Precedence: bulk
 X-Mailing-List: sashiko-reviews@lists.linux.dev
 List-Id: <sashiko-reviews.lists.linux.dev>
 List-Subscribe: <mailto:sashiko-reviews+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:sashiko-reviews+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-References: <20260612193738.2183968-4-nphamcs@gmail.com> <20260612195915.328121F000E9@smtp.kernel.org>
-In-Reply-To: <20260612195915.328121F000E9@smtp.kernel.org>
+References: <20260612193738.2183968-2-nphamcs@gmail.com> <20260612200234.93CAA1F000E9@smtp.kernel.org>
+In-Reply-To: <20260612200234.93CAA1F000E9@smtp.kernel.org>
 From: Nhat Pham <nphamcs@gmail.com>
-Date: Sun, 14 Jun 2026 21:57:24 -0400
-X-Gm-Features: AVVi8Cf_I41x8LcpDrlyq3cju8mkBgacldJnx8S93DJC7fXfNVtyOKatHa11T60
-Message-ID: <CAKEwX=P8ePhOcg6ktrNLbaKuVYOXs+6Hp-85sN19a7vRbP2Fgg@mail.gmail.com>
-Subject: Re: [RFC PATCH v2 3/7] mm, swap: support physical swap as a vswap backend
+Date: Sun, 14 Jun 2026 22:00:12 -0400
+X-Gm-Features: AVVi8CeBboNpYssU25ojNOxnTY94QiMaMqzA1T6X7OZsH2_len7MxYqDu_iYH-I
+Message-ID: <CAKEwX=M1OE5Rjcs15ZJUJe7ymiQ4VbCfwtkRPu1+8PcKA_wCyA@mail.gmail.com>
+Subject: Re: [RFC PATCH v2 1/7] mm, swap: add virtual swap device infrastructure
 To: sashiko-reviews@lists.linux.dev
-Cc: mkoutny@suse.com, hannes@cmpxchg.org, tj@kernel.org
+Cc: hannes@cmpxchg.org, tj@kernel.org, mkoutny@suse.com
 Content-Type: text/plain; charset="UTF-8"
 Content-Transfer-Encoding: quoted-printable
 
-On Fri, Jun 12, 2026 at 3:59=E2=80=AFPM <sashiko-bot@kernel.org> wrote:
+On Fri, Jun 12, 2026 at 4:02=E2=80=AFPM <sashiko-bot@kernel.org> wrote:
 >
-> Thank you for your contribution! Sashiko AI review found 4 potential issu=
+> Thank you for your contribution! Sashiko AI review found 1 potential issu=
 e(s) to consider:
-> - [Critical] Large folios with fragmented or heterogeneous vswap physical=
- backings cause out-of-bounds physical swap reads and writes.
-> - [Critical] Missing PG_uptodate check in try_to_unuse() causes silent da=
-ta corruption and memory leak to userspace on swap read errors.
-> - [High] Physical swap slots are permanently leaked when a vswap entry is=
- successfully stored in zswap, or when zswap writeback decompression fails.
-> - [High] Non-uptodate ghost folios left in swap cache on concurrent backi=
-ng release cause SIGBUS.
-
-Seems like all of these are false positives.
-
-> --
->
-> commit b0de967e96de0b0840388227b716d4c3f3e653de
-> Author: Nhat Pham <nphamcs@gmail.com>
-> Subject: mm, swap: support physical swap as a vswap backend
->
-> This commit introduces physical swap as a backend for the virtual swap la=
-yer.
-> With physical swap backing, vswap can allocate a physical slot on demand =
-when
-> needed as a fallback for zswap_store failures or as the destination for z=
-swap
-> writeback. Each vswap entry's physical slot is tracked via a pointer-tagg=
-ed
-> swap_table entry on the physical cluster.
->
-> > diff --git a/mm/swapfile.c b/mm/swapfile.c
-> > --- a/mm/swapfile.c
-> > +++ b/mm/swapfile.c
-> [ ... ]
-> > @@ -3012,19 +3400,93 @@ static unsigned int find_next_to_unuse(struct s=
-wap_info_struct *si,
+> - [Low] Dead code in `swap_type_str`: VSWAP devices are never displayed i=
+n `/proc/swaps`.
 > >
-> >  static int try_to_unuse(unsigned int type)
-> >  {
-> [ ... ]
-> > +             /*
-> > +              * Re-validate under folio lock: rmap holds folio->swap +=
- j
-> > +              * for some j in [0, nr_pages). Check folio->swap still m=
-aps
-> > +              * to the contiguous physical run that includes our slot =
-i.
-> > +              */
-> > +             j =3D vswap_entry.val - folio->swap.val;
-> > +             phys =3D vswap_to_phys(folio->swap);
-> > +             if (!phys.val || swp_type(phys) !=3D type ||
-> > +                 swp_offset(phys) + j !=3D i ||
-> > +                 j >=3D folio_nr_pages(folio)) {
-> > +                     folio_unlock(folio);
-> > +                     folio_put(folio);
-> > +                     continue;
-> > +             }
->
-> [Severity: High]
-> Could this leave a poisoned, non-uptodate ghost folio in the swap cache?
->
-> If swap_cache_alloc_folio() was called to add the folio, but the physical
-> backing was concurrently released or migrated to ZSWAP, swap_read_folio()
-> will see phys.val =3D=3D 0 and abort early without setting the folio PG_u=
-ptodate.
->
-> When the code reaches this check, if phys.val =3D=3D 0, it unlocks and pu=
-ts the
-> folio and continues. However, because it doesn't call swap_cache_del_foli=
-o(),
-> the uninitialized folio remains in the swap cache. Wouldn't a subsequent
-> access to this folio trigger a VM_FAULT_SIGBUS even though the data safel=
-y
-> exists in ZSWAP?
-
-This case basically happens when the data on the swapfile is
-corrupted. Pagefault-er SIGBUS-ing on this folio is the expected
-behavior. Besides, this caller is not the one added the folio to swap
-cache or discover the data corruption.
-
-FWIW, __try_to_reclaim_swap() has similar patterns here too.
-
->
-> > +
-> > +             folio_wait_writeback(folio);
-> > +             folio_release_vswap_backing(folio);
-> > +             folio_mark_dirty(folio);
-> > +             folio_unlock(folio);
-> > +             folio_put(folio);
-> > +     }
->
-> [Severity: Critical]
-> Is it possible for the folio to be uninitialized here if the swap read fa=
-iled?
->
-> After calling swap_read_folio() and folio_wait_writeback(), there is no c=
-heck
-> to verify if the read was successful via folio_test_uptodate(folio).
->
-> If the block device read fails due to an IO error, the folio remains
-> uninitialized. By unconditionally calling folio_release_vswap_backing() a=
-nd
-> folio_mark_dirty(), doesn't this destroy the original physical backing an=
-d
-> certify the garbage memory as valid dirty data, potentially leaking
-> uninitialized kernel memory to userspace?
-
-If IO error happens, the original physical backing is a goner, no...?
-
-I'm pretty sure unuse_pte_range() (the existing swapoff scheme) has
-the same pattern here.
-
->
-> > diff --git a/mm/vswap.h b/mm/vswap.h
-> > --- a/mm/vswap.h
-> > +++ b/mm/vswap.h
-> [ ... ]
-> > @@ -159,6 +203,25 @@ vswap_lock_cluster(swp_entry_t entry, unsigned int=
- *voff)
-> >       return ci_dyn;
-> >  }
-> >
-> > +static inline swp_entry_t vswap_to_phys(swp_entry_t entry)
+> > +static const char *swap_type_str(struct swap_info_struct *si)
 > > +{
-> > +     struct swap_cluster_info_dynamic *ci_dyn;
-> > +     unsigned int voff;
-> > +     unsigned long vt;
+> > +     struct file *file =3D si->swap_file;
 > > +
-> > +     ci_dyn =3D vswap_lock_cluster(entry, &voff);
-> > +     if (!ci_dyn)
-> > +             return (swp_entry_t){};
-> > +
-> > +     vt =3D __vtable_get(ci_dyn, voff);
-> > +     spin_unlock(&ci_dyn->ci.lock);
-> > +
-> > +     if (vtable_type(vt) !=3D VSWAP_SWAPFILE)
-> > +             return (swp_entry_t){};
-> > +
-> > +     return vtable_to_phys(vt);
-> > +}
+> > +     if (si->flags & SWP_VSWAP)
+> > +             return "vswap\t";
 >
-> [Severity: Critical]
-> Does this function handle large folios with heterogeneous backings safely=
-?
+> [Severity: Low]
+> Is this branch actually reachable?
 >
-> When swapping in or writing out a large folio, vswap_to_phys() only inspe=
-cts
-> the first subpage's vtable entry. If it sees VSWAP_SWAPFILE, it returns t=
-he
-> order-0 physical slot.
+> Looking at swap_start() and swap_next() in mm/swapfile.c, the seq_file
+> iterator skips any swap device where si->swap_file is NULL. Since the
+> vswap_si created at boot has no backing file, it seems the vswap device
+> will never be yielded to swap_show(), making this dead code.
 >
-> The caller (like swap_read_folio_phys() or __swap_writepage_phys()) might=
- then
-> build a sequential bio for the full folio_size(folio) starting from that =
-single
-> slot. If the large folio isn't fully contiguously backed by the swapfile
-> (e.g., if part of it is in ZSWAP), won't reading or writing multiple page=
-s
-> from this slot overflow into adjacent physical swap slots belonging to ot=
-her
-> processes, causing data corruption or an information leak?
->
+> Additionally, if the device were somehow yielded to swap_show() without
+> addressing the file check, would seq_file_path(swap, file, ...) crash
+> by dereferencing the NULL file pointer?
 
-We explicitly check for this in __swap_cache_add_check(), and (while
-under a single atomic context protected by swap cluster lock) adding
-the folio into the cache, which makes swap backend stable.
-
-False positive I think.
-
-> > diff --git a/mm/zswap.c b/mm/zswap.c
-> > --- a/mm/zswap.c
-> > +++ b/mm/zswap.c
-> [ ... ]
-> > @@ -1028,40 +1019,78 @@ static int zswap_writeback_entry(struct zswap_e=
-ntry *entry,
-> [ ... ]
-> >       if (!zswap_decompress(entry, folio)) {
-> >               ret =3D -EIO;
-> > +             /*
-> > +              * For vswap: folio_realloc_swap already moved the entry
-> > +              * out of the vtable. Restore it via vswap_zswap_store so
-> > +              * the entry stays tracked (and the just-allocated PHYS
-> > +              * slot is freed). For non-vswap: entry is still in the
-> > +              * zswap tree.
-> > +              */
-> > +             if (swap_is_vswap(si) && phys.val)
-> > +                     vswap_zswap_store(swpentry, entry);
-> >               goto out;
-> >       }
->
-> [Severity: High]
-> Does vswap_zswap_store() leak the newly allocated physical slot?
->
-> If zswap_decompress() fails, this error path attempts to restore the old
-> zswap entry into the vtable by calling vswap_zswap_store(swpentry, entry)=
+Looks correct yeah. I think this was a hold-over from older version of this=
 .
-> However, it appears vswap_zswap_store() blindly overwrites the vtable ent=
-ry
-> with VSWAP_ZSWAP without freeing the prior VSWAP_SWAPFILE physical slot
-> that was just allocated by folio_realloc_swap().
 
-vswap_zswap_store() calls __vswap_release_backing(). This seems like a
-false positive...
-
->
-> Since vswap_to_phys() will now return empty, the physical reclaim scanner
-> will fail to reclaim it. Does this permanently leak the physical slot?
->
-> [ ... ]
-> > @@ -1558,7 +1599,7 @@ bool zswap_store(struct folio *folio)
-> >        * writeback could overwrite the new data in the swapfile.
-> >        */
-> >       if (partial_store && is_vswap_entry(swp))
-> > -             folio_release_vswap_backing(folio);
-> > +             folio_release_non_phys_swap_backing(folio);
-> >       else if (!ret && !is_vswap_entry(swp)) {
->
-> [Severity: High]
-> Does a successful zswap_store() leak the physical swap backing?
->
-> When a folio with an existing VSWAP_SWAPFILE physical vswap backing is
-> swapped out again, swap_writeout() preserves the physical backing to allo=
-w
-> fast reuse if zswap_store() fails.
->
-> If zswap_store() succeeds, it will eventually call vswap_zswap_store() wh=
-ich
-> overwrites the vtable entry with VSWAP_ZSWAP without freeing the prior ph=
-ysical
-> slot. Should there be a cleanup for the preserved physical slot here or i=
-nside
-> vswap_zswap_store() to prevent leaking the physical slots?
-
-Ditto.
-
->
-> --
-> Sashiko AI review =C2=B7 https://sashiko.dev/#/patchset/20260612193738.21=
-83968-1-nphamcs@gmail.com?part=3D3
+I'll fix this.
