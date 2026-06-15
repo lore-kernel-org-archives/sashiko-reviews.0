@@ -1,166 +1,238 @@
-Received: from mail-oi1-f172.google.com (mail-oi1-f172.google.com [209.85.167.172])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from mx0a-0031df01.pphosted.com (mx0a-0031df01.pphosted.com [205.220.168.131])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7CD4F2D97AA
-	for <sashiko-reviews@lists.linux.dev>; Mon, 15 Jun 2026 21:53:52 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=pass smtp.client-ip=209.85.167.172
-ARC-Seal:i=2; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1781560433; cv=pass; b=sojcaz4k4tmTH7ZxYkIkcDfVQ1hfoD8p3rV+Ho8MiwBvjmdv7bmjtNdcaTEak7DBp5GvNigByXehfjrmmfrS9LfAlK0oegkN8cOpfhBHnjg7Hl/S5U7gzpEhVRwy2TIRvjr0lnxwyX+rSqhcG3SDiG4OQm7pCc8X7Paeb40smzQ=
-ARC-Message-Signature:i=2; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1781560433; c=relaxed/simple;
-	bh=MAw7xAS00Pxp7lTFSZCtf6qTpMGHE7iw4QUCdtuTrn4=;
-	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
-	 To:Cc:Content-Type; b=kdKS88XuCQgDqQRTlZXQLACx12FPdf6I/8+kAhleLu7w+0w3sUsqFdtlqtf1/znAzFnaUcFtne3pi5J5WHDUOV72IQOrMldluOhSvuUaqdG8AQs+hEdrsequWSRFHFblWpnh8KVUaITiRT1AQGBRtVzHOwow7+Fg29NX/Als6+g=
-ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=google.com; spf=pass smtp.mailfrom=google.com; dkim=pass (2048-bit key) header.d=google.com header.i=@google.com header.b=wR/5i4Xo; arc=pass smtp.client-ip=209.85.167.172
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=google.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=google.com
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 11B993B6356
+	for <sashiko-reviews@lists.linux.dev>; Mon, 15 Jun 2026 22:42:16 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.168.131
+ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
+	t=1781563340; cv=none; b=fjdKqx9/25f1NbdViViVeqcZ+JGfWWMV+6vW38Q1cyFqCIY5Ypg9yFIRj0S7p/yh0S0jDbNdbs4JYTVEyJwsYF31aRXElOvUfcKFU/gEPTbbfdo/kRDojzBEg3vLGsQhWNw9yRyShxUZD/oWmffgyeXyX5KwRm3LmGg/7EWZ5uk=
+ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
+	s=arc-20240116; t=1781563340; c=relaxed/simple;
+	bh=bSn4IF5SXIoyf657ywaHvXslqafduIay3JjIzHM+EAY=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=XvcXvEovR8ohDPTMCehdmgX0W4QY7gXt4+9XA22oeSDR/lwrFsutQO1LJcqUvvreHn8bK8D5pVZ/EKhR/U5g7iffk/93tUx9r0pDhkFPdOmv/S9RECF2kNvEz5aLSNT+BgkNKBnFERFYLqUFQ00Ux9arxKqSBDTw9VNFFqIpSY4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com; spf=pass smtp.mailfrom=oss.qualcomm.com; dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b=coj3dEIM; dkim=pass (2048-bit key) header.d=oss.qualcomm.com header.i=@oss.qualcomm.com header.b=AoLPkyf7; arc=none smtp.client-ip=205.220.168.131
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=oss.qualcomm.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=google.com header.i=@google.com header.b="wR/5i4Xo"
-Received: by mail-oi1-f172.google.com with SMTP id 5614622812f47-488b3fd8d0dso68547b6e.1
-        for <sashiko-reviews@lists.linux.dev>; Mon, 15 Jun 2026 14:53:52 -0700 (PDT)
-ARC-Seal: i=1; a=rsa-sha256; t=1781560431; cv=none;
-        d=google.com; s=arc-20240605;
-        b=gckA/P6CSCIOWkqSxiVgAeRTu23oDTcwK5Bg1r0uvHZB3SWKe2igOmS1dr6oaepkQk
-         OYyZM5db8/4673uRKkgpzTkbQV2KZ6Lhqhhtv7f/w/RfnGfB5mc2heHntNblCAbCVLrL
-         VUsWqKu9OPD75/O6PTnYBPXSNmP002ogahGUkTYN+SSNV35HoEx/2TC7NkCKk+knV94B
-         TQjPvY2buKqca6Q+GiClLxNIjOlCmbDnvNGd93vXry2iAVdtwA8jdmTgwublYpPlMmFc
-         BK3xHcz+xpDVlgws8AM+rBxdlYQNfxXDIlHddWunzSJC6b58P0yYFNNmgP1dkw9U8vwF
-         z3MA==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com; s=arc-20240605;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:dkim-signature;
-        bh=MAw7xAS00Pxp7lTFSZCtf6qTpMGHE7iw4QUCdtuTrn4=;
-        fh=ckBl/s1LLKA3km8atbibBY7xTgAiKuqA5kAhDce8+2s=;
-        b=Yxpune7Gh2H9957rDC1/1zH+rN3JYMrbj5wYQMlo2k6vh5DnUYChOmegwII4h5ITSS
-         /0Q4GGUBJeE7DP6SjQej1RCx1MYnNEWvDngJWrHHQQoS1bCBvWHRtM03h9Q6ox+ANphg
-         i9Y9rRlYscNYQ49ci/81Erx21tjdq/Efny2g5KvASDHcn5fupLhspBS3xyOflElCfxIe
-         5nLry0/NqdiYHnaCvHbeB0nhzaeyMdIIErQtSX1Vo2G5TqvM3VtBUTHsMziHieyA1h/n
-         D9lBpYYTuy1ARfcV129/TsTKqPJ5Z1nhKohqM0OT5ODJhdqdWQ73JCZdip+1NEgtEf8A
-         3G4Q==;
-        darn=lists.linux.dev
-ARC-Authentication-Results: i=1; mx.google.com; arc=none
+	dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b="coj3dEIM";
+	dkim=pass (2048-bit key) header.d=oss.qualcomm.com header.i=@oss.qualcomm.com header.b="AoLPkyf7"
+Received: from pps.filterd (m0279863.ppops.net [127.0.0.1])
+	by mx0a-0031df01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id 65FIx7d0861025
+	for <sashiko-reviews@lists.linux.dev>; Mon, 15 Jun 2026 22:42:16 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=qualcomm.com; h=
+	cc:content-type:date:from:in-reply-to:message-id:mime-version
+	:references:subject:to; s=qcppdkim1; bh=zHE3dR2u6AwWN2e/vCgwqj+r
+	w4dt77oofxvwtyZmHYk=; b=coj3dEIMglK8jz1O9wLV3JJ0V9KohF9ZN1N74BiJ
+	ysauhdGXYwQ8SUaQ8TNhE3gdj0edIvUbk/naMKCS4/ZQk8Lx+iZ+Ck4Tuy3qgk5H
+	A5kK2rPaZQIr4gVKBuNr0jymfDWrVwtk5m9ct1OUTppkzeAbRwwAt+dKiHfHTbOn
+	9FUf1KdbzRyg+t0uL7nLM3OvN4bA+niLjcO3eI7n5ZyLlmzsLiEibPX9NujF4a5T
+	QZrLTHbhPXyWPK+CBL/LZmoAzXvt2sHwdl2CuYi7JqW6ZLU+sbtRPfS56r9a2mpv
+	FX1pU4Kc30myhfCh9/E0TuqYDZd8QmZffAgdffvu8kNLhg==
+Received: from mail-qv1-f71.google.com (mail-qv1-f71.google.com [209.85.219.71])
+	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 4eteydbbgp-1
+	(version=TLSv1.3 cipher=TLS_AES_128_GCM_SHA256 bits=128 verify=NOT)
+	for <sashiko-reviews@lists.linux.dev>; Mon, 15 Jun 2026 22:42:16 +0000 (GMT)
+Received: by mail-qv1-f71.google.com with SMTP id 6a1803df08f44-8ccd51bc2f5so86212776d6.2
+        for <sashiko-reviews@lists.linux.dev>; Mon, 15 Jun 2026 15:42:15 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=google.com; s=20251104; t=1781560431; x=1782165231; darn=lists.linux.dev;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=MAw7xAS00Pxp7lTFSZCtf6qTpMGHE7iw4QUCdtuTrn4=;
-        b=wR/5i4Xo0xAcFdpk+Tqxb0vS84Qc/F/hcj1UL/hIG5jc3P1gwnVYp6lqQZOZ7Fh/Xa
-         bgLF48SaOKYUBL3xlhrmBxlUcS2b7QHO8D6H6vMCsYqlLnQCfVsC+utbmdMcPkoiiOjh
-         39fJcskTqisuq2RYz7HI7G83h9v+Ut3KShPh+Gyr/iCZhbmbk7J5PPw6qG7g9g0JA5ev
-         lfgmbZOdYTQyUdlxyfoy0rqkk4bb73smnyGflzmAKk/KPWJ/iQtv12bvhaBhMUCjUG3Q
-         fQlYj4rQENImDerzAjMG7jYatV+WxuWHTYFUHf5nRd3f7QQfstXhH+hyPkfSr712bBX3
-         clpw==
+        d=oss.qualcomm.com; s=google; t=1781563335; x=1782168135; darn=lists.linux.dev;
+        h=in-reply-to:content-disposition:mime-version:references:message-id
+         :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
+        bh=zHE3dR2u6AwWN2e/vCgwqj+rw4dt77oofxvwtyZmHYk=;
+        b=AoLPkyf7NVj0yLBl2DpLDK7A2GW6FvXj5inkkytaUVvCymf81AuAXerUqQ2qArSwsa
+         dpcdvbb0fCza3e9eyLvkG1nv4ae5Asa9rngQfKbe5PeRpqF10gbtxfy2+7zUQXwXun0E
+         WR4k2JzAusA4Gro56ylB0P6uEX9USPEl7fohi3dqFxPF8wtyjxeZz26fa0TBJBlNUGQA
+         1rrdZKiAitFYyY4Kiq6/LEBz7irH0bbZVPjAR/vQxzpkC0m6PtCWInRtcxLu6daIhV0T
+         x7ybLiYEvV/aPMWCQHxBj88hns3Vn30riGp35HaD/nQ3GkOH0lPxTVRpjnQ3BAqaT9A4
+         /Ocg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20251104; t=1781560431; x=1782165231;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:x-gm-gg:x-gm-message-state:from
-         :to:cc:subject:date:message-id:reply-to;
-        bh=MAw7xAS00Pxp7lTFSZCtf6qTpMGHE7iw4QUCdtuTrn4=;
-        b=oVCYXF44nYcvry38dojs6pzBkBXJn0vUkvNBlyWzFg1P4mN3Y6SgO/Gekb9h9ekpNn
-         pZW749BjYxCDlTYOOIZGdokBKpLsmtgv5c2eWA+N24PxoFRPnedYE1j8ayMaE8EkJfj3
-         oLjPvxZsAiW9MlNMSue0FkTMIyJYis8zkppzIrMILjJ+2rSI/XdFQJ/ZlEs4QpGBaEp9
-         +FCwIlt8bku/kpTbpmqLwTJEfMCrQSr1aeOVWJyIJ5uF+zHLkwUQp61M+ebIiWXmYwk+
-         x1nll/Tz64gyplTxX6c/LGtp/CHOku5kIMhPY7CtJRqfhfExOxP0jhlKmpCCdgteoC8Y
-         Mp3Q==
-X-Gm-Message-State: AOJu0YxZOTxBq3rlq4Qw4R8+fTHV05GcLttf/B+OsN8Oj3+0TZnFHfZQ
-	6qjjA/aov71/jpUfoTDIuQtdMsr1AFG05nFB42/oGKao0zDJdP5Mv+pghbLgIO6zJonQGRqBCUs
-	7XXrTtDt8HEwzf72qUGj22GITj4v4dNaojSKTOgsiJEXXqfCyJJ/lFv3O
-X-Gm-Gg: Acq92OFydyvUKZ6ZwyrBtxx4/x/moPzntR4NzUkCaKAONxGHbIGUt6Ts9qObW57x2DZ
-	Q4logOXGDCCnr2a9JQi2+iCWh2pFJjRdv0kTJA64m7ZpAFn3Gqul2xXk7ZlrfOs76vNslzgjKnQ
-	BZmVPEo7Wq63xzYSPn5VzjayusdEM+YnZdh9URqpQNp3SZRvUqhuWeL9xH/Cu+RGl8P5dVri2wz
-	VN3MPmCzKNaB9HcddUQqQ4UY8idG5tSgWYgJVBCgsLRt2ReezEMzbTsjosapmdbQLPN9oM4LHIH
-	TEJQQSwy4U92OOfqKZf1Cgy8ADdkARwceQ2MhQ==
-X-Received: by 2002:a05:6808:170f:b0:485:15bd:60e8 with SMTP id
- 5614622812f47-48741b51368mr7889705b6e.35.1781560430903; Mon, 15 Jun 2026
- 14:53:50 -0700 (PDT)
+        d=1e100.net; s=20251104; t=1781563335; x=1782168135;
+        h=in-reply-to:content-disposition:mime-version:references:message-id
+         :subject:cc:to:from:date:x-gm-gg:x-gm-message-state:from:to:cc
+         :subject:date:message-id:reply-to;
+        bh=zHE3dR2u6AwWN2e/vCgwqj+rw4dt77oofxvwtyZmHYk=;
+        b=po30joQQKLK8/AGl8wUXIVk5oZWmvTT9oS9T+eA6d5lwRLvAy2HM5PdeAYTv1+cQqa
+         E/xY5IV27WKdmQGSlriEhlZ5PPFRPQEobQ6en1rN+pG1W0CyShojkC9It6NyOnUC5pr1
+         fg2oSNhmNso7o30Vlb0KebqLl6Lm0kHJFBZFPMk6wWGBQgmm+WDUKcS2e1a++vNRTE5e
+         HznH/kmwSYQcquVfzGA3uo0OOkmK3thXM8fweykLvpS4E7gSOflnX8OZq0Ej/lvwwA65
+         iuNV6Vy9lGvPyuRc8hkFEyOznCSJfdrr+jVjsdqszOIf3EfNFR8G5MmUbSC3qWhE7ant
+         UwjA==
+X-Gm-Message-State: AOJu0Yxzupm5rKj0GAPT2jPns5g7XDQrvNPcW2bsrLDKKFun0oZqrxbs
+	BskEZSk6rylE9yyjOJGdJYzbVKWr24H0kcj9zQ8N2lVjWYReyq183IVCPaNM7Ert70bAxWktKVd
+	kY1L6WxOSOxeLEFn1V470KYjqJVHJGDTvgyjQ8zpMPQulVMDFdQBmFmZXpD8gdMpZhxe+i+hs38
+	l3sJQ=
+X-Gm-Gg: Acq92OFeUThBNOEe2IYJLW/T4n8EikvsIqsoHic32x09ecU4jj59R+A7pKTJgISu9xT
+	gFP92BH3SERjKSuxy+BsksMP/bcjnVHNYujwHuYFGBmE0wvf/1Gwvdfwan0SLm4Uqxv2dpw8Lyi
+	OJS66spBnUbudB86f5VXGHCHFumJpGG7N3m6C5vc2RautIAD+Nk5cSV/kHJhu+RP/wut7+MbeNO
+	NolWvZ1ZPfSGlZN6iJereAcQRxC3jd+aKQGjlZn3vu5M3q6J2UThY2ofuN3SVgriIv5B4WutK6Y
+	HV239QOlc9/vIZowXQg4vjqUZLNUxsxWs4zxToH8o78Qs7DQfXE8znjIv5kWEi9bxGyFZfOgPOU
+	S4zOve7RPvOgz14yeUp5Xy3cbgpi2zG6xc4cjpNKxva04noJjXUGzqPQ9nXfQosBeYYSBjOaQSs
+	UcFI0Ril0wfWGA/Rq4lg0bngN8eutBzuvTJK0=
+X-Received: by 2002:a05:620a:2945:b0:915:d322:c47b with SMTP id af79cd13be357-9161bc4b5ccmr2472984785a.13.1781563335111;
+        Mon, 15 Jun 2026 15:42:15 -0700 (PDT)
+X-Received: by 2002:a05:620a:2945:b0:915:d322:c47b with SMTP id af79cd13be357-9161bc4b5ccmr2472980585a.13.1781563334472;
+        Mon, 15 Jun 2026 15:42:14 -0700 (PDT)
+Received: from umbar.lan (2001-14ba-a073-af00-264b-feff-fe8b-be8a.rev.dnainternet.fi. [2001:14ba:a073:af00:264b:feff:fe8b:be8a])
+        by smtp.gmail.com with ESMTPSA id 38308e7fff4ca-3995c059bb8sm2169691fa.10.2026.06.15.15.42.10
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Mon, 15 Jun 2026 15:42:12 -0700 (PDT)
+Date: Tue, 16 Jun 2026 01:42:08 +0300
+From: Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>
+To: John Harrison <John.Harrison@igalia.com>
+Cc: sashiko-reviews@lists.linux.dev, dri-devel@lists.freedesktop.org,
+        wsa+renesas@sang-engineering.com
+Subject: Re: [PATCH v6 3/9] drm/amd/display: use
+ drmm_writeback_connector_init()
+Message-ID: <eieq74qmqkkrgovktpon6umq2an3l6xmih2gqxjqtawmtvnesl@zpxepcxb3hm6>
+References: <20260612-wb-drop-encoder-v6-3-9f3a54f81310@oss.qualcomm.com>
+ <20260612185828.C0D241F00A3E@smtp.kernel.org>
+ <e98e6632-20a1-4e76-a6e5-916066c7438a@Igalia.com>
 Precedence: bulk
 X-Mailing-List: sashiko-reviews@lists.linux.dev
 List-Id: <sashiko-reviews.lists.linux.dev>
 List-Subscribe: <mailto:sashiko-reviews+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:sashiko-reviews+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-References: <20260615180556.4048184-2-rdbabiera@google.com> <20260615181706.37CEE1F000E9@smtp.kernel.org>
-In-Reply-To: <20260615181706.37CEE1F000E9@smtp.kernel.org>
-From: RD Babiera <rdbabiera@google.com>
-Date: Mon, 15 Jun 2026 14:53:39 -0700
-X-Gm-Features: AVVi8CfdaUv4C0Jec2nygNARmn06gsFvMFXSZkGy4qWWVfVu5cK-IRmgwemhDeI
-Message-ID: <CALzBnUE+pDfb2XhPeSb=6ihi1xPt23HVSDMs47XZmc1pn-y4gQ@mail.gmail.com>
-Subject: Re: [PATCH v1] phy: Add USB3 PHY support to Google Tensor SoC USB PHY driver
-To: sashiko-reviews@lists.linux.dev
-Cc: olteanv@gmail.com, linux-phy@lists.infradead.org, 
-	neil.armstrong@linaro.org, vkoul@kernel.org
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <e98e6632-20a1-4e76-a6e5-916066c7438a@Igalia.com>
+X-Proofpoint-GUID: FIoqQ9o5uSQD6gEAxQx8xo3Aw1fLPXIv
+X-Proofpoint-Spam-Info: AW1haW4tMjYwNjE1MDI0MCBTYWx0ZWRfX0UnWi4tsEnH7
+ GVrDghM1jkCvmm/7mxtSzeteELa3N+gmIylbxiPndgappiRtThJptAnc+RPCvjd/f9GLBnfaCDa
+ /vJwGSPaAoprsoA1CsgbwX8YVdP67Uc=
+X-Authority-Analysis: v=2.4 cv=QrJuG1yd c=1 sm=1 tr=0 ts=6a307fc8 cx=c_pps
+ a=UgVkIMxJMSkC9lv97toC5g==:117 a=xqWC_Br6kY4A:10 a=kj9zAlcOel0A:10
+ a=FelO9ux0wxsA:10 a=s4-Qcg_JpJYA:10 a=VkNPw1HP01LnGYTKEx00:22
+ a=u7WPNUs3qKkmUXheDGA7:22 a=yOCtJkima9RkubShWh1s:22 a=VwQbUJbxAAAA:8
+ a=EUspDBNiAAAA:8 a=MhOIpkx3JouqtUk9ItIA:9 a=CjuIK1q_8ugA:10
+ a=1HOtulTD9v-eNWfpl4qZ:22
+X-Proofpoint-ORIG-GUID: FIoqQ9o5uSQD6gEAxQx8xo3Aw1fLPXIv
+X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwNjE1MDI0MCBTYWx0ZWRfXz8z0XrXBYXNh
+ FEjrb7w+ET4JNzra+OH0G7iFew27Ne57QGe7aN6e0RFVNGgEk57hUEpR2srrx8oaYU6orIy3eMa
+ LYBibnXlN6aeu93zSI7d2pYpLQAoa3UzDywlFg+2KjLHqsX2TTur0/8WxLi5EP5kXnyocJLwzap
+ m8Z/S4k+RbYNHi+6WZnCA3ZbLxMEXJdCtgfxWZaypqBtm89Fu+j/CsO6GZ3/c2mA9nmjblG73Z5
+ rWn2e5qffSaH+jLBxldfxckGXohfx0imhVnp59WkcOwikb+qu2l9V/9KodYYQ/jt+hHzTg05wXS
+ J0mFYQ6Zb3x83s6s0A11q5YUnPNppdDbSG2ElUpPzX+08Nho2INcVPuqSaUKwvrh6yHeLeqJlPX
+ tVauEV95PvqzsbjOYJ7Ru0muQRqrDnlj38alVeKc4y/6XfeyBHZAPDXVDjtTlOtwHyz+To+NcWQ
+ 7GRBWpsns0nCyAtk1Hg==
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.293,Aquarius:18.0.1143,Hydra:6.1.125,FMLib:17.12.100.49
+ definitions=2026-06-15_05,2026-06-15_04,2025-10-01_01
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
+ clxscore=1015 priorityscore=1501 lowpriorityscore=0 suspectscore=0
+ phishscore=0 spamscore=0 impostorscore=0 malwarescore=0 adultscore=0
+ bulkscore=0 classifier=typeunknown authscore=0 authtc= authcc= route=outbound
+ adjust=0 reason=mlx scancount=1 engine=8.22.0-2606040000
+ definitions=main-2606150240
 
-On Mon, Jun 15, 2026 at 11:17=E2=80=AFAM <sashiko-bot@kernel.org> wrote:
-> [Severity: High]
-> Does this missing update cause USB3 signal routing failures on orientatio=
-n
-> changes?
->
-> When the Type-C orientation changes, google_usb_set_orientation() updates
-> the software state and calls set_vbus_valid(gphy). While this was suffici=
-ent
-> for USB2, it doesn't seem to reprogram the newly added USB3 TCA hardware
-> multiplexer.
->
-> If the orientation flips while the USB3 PHY is active, will the hardware
-> state miss the update because program_tca_locked() is not invoked, leavin=
-g
-> the TCA_TCPC_CONNECTOR_ORIENTATION bit stale?
+On Mon, Jun 15, 2026 at 11:27:12AM -0700, John Harrison wrote:
+> On 6/12/26 11:58, sashiko-bot@kernel.org wrote:
+> > Thank you for your contribution! Sashiko AI review found 2 potential issue(s) to consider:
+> > 
+> > New issues:
+> > - [High] Dangling drmm cleanup action on writeback connector initialization error path leads to Use-After-Free, and possible build failure with drmm_kfree.
+> > 
+> > Pre-existing issues:
+> > - [High] Pre-existing memory leak of `wb_info` and sleeping in atomic context in `dm_set_writeback()`.
+> > --
+> > 
+> > commit 946e1af8401710237d25526b5d87b4357eceb542
+> > Author: Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>
+> > 
+> > drm/amd/display: use drmm_writeback_connector_init()
+> > 
+> > The patch converts the driver to use drmm_writeback_connector_init() and
+> > drmm_plain_encoder_alloc() to ensure proper cleanup of the writeback
+> > connector instance and its job queue.
+> > 
+> > > --- a/drivers/gpu/drm/amd/display/amdgpu_dm/amdgpu_dm.c
+> > > +++ b/drivers/gpu/drm/amd/display/amdgpu_dm/amdgpu_dm.c
+> > [ ... ]
+> > > @@ -11086,7 +11086,7 @@ static void dm_set_writeback(struct amdgpu_display_manager *dm,
+> > >   		return;
+> > >   	}
+> > > -	acrtc = to_amdgpu_crtc(wb_conn->encoder.crtc);
+> > > +	acrtc = to_amdgpu_crtc(crtc_state->base.crtc);
+> > [Severity: High]
+> > This is a pre-existing issue, but does dm_set_writeback() allocate memory
+> > using GFP_KERNEL in an atomic context?
+> > 
+> > It appears that wb_info is allocated using kzalloc_obj() earlier in this
+> > function, which implicitly uses GFP_KERNEL. However, this function is called
+> > from amdgpu_dm_atomic_commit_tail(), which is an atomic context where sleeping
+> > functions are forbidden.
+> > 
+> > Additionally, dc_stream_add_writeback() copies the contents of wb_info by
+> > value, but the originally allocated pointer seems to never be freed before
+> > dm_set_writeback() returns. Does this introduce a memory leak every time a
+> > writeback job is queued?
+> > 
+> > >   	if (!acrtc) {
+> > >   		drm_err(adev_to_drm(adev), "no amdgpu_crtc found\n");
+> > >   		kfree(wb_info);
+> > [ ... ]
+> > > --- a/drivers/gpu/drm/amd/display/amdgpu_dm/amdgpu_dm_wb.c
+> > > +++ b/drivers/gpu/drm/amd/display/amdgpu_dm/amdgpu_dm_wb.c
+> > [ ... ]
+> > > @@ -188,17 +187,26 @@ int amdgpu_dm_wb_connector_init(struct amdgpu_display_manager *dm,
+> > >   	struct dc *dc = dm->dc;
+> > >   	struct dc_link *link = dc_get_link_at_index(dc, link_index);
+> > >   	int res = 0;
+> > > +	struct drm_encoder *encoder;
+> > > +
+> > > +	encoder = drmm_plain_encoder_alloc(&dm->adev->ddev, NULL,
+> > > +					   DRM_MODE_ENCODER_VIRTUAL, NULL);
+> > > +	if (IS_ERR(encoder))
+> > > +		return PTR_ERR(encoder);
+> > > +
+> > > +	drm_encoder_helper_add(encoder, &amdgpu_dm_wb_encoder_helper_funcs);
+> > > +
+> > > +	encoder->possible_crtcs = amdgpu_dm_get_encoder_crtc_mask(dm->adev);
+> > >   	wbcon->link = link;
+> > >   	drm_connector_helper_add(&wbcon->base.base, &amdgpu_dm_wb_conn_helper_funcs);
+> > > -	res = drm_writeback_connector_init(&dm->adev->ddev, &wbcon->base,
+> > > +	res = drmm_writeback_connector_init(&dm->adev->ddev, &wbcon->base,
+> > >   					    &amdgpu_dm_wb_connector_funcs,
+> > > -					    &amdgpu_dm_wb_encoder_helper_funcs,
+> > > +					    encoder,
+> > >   					    amdgpu_dm_wb_formats,
+> > > -					    ARRAY_SIZE(amdgpu_dm_wb_formats),
+> > > -					    amdgpu_dm_get_encoder_crtc_mask(dm->adev));
+> > > +					    ARRAY_SIZE(amdgpu_dm_wb_formats));
+> > [Severity: High]
+> > If drmm_writeback_connector_init() fails internally after successfully calling
+> > drmm_connector_init(), will it leave the drmm_connector_cleanup_action
+> > registered?
+> I'm not following this one. everything that drmm_writeback_connector_init()
+> does has a check on the return code and only if everything works does it
+> register the cleanup function as the last action. So how do you get a
+> dangling anything?
+> 
+> > 
+> > The caller, amdgpu_dm_initialize_drm_device(), appears to handle this failure
+> > by attempting to free the connector using drmm_kfree(). Since drmm_kfree()
+> > requires a dev argument, will this missing argument result in a build failure?
+> Bizarre that it is complaining about something in a totally different patch.
+> 
+> > 
+> > More importantly, since drmm_kfree() frees the memory but does not unregister
+> > actions, will the managed resource list later execute
+> > drmm_connector_cleanup_action on the already-freed pointer, resulting in a
+> > use-after-free when the DRM device is torn down?
+> Isn't this just lying? The whole point of drmm_kfree() is surely that it
+> does unregister the cleanup of the allocation?
 
-program_tca_locked should be called if the phy_init and phy_power on sequen=
-ce
-are completed and an orientation change is made. I'll add an internal phy s=
-tate
-enum to indicate when the operation is safe and check in
-google_usb_set_orientation.
+The question is not about freeint the memory, but about unrolling the
+connector registration. I'll take a look later whether Sashiko is
+hallucinating or not
 
-> [Severity: Medium]
-> Is it safe to mix goto-based error handling with scope-based cleanup here=
-?
->
-> According to the cleanup subsystem documentation, usage of goto and clean=
-up
-> helpers like guard(mutex) should never be mixed in the same function. Can
-> this create confusing execution order and resource ownership?
+> 
+> > 
+> > >   	if (res)
+> > >   		return res;
+> 
 
-I'll remove the go-to statements here.
-
-> [Severity: Medium]
-> Are we missing a step to revert the hardware clock request on the error p=
-ath?
-
-set_pmgt_ref_clk_req_n() will reset on the error path as the HW is powered =
-down
-and powered on, so there is no concern here.
-
-> [Severity: High]
-> Is this hardware teardown sequence in the correct order?
-
-The teardown sequence is consistent with our requirements, no
-concern on our end.
-
-> [Severity: High]
-> Will this unconditionally time out on subsequent power-on calls?
-
-phy-core documentation indicates that power_on is called after phy_init,
-and the power_on callback will only be called when the power_on count is 0.
-In addition, the aforementioned internal phy state will prevent an unnecess=
-ary
-power-on call if the PHY had not been torn down yet.
-
-> [Severity: Medium]
-> Is the usb3_core memory region actually used anywhere in the driver?
->
-> This maps the usb3_core resource and aborts the probe if it is missing,
-> but the resulting gphy->usb3_core_base pointer doesn't appear to be
-> referenced later. Could this introduce an unnecessary strict dependency
-> that breaks the probe on older Device Trees lacking this resource?
-
-This currently isn't being used in the driver, so it will be fine to
-remove it for now.
-
-Best,
-RD
+-- 
+With best wishes
+Dmitry
