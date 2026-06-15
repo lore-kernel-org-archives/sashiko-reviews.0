@@ -1,202 +1,219 @@
-Received: from mail-qt1-f182.google.com (mail-qt1-f182.google.com [209.85.160.182])
+Received: from mail-yx1-f44.google.com (mail-yx1-f44.google.com [74.125.224.44])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 586C03F1ADE
-	for <sashiko-reviews@lists.linux.dev>; Mon, 15 Jun 2026 13:13:30 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=pass smtp.client-ip=209.85.160.182
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 305AE21C16A
+	for <sashiko-reviews@lists.linux.dev>; Mon, 15 Jun 2026 14:11:33 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=pass smtp.client-ip=74.125.224.44
 ARC-Seal:i=2; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1781529211; cv=pass; b=SVF/NQz3vne2a+kZwFUMt8VYDZdJ3vmNWIxNi0wLpiERtrP24xIdRXycnd5cLuPn7vW/H7h/0wjBGIx+PIDJgW2fL9bGp1J75QJSEbEo5QvkYrJuu2PCTqVZVhu3YaCfqgOFod9Xi5MwTUAf+Mr0bbfqU2XJRfi2yFPDbnFIs4g=
+	t=1781532694; cv=pass; b=sgo20zBj5mYInGVnBMmW3j9peA6szJZSMi5GiNT5MGK+pcyCoTBWuR44XDB/YMZ7QSuncVZePrn8pHM3WzFO1cIQQ1G7EDon9QxffR6ImhV7mC1fpPHNK+gMzTM2msfRybSnponCdzKeoxpxYw8YFc1aziQla47dqeDy82GmsLU=
 ARC-Message-Signature:i=2; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1781529211; c=relaxed/simple;
-	bh=JFSXX89TRMF0cmJ1cK7Y0aUHUQ3U5IIYGQ/no+czA+Q=;
+	s=arc-20240116; t=1781532694; c=relaxed/simple;
+	bh=UKZhWeWAfm91Tl34gD1jUYGw1Gj8LP6juUfsejBIZXg=;
 	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
-	 To:Cc:Content-Type; b=PuXFMdo+mmf8QVPCBPoKEnUlrr7lzzrrrYJToChV/cUttjGXorcydvbYytLO1FlbszxwGbmTAe95bu8vJc1ksLrGcjhZb8uHnBxUQMQ9hZurl27LBlbrYA5FMdAzb3QNruavMFe2jMnzbVX1wylwC8zTX0BSn3XFjfQ6+OsjXtA=
-ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=google.com; spf=pass smtp.mailfrom=google.com; dkim=pass (2048-bit key) header.d=google.com header.i=@google.com header.b=LD+vSaph; arc=pass smtp.client-ip=209.85.160.182
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=google.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=google.com
+	 To:Cc:Content-Type; b=PBWrUyITTd6ock5+HX6f+2k8Jr5B5CRcxq4jvCr2k4/Ohk14bRz9FkNe8rp9puu840vJ62zp9FIqanDS6OGGZCJx54R5nOHFU58TdKyW+pRug6sQSZA12rw7k2QI6z8835lS0AzBzpyQ3cucXq6JJgYTKOiBOV0QvjgiiDudeis=
+ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=feyThw10; arc=pass smtp.client-ip=74.125.224.44
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=google.com header.i=@google.com header.b="LD+vSaph"
-Received: by mail-qt1-f182.google.com with SMTP id d75a77b69052e-5175d339e8bso999931cf.0
-        for <sashiko-reviews@lists.linux.dev>; Mon, 15 Jun 2026 06:13:30 -0700 (PDT)
-ARC-Seal: i=1; a=rsa-sha256; t=1781529209; cv=none;
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="feyThw10"
+Received: by mail-yx1-f44.google.com with SMTP id 956f58d0204a3-660512d80b4so3306777d50.1
+        for <sashiko-reviews@lists.linux.dev>; Mon, 15 Jun 2026 07:11:33 -0700 (PDT)
+ARC-Seal: i=1; a=rsa-sha256; t=1781532692; cv=none;
         d=google.com; s=arc-20240605;
-        b=kJdaLtuKdw7VVcD92mArxp4UWcn//bZZPRlMuY6/8BZ0HyJTGcNCRD53ecSgoBWxRn
-         NikGKUuxQlAHB1uCgEskVhcWOq0oqpZAbDNrk21wIyfyLfE3YnTd8VCRf/MgH8xPH6hK
-         gO55DMpB25i97CBI4zhcEUYkIOneBBCdFJ00MWfUd6QAXpDuevCpUjkjehq9TcudMzjE
-         4TyNfSVkIQzrunCq4ETk/dxOdETUeMW4Vrtwf1zCFdUXFxleXcx5HhXBUChnyNUrsQh9
-         B9ayL7mxEgR+7UnU+TYMQuZ2oDRZFXEi90HJ/3LrNI2rQvWkqVfQ5pmEAWDdAWguj/my
-         fzlw==
+        b=Xiuo1ZiFTbp8AIGO70o5/vbaDe3PcoDhWycyvpaYfOnkwwAoJIGw3cmw6gHFhJb7Ce
+         KyMOzLP+7HscYN/Qm/S2jj5KgE2Y+xaKQf5/b6g7Lx1q7bqgAGocSfgESvtNP48tN8ER
+         FUhHuu2xGQyzGTJaJTDWn9oG8ry8a5yDIedNxkJZwqReaDLH5AlsW6XeO6DHMZtVL4sg
+         w59DS9cCGX3WUAPXNPUHAuKvQO6bUxcLPDPXDUYsNjnXBcdb97zHbpjLqf3vh2mBbJGU
+         AWeVlrRkiJ8yY5w1DUT6EgC5JE48/1Wc4haQsxThAgBzvZ6QYQwqnOdzGWktyO88D82n
+         38ig==
 ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com; s=arc-20240605;
-        h=cc:to:subject:message-id:date:from:in-reply-to:references
-         :mime-version:dkim-signature;
-        bh=2In6AGzrSURwEbShzRwtRfVTt7zDjTYOHDQU3MzBeLw=;
-        fh=i8dP7DtcVdcEwXLR4YFks8kJGWomNyz8GNHm/+LeWHs=;
-        b=WF8pxoA8C9uLjN91L4hH3JKys2gGGAEARAMznlEAebpFbVsCzZC23qJdcWbaug2YuE
-         ZHYgcUOYTMg8So+zBDnZAkBfWLzk5+jD1RTQ80A3c7pN+mq0fDbtVgGZgJasyoHpFOR4
-         glir1ORkVSNDRrqHVAFkZ8HW05frOoF22TgOPDtkVC4O9WwmG467mr8hD/ANU0K0d1bh
-         DENvUiomkD0YJsGBWjGr8m9cUtbn51Pxn3dswYoQqcIcoGb2q2a/EGDPx5RQEYCe7jk4
-         6f4LnaLNJjnsvKvX5e++0VM+o9pTVSrBO7eYr6ky6uhLeE22Jcqq1/kvKOEj7aCUnwWm
-         ypfg==;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:dkim-signature;
+        bh=UrGpYc7EZ2BDTKPv+yN+W6g0qTS6gFnZcs1t2tSQ68g=;
+        fh=+Kn94FVzl6rE7mDhn4pFvEHlRshbQ57dQ5o19v04Oyg=;
+        b=f4DPUi4psN5xl1FWzW2ILYBp1thK2ffx5Jpg4f2amnbOffRq+39YILE8DgY3biV9Dj
+         O+4F465pSSemmms2gCHT38G0IHBLUp5j4FgeOZY7pFJPkb16HDQOwNKE8j10SzooyEYM
+         sOhQNzVRI5UozOuFvR5Ba6hCk5YtkbzTRvwfXPmIXBKBKaMh0sJmthd+9g6ar0PQyIE6
+         PiQ/B4lldbrHvDyvtd5+2xepw6eBiHUPkv4ci44IH3AYrDkyt9jVGy0bq6y2obmE6t8+
+         IdBMuo3OOJEQqtw0ufnb6V/J1OHSe8coHY8XZ+H6XjXjlPOvulOI7mJ7eqY4yBc7j5kQ
+         /Ekg==;
         darn=lists.linux.dev
 ARC-Authentication-Results: i=1; mx.google.com; arc=none
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=google.com; s=20251104; t=1781529209; x=1782134009; darn=lists.linux.dev;
-        h=cc:to:subject:message-id:date:from:in-reply-to:references
-         :mime-version:from:to:cc:subject:date:message-id:reply-to;
-        bh=2In6AGzrSURwEbShzRwtRfVTt7zDjTYOHDQU3MzBeLw=;
-        b=LD+vSaphrhJfopfM9hRC12Lj2m8vjAu6J0eDmb6MK3enxFlOB2t1gB8ZV+jfUwwOgC
-         gznXN3ZiFTOIlScIlRSqnKEKymBVR9FK+axf3RMwe2xwdrErp6eKZlKmMKSOR8O70xk1
-         2m3LldtWl3LZFRxtW7j/9+WkkKmARvT4Cy90IV06928CKY0YRqWAwVGUDQgnHLqKwe72
-         J02g7vvN5uFj9bkw3yZBwaQa1kxBcRF0dm1S+XFhzbKgQZgwRVV+CVAjrruU1rKefgag
-         ohLynfATHcLojaXzQc9bjWbVzabtRPS47gGbU3cbBSFnpUuMIodcPFn6t1uusfNAW7zs
-         LLfg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20251104; t=1781529209; x=1782134009;
-        h=cc:to:subject:message-id:date:from:in-reply-to:references
-         :mime-version:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
+        d=gmail.com; s=20251104; t=1781532692; x=1782137492; darn=lists.linux.dev;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:from:to:cc:subject:date
          :message-id:reply-to;
-        bh=2In6AGzrSURwEbShzRwtRfVTt7zDjTYOHDQU3MzBeLw=;
-        b=Ie9Y8VZOs+/LO9TindTKV3a/ms2G8nURA4AzhyqQd8cDR8uQFnMCS0V/cbbfyC4GTL
-         7W3CQF22ka2soBIgX9NbvX62yOadgVDVk0M5g3P6RHrtsDK+n7nI8qCHcdQ6w86a52EG
-         1p9Kup3kCCnZMNt4G7Df9OIVbiTNeVXL5c1zXWf0sc7KxsM5c4X6QzAjitW0BjNVxrJA
-         8+kHCSAMqPn4IAnXIAeYe9B2r/jYBaTsyzrWhpX1sv9swMKlSKElROa4dFDxPD9a5xhz
-         871g42plpiLuoNQ6thaT5+0gZG8CpT0MFBT3VLVR8AVTO74YTkKNNnaVaKnVwPVYRMiV
-         3OxA==
-X-Gm-Message-State: AOJu0Yyv2QpNK8MaBb+ggFl2IuosfWX+0hvQuCFPsTOutowwGZnblNOn
-	R+JfPCqx1SD5vqHD1hJ1AO/C1M1QYPXE3ZyUQIe6BP0CMTOUUVjHnUIrQn7Zars1owCh4qdRVqS
-	WQkp81MCzoXaVYItqw2bjNIsbj98gRK+/159qNWgo8uvZk9Y4GlSYfWl2LdU=
-X-Gm-Gg: Acq92OGJ3srePxQdeeON0x80Rzzmg9aUa+KGqvO9lOO8nf+H1D3aensLQIhxMnZEMwa
-	6jG/gVJ1THAez+Uc9NV6NObmhuCF0TOy0ou9c1WYBC+9B2cWSTIs7yc8pFqJaS4YD/Y8kcaDFG4
-	8tLFjr1S2G3tjNJlLeSfOahp6M7GiszJZaVxnqikY0GUKICpqZ3SA7UYjRbqagTou1Sg67hHZ9s
-	Qc3/u0+v6ktwgHlwYcnz9ChOPrVoO55AxLeOhTpO5HkHMbhZqlNFTGHgsogg3c4lGJ288U6W+5w
-	s/9hB8un
-X-Received: by 2002:a05:622a:4cc8:b0:516:9871:9a37 with SMTP id
- d75a77b69052e-519872e7661mr1495431cf.3.1781529208275; Mon, 15 Jun 2026
- 06:13:28 -0700 (PDT)
+        bh=UrGpYc7EZ2BDTKPv+yN+W6g0qTS6gFnZcs1t2tSQ68g=;
+        b=feyThw10WBI+9wInQhPvTrs22T4GDx+Y18j01y7PGkpelDayxxpoPUhaT9ampG4iXU
+         CLnflQ6uknfp9+YGB6mCD0WDl0ORuv/oo1NC6+g6u51hvHcM52WSEl0EMs7btM8y7fqG
+         /wgkIMzGiXV68pi82NI9RlJ2URluGIqQ7ipL77xizXi9/DnY2HXly/1oLDZrf+oGUEwY
+         EYP4s/RmzoriJGPvsZ4YL5z0Cvebho6GOue3OUVkHMQCyw9FWhHPY+eZTNV7eDq5sdNQ
+         uhHxng+wgHgbWuNEM+ieRrvicCFG0t/i+aLCFa331FLlTV0jLrLKd0okMlTqy9LPwm+S
+         S5Dg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20251104; t=1781532692; x=1782137492;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:x-gm-gg:x-gm-message-state:from
+         :to:cc:subject:date:message-id:reply-to;
+        bh=UrGpYc7EZ2BDTKPv+yN+W6g0qTS6gFnZcs1t2tSQ68g=;
+        b=PTVgbxJckf/9dgvtw/npGAmEWlifMiaGnyUlPJhH0raoP8K3ymEVxG6ihXpPTu+nPT
+         9zH2wZ6AZfPpPQybPMuTv7Hq5InCr+b0i8oYUDdGEyGLAOJWwleB6AogGAFz2wnziqDC
+         Eh8sx0z+EVelf2PLhiYok53AAGQCQ2t1Uhij92esctWzhf9Q6UJElBRClcwysazuUS43
+         +KxHXvIeRNiTxH2FXeg5oXYBJRjqNleKX1n1WQXmgFU1LfCPLACDIrOcz4Fy0Dw2uOZL
+         YOzZlijxLbEHkTSeAj1MH4XkuxriLIMga1mWCXStPLRUUcGFyuFBKXqFttsBTp1fncer
+         gFPw==
+X-Gm-Message-State: AOJu0YzD6e+gJ5zWeI4HJ6cpCVBOQZnsqIka2eTgPs5dXpHKJQGTxlg+
+	VJUVgzQbmy+JOqoZMuBS/z7MgOmuL6Ws2femjB+3/U7yuNN9j1i2IRDMHzmpchHDWDAjmjAt7mf
+	S2OS8cgGlsrhXodFkImccy83r+OK8y2euTRBW
+X-Gm-Gg: Acq92OHPKMeIT4tXx19UAjci/SMQnEKCeldaItAjEwRlcjcbEmmVy+YlQyBYnxoc8id
+	ha4SL/YKtMDbQQAGL8PrZs4x38CCGHDeFq7gI14qStHyEngma7Wl0PpWoaDNkpO7rmk17Pz4Ht3
+	wrZViarDano3rJ2Hf5uDKukqjjdJK4DEM03tr48wy9hoOfl4gNaZCe+jXBxYzyDmaIKcWlvm58p
+	qEV4rsaPkw5up4Swkuz/l05nen//sxqtZ+GhCr0hWmbO8/b69fLHfWWCXKgWNz/7DgIik82Jn4A
+	PoN5fOTU0g==
+X-Received: by 2002:a05:690e:1443:b0:65c:6bf0:fad4 with SMTP id
+ 956f58d0204a3-66278d4f1f8mr7941983d50.27.1781532692254; Mon, 15 Jun 2026
+ 07:11:32 -0700 (PDT)
 Precedence: bulk
 X-Mailing-List: sashiko-reviews@lists.linux.dev
 List-Id: <sashiko-reviews.lists.linux.dev>
 List-Subscribe: <mailto:sashiko-reviews+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:sashiko-reviews+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-References: <20260614163336.3490925-7-tabba@google.com> <20260614164416.D37E61F000E9@smtp.kernel.org>
- <ai-DsLydd7ry0RpS@kernel.org>
-In-Reply-To: <ai-DsLydd7ry0RpS@kernel.org>
-From: Fuad Tabba <tabba@google.com>
-Date: Mon, 15 Jun 2026 14:12:51 +0100
-X-Gm-Features: AVVi8CcO8m7JqCdVLIloH1KAihfPBodYuoCe0_y-y0JfcVg7oXzuQgANsW62kFI
-Message-ID: <CA+EHjTxn56a-NsNhYns6RSNkqTO+oujM9qnK4JaV0wJmchT43Q@mail.gmail.com>
-Subject: Re: [PATCH 6/7] KVM: arm64: Set IL for nested SError injection
-To: Oliver Upton <oupton@kernel.org>
-Cc: sashiko-reviews@lists.linux.dev, kvmarm@lists.linux.dev, 
-	Marc Zyngier <maz@kernel.org>
+References: <20260610160816.2828713-3-tmaimon77@gmail.com> <20260610162038.304A01F00893@smtp.kernel.org>
+In-Reply-To: <20260610162038.304A01F00893@smtp.kernel.org>
+From: Tomer Maimon <tmaimon77@gmail.com>
+Date: Mon, 15 Jun 2026 17:11:20 +0300
+X-Gm-Features: AVVi8CfEc81qkCQBN8OJtoQ-_JIGYWvllSrsq9M306zQn2ux9pWdHNpYV0tje48
+Message-ID: <CAP6Zq1iC_sLfZtBkXGB-3CEodftR1hNnq8BfRx8mYc5_Je7FNQ@mail.gmail.com>
+Subject: Re: [PATCH v4 2/3] arm64: dts: nuvoton: npcm845: Add peripheral nodes
+To: sashiko-reviews@lists.linux.dev
+Cc: devicetree@vger.kernel.org, robh@kernel.org, conor+dt@kernel.org
 Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 
-On Mon, 15 Jun 2026 at 05:46, Oliver Upton <oupton@kernel.org> wrote:
->
-> On Sun, Jun 14, 2026 at 04:44:16PM +0000, sashiko-bot@kernel.org wrote:
-> > Thank you for your contribution! Sashiko AI review found 2 potential issue(s) to consider:
-> >
-> > Pre-existing issues:
-> > - [High] The constructed SError syndrome (ESR) is silently dropped during nested EL2 exception injection because `ESR_EL2` is never updated.
-> > - [High] When SCTLR2_EL1_EASE routes a Synchronous External abort to an SError, the ESR injected has the wrong EC (IABT/DABT instead of SERROR) and an incorrect ISS format.
-> > --
-> >
-> > commit 09fd06d56ab3236a0e7af03e0d026ed6725ad6d6
-> > Author: Fuad Tabba <tabba@google.com>
-> >
-> > KVM: arm64: Set IL for nested SError injection
-> >
-> > This patch modifies the emulated SError injection to unconditionally
-> > set the IL (Instruction Length) bit in the generated ESR, as mandated
-> > by the architecture.
-> >
-> > > diff --git a/arch/arm64/kvm/emulate-nested.c b/arch/arm64/kvm/emulate-nested.c
-> > > index 4b39363cf8911..4262d4c17a877 100644
-> > > --- a/arch/arm64/kvm/emulate-nested.c
-> > > +++ b/arch/arm64/kvm/emulate-nested.c
-> > > @@ -2938,6 +2938,6 @@ int kvm_inject_nested_serror(struct kvm_vcpu *vcpu, u64 esr)
-> > >      * vSError injection. Manually populate EC for an emulated SError
-> > >      * exception.
-> > >      */
-> > > -   esr |= FIELD_PREP(ESR_ELx_EC_MASK, ESR_ELx_EC_SERROR);
-> > > +   esr |= FIELD_PREP(ESR_ELx_EC_MASK, ESR_ELx_EC_SERROR) | ESR_ELx_IL;
-> > >     return kvm_inject_nested(vcpu, esr, except_type_serror);
-> >
-> > [Severity: High]
-> > This isn't a bug introduced by this patch, but does the carefully constructed
-> > esr value actually get written to the guest's ESR_EL2?
-> >
-> > Looking at kvm_inject_nested(), it passes the esr_el2 argument down:
-> >
-> > kvm_inject_nested(vcpu, esr_el2, type) {
-> >     ...
-> >     kvm_inject_el2_exception(vcpu, esr_el2, type);
-> >     ...
-> > }
-> >
-> > However, in kvm_inject_el2_exception():
-> >
-> > static void kvm_inject_el2_exception(...) {
-> >     ...
-> >     switch (type) {
-> >     ...
-> >     case except_type_serror:
-> >         kvm_pend_exception(vcpu, EXCEPT_AA64_EL2_SERR);
-> >         break;
-> >     ...
-> > }
-> >
-> > Since except_type_serror only pends the exception and doesn't explicitly
-> > write the esr_el2 argument into ESR_EL2 (unlike except_type_sync), does the
-> > nested hypervisor observe a stale or uninitialized syndrome when it takes
-> > the SError?
->
-> Oops, this definitely needs fixing :) OTOH...
+Hi,
 
-https://lore.kernel.org/all/20260615131116.390977-1-tabba@google.com/
-
-Done :)
-
-/fuad
-
-
+On Wed, 10 Jun 2026 at 19:20, <sashiko-bot@kernel.org> wrote:
 >
-> > [Severity: High]
-> > This is a pre-existing issue, but since this code deals with fixing SError
-> > syndromes, what happens when SCTLR2_ELx.EASE is enabled and a Synchronous
-> > External abort is routed to an SError?
+> Thank you for your contribution! Sashiko AI review found 2 potential issu=
+e(s) to consider:
+> - [Low] DTC Warning (unit_address_vs_reg): The `apb` node includes a unit=
+ address but lacks a `reg` property.
+> - [Low] DT Binding Schema Violation: `nuvoton,sysgcr` property is undocum=
+ented and forbidden by the ChipIdea USB2 schema.
+> --
+>
+> commit b1b96db36d76cd5dd1f935613798ed29aade275d
+> Author: Tomer Maimon <tmaimon77@gmail.com>
+>
+> arm64: dts: nuvoton: npcm845: Add peripheral nodes
+>
+> Extend the NPCM845 SoC DTSI with the peripheral controller nodes needed
+> by the evaluation board and downstream platforms. Add the Ethernet MACs,
+> USB device controllers and PHY, MMC controller, FIU controllers, memory
+> controller, RNG, ADC, PWM/FAN controller, and I2C buses. Also add the
+> OP-TEE firmware node needed to describe these blocks.
+>
+> > diff --git a/arch/arm64/boot/dts/nuvoton/nuvoton-common-npcm8xx.dtsi b/=
+arch/arm64/boot/dts/nuvoton/nuvoton-common-npcm8xx.dtsi
+> > index 7976baafb9942..1e21b2704784f 100644
+> > --- a/arch/arm64/boot/dts/nuvoton/nuvoton-common-npcm8xx.dtsi
+> > +++ b/arch/arm64/boot/dts/nuvoton/nuvoton-common-npcm8xx.dtsi
+> [ ... ]
+> > @@ -51,7 +57,255 @@ clk: rstc: reset-controller@f0801000 {
+> >                       #clock-cells =3D <1>;
+> >               };
 > >
-> > Looking at kvm_inject_nested_sea() in the same file:
-> >
-> > int kvm_inject_nested_sea(struct kvm_vcpu *vcpu) {
-> >     ...
-> >     u64 esr = FIELD_PREP(ESR_ELx_EC_MASK,
-> >                          iabt ? ESR_ELx_EC_IABT_LOW : ESR_ELx_EC_DABT_LOW);
-> >     ...
-> >     if (__vcpu_sys_reg(vcpu, SCTLR2_EL2) & SCTLR2_EL1_EASE)
-> >         return kvm_inject_nested(vcpu, esr, except_type_serror);
-> >     ...
-> > }
-> >
-> > Does this result in an SError being injected with a Data/Instruction Abort
-> > EC? According to the ARM Architecture Reference Manual (D8.2.5), shouldn't
-> > an SError always have its ESR_ELx.EC field set to 0b101111 (SError)?
-> >
-> > A similar pattern appears in inject_abt64() for EL1, where a DABT/IABT
-> > syndrome is constructed and actively written to exception_esr_elx(vcpu)
-> > even though an SError exception was pended. Would this incorrect EC format
-> > confuse the guest's exception handlers?
+> > -             apb {
+> > +             gmac1: ethernet@f0804000 {
+> [ ... ]
+> > +             udc8: usb@f0838000 {
+> > +                     compatible =3D "nuvoton,npcm845-udc", "nuvoton,np=
+cm750-udc";
+> > +                     reg =3D <0x0 0xf0838000 0x0 0x1000
+> > +                            0x0 0xfffef000 0x0 0x800>;
+> > +                     interrupts =3D <GIC_SPI 59 IRQ_TYPE_LEVEL_HIGH>;
+> > +                     clocks =3D <&clk NPCM8XX_CLK_SU>;
+> > +                     clock-names =3D "clk_usb_bridge";
+> > +
+> > +                     nuvoton,sysgcr =3D <&gcr 0x9C 0xC000 0xC000>;
 >
-> This is confidently wrong, down to citations of the Arm ARM.
+> [Severity: Low]
+> Does this undocumented nuvoton,sysgcr property cause a dtbs_check warning=
+?
 >
-> While I couldn't find an explicit rule to cite in my cursory search of
-> the manual, the definition of the bit describes this as "External Abort
-> to SError Vector". On top of that, AArch64.DataAbort() just changes the
-> vector offset (but not the EC) based on EASE.
+> The USB Device Controllers bind to "nuvoton,npcm750-udc", which is evalua=
+ted
+> against Documentation/devicetree/bindings/usb/ci-hdrc-usb2.yaml. This sch=
+ema
+> specifies unevaluatedProperties: false but does not document nuvoton,sysg=
+cr
+> internally or in any dependencies.
+will be removed at V5
 >
-> My understanding is that the exception syndrome of an external abort is
-> preserved despite taking the SError vector.
+> > +                     phys =3D <&udc0_phy>;
+> > +                     phy_type =3D "utmi_wide";
+> > +                     dr_mode =3D "peripheral";
+> > +                     status =3D "disabled";
+> > +             };
+> > +
+> > +             udc9: usb@f0839000 {
+> > +                     compatible =3D "nuvoton,npcm845-udc", "nuvoton,np=
+cm750-udc";
+> > +                     reg =3D <0x0 0xf0839000 0x0 0x1000
+> > +                            0x0 0xfffef800 0x0 0x800>;
+> > +                     interrupts =3D <GIC_SPI 60 IRQ_TYPE_LEVEL_HIGH>;
+> > +                     clocks =3D <&clk NPCM8XX_CLK_SU>;
+> > +                     clock-names =3D "clk_usb_bridge";
+> > +
+> > +                     nuvoton,sysgcr =3D <&gcr 0x9C 0x3000 0x3000>;
 >
-> Thanks,
-> Oliver
+> [Severity: Low]
+> Is this the same undocumented property issue as seen above in udc8?
+will be removed at V5
+>
+> > +                     phys =3D <&udc0_phy>;
+> > +                     phy_type =3D "utmi_wide";
+> > +                     dr_mode =3D "peripheral";
+> > +                     status =3D "disabled";
+> > +             };
+> > +
+> [ ... ]
+> > +             fiux: spi@fb001000 {
+> > +                     compatible =3D "nuvoton,npcm845-fiu";
+> > +                     #address-cells =3D <1>;
+> > +                     #size-cells =3D <0>;
+> > +                     reg =3D <0x0 0xfb001000 0x0 0x1000>,
+> > +                     <0x0 0xf8000000 0x0 0x2000000>;
+> > +                     reg-names =3D "control", "memory";
+> > +                     clocks =3D  <&clk NPCM8XX_CLK_SPIX>;
+> > +                     status =3D "disabled";
+> > +             };
+> > +
+> > +             apb: bus@f0000000 {
+>
+> [Severity: Low]
+> Will changing this node name to include the @f0000000 unit address
+> trigger a unit_address_vs_reg DTC warning?
+>
+> According to the Devicetree specification, if a node name includes a
+> unit-address, the node must also have a reg property where the first
+> address matches the unit-address. Because the apb node defines ranges
+> but lacks a reg property, this might introduce build noise.
+would be back to apb in V5
+>
+> >                       #address-cells =3D <1>;
+> >                       #size-cells =3D <1>;
+> >                       compatible =3D "simple-bus";
+> > @@ -59,14 +313,6 @@ apb {
+> >                       ranges =3D <0x0 0x0 0xf0000000 0x00300000>,
+> >                               <0xfff00000 0x0 0xfff00000 0x00016000>;
+>
+> --
+> Sashiko AI review =C2=B7 https://sashiko.dev/#/patchset/20260610160816.28=
+28713-1-tmaimon77@gmail.com?part=3D2
+
+Thanks,
+
+Tomer
