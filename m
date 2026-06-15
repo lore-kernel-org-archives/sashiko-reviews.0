@@ -1,145 +1,105 @@
-Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
+Received: from mailout1.samsung.com (mailout1.samsung.com [203.254.224.24])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 162322BD59C;
-	Mon, 15 Jun 2026 04:46:41 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3905A382379
+	for <sashiko-reviews@lists.linux.dev>; Mon, 15 Jun 2026 05:36:39 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=203.254.224.24
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1781498803; cv=none; b=EmHxsNmeZ9NNQiKl+yhzg4AdUtu6CXXWzypJLTjhIdtEshOV2c9I42UmpZTOMea7FNky2RDP7c3+6VMDSnrJLgbSYdFYI6uENeHGdC4TxOs2JlA/wEMzAPnfBDbI9MqK/46wdb7+k/ifv/l/f7FBk0eGfqEcqsy7qoXEsGPNwAk=
+	t=1781501804; cv=none; b=IRABMx6qCLWCKibW6cyePumLWXa0YExenXyBqE34UUQlCgHqd1pYYxd0laCuUruU7u/73zBU2QwstZNHGjvcE+5RlwEqopCFZ1aDVuNljsBQB6HDeIo1ELZDrWMUujB57bxVIy1KwkbldbuOlnTfGr7Lwt4so1qnwjbsPpztwY8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1781498803; c=relaxed/simple;
-	bh=pZ4Lj9sxuu4fCJZEfzfOLVeCOmNrnV+QzCfqdGQaGSs=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=VeGnWH106b5qqoRg7C2g8snVoLgwlVxGrlx6ualDWgcOdsd775R1sOZef+EyRuVgIY3wywfhEy/svFGGshnembr1B3HC94hFU7wwIvJd4+ACHeeJ8Ih0DfKz6s0ASRwm74rQG9wRVwMVLY2M/UGsuNqyj+qnfTaZ5yYGKIXeT6M=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=Tm6bW9MN; arc=none smtp.client-ip=100.103.45.18
+	s=arc-20240116; t=1781501804; c=relaxed/simple;
+	bh=VZgiyT95X0e5PDv3s9L6rOwD+r+gbXddQ89RG2HR2b8=;
+	h=From:To:Cc:In-Reply-To:Subject:Date:Message-ID:MIME-Version:
+	 Content-Type:References; b=Qp5/omcl5cVHFAulqGuIZ33PPQQj7GhgUfvX/A9LmX5d4HtGbcFMOZ7IpIEc4b5s3g3rrr8j1B1anEmK/KfdWO4BDIuhCS8dhSd3dEYCGqjf7NqQP0TtNOXqDheJjY6UhYiukxDjGHYU0fONeopJGPU4SXm13yKeWRGfGhI5oDs=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=samsung.com; spf=pass smtp.mailfrom=samsung.com; dkim=pass (1024-bit key) header.d=samsung.com header.i=@samsung.com header.b=BxxYHtwc; arc=none smtp.client-ip=203.254.224.24
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=samsung.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=samsung.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="Tm6bW9MN"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4A4A31F000E9;
-	Mon, 15 Jun 2026 04:46:41 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=kernel.org;
-	s=k20260515; t=1781498801;
-	bh=Dj09pM2es9y/CXI2hKjzMBH0rjHFqzTBpycpBpv3EAI=;
-	h=Date:From:To:Cc:Subject:References:In-Reply-To;
-	b=Tm6bW9MN12hKKUYvKu8jHWW6gqS/Ud6gT0gblUQ5hGl/sAOSe5XJYkIXPtSiPyzrT
-	 qJjTl3M3P/e3aY9Sg2yltv2evc99gKa+faYGY2vSO4BngEhnQvklj8p/rQD/e98tQS
-	 rTFA8MYKtmEkuSnrmnvYddEBV5Vd5LBhN9dMgsyEsSkR9NajqSngLTBeOjfU07Wq/S
-	 d4eOyIM6J+uU+4rBKZ0rF8UkmGS9Fs6ZTeTKkQl1ecSWZhGMhhI0xv9j8DFIWg+b6z
-	 978FqYKWTvwL5mCv1bqpUJ2XTA4fl+mkWb9jqj6QzaIn9Y4D92KWEnZd+PTEfM/lcL
-	 hItZNDMG0cwLQ==
-Date: Sun, 14 Jun 2026 21:46:40 -0700
-From: Oliver Upton <oupton@kernel.org>
-To: sashiko-reviews@lists.linux.dev
-Cc: Fuad Tabba <tabba@google.com>, kvmarm@lists.linux.dev,
-	Marc Zyngier <maz@kernel.org>
-Subject: Re: [PATCH 6/7] KVM: arm64: Set IL for nested SError injection
-Message-ID: <ai-DsLydd7ry0RpS@kernel.org>
-References: <20260614163336.3490925-7-tabba@google.com>
- <20260614164416.D37E61F000E9@smtp.kernel.org>
+	dkim=pass (1024-bit key) header.d=samsung.com header.i=@samsung.com header.b="BxxYHtwc"
+Received: from epcas5p1.samsung.com (unknown [182.195.41.39])
+	by mailout1.samsung.com (KnoxPortal) with ESMTP id 20260615053631epoutp014a18caa2662ab4522cd1cd4aaa33bde6~5KnDjJ4eO3274232742epoutp01G
+	for <sashiko-reviews@lists.linux.dev>; Mon, 15 Jun 2026 05:36:31 +0000 (GMT)
+DKIM-Filter: OpenDKIM Filter v2.11.0 mailout1.samsung.com 20260615053631epoutp014a18caa2662ab4522cd1cd4aaa33bde6~5KnDjJ4eO3274232742epoutp01G
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=samsung.com;
+	s=mail20170921; t=1781501791;
+	bh=VZgiyT95X0e5PDv3s9L6rOwD+r+gbXddQ89RG2HR2b8=;
+	h=From:To:Cc:In-Reply-To:Subject:Date:References:From;
+	b=BxxYHtwc+QqQP+0jil49rhjXqmM4EKL0v7zlCYBd+mWYyHppaIomYtw3qu0rWIxSb
+	 PlHAIaLHK4JofhLs1HYWF0tWq93BCHRK2REhXSI//ZDR8rlISlr7j05JsLrFWLoPJ5
+	 uPeoMlrI6mJjrPsAt1Og+QbF0JljJuTXyblZQMCg=
+Received: from epsnrtp01.localdomain (unknown [182.195.42.153]) by
+	epcas5p4.samsung.com (KnoxPortal) with ESMTPS id
+	20260615053631epcas5p4bab19141873367d2c1512c58ed8d2dc1~5KnDQwof_0683606836epcas5p4j;
+	Mon, 15 Jun 2026 05:36:31 +0000 (GMT)
+Received: from epcas5p4.samsung.com (unknown [182.195.38.92]) by
+	epsnrtp01.localdomain (Postfix) with ESMTP id 4gdzPp57D8z6B9mJ; Mon, 15 Jun
+	2026 05:36:30 +0000 (GMT)
+Received: from epsmtip1.samsung.com (unknown [182.195.34.30]) by
+	epcas5p2.samsung.com (KnoxPortal) with ESMTPA id
+	20260615053630epcas5p2f7154ee25cdcefc604eda766013f90ed~5KnB-II5X2123821238epcas5p2M;
+	Mon, 15 Jun 2026 05:36:30 +0000 (GMT)
+Received: from INBRO002756 (unknown [107.122.3.168]) by epsmtip1.samsung.com
+	(KnoxPortal) with ESMTPA id
+	20260615053629epsmtip196c4d6881af617715f6396df4b67bdc7~5KnBNz64f2068920689epsmtip1T;
+	Mon, 15 Jun 2026 05:36:29 +0000 (GMT)
+From: "Alim Akhtar" <alim.akhtar@samsung.com>
+To: <sashiko-reviews@lists.linux.dev>
+Cc: <robh@kernel.org>, <conor+dt@kernel.org>, <devicetree@vger.kernel.org>
+In-Reply-To: <20260612162335.1F9361F000E9@smtp.kernel.org>
+Subject: RE: [PATCH 4/5] arm64: dts: exynos: add initial support for Samsung
+ Exynos8855 smdk
+Date: Mon, 15 Jun 2026 11:06:18 +0530
+Message-ID: <000001dcfc88$eac875f0$c05961d0$@samsung.com>
 Precedence: bulk
 X-Mailing-List: sashiko-reviews@lists.linux.dev
 List-Id: <sashiko-reviews.lists.linux.dev>
 List-Subscribe: <mailto:sashiko-reviews+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:sashiko-reviews+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <20260614164416.D37E61F000E9@smtp.kernel.org>
+Content-Transfer-Encoding: quoted-printable
+X-Mailer: Microsoft Outlook 16.0
+Thread-Index: AQIJF/JBY04orJGzCW+OH3XyVBjlqQMtuzB6AcrDVpm1vx2NQA==
+Content-Language: en-us
+X-CMS-MailID: 20260615053630epcas5p2f7154ee25cdcefc604eda766013f90ed
+X-Msg-Generator: CA
+Content-Type: text/plain; charset="utf-8"
+CMS-TYPE: 105P
+cpgsPolicy: CPGSC10-543,Y
+X-CFilter-Loop: Reflected
+X-CMS-RootMailID: 20260612162339epcas5p402cf2406ae41ca7a3c5d4f09163ab872
+References: <20260612163020.411761-5-alim.akhtar@samsung.com>
+	<CGME20260612162339epcas5p402cf2406ae41ca7a3c5d4f09163ab872@epcas5p4.samsung.com>
+	<20260612162335.1F9361F000E9@smtp.kernel.org>
 
-On Sun, Jun 14, 2026 at 04:44:16PM +0000, sashiko-bot@kernel.org wrote:
-> Thank you for your contribution! Sashiko AI review found 2 potential issue(s) to consider:
-> 
-> Pre-existing issues:
-> - [High] The constructed SError syndrome (ESR) is silently dropped during nested EL2 exception injection because `ESR_EL2` is never updated.
-> - [High] When SCTLR2_EL1_EASE routes a Synchronous External abort to an SError, the ESR injected has the wrong EC (IABT/DABT instead of SERROR) and an incorrect ISS format.
+
+
+> -----Original Message-----
+> From: sashiko-bot=40kernel.org <sashiko-bot=40kernel.org>
+> Sent: Friday, June 12, 2026 9:54 PM
+> To: Alim Akhtar <alim.akhtar=40samsung.com>
+> Cc: robh=40kernel.org; conor+dt=40kernel.org; devicetree=40vger.kernel.or=
+g
+> Subject: Re: =5BPATCH 4/5=5D arm64: dts: exynos: add initial support for =
+Samsung
+> Exynos8855 smdk
+>=20
+> Thank you for your contribution=21 Sashiko AI review found 5 potential is=
+sue(s)
+> to consider:
+> - =5BHigh=5D Missing Required Property in UART node =60serial_0=60
+> - =5BMedium=5D Device Tree Topology Error: =60cluster1=60 skips =60core2=
+=60
+> - =5BLow=5D Device Tree Binding Violation in =60timer=60 node interrupts
+> - =5BLow=5D DT Binding Violation: Missing =60-gpio-bank=60 suffix on GPIO=
+ bank nodes
+> - =5BLow=5D Device Tree Syntax Error: =60gic=60 node defines =60=23size-c=
+ells =3D <1>=60
+> without =60=23address-cells =3D <1>=60
 > --
-> 
-> commit 09fd06d56ab3236a0e7af03e0d026ed6725ad6d6
-> Author: Fuad Tabba <tabba@google.com>
-> 
-> KVM: arm64: Set IL for nested SError injection
-> 
-> This patch modifies the emulated SError injection to unconditionally
-> set the IL (Instruction Length) bit in the generated ESR, as mandated
-> by the architecture.
-> 
-> > diff --git a/arch/arm64/kvm/emulate-nested.c b/arch/arm64/kvm/emulate-nested.c
-> > index 4b39363cf8911..4262d4c17a877 100644
-> > --- a/arch/arm64/kvm/emulate-nested.c
-> > +++ b/arch/arm64/kvm/emulate-nested.c
-> > @@ -2938,6 +2938,6 @@ int kvm_inject_nested_serror(struct kvm_vcpu *vcpu, u64 esr)
-> >  	 * vSError injection. Manually populate EC for an emulated SError
-> >  	 * exception.
-> >  	 */
-> > -	esr |= FIELD_PREP(ESR_ELx_EC_MASK, ESR_ELx_EC_SERROR);
-> > +	esr |= FIELD_PREP(ESR_ELx_EC_MASK, ESR_ELx_EC_SERROR) | ESR_ELx_IL;
-> >  	return kvm_inject_nested(vcpu, esr, except_type_serror);
-> 
-> [Severity: High]
-> This isn't a bug introduced by this patch, but does the carefully constructed
-> esr value actually get written to the guest's ESR_EL2?
-> 
-> Looking at kvm_inject_nested(), it passes the esr_el2 argument down:
-> 
-> kvm_inject_nested(vcpu, esr_el2, type) {
->     ...
->     kvm_inject_el2_exception(vcpu, esr_el2, type);
->     ...
-> }
-> 
-> However, in kvm_inject_el2_exception():
-> 
-> static void kvm_inject_el2_exception(...) {
->     ...
->     switch (type) {
->     ...
->     case except_type_serror:
->         kvm_pend_exception(vcpu, EXCEPT_AA64_EL2_SERR);
->         break;
->     ...
-> }
-> 
-> Since except_type_serror only pends the exception and doesn't explicitly
-> write the esr_el2 argument into ESR_EL2 (unlike except_type_sync), does the
-> nested hypervisor observe a stale or uninitialized syndrome when it takes
-> the SError?
+Thanks, Will fix these in next version
 
-Oops, this definitely needs fixing :) OTOH...
-
-> [Severity: High]
-> This is a pre-existing issue, but since this code deals with fixing SError
-> syndromes, what happens when SCTLR2_ELx.EASE is enabled and a Synchronous
-> External abort is routed to an SError?
-> 
-> Looking at kvm_inject_nested_sea() in the same file:
-> 
-> int kvm_inject_nested_sea(struct kvm_vcpu *vcpu) {
->     ...
->     u64 esr = FIELD_PREP(ESR_ELx_EC_MASK,
->                          iabt ? ESR_ELx_EC_IABT_LOW : ESR_ELx_EC_DABT_LOW);
->     ...
->     if (__vcpu_sys_reg(vcpu, SCTLR2_EL2) & SCTLR2_EL1_EASE)
->         return kvm_inject_nested(vcpu, esr, except_type_serror);
->     ...
-> }
-> 
-> Does this result in an SError being injected with a Data/Instruction Abort
-> EC? According to the ARM Architecture Reference Manual (D8.2.5), shouldn't
-> an SError always have its ESR_ELx.EC field set to 0b101111 (SError)?
-> 
-> A similar pattern appears in inject_abt64() for EL1, where a DABT/IABT
-> syndrome is constructed and actively written to exception_esr_elx(vcpu)
-> even though an SError exception was pended. Would this incorrect EC format
-> confuse the guest's exception handlers?
-
-This is confidently wrong, down to citations of the Arm ARM.
-
-While I couldn't find an explicit rule to cite in my cursory search of
-the manual, the definition of the bit describes this as "External Abort
-to SError Vector". On top of that, AArch64.DataAbort() just changes the
-vector offset (but not the EC) based on EASE.
-
-My understanding is that the exception syndrome of an external abort is
-preserved despite taking the SError vector.
-
-Thanks,
-Oliver
+> Sashiko AI review =C2=B7=20https://protect2.fireeye.com/v1/url?k=3Df6873d=
+03-=0D=0A>=20970c2830-f686b64c-000babff9bb7-7861d1909a20c345&q=3D1&e=3Dc55a=
+9d49-=0D=0A>=2067b5-4ef3-896c-=0D=0A>=2048615db6c678&u=3Dhttps%3A%2F%2Fsash=
+iko.dev%2F%23%2Fpatchset%2F202=0D=0A>=2060612163020.411761-1-alim.akhtar%40=
+samsung.com%3Fpart%3D4=0D=0A=0D=0A
