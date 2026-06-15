@@ -1,215 +1,130 @@
-Received: from mail-yx1-f41.google.com (mail-yx1-f41.google.com [74.125.224.41])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from mailout1.hostsharing.net (mailout1.hostsharing.net [83.223.95.204])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E9C9D3F8220
-	for <sashiko-reviews@lists.linux.dev>; Mon, 15 Jun 2026 14:13:42 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=pass smtp.client-ip=74.125.224.41
-ARC-Seal:i=2; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1781532825; cv=pass; b=si0gEAtEat+kBWBhMtCvowSoMTOrnbyARD9QL3ZmJyJ8lVf6sm5EsPgzwEohsg5TYH3lWFw2G6rNfkO9udJGDQL1HGv5w1Tp2Oimy6tkmvJEmtbL5fbIhhw0dcaQ5pNVFeo0HU1KgR3FzpGLfOo6XvyXcgFhTBPC27MSb5PcHCk=
-ARC-Message-Signature:i=2; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1781532825; c=relaxed/simple;
-	bh=cVelw7fcNjmAbQTMBjtUEr4ud5VagRi5XfNiWdZvSlI=;
-	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
-	 To:Cc:Content-Type; b=DJYRuBNzCY3urdG3qve8VB+G61nKkf9ili2qYT8dESISg1oNMMs7pRNOD8gcb5cm/YDwGkhpJ5Ji9jiHEBP+VyaU3POBXn7X/gQ2SxshbGxKhRN51XN/+X8F0CAsuuOW+z6RSCO3PUbAYEfg9k7lVybXkE+RQMwWSZ3w/OWELNU=
-ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=X8AwneLu; arc=pass smtp.client-ip=74.125.224.41
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
-Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="X8AwneLu"
-Received: by mail-yx1-f41.google.com with SMTP id 956f58d0204a3-6606678420bso3410404d50.1
-        for <sashiko-reviews@lists.linux.dev>; Mon, 15 Jun 2026 07:13:42 -0700 (PDT)
-ARC-Seal: i=1; a=rsa-sha256; t=1781532822; cv=none;
-        d=google.com; s=arc-20240605;
-        b=S8aI3CpzHsUZbfobXloys1tyH1+3vlcXQP7qEuKEus5Nd3mrhFA6z8U7BxHxb5YvNo
-         nm+/uGB4UO6p7Ml2o89Z2y25rEzXmuMKx5DeFtAtn1ycm0C58v8Q3W0ETNzoY0RzgMLg
-         vSSYkkUoyRw4Q7P2YC9AqWw9hIhGX/LMmPEjuG5r+m0qGunI/ye4RfZfULp8gIW0DMRp
-         Jqgi5RfjIHufzI6sXMoG7Y0hz1L3yWKL2hqDMUXH1A7ybdLXV6vq4QRf/F51TabmkreL
-         Vj6tL3lBhwl2+8FisGYrrdbNQoGy6CUKqgLuN/1/1eKNI3eFYXdgIbhTADYtl/z4soff
-         /Xaw==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com; s=arc-20240605;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:dkim-signature;
-        bh=LgSe2jgByuUbVfHsyZ6zz3QwRmw592U5GGdlEu1FoPI=;
-        fh=vz3pN3PK/bu+NRXdfIvIk2p5+cHuimYs4qHOOK8kDks=;
-        b=b0xrBLfoD62Aod7uJchpNtge+Mt+a5VizumgnxO++574xL1P2h5oPqtbn3eYj8stTH
-         gNGnf6i8utZ78YZfknCScP8NSX0dnL14N1qDDZihqzl8Io+PPEsciCvs4MAlmzW7IFyl
-         AoUKCIYwLnPxnmWpQHihE5LiJd5R81Tpoiv1pxyIqZPHK3LfTMv/MeHyIn8lSpzJ+Mtx
-         L0IO+ObTAVf/ATu2c6VE30pwcmFvx/QDQN/CbUgoNHAzOqm0NO3Ma8qTTFQOi4EwKm6V
-         E90N/aREAmLrfiOQJJ5aZOJGJ7vkz/CUNJZ7D1nS2D4v+P44/ljDAcDeHh2RBJWBaNbh
-         2I8A==;
-        darn=lists.linux.dev
-ARC-Authentication-Results: i=1; mx.google.com; arc=none
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20251104; t=1781532822; x=1782137622; darn=lists.linux.dev;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=LgSe2jgByuUbVfHsyZ6zz3QwRmw592U5GGdlEu1FoPI=;
-        b=X8AwneLukUma9AVzvQd6XKpFhWSvb6d5i4TCwvDpcgKrDorIDUoHw2hkCVE3FvkTAU
-         3EyVsfT++bisXvCDQAykBw5NqsVfZZrSdnbAY5cP9U3nXU9Jf/YkF8iYQu1eiiO5tPEr
-         0BPSWZwV/Xnd3VhPsjEC+54U13qzEGXMhLaYV5XmRJrhB1ui9E0WRmeR8IfkINDDjW0g
-         xXnpzaBJCRq0EtlCvwg4tutON5ekDKmhNsZW53ywbUMTS95kLxNYtRktGo7V96ZE/dg7
-         jpZlSY4fwALm43RdN20vfAx8gq1aC9XqYpULGf9UwnB6kYsCzODgPu+8fUnrDDyU1ohC
-         8Hig==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20251104; t=1781532822; x=1782137622;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:x-gm-gg:x-gm-message-state:from
-         :to:cc:subject:date:message-id:reply-to;
-        bh=LgSe2jgByuUbVfHsyZ6zz3QwRmw592U5GGdlEu1FoPI=;
-        b=jC7IvsIvbUA6HgsS3O33V1qpwAzZxATXKla41PosMG/d+EJZyuKhPRMJSvGvNJKJ/x
-         r2wgtrGqtSm9QkuDg2Cfq7yEN72/eGT3e9+HFduUWlZeQzwStDQY5tMC6RjawLD4x3eC
-         Ct3X6JN0r9JhrJ8cK6n1TpOfZTOf97amPDhWFPVWRtmDL9Ge1PpQnrl4vfxkIH56bN9C
-         zW+UAz+kUYQBrtZTZWAY4FmNcdBn+8CgZfKiDTX5IWJcz2487VkwfuWd2DisNxYnoKit
-         x17UaxP/h0iFKFjwb+SBcD4s2eEJiFQ1yu/tjCq2TXW5QIKwcTg/WAt43QxH/VVeyy9+
-         uk6g==
-X-Gm-Message-State: AOJu0Yw+g0V51x2pJQdCY0/QxlzHFIYrKgTcP6FZcJYO7PRUjbDU6fgL
-	s+/hi4k2MNsdnM+ShubNYuIpsjPV4c4BYARJiiJqJyXuPKF1ptQrF6eCZy4tLY8pEDkWAjU/a0h
-	R56MuzgwaUChnycw+lC5Sjqd9Fi3udJOpXg==
-X-Gm-Gg: Acq92OEt+isJjTICMR2KarzEwH1nu+v6OdU8C74y4RBkOs6f7dyt0cbv4d4TC+Osm0+
-	e2Wh1iOp6WWIb0lkRr9Kp+jMs+hA7kuq6mr4HZ7vOJfFDcAK77AllTCf76ffVDbhKam6gW03LEw
-	oaogt+nRzYIqTMrrycxjsPwmNl7JxvF46tbzEFne4t+TimxImc2cd/v4L2XQkDByol7XZPHA+4S
-	sOsRVJwPyYX5pT3/NwpGIsS9SOG9SHret6GYXgpQT/QFwfugohQafA7odOJ/bDnoaIA3CLrJ6SU
-	9FKsrQO7OQ==
-X-Received: by 2002:a05:690e:4842:b0:662:5e4d:2bd1 with SMTP id
- 956f58d0204a3-66284f1afe6mr6617333d50.23.1781532821853; Mon, 15 Jun 2026
- 07:13:41 -0700 (PDT)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0F5FA3CAA48;
+	Mon, 15 Jun 2026 15:44:12 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=83.223.95.204
+ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
+	t=1781538255; cv=none; b=KnS0aeR4xjuiJU8dJx/PuqRrjrsTvYzaks2YgTOunusE9Gzh2O00bYs7tFXk9Fzc1Gtqh8u7qBBGFRxyNNUDggp8UyPlVzhEXnCyzoKiPWg7kkUK6c8XjzwMWBwIlns2HAm9LWTJ041+9u2a1OwApfXZBKScJw5rpWsJm2BNnVA=
+ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
+	s=arc-20240116; t=1781538255; c=relaxed/simple;
+	bh=Dwxhv7sf09IRSFSSoN2QRxvu5M8MbqOUFr8Ti4Q5s9s=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=JfRy26xVrli0NYkG8kMo8TIIi/XAcYGBlSzbRNJJSwWdlfIIXiGPsBQKe4cZW6vS5W+En0bXEKW/f0TW1tM/Bu61YceBERgQW2u9/dNqlklD9RIg45XqaJvybbMD9+50gb6v2z/f0MLPVFFA7XynQsMR7JqDCbevyUulbjA8Z8w=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=wunner.de; spf=pass smtp.mailfrom=wunner.de; arc=none smtp.client-ip=83.223.95.204
+Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=wunner.de
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=wunner.de
+Received: from h08.hostsharing.net (h08.hostsharing.net [83.223.95.28])
+	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+	 key-exchange x25519 server-signature ECDSA (secp384r1) server-digest SHA384
+	 client-signature ECDSA (secp384r1) client-digest SHA384)
+	(Client CN "*.hostsharing.net", Issuer "GlobalSign GCC R6 AlphaSSL CA 2025" (verified OK))
+	by mailout1.hostsharing.net (Postfix) with ESMTPS id 636473A6;
+	Mon, 15 Jun 2026 17:37:52 +0200 (CEST)
+Received: by h08.hostsharing.net (Postfix, from userid 100393)
+	id 49A146019068; Mon, 15 Jun 2026 17:37:52 +0200 (CEST)
+Date: Mon, 15 Jun 2026 17:37:52 +0200
+From: Lukas Wunner <lukas@wunner.de>
+To: sashiko-reviews@lists.linux.dev
+Cc: linux-pci@vger.kernel.org, Dan Williams <djbw@kernel.org>,
+	Ashish Kalra <ashish.kalra@amd.com>,
+	Tom Lendacky <thomas.lendacky@amd.com>,
+	Alexey Kardashevskiy <aik@amd.com>, linux-coco@lists.linux.dev,
+	Jonathan Cameron <jic23@kernel.org>
+Subject: Re: [PATCH] PCI/TSM: Resume device to D0 for CMA-SPDM operation
+Message-ID: <ajAcUOumwyK_RYs0@wunner.de>
+References: <7bdfaf14d7e5a466f3f650150c688a60e947a7a9.1781527060.git.lukas@wunner.de>
+ <20260615134252.B34A21F000E9@smtp.kernel.org>
 Precedence: bulk
 X-Mailing-List: sashiko-reviews@lists.linux.dev
 List-Id: <sashiko-reviews.lists.linux.dev>
 List-Subscribe: <mailto:sashiko-reviews+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:sashiko-reviews+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-References: <20260610160816.2828713-4-tmaimon77@gmail.com> <20260610162318.E468D1F00893@smtp.kernel.org>
-In-Reply-To: <20260610162318.E468D1F00893@smtp.kernel.org>
-From: Tomer Maimon <tmaimon77@gmail.com>
-Date: Mon, 15 Jun 2026 17:13:30 +0300
-X-Gm-Features: AVVi8CccHflQp_WEDPFT1deDFtEHQhAGFJXoGfxTiW93gE5Hb4eEw-ozhco4FAI
-Message-ID: <CAP6Zq1g9s0JVKu0X7AT2CkK-v5xmnq3tp3UTCP8gh2Ysh7cdpw@mail.gmail.com>
-Subject: Re: [PATCH v4 3/3] arm64: dts: nuvoton: npcm845-evb: Add peripheral nodes
-To: sashiko-reviews@lists.linux.dev
-Cc: conor+dt@kernel.org, robh@kernel.org, devicetree@vger.kernel.org
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <20260615134252.B34A21F000E9@smtp.kernel.org>
 
-Hi
-
-On Wed, 10 Jun 2026 at 19:23, <sashiko-bot@kernel.org> wrote:
->
-> Thank you for your contribution! Sashiko AI review found 3 potential issu=
-e(s) to consider:
-> - [High] Missing `/bits/ 8` for `fan-tach-ch` and `cooling-levels` causes=
- incorrect 32-bit integer array emission, corrupting the thermal fan driver=
- state.
-> - [High] The `tip_reserved` memory node lacks the `no-map` directive, cau=
-sing speculative external aborts.
-> - [Medium] Incorrect Device Tree property name `spix-mode` prevents the F=
-IU controller from enabling SPIX mode.
-> --
->
-> commit 011b4946d76e73a81f86b002033d53a6d052bd40
-> Author: Tomer Maimon <tmaimon77@gmail.com>
->
-> arm64: dts: nuvoton: npcm845-evb: Add peripheral nodes
->
-> Enable peripheral support for the NPCM845 evaluation board by wiring up
-> the SoC controller nodes to the board design.
->
-> > diff --git a/arch/arm64/boot/dts/nuvoton/nuvoton-npcm845-evb.dts b/arch=
-/arm64/boot/dts/nuvoton/nuvoton-npcm845-evb.dts
-> > index 5edf5d13342da..ea92888d9b9e2 100644
-> > --- a/arch/arm64/boot/dts/nuvoton/nuvoton-npcm845-evb.dts
-> > +++ b/arch/arm64/boot/dts/nuvoton/nuvoton-npcm845-evb.dts
->
-> [ ... ]
->
-> > @@ -26,12 +62,389 @@ refclk: refclk-25mhz {
-> >               clock-frequency =3D <25000000>;
-> >               #clock-cells =3D <0>;
-> >       };
+On Mon, Jun 15, 2026 at 01:42:52PM +0000, sashiko-bot@kernel.org wrote:
+> > +++ b/drivers/crypto/ccp/sev-dev-tsm.c
+> > @@ -38,6 +40,10 @@ static int sev_tio_spdm_cmd(struct tio_dsm *dsm, int ret)
+> >  	if (ret <= 0)
+> >  		return ret;
+> >  
+> > +	PM_RUNTIME_ACQUIRE(&dsm->tsm.base_tsm.pdev->dev, pm);
+> > +	if ((pm_ret = PM_RUNTIME_ACQUIRE_ERR(&pm)))
+> > +		return pm_ret;
 > > +
-> > +     reserved-memory {
-> > +             #address-cells =3D <2>;
-> > +             #size-cells =3D <2>;
-> > +             ranges;
-> > +
-> > +             tip_reserved: tip@0 {
-> > +                     reg =3D <0x0 0x0 0x0 0x6200000>;
->
-> [Severity: High]
-> Does this reserved memory region need the no-map directive?
-No, the kernel shouldn't use this memory
->
-> Without no-map, the kernel establishes a direct, cacheable linear mapping
-> over this region. Since this block is isolated by hardware firewalls for =
-the
-> Trusted Information Processing firmware, could speculative execution or
-> prefetching by the CPU into this linear mapping trigger fatal synchronous
-> external aborts or SErrors?
->
-> > +             };
-> > +     };
->
-> [ ... ]
->
-> > +&fiux {
-> > +     spix-mode;
->
+> 
 > [Severity: Medium]
-> Is this property missing the vendor prefix?
-Would be changed in V5
->
-> The SPI driver for the NPCM FIU (drivers/spi/spi-npcm-fiu.c) appears to
-> check specifically for the "nuvoton,spix-mode" property. If it is only na=
-med
-> "spix-mode" here, will the driver fail to detect it and silently fall bac=
-k
-> to standard mode?
->
-> > +};
->
-> [ ... ]
->
-> > +&pwm_fan {
-> > +     status =3D "okay";
-> > +     pinctrl-names =3D "default";
-> > +     pinctrl-0 =3D <&pwm0_pins &pwm1_pins
-> > +             &pwm2_pins &pwm3_pins
-> > +             &pwm4_pins &pwm5_pins
-> > +             &pwm6_pins &pwm7_pins
-> > +             &fanin0_pins &fanin1_pins
-> > +             &fanin2_pins &fanin3_pins
-> > +             &fanin4_pins &fanin5_pins
-> > +             &fanin6_pins &fanin7_pins>;
-> > +     #address-cells =3D <1>;
-> > +     #size-cells =3D <0>;
-> > +     fan@0 {
-> > +             reg =3D <0x00>;
-> > +             fan-tach-ch =3D <0x0 0x1>;
-> > +             cooling-levels =3D <127 255>;
->
+> The commit message mentions that "resuming to D0 needs to (only) be done in
+> code paths which use DOE specifically for CMA-SPDM", but does this code
+> unconditionally resume the device to D0 regardless of the operation?
+> 
+> Looking at sev_tio_spdm_cmd(), the resume happens before the loop checks if
+> the operation is actually PCI_DOE_FEATURE_CMA or PCI_DOE_FEATURE_SSESSION.
+> Could this cause unnecessary power transitions for generic operations where
+> accessing the config space in D3hot would be sufficient?
+
+Moving PM_RUNTIME_ACQUIRE() inside the while loop may lead to repeated
+D0 -> D3hot -> D0 -> D3hot ... transitions (depending on autosuspend
+settings of the device, which are user-configurable through sysfs).
+It would also lead to overhead induced by runtime PM code (repeated
+spinlock acquisition etc).
+
+So I believe keeping PM_RUNTIME_ACQUIRE() outside the while loop is
+the right thing to do, but I'll leave this to AMD engineers to decide.
+
 > [Severity: High]
-> Should these arrays be explicitly sized using /bits/ 8?
-Could be used 32 bits.
->
-> The Device Tree compiler natively emits 32-bit big-endian integers for th=
-is
-> syntax. However, if the driver (npcm750-pwm-fan.c) explicitly reads both
-> properties using of_property_read_u8_array(), an 8-byte payload like
-> <127 255> would be read as 8 individual u8 elements:
-> 0, 0, 0, 127, 0, 0, 0, 255.
->
-> Does this result in registering intermediate thermal cooling states with =
-a 0
-> duty cycle, inadvertently turning the fan off during active cooling reque=
-sts?
->
-> > +     };
->
-> --
-> Sashiko AI review =C2=B7 https://sashiko.dev/#/patchset/20260610160816.28=
-28713-1-tmaimon77@gmail.com?part=3D3
+> Does using PM_RUNTIME_ACQUIRE() here risk leaving the hardware permanently
+> stuck in D0 during the device removal path?
+> 
+> The PM_RUNTIME_ACQUIRE() macro queues an asynchronous pm_runtime_put() when
+> dropping the reference. If sev_tio_spdm_cmd() is called during teardown
+> sequences, the pending asynchronous suspend can be cancelled by a subsequent
+> device_del() call, which disables runtime PM. 
+> 
+> Should a synchronous runtime put be used here to ensure the device actually
+> suspends before the removal completes?
+
+If the device is deleted anyway, we don't care about leaked references.
+And we absolutely do not want to synchronously runtime suspend here.
+
+> > +++ b/drivers/pci/tsm.c
+> > @@ -894,6 +896,10 @@ int pci_tsm_doe_transfer(struct pci_dev *pdev, u8 type, const void *req,
+> >  	if (!tsm->doe_mb)
+> >  		return -ENXIO;
+> >  
+> > +	PM_RUNTIME_ACQUIRE(&pdev->dev, pm);
+> > +	if ((rc = PM_RUNTIME_ACQUIRE_ERR(&pm)))
+> > +		return rc;
+> > +
+> 
+> [Severity: Medium]
+> Similarly to sev_tio_spdm_cmd(), does this code unconditionally resume the
+> device to D0, ignoring the type parameter?
+> 
+> If a generic DOE transfer is requested that does not strictly require D0, it
+> appears this will still force a transition to D0, contradicting the commit
+> message's stated power management requirements.
+
+Hallucination, this code does not perform "generic DOE" exchanges, only
+CMA-SPDM ones.
+
+> [Severity: High]
+> Is this exported API also susceptible to the same asynchronous put regression
+> mentioned above?
+> 
+> If pci_tsm_doe_transfer() is invoked during a teardown sequence, the async
+> idle and suspend queued by the macro might get canceled by device_del(),
+> leaving the device in D0.
+
+We have to leave de-enumerated devices in D0 to ensure that a subsequent
+rescan successfully re-enumerates them.  E.g. leaving a Downstream Port
+in D3hot upon de-enumeration would leave any children inaccessible.
+
+We also leave unbound devices in D0 for similar reasons.
 
 Thanks,
 
-Tomer
+Lukas
