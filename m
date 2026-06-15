@@ -1,208 +1,281 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E6CD5407CEB
-	for <sashiko-reviews@lists.linux.dev>; Mon, 15 Jun 2026 16:08:33 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6C0E740FDB7;
+	Mon, 15 Jun 2026 16:48:52 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1781539714; cv=none; b=Si6pkYsVJVYx06n4lFHb3+QZJS1YzJl4WiN5F7YA4RrnAkKKUmSi6V2cQGdpEnJ16afPh8x8IynjQY5JdBA5W6mq1b8I0yj44NZ+5NqN0iA9/F2T5ytEpC96G1DwRR1J1YTLi6jhav0gdsJEpdJoCf6uL9LFaJJEsp+V1k9WlMY=
+	t=1781542133; cv=none; b=L/OC49S9lBtmSvoicxkFYGMlIKQydrm0IE9wN/P9y612tA5lMCrVXb5lu69hnLNTW8f80f8iGT/S4GIIZTl4CjLSCw5/v0SR//kXtorHBSEP/b0xt1vpFU2PPC004Jm/Co+LtNCHZr6Fdc6wjUwClnBfZHDN6dB6QkXqcBrVclk=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1781539714; c=relaxed/simple;
-	bh=H9nShDRqTCz1bGXhD3pKSiKXFh5nNqaH2RSpftTRtvo=;
-	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=h9hM8jpMZ66vW670yjl50sYRRcuA8WM9p5CNdeezdYj2kcoBksoGbWqLUodz3TV63KVxsvANH8b0WfRO6Jv1KnUDBUdxQ3Km3JySBcgdIiRtscz8X2Bbkd7gFondCc8Cq2AhW8JCbUNgzISAolwSaXYFOOHP8KUo8zCIHkxX8SE=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=T8YEaIcC; arc=none smtp.client-ip=100.103.45.18
+	s=arc-20240116; t=1781542133; c=relaxed/simple;
+	bh=l5w3ieOteXurPvOx7c2sSzMGJI9CHIUqhd+xc5Vy/HI=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=cgPclRP15hjzYVRUSFM1f8jvX4Mi/mS7T2npcHSvi8O2pdM9YyJdwdh7RZo/CHJfl1FXy+6FGWP2f4FMytX/P8Nwt/58NtDqMGBClx5LNCTUZCUMB7Sra582BiH05N3tNMbaAqgpTQ2E6Iqnd+9uO1dWOiVM3wGvjHlVGB493yI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=Wru4OnAk; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="T8YEaIcC"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id B9D471F000E9;
-	Mon, 15 Jun 2026 16:08:32 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="Wru4OnAk"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id BBE401F000E9;
+	Mon, 15 Jun 2026 16:48:50 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=kernel.org;
-	s=k20260515; t=1781539713;
-	bh=FRkMbwVFG7ipwirEP3+OfCRo7yb0ur2K2jVhqfJXI+Y=;
-	h=Date:Subject:To:Cc:References:From:In-Reply-To;
-	b=T8YEaIcChW72QHt+U8CgnTN2j9H3yWeaaY6OIRWQj8858+kmCk9BFRy3GGkTD56Al
-	 bliFFbfIecs01M6fhXmu4JFELijFOKAGSpsGzTrPEDdWJOzu9OqlHcQjx/X+ONxAIs
-	 ntmBrU9znMCfI6UXk5uKVJc5qM/cw59libZ43ZYimZqHYy+RJ4AJy2CRG8nWXXc8Pq
-	 YaSKGnZQHmSXCLlPly9L2KEVQjj4vB6mdPwFAP0Ckej/CMkcEyNWulWpid4QjPsnqr
-	 KFC+opxPVlaHU894brtandUqTCBM/wAQkCDKD608lTQHMHK0LVtK33YGsF6rS1ChoC
-	 S+67QstVkJy1Q==
-Message-ID: <caf02e6a-06bf-4df1-b89e-9fe11ebd6a84@kernel.org>
-Date: Mon, 15 Jun 2026 18:08:31 +0200
+	s=k20260515; t=1781542132;
+	bh=rgAK34AoO/YNV6ur2YhBuivVJRCBBRUUpYRgZ9dzBks=;
+	h=Date:From:To:Cc:Subject:References:In-Reply-To;
+	b=Wru4OnAk/9dpN7n0cAJMyVXsAmkWcFPZG/Bjnr15Jb2+fw+q2SjMQm0JucaKmibeO
+	 T9UUOfzwlHTyHEfQ4fiO/JpPrNnbsyyDZQfK3hKHxt0WlWNiBc2EPYDUSLu2p5IreE
+	 GKD8WYZMDD8E/gai6ma+uWJAZrrY5DhcGhWLiGkAfbtP61ECtVJP54DLY6w4/8/FpZ
+	 mY4+0PLTk1r0EJASWSniHWmbCkPPWLW8OmEBXSWSobuXZdfPkW5qqv4gc4dkbPyUIm
+	 NBG7clW+cKdRiLdEa6BpOqtLskEDD0q9lyEocEFOfpb4roid8N/Q1tM9BmAPh7Kccw
+	 iemSZuOpTDawQ==
+Date: Mon, 15 Jun 2026 17:48:48 +0100
+From: Conor Dooley <conor@kernel.org>
+To: sashiko-reviews@lists.linux.dev
+Cc: MidG971 <midgy971@gmail.com>, conor+dt@kernel.org, robh@kernel.org,
+	devicetree@vger.kernel.org, dri-devel@lists.freedesktop.org
+Subject: Re: [RFC PATCH v4 6/9] dt-bindings: npu: rockchip,rk3588-rknn-core:
+ Add RK3568
+Message-ID: <20260615-platter-washroom-043ea869adb1@spud>
+References: <20260613070116.438906-7-midgy971@gmail.com>
+ <20260613071113.C60751F00A3D@smtp.kernel.org>
 Precedence: bulk
 X-Mailing-List: sashiko-reviews@lists.linux.dev
 List-Id: <sashiko-reviews.lists.linux.dev>
 List-Subscribe: <mailto:sashiko-reviews+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:sashiko-reviews+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v4 6/9] dax: plumb hotplug online_type through dax
-To: Gregory Price <gourry@gourry.net>
-Cc: sashiko-reviews@lists.linux.dev, linux-mm@kvack.org
-References: <20260605211911.2160954-7-gourry@gourry.net>
- <20260605213143.A18F01F00893@smtp.kernel.org>
- <aiNFezMarbvIZNa0@gourry-fedora-PF4VCD3F>
- <878faef6-bbd3-43ec-af82-6da675a5f8fe@kernel.org>
- <aigyQcBH3HRrOn23@gourry-fedora-PF4VCD3F>
-From: "David Hildenbrand (Arm)" <david@kernel.org>
-Content-Language: en-US
-Autocrypt: addr=david@kernel.org; keydata=
- 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
- qIws/H2t
-In-Reply-To: <aigyQcBH3HRrOn23@gourry-fedora-PF4VCD3F>
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 7bit
-
-On 6/9/26 17:33, Gregory Price wrote:
-> On Tue, Jun 09, 2026 at 12:21:34PM +0200, David Hildenbrand (Arm) wrote:
->> On 6/5/26 23:54, Gregory Price wrote:
->>>
->>> @David - we talked about this ~6+ mo ago at this point, i originally
->>> proposed something like MMOP_SYSTEM_DEFAULT
->>>
->>> https://lore.kernel.org/linux-mm/20260114085201.3222597-3-gourry@gourry.net/
->>>
->>> https://lore.kernel.org/linux-mm/c4ed9675-269c-4764-86d5-87f4f83fc74d@kernel.org/
->>>
->>> '''
->>>    I don't like having fake options as part of this interface.
->>>
->>>    Why can't we let selected users use mhp_get_default_online_type() 
->>>    instead? Like add_memory_resource(). We can export that function.
->>> '''
->>>
->>> I guess the argument here is that the value can't be cached?
->>>
->>> But we can't really enforce that.
->>>
->>> This is a behavioral change we have to agree on (either we change it or
->>> carry something like MMOP_SYSTEM_DEFAULT for this).
->>
->> I don't think we'd need a generic MMOP_* for that purpose (the core cannot
->> really do a lot with that AFAIKS, and the scenario "unspecified" doesn't really
->> occur in memory hotplug core).
->>
->> I guess you could have some indication whether the user already configured it
->> manually (bool online_type_specified), and handle that in the handful of places.
->>
->> if (dev_dax->online_type_specified)
->> 	online_type = dev_dax->online_type;
->> else
->> 	online_type = mhp_get_default_online_type();
->>
-> 
-> Hm, I suppose this would do it.
-> 
-> I'm using -1 as "DAX_UNPLUGGED" at the moment, but I could actually just
-> add MMOP_UNPLUGGED as an explicit mode which only has relevance to callers
-> of hotplug (the state of the hotplug region they currently control is
-> MMOP_UNPLUGGED) - but not to hotplug itself (memory_hotplug.c doesn't
-> use it / rejects it).
-> 
-> Then i could use (dev_dax->online_type == -1) to mean "use system
-> default"
-> 
-> I'll bring this up in the mmop/str patch whether we should add
-> MMOP_UNPLUGGED.
-
-Yeah, but I think it would be best to leave that out of the core. The value
-doesn't make any sense for the core.
-
-[...]
-
->>
->> But the question really is which semantics we would want? is that exposed to
->> user-space somehow, such that the user could query it ("default")? or how does
->> this get set, and how does it later get used while it could have changed
->> system-wide?
->>
-> 
-> I think this is the core question.
-> 
-> What selection of these values do we want?
-> 
->   echo default        > .../dax0.0/hotplug  # -1
->   echo unplugged      > .../dax0.0/hotplug  # MMOP_UNPLUGGED
->   echo offline        > .../dax0.0/hotplug  # MMOP_OFFLINE
->   echo online         > .../dax0.0/hotplug  # MMOP_ONLINE
->   echo online_kernel  > .../dax0.0/hotplug  # MMOP_ONLINE_KERNEL
->   echo online_movable > .../dax0.0/hotplug  # MMOP_ONLINE_MOVABLE
-
-BTW, should this then be called "/state" ?
-
-In that sense "default" doesn't really make sense. Memory can be unplugged. It
-can be plugged+offline, "plugged+online" etc.
+Content-Type: multipart/signed; micalg=pgp-sha512;
+	protocol="application/pgp-signature"; boundary="KcjmGw9GtIMy6xex"
+Content-Disposition: inline
+In-Reply-To: <20260613071113.C60751F00A3D@smtp.kernel.org>
 
 
-> 
->   echo default        > .../memoryN/state   # -EINVAL - nonsensical
->   echo unplugged      > .../memoryN/state   # -EINVAL - nonsensical
->   echo offline        > .../memoryN/state   # MMOP_OFFLINE
->   echo online         > .../memoryN/state   # MMOP_ONLINE
->   echo online_kernel  > .../memoryN/state   # MMOP_ONLINE_KERNEL
->   echo online_movable > .../memoryN/state   # MMOP_ONLINE_MOVABLE
-> 
-> And lets say the use sets a value, should they be able to return it to
-> the system default?  I don't think that makes much sense, considering
-> the default is really only used on probe.
-> 
-> i.e.:
-> 
->   cat .../dax0.0/hotplug                     # default
->   echo online_movable > .../dax0.0/hotplug   # online_movable
->   echo default > .../dax0.0/hotplug          # -EINVAL?
-> 
-> The point being that .../dax0.0/hotplug doesn't exist unless the dax
-> device is already bound to kmem - and so by the time you can set it, the
-> point at which (hotplug == default) being useful is already passed.
-> 
-> Does this seem reasonable?  The tl;dr is
+--KcjmGw9GtIMy6xex
+Content-Type: text/plain; charset=iso-8859-1
+Content-Disposition: inline
+Content-Transfer-Encoding: quoted-printable
 
-I'm still confused about "default". As you say, once user space sees it, it
-should already be either unplugged or plugged(and onlined or offlined)
+On Sat, Jun 13, 2026 at 07:11:13AM +0000, sashiko-bot@kernel.org wrote:
+> Thank you for your contribution! Sashiko AI review found 5 potential issu=
+e(s) to consider:
+>=20
+> Pre-existing issues:
+> - [Critical] Double free of `rjob->tasks` leading to memory corruption tr=
+iggerable from userspace.
+> - [Critical] Unconditional dereference of a NULL `job->domain` triggering=
+ a kernel panic on early job submission failure.
+> - [High] Permanent PM runtime reference count leak when `iommu_attach_gro=
+up()` fails.
+> - [High] Zero-initialized clock IDs cause the framework to fetch the same=
+ clock repeatedly, violating hardware constraints.
+> - [Medium] Premature DRM device registration exposes an incomplete state =
+to userspace.
 
+Why is the bot complaining about drivers here?
 
--- 
-Cheers,
+> --
+>=20
+> commit d0d76b931ac773e3e176353cdb3ac9c590c43dc3
+> Author: Midgy BALON <midgy971@gmail.com>
+>=20
+> dt-bindings: npu: rockchip, rk3588-rknn-core: Add RK3568
+>    =20
+> The RK3568 carries a single core of the same NVDLA-derived NPU IP as the
+> RK3588.  Add its compatible.
+>=20
+> > diff --git a/Documentation/devicetree/bindings/npu/rockchip,rk3588-rknn=
+-core.yaml b/Documentation/devicetree/bindings/npu/rockchip,rk3588-rknn-cor=
+e.yaml
+> > index caca2a4903cd1..e0b948ac47d45 100644
+> > --- a/Documentation/devicetree/bindings/npu/rockchip,rk3588-rknn-core.y=
+aml
+> > +++ b/Documentation/devicetree/bindings/npu/rockchip,rk3588-rknn-core.y=
+aml
+> [ ... ]
+>=20
+> drivers/accel/rocket/rocket_device.c:rocket_device_init() {
+>     ...
+>     err =3D drm_dev_register(ddev, 0);
+>     ...
+> }
+>=20
+> drivers/accel/rocket/rocket_drv.c:rocket_probe() {
+>     ...
+>     rdev->cores[core].dev =3D &pdev->dev;
+>     ...
+> }
+>=20
+> [Severity: Medium]
+> This is a pre-existing issue, but does this premature registration expose=
+ an
+> incomplete state to userspace?
+>=20
+> drm_dev_register() is called in rocket_device_init() before rocket_probe()
+> assigns rdev->cores[0].dev.
+>=20
+> As a result, the device node is briefly visible to userspace while its co=
+re
+> structures remain partially uninitialized.
+>=20
+> If userspace attempts to open the DRM device during this window, rocket_o=
+pen()
+> passes the NULL rdev->cores[0].dev to rocket_iommu_domain_create().
+>=20
+> While the IOMMU framework safely catches the NULL device and returns -ENO=
+DEV,
+> this still causes a spurious open() failure for userspace applications re=
+lying
+> on udev events.
+>=20
+>=20
+> drivers/accel/rocket/rocket_job.c:rocket_job_run() {
+>     ...
+> 	ret =3D pm_runtime_get_sync(core->dev);
+> 	if (ret < 0)
+> 		return fence;
+>     ...
+> 		ret =3D iommu_attach_group(job->domain->domain, core->iommu_group);
+> 		if (ret < 0)
+> 			return fence;
+>     ...
+> }
+>=20
+> [Severity: High]
+> This is a pre-existing issue, but does this cause a permanent PM runtime
+> reference count leak when iommu_attach_group() fails?
+>=20
+> In rocket_job_run(), pm_runtime_get_sync() increments the PM usage count =
+to wake
+> up the NPU.
+>=20
+> If the subsequent iommu_attach_group() fails, the driver returns the allo=
+cated
+> fence and exits early without calling pm_runtime_put().
+>=20
+> Because the driver exits before assigning core->in_flight_job, the subseq=
+uent
+> timeout handler rocket_reset() will also skip the manual
+> pm_runtime_put_noidle().
+>=20
+> This causes a permanent PM runtime reference count leak, preventing the N=
+PU
+> hardware from ever entering runtime suspend.
+>=20
+>=20
+> drivers/accel/rocket/rocket_core.c:rocket_core_init() {
+>     ...
+>     err =3D devm_clk_bulk_get(dev, ARRAY_SIZE(core->clks), core->clks);
+>     ...
+> }
+>=20
+> [Severity: High]
+> This is a pre-existing issue, but do these zero-initialized clock IDs cau=
+se the
+> framework to fetch the same clock repeatedly?
+>=20
+> In rocket_core_init(), the driver declares an array of clk_bulk_data but =
+never
+> initializes the .id fields, leaving them implicitly NULL.
+>=20
+> When devm_clk_bulk_get() is called, the clock framework handles the NULL =
+IDs by
+> returning the first clock defined in the device tree for the device on al=
+l four
+> iterations.
+>=20
+> Consequently, rocket_device_runtime_resume() enables the exact same clock=
+ four
+> times, while the remaining required clocks are left disabled.
+>=20
+> This violates physical hardware state requirements and causes unclocked N=
+PU
+> register accesses.
+>=20
+>=20
+> drivers/accel/rocket/rocket_job.c:rocket_copy_tasks() {
+>     ...
+> fail:
+> 	kvfree(rjob->tasks);
+> 	return ret;
+> }
+>=20
+> drivers/accel/rocket/rocket_job.c:rocket_job_cleanup() {
+>     ...
+> 	kvfree(job->tasks);
+>     ...
+> }
+>=20
+> [Severity: Critical]
+> This is a pre-existing issue, but does this lead to a double free of rjob=
+->tasks
+> that can be triggered from userspace?
+>=20
+> In rocket_copy_tasks(), if copy_from_user() fails, kvfree(rjob->tasks) is
+> called, but the pointer rjob->tasks is not cleared.
+>=20
+> The function returns an error to rocket_ioctl_submit_job(), which jumps to
+> out_cleanup_job and invokes rocket_job_put().
+>=20
+> When the reference count drops, rocket_job_cleanup() is executed,
+> unconditionally calling kvfree(job->tasks) again on the already freed mem=
+ory
+> block.
+>=20
+> Since the IOCTL input is fully controlled by userspace, an unprivileged a=
+ttacker
+> can trigger a double free by submitting an invalid task pointer.
+>=20
+>=20
+> drivers/accel/rocket/rocket_job.c:rocket_ioctl_submit_job() {
+>     ...
+> 	rjob =3D kzalloc_obj(*rjob);
+>     ...
+> 	ret =3D rocket_copy_tasks(dev, file, job, rjob);
+> 	if (ret)
+> 		goto out_cleanup_job;
+>     ...
+> }
+>=20
+> drivers/accel/rocket/rocket_drv.c:rocket_iommu_domain_put() {
+>     ...
+>     kref_put(&domain->kref, rocket_iommu_domain_destroy);
+>     ...
+> }
+>=20
+> [Severity: Critical]
+> This is a pre-existing issue, but does this unconditionally dereference a=
+ NULL
+> job->domain, triggering a kernel panic on early job submission failure?
+>=20
+> In rocket_ioctl_submit_job(), rjob is allocated via kzalloc_obj(), leaving
+> rjob->domain initialized to NULL.
+>=20
+> If a failure occurs before the domain is assigned, such as an invalid task
+> pointer in rocket_copy_tasks() or a bad BO handle in drm_gem_objects_look=
+up(),
+> the driver jumps to the cleanup path.
+>=20
+> The cleanup handler, rocket_job_cleanup(), unconditionally passes the NULL
+> domain to rocket_iommu_domain_put(), which invokes kref_put(&domain->kref=
+, ...).
+>=20
+> Computing &domain->kref yields an offset address, and refcount_dec_and_te=
+st()
+> immediately dereferences this invalid address, resulting in a kernel pani=
+c that
+> can be triggered by unprivileged userspace.
+>=20
+> --=20
+> Sashiko AI review =B7 https://sashiko.dev/#/patchset/20260613070116.43890=
+6-1-midgy971@gmail.com?part=3D6
 
-David
+--KcjmGw9GtIMy6xex
+Content-Type: application/pgp-signature; name=signature.asc
+
+-----BEGIN PGP SIGNATURE-----
+
+iHUEABYKAB0WIQRh246EGq/8RLhDjO14tDGHoIJi0gUCajAs8AAKCRB4tDGHoIJi
+0ofRAP97TD5uDsOpTTpPt+os3+gnPlFQSvVwHARNEl0ytyivmQD8DStsr3uQM9Me
+xBayd1rg1P6TJhzNDiXajM0OU5hPnQw=
+=KBbc
+-----END PGP SIGNATURE-----
+
+--KcjmGw9GtIMy6xex--
