@@ -1,246 +1,145 @@
-Received: from canpmsgout12.his.huawei.com (canpmsgout12.his.huawei.com [113.46.200.227])
+Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8185A277007
-	for <sashiko-reviews@lists.linux.dev>; Mon, 15 Jun 2026 03:57:18 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=113.46.200.227
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 162322BD59C;
+	Mon, 15 Jun 2026 04:46:41 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1781495842; cv=none; b=XWJ9Et8HtUa6Pl+4sTXm6jZl60KUyjtBqCLahgED0iZUDKwG3kKpVNbUZtnPgNQyJXxCiD3PhDdZA/68LO+g1z+EvtWdg20QGf+tbHdH/FtGT//ueF1oiRFIhefs99V+TjIh8Ii4C8XYRLZk+v6vRjRQ7CBDC7UOY3z2GAr6nPw=
+	t=1781498803; cv=none; b=EmHxsNmeZ9NNQiKl+yhzg4AdUtu6CXXWzypJLTjhIdtEshOV2c9I42UmpZTOMea7FNky2RDP7c3+6VMDSnrJLgbSYdFYI6uENeHGdC4TxOs2JlA/wEMzAPnfBDbI9MqK/46wdb7+k/ifv/l/f7FBk0eGfqEcqsy7qoXEsGPNwAk=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1781495842; c=relaxed/simple;
-	bh=hmEZLOUCNMYZvTrP3sV9QfQ2DDagvRzxb6xxkcW6onU=;
-	h=Message-ID:Date:MIME-Version:Subject:To:CC:References:From:
-	 In-Reply-To:Content-Type; b=XD1e1GeHRF//M+h3WCZcvRBTHFlCQKaNvt3CPgo9ddw/MGv1WV8HYAtuvwDzsc2uPxmtNL/a79GcRFuGQBqpWZuGzVa1CoF60tX+H1SkmKvx8l6MwG/sKsZ53tRKqdDwNH381h+PRKzbROOzBMk6255IGGzhChCl63XSJJYUAe0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=huawei.com; spf=pass smtp.mailfrom=huawei.com; dkim=pass (1024-bit key) header.d=huawei.com header.i=@huawei.com header.b=4WE2juLL; arc=none smtp.client-ip=113.46.200.227
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=huawei.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=huawei.com
+	s=arc-20240116; t=1781498803; c=relaxed/simple;
+	bh=pZ4Lj9sxuu4fCJZEfzfOLVeCOmNrnV+QzCfqdGQaGSs=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=VeGnWH106b5qqoRg7C2g8snVoLgwlVxGrlx6ualDWgcOdsd775R1sOZef+EyRuVgIY3wywfhEy/svFGGshnembr1B3HC94hFU7wwIvJd4+ACHeeJ8Ih0DfKz6s0ASRwm74rQG9wRVwMVLY2M/UGsuNqyj+qnfTaZ5yYGKIXeT6M=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=Tm6bW9MN; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=huawei.com header.i=@huawei.com header.b="4WE2juLL"
-dkim-signature: v=1; a=rsa-sha256; d=huawei.com; s=dkim;
-	c=relaxed/relaxed; q=dns/txt;
-	h=From;
-	bh=vdO5ZFCSlMTmcU3+Wbk1cMucfrDRbTdHei1R6ymJZfM=;
-	b=4WE2juLLeD6kC+JhbUf/QoUPtaCYi2YUkpnvI98mn4zGJhffsD0CHkjhxXbxxy7QE8CGd4FFD
-	8HQRqnDC2M9bByK42wJVGPPsmUPGLNFGpmhWasIdDlOY0WLQh98EBfaTyZKO0Z0cTj8yu7LyLRA
-	EFT6pjx70+SP4sSy8C2tzuY=
-Received: from mail.maildlp.com (unknown [172.19.163.163])
-	by canpmsgout12.his.huawei.com (SkyGuard) with ESMTPS id 4gdx163zsnznTbY;
-	Mon, 15 Jun 2026 11:48:26 +0800 (CST)
-Received: from kwepemk500009.china.huawei.com (unknown [7.202.194.94])
-	by mail.maildlp.com (Postfix) with ESMTPS id A6CE34056E;
-	Mon, 15 Jun 2026 11:57:15 +0800 (CST)
-Received: from [10.67.121.161] (10.67.121.161) by
- kwepemk500009.china.huawei.com (7.202.194.94) with Microsoft SMTP Server
- (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
- 15.2.1544.11; Mon, 15 Jun 2026 11:57:15 +0800
-Message-ID: <077d70d2-8b25-43f9-95ce-aa9d5e6831db@huawei.com>
-Date: Mon, 15 Jun 2026 11:57:14 +0800
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="Tm6bW9MN"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4A4A31F000E9;
+	Mon, 15 Jun 2026 04:46:41 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=kernel.org;
+	s=k20260515; t=1781498801;
+	bh=Dj09pM2es9y/CXI2hKjzMBH0rjHFqzTBpycpBpv3EAI=;
+	h=Date:From:To:Cc:Subject:References:In-Reply-To;
+	b=Tm6bW9MN12hKKUYvKu8jHWW6gqS/Ud6gT0gblUQ5hGl/sAOSe5XJYkIXPtSiPyzrT
+	 qJjTl3M3P/e3aY9Sg2yltv2evc99gKa+faYGY2vSO4BngEhnQvklj8p/rQD/e98tQS
+	 rTFA8MYKtmEkuSnrmnvYddEBV5Vd5LBhN9dMgsyEsSkR9NajqSngLTBeOjfU07Wq/S
+	 d4eOyIM6J+uU+4rBKZ0rF8UkmGS9Fs6ZTeTKkQl1ecSWZhGMhhI0xv9j8DFIWg+b6z
+	 978FqYKWTvwL5mCv1bqpUJ2XTA4fl+mkWb9jqj6QzaIn9Y4D92KWEnZd+PTEfM/lcL
+	 hItZNDMG0cwLQ==
+Date: Sun, 14 Jun 2026 21:46:40 -0700
+From: Oliver Upton <oupton@kernel.org>
+To: sashiko-reviews@lists.linux.dev
+Cc: Fuad Tabba <tabba@google.com>, kvmarm@lists.linux.dev,
+	Marc Zyngier <maz@kernel.org>
+Subject: Re: [PATCH 6/7] KVM: arm64: Set IL for nested SError injection
+Message-ID: <ai-DsLydd7ry0RpS@kernel.org>
+References: <20260614163336.3490925-7-tabba@google.com>
+ <20260614164416.D37E61F000E9@smtp.kernel.org>
 Precedence: bulk
 X-Mailing-List: sashiko-reviews@lists.linux.dev
 List-Id: <sashiko-reviews.lists.linux.dev>
 List-Subscribe: <mailto:sashiko-reviews+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:sashiko-reviews+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v16 12/12] vfio/pci: Virtualize PCIe TPH capability
- registers
-To: <sashiko-reviews@lists.linux.dev>
-CC: <kvm@vger.kernel.org>, <linux-pci@vger.kernel.org>
-References: <20260604132804.28678-13-fengchengwen@huawei.com>
- <20260604140509.BF1A41F00893@smtp.kernel.org>
-Content-Language: en-US
-From: fengchengwen <fengchengwen@huawei.com>
-In-Reply-To: <20260604140509.BF1A41F00893@smtp.kernel.org>
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: 7bit
-X-ClientProxiedBy: kwepems100001.china.huawei.com (7.221.188.238) To
- kwepemk500009.china.huawei.com (7.202.194.94)
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <20260614164416.D37E61F000E9@smtp.kernel.org>
 
-On 6/4/2026 10:05 PM, sashiko-bot@kernel.org wrote:
-> Thank you for your contribution! Sashiko AI review found 6 potential issue(s) to consider:
-> 
-> New issues:
-> - [Critical] Concurrent config writes cause Double-Free/Use-After-Free in power management saved state.
-
-will use memory_lock to protect the power management
-
-> - [High] Missing virtual configuration rollback on power state transition failure.
-
-will do rollback in v17
-
-> - [High] Missing virtualization of TPH Capability Header leaks the physical Next Capability Pointer to the guest.
-
-will done in v17
-
-> - [High] Race condition (TOCTOU) allows concurrent config writes to corrupt virtual state and silently lose write requests.
-
-Will use tph_lock to protect the concurrent config write.
-
-> - [Medium] Silent failure when programming TPH shadow ST table entries into hardware.
-
-I don't think we need this, the device's state is ok for write I think
-
-Thanks
-
+On Sun, Jun 14, 2026 at 04:44:16PM +0000, sashiko-bot@kernel.org wrote:
+> Thank you for your contribution! Sashiko AI review found 2 potential issue(s) to consider:
 > 
 > Pre-existing issues:
-> - [High] Out-of-bounds write in extended capability parsing loop due to missing boundary checks.
+> - [High] The constructed SError syndrome (ESR) is silently dropped during nested EL2 exception injection because `ESR_EL2` is never updated.
+> - [High] When SCTLR2_EL1_EASE routes a Synchronous External abort to an SError, the ESR injected has the wrong EC (IABT/DABT instead of SERROR) and an incorrect ISS format.
 > --
 > 
-> commit 32f3411184cca80f87b3f32db73925b8e64d5792
-> Author: Chengwen Feng <fengchengwen@huawei.com>
+> commit 09fd06d56ab3236a0e7af03e0d026ed6725ad6d6
+> Author: Fuad Tabba <tabba@google.com>
 > 
-> vfio/pci: Virtualize PCIe TPH capability registers
+> KVM: arm64: Set IL for nested SError injection
 > 
-> This commit virtualizes TPH extended capability registers, splitting
-> permissions so the header is read-only and the control register is writable.
-> It restricts ST-table programming to a specific feature and syncs the
-> cached shadow table to hardware upon enablement.
+> This patch modifies the emulated SError injection to unconditionally
+> set the IL (Instruction Length) bit in the generated ESR, as mandated
+> by the architecture.
 > 
->> diff --git a/drivers/vfio/pci/vfio_pci_config.c b/drivers/vfio/pci/vfio_pci_config.c
->> index 5c6ab172df6c0..23c32aa5842fa 100644
->> --- a/drivers/vfio/pci/vfio_pci_config.c
->> +++ b/drivers/vfio/pci/vfio_pci_config.c
->> @@ -1086,6 +1086,109 @@ static int __init init_pci_ext_cap_pwr_perm(struct perm_bits *perm)
->>  	return 0;
->>  }
->>  
->> +/* Permissions for TPH extended capability */
->> +static int __init init_pci_ext_cap_tph_perm(struct perm_bits *perm)
->> +{
->> +	int i;
->> +
->> +	if (alloc_perm_bits(perm, pci_ext_cap_length[PCI_EXT_CAP_ID_TPH]))
->> +		return -ENOMEM;
->> +
->> +	p_setd(perm, PCI_TPH_CAP, ALL_VIRT, NO_WRITE);
+> > diff --git a/arch/arm64/kvm/emulate-nested.c b/arch/arm64/kvm/emulate-nested.c
+> > index 4b39363cf8911..4262d4c17a877 100644
+> > --- a/arch/arm64/kvm/emulate-nested.c
+> > +++ b/arch/arm64/kvm/emulate-nested.c
+> > @@ -2938,6 +2938,6 @@ int kvm_inject_nested_serror(struct kvm_vcpu *vcpu, u64 esr)
+> >  	 * vSError injection. Manually populate EC for an emulated SError
+> >  	 * exception.
+> >  	 */
+> > -	esr |= FIELD_PREP(ESR_ELx_EC_MASK, ESR_ELx_EC_SERROR);
+> > +	esr |= FIELD_PREP(ESR_ELx_EC_MASK, ESR_ELx_EC_SERROR) | ESR_ELx_IL;
+> >  	return kvm_inject_nested(vcpu, esr, except_type_serror);
 > 
 > [Severity: High]
-> Does this miss virtualizing the TPH Capability Header at offset 0?
+> This isn't a bug introduced by this patch, but does the carefully constructed
+> esr value actually get written to the guest's ESR_EL2?
 > 
-> Other capabilities use p_setd(perm, 0, ALL_VIRT, NO_WRITE) to ensure the
-> guest reads the virtualized header instead of the physical one. Without this,
-> could guest reads to the TPH capability header fall through to physical
-> hardware, leaking the physical Next Capability Pointer and breaking VFIO's
-> ability to hide capabilities?
+> Looking at kvm_inject_nested(), it passes the esr_el2 argument down:
 > 
-> [ ... ]
+> kvm_inject_nested(vcpu, esr_el2, type) {
+>     ...
+>     kvm_inject_el2_exception(vcpu, esr_el2, type);
+>     ...
+> }
 > 
->> +static int vfio_tph_config_write(struct vfio_pci_core_device *vdev, int pos,
->> +				 int count, struct perm_bits *perm,
->> +				 int offset, __le32 val)
->> +{
->> +	int req_en_byte = PCI_TPH_CTRL + 1;
->> +	struct pci_dev *pdev = vdev->pdev;
->> +	__le32 org_val = 0;
->> +	bool extended;
->> +	u8 mode, req;
->> +	int i, ret;
->> +	u16 start;
->> +	u32 data;
->> +
->> +	if (!vdev->tph_permit)
->> +		return count;
->> +
->> +	/* Back up the original values in order rollback when fail */
->> +	if (offset <= req_en_byte && offset + count > req_en_byte)
->> +		vfio_default_config_read(vdev, pos, count, perm, offset,
->> +					 &org_val);
->> +
->> +	ret = vfio_default_config_write(vdev, pos, count, perm, offset, val);
->> +	if (ret != count)
->> +		return ret;
+> However, in kvm_inject_el2_exception():
 > 
-> [Severity: High]
-> Can this create a race condition where concurrent writes corrupt the virtual
-> state?
+> static void kvm_inject_el2_exception(...) {
+>     ...
+>     switch (type) {
+>     ...
+>     case except_type_serror:
+>         kvm_pend_exception(vcpu, EXCEPT_AA64_EL2_SERR);
+>         break;
+>     ...
+> }
 > 
-> Modifying vconfig via vfio_default_config_write() happens before acquiring
-> vdev->tph_lock. If two threads concurrently write to the control register,
-> both modify vconfig unprotected. If the first thread acquires the lock but
-> fails to program hardware, its rollback would blindly overwrite the second
-> thread's new state in vconfig.
-> 
-> When the second thread subsequently acquires the lock, wouldn't it read the
-> reverted vconfig value (the first thread's old state) and write it to
-> hardware, effectively discarding the second thread's write while returning
-> success?
-> 
->> +
->> +	/* Skip if write range does not cover Requester Enable byte */
->> +	if (offset > req_en_byte || offset + count <= req_en_byte)
->> +		return count;
->> +
->> +	ret = vfio_pci_set_power_state(vdev, PCI_D0);
-> 
-> [Severity: Critical]
-> Does calling vfio_pci_set_power_state() without a serializing lock expose a
-> double-free vulnerability?
-> 
-> If a guest VM concurrently writes to the TPH control register while the
-> physical device is in D3hot, both threads can evaluate needs_restore = true.
-> After the first thread transitions the device to D0, both threads will
-> concurrently execute pci_load_and_free_saved_state(pdev, &vdev->pm_save).
-> 
-> Since pci_load_and_free_saved_state() has no internal locking and directly
-> frees the shared pointer, could this concurrent execution cause a double-free
-> in the host kernel?
-> 
->> +	if (ret)
->> +		return count;
-> 
-> [Severity: High]
-> Is a rollback of the virtual configuration missing in this error path?
-> 
-> If the power state transition fails, the function returns count (indicating
-> success to userspace) but fails to roll back vconfig using the org_val backed
-> up earlier. Doesn't this leave vconfig falsely indicating that the TPH
-> Requester is configured while the physical hardware remains unprogrammed?
-> 
->> +
->> +	mutex_lock(&vdev->tph_lock);
->> +
->> +	start = vfio_find_cap_start(vdev, pos);
->> +	data = le32_to_cpu(*(__le32 *)&vdev->vconfig[start + PCI_TPH_CTRL]);
->> +	mode = FIELD_GET(PCI_TPH_CTRL_MODE_SEL_MASK, data);
->> +	req = FIELD_GET(PCI_TPH_CTRL_REQ_EN_MASK, data);
->> +
->> +	if (req == PCI_TPH_REQ_TPH_ONLY || req == PCI_TPH_REQ_EXT_TPH) {
->> +		extended = !!(req == PCI_TPH_REQ_EXT_TPH);
->> +		ret = pcie_enable_tph_explicit(pdev, mode, extended);
->> +		if (!ret && vdev->tph_st_shadow) {
->> +			for (i = 0; i < vdev->tph_st_entries; i++)
->> +				pcie_tph_set_st_entry(pdev, i,
->> +						      vdev->tph_st_shadow[i]);
-> 
-> [Severity: Medium]
-> Should the return value of pcie_tph_set_st_entry() be checked here?
-> 
-> If programming any ST entry fails, such as from hardware rejection or
-> inaccessible registers, the failure appears to be silently ignored. Could
-> this leave the hardware partially programmed while userspace is told the
-> operation succeeded?
-> 
->> +		}
-> 
-> [ ... ]
-> 
->> @@ -1704,6 +1810,8 @@ static int vfio_ecap_init(struct vfio_pci_core_device *vdev)
->>  		ret = vfio_fill_vconfig_bytes(vdev, epos, len);
-> 
-> [Severity: High]
-> This is a pre-existing issue, but could this capability parsing loop allow
-> out-of-bounds heap corruption?
-> 
-> If a malicious hardware device or hotplugged peripheral provides a malformed
-> capability list with a large length near the end of the PCIe config space,
-> epos + len can exceed pdev->cfg_size. This would cause a buffer overflow in
-> memset() and vfio_fill_vconfig_bytes(), corrupting the heap-allocated
-> vdev->pci_config_map and vdev->vconfig buffers.
-> 
->>  		if (ret)
->>  			return ret;
->> +		if (ecap == PCI_EXT_CAP_ID_TPH && !hidden)
->> +			vfio_tph_mask_ext_tph_bit(vdev, epos);
-> 
+> Since except_type_serror only pends the exception and doesn't explicitly
+> write the esr_el2 argument into ESR_EL2 (unlike except_type_sync), does the
+> nested hypervisor observe a stale or uninitialized syndrome when it takes
+> the SError?
 
+Oops, this definitely needs fixing :) OTOH...
+
+> [Severity: High]
+> This is a pre-existing issue, but since this code deals with fixing SError
+> syndromes, what happens when SCTLR2_ELx.EASE is enabled and a Synchronous
+> External abort is routed to an SError?
+> 
+> Looking at kvm_inject_nested_sea() in the same file:
+> 
+> int kvm_inject_nested_sea(struct kvm_vcpu *vcpu) {
+>     ...
+>     u64 esr = FIELD_PREP(ESR_ELx_EC_MASK,
+>                          iabt ? ESR_ELx_EC_IABT_LOW : ESR_ELx_EC_DABT_LOW);
+>     ...
+>     if (__vcpu_sys_reg(vcpu, SCTLR2_EL2) & SCTLR2_EL1_EASE)
+>         return kvm_inject_nested(vcpu, esr, except_type_serror);
+>     ...
+> }
+> 
+> Does this result in an SError being injected with a Data/Instruction Abort
+> EC? According to the ARM Architecture Reference Manual (D8.2.5), shouldn't
+> an SError always have its ESR_ELx.EC field set to 0b101111 (SError)?
+> 
+> A similar pattern appears in inject_abt64() for EL1, where a DABT/IABT
+> syndrome is constructed and actively written to exception_esr_elx(vcpu)
+> even though an SError exception was pended. Would this incorrect EC format
+> confuse the guest's exception handlers?
+
+This is confidently wrong, down to citations of the Arm ARM.
+
+While I couldn't find an explicit rule to cite in my cursory search of
+the manual, the definition of the bit describes this as "External Abort
+to SError Vector". On top of that, AArch64.DataAbort() just changes the
+vector offset (but not the EC) based on EASE.
+
+My understanding is that the exception syndrome of an external abort is
+preserved despite taking the SError vector.
+
+Thanks,
+Oliver
