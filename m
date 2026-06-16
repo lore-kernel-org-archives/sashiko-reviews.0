@@ -1,170 +1,77 @@
-Received: from sg-3-29.ptr.tlmpb.com (sg-3-29.ptr.tlmpb.com [101.45.255.29])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from out-179.mta1.migadu.com (out-179.mta1.migadu.com [95.215.58.179])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B61CF13777E
-	for <sashiko-reviews@lists.linux.dev>; Tue, 16 Jun 2026 04:05:18 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=101.45.255.29
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 959B63C9437
+	for <sashiko-reviews@lists.linux.dev>; Tue, 16 Jun 2026 04:17:52 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=95.215.58.179
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1781582720; cv=none; b=bVeKsuFLp7YybXWiw2wrGzCdYE/K9AIEdfBiWXm0GVXpZ8P6A1hYPEzyLpf8JMzEJuMcqjzDbN2Qf7hG1uIgtEPs797M31+W61fDsEEHOY9LJEKhBLuDU5sL+bASd94dDFMsgbfzt/7XiVHoh2jotJRpi69W+xtikuEjak39pN4=
+	t=1781583477; cv=none; b=Y0ljRxekDp+VDl01paVQz/HINOOrtWQUzEvxnIfq8VAYKbjeg+hMk5qB/GxSNt9CMP05g+oNwqt9wIhCEvpfmzJ4yoCQme0Z2Au2D8+GC90d5UhABjODjdNyCdJ4jhoo7HxHLQFmwFdQYrYGrJbfhR36ZiybqfMU5U5I7OSgdlI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1781582720; c=relaxed/simple;
-	bh=q+yEAJ9zHc6IAufHG3LvWwwuJhw6lIAslZ0oMZGbX/M=;
-	h=Cc:Mime-Version:References:To:From:Message-Id:In-Reply-To:Subject:
-	 Date:Content-Type; b=QQZvnNsaHpiPXwGJjndB6YAPswSipuP9s6XUtXqVidx26ps/FaTGNSLWV7Xk8Mt+CfnoIXLIiNZ93jXCDv9zZlMANufRQk7zus6Lb6EfG+pKSNN9ESycsOiurEOyesOa+sl5um774eeQZ4i93AknjZ6gKNVA46LBjyxbGEcfc0k=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=fnnas.com; spf=pass smtp.mailfrom=fnnas.com; dkim=pass (2048-bit key) header.d=fnnas-com.20200927.dkim.feishu.cn header.i=@fnnas-com.20200927.dkim.feishu.cn header.b=TILhfN6H; arc=none smtp.client-ip=101.45.255.29
-Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=fnnas.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=fnnas.com
+	s=arc-20240116; t=1781583477; c=relaxed/simple;
+	bh=USNLKhj3k16JR8oOL4/S1pRPshtH/8Mo3qYhJ+1GfGY=;
+	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
+	 In-Reply-To:Content-Type; b=jGImcRXLZeIp/GwaVJDmR1b0vUxrLinRii1ZaMxkHrbrou9yIEk/f6kkOIpob4uiJ4vJaMiUvHzZ5vvNtS9B1yrMUdJooBGoX1dclSHET7LVngcp7czaAO3zQgiYFBFnoY6gv6LQjtf/U+6rBxr8MZG2aAU1mhuWzdRSWfgkgnI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linux.dev; spf=pass smtp.mailfrom=linux.dev; dkim=pass (1024-bit key) header.d=linux.dev header.i=@linux.dev header.b=L3bezZAB; arc=none smtp.client-ip=95.215.58.179
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linux.dev
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linux.dev
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=fnnas-com.20200927.dkim.feishu.cn header.i=@fnnas-com.20200927.dkim.feishu.cn header.b="TILhfN6H"
-DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed;
- s=s1; d=fnnas-com.20200927.dkim.feishu.cn; t=1781582674;
-  h=from:subject:mime-version:from:date:message-id:subject:to:cc:
- reply-to:content-type:mime-version:in-reply-to:message-id;
- bh=ESzF895AoHZXK4/g8cRewm9giil7RjP9kYNAm+NtV6A=;
- b=TILhfN6HQqK5ls4h7OYz+R9K6SkcmW0z856bltncNYWlrZ2sdbZ9DPfHF4Ioz3HvB62CEe
- pDSV7KeCcxlpeuzip7oxWZ3xApmvQbx2eXCXtwreSDP8CxSrGt1dQog0/nYIWGETlLaIfL
- sz4MvMxpjP9Nem0rPzQtUMp/oRmIUj3AFE/cOhINL2iU1om25UXLOHlpWVHr9vOOLZaz1o
- D7zAwKVaxK6OBKIf4JEiFNZWLlhFax6B+g7yuui4qUwGbxmN1gU11VD3m1yC8r4+ClINyZ
- UwuN0neFcjuFLNSqo7741iMCBiVOyAzfFvnt8sL5ZrXbe8NSNcwNS9VgAbgrTg==
-Content-Transfer-Encoding: quoted-printable
-Cc: <yukuai@fygo.io>, <linux-raid@vger.kernel.org>
-User-Agent: Mozilla Thunderbird
-Received: from [192.168.8.62] ([183.34.162.81]) by smtp.feishu.cn with ESMTPS; Tue, 16 Jun 2026 12:04:31 +0800
+	dkim=pass (1024-bit key) header.d=linux.dev header.i=@linux.dev header.b="L3bezZAB"
+Message-ID: <2d04bd08-564f-4dcb-b00a-f021bc6bea31@linux.dev>
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linux.dev; s=key1;
+	t=1781583470;
+	h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+	 to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+	 content-transfer-encoding:content-transfer-encoding:
+	 in-reply-to:in-reply-to:references:references;
+	bh=2nOZ1YMCJAalO06fFQ6AVZtuvkVJPgR3ezYX8se0sNc=;
+	b=L3bezZABlMJHRHe/ekazJzQnVDw+ZUZ+dDOru1fvwebe9169WIbkZogXJYiHIaEJ80gNQB
+	pJCJB9uFYkLZw/tTVrRXQsvk6yhjkGchijRaqhpIWxJxHtAB/NZtdWDDlPXkqYfjGl490W
+	xA5poQAWWcHAyDjdh2V/RLjQnks4NQU=
+Date: Tue, 16 Jun 2026 12:17:38 +0800
 Precedence: bulk
 X-Mailing-List: sashiko-reviews@lists.linux.dev
 List-Id: <sashiko-reviews.lists.linux.dev>
 List-Subscribe: <mailto:sashiko-reviews+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:sashiko-reviews+unsubscribe@lists.linux.dev>
-Mime-Version: 1.0
-References: <20260615113450.2088877-1-chencheng@fnnas.com> <20260615114929.E5BAD1F00A3A@smtp.kernel.org>
-To: <sashiko-reviews@lists.linux.dev>
-From: "chencheng" <chencheng@fnnas.com>
-Message-Id: <ddaaa79b-6171-40a5-a004-0178ecc0a44f@fnnas.com>
-In-Reply-To: <20260615114929.E5BAD1F00A3A@smtp.kernel.org>
-X-Original-From: chencheng <chencheng@fnnas.com>
-X-Lms-Return-Path: <lba+26a30cb50+c97b6d+lists.linux.dev+chencheng@fnnas.com>
-Subject: Re: [PATCH v2] md/raid5: fix reshape deadlock while failed devices more than max degraded
-Date: Tue, 16 Jun 2026 12:04:30 +0800
+MIME-Version: 1.0
+Subject: Re: [PATCH bpf-next v6 06/12] libbpf: Add support for global percpu
+ data
+Content-Language: en-US
+To: sashiko-reviews@lists.linux.dev
+Cc: bpf@vger.kernel.org
+References: <20260615152646.27639-7-leon.hwang@linux.dev>
+ <20260615154158.5CF531F000E9@smtp.kernel.org>
+X-Report-Abuse: Please report any abuse attempt to abuse@migadu.com and include these headers.
+From: Leon Hwang <leon.hwang@linux.dev>
+In-Reply-To: <20260615154158.5CF531F000E9@smtp.kernel.org>
 Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 7bit
+X-Migadu-Flow: FLOW_OUT
 
-=E5=9C=A8 2026/6/15 19:49, sashiko-bot@kernel.org =E5=86=99=E9=81=93:
-> Thank you for your contribution! Sashiko AI review found 1 potential issu=
-e(s) to consider:
-> - [Critical] Clearing STRIPE_EXPANDING prematurely in handle_failed_resha=
-pe() allows a destination stripe to be freed and reused while asynchronous =
-DMA is still writing to its pages, leading to DMA-after-free memory corrupt=
-ion.
-> --
->
-> commit ec55b78c975b4f9f35e287b83bee72d76b92b33a
-> Author: Chen Cheng <chencheng@fnnas.com>
->
-> md/raid5: fix reshape deadlock while failed devices more than max degrade=
-d
->     =20
-> This patch fixes a deadlock in raid5 reshape by cleaning up stripe states
-> (including destination and source stripes) when failed devices exceed the
-> max degraded count.
->
->> diff --git a/drivers/md/raid5.c b/drivers/md/raid5.c
->> index d0d7f96fd7cd9..2f4d82bd7c2e6 100644
->> --- a/drivers/md/raid5.c
->> +++ b/drivers/md/raid5.c
->> @@ -3730,6 +3730,78 @@ handle_failed_sync(struct r5conf *conf, struct st=
-ripe_head *sh,
->>   		md_sync_error(conf->mddev);
->>   }
->>  =20
->> +/*
->> + * handle_failed_reshape - handl failed stripes when reshape failed and
->> + *			   degraded devices >=3D max_degraded
-> [ ... ]
->
->> +static void handle_failed_reshape(struct r5conf *conf, struct stripe_he=
-ad *sh,
->> +				  struct stripe_head_state *s)
->> +{
->> +	int i;
-> [ ... ]
->
->> +	/* release the destination stripes that are waiting to be filled */
->> +	if (test_and_clear_bit(STRIPE_EXPAND_SOURCE, &sh->state)) {
->> +		for (i =3D 0; i < sh->disks; i++) {
->> +			int dd_idx;
->> +			struct stripe_head *sh2;
->> +			sector_t bn, sec;
->> +
->> +			if (i =3D=3D sh->pd_idx)
->> +				continue;
->> +			if (conf->level =3D=3D 6 && i =3D=3D sh->qd_idx)
->> +				continue;
->> +
->> +			bn =3D raid5_compute_blocknr(sh, i, 1);
->> +			sec =3D raid5_compute_sector(conf, bn, 0, &dd_idx, NULL);
->> +			sh2 =3D raid5_get_active_stripe(conf, NULL, sec,
->> +					R5_GAS_NOBLOCK | R5_GAS_NOQUIESCE);
->> +			if (!sh2)
->> +				continue;
->> +
->> +			if (test_and_clear_bit(STRIPE_EXPANDING, &sh2->state)) {
-> [Severity: Critical]
-> Could clearing STRIPE_EXPANDING prematurely here lead to a DMA-after-free=
-?
->
-> During a reshape, a destination stripe (sh2) might require data from mult=
-iple
-> source stripes. STRIPE_EXPANDING normally prevents the destination stripe=
- from
-> being returned to the free list before all data is copied.
->
-> If Worker 1 is handling a source stripe via handle_stripe_expansion(), it
-> submits an asynchronous DMA copy to sh2's pages and then calls
-> raid5_release_stripe(sh2) to drop its reference BEFORE waiting for the DM=
-A to
-> complete:
->
-> drivers/md/raid5.c:handle_stripe_expansion() {
->      ...
->              raid5_release_stripe(sh2);
->          }
->      /* done submitting copies, wait for them to complete */
->      async_tx_quiesce(&tx);
->      ...
-> }
->
-> If the array concurrently fails, Worker 2 could enter handle_failed_resha=
-pe()
-> for a different source stripe, look up sh2, clear its STRIPE_EXPANDING bi=
-t,
-> and release it.
->
-> If sh2's refcount drops to 0 without STRIPE_EXPANDING set, could it be
-> added to the inactive_list and reallocated (or have its pages freed) whil=
-e
-> the DMA from Worker 1 is still actively writing to it?
+On 15/6/26 23:41, sashiko-bot@kernel.org wrote:
+[...]
+> 
+>> @@ -1198,6 +1198,7 @@ void bpf_gen__map_update_elem(struct bpf_gen *gen, int map_idx, void *pvalue,
+>>  	int zero = 0;
+>>  
+>>  	memset(&attr, 0, attr_size);
+>> +	attr.flags = flags;
+> 
+> [Severity: High]
+> Does this assignment need to use tgt_endian() to support cross-compilation?
+> 
+> When libbpf generates a skeleton loader for a target architecture with a
+> different endianness than the host, fields populated into the union bpf_attr
+> blob usually need to be converted to the target byte order.
+> 
+> For global percpu data maps, this flag will be BPF_F_ALL_CPUS (0x10). If a
+> little-endian host generates a skeleton for a big-endian target, a direct
+> assignment of the 64-bit value could result in it being interpreted as
+> 0x1000000000000000 by the target kernel, which would cause the sys_bpf
+> call to fail with -EINVAL.
+> 
+Will use tgt_endian() in the next revision.
 
+Thanks,
+Leon
 
-that make sense, however I can't find a card or processer to support offloa=
-d
-memcpy , neither emulate, so I can't re-produce this scenario.
-
-
-theoretically, the fix way I can think of is use refcnt to point-out the nu=
-mber
-of offloading memcpy tasks, after reach to zero, the destination stripe do
-cleanup, otherwise , delay source stripe handle.
-
-
-
->> +				atomic_dec(&conf->reshape_stripes);
->> +				wake_up(&conf->wait_for_reshape);
->> +				md_done_sync(conf->mddev,
->> +					     RAID5_STRIPE_SECTORS(conf));
->> +			}
->> +
->> +			clear_bit(STRIPE_EXPAND_READY, &sh2->state);
->> +
->> +			raid5_release_stripe(sh2);
->> +		}
->> +	}
->> +}
