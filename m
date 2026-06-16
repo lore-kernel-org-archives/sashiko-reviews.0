@@ -1,41 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B617B472798;
-	Tue, 16 Jun 2026 18:51:26 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 213083CEBBD;
+	Tue, 16 Jun 2026 18:57:47 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1781635888; cv=none; b=n54RFGadBD4t8ImuO2ODcpkmevznzeVs7xvmop27dBmTuuxWlFa8Mc05RFQPHQhzb0aO3Dpi2I66/Wz3cjz63Dk8EoNlZrFNbAWNSMff+8aBnsemO0cJPRGV3/5r8mZ9ciESmDXPsxjfFb6txkKXA9hpN2AIMEwyZhu77x7nxPM=
+	t=1781636268; cv=none; b=MylnXYpkZpALAuPIjQ+dCHQB4gexuOdtKfxCMXQBbv0JP+Vm7dzkfEEi4u6UYsKHrD/zYRO2vAlKp5DHxtWr9extCn24b5x4jcgdUBY6z5elC+g1yDwqhOOaHOYTU+yvQsKTASUMUR7YQWEsv7dtWw3bmFXwa1n9aKlnPnSLkLk=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1781635888; c=relaxed/simple;
-	bh=rmBRnG8AxqdlIuJyRiYimv60Y6yDX53K41LT0+N6dNo=;
+	s=arc-20240116; t=1781636268; c=relaxed/simple;
+	bh=VSLNvE4kRbOqrt1OJ/KhontEzREN1pu1ATQom+s29Rs=;
 	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=Ie/0gkJguq3tzBsTOxfR5QNjtBaBHwR1DPVKPQx0fXkhiOS0FVJ0IeKsvZzr27bMvPHxpDDZpXcjKrDD9g8WuRirEni71VOSiHYR0K4PlmIMh4N21yItZSYQ/IyHc73rFBFOd24Owjqf22u5z2iiLl2H3oqfrQZBHlxvjwic+AQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=kzT+Vjc6; arc=none smtp.client-ip=100.103.45.18
+	 Content-Type:Content-Disposition:In-Reply-To; b=blHxZ05JUEFhEgeEIT2xtwv/oZl6K43qirtuleaP3fQOBX5Q70FERrbnhQCXro7zthwxUtRTuxjbUZAClh+7ZQp3d6I1IpeRgYfOor8AIoIMGwEVJHDtov7F6UgBxpyxO5CoGStZJyxQLKlnqJIxVfBXQ3dfOaK7vYv1aDEf0JA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=oJ8K9jw+; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="kzT+Vjc6"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6989F1F000E9;
-	Tue, 16 Jun 2026 18:51:26 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="oJ8K9jw+"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1E1C81F000E9;
+	Tue, 16 Jun 2026 18:57:45 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=kernel.org;
-	s=k20260515; t=1781635886;
-	bh=+lcXMh4NrdCZ0Zg9FeWlSVZOphMiPhiVRq4MaeywrPQ=;
+	s=k20260515; t=1781636266;
+	bh=+u2CQ3JCxLqq4KVytfesXpoMNP5xMMmxB4qs1tyq7Sg=;
 	h=Date:From:To:Cc:Subject:References:In-Reply-To;
-	b=kzT+Vjc6/j4GgYdCUNbgJSqQ7q94v02nODN/3pdO0nfdWRj7kEULdzZeZLqBPpSUU
-	 9NztSq6DMy5IZRdVuH8G91taxjMt/Lqdvt5/P5n7tC1foUe0yC5YNsBqPEXce22Z26
-	 t5H+UfVZaNklQH258oPKO/AWsQ/bo8Dp1kKI2PB4kuhW0Dv4oXA7tAhePY8j7IbVBd
-	 XiqR0YRw28X7EoiVpoYupOyTnPmp5gC+i72Qpo0jHFx1dIGAlzdlXfK5VCdr6h4lmR
-	 nNO8tC7gfFjEqCE8Q2kMbK7BszKgpfMbgFuByd3SB5Sh6G7e6pHT8HAB84xwMCbcdD
-	 ZNdkru2braFlQ==
-Date: Tue, 16 Jun 2026 11:51:25 -0700
-From: Oliver Upton <oupton@kernel.org>
+	b=oJ8K9jw+0G6GbVqrtV7Wp5uDPVNDzJyVznwciNyfi7CJpVfe6u78q+d31LT4+SW9F
+	 /GFNBDB/P7xFdXRPOcCodSIl4c/GEigaP4d1/vld6U2mLaIKbUqgbPU7zqxYBpXWZQ
+	 JrEl0Jo1jceZ38frwuF9Ra8CtL1mF4BnF7zyOzXB1ZaeudpnD8Pzr0rlaNXVi4/Kus
+	 Pc865ZpbGikFzeXhhErp/7h+RNegrOn2hmk1oS+6+Sd8dVZewJvs6KhZD/PKaVB4EM
+	 g4BpiEgPKiJpexTI7DbNM88gHiDtuN60yDCtXt7IUN0Vy1Rlji22z1v8rmQ9dBrTOz
+	 vtWECPIntbizg==
+Date: Tue, 16 Jun 2026 21:57:42 +0300
+From: Leon Romanovsky <leon@kernel.org>
 To: sashiko-reviews@lists.linux.dev
-Cc: Marc Zyngier <maz@kernel.org>, kvm@vger.kernel.org,
-	kvmarm@lists.linux.dev
-Subject: Re: [PATCH] KVM: arm64: Handle race between interrupt affinity
- change and LPI disabling
-Message-ID: <ajGbLXf8Yc67cSI9@kernel.org>
-References: <20260615181625.3029352-1-maz@kernel.org>
- <20260615183314.65A571F00A3A@smtp.kernel.org>
+Cc: lirongqing <lirongqing@baidu.com>, linux-pci@vger.kernel.org
+Subject: Re: [PATCH] PCI/P2PDMA: Use RCU_INIT_POINTER() to clear pdev->p2pdma
+Message-ID: <20260616185742.GS327369@unreal>
+References: <20260612083452.1639-1-lirongqing@baidu.com>
+ <20260612084824.A3DE91F00A3A@smtp.kernel.org>
 Precedence: bulk
 X-Mailing-List: sashiko-reviews@lists.linux.dev
 List-Id: <sashiko-reviews.lists.linux.dev>
@@ -44,56 +42,59 @@ List-Unsubscribe: <mailto:sashiko-reviews+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-In-Reply-To: <20260615183314.65A571F00A3A@smtp.kernel.org>
+In-Reply-To: <20260612084824.A3DE91F00A3A@smtp.kernel.org>
 
-On Mon, Jun 15, 2026 at 06:33:14PM +0000, sashiko-bot@kernel.org wrote:
-> > @@ -795,7 +796,11 @@ static void vgic_prune_ap_list(struct kvm_vcpu *vcpu)
-> >  			continue;
-> >  		}
+On Fri, Jun 12, 2026 at 08:48:24AM +0000, sashiko-bot@kernel.org wrote:
+> Thank you for your contribution! Sashiko AI review found 2 potential issue(s) to consider:
+> 
+> Pre-existing issues:
+> - [High] pci_p2pdma_release() skips synchronize_rcu() when p2pdma->pool is NULL, causing a use-after-free of the devm-allocated p2pdma structure and corruption of its map_types xarray for concurrent RCU readers.
+> - [High] Missing devres action removal in pci_p2pdma_add_resource() error paths causes Use-After-Free of p2p_pgmap during devres teardown.
+> --
+> 
+> commit eb4ec2c32d602512abbeccbe720637cf83f85cb6
+> Author: Li RongQing <lirongqing@baidu.com>
+> 
+> PCI/P2PDMA: Use RCU_INIT_POINTER() to clear pdev->p2pdma
+> 
+> Since pdev->p2pdma is an RCU-protected pointer, directly assigning
+> NULL to it violates RCU semantics and triggers sparse static analysis
+> warnings.
+> 
+> Fix this by using RCU_INIT_POINTER() instead of a raw assignment,
+> ensuring proper RCU annotations and consistency with the subsequent
+> synchronize_rcu() call.
+> 
+> > diff --git a/drivers/pci/p2pdma.c b/drivers/pci/p2pdma.c
+> > index 7c898542af8d5..fd98624208c50 100644
+> > --- a/drivers/pci/p2pdma.c
+> > +++ b/drivers/pci/p2pdma.c
+> > @@ -236,7 +236,7 @@ static void pci_p2pdma_release(void *data)
+> >  		return;
 > >  
-> > -		/* This interrupt looks like it has to be migrated. */
-> > +		/*
-> > +		 * This interrupt looks like it has to be migrated,
-> > +		 * make sure it is kept alive while locks are dropped.
-> > +		 */
-> > +		vgic_get_irq_ref(irq);
+> >  	/* Flush and disable pci_alloc_p2p_mem() */
+> > -	pdev->p2pdma = NULL;
+> > +	RCU_INIT_POINTER(pdev->p2pdma, NULL);
+> >  	if (p2pdma->pool)
+> >  		synchronize_rcu();
 > 
-> [Severity: Critical]
-> This isn't a bug introduced by this patch, but could the lock-dropping window
-> here lead to a double list_del() and a use-after-free under certain race
-> conditions?
+> [Severity: High]
+> This isn't a bug introduced by this patch, but could skipping
+> synchronize_rcu() here result in a use-after-free for concurrent RCU readers?
 > 
-> When vgic_prune_ap_list() drops the irq and ap_list locks shortly after this
-> reference is taken, another thread could concurrently execute
-> vgic_flush_pending_lpis() above and remove the irq from the list.
+> If p2pdma->pool is NULL, synchronize_rcu() is bypassed before destroying the
+> map_types xarray and returning. Since the p2pdma structure is managed by
+> devres, it will be freed shortly after this callback returns.
 > 
-> If a third thread then concurrently injects the same LPI before the locks are
-> reacquired, the irq_lock is taken and pending_latch is set to true again.
+> If concurrent RCU readers (like those executing pci_p2pdma_map_type()) obtain
+> the pointer just before it is cleared, will they continue to access the freed
+> map_types xarray and p2pdma structure?
 > 
-> When vgic_prune_ap_list() reacquires the locks further down in the function,
-> the target_vcpu oracle check will pass because the interrupt is pending again:
-> 
-> arch/arm64/kvm/vgic/vgic.c:vgic_prune_ap_list() {
->     ...
->     if (target_vcpu == vgic_target_oracle(irq)) {
->         struct vgic_cpu *new_cpu = &target_vcpu->arch.vgic_cpu;
-> 
->         list_del(&irq->ap_list);
->         irq->vcpu = target_vcpu;
->     ...
-> }
-> 
-> Because there is no check verifying that irq->vcpu is still equal to the
-> source vcpu, does this unconditionally execute list_del() on a list entry
-> that has already been removed and poisoned?
-> 
-> Would this also bypass acquiring a new list reference, leaving the LPI on the
-> new list with a deficient reference count if it avoids a crash?
+> >  	xa_destroy(&p2pdma->map_types);
 
-Urgh... Marc, I think we need Hyunwoo's patch in addition to yours. Even
-though this 3-way race seems improbable, it does appear possible :/
+I do not believe this is a bug. The p2pdma->pool field is NULL only for
+in-kernel users that fully control the lifecycle of their drivers.
+In that mode, there should not be any concurrent RCU readers when the
+device is released.
 
-[*]: https://lore.kernel.org/kvmarm/aiHnI1mu6SGQrgnz@v4bel/
-
-Thanks,
-Oliver
+Thanks
