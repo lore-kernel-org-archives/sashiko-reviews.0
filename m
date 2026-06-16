@@ -1,298 +1,138 @@
-Received: from mail-wr1-f49.google.com (mail-wr1-f49.google.com [209.85.221.49])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from mx0a-0031df01.pphosted.com (mx0a-0031df01.pphosted.com [205.220.168.131])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5657120E702
-	for <sashiko-reviews@lists.linux.dev>; Tue, 16 Jun 2026 00:19:37 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=pass smtp.client-ip=209.85.221.49
-ARC-Seal:i=2; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1781569179; cv=pass; b=U9ROCjztrWxV3QCJdGzTGMXJ9Ev2blAwA53B/9k5jDVGnkiiOrlxr/CpLVgt7/R4Zq8hd4R9qje4OD45aKuHjPvQT/SC4qiX43WBJyvUZ/rbwFDsnNN00EdR6H5DHkawb5R+GQV7BYvHLMq+n/HAqNXnZ+lJz+tIsTyiyxc0hCE=
-ARC-Message-Signature:i=2; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1781569179; c=relaxed/simple;
-	bh=R7jkRHEbkI3KDNTdvpskkAftIPIp5keaE4wczIV0tng=;
-	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
-	 To:Cc:Content-Type; b=Vpttk3gUac6+JqYvRcXwsft0+Mw1mOKLpcP5gFvy2AXSEUQNn7D1G8Nw8MfWWzDXgrbkNw4vCNlQnUzgR26uTVM+QTfZPaacQDugwFr1Ku/qRggy2mMIOLsqNhwYbgFCsn3xs/sErqErJcZ4uBpxPr9xZl8XHRlxH0QJ8DCREIA=
-ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=google.com; spf=pass smtp.mailfrom=google.com; dkim=pass (2048-bit key) header.d=google.com header.i=@google.com header.b=JEFpIPYI; arc=pass smtp.client-ip=209.85.221.49
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=google.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=google.com
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D095B19DF6A
+	for <sashiko-reviews@lists.linux.dev>; Tue, 16 Jun 2026 00:30:42 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.168.131
+ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
+	t=1781569843; cv=none; b=InL6ODzhjrQCOaFmuSS/n0hLeJrOTxPWblt6ckOTOLHBvTXlO0wtjqhVRokwseWKfEf948lLf8J1OFmVmTsdMMMryzkUCMhbLVCfRTBon0yB/m8f/tDLupC4Vkt/IEqrgufFvfS4sZ4emBpFdDt0wP1xfKeywEr7vr2Myuu7B0A=
+ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
+	s=arc-20240116; t=1781569843; c=relaxed/simple;
+	bh=TRJG9+1ZB40bVO817nPs/2tJGAhkcQ5cFkt9ukk15J0=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=pxn6Bx/gjvEdTNwQImwC0aLohOBdchs5h1AYRbm7n2a/Rt9ZlRRYUp/1uuD5azQTMV2n2ZLUl4Y2cHYqQKoT2dGpRsFBC6P8DAeg+fAWveCORkR/I7uKdNGufKsMp/M5xyaqA89VqfhsxtW/K5ekaWJi+Ndu12TPAs28PJYOE2w=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com; spf=pass smtp.mailfrom=oss.qualcomm.com; dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b=Zt8pHVF4; dkim=pass (2048-bit key) header.d=oss.qualcomm.com header.i=@oss.qualcomm.com header.b=kwkqVAQU; arc=none smtp.client-ip=205.220.168.131
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=oss.qualcomm.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=google.com header.i=@google.com header.b="JEFpIPYI"
-Received: by mail-wr1-f49.google.com with SMTP id ffacd0b85a97d-45ef189aa1cso2655292f8f.0
-        for <sashiko-reviews@lists.linux.dev>; Mon, 15 Jun 2026 17:19:37 -0700 (PDT)
-ARC-Seal: i=1; a=rsa-sha256; t=1781569176; cv=none;
-        d=google.com; s=arc-20240605;
-        b=aAJ3uuwPFMEZ2ONhXKdKjHacyJhbmGUVs7aZ7/ZUWkGCQeNopqn/UoINNU4F6tR2m8
-         paGom5QttCr+yD3Iq1wrnSTzgbjwNFD01s6EmJiKpKwbK+3fA8wJXH2bFgw7BRmNyWMS
-         NxfZA8xMq/2lXaPGaf/rtUoCtXyqWK/8D5L9Dehu1A4Wc7CZjNRPo0rwUcU7iN7vnHya
-         qRvF7MjlLZeZx30riN5BUKphS+FkhJC5amE72vwuPFf1mvTZVE6NWxXmxJ6nR2GONiuW
-         rbD4pzarNSjJ3mPtp+v+oEebbtwHRwvWw6PIHuN0CfAz9FwBzB27p4CI0GWIHgEd2Bz6
-         dHZg==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com; s=arc-20240605;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:dkim-signature;
-        bh=5YLj9OAh9JKKkVKHgW/CHhfFo9P9VujzFSmDrvaSXGQ=;
-        fh=ZQj8wCB9VMBCXL+OfYFEzObXprQh5Nd9PrgaDqwJY6M=;
-        b=YEI0dob1tgEZNO6BeqJMLZjQoEcgmopitMGkEk0kps+J6bhNhirs3WrQxM9J3ULyVu
-         +Y7g1+Em2uP7qDtrSkMbV8X2srDvXTYZQOsBF/WorZA4GlDy6A2sCmvtF6dZYtXQRhOX
-         xnl+THbtUsgPYF43BQ22AQaxcWCnrxDdQS0LQc51cLPg+OfYrPXf2rrstUi8a7gIVYhc
-         3c2Op8bmPqRmIyLIr6yCbloB+qyMVcS1zeCSbmD4bGEwH8u4ulHaJb8SYLud/ULM9s08
-         tD6GqNw2/tcqpbf6sBamy284EDViQdNH8OHTZQ8M7eH6DJAzhBZo59l2zhj8H+vUT+0i
-         1jpQ==;
-        darn=lists.linux.dev
-ARC-Authentication-Results: i=1; mx.google.com; arc=none
+	dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b="Zt8pHVF4";
+	dkim=pass (2048-bit key) header.d=oss.qualcomm.com header.i=@oss.qualcomm.com header.b="kwkqVAQU"
+Received: from pps.filterd (m0279863.ppops.net [127.0.0.1])
+	by mx0a-0031df01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id 65G0NxbF1561404
+	for <sashiko-reviews@lists.linux.dev>; Tue, 16 Jun 2026 00:30:42 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=qualcomm.com; h=
+	cc:content-type:date:from:in-reply-to:message-id:mime-version
+	:references:subject:to; s=qcppdkim1; bh=OM8Sy69AmlhuB+YEEPhyCqX4
+	gyG3z42cZbvcOsnssW8=; b=Zt8pHVF4FrcgHVf7vXUX7wti8nNZrth0u9FiIGrr
+	ZbAeg2QB3otrwmu+PmMYnRo5DrsAY6GDC+SyqiuzCcDKDMekb2LoSkoTa23A6cBO
+	CTlLnbHReV5vC7nunwj1O4TonKmiU7NvErzT/GIIhf/xzAQOPw5IYhWDnAidHwD3
+	bryvW0xHGzZ8n1BAYA/7P0rED0olamGMmce/is87pLDs+48jt/dRfg3GIw1HbhBZ
+	/mTISSue5+yKCBYlvGdMZ5KjEehBG90inXQYSOvu1NTyNJrUOkyuF6fJCpnTopGY
+	YCDiD5ktx7vJ9Ur+PuozXSCpaDyrBbFJIcJ+9XvPEO0Nxg==
+Received: from mail-qk1-f197.google.com (mail-qk1-f197.google.com [209.85.222.197])
+	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 4eteydbr1b-1
+	(version=TLSv1.3 cipher=TLS_AES_128_GCM_SHA256 bits=128 verify=NOT)
+	for <sashiko-reviews@lists.linux.dev>; Tue, 16 Jun 2026 00:30:42 +0000 (GMT)
+Received: by mail-qk1-f197.google.com with SMTP id af79cd13be357-915d1d4fc5aso677396885a.3
+        for <sashiko-reviews@lists.linux.dev>; Mon, 15 Jun 2026 17:30:42 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=google.com; s=20251104; t=1781569176; x=1782173976; darn=lists.linux.dev;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=5YLj9OAh9JKKkVKHgW/CHhfFo9P9VujzFSmDrvaSXGQ=;
-        b=JEFpIPYIJ7i4HJddl0Oh1sruvrXaIxt+Ly3lH5gZAgFdmeAAjE0r5/GEz1HJUquacH
-         /AC8FPVkQ41bjAZOi4tCS8NubtdXL0DufrH8B7hFkBl3RuMvjZSY0um49lIW8YKFaNwh
-         cA54S3xrU4BG2p+spFKbm7uXNaNfft33BHXtmzZNlCJK5GKym04m5lSDXvILwUV7Iirz
-         RkrJrJ1aHq1r+65RqRMdkzCDx06SgQm902jZ81eGcyszXXSRLQarH5fuSbQHS4tvox2A
-         UUgd3cbVm9XRm908beki3ZG1K0NRbHjj96jopmGk9DVIHC2w0jkIT5G1i1mzsMZ1JkBn
-         txww==
+        d=oss.qualcomm.com; s=google; t=1781569841; x=1782174641; darn=lists.linux.dev;
+        h=in-reply-to:content-disposition:mime-version:references:message-id
+         :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
+        bh=OM8Sy69AmlhuB+YEEPhyCqX4gyG3z42cZbvcOsnssW8=;
+        b=kwkqVAQU6BsujkaDyx1Db1qKqapDLEVOXExdm24AtfHrT1LbC3EufNSFAGd4bJKnXu
+         APxbaznLvSmE7hlp0vX8sTW4TMS4ot4NF6e1MtM+7EY7QRgP+MNCXVxtNsnGScvi5rHh
+         kN+Wwz8A20KXRlWMmMkKZfeFOpLl9j84dT6ahMgMMABc4TTqP9DIiIKZ19eD0jxWH8Lb
+         2LHvxvOS6XxsvLAKWLpKTFvGZ5hT0ceWKPgcATvqrBC0cSd70dNQUldwYV5j7rH/+ZH7
+         OEFJs8Op/xXCxgCJFTAe/CXDLZ1AYKb0WER2qZGHDFOksmcBVHOk4wgSe3qkiyYNxD1o
+         R+rA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20251104; t=1781569176; x=1782173976;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:x-gm-gg:x-gm-message-state:from
-         :to:cc:subject:date:message-id:reply-to;
-        bh=5YLj9OAh9JKKkVKHgW/CHhfFo9P9VujzFSmDrvaSXGQ=;
-        b=Cv7e8khQrRTq/Z09UqUImJfotdKbBBeotctoXJlBW4g9ua5mLGTiQRYLEhOMhCD0xo
-         Jtwxw6z3mQBTrCjT/okPF7JTtpNQrngPzRvpFEWu5L85KvgtQG4d96bFR4D1KBnsj5JA
-         /pWtTThBDZKpZ/fxtsYF8hZW6bEuZIUP2GM+0JiFgGS72MFKEdjtb20FDrRK//2b9hxp
-         HLoSQNJaVHjjUy6+B856Q1xggK05gxUn98gRr6pl2+u77czCHB3TcZYRZbaqjAR6DJGh
-         y8sMGYgKWAWlk3ofaqX5M2csH3lRgLGUaGQz183IWYSrXLzPQUDPDu0R1G7XN8twK7+S
-         pOjw==
-X-Forwarded-Encrypted: i=1; AFNElJ/GOjDE9dgF9f1G4zx6stXqJVSyApkDkAq7jJ5TH2b3J61agQVa3H5xwJVOAe2BBk9T6jYNp6HK2hgZ1UAJ4Ro=@lists.linux.dev
-X-Gm-Message-State: AOJu0YzA579dGQAo/Wuc7ACAhOI8qm3Usmc94IrBQ1XNFJr4k0rXb71d
-	R/197Fp0jbNmCOVSj/wyEr3DQJZpINaAXet96QAxli9asQ1cO7LSye5uYG2ROvyyu+nirBEbLbq
-	cOcnnMrFsNel9ksOyN6bK5ocud+Hg3TiRGXsRFgrW
-X-Gm-Gg: Acq92OE103nkdSje7dJWpJBj7vv50bPVLk44TUzPUZgSoe1rUldl0/V4z3UeCKMdOxw
-	lkH/r5VcEnSRoFX4Bqmw+r1z32IcIru8N6Sxz9VNixRv2xAs7xy+Qn2PEKsbsLOTP+HXDHotZNj
-	bYRVpmpWbVA3D/ZupHplQH6INA7691kdzbZl96YAUZh52zIRVjW9Yk1LdpPZXPeoAAdzvsdFP6+
-	IEMyUBQTFqyC9FiJzRRZyd47lSrWU6nr7w/yZeA9Iujy1xbzHHBkcLavoO5UmAgYoOJpxEPbGKs
-	2J5nL1OvgTdwaLAIZwwH5N9jQ0JEjDKioI3J
-X-Received: by 2002:a05:6000:4716:b0:461:a15f:700a with SMTP id
- ffacd0b85a97d-461a15f70a6mr573337f8f.9.1781569175315; Mon, 15 Jun 2026
- 17:19:35 -0700 (PDT)
+        d=1e100.net; s=20251104; t=1781569841; x=1782174641;
+        h=in-reply-to:content-disposition:mime-version:references:message-id
+         :subject:cc:to:from:date:x-gm-gg:x-gm-message-state:from:to:cc
+         :subject:date:message-id:reply-to;
+        bh=OM8Sy69AmlhuB+YEEPhyCqX4gyG3z42cZbvcOsnssW8=;
+        b=PG8izSNWRlDD3ks3K4XGnJ+IGhfGWDOic1+4RRTVSdMxg9p23BzDpLZPYoF+rfwEvi
+         V/5X8JGuGdMzlCS4+UOMv51AxE/ygt0rrPqDxZ6fvUkjsvNxDqbx0lr8jJ3OZlQSUCeN
+         g5MVH80ZGwUMdwuz0aT0yJpTjoSDVyjzJqqES/iWbNYGfRiIpmkj/oSGgq5KMULiYRxq
+         2xMy1g946K+Ku7qSBJ9nhLQHe5Sk3orTQRVzatPXop19VKQacKi8HIbRwVC7E2xLBuXY
+         be2BlMk36GhD4w0rsPm6qD31iFrB/K7jt4P3bavG6vISe75Mo59n/bvXcQO1zPU3Ti+c
+         xF1g==
+X-Gm-Message-State: AOJu0YzrKBndSWWF7rdKdhneLq4arz5JMPcdwx70vPPafUmqvimb2oMs
+	dpitB2ShbT+NTUTCTLMr87qEbAhP2147rejsTjyIQfJq/6OXUezgbXaR1gtZWj6XYhRee2TUScf
+	wNlytz5Y/gc7sgTyotjrgo5m4+xm9rLrZQj5PaRsDaT7b7PhBzKD75G7+Rj9E8Z2ahmZxFs7HTj
+	/+89I=
+X-Gm-Gg: Acq92OHaT5EwQdnVuZDdFoLpFT8CXFuFDgjV1cJb8r32orphv2/F3K5cIjS9s6KfAxL
+	8t4K4Iq+gvsa8GU7BG7Wk0it2/v+nQtEIPywP4lxs8FhDRj8MVCf1yZoqQnGMPQ+JWtsyRa5JJ+
+	R1KoLxxBGGxf2OKUcTuoFIJb9Xb5LI9r8UC0VQAu9Xt8H0Rqyj2KN2ZH/GQt8NtjF6+fdoo5gn0
+	ChoyzZmvPOJqsoh5XjHxpnj+qCKT8GycBE6o7mMeu9f9nZbN0NU74r7ATU45Kkpx2CrlkHfBWbk
+	7ZwdOH8s5DljDVouid4nhCjCJkVe4pqqhYTGyMkKAUqr1Uq+e+RfJodt0Ayh4ckywKQYyfJb1Dy
+	CreXO+McubaFBZFwBdn1QS9qbYHk5HWBRRotoVUuqX3joaPvvlhAgtpUFNmKZsjzvDD50F5cGdA
+	kO2JDaXvfyLVDrNnZbOtE3PrNrv67MOTY+MlA=
+X-Received: by 2002:a05:620a:7106:b0:915:a953:4b93 with SMTP id af79cd13be357-9161baf5670mr2579888185a.3.1781569840582;
+        Mon, 15 Jun 2026 17:30:40 -0700 (PDT)
+X-Received: by 2002:a05:620a:7106:b0:915:a953:4b93 with SMTP id af79cd13be357-9161baf5670mr2579878785a.3.1781569839703;
+        Mon, 15 Jun 2026 17:30:39 -0700 (PDT)
+Received: from umbar.lan (2001-14ba-a073-af00-264b-feff-fe8b-be8a.rev.dnainternet.fi. [2001:14ba:a073:af00:264b:feff:fe8b:be8a])
+        by smtp.gmail.com with ESMTPSA id 2adb3069b0e04-5ad2e162222sm3144448e87.17.2026.06.15.17.30.36
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Mon, 15 Jun 2026 17:30:37 -0700 (PDT)
+Date: Tue, 16 Jun 2026 03:30:35 +0300
+From: Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>
+To: sashiko-reviews@lists.linux.dev
+Cc: robh@kernel.org, conor+dt@kernel.org, devicetree@vger.kernel.org
+Subject: Re: [PATCH v5 13/16] media: iris: Introduce buffer size calculations
+ for AR50LT
+Message-ID: <p32fxlxsjtxbo2i5wqvrt3dxh7ozvrhqby6xkgpctmfhe2npr2@kucx4sxvijdx>
+References: <20260616-iris-ar50lt-v5-13-583b42770b6a@oss.qualcomm.com>
+ <20260616002148.EE7CB1F000E9@smtp.kernel.org>
 Precedence: bulk
 X-Mailing-List: sashiko-reviews@lists.linux.dev
 List-Id: <sashiko-reviews.lists.linux.dev>
 List-Subscribe: <mailto:sashiko-reviews+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:sashiko-reviews+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-References: <20260601-sev_snp_fixes-v2-1-611891b28a86@meta.com>
- <20260601231728.C67C51F00893@smtp.kernel.org> <33dccdf4-45f7-40b5-a0cf-3f99b26d46f1@linux.dev>
- <2ae6f15d-695e-44d7-b2ab-905f83e78a6f@amd.com> <CAJ5mJ6jVX++74H2o=ZFcQbppHoNTWD0a52wOycYL4En3_dUWeQ@mail.gmail.com>
-In-Reply-To: <CAJ5mJ6jVX++74H2o=ZFcQbppHoNTWD0a52wOycYL4En3_dUWeQ@mail.gmail.com>
-From: Jacob Xu <jacobhxu@google.com>
-Date: Mon, 15 Jun 2026 17:19:23 -0700
-X-Gm-Features: AVVi8CduKs6ypAk7r23RxbnbCi_yifSdOfmekAY59pAbw-267Uo-nPzuRXtiWko
-Message-ID: <CAJ5mJ6j54GG5A_n8+4azeZ4BUAWbYEdv40AY3JbPCcT_dDZ+0g@mail.gmail.com>
-Subject: Re: [PATCH v2 1/4] KVM: SEV: Do not allow intra-host
- migration/mirroring of SNP VMs
-To: Tom Lendacky <thomas.lendacky@amd.com>, joerg.roedel@amd.com
-Cc: Atish Patra <atish.patra@linux.dev>, sashiko-reviews@lists.linux.dev, 
-	Peter Gonda <pgonda@google.com>, kvm@vger.kernel.org
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <20260616002148.EE7CB1F000E9@smtp.kernel.org>
+X-Proofpoint-GUID: ywta_Gp2qk3VsrWvt21CbtkO1O3CPrWd
+X-Proofpoint-Spam-Info: AW1haW4tMjYwNjE2MDAwMiBTYWx0ZWRfX9Dk1mMhiKU/g
+ hhNSLQex+DdzTS6igOm/MNtbPt+haSMJDGvwxMGk/3NpLIoXLuzPJ7HA0UT0lMmSmbTZIzcqVR4
+ Xbgqma6kbqsCgaMWQoSQkW31/jKTbg8=
+X-Authority-Analysis: v=2.4 cv=QrJuG1yd c=1 sm=1 tr=0 ts=6a309932 cx=c_pps
+ a=50t2pK5VMbmlHzFWWp8p/g==:117 a=xqWC_Br6kY4A:10 a=kj9zAlcOel0A:10
+ a=FelO9ux0wxsA:10 a=s4-Qcg_JpJYA:10 a=VkNPw1HP01LnGYTKEx00:22
+ a=u7WPNUs3qKkmUXheDGA7:22 a=yOCtJkima9RkubShWh1s:22 a=VwQbUJbxAAAA:8
+ a=ErpfJ9jdl2GgYSnf1vMA:9 a=CjuIK1q_8ugA:10 a=IoWCM6iH3mJn3m4BftBB:22
+X-Proofpoint-ORIG-GUID: ywta_Gp2qk3VsrWvt21CbtkO1O3CPrWd
+X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwNjE2MDAwMiBTYWx0ZWRfXyOrIytIjj5ZK
+ QvsRmcPG4bdp1UQ92LGyp/fnmXkXL6keGqTqBDy2hwZxee3skJjCChNGAefqtOMRUaS94gSWfAO
+ PO+dwO2jLcr5W3Fsg3RdLF8h9kmZxCyQppiVK8DWzyeecCL3ZlroPtMGRcagc8tqYAK4X2bZagZ
+ ImRpI1UyUGZ+kkDSI2LirpkQno2ZJkopAD6p4BZjmsN1DYxelFLd+UYJQCuZynOZcoyKmIoyCOg
+ fZM1J22Q+Ymw+Xqj0E7yrzdelNP1vLmr+XI2PWH6Wgaj8CA6OKT3hPhEliML71xNORhpIPQ1Fti
+ Nl3T/5s79KG2c5HLzkEPyk5njT7c4o5RNOwEUR2bqqEjAHDxh+a7Z5snHVkD8z1m6oeRt2n95xK
+ smJ81twEK2bAX0k9bR5+a7sULoJ+Hagn2JH0zl3cWCqVaPc7B7sLQ6RI5dDL/D3QNqKKHEvd296
+ 3SM9SkfUFr6SI6xyi/Q==
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.293,Aquarius:18.0.1143,Hydra:6.1.125,FMLib:17.12.100.49
+ definitions=2026-06-16_01,2026-06-15_04,2025-10-01_01
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
+ clxscore=1015 priorityscore=1501 lowpriorityscore=0 suspectscore=0
+ phishscore=0 spamscore=0 impostorscore=0 malwarescore=0 adultscore=0
+ bulkscore=0 classifier=typeunknown authscore=0 authtc= authcc= route=outbound
+ adjust=0 reason=mlx scancount=1 engine=8.22.0-2606040000
+ definitions=main-2606160002
 
-oops, wrong email, corrected.
+On Tue, Jun 16, 2026 at 12:21:48AM +0000, sashiko-bot@kernel.org wrote:
+> Thank you for your contribution! Sashiko AI review found 4 potential issue(s) to consider:
+> - [High] The AR50LT decoder line buffer size calculations accept an `is_opb` parameter but completely ignore it, failing to allocate memory for the VPSS line buffer when OPB (split mode) is enabled.
+> - [High] The AR50LT BIN buffer size calculations for H.264 and HEVC ignore `num_vpp_pipes`, preventing proper buffer partitioning and alignment across hardware pipelines.
+> - [High] The VP9 AR50LT line buffer calculation omits critical component sizes for DMA metadata and QP maps.
+> - [High] Missing SEI user data allocation in the H.264 AR50LT persist buffer calculation.
 
-On Mon, Jun 15, 2026 at 5:18=E2=80=AFPM Jacob Xu <jacobhxu@google.com> wrot=
-e:
->
-> >  Could this silently
-> > drop important execution features for SEV-ES mirrors?
->
-> f43c887cb7cb5 "KVM: SEV: Update svm_vm_copy_asid_from for SEV-ES"
-> notes in its description
-> ```
-> For mirroring SEV-ES the mirror VM will need more then just the ASID.
->     The FD and the handle are required to all the mirror to call psp
->     commands. The mirror VM will need to call KVM_SEV_LAUNCH_UPDATE_VMSA =
-to
->     setup its vCPUs' VMSAs for SEV-ES.
-> ```
->
-> This seems to assume QEMU (or whichever VMM being used, i haven't
-> checked QEMU) syncs this for us by calling the other ioctl on the
-> target VM. Notably Joerg sent out a patchset that directly sets VMSA
-> from userspace (https://lkml.org/lkml/2026/6/11/1200), so we may want
-> to coordinate this a bit.
->
-> Adding Joerg to the thread as FYI, we'll also be wanting to support
-> copyless migration for planes which replicates more state.
->
->
-> On Wed, Jun 3, 2026 at 6:15=E2=80=AFAM Tom Lendacky <thomas.lendacky@amd.=
-com> wrote:
-> >
-> > On 6/2/26 16:55, Atish Patra wrote:
-> > >
-> > > On 6/1/26 4:17 PM, sashiko-bot@kernel.org wrote:
-> > >> Thank you for your contribution! Sashiko AI review found 3 potential
-> > >> issue(s) to consider:
-> >
-> > Adding @Peter Gonda who knows this code better than I do!
-> >
-> > Thanks,
-> > Tom
-> > >>
-> > >> Pre-existing issues:
-> > >> - [High] Missing `kvm->arch.vm_type` validation in
-> > >> `sev_vm_copy_enc_context_from` allows creating structurally
-> > >> inconsistent mirror VMs.
-> > >> - [High] Missing `vmsa_features` copy in
-> > >> `sev_vm_copy_enc_context_from` breaks SEV-ES mirror VMs that use
-> > >> features like `DEBUG_SWAP`.
-> > >> - [High] Concurrent list modification of `owner_sev_info->mirror_vms=
-`
-> > >> without holding the owner VM's lock during mirror VM migration.
-> > >> --
-> > >>
-> > >> commit 5adb8a893221b0569310f07fd9fc7abca8088651
-> > >> Author: Atish Patra <atishp@meta.com>
-> > >>
-> > >> KVM: SEV: Do not allow intra-host migration/mirroring of SNP VMs
-> > >>
-> > >> This commit rejects SNP source VMs in migration/mirroring until prop=
-er
-> > >> SNP
-> > >> state transfer is implemented.
-> > >>
-> > >>> diff --git a/arch/x86/kvm/svm/sev.c b/arch/x86/kvm/svm/sev.c
-> > >>> --- a/arch/x86/kvm/svm/sev.c
-> > >>> +++ b/arch/x86/kvm/svm/sev.c
-> > >>> @@ -2142,7 +2142,8 @@ int sev_vm_move_enc_context_from(struct kvm
-> > >>> *kvm, unsigned int source_fd)
-> > >>>           return ret;
-> > >>>         if (kvm->arch.vm_type !=3D source_kvm->arch.vm_type ||
-> > >>> -        sev_guest(kvm) || !sev_guest(source_kvm)) {
-> > >>> +        sev_guest(kvm) || !sev_guest(source_kvm) ||
-> > >>> +        sev_snp_guest(source_kvm)) {
-> > >> [Severity: High]
-> > >> This is a pre-existing issue, but I noticed a potential locking race=
- when
-> > >> an existing mirror VM is migrated via sev_vm_move_enc_context_from()=
-.
-> > >>
-> > >> Locks are only acquired for the source mirror (source_kvm) and
-> > >> destination
-> > >> VM (kvm):
-> > >>
-> > >> arch/x86/kvm/svm/sev.c:sev_vm_move_enc_context_from() {
-> > >>      ...
-> > >>      ret =3D sev_lock_two_vms(kvm, source_kvm);
-> > >>      if (ret)
-> > >>          return ret;
-> > >>      ...
-> > >> }
-> > >>
-> > >> Later, in sev_migrate_from(), it updates its owner's list of mirrors=
-:
-> > >>
-> > >> arch/x86/kvm/svm/sev.c:sev_migrate_from() {
-> > >>      ...
-> > >>      if (is_mirroring_enc_context(dst_kvm)) {
-> > >>          struct kvm_sev_info *owner_sev_info =3D
-> > >>              to_kvm_sev_info(dst->enc_context_owner);
-> > >>
-> > >>          list_del(&src->mirror_entry);
-> > >>          list_add_tail(&dst->mirror_entry, &owner_sev_info->mirror_v=
-ms);
-> > >>      }
-> > >>      ...
-> > >> }
-> > >>
-> > >> Since the required lock for enc_context_owner is omitted entirely, c=
-ould
-> > >> this concurrently modify the owner_sev_info->mirror_vms linked list =
-if
-> > >> userspace creates a new mirror via sev_vm_copy_enc_context_from(), w=
-hich
-> > >> locks the owner VM? Would this result in kernel list corruption?
-> > >
-> > > It looks possible for SEV VMs looking at the code but I don't the kno=
-w
-> > > code path
-> > > or the mirroring/migration use case well enough to judge how likely t=
-his
-> > > scenario
-> > > in real world.
-> > >
-> > >>>           ret =3D -EINVAL;
-> > >>>           goto out_unlock;
-> > >>>       }
-> > >>> @@ -2865,6 +2866,7 @@ int sev_vm_copy_enc_context_from(struct kvm
-> > >>> *kvm, unsigned int source_fd)
-> > >>>        * created after SEV/SEV-ES initialization, e.g. to init
-> > >>> intercepts.
-> > >>>        */
-> > >>>       if (sev_guest(kvm) || !sev_guest(source_kvm) ||
-> > >>> +        sev_snp_guest(source_kvm) ||
-> > >>>           is_mirroring_enc_context(source_kvm) || kvm->created_vcpu=
-s) {
-> > >> [Severity: High]
-> > >> This isn't a bug introduced by this patch, but this block seems to b=
-e
-> > >> missing the kvm->arch.vm_type !=3D source_kvm->arch.vm_type check th=
-at
-> > >> exists in sev_vm_move_enc_context_from().
-> > >>
-> > >> Does this omission allow creating structurally inconsistent mirror V=
-Ms?
-> > >> Userspace could potentially create a destination VM as KVM_X86_SNP_V=
-M and
-> > >> mirror a source VM of type KVM_X86_SEV_VM into it. Since KVM's core =
-MMU
-> > >> would treat the new VM as an SNP VM (due to arch.vm_type), but the S=
-EV
-> > >> code treats it as a legacy SEV VM (because ____sev_snp_guest evaluat=
-es
-> > >> to false), could this produce an inconsistent internal state and all=
-ow
-> > >> attaching guest_memfd to standard SEV VMs?
-> > > NA. They don't have to be same vm type as per my understanding from t=
-he
-> > > selftest code.
-> > >>>           ret =3D -EINVAL;
-> > >>>           goto e_unlock;
-> > >> [Severity: High]
-> > >> This is a pre-existing issue, but I noticed another detail in
-> > >> sev_vm_copy_enc_context_from() just below this diff.
-> > >>
-> > >> The initialization block for the mirror VM omits copying vmsa_featur=
-es:
-> > >>
-> > >> arch/x86/kvm/svm/sev.c:sev_vm_copy_enc_context_from() {
-> > >>      ...
-> > >>      mirror_sev->enc_context_owner =3D source_kvm;
-> > >>      mirror_sev->active =3D true;
-> > >>      mirror_sev->asid =3D source_sev->asid;
-> > >>      mirror_sev->fd =3D source_sev->fd;
-> > >>      mirror_sev->es_active =3D source_sev->es_active;
-> > >>      mirror_sev->need_init =3D false;
-> > >>      mirror_sev->handle =3D source_sev->handle;
-> > >>      ...
-> > >> }
-> > >>
-> > >> This omits mirror_sev->vmsa_features =3D source_sev->vmsa_features.
-> > >>
-> > >> Since SEV-ES VMs use vmsa_features to track capabilities like
-> > >> SVM_SEV_FEAT_DEBUG_SWAP, would a mirrored SEV-ES VM incorrectly
-> > >> initialize its vmsa_features to 0? When vCPUs are instantiated,
-> > >> sev_es_init_vmcb() checks sev_vcpu_has_debug_swap(), which would eva=
-luate
-> > >> to false, resulting in misconfigured VMCB intercepts. Could this sil=
-ently
-> > >> drop important execution features for SEV-ES mirrors?
-> > >
-> > > As per my understanding, that is intentional as well.
-> > > Is it common to mirror SEV VMs with SVM_SEV_FEAT_DEBUG_SWAP enabled ?
-> > >
-> > > @tom: Please let me know if any of the above statements are not true.
-> > >
-> > >
-> >
-> >
+Vikash, Visnu, could you pleae check whether buffer sizes for HFI Gen2
+are calculated correctly or not?
+
+-- 
+With best wishes
+Dmitry
