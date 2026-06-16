@@ -1,214 +1,236 @@
-Received: from sender4-op-o11.zoho.com (sender4-op-o11.zoho.com [136.143.188.11])
+Received: from mgamail.intel.com (mgamail.intel.com [192.198.163.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E63EB331EA5
-	for <sashiko-reviews@lists.linux.dev>; Tue, 16 Jun 2026 21:50:41 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=pass smtp.client-ip=136.143.188.11
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 29EFD3F23D7
+	for <sashiko-reviews@lists.linux.dev>; Tue, 16 Jun 2026 22:52:20 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=fail smtp.client-ip=192.198.163.17
 ARC-Seal:i=2; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1781646643; cv=pass; b=AmrqkOomzGiaPg90xviDhTyfAbZtyfFhUPFLdBTQD2tvEcffribeC2e06gprMCqE/YanZHVQIFWOi92LPLI/BNeWwHwBCH+DvpMOz8Sx+AoJFIa+CVowEi0h8kjiCjA+eh3dZLrKN9EFDVX2IPq2YAFYJ6Lxi8b5ZME8PyzOvvg=
+	t=1781650342; cv=fail; b=mL+mqblDoyM2/hJyI7/WEVdNlNR5FAA2cbRymqhgEAZzvP1Vnli8p/bIlvSw5kjcSAh7MXTfVRh/Tpyimvp0bnrl42OTHtA1s2QQV6cKUQCd+jeUVukXI1NNI8h1DP0zaCzJJRGeRBdZ2dO4OGwU2wjl1aI70aAdiI1ULV0QmEM=
 ARC-Message-Signature:i=2; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1781646643; c=relaxed/simple;
-	bh=c3K+UtdL4o7jemvgbuzk6Ot2hHco585tVC0nhdKFgss=;
-	h=MIME-Version:Content-Type:Subject:From:To:Cc:In-Reply-To:
-	 References:Date:Message-Id; b=r34255LOHVg45vW0Ct9JcL78lb2GZ3rkmZ8hPzaCfyXUAsz6sOQory+GTKN5FU2ooNFi5h9omYFAz8t4gSVrD7bpgDy52Wa5/KeJC/gl/FxoiGAnbRrK1RtLT8rMdAMKI1Pg9Jtju4+UsaE1dlQ2M8BRgX1TY/tizl3XLppd8b4=
-ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=collabora.com; spf=pass smtp.mailfrom=collabora.com; dkim=pass (1024-bit key) header.d=collabora.com header.i=adrian.larumbe@collabora.com header.b=JBpUEqdp; arc=pass smtp.client-ip=136.143.188.11
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=collabora.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=collabora.com
+	s=arc-20240116; t=1781650342; c=relaxed/simple;
+	bh=lTkQeSRAnbFPr39lqEmV3Geps7uhUn1S15NWuF9y9Jg=;
+	h=Date:From:To:CC:Subject:Message-ID:References:Content-Type:
+	 Content-Disposition:In-Reply-To:MIME-Version; b=P0swE2V+T9HBSYpniIBUGU2ymNCyc82HfQQ7gWr6GKvCgAIbAK/wp+UgT16U+rSw+xB2kOXAW4eLPronrZMLbVBCTNJ1hEQLiHUmwoWQrkMT57bmC0StF7HgUKbt4jWWKRc1BvSpjDz4NRmufYmjXtoWFR0zZd4ZoJjmctKsA0k=
+ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=intel.com; spf=pass smtp.mailfrom=intel.com; dkim=pass (2048-bit key) header.d=intel.com header.i=@intel.com header.b=DlnQFAKH; arc=fail smtp.client-ip=192.198.163.17
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=intel.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=intel.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=collabora.com header.i=adrian.larumbe@collabora.com header.b="JBpUEqdp"
-ARC-Seal: i=1; a=rsa-sha256; t=1781646637; cv=none; 
-	d=zohomail.com; s=zohoarc; 
-	b=lLRtcahlZ1Jn+2W0Y7wyQA/2FUccc7ZM9I8C80aRudZlntHoVTwMDqraUuzmgutSXKdvPSxLO3OWAwB5XfZYUJhDdcutI7QlKgVa4aXNTPcoxkIbPlkmV8clgCaBD4FXqimC5PmJ/0jGd/iLbJvyLBdi86gAwVqeCBKtbM2DrTk=
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=zohomail.com; s=zohoarc; 
-	t=1781646637; h=Content-Type:Content-Transfer-Encoding:Cc:Cc:Date:Date:From:From:In-Reply-To:MIME-Version:Message-ID:References:Subject:Subject:To:To:Message-Id:Reply-To; 
-	bh=ORx90GUjLfrYFeumSHeW4zoduUOfs/rnXYVxNKsf8X4=; 
-	b=kVOvHK0x/8uSEAWV3V5s6r90rDe/D4zaNYkHEXHoFt7Rj5DTw4TrjpTy7NMNgR4wyJN8UITbpwgAr96ghm1JWKUfBbVR+/YpJnaS2sIwRyuFa7sA6Vzg/VM3E5YPt4OW9U5vjjTfAGzIpzEZxLpe0deRRCV5fea4PIXUMv58FN4=
-ARC-Authentication-Results: i=1; mx.zohomail.com;
-	dkim=pass  header.i=collabora.com;
-	spf=pass  smtp.mailfrom=adrian.larumbe@collabora.com;
-	dmarc=pass header.from=<adrian.larumbe@collabora.com>
-DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed; t=1781646637;
-	s=zohomail; d=collabora.com; i=adrian.larumbe@collabora.com;
-	h=MIME-Version:Content-Type:Content-Transfer-Encoding:Subject:Subject:From:From:To:To:Cc:Cc:In-Reply-To:References:Date:Date:Message-Id:Message-Id:Reply-To;
-	bh=ORx90GUjLfrYFeumSHeW4zoduUOfs/rnXYVxNKsf8X4=;
-	b=JBpUEqdpIp3Zy1FQN2YnIayb9SZvEtD6uNlZXeJ3rDo1PXZnIKLDQ4+k5ONHAmcL
-	bzl5ge7dpMhnUm5oUZrWXuMa2PPFuKV/wOO7xh43MMuuqTtm54kMY5nOY0eSmVXrhKN
-	jAMbZoYyZbwnBfHc8kI6z4Sckl1vK8DsXxFoCb7A=
-Received: by mx.zohomail.com with SMTPS id 1781646635271384.4921958030527;
-	Tue, 16 Jun 2026 14:50:35 -0700 (PDT)
+	dkim=pass (2048-bit key) header.d=intel.com header.i=@intel.com header.b="DlnQFAKH"
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
+  d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
+  t=1781650340; x=1813186340;
+  h=date:from:to:cc:subject:message-id:references:
+   content-transfer-encoding:in-reply-to:mime-version;
+  bh=lTkQeSRAnbFPr39lqEmV3Geps7uhUn1S15NWuF9y9Jg=;
+  b=DlnQFAKHnX3rlVwrVWvdIDi9XeH2hjr+5qJTY9gzhMeuhaf1HpNuq+n0
+   l2GmQ9+N09wIu/HH8posq4u5ubIWANdw0UQV/SlUjvEpSCRwK7liPjw4j
+   bbfxa4+GL7QON7jhQB7VfOi94Mg8HOwpsZWmD091qCFR26mkEkVsxQfRh
+   qhDWpH8iA8/94Aqut1wKZKOX8KAL7+ZLdLOm6dfXaagBt7WooCEvjF2uw
+   26aB8cA/YjvmdHqnz9yPK/AXR8Qsmro+61yLgFyYbvwrIRIGJRX+p4NDV
+   ADVOhS2f1WTlEEBhpaUIHy58mhjTcaGJI1mTEFAlpmq9eUVLhD+COEeMQ
+   w==;
+X-CSE-ConnectionGUID: miyKnCzXQg+ExDu+st9+Xg==
+X-CSE-MsgGUID: yXE0Pl9bQ8ayvo3AzVk2wg==
+X-IronPort-AV: E=McAfee;i="6800,10657,11819"; a="82293427"
+X-IronPort-AV: E=Sophos;i="6.24,208,1774335600"; 
+   d="scan'208";a="82293427"
+Received: from orviesa010.jf.intel.com ([10.64.159.150])
+  by fmvoesa111.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 16 Jun 2026 15:52:20 -0700
+X-CSE-ConnectionGUID: OHVVZU2JQ2Gghjq3tlOIZw==
+X-CSE-MsgGUID: ChCbtT9oT/CTHLu8s+Fw5Q==
+X-ExtLoop1: 1
+X-IronPort-AV: E=Sophos;i="6.24,208,1774335600"; 
+   d="scan'208";a="247014994"
+Received: from orsmsx902.amr.corp.intel.com ([10.22.229.24])
+  by orviesa010.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 16 Jun 2026 15:52:19 -0700
+Received: from ORSMSX903.amr.corp.intel.com (10.22.229.25) by
+ ORSMSX902.amr.corp.intel.com (10.22.229.24) with Microsoft SMTP Server
+ (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
+ 15.2.2562.37; Tue, 16 Jun 2026 15:52:19 -0700
+Received: from ORSEDG901.ED.cps.intel.com (10.7.248.11) by
+ ORSMSX903.amr.corp.intel.com (10.22.229.25) with Microsoft SMTP Server
+ (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
+ 15.2.2562.37 via Frontend Transport; Tue, 16 Jun 2026 15:52:19 -0700
+Received: from BL2PR02CU003.outbound.protection.outlook.com (52.101.52.59) by
+ edgegateway.intel.com (134.134.137.111) with Microsoft SMTP Server
+ (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
+ 15.2.2562.37; Tue, 16 Jun 2026 15:52:19 -0700
+ARC-Seal: i=1; a=rsa-sha256; s=arcselector10001; d=microsoft.com; cv=none;
+ b=RNeGQYj07b6rTmb3NSz4kI9cBl8x4en4OefTtWZFZuymaF+l88l870Ap3NvawaZ5sOFephep8er+bIUj47dZDOTKVu3iZ8iadIK6w1spGelYwgrIGQYf5Sw5/3twXGhkjP6uuSM03M1JLIBWjjxoL+4+aK/3udcZdxlrNVgEeU0DU4AP+MvFi4WFuDT5Twc0D4/ly3qJWuUv25QmscURuEV/Muo55gcWyRBJVZfNBCluxWaAogiRRxZyYIWbP4BC56pEGkPbLHH3xo3rNufq0BISlhQ03ow9E+BMpDuqcV+3eoGip2d+3SPw20noTJ4rTia5c+YcsBW7mhjKXNbUPw==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com;
+ s=arcselector10001;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
+ bh=08ie25c4E3MLK3ecfFaLGjJODgKk3H52IWz2d0a2Z08=;
+ b=DxoN6/45/w7dlQ4ZbVotaPM0YDERdMHI/zYKa05yp9x1vjIqRGurRPHZcqdM1FYKkQH46ItfPRfJdEyJMgDGWe/uAdRGMt7hBaV0np88R5uKFJn8/DGG0K6yW0OXarjqwcZmwzJOvDt2O56jIb14tM+crDCC6TTyhW51SIsXn0pDO6d92wG+cUuIb424zD4mQACHG5cc4bdxmIq/qAqQleQy7hG7zpm4e6YyYJ/zz26cpZP7Nvjxqo+54dbMYJn9GNbVhPjvSgVvLy/OdFizgVWH0snFq8nkimT/mWbRKouZxSPO/rEVcRa2akMaU6H4cKIlr/a16Qykh1J0zTsnPg==
+ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
+ smtp.mailfrom=intel.com; dmarc=pass action=none header.from=intel.com;
+ dkim=pass header.d=intel.com; arc=none
+Authentication-Results: dkim=none (message not signed)
+ header.d=none;dmarc=none action=none header.from=intel.com;
+Received: from DS4PPF0BAC23327.namprd11.prod.outlook.com (2603:10b6:f:fc02::9)
+ by DS4PPF75D68BA1B.namprd11.prod.outlook.com (2603:10b6:f:fc02::32) with
+ Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.21.113.18; Tue, 16 Jun
+ 2026 22:52:11 +0000
+Received: from DS4PPF0BAC23327.namprd11.prod.outlook.com
+ ([fe80::a195:49d4:38c5:3891]) by DS4PPF0BAC23327.namprd11.prod.outlook.com
+ ([fe80::a195:49d4:38c5:3891%4]) with mapi id 15.21.0113.015; Tue, 16 Jun 2026
+ 22:52:11 +0000
+Date: Tue, 16 Jun 2026 15:52:08 -0700
+From: Alison Schofield <alison.schofield@intel.com>
+To: <sashiko-reviews@lists.linux.dev>
+CC: <linux-cxl@vger.kernel.org>
+Subject: Re: [PATCH v2 4/6] cxl/region: Validate mixed-granularity at sysfs
+ and attach gates
+Message-ID: <ajHTmAuRUMTNcyu4@aschofie-mobl2.lan>
+References: <42da0b69d39207b712d7c27f1af6186febbeaa6f.1781199122.git.alison.schofield@intel.com>
+ <20260611180334.7EC6B1F000E9@smtp.kernel.org>
+Content-Type: text/plain; charset="iso-8859-1"
+Content-Disposition: inline
+Content-Transfer-Encoding: 8bit
+In-Reply-To: <20260611180334.7EC6B1F000E9@smtp.kernel.org>
+X-ClientProxiedBy: SJ0PR13CA0007.namprd13.prod.outlook.com
+ (2603:10b6:a03:2c0::12) To DS4PPF0BAC23327.namprd11.prod.outlook.com
+ (2603:10b6:f:fc02::9)
 Precedence: bulk
 X-Mailing-List: sashiko-reviews@lists.linux.dev
 List-Id: <sashiko-reviews.lists.linux.dev>
 List-Subscribe: <mailto:sashiko-reviews+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:sashiko-reviews+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset="utf-8"
-Content-Transfer-Encoding: 8bit
-Subject: Re: [PATCH v2 5/7] drm/panfrost: Make reset sequence deal with an
- active HWPerf session
-From: =?utf-8?q?Adri=C3=A1n_Larumbe?= <adrian.larumbe@collabora.com>
-To: sashiko-reviews@lists.linux.dev
-Cc: =?utf-8?q?Adri=C3=A1n_Larumbe?= <adrian.larumbe@collabora.com>, 
- dri-devel@lists.freedesktop.org
-In-Reply-To: <20260604174918.2BC551F00893@smtp.kernel.org>
-References: <20260604-claude-fixes-v2-5-57c6bd4c1655@collabora.com>
- <20260604174918.2BC551F00893@smtp.kernel.org>
-Date: Tue, 16 Jun 2026 22:50:26 +0100
-Message-Id: <178164662685.450479.6904294010009293249.b4-reply@b4>
-X-Mailer: b4 0.15.2
-X-Developer-Signature: v=1; a=openpgp-sha256; l=6897;
- i=adrian.larumbe@collabora.com; h=from:subject:message-id;
- bh=c3K+UtdL4o7jemvgbuzk6Ot2hHco585tVC0nhdKFgss=;
- b=owEB7QES/pANAwAKAQ4mfkzuU0M9AcsmYgBqMcUqHln40mPrNWYqcVQPQcowt3Mjoztcgbea/
- xO9AokKYtCJAbMEAAEKAB0WIQQyQDDowAUXXfk3B6QOJn5M7lNDPQUCajHFKgAKCRAOJn5M7lND
- PZA3C/sEuXgxQZQkjkMa3A3dqrlCqSj7DMuHm5FNCBCtCDPGU9N9AtL/jNIsDEIVMqWfBZnkhYc
- jgwVQp2Gs22Vc7SmCkIJvMr1F0rvma/nsK5J2S5qVh6waq/VvOTGR1jR2CmEQbp/C1hEkM5A1O6
- 5jGNotQuipZ6XHUs/U2U5llylPCJTMeablDUjCgOLw8VA2gFb6a18L2ZPjrRAhkn59a4j/wD51N
- +dFpJG5tmJAhZHyJ6i9z2EmNDh1dGv+K5lb8ymtpyDzOKbZ511mK7XsjfQyyHAXl+JqR8ooygKi
- hOwYFMp5Y828u/eXgzbymucrb20ySHwmq3zqhcDcakyYyl1ke3ElG94JaV+qfYRXPqVGs6vT4gf
- khghw826tYd2PqZXwQtXD5H43pntKubgutZxf7BJjoJUUmxpRXp5vhFUe/BTLeJ0SypMoIq9oq7
- C2g0yE8svDiwC9Z+aUWXDRBcCN9AtUcuSvMIJS6ZAd500CYapAHiaU63lQ8brsn2YhPhA=
-X-Developer-Key: i=adrian.larumbe@collabora.com; a=openpgp;
- fpr=324030E8C005175DF93707A40E267E4CEE53433D
+X-MS-PublicTrafficType: Email
+X-MS-TrafficTypeDiagnostic: DS4PPF0BAC23327:EE_|DS4PPF75D68BA1B:EE_
+X-MS-Office365-Filtering-Correlation-Id: e668dec5-9628-4f76-405c-08decbf9e6a8
+X-MS-Exchange-SenderADCheck: 1
+X-MS-Exchange-AntiSpam-Relay: 0
+X-Microsoft-Antispam: BCL:0;ARA:13230040|366016|23010399003|376014|1800799024|11063799006|56012099006|4143699003|5023799004|22082099003|18002099003|3023799007;
+X-Microsoft-Antispam-Message-Info: oDS585dQp4+9vSTJvx1KXW4XdmHBr8VFzjX53KBS5+8/EmwRjywvZU7WgZpOkDMOE0IJP6QfyOoT3sFfkXrYDo41YKwnFcGM7OfrSTQOjjUCf55Knmp5zvSBoqy3ssz/k9A/VmWmw150e1PrDqiMcxlKfRZmVsCHcd2H3Kep1hzsGfKi3iwg1Ti+iJJLmx3PXjAvKWSHSlt7GGSBxAXDxcvH2pKCtCDyqVdaYXE+/QmZI7N4WNBFzYTrA4D83tK5lvO+uqZHEXI2wVWXE32dsKy8R5kv1CxB2KY3VJBxfHCGeOsDKLAyj3zH1gKkSw15l5ssQoYX87v9s9Os6P1ubcnvH7Q2zehM5us6PhxVmS6wsHlUFeHfn4MASt5n/6LXl9BjUHPaQFfazo7/jB0si1K6POSTgYUSxhW00Pp4tR9J8164tXKnJ+GOR4/9fX3r7zxfpd/VdcLPOYZjyYrMoD1DUjwLtWZBE+GhMTYhr7XDyfxIqNHav5KBhskCKYyPRiGSzhtBdUdZHQ0B/rKCFTiXQiERe3YZFVqB3bqeju6+mHK5ig5ofFY8Mar5Aht+CobraSIsHCoN7eAylbjpakZTNN3xcN2TaMgOD3JpGt8m/iUBlwkZJvgSROTv5ArsP4Lev6tSySfVKX+0Lcby+Q==
+X-Forefront-Antispam-Report: CIP:255.255.255.255;CTRY:;LANG:en;SCL:1;SRV:;IPV:NLI;SFV:NSPM;H:DS4PPF0BAC23327.namprd11.prod.outlook.com;PTR:;CAT:NONE;SFS:(13230040)(366016)(23010399003)(376014)(1800799024)(11063799006)(56012099006)(4143699003)(5023799004)(22082099003)(18002099003)(3023799007);DIR:OUT;SFP:1101;
+X-MS-Exchange-AntiSpam-MessageData-ChunkCount: 1
+X-MS-Exchange-AntiSpam-MessageData-0: =?iso-8859-1?Q?QdEc4sR1ecHfQpS96GGuobREFsWr0ec3JnQCojid76/q4ziUBc3LzwVYmI?=
+ =?iso-8859-1?Q?5vRCW7m2xN00kobz6N2EKunuPeLMjxIQfNtvhnohi0KCT/6DLjv3pefQ0S?=
+ =?iso-8859-1?Q?8GLhriGIS/Ws0lIjJ7RGa63BC7+URjw+fpHme1+sR1hWEcUtVGtFHOaLaE?=
+ =?iso-8859-1?Q?Haf4PUeLiwq3AcQkJlpo2o/qV8gxeuutm7uIqAf+yqhNTNdq8x/FvUUAM5?=
+ =?iso-8859-1?Q?I7SwTWPv+R3Oblv8daSz1srIcT06+adAm3tYkYhRbMwirojkgXjrdNrvHc?=
+ =?iso-8859-1?Q?/gltkw5nBdiTD3OERfXvU2l+oj0fIeqerg6JnbGL3uAZIvKiwYQiWg5vY/?=
+ =?iso-8859-1?Q?4T99PmMIaqCqiyuPNKPu6d17GXFZ8K/WY8SRfy7jXq0oYVK/ifpPQdrCan?=
+ =?iso-8859-1?Q?eA2RhM276g6RNc1xaCEKbKgb0hxxOFp1HJR8b5TO25tRLf+x0WR9g9Ewdh?=
+ =?iso-8859-1?Q?YopBNYcaRYJxpxg84JYg7WSfCKWdknbpcF3u29OVc4dtXAqpic7Z592Iv/?=
+ =?iso-8859-1?Q?AFCLpwvfkM+Pp7emwF3qW08q4OG5nyCb87xYswhFSIK5rSmex6pWORbi64?=
+ =?iso-8859-1?Q?5In7my8Y8FRG2rNJQ50vNf2oInCdFMTIrW7VXO5iHAq5hrUUJAM/tsPz4P?=
+ =?iso-8859-1?Q?IbOLokXTVB2vrOCwgkWKZJ69LglL+yHfIfBX9QwwTkg9GbGoUOHOQhDjd3?=
+ =?iso-8859-1?Q?BAC5Umlm9uArHXfOCq/b7DRpqOH0I1gd1GtsxK9fnHrB2aV6Qn2T5v4HRP?=
+ =?iso-8859-1?Q?/x3WOeLQR069MTZxHzfFv7Ml8FwAp/SXcbloBZzmgp+pSaVoQmsE3WacRT?=
+ =?iso-8859-1?Q?DKGqR4rUPKcfWPcKvBnjeZwm07w7ZAcTs4RX8OvHMmvQl6cYvfvgah3D7q?=
+ =?iso-8859-1?Q?GyJS+leOhC2WUKqNpXr2R2F7ikuLxHjQsNRV+aQLH4WAGU7J1tIsvXZ75o?=
+ =?iso-8859-1?Q?gmiF7OxYAivTObf2T8m5zfl8GHX+nSj9m88EZfkCo0/mwoBMsNVaY4TBhN?=
+ =?iso-8859-1?Q?XLhA27vTLNAcwiMRY96QFPxcee3eBLzO2SSHqHjEX8NqIwtyRN8O/6DtHX?=
+ =?iso-8859-1?Q?UGfwW3PZMgumhLLQ5ZsGRYxdXVeAhALYu0hwAKZjMu/S2O8HDhOTPXWWZT?=
+ =?iso-8859-1?Q?NYfe5FG457H3BJJptWAHEj3l3LpTqlVXC7wXxX8geg1JeoDhBcrnp52mO1?=
+ =?iso-8859-1?Q?pxnhQasvOfS4KUtoLsxVRmYXs9xY9uzvdIYoH3R8msaibiPeUy7p6gwS7D?=
+ =?iso-8859-1?Q?bwB+IcENYF+uWsI4yyzS0c4SRKAHeUbOh9/ahAc2M3FWTR5wZV9Sm7kYgd?=
+ =?iso-8859-1?Q?YOvd+olTcpy6dZoLMqGIeXS5Z6vHZOE3pysk9OhFW9lxvoYh+PQ1ocIsBv?=
+ =?iso-8859-1?Q?UlS5p1qkWEf65JB40OqxeHCEr5W7+NwCYS6QIA6Are42bBgGDHuv1pb/tD?=
+ =?iso-8859-1?Q?CKf+EaCHdcm85o/cwc/XXuld57+Ggb/s0VdM9famHeF/OOLf7sR+15YgA5?=
+ =?iso-8859-1?Q?sZ3oJ6anNerdHKhVOmWDNVqbc1fgUvCz447FQRiqYE1ji0WB35fxQ537mn?=
+ =?iso-8859-1?Q?POc+4Q/iLV6AdWOGGdYkqMGXyFC67f1qV3DBHGvq7LOezn5kZxzE1sXo7n?=
+ =?iso-8859-1?Q?X9UatrO51Kuk+yEix1r1W5+t6aAq8HYdxAS2k9nT4rdY5kGF9YzOuNcDZq?=
+ =?iso-8859-1?Q?S7m8TI+DvnstwAJBl2fL1pnfIG2u96d0QVeYYRCymMR5dBq8R/8maoBhBx?=
+ =?iso-8859-1?Q?O/wGTDr+bgIFYvV8+2oHYReFBCRX3TCEMwNAygc4KzqJXrK3L2GTG+wvtf?=
+ =?iso-8859-1?Q?51S4MiQeZCvEdD+7BAIqyN2Y3C5pb2I=3D?=
+X-Exchange-RoutingPolicyChecked: cRItvwK8exdaTpIpWMxs+f4md8iHFf3hXH4ZvTplXdBZtKs3wa+N8QO/eKaUJszn90mt4uBdCGIUR/zrPqsgdzs38BWlU4gNzgmbDXl6SERRErR79z0vcXD4cKU14ix503Y1PnL/zFMJvQPWY7Sp72aEiOgCSpqpdw4LRifHJF2lCOu6yDVl4fGSdOJCN9cqyShn/D5GIk1j+La+eDiRiCzy7aW0DzIS5oqlGF8teVdc1fKTM3fobky23znDCDe+CbL3Up4+7Nnwnq5jsS0ifxY1iaubQ1aPjsuYHySrmydweiApKRAiANdrnjHFXEssgpjfSjnXR2zLdBVNs/4Dqg==
+X-MS-Exchange-CrossTenant-Network-Message-Id: e668dec5-9628-4f76-405c-08decbf9e6a8
+X-MS-Exchange-CrossTenant-AuthSource: DS4PPF0BAC23327.namprd11.prod.outlook.com
+X-MS-Exchange-CrossTenant-AuthAs: Internal
+X-MS-Exchange-CrossTenant-OriginalArrivalTime: 16 Jun 2026 22:52:11.3020
+ (UTC)
+X-MS-Exchange-CrossTenant-FromEntityHeader: Hosted
+X-MS-Exchange-CrossTenant-Id: 46c98d88-e344-4ed4-8496-4ed7712e255d
+X-MS-Exchange-CrossTenant-MailboxType: HOSTED
+X-MS-Exchange-CrossTenant-UserPrincipalName: QvQw2Be8ZiSIcQ3lR8LKoXE7hE10GColTCeuPFY7i8HK70he2rGAwVTVUJDCbxjIPrz5wTDQ76YSzE8uLrGX16Md02W2ZA1EMZskfFQAJNc=
+X-MS-Exchange-Transport-CrossTenantHeadersStamped: DS4PPF75D68BA1B
+X-OriginatorOrg: intel.com
 
-On 2026-06-04 17:49:17+00:00, sashiko-bot@kernel.org wrote:
-> Thank you for your contribution! Sashiko AI review found 4 potential issue(s) to consider:
-> - [High] Address Space reference (mmu->as_count) permanently leaks when hardware reset aborts perfcnt_enable_locked.
-> - [High] A TOCTOU race between disable_locked and the asynchronous reset workqueue reintroduces the mmu->as_count underflow WARN.
-> - [Medium] A positive error code (EAGAIN) is incorrectly returned directly to userspace instead of the negative standard (-EAGAIN).
-> - [Medium] Spurious initialization failures occur for new perfcnt sessions due to a stale hw_reset_happened flag.
+On Thu, Jun 11, 2026 at 06:03:33PM +0000, sashiko-bot@kernel.org wrote:
+> Thank you for your contribution! Sashiko AI review found 1 potential issue(s) to consider:
+> 
+> Pre-existing issues:
+> - [High] The function `check_interleave_cap()` ignores the return values of `ways_to_eiw()` and `granularity_to_eig()`, leading to the use of uninitialized stack variables (`eiw`, `eig`) in bitmask calculations.
 > --
 > 
-> commit 555dc068f79668462a998f3ee4fa95ead697090d
-> Author: Adri√°n Larumbe <adrian.larumbe@collabora.com>
+> commit 999caa321a85ce92543a94c3525b252f33aab308
+> Author: Alison Schofield <alison.schofield@intel.com>
 > 
-> drm/panfrost: Make reset sequence deal with an active HWPerf session
+> cxl/region: Validate mixed-granularity at sysfs and attach gates
 > 
-> This commit introduces a perfcnt HW reset path to handle active HWPerf
-> sessions during a HW reset. It renders perfcnt unusable after reset and
-> notifies the user to take recovery measures.
+> Replace the same-granularity sysfs check with is_ig_allowed() to permit valid
+> mixed-granularity regions. Call this helper at attach time to enforce the same
+> rules for auto regions, and add an explicit span equality check for
+> 3-way-family roots.
 > 
-> Closes: https://gitlab.freedesktop.org/panfrost/linux/-/work_items/88
-> Fixes: 7786fd108777 ("drm/panfrost: Expose performance counters through unstable ioctls")
-> 
-> > diff --git a/drivers/gpu/drm/panfrost/panfrost_perfcnt.c b/drivers/gpu/drm/panfrost/panfrost_perfcnt.c
-> > index ad1156678e91c..c2087ea705fe6 100644
-> > --- a/drivers/gpu/drm/panfrost/panfrost_perfcnt.c
-> > +++ b/drivers/gpu/drm/panfrost/panfrost_perfcnt.c
+> > diff --git a/drivers/cxl/core/region.c b/drivers/cxl/core/region.c
+> > index 9fff538a9ce16..311b5052bbc8f 100644
+> > --- a/drivers/cxl/core/region.c
+> > +++ b/drivers/cxl/core/region.c
 > 
 > [ ... ]
 > 
-> > @@ -173,6 +187,16 @@ static int panfrost_perfcnt_enable_locked(struct panfrost_device *pfdev,
-> >  	if (panfrost_has_hw_issue(pfdev, HW_ISSUE_8186))
-> >  		gpu_write(pfdev, GPU_PRFCNT_TILER_EN, 0xffffffff);
+> > @@ -2096,6 +2107,8 @@ static int cxl_region_attach(struct cxl_region *cxlr,
+> >  	struct cxl_dport *dport;
+> >  	int rc = -ENXIO;
+> >  	int stride;
+> > +	int root_ways = cxlrd->cxlsd.cxld.interleave_ways;
+> > +	int root_gran = cxlrd->cxlsd.cxld.interleave_granularity;
 > >  
-> > +	/* If a reset happened, we've no way of knowing whether it was between the time we called
-> > +	 * panfrost_mmu_as_get() or before perfcnt_enable(), so clearing this flag and going forward
-> > +	 * isn't possible. We must clear the flag and try again in the hopes no resets will happen
-> > +	 * between this and the next ioctl invocation.
-> > +	 */
-> > +	if (atomic_cmpxchg(&perfcnt->hw_reset_happened, 1, 0)) {
-> > +		ret = EAGAIN;
-> 
-> [Severity: Medium]
-> Does this return a positive error code directly to userspace instead of the
-> standard negative one (-EAGAIN)?
-> 
-> DRM ioctls pass positive return values directly back to user space as the
-> ioctl syscall result. Because of this, user space will incorrectly interpret
-> this as success and subsequently fail on dump ioctls since the session wasn't
-> actually enabled.
-> 
-> > +		goto err_disable;
+> >  	rc = check_interleave_cap(&cxled->cxld, p->interleave_ways,
+> >  				  p->interleave_granularity);
 > 
 > [Severity: High]
-> Can this leak the Address Space reference if a hardware reset aborts the
-> enable sequence?
+> This isn't a bug introduced by this patch, but check_interleave_cap() is
+> called here with potentially uninitialized (zero) values for interleave_ways
+> and interleave_granularity prior to state verification.
 > 
-> If a GPU reset occurs before panfrost_mmu_as_get() is called, the reset
-> handler clears mmu->as_count to 0, and then panfrost_mmu_as_get() increments
-> it to 1. The code subsequently detects the reset via the hw_reset_happened
-> flag, clears it, and jumps to err_disable here. Because err_disable skips
-> panfrost_mmu_as_put(), the AS slot reference is permanently leaked,
-> eventually exhausting the limited hardware AS slots.
+> Inside check_interleave_cap() in drivers/cxl/core/region.c, ways_to_eiw() and
+> granularity_to_eig() are called but their return values are ignored:
 > 
-> > +	}
-> > +
-> >  	/* The BO ref is retained by the mapping. */
-> >  	drm_gem_object_put(&bo->base);
+> 	ways_to_eiw(iw, &eiw);
+> 	if (eiw == 0 || eiw == 8)
+> 		return 0;
 > 
-> [ ... ]
+> 	granularity_to_eig(ig, &eig);
+> 	if (eiw > 8)
+> 		high_pos = eiw + eig - 1;
+> 	else
+> 		high_pos = eiw + eig + 7;
+> 	low_pos = eig + 8;
+> 	interleave_mask = GENMASK(high_pos, low_pos);
 > 
-> > @@ -209,7 +235,8 @@ static int panfrost_perfcnt_disable_locked(struct panfrost_device *pfdev,
-> >  	drm_gem_vunmap(&perfcnt->mapping->obj->base.base, &map);
-> >  	perfcnt->buf = NULL;
-> >  	panfrost_gem_close(&perfcnt->mapping->obj->base.base, file_priv);
-> > -	panfrost_mmu_as_put(pfdev, perfcnt->mapping->mmu);
-> > +	if (!atomic_read(&perfcnt->hw_reset_happened))
-> > +		panfrost_mmu_as_put(pfdev, perfcnt->mapping->mmu);
+> If interleave_ways and interleave_granularity are 0, both ways_to_eiw() and
+> granularity_to_eig() return -EINVAL, leaving eiw and eig uninitialized.
+> Because eig is an uninitialized u16, low_pos can be as large as 65543.
 > 
-> [Severity: High]
-> Could a race between this check and an asynchronous reset reintroduce the
-> mmu->as_count underflow WARN that this patch was explicitly intended to
-> prevent?
+> Passing values greater than 64 to GENMASK() results in an out-of-bounds
+> bitwise shift.
 > 
-> The non-atomic gap between reading the flag and executing
-> panfrost_mmu_as_put() creates an exposure window. If an interleaved
-> asynchronous hardware reset occurs in this window, panfrost_device_reset()
-> will clear mmu->as_count to 0. The subsequent execution of
-> panfrost_mmu_as_put() decrements it to -1, directly triggering the WARN.
-> 
-> >  	panfrost_gem_mapping_put(perfcnt->mapping);
-> >  	perfcnt->mapping = NULL;
-> >  	pm_runtime_put_autosuspend(pfdev->base.dev);
-> 
-> [ ... ]
-> 
-> > @@ -346,3 +373,20 @@ void panfrost_perfcnt_fini(struct panfrost_device *pfdev)
-> >  	/* Disable everything before leaving. */
-> >  	panfrost_perfcnt_gpu_disable(pfdev);
-> >  }
-> > +
-> > +void panfrost_perfcnt_reset(struct panfrost_device *pfdev)
-> > +{
-> > +	struct panfrost_perfcnt *perfcnt = pfdev->perfcnt;
-> > +
-> > +	/* Since this function will be called either from a scheduled HW reset
-> > +	 * or a runtime resume, tearing down any perfcnt resources means we're
-> > +	 * doomed to deadlocking with perfcnt_{enable/disable}, since we'd have
-> > +	 * to take the perfecnt lock. On top of that, it'd also violate DMA fence
-> > +	 * signalling rules because GFP_KERNEL allocations are made with the perfcnt
-> > +	 * lock taken in perfcnt_enable. In light of this, the only thing we can do
-> > +	 * is disabling perfcnt unconditionally, and notifying the perfcnt user of
-> > +	 * the reset having happpened so that they can take recovery measures.
-> > +	 */
-> > +	panfrost_perfcnt_gpu_disable(pfdev);
-> > +	atomic_set(&perfcnt->hw_reset_happened, 1);
-> 
-> [Severity: Medium]
-> Will this unconditionally set the reset flag even if no perfcnt session is
-> active, causing the next new session to spuriously fail?
-> 
-> Since this function is called during any GPU reset, it sets the flag even
-> when perfcnt->user == NULL. If user space later attempts to start a
-> completely new session, panfrost_perfcnt_enable_locked() will consume this
-> stale flag and abort with EAGAIN, functionally breaking the feature on the
-> first attempt after a reset.
+> On systems with CONFIG_UBSAN_TRAP enabled, could this lead to a kernel panic
+> if a privileged user misorders sysfs writes?
 
-Revealed by b4 review tui:
+This issue is already fixed for 7.2, sitting in cxl/next here:
 
-"For HW with `HW_ISSUE_8186` (the Tiler-counter erratum that the enable
-path goes out of its way to handle by toggling Tiler around the CFG
-write), turning off the master CFG while Tiler counters are still
-enabled is the exact ordering the enable path tries to avoid. The commit
-message does not acknowledge this functional change, and there is no
-analysis of whether the new sequence is safe on `HW_ISSUE_8186`
-parts. (Also flagged by sashiko-bot.)  **Suggested fix:** Either
-preserve the original disable order in the helper (zero block enables
-before clearing CFG), or document/justify in the commit message that the
-new order is safe on all supported GPUs including `HW_ISSUE_8186` ones,
-and drop the "no functional change" framing."
+https://git.kernel.org/pub/scm/linux/kernel/git/cxl/cxl.git/commit/?h=next&id=661c092f9839
 
-If it's true this breaks a HW quirk workaround, I might have to drop
-this patch altogether.
+cxl: Align interleave decode/encode helpers with their callers
 
+which initializes the encode helper outputs (*eiw = 0, *eig = 0) before
+the -EINVAL returns. With that, the iw == 0 case reads a defined eiw == 0
+and takes the existing early return, so eig is never consumed and the
+shift is never reached.
+
+ATM, I'm thinking the v3 of this series will appear rebased on 7.2-rc1
+(that has the fix) so nothing to see here.
+
+-- Alison
+
+> 
+> -- 
+> Sashiko AI review ∑ https://sashiko.dev/#/patchset/cover.1781199122.git.alison.schofield@intel.com?part=4
