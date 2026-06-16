@@ -1,384 +1,176 @@
-Received: from alln-iport-4.cisco.com (alln-iport-4.cisco.com [173.37.142.91])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-wm1-f46.google.com (mail-wm1-f46.google.com [209.85.128.46])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 53A923CF1F4
-	for <sashiko-reviews@lists.linux.dev>; Tue, 16 Jun 2026 05:15:59 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=fail smtp.client-ip=173.37.142.91
-ARC-Seal:i=2; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1781586961; cv=fail; b=itWsHKDS5oMFOYbYFY4eds1oZwNGgr6soph0Kich6DedvjtPXp35LjNt5x2iWj2o7tWXqrslc2Ct5BFo/BslgMuisqgCoHo/YboPI4L3tmvmCF/9f8KdO0hCmMhbe2yBFE0LDujz4JKqIh7Epmanyq4VRv29eTr57eo5lkmA5Mw=
-ARC-Message-Signature:i=2; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1781586961; c=relaxed/simple;
-	bh=p72r261LXbnRkSHICEVfZ9YqTVDXiREgyWlQVu9ZYVM=;
-	h=From:To:CC:Subject:Date:Message-ID:References:In-Reply-To:
-	 Content-Type:MIME-Version; b=HCXGVPQp8QZWX/4B4NSR3Yx0ecFTH3IUCgC2tBat+OUjwWstCWPHgMaMABAlCJwIfFOey23lcyvMirg0Jdk/Xmne7ITwksBTtkIREN2eypKKbENU8whBsHI2Aw/4heKfi6mgNyfOa1wXhS2JjCVUiUEf19gxA1u6XPbJVOhqUJ4=
-ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=cisco.com; spf=pass smtp.mailfrom=cisco.com; dkim=pass (2048-bit key) header.d=cisco.com header.i=@cisco.com header.b=eeKUHjMG; arc=fail smtp.client-ip=173.37.142.91
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=cisco.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=cisco.com
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D8D373DA7C6
+	for <sashiko-reviews@lists.linux.dev>; Tue, 16 Jun 2026 06:07:25 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.46
+ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
+	t=1781590047; cv=none; b=gnevraXtluR/+PYNixFPn070x7a6drY0sTBik+CfqKy/n/jqgvS+qnzG/aQyc1yEMNkOSy6zDj2E5ySjm9OVrp9euqB2rmZjizkMC880I9RS5uRqpFj0gURL8kKa1XayBuDWlm6Mz//tOBxv4jmMvmlsNRNAlby9OHDKBZAoY/k=
+ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
+	s=arc-20240116; t=1781590047; c=relaxed/simple;
+	bh=v1cTzgnR+l9OmcIlPG1/hyZEwlGLH5SEj4x4aVXeQJ4=;
+	h=Message-ID:Date:MIME-Version:From:Subject:To:Cc:References:
+	 In-Reply-To:Content-Type; b=aHVr7rD9wQeU6HTv3rFlaDsUY3h0dc6hkiQ2XUl1iAca4jG1tMOpdq4tSNd4kIKvN2lvz9qOCeKo7uSOSjZcQXGNUBwg87puBmXQE4GhZ7/dL8forGokZ8ppKkWIgiKJHXQmCaXNuZMcQSvHI40eQMUxCA++HwsEqq2b5G9O4tY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=AB7sPPwC; arc=none smtp.client-ip=209.85.128.46
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=cisco.com header.i=@cisco.com header.b="eeKUHjMG"
+	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="AB7sPPwC"
+Received: by mail-wm1-f46.google.com with SMTP id 5b1f17b1804b1-490c0c92cffso26675475e9.2
+        for <sashiko-reviews@lists.linux.dev>; Mon, 15 Jun 2026 23:07:25 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-  d=cisco.com; i=@cisco.com; l=6998; q=dns/txt;
-  s=iport01; t=1781586959; x=1782796559;
-  h=from:to:cc:subject:date:message-id:references:
-   in-reply-to:content-transfer-encoding:mime-version;
-  bh=p72r261LXbnRkSHICEVfZ9YqTVDXiREgyWlQVu9ZYVM=;
-  b=eeKUHjMGAqwEM2cpNoBP5ddOJxyXFLXCTn5o5YOB1tDeFQGYC+IAOuIg
-   8+lycjQO2VW71DmXirA3b7chefEuS1/+xq4e9XIkbbeLL7K4axlkrGbKM
-   eD3u5GGhLW4kOtCrz485hwCP7+ge32zF5ZbwdDHOOCeVJHouHi+7sDa9M
-   5gYIpXvgGD9oE2LLpiPyRYMp5/35drdm+R4pLIlQfGhKZ84hwD6ZzD98j
-   rw+kDJtSokvedojESkUvlDitmhd6PmnDijpXRP9k+dq+JPJt0VXLiQz8C
-   LEaEJwEHhJ1Dl2+MGw6HrzTPao08Trb5ZrFDbZP2D43Amo6she0egyWd7
-   A==;
-X-CSE-ConnectionGUID: H3eAqXWDQTmNf0tZjbBYDw==
-X-CSE-MsgGUID: Kz2eqsm0SPOB48inzLF63w==
-X-IPAS-Result: =?us-ascii?q?A0ApAAAr2jBq/4wQJK1aHAEBAQEBAQcBARIBAQQEAQFlg?=
- =?us-ascii?q?RcHAQELAYFtKimCK0mIIwOETV+IeQOBE50IgX4PAQEBDQJRBAEBhQYCjT8CJ?=
- =?us-ascii?q?jQJDgECBAMCAwEBAQEBAQEBAQEBCwEBBQEBAQIBBwWBDhOGUAyGWgEBAQEDE?=
- =?us-ascii?q?hUTNgkQAgEIGB4QMSUCBA4FCBqCCINMAwECpyABgT0Ciip4gQEzgQHgNRWBO?=
- =?us-ascii?q?AGIWgGFdjiERCcbgg2BFUKCMTg+hEWEE4IwBIINFYEMhEKGIoYvUngcA1ksA?=
- =?us-ascii?q?VUTFwsHBYEjQwMqLy0jSwUtHYEjIR0XFh5YGwcFEiAqQkUjAwIWM1lCOAtDB?=
- =?us-ascii?q?YFdAoIaTiMfAzl/gW+BJWdmFTA1gQEBER8KOgMLbT03FBsDBIE1BYxbFw+CL?=
- =?us-ascii?q?WohCR44NAJCFh9GKBYmlhibC5UXCoQdohEXhASUF5JRmQgjoxs/hRoCBAIEB?=
- =?us-ascii?q?QIQAQEGgWg8gVlwFTuCZ1MZD44qGct+eT0CBwIHDgMLkWotgU4BAQ?=
-IronPort-PHdr: A9a23:l+HkpBAb1LTnxKYfhl3GUyQVXRdPi9zP1kY9454jjfdJaqu8us+kN
- 03E7vIrh1jMDs3X6PNB3vLfqLuoGXcB7pCIrG0YfdRSWgUEh8Qbk01oAMOMBUDhav+/Ryc7B
- 89FElRi+hmG
-IronPort-Data: A9a23:++rbeKtBBl0fS3Tl8s6SSb8KSOfnVAZfMUV32f8akzHdYApBsoF/q
- tZmKWqPOfyDNGCnftolPty+/EwP7MOGzNFjGlRk/ntjRSMVgMeUXt7xwmUckM+xwmwvaGo9s
- q3yv/GZdJhcokf0/0nrav666yEgiclkf5KkYMbcICd9WAR4fykojBNnioYRj5Vh6TSDK1vlV
- eja/YuFZDdJ5xYuajhKs/za9Us11BjPkGpwUmIWNKgjUGD2zxH5PLpHTYmtIn3xRJVjH+LSb
- 47r0LGj82rFyAwmA9Wjn6yTWhVirmn6ZFXmZtJ+AsBOszAazsAA+v9T2Mk0NS+7vw60c+VZk
- 72hg3AfpTABZcUgkMxFO/VR/roX0aduoNcrKlDn2SCfItGvn3bEm51T4E8K0YIw2r16KHh+y
- tAhFDUrYEifteC86oOXVbw57igjBJGD0II3s3Vky3TdSP0hW52GG/6M7t5D1zB2jcdLdRrcT
- 5NGMnw0MlKZPVsWZg9/5JEWxI9EglH8eidEqVacpoI84nPYy0p6172F3N/9JYLQFZwFwxnIz
- o7A10frWBwDL9nH8gKi2C78h+nduQ2lA51HQdVU8dYv2jV/3Fc7ExQNVVq4pryjh1C/Vs1EA
- 0gV4TY166wz8lG7CNXwQXWFTGWstxoYXZ9UVuY98gzIkvGS6AeCDW9CRTlEADA7iPILqfUR/
- gbht/viBCdkt/ueTnf1y1tehWroUcTJBQfuvRM5cDY=
-IronPort-HdrOrdr: A9a23:QhFqiKgOk8EXyYzx3Us/NfGJK3BQX9V23DAbv31ZSRFFG/FwyP
- re/8jzhCWVtN9OYhAdcIi7Sde9qBPnmaKc4eEqTNGftXrdyRqVxeZZnMTfKlzbamHDH4FmpN
- 1dmsRFebnN5B1B/LnHCWqDYpgdKbu8gd2VbI7lph8HI3AJGsRdBkVCe3qm+yZNNXB77O8CZe
- GhD7181kKdkBosH6OGL0hAddLu4/fMk5XrawMHARkI1Cmi5AnD1JfKVzKj8lM7ST1g/ZcOmF
- KpryXJoomzufCyzRHRk1TU84lXn9XZzN5CDtyni8QeKDng4zzYJbiJXYfsgBkF5MWUrHo6mt
- jFpBkte+5p7WnKQ22zqRzxnyH9zTcH8RbZuBylqEqmhfa8aCMxCsJHi44cWADe8VAcsNZ117
- 8O936FtqBQEQjLkE3Glpr1vlBR5w+JSEgZ4KkuZk9kIM0jgXhq3NUiFXZuYdM99eTBmdga+a
- dVfZrhDb1tACOnhjjizxpSKZqXLzQONybDZFQescqI1DUTtnV4w0wEgPE7pB47hcgAo10u3Z
- WZDkyu/4s+E/M+fOZzAvwMTtCwDXGISRXQMHiKKVCiD60fPWnRwqSHq4ndydvaMaDg9qFC0K
- jpQRddryo/akjuAcqB0NlC9Q3MWny0WXDoxttF75Z0t7XgTP6zWBfzBWwGgo+lubESE8fbU/
- G8NNZfBOLiN3LnHcJM0xflU5dfJHECWIkeu8o9WViJvsXXQ7ea/NDzYbLWPv7gADwkUmTwDj
- 8KWyXyPtxJ6gSxVnrxkHHqKgXQk4zEjOVN+YThjpwuIdI2R/9xWyAu+CGE2v0=
-X-Talos-CUID: 9a23:ZV5Nt2NjPoq3De5DeHJq3VckJewcTnj7wi/MEU2yI1dFV+jA
-X-Talos-MUID: 9a23:+bEDAAV/adcCVD7q/Bz+3jx7L8Iw2JyJIhxdkJMUn+fabjMlbg==
-X-IronPort-Anti-Spam-Filtered: true
-Received: from alln-l-core-03.cisco.com ([173.36.16.140])
-  by alln-iport-4.cisco.com with ESMTP/TLS/TLS_AES_256_GCM_SHA384; 16 Jun 2026 05:14:50 +0000
-Received: from alln-opgw-3.cisco.com (alln-opgw-3.cisco.com [173.37.147.251])
-	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
-	 key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
-	(No client certificate requested)
-	by alln-l-core-03.cisco.com (Postfix) with ESMTPS id AE77F180007F3
-	for <sashiko-reviews@lists.linux.dev>; Tue, 16 Jun 2026 05:13:49 +0000 (GMT)
-X-CSE-ConnectionGUID: /7nkSjO6SA2uf2+HJtvmrA==
-X-CSE-MsgGUID: XHIic1gtT6mE/8KIO49A3w==
-Authentication-Results: alln-opgw-3.cisco.com; dkim=pass (signature verified) header.i=@cisco.com
-X-IronPort-AV: E=Sophos;i="6.24,207,1774310400"; 
-   d="scan'208";a="56659560"
-Received: from mail-northcentralusazon11012052.outbound.protection.outlook.com (HELO CH5PR02CU005.outbound.protection.outlook.com) ([40.107.200.52])
-  by alln-opgw-3.cisco.com with ESMTP/TLS/TLS_AES_256_GCM_SHA384; 16 Jun 2026 05:13:49 +0000
-ARC-Seal: i=1; a=rsa-sha256; s=arcselector10001; d=microsoft.com; cv=none;
- b=oY/1LGKIZrVlgiGQwm4cZn9Z0jmOmt5HoIoRS7kkDkh8MRO9jLtG2iFs4bWB8L7NTMhXbbTe5EC8RVjdD5Oh4y98PNXSzMyan0s05WmMSWh/EhKgWbUg7DM3zWFFOK6DI5fUYDO0TBenJbMS23HYynETvKLV4bbvpfdPxro2MajpNq3wQjJkbO6h9G4MQFbsVLD97DRHIi1a1tkS1eKwAR4y0BpStpORyGiUH6EbD3jaVnQSGjQzPu9euL4kye5ObDRXoXX5Kkj1ugo5HtC3j/+ttgWCsj7QD36GnhhGaP3+2w7raxoHj5T0lHXQmpVF299qeDqyKE5zJC8lEQVdxA==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com;
- s=arcselector10001;
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
- bh=p72r261LXbnRkSHICEVfZ9YqTVDXiREgyWlQVu9ZYVM=;
- b=ua2iKIr/3X7jZzBpON1LeF1KHs1NAwrid+w2UNFcqFY41yzXJ1cPx9nK/QYoN51hD961TI0pqDLw3h7hoQLKC7EgszJ5uuI4PqGxYmw/5bURtoiDbSpCyCYXurAFDA2cAjDLt687rI5nJoXoCbwQ0kVbhdvt0IMHrgJT9CVLMBt8nMQGOsec90MVZYZdx0P0gU9kZxBQV4sVCDoP/scG1u9Os839P6SdHz2G+AJqeWAGoIov1wHAkgbZ7KwEEjO94q5gQH+3ItRAKcwnT6D8B8J5pfxQVwkKXsc19PLdX27drGa5JpGzlQkLG++8aS0437y2uuEpmNFhDKLydQ2OjQ==
-ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
- smtp.mailfrom=cisco.com; dmarc=pass action=none header.from=cisco.com;
- dkim=pass header.d=cisco.com; arc=none
-Received: from SJ0PR11MB5896.namprd11.prod.outlook.com (2603:10b6:a03:42c::19)
- by SJ0PR11MB5088.namprd11.prod.outlook.com (2603:10b6:a03:2df::17) with
- Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.21.113.18; Tue, 16 Jun
- 2026 05:13:47 +0000
-Received: from SJ0PR11MB5896.namprd11.prod.outlook.com
- ([fe80::41fa:d12d:31c1:d5db]) by SJ0PR11MB5896.namprd11.prod.outlook.com
- ([fe80::41fa:d12d:31c1:d5db%3]) with mapi id 15.21.0113.015; Tue, 16 Jun 2026
- 05:13:47 +0000
-From: "Karan Tilak Kumar (kartilak)" <kartilak@cisco.com>
-To: "sashiko-reviews@lists.linux.dev" <sashiko-reviews@lists.linux.dev>
-CC: "linux-scsi@vger.kernel.org" <linux-scsi@vger.kernel.org>, "Sesidhar
- Baddela (sebaddel)" <sebaddel@cisco.com>, "Arulprabhu Ponnusamy (arulponn)"
-	<arulponn@cisco.com>, "Gian Carlo Boffa (gcboffa)" <gcboffa@cisco.com>, "Arun
- Easi (aeasi)" <aeasi@cisco.com>
-Subject: RE: [PATCH v4 01/13] scsi: fnic: Make debug logging protocol
- independent
-Thread-Topic: [PATCH v4 01/13] scsi: fnic: Make debug logging protocol
- independent
-Thread-Index: AQHc+pa5ZO+HemQVgk6EjyVqD39z37Y7QUcAgAUK8KA=
-Date: Tue, 16 Jun 2026 05:13:47 +0000
-Message-ID:
- <SJ0PR11MB58965CACD5121D86A11CBEA4C3E52@SJ0PR11MB5896.namprd11.prod.outlook.com>
-References: <20260612180918.8554-2-kartilak@cisco.com>
- <20260612184233.1FDAB1F000E9@smtp.kernel.org>
-In-Reply-To: <20260612184233.1FDAB1F000E9@smtp.kernel.org>
-Accept-Language: en-US
-Content-Language: en-US
-X-MS-Has-Attach:
-X-MS-TNEF-Correlator:
-x-ms-publictraffictype: Email
-x-ms-traffictypediagnostic: SJ0PR11MB5896:EE_|SJ0PR11MB5088:EE_
-x-ms-office365-filtering-correlation-id: f21f77e6-3034-4eea-48b3-08decb660b65
-x-ms-exchange-senderadcheck: 1
-x-ms-exchange-antispam-relay: 0
-x-microsoft-antispam:
- BCL:0;ARA:13230040|1800799024|366016|376014|23010399003|38070700021|22082099003|18002099003|4143699003|11063799006|56012099006|6133799003;
-x-microsoft-antispam-message-info:
- ZIMZGf4oKrPyCEjkB8QrVJJ1EyM2BWvsafZQjX1yEXIDprwzIMfAECoNBvnkhVlkxya6iRFUuwGB13OUBlTobSSz0sn/LpoREHOwAM7vJZ6BMN6TuM01vX8brZZNL5xv0pgYJGL6z+19iJUlMDilJB7IVs25TsjR59eA3ETcg+0LGsDQk38FDU0GHq3mL8Cfw9DABZsebGeSUoWWboE9Reu93QtNX6wi1CPplm5MP7G8bjTvqZfs1W/3iahxRQQIh7g/paFf6x8i6ALI1M+cUnLC7NIRp8mYNbdm06eTRMY3I9UuNkB1qyjE9pIjL/QOh/3hAFFnyJKBS3mBtH0Ali1h/RwmdY0LylbzqgBzyvGwQ0FlYOc5gdDANPsgkzAo6OxyAJGjvBzY8QG6HD/hRvYZlD8dLz2VaU81Rmhylg154099EVYSbVuJJE9O9mtictce4aHt33ktVx0ADJykvbJGevshkfz4kNu+YpGd1ypWgeW69d2AdxoKzxh92ce+z4pcLW4wNwogomXoGlimLSdEAHgn11FR9CgPkO6VzcoNbTXETECFTTYwhT89xk1L+jnMtS0uHd7dy+43IO4AVYNuEocV0UeM7mcE0Xnc153X8yfLAA/ga8wDW0RulIOtiGmLTOEmYuq6F5VJez0u3uYtMD1sxZ+wTIgk91qo5KV9ocZAZhtB2iH+ijSk0tGY5ADYmTOyIQcRIzRrpisf5V8eFWHuGsBX3071qj0ZHxEI68MqLEtcmLyUfKBwlMIz
-x-forefront-antispam-report:
- CIP:255.255.255.255;CTRY:;LANG:en;SCL:1;SRV:;IPV:NLI;SFV:NSPM;H:SJ0PR11MB5896.namprd11.prod.outlook.com;PTR:;CAT:NONE;SFS:(13230040)(1800799024)(366016)(376014)(23010399003)(38070700021)(22082099003)(18002099003)(4143699003)(11063799006)(56012099006)(6133799003);DIR:OUT;SFP:1101;
-x-ms-exchange-antispam-messagedata-chunkcount: 1
-x-ms-exchange-antispam-messagedata-0:
- =?us-ascii?Q?ZQJRSOJ/edNFPJqlot+1al7UAqGprfl6YpftudXcDQGF1lLQjbKKbefov2F4?=
- =?us-ascii?Q?KNF+FhshgScTvyZr9BkbBi7UOLjtYuEKHx7Iu9XRXeach0ln+oz1x3MLJBpv?=
- =?us-ascii?Q?MBJw9DEuulVYTMS1i9yWldvTv/SFa6h/7BL3thKHPlSsdV2VAkEiUCDwDbsd?=
- =?us-ascii?Q?SMQoV77gVc5t5Sq8vR+YQ10zC32mYv3bwa3EsSOTZKwIRNp1MPaXejhSH326?=
- =?us-ascii?Q?iChskjWsqrRyTz1BfrV+zmUklbwdiH7YvmeKLudnjEL7HmN6s3b/JLD/oVL6?=
- =?us-ascii?Q?RQENJ4/RFL8jsDYBWtSQCrMF1UYkT0N9vjy9P2aqBD6x19eeMi8Ip/j2QGxa?=
- =?us-ascii?Q?dh+74Ci19UICMRdppk2JS+K9mYQH4Apcg6TBtOz1uF8jzDoMf5ddWx21pHqt?=
- =?us-ascii?Q?68jY6LSi16oHq+tKAQ2De8gVRB/3LKFepgnyMtWuoKUoC4K+v9vhM6PHsitw?=
- =?us-ascii?Q?+vDK08GZQDbWclRqU5h6csi80eweAMbChPNjdXlA8PEoIBxDBorPSSeKkUp2?=
- =?us-ascii?Q?Gt0rbiIFCKSInX4iavJf+Hsdg45gBrlk1kJ0QPgBahYqGFNKiqzCSyva8l34?=
- =?us-ascii?Q?N/CAnSHUZciLM2FTTcvE5qz1MPB0NiEHdtSJsbaYP2xkPzB/iH0iqF6ShaFz?=
- =?us-ascii?Q?CKcXaG92vFRdDdPF8j6AhqgJfu62QnfxpBS22DxifDF7tmuIVjLVaqUw7iSQ?=
- =?us-ascii?Q?UYY1BQngfakr2t1OJ3M28W5mv6McI8M6rCfuypaUfs14Go/eQuw/oQUh+T54?=
- =?us-ascii?Q?yPxTXNbNWQvM4d36QMzXzG70lmQl6fxq4KsIAI2nqfY8mCeGIv05R6EJzNQD?=
- =?us-ascii?Q?yE5ojtVaeytCp7SQBKzzK3DtfIfZiNIqm8n4GTt8m0Wk/sUkoai1H28x1X4l?=
- =?us-ascii?Q?3JIO8dfr9EEvC6Td+BxIqPLQRMfbUw5BQ4IgRfjEYHhdsd3MLPs7behvo4Db?=
- =?us-ascii?Q?Cw0fEujcnDkjtJErvlgo/Xm/yz2tTaDuokI5zVYuJnW8YmCP+nLfLbo4My9D?=
- =?us-ascii?Q?Z9rPbRPLxjerr3UnM3AYItZzE9rH+/0ck9EfQBm8WSY6Uopj9EGLZWTYS6a6?=
- =?us-ascii?Q?RQJK8a8lGuOGiyRFnIEWdjU5SuTs0U2QGLb8+OoqPH8YOl/0ZLq1agLLrVWg?=
- =?us-ascii?Q?43yKp9eZUZt4E0xJBlO4NcqLchle6tQw2mBTHQxqkZKWmvgeB6U+gcPzx7ar?=
- =?us-ascii?Q?oc2QTN2oiosHLoW9op9OThZ8p6M8Uj3LFWV3ZBrc8BeAmJxdUfZrEYj6SugV?=
- =?us-ascii?Q?DmVIJW95fkaSP8cVEHgAwCiNmyhpmAD4sE0ZBQtFwtd1EvbPmJloGM2mjKTw?=
- =?us-ascii?Q?ZHDtDYYGE038qzpU8vp3ET3Sq0WVxHxzBQ0P6+Z2QYwKxH0hwnTKkJLgC2e7?=
- =?us-ascii?Q?lzn2YoupQR9XWWACxV+ZfqYqB19kBzUp++hrq5FNH6VNzhPv4qIpbMTpVvoj?=
- =?us-ascii?Q?Y4M5eT2lkhud6fGZLjDe7VuY+K3ny7JNqzJLOT1caC2E+OkPhmmqCAi5yKl2?=
- =?us-ascii?Q?Tdh8asfjjEyr2xhE0M3bFV8pAqvyPsI/xVIdWTPR3/wghxBkJn5dx3Z/C/X5?=
- =?us-ascii?Q?dEa/QHnodPbx7tm+pEATd8rdWZslCaqORZ6XFtEWjzPR7whxw6oOvd55jSPS?=
- =?us-ascii?Q?GBJInyYcKXslJ5ByYumxnHVPol8gK+xeoViWo7c7b0a4p62ahEU7o5dk3jc8?=
- =?us-ascii?Q?Q41DYV5vRQYyrMW0h/Jq1tR3VIoBU6og+QCOUrq9jVV5FrxD?=
-Content-Type: text/plain; charset="us-ascii"
-Content-Transfer-Encoding: quoted-printable
+        d=linaro.org; s=google; t=1781590044; x=1782194844; darn=lists.linux.dev;
+        h=content-transfer-encoding:in-reply-to:organization:autocrypt
+         :content-language:references:cc:to:subject:reply-to:from:user-agent
+         :mime-version:date:message-id:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=xoHHKRKukzaKnREbzwd66CB8l6NREbEWNDgRAiNx0fE=;
+        b=AB7sPPwCBkRhkojvWB4UI3vqZuGI8b053cxzQONyRtRw3Zew+vAmtUFFCGnSXvJvDa
+         f7i2BiUUowxon/M03sqjzVlAGUO4N7FrIu1yGjL+RxclOZ8DmhNTMA7ikMYvUEjAplX4
+         XxfvbdWrQrB2MiOMUFNOGEVEn69TGUWDU88Hszw/Em7rlz2p9MbDFJOGRxe0OC3JeGt6
+         PsJBR+R7HQH1aHia83PruC0DblXFisFmF+nb2pa9KLIATeHCFdoFEb+J7WKfu9fs8t+h
+         9ccnXu4FYz7x8U+Nct3J1mUFGi4eP+U15pDLKfZ7HfqHx3+aW0pQOqwcD9K5wsi+LeZl
+         B1gw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20251104; t=1781590044; x=1782194844;
+        h=content-transfer-encoding:in-reply-to:organization:autocrypt
+         :content-language:references:cc:to:subject:reply-to:from:user-agent
+         :mime-version:date:message-id:x-gm-gg:x-gm-message-state:from:to:cc
+         :subject:date:message-id:reply-to;
+        bh=xoHHKRKukzaKnREbzwd66CB8l6NREbEWNDgRAiNx0fE=;
+        b=HNtkM8fgZkZIuWKP8FavweGwL6KOP/wFQGu9AtJ51Np5d7QzXObt3KUU1S+ERFfsO+
+         IYOI29sizAxwgupGl670iMpUKejvKysZiU44AQ8iJHBrEL27NnS2ORpHcUrnH3294wH4
+         p6qEgwyNzncR+j57rNeosQWtLVezM3SACPyfF45tzYrOpQPEcqnHYdarEwvpQbM+eUCG
+         nZ8vQwt/2xV3msMvzLfRYFiWYCBzmJm53ZFQKCJ0dP2UFyN4qG8/BgihkpYeR7yLhOU8
+         oFbTBLT1phkkKY96f6QpK/KLO9gv1ncawh4H718jqLWhdKVTcRvpWFeFZw4nkvaSzLL8
+         RONQ==
+X-Gm-Message-State: AOJu0YzWUF5EVJwPzrHRB4ao2E8RmO/FIbz0JAkviX3rLCJIgMU/sDSt
+	xGyMZ9E+JUXmXvJUy+yCf1mR8tX1ETjWb8q9eJln0oPq0fxLNoty0seSBL4OAyYdy1WihFFhgsk
+	cky4Q7Ls=
+X-Gm-Gg: Acq92OEoEYj/4Z/RYwuACoejDVSFFT3guNi6qBGiCEuVpjbvPQJIHyRgoEZhHH8FJdE
+	wE+fBwNcBjCpzcfqaL6J7KRchsyifXZIGQ8E65yU4NfotDGMlOjPSr8GLJkn63KN/BWPd0ahX2t
+	2aE4SDKLjjNh/rnPsz9ixdWCMvds6w+nusDj9dE8WKrH2mXrQo29DAsdZeybR/qNaq7VIevHzAe
+	Bw8fCodpe5Ol8JXrurjNF9IVtaGR0HzvguhoxPWbLEM2Zn0DfSKwsd8dj0g/dSpKaRoVt3x0yBH
+	7gw1FjquIbNK57HjoHLOZngDiys+H08OqhF8+3fXbwOvevwKpOHP8jg+/q6JNdRk/U3ecjvryVF
+	HnMvwKgH8g1auS8x2rfYYGj4Lrex6vYLfDLCVd8i0xqbs1caZ+Z5Idz+qsRve6c+bozsnvCY+pj
+	mlLjg3pGYOgvRz0N1wPKel9vQIl+eKWEhK2rPVx2YHt44=
+X-Received: by 2002:a05:600d:640f:20b0:490:e180:2ed with SMTP id 5b1f17b1804b1-4922ff92614mr21627735e9.4.1781590043973;
+        Mon, 15 Jun 2026 23:07:23 -0700 (PDT)
+Received: from [172.20.10.3] ([37.167.117.98])
+        by smtp.gmail.com with ESMTPSA id 5b1f17b1804b1-4922fa96f0esm53085415e9.12.2026.06.15.23.07.23
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Mon, 15 Jun 2026 23:07:23 -0700 (PDT)
+Message-ID: <1539e5d5-7c58-4def-ad07-4c29b58ccb62@linaro.org>
+Date: Tue, 16 Jun 2026 08:07:22 +0200
 Precedence: bulk
 X-Mailing-List: sashiko-reviews@lists.linux.dev
 List-Id: <sashiko-reviews.lists.linux.dev>
 List-Subscribe: <mailto:sashiko-reviews+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:sashiko-reviews+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-X-Exchange-RoutingPolicyChecked:
-	SJ7rKzG8vjSHoMePTNWkXC07e/JArW5yHzWuE7kxnGPFGSNi+vPQaMeaK9IC4fnIFyDONXTh1pY0MHxveAOLJYRzWZBHGDE0ZiajF/7VG71O/Gzy2VqpzlRHfrVTX9BTl6J6gfkExpsB2I6ut+QAkRyo/vNMBERUINIyHTqj7xB6QXFQ/OQ50/w4cIePJd9hlpZdJJJbsVCtXPnlT6eZixydJ+r5pxV5Jy7al0wIDeASmevsyww5DdbCx7TN4O+mGfChV9VIDHHoQoK/fAWDoV4724rY0ppE5BaugwC6E8CadsAsNzfBi0hpSiClPyje9Q1zYWGYSrI9nv9DsyRFww==
-X-OriginatorOrg: cisco.com
-X-MS-Exchange-CrossTenant-AuthAs: Internal
-X-MS-Exchange-CrossTenant-AuthSource: SJ0PR11MB5896.namprd11.prod.outlook.com
-X-MS-Exchange-CrossTenant-Network-Message-Id: f21f77e6-3034-4eea-48b3-08decb660b65
-X-MS-Exchange-CrossTenant-originalarrivaltime: 16 Jun 2026 05:13:47.1391
- (UTC)
-X-MS-Exchange-CrossTenant-fromentityheader: Hosted
-X-MS-Exchange-CrossTenant-id: 5ae1af62-9505-4097-a69a-c1553ef7840e
-X-MS-Exchange-CrossTenant-mailboxtype: HOSTED
-X-MS-Exchange-CrossTenant-userprincipalname: P+vl4gM4CXLEvPYJGeJCvtLvLs/uUYpwVn8k48cC6aAC1hmOmCYLcOk0xFxQ1tyj8rqs4T+m+XpvUXEhCRrVOQ==
-X-MS-Exchange-Transport-CrossTenantHeadersStamped: SJ0PR11MB5088
-X-Outbound-Client-TLS: ANONYMOUS;alln-opgw-3.cisco.com [173.37.147.251];TLSv1.3;TLS_AES_256_GCM_SHA384;256
-X-Outbound-SMTP-Client: 173.37.147.251, alln-opgw-3.cisco.com
-X-Outbound-Node: alln-l-core-03.cisco.com
+User-Agent: Mozilla Thunderbird
+From: neil.armstrong@linaro.org
+Reply-To: Neil Armstrong <neil.armstrong@linaro.org>
+Subject: Re: [PATCH] soc: amlogic: meson-clk-measure: remove debugfs tree
+To: sashiko-reviews@lists.linux.dev, Pengpeng Hou <pengpeng@iscas.ac.cn>
+Cc: linux-amlogic@lists.infradead.org
+References: <20260615091531.21964-1-pengpeng@iscas.ac.cn>
+ <20260615092437.671C31F000E9@smtp.kernel.org>
+Content-Language: en-US, fr
+Autocrypt: addr=neil.armstrong@linaro.org; keydata=
+ xsBNBE1ZBs8BCAD78xVLsXPwV/2qQx2FaO/7mhWL0Qodw8UcQJnkrWmgTFRobtTWxuRx8WWP
+ GTjuhvbleoQ5Cxjr+v+1ARGCH46MxFP5DwauzPekwJUD5QKZlaw/bURTLmS2id5wWi3lqVH4
+ BVF2WzvGyyeV1o4RTCYDnZ9VLLylJ9bneEaIs/7cjCEbipGGFlfIML3sfqnIvMAxIMZrvcl9
+ qPV2k+KQ7q+aXavU5W+yLNn7QtXUB530Zlk/d2ETgzQ5FLYYnUDAaRl+8JUTjc0CNOTpCeik
+ 80TZcE6f8M76Xa6yU8VcNko94Ck7iB4vj70q76P/J7kt98hklrr85/3NU3oti3nrIHmHABEB
+ AAHNKk5laWwgQXJtc3Ryb25nIDxuZWlsLmFybXN0cm9uZ0BsaW5hcm8ub3JnPsLAkQQTAQoA
+ OwIbIwULCQgHAwUVCgkICwUWAgMBAAIeAQIXgBYhBInsPQWERiF0UPIoSBaat7Gkz/iuBQJk
+ Q5wSAhkBAAoJEBaat7Gkz/iuyhMIANiD94qDtUTJRfEW6GwXmtKWwl/mvqQtaTtZID2dos04
+ YqBbshiJbejgVJjy+HODcNUIKBB3PSLaln4ltdsV73SBcwUNdzebfKspAQunCM22Mn6FBIxQ
+ GizsMLcP/0FX4en9NaKGfK6ZdKK6kN1GR9YffMJd2P08EO8mHowmSRe/ExAODhAs9W7XXExw
+ UNCY4pVJyRPpEhv373vvff60bHxc1k/FF9WaPscMt7hlkbFLUs85kHtQAmr8pV5Hy9ezsSRa
+ GzJmiVclkPc2BY592IGBXRDQ38urXeM4nfhhvqA50b/nAEXc6FzqgXqDkEIwR66/Gbp0t3+r
+ yQzpKRyQif3OwE0ETVkGzwEIALyKDN/OGURaHBVzwjgYq+ZtifvekdrSNl8TIDH8g1xicBYp
+ QTbPn6bbSZbdvfeQPNCcD4/EhXZuhQXMcoJsQQQnO4vwVULmPGgtGf8PVc7dxKOeta+qUh6+
+ SRh3vIcAUFHDT3f/Zdspz+e2E0hPV2hiSvICLk11qO6cyJE13zeNFoeY3ggrKY+IzbFomIZY
+ 4yG6xI99NIPEVE9lNBXBKIlewIyVlkOaYvJWSV+p5gdJXOvScNN1epm5YHmf9aE2ZjnqZGoM
+ Mtsyw18YoX9BqMFInxqYQQ3j/HpVgTSvmo5ea5qQDDUaCsaTf8UeDcwYOtgI8iL4oHcsGtUX
+ oUk33HEAEQEAAcLAXwQYAQIACQUCTVkGzwIbDAAKCRAWmrexpM/4rrXiB/sGbkQ6itMrAIfn
+ M7IbRuiSZS1unlySUVYu3SD6YBYnNi3G5EpbwfBNuT3H8//rVvtOFK4OD8cRYkxXRQmTvqa3
+ 3eDIHu/zr1HMKErm+2SD6PO9umRef8V82o2oaCLvf4WeIssFjwB0b6a12opuRP7yo3E3gTCS
+ KmbUuLv1CtxKQF+fUV1cVaTPMyT25Od+RC1K+iOR0F54oUJvJeq7fUzbn/KdlhA8XPGzwGRy
+ 4zcsPWvwnXgfe5tk680fEKZVwOZKIEuJC3v+/yZpQzDvGYJvbyix0lHnrCzq43WefRHI5XTT
+ QbM0WUIBIcGmq38+OgUsMYu4NzLu7uZFAcmp6h8g
+Organization: Linaro
+In-Reply-To: <20260615092437.671C31F000E9@smtp.kernel.org>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
 
-On Friday, June 12, 2026 11:43 AM, sashiko-bot@kernel.org <sashiko-bot@kern=
-el.org> wrote:
->
+On 6/15/26 11:24, sashiko-bot@kernel.org wrote:
+> Thank you for your contribution! Sashiko AI review found 1 potential issue(s) to consider:
+> 
+> Pre-existing issues:
+> - [High] Exposing the `measure_summary` debugfs file before initializing the `priv` pointers in the `msr_table` leads to a potential NULL pointer dereference.
+> --
+> 
+> commit cf66aebca628dec91393028bc843130a21da66ad
+> Author: Pengpeng Hou <pengpeng@iscas.ac.cn>
+> Subject: soc: amlogic: meson-clk-measure: remove debugfs tree
+> 
+> This commit adds a remove callback to the driver to properly clean up the
+> debugfs tree created during probe. By storing the debugfs root and removing
+> it on driver unbind, it prevents leftover entries from referencing freed
+> private data.
+> 
+>> diff --git a/drivers/soc/amlogic/meson-clk-measure.c b/drivers/soc/amlogic/meson-clk-measure.c
+>> index d862e30a244ed..7ca43bcb622a2 100644
+>> --- a/drivers/soc/amlogic/meson-clk-measure.c
+>> +++ b/drivers/soc/amlogic/meson-clk-measure.c
+> [ ... ]
+>> @@ -952,6 +954,7 @@ static int meson_msr_probe(struct platform_device *pdev)
+>>   	       sizeof(struct msr_reg_offset));
+>>   
+>>   	root = debugfs_create_dir("meson-clk-msr", NULL);
+>> +	priv->debugfs_root = root;
+>>   	clks = debugfs_create_dir("clks", root);
+>>   
+>>   	debugfs_create_file("measure_summary", 0444, root,
+>>   			    priv->data.msr_table, &clk_msr_summary_fops);
+>>   
+>>   	for (i = 0 ; i < priv->data.msr_count ; ++i) {
+>>   		if (!priv->data.msr_table[i].name)
+>>   			continue;
+>>   
+>>   		priv->data.msr_table[i].priv = priv;
+> 
 > [Severity: High]
-> This is a pre-existing issue, but does this logic permanently halt alloca=
-tion
-> if it reaches the end of the pool? If find_next_zero_bit() starts at
-> oxid_pool->next_idx and reaches FNIC_OXID_POOL_SZ, it appears to return a=
-n
-> error rather than wrapping around to index 0 to search the rest of the
-> bitmap. Because next_idx is not advanced on failure, all subsequent
-> allocations might search the same empty tail and fail indefinitely.
+> This is a pre-existing issue, but does creating the measure_summary debugfs
+> file here expose it to userspace before the priv pointers in msr_table are
+> initialized?
+> 
+> If a user-space process reads measure_summary concurrently while the loop
+> below is still executing, clk_msr_summary_show() could dereference a NULL
+> pointer via msr_table->priv:
+> 
+> clk_msr_summary_show() {
+>      struct meson_msr_id *msr_table = s->private;
+>      unsigned int msr_count = msr_table->priv->data.msr_count;
+>      ...
+> }
+> 
+> Could the measure_summary debugfs file be created after the priv fields are
+> fully initialized in the loop to avoid this race?
 
-Thanks for the review.
+Impossible the driver is initialized way before userspace starts.
 
-This appears to be a pre-existing issue and is not introduced by this patch=
-.
-Since this patch only updates the debug logging interface, addressing this
-issue is outside the scope of this series.
+> 
+>>   		debugfs_create_file(priv->data.msr_table[i].name, 0444, clks,
+>>   				    &priv->data.msr_table[i], &clk_msr_fops);
+>>   	}
+>>   
+>> +	platform_set_drvdata(pdev, priv);
+>> +
+>>   	return 0;
+>>   }
+> 
 
-A fix can be considered separately in a dedicated patch series.
-
->
-> [Severity: Medium]
-> This isn't a bug introduced by this patch, but does returning false here
-> leak the tport structure? If kzalloc_obj() fails, the target port remains
-> in the iport->tport_list despite being marked OFFLINING and TERMINATING.
-
-Thanks for the review.
-
-This appears to be a pre-existing issue and is not introduced by this patch=
-.
-Since this patch only updates the debug logging interface, addressing this
-issue is outside the scope of this series.
-
-A fix can be considered separately in a dedicated patch series.
-
->
-> [Severity: High]
-> This is a pre-existing issue, but are we leaking control frames if the
-> transmission fails? In fdls_send_tgt_plogi(), fnic_send_fcoe_frame() is
-> called right after this debug statement, but its return value is ignored.
-> If the underlying DMA mapping or workqueue is full, does the allocated
-> mempool frame stay permanently leaked?
-
-Thanks for the review.
-
-This appears to be a pre-existing issue and is not introduced by this patch=
-.
-Since this patch only updates the debug logging interface, addressing this
-issue is outside the scope of this series.
-
-A fix can be considered separately in a dedicated patch series.
-
->
-> [Severity: High]
-> This isn't a bug introduced by this patch, but does the payload parsing r=
-ead
-> out of bounds here? Earlier in fdls_process_gpn_ft_tgt_list(), len is
-> adjusted by subtracting the FC and CT headers, but rem_len is initialized=
- to
-> the original unadjusted len. Does the while (rem_len > 0) loop process ex=
-tra
-> bytes past the end of the packet if the FC_NS_FID_LAST bit is missing?
-
-Thanks for the review.
-
-This appears to be a pre-existing issue and is not introduced by this patch=
-.
-Since this patch only updates the debug logging interface, addressing this
-issue is outside the scope of this series.
-
-A fix can be considered separately in a dedicated patch series.
-
->
-> [Severity: High]
-> This is a pre-existing issue, but could this loop trigger a use-after-fre=
-e?
-> The list_for_each_entry_safe() loop caches the next pointer. However,
-> fdls_delete_tport() intentionally drops the fnic->fnic_lock internally.
-> While the lock is dropped, can a concurrent event delete the cached next
-> element from the list?
-
-Thanks for the review.
-
-This appears to be a pre-existing issue and is not introduced by this patch=
-.
-Since this patch only updates the debug logging interface, addressing this
-issue is outside the scope of this series.
-
-A fix can be considered separately in a dedicated patch series.
-
->
-> [Severity: High]
-> This is a pre-existing issue, but does this code trust the RSCN payload
-> length blindly? The rscn_payload_len variable is read directly from the
-> network packet without validating it against the actual received buffer
-> length. If a spoofed frame specifies a large length, does this loop read
-> out-of-bounds?
-
-Thanks for the review.
-
-This appears to be a pre-existing issue and is not introduced by this patch=
-.
-Since this patch only updates the debug logging interface, addressing this
-issue is outside the scope of this series.
-
-A fix can be considered separately in a dedicated patch series.
-
->
-> [Severity: High]
-> This is a pre-existing issue, but can this loop run infinitely if
-> vlan_desc->fd_desc.fip_dlen is 0? The while (desc_len > 0) loop would
-> fail to advance cur_desc or decrement desc_len. Because this function run=
-s
-> with interrupts disabled (spin_lock_irqsave), could a maliciously crafted
-> zero-length descriptor cause a hard lockup?
-
-Thanks for the review.
-
-This appears to be a pre-existing issue and is not introduced by this patch=
-.
-Since this patch only updates the debug logging interface, addressing this
-issue is outside the scope of this series.
-
-A fix can be considered separately in a dedicated patch series.
-
->
-> [Severity: High]
-> This isn't a bug introduced by this patch, but does the FIP parsing read
-> out of bounds here? At the start of fdls_fip_recv_frame(), the packet len=
-gth
-> appears to be hardcoded to 2048 instead of using the actual received fram=
-e
-> size. If a packet declares large descriptors but the actual payload is sm=
-all,
-> would parsing read past the end of the buffer?
-
-Thanks for the review.
-
-This appears to be a pre-existing issue and is not introduced by this patch=
-.
-Since this patch only updates the debug logging interface, addressing this
-issue is outside the scope of this series.
-
-A fix can be considered separately in a dedicated patch series.
-
->
-> [Severity: High]
-> This is a pre-existing issue, but is the shared fip_timer_work susceptibl=
-e
-> to workqueue corruption? It appears that fnic_handle_fip_timer() and
-> fnic_handle_fcs_ka_timer() unconditionally call INIT_WORK on
-> fnic->fip_timer_work before queuing it. If these fire concurrently or if =
-one
-> queues the work while it is already pending/executing, does INIT_WORK
-> corrupt the active work_struct linked list pointers?
-
-Thanks for the review.
-
-This appears to be a pre-existing issue and is not introduced by this patch=
-.
-Since this patch only updates the debug logging interface, addressing this
-issue is outside the scope of this series.
-
-A fix can be considered separately in a dedicated patch series.
-
->
-> [Severity: High]
-> This is a pre-existing issue, but does fnic_remove() tear down resources
-> safely? During driver teardown, fnic_remove() frees the fnic structure bu=
-t
-> fails to cancel oxid_pool.oxid_reclaim_work,
-> oxid_pool.schedule_oxid_free_retry, and iport.fabric.retry_timer. If any =
-of
-> these delayed works or timers fire after teardown, could they execute the=
-ir
-> callbacks and access the freed fnic structure, causing a use-after-free
-> crash?
-
-Thanks for the review.
-
-This appears to be a pre-existing issue and is not introduced by this patch=
-.
-Since this patch only updates the debug logging interface, addressing this
-issue is outside the scope of this series.
-
-A fix can be considered separately in a dedicated patch series.
-
-Regards,
-Karan
