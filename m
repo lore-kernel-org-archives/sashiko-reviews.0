@@ -1,93 +1,124 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6907243CEC7
-	for <sashiko-reviews@lists.linux.dev>; Tue, 16 Jun 2026 18:28:40 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3F17E47AF43;
+	Tue, 16 Jun 2026 18:47:18 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1781634521; cv=none; b=YfNf1sJzGP63uD7o4czvT+WXyUuVVyjVl0rQWXVpqO5tRO2yEt+mneuOAyjouxyZ/S8Y2ydG04q0NfGFdjZhvn+I7qSWmqtk1AJjyMdYurvhzsvxfQsvbxMFfM7jlAGTw7upMA50iic9Pm77Al8MpSk8iwSA/ys4WsLRQ3ifE9Q=
+	t=1781635639; cv=none; b=sdtgazmP3T2n6/jdarcx+SMTVxWWXk409vTZ8FyvtoTgLa+EpasMttNVqdGKa+qXicJOsIBCSa+ULMIr0KfqZVp8z4lwVsYxH6n+g7HSQNFPL83x1gb52eJmASocsOnj6OZCWJ+BB+ecZZcDBXZC5tzmXzuT0ahgXFEAXEVe4j4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1781634521; c=relaxed/simple;
-	bh=/IPWvzWE3mBCQO6eVjzmENBoluGWTRJrVfjEUnbHEGg=;
-	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
-	 To:Cc:Content-Type; b=ogUdqhd0pgPLPWObUBVuOpSmrLXsZ4dI+DG5I8c+GR3R9qzqCT6BkwaellFprihH2vDBcp0OAxjxG8R/zbd+eWH/SfOX9TI0RZQeETkvFYI7hTLHFSFTDrjkUZTGSNBJ40w340FDftgJrXFHzsgz9Ih+nuVp63mkPbTDOZt7U1o=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=FdTfv/sG; arc=none smtp.client-ip=100.103.45.18
+	s=arc-20240116; t=1781635639; c=relaxed/simple;
+	bh=lPtqWXon5MIl0aaDsN+OFYj0FC8iKlrwp+KoTGY5hxI=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=NxgtSulyNf5ZOrMz/LqvYILLtH+Tw1+kCC3AkEcSCVNHuh7rxkmRnbzOLkvSLfMMn9pCEHBxz+ZquZDLHbB1sp/ptZM3e8A0aclygBqLsGYSv8mop6p2c5Q52Ey5ov50bWBxXQWB2S4vJ5+wu3cteB/1/UFLvbDikceE+UJqof0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=Hj9sLAX6; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="FdTfv/sG"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3309F1F00A3E
-	for <sashiko-reviews@lists.linux.dev>; Tue, 16 Jun 2026 18:28:40 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="Hj9sLAX6"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 44CB51F00A3A;
+	Tue, 16 Jun 2026 18:47:17 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=kernel.org;
-	s=k20260515; t=1781634520;
-	bh=AMEMq1m5LZROrTM6KasbbQmcYxkBva6ZQOd5Fe0JbjI=;
-	h=References:In-Reply-To:From:Date:Subject:To:Cc;
-	b=FdTfv/sGLQVkQ/grL7uNBEYTSaloaksPs6kmJknRJU3wgEFibLQ895plYvzK3oQ+u
-	 veJWOnzY5j/pJrsBW/V+K3zXuPSf0bZD+P7Y91qMj3gtyNO7smnr3VmCMeW1MKCeH2
-	 ZVBNSwsa4CaDOLF42h5BTaopkcEHrUY/8oyXUi1ZN/Z7zJOl5tHPM91vZbzpHmOMfX
-	 MIqFSm5tiBCm1BnAT9Ncg1eCDW9fzoDVt7ZZH8kL7lb2eJ2IEjXFqawoQAr8OErHJG
-	 Sah5zk+DQmv9say628xYin/wdptBisUiBtQ5SANpyPa4esWCisSTx8bl2eq5qQhEtc
-	 bDsWAVN1woSEw==
-Received: by mail-ej1-f47.google.com with SMTP id a640c23a62f3a-bf046d4da1fso456842966b.3
-        for <sashiko-reviews@lists.linux.dev>; Tue, 16 Jun 2026 11:28:40 -0700 (PDT)
-X-Gm-Message-State: AOJu0YxeoN2kARaakrmz2BLkJtgJBw46qLwqXUPNpqc05ifzgtkYeTZ7
-	mJGjHv0ZI4oB2z9kY1037l3O4Xiwcbq5BaNgCR0pFEbJYUZgJcSizl86tqsXGZGsLDx6FLA+4O9
-	fyaI/tmmJ8SybaOem+MSYWRXVNIL1NDc=
-X-Received: by 2002:a17:907:9805:b0:bfe:ed06:5a16 with SMTP id
- a640c23a62f3a-c05a7bb59c7mr51253466b.52.1781634519151; Tue, 16 Jun 2026
- 11:28:39 -0700 (PDT)
+	s=k20260515; t=1781635637;
+	bh=dkFKr7CU9O426Ttw+ERPRygHHOZqQUerx721Kib79Ik=;
+	h=Date:From:To:Cc:Subject:References:In-Reply-To;
+	b=Hj9sLAX6YcpVnnevxHG36GnNbyzXZnxkIqP/cH9Ktl5LZt6MUpDDyQAbj5nob56IJ
+	 W/cTo7jGWJHk3we8OYMjyh7ydd+j0q0O3YYcAtYBETiWeYiBJZhXlbBWevvAL0jXHm
+	 2J5Zmiek86jTH8Kx22Zw8a3U+iBZuzyba+cxHYW8vTbZFq8k/qiB1GRI+ziR9y2wC7
+	 oJJbJ3xZYExCvJrCwpyb7H0m3bRP+7aiFK/29PFhXGqxmPHWjRj/2btcpT6be7aLVG
+	 NtlnIKy2zn2lLb98zwsPSfyzp0dZQ5Yq0gqG66hZh3j96122RE/0rM3F9h9Y1tO6Em
+	 pBFOMUIxWoxQg==
+Date: Tue, 16 Jun 2026 15:47:14 -0300
+From: Arnaldo Carvalho de Melo <acme@kernel.org>
+To: sashiko-reviews@lists.linux.dev
+Cc: linux-perf-users@vger.kernel.org
+Subject: Re: [PATCH 1/2] perf evsel: Add lazy-initialized probe type
+ detection helpers
+Message-ID: <ajGaMjKm56V0VNF-@x1>
+References: <20260616182546.8892-2-acme@kernel.org>
+ <20260616184006.0CC9A1F000E9@smtp.kernel.org>
 Precedence: bulk
 X-Mailing-List: sashiko-reviews@lists.linux.dev
 List-Id: <sashiko-reviews.lists.linux.dev>
 List-Subscribe: <mailto:sashiko-reviews+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:sashiko-reviews+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-References: <20260616004155.1435766-25-yosry@kernel.org> <20260616013031.53DAC1F000E9@smtp.kernel.org>
- <CAO9r8zPA6B72RDWeBMHqv1xz6o9dDHEEjwnMjwAwVwA=5qxaKg@mail.gmail.com>
-In-Reply-To: <CAO9r8zPA6B72RDWeBMHqv1xz6o9dDHEEjwnMjwAwVwA=5qxaKg@mail.gmail.com>
-From: Yosry Ahmed <yosry@kernel.org>
-Date: Tue, 16 Jun 2026 11:28:27 -0700
-X-Gmail-Original-Message-ID: <CAO9r8zM1aKR6VzOhVq1_xTH5ZhSUBzYh-tr+ZzO_L4o28iy9OA@mail.gmail.com>
-X-Gm-Features: AVVi8CdLfKDfFBG-2pNNqpgYhvG4dfI1iIxMmXI9SuNwPIRKQo6WeFsIst67xuc
-Message-ID: <CAO9r8zM1aKR6VzOhVq1_xTH5ZhSUBzYh-tr+ZzO_L4o28iy9OA@mail.gmail.com>
-Subject: Re: [RFC PATCH v2 24/25] KVM: nSVM: Use different ASIDs for L1 and L2
-To: sashiko-reviews@lists.linux.dev
-Cc: kvm@vger.kernel.org
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
+Content-Type: text/plain; charset=iso-8859-1
+Content-Disposition: inline
+Content-Transfer-Encoding: 8bit
+In-Reply-To: <20260616184006.0CC9A1F000E9@smtp.kernel.org>
 
-On Tue, Jun 16, 2026 at 11:14=E2=80=AFAM Yosry Ahmed <yosry@kernel.org> wro=
-te:
->
-> [Omitting the previously reported issue]
->
-> > > @@ -1557,6 +1550,8 @@ void svm_free_nested(struct vcpu_svm *svm)
-> > >       if (WARN_ON_ONCE(svm->vmcb !=3D svm->vmcb01.ptr))
-> > >               svm_switch_vmcb(svm, &svm->vmcb01);
-> > >
-> > > +     free_asid(svm->nested.asid02);
-> > > +
-> >
-> > [Severity: Critical]
-> > When the hardware ASID is freed here during nested SVM teardown, does
-> > svm->nested.last_asid also need to be reset to 0?
-> >
-> > If L1 disables SVM, svm_free_nested() is called, freeing asid02. This A=
-SID tag
-> > can then be reallocated. If L1 later re-enables SVM and uses the same L=
-1-managed
-> > ASID, nested_svm_entry_tlb_flush() will see:
->
-> Hmm if L1 reuses the same ASID, it's up to L1 to explicitly flush it if n=
-eeded.
->
-> That being said, KVM needs to flush ASIDs when first allocated anyway,
-> otherwise we risk reusing TLB entries from a completely different vCPU
-> or VM. This series correctly does so for L1 (calls
-> vmcb_set_flush_asid() when initializing vmcb01's ASID), but not for
-> L2.
->
-> So yes, we need to make sure asid02 is always initialized (and reset)
-> to 0, but not for the reason Sashiko mentioned. It's so that the first
-> nested VMRUN using an L2 ASID always does a flush (as L1 is not
-> allowed to use ASID 0).
+On Tue, Jun 16, 2026 at 06:40:05PM +0000, sashiko-bot@kernel.org wrote:
+> Thank you for your contribution! Sashiko AI review found 1 potential issue(s) to consider:
+> - [Medium] Ftrace-based return probes (kretprobe, uretprobe, fexit) are incorrectly classified as PROBE__NOPE because they lack the __probe_ip field.
+> --
+> 
+> commit fc58c48524e7c99a712f8fb111c94abfbbeb4b6d
+> Author: Arnaldo Carvalho de Melo <acme@redhat.com>
+> 
+> perf evsel: Add lazy-initialized probe type detection helpers
+> 
+> This commit introduces lazy-initialized probe type detection helpers for
+> perf evsel. It caches the probe type lookup in a 3-bit field within struct
+> evsel to avoid repeated PMU list walks via evsel__find_pmu().
+> 
+> > diff --git a/tools/perf/util/evsel.c b/tools/perf/util/evsel.c
+> > index 05fa0010c858a..ea9fa04429f08 100644
+> > --- a/tools/perf/util/evsel.c
+> > +++ b/tools/perf/util/evsel.c
+> 
+> [ ... ]
+> 
+> > @@ -254,6 +254,58 @@ const char *evsel__pmu_name(const struct evsel *evsel)
+> >  	return event_type(evsel->core.attr.type);
+> >  }
+> >  
+> > +enum evsel_probe_type {
+> > +	PROBE__UNKNOWN	= 0,
+> > +	PROBE__NOPE	= 1,
+> > +	PROBE__KPROBE	= 2,
+> > +	PROBE__UPROBE	= 3,
+> > +	/*
+> > +	 * Ftrace-based dynamic probes (kprobes/uprobes/fprobes created via
+> > +	 * tracefs) report PMU "tracepoint", not "kprobe"/"uprobe".  Detect
+> > +	 * them by the __probe_ip field that the kernel adds to all dynamic
+> > +	 * probe formats.
+> > +	 */
+> > +	PROBE__FTRACE	= 4,
+> > +};
+> > +
+> > +static void evsel__resolve_probe_type(struct evsel *evsel)
+> > +{
+> > +	const char *name = evsel__pmu_name(evsel);
+> > +
+> > +	if (!strcmp(name, "kprobe"))
+> > +		evsel->probe_type = PROBE__KPROBE;
+> > +	else if (!strcmp(name, "uprobe"))
+> > +		evsel->probe_type = PROBE__UPROBE;
+> > +	else if (!strcmp(name, "tracepoint") && evsel__field(evsel, "__probe_ip"))
+> 
+> [Severity: Medium]
+> The commit message mentions this covers kprobes, uprobes, and fprobes
+> regardless of their group or system name by checking the __probe_ip field.
+> Will this successfully detect ftrace-based return probes?
+> 
+> It looks like return probes like kretprobe, uretprobe, and fexit do not
+> contain a __probe_ip field, but instead define __probe_func and
+> __probe_ret_ip.
+> 
+> If evsel__field() returns NULL for return probes, won't they incorrectly
+> fall through to the else branch and be classified as PROBE__NOPE?
 
-I think VMX might have the same problem.
+Sure, and this is an interesting observation, we need to cover
+__probe_ret_ip in the same fashion as __probe_ip, probably __probe_func
+as well, but this should be done in an upcoming patch series.
+
+I'll make sure to save this in a TODO file for later work.
+
+- Arnaldo
+ 
+> > +		evsel->probe_type = PROBE__FTRACE;
+> > +	else
+> > +		evsel->probe_type = PROBE__NOPE;
+> > +}
+> 
+> -- 
+> Sashiko AI review · https://sashiko.dev/#/patchset/20260616182546.8892-1-acme@kernel.org?part=1
