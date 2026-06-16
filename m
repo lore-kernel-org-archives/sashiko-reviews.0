@@ -1,48 +1,45 @@
-Received: from m16.mail.163.com (m16.mail.163.com [117.135.210.3])
+Received: from m16.mail.163.com (m16.mail.163.com [117.135.210.4])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7A10A411664
-	for <sashiko-reviews@lists.linux.dev>; Tue, 16 Jun 2026 08:54:26 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=117.135.210.3
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2F8002F12A5
+	for <sashiko-reviews@lists.linux.dev>; Tue, 16 Jun 2026 09:17:00 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=117.135.210.4
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1781600070; cv=none; b=FKm7MVkWN61J+nzi55zTtOMfjClwBRLF9mUW79FLOMImSRR0jT7bZOHtDnmBIUUVE86LMo6QBzYqM564FEkYW6DZcjIA8UD36nJVQ9h/pPYeKLaGWxG1S/HjIImO6Wg9Pcrsqn5BW8SwXB5eMD/7+++u8UeKruE3/nDCG46boFU=
+	t=1781601424; cv=none; b=oXNYiBuaSYp4n3/uwPeUpG6HHXzjShi74wZZ7M+ktI//7Qkbr8Nsom4VG/s2TBaj+rB5mVXN2S/MhFByKvJ/r35G9CLtO3/IfJM3SOf9BSM54q3iBlhNgTdf3lHnp+rBbA6wgEquCEVxhvzJgZ3lMsir2xhkEpm7U0z9FoS6WTU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1781600070; c=relaxed/simple;
-	bh=C9tICqSQnhcG0dcsD7D6jEAO4/apcu/YfiUFPbavmSw=;
+	s=arc-20240116; t=1781601424; c=relaxed/simple;
+	bh=v8qUlZlYL5EDEonR7yZrumedOGixVc88sqh74qva4To=;
 	h=From:To:Cc:Subject:Date:Message-Id:In-Reply-To:References:
-	 MIME-Version; b=PZfw7uv06cflA+kJTPOdTnRorAXOxATzkaeij0fUnidXQYtmb+43rTFyFD4sWTy6K/FmWAa92Y0c+yNYHOGWklo1ky0GX/KB3piJcG0mIKXSh7oD7bOrTW7UeiVzlux3756+CsSE5N7gQtBydp8m0Yxi2WJwcN/Xuqf0yataJiM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=163.com; spf=pass smtp.mailfrom=163.com; dkim=pass (1024-bit key) header.d=163.com header.i=@163.com header.b=IOGnqxDr; arc=none smtp.client-ip=117.135.210.3
+	 MIME-Version; b=hftmjKG1RTSjrWMVRSXEl35qwovPD2mmP/iSSH/Qz+25PO1tV62iBpb3mg4rXLPYfZyM/hXZrtTXhp6xHn5rHoL8WYEN/yeTwXM/Ga9DhNT4qHckWpHJ86FqvmlTbKaFVHCQLXRVU1MUTHAy31G0UMa4xnk1EUsnOLhFGcohdqs=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=163.com; spf=pass smtp.mailfrom=163.com; dkim=pass (1024-bit key) header.d=163.com header.i=@163.com header.b=JSGFe2uk; arc=none smtp.client-ip=117.135.210.4
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=163.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=163.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=163.com header.i=@163.com header.b="IOGnqxDr"
+	dkim=pass (1024-bit key) header.d=163.com header.i=@163.com header.b="JSGFe2uk"
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=163.com;
-	s=s110527; h=From:To:Subject:Date:Message-Id:MIME-Version; bh=uY
-	5Q5jA4eHj9zzllHhFDtqrHcbMnu37U6FBHIvB8mOw=; b=IOGnqxDrY3QnCJWNUT
-	cWAgYjbnPSGtsKzQBu3Ps8QW3JoH5/S7kU2Cv+qFcSIU+ADQpCO3V1CnO+EIv2Hm
-	votVLxnn0iYvlh2EyuAHHk2G8Zxk/aK5PD7QOYFDUwoBucmiquh8m3QLLNWe0JRz
-	T/Yscm/J/Tt0ZCI9DIdzJ7LQU=
+	s=s110527; h=From:To:Subject:Date:Message-Id:MIME-Version; bh=4X
+	OZLI3YNNOUnqxkS6rCc5AqvKbHZvIEqbeNN07qW2A=; b=JSGFe2uk0e6JWqeyQO
+	cLWOSNZDhrIamRGU2HFsaTVaeRq1ijdcbSNpuqZZCZWxMQXF9/OlG3ehPABg1q+e
+	18TeD+0ab++okDuK17J2qx76Mo82NtYeST5KCtIkq4TjDJhGCSaQmLLlV0hwu5US
+	sROpYIrJACSSMUCjh3veGiobE=
 Received: from rlk.localdomain (unknown [])
-	by gzga-smtp-mtada-g0-1 (Coremail) with SMTP id _____wDnEpYsDzFqEuHvDg--.40923S2;
-	Tue, 16 Jun 2026 16:54:06 +0800 (CST)
+	by gzga-smtp-mtada-g0-3 (Coremail) with SMTP id _____wBHTRd6FDFqkneCDw--.45447S2;
+	Tue, 16 Jun 2026 17:16:43 +0800 (CST)
 From: guoqi0226 <guoqi0226@163.com>
-To: mkl@pengutronix.de,
-	sashiko-bot@kernel.org
-Cc: cuiguoqi@kylinos.cn,
+To: sashiko-bot@kernel.org,
+	mkl@pengutronix.de
+Cc: guoqi0226@163.com,
 	linux-can@vger.kernel.org,
 	mailhol@kernel.org,
-	mani@kernel.org,
-	thomas.kopp@microchip.com,
 	o.rempel@pengutronix.de,
 	sashiko-reviews@lists.linux.dev,
-	socketcan@hartkopp.net,
-	guoqi0226 <guoqi0226@163.com>
-Subject: [PATCH v2 0/1] can: mcp251x: Add ACPI device ID table for MCP2515
-Date: Tue, 16 Jun 2026 16:53:58 +0800
-Message-Id: <20260616085359.89406-1-guoqi0226@163.com>
+	socketcan@hartkopp.net
+Subject: [PATCH v3 0/1] can: mcp251xfd: Add ACPI device ID table for MCP251XFD
+Date: Tue, 16 Jun 2026 17:16:39 +0800
+Message-Id: <20260616091640.93275-1-guoqi0226@163.com>
 X-Mailer: git-send-email 2.25.1
-In-Reply-To: <20260616031332.0F34C1F000E9@smtp.kernel.org 20260616-teal-wrasse-of-conversion-348af0-mkl@pengutronix.de>
-References: <20260616031332.0F34C1F000E9@smtp.kernel.org 20260616-teal-wrasse-of-conversion-348af0-mkl@pengutronix.de>
+In-Reply-To: <20260616090742.E80BE1F000E9@smtp.kernel.org>
+References: <20260616090742.E80BE1F000E9@smtp.kernel.org>
 Precedence: bulk
 X-Mailing-List: sashiko-reviews@lists.linux.dev
 List-Id: <sashiko-reviews.lists.linux.dev>
@@ -50,21 +47,16 @@ List-Subscribe: <mailto:sashiko-reviews+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:sashiko-reviews+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-X-CM-TRANSID:_____wDnEpYsDzFqEuHvDg--.40923S2
+X-CM-TRANSID:_____wBHTRd6FDFqkneCDw--.45447S2
 X-Coremail-Antispam: 1Uf129KBjDUn29KB7ZKAUJUUUUU529EdanIXcx71UUUUU7v73
-	VFW2AGmfu7bjvjm3AaLaJ3UbIYCTnIWIevJa73UjIFyTuYvj4RCsjjDUUUU
-X-CM-SenderInfo: 5jxr1xaqsslqqrwthudrp/xtbC-g61HmoxDy6oXgAA3X
+	VFW2AGmfu7bjvjm3AaLaJ3UbIYCTnIWIevJa73UjIFyTuYvj4RgJ5FUUUUU
+X-CM-SenderInfo: 5jxr1xaqsslqqrwthudrp/xtbC4RsKcmoxFHtivwAA3r
 
-Changes in v2:
-1. MCP2515 is verified, but MCP251XFD has not been tested.
-   When testing MCP2515, MCP251XFD was found missing ACPI support, hence this addition.
-   Reference the validated MCP2515 ACPI node as template:
-   Device(CAN0){
-         Name(_HID, "MCP2515")
-         Name(_UID, 0)
-         Name (_DSD, Package() {
-2. The original 9-character HID "MCP251XFD" violates ACPI format rules; 
-   redefine it to standard compliant ACPI ID MCHP15FD.
+Sent incorrect patch accidentally, fixed in this version
+
+changed v3
+Recover accidentally deleted netdev_info log line with __func__
+-	netdev_info(priv->ndev, "%s\n", __func__);
 
 guoqi0226 (1):
   can: mcp251xfd: Add ACPI device ID table for MCP251XFD
