@@ -1,165 +1,181 @@
-Received: from mail-wm1-f44.google.com (mail-wm1-f44.google.com [209.85.128.44])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B72D84192FD
-	for <sashiko-reviews@lists.linux.dev>; Tue, 16 Jun 2026 08:39:47 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.44
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4200430AD0A;
+	Tue, 16 Jun 2026 08:44:47 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1781599189; cv=none; b=kbeJOPOR/L9hwKQ/misDAdy/alu3RQSGXQtK8fdf4pWPYHLlBSJoY2LxQLfoixR21Ampe9Ta/XyAfYz+QOLr9DZyNNSZMEbWRKSfAMA1G9cZnZmA9nU/0/K+52zkRePP4AKyZHISLF7IUqzlvd+TzhQvPR/dQn/64WF9shNodDc=
+	t=1781599489; cv=none; b=tKORO+Pdbr1k/7R38irpP7PHsePRv8hRIBCQhde//4zSWkxHZijaDRyCpfxkf5IRL6WvEZuhILumYkHuh5QePEHBuXhkBND1CY+2e8uu3hWG/mGeO0tAqvqPw2SsEK4sKVqjbkqGx/W+UKwzlGSyhF4+bJ8dRpvkeUe9PyZfVyM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1781599189; c=relaxed/simple;
-	bh=xgqg2HEwifWUM0vuhnri1EIB65MvKX7fBHTptgMWJfY=;
-	h=Message-ID:Date:MIME-Version:From:Subject:To:Cc:References:
-	 In-Reply-To:Content-Type; b=a+VlopmlgL+BiNJjPNRIYmtgogH1W+vZfvF3WDGcSdvBtmMLQyTMbiXFN14RUNFHae2/d1ik6jIs9+fxBQmpwtpxtPMM7xlaaHUAcL32LY5BdUHB8jcy1ojMMsvdz0IWN75hEW9hKQ5BVpX+yAZnxLXU24gZr3hGYlcS5hryz9M=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=xSQwYvmC; arc=none smtp.client-ip=209.85.128.44
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
+	s=arc-20240116; t=1781599489; c=relaxed/simple;
+	bh=vU5CkjwusbK4oTshtz0qTyrjjkJfMFH1mI6MHUX9Lf0=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=NqSZS8JDwF/vb4FY91WXHj2HsZwOadk5Fh86QaeUA784M9NbW6UeLfSEHIcOkbJ1950FYRtc2YftMJ5/EjrdguQrGKclAWthgP4jNg62krJmk+wxzub27y9XD3b6idEgz00fNvngcjHq0ZLHzcofmK/CSgVPyvqvyliHG9SfYgQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=OoTB7quQ; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="xSQwYvmC"
-Received: by mail-wm1-f44.google.com with SMTP id 5b1f17b1804b1-490aaeabdb4so29314275e9.1
-        for <sashiko-reviews@lists.linux.dev>; Tue, 16 Jun 2026 01:39:47 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1781599186; x=1782203986; darn=lists.linux.dev;
-        h=content-transfer-encoding:in-reply-to:organization:autocrypt
-         :content-language:references:cc:to:subject:reply-to:from:user-agent
-         :mime-version:date:message-id:from:to:cc:subject:date:message-id
-         :reply-to;
-        bh=2H65j63RwgTq0P0u4BfHzeL9+e1nXdHZ4T1IfU/mVhQ=;
-        b=xSQwYvmC3Exc9Tvyg9CaQQurt3Kn6aH5e6Svxx2+Xsel6ywIBeOF1SRirowmt3D7qU
-         Gy9c1wqD5jVZ7bEtFN2+SmEic7JoKYlSF7GB0uRJTJNOXa9WVXRxocd9j8mjd3AegPRP
-         7pyz8zMoo7/n8ZKp+X4l2gId0X5li59PlH5Q8m6tFfIZpfi/3D3lkoSrWhF5DyXINkMV
-         mmkvkhSYteKsPm+Nyw2mofiX1BlQe8wMvAulgU/8BRYxFaSjpGGWCet8g5BBp4oTXau2
-         UZ2ue5MGxs25ESkhveccKqOyaf/IS+T0zzZ3IfLjZN/eEBwbpdEvvAksrPWaCOK1b1fF
-         CHVA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20251104; t=1781599186; x=1782203986;
-        h=content-transfer-encoding:in-reply-to:organization:autocrypt
-         :content-language:references:cc:to:subject:reply-to:from:user-agent
-         :mime-version:date:message-id:x-gm-gg:x-gm-message-state:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=2H65j63RwgTq0P0u4BfHzeL9+e1nXdHZ4T1IfU/mVhQ=;
-        b=B25MEtKgIl0hogHzP25fx5PE7meSZS1cNccdE7uuuDcADFpeBrlo0aFwTbvVgrkTUb
-         BpbVLk/TP869L5cQmAgc5sCsIVaC2cVJRW/vHg36Hip/jK+6MuA1PAtmwF+Fyh2hontP
-         79nF7/qxpNnTM0ogZkOXnyYDrVxqwAlJaciDHx5T+2VqFLrxpUHTahwMXi3K5uL/WuzO
-         +QEyfqjWpLWSXbw1iR2IbGivR8MfrRuln3HpQxBahjFp4Xf/owZv7Dm9U9gjwxxOqctR
-         yxR7emoYbmFiB4czJYKpHt0H9M+0tyzRQOzXkg4MLPFQCv8cclJXaqvP8BjjUToWXd0s
-         MGew==
-X-Forwarded-Encrypted: i=1; AFNElJ/ekiK+aHCIkZgr5MvKrJDSN6z+dtL4ZW1jfTsAn+z957Lhy0AaB3CCCgqBZ/T3wBiwy6RL4ZDTpfJagaLvdzs=@lists.linux.dev
-X-Gm-Message-State: AOJu0YyH9ln5pmIlg0c3LcVKen/igbdtpO2AppRpn4Jz5SXEitlfhYiy
-	3mwK6BqZ1zgLJIzZeIlZmVJZPqweHEwLcMxlyAlvoeQ9pCSGJjWSvChFqqsHbTF3KDo=
-X-Gm-Gg: Acq92OGWaDhhIJ7tx9FrOVxU0H+fdmHReYqFg4tfoRqwuOHn4Of+8Iiq4unOYZ2hJVf
-	KAlLbFwU/n4rIdO/Ziir5Gi88I0aeS+kT5XaYPnIoxtPvHmDc5E7wHsCU/VLOzzLiW+PnQWSDUv
-	VfaIJyV/Jvu9BonFwJSyzOl+fyMjE7EiL4toDnc65jpI4XC2LKti5VadompVDaU3BVy3W2znm/G
-	1Jl0loLGg2F56sNLq+wTMqpviS9xRfSKzcVCq8YNtIKoxOqwhWE3g1os0uuMAiwJJw/FH8bJKUq
-	0JMnrdeA4j6lPQZBD+P0HjoJ2DHPr50mxRHK/ZJt7/ezao7ZEQz84H8+/Kxeo6YhgKfy5p+9lf/
-	9IbQkIy2RJcuGDaqwxID8CWrv6sUyEU949/PJoG/X+0CHORBwEthGaNBV5O7PyC5OsuIpCQqHI/
-	SubiFk/kQt/VjKuMijLSGaEsrZz/x/hg==
-X-Received: by 2002:a05:600c:6d4c:b0:490:d2a4:1b59 with SMTP id 5b1f17b1804b1-492201184admr149927925e9.31.1781599185914;
-        Tue, 16 Jun 2026 01:39:45 -0700 (PDT)
-Received: from [10.3.4.22] ([212.133.41.77])
-        by smtp.gmail.com with ESMTPSA id 5b1f17b1804b1-49230a96b47sm35404405e9.13.2026.06.16.01.39.44
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Tue, 16 Jun 2026 01:39:45 -0700 (PDT)
-Message-ID: <542d32c7-a3a0-41a4-833a-c28f33f24cea@linaro.org>
-Date: Tue, 16 Jun 2026 10:39:44 +0200
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="OoTB7quQ"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id D07FB1F000E9;
+	Tue, 16 Jun 2026 08:44:46 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=kernel.org;
+	s=k20260515; t=1781599487;
+	bh=/oYQ5/Jb6iFjya9RVTgs4HXzWqEW3bAB8XqQIRdPPM8=;
+	h=Date:From:To:Cc:Subject:References:In-Reply-To;
+	b=OoTB7quQChG4Wuzmat03cFa0GB8SBI0UrHX3msdndFVJFvkvkrEubr4xQ0mjvFKG2
+	 gDLWKmz4VrxKjIbRXVoX1KTjikdfDOua1XZEl4C71AMT4Vlf5DR4txJmU9r9SKqNw4
+	 7R6xIjrhPMh603GkUw4MK50pgP/U3AWWOxv2i3sEUMGYwZ7fb94m1u+NsXJZXSztfK
+	 XpD9y0Tq1sRcEhgd/hn1K7o1hHKfMJgnRo0gJh7z4TDTZS5ELx0fsU8N4V0/woM5f0
+	 hnNH203ujgzyILmM/hQSueJi0c5i1hAt7IslgoMPqZdYOYj4eCibOCB5nCao0lvrIg
+	 vpTfLF8ZXQQsg==
+Date: Tue, 16 Jun 2026 14:14:33 +0530
+From: Vinod Koul <vkoul@kernel.org>
+To: "Golla, Nagendra" <Nagendra.Golla@amd.com>
+Cc: sashiko-reviews@lists.linux.dev, robh@kernel.org,
+	devicetree@vger.kernel.org, Frank.Li@kernel.org,
+	dmaengine@vger.kernel.org, conor+dt@kernel.org
+Subject: Re: [PATCH 2/2] dmaengine: zynqmp_dma: Add per-channel reset support
+Message-ID: <ajEM8QfB5brd3sOQ@vaman>
+References: <20260525105042.2249542-3-nagendra.golla@amd.com>
+ <20260525113349.68D6E1F00A3D@smtp.kernel.org>
+ <efa45058-6724-45cb-8b8f-75427446f62c@amd.com>
 Precedence: bulk
 X-Mailing-List: sashiko-reviews@lists.linux.dev
 List-Id: <sashiko-reviews.lists.linux.dev>
 List-Subscribe: <mailto:sashiko-reviews+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:sashiko-reviews+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-From: Neil Armstrong <neil.armstrong@linaro.org>
-Reply-To: Neil Armstrong <neil.armstrong@linaro.org>
-Subject: Re: [PATCH RFC v3 3/6] arm64: dts: qcom: sm8550-qrd: add SPMI ADC
- channels and thermal nodes
-To: Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>,
- sashiko-reviews@lists.linux.dev
-Cc: devicetree@vger.kernel.org, conor+dt@kernel.org, robh@kernel.org
-References: <20260615-topic-sm8x50-adc5-gen3-v3-3-216a2b5ccb85@linaro.org>
- <20260615171519.F2A851F00A3A@smtp.kernel.org>
- <dz2leajz5bh5knzzhjlbisosfg3ujaokaoo5rq7lf2dzvgut7u@s44eop5u4li4>
-Content-Language: en-US, fr
-Autocrypt: addr=neil.armstrong@linaro.org; keydata=
- xsBNBE1ZBs8BCAD78xVLsXPwV/2qQx2FaO/7mhWL0Qodw8UcQJnkrWmgTFRobtTWxuRx8WWP
- GTjuhvbleoQ5Cxjr+v+1ARGCH46MxFP5DwauzPekwJUD5QKZlaw/bURTLmS2id5wWi3lqVH4
- BVF2WzvGyyeV1o4RTCYDnZ9VLLylJ9bneEaIs/7cjCEbipGGFlfIML3sfqnIvMAxIMZrvcl9
- qPV2k+KQ7q+aXavU5W+yLNn7QtXUB530Zlk/d2ETgzQ5FLYYnUDAaRl+8JUTjc0CNOTpCeik
- 80TZcE6f8M76Xa6yU8VcNko94Ck7iB4vj70q76P/J7kt98hklrr85/3NU3oti3nrIHmHABEB
- AAHNKk5laWwgQXJtc3Ryb25nIDxuZWlsLmFybXN0cm9uZ0BsaW5hcm8ub3JnPsLAkQQTAQoA
- OwIbIwULCQgHAwUVCgkICwUWAgMBAAIeAQIXgBYhBInsPQWERiF0UPIoSBaat7Gkz/iuBQJk
- Q5wSAhkBAAoJEBaat7Gkz/iuyhMIANiD94qDtUTJRfEW6GwXmtKWwl/mvqQtaTtZID2dos04
- YqBbshiJbejgVJjy+HODcNUIKBB3PSLaln4ltdsV73SBcwUNdzebfKspAQunCM22Mn6FBIxQ
- GizsMLcP/0FX4en9NaKGfK6ZdKK6kN1GR9YffMJd2P08EO8mHowmSRe/ExAODhAs9W7XXExw
- UNCY4pVJyRPpEhv373vvff60bHxc1k/FF9WaPscMt7hlkbFLUs85kHtQAmr8pV5Hy9ezsSRa
- GzJmiVclkPc2BY592IGBXRDQ38urXeM4nfhhvqA50b/nAEXc6FzqgXqDkEIwR66/Gbp0t3+r
- yQzpKRyQif3OwE0ETVkGzwEIALyKDN/OGURaHBVzwjgYq+ZtifvekdrSNl8TIDH8g1xicBYp
- QTbPn6bbSZbdvfeQPNCcD4/EhXZuhQXMcoJsQQQnO4vwVULmPGgtGf8PVc7dxKOeta+qUh6+
- SRh3vIcAUFHDT3f/Zdspz+e2E0hPV2hiSvICLk11qO6cyJE13zeNFoeY3ggrKY+IzbFomIZY
- 4yG6xI99NIPEVE9lNBXBKIlewIyVlkOaYvJWSV+p5gdJXOvScNN1epm5YHmf9aE2ZjnqZGoM
- Mtsyw18YoX9BqMFInxqYQQ3j/HpVgTSvmo5ea5qQDDUaCsaTf8UeDcwYOtgI8iL4oHcsGtUX
- oUk33HEAEQEAAcLAXwQYAQIACQUCTVkGzwIbDAAKCRAWmrexpM/4rrXiB/sGbkQ6itMrAIfn
- M7IbRuiSZS1unlySUVYu3SD6YBYnNi3G5EpbwfBNuT3H8//rVvtOFK4OD8cRYkxXRQmTvqa3
- 3eDIHu/zr1HMKErm+2SD6PO9umRef8V82o2oaCLvf4WeIssFjwB0b6a12opuRP7yo3E3gTCS
- KmbUuLv1CtxKQF+fUV1cVaTPMyT25Od+RC1K+iOR0F54oUJvJeq7fUzbn/KdlhA8XPGzwGRy
- 4zcsPWvwnXgfe5tk680fEKZVwOZKIEuJC3v+/yZpQzDvGYJvbyix0lHnrCzq43WefRHI5XTT
- QbM0WUIBIcGmq38+OgUsMYu4NzLu7uZFAcmp6h8g
-Organization: Linaro
-In-Reply-To: <dz2leajz5bh5knzzhjlbisosfg3ujaokaoo5rq7lf2dzvgut7u@s44eop5u4li4>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 8bit
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <efa45058-6724-45cb-8b8f-75427446f62c@amd.com>
 
-On 6/16/26 01:59, Dmitry Baryshkov wrote:
-> On Mon, Jun 15, 2026 at 05:15:19PM +0000, sashiko-bot@kernel.org wrote:
->> Thank you for your contribution! Sashiko AI review found 2 potential issue(s) to consider:
->> - [Medium] Missing `qcom,hw-settle-time` for the `channel@749` 100kΩ pull-up thermistor (`pm8550b_wls_therm`), leading to inaccurate temperature readings.
->> - [Low] The ADC channel nodes are not sorted by their unit address, violating standard device tree conventions.
->> --
->>
->> commit 4a45cdf2d6ed588ab63165c08752b51ef046be4f
->> Author: Neil Armstrong <neil.armstrong@linaro.org>
->>
->> arm64: dts: qcom: sm8550-qrd: add SPMI ADC channels and thermal nodes
->>      
->> Add the SPMI ADC channels on the PMK8550 SPMI5 ADC3 for the
->> other PMICS on the system.
->>
->> The thermal nodes are sorted by the sensor channel to be
->> coherent with the system thermal nodes ordering.
->>
->>
->> [Severity: Low]
->> Similar to the above, this isn't a bug, but should channel@78e and
->> channel@78f be placed after channel@747 and channel@749 to maintain
->> proper unit address sorting?
+On 15-06-26, 14:59, Golla, Nagendra wrote:
 > 
-> Yes, sorting might need some improvements.
-
-Definitely, will fix
-
 > 
->>
->>> +
->>> +	channel@749 {
->>> +		reg = <PM8550B_ADC5_GEN3_AMUX_THM6_GPIO10_100K_PU(7)>;
->>> +		label = "pm8550b_wls_therm";
->>> +		qcom,ratiometric;
->>> +		qcom,pre-scaling = <1 1>;
->>> +		qcom,adc-tm;
->>> +	};
->>
->> [Severity: Medium]
->> Does this node need qcom,hw-settle-time = <200> like the other 100K
->> pull-up thermistor channels in this patch?
->>
->> Without it, the ADC measurement falls back to the default settle time,
->> which might be insufficient for this high-impedance path and lead to
->> inaccurate temperature readings for the pm8550b_wls_therm channel.
+> On 5/25/2026 5:03 PM, sashiko-bot@kernel.org wrote:
+> > Thank you for your contribution! Sashiko AI review found 3 potential issue(s) to consider:
+> > 
+> > Pre-existing issues:
+> > - [High] The probe error path leaks a runtime PM usage counter reference, permanently breaking runtime PM and leaving hardware clocks enabled.
+> > - [High] Dropping the spinlock inside `list_for_each_entry_safe` allows concurrent modification of the list, leading to memory corruption.
+> > - [High] Hardware registers are accessed in the IRQ handler without verifying if the device is active, risking a kernel panic on spurious interrupts.
+> > --
+> > 
+> > commit b2d2a678f48614c7188f8d81cbc70143b2bdfc0f
+> > Author: Golla Nagendra <nagendra.golla@amd.com>
+> > Subject: dmaengine: zynqmp_dma: Add per-channel reset support
+> > 
+> > This commit introduces per-channel reset support for Versal Gen 2 and
+> > Versal Net SoCs. It adds reset handling in the channel probe path using
+> > device_reset_optional() to trigger a reset pulse during initialization.
+> > Platforms without per-channel reset are unaffected.
+> > 
+> > > diff --git a/drivers/dma/xilinx/zynqmp_dma.c b/drivers/dma/xilinx/zynqmp_dma.c
+> > > index f6a812e49ddca..51c831760372c 100644
+> > > --- a/drivers/dma/xilinx/zynqmp_dma.c
+> > > +++ b/drivers/dma/xilinx/zynqmp_dma.c
+> > [ ... ]
+> > > @@ -916,6 +917,11 @@ static int zynqmp_dma_chan_probe(struct zynqmp_dma_device *zdev,
+> > >   	if (IS_ERR(chan->regs))
+> > >   		return PTR_ERR(chan->regs);
+> > > +	err = device_reset_optional(&pdev->dev);
+> > > +	if (err)
+> > > +		return dev_err_probe(&pdev->dev, err,
+> > > +				     "failed to reset channel\n");
+> > > +
+> > 
+> > [Severity: High]
+> > This isn't a bug introduced by this patch, but does this error path leak a
+> > runtime PM usage counter reference?
+> > 
+> > In zynqmp_dma_probe(), pm_runtime_resume_and_get() is called to increment
+> > the runtime PM usage counter and enable the device clocks. If a subsequent
+> > initialization step fails, such as the newly added device_reset_optional()
+> > returning -EPROBE_DEFER, the code jumps to the err_disable_pm label:
+> > 
+> > zynqmp_dma_probe()
+> >      ...
+> > 	ret = pm_runtime_resume_and_get(zdev->dev);
+> >      ...
+> > 	ret = zynqmp_dma_chan_probe(zdev, pdev);
+> > 	if (ret) {
+> > 		dev_err_probe(&pdev->dev, ret, "Probing channel failed\n");
+> > 		goto err_disable_pm;
+> > 	}
+> >      ...
+> > err_disable_pm:
+> > 	if (!pm_runtime_enabled(zdev->dev))
+> > 		zynqmp_dma_runtime_suspend(zdev->dev);
+> > 	pm_runtime_disable(zdev->dev);
+> > 	return ret;
+> > 
+> > Since the device is still runtime PM enabled, it skips
+> > zynqmp_dma_runtime_suspend() and fails to drop the usage counter with
+> > pm_runtime_put_noidle().
+> > 
+> > Because -EPROBE_DEFER is a normal occurrence during boot, this path can
+> > be hit multiple times. Will this permanently leave the usage counter above
+> > zero, preventing the device from ever entering runtime suspend and leaving
+> > its clocks enabled indefinitely?
+> > 
+> > >   	chan->bus_width = ZYNQMP_DMA_BUS_WIDTH_64;
+> > >   	chan->dst_burst_len = ZYNQMP_DMA_MAX_DST_BURST_LEN;
+> > 
+> > [Severity: High]
+> > This is a pre-existing issue, but does dropping the spinlock inside
+> > list_for_each_entry_safe() in zynqmp_dma_chan_desc_cleanup() allow concurrent
+> > modification of the list, leading to memory corruption?
+> > 
+> > When zynqmp_dma_chan_desc_cleanup() temporarily drops the lock to invoke
+> > the DMA callback:
+> > 
+> > zynqmp_dma_chan_desc_cleanup()
+> >      ...
+> > 	list_for_each_entry_safe(desc, next, &chan->done_list, node) {
+> >          ...
+> > 		if (dmaengine_desc_callback_valid(&cb)) {
+> > 			spin_unlock_irqrestore(&chan->lock, irqflags);
+> > 			dmaengine_desc_callback_invoke(&cb, NULL);
+> > 			spin_lock_irqsave(&chan->lock, irqflags);
+> > 		}
+> > 
+> > A client driver can concurrently invoke dmaengine_terminate_sync(), which
+> > calls zynqmp_dma_device_terminate_all() and executes
+> > zynqmp_dma_free_descriptors(). This moves all remaining elements, including
+> > the prefetched next pointer, from done_list to free_list.
+> > 
+> > When zynqmp_dma_chan_desc_cleanup() reacquires the lock, won't it continue
+> > iterating using the corrupted next pointer that now resides in free_list,
+> > eventually interpreting the list head &chan->free_list as a struct
+> > zynqmp_dma_desc_sw and resulting in out-of-bounds memory accesses?
+> > 
+> > [Severity: High]
+> > This is a pre-existing issue, but are hardware registers accessed in the
+> > IRQ handler without verifying if the device is active, risking a kernel
+> > panic on spurious interrupts?
 > 
-> I'd also guess so. Neil, are you sure?
+> Hi,
 > 
+> Thanks for pointing this out.After reviewing the runtime PM guidelines and
+> the driver behavior, I believe this is not a strict requirement for all IRQ
+> handlers. The PM documentation does not mandate that
+> pm_runtime_get_if_active() must be used before every register access in an
+> ISR. It is mainly intended for cases where an interrupt can occur while the
+> device might be runtime-suspended, such as shared IRQ or spurious interrupt
+> scenarios.
+> 
+> In the case of the zynqmp DMA driver, the interrupt is generated only when
+> the hardware is active during a transfer, and the driver ensures the device
+> remains runtime-active while DMA operations are in progress. Because of
+> this, the ISR is not expected to run when the device is suspended, and
+> accessing registers directly should be safe.
+> 
+> So, in this context, adding pm_runtime_get_if_active() in the IRQ handler
+> may not be necessary. That said, please let me know  if you see a scenario
+> where the interrupt could be triggered while the device is
+> runtime-suspended, and I can revisit accordingly.
 
-I'll check
+We can have a spurious interrupt. if you have an isr registered, your
+cide should be able to handle the invocation... I think it is indeed
+pragmatic to handle this
 
-Thanks,
-Neil
+-- 
+~Vinod
