@@ -1,166 +1,197 @@
-Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-ed1-f53.google.com (mail-ed1-f53.google.com [209.85.208.53])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E53234657F4;
-	Tue, 16 Jun 2026 16:03:04 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
-ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1781625786; cv=none; b=AwfE8cCwf4aihbqMoL+TlEvukqwkvYbaaWwuAb/RoJsJ8eX6CabC7/vvdak12TkSLgE3YmRsklrABNQYDBtTReTm24rMl0djJqbxCTpygx3ZcaD5e+AirRfzUD272Nj6fdB4MOqZNfTbHjYipLytxhrnxx/TxU0fzG8AnQXmU1c=
-ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1781625786; c=relaxed/simple;
-	bh=Mw5IgsnN7DNwwUQHsgasLdh9fk6jhKqNpH2Nv522Vrs=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=SQ0tlON1e1h+BjKSJsV/fKMVHfh8fljguQ0uwV4wD5vanh/qhb04yTAMweF/5Q6hRqnJwn296dRUGyNotbhtevAsa849EOp/hyLNqbL3MPXVWMcExxUos7bnCIn5oRX84+5EW8mthqJLaWBizDEPgj80hbr4ac2katS8nywSHD8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=FZS50b5o; arc=none smtp.client-ip=100.103.45.18
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9AA9543E490
+	for <sashiko-reviews@lists.linux.dev>; Tue, 16 Jun 2026 16:12:51 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=pass smtp.client-ip=209.85.208.53
+ARC-Seal:i=2; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
+	t=1781626373; cv=pass; b=rv+YYZ7NmDj7oHsZ1g0cCDj8KgC73b6lpirQ442Uq8cUDQkG6QtM+zors0WkoMErEuNQjLUDZWnvm6lhHolTUGs255ws90KLu1s8X0aUFeiVQ0ZtDf3Ge0sMheK/MIUb2QG1p5JDrZZi1/PHEBy+ooMgTG/XOgm3T4Lc39EFDEc=
+ARC-Message-Signature:i=2; a=rsa-sha256; d=subspace.kernel.org;
+	s=arc-20240116; t=1781626373; c=relaxed/simple;
+	bh=8uDoBxR5qf+5tNtsgyPNdMc2uf8NWiIUFAqpGNdUaNU=;
+	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
+	 To:Cc:Content-Type; b=VclMk26UWZ7Kd27sb35SV8ZtVq9GdrmeVePo8g/2at08bY4IIJJ1X8w1Sm+NnusDEUpr+E/zIeX4HDXZgytvRcBC6JEZnYMe00yDvTIfWfzgemJEaGHjKjYU8O61UNRxtaAo4DOJ0VwY+XZuG6gwuyr3Wsj3MB21FUhBnDqweEE=
+ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=NCQidOXm; arc=pass smtp.client-ip=209.85.208.53
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="FZS50b5o"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1B0C41F000E9;
-	Tue, 16 Jun 2026 16:03:03 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=kernel.org;
-	s=k20260515; t=1781625784;
-	bh=7OHd0UBpn0rgUH6NJV8ruQioGXLuV/btshrbeH7Pyyg=;
-	h=Date:From:To:Cc:Subject:References:In-Reply-To;
-	b=FZS50b5owRSlNiNmvBC7hf743BZmidStIwVBwouxAABBrgP+2jkz10FIo0rDADkxl
-	 ZSV0LAfBQuDR7zeBrX/sx+UO0tVENtRIOezku+SGdrwl9SW/goYzXiAB0s6Z+X3Ge5
-	 IH9ocnBWeLRpLKa4TpiaWm9q5XYJNxAwUdEPcJ1wSoM0lrnQRwD2v+x/eCTCdX9KL6
-	 stG6nUm+7naMeBkN0kGMd0k+TupxunOjV/JgH3EcadBpXxY8M8yhfSXM1I5nvjVfa+
-	 1M5RIz7EEsoIyfu/Cg0MulNgXI415hUkxqEa9qt3YJZF3IKKSraqMtBPtUtsdpbc5M
-	 /lr7Wf7Z6GLKg==
-Date: Tue, 16 Jun 2026 13:03:01 -0300
-From: Arnaldo Carvalho de Melo <acme@kernel.org>
-To: sashiko-reviews@lists.linux.dev
-Cc: Ian Rogers <irogers@google.com>, linux-perf-users@vger.kernel.org
-Subject: Re: [PATCH v21 08/21] perf python: Use evsel in sample in pyrf_event
-Message-ID: <ajFztSaBdZgJ6sJF@x1>
-References: <20260616011543.4037138-9-irogers@google.com>
- <20260616015219.0BCC51F000E9@smtp.kernel.org>
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="NCQidOXm"
+Received: by mail-ed1-f53.google.com with SMTP id 4fb4d7f45d1cf-68d232ed3f9so7391207a12.0
+        for <sashiko-reviews@lists.linux.dev>; Tue, 16 Jun 2026 09:12:51 -0700 (PDT)
+ARC-Seal: i=1; a=rsa-sha256; t=1781626370; cv=none;
+        d=google.com; s=arc-20240605;
+        b=D3q2Crle97DWTz3Ciakqw+UOm3lUjsjgjYGvqrye7lyv7sbI9GcbaxaTComL89K7gJ
+         PTu4eGjLiBATnSi5LpbBWrwQtohHfnR8f623p/6pl5txOjVq3/AEL9pyGQDQ5YhzDSTu
+         Cr6k09g5dPowLYIXA+7kndbgVcD4a8wI3r+dYqe3yYJFNoWuFuBaXb/mcrnkXj+pUzPy
+         H/Jh0y0X4UWQGafaRvtnyAfBlwLaxbINTjQx5iB532GfLVkxbLZuymOlp43nU63UxyLE
+         5/4wTGKVvppfLVSQHfs872+tKyyW10rkTda+/5h4917K7kxAFHNL1Ygvx0xN+6puS1fO
+         3qDQ==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com; s=arc-20240605;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:dkim-signature;
+        bh=GKs2jxsRv9+LlDfAIsR7Q+9I5QhaQR7XKzFdmi7DHcA=;
+        fh=LQLdSW01h2ROUwNK2N5+UwHQ+4lE93qNu55uGrsD190=;
+        b=ea3A9DZe9m41FkuTTLbqYyy5qOS+Ii6CfYG0a0OaZHQmYUOaOZung56Y8SyNmZYdq/
+         CupMnmHi1wEZVgLjqukhbMN/Vx+prA3VgRZJp5q1AvJZDa28SKa38WF5roig0WCm/Ken
+         cCTuaJjaTdCC5+rax1T4uhdNXqC59r3FTzv4IykzNRoh1kOOq1gX85YK4mlqlzsOp3pn
+         W0Gu/vLZ/nKdP1Cjn6dWHVHD3yd6p9iNnrWYHTBIivvPClUJ5jVuizo0jAOr7Qjn88Pp
+         v2i6gjvnOMZY98ydUSpsKkFxCq4c0NLt3j+WU/btp9vxgFJqMN8lk3wpA891PMNsj97H
+         gVWA==;
+        darn=lists.linux.dev
+ARC-Authentication-Results: i=1; mx.google.com; arc=none
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20251104; t=1781626370; x=1782231170; darn=lists.linux.dev;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=GKs2jxsRv9+LlDfAIsR7Q+9I5QhaQR7XKzFdmi7DHcA=;
+        b=NCQidOXmC3TtRU8L/H4c4/+k4DTH3rb372HoMwvbRRhSmYaaMfKP8BgjBx8peY/7jh
+         CYh02QO3ruUmPZBkXNqEC/QqvgUBRIlJSGiJfzn0t2SHm7mWEp2m6TaB72raUQPRBxEg
+         2b1b4tOoEY/wRytf3X5xY8m8lT6Mwj8eHSPmLOtLkeTmPXKQ9kSSxcjXugDPycdid9HW
+         KudGl4AG6INqKdW6Edsvx/3Y9KKhe3ixjREEHxgYY0uvN/WGtmFYAGGGzkeJrvy74rqr
+         w8+X+RH9VLFOsyUxtQU8cFakqJq9GmUGoefFW6BlIz2Njw9Zq+Ru4a+M1UD+vlWxSkWD
+         4WOg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20251104; t=1781626370; x=1782231170;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:x-gm-gg:x-gm-message-state:from
+         :to:cc:subject:date:message-id:reply-to;
+        bh=GKs2jxsRv9+LlDfAIsR7Q+9I5QhaQR7XKzFdmi7DHcA=;
+        b=OtWiVkLkpcMCiazX0GrjYELpJudP0n+ox1p6aAn52+iDuaG7+t6XroedKhaAllTqgK
+         IAMS9z92ViPxQBvhKom9FLTXFUSsE1UnO5oOkMq1/9ejWR/4ieShjpQ5rZvbisUl7JSn
+         OpIzE8wHKzaMmn0iS8RgfKZn0CoOMMeYUZFB2BJ5B6QwoDARrjpc4xpeKvJIFlQl9DK4
+         gIGbp7OCK0+5aMurPqv8T7/hmIzv3MTaAd+pwBnKQiO/S8RHvLX/zJ9FnI47a3BVE87C
+         9nf7XzLmPJGXpGJT3HFDAxVdZSXPHQQ4txqhZzHtlCJOxuK2aZcbinpuVweQgSJTDmwI
+         yE3w==
+X-Gm-Message-State: AOJu0YwBRWxDFhdyd0m3zarpaLcJIERBoO6e6diqjDpvLRsDhp9Z41i0
+	wqNCIhG+ScTCmDoAshUOHaNExS17xuxdDK4pHz9nnG2oZcVR7fO1cl8Zm+bgXcuJvZEiEia01xQ
+	wNrBC6iwVdK2Ri+Ad0fiLO7drVxA4k7dn+2h0
+X-Gm-Gg: Acq92OH+5wKICv1zOblBgLz/B+2ZVf29Pw7N/xH+8UuNVXRe1toao45utyO7IDtLVs9
+	Q+08rnLwRaPQHhdJHzSuGgvTbLG1b/ULZFQCTXSfhtFpzMnh3aLuEN5eJdYJPxFNiBlagGHeffV
+	faZ/55MEsOStOWYzg4x7he16wBVyZbM+8jsVWu1ZwXmBCSD9dXN9GZim7ps9ljdq48Eh2VJe2/5
+	m67Ckuq8geCOyBriuCiR6OEHgeRxD59kW7LaXdMZgTYkaB/0LIsQeNHJQY06wVvTz408cno9zLU
+	JGD0h8oRqFXOrGhppj1Mif0=
+X-Received: by 2002:a17:907:b03:b0:bee:875d:af12 with SMTP id
+ a640c23a62f3a-c05a09bc11dmr25587266b.0.1781626369768; Tue, 16 Jun 2026
+ 09:12:49 -0700 (PDT)
 Precedence: bulk
 X-Mailing-List: sashiko-reviews@lists.linux.dev
 List-Id: <sashiko-reviews.lists.linux.dev>
 List-Subscribe: <mailto:sashiko-reviews+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:sashiko-reviews+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-Content-Transfer-Encoding: 8bit
-In-Reply-To: <20260616015219.0BCC51F000E9@smtp.kernel.org>
+References: <20260616155716.2631508-5-puranjay@kernel.org> <20260616160409.F321B1F000E9@smtp.kernel.org>
+In-Reply-To: <20260616160409.F321B1F000E9@smtp.kernel.org>
+From: Puranjay Mohan <puranjay12@gmail.com>
+Date: Tue, 16 Jun 2026 17:12:35 +0100
+X-Gm-Features: AVVi8CdKaboq2XwNC4hu_WdVZt4UvvXDyGLLztXHu06VCQ07VL0tsmlmXy4Rvtk
+Message-ID: <CANk7y0jV89r++T_nN21FTCiuA6Twx+LB3jv+BzEN3+rzyjypJw@mail.gmail.com>
+Subject: Re: [PATCH v5 4/4] selftests/bpf: Adjust wasted entries threshold for
+ ARM64 BRBE
+To: sashiko-reviews@lists.linux.dev
+Cc: linux-perf-users@vger.kernel.org, bpf@vger.kernel.org
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 
-On Tue, Jun 16, 2026 at 01:52:16AM +0000, sashiko-bot@kernel.org wrote:
-> Thank you for your contribution! Sashiko AI review found 3 potential issue(s) to consider:
-> - [High] Missing NULL check before calling evsel__get() on the result of evlist__id2evsel() leads to a potential crash.
-> - [Medium] Missing perf_sample__exit() on the error path of guest_session__fetch() leaks the evsel reference.
-> - [Medium] Missing perf_sample__exit() on the error path out of perf_mmap__read_event() loop in test__perf_time_to_tsc leaks the evsel reference.
+On Tue, Jun 16, 2026 at 5:04=E2=80=AFPM <sashiko-bot@kernel.org> wrote:
+>
+> Thank you for your contribution! Sashiko AI review found 2 potential issu=
+e(s) to consider:
+> - [Medium] The test skip threshold for `total_entries` was not adjusted f=
+or the increased ARM64 overhead, leading to guaranteed test failures on har=
+dware with 16 branch entries.
+> - [Medium] The ARM64 threshold for `wasted_entries` provides zero margin =
+for environmental variations, making the test extremely brittle.
 > --
-> 
-> commit c23db56d8fc8d40b59596916ce6b0537514263aa
-> Author: Ian Rogers <irogers@google.com>
-> 
-> perf python: Use evsel in sample in pyrf_event
->     
-> Avoid a duplicated evsel by using the one in sample. Add
-> evsel__get/put to the evsel in perf_sample.
-> 
-> > diff --git a/tools/perf/util/evsel.c b/tools/perf/util/evsel.c
-> > index ec759a11f7588..d79112cebb716 100644
-> > --- a/tools/perf/util/evsel.c
-> > +++ b/tools/perf/util/evsel.c
-> > @@ -3365,7 +3365,7 @@ int __evsel__parse_sample(struct evsel *evsel, union perf_event *event,
-> >  	union u64_swap u;
-> >  
-> >  	perf_sample__init(data, /*all=*/true);
-> > -	data->evsel = evsel;
-> > +	data->evsel = evsel__get(evsel);
-> 
-> [Severity: Medium]
-> Does this new reference acquisition cause memory leaks in existing callers
-> that do not expect sample.evsel to hold a reference on early errors? 
-
-So this was something I wasn't expecting: patches for tools/perf/util/
-inside a python binding series :-\
- 
-> For example, in tools/perf/builtin-inject.c:guest_session__inject_events(),
-> if guest_session__fetch() fails, it returns an error but the cleanup block
-> checking if (ret && gs->fetched) prevents perf_sample__exit() from running,
-> leaking the evsel reference.
-
-this looks valid, no?
-
-And while looking at it, there is another bug in that function, but now
-I'm looking like sashiko ;-)
-
-Namely:
-
- tools/perf/builtin-inject.c
-╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌
- 1970        if (sample->cpu >= gs->vcpu_cnt) {
- 1971          pr_err("Guest event with unknown VCPU %u\n",
- 1972                 sample->cpu);
- 1973 -        return -EINVAL;
- 1973 +        ret = -EINVAL;
- 1974 +        break;
- 1975        }
- 1976        /* Change to host CPU instead of guest VCPU */
- 1977        sample->cpu = gs->vcpu[sample->cpu].cpu;
-
-But the comment for your patch seems actionable, i.e. it is an issue
-introduced by your series, by calling that evsel__get(), no?
- 
-> Similarly, in tools/perf/tests/perf-time-to-tsc.c:test__perf_time_to_tsc(),
-> the CHECK__(evsel__parse_sample(...)) macro jumps to out_err on failure,
-> bypassing perf_sample__exit(&sample) and permanently leaking the newly
-> acquired evsel.
-> 
-> >  	data->cpu = data->pid = data->tid = -1;
-> >  	data->stream_id = data->id = data->time = -1ULL;
-> >  	data->period = evsel->core.attr.sample_period;
-> 
-> [ ... ]
-> 
-> > diff --git a/tools/perf/util/session.c b/tools/perf/util/session.c
-> > index 89d0f4cec6c7f..18af70488e07a 100644
-> > --- a/tools/perf/util/session.c
-> > +++ b/tools/perf/util/session.c
-> > @@ -1874,7 +1875,11 @@ static int evlist__deliver_deferred_callchain(struct evlist *evlist,
-> >  		else
-> >  			orig_sample.deferred_callchain = false;
-> >  
-> > -		orig_sample.evsel = evlist__id2evsel(evlist, orig_sample.id);
-> > +		new_evsel = evlist__id2evsel(evlist, orig_sample.id);
-> > +		if (new_evsel != orig_sample.evsel) {
-> > +			evsel__put(orig_sample.evsel);
-> > +			orig_sample.evsel = evsel__get(new_evsel);
-> > +		}
-> 
-> [Severity: High]
-> Can this cause a segmentation fault if the sample ID is unknown or corrupted?
-> 
-> The evlist__id2evsel() function can return NULL for malformed perf.data files.
-> If new_evsel is NULL, passing it directly to evsel__get(new_evsel) will
-> dereference the NULL pointer when trying to increment its reference count.
-> 
-> Could we add a NULL check here before calling evsel__get()?
-> 
-> >  		ret = evlist__deliver_sample(evlist, tool, de->event,
-> >  					     &orig_sample, machine);
-> >  
-> > @@ -1913,7 +1919,11 @@ static int session__flush_deferred_samples(struct perf_session *session,
-> >  		}
-> >  		sample.file_offset = de->file_offset;
-> >  
-> > -		sample.evsel = evlist__id2evsel(evlist, sample.id);
-> > +		new_evsel = evlist__id2evsel(evlist, sample.id);
-> > +		if (new_evsel != sample.evsel) {
-> > +			evsel__put(sample.evsel);
-> > +			sample.evsel = evsel__get(new_evsel);
-> > +		}
-> 
-> [Severity: High]
-> Similarly, could evlist__id2evsel() return NULL here and cause a crash when
-> passed to evsel__get()?
-> 
-> >  		ret = evlist__deliver_sample(evlist, tool, de->event,
-> >  					     &sample, machine);
+>
+> commit 08ff160f53fde2f401cb063e6cbc84b6bc9a9970
+> Author: Puranjay Mohan <puranjay@kernel.org>
+>
+> selftests/bpf: Adjust wasted entries threshold for ARM64 BRBE
+>
+> The commit adjusts the wasted entries threshold in the get_branch_snapsho=
+t test
+> for ARM64. It raises the threshold to accommodate the ~13 wasted entries
+> generated by the ARM64 BPF trampoline compared to ~7 on x86.
+>
+> > diff --git a/tools/testing/selftests/bpf/prog_tests/get_branch_snapshot=
+.c b/tools/testing/selftests/bpf/prog_tests/get_branch_snapshot.c
+> > index 0394a1156d99d..8d1a3480767fe 100644
+> > --- a/tools/testing/selftests/bpf/prog_tests/get_branch_snapshot.c
+> > +++ b/tools/testing/selftests/bpf/prog_tests/get_branch_snapshot.c
+> > @@ -116,13 +116,18 @@ void serial_test_get_branch_snapshot(void)
 > >
-> 
-> -- 
-> Sashiko AI review · https://sashiko.dev/#/patchset/20260616011543.4037138-1-irogers@google.com?part=8
+> >       ASSERT_GT(skel->bss->test1_hits, 6, "find_looptest_in_lbr");
+>
+> [Severity: Medium]
+> Since this patch increases the expected wasted entries to ~13 on ARM64, d=
+oes the
+> skip threshold also need to be updated?
+>
+> Right above this line, the test skips if total_entries is too small:
+>
+>     if (skel->bss->total_entries < 16) {
+>         /* too few entries for the hit/waste test */
+>         test__skip();
+>         goto cleanup;
+>     }
+>
+> On an ARM64 system with a 16-entry BRBE buffer, the skip condition evalua=
+tes
+> to false, but with 13 wasted entries, only 3 remain for hits. This would =
+cause
+> the ASSERT_GT check to deterministically fail rather than gracefully skip=
+ping.
+>
+> Could the threshold be adjusted to account for the additional ARM64 overh=
+ead
+> (e.g., needing at least 13 + 7 =3D 20 entries)?
+>
+> > -     /* Given we stop LBR in software, we will waste a few entries.
+> > +     /* Given we stop LBR/BRBE in software, we will waste a few entrie=
+s.
+> >        * But we should try to waste as few as possible entries. We are =
+at
+> > -      * about 7 on x86_64 systems.
+> > -      * Add a check for < 10 so that we get heads-up when something
+> > -      * changes and wastes too many entries.
+> > +      * about 7 on x86_64 and about 13 on arm64 systems (the arm64 BPF
+> > +      * trampoline generates more branches than x86_64).
+> > +      * Add a check so that we get heads-up when something changes and
+> > +      * wastes too many entries.
+> >        */
+> > +#if defined(__aarch64__)
+> > +     ASSERT_LT(skel->bss->wasted_entries, 14, "check_wasted_entries");
+>
+> [Severity: Medium]
+> Does this threshold provide enough margin for variations in kernel config=
+uration?
+>
+> The commit message notes there are about 13 wasted entries. Using < 14 me=
+ans
+> the test will fail if exactly 14 entries are wasted, leaving no margin fo=
+r
+> error.
+>
+> Minor variations like KASAN, PREEMPT_RCU, or different compiler code
+> generation could add a single branch to __bpf_prog_enter_recur and cause =
+this
+> test to become flaky.
+>
+> For comparison, the x86 threshold is < 10 for an expected 7 entries, givi=
+ng
+> a 2-3 branch margin. Could the ARM64 threshold be relaxed slightly to pre=
+vent
+> spurious failures?
+>
+> > +#else
+> >       ASSERT_LT(skel->bss->wasted_entries, 10, "check_wasted_entries");
+> > +#endif
+> >
+> >  cleanup:
+> >       get_branch_snapshot__destroy(skel);
+
+
+This selftest is supposed to work with the standard BPF CI config and
+setup which it does currently, it doesn't need to support all
+different configurations and setups.
