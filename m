@@ -1,181 +1,114 @@
-Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
+Received: from m16.mail.163.com (m16.mail.163.com [220.197.31.3])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4200430AD0A;
-	Tue, 16 Jun 2026 08:44:47 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D4DBC30AD0A
+	for <sashiko-reviews@lists.linux.dev>; Tue, 16 Jun 2026 08:54:25 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=220.197.31.3
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1781599489; cv=none; b=tKORO+Pdbr1k/7R38irpP7PHsePRv8hRIBCQhde//4zSWkxHZijaDRyCpfxkf5IRL6WvEZuhILumYkHuh5QePEHBuXhkBND1CY+2e8uu3hWG/mGeO0tAqvqPw2SsEK4sKVqjbkqGx/W+UKwzlGSyhF4+bJ8dRpvkeUe9PyZfVyM=
+	t=1781600069; cv=none; b=ZJ18KU6Ru4eg7mNtAC4fPm4ak5S9U9vAfBr8vFb6b+ITsHem/eP2H+KTTm2tmj/Xl1aedAyJ2d5xuYdD5tDtCEeX1l5hy46FWg+McG1lFPETykE5qG5Ot0Oa3dm5RdEsRDNboEXmxXWqv58v6z+YMvENbTykORyKHEJNrfvrgAk=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1781599489; c=relaxed/simple;
-	bh=vU5CkjwusbK4oTshtz0qTyrjjkJfMFH1mI6MHUX9Lf0=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=NqSZS8JDwF/vb4FY91WXHj2HsZwOadk5Fh86QaeUA784M9NbW6UeLfSEHIcOkbJ1950FYRtc2YftMJ5/EjrdguQrGKclAWthgP4jNg62krJmk+wxzub27y9XD3b6idEgz00fNvngcjHq0ZLHzcofmK/CSgVPyvqvyliHG9SfYgQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=OoTB7quQ; arc=none smtp.client-ip=100.103.45.18
+	s=arc-20240116; t=1781600069; c=relaxed/simple;
+	bh=jY2iMCSOh2cMOiEI8qWkxyY9tdmhfIpJYUvoK4sW0Rs=;
+	h=From:To:Cc:Subject:Date:Message-Id:In-Reply-To:References:
+	 MIME-Version; b=Jt9eKOyAynJPwI5Sh7mb5Qd+iY6HMZzmQcLWAyW+SIO9yTUKo5Q66RkQAkTmvH9r0fn6Xt3PNeJzR9aOOS/waGYVGp2lfeCoa5GHpj3dRRDtREMfU0eWAHU4qLHk7SF+gDGWhSiffMyTbM5mCRdTBpyGlGnSFjXfe4ER3hRZOTM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=163.com; spf=pass smtp.mailfrom=163.com; dkim=pass (1024-bit key) header.d=163.com header.i=@163.com header.b=OW1MJ9So; arc=none smtp.client-ip=220.197.31.3
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=163.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=163.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="OoTB7quQ"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id D07FB1F000E9;
-	Tue, 16 Jun 2026 08:44:46 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=kernel.org;
-	s=k20260515; t=1781599487;
-	bh=/oYQ5/Jb6iFjya9RVTgs4HXzWqEW3bAB8XqQIRdPPM8=;
-	h=Date:From:To:Cc:Subject:References:In-Reply-To;
-	b=OoTB7quQChG4Wuzmat03cFa0GB8SBI0UrHX3msdndFVJFvkvkrEubr4xQ0mjvFKG2
-	 gDLWKmz4VrxKjIbRXVoX1KTjikdfDOua1XZEl4C71AMT4Vlf5DR4txJmU9r9SKqNw4
-	 7R6xIjrhPMh603GkUw4MK50pgP/U3AWWOxv2i3sEUMGYwZ7fb94m1u+NsXJZXSztfK
-	 XpD9y0Tq1sRcEhgd/hn1K7o1hHKfMJgnRo0gJh7z4TDTZS5ELx0fsU8N4V0/woM5f0
-	 hnNH203ujgzyILmM/hQSueJi0c5i1hAt7IslgoMPqZdYOYj4eCibOCB5nCao0lvrIg
-	 vpTfLF8ZXQQsg==
-Date: Tue, 16 Jun 2026 14:14:33 +0530
-From: Vinod Koul <vkoul@kernel.org>
-To: "Golla, Nagendra" <Nagendra.Golla@amd.com>
-Cc: sashiko-reviews@lists.linux.dev, robh@kernel.org,
-	devicetree@vger.kernel.org, Frank.Li@kernel.org,
-	dmaengine@vger.kernel.org, conor+dt@kernel.org
-Subject: Re: [PATCH 2/2] dmaengine: zynqmp_dma: Add per-channel reset support
-Message-ID: <ajEM8QfB5brd3sOQ@vaman>
-References: <20260525105042.2249542-3-nagendra.golla@amd.com>
- <20260525113349.68D6E1F00A3D@smtp.kernel.org>
- <efa45058-6724-45cb-8b8f-75427446f62c@amd.com>
+	dkim=pass (1024-bit key) header.d=163.com header.i=@163.com header.b="OW1MJ9So"
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=163.com;
+	s=s110527; h=From:To:Subject:Date:Message-Id:MIME-Version; bh=44
+	SW/x8wXDaBWMGB26VUDUNVEBqTyRGs4639vhQHD8E=; b=OW1MJ9SoFmBXa54Qcm
+	Z3Cgi4oc8mi351S1tbVSa2uVrJdXChtOmLsTDZbdbPrb/zOEBf96gHl9iO8NsNj+
+	JAmiqx0ZHc6+fUPUMbM2Hkx+Bc+3QdoMh+mfTkuh68+L/7PX0s7JVYgWiXyLp+3N
+	SGE+81TkHmPZiTroLNQD0sIRU=
+Received: from rlk.localdomain (unknown [])
+	by gzga-smtp-mtada-g0-1 (Coremail) with SMTP id _____wDnEpYsDzFqEuHvDg--.40923S3;
+	Tue, 16 Jun 2026 16:54:08 +0800 (CST)
+From: guoqi0226 <guoqi0226@163.com>
+To: mkl@pengutronix.de,
+	sashiko-bot@kernel.org
+Cc: cuiguoqi@kylinos.cn,
+	linux-can@vger.kernel.org,
+	mailhol@kernel.org,
+	mani@kernel.org,
+	thomas.kopp@microchip.com,
+	o.rempel@pengutronix.de,
+	sashiko-reviews@lists.linux.dev,
+	socketcan@hartkopp.net,
+	guoqi0226 <guoqi0226@163.com>
+Subject: [PATCH v2] can: mcp251xfd: Add ACPI device ID table for MCP251XFD
+Date: Tue, 16 Jun 2026 16:53:59 +0800
+Message-Id: <20260616085359.89406-2-guoqi0226@163.com>
+X-Mailer: git-send-email 2.25.1
+In-Reply-To: <20260616085359.89406-1-guoqi0226@163.com>
+References: <20260616031332.0F34C1F000E9@smtp.kernel.org 20260616-teal-wrasse-of-conversion-348af0-mkl@pengutronix.de>
+ <20260616085359.89406-1-guoqi0226@163.com>
 Precedence: bulk
 X-Mailing-List: sashiko-reviews@lists.linux.dev
 List-Id: <sashiko-reviews.lists.linux.dev>
 List-Subscribe: <mailto:sashiko-reviews+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:sashiko-reviews+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <efa45058-6724-45cb-8b8f-75427446f62c@amd.com>
+Content-Transfer-Encoding: 8bit
+X-CM-TRANSID:_____wDnEpYsDzFqEuHvDg--.40923S3
+X-Coremail-Antispam: 1Uf129KBjvJXoW7tw45tF18urWUJF4kCw48Zwb_yoW8AF1fpF
+	4DtF1qyrWUGF4UWa15C3WDZ345X34DAry0grWaka4jqryfAw1UZFs293W5Ars5JFW5GF13
+	Zr93AryDG3y5W37anT9S1TB71UUUUU7qnTZGkaVYY2UrUUUUjbIjqfuFe4nvWSU5nxnvy2
+	9KBjDUYxBIdaVFxhVjvjDU0xZFpf9x07U0LvNUUUUU=
+X-CM-SenderInfo: 5jxr1xaqsslqqrwthudrp/xtbC-hC2H2oxDzCohQAA3O
 
-On 15-06-26, 14:59, Golla, Nagendra wrote:
-> 
-> 
-> On 5/25/2026 5:03 PM, sashiko-bot@kernel.org wrote:
-> > Thank you for your contribution! Sashiko AI review found 3 potential issue(s) to consider:
-> > 
-> > Pre-existing issues:
-> > - [High] The probe error path leaks a runtime PM usage counter reference, permanently breaking runtime PM and leaving hardware clocks enabled.
-> > - [High] Dropping the spinlock inside `list_for_each_entry_safe` allows concurrent modification of the list, leading to memory corruption.
-> > - [High] Hardware registers are accessed in the IRQ handler without verifying if the device is active, risking a kernel panic on spurious interrupts.
-> > --
-> > 
-> > commit b2d2a678f48614c7188f8d81cbc70143b2bdfc0f
-> > Author: Golla Nagendra <nagendra.golla@amd.com>
-> > Subject: dmaengine: zynqmp_dma: Add per-channel reset support
-> > 
-> > This commit introduces per-channel reset support for Versal Gen 2 and
-> > Versal Net SoCs. It adds reset handling in the channel probe path using
-> > device_reset_optional() to trigger a reset pulse during initialization.
-> > Platforms without per-channel reset are unaffected.
-> > 
-> > > diff --git a/drivers/dma/xilinx/zynqmp_dma.c b/drivers/dma/xilinx/zynqmp_dma.c
-> > > index f6a812e49ddca..51c831760372c 100644
-> > > --- a/drivers/dma/xilinx/zynqmp_dma.c
-> > > +++ b/drivers/dma/xilinx/zynqmp_dma.c
-> > [ ... ]
-> > > @@ -916,6 +917,11 @@ static int zynqmp_dma_chan_probe(struct zynqmp_dma_device *zdev,
-> > >   	if (IS_ERR(chan->regs))
-> > >   		return PTR_ERR(chan->regs);
-> > > +	err = device_reset_optional(&pdev->dev);
-> > > +	if (err)
-> > > +		return dev_err_probe(&pdev->dev, err,
-> > > +				     "failed to reset channel\n");
-> > > +
-> > 
-> > [Severity: High]
-> > This isn't a bug introduced by this patch, but does this error path leak a
-> > runtime PM usage counter reference?
-> > 
-> > In zynqmp_dma_probe(), pm_runtime_resume_and_get() is called to increment
-> > the runtime PM usage counter and enable the device clocks. If a subsequent
-> > initialization step fails, such as the newly added device_reset_optional()
-> > returning -EPROBE_DEFER, the code jumps to the err_disable_pm label:
-> > 
-> > zynqmp_dma_probe()
-> >      ...
-> > 	ret = pm_runtime_resume_and_get(zdev->dev);
-> >      ...
-> > 	ret = zynqmp_dma_chan_probe(zdev, pdev);
-> > 	if (ret) {
-> > 		dev_err_probe(&pdev->dev, ret, "Probing channel failed\n");
-> > 		goto err_disable_pm;
-> > 	}
-> >      ...
-> > err_disable_pm:
-> > 	if (!pm_runtime_enabled(zdev->dev))
-> > 		zynqmp_dma_runtime_suspend(zdev->dev);
-> > 	pm_runtime_disable(zdev->dev);
-> > 	return ret;
-> > 
-> > Since the device is still runtime PM enabled, it skips
-> > zynqmp_dma_runtime_suspend() and fails to drop the usage counter with
-> > pm_runtime_put_noidle().
-> > 
-> > Because -EPROBE_DEFER is a normal occurrence during boot, this path can
-> > be hit multiple times. Will this permanently leave the usage counter above
-> > zero, preventing the device from ever entering runtime suspend and leaving
-> > its clocks enabled indefinitely?
-> > 
-> > >   	chan->bus_width = ZYNQMP_DMA_BUS_WIDTH_64;
-> > >   	chan->dst_burst_len = ZYNQMP_DMA_MAX_DST_BURST_LEN;
-> > 
-> > [Severity: High]
-> > This is a pre-existing issue, but does dropping the spinlock inside
-> > list_for_each_entry_safe() in zynqmp_dma_chan_desc_cleanup() allow concurrent
-> > modification of the list, leading to memory corruption?
-> > 
-> > When zynqmp_dma_chan_desc_cleanup() temporarily drops the lock to invoke
-> > the DMA callback:
-> > 
-> > zynqmp_dma_chan_desc_cleanup()
-> >      ...
-> > 	list_for_each_entry_safe(desc, next, &chan->done_list, node) {
-> >          ...
-> > 		if (dmaengine_desc_callback_valid(&cb)) {
-> > 			spin_unlock_irqrestore(&chan->lock, irqflags);
-> > 			dmaengine_desc_callback_invoke(&cb, NULL);
-> > 			spin_lock_irqsave(&chan->lock, irqflags);
-> > 		}
-> > 
-> > A client driver can concurrently invoke dmaengine_terminate_sync(), which
-> > calls zynqmp_dma_device_terminate_all() and executes
-> > zynqmp_dma_free_descriptors(). This moves all remaining elements, including
-> > the prefetched next pointer, from done_list to free_list.
-> > 
-> > When zynqmp_dma_chan_desc_cleanup() reacquires the lock, won't it continue
-> > iterating using the corrupted next pointer that now resides in free_list,
-> > eventually interpreting the list head &chan->free_list as a struct
-> > zynqmp_dma_desc_sw and resulting in out-of-bounds memory accesses?
-> > 
-> > [Severity: High]
-> > This is a pre-existing issue, but are hardware registers accessed in the
-> > IRQ handler without verifying if the device is active, risking a kernel
-> > panic on spurious interrupts?
-> 
-> Hi,
-> 
-> Thanks for pointing this out.After reviewing the runtime PM guidelines and
-> the driver behavior, I believe this is not a strict requirement for all IRQ
-> handlers. The PM documentation does not mandate that
-> pm_runtime_get_if_active() must be used before every register access in an
-> ISR. It is mainly intended for cases where an interrupt can occur while the
-> device might be runtime-suspended, such as shared IRQ or spurious interrupt
-> scenarios.
-> 
-> In the case of the zynqmp DMA driver, the interrupt is generated only when
-> the hardware is active during a transfer, and the driver ensures the device
-> remains runtime-active while DMA operations are in progress. Because of
-> this, the ISR is not expected to run when the device is suspended, and
-> accessing registers directly should be safe.
-> 
-> So, in this context, adding pm_runtime_get_if_active() in the IRQ handler
-> may not be necessary. That said, please let me know  if you see a scenario
-> where the interrupt could be triggered while the device is
-> runtime-suspended, and I can revisit accordingly.
+This patch adds an ACPI match table for the MCP251XFD CAN controller,
+enabling driver binding on ACPI-enumerated SPI platforms.
 
-We can have a spurious interrupt. if you have an isr registered, your
-cide should be able to handle the invocation... I think it is indeed
-pragmatic to handle this
+Signed-off-by: guoqi0226 <guoqi0226@163.com>
+---
+ drivers/net/can/spi/mcp251xfd/mcp251xfd-core.c | 11 ++++++++++-
+ 1 file changed, 10 insertions(+), 1 deletion(-)
 
+diff --git a/drivers/net/can/spi/mcp251xfd/mcp251xfd-core.c b/drivers/net/can/spi/mcp251xfd/mcp251xfd-core.c
+index 92a86083c896..031967370728 100644
+--- a/drivers/net/can/spi/mcp251xfd/mcp251xfd-core.c
++++ b/drivers/net/can/spi/mcp251xfd/mcp251xfd-core.c
+@@ -20,6 +20,7 @@
+ #include <linux/module.h>
+ #include <linux/pm_runtime.h>
+ #include <linux/property.h>
++#include <linux/acpi.h>
+ 
+ #include "mcp251xfd.h"
+ 
+@@ -982,7 +983,6 @@ static int mcp251xfd_handle_rxovif(struct mcp251xfd_priv *priv)
+ 
+ static int mcp251xfd_handle_txatif(struct mcp251xfd_priv *priv)
+ {
+-	netdev_info(priv->ndev, "%s\n", __func__);
+ 
+ 	return 0;
+ }
+@@ -2212,6 +2212,14 @@ static const struct spi_device_id mcp251xfd_id_table[] = {
+ };
+ MODULE_DEVICE_TABLE(spi, mcp251xfd_id_table);
+ 
++#ifdef CONFIG_ACPI
++static const struct acpi_device_id mcp251xfd_acpi_match[] = {
++	{ "MCHP15FD", (kernel_ulong_t)&mcp251xfd_devtype_data_mcp251xfd},
++	{ }
++};
++MODULE_DEVICE_TABLE(acpi, mcp251xfd_acpi_match);
++#endif
++
+ static int mcp251xfd_probe(struct spi_device *spi)
+ {
+ 	struct net_device *ndev;
+@@ -2442,6 +2450,7 @@ static struct spi_driver mcp251xfd_driver = {
+ 		.name = DEVICE_NAME,
+ 		.pm = &mcp251xfd_pm_ops,
+ 		.of_match_table = mcp251xfd_of_match,
++		.acpi_match_table = ACPI_PTR(mcp251xfd_acpi_match),
+ 	},
+ 	.probe = mcp251xfd_probe,
+ 	.remove = mcp251xfd_remove,
 -- 
-~Vinod
+2.25.1
+
