@@ -1,79 +1,39 @@
-Received: from mail-ed1-f41.google.com (mail-ed1-f41.google.com [209.85.208.41])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 25F7A3793AA
-	for <sashiko-reviews@lists.linux.dev>; Tue, 16 Jun 2026 19:54:50 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=pass smtp.client-ip=209.85.208.41
-ARC-Seal:i=2; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1781639691; cv=pass; b=LUt6qlH0Qcy8e7B5x6ulvCB5jcJKGepL6QyhoQIazLReviVCryxPZvjbXdSWFa1f4IzVX6fYyG5qXoJ6zv6NsylH16+uE8VW6NFJsTkuh7xy8YY+8MCcgDB3elLBNRnsUWsHRhhpgI7+Qn7CXQOdR2+ONuet+ZlaKFJVJTlzq3I=
-ARC-Message-Signature:i=2; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1781639691; c=relaxed/simple;
-	bh=rOreL9cMPNKjQLcaTXTeQFF75y3HOUoqRBuOPg2jGxo=;
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 24D1A37CD32
+	for <sashiko-reviews@lists.linux.dev>; Tue, 16 Jun 2026 19:56:47 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
+ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
+	t=1781639809; cv=none; b=AEBEC7YKqB/QMe3hQfu1Ix2yrvPEG36eWxj/u8TY3EfgO/xPi/etz1SXRxPmZTjXAYMbNGYJzfkSbWr6UykIrwaq6gshfqKJSo+LNSJ96F1HUxbcNws/EN1Vdj4tHRQs2/ZMdEBCTxrtxYjj7sYO2csvpTQnHACr/7Zw2+QlTKk=
+ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
+	s=arc-20240116; t=1781639809; c=relaxed/simple;
+	bh=fdECusmbQimqAO7FUbvxT4C+3cdeJ33l5jxcefbwdhA=;
 	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
-	 To:Cc:Content-Type; b=LTgywdD2GgmWuZphkss4CxrBEVUT34LpVMPDktwtx9FlSHcyGWycjMDBjPGjBI3RDqjaeNPjQKF6h5Ii2VO4LmBAJ81BZJ6dbzS30wKs1QId3X7c7N/vZ3yKueSqJ3cRzEzGkVritCQlJwYIxKNNSnhJbRyy1g8IJIGsdLLudrM=
-ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=google.com; spf=pass smtp.mailfrom=google.com; dkim=pass (2048-bit key) header.d=google.com header.i=@google.com header.b=hSImgKOp; arc=pass smtp.client-ip=209.85.208.41
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=google.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=google.com
+	 To:Cc:Content-Type; b=T97Ls7XpNBiV8/eoomLBSXtL3RC3RjidML2gMAi9qDM5NzH88QBKfsLQg5MsDnZhDJOqIh38B6aVYz9/nZhwI2ShAnZkG/2gPHyFonJFB5HvyrDO/CR1jk6llOqOOKVxYqL1AcK0WxEcQmY5FzBzUIFuz0dB5genYak5HrCSSp0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=CYaBkXx4; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=google.com header.i=@google.com header.b="hSImgKOp"
-Received: by mail-ed1-f41.google.com with SMTP id 4fb4d7f45d1cf-68d22476e88so3070a12.0
-        for <sashiko-reviews@lists.linux.dev>; Tue, 16 Jun 2026 12:54:49 -0700 (PDT)
-ARC-Seal: i=1; a=rsa-sha256; t=1781639688; cv=none;
-        d=google.com; s=arc-20240605;
-        b=jgrR3g45DMH/PkuGTZJ9rfW0EG0HOL03qL7B34coxPNALg3P6HJQU9Z4ZrE3zI6FoG
-         a00qxmbGEDKwPa07v0JkkJt3tTdd76mvF2ywzs4qk3NeBJwgEwD66IwDsCywEsn8WXzx
-         cG5MKdd78IiEkLXBs/WKzDAmqyR1SLjHX75OQTpy/sgOvKu6vrb+IouY6itfQMpaVH14
-         k/X/tuIcbU0flXWbqkruXh+hfe14QvknjhrtVeNXshx9TfThq+9irmpAOy5g6/bW1b/t
-         unMkW8Kx2Vmd+yjmAku6x/Q96woFrLuD9A6b8mDE6ZOTp/8ld05mpxyqfwb77CVUT+Lj
-         8DBg==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com; s=arc-20240605;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:dkim-signature;
-        bh=l/CgDRXCVmcvg8qX3Y+6ACmme2uqTw2HX6Xact+DTl4=;
-        fh=wPfcqgZzFtHU2ja2Y0lrnDCQh/N/nq9j5T+zctXKEPA=;
-        b=Ahzxd/2HawHIrZNvMsBKHGUUrFB90qYiQzrzAUWbEnywSRg5F9TF5fFjedWWoFAC2W
-         EK8nHxaEy9a7z8aGERWnV0X6C02VkZYAMeeQnr4wUyuVs/8w3dn8gWpsDKy1Pbu2r0nq
-         MGRVFmA1YBjnIkMK+0MqFzU671h8MdhVZLgSlKwQrgUIzacCBv5qigjffn8xUbU4yZcO
-         SMQKaKwolYpDUu53XRf8X1weyF5wL5bOJGn5onCiO8HJ/F60G3C7jH/Esg28/Orw+NTq
-         HuC6x4mE9eaFm+rE/59bgWUBbGMR0GcTdzKwwBoPz/d9jAL+Xob4WIgd+X6iaIF9+/FB
-         zoCQ==;
-        darn=lists.linux.dev
-ARC-Authentication-Results: i=1; mx.google.com; arc=none
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=google.com; s=20251104; t=1781639688; x=1782244488; darn=lists.linux.dev;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=l/CgDRXCVmcvg8qX3Y+6ACmme2uqTw2HX6Xact+DTl4=;
-        b=hSImgKOpWfPs84ngTy3K8wNev1Hm3ACDiMJ6owOgORhSIcTEVc/Nq2cqXwFXiR0pE7
-         85oxfGPHWQOVOUtJDEA0t/gqCkLNlK5KRjb/HOZ0JtnG6I9evjb1NlIyewCEIZJn9dI5
-         kipYTkpUEWZBzJXKlN/UFlMHLOSEyg696k8vQGM0gu5af80SrHbRjLAGVR/w7bDzh7wf
-         SG3t6zBWsQaSE/l6EzvEesa+5kHXbe6c88PD9VwWkzyEvgujWDq3csqgqX6blVVlUXm1
-         115wz2oZVsCp9mLtuDsT9LB3Mr9E0s2+7j/QowH/e0/FrpEPNEqJ8aZ3SnbtD/1JJeoB
-         lIHA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20251104; t=1781639688; x=1782244488;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:x-gm-gg:x-gm-message-state:from
-         :to:cc:subject:date:message-id:reply-to;
-        bh=l/CgDRXCVmcvg8qX3Y+6ACmme2uqTw2HX6Xact+DTl4=;
-        b=R2b3XvOBMHvNuWb/H0IUBj6I279AbZMdc/XHh2azXh+Czj8zuW0gf2u+vHNrt4LTDN
-         /jeaOKkeevF6EZ2d/FyQ/3KCIc1h7VhVMR68I+CKUUYvviXgzCRRApdxkQI2SsGfXO/o
-         A/TFVwl16dgDwc54jEDmGW2eE3jHp9/YfgLC6Sslui3borOekBPMltiUP5EEWzn9pcj1
-         8V48Y6A0csdb6hwauCKlf0W34hrQIJJ4CoY33qpw4vF7Rb79N993EKXphRkZpA+k4DTK
-         umoqPwnSuat8LfXZNrOEdEhwHVqSHvL8kIEsbMIXHZPRH8LcjScY+Xtyj5dvddjqdhmT
-         d19g==
-X-Gm-Message-State: AOJu0YyURX/xeUeiwFpWF24p4P9oXOczTnucJfnVPbuPrGfgNuC9TLPf
-	UasyD9fnqoPby1UMtqwLSi8Tc8irsxdkR04wb9d3HE6fFIT5gAKIeBH+QAJDnjy7mySkDy9RWro
-	ONV8yrV4KNbQKl4v062T1w+1JvzpWcg/Hvy9+k0wA
-X-Gm-Gg: Acq92OHhXVGBya7VLOnxZTx7lGWqMk49KW8boXAmG3dcbxithKY3zaE4svtM1Bx0EQU
-	hAMbYrpOUjEt/yj+mk37OD3wpPolV5LQ4J2jVm3VYMBFxdDZZ6M6im3F1jr9KuXAnv+nRw87bFP
-	b6hLA4gCwE/5diWyg1Md1Q4D6UzVGi9dWEKbKG8F6/PuO+9Y25UxBsldlHqkSFD2M1q/sdFqDhd
-	Mmy3zGp91317pgWH9qNoGS5BKDkgYVZTwVLViZc847XuMYaDSghc6p9C99E7SjWOrt0OCWqFu3N
-	K4MqDTa2AbSGOJyGiw==
-X-Received: by 2002:aa7:c919:0:b0:693:3e06:8f4d with SMTP id
- 4fb4d7f45d1cf-695476eb895mr8776a12.2.1781639687910; Tue, 16 Jun 2026 12:54:47
- -0700 (PDT)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="CYaBkXx4"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id C254E1F00A3A
+	for <sashiko-reviews@lists.linux.dev>; Tue, 16 Jun 2026 19:56:47 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=kernel.org;
+	s=k20260515; t=1781639807;
+	bh=oGUW0Qza0yi05eQYzGeFSOktaWzJbU8RtLbmdGU9AHY=;
+	h=References:In-Reply-To:From:Date:Subject:To:Cc;
+	b=CYaBkXx4ka1Hv0Aw0MUsBLD9ZUxucLwIVXWfIdZwm3Zm8TiaSVetTmkXKuX9Jq6Xo
+	 sJ4/YL/rBKMPzVinLHuEmPlt/1kBmohJT8Q4EIAth+1kAn335UXPANrJqz+iNDlVMk
+	 sGh841SqemqbQTK75UKHDwLY2z6vyEgzRxqf7jPA5E0uh8CVrdF3k/F0iTE9LGzgg1
+	 G7+5IUWAyiGBuQibLj6vYzKFDfiD1IpKCAkUF/XNQ5xY/D3+Ov6i67+MlfR1045DL8
+	 jCobD6z05cf9TxqWRywpwasU+SxOsUn+Y7PMJHo360KaQMVCbPvoGrbV4BBa0Mn1d/
+	 jmucnFsSrLPnA==
+Received: by mail-ed1-f45.google.com with SMTP id 4fb4d7f45d1cf-68bd9fce347so8976864a12.2
+        for <sashiko-reviews@lists.linux.dev>; Tue, 16 Jun 2026 12:56:47 -0700 (PDT)
+X-Gm-Message-State: AOJu0YxApT1vfpuF26p6uB0lZJbpvBiLNkaOWZrEicJwnB16jGqVwG6m
+	eKFiC2WUJywRMKq2LOpuNumFVEDczx+87xUe/jubY8atG8JSHKTKMk6dP8ZpnWjGk0i02Osz6VN
+	6GV4llLISegRg3mabHny8on0ZQkVLnr4=
+X-Received: by 2002:a17:907:9617:b0:bec:52f4:28f3 with SMTP id
+ a640c23a62f3a-c05a7ea5fcemr67816066b.44.1781639806780; Tue, 16 Jun 2026
+ 12:56:46 -0700 (PDT)
 Precedence: bulk
 X-Mailing-List: sashiko-reviews@lists.linux.dev
 List-Id: <sashiko-reviews.lists.linux.dev>
@@ -81,72 +41,86 @@ List-Subscribe: <mailto:sashiko-reviews+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:sashiko-reviews+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 References: <20260616004155.1435766-25-yosry@kernel.org> <20260616013031.53DAC1F000E9@smtp.kernel.org>
- <CAO9r8zPA6B72RDWeBMHqv1xz6o9dDHEEjwnMjwAwVwA=5qxaKg@mail.gmail.com> <CAO9r8zM1aKR6VzOhVq1_xTH5ZhSUBzYh-tr+ZzO_L4o28iy9OA@mail.gmail.com>
-In-Reply-To: <CAO9r8zM1aKR6VzOhVq1_xTH5ZhSUBzYh-tr+ZzO_L4o28iy9OA@mail.gmail.com>
-From: Jim Mattson <jmattson@google.com>
-Date: Tue, 16 Jun 2026 12:54:35 -0700
-X-Gm-Features: AVVi8Ccl5w4C_y5y0xOjMjz0BTS525Kww8pR3RSPvd9mlFGLN-xlUMmMlMC5JwA
-Message-ID: <CALMp9eRS0EyqPqWZNkS0U=iH4mSt0snD44ufgXw7wvs9+o=a4A@mail.gmail.com>
+ <CAO9r8zPA6B72RDWeBMHqv1xz6o9dDHEEjwnMjwAwVwA=5qxaKg@mail.gmail.com>
+ <CAO9r8zM1aKR6VzOhVq1_xTH5ZhSUBzYh-tr+ZzO_L4o28iy9OA@mail.gmail.com> <CALMp9eRS0EyqPqWZNkS0U=iH4mSt0snD44ufgXw7wvs9+o=a4A@mail.gmail.com>
+In-Reply-To: <CALMp9eRS0EyqPqWZNkS0U=iH4mSt0snD44ufgXw7wvs9+o=a4A@mail.gmail.com>
+From: Yosry Ahmed <yosry@kernel.org>
+Date: Tue, 16 Jun 2026 12:56:34 -0700
+X-Gmail-Original-Message-ID: <CAO9r8zOMJdzFvjtpyCYZnZWG-ddVtBqLUvbHr0ggA-58KSC7yQ@mail.gmail.com>
+X-Gm-Features: AVVi8CfPC6Q5TfKId2ngb6QRnXcbE4Cx8JTEluFXYcPcyFsb3H6C-JSveRcPCT8
+Message-ID: <CAO9r8zOMJdzFvjtpyCYZnZWG-ddVtBqLUvbHr0ggA-58KSC7yQ@mail.gmail.com>
 Subject: Re: [RFC PATCH v2 24/25] KVM: nSVM: Use different ASIDs for L1 and L2
-To: Yosry Ahmed <yosry@kernel.org>
+To: Jim Mattson <jmattson@google.com>
 Cc: sashiko-reviews@lists.linux.dev, kvm@vger.kernel.org
 Content-Type: text/plain; charset="UTF-8"
 Content-Transfer-Encoding: quoted-printable
 
-On Tue, Jun 16, 2026 at 11:28=E2=80=AFAM Yosry Ahmed <yosry@kernel.org> wro=
-te:
+On Tue, Jun 16, 2026 at 12:54=E2=80=AFPM Jim Mattson <jmattson@google.com> =
+wrote:
 >
-> On Tue, Jun 16, 2026 at 11:14=E2=80=AFAM Yosry Ahmed <yosry@kernel.org> w=
+> On Tue, Jun 16, 2026 at 11:28=E2=80=AFAM Yosry Ahmed <yosry@kernel.org> w=
 rote:
 > >
-> > [Omitting the previously reported issue]
-> >
-> > > > @@ -1557,6 +1550,8 @@ void svm_free_nested(struct vcpu_svm *svm)
-> > > >       if (WARN_ON_ONCE(svm->vmcb !=3D svm->vmcb01.ptr))
-> > > >               svm_switch_vmcb(svm, &svm->vmcb01);
+> > On Tue, Jun 16, 2026 at 11:14=E2=80=AFAM Yosry Ahmed <yosry@kernel.org>=
+ wrote:
+> > >
+> > > [Omitting the previously reported issue]
+> > >
+> > > > > @@ -1557,6 +1550,8 @@ void svm_free_nested(struct vcpu_svm *svm)
+> > > > >       if (WARN_ON_ONCE(svm->vmcb !=3D svm->vmcb01.ptr))
+> > > > >               svm_switch_vmcb(svm, &svm->vmcb01);
+> > > > >
+> > > > > +     free_asid(svm->nested.asid02);
+> > > > > +
 > > > >
-> > > > +     free_asid(svm->nested.asid02);
-> > > > +
+> > > > [Severity: Critical]
+> > > > When the hardware ASID is freed here during nested SVM teardown, do=
+es
+> > > > svm->nested.last_asid also need to be reset to 0?
+> > > >
+> > > > If L1 disables SVM, svm_free_nested() is called, freeing asid02. Th=
+is ASID tag
+> > > > can then be reallocated. If L1 later re-enables SVM and uses the sa=
+me L1-managed
+> > > > ASID, nested_svm_entry_tlb_flush() will see:
 > > >
-> > > [Severity: Critical]
-> > > When the hardware ASID is freed here during nested SVM teardown, does
-> > > svm->nested.last_asid also need to be reset to 0?
+> > > Hmm if L1 reuses the same ASID, it's up to L1 to explicitly flush it =
+if needed.
 > > >
-> > > If L1 disables SVM, svm_free_nested() is called, freeing asid02. This=
- ASID tag
-> > > can then be reallocated. If L1 later re-enables SVM and uses the same=
- L1-managed
-> > > ASID, nested_svm_entry_tlb_flush() will see:
+> > > That being said, KVM needs to flush ASIDs when first allocated anyway=
+,
+> > > otherwise we risk reusing TLB entries from a completely different vCP=
+U
+> > > or VM. This series correctly does so for L1 (calls
+> > > vmcb_set_flush_asid() when initializing vmcb01's ASID), but not for
+> > > L2.
+> > >
+> > > So yes, we need to make sure asid02 is always initialized (and reset)
+> > > to 0, but not for the reason Sashiko mentioned. It's so that the firs=
+t
+> > > nested VMRUN using an L2 ASID always does a flush (as L1 is not
+> > > allowed to use ASID 0).
 > >
-> > Hmm if L1 reuses the same ASID, it's up to L1 to explicitly flush it if=
- needed.
-> >
-> > That being said, KVM needs to flush ASIDs when first allocated anyway,
-> > otherwise we risk reusing TLB entries from a completely different vCPU
-> > or VM. This series correctly does so for L1 (calls
-> > vmcb_set_flush_asid() when initializing vmcb01's ASID), but not for
-> > L2.
-> >
-> > So yes, we need to make sure asid02 is always initialized (and reset)
-> > to 0, but not for the reason Sashiko mentioned. It's so that the first
-> > nested VMRUN using an L2 ASID always does a flush (as L1 is not
-> > allowed to use ASID 0).
+> > I think VMX might have the same problem.
 >
-> I think VMX might have the same problem.
+> This code *should* take care of it, since vmcs12->virtual_processor_id
+> can't be 0 if it's being used, and vmx->nested_last_vpid is
+> initialized to 0:
+>
+> > if (is_vmenter && vmcs12->virtual_processor_id !=3D vmx->nested.last_vp=
+id) {
+> >         vmx->nested.last_vpid =3D vmcs12->virtual_processor_id;
+> >         kvm_make_request(KVM_REQ_TLB_FLUSH_GUEST, vcpu);
+> >         return;
+> > }
+>
+> However, Gemini points out that last_vpid is not cleared when L1 does
+> a VMXOFF, even though vmx->nested.vpid02 is freed.
+>
+> Per the exhortation in security-bugs.rst, I am treating this issue as pub=
+lic.
 
-This code *should* take care of it, since vmcs12->virtual_processor_id
-can't be 0 if it's being used, and vmx->nested_last_vpid is
-initialized to 0:
-
-> if (is_vmenter && vmcs12->virtual_processor_id !=3D vmx->nested.last_vpid=
-) {
->         vmx->nested.last_vpid =3D vmcs12->virtual_processor_id;
->         kvm_make_request(KVM_REQ_TLB_FLUSH_GUEST, vcpu);
->         return;
-> }
-
-However, Gemini points out that last_vpid is not cleared when L1 does
-a VMXOFF, even though vmx->nested.vpid02 is freed.
-
-Per the exhortation in security-bugs.rst, I am treating this issue as publi=
-c.
+Yeah both last_vpid (and last_asid) should be reset to 0 when nested
+is turned off (VMXOFF or clearing EFER.SVME), we should probably also
+document that this is required to ensure a TLB flush on the first
+usage of the ASID/VPID.
