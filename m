@@ -1,157 +1,87 @@
-Received: from mgamail.intel.com (mgamail.intel.com [192.198.163.12])
+Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 64AFB477993
-	for <sashiko-reviews@lists.linux.dev>; Tue, 16 Jun 2026 16:32:06 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=192.198.163.12
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DCCDD35DA6A;
+	Tue, 16 Jun 2026 16:47:55 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1781627529; cv=none; b=awngfsP7R3I6LP2VZay2xARZrh0rMPDzQYccSZjj2IzOu23NQgDawa4IclgaD30nVxEjqy5GivH22LUthHORGdVn5orDeeHbkrgLQXDiPce6g8ownSpfG+7a2y3CbKB63hJZZ7apu/FL7JFZLxwROUUSKR4uYuAUxX3s3jgdOIU=
+	t=1781628476; cv=none; b=KVpxOnVtfxOpBaIW9wo4QASkq1SdzQPmSzyMClJ/fYqE5ygBeqWhmUY1iITuNrn7nmnPlPKvxkmUtZsVzM+JbAA4yTSEpqPkbh2F9Vn6TXSvHRi/xsDuoT+JT08dM9vDnqI6qwr/W0+qeCATNPuOO62IpmWbWfX4FNKQeP7f2AY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1781627529; c=relaxed/simple;
-	bh=Fj8TzhLob2NdJBaiwdtFI+rXY+7QYb5l9Qj7g4zGkdo=;
-	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=HTTb6DLV2RXMbv+jIaFo4PJ/psBEpB+msxdX/GEBk+zzNn9K06a+ltX6WlCC0fVj9amqHgnBcuesQ4PP2cVLcsyC34VUkv7LBzCi4/pd4ecj98D22kkxO9V5IsU4c54KAc8AatTZMBZKA2Mx7OPMIZ7myHgKzLuctboy5tgIYCY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=intel.com; spf=pass smtp.mailfrom=intel.com; dkim=pass (2048-bit key) header.d=intel.com header.i=@intel.com header.b=dkXmcbQu; arc=none smtp.client-ip=192.198.163.12
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=intel.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=intel.com
+	s=arc-20240116; t=1781628476; c=relaxed/simple;
+	bh=L1XpZjCaOyKRpumzV49F0NYsoPsNL50vsehrCj2ihsY=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=Kp7RcF35/cDoh8IzE23wv2/JpRQPZkbmncSZV9gLv7/GK1/bjIpit2Y1S/Vo0ODlVWxGodu5UNtFUZRmDp3JONhNdUHVvH4Z4a429xTFrA/e+OQfekfzEndqIF9TXWhc5BSXSiKFxjykD8zKAy+sTRHAOHzxDqe6RBZ0jPpGulw=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=FJVRMJy3; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=intel.com header.i=@intel.com header.b="dkXmcbQu"
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
-  d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
-  t=1781627526; x=1813163526;
-  h=message-id:date:mime-version:subject:to:cc:references:
-   from:in-reply-to:content-transfer-encoding;
-  bh=Fj8TzhLob2NdJBaiwdtFI+rXY+7QYb5l9Qj7g4zGkdo=;
-  b=dkXmcbQuHo8y3pKjpVSgHetzdC2DUkiX2bHHape6hXfgxzD66mAD9ghU
-   UYonwChoejQg9lEaopPu7GoBzT3qQnDUzVSGoaJwPkbAZJzl4GC6HzYap
-   Re4l/I7l4S1KJeIirVA4QfJHu11N6pD7EFAY0j3UqiT2v1c3bsbA5r4ZJ
-   EbKCB8vMBy7dvNz0ac8olBksOBoN6ny4xyQSFgoePDZUP3S38OsErDAHq
-   ORiCtkzfvFskTLCNRTl2d2o1nGWZ/tJ7+Wmzu8NS0wnbCaS13/Y9X6c+x
-   a7mJZr5NI3+aedzqX6jKo73QEKe80tlcb/1xzwxcf2J9OejLPSkTHMJV4
-   A==;
-X-CSE-ConnectionGUID: CUM8xwk7TMi6kATdxONlZw==
-X-CSE-MsgGUID: jvOeSaLuTTO2K7ipL3nrFg==
-X-IronPort-AV: E=McAfee;i="6800,10657,11819"; a="86237273"
-X-IronPort-AV: E=Sophos;i="6.24,208,1774335600"; 
-   d="scan'208";a="86237273"
-Received: from orviesa003.jf.intel.com ([10.64.159.143])
-  by fmvoesa106.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 16 Jun 2026 09:32:06 -0700
-X-CSE-ConnectionGUID: umCaix6vQuqo2ZJTKYwl3g==
-X-CSE-MsgGUID: n6QsVB3gQSGDnnLFpUoZyw==
-X-ExtLoop1: 1
-X-IronPort-AV: E=Sophos;i="6.24,208,1774335600"; 
-   d="scan'208";a="251740188"
-Received: from soc-cp83kr3.clients.intel.com (HELO [10.122.185.5]) ([10.122.185.5])
-  by ORVIESA003-auth.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 16 Jun 2026 09:32:05 -0700
-Message-ID: <9f1d6940-3180-4aff-841b-82baa3ab0029@intel.com>
-Date: Tue, 16 Jun 2026 11:32:04 -0500
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="FJVRMJy3"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2AB7D1F000E9;
+	Tue, 16 Jun 2026 16:47:55 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=kernel.org;
+	s=k20260515; t=1781628475;
+	bh=BoDHER7EyU0oWbzWrxHJ/W1Eo3i8tJoYjwQsCPy18gY=;
+	h=Date:From:To:Cc:Subject:References:In-Reply-To;
+	b=FJVRMJy3fxZ4M/Bwv8IN15tsqoxuMGZxqC+9pKg3JB4cr4desMwZQq8tBAGOueUzs
+	 iMX6puuc7eGHAZJSOuF/bvKQyxVj7tMij8biTK1CZcJXoWGO5yzQLnSVaZbzIsVt36
+	 H1YvRNvQZ8em3NaOX9oHgvqMkj+iXuWCTpewGchbAbqBBMyT60t5SGKN6BJ+S99sk0
+	 KuQdWxG6ZJTZjvbs2G8daBy3wGcSeiI+d414XG01TIRy33ir5fbAqMnT2DZMseQUYl
+	 BT64wqPCZ0AzLdOjtYmSlSywdC5wQO31ZuG+bJ/zBLEhhAYfNWrONcVx33DC9oJ2zl
+	 4t2bfSV169P7w==
+Date: Wed, 17 Jun 2026 01:47:53 +0900
+From: Krzysztof =?utf-8?Q?Wilczy=C5=84ski?= <kwilczynski@kernel.org>
+To: sashiko-reviews@lists.linux.dev
+Cc: linux-pci@vger.kernel.org
+Subject: Re: [PATCH 1/2] PCI/sysfs: Fix out-of-bounds read in
+ pci_write_legacy_io()
+Message-ID: <20260616164648.GA320708@rocinante>
+References: <20260616163131.2763281-1-kwilczynski@kernel.org>
+ <20260616164230.81F281F000E9@smtp.kernel.org>
 Precedence: bulk
 X-Mailing-List: sashiko-reviews@lists.linux.dev
 List-Id: <sashiko-reviews.lists.linux.dev>
 List-Subscribe: <mailto:sashiko-reviews+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:sashiko-reviews+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH V3 4/4] KVM: selftests: Add perf_metrics and fixed counter
- 3 tests
-To: sashiko-reviews@lists.linux.dev
-Cc: kvm@vger.kernel.org
-References: <20260615230118.50718-5-zide.chen@intel.com>
- <20260615232652.768D71F000E9@smtp.kernel.org>
-Content-Language: en-US
-From: "Chen, Zide" <zide.chen@intel.com>
-In-Reply-To: <20260615232652.768D71F000E9@smtp.kernel.org>
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 7bit
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <20260616164230.81F281F000E9@smtp.kernel.org>
 
+Hello,
 
-
-On 6/15/2026 6:26 PM, sashiko-bot@kernel.org wrote:
-> Thank you for your contribution! Sashiko AI review found 1 potential issue(s) to consider:
-> 
-> Pre-existing issues:
-> - [High] A malicious or misconfigured guest can trigger a host-side WARN_ON_ONCE by forcing KVM to emulate an RDMSR or WRMSR to MSR_PERF_METRICS, leading to log spam or a host kernel panic.
-> --
-> 
-> commit 2e12d71150f3902b3e1f245bbcb48d6fe2235b4a
-> Author: Zide Chen <zide.chen@intel.com>
-> 
-> KVM: selftests: Add perf_metrics and fixed counter 3 tests
-> 
-> This commit adds a selftest to exercise IA32_PERF_METRICS support for Topdown
-> (TMA) Level 1 metrics. It checks for non-zero metrics derived from the
-> workload and extends the PMU selftest to cover Intel fixed counter 3 by
-> bumping MAX_NR_FIXED_COUNTERS to 4.
-> 
->> diff --git a/tools/testing/selftests/kvm/x86/pmu_counters_test.c b/tools/testing/selftests/kvm/x86/pmu_counters_test.c
->> index dc6afac3aa919..d4688a7d1e556 100644
->> --- a/tools/testing/selftests/kvm/x86/pmu_counters_test.c
->> +++ b/tools/testing/selftests/kvm/x86/pmu_counters_test.c
-> [ ... ]
->> @@ -318,6 +322,56 @@ static void guest_test_arch_event(u8 idx)
->>  				FIXED_PMC_GLOBAL_CTRL_ENABLE(i));
->>  }
->>  
->> +static void guest_test_perf_metrics(void)
->> +{
->> +	int retiring, bad_spec, fe_bound, be_bound, sum;
->> +	u64 global_ctrl, metrics;
->> +
->> +	if ((guest_get_pmu_version() < 2) ||	/* Does guest have GLOBAL_CTRL? */
->> +	    !this_cpu_has(X86_FEATURE_PDCM) ||
->> +	    !(rdmsr(MSR_IA32_PERF_CAPABILITIES) & PERF_CAP_PERF_METRICS))
->> +		return;
->> +
->> +	wrmsr(MSR_CORE_PERF_GLOBAL_CTRL, 0);
->> +	wrmsr(MSR_CORE_PERF_FIXED_CTR3, 0);
->> +	wrmsr(MSR_PERF_METRICS, 0);
-> 
 > [Severity: High]
-> This is a pre-existing issue, but since this test now exercises
-> MSR_PERF_METRICS, is it possible for a guest to trigger a host-side
-> WARN_ON_ONCE by forcing KVM to emulate RDMSR or WRMSR to MSR_PERF_METRICS?
+> This is a pre-existing issue, but the claim that no changes are needed for
+> Alpha doesn't seem quite right.
 > 
-> Looking at KVM's emulation path in arch/x86/kvm/vmx/pmu_intel.c,
-> intel_pmu_get_msr() and intel_pmu_set_msr() both contain a WARN_ON_ONCE:
+> Looking at pci_legacy_write() in arch/alpha/kernel/pci-sysfs.c, it calls the
+> I/O port functions with the port and value reversed:
 > 
-> intel_pmu_get_msr() {
+> arch/alpha/kernel/pci-sysfs.c:pci_legacy_write() {
 >     ...
->     case MSR_PERF_METRICS:
->         WARN_ON_ONCE(!msr_info->host_initiated);
->         msr_info->data = pmu->perf_metrics;
->         break;
+> 	switch(size) {
+> 	case 1:
+> 		outb(port, val);
+> 		return 1;
+> 	case 2:
+> 		if (port & 1)
+> 			return -EINVAL;
+> 		outw(port, val);
+> 		return 2;
+> 	case 4:
+> 		if (port & 3)
+> 			return -EINVAL;
+> 		outl(port, val);
+> 		return 4;
+> 	}
+>     ...
 > }
 > 
-> If a malicious guest forces instruction emulation for RDMSR or WRMSR targeting
-> this MSR (for example, by using the KVM_FEP forced emulation prefix, or by
-> executing the instruction from a page that triggers an EPT violation on
-> fetch), the instruction is processed by KVM's software emulator.
-> 
-> The emulator calls kvm_emulate_msr_read() or kvm_emulate_msr_write(), which
-> explicitly set msr_info.host_initiated = false.
-> 
-> Could this trigger the WARN_ON_ONCE in intel_pmu_get_msr() or
-> intel_pmu_set_msr() and allow an unprivileged guest to spam the host kernel
-> log or panic the host if panic_on_warn is enabled?
+> Since Alpha's outb(), outw(), and outl() expect arguments in the order
+> (value, port), doesn't passing port as the value and val as the port
+> address incorrectly use user-supplied data as the target I/O port address?
 
+A known issue for which a fix has been sent:
 
-Yes, it's good to change this in patch 3/4 to avoid the WARN_ON_ONCE().
+  https://lore.kernel.org/linux-pci/20260612232400.585195-1-kwilczynski@kernel.org/
 
-        case MSR_PERF_METRICS:
--               WARN_ON_ONCE(!msr_info->host_initiated);
-+               if (!msr_info->host_initiated)
-+                       return 1;
+Thank you!
 
-> 
->> +
->> +	/* Enable fixed ctr3 (TOPDOWN.SLOTS) and PERF_METRICS. */
->> +	wrmsr(MSR_CORE_PERF_FIXED_CTR_CTRL, FIXED_PMC_CTRL(3, FIXED_PMC_KERNEL));
->> +	global_ctrl = FIXED_PMC_GLOBAL_CTRL_ENABLE(3) |
->> +		      PERF_METRICS_GLOBAL_CTRL_ENABLE;
->> +
->> +	GUEST_RUN_PAYLOAD(MSR_CORE_PERF_GLOBAL_CTRL, global_ctrl, "");
->> +
->> +	/* Check test results. */
->> +	metrics = rdmsr(MSR_PERF_METRICS);
-> 
-
+	Krzysztof
