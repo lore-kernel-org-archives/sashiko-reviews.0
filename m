@@ -1,124 +1,99 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3F17E47AF43;
-	Tue, 16 Jun 2026 18:47:18 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B617B472798;
+	Tue, 16 Jun 2026 18:51:26 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1781635639; cv=none; b=sdtgazmP3T2n6/jdarcx+SMTVxWWXk409vTZ8FyvtoTgLa+EpasMttNVqdGKa+qXicJOsIBCSa+ULMIr0KfqZVp8z4lwVsYxH6n+g7HSQNFPL83x1gb52eJmASocsOnj6OZCWJ+BB+ecZZcDBXZC5tzmXzuT0ahgXFEAXEVe4j4=
+	t=1781635888; cv=none; b=n54RFGadBD4t8ImuO2ODcpkmevznzeVs7xvmop27dBmTuuxWlFa8Mc05RFQPHQhzb0aO3Dpi2I66/Wz3cjz63Dk8EoNlZrFNbAWNSMff+8aBnsemO0cJPRGV3/5r8mZ9ciESmDXPsxjfFb6txkKXA9hpN2AIMEwyZhu77x7nxPM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1781635639; c=relaxed/simple;
-	bh=lPtqWXon5MIl0aaDsN+OFYj0FC8iKlrwp+KoTGY5hxI=;
+	s=arc-20240116; t=1781635888; c=relaxed/simple;
+	bh=rmBRnG8AxqdlIuJyRiYimv60Y6yDX53K41LT0+N6dNo=;
 	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=NxgtSulyNf5ZOrMz/LqvYILLtH+Tw1+kCC3AkEcSCVNHuh7rxkmRnbzOLkvSLfMMn9pCEHBxz+ZquZDLHbB1sp/ptZM3e8A0aclygBqLsGYSv8mop6p2c5Q52Ey5ov50bWBxXQWB2S4vJ5+wu3cteB/1/UFLvbDikceE+UJqof0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=Hj9sLAX6; arc=none smtp.client-ip=100.103.45.18
+	 Content-Type:Content-Disposition:In-Reply-To; b=Ie/0gkJguq3tzBsTOxfR5QNjtBaBHwR1DPVKPQx0fXkhiOS0FVJ0IeKsvZzr27bMvPHxpDDZpXcjKrDD9g8WuRirEni71VOSiHYR0K4PlmIMh4N21yItZSYQ/IyHc73rFBFOd24Owjqf22u5z2iiLl2H3oqfrQZBHlxvjwic+AQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=kzT+Vjc6; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="Hj9sLAX6"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 44CB51F00A3A;
-	Tue, 16 Jun 2026 18:47:17 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="kzT+Vjc6"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6989F1F000E9;
+	Tue, 16 Jun 2026 18:51:26 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=kernel.org;
-	s=k20260515; t=1781635637;
-	bh=dkFKr7CU9O426Ttw+ERPRygHHOZqQUerx721Kib79Ik=;
+	s=k20260515; t=1781635886;
+	bh=+lcXMh4NrdCZ0Zg9FeWlSVZOphMiPhiVRq4MaeywrPQ=;
 	h=Date:From:To:Cc:Subject:References:In-Reply-To;
-	b=Hj9sLAX6YcpVnnevxHG36GnNbyzXZnxkIqP/cH9Ktl5LZt6MUpDDyQAbj5nob56IJ
-	 W/cTo7jGWJHk3we8OYMjyh7ydd+j0q0O3YYcAtYBETiWeYiBJZhXlbBWevvAL0jXHm
-	 2J5Zmiek86jTH8Kx22Zw8a3U+iBZuzyba+cxHYW8vTbZFq8k/qiB1GRI+ziR9y2wC7
-	 oJJbJ3xZYExCvJrCwpyb7H0m3bRP+7aiFK/29PFhXGqxmPHWjRj/2btcpT6be7aLVG
-	 NtlnIKy2zn2lLb98zwsPSfyzp0dZQ5Yq0gqG66hZh3j96122RE/0rM3F9h9Y1tO6Em
-	 pBFOMUIxWoxQg==
-Date: Tue, 16 Jun 2026 15:47:14 -0300
-From: Arnaldo Carvalho de Melo <acme@kernel.org>
+	b=kzT+Vjc6/j4GgYdCUNbgJSqQ7q94v02nODN/3pdO0nfdWRj7kEULdzZeZLqBPpSUU
+	 9NztSq6DMy5IZRdVuH8G91taxjMt/Lqdvt5/P5n7tC1foUe0yC5YNsBqPEXce22Z26
+	 t5H+UfVZaNklQH258oPKO/AWsQ/bo8Dp1kKI2PB4kuhW0Dv4oXA7tAhePY8j7IbVBd
+	 XiqR0YRw28X7EoiVpoYupOyTnPmp5gC+i72Qpo0jHFx1dIGAlzdlXfK5VCdr6h4lmR
+	 nNO8tC7gfFjEqCE8Q2kMbK7BszKgpfMbgFuByd3SB5Sh6G7e6pHT8HAB84xwMCbcdD
+	 ZNdkru2braFlQ==
+Date: Tue, 16 Jun 2026 11:51:25 -0700
+From: Oliver Upton <oupton@kernel.org>
 To: sashiko-reviews@lists.linux.dev
-Cc: linux-perf-users@vger.kernel.org
-Subject: Re: [PATCH 1/2] perf evsel: Add lazy-initialized probe type
- detection helpers
-Message-ID: <ajGaMjKm56V0VNF-@x1>
-References: <20260616182546.8892-2-acme@kernel.org>
- <20260616184006.0CC9A1F000E9@smtp.kernel.org>
+Cc: Marc Zyngier <maz@kernel.org>, kvm@vger.kernel.org,
+	kvmarm@lists.linux.dev
+Subject: Re: [PATCH] KVM: arm64: Handle race between interrupt affinity
+ change and LPI disabling
+Message-ID: <ajGbLXf8Yc67cSI9@kernel.org>
+References: <20260615181625.3029352-1-maz@kernel.org>
+ <20260615183314.65A571F00A3A@smtp.kernel.org>
 Precedence: bulk
 X-Mailing-List: sashiko-reviews@lists.linux.dev
 List-Id: <sashiko-reviews.lists.linux.dev>
 List-Subscribe: <mailto:sashiko-reviews+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:sashiko-reviews+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=iso-8859-1
+Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-Content-Transfer-Encoding: 8bit
-In-Reply-To: <20260616184006.0CC9A1F000E9@smtp.kernel.org>
+In-Reply-To: <20260615183314.65A571F00A3A@smtp.kernel.org>
 
-On Tue, Jun 16, 2026 at 06:40:05PM +0000, sashiko-bot@kernel.org wrote:
-> Thank you for your contribution! Sashiko AI review found 1 potential issue(s) to consider:
-> - [Medium] Ftrace-based return probes (kretprobe, uretprobe, fexit) are incorrectly classified as PROBE__NOPE because they lack the __probe_ip field.
-> --
-> 
-> commit fc58c48524e7c99a712f8fb111c94abfbbeb4b6d
-> Author: Arnaldo Carvalho de Melo <acme@redhat.com>
-> 
-> perf evsel: Add lazy-initialized probe type detection helpers
-> 
-> This commit introduces lazy-initialized probe type detection helpers for
-> perf evsel. It caches the probe type lookup in a 3-bit field within struct
-> evsel to avoid repeated PMU list walks via evsel__find_pmu().
-> 
-> > diff --git a/tools/perf/util/evsel.c b/tools/perf/util/evsel.c
-> > index 05fa0010c858a..ea9fa04429f08 100644
-> > --- a/tools/perf/util/evsel.c
-> > +++ b/tools/perf/util/evsel.c
-> 
-> [ ... ]
-> 
-> > @@ -254,6 +254,58 @@ const char *evsel__pmu_name(const struct evsel *evsel)
-> >  	return event_type(evsel->core.attr.type);
-> >  }
+On Mon, Jun 15, 2026 at 06:33:14PM +0000, sashiko-bot@kernel.org wrote:
+> > @@ -795,7 +796,11 @@ static void vgic_prune_ap_list(struct kvm_vcpu *vcpu)
+> >  			continue;
+> >  		}
 > >  
-> > +enum evsel_probe_type {
-> > +	PROBE__UNKNOWN	= 0,
-> > +	PROBE__NOPE	= 1,
-> > +	PROBE__KPROBE	= 2,
-> > +	PROBE__UPROBE	= 3,
-> > +	/*
-> > +	 * Ftrace-based dynamic probes (kprobes/uprobes/fprobes created via
-> > +	 * tracefs) report PMU "tracepoint", not "kprobe"/"uprobe".  Detect
-> > +	 * them by the __probe_ip field that the kernel adds to all dynamic
-> > +	 * probe formats.
-> > +	 */
-> > +	PROBE__FTRACE	= 4,
-> > +};
-> > +
-> > +static void evsel__resolve_probe_type(struct evsel *evsel)
-> > +{
-> > +	const char *name = evsel__pmu_name(evsel);
-> > +
-> > +	if (!strcmp(name, "kprobe"))
-> > +		evsel->probe_type = PROBE__KPROBE;
-> > +	else if (!strcmp(name, "uprobe"))
-> > +		evsel->probe_type = PROBE__UPROBE;
-> > +	else if (!strcmp(name, "tracepoint") && evsel__field(evsel, "__probe_ip"))
+> > -		/* This interrupt looks like it has to be migrated. */
+> > +		/*
+> > +		 * This interrupt looks like it has to be migrated,
+> > +		 * make sure it is kept alive while locks are dropped.
+> > +		 */
+> > +		vgic_get_irq_ref(irq);
 > 
-> [Severity: Medium]
-> The commit message mentions this covers kprobes, uprobes, and fprobes
-> regardless of their group or system name by checking the __probe_ip field.
-> Will this successfully detect ftrace-based return probes?
+> [Severity: Critical]
+> This isn't a bug introduced by this patch, but could the lock-dropping window
+> here lead to a double list_del() and a use-after-free under certain race
+> conditions?
 > 
-> It looks like return probes like kretprobe, uretprobe, and fexit do not
-> contain a __probe_ip field, but instead define __probe_func and
-> __probe_ret_ip.
+> When vgic_prune_ap_list() drops the irq and ap_list locks shortly after this
+> reference is taken, another thread could concurrently execute
+> vgic_flush_pending_lpis() above and remove the irq from the list.
 > 
-> If evsel__field() returns NULL for return probes, won't they incorrectly
-> fall through to the else branch and be classified as PROBE__NOPE?
+> If a third thread then concurrently injects the same LPI before the locks are
+> reacquired, the irq_lock is taken and pending_latch is set to true again.
+> 
+> When vgic_prune_ap_list() reacquires the locks further down in the function,
+> the target_vcpu oracle check will pass because the interrupt is pending again:
+> 
+> arch/arm64/kvm/vgic/vgic.c:vgic_prune_ap_list() {
+>     ...
+>     if (target_vcpu == vgic_target_oracle(irq)) {
+>         struct vgic_cpu *new_cpu = &target_vcpu->arch.vgic_cpu;
+> 
+>         list_del(&irq->ap_list);
+>         irq->vcpu = target_vcpu;
+>     ...
+> }
+> 
+> Because there is no check verifying that irq->vcpu is still equal to the
+> source vcpu, does this unconditionally execute list_del() on a list entry
+> that has already been removed and poisoned?
+> 
+> Would this also bypass acquiring a new list reference, leaving the LPI on the
+> new list with a deficient reference count if it avoids a crash?
 
-Sure, and this is an interesting observation, we need to cover
-__probe_ret_ip in the same fashion as __probe_ip, probably __probe_func
-as well, but this should be done in an upcoming patch series.
+Urgh... Marc, I think we need Hyunwoo's patch in addition to yours. Even
+though this 3-way race seems improbable, it does appear possible :/
 
-I'll make sure to save this in a TODO file for later work.
+[*]: https://lore.kernel.org/kvmarm/aiHnI1mu6SGQrgnz@v4bel/
 
-- Arnaldo
- 
-> > +		evsel->probe_type = PROBE__FTRACE;
-> > +	else
-> > +		evsel->probe_type = PROBE__NOPE;
-> > +}
-> 
-> -- 
-> Sashiko AI review · https://sashiko.dev/#/patchset/20260616182546.8892-1-acme@kernel.org?part=1
+Thanks,
+Oliver
