@@ -1,118 +1,131 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4075434E764
-	for <sashiko-reviews@lists.linux.dev>; Tue, 16 Jun 2026 18:00:42 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 303BB3D75CE
+	for <sashiko-reviews@lists.linux.dev>; Tue, 16 Jun 2026 18:06:34 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1781632843; cv=none; b=Z0OlJ83GtWybHdFRzvEKjKHpr1JI0de90Avfyxitz4MOVHYi2dwlTZnxji/thECjCo9zf84No+JVLShfQ3pBGACOZHWEau9nUsaGr4JmT8CEN7rzUJC/GbyBnU0v+VAPz/g+i6Vtz4vTpwfMxZRpZm/wvNjCaHy1EIJtA/eFth4=
+	t=1781633197; cv=none; b=ZH846mRItWaVjDr/PANcwWw4/VbWmfifY0q5Shld1Obkxe1RFR0ttR5oznZlOT3nS7lUo0Yk3zYjfkLRZUL8ikljW+pfNNK/WXbsgGx3yF57EL+fYYxxf8D4sakOnIwcPmXQbwWcpNYKUOoAUDGwkMCea+TYaZoz804So8cynK4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1781632843; c=relaxed/simple;
-	bh=iCaOP0Ax2vc2sgI2Fmtc3HRYUD0UaxmzhZUUcdhw4YY=;
+	s=arc-20240116; t=1781633197; c=relaxed/simple;
+	bh=qoB9GPNPtRCGdgUzvHR5ID3q5VcfG6xQ3u0PiTHG1PE=;
 	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
-	 To:Cc:Content-Type; b=DO00VOf9q03Zbr+EyILNPqmFq9sqT7nMKJxe/B/2SWy5dOktFcjUYd+VUso3KuGPVcad3+uyseZryUD3Ypann0Uxfi5dlxnM+auOBO2wsFFwd90GaU1cdSwKAdDjzUIYasqRovilQ07FB+QmUxQaJRhPv2ZTigPiT3iFuzQlWy4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=WnFADW8k; arc=none smtp.client-ip=100.103.45.18
+	 To:Cc:Content-Type; b=EVDCoElC4hT3Evbx8XYZkcaw11DR68MJ0dvSLsr0OxmycLvcu9AkKnpxGjt/mvy9l47sQqfsFmo58d92g7ir40FAX0h1RDrokBsJBmb+StBdVg3DEBHpwsfbushbUuXp/IP9bIbMLQxDRZ4XkKu/eEEhzhJmigXswxXMw3tmLLs=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=P2aS8IFK; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="WnFADW8k"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id E99211F00A3D
-	for <sashiko-reviews@lists.linux.dev>; Tue, 16 Jun 2026 18:00:41 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="P2aS8IFK"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id B0CB71F00A3D
+	for <sashiko-reviews@lists.linux.dev>; Tue, 16 Jun 2026 18:06:33 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=kernel.org;
-	s=k20260515; t=1781632841;
-	bh=NwZPNnIRwgCRGyzWK3KP1QnXx1j33jdNjy9Lx5YY9wY=;
+	s=k20260515; t=1781633193;
+	bh=xMWgSJWYxuKZLOL7EL5ws3yqi8TQEX54163KvYwXdYo=;
 	h=References:In-Reply-To:From:Date:Subject:To:Cc;
-	b=WnFADW8kZWZDTdxp24Un5Bm48PtTRVh7WTNKBDjGMrAZ6c8I50reecT2lffTajT4N
-	 LnVOCPVoS14GVGbC85vTAyEo+lGxbKvO+qwzak3ujSoX2hgGmZ2kFohiEEKkx6wTXn
-	 tQaR8IUl7cXpE4SQZyzmROfrV2ndrbj244rHrfuk4U+zIAYnkGtuBLyejtkywruRey
-	 d4ZixOAmy/a6Uu+ztv9g15GfT9KFU2CBlWCIIF+cOIxoO6Y+n2DJHdn/69VnPhrLIB
-	 m3E+DUl0EcK3K1b3Np58a2EYTvRVgpWsxWqXqrXXhULO8jRJM8PyWm+WWURuyzowK9
-	 7oY8YkU87fA0A==
-Received: by mail-ej1-f45.google.com with SMTP id a640c23a62f3a-bebde89cfd3so615075466b.2
-        for <sashiko-reviews@lists.linux.dev>; Tue, 16 Jun 2026 11:00:41 -0700 (PDT)
-X-Gm-Message-State: AOJu0Yzgwj4kJ7VyzDd3v9nfWh4XQikCprvlnDaBELdsVyJqPWlZ/g5d
-	SjxEZRaeot5tK9gA7tKOGNAN1NkDHZiQnn9x8ZbJCHJHTirawnGQv/T/gzlGzW1HNt68wyRXUNm
-	gd+ow7zxsUVOwbPET0pTivEZQ3FlQMk0=
-X-Received: by 2002:a17:907:25c5:b0:beb:8c28:254 with SMTP id
- a640c23a62f3a-c059e645cfcmr59192766b.0.1781632840918; Tue, 16 Jun 2026
- 11:00:40 -0700 (PDT)
+	b=P2aS8IFKAX4yilXU/kblHbrQyyDW5FfHY8fDYO9F6towBp7gjCw7sE2J7xQWcaV1k
+	 NXl4cmcLCb3XRsILSHGXqdpRFJgqQ8KgOv+w2/8CLdxPvGO+ymhUkCtsEvScJ6E2yJ
+	 xsV2iRH7AQFh4NDIyF4sSZ9Uk3aEee9f6k8oXIcOrPnayQquAqq76tdo/Sh12XbNcy
+	 eEgBaBP38nWCu53fWmM93YAKk/5J41nG4u1zZNZcopce7G+s3gBDhIIlNp67910cT1
+	 EdGY5LNXiEpATJeYpEij6pOYA8TIiZBwkr7LYP3z1hdS1FWK5nn23vsz6+gAZqSz4J
+	 BYyd6rhg1MNaQ==
+Received: by mail-ej1-f46.google.com with SMTP id a640c23a62f3a-bebb72b845aso833240266b.3
+        for <sashiko-reviews@lists.linux.dev>; Tue, 16 Jun 2026 11:06:33 -0700 (PDT)
+X-Gm-Message-State: AOJu0YzV68Q/H++zbSMgsvx+74J6TCWrZNxTNJkAsGCivi3W1ypLpWjk
+	wCmfUCR5PK+9fCj5Ij6slqlod8ldp4MPy13xi+D8VM0WV9/93Hc0nFElOONGKQEPByvC7bSQN14
+	odoOhb8/Nn9EOBEprTSibJovcLCSz2j0=
+X-Received: by 2002:a17:907:c81b:b0:bfa:6dc1:3c64 with SMTP id
+ a640c23a62f3a-c05a2748e0emr50765966b.13.1781633192653; Tue, 16 Jun 2026
+ 11:06:32 -0700 (PDT)
 Precedence: bulk
 X-Mailing-List: sashiko-reviews@lists.linux.dev
 List-Id: <sashiko-reviews.lists.linux.dev>
 List-Subscribe: <mailto:sashiko-reviews+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:sashiko-reviews+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-References: <20260616004155.1435766-14-yosry@kernel.org> <20260616010534.2C8511F000E9@smtp.kernel.org>
-In-Reply-To: <20260616010534.2C8511F000E9@smtp.kernel.org>
+References: <20260616004155.1435766-18-yosry@kernel.org> <20260616012056.669B91F000E9@smtp.kernel.org>
+In-Reply-To: <20260616012056.669B91F000E9@smtp.kernel.org>
 From: Yosry Ahmed <yosry@kernel.org>
-Date: Tue, 16 Jun 2026 11:00:28 -0700
-X-Gmail-Original-Message-ID: <CAO9r8zNVPAeeiporS5aYFxdRUciaGwZGbnSg7Dr2XVpNFCvOmw@mail.gmail.com>
-X-Gm-Features: AVVi8Cc-TsmqIJX20e3E1uDGzSFqJJv-kuQrTw-u4LVXvFPouTeVpZwljYutxoc
-Message-ID: <CAO9r8zNVPAeeiporS5aYFxdRUciaGwZGbnSg7Dr2XVpNFCvOmw@mail.gmail.com>
-Subject: Re: [RFC PATCH v2 13/25] KVM: nSVM: Flush both L1 and L2 ASIDs on KVM_REQ_TLB_FLUSH
+Date: Tue, 16 Jun 2026 11:06:20 -0700
+X-Gmail-Original-Message-ID: <CAO9r8zPRmcwKAtHch995Gm5EKxv07-3f90+H71g+w=iZ+VZfiQ@mail.gmail.com>
+X-Gm-Features: AVVi8Cfe7ybnfoedhz86zNlgaFamO5obTudW21u4hB04KYbKN9HFXxuXbRO2_xE
+Message-ID: <CAO9r8zPRmcwKAtHch995Gm5EKxv07-3f90+H71g+w=iZ+VZfiQ@mail.gmail.com>
+Subject: Re: [RFC PATCH v2 17/25] KVM: nSVM: Service local TLB flushes before
+ nested transitions
 To: sashiko-reviews@lists.linux.dev
 Cc: kvm@vger.kernel.org
 Content-Type: text/plain; charset="UTF-8"
 Content-Transfer-Encoding: quoted-printable
 
-On Mon, Jun 15, 2026 at 6:05=E2=80=AFPM <sashiko-bot@kernel.org> wrote:
+On Mon, Jun 15, 2026 at 6:20=E2=80=AFPM <sashiko-bot@kernel.org> wrote:
 >
 > Thank you for your contribution! Sashiko AI review found 1 potential issu=
 e(s) to consider:
-> - [High] Dereferencing `svm->nested.vmcb02.ptr` without verifying `svm->n=
-ested.initialized` causes a Use-After-Free write if `svm_allocate_nested()`=
- previously failed.
+> - [High] Context mismatch in `svm_switch_vmcb()` incorrectly applies glob=
+al TLB flushes to the outgoing VMCB and clears the request bit, causing the=
+ incoming VMCB to miss the flush. Furthermore, on nested VM-Exit, `leave_gu=
+est_mode()` is called before `svm_switch_vmcb()`, causing `kvm_hv_purge_tlb=
+_flush_fifo()` to incorrectly reset L1's Hyper-V TLB flush FIFO while hardw=
+are flushes are applied to L2's `vmcb02`.
 > --
 >
-> commit 88a69b7a032d088ddb452c91fba161d26dbed0ec
+> commit 5fb35fcca4bb6e1756cc67fdc65ffe16ab6c194f
 > Author: Yosry Ahmed <yosry@kernel.org>
 >
-> KVM: nSVM: Flush both L1 and L2 ASIDs on KVM_REQ_TLB_FLUSH
+> KVM: nSVM: Service local TLB flushes before nested transitions
 >
-> This commit modifies svm_flush_tlb_all() to flush both L1 and L2 ASIDs
-> to properly handle KVM_REQ_TLB_FLUSH across all contexts. It also purges
-> all Hyper-V TLB FIFOs for both L1 and L2.
+> This patch updates nSVM to service local TLB flush requests before
+> switching VMCBs during nested transitions. It aims to ensure flushes are
+> applied to the correct context, similar to how nVMX handles them.
 >
-> > diff --git a/arch/x86/kvm/svm/svm.c b/arch/x86/kvm/svm/svm.c
-> > index dac3d0098bb77..4f13c3456a5d7 100644
-> > --- a/arch/x86/kvm/svm/svm.c
-> > +++ b/arch/x86/kvm/svm/svm.c
-> [ ... ]
-> > @@ -4213,7 +4215,11 @@ static void svm_flush_tlb_all(struct kvm_vcpu *v=
-cpu)
-> >       if (WARN_ON_ONCE(svm_hv_is_enlightened_tlb_enabled(vcpu)))
-> >               hv_flush_remote_tlbs(vcpu->kvm);
+> > diff --git a/arch/x86/kvm/svm/nested.c b/arch/x86/kvm/svm/nested.c
+> > index 234724d8b4c54..7b19191e0e43f 100644
+> > --- a/arch/x86/kvm/svm/nested.c
+> > +++ b/arch/x86/kvm/svm/nested.c
+> > @@ -717,9 +717,16 @@ static void svm_switch_vmcb(struct vcpu_svm *svm, =
+struct kvm_vmcb_info *target_v
+> >  {
+> >       struct kvm_vcpu *vcpu =3D &svm->vcpu;
 > >
-> > -     svm_flush_tlb_asid(vcpu);
-> > +     kvm_hv_purge_all_tlb_flush_fifos(vcpu);
-> > +
-> > +     vmcb_set_flush_asid(svm->vmcb01.ptr);
-> > +     if (svm->nested.vmcb02.ptr)
-> > +             vmcb_set_flush_asid(svm->nested.vmcb02.ptr);
+> > +     /*
+> > +      * TLB flushes are applied to the VMCB, so apply any pending TLB =
+flushes
+> > +      * on the current VMCB before switching to a new one..
+> > +      */
+> > +     kvm_service_local_tlb_flush_requests(vcpu);
 >
 > [Severity: High]
-> Could this dereference of svm->nested.vmcb02.ptr cause a use-after-free?
+> Does this clear global TLB flush requests (like KVM_REQ_TLB_FLUSH_GUEST)
+> while applying them only to the outgoing VMCB?
 >
-> If svm_allocate_nested() successfully allocates vmcb02_page and assigns i=
-t
-> to svm->nested.vmcb02.ptr, but a subsequent allocation (such as msrpm)
-> fails, the error path frees the page but does not clear the pointer:
->
-> arch/x86/kvm/svm/nested.c:svm_allocate_nested() {
->     ...
-> err_free_vmcb02:
->     __free_page(vmcb02_page);
->     return -ENOMEM;
-> }
->
-> If a TLB flush is later triggered and calls svm_flush_tlb_all(), the chec=
-k
-> for if (svm->nested.vmcb02.ptr) would evaluate to true on the dangling
-> pointer, and vmcb_set_flush_asid() would write to freed memory.
->
-> Would it be safer to check svm->nested.initialized here instead, to ensur=
-e
-> the nested state is fully allocated and valid?
+> If a host-initiated flush occurs (e.g., from page reclaim), the request
+> bit will be consumed and applied to the outgoing VMCB, leaving the incomi=
+ng
+> VMCB to miss the flush and run with a stale TLB.
 
-Yes. But if no one objects, I'd rather add a patch to drop
-svm->nested.initialized completely, and properly NULLify
-svm->nested.vmcb02.ptr in the destruction paths. Keying off the
-pointer makes more sense semantically imo.
+Yeah it is intentional to apply the flushes to the
+current/old/outgoing context. If there are flushes needed in the new
+context, they are queued by nested_svm_{entry/exit}_tlb_flush().
+That's similar to what VMX does.
+
+>
+> Also, is there a context mismatch here during nested VM-Exit?
+>
+> In nested_svm_vmexit(), leave_guest_mode(vcpu) is called before
+> svm_switch_vmcb(svm, &svm->vmcb01).
+>
+> Because of this, kvm_service_local_tlb_flush_requests() will see
+> is_guest_mode(vcpu) as false. If Hyper-V is enabled, this means
+> kvm_hv_purge_tlb_flush_fifo() will incorrectly target L1's FIFO while the
+> hardware flushes are actually being applied to L2's vmcb02.
+
+Ugh.. yes. This is annoying. kvm_service_local_tlb_flush_requests()
+needs to be called on both the current/old/outgoing VMCB *and* guest
+mode. So we'll need to open-code the call in a bunch of places before
+svm_switch_vmcb() and {enter/leave}_guest_mode(). I really liked
+putting it in svm_switch_vmcb() together with
+nested_svm_{entry/exit}_tlb_flush() so that all the TLB flushing logic
+for nested transitions live in one place and the ordering needs to be
+handled in one place.
+
+I guess there's already a lot of ordering dependencies in all code
+entering/leaving guest mode. We really should refactor the code, if
+possible, to have one helper for entering nested and one helper for
+leaving nested, but I guess that's outside the scope of this series.
