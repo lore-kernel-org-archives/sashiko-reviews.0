@@ -1,67 +1,67 @@
-Received: from mail-wm1-f46.google.com (mail-wm1-f46.google.com [209.85.128.46])
+Received: from mail-wm1-f44.google.com (mail-wm1-f44.google.com [209.85.128.44])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D8D373DA7C6
-	for <sashiko-reviews@lists.linux.dev>; Tue, 16 Jun 2026 06:07:25 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.46
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B72D84192FD
+	for <sashiko-reviews@lists.linux.dev>; Tue, 16 Jun 2026 08:39:47 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.44
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1781590047; cv=none; b=gnevraXtluR/+PYNixFPn070x7a6drY0sTBik+CfqKy/n/jqgvS+qnzG/aQyc1yEMNkOSy6zDj2E5ySjm9OVrp9euqB2rmZjizkMC880I9RS5uRqpFj0gURL8kKa1XayBuDWlm6Mz//tOBxv4jmMvmlsNRNAlby9OHDKBZAoY/k=
+	t=1781599189; cv=none; b=kbeJOPOR/L9hwKQ/misDAdy/alu3RQSGXQtK8fdf4pWPYHLlBSJoY2LxQLfoixR21Ampe9Ta/XyAfYz+QOLr9DZyNNSZMEbWRKSfAMA1G9cZnZmA9nU/0/K+52zkRePP4AKyZHISLF7IUqzlvd+TzhQvPR/dQn/64WF9shNodDc=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1781590047; c=relaxed/simple;
-	bh=v1cTzgnR+l9OmcIlPG1/hyZEwlGLH5SEj4x4aVXeQJ4=;
+	s=arc-20240116; t=1781599189; c=relaxed/simple;
+	bh=xgqg2HEwifWUM0vuhnri1EIB65MvKX7fBHTptgMWJfY=;
 	h=Message-ID:Date:MIME-Version:From:Subject:To:Cc:References:
-	 In-Reply-To:Content-Type; b=aHVr7rD9wQeU6HTv3rFlaDsUY3h0dc6hkiQ2XUl1iAca4jG1tMOpdq4tSNd4kIKvN2lvz9qOCeKo7uSOSjZcQXGNUBwg87puBmXQE4GhZ7/dL8forGokZ8ppKkWIgiKJHXQmCaXNuZMcQSvHI40eQMUxCA++HwsEqq2b5G9O4tY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=AB7sPPwC; arc=none smtp.client-ip=209.85.128.46
+	 In-Reply-To:Content-Type; b=a+VlopmlgL+BiNJjPNRIYmtgogH1W+vZfvF3WDGcSdvBtmMLQyTMbiXFN14RUNFHae2/d1ik6jIs9+fxBQmpwtpxtPMM7xlaaHUAcL32LY5BdUHB8jcy1ojMMsvdz0IWN75hEW9hKQ5BVpX+yAZnxLXU24gZr3hGYlcS5hryz9M=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=xSQwYvmC; arc=none smtp.client-ip=209.85.128.44
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="AB7sPPwC"
-Received: by mail-wm1-f46.google.com with SMTP id 5b1f17b1804b1-490c0c92cffso26675475e9.2
-        for <sashiko-reviews@lists.linux.dev>; Mon, 15 Jun 2026 23:07:25 -0700 (PDT)
+	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="xSQwYvmC"
+Received: by mail-wm1-f44.google.com with SMTP id 5b1f17b1804b1-490aaeabdb4so29314275e9.1
+        for <sashiko-reviews@lists.linux.dev>; Tue, 16 Jun 2026 01:39:47 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1781590044; x=1782194844; darn=lists.linux.dev;
+        d=linaro.org; s=google; t=1781599186; x=1782203986; darn=lists.linux.dev;
         h=content-transfer-encoding:in-reply-to:organization:autocrypt
          :content-language:references:cc:to:subject:reply-to:from:user-agent
          :mime-version:date:message-id:from:to:cc:subject:date:message-id
          :reply-to;
-        bh=xoHHKRKukzaKnREbzwd66CB8l6NREbEWNDgRAiNx0fE=;
-        b=AB7sPPwCBkRhkojvWB4UI3vqZuGI8b053cxzQONyRtRw3Zew+vAmtUFFCGnSXvJvDa
-         f7i2BiUUowxon/M03sqjzVlAGUO4N7FrIu1yGjL+RxclOZ8DmhNTMA7ikMYvUEjAplX4
-         XxfvbdWrQrB2MiOMUFNOGEVEn69TGUWDU88Hszw/Em7rlz2p9MbDFJOGRxe0OC3JeGt6
-         PsJBR+R7HQH1aHia83PruC0DblXFisFmF+nb2pa9KLIATeHCFdoFEb+J7WKfu9fs8t+h
-         9ccnXu4FYz7x8U+Nct3J1mUFGi4eP+U15pDLKfZ7HfqHx3+aW0pQOqwcD9K5wsi+LeZl
-         B1gw==
+        bh=2H65j63RwgTq0P0u4BfHzeL9+e1nXdHZ4T1IfU/mVhQ=;
+        b=xSQwYvmC3Exc9Tvyg9CaQQurt3Kn6aH5e6Svxx2+Xsel6ywIBeOF1SRirowmt3D7qU
+         Gy9c1wqD5jVZ7bEtFN2+SmEic7JoKYlSF7GB0uRJTJNOXa9WVXRxocd9j8mjd3AegPRP
+         7pyz8zMoo7/n8ZKp+X4l2gId0X5li59PlH5Q8m6tFfIZpfi/3D3lkoSrWhF5DyXINkMV
+         mmkvkhSYteKsPm+Nyw2mofiX1BlQe8wMvAulgU/8BRYxFaSjpGGWCet8g5BBp4oTXau2
+         UZ2ue5MGxs25ESkhveccKqOyaf/IS+T0zzZ3IfLjZN/eEBwbpdEvvAksrPWaCOK1b1fF
+         CHVA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20251104; t=1781590044; x=1782194844;
+        d=1e100.net; s=20251104; t=1781599186; x=1782203986;
         h=content-transfer-encoding:in-reply-to:organization:autocrypt
          :content-language:references:cc:to:subject:reply-to:from:user-agent
          :mime-version:date:message-id:x-gm-gg:x-gm-message-state:from:to:cc
          :subject:date:message-id:reply-to;
-        bh=xoHHKRKukzaKnREbzwd66CB8l6NREbEWNDgRAiNx0fE=;
-        b=HNtkM8fgZkZIuWKP8FavweGwL6KOP/wFQGu9AtJ51Np5d7QzXObt3KUU1S+ERFfsO+
-         IYOI29sizAxwgupGl670iMpUKejvKysZiU44AQ8iJHBrEL27NnS2ORpHcUrnH3294wH4
-         p6qEgwyNzncR+j57rNeosQWtLVezM3SACPyfF45tzYrOpQPEcqnHYdarEwvpQbM+eUCG
-         nZ8vQwt/2xV3msMvzLfRYFiWYCBzmJm53ZFQKCJ0dP2UFyN4qG8/BgihkpYeR7yLhOU8
-         oFbTBLT1phkkKY96f6QpK/KLO9gv1ncawh4H718jqLWhdKVTcRvpWFeFZw4nkvaSzLL8
-         RONQ==
-X-Gm-Message-State: AOJu0YzWUF5EVJwPzrHRB4ao2E8RmO/FIbz0JAkviX3rLCJIgMU/sDSt
-	xGyMZ9E+JUXmXvJUy+yCf1mR8tX1ETjWb8q9eJln0oPq0fxLNoty0seSBL4OAyYdy1WihFFhgsk
-	cky4Q7Ls=
-X-Gm-Gg: Acq92OEoEYj/4Z/RYwuACoejDVSFFT3guNi6qBGiCEuVpjbvPQJIHyRgoEZhHH8FJdE
-	wE+fBwNcBjCpzcfqaL6J7KRchsyifXZIGQ8E65yU4NfotDGMlOjPSr8GLJkn63KN/BWPd0ahX2t
-	2aE4SDKLjjNh/rnPsz9ixdWCMvds6w+nusDj9dE8WKrH2mXrQo29DAsdZeybR/qNaq7VIevHzAe
-	Bw8fCodpe5Ol8JXrurjNF9IVtaGR0HzvguhoxPWbLEM2Zn0DfSKwsd8dj0g/dSpKaRoVt3x0yBH
-	7gw1FjquIbNK57HjoHLOZngDiys+H08OqhF8+3fXbwOvevwKpOHP8jg+/q6JNdRk/U3ecjvryVF
-	HnMvwKgH8g1auS8x2rfYYGj4Lrex6vYLfDLCVd8i0xqbs1caZ+Z5Idz+qsRve6c+bozsnvCY+pj
-	mlLjg3pGYOgvRz0N1wPKel9vQIl+eKWEhK2rPVx2YHt44=
-X-Received: by 2002:a05:600d:640f:20b0:490:e180:2ed with SMTP id 5b1f17b1804b1-4922ff92614mr21627735e9.4.1781590043973;
-        Mon, 15 Jun 2026 23:07:23 -0700 (PDT)
-Received: from [172.20.10.3] ([37.167.117.98])
-        by smtp.gmail.com with ESMTPSA id 5b1f17b1804b1-4922fa96f0esm53085415e9.12.2026.06.15.23.07.23
+        bh=2H65j63RwgTq0P0u4BfHzeL9+e1nXdHZ4T1IfU/mVhQ=;
+        b=B25MEtKgIl0hogHzP25fx5PE7meSZS1cNccdE7uuuDcADFpeBrlo0aFwTbvVgrkTUb
+         BpbVLk/TP869L5cQmAgc5sCsIVaC2cVJRW/vHg36Hip/jK+6MuA1PAtmwF+Fyh2hontP
+         79nF7/qxpNnTM0ogZkOXnyYDrVxqwAlJaciDHx5T+2VqFLrxpUHTahwMXi3K5uL/WuzO
+         +QEyfqjWpLWSXbw1iR2IbGivR8MfrRuln3HpQxBahjFp4Xf/owZv7Dm9U9gjwxxOqctR
+         yxR7emoYbmFiB4czJYKpHt0H9M+0tyzRQOzXkg4MLPFQCv8cclJXaqvP8BjjUToWXd0s
+         MGew==
+X-Forwarded-Encrypted: i=1; AFNElJ/ekiK+aHCIkZgr5MvKrJDSN6z+dtL4ZW1jfTsAn+z957Lhy0AaB3CCCgqBZ/T3wBiwy6RL4ZDTpfJagaLvdzs=@lists.linux.dev
+X-Gm-Message-State: AOJu0YyH9ln5pmIlg0c3LcVKen/igbdtpO2AppRpn4Jz5SXEitlfhYiy
+	3mwK6BqZ1zgLJIzZeIlZmVJZPqweHEwLcMxlyAlvoeQ9pCSGJjWSvChFqqsHbTF3KDo=
+X-Gm-Gg: Acq92OGWaDhhIJ7tx9FrOVxU0H+fdmHReYqFg4tfoRqwuOHn4Of+8Iiq4unOYZ2hJVf
+	KAlLbFwU/n4rIdO/Ziir5Gi88I0aeS+kT5XaYPnIoxtPvHmDc5E7wHsCU/VLOzzLiW+PnQWSDUv
+	VfaIJyV/Jvu9BonFwJSyzOl+fyMjE7EiL4toDnc65jpI4XC2LKti5VadompVDaU3BVy3W2znm/G
+	1Jl0loLGg2F56sNLq+wTMqpviS9xRfSKzcVCq8YNtIKoxOqwhWE3g1os0uuMAiwJJw/FH8bJKUq
+	0JMnrdeA4j6lPQZBD+P0HjoJ2DHPr50mxRHK/ZJt7/ezao7ZEQz84H8+/Kxeo6YhgKfy5p+9lf/
+	9IbQkIy2RJcuGDaqwxID8CWrv6sUyEU949/PJoG/X+0CHORBwEthGaNBV5O7PyC5OsuIpCQqHI/
+	SubiFk/kQt/VjKuMijLSGaEsrZz/x/hg==
+X-Received: by 2002:a05:600c:6d4c:b0:490:d2a4:1b59 with SMTP id 5b1f17b1804b1-492201184admr149927925e9.31.1781599185914;
+        Tue, 16 Jun 2026 01:39:45 -0700 (PDT)
+Received: from [10.3.4.22] ([212.133.41.77])
+        by smtp.gmail.com with ESMTPSA id 5b1f17b1804b1-49230a96b47sm35404405e9.13.2026.06.16.01.39.44
         (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Mon, 15 Jun 2026 23:07:23 -0700 (PDT)
-Message-ID: <1539e5d5-7c58-4def-ad07-4c29b58ccb62@linaro.org>
-Date: Tue, 16 Jun 2026 08:07:22 +0200
+        Tue, 16 Jun 2026 01:39:45 -0700 (PDT)
+Message-ID: <542d32c7-a3a0-41a4-833a-c28f33f24cea@linaro.org>
+Date: Tue, 16 Jun 2026 10:39:44 +0200
 Precedence: bulk
 X-Mailing-List: sashiko-reviews@lists.linux.dev
 List-Id: <sashiko-reviews.lists.linux.dev>
@@ -69,13 +69,16 @@ List-Subscribe: <mailto:sashiko-reviews+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:sashiko-reviews+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-From: neil.armstrong@linaro.org
+From: Neil Armstrong <neil.armstrong@linaro.org>
 Reply-To: Neil Armstrong <neil.armstrong@linaro.org>
-Subject: Re: [PATCH] soc: amlogic: meson-clk-measure: remove debugfs tree
-To: sashiko-reviews@lists.linux.dev, Pengpeng Hou <pengpeng@iscas.ac.cn>
-Cc: linux-amlogic@lists.infradead.org
-References: <20260615091531.21964-1-pengpeng@iscas.ac.cn>
- <20260615092437.671C31F000E9@smtp.kernel.org>
+Subject: Re: [PATCH RFC v3 3/6] arm64: dts: qcom: sm8550-qrd: add SPMI ADC
+ channels and thermal nodes
+To: Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>,
+ sashiko-reviews@lists.linux.dev
+Cc: devicetree@vger.kernel.org, conor+dt@kernel.org, robh@kernel.org
+References: <20260615-topic-sm8x50-adc5-gen3-v3-3-216a2b5ccb85@linaro.org>
+ <20260615171519.F2A851F00A3A@smtp.kernel.org>
+ <dz2leajz5bh5knzzhjlbisosfg3ujaokaoo5rq7lf2dzvgut7u@s44eop5u4li4>
 Content-Language: en-US, fr
 Autocrypt: addr=neil.armstrong@linaro.org; keydata=
  xsBNBE1ZBs8BCAD78xVLsXPwV/2qQx2FaO/7mhWL0Qodw8UcQJnkrWmgTFRobtTWxuRx8WWP
@@ -102,75 +105,61 @@ Autocrypt: addr=neil.armstrong@linaro.org; keydata=
  4zcsPWvwnXgfe5tk680fEKZVwOZKIEuJC3v+/yZpQzDvGYJvbyix0lHnrCzq43WefRHI5XTT
  QbM0WUIBIcGmq38+OgUsMYu4NzLu7uZFAcmp6h8g
 Organization: Linaro
-In-Reply-To: <20260615092437.671C31F000E9@smtp.kernel.org>
+In-Reply-To: <dz2leajz5bh5knzzhjlbisosfg3ujaokaoo5rq7lf2dzvgut7u@s44eop5u4li4>
 Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
+Content-Transfer-Encoding: 8bit
 
-On 6/15/26 11:24, sashiko-bot@kernel.org wrote:
-> Thank you for your contribution! Sashiko AI review found 1 potential issue(s) to consider:
+On 6/16/26 01:59, Dmitry Baryshkov wrote:
+> On Mon, Jun 15, 2026 at 05:15:19PM +0000, sashiko-bot@kernel.org wrote:
+>> Thank you for your contribution! Sashiko AI review found 2 potential issue(s) to consider:
+>> - [Medium] Missing `qcom,hw-settle-time` for the `channel@749` 100kΩ pull-up thermistor (`pm8550b_wls_therm`), leading to inaccurate temperature readings.
+>> - [Low] The ADC channel nodes are not sorted by their unit address, violating standard device tree conventions.
+>> --
+>>
+>> commit 4a45cdf2d6ed588ab63165c08752b51ef046be4f
+>> Author: Neil Armstrong <neil.armstrong@linaro.org>
+>>
+>> arm64: dts: qcom: sm8550-qrd: add SPMI ADC channels and thermal nodes
+>>      
+>> Add the SPMI ADC channels on the PMK8550 SPMI5 ADC3 for the
+>> other PMICS on the system.
+>>
+>> The thermal nodes are sorted by the sensor channel to be
+>> coherent with the system thermal nodes ordering.
+>>
+>>
+>> [Severity: Low]
+>> Similar to the above, this isn't a bug, but should channel@78e and
+>> channel@78f be placed after channel@747 and channel@749 to maintain
+>> proper unit address sorting?
 > 
-> Pre-existing issues:
-> - [High] Exposing the `measure_summary` debugfs file before initializing the `priv` pointers in the `msr_table` leads to a potential NULL pointer dereference.
-> --
-> 
-> commit cf66aebca628dec91393028bc843130a21da66ad
-> Author: Pengpeng Hou <pengpeng@iscas.ac.cn>
-> Subject: soc: amlogic: meson-clk-measure: remove debugfs tree
-> 
-> This commit adds a remove callback to the driver to properly clean up the
-> debugfs tree created during probe. By storing the debugfs root and removing
-> it on driver unbind, it prevents leftover entries from referencing freed
-> private data.
-> 
->> diff --git a/drivers/soc/amlogic/meson-clk-measure.c b/drivers/soc/amlogic/meson-clk-measure.c
->> index d862e30a244ed..7ca43bcb622a2 100644
->> --- a/drivers/soc/amlogic/meson-clk-measure.c
->> +++ b/drivers/soc/amlogic/meson-clk-measure.c
-> [ ... ]
->> @@ -952,6 +954,7 @@ static int meson_msr_probe(struct platform_device *pdev)
->>   	       sizeof(struct msr_reg_offset));
->>   
->>   	root = debugfs_create_dir("meson-clk-msr", NULL);
->> +	priv->debugfs_root = root;
->>   	clks = debugfs_create_dir("clks", root);
->>   
->>   	debugfs_create_file("measure_summary", 0444, root,
->>   			    priv->data.msr_table, &clk_msr_summary_fops);
->>   
->>   	for (i = 0 ; i < priv->data.msr_count ; ++i) {
->>   		if (!priv->data.msr_table[i].name)
->>   			continue;
->>   
->>   		priv->data.msr_table[i].priv = priv;
-> 
-> [Severity: High]
-> This is a pre-existing issue, but does creating the measure_summary debugfs
-> file here expose it to userspace before the priv pointers in msr_table are
-> initialized?
-> 
-> If a user-space process reads measure_summary concurrently while the loop
-> below is still executing, clk_msr_summary_show() could dereference a NULL
-> pointer via msr_table->priv:
-> 
-> clk_msr_summary_show() {
->      struct meson_msr_id *msr_table = s->private;
->      unsigned int msr_count = msr_table->priv->data.msr_count;
->      ...
-> }
-> 
-> Could the measure_summary debugfs file be created after the priv fields are
-> fully initialized in the loop to avoid this race?
+> Yes, sorting might need some improvements.
 
-Impossible the driver is initialized way before userspace starts.
+Definitely, will fix
 
 > 
->>   		debugfs_create_file(priv->data.msr_table[i].name, 0444, clks,
->>   				    &priv->data.msr_table[i], &clk_msr_fops);
->>   	}
->>   
->> +	platform_set_drvdata(pdev, priv);
->> +
->>   	return 0;
->>   }
+>>
+>>> +
+>>> +	channel@749 {
+>>> +		reg = <PM8550B_ADC5_GEN3_AMUX_THM6_GPIO10_100K_PU(7)>;
+>>> +		label = "pm8550b_wls_therm";
+>>> +		qcom,ratiometric;
+>>> +		qcom,pre-scaling = <1 1>;
+>>> +		qcom,adc-tm;
+>>> +	};
+>>
+>> [Severity: Medium]
+>> Does this node need qcom,hw-settle-time = <200> like the other 100K
+>> pull-up thermistor channels in this patch?
+>>
+>> Without it, the ADC measurement falls back to the default settle time,
+>> which might be insufficient for this high-impedance path and lead to
+>> inaccurate temperature readings for the pm8550b_wls_therm channel.
+> 
+> I'd also guess so. Neil, are you sure?
 > 
 
+I'll check
+
+Thanks,
+Neil
