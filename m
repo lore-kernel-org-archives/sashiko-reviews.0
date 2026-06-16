@@ -1,305 +1,141 @@
-Received: from alln-iport-4.cisco.com (alln-iport-4.cisco.com [173.37.142.91])
+Received: from frasgout.his.huawei.com (frasgout.his.huawei.com [185.176.79.56])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AC59D3D7D70
-	for <sashiko-reviews@lists.linux.dev>; Tue, 16 Jun 2026 19:21:09 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=fail smtp.client-ip=173.37.142.91
-ARC-Seal:i=2; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1781637671; cv=fail; b=q1M78PJml7nqWuH/96+FcuuwhREdq+K/LZuwcuCZUTF1ozvBpEfcbIE6c4jPQYvbY0mmB/lE3vh1QyFebKmq9qjnhQefqMYLKE3gNGRAdzYENhZK+065d58tKnZdqtKIIkjzHDJHZuQ9VTMmUlTx/5LDulK0peiiXk1uxyEEpIw=
-ARC-Message-Signature:i=2; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1781637671; c=relaxed/simple;
-	bh=5BUmB5dBruhViEywXYzDV14MsL5XtX1o0IRwExZ+rXE=;
-	h=From:To:CC:Subject:Date:Message-ID:References:In-Reply-To:
-	 Content-Type:MIME-Version; b=nb9dh1J1Q6I/J4qilPvFrTDBJPFISz9tuifCkVYG347xFeLmarCMQURgg4k3X7gBGbFIyho+/vuaBcjvdNj0eL7KP+IidGN5UXvqDO1FlcAYappBmWCfPERnAmPPcJezZIt+VVTD2vv07eDXGUFuZccPLZEEtFGMQanvM155Nkc=
-ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=cisco.com; spf=pass smtp.mailfrom=cisco.com; dkim=pass (2048-bit key) header.d=cisco.com header.i=@cisco.com header.b=QKfolDyZ; arc=fail smtp.client-ip=173.37.142.91
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=cisco.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=cisco.com
-Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=cisco.com header.i=@cisco.com header.b="QKfolDyZ"
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-  d=cisco.com; i=@cisco.com; l=7870; q=dns/txt;
-  s=iport01; t=1781637669; x=1782847269;
-  h=from:to:cc:subject:date:message-id:references:
-   in-reply-to:content-transfer-encoding:mime-version;
-  bh=5BUmB5dBruhViEywXYzDV14MsL5XtX1o0IRwExZ+rXE=;
-  b=QKfolDyZUhAWevXqozwhUjMLgKX4odHvi9lkqT0cw24HNrGKKpMxTSmO
-   WEA/6HR/PnfncTGYuDevyhz6nKKXvc93Mf7yy+6seik1zL2QEbU9XUJI0
-   SNfp2LqYiD+OZOuaOnlBiRUmD7uqRK6emCXpK06SVPi1KEEU01xpB9//w
-   jjzIi+A75w6v8Hcl2YNGopn86WwuNxnZEvHlxgIg3KGkkt2d5VagrIeLT
-   GLJFJX53YoMONchOLNLsh9Fc5oY31e2piNTb1C0f7mKBUM0F07rjzWu9/
-   YElBitTEM5qF4rUe4546U8XeyjOWEUAYG+Pa34w0mybEpf3CPZLRTmHqR
-   g==;
-X-CSE-ConnectionGUID: SVdDUI8HQ/aP0f2Xvi1jHA==
-X-CSE-MsgGUID: TX6Pk4X6RZyT4hsILB7Xow==
-X-IPAS-Result: =?us-ascii?q?A0CTAwD8oDFq/5EQJK1agS6BK4FuKimBCoEhSYRXg0wDh?=
- =?us-ascii?q?SyIeQOBE50IFIFqDwEBAQ0CUQQBAYUGAhaNKgImNAkOAQIEAwIDAQEBAQEBA?=
- =?us-ascii?q?QEBAQELAQEFAQEBAgEHBYEOE4ZQDIZaAQEBAQMSEQQNRRACAQgYAgImAgICL?=
- =?us-ascii?q?xUQAgQOBQgagghZgnMDAQKmWgGBPQKKKnp/M4EB4C8GFAGBCi6IWwGBcIQGO?=
- =?us-ascii?q?IREJxuCDYEVQoIxOD6EKhsVg0Q6gjAEgiKBDJEbCUl4HANZLAFVExcLBwVhQ?=
- =?us-ascii?q?kMDKi8tI0sFLR2BIyEdFxYeWBsHBRIgKkJFIwMCQjQEIT84C0MFgV0CghFOI?=
- =?us-ascii?q?x8DOX+Bb4ElZ2YVMDWBAQERHwp7AwttPTcUGwMEOnsFjGkXD4I2CBUbgQkgA?=
- =?us-ascii?q?oEMZZQQgmxJr1kKhB2iEReEBI16hh2SUZkII6h0AgQCBAUCEAEBBoFoPIFZc?=
- =?us-ascii?q?BWDIlMZD44tFswmeT0CBwIHDgMLk2UBAQ?=
-IronPort-PHdr: A9a23:gcF3nxHPa31rFLDJqkez+51GfhMY04WdBeZdwpMjj7QLdbys4NG+e
- kfe/v5qylTOWNaT5/FFjr/Ourv7ESwb4JmHuWwfapEESRIfiMsXkgBhSM6IAEH2NrjrOgQxH
- d9JUxlu+HTTDA==
-IronPort-Data: A9a23:C4jOJa9U9hXTXbYRnjsYDrUD0X+TJUtcMsCJ2f8bNWPcYEJGY0x3y
- DccX2DXaK6KM2ajLY0iaIy+pkpQsZbTn9E3S1Rk/C9EQiMRo6IpJzg2wmQcns+2BpeeJK6yx
- 5xGMrEsFOhtEDmE4EzrauS9xZVF/fngbqLmD+LZMTxGSwZhSSMw4TpugOdRbrRA2bBVOCvT/
- 4muyyHjEAX9gWAsbDtKs/nrRC5H5ZwehhtJ5jTSWtgT1LPuvyF9JI4SI6i3M0z5TuF8dsamR
- /zOxa2O5WjQ+REgELuNyt4XpWVTH9Y+lSDX4pZnc/DKbipq/0Te4Y5nXBYoUnq7vh3S9zxHJ
- HqhgrTrIeshFvWkdO3wyHC0GQkmVUFN0OevzXRSLaV/wmWeG0YAzcmCA2kNA4E0x8cnIVgJ/
- MRAJmo9cBHahcKflefTpulE3qzPLeHiOIcZ/3UlxjbDALN+EdbIQr7B4plT2zJYasJmRKmFI
- ZFHL2MxKk2cPnWjOX9PYH46tOShnGX+dzRbgFmUvqEwpWPUyWSd1ZCyboGOKobaHpk9ckCwm
- lKYx2elMk8gBs2jlTqe01aG2d/IgnauMG4VPPjinhJwu3WIz3cTCR4REEG2v/i0lVWWX9NEN
- 1dS/isosLh0+EG1JuQRRDWxpHqC+xpZUN1KHqhiuEeGy7Hf5ECSAW1soiN9VeHKffQeHFQC/
- lSIhNjuQzdotdWopbi1r994cRva1fApEFI/
-IronPort-HdrOrdr: A9a23:SaS/5q+C/pdQwz1mgMhuk+HXdr1zdoMgy1knxilNoENuA6+lfp
- GV/MjziyWUtN9IYgBfpTnhAsW9qXO1z+8S3WBjB8bSYOCAghrmEGgC1/qv/9SOIVyFygcw79
- YFT0E6MqyOMbEYt7e13ODbKadc/DDvysnB7omurQYJcegpUdAd0+4TMHfjLqQCfng8OXNPLu
- vl2iMonUvGRV0nKu6AKj0uWe/Fq9fXlJTgTyInKnccgjWmvHeD0pK/NwKX8Cs/flp0rIsKwC
- zoggb57qKsv7WBzAPA12jc1pJSmNHw4NpODs6Bh6EuW3TRYwCTC7hJavmnhnQYseuv4FElnJ
- 3nuBE7Jfl+7HvXYyWcvQbt8xOI6kds11bSjXujxVfzq83wQzw3T+Bbg5hCTxff4008+Plhza
- Nw2X6DvZY/N2KDoM293amMa/hZrDvynZMQq59Us5WZa/pGVFZll/1awKqSKuZZIMu10vF9LA
- AkNrCt2B8fSyLoU5mehBgu/PWcGlIuAxyBXk8O/uaR0zRQgTRF6nFw/r1Eop/Fn6hNF6WtII
- //Q/lVvaALQckMYa1nAuAdBcOxF2zWWBrJdHmfOFL9Ccg8SjnwQrPMkfwIDduRCdQ15Yp3nI
- 6EXEJTtGY0dU6rAcqS3IdT+hSIRGmmRzzixsxX+pA849THNffWGDzGTEprn9qrov0ZDMGeU/
- GvOIhOC/umKWf1A45G0wD3RpEXI3gDV88evMo9Rju104j2A5yvsvaefOfYJbLrHzphUmTjAm
- EbVDy2P8lE5lDDYA6PvPEQYQKbRqXSx+MFLEGBxZlg9GEkDPw4jjQo
-X-Talos-CUID: =?us-ascii?q?9a23=3A4VEE/WpMc77FnyHK+w2klJ/mUfsbflHg7SfwGgi?=
- =?us-ascii?q?xMT5nEo2LSAaS2Ioxxg=3D=3D?=
-X-Talos-MUID: 9a23:LBjq9gu8cLAVkEyjnM2nuAE8DMQ00/qUOlExzZUdmu2uahx3JGLI
-X-IronPort-Anti-Spam-Filtered: true
-Received: from alln-l-core-08.cisco.com ([173.36.16.145])
-  by alln-iport-4.cisco.com with ESMTP/TLS/TLS_AES_256_GCM_SHA384; 16 Jun 2026 19:21:08 +0000
-Received: from alln-opgw-4.cisco.com (alln-opgw-4.cisco.com [173.37.147.252])
-	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
-	 key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
-	(No client certificate requested)
-	by alln-l-core-08.cisco.com (Postfix) with ESMTPS id 7ECCB18000443
-	for <sashiko-reviews@lists.linux.dev>; Tue, 16 Jun 2026 19:21:08 +0000 (GMT)
-X-CSE-ConnectionGUID: jmu6Cs93QOas4YO2rSBb+w==
-X-CSE-MsgGUID: aBMFkDuVQASZIOf34rp87A==
-Authentication-Results: alln-opgw-4.cisco.com; dkim=pass (signature verified) header.i=@cisco.com
-X-IronPort-AV: E=Sophos;i="6.24,208,1774310400"; 
-   d="scan'208";a="78429142"
-Received: from mail-northcentralusazon11012028.outbound.protection.outlook.com (HELO CH5PR02CU005.outbound.protection.outlook.com) ([40.107.200.28])
-  by alln-opgw-4.cisco.com with ESMTP/TLS/TLS_AES_256_GCM_SHA384; 16 Jun 2026 19:21:08 +0000
-ARC-Seal: i=1; a=rsa-sha256; s=arcselector10001; d=microsoft.com; cv=none;
- b=NtEFbsFrbFAlruYKhboiJglVrzp/ITD/RoDwdFRRCESAtUARoH/L44rswzIH/VH2192nYlkd8aLnqWRBWhMJurxl6wwC4dWtnbwCdSXYdolTnnpRLYJsfMTw9cbUrXPHe7lQZmk0RLD8i+g9VJBZ3LrkJFIchHdVNPkFIZIj1k/LRapL1Bg0jBPwQxB4G/ppNw5Vpjbs4eUI/gxMMtfmr9fwPZAqnetjvHY2XumIS60XxnIpH4r1Tvf1p5v/y22/Cl7OJDPXxJVeQvEbiwqvwnffvRcc+A4BxjTEdbKyLPEfLL19AxV4I1Jf37orSr3HVYYWB2SRA4VofdXTq4BiNQ==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com;
- s=arcselector10001;
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
- bh=5BUmB5dBruhViEywXYzDV14MsL5XtX1o0IRwExZ+rXE=;
- b=HEmBqj/4OALxFu4sWC94IGOX8JSLQy+2u75ObgWvp2m8pytA641SnV5AOuCPyNGX+LrHosNpUxehYD4JUIF73OpufT4Iy9CjQpS9/lKCz/Tl5yCwI8/FmlguijFb0b0GvyPC7QTDF3pdazPX7Kj/NgY0rDID+wUDZrfFXvgu1UxhTR7GcD4N7ZDIx645PWPrcuyhuHCJqH58Lzdnm6f4vLPfd5FlrAm2qMZBVMMfVTNuppzI/Sf690jr1fLoUIYxf2IuHfJhLIrh61pUn756Vfh/ATrQqMMn3Mq6nt2YjicvG7qxXqZlhkGdULbtktELw6Vof7a/LtmqAP6mQ554Mg==
-ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
- smtp.mailfrom=cisco.com; dmarc=pass action=none header.from=cisco.com;
- dkim=pass header.d=cisco.com; arc=none
-Received: from SJ0PR11MB5896.namprd11.prod.outlook.com (2603:10b6:a03:42c::19)
- by SJ0PR11MB5939.namprd11.prod.outlook.com (2603:10b6:a03:42e::21) with
- Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.21.113.18; Tue, 16 Jun
- 2026 19:21:04 +0000
-Received: from SJ0PR11MB5896.namprd11.prod.outlook.com
- ([fe80::41fa:d12d:31c1:d5db]) by SJ0PR11MB5896.namprd11.prod.outlook.com
- ([fe80::41fa:d12d:31c1:d5db%3]) with mapi id 15.21.0113.015; Tue, 16 Jun 2026
- 19:21:04 +0000
-From: "Karan Tilak Kumar (kartilak)" <kartilak@cisco.com>
-To: "sashiko-reviews@lists.linux.dev" <sashiko-reviews@lists.linux.dev>
-CC: "linux-scsi@vger.kernel.org" <linux-scsi@vger.kernel.org>, "Sesidhar
- Baddela (sebaddel)" <sebaddel@cisco.com>, "Arulprabhu Ponnusamy (arulponn)"
-	<arulponn@cisco.com>, "Gian Carlo Boffa (gcboffa)" <gcboffa@cisco.com>, "Arun
- Easi (aeasi)" <aeasi@cisco.com>
-Subject: RE: [PATCH v4 07/13] scsi: fnic: Route completions and resets by
- initiator role
-Thread-Topic: [PATCH v4 07/13] scsi: fnic: Route completions and resets by
- initiator role
-Thread-Index: AQHc+pc1OOOOpraNmUGMsw+MlokPILY7fN4AgAYXIzA=
-Date: Tue, 16 Jun 2026 19:21:04 +0000
-Message-ID:
- <SJ0PR11MB5896BC592264395BAF588612C3E52@SJ0PR11MB5896.namprd11.prod.outlook.com>
-References: <20260612180918.8554-8-kartilak@cisco.com>
- <20260612221550.B8A961F000E9@smtp.kernel.org>
-In-Reply-To: <20260612221550.B8A961F000E9@smtp.kernel.org>
-Accept-Language: en-US
-Content-Language: en-US
-X-MS-Has-Attach:
-X-MS-TNEF-Correlator:
-x-ms-publictraffictype: Email
-x-ms-traffictypediagnostic: SJ0PR11MB5896:EE_|SJ0PR11MB5939:EE_
-x-ms-office365-filtering-correlation-id: 517f0497-be88-48ca-c22c-08decbdc68cd
-x-ms-exchange-senderadcheck: 1
-x-ms-exchange-antispam-relay: 0
-x-microsoft-antispam:
- BCL:0;ARA:13230040|366016|376014|23010399003|1800799024|56012099006|4143699003|5023799004|11063799006|22082099003|18002099003|6133799003|38070700021;
-x-microsoft-antispam-message-info:
- 83hpsnmxeA4NPZJOGbFCL/LSzdHW1teDtr3g2MrpAmeKr0ABAc+59eJzFLTektAk6JojhOTl1PK9Ji4g7E4YotKDkRugTVub+v/pIL6B37aL5W0MvgYMoBi9E4X3kB0/x5YCfG4FHUxEkwIog+o3e6kFDxF1ldmOzDYaqsiFCun3avAsmP0Iul6WYL9QjBa47+RpN7c/8gkf+ZnzWc5pwidFB7pfIbRhoPKDZ7INIyQ+bunF7Fdgl08jzYC5iGnNc3PM95/GNDF+aS503zn4HPVyN/0FkbpmWHlaFRH0eXNtcSMPPUTTLgwkmilYlPdKpT3N1IxWoCpRx8hUuLPpSPLxjL0bqlzhzG9qekmrv0sx651rf6ef6hciElJ6sM2bh1IbXqglDkvrWrgtCzisJSlRxZgk4RQ6dvVT5D2IFbgA4YXPfVQS14zm7OARk4P9Je0+A9qL4lt5NdPkWZdltP30LQ3dQLuC3tfr667ne9zZCc2U8PjXnjG2JUnAyAl8lhOjnmMNj8uHk5VpkKb2/tFaTJiYbHWLuTOQItWGSUlEjLbKFKETajX8sT3SI7cLRVnN5u3nw56COlpAeSbVXRWUVScQHF3jDIRNI/HzJifFM7XjeJNMhXp+lGGoW94RrIc39ZsJZZwFELqG6MdNBhi5yVb5lwnOSlxVURw93P0BEk8n2kO6bxVAAt9MBgfsEuYR93w7ywF03rKSAXCEFA==
-x-forefront-antispam-report:
- CIP:255.255.255.255;CTRY:;LANG:en;SCL:1;SRV:;IPV:NLI;SFV:NSPM;H:SJ0PR11MB5896.namprd11.prod.outlook.com;PTR:;CAT:NONE;SFS:(13230040)(366016)(376014)(23010399003)(1800799024)(56012099006)(4143699003)(5023799004)(11063799006)(22082099003)(18002099003)(6133799003)(38070700021);DIR:OUT;SFP:1101;
-x-ms-exchange-antispam-messagedata-chunkcount: 1
-x-ms-exchange-antispam-messagedata-0:
- =?utf-8?B?eHQ4T1d6RVhnbWd6NGJUVk8rMURpdlZ3ZkRWL2FzUUlTdjYrTHJhZzZFTmVr?=
- =?utf-8?B?UXZlRHpYMktFVjVXRm0yMk5yOHREODV2bTAxWEYwV0ErZEUrUE94OU9Mc0hM?=
- =?utf-8?B?WDlBaUYzZlU0TWMyWmRncmdvNW1vSyswTkJNaTlIU2xOdk9TanRWTk1Pb1Jj?=
- =?utf-8?B?Q1JiNllOMTNZRDZaZVM3eFN5SGF3QmJITHF0dlpSSGNhb3NDNkQxb0xFV0pY?=
- =?utf-8?B?aFI4cXlHNTZocStwK051K0VCZU1kS0s3Z1FrSjhQSDdxMkVFY2xIOHhUZ2V3?=
- =?utf-8?B?OGx0S1dyY213SEgwWDVUVEVkaFVFLytJK000T0hIT0F4VUZ0emJVM21QZHJz?=
- =?utf-8?B?ZWw4dHIxYndFZGlDSXQyWXBOL2pHSTkyZTdtZTR2OGpEUVg5cHVlK01ZdmY1?=
- =?utf-8?B?NDRJVnRwVWd4OWZxQzBxY05TNVdPWVJHT1ZYM2F3bUl2bEpLQktwK2oyZzBI?=
- =?utf-8?B?TXlVS1MyUWI4dlhnSE5wU0ZsY3dMZXJhZThBRlJaT2EyL25BS0R2NWhhdU9a?=
- =?utf-8?B?bFUrQ0gzdE9OaU80ZXZjWSsrTFJxSHNva3FHSlN2MzNpc2NOaWVyYy81MVhm?=
- =?utf-8?B?VE1TMzNFZ3o4TmlnRzZySndGbXk1Tjc0Z0g4cEpvNVdSTmx4SGd2RHNOcDhw?=
- =?utf-8?B?SmxoTmlNb3M2SC9RM2JGdGwxbnF2bG01Z0JONFB4ei9zMWxRS2txaVFwWEdu?=
- =?utf-8?B?REFMT1JCY2FwaTY5UGVSSkhhelRQbUMzR1k4T0szRkdSMVMwVXVJcTNVNFI5?=
- =?utf-8?B?UkNJSVBLVmNGV1NueU4xSjJMdTcvemk0OFJpTFJDUTJZZEppKzE0UmMrVGsy?=
- =?utf-8?B?emtXREVDRDgraE5tcG1sVmcydGdlY1crbzRlenBuYkp2NWVhUGlqNzg3TVNT?=
- =?utf-8?B?RnpIa0J2QnJoR1ZVeHdRVnRHYnpCbXZ1VkZENjE5eVRuMkNpRUlKVXN4S2tU?=
- =?utf-8?B?ZjJvME55dVpOS0xqQmFhRStyQVpRSnE2bjlqYlNvV3FrQlJqdUI0Vml0TXR4?=
- =?utf-8?B?NE9NNnI3VUU1eXk2cmgrNGpic2s4Y1ZmeTgrWFN0T1RLSUUyR3MyU2ZoZUI2?=
- =?utf-8?B?ZS9FWkc5bWpJc1RYeDN3MlEyMVFUNEdyZy9lTXRqMGFoamRTc2xRVWNUTHVo?=
- =?utf-8?B?MTZJM3hDWUd6akV3NVp2Q1JuMFExdlY0QTRIYzFkV1FkcTMrZW1Cb1hJdDZE?=
- =?utf-8?B?MkNpblIzTk4rQlBiQVV3QThseVJ1bWFRZUZOS0xIUXllN044RU5SWi95YXdR?=
- =?utf-8?B?NjAwb2tBR1I1bUhJSzBPVTQzZkltdWtDd1BvTUQ3dG83RERGQTNWWXlxQ0JL?=
- =?utf-8?B?KzV6dXVTYm9ZSjh0UWNURElvSUtzNXhITStTdVJEbnk1RjFJWldZUGovcmgx?=
- =?utf-8?B?cGhYNGh3N1J5RlNNb0dkQ0pidEpKWHRPN0d6dFV3alY0cVQ1b3NoZDNvKzJi?=
- =?utf-8?B?QVUvVmd5NWo2SUx1N00yUS84VkJ3ZDF2dXlRR3dSRmNIVG9XSkdpdWQyTW85?=
- =?utf-8?B?eDJkRm96am5EUnRWdVNsU2h6anQwekxDbDk3SmJidkZLb0JqaWZ4TTd6Rk5u?=
- =?utf-8?B?a08rL3FVQk03Wi9mRmV3VkRNd2paTnMvVWNjdXdDL0EvT0c5aU5KZ0lralpt?=
- =?utf-8?B?LzI0eDQwenIrSTB6b0djRUloenlocSszVXVoOFgySzdxQU9TR2wzVWJ5Um9p?=
- =?utf-8?B?alR4bXpBdUpEdVByN0wvM2c1aldtYll4VEZ3UkJKTDR1aUNtNDd0YkV1K0lj?=
- =?utf-8?B?RlFPVHBUNlZLQ3pyaGxsNW5pd1VEc01RWGUyNlZlajMzNmFWVmdQQkExNzFq?=
- =?utf-8?B?bjkxbDREbWUvRmJSUVRrMzFqL3diUHhVSG5BemtzU0dpYms5dmZWclBMN1pG?=
- =?utf-8?B?OCtMcUgyNCt2MkJ0YThzRHhnYmRUNURhaDlINkJkYUxQb2NZM0lGNEZhZ2NG?=
- =?utf-8?B?VlIwaTBTbzFSUjVidzNxZEpVcnNiMmwveUI4MDFLUUZkNnVXZURpOG9pa1dt?=
- =?utf-8?B?dGVtM2tqU2svWStvYUxWR1lXYkZoejlFb01jckpPYUZPSEVvc2c4OERZWXBu?=
- =?utf-8?B?bU55U2IvWUV1VVI4ODFDS3pYSFdyc3E3cDBIZXcxclU5RGJIOUlOZnJzME1H?=
- =?utf-8?B?VUYzeDJYNy9IYjVFRHE3V0FaYi9oK1dZWlZQeG9HTlNvaU5iczdwOHE2a2tr?=
- =?utf-8?B?cTIzMitLVjBhV1dXYkpDZnpUV2UrQnJLK0Z6UnZDVTR3RGdpeHJvM24raVVK?=
- =?utf-8?B?bUxLcFQrOSs5ZmJkcUd3c25BUjhVUDM2MFFWOWNyUTlXMnoxVUFPN0RHRDJC?=
- =?utf-8?Q?GD/+d+elHAQH0+1rjx?=
-Content-Type: text/plain; charset="utf-8"
-Content-Transfer-Encoding: base64
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 23E9932C302;
+	Tue, 16 Jun 2026 19:27:47 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=185.176.79.56
+ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
+	t=1781638071; cv=none; b=hZvEegkzMWr/7WQRd3+Jg+AVpIZKhq2YzoPTKxEijixYVpj/NighZ1cwdNRcz2Gz0E0zV6nVucVBoncPMWmF1CG6sCV9TYjH4zdVoB9xiulQfo5/Mjrkb0mVsRXOzqa9uTQsMyFqHxrn0YvjH92m3wV7naPQd/6/efdzZ7YnIfI=
+ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
+	s=arc-20240116; t=1781638071; c=relaxed/simple;
+	bh=HaN5x81W4hL11Cl5zzBn+hU2pb8iUZvJxCIMAEA0/eA=;
+	h=Message-ID:Date:MIME-Version:Subject:To:CC:References:From:
+	 In-Reply-To:Content-Type; b=h7gqmdH9m9axOz95KswpzGUeGN+spsch2usQ9wMPwSoHVzOjZk+dJ7c1yz9qY8BYua8UQFa9CzIfuPjhJEGhHRZRY7IFNS6TTZ06uCY/s8drbbOQZpFG2cOln8N9hKeZ1yALbs6j6uuIagCjPS+7HSbPIHZRnYDCRmh32AR2+x0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=huawei-partners.com; spf=pass smtp.mailfrom=huawei-partners.com; arc=none smtp.client-ip=185.176.79.56
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=huawei-partners.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=huawei-partners.com
+Received: from mail.maildlp.com (unknown [172.18.224.150])
+	by frasgout.his.huawei.com (SkyGuard) with ESMTPS id 4gfxnz3HrrzJ46DY;
+	Wed, 17 Jun 2026 03:27:19 +0800 (CST)
+Received: from mscpeml500003.china.huawei.com (unknown [7.188.49.51])
+	by mail.maildlp.com (Postfix) with ESMTPS id 44F9840572;
+	Wed, 17 Jun 2026 03:27:43 +0800 (CST)
+Received: from [10.123.123.154] (10.123.123.154) by
+ mscpeml500003.china.huawei.com (7.188.49.51) with Microsoft SMTP Server
+ (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
+ 15.2.1544.11; Tue, 16 Jun 2026 22:27:42 +0300
+Message-ID: <308b6783-a1cc-4f57-94d2-7421fd4362e9@huawei-partners.com>
+Date: Tue, 16 Jun 2026 22:27:41 +0300
 Precedence: bulk
 X-Mailing-List: sashiko-reviews@lists.linux.dev
 List-Id: <sashiko-reviews.lists.linux.dev>
 List-Subscribe: <mailto:sashiko-reviews+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:sashiko-reviews+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-X-Exchange-RoutingPolicyChecked:
-	dAZVlWtxPvQelFGXA1RVdBs0lDBtA7CZDCiTCOqOR+f6TWsGsZquLsk9P7IZ4IMFf6UZScUc0PoWMgQdwN1W+A6VLm433eajsz9RsB0pYOEw9zWOpWxLcjZtQHR0a39aWBgD6TeEpQE/M5gMD05EteApaY2mTucxdJBdoBiulTmmSBSE/OD1ugL5HYLlaXvYT6zWTWIWMNhP9BYzmVpxE0hkYaQNk6ZiLL0CjNhqzN6Xw8p2xD+WnQCYCVoAjEjk/PxoC+wsiKTPnNoSb5MxKsB0zmvqP0mGHNUURuNUayCfgGGEoG06dBEc5idQbRU2CS9ETHBeNUJnmiijm4qMAQ==
-X-OriginatorOrg: cisco.com
-X-MS-Exchange-CrossTenant-AuthAs: Internal
-X-MS-Exchange-CrossTenant-AuthSource: SJ0PR11MB5896.namprd11.prod.outlook.com
-X-MS-Exchange-CrossTenant-Network-Message-Id: 517f0497-be88-48ca-c22c-08decbdc68cd
-X-MS-Exchange-CrossTenant-originalarrivaltime: 16 Jun 2026 19:21:04.4303
- (UTC)
-X-MS-Exchange-CrossTenant-fromentityheader: Hosted
-X-MS-Exchange-CrossTenant-id: 5ae1af62-9505-4097-a69a-c1553ef7840e
-X-MS-Exchange-CrossTenant-mailboxtype: HOSTED
-X-MS-Exchange-CrossTenant-userprincipalname: VvyYLr0WXhXrwDNJmu7nSVdcqcZj9U1AUfhOWNvdsWnHVdW6CkbhmZZ4tcPWcWnf9cKSNfgjyHyZurSvbDUyWg==
-X-MS-Exchange-Transport-CrossTenantHeadersStamped: SJ0PR11MB5939
-X-Outbound-Client-TLS: ANONYMOUS;alln-opgw-4.cisco.com [173.37.147.252];TLSv1.3;TLS_AES_256_GCM_SHA384;256
-X-Outbound-SMTP-Client: 173.37.147.252, alln-opgw-4.cisco.com
-X-Outbound-Node: alln-l-core-08.cisco.com
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH v1 2/3] mm/damon: introduce DAMON_HUGEPAGE for hot region
+ hugepage collapsing
+To: <sashiko-reviews@lists.linux.dev>
+CC: <damon@lists.linux.dev>
+References: <20260616150316.580819-3-gutierrez.asier@huawei-partners.com>
+ <20260616152139.9648D1F000E9@smtp.kernel.org>
+Content-Language: en-US
+From: Gutierrez Asier <gutierrez.asier@huawei-partners.com>
+In-Reply-To: <20260616152139.9648D1F000E9@smtp.kernel.org>
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: 7bit
+X-ClientProxiedBy: mscpeml500003.china.huawei.com (7.188.49.51) To
+ mscpeml500003.china.huawei.com (7.188.49.51)
 
-T24gRnJpZGF5LCBKdW5lIDEyLCAyMDI2IDM6MTYgUE0sIHNhc2hpa28tYm90QGtlcm5lbC5vcmcg
-PHNhc2hpa28tYm90QGtlcm5lbC5vcmc+IHdyb3RlOg0KPg0KPiBUaGFuayB5b3UgZm9yIHlvdXIg
-Y29udHJpYnV0aW9uISBTYXNoaWtvIEFJIHJldmlldyBmb3VuZCAzIHBvdGVudGlhbCBpc3N1ZShz
-KSB0byBjb25zaWRlcjoNCj4NCj4gTmV3IGlzc3VlczoNCj4gLSBbSGlnaF0gU2tpcHBpbmcgV1Eg
-Y29weSBjbGVhbnVwIGZvciBpbml0aWF0b3Igcm9sZXMgY2F1c2VzIG1lbW9yeSBsZWFrcyBhbmQg
-bW9kdWxlIHVubG9hZCBoYW5ncyB3aGVuIHRoZSBmaXJtd2FyZSByZXNldCB0aW1lcyBvdXQgb3Ig
-ZmFpbHMuDQo+IC0gW0hpZ2hdIFVuY29uZGl0aW9uYWwgcHJvY2Vzc2luZyBvZiBgRkNQSU9fTlZN
-RV9FUlNQX0hXX0NNUExgIGNhdXNlcyBhIE5VTEwgcG9pbnRlciBkZXJlZmVyZW5jZSB3aGVuIHRo
-ZSBkcml2ZXIgaXMgY29uZmlndXJlZCBhcyBhbiBGQyBpbml0aWF0b3IuDQo+DQo+IFByZS1leGlz
-dGluZyBpc3N1ZXM6DQo+IC0gW0hpZ2hdIENhbGxpbmcgYHNjaGVkdWxlX3RpbWVvdXQoKWAgaW5z
-aWRlIGEgaGFyZCBJUlEgaGFuZGxlciBjYXVzZXMgYSAnQlVHOiBzY2hlZHVsaW5nIHdoaWxlIGF0
-b21pYycga2VybmVsIHBhbmljLg0KPiAtLQ0KPg0KPiBjb21taXQgMjNjN2NmNWEyOTllOTgzNWEz
-MmExNDYwMjUzN2Y1NzkxYzk0YjE0Yg0KPiBBdXRob3I6IEthcmFuIFRpbGFrIEt1bWFyIDxrYXJ0
-aWxha0BjaXNjby5jb20+DQo+DQo+IHNjc2k6IGZuaWM6IFJvdXRlIGNvbXBsZXRpb25zIGFuZCBy
-ZXNldHMgYnkgaW5pdGlhdG9yIHJvbGUNCj4NCj4gRGlzcGF0Y2ggRkNQSU8gY29tbWFuZCwgcmVz
-cG9uc2UsIGFuZCBJVE1GIGNvbXBsZXRpb25zIHRvIHRoZSBGQ1Agb3IgTlZNZQ0KPiBoYW5kbGVy
-cyBiYXNlZCBvbiB0aGUgY29uZmlndXJlZCByb2xlLiBSZWFkIHRoZSBOVk1lIHF1ZXVlLWRlcHRo
-IGFuZCB0aW1lb3V0DQo+IHJldHJ5IGZpZWxkcyBmcm9tIGZpcm13YXJlIGNvbmZpZywgY2xlYW4g
-dXAgTlZNZSBJL08gb24gZmlybXdhcmUgcmVzZXQsIGFuZA0KPiBza2lwIFNDU0ktb25seSBjbGVh
-bnVwIGZvciBpbml0aWF0b3Igcm9sZXMgdGhhdCBhbHJlYWR5IHJlc2V0IGZpcm13YXJlLW93bmVk
-DQo+IHJlcXVlc3RzLg0KPg0KPiA+IGRpZmYgLS1naXQgYS9kcml2ZXJzL3Njc2kvZm5pYy9mbmlj
-X3Njc2kuYyBiL2RyaXZlcnMvc2NzaS9mbmljL2ZuaWNfc2NzaS5jDQo+ID4gaW5kZXggMDRhYjM4
-NDAzM2IxOS4uNWFkNGJiNzE0NDI4MyAxMDA2NDQNCj4gPiAtLS0gYS9kcml2ZXJzL3Njc2kvZm5p
-Yy9mbmljX3Njc2kuYw0KPiA+ICsrKyBiL2RyaXZlcnMvc2NzaS9mbmljL2ZuaWNfc2NzaS5jDQo+
-ID4gQEAgLTczNCw2ICs3MzUsOCBAQCBzdGF0aWMgaW50IGZuaWNfZmNwaW9fZndfcmVzZXRfY21w
-bF9oYW5kbGVyKHN0cnVjdCBmbmljICpmbmljLA0KPiA+ICAgICAvKiBDbGVhbiB1cCBhbGwgb3V0
-c3RhbmRpbmcgaW8gcmVxdWVzdHMgKi8NCj4gPiAgICAgaWYgKElTX0ZOSUNfRkNQX0lOSVRJQVRP
-UihmbmljKSkNCj4gPiAgICAgICAgICAgICBmbmljX2NsZWFudXBfaW8oZm5pYywgU0NTSV9OT19U
-QUcpOw0KPiA+ICsgICBlbHNlIGlmIChJU19GTklDX05WTUVfSU5JVElBVE9SKGZuaWMpKQ0KPiA+
-ICsgICAgICAgICAgIG52Zm5pY19jbGVhbnVwX2FsbF9udm1lX2lvcyhmbmljKTsNCj4NCj4gW1Nl
-dmVyaXR5OiBIaWdoXQ0KPiBUaGlzIGlzIGEgcHJlLWV4aXN0aW5nIGlzc3VlLCBidXQgZG9lcyBj
-YWxsaW5nIGZuaWNfY2xlYW51cF9pbygpIGhlcmUgY2F1c2UgYQ0KPiAnQlVHOiBzY2hlZHVsaW5n
-IHdoaWxlIGF0b21pYycga2VybmVsIHBhbmljPw0KPg0KPiBUaGUgY29tcGxldGlvbiBoYW5kbGVy
-IGlzIGNhbGxlZCBpbiBhbiBhdG9taWMgY29udGV4dDoNCj4gZm5pY19pc3JfbXNpeF93cV9jb3B5
-KCkgLT4gdm5pY19jcV9jb3B5X3NlcnZpY2UoKSAtPg0KPiBmbmljX2ZjcGlvX2NtcGxfaGFuZGxl
-cigpIC0+IGZuaWNfZmNwaW9fZndfcmVzZXRfY21wbF9oYW5kbGVyKCkgLT4NCj4gZm5pY19jbGVh
-bnVwX2lvKCkNCj4NCj4gSW5zaWRlIGZuaWNfY2xlYW51cF9pbygpLCB0aGUgdGhyZWFkIHlpZWxk
-czoNCj4NCj4gZHJpdmVycy9zY3NpL2ZuaWMvZm5pY19zY3NpLmM6Zm5pY19jbGVhbnVwX2lvKCkg
-ew0KPiAgICAgLi4uDQo+ICAgICAgIHdoaWxlICgoaW9fY291bnQgPSBmbmljX2NvdW50X2FsbF9p
-b3JlcXMoZm5pYykpKSB7DQo+ICAgICAgICAgICAgICAgRk5JQ19TQ1NJX0RCRyhLRVJOX0RFQlVH
-LCBmbmljLCAuLi4pOw0KPg0KPiAgICAgICAgICAgICAgIHNjaGVkdWxlX3RpbWVvdXQobXNlY3Nf
-dG9famlmZmllcygxMDApKTsNCj4gICAgICAgfQ0KPiAgICAgLi4uDQo+IH0NCj4NCj4gWyAuLi4g
-XQ0KDQpUaGFua3MgZm9yIHRoZSByZXZpZXcuDQpUaGlzIGlzIGEgcHJlLWV4aXN0aW5nIGlzc3Vl
-IGFuZCBpcyBvdXRzaWRlIHRoZSBzY29wZSBvZiB0aGlzIHBhdGNoIHNlcmllcy4NCkl0IHdpbGwg
-bmVlZCB0byBiZSBhZGRyZXNzZWQgaW4gYSBzZXBhcmF0ZSBkZWRpY2F0ZWQgcGF0Y2ggc2VyaWVz
-Lg0KDQo+ID4gQEAgLTE0NTcsMTEgKzE0NjAsMjEgQEAgc3RhdGljIGludCBmbmljX2ZjcGlvX2Nt
-cGxfaGFuZGxlcihzdHJ1Y3Qgdm5pY19kZXYgKnZkZXYsDQo+ID4gICAgICAgICAgICAgYnJlYWs7
-DQo+ID4NCj4gPiAgICAgY2FzZSBGQ1BJT19JQ01ORF9DTVBMOiAvKiBmdyBjb21wbGV0ZWQgYSBj
-b21tYW5kICovDQo+ID4gLSAgICAgICAgICAgZm5pY19mY3Bpb19pY21uZF9jbXBsX2hhbmRsZXIo
-Zm5pYywgY3FfaW5kZXgsIGRlc2MpOw0KPiA+ICsgICAgICAgICAgIGlmIChJU19GTklDX0ZDUF9J
-TklUSUFUT1IoZm5pYykpDQo+ID4gKyAgICAgICAgICAgICAgICAgICBmbmljX2ZjcGlvX2ljbW5k
-X2NtcGxfaGFuZGxlcihmbmljLCBjcV9pbmRleCwgZGVzYyk7DQo+ID4gKyAgICAgICAgICAgZWxz
-ZSBpZiAoSVNfRk5JQ19OVk1FX0lOSVRJQVRPUihmbmljKSkNCj4gPiArICAgICAgICAgICAgICAg
-ICAgIG52Zm5pY19mY3Bpb19udm1lX2Zhc3RfY21wbF9oYW5kbGVyKGZuaWMsIGRlc2MpOw0KPiA+
-ICsgICAgICAgICAgIGJyZWFrOw0KPiA+ICsNCj4gPiArICAgY2FzZSBGQ1BJT19OVk1FX0VSU1Bf
-SFdfQ01QTDogLyogZncgY29tcGxldGVkIE5WTWUgRVJTUCAqLw0KPiA+ICsgICAgICAgICAgIG52
-Zm5pY19mY3Bpb19lcnNwX2NtcGxfaGFuZGxlcihmbmljLCBkZXNjLCAxKTsNCj4gPiAgICAgICAg
-ICAgICBicmVhazsNCj4NCj4gW1NldmVyaXR5OiBIaWdoXQ0KPiBEb2VzIHVuY29uZGl0aW9uYWwg
-cHJvY2Vzc2luZyBvZiBGQ1BJT19OVk1FX0VSU1BfSFdfQ01QTCBjYXVzZSBhIE5VTEwgcG9pbnRl
-cg0KPiBkZXJlZmVyZW5jZSB3aGVuIHRoZSBkcml2ZXIgaXMgY29uZmlndXJlZCBhcyBhbiBGQyBp
-bml0aWF0b3I/DQo+DQo+IFVubGlrZSB0aGUgRkNQSU9fSUNNTkRfQ01QTCBhbmQgRkNQSU9fSVRN
-Rl9DTVBMIGNhc2VzIHdoaWNoIGNoZWNrIHRoZQ0KPiBpbml0aWF0b3Igcm9sZSwgbnZmbmljX2Zj
-cGlvX2Vyc3BfY21wbF9oYW5kbGVyKCkgaXMgY2FsbGVkIHVuY29uZGl0aW9uYWxseS4NCj4NCj4g
-VGhpcyBmdW5jdGlvbiByZWxpZXMgb24gbnZmbmljX2ZpbmRfaW9fcmVxX2J5X3RhZygpLCB3aGlj
-aCB0ZXN0cyBhIGJpdCBpbiB0aGUNCj4gbnZmbmljX3RhZ19tYXAgYml0bWFwOg0KPg0KPiBkcml2
-ZXJzL3Njc2kvZm5pYy9mbmljX252bWUuYzpudmZuaWNfZmluZF9pb19yZXFfYnlfdGFnKCkgew0K
-PiAgICAgaWYgKHRhZyA9PSBGTklDX05WTUVfTk9fRlJFRV9UQUcgfHwNCj4gICAgICAgICAhc2Jp
-dG1hcF90ZXN0X2JpdCgmZm5pYy0+bnZmbmljX3RhZ19tYXAsIHRhZykpDQo+ICAgICAgICAgcmV0
-dXJuIE5VTEw7DQo+IH0NCj4NCj4gSG93ZXZlciwgZm5pYy0+bnZmbmljX3RhZ19tYXAgaXMgaW5p
-dGlhbGl6ZWQgZXhjbHVzaXZlbHkgaW4NCj4gZm5pY19udm1lX2Rydl9pbml0KCksIHdoaWNoIGlz
-IG9ubHkgZXhlY3V0ZWQgaWYgdGhlIGRyaXZlciByb2xlIGlzDQo+IEZOSUNfUk9MRV9OVk1FX0lO
-SVRJQVRPUi4gSWYgZmlybXdhcmUgc2VuZHMgdGhpcyBldmVudCB0byBhIGhvc3Qgb3BlcmF0aW5n
-IGFzDQo+IGFuIEZDIGluaXRpYXRvciwgc2JpdG1hcF90ZXN0X2JpdCgpIHdpbGwgZGVyZWZlcmVu
-Y2UgdGhlIHVuaW5pdGlhbGl6ZWQgc2JpdG1hcA0KPiBzdHJ1Y3QuDQo+DQo+IFsgLi4uIF0NCg0K
-VGhhbmtzIGZvciB0aGUgcmV2aWV3Lg0KVGhlIHRlYW0gd2lsbCByZXZpZXcgdGhpcyBmZWVkYmFj
-ayBhbmQgZGV0ZXJtaW5lIHRoZSBuZWNlc3NhcnkgY2hhbmdlcyBpbiB0aGUgbmV4dCByZXZpc2lv
-biBvZiB0aGUgcGF0Y2ggc2VyaWVzLg0KDQo+ID4gQEAgLTE2NTAsNiArMTY2MywxNSBAQCB2b2lk
-IGZuaWNfd3FfY29weV9jbGVhbnVwX2hhbmRsZXIoc3RydWN0IHZuaWNfd3FfY29weSAqd3EsDQo+
-ID4gICAgIHVuc2lnbmVkIGxvbmcgc3RhcnRfdGltZSA9IDA7DQo+ID4gICAgIHVpbnQxNl90IGh3
-cTsNCj4gPg0KPiA+ICsgICAvKg0KPiA+ICsgICAgKiBDbGVhbiB1cCBhbGwgb3V0c3RhbmRpbmcg
-aW8gcmVxdWVzdHMuIEZvciBGQyBpbml0aWF0b3Igb3IgTlZNRQ0KPiA+ICsgICAgKiBpbml0aWF0
-b3Igd2UgaXNzdWUgZmlybXdhcmUgcmVzZXQgYmVmb3JlIHRoaXMgYW5kIGFsbCBJL09zIGFyZQ0K
-PiA+ICsgICAgKiBhbHJlYWR5IGZyZWVkDQo+ID4gKyAgICAqLw0KPiA+ICsgICBpZiAoSVNfRk5J
-Q19GQ1BfSU5JVElBVE9SKGZuaWMpIHx8DQo+ID4gKyAgICAgICBJU19GTklDX05WTUVfSU5JVElB
-VE9SKGZuaWMpKQ0KPiA+ICsgICAgICAgICAgIHJldHVybjsNCj4gPiArDQo+DQo+IFtTZXZlcml0
-eTogSGlnaF0NCj4gRG9lcyB0aGlzIGVhcmx5IHJldHVybiBjYXVzZSBtZW1vcnkgbGVha3MgYW5k
-IG1vZHVsZSB1bmxvYWQgaGFuZ3MgaWYgdGhlDQo+IGZpcm13YXJlIHJlc2V0IHRpbWVzIG91dCBv
-ciBmYWlscz8NCj4NCj4gSWYgZm5pY19mY3Bpb19yZXNldCgpIHRpbWVzIG91dCB3aGlsZSB3YWl0
-aW5nIGZvciBjb21wbGV0aW9uLCB0aGUNCj4gZm5pY19mY3Bpb19md19yZXNldF9jbXBsX2hhbmRs
-ZXIoKSBpcyBuZXZlciBpbnZva2VkLCBhbmQgdGhlIElPIGNsZWFudXANCj4gZnVuY3Rpb25zIGFy
-ZSBza2lwcGVkLg0KPg0KPiBCZWNhdXNlIGZuaWNfd3FfY29weV9jbGVhbnVwX2hhbmRsZXIoKSBu
-b3cgdW5jb25kaXRpb25hbGx5IHJldHVybnMgZWFybHkNCj4gaW5zdGVhZCBvZiBhY3RpbmcgYXMg
-YSBmYWxsYmFjayB0byBjb21wbGV0ZSBwZW5kaW5nIGRlc2NyaXB0b3JzIHdpdGgNCj4gRElEX05P
-X0NPTk5FQ1QsIGl0IHNlZW1zIGFsbCBvdXRzdGFuZGluZyBJT3Mgd291bGQgYmUgbGVha2VkLiBU
-aGVpcg0KPiBjb21wbGV0aW9uIGNhbGxiYWNrcyBhcmUgbmV2ZXIgdHJpZ2dlcmVkLCB3aGljaCBw
-ZXJtYW5lbnRseSBibG9ja3MNCj4gc2NzaV9yZW1vdmVfaG9zdCgpIGR1cmluZyB0ZWFyZG93bi4N
-Cj4NCg0KVGhhbmtzIGZvciB0aGUgcmV2aWV3Lg0KVGhlIHRlYW0gd2lsbCByZXZpZXcgdGhpcyBm
-ZWVkYmFjayBhbmQgZGV0ZXJtaW5lIHRoZSBuZWNlc3NhcnkgY2hhbmdlcyBpbiB0aGUgbmV4dCBy
-ZXZpc2lvbiBvZiB0aGUgcGF0Y2ggc2VyaWVzLg0KDQo+IC0tDQo+IFNhc2hpa28gQUkgcmV2aWV3
-IMK3IGh0dHBzOi8vc2FzaGlrby5kZXYvIy9wYXRjaHNldC8yMDI2MDYxMjE4MDkxOC44NTU0LTEt
-a2FydGlsYWtAY2lzY28uY29tP3BhcnQ9Nw0KPg0KDQpSZWdhcmRzLA0KS2FyYW4NCg==
+
+
+On 6/16/2026 6:21 PM, sashiko-bot@kernel.org wrote:
+> Thank you for your contribution! Sashiko AI review found 3 potential issue(s) to consider:
+> - [Medium] The `DAMOS_QUOTA_USER_INPUT` goal tuner feedback mechanism is statically stuck because `current_value` is never dynamically updated.
+> - [Medium] The scheme applies the DAMOS_COLLAPSE action to all regions including completely cold ones, contradicting the patch description.
+> - [Low] The module cannot be compiled due to a naming mismatch between the Kconfig symbol and the Makefile variable.
+> --
+> 
+> commit 7e15caa860a55beb8439fc6bb5f299c5c42fb138
+> Author: Asier Gutierrez <gutierrez.asier@huawei-partners.com>
+> 
+> mm/damon: introduce DAMON_HUGEPAGE for hot region hugepage collapsing
+> 
+> This patch introduces a new DAMON module (SAMPLE_DAMON_HPAGE)
+> which collapses hot regions into huge pages. The module monitors
+> a specific task using DAMON-based sampling and applies collapsing
+> based on memory usage.
+> 
+>> diff --git a/samples/damon/Makefile b/samples/damon/Makefile
+>> index 72f68cbf422aa..a348dc74ddcb1 100644
+>> --- a/samples/damon/Makefile
+>> +++ b/samples/damon/Makefile
+>> @@ -3,3 +3,4 @@
+>>  obj-$(CONFIG_SAMPLE_DAMON_WSSE) += wsse.o
+>>  obj-$(CONFIG_SAMPLE_DAMON_PRCL) += prcl.o
+>>  obj-$(CONFIG_SAMPLE_DAMON_MTIER) += mtier.o
+>> +obj-$(CONFIG_SAMPLE_DAMON_HUGEPAGE) += hpage.o
+> 
+> [Severity: Low]
+> Does this prevent the module from building? 
+> 
+> The Kconfig file defines the configuration option as SAMPLE_DAMON_HPAGE, 
+> but the Makefile evaluates CONFIG_SAMPLE_DAMON_HUGEPAGE. This mismatch 
+> means the build system might silently skip compiling hpage.o.
+Yes, my bad when moving around code from different branches. Will
+be fixed in v2.
+>> diff --git a/samples/damon/hpage.c b/samples/damon/hpage.c
+>> new file mode 100644
+>> index 0000000000000..ebbe5e1be1a1d
+>> --- /dev/null
+>> +++ b/samples/damon/hpage.c
+> 
+> [ ... ]
+> 
+>> +	scheme = damon_new_scheme(&(struct damos_access_pattern) {
+>> +				.min_sz_region = HPAGE_PMD_SIZE,
+>> +				.max_sz_region = ULONG_MAX,
+>> +				.min_nr_accesses = 0,
+>> +				.max_nr_accesses = UINT_MAX,
+> 
+> [Severity: Medium]
+> Will this apply the collapse action to completely cold regions? 
+> 
+> The commit message states this module collapses "hot regions", but setting 
+> min_nr_accesses to 0 instructs DAMON to apply the action to all regions 
+> that meet the age threshold, including those with no accesses at all. 
+> 
+> Should this be set to a value strictly greater than 0 to only target 
+> heavily accessed regions?
+Good catch. I will update it to 1.
+> [ ... ]
+> 
+>> +	if (quota_autotune_feedback) {
+>> +		goal = damos_new_quota_goal(DAMOS_QUOTA_USER_INPUT, 10000);
+>> +		if (!goal) {
+>> +			damon_destroy_ctx(ctx);
+>> +			return -ENOMEM;
+>> +		}
+>> +		goal->current_value = quota_autotune_feedback;
+>> +		damos_add_quota_goal(&scheme->quota, goal);
+>> +	}
+> 
+> [Severity: Medium]
+> Is there a missing mechanism to dynamically update this feedback value?
+> 
+> Since the module parameter is assigned to current_value exactly once at 
+> startup, without a dynamic update path while running, the auto-tuner will 
+> receive a constant error value. 
+> 
+> Won't this continuously push the quota aggressiveness in one direction 
+> until it hits the limits, rather than forming a proper feedback loop?
+> 
+This is a sample module. There is no commit mechanism as in the usual
+DAMON modules. It should be set up before enabling the module.
+
+I will document this behaviour in the documentation.
+
+-- 
+Asier Gutierrez
+Huawei
+
