@@ -1,50 +1,50 @@
-Received: from va-2-20.ptr.blmpb.com (va-2-20.ptr.blmpb.com [209.127.231.20])
+Received: from va-2-28.ptr.blmpb.com (va-2-28.ptr.blmpb.com [209.127.231.28])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2499C2F8E96
-	for <sashiko-reviews@lists.linux.dev>; Tue, 16 Jun 2026 03:59:41 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.127.231.20
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C00C735A3A4
+	for <sashiko-reviews@lists.linux.dev>; Tue, 16 Jun 2026 04:02:40 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.127.231.28
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1781582384; cv=none; b=SgfGLLpy7OFQZiY8W5yIPHT+SQsNB/M6xb6NBI8XzyiytSEss43ieD/cHOwKC5jGM12kGh0spg/IwHEmyL4tZtdEutNL2Th2nGjkKR+9NIeFyu/MHGY3sOPvtG5dnVjnRV6lzPW6/JWZfSlAUuKZN2XJeUdlD2Ota22rIGtj+NQ=
+	t=1781582562; cv=none; b=Lld+liPaV6QT1WWtbBG9GeRIoE/AyKrF7QzO6mExnYwUacGVpS13PNvxi196NKP3IdKQ595CQd/tBm+poY+87sjy97WNM4iXNap9LAswDC6bwAQprUkr5TwRvjX0zHX8jasOlo6wA4/Gako/AcIUmk5SaMgyJiXKIbI3IsHhrlw=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1781582384; c=relaxed/simple;
-	bh=hsah/15Fj05n8KzbzqXTLyXhcMXqEo6iqKvyPIzMsqA=;
-	h=Date:Message-Id:In-Reply-To:From:To:Mime-Version:Content-Type:
-	 References:Subject; b=nGsR4EfLKlZ8jFJLaYBU8osjy0y4V1TwvbHuwsPyAWDgo7mpO7QA0mSE303RSdZJN7oi1MsO1GOQavAzwAwg4L//BeIWPyz82hg9yRleh/Hn51nlVBbECqhxjIZSiG2kQY6N9X8eH7rQbxX6IGivGaJfUn/+rGkf/z9Yt5GtvbU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=fnnas.com; spf=pass smtp.mailfrom=fnnas.com; dkim=pass (2048-bit key) header.d=fnnas-com.20200927.dkim.feishu.cn header.i=@fnnas-com.20200927.dkim.feishu.cn header.b=mIUuplO/; arc=none smtp.client-ip=209.127.231.20
+	s=arc-20240116; t=1781582562; c=relaxed/simple;
+	bh=AwNKfL9SSNcGYoZ17QcLuU64BZDbB/ephFk8uFUmi4M=;
+	h=Subject:Mime-Version:References:From:Content-Type:Message-Id:To:
+	 Date:In-Reply-To; b=LcRW9JSy+iz6xd4EFiE/aphrdQnjfqALII2jM35ANZfGwAMXfFITgNn5u4kpHLWExxGfyoK7Px4WEQnDdJc9ubvbiU21phblZ9RsCCq/bon0UA2snOyk/RdiFWRFqoUHiDIl7q+2NEQjnGslxRhev4IgSQUxA9XkDdhDMsHVe50=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=fnnas.com; spf=pass smtp.mailfrom=fnnas.com; dkim=pass (2048-bit key) header.d=fnnas-com.20200927.dkim.feishu.cn header.i=@fnnas-com.20200927.dkim.feishu.cn header.b=mN8SNmYr; arc=none smtp.client-ip=209.127.231.28
 Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=fnnas.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=fnnas.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=fnnas-com.20200927.dkim.feishu.cn header.i=@fnnas-com.20200927.dkim.feishu.cn header.b="mIUuplO/"
+	dkim=pass (2048-bit key) header.d=fnnas-com.20200927.dkim.feishu.cn header.i=@fnnas-com.20200927.dkim.feishu.cn header.b="mN8SNmYr"
 DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed;
- s=s1; d=fnnas-com.20200927.dkim.feishu.cn; t=1781582371;
+ s=s1; d=fnnas-com.20200927.dkim.feishu.cn; t=1781582556;
   h=from:subject:mime-version:from:date:message-id:subject:to:cc:
  reply-to:content-type:mime-version:in-reply-to:message-id;
- bh=6VHD9awDiPH/43rkmYUP2xcTYC8GI6bJQhkSjdEtnig=;
- b=mIUuplO/PsaxC5+hw/f7IffE9mLIc56yCleDHefhHNVC1kFUWvkqfg0IuYzxlpaNNIbsg1
- 7SOyJbVBxRs7sDESgPzNL83xwYI3eo58zvjR7cuFfQiPF/iDEkYlUmD6gFG0a8Hae6xrFJ
- ehAPz+VRSPa86xW3Llahnvj5vq9kaGchF1BCoOP5mCzbx6aZ+TZNSe26azMCE/mXEDYcMM
- CAd8pDjIS6XSlRYWK6ZucHVJgr3kD/uGJ9dHa4w1aBXZl1Y3oNYE7YN7bjzt7aJA47okDv
- GbgFSLJB66e4UFO/2ChOIVjo9MXNZ/geppSWDRsTLtgvH7vGr6h4UK4jb2AccQ==
-Date: Tue, 16 Jun 2026 11:59:27 +0800
-Message-Id: <ed5eadd2-26e6-40c9-a0dc-956c5ef32c14@fnnas.com>
-In-Reply-To: <20260615114929.E5BAD1F00A3A@smtp.kernel.org>
-From: "chencheng" <chencheng@fnnas.com>
-To: <sashiko-reviews@lists.linux.dev>
-X-Original-From: chencheng <chencheng@fnnas.com>
-User-Agent: Mozilla Thunderbird
+ bh=ZwMJkGm4oNFYZgv6YKJJRFi0G/4YgISTpxB+3KkOaNs=;
+ b=mN8SNmYr2juhwHaAnBuSA2u++x+HD6f+NndhFD9hw/bWgk653M4xNGJCfUctL9vN76MPNi
+ xUgu6mKhwVa91lM6UUBNCjDPdfNSXxo5QZiamn82ifKLz+DLstfxj+jnW4KG+H2xLFOkCX
+ kNblC5+/Aa6KocauzHoajFihnvOr/dcWwocf9SHAj7Kwy10hXbfaAYS5J+rJNUP50+lBxB
+ NZ1XkKuCjOdRmlpMkkihMOBDdYN5G95MdvJDHiiJO+fSmds2l7MlBguMAlnUq3T68tZT3d
+ 2761y/IAWljGC/UyYQrNEM53sI2cp+h7pyaeoi+u1IJutp//+2uiyXTIvl8joQ==
+Subject: Re: [PATCH v2] md/raid5: fix reshape deadlock while failed devices more than max degraded
 Precedence: bulk
 X-Mailing-List: sashiko-reviews@lists.linux.dev
 List-Id: <sashiko-reviews.lists.linux.dev>
 List-Subscribe: <mailto:sashiko-reviews+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:sashiko-reviews+unsubscribe@lists.linux.dev>
 Mime-Version: 1.0
+References: <20260615113450.2088877-1-chencheng@fnnas.com> <20260615114929.E5BAD1F00A3A@smtp.kernel.org>
+Received: from [192.168.8.62] ([183.34.162.81]) by smtp.feishu.cn with ESMTPS; Tue, 16 Jun 2026 12:02:33 +0800
+From: "chencheng" <chencheng@fnnas.com>
 Content-Transfer-Encoding: quoted-printable
 Content-Type: text/plain; charset=UTF-8
-References: <20260615113450.2088877-1-chencheng@fnnas.com> <20260615114929.E5BAD1F00A3A@smtp.kernel.org>
-Received: from [192.168.8.62] ([183.34.162.81]) by smtp.feishu.cn with ESMTPS; Tue, 16 Jun 2026 11:59:28 +0800
-X-Lms-Return-Path: <lba+26a30ca21+6d84de+lists.linux.dev+chencheng@fnnas.com>
-Subject: Re: [PATCH v2] md/raid5: fix reshape deadlock while failed devices more than max degraded
+X-Original-From: chencheng <chencheng@fnnas.com>
+Message-Id: <ec3e5f21-470e-4d4b-b1b0-fe698bdc1ff7@fnnas.com>
+X-Lms-Return-Path: <lba+26a30cada+f9f5e4+lists.linux.dev+chencheng@fnnas.com>
+User-Agent: Mozilla Thunderbird
+To: <sashiko-reviews@lists.linux.dev>
+Date: Tue, 16 Jun 2026 12:02:32 +0800
+In-Reply-To: <20260615114929.E5BAD1F00A3A@smtp.kernel.org>
 
 =E5=9C=A8 2026/6/15 19:49, sashiko-bot@kernel.org =E5=86=99=E9=81=93:
 > Thank you for your contribution! Sashiko AI review found 1 potential issu=
@@ -143,21 +143,17 @@ e
 > the DMA from Worker 1 is still actively writing to it?
 
 
-that make sense, however I can't find a card or processer to support
-
-offload memcpy , neither emulate, so I can't re-produce this scenario.
-
-
-theoretically, the fix way I can think of is use refcnt to point-out the=20
-number of
-
-offloading memcpy tasks, after reach to zero, the destination stripe do=20
-cleanup,
-
-otherwise , delay source stripe handle .
+that make sense, however I can't find a card or processer to support offloa=
+d
+memcpy , neither emulate, so I can't re-produce this scenario.
 
 
->
+theoretically, the fix way I can think of is use refcnt to point-out the nu=
+mber
+of offloading memcpy tasks, after reach to zero, the destination stripe do
+cleanup, otherwise , delay source stripe handle .
+
+
 >> +				atomic_dec(&conf->reshape_stripes);
 >> +				wake_up(&conf->wait_for_reshape);
 >> +				md_done_sync(conf->mddev,
