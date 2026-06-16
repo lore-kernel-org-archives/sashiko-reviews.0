@@ -1,248 +1,240 @@
-Received: from CWXP265CU009.outbound.protection.outlook.com (mail-ukwestazon11021135.outbound.protection.outlook.com [52.101.100.135])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-pl1-f182.google.com (mail-pl1-f182.google.com [209.85.214.182])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5658D364024
-	for <sashiko-reviews@lists.linux.dev>; Tue, 16 Jun 2026 15:48:21 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=fail smtp.client-ip=52.101.100.135
-ARC-Seal:i=2; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1781624904; cv=fail; b=SVrt63Hj3jghuJYrAsn0m6NhSjxVD31b8f5tvdqMzGYTWV80cCIFDOXD5SJwVsO6gwpdquOAiUQeoOW6HKsjxruJe1U76LuRiAyNfRBBK2cusFY68bzRX4eUgOoMmSL0Vi9HWVo3o8lCF9iEqOx9PMI0dPuzDtb/nr+DGekuVGE=
-ARC-Message-Signature:i=2; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1781624904; c=relaxed/simple;
-	bh=76722t+u/fyVq/S/LOgY5fC7LGsYEy8quJWGxPuxvWE=;
-	h=Content-Type:Date:Message-Id:To:Cc:Subject:From:References:
-	 In-Reply-To:MIME-Version; b=plCu7MGbH6rBNv/w6olBleKrdKRMdhwSGASSM83s3fCNacxatWi/n15mneWFH1hUfVR/FUz/YBNsEMiIrJ7f8noSYqvO6JsNsL1N81QONPO7IA2Nd5ca9J0+JG95YZXmDRUAkWYCHpPSyGSgZHe+gooGgLx1prKfmDHhPISwb2c=
-ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=garyguo.net; spf=pass smtp.mailfrom=garyguo.net; dkim=pass (1024-bit key) header.d=garyguo.net header.i=@garyguo.net header.b=b/lNG3W7; arc=fail smtp.client-ip=52.101.100.135
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=garyguo.net
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=garyguo.net
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 75EC244CAF9
+	for <sashiko-reviews@lists.linux.dev>; Tue, 16 Jun 2026 15:55:28 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.214.182
+ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
+	t=1781625329; cv=none; b=JAQSSULV8GnBUy6Jnuiwwkvr3tEbDidbxyUQ/N5LcuOCfq9ra7CtywlfmvUU+QrCBT3LDzhAz+IrUNhNeBOsOPgL/SLOWNwL7Ry8DoPa+lcleDxIxSoxbVEiv4WswdLh2vaTqFhwke0MX1zIV1hF1LNz3YvD6yUtgaIOSt0tXsQ=
+ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
+	s=arc-20240116; t=1781625329; c=relaxed/simple;
+	bh=bEH96bnIltoEa0z4iZyqds3YfSC1kw1kx0wLvQAGKTI=;
+	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
+	 In-Reply-To:Content-Type; b=un2shFJdzmFr/LNoDMb+Rxfd6Zhw7Nsi5laYapSIqvzX/bOHK65jAhVVsP0eSWHyyeu1r5QLMBLPW9u9NXm666oQZAk/756R29G8WGl68xz8Pg603QgMXv7VMMwrTlZI01eTY2QYQckAPHNUxMS7LXyqE2QUBGd9TjFic4Pwl84=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=roeck-us.net; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=VGSLXQnd; arc=none smtp.client-ip=209.85.214.182
+Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=roeck-us.net
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=garyguo.net header.i=@garyguo.net header.b="b/lNG3W7"
-ARC-Seal: i=1; a=rsa-sha256; s=arcselector10001; d=microsoft.com; cv=none;
- b=ap2h1Pt58vVE42YPbXxVYrsRNRqswTNSnpIf0rFoiMDXuBiEpJnZY63VHWfPKpnZxRWLSF1YEruDKKFAVal7PIMfKeR30XG8Sgd/h8qKqq93ornM733lOYjKOJnxaUj3wcCFxCLB6nCYb1LCvdNyUYFWWvA9zuEWHxulkG5rVl17haxpkkdrpvzhALf0Dm7dnyUzyzeVbkU/VeoRqFEp0REmELHKIMjp4f+RMDmrCJuaLRTnWDDn3SHmCmd5VCLiq/fBquiZHcr4Vbn4Yb+yl4Vz7rpZ7ulUzId3GDkXpS5rDrsguIQZmTvema2boZSr3WnlvPj5h5UbMHlyY0dD3g==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com;
- s=arcselector10001;
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
- bh=+nMJ65ghbfQsIZeSGoMx0CEGlZ7VotfwDakX0owrF7w=;
- b=dqY3hjzi0tlhRQf3AGzA8D8kiaMdDa28qbYI/WP8lIDZr+bB50BvpuvduSj59S/MKvoJLHN6W9acfld4hx6katd4CfiohEGBKvEtGXrvtwH7NedNfY8+QruDfY1BZpiL0QSxFm6vxaOgus+59CkvTl55bg1VXj8bTLXCFlkdfzCFBTqLpa8RfncV7lIwhrYn/8G2KaUwkdXtEXfeAPuY1PaYrIeXeFEZjpZlCFU+n/qvCB6kgZ6XIK9HHxbKdW+Gnj+eMF2UHjCXs+3BQbFHXhhuBb7ikemCdLKf5P8jeCxsLsnUEIgw87AzubDYKORDI6d0WhXLlwPjd/GEsGWJ2g==
-ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
- smtp.mailfrom=garyguo.net; dmarc=pass action=none header.from=garyguo.net;
- dkim=pass header.d=garyguo.net; arc=none
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=garyguo.net;
- s=selector1;
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
- bh=+nMJ65ghbfQsIZeSGoMx0CEGlZ7VotfwDakX0owrF7w=;
- b=b/lNG3W7Iy2vWOjZOA4RkvQg5SsYqpaaOQAp70iaQ16CKVS24ZuizvStvo4JVBhIpiVaIj8Ual+arXcYv8MceOUD1tVxWuucKb//IAZdspWe7UBqLY1ZUphldEB/SLNkIDobZrTNeBOJmHRTFYppsS8bc5DqU78QYbzDWIQw6YQ=
-Authentication-Results: dkim=none (message not signed)
- header.d=none;dmarc=none action=none header.from=garyguo.net;
-Received: from LOVP265MB8871.GBRP265.PROD.OUTLOOK.COM (2603:10a6:600:488::16)
- by LOAP265MB9111.GBRP265.PROD.OUTLOOK.COM (2603:10a6:600:497::14) with
- Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.21.113.18; Tue, 16 Jun
- 2026 15:48:17 +0000
-Received: from LOVP265MB8871.GBRP265.PROD.OUTLOOK.COM
- ([fe80::1c3:ceba:21b4:9986]) by LOVP265MB8871.GBRP265.PROD.OUTLOOK.COM
- ([fe80::1c3:ceba:21b4:9986%4]) with mapi id 15.21.0113.015; Tue, 16 Jun 2026
- 15:48:16 +0000
-Content-Transfer-Encoding: quoted-printable
-Content-Type: text/plain; charset=UTF-8
-Date: Tue, 16 Jun 2026 16:48:16 +0100
-Message-Id: <DJALBE5W3ZZ6.2NRHWTDZPOC41@garyguo.net>
-To: <sashiko-reviews@lists.linux.dev>, "Gary Guo" <gary@garyguo.net>
-Cc: <ojeda@kernel.org>, <rust-for-linux@vger.kernel.org>
-Subject: Re: [PATCH 2/3] rust: kunit: use `line!()` inside `kunit_assert!`
-From: "Gary Guo" <gary@garyguo.net>
-X-Mailer: aerc 0.21.0
-References: <20260616-kunit-v1-2-b191604a8d6b@garyguo.net>
- <20260616153845.32B241F00A3A@smtp.kernel.org>
-In-Reply-To: <20260616153845.32B241F00A3A@smtp.kernel.org>
-X-ClientProxiedBy: LO4P265CA0137.GBRP265.PROD.OUTLOOK.COM
- (2603:10a6:600:2c4::15) To LOVP265MB8871.GBRP265.PROD.OUTLOOK.COM
- (2603:10a6:600:488::16)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="VGSLXQnd"
+Received: by mail-pl1-f182.google.com with SMTP id d9443c01a7336-2bf2247e38eso43526155ad.3
+        for <sashiko-reviews@lists.linux.dev>; Tue, 16 Jun 2026 08:55:28 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20251104; t=1781625328; x=1782230128; darn=lists.linux.dev;
+        h=content-transfer-encoding:in-reply-to:autocrypt:from
+         :content-language:references:cc:to:subject:user-agent:mime-version
+         :date:message-id:sender:from:to:cc:subject:date:message-id:reply-to;
+        bh=AsR19V/9UOzKY0KYtJv6IFN6IvbD4jUVTeC5l3UI9uA=;
+        b=VGSLXQndtV8ogZaKw5ED8XAHEbILPRxm+aS4UrcH9iEOHl0VFXwSWa8QmPI5d9/a4Z
+         kqby9rzgN4iH03/+6QeFkISX6g1wFmvjm9Vw+tX1TqpwazwiHeixh+OruuObTwkZd3jM
+         7TWyPNFcZ4qis1CUwpAKazyJGobTz4wf2dwUDY1PLSyNzExcd7y4DnAP3eOUhFPmZppv
+         C8Wz/3Xzv+sO8nd1C1Yu8micDHT0+IV7uqP/0OWDSCPT31I0in/kiVKYCvHLuE1aX+9w
+         CORZIrd8Uq5pyuZxeGvOtHpnCskO1/YO6h5ba8j6DpH3gf/WM2dIWUu7p/mnt5+YWmwI
+         Yxmw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20251104; t=1781625328; x=1782230128;
+        h=content-transfer-encoding:in-reply-to:autocrypt:from
+         :content-language:references:cc:to:subject:user-agent:mime-version
+         :date:message-id:sender:x-gm-gg:x-gm-message-state:from:to:cc
+         :subject:date:message-id:reply-to;
+        bh=AsR19V/9UOzKY0KYtJv6IFN6IvbD4jUVTeC5l3UI9uA=;
+        b=mACsXf4q60OaTggP+/wiTPK/YPrMbgw8pt4TKZ7DUkd/Mj9jGmMpP0oTYcjdfTnvVA
+         nL3VYn2H4tZe6rq1tklswv/j/7N0/Rqpz0v/FRLJIUbA8OumLZfCR+HBWnTPO3WlMw3m
+         vJy3ovXfwNxXyauj2Q+DIOTDWmO7Q5v5H/oPqhsP5mPxw932FWbxl/vnVF4VYHwvQH6w
+         iQ1aI6AVGKCWOyPExJIREjv0R6DKj0nXxUPvrhx0ruGzNOHdfzDiw6oyYzbJhtZwpyaO
+         iaWbE2XPDDRCfcEhMEOJDD4/JRHWPv1oeZkNn2IOc5pOT3C1l/qLvS3c6qi+WAcRUdgG
+         TcJQ==
+X-Gm-Message-State: AOJu0Yx3WS7mLC0l0cIXNIFluapOnIBzwHIxYeGuxOdvsR1+VujgS09V
+	/UX2KWAdiyjPv/Z68ihmEN/ouVNwystZlvv4KI4xDshB6EGx2CNm8BgOomjpbStJ
+X-Gm-Gg: Acq92OExh3rn2wK6aAL+1rWDjgGMGVpyE4WqKKX9gdnNd5vfc0o4bX61/MGYZTlOP9g
+	7eymHeIETTgmL1YItrPTUMB1cHr6vWqQqoXdsSoUJWafZyWugCvBD+5VxJqJyCrir0bOStmlvHq
+	0jD50JhTji+2i6DP/b8gxKX3OL8hyF+pHXE1+zJY26Ksrba1ruRtp/VrKtlO8P6sBRZ0Rv1SKDL
+	HTVaAAQNaCZt43QWwRGBH7yvwu0+dtnxRfzaU+OZgHXMkEluOS9Oud14x/+p7fGHJXRxhcV0Qs5
+	YB5WgqLZfXn21WNigCKQp2xjw0jP21XByvLvu0gjfQ2pLYTm4auYJgudhpm+gCHOTzSpSWTA7IA
+	cfMx4SpUGK/RZPUIocU7LQ2ASRw1Sf+a45CCaIHk+jkeqOCXYJ64+03tRNLNNJiOxj71FIEaSaG
+	9f6lp3lUIQc7hXhXRFyHl+MZSrwwR/J20pkExJjcPJLQbg1hSDG3pkjOx/U7Z5nuyHcb1g5pv8
+X-Received: by 2002:a17:902:ced0:b0:2c0:d097:51bb with SMTP id d9443c01a7336-2c69a0de0b3mr44847805ad.1.1781625327711;
+        Tue, 16 Jun 2026 08:55:27 -0700 (PDT)
+Received: from ?IPV6:2600:1700:e321:62f0:da43:aeff:fecc:bfd5? ([2600:1700:e321:62f0:da43:aeff:fecc:bfd5])
+        by smtp.gmail.com with ESMTPSA id d9443c01a7336-2c4330782b2sm147646405ad.67.2026.06.16.08.55.26
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Tue, 16 Jun 2026 08:55:27 -0700 (PDT)
+Sender: Guenter Roeck <groeck7@gmail.com>
+Message-ID: <2d1ae3b5-bc52-4043-9090-a78f30390024@roeck-us.net>
+Date: Tue, 16 Jun 2026 08:55:26 -0700
 Precedence: bulk
 X-Mailing-List: sashiko-reviews@lists.linux.dev
 List-Id: <sashiko-reviews.lists.linux.dev>
 List-Subscribe: <mailto:sashiko-reviews+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:sashiko-reviews+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-X-MS-PublicTrafficType: Email
-X-MS-TrafficTypeDiagnostic: LOVP265MB8871:EE_|LOAP265MB9111:EE_
-X-MS-Office365-Filtering-Correlation-Id: 6544e933-195d-46cc-0ba7-08decbbeae67
-X-MS-Exchange-SenderADCheck: 1
-X-MS-Exchange-AntiSpam-Relay: 0
-X-Microsoft-Antispam:
-	BCL:0;ARA:13230040|1800799024|23010399003|376014|10070799003|366016|56012099006|3023799007|5023799004|4143699003|6133799003|22082099003|18002099003;
-X-Microsoft-Antispam-Message-Info:
-	tiDdWxHEqDa70LrzKvwZbWIDjINns+uVCb5AgbPs6Rg8BKB5z6VDEwKu21Z5TjCCMtHBb/keB4DRepi3AGofVxphx4CnV+qiTkQGJazseRVAC6OOUfVe02YK++l2+6jzPC7Z3nJ/xnErFdDmVJSg8af/QZL8k6K+MNYQ1oraHqcqj9MHV8v6GChmRDVbpadT9ZqXZkcCpkhLA9x5mfkrTetOpwdscCT22g12RcQj1vXXGlOu4f1LjMPEtqe69cCkg0x8WK8mbg7Sk5TqTMB3Imv3fcjrHD3EZunQs/EpIJAxdsoDHqdtOikpHaq55OtEjUTpwLmynZ6UcB69uixkbfV/+X+b8VvZ6NRFzPAsE4JAZk9+xVOVww+KCoYz6V+ylsxwwOaSEGRaztvKDJ0Wrn9q99KkzoziPwQyjnSyc03wSOFtRMB6Xs6+2gF25ObUlz0OZ5TIW9/BNgugW6ylYvfBmnj5Inj2fa2vzJEdIjXg8lUYh7/V1h4ekPaG8DJUuVXYToO9BuWbFa8lC47wPnu725LjML2QM9wu3t+HygIkoFJIc7OHusWC4+bRMGF6xS59GLvzL1dYooUkjHGk1Sa6I+jOXoaXroe7uGidPT0Zud5DCyDoJTmnB4jvqXhdWfc/b5AEkpZU0uE7C/mLSduj+KFkjrtFk5CK9bA4VzenKEoSqlY+/zZoeCWeobMp
-X-Forefront-Antispam-Report:
-	CIP:255.255.255.255;CTRY:;LANG:en;SCL:1;SRV:;IPV:NLI;SFV:NSPM;H:LOVP265MB8871.GBRP265.PROD.OUTLOOK.COM;PTR:;CAT:NONE;SFS:(13230040)(1800799024)(23010399003)(376014)(10070799003)(366016)(56012099006)(3023799007)(5023799004)(4143699003)(6133799003)(22082099003)(18002099003);DIR:OUT;SFP:1102;
-X-MS-Exchange-AntiSpam-MessageData-ChunkCount: 1
-X-MS-Exchange-AntiSpam-MessageData-0:
-	=?utf-8?B?RHBFTFRZUVB4dVlVaEJwRDNIcGZwUnFodDdjUEFzbmRZcm5xclpBR3ExS3Fq?=
- =?utf-8?B?V0MvNVpVSHhmQjdwSW5XWmxDME85SzgyT3BFUDcxblg4dGpXamp3WndtMHc3?=
- =?utf-8?B?K0x2ZmJOcy9LN25PMDBkQmVpL3BJTHdldmtiZVNNVnZhbVNobjhzQW93LzFy?=
- =?utf-8?B?RzlxYitnc3Y2eE5pakR6SUlZM3hTY3M3R2NrMVVmem0xb1gvNjJXeGwrNlV4?=
- =?utf-8?B?YnU2cmdvSnlBZGxXdXRNY3dpZ05tWmNsbGNKbHplZUp2NUQ5aERYZndkV0dV?=
- =?utf-8?B?c1NlVE4rWjdUYy80VDUwaWdZS1dXV0ErRHZDdi9BYnlyTmViT292NGJEWTlZ?=
- =?utf-8?B?aUFIdkZLdWt5UHhJQUJjWGF3VWJpN094MFlDTlZqSEtSQnNQMzY3RCttTy9h?=
- =?utf-8?B?OFc4Mkxhc0xOT0JTL3ZDM2pPdklhVERZK01QcDd1c0U5Wm1GeDFsM1Q1azJ4?=
- =?utf-8?B?VkU4UTlQT0FZazQ4aGVvZWFESGFKM2EyNGR6dXBPUll0UkhGMEdaT1B6dlhz?=
- =?utf-8?B?bEFydk83Q0NZaEI5UWpNNEk3TTdjc2hxeEp3QS9DcXdXN0svTGdrb0pid2FJ?=
- =?utf-8?B?WDdZZVFheG1qV2ZrVHFWaEU3N3psUVExQlRKK09sQUFGL1V3VzFWei9pQU5E?=
- =?utf-8?B?ZEJ3ZldhMk14ekdpbjVWTjN5ZmNzaSt0TGYrZzZSa3hlcE9VeUx0T2VydXVa?=
- =?utf-8?B?TExQdmtnZENiK0plOW0rekEwT3F4ZXlXdGlUdXV1QXdMeU5zSHFnOG1vVVUr?=
- =?utf-8?B?K3pQQlAvemRJb2VBUFlFcC9ad3cwZXMwdnZmZ0VxaHhlejhheWllRU5XbkRN?=
- =?utf-8?B?cGlLYnc4SGFhaUY1aGdxSDVMUTRiVFVUbEcvYmk5OFF5TGpyd0ZWQzE1TFVR?=
- =?utf-8?B?VjA3aHltZnFqMDBqYTRDR2I3SE1VdVBiZjB0S0tFVzlQY0lDVHZKNjRiN3Ex?=
- =?utf-8?B?SUMrdHVVeEo2ZzlYQlhKRUlUaG9aalJxRUZERjZia0xBeWZERkh5d2JKcTND?=
- =?utf-8?B?MEJONVliL2ZRTzJXbnd3WTB2cTdjUkdXWUlPdVR6NERKMkV1eWdPK2pMYTRh?=
- =?utf-8?B?WTFvM0ErQ0xlVGJ2RFVjcU8rUUNvaXFqd0lvT2g0dUdSMHZmbWtoWVhMc3Vs?=
- =?utf-8?B?aE9XdE5vT1JWaUFIT2VScnB5Vnh2Ty8yWFJBMGlNVE9aN3VtcktvQUtFRkFQ?=
- =?utf-8?B?UGlLUHZocFlpVGRNVjdiM0Exckt4TGpHN3JJRXNNaDg0NU1EUVEvZG9jQmlt?=
- =?utf-8?B?TmpXZ1NVbkdJd2xnaHJGRjlyY2NpWlJwQy9yNWl2NDZpTFVIajRPcTh0Uzlj?=
- =?utf-8?B?K0pJZ3g0UnVFbzE3QzZjQ0RtVnB1MkJ6R1A1VXYvTjhXZUc1RHMyNVVhcUxz?=
- =?utf-8?B?a0JLdkY0R1VLUENOYmJLeUpZbml6NG5yKzlKK2JRRW5LNVAzbUFuTGlUeTdw?=
- =?utf-8?B?TjhjR2JqVnNUMVY1VWhJcCtiMU5OM3prKzhSdlJObW8zSkRsSnA5UmVHVjFK?=
- =?utf-8?B?VUtNYmpUSnVoS2pFSUFzeDJQekt4ZUlKM2NVZVNkcm5MQ29sT1AxU2o0eGpy?=
- =?utf-8?B?QysxeUtZVVpBUDNQT1ZTZkpkNDFDUmo3RWY0anlTQnpCWjBjeDVJM2w2YTRE?=
- =?utf-8?B?Z3BSUVZxOEptcHRrVFpJZ2xMelozQWw0NUtlVEFrS0IwWW9GTHYva2tSVW15?=
- =?utf-8?B?Q295Mjd5MnB4NzViQUNoTEI2eEhuVkc3UkhUcG9IM2h1V3Fta1JnQzBLdE53?=
- =?utf-8?B?SHJKNXgvR29hVGx5ay9oVWJXSXZ6RnZqbWY2enpNd0RBL25FZGg3aWl6Nkd6?=
- =?utf-8?B?aUxTT2lOZkRac1YvNFQ4TGhiMVIvcmNQL2hYbWN1WkNlbHA0MHBkZ1M4cS83?=
- =?utf-8?B?QmNYSWx2YzRPVGRHUlpTVC9OOVdmeDFrZGxWaEdGOUx0QUFITXFlaDVrREQw?=
- =?utf-8?B?VjNpakgrc1hIeTNaQjlBY3l6aUVIdmVWNHNvcFVWV2x1Rm8rYTdlZzJXbDlO?=
- =?utf-8?B?YkJhc3dQRXR0Vi9BSEh5OTVKTDVIS2dncGVqTitSWkgzWkdnaFVZR1ZleHFT?=
- =?utf-8?B?U1k0QTRmSEZjUmF2cS8wTkVBT0RkNDUxR09NRk52YlJyQTRlNU5rUGZ0d0NJ?=
- =?utf-8?B?cXI0RUUxUDhQV1JvSEVCU1J4ems3b2Q0QVM0UnUzVFMrVnEyWjBLR2hzTWFt?=
- =?utf-8?B?S2pMRG41SDdnR0VLRXhHM0pDbGx6TmVSYmNrbDNleUtZVHJJNEVpb2Z4SkhE?=
- =?utf-8?B?YnJQTFZpVjMxSzdCQ1Y1aUlmVzJSL2xrL3FMQmdnc3puOVdEbS96MUU1eFl2?=
- =?utf-8?B?RklWZ0pFWndha2Z3aHkwcElxTXVBay9YdmtBOUVVWTdBTWE2dzVEQT09?=
-X-OriginatorOrg: garyguo.net
-X-MS-Exchange-CrossTenant-Network-Message-Id: 6544e933-195d-46cc-0ba7-08decbbeae67
-X-MS-Exchange-CrossTenant-AuthSource: LOVP265MB8871.GBRP265.PROD.OUTLOOK.COM
-X-MS-Exchange-CrossTenant-AuthAs: Internal
-X-MS-Exchange-CrossTenant-OriginalArrivalTime: 16 Jun 2026 15:48:16.4273
- (UTC)
-X-MS-Exchange-CrossTenant-FromEntityHeader: Hosted
-X-MS-Exchange-CrossTenant-Id: bbc898ad-b10f-4e10-8552-d9377b823d45
-X-MS-Exchange-CrossTenant-MailboxType: HOSTED
-X-MS-Exchange-CrossTenant-UserPrincipalName: pgtoxAuDQVpez5FutM2wbJOmLnChe/YdSikheyCBZGNTeZLeJBiVxBrAt8qCtc75SJ5PKXra+0taa0D01wDVJA==
-X-MS-Exchange-Transport-CrossTenantHeadersStamped: LOAP265MB9111
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH v7 2/2] hwmon: Add Eswin EIC7700 PVT sensor driver
+To: sashiko-reviews@lists.linux.dev, hehuan1@eswincomputing.com
+Cc: robh@kernel.org, devicetree@vger.kernel.org, linux-hwmon@vger.kernel.org,
+ conor+dt@kernel.org
+References: <20260611090639.777-1-hehuan1@eswincomputing.com>
+ <20260611091748.A6EAC1F00898@smtp.kernel.org>
+Content-Language: en-US
+From: Guenter Roeck <linux@roeck-us.net>
+Autocrypt: addr=linux@roeck-us.net; keydata=
+ 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
+ np3900V20aS7eD9K8GTU0TGC1pyz6IVJwIE=
+In-Reply-To: <20260611091748.A6EAC1F00898@smtp.kernel.org>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
 
-(Cc list)
-
-On Tue Jun 16, 2026 at 4:38 PM BST, sashiko-bot wrote:
-> Thank you for your contribution! Sashiko AI review found 3 potential issu=
-e(s) to consider:
-> - [Medium] Macro hygiene prevents `kunit_assert!` from using the local `l=
-ine!` override, breaking line number reporting in doctest failures.
-> - [Low] Compilation error E0013 due to referencing a `static` item within=
- an inline `const` block in the `line!` macro override.
-> - [Low] Compile-time unsigned integer underflow in the overridden `line!`=
- macro when invoked before the main test body.
+On 6/11/26 02:17, sashiko-bot@kernel.org wrote:
+> Thank you for your contribution! Sashiko AI review found 2 potential issue(s) to consider:
+> - [High] The IRQ is requested before the PM runtime cleanup action is registered, leading to a possible use-after-disable of the hardware clock in the ISR on driver removal.
+> - [Medium] The interrupt handler `eic7700_pvt_hard_isr` does not check the hardware interrupt status bit to verify if the device actually generated the interrupt.
 > --
->
-> commit bb46da20c6822f21e525800928a1b682691c33c6
-> Author: Gary Guo <gary@garyguo.net>
-> Date:   Tue Jun 16 15:24:50 2026 +0000
->
->     rust: kunit: use line!() inside kunit_assert!
->
->     This commit simplifies the kunit_assert macro by removing the diff
->     parameter and using the line! macro instead. It updates rustdoc_test_=
-gen
->     to override the line! macro to correct line numbers in tests.
->
->> diff --git a/rust/kernel/kunit.rs b/rust/kernel/kunit.rs
->> index 157fd0634708f..58dfec66b4f69 100644
->> --- a/rust/kernel/kunit.rs
->> +++ b/rust/kernel/kunit.rs
->
+> 
+> commit 0f4c8aefb83780ee09652639eb2843f01c2baf38
+> Author: Huan He <hehuan1@eswincomputing.com>
+> 
+> hwmon: Add Eswin EIC7700 PVT sensor driver
+> 
+> Add support for ESWIN EIC7700 Voltage and Temperature sensor. The driver
+> supports temperature and voltage monitoring with polynomial conversion,
+> and provides sysfs interface for sensor data access.
+> 
+>> diff --git a/drivers/hwmon/eic7700-pvt.c b/drivers/hwmon/eic7700-pvt.c
+>> new file mode 100644
+>> index 0000000000000..3b3aed74c3941
+>> --- /dev/null
+>> +++ b/drivers/hwmon/eic7700-pvt.c
+> 
 > [ ... ]
->
->> @@ -67,7 +67,7 @@ macro_rules! kunit_assert {
->> =20
->>              // Use file!() instead of ::core::file!() here so it can be=
- overridden.
->>              static FILE: &'static $crate::str::CStr =3D $crate::c_str!(=
-file!());
->> -            static LINE: i32 =3D ::core::line!() as i32 - $diff;
->> +            static LINE: i32 =3D line!() as i32;
->>              static CONDITION: &'static $crate::str::CStr =3D $crate::c_=
-str!(stringify!($condition));
->> =20
->
-> [Severity: Medium]
-> Will this actually use the overridden line! macro from the test wrapper?
->
-> Because kunit_assert! is a declarative macro defined here, wouldn't macro
-> hygiene cause line!() to resolve to core::line! at this definition site?
->
-> If so, it seems the local macro override in rustdoc_test_gen.rs would be
-> ignored, and failing tests would report the generated source line numbers
-> instead of the original ones.
-
-Not sure where Gemini gets this hallucination from, with mixed site hygiene=
- only
-local variables, labels and `$crate` are resolved from def site. There's no=
-t
-even a way for macro invocations to resolve from def site at all without us=
-ing
-macro 2.0 hygiene.
-
->
->> diff --git a/scripts/rustdoc_test_gen.rs b/scripts/rustdoc_test_gen.rs
->> index 37f4877f52e2d..acc4debe85923 100644
->> --- a/scripts/rustdoc_test_gen.rs
->> +++ b/scripts/rustdoc_test_gen.rs
->
-> [ ... ]
->
->> @@ -169,18 +169,26 @@ fn main() {
->>              r#"/// Generated `{name}` KUnit test case from a Rust docum=
-entation test.
->>  #[no_mangle]
->>  pub extern "C" fn {kunit_name}(__kunit_test: *mut ::kernel::bindings::k=
-unit) {{
->> -    /// Overrides the usual [`file!`] macro with one that expands to th=
-e real path.
->> +    // Overrides the usual [`file!`] macro with one that expands to the=
- real path.
->>      #[allow(unused)]
->>      macro_rules! file {{
->>          () =3D> {{ "{real_path}" }}
->>      }}
->> =20
->> +    // Overrides the usual [`line!`] macro with one that expands to the=
- real line number.
->> +    #[allow(unused)]
->> +    macro_rules! line {{
->> +        // NOTE: This does not expand to a literal, but a constant expr=
-ession.
->> +        // Therefore code that depends on `line!()` being overrideable =
-needs special adjustment.
->> +        () =3D> {{ const {{ ::core::line!() - __DOCTEST_ANCHOR + {line}=
- }} }}
->> +    }}
+> 
+>> +static irqreturn_t eic7700_pvt_hard_isr(int irq, void *data)
+>> +{
+>> +	struct pvt_hwmon *pvt = data;
+>> +	int active;
+>> +	u32 val;
 >> +
->
-> [Severity: Low]
-> Does this code cause a compilation error if the macro is ever invoked?
->
-> Since __DOCTEST_ANCHOR is defined as a static item below, referencing it
-> inside an inline const block violates Rust rules against reading statics
-> in a const context, which would trigger compilation error E0013.
+>> +	if (IS_ENABLED(CONFIG_PM)) {
+>> +		active = pm_runtime_get_if_active(pvt->dev);
+>> +		if (active <= 0)
+>> +			return IRQ_NONE;
+>> +	}
+>> +
+>> +	eic7700_pvt_update(pvt->regs + PVT_INT, PVT_INT_CLR, PVT_INT_CLR);
+>> +	/*
+>> +	 * Read the data, update the cache and notify a waiter of this event.
+>> +	 */
+>> +	val = readl(pvt->regs + PVT_DATA);
+>> +	WRITE_ONCE(pvt->data_cache, FIELD_GET(PVT_DATA_OUT, val));
+>> +	complete(&pvt->conversion);
+> 
+> [Severity: Medium]
+> Does this unconditionally process the interrupt without checking if the device
+> actually generated it?
+> 
+> If a spurious interrupt occurs, the ISR will prematurely clear the interrupt,
+> read whatever stale value is in PVT_DATA, and call complete(&pvt->conversion).
+> This will cause the waiting thread in eic7700_pvt_read_data() to wake up early
+> and return stale or garbage data to userspace.
+> 
+> Should the ISR read the status register and return IRQ_NONE if its device did
+> not assert the interrupt?
+> 
+> [ ... ]
+> 
+>> +	ret = eic7700_pvt_request_irq(pvt);
+>> +	if (ret) {
+>> +		if (!IS_ENABLED(CONFIG_PM))
+>> +			clk_disable_unprepare(pvt->clk);
+>> +		return ret;
+>> +	}
+>> +
+>> +	pm_runtime_enable(&pdev->dev);
+>> +	pm_runtime_set_autosuspend_delay(&pdev->dev, 3000);
+>> +	pm_runtime_use_autosuspend(&pdev->dev);
+>> +	pm_runtime_get_noresume(&pdev->dev);
+>> +
+>> +	ret = devm_add_action_or_reset(pvt->dev, eic7700_pvt_disable_pm_runtime,
+>> +				       pvt);
+> 
+> [Severity: High]
+> Can this devres setup lead to accessing unclocked registers during device
+> removal?
+> 
+> Because devres executes teardown callbacks in reverse order of their
+> registration, eic7700_pvt_disable_pm_runtime() will run before the IRQ
+> is freed by devm_request_threaded_irq()'s teardown.
+> 
+> During removal, eic7700_pvt_disable_pm_runtime() disables the clock:
+> 
+> eic7700_pvt_disable_pm_runtime() {
+>      ...
+>      if (!pm_runtime_status_suspended(pvt->dev)) {
+>          clk_disable_unprepare(pvt->clk);
+>          pm_runtime_set_suspended(pvt->dev);
+>      }
+> }
+> 
+> If an interrupt fires concurrently and the ISR executes past the
+> pm_runtime_get_if_active() check before the clock is disabled, the ISR
+> will attempt to access hardware registers while unclocked, which can lead
+> to an external abort or kernel panic:
+> 
+> eic7700_pvt_hard_isr() {
+>      ...
+>      eic7700_pvt_update(pvt->regs + PVT_INT, ...);
+> }
+> 
+> Should the PM runtime cleanup action be registered before the IRQ is requested?
+> 
 
-Somehow Sashiko is still pretending that it is the compiler. I've checked
-Sashiko GitHub repo and it has already contains prompt that instruct it to
-assume code builds cleanly. Somehow this is not working?
+If not solved, these questions will at least have to be answered.
 
->
-> Also, since the subtraction evaluates left-to-right on unsigned integers,
-> could this underflow?
->
-> If line! is called before the main body, ::core::line!() is less than
-> __DOCTEST_ANCHOR. This compile-time subtraction would fail.
+Thanks,
+Guenter
 
-Impossible to happen.
+>> +	if (ret) {
+>> +		pm_runtime_put_noidle(&pdev->dev);
+>> +		return dev_err_probe(&pdev->dev, ret,
+>> +				     "Can't register PM cleanup\n");
+>> +	}
+> 
 
-Best,
-Gary
