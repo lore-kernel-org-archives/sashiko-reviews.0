@@ -1,107 +1,131 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C1D4A42847B;
-	Wed, 17 Jun 2026 14:03:12 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6C7E33E92AF;
+	Wed, 17 Jun 2026 14:34:51 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1781704994; cv=none; b=JTAFYG/ntWtJZrcqo4nP20h32WCffId4ZGeBK7UspIxlimK1V0j5ZHB6nTAao2ob1wbSvH+5ljVLHPufrLdB6aiIQzHW20uYU6fVrl1wMDRHTk7rt/gqrTMse9hbbRzHAEAtl07Qf7GRV8xvy0RhhvFq+kAAZ3Os2q6ZC25O3r4=
+	t=1781706892; cv=none; b=Vc2PmHfdydhZa7JaiAFk4rYi/F/hRCu7RIg3zCJuJ9BeeR6DN9b7mZ0ddzUJkHzJSReppXwmNuo/LK/TJ3+DutCJekc5v6zgiD35CyxoHsIsPWVTK5UfhJwEGteD+3dom80+DsczKsMHSysmcUcSkknxLuOhXlDtg3uijT+B7Eo=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1781704994; c=relaxed/simple;
-	bh=fyXebLiltjSHyI0C9+G+AxBFVkRZs1Jjmc92wKPBSvc=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=SQu2tUKBf5NPgqRwzJtGjexRwzmJwMFCfRTyNRPd91uNhnxhoj2U999/6oNF37tz2HJFIlOSuTcQT01S4PaTu/4arrWWO0UrHy6ZVS/8TZeUxG072OyuTHNmtmqfehZc3iX6sVZYegtwoWMIboCO53bKGRJb0qyUpdAC/Jehfto=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=nkNHG2cE; arc=none smtp.client-ip=100.103.45.18
+	s=arc-20240116; t=1781706892; c=relaxed/simple;
+	bh=T10VaNL+zwxE9/3r7p9C2hoCfHPoDNAUqtX7pXTZ+5Y=;
+	h=Date:Message-ID:From:To:Cc:Subject:In-Reply-To:References:
+	 MIME-Version:Content-Type; b=C7+6vwrzqpPz0S1tE+fjaB0WRrp8DcyBuvEU0h7oaOX/LVThXRKM5OKHBejTh7uqyiQ3Oa4eVOdhbR6Z3NLrkx/yMhkNEOS3uKnDmhrciBoHm3/Eyptd8iX9ykk++4HqEoyLWpAvFtdpsZwOXdE0VmX0nn82TGcOQVJ+LEaXEE0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=gh/chnsp; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="nkNHG2cE"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id B2F741F000E9;
-	Wed, 17 Jun 2026 14:03:11 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="gh/chnsp"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 246D41F000E9;
+	Wed, 17 Jun 2026 14:34:51 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=kernel.org;
-	s=k20260515; t=1781704992;
-	bh=Ur7+lgc4V1Q/ImkQI5CoXvHiLk63BK8pFxHtD6NsgLA=;
-	h=Date:From:To:Cc:Subject:References:In-Reply-To;
-	b=nkNHG2cEeBt9LBN+0QB+6c1QP/OHJACFWKa5MKGSimMYgZQLbl+PnCxPeMV5IJymG
-	 kzQNk7jAlol//WoD4geTI8yml9D4TdZzATRQhbrbfJO4UDmRAMpO39lpVDkRSywmfS
-	 pD8dgU2rLo4KZjUeZnNq/JdkNtDmeis+Qvn5FKXPYFeYxx7vt62be5YerFLulZfqbP
-	 aaZK994606Zx5VPnSKDoMAGlHMgCkh493licy5ZmGEytzArjRTCIhRJkbjBi3vTNUU
-	 NVj2a+w8kuQC1KpOdDVUGgWnEPWBS0eDzPqBt83zjcnu4dVYUU4Z8T9q2ZH7bvCqPn
-	 cGx92HEXhjG3A==
-Date: Wed, 17 Jun 2026 16:03:09 +0200
-From: Christian Brauner <brauner@kernel.org>
-To: sashiko-reviews@lists.linux.dev
-Cc: bpf@vger.kernel.org
-Subject: Re: [PATCH 1/2] fs: Add bpf_sock_read_xattr() kfunc to read socket
- xattrs
-Message-ID: <20260617-gericht-leerlauf-verzichten-a70f3725c8e9@brauner>
-References: <20260617-work-bpf-sock-xattr-v1-0-a1276f7c9da3@kernel.org>
- <20260617-work-bpf-sock-xattr-v1-1-a1276f7c9da3@kernel.org>
- <20260617113209.8D4BA1F000E9@smtp.kernel.org>
+	s=k20260515; t=1781706891;
+	bh=bFAZls850KmKz14s0NZLMDhrULuK6yt45g7kQueM+w4=;
+	h=Date:From:To:Cc:Subject:In-Reply-To:References;
+	b=gh/chnspF4JiuteJKxFzkhBB2/gQVYo0dCXM3U8ySKWKJXwycrX1QOgPsC5mO3mml
+	 G0PIir5PwGSfwku10H4HPtDPy74NaIDlTvOb+aDlQDWmAscLcnsIwexEXX3TV3sOZr
+	 qfVXIKQzFdjxvbgNoYXy8Xos1mwxPOqfmswKIVpDVVZcgoBJWU6uW0EU0CTBm7VmlW
+	 7qgHaOVYsfSRyl33n8aMKsRIDt4XtrdwHiVmVCfsyh7qKmJAxKWEXSofZhiA9csMtN
+	 wYmuVRDHv3XNYSWIHGXTUHqb+Ac0jOkj+LFhhI84LQ1Rbxb8qzhBj54bIkZYsSAcX0
+	 BsxEJ/dHAfgLA==
+Received: from sofa.misterjones.org ([185.219.108.64] helo=goblin-girl.misterjones.org)
+	by disco-boy.misterjones.org with esmtpsa  (TLS1.3) tls TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384
+	(Exim 4.98.2)
+	(envelope-from <maz@kernel.org>)
+	id 1wZrLs-0000000DiNc-3heV;
+	Wed, 17 Jun 2026 14:34:48 +0000
+Date: Wed, 17 Jun 2026 15:34:48 +0100
+Message-ID: <86v7bhs0af.wl-maz@kernel.org>
+From: Marc Zyngier <maz@kernel.org>
+To: Fuad Tabba <tabba@google.com>
+Cc: sashiko-reviews@lists.linux.dev,
+	Oliver Upton <oupton@kernel.org>,
+	kvmarm@lists.linux.dev
+Subject: Re: [PATCH 4/7] KVM: arm64: Set IL for injected FPAC exceptions during ERET emulation
+In-Reply-To: <CA+EHjTzWpLBxy=Pi=K0G-9JU0cPTsGSNB4Esy+K+vFYNM0DnNw@mail.gmail.com>
+References: <20260614163336.3490925-5-tabba@google.com>
+	<20260614164547.D398B1F000E9@smtp.kernel.org>
+	<CA+EHjTwHoveK6FT0CGcKuj97aUaHpv7vk=DQjRxT9c6UkkSeoA@mail.gmail.com>
+	<86wlvxs5r0.wl-maz@kernel.org>
+	<CA+EHjTzWpLBxy=Pi=K0G-9JU0cPTsGSNB4Esy+K+vFYNM0DnNw@mail.gmail.com>
+User-Agent: Wanderlust/2.15.9 (Almost Unreal) SEMI-EPG/1.14.7 (Harue)
+ FLIM-LB/1.14.9 (=?UTF-8?B?R29qxY0=?=) APEL-LB/10.8 EasyPG/1.0.0 Emacs/30.1
+ (aarch64-unknown-linux-gnu) MULE/6.0 (HANACHIRUSATO)
 Precedence: bulk
 X-Mailing-List: sashiko-reviews@lists.linux.dev
 List-Id: <sashiko-reviews.lists.linux.dev>
 List-Subscribe: <mailto:sashiko-reviews+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:sashiko-reviews+unsubscribe@lists.linux.dev>
-MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-In-Reply-To: <20260617113209.8D4BA1F000E9@smtp.kernel.org>
+MIME-Version: 1.0 (generated by SEMI-EPG 1.14.7 - "Harue")
+Content-Type: text/plain; charset=US-ASCII
+X-SA-Exim-Connect-IP: 185.219.108.64
+X-SA-Exim-Rcpt-To: tabba@google.com, sashiko-reviews@lists.linux.dev, oupton@kernel.org, kvmarm@lists.linux.dev
+X-SA-Exim-Mail-From: maz@kernel.org
+X-SA-Exim-Scanned: No (on disco-boy.misterjones.org); SAEximRunCond expanded to false
 
-On Wed, Jun 17, 2026 at 11:32:08AM +0000, sashiko-bot@kernel.org wrote:
-> Thank you for your contribution! Sashiko AI review found 1 potential issue(s) to consider:
-> - [High] Missing READ_ONCE() on lockless access to sock->file can lead to a TOCTOU NULL pointer dereference.
-> --
+On Wed, 17 Jun 2026 13:39:14 +0100,
+Fuad Tabba <tabba@google.com> wrote:
 > 
-> commit 9bf8c99c6cda345fa08537f5df5f36bc0aa367b9
-> Author: Christian Brauner <brauner@kernel.org>
-> 
-> fs: Add bpf_sock_read_xattr() kfunc to read socket xattrs
-> 
-> This commit introduces the bpf_sock_read_xattr() kfunc to allow BPF LSM
-> programs to locklessly read user.* extended attributes from a socket's
-> sockfs inode. The kfunc is registered as KF_RCU, and retrieves the
-> attributes using an RCU-protected rhashtable lookup.
-> 
-> Link: https://github.com/systemd/systemd/pull/40559 [1]
-> 
-> > diff --git a/net/socket.c b/net/socket.c
-> > index 9e8dc769ff7af..3566f8c8ea3fb 100644
-> > --- a/net/socket.c
-> > +++ b/net/socket.c
-> [ ... ]
-> > @@ -465,6 +465,31 @@ static const struct xattr_handler sockfs_user_xattr_handler = {
-> >  	.set = sockfs_user_xattr_set,
-> >  };
-> >  
-> > +/**
-> > + * sock_read_xattr - read a user.* xattr from a socket's sockfs inode
-> [ ... ]
-> > +int sock_read_xattr(struct socket *sock, const char *name, void *value, size_t size)
-> > +{
-> > +	struct file *file = sock->file;
-> > +	struct sockfs_inode *si;
+> On Wed, 17 Jun 2026 at 13:36, Marc Zyngier <maz@kernel.org> wrote:
+> >
+> > On Mon, 15 Jun 2026 13:42:23 +0100,
+> > Fuad Tabba <tabba@google.com> wrote:
+> > >
+> > > On Sun, 14 Jun 2026 at 17:45, <sashiko-bot@kernel.org> wrote:
+> > > >
+> > > One thing I noticed while looking at this:
+> > > kvm_check_illegal_exception_return() preserves {N,Z,C,V,D,A,I,F} from
+> > > the current PSTATE, but the Arm ARM says these should come from
+> > > SPSR_ELx on an illegal exception return (EL and SP are unchanged, but
+> > > the flags and masks are taken from SPSR). PAN and ALLINT should also
+> > > come from SPSR_ELx if their respective features are implemented.
+> > >
+> > > Marc, is the current behavior intentional, or should we be
+> > > constructing PSTATE from the original SPSR_EL2 for those fields?
+> >
+> > This looks like a long standing bug for something we really never
+> > tested. I reckon the patch below would do the trick.
+> >
+> >         M.
+> >
+> > +++ b/arch/arm64/kvm/emulate-nested.c
+> > @@ -2746,17 +2746,29 @@ static u64 kvm_check_illegal_exception_return(struct kvm_vcpu *vcpu, u64 spsr)
+> >             (spsr & PSR_MODE32_BIT) ||
+> >             (vcpu_el2_tge_is_set(vcpu) && (mode == PSR_MODE_EL1t ||
+> >                                            mode == PSR_MODE_EL1h))) {
+> > +               u64 mask;
 > > +
-> > +	if (!file || sock_from_file(file) != sock)
+> >                 /*
+> >                  * The guest is playing with our nerves. Preserve EL, SP,
+> > -                * masks, flags from the existing PSTATE, and set IL.
+> > -                * The HW will then generate an Illegal State Exception
+> > -                * immediately after ERET.
+> > +                * masks, flags from the existing SPSR, and set IL (see
+> > +                * R_VWJHB). The HW will then generate an Illegal State
+> > +                * Exception immediately after ERET.
+> >                  */
+> > -               spsr = *vcpu_cpsr(vcpu);
+> > -
+> > -               spsr &= (PSR_D_BIT | PSR_A_BIT | PSR_I_BIT | PSR_F_BIT |
+> > +               mask  = (PSR_D_BIT | PSR_A_BIT | PSR_I_BIT | PSR_F_BIT |
+> >                          PSR_N_BIT | PSR_Z_BIT | PSR_C_BIT | PSR_V_BIT |
+> >                          PSR_MODE_MASK | PSR_MODE32_BIT);
+> > +
+> > +               if (kvm_has_feat(vcpu->kvm, ID_AA64MMFR1_EL1, PAN, IMP))
+> > +                       mask |= PSR_PAN_BIT;
+> > +               if (kvm_has_feat(vcpu->kvm, ID_AA64PFR1_EL1, NMI, IMP))
+> > +                       mask |= ALLINT_ALLINT;
+> > +               /* Account for FEAT_SPE_EXC and FEAT_TRBE_EXC one day... */
+> > +               if (kvm_has_feat(vcpu->kvm, ID_AA64DFR1_EL1, EBEP, IMP))
+> > +                       mask |= BIT_ULL(32);
+> > +               if (kvm_has_feat(vcpu->kvm, ID_AA64PFR1_EL1, GCS, IMP))
+> > +                       mask |= BIT_ULL(34);
+> > +
+> > +               spsr &= mask;
 > 
-> [Severity: High]
-> Can a concurrent close cause a NULL pointer dereference here?
-> 
-> Since bpf_sock_read_xattr() is registered with KF_RCU, BPF programs can
-> call it under RCU protection where the socket might not have a held file
-> reference. If the last file descriptor is closed concurrently,
-> __sock_release() can set sock->file = NULL without waiting for an RCU grace
-> period.
-> 
-> Because sock->file is read without READ_ONCE(), the compiler is permitted
-> to reload the pointer from memory. If the initial read for the !file check
-> sees a valid pointer, but a subsequent read for the inlined
-> sock_from_file(file) call sees NULL due to the concurrent modification,
-> sock_from_file() will attempt to dereference file->f_op on a NULL pointer.
-> 
-> Does this need struct file *file = READ_ONCE(sock->file) to prevent a
-> TOCTOU issue?
+> I'm on it...
 
-The function is intentionally restricted to BPF LSM hooks where the file
-pointer on struct socket is either NULL or stable. This invariant is
-also relied upon by other LSMs. The RCU makes it possible to use it in
-non-sleeping contexts and the simple xattr interface was specifically
-designed for that.
+Sorry, in what sense?
+
+	M.
+
+-- 
+Without deviation from the norm, progress is not possible.
