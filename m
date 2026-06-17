@@ -1,324 +1,186 @@
-Received: from MRWPR03CU001.outbound.protection.outlook.com (mail-francesouthazon11011005.outbound.protection.outlook.com [40.107.130.5])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-qt1-f178.google.com (mail-qt1-f178.google.com [209.85.160.178])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F123948BD3B
-	for <sashiko-reviews@lists.linux.dev>; Wed, 17 Jun 2026 15:28:25 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=fail smtp.client-ip=40.107.130.5
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D705B48AE16
+	for <sashiko-reviews@lists.linux.dev>; Wed, 17 Jun 2026 15:29:48 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=pass smtp.client-ip=209.85.160.178
 ARC-Seal:i=2; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1781710114; cv=fail; b=GSJ1fmofI3io7m4EdGEmBLyAqJATMpHRYcvvNlDfnPDczEB/0hiD9iQY5bFTAEoIbK6lV0Y2K6Tb9Xc17TWPhdTs53E5OUcq7hhmLdUp2B8F+HT7+WO9cSOaSHh4jYTwZmmUByZIIlwUVGBzEWtUKJc8aP54s9PIX9T0QwLsM/w=
+	t=1781710194; cv=pass; b=hkElzkXCphuXRsFNDGT8DKFu5SdvdnPvK0CL7ioxiipph8is6x0aeA98bqX8B0yyPgJDztkDiaDk3se2z4etOT2zDAvm8rUjJXUjQ2cdUeRyqGDR/m0Dzr4fgOu4SD3WGmyDZ+ZTBCXCl3pBTL5TgasbxeBWI4HG8WINdkykWis=
 ARC-Message-Signature:i=2; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1781710114; c=relaxed/simple;
-	bh=Onvy3w98THPQaa4MTf5GodAd1wsCVy/rFY2ZSCn4M9Y=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:Content-Type:
-	 Content-Disposition:In-Reply-To:MIME-Version; b=cLpwgZXrvEppIwc1w7NnMgTxD0mqlxL8AHiXRivnI5W09F5GRlE2POhOLz8Zz0r2JUc3Dm2njo6L1gh7OwB6cXS9buOFR6hjyqsINJST+UIvgeX3Y0+BgTU9wMbevRZ6comOgNkgk2pYCjzxrFLqk8Wa1Yz1n89hmnahBH9CbTo=
-ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=oss.nxp.com; spf=pass smtp.mailfrom=oss.nxp.com; dkim=fail (2048-bit key) header.d=NXP1.onmicrosoft.com header.i=@NXP1.onmicrosoft.com header.b=UQtzHAMO reason="signature verification failed"; arc=fail smtp.client-ip=40.107.130.5
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=oss.nxp.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=oss.nxp.com
+	s=arc-20240116; t=1781710194; c=relaxed/simple;
+	bh=MKk5MluiAQJnSpa2Pf6/pQQh44RfvLoPtvDGJYV3mt0=;
+	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
+	 To:Cc:Content-Type; b=BeTgkYq04TE8qtAW5vZs6bERi545hXd2MXrGrvs/Vz3Uosd+21fwNknf5lcJpimiGCP4RT/21dv6Kyd0ROD1Zjm1sga9z3ByMxZRzG6HxM2UiL/2CDuDJHtD7D69+2WzDI5FEgD6bxNiXKgu7B8jTgCrhGF1xd7APk6OYl92C9s=
+ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=google.com; spf=pass smtp.mailfrom=google.com; dkim=pass (2048-bit key) header.d=google.com header.i=@google.com header.b=SXaJtE3/; arc=pass smtp.client-ip=209.85.160.178
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=google.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=google.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=fail reason="signature verification failed" (2048-bit key) header.d=NXP1.onmicrosoft.com header.i=@NXP1.onmicrosoft.com header.b="UQtzHAMO"
-ARC-Seal: i=1; a=rsa-sha256; s=arcselector10001; d=microsoft.com; cv=none;
- b=pPaIw8HzJj6grg3dZoyecQPGDOSWEY7PFxOUwz9RsqGr4aDKzGF+bRrnfM0FpXX/j2TDPR/66Ngl2ez2Bb44QljmR8ZuAQ40ngqmQ12BW5Rei8ggLpJc5B/bxcmVQLEZTKyG3xH/i6vM9UIc1YDpJBSTSQ+2XGuySLIpVo83dwUVHn9wFiLed4Z/p6YkKZHpoqoWRPkEbsekNOvVi0F4Mv0Of9tr5sV6kEJdKRdV+4BgvXCOAN8ZxcJI+G/vcz5QEe0WqvJ2cMrGaZmVrznh1WDwL5CZp35L90eg+7TXUmN69aspkVpklQHa10Lt47IKGiyoK6F0Gu0aMy5po9XAQg==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com;
- s=arcselector10001;
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
- bh=bI2edrsASfwwaCCmDFAvAA09SEz83RRNFSPGhlB+H0k=;
- b=DawAJpEzP6aiGKZsBc9yVwG186B8arKrY9znK60dglee/2ZJn8AdcT4cX0e5bjLUt/y15ZT87+RgU5ReCYpjk43C9jp61A9s8xFZMkCN9JTbVMd4ykmNNuHLy3KhIFpRuytF3zbv4dmRw4Ifqu+UjqjFPU1eEe4tRD9veBrCMLQnj8bENDg403qdUsIl7eBm5RVo/I2sPEQz0nO1qNHnSpTRpMit6WBjc6yG5yvFLm5W4Gmdk2rMYBFUULh5KYOy0wLw60sn/7dwvIId88W5y7bmSksBRN8otyEYe2XOCzB9AuyvqJxabpJ2DtkPrJ9U/NsuLnYiHR4uM9UNQsDNrQ==
-ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
- smtp.mailfrom=oss.nxp.com; dmarc=pass action=none header.from=oss.nxp.com;
- dkim=pass header.d=oss.nxp.com; arc=none
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=NXP1.onmicrosoft.com;
- s=selector1-NXP1-onmicrosoft-com;
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
- bh=bI2edrsASfwwaCCmDFAvAA09SEz83RRNFSPGhlB+H0k=;
- b=UQtzHAMO/zth3oloDmd70V4CUakx2h8w1oPvFXa97mFzsaUY8DtNLXv1ZdeyWcQ8EY/3YWtiXkHQc0rMQa2Jd59zC+WVRBPMiiGqC5jBWpvs9nXfCpOrRT5rW+2UsZpSr4ZBzpwm7E3mHvgAdhf+2g/XxmSMEydsNQiWv0TV6UINZIwVuE3lTs270lxY/Z1PZWYx6CZiVmb4vgX9S0FhSw2r5/Ppl+2i1ATeYVddkodKgnYHJjvmYkcgZa9Ooey/fOMmqTqn7vtg+RmJe521H5UAJLucpU8Ri14EJ01QDRyhT5YX8tpSyyjLfxYN0+fYXYQ2nU+nCcpqK994x8ZYLA==
-Authentication-Results: dkim=none (message not signed)
- header.d=none;dmarc=none action=none header.from=oss.nxp.com;
-Received: from GV2PR04MB11799.eurprd04.prod.outlook.com (2603:10a6:150:2cf::9)
- by AM0PR04MB7171.eurprd04.prod.outlook.com (2603:10a6:208:19c::13) with
- Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.21.139.11; Wed, 17 Jun
- 2026 15:28:21 +0000
-Received: from GV2PR04MB11799.eurprd04.prod.outlook.com
- ([fe80::2146:83a2:5329:b7c]) by GV2PR04MB11799.eurprd04.prod.outlook.com
- ([fe80::2146:83a2:5329:b7c%6]) with mapi id 15.21.0113.015; Wed, 17 Jun 2026
- 15:28:20 +0000
-Date: Wed, 17 Jun 2026 11:28:13 -0400
-From: Frank Li <Frank.li@oss.nxp.com>
-To: sashiko-reviews@lists.linux.dev
-Cc: Lakshay Piplani <lakshay.piplani@nxp.com>, devicetree@vger.kernel.org,
-	robh@kernel.org, linux-i3c@lists.infradead.org, Frank.Li@kernel.org,
-	conor+dt@kernel.org
-Subject: Re: [PATCH v12 6/7] i3c: hub: p3h2x4x: Add support for NXP P3H2x4x
- I3C hub functionality
-Message-ID: <ajK9DceV1NICNuus@lizhi-Precision-Tower-5810>
-References: <20260617110355.1591844-1-lakshay.piplani@nxp.com>
- <20260617110355.1591844-7-lakshay.piplani@nxp.com>
- <20260617111846.EAB851F000E9@smtp.kernel.org>
-Content-Type: text/plain; charset=iso-8859-1
-Content-Disposition: inline
-Content-Transfer-Encoding: 8bit
-In-Reply-To: <20260617111846.EAB851F000E9@smtp.kernel.org>
-X-ClientProxiedBy: SN7PR04CA0231.namprd04.prod.outlook.com
- (2603:10b6:806:127::26) To GV2PR04MB11799.eurprd04.prod.outlook.com
- (2603:10a6:150:2cf::9)
+	dkim=pass (2048-bit key) header.d=google.com header.i=@google.com header.b="SXaJtE3/"
+Received: by mail-qt1-f178.google.com with SMTP id d75a77b69052e-5175d339e8bso303231cf.0
+        for <sashiko-reviews@lists.linux.dev>; Wed, 17 Jun 2026 08:29:48 -0700 (PDT)
+ARC-Seal: i=1; a=rsa-sha256; t=1781710188; cv=none;
+        d=google.com; s=arc-20240605;
+        b=BCfkUzUB/+wCmKSW354iPE3S5g0vj/SGS1FRUlhkZthDJ3+3GhvgHQFXSkZf5r+uh/
+         3qSctnsR8o9EwAeySLJiy9VcPvJJlHYJVE1SBQQalBlneftEgNodfjqe3TIyKg0IUdpw
+         x1FvlXSOnEDkh9vgToOyqWACCGyA8/ZRc/pijBrAJuZ72kFdwM0YDhjckRzOSlpo84hY
+         3IPIkoCARZ0Txc2RqoudjceUhdQLx4b8tYzW1yetsDvG0BoDd/fbX24z7Ikii0oN92LZ
+         sSj1GtFxbcExva+iFbYjjcsH57CdibvpaHIdkJ8L1Us0zw+7IL2QGk6ik2BsX59Bv252
+         Wrww==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com; s=arc-20240605;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:dkim-signature;
+        bh=ubB/kwmCmSaCx0iLF8+L4TShpYDwgBrKrRr5YdGlWvg=;
+        fh=vxFxEzPfV2TVZiF6T5th9UokvWy0tGwKR5SSoD4lX+g=;
+        b=XCdPSd2eJZHTyV9sA//c9COZdQDdjGEROfdjk4eSGYTEqsGLTCo8wSVcne+/dwIW/N
+         b0i7Cm0qVJXLwKU3nGhlcNEBemjbj5r7gTCcKdnG+x2sFBbqtgwc++swKKHRUEDCuC/0
+         11MYLkWiyhGh7szpgDRfSJTiAJSCHvqkuT20zvgREgAxmYqnfn/uxvn9Peqs4ZlWaacV
+         CbqODA2/pZqjhzFSJgmIuAyZI6c8go8yj5DmXX5ZgsuNhvcZ+IYG2GKnoPzM1i12qgbw
+         EzYTAmRS5fDUtX1/RoUTWfLOScrgt5pjX6n+K5+4za43HVdRR32N16yyHsbCSf3V27Ym
+         O65Q==;
+        darn=lists.linux.dev
+ARC-Authentication-Results: i=1; mx.google.com; arc=none
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=google.com; s=20251104; t=1781710188; x=1782314988; darn=lists.linux.dev;
+        h=content-transfer-encoding:content-type:cc:to:subject:message-id
+         :date:from:in-reply-to:references:mime-version:from:to:cc:subject
+         :date:message-id:reply-to:content-type;
+        bh=ubB/kwmCmSaCx0iLF8+L4TShpYDwgBrKrRr5YdGlWvg=;
+        b=SXaJtE3/nEiMmaY+Bb5svov4r972q46J2rqWrvzWJKlpAxvAfBiWjIX+ydXMFMjryh
+         H7oaXWB/6Rp4wPWldGptbLXhX1zDSLJxk43F5K05+8zXwyk7d3V8dXLcESOnT0Cf9+8s
+         fvaiTJcgOfsYKd1WEpqbrhZz7WFNtIZlXaHiTJudY9KSY+DA0zCB8E9G7QYryIwWkScl
+         8Uch3zd9HISXmhCqS6YG/oeKJFIXA1z+jgMPLWVASuHBuRkbqQR6DGlcDzEW6k+8R/1C
+         M9JFSVWFwj/fCsCI6TvTotfoWXKlz+e7eataibAR+DJkiVUmAEmYDzgG047FSVRN6pqe
+         +ddg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20251104; t=1781710188; x=1782314988;
+        h=content-transfer-encoding:content-type:cc:to:subject:message-id
+         :date:from:in-reply-to:references:mime-version:x-gm-gg
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to
+         :content-type;
+        bh=ubB/kwmCmSaCx0iLF8+L4TShpYDwgBrKrRr5YdGlWvg=;
+        b=c5i0QWptC3wN9Qu3/QEv7dpfiz6sPGOlUmIkQWbiTX+pCCQnihZT4rAkETpflVQKHn
+         7rpVbCicmfiZxp860N7Bl27rEuqogBa3PnQm36mVH2d8GQrfUmEVxTYb6la/URi+CbiV
+         dGoS7gphK0cTr0uyNu8emXvQkRwySYNNK9Orm/Fwlo0KNp3yO7I0/e0LlRH2VFxgqhXU
+         9KG4rQWaVxWG+IHeVipOsgNnlyf9LsEkwf953+yCkLhfPzynwNemQkZC43pp4boPVY2Y
+         J4ymC/NyWdVL5GZMwWZbkdhnBqhGBLY8MknufgZU4Oqajp2ErjcGjVtdmu/8qvRUUBcq
+         xOdg==
+X-Gm-Message-State: AOJu0YzHWYBQRVTSRrOvR2yzRJXB/duJUAADDCbepEWQEHS/h87drsXr
+	K1a93H+JklDUSFsPjPnjdaS1dM+22g/kdmuNM03GnPWdmZtvGQWnxdcGJOX3dXWebxkNchNt5/Z
+	Hkcdar71Z6JOUAgseENoAtW0Y1WYUnfzRfk0n+uLDnbDIRCfjJI+GDmTa6rM=
+X-Gm-Gg: Acq92OHrIqfZsTLud6EsQXFplHuSXcLExDKzoPyT9JxxS2wwGiR0fwElCnThC1Zon1q
+	USR3kgmAUA1ipFLH6a58k7CYjb9NFYER7mkggUk7MMJsLy2fiDU8DJaeRo7WRbo2xMRJ+hDq7Xq
+	Bc7ofZFQzu0tCMgJaWDmqcGzquAnGf8Pbb60+fD9cEDppTTLUGKQKlkehK0LZEOLTWDBK9xcsup
+	+4G6h84Cokm/aUhxGP0RzbaHkCtcGCtZ2bVbX2qW4avwr9DNDw8xt4Ag6WKJRrxdIEQXqbC5LyR
+	qIe2C/NH0bPvS++0aVasD/26OQ==
+X-Received: by 2002:a05:622a:5a0c:b0:4f3:5475:6b10 with SMTP id
+ d75a77b69052e-519aa976470mr10556381cf.8.1781710186875; Wed, 17 Jun 2026
+ 08:29:46 -0700 (PDT)
 Precedence: bulk
 X-Mailing-List: sashiko-reviews@lists.linux.dev
 List-Id: <sashiko-reviews.lists.linux.dev>
 List-Subscribe: <mailto:sashiko-reviews+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:sashiko-reviews+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-X-MS-PublicTrafficType: Email
-X-MS-TrafficTypeDiagnostic: GV2PR04MB11799:EE_|AM0PR04MB7171:EE_
-X-MS-Office365-Filtering-Correlation-Id: e6938f9e-15b3-4fb0-6c4a-08decc850fe0
-X-MS-Exchange-SenderADCheck: 1
-X-MS-Exchange-AntiSpam-Relay: 0
-X-Microsoft-Antispam:
-	BCL:0;ARA:13230040|376014|366016|19092799006|23010399003|1800799024|18002099003|22082099003|11063799006|4143699003|3023799007|56012099006|6133799003;
-X-Microsoft-Antispam-Message-Info:
-	LoLBNKqUkPDGD6DWpOxlljvG3glxNDJ/LjrrPr81Xaqzmz7PVPbq11alXuczMhSYHN+irs0s0grj+gpwaGAsCc8zjFlmDPPaYFScGdDobdJd+8NbyIBgyfsb32jSc5QYGqWXRu804ICtK9X0AvMkhA+/jNGHTS0J687GECP+ZL29ih1Aa0FaRKLElfipMNQbHYmEqjoLhcJagfGerDxg0RMcir4t7xTOdpj2dx31FGpyr9yEpF+6VRffIkCjturxLN6yZR1D3zvxEF26flxtksu7Ia9X1xEwQasGCwXeWdk7yM3dehz/Q2kGQbc7CNbPDOjBaa9Pe4lwdWJQMi6mcQO/GsDlBJCjKeNW9PNArPbfy1um/Hq+AboZ2/rVqIK7cKb0SF+IxOT+rqHz9CwVCjNzbHkEvygIs6GdopDzyJRgPfLFyi6yR7dxNfCFadQwmm0DF5sXGpIq8QNVprwHcI/Xwd0CMLu2LJ5OAzITRyv4/2qJm/UbwIdR/5EedD1YVK5GWTEw/qY64F4gLA7JKsXpgCQ4/PJKoQ4S02x559V5xOlJQLc36mTO2+W0+YWsOPdKcQ9+S1i8lmo+kZ789sz1+i0Rnrdk6B5K8SltIk3jAS5fcE/jOjal+JvX4Todwb/FtkeTOMQOC9sYScg9/g==
-X-Forefront-Antispam-Report:
-	CIP:255.255.255.255;CTRY:;LANG:en;SCL:1;SRV:;IPV:NLI;SFV:NSPM;H:GV2PR04MB11799.eurprd04.prod.outlook.com;PTR:;CAT:NONE;SFS:(13230040)(376014)(366016)(19092799006)(23010399003)(1800799024)(18002099003)(22082099003)(11063799006)(4143699003)(3023799007)(56012099006)(6133799003);DIR:OUT;SFP:1101;
-X-MS-Exchange-AntiSpam-MessageData-ChunkCount: 1
-X-MS-Exchange-AntiSpam-MessageData-0:
-	=?iso-8859-1?Q?zDNgyPT9D2duIBghvIbAAQl4AVo6ND8nSm9XIlloIuccSfS5CS5dfueBht?=
- =?iso-8859-1?Q?YRaImfMfhs2ODDAd69HhRgFbrcwTH4VwwsjZmas0klqsTKZPDVHk5n/Xim?=
- =?iso-8859-1?Q?9unnWcvl53nBGhc+7mpC5LhWVXcHInN9ggQnvkF5qUZonjPuTeNd8XU3IW?=
- =?iso-8859-1?Q?1BfClExwC3dmAoy90ov+nX+psXdkSlaVLhB8bS7WSwx69ER1p69tVMCrE3?=
- =?iso-8859-1?Q?h/nXZkTxgyXLD5VHxh5y17QuJLs1a6kVSfoZaFKL3yb949wCQxVYuOr+sd?=
- =?iso-8859-1?Q?vRJPEQ2J3IKTd73+McZ+9L4RmLhEQf1VqQskVpsoQNpQjR3BpPgs8vszR8?=
- =?iso-8859-1?Q?WSi9GaIGXXZwe3pmBIupAM6AMjGIlOF9noRKUviccHesxttt6epflS8sUV?=
- =?iso-8859-1?Q?70YbYsNK/xndJG9Z/C/iU51R7Ep2MAnT2npDyCz17ydMMmo8VUjTRL9IcC?=
- =?iso-8859-1?Q?OvTUnBalWk4R/yhBV58hCFDG5bYQx2RVx1a7Qh7dpe6iH4EU1mzarVQCiM?=
- =?iso-8859-1?Q?gdAiAeRlykKsrtjtsjz/C3c1Kgx3fIaGHB3v6g/bMHCZC3XmqpLz4EURci?=
- =?iso-8859-1?Q?f/oFjHs61kuctYjy7lR8awfJ4QRLy4LAbz0L+OGoE/eBJthHokVvToZXCJ?=
- =?iso-8859-1?Q?OCkaBiuw9/zyseaNa8DQjwyf5r3QQLbC3dglJdUiHikwvjgWIxBwF5QKzy?=
- =?iso-8859-1?Q?FJJ77+npHoGrdqBogglPIQtH0X6xsrsqmF4PBOillYDXQg4QHIiCb46gUW?=
- =?iso-8859-1?Q?/+Zm3wuAs51lxkDxwvA/mc/MTfW9wMZVrwvQXJlOQ5GEzJU3XMki1qo+5z?=
- =?iso-8859-1?Q?WvH+a2P2LpqPVMb1NN5u7YdE+QVfIPIwBZxetKeanYsHzqKplyhumY9Nzv?=
- =?iso-8859-1?Q?kY6idw1jfd7yoZovQ95G2zNsrQnbG4Fvc1vuy93GqIaPq8qowozDY4THDu?=
- =?iso-8859-1?Q?6y3sVS/I7w7bYm5pnxjS9miQo8qGkGIUkgsUsgWM3i4yf7aQFKDbAJXlDJ?=
- =?iso-8859-1?Q?2sO2Ba4q1fTqtFA5K1OPPAmXxZgOnrMhZ1FuQHsUwqtwtpjkrVzsv8qc8h?=
- =?iso-8859-1?Q?aXJhhUpggqWqjVVhXM76lE/ERsLB6w818fnsFy+1iN1LxKyWZ12XECORHv?=
- =?iso-8859-1?Q?LaF6HM4qbdWGwzqQJGqiQmn46w+KrC0WZbGr8dgO0+f1kk/OyPnqOMUFIN?=
- =?iso-8859-1?Q?Kpoe1qadDzDlRoYAHhUzyKxpBoO7ltB7/LIfn7LnTppA1Q2BiCMxOfIi3f?=
- =?iso-8859-1?Q?GgbwZbzzHWqCo/qoH0wpEH7CHHH0XvcJi9PtPiN9fXRS9FX1RI7z+5p5vC?=
- =?iso-8859-1?Q?5KdYOwUdwjeTU3Hk+NruVAhifIxMh6qnpGGp6KweDr3EemG5jCuqgtFLdi?=
- =?iso-8859-1?Q?vKvjbXOlv98tuee+xsHfz/h3M5f8Czj/LwrHcAE3edlskk4JeNUs1jhqtg?=
- =?iso-8859-1?Q?oB2rgGFSWkHDQ50ECNNsl00CCdXpilkKmtSgvjLL0inDPT0j4oQCioRUX1?=
- =?iso-8859-1?Q?JvqjpI/PSEyiXA1P+JKDm9/iHd0EC3lDQHM0jQtC3fhy0FhFA1F7FZ8A3n?=
- =?iso-8859-1?Q?I5LqBQ3vCNS8vcx4MXTW6scqoqA6FfJykng9k7GRGzTWgJJm74ju5svTHM?=
- =?iso-8859-1?Q?WhKho/pFXAoqJPdi/SPbkuxJxZCTuIBTLOv1Qn3VHowV7+PHpnAA1vmLxJ?=
- =?iso-8859-1?Q?j1pp6rzzw+t421SeyfhW/d1qe8fjZ6j3vMzDtgCpX5HTtKpS80P1B9r0x2?=
- =?iso-8859-1?Q?+EmSN8zzN+iwrzllsKL6OLd5gRAE1VOK27R5h9Mtt5sRNV3nk5YLKaImq4?=
- =?iso-8859-1?Q?FwRl5l/pf7zR6pJzqVTVRiQZD2BzYD+pIBkVC6CflBolUq+d/lza?=
-X-OriginatorOrg: oss.nxp.com
-X-MS-Exchange-CrossTenant-Network-Message-Id: e6938f9e-15b3-4fb0-6c4a-08decc850fe0
-X-MS-Exchange-CrossTenant-AuthSource: GV2PR04MB11799.eurprd04.prod.outlook.com
-X-MS-Exchange-CrossTenant-AuthAs: Internal
-X-MS-Exchange-CrossTenant-OriginalArrivalTime: 17 Jun 2026 15:28:20.5672
- (UTC)
-X-MS-Exchange-CrossTenant-FromEntityHeader: Hosted
-X-MS-Exchange-CrossTenant-Id: 686ea1d3-bc2b-4c6f-a92c-d99c5c301635
-X-MS-Exchange-CrossTenant-MailboxType: HOSTED
-X-MS-Exchange-CrossTenant-UserPrincipalName: 4uJ0aZPotzqgaJoBJuAuL6n8Fa0BfQuyZ29DHxZ64uFOtHT0e3idNdu92EaCUF6ll1T0FNy7EDTPEAj0m+rQZ55/m5CiHYr4/ZAhz8AnAPv6A4dLPDtYxdBiUn4Ixpbn
-X-MS-Exchange-Transport-CrossTenantHeadersStamped: AM0PR04MB7171
+References: <20260617144907.2972095-1-tabba@google.com> <20260617150438.66E3A1F000E9@smtp.kernel.org>
+In-Reply-To: <20260617150438.66E3A1F000E9@smtp.kernel.org>
+From: Fuad Tabba <tabba@google.com>
+Date: Wed, 17 Jun 2026 16:29:09 +0100
+X-Gm-Features: AVVi8CcDF_ndawt-hT_yYHscpCN_9-TB4HVtY75uSEgCoFxG-oPzigLrxSYXAig
+Message-ID: <CA+EHjTybyMvQtBAbRhShXA8Ba0=-W8E7-RvCKO2X3EMnMXhhuw@mail.gmail.com>
+Subject: Re: [PATCH] KVM: arm64: nv: Fix PSTATE construction on illegal
+ exception return
+To: sashiko-reviews@lists.linux.dev
+Cc: Marc Zyngier <maz@kernel.org>, kvmarm@lists.linux.dev, 
+	Oliver Upton <oupton@kernel.org>
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 
-On Wed, Jun 17, 2026 at 11:18:46AM +0000, sashiko-bot@kernel.org wrote:
-> Thank you for your contribution! Sashiko AI review found 5 potential issue(s) to consider:
-> - [High] The SMBus transaction wait logic uses a fixed sleep instead of polling the hardware completion flag, leading to premature reads of incomplete transactions and data corruption.
-> - [High] Overwriting the parent device's `of_node` pointer iteratively causes a memory leak of the original parent node, a double-free of the target port nodes, and state corruption.
-> - [Medium] Potential `of_node` reference leak in `p3h2x4x_get_target_port_dt_conf()` if multiple child nodes specify the same target port index.
-> - [Medium] The hub's protected registers remain permanently unlocked if the hardware configuration or bus registration fails during probe.
-> - [Low] Comment describes a read followed by a write, but the code implements a write followed by a read.
+On Wed, 17 Jun 2026 at 16:04, <sashiko-bot@kernel.org> wrote:
+>
+> Thank you for your contribution! Sashiko AI review found 1 potential issu=
+e(s) to consider:
+>
+> Pre-existing issues:
+> - [High] Incomplete PSTATE allowlist on illegal exception return causes g=
+uest state corruption
 > --
 >
-> commit 1c982ecf71c6fb3b765caf255191a821a5e37cb5
-> Author: Aman Kumar Pandey <aman.kumarpandey@nxp.com>
+> commit 93d5c5c2769fe9f58076ca66eb01cbe04fd87921
+> Author: Fuad Tabba <tabba@google.com>
 >
-> i3c: hub: p3h2x4x: Add support for NXP P3H2x4x I3C hub functionality
+> KVM: arm64: nv: Fix PSTATE construction on illegal exception return
 >
-> Add I3C hub functionality for the NXP P3H2x4x family of multiport hubs.
-> These devices support downstream target ports that can be configured
-> as I3C, I2C, or SMBus.
+> This commit updates PSTATE construction during an illegal exception retur=
+n
+> to correctly source flags and masks from the SPSR being returned to, as
+> per ARM rule R_VWJHB. It constructs the PSTATE by taking these fields fro=
+m
+> the SPSR while preserving EL, SP, nRW, and EXLOCK from the current PSTATE=
+.
 >
-> > diff --git a/drivers/i3c/hub/p3h2840_i3c_hub_common.c b/drivers/i3c/hub/p3h2840_i3c_hub_common.c
-> > new file mode 100644
-> > index 0000000000000..05e19bff20d5c
-> > --- /dev/null
-> > +++ b/drivers/i3c/hub/p3h2840_i3c_hub_common.c
+> Link: https://lore.kernel.org/all/86wlvxs5r0.wl-maz@kernel.org/
+>
+> > diff --git a/arch/arm64/kvm/emulate-nested.c b/arch/arm64/kvm/emulate-n=
+ested.c
+> > index dba7ced74ca5e..ace2b40cf8756 100644
+> > --- a/arch/arm64/kvm/emulate-nested.c
+> > +++ b/arch/arm64/kvm/emulate-nested.c
+> > @@ -2738,17 +2738,30 @@ static u64 kvm_check_illegal_exception_return(s=
+truct kvm_vcpu *vcpu, u64 spsr)
+>
 > [ ... ]
-> > +static void p3h2x4x_get_target_port_dt_conf(struct device *dev,
-> > +					    const struct device_node *node)
-> > +{
-> > +	struct p3h2x4x_i3c_hub_dev *p3h2x4x_i3c_hub = dev_get_drvdata(dev);
-> > +	u64 tp_port;
+>
+> > +             mask =3D PSR_D_BIT | PSR_A_BIT | PSR_I_BIT | PSR_F_BIT |
+> > +                    PSR_N_BIT | PSR_Z_BIT | PSR_C_BIT | PSR_V_BIT;
 > > +
-> > +	for_each_available_child_of_node_scoped(node, dev_node) {
-> > +		if (of_property_read_reg(dev_node, 0, &tp_port, NULL))
-> > +			continue;
+> > +             if (kvm_has_feat(vcpu->kvm, ID_AA64MMFR1_EL1, PAN, IMP))
+> > +                     mask |=3D PSR_PAN_BIT;
+> > +             if (kvm_has_feat(vcpu->kvm, ID_AA64PFR1_EL1, NMI, IMP))
+> > +                     mask |=3D ALLINT_ALLINT;
+> > +             /* FEAT_SPE_EXC and FEAT_TRBE_EXC also gate PSTATE.PM one=
+ day... */
+> > +             if (kvm_has_feat(vcpu->kvm, ID_AA64DFR1_EL1, EBEP, IMP))
+> > +                     mask |=3D BIT_ULL(32);    /* PSTATE.PM */
 > > +
-> > +		if (tp_port < P3H2X4X_TP_MAX_COUNT) {
-> > +			p3h2x4x_i3c_hub->tp_bus[tp_port].of_node = of_node_get(dev_node);
->
-> [Severity: Medium]
-> Could this leak the of_node reference if a malformed device tree specifies
-> multiple child nodes with the same target port index?
->
-> If multiple child nodes specify the same reg value, the pointer is
-> overwritten with a new of_node_get() result, which abandons the previous
-> reference.
->
-> > +			p3h2x4x_i3c_hub->tp_bus[tp_port].tp_mask = P3H2X4X_SET_BIT(tp_port);
-> > +			p3h2x4x_i3c_hub->tp_bus[tp_port].p3h2x4x_i3c_hub = p3h2x4x_i3c_hub;
-> > +			p3h2x4x_i3c_hub->tp_bus[tp_port].tp_port = tp_port;
-> > +		}
-> > +	}
-> > +}
-> [ ... ]
-> > +static int p3h2x4x_i3c_hub_probe(struct platform_device *pdev)
-> > +{
-> [ ... ]
-> > +	/* Unlock access to protected registers */
-> > +	ret = regmap_write(p3h2x4x_i3c_hub->regmap, P3H2X4X_DEV_REG_PROTECTION_CODE,
-> > +			   P3H2X4X_REGISTERS_UNLOCK_CODE);
-> > +	if (ret)
-> > +		return dev_err_probe(dev, ret, "Failed to unlock HUB's protected registers\n");
-> > +
-> > +	ret = p3h2x4x_configure_hw(dev);
-> > +	if (ret)
-> > +		return dev_err_probe(dev, ret, "Failed to configure the HUB\n");
->
-> [Severity: Medium]
-> Are the hub's protected registers left permanently unlocked if probe fails
-> during p3h2x4x_configure_hw() or bus registration?
->
-> The driver unlocks the hardware registers at the start of probe and locks
-> them at the very end. However, if any initialization step fails and returns
-> an error, the function exits immediately without locking the registers again.
->
-> Could this be mitigated by using a devm_add_action_or_reset() callback or
-> explicit error handling labels to ensure the registers are safely relocked?
-
-It is not big problem if device can support P3H2X4X_REGISTERS_UNLOCK_CODE
-twice without LOCK. The driver should recover from failure state.
-
->
-> > +
-> > +	/* Register virtual I3C master controllers for I3C target ports */
-> > +	if (p3h2x4x->i3cdev) {
-> [ ... ]
-> > diff --git a/drivers/i3c/hub/p3h2840_i3c_hub_i3c.c b/drivers/i3c/hub/p3h2840_i3c_hub_i3c.c
-> > new file mode 100644
-> > index 0000000000000..8adb235b992c0
-> > --- /dev/null
-> > +++ b/drivers/i3c/hub/p3h2840_i3c_hub_i3c.c
-> [ ... ]
-> > +int p3h2x4x_tp_i3c_algo(struct p3h2x4x_i3c_hub_dev *p3h2x4x_hub)
-> > +{
-> [ ... ]
-> > +	for (tp = 0; tp < P3H2X4X_TP_MAX_COUNT; tp++) {
-> > +		if (!p3h2x4x_hub->tp_bus[tp].of_node ||
-> > +		    p3h2x4x_hub->hub_config.tp_config[tp].mode != P3H2X4X_TP_MODE_I3C)
-> > +			continue;
-> > +
-> > +		/* Assign DT node for this TP */
-> > +		p3h2x4x_hub->dev->of_node = p3h2x4x_hub->tp_bus[tp].of_node;
+> > +             spsr &=3D mask;
 >
 > [Severity: High]
-> Does overwriting the parent device's of_node pointer iteratively cause a
-> memory leak of the original parent node and a double-free of the target port
-> nodes?
+> This is a pre-existing issue, but this explicit allowlist approach seems =
+to
+> omit several architecturally defined and KVM-supported PSTATE fields.
+>
+> For example, PSR_SSBS_BIT, PSR_DIT_BIT, PSR_UAO_BIT, PSR_TCO_BIT, and
+> PSR_BTYPE_MASK are not included in the mask. Because spsr is masked with
+> this incomplete allowlist, won't these valid bits be silently zeroed out
+> instead of being preserved?
+>
+> When the guest takes the resulting Illegal State Exception, its SPSR_ELx
+> will have lost these bits, which could corrupt the guest's architectural
+> state and break guest exception handlers that rely on them.
+>
+> Would a denylist approach (masking out only the mode bits and EXLOCK from
+> SPSR and taking them from CPSR) be safer to ensure all relevant bits are
+> retained?
 
-Look like AI is correct.
+I don't think so, but Marc, please correct me if I'm wrong.
 
->
-> The loop over target ports directly mutates the shared pdev->dev.of_node
-> pointer which was populated in probe using device_set_of_node_from_dev().
-> This leaks the reference to the original parent node, and leaves
-> dev->of_node pointing to the last target port node.
->
-> When the driver is unbound, the driver core will drop a reference on
-> dev->of_node, but p3h2x4x_put_target_port_of_nodes() also drops a reference
-> on the same node, which can cause a use-after-free or double-free refcount
-> underflow. Mutating dev->of_node also creates a race with sysfs/uevent.
->
-> Should the driver assign the node to controller->dev.of_node directly
-> instead of mutating the parent's pointer?
->
-> > +
-> > +		struct i3c_hub_controller *hub_controller =
-> > +				&p3h2x4x_hub->tp_bus[tp].hub_controller;
-> [ ... ]
-> > diff --git a/drivers/i3c/hub/p3h2840_i3c_hub_smbus.c b/drivers/i3c/hub/p3h2840_i3c_hub_smbus.c
-> > new file mode 100644
-> > index 0000000000000..cf664425af071
-> > --- /dev/null
-> > +++ b/drivers/i3c/hub/p3h2840_i3c_hub_smbus.c
-> [ ... ]
-> > +static int p3h2x4x_read_smbus_transaction_status(struct p3h2x4x_i3c_hub_dev *hub,
-> > +						 u8 target_port_status,
-> > +						 u8 data_length)
-> > +{
-> > +	u32 status_read;
-> > +	u8 status;
-> > +	int ret;
-> > +
-> > +	fsleep(P3H2X4X_SMBUS_400kHz_TRANSFER_TIMEOUT(data_length));
-> > +
-> > +	ret = regmap_read(hub->regmap, target_port_status, &status_read);
->
-> [Severity: High]
-> Does using a hardcoded sleep based on bytes transferred instead of polling a
-> hardware completion status bit lead to premature reads of incomplete
-> transactions?
->
-> If the downstream device performs clock stretching or is slow to respond,
-> the transfer will take longer than the hardcoded timeout. The driver then
-> reads target_port_status and shifts to check the status bits.
->
-> Since an ongoing transaction leaves the status bits at 0
-> (P3H2X4X_SMBUS_CNTRL_STATUS_TXN_OK), the driver will incorrectly assume the
-> transaction has finished successfully. It will then proceed to read stale or
-> uninitialized memory buffers and return garbage data.
->
-> Could this be updated to use a polling loop checking the finish flag?
+My reading of the ARM ARM is that these fields are UNKNOWN on an illegal
+exception return, not preserved. R_VWJHB says "All of the following are
+UNKNOWN" and lists PSTATE.{UAO, DIT, TCO, SSBS, BTYPE, PACM}. If that is
+right, masking them to 0 is a valid realisation of UNKNOWN rather than a
+loss of state, since a guest cannot rely on them surviving an illegal ERET.
 
-Yes, it should use read_poll_timeout here.
+Cheers,
+/fuad
 
 >
-> > +	if (ret)
-> > +		return ret;
-> > +
-> > +	status = (u8)status_read;
-> [ ... ]
-> > +static s32 p3h2x4x_tp_i2c_xfer(struct i2c_adapter *adap, struct i2c_msg *msgs, int num)
-> > +{
-> [ ... ]
-> > +		rw = (msgs[msg_count].flags & I2C_M_RD) ? 1 : 0;
-> > +		if (!rw) {
-> > +			/* If a read message is immediately followed by a write message to
-> > +			 * the same address,  consider combining them into a single transaction.
-> > +			 */
->
-> [Severity: Low]
-> This isn't a bug, but the comment describes a read followed by a write while
-> the code implements a write followed by a read.
->
-> The actual code block checks !rw for the first message and flags & I2C_M_RD
-> for the second message, which accurately handles a write message immediately
-> followed by a read message.
-
-small issue, easy to fix it.
-
-Frank
-
->
-> > +			if (msg_count + 1 < num &&
-> > +			    msgs[msg_count].addr == msgs[msg_count + 1].addr &&
-> > +			    (msgs[msg_count + 1].flags & I2C_M_RD)) {
-> > +				if (msgs[msg_count].len + msgs[msg_count + 1].len >
-> > +				    P3H2X4X_SMBUS_PAYLOAD_SIZE)
-> > +					return -EINVAL;
+> > +             spsr |=3D cpsr & (PSR_MODE_MASK | PSR_MODE32_BIT);
+> > +             if (kvm_has_feat(vcpu->kvm, ID_AA64PFR1_EL1, GCS, IMP))
+> > +                     spsr |=3D cpsr & BIT_ULL(34);     /* PSTATE.EXLOC=
+K */
+> >               spsr |=3D PSR_IL_BIT;
+> >       }
 >
 > --
-> Sashiko AI review · https://sashiko.dev/#/patchset/20260617110355.1591844-1-lakshay.piplani@nxp.com?part=6
+> Sashiko AI review =C2=B7 https://sashiko.dev/#/patchset/20260617144907.29=
+72095-1-tabba@google.com?part=3D1
