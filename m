@@ -1,57 +1,124 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4E0A3381AF1;
-	Wed, 17 Jun 2026 08:28:21 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D31A3380FDD;
+	Wed, 17 Jun 2026 10:35:44 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1781684902; cv=none; b=Twd62SEBG8rJztCNOB6Te4eFHwghK92OA4vAHIM1uV5wIV963rAMUSAZIrOAPBV0x4c1iRz+nwhOPTrg4cg8fMQRmdJanlrWK+S4BFY/ScX1LzQOS1eiJ+QWDDSX+zYghrHLjPaP6wcdY3wZTpOXLRLZ+dyZ1FWiq3BvB8Cl1uQ=
+	t=1781692547; cv=none; b=jw4SmgL6NWiCnL7t3Awuq+2Sx6H08CxxoPN+4rwWMHDYXLQwoVdtz4BOk0N7vsf1Zg6jjpJmV15MoiL2fwU0c4TaundR05PePpqKIYr5T76wGPDhGHihtPCAi3u+C1JMqEsJgqXaII0LqtvQC/34w3I0xWSwSaQXGWmvaEfwMxY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1781684902; c=relaxed/simple;
-	bh=WqL7U+S2Iy4uX59QoAT3Vhwoou+EBlmkapsajA+3AYY=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=R4xqwiR4cbUhT2NMpYHosX9DF/QexiVeaEOgSjwfjyszATqdhhLI2xH106a2vm9w0Z24BZE311qSmEG/Ry7f9s5+/WDe3BVDHLqMHFso2OTUjqUcVX9ClreaqEKu/gf2gRKnxMUngipuHkQyQ98ohX4srFXRpwDAUFoOfmrxz1A=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=h5YAacGI; arc=none smtp.client-ip=100.103.45.18
+	s=arc-20240116; t=1781692547; c=relaxed/simple;
+	bh=RrNJxgwTf/XIBO4xypsk04H4BkZDswlpF6TTo/qNS0o=;
+	h=Date:Message-ID:From:To:Cc:Subject:In-Reply-To:References:
+	 MIME-Version:Content-Type; b=EjX7r1QE7jNpgW8kJEEODUm0fXTkOOzj4NaT8/ZSNWTB7QLHRmH0Ot7w0q7PK/hgl/CDQAB3zqrG/DM91kPl//9ckQtBGlEVFYhRNb/r7cPPp15l6qdWyS8SH2SxndCYU8G8qTf3oty05eTs4Rmc68Q7Ze937dOtaR2SPBJbLmI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=FMdFcSmG; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="h5YAacGI"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 22FBB1F000E9;
-	Wed, 17 Jun 2026 08:28:19 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="FMdFcSmG"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 531CA1F000E9;
+	Wed, 17 Jun 2026 10:35:44 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=kernel.org;
-	s=k20260515; t=1781684901;
-	bh=aliNvZtAnIZtiREEorpctDPgcyLLhMKE6RdQ2zxEaUs=;
-	h=Date:From:To:Cc:Subject:References:In-Reply-To;
-	b=h5YAacGIuJ+WASJQJTtqLRaD4DKdWhqss/76klQ9WrKGLMn+aWGInNVNBFDkvY2KR
-	 OM5SwYrugNLBbPmFYnLo+ebODUZezbZ34NGMCBqpq6HYv+dcFlr3vIXdy7VdvUT3wn
-	 lv9QlXTUD0PAL5JRwIoP413GWiQ/L71/OjFEi1KZyb3CXbqfCRKGj/PgqPsW2mLtuc
-	 T+NRbuBomTAUMDKG0LH99U8RxG2XCBNeNDqrsTqqGXrTXX7+IDDhBjESVCFeXroQen
-	 Mv86GES8dGjzrY5UkUVHoX1yBIUXrUFgQGgC7vX2qAcctvU97P4iU5pz8CvdDx07rA
-	 Ghm3L/UHGydZQ==
-Date: Wed, 17 Jun 2026 09:28:17 +0100
-From: Lee Jones <lee@kernel.org>
-To: sashiko-reviews@lists.linux.dev
-Cc: linux-input@vger.kernel.org, dmitry.torokhov@gmail.com
-Subject: Re: [PATCH v4 1/3] HID: wacom: Fix Use-After-Free in wacom_intuos_pad
-Message-ID: <20260617082817.GC10056@google.com>
-References: <20260616092658.1714548-1-lee@kernel.org>
- <20260616094526.D380A1F000E9@smtp.kernel.org>
+	s=k20260515; t=1781692544;
+	bh=O/jqFd+m3bTR3khFaiDVQE+f/oaTsTTweB/Z47ULnQM=;
+	h=Date:From:To:Cc:Subject:In-Reply-To:References;
+	b=FMdFcSmGNYHdLWO/QKMsuCv5P53+Xwjqhimwx8v4wRXHO+TXiGERWnIi8zvjF7wBb
+	 7HHe/Bt5+AatwU3LQX/pAINupDUsFjio9eSUO0od3LdCACRFk5kUfCJNXkI0ejcifZ
+	 ciiQEV/ZA771bBnaMKrakvUUqUY3c/JSac5RZw9gKpEJhNKNglIGW8y51p8dBu2FPg
+	 XEXI2ucRxMHEhR0xEB9Lpy+8InkIqpYyiYyuEaxf9W4Jiuga6QL5UO/UfHpEY/jzIo
+	 4gR/uWlVkyYtQVK7qyWW/pWMPv9x6aAwzdvDxeTuVN692Ay9SWnstA9p07/yo/zzDN
+	 eHe+9Flt4iVxQ==
+Received: from sofa.misterjones.org ([185.219.108.64] helo=goblin-girl.misterjones.org)
+	by disco-boy.misterjones.org with esmtpsa  (TLS1.3) tls TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384
+	(Exim 4.98.2)
+	(envelope-from <maz@kernel.org>)
+	id 1wZncU-0000000DdiT-2baY;
+	Wed, 17 Jun 2026 10:35:42 +0000
+Date: Wed, 17 Jun 2026 11:35:42 +0100
+Message-ID: <861pe5tpxd.wl-maz@kernel.org>
+From: Marc Zyngier <maz@kernel.org>
+To: Oliver Upton <oupton@kernel.org>
+Cc: sashiko-reviews@lists.linux.dev,
+	kvm@vger.kernel.org,
+	kvmarm@lists.linux.dev
+Subject: Re: [PATCH] KVM: arm64: Handle race between interrupt affinity change and LPI disabling
+In-Reply-To: <ajGbLXf8Yc67cSI9@kernel.org>
+References: <20260615181625.3029352-1-maz@kernel.org>
+	<20260615183314.65A571F00A3A@smtp.kernel.org>
+	<ajGbLXf8Yc67cSI9@kernel.org>
+User-Agent: Wanderlust/2.15.9 (Almost Unreal) SEMI-EPG/1.14.7 (Harue)
+ FLIM-LB/1.14.9 (=?UTF-8?B?R29qxY0=?=) APEL-LB/10.8 EasyPG/1.0.0 Emacs/30.1
+ (aarch64-unknown-linux-gnu) MULE/6.0 (HANACHIRUSATO)
 Precedence: bulk
 X-Mailing-List: sashiko-reviews@lists.linux.dev
 List-Id: <sashiko-reviews.lists.linux.dev>
 List-Subscribe: <mailto:sashiko-reviews+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:sashiko-reviews+unsubscribe@lists.linux.dev>
-MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <20260616094526.D380A1F000E9@smtp.kernel.org>
+MIME-Version: 1.0 (generated by SEMI-EPG 1.14.7 - "Harue")
+Content-Type: text/plain; charset=US-ASCII
+X-SA-Exim-Connect-IP: 185.219.108.64
+X-SA-Exim-Rcpt-To: oupton@kernel.org, sashiko-reviews@lists.linux.dev, kvm@vger.kernel.org, kvmarm@lists.linux.dev
+X-SA-Exim-Mail-From: maz@kernel.org
+X-SA-Exim-Scanned: No (on disco-boy.misterjones.org); SAEximRunCond expanded to false
 
-On Tue, 16 Jun 2026, sashiko-bot@kernel.org wrote:
-
-> Thank you for your contribution! Sashiko AI review found 1 potential issue(s) to consider:
+On Tue, 16 Jun 2026 19:51:25 +0100,
+Oliver Upton <oupton@kernel.org> wrote:
 > 
-> Pre-existing issues:
-> - [High] Use-After-Free in `wacom_mode_change_work()` due to unprotected lockless access of sibling device pointers.
+> On Mon, Jun 15, 2026 at 06:33:14PM +0000, sashiko-bot@kernel.org wrote:
+> > > @@ -795,7 +796,11 @@ static void vgic_prune_ap_list(struct kvm_vcpu *vcpu)
+> > >  			continue;
+> > >  		}
+> > >  
+> > > -		/* This interrupt looks like it has to be migrated. */
+> > > +		/*
+> > > +		 * This interrupt looks like it has to be migrated,
+> > > +		 * make sure it is kept alive while locks are dropped.
+> > > +		 */
+> > > +		vgic_get_irq_ref(irq);
+> > 
+> > [Severity: Critical]
+> > This isn't a bug introduced by this patch, but could the lock-dropping window
+> > here lead to a double list_del() and a use-after-free under certain race
+> > conditions?
+> > 
+> > When vgic_prune_ap_list() drops the irq and ap_list locks shortly after this
+> > reference is taken, another thread could concurrently execute
+> > vgic_flush_pending_lpis() above and remove the irq from the list.
+> > 
+> > If a third thread then concurrently injects the same LPI before the locks are
+> > reacquired, the irq_lock is taken and pending_latch is set to true again.
+> > 
+> > When vgic_prune_ap_list() reacquires the locks further down in the function,
+> > the target_vcpu oracle check will pass because the interrupt is pending again:
+> > 
+> > arch/arm64/kvm/vgic/vgic.c:vgic_prune_ap_list() {
+> >     ...
+> >     if (target_vcpu == vgic_target_oracle(irq)) {
+> >         struct vgic_cpu *new_cpu = &target_vcpu->arch.vgic_cpu;
+> > 
+> >         list_del(&irq->ap_list);
+> >         irq->vcpu = target_vcpu;
+> >     ...
+> > }
+> > 
+> > Because there is no check verifying that irq->vcpu is still equal to the
+> > source vcpu, does this unconditionally execute list_del() on a list entry
+> > that has already been removed and poisoned?
+> > 
+> > Would this also bypass acquiring a new list reference, leaving the LPI on the
+> > new list with a deficient reference count if it avoids a crash?
+> 
+> Urgh... Marc, I think we need Hyunwoo's patch in addition to yours. Even
+> though this 3-way race seems improbable, it does appear possible :/
+> 
+> [*]: https://lore.kernel.org/kvmarm/aiHnI1mu6SGQrgnz@v4bel/
 
-Note that the issues found on this set are all pre-existing.
+Yeah. This thing is getting way too subtle. I'm starting to think that
+we may need to use something similar to the MMU notifier sequence
+number, and check if anything has happen to the AP list between the
+two locked sections.
+
+Thanks,
+
+	M.
 
 -- 
-Lee Jones
+Without deviation from the norm, progress is not possible.
