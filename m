@@ -1,209 +1,121 @@
-Received: from smtp-out2.suse.de (smtp-out2.suse.de [195.135.223.131])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6D5693F8ECA
-	for <sashiko-reviews@lists.linux.dev>; Wed, 17 Jun 2026 12:36:42 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=195.135.223.131
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 921C23B8BD9;
+	Wed, 17 Jun 2026 12:36:54 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1781699805; cv=none; b=R3aH+MeEuH/PbbF2qfiZCZViMjFpBRGrgbngyKrzjW4p6xzjC86S8n4yvCUOnII26D/kFqaNxKKYRePK8MHHUM829jiZtiiK68+xRCKPB6qBIC85OA/qyhzQxFh7/HJwurtiUiCFbvhiNcUMYPecUPIKx34DeWLt7y3mHMdUckU=
+	t=1781699815; cv=none; b=NRuB1716JLZYWpeQIas75uxcw0HDpmAV5G5LAesnKTHvP61QeqMHwVXt3pmXsMBIqEmu6Xp5el+NlVg4FwAVCt7vtN/wbV3QeBlrTgF+HcWloCjXKXZgajbo4yPfwv61da4PR3VoUqvQs/UJvIZlE9brnoPdIlPQIjQwA4cPh6M=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1781699805; c=relaxed/simple;
-	bh=BLhbvrRR/HJ2UXcFhZDaXzn6kzxtWODktq5uNU4CFu8=;
-	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=B4N0Sri/gISDpeVYJq9NciGJbPBVRHe+Al1VaCOMRix1acfkb4RkfjhQI9aQrYzxDjRXtH1O0Sj/8RG4FoLiz1YQsbCKT2eFJmYWTVirehq1e4pZt7Xgxl0kGdoMFyb9vUmZzJZgvGmsPDBMWXuMfK+Wn0qwzz2YeA6coIEShJM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=suse.de; spf=pass smtp.mailfrom=suse.de; dkim=pass (1024-bit key) header.d=suse.de header.i=@suse.de header.b=SB1YPUr3; dkim=permerror (0-bit key) header.d=suse.de header.i=@suse.de header.b=Jq2mttOj; dkim=pass (1024-bit key) header.d=suse.de header.i=@suse.de header.b=SB1YPUr3; dkim=permerror (0-bit key) header.d=suse.de header.i=@suse.de header.b=Jq2mttOj; arc=none smtp.client-ip=195.135.223.131
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=suse.de
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=suse.de
+	s=arc-20240116; t=1781699815; c=relaxed/simple;
+	bh=dleS0YzrkFvYzjrggfNx+7NLbbEvpBRL1KMSLTKGCvM=;
+	h=Date:Message-ID:From:To:Cc:Subject:In-Reply-To:References:
+	 MIME-Version:Content-Type; b=pl1O8gm1g7b1T2G14c52B6eFDEV6uW1RdxioUMr0yFrzz8LQi9qFhi8vGCa7ul1/7s8EtFMXcrx9uXMakLDgois/k4psFlvK1ooqgqy9yEBz2qUzCrSYM45ETXn9X8CyrJzd06WFk1uSgGAvbM+AJfsn32LKz5B8UZrNxksrQrw=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=X625+yaT; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=suse.de header.i=@suse.de header.b="SB1YPUr3";
-	dkim=permerror (0-bit key) header.d=suse.de header.i=@suse.de header.b="Jq2mttOj";
-	dkim=pass (1024-bit key) header.d=suse.de header.i=@suse.de header.b="SB1YPUr3";
-	dkim=permerror (0-bit key) header.d=suse.de header.i=@suse.de header.b="Jq2mttOj"
-Received: from imap1.dmz-prg2.suse.org (unknown [10.150.64.97])
-	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
-	 key-exchange X25519 server-signature RSA-PSS (4096 bits) server-digest SHA256)
-	(No client certificate requested)
-	by smtp-out2.suse.de (Postfix) with ESMTPS id 52C9E75AE4;
-	Wed, 17 Jun 2026 12:36:40 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=suse.de; s=susede2_rsa;
-	t=1781699800; h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
-	 mime-version:mime-version:content-type:content-type:
-	 content-transfer-encoding:content-transfer-encoding:
-	 in-reply-to:in-reply-to:references:references:autocrypt:autocrypt;
-	bh=uMwmD5ZVKo48graesQDZg+wP6nz0U0LlLpQHB/3WxOs=;
-	b=SB1YPUr3ni0ThVz0W1qRVpKO0aHK2y+Po0bTOFTdQYTHtoQ32wTt7J1QUmNY/Kb9QCsvsM
-	Hi5nx/TkR+fm+OgKjjsHs9eXWXhwYHgNuL9VG5sgpq8kfRhd+H8XjjJzGfgPC+exBIuZt+
-	b2id3KN0pse/eexwj9Y+MMrPGN0F2Hc=
-DKIM-Signature: v=1; a=ed25519-sha256; c=relaxed/relaxed; d=suse.de;
-	s=susede2_ed25519; t=1781699800;
-	h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
-	 mime-version:mime-version:content-type:content-type:
-	 content-transfer-encoding:content-transfer-encoding:
-	 in-reply-to:in-reply-to:references:references:autocrypt:autocrypt;
-	bh=uMwmD5ZVKo48graesQDZg+wP6nz0U0LlLpQHB/3WxOs=;
-	b=Jq2mttOjjS3NHtXBy5w6IKCUu57tgAfIFSWY28UgO5fmNXvN3WhV2Io/LZGGyikWW5Wwln
-	T9aWM21NfzZFS2Bw==
-Authentication-Results: smtp-out2.suse.de;
-	none
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=suse.de; s=susede2_rsa;
-	t=1781699800; h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
-	 mime-version:mime-version:content-type:content-type:
-	 content-transfer-encoding:content-transfer-encoding:
-	 in-reply-to:in-reply-to:references:references:autocrypt:autocrypt;
-	bh=uMwmD5ZVKo48graesQDZg+wP6nz0U0LlLpQHB/3WxOs=;
-	b=SB1YPUr3ni0ThVz0W1qRVpKO0aHK2y+Po0bTOFTdQYTHtoQ32wTt7J1QUmNY/Kb9QCsvsM
-	Hi5nx/TkR+fm+OgKjjsHs9eXWXhwYHgNuL9VG5sgpq8kfRhd+H8XjjJzGfgPC+exBIuZt+
-	b2id3KN0pse/eexwj9Y+MMrPGN0F2Hc=
-DKIM-Signature: v=1; a=ed25519-sha256; c=relaxed/relaxed; d=suse.de;
-	s=susede2_ed25519; t=1781699800;
-	h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
-	 mime-version:mime-version:content-type:content-type:
-	 content-transfer-encoding:content-transfer-encoding:
-	 in-reply-to:in-reply-to:references:references:autocrypt:autocrypt;
-	bh=uMwmD5ZVKo48graesQDZg+wP6nz0U0LlLpQHB/3WxOs=;
-	b=Jq2mttOjjS3NHtXBy5w6IKCUu57tgAfIFSWY28UgO5fmNXvN3WhV2Io/LZGGyikWW5Wwln
-	T9aWM21NfzZFS2Bw==
-Received: from imap1.dmz-prg2.suse.org (localhost [127.0.0.1])
-	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
-	 key-exchange X25519 server-signature RSA-PSS (4096 bits) server-digest SHA256)
-	(No client certificate requested)
-	by imap1.dmz-prg2.suse.org (Postfix) with ESMTPS id 1C5BC779A8;
-	Wed, 17 Jun 2026 12:36:40 +0000 (UTC)
-Received: from dovecot-director2.suse.de ([2a07:de40:b281:106:10:150:64:167])
-	by imap1.dmz-prg2.suse.org with ESMTPSA
-	id uI6gBdiUMmrXKwAAD6G6ig
-	(envelope-from <tzimmermann@suse.de>); Wed, 17 Jun 2026 12:36:40 +0000
-Message-ID: <ebf3a909-99e4-47f3-9c1c-b329d6000996@suse.de>
-Date: Wed, 17 Jun 2026 14:36:39 +0200
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="X625+yaT"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 39F481F000E9;
+	Wed, 17 Jun 2026 12:36:54 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=kernel.org;
+	s=k20260515; t=1781699814;
+	bh=pmGF6ZEX1/jO7HdfFpaCMqxjkqXGmtFB3vh3ikghC7s=;
+	h=Date:From:To:Cc:Subject:In-Reply-To:References;
+	b=X625+yaTR3SzYm9vRLbi69wtalCbxVIKtG7zV8x2LXYBiJ5QRymTO1THCyOs7q5dK
+	 ivT8iYYhjxSg/d7RG6jL+ymXoU+mmk3sGVolU7jKs3eznjkGKgcuMzf/y9tecM0ajT
+	 f4WusPnbm/eYm1W6xRags1oObGgz6l7fgBorbXg04NiWlEaxeomjbsO7/tfuO4j2rI
+	 kGof8RWl2PrsR5xGxPOw65S5ct5bVQ/m2SL7ujcZ+pmyniKNP7E56NfnPeKg1tQi7U
+	 2nPlih1Lbc0k+md2jFMZjuZ1XK4E4YSwD9mqqpdpG4Co3bR80eguuTwsirPkcVKVHX
+	 PEnZLkuk+Obbg==
+Received: from sofa.misterjones.org ([185.219.108.64] helo=goblin-girl.misterjones.org)
+	by disco-boy.misterjones.org with esmtpsa  (TLS1.3) tls TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384
+	(Exim 4.98.2)
+	(envelope-from <maz@kernel.org>)
+	id 1wZpVk-0000000DgFH-0byB;
+	Wed, 17 Jun 2026 12:36:52 +0000
+Date: Wed, 17 Jun 2026 13:36:51 +0100
+Message-ID: <86wlvxs5r0.wl-maz@kernel.org>
+From: Marc Zyngier <maz@kernel.org>
+To: Fuad Tabba <tabba@google.com>
+Cc: sashiko-reviews@lists.linux.dev,
+	Oliver Upton <oupton@kernel.org>,
+	kvmarm@lists.linux.dev
+Subject: Re: [PATCH 4/7] KVM: arm64: Set IL for injected FPAC exceptions during ERET emulation
+In-Reply-To: <CA+EHjTwHoveK6FT0CGcKuj97aUaHpv7vk=DQjRxT9c6UkkSeoA@mail.gmail.com>
+References: <20260614163336.3490925-5-tabba@google.com>
+	<20260614164547.D398B1F000E9@smtp.kernel.org>
+	<CA+EHjTwHoveK6FT0CGcKuj97aUaHpv7vk=DQjRxT9c6UkkSeoA@mail.gmail.com>
+User-Agent: Wanderlust/2.15.9 (Almost Unreal) SEMI-EPG/1.14.7 (Harue)
+ FLIM-LB/1.14.9 (=?UTF-8?B?R29qxY0=?=) APEL-LB/10.8 EasyPG/1.0.0 Emacs/30.1
+ (aarch64-unknown-linux-gnu) MULE/6.0 (HANACHIRUSATO)
 Precedence: bulk
 X-Mailing-List: sashiko-reviews@lists.linux.dev
 List-Id: <sashiko-reviews.lists.linux.dev>
 List-Subscribe: <mailto:sashiko-reviews+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:sashiko-reviews+unsubscribe@lists.linux.dev>
-MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 1/2] drm/sysfb: Do not page-align visible size of the
- framebuffer
-To: Javier Martinez Canillas <javierm@redhat.com>,
- maarten.lankhorst@linux.intel.com, mripard@kernel.org, airlied@gmail.com,
- simona@ffwll.ch
-Cc: dri-devel@lists.freedesktop.org, sashiko-reviews@lists.linux.dev,
- stable@vger.kernel.org
-References: <20260617112932.511657-1-tzimmermann@suse.de>
- <20260617112932.511657-2-tzimmermann@suse.de>
- <874ij1z90y.fsf@ocarina.mail-host-address-is-not-set>
-Content-Language: en-US
-From: Thomas Zimmermann <tzimmermann@suse.de>
-Autocrypt: addr=tzimmermann@suse.de; keydata=
- xsBNBFs50uABCADEHPidWt974CaxBVbrIBwqcq/WURinJ3+2WlIrKWspiP83vfZKaXhFYsdg
- XH47fDVbPPj+d6tQrw5lPQCyqjwrCPYnq3WlIBnGPJ4/jreTL6V+qfKRDlGLWFjZcsrPJGE0
- BeB5BbqP5erN1qylK9i3gPoQjXGhpBpQYwRrEyQyjuvk+Ev0K1Jc5tVDeJAuau3TGNgah4Yc
- hdHm3bkPjz9EErV85RwvImQ1dptvx6s7xzwXTgGAsaYZsL8WCwDaTuqFa1d1jjlaxg6+tZsB
- 9GluwvIhSezPgnEmimZDkGnZRRSFiGP8yjqTjjWuf0bSj5rUnTGiyLyRZRNGcXmu6hjlABEB
- AAHNJ1Rob21hcyBaaW1tZXJtYW5uIDx0emltbWVybWFubkBzdXNlLmRlPsLAjgQTAQgAOAIb
- AwULCQgHAgYVCgkICwIEFgIDAQIeAQIXgBYhBHIX+6yM6c9jRKFo5WgNwR1TC3ojBQJftODH
- AAoJEGgNwR1TC3ojx1wH/0hKGWugiqDgLNXLRD/4TfHBEKmxIrmfu9Z5t7vwUKfwhFL6hqvo
- lXPJJKQpQ2z8+X2vZm/slsLn7J1yjrOsoJhKABDi+3QWWSGkaGwRJAdPVVyJMfJRNNNIKwVb
- U6B1BkX2XDKDGffF4TxlOpSQzdtNI/9gleOoUA8+jy8knnDYzjBNOZqLG2FuTdicBXblz0Mf
- vg41gd9kCwYXDnD91rJU8tzylXv03E75NCaTxTM+FBXPmsAVYQ4GYhhgFt8S2UWMoaaABLDe
- 7l5FdnLdDEcbmd8uLU2CaG4W2cLrUaI4jz2XbkcPQkqTQ3EB67hYkjiEE6Zy3ggOitiQGcqp
- j//OwE0EWznS4AEIAMYmP4M/V+T5RY5at/g7rUdNsLhWv1APYrh9RQefODYHrNRHUE9eosYb
- T6XMryR9hT8XlGOYRwKWwiQBoWSDiTMo/Xi29jUnn4BXfI2px2DTXwc22LKtLAgTRjP+qbU6
- 3Y0xnQN29UGDbYgyyK51DW3H0If2a3JNsheAAK+Xc9baj0LGIc8T9uiEWHBnCH+RdhgATnWW
- GKdDegUR5BkDfDg5O/FISymJBHx2Dyoklv5g4BzkgqTqwmaYzsl8UxZKvbaxq0zbehDda8lv
- hFXodNFMAgTLJlLuDYOGLK2AwbrS3Sp0AEbkpdJBb44qVlGm5bApZouHeJ/+n+7r12+lqdsA
- EQEAAcLAdgQYAQgAIAIbDBYhBHIX+6yM6c9jRKFo5WgNwR1TC3ojBQJftOH6AAoJEGgNwR1T
- C3ojVSkIALpAPkIJPQoURPb1VWjh34l0HlglmYHvZszJWTXYwavHR8+k6Baa6H7ufXNQtThR
- yIxJrQLW6rV5lm7TjhffEhxVCn37+cg0zZ3j7zIsSS0rx/aMwi6VhFJA5hfn3T0TtrijKP4A
- SAQO9xD1Zk9/61JWk8OysuIh7MXkl0fxbRKWE93XeQBhIJHQfnc+YBLprdnxR446Sh8Wn/2D
- Ya8cavuWf2zrB6cZurs048xe0UbSW5AOSo4V9M0jzYI4nZqTmPxYyXbm30Kvmz0rYVRaitYJ
- 4kyYYMhuULvrJDMjZRvaNe52tkKAvMevcGdt38H4KSVXAylqyQOW5zvPc4/sq9c=
-In-Reply-To: <874ij1z90y.fsf@ocarina.mail-host-address-is-not-set>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 8bit
-X-Spam-Flag: NO
-X-Spam-Score: -4.30
-X-Spamd-Result: default: False [-4.30 / 50.00];
-	BAYES_HAM(-3.00)[100.00%];
-	NEURAL_HAM_LONG(-1.00)[-1.000];
-	NEURAL_HAM_SHORT(-0.20)[-0.997];
-	MIME_GOOD(-0.10)[text/plain];
-	RCVD_VIA_SMTP_AUTH(0.00)[];
-	FREEMAIL_TO(0.00)[redhat.com,linux.intel.com,kernel.org,gmail.com,ffwll.ch];
-	ARC_NA(0.00)[];
-	MIME_TRACE(0.00)[0:+];
-	RCPT_COUNT_SEVEN(0.00)[8];
-	FUZZY_RATELIMITED(0.00)[rspamd.com];
-	MID_RHS_MATCH_FROM(0.00)[];
-	FREEMAIL_ENVRCPT(0.00)[gmail.com];
-	DKIM_SIGNED(0.00)[suse.de:s=susede2_rsa,suse.de:s=susede2_ed25519];
-	FROM_EQ_ENVFROM(0.00)[];
-	FROM_HAS_DN(0.00)[];
-	TO_DN_SOME(0.00)[];
-	RCVD_TLS_ALL(0.00)[];
-	TO_MATCH_ENVRCPT_ALL(0.00)[];
-	RCVD_COUNT_TWO(0.00)[2];
-	DBL_BLOCKED_OPENRESOLVER(0.00)[imap1.dmz-prg2.suse.org:helo,suse.com:url,suse.de:email,suse.de:mid]
-X-Spam-Level: 
+MIME-Version: 1.0 (generated by SEMI-EPG 1.14.7 - "Harue")
+Content-Type: text/plain; charset=US-ASCII
+X-SA-Exim-Connect-IP: 185.219.108.64
+X-SA-Exim-Rcpt-To: tabba@google.com, sashiko-reviews@lists.linux.dev, oupton@kernel.org, kvmarm@lists.linux.dev
+X-SA-Exim-Mail-From: maz@kernel.org
+X-SA-Exim-Scanned: No (on disco-boy.misterjones.org); SAEximRunCond expanded to false
 
-Hi
+On Mon, 15 Jun 2026 13:42:23 +0100,
+Fuad Tabba <tabba@google.com> wrote:
+> 
+> On Sun, 14 Jun 2026 at 17:45, <sashiko-bot@kernel.org> wrote:
+> >
+> One thing I noticed while looking at this:
+> kvm_check_illegal_exception_return() preserves {N,Z,C,V,D,A,I,F} from
+> the current PSTATE, but the Arm ARM says these should come from
+> SPSR_ELx on an illegal exception return (EL and SP are unchanged, but
+> the flags and masks are taken from SPSR). PAN and ALLINT should also
+> come from SPSR_ELx if their respective features are implemented.
+> 
+> Marc, is the current behavior intentional, or should we be
+> constructing PSTATE from the original SPSR_EL2 for those fields?
 
-Am 17.06.26 um 13:44 schrieb Javier Martinez Canillas:
-> Thomas Zimmermann <tzimmermann@suse.de> writes:
->
-> Hello Thomas,
->
->> Only return the actually visible size of the system framebuffer in
->> drm_sysfb_get_visible_size_si(). Drivers use this size value for
->> reserving access to framebuffer memory. Increasing the value can
->> make later attempts to do so fail.
->>
->> Signed-off-by: Thomas Zimmermann <tzimmermann@suse.de>
->> Fixes: 32ae90c66fb6 ("drm/sysfb: Add efidrm for EFI displays")
->> Fixes: a84eb6abe2b6 ("drm/sysfb: Add vesadrm for VESA displays")
->> Cc: Thomas Zimmermann <tzimmermann@suse.de>
->> Cc: Javier Martinez Canillas <javierm@redhat.com>
->> Cc: dri-devel@lists.freedesktop.org
->> Cc: <stable@vger.kernel.org> # v6.16+
->> ---
->>   drivers/gpu/drm/sysfb/drm_sysfb_screen_info.c | 2 +-
->>   1 file changed, 1 insertion(+), 1 deletion(-)
->>
->> diff --git a/drivers/gpu/drm/sysfb/drm_sysfb_screen_info.c b/drivers/gpu/drm/sysfb/drm_sysfb_screen_info.c
->> index 749290196c6a..361b7233600c 100644
->> --- a/drivers/gpu/drm/sysfb/drm_sysfb_screen_info.c
->> +++ b/drivers/gpu/drm/sysfb/drm_sysfb_screen_info.c
->> @@ -67,7 +67,7 @@ EXPORT_SYMBOL(drm_sysfb_get_stride_si);
->>   u64 drm_sysfb_get_visible_size_si(struct drm_device *dev, const struct screen_info *si,
->>   				  unsigned int height, unsigned int stride, u64 size)
->>   {
->> -	u64 vsize = PAGE_ALIGN(height * stride);
-> Do you know why the original efidrm_get_visible_size_si() (from where
-> you took this code to make it generic) did the page align ?
+This looks like a long standing bug for something we really never
+tested. I reckon the patch below would do the trick.
 
-There's nothing in the old reviews AFAICT. I think, it was an oversight 
-from prototyping the driver. I certainly wanted to return 0 for errors 
-at first, but later changed it to an errno code. There, I forgot to 
-update the code accordingly.
+	M.
 
->
-> The change makes sense to me though from your explanation:
->
-> Reviewed-by: Javier Martinez Canillas <javierm@redhat.com>
-
-Thanks.
-
-Best regards
-Thomas
-
->
++++ b/arch/arm64/kvm/emulate-nested.c
+@@ -2746,17 +2746,29 @@ static u64 kvm_check_illegal_exception_return(struct kvm_vcpu *vcpu, u64 spsr)
+ 	    (spsr & PSR_MODE32_BIT) ||
+ 	    (vcpu_el2_tge_is_set(vcpu) && (mode == PSR_MODE_EL1t ||
+ 					   mode == PSR_MODE_EL1h))) {
++		u64 mask;
++
+ 		/*
+ 		 * The guest is playing with our nerves. Preserve EL, SP,
+-		 * masks, flags from the existing PSTATE, and set IL.
+-		 * The HW will then generate an Illegal State Exception
+-		 * immediately after ERET.
++		 * masks, flags from the existing SPSR, and set IL (see
++		 * R_VWJHB). The HW will then generate an Illegal State
++		 * Exception immediately after ERET.
+ 		 */
+-		spsr = *vcpu_cpsr(vcpu);
+-
+-		spsr &= (PSR_D_BIT | PSR_A_BIT | PSR_I_BIT | PSR_F_BIT |
++		mask  = (PSR_D_BIT | PSR_A_BIT | PSR_I_BIT | PSR_F_BIT |
+ 			 PSR_N_BIT | PSR_Z_BIT | PSR_C_BIT | PSR_V_BIT |
+ 			 PSR_MODE_MASK | PSR_MODE32_BIT);
++
++		if (kvm_has_feat(vcpu->kvm, ID_AA64MMFR1_EL1, PAN, IMP))
++			mask |= PSR_PAN_BIT;
++		if (kvm_has_feat(vcpu->kvm, ID_AA64PFR1_EL1, NMI, IMP))
++			mask |= ALLINT_ALLINT;
++		/* Account for FEAT_SPE_EXC and FEAT_TRBE_EXC one day... */
++		if (kvm_has_feat(vcpu->kvm, ID_AA64DFR1_EL1, EBEP, IMP))
++			mask |= BIT_ULL(32);
++		if (kvm_has_feat(vcpu->kvm, ID_AA64PFR1_EL1, GCS, IMP))
++			mask |= BIT_ULL(34);
++
++		spsr &= mask;
+ 		spsr |= PSR_IL_BIT;
+ 	}
+ 
 
 -- 
---
-Thomas Zimmermann
-Graphics Driver Developer
-SUSE Software Solutions Germany GmbH
-Frankenstr. 146, 90461 Nürnberg, Germany, www.suse.com
-GF: Jochen Jaser, Andrew McDonald, Werner Knoblich, (HRB 36809, AG Nürnberg)
-
-
+Without deviation from the norm, progress is not possible.
