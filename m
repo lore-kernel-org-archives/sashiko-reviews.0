@@ -1,175 +1,238 @@
-Received: from mail-qt1-f174.google.com (mail-qt1-f174.google.com [209.85.160.174])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from OSPPR02CU001.outbound.protection.outlook.com (mail-norwayeastazon11013048.outbound.protection.outlook.com [40.107.159.48])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D83F527EC7C
-	for <sashiko-reviews@lists.linux.dev>; Wed, 17 Jun 2026 14:52:29 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=pass smtp.client-ip=209.85.160.174
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2E6083E5570
+	for <sashiko-reviews@lists.linux.dev>; Wed, 17 Jun 2026 14:52:59 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=fail smtp.client-ip=40.107.159.48
 ARC-Seal:i=2; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1781707951; cv=pass; b=ZaibNmCict9/Ie4wOH+i84l5hr6UuOZdfjTdiQzbZtop5IZhi5NcOWOjB6O60d/yNNckbIshVOZ3gz/5tSaWFCiJ09AifpanzfIckV9vnqhHK/3IHTERz+MKduFQQjjlgsJVFTHlX5iOOFlNj6ghzkiGoEi15pE+P4lPu9jzkXY=
+	t=1781707982; cv=fail; b=QfSv1usLUcmkK8sFNVwAUTMZOXVNzEBIyns5eLGf/bzA3wc6cU+MFXEnae9HHG/ynjjB3kXL+amrOAzmU1sCPQm0dMdDP3IXG/i5FhDRtrAgNFKUjeU+7uGPfsJsBDHIZdeA87iCSnGTwNjAM58PLUItOkUk+rlXhhf/S8jIl7k=
 ARC-Message-Signature:i=2; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1781707951; c=relaxed/simple;
-	bh=svG5VUeLWXcFadC9nMYewsobyw3y4iSJPkBxx3gavIM=;
-	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
-	 To:Cc:Content-Type; b=swCV4i/f/uVsglvui+FFy+laFn45Hrk+BJhFm553rMo8C18EPPHNARt6q+PZnzgmkk6dGajZaXts6ETLU5ffrgDrCzHeih/B7YtExmh1eFeP2sGlla/tfvt/ajjMX7GICDhehIQzVY0BUpY1wpFao8nr3NUvKoCV/HMNAp3czzA=
-ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=google.com; spf=pass smtp.mailfrom=google.com; dkim=pass (2048-bit key) header.d=google.com header.i=@google.com header.b=IdZWu9pj; arc=pass smtp.client-ip=209.85.160.174
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=google.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=google.com
+	s=arc-20240116; t=1781707982; c=relaxed/simple;
+	bh=7U8hlfqAJV1eY6db42fVsK0SQTfy2me0peyGMEr4mzs=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:Content-Type:
+	 Content-Disposition:In-Reply-To:MIME-Version; b=gaPe8PzMuCL9BA92HeKO5SWxRJWSxFzcPRujBGN2z/CLv6OPXHxpn8MmdJ8sEj/qiLvTniAr0vbZaNiFNpJ0s+1s8Bz5jJQZ0ws2pQI6gi6ELVHd93IIbm5sGPftZo0H0ZBRYLTaLhPZfcsCH8/2IeO0UYWSdqo8s4TmQ1LZj0Y=
+ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=oss.nxp.com; spf=pass smtp.mailfrom=oss.nxp.com; dkim=fail (2048-bit key) header.d=NXP1.onmicrosoft.com header.i=@NXP1.onmicrosoft.com header.b=lSIirCEz reason="signature verification failed"; arc=fail smtp.client-ip=40.107.159.48
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=oss.nxp.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=oss.nxp.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=google.com header.i=@google.com header.b="IdZWu9pj"
-Received: by mail-qt1-f174.google.com with SMTP id d75a77b69052e-5177d1ff061so269591cf.1
-        for <sashiko-reviews@lists.linux.dev>; Wed, 17 Jun 2026 07:52:29 -0700 (PDT)
-ARC-Seal: i=1; a=rsa-sha256; t=1781707949; cv=none;
-        d=google.com; s=arc-20240605;
-        b=VaiSNVfLV8ZnoWRCncYGOLv6tgxY2QuozQer2urEJqPv760nrvk8nuKWaVL2zwNgxG
-         5xYMb3TWE/30U0/km6ecTJ2UneoYX5wlf7RE1h+y0p4S+zwQOV/6+fnTWajOjIBHQpaN
-         HtOaLcHjkJCgYtDGa4+FmDDst/ha/9zPE8mMZLCL6dB+GqRrt7y6r1UV3Qv4s54VV08f
-         VxuKZWp+OLlARS7NiwYtSfz16/pTmTbKOy1rmjL6qkQZa3sF8rm/KkXMugbk3sUYxQTn
-         ovPWeiM1THYPLHUizKV0sIj3LsRaQ+Uk4pIxlQTFIJOa95ynL9SMp6SdTH3wIQ7wtxTa
-         xvdw==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com; s=arc-20240605;
-        h=cc:to:subject:message-id:date:from:in-reply-to:references
-         :mime-version:dkim-signature;
-        bh=rRL5oribGYZKW3GCbWudAKMbSR10/FVZtjDSZUF5qUc=;
-        fh=k9s8btd99OQQsxs9gX8zPzaoPr4l9lUJ09mDmwBg+Vo=;
-        b=QbuSY9rA26HQtoItjgfi3mrT9nnSUWz1NnI98QJJPMtFOGpLZTwhE+77p34ZiiOIfR
-         dh1keYBMFnaybyHa1Kl5jWo2zUnAb/TNJb6Vz3TQP+0ffvkGue067UvOE3egQES+Y7/P
-         VgQK3kIGmLFdYAPJEd2D4PZCL5iQpmxxTlYYb0c+AOU1fqkVPfdFx2vQm1p8kF5lPbYY
-         pzYrQMV1hxFOSYWrFYTklEKOOazHbPesZwc1+6HVHZTNthxd5X2/syN+/5Yk4sUwrbA5
-         BoR5MwDh/0gL4/qO7tYTYbrbcb/EioAZiFuIKy7sg3EoXK8PxIRSuUifP7TPUApQSDbN
-         JSQg==;
-        darn=lists.linux.dev
-ARC-Authentication-Results: i=1; mx.google.com; arc=none
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=google.com; s=20251104; t=1781707949; x=1782312749; darn=lists.linux.dev;
-        h=cc:to:subject:message-id:date:from:in-reply-to:references
-         :mime-version:from:to:cc:subject:date:message-id:reply-to;
-        bh=rRL5oribGYZKW3GCbWudAKMbSR10/FVZtjDSZUF5qUc=;
-        b=IdZWu9pj1BXYXox1F2vuzn+6N9amITcUz/Dql+8DdGTxGilfHKqeMhhgy0J/pWSqEW
-         J7wE1OJ6yi786DNq+9mw6E8Nu90wEfHRSMvDPdJqK0NAUeAxG2mpOx13Bmf7179du7HY
-         8whhxXp9YlkUZ4AxgsFU9iBrdoU5kPNhlrdSG9pMRDiCxPpQyE+EQug13G5e9fZQaNdX
-         JtanltPluJPC3fqjOQhLrd5+tWnflT46mYFMKOQ7Yd/cIkevfW27b6ZaCj2GqnNotHaL
-         MmSvoSBpaFxRR//IwaVlK9k0qByeJiu2ss8VyCarrrGNauU81YOiiDV5Q3Nyqs8apwv1
-         DgEQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20251104; t=1781707949; x=1782312749;
-        h=cc:to:subject:message-id:date:from:in-reply-to:references
-         :mime-version:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=rRL5oribGYZKW3GCbWudAKMbSR10/FVZtjDSZUF5qUc=;
-        b=h14XJCxdcMukWAlWTf1WtXvr4fbyZ7upFAPDXTuYmIDIOextiMS8kskXeGBnZRIyBn
-         B574fZ+qjbmte3A+m4hfxZ6c8c0Wfgk+OKAoWK1QjD9/cZ+CSn9jE66ymyLfb9CL6D4p
-         9pJX+iwNJSQ8qTQFa+OA/RgpwSoHx52oQPuwSeLiqcRvIZknhzpHn8KzTiV8iUa19oCu
-         1degNh21w5Ss7VJpVYPFBJmYiUkxFQzjy9yK2cN3GZ1/lNLsBmpSWoAT4T2aJk3ulEkD
-         eMv5f3un2ASYFeLkFr0Jc/CGBHgrh4LbJ1zh/j2R5TMjvasHIre78ZCt8EO0+M0Q1PT5
-         cCQQ==
-X-Gm-Message-State: AOJu0YyKhmuuWvxqnw7NsagRYZd+rIXXza42lTFneBxNt6gQNXwrJwXL
-	6rICahbzkzh5sAawa0TQtYssQLRCLwlipedInVuecQh1SAkCaQwZr5ZbpHTFqn3UaL6j7lW6CQ2
-	q5tnCLJLHZ2VPQ0EFRxdoJjY3/FFazPurYWD6EgQD
-X-Gm-Gg: Acq92OExXdL18M5peADG+ybbMVHl1xRGReZpvWnG/K77iaAK4qyFQo41X/A8sO/ZC8h
-	2LHIzwazvtf3vEtBs9C948cDFGK6IZs2EOZ4p83aKGAVGRJRUrdanPAZCTMutamim5nDGNBgMOM
-	pMNFP7UKCAVmAkBNOaWRLusy0DsreWEAbrDTiSaUQBKWUc9bsDraPcc8w1m1/GXNDavpmy1IWE3
-	RzaVALcj2jXZ8mZ3/2Qf/GwAakS9ZsAFT88XcLYv1r0PgvFiRYkPquaKlvuN0wETB19CeFZF9tA
-	Hm9NPdVo8hh4lE+xfG7Cw5939fQ=
-X-Received: by 2002:a05:622a:1143:b0:519:56a8:2693 with SMTP id
- d75a77b69052e-519aad18b33mr10178591cf.24.1781707948213; Wed, 17 Jun 2026
- 07:52:28 -0700 (PDT)
+	dkim=fail reason="signature verification failed" (2048-bit key) header.d=NXP1.onmicrosoft.com header.i=@NXP1.onmicrosoft.com header.b="lSIirCEz"
+ARC-Seal: i=1; a=rsa-sha256; s=arcselector10001; d=microsoft.com; cv=none;
+ b=THmCa29w0/0G37hN+e1TLM4pamXI5/nPAVOkhfrg1aaX1cl2ZrkvOcJhMc8I0wHl3oKsdjMHcoJ4ouHDduVN97Q2U1R4FYhR6WSMc9SptW8w/7miP4aJa9f97aDKdYhbVasu4i5+iY1VSqB9D2d9WG7qDcond9lFYflEAKmIbu2drJjL0u+2g2xShMJEW3S8zvzN8fkRZLdPiMB6EsKOzBlkRMs2wG9x6+JYVIoc2vQT1DDId8ggf8aMc3StRTmglPJJ9rIxn3od4MDxqWlvAGsyoO6geS/BkYZUIGO9yQx8VRj6o5PWYokQt1CG2cGMBtgw72A0myhAKS0BGHb8ng==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com;
+ s=arcselector10001;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
+ bh=WQP1JVKiwqOU0zDKjFEJSF3uTacR3Sugq3u/tlkjpbY=;
+ b=VuYpFa9rztQOwR1MTYLp5ruNHAkEq+KmBLIPND7P2r9zvrkWthCPTi+AwzAwubOLsSw95rO+gEYQzFUti0wlYWMRoiEbYZydjTNHUVcAn5pF4ubRk/MeHt8644Qv2hsJ+++9lEpkc44FSoorlRcvtiX4A/gaFGsSvZp7isMlS3Gu74p7r/XBkzBvYnQX0l5qfAMRcLO222MxSsqQq6RRumYrdNtKszUlioNRFVaFBdTM580NrSMOpvI8fVwWCAPyipoapO68CPBOV2x5yMSRZJfeHeJHySwngQ2Btfqnf2RCx5RV9Bc9S86zcj0mAMpIhe3C3onO1K5M/q5LitHKWg==
+ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
+ smtp.mailfrom=oss.nxp.com; dmarc=pass action=none header.from=oss.nxp.com;
+ dkim=pass header.d=oss.nxp.com; arc=none
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=NXP1.onmicrosoft.com;
+ s=selector1-NXP1-onmicrosoft-com;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
+ bh=WQP1JVKiwqOU0zDKjFEJSF3uTacR3Sugq3u/tlkjpbY=;
+ b=lSIirCEz62A0CTjodqcVw7gNhxnFMMlgepwwaH8Qur9l9gI46j3xfI49Rfosv2jo81DcCaPRq/gw0QPXaCjLT8/1iyiVGtWzTG5nyBhoNWUST0ObWtWL2Y5RGuAC3aBFSgHMNw7w6z15O3PoeBmYx/ze82VCAdtZeKehqwpdvkPrijYQ8wsfEa0F5HScdSx5cqLwMlOjDz7AqLaengU4n1GuWdUZ5XQP0ioeHZM+6rKJ0ZTtcHVIZSG0rVcbQjhSoYUIAnvoaF20+SFdNoIyxZ9l0YZASoT9d8hiZ27oT1FLCbi4SF+DY2wEttobbjlXr75NGT/3MsspdaIwcQKH4w==
+Authentication-Results: dkim=none (message not signed)
+ header.d=none;dmarc=none action=none header.from=oss.nxp.com;
+Received: from GV2PR04MB11799.eurprd04.prod.outlook.com (2603:10a6:150:2cf::9)
+ by DBBPR04MB7947.eurprd04.prod.outlook.com (2603:10a6:10:1f1::22) with
+ Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.21.139.11; Wed, 17 Jun
+ 2026 14:52:56 +0000
+Received: from GV2PR04MB11799.eurprd04.prod.outlook.com
+ ([fe80::2146:83a2:5329:b7c]) by GV2PR04MB11799.eurprd04.prod.outlook.com
+ ([fe80::2146:83a2:5329:b7c%6]) with mapi id 15.21.0113.015; Wed, 17 Jun 2026
+ 14:52:56 +0000
+Date: Wed, 17 Jun 2026 10:52:50 -0400
+From: Frank Li <Frank.li@oss.nxp.com>
+To: sashiko-reviews@lists.linux.dev
+Cc: Lakshay Piplani <lakshay.piplani@nxp.com>, robh@kernel.org,
+	conor+dt@kernel.org, devicetree@vger.kernel.org,
+	linux-i3c@lists.infradead.org, Frank.Li@kernel.org
+Subject: Re: [PATCH v12 2/7] dt-bindings: i3c: Add NXP P3H2x4x i3c-hub support
+Message-ID: <ajK0wrNxxlhvaRvT@lizhi-Precision-Tower-5810>
+References: <20260617110355.1591844-1-lakshay.piplani@nxp.com>
+ <20260617110355.1591844-3-lakshay.piplani@nxp.com>
+ <20260617111331.7AB671F000E9@smtp.kernel.org>
+Content-Type: text/plain; charset=iso-8859-1
+Content-Disposition: inline
+Content-Transfer-Encoding: 8bit
+In-Reply-To: <20260617111331.7AB671F000E9@smtp.kernel.org>
+X-ClientProxiedBy: SN7PR04CA0193.namprd04.prod.outlook.com
+ (2603:10b6:806:126::18) To GV2PR04MB11799.eurprd04.prod.outlook.com
+ (2603:10a6:150:2cf::9)
 Precedence: bulk
 X-Mailing-List: sashiko-reviews@lists.linux.dev
 List-Id: <sashiko-reviews.lists.linux.dev>
 List-Subscribe: <mailto:sashiko-reviews+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:sashiko-reviews+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-References: <20260614163336.3490925-5-tabba@google.com> <20260614164547.D398B1F000E9@smtp.kernel.org>
- <CA+EHjTwHoveK6FT0CGcKuj97aUaHpv7vk=DQjRxT9c6UkkSeoA@mail.gmail.com>
- <86wlvxs5r0.wl-maz@kernel.org> <CA+EHjTzWpLBxy=Pi=K0G-9JU0cPTsGSNB4Esy+K+vFYNM0DnNw@mail.gmail.com>
- <86v7bhs0af.wl-maz@kernel.org>
-In-Reply-To: <86v7bhs0af.wl-maz@kernel.org>
-From: Fuad Tabba <tabba@google.com>
-Date: Wed, 17 Jun 2026 15:51:51 +0100
-X-Gm-Features: AVVi8Ce476niaO8Z4RT83x1LhKP1vNSFXlSVYznEqkjoo5qVPP39l7ZYDE5bAKw
-Message-ID: <CA+EHjTy_t2SR7yeehg3JDV5+1pa=BpREQ2-UuinZ2SQAgj3JZw@mail.gmail.com>
-Subject: Re: [PATCH 4/7] KVM: arm64: Set IL for injected FPAC exceptions
- during ERET emulation
-To: Marc Zyngier <maz@kernel.org>
-Cc: sashiko-reviews@lists.linux.dev, Oliver Upton <oupton@kernel.org>, 
-	kvmarm@lists.linux.dev
-Content-Type: text/plain; charset="UTF-8"
+X-MS-PublicTrafficType: Email
+X-MS-TrafficTypeDiagnostic: GV2PR04MB11799:EE_|DBBPR04MB7947:EE_
+X-MS-Office365-Filtering-Correlation-Id: 3c7f7c49-8648-4627-f139-08decc801deb
+X-MS-Exchange-SenderADCheck: 1
+X-MS-Exchange-AntiSpam-Relay: 0
+X-Microsoft-Antispam:
+	BCL:0;ARA:13230040|19092799006|366016|376014|23010399003|1800799024|11063799006|56012099006|5023799004|4143699003|6133799003|18002099003|22082099003|3023799007;
+X-Microsoft-Antispam-Message-Info:
+	aAD29E9Xkbpnit6+XyKw6uPAjY3ne5Fj4QLO3lJoYoHMWCoyY7xQtIejH6a8qMFeAtxYEamViHvfst24H+gYwKaDvfd/JVdJYDlh0ub16IawOFs75aUo2VZ6dAHyp8y2bVgrCBcoSuFd3ibGp0vudDOX3GZ1s5/fYBiHABbsnCh07CNwtXWx/BEv7O3EribasPUKM/kyggURvhlwxdHoV+X6Ph0OQ6nVsTUkWFX2Vhs7PXtgxPAv5MrFN+xmiwPcqVP0Z5sbqWRtnjV3ykDqDpwac/24G1B/wgYTw3q9BiPA5egWsKj2tpN7thAPinc4XtzSa3EEwrJguqhMDSdsLd3JD1tP/I2itY7v8vfLdLpCOsLO0jzRJVsC4x7Z18qlNlqTvfazYbzZNaRW05gTGPufP+CjLwnpzWaULYBHbps1spfyaHDsm+bHz1n336cf6pBgLFHa1JOpmIZWksWAJfvsVcLUiNhzig4aDhCoqNHCRD3o2EypoUII1T/d8gqIkjgc8xZB5p6PqCrWDoUYzU0SQwc1N20cWOpAujhYaNLHpzyMAfO4p8S/woBzO6pzmmI8bUEmomJdjC7ZoI3W8KvXNUpBy/rMPnS926ve2lUseVeySd8MJ2a+XhNxfqis
+X-Forefront-Antispam-Report:
+	CIP:255.255.255.255;CTRY:;LANG:en;SCL:1;SRV:;IPV:NLI;SFV:NSPM;H:GV2PR04MB11799.eurprd04.prod.outlook.com;PTR:;CAT:NONE;SFS:(13230040)(19092799006)(366016)(376014)(23010399003)(1800799024)(11063799006)(56012099006)(5023799004)(4143699003)(6133799003)(18002099003)(22082099003)(3023799007);DIR:OUT;SFP:1101;
+X-MS-Exchange-AntiSpam-MessageData-ChunkCount: 1
+X-MS-Exchange-AntiSpam-MessageData-0:
+	=?iso-8859-1?Q?eppYw6VfNV2v5xPalB1VjvWzD7GXx6d7kb4AHI+QoRwjIFWDf+CEjUlLTI?=
+ =?iso-8859-1?Q?E31fQ51lvytx6rwZozy1f66CnIHHd59tKoMXxDt10nnRIRVCcbz5NyjfGA?=
+ =?iso-8859-1?Q?ZbKKfzmVPDRSnuC6iKHSlHtMOidkYTiwBQvkyowB4/VSFT9oxERYajaYpA?=
+ =?iso-8859-1?Q?4nPkx1vwPyRxhX/T2FX/ccIEFsFCloGtw0yh3DbOOM/8PHsSWJrzTWdSpS?=
+ =?iso-8859-1?Q?8C34aFUexunfKiKC8mO9KCr1gC/VWgxoj0mnilMBxLU2fEFU4yHle6FeIM?=
+ =?iso-8859-1?Q?zK5H1dUBbv4//FNvSmW8EwOKRMv5DaWjPMJtEcdix8/HVvar/9ZPh25Gtp?=
+ =?iso-8859-1?Q?Hu4DUhPyBxGDhmIp8zdKu6ptRuQb0vuuBxs1VgUyOa9e/WBUANQ1rgc+ol?=
+ =?iso-8859-1?Q?li5sVjDMALUSr6AD28WNNbTEmb242EfsUwszt/+RPq8xxdLktUwFsAHmL+?=
+ =?iso-8859-1?Q?WZGqAV0MeKsyV3Y2ulibTozJcMqcEdM/EnH/RjABEAkPzsjabh0tkzJ4hi?=
+ =?iso-8859-1?Q?m2FTxHxLfSUBJfCXMVp8U1qDIQdAwb6yZUl0mTEll7JvxsJqGYz3jMcOdr?=
+ =?iso-8859-1?Q?V73/JS9C3A0j9JFwWz95DhLgBsZtdNuer+l1kLA7w/zZPdmsqujpwW1i+e?=
+ =?iso-8859-1?Q?tLPlDiPOGIIstbwnL7sCXvfoUiiopFHaIOSBxCKyNLg5AfGzBbPV5wCWJu?=
+ =?iso-8859-1?Q?qGcgB8eHdKPNWqSSrZGrz2VTlRpfP1t1JZjiLumSqsyL1T/xVJks/OQltM?=
+ =?iso-8859-1?Q?KFOj73rSCZ/vs+DFk5c+3KgjS393mLiVW6ByeBWwdyfn28UJWj71NUH8co?=
+ =?iso-8859-1?Q?zglREuLZfv3Usy1EYm66ESBUWMAIWRXV5jmo5E6F3pNxiTY14sB2bjlglD?=
+ =?iso-8859-1?Q?MoEhr+o/FdJ1uZ7ww7PzAg6KqMoCwWP7ERqIaJc12WSVYyRVIDteLBWg5G?=
+ =?iso-8859-1?Q?cUohrCJ6yGslUCBKstWreAhQJWvda8OLGmNY/fmEJqeHcVB1cZNitPOp80?=
+ =?iso-8859-1?Q?tRR/1v+8kN6XqhnMnB+VRCZzbzjzC2DBdC2HaMEqhQZt0wBzQ+pG6KiKn2?=
+ =?iso-8859-1?Q?1CWawUvPfCVUrZh/8kdtvRiNDVnjvM4+MgmcMcYkEFZLpN3RTpasWvByLd?=
+ =?iso-8859-1?Q?Gec0OovsapTiPwix9JEVF6P71A1fTxom/Bdwtz5wVS1ZwKSqtY/+jZ1V+e?=
+ =?iso-8859-1?Q?TWKTmIVGGuqwsjL/OC+zumlb8qJXMrJ9ch9xjZKvV7eC5KR/WL9d+gkUZy?=
+ =?iso-8859-1?Q?EGGV3YYRAyG3HLPdVvmvb2TSKL20+1+iD1nQUENr258U9Ew63F2Vb/xnov?=
+ =?iso-8859-1?Q?8oFO1rzowQiT39Xt4b1DEY6MRrZrOoQAJ6iFDDz+ne7QzvRPhqB8WX4r5C?=
+ =?iso-8859-1?Q?UxIKTyYjR4t96p5Ta67G7EKNY8RG5XH9AYUffvrygoHLmLO5sOb/+mTRvl?=
+ =?iso-8859-1?Q?PhD7xKG3W7rC06G75hAd3GdSlsWeO+MnyPjL2F+q8hyYuzN+VA9Aile1qy?=
+ =?iso-8859-1?Q?1QcnFkCJf3uGpSIyVcdeK8qaoxD6/3yVYLgd5ZscJCpx/z6kvtnMoz2PHt?=
+ =?iso-8859-1?Q?7uPej1qrwygTNdhGF42tUmPG2cOHWZ7Gt0TofvgJQYNEiOgR9EVzpnqtPW?=
+ =?iso-8859-1?Q?2IpBlohW5Tivs/KQ3VeguP/WomwbYNHKCtB6JV16GKXqbEA7fx/5VjILYd?=
+ =?iso-8859-1?Q?Kp0hSwQTPNaKpugJtVi+fvV1BiWuaOyr/QJFyAItdxzSwdziEeZ2q1M4zU?=
+ =?iso-8859-1?Q?q0wV4f2+t+XKNkGVZ4sIIyF58Q8P8UxZpaFIRhFuJv3SRPStCG1eE0VdOi?=
+ =?iso-8859-1?Q?4MGZTNEbB269FhBgUnkSgSEkJnV9CT08WgZUq20VRosNlyNsrCQD?=
+X-OriginatorOrg: oss.nxp.com
+X-MS-Exchange-CrossTenant-Network-Message-Id: 3c7f7c49-8648-4627-f139-08decc801deb
+X-MS-Exchange-CrossTenant-AuthSource: GV2PR04MB11799.eurprd04.prod.outlook.com
+X-MS-Exchange-CrossTenant-AuthAs: Internal
+X-MS-Exchange-CrossTenant-OriginalArrivalTime: 17 Jun 2026 14:52:56.5115
+ (UTC)
+X-MS-Exchange-CrossTenant-FromEntityHeader: Hosted
+X-MS-Exchange-CrossTenant-Id: 686ea1d3-bc2b-4c6f-a92c-d99c5c301635
+X-MS-Exchange-CrossTenant-MailboxType: HOSTED
+X-MS-Exchange-CrossTenant-UserPrincipalName: a1vwUha+tkCgBFVF+5rTOY9f9wDnoeitu5PqV8RZiYhSnjri513/37F6Rig82/+jszi3ntlURF6WT2drmCvgHqotX77MpP0IX868WvR1v7643YKz33ZcV0rDjk0CSoKe
+X-MS-Exchange-Transport-CrossTenantHeadersStamped: DBBPR04MB7947
 
-On Wed, 17 Jun 2026 at 15:34, Marc Zyngier <maz@kernel.org> wrote:
+On Wed, Jun 17, 2026 at 11:13:31AM +0000, sashiko-bot@kernel.org wrote:
+> Thank you for your contribution! Sashiko AI review found 3 potential issue(s) to consider:
+> - [Medium] The binding documents GPIO capability for target ports but omits the standard GPIO provider properties, violating subsystem guidelines.
+> - [Medium] The binding fails to include compatible strings for the 4-port variants and unconditionally allows up to 8 ports.
+> - [Low] The unit address in the I3C example does not match its `reg` property.
+> --
 >
-> On Wed, 17 Jun 2026 13:39:14 +0100,
-> Fuad Tabba <tabba@google.com> wrote:
-> >
-> > On Wed, 17 Jun 2026 at 13:36, Marc Zyngier <maz@kernel.org> wrote:
-> > >
-> > > On Mon, 15 Jun 2026 13:42:23 +0100,
-> > > Fuad Tabba <tabba@google.com> wrote:
-> > > >
-> > > > On Sun, 14 Jun 2026 at 17:45, <sashiko-bot@kernel.org> wrote:
-> > > > >
-> > > > One thing I noticed while looking at this:
-> > > > kvm_check_illegal_exception_return() preserves {N,Z,C,V,D,A,I,F} from
-> > > > the current PSTATE, but the Arm ARM says these should come from
-> > > > SPSR_ELx on an illegal exception return (EL and SP are unchanged, but
-> > > > the flags and masks are taken from SPSR). PAN and ALLINT should also
-> > > > come from SPSR_ELx if their respective features are implemented.
-> > > >
-> > > > Marc, is the current behavior intentional, or should we be
-> > > > constructing PSTATE from the original SPSR_EL2 for those fields?
-> > >
-> > > This looks like a long standing bug for something we really never
-> > > tested. I reckon the patch below would do the trick.
-> > >
-> > >         M.
-> > >
-> > > +++ b/arch/arm64/kvm/emulate-nested.c
-> > > @@ -2746,17 +2746,29 @@ static u64 kvm_check_illegal_exception_return(struct kvm_vcpu *vcpu, u64 spsr)
-> > >             (spsr & PSR_MODE32_BIT) ||
-> > >             (vcpu_el2_tge_is_set(vcpu) && (mode == PSR_MODE_EL1t ||
-> > >                                            mode == PSR_MODE_EL1h))) {
-> > > +               u64 mask;
-> > > +
-> > >                 /*
-> > >                  * The guest is playing with our nerves. Preserve EL, SP,
-> > > -                * masks, flags from the existing PSTATE, and set IL.
-> > > -                * The HW will then generate an Illegal State Exception
-> > > -                * immediately after ERET.
-> > > +                * masks, flags from the existing SPSR, and set IL (see
-> > > +                * R_VWJHB). The HW will then generate an Illegal State
-> > > +                * Exception immediately after ERET.
-> > >                  */
-> > > -               spsr = *vcpu_cpsr(vcpu);
-> > > -
-> > > -               spsr &= (PSR_D_BIT | PSR_A_BIT | PSR_I_BIT | PSR_F_BIT |
-> > > +               mask  = (PSR_D_BIT | PSR_A_BIT | PSR_I_BIT | PSR_F_BIT |
-> > >                          PSR_N_BIT | PSR_Z_BIT | PSR_C_BIT | PSR_V_BIT |
-> > >                          PSR_MODE_MASK | PSR_MODE32_BIT);
-> > > +
-> > > +               if (kvm_has_feat(vcpu->kvm, ID_AA64MMFR1_EL1, PAN, IMP))
-> > > +                       mask |= PSR_PAN_BIT;
-> > > +               if (kvm_has_feat(vcpu->kvm, ID_AA64PFR1_EL1, NMI, IMP))
-> > > +                       mask |= ALLINT_ALLINT;
-> > > +               /* Account for FEAT_SPE_EXC and FEAT_TRBE_EXC one day... */
-> > > +               if (kvm_has_feat(vcpu->kvm, ID_AA64DFR1_EL1, EBEP, IMP))
-> > > +                       mask |= BIT_ULL(32);
-> > > +               if (kvm_has_feat(vcpu->kvm, ID_AA64PFR1_EL1, GCS, IMP))
-> > > +                       mask |= BIT_ULL(34);
-> > > +
-> > > +               spsr &= mask;
-> >
-> > I'm on it...
+> commit af3b77595fece3e15864b37b9b683be835a0e1eb
+> Author: Aman Kumar Pandey <aman.kumarpandey@nxp.com>
 >
-> Sorry, in what sense?
-
-Writing up the fix:
-https://lore.kernel.org/all/20260617144907.2972095-1-tabba@google.com/
-
-which deviated slightly from your suggestion above.
-
-Cheers,
-/fuad
+> dt-bindings: i3c: Add NXP P3H2x4x i3c-hub support
 >
->         M.
+> This commit adds device tree bindings for the NXP P3H2x4x multi-port I3C hub
+> family. It supports connecting a host via I3C/I2C/SMBus to multiple downstream
+> peripherals across up to 8 ports.
+>
+> > diff --git a/Documentation/devicetree/bindings/i3c/nxp,p3h2840.yaml b/Documentation/devicetree/bindings/i3c/nxp,p3h2840.yaml
+> > new file mode 100644
+> > index 0000000000000..c080eeb0eeaa8
+> > --- /dev/null
+> > +++ b/Documentation/devicetree/bindings/i3c/nxp,p3h2840.yaml
+> > @@ -0,0 +1,291 @@
+> > +# SPDX-License-Identifier: (GPL-2.0-only OR BSD-2-Clause)
+> > +# Copyright 2025 NXP
+> > +%YAML 1.2
+> > +---
+> > +$id: http://devicetree.org/schemas/i3c/nxp,p3h2840.yaml#
+> > +$schema: http://devicetree.org/meta-schemas/core.yaml#
+> > +
+> > +title: NXP P3H2X4X I3C HUB
+> > +
+> > +maintainers:
+> > +  - Aman Kumar Pandey <aman.kumarpandey@nxp.com>
+> > +  - Vikash Bansal <vikash.bansal@nxp.com>
+> > +  - Lakshay Piplani <lakshay.piplani@nxp.com>
+> > +
+> > +description: |
+> > +  P3H2x4x (P3H2440/P3H2441/P3H2840/P3H2841) is a family of multiport I3C
+> > +  hub devices that connect to:-
+> > +  1. A host CPU via I3C/I2C/SMBus bus on upstream side and connect to multiple
+> > +     peripheral devices on the downstream  side.
+> > +  2. Have two Controller Ports which can support either
+> > +     I2C/SMBus or I3C buses and connect to a CPU, BMC or SOC.
+> > +  3. P3H2840/ P3H2841 are 8 port I3C hub with eight I3C/I2C Target Port.
+> > +  4. P3H2440/ P3H2441 are 4 port I3C hub with four I3C/I2C Target Port.
+> > +     Target ports can be configured as I2C/SMBus, I3C or GPIO and connect to
+> > +     peripherals.
+>
+> [Severity: Medium]
+> Since the description advertises that target ports can be configured as GPIO,
+> should this binding include the standard GPIO provider properties like
+> gpio-controller and #gpio-cells?
+>
+> Because unevaluatedProperties is false and there are no child node patterns
+> defined for GPIO ports in patternProperties, won't adding a GPIO child node
+> fail schema validation?
+>
+> > +
+> > +properties:
+> > +  compatible:
+> > +    const: nxp,p3h2840
+>
+> [Severity: Medium]
+> The commit message and description state the binding supports the P3H2440
+> and P3H2441 4-port hubs alongside the 8-port P3H2840/P3H2841.
+>
+> Should compatible strings be included for the 4-port variants here as well?
+>
+> [ ... ]
+>
+> > +patternProperties:
+> > +  "^i3c@[0-7]$":
+> > +    type: object
+> > +    $ref: /schemas/i3c/i3c.yaml#
+> > +    unevaluatedProperties: false
+> > +
+> > +    properties:
+> > +      reg:
+> > +        description:
+> > +          The I3C HUB Target Port number.
+> > +        maximum: 7
+>
+> [Severity: Medium]
+> Does unconditionally allowing a maximum port index of 7 cause issues for the
+> 4-port variants mentioned in the description?
+>
+> It seems this allows invalid configurations that define non-existent ports
+> (4-7) for the 4-port hardware.
+>
+> [ ... ]
+>
+> > +examples:
+> > +  - |
+> > +    i3c {
+> > +        #address-cells = <3>;
+> > +        #size-cells = <0>;
+> > +
+> > +        hub@70,236153000c2 {
+> > +            reg = <0x70 0x236 0x3000c2>;
+>
+> [Severity: Low]
+> Does the unit address in this example match its reg property?
+>
+> The reg property combines to a provisioned ID of 0x236003000c2, which appears
+> to differ from 236153000c2 in the unit address. Could this mismatch trigger a
+> simple_bus_reg warning during make dt_binding_check?
+
+I remember I3C mask 0x15, it'd better kept node name consisent with reg
+
+Frank
+
 >
 > --
-> Without deviation from the norm, progress is not possible.
+> Sashiko AI review · https://sashiko.dev/#/patchset/20260617110355.1591844-1-lakshay.piplani@nxp.com?part=2
