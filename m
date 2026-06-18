@@ -1,201 +1,210 @@
-Received: from mail-lf1-f50.google.com (mail-lf1-f50.google.com [209.85.167.50])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from mo4-p01-ob.smtp.rzone.de (mo4-p01-ob.smtp.rzone.de [85.215.255.51])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1FB853F58C8
-	for <sashiko-reviews@lists.linux.dev>; Thu, 18 Jun 2026 15:06:48 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=pass smtp.client-ip=209.85.167.50
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C83562DFA25
+	for <sashiko-reviews@lists.linux.dev>; Thu, 18 Jun 2026 17:56:36 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=pass smtp.client-ip=85.215.255.51
 ARC-Seal:i=2; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1781795211; cv=pass; b=Il3g6k2GTb+clA2jmrSNdHzpSpsj0Znuq4WimqATWfYvhGCfqysa/qjXnG0AXNIBVFQWXhUGha/YXXE8KOBElkilxaosS6VXbRbe4nroNPE73Rc/LwqmHjkmhcsFj/iNM/VEV2p9Omd8AaLLoANpJaHfJheaZkZe37cZV3EcHGo=
+	t=1781805399; cv=pass; b=r8c28LSLDyoXTM8fGK3cCAA/GEln2IjFo83E9gtfCoCfOFd/5PFoew+OcWU56PaXzgjUMXLfPscDrmXd9zZxLOz/3c3fea0009NADi05gHmcJ+UmOzZ3x9D/bjBLVhjLHyJWpqt+LloIFBLBYBu6I/6pNp823CXokKpoB5YM3z4=
 ARC-Message-Signature:i=2; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1781795211; c=relaxed/simple;
-	bh=OAxAzmYwdcy7zd8tpPxqe24/aSqWkYNzOFXNAJfuqwc=;
-	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
-	 To:Cc:Content-Type; b=amIlT4j6Wz1HuGInZPFKOO0yzwtOmpWX4PL9gtGcxCnrerdL8xzGhXUth7GF4M9EPAqOPn/L1LdZqDf3L+vE+wqi9azFCAldYtgAEiB8MoamHQ5adIcEPlAks/rlYB0pOTW8qm+LZU6W8nTms3BfKRk8BSBk4UlHTqgHtmXn9yI=
-ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=google.com; spf=pass smtp.mailfrom=google.com; dkim=pass (2048-bit key) header.d=google.com header.i=@google.com header.b=K3VqO5Wu; arc=pass smtp.client-ip=209.85.167.50
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=google.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=google.com
+	s=arc-20240116; t=1781805399; c=relaxed/simple;
+	bh=6cY0xP6GJo6iqFSzep5rMZFBVnLwQGKOFd9FLJUu57k=;
+	h=Content-Type:Mime-Version:Subject:From:In-Reply-To:Date:Cc:
+	 Message-Id:References:To; b=BHWhOFRD5nqs7UHEcuRKRC1YftsGzlStb8VoNC8qW6tBEeCmf6gKpDsak57qzkgcTaFaB+L/NuTh2CpgXNolzIQPzodLm8x+ZSFuupJ1II59q6uXhHDbxjwgUMimlvZ77o7OSLclDhc45IlACu1ohG4EPMrT6uNfhTphEr0VmMM=
+ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=goldelico.com; spf=pass smtp.mailfrom=goldelico.com; dkim=pass (2048-bit key) header.d=goldelico.com header.i=@goldelico.com header.b=kJ1iCQTS; dkim=permerror (0-bit key) header.d=goldelico.com header.i=@goldelico.com header.b=qPcunTjt; arc=pass smtp.client-ip=85.215.255.51
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=goldelico.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=goldelico.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=google.com header.i=@google.com header.b="K3VqO5Wu"
-Received: by mail-lf1-f50.google.com with SMTP id 2adb3069b0e04-5ad4d840d43so7748e87.1
-        for <sashiko-reviews@lists.linux.dev>; Thu, 18 Jun 2026 08:06:48 -0700 (PDT)
-ARC-Seal: i=1; a=rsa-sha256; t=1781795207; cv=none;
-        d=google.com; s=arc-20260327;
-        b=fPwvoOm31/zjykKqVXy+jFXjEqqrqTu+kZ9B7CTofckezMQvUaglrv8qlGzdjZxwpz
-         dh8vSjy7ig0o5xvaVhZVqukr2MKbgbAY+54j/JoR8JX/sfEMG3WFpFRvpLVcNNvmiIzU
-         eAYkdUSrQZfsMH7u6ttEQ8H/+96W3ZNLGkxvAr88CkYY44KwDRQ4yVAHzRkfyYphBce1
-         AM/WAE/UOgluQbSR/iIeN4KE+w/pQvANlIpdrjiFfKiOglYxiga/GaROWFQMaz57RCd4
-         HJIJAolU/5FwJYit9EiNAJSy22pWE3bVzNSX0bYBUpyXLEO6do2JvPqhbyyUasnDMMVT
-         m0Sw==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com; s=arc-20260327;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:dkim-signature;
-        bh=B+Kk4p+Z7Ji+kLPZDyM/vRpxyN8zCW/MQSdfnLHPQPE=;
-        fh=vxFxEzPfV2TVZiF6T5th9UokvWy0tGwKR5SSoD4lX+g=;
-        b=pjbnbZyHBTDpioNA0r2/DFi8eB3HkYpFJJ1KMii17CAmXmyimeWcmWlo+kqs1B4I/E
-         kbxm1ur4/lmMXL5WU2ybZBx92+yfFb3RxqSlc2rmeXFQtIW0d7h95NhDgy1Lr9CpE0AH
-         jkDeqvsUOIlnXM72kAyJ1s9IjXwDXuRQDFohbDlHPP+Du5vRY/Umhx4Dun2jWmDy651/
-         9DXzeVg/Y4+YgNM62Dwb5s7FrN8llshCGvvcqKwzriFZ2chY44o2cOzG0eJE9vy1Ki6E
-         gr0CFwQ1U4kIPo+bRT3toNcPxFst+t7ANnoIvquLy/a73bgI66s0DQAIS/nsNKLNx73K
-         ekBg==;
-        darn=lists.linux.dev
-ARC-Authentication-Results: i=1; mx.google.com; arc=none
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=google.com; s=20251104; t=1781795207; x=1782400007; darn=lists.linux.dev;
-        h=content-transfer-encoding:content-type:cc:to:subject:message-id
-         :date:from:in-reply-to:references:mime-version:from:to:cc:subject
-         :date:message-id:reply-to:content-type;
-        bh=B+Kk4p+Z7Ji+kLPZDyM/vRpxyN8zCW/MQSdfnLHPQPE=;
-        b=K3VqO5WuIlVAaP7D4cx26aeI75UQ8WpbFR/6tagh7MWzAf2JnDJ4TlRUQS/ROgsz0/
-         jcrCyI1pQ2/yzVitqcaINbQAZ6NwlWMvRJXaLI2FnTaLrwOyjG5/m9CGyUclPBK+mqfd
-         1aika+Uxg65kJfvFiJ4WwHpzVCa7LR1ddstAyoEOWytYRtQH5VKybT1hc3TUMrveY6q0
-         zIVSGZ24qW0QLB4WSY2Ur1kYQhpRV+gHFgv8l2XNTuq/2JzxCnxisggoRob/3qisyiRm
-         iVgtoc3tdwA2su1VTsbeGYgrih2i+Cf3fcIq8TWkpnn04mjIX5L98xk0cPnRvcPL4yP3
-         Ga0A==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20251104; t=1781795207; x=1782400007;
-        h=content-transfer-encoding:content-type:cc:to:subject:message-id
-         :date:from:in-reply-to:references:mime-version:x-gm-gg
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to
-         :content-type;
-        bh=B+Kk4p+Z7Ji+kLPZDyM/vRpxyN8zCW/MQSdfnLHPQPE=;
-        b=TNWGH3ubTAAb4CFxeAh1NzVgdiQIfyvpXEYlhgy2B0xfP2VC6jUehA7DKLUM2xs9iD
-         iTpIthcQyFmfEOkPEzd0LRvn5lS4Chd6qK7qgR5PihX4Oum5n/Nwbd7Tah8q38uBVNwI
-         bWOKMfNvMygDPrRkFjzTLzBgNFVGloAPRN21tSJk0FCRIFLb2+Pa1r0D9eUarCetvjTh
-         6m3HXy1tvcCm20Iov1u6gIp+xCKpJeJNlovRYpzBCweVsVkXHG05j2IgfO5eN8HTEnNb
-         cKZtTZ75DSgMt1uY3gBlqnWt9lHqOggRpeiBDrIdL8EfMN0rbOflBysF0ThUKe85V5qI
-         cEiw==
-X-Gm-Message-State: AOJu0YzElVrnmcHv6uAZsljf7rVzcXL4JpN+kMuIVlxUjU1kcKZCZh3h
-	ugnKb3IHxRTAPBTNw/+tIqiWLS/qgt7ZfMqu2GDBLfIYsluSh2qDe+SytlHRclcvubsLMC2kSrl
-	gSAWKgqBo6KUjF35RykHwJnSD4YqElzlu2mgfxGgZ7Nx7fVmKqNd6MQEZ2Bc=
-X-Gm-Gg: AfdE7ckwA7366haKNASDGk1fL9T97HI4DhUTm3V/0/k4A+gBP90+ON3Vqm8GGP1cIeA
-	klCRY36Y1XbafQnAXQEjS+xNiXrBPI3QXPzQplh3S+rwVdpCzEGsDvRfpwy5dR/iloUsoVqm0aw
-	zXSNMeMaWrVoOyLQrv4JAtZncFWRTy4xS1x7RF5HPJiFlecf1KbK1O+EM7IWoS44b3flVvd1taP
-	i0J9wc1gB7VIEvtS75OLCCXlW/HmXp2sFxIQB0YhkwsAyZyNiwuiCidc1udNmNxxm4XEpl69hib
-	AYBq8b0v
-X-Received: by 2002:a05:6512:1287:b0:5aa:8842:241f with SMTP id
- 2adb3069b0e04-5ad4dba1941mr161077e87.12.1781795206552; Thu, 18 Jun 2026
- 08:06:46 -0700 (PDT)
+	dkim=pass (2048-bit key) header.d=goldelico.com header.i=@goldelico.com header.b="kJ1iCQTS";
+	dkim=permerror (0-bit key) header.d=goldelico.com header.i=@goldelico.com header.b="qPcunTjt"
+ARC-Seal: i=1; a=rsa-sha256; t=1781805371; cv=none;
+    d=strato.com; s=strato-dkim-0002;
+    b=biIWkRYcrCn1wzCiW5vgV3hnFpUomIyR6Vch0iCp8TJA0LTrJqXES6LawadArqtntX
+    5I3Ak+DzwZzooNg//zVgzkP2UbHzPbI/QCC0XJW70Z5d92eeCGI/frJXimZKVFiYk71O
+    w5qGlE9Trv0gEGNn014ovQldFLRGeGV937t9fjGnQJIMhPS/XUeht0RT9C2dUfiKvrx+
+    PW4KiopE4G8opIZippFiCI49c3hESLDwD9JUQih9T1KQOsBZjY6ivNePNh2EVOuJDZNf
+    fTBico1ZrMRntPcuxqsl1OUOsruhp018Yoff8aMwfTlRVoSs8tfwQGrTspgsOvowvtks
+    8HaA==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; t=1781805371;
+    s=strato-dkim-0002; d=strato.com;
+    h=To:References:Message-Id:Cc:Date:In-Reply-To:From:Subject:Cc:Date:
+    From:Subject:Sender;
+    bh=zsVPEWZ+mX351yEn9Wdd5+9zEGjn0ObEo6N4OFCKFe4=;
+    b=cApQwGWcLQy2VNingyuSiac0uR/JzKo/aFX7emoy186bidMa9jxzdU3zrSJ8wPeUhF
+    FveIWir1bIRb+PGAaYJt8GZliRlAZbapkMSgY/BmoXpm96UymdT6vVbSA9bZyl5YYWbp
+    Pv/Q4gIOziQN2kJdn+Rlm8wSj8AblvJahXSIajkp8q8+ArJL4BqeC6CanhgHP6P4n66r
+    S6NOJmr8YMYoEjPaXqpQRTD0/pB2TDNgUyyaLOIKYwF/deEeo77eLYXkCZUXzLJ2a/Ie
+    ETIH6Z9fnmUQh5hKgL7MvCNB4m3uSgUdhrjputG+0kkv+FqstGUN2CNKitiSuKprlpdM
+    3ARg==
+ARC-Authentication-Results: i=1; strato.com;
+    arc=none;
+    dkim=none
+X-RZG-CLASS-ID: mo01
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; t=1781805371;
+    s=strato-dkim-0002; d=goldelico.com;
+    h=To:References:Message-Id:Cc:Date:In-Reply-To:From:Subject:Cc:Date:
+    From:Subject:Sender;
+    bh=zsVPEWZ+mX351yEn9Wdd5+9zEGjn0ObEo6N4OFCKFe4=;
+    b=kJ1iCQTS/qe6kuYIvSD8esu+D4kTx7Ioy4Qo4yn7MiLJpf1CloZXtDVJVALW0r8i/z
+    Sr2M2jBFrmX7sWsJ6ARkL2WFmEsk7f3fsOc+RROLpxl4K7b9ipU4pCH6H6kCLRxcY5qa
+    13Dj8cd6YnW+2g8As95iEDRma2Xr5odFYNLgStfvy3hHKY63ghB58ythfipd4NaidP2z
+    0tRcmaMzMA9CU1JUSWT+Q+DdpqBS2bf8MvryNbSABTQH5uXc1sSE7tIP1K9cSOfRGVP5
+    VWYLC1l9ZhQbMMDoG0++kTV7WmOjCzLHOIHUyyqVDk3mxD/MnHdTMkvxZwrURKRLjfnA
+    /IeQ==
+DKIM-Signature: v=1; a=ed25519-sha256; c=relaxed/relaxed; t=1781805371;
+    s=strato-dkim-0003; d=goldelico.com;
+    h=To:References:Message-Id:Cc:Date:In-Reply-To:From:Subject:Cc:Date:
+    From:Subject:Sender;
+    bh=zsVPEWZ+mX351yEn9Wdd5+9zEGjn0ObEo6N4OFCKFe4=;
+    b=qPcunTjtGsq5YMj4R2rLk6U5TdNUR6khGjwBnfooOOAE0vwIsPHeQP8t5HNVxXzSC5
+    qAnxnJn89YccuatXctCw==
+X-RZG-AUTH: ":JGIXVUS7cutRB/49FwqZ7WcJeFKiMhflhwDubTJ9qVpwcQVkPW4I1HrT0ZoOnciNQh0E54wP3opQ+1mzcazh2bvtQoZf"
+Received: from smtpclient.apple
+    by smtp.strato.de (RZmta 55.0.1 AUTH)
+    with ESMTPSA id Qcf97c25IHuBfsN
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (curve X9_62_prime256v1 with 256 ECDH bits, eq. 3072 bits RSA))
+	(Client did not present a certificate);
+    Thu, 18 Jun 2026 19:56:11 +0200 (CEST)
+Content-Type: text/plain;
+	charset=utf-8
 Precedence: bulk
 X-Mailing-List: sashiko-reviews@lists.linux.dev
 List-Id: <sashiko-reviews.lists.linux.dev>
 List-Subscribe: <mailto:sashiko-reviews+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:sashiko-reviews+unsubscribe@lists.linux.dev>
-MIME-Version: 1.0
-References: <20260618121643.4105064-1-tabba@google.com> <20260618121643.4105064-7-tabba@google.com>
- <20260618123349.1F2ED1F000E9@smtp.kernel.org>
-In-Reply-To: <20260618123349.1F2ED1F000E9@smtp.kernel.org>
-From: Fuad Tabba <tabba@google.com>
-Date: Thu, 18 Jun 2026 16:06:06 +0100
-X-Gm-Features: AVVi8CcxJ-IsB4OvmQz77gg32emdl0ycJsg7W-qphmraRq1ydJgHihXlkYAdfEE
-Message-ID: <CA+EHjTzAXQYZ9XYEXxihZOsx0AN3HBKXtZJcndCS=i+UYQzznQ@mail.gmail.com>
-Subject: Re: [PATCH v2 6/7] KVM: arm64: Set IL for nested SError injection
-To: sashiko-reviews@lists.linux.dev
-Cc: Marc Zyngier <maz@kernel.org>, kvmarm@lists.linux.dev, 
-	Oliver Upton <oupton@kernel.org>
-Content-Type: text/plain; charset="UTF-8"
+Mime-Version: 1.0 (Mac OS X Mail 16.0 \(3826.700.81.1.6\))
+Subject: Re: [PATCH] drm/fb_helper: Determine proper crtc_index within
+ drm_fb_helper_fb_dirty
+From: "H. Nikolaus Schaller" <hns@goldelico.com>
+In-Reply-To: <20260618174310.70DB11F000E9@smtp.kernel.org>
+Date: Thu, 18 Jun 2026 19:56:00 +0200
+Cc: dri-devel@lists.freedesktop.org,
+ Andreas Kemnade <akemnade@kernel.org>
 Content-Transfer-Encoding: quoted-printable
+Message-Id: <50FDBC3B-BFC2-4BC6-B216-78C2C24D9E30@goldelico.com>
+References: <5118b37e579cec220f2d2b6ab0bb1ecfb67f0d5c.1781803617.git.hns@goldelico.com>
+ <20260618174310.70DB11F000E9@smtp.kernel.org>
+To: sashiko-reviews@lists.linux.dev
+X-Mailer: Apple Mail (2.3826.700.81.1.6)
 
-On Thu, 18 Jun 2026 at 13:33, <sashiko-bot@kernel.org> wrote:
->
-> Thank you for your contribution! Sashiko AI review found 2 potential issu=
-e(s) to consider:
->
-> Pre-existing issues:
-> - [High] The SError syndrome constructed by `kvm_inject_nested_serror()` =
-(including the newly added IL bit) is a dead store because the downstream i=
-njection logic silently drops the syndrome.
-> - [High] When a Synchronous External Abort is routed to an SError via FEA=
-T_DoubleFault2 (`EASE`), KVM incorrectly populates the ESR with an IABT or =
-DABT Exception Class (EC) instead of the architectural SError EC.
 
-https://lore.kernel.org/all/CA+EHjTyJUrHZJiM9e2r20_1JLzWQg-+TAr9g720njugLMW=
-TpGw@mail.gmail.com/
 
-Cheers,
-/fuad
-
+> Am 18.06.2026 um 19:43 schrieb sashiko-bot@kernel.org:
+>=20
+> Thank you for your contribution! Sashiko AI review found 3 potential =
+issue(s) to consider:
+> - [High] Lockless access to `crtc->state` and `crtc->primary->state` =
+can lead to a Use-After-Free due to concurrent atomic commits.
+> - [High] The patch breaks vblank synchronization for legacy =
+(non-atomic) DRM drivers.
+> - [Medium] The logic selects the first matching CRTC instead of the =
+last active one, contradicting the commit message.
 > --
->
-> commit 889dc0193654a25a0ce52006ebe91e58fc4c4ed8
-> Author: Fuad Tabba <tabba@google.com>
->
-> KVM: arm64: Set IL for nested SError injection
->
-> This patch modifies kvm_inject_nested_serror() to unconditionally set the=
- IL
-> bit in the SError syndrome, as mandated by the architecture.
->
-> > diff --git a/arch/arm64/kvm/emulate-nested.c b/arch/arm64/kvm/emulate-n=
-ested.c
-> > index b74369e9ad7ff..6f12496cae815 100644
-> > --- a/arch/arm64/kvm/emulate-nested.c
-> > +++ b/arch/arm64/kvm/emulate-nested.c
-> > @@ -2938,6 +2938,6 @@ int kvm_inject_nested_serror(struct kvm_vcpu *vcp=
-u, u64 esr)
-> >        * vSError injection. Manually populate EC for an emulated SError
-> >        * exception.
-> >        */
-> > -     esr |=3D FIELD_PREP(ESR_ELx_EC_MASK, ESR_ELx_EC_SERROR);
-> > +     esr |=3D FIELD_PREP(ESR_ELx_EC_MASK, ESR_ELx_EC_SERROR) | ESR_ELx=
-_IL;
-> >       return kvm_inject_nested(vcpu, esr, except_type_serror);
-> >  }
->
+>=20
+> commit 0337b26b606b4d905d72ea2be31bcb984fe62c6e
+> Author: H. Nikolaus Schaller <hns@goldelico.com>
+>=20
+> drm/fb_helper: Determine proper crtc_index within =
+drm_fb_helper_fb_dirty
+>=20
+> This commit updates the dirty framebuffer worker to search for a =
+matching
+> active CRTC instead of hardcoding the wait for vblank to CRTC index 0. =
+It
+> aims to avoid vblank timeouts when CRTC 0 is inactive.
+>=20
+>> diff --git a/drivers/gpu/drm/drm_fb_helper.c =
+b/drivers/gpu/drm/drm_fb_helper.c
+>> --- a/drivers/gpu/drm/drm_fb_helper.c
+>> +++ b/drivers/gpu/drm/drm_fb_helper.c
+> [ ... ]
+>> @@ -232,9 +232,23 @@ static void drm_fb_helper_fb_dirty(struct =
+drm_fb_helper *helper)
+>> struct drm_clip_rect clip_copy;
+>> unsigned long flags;
+>> int ret;
+>> + unsigned int crtc_index =3D 0;
+>> + struct drm_crtc *crtc;
+>>=20
+>> mutex_lock(&helper->lock);
+>> - drm_client_modeset_wait_for_vblank(&helper->client, 0);
+>> +
+>> + drm_for_each_crtc(crtc, dev) {
+>> + if (crtc->primary && crtc->primary->state &&
+>> +    crtc->primary->state->fb =3D=3D helper->fb &&
+>> +    crtc->state && crtc->state->active) {
+>=20
 > [Severity: High]
-> This isn't a bug introduced by this patch, but does the constructed syndr=
-ome
-> value get silently dropped downstream?
->
-> Looking at kvm_inject_nested(), it forwards the esr to
-> kvm_inject_el2_exception():
->
-> arch/arm64/kvm/emulate-nested.c:kvm_inject_el2_exception() {
->     ...
->     case except_type_serror:
->         kvm_pend_exception(vcpu, EXCEPT_AA64_EL2_SERR);
->         break;
->     ...
-> }
->
-> The except_type_serror case doesn't write esr_el2 to ESR_EL2 (unlike the
-> except_type_sync case), and downstream exception entry code doesn't write
-> it either.
->
-> The constructed payload appears to be entirely discarded.
->
-> Would the nested hypervisor observe a stale ESR_EL2 value when taking the
-> SError, rendering this fix functionally ineffective?
->
+> Can this lockless access to crtc->state and crtc->primary->state =
+result in a
+> use-after-free?
+
+No idea...
+
+>=20
+> The drm_fb_helper_fb_dirty() function holds helper->lock, but does not =
+hold
+> the DRM modeset locks required to protect these state pointers. During =
+a
+
+Which locks are exactly recommended to add? What is their name/pointer?
+
+> concurrent atomic modeset commit, the DRM core allocates new state =
+objects,
+> swaps them into place, and frees the old objects via kfree().
+>=20
+> If this code reads an old state pointer and gets preempted, could it =
+then
+> dereference the pointer after it has been freed by the concurrent =
+commit?
+>=20
 > [Severity: High]
-> This is a pre-existing issue, but when a Synchronous External Abort is ro=
-uted
-> to an SError via EASE (FEAT_DoubleFault2), does KVM incorrectly populate =
-the
-> ESR with an Abort Exception Class instead of SError?
->
-> In kvm_inject_nested_sea(), if SCTLR2_EL1_EASE is set, an SError is reque=
-sted
-> using an ESR constructed with an Abort EC:
->
-> arch/arm64/kvm/emulate-nested.c:kvm_inject_nested_sea() {
->     ...
->     if (__vcpu_sys_reg(vcpu, SCTLR2_EL2) & SCTLR2_EL1_EASE)
->         return kvm_inject_nested(vcpu, esr, except_type_serror);
->     ...
-> }
->
-> Similarly in arch/arm64/kvm/inject_fault.c:inject_abt64(), the ESR is
-> populated with ESR_ELx_EC_IABT_* or ESR_ELx_EC_DABT_* before being writte=
-n.
->
-> Architecturally, all SError interrupts must have an SError Exception Clas=
-s,
-> even when representing a routed SEA.
->
-> Does supplying an Abort EC violate the architecture and provide the guest=
- with
-> a malformed exception syndrome?
->
-> --
-> Sashiko AI review =C2=B7 https://sashiko.dev/#/patchset/20260618121643.41=
-05064-1-tabba@google.com?part=3D6
+> Does this break vblank synchronization for legacy non-atomic DRM =
+drivers?
+
+>=20
+> Legacy drivers do not use the atomic modesetting infrastructure, so =
+their
+> crtc->state and crtc->primary->state pointers remain NULL. Since the =
+condition
+> above requires these pointers to be non-NULL, the loop will skip the =
+vblank
+> wait entirely for legacy drivers. This skips the intended =
+rate-limiting
+> behavior and could lead to unbounded damage worker execution.
+
+What is the solution? And is this important.
+
+Before d8c4bddcd8bcb ("drm/fb-helper: Synchronize dirty worker with =
+vblank")
+
+there was also no rate-limiting behavior.
+
+>=20
+>> + crtc_index =3D drm_crtc_index(crtc) + 1;
+>> + break;
+>=20
+> [Severity: Medium]
+> The commit message states "If multiple CRTCs match, the last active =
+one is
+> selected." Does the break statement here cause the first active CRTC =
+to be
+> selected instead, bypassing the remaining matches in the list?
+
+Yes, that is correct. The description is indeed wrong.
+
+>=20
+>> + }
+>> + }
+>> +
+>> + if (crtc_index > 0)
+>> + drm_client_modeset_wait_for_vblank(&helper->client, crtc_index - =
+1);
+>> +
+>> mutex_unlock(&helper->lock);
+>=20
+> --=20
+> Sashiko AI review =C2=B7 =
+https://sashiko.dev/#/patchset/5118b37e579cec220f2d2b6ab0bb1ecfb67f0d5c.17=
+81803617.git.hns@goldelico.com?part=3D1
+
