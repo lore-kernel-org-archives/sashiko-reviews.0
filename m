@@ -1,161 +1,124 @@
-Received: from foss.arm.com (foss.arm.com [217.140.110.172])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 1721F3EEAF9;
-	Thu, 18 Jun 2026 10:20:02 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=217.140.110.172
+Received: from us-smtp-delivery-124.mimecast.com (us-smtp-delivery-124.mimecast.com [170.10.129.124])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+	(No client certificate requested)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A86863EDAC6
+	for <sashiko-reviews@lists.linux.dev>; Thu, 18 Jun 2026 10:45:36 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=170.10.129.124
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1781778010; cv=none; b=i1Q8qRUOQWWrLKvLF4K1MDlZ2H5poQ1LXwU0+wD6ZBnJLbAmGf7AJb8CQUJQncIRzABt6vTzpP9GDShk0wA3YyWsASWMu1S6ABip3kz9nQdsjF4QuM+GdL/vqz5a4jKp5z28Kotsm/Wf37A6RRRZikDJLWeBH6CduIi2bwcGGuI=
+	t=1781779538; cv=none; b=fKmFuQ8NkUKcvaHuFh3cF76HUUuEa4zDL/mQWnefv/dwboXLc3aqTmq7GOV+sLwfMV8xkliDHVKmTTonRedPpveUQUb0g4EbLYQ63dcl31a5oGymMvVa0bSNFJ+xj7AyeceJAMBCk+as8RvYoAfeszCYwRcVFbIMPwLm67wK578=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1781778010; c=relaxed/simple;
-	bh=9fangGeG4n196Zz3BJvMg9UNdqOmOWQJGg3FWdgaILs=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=I6gySqxEsdYh5t7+HqQq7U/YRHgUVf2sCg7Vl79J4tHx4h6Ff/J8+XxQts7o4KUUVLH2ZJVnJSqdRcZ+R1FF3zcOtyO9gjMp6pXP666rSrS69EzTRxmVCmRbvNLBVVzq6ptggjrr263aV65oebzjYmM3RVLMj3WGqvImO94usEc=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=arm.com; spf=pass smtp.mailfrom=arm.com; dkim=pass (1024-bit key) header.d=arm.com header.i=@arm.com header.b=FTidFAd+; arc=none smtp.client-ip=217.140.110.172
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=arm.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=arm.com
+	s=arc-20240116; t=1781779538; c=relaxed/simple;
+	bh=Wj7lHFDw7QwsljMhK+ltKOvxMVwEF40WJ2l1whX5uww=;
+	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
+	 MIME-Version:Content-Type; b=I6mhpt4rooRrp3qryFKkSGM0CBunUfOJY7IpNFKq8fsthJssjXMnphS8EB/4uWYDGL4grFmwd9XhtyL7ujK/V2arSQch0YsOIU5IiDeldLDL99bx/XxpIU46nT7keQ82sLNb2VoHKVUNbVAFK2pFzIeWIiDb0TLSzcRF8EZLnNs=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=redhat.com; spf=pass smtp.mailfrom=redhat.com; dkim=pass (1024-bit key) header.d=redhat.com header.i=@redhat.com header.b=IGnM1z7C; arc=none smtp.client-ip=170.10.129.124
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=redhat.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=redhat.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=arm.com header.i=@arm.com header.b="FTidFAd+"
-Received: from usa-sjc-imap-foss1.foss.arm.com (unknown [10.121.207.14])
-	by usa-sjc-mx-foss1.foss.arm.com (Postfix) with ESMTP id 2A4DA2C1D;
-	Thu, 18 Jun 2026 03:19:57 -0700 (PDT)
-Received: from raptor (usa-sjc-mx-foss1.foss.arm.com [172.31.20.19])
-	by usa-sjc-imap-foss1.foss.arm.com (Postfix) with ESMTPSA id 503AC3F905;
-	Thu, 18 Jun 2026 03:20:00 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=simple/simple; d=arm.com; s=foss;
-	t=1781778001; bh=9fangGeG4n196Zz3BJvMg9UNdqOmOWQJGg3FWdgaILs=;
-	h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
-	b=FTidFAd+kMZcLOALCGU7P9wsthueikOo5vkAe+SBemmN/cUXQHiPDzD8fxv/nUROw
-	 7k34i+3w+wt1UVGVGjISKJC1XNSmGNDO/wW6PfMCU1B0SX4PyGl+vSRP5s7NgEadEd
-	 uRiYVbQLsqDbpmk0IETOc3GjeDfoTvACAmH/RUlM=
-Date: Thu, 18 Jun 2026 11:19:56 +0100
-From: Alexandru Elisei <alexandru.elisei@arm.com>
-To: Sean Christopherson <seanjc@google.com>
-Cc: sashiko-reviews@lists.linux.dev, Marc Zyngier <maz@kernel.org>,
-	kvm@vger.kernel.org, kvmarm@lists.linux.dev,
-	Oliver Upton <oupton@kernel.org>
-Subject: Re: [RFC PATCH] KVM: Ignore MMU notifiers for guest_memfd-only
- memslots
-Message-ID: <ajPGTF8p_wFfogn_@raptor>
-References: <20260615155244.183044-1-alexandru.elisei@arm.com>
- <20260615160901.9A1A61F000E9@smtp.kernel.org>
- <ajA6ogaNiI3KDv5i@google.com>
- <ajKcDRqT5m069PXK@raptor>
- <ajMPvgA2eHQCj-B0@google.com>
+	dkim=pass (1024-bit key) header.d=redhat.com header.i=@redhat.com header.b="IGnM1z7C"
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+	s=mimecast20190719; t=1781779535;
+	h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+	 to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+	 in-reply-to:in-reply-to:references:references;
+	bh=ex4FXoS07wD1HdVUSdQ/7roGTbJyzugyEwIGze9M3sg=;
+	b=IGnM1z7C62ekUWIPYWdG5JMOJSEh8dY0L3Z4Z3C7JbOQ6vuFjScF3h9mhESCKShVePhyjp
+	4HUCJZgLuqGZGOJrqNDADFZNDQRXOwViAORAvpaQs9O/Vvm4GozrzpvTxGai70pD4790al
+	9rvqQ/8XZphiaE/DDrvJB1E8o7xDcxI=
+Received: from mail-wr1-f69.google.com (mail-wr1-f69.google.com
+ [209.85.221.69]) by relay.mimecast.com with ESMTP with STARTTLS
+ (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
+ us-mta-439-DsIv1ouAM9uJNVFnfTcDgQ-1; Thu, 18 Jun 2026 06:45:34 -0400
+X-MC-Unique: DsIv1ouAM9uJNVFnfTcDgQ-1
+X-Mimecast-MFC-AGG-ID: DsIv1ouAM9uJNVFnfTcDgQ_1781779533
+Received: by mail-wr1-f69.google.com with SMTP id ffacd0b85a97d-4642a5651d4so396171f8f.2
+        for <sashiko-reviews@lists.linux.dev>; Thu, 18 Jun 2026 03:45:34 -0700 (PDT)
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20251104; t=1781779533; x=1782384333;
+        h=mime-version:message-id:date:references:in-reply-to:subject:cc:to
+         :from:x-gm-gg:x-gm-message-state:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=ex4FXoS07wD1HdVUSdQ/7roGTbJyzugyEwIGze9M3sg=;
+        b=Qjihn2SbSNKnT4GMma3bbv0xRoQ2Y4NEhAGdID71r2mqh9oefo1q+5HEAaxQ7E3NYK
+         Zs5bR9lzynasEZHsNXRy2vYMs2AR/XtIYK2cv9sUjOXGyGq880IriGGIY6JB5IEAlQIq
+         0XToUNqtwX4OoJUMPm1hVlNJtlBIJ+k7wT3XIkYTSSoOVC4n+qpH9LGuGNLgM/JFyCx6
+         lSOfs9j0v7OKI6Xu3FDW3ji1yXdySRmV7JjAyJdIKX+M8AYHm+8xv826webkjig75xyJ
+         xR5r59sxItY//vxTN+/unQ0E5v4x9swU3CarG5ntjpj3gnYv81etk1KjQowQftDrWVex
+         Xleg==
+X-Forwarded-Encrypted: i=1; AFNElJ/VGtwOZitW1BZH0urwolx3UyIioipsvMKc3T7+bIHaAEo0TF2Fr1VeGlL5TKe3Kcy5Ms/CeYDXg5Bdfxt19Mk=@lists.linux.dev
+X-Gm-Message-State: AOJu0YwS+gCb8GSFcVVbMeDyNS7vTmpW/VOjKir/3t7aRebJbeGL3JR4
+	5jGWk8fhX31dLYa9L+tL2MbnqHh6TMlXNAsiFJ0hdnk4/JedGCy8lwl6TPu+Ir0OvAnTUfl/DzR
+	gjUfNDpM2q4RkV/zSdXA/IxMDAfA7bMarXVQ/hDrBJOpk4YhYmgyhtz/rmvV7WY41AYSrvg==
+X-Gm-Gg: AfdE7ckuLrN71sCEUZSk/fqU3QHz1KJUm01PsSSEAj7wSfIqc8zUPnnyriv2GDX1SV4
+	aQFzRkbGdg9wKdWJ2Uu/L727JMdso62Xv0GCuAU3kbhWEtz0B7K7UpPXk9WjrrvxjACxT6vdDKD
+	zxdTxQiVe6jexWNompKkghAQwO3tWiitC3usVrOVCZwOzCNgQ3jNxnicq9EL+rPyxpaMCopryzl
+	XjdwDaHSj3LoudSs6NLY2i9r+fKf4ahPEOwpVVTa9g9vebqqLOBCufzM7Gl5xrDx0Ab2+p/lbO4
+	vpjp07g9GOfcedDPH9zcTqV4osOr8GISxTJA5fcSg2/ZsERaTjJVtKNv6ObTaCrh0w0E+yU7Wwt
+	ROXNwEj12w0nfF/gZ7WeeFBNnIyjWhstNRYFbiWpr82dHqrENDeNtlxt3mAZWDqx5kpKUfw==
+X-Received: by 2002:a5d:46ce:0:b0:461:c779:1e45 with SMTP id ffacd0b85a97d-46235e9bae2mr9463942f8f.2.1781779532862;
+        Thu, 18 Jun 2026 03:45:32 -0700 (PDT)
+X-Received: by 2002:a5d:46ce:0:b0:461:c779:1e45 with SMTP id ffacd0b85a97d-46235e9bae2mr9463902f8f.2.1781779532333;
+        Thu, 18 Jun 2026 03:45:32 -0700 (PDT)
+Received: from localhost (62-151-111-63.jazzfree.ya.com. [62.151.111.63])
+        by smtp.gmail.com with ESMTPSA id ffacd0b85a97d-4606f26f1cdsm64765302f8f.11.2026.06.18.03.45.30
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Thu, 18 Jun 2026 03:45:31 -0700 (PDT)
+From: Javier Martinez Canillas <javierm@redhat.com>
+To: Thomas Zimmermann <tzimmermann@suse.de>,
+ maarten.lankhorst@linux.intel.com, mripard@kernel.org, airlied@gmail.com,
+ simona@ffwll.ch
+Cc: dri-devel@lists.freedesktop.org, sashiko-reviews@lists.linux.dev, Thomas
+ Zimmermann <tzimmermann@suse.de>, Sashiko <sashiko-bot@kernel.org>,
+ stable@vger.kernel.org
+Subject: Re: [PATCH v2 2/4] drm/sysfb: Avoid possible truncation with
+ calculating visible size
+In-Reply-To: <20260618084327.46567-3-tzimmermann@suse.de>
+References: <20260618084327.46567-1-tzimmermann@suse.de>
+ <20260618084327.46567-3-tzimmermann@suse.de>
+Date: Thu, 18 Jun 2026 12:45:29 +0200
+Message-ID: <87cxxojfee.fsf@ocarina.mail-host-address-is-not-set>
 Precedence: bulk
 X-Mailing-List: sashiko-reviews@lists.linux.dev
 List-Id: <sashiko-reviews.lists.linux.dev>
 List-Subscribe: <mailto:sashiko-reviews+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:sashiko-reviews+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <ajMPvgA2eHQCj-B0@google.com>
+X-Mimecast-Spam-Score: 0
+X-Mimecast-MFC-PROC-ID: HksQfOmDUfL4r5gf27nd85RlnowdY9PPUNtcJRFY-U0_1781779533
+X-Mimecast-Originator: redhat.com
+Content-Type: text/plain
 
-Hi Sean,
+Thomas Zimmermann <tzimmermann@suse.de> writes:
 
-On Wed, Jun 17, 2026 at 02:21:02PM -0700, Sean Christopherson wrote:
-> On Wed, Jun 17, 2026, Alexandru Elisei wrote:
-> > Hi Sean,
-> > 
-> > Thanks for the reply. Just to make sure, once the bugs have been iron out,
-> > you're ok with this idea?
-> > 
-> > On Mon, Jun 15, 2026 at 10:47:14AM -0700, Sean Christopherson wrote:
-> > > On Mon, Jun 15, 2026, sashiko-bot@kernel.org wrote:
-> > > > > diff --git a/virt/kvm/kvm_main.c b/virt/kvm/kvm_main.c
-> > > > > --- a/virt/kvm/kvm_main.c
-> > > > > +++ b/virt/kvm/kvm_main.c
-> > > > [ ... ]
-> > > > > @@ -592,6 +592,10 @@ static __always_inline kvm_mn_ret_t kvm_handle_hva_range(struct kvm *kvm,
-> > > > >  			unsigned long hva_start, hva_end;
-> > > > >  
-> > > > >  			slot = container_of(node, struct kvm_memory_slot, hva_node[slots->node_idx]);
-> > > > > +
-> > > > > +			if (kvm_slot_has_gmem(slot) && kvm_memslot_is_gmem_only(slot))
-> > > > > +				continue;
-> > > > > +
-> > > > 
-> > > > [Severity: Critical]
-> > > > Does this change inadvertently introduce a regression in the pfncache retry
-> > > > protocol?
-> > > > 
-> > > > Looking at the pfncache framework, it maps guest memory into kernel space and
-> > > > explicitly drops the page reference after mapping it:
-> > > > 
-> > > > virt/kvm/pfncache.c:hva_to_pfn_retry() {
-> > > >     ...
-> > > >     kvm_release_page_clean(page);
-> > > >     ...
-> > > > }
-> > > > 
-> > > > It appears to rely entirely on KVM's MMU notifiers (kvm->mmu_invalidate_seq)
-> > > > to invalidate the cache when the page is unmapped by the host.
-> > > > 
-> > > > If a VMM defines a guest_memfd-backed memslot with KVM_MEMSLOT_GMEM_ONLY
-> > > > but still provides a valid anonymous user mapping as its userspace_addr,
-> > > > could this regression lead to a use-after-free?
-> > > 
-> > > Sadly, yes.  To land this, we would need to first teach the gfn_to_pfn_cache code
-> > > to be able to pull directly from guest_memfd.  I forget if anyone is working on
-> > > that.
-> > 
-> > I've been trying to wrap my head around this, and I just can't seem to
-> > figure it out.
-> > 
-> > kvm_mmu_notifier_invalidate_range_start(), before handle_hva_range(), calls
-> > gfn_to_pfn_cache_invalidate_start() for the MMU notifier range, and that
-> > marks all caches that overlap the range as invalid. kvm_gpc_check() returns
-> > false for an invalid cache, so how can the memory still be accessed via the
-> > pfncache?
-> 
-> That just forces gpcs to be refreshed, mmu_notifier_retry_cache() still relies
-> on mmu_invalidate_seq being bumped to avoid consuming stale state.
+Hello Thomas,
 
-Yes.
+> Calculating the visible size of the system framebuffer can result in
+> truncation of the result. The calculation uses 32-bit arithmetics,
+> which can overflow if the values for height and stride are large. Fix
+> the issue by multiplying with mul_u32_u32().
+>
+> Signed-off-by: Thomas Zimmermann <tzimmermann@suse.de>
+> Fixes: 32ae90c66fb6 ("drm/sysfb: Add efidrm for EFI displays")
+> Fixes: a84eb6abe2b6 ("drm/sysfb: Add vesadrm for VESA displays")
+> Reported-by: Sashiko <sashiko-bot@kernel.org>
+> Closes: https://lore.kernel.org/dri-devel/20260617114027.1F2A71F000E9@smtp.kernel.org/
+> Cc: Thomas Zimmermann <tzimmermann@suse.de>
+> Cc: Javier Martinez Canillas <javierm@redhat.com>
+> Cc: dri-devel@lists.freedesktop.org
+> Cc: <stable@vger.kernel.org> # v6.16+
+> ---
+> I've added Reported-by and Closes tags because this is a pre-existing issue.
+> ---
+>  drivers/gpu/drm/sysfb/drm_sysfb_screen_info.c | 3 ++-
+>  1 file changed, 2 insertions(+), 1 deletion(-)
+>
 
-> 
-> > > > By unmapping the anonymous memory, the host would trigger MMU notifiers, but
-> > > > this new check skips the memslot. As a result, kvm->mmu_invalidate_seq
-> > > > wouldn't increment, and KVM might retain a kernel mapping to a freed physical
-> > > > page.
-> > 
-> > kvm->mmu_invalidate_seq is incremented in kvm_mmu_invalidate_end(), I don't see
-> > how that is affected by skipping a memslot in handle_hva_range().
-> 
-> handle_hva_range() only invokes on_lock() if a memslot is found.  By skipping the
-> memslot entirely, kvm_mmu_invalidate_{start,end}() won't be called and so
-> mmu_invalidate_seq won't be bumped.
+Reviewed-by: Javier Martinez Canillas <javierm@redhat.com>
 
-I see it now, for some reason I completely missed the part where
-kvm_mmu_invalidate_{begin,end}() is called on ->lock() :( I was under the
-impression that they are called directly from the
-->invalidate_range_{start,end}() MMU notifier callbacks.
+-- 
+Best regards,
 
-> 
-> > > > Could this allow the guest to read or write arbitrary host physical memory?
-> > 
-> > The KVM_MEMSLOT_GMEM_ONLY flag is set if the backing guest_memfd has been
-> > created with GUEST_MEMFD_FLAG_MMAP. The documentation for the flag says
-> > that '[..] the fault will always be consumed from guest_memfd, regardless
-> > of whether it is a shared or private fault'.  As far as I can tell, this
-> > means that, absent a fallocate(FALLOC_FL_PUNCH_HOLE) call, the page is
-> > still in the page cache for the guest_memfd file after userspace has
-> > unmapped it, so the guest will not be accessing a freed page.
-> 
-> KVM_MEMSLOT_GMEM_ONLY is somewhat misleading, it only applies to the KVM's MMU.
-> For other cases where KVM accesses guest memory, KVM still follows the host virtual
-> address, e.g. so that copy_{to,from}_user() Just Works.  But userspace isn't
-> strictly *required* to keep the userspace mapping coherent with guest_memfd, nor
-> is userspace required to make the userspace mapping fully RWX.  And so if
-> userspace modifies the VMA, KVM needs to react accordingly.
-> 
-> When in-place conversion comes along, KVM will also rely on userspace mappings
-> being torn down before allow a SHARED page to become PRIVATE (for all intents
-> and purposes, we're conceptually treating conversions as free()+re-alloc().  So
-> while the page might still be in the page cache, it's effectively been "freed".
-> So in that case, KVM really does need to ensure it handles mmu_notifier events
-> correctly to avoid UAF.
+Javier Martinez Canillas
+Core Platforms
+Red Hat
 
-Everything makes more sense now, thanks for your patience in explaining it.
-
-Thanks,
-Alex
