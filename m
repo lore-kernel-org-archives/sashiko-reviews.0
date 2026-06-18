@@ -1,197 +1,289 @@
-Received: from smtp-out2.suse.de (smtp-out2.suse.de [195.135.223.131])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from DM1PR04CU001.outbound.protection.outlook.com (mail-centralusazon11010024.outbound.protection.outlook.com [52.101.61.24])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C66461E32CF
-	for <sashiko-reviews@lists.linux.dev>; Thu, 18 Jun 2026 13:38:14 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=195.135.223.131
-ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1781789896; cv=none; b=JHD37vz+feNJ0eaZAoTXhzRDkelmcvvSX4khLv503UdUv0+2wIsvXdUh9n+wfiucZcSDih+hTM3K0XpuDGHZDa402xifk4+yEXYa1b3KLfW+oONQEvpoao+Lh4ogzR1PfQH3i5xMY8tfFevlqi7uuFQiHBxXxPY6qKPgI2CbBqk=
-ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1781789896; c=relaxed/simple;
-	bh=lChuQTUQhRolEatef4+6mC5M9Y9csCRcDpIJKo6t1uQ=;
-	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=IyZ+6MKQ9CYIgSqcRM+NAU8isa/bwH11Az6rOnGW89gUindkip0bcvLGlSFfFEVdYEH/whCHp4fFdj6QevgG/kcSvOI0OdyvkUBImMvLCvrbFf1lVUHILtzEuQhsUvleQ/+ACY3B69bCjUFdX1qjS8v4WSSpr1d0lfI86XBOG3w=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=suse.de; spf=pass smtp.mailfrom=suse.de; dkim=pass (1024-bit key) header.d=suse.de header.i=@suse.de header.b=PpoOhuEN; dkim=permerror (0-bit key) header.d=suse.de header.i=@suse.de header.b=b2484VRz; dkim=pass (1024-bit key) header.d=suse.de header.i=@suse.de header.b=hy0UhNob; dkim=permerror (0-bit key) header.d=suse.de header.i=@suse.de header.b=VUtOfiqL; arc=none smtp.client-ip=195.135.223.131
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=suse.de
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=suse.de
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E47503DB332
+	for <sashiko-reviews@lists.linux.dev>; Thu, 18 Jun 2026 13:42:29 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=fail smtp.client-ip=52.101.61.24
+ARC-Seal:i=2; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
+	t=1781790151; cv=fail; b=CkZiNnkFCYzdyEEtGDGLZccxeSSvXfpZGrTVSjLqSZSjaipMca0BOh623Qs27PLCmDNet6DOaYPSZNpLsQeKUECxfMQPYPTeW774J40hHiNJvAZAQExMlkUga7eA9GWVocKJdZBj/wxixidmpfLk7ewgecknOTgLMLSrA733rg4=
+ARC-Message-Signature:i=2; a=rsa-sha256; d=subspace.kernel.org;
+	s=arc-20240116; t=1781790151; c=relaxed/simple;
+	bh=5hU6O7obTEl/jw9isHLqv4lsOYYdjIOopGZxJKpXhiU=;
+	h=From:To:CC:Subject:Date:Message-ID:References:In-Reply-To:
+	 Content-Type:MIME-Version; b=L5ixwZheIB0hC/Oo/kMQpV3ZOxGcdYBk0Ne53VZEyLQEkynYtQ0dvKFhzxq7bvHjueZ4ipswh6HMSgTY12l2niKzqBBgrtqCnq719mbm1Nbcfj7eNkciqSJq5Iz+PjB7dmBSsc97/IEOOpR1SFakycFZGu57nj+roam7ezql9t8=
+ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=einfochips.com; spf=pass smtp.mailfrom=einfochips.com; dkim=pass (1024-bit key) header.d=einfochips.com header.i=@einfochips.com header.b=uoi6gDrK; arc=fail smtp.client-ip=52.101.61.24
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=einfochips.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=einfochips.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=suse.de header.i=@suse.de header.b="PpoOhuEN";
-	dkim=permerror (0-bit key) header.d=suse.de header.i=@suse.de header.b="b2484VRz";
-	dkim=pass (1024-bit key) header.d=suse.de header.i=@suse.de header.b="hy0UhNob";
-	dkim=permerror (0-bit key) header.d=suse.de header.i=@suse.de header.b="VUtOfiqL"
-Received: from imap1.dmz-prg2.suse.org (imap1.dmz-prg2.suse.org [IPv6:2a07:de40:b281:104:10:150:64:97])
-	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
-	 key-exchange X25519 server-signature RSA-PSS (4096 bits) server-digest SHA256)
-	(No client certificate requested)
-	by smtp-out2.suse.de (Postfix) with ESMTPS id 9F12F75EAE;
-	Thu, 18 Jun 2026 13:38:11 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=suse.de; s=susede2_rsa;
-	t=1781789892; h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
-	 mime-version:mime-version:content-type:content-type:
-	 content-transfer-encoding:content-transfer-encoding:
-	 in-reply-to:in-reply-to:references:references:autocrypt:autocrypt;
-	bh=JIihKGpFt77tZE2GPXqak/8XxXhb3poYTEKtF1MEdcY=;
-	b=PpoOhuENQMd6GS8l1Z7pvzdpZPNOufMTUNOwp3Gw/G/jkpYe7pbAGkUPISyK4w9t2JGXAF
-	mWMQ2oWzkW7pP9Y6xOC/hJY3zG3oDUrU636rjAoMNbjHI3bqvUECHVhmfe7DxAvVaw+a4X
-	IwVO/MUbRQCni2dmJX0tMLZsU7fgGxw=
-DKIM-Signature: v=1; a=ed25519-sha256; c=relaxed/relaxed; d=suse.de;
-	s=susede2_ed25519; t=1781789892;
-	h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
-	 mime-version:mime-version:content-type:content-type:
-	 content-transfer-encoding:content-transfer-encoding:
-	 in-reply-to:in-reply-to:references:references:autocrypt:autocrypt;
-	bh=JIihKGpFt77tZE2GPXqak/8XxXhb3poYTEKtF1MEdcY=;
-	b=b2484VRzTjk2BY8gxzjYDrlRZQ9rJSG4L+1BlVRlQsv7DZfBmrokszAt6WAvnRDJLmZb+w
-	SlyKSUX6vpm/19Bw==
-Authentication-Results: smtp-out2.suse.de;
-	dkim=pass header.d=suse.de header.s=susede2_rsa header.b=hy0UhNob;
-	dkim=pass header.d=suse.de header.s=susede2_ed25519 header.b=VUtOfiqL
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=suse.de; s=susede2_rsa;
-	t=1781789891; h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
-	 mime-version:mime-version:content-type:content-type:
-	 content-transfer-encoding:content-transfer-encoding:
-	 in-reply-to:in-reply-to:references:references:autocrypt:autocrypt;
-	bh=JIihKGpFt77tZE2GPXqak/8XxXhb3poYTEKtF1MEdcY=;
-	b=hy0UhNob1vFUD+Xc1NayhOtf4MPKw5BtInSugV+cLO9Yw0iI+vaA668xqgEvz4IZIn+qk0
-	ZGl75x+sve5GKDSkw0lPM1BGPR93erwabzdVg5Wi4Vr4ImIKGGeMtQ+dJu1FH0fbhKxfbj
-	yW4U6JegpZahf99cAOCoCbpD0DRO4Zw=
-DKIM-Signature: v=1; a=ed25519-sha256; c=relaxed/relaxed; d=suse.de;
-	s=susede2_ed25519; t=1781789891;
-	h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
-	 mime-version:mime-version:content-type:content-type:
-	 content-transfer-encoding:content-transfer-encoding:
-	 in-reply-to:in-reply-to:references:references:autocrypt:autocrypt;
-	bh=JIihKGpFt77tZE2GPXqak/8XxXhb3poYTEKtF1MEdcY=;
-	b=VUtOfiqLvm88dpdUQ8cluFMr0EgjH8hg/cVGYDNJOHeUd6THczdM9f7kb4pl9TQ8fe3Lq1
-	WlSdCIfd6i3rmUBA==
-Received: from imap1.dmz-prg2.suse.org (localhost [127.0.0.1])
-	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
-	 key-exchange X25519 server-signature RSA-PSS (4096 bits) server-digest SHA256)
-	(No client certificate requested)
-	by imap1.dmz-prg2.suse.org (Postfix) with ESMTPS id 71707779A8;
-	Thu, 18 Jun 2026 13:38:11 +0000 (UTC)
-Received: from dovecot-director2.suse.de ([2a07:de40:b281:106:10:150:64:167])
-	by imap1.dmz-prg2.suse.org with ESMTPSA
-	id 1fAtGsP0M2oKaAAAD6G6ig
-	(envelope-from <tzimmermann@suse.de>); Thu, 18 Jun 2026 13:38:11 +0000
-Message-ID: <8be213e4-ce75-4728-901c-55a0f4fee34a@suse.de>
-Date: Thu, 18 Jun 2026 15:38:10 +0200
+	dkim=pass (1024-bit key) header.d=einfochips.com header.i=@einfochips.com header.b="uoi6gDrK"
+ARC-Seal: i=1; a=rsa-sha256; s=arcselector10001; d=microsoft.com; cv=none;
+ b=tXd47SUghHTCcXUGoM7LuuPgjYlbCg/Q9D3L2Z6CYPF9fxgx18/rrXIUzOXZnIJUaBVVr4FrBo2aH8+9scEN6M+KKPM4p4C1/t65ejxg4Z7D7ZBa5w5phB8WEe/GNys7fX3sh8sGEAo9VYO8b6XcYAk370pmAIw8SFHeau8Fyd8qmBnU2VipUH/TLHjn6KuKkiWCVDrwEHaaqULL8OfzAWGQ7SuD+7W5J475qSglpWqQy5UNfuBejuuCWKXsMqaeDCKHOog+DLfJ1QvXO/kVDWo0XHnu/h0mWVgX+g2ntSvhqX/TU/P1zum0yXeQ3LdyQN3TU26WTyyj6lhdThNn2A==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com;
+ s=arcselector10001;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
+ bh=TQyaKUrMdInBF7Ma/MXOm+ZmpHeLl6IGBNC5IBo/a3Y=;
+ b=Uz/vtt9b3WNsaUGzIpwvack5SsVx6YWOeyW8vlFsJH16Av9gwoNh5+PBojjOJ0pjhSrxLfNgzoY3gk+gRIk8aR+/nG0mJcDwabYYATtkazHMdN0BLkwRAxuaJ4OcqjLkXH0zm9Oq/8n7TdTKPjEp3KWs5Lt4v4skbvMlsZfPy73ekdSStLNzE/hKsUhR88ZuRHP9oO1pevBSNgNmSSEB2moOdfzGoL7ocm0UiQX0yeLKSX7yRsRbdBGHTyAd6XPGuamPhrtOpdVB168D1Q8cxREdU6nrJ8d88kdGmotN6YDbHQMg2fARSDU6JiMjGitt+YY5IkfmvNL54stvXbHGEg==
+ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
+ smtp.mailfrom=einfochips.com; dmarc=pass action=none
+ header.from=einfochips.com; dkim=pass header.d=einfochips.com; arc=none
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=einfochips.com;
+ s=selector1;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
+ bh=TQyaKUrMdInBF7Ma/MXOm+ZmpHeLl6IGBNC5IBo/a3Y=;
+ b=uoi6gDrK9Gqv4jyxrw12mhbV/UotAbwdIkRK0Qv068SH2A0aO0WLR0GI5mCJ9rs28ZGZI9v8AXsrb45M+IhZS+tnYNZJcbMhuArKbExtoJ1PIHQwsjWNSHtSAC+NbzBAypgrmlWdzfn+PmtNh43yG9Z/FukfNvS65bINiE05sfE=
+Received: from SJ2PR04MB8896.namprd04.prod.outlook.com (2603:10b6:a03:53e::6)
+ by DM6PR04MB6667.namprd04.prod.outlook.com (2603:10b6:5:247::21) with
+ Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.21.113.18; Thu, 18 Jun
+ 2026 13:42:26 +0000
+Received: from SJ2PR04MB8896.namprd04.prod.outlook.com
+ ([fe80::8292:662a:4214:95e0]) by SJ2PR04MB8896.namprd04.prod.outlook.com
+ ([fe80::8292:662a:4214:95e0%4]) with mapi id 15.21.0113.015; Thu, 18 Jun 2026
+ 13:42:26 +0000
+From: Pinkesh Vaghela <pinkesh.vaghela@einfochips.com>
+To: "sashiko-reviews@lists.linux.dev" <sashiko-reviews@lists.linux.dev>
+CC: "conor+dt@kernel.org" <conor+dt@kernel.org>, "robh@kernel.org"
+	<robh@kernel.org>, "devicetree@vger.kernel.org" <devicetree@vger.kernel.org>
+Subject: Re: [PATCH 5/7] riscv: dts: eswin: add hsp power domain
+Thread-Topic: [PATCH 5/7] riscv: dts: eswin: add hsp power domain
+Thread-Index: AQHc/yhMZeEToNWjb0W6u1v6W3Ytpw==
+Date: Thu, 18 Jun 2026 13:42:26 +0000
+Message-ID:
+ <SJ2PR04MB88967F187D6A90244C2CDA7983E32@SJ2PR04MB8896.namprd04.prod.outlook.com>
+References: <20260615122016.1110206-6-pinkesh.vaghela@einfochips.com>
+ <20260615123122.A624D1F0155D@smtp.kernel.org>
+In-Reply-To: <20260615123122.A624D1F0155D@smtp.kernel.org>
+Accept-Language: en-US, en-GB
+Content-Language: en-US
+X-MS-Has-Attach:
+X-MS-TNEF-Correlator:
+msip_labels:
+ MSIP_Label_879e395e-e3b5-421f-8616-70a10f9451af_ActionId=b93f298f-9acf-481b-acc8-c7b0a37d4608;MSIP_Label_879e395e-e3b5-421f-8616-70a10f9451af_ContentBits=0;MSIP_Label_879e395e-e3b5-421f-8616-70a10f9451af_Enabled=true;MSIP_Label_879e395e-e3b5-421f-8616-70a10f9451af_Method=Standard;MSIP_Label_879e395e-e3b5-421f-8616-70a10f9451af_Name=879e395e-e3b5-421f-8616-70a10f9451af;MSIP_Label_879e395e-e3b5-421f-8616-70a10f9451af_SetDate=2026-06-18T13:28:34Z;MSIP_Label_879e395e-e3b5-421f-8616-70a10f9451af_SiteId=0beb0c35-9cbb-4feb-99e5-589e415c7944;MSIP_Label_879e395e-e3b5-421f-8616-70a10f9451af_Tag=10,
+ 3, 0, 1;
+authentication-results: dkim=none (message not signed)
+ header.d=none;dmarc=none action=none header.from=einfochips.com;
+x-ms-publictraffictype: Email
+x-ms-traffictypediagnostic: SJ2PR04MB8896:EE_|DM6PR04MB6667:EE_
+x-ms-office365-filtering-correlation-id: c5c6c58c-4f38-43cc-f2cd-08decd3f6f56
+x-ms-exchange-atpmessageproperties: SA
+x-ms-exchange-senderadcheck: 1
+x-ms-exchange-antispam-relay: 0
+x-microsoft-antispam:
+ BCL:0;ARA:13230040|366016|376014|23010399003|1800799024|56012099006|55112099003|11063799006|4143699003|6133799003|4133799003|5023799004|22082099003|18002099003|38070700021;
+x-microsoft-antispam-message-info:
+ X3wpw+w0NC5YniRUA/FLw5dNzu3dmzf8SvbssxiEwoKJDJvslDXYd8m9TRdiPWI4ThqCUkwcF/KMVbbQS1BYZLLYuCZcx+fi3MakyQ8fNAYoGTO3wrY+mzh4TxWkzeAnAOMjRBdVD0Aeyf+p0oaLoF6EaGhR7VdpEe4caIm9rnmxcLMy06ZXGlrJ94di0VIeS9QM7u06qOtrBXQy60PUxWcN9VcWv1cvptC/ppdldj2eL9fDcMn3aqen7KY60x7x/DvRAB1mdZ0pHfF+SWVxHXuzNcjRmQixJcykEMK9R5IPCZAKrueaRbVMcuzyqW2ZhmGOqb8sDuIoWVL5HvxDdcku4rGrwzU1CnupO3/xNsRdLRqj7nLfPskKhMbKPhcl+k2gg01exJC/3QbSLQEbgUEWQUPwz+iy4AAMuE9BoW3/0XBjmEHQxVrPrxnZ7MK6IJ+sZGTFXW+/B9xdna5TezFiJJ1Xj6VKnCy0sqSj2u//6agiku/cYg0YGlLq9XyqHTCsyYZPv3cei3bf9L8PF+BcHW8W3NpG9qjZNlFYDN28sBGjwut/X8IkXn7YiO1Fiwnv1/zA5F4CqbOPE7y6V3wj9U2+A04g6U3OTTeV40EStJovwGo4nyszuIKbTP97PBF9Lm1TDw+83DnipeF/BL9hF5tqOpQYbXF9Ghp+lrZWGXPIkHIyDpg3rHUsRSOWnEYXS2CO0fZ14z6ovUxlos0+Sq3hax3Yq+HohDwFwCNBm4KQYS80qEVE1qQQYHm9
+x-forefront-antispam-report:
+ CIP:255.255.255.255;CTRY:;LANG:en;SCL:1;SRV:;IPV:NLI;SFV:NSPM;H:SJ2PR04MB8896.namprd04.prod.outlook.com;PTR:;CAT:NONE;SFS:(13230040)(366016)(376014)(23010399003)(1800799024)(56012099006)(55112099003)(11063799006)(4143699003)(6133799003)(4133799003)(5023799004)(22082099003)(18002099003)(38070700021);DIR:OUT;SFP:1101;
+x-ms-exchange-antispam-messagedata-chunkcount: 1
+x-ms-exchange-antispam-messagedata-0:
+ =?us-ascii?Q?VimqabtBvx0w2IqmtGE+xKB2U6T9c9+mcv6Q/3W1LZGZuZXrgMTcYhEsioIa?=
+ =?us-ascii?Q?8aJ0iCoUN6UGQgAXbSVzZNfPbNAn503UkJUePxxhceDRP5fh7uOzx5vxwAaD?=
+ =?us-ascii?Q?tQ0KLjZJ6SvRRVY2vGP7FT05Tmrcv9uk45O0EC4r7MrjxsI7ZdLRI0YhqpBb?=
+ =?us-ascii?Q?+edjHWhn/RlWP9hgUwUJu4z3Ed5AmG8vV/PHrDTvdige0JRa506OqMfsxSXE?=
+ =?us-ascii?Q?K3IMbHQNykCtnEpsZSPARskTNs9pVrGHDdIKErZvr4lz9nogeUmwqnwqNRig?=
+ =?us-ascii?Q?WsYq3csyUw2VZm7Tlrd15brPIp7BjZwH+MWH4hbYozfMpraK+DxBIlKW8o6F?=
+ =?us-ascii?Q?rV4hNHwx/1vV74ej/oE9spnNLuWOvYEVgijaG+pzmuoXfy1IrBlgP4sycgYj?=
+ =?us-ascii?Q?h0g8KMDrWWMgS+reLu4gB1js53NIbNZ2f4drbUs4/g95sZuFaCA3zB9LeibH?=
+ =?us-ascii?Q?s4WT0BabFLXicYtYhVwbyjy+XsKICWjhyPrpFhFL18embSkU6MwA+Mxkktel?=
+ =?us-ascii?Q?9U/cI27ZbSxnmP9l8kKVenuaLntNk8PhQm6EfZhkHwHFNS2A/XgnzxkZvqYz?=
+ =?us-ascii?Q?n4mYWfK27WkmZ8qMb7IcQp+GY3q9rqFOHAWylQ+7oTsmQt5r9uqk19ISkewH?=
+ =?us-ascii?Q?jU9x7QDtN3LFON5gjyXqMAHqa1Ly4BDfZGgOHUvmcxIgrfAZoHTOkbmkVgbb?=
+ =?us-ascii?Q?DJIITAGSjqYNbHvpSvGNfSFv5Kd57t9XWK6UQIM9qVhGSvp5Py55yth3x2+m?=
+ =?us-ascii?Q?2KmS2D3eeUUsKKX2IbsIKv5pCXr5FnKTM3/WIuf9wPKrcIEVr8SoFE/1Ewvg?=
+ =?us-ascii?Q?xZD+0her2DFJXVOQs8cj5h4QSNcf38Ek+ZwQ9+Vs+hFQW16QZu1jL2gSuZIJ?=
+ =?us-ascii?Q?octBQRPSQugffqt2sqT1qm6fgrsg97Q4YQTgdG5+UsK4KT0sw4zPB9QuFM+3?=
+ =?us-ascii?Q?waO7L4oe01mPMoM7q6Ewtx9x9vtyQlzMllOiNpNXpbr2LRJFmPDbGG+AYm7u?=
+ =?us-ascii?Q?q+Y6No1QFRksm2cYisrGkg95/+pnpHMk1QjQMZ6IeYYQTYh4+uU0kqGtKvDa?=
+ =?us-ascii?Q?Kf1huf781EnfpZmQpUYjx7EBdlOVlP91Z8sk2xxe2Lc6B6yeCg9xBga7IBcW?=
+ =?us-ascii?Q?c3iYLnpYD9ITzNeFN/AkJGNWEwUy5x0a4qgjiY4Y45KEABvzmMtBPySseDXI?=
+ =?us-ascii?Q?dB33+BFSf2UMWGVl2CAg3OzS3WWAp6afUixTQ+5yv4Xx10TBZpeoftS9IrXm?=
+ =?us-ascii?Q?BZxBopx7s8rupc+0TCziCR8//ARRLDMlTmUcrlXvtYTbOq+QWuSEpEeaiTjL?=
+ =?us-ascii?Q?ta4wzFu3JPQdSyrkWU96twkOBMTBEXeqNN9FEIupow1QZ+2CygLbgPiEce8X?=
+ =?us-ascii?Q?dfc+L0g2VC+WISLUxUn9NKrmSEaLu/ZeQmFRqNlfA/jugcGb7q+iMWJtWNbH?=
+ =?us-ascii?Q?xqvW8da38xFGbn5Z8O7Mq606Tas7iFDwexM7l+pYkz6RputWDUV9+pivaC93?=
+ =?us-ascii?Q?3CNrlcwQxaCKKDhvp7K4KEKikZ10vooqiM7Gim38lYx9wtFDxgUXjoaZyFKD?=
+ =?us-ascii?Q?O0bccsKMMO6k6FoKu08d7yLS1pfA8dez/zhrRrbhtuWiKC4pYauUaMwnCMSs?=
+ =?us-ascii?Q?SSbncdB3WX2tqtiWMTTReVkdgLQCauBGxdTCE2KJ/YKj3E7++yJKPlzjEXFN?=
+ =?us-ascii?Q?ndWwUXLsxG3mf2/BiVk8EeclVJ5CCWBx9jatJqfLR6ChrKTf3kjfVokyIMFF?=
+ =?us-ascii?Q?PcX4WxKKKw=3D=3D?=
+Content-Type: text/plain; charset="us-ascii"
+Content-Transfer-Encoding: quoted-printable
 Precedence: bulk
 X-Mailing-List: sashiko-reviews@lists.linux.dev
 List-Id: <sashiko-reviews.lists.linux.dev>
 List-Subscribe: <mailto:sashiko-reviews+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:sashiko-reviews+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 0/3] drm/omapdrm: fbdev: Use client buffers
-To: tomi.valkeinen@ideasonboard.com, maarten.lankhorst@linux.intel.com,
- mripard@kernel.org, airlied@gmail.com, simona@ffwll.ch
-Cc: dri-devel@lists.freedesktop.org, sashiko-reviews@lists.linux.dev
-References: <20260423140031.126072-1-tzimmermann@suse.de>
-Content-Language: en-US
-From: Thomas Zimmermann <tzimmermann@suse.de>
-Autocrypt: addr=tzimmermann@suse.de; keydata=
- xsBNBFs50uABCADEHPidWt974CaxBVbrIBwqcq/WURinJ3+2WlIrKWspiP83vfZKaXhFYsdg
- XH47fDVbPPj+d6tQrw5lPQCyqjwrCPYnq3WlIBnGPJ4/jreTL6V+qfKRDlGLWFjZcsrPJGE0
- BeB5BbqP5erN1qylK9i3gPoQjXGhpBpQYwRrEyQyjuvk+Ev0K1Jc5tVDeJAuau3TGNgah4Yc
- hdHm3bkPjz9EErV85RwvImQ1dptvx6s7xzwXTgGAsaYZsL8WCwDaTuqFa1d1jjlaxg6+tZsB
- 9GluwvIhSezPgnEmimZDkGnZRRSFiGP8yjqTjjWuf0bSj5rUnTGiyLyRZRNGcXmu6hjlABEB
- AAHNJ1Rob21hcyBaaW1tZXJtYW5uIDx0emltbWVybWFubkBzdXNlLmRlPsLAjgQTAQgAOAIb
- AwULCQgHAgYVCgkICwIEFgIDAQIeAQIXgBYhBHIX+6yM6c9jRKFo5WgNwR1TC3ojBQJftODH
- AAoJEGgNwR1TC3ojx1wH/0hKGWugiqDgLNXLRD/4TfHBEKmxIrmfu9Z5t7vwUKfwhFL6hqvo
- lXPJJKQpQ2z8+X2vZm/slsLn7J1yjrOsoJhKABDi+3QWWSGkaGwRJAdPVVyJMfJRNNNIKwVb
- U6B1BkX2XDKDGffF4TxlOpSQzdtNI/9gleOoUA8+jy8knnDYzjBNOZqLG2FuTdicBXblz0Mf
- vg41gd9kCwYXDnD91rJU8tzylXv03E75NCaTxTM+FBXPmsAVYQ4GYhhgFt8S2UWMoaaABLDe
- 7l5FdnLdDEcbmd8uLU2CaG4W2cLrUaI4jz2XbkcPQkqTQ3EB67hYkjiEE6Zy3ggOitiQGcqp
- j//OwE0EWznS4AEIAMYmP4M/V+T5RY5at/g7rUdNsLhWv1APYrh9RQefODYHrNRHUE9eosYb
- T6XMryR9hT8XlGOYRwKWwiQBoWSDiTMo/Xi29jUnn4BXfI2px2DTXwc22LKtLAgTRjP+qbU6
- 3Y0xnQN29UGDbYgyyK51DW3H0If2a3JNsheAAK+Xc9baj0LGIc8T9uiEWHBnCH+RdhgATnWW
- GKdDegUR5BkDfDg5O/FISymJBHx2Dyoklv5g4BzkgqTqwmaYzsl8UxZKvbaxq0zbehDda8lv
- hFXodNFMAgTLJlLuDYOGLK2AwbrS3Sp0AEbkpdJBb44qVlGm5bApZouHeJ/+n+7r12+lqdsA
- EQEAAcLAdgQYAQgAIAIbDBYhBHIX+6yM6c9jRKFo5WgNwR1TC3ojBQJftOH6AAoJEGgNwR1T
- C3ojVSkIALpAPkIJPQoURPb1VWjh34l0HlglmYHvZszJWTXYwavHR8+k6Baa6H7ufXNQtThR
- yIxJrQLW6rV5lm7TjhffEhxVCn37+cg0zZ3j7zIsSS0rx/aMwi6VhFJA5hfn3T0TtrijKP4A
- SAQO9xD1Zk9/61JWk8OysuIh7MXkl0fxbRKWE93XeQBhIJHQfnc+YBLprdnxR446Sh8Wn/2D
- Ya8cavuWf2zrB6cZurs048xe0UbSW5AOSo4V9M0jzYI4nZqTmPxYyXbm30Kvmz0rYVRaitYJ
- 4kyYYMhuULvrJDMjZRvaNe52tkKAvMevcGdt38H4KSVXAylqyQOW5zvPc4/sq9c=
-In-Reply-To: <20260423140031.126072-1-tzimmermann@suse.de>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 8bit
-X-Rspamd-Action: no action
-X-Rspamd-Queue-Id: 9F12F75EAE
-X-Spam-Flag: NO
-X-Spam-Score: -4.51
-X-Spam-Level: 
-X-Spamd-Result: default: False [-4.51 / 50.00];
-	BAYES_HAM(-3.00)[100.00%];
-	NEURAL_HAM_LONG(-1.00)[-1.000];
-	R_DKIM_ALLOW(-0.20)[suse.de:s=susede2_rsa,suse.de:s=susede2_ed25519];
-	NEURAL_HAM_SHORT(-0.20)[-1.000];
-	MIME_GOOD(-0.10)[text/plain];
-	MX_GOOD(-0.01)[];
-	TO_MATCH_ENVRCPT_ALL(0.00)[];
-	DKIM_SIGNED(0.00)[suse.de:s=susede2_rsa,suse.de:s=susede2_ed25519];
-	FREEMAIL_TO(0.00)[ideasonboard.com,linux.intel.com,kernel.org,gmail.com,ffwll.ch];
-	ARC_NA(0.00)[];
-	RCVD_TLS_ALL(0.00)[];
-	RBL_SPAMHAUS_BLOCKED_OPENRESOLVER(0.00)[2a07:de40:b281:104:10:150:64:97:from];
-	FUZZY_RATELIMITED(0.00)[rspamd.com];
-	DKIM_TRACE(0.00)[suse.de:+];
-	FREEMAIL_ENVRCPT(0.00)[gmail.com];
-	RCVD_VIA_SMTP_AUTH(0.00)[];
-	RCVD_COUNT_TWO(0.00)[2];
-	FROM_EQ_ENVFROM(0.00)[];
-	FROM_HAS_DN(0.00)[];
-	MIME_TRACE(0.00)[0:+];
-	TO_DN_NONE(0.00)[];
-	MID_RHS_MATCH_FROM(0.00)[];
-	DNSWL_BLOCKED(0.00)[2a07:de40:b281:106:10:150:64:167:received];
-	RECEIVED_SPAMHAUS_BLOCKED_OPENRESOLVER(0.00)[2a07:de40:b281:106:10:150:64:167:received];
-	RCPT_COUNT_SEVEN(0.00)[7];
-	DBL_BLOCKED_OPENRESOLVER(0.00)[suse.com:url,suse.de:mid,suse.de:dkim,imap1.dmz-prg2.suse.org:rdns,imap1.dmz-prg2.suse.org:helo]
-X-Rspamd-Server: rspamd1.dmz-prg2.suse.org
+X-OriginatorOrg: einfochips.com
+X-MS-Exchange-CrossTenant-AuthAs: Internal
+X-MS-Exchange-CrossTenant-AuthSource: SJ2PR04MB8896.namprd04.prod.outlook.com
+X-MS-Exchange-CrossTenant-Network-Message-Id: c5c6c58c-4f38-43cc-f2cd-08decd3f6f56
+X-MS-Exchange-CrossTenant-originalarrivaltime: 18 Jun 2026 13:42:26.7729
+ (UTC)
+X-MS-Exchange-CrossTenant-fromentityheader: Hosted
+X-MS-Exchange-CrossTenant-id: 0beb0c35-9cbb-4feb-99e5-589e415c7944
+X-MS-Exchange-CrossTenant-mailboxtype: HOSTED
+X-MS-Exchange-CrossTenant-userprincipalname: Nlw+7OXUFB11rdEXNiYeZX+mKfmRinqbznNgsYDCPOhu6pRVQmenzp6W3Lc5TreaCq43gNTbX6ldBpo55ViD73LZOeRYoa+4dc7JzibBPXg=
+X-MS-Exchange-Transport-CrossTenantHeadersStamped: DM6PR04MB6667
 
-ping for a review
+Hi Sashiko,
 
-Am 23.04.26 um 15:58 schrieb Thomas Zimmermann:
-> A client buffer holds the DRM framebuffer for an in-kernel DRM
-> client. Until now, omapdrm created an internal ad-hoc framebuffer for
-> its fbdev emulation, while by-passing the regular interfaces used by
-> user-space compositors.
->
-> Convert omapdrm's fbdev emulation to use client buffers. Replacing the
-> existing code with a client buffer allows for stream-lining omapdrm code
-> and later also the fbdev helpers. The new framebuffer will be registered
-> against the client's file and will support handles for GEM objects. It
-> is then just another framebuffer within the DRM ecosystem.
->
-> If all driver's fbdev-emulation helpers can be converted to use client
-> buffers, the emulation's framebuffer handling as a whole can possibly be
-> moved into shared helpers.
->
-> Patches 1 and 2 convert omapdrm's fbdev emulation to client buffers. It
-> still allocates a GEM object buffer tailored towards fbdev emulation,
-> but size calculations now use common DRM helpers.
->
-> Patch 3 cleans up symbol visibility in omapdrm's fb code.
->
-> Thomas Zimmermann (3):
->    drm/omapdrm: fbdev: Calculate buffer geometry with format helpers
->    drm/omapdrm: fbdev: Use a DRM client buffer
->    drm/omapdrm: Make omap_framebuffer_init() an internal interface
->
->   drivers/gpu/drm/omapdrm/omap_fb.c    | 68 +++++++++----------
->   drivers/gpu/drm/omapdrm/omap_fb.h    |  3 -
->   drivers/gpu/drm/omapdrm/omap_fbdev.c | 98 +++++++++++++++-------------
->   3 files changed, 88 insertions(+), 81 deletions(-)
->
+Thanks for your time to review this patch.
 
--- 
---
-Thomas Zimmermann
-Graphics Driver Developer
-SUSE Software Solutions Germany GmbH
-Frankenstr. 146, 90461 Nürnberg, Germany, www.suse.com
-GF: Jochen Jaser, Andrew McDonald, Werner Knoblich, (HRB 36809, AG Nürnberg)
+> Thank you for your contribution! Sashiko AI review found 2 potential issu=
+e(s)
+> to consider:
+> - [High] The HSP CFG clock will never be enabled, causing a hardware hang
+> during register access, because `simple-pm-bus` requires children to use
+> `pm_runtime` but `syscon` bypasses it.
+> - [Medium] The node is labeled and described as a 'power domain' but is
+> modeled as a simple bus without the ability to act as a power domain
+> provider.
+> --
+>=20
+> commit 0dad730760e600f73d118515b1907e14ac735dad
+> Author: Pinkesh Vaghela <pinkesh.vaghela@einfochips.com>
+>=20
+> riscv: dts: eswin: add hsp power domain
+>=20
+> This commit adds an HSP power domain node to manage the HSP CFG clock,
+> which is required to access the HSP CSR registers. The CSR is defined as =
+a
+> syscon child node within a simple-pm-bus.
+>=20
+> > diff --git a/arch/riscv/boot/dts/eswin/eic7700.dtsi
+> > b/arch/riscv/boot/dts/eswin/eic7700.dtsi
+> > --- a/arch/riscv/boot/dts/eswin/eic7700.dtsi
+> > +++ b/arch/riscv/boot/dts/eswin/eic7700.dtsi
+> > @@ -252,6 +252,19 @@ plic: interrupt-controller@c000000 {
+> >                       #interrupt-cells =3D <1>;
+> >               };
+> >
+> > +             hsp_power_domain: bus@50400000 {
+> > +                     compatible =3D "simple-pm-bus";
+>=20
+> [Severity: Medium]
+> The commit message and node label describe this as a power domain, but
+> the node uses simple-pm-bus and lacks a #power-domain-cells property. Can
+> other devices actually reference this as a power domain?
+>=20
+> simple-pm-bus acts as a transparent bus for managing clocks or resets for=
+ its
+> direct children, rather than a genpd provider. If this is meant to act as=
+ a power
+> domain that other IP blocks depend on via power-domains =3D <...>, does i=
+t
+> need a dedicated driver and the #power-domain-cells property?
+>=20
+> If it is strictly meant to manage the syscon clock, should the wrapper be
+> removed entirely?
 
+This node is not intended to be a generic power domain (genpd) provider and=
+ is
+Not expected to be referenced by other devices via a `power-domains` proper=
+ty.
 
+The `simple-pm-bus` wrapper is used to manage the HSP CFG clock, which must
+Be enabled before accessing the HSP CSR registers and the register spaces o=
+f
+the HSP child devices.
+
+The current label is misleading. To avoid confusion with a genpd provider,
+we will rename it in v2:
+hsp_power_domain: bus@50400000 to hsp: bus@50400000
+
+>=20
+> > +                     ranges =3D <0x0 0x50400000 0x0 0x50400000 0x0 0xa=
+0000>;
+> > +                     clocks =3D <&clk EIC7700_CLK_GATE_HSP_CFG_CLK>;
+>=20
+> [Severity: High]
+> Since the child node uses the generic syscon compatible, will this clock =
+ever
+> be enabled?
+>=20
+> The syscon framework in drivers/mfd/syscon.c does not register a platform
+> driver, does not probe a device, and does not invoke pm_runtime_get_sync(=
+).
+> Because the child device is never probed or runtime-resumed, the parent
+> simple-pm-bus will remain suspended.
+>=20
+> Would this cause a system hang when accessing the syscon registers since =
+the
+> clock would remain disabled?
+>=20
+> Additionally, of_syscon_register() natively expects the clocks property t=
+o be
+> directly in the syscon node. Should the clocks property be moved to the
+> hsp_sp_csr node and the simple-pm-bus wrapper removed?
+
+The HSP CFG clock is required not only for accessing the HSP CSR registers,=
+ but
+also for accessing the register spaces of all HSP peripherals.
+
+In this series, we have not yet submitted the DTS patches for the HSP perip=
+heral
+devices. The intention is for all HSP peripherals to be placed under this
+simple-pm-bus node so that the HSP CFG clock can be managed centrally.
+A simplified example is shown below:
+
+hsp: bus@50400000 {
+        compatible =3D "simple-pm-bus";
+        clocks =3D <&clk EIC7700_CLK_GATE_HSP_CFG_CLK>;
+
+        hsp_sp_csr: hsp-sp-top-csr@50440000 {
+                compatible =3D "eswin,eic7700-syscfg", "syscon";
+                reg =3D <0x0 0x50440000 0x0 0x2000>;
+        };
+
+        sdhci_emmc: mmc@50450000 {
+                ...
+        };
+};
+
+The purpose of this node is not solely to provide access to the HSP CSR
+registers but to act as the common parent bus for HSP peripherals that
+depend on the HSP CFG clock.
+
+The current commit message is misleading because it suggests that the node
+exists only for the CSR access.
+We will update the commit message in v2 as below:
+
+riscv: dts: eswin: add HSP bus node
+
+Add an HSP bus node to manage the HSP CFG clock used by HSP
+peripherals. This clock is required for accessing both the HSP CSR
+registers and the register spaces of HSP peripheral devices.
+
+Is this acceptable?
+
+Regards,
+Pinkesh
+
+>=20
+> > +                     #address-cells =3D <2>;
+> > +                     #size-cells =3D <2>;
+> > +
+> > +                     hsp_sp_csr: hsp-sp-top-csr@50440000 {
+> > +                             compatible =3D "eswin,eic7700-syscfg", "s=
+yscon";
+> > +                             reg =3D <0x0 0x50440000 0x0 0x2000>;
+> > +                     };
+> > +             };
+> > +
+> >               uart0: serial@50900000 {
+> >                       compatible =3D "snps,dw-apb-uart";
+> >                       reg =3D <0x0 0x50900000 0x0 0x10000>;
+>=20
+> --
+> Sashiko AI review *
+> https://nam04.safelinks.protection.outlook.com/?url=3Dhttps%3A%2F%2Fsashi=
+k
+> o.dev%2F%23%2Fpatchset%2F20260615122016.1110206-1-
+> pinkesh.vaghela%40einfochips.com%3Fpart%3D5&data=3D05%7C02%7Cpinkesh
+> .vaghela%40einfochips.com%7Cd647a45fb159406b1be408decada02f7%7C0b
+> eb0c359cbb4feb99e5589e415c7944%7C1%7C0%7C639171234888553198%7C
+> Unknown%7CTWFpbGZsb3d8eyJFbXB0eU1hcGkiOnRydWUsIlYiOiIwLjAuMDA
+> wMCIsIlAiOiJXaW4zMiIsIkFOIjoiTWFpbCIsIldUIjoyfQ%3D%3D%7C0%7C%7C%
+> 7C&sdata=3DzdGzcGOEAAOetK3OWTF5JjYPXpfvcIgMARFEP7DI39I%3D&reserved
+> =3D0
