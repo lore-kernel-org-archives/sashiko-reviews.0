@@ -1,68 +1,36 @@
 Received: from smtp-out1.suse.de (smtp-out1.suse.de [195.135.223.130])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A51773563E1
-	for <sashiko-reviews@lists.linux.dev>; Thu, 18 Jun 2026 12:31:49 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9B99B3563E1
+	for <sashiko-reviews@lists.linux.dev>; Thu, 18 Jun 2026 12:31:55 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=195.135.223.130
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1781785910; cv=none; b=JZjr2BKwQf97xp44DL0vnz/jCz/apokHTbvazmff9rB6YtBI1PJ0uDr3w9y2fbLxscVBvMc1niKNCafWmN5h/Zs87/Y+czYF5XNnQu2oTcHMhlzS8yJWfEfB5Cfa7MFjVmxgnZkPdvPmu32UN2HUCvsfAn/WeSfNeV9owsV4aEc=
+	t=1781785916; cv=none; b=LFy1zrYLmgQ7B0+fvkpys+BV2X8QdE3iUqNRrg0xjDSIID1U++kl3y/vafoX0KHggy/RyfEQrVpi5dpcZTJPNwKMzO2aStZC+MGUR3tm109IfkbMP/bChcZqP6bL7tsmKD8LCer/q9yHe9WMD6o0sVEkKA5pTM1iW7u3LL0kPto=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1781785910; c=relaxed/simple;
-	bh=soFw/qqktlzzWCtOkCBG6daZa2XqzKzzp/tYoN21O24=;
-	h=From:To:Cc:Subject:Date:Message-ID:MIME-Version; b=jtkxupMeviKTBBHT64zl7RYmwWsgsW1bUTiNiHQdPSnchO3zx/ayHIdx9f4GZZddlXc0jbz31aRuXkt+jwOUplI0+1zzQn5qacAU7+TzMiLegqpoH/Ge+dE6JzAzeVZh/gGhY+d8Xe8sYFK7oXkN58AgbmhY/rzYMnDWD7Fg1N8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=suse.de; spf=pass smtp.mailfrom=suse.de; dkim=pass (1024-bit key) header.d=suse.de header.i=@suse.de header.b=1ynjfjJc; dkim=permerror (0-bit key) header.d=suse.de header.i=@suse.de header.b=s7vEiTTt; dkim=pass (1024-bit key) header.d=suse.de header.i=@suse.de header.b=1ynjfjJc; dkim=permerror (0-bit key) header.d=suse.de header.i=@suse.de header.b=s7vEiTTt; arc=none smtp.client-ip=195.135.223.130
+	s=arc-20240116; t=1781785916; c=relaxed/simple;
+	bh=mDZcyD6Qym7NLV78zpK4l6Yxyrba1PoSuj/nb7H/FI8=;
+	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
+	 MIME-Version; b=nbcrabzz1CPvT2tvzzwsY9/LssnwhirriXTaXxLIaL3BMhtN3yC2UlEg5cdUg0kvLNCoBm9CeWMxhn5Xv47zP5kfamGeOhLTR9UCTAKdWNFvWKLa3VI1zAHqdkVtT2EfyJmvQzPCzQcd9yXhHalc/jlbARn7d71DzeaEiLwHAog=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=suse.de; spf=pass smtp.mailfrom=suse.de; arc=none smtp.client-ip=195.135.223.130
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=suse.de
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=suse.de
-Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=suse.de header.i=@suse.de header.b="1ynjfjJc";
-	dkim=permerror (0-bit key) header.d=suse.de header.i=@suse.de header.b="s7vEiTTt";
-	dkim=pass (1024-bit key) header.d=suse.de header.i=@suse.de header.b="1ynjfjJc";
-	dkim=permerror (0-bit key) header.d=suse.de header.i=@suse.de header.b="s7vEiTTt"
-Received: from imap1.dmz-prg2.suse.org (unknown [10.150.64.97])
+Received: from imap1.dmz-prg2.suse.org (imap1.dmz-prg2.suse.org [IPv6:2a07:de40:b281:104:10:150:64:97])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature RSA-PSS (4096 bits) server-digest SHA256)
 	(No client certificate requested)
-	by smtp-out1.suse.de (Postfix) with ESMTPS id DA7B16D350;
-	Thu, 18 Jun 2026 12:31:47 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=suse.de; s=susede2_rsa;
-	t=1781785907; h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
-	 mime-version:mime-version:  content-transfer-encoding:content-transfer-encoding;
-	bh=xo0aHidRb4wA5F1wXgNyr9a0GOziBVbGIPO/tKEQZic=;
-	b=1ynjfjJc9+dqGE4LUrptDoTjlEWf9B1NDi0W63XQbB9A9dZZ0AVdRgLbv5pbP43muPnv14
-	D4jPEf37+KASXcwCvOSp+OhC6avJxIK5gt3/FN9b2FyLZ4IQeUmAAqQ90HQAHDwQNF4QP2
-	0ioB2i8XVpnQSx6+kVAOzUoBKSuncVk=
-DKIM-Signature: v=1; a=ed25519-sha256; c=relaxed/relaxed; d=suse.de;
-	s=susede2_ed25519; t=1781785907;
-	h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
-	 mime-version:mime-version:  content-transfer-encoding:content-transfer-encoding;
-	bh=xo0aHidRb4wA5F1wXgNyr9a0GOziBVbGIPO/tKEQZic=;
-	b=s7vEiTTt7Ei6omIViI7Mul29Sj9ZEhlFD+GeybPGCF3IIg/EM/61QFkTFk7bhQwviR3yqO
-	KRsD0KMP/qYQSCAA==
+	by smtp-out1.suse.de (Postfix) with ESMTPS id 566626D354;
+	Thu, 18 Jun 2026 12:31:48 +0000 (UTC)
 Authentication-Results: smtp-out1.suse.de;
 	none
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=suse.de; s=susede2_rsa;
-	t=1781785907; h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
-	 mime-version:mime-version:  content-transfer-encoding:content-transfer-encoding;
-	bh=xo0aHidRb4wA5F1wXgNyr9a0GOziBVbGIPO/tKEQZic=;
-	b=1ynjfjJc9+dqGE4LUrptDoTjlEWf9B1NDi0W63XQbB9A9dZZ0AVdRgLbv5pbP43muPnv14
-	D4jPEf37+KASXcwCvOSp+OhC6avJxIK5gt3/FN9b2FyLZ4IQeUmAAqQ90HQAHDwQNF4QP2
-	0ioB2i8XVpnQSx6+kVAOzUoBKSuncVk=
-DKIM-Signature: v=1; a=ed25519-sha256; c=relaxed/relaxed; d=suse.de;
-	s=susede2_ed25519; t=1781785907;
-	h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
-	 mime-version:mime-version:  content-transfer-encoding:content-transfer-encoding;
-	bh=xo0aHidRb4wA5F1wXgNyr9a0GOziBVbGIPO/tKEQZic=;
-	b=s7vEiTTt7Ei6omIViI7Mul29Sj9ZEhlFD+GeybPGCF3IIg/EM/61QFkTFk7bhQwviR3yqO
-	KRsD0KMP/qYQSCAA==
 Received: from imap1.dmz-prg2.suse.org (localhost [127.0.0.1])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature RSA-PSS (4096 bits) server-digest SHA256)
 	(No client certificate requested)
-	by imap1.dmz-prg2.suse.org (Postfix) with ESMTPS id 91433779A8;
+	by imap1.dmz-prg2.suse.org (Postfix) with ESMTPS id E2822779AB;
 	Thu, 18 Jun 2026 12:31:47 +0000 (UTC)
 Received: from dovecot-director2.suse.de ([2a07:de40:b281:106:10:150:64:167])
 	by imap1.dmz-prg2.suse.org with ESMTPSA
-	id hMZMIjPlM2rTJQAAD6G6ig
+	id cLQENjPlM2rTJQAAD6G6ig
 	(envelope-from <tzimmermann@suse.de>); Thu, 18 Jun 2026 12:31:47 +0000
 From: Thomas Zimmermann <tzimmermann@suse.de>
 To: shiyongbang@huawei.com,
@@ -74,11 +42,19 @@ To: shiyongbang@huawei.com,
 	simona@ffwll.ch
 Cc: dri-devel@lists.freedesktop.org,
 	sashiko-reviews@lists.linux.dev,
-	Thomas Zimmermann <tzimmermann@suse.de>
-Subject: [PATCH v4 0/6] drm/hibmc: Fix plane helpers and convert to gem-shmem
-Date: Thu, 18 Jun 2026 14:28:38 +0200
-Message-ID: <20260618123142.92298-1-tzimmermann@suse.de>
+	Thomas Zimmermann <tzimmermann@suse.de>,
+	Rongrong Zou <zourongrong@gmail.com>,
+	Sean Paul <seanpaul@chromium.org>,
+	Xinliang Liu <xinliang.liu@linaro.org>,
+	Dmitry Baryshkov <lumag@kernel.org>,
+	Baihan Li <libaihan@huawei.com>,
+	stable@vger.kernel.org
+Subject: [PATCH v4 1/6] drm/hibmc: Use drm_atomic_helper_check_plane_state()
+Date: Thu, 18 Jun 2026 14:28:39 +0200
+Message-ID: <20260618123142.92298-2-tzimmermann@suse.de>
 X-Mailer: git-send-email 2.54.0
+In-Reply-To: <20260618123142.92298-1-tzimmermann@suse.de>
+References: <20260618123142.92298-1-tzimmermann@suse.de>
 Precedence: bulk
 X-Mailing-List: sashiko-reviews@lists.linux.dev
 List-Id: <sashiko-reviews.lists.linux.dev>
@@ -86,78 +62,125 @@ List-Subscribe: <mailto:sashiko-reviews+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:sashiko-reviews+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
+X-Rspamd-Pre-Result: action=no action;
+	module=replies;
+	Message is reply to one we originated
+X-Rspamd-Queue-Id: 566626D354
 X-Spam-Flag: NO
-X-Spam-Score: -2.80
-X-Spamd-Result: default: False [-2.80 / 50.00];
-	BAYES_HAM(-3.00)[100.00%];
-	MID_CONTAINS_FROM(1.00)[];
-	NEURAL_HAM_LONG(-1.00)[-1.000];
-	R_MISSING_CHARSET(0.50)[];
-	NEURAL_HAM_SHORT(-0.20)[-0.993];
-	MIME_GOOD(-0.10)[text/plain];
-	TO_MATCH_ENVRCPT_ALL(0.00)[];
-	RCVD_VIA_SMTP_AUTH(0.00)[];
-	FUZZY_RATELIMITED(0.00)[rspamd.com];
-	ARC_NA(0.00)[];
-	MIME_TRACE(0.00)[0:+];
-	FROM_HAS_DN(0.00)[];
-	DBL_BLOCKED_OPENRESOLVER(0.00)[suse.de:mid,imap1.dmz-prg2.suse.org:helo];
-	FROM_EQ_ENVFROM(0.00)[];
-	RCPT_COUNT_SEVEN(0.00)[10];
-	RCVD_COUNT_TWO(0.00)[2];
-	FREEMAIL_TO(0.00)[huawei.com,hisilicon.com,linux.intel.com,kernel.org,gmail.com,ffwll.ch];
-	RCVD_TLS_ALL(0.00)[];
-	TO_DN_SOME(0.00)[];
-	DKIM_SIGNED(0.00)[suse.de:s=susede2_rsa,suse.de:s=susede2_ed25519];
-	FREEMAIL_ENVRCPT(0.00)[gmail.com]
+X-Spam-Score: -4.00
 X-Spam-Level: 
+X-Rspamd-Action: no action
+X-Rspamd-Server: rspamd1.dmz-prg2.suse.org
+X-Rspamd-Pre-Result: action=no action;
+	module=replies;
+	Message is reply to one we originated
+X-Spamd-Result: default: False [-4.00 / 50.00];
+	REPLY(-4.00)[]
 
-Convert hibmc's memory management from gem-vram ot gem-shmem. Fix a
-number of bugs in preparation.
+Call drm_atomic_helper_check_plane_state() from the primary plane's
+atomic-check helper and replace the custom implementation.
 
-Patches 1 to 5 fix various bugs and minor issues in the plane code.
+All plane's implementations of atomic_check should call the shared
+_check_plane_state() helper first. It adjusts the plane state for
+correct positioning, rotation and scaling of the plane. Do this
+even if the plane's CRTC has been disabled by setting the parameter
+can_update_disabled. The original code returned early in this case,
+but it's safe to so and cleaner to have all plane state initialized.
 
-Patch 6 replaces gem-vram with gem-shmem. The rational is that gem-vram
-has corner cases on low-end devices and is limited in functionality. The
-commit messages state a list of possible issues.
+As we don't set can_position, drm_atomic_helper_check_plane_state()'s
+visibility check tests if the plane covers all of the CRTC. This is
+a small change from the original code, which tested if the plane is
+exactly the size of the CRTC. With the new test, the plane still has
+to cover all of the CRTC, but can be larger than the CRTC's size. A
+later patch can fully implement this feature in hibmc.
 
-Switching to gem-shmem avoids these problems. It also enables buffer
-sharing via dma_buf, which improves the hibmc driver's integration with
-the overall graphics ecosystem.
+If the plane is disabled, the helper clears the visibility flag in the
+plane state. On errors or if the plane is not visible, the atomic-check
+helper can return early. Implement all this in hibmc and drop the custom
+code that does some of it.
 
-We've done these changes on drivers for similar hardware, such as ast and
-mgag200. Hibmc is the last of these drivers to run on gem-shmem. Gem-vram
-instead is deprecated and can hopefully be removed in a later release.
-
-Tested on an RH1288 v3 system.
-
-v4:
-- verify framebuffer pitch aligns to 128
-- store fb in local variable in atomic_update (Yongbang)
-v3:
-- fix coding style
-- rebase on display-detection fixes
 v2:
-- extend commit message of patch 2 (Yongbang)
-- so not select TTM any longer
+- extend the commit description (Yongbang)
 
-Thomas Zimmermann (6):
-  drm/hibmc: Use drm_atomic_helper_check_plane_state()
-  drm/hibmc: Fix list of formats on the primary plane
-  drm/hibmc: Store fb in variable in atomic_update
-  drm/hibmc: Do not use cpp from struct drm_format_info
-  drm/hibmc: Verify the framebuffer pitch to be a multiple of 128
-  drm/hibmc: Use gem-shmem with shadow-plane helpers for memory
-    management
+Signed-off-by: Thomas Zimmermann <tzimmermann@suse.de>
+Fixes: da52605eea8f ("drm/hisilicon/hibmc: Add support for display engine")
+Reviewed-by: Yongbang Shi <shiyongbang@huawei.com>
+Cc: Rongrong Zou <zourongrong@gmail.com>
+Cc: Sean Paul <seanpaul@chromium.org>
+Cc: Xinliang Liu <xinliang.liu@linaro.org>
+Cc: Dmitry Baryshkov <lumag@kernel.org>
+Cc: Baihan Li <libaihan@huawei.com>
+Cc: Yongbang Shi <shiyongbang@huawei.com>
+Cc: <stable@vger.kernel.org> # v4.10+
+---
+ .../gpu/drm/hisilicon/hibmc/hibmc_drm_de.c    | 46 ++++++-------------
+ 1 file changed, 14 insertions(+), 32 deletions(-)
 
- drivers/gpu/drm/drm_gem_shmem_helper.c        |  22 +++-
- drivers/gpu/drm/hisilicon/hibmc/Kconfig       |   4 +-
- .../gpu/drm/hisilicon/hibmc/hibmc_drm_de.c    | 110 +++++++++---------
- .../gpu/drm/hisilicon/hibmc/hibmc_drm_drv.c   |  78 ++++++++++---
- .../gpu/drm/hisilicon/hibmc/hibmc_drm_drv.h   |   5 +
- include/drm/drm_gem_shmem_helper.h            |   4 +
- 6 files changed, 145 insertions(+), 78 deletions(-)
-
+diff --git a/drivers/gpu/drm/hisilicon/hibmc/hibmc_drm_de.c b/drivers/gpu/drm/hisilicon/hibmc/hibmc_drm_de.c
+index 3066dc9ebc64..7c0b88c774b5 100644
+--- a/drivers/gpu/drm/hisilicon/hibmc/hibmc_drm_de.c
++++ b/drivers/gpu/drm/hisilicon/hibmc/hibmc_drm_de.c
+@@ -72,46 +72,28 @@ static int hibmc_get_best_clock_idx(const struct drm_display_mode *mode)
+ static int hibmc_plane_atomic_check(struct drm_plane *plane,
+ 				    struct drm_atomic_commit *state)
+ {
+-	struct drm_plane_state *new_plane_state = drm_atomic_get_new_plane_state(state,
+-										 plane);
+-	struct drm_framebuffer *fb = new_plane_state->fb;
+-	struct drm_crtc *crtc = new_plane_state->crtc;
+-	struct drm_crtc_state *crtc_state;
+-	u32 src_w = new_plane_state->src_w >> 16;
+-	u32 src_h = new_plane_state->src_h >> 16;
+-
+-	if (!crtc || !fb)
+-		return 0;
++	struct drm_plane_state *new_plane_state =
++		drm_atomic_get_new_plane_state(state, plane);
++	struct drm_crtc_state *new_crtc_state = NULL;
++	int ret;
+ 
+-	crtc_state = drm_atomic_get_crtc_state(state, crtc);
+-	if (IS_ERR(crtc_state))
+-		return PTR_ERR(crtc_state);
++	if (new_plane_state->crtc)
++		new_crtc_state = drm_atomic_get_new_crtc_state(state, new_plane_state->crtc);
+ 
+-	if (src_w != new_plane_state->crtc_w || src_h != new_plane_state->crtc_h) {
+-		drm_dbg_atomic(plane->dev, "scale not support\n");
+-		return -EINVAL;
+-	}
+-
+-	if (new_plane_state->crtc_x < 0 || new_plane_state->crtc_y < 0) {
+-		drm_dbg_atomic(plane->dev, "crtc_x/y of drm_plane state is invalid\n");
+-		return -EINVAL;
+-	}
+-
+-	if (!crtc_state->enable)
++	ret = drm_atomic_helper_check_plane_state(new_plane_state, new_crtc_state,
++						  DRM_PLANE_NO_SCALING,
++						  DRM_PLANE_NO_SCALING,
++						  false, true);
++	if (ret)
++		return ret;
++	else if (!new_plane_state->visible)
+ 		return 0;
+ 
+-	if (new_plane_state->crtc_x + new_plane_state->crtc_w >
+-	    crtc_state->adjusted_mode.hdisplay ||
+-	    new_plane_state->crtc_y + new_plane_state->crtc_h >
+-	    crtc_state->adjusted_mode.vdisplay) {
+-		drm_dbg_atomic(plane->dev, "visible portion of plane is invalid\n");
+-		return -EINVAL;
+-	}
+-
+ 	if (new_plane_state->fb->pitches[0] % 128 != 0) {
+ 		drm_dbg_atomic(plane->dev, "wrong stride with 128-byte aligned\n");
+ 		return -EINVAL;
+ 	}
++
+ 	return 0;
+ }
+ 
 -- 
 2.54.0
 
