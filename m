@@ -1,210 +1,116 @@
-Received: from mo4-p01-ob.smtp.rzone.de (mo4-p01-ob.smtp.rzone.de [85.215.255.51])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-pj1-f51.google.com (mail-pj1-f51.google.com [209.85.216.51])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C83562DFA25
-	for <sashiko-reviews@lists.linux.dev>; Thu, 18 Jun 2026 17:56:36 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=pass smtp.client-ip=85.215.255.51
-ARC-Seal:i=2; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1781805399; cv=pass; b=r8c28LSLDyoXTM8fGK3cCAA/GEln2IjFo83E9gtfCoCfOFd/5PFoew+OcWU56PaXzgjUMXLfPscDrmXd9zZxLOz/3c3fea0009NADi05gHmcJ+UmOzZ3x9D/bjBLVhjLHyJWpqt+LloIFBLBYBu6I/6pNp823CXokKpoB5YM3z4=
-ARC-Message-Signature:i=2; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1781805399; c=relaxed/simple;
-	bh=6cY0xP6GJo6iqFSzep5rMZFBVnLwQGKOFd9FLJUu57k=;
-	h=Content-Type:Mime-Version:Subject:From:In-Reply-To:Date:Cc:
-	 Message-Id:References:To; b=BHWhOFRD5nqs7UHEcuRKRC1YftsGzlStb8VoNC8qW6tBEeCmf6gKpDsak57qzkgcTaFaB+L/NuTh2CpgXNolzIQPzodLm8x+ZSFuupJ1II59q6uXhHDbxjwgUMimlvZ77o7OSLclDhc45IlACu1ohG4EPMrT6uNfhTphEr0VmMM=
-ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=goldelico.com; spf=pass smtp.mailfrom=goldelico.com; dkim=pass (2048-bit key) header.d=goldelico.com header.i=@goldelico.com header.b=kJ1iCQTS; dkim=permerror (0-bit key) header.d=goldelico.com header.i=@goldelico.com header.b=qPcunTjt; arc=pass smtp.client-ip=85.215.255.51
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=goldelico.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=goldelico.com
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 52F602D662F
+	for <sashiko-reviews@lists.linux.dev>; Thu, 18 Jun 2026 19:02:17 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.216.51
+ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
+	t=1781809338; cv=none; b=hPjQXUxrP4h2B21Tnsx1Pjt8ptGbqfsTzhEEfrKNQOvH5sfrzRHaH3zmInjkdmCBQRHvW2eEXuPvuIX5IyWAhYoEVXLe8oiP3rzOD3mqm0dUuBuNV/Tecj2dHRIoOTAI0TR085EfOJzi3DZegDXg3Kc69b0ReNoEPN6oevhmo6k=
+ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
+	s=arc-20240116; t=1781809338; c=relaxed/simple;
+	bh=Ud7c7ziFdGIHMaWEoi0fi8loXZCXKJaP++l3geDTRd4=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=rbyquoxfokBd7BfJ+6OijD2dCEDULQFyCLW70NHgAdb81W0y7DWr7orcpVaxcX0l8GlGYGwBjAoYxzkCrHQmn14hhoIhcJBELX0oH+LDHVRWipXdefv2k9061THqM/OwoOkMc+WDtXm/nQXF41mJTDL7Avk51cVrzt/9+lD/nJY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=bg+H2qDD; arc=none smtp.client-ip=209.85.216.51
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=goldelico.com header.i=@goldelico.com header.b="kJ1iCQTS";
-	dkim=permerror (0-bit key) header.d=goldelico.com header.i=@goldelico.com header.b="qPcunTjt"
-ARC-Seal: i=1; a=rsa-sha256; t=1781805371; cv=none;
-    d=strato.com; s=strato-dkim-0002;
-    b=biIWkRYcrCn1wzCiW5vgV3hnFpUomIyR6Vch0iCp8TJA0LTrJqXES6LawadArqtntX
-    5I3Ak+DzwZzooNg//zVgzkP2UbHzPbI/QCC0XJW70Z5d92eeCGI/frJXimZKVFiYk71O
-    w5qGlE9Trv0gEGNn014ovQldFLRGeGV937t9fjGnQJIMhPS/XUeht0RT9C2dUfiKvrx+
-    PW4KiopE4G8opIZippFiCI49c3hESLDwD9JUQih9T1KQOsBZjY6ivNePNh2EVOuJDZNf
-    fTBico1ZrMRntPcuxqsl1OUOsruhp018Yoff8aMwfTlRVoSs8tfwQGrTspgsOvowvtks
-    8HaA==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; t=1781805371;
-    s=strato-dkim-0002; d=strato.com;
-    h=To:References:Message-Id:Cc:Date:In-Reply-To:From:Subject:Cc:Date:
-    From:Subject:Sender;
-    bh=zsVPEWZ+mX351yEn9Wdd5+9zEGjn0ObEo6N4OFCKFe4=;
-    b=cApQwGWcLQy2VNingyuSiac0uR/JzKo/aFX7emoy186bidMa9jxzdU3zrSJ8wPeUhF
-    FveIWir1bIRb+PGAaYJt8GZliRlAZbapkMSgY/BmoXpm96UymdT6vVbSA9bZyl5YYWbp
-    Pv/Q4gIOziQN2kJdn+Rlm8wSj8AblvJahXSIajkp8q8+ArJL4BqeC6CanhgHP6P4n66r
-    S6NOJmr8YMYoEjPaXqpQRTD0/pB2TDNgUyyaLOIKYwF/deEeo77eLYXkCZUXzLJ2a/Ie
-    ETIH6Z9fnmUQh5hKgL7MvCNB4m3uSgUdhrjputG+0kkv+FqstGUN2CNKitiSuKprlpdM
-    3ARg==
-ARC-Authentication-Results: i=1; strato.com;
-    arc=none;
-    dkim=none
-X-RZG-CLASS-ID: mo01
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; t=1781805371;
-    s=strato-dkim-0002; d=goldelico.com;
-    h=To:References:Message-Id:Cc:Date:In-Reply-To:From:Subject:Cc:Date:
-    From:Subject:Sender;
-    bh=zsVPEWZ+mX351yEn9Wdd5+9zEGjn0ObEo6N4OFCKFe4=;
-    b=kJ1iCQTS/qe6kuYIvSD8esu+D4kTx7Ioy4Qo4yn7MiLJpf1CloZXtDVJVALW0r8i/z
-    Sr2M2jBFrmX7sWsJ6ARkL2WFmEsk7f3fsOc+RROLpxl4K7b9ipU4pCH6H6kCLRxcY5qa
-    13Dj8cd6YnW+2g8As95iEDRma2Xr5odFYNLgStfvy3hHKY63ghB58ythfipd4NaidP2z
-    0tRcmaMzMA9CU1JUSWT+Q+DdpqBS2bf8MvryNbSABTQH5uXc1sSE7tIP1K9cSOfRGVP5
-    VWYLC1l9ZhQbMMDoG0++kTV7WmOjCzLHOIHUyyqVDk3mxD/MnHdTMkvxZwrURKRLjfnA
-    /IeQ==
-DKIM-Signature: v=1; a=ed25519-sha256; c=relaxed/relaxed; t=1781805371;
-    s=strato-dkim-0003; d=goldelico.com;
-    h=To:References:Message-Id:Cc:Date:In-Reply-To:From:Subject:Cc:Date:
-    From:Subject:Sender;
-    bh=zsVPEWZ+mX351yEn9Wdd5+9zEGjn0ObEo6N4OFCKFe4=;
-    b=qPcunTjtGsq5YMj4R2rLk6U5TdNUR6khGjwBnfooOOAE0vwIsPHeQP8t5HNVxXzSC5
-    qAnxnJn89YccuatXctCw==
-X-RZG-AUTH: ":JGIXVUS7cutRB/49FwqZ7WcJeFKiMhflhwDubTJ9qVpwcQVkPW4I1HrT0ZoOnciNQh0E54wP3opQ+1mzcazh2bvtQoZf"
-Received: from smtpclient.apple
-    by smtp.strato.de (RZmta 55.0.1 AUTH)
-    with ESMTPSA id Qcf97c25IHuBfsN
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (curve X9_62_prime256v1 with 256 ECDH bits, eq. 3072 bits RSA))
-	(Client did not present a certificate);
-    Thu, 18 Jun 2026 19:56:11 +0200 (CEST)
-Content-Type: text/plain;
-	charset=utf-8
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="bg+H2qDD"
+Received: by mail-pj1-f51.google.com with SMTP id 98e67ed59e1d1-37c64d34032so1339410a91.0
+        for <sashiko-reviews@lists.linux.dev>; Thu, 18 Jun 2026 12:02:17 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20251104; t=1781809337; x=1782414137; darn=lists.linux.dev;
+        h=in-reply-to:content-transfer-encoding:content-disposition
+         :mime-version:references:message-id:subject:cc:to:from:date:from:to
+         :cc:subject:date:message-id:reply-to;
+        bh=whmu7IhVKfdGkzE0JL0WMbR56gnvcartiKhVDhUrLW4=;
+        b=bg+H2qDDIbS7W76Keiyvkl9b+rw+NFWWvCsWWrbRBohyVe+n9O5YS8l+5eDSPRRsYC
+         48RZ4SjQcjeoiOrr2uzd17Y0du2skXjHRrOeBdin9v74hwbulYFavpsu8uJY1bd1fVlm
+         64fyfcdj46vdXpU2ITG2mOknNAoWRztZBWygKiQN2nH8ag7ZBj3bcUVeJhW2LIPxpoBG
+         lvZnTl+y3IISmz2IV8gb7AxEfzUL6gsiMVST1SDIosoNfmm86qHXHNOE/Rgtupzzsbor
+         WNIKEQwF7/QWzPaytvcCir1zcquokH9NvE9FFW/+apyA7sQYh2Sd9TNxnB9y+kYYxlVx
+         IDlg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20251104; t=1781809337; x=1782414137;
+        h=in-reply-to:content-transfer-encoding:content-disposition
+         :mime-version:references:message-id:subject:cc:to:from:date:x-gm-gg
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+        bh=whmu7IhVKfdGkzE0JL0WMbR56gnvcartiKhVDhUrLW4=;
+        b=IYQcjgCkyzHJoJk11KTcHjgEjAs4wDoxJlSKs1Y4qJfaQbUbDI4GosDl1C6QKfvEMm
+         ePKguZxbK3fmd1lev4rxxGfgktrpG9xj9P9gLJgPAy97rT5xs/IXMYJr+VcrYbnwlqjb
+         d0VGC3Qq1UEdyWqJaME9JdH/X365+EuY92osUS3Na4xFyC2qlnPoHdjOsJf5cWITPS59
+         1KZzFaYv/qG/teZ+IayWluPzCtjEg35SRKFqx6uCxyoZjyXlS/ZItY4LdDST915aiI0e
+         k6gJK9tXlgxP5UxUd8U6IJ6wl1bhVs+WQBPyNxsCAlxTO537Hhsqquxq/c8d18TUmEle
+         P7XQ==
+X-Gm-Message-State: AOJu0Yw8C79qyxViaacIP0Ecc10F75E2iZ0L5YBokfMGw+r1Xq8ONqyl
+	aEXomNjanCPUwl0pMgMASV0VcvpFykPKnupIwT1C4zLwBdUM66JqvlK5UeuB8A==
+X-Gm-Gg: AfdE7cki09awZ2xrOvGQJTLpTmE1VGZW+weLk20a3z7dfyciVsDxP93a+hC3FJqu21F
+	cZtn1PGwraSlnOycz8BEP8T1eUyV+GpPKUF90d/fKaEvfCkpiZ0vqflP+4lcmLmT11ZZHJIOUjK
+	CdT4zlMYOwBG39N838LjS75cqziNfnWQP+OTsze5s69nmfvmEvXyHzZYlCLZxmUPIWUBu19tAus
+	OZwVW5yC7eMV1csvgGA+tORcVEE4iAZit6BnnWW41/NMNnjfgljimHZfg4zsVEBaSWuTTLIrSTV
+	rg8C0mbeT3zHiMBRl2vMveyrn8leuhJGmIJdNi6zaF0Pci8KrDIjKOIPZuUrkLIJ/QRPYWPUoLk
+	EYZS+TgUk7bXaoP44xSz2va7Ap3M7wQqIrUzkk/38hzeTKzZxjyhSpl8udIZVwMt2QrRmHXGi1O
+	SmDDOhTeNIzw==
+X-Received: by 2002:a17:90a:e183:b0:36a:caf2:3815 with SMTP id 98e67ed59e1d1-37d1a30f02bmr225853a91.15.1781809336618;
+        Thu, 18 Jun 2026 12:02:16 -0700 (PDT)
+Received: from john-p8 ([98.97.43.82])
+        by smtp.gmail.com with ESMTPSA id 98e67ed59e1d1-37d157b7182sm415141a91.11.2026.06.18.12.02.15
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Thu, 18 Jun 2026 12:02:15 -0700 (PDT)
+Date: Thu, 18 Jun 2026 12:02:14 -0700
+From: John Fastabend <john.fastabend@gmail.com>
+To: sashiko-reviews@lists.linux.dev
+Cc: Sechang Lim <rhkrqnwk98@gmail.com>, bpf@vger.kernel.org
+Subject: Re: [PATCH bpf] bpf, sockmap: fix BUG_ON in skb_to_sgvec() on a
+ resized ingress skb
+Message-ID: <ajRAgiUlvyNt5wlr@john-p8>
+References: <20260613082442.3252576-1-rhkrqnwk98@gmail.com>
+ <20260613083747.CA2991F000E9@smtp.kernel.org>
 Precedence: bulk
 X-Mailing-List: sashiko-reviews@lists.linux.dev
 List-Id: <sashiko-reviews.lists.linux.dev>
 List-Subscribe: <mailto:sashiko-reviews+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:sashiko-reviews+unsubscribe@lists.linux.dev>
-Mime-Version: 1.0 (Mac OS X Mail 16.0 \(3826.700.81.1.6\))
-Subject: Re: [PATCH] drm/fb_helper: Determine proper crtc_index within
- drm_fb_helper_fb_dirty
-From: "H. Nikolaus Schaller" <hns@goldelico.com>
-In-Reply-To: <20260618174310.70DB11F000E9@smtp.kernel.org>
-Date: Thu, 18 Jun 2026 19:56:00 +0200
-Cc: dri-devel@lists.freedesktop.org,
- Andreas Kemnade <akemnade@kernel.org>
-Content-Transfer-Encoding: quoted-printable
-Message-Id: <50FDBC3B-BFC2-4BC6-B216-78C2C24D9E30@goldelico.com>
-References: <5118b37e579cec220f2d2b6ab0bb1ecfb67f0d5c.1781803617.git.hns@goldelico.com>
- <20260618174310.70DB11F000E9@smtp.kernel.org>
-To: sashiko-reviews@lists.linux.dev
-X-Mailer: Apple Mail (2.3826.700.81.1.6)
+MIME-Version: 1.0
+Content-Type: text/plain; charset=iso-8859-1; format=flowed
+Content-Disposition: inline
+Content-Transfer-Encoding: 8bit
+In-Reply-To: <20260613083747.CA2991F000E9@smtp.kernel.org>
 
-
-
-> Am 18.06.2026 um 19:43 schrieb sashiko-bot@kernel.org:
->=20
-> Thank you for your contribution! Sashiko AI review found 3 potential =
-issue(s) to consider:
-> - [High] Lockless access to `crtc->state` and `crtc->primary->state` =
-can lead to a Use-After-Free due to concurrent atomic commits.
-> - [High] The patch breaks vblank synchronization for legacy =
-(non-atomic) DRM drivers.
-> - [Medium] The logic selects the first matching CRTC instead of the =
-last active one, contradicting the commit message.
-> --
->=20
-> commit 0337b26b606b4d905d72ea2be31bcb984fe62c6e
-> Author: H. Nikolaus Schaller <hns@goldelico.com>
->=20
-> drm/fb_helper: Determine proper crtc_index within =
-drm_fb_helper_fb_dirty
->=20
-> This commit updates the dirty framebuffer worker to search for a =
-matching
-> active CRTC instead of hardcoding the wait for vblank to CRTC index 0. =
-It
-> aims to avoid vblank timeouts when CRTC 0 is inactive.
->=20
->> diff --git a/drivers/gpu/drm/drm_fb_helper.c =
-b/drivers/gpu/drm/drm_fb_helper.c
->> --- a/drivers/gpu/drm/drm_fb_helper.c
->> +++ b/drivers/gpu/drm/drm_fb_helper.c
-> [ ... ]
->> @@ -232,9 +232,23 @@ static void drm_fb_helper_fb_dirty(struct =
-drm_fb_helper *helper)
->> struct drm_clip_rect clip_copy;
->> unsigned long flags;
->> int ret;
->> + unsigned int crtc_index =3D 0;
->> + struct drm_crtc *crtc;
->>=20
->> mutex_lock(&helper->lock);
->> - drm_client_modeset_wait_for_vblank(&helper->client, 0);
+On Sat, Jun 13, 2026 at 08:37:47AM +0000, sashiko-bot@kernel.org wrote:
+>Thank you for your contribution! Sashiko AI review found 1 potential issue(s) to consider:
+>- [High] Returning -EINVAL when an SKB is shrunk by a BPF program causes the `sk_psock_backlog` worker to incorrectly treat the valid shrink as a fatal error, leading to an unintended broken pipe (EPIPE).
+>--
+>
+>commit 54e4eaf90ac6a727b56c416746a6a961673b62f5
+>Author: Sechang Lim <rhkrqnwk98@gmail.com>
+>
+>bpf, sockmap: fix BUG_ON in skb_to_sgvec() on a resized ingress skb
+>
+>This commit prevents a BUG_ON when a BPF program shrinks an ingress SKB.
+>It accomplishes this by clamping the length to skb->len - off and
+>returning -EINVAL if off is already past the SKB length.
+>
+>> diff --git a/net/core/skmsg.c b/net/core/skmsg.c
+>> index e1850caf1a71a..2961178ebd1e1 100644
+>> --- a/net/core/skmsg.c
+>> +++ b/net/core/skmsg.c
+>> @@ -550,6 +550,10 @@ static int sk_psock_skb_ingress_enqueue(struct sk_buff *skb,
+>>  {
+>>  	int num_sge, copied;
+>>
+>> +	if (off >= skb->len)
+>> +		return -EINVAL;
+>> +	len = min_t(u32, len, skb->len - off);
 >> +
->> + drm_for_each_crtc(crtc, dev) {
->> + if (crtc->primary && crtc->primary->state &&
->> +    crtc->primary->state->fb =3D=3D helper->fb &&
->> +    crtc->state && crtc->state->active) {
->=20
-> [Severity: High]
-> Can this lockless access to crtc->state and crtc->primary->state =
-result in a
-> use-after-free?
+>
+>[Severity: High]
+>Could returning -EINVAL here cause the sk_psock_backlog() worker to
+>incorrectly treat a valid SKB shrink as a permanent error?
 
-No idea...
+Yep it treats it as a hard error and breaks the socket. The above
+patch does enough to fix the BUG but doesn't actually fix the
+underlying issue.
 
->=20
-> The drm_fb_helper_fb_dirty() function holds helper->lock, but does not =
-hold
-> the DRM modeset locks required to protect these state pointers. During =
-a
-
-Which locks are exactly recommended to add? What is their name/pointer?
-
-> concurrent atomic modeset commit, the DRM core allocates new state =
-objects,
-> swaps them into place, and frees the old objects via kfree().
->=20
-> If this code reads an old state pointer and gets preempted, could it =
-then
-> dereference the pointer after it has been freed by the concurrent =
-commit?
->=20
-> [Severity: High]
-> Does this break vblank synchronization for legacy non-atomic DRM =
-drivers?
-
->=20
-> Legacy drivers do not use the atomic modesetting infrastructure, so =
-their
-> crtc->state and crtc->primary->state pointers remain NULL. Since the =
-condition
-> above requires these pointers to be non-NULL, the loop will skip the =
-vblank
-> wait entirely for legacy drivers. This skips the intended =
-rate-limiting
-> behavior and could lead to unbounded damage worker execution.
-
-What is the solution? And is this important.
-
-Before d8c4bddcd8bcb ("drm/fb-helper: Synchronize dirty worker with =
-vblank")
-
-there was also no rate-limiting behavior.
-
->=20
->> + crtc_index =3D drm_crtc_index(crtc) + 1;
->> + break;
->=20
-> [Severity: Medium]
-> The commit message states "If multiple CRTCs match, the last active =
-one is
-> selected." Does the break statement here cause the first active CRTC =
-to be
-> selected instead, bypassing the remaining matches in the list?
-
-Yes, that is correct. The description is indeed wrong.
-
->=20
->> + }
->> + }
->> +
->> + if (crtc_index > 0)
->> + drm_client_modeset_wait_for_vblank(&helper->client, crtc_index - =
-1);
->> +
->> mutex_unlock(&helper->lock);
->=20
-> --=20
-> Sashiko AI review =C2=B7 =
-https://sashiko.dev/#/patchset/5118b37e579cec220f2d2b6ab0bb1ecfb67f0d5c.17=
-81803617.git.hns@goldelico.com?part=3D1
-
+Sashiko AI review · 
+https://sashiko.dev/#/patchset/20260613082442.3252576-1-rhkrqnwk98@gmail.com?part=1
