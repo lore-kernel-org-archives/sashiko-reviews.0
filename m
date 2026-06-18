@@ -1,268 +1,164 @@
-Received: from smtp-out2.suse.de (smtp-out2.suse.de [195.135.223.131])
+Received: from mail-lf1-f47.google.com (mail-lf1-f47.google.com [209.85.167.47])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7D5D43B4EAD
-	for <sashiko-reviews@lists.linux.dev>; Thu, 18 Jun 2026 14:13:17 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=195.135.223.131
-ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1781791999; cv=none; b=I7Lh/6LLYFup/Vced3E/1zVfAD/0dFp98hCIfzMl6QHr83G6gKyjbz/p5gNtZixbrtZc+OhszZ1/D7NUWc71A5DK2TyRekFzs9ltjxc9QjRC2iTwkqH3CinRHX2BY0ei2NgL4WxKnGKp73AA6C13B13BnwzQy2K0R8uQc+6IPM8=
-ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1781791999; c=relaxed/simple;
-	bh=l9+M4G4Lo17GJ8kVy78HklvcgFOgOb101+w9hj/d3XA=;
-	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=d5JBxFgn9qtU/SNFbGJFvqnFQqGyMY6Fczig9WsK1vA2T5wqH+gMN9opJOPxfF4ULTwYSIrMUgTH3gj/QXwO+nUF/xkR+E5ccHvSyWcGFTpstSH8K1WpRrP4sXJBFAA6gu9YR3xCvxf0D+zZ+NEkKYLCHjkzBvp4GTL/fHbmDnc=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=suse.de; spf=pass smtp.mailfrom=suse.de; dkim=pass (1024-bit key) header.d=suse.de header.i=@suse.de header.b=fnrlSBI2; dkim=permerror (0-bit key) header.d=suse.de header.i=@suse.de header.b=OP/FOS4u; dkim=pass (1024-bit key) header.d=suse.de header.i=@suse.de header.b=fnrlSBI2; dkim=permerror (0-bit key) header.d=suse.de header.i=@suse.de header.b=OP/FOS4u; arc=none smtp.client-ip=195.135.223.131
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=suse.de
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=suse.de
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 561EB286417
+	for <sashiko-reviews@lists.linux.dev>; Thu, 18 Jun 2026 14:24:57 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=pass smtp.client-ip=209.85.167.47
+ARC-Seal:i=2; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
+	t=1781792698; cv=pass; b=aIIUl+v2ntV8IFLH+hzp4nPYB7whJMQQapmLty9hL0z0yED8QEDIjzrQLNqj+lWijFS8XHv2oQY5pqDJJuXUCO4UXo4LwmYB4V7tbR14T+/UM8jNCpBC74MFIwQcwQHtzhZFJG/W3fS0zmFoVW2buszyrgL+EjsEf9OouHOBUx8=
+ARC-Message-Signature:i=2; a=rsa-sha256; d=subspace.kernel.org;
+	s=arc-20240116; t=1781792698; c=relaxed/simple;
+	bh=IcUDRh8Om3ZmpHU8OKEmFDWjuWTvs4Y7QkwArrvhnwQ=;
+	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
+	 To:Cc:Content-Type; b=NBEVw20CvJRssiSHbYR4cGMFfk08l4iqb5EKIrqjHOtUjpp8opE5QI99a7UCstloUkoQQ+xFRC6P37S4qaubV6/BUOx6DvSFH6drzlWdw4XhN0mJ9N7pdiIy/esM6gXyDYbzLYgQ837J3ocLy2JocWbQDIaGsI3LyVgHdRwoL4Y=
+ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=google.com; spf=pass smtp.mailfrom=google.com; dkim=pass (2048-bit key) header.d=google.com header.i=@google.com header.b=ZKH1kH2A; arc=pass smtp.client-ip=209.85.167.47
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=google.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=google.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=suse.de header.i=@suse.de header.b="fnrlSBI2";
-	dkim=permerror (0-bit key) header.d=suse.de header.i=@suse.de header.b="OP/FOS4u";
-	dkim=pass (1024-bit key) header.d=suse.de header.i=@suse.de header.b="fnrlSBI2";
-	dkim=permerror (0-bit key) header.d=suse.de header.i=@suse.de header.b="OP/FOS4u"
-Received: from imap1.dmz-prg2.suse.org (unknown [10.150.64.97])
-	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
-	 key-exchange X25519 server-signature RSA-PSS (4096 bits) server-digest SHA256)
-	(No client certificate requested)
-	by smtp-out2.suse.de (Postfix) with ESMTPS id A4E2775F74;
-	Thu, 18 Jun 2026 14:12:58 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=suse.de; s=susede2_rsa;
-	t=1781791978; h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
-	 mime-version:mime-version:
-	 content-transfer-encoding:content-transfer-encoding:
-	 in-reply-to:in-reply-to:references:references;
-	bh=Vpzvf9WugZGu/Vi9s7nRlfWvRZvyImnZ8YVspSaHRkM=;
-	b=fnrlSBI2PjVmMKG0mp904GaZt5zXjLM2gfQKJY8UPG62EreepnZ34B314XCIIJHxaXsZD8
-	ClJo5qnMbvbQ1lq6ZvMzIMs3EhRKFxq9+lvvSY4SOJ2K9/5t9IoHcjQ991XIiKA2RlFyDN
-	hyLzu+BDOTwW1k20JJuVYSiZuox48iw=
-DKIM-Signature: v=1; a=ed25519-sha256; c=relaxed/relaxed; d=suse.de;
-	s=susede2_ed25519; t=1781791978;
-	h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
-	 mime-version:mime-version:
-	 content-transfer-encoding:content-transfer-encoding:
-	 in-reply-to:in-reply-to:references:references;
-	bh=Vpzvf9WugZGu/Vi9s7nRlfWvRZvyImnZ8YVspSaHRkM=;
-	b=OP/FOS4uiy1BD2rFdR8wugz9gHdtdYAdZW1KrvUwPGQNINm53r7FrleWHm7NxcloreH3e4
-	cW5Eo4ycRAhivnCw==
-Authentication-Results: smtp-out2.suse.de;
-	none
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=suse.de; s=susede2_rsa;
-	t=1781791978; h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
-	 mime-version:mime-version:
-	 content-transfer-encoding:content-transfer-encoding:
-	 in-reply-to:in-reply-to:references:references;
-	bh=Vpzvf9WugZGu/Vi9s7nRlfWvRZvyImnZ8YVspSaHRkM=;
-	b=fnrlSBI2PjVmMKG0mp904GaZt5zXjLM2gfQKJY8UPG62EreepnZ34B314XCIIJHxaXsZD8
-	ClJo5qnMbvbQ1lq6ZvMzIMs3EhRKFxq9+lvvSY4SOJ2K9/5t9IoHcjQ991XIiKA2RlFyDN
-	hyLzu+BDOTwW1k20JJuVYSiZuox48iw=
-DKIM-Signature: v=1; a=ed25519-sha256; c=relaxed/relaxed; d=suse.de;
-	s=susede2_ed25519; t=1781791978;
-	h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
-	 mime-version:mime-version:
-	 content-transfer-encoding:content-transfer-encoding:
-	 in-reply-to:in-reply-to:references:references;
-	bh=Vpzvf9WugZGu/Vi9s7nRlfWvRZvyImnZ8YVspSaHRkM=;
-	b=OP/FOS4uiy1BD2rFdR8wugz9gHdtdYAdZW1KrvUwPGQNINm53r7FrleWHm7NxcloreH3e4
-	cW5Eo4ycRAhivnCw==
-Received: from imap1.dmz-prg2.suse.org (localhost [127.0.0.1])
-	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
-	 key-exchange X25519 server-signature RSA-PSS (4096 bits) server-digest SHA256)
-	(No client certificate requested)
-	by imap1.dmz-prg2.suse.org (Postfix) with ESMTPS id 4D5D2779AB;
-	Thu, 18 Jun 2026 14:12:58 +0000 (UTC)
-Received: from dovecot-director2.suse.de ([2a07:de40:b281:106:10:150:64:167])
-	by imap1.dmz-prg2.suse.org with ESMTPSA
-	id MKm1Eer8M2o8DQAAD6G6ig
-	(envelope-from <tzimmermann@suse.de>); Thu, 18 Jun 2026 14:12:58 +0000
-From: Thomas Zimmermann <tzimmermann@suse.de>
-To: robin.clark@oss.qualcomm.com,
-	lumag@kernel.org,
-	abhinav.kumar@linux.dev,
-	jesszhan0024@gmail.com,
-	sean@poorly.run,
-	marijn.suijten@somainline.org,
-	airlied@gmail.com,
-	simona@ffwll.ch
-Cc: linux-arm-msm@vger.kernel.org,
-	dri-devel@lists.freedesktop.org,
-	freedreno@lists.freedesktop.org,
-	sashiko-reviews@lists.linux.dev,
-	Thomas Zimmermann <tzimmermann@suse.de>,
-	Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>
-Subject: [PATCH v2 5/6] drm/msm: fbdev: Use a DRM client buffer
-Date: Thu, 18 Jun 2026 16:11:36 +0200
-Message-ID: <20260618141249.151338-6-tzimmermann@suse.de>
-X-Mailer: git-send-email 2.54.0
-In-Reply-To: <20260618141249.151338-1-tzimmermann@suse.de>
-References: <20260618141249.151338-1-tzimmermann@suse.de>
+	dkim=pass (2048-bit key) header.d=google.com header.i=@google.com header.b="ZKH1kH2A"
+Received: by mail-lf1-f47.google.com with SMTP id 2adb3069b0e04-5ad4ee260b0so7127e87.0
+        for <sashiko-reviews@lists.linux.dev>; Thu, 18 Jun 2026 07:24:57 -0700 (PDT)
+ARC-Seal: i=1; a=rsa-sha256; t=1781792695; cv=none;
+        d=google.com; s=arc-20260327;
+        b=bCtXqzEKTkQnzoylRAy9EU43GNQ4vFn4h/ep0ixnqD3ub/d/UYsMgos4XieaVSMKyu
+         OZh3pnkp+FgZwGcQX6QCJQ8b62/IFohWetsadcSiJNrHR+qd1prJzgcUMEatt7kcsoux
+         nS1+hH8h2t7BGlwN8jDcYXayN5G3uV10xhxpguVYpbI75qGg3Y9m8xeXSK7GnDXIPJVL
+         Gwu7Vxq9LBxrcxkpZIg1hHVAMlwGQr5k6TDqJfqmlEK5S78xUcKzzHZ2ZSVE2wZkmOAd
+         oFSTRM/VllLL7X/txL+gS5CTpqpd6M9GR1fxHWt5wyGj2KlE7p4u81BO20j5b1A7vC9+
+         jnjA==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com; s=arc-20260327;
+        h=cc:to:subject:message-id:date:from:in-reply-to:references
+         :mime-version:dkim-signature;
+        bh=6ZkTLznup++j+ETiI3q7N04K3XjTDaIw/OGbmI0KOEA=;
+        fh=Qo1snKJerNHX4mUeXQzzlujO7aTb9JnYoBqg/4neaLM=;
+        b=h3AQLLG2VLKsAZtDcf+V0vSc6/2PQf0OwcX5sNiywc8pQ0lczjsEZkYKK5Ah0A0fR1
+         f7GmFKWM7WWRy2b0+3j42Vbt1V4xBqreVT/LSLpAqbH3me0OzvIj35JxCyx1XW3IPIMN
+         LlB21NBO/HLdPr1YhnHwPhFv45HerPA+IG/1fRorDxL7JTGDpz0jRhhrhI9GAaGAGgc8
+         hioCbxD3FSGRK2ewmNynJGYC/2SKU4OqPUpUuckPuvSFXfh2fB9X7MPDu3EHJ/rHW2Tm
+         trdBXVUA0b2xs3KmXf6Vys2WA3+CBQxisySDnZW0vHGzr30/3oOjHOB83LKg3nQpvv9B
+         9BGg==;
+        darn=lists.linux.dev
+ARC-Authentication-Results: i=1; mx.google.com; arc=none
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=google.com; s=20251104; t=1781792695; x=1782397495; darn=lists.linux.dev;
+        h=content-type:cc:to:subject:message-id:date:from:in-reply-to
+         :references:mime-version:from:to:cc:subject:date:message-id:reply-to
+         :content-type;
+        bh=6ZkTLznup++j+ETiI3q7N04K3XjTDaIw/OGbmI0KOEA=;
+        b=ZKH1kH2A52M6r68Fzc66zlWRWEpVuq80lzjHavEJeBtX4bHy3dOXojuknB42PhqHFw
+         lgOSStblD4DBycy7P0G08L71jUdsmOaeWRA4Z1aiIvmB98onsvAhiKhiaRHPTuLuWqll
+         ApBi6h3Rt9sqM9k8+qFQH5PizUnHThIZ3U3r1h9Y+GOSWjoXS8048ALLxNd+TOulhxwX
+         wC1NKmuR+vpC3mKhXLB1YmOhbcuAE8fEz0wMqS0kxQ1IJEjR759ZHZbkLlWpsjLBr51E
+         ssY8uuTZwjKj9Zt5jLT1A5Wkp9fD8ZgSqAmDb3q1RMWzp5YKSYA/7cwChnLZyN6bnqwS
+         sF8Q==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20251104; t=1781792695; x=1782397495;
+        h=content-type:cc:to:subject:message-id:date:from:in-reply-to
+         :references:mime-version:x-gm-gg:x-gm-message-state:from:to:cc
+         :subject:date:message-id:reply-to:content-type;
+        bh=6ZkTLznup++j+ETiI3q7N04K3XjTDaIw/OGbmI0KOEA=;
+        b=SbT6o+NgqzCf/DIMBYUT+NOBony4m4SWlB53ZiisTtCAbUUSBxKLcvok3tlfB04SPS
+         mA9neL40tnIVdKKTamVashIxcHAYXAUFG/7RYPkER8qnFA1BgYUTesRDAaRjTXjx0cBM
+         bv/xCw2xa6UHE3qEKiFLBzCL9x/AknOdi0tnneb11/+0GcIG/BQlNIBqjphF5ytTrr8J
+         jQfuX1rK6Yen000Kj8pFisqJ88qIxeQt1S7f5yNq74iDi6zRcKXDDMpJetyZFnGOnDu+
+         aSLdPDZdwYnt+8QE3CW5UTF7JJvwc4BBoKZ0/blbOkc7MGA/WLfII7w68ahb+EC5+KjJ
+         D+jA==
+X-Gm-Message-State: AOJu0YwqRJ8EftafXtQiqsi0fPwXEdAO2Mrr4uS3APi3COkYlaPGCR4g
+	tux+ltybXfl2n2yZp9lHaWBdtTjE/JDtMkqRFiqWELQKmqRIUMUDX3GfHPVyiHacrQhYh8IpQdl
+	IoJar/sCC/dWKDYdVl4fEuc6XU1UBm7oOEhOz+mnn
+X-Gm-Gg: AfdE7ckYw+nTuo5fPA/mqblkHMij+AUzKoL/LSjbJ36+E3c/3IqELCLCECCd47Ulo76
+	fa3Vi3pcjv3y0VoTKL8qioug/GujeJ1TCP/jOI+2zILpCxKviIQvMKcI4JQ9Hh7QGYN5g5RUueJ
+	od1yLHLheF0EtcH5PU4nWIfMR+An7c7GPr/ZfkCrikBtf6k45hZjIA9PSILI4foK1fGovSPz1yi
+	RVqeyN2h+CGYfW1hTKT7fbLsxeVmV7LoN54ygG5qPrvhkidLQ/S1hiGtjUolVHD9gwXobiKDw==
+X-Received: by 2002:a05:6512:3b21:b0:5aa:6b27:89f5 with SMTP id
+ 2adb3069b0e04-5ad4db85135mr171416e87.8.1781792694725; Thu, 18 Jun 2026
+ 07:24:54 -0700 (PDT)
 Precedence: bulk
 X-Mailing-List: sashiko-reviews@lists.linux.dev
 List-Id: <sashiko-reviews.lists.linux.dev>
 List-Subscribe: <mailto:sashiko-reviews+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:sashiko-reviews+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
-X-Spam-Flag: NO
-X-Spam-Score: -2.80
-X-Spamd-Result: default: False [-2.80 / 50.00];
-	BAYES_HAM(-3.00)[100.00%];
-	MID_CONTAINS_FROM(1.00)[];
-	NEURAL_HAM_LONG(-1.00)[-1.000];
-	R_MISSING_CHARSET(0.50)[];
-	NEURAL_HAM_SHORT(-0.20)[-1.000];
-	MIME_GOOD(-0.10)[text/plain];
-	TO_MATCH_ENVRCPT_ALL(0.00)[];
-	FROM_HAS_DN(0.00)[];
-	ARC_NA(0.00)[];
-	RCVD_VIA_SMTP_AUTH(0.00)[];
-	MIME_TRACE(0.00)[0:+];
-	TO_DN_SOME(0.00)[];
-	RCPT_COUNT_TWELVE(0.00)[14];
-	DBL_BLOCKED_OPENRESOLVER(0.00)[qualcomm.com:email,suse.de:email,suse.de:mid,imap1.dmz-prg2.suse.org:helo];
-	FUZZY_RATELIMITED(0.00)[rspamd.com];
-	FROM_EQ_ENVFROM(0.00)[];
-	RCVD_COUNT_TWO(0.00)[2];
-	FREEMAIL_TO(0.00)[oss.qualcomm.com,kernel.org,linux.dev,gmail.com,poorly.run,somainline.org,ffwll.ch];
-	RCVD_TLS_ALL(0.00)[];
-	R_RATELIMIT(0.00)[to_ip_from(RLqirfcw6gnbcr9a9yhi49fhi6)];
-	DKIM_SIGNED(0.00)[suse.de:s=susede2_rsa,suse.de:s=susede2_ed25519];
-	FREEMAIL_ENVRCPT(0.00)[gmail.com]
-X-Spam-Level: 
+References: <20260618121643.4105064-1-tabba@google.com> <20260618121643.4105064-5-tabba@google.com>
+ <20260618122808.1369D1F000E9@smtp.kernel.org> <86cxxorp3e.wl-maz@kernel.org>
+In-Reply-To: <86cxxorp3e.wl-maz@kernel.org>
+From: Fuad Tabba <tabba@google.com>
+Date: Thu, 18 Jun 2026 15:24:15 +0100
+X-Gm-Features: AVVi8CeoopBIbTYaE09ZeamUAMFNzrsBfsl77QFwZoOcgFL63sxSgwLaI5ejrmY
+Message-ID: <CA+EHjTxJOXussAoOpBMCD8Y7WXf_zvcp2K-JaajrtvS88O3-ag@mail.gmail.com>
+Subject: Re: [PATCH v2 4/7] KVM: arm64: Set IL for injected FPAC exceptions
+ during ERET emulation
+To: Marc Zyngier <maz@kernel.org>
+Cc: sashiko-reviews@lists.linux.dev, kvmarm@lists.linux.dev, 
+	Oliver Upton <oupton@kernel.org>
+Content-Type: text/plain; charset="UTF-8"
 
-Replace the internal DRM framebuffer with a DRM client buffer. The
-client buffer allocates the DRM framebuffer on a file and also uses
-GEM object handles via the regular ADDFB2 interfaces.
+On Thu, 18 Jun 2026 at 13:48, Marc Zyngier <maz@kernel.org> wrote:
+>
+> On Thu, 18 Jun 2026 13:28:07 +0100,
+> sashiko-bot@kernel.org wrote:
+> >
+> > Thank you for your contribution! Sashiko AI review found 1 potential issue(s) to consider:
+> >
+> > Pre-existing issues:
+> > - [High] The constructed FPAC exception syndrome incorrectly maps the ERET ISS encoding directly to the FPAC ISS encoding, resulting in malformed ISS[2:0] bits being injected into the guest.
+> > --
+> >
+> > commit 27996a8004c4285e2d114067b3fc644f3f649d64
+> > Author: Fuad Tabba <tabba@google.com>
+> > KVM: arm64: Set IL for injected FPAC exceptions during ERET emulation
+> >
+> > This commit sets the IL (Instruction Length) bit for the FPAC syndrome
+> > constructed during nested ERET emulation. Since ERET and its authenticated
+> > variants are always A64 32-bit instructions, the IL bit must be set to 1.
+> >
+> > > diff --git a/arch/arm64/kvm/emulate-nested.c b/arch/arm64/kvm/emulate-nested.c
+> > > index dba7ced74ca5e..b74369e9ad7ff 100644
+> > > --- a/arch/arm64/kvm/emulate-nested.c
+> > > +++ b/arch/arm64/kvm/emulate-nested.c
+> > > @@ -2776,7 +2776,7 @@ void kvm_emulate_nested_eret(struct kvm_vcpu *vcpu)
+> > >              * ERET handling, and the guest will have a little surprise.
+> > >              */
+> > >             if (kvm_has_pauth(vcpu->kvm, FPACCOMBINE) && !(spsr & PSR_IL_BIT)) {
+> > > -                   esr &= ESR_ELx_ERET_ISS_ERETA;
+> > > +                   esr &= (ESR_ELx_ERET_ISS_ERETA | ESR_ELx_IL);
+> >
+> > [Severity: High]
+> > This isn't a bug introduced by this patch, but does this mapping of the ERET
+> > ISS to the FPAC ISS result in malformed ISS[2:0] bits being injected into
+> > the guest?
+> >
+> > For an ERET trap (EC=0x1A), ISS[0] indicates the key used (0 for ERETAA,
+> > 1 for ERETAB). For an FPAC exception (EC=0x1C), ISS[0] is the Instruction
+> > Type (must be 1 for a branch/return instruction), and ISS[2:1] indicates
+> > the Authentication Key.
+>
+> No. Not at all. ESR_ELx_EC_FPAC (0x1C) defines ISS[0] as BnA. Which
+> matches the definition for ERET. On purpose. See ARM DDI 0487, version
+> M.b, D24-8777.
+>
+> >
+> > By retaining the ERET ISS[0] bit and clearing the rest, it appears KVM
+> > inadvertently maps the ERET key type directly into the FPAC Instruction
+> > Type bit, while leaving the FPAC key type (ISS[2:1]) always at 00.
+> >
+> > Consequently, wouldn't ERETAA be injected with an FPAC ISS of 0 (wrong
+> > instruction type), and ERETAB get an FPAC ISS of 1 (wrong key type)?
+>
+> Yes, and that'd be correct.
+>
+> I don't know who told Sashiko about the ARM ARM, but it doesn't seem
+> to parse it correctly.
 
-Using client-buffer interfaces unifies framebuffer allocation for
-DRM clients in user space and msm's internal fbdev emulation. It
-also simplifies the clean-up side of the fbdev emulation.
+The problem is that it _doesn't_ have the ARM ARM, so it hallucinates
+it. I'll reply to the other ones, and then see if I can write up a PR
+to review-prompts to fix this.
 
-Signed-off-by: Thomas Zimmermann <tzimmermann@suse.de>
-Reviewed-by: Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>
----
- drivers/gpu/drm/msm/msm_fbdev.c | 55 +++++++++++++++++++--------------
- 1 file changed, 32 insertions(+), 23 deletions(-)
+Cheers,
+/fuad
 
-diff --git a/drivers/gpu/drm/msm/msm_fbdev.c b/drivers/gpu/drm/msm/msm_fbdev.c
-index 5532c5779f17..f14db46aa51e 100644
---- a/drivers/gpu/drm/msm/msm_fbdev.c
-+++ b/drivers/gpu/drm/msm/msm_fbdev.c
-@@ -41,17 +41,15 @@ static int msm_fbdev_mmap(struct fb_info *info, struct vm_area_struct *vma)
- static void msm_fbdev_fb_destroy(struct fb_info *info)
- {
- 	struct drm_fb_helper *helper = (struct drm_fb_helper *)info->par;
--	struct drm_framebuffer *fb = helper->fb;
--	struct drm_gem_object *bo = msm_framebuffer_bo(fb, 0);
-+	struct drm_gem_object *bo = msm_framebuffer_bo(helper->fb, 0);
- 
- 	DBG();
- 
- 	drm_fb_helper_fini(helper);
- 
--	/* this will free the backing object */
- 	msm_gem_put_vaddr(bo);
--	drm_framebuffer_remove(fb);
- 
-+	drm_client_buffer_delete(helper->buffer);
- 	drm_client_release(&helper->client);
- }
- 
-@@ -90,15 +88,16 @@ static const struct drm_fb_helper_funcs msm_fbdev_helper_funcs = {
- int msm_fbdev_driver_fbdev_probe(struct drm_fb_helper *helper,
- 				 struct drm_fb_helper_surface_size *sizes)
- {
--	struct drm_device *dev = helper->dev;
-+	struct drm_client_dev *client = &helper->client;
-+	struct drm_device *dev = client->dev;
-+	struct drm_file *file = client->file;
- 	struct msm_drm_private *priv = dev->dev_private;
- 	struct fb_info *fbi = helper->info;
--	struct drm_mode_fb_cmd2 mode_cmd = { };
--	struct drm_framebuffer *fb = NULL;
- 	const struct drm_format_info *format;
--	u32 fourcc, pitch;
-+	u32 fourcc, pitch, handle;
- 	u64 size;
- 	struct drm_gem_object *bo;
-+	struct drm_client_buffer *buffer;
- 	uint64_t paddr;
- 	int ret;
- 
-@@ -127,16 +126,15 @@ int msm_fbdev_driver_fbdev_probe(struct drm_fb_helper *helper,
- 
- 	msm_gem_object_set_name(bo, "stolenfb");
- 
--	mode_cmd.pixel_format = fourcc;
--	mode_cmd.width = sizes->surface_width;
--	mode_cmd.height = sizes->surface_height;
--	mode_cmd.pitches[0] = pitch;
--
--	fb = msm_framebuffer_init(dev, format, &mode_cmd, &bo);
--	if (IS_ERR(fb)) {
--		drm_err(dev, "failed to allocate fb\n");
--		ret = PTR_ERR(fb);
-+	ret = drm_gem_handle_create(file, bo, &handle);
-+	if (ret)
- 		goto err_drm_gem_object_put;
-+
-+	buffer = drm_client_buffer_create(client, sizes->surface_width, sizes->surface_height,
-+					  fourcc, handle, pitch);
-+	if (IS_ERR(buffer)) {
-+		ret = PTR_ERR(buffer);
-+		goto err_drm_gem_handle_delete;
- 	}
- 
- 	/*
-@@ -147,13 +145,14 @@ int msm_fbdev_driver_fbdev_probe(struct drm_fb_helper *helper,
- 	ret = msm_gem_get_and_pin_iova(bo, priv->kms->vm, &paddr);
- 	if (ret) {
- 		drm_err(dev, "failed to get buffer obj iova: %d\n", ret);
--		goto err_drm_framebuffer_remove;
-+		goto err_drm_client_buffer_delete;
- 	}
- 
- 	DBG("fbi=%p, dev=%p", fbi, dev);
- 
- 	helper->funcs = &msm_fbdev_helper_funcs;
--	helper->fb = fb;
-+	helper->buffer = buffer;
-+	helper->fb = buffer->fb;
- 
- 	fbi->fbops = &msm_fb_ops;
- 
-@@ -162,19 +161,29 @@ int msm_fbdev_driver_fbdev_probe(struct drm_fb_helper *helper,
- 	fbi->screen_buffer = msm_gem_get_vaddr(bo);
- 	if (IS_ERR(fbi->screen_buffer)) {
- 		ret = PTR_ERR(fbi->screen_buffer);
--		goto err_drm_framebuffer_remove;
-+		goto err_msm_gem_put_vaddr;
- 	}
- 	fbi->screen_size = bo->size;
- 	fbi->fix.smem_start = paddr;
- 	fbi->fix.smem_len = bo->size;
- 
- 	DBG("par=%p, %dx%d", fbi->par, fbi->var.xres, fbi->var.yres);
--	DBG("allocated %dx%d fb", fb->width, fb->height);
-+	DBG("allocated %dx%d fb", buffer->fb->width, buffer->fb->height);
-+
-+	/* The handle is only needed for creating the framebuffer. */
-+	drm_gem_handle_delete(file, handle);
-+
-+	/* The framebuffer still holds a reference on the GEM object. */
-+	drm_gem_object_put(bo);
- 
- 	return 0;
- 
--err_drm_framebuffer_remove:
--	drm_framebuffer_remove(fb);
-+err_msm_gem_put_vaddr:
-+	msm_gem_put_vaddr(bo);
-+err_drm_client_buffer_delete:
-+	drm_client_buffer_delete(buffer);
-+err_drm_gem_handle_delete:
-+	drm_gem_handle_delete(file, handle);
- err_drm_gem_object_put:
- 	drm_gem_object_put(bo);
- 	return ret;
--- 
-2.54.0
-
+>
+>         M.
+>
+> --
+> Without deviation from the norm, progress is not possible.
