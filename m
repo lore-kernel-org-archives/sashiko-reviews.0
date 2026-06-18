@@ -1,196 +1,161 @@
-Received: from mail-lf1-f42.google.com (mail-lf1-f42.google.com [209.85.167.42])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
-	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F2F5A3E1CF4
-	for <sashiko-reviews@lists.linux.dev>; Thu, 18 Jun 2026 09:40:58 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=pass smtp.client-ip=209.85.167.42
-ARC-Seal:i=2; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1781775664; cv=pass; b=pACzbFgLXUATYBdyYJOJHSf6qKo+5x5f2Y1xTstpZxFqEQgnezI+DdS4imsuPNjowN1fgTrIMNQFFWROK2vPLltUvyQQMIRVpRh3pMADP9dNMyYXorsBv8jfqSGWCrQfWTprXgvSUm0xuRFoSDV6Ma0JjWrWg2uqbxBRtbGAda0=
-ARC-Message-Signature:i=2; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1781775664; c=relaxed/simple;
-	bh=muaRs4souuC9L6Um52i9Edo0YD1J/DTF6k3Hdh3bmBk=;
-	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
-	 To:Cc:Content-Type; b=g0581x4/+sbHKKFksv7hKQUHuSSO9QQ6jdXwc4nMJvY7zDhN5JdihbeTgunrhcGfzXouktpPVjGCaDZaL1VyX9J6jljVrelEAIBEZOhYW+Prja7G+lQy+FfYgUGMOCLVmC6SMk50CGy013w20RqyihdkzvXb0Kz7fb88W80Mpwg=
-ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=google.com; spf=pass smtp.mailfrom=google.com; dkim=pass (2048-bit key) header.d=google.com header.i=@google.com header.b=I92GxlNN; arc=pass smtp.client-ip=209.85.167.42
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=google.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=google.com
+Received: from foss.arm.com (foss.arm.com [217.140.110.172])
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 1721F3EEAF9;
+	Thu, 18 Jun 2026 10:20:02 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=217.140.110.172
+ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
+	t=1781778010; cv=none; b=i1Q8qRUOQWWrLKvLF4K1MDlZ2H5poQ1LXwU0+wD6ZBnJLbAmGf7AJb8CQUJQncIRzABt6vTzpP9GDShk0wA3YyWsASWMu1S6ABip3kz9nQdsjF4QuM+GdL/vqz5a4jKp5z28Kotsm/Wf37A6RRRZikDJLWeBH6CduIi2bwcGGuI=
+ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
+	s=arc-20240116; t=1781778010; c=relaxed/simple;
+	bh=9fangGeG4n196Zz3BJvMg9UNdqOmOWQJGg3FWdgaILs=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=I6gySqxEsdYh5t7+HqQq7U/YRHgUVf2sCg7Vl79J4tHx4h6Ff/J8+XxQts7o4KUUVLH2ZJVnJSqdRcZ+R1FF3zcOtyO9gjMp6pXP666rSrS69EzTRxmVCmRbvNLBVVzq6ptggjrr263aV65oebzjYmM3RVLMj3WGqvImO94usEc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=arm.com; spf=pass smtp.mailfrom=arm.com; dkim=pass (1024-bit key) header.d=arm.com header.i=@arm.com header.b=FTidFAd+; arc=none smtp.client-ip=217.140.110.172
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=arm.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=arm.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=google.com header.i=@google.com header.b="I92GxlNN"
-Received: by mail-lf1-f42.google.com with SMTP id 2adb3069b0e04-5ad4d840d43so4608e87.1
-        for <sashiko-reviews@lists.linux.dev>; Thu, 18 Jun 2026 02:40:58 -0700 (PDT)
-ARC-Seal: i=1; a=rsa-sha256; t=1781775657; cv=none;
-        d=google.com; s=arc-20260327;
-        b=p5OQ0AmkLrIG/mM5bbmQ1b4y0IGxkD4TFjwPUO0JtsVo3FemizeUEyjnLoFniIx/pm
-         p/DW/IiKPGs1o/FWyYMVLel1YER5y4u6Egw/e0rA71aXTxbSYiBX/fQ16O0+y5kp8+Yt
-         6yKq06wkFwRAWE7gDc0A5HMfOnKc7CYuOS6P5XAjRmXfcczqCIU2GBLNNdXc3bUzQvTw
-         xYPh8KARVXUx0kTSg1ztYA2IeiU0Qm+XQ78GH2FBEaRcyWdszz54JHdMYFGhu4MaBRE+
-         2r7tdEcNxNqgzs6xhiH8rwAPa3+L3hbuP+V0Vmgvv3+Itx6aWPXT+kp+ppxIbNiAvwD6
-         kySA==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com; s=arc-20260327;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:dkim-signature;
-        bh=NCuMGqE9qyjuURJEKx/Q1SDggmAHo1iFvRp0M1Zowyc=;
-        fh=vxFxEzPfV2TVZiF6T5th9UokvWy0tGwKR5SSoD4lX+g=;
-        b=NT7WTr3n39z5Om0JFpJbIus8BJGJi7b1se7t1sRm8KrZYuPfSlAC2Ptx8yxagQbRWJ
-         CHiRcrWrxKFdBUU1njQsNEff8LWwPMhGVWNMaPSYrWi277nW0c1oRNTb3Fy47IqtF+Ek
-         0xjyXPATDxFjV+rluruW/4CYSdscycDphlAU8Wz7QUsKRgchlW5lvNvBxkKLFngru/LZ
-         qqu4AK0cwgnuZxVaaPXzKvtTEj72I140ZzcG148m+t/cS0M0OZKMQ+T5A6oS6Yz6I/jU
-         ebopGZ3Jmv5Krl0PEN8hnkChVNPA3ETsVFae3wKsP/ZwWFmrSmAPWRKCSx33pZn2EnUp
-         SD5w==;
-        darn=lists.linux.dev
-ARC-Authentication-Results: i=1; mx.google.com; arc=none
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=google.com; s=20251104; t=1781775657; x=1782380457; darn=lists.linux.dev;
-        h=content-transfer-encoding:content-type:cc:to:subject:message-id
-         :date:from:in-reply-to:references:mime-version:from:to:cc:subject
-         :date:message-id:reply-to:content-type;
-        bh=NCuMGqE9qyjuURJEKx/Q1SDggmAHo1iFvRp0M1Zowyc=;
-        b=I92GxlNNrEzxPk5xc0gjTuE1IX2pXrcIA/uPkJpxtdCTk3gCitgfAkF0dS7KMh//4V
-         VUSBF87vpvToMbHFt4wX4X8BFfO0kIvkiXLr8vmxSvjoM/q6lO/oAfLbQ9LBjETAyCTT
-         6rPhWXMQs1RRcNy0f4Se5ii4dBLOVAA1pl3GIRkWJyuP+OLDTuDWUnLddAZmWia8OLWm
-         5nRomgGOqvyk7YdLyHKOYJ+H0tmaMCkTM28qVKYcszBuA64vSVZt1HUkHE/F8gg11ppG
-         RXs668i1HYBJUb82qeCiMd/0LZyLDVezwUsWtyCNMstY2pghYO2k3ZBBB6N6F6BBanOe
-         BhzA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20251104; t=1781775657; x=1782380457;
-        h=content-transfer-encoding:content-type:cc:to:subject:message-id
-         :date:from:in-reply-to:references:mime-version:x-gm-gg
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to
-         :content-type;
-        bh=NCuMGqE9qyjuURJEKx/Q1SDggmAHo1iFvRp0M1Zowyc=;
-        b=FXFYCvR92C0yg+UxIbt6lo9fryETOfIBE1DRqWOmcSHqw4KOtPFqED+zDUWwV4Jnr1
-         lj0a8XVBc6is/MJKbbSAblliVpEZ4hVYdGheNbCJAA/R7ObP+1a9EgvIR3JLEJzLjx/m
-         puMAcGAo6LAc7foKLeL0zR+k9B+6ews/nHgGfDZlLEHTtmSStvp6KMxGU+JCYweY1iq2
-         m+ttimDud0q5Kn9M9B15atYHPW9d9PogeHYRurglRGd52hdHB9Zhm7G2UevRzcLyC89X
-         NmiviSaEocQ+Ea8CnPa4JBAZGcNxPtXTfV8GGo0UW9MXt9DIwgVCOtLedYyyBLaB50fG
-         1yAQ==
-X-Gm-Message-State: AOJu0YzRIiDEnnwB7w8ERMH4dFSTGb9eL2O6gx71td1rupBvPfqroRmB
-	dhlflV9eHHOxM2KvkfaMNsJn29TcU4DvP6tFFQobbDGKSbyYScVrWYzNphHVYfzs87FVztwYrIf
-	JGjNbq8uLAroJeDX/9iS+SEvb55OxgrDOXaTppJApvCU7hTQgdjHZ3+44QxY=
-X-Gm-Gg: AfdE7ckR2FBGtuK6Hmg4/LhXVts9finbuh2BtZQraMaoIMpPGKMTBWwSuGO4Guzcjo1
-	BjozyQHh31QvqyUl7fuNynLAtF4y5L0jIBIFb9dXhyGRwpzTgOqlEZZOpftTtJBxndbWpespfCI
-	w67hlxh5iehNOtMXZ8jp0nBw5NP5ZMDgF/Mgl70uTDwwulF0hKfMSLZ7QcPb/Cdft7KbegJVdvw
-	uUt5zQ+iPxVwhxB9GKcUUmmmlsUiT6mLzAgFLwG0QuAp2j0+L08MY4AFA1wW/OfO9kBhA46PMwE
-	q0fFCd3B
-X-Received: by 2002:a05:6512:3e24:b0:5a8:6646:d7b4 with SMTP id
- 2adb3069b0e04-5ad4ee75f16mr99922e87.1.1781775656442; Thu, 18 Jun 2026
- 02:40:56 -0700 (PDT)
+	dkim=pass (1024-bit key) header.d=arm.com header.i=@arm.com header.b="FTidFAd+"
+Received: from usa-sjc-imap-foss1.foss.arm.com (unknown [10.121.207.14])
+	by usa-sjc-mx-foss1.foss.arm.com (Postfix) with ESMTP id 2A4DA2C1D;
+	Thu, 18 Jun 2026 03:19:57 -0700 (PDT)
+Received: from raptor (usa-sjc-mx-foss1.foss.arm.com [172.31.20.19])
+	by usa-sjc-imap-foss1.foss.arm.com (Postfix) with ESMTPSA id 503AC3F905;
+	Thu, 18 Jun 2026 03:20:00 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=simple/simple; d=arm.com; s=foss;
+	t=1781778001; bh=9fangGeG4n196Zz3BJvMg9UNdqOmOWQJGg3FWdgaILs=;
+	h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
+	b=FTidFAd+kMZcLOALCGU7P9wsthueikOo5vkAe+SBemmN/cUXQHiPDzD8fxv/nUROw
+	 7k34i+3w+wt1UVGVGjISKJC1XNSmGNDO/wW6PfMCU1B0SX4PyGl+vSRP5s7NgEadEd
+	 uRiYVbQLsqDbpmk0IETOc3GjeDfoTvACAmH/RUlM=
+Date: Thu, 18 Jun 2026 11:19:56 +0100
+From: Alexandru Elisei <alexandru.elisei@arm.com>
+To: Sean Christopherson <seanjc@google.com>
+Cc: sashiko-reviews@lists.linux.dev, Marc Zyngier <maz@kernel.org>,
+	kvm@vger.kernel.org, kvmarm@lists.linux.dev,
+	Oliver Upton <oupton@kernel.org>
+Subject: Re: [RFC PATCH] KVM: Ignore MMU notifiers for guest_memfd-only
+ memslots
+Message-ID: <ajPGTF8p_wFfogn_@raptor>
+References: <20260615155244.183044-1-alexandru.elisei@arm.com>
+ <20260615160901.9A1A61F000E9@smtp.kernel.org>
+ <ajA6ogaNiI3KDv5i@google.com>
+ <ajKcDRqT5m069PXK@raptor>
+ <ajMPvgA2eHQCj-B0@google.com>
 Precedence: bulk
 X-Mailing-List: sashiko-reviews@lists.linux.dev
 List-Id: <sashiko-reviews.lists.linux.dev>
 List-Subscribe: <mailto:sashiko-reviews+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:sashiko-reviews+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-References: <20260618090128.3913688-1-tabba@google.com> <20260618090128.3913688-4-tabba@google.com>
- <20260618092223.45D231F00A3A@smtp.kernel.org>
-In-Reply-To: <20260618092223.45D231F00A3A@smtp.kernel.org>
-From: Fuad Tabba <tabba@google.com>
-Date: Thu, 18 Jun 2026 10:40:17 +0100
-X-Gm-Features: AVVi8CdwpCZOAk7Uhts5s_1DWseHRrjXQYyhpm67bkeDIKRKDsz96YtE297TLEU
-Message-ID: <CA+EHjTxwco3D3FNg_XtkjGY3R6eb+EirTKJPyrjc+nSjYRuhmA@mail.gmail.com>
-Subject: Re: [PATCH 3/3] KVM: arm64: Drop redundant READ_ONCE() in pkvm_hyp_vm_is_created()
-To: sashiko-reviews@lists.linux.dev
-Cc: Marc Zyngier <maz@kernel.org>, kvmarm@lists.linux.dev, 
-	Oliver Upton <oupton@kernel.org>
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <ajMPvgA2eHQCj-B0@google.com>
 
-On Thu, 18 Jun 2026 at 10:22, <sashiko-bot@kernel.org> wrote:
->
-> Thank you for your contribution! Sashiko AI review found 1 potential issu=
-e(s) to consider:
->
-> Pre-existing issues:
-> - [High] Teardown sequence inversion in `kvm_arch_destroy_vm()` causes me=
-mory leak of protected guest pages.
-> --
->
-> commit 3c4352fb45fd315836f7f7aa2ad63af580a902d7
-> Author: Fuad Tabba <tabba@google.com>
->
-> KVM: arm64: Drop redundant READ_ONCE() in pkvm_hyp_vm_is_created()
->
-> This patch removes an unnecessary READ_ONCE() around the read of
-> kvm->arch.pkvm.is_created. The read is already serialised against concurr=
-ent
-> writers by either config_lock, slots_lock, or the teardown VM lifecycle.
->
-> > diff --git a/arch/arm64/kvm/pkvm.c b/arch/arm64/kvm/pkvm.c
-> > index 67b90a58fbea2..008766273912e 100644
-> > --- a/arch/arm64/kvm/pkvm.c
-> > +++ b/arch/arm64/kvm/pkvm.c
-> > @@ -185,7 +185,11 @@ static int __pkvm_create_hyp_vm(struct kvm *kvm)
-> >
-> >  bool pkvm_hyp_vm_is_created(struct kvm *kvm)
-> >  {
-> > -     return READ_ONCE(kvm->arch.pkvm.is_created);
-> > +     /*
-> > +      * Serialised by config_lock/slots_lock, or by VM lifecycle at
-> > +      * teardown, so a plain read suffices.
-> > +      */
->
-> [Severity: High]
-> This isn't a bug introduced by this patch, but since the comment mentions=
- the
-> teardown lifecycle, is there a teardown sequence inversion in
-> kvm_arch_destroy_vm() that leaks protected guest pages?
->
-> Looking at kvm_arch_destroy_vm() in arch/arm64/kvm/arm.c, it calls
-> pkvm_destroy_hyp_vm() before kvm_uninit_stage2_mmu().
->
-> Because kvm_uninit_stage2_mmu() hasn't run yet, __pkvm_start_teardown_vm(=
-)
-> is not invoked. This causes the __pkvm_finalize_teardown_vm hypercall ins=
-ide
-> pkvm_destroy_hyp_vm() to be rejected by the hypervisor, and the host clea=
-rs
-> the handle via __pkvm_destroy_hyp_vm():
->
-> arch/arm64/kvm/pkvm.c:__pkvm_destroy_hyp_vm() {
->     ...
->     kvm->arch.pkvm.handle =3D 0;
-> }
->
-> Subsequently, when kvm_uninit_stage2_mmu() does run, it eventually calls
-> pkvm_pgtable_stage2_destroy_range(), which returns early due to the clear=
-ed
-> handle:
->
-> arch/arm64/kvm/pkvm.c:pkvm_pgtable_stage2_destroy_range() {
->     if (!handle)
->         return;
->     ...
-> }
->
-> Does this sequence skip page reclamation and unsharing, permanently leaki=
-ng
-> all memory donated to the protected guest?
+Hi Sean,
 
-Not a leak. The reclaim runs before kvm_arch_destroy_vm(), not after it.
+On Wed, Jun 17, 2026 at 02:21:02PM -0700, Sean Christopherson wrote:
+> On Wed, Jun 17, 2026, Alexandru Elisei wrote:
+> > Hi Sean,
+> > 
+> > Thanks for the reply. Just to make sure, once the bugs have been iron out,
+> > you're ok with this idea?
+> > 
+> > On Mon, Jun 15, 2026 at 10:47:14AM -0700, Sean Christopherson wrote:
+> > > On Mon, Jun 15, 2026, sashiko-bot@kernel.org wrote:
+> > > > > diff --git a/virt/kvm/kvm_main.c b/virt/kvm/kvm_main.c
+> > > > > --- a/virt/kvm/kvm_main.c
+> > > > > +++ b/virt/kvm/kvm_main.c
+> > > > [ ... ]
+> > > > > @@ -592,6 +592,10 @@ static __always_inline kvm_mn_ret_t kvm_handle_hva_range(struct kvm *kvm,
+> > > > >  			unsigned long hva_start, hva_end;
+> > > > >  
+> > > > >  			slot = container_of(node, struct kvm_memory_slot, hva_node[slots->node_idx]);
+> > > > > +
+> > > > > +			if (kvm_slot_has_gmem(slot) && kvm_memslot_is_gmem_only(slot))
+> > > > > +				continue;
+> > > > > +
+> > > > 
+> > > > [Severity: Critical]
+> > > > Does this change inadvertently introduce a regression in the pfncache retry
+> > > > protocol?
+> > > > 
+> > > > Looking at the pfncache framework, it maps guest memory into kernel space and
+> > > > explicitly drops the page reference after mapping it:
+> > > > 
+> > > > virt/kvm/pfncache.c:hva_to_pfn_retry() {
+> > > >     ...
+> > > >     kvm_release_page_clean(page);
+> > > >     ...
+> > > > }
+> > > > 
+> > > > It appears to rely entirely on KVM's MMU notifiers (kvm->mmu_invalidate_seq)
+> > > > to invalidate the cache when the page is unmapped by the host.
+> > > > 
+> > > > If a VMM defines a guest_memfd-backed memslot with KVM_MEMSLOT_GMEM_ONLY
+> > > > but still provides a valid anonymous user mapping as its userspace_addr,
+> > > > could this regression lead to a use-after-free?
+> > > 
+> > > Sadly, yes.  To land this, we would need to first teach the gfn_to_pfn_cache code
+> > > to be able to pull directly from guest_memfd.  I forget if anyone is working on
+> > > that.
+> > 
+> > I've been trying to wrap my head around this, and I just can't seem to
+> > figure it out.
+> > 
+> > kvm_mmu_notifier_invalidate_range_start(), before handle_hva_range(), calls
+> > gfn_to_pfn_cache_invalidate_start() for the MMU notifier range, and that
+> > marks all caches that overlap the range as invalid. kvm_gpc_check() returns
+> > false for an invalid cache, so how can the memory still be accessed via the
+> > pfncache?
+> 
+> That just forces gpcs to be refreshed, mmu_notifier_retry_cache() still relies
+> on mmu_invalidate_seq being bumped to avoid consuming stale state.
 
-kvm_destroy_vm() unregisters the mmu-notifier before calling
-kvm_arch_destroy_vm(). That release path (kvm_flush_shadow_all ->
-kvm_arch_flush_shadow_all(), nested.c) calls kvm_uninit_stage2_mmu()
--> pkvm_pgtable_stage2_destroy_range() while the handle is still
-valid, so __pkvm_start_teardown_vm() sets is_dying and the guest pages
-are reclaimed there.
+Yes.
 
-By the time kvm_arch_destroy_vm() runs pkvm_destroy_hyp_vm(),
-__pkvm_finalize_teardown_vm() therefore succeeds (is_dying already
-set, no WARN), and the kvm_uninit_stage2_mmu() that follows is a
-second pass that returns early on the now-cleared handle. A pVM
-teardown is WARN-free in practice, which wouldn't hold if finalize
-were being rejected as described.
+> 
+> > > > By unmapping the anonymous memory, the host would trigger MMU notifiers, but
+> > > > this new check skips the memslot. As a result, kvm->mmu_invalidate_seq
+> > > > wouldn't increment, and KVM might retain a kernel mapping to a freed physical
+> > > > page.
+> > 
+> > kvm->mmu_invalidate_seq is incremented in kvm_mmu_invalidate_end(), I don't see
+> > how that is affected by skipping a memslot in handle_hva_range().
+> 
+> handle_hva_range() only invokes on_lock() if a memslot is found.  By skipping the
+> memslot entirely, kvm_mmu_invalidate_{start,end}() won't be called and so
+> mmu_invalidate_seq won't be bumped.
 
-Cheers,
-/fuad
+I see it now, for some reason I completely missed the part where
+kvm_mmu_invalidate_{begin,end}() is called on ->lock() :( I was under the
+impression that they are called directly from the
+->invalidate_range_{start,end}() MMU notifier callbacks.
 
->
-> > +     return kvm->arch.pkvm.is_created;
-> >  }
-> >
-> >  int pkvm_create_hyp_vm(struct kvm *kvm)
->
-> --
-> Sashiko AI review =C2=B7 https://sashiko.dev/#/patchset/20260618090128.39=
-13688-1-tabba@google.com?part=3D3
+> 
+> > > > Could this allow the guest to read or write arbitrary host physical memory?
+> > 
+> > The KVM_MEMSLOT_GMEM_ONLY flag is set if the backing guest_memfd has been
+> > created with GUEST_MEMFD_FLAG_MMAP. The documentation for the flag says
+> > that '[..] the fault will always be consumed from guest_memfd, regardless
+> > of whether it is a shared or private fault'.  As far as I can tell, this
+> > means that, absent a fallocate(FALLOC_FL_PUNCH_HOLE) call, the page is
+> > still in the page cache for the guest_memfd file after userspace has
+> > unmapped it, so the guest will not be accessing a freed page.
+> 
+> KVM_MEMSLOT_GMEM_ONLY is somewhat misleading, it only applies to the KVM's MMU.
+> For other cases where KVM accesses guest memory, KVM still follows the host virtual
+> address, e.g. so that copy_{to,from}_user() Just Works.  But userspace isn't
+> strictly *required* to keep the userspace mapping coherent with guest_memfd, nor
+> is userspace required to make the userspace mapping fully RWX.  And so if
+> userspace modifies the VMA, KVM needs to react accordingly.
+> 
+> When in-place conversion comes along, KVM will also rely on userspace mappings
+> being torn down before allow a SHARED page to become PRIVATE (for all intents
+> and purposes, we're conceptually treating conversions as free()+re-alloc().  So
+> while the page might still be in the page cache, it's effectively been "freed".
+> So in that case, KVM really does need to ensure it handles mmu_notifier events
+> correctly to avoid UAF.
+
+Everything makes more sense now, thanks for your patience in explaining it.
+
+Thanks,
+Alex
