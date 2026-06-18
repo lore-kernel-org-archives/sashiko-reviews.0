@@ -1,181 +1,196 @@
-Received: from mail-oa1-f52.google.com (mail-oa1-f52.google.com [209.85.160.52])
+Received: from mail-lf1-f42.google.com (mail-lf1-f42.google.com [209.85.167.42])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D1A4C3B6354
-	for <sashiko-reviews@lists.linux.dev>; Thu, 18 Jun 2026 08:53:39 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=pass smtp.client-ip=209.85.160.52
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F2F5A3E1CF4
+	for <sashiko-reviews@lists.linux.dev>; Thu, 18 Jun 2026 09:40:58 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=pass smtp.client-ip=209.85.167.42
 ARC-Seal:i=2; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1781772821; cv=pass; b=azoy84/NUTfmkULJvXljBz8DmvLyq1edjxvSWmkJNl611I5J5P78wlgriFpJKA+JaulS3R2pj8zry0iAA3/T95TIW9seUlmdEwmey+2rhImLOwozrHM8xO+kzVl6FM0Epj2oX3vGQrlhAKEsufUmO+9WUA9hPI5EmE/4pljf/b4=
+	t=1781775664; cv=pass; b=pACzbFgLXUATYBdyYJOJHSf6qKo+5x5f2Y1xTstpZxFqEQgnezI+DdS4imsuPNjowN1fgTrIMNQFFWROK2vPLltUvyQQMIRVpRh3pMADP9dNMyYXorsBv8jfqSGWCrQfWTprXgvSUm0xuRFoSDV6Ma0JjWrWg2uqbxBRtbGAda0=
 ARC-Message-Signature:i=2; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1781772821; c=relaxed/simple;
-	bh=Z1YJp/HqfQ6hf6uFiAiDrxi+ZDsMGhSZke+8x869FEk=;
+	s=arc-20240116; t=1781775664; c=relaxed/simple;
+	bh=muaRs4souuC9L6Um52i9Edo0YD1J/DTF6k3Hdh3bmBk=;
 	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
-	 To:Cc:Content-Type; b=ecJjUKfOxOSoZ8XCa1qJU1Uz9BX/mwYU572fZHB6MvNlgZC9vMVUY3dCW7qWN+bYkDv7zB7brgNGWbWRl9gxyghquzAJGtmqeyOqHXhXZBIECT3adgcARmGQL1PQ2bTOf8bzFT71VEtEHiB4o6pD/hWXQQe0kr49Vaqwi3w/x0Y=
-ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=bytedance.com; spf=pass smtp.mailfrom=bytedance.com; dkim=pass (2048-bit key) header.d=bytedance.com header.i=@bytedance.com header.b=ghSPXyM6; arc=pass smtp.client-ip=209.85.160.52
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=bytedance.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=bytedance.com
+	 To:Cc:Content-Type; b=g0581x4/+sbHKKFksv7hKQUHuSSO9QQ6jdXwc4nMJvY7zDhN5JdihbeTgunrhcGfzXouktpPVjGCaDZaL1VyX9J6jljVrelEAIBEZOhYW+Prja7G+lQy+FfYgUGMOCLVmC6SMk50CGy013w20RqyihdkzvXb0Kz7fb88W80Mpwg=
+ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=google.com; spf=pass smtp.mailfrom=google.com; dkim=pass (2048-bit key) header.d=google.com header.i=@google.com header.b=I92GxlNN; arc=pass smtp.client-ip=209.85.167.42
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=google.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=google.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=bytedance.com header.i=@bytedance.com header.b="ghSPXyM6"
-Received: by mail-oa1-f52.google.com with SMTP id 586e51a60fabf-446f87b6de1so31642fac.3
-        for <sashiko-reviews@lists.linux.dev>; Thu, 18 Jun 2026 01:53:39 -0700 (PDT)
-ARC-Seal: i=1; a=rsa-sha256; t=1781772819; cv=none;
-        d=google.com; s=arc-20240605;
-        b=WU677MIQZO863AfSHWrfisNkC49AN/f4DEG+dL31DmZVj3dDmz1JfVxkmfbzoMyRF4
-         jpNkfsS8mV5s6ALyEiJBRfnYV5j2zzlrbuP31M6FDGqCIUs2Bq85En1Pt+paN7CjqmZn
-         RME+2a2JVLo3l61bU8UiumyPJHOP3omBLfw0B/1iMxLt/EivWVGXM2gAXpfAcDVjbYSB
-         Lc151dvNfRNKKbGcJF62WkjjXnvoea7HTuQgk0P5MBZRPPRvn79G6tyWdpS7fiBapZd9
-         8r38PX/RwAEuSANy1aMo6CUtwxP8b8rbIgrQsreHfXhxSZ2d1d1IDs672weLQnMAgqbx
-         o2sA==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com; s=arc-20240605;
+	dkim=pass (2048-bit key) header.d=google.com header.i=@google.com header.b="I92GxlNN"
+Received: by mail-lf1-f42.google.com with SMTP id 2adb3069b0e04-5ad4d840d43so4608e87.1
+        for <sashiko-reviews@lists.linux.dev>; Thu, 18 Jun 2026 02:40:58 -0700 (PDT)
+ARC-Seal: i=1; a=rsa-sha256; t=1781775657; cv=none;
+        d=google.com; s=arc-20260327;
+        b=p5OQ0AmkLrIG/mM5bbmQ1b4y0IGxkD4TFjwPUO0JtsVo3FemizeUEyjnLoFniIx/pm
+         p/DW/IiKPGs1o/FWyYMVLel1YER5y4u6Egw/e0rA71aXTxbSYiBX/fQ16O0+y5kp8+Yt
+         6yKq06wkFwRAWE7gDc0A5HMfOnKc7CYuOS6P5XAjRmXfcczqCIU2GBLNNdXc3bUzQvTw
+         xYPh8KARVXUx0kTSg1ztYA2IeiU0Qm+XQ78GH2FBEaRcyWdszz54JHdMYFGhu4MaBRE+
+         2r7tdEcNxNqgzs6xhiH8rwAPa3+L3hbuP+V0Vmgvv3+Itx6aWPXT+kp+ppxIbNiAvwD6
+         kySA==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com; s=arc-20260327;
         h=content-transfer-encoding:cc:to:subject:message-id:date:from
          :in-reply-to:references:mime-version:dkim-signature;
-        bh=oUQ+0xSBpfvF1Od2o3ssM+WJLtkna5s39YaO37zuJWQ=;
-        fh=53qvJawqK0TJTsq+MaD47KBMEtgXQmC582XHmZ7TrbI=;
-        b=bFEM/IOhrHkO5s/eR4+xG8IFTjZsnKqPRh7/nmcS6CzXFvkDNmcoPTGy2/Fc/zWqP4
-         rPwZ0EPT/iE1ztWHW7X9Ur0q4bNKAlMPNDJ0ZkkyFCN2p5jSzYi7+SsRgnOLgDyGwM8d
-         UIaGvZ7TGSwdp+LRuaLQWE4VPKmbb2ea/pr+aoECj41puPfcsJHWIuC+zv8AAFIYuPMo
-         dO58SARLi+ucFnlajsJlFKwdp3wtZHpqESby/AHLmEqu00M4kKNMBF6cK7vnYich0gu0
-         CEUrTpsZLv8xneOET14Xp/vG+6C7OHSjOq7lEa+3DHRhOj/DVrea8vv4M2nGqAzzTBrt
-         zi0g==;
+        bh=NCuMGqE9qyjuURJEKx/Q1SDggmAHo1iFvRp0M1Zowyc=;
+        fh=vxFxEzPfV2TVZiF6T5th9UokvWy0tGwKR5SSoD4lX+g=;
+        b=NT7WTr3n39z5Om0JFpJbIus8BJGJi7b1se7t1sRm8KrZYuPfSlAC2Ptx8yxagQbRWJ
+         CHiRcrWrxKFdBUU1njQsNEff8LWwPMhGVWNMaPSYrWi277nW0c1oRNTb3Fy47IqtF+Ek
+         0xjyXPATDxFjV+rluruW/4CYSdscycDphlAU8Wz7QUsKRgchlW5lvNvBxkKLFngru/LZ
+         qqu4AK0cwgnuZxVaaPXzKvtTEj72I140ZzcG148m+t/cS0M0OZKMQ+T5A6oS6Yz6I/jU
+         ebopGZ3Jmv5Krl0PEN8hnkChVNPA3ETsVFae3wKsP/ZwWFmrSmAPWRKCSx33pZn2EnUp
+         SD5w==;
         darn=lists.linux.dev
 ARC-Authentication-Results: i=1; mx.google.com; arc=none
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=bytedance.com; s=google; t=1781772819; x=1782377619; darn=lists.linux.dev;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=oUQ+0xSBpfvF1Od2o3ssM+WJLtkna5s39YaO37zuJWQ=;
-        b=ghSPXyM6Dlv2STcUKiKBbOebXfzs/52VtuNYszubDixfddIzYbepHTaxGUPGGtf5fG
-         A6/LtQ2jiDAZBMHvxcdNhCqCRgxEUFXICs/H8i456uPYOOoLqsspMFI7jVXb0fDlxKz3
-         jVRGNQ1e88YyMDlZwbM2c9NLpvHS7yH6kxzGxs8SMYeeL+mNov6JEx4OeG3TsdXAuDti
-         2j+1HRJjPeZh4A9ZZRbsXpv5aFshX1EHEU36fjLmDFUtULQTWmcWcatzIfd+XTZUyuuz
-         5fYgDbpJhXWL0Tq9NmkqbVhR4CUwxK/s25wDpiu3fWBJSjsTDTp/XpPAJP7ysOJVo3hV
-         Zx1Q==
+        d=google.com; s=20251104; t=1781775657; x=1782380457; darn=lists.linux.dev;
+        h=content-transfer-encoding:content-type:cc:to:subject:message-id
+         :date:from:in-reply-to:references:mime-version:from:to:cc:subject
+         :date:message-id:reply-to:content-type;
+        bh=NCuMGqE9qyjuURJEKx/Q1SDggmAHo1iFvRp0M1Zowyc=;
+        b=I92GxlNNrEzxPk5xc0gjTuE1IX2pXrcIA/uPkJpxtdCTk3gCitgfAkF0dS7KMh//4V
+         VUSBF87vpvToMbHFt4wX4X8BFfO0kIvkiXLr8vmxSvjoM/q6lO/oAfLbQ9LBjETAyCTT
+         6rPhWXMQs1RRcNy0f4Se5ii4dBLOVAA1pl3GIRkWJyuP+OLDTuDWUnLddAZmWia8OLWm
+         5nRomgGOqvyk7YdLyHKOYJ+H0tmaMCkTM28qVKYcszBuA64vSVZt1HUkHE/F8gg11ppG
+         RXs668i1HYBJUb82qeCiMd/0LZyLDVezwUsWtyCNMstY2pghYO2k3ZBBB6N6F6BBanOe
+         BhzA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20251104; t=1781772819; x=1782377619;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:x-gm-gg:x-gm-message-state:from
-         :to:cc:subject:date:message-id:reply-to;
-        bh=oUQ+0xSBpfvF1Od2o3ssM+WJLtkna5s39YaO37zuJWQ=;
-        b=qcHUcS3lTBr0yj3V22tVlvBzOvn33gcW4C/N5Jjc8IsqybCkMGErl5FK3eMQqD0Gw5
-         htSecmGYhcMXXXZRxOwEOnVWjBI381cPpez91+9sJe1KmMitmQaViezmNCifTfh5NruM
-         +Dsggo6UnFRjV3OXowaJzF4t5enzMopByBIal76lhLLzenrtY0hCSe92stOCmTRPDAqA
-         uf4brrs5jgAIkJF6LMuW4geDIQf66fa3vw4N1OoQdcSUF5zHSuN1RgAyjHBLhOLznTg6
-         fXLBpz4PzMP2Tvh6Ytn7q02+DV2PPzlSvSUWT4WqCxgGuNz7Sa6xijGOARqM7UMWni7i
-         qjJA==
-X-Gm-Message-State: AOJu0Yziu0PWOKeHgtOUkqmfG/BEoB3s4BbP3CYyIURPPuXCGdlrDH5K
-	5V4dZrW5gxwTEIhuHdc0j6YUTcFO6ZXaSKuDalCyGo73RkrV7CM9grZCkXgsPbJklgDZ8qbxxOD
-	A+0n+0LatiIr4V9/J39wAXV6c8gb6qHyWhZnTKcom0zoRbP+OHq8J2/6FRw==
-X-Gm-Gg: Acq92OFRyHbUBb9flT0m+jnOEaNjKYBLv9pTupyjCkWSP//4mpeC9Tc/g5ni3YIZtGR
-	uMBij9D4mFt5fEDDOH7EGvXGdG0O4DD8KP6ddhOJu5RA+Btvv6k9sSSZmtT3c22nCTgmonDUcJH
-	SUyQ0TQZFde1dziZiK106SGdFfWmZD2r+KqrVb/tV++E0KcnqKeRUXkCODIM4nvzUZcxByYIGid
-	4mLKSb/G5I1PMCjPkYevow8u80Ce3IYdoOUanKDEdcQinv/qlxjwEe9yvcfpkwC1k+8vgbFfgHy
-	j/c=
-X-Received: by 2002:a05:6870:48f:b0:43c:3678:1541 with SMTP id
- 586e51a60fabf-4469045cf99mr5249080fac.28.1781772818570; Thu, 18 Jun 2026
- 01:53:38 -0700 (PDT)
+        d=1e100.net; s=20251104; t=1781775657; x=1782380457;
+        h=content-transfer-encoding:content-type:cc:to:subject:message-id
+         :date:from:in-reply-to:references:mime-version:x-gm-gg
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to
+         :content-type;
+        bh=NCuMGqE9qyjuURJEKx/Q1SDggmAHo1iFvRp0M1Zowyc=;
+        b=FXFYCvR92C0yg+UxIbt6lo9fryETOfIBE1DRqWOmcSHqw4KOtPFqED+zDUWwV4Jnr1
+         lj0a8XVBc6is/MJKbbSAblliVpEZ4hVYdGheNbCJAA/R7ObP+1a9EgvIR3JLEJzLjx/m
+         puMAcGAo6LAc7foKLeL0zR+k9B+6ews/nHgGfDZlLEHTtmSStvp6KMxGU+JCYweY1iq2
+         m+ttimDud0q5Kn9M9B15atYHPW9d9PogeHYRurglRGd52hdHB9Zhm7G2UevRzcLyC89X
+         NmiviSaEocQ+Ea8CnPa4JBAZGcNxPtXTfV8GGo0UW9MXt9DIwgVCOtLedYyyBLaB50fG
+         1yAQ==
+X-Gm-Message-State: AOJu0YzRIiDEnnwB7w8ERMH4dFSTGb9eL2O6gx71td1rupBvPfqroRmB
+	dhlflV9eHHOxM2KvkfaMNsJn29TcU4DvP6tFFQobbDGKSbyYScVrWYzNphHVYfzs87FVztwYrIf
+	JGjNbq8uLAroJeDX/9iS+SEvb55OxgrDOXaTppJApvCU7hTQgdjHZ3+44QxY=
+X-Gm-Gg: AfdE7ckR2FBGtuK6Hmg4/LhXVts9finbuh2BtZQraMaoIMpPGKMTBWwSuGO4Guzcjo1
+	BjozyQHh31QvqyUl7fuNynLAtF4y5L0jIBIFb9dXhyGRwpzTgOqlEZZOpftTtJBxndbWpespfCI
+	w67hlxh5iehNOtMXZ8jp0nBw5NP5ZMDgF/Mgl70uTDwwulF0hKfMSLZ7QcPb/Cdft7KbegJVdvw
+	uUt5zQ+iPxVwhxB9GKcUUmmmlsUiT6mLzAgFLwG0QuAp2j0+L08MY4AFA1wW/OfO9kBhA46PMwE
+	q0fFCd3B
+X-Received: by 2002:a05:6512:3e24:b0:5a8:6646:d7b4 with SMTP id
+ 2adb3069b0e04-5ad4ee75f16mr99922e87.1.1781775656442; Thu, 18 Jun 2026
+ 02:40:56 -0700 (PDT)
 Precedence: bulk
 X-Mailing-List: sashiko-reviews@lists.linux.dev
 List-Id: <sashiko-reviews.lists.linux.dev>
 List-Subscribe: <mailto:sashiko-reviews+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:sashiko-reviews+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-References: <20260618064406.14508-1-cuiyunhui@bytedance.com>
- <20260618064406.14508-3-cuiyunhui@bytedance.com> <20260618070215.268ED1F000E9@smtp.kernel.org>
-In-Reply-To: <20260618070215.268ED1F000E9@smtp.kernel.org>
-From: yunhui cui <cuiyunhui@bytedance.com>
-Date: Thu, 18 Jun 2026 16:53:27 +0800
-X-Gm-Features: AVVi8Cc1wsk8OHCml6nVyEvFINMaXLaYsBrkjDDvdX7s6ie08eRbA-euJM6qaHA
-Message-ID: <CAEEQ3wkD+qYWSzZ=5VGCzvHDmeiaaeJexNokGgbv7zAqccD5sg@mail.gmail.com>
-Subject: Re: [External] Re: [PATCH v4 2/3] riscv: track effective hardware PTE
- A/D updating
+References: <20260618090128.3913688-1-tabba@google.com> <20260618090128.3913688-4-tabba@google.com>
+ <20260618092223.45D231F00A3A@smtp.kernel.org>
+In-Reply-To: <20260618092223.45D231F00A3A@smtp.kernel.org>
+From: Fuad Tabba <tabba@google.com>
+Date: Thu, 18 Jun 2026 10:40:17 +0100
+X-Gm-Features: AVVi8CdwpCZOAk7Uhts5s_1DWseHRrjXQYyhpm67bkeDIKRKDsz96YtE297TLEU
+Message-ID: <CA+EHjTxwco3D3FNg_XtkjGY3R6eb+EirTKJPyrjc+nSjYRuhmA@mail.gmail.com>
+Subject: Re: [PATCH 3/3] KVM: arm64: Drop redundant READ_ONCE() in pkvm_hyp_vm_is_created()
 To: sashiko-reviews@lists.linux.dev
-Cc: devicetree@vger.kernel.org, conor+dt@kernel.org, robh@kernel.org
+Cc: Marc Zyngier <maz@kernel.org>, kvmarm@lists.linux.dev, 
+	Oliver Upton <oupton@kernel.org>
 Content-Type: text/plain; charset="UTF-8"
 Content-Transfer-Encoding: quoted-printable
 
-Hi sashiko,
-
-On Thu, Jun 18, 2026 at 3:03=E2=80=AFPM <sashiko-bot@kernel.org> wrote:
+On Thu, 18 Jun 2026 at 10:22, <sashiko-bot@kernel.org> wrote:
 >
 > Thank you for your contribution! Sashiko AI review found 1 potential issu=
 e(s) to consider:
-> - [High] A hotplugged CPU lacking the Svadu extension is incorrectly allo=
-wed to come online when hardware PTE A/D updating is globally enabled but F=
-WFT is not required, leading to silent data corruption.
+>
+> Pre-existing issues:
+> - [High] Teardown sequence inversion in `kvm_arch_destroy_vm()` causes me=
+mory leak of protected guest pages.
 > --
 >
-> commit e238566a69f2ecd235872518a759dd75d54f71af
-> Author: Yunhui Cui <cuiyunhui@bytedance.com>
+> commit 3c4352fb45fd315836f7f7aa2ad63af580a902d7
+> Author: Fuad Tabba <tabba@google.com>
 >
-> riscv: track effective hardware PTE A/D updating
+> KVM: arm64: Drop redundant READ_ONCE() in pkvm_hyp_vm_is_created()
 >
-> This commit tracks the runtime state of hardware PTE A/D updating using a
-> static key. It attempts to enable FWFT for all online harts, falling back
-> to software A/D if that fails, and ensures hotplugged CPUs match the glob=
-al
-> state before coming online.
+> This patch removes an unnecessary READ_ONCE() around the read of
+> kvm->arch.pkvm.is_created. The read is already serialised against concurr=
+ent
+> writers by either config_lock, slots_lock, or the teardown VM lifecycle.
 >
-> > diff --git a/arch/riscv/kernel/cpufeature.c b/arch/riscv/kernel/cpufeat=
-ure.c
-> > --- a/arch/riscv/kernel/cpufeature.c
-> > +++ b/arch/riscv/kernel/cpufeature.c
->
-> [ ... ]
->
-> > +int riscv_enable_hw_pte_ad_updating(void)
-> > +{
-> > +     unsigned int cpu;
-> > +     int ret;
-> > +
-> > +     if (!riscv_has_hw_pte_ad_updating() ||
-> > +         !riscv_hw_pte_ad_updating_requires_fwft)
-> > +             return 0;
+> > diff --git a/arch/arm64/kvm/pkvm.c b/arch/arm64/kvm/pkvm.c
+> > index 67b90a58fbea2..008766273912e 100644
+> > --- a/arch/arm64/kvm/pkvm.c
+> > +++ b/arch/arm64/kvm/pkvm.c
+> > @@ -185,7 +185,11 @@ static int __pkvm_create_hyp_vm(struct kvm *kvm)
+> >
+> >  bool pkvm_hyp_vm_is_created(struct kvm *kvm)
+> >  {
+> > -     return READ_ONCE(kvm->arch.pkvm.is_created);
+> > +     /*
+> > +      * Serialised by config_lock/slots_lock, or by VM lifecycle at
+> > +      * teardown, so a plain read suffices.
+> > +      */
 >
 > [Severity: High]
-> Does this code allow a hotplugged CPU to come online without the Svadu
-> extension when hardware A/D updating is globally enabled?
+> This isn't a bug introduced by this patch, but since the comment mentions=
+ the
+> teardown lifecycle, is there a teardown sequence inversion in
+> kvm_arch_destroy_vm() that leaks protected guest pages?
 >
-> If the boot CPUs have Svadu but lack Svade, the flag
-> riscv_hw_pte_ad_updating_requires_fwft is set to false and the global
-> static key riscv_hw_pte_ad_updating is enabled.
+> Looking at kvm_arch_destroy_vm() in arch/arm64/kvm/arm.c, it calls
+> pkvm_destroy_hyp_vm() before kvm_uninit_stage2_mmu().
+>
+> Because kvm_uninit_stage2_mmu() hasn't run yet, __pkvm_start_teardown_vm(=
+)
+> is not invoked. This causes the __pkvm_finalize_teardown_vm hypercall ins=
+ide
+> pkvm_destroy_hyp_vm() to be rejected by the hypervisor, and the host clea=
+rs
+> the handle via __pkvm_destroy_hyp_vm():
+>
+> arch/arm64/kvm/pkvm.c:__pkvm_destroy_hyp_vm() {
+>     ...
+>     kvm->arch.pkvm.handle =3D 0;
+> }
+>
+> Subsequently, when kvm_uninit_stage2_mmu() does run, it eventually calls
+> pkvm_pgtable_stage2_destroy_range(), which returns early due to the clear=
+ed
+> handle:
+>
+> arch/arm64/kvm/pkvm.c:pkvm_pgtable_stage2_destroy_range() {
+>     if (!handle)
+>         return;
+>     ...
+> }
+>
+> Does this sequence skip page reclamation and unsharing, permanently leaki=
+ng
+> all memory donated to the protected guest?
 
-No, a hotplugged CPU should not be able to bypass this in the normal
-RISC-V hotplug path. A CPU reaching smp_callin() must already be in
-cpu_possible_mask, and the
-global Svadu state is computed from the ISA intersection of all
-possible CPUs. Therefore, if any possible hotplug CPU lacks Svadu,
-riscv_has_extension_unlikely(SVADU)
-is false and the HW A/D static key is never enabled.
+Not a leak. The reclaim runs before kvm_arch_destroy_vm(), not after it.
+
+kvm_destroy_vm() unregisters the mmu-notifier before calling
+kvm_arch_destroy_vm(). That release path (kvm_flush_shadow_all ->
+kvm_arch_flush_shadow_all(), nested.c) calls kvm_uninit_stage2_mmu()
+-> pkvm_pgtable_stage2_destroy_range() while the handle is still
+valid, so __pkvm_start_teardown_vm() sets is_dying and the guest pages
+are reclaimed there.
+
+By the time kvm_arch_destroy_vm() runs pkvm_destroy_hyp_vm(),
+__pkvm_finalize_teardown_vm() therefore succeeds (is_dying already
+set, no WARN), and the kvm_uninit_stage2_mmu() that follows is a
+second pass that returns early on the now-cleared handle. A pVM
+teardown is WARN-free in practice, which wouldn't hold if finalize
+were being rejected as described.
+
+Cheers,
+/fuad
 
 >
-> When a new CPU is later hotplugged, it calls this function via
-> smp_callin(). Since riscv_hw_pte_ad_updating_requires_fwft is false, it
-> returns 0 and bypasses any capability checks for the local CPU.
->
-> If the hotplugged CPU does not actually support Svadu (e.g., in an
-> asymmetric SoC or due to firmware misconfiguration), it successfully
-> comes online. Because the kernel globally assumes hardware A/D updating
-> is active, it skips software A/D fault handling.
->
-> Could this lead to the hotplugged CPU silently failing to update
-> accessed/dirty bits, causing data corruption when dirty data is dropped
-> during reclaim?
->
-> > +
-> > +     cpu =3D smp_processor_id();
-> > +     ret =3D riscv_enable_local_hw_pte_ad_updating();
-> > +     if (ret)
-> > +             pr_err("CPU%u failed to enable hardware PTE A/D updating:=
- %d\n",
-> > +                    cpu, ret);
-> > +
-> > +     return ret;
-> > +}
+> > +     return kvm->arch.pkvm.is_created;
+> >  }
+> >
+> >  int pkvm_create_hyp_vm(struct kvm *kvm)
 >
 > --
-> Sashiko AI review =C2=B7 https://sashiko.dev/#/patchset/20260618064406.14=
-508-1-cuiyunhui@bytedance.com?part=3D2
-
-Thanks,
-Yunhui
+> Sashiko AI review =C2=B7 https://sashiko.dev/#/patchset/20260618090128.39=
+13688-1-tabba@google.com?part=3D3
