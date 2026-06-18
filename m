@@ -1,77 +1,36 @@
-Received: from smtp-out2.suse.de (smtp-out2.suse.de [195.135.223.131])
+Received: from smtp-out1.suse.de (smtp-out1.suse.de [195.135.223.130])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4127439B48E
-	for <sashiko-reviews@lists.linux.dev>; Thu, 18 Jun 2026 12:31:56 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=195.135.223.131
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C3FB837AA65
+	for <sashiko-reviews@lists.linux.dev>; Thu, 18 Jun 2026 12:32:01 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=195.135.223.130
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1781785918; cv=none; b=rB5YKb/SPMr5EpahUc/xrCpjqsbu5F+DRn+LPLgu70Wp44Z2IGZcq4xXfFAyGtnnEe4IeYGFIVFBeAdhTn1Zb6qe53CeAZWNNMl1IFaRHpQ52nO0nP9Was8Zh4Snu2ai6T/zMS8TurETmNkaNChcdZKlgpY/mb7GEUHK82Cu8mk=
+	t=1781785923; cv=none; b=Ro3KrwaIZ4nuUEzZ1RX+J6LxMGTJHXgoEG8oED8evX+9E35Vg0HDJAnEDUsJ/tCefDkFrNyF9Yk0PbHghYAs+SSl2okPYzdcHW/z/XaF6IZg96figBU/+GIYL4Z+mvx0nKhen+EoyIv0hEIDtJ2NbbD8MRf5vKXWXNyYy6NuMAk=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1781785918; c=relaxed/simple;
-	bh=otMyTGzPNefDNXsxc+KHyPw2W2HBmgKvh7/2nzNpf1o=;
+	s=arc-20240116; t=1781785923; c=relaxed/simple;
+	bh=huIetHkQR2jTTwx/X+PQ/Oui54MfRWvS55LzaeTDQX0=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=VyDKmKwkH9IROAO/nmmN1GCr9XN/z+kYgrOebD6PjL5dlSgjTOI2d4ueddwuL72C/lBKpWBz3KMvkAO35UYhPA9zzEOyOBIUfApuhApx8rb0gzYSJNpIU+adWNYwrjt/TLbAN5/8JzWf8LVDJQrSkklEvi3QfeuOkOlVnZKq7Ms=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=suse.de; spf=pass smtp.mailfrom=suse.de; dkim=pass (1024-bit key) header.d=suse.de header.i=@suse.de header.b=GJDazzry; dkim=permerror (0-bit key) header.d=suse.de header.i=@suse.de header.b=1wjnnoyn; dkim=pass (1024-bit key) header.d=suse.de header.i=@suse.de header.b=GJDazzry; dkim=permerror (0-bit key) header.d=suse.de header.i=@suse.de header.b=1wjnnoyn; arc=none smtp.client-ip=195.135.223.131
+	 MIME-Version; b=Ha+YJEpJY3jQvh+n7r7+8qO0PJ9oj6gpmPUVT3YLYJhbUywE4XZ4SCOG0rV8pGxeHtM4i2150GHe2x/mo2GuGicVAtpHZUXxeet0Y9mK8FXKoyQN/CapsRBaRIWLbMkF7WjbTfjmkIurfCy2vOb+Hnx2r48e4eadBdGaMDxTB7Q=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=suse.de; spf=pass smtp.mailfrom=suse.de; arc=none smtp.client-ip=195.135.223.130
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=suse.de
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=suse.de
-Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=suse.de header.i=@suse.de header.b="GJDazzry";
-	dkim=permerror (0-bit key) header.d=suse.de header.i=@suse.de header.b="1wjnnoyn";
-	dkim=pass (1024-bit key) header.d=suse.de header.i=@suse.de header.b="GJDazzry";
-	dkim=permerror (0-bit key) header.d=suse.de header.i=@suse.de header.b="1wjnnoyn"
-Received: from imap1.dmz-prg2.suse.org (unknown [10.150.64.97])
+Received: from imap1.dmz-prg2.suse.org (imap1.dmz-prg2.suse.org [IPv6:2a07:de40:b281:104:10:150:64:97])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature RSA-PSS (4096 bits) server-digest SHA256)
 	(No client certificate requested)
-	by smtp-out2.suse.de (Postfix) with ESMTPS id B9D5375E26;
-	Thu, 18 Jun 2026 12:31:48 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=suse.de; s=susede2_rsa;
-	t=1781785908; h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
-	 mime-version:mime-version:
-	 content-transfer-encoding:content-transfer-encoding:
-	 in-reply-to:in-reply-to:references:references;
-	bh=puXDryzmvm+hScsn8xQG8yH6VqIBFkvdIaDgwIfkaOA=;
-	b=GJDazzryCET/HO4aVNxQ0YI/ZL6wfOBWbWza6dgF3R441mCAFEAyXktczW75IQA7vuJMyo
-	AMAH0xnR+YmyZU+JtuAFwB3I6azyHJwwOCR1YtdmKR7c+2MZnuyBwu0h0UZSVTcFn3FWgd
-	47wmj2D+8GiCWBX7QfaU2Djba6BDSG0=
-DKIM-Signature: v=1; a=ed25519-sha256; c=relaxed/relaxed; d=suse.de;
-	s=susede2_ed25519; t=1781785908;
-	h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
-	 mime-version:mime-version:
-	 content-transfer-encoding:content-transfer-encoding:
-	 in-reply-to:in-reply-to:references:references;
-	bh=puXDryzmvm+hScsn8xQG8yH6VqIBFkvdIaDgwIfkaOA=;
-	b=1wjnnoynqvSUUcSWMKD8pdTKlGwNXMgvtIdeq7IhjrHnyDqGcT+VPzW4p921ioWTBhKfKx
-	QDTWmO6Yy/tZuMCQ==
-Authentication-Results: smtp-out2.suse.de;
+	by smtp-out1.suse.de (Postfix) with ESMTPS id 0F5826D2F7;
+	Thu, 18 Jun 2026 12:31:49 +0000 (UTC)
+Authentication-Results: smtp-out1.suse.de;
 	none
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=suse.de; s=susede2_rsa;
-	t=1781785908; h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
-	 mime-version:mime-version:
-	 content-transfer-encoding:content-transfer-encoding:
-	 in-reply-to:in-reply-to:references:references;
-	bh=puXDryzmvm+hScsn8xQG8yH6VqIBFkvdIaDgwIfkaOA=;
-	b=GJDazzryCET/HO4aVNxQ0YI/ZL6wfOBWbWza6dgF3R441mCAFEAyXktczW75IQA7vuJMyo
-	AMAH0xnR+YmyZU+JtuAFwB3I6azyHJwwOCR1YtdmKR7c+2MZnuyBwu0h0UZSVTcFn3FWgd
-	47wmj2D+8GiCWBX7QfaU2Djba6BDSG0=
-DKIM-Signature: v=1; a=ed25519-sha256; c=relaxed/relaxed; d=suse.de;
-	s=susede2_ed25519; t=1781785908;
-	h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
-	 mime-version:mime-version:
-	 content-transfer-encoding:content-transfer-encoding:
-	 in-reply-to:in-reply-to:references:references;
-	bh=puXDryzmvm+hScsn8xQG8yH6VqIBFkvdIaDgwIfkaOA=;
-	b=1wjnnoynqvSUUcSWMKD8pdTKlGwNXMgvtIdeq7IhjrHnyDqGcT+VPzW4p921ioWTBhKfKx
-	QDTWmO6Yy/tZuMCQ==
 Received: from imap1.dmz-prg2.suse.org (localhost [127.0.0.1])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature RSA-PSS (4096 bits) server-digest SHA256)
 	(No client certificate requested)
-	by imap1.dmz-prg2.suse.org (Postfix) with ESMTPS id 5B755779A8;
+	by imap1.dmz-prg2.suse.org (Postfix) with ESMTPS id C0137779AB;
 	Thu, 18 Jun 2026 12:31:48 +0000 (UTC)
 Received: from dovecot-director2.suse.de ([2a07:de40:b281:106:10:150:64:167])
 	by imap1.dmz-prg2.suse.org with ESMTPSA
-	id 8GUmFTTlM2rTJQAAD6G6ig
+	id 4GyyLTTlM2rTJQAAD6G6ig
 	(envelope-from <tzimmermann@suse.de>); Thu, 18 Jun 2026 12:31:48 +0000
 From: Thomas Zimmermann <tzimmermann@suse.de>
 To: shiyongbang@huawei.com,
@@ -83,16 +42,10 @@ To: shiyongbang@huawei.com,
 	simona@ffwll.ch
 Cc: dri-devel@lists.freedesktop.org,
 	sashiko-reviews@lists.linux.dev,
-	Thomas Zimmermann <tzimmermann@suse.de>,
-	Rongrong Zou <zourongrong@gmail.com>,
-	Sean Paul <seanpaul@chromium.org>,
-	Xinliang Liu <xinliang.liu@linaro.org>,
-	Dmitry Baryshkov <lumag@kernel.org>,
-	Baihan Li <libaihan@huawei.com>,
-	stable@vger.kernel.org
-Subject: [PATCH v4 2/6] drm/hibmc: Fix list of formats on the primary plane
-Date: Thu, 18 Jun 2026 14:28:40 +0200
-Message-ID: <20260618123142.92298-3-tzimmermann@suse.de>
+	Thomas Zimmermann <tzimmermann@suse.de>
+Subject: [PATCH v4 3/6] drm/hibmc: Store fb in variable in atomic_update
+Date: Thu, 18 Jun 2026 14:28:41 +0200
+Message-ID: <20260618123142.92298-4-tzimmermann@suse.de>
 X-Mailer: git-send-email 2.54.0
 In-Reply-To: <20260618123142.92298-1-tzimmermann@suse.de>
 References: <20260618123142.92298-1-tzimmermann@suse.de>
@@ -103,83 +56,80 @@ List-Subscribe: <mailto:sashiko-reviews+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:sashiko-reviews+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
+X-Rspamd-Pre-Result: action=no action;
+	module=replies;
+	Message is reply to one we originated
+X-Rspamd-Queue-Id: 0F5826D2F7
 X-Spam-Flag: NO
-X-Spamd-Result: default: False [-6.80 / 50.00];
-	REPLY(-4.00)[];
-	BAYES_HAM(-3.00)[100.00%];
-	NEURAL_HAM_LONG(-1.00)[-1.000];
-	MID_CONTAINS_FROM(1.00)[];
-	R_MISSING_CHARSET(0.50)[];
-	NEURAL_HAM_SHORT(-0.20)[-0.999];
-	MIME_GOOD(-0.10)[text/plain];
-	DBL_BLOCKED_OPENRESOLVER(0.00)[imap1.dmz-prg2.suse.org:helo,suse.de:email,suse.de:mid,linaro.org:email];
-	ARC_NA(0.00)[];
-	RCVD_TLS_ALL(0.00)[];
-	RCVD_VIA_SMTP_AUTH(0.00)[];
-	RCPT_COUNT_TWELVE(0.00)[16];
-	MIME_TRACE(0.00)[0:+];
-	FUZZY_RATELIMITED(0.00)[rspamd.com];
-	FREEMAIL_CC(0.00)[lists.freedesktop.org,lists.linux.dev,suse.de,gmail.com,chromium.org,linaro.org,kernel.org,huawei.com,vger.kernel.org];
-	FREEMAIL_TO(0.00)[huawei.com,hisilicon.com,linux.intel.com,kernel.org,gmail.com,ffwll.ch];
-	RCVD_COUNT_TWO(0.00)[2];
-	TO_MATCH_ENVRCPT_ALL(0.00)[];
-	FROM_EQ_ENVFROM(0.00)[];
-	FROM_HAS_DN(0.00)[];
-	TO_DN_SOME(0.00)[];
-	DKIM_SIGNED(0.00)[suse.de:s=susede2_rsa,suse.de:s=susede2_ed25519];
-	FREEMAIL_ENVRCPT(0.00)[gmail.com]
+X-Spam-Score: -4.00
 X-Spam-Level: 
-X-Spam-Score: -6.80
+X-Rspamd-Action: no action
+X-Rspamd-Server: rspamd1.dmz-prg2.suse.org
+X-Rspamd-Pre-Result: action=no action;
+	module=replies;
+	Message is reply to one we originated
+X-Spamd-Result: default: False [-4.00 / 50.00];
+	REPLY(-4.00)[]
 
-Remove all formats from the primary plane that are unsupported for
-various reasons.
+The atomic-update helper frequently refers to the framebuffer in
+new_state->fb. Store it in a local variable to make the code more
+readable. No functional changes.
 
-* Formats with alpha channel: planes should not announce alpha channels
-unless they support transparency. There's no transparency support in
-the primary plane's implementation.
-
-* Formats with BGR order. The common format is in RGB channel order.
-There's no BGR support in the primary plane's implementation.
-
-* RGB888: atomic_update programs the format from cpp[0] * 8 / 16. For
-RGB888's cpp value of 3 this returns 1.5; rounded to 1. Programming
-the value of 1 to HIBMC_CRT_DISP_CTL_FORMAT sets up RGB565. Hence, the
-output is distorted. This can be tested by booting with video=1024x768-24.
-
-Removing all unsupported formats leaves XRGB8888 and RGB565. Both of
-which are supported and work correctly.
-
+Suggested-by: Yongbang Shi <shiyongbang@huawei.com>
 Signed-off-by: Thomas Zimmermann <tzimmermann@suse.de>
-Fixes: da52605eea8f ("drm/hisilicon/hibmc: Add support for display engine")
-Reviewed-by: Yongbang Shi <shiyongbang@huawei.com>
-Cc: Rongrong Zou <zourongrong@gmail.com>
-Cc: Sean Paul <seanpaul@chromium.org>
-Cc: Xinliang Liu <xinliang.liu@linaro.org>
-Cc: Dmitry Baryshkov <lumag@kernel.org>
-Cc: Yongbang Shi <shiyongbang@huawei.com>
-Cc: Baihan Li <libaihan@huawei.com>
-Cc: <stable@vger.kernel.org> # v4.10+
 ---
- drivers/gpu/drm/hisilicon/hibmc/hibmc_drm_de.c | 6 ++----
- 1 file changed, 2 insertions(+), 4 deletions(-)
+ drivers/gpu/drm/hisilicon/hibmc/hibmc_drm_de.c | 15 +++++++--------
+ 1 file changed, 7 insertions(+), 8 deletions(-)
 
 diff --git a/drivers/gpu/drm/hisilicon/hibmc/hibmc_drm_de.c b/drivers/gpu/drm/hisilicon/hibmc/hibmc_drm_de.c
-index 7c0b88c774b5..2e6e189bec1a 100644
+index 2e6e189bec1a..19cb16a7daf9 100644
 --- a/drivers/gpu/drm/hisilicon/hibmc/hibmc_drm_de.c
 +++ b/drivers/gpu/drm/hisilicon/hibmc/hibmc_drm_de.c
-@@ -135,10 +135,8 @@ static void hibmc_plane_atomic_update(struct drm_plane *plane,
+@@ -100,18 +100,18 @@ static int hibmc_plane_atomic_check(struct drm_plane *plane,
+ static void hibmc_plane_atomic_update(struct drm_plane *plane,
+ 				      struct drm_atomic_commit *state)
+ {
+-	struct drm_plane_state *new_state = drm_atomic_get_new_plane_state(state,
+-									   plane);
++	struct drm_plane_state *new_state = drm_atomic_get_new_plane_state(state, plane);
++	struct drm_framebuffer *fb = new_state->fb;
+ 	u32 reg;
+ 	s64 gpu_addr = 0;
+ 	u32 line_l;
+ 	struct hibmc_drm_private *priv = to_hibmc_drm_private(plane->dev);
+ 	struct drm_gem_vram_object *gbo;
+ 
+-	if (!new_state->fb)
++	if (!fb)
+ 		return;
+ 
+-	gbo = drm_gem_vram_of_gem(new_state->fb->obj[0]);
++	gbo = drm_gem_vram_of_gem(fb->obj[0]);
+ 
+ 	gpu_addr = drm_gem_vram_offset(gbo);
+ 	if (WARN_ON_ONCE(gpu_addr < 0))
+@@ -119,9 +119,9 @@ static void hibmc_plane_atomic_update(struct drm_plane *plane,
+ 
+ 	writel(gpu_addr, priv->mmio + HIBMC_CRT_FB_ADDRESS);
+ 
+-	reg = new_state->fb->width * (new_state->fb->format->cpp[0]);
++	reg = fb->width * fb->format->cpp[0];
+ 
+-	line_l = new_state->fb->pitches[0];
++	line_l = fb->pitches[0];
+ 	writel(HIBMC_FIELD(HIBMC_CRT_FB_WIDTH_WIDTH, reg) |
+ 	       HIBMC_FIELD(HIBMC_CRT_FB_WIDTH_OFFS, line_l),
+ 	       priv->mmio + HIBMC_CRT_FB_WIDTH);
+@@ -129,8 +129,7 @@ static void hibmc_plane_atomic_update(struct drm_plane *plane,
+ 	/* SET PIXEL FORMAT */
+ 	reg = readl(priv->mmio + HIBMC_CRT_DISP_CTL);
+ 	reg &= ~HIBMC_CRT_DISP_CTL_FORMAT_MASK;
+-	reg |= HIBMC_FIELD(HIBMC_CRT_DISP_CTL_FORMAT,
+-			   new_state->fb->format->cpp[0] * 8 / 16);
++	reg |= HIBMC_FIELD(HIBMC_CRT_DISP_CTL_FORMAT, fb->format->cpp[0] * 8 / 16);
+ 	writel(reg, priv->mmio + HIBMC_CRT_DISP_CTL);
  }
  
- static const u32 channel_formats1[] = {
--	DRM_FORMAT_RGB565, DRM_FORMAT_BGR565, DRM_FORMAT_RGB888,
--	DRM_FORMAT_BGR888, DRM_FORMAT_XRGB8888, DRM_FORMAT_XBGR8888,
--	DRM_FORMAT_RGBA8888, DRM_FORMAT_BGRA8888, DRM_FORMAT_ARGB8888,
--	DRM_FORMAT_ABGR8888
-+	DRM_FORMAT_XRGB8888,
-+	DRM_FORMAT_RGB565,
- };
- 
- static const struct drm_plane_funcs hibmc_plane_funcs = {
 -- 
 2.54.0
 
