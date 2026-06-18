@@ -1,174 +1,222 @@
-Received: from mail-oo1-f54.google.com (mail-oo1-f54.google.com [209.85.161.54])
+Received: from mail-ot1-f44.google.com (mail-ot1-f44.google.com [209.85.210.44])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1C7B317A2FC
-	for <sashiko-reviews@lists.linux.dev>; Thu, 18 Jun 2026 06:16:15 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=pass smtp.client-ip=209.85.161.54
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F1DEA3859F9
+	for <sashiko-reviews@lists.linux.dev>; Thu, 18 Jun 2026 06:45:11 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=pass smtp.client-ip=209.85.210.44
 ARC-Seal:i=2; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1781763377; cv=pass; b=o3N88l4TYJC3BBJ5oRwi/lVp7m/Lqvw2HF4kzNukYdcEIw4M6xovWJE3oPedUmqN8G5Q1XG2KRpGWTm8jzFvn479Ch2mc+KKqlZSQgnIurD7tTdCdAf/exSpObuH5FVzDElZOpVMWd+1/p7EDHlVGWdPv8f+FUDMDbEM+jX24Bo=
+	t=1781765114; cv=pass; b=RllKdkMdr3xCHIpUDxJxg4sT0ZbPxUb/tSWpUEgigKy46mco5vAKD+loOFMI6oRfSCVRGXzBYhdQU9AzykwqRgHcHcr6hB+mSX9cdUrrMLyAjmTGgaNJMGt1fYKn4T6XYGRkB9WVQgd0Lo2xXDhtlzrgv5+9kuqV7lUO+xtTXds=
 ARC-Message-Signature:i=2; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1781763377; c=relaxed/simple;
-	bh=6Du4FMFP7UPcAJzlB4al9sH/b35QZkMHKVDjgrhrnV0=;
+	s=arc-20240116; t=1781765114; c=relaxed/simple;
+	bh=sdWy0UMOuVbFCW8i16nWjLi7y01cjarkANI889btKS0=;
 	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
-	 To:Cc:Content-Type; b=Jpl33QRAKKQcpBFkGuWSPuHCX+MGKp/OqTY5R4Fira5fHPkboSjlBcHLKWzeTejdV2CzJFzpU8e1/uPPn+ZTJVc7UYLYKMcVwnmvM1URInu2ZJSlyditeS8mZmQFUBZtrqyf5Vm8qFh0qeh2ko/R9RHJnFCfWi47D/EvuJC88/E=
-ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=bytedance.com; spf=pass smtp.mailfrom=bytedance.com; dkim=pass (2048-bit key) header.d=bytedance.com header.i=@bytedance.com header.b=hinKA8ia; arc=pass smtp.client-ip=209.85.161.54
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=bytedance.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=bytedance.com
+	 To:Cc:Content-Type; b=YTJaEvjtHBcbkqtU8NX06Z7x/RXpovfZsXCCyQXio4r5wf2qG3fOSl9TIktRtKcLtOWlLbSrOltcOceU31gP5A2CwFw+f2YyDwx6tr0ubMGqb9f6Qd79Eo9s63wNtMcEpcEiaWUnTm2eVaEIXO+ovGZDO4Ioxfa23DGIrz8479s=
+ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=Z1jtV8+4; arc=pass smtp.client-ip=209.85.210.44
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=bytedance.com header.i=@bytedance.com header.b="hinKA8ia"
-Received: by mail-oo1-f54.google.com with SMTP id 006d021491bc7-69d8f70cb0cso482629eaf.0
-        for <sashiko-reviews@lists.linux.dev>; Wed, 17 Jun 2026 23:16:15 -0700 (PDT)
-ARC-Seal: i=1; a=rsa-sha256; t=1781763375; cv=none;
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="Z1jtV8+4"
+Received: by mail-ot1-f44.google.com with SMTP id 46e09a7af769-7e6dcad6018so502906a34.3
+        for <sashiko-reviews@lists.linux.dev>; Wed, 17 Jun 2026 23:45:11 -0700 (PDT)
+ARC-Seal: i=1; a=rsa-sha256; t=1781765111; cv=none;
         d=google.com; s=arc-20240605;
-        b=MK2LMaAmUpYLWcL1d9SsKLRw3Bbt8lI5JBAuoSY1nArSDXeXc5knK+P5g8gyF+P8JD
-         0+l1U3bDaNA1+YMAtKajH6Teqg0cbLiDNw5a3DHMXJdoHdF+JT0mdL2Hgsenu4dCRIyK
-         GmEgKJrq6LxpAKToW/7tAeCDzO5CIQghETEud+avnAUm7ha0vDVwgn3nAVW6IZoT2hyg
-         dBdpKos7CQ/G5rE91xPs9K5RNDotXraXKQ6hZmguVHPMmhpRKC+wSBMBWE2P1W3PF+Ql
-         koqBPzAxdwB9kt6DBP33bE5S0b5Q6akxDfZutVm+mtRwrYSMTN6ltEQ2tnESZ44WS77f
-         8OEA==
+        b=Fxk16Vfm4mihalejtWwGGK7eDWhYau9kRS1NaH6n3cgL1Gwyipcl9AEYTXyu/tF5wn
+         sz4HKifzgzJ2qlndw5jLWX4uNohVIihkKAODJKveDhRy0QzVwfmezuIPIaEYATfCGvOW
+         ++nsk+eS0+UbCZMYcWStHNPjmPtxUjdr5VmwkCcAm7cVakZnVaVIxVP9Bi0ukvdNE1yK
+         w0r4rH+IrvORtXF1tAN3Bt1FTu/9ED/4uqIcLep4gXIAx0yMQe55T2rvJ43ZmxDAeHZE
+         zyrIkvSEzUVb6+1wJBcPMyq//nSZNmbMVKeKak92DFnMsJYNF8jjPuqT/hOj2ZoLda8b
+         WAgQ==
 ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com; s=arc-20240605;
         h=content-transfer-encoding:cc:to:subject:message-id:date:from
          :in-reply-to:references:mime-version:dkim-signature;
-        bh=XvwDdUwqNB/mJRpzgcLfrzEdZHAgOs9CmXdopX1fav0=;
-        fh=xPpY1eJncIbZYzB1EwAwSnJKmF4AWv783JvkNJMI/QQ=;
-        b=PNDdUOa3Ne9VYVMRUIVJrxyVEL0mOF2IPDFYjtj7+aQmirKc8eUHz41KmJ2CtwS4OF
-         XCW2RH2b/HdFM/sL3V2gEVcOBxFn0CkdVhhV0ridJLa4DDM7rDzOQgEW/H3jwRk6lX2l
-         PkkKIcy1pMj1djP7VTw5tElJ3UEe0LqE0R0lIGC3R7mSgXwu77WnQhx4UoL/WAMnLIWx
-         KKjjAFPKVgGXCMDbCoV5TJ2zQZAWGAKOnBOa6QgCb2ym8zNxQtqOxE989PsTbs+LWac0
-         0IIz24OrDNlOY7W9LOOIVWCaRlGQBqisgFXrnx/5FH2TCpUg1a3d3MndS+xtpyjxKRvv
-         olyQ==;
+        bh=Aw7+Ysr8IWme6YKCtFAf4Wtx49VGl1R8xVbGoroEzf4=;
+        fh=1ANcksFQ8byr9OCZkB9UeyFhQNT99Z2aR8Bb6CgP//E=;
+        b=YV3k0yqCvyp3dp+uzFxkk40PkM8cnMsAQa927W9rugdhCqXan5P27AUaU3OXhHG7yN
+         ua+QbWj83VDIvOVKmCNaIe5I0mvhreseXQIM9oXDVMNutU6SYKppIK4Z4xbrd2raGCC7
+         8CXJ4cluYuegStWNbrNTQeh/bA/xQ2NrHSMC7QPR8ChfV2JhDqub+gXXFSC0jNecuRti
+         9D73CTwYHCu5zCZmkKYkguUZiFBQNEZG2NYq3k0mhVPAPJYMc1u37NYcr4x0H5jp2f1+
+         99eeZAjKINMZSnX3iWAUDGZlDdI3mOVxctR8j8giRW2fj2nUODrfR6PrBs138tZ27U6D
+         9lYg==;
         darn=lists.linux.dev
 ARC-Authentication-Results: i=1; mx.google.com; arc=none
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=bytedance.com; s=google; t=1781763375; x=1782368175; darn=lists.linux.dev;
+        d=gmail.com; s=20251104; t=1781765111; x=1782369911; darn=lists.linux.dev;
         h=content-transfer-encoding:cc:to:subject:message-id:date:from
          :in-reply-to:references:mime-version:from:to:cc:subject:date
          :message-id:reply-to;
-        bh=XvwDdUwqNB/mJRpzgcLfrzEdZHAgOs9CmXdopX1fav0=;
-        b=hinKA8iahIm5G94a9t8wGMhDhOpwMqXwtDGzx6mNNz2AeSW7PTTBZJEv5gaxsgOYXr
-         ovStjuXOUEa7/j6dQl2/z0M3dsMFyjEdp3cz59PFrUxZEQIXYnBK/sJn93TQfA0r3oz+
-         1RWm5b7F/LmlZP9KjtgD8uGH/dweCh+xxFQYgTsKh5yhSH0uhrFCY6mTtR0nN+Oam1JU
-         qOmvgpGPlxap7QnBuC1hcpWJ5YKoMv3fqhYXaP2F5gVeGooaxWSReYWcPS7UdCL/5LdA
-         SElIu6VrDI0uplPTvBoaNUYHURkK/+hnvSCFuWUaddzkeEB2h6+rfnxp5E6Lp8L2aAC3
-         lCOQ==
+        bh=Aw7+Ysr8IWme6YKCtFAf4Wtx49VGl1R8xVbGoroEzf4=;
+        b=Z1jtV8+4EpisALx6VL8bpPNKdRkUqq9iC8aYuVl9SoUacomz0Jn5ZkugBFoQUILKac
+         FBDe6byVVac9UHObWlbVU4H6AL+qxAttJH7s50sFBLPp1A7CL882TkWGm4xzKMgoKwH5
+         9S5w/Ay39U7fquTBydmTE1XuL6Qd82KmVTfo6cusNpysZPGhh7QGjo85cyLSR5glXcpp
+         Mwqsx1RDBOw6H1c4HMTubOK6n/0PuI0i786lUnJ1N5zOCnghI0xUe9XM6KmqBI2E2ayc
+         kn73bTsV2exvUBjoXWms2cbatlR0QQ9yJ7JmRNTXO3VyG3/Phayut5Cp+DppzOZMR70P
+         tvNA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20251104; t=1781763375; x=1782368175;
+        d=1e100.net; s=20251104; t=1781765111; x=1782369911;
         h=content-transfer-encoding:cc:to:subject:message-id:date:from
          :in-reply-to:references:mime-version:x-gm-gg:x-gm-message-state:from
          :to:cc:subject:date:message-id:reply-to;
-        bh=XvwDdUwqNB/mJRpzgcLfrzEdZHAgOs9CmXdopX1fav0=;
-        b=WYg0ZhvdrTe/apUMSk7To8eMg0Xi+dtDZm+yPl0lVB11/9JCkc3GA0YEFFi1jqTo1g
-         qLhFrkvgTbtRBIK48TQt1O2qipLGZIJCbto7qNnvb9J91/jmubr9qsobj0GYfNMdmxT6
-         umlBMrKR1ZWA06YKMHmwEBvmjIOLlV1dm7B0prbYcBNb2Ti4GUb2k/6vjMFmVLjPUB02
-         da49sjOJVfvdq1qFtLTRh0bSxInB6EYivcdfB4pxCwRNoszD0ja7hbQ5RAlAKtJhMRXV
-         Us0O03eyzWa5X0RshwnZDzxcCmk2HqeEOJF44dN2tOwQXQUoS+YHe2s86ojWrzUv/UJz
-         X+Cg==
-X-Gm-Message-State: AOJu0Yz1UcRcm3SfC2IP61fksCn7WDHyVKOGmYSYTLznB4PN5P6azOLL
-	GVfwAcVdNjaWb4GfuKsyrW9U8+OL1WAFd6jj54MDUTWXjDVST9eN0yka5RRg67ZXBt6qU7P4jXd
-	+lPkBDhRpMHX/BWP/A0UwSJnrZ3AhqAMwOzVE5rRDW8CYbMfcQHNvEcXqgw==
-X-Gm-Gg: Acq92OFIQrMnR6OZQT7izR1B0zG8U9hj330Bk34JmIGXjkXN58l3oonCamXwjGPG4p4
-	WVv+icg/N3Rjj4zfGLjrYoC6hWYrUh0TrP7SM+GLPF7SefgJSQY5w6fpmTXiLu6sJ3nDLXEXXiW
-	AWBS1V1UV20lndGMupduahQ3xCSdzx5+NgakrMMv3wAbwGz9Ny6kgsVgH3rW7tEbvnGxvs4HmOg
-	hr8mZysH4UMNwenoqUFgG5uuZ9Xicy4MlMy3/WxNgDWy3IrJ3uG4rO6ZNa0kk+KJPeoGoyJd2IW
-	XJM=
-X-Received: by 2002:a05:6820:80c8:b0:69e:39c9:c6d6 with SMTP id
- 006d021491bc7-6a0b5e3cc18mr5260511eaf.10.1781763374599; Wed, 17 Jun 2026
- 23:16:14 -0700 (PDT)
+        bh=Aw7+Ysr8IWme6YKCtFAf4Wtx49VGl1R8xVbGoroEzf4=;
+        b=KOxhu7i1bf7LyDRljEhxa1tqc0RaZ3GPShBdhsnK8bCGNneXh495wCU9Ywt8A/kody
+         4gpZwHqLjfO1+vWZkAbwevWOHihaZkKx4JyPFCUATPe3g+WWOEKa8ePQhB/oIFt3/6lH
+         x+fzD87yoJKp9wGqsNmQcKbHX0fHKehtA3XmdtXhvwdog6hJHUGiNpL2wm+kEflJ9nzJ
+         YVFWM3N/sSdzwikJgn1ZxgOMe7Qh+5HmCNgTEStd+31DaL5Qm93ja0riIdJlIUZY43PK
+         Ch7rv2rq2UtQ2c2Kawz+GHVifFMDakFQx+riDJ0sEM3LxjmJdoRPt9FiPCZd/tsW9lOR
+         3YDQ==
+X-Gm-Message-State: AOJu0Yz5w1bUQlkf0o7vC0K6V3nuRVP7TU2YkwxtgOeqfy69iXIiOCBa
+	1lefRk38PyHrYEoucCSFTIhtAmBYn2PiyDCmPR49hcksJh18WdYJiS+e9fec7ialkLyANLIUPwP
+	vhsMrR5ZAh+d9Uprc0CxqRtHVgx3ofx7tNnpyrP4GfcoTHUE=
+X-Gm-Gg: Acq92OHqUnBnE9odWpwJqa8Wq1grGcAVMjVd8FmuPt7FauTN4Lh2QVkzOstR9YyHFdH
+	tgcBFvMEVPbWh7JSRCK3oCGRkrikiUjk5r0AvADgYd8RCujv7pZ+NgPAlIYIA4a1AOeCUJ//NJs
+	mEkao/WX3w77yV+GRwOKQ+DfGGFn5Lve7jD/uzQEOprR6WuzGE/pv3EbapU/S8ZvncDuL/qUsE2
+	Y2bA4lsY1a9AGVRe+yj+3YOPuCbE6aoi0SiF1Z3F+v6MUm8QLP9oy47DxFj1s10jwxPBz/eSw4=
+X-Received: by 2002:a05:6830:6d4f:b0:7dc:df37:844b with SMTP id
+ 46e09a7af769-7e91c0fbf54mr2313833a34.4.1781765110831; Wed, 17 Jun 2026
+ 23:45:10 -0700 (PDT)
 Precedence: bulk
 X-Mailing-List: sashiko-reviews@lists.linux.dev
 List-Id: <sashiko-reviews.lists.linux.dev>
 List-Subscribe: <mailto:sashiko-reviews+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:sashiko-reviews+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-References: <20260609130021.99899-3-cuiyunhui@bytedance.com> <20260609131621.3541C1F00898@smtp.kernel.org>
-In-Reply-To: <20260609131621.3541C1F00898@smtp.kernel.org>
-From: yunhui cui <cuiyunhui@bytedance.com>
-Date: Thu, 18 Jun 2026 14:16:03 +0800
-X-Gm-Features: AVVi8CfbhIfrfyOhP91UzVJ7Wt3CfSeCLsAl44UT7jOTGHzHjqut50HYYR5OKX8
-Message-ID: <CAEEQ3wnt9wrVvSvdcuyA3wME7oCyRmNrKOKi=LjwKWKzYxWhNg@mail.gmail.com>
-Subject: Re: [External] Re: [PATCH v3 2/3] riscv: track effective hardware PTE
- A/D updating
-To: sashiko-reviews@lists.linux.dev
-Cc: robh@kernel.org, conor+dt@kernel.org, devicetree@vger.kernel.org
+References: <20260618055216.56191-1-mikhail.v.gavrilov@gmail.com> <20260618061728.75BDF1F000E9@smtp.kernel.org>
+In-Reply-To: <20260618061728.75BDF1F000E9@smtp.kernel.org>
+From: Mikhail Gavrilov <mikhail.v.gavrilov@gmail.com>
+Date: Thu, 18 Jun 2026 11:44:58 +0500
+X-Gm-Features: AVVi8CcdRAiVNAPkl0B3_vJtXygoy8kBQDI2uhJDlcKLkPHtrH-T6C0HJWVrOP8
+Message-ID: <CABXGCsNgUaSkfLw1Nn7-BzD2LBUqscQJtce0Wk6F9pK0+Y6Zyw@mail.gmail.com>
+Subject: Re: [PATCH] drm/amdgpu: do not enter fs_reclaim under notifier_lock
+ in lockdep training
+To: sashiko-reviews@lists.linux.dev, Alex Deucher <alexander.deucher@amd.com>, 
+	=?UTF-8?Q?Christian_K=C3=B6nig?= <christian.koenig@amd.com>, 
+	Vitaly Prosyak <vitaly.prosyak@amd.com>
+Cc: dri-devel@lists.freedesktop.org, David Airlie <airlied@gmail.com>, 
+	Simona Vetter <simona@ffwll.ch>, amd-gfx list <amd-gfx@lists.freedesktop.org>, 
+	Linux List Kernel Mailing <linux-kernel@vger.kernel.org>
 Content-Type: text/plain; charset="UTF-8"
 Content-Transfer-Encoding: quoted-printable
 
-Hi sashiko,
-
-
-On Tue, Jun 9, 2026 at 9:16=E2=80=AFPM <sashiko-bot@kernel.org> wrote:
+On Thu, Jun 18, 2026 at 11:17=E2=80=AFAM <sashiko-bot@kernel.org> wrote:
 >
 > Thank you for your contribution! Sashiko AI review found 1 potential issu=
 e(s) to consider:
-> - [High] Incorrect global ISA extension check prevents FWFT enablement on=
- asymmetric SVADE/SVADU systems.
+>
+> Pre-existing issues:
+> - [High] Removing the `fs_reclaim` lockdep annotation silences a true-pos=
+itive warning about a real ABBA deadlock between memory reclaim and GPU res=
+et, rather than fixing the underlying bug.
 > --
 >
-> commit f3d7c0060d5bf449bef26605d30b6a4b56780451
-> Author: Yunhui Cui <cuiyunhui@bytedance.com>
-> Subject: riscv: track effective hardware PTE A/D updating
+> commit 4896f663f62249014930226b2bc964c2419486d0
+> Author: Mikhail Gavrilov <mikhail.v.gavrilov@gmail.com>
 >
-> This commit separates the tracking of hardware PTE A/D updating from SVAD=
-U
-> discovery. It enables Firmware Features (FWFT) on all online harts before
-> globally advertising the feature, and requires secondary harts to enable =
-it
-> before they are marked online.
+> drm/amdgpu: do not enter fs_reclaim under notifier_lock in lockdep traini=
+ng
 >
-> > diff --git a/arch/riscv/kernel/cpufeature.c b/arch/riscv/kernel/cpufeat=
-ure.c
-> > --- a/arch/riscv/kernel/cpufeature.c
-> > +++ b/arch/riscv/kernel/cpufeature.c
-> [ ... ]
-> > @@ -287,15 +291,88 @@ static int riscv_ext_zvfbfwma_validate(const stru=
-ct riscv_isa_ext_data *data,
-> >  static int __init riscv_hw_pte_ad_updating_init(void)
-> >  {
-> >       bool has_svade, has_svadu;
-> >       int ret;
+> The commit removes the fs_reclaim_acquire() and fs_reclaim_release() call=
+s
+> from amdgpu_lockdep_init() to silence a circular locking dependency warni=
+ng,
+> claiming it is a false positive.
+>
+> > diff --git a/drivers/gpu/drm/amd/amdgpu/amdgpu_lockdep.c b/drivers/gpu/=
+drm/amd/amdgpu/amdgpu_lockdep.c
+> > index d5d71fd7c70d0..eeb3b5007f80f 100644
+> > --- a/drivers/gpu/drm/amd/amdgpu/amdgpu_lockdep.c
+> > +++ b/drivers/gpu/drm/amd/amdgpu/amdgpu_lockdep.c
+> > @@ -150,12 +150,6 @@ int amdgpu_lockdep_init(void)
+> >       /* Level 6: Reset control lock */
+> >       mutex_lock(&reset_ctl.reset_lock);
 > >
-> >       has_svade =3D riscv_has_extension_unlikely(RISCV_ISA_EXT_SVADE);
-> >       has_svadu =3D riscv_has_extension_unlikely(RISCV_ISA_EXT_SVADU);
-> >
-> >       if (!has_svadu)
-> >               return 0;
-> >
-> >       if (has_svade) {
-> >               riscv_hw_pte_ad_updating_requires_fwft =3D true;
-> >               ret =3D riscv_set_online_hw_pte_ad_updating(true);
+> > -     /*
+> > -      * Mark potential memory reclaim boundary.
+> > -      * GPU operations might trigger memory allocation/reclaim.
+> > -      */
+> > -     fs_reclaim_acquire(GFP_KERNEL);
+> > -
 >
 > [Severity: High]
-> Since riscv_has_extension_unlikely checks the global intersection of
-> extensions, will has_svade evaluate to false on an asymmetric system wher=
-e
-> some CPUs support both SVADE and SVADU, but others only support SVADU?
-
- Thanks, I'll address this in v4.
-
-
+> This is a pre-existing issue, but does removing this lockdep annotation
+> silence a true-positive warning about a real ABBA deadlock?
 >
-> If has_svade evaluates to false, FWFT enablement is skipped here, but
-> riscv_set_hw_pte_ad_updating is unconditionally called at the end of this
-> function. Could this cause the kernel to assume hardware A/D tracking is
-> active globally, even though CPUs with both extensions would remain in th=
-eir
-> default software-managed SVADE mode?
+> While the circular dependency might not happen in the same thread, couldn=
+'t a
+> cross-thread deadlock occur between memory reclaim and GPU reset?
 >
-> If the kernel incorrectly assumes hardware A/D tracking is active, would =
-this
-> cause arch_has_hw_pte_young to return true and erroneously expose the SVA=
-DU
-> extension to KVM guests? It seems like this could lead to unexpected VS-s=
-tage
-> page faults and guest crashes if the underlying host CPU traps on missing=
- A/D
-> bits while the guest OS expects hardware updates.
+> For example, if Thread A executes the MMU notifier amdgpu_hmm_invalidate_=
+gfx()
+> (e.g., during direct reclaim), it acquires adev->notifier_lock and blocks=
+ in
+> dma_resv_wait_timeout() waiting for a hardware fence:
 >
-> [ ... ]
+> drivers/gpu/drm/amd/amdgpu/amdgpu_hmm.c:amdgpu_hmm_invalidate_gfx() {
+>         ...
+>         mutex_lock(&adev->notifier_lock);
+>         ...
+>         r =3D dma_resv_wait_timeout(vm_root->tbo.base.resv,
+>                                   DMA_RESV_USAGE_BOOKKEEP, false,
+>                                   MAX_SCHEDULE_TIMEOUT);
+> }
+>
+> If Thread B (the GPU reset thread) takes down_write(&adev->reset_domain->=
+sem)
+> to reset the GPU and signal the fences, and performs GFP_KERNEL allocatio=
+ns,
+> it could be forced into direct memory reclaim (fs_reclaim). This would in=
+voke
+> the MMU notifier, attempting to acquire adev->notifier_lock, forming a cy=
+cle.
+>
+> Would it be better to fix the underlying deadlock by wrapping the GPU res=
+et
+> path with memalloc_noreclaim_save() or memalloc_noio_save() to prevent it
+> from entering memory reclaim, instead of removing the lockdep annotation?
 >
 > --
-> Sashiko AI review =C2=B7 https://sashiko.dev/#/patchset/20260609130021.99=
-899-1-cuiyunhui@bytedance.com?part=3D2
+> Sashiko AI review =C2=B7 https://sashiko.dev/#/patchset/20260618055216.56=
+191-1-mikhail.v.gavrilov@gmail.com?part=3D1
 
-Thanks,
-Yunhui
+The reported splat is not the reset/reclaim deadlock described here.
+
+It is single-threaded: kswapd holds fs_reclaim and the mmu_notifier range,
+then takes notifier_lock in amdgpu_hmm_invalidate_gfx(). That is the normal=
+,
+mandatory direction fs_reclaim -> mmu_notifier -> notifier_lock. The MMU
+notifier callback runs from inside reclaim, so notifier_lock is acquired
+below fs_reclaim and is never held across a reclaiming allocation.
+
+amdgpu_lockdep_init() asserts the opposite edge, notifier_lock -> fs_reclai=
+m,
+by calling fs_reclaim_acquire() while notifier_lock is held. That edge does
+not occur at runtime, so the reported cycle is a false positive. Dropping t=
+he
+annotation removes the impossible edge and touches no real lock.
+
+On the cross-thread reset case: if the reset path really holds
+reset_domain->sem across a GFP_KERNEL allocation, lockdep learns
+reset_sem -> fs_reclaim from that real allocation, not from this annotation=
+.
+The fs_reclaim_acquire() here adds nothing for that real edge; it only inje=
+cts
+the impossible notifier_lock -> fs_reclaim one. And because it fires on the
+innocent kswapd path, it calls debug_locks_off() and disables lockdep for t=
+he
+rest of the boot, which would prevent detecting exactly that reset deadlock=
+.
+
+Note memalloc_noreclaim_save() on the reset path would not silence this spl=
+at:
+the false edge lives in amdgpu_lockdep_init(), independent of the reset pat=
+h.
+The splat reproduces with a userptr BO + MADV_PAGEOUT and is gone after thi=
+s
+change; I verified both.
+
+If reset is confirmed to allocate under reset_domain->sem with reclaim, tha=
+t
+is a real and separate issue and memalloc_noreclaim_save() there would be
+reasonable, but it is a different patch and does not change this one.
+
+--=20
+Best Regards,
+Mike Gavrilov.
