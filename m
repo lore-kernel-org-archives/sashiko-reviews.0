@@ -1,132 +1,129 @@
-Received: from va-2-26.ptr.blmpb.com (va-2-26.ptr.blmpb.com [209.127.231.26])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D0B59233943
-	for <sashiko-reviews@lists.linux.dev>; Thu, 18 Jun 2026 03:41:23 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.127.231.26
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2AEC7218845
+	for <sashiko-reviews@lists.linux.dev>; Thu, 18 Jun 2026 04:30:46 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1781754085; cv=none; b=pg7Mrk6bi7/leY56nHb1imoqwPiGIS1CrgwhM3356c/XsIg3+MWfORpbvLHyaoiCZmpr6iUms6eUtl2+6tu9xgqS/PxQaRltq0Ny8dMoK3KT6olUFloBlku0s0QJag5oarDaAJ/d/RBo1fvDxI6PQKAc5zDmbjnE7JbfhqvXW8M=
+	t=1781757048; cv=none; b=tpofJS4h8IYxqqnfYk4p7Dp/xUAgrTKNmp+s3Y0sxwKbxoEWPukdpZQXGzz4VMtJTXaq9bHQCKU6CglN4huxnH6FMH7M0Jjgactl/FbKSwfKWx/xUKTp/uzr50qaQy1H3mw9Ll02JMXxmL8qM+hzlNlIXaw1XBKzoKgQlwrcaKg=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1781754085; c=relaxed/simple;
-	bh=GB2CGxiVXiwwIBGUquuq0pcJk+W4fiCpQlrILlK3YF4=;
-	h=Subject:Date:Message-Id:Mime-Version:Content-Type:Cc:From:
-	 In-Reply-To:To:References; b=XnqZcI66xnWk5AemPYyr4xyjEXPGpq3i5sncUA/dT/svWlL290O1s/XVLzzp6mPlAbQtailpuH+zgBUcPu3C8y+OHpKbG3sJ4jRCPTrJAQ/5W6J/ny+xnTxTNWaagBKC2eZAViZUFUIWjkb769DFNJBkRn3mp/j+NIS59XOgjPs=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=fnnas.com; spf=pass smtp.mailfrom=fnnas.com; dkim=pass (2048-bit key) header.d=fnnas-com.20200927.dkim.feishu.cn header.i=@fnnas-com.20200927.dkim.feishu.cn header.b=rXh+HWoO; arc=none smtp.client-ip=209.127.231.26
-Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=fnnas.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=fnnas.com
+	s=arc-20240116; t=1781757048; c=relaxed/simple;
+	bh=64jtikOdxNCRpd47E4DI1fsgJu6X9T4CDAofBwQE/Yk=;
+	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
+	 In-Reply-To:Content-Type; b=bx5JoOPpc1GU9oWYXgQMoTUwuI9JJAuwSqM6oFEDOPYQ+cy2pXApKWFNOnPjr+jRBLiFxkgZTZZqDVhz/wKD2T0kDRpc2dPueKQroWcayDYYYSCIzT+vWMbwKDaYWsGMCAHev+XU3La4qac/VdTH7D7AebsHL07PTFKCW2tb3+w=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=Q1kkdcjl; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=fnnas-com.20200927.dkim.feishu.cn header.i=@fnnas-com.20200927.dkim.feishu.cn header.b="rXh+HWoO"
-DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed;
- s=s1; d=fnnas-com.20200927.dkim.feishu.cn; t=1781754072;
-  h=from:subject:mime-version:from:date:message-id:subject:to:cc:
- reply-to:content-type:mime-version:in-reply-to:message-id;
- bh=fJ8uBvKCl/b//LtCUtVSxBUtPP1ma0gdfVNEhV05WDA=;
- b=rXh+HWoOEC6LIRk+JIqGfPUktxmUBEjirEU0+7fm/Cr4O4g2YSm3HpGoUAz5LFjo2BVTww
- 5qFYlcFTTDg4AHC0ZbOzEjEHFr7ytDNfoU/+2oY3a/iqXlpQQ+/65yAw84jj/bS9eJBB98
- 4FP5AKw7Pxtm01izXUIojjXbw7gsAF/dVGtyrciDAgc0b/Z49UNFkDejmQvt3QEzrcoz51
- otFa2v3loMiAv6mHeyTbx+Iq5ooaxj5leLC5S8M07fg+W6ncU6pHmuUuXkDk6df2H8iFOK
- 4zfQfIHkHQIv3TKKinCYotIxT+5nxF+HpXP2odmuiI9BNchanetBPdij4NvqKA==
-Subject: Re: [PATCH] md/raid5: let stripe batch bm_seq comparison wrap-safe
-Date: Thu, 18 Jun 2026 11:41:08 +0800
-Message-Id: <8607405e-66cc-495a-9f67-1b68a4b56852@fnnas.com>
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="Q1kkdcjl"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id C84DD1F000E9;
+	Thu, 18 Jun 2026 04:30:45 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=kernel.org;
+	s=k20260515; t=1781757046;
+	bh=DHmk96uiHkviuL9OahPCLRPAmLH8lVTAdu6jHOhQphw=;
+	h=Date:Subject:To:Cc:References:From:In-Reply-To;
+	b=Q1kkdcjlo9bdHWXagAB9lsoyDUExbM5jfkCl1p6WD4WxpvI5HNJwm0AYV3CWeyENk
+	 atdTDNOKXzZiWTVdfE+kDGasnAxHgZGYW5q7UhptfvqJrabvVnl+ztOQ8BNYXQwdh0
+	 gmv6XPtTiJuuuOAn+qJl/POQuxYtDc9brFeF3PckEBr8W+fBF9+XHn+1QuvOclY7+W
+	 d9L39vM0UkcxDFYSx0VRvd1/k7HWTCNTAJG0lbq6GKBr3s9RJNlq2bsyXpiOiMjeMC
+	 YOrtcMzaY9LRahpe9UjWuvtotawQN+qy6elkX3rvWjmWwxqQX74AnQYu1VHfp868Vg
+	 q3dGiWveZlvYg==
+Message-ID: <85144ed7-50b3-42cd-8405-f64335a94486@kernel.org>
+Date: Thu, 18 Jun 2026 07:30:43 +0300
 Precedence: bulk
 X-Mailing-List: sashiko-reviews@lists.linux.dev
 List-Id: <sashiko-reviews.lists.linux.dev>
 List-Subscribe: <mailto:sashiko-reviews+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:sashiko-reviews+unsubscribe@lists.linux.dev>
-Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Cc: <yukuai@fygo.io>, <linux-raid@vger.kernel.org>
-From: "Chen Cheng" <chencheng@fnnas.com>
-X-Lms-Return-Path: <lba+26a3368d6+43830b+lists.linux.dev+chencheng@fnnas.com>
-In-Reply-To: <20260618031232.831A41F000E9@smtp.kernel.org>
-Content-Transfer-Encoding: quoted-printable
-X-Original-From: Chen Cheng <chencheng@fnnas.com>
-To: <sashiko-reviews@lists.linux.dev>
-Received: from [192.168.8.62] ([183.34.170.8]) by smtp.feishu.cn with ESMTPS; Thu, 18 Jun 2026 11:41:09 +0800
+MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-References: <20260618025735.915113-1-chencheng@fnnas.com> <20260618031232.831A41F000E9@smtp.kernel.org>
+Subject: Re: [PATCH v4 16/16] i3c: renesas: Add runtime PM support
+To: sashiko-reviews@lists.linux.dev
+Cc: linux-i3c@lists.infradead.org, Frank.Li@kernel.org
+References: <20260612160458.3102106-17-claudiu.beznea@kernel.org>
+ <20260612163403.B8A091F000E9@smtp.kernel.org>
+Content-Language: en-US
+From: Claudiu Beznea <claudiu.beznea@kernel.org>
+In-Reply-To: <20260612163403.B8A091F000E9@smtp.kernel.org>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
 
-=E5=9C=A8 2026/6/18 11:12, sashiko-bot@kernel.org =E5=86=99=E9=81=93:
-> Thank you for your contribution! Sashiko AI review found 2 potential issu=
-e(s) to consider:
->=20
+
+
+On 6/12/26 19:34, sashiko-bot@kernel.org wrote:
+> Thank you for your contribution! Sashiko AI review found 2 potential issue(s) to consider:
+> 
 > New issues:
-> - [Medium] Wrap-safe sequence comparison introduces signed integer overfl=
-ow, triggering UBSAN.
->=20
+> - [High] Timeout handler fails to abort hardware transfers because it clears the BCTL_ABT bit instead of setting it.
+> 
 > Pre-existing issues:
-> - [High] Concurrent lockless read-modify-write of `batch_head->bm_seq` ca=
-n result in lost bitmap flush sequence updates.
+> - [High] Transfer loops do not break on timeout and unconditionally return success, leading to silent failures, race conditions, and memory corruption.
 > --
->=20
-> commit 38cbf25fbeef1204525d320e539132e2704c3653
-> Author: Chen Cheng <chencheng@fnnas.com>
->=20
-> md/raid5: let stripe batch bm_seq comparison wrap-safe
->=20
-> This commit alters the comparison of sequence numbers in the RAID5
-> stripe batching path to correctly handle wrap-around by using subtraction=
-.
->=20
->> diff --git a/drivers/md/raid5.c b/drivers/md/raid5.c
->> index d0d7f96fd7cd9..5882670f7d0c9 100644
->> --- a/drivers/md/raid5.c
->> +++ b/drivers/md/raid5.c
->> @@ -996,7 +996,7 @@ static void stripe_add_to_batch_list(struct r5conf *=
-conf,
->>   	if (test_and_clear_bit(STRIPE_BIT_DELAY, &sh->state)) {
->>   		int seq =3D sh->bm_seq;
->>   		if (test_bit(STRIPE_BIT_DELAY, &sh->batch_head->state) &&
->=20
+> 
+> commit d8976043a71981cb4634aa1e9eafca1113e44ec6
+> Author: Claudiu Beznea <claudiu.beznea.uj@bp.renesas.com>
+> 
+> i3c: renesas: Add runtime PM support
+> 
+> This commit adds runtime PM support to the Renesas I3C driver, guarding
+> subsystem operations with pm_runtime APIs. It also drops explicit clock
+> handling, modifies wait_xfer to return unsigned long, and introduces a
+> function to clear pending IRQs on transfer aborts.
+> 
+>> diff --git a/drivers/i3c/master/renesas-i3c.c b/drivers/i3c/master/renesas-i3c.c
+>> --- a/drivers/i3c/master/renesas-i3c.c
+>> +++ b/drivers/i3c/master/renesas-i3c.c
+> 
+> [ ... ]
+> 
+>> @@ -443,7 +442,24 @@ static void renesas_i3c_enqueue_xfer(struct renesas_i3c *i3c, struct renesas_i3c
+>>   	}
+>>   }
+>>   
+>> -static void renesas_i3c_wait_xfer(struct renesas_i3c *i3c, struct renesas_i3c_xfer *xfer)
+>> +static void renesas_i3c_irqs_mask_and_clear(struct renesas_i3c *i3c)
+>> +{
+>> +	guard(spinlock_irqsave)(&i3c->xferqueue.lock);
+>> +
+>> +	/* Disable all the interrupts */
+>> +	renesas_writel(i3c->regs, BIE, 0);
+>> +	renesas_writel(i3c->regs, NTIE, 0);
+>> +
+>> +	/* Clear normal transfer status flags. */
+>> +	renesas_clear_bit(i3c->regs, NTST, NTST_TDBEF0 | NTST_RDBFF0 | NTST_RSPQFF |
+>> +					   NTST_TEF | NTST_TABTF);
+>> +	/* Clear bus status flags. */
+>> +	renesas_clear_bit(i3c->regs, BST, BST_NACKDF | BST_TENDF | BST_SPCNDDF);
+>> +	/* Clear error flags. */
+>> +	renesas_clear_bit(i3c->regs, BCTL, BCTL_ABT);
+>> +}
+> 
 > [Severity: High]
-> This isn't a bug introduced by this patch, but it appears that the shared
-> batch_head->bm_seq is being accessed and updated locklessly here. If mult=
-iple
-> threads concurrently append stripes to different parts of the batch list,
-> could Thread A and Thread B concurrently read batch_head->bm_seq, compare=
- it,
-> and write it back, causing a race?
->=20
-> An unguarded read-modify-write might allow a thread writing an older
-> sequence number to overwrite a newer one written by another thread. If bm=
-_seq
-> gets overwritten with an older value, could the batch start processing be=
-fore
-> the newer bitmap flush completes, potentially risking data corruption on =
-power
-> loss?
->=20
->> -		    sh->batch_head->bm_seq > seq)
->> +		    sh->batch_head->bm_seq - seq > 0)
->=20
+> Does this actually abort the hardware transfer? The commit message mentions
+> disabling interrupts and clearing pending IRQ status bits when a completion
+> timeout occurs.
+> 
+> However, clearing the BCTL_ABT bit is usually how an abort is acknowledged.
+> To actually initiate a hardware abort, the host typically must set the
+> BCTL_ABT bit, or explicitly reset the controller.
+> 
+> By only clearing an already-zero bit, does the controller remain in a busy
+> or hung state, potentially corrupting subsequent transfers?
 
-good catch..
+The ABT bit of BCTL has the following meaning according to documentation:
 
-> [Severity: Medium]
-> Since both sh->batch_head->bm_seq and seq are signed ints, does this wrap=
--safe
-> comparison introduce a signed integer overflow when the sequence wraps?
->=20
-> While the kernel is compiled with -fno-strict-overflow so it functions as
-> intended, subtracting two signed integers whose difference exceeds the
-> representable range of a 32-bit signed integer can trigger Undefined Beha=
-vior
-> Sanitizer (UBSAN) splats.
->=20
-> Could this be written by casting to unsigned before subtraction and back =
-to
-> signed, such as (s32)((u32)a - (u32)b) > 0, to avoid UBSAN warnings and
-> potential kernel panics on environments with panic_on_warn?
->=20
->>   			seq =3D sh->batch_head->bm_seq;
->>   		set_bit(STRIPE_BIT_DELAY, &sh->batch_head->state);
->>   		sh->batch_head->bm_seq =3D seq;
->=20
+  ABT
+0: I3C is running.
+1: I3C has aborted a transfer.
 
-I am fine with both way .. raid5 use the template "a - b > 0" directly=20
-for a long time
+And the following explanation:
 
-     e.g. "sh->bm_seq - conf->seq_write > 0" in do_release_stripe()
+When set to 1, this bit allows I3C to relinquish control of the I3C Bus before 
+completing the currently issued transfer.
+In response to an ABORT request, I3C issues the STOP condition on the I3C Bus 
+after the complete data byte is transferred or received.
 
-(s32)((u32)a - (u32)b) > 0 is more rigorous, and "a - b > 0" much cleaner .
+The Driver shall clear the ABT bit to allow operation on the Bus.
+
+Thus, the drive is clearing this bit to allow next I3C transfers to go on.
+
+Thank you,
+Claudiu
