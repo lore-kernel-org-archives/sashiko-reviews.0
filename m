@@ -1,186 +1,183 @@
-Received: from mail-qt1-f177.google.com (mail-qt1-f177.google.com [209.85.160.177])
+Received: from mail-wr1-f45.google.com (mail-wr1-f45.google.com [209.85.221.45])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 92687313E2B
-	for <sashiko-reviews@lists.linux.dev>; Fri, 19 Jun 2026 07:29:45 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=pass smtp.client-ip=209.85.160.177
-ARC-Seal:i=2; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1781854188; cv=pass; b=c2PR0pCFXNGkxCtYYIkx0+7+hmEeRqGq+45E6RWpFEb+3R8N+ihb8VO02wvWmua7RaLDHcFrnEhOqQ8jYsqP9Er2wrrj8UaMYJT0J/RSkfQs3K69Zl6l3CgqFErxng2rhgZ8FPJeEnCMHBy1nUcughxcs5qG33V3PNJrTJnH2JU=
-ARC-Message-Signature:i=2; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1781854188; c=relaxed/simple;
-	bh=DVv5Jsf7DjPFuqS8OPq6whz30sTPdSNrC/zFcXZT3So=;
-	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
-	 To:Cc:Content-Type; b=PcLkOrjh3EsWYiZqJekU2zaPU2WxjTyqW4lYimafOFvZsKKbuM+kwELVD9Km1TNvMrxNjq2O3B1TceX/VxJbYWGDzWgCocH/Cboro24amQpdPv3aYyOkBvV8eN7eA6v+Dn6j0/H7OSCWmTNbKeiNzLDx7NdlsGMYzmGpfLFq7Y0=
-ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=google.com; spf=pass smtp.mailfrom=google.com; dkim=pass (2048-bit key) header.d=google.com header.i=@google.com header.b=o90ILt5v; arc=pass smtp.client-ip=209.85.160.177
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=google.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=google.com
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id ACFAB3148D8
+	for <sashiko-reviews@lists.linux.dev>; Fri, 19 Jun 2026 07:34:22 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.221.45
+ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
+	t=1781854464; cv=none; b=qdCRqezrcQWBPOK/MFgugeQomGZcvxEepsqI8H+VCu0JDgJO5ucaxKBzj93dqkzQs4/RtiUqAwOejHqUstXAaa+EK9ISefEanNzsdv/tjxSM3QxZnabx+qjOJnuLJLEHFpeXSIqv/ZNbo5tY9rur+9mwstatsVTOSVHD0nMtyiE=
+ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
+	s=arc-20240116; t=1781854464; c=relaxed/simple;
+	bh=oo2NwlXdoGMZAGZzoEFlNNPoHpWW5TOnQNct4wkenfA=;
+	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
+	 MIME-Version:Content-Type; b=CxVjrFn03yWwspUMkDeAiLh22SpCRExahrzaAqaTMBlTZtm6tz/3gGfzMxzEo8R7TBz9Cpv8sfjoVc7ToHxbiBr38/vS3UAcVaRqyTD2Zc1vbCdRvGPynsb+weXpGcP+BRijVqp71y7o8SZwwJ3Rg5tpdLtv4iqsQf1AnSyEKGo=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=baylibre.com; spf=pass smtp.mailfrom=baylibre.com; dkim=pass (2048-bit key) header.d=baylibre.com header.i=@baylibre.com header.b=Pu71C2gc; arc=none smtp.client-ip=209.85.221.45
+Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=baylibre.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=baylibre.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=google.com header.i=@google.com header.b="o90ILt5v"
-Received: by mail-qt1-f177.google.com with SMTP id d75a77b69052e-51765331535so111111cf.1
-        for <sashiko-reviews@lists.linux.dev>; Fri, 19 Jun 2026 00:29:45 -0700 (PDT)
-ARC-Seal: i=1; a=rsa-sha256; t=1781854184; cv=none;
-        d=google.com; s=arc-20260327;
-        b=f5Bw8ukGZ0+yMqK9KKFAWApwMDkmnTmtx5FM4hB3E9rXAMgQcmY3AP2r85eKxjBBAa
-         N3IJn0b0SS07YeXw72anpTka0eCbwoFUIU0ZYE2cICEDVLPzpWVQviv+Yi2oFpGp5uG/
-         6R/px+fS4FprMqomeGB2wU3iqZDZz64smKs6RvToN0wMQy8Q49uiUhpSp7XlegLlPMo5
-         NFTjo+MTOTjY0FONTBo88mXVguKxCZr4hhQta9J3vM1GEPUkpJaCECy56SX324BY+xjc
-         E0RwDW6FbC1lc8vkvqddFZFqb0eAJxjlNFqYmh3jg+XZmcngV8TTZnShpPh23vjjcK3Y
-         f4OA==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com; s=arc-20260327;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:dkim-signature;
-        bh=rFt+8mgzJiyeBl/92ggs2AZvMokp6o1r/LEN2euuLt8=;
-        fh=72Zv5DwALZblOpx9SPAiT2x2CC+g2u2bBNeYtrdMw5c=;
-        b=BKqU96IDBFsqA/3QorScnsuH8A1A/51rFdAkwV0WkjC4QnoNbK2/FNRtaHLnmaCL4c
-         HUM0vegcfOETA/YAzDJUgckGzvDgZIEBwIGclTZTx/c+RS5e7MkfAk81uOpmT/DsOsxC
-         0t56A3VxlL0tioD57eOVqdV+L5UTMps03MFu+UUhCJjM9DLBno8ixkJTEO4OK+DbaxdS
-         E2JWw1pI5ytc9B853C+EWdvVXVCBGNFDIR0el46D4yCQTDI9EW8OqgjJcqVdN+0Ugx/r
-         zlHp1KXncjQn7AV+N/KbqHf445P1NSZSyK+Hikpwh0LV2gtG8xXDTCkNAhrhA+jJDoUM
-         Vcxw==;
-        darn=lists.linux.dev
-ARC-Authentication-Results: i=1; mx.google.com; arc=none
+	dkim=pass (2048-bit key) header.d=baylibre.com header.i=@baylibre.com header.b="Pu71C2gc"
+Received: by mail-wr1-f45.google.com with SMTP id ffacd0b85a97d-462342ac290so2043865f8f.2
+        for <sashiko-reviews@lists.linux.dev>; Fri, 19 Jun 2026 00:34:22 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=google.com; s=20251104; t=1781854184; x=1782458984; darn=lists.linux.dev;
-        h=content-transfer-encoding:content-type:cc:to:subject:message-id
-         :date:from:in-reply-to:references:mime-version:from:to:cc:subject
-         :date:message-id:reply-to:content-type;
-        bh=rFt+8mgzJiyeBl/92ggs2AZvMokp6o1r/LEN2euuLt8=;
-        b=o90ILt5vPQpzcAeOE+cwMi+q/yuor7Xwe5UH5Hyk2QPHJIodUtVz/NzPbtCgMTu8KE
-         C768HmbUzgzPabMq4Cfa7E1wn0TYsTLF25Uh5+rDmrh3zPFhZJBpmOS9B2hIfdfLVpQ9
-         EJd2VHpJDTXEKE5O1hIs8SUDqVY1acqXEK21RUS0hDswz9sXB7xXOjY1nLqZ36O4o9Ui
-         mhBzzKJmY7+ZwYvWjH/EmRltUOEqTGTUJiAFjuN0BJTx3uczk7uof2h0PxNV7VNFVoJc
-         I9ZdPzES4d9h0ilZCAvdftP0A8eSFfJBXluCXkCr3TaCmzonAFQOtDiOO/uDLWzGM2Bh
-         a9xA==
+        d=baylibre.com; s=google; t=1781854461; x=1782459261; darn=lists.linux.dev;
+        h=mime-version:message-id:date:user-agent:references:in-reply-to
+         :subject:cc:to:from:from:to:cc:subject:date:message-id:reply-to;
+        bh=C6ROwWS+BraRmUYYx28pn3bvnZE1QcDyqCuuK0v9v/Y=;
+        b=Pu71C2gcAMiKWEaEeY2UiJ2qL6YZZWsg5MAgzpLwyaMwlnrhxs2NPzpEJ4uDkUdcge
+         Zo9sGRUw7W9I3NPi+aes7lHEhuQJX6T4v8+7kRV/Ddm0jHHlPwEgRAdhwZEwSRHdWT5o
+         ltxy2+UjhUo592Bak7QzPOe9pEILy5AhuMOWFwLPbmK2arCXWm92qPjXev3TPilLlppb
+         Tc8dosaUqF3b2YjX/+3CsSx4UO48QQnXzNXzFgOFEW/o9VpDh5mZyAq96hb7uy6MjqH8
+         LqdCmn/fWpPMmaqXFih+EDLeG0ZtBQelMeJUr13OlXwg32fcDtbRr68DVAPXdRJkujJB
+         nOQw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20251104; t=1781854184; x=1782458984;
-        h=content-transfer-encoding:content-type:cc:to:subject:message-id
-         :date:from:in-reply-to:references:mime-version:x-gm-gg
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to
-         :content-type;
-        bh=rFt+8mgzJiyeBl/92ggs2AZvMokp6o1r/LEN2euuLt8=;
-        b=bc8HqOj2k1bRevHnQewZDSIm8+qFTWfwacEA4gBMmc63KAf1HkyIIaIH/4Q2+13t4j
-         hE8SAWO7xFdUyX55s/XTbGJz9DVlpFD2YfO1/jhDyv9DlpAHrwlcxZeDw9OoJjlFdJJA
-         TpCJT0OTotuI8x2qdZ9PFKBchDZZmPRThcwsDSCFtTwT3Wb/Nf2o47PAPe+uSZHGGtF+
-         NJ1omN4f1dVruCU3Dzsd40jZXwakvNntti8NNeynWg3OfSF9tEQH66avdDwZht6vkI3M
-         8bEoCPJrIlMBF0eNmLH0v6vB+oqC/2p8gTBX/TzUIN2uB7Tl9cHhDdyCd6qiATQY9450
-         nT+g==
-X-Gm-Message-State: AOJu0Yy2zWmxrtv/UB7B/4rl0SlsZNQOdXkkOiEyUb+Dl6w/s9SHE48s
-	P8BVLGarAb+9bzTfl9N40EBJZ7X58OsjJHncD5zoXJmdRmElwxfSHZpr31+/Z0xOYikZImx1hYA
-	7baOmCbglypGngI6gp0CzzR6kuhvEulD8gQ7cT0psnNuhTnwuQ6pOH5FGXJs=
-X-Gm-Gg: AfdE7ckIS/Ft6VqFyx8hd1wPkNyEaMHNLwEVIC7+DeU5jywq7PKS28S7Kb0Gryo6zKI
-	z4uKKp6VJKG2oAORRd+hRaZWkLHDe5Ye/k11Qw6QIF2RRBD3H9UaCEeki6LVEtFS+SjUxcP/TUt
-	VlFmrJDLfzJC8/4hJcYQ6Bsk2vKQp/qPagWn0Knb8iIZysd59C1T2BWmr/UpToK4XeDDjFjq7Z1
-	SmriL7Xsd83RoT4Cm7H/lxiteSEpu5CnpJ/Tvc2h1u/aLyI33yKeUVjf4p8qwi6GmpFnbjcrg==
-X-Received: by 2002:a05:622a:1b88:b0:519:b82d:fe62 with SMTP id
- d75a77b69052e-519e891c801mr4376661cf.7.1781854183912; Fri, 19 Jun 2026
- 00:29:43 -0700 (PDT)
+        d=1e100.net; s=20251104; t=1781854461; x=1782459261;
+        h=mime-version:message-id:date:user-agent:references:in-reply-to
+         :subject:cc:to:from:x-gm-gg:x-gm-message-state:from:to:cc:subject
+         :date:message-id:reply-to;
+        bh=C6ROwWS+BraRmUYYx28pn3bvnZE1QcDyqCuuK0v9v/Y=;
+        b=HGXapE7i7+ZTH0mU/60I6+aVOpOObHZ1EtPaArqH+gknP0rsttFIxtOQM8Unx/ibJI
+         FEvXHD6/ztqvXSqlo1sjWDi3Q9sQfjOBKEv/V2VJjtRn/An6UsOTGcyLC54vuLMjly9v
+         F187ylC6d160J6D2EitaGk/TnqGOBStTGAY0m4EMjetQ5uqB0R8E8qTo63hswoi5JJja
+         3gwH9SqQXhYpjx0vybfSPJD9GMedUQWWL9FI8Nio48JW8n4JDzzfYqnBRWpVXFJ32O7t
+         UtVdmWsr5h+jnHXxmnN+8MYEUmMfjgJL5L4sONytJBISEnxsB+TSZH5lifrO3/i9xxuP
+         GBBA==
+X-Forwarded-Encrypted: i=1; AFNElJ8yTdQ/l8LF45wrrTs8a12CfeEMiv8OFQbPtGaAZOu5/WJ9XWlvAQ7v5GO710c3a0SYvBIi7QvGE4kxiE4gDCI=@lists.linux.dev
+X-Gm-Message-State: AOJu0Yw+L90fCTg0WCR9JWGnQWDvaC+vq2AKL6n6Pj59mpN8YbMRUGig
+	tj8+4zDBtLznRGiQoMno8x70dT+cmFhiewtg7CS75oey0nt907E+3K4hBmJfhEac4HI=
+X-Gm-Gg: AfdE7ckC21fhkGBcPm7bkLYF1PVAsrvjzRK8cb+1wIiGo8s89EIS1Pr12IV2+iKk2dX
+	6xxlH9QeOzDNTcKIVn9KfMtFPw9rB9nU/oMMAwl6FMgywjS6yikCGlwKEd2U4m8yscDg3jb+oxK
+	sEwxznmjSHsJhjfPLN/PNJRaUJsj2Sv7LZCnqhPu3gwaVaWUSLUjvxvTurP75w76olX61TkdR/Z
+	SMgRoHQm8FK97FKdnIKP2O8z4kRiijQFQXRCWHjCNUamLUohTBQW1X8VGZtBCAQjfX+woWloDl1
+	qcCnPRkBkL8xnLOnKSm4xe8IVfFsvbL/Vq3Qax5NFZsTiIv7JgTiZr/jYcBWt6FaIq4ls9/9kpd
+	KxQBWdwjWeDGpCJ/OK7IMTKXVIkdvytyhrUeIAmFHxZN2S3DakbOB6Q9Txogto3zj2m2GA22eij
+	H6qF4o3pN/LuFKHChXAZnYDA==
+X-Received: by 2002:a05:600c:8b73:b0:490:c682:e37d with SMTP id 5b1f17b1804b1-4924258f728mr21532045e9.32.1781854461201;
+        Fri, 19 Jun 2026 00:34:21 -0700 (PDT)
+Received: from localhost ([2a01:e0a:3c5:5fb1:95ed:eac1:5731:4e21])
+        by smtp.gmail.com with UTF8SMTPSA id 5b1f17b1804b1-49240084928sm47909745e9.15.2026.06.19.00.34.20
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Fri, 19 Jun 2026 00:34:20 -0700 (PDT)
+From: Jerome Brunet <jbrunet@baylibre.com>
+To: sashiko-bot@kernel.org
+Cc: "Jian Hu via B4 Relay" <devnull+jian.hu.amlogic.com@kernel.org>,
+  sashiko-reviews@lists.linux.dev,  linux-amlogic@lists.infradead.org,
+  neil.armstrong@linaro.org,  robh@kernel.org,  devicetree@vger.kernel.org,
+  conor+dt@kernel.org
+Subject: Re: [PATCH v4 2/2] clk: amlogic: Add A9 AO clock controller driver
+In-Reply-To: <20260618100341.0A42F1F00A3A@smtp.kernel.org>
+	(sashiko-bot@kernel.org's message of "Thu, 18 Jun 2026 10:03:40
+	+0000")
+References: <20260618-a9_aoclk-v4-0-569d0425e50c@amlogic.com>
+	<20260618-a9_aoclk-v4-2-569d0425e50c@amlogic.com>
+	<20260618100341.0A42F1F00A3A@smtp.kernel.org>
+User-Agent: mu4e 1.12.9; emacs 30.1
+Date: Fri, 19 Jun 2026 09:34:18 +0200
+Message-ID: <1j33yjc7b9.fsf@starbuckisacylon.baylibre.com>
 Precedence: bulk
 X-Mailing-List: sashiko-reviews@lists.linux.dev
 List-Id: <sashiko-reviews.lists.linux.dev>
 List-Subscribe: <mailto:sashiko-reviews+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:sashiko-reviews+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-References: <20260619070508.802802-1-tabba@google.com> <20260619070508.802802-7-tabba@google.com>
- <20260619072238.CBAD51F000E9@smtp.kernel.org>
-In-Reply-To: <20260619072238.CBAD51F000E9@smtp.kernel.org>
-From: Fuad Tabba <tabba@google.com>
-Date: Fri, 19 Jun 2026 08:29:06 +0100
-X-Gm-Features: AVVi8Cc94G4NP6TmL5kUBsJUSfswAVcJeIUWMgnLj1_eZF8iuuFoZoPhTHjqtlo
-Message-ID: <CA+EHjTxSZOwDBwVidTnjkNCzS-F9x=YXfZFQs0pB0OyJWcby7Q@mail.gmail.com>
-Subject: Re: [PATCH 6/8] KVM: arm64: Minimise EL2's exposure of host VGIC
- state during world switch
-To: sashiko-reviews@lists.linux.dev
-Cc: Oliver Upton <oupton@kernel.org>, kvmarm@lists.linux.dev, 
-	Marc Zyngier <maz@kernel.org>
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
+Content-Type: text/plain
 
-On Fri, 19 Jun 2026 at 08:22, <sashiko-bot@kernel.org> wrote:
->
-> Thank you for your contribution! Sashiko AI review found 1 potential issu=
-e(s) to consider:
->
-> Pre-existing issues:
-> - [Critical] Missing trust boundary validation for host-provided pointers=
- in several hypercalls (`handle___vgic_v5_save_apr`, `handle___vgic_v5_rest=
-ore_vmcr_apr`, `handle___kvm_adjust_pc`, `handle___kvm_tlb_flush_vmid_ipa`)=
-, leading to arbitrary EL2 memory dereference.
+On jeu. 18 juin 2026 at 10:03, sashiko-bot@kernel.org wrote:
 
-GICv5 is not supported in protected mode (is_protected_kvm_enabled()
-gate in vgic-v5.c skips device registration entirely), so the v5
-handlers are unreachable. handle___kvm_adjust_pc and
-handle___kvm_tlb_flush_vmid_ipa are pre-existing upstream
-unvalidated-pointer hypercalls, not introduced or modified by this
-commit. They are fixed as a group in the subsequent series.
-
-/fuad
-
+> Thank you for your contribution! Sashiko AI review found 3 potential issue(s) to consider:
+> - [Medium] The AO PWM clocks are registered without an `ao_` or `a9_ao_`
+> prefix, which will cause global namespace collisions with the main clock
+> controller.
+> - [Low] Typographical error in the clock name string literal for the RTC
+> dualdiv input gate: `ao_rtc_duandiv_in` instead of `ao_rtc_dualdiv_in`.
+> - [Low] Missing `#include <linux/module.h>` for `MODULE_*` macros.
 > --
 >
-> commit 5fa49efc0aabdcdf925969737165624792f92f6c
-> Author: Marc Zyngier <maz@kernel.org>
-> KVM: arm64: Minimise EL2's exposure of host VGIC state during world switc=
-h
+> commit ef5998ff087b6faed09d9eed4f59078d2b2f0a60
+> Author: Jian Hu <jian.hu@amlogic.com>
 >
-> This patch minimises EL2's exposure of host VGIC state by recovering the =
-host
-> vCPU from the supplied cpu_if via container_of() and copying only the
-> necessary registers. This avoids directly dereferencing the host's
-> vgic_v3_cpu_if pointer.
+> clk: amlogic: Add A9 AO clock controller driver
+>     
+> Add the Always-on clock controller driver for the Amlogic A9 SoC family.
 >
-> > diff --git a/arch/arm64/kvm/hyp/nvhe/hyp-main.c b/arch/arm64/kvm/hyp/nv=
-he/hyp-main.c
-> > --- a/arch/arm64/kvm/hyp/nvhe/hyp-main.c
-> > +++ b/arch/arm64/kvm/hyp/nvhe/hyp-main.c
+>> diff --git a/drivers/clk/meson/a9-aoclk.c b/drivers/clk/meson/a9-aoclk.c
+>> new file mode 100644
+>> index 0000000000000..88aa8cf3f5d00
+>> --- /dev/null
+>> +++ b/drivers/clk/meson/a9-aoclk.c
+>> @@ -0,0 +1,488 @@
+>> +// SPDX-License-Identifier: (GPL-2.0-only OR MIT)
+>> +/*
+>> + * Copyright (C) 2026 Amlogic, Inc. All rights reserved
+>> + */
+>> +
+>> +#include <dt-bindings/clock/amlogic,a9-aoclkc.h>
+>> +#include <linux/clk-provider.h>
+>> +#include <linux/platform_device.h>
+>
+> [Severity: Low]
+> Should this file explicitly include <linux/module.h>?
+>
+> The file relies on several module macros at the end (such as MODULE_DESCRIPTION,
+> MODULE_AUTHOR, and MODULE_LICENSE). Although it currently compiles successfully
+> due to transitive includes from <linux/platform_device.h>, standard kernel
+> practice is to include the header explicitly.
+
+Yes please fix this
+
 >
 > [ ... ]
 >
-> >  static void handle___kvm_adjust_pc(struct kvm_cpu_context *host_ctxt)
-> >  {
-> >       DECLARE_REG(struct kvm_vcpu *, vcpu, host_ctxt, 1);
-> >
-> >       __kvm_adjust_pc(kern_hyp_va(vcpu));
-> >  }
+>> +static const struct clk_parent_data a9_ao_pwm_parents[] = {
+>> +	{ .hw = &a9_ao_xtal.hw },
+>> +	{ .fw_name = "fdiv5", },
+>> +	{ .fw_name = "fdiv4", },
+>> +	{ .fw_name = "fdiv3", }
+>> +};
+>> +
+>> +static A9_COMP_SEL(pwm_a, AO_PWM_CLK_A_CTRL, 9, 0x7, a9_ao_pwm_parents);
 >
-> [Severity: Critical]
-> This is a pre-existing issue, but while this patch fixes the trust bounda=
-ry
-> for the VGIC v3 aprs hypercalls, other always-on hypercalls like
-> handle___kvm_adjust_pc() still unconditionally use kern_hyp_va() on
-> host-provided pointers.
+> [Severity: Medium]
+> Will this cause a clock name collision with the main clock controller?
 >
-> Can a malicious host provide a crafted EL2 linear-map pointer (for exampl=
-e,
-> the address of a protected VM's vCPU) here? Since kern_hyp_va() is idempo=
-tent
-> for linear-map objects, it leaves the pointer as-is.
+> Because the A9_COMP_SEL macro uses the #_name stringification operator inside
+> MESON_COMP_SEL, this will generate the clock name as exactly "pwm_a_sel"
+> (and similarly "pwm_a_div" and "pwm_a" for the others), without any "ao_" or
+> "a9_ao_" prefix.
+
+I think AI got it wrong and missed the prefix addition. Unless I missed
+something my self, I think you are fine here
+
 >
-> This would allow the host to dereference this pointer, potentially modify=
-ing
-> protected guest state via __kvm_adjust_pc() and bypassing pKVM isolation.
+> If the main clock controller conventionally registers a "pwm_a" clock, failing
+> to prefix the Always-On clocks will lead to global namespace collisions in the
+> Common Clock Framework and debugfs.
+>
+>> +static A9_COMP_DIV(pwm_a, AO_PWM_CLK_A_CTRL, 0, 8);
+>> +static A9_COMP_GATE(pwm_a, AO_PWM_CLK_A_CTRL, 8);
+>> +
+>> +static A9_COMP_SEL(pwm_b, AO_PWM_CLK_B_CTRL, 9, 0x7, a9_ao_pwm_parents);
 >
 > [ ... ]
 >
-> >  static void handle___kvm_tlb_flush_vmid_ipa(struct kvm_cpu_context *ho=
-st_ctxt)
-> >  {
-> >       DECLARE_REG(struct kvm_s2_mmu *, mmu, host_ctxt, 1);
-> >       DECLARE_REG(phys_addr_t, ipa, host_ctxt, 2);
-> >       DECLARE_REG(int, level, host_ctxt, 3);
-> >
-> >       __kvm_tlb_flush_vmid_ipa(kern_hyp_va(mmu), ipa, level);
-> >  }
+>> +static struct clk_regmap a9_ao_rtc_dualdiv_in = {
+>> +	.data = &(struct clk_regmap_gate_data){
+>> +		.offset = AO_RTC_BY_OSCIN_CTRL0,
+>> +		.bit_idx = 31,
+>> +	},
+>> +	.hw.init = &(struct clk_init_data) {
+>> +		.name = "ao_rtc_duandiv_in",
 >
-> [Severity: Critical]
-> This is a pre-existing issue, but similar to the above, does this allow
-> the host to pass a crafted mmu pointer?
+> [Severity: Low]
+> This isn't a bug, but there's a typo in the clock name literal. Should
+> "ao_rtc_duandiv_in" be "ao_rtc_dualdiv_in"?
+
+Yes
+
 >
-> If kern_hyp_va() leaves an EL2 linear-map pointer untouched, could the ho=
-st
-> use this to load arbitrary values into hardware registers like VTTBR_EL2 =
-via
-> __kvm_tlb_flush_vmid_ipa()?
->
-> --
-> Sashiko AI review =C2=B7 https://sashiko.dev/#/patchset/20260619070508.80=
-2802-1-tabba@google.com?part=3D6
+>> +		.ops = &clk_regmap_gate_ops,
+>> +		.parent_hws = (const struct clk_hw *[]) {
+>> +			&a9_ao_xtal.hw
+>> +		},
+
+-- 
+Jerome
