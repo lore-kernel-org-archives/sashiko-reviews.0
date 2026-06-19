@@ -1,171 +1,316 @@
-Received: from mail-qt1-f182.google.com (mail-qt1-f182.google.com [209.85.160.182])
+Received: from smtp-out2.suse.de (smtp-out2.suse.de [195.135.223.131])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 47054823DD
-	for <sashiko-reviews@lists.linux.dev>; Fri, 19 Jun 2026 08:25:30 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=pass smtp.client-ip=209.85.160.182
-ARC-Seal:i=2; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1781857531; cv=pass; b=NT67KD7IwQ7KVbheLRTm22i+QcI6162xf0ybeGX6ffhhPOmqNo2NBBEEbIDik70/ifctXnomIj4W99Q00MVI6DUjuxLqM/n+CFRw7/Nq7v6RKY93NCZFRFMNQGfu2bmlgqsSlwVAfwiCFlBO34AbOySLTIN5SXxtko+kskyd9zQ=
-ARC-Message-Signature:i=2; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1781857531; c=relaxed/simple;
-	bh=h22ve8W/AMMGoQTgrDvL6p2XoTwz9Q2Vh3c4CoiRQGo=;
-	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
-	 To:Cc:Content-Type; b=HeG+6imENrgSF5GuUibdvbjPKUGTOc+vT6wfAuMRxUJepvX+Pn21Xgo67IAWp2Q3djDSq/1udmzdnDeV+w4DceSyj+n2Z83dcF0DDzA8TEQCoOHDu/BFEDU6nHulfUHXfNO+72Qc6STsornr2VlkT0qBSiQJCmZFb5hD7XTkZBw=
-ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=google.com; spf=pass smtp.mailfrom=google.com; dkim=pass (2048-bit key) header.d=google.com header.i=@google.com header.b=IGZ8g2Ih; arc=pass smtp.client-ip=209.85.160.182
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=google.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=google.com
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1ABF331E834
+	for <sashiko-reviews@lists.linux.dev>; Fri, 19 Jun 2026 08:50:27 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=195.135.223.131
+ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
+	t=1781859028; cv=none; b=oH+j2Oi2C73nPYo8woQtLRq/rcNUj0QJ3EHZWp+H+nBM6q0YwjlSTpTXzy+k0RphYRnfnM9v6yOzk1xL0jFtjCxdpgt8dmcyaA5vVgxRyBL6xsCt1dK50up5Pbh5QfdjCHMFZ/023hOr+RHcUQwB3tih8++hb3x9cL9333U1yi8=
+ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
+	s=arc-20240116; t=1781859028; c=relaxed/simple;
+	bh=wLqk7/nM2qwH7apfl8G9f05xRZliGkUWW9jucG015uc=;
+	h=Content-Type:Message-ID:Date:MIME-Version:Subject:To:Cc:
+	 References:From:In-Reply-To; b=Da+fp+8R7PriaowK0kC/D9NPr3Uo41KihsVrW3+xS3Fyrj9Tk14BBstFDUWE9UT/N0NNY/a+2tfRCDbWC9YWgPZcs8h0XKuxux4HpA+KcfcYe5RgnPz7lymr+1aceo8Au4b6eUgzD6/uuyfgOvjbd9GBfDzW4FNz4C1pLmvuFE8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=suse.de; spf=pass smtp.mailfrom=suse.de; dkim=pass (1024-bit key) header.d=suse.de header.i=@suse.de header.b=yAa7SG4u; dkim=permerror (0-bit key) header.d=suse.de header.i=@suse.de header.b=aS3qnGtv; dkim=pass (1024-bit key) header.d=suse.de header.i=@suse.de header.b=yAa7SG4u; dkim=permerror (0-bit key) header.d=suse.de header.i=@suse.de header.b=aS3qnGtv; arc=none smtp.client-ip=195.135.223.131
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=suse.de
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=suse.de
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=google.com header.i=@google.com header.b="IGZ8g2Ih"
-Received: by mail-qt1-f182.google.com with SMTP id d75a77b69052e-519ed52bcc6so102071cf.0
-        for <sashiko-reviews@lists.linux.dev>; Fri, 19 Jun 2026 01:25:30 -0700 (PDT)
-ARC-Seal: i=1; a=rsa-sha256; t=1781857529; cv=none;
-        d=google.com; s=arc-20260327;
-        b=LAnCBBvoue4zktiRNNwIaQoJ9Lp+8tkmhGONFgOYyUqik5drBG73SbTE33+9KiFGsx
-         k1zEkbg3/e/4eHKY04Un8I0Gj8KpvyFJzSEIFOoNCv/3rx3YKO/aaFeZxMzyJoLGNWNh
-         tLf/NA0U1+yQDr6TLkcmAXIgzNjOMdP8gySyzMwmbAF9nLo3k43qJFIR86vPKnpnJOYd
-         VdA/FHjqSoPxf0maJy/PdZmQBhZV0rnkl/IDYs/y0hu+GZ8iqNd6rHNVg24vgkR6jkXQ
-         g8K4rPYBjcEkg3WXbw9Iupp5ZYziG1HP2hoEZGEX3OHT8W+GglLNTRbe75W1Rjk3gzHG
-         Be8A==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com; s=arc-20260327;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:dkim-signature;
-        bh=TxeIafjVeRSfliAEGIJzlXDLNa8j87RID43xBzL+1lI=;
-        fh=QO/2cIsGIfGCLZGcA2ucK9O8KUAei36yLEXUwefekOc=;
-        b=VqtvhHxR5VX+lkcnu+h6WrrYTlwy5A1cKfMO/SA90ySqVYTqGX10gf9ZBA6iN7iVen
-         vfjvjh/VsfwKveLQdSKCowG+KHDeMQtufbMIz1s4Bs2njzHe2YjfNFc2kwv98nGHa/5R
-         sXKmp8lJiEQmuBXZZ1F2nrjylElv+xUCU21Ode2Khy94XeSsii7fdXkeIXSLisAG0IjK
-         mCcfAgHonqXOJyxQ0N6f/fX05rkIIpYgw4xeCBAR2QS4MxXDetoWF4fLY6L3fwUJ0V0X
-         DTOof4p2M5XxM1J0ycAMTmUqlNJZJpZ7l773HgpmwqMqRW7eNJgfZWla+AjJ6g9IHbA/
-         p6/Q==;
-        darn=lists.linux.dev
-ARC-Authentication-Results: i=1; mx.google.com; arc=none
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=google.com; s=20251104; t=1781857529; x=1782462329; darn=lists.linux.dev;
-        h=content-transfer-encoding:content-type:cc:to:subject:message-id
-         :date:from:in-reply-to:references:mime-version:from:to:cc:subject
-         :date:message-id:reply-to:content-type;
-        bh=TxeIafjVeRSfliAEGIJzlXDLNa8j87RID43xBzL+1lI=;
-        b=IGZ8g2IhXomsEZnr9Ha9ckHHiwKWPnqttA3JCiL6N8pE6Xx+3zXD9Mn77aYbhoJ7Ne
-         zjKNfQ6YtzAxv9jHKAd2ybqGBV3S0EH55UhMuA9vOG85oKNW8Yj3rZbUon5BWBxheQ4z
-         4PjZcwyBd0dYWioJKcE60mAqHjbnvGqrUpxzmN20pVfrIzOELmjNDJRXE2XVpSKWzb2Z
-         j5VvvdB04Owb4BAUAjcx6y5ROKQGtCoC83RXdAJUpNST6qtyk9EIvXUx6osxFTFpfWYw
-         gp1dSKyBdtBH9hDxEUJybnWB4U0YAEhEO40pN3BwNeR3L9iabOgVtbG6FjrPSQcAdlX5
-         ARxw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20251104; t=1781857529; x=1782462329;
-        h=content-transfer-encoding:content-type:cc:to:subject:message-id
-         :date:from:in-reply-to:references:mime-version:x-gm-gg
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to
-         :content-type;
-        bh=TxeIafjVeRSfliAEGIJzlXDLNa8j87RID43xBzL+1lI=;
-        b=FFG7lwkAX66YPWq3U1cDVB/oU99P9nEg1+dgleOmXR1pLQJBFL/NBe4BPWcVxcSsJa
-         B5+S7FnRfrpWPThPTYSaAkCg3sW3eit7L9Ac8lEQtq3NdDUtmMR5DdfDlyNgvUEK4qxn
-         qQLXg4A6tiCBq8XhNbwdh/lDPrOWvcyTY5D0MSy8CxhyxUiArrp/qfBDm66nX9hxMJD5
-         ND3sXLsmaptr3W3IOgHzDkF3X72r7d9J+Yt/M0rdTpeF1cwLWOrYjuoB7SjDYA+juKId
-         tpHjyN0oyGLqd3uuAhS9DVMVClosFxeqjYoUw7bSHxGOzqUJclCxfq4ygyS5s8rgoS2k
-         viYA==
-X-Gm-Message-State: AOJu0YwYntxD8bOgrUYXwDER2J84oBwVOB1lKjJHGBktz0o9IvGvG9tX
-	+1SXEbqI/RyIbpGpx+dWTYkUAXynugm8DPX7F99K0yd6H11krp1fFGyQBjO/xL4QzICfsW4YGNn
-	7v+3rpqxSq1SfMyYvqiIHkjGnly7XNaoizpkHdpFcVHqEObz1+83AsGQd6mY=
-X-Gm-Gg: AfdE7cnysUqEsgF5lLbiAHBSR7MjFRmP9flYymXe6r9hwwiHSkb08N3cGnxdeWWBZTz
-	7tT3Dw+a3D5+0VAc5kwAnqyqj2JAKZtL47/OQv9P7z5erI7kAB8DjBWkcTMIjXbkp7c1dbsMBCX
-	+B7WpND4XrLVfMMEz1oARwp848cTMRN9xZdbDfaIQ/eSbYiwmegk0Ye2LWzJZOoqmCxlczRf5OH
-	X0csf1qm1AIRmBfrbrr5iNf+A/dlXS+9/xj9gm+clGH+2SvHQHOVSjpVfceRGIGfG7xitCAHA==
-X-Received: by 2002:a05:622a:82:b0:50f:ce97:3b84 with SMTP id
- d75a77b69052e-519e48867afmr6336961cf.6.1781857528567; Fri, 19 Jun 2026
- 01:25:28 -0700 (PDT)
+	dkim=pass (1024-bit key) header.d=suse.de header.i=@suse.de header.b="yAa7SG4u";
+	dkim=permerror (0-bit key) header.d=suse.de header.i=@suse.de header.b="aS3qnGtv";
+	dkim=pass (1024-bit key) header.d=suse.de header.i=@suse.de header.b="yAa7SG4u";
+	dkim=permerror (0-bit key) header.d=suse.de header.i=@suse.de header.b="aS3qnGtv"
+Received: from imap1.dmz-prg2.suse.org (imap1.dmz-prg2.suse.org [IPv6:2a07:de40:b281:104:10:150:64:97])
+	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+	 key-exchange X25519 server-signature RSA-PSS (4096 bits) server-digest SHA256)
+	(No client certificate requested)
+	by smtp-out2.suse.de (Postfix) with ESMTPS id 0A0C275FCB;
+	Fri, 19 Jun 2026 08:50:25 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=suse.de; s=susede2_rsa;
+	t=1781859025; h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
+	 mime-version:mime-version:content-type:content-type:
+	 in-reply-to:in-reply-to:references:references:autocrypt:autocrypt;
+	bh=1RNwsuFgZ14kn/jzgqyv0gdCOLvVb7eIlc2eU5toI0E=;
+	b=yAa7SG4uBA17uB1Xg45aeCe5g0Cl7/JnzENdFbSooIfkAYED1hBQ6XeKxKLQEFBTgzXuCQ
+	7J6+Y1KhuMGHOwrxSIqz9zMa6ewjK3q6MWY43DtB0yUYBOZigAnYsGjA9rz3ilYg8+R45P
+	RgpU8x2qvpwd7Dalj2dFp26bbk1xDTQ=
+DKIM-Signature: v=1; a=ed25519-sha256; c=relaxed/relaxed; d=suse.de;
+	s=susede2_ed25519; t=1781859025;
+	h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
+	 mime-version:mime-version:content-type:content-type:
+	 in-reply-to:in-reply-to:references:references:autocrypt:autocrypt;
+	bh=1RNwsuFgZ14kn/jzgqyv0gdCOLvVb7eIlc2eU5toI0E=;
+	b=aS3qnGtvZfoa7DSnijgeqyflSOUrOkXCWHxvAdHj2S0w6AZnz2hhWZU7ic9CkjH532p8rG
+	iJot/S5WVzbSccDA==
+Authentication-Results: smtp-out2.suse.de;
+	dkim=pass header.d=suse.de header.s=susede2_rsa header.b=yAa7SG4u;
+	dkim=pass header.d=suse.de header.s=susede2_ed25519 header.b=aS3qnGtv
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=suse.de; s=susede2_rsa;
+	t=1781859025; h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
+	 mime-version:mime-version:content-type:content-type:
+	 in-reply-to:in-reply-to:references:references:autocrypt:autocrypt;
+	bh=1RNwsuFgZ14kn/jzgqyv0gdCOLvVb7eIlc2eU5toI0E=;
+	b=yAa7SG4uBA17uB1Xg45aeCe5g0Cl7/JnzENdFbSooIfkAYED1hBQ6XeKxKLQEFBTgzXuCQ
+	7J6+Y1KhuMGHOwrxSIqz9zMa6ewjK3q6MWY43DtB0yUYBOZigAnYsGjA9rz3ilYg8+R45P
+	RgpU8x2qvpwd7Dalj2dFp26bbk1xDTQ=
+DKIM-Signature: v=1; a=ed25519-sha256; c=relaxed/relaxed; d=suse.de;
+	s=susede2_ed25519; t=1781859025;
+	h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
+	 mime-version:mime-version:content-type:content-type:
+	 in-reply-to:in-reply-to:references:references:autocrypt:autocrypt;
+	bh=1RNwsuFgZ14kn/jzgqyv0gdCOLvVb7eIlc2eU5toI0E=;
+	b=aS3qnGtvZfoa7DSnijgeqyflSOUrOkXCWHxvAdHj2S0w6AZnz2hhWZU7ic9CkjH532p8rG
+	iJot/S5WVzbSccDA==
+Received: from imap1.dmz-prg2.suse.org (localhost [127.0.0.1])
+	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+	 key-exchange X25519 server-signature RSA-PSS (4096 bits) server-digest SHA256)
+	(No client certificate requested)
+	by imap1.dmz-prg2.suse.org (Postfix) with ESMTPS id DA1F4779A8;
+	Fri, 19 Jun 2026 08:50:24 +0000 (UTC)
+Received: from dovecot-director2.suse.de ([2a07:de40:b281:106:10:150:64:167])
+	by imap1.dmz-prg2.suse.org with ESMTPSA
+	id QpcqNNACNWrgSgAAD6G6ig
+	(envelope-from <tzimmermann@suse.de>); Fri, 19 Jun 2026 08:50:24 +0000
+Content-Type: multipart/mixed; boundary="------------A02MuYS0LUjC7ZHA3gGhySn0"
+Message-ID: <1c9e0e24-9c4a-4259-8700-cf9e5fd60ca3@suse.de>
+Date: Fri, 19 Jun 2026 10:50:24 +0200
 Precedence: bulk
 X-Mailing-List: sashiko-reviews@lists.linux.dev
 List-Id: <sashiko-reviews.lists.linux.dev>
 List-Subscribe: <mailto:sashiko-reviews+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:sashiko-reviews+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-References: <20260618-gmem-inplace-conversion-v8-0-9d2959357853@google.com>
- <20260618-gmem-inplace-conversion-v8-9-9d2959357853@google.com> <20260619004918.378771F000E9@smtp.kernel.org>
-In-Reply-To: <20260619004918.378771F000E9@smtp.kernel.org>
-From: Fuad Tabba <tabba@google.com>
-Date: Fri, 19 Jun 2026 09:24:51 +0100
-X-Gm-Features: AVVi8CcBvC8TtgogaTN3EUPr2ibU9wi2w0OnsKTZp__1iLlZ0ogFy1kJC5a9Fls
-Message-ID: <CA+EHjTzh_FxssbW62ejsbjBBks6YmiNc=9rY=xh5tkTFpkqDKQ@mail.gmail.com>
-Subject: Re: [PATCH v8 09/46] KVM: guest_memfd: Introduce function to check
- GFN private/shared status
-To: sashiko-reviews@lists.linux.dev
-Cc: Ackerley Tng via B4 Relay <devnull+ackerleytng.google.com@kernel.org>, kvm@vger.kernel.org
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH] drm/fb_helper: Determine proper crtc_index within
+ drm_fb_helper_fb_dirty
+To: "H. Nikolaus Schaller" <hns@goldelico.com>,
+ sashiko-reviews@lists.linux.dev, Icenowy Zheng <zhengxingda@iscas.ac.cn>
+Cc: dri-devel@lists.freedesktop.org, Andreas Kemnade <akemnade@kernel.org>
+References: <5118b37e579cec220f2d2b6ab0bb1ecfb67f0d5c.1781803617.git.hns@goldelico.com>
+ <20260618174310.70DB11F000E9@smtp.kernel.org>
+ <50FDBC3B-BFC2-4BC6-B216-78C2C24D9E30@goldelico.com>
+Content-Language: en-US
+From: Thomas Zimmermann <tzimmermann@suse.de>
+Autocrypt: addr=tzimmermann@suse.de; keydata=
+ xsBNBFs50uABCADEHPidWt974CaxBVbrIBwqcq/WURinJ3+2WlIrKWspiP83vfZKaXhFYsdg
+ XH47fDVbPPj+d6tQrw5lPQCyqjwrCPYnq3WlIBnGPJ4/jreTL6V+qfKRDlGLWFjZcsrPJGE0
+ BeB5BbqP5erN1qylK9i3gPoQjXGhpBpQYwRrEyQyjuvk+Ev0K1Jc5tVDeJAuau3TGNgah4Yc
+ hdHm3bkPjz9EErV85RwvImQ1dptvx6s7xzwXTgGAsaYZsL8WCwDaTuqFa1d1jjlaxg6+tZsB
+ 9GluwvIhSezPgnEmimZDkGnZRRSFiGP8yjqTjjWuf0bSj5rUnTGiyLyRZRNGcXmu6hjlABEB
+ AAHNJ1Rob21hcyBaaW1tZXJtYW5uIDx0emltbWVybWFubkBzdXNlLmRlPsLAjgQTAQgAOAIb
+ AwULCQgHAgYVCgkICwIEFgIDAQIeAQIXgBYhBHIX+6yM6c9jRKFo5WgNwR1TC3ojBQJftODH
+ AAoJEGgNwR1TC3ojx1wH/0hKGWugiqDgLNXLRD/4TfHBEKmxIrmfu9Z5t7vwUKfwhFL6hqvo
+ lXPJJKQpQ2z8+X2vZm/slsLn7J1yjrOsoJhKABDi+3QWWSGkaGwRJAdPVVyJMfJRNNNIKwVb
+ U6B1BkX2XDKDGffF4TxlOpSQzdtNI/9gleOoUA8+jy8knnDYzjBNOZqLG2FuTdicBXblz0Mf
+ vg41gd9kCwYXDnD91rJU8tzylXv03E75NCaTxTM+FBXPmsAVYQ4GYhhgFt8S2UWMoaaABLDe
+ 7l5FdnLdDEcbmd8uLU2CaG4W2cLrUaI4jz2XbkcPQkqTQ3EB67hYkjiEE6Zy3ggOitiQGcqp
+ j//OwE0EWznS4AEIAMYmP4M/V+T5RY5at/g7rUdNsLhWv1APYrh9RQefODYHrNRHUE9eosYb
+ T6XMryR9hT8XlGOYRwKWwiQBoWSDiTMo/Xi29jUnn4BXfI2px2DTXwc22LKtLAgTRjP+qbU6
+ 3Y0xnQN29UGDbYgyyK51DW3H0If2a3JNsheAAK+Xc9baj0LGIc8T9uiEWHBnCH+RdhgATnWW
+ GKdDegUR5BkDfDg5O/FISymJBHx2Dyoklv5g4BzkgqTqwmaYzsl8UxZKvbaxq0zbehDda8lv
+ hFXodNFMAgTLJlLuDYOGLK2AwbrS3Sp0AEbkpdJBb44qVlGm5bApZouHeJ/+n+7r12+lqdsA
+ EQEAAcLAdgQYAQgAIAIbDBYhBHIX+6yM6c9jRKFo5WgNwR1TC3ojBQJftOH6AAoJEGgNwR1T
+ C3ojVSkIALpAPkIJPQoURPb1VWjh34l0HlglmYHvZszJWTXYwavHR8+k6Baa6H7ufXNQtThR
+ yIxJrQLW6rV5lm7TjhffEhxVCn37+cg0zZ3j7zIsSS0rx/aMwi6VhFJA5hfn3T0TtrijKP4A
+ SAQO9xD1Zk9/61JWk8OysuIh7MXkl0fxbRKWE93XeQBhIJHQfnc+YBLprdnxR446Sh8Wn/2D
+ Ya8cavuWf2zrB6cZurs048xe0UbSW5AOSo4V9M0jzYI4nZqTmPxYyXbm30Kvmz0rYVRaitYJ
+ 4kyYYMhuULvrJDMjZRvaNe52tkKAvMevcGdt38H4KSVXAylqyQOW5zvPc4/sq9c=
+In-Reply-To: <50FDBC3B-BFC2-4BC6-B216-78C2C24D9E30@goldelico.com>
+X-Rspamd-Action: no action
+X-Rspamd-Queue-Id: 0A0C275FCB
+X-Spam-Flag: NO
+X-Spam-Score: -3.41
+X-Spam-Level: 
+X-Spamd-Result: default: False [-3.41 / 50.00];
+	BAYES_HAM(-3.00)[100.00%];
+	MIME_BASE64_TEXT_BOGUS(1.00)[];
+	NEURAL_HAM_LONG(-1.00)[-1.000];
+	R_DKIM_ALLOW(-0.20)[suse.de:s=susede2_rsa,suse.de:s=susede2_ed25519];
+	NEURAL_HAM_SHORT(-0.20)[-0.998];
+	MIME_GOOD(-0.10)[multipart/mixed,text/plain,text/x-patch];
+	MIME_BASE64_TEXT(0.10)[];
+	MX_GOOD(-0.01)[];
+	FROM_HAS_DN(0.00)[];
+	DKIM_SIGNED(0.00)[suse.de:s=susede2_rsa,suse.de:s=susede2_ed25519];
+	RBL_SPAMHAUS_BLOCKED_OPENRESOLVER(0.00)[2a07:de40:b281:104:10:150:64:97:from];
+	ARC_NA(0.00)[];
+	FUZZY_RATELIMITED(0.00)[rspamd.com];
+	TO_DN_SOME(0.00)[];
+	MIME_TRACE(0.00)[0:+,1:+,2:+];
+	URIBL_BLOCKED(0.00)[suse.de:dkim,suse.de:email,suse.de:mid,suse.com:url,imap1.dmz-prg2.suse.org:rdns,imap1.dmz-prg2.suse.org:helo,goldelico.com:email,sashiko.dev:url];
+	TO_MATCH_ENVRCPT_ALL(0.00)[];
+	RCVD_TLS_ALL(0.00)[];
+	MID_RHS_MATCH_FROM(0.00)[];
+	RCVD_COUNT_TWO(0.00)[2];
+	FROM_EQ_ENVFROM(0.00)[];
+	RCPT_COUNT_FIVE(0.00)[5];
+	RECEIVED_SPAMHAUS_BLOCKED_OPENRESOLVER(0.00)[2a07:de40:b281:106:10:150:64:167:received];
+	DKIM_TRACE(0.00)[suse.de:+];
+	RCVD_VIA_SMTP_AUTH(0.00)[];
+	HAS_ATTACHMENT(0.00)[];
+	DBL_BLOCKED_OPENRESOLVER(0.00)[suse.de:dkim,suse.de:email,suse.de:mid,sashiko.dev:url,suse.com:url,imap1.dmz-prg2.suse.org:rdns,imap1.dmz-prg2.suse.org:helo]
+X-Rspamd-Server: rspamd1.dmz-prg2.suse.org
 
-On Fri, 19 Jun 2026 at 01:49, <sashiko-bot@kernel.org> wrote:
->
-> Thank you for your contribution! Sashiko AI review found 1 potential issu=
-e(s) to consider:
-> - [High] `kvm_gmem_is_private()` hardcodes address space 0 by using `gfn_=
-to_memslot(kvm, gfn)`, which breaks multi-address-space vCPUs (e.g., SMM).
+This is a multi-part message in MIME format.
+--------------A02MuYS0LUjC7ZHA3gGhySn0
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 8bit
 
-Same limitation as the per-VM kvm_vm_mem_is_private (single xarray
-keyed by GFN, no AS qualifier). Not a regression.
+(cc Icenowy)
 
-/fuad
+Hi,
 
-> --
+there are a number of similar reports. Does the attached patch fix the 
+problem. It picks up what you do, but in a more correct way.
+
+Best regards
+Thomas
+
+Am 18.06.26 um 19:56 schrieb H. Nikolaus Schaller:
 >
-> commit 8dfdb2d13d27c9727b32ecdcb6460d23702e6438
-> Author: Ackerley Tng <ackerleytng@google.com>
+>> Am 18.06.2026 um 19:43 schrieb sashiko-bot@kernel.org:
+>>
+>> Thank you for your contribution! Sashiko AI review found 3 potential issue(s) to consider:
+>> - [High] Lockless access to `crtc->state` and `crtc->primary->state` can lead to a Use-After-Free due to concurrent atomic commits.
+>> - [High] The patch breaks vblank synchronization for legacy (non-atomic) DRM drivers.
+>> - [Medium] The logic selects the first matching CRTC instead of the last active one, contradicting the commit message.
+>> --
+>>
+>> commit 0337b26b606b4d905d72ea2be31bcb984fe62c6e
+>> Author: H. Nikolaus Schaller <hns@goldelico.com>
+>>
+>> drm/fb_helper: Determine proper crtc_index within drm_fb_helper_fb_dirty
+>>
+>> This commit updates the dirty framebuffer worker to search for a matching
+>> active CRTC instead of hardcoding the wait for vblank to CRTC index 0. It
+>> aims to avoid vblank timeouts when CRTC 0 is inactive.
+>>
+>>> diff --git a/drivers/gpu/drm/drm_fb_helper.c b/drivers/gpu/drm/drm_fb_helper.c
+>>> --- a/drivers/gpu/drm/drm_fb_helper.c
+>>> +++ b/drivers/gpu/drm/drm_fb_helper.c
+>> [ ... ]
+>>> @@ -232,9 +232,23 @@ static void drm_fb_helper_fb_dirty(struct drm_fb_helper *helper)
+>>> struct drm_clip_rect clip_copy;
+>>> unsigned long flags;
+>>> int ret;
+>>> + unsigned int crtc_index = 0;
+>>> + struct drm_crtc *crtc;
+>>>
+>>> mutex_lock(&helper->lock);
+>>> - drm_client_modeset_wait_for_vblank(&helper->client, 0);
+>>> +
+>>> + drm_for_each_crtc(crtc, dev) {
+>>> + if (crtc->primary && crtc->primary->state &&
+>>> +    crtc->primary->state->fb == helper->fb &&
+>>> +    crtc->state && crtc->state->active) {
+>> [Severity: High]
+>> Can this lockless access to crtc->state and crtc->primary->state result in a
+>> use-after-free?
+> No idea...
 >
-> KVM: guest_memfd: Introduce function to check GFN private/shared status
+>> The drm_fb_helper_fb_dirty() function holds helper->lock, but does not hold
+>> the DRM modeset locks required to protect these state pointers. During a
+> Which locks are exactly recommended to add? What is their name/pointer?
 >
-> This commit introduces a new KVM utility function to check whether a give=
-n
-> GFN is backed by private memory. It checks for a guest_memfd file associa=
-ted
-> with the memslot and queries the inode's private memory state.
+>> concurrent atomic modeset commit, the DRM core allocates new state objects,
+>> swaps them into place, and frees the old objects via kfree().
+>>
+>> If this code reads an old state pointer and gets preempted, could it then
+>> dereference the pointer after it has been freed by the concurrent commit?
+>>
+>> [Severity: High]
+>> Does this break vblank synchronization for legacy non-atomic DRM drivers?
+>> Legacy drivers do not use the atomic modesetting infrastructure, so their
+>> crtc->state and crtc->primary->state pointers remain NULL. Since the condition
+>> above requires these pointers to be non-NULL, the loop will skip the vblank
+>> wait entirely for legacy drivers. This skips the intended rate-limiting
+>> behavior and could lead to unbounded damage worker execution.
+> What is the solution? And is this important.
 >
-> > diff --git a/virt/kvm/guest_memfd.c b/virt/kvm/guest_memfd.c
-> > index 8101f64e0366f..bca912db5be6e 100644
-> > --- a/virt/kvm/guest_memfd.c
-> > +++ b/virt/kvm/guest_memfd.c
-> [ ... ]
-> > @@ -510,6 +510,37 @@ static int kvm_gmem_mmap(struct file *file, struct=
- vm_area_struct *vma)
-> >       return 0;
-> >  }
-> >
-> > +bool kvm_gmem_is_private(struct kvm *kvm, gfn_t gfn)
-> > +{
-> > +     struct kvm_memory_slot *slot =3D gfn_to_memslot(kvm, gfn);
+> Before d8c4bddcd8bcb ("drm/fb-helper: Synchronize dirty worker with vblank")
 >
-> [Severity: High]
-> Does this code correctly handle multi-address-space vCPUs (such as SMM on
-> x86)?
+> there was also no rate-limiting behavior.
 >
-> The call to gfn_to_memslot() internally looks up the memslot tree strictl=
-y
-> for address space 0. If a vCPU is operating in an alternate address space
-> where the memslot layout differs from address space 0, this lookup could
-> return an incorrect memslot or no memslot at all.
+>>> + crtc_index = drm_crtc_index(crtc) + 1;
+>>> + break;
+>> [Severity: Medium]
+>> The commit message states "If multiple CRTCs match, the last active one is
+>> selected." Does the break statement here cause the first active CRTC to be
+>> selected instead, bypassing the remaining matches in the list?
+> Yes, that is correct. The description is indeed wrong.
 >
-> This could cause KVM to incorrectly treat private memory accesses as shar=
-ed
-> for alternate address spaces, potentially leading to incorrect page table
-> installations or guest memory corruption. Should this function perhaps ta=
-ke
-> the target kvm_vcpu or the kvm_memory_slot directly so it is evaluated
-> against the correct address space?
->
-> > +     struct inode *inode;
-> > +
-> > +     /*
-> > +      * If this gfn has no associated memslot, there's no chance of th=
-e gfn
-> > +      * being backed by private memory, since guest_memfd must be used=
- for
-> > +      * private memory, and guest_memfd must be associated with some m=
-emslot.
-> > +      */
-> > +     if (!slot)
-> > +             return 0;
-> [ ... ]
->
-> --
-> Sashiko AI review =C2=B7 https://sashiko.dev/#/patchset/20260618-gmem-inp=
-lace-conversion-v8-0-9d2959357853@google.com?part=3D9
->
+>>> + }
+>>> + }
+>>> +
+>>> + if (crtc_index > 0)
+>>> + drm_client_modeset_wait_for_vblank(&helper->client, crtc_index - 1);
+>>> +
+>>> mutex_unlock(&helper->lock);
+>> -- 
+>> Sashiko AI review · https://sashiko.dev/#/patchset/5118b37e579cec220f2d2b6ab0bb1ecfb67f0d5c.1781803617.git.hns@goldelico.com?part=1
+
+-- 
+--
+Thomas Zimmermann
+Graphics Driver Developer
+SUSE Software Solutions Germany GmbH
+Frankenstr. 146, 90461 Nürnberg, Germany, www.suse.com
+GF: Jochen Jaser, Andrew McDonald, Werner Knoblich, (HRB 36809, AG Nürnberg)
+
+
+--------------A02MuYS0LUjC7ZHA3gGhySn0
+Content-Type: text/x-patch; charset=UTF-8;
+ name="0001-drm-fb-helper-Only-consider-active-CRTCs-for-vblank-.patch"
+Content-Disposition: attachment;
+ filename*0="0001-drm-fb-helper-Only-consider-active-CRTCs-for-vblank-.pa";
+ filename*1="tch"
+Content-Transfer-Encoding: base64
+
+RnJvbSA5Zjk0ZTE5ZDg4N2VkNGU0NTZkZWQ4MWQwNzVlOTMwMDViZDYwZDFiIE1vbiBTZXAg
+MTcgMDA6MDA6MDAgMjAwMQpGcm9tOiBUaG9tYXMgWmltbWVybWFubiA8dHppbW1lcm1hbm5A
+c3VzZS5kZT4KRGF0ZTogRnJpLCAxOSBKdW4gMjAyNiAxMDozMTozOCArMDIwMApTdWJqZWN0
+OiBbUEFUQ0hdIGRybS9mYi1oZWxwZXI6IE9ubHkgY29uc2lkZXIgYWN0aXZlIENSVENzIGZv
+ciB2Ymxhbmsgc3luYwoKT25seSBzeW5jaHJvbml6ZSBmYmRldiBvdXRwdXQgdG8gdGhlIHZi
+bGFuayBvZiBhY3RpdmUgQ1JUQ3MuIEdvIG92ZXIKdGhlIGxpc3Qgb2YgQ1JUQ3MgYW5kIHBp
+Y2sgdGhlIGZpcnN0IHRoYXQgbWF0Y2hlcy4gRml4ZXMgd2FybmluZ3MgYXMKdGhlIG9uZSBz
+aG93biBiZWxvdwoKWyAgIDc3LjIwMTM1NF0gV0FSTklORzogZHJpdmVycy9ncHUvZHJtL2Ry
+bV92YmxhbmsuYzoxMzIwIGF0IGRybV9jcnRjX3dhaXRfb25lX3ZibGFuaysweDE5NC8weDFj
+YyBbZHJtXSwgQ1BVIzE6IGt3b3JrZXIvMTo3LzE4NjcKWyAgIDc3LjIwMTM1NF0gb21hcGRy
+bSBvbWFwZHJtLjA6IFtkcm1dIHZibGFuayB3YWl0IHRpbWVkIG91dCBvbiBjcnRjIDAKClRo
+aXMgY3VycmVudGx5IGhhcHBlbnMgaWYgdGhlIGZiZGV2IG91dHB1dCBpcyBub3Qgb24gQ1JU
+QyAwLgoKVGhlIHBhdGNoIGRpc2FibGVzIHZibGFuayBzeW5jIG9uIHRoZSBmZXcgZHJpdmVy
+cyB0aGF0IHN0aWxsIGRvIG5vdAppbXBsZW1lbnQgYXRvbWljIG1vZGVzZXR0aW5nLiBJdCdz
+IG5vdCBhdCBhbGwgYSBjcml0aWNhbCBmZWF0dXJlIHRob3VnaC4KClNpZ25lZC1vZmYtYnk6
+IFRob21hcyBaaW1tZXJtYW5uIDx0emltbWVybWFubkBzdXNlLmRlPgpGaXhlczogZDhjNGJk
+ZGNkOGJjYiAoImRybS9mYi1oZWxwZXI6IFN5bmNocm9uaXplIGRpcnR5IHdvcmtlciB3aXRo
+IHZibGFuayIpCi0tLQogZHJpdmVycy9ncHUvZHJtL2RybV9mYl9oZWxwZXIuYyB8IDMyICsr
+KysrKysrKysrKysrKysrKysrKysrKysrKysrLS0tCiAxIGZpbGUgY2hhbmdlZCwgMjkgaW5z
+ZXJ0aW9ucygrKSwgMyBkZWxldGlvbnMoLSkKCmRpZmYgLS1naXQgYS9kcml2ZXJzL2dwdS9k
+cm0vZHJtX2ZiX2hlbHBlci5jIGIvZHJpdmVycy9ncHUvZHJtL2RybV9mYl9oZWxwZXIuYwpp
+bmRleCA3YjExYTU4MmY4ZWMuLjM3ZTRkMzNhNmQ0OSAxMDA2NDQKLS0tIGEvZHJpdmVycy9n
+cHUvZHJtL2RybV9mYl9oZWxwZXIuYworKysgYi9kcml2ZXJzL2dwdS9kcm0vZHJtX2ZiX2hl
+bHBlci5jCkBAIC0yMzAsMTIgKzIzMCwzOCBAQCBzdGF0aWMgdm9pZCBkcm1fZmJfaGVscGVy
+X2ZiX2RpcnR5KHN0cnVjdCBkcm1fZmJfaGVscGVyICpoZWxwZXIpCiAJc3RydWN0IGRybV9k
+ZXZpY2UgKmRldiA9IGhlbHBlci0+ZGV2OwogCXN0cnVjdCBkcm1fY2xpcF9yZWN0ICpjbGlw
+ID0gJmhlbHBlci0+ZGFtYWdlX2NsaXA7CiAJc3RydWN0IGRybV9jbGlwX3JlY3QgY2xpcF9j
+b3B5OworCXN0cnVjdCBkcm1fcGxhbmUgKnBsYW5lOworCWludCBjcnRjX2luZGV4ID0gLTE7
+CiAJdW5zaWduZWQgbG9uZyBmbGFnczsKIAlpbnQgcmV0OwogCi0JbXV0ZXhfbG9jaygmaGVs
+cGVyLT5sb2NrKTsKLQlkcm1fY2xpZW50X21vZGVzZXRfd2FpdF9mb3JfdmJsYW5rKCZoZWxw
+ZXItPmNsaWVudCwgMCk7Ci0JbXV0ZXhfdW5sb2NrKCZoZWxwZXItPmxvY2spOworCWlmIChk
+cm1fZHJ2X3VzZXNfYXRvbWljX21vZGVzZXQoZGV2KSkgeworCQltdXRleF9sb2NrKCZoZWxw
+ZXItPmxvY2spOworCQltdXRleF9sb2NrKCZkZXYtPm1vZGVfY29uZmlnLm11dGV4KTsKKwor
+CQlkcm1fZm9yX2VhY2hfcGxhbmUocGxhbmUsIGRldikgeworCQkJY29uc3Qgc3RydWN0IGRy
+bV9wbGFuZV9zdGF0ZSAqcGxhbmVfc3RhdGU7CisJCQljb25zdCBzdHJ1Y3QgZHJtX2NydGMg
+KmNydGM7CisKKwkJCWlmIChwbGFuZS0+dHlwZSAhPSBEUk1fUExBTkVfVFlQRV9QUklNQVJZ
+KQorCQkJCWNvbnRpbnVlOyAvKiBub3QgYSBwcmltYXJ5IHBsYW5lICovCisKKwkJCXBsYW5l
+X3N0YXRlID0gcGxhbmUtPnN0YXRlOworCQkJaWYgKHBsYW5lX3N0YXRlLT5mYiAhPSBoZWxw
+ZXItPmZiIHx8ICFwbGFuZV9zdGF0ZS0+Y3J0YykKKwkJCQljb250aW51ZTsgLyogcGxhbmUg
+ZG9lc24ndCBkaXNwbGF5IGZiZGV2IGVtdWxhdGlvbiAqLworCisJCQljcnRjID0gcGxhbmVf
+c3RhdGUtPmNydGM7CisJCQlpZiAoY3J0Yy0+c3RhdGUtPmFjdGl2ZSkgeworCQkJCWNydGNf
+aW5kZXggPSBjcnRjLT5pbmRleDsKKwkJCQlicmVhazsKKwkJCX0KKwkJfQorCQltdXRleF91
+bmxvY2soJmRldi0+bW9kZV9jb25maWcubXV0ZXgpOworCisJCWlmIChjcnRjX2luZGV4ID49
+IDApCisJCQlkcm1fY2xpZW50X21vZGVzZXRfd2FpdF9mb3JfdmJsYW5rKCZoZWxwZXItPmNs
+aWVudCwgY3J0Y19pbmRleCk7CisJCW11dGV4X3VubG9jaygmaGVscGVyLT5sb2NrKTsKKwl9
+CiAKIAlpZiAoZHJtX1dBUk5fT05fT05DRShkZXYsICFoZWxwZXItPmZ1bmNzLT5mYl9kaXJ0
+eSkpCiAJCXJldHVybjsKLS0gCjIuNTQuMAoK
+
+--------------A02MuYS0LUjC7ZHA3gGhySn0--
