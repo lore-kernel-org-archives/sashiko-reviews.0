@@ -1,226 +1,118 @@
-Received: from mail-qt1-f173.google.com (mail-qt1-f173.google.com [209.85.160.173])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from mx0a-001b2d01.pphosted.com (mx0a-001b2d01.pphosted.com [148.163.156.1])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B410C30E82C
-	for <sashiko-reviews@lists.linux.dev>; Fri, 19 Jun 2026 07:56:01 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=pass smtp.client-ip=209.85.160.173
-ARC-Seal:i=2; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1781855763; cv=pass; b=B99f36r+MkrlWjhaEbJTfIIaUpOWJWqI/KhOtGgvhI39VtCKn0tJiu2p3qiHeES+v7+nMrhGVfxV6HqFXnfd4UESx8wMx2aotAihdpUncp+TGs8RtF3nBrKGO4IfCfrXiZwW9gyL1LY/7XlznoLRqupRVuqKpbTkEfwEGBpao/0=
-ARC-Message-Signature:i=2; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1781855763; c=relaxed/simple;
-	bh=Kunw76BAh6SJh5I4USkWOUrOGhUUrVSnPf1ryhN85dw=;
-	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
-	 To:Cc:Content-Type; b=P0UV2aaCAYhYlqiGF+loZ9gL/LCcf2B1R/zloCaoVCZsXO82fO57k0R5eBQAuHUWiE2BdZ5ZlVTO2YDrwHE9eFuldl2Qpl3BFMhBBXlTxLrzFLRNomnw0TiRCSllL3BxEmnnqg4Joq95RxclZf1eAQuhXe1kDSW9qIOWfgHeN80=
-ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=google.com; spf=pass smtp.mailfrom=google.com; dkim=pass (2048-bit key) header.d=google.com header.i=@google.com header.b=nBqoHlLL; arc=pass smtp.client-ip=209.85.160.173
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=google.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=google.com
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0D0B12D7DE9;
+	Fri, 19 Jun 2026 08:02:55 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=148.163.156.1
+ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
+	t=1781856177; cv=none; b=hDevVAvgGyL1NW6TbzODAZej3W+aavlTZG5VrpocTF3gJosD24cF0T9TarpYb/RQNGqxSl7AURrT1nFkTST18IyGuabXgvwdIRwEJ6jKp9HC0OSJVjldk6IKHpnRti3mzOCPg8hGEzI33jfr69VsJSESMlxUERqdC+VeiA9oP3g=
+ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
+	s=arc-20240116; t=1781856177; c=relaxed/simple;
+	bh=j/ekGBZ23rxTVqUIGAtaFX271w2kJDCmY0L3kwYqcrE=;
+	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
+	 In-Reply-To:Content-Type; b=bAi6bOW+6gYKgN8KS9bFzRz8DvgDxnRwO1tY0P0JXI2Z3sKluUESMmqrq1g+QRbN2MRApa4X+AfYT4wyjP1rpx+yNQZnWhDhA2nigK/Tjx2aGEW6dWALYoiquTcBC0UlymEbmj3lnUkVyY21cSQvenpgr0x5rLvhptKiPvJ5uFs=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linux.ibm.com; spf=pass smtp.mailfrom=linux.ibm.com; dkim=pass (2048-bit key) header.d=ibm.com header.i=@ibm.com header.b=AQ+2lohk; arc=none smtp.client-ip=148.163.156.1
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linux.ibm.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linux.ibm.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=google.com header.i=@google.com header.b="nBqoHlLL"
-Received: by mail-qt1-f173.google.com with SMTP id d75a77b69052e-519ed52bcc6so95571cf.0
-        for <sashiko-reviews@lists.linux.dev>; Fri, 19 Jun 2026 00:56:01 -0700 (PDT)
-ARC-Seal: i=1; a=rsa-sha256; t=1781855761; cv=none;
-        d=google.com; s=arc-20260327;
-        b=aXB7YO9Wd/lAYn6Cio9hagiL/PUjCGBZSf5F/piu07aulodg7x3ZacSBZmBk5IDt0O
-         vVWvCSuy9+Z8ip8Afmsdhew6TsBfHQ6LdCAn2b15ZI8Fwo98A5QEdV+X75jHD2CcaXKq
-         R/932UcCErvJJi6qwvq6PxbyVT2hJJArh0BsafXsZw+g+dcdwKNQ1DN6Y8fdj6L0pF32
-         Oer3fFbrQA05TYTLLoggJdJEL9jlhJWbnW5elfA/ia/ghQU/J29hLNEF+em7hCgOqNkp
-         NN6t8YsX22YDnRWZMYlDOtB61yitK8lPFS0q68Qnn4Cwhyl+Q0bKqgrdZz1zN8VUeK32
-         9AWQ==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com; s=arc-20260327;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:dkim-signature;
-        bh=9ZlamI52aivzrTUrMKEhRodd7sLk7SBl7YTVBgVk0FA=;
-        fh=HhTV4G5+xnJ3thQDc6cpcOYMN3AitX7qB0zPfKB89LY=;
-        b=Yay0Ma9BV2hg+Z+Yi0tIF125hj/7iC5l52wtzm9FLKhL9dqnVDA/WQVBA3VVYeGU1+
-         9ALJ0w3mepyXzzVtCHkFuEsRCn9bkdZKokMoNEXIVZ8D9DBE6kPHDB0pBtC7+bdFl20f
-         RODLYPUljDHPx/Dv3+rW4mYfGzQuxBt1Ll7XigA00fiulwqgH9SDYmfN0YB7AsUwNhqH
-         w6+yLkgD4CrnWB4fEFKczwSnE3Z0GQWmunWIUApL5XH5h/tP+LI0/tBQzIwrFjXgma6/
-         TtLr9rOZIcsFDOai78CljQL0w/NDwqFTRAwlWnbvRSZR3v5W3NSg0wqOFA7S6q3yldbs
-         L/gA==;
-        darn=lists.linux.dev
-ARC-Authentication-Results: i=1; mx.google.com; arc=none
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=google.com; s=20251104; t=1781855761; x=1782460561; darn=lists.linux.dev;
-        h=content-transfer-encoding:content-type:cc:to:subject:message-id
-         :date:from:in-reply-to:references:mime-version:from:to:cc:subject
-         :date:message-id:reply-to:content-type;
-        bh=9ZlamI52aivzrTUrMKEhRodd7sLk7SBl7YTVBgVk0FA=;
-        b=nBqoHlLLAvEZ0v5xv3BySA1W8HUHTfZ35qWuD3B0eNiK9ThhuTM82mu2ah53yFV3T9
-         jZEbWzAgVh/10fDa7mQXvjJi+UPV/53KE5U/7cF51NLeyi7Ub0qFnM9ZCUVIkeYoiUnT
-         gNWJap9DQFOL5uF6zoADp6c6Xbl0V0/EGFGGpeUMT+x/qZ9RMawtlpop3Q8LH4bdT+Rc
-         pekJ8M/8mEPnQrnk+dXulGAAf/xIemzPYQlT8XfG09Stulwb71MiwK/03ch8JxVEDZTu
-         e33TEBXCDiUwAgWE1Mc/vt6AVr6B+5uHgVKMriLCZQ/KjKmZeCyjJfonxj28Duuhcimb
-         WBkQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20251104; t=1781855761; x=1782460561;
-        h=content-transfer-encoding:content-type:cc:to:subject:message-id
-         :date:from:in-reply-to:references:mime-version:x-gm-gg
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to
-         :content-type;
-        bh=9ZlamI52aivzrTUrMKEhRodd7sLk7SBl7YTVBgVk0FA=;
-        b=Oy8CPvdf0CefLt3MO5rtbqeBGwVQCGPkTozfY75BXzhW6wpzZ+V+vCXbun+21RaG+I
-         ut/sz06/JF6ICf7zuw8395N5jnXGdnylf6A01JH53ePN5aIHAqkdBVN6KbQnVHY8h/hr
-         PahbKCgtnVTW3LkyUML4zCtjop7ogJUzbtd4sXT8eyy5S4YPD6l/2mz0tsjx7ga4XX0r
-         3JolgYo84qAl9fHzilCNoYxsuMXNV1F1CnMwCbmEPrBzpY+JOckRB/QRQ2tfe0e94621
-         XJeA+SIyJ1UD85xoxdS4UjthAwdNjKgz8qoq/ERHX5qag9FbDHg1ZO4w36tzylGAyjrs
-         nufQ==
-X-Gm-Message-State: AOJu0YwflYhGItoSNbzvFgODOQ0aCq/WkB+TJYP/kiiNvd4E7ik6Dn2B
-	O9QOC0r67OY3ntEM+38+G14GLeQ7Uh/sw2f022g3r45wSHdwyEXJkYgw8hMMwrD2h/bYcG4nUPX
-	jbXmu4cuAOZcXR7K9P7b/CO0NAULc2RVufhVB7YFdRTXzvbNE0pt1mD5jtvU=
-X-Gm-Gg: AfdE7cmuzW2/Ak44jE0gOh35rEuT+lzkQ4/vB4tF7w6M+HOvc+6IJ92iPo/qLQammL1
-	58jleuwriO1UZ/WbVUSv1CGO30RmFMvj2xew5w3ug1r5Hw0rXnFQ2QDeBNVg8f7heJAL0g4lQ33
-	8WIQ3IZwXbeOe3yDS2wLNC+YZmQabVYwcFbYSelB2yTOdOLUS4eMQtJW6/b0LRvxozahKQbBuZr
-	JcfTzBNtq/KjDJ/0yDAnN3IXoe9QbgCCGWSbi9v1LMgPDFwJZ1KJKXh07vN6zrsArgvdo4Mnw==
-X-Received: by 2002:a05:622a:1485:b0:4ff:c0e7:be9c with SMTP id
- d75a77b69052e-519e45706fbmr7118561cf.0.1781855759865; Fri, 19 Jun 2026
- 00:55:59 -0700 (PDT)
+	dkim=pass (2048-bit key) header.d=ibm.com header.i=@ibm.com header.b="AQ+2lohk"
+Received: from pps.filterd (m0353729.ppops.net [127.0.0.1])
+	by mx0a-001b2d01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id 65J7mOWI1840513;
+	Fri, 19 Jun 2026 08:02:55 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=ibm.com; h=cc
+	:content-transfer-encoding:content-type:date:from:in-reply-to
+	:message-id:mime-version:references:subject:to; s=pp1; bh=WE36Gl
+	C2QLlT24ILZJ0WI39AQniVN83jo/SKSSzGV44=; b=AQ+2lohk98qiE41PcS+1hg
+	pQR9zForTj64lJ2nkeEsd0YCwYs/5YEWqTwG9eWjcx2PXzrEtlhupNJAvHc20qa2
+	y+4zA0yHw9vNxxOCum282pSP8N6rqaX28u9omc1DFcYpw5AZ6XNv6+9HPfi7rGKV
+	+y+W+crOmiXGVqtwRhy+DrD4XaQWakYabyxKYG9GvxTr1ZqROtGu3AKWv/Dujnge
+	UEcYRNlOUisCMwZAu1p2AKPhxQzgTmrSRDou0FedZjU79eeZsXSaKtoWr4++24Rz
+	e8K6yElZrnBYVSzCWaqFqN3R8ecZG/wHTuYkW7pTmUSHt7uyEFrejmJfGfha5Jzg
+	==
+Received: from ppma21.wdc07v.mail.ibm.com (5b.69.3da9.ip4.static.sl-reverse.com [169.61.105.91])
+	by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 4euequcer5-1
+	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+	Fri, 19 Jun 2026 08:02:55 +0000 (GMT)
+Received: from pps.filterd (ppma21.wdc07v.mail.ibm.com [127.0.0.1])
+	by ppma21.wdc07v.mail.ibm.com (8.18.1.7/8.18.1.7) with ESMTP id 65J7ngig024958;
+	Fri, 19 Jun 2026 08:02:54 GMT
+Received: from smtprelay01.fra02v.mail.ibm.com ([9.218.2.227])
+	by ppma21.wdc07v.mail.ibm.com (PPS) with ESMTPS id 4ev172fu1t-1
+	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+	Fri, 19 Jun 2026 08:02:53 +0000 (GMT)
+Received: from smtpav03.fra02v.mail.ibm.com (smtpav03.fra02v.mail.ibm.com [10.20.54.102])
+	by smtprelay01.fra02v.mail.ibm.com (8.14.9/8.14.9/NCO v10.0) with ESMTP id 65J82osG61800734
+	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
+	Fri, 19 Jun 2026 08:02:50 GMT
+Received: from smtpav03.fra02v.mail.ibm.com (unknown [127.0.0.1])
+	by IMSVA (Postfix) with ESMTP id 4CB5B2004F;
+	Fri, 19 Jun 2026 08:02:50 +0000 (GMT)
+Received: from smtpav03.fra02v.mail.ibm.com (unknown [127.0.0.1])
+	by IMSVA (Postfix) with ESMTP id EBB6E2004D;
+	Fri, 19 Jun 2026 08:02:49 +0000 (GMT)
+Received: from [9.111.75.212] (unknown [9.111.75.212])
+	by smtpav03.fra02v.mail.ibm.com (Postfix) with ESMTP;
+	Fri, 19 Jun 2026 08:02:49 +0000 (GMT)
+Message-ID: <536350a6-6b82-4b13-afc2-2cdbe3d6cf7f@linux.ibm.com>
+Date: Fri, 19 Jun 2026 10:02:49 +0200
 Precedence: bulk
 X-Mailing-List: sashiko-reviews@lists.linux.dev
 List-Id: <sashiko-reviews.lists.linux.dev>
 List-Subscribe: <mailto:sashiko-reviews+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:sashiko-reviews+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-References: <20260619070508.802802-1-tabba@google.com> <20260619070508.802802-9-tabba@google.com>
- <20260619072432.80E331F000E9@smtp.kernel.org>
-In-Reply-To: <20260619072432.80E331F000E9@smtp.kernel.org>
-From: Fuad Tabba <tabba@google.com>
-Date: Fri, 19 Jun 2026 08:55:22 +0100
-X-Gm-Features: AVVi8Cf2uyu3HDiWVJEKm53KzvotsYPgYT-7gqDcgT28cgshv5Cad908CPNjNDw
-Message-ID: <CA+EHjTxc9PJPUHtHxCFG4CEhJnKSUOFHDca3co2ZG7kvUrUAZA@mail.gmail.com>
-Subject: Re: [PATCH 8/8] KVM: arm64: Implement lazy vCPU state sync for
- non-protected guests
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH v1 1/1] pkey: Fix bitsize check in PKEY_VERIFYPROTK ioctl
 To: sashiko-reviews@lists.linux.dev
-Cc: kvmarm@lists.linux.dev, Oliver Upton <oupton@kernel.org>, 
-	Marc Zyngier <maz@kernel.org>
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
+Cc: linux-s390@vger.kernel.org, Vasily Gorbik <gor@linux.ibm.com>,
+        Heiko Carstens <hca@linux.ibm.com>,
+        Alexander Gordeev <agordeev@linux.ibm.com>
+References: <20260619074541.1710716-1-dengler@linux.ibm.com>
+ <20260619074541.1710716-2-dengler@linux.ibm.com>
+ <20260619080011.4E1A71F00A3D@smtp.kernel.org>
+From: Holger Dengler <dengler@linux.ibm.com>
+Content-Language: en-US
+In-Reply-To: <20260619080011.4E1A71F00A3D@smtp.kernel.org>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 8bit
+X-TM-AS-GCONF: 00
+X-Proofpoint-Spam-Info: AW1haW4tMjYwNjE5MDA3MSBTYWx0ZWRfX0MjvPTPgnj+o
+ KYq6gx1HhqxXVdbPH5bPG1o+FJ8GlyjUidg8ZovE+mbPdNbXJ9OgyPd/iMCjtGns3NsxxvMYJS8
+ UrJum7tnhBRRTaT8RAJFxjzGarvQE0E=
+X-Proofpoint-ORIG-GUID: aeeBJ9Hg4LVn9cRGJWU4G9Uvsqkoqh9n
+X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwNjE5MDA3MSBTYWx0ZWRfX2jrp5/tp8CR4
+ p3ZelOaB1Xqjl1bgyyDJZDh8bwks4NoN7Z7VTvmpgywADt/yUGnJUutM0hfbXiiUEHC5iZL298L
+ HEHdalzviai44VEyK6oqafLdpdWixXH8fKhe8j3xJ3fE2+cwjnY+reIdmwQBbfENNAdnnY02GcI
+ RxEgPF5O3VZqnzdqg7iDEAAQXInzj2xiF2mHblphAz/GB9v+U0yIcPsgQ2A41RH34Lt8phE8StE
+ kAyOc9zCfAbW10qJw+uvhkiRKkXChB4PLYyXQWzRjkkjIQw11xFHvTCfJX69SCUPi7GMU3W0et7
+ YqXwmj8W8JjMMmLSsDhO/vDVuQaR4eB0YhtzZ9jjeDLujh7itnKb5LDdcPBPMdCJaNyzHDSUExV
+ YWTWV+As/Vl4hWBY37s1hArB4HiDXl24rMq/wXnkxWvSdN1VJRLCdDcwEpHpRgADNuZ+CzpC/KW
+ wQLmJoFPF+7AWJbO43g==
+X-Proofpoint-GUID: aeeBJ9Hg4LVn9cRGJWU4G9Uvsqkoqh9n
+X-Authority-Analysis: v=2.4 cv=L9gtheT8 c=1 sm=1 tr=0 ts=6a34f7af cx=c_pps
+ a=GFwsV6G8L6GxiO2Y/PsHdQ==:117 a=GFwsV6G8L6GxiO2Y/PsHdQ==:17
+ a=IkcTkHD0fZMA:10 a=FelO9ux0wxsA:10 a=VkNPw1HP01LnGYTKEx00:22
+ a=RnoormkPH1_aCDwRdu11:22 a=uAbxVGIbfxUO_5tXvNgY:22 a=VwQbUJbxAAAA:8
+ a=K_X9F7hbqwqGGdNf0T4A:9 a=3ZKOabzyN94A:10 a=QEXdDO2ut3YA:10
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.293,Aquarius:18.0.1143,Hydra:6.1.125,FMLib:17.12.100.49
+ definitions=2026-06-19_02,2026-06-18_03,2025-10-01_01
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
+ bulkscore=0 impostorscore=0 malwarescore=0 clxscore=1011 adultscore=0
+ phishscore=0 lowpriorityscore=0 suspectscore=0 priorityscore=1501 spamscore=0
+ classifier=typeunknown authscore=0 authtc= authcc= route=outbound adjust=0
+ reason=mlx scancount=1 engine=8.22.0-2606150000 definitions=main-2606190071
 
-On Fri, 19 Jun 2026 at 08:24, <sashiko-bot@kernel.org> wrote:
->
-> Thank you for your contribution! Sashiko AI review found 3 potential issu=
-e(s) to consider:
-> - [Critical] Removal of `hcr_el2` sync-back causes infinite virtual SErro=
-r injections.
-> - [High] Injected exceptions for Illegal Execution State (ARM_EXCEPTION_I=
-L) are silently dropped on re-entry.
-> - [High] Asynchronous guest context modifications (e.g., KVM_REQ_VCPU_RES=
-ET via PSCI CPU_ON) are dropped, ignoring resets.
-
-VSE is explicitly synced back, not dropped. The stale-SW-copy concern
-is pre-existing upstream nVHE (no HCR_EL2 readback from HW); the old
-full copy synced the same stale value. ARM_EXCEPTION_IL returns
-KVM_EXIT_FAIL_ENTRY to userspace without re-entering, so no injection
-is needed. PENDING_EXCEPTION rides iflags, copied unconditionally (not
-DIRTY-gated). KVM_REQ_VCPU_RESET targets the OFF->ON vCPU, not the
-running one.
-
-/fuad
+On 6/19/26 10:00, sashiko-bot@kernel.org wrote:
+> Thank you for your contribution! Sashiko AI review found 1 potential issue(s) to consider:
+> 
+> Pre-existing issues:
+> - [Critical] An integer wrap-around in the key bit-size calculation bypasses length validation, leading to massive out-of-bounds memory accesses during a subsequent memcpy().
 > --
->
-> commit 479bc386009beb82e67cb9e9a04495d0872f077c
-> Author: Fuad Tabba <tabba@google.com>
->
-> KVM: arm64: Implement lazy vCPU state sync for non-protected guests
->
-> This commit defers copying a non-protected guest's register context
-> between the host and hypervisor until the host explicitly needs it or
-> modifies it. It introduces the PKVM_HOST_STATE_DIRTY flag to track when
-> the state must be flushed to the hypervisor on guest entry.
->
-> > diff --git a/arch/arm64/kvm/handle_exit.c b/arch/arm64/kvm/handle_exit.=
-c
-> > --- a/arch/arm64/kvm/handle_exit.c
-> > +++ b/arch/arm64/kvm/handle_exit.c
->
-> [ ... ]
->
-> > @@ -489,6 +503,22 @@ int handle_exit(struct kvm_vcpu *vcpu, int excepti=
-on_index)
-> >  /* For exit types that need handling before we can be preempted */
-> >  void handle_exit_early(struct kvm_vcpu *vcpu, int exception_index)
-> >  {
-> > +     bool inject_serror =3D ARM_SERROR_PENDING(exception_index) ||
-> > +             ARM_EXCEPTION_CODE(exception_index) =3D=3D ARM_EXCEPTION_=
-EL1_SERROR;
-> > +
-> > +     /*
-> > +      * An SError injected below writes the host ctxt; for a non-prote=
-cted
-> > +      * guest, sync from the hyp vCPU and keep it dirty so it isn't dr=
-opped.
-> > +      */
-> > +     if (is_protected_kvm_enabled()) {
-> > +             vcpu_clear_flag(vcpu, PKVM_HOST_STATE_DIRTY);
->
-> [Severity: High]
-> Does unconditionally clearing the dirty flag here cause other injected
-> exceptions or asynchronous state changes to be silently dropped on the ne=
-xt
-> guest entry?
->
-> For instance, when a non-protected guest exits with an illegal execution
-> state (ARM_EXCEPTION_IL), handle_exit_early() clears PKVM_HOST_STATE_DIRT=
-Y.
-> Later, handle_exit() processes the exception by calling
-> kvm_inject_undefined(), which modifies the host's copy of the guest regis=
-ter
-> context (vcpu->arch.ctxt) to deliver an UNDEF exception. Because this hap=
-pens
-> outside of handle_trap_exceptions(), the dirty flag is never set back to =
-1.
-> Consequently, on the next entry, flush_hyp_vcpu() skips syncing the modif=
-ied
-> context, and the guest resumes execution with its previous state instead =
-of
-> taking the UNDEF exception, leading to an infinite trap loop.
->
-> Similarly, if a PSCI CPU_ON call triggers an IPI, the target vCPU exits w=
-ith
-> ARM_EXCEPTION_IRQ, and the dirty flag is cleared here. The run loop then
-> processes pending requests via check_vcpu_requests(), handling
-> KVM_REQ_VCPU_RESET by calling kvm_reset_vcpu(). The host's context is res=
-et,
-> but since the dirty flag remains 0, the next entry skips syncing the rese=
-t
-> context to the hypervisor, causing the PSCI wake/reset request to be igno=
-red.
->
-> > diff --git a/arch/arm64/kvm/hyp/nvhe/hyp-main.c b/arch/arm64/kvm/hyp/nv=
-he/hyp-main.c
-> > --- a/arch/arm64/kvm/hyp/nvhe/hyp-main.c
-> > +++ b/arch/arm64/kvm/hyp/nvhe/hyp-main.c
->
-> [ ... ]
->
-> > @@ -203,9 +255,13 @@ static void sync_hyp_vcpu(struct pkvm_hyp_vcpu *hy=
-p_vcpu)
-> >       fpsimd_sve_sync(&hyp_vcpu->vcpu);
-> >       sync_debug_state(hyp_vcpu);
-> >
-> > -     host_vcpu->arch.ctxt            =3D hyp_vcpu->vcpu.arch.ctxt;
-> > -
-> > -     host_vcpu->arch.hcr_el2         =3D hyp_vcpu->vcpu.arch.hcr_el2;
->
-> [Severity: Critical]
-> Does removing the synchronization of arch.hcr_el2 back to the host cause =
-an
-> infinite loop of virtual SError injections?
->
-> The host uses HCR_VSE to inject a virtual SError. When the guest takes th=
-e
-> exception, the hardware clears the physical HCR_EL2.VSE bit, which is sav=
-ed in
-> the hyp vCPU's context on exit. Because this sync-back assignment is remo=
-ved,
-> host_vcpu->arch.hcr_el2 indefinitely retains the stale HCR_VSE bit set to=
- 1.
->
-> On every subsequent guest entry, flush_hyp_vcpu() will re-apply this stal=
-e
-> bit from the host into the hyp context, causing infinite, spurious virtua=
-l
-> SError injections that will hang or crash the guest.
->
-> --
-> Sashiko AI review =C2=B7 https://sashiko.dev/#/patchset/20260619070508.80=
-2802-1-tabba@google.com?part=3D8
+
+This issue is already fixed and on its way.
+
+-- 
+Mit freundlichen Grüßen / Kind regards
+Holger Dengler
+
