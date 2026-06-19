@@ -1,182 +1,140 @@
-Received: from mail-yx1-f53.google.com (mail-yx1-f53.google.com [74.125.224.53])
+Received: from va-2-40.ptr.blmpb.com (va-2-40.ptr.blmpb.com [209.127.231.40])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AEFD13064AE
-	for <sashiko-reviews@lists.linux.dev>; Fri, 19 Jun 2026 04:50:51 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=pass smtp.client-ip=74.125.224.53
-ARC-Seal:i=2; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1781844652; cv=pass; b=qbNuQSC6kh+AvxIWWw+AxbsR2kaBPDOpM9EBQVv0KfnooF9Ptp6QcAOnp74wmTqzhivDgNOryIg9qzCIkf8wddRtuk980lr+qtFt4wm0V7Xr2EPl/AZW5x187YVRB5wCqb36RdMsqtzJbKlHemCHEiB177cku0oeYeK7DbkgMjI=
-ARC-Message-Signature:i=2; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1781844652; c=relaxed/simple;
-	bh=hB9u4DRdQqn052bt6peJU7HSp23Mv+TCxzIKFIk6juA=;
-	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
-	 To:Cc:Content-Type; b=dxbv0TrDOdpob3z6QWy0G2mCzQ3cyWJumJWRplwqigGE3gT8sbSWmyW0BJUfl4yueraT8UaIrP5idPj0XLsLbCMAGG3l2Z3iJ36jxrTlnIOOyOa4ofdho010JQLusafVETdD1HAxtpsxwF2LLPXIgzVzSvlInRNFkW+IHh+fJ0E=
-ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=sY9dAJLP; arc=pass smtp.client-ip=74.125.224.53
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1FAC48F49
+	for <sashiko-reviews@lists.linux.dev>; Fri, 19 Jun 2026 04:55:52 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.127.231.40
+ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
+	t=1781844955; cv=none; b=MUiwnilSsJdtGnAIkJ8dK+0qZsAnoC4IHHXrCCAz0JowsG0F4fKQp4obxZBuGPZKK0ZLkEfyimRsLZQ1Lfj2jxrnwkb0zWc2Jai0NpStT9hs+eAfEz+2zlfAUtRLO/aaCA30RV8MpEDNJHdOeJZRUH1CY41aIMLjABGFbmrNzGA=
+ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
+	s=arc-20240116; t=1781844955; c=relaxed/simple;
+	bh=2N7aF5Va3Kpbp/jh/DJivxZPuHiAClh4sTv7kIihI0E=;
+	h=Date:Message-Id:Mime-Version:Content-Type:To:From:Subject:
+	 In-Reply-To:References:Cc; b=NCRO9/L2NpsdJisqIxabgSp4IA5HenS9Wh7j5RSnT1kow2LB4GUZhQhVycSzgDOGZvPPwkDdVK9GoJ9CBv2ZChUYx4tCbp6Fdjb1QEqPvdNiPRd8Ck+WxpWBQG0qGqRromg9JmtJBnHjxsMRtdXSHuDwcroIDc2o+NXn5UXh/Cg=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=fnnas.com; spf=none smtp.mailfrom=fnnas.com; dkim=pass (2048-bit key) header.d=fnnas-com.20200927.dkim.feishu.cn header.i=@fnnas-com.20200927.dkim.feishu.cn header.b=DRbKavPv; arc=none smtp.client-ip=209.127.231.40
+Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=fnnas.com
+Authentication-Results: smtp.subspace.kernel.org; spf=none smtp.mailfrom=fnnas.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="sY9dAJLP"
-Received: by mail-yx1-f53.google.com with SMTP id 956f58d0204a3-660e9fe3c3aso1053510d50.2
-        for <sashiko-reviews@lists.linux.dev>; Thu, 18 Jun 2026 21:50:51 -0700 (PDT)
-ARC-Seal: i=1; a=rsa-sha256; t=1781844650; cv=none;
-        d=google.com; s=arc-20240605;
-        b=AHAvpH1gqXZkLedcp4knBT2sgVRLifFAXqueOn6Fe3EsN+fbAQSVboBXIHJtYPrFwd
-         8u8ntpr3A32DCQZ6pn2nWgq0Hbvus+F0+VjXfPpfPiLsMmnRBXiAS9FYsZnYKFLdH2Oy
-         anfM+TT8V5gvenxy7rgVph+jcUNgqKm6k/P6Bs26bEb81zEr2UBcqhf/+YBHlJ0H6VzQ
-         k7NYIfB9bNHoSriZ0aF0VFQk4OCAzpDZ4zqZNNUVn/+fqMaAtlRICgW5QP8ZqCvRET9Q
-         I4VNvpMrjXbO/TPcrMaalaHXrte1Ptbhg/hmnv3CCriFbbQtZX5C2UNmoDgdY7K5kiSw
-         LbUw==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com; s=arc-20240605;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:dkim-signature;
-        bh=d+k3Ml8dy+ZiyZRYJ1dHv36rs8wSqODj2cIfkPfKU5U=;
-        fh=uA360uvxR9S0K/Y4Lovo7aIaGlBwzVBnnb2BKWupr/4=;
-        b=JHNhB3KtycveRyIH4+zDyKsQpwj9HKN9ZfI+Rn+qQllymjTKRlG8NlmsB5CPdqxon5
-         UYCMUFuI/uN64pP0iW8KmqEu5TGdGJh3GCCvQQ4H6btAyP7cCmOfQkf+NUfcI05+E/Cg
-         uagCfwH5CP92WSeLEse4Uq1iVFvsmNwm1fWqb7WoxyqS7+0+6P3l7GZVEWQtAXzMNEbT
-         w65wa//880AVGNB8wXqzllLVH/dl7uhBFOpTJhPqXO8BAokDc+6K+135TQcln0NTxLHy
-         k9MMmmq8opH97kwqAybS2pp5NnTz/noDO8C6DxfkzaXakUed5XQQ7uvrk416iKNNKb/f
-         9IZw==;
-        darn=lists.linux.dev
-ARC-Authentication-Results: i=1; mx.google.com; arc=none
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20251104; t=1781844650; x=1782449450; darn=lists.linux.dev;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=d+k3Ml8dy+ZiyZRYJ1dHv36rs8wSqODj2cIfkPfKU5U=;
-        b=sY9dAJLP+hPpsqQd6nMPWWNEfv1L9gCWEaqMq77XklWILS+2kQKLfLVxSJHa3XJosp
-         DWN9LYNikTvYHOxMfSJ54aQlKRJyldcSWCeEktLVnNe2yuxJVAz5jaMFF/jS5d5jXWD0
-         wRxPDrtcCRR2jhXuK3nwFx9iEQcvyBiDc86Kxux+UJqiqANMLuGRDD9NUCglNZ10yYZZ
-         eQlw+/n5BT4S8YQQXK/9kG4xeEhYztK1g6HPrSgCU8qZdgFd2TWeV7FiSgHrfJNq8sv9
-         xIyIDRzy7P5CSF2i+ERBbm9SRXdIep06x6WvC8kZPcc6x/Ah3n5AJFyyVS7Ipg+VCC9G
-         xdZg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20251104; t=1781844650; x=1782449450;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:x-gm-gg:x-gm-message-state:from
-         :to:cc:subject:date:message-id:reply-to;
-        bh=d+k3Ml8dy+ZiyZRYJ1dHv36rs8wSqODj2cIfkPfKU5U=;
-        b=swRxXWjWGTMKgQlKDhwDiAU1MM464qke4AZ1ZlGGbvugx0fV4bGxRpZjSgknmqD+S8
-         ehoRDtkwWYwhlse105MBEPtpXwbgDJ1FrpmAeR/v2ut76F2qeHY9upGq5hhjOrkPW235
-         dDwfYlUoXPS7Ot38WtmVKt/QIjKLvGyFlWFUGS8zVZN8x8suwaPQXqnms9S8j9uzXqz3
-         iZEmcd4oZm0KqgaULoMh6YB5j1brvria1ojUUbvulNunqAr9QZrTmdzTchD+4B7DqY+V
-         mV7GTcVbKX0t/qvzgbryYgnNKLCmn5Zv50cR5wU/IQfj7Ggo/4n3OKRzO/MO03US1Shd
-         5aDg==
-X-Gm-Message-State: AOJu0Yxo0e3RLZ66mw1urcU8mircoxNaTMkexCtNjxhRU1fpVP7bHUKj
-	/hmWA/HkDO9Y1nks8MPcR8yHV0JMbSYohgqqtqjnGprhaW+z/KzA0r6ezOtCIwSARjhpXxA9oe1
-	moCWT2xJPrjBPmet2tiidSOndP2tzbjgIHw==
-X-Gm-Gg: AfdE7cmyb62sHJmMovindaeYs2HY7cNrrOwIKcShUaLi9kCYlkIn4p+BaQ0gLNqEbFN
-	wj19eGVfiCH6CSk/Zu1u7kS99phDNuCBGsySuweRO8gymiQ0cCs7hwuQcO9D5dGRetkXyo0oxwl
-	gNye0DNoSbUhwJW/wqcczqDm+mIzykeV31VNnIxOel2u43M26lDl7jU80ugyBg+k9tI7IwrlEWt
-	I1+wmW9wdghnfDobFcQa+D1/0t1T9kbzl1phF/YN/eYHGqrGtZDE7Haln6B/p5wiFFBZSti
-X-Received: by 2002:a05:690e:439a:b0:662:d8cc:6b2e with SMTP id
- 956f58d0204a3-662fc7b38f5mr1923340d50.13.1781844650545; Thu, 18 Jun 2026
- 21:50:50 -0700 (PDT)
+	dkim=pass (2048-bit key) header.d=fnnas-com.20200927.dkim.feishu.cn header.i=@fnnas-com.20200927.dkim.feishu.cn header.b="DRbKavPv"
+DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed;
+ s=s1; d=fnnas-com.20200927.dkim.feishu.cn; t=1781844948;
+  h=from:subject:mime-version:from:date:message-id:subject:to:cc:
+ reply-to:content-type:mime-version:in-reply-to:message-id;
+ bh=ctSG7S+aI0m/BrlvwKZNwUMMch2JYmi2vbI/B7Q3hRg=;
+ b=DRbKavPvUQ/OFejTaZ1L0B66LGiFNuWUBRSrVIXofLBFaNQt6WXukW13g3vX81rsoNI6my
+ BFCgz5NsjwqabLFAp7H0vEHaJ7tytoGOY2jaPE/w9OX7yDmJjhjKVL4Mew3J6GlDoiakWi
+ Hw+EJ01NIwNxLKu4ixi7J5FF1s7ZSOnWy5PnBHdECrHntGh6wker4HsAj5bOPXCGMFLA2J
+ 15El7+wcBIG/nMe3oTlifp0GnqSDpNiNWHEpRo/WGUEfFxnDEfW0VuH5h5ZoWsJlDR8BgD
+ Wso2whOYH4k61qqa1VclRHCjGbxml1WEtOn+iQIO5FuPs7NYp/3V1wzEGqXu+Q==
+X-Original-From: Chen Cheng <chencheng@fnnas.com>
+Date: Fri, 19 Jun 2026 12:55:44 +0800
+Message-Id: <03e65404-e103-4079-9763-b4ae7a5c489c@fnnas.com>
 Precedence: bulk
 X-Mailing-List: sashiko-reviews@lists.linux.dev
 List-Id: <sashiko-reviews.lists.linux.dev>
 List-Subscribe: <mailto:sashiko-reviews+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:sashiko-reviews+unsubscribe@lists.linux.dev>
-MIME-Version: 1.0
-References: <20260618221919.2919512-1-ameryhung@gmail.com> <20260618221919.2919512-2-ameryhung@gmail.com>
- <20260618222630.755041F000E9@smtp.kernel.org>
-In-Reply-To: <20260618222630.755041F000E9@smtp.kernel.org>
-From: Amery Hung <ameryhung@gmail.com>
-Date: Thu, 18 Jun 2026 21:50:39 -0700
-X-Gm-Features: AVVi8CerEGxHtpg1VD1XQFUvmiV4L4zG6EXOJKqow8re4F7R7uFQtG0K1PS22Ss
-Message-ID: <CAMB2axNic+A2QzV8e7B6o9frcMm50nq1QDzU+ME_FnuBvGdy=w@mail.gmail.com>
-Subject: Re: [PATCH bpf v1 2/2] selftests/bpf: Test cgroup link replace with BPF_F_PREORDER
-To: sashiko-reviews@lists.linux.dev
-Cc: bpf@vger.kernel.org
-Content-Type: text/plain; charset="UTF-8"
+Mime-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: quoted-printable
+To: <sashiko-reviews@lists.linux.dev>
+User-Agent: Mozilla Thunderbird
+X-Lms-Return-Path: <lba+26a34cbd2+83ca2b+lists.linux.dev+chencheng@fnnas.com>
+From: "Chen Cheng" <chencheng@fnnas.com>
+Subject: Re: [PATCH] md/raid1: protect head_position for read balance
+Received: from [192.168.8.62] ([183.34.170.142]) by smtp.feishu.cn with ESMTPS; Fri, 19 Jun 2026 12:55:45 +0800
+In-Reply-To: <20260619045116.E12901F000E9@smtp.kernel.org>
+References: <20260619044114.1208456-1-chencheng@fnnas.com> <20260619045116.E12901F000E9@smtp.kernel.org>
+Cc: <yukuai@fygo.io>, <linux-raid@vger.kernel.org>
 
-On Thu, Jun 18, 2026 at 3:26=E2=80=AFPM <sashiko-bot@kernel.org> wrote:
->
-> Thank you for your contribution! Sashiko AI review found 1 potential issu=
+=E5=9C=A8 2026/6/19 12:51, sashiko-bot@kernel.org =E5=86=99=E9=81=93:
+> Thank you for your contribution! Sashiko AI review found 2 potential issu=
 e(s) to consider:
-> - [Medium] Missing error code propagation on `bpf_link_create` failures c=
-auses the test function to incorrectly return success.
+>=20
+> Pre-existing issues:
+> - [Medium] The commit fixes a KCSAN-reported data race on `head_position`=
+ in `raid1.c` but misses the identical data race in the sibling `raid10.c` =
+subsystem.
+> - [Medium] The patch addresses a KCSAN data race for `head_position` but =
+misses identical concurrent data races on adjacent heuristic variables `nex=
+t_seq_sect` and `seq_start`, leading to a potential double-fetch bug and un=
+signed integer underflow.
 > --
->
-> commit 5273c7a6df31aa862a2601f91f12e4d696020f49
-> Author: Amery Hung <ameryhung@gmail.com>
->
-> selftests/bpf: Test cgroup link replace with BPF_F_PREORDER
->
-> This commit adds a cgroup_preorder test case that attaches both a normal
-> and a BPF_F_PREORDER program to a cgroup. It then replaces the normal
-> link's program via bpf_link_update() to verify the effective order change=
-s
-> correctly without array corruption.
->
-> > diff --git a/tools/testing/selftests/bpf/prog_tests/cgroup_preorder.c b=
-/tools/testing/selftests/bpf/prog_tests/cgroup_preorder.c
-> > index d4d583872fa26..80a17203c4fd5 100644
-> > --- a/tools/testing/selftests/bpf/prog_tests/cgroup_preorder.c
-> > +++ b/tools/testing/selftests/bpf/prog_tests/cgroup_preorder.c
->
-> [ ... ]
->
-> > @@ -102,6 +102,75 @@ static int run_getsockopt_test(int cg_parent, int =
-cg_child, int sock_fd, bool al
-> > +static int run_link_replace_test(int cgroup_fd, int sock_fd)
-> > +{
-> > +     LIBBPF_OPTS(bpf_link_create_opts, create_opts);
-> > +     struct cgroup_preorder *skel =3D NULL;
-> > +     int normal_link =3D -1, preorder_link =3D -1;
-> > +     int atype, err =3D 0;
-> > +     __u8 *result, buf =3D 0x00;
-> > +     socklen_t optlen =3D 1;
-> > +
-> > +     skel =3D cgroup_preorder__open_and_load();
-> > +     if (!ASSERT_OK_PTR(skel, "cgroup_preorder__open_and_load"))
-> > +             return -1;
-> > +
-> > +     err =3D setsockopt(sock_fd, SOL_IP, IP_TOS, &buf, 1);
-> > +     if (!ASSERT_OK(err, "setsockopt"))
-> > +             goto close_skel;
-> > +
-> > +     atype =3D bpf_program__expected_attach_type(skel->progs.child);
-> > +
-> > +     create_opts.flags =3D 0;
-> > +     normal_link =3D bpf_link_create(bpf_program__fd(skel->progs.child=
-),
-> > +                                   cgroup_fd, atype, &create_opts);
-> > +     if (!ASSERT_GE(normal_link, 0, "create_normal_link"))
-> > +             goto close_skel;
->
+>=20
+> commit 754549019263d81271c296e50e19909fb366125b
+> Author: Chen Cheng <chencheng@fnnas.com>
+>=20
+> md/raid1: protect head_position for read balance
+>=20
+> KCSAN reports a data race between raid1_end_read_request() and
+> raid1_read_request().
+>=20
+> The completion path updates conf->mirrors[disk].head_position in
+> update_head_pos() without a lock, while the read-balance heuristic reads
+> the same field locklessly in is_sequential() and choose_best_rdev().
+>=20
 > [Severity: Medium]
-> Will run_link_replace_test() incorrectly return success if this first
-> bpf_link_create() fails?
->
-> The err variable is 0 here from the previously successful setsockopt() ca=
-ll.
-> If normal_link fails, we jump to close_skel and return err, causing the
-> caller's ASSERT_OK() check to see a successful test run despite the failu=
-re.
->
-> > +
-> > +     create_opts.flags =3D BPF_F_PREORDER;
-> > +     preorder_link =3D bpf_link_create(bpf_program__fd(skel->progs.chi=
-ld_2),
-> > +                                     cgroup_fd, atype, &create_opts);
-> > +     if (!ASSERT_GE(preorder_link, 0, "create_preorder_link"))
-> > +             goto close_links;
->
-> [Severity: Medium]
-> Similarly, should err be set to a negative value before jumping to
-> close_links if this second bpf_link_create() fails?
-
-Right. Both error propagation are missing. Will fix.
-
->
-> > +
-> > +     result =3D skel->bss->result;
->
+> This is a pre-existing issue, but does raid10 also need this same fix?
+>=20
+> Looking at drivers/md/raid10.c, update_head_pos() updates
+> conf->mirrors[r10_bio->devs[slot].devnum].head_position locklessly, and
+> read_balance() reads it locklessly:
+>=20
+> drivers/md/raid10.c:read_balance() {
+> ...
+> 	new_distance =3D abs(r10_bio->devs[slot].addr -
+> 			   conf->mirrors[disk].head_position);
+> ...
+> }
+>=20
+> Since raid10 shares this read-balancing heuristic, should the data race b=
+e
+> addressed there as well to prevent torn reads?
+>=20
 > [ ... ]
->
-> --
-> Sashiko AI review =C2=B7 https://sashiko.dev/#/patchset/20260618221919.29=
-19512-1-ameryhung@gmail.com?part=3D2
+>=20
+
+sure, already submited in another patch .
+
+
+>> diff --git a/drivers/md/raid1.c b/drivers/md/raid1.c
+>> index 5b9368bd9e700..4cdf4484cab6c 100644
+>> --- a/drivers/md/raid1.c
+>> +++ b/drivers/md/raid1.c
+> [ ... ]
+>> @@ -737,7 +737,7 @@ static bool is_sequential(struct r1conf *conf, int d=
+isk, struct r1bio *r1_bio)
+>>   {
+>>   	/* TODO: address issues with this check and concurrency. */
+>>   	return conf->mirrors[disk].next_seq_sect =3D=3D r1_bio->sector ||
+>> -	       conf->mirrors[disk].head_position =3D=3D r1_bio->sector;
+>> +	       READ_ONCE(conf->mirrors[disk].head_position) =3D=3D r1_bio->sec=
+tor;
+>>   }
+>=20
+> [Severity: Medium]
+> This is a pre-existing issue, but should next_seq_sect and seq_start also
+> be protected to prevent double-fetch bugs and underflows?
+>=20
+> While this patch secures head_position, next_seq_sect is still read lockl=
+essly
+> here and in should_choose_next():
+>=20
+> drivers/md/raid1.c:should_choose_next() {
+> ...
+> 	return opt_iosize > 0 && mirror->seq_start !=3D MaxSector &&
+> 	       mirror->next_seq_sect > opt_iosize &&
+> 	       mirror->next_seq_sect - opt_iosize >=3D mirror->seq_start;
+> }
+>=20
+> Because mirror->next_seq_sect is read multiple times without READ_ONCE(),
+> could the compiler emit multiple memory loads?
+>=20
+> If a concurrent update from update_read_sectors() reduces next_seq_sect
+> after the safety check (mirror->next_seq_sect > opt_iosize) but before th=
+e
+> subtraction, could it cause an unsigned integer underflow, bypassing the
+> seq_start check?
+>=20
+
+good catch , and , I notice either. I will submit in separate patch .
