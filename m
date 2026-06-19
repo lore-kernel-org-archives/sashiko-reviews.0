@@ -1,154 +1,148 @@
-Received: from mail-wm1-f67.google.com (mail-wm1-f67.google.com [209.85.128.67])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from out-174.mta1.migadu.com (out-174.mta1.migadu.com [95.215.58.174])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C596833D4FB
-	for <sashiko-reviews@lists.linux.dev>; Fri, 19 Jun 2026 21:19:51 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.67
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D273426E70E
+	for <sashiko-reviews@lists.linux.dev>; Fri, 19 Jun 2026 23:39:21 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=95.215.58.174
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1781903993; cv=none; b=PD0clpgIyeueIx0TzWkjiJeedWVEnLio7UZXo5ddbudVNRF0/3ZVHGB5tH0UDu2zA6fK2mzf5Rr2r8onEFko+pTFj51nBn+cSqmkGOk+cKre0lcjQGuOVLaf/n48tNMFU4Oex3tLWG0bzlcvJwg8yTRbtuz8qwBvQuHQadfurm4=
+	t=1781912363; cv=none; b=gtF1RTVlnwgK/EDpsw5A68QAF7fbnDkKCuCS/HNLAxZV9vPk8Qv9lTLOs16r/MH8rVA/i85fgVXwCVzRSYt1nnA9cAmgcmRaI6q4hALkXumn0maG9WnmPwi9Z6GZRfSXhY7RZHvQid/mXeOoXrDI08c5RB1rS+8X2hzue3nADzY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1781903993; c=relaxed/simple;
-	bh=Z1v7oK08s9cX9ai3rtGVy+hD16fiw/Yo5ZmR3yMmw6U=;
-	h=Mime-Version:Content-Type:Date:Message-Id:Cc:Subject:From:To:
-	 References:In-Reply-To; b=D5ZevaFtVT4Eo5jgJIpnKOvZ76Kw0Pv02xSc7Y6Q5FUDTHbVplkPQjraZIcictksXsRdLlOXRWniW3wPfav3W0TYj4FX7odfnu4BcxlL4SDhdx1l4xBOElkrCuMnZqVoOLcfartdeJ1kfSQOFooKIC/b7OLC5hsFl+y6CXkyFk4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=coumUBfv; arc=none smtp.client-ip=209.85.128.67
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+	s=arc-20240116; t=1781912363; c=relaxed/simple;
+	bh=C1Y3OdP/bAcdNgU5rQcA7TEt7rhXSGoAbUtrrGhKV2Y=;
+	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
+	 In-Reply-To:Content-Type; b=Jh4kBp5w9V3klRhONmAxHubcREd96ZQhVeUizK1beFTH2EyI8qm6ecGwox5cxcK1THslsAJU+PZGptxgi9q+sTqdHuMwPEhhgyqiRJ26ys9MJWEDj0YnNQ7Ad+53M44QuyhGDiVs9LAYRQ+JJ/AmGqQdcjWs0H4kI3voLhJ/5ZM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linux.dev; spf=pass smtp.mailfrom=linux.dev; dkim=pass (1024-bit key) header.d=linux.dev header.i=@linux.dev header.b=Y3WZgT3H; arc=none smtp.client-ip=95.215.58.174
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linux.dev
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linux.dev
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="coumUBfv"
-Received: by mail-wm1-f67.google.com with SMTP id 5b1f17b1804b1-4903d730b1fso33610975e9.2
-        for <sashiko-reviews@lists.linux.dev>; Fri, 19 Jun 2026 14:19:51 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20251104; t=1781903990; x=1782508790; darn=lists.linux.dev;
-        h=in-reply-to:references:to:from:subject:cc:message-id:date
-         :content-transfer-encoding:mime-version:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=aPe7xhOch75yXx5Pu0qv+8+PGvLXn4ZjaQ2xwLoyw08=;
-        b=coumUBfvo6S0O9LbOeZgAxC/33RInZnEN1kcBqb6KLa2x8RC41tSyr9dOBW6LcP60m
-         RL6EnpV0s3n5b7YoFcsZ6Yof7ZbpS75Y63vC6YDKb3+IX4wpO3YOLC9YnKUapKg8JQle
-         a2fOX6f9PVi9/R/vTi4E/46YrTfOIHUE8il1zWScopBKtu5Hv8EIBSTghI8dpKD1iOGq
-         gNJz1iwK09nMMfPEd4B1OzE6ePC9u26+aKfT/7fqJYiNjCXdZtE/wfS88CAXam//lKWg
-         zGRfI+mK9fFfEnXgdVqky3dOrfQR3nnS1jZXrk3pdcqOBsTz30pwVlY1HHmubYeJXoZg
-         JzfA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20251104; t=1781903990; x=1782508790;
-        h=in-reply-to:references:to:from:subject:cc:message-id:date
-         :content-transfer-encoding:mime-version:x-gm-gg:x-gm-message-state
-         :from:to:cc:subject:date:message-id:reply-to;
-        bh=aPe7xhOch75yXx5Pu0qv+8+PGvLXn4ZjaQ2xwLoyw08=;
-        b=ErhoLC9E4JiiHjcgi/+rwiMO7yxuWfmE0GDFwLqYXlzlzm/NkW4sS6T0JfM+8HNk0J
-         cEFyNat99Y96mhMbFUfaMJkhejVbLziXgrmiwEyb/IWFl9sT/1+/VJnu67oXfihRWbJk
-         MV1gIGbeq7are0BQTuM+XU1UijIHp9IGDCu3dMluVgZ/YYbhyK9YGvcUhipjUJKUi4R5
-         /kBrn08wAhKxhY7iGS3ZnMTjUAOhNPYYgL8mL448urop2dBi/9CdJtwpD0bc9OoHa1cX
-         T58NBieWm3CVQ+jG/dlnm+/NAJC6VT7Um0Jc8syfzbMRnHhq1M/iZmV7iSMbtxR+S32n
-         E14g==
-X-Gm-Message-State: AOJu0Yx/A9WEOM1vmE1Qn9RT76KClen8F+WnD7QQqHsMeQfQWSisSNa8
-	drCvyJWJ5X+ar7Voi7F9+21wqWljCjsSSp6b8rS+MubGo6B/rHibhROMPhZV0Liy
-X-Gm-Gg: AfdE7cnjDa36L6zjbA+KSZ/abCPkuoI2WJOhBuBeEggRE8P5ZrWql0AdqOpssYQNrJ1
-	ck+8B0V2siwO5gQR4gzpxOWAwNeAAkgmcvZXS4c5hkwQ5LmkBwecQAAg7csBFgWQOdG3zXfsFnH
-	GhWnA04noAwGs4znow3oftYfdQRdfAdJYTzZlM/d7EgYIsjnHnr+HwFL5zoDqUWkQab45yB0p5A
-	lfUWcD81FUHxBFwVAXkVSJvDThlOZEAO/byHJa3GP9bKO1K95Wqgz4GiqHWS+zydo+Ohfb7CAcr
-	HO1dPZZq3jcr1+/d9NKQZUKUKbf1fsG/AwfAWxbOu3t0nOMrahPGbyWWWPgpTzST0xRgaAdSZfQ
-	m8GBSfNl44xofKZ/aPwcvanHutb0anNLM3nbIcazdAz55kLgc2308Su3FvxQsVuwovw5payE6tc
-	SKuBka1mwCg3yhWNf8tVbM3FqSzpS2fSTApfptmK9MC935h8ULRjncDt0SMQ0XXY0Ox77VQGdmC
-	jjk7fOq0f6orEw1qS2f8hLzBW+fRiMpW/bEyByqfSMgfgfWIRUwNa0=
-X-Received: by 2002:a05:600c:5252:b0:490:bd1d:4732 with SMTP id 5b1f17b1804b1-4923f579333mr93310165e9.23.1781903990201;
-        Fri, 19 Jun 2026 14:19:50 -0700 (PDT)
-Received: from localhost (nat-icclus-192-26-29-3.epfl.ch. [192.26.29.3])
-        by smtp.gmail.com with ESMTPSA id 5b1f17b1804b1-4923ff821aasm97351255e9.12.2026.06.19.14.19.49
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Fri, 19 Jun 2026 14:19:49 -0700 (PDT)
+	dkim=pass (1024-bit key) header.d=linux.dev header.i=@linux.dev header.b="Y3WZgT3H"
+Message-ID: <4a08c2ca-8137-428d-9f27-337401b62f11@linux.dev>
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linux.dev; s=key1;
+	t=1781912359;
+	h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+	 to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+	 content-transfer-encoding:content-transfer-encoding:
+	 in-reply-to:in-reply-to:references:references;
+	bh=NNpb7L2Dqpu2wyeTGuiQDnyk9igjFskq57DPZVvFEao=;
+	b=Y3WZgT3H8P0jSvw93j3YMzpV/qRHSkpIE/CwHlCo0dnsmtnb9lwv5yEH5kyMBbH5WIycxb
+	ruxLtUN44dm46SUyssPaguRnQC0ML7g2GWdK1u9ger8I6xD12OOvCGrRc4Nu6/sF/iB9tV
+	eqpxZ5ploHhn096cDxFDp9B52Cn2vvk=
+Date: Fri, 19 Jun 2026 16:39:05 -0700
 Precedence: bulk
 X-Mailing-List: sashiko-reviews@lists.linux.dev
 List-Id: <sashiko-reviews.lists.linux.dev>
 List-Subscribe: <mailto:sashiko-reviews+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:sashiko-reviews+unsubscribe@lists.linux.dev>
-Mime-Version: 1.0
-Content-Transfer-Encoding: quoted-printable
-Content-Type: text/plain; charset=UTF-8
-Date: Fri, 19 Jun 2026 23:19:49 +0200
-Message-Id: <DJDC8VWEQND5.F1DEG4W53SB7@gmail.com>
-Cc: <bpf@vger.kernel.org>
-Subject: Re: [PATCH bpf-next v2 07/17] bpf: Track verifier context
- diagnostic events
-From: "Kumar Kartikeya Dwivedi" <memxor@gmail.com>
-To: <sashiko-reviews@lists.linux.dev>, "Kumar Kartikeya Dwivedi"
- <memxor@gmail.com>
-X-Mailer: aerc 0.21.0
-References: <20260619205934.1312876-1-memxor@gmail.com>
- <20260619205934.1312876-8-memxor@gmail.com>
- <20260619211353.0B4201F000E9@smtp.kernel.org>
-In-Reply-To: <20260619211353.0B4201F000E9@smtp.kernel.org>
+MIME-Version: 1.0
+Subject: Re: [PATCH v6 04/21] RISC-V: Define indirect CSR access helpers
+To: sashiko-reviews@lists.linux.dev
+Cc: robh@kernel.org, devicetree@vger.kernel.org,
+ linux-perf-users@vger.kernel.org, conor+dt@kernel.org
+References: <20260608-counter_delegation-v6-4-285b72ed65a9@meta.com>
+ <20260609061511.276E31F00893@smtp.kernel.org>
+Content-Language: en-US
+X-Report-Abuse: Please report any abuse attempt to abuse@migadu.com and include these headers.
+From: Atish Patra <atish.patra@linux.dev>
+In-Reply-To: <20260609061511.276E31F00893@smtp.kernel.org>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
+X-Migadu-Flow: FLOW_OUT
 
-On Fri Jun 19, 2026 at 11:13 PM CEST, sashiko-bot wrote:
-> Thank you for your contribution! Sashiko AI review found 1 potential issu=
-e(s) to consider:
-> - [Medium] Hardcoded depth for IRQ contexts breaks nested diagnostic hist=
-ory anchoring.
+
+On 6/8/26 11:15 PM, sashiko-bot@kernel.org wrote:
+> Thank you for your contribution! Sashiko AI review found 1 potential issue(s) to consider:
+> - [Medium] Unsafe statement-expression macro definitions causing delayed evaluation and variable shadowing hazards.
 > --
 >
-> commit 86418a115dc1ef24cac1a623674bfd700c69c32e
-> Author: Kumar Kartikeya Dwivedi <memxor@gmail.com>
+> commit 572b7555547c1b5bc07701482ba67d379f6a2177
+> Author: Atish Patra <atishp@rivosinc.com>
 >
-> bpf: Track verifier context diagnostic events
+> RISC-V: Define indirect CSR access helpers
 >
-> Record verifier context transitions in the diagnostic history to anchor
-> causal paths for lock, IRQ, RCU, and preempt regions. The depth of the
-> context is used to ensure nested regions correctly anchor at the outermos=
-t
-> active region.
+> This commit introduces helper macros to read, write, and perform WARL
+> operations on indirect CSRs. The macros use statement-expressions to handle
+> the multiple instructions required while disabling interrupts.
 >
->> diff --git a/kernel/bpf/verifier.c b/kernel/bpf/verifier.c
->> index 93941deb2cd8c..e584dec04b34d 100644
->> --- a/kernel/bpf/verifier.c
->> +++ b/kernel/bpf/verifier.c
-> [ ... ]
->> @@ -1473,6 +1475,7 @@ static int acquire_irq_state(struct bpf_verifier_e=
-nv *env, int insn_idx)
->>  	s->id =3D ++env->id_gen;
->>
->>  	state->active_irq_id =3D s->id;
->> +	bpf_diag_record_context(env, insn_idx, BPF_DIAG_CONTEXT_IRQ, true, 1);
->
+>> diff --git a/arch/riscv/include/asm/csr_ind.h b/arch/riscv/include/asm/csr_ind.h
+>> new file mode 100644
+>> index 0000000000000..6fd7d44dc640a
+>> --- /dev/null
+>> +++ b/arch/riscv/include/asm/csr_ind.h
+>> @@ -0,0 +1,44 @@
+>> +/* SPDX-License-Identifier: GPL-2.0-only */
+>> +/*
+>> + * Copyright (C) 2024 Rivos Inc.
+>> + */
+>> +
+>> +#ifndef _ASM_RISCV_CSR_IND_H
+>> +#define _ASM_RISCV_CSR_IND_H
+>> +
+>> +#include <linux/irqflags.h>
+>> +
+>> +#include <asm/csr.h>
+>> +
+>> +#define csr_ind_read(iregcsr, iselbase, iseloff) ({		\
+>> +	unsigned long __value = 0;				\
+>> +	unsigned long __flags;					\
 > [Severity: Medium]
-> The commit message mentions using context depth to anchor nested regions =
-at
-> the outer active region. Since BPF allows nested IRQ disables (for exampl=
-e,
-> via multiple bpf_local_irq_save calls), does hardcoding the depth to 1 he=
-re
-> break that behavior?
+> Will these generic variable names (__value, __flags) cause shadowing issues if
+> the caller passes in arguments with the same names?
 >
-> If a program nests IRQ contexts, multiple enter events will be recorded w=
-ith
-> a depth of 1. When bpf_diag_history_context_start_idx() searches backward=
-s
-> for an event with a depth of 1, won't it stop at the innermost IRQ enter
-> event rather than the outermost one?
+> Evaluating macro arguments into unique local variables before entering the
+> IRQ-disabled region would avoid this regression.
 >
-
-Good catch in both replies; will fix in v3.
-
->>  	return s->id;
->>  }
->
-> [ ... ]
->> @@ -1552,6 +1561,9 @@ static int release_irq_state(struct bpf_verifier_s=
-tate *state, int id)
->>  		if (state->refs[i].id =3D=3D id) {
->>  			release_reference_state(state, i);
->>  			state->active_irq_id =3D prev_id;
->> +			bpf_diag_record_context(env, env->insn_idx,
->> +						BPF_DIAG_CONTEXT_IRQ, false,
->> +						state->active_irq_id ? 1 : 0);
->
+>> +	local_irq_save(__flags);				\
+>> +	csr_write(CSR_ISELECT, (iselbase) + (iseloff));		\
+>> +	__value = csr_read(iregcsr);				\
+>> +	local_irq_restore(__flags);				\
+>> +	__value;						\
+>> +})
+>> +
+>> +#define csr_ind_write(iregcsr, iselbase, iseloff, value) ({	\
+>> +	unsigned long __flags;					\
+>> +	local_irq_save(__flags);				\
+>> +	csr_write(CSR_ISELECT, (iselbase) + (iseloff));		\
+>> +	csr_write(iregcsr, (value));				\
 > [Severity: Medium]
-> Similarly, won't this hardcode the exit depth to 1 if there are still out=
-er
-> nested IRQ contexts active? Should this calculate the actual number of
-> nested IRQ contexts instead?
+> Since value is evaluated here after CSR_ISELECT has been programmed, what
+> happens if a caller passes an expression that accesses another indirect CSR,
+> such as a nested csr_ind_read(), as the value argument?
 >
->>  			return 0;
->>  		} else {
->>  			prev_id =3D state->refs[i].id;
+> It appears the nested call would overwrite CSR_ISELECT, causing the write to
+> silently corrupt the wrong hardware register. Evaluating arguments into local
+> variables before disabling interrupts would prevent this, and also avoid the
+> risk of evaluating expressions with side effects while interrupts are disabled.
+>
+>> +	local_irq_restore(__flags);				\
+>> +})
+>> +
+>> +#define csr_ind_warl(iregcsr, iselbase, iseloff, warl_val) ({	\
+>> +	unsigned long __old_val = 0, __value = 0;		\
+>> +	unsigned long __flags;					\
+> [Severity: Medium]
+> Do these generic local variables risk shadowing caller arguments?
+>
+>> +	local_irq_save(__flags);				\
+>> +	csr_write(CSR_ISELECT, (iselbase) + (iseloff));		\
+>> +	__old_val = csr_read(iregcsr);				\
+>> +	csr_write(iregcsr, (warl_val));				\
+> [Severity: Medium]
+> Is there a risk that evaluating warl_val here could overwrite CSR_ISELECT if
+> the caller provides an expression that performs another indirect CSR access?
+>
+>> +	__value = csr_read(iregcsr);				\
+>> +	csr_write(iregcsr, __old_val);				\
+>> +	local_irq_restore(__flags);				\
+>> +	__value;						\
+>> +})
+>> +
+>> +#endif
+
+Given the callers, I don't think the possibilities raised by Sashiko can 
+actually happen.
+It's a macro. So the new callers should ensure they are invoking it with 
+proper argument.
+
+N/A.
+
 
