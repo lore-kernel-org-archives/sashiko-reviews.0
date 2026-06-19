@@ -1,117 +1,127 @@
-Received: from mo4-p00-ob.smtp.rzone.de (mo4-p00-ob.smtp.rzone.de [81.169.146.221])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-wm1-f41.google.com (mail-wm1-f41.google.com [209.85.128.41])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CA3B226B2AD
-	for <sashiko-reviews@lists.linux.dev>; Fri, 19 Jun 2026 17:21:08 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=pass smtp.client-ip=81.169.146.221
-ARC-Seal:i=2; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1781889671; cv=pass; b=eah3OL/fFt4zeFOFi5XmhWIhvt2pZKP0e9M9Xc6ZDaRcBEzzs83fMqUz1Fv58K9S5RKzLV74wZUYybgMPY3+skR+e6m9/JIUPod0baAeTzC8g+MtcxrXTtSgQq77I9XDX+vir8EIpoLxS7i+95MUUJ7WZFbf6jiUwmSZlV39HE8=
-ARC-Message-Signature:i=2; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1781889671; c=relaxed/simple;
-	bh=NkCuyHKA475pm8MMGSPylFmgWbkQ49DTcM5GNi67nMU=;
-	h=Content-Type:Mime-Version:Subject:From:In-Reply-To:Date:Cc:
-	 Message-Id:References:To; b=TDEgfG+LWV6BnvF3YCqCukeh2+/x5//ezQ/L34g52j4rm4WG7YmupdsZZ1Cu/7DwoimBvbYOEJBL4e3mus3nFbVhMbCFGMXkl+4WYPU/gvWXd7BxMVVMHMrDQlbxOdoiXBUkzEfQoPiLvBXeu5DHIEAeXdejPisEwas0Xx95KvQ=
-ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=goldelico.com; spf=pass smtp.mailfrom=goldelico.com; dkim=pass (2048-bit key) header.d=goldelico.com header.i=@goldelico.com header.b=dxA9BEdC; dkim=permerror (0-bit key) header.d=goldelico.com header.i=@goldelico.com header.b=nv8LpHQp; arc=pass smtp.client-ip=81.169.146.221
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=goldelico.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=goldelico.com
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4420A380FF9
+	for <sashiko-reviews@lists.linux.dev>; Fri, 19 Jun 2026 17:35:17 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.41
+ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
+	t=1781890519; cv=none; b=LWJztGlt76E9mxbvDEVEwQfjsP1PYwS0gN5N5ksCV14RT1Jvf5vj9SgAVgvYKafWls826nJVVM7G4hQWtr8Codm5cYSPiFGdvZSaSFHUsWJkguIQXvRy8Tb87ydiGdfX2Fh0VDwcxulZURXhuhdRN533YY9OyFT70/4nEy1lhhg=
+ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
+	s=arc-20240116; t=1781890519; c=relaxed/simple;
+	bh=3kAluI+OK1a60ua4Ojr4hrMwx6+mT13I2kAsJtMdAl4=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=a9edDX7PFxIx9dWwm2rqkEmf9P2JlYA9Cv4k/7znXwiGpCPlxDKmTdgVYijllBu/wV2al4ZaIDNXETpsF0blfTjrnzS0sKDtYrKIc561qA4jjFmveFwEuZieCATdygmy3x0xh5Yb787FXgg89j1UdyBqXfIbqst1Swb7KrK7RuI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=baylibre.com; spf=pass smtp.mailfrom=baylibre.com; dkim=pass (2048-bit key) header.d=baylibre.com header.i=@baylibre.com header.b=dGN8QcBr; arc=none smtp.client-ip=209.85.128.41
+Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=baylibre.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=baylibre.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=goldelico.com header.i=@goldelico.com header.b="dxA9BEdC";
-	dkim=permerror (0-bit key) header.d=goldelico.com header.i=@goldelico.com header.b="nv8LpHQp"
-ARC-Seal: i=1; a=rsa-sha256; t=1781889482; cv=none;
-    d=strato.com; s=strato-dkim-0002;
-    b=SvtzZD13tUbY+NO4sA+tQrFpJaXs07CE7G6QcyWyL40KhcsWapLaIs+x+Za/XYZCsI
-    bdwN1/uciAp8jg4x8FXzzM7igo6B3XHhpNjIRIoECn2FM064eQW5iaABnPIpRshFFpQ4
-    3XXLWf8s263oLe3wE/pyiucWMfbCbQ9GbpUcIMTEDdOSVYK9HfGn+9xu5KTc5/XPvfE5
-    lFST8LZR8Gkk/ZHHv8uk88aD+bn/d1efgStiKryPBvDlhLIMIo9xR2vg3iQqW485A4Tu
-    W+MUWcLgz/iiyN4LJ9mpOvYYO9uwcTDUSoJmTsUhXFjtjX86K6bnT+B3lusXy+ecdDLQ
-    CDVQ==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; t=1781889482;
-    s=strato-dkim-0002; d=strato.com;
-    h=To:References:Message-Id:Cc:Date:In-Reply-To:From:Subject:Cc:Date:
-    From:Subject:Sender;
-    bh=NkCuyHKA475pm8MMGSPylFmgWbkQ49DTcM5GNi67nMU=;
-    b=dpI6RIULdyCc4gFMIA3mGyC34e8ybAhkT/n5B/NiGfY0/mxlInbZz9CMUhEB53KBXG
-    VyzKpmRY0o25sOchJpQnU1PCc4O2oi/NdOwVLcyvAZzcn6HtptLlreSI/drbIe6c52OL
-    Vy6MPEh5jytfY9wsjCEnSwf1WXFjojNPBtevM2a3MNINqIWMmQIaiGCGK/kIgVOG/ay5
-    rzqKHvLu2JHCW2BOLDpzBu3C6f2m9vpOrJY1mxVIC4EgG7YdALcb/JAKD6sNyyzLVrXA
-    fx51oWj6dj8guebcVdlpdAGVzE5srrZrJN64Cxt80/I1cmCY/FTXShqKenvSc2zI54aR
-    Rjag==
-ARC-Authentication-Results: i=1; strato.com;
-    arc=none;
-    dkim=none
-X-RZG-CLASS-ID: mo00
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; t=1781889482;
-    s=strato-dkim-0002; d=goldelico.com;
-    h=To:References:Message-Id:Cc:Date:In-Reply-To:From:Subject:Cc:Date:
-    From:Subject:Sender;
-    bh=NkCuyHKA475pm8MMGSPylFmgWbkQ49DTcM5GNi67nMU=;
-    b=dxA9BEdCck/8HD7K4ol37kUUttpOwQnTIvtGp1C15pn6Ox1XyXkRg0mRlBscbYqSr3
-    6pSQ0D9v+QXEE1Zwr8UtasaUEYZ1+QWcRwVNoTt5GQI3H4+N8ifBut5FzjbbQIhq0fx2
-    ibHx8tLm0RM0aW7m9o0iMUBJRbvOaGl6XWq6Zwwi6+MvEtZ3rMSgxFDUTFElH143inNK
-    Jqgqx66Cn88/ypFHT5TbTbzbDBSMH5xWZZtb/9pZqDdLTehY32xbJVGB8jS1xpSHchBb
-    7TmnKc8w8ZewpMbeAt05e5yhoCCDip7ID9HOEhmkIFV7qONlTznAL95YH7lFLrImfzVc
-    maKA==
-DKIM-Signature: v=1; a=ed25519-sha256; c=relaxed/relaxed; t=1781889482;
-    s=strato-dkim-0003; d=goldelico.com;
-    h=To:References:Message-Id:Cc:Date:In-Reply-To:From:Subject:Cc:Date:
-    From:Subject:Sender;
-    bh=NkCuyHKA475pm8MMGSPylFmgWbkQ49DTcM5GNi67nMU=;
-    b=nv8LpHQprR9uqr/eFiXQoXUWCWqh6OciHCC19hPiKvDw/8qc+8tYaI8n7yF8Gz/eFT
-    djtyzyvtdnpsxFGeyPBw==
-X-RZG-AUTH: ":JGIXVUS7cutRB/49FwqZ7WcJeFKiMhflhwDubTJ9qVpwcQVkPW4I1HrQ2ppZzsiNc/fOFMhUadUzANaCP/08tKGRQWc="
-Received: from smtpclient.apple
-    by smtp.strato.de (RZmta 55.0.1 AUTH)
-    with ESMTPSA id Qcf97c25JHI1jmb
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (curve X9_62_prime256v1 with 256 ECDH bits, eq. 3072 bits RSA))
-	(Client did not present a certificate);
-    Fri, 19 Jun 2026 19:18:01 +0200 (CEST)
-Content-Type: text/plain;
-	charset=us-ascii
+	dkim=pass (2048-bit key) header.d=baylibre.com header.i=@baylibre.com header.b="dGN8QcBr"
+Received: by mail-wm1-f41.google.com with SMTP id 5b1f17b1804b1-4923fb1f095so12180645e9.1
+        for <sashiko-reviews@lists.linux.dev>; Fri, 19 Jun 2026 10:35:17 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=baylibre.com; s=google; t=1781890516; x=1782495316; darn=lists.linux.dev;
+        h=in-reply-to:content-disposition:mime-version:references:message-id
+         :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
+        bh=3kAluI+OK1a60ua4Ojr4hrMwx6+mT13I2kAsJtMdAl4=;
+        b=dGN8QcBrVuD55GZ/1YSYgh4jBHyiP7lxRMmbgtoxID3NM/I+fzvAZFV39Ekce8pIpp
+         29sIDCiYBVzC2bbUbooa7DvIeORoELN1GOmaXdYqIksPw7sIrudlKxLrma67qXVnSgVo
+         sMkVRT1OmFtKSCZpqE54lBMAfvJA/3HH7GnOYtokzLcwygc9y1iKWVLUNAWlCe+nwYhC
+         xLMy9Gzs/4y/MlLlUXG/yqVHdRlFguflnpbRf1M7X0e8tBUAUyL94zVnHushjIF80uTO
+         hGmFbHlwH3kCYhhTTNYcmyYRtiLqfgMyMOxfgVJRHfW1ZPAC+dOT6WM5oayPKfrvJXX3
+         CXlQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20251104; t=1781890516; x=1782495316;
+        h=in-reply-to:content-disposition:mime-version:references:message-id
+         :subject:cc:to:from:date:x-gm-gg:x-gm-message-state:from:to:cc
+         :subject:date:message-id:reply-to;
+        bh=3kAluI+OK1a60ua4Ojr4hrMwx6+mT13I2kAsJtMdAl4=;
+        b=ImAoboCE/VYIC1hBo6ljWAyATEtD7dIKqnEW5KbHuIMzxpwGY8bzSJoDthcb8qcO1+
+         eNrZlA9qXuDl8NWXD5Be1bQH9xlDnV10BtPWbXJryTJbGdpal+5nz4m3tJ1Ona56G6N2
+         ySUyanbC7Fsp79CjviWbaLPR59v55WVkq24n2U2tuXa51o09PfT1IR9gzWfw7nSz/Adt
+         r1Zzxpa8D33Ub0SZB5RU2YBss+0Sa81uf53UfJ6HGwfKDf5eySE0umuICNI8xVHn+1Kr
+         14UUxFQ/w5vkwypBt3G63TygUYOlSLwSKnyhau/5Z0igdWpkF+TM9kQ4Pt8K6j3JrO4i
+         YeQQ==
+X-Forwarded-Encrypted: i=1; AFNElJ+IvjD0GrfFr+ddjDpiv2c7bBUKRTQSZGM/IVW/QJjF292OeIbwpTlmlRz/POz0v10mW6GCNTGWKVt+egcRHkQ=@lists.linux.dev
+X-Gm-Message-State: AOJu0Yxnqcpv3g99IuWpJ3NTq0O7cxdIPG9nD21HwMweutORBoWF5zMq
+	ZTJzMkbEZ3BkHxAOvb6Se6js37PdiucrOFQIquvhwkMaoQYBqH9WF6QC23YmS36Da+o=
+X-Gm-Gg: AfdE7clg2NdZSc33fCyUMvmPIneeLToQ46ayJUsr2jfc0txKf4RC9M4Vk57NqMieEHZ
+	025bdhtuNQRj9iShVKCJXO9ZFV9+v8nEGPAnL9rH9IFpfnPpBcSLB19yk/69W3XT6fZDX+pDkyD
+	39C2a+6by/+yTcEp/tdN8KcJpDa4GtTU6qLGGUN8c7jfk0itFjISygZL5Y1SzpFY61/PazyXrvS
+	AXCJn1Td0ggc3yYEcJ5gO0mzSvjHeJtSz2p8uB4tCK90Tz+9J3eB4T4j6zCaSQw27B0E2Kt4G3n
+	7ClHzAX54rgMpAE2CyHfUiioA3LBdV0Q6nTCoxUPx7cN8+L9uG4VSiq61kieR9BCpSRTBExmaYx
+	hVEORV2hURKAZkMExipNBwmHSr6aTgR5N3vh4avSCpf7c/tJBThzQ5UJPShph63FP+8CwLTft2y
+	2emH+jjSldXQd5iAtxSWxoWKIWAxVsavcl39Mfdl0ZpmISNweE5vTjBa5PGEYmMaEkePkVPoTQa
+	MZhBJk7JjBCEg==
+X-Received: by 2002:a05:600d:8654:20b0:492:45cd:82d5 with SMTP id 5b1f17b1804b1-49245cd835cmr26779975e9.24.1781890515652;
+        Fri, 19 Jun 2026 10:35:15 -0700 (PDT)
+Received: from localhost (p200300f65f47db04359fc0e70763236f.dip0.t-ipconnect.de. [2003:f6:5f47:db04:359f:c0e7:763:236f])
+        by smtp.gmail.com with UTF8SMTPSA id ffacd0b85a97d-466648c698dsm693532f8f.16.2026.06.19.10.35.13
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Fri, 19 Jun 2026 10:35:13 -0700 (PDT)
+Date: Fri, 19 Jun 2026 19:35:12 +0200
+From: Uwe =?utf-8?Q?Kleine-K=C3=B6nig?= <u.kleine-koenig@baylibre.com>
+To: Marc Kleine-Budde <mkl@pengutronix.de>
+Cc: Oleksij Rempel <o.rempel@pengutronix.de>, linux-can@vger.kernel.org, 
+	Vincent Mailhol <mailhol@kernel.org>, Oliver Hartkopp <socketcan@hartkopp.net>, 
+	sashiko-reviews@lists.linux.dev
+Subject: Re: [PATCH net] can: flexcan: Fix probing for m68k/coldfire
+Message-ID: <ajV9XwYJSsqYiP2J@monoceros>
+References: <20260618140147.142489-2-u.kleine-koenig@baylibre.com>
+ <20260618141210.11C001F000E9@smtp.kernel.org>
 Precedence: bulk
 X-Mailing-List: sashiko-reviews@lists.linux.dev
 List-Id: <sashiko-reviews.lists.linux.dev>
 List-Subscribe: <mailto:sashiko-reviews+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:sashiko-reviews+unsubscribe@lists.linux.dev>
-Mime-Version: 1.0 (Mac OS X Mail 16.0 \(3826.700.81.1.6\))
-Subject: Re: [PATCH] drm/fb_helper: Determine proper crtc_index within
- drm_fb_helper_fb_dirty
-From: "H. Nikolaus Schaller" <hns@goldelico.com>
-In-Reply-To: <1c9e0e24-9c4a-4259-8700-cf9e5fd60ca3@suse.de>
-Date: Fri, 19 Jun 2026 19:17:51 +0200
-Cc: sashiko-reviews@lists.linux.dev,
- Icenowy Zheng <zhengxingda@iscas.ac.cn>,
- dri-devel@lists.freedesktop.org,
- Andreas Kemnade <akemnade@kernel.org>,
- Discussions about the Letux Kernel <letux-kernel@openphoenux.org>
+MIME-Version: 1.0
+Content-Type: multipart/signed; micalg=pgp-sha512;
+	protocol="application/pgp-signature"; boundary="cgshtc6dqvrb74k7"
+Content-Disposition: inline
+In-Reply-To: <20260618141210.11C001F000E9@smtp.kernel.org>
+
+
+--cgshtc6dqvrb74k7
+Content-Type: text/plain; protected-headers=v1; charset=us-ascii
+Content-Disposition: inline
 Content-Transfer-Encoding: quoted-printable
-Message-Id: <D08962D1-4D1D-49C5-A60F-89CB7F7E0378@goldelico.com>
-References: <5118b37e579cec220f2d2b6ab0bb1ecfb67f0d5c.1781803617.git.hns@goldelico.com>
- <20260618174310.70DB11F000E9@smtp.kernel.org>
- <50FDBC3B-BFC2-4BC6-B216-78C2C24D9E30@goldelico.com>
- <1c9e0e24-9c4a-4259-8700-cf9e5fd60ca3@suse.de>
-To: Thomas Zimmermann <tzimmermann@suse.de>
-X-Mailer: Apple Mail (2.3826.700.81.1.6)
+Subject: Re: [PATCH net] can: flexcan: Fix probing for m68k/coldfire
+MIME-Version: 1.0
 
-Hi Thomas,
+Hello Marc,
 
-
-> Am 19.06.2026 um 10:50 schrieb Thomas Zimmermann =
-<tzimmermann@suse.de>:
+On Thu, Jun 18, 2026 at 02:12:09PM +0000, sashiko-bot@kernel.org wrote:
+> Thank you for your contribution! Sashiko AI review found 1 potential issu=
+e(s) to consider:
 >=20
-> (cc Icenowy)
->=20
-> Hi,
->=20
-> there are a number of similar reports. Does the attached patch fix the =
-problem. It picks up what you do, but in a more correct way.
+> Pre-existing issues:
+> - [High] Network device is registered and exposed to userspace before har=
+dware and state initialization are complete, leading to race conditions and=
+ a PM runtime underflow on probe failure.
+> --
 
-Yes, reverting my version makes the issue come back and after applying =
-yours it is again gone. At least in the scenarios I have tested for the =
-PandaBoard-ES (boot/reboot, unplug/replug, second display or not).
+given this is a pre-existing issue, I don't expect this to be in the way
+for my fix to go in.
 
-Should I take your corrections and resubmit or how to proceed?
+FTR: I don't intend to work on the issue that sashiko pointed out. I
+don't have a machine with that hardware. So if someone cares, from my
+side this patch opportunity is available to be grabbed.
 
-Best regards,
-Nikolaus
+Best regards
+Uwe
 
+--cgshtc6dqvrb74k7
+Content-Type: application/pgp-signature; name="signature.asc"
 
+-----BEGIN PGP SIGNATURE-----
+
+iQEzBAABCgAdFiEEP4GsaTp6HlmJrf7Tj4D7WH0S/k4FAmo1fc4ACgkQj4D7WH0S
+/k5qXgf9H3duB+br6QFgxRg+6Z8BihknViaOnUHZ7d046No2cNVc8c5KNb8qxiTb
+aFKRhQsjTD4m/kQhjYjQNJn2Dyf46JkNBpmGDa6qx+4v0zuiP0qo0BQDo7ML8TcU
+odKvV3PkNQJstzzhmRAaHgoh8mrq/nc0qACezd3XckQGSRf1h/virMzA88sDx7cE
+4iY1N2IgPfAgd0Hw+rO/ZzynUs+IslT/9DYkE3OvN9lZVy4sUkTjICwrViLw/me1
+QbAc0VlIul8gb/ndKVszQQFEkD0mAqDMsZiynSeyCQJ9mLjncxYNeivqK8p9ERKd
+9xHzzNtbNL3aS85F1CJOHkwhgz5P9A==
+=ADuo
+-----END PGP SIGNATURE-----
+
+--cgshtc6dqvrb74k7--
