@@ -1,118 +1,162 @@
-Received: from mx0a-001b2d01.pphosted.com (mx0a-001b2d01.pphosted.com [148.163.156.1])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-qt1-f178.google.com (mail-qt1-f178.google.com [209.85.160.178])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0D0B12D7DE9;
-	Fri, 19 Jun 2026 08:02:55 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=148.163.156.1
-ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1781856177; cv=none; b=hDevVAvgGyL1NW6TbzODAZej3W+aavlTZG5VrpocTF3gJosD24cF0T9TarpYb/RQNGqxSl7AURrT1nFkTST18IyGuabXgvwdIRwEJ6jKp9HC0OSJVjldk6IKHpnRti3mzOCPg8hGEzI33jfr69VsJSESMlxUERqdC+VeiA9oP3g=
-ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1781856177; c=relaxed/simple;
-	bh=j/ekGBZ23rxTVqUIGAtaFX271w2kJDCmY0L3kwYqcrE=;
-	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=bAi6bOW+6gYKgN8KS9bFzRz8DvgDxnRwO1tY0P0JXI2Z3sKluUESMmqrq1g+QRbN2MRApa4X+AfYT4wyjP1rpx+yNQZnWhDhA2nigK/Tjx2aGEW6dWALYoiquTcBC0UlymEbmj3lnUkVyY21cSQvenpgr0x5rLvhptKiPvJ5uFs=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linux.ibm.com; spf=pass smtp.mailfrom=linux.ibm.com; dkim=pass (2048-bit key) header.d=ibm.com header.i=@ibm.com header.b=AQ+2lohk; arc=none smtp.client-ip=148.163.156.1
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linux.ibm.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linux.ibm.com
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6C1F734572B
+	for <sashiko-reviews@lists.linux.dev>; Fri, 19 Jun 2026 08:17:58 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=pass smtp.client-ip=209.85.160.178
+ARC-Seal:i=2; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
+	t=1781857079; cv=pass; b=eUmMoC3+7Vs4OdWjuFqYmu4U0ES/uRU0D9iThljSQaqt/GxrFkQlRUsTUiBeGy3/HuEiHWe8dWItHkgXfg/zaJGw+cyMrnNxg6qGuHE6mxsLvxyA4Bz5Uv3IPsXiTqDLeD0yVo8vrHlKBIsiyBLkRrXZQnPdTeFExbTHJ8njdsg=
+ARC-Message-Signature:i=2; a=rsa-sha256; d=subspace.kernel.org;
+	s=arc-20240116; t=1781857079; c=relaxed/simple;
+	bh=KA6DRUYfMDNKEHfy7weqCq+2Yu35KUFPv1pvOf6mSHs=;
+	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
+	 To:Cc:Content-Type; b=oQORUMS5pf21M5Ft3waZ83diDqRp6973TJUJ8oVr4FOIKfJ+nH+qs3LsQjRffYH/wPaQR7RiArWQRapOOSjDqODV/k2xPlKzD0jDXCkfG7o8ss9ii0tsgbqISB+E21ovfN4YfYU7K7vL3g4QnKioZpvVjVzjsD71621iC2lUDcg=
+ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=google.com; spf=pass smtp.mailfrom=google.com; dkim=pass (2048-bit key) header.d=google.com header.i=@google.com header.b=LB6eBx8n; arc=pass smtp.client-ip=209.85.160.178
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=google.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=google.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=ibm.com header.i=@ibm.com header.b="AQ+2lohk"
-Received: from pps.filterd (m0353729.ppops.net [127.0.0.1])
-	by mx0a-001b2d01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id 65J7mOWI1840513;
-	Fri, 19 Jun 2026 08:02:55 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=ibm.com; h=cc
-	:content-transfer-encoding:content-type:date:from:in-reply-to
-	:message-id:mime-version:references:subject:to; s=pp1; bh=WE36Gl
-	C2QLlT24ILZJ0WI39AQniVN83jo/SKSSzGV44=; b=AQ+2lohk98qiE41PcS+1hg
-	pQR9zForTj64lJ2nkeEsd0YCwYs/5YEWqTwG9eWjcx2PXzrEtlhupNJAvHc20qa2
-	y+4zA0yHw9vNxxOCum282pSP8N6rqaX28u9omc1DFcYpw5AZ6XNv6+9HPfi7rGKV
-	+y+W+crOmiXGVqtwRhy+DrD4XaQWakYabyxKYG9GvxTr1ZqROtGu3AKWv/Dujnge
-	UEcYRNlOUisCMwZAu1p2AKPhxQzgTmrSRDou0FedZjU79eeZsXSaKtoWr4++24Rz
-	e8K6yElZrnBYVSzCWaqFqN3R8ecZG/wHTuYkW7pTmUSHt7uyEFrejmJfGfha5Jzg
-	==
-Received: from ppma21.wdc07v.mail.ibm.com (5b.69.3da9.ip4.static.sl-reverse.com [169.61.105.91])
-	by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 4euequcer5-1
-	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Fri, 19 Jun 2026 08:02:55 +0000 (GMT)
-Received: from pps.filterd (ppma21.wdc07v.mail.ibm.com [127.0.0.1])
-	by ppma21.wdc07v.mail.ibm.com (8.18.1.7/8.18.1.7) with ESMTP id 65J7ngig024958;
-	Fri, 19 Jun 2026 08:02:54 GMT
-Received: from smtprelay01.fra02v.mail.ibm.com ([9.218.2.227])
-	by ppma21.wdc07v.mail.ibm.com (PPS) with ESMTPS id 4ev172fu1t-1
-	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Fri, 19 Jun 2026 08:02:53 +0000 (GMT)
-Received: from smtpav03.fra02v.mail.ibm.com (smtpav03.fra02v.mail.ibm.com [10.20.54.102])
-	by smtprelay01.fra02v.mail.ibm.com (8.14.9/8.14.9/NCO v10.0) with ESMTP id 65J82osG61800734
-	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
-	Fri, 19 Jun 2026 08:02:50 GMT
-Received: from smtpav03.fra02v.mail.ibm.com (unknown [127.0.0.1])
-	by IMSVA (Postfix) with ESMTP id 4CB5B2004F;
-	Fri, 19 Jun 2026 08:02:50 +0000 (GMT)
-Received: from smtpav03.fra02v.mail.ibm.com (unknown [127.0.0.1])
-	by IMSVA (Postfix) with ESMTP id EBB6E2004D;
-	Fri, 19 Jun 2026 08:02:49 +0000 (GMT)
-Received: from [9.111.75.212] (unknown [9.111.75.212])
-	by smtpav03.fra02v.mail.ibm.com (Postfix) with ESMTP;
-	Fri, 19 Jun 2026 08:02:49 +0000 (GMT)
-Message-ID: <536350a6-6b82-4b13-afc2-2cdbe3d6cf7f@linux.ibm.com>
-Date: Fri, 19 Jun 2026 10:02:49 +0200
+	dkim=pass (2048-bit key) header.d=google.com header.i=@google.com header.b="LB6eBx8n"
+Received: by mail-qt1-f178.google.com with SMTP id d75a77b69052e-5177d1ff061so114861cf.1
+        for <sashiko-reviews@lists.linux.dev>; Fri, 19 Jun 2026 01:17:58 -0700 (PDT)
+ARC-Seal: i=1; a=rsa-sha256; t=1781857077; cv=none;
+        d=google.com; s=arc-20260327;
+        b=qSBX/IgI9OHtl9DnR93v7vZC4OW1lI9vVvUNiRDYYxgzHHCY8A46VRj4Ry/fH4JEF9
+         ixKtL41lpM8VzrThtIIdcLe75fXpLIEuy3bnf1qMohdBgL12HJcQSAb5Mvi8AKUGts9k
+         TEHhZAn5v61+Oerf792jF37dC52Ql0zwAETWmJpl4yarxiTOw9iUeYhbN7Vxf/kn4Wel
+         HqE0nFvu7fch8rJU47A2dEw9qsw3V4rBxbRuh9g6E2B5WcQxJ2V2zLqdCSXWglsCIIga
+         yfGlFA9iheVrXXaUYtjipmU1XQkTP+npV2Ok5QKFKWjA7cwccL/ffJQl9CzGF4u7XCiz
+         yfQQ==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com; s=arc-20260327;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:dkim-signature;
+        bh=KA6DRUYfMDNKEHfy7weqCq+2Yu35KUFPv1pvOf6mSHs=;
+        fh=QO/2cIsGIfGCLZGcA2ucK9O8KUAei36yLEXUwefekOc=;
+        b=KHlR8800x3SNGzoQCtDa1XGxMDV6OaJWVjyQDQEj/RMhTvcvNIQhJJenpn/hSzHoRo
+         sgVXiFkB24poJQ+suuJ5YGkz8TSYUHbafLiFMsmQY4TEZFJfXQuEn6/yHyyTEBolqO2o
+         /l+hyCkA02SRvRbRbY6iJhH7FiFh4tNCFDYuU4SdPxok2KaXXEbPY6lJOYvZv2HP0cSH
+         OaOUxGCvsgHl5Gnt9EI2S2eltq6ftXMhP/aLNoK47huXQw9Pie1b+1kDY/z39XQXpbZ5
+         bQAz/8szbD+IXFxLJXI7dzmtTbqFejwz+NeojHARAFK0i0S190VgzmTw87XMlATwzH4B
+         N91A==;
+        darn=lists.linux.dev
+ARC-Authentication-Results: i=1; mx.google.com; arc=none
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=google.com; s=20251104; t=1781857077; x=1782461877; darn=lists.linux.dev;
+        h=content-transfer-encoding:content-type:cc:to:subject:message-id
+         :date:from:in-reply-to:references:mime-version:from:to:cc:subject
+         :date:message-id:reply-to:content-type;
+        bh=KA6DRUYfMDNKEHfy7weqCq+2Yu35KUFPv1pvOf6mSHs=;
+        b=LB6eBx8nl6/5vFEWO/mvGnTxy54yRRwjayYNKxRLjYNiHYIULbbvV5tAiu+3eJ0yj2
+         P1je4lk3T5Jnx+ntK8Z0jpXiqKMLTeoNB3sYvhDfjckb6Pn/J8Wt1K1rLCVErhBUG7JQ
+         Qq4o7u2GEPDmzrMPqMkM7urB93OZwHqscEwYoYJDhUbZgVmfcLf9rpyQNBDAdFXEgV+b
+         3NkBO4C2f6a2yN79MxfsElX9Kzl0k0fpG7c8wJqudWDueg+ff7W6n9P0AerChZBKJ5OG
+         XBSTIcNBxCpaAv5G13GC5SaUwKWwXMD/xwdVibdtdkpFM8ws1myFfa9B7wZOb/d2w2rI
+         0yXA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20251104; t=1781857077; x=1782461877;
+        h=content-transfer-encoding:content-type:cc:to:subject:message-id
+         :date:from:in-reply-to:references:mime-version:x-gm-gg
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to
+         :content-type;
+        bh=KA6DRUYfMDNKEHfy7weqCq+2Yu35KUFPv1pvOf6mSHs=;
+        b=lLTwJIkUFkBfaRY5iO3wvzWgtpxWJoLeTbzHO7kYejUlnPS9tZIwuvYVKqgY+EjpLv
+         6wUunBAZ51Q1fwcNpJNxj28lxUyKLBARQzUgYYHbEGTOqRF63A+xeOMMSDUApNOw8X7p
+         cqpdKeYUsdzl7RvsqfMfse7QDGrn92vZOz6rX20HJOKHM7y2X4235MlgIjtD+UIbkIbZ
+         Pa8YTYFXH3C7w0wmHc/78TnJOfj+x3jwCswqNbM/ktEuhKSzV0iBqi7VDubhQwB6TKid
+         0PymO8MdiVu3WA2najuxjGCJiYL2dgx1WjKdyknNriwgvoaeB7K6j6dH/2jy6wxLsKTQ
+         XzIg==
+X-Gm-Message-State: AOJu0YxZqNde+fY3t9DnzF9DpVoLUIVOcgmPnSc/NUckLWcp74Fni5vc
+	AKKe3RaWE1QUhxwngTq7KPJMd1V/nsM6qRBiKY2FwbIv39NoNprJQIVPKxAxoOzspf1e+ADJBq2
+	wppsAzEUcoGxaqYff8WE0YR96jU7KnE2HMJBSLsH/mXS/3ojdI+DBFN6kFsU=
+X-Gm-Gg: AfdE7cm8WbWS0ifQzI7NnvYSN8TfwGudWtuf2wFfbiPr12qk6bNmN2T+kkPxUihLnSH
+	6lR8HY4ihRAISQsgtfx9hOrNi24fQvnfebwn/okFMByUxS5cG0YcNWtQad1gEyNluu3+36tuaZr
+	pSQSwRDuHJDM3ip/NkaaX8dgpyZScJeiQT9UbM7i+yuNAO4igTRMnXDZ85VipBYZlHt0YStzbK2
+	K2/L9bsefTUNJ3LRcOdav3FJrKBpImSBb6Hn80aBVWAc5Z9fa3CkMDezcDvgrk6yVA/yoKilQ==
+X-Received: by 2002:a05:622a:4183:b0:517:5ec3:b59c with SMTP id
+ d75a77b69052e-519e489116cmr7174671cf.2.1781857076604; Fri, 19 Jun 2026
+ 01:17:56 -0700 (PDT)
 Precedence: bulk
 X-Mailing-List: sashiko-reviews@lists.linux.dev
 List-Id: <sashiko-reviews.lists.linux.dev>
 List-Subscribe: <mailto:sashiko-reviews+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:sashiko-reviews+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v1 1/1] pkey: Fix bitsize check in PKEY_VERIFYPROTK ioctl
+References: <20260618-gmem-inplace-conversion-v8-0-9d2959357853@google.com>
+ <20260618-gmem-inplace-conversion-v8-7-9d2959357853@google.com> <20260619005533.984EC1F000E9@smtp.kernel.org>
+In-Reply-To: <20260619005533.984EC1F000E9@smtp.kernel.org>
+From: Fuad Tabba <tabba@google.com>
+Date: Fri, 19 Jun 2026 09:17:19 +0100
+X-Gm-Features: AVVi8CdmXQJb7WzuENzIP0MXl8aUdhwXeoyf7m3f_2laETL1i2q75b6p8_BKkxA
+Message-ID: <CA+EHjTxdN+TsqSyp+f+8QO-BbOgHEebmpMhJbmD0D8quWg3s8A@mail.gmail.com>
+Subject: Re: [PATCH v8 07/46] KVM: Rename memory attribute APIs to prepare for
+ in-place gmem conversion
 To: sashiko-reviews@lists.linux.dev
-Cc: linux-s390@vger.kernel.org, Vasily Gorbik <gor@linux.ibm.com>,
-        Heiko Carstens <hca@linux.ibm.com>,
-        Alexander Gordeev <agordeev@linux.ibm.com>
-References: <20260619074541.1710716-1-dengler@linux.ibm.com>
- <20260619074541.1710716-2-dengler@linux.ibm.com>
- <20260619080011.4E1A71F00A3D@smtp.kernel.org>
-From: Holger Dengler <dengler@linux.ibm.com>
-Content-Language: en-US
-In-Reply-To: <20260619080011.4E1A71F00A3D@smtp.kernel.org>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 8bit
-X-TM-AS-GCONF: 00
-X-Proofpoint-Spam-Info: AW1haW4tMjYwNjE5MDA3MSBTYWx0ZWRfX0MjvPTPgnj+o
- KYq6gx1HhqxXVdbPH5bPG1o+FJ8GlyjUidg8ZovE+mbPdNbXJ9OgyPd/iMCjtGns3NsxxvMYJS8
- UrJum7tnhBRRTaT8RAJFxjzGarvQE0E=
-X-Proofpoint-ORIG-GUID: aeeBJ9Hg4LVn9cRGJWU4G9Uvsqkoqh9n
-X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwNjE5MDA3MSBTYWx0ZWRfX2jrp5/tp8CR4
- p3ZelOaB1Xqjl1bgyyDJZDh8bwks4NoN7Z7VTvmpgywADt/yUGnJUutM0hfbXiiUEHC5iZL298L
- HEHdalzviai44VEyK6oqafLdpdWixXH8fKhe8j3xJ3fE2+cwjnY+reIdmwQBbfENNAdnnY02GcI
- RxEgPF5O3VZqnzdqg7iDEAAQXInzj2xiF2mHblphAz/GB9v+U0yIcPsgQ2A41RH34Lt8phE8StE
- kAyOc9zCfAbW10qJw+uvhkiRKkXChB4PLYyXQWzRjkkjIQw11xFHvTCfJX69SCUPi7GMU3W0et7
- YqXwmj8W8JjMMmLSsDhO/vDVuQaR4eB0YhtzZ9jjeDLujh7itnKb5LDdcPBPMdCJaNyzHDSUExV
- YWTWV+As/Vl4hWBY37s1hArB4HiDXl24rMq/wXnkxWvSdN1VJRLCdDcwEpHpRgADNuZ+CzpC/KW
- wQLmJoFPF+7AWJbO43g==
-X-Proofpoint-GUID: aeeBJ9Hg4LVn9cRGJWU4G9Uvsqkoqh9n
-X-Authority-Analysis: v=2.4 cv=L9gtheT8 c=1 sm=1 tr=0 ts=6a34f7af cx=c_pps
- a=GFwsV6G8L6GxiO2Y/PsHdQ==:117 a=GFwsV6G8L6GxiO2Y/PsHdQ==:17
- a=IkcTkHD0fZMA:10 a=FelO9ux0wxsA:10 a=VkNPw1HP01LnGYTKEx00:22
- a=RnoormkPH1_aCDwRdu11:22 a=uAbxVGIbfxUO_5tXvNgY:22 a=VwQbUJbxAAAA:8
- a=K_X9F7hbqwqGGdNf0T4A:9 a=3ZKOabzyN94A:10 a=QEXdDO2ut3YA:10
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.293,Aquarius:18.0.1143,Hydra:6.1.125,FMLib:17.12.100.49
- definitions=2026-06-19_02,2026-06-18_03,2025-10-01_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
- bulkscore=0 impostorscore=0 malwarescore=0 clxscore=1011 adultscore=0
- phishscore=0 lowpriorityscore=0 suspectscore=0 priorityscore=1501 spamscore=0
- classifier=typeunknown authscore=0 authtc= authcc= route=outbound adjust=0
- reason=mlx scancount=1 engine=8.22.0-2606150000 definitions=main-2606190071
+Cc: Ackerley Tng via B4 Relay <devnull+ackerleytng.google.com@kernel.org>, kvm@vger.kernel.org
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 
-On 6/19/26 10:00, sashiko-bot@kernel.org wrote:
-> Thank you for your contribution! Sashiko AI review found 1 potential issue(s) to consider:
-> 
+On Fri, 19 Jun 2026 at 01:55, <sashiko-bot@kernel.org> wrote:
+>
+> Thank you for your contribution! Sashiko AI review found 1 potential issu=
+e(s) to consider:
+>
 > Pre-existing issues:
-> - [Critical] An integer wrap-around in the key bit-size calculation bypasses length validation, leading to massive out-of-bounds memory accesses during a subsequent memcpy().
+> - [High] `kvm_range_has_vm_memory_attributes` iterates over potentially m=
+assive ranges under `rcu_read_lock()` without yielding, leading to RCU stal=
+ls.
+
+Not a concern. The xarray walk is pointer comparisons with no I/O or
+allocation per iteration. Realistic ranges (memslot-sized, low
+millions of GFNs) complete in microseconds. The "billions of elements"
+scenario mentioned below requires ~8 GB of xarray metadata to even set
+up and doesn't happen in practice. The `!attrs` fast path
+short-circuits via `xas_find` when no entries exist. This is the
+standard xarray-under-RCU pattern used throughout KVM and mm/. Pre-
+existing and unchanged by this rename patch.
+
+/fuad
+
+
 > --
-
-This issue is already fixed and on its way.
-
--- 
-Mit freundlichen Grüßen / Kind regards
-Holger Dengler
-
+>
+> Note: The format of this report is altered to provide a free-form summary
+> without quoting the original patch code directly due to recitation restri=
+ctions.
+>
+> commit 05536cc2fad8dac656829127ace4d82d1b522580
+> Author: Sean Christopherson <seanjc@google.com>
+> Subject: KVM: Rename memory attribute APIs to prepare for in-place gmem c=
+onversion
+>
+> This patch renames the memory attribute APIs to include "vm_" in anticipa=
+tion
+> of moving PRIVATE tracking into guest_memfd. It introduces no functional
+> changes.
+>
+> [Severity: High]
+> This is a pre-existing issue, but the kvm_range_has_vm_memory_attributes(=
+)
+> function in virt/kvm/kvm_main.c appears to iterate over a potentially mas=
+sive
+> range under an RCU read lock without yielding.
+>
+> The bounds for the loop come from the KVM_SET_MEMORY_ATTRIBUTES ioctl
+> handler (kvm_vm_ioctl_set_mem_attributes()), which does not place an uppe=
+r
+> limit on the size other than preventing arithmetic overflow. If a user wi=
+th a
+> large memcg limit pre-populates a massive range, and then calls the ioctl
+> again on the same range, the loop using xas_next() inside the guard(rcu)(=
+)
+> block will iterate over the entire range.
+>
+> Since it does not yield, a sufficiently large range (e.g., billions of
+> elements) could run for tens of seconds, causing an RCU stall or soft loc=
+kup.
+>
+> Could this code drop the RCU lock and yield periodically, or process in
+> batches, to prevent unprivileged userspace from causing lockups here?
+>
+> --
+> Sashiko AI review =C2=B7 https://sashiko.dev/#/patchset/20260618-gmem-inp=
+lace-conversion-v8-0-9d2959357853@google.com?part=3D7
+>
