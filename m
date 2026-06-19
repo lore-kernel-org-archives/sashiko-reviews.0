@@ -1,148 +1,117 @@
-Received: from out-174.mta1.migadu.com (out-174.mta1.migadu.com [95.215.58.174])
+Received: from out-181.mta0.migadu.com (out-181.mta0.migadu.com [91.218.175.181])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D273426E70E
-	for <sashiko-reviews@lists.linux.dev>; Fri, 19 Jun 2026 23:39:21 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=95.215.58.174
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 20210346E47
+	for <sashiko-reviews@lists.linux.dev>; Fri, 19 Jun 2026 23:39:51 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=91.218.175.181
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1781912363; cv=none; b=gtF1RTVlnwgK/EDpsw5A68QAF7fbnDkKCuCS/HNLAxZV9vPk8Qv9lTLOs16r/MH8rVA/i85fgVXwCVzRSYt1nnA9cAmgcmRaI6q4hALkXumn0maG9WnmPwi9Z6GZRfSXhY7RZHvQid/mXeOoXrDI08c5RB1rS+8X2hzue3nADzY=
+	t=1781912393; cv=none; b=fnUMY8G2b1/ejy8WiNFCECAqpfI0KNaIEvCgEt7S/6prOjMi0o0GKBXwLyFhjew/71co/H+XkaoWegDqn3OqNPZQZhDfKdZUHHklE5g3rYAccfO8JOl/rQVwwagAyy80/SOnZuSIaukYed694/pl/YmMJFgD1cwUlCxkCpNekPw=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1781912363; c=relaxed/simple;
-	bh=C1Y3OdP/bAcdNgU5rQcA7TEt7rhXSGoAbUtrrGhKV2Y=;
+	s=arc-20240116; t=1781912393; c=relaxed/simple;
+	bh=HLd093fW6fiXSx0iDoYDRpSHWr7hdA4IeBLK0H8xz38=;
 	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=Jh4kBp5w9V3klRhONmAxHubcREd96ZQhVeUizK1beFTH2EyI8qm6ecGwox5cxcK1THslsAJU+PZGptxgi9q+sTqdHuMwPEhhgyqiRJ26ys9MJWEDj0YnNQ7Ad+53M44QuyhGDiVs9LAYRQ+JJ/AmGqQdcjWs0H4kI3voLhJ/5ZM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linux.dev; spf=pass smtp.mailfrom=linux.dev; dkim=pass (1024-bit key) header.d=linux.dev header.i=@linux.dev header.b=Y3WZgT3H; arc=none smtp.client-ip=95.215.58.174
+	 In-Reply-To:Content-Type; b=mx5Ujbv0A+2c2HM1CQ7g7yjXBKGAaf+CcjNtlgJRDeyIZm4LNd9090XkcUeXhP3x+yitBdByS7Iug+y+A2czhmevqyyQ4YwfB2B1C9MHypVc6wAaU8W+0qbrCjQvBjRUlKO1fNjquYDh5KxIJb/IQ7ttd03hsvYfPD0Xv7ktb40=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linux.dev; spf=pass smtp.mailfrom=linux.dev; dkim=pass (1024-bit key) header.d=linux.dev header.i=@linux.dev header.b=thjLR9H7; arc=none smtp.client-ip=91.218.175.181
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linux.dev
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linux.dev
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linux.dev header.i=@linux.dev header.b="Y3WZgT3H"
-Message-ID: <4a08c2ca-8137-428d-9f27-337401b62f11@linux.dev>
+	dkim=pass (1024-bit key) header.d=linux.dev header.i=@linux.dev header.b="thjLR9H7"
+Message-ID: <81003947-40c1-4d3c-9c65-bc7f7257628f@linux.dev>
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linux.dev; s=key1;
-	t=1781912359;
+	t=1781912389;
 	h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
 	 to:to:cc:cc:mime-version:mime-version:content-type:content-type:
 	 content-transfer-encoding:content-transfer-encoding:
 	 in-reply-to:in-reply-to:references:references;
-	bh=NNpb7L2Dqpu2wyeTGuiQDnyk9igjFskq57DPZVvFEao=;
-	b=Y3WZgT3H8P0jSvw93j3YMzpV/qRHSkpIE/CwHlCo0dnsmtnb9lwv5yEH5kyMBbH5WIycxb
-	ruxLtUN44dm46SUyssPaguRnQC0ML7g2GWdK1u9ger8I6xD12OOvCGrRc4Nu6/sF/iB9tV
-	eqpxZ5ploHhn096cDxFDp9B52Cn2vvk=
-Date: Fri, 19 Jun 2026 16:39:05 -0700
+	bh=h+bdE/VVGhwRt3zFUnvNiBBGwABz8YqbPEbj27wTHWo=;
+	b=thjLR9H70PxWBvpfvSKvv/IXvd6Se7M1wiNY6P9Sxo6NUQisfmLYJNBlu6/El6qEqkzD4J
+	w14dEw2pNwyLsqZ3UWjtjyjlWUmExwhoxEg0ecXlvyUOm7+YUZlL/1hC9gxnymOjxG84ZS
+	PWuknfuyF3KjmPRfZiTcI5kTfjmW18w=
+Date: Fri, 19 Jun 2026 16:39:45 -0700
 Precedence: bulk
 X-Mailing-List: sashiko-reviews@lists.linux.dev
 List-Id: <sashiko-reviews.lists.linux.dev>
 List-Subscribe: <mailto:sashiko-reviews+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:sashiko-reviews+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Subject: Re: [PATCH v6 04/21] RISC-V: Define indirect CSR access helpers
+Subject: Re: [PATCH v6 03/21] dt-bindings: riscv: add Sxcsrind ISA extension
+ description
 To: sashiko-reviews@lists.linux.dev
-Cc: robh@kernel.org, devicetree@vger.kernel.org,
- linux-perf-users@vger.kernel.org, conor+dt@kernel.org
-References: <20260608-counter_delegation-v6-4-285b72ed65a9@meta.com>
- <20260609061511.276E31F00893@smtp.kernel.org>
+Cc: linux-perf-users@vger.kernel.org, conor+dt@kernel.org, robh@kernel.org,
+ devicetree@vger.kernel.org
+References: <20260608-counter_delegation-v6-3-285b72ed65a9@meta.com>
+ <20260609060921.547691F00893@smtp.kernel.org>
 Content-Language: en-US
 X-Report-Abuse: Please report any abuse attempt to abuse@migadu.com and include these headers.
 From: Atish Patra <atish.patra@linux.dev>
-In-Reply-To: <20260609061511.276E31F00893@smtp.kernel.org>
+In-Reply-To: <20260609060921.547691F00893@smtp.kernel.org>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 7bit
 X-Migadu-Flow: FLOW_OUT
 
 
-On 6/8/26 11:15 PM, sashiko-bot@kernel.org wrote:
-> Thank you for your contribution! Sashiko AI review found 1 potential issue(s) to consider:
-> - [Medium] Unsafe statement-expression macro definitions causing delayed evaluation and variable shadowing hazards.
+On 6/8/26 11:09 PM, sashiko-bot@kernel.org wrote:
+> Thank you for your contribution! Sashiko AI review found 2 potential issue(s) to consider:
+> - [Low] The `sscsrind` extension is inserted out of alphanumeric order, violating the explicit formatting rule in the binding file.
+> - [Low] The description for `smcsrind` contains a copy-paste error incorrectly labeling it as a 'supervisor-level' extension, and both `smcsrind` and `sscsrind` contain a grammatical typo.
 > --
 >
-> commit 572b7555547c1b5bc07701482ba67d379f6a2177
+> commit a4e1326a37463e042ca0a72ff72d93f2be1d22f8
 > Author: Atish Patra <atishp@rivosinc.com>
 >
-> RISC-V: Define indirect CSR access helpers
+> dt-bindings: riscv: add Sxcsrind ISA extension description
 >
-> This commit introduces helper macros to read, write, and perform WARL
-> operations on indirect CSRs. The macros use statement-expressions to handle
-> the multiple instructions required while disabling interrupts.
+> Add the S[m|s]csrind ISA extension description.
 >
->> diff --git a/arch/riscv/include/asm/csr_ind.h b/arch/riscv/include/asm/csr_ind.h
->> new file mode 100644
->> index 0000000000000..6fd7d44dc640a
->> --- /dev/null
->> +++ b/arch/riscv/include/asm/csr_ind.h
->> @@ -0,0 +1,44 @@
->> +/* SPDX-License-Identifier: GPL-2.0-only */
->> +/*
->> + * Copyright (C) 2024 Rivos Inc.
->> + */
+>> diff --git a/Documentation/devicetree/bindings/riscv/extensions.yaml b/Documentation/devicetree/bindings/riscv/extensions.yaml
+>> index 2b0a8a93bb214..4be557dc215de 100644
+>> --- a/Documentation/devicetree/bindings/riscv/extensions.yaml
+>> +++ b/Documentation/devicetree/bindings/riscv/extensions.yaml
+>> @@ -181,6 +181,14 @@ properties:
+>>               changes to interrupts as frozen at commit ccbddab ("Merge pull
+>>               request #42 from riscv/jhauser-2023-RC4") of riscv-aia.
+>>   
+>> +        - const: smcsrind
+>> +          description: |
+>> +            The standard Smcsrind supervisor-level extension extends the
+>> +            indirect CSR access mechanism defined by the Smaia extension. This
+> [Severity: Low]
+> Is this description accurate for smcsrind? The m in Smcsrind indicates
+> it is a machine-level extension, rather than a supervisor-level extension.
+>
+>> +            extension allows other ISA extension to use indirect CSR access
+> [Severity: Low]
+> This isn't a bug, but there is a typo here. Should "ISA extension" be
+> pluralized to "ISA extensions"?
+>
+>> +            mechanism in M-mode as ratified in the 20240326 version of the
+>> +            privileged ISA specification.
 >> +
->> +#ifndef _ASM_RISCV_CSR_IND_H
->> +#define _ASM_RISCV_CSR_IND_H
->> +
->> +#include <linux/irqflags.h>
->> +
->> +#include <asm/csr.h>
->> +
->> +#define csr_ind_read(iregcsr, iselbase, iseloff) ({		\
->> +	unsigned long __value = 0;				\
->> +	unsigned long __flags;					\
-> [Severity: Medium]
-> Will these generic variable names (__value, __flags) cause shadowing issues if
-> the caller passes in arguments with the same names?
+> [ ... ]
 >
-> Evaluating macro arguments into unique local variables before entering the
-> IRQ-disabled region would avoid this regression.
+>> @@ -199,6 +207,14 @@ properties:
+>>               added by other RISC-V extensions in H/S/VS/U/VU modes and as
+>>               ratified at commit a28bfae (Ratified (#7)) of riscv-state-enable.
+>>   
+>> +        - const: sscsrind
+>> +          description: |
+>> +            The standard Sscsrind supervisor-level extension extends the
+>> +            indirect CSR access mechanism defined by the Ssaia extension. This
+>> +            extension allows other ISA extension to use indirect CSR access
+> [Severity: Low]
+> This isn't a bug, but there is the same typo here. Should "ISA extension" be
+> pluralized to "ISA extensions"?
 >
->> +	local_irq_save(__flags);				\
->> +	csr_write(CSR_ISELECT, (iselbase) + (iseloff));		\
->> +	__value = csr_read(iregcsr);				\
->> +	local_irq_restore(__flags);				\
->> +	__value;						\
->> +})
+>> +            mechanism in S-mode as ratified in the 20240326 version of the
+>> +            privileged ISA specification.
 >> +
->> +#define csr_ind_write(iregcsr, iselbase, iseloff, value) ({	\
->> +	unsigned long __flags;					\
->> +	local_irq_save(__flags);				\
->> +	csr_write(CSR_ISELECT, (iselbase) + (iseloff));		\
->> +	csr_write(iregcsr, (value));				\
-> [Severity: Medium]
-> Since value is evaluated here after CSR_ISELECT has been programmed, what
-> happens if a caller passes an expression that accesses another indirect CSR,
-> such as a nested csr_ind_read(), as the value argument?
->
-> It appears the nested call would overwrite CSR_ISELECT, causing the write to
-> silently corrupt the wrong hardware register. Evaluating arguments into local
-> variables before disabling interrupts would prevent this, and also avoid the
-> risk of evaluating expressions with side effects while interrupts are disabled.
->
->> +	local_irq_restore(__flags);				\
->> +})
->> +
->> +#define csr_ind_warl(iregcsr, iselbase, iseloff, warl_val) ({	\
->> +	unsigned long __old_val = 0, __value = 0;		\
->> +	unsigned long __flags;					\
-> [Severity: Medium]
-> Do these generic local variables risk shadowing caller arguments?
->
->> +	local_irq_save(__flags);				\
->> +	csr_write(CSR_ISELECT, (iselbase) + (iseloff));		\
->> +	__old_val = csr_read(iregcsr);				\
->> +	csr_write(iregcsr, (warl_val));				\
-> [Severity: Medium]
-> Is there a risk that evaluating warl_val here could overwrite CSR_ISELECT if
-> the caller provides an expression that performs another indirect CSR access?
->
->> +	__value = csr_read(iregcsr);				\
->> +	csr_write(iregcsr, __old_val);				\
->> +	local_irq_restore(__flags);				\
->> +	__value;						\
->> +})
->> +
->> +#endif
+>>           - const: ssaia
+> [Severity: Low]
+> Should sscsrind be placed after ssaia rather than before it? The
+> extensions in this file are expected to be sorted alphanumerically.
 
-Given the callers, I don't think the possibilities raised by Sashiko can 
-actually happen.
-It's a macro. So the new callers should ensure they are invoking it with 
-proper argument.
-
-N/A.
+Fixed the typos in v7.
 
 
+>>             description: |
+>>               The standard Ssaia supervisor-level extension for the advanced
