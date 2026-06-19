@@ -1,78 +1,154 @@
-Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-wm1-f67.google.com (mail-wm1-f67.google.com [209.85.128.67])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 294FA336897;
-	Fri, 19 Jun 2026 18:31:06 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C596833D4FB
+	for <sashiko-reviews@lists.linux.dev>; Fri, 19 Jun 2026 21:19:51 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.67
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1781893868; cv=none; b=cl+n08Gg5+nD6BrBCtyxn+WLPKvEdMA8iFCM/TkXMUjf9r9PUEPlUK4se2jvivxjbj3AbaZZ1xZzQB6ZniTpwbo6PtwdXxEZxbuRhbkjiNQYyK208SOKEeCkRe4MwsY2BtZC215Mpcf0bq9tHpLBioUz3luslp5QXr85/laGzng=
+	t=1781903993; cv=none; b=PD0clpgIyeueIx0TzWkjiJeedWVEnLio7UZXo5ddbudVNRF0/3ZVHGB5tH0UDu2zA6fK2mzf5Rr2r8onEFko+pTFj51nBn+cSqmkGOk+cKre0lcjQGuOVLaf/n48tNMFU4Oex3tLWG0bzlcvJwg8yTRbtuz8qwBvQuHQadfurm4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1781893868; c=relaxed/simple;
-	bh=ODpmQCFCK0JHSnHrF0w93bn+zbTNp3AX2VjeRTG2tOY=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=qHtPR0VoRyiUePnbhb5SOt5YZAKuMVQ1VHCUH/eRShQvIDMDlFHJkGHSlg5/KRBzwt638sCb0sJmsawqXtaXgfXd0arPaav1YSQD9Mx0pPw1u1czFfPSaMWNYhu/6snjGZhQcc9YoIeeHrPr9qUsyEiPOm3E5l86uO6BO3ahbTM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=kyAokcZv; arc=none smtp.client-ip=100.103.45.18
+	s=arc-20240116; t=1781903993; c=relaxed/simple;
+	bh=Z1v7oK08s9cX9ai3rtGVy+hD16fiw/Yo5ZmR3yMmw6U=;
+	h=Mime-Version:Content-Type:Date:Message-Id:Cc:Subject:From:To:
+	 References:In-Reply-To; b=D5ZevaFtVT4Eo5jgJIpnKOvZ76Kw0Pv02xSc7Y6Q5FUDTHbVplkPQjraZIcictksXsRdLlOXRWniW3wPfav3W0TYj4FX7odfnu4BcxlL4SDhdx1l4xBOElkrCuMnZqVoOLcfartdeJ1kfSQOFooKIC/b7OLC5hsFl+y6CXkyFk4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=coumUBfv; arc=none smtp.client-ip=209.85.128.67
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="kyAokcZv"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6AA221F000E9;
-	Fri, 19 Jun 2026 18:31:06 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=kernel.org;
-	s=k20260515; t=1781893866;
-	bh=idgwsKr1BVBWS+hvFWYbNhlxL05HBlSgC6jlCV2Xn/A=;
-	h=Date:From:To:Cc:Subject:References:In-Reply-To;
-	b=kyAokcZvf3iLQroiUGG1Zei2KN4pU+toV3YadAJS83pLZyAB/7s8SLSWWWwq91LZ4
-	 X15l62UHsgglSO8VBHbHAMbrylT9LvydMJCFAr0bQRPP0I6Hd0V7Axf8DqKkGaFO67
-	 53YmxBSRfU1v7APdhPFDFMIyPvZ/dNjnHKFYqGu35j8i0uWnxHNPvwO4MDIf+5QxsI
-	 y/hSodrDdp0vxXtx5DP/YdR+cTaFwrGr+zPvF1yAYbmMRjsD4zhqh7koqTLrcUpL/+
-	 2ghSS6hnK7c1sKr9id2CkovHIbPgxCxHN8cE8odPTovsVEhaE9Y1Q+T/mOrrLfx0Xa
-	 kJ5QigPLccisQ==
-Date: Sat, 20 Jun 2026 03:31:05 +0900
-From: Krzysztof =?utf-8?Q?Wilczy=C5=84ski?= <kwilczynski@kernel.org>
-To: sashiko-reviews@lists.linux.dev
-Cc: linux-pci@vger.kernel.org
-Subject: Re: [PATCH v8 23/25] PCI/sysfs: Convert legacy I/O and memory
- attributes to static definitions
-Message-ID: <20260619182700.GB2528910@rocinante>
-References: <20260619085200.3729431-1-kwilczynski@kernel.org>
- <20260619085200.3729431-24-kwilczynski@kernel.org>
- <20260619091646.819C41F000E9@smtp.kernel.org>
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="coumUBfv"
+Received: by mail-wm1-f67.google.com with SMTP id 5b1f17b1804b1-4903d730b1fso33610975e9.2
+        for <sashiko-reviews@lists.linux.dev>; Fri, 19 Jun 2026 14:19:51 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20251104; t=1781903990; x=1782508790; darn=lists.linux.dev;
+        h=in-reply-to:references:to:from:subject:cc:message-id:date
+         :content-transfer-encoding:mime-version:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=aPe7xhOch75yXx5Pu0qv+8+PGvLXn4ZjaQ2xwLoyw08=;
+        b=coumUBfvo6S0O9LbOeZgAxC/33RInZnEN1kcBqb6KLa2x8RC41tSyr9dOBW6LcP60m
+         RL6EnpV0s3n5b7YoFcsZ6Yof7ZbpS75Y63vC6YDKb3+IX4wpO3YOLC9YnKUapKg8JQle
+         a2fOX6f9PVi9/R/vTi4E/46YrTfOIHUE8il1zWScopBKtu5Hv8EIBSTghI8dpKD1iOGq
+         gNJz1iwK09nMMfPEd4B1OzE6ePC9u26+aKfT/7fqJYiNjCXdZtE/wfS88CAXam//lKWg
+         zGRfI+mK9fFfEnXgdVqky3dOrfQR3nnS1jZXrk3pdcqOBsTz30pwVlY1HHmubYeJXoZg
+         JzfA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20251104; t=1781903990; x=1782508790;
+        h=in-reply-to:references:to:from:subject:cc:message-id:date
+         :content-transfer-encoding:mime-version:x-gm-gg:x-gm-message-state
+         :from:to:cc:subject:date:message-id:reply-to;
+        bh=aPe7xhOch75yXx5Pu0qv+8+PGvLXn4ZjaQ2xwLoyw08=;
+        b=ErhoLC9E4JiiHjcgi/+rwiMO7yxuWfmE0GDFwLqYXlzlzm/NkW4sS6T0JfM+8HNk0J
+         cEFyNat99Y96mhMbFUfaMJkhejVbLziXgrmiwEyb/IWFl9sT/1+/VJnu67oXfihRWbJk
+         MV1gIGbeq7are0BQTuM+XU1UijIHp9IGDCu3dMluVgZ/YYbhyK9YGvcUhipjUJKUi4R5
+         /kBrn08wAhKxhY7iGS3ZnMTjUAOhNPYYgL8mL448urop2dBi/9CdJtwpD0bc9OoHa1cX
+         T58NBieWm3CVQ+jG/dlnm+/NAJC6VT7Um0Jc8syfzbMRnHhq1M/iZmV7iSMbtxR+S32n
+         E14g==
+X-Gm-Message-State: AOJu0Yx/A9WEOM1vmE1Qn9RT76KClen8F+WnD7QQqHsMeQfQWSisSNa8
+	drCvyJWJ5X+ar7Voi7F9+21wqWljCjsSSp6b8rS+MubGo6B/rHibhROMPhZV0Liy
+X-Gm-Gg: AfdE7cnjDa36L6zjbA+KSZ/abCPkuoI2WJOhBuBeEggRE8P5ZrWql0AdqOpssYQNrJ1
+	ck+8B0V2siwO5gQR4gzpxOWAwNeAAkgmcvZXS4c5hkwQ5LmkBwecQAAg7csBFgWQOdG3zXfsFnH
+	GhWnA04noAwGs4znow3oftYfdQRdfAdJYTzZlM/d7EgYIsjnHnr+HwFL5zoDqUWkQab45yB0p5A
+	lfUWcD81FUHxBFwVAXkVSJvDThlOZEAO/byHJa3GP9bKO1K95Wqgz4GiqHWS+zydo+Ohfb7CAcr
+	HO1dPZZq3jcr1+/d9NKQZUKUKbf1fsG/AwfAWxbOu3t0nOMrahPGbyWWWPgpTzST0xRgaAdSZfQ
+	m8GBSfNl44xofKZ/aPwcvanHutb0anNLM3nbIcazdAz55kLgc2308Su3FvxQsVuwovw5payE6tc
+	SKuBka1mwCg3yhWNf8tVbM3FqSzpS2fSTApfptmK9MC935h8ULRjncDt0SMQ0XXY0Ox77VQGdmC
+	jjk7fOq0f6orEw1qS2f8hLzBW+fRiMpW/bEyByqfSMgfgfWIRUwNa0=
+X-Received: by 2002:a05:600c:5252:b0:490:bd1d:4732 with SMTP id 5b1f17b1804b1-4923f579333mr93310165e9.23.1781903990201;
+        Fri, 19 Jun 2026 14:19:50 -0700 (PDT)
+Received: from localhost (nat-icclus-192-26-29-3.epfl.ch. [192.26.29.3])
+        by smtp.gmail.com with ESMTPSA id 5b1f17b1804b1-4923ff821aasm97351255e9.12.2026.06.19.14.19.49
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Fri, 19 Jun 2026 14:19:49 -0700 (PDT)
 Precedence: bulk
 X-Mailing-List: sashiko-reviews@lists.linux.dev
 List-Id: <sashiko-reviews.lists.linux.dev>
 List-Subscribe: <mailto:sashiko-reviews+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:sashiko-reviews+unsubscribe@lists.linux.dev>
-MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <20260619091646.819C41F000E9@smtp.kernel.org>
+Mime-Version: 1.0
+Content-Transfer-Encoding: quoted-printable
+Content-Type: text/plain; charset=UTF-8
+Date: Fri, 19 Jun 2026 23:19:49 +0200
+Message-Id: <DJDC8VWEQND5.F1DEG4W53SB7@gmail.com>
+Cc: <bpf@vger.kernel.org>
+Subject: Re: [PATCH bpf-next v2 07/17] bpf: Track verifier context
+ diagnostic events
+From: "Kumar Kartikeya Dwivedi" <memxor@gmail.com>
+To: <sashiko-reviews@lists.linux.dev>, "Kumar Kartikeya Dwivedi"
+ <memxor@gmail.com>
+X-Mailer: aerc 0.21.0
+References: <20260619205934.1312876-1-memxor@gmail.com>
+ <20260619205934.1312876-8-memxor@gmail.com>
+ <20260619211353.0B4201F000E9@smtp.kernel.org>
+In-Reply-To: <20260619211353.0B4201F000E9@smtp.kernel.org>
 
-Hello,
-
-> > diff --git a/drivers/pci/pci-sysfs.c b/drivers/pci/pci-sysfs.c
-> > index 7f1d8e07924f5..dfb4e06677fce 100644
-> > --- a/drivers/pci/pci-sysfs.c
-> > +++ b/drivers/pci/pci-sysfs.c
+On Fri Jun 19, 2026 at 11:13 PM CEST, sashiko-bot wrote:
+> Thank you for your contribution! Sashiko AI review found 1 potential issu=
+e(s) to consider:
+> - [Medium] Hardcoded depth for IRQ contexts breaks nested diagnostic hist=
+ory anchoring.
+> --
+>
+> commit 86418a115dc1ef24cac1a623674bfd700c69c32e
+> Author: Kumar Kartikeya Dwivedi <memxor@gmail.com>
+>
+> bpf: Track verifier context diagnostic events
+>
+> Record verifier context transitions in the diagnostic history to anchor
+> causal paths for lock, IRQ, RCU, and preempt regions. The depth of the
+> context is used to ensure nested regions correctly anchor at the outermos=
+t
+> active region.
+>
+>> diff --git a/kernel/bpf/verifier.c b/kernel/bpf/verifier.c
+>> index 93941deb2cd8c..e584dec04b34d 100644
+>> --- a/kernel/bpf/verifier.c
+>> +++ b/kernel/bpf/verifier.c
 > [ ... ]
-> > -void pci_create_legacy_files(struct pci_bus *b)
-> > -{
-> > -	int error;
-> > -
-> > -	if (!sysfs_initialized)
-> > -		return;
-> > -
-> > -	b->legacy_io = kzalloc_objs(struct bin_attribute, 2, GFP_ATOMIC);
-> 
-> [Severity: Low]
-> Since this patch removes the dynamic allocation and assignments to
-> b->legacy_io and b->legacy_mem, are these fields in struct pci_bus
-> (defined in include/linux/pci.h) now completely unused?
-> 
-> If they are dead code, should they also be removed from struct pci_bus
-> to reduce the size of the structure?
+>> @@ -1473,6 +1475,7 @@ static int acquire_irq_state(struct bpf_verifier_e=
+nv *env, int insn_idx)
+>>  	s->id =3D ++env->id_gen;
+>>
+>>  	state->active_irq_id =3D s->id;
+>> +	bpf_diag_record_context(env, insn_idx, BPF_DIAG_CONTEXT_IRQ, true, 1);
+>
+> [Severity: Medium]
+> The commit message mentions using context depth to anchor nested regions =
+at
+> the outer active region. Since BPF allows nested IRQ disables (for exampl=
+e,
+> via multiple bpf_local_irq_save calls), does hardcoding the depth to 1 he=
+re
+> break that behavior?
+>
+> If a program nests IRQ contexts, multiple enter events will be recorded w=
+ith
+> a depth of 1. When bpf_diag_history_context_start_idx() searches backward=
+s
+> for an event with a depth of 1, won't it stop at the innermost IRQ enter
+> event rather than the outermost one?
+>
 
-Both of these struct pci_bus members are removed. The next patch does
-exactly that.
+Good catch in both replies; will fix in v3.
 
-Thank you,
+>>  	return s->id;
+>>  }
+>
+> [ ... ]
+>> @@ -1552,6 +1561,9 @@ static int release_irq_state(struct bpf_verifier_s=
+tate *state, int id)
+>>  		if (state->refs[i].id =3D=3D id) {
+>>  			release_reference_state(state, i);
+>>  			state->active_irq_id =3D prev_id;
+>> +			bpf_diag_record_context(env, env->insn_idx,
+>> +						BPF_DIAG_CONTEXT_IRQ, false,
+>> +						state->active_irq_id ? 1 : 0);
+>
+> [Severity: Medium]
+> Similarly, won't this hardcode the exit depth to 1 if there are still out=
+er
+> nested IRQ contexts active? Should this calculate the actual number of
+> nested IRQ contexts instead?
+>
+>>  			return 0;
+>>  		} else {
+>>  			prev_id =3D state->refs[i].id;
 
-	Krzysztof
