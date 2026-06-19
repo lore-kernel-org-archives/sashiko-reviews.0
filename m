@@ -1,193 +1,274 @@
-Received: from cstnet.cn (smtp25.cstnet.cn [159.226.251.25])
-	(using TLSv1.2 with cipher DHE-RSA-AES256-SHA (256/256 bits))
+Received: from CWXP265CU008.outbound.protection.outlook.com (mail-ukwestazon11020094.outbound.protection.outlook.com [52.101.195.94])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C6C441A683C
-	for <sashiko-reviews@lists.linux.dev>; Fri, 19 Jun 2026 16:59:19 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=159.226.251.25
-ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1781888363; cv=none; b=lQCROB29+DsOzT+VZs/IAQcXttbqDajmV135Y/w74JWwbwWG9XgTW7oBGzrI9U7vESSs4HaRsz1VKGaayOJDN+eZCVnjO19QZeVNsOqP7s/A5A6RNdb/dUfIq03FCeU1CDduNrWS6upD7uBVFRhK+LRtzon1u9Oa85z2WUnt9MU=
-ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1781888363; c=relaxed/simple;
-	bh=oWKnd+CUk/BLsnF0i7U0rKXo/4Kj9NqsLh9eAdC7ZTY=;
-	h=Message-ID:Subject:From:To:Cc:Date:In-Reply-To:References:
-	 Content-Type:MIME-Version; b=sOLcd+ujnoAcsqtuF00qs3MHakiIQOyaRkGKCnwlLQhnjvjeF8Vu75JS94d3RgMheqhyqyLXl9ZdBZ+s63h0XTpZOyIv3F/YMzNIgg0fW28ND8iM7b4WOs24sMYuVVaJJUgBormEQh4ReuGAl5Exfl630WqOfJ/EQacyhXawkfA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=iscas.ac.cn; spf=pass smtp.mailfrom=iscas.ac.cn; arc=none smtp.client-ip=159.226.251.25
-Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=iscas.ac.cn
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=iscas.ac.cn
-Received: from edelgard.fodlan.icenowy.me (unknown [112.94.100.206])
-	by APP-05 (Coremail) with SMTP id zQCowACnAdVbdTVqdM9DFA--.14608S2;
-	Sat, 20 Jun 2026 00:59:07 +0800 (CST)
-Message-ID: <8773121ff24730f0b4c2d0037132e4507380a77f.camel@iscas.ac.cn>
-Subject: Re: [PATCH] drm/fb_helper: Determine proper crtc_index within
- drm_fb_helper_fb_dirty
-From: Icenowy Zheng <zhengxingda@iscas.ac.cn>
-To: Thomas Zimmermann <tzimmermann@suse.de>, "H. Nikolaus Schaller"
-	 <hns@goldelico.com>, sashiko-reviews@lists.linux.dev
-Cc: dri-devel@lists.freedesktop.org, Andreas Kemnade <akemnade@kernel.org>
-Date: Sat, 20 Jun 2026 00:59:07 +0800
-In-Reply-To: <1c9e0e24-9c4a-4259-8700-cf9e5fd60ca3@suse.de>
-References: 
-	<5118b37e579cec220f2d2b6ab0bb1ecfb67f0d5c.1781803617.git.hns@goldelico.com>
-	 <20260618174310.70DB11F000E9@smtp.kernel.org>
-	 <50FDBC3B-BFC2-4BC6-B216-78C2C24D9E30@goldelico.com>
-	 <1c9e0e24-9c4a-4259-8700-cf9e5fd60ca3@suse.de>
-Content-Type: text/plain; charset="UTF-8"
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AE2F03C10A4
+	for <sashiko-reviews@lists.linux.dev>; Fri, 19 Jun 2026 17:12:45 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=fail smtp.client-ip=52.101.195.94
+ARC-Seal:i=2; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
+	t=1781889168; cv=fail; b=NbHuZHdR/DSH7i1vsPfvfmpJd7P9Zr+YROAn3aWwJxVGaLm9cIWOEA+Fx0GLEPgt/uAcOx4n1018KGfbJ2igON/xyjA4+o/01QlpwSnU2t4tvdi4x5Je4t0PS3jkoTI6X038a1ATgLPlkPn6SR9Mp+uzgOgpjRb8arvyFatAsgc=
+ARC-Message-Signature:i=2; a=rsa-sha256; d=subspace.kernel.org;
+	s=arc-20240116; t=1781889168; c=relaxed/simple;
+	bh=arkVJKIiGncq0V5xzrfIDF2xC85Uy/GvDHezLIcAu0k=;
+	h=Content-Type:Date:Message-Id:Cc:Subject:From:To:References:
+	 In-Reply-To:MIME-Version; b=JOzbco6IYMLETFw0C1hcn0uoUm1N5AONhkQeJUzWgV0cj6kIUIA5QuamNpJ4dv1Uu7lciVDVW2iR+DF9vlFPEq1JfITFPMxYHRxiZMaZ66TNOy9enoZiIZjF/hHNgEUUGgFf5euScOcs+u1gOBxMiigsZOOSb8n3zfhT2IqMuTI=
+ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=garyguo.net; spf=pass smtp.mailfrom=garyguo.net; dkim=pass (1024-bit key) header.d=garyguo.net header.i=@garyguo.net header.b=tvx/ldno; arc=fail smtp.client-ip=52.101.195.94
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=garyguo.net
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=garyguo.net
+Authentication-Results: smtp.subspace.kernel.org;
+	dkim=pass (1024-bit key) header.d=garyguo.net header.i=@garyguo.net header.b="tvx/ldno"
+ARC-Seal: i=1; a=rsa-sha256; s=arcselector10001; d=microsoft.com; cv=none;
+ b=ojQVaMju1ZuAoknrcAOhHkJeS4QO7RbiLHosh6Bo2XFK/Q9FP3uHGCgQvNTsAHmlox7n2NpjZ66eEaicV36wB4amcMDS6cBIo8ZfiAOMkdYUhicSode/QEM+D4cuUfE2BUlEDh+Qywb5zpc1/Pu5WVSSMjePgpbpdhyk4Gzy2xYjlzsUsvt3z0erOWyhSI36t0Up46o+uulCseSVxrzsP9Ma+axkWrb/4Q7MdF5KMggeZGjC8U8mv+KW9FhBih+UPUcojMB6TbtdVNlFalzMEhpVPVAX0QSL9P+0Iu9wXrgj4Xp4YX+wCQ8PQJZuct4peSQ+QkDvlZu5jFvg9uR9BQ==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com;
+ s=arcselector10001;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
+ bh=2BHY1upK8RJDNw3uKaE3rPb44wbRJKVD6YnQi7IB5GE=;
+ b=xItbpj3Sjk1ptUHDcH6+R2TvwOuI4zW1+DKkI1vFZM16VFne4eUsnTMmGKF1FVwIWyyHANmvkJo30+OdPFEEE+MMw3E5wN+6CL3i9f1i5GPeN2uFdZtxefWpRnB3kDADASW8roqTc0/4JyZUwGOTYCovuWiNWXhuf4+4BZiJOqGqUqfZwDxpS6T/zAN9BTPM570ZMDt1IIBxqV8w4IFN7aELXqwLP2zHyba2GLJNsgzjCuiBmXr6M+PvFt5SCyrisWRz+tOwXoC3xoJA6yS9JsxVDca7Cxqyb3QA63prDSE6raMeF7mOhqWN7cnGl76+UqbD/T9wrnapWUErVztd9A==
+ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
+ smtp.mailfrom=garyguo.net; dmarc=pass action=none header.from=garyguo.net;
+ dkim=pass header.d=garyguo.net; arc=none
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=garyguo.net;
+ s=selector1;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
+ bh=2BHY1upK8RJDNw3uKaE3rPb44wbRJKVD6YnQi7IB5GE=;
+ b=tvx/ldnojh1rSoOj+kcTrx7WPZRUYdw4I6Jy+n1ON8aqpk/hPuH1p4NV/UZWGLUWT5PzpncGtG7RSsfl55l4xUBtAYPRbZa9CuhBRJ0J9+ZxEEx5XZZc6QvSqhlwoY+TKWC0JaKYfilpzJNJjeTnhA0fp2a3sn1lv0aNepyxwrM=
+Authentication-Results: dkim=none (message not signed)
+ header.d=none;dmarc=none action=none header.from=garyguo.net;
+Received: from LOVP265MB8871.GBRP265.PROD.OUTLOOK.COM (2603:10a6:600:488::16)
+ by LOBP265MB9284.GBRP265.PROD.OUTLOOK.COM (2603:10a6:600:47d::5) with
+ Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.21.139.13; Fri, 19 Jun
+ 2026 17:12:42 +0000
+Received: from LOVP265MB8871.GBRP265.PROD.OUTLOOK.COM
+ ([fe80::1c3:ceba:21b4:9986]) by LOVP265MB8871.GBRP265.PROD.OUTLOOK.COM
+ ([fe80::1c3:ceba:21b4:9986%4]) with mapi id 15.21.0139.018; Fri, 19 Jun 2026
+ 17:12:41 +0000
 Content-Transfer-Encoding: quoted-printable
-User-Agent: Evolution 3.58.3 
+Content-Type: text/plain; charset=UTF-8
+Date: Fri, 19 Jun 2026 18:12:41 +0100
+Message-Id: <DJD6ZNYG3G4M.101HSCYG8Q7HQ@garyguo.net>
+Cc: <dri-devel@lists.freedesktop.org>, <devicetree@vger.kernel.org>,
+ <conor+dt@kernel.org>, <robh@kernel.org>, <linux-pci@vger.kernel.org>,
+ "Danilo Krummrich" <dakr@kernel.org>, <ojeda@kernel.org>, "Alexandre
+ Courbot" <acourbot@nvidia.com>
+Subject: Re: [PATCH 07/10] rust: driver: store pointers in `DeviceId`
+From: "Gary Guo" <gary@garyguo.net>
+To: <sashiko-reviews@lists.linux.dev>, "Gary Guo" <gary@garyguo.net>
+X-Mailer: aerc 0.21.0
+References: <20260618-id_info-v1-0-96af1e559ef9@garyguo.net>
+ <20260618-id_info-v1-7-96af1e559ef9@garyguo.net>
+ <20260619170508.8E9351F00A3E@smtp.kernel.org>
+In-Reply-To: <20260619170508.8E9351F00A3E@smtp.kernel.org>
+X-ClientProxiedBy: LO4P123CA0376.GBRP123.PROD.OUTLOOK.COM
+ (2603:10a6:600:18e::21) To LOVP265MB8871.GBRP265.PROD.OUTLOOK.COM
+ (2603:10a6:600:488::16)
 Precedence: bulk
 X-Mailing-List: sashiko-reviews@lists.linux.dev
 List-Id: <sashiko-reviews.lists.linux.dev>
 List-Subscribe: <mailto:sashiko-reviews+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:sashiko-reviews+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-X-CM-TRANSID:zQCowACnAdVbdTVqdM9DFA--.14608S2
-X-Coremail-Antispam: 1UD129KBjvJXoWxuF4kXrWDZF1DCFWfWryrCrg_yoWrZF13pF
-	W3JFWYkFWkJFyrJ3sFga10va4qk397JF97Wr1rJw15ZFyqvr1S9F4ayrW5uFWDur13Jw42
-	vr4UKFy3urn8AaUanT9S1TB71UUUUU7qnTZGkaVYY2UrUUUUjbIjqfuFe4nvWSU5nxnvy2
-	9KBjDU0xBIdaVrnRJUUUk2b7Iv0xC_Kw4lb4IE77IF4wAFF20E14v26r1j6r4UM7CY07I2
-	0VC2zVCF04k26cxKx2IYs7xG6rWj6s0DM7CIcVAFz4kK6r1j6r18M28lY4IEw2IIxxk0rw
-	A2F7IY1VAKz4vEj48ve4kI8wA2z4x0Y4vE2Ix0cI8IcVAFwI0_Gr0_Xr1l84ACjcxK6xII
-	jxv20xvEc7CjxVAFwI0_Gr0_Cr1l84ACjcxK6I8E87Iv67AKxVWxJVW8Jr1l84ACjcxK6I
-	8E87Iv6xkF7I0E14v26r4j6r4UJwAS0I0E0xvYzxvE52x082IY62kv0487Mc02F40EFcxC
-	0VAKzVAqx4xG6I80ewAv7VC0I7IYx2IY67AKxVWUJVWUGwAv7VC2z280aVAFwI0_Jr0_Gr
-	1lOx8S6xCaFVCjc4AY6r1j6r4UM4x0Y48IcVAKI48JMxkF7I0En4kS14v26r126r1DMxAI
-	w28IcxkI7VAKI48JMxC20s026xCaFVCjc4AY6r1j6r4UMI8I3I0E5I8CrVAFwI0_Jr0_Jr
-	4lx2IqxVCjr7xvwVAFwI0_JrI_JrWlx4CE17CEb7AF67AKxVWUAVWUtwCIc40Y0x0EwIxG
-	rwCI42IY6xIIjxv20xvE14v26r1j6r1xMIIF0xvE2Ix0cI8IcVCY1x0267AKxVWUJVW8Jw
-	CI42IY6xAIw20EY4v20xvaj40_Jr0_JF4lIxAIcVC2z280aVAFwI0_Jr0_Gr1lIxAIcVC2
-	z280aVCY1x0267AKxVWUJVW8JbIYCTnIWIevJa73UjIFyTuYvjxUgtr4UUUUU
-X-CM-SenderInfo: x2kh0wp0lqwv3d6l2u1dvotugofq/
+X-MS-PublicTrafficType: Email
+X-MS-TrafficTypeDiagnostic: LOVP265MB8871:EE_|LOBP265MB9284:EE_
+X-MS-Office365-Filtering-Correlation-Id: 0f1ba150-88fa-4624-20cf-08dece25f8dd
+X-MS-Exchange-SenderADCheck: 1
+X-MS-Exchange-AntiSpam-Relay: 0
+X-Microsoft-Antispam:
+	BCL:0;ARA:13230040|10070799003|1800799024|23010399003|376014|366016|6133799003|4143699003|56012099006|18002099003|22082099003;
+X-Microsoft-Antispam-Message-Info:
+	iVqKZSQOOb+4SFH34Sgc2QXNUE3PB3245CnaBg3voZzDrLiMKRIE/1C/snCAuFwEZzQuVJ7+WxglTyGfhdZa3i8dhzhuzOJ467S4FtMleU5Kg6qxa89Z1qc5jsilRtHGLIp8BAEq8BA0ePJQ+kjgV10lU4zyZtJHlWpBcLO2/s1ALN2+EgX9Ha6wJyQ+CSae0tTJbRz7U5PfE8Iyvh+SwHsYZQVO0Dhd11a97EfuV4gjc4CFmdpi7rjN8BMqltmvJcxXtPpbwWEK3i0CSPL2cwHPYA/DxbP8Sgo68onUSVD2/2shV+Ay61LtNZQmQfpiP/HwFHx1TfwhmVRSqgRx5E06bUfrhOoo7TZjVvFQlZLum0hwxjuQ46NaOKOzNvMn8r1EDmFQAmo2gxn51h/eEXK8odxNZHzu3+q2hQZTQWJZ+fUlvf1dGsj6OKeOeGgI6dTck9vYN9IVEx4UQma0ze3+2wdpNd5WXNfbPfwDXFz4AnkQzkdaObfkg3a8Pv/6uzqyRwFD5KTzHLqBvvE+y88rpeMboXUIHhyRFFkTxwIDAgrucFrwYFTER/TGsWm0IYwrNYtj2HQiWI2K2oXG6B4aQqFbYmXHahXWm21pXVaUj5qRf5hFY97+EkcD4t7+4cj6j8xUEtJYFGeM5TTt2vLVc/5buy0CxQiVGeF5z6k=
+X-Forefront-Antispam-Report:
+	CIP:255.255.255.255;CTRY:;LANG:en;SCL:1;SRV:;IPV:NLI;SFV:NSPM;H:LOVP265MB8871.GBRP265.PROD.OUTLOOK.COM;PTR:;CAT:NONE;SFS:(13230040)(10070799003)(1800799024)(23010399003)(376014)(366016)(6133799003)(4143699003)(56012099006)(18002099003)(22082099003);DIR:OUT;SFP:1102;
+X-MS-Exchange-AntiSpam-MessageData-ChunkCount: 1
+X-MS-Exchange-AntiSpam-MessageData-0:
+	=?utf-8?B?N2E2Zy9yYmtvK0Z1OG9zam96ZUxRR1dZMjBTZDZDTFVHZkJiUlI5ZVZYMk1B?=
+ =?utf-8?B?Viszc0lmRVRXem11WnJCVGxiMzFEM2k1c1ZQYWpvZWlCNnB4My8zaDR3SHNQ?=
+ =?utf-8?B?MldFM2IzOGlBMFJHZ3JMc1B5ZVpCMmdTWDJtckhhTStXMm45a3pqYmpZdmFs?=
+ =?utf-8?B?NEJ4Y2NBakRGejlqZnhJejR2QmJ3aXloSm5CVUwzdk56WVFDMGVuRFdzUmRR?=
+ =?utf-8?B?akRVeVdDTE5CSVo4dWtzMmZtbnRQTFM1V1o5clk3aWh3dEd1T3EycFVYT2M5?=
+ =?utf-8?B?N2ZTSjUzenBiYlZxT0FvL3B1d2RJWG5qQXJxNGZjUzlmR2NWUXl3UmJtZ2Zw?=
+ =?utf-8?B?RHkwQ1J1UUFsRzVLMVdqZWlSNnowYnJWajI5MUtsWWZtMTc0Vkh1bk44aTdq?=
+ =?utf-8?B?Y1FNdS9qN3dNM1UyODBRWEl0ZzRIbXV4dm1qVUc0M2ZhRmpSQ09ubmZSYXlh?=
+ =?utf-8?B?NEVTL3FzQ09LK3hCbjhCN25INmNkL2lhNW9od2dvcy9tbHIrSEFDenVnek1m?=
+ =?utf-8?B?azgwR2hkNzBzQjJrb2NrRFV0RkNLQzQ4TjVmeURFOEZEUGVPQzFRVi81UHlN?=
+ =?utf-8?B?UjFlQUhLaUludEFQNy9tZXJLTWdrU0pIQ2E1bmJVQlNMckJGbHF1STFrYjY3?=
+ =?utf-8?B?Y25iK0FJcURUaUZMY016UElET0tuQjMwYzZvbGllbEV5K0VJMCtXWCtnclRX?=
+ =?utf-8?B?aXJzengzbVFxaXR6emhOeUJqdjV3aU5MbTgwSmtIbTdZd0pkenlvdHRLdXBN?=
+ =?utf-8?B?WlE3a2FVajgrYmJPeGNOVjRmbG9xVGQ2UUxUUmFuRkJCK1l1QW85dTNtbXAv?=
+ =?utf-8?B?WG90ZTVGOWo1VUJsU1FCbWR2ZzZrOC9uREdvZlRwVEluL3NBcTBxd0JIdnVK?=
+ =?utf-8?B?MU02cVJvMk1Ga24xdit3U2ZyV04vTFU1dUJHN2Q3NUUwOWkxTTBFQzVMenN1?=
+ =?utf-8?B?cG16MFVoNlgrSlVRWHFWSmJCeWYzMjVpTDhhVUVNbXNIZENEdkRMcjdWbDI4?=
+ =?utf-8?B?RjIyTmtubXVXaHZSTkFJeDVpY2N6d3Z3ZWpKMlNLeFpRUFR4RGJUNUYzZWtk?=
+ =?utf-8?B?RERDQmJibkxyT01vVXVpSDQzbTFpa2p0Zi9TZWkzS1JzenpKcnY0SVgzRWhk?=
+ =?utf-8?B?aXFjZEZGU0hlOG1LRVA0dmhTVU4wOWFvcVNrQjd5OWhiNTl5dUEyQkZoejNY?=
+ =?utf-8?B?akZoN2E4Y1hHT21uRWp0T3ZlaEd0enVGSW5wblFRWHZuaHcxU0NPbVVYKytm?=
+ =?utf-8?B?RlhQOFFrb2VJRDF0dVRocTdub2M3bnJ3UHlKenJzQzZDTUFkTkV6QnZYOW1C?=
+ =?utf-8?B?dWhiaGFnNC9VZDlnRktxTlk0SFlCOVdwa1g0Z2kvNzNJTTNMU01WOVNQaGh3?=
+ =?utf-8?B?Nkp3UWpPTG5sS1FSK2ZXdUJYalpYd2ZNUngyenpMUW1tcEFFZUlqNllaVGRl?=
+ =?utf-8?B?UERHcllYQ2huMW40NEE3QzQ3NEdMUTAxZ2pVTDJISTFYREtia2tFQnBiaUph?=
+ =?utf-8?B?VlhaMlBYWWdBbjFXamRsR1BoVUxXMzkwMmlIdGR6emlpc2tvN3pYVUx3Ynlm?=
+ =?utf-8?B?TnBVaVpyck9xbU9rWkpJcExaL2gvOWNXRE44QUFrQTNFN2xJbzFac25vakZm?=
+ =?utf-8?B?bnNCbk1Id01WRzBVd1p6b1FXb0YwalI2N2Y5ZE1GRnlYNS8xRjhzTjhTa1lY?=
+ =?utf-8?B?TlZZYjZBSnJFTTNNSng1TWdKZDVOZzNPMEdrQzFuakZBUTVOeFNlQVNKT0xx?=
+ =?utf-8?B?TFFFb0Q0VS9kU3pKMFNrbVlhOFliQVlHT1VXUlIrNlQwTFhYcXZJYWNvVlA5?=
+ =?utf-8?B?ZHUvdTVrQVY0Y0J1UTMyM1ZLdGpqZUxrcmY3eWhLMlVrSmhzTFk2c3E0N0pk?=
+ =?utf-8?B?RXJ0bSs3WmdXKytFckNoSkRzR1hGNEQzOEVZTUJ6aXpobjZ2UG04VlFDNWpZ?=
+ =?utf-8?B?RDhKcUM2bEFsUmRFRzlkTVgxRDZuR2Vhczd6K1hwQm1jMG5tczN0Rk5CY1VW?=
+ =?utf-8?B?SWdiZE1NVHJRYnJ6b3hYOUVhVzBlOERqblVzT3pRenJUSXhuYmxBcHVIQUVJ?=
+ =?utf-8?B?akFZQVFTdWFuNFRlUjhlQ2NuVVdySHNMMGJCMHBTOUpSeGxXZU5NSEdYZXJZ?=
+ =?utf-8?B?MjYwSTBpYjZIaHBQb3dSTDI5U2xWRkZZVFNVMndjWDRhOVVURjFWdy9ZK3FY?=
+ =?utf-8?B?RkwxcVN4a1NJREVyVVhWZzZuYjZCdVpCOWpvN2w3d1VkbVdaWWI1TGU5V1F4?=
+ =?utf-8?B?NmJ5c0IrQnBmcysrRXptS3JvMXZQcUltWnFsTW5YYlc3L0VtcHhiNlZUOHNZ?=
+ =?utf-8?B?SXZubEErdCtNN3RKT1lRZzNzOEFCQXJrM3FXNXBvMjZQeTdMSFFGUT09?=
+X-OriginatorOrg: garyguo.net
+X-MS-Exchange-CrossTenant-Network-Message-Id: 0f1ba150-88fa-4624-20cf-08dece25f8dd
+X-MS-Exchange-CrossTenant-AuthSource: LOVP265MB8871.GBRP265.PROD.OUTLOOK.COM
+X-MS-Exchange-CrossTenant-AuthAs: Internal
+X-MS-Exchange-CrossTenant-OriginalArrivalTime: 19 Jun 2026 17:12:41.8287
+ (UTC)
+X-MS-Exchange-CrossTenant-FromEntityHeader: Hosted
+X-MS-Exchange-CrossTenant-Id: bbc898ad-b10f-4e10-8552-d9377b823d45
+X-MS-Exchange-CrossTenant-MailboxType: HOSTED
+X-MS-Exchange-CrossTenant-UserPrincipalName: f1uxbWzg6liCV7irkthg92VfLNFuimNnhgxIbNuvGoO672NSIGpdI1dOdT7E/+xAJr6gnwOyFM54p+9PVBVtbw==
+X-MS-Exchange-Transport-CrossTenantHeadersStamped: LOBP265MB9284
 
-=E5=9C=A8 2026-06-19=E4=BA=94=E7=9A=84 10:50 +0200=EF=BC=8CThomas Zimmerman=
-n=E5=86=99=E9=81=93=EF=BC=9A
-> (cc Icenowy)
->=20
-> Hi,
->=20
-> there are a number of similar reports. Does the attached patch fix
-> the=20
-> problem. It picks up what you do, but in a more correct way.
+On Fri Jun 19, 2026 at 6:05 PM BST, sashiko-bot wrote:
+> Thank you for your contribution! Sashiko AI review found 2 potential issu=
+e(s) to consider:
+> - [Critical] Arbitrary Memory Dereference / Privilege Escalation via PCI =
+dynamic IDs (`new_id`)
+> - [High] Undefined Behavior via unconditional null reference creation whe=
+n `driver_data` is 0
+> --
+>
+> commit 01871465d12a97f7be006ca329ebda24f458cf1e
+> Author: Gary Guo <gary@garyguo.net>
+>
+> rust: driver: store pointers in `DeviceId`
+>
+> This commit changes Rust device IDs to store pointers directly in the
+> driver_data field, matching the behavior of C drivers. It works around
+> the limitation of missing provenance during const evaluation by wrapping
+> raw IDs in MaybeUninit.
+>
+>> diff --git a/rust/kernel/device_id.rs b/rust/kernel/device_id.rs
+>> index 84852a2d9ad78..59453588df0e7 100644
+>> --- a/rust/kernel/device_id.rs
+>> +++ b/rust/kernel/device_id.rs
+> [ ... ]
+>> @@ -47,15 +50,48 @@ pub unsafe trait RawDeviceIdIndex: RawDeviceId {
+>>      /// The offset (in bytes) to the context/data field in the raw devi=
+ce ID.
+>>      const DRIVER_DATA_OFFSET: usize;
+>> =20
+>> -    /// The index stored at `DRIVER_DATA_OFFSET` of the implementor of =
+the [`RawDeviceIdIndex`]
+>> -    /// trait.
+>> -    fn index(&self) -> usize;
+>> +    /// Obtain the data pointer stored inside the device ID.
+>> +    ///
+>> +    /// # Safety
+>> +    ///
+>> +    /// `&Self` must be stored inside a `IdArray<Self, U>`.
+>> +    unsafe fn info_unchecked<U>(&self) -> &'static U {
+>> +        // SAFETY: By safety requirement of the trait, this is `self.dr=
+iver_data as *const U` and by
+>> +        // the safety requirement of the function, this is stored in `I=
+dArray<Self, U>` so is
+>> +        // convertible to `&'static U`.
+>> +        unsafe {
+>> +            core::ptr::from_ref(self)
+>> +                .byte_add(Self::DRIVER_DATA_OFFSET)
+>> +                .cast::<&U>()
+>> +                .read()
+>> +        }
+>> +    }
+>
+> [Severity: High]
+> Does this code create an unconditional null reference in Rust if the
+> driver_data or driver_info field is 0?
+>
+> Creating a null reference is immediate undefined behavior in Rust, even f=
+or
+> zero-sized types. This 0 value can occur in paths like:
+>
+> 1. IdArray::new_without_index() leaving driver_data fields as 0.
+>
+> 2. When userspace adds a dynamic USB ID via the sysfs new_id interface us=
+ing
+> fewer than 5 fields (omitting refVendor), USB core initializes driver_inf=
+o
+> to 0.
+>
+> [ ... ]
+>> diff --git a/rust/kernel/pci.rs b/rust/kernel/pci.rs
+>> index a3dd48f763532..a630c7fc6a853 100644
+>> --- a/rust/kernel/pci.rs
+>> +++ b/rust/kernel/pci.rs
+> [ ... ]
+>> @@ -110,10 +110,13 @@ extern "C" fn probe_callback(
+>>          // SAFETY: `DeviceId` is a `#[repr(transparent)]` wrapper of `s=
+truct pci_device_id` and
+>>          // does not add additional invariants, so it's safe to transmut=
+e.
+>>          let id =3D unsafe { &*id.cast::<DeviceId>() };
+>> -        let info =3D T::ID_TABLE.info(id.index());
+>> +
+>> +        // SAFETY: `id` comes from `T::ID_TABLE` which is of type `IdAr=
+ray<_, T::IdInfo>` or
+>> +        // `pci_device_id_any` which has 0 as driver_data.
+>> +        let info =3D unsafe { id.info_unchecked_opt::<T::IdInfo>() };
+>
+> [Severity: Critical]
+> Can this allow an arbitrary memory dereference or bypass kernel lockdown?
+>
+> The PCI subsystem supports dynamic IDs via the sysfs new_id interface
+> (drivers/pci/pci-driver.c), which parses up to 7 arguments, the last bein=
+g
+> driver_data (%lx).
+>
+> This allows a privileged user (root) to supply an arbitrary pointer value=
+.
+> The code here will blindly cast this integer to an Option<&'static U> via
+> info_unchecked_opt() and dereference it if non-zero, allowing arbitrary
+> kernel memory access.
 
-Yes, this patch looks okay, but I wonder whether the crtc index query
-should be done in drm_client_modeset_wait_for_vblank() instead.
+False positive because dyn ID requires the data to be matching one of the
+existing data.
 
-I will test this patch this weekend.
+>
+> [ ... ]
+>> diff --git a/rust/kernel/usb.rs b/rust/kernel/usb.rs
+>> index 500b5e0ba4ea9..8aeff50117552 100644
+>> --- a/rust/kernel/usb.rs
+>> +++ b/rust/kernel/usb.rs
+> [ ... ]
+>> @@ -89,7 +89,8 @@ extern "C" fn probe_callback(
+>>              // does not add additional invariants, so it's safe to tran=
+smute.
+>>              let id =3D unsafe { &*id.cast::<DeviceId>() };
+>> =20
+>> -            let info =3D T::ID_TABLE.info(id.index());
+>> +            // SAFETY: `id` comes from `T::ID_TABLE` which is of type `=
+IdArray<_, T::IdInfo>`.
+>> +            let info =3D unsafe { id.info_unchecked::<T::IdInfo>() };
+>>              let data =3D T::probe(intf, id, info);
+>
+> [Severity: High]
+> Does this code trigger undefined behavior when the underlying USB device =
+ID
+> driver_info field is 0?
+>
+> When the id is constructed using IdArray::new_without_index() or when
+> dynamically added via sysfs new_id with fewer fields, the driver_info is =
+0.
+> /sys/bus/
+> This probe unconditionally expects a valid non-null reference and creates
+> one even for 0-initialized IDs via info_unchecked().
 
-Thanks,
-Icenow
+Looks like I need to convert USB code to use `Option<&Self::IdInfo>` too, l=
+ike
+what I did to PCI.
 
->=20
-> Best regards
-> Thomas
->=20
-> Am 18.06.26 um 19:56 schrieb H. Nikolaus Schaller:
-> >=20
-> > > Am 18.06.2026 um 19:43 schrieb sashiko-bot@kernel.org:
-> > >=20
-> > > Thank you for your contribution! Sashiko AI review found 3
-> > > potential issue(s) to consider:
-> > > - [High] Lockless access to `crtc->state` and `crtc->primary-
-> > > >state` can lead to a Use-After-Free due to concurrent atomic
-> > > commits.
-> > > - [High] The patch breaks vblank synchronization for legacy (non-
-> > > atomic) DRM drivers.
-> > > - [Medium] The logic selects the first matching CRTC instead of
-> > > the last active one, contradicting the commit message.
-> > > --
-> > >=20
-> > > commit 0337b26b606b4d905d72ea2be31bcb984fe62c6e
-> > > Author: H. Nikolaus Schaller <hns@goldelico.com>
-> > >=20
-> > > drm/fb_helper: Determine proper crtc_index within
-> > > drm_fb_helper_fb_dirty
-> > >=20
-> > > This commit updates the dirty framebuffer worker to search for a
-> > > matching
-> > > active CRTC instead of hardcoding the wait for vblank to CRTC
-> > > index 0. It
-> > > aims to avoid vblank timeouts when CRTC 0 is inactive.
-> > >=20
-> > > > diff --git a/drivers/gpu/drm/drm_fb_helper.c
-> > > > b/drivers/gpu/drm/drm_fb_helper.c
-> > > > --- a/drivers/gpu/drm/drm_fb_helper.c
-> > > > +++ b/drivers/gpu/drm/drm_fb_helper.c
-> > > [ ... ]
-> > > > @@ -232,9 +232,23 @@ static void drm_fb_helper_fb_dirty(struct
-> > > > drm_fb_helper *helper)
-> > > > struct drm_clip_rect clip_copy;
-> > > > unsigned long flags;
-> > > > int ret;
-> > > > + unsigned int crtc_index =3D 0;
-> > > > + struct drm_crtc *crtc;
-> > > >=20
-> > > > mutex_lock(&helper->lock);
-> > > > - drm_client_modeset_wait_for_vblank(&helper->client, 0);
-> > > > +
-> > > > + drm_for_each_crtc(crtc, dev) {
-> > > > + if (crtc->primary && crtc->primary->state &&
-> > > > +=C2=A0=C2=A0=C2=A0 crtc->primary->state->fb =3D=3D helper->fb &&
-> > > > +=C2=A0=C2=A0=C2=A0 crtc->state && crtc->state->active) {
-> > > [Severity: High]
-> > > Can this lockless access to crtc->state and crtc->primary->state
-> > > result in a
-> > > use-after-free?
-> > No idea...
-> >=20
-> > > The drm_fb_helper_fb_dirty() function holds helper->lock, but
-> > > does not hold
-> > > the DRM modeset locks required to protect these state pointers.
-> > > During a
-> > Which locks are exactly recommended to add? What is their
-> > name/pointer?
-> >=20
-> > > concurrent atomic modeset commit, the DRM core allocates new
-> > > state objects,
-> > > swaps them into place, and frees the old objects via kfree().
-> > >=20
-> > > If this code reads an old state pointer and gets preempted, could
-> > > it then
-> > > dereference the pointer after it has been freed by the concurrent
-> > > commit?
-> > >=20
-> > > [Severity: High]
-> > > Does this break vblank synchronization for legacy non-atomic DRM
-> > > drivers?
-> > > Legacy drivers do not use the atomic modesetting infrastructure,
-> > > so their
-> > > crtc->state and crtc->primary->state pointers remain NULL. Since
-> > > the condition
-> > > above requires these pointers to be non-NULL, the loop will skip
-> > > the vblank
-> > > wait entirely for legacy drivers. This skips the intended rate-
-> > > limiting
-> > > behavior and could lead to unbounded damage worker execution.
-> > What is the solution? And is this important.
-> >=20
-> > Before d8c4bddcd8bcb ("drm/fb-helper: Synchronize dirty worker with
-> > vblank")
-> >=20
-> > there was also no rate-limiting behavior.
-> >=20
-> > > > + crtc_index =3D drm_crtc_index(crtc) + 1;
-> > > > + break;
-> > > [Severity: Medium]
-> > > The commit message states "If multiple CRTCs match, the last
-> > > active one is
-> > > selected." Does the break statement here cause the first active
-> > > CRTC to be
-> > > selected instead, bypassing the remaining matches in the list?
-> > Yes, that is correct. The description is indeed wrong.
-> >=20
-> > > > + }
-> > > > + }
-> > > > +
-> > > > + if (crtc_index > 0)
-> > > > + drm_client_modeset_wait_for_vblank(&helper->client,
-> > > > crtc_index - 1);
-> > > > +
-> > > > mutex_unlock(&helper->lock);
-> > > --=20
-> > > Sashiko AI review =C2=B7
-> > > https://sashiko.dev/#/patchset/5118b37e579cec220f2d2b6ab0bb1ecfb67f0d=
-5c.1781803617.git.hns@goldelico.com?part=3D1
+Best,
+Gary
 
