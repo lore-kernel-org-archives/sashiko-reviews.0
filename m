@@ -1,141 +1,148 @@
-Received: from out-173.mta0.migadu.com (out-173.mta0.migadu.com [91.218.175.173])
+Received: from out-181.mta0.migadu.com (out-181.mta0.migadu.com [91.218.175.181])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9412440D59C
-	for <sashiko-reviews@lists.linux.dev>; Sat, 20 Jun 2026 20:54:50 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=91.218.175.173
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AD8E22EC571
+	for <sashiko-reviews@lists.linux.dev>; Sat, 20 Jun 2026 23:15:36 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=91.218.175.181
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1781988892; cv=none; b=usCz7O0V55h1xpauGhC84krXgXFCLlAoUGekMNx+3dpIH/osM5Xzu7zT2UgIpOV/GaKUNVNlasTGN1PHFTY/7r7i+pHdPvyi/SMk/P7TjMPXhTOQqyyFzbihXwvH5wEsC0cczZGR0J6a2dhMwinAbJWg4ITge1v523Y8G0KRDzI=
+	t=1781997338; cv=none; b=FILJkOAdsJprJbqw4AoAyqgNQ/o3lRy94LjlxrxptzZShTAysRA6ZeQ2neoqrV3sfaHa5DUVtSHM/GXkwEs5w2TC1SYY6TLTQOKlZGtaK3sSXhYkGoP8MyMmtcSM313GihRRvGoAcT/WysPUiUkbiT3WDFOAued5CScLY233WcM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1781988892; c=relaxed/simple;
-	bh=hoyWPSh53vkdoKN1ko25Ca+FPJMsXh3cNqjZJxcRRrY=;
+	s=arc-20240116; t=1781997338; c=relaxed/simple;
+	bh=c55u9JRxfeVF5+lIje4TMCUBZ0laNtO3MJ5wSzOs+SI=;
 	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=Pm7inmeuBfOXSevtDCYzA3ttnqrtZvwZy1+TWfjJEi3kng2miLBQwqkyLoxJ5149k/gMncPXEath5LpeUlP1E+ktqpuWiYHDLZdrhqBAWztT4T4rAGs1ncA4cyZKIAXy5bdkqTvCSAte9CwPNSxCtWs0zg8bM4b+l8/q4teaT/Y=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linux.dev; spf=pass smtp.mailfrom=linux.dev; dkim=pass (1024-bit key) header.d=linux.dev header.i=@linux.dev header.b=jb29XCiN; arc=none smtp.client-ip=91.218.175.173
+	 In-Reply-To:Content-Type; b=K+XtImTTxYKMoUXHpHiL2hDrYIwndXPZ8JWzZ5pXUcK7Xz0uH8IEsw3UU/X6xjLp6dC8SGi8s+mYU90pngd7dbSLP57tHgCEIroL0sbsdL6UKZgN4H7/9mjMcds2dZKCjut5+F+7R5gUEE6aJ8jeR8e3jUOCMG9IixlpR09NoGw=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linux.dev; spf=pass smtp.mailfrom=linux.dev; dkim=pass (1024-bit key) header.d=linux.dev header.i=@linux.dev header.b=v3wkx8vG; arc=none smtp.client-ip=91.218.175.181
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linux.dev
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linux.dev
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linux.dev header.i=@linux.dev header.b="jb29XCiN"
-Message-ID: <125e95fe-36f0-48f5-8888-ccfd944606a1@linux.dev>
+	dkim=pass (1024-bit key) header.d=linux.dev header.i=@linux.dev header.b="v3wkx8vG"
+Message-ID: <bebea55d-6f39-41af-b838-22e030b2a66c@linux.dev>
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linux.dev; s=key1;
-	t=1781988888;
+	t=1781997334;
 	h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
 	 to:to:cc:cc:mime-version:mime-version:content-type:content-type:
 	 content-transfer-encoding:content-transfer-encoding:
 	 in-reply-to:in-reply-to:references:references;
-	bh=aiHXj3HckvwS/mpx9wfuAVXvq6RrK1VlpJ2FZCgggxc=;
-	b=jb29XCiNDn9BPRTH0uNqkOA3cUxq2HUD/12OWZq3kPHTbgAgpYpUbhO04wkzPNPNWw550x
-	Tc+G90Inx1+bOOZERITsjgEXN9akFwiddy09DU9gR7DUyqbaIwvtripZX+wxepYtNbp4MR
-	7JVs+tSxjQjfh+p1UpLCRErF8wpiEr8=
-Date: Sat, 20 Jun 2026 13:54:39 -0700
+	bh=eEuPlCv52nwo/gWF/w3ejVnuRDQuHOF1oyVFidnviJY=;
+	b=v3wkx8vGIeU4QuFQVyrdSpesGGjauu1sXFQYpIKoVlQyF7JA3RGBhPMJkhMukyf3J/j8+n
+	GFX27PN3z9+lpigeIBNUVtH/j0ymUOWJva6tpJM60MDdYEZRgC7akAjxLY71Tn5Tt1t8Wb
+	iNRahysUw3rVAMjkSB/+4AJPiO7SM34=
+Date: Sat, 20 Jun 2026 16:15:30 -0700
 Precedence: bulk
 X-Mailing-List: sashiko-reviews@lists.linux.dev
 List-Id: <sashiko-reviews.lists.linux.dev>
 List-Subscribe: <mailto:sashiko-reviews+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:sashiko-reviews+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Subject: Re: [PATCH bpf v2 1/2] bpf: Fix effective prog array index with
- BPF_F_PREORDER
-Content-Language: en-GB
-To: sashiko-reviews@lists.linux.dev, Amery Hung <ameryhung@gmail.com>
-Cc: bpf@vger.kernel.org
-References: <20260619063520.2690547-1-ameryhung@gmail.com>
- <20260619063520.2690547-2-ameryhung@gmail.com>
- <20260619064625.545CE1F000E9@smtp.kernel.org>
+Subject: Re: [PATCH v6 14/21] RISC-V: perf: Skip PMU SBI extension when not
+ implemented
+To: sashiko-reviews@lists.linux.dev
+Cc: devicetree@vger.kernel.org, linux-perf-users@vger.kernel.org,
+ robh@kernel.org, conor+dt@kernel.org, linux-riscv@lists.infradead.org
+References: <20260608-counter_delegation-v6-14-285b72ed65a9@meta.com>
+ <20260609063329.66D801F00893@smtp.kernel.org>
+Content-Language: en-US
 X-Report-Abuse: Please report any abuse attempt to abuse@migadu.com and include these headers.
-From: Yonghong Song <yonghong.song@linux.dev>
-In-Reply-To: <20260619064625.545CE1F000E9@smtp.kernel.org>
+From: Atish Patra <atish.patra@linux.dev>
+In-Reply-To: <20260609063329.66D801F00893@smtp.kernel.org>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 7bit
 X-Migadu-Flow: FLOW_OUT
 
 
-
-On 6/18/26 11:46 PM, sashiko-bot@kernel.org wrote:
-> Thank you for your contribution! Sashiko AI review found 1 potential issue(s) to consider:
+On 6/8/26 11:33 PM, sashiko-bot@kernel.org wrote:
+> Thank you for your contribution! Sashiko AI review found 2 potential issue(s) to consider:
 >
 > Pre-existing issues:
-> - [Critical] This problem wasn't introduced by this patch, but replace_effective_prog() erroneously uses the logical index returned by effective_prog_pos() as a direct physical index into the effective BPF program array. If previous detach operations failed to reallocate the array and left dummy_bpf_prog elements in place, the physical index does not match the logical index. This causes bpf_link_update() to overwrite the wrong program slot (e.g., the dummy) leaving the original program untouched in the active array while its reference is dropped by __cgroup_bpf_replace(). Once the RCU grace period expires, this leads to a Use-After-Free when the kernel executes the freed program.
+> - [Critical] Missing perf_pmu_unregister() on error paths leads to Use-After-Free of the pmu struct.
+> - [High] Unconditional cpuhp_state_remove_instance() on an uninitialized hlist_node causes a kernel panic.
 > --
 >
-> commit f837441f68b1fdb520696422a141ec421e2d50ae
-> Author: Amery Hung <ameryhung@gmail.com>
+> commit bd51c5655be0902a2fc1fd90b8d692c299e7265b
+> Author: Charlie Jenkins <charlie@rivosinc.com>
 >
-> bpf: Fix effective prog array index with BPF_F_PREORDER
+> RISC-V: perf: Skip PMU SBI extension when not implemented
 >
-> This commit introduces a shared helper effective_prog_pos() to accurately
-> determine a program's position in the effective array by replaying the
-> placement logic. This fixes an issue where preorder programs caused
-> replace_effective_prog() and purge_effective_progs() to access incorrect
-> slots, corrupting the array or causing a use-after-free.
->
->> diff --git a/kernel/bpf/cgroup.c b/kernel/bpf/cgroup.c
->> index 83ce66296ac19..4355ccb78a9c6 100644
->> --- a/kernel/bpf/cgroup.c
->> +++ b/kernel/bpf/cgroup.c
+> When the PMU SBI extension is not implemented, sbi_v2_available should
+> not be set to true. The SBI implementation for counter config matching
+> and firmware counter read  should also be skipped when the SBI extension
+> is not implemented.
++linux-riscv
+>> diff --git a/drivers/perf/riscv_pmu_sbi.c b/drivers/perf/riscv_pmu_sbi.c
+>> index 1f16df9d0dd00..5bfcd3821f572 100644
+>> --- a/drivers/perf/riscv_pmu_sbi.c
+>> +++ b/drivers/perf/riscv_pmu_sbi.c
 > [ ... ]
->
->> @@ -960,27 +1006,15 @@ static void replace_effective_prog(struct cgroup *cgrp,
->>   		if (percpu_ref_is_zero(&desc->bpf.refcnt))
->>   			continue;
+>> @@ -2045,12 +2052,13 @@ static int __init rvpmu_devinit(void)
+>>   	int ret;
+>>   	struct platform_device *pdev;
 >>   
->> -		/* find position of link in effective progs array */
->> -		for (pos = 0, cg = desc; cg; cg = cgroup_parent(cg)) {
->> -			if (pos && !(cg->bpf.flags[atype] & BPF_F_ALLOW_MULTI))
->> -				continue;
->> -
->> -			head = &cg->bpf.progs[atype];
->> -			hlist_for_each_entry(pl, head, node) {
->> -				if (!prog_list_prog(pl))
->> -					continue;
->> -				if (pl->link == link)
->> -					goto found;
->> -				pos++;
->> -			}
->> -		}
->> -found:
->> -		BUG_ON(!cg);
->> +		pos = effective_prog_pos(desc, atype, pl);
->> +		if (WARN_ON_ONCE(pos < 0))
->> +			continue;
+>> -	if (sbi_spec_version >= sbi_mk_version(0, 3) &&
+>> -	    sbi_probe_extension(SBI_EXT_PMU))
+>> -		static_branch_enable(&riscv_pmu_sbi_available);
+>> +	if (sbi_probe_extension(SBI_EXT_PMU)) {
+>> +		if (sbi_spec_version >= sbi_mk_version(0, 3))
+>> +			static_branch_enable(&riscv_pmu_sbi_available);
+>> +		if (sbi_spec_version >= sbi_mk_version(2, 0))
+>> +			sbi_v2_available = true;
+>> +	}
 >>   
->>   		progs = rcu_dereference_protected(
->>   				desc->bpf.effective[atype],
->>   				lockdep_is_held(&cgroup_mutex));
->>   		item = &progs->items[pos];
->> -		WRITE_ONCE(item->prog, link->link.prog);
->> +		WRITE_ONCE(item->prog, pl->link->link.prog);
+>> -	if (sbi_spec_version >= sbi_mk_version(2, 0))
+>> -		sbi_v2_available = true;
+>>   	/*
+>>   	 * We need all three extensions to be present to access the counters
+>>   	 * in S-mode via Supervisor Counter delegation.
 > [Severity: Critical]
-> This isn't a bug introduced by this patch, but does replace_effective_prog()
-> erroneously use the logical index returned by effective_prog_pos() as a direct
-> physical index into the effective BPF program array?
+> This is a pre-existing issue, but I noticed a potential use-after-free in the
+> error handling path of rvpmu_device_probe() when allocating or registering
+> fails after perf_pmu_register() succeeds.
 >
-> If previous detach operations failed to reallocate the array and left
-> dummy_bpf_prog elements in place, the physical index would not match the
-> logical index. This could cause bpf_link_update() to overwrite the wrong
-> program slot (e.g., the dummy), leaving the original program untouched in the
-> active array while its reference is dropped by __cgroup_bpf_replace().
+> If an error occurs, such as pmu_sbi_snapshot_alloc() failing, the code jumps
+> to out_unregister:
 >
-> Once the RCU grace period expires, could this lead to a Use-After-Free when
-> the kernel executes the freed program? Should this instead use
-> bpf_prog_array_update_at(progs, pos, pl->link->link.prog) to correctly handle
-> the presence of dummy programs?
+> out_unregister:
+> 	riscv_pmu_destroy(pmu);
+>
+> out_free:
+> 	kfree(pmu);
+> 	return ret;
+>
+> However, neither the error path nor riscv_pmu_destroy() calls
+> perf_pmu_unregister(&pmu->pmu).
+>
+> This leaves the PMU registered in the perf core subsystem while its backing
+> memory is freed via kfree(). Any subsequent access to the PMU could result
+> in a use-after-free.
+>
+> Should perf_pmu_unregister() be called during teardown to avoid memory
+> corruption?
 
-Indeed this is a prefixing bug and can be fixed in another patch. If I undersand
-correctly, the logic like below:
-    __cgroup_bpf_detach
-      update_effective_progs
-        failed doe to out-of-memory:
-           purge_effective_progs
-               ...
-               bpf_prog_array_delete_safe_at(...)
-               /* dummy prog is in the effective array */
-    __cgroup_bpf_replace
-      replace_effective_prog
-        ...
-        item = &progs->items[pos];
-        WRITE_ONCE(item->prog, pl->link->link.prog);
-        /* dummy prog in effective array, but pos may ignore dummy prog during accouting. */
+Yes. Same comment as other patches. Fixed.
 
-So for in replace_effective_prog(), bpf_prog_array_update_at() is the right way to fix.
 
+> [Severity: High]
+> This is a pre-existing issue, but the error teardown path in
+> rvpmu_device_probe() seems to have a bug that could trigger a kernel panic.
+>
+> If rvpmu_device_probe() fails before successfully calling
+> cpuhp_state_add_instance(), it jumps to out_unregister and calls
+> riscv_pmu_destroy(pmu).
+>
+> Inside riscv_pmu_destroy(), it unconditionally removes the hotplug instance:
+>
+> static void riscv_pmu_destroy(struct riscv_pmu *pmu)
+> {
+> 	...
+> 	cpuhp_state_remove_instance(CPUHP_AP_PERF_RISCV_STARTING, &pmu->node);
+> }
+>
+> Because the pmu struct is allocated with kzalloc() and the node hasn't been
+> added to the hotplug list yet, its hlist_node is zero-initialized.
+>
+> When hlist_del() is called internally by cpuhp_state_remove_instance(), it
+> attempts to dereference node->pprev (which is NULL), causing a NULL pointer
+> dereference.
+>
+> Would it be better to check if the node is actually hashed before attempting
+> to remove the hotplug instance?
+Fixed in v7.
