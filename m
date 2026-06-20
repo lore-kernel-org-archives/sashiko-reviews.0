@@ -1,119 +1,102 @@
-Received: from out-179.mta0.migadu.com (out-179.mta0.migadu.com [91.218.175.179])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-dl1-f49.google.com (mail-dl1-f49.google.com [74.125.82.49])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C1E1E40D580
-	for <sashiko-reviews@lists.linux.dev>; Sat, 20 Jun 2026 00:37:29 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=91.218.175.179
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 289F7285417
+	for <sashiko-reviews@lists.linux.dev>; Sat, 20 Jun 2026 07:47:33 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=74.125.82.49
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1781915851; cv=none; b=WrumnbG7V6zCVMLO3pRMhARPR1GNNIYqDgYM0C4flV0aNpy4rSTehpJ6zeO2yhroxWRpblAs3/b/HK8TSZ9w+jvxfwraBvHNXVO6VudW2utS+BIl/EMjupqz79tGrskJZiqwXGJlis7325Tgswug/UIkxcGsNy3FucuaFTg7cEo=
+	t=1781941655; cv=none; b=iKRhnCTxjjIMJI0MIAT0SBssMhyGJjk8YI601Qsu0iP3/SHqfYi7Z7pKNzlckkQE3R675A7jDivCyj4YOWEv0fjTGyZvlCyZaQlRRNmrdBaO0MMvJ/sW9msAvml2/LP/opBQ1pfPRgCCiie1szsOfVk6n4p5nsb1Jze8LUxKgdA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1781915851; c=relaxed/simple;
-	bh=zlVRYtTX0IMSiEplXwHZftLFto6fUpYN9sipcBlMMT0=;
-	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=LvkWIXshn1SBagoGc0Z89P8Jpt4VzRQnl0cKaKEz1F/ekQmKudRErjhUnA4+QDPoAY6AQAGh6qOhnPm1RCT6p0lYKd94viIhYnHGkw5lkQ/5CYSlMlgARLwaw8oqY6lmgGcM4sMx9zv106L5BXdlGB2nSb1CFeiY3DjxGTJzjHE=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linux.dev; spf=pass smtp.mailfrom=linux.dev; dkim=pass (1024-bit key) header.d=linux.dev header.i=@linux.dev header.b=mPB+xqiz; arc=none smtp.client-ip=91.218.175.179
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linux.dev
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linux.dev
+	s=arc-20240116; t=1781941655; c=relaxed/simple;
+	bh=CGaSle0JP4NlvOHxZxH2Ie3emSkFSrdW2uVS1Av9j3U=;
+	h=Content-Type:Date:Message-Id:Subject:From:To:Cc:In-Reply-To:
+	 References:MIME-Version; b=X5Cn+7K5Ob6u2Tbhf14rI6wqndCXUcSMOr64CRBsRVYKh/InMrgjHjNJW1FwxdneyTDMKXdMQEsyaEDVMi4giEStZm07Bn+R5yonswM/2ttShDdkgWX0/75K9p8rEhNh1lenYNQ/Cpa4cFReoJQ9rz3nwuXVckahxGDchcEhZOc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=nexthop.ai; spf=pass smtp.mailfrom=nexthop.ai; dkim=pass (2048-bit key) header.d=nexthop.ai header.i=@nexthop.ai header.b=j6B/PtEX; arc=none smtp.client-ip=74.125.82.49
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=nexthop.ai
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=nexthop.ai
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linux.dev header.i=@linux.dev header.b="mPB+xqiz"
-Message-ID: <45c4f50d-46d1-4111-b0a1-d4da386bba66@linux.dev>
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linux.dev; s=key1;
-	t=1781915848;
-	h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
-	 to:to:cc:cc:mime-version:mime-version:content-type:content-type:
-	 content-transfer-encoding:content-transfer-encoding:
-	 in-reply-to:in-reply-to:references:references;
-	bh=B6Ws2e3pGATryWc6/hsprSzAgwSCbcpOlE9xtcnLeMg=;
-	b=mPB+xqiz75neW2047tYmRmI2dMRxaCpTphKtLfW1HQsYCJp1Mvh5Qb0beyurzKtAnm0sjk
-	KESv+s6HbixTAvz2yslqKIJ8U64FRysQ3sNgMTGISXC88ZqsdNXerUusSqg4XR0gCiM6J2
-	3mapRiWgq5uNsWXogQIm0ys+FepT564=
-Date: Fri, 19 Jun 2026 17:37:22 -0700
+	dkim=pass (2048-bit key) header.d=nexthop.ai header.i=@nexthop.ai header.b="j6B/PtEX"
+Received: by mail-dl1-f49.google.com with SMTP id a92af1059eb24-1390f75d8bbso3750057c88.0
+        for <sashiko-reviews@lists.linux.dev>; Sat, 20 Jun 2026 00:47:33 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=nexthop.ai; s=google; t=1781941653; x=1782546453; darn=lists.linux.dev;
+        h=content-transfer-encoding:mime-version:references:in-reply-to:cc:to
+         :from:subject:message-id:date:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=CGaSle0JP4NlvOHxZxH2Ie3emSkFSrdW2uVS1Av9j3U=;
+        b=j6B/PtEXHVQYvH2pbYbzpoSY66Gvi0hrgDkVpvcVfMjy3EH4dbYHRGEgwcyBVL+Jz7
+         VWg9vnI10rFAQt5rweHyqaSHBlAIYL7AXa7fyl/jtlKO/dPcEoEw+R+MLvADDy4QBLky
+         VjQ3wYWQrgo0NEia9+7b07LdHqII0jMI30zvJvzobRTqZjeTZcLgPJXDEz0ZlG+FIykG
+         pidhb0gicEpafn3JwHSDFuF8Co5JDWJ7tF/RcKAjarT6J1pjbdoFX47asOfMUMXB2tqD
+         Wf9PyHA9qTnY3F5JVF8l2GksEi4KiDQfdgg5CK6TH3dRwrC+RDXEPJqXVwFUoZZnZRKz
+         qpPA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20251104; t=1781941653; x=1782546453;
+        h=content-transfer-encoding:mime-version:references:in-reply-to:cc:to
+         :from:subject:message-id:date:x-gm-gg:x-gm-message-state:from:to:cc
+         :subject:date:message-id:reply-to;
+        bh=CGaSle0JP4NlvOHxZxH2Ie3emSkFSrdW2uVS1Av9j3U=;
+        b=msXHuBldFbQwWeixIQbHvBDXmU/bMYXetLfThIp6QTepHteM8IFAstulYq/bXJFV32
+         wEsZGc4DkzYKsTSsXEl8zFrUMkIrB7IQu/PKtAZ46oWbGUM/galgfn/mWrUWhD8OIOtZ
+         3EDpDcBC2lzcxsM68W00bjCxcO4qC0N5fWK7tYoTWhWiAvlsANEGnzaFMqBM1/ppYbSv
+         UnnxiNI+/u2tEj0lNlzotM0wUbB4eHchIV49lTi02oi9Ml3WN+hojZri9pWO5ZNkwxvJ
+         iD/WCMuwXN1zSfc+CUPDFRdAq+KhwzU2vDYja7PhXkTUEREr7lljPMiPSP1loZNIaivw
+         8FXA==
+X-Gm-Message-State: AOJu0YxdT6wPOBKlChAkcnkxmkMpLDfw4iOe6mcfeGmbUpocX8389PKF
+	Ah8edizayMon11etnJMJsiW3ZxLyizDv+5rq4N5apubj+mjQO8wS2F/uebCJOyiy6WqDxVcHNgl
+	CxaT9
+X-Gm-Gg: AfdE7cmLkVyraypoQ8qcH6S5KUJ6NvyTqoLr7kc1UpCqkZ2JUuhxoQhrhIMLO0HdQC4
+	P3Z9PMYB390FpE9+XN2+qAApOKrU7anfFa9eabq/IfvaWppVwdif3YxTgncsQ2Gvn8Wl5UM+hub
+	34IVkZqeVnDbNfxc6E+g/suf9v6AjS5Uti92iqAmFzwalvMLVTf7zPDZ1NbttQD1bCIxowgnq4e
+	mVo5LZFfL0C7xCAC3J5H/+Eh8Oq/NYFB3aItxvkohqwb/qx1wqmRNQ+iu7LUHuJU3oQho0gI+NT
+	lhYtCAFWv2eDnLbubtfT7opJByWIhMyk1XXmn/tVqEiZxsRChRC8vFWgK9Hz+k/IC1aDaw2hrrZ
+	50OB2YILAWhqZjSZWG4W3quyQN4a3AEU0sfQquE6Lyd3e2qkwV5shOSD9hdMZ+5mceV4UXFv4I0
+	JXinjPGo5ifHwh
+X-Received: by 2002:a05:7022:4383:b0:12d:b7e5:a691 with SMTP id a92af1059eb24-139a4eb8b1fmr2876221c88.7.1781941652989;
+        Sat, 20 Jun 2026 00:47:32 -0700 (PDT)
+Received: from localhost ([50.145.100.174])
+        by smtp.gmail.com with ESMTPSA id a92af1059eb24-139add81933sm1826956c88.14.2026.06.20.00.47.32
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Sat, 20 Jun 2026 00:47:32 -0700 (PDT)
+Content-Type: text/plain; charset=UTF-8
+Date: Sat, 20 Jun 2026 00:47:31 -0700
+Message-Id: <DJDPLHR74OJJ.1H86LMMNB3YMN@nexthop.ai>
+Subject: Re: [PATCH] hwmon: (pmbus/xdpe1a2g7b) Add regulator support
+From: "Abdurrahman Hussain" <abdurrahman@nexthop.ai>
+To: <sashiko-reviews@lists.linux.dev>
+Cc: <linux-hwmon@vger.kernel.org>, <linux@roeck-us.net>,
+ <ashish.yadav@infineon.com>, <linux-kernel@vger.kernel.org>
+In-Reply-To: <20260620065358.0FA801F000E9@smtp.kernel.org>
+References: <20260619-xdpe1a2g7b-v1-1-428c3847be0d@nexthop.ai>
+	<20260620065358.0FA801F000E9@smtp.kernel.org>
 Precedence: bulk
 X-Mailing-List: sashiko-reviews@lists.linux.dev
 List-Id: <sashiko-reviews.lists.linux.dev>
 List-Subscribe: <mailto:sashiko-reviews+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:sashiko-reviews+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Subject: Re: [PATCH v6 17/21] RISC-V: perf: Add Qemu virt machine events
-To: sashiko-reviews@lists.linux.dev
-Cc: linux-perf-users@vger.kernel.org, conor+dt@kernel.org, robh@kernel.org,
- devicetree@vger.kernel.org
-References: <20260608-counter_delegation-v6-17-285b72ed65a9@meta.com>
- <20260609062221.D90C81F00893@smtp.kernel.org>
-Content-Language: en-US
-X-Report-Abuse: Please report any abuse attempt to abuse@migadu.com and include these headers.
-From: Atish Patra <atish.patra@linux.dev>
-In-Reply-To: <20260609062221.D90C81F00893@smtp.kernel.org>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
-X-Migadu-Flow: FLOW_OUT
+Content-Transfer-Encoding: 8bit
 
+On Sat, 20 Jun 2026 06:53:57 +0000, sashiko-bot@kernel.org wrote:
+> [Severity: Critical]
+> This is a pre-existing issue, but does enabling regulator support here expose
+> attached hardware to destructive voltages when operating in nvidia195mv VID
+> mode?
+>
+> The core PMBus framework translates microvolts into raw register encodings via
+> pmbus_data2reg_vid(), but it currently hardcodes the VR11 VID calculation
+> formula and completely ignores the vrm_version parameter configured by the
+> driver.
 
-On 6/8/26 11:22 PM, sashiko-bot@kernel.org wrote:
-> Thank you for your contribution! Sashiko AI review found 1 potential issue(s) to consider:
-> - [Medium] The patch incorrectly overloads the generic 'unimplemented' or 'non-commercial' CPU IDs (`mvendorid=0`, `marchid=0`, `mimpid=0`) to uniquely identify the QEMU virt machine, applying QEMU-specific PMU events globally to any minimal or academic RISC-V core.
-> --
->
-> commit 61b476b524390d76a4db3dcbab4b57114ff0ebc8
-> Author: Atish Patra <atishp@rivosinc.com>
->
-> RISC-V: perf: Add Qemu virt machine events
->
-> This patch adds a minimal set of legacy perf events for the QEMU virt
-> machine to the vendor table, allowing users to use them when counter
-> delegation is enabled.
->
->> diff --git a/arch/riscv/include/asm/vendorid_list.h b/arch/riscv/include/asm/vendorid_list.h
->> index 7f5030ee1fcf8..603aa2b21c0ba 100644
->> --- a/arch/riscv/include/asm/vendorid_list.h
->> +++ b/arch/riscv/include/asm/vendorid_list.h
->> @@ -11,4 +11,8 @@
->>   #define SIFIVE_VENDOR_ID	0x489
->>   #define THEAD_VENDOR_ID		0x5b7
->>   
->> +#define QEMU_VIRT_VENDOR_ID		0x000
->> +#define QEMU_VIRT_IMPL_ID		0x000
->> +#define QEMU_VIRT_ARCH_ID		0x000
->> +
-> [Severity: Medium]
-> Do these definitions overload the generic "unimplemented" or "non-commercial"
-> CPU IDs to uniquely identify the QEMU virt machine?
->
-> According to the RISC-V Privileged Architecture specification, a value of 0
-> in the mvendorid, marchid, and mimpid CSRs indicates that the ID is either
-> unimplemented or represents a non-commercial implementation.
+Good catch! Confirmed: pmbus_data2reg_vid() ignores vrm_version while its
+read counterpart pmbus_reg2data_vid() already switches on it, so a non-VR11
+driver that exposes a regulator -- or any hwmon vout_command setter -- will
+write VR11-encoded values into the chip. For an nvidia195mv part this turns
+a 200 mV request into VID 0xB2, which the chip interprets as 1080 mV.
 
-That's what virt machine exposes. We need actually what is being exposed 
-in virt machine
-as it still remains one of the most commonly used platforms in RISC-V.
+I'll send the core fix as a separate prerequisite patch (mirroring
+pmbus_reg2data_vid() so writes round-trip with reads) and respin this
+series on top of it.
 
->> diff --git a/drivers/perf/riscv_pmu_sbi.c b/drivers/perf/riscv_pmu_sbi.c
->> index 00b84b28117a8..74acac54328e0 100644
->> --- a/drivers/perf/riscv_pmu_sbi.c
->> +++ b/drivers/perf/riscv_pmu_sbi.c
-> [ ... ]
->
->> @@ -453,7 +454,42 @@ struct riscv_vendor_pmu_events {
->>   	  .hw_event_map = _hw_event_map, .cache_event_map = _cache_event_map, \
->>   	  .attrs_events = _attrs },
->>   
-> [ ... ]
->
->>   static struct riscv_vendor_pmu_events pmu_vendor_events_table[] = {
->> +	RISCV_VENDOR_PMU_EVENTS(QEMU_VIRT_VENDOR_ID, QEMU_VIRT_ARCH_ID, QEMU_VIRT_IMPL_ID,
->> +				qemu_virt_hw_event_map, qemu_virt_cache_event_map,
->> +				qemu_virt_event_group)
->>   };
-> [Severity: Medium]
-> By binding the 0x000 ID tuple to QEMU's specific PMU event maps here, will
-> the kernel mistakenly assume any generic core returning 0 is a QEMU virt
-> machine?
->
-> If that non-QEMU core implements PMU counter delegation (Ssccfg/Smcdeleg) but
-> uses standard or different raw event encodings, this could unconditionally
-> program QEMU's arbitrary raw event values into the core's PMU configuration
-> registers, silently corrupting performance monitoring statistics.
-
-N/A
-
-
+Thanks,
+Abdurrahman
