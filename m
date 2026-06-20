@@ -1,129 +1,141 @@
-Received: from va-2-52.ptr.blmpb.com (va-2-52.ptr.blmpb.com [209.127.231.52])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from out-173.mta0.migadu.com (out-173.mta0.migadu.com [91.218.175.173])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0AB292E7185
-	for <sashiko-reviews@lists.linux.dev>; Sat, 20 Jun 2026 18:25:17 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.127.231.52
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9412440D59C
+	for <sashiko-reviews@lists.linux.dev>; Sat, 20 Jun 2026 20:54:50 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=91.218.175.173
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1781979919; cv=none; b=vFgdeYEvzVLWqmULetqwpogn6o8U9HJea4dvwEvEKO74BZwEwDj1B37+IMp1S4ICmqwB4dCAmDFSNgu+q3A8vRKtkTMLDWi/RDT8SFh1TG/0h6yRR0YGX/WwxtaT1frjKPCExtI1jXlAoHPQ3RRqH0hidd7GOs0Y/3MUVaJpfmw=
+	t=1781988892; cv=none; b=usCz7O0V55h1xpauGhC84krXgXFCLlAoUGekMNx+3dpIH/osM5Xzu7zT2UgIpOV/GaKUNVNlasTGN1PHFTY/7r7i+pHdPvyi/SMk/P7TjMPXhTOQqyyFzbihXwvH5wEsC0cczZGR0J6a2dhMwinAbJWg4ITge1v523Y8G0KRDzI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1781979919; c=relaxed/simple;
-	bh=m4+vnQCzD4W1MtiBYdXcSLms4gBLg2bJhdg/2zEaZlA=;
-	h=Cc:Subject:References:Date:Content-Type:From:Mime-Version:
-	 In-Reply-To:To:Message-Id; b=SZEX/gg7wn08Ds7P33L+kWUS1EJSpL6eOhiOAmyi9ylMeyeDjPl/Nli7svobiLTUf3VmjnzJYUjrznc4vLdnimYnNSOKLs00SIwd+/xQHJOJ3yjO7S1sHef3RMIgGqwDAyC6eiV723/p64eNOoudS803ezhmRAMKxdLbvZ0Gng8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=fygo.io; spf=pass smtp.mailfrom=fygo.io; dkim=pass (2048-bit key) header.d=fygo-io.20200929.dkim.larksuite.com header.i=@fygo-io.20200929.dkim.larksuite.com header.b=mswArY0c; arc=none smtp.client-ip=209.127.231.52
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=fygo.io
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=fygo.io
+	s=arc-20240116; t=1781988892; c=relaxed/simple;
+	bh=hoyWPSh53vkdoKN1ko25Ca+FPJMsXh3cNqjZJxcRRrY=;
+	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
+	 In-Reply-To:Content-Type; b=Pm7inmeuBfOXSevtDCYzA3ttnqrtZvwZy1+TWfjJEi3kng2miLBQwqkyLoxJ5149k/gMncPXEath5LpeUlP1E+ktqpuWiYHDLZdrhqBAWztT4T4rAGs1ncA4cyZKIAXy5bdkqTvCSAte9CwPNSxCtWs0zg8bM4b+l8/q4teaT/Y=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linux.dev; spf=pass smtp.mailfrom=linux.dev; dkim=pass (1024-bit key) header.d=linux.dev header.i=@linux.dev header.b=jb29XCiN; arc=none smtp.client-ip=91.218.175.173
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linux.dev
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linux.dev
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=fygo-io.20200929.dkim.larksuite.com header.i=@fygo-io.20200929.dkim.larksuite.com header.b="mswArY0c"
-DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed;
- s=s1; d=fygo-io.20200929.dkim.larksuite.com; t=1781979905;
-  h=from:subject:mime-version:from:date:message-id:subject:to:cc:
- reply-to:content-type:mime-version:in-reply-to:message-id;
- bh=ys4LFglm/KrCkt8cR7S2UM10kO0Eh2S6Upx2AWFDtAQ=;
- b=mswArY0cb94tcnXk6C7PYQ9shZF0k+1JsxGfeCOAJkEOruozknp+LIqEa1fvdkbqJPJiRt
- ldz9URzcj+vOHs0F7CA0mOgLIYN4SdNlSR4DfiZy3XW7+2veDjR8k4t6OEq/B1ZZMxP+jL
- Gafaa+v9xC7WXUnAFsAmy78YlwVaIWSpYTwdH2IdEQBEM36GtNnx3pLlo1w3kL2bWj3Q0i
- Ccj9sNAVPFA7TsrrJtnVzyPrvH92xCx9lI0e3E+SO/krhLGvTaMiWiA490tIli2VwC9v/t
- ccvnTUHOhiAHG7lALXx8hg/F3qheHiXz5Rusx7nwzvbC9XUBz92vJRd1abcn5g==
-Cc: <linux-raid@vger.kernel.org>, <yukuai@fygo.io>
-Subject: Re: [PATCH v2 2/4] md/raid10: fix writes_pending leak on write request failures
-References: <20260613182810.1317258-3-abd.masalkhi@gmail.com> <20260613184042.BCEC01F000E9@smtp.kernel.org>
-Received: from [192.168.1.104] ([39.182.0.148]) by smtp.larksuite.com with ESMTPS; Sat, 20 Jun 2026 18:25:03 +0000
-Date: Sun, 21 Jun 2026 02:25:00 +0800
-Content-Type: text/plain; charset=UTF-8
-X-Lms-Return-Path: <lba+26a36db00+1dacd2+lists.linux.dev+yukuai@fygo.io>
-Content-Transfer-Encoding: quoted-printable
-From: "yu kuai" <yukuai@fygo.io>
+	dkim=pass (1024-bit key) header.d=linux.dev header.i=@linux.dev header.b="jb29XCiN"
+Message-ID: <125e95fe-36f0-48f5-8888-ccfd944606a1@linux.dev>
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linux.dev; s=key1;
+	t=1781988888;
+	h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+	 to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+	 content-transfer-encoding:content-transfer-encoding:
+	 in-reply-to:in-reply-to:references:references;
+	bh=aiHXj3HckvwS/mpx9wfuAVXvq6RrK1VlpJ2FZCgggxc=;
+	b=jb29XCiNDn9BPRTH0uNqkOA3cUxq2HUD/12OWZq3kPHTbgAgpYpUbhO04wkzPNPNWw550x
+	Tc+G90Inx1+bOOZERITsjgEXN9akFwiddy09DU9gR7DUyqbaIwvtripZX+wxepYtNbp4MR
+	7JVs+tSxjQjfh+p1UpLCRErF8wpiEr8=
+Date: Sat, 20 Jun 2026 13:54:39 -0700
 Precedence: bulk
 X-Mailing-List: sashiko-reviews@lists.linux.dev
 List-Id: <sashiko-reviews.lists.linux.dev>
 List-Subscribe: <mailto:sashiko-reviews+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:sashiko-reviews+unsubscribe@lists.linux.dev>
-Mime-Version: 1.0
-In-Reply-To: <20260613184042.BCEC01F000E9@smtp.kernel.org>
-Reply-To: yukuai@fygo.io
-To: <sashiko-reviews@lists.linux.dev>, 
-	"Abd-Alrhman Masalkhi" <abd.masalkhi@gmail.com>
-Message-Id: <ecaef394-23a2-43ec-a85b-2e25786914aa@fygo.io>
-X-Original-From: yu kuai <yukuai@fygo.io>
-User-Agent: Mozilla Thunderbird
+MIME-Version: 1.0
+Subject: Re: [PATCH bpf v2 1/2] bpf: Fix effective prog array index with
+ BPF_F_PREORDER
+Content-Language: en-GB
+To: sashiko-reviews@lists.linux.dev, Amery Hung <ameryhung@gmail.com>
+Cc: bpf@vger.kernel.org
+References: <20260619063520.2690547-1-ameryhung@gmail.com>
+ <20260619063520.2690547-2-ameryhung@gmail.com>
+ <20260619064625.545CE1F000E9@smtp.kernel.org>
+X-Report-Abuse: Please report any abuse attempt to abuse@migadu.com and include these headers.
+From: Yonghong Song <yonghong.song@linux.dev>
+In-Reply-To: <20260619064625.545CE1F000E9@smtp.kernel.org>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
+X-Migadu-Flow: FLOW_OUT
 
-Hi,
 
-=E5=9C=A8 2026/6/14 2:40, sashiko-bot@kernel.org =E5=86=99=E9=81=93:
-> Thank you for your contribution! Sashiko AI review found 1 potential issu=
-e(s) to consider:
+
+On 6/18/26 11:46 PM, sashiko-bot@kernel.org wrote:
+> Thank you for your contribution! Sashiko AI review found 1 potential issue(s) to consider:
 >
 > Pre-existing issues:
-> - [High] The `r10_bio` structure allocated from the mempool is leaked whe=
-n `raid10_write_request()` bails out early due to `REQ_NOWAIT`.
+> - [Critical] This problem wasn't introduced by this patch, but replace_effective_prog() erroneously uses the logical index returned by effective_prog_pos() as a direct physical index into the effective BPF program array. If previous detach operations failed to reallocate the array and left dummy_bpf_prog elements in place, the physical index does not match the logical index. This causes bpf_link_update() to overwrite the wrong program slot (e.g., the dummy) leaving the original program untouched in the active array while its reference is dropped by __cgroup_bpf_replace(). Once the RCU grace period expires, this leads to a Use-After-Free when the kernel executes the freed program.
 > --
-This looks like a real issue, do you plan to fix this as well?
 >
-> commit 3940ccdb4c7c7e19c20f9b5e2e1d12545c2558b5
-> Author: Abd-Alrhman Masalkhi <abd.masalkhi@gmail.com>
+> commit f837441f68b1fdb520696422a141ec421e2d50ae
+> Author: Amery Hung <ameryhung@gmail.com>
 >
-> md/raid10: fix writes_pending leak on write request failures
+> bpf: Fix effective prog array index with BPF_F_PREORDER
 >
-> raid10_make_request() acquires a writes_pending reference with
-> md_write_start() before dispatching write requests. Several failure
-> paths in raid10_write_request() complete the bio and return without
-> reaching the normal write completion path, causing the corresponding
-> md_write_end() to be skipped.
+> This commit introduces a shared helper effective_prog_pos() to accurately
+> determine a program's position in the effective array by replaying the
+> placement logic. This fixes an issue where preorder programs caused
+> replace_effective_prog() and purge_effective_progs() to access incorrect
+> slots, corrupting the array or causing a use-after-free.
 >
->> diff --git a/drivers/md/raid10.c b/drivers/md/raid10.c
->> index cee5a253a281d..c123a8c76ddcd 100644
->> --- a/drivers/md/raid10.c
->> +++ b/drivers/md/raid10.c
+>> diff --git a/kernel/bpf/cgroup.c b/kernel/bpf/cgroup.c
+>> index 83ce66296ac19..4355ccb78a9c6 100644
+>> --- a/kernel/bpf/cgroup.c
+>> +++ b/kernel/bpf/cgroup.c
 > [ ... ]
->> @@ -1365,7 +1365,7 @@ static void raid10_write_request(struct mddev *mdd=
-ev, struct bio *bio,
->>   		/* Bail out if REQ_NOWAIT is set for the bio */
->>   		if (bio->bi_opf & REQ_NOWAIT) {
->>   			bio_wouldblock_error(bio);
->> -			return;
->> +			return false;
-> [Severity: High]
-> This isn't a bug introduced by this patch, but does this early return lea=
-k
-> the r10_bio structure?
 >
-> __make_request() allocates r10_bio using:
->      r10_bio =3D mempool_alloc(&conf->r10bio_pool, GFP_NOIO);
+>> @@ -960,27 +1006,15 @@ static void replace_effective_prog(struct cgroup *cgrp,
+>>   		if (percpu_ref_is_zero(&desc->bpf.refcnt))
+>>   			continue;
+>>   
+>> -		/* find position of link in effective progs array */
+>> -		for (pos = 0, cg = desc; cg; cg = cgroup_parent(cg)) {
+>> -			if (pos && !(cg->bpf.flags[atype] & BPF_F_ALLOW_MULTI))
+>> -				continue;
+>> -
+>> -			head = &cg->bpf.progs[atype];
+>> -			hlist_for_each_entry(pl, head, node) {
+>> -				if (!prog_list_prog(pl))
+>> -					continue;
+>> -				if (pl->link == link)
+>> -					goto found;
+>> -				pos++;
+>> -			}
+>> -		}
+>> -found:
+>> -		BUG_ON(!cg);
+>> +		pos = effective_prog_pos(desc, atype, pl);
+>> +		if (WARN_ON_ONCE(pos < 0))
+>> +			continue;
+>>   
+>>   		progs = rcu_dereference_protected(
+>>   				desc->bpf.effective[atype],
+>>   				lockdep_is_held(&cgroup_mutex));
+>>   		item = &progs->items[pos];
+>> -		WRITE_ONCE(item->prog, link->link.prog);
+>> +		WRITE_ONCE(item->prog, pl->link->link.prog);
+> [Severity: Critical]
+> This isn't a bug introduced by this patch, but does replace_effective_prog()
+> erroneously use the logical index returned by effective_prog_pos() as a direct
+> physical index into the effective BPF program array?
 >
-> It then passes it to raid10_write_request(). When the bio has REQ_NOWAIT =
-set
-> during a clustered area resync, we complete the bio with an error and ret=
-urn
-> false without freeing the r10_bio. Could repeatedly triggering this exhau=
-st
-> the r10bio_pool, causing deadlocks on subsequent operations?
+> If previous detach operations failed to reallocate the array and left
+> dummy_bpf_prog elements in place, the physical index would not match the
+> logical index. This could cause bpf_link_update() to overwrite the wrong
+> program slot (e.g., the dummy), leaving the original program untouched in the
+> active array while its reference is dropped by __cgroup_bpf_replace().
 >
-> Note that the regular_request_wait() error path right below correctly cal=
-ls
-> free_r10bio(r10_bio) before returning.
->
->>   		}
->>   		for (;;) {
-> [ ... ]
->> @@ -1398,7 +1398,7 @@ static void raid10_write_request(struct mddev *mdd=
-ev, struct bio *bio,
->>   		if (bio->bi_opf & REQ_NOWAIT) {
->>   			allow_barrier(conf);
->>   			bio_wouldblock_error(bio);
->> -			return;
->> +			return false;
-> [Severity: High]
-> This is a pre-existing issue, but does this path also leak the r10_bio
-> mempool allocation when waiting for a reshape metadata update?
->
-> Similar to the clustered area resync case above, the r10_bio allocated in
-> __make_request() does not appear to be freed before returning here.
->
->>   		}
->>   		mddev_add_trace_msg(conf->mddev,
+> Once the RCU grace period expires, could this lead to a Use-After-Free when
+> the kernel executes the freed program? Should this instead use
+> bpf_prog_array_update_at(progs, pos, pl->link->link.prog) to correctly handle
+> the presence of dummy programs?
 
---=20
-Thanks,
-Kuai
+Indeed this is a prefixing bug and can be fixed in another patch. If I undersand
+correctly, the logic like below:
+    __cgroup_bpf_detach
+      update_effective_progs
+        failed doe to out-of-memory:
+           purge_effective_progs
+               ...
+               bpf_prog_array_delete_safe_at(...)
+               /* dummy prog is in the effective array */
+    __cgroup_bpf_replace
+      replace_effective_prog
+        ...
+        item = &progs->items[pos];
+        WRITE_ONCE(item->prog, pl->link->link.prog);
+        /* dummy prog in effective array, but pos may ignore dummy prog during accouting. */
+
+So for in replace_effective_prog(), bpf_prog_array_update_at() is the right way to fix.
+
