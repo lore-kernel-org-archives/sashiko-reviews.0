@@ -1,64 +1,63 @@
-Received: from TY3P286CU002.outbound.protection.outlook.com (mail-japaneastazon11020105.outbound.protection.outlook.com [52.101.229.105])
+Received: from PH7PR06CU001.outbound.protection.outlook.com (mail-westus3azon11010033.outbound.protection.outlook.com [52.101.201.33])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8545336F437
-	for <sashiko-reviews@lists.linux.dev>; Sun, 21 Jun 2026 14:35:43 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=fail smtp.client-ip=52.101.229.105
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 17A331F151C
+	for <sashiko-reviews@lists.linux.dev>; Sun, 21 Jun 2026 18:05:13 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=fail smtp.client-ip=52.101.201.33
 ARC-Seal:i=2; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1782052545; cv=fail; b=YEhUrUFA3gM/qJ9InzD4GG6QqKNTbPY0VOotZwyWS3n3eUcfx5+2Z0MaY8f2rc94N0TjzNxvRJoSYh0TeWpQQS9vf0fdye6s5LAbe48YY8gTm2uJlcK6Hwic22uG64xucwNe2yU6ZligmF+4wJeqCxi581JAhOPjqamHraGUJn8=
+	t=1782065115; cv=fail; b=XmrD4aJp5He+WJrgJJWwAQoa+YPK0a9nIhPE590oTzEqzerrt+8aWsXX1ux4EOMQyS7TeD5mSoJLTW3H2QZ0iImIcywzoUaedR23bBazSSIGsjMhvsn50XyuRnEBZfezwQoFp8H24kbGbMJM+9XO9uGfvBWmHIw/XZXHduS6FM4=
 ARC-Message-Signature:i=2; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1782052545; c=relaxed/simple;
-	bh=ao1cMbF7isrVCp/TzGurklCyHAihXJVCcKjWXK9Bj9I=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:Content-Type:
-	 Content-Disposition:In-Reply-To:MIME-Version; b=swcPm/9rlGRVSdrYdo2uvgTEcjRCyxYKtuynZShiPrIOp02lsklfiaEAT0mdAkLgdEkV9vgP3cUELBVYAKN/c2GfXndUeNyvk2lX1xjOUnkfPKV1IW9S0YvtgLOdX8ObL4f163jwlUeaZVwM5APWjfHJVLiaY15RDxEiY3EbQjA=
-ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=valinux.co.jp; spf=pass smtp.mailfrom=valinux.co.jp; dkim=fail (1024-bit key) header.d=valinux.co.jp header.i=@valinux.co.jp header.b=hTfmCaXm reason="signature verification failed"; arc=fail smtp.client-ip=52.101.229.105
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=valinux.co.jp
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=valinux.co.jp
+	s=arc-20240116; t=1782065115; c=relaxed/simple;
+	bh=/Sm/wWsu8DbJ/2D1QBUKCXIZw1gkSmFiBYuwCQoAnmk=;
+	h=Message-ID:Date:Subject:To:Cc:References:From:In-Reply-To:
+	 Content-Type:MIME-Version; b=EzbNnKgSO8RWiXrvVYlyQXFo0V+lKSzRHag+CUZyrunu8pC5CJ9/zrahiYLxv33+0KlbNEFpUkWarFAeIETmQhLa62i6Ld/mm4u+Wc3mcEMK4iKxRKkFyw1oTYKuQMC7mgoD74TFieGAYsEIRpqZFirVY2YQd0w/3cO3VWO1HWw=
+ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=amd.com; spf=fail smtp.mailfrom=amd.com; dkim=pass (1024-bit key) header.d=amd.com header.i=@amd.com header.b=TO01BJe5; arc=fail smtp.client-ip=52.101.201.33
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=amd.com
+Authentication-Results: smtp.subspace.kernel.org; spf=fail smtp.mailfrom=amd.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=fail reason="signature verification failed" (1024-bit key) header.d=valinux.co.jp header.i=@valinux.co.jp header.b="hTfmCaXm"
+	dkim=pass (1024-bit key) header.d=amd.com header.i=@amd.com header.b="TO01BJe5"
 ARC-Seal: i=1; a=rsa-sha256; s=arcselector10001; d=microsoft.com; cv=none;
- b=YjKHJR+cGteiLrSH7SkrI0DfgsEVr5o7GoWnKC9IosTt4FagxIrB/P9rh9AOiG85N6dsb3Ii/JtEJXSjeV0PDS1hH7b4PlUnm1jNsJWU15+QyO43G/rRXMYKqaFHHi3WjLrymdvLy7MvojU2oUVd+xzyWyI280VAPfjKCPgrYR0rYgYY7PsEK80vvnkD3BldcC7J5ISCfRXCzpgX33ZJNPwlTwxSkfflH1cYK/nQ32kk9ayykWn1yniBZhOwyFQCDjLF6e/u+xU3lJBzMLSwZicFIii0dkVzT89KMURC+bMSr8nRd3wSDhWhG1JAqZUUqKVpsDRK6/zqafh8oAG0nQ==
+ b=xCrNuwne4yyzREW3K5qQOcFJL8ckEVaiEupKV0gse/y1zA+krUFSPUvQVrLQoV/mVAm74U1/mfL3oPHEbQTF7b/nEdeKMHmkH38HA3P4ayDUepb2QrMpCGONgKIOnL6/aZ+meSijhqyRQYTCLzLWPp1qOX0lzEQFpPk6vqSOj41ShPtdS62o45XxI2mZrxyJFCqOFQwmVxr6LQQ0FavYtyQYnKPaYxq+1dOsZB2Oy03iDuze/PYinH1CvHvOlR4yfLvCZMVXUkbg323SzPORsjCBREacsxw/Ujv0IK/VmoV7o1uUzz4fTFxpa0YlleX0/QOj2oVIPPFzDxZzfRKfKg==
 ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com;
  s=arcselector10001;
  h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
- bh=pMVcVKHqJkfI4vW666Rhv585VAoJitcO0Eq+zytx/9A=;
- b=R+lHZ1I2gTkXay2JHp6qIZQrlzg/yKKjwomcwIVSZCnDfBulgkP4gtCOXRNIhK7wGt1aNGDi5+G7fkqF6fHETYnfI7gZaQPDPgJQ6DAYYzPMbQ+Az2aPHTvuFjDbeohZgUdkZmwPQ99R17whdl4LE96B11JGHbeOPIr3plg75yv5bj3eV4nY5kQA82nM5di7oy45f0wZbCc87pOOsKw1ASCWyUeCB+3IaKi6bRLOZUrZ6e6jORr0oMqye3kilyvd2sPZF/P6HaGonXz3M3ibvsOUFlKBwPYoXX9TO2tT0uNcZoaiHiKG1eijoJv+1nCoTm0nPOxrCQHMKIKaiR4qvA==
+ bh=RA0SKiGxQiANH+wx4A7HD7zZRATsrzL1Fso9j9sMEsk=;
+ b=bA+oxBH84aMhubGkl8LYVYWR87KgnQRbLrBFvnyX4fVCob9MUe7XSgaNGBdP0dcImQawOP2SJEapw5l56Q96UuvtNiq+59yWk9eU6k3Ufv8yurWNlkbiIxyQTz/pJXZGZjoBDqzJwQpmTD742vmTY49QXoHe1fttOGA3aFWcSjDgUcnBDeclKKoeT7f5nDROnULrT08fRQQcsjrGW4iYSo2GDGtmlcWgiC+Vu0cOYvDnGWlbCm0ZebHoiC21L50FVOsAtYh/sug3tC0JkBJQClBzxq8x7pvQST7oowdjKZ6k4aT8YvPJMcY81JJ37RGX38DsjvcXo/SJVpbL7UA0yg==
 ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
- smtp.mailfrom=valinux.co.jp; dmarc=pass action=none
- header.from=valinux.co.jp; dkim=pass header.d=valinux.co.jp; arc=none
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=valinux.co.jp;
- s=selector1;
+ smtp.mailfrom=amd.com; dmarc=pass action=none header.from=amd.com; dkim=pass
+ header.d=amd.com; arc=none
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=amd.com; s=selector1;
  h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
- bh=pMVcVKHqJkfI4vW666Rhv585VAoJitcO0Eq+zytx/9A=;
- b=hTfmCaXmG+AlWNstfO2KYBRCyD2NnNNVWx6PrLh++Zaahadhn9+Ru6qySjjG1mAAiqUhGpwq5EgwkO9EDZq6OekaKY7JcwPDcT1Zqbxj92H+JRMZYphEHtRmfc3geEnTOQEXvWLyDEX20jwwh1DGgp0/r8HtCcwAInxJBy0ccgQ=
+ bh=RA0SKiGxQiANH+wx4A7HD7zZRATsrzL1Fso9j9sMEsk=;
+ b=TO01BJe5E9CDocXkZ/FQGo/pBVot6IVgOzHsELap/F0qsNmVpbn+hYLL1MM+WYQilJ/iU3cWTrGCTIEZOLjkJIMtpfbIEbqGTNHj/cQNMpXDCEA55ZJ+WviKf4w2ZpWzwR/QxIgf8qwG4cHozFtzokUrgqyVj/3L6E6I3uvC9pk=
 Authentication-Results: dkim=none (message not signed)
- header.d=none;dmarc=none action=none header.from=valinux.co.jp;
-Received: from TY7P286MB7722.JPNP286.PROD.OUTLOOK.COM (2603:1096:405:38f::10)
- by TY4P286MB5774.JPNP286.PROD.OUTLOOK.COM (2603:1096:405:2c7::10) with
+ header.d=none;dmarc=none action=none header.from=amd.com;
+Received: from PH8PR12MB6914.namprd12.prod.outlook.com (2603:10b6:510:1cb::21)
+ by MN6PR12MB8514.namprd12.prod.outlook.com (2603:10b6:208:474::16) with
  Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.21.139.19; Sun, 21 Jun
- 2026 14:35:35 +0000
-Received: from TY7P286MB7722.JPNP286.PROD.OUTLOOK.COM
- ([fe80::2305:327c:28ec:9b32]) by TY7P286MB7722.JPNP286.PROD.OUTLOOK.COM
- ([fe80::2305:327c:28ec:9b32%5]) with mapi id 15.21.0139.018; Sun, 21 Jun 2026
- 14:35:35 +0000
-Date: Sun, 21 Jun 2026 23:35:33 +0900
-From: Koichiro Den <den@valinux.co.jp>
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.21.139.18; Sun, 21 Jun
+ 2026 18:05:10 +0000
+Received: from PH8PR12MB6914.namprd12.prod.outlook.com
+ ([fe80::2893:177a:72b0:6000]) by PH8PR12MB6914.namprd12.prod.outlook.com
+ ([fe80::2893:177a:72b0:6000%6]) with mapi id 15.21.0139.009; Sun, 21 Jun 2026
+ 18:05:10 +0000
+Message-ID: <5a7117b6-3e2b-4bf9-bf8e-5a873b4e7b76@amd.com>
+Date: Sun, 21 Jun 2026 11:05:08 -0700
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH] fbcon: Drop vga_default_device() check from
+ video_is_primary_device()
+Content-Language: en-US
 To: sashiko-reviews@lists.linux.dev
-Cc: vkoul@kernel.org, Frank.Li@kernel.org, dmaengine@vger.kernel.org
-Subject: Re: [PATCH v3 01/13] dmaengine: dw-edma: Add per-channel interrupt
- routing control
-Message-ID: <srhpqgi4vitjhbehchlq7ri6yti6ghvlxjzszxad2lmfvr6vz4@aqfnmcew3zlu>
-References: <20260620170040.3756043-1-den@valinux.co.jp>
- <20260620170040.3756043-2-den@valinux.co.jp>
- <20260620171353.436AE1F000E9@smtp.kernel.org>
-Content-Type: text/plain; charset=iso-8859-1
-Content-Disposition: inline
-Content-Transfer-Encoding: 8bit
-In-Reply-To: <20260620171353.436AE1F000E9@smtp.kernel.org>
-X-ClientProxiedBy: TYCP286CA0031.JPNP286.PROD.OUTLOOK.COM
- (2603:1096:400:29d::6) To TY7P286MB7722.JPNP286.PROD.OUTLOOK.COM
- (2603:1096:405:38f::10)
+Cc: linux-pci@vger.kernel.org
+References: <20260621175230.1453114-1-mario.limonciello@amd.com>
+ <20260621180138.011DC1F000E9@smtp.kernel.org>
+From: Mario Limonciello <mario.limonciello@amd.com>
+In-Reply-To: <20260621180138.011DC1F000E9@smtp.kernel.org>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
+X-ClientProxiedBy: SJ0PR05CA0017.namprd05.prod.outlook.com
+ (2603:10b6:a03:33b::22) To PH8PR12MB6914.namprd12.prod.outlook.com
+ (2603:10b6:510:1cb::21)
 Precedence: bulk
 X-Mailing-List: sashiko-reviews@lists.linux.dev
 List-Id: <sashiko-reviews.lists.linux.dev>
@@ -66,129 +65,140 @@ List-Subscribe: <mailto:sashiko-reviews+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:sashiko-reviews+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 X-MS-PublicTrafficType: Email
-X-MS-TrafficTypeDiagnostic: TY7P286MB7722:EE_|TY4P286MB5774:EE_
-X-MS-Office365-Filtering-Correlation-Id: b5434c95-93bf-418d-4eef-08decfa25ae1
+X-MS-TrafficTypeDiagnostic: PH8PR12MB6914:EE_|MN6PR12MB8514:EE_
+X-MS-Office365-Filtering-Correlation-Id: 31820af7-f625-4697-c471-08decfbfa268
 X-MS-Exchange-SenderADCheck: 1
 X-MS-Exchange-AntiSpam-Relay: 0
 X-Microsoft-Antispam:
-	BCL:0;ARA:13230040|10070799003|366016|376014|23010399003|1800799024|6133799003|3023799007|56012099006|4143699003|18002099003|22082099003;
+	BCL:0;ARA:13230040|23010399003|1800799024|366016|376014|4143699003|11063799006|18002099003|22082099003|56012099006;
 X-Microsoft-Antispam-Message-Info:
-	/1aS6phgtEDY6veayhvrMrV0WFuknfolAtlJ7Q2eWQJ6A6AClHgQCXPVDNJ1oqleZM4dHsd0EN1XZkuNED9BSqMkYEhQcUWlgCSH3/pblAmA0aYW/Lcq1V1/KHS3kdlt5uEY9MbP3yGxRZXghGFSHkStTfV8oCUgq8fPdLjoPRy3oJ07WcWyd/a6tNdDKnqJg0tq77UI5ZfjXFVzGed2fPLSW4yu5+uadDPrXIpZ7G3UTL7aRHcu2ZKdLbl+DNx1M3NbaNk7qzppFf87MtzxWrrvxG/z7M0+AcxaVHLTQgjvTgYHw/PQQOJMJ85xJDpTL7zNNVnI1sl3lRtqw+6GmuGGEbUrpMvF5aAOJ9BPRBxQVgguk7+LzTm+bo/H3Ylu+gmmKyvqHfvkNj117bc8qLTfQkMrld98VhwTeBdK20/vCRIO8edtL9QVIKkNBw9TSCZZpgPFbFJHmU/Dx8PvvCdyTh5qzP2fA3PuPh1//XWAeDm7q/FFnmatq2g6cbFfagWfDGlw8iOIQoxR5wdcCqpta0gv1fPvMULokBQ0esYdrfF3MhzyYEwVz3ksf2aMmXeXIjmCOCmVMXjNIwPlPAeG2YDPZ0mGE7fJ4xLX6UI=
+	rHrBk5BLDeruOI6KQxoD/33N+hxWhF6ig4x3JBTbIRV6WL8N7JO6PGjbwB/FQw/nOXgu6Uy3chgS6mEOTTColv7loWHyC20tk0bHHJhPMmujtXUIqjFruzB20kQHW/EvHw0K6E75mnXFCNoLuIViFdb+WDxi1Od7tarV3HANV958sSrRdeooJHb95aH71K1KN7EUM8jXhjI+xqDGSONpRWdIOhxt7WE4czbYxlEKsrZnpaNGGEwuT+tCexNWQ2nr36hA/WPTqLnM3mcnPXb0zMlcQSrNtCG6FvcRDvNwi/CB6S/6vC91dc6urjRTyEp8y9IldlAexVjARQZuFrIeOV6sUtdjrSLfYi29zbKf6Gop/5HqC3njFuqmplEwIaiNZWAgH6wMFLlWTZZiOvsjAOYTFDO37etteYCeocgqIygyL2OiIUb9oJxDOI7xpbhX20lX3cWCOIu2ttsf5I3U6yepFBrypZ1PdCi2p0zpEp4Yl4tDtMtB8NiNQEW5w5N73XljRVrgh7Nl+rLl4M26/MtqGnr/VwF4tRHIN/5auctG3h9CuNGzBaZXYXRHO2pmSXKdZAUXNM6qIYdlva83SDzVe9BLwYJO4PicLoUsr/ptmKi4rUDodw4Ae4QW1YS0vLSIC+suUazRGewBlppl7IqU9EWsrs1D3z3O3ORbwYI=
 X-Forefront-Antispam-Report:
-	CIP:255.255.255.255;CTRY:;LANG:en;SCL:1;SRV:;IPV:NLI;SFV:NSPM;H:TY7P286MB7722.JPNP286.PROD.OUTLOOK.COM;PTR:;CAT:NONE;SFS:(13230040)(10070799003)(366016)(376014)(23010399003)(1800799024)(6133799003)(3023799007)(56012099006)(4143699003)(18002099003)(22082099003);DIR:OUT;SFP:1102;
+	CIP:255.255.255.255;CTRY:;LANG:en;SCL:1;SRV:;IPV:NLI;SFV:NSPM;H:PH8PR12MB6914.namprd12.prod.outlook.com;PTR:;CAT:NONE;SFS:(13230040)(23010399003)(1800799024)(366016)(376014)(4143699003)(11063799006)(18002099003)(22082099003)(56012099006);DIR:OUT;SFP:1101;
 X-MS-Exchange-AntiSpam-MessageData-ChunkCount: 1
 X-MS-Exchange-AntiSpam-MessageData-0:
-	=?iso-8859-1?Q?dEx++/QkoTtcsjxXpVEaLmhlU3QIpUrGIIxS5aOrnEyO1HHIIBcVsQ+/ZR?=
- =?iso-8859-1?Q?pK9j3IrpOjQQtMK5n5C32TtDloSS/sVb3Gyaqs8bHO8UaUN+MahaWEnJHI?=
- =?iso-8859-1?Q?C6MS0B1bW4LLV6an81+ZcPnoalbhqhbnWlRh6dPGhjxpF5bJf6Yr4CYrdY?=
- =?iso-8859-1?Q?si64tz2+/QsdCdLTjzW2KqQqva9t4hOqjIADJnU41QjTMrpJcXyFCq6+Js?=
- =?iso-8859-1?Q?3m0qgV+Tb6S6adJsM+cfo4uek+X8YGc0cEZRcnz6CC3jzsvSPDtNibU1Br?=
- =?iso-8859-1?Q?vOa2a1aw823hwVpIP/+NVUTNLHNZ0D1+7pHhTVaEzTxxrOO2dCg9Kd5a69?=
- =?iso-8859-1?Q?/X31Lf8YphYmUjxt3Vh4BOljr9sA4uQCgTttgC7uqAoaUPdyEj4v6fQv6t?=
- =?iso-8859-1?Q?DCRzRrkU5k2S55bW+r0L6Oz9Z+pl27puEuYtJw6HOcofqPWmJZHFKUH6IZ?=
- =?iso-8859-1?Q?FO6DApIRfDlFse3B3ln76BzBGlKbWs7/zkgi7Lub0LPqiS3czXTS51Ozcb?=
- =?iso-8859-1?Q?0dCM2QVnluFBJ9Hul4jbEGchX551FMd55YGD6xIibCSwvixv1FUPDF41Sr?=
- =?iso-8859-1?Q?a6pBPBtE58LW2rws4feOmBcuRYAdwkNcT41mB1KNVyW/lRyI1/IVQiUqDC?=
- =?iso-8859-1?Q?A0/wd9Qu9S9OZMDylpzosyjIgcBwvWpH+dBqPir72Y4U+C6+FYcu60bsOE?=
- =?iso-8859-1?Q?ILni0K8ix9d390Jj+vt1erlxO+jYdym6q5jrc7JwG+J8kwjJZ+Rlo1oSqT?=
- =?iso-8859-1?Q?1t9GO8FbhInqPaOZpuAWd2a8PdWMM8m0GPRQkLClzliF3C8tp8y3HO9Kxo?=
- =?iso-8859-1?Q?bL/uCdpNsHaFhz+cA3s0NrRRGpVOPmWy9B66aXIWpF/vP5MI3QVe/Lv3ye?=
- =?iso-8859-1?Q?SnFhcgHqRJ5gkmLo9y2ZUoOShcj/Kg1YPFKZfBOJBpq3YXRBw1tfM6Eyuv?=
- =?iso-8859-1?Q?NnBu3wrB8wvkDglcvJ2fzG7ShJaVDm9dsIsYSfcu8pVRUHyCp9xvC0xu8d?=
- =?iso-8859-1?Q?H0XJpO1oO93xZKkaURjr3ywMzYmZCKtA4wmpcEac7L+3Mc0u9ejiWyq7VU?=
- =?iso-8859-1?Q?VKe0WDEcUqL1w02UZLhNu7DsDc3el/tAOwnn0k5KV33qiYqQ/1nGnsLoEW?=
- =?iso-8859-1?Q?gl+D+5GmWfmXhrgSFvLHvu/3yNrbUxX3H7/3KZEKyINo7jXOd55o8a5RIL?=
- =?iso-8859-1?Q?c268TJmajJ9ye6bFYz4mQm0yZcsIZQBX8WuKW1qQYdNXMLoFJ0nDncw86i?=
- =?iso-8859-1?Q?A2xNeN3KXz1mtcWxOLfuVbNPOK9YfLcMmj3LYcQFJkc5v5CQsQWKC+DgnA?=
- =?iso-8859-1?Q?w12g+PvOmvVySmwFngY94B+rlceIGCxBDX2U0beaiozaf4lkbHdEIAwqb3?=
- =?iso-8859-1?Q?/vcGj6i7F9tAe+x9qiz2i3awItFqg5UY8X+PWTyKbSyPvbl2MJvTxXYbHD?=
- =?iso-8859-1?Q?ujCGOrntzYSTs7fv6fwNb8p2FCC/03BUJOF0NL0TQIDcbi4+pb/JzrSwBp?=
- =?iso-8859-1?Q?VwvFHpv7aNI93zDZweqEb3EneMgys7kyME6QwaN+02LfyFvtJrrlCHavYC?=
- =?iso-8859-1?Q?5pWZ/MMldhXwlyGiM2rcsX/D6D5JpB9KrRTukYQbzqxYEtVnWscMzlhp8Q?=
- =?iso-8859-1?Q?cfSFIPqN7TEjhQ3/S63uPkIy6Ur7FOaqsrm04XWLCGP3m1LyX4qMPpgU0E?=
- =?iso-8859-1?Q?qf4iw7WlJD3puFcfsSxj5TFT0LyPUJZKq3Msicr1Rs3FR7TTki5SaerrDn?=
- =?iso-8859-1?Q?QnfDspGfxVykIKzl3HAz4ICzlDp2kB1rd3OmOOT3KkCWvgDdxs+KD+0y6x?=
- =?iso-8859-1?Q?QBNDVnyLeGBirHnUBpO/HK4Q0FxemdBZYBXDA1lNdo0qIYxT/K52?=
-X-OriginatorOrg: valinux.co.jp
-X-MS-Exchange-CrossTenant-Network-Message-Id: b5434c95-93bf-418d-4eef-08decfa25ae1
-X-MS-Exchange-CrossTenant-AuthSource: TY7P286MB7722.JPNP286.PROD.OUTLOOK.COM
+	=?utf-8?B?V3BoMnlXL1EzRldUSEhnVEhiQWtNeThUcnpJT3hFajFoa3B4VzhNRXVPM09j?=
+ =?utf-8?B?TXFpbG9Oall5S0w1aUhKb25qeWFBVUFUSDR0ZWVUYlZSOE9NalZpRXJPejYr?=
+ =?utf-8?B?a2pwZkordk5nZURYVVFGcTh4VzFkMWg5ZUJYQnpTVlRuVWp5N3hSUFBXNlEz?=
+ =?utf-8?B?WkFlaHdFSHY0Q1BjaUwySE5rcDZQRXRPSU9QT2NSWFFUcFZvWGJ6YUVWVDlo?=
+ =?utf-8?B?Wm5nSUd3ZVBrSWFUdGNmOTg2ekYyTytvZDhVNkJLTVU1dDcxNU1YOVNFdVAz?=
+ =?utf-8?B?WlAwVDQxbEt2QlVFL0RYdFJ0cjI1TmFUMDArVTZKRVdTTlJkbzVkY3RzN0ZR?=
+ =?utf-8?B?OXdxdjdFejFqK0FqQlZwbzB5S0c4cnh3SGNRYk9hbEpkMDNvWkJSa04xbHJL?=
+ =?utf-8?B?U1JBOUhqVHM0Q0NqQWxMWEFLQlN4TmswOFhxaHlPZkEvYzAvdWdpbnRCSlUz?=
+ =?utf-8?B?Yi9aRTVzSVFQNE9KMTVlVnZnYTR6djdZMWJWcmtoQVZobVpaVHFmVW9kWnRi?=
+ =?utf-8?B?WGRYUWYvTnA5OFRKMHlKL1RGVmk5RHhtQUR4WjhQeWtuUGo3ck1Dd3NSRGcw?=
+ =?utf-8?B?RVhHMXJzTnFKMkJsL3ZKR0FEZDh4Q3l6S2pGL3RDNko4bjdpTFNlekxlVnlu?=
+ =?utf-8?B?MmpUdGxYV0xrM1R4ZU5keEFLRUlQbkZZdUJ4ajdqbmZ4b0dGUlk3bUxWWDNs?=
+ =?utf-8?B?czNXdUlyMTUydlVTUkJPN0FncDlHWVhoN3l6d3BEY3lhZkRQeWs4NkpRWTYv?=
+ =?utf-8?B?QlNhU3oxQ0YwL1dEK2l0WitEQnoweTIzNmsySjFTTVM2Sk9qbWZOeE9ONU8x?=
+ =?utf-8?B?czFLRXpnK0ZDWTI2d1J4WHNnVzBVc0p6UElFQmNyYXdEY0xmam9za2owS0ZQ?=
+ =?utf-8?B?VzNTSERLOUtnVHA0SGdjQi96T1QrTk1GOHN3T3h3V1Z5dGt6N3hzVnRPRUM4?=
+ =?utf-8?B?RjdUQ1ZxY042TjgydHRDdW5QVktXNFBFTFNaVmFvdXFSOFNjVTZ3alg1WkNW?=
+ =?utf-8?B?UStVdTV3RDVYcHdiQitrZFhocWFBZHluR0MwT09QNWJ5czdsUzU1VkNqeGpW?=
+ =?utf-8?B?T0lzTDBGTCs4cnFSOXRLSkQyL2xrV0x0UmV5Sk1PQU9EQjdSOHRPODhQK0tZ?=
+ =?utf-8?B?cE9WTVRJakpwWmx1eCtBNW9Fc1NWVW8xdmxTTnhZR0ZwMmlhaHNsR3hsZmNw?=
+ =?utf-8?B?MWRBR0dXd1lNZjF4S240bmR0THM3VDVHSGRkR3F5UGQ2WlB2YllnN240QjVB?=
+ =?utf-8?B?Z1djQU40Y1lCa04xbWNsZlhWL1o4ZlloZ2h5cFpQdlNlR1dmMmhjaVRkTzN4?=
+ =?utf-8?B?R2pLRll0aWEwS0FENms2UDd4WkVJREc4dHI2NVlGZ2pFN1dVRVNrTUUxYlpm?=
+ =?utf-8?B?b3ZSSUZjQ2lNOFJjSjdYeVJuMW1RUExGQ1FObmlOZUlVM1FmQnJ2VTF5R2t0?=
+ =?utf-8?B?TWtHamJ0aWtCb3hDVlpWOHhMMmlqYXd5cTJvUW5kU0VFL3MxZWZPcFJxNmRB?=
+ =?utf-8?B?anB5Mk1Sc1B1TERPZmtzU1E3cHhRVFlDVVI5Q0JjOGxjOHJQMVRSRThtNlBS?=
+ =?utf-8?B?MVpUT1FhdzRCVXNTNnk3NjFRWDk5T1V0VDUwTVhuUEwxLzIxTDFCdlpWSUxN?=
+ =?utf-8?B?VExSTlFBWlVCbkJ5WmJoWW9ZOGVwdFhrb3BJSTY5L0JIMUlObStPWTVNaTVa?=
+ =?utf-8?B?Sng2bEhJcVlLTUw1Y0NwVjNQTnhQV2ZKdjNPMlV4cHZNYjB5c0pNS21XOFhE?=
+ =?utf-8?B?djhFa2tXRDkvejkrVm94R243eGJFbGNFMVBjeDRLR20xbXZyMk11dW1SdXNo?=
+ =?utf-8?B?eWNGQkppOHdGUXh0aFlNTDlhVmcySjBXNjF0VTFFU0kxZkgzN0xDa3NWTmEr?=
+ =?utf-8?B?M0U1NGdrUm9HanlxdlVnY2NwTnVINEVFS1J3OWlxbHo0eDRIaE9IOUJUOFFz?=
+ =?utf-8?B?T1NJM2RnaUVxNE1qYUFLcUhyeGkrUjFveEZVN01iMkNNRWFkN3lHRk9KUWdl?=
+ =?utf-8?B?Znp6RnliNmtvUFE0MnNPV0RTR0NJUXhTYWxyT1VWZzVWdmNnUjFXb1k0Ym9I?=
+ =?utf-8?B?UlVGWkkxVFFvb1M0NEQySzZRTWVITjg3WE52ZzU2ejkzYW03MjJTTE5IYzNI?=
+ =?utf-8?B?Y0lTZ1hVMnNxOTU3N0hmQzg2K1FrTTQ0SjMrK1J4NWlYMGZNTEFxWG5zcjBM?=
+ =?utf-8?B?M1FTS20yYmdWdVJwMnVybDJObFdjVlU2bzRRT0NCNzlyYWVWTjZESytuU0Nk?=
+ =?utf-8?B?WVJ2T01Vc1A4bFA5Y0gvTUlmYzllUG1CWWdzKzdDNjg5QkhQZFBBMDMyYkN4?=
+ =?utf-8?Q?wkP50jO31nTKv+CQPk?=
+X-OriginatorOrg: amd.com
+X-MS-Exchange-CrossTenant-Network-Message-Id: 31820af7-f625-4697-c471-08decfbfa268
+X-MS-Exchange-CrossTenant-AuthSource: PH8PR12MB6914.namprd12.prod.outlook.com
 X-MS-Exchange-CrossTenant-AuthAs: Internal
-X-MS-Exchange-CrossTenant-OriginalArrivalTime: 21 Jun 2026 14:35:35.0070
+X-MS-Exchange-CrossTenant-OriginalArrivalTime: 21 Jun 2026 18:05:10.5353
  (UTC)
 X-MS-Exchange-CrossTenant-FromEntityHeader: Hosted
-X-MS-Exchange-CrossTenant-Id: 7a57bee8-f73d-4c5f-a4f7-d72c91c8c111
+X-MS-Exchange-CrossTenant-Id: 3dd8961f-e488-4e60-8e11-a82d994e183d
 X-MS-Exchange-CrossTenant-MailboxType: HOSTED
-X-MS-Exchange-CrossTenant-UserPrincipalName: Jg/Z2vS69GHPHrg+V+0yK570JRSvER446v66yNRA6TM5lwogKtpt4cAZxAGLG1CIPXaLf13z+BEVp8nCYJWWWA==
-X-MS-Exchange-Transport-CrossTenantHeadersStamped: TY4P286MB5774
+X-MS-Exchange-CrossTenant-UserPrincipalName: 6JrkQGvwcXLwyvOM36XE5jJsm/YZ8uL8u9d4Pdon7gThjMwLYgd43BwEQLgcMyNjyoMW9Dz9vPQcyR/gu0U+PA==
+X-MS-Exchange-Transport-CrossTenantHeadersStamped: MN6PR12MB8514
 
-On Sat, Jun 20, 2026 at 05:13:52PM +0000, sashiko-bot@kernel.org wrote:
+
+
+On 6/21/26 11:01, sashiko-bot@kernel.org wrote:
 > Thank you for your contribution! Sashiko AI review found 1 potential issue(s) to consider:
-> - [High] V0 eDMA fails to set the Remote Interrupt Enable (RIE) bit for remote-routed channels on a local endpoint controller.
-
-This is a false positive.
-
+> - [High] Removing the `vga_default_device()` fallback breaks primary device detection for systems booting in legacy VGA modes (e.g., BIOS/CSM).
 > --
 > 
-> commit df5a2947e52cc02cfc126b63bc365277ac3752fa
-> Author: Koichiro Den <den@valinux.co.jp>
-> dmaengine: dw-edma: Add per-channel interrupt routing control
+> commit ae22bd27658973af445cda4ac9c68bb0a550097b
+> Author: Mario Limonciello <mario.limonciello@amd.com>
 > 
-> This commit adds per-channel interrupt routing control to the DesignWare
-> eDMA driver, allowing channels to route completion signals locally or
-> remotely. It updates the v0 eDMA and HDMA paths to configure interrupt masks
-> and generation based on the selected mode.
+> fbcon: Drop vga_default_device() check from video_is_primary_device()
 > 
-> > diff --git a/drivers/dma/dw-edma/dw-edma-v0-core.c b/drivers/dma/dw-edma/dw-edma-v0-core.c
-> > --- a/drivers/dma/dw-edma/dw-edma-v0-core.c
-> > +++ b/drivers/dma/dw-edma/dw-edma-v0-core.c
-> [ ... ]
-> > @@ -331,7 +335,8 @@ static void dw_edma_v0_core_write_chunk(struct dw_edma_chunk *chunk)
-> >  		j--;
-> >  		if (!j) {
-> >  			control |= DW_EDMA_V0_LIE;
-> > -			if (!(chan->dw->chip->flags & DW_EDMA_CHIP_LOCAL))
-> > +			if (!(chan->dw->chip->flags & DW_EDMA_CHIP_LOCAL) &&
-> > +			    chan->irq_mode != DW_EDMA_CH_IRQ_LOCAL)
-> >  				control |= DW_EDMA_V0_RIE;
-> >  		}
+> This commit removes the vga_default_device() fallback from
+> video_is_primary_device() to prevent multiple devices from erroneously
+> showing the boot_display attribute on multi-GPU systems. It updates the
+> function to rely entirely on screen info to find the primary display device.
+> 
+> Link: https://lore.kernel.org/linux-pci/20260618081803.2790848-1-aaron.ma@canonical.com/#t
+> 
+>> diff --git a/arch/x86/video/video-common.c b/arch/x86/video/video-common.c
+>> index e0aeee99bc99e..eb584d9e55f1c 100644
+>> --- a/arch/x86/video/video-common.c
+>> +++ b/arch/x86/video/video-common.c
+>> @@ -43,9 +43,6 @@ bool video_is_primary_device(struct device *dev)
+>>   	if (!pci_is_display(pdev))
+>>   		return false;
+>>   
+>> -	if (pdev == vga_default_device())
+>> -		return true;
+>> -
 > 
 > [Severity: High]
-> When a local endpoint controller delegates a channel to a remote host, the
-> irq_mode is set to DW_EDMA_CH_IRQ_REMOTE, but DW_EDMA_CHIP_LOCAL is also
-> present in the chip flags.
+> Does removing this fallback break primary device detection for systems
+> booting in legacy VGA modes?
 > 
-> Because the check in dw_edma_v0_core_write_chunk() explicitly requires that
-> DW_EDMA_CHIP_LOCAL is not present, the first condition evaluates to false
-> and DW_EDMA_V0_RIE is never set.
-
-The key point is that a delegated channel is not driven by any EP-local
-consumer. The EP side calls dw_edma_request_delegated_chan() only to reserve the
-exact HW channel, so no local DMA engine client can take it while it is exposed
-to the host. pci-epf-dma itself never submits DMA transfers on that channel.
-
-Transfers on delegated channels are programmed by the RC-side dw-edma-pcie [1],
-after the DMA register window and descriptor memory have been exposed through
-the BARs. On that RC-side instance, DW_EDMA_CHIP_LOCAL is not set, so the
-existing condition still sets DW_EDMA_V0_RIE.
-
-So the EP-local channel having irq_mode == DW_EDMA_CH_IRQ_REMOTE does not mean
-that the EP-local instance will call dw_edma_v0_core_write_chunk() for that
-channel. It only means that the EP-local instance must not consume the
-completion status if a local interrupt is unexpectedly observed.
-
-[1] The protocol does not exclude other RC-side consumers for other vendors in
-    the future. dw-edma-pcie is just the first supported consumer for the
-    pci-ep-dma.h protocol.
-
-Best regards,
-Koichiro
-
+> When a system boots in legacy VGA mode (e.g., BIOS/CSM text mode),
+> screen_info_resources() provides memory resources representing the legacy
+> VGA window (such as 0xa0000 or 0xb8000). The subsequent code relies on
+> pci_find_resource() to match this resource against the device's PCI BARs.
 > 
-> According to the commit message, requesting a remote-only interrupt requires
-> setting both LIE and RIE while masking the local interrupt. Since
-> dw_edma_v0_core_start() correctly masks the local interrupt for these
-> channels, does this prevent the DMA completion event from being sent
-> entirely, potentially causing the remote host to wait forever?
+> However, legacy VGA memory is implicitly decoded by the hardware and enabled
+> via the PCI command register and bridge controls. It is never explicitly
+> represented as a standard PCI Base Address Register (BAR).
 > 
-> -- 
-> Sashiko AI review · https://sashiko.dev/#/patchset/20260620170040.3756043-1-den@valinux.co.jp?part=1
+> Since pci_find_resource() only iterates over the standard BARs, won't it
+> always return NULL for these legacy VGA resources? This appears like it
+> would cause video_is_primary_device() to unconditionally return false and
+> break the boot_display attribute for legacy boot systems.
+> 
+
+To this Sashiko feedback - I believe this is OK because we still have 
+the boot_vga attribute that userspace can look at which covers this case.
+
+Basically:
+
+* Legacy system:
+   - boot_vga only
+
+* New system, 2 GPUs
+   - 1 GPU gets boot_vga
+   - 1 GPU gets boot_display
+   - Same GPU might not have both
+
+* New system, 1 GPU
+   - Same GPU will have both attributes
+
+Userspace already knows how to handle boot_vga only as this is how it's 
+been for many many years.
+
+>>   #ifdef CONFIG_SCREEN_INFO
+>>   	numres = screen_info_resources(si, res, ARRAY_SIZE(res));
+>>   	for (i = 0; i < numres; ++i) {
+> 
+
