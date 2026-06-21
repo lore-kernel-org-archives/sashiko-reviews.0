@@ -1,263 +1,209 @@
-Received: from out-188.mta0.migadu.com (out-188.mta0.migadu.com [91.218.175.188])
+Received: from mgamail.intel.com (mgamail.intel.com [198.175.65.16])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 75468230BDB
-	for <sashiko-reviews@lists.linux.dev>; Sat, 20 Jun 2026 23:25:14 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=91.218.175.188
-ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1781997916; cv=none; b=C8wLjBnqXsPqglxuuKKSR8hgp1mTRca5X/vjcCq60Qt0P+GeoOK+WP2n8iHAjBOqw+bimyG5z3NXYzOTpgeibBgJJu2IVfl7/44aBd1D4nNFFRx/2uen5+XCNN4cIGjkCgOMNYxvW+n7BwqrHXCjVKBJnFdw6lvv+EEoiss/j3g=
-ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1781997916; c=relaxed/simple;
-	bh=/b064bdXZNhVy1mTk/DGXPpDf0YJDnbCJX2bGMqud6A=;
-	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=u7H+FVErsbGD1Y1ruH2uwZvP7V80yJQlG5Q2yU26mEjo5arKcwy3Rd3bEGfto4nEazWGlQgzB1JaTHZQntRuom7ow0y6CJB1flnBCVm1UFj5xiAnOx4GQXXHq/b09CKbBiu4bEFNjyfhvyxhYPA9taXGcery7XXmYusS8d6Tcvo=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linux.dev; spf=pass smtp.mailfrom=linux.dev; dkim=pass (1024-bit key) header.d=linux.dev header.i=@linux.dev header.b=pudnV4hA; arc=none smtp.client-ip=91.218.175.188
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linux.dev
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linux.dev
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5BE0719E97B
+	for <sashiko-reviews@lists.linux.dev>; Sun, 21 Jun 2026 07:30:30 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=fail smtp.client-ip=198.175.65.16
+ARC-Seal:i=2; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
+	t=1782027032; cv=fail; b=ngfR37HBde5ewnGERJYh3Vq0MzGh3+YEs6OqWfO2ZwBE24TxTlADibdcnMMhXto4M0D9IkguOEOX7Q2V2DfMmqxkri/ndhSRX9ChN54GUe9nddd1nXDSKVAikbQAQIrM7jaqc5DVLy95jVAeKVmnC9JkIeDEjpKL/rXf/rAhfe8=
+ARC-Message-Signature:i=2; a=rsa-sha256; d=subspace.kernel.org;
+	s=arc-20240116; t=1782027032; c=relaxed/simple;
+	bh=eA1dZYpCygmwyDxXVkVHLYf+rryUxioeBpE92cuTttI=;
+	h=From:To:CC:Subject:Date:Message-ID:References:In-Reply-To:
+	 Content-Type:MIME-Version; b=CTKI464PCDlXcQBFq2AODuKy8je2npAbmBtUtopMXhG10dQcXjC6/hIiw0SMholt3f7s3zDZczv9vj1HWmS/k10mH/gtPywvmi+vuCYmDPaPVqj1LTE9+4IGQu9Ft4Uu9PM/Tm/1NZNK5Fkj5lDP8KCNeHW0/M64DGy73FTuNLM=
+ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=intel.com; spf=pass smtp.mailfrom=intel.com; dkim=pass (2048-bit key) header.d=intel.com header.i=@intel.com header.b=ge1UlfOK; arc=fail smtp.client-ip=198.175.65.16
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=intel.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=intel.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linux.dev header.i=@linux.dev header.b="pudnV4hA"
-Message-ID: <8a7c775a-4c81-4ed1-ab1e-356fc85bbf78@linux.dev>
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linux.dev; s=key1;
-	t=1781997912;
-	h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
-	 to:to:cc:cc:mime-version:mime-version:content-type:content-type:
-	 content-transfer-encoding:content-transfer-encoding:
-	 in-reply-to:in-reply-to:references:references;
-	bh=bvtjD6I2KZP/SWA/i5nXjLd4czU9+VHJ/6bCQtfPK+c=;
-	b=pudnV4hATFs5d+Y5vngjQfZObx0prgcmnjcgnZ47nyyH/Osev1x+T/Kh6IUYrdX66fBIu2
-	ygFhg9pHe+rP/og+hCl0Ar8NEVwtp1ZSGYdUGnUuvfWck8Yv06Jt9qhKGPGL5hsCuoS1Aa
-	3WFWjnMdYJmo2xP8u1DfvyrR+ytvXjU=
-Date: Sat, 20 Jun 2026 16:25:09 -0700
+	dkim=pass (2048-bit key) header.d=intel.com header.i=@intel.com header.b="ge1UlfOK"
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
+  d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
+  t=1782027030; x=1813563030;
+  h=from:to:cc:subject:date:message-id:references:
+   in-reply-to:content-id:content-transfer-encoding:
+   mime-version;
+  bh=eA1dZYpCygmwyDxXVkVHLYf+rryUxioeBpE92cuTttI=;
+  b=ge1UlfOKYOlEnqIWtF2NSymsrKiPaiORaXCAR4isu5wvWUsydyjgHYQ5
+   89VvrPNM4dtT+VG8whYdi3Kwvl9ZnDYfTVF2mDY5eBoWtETjdTObCsXlm
+   uahpfczfjWGOYdTXe8whsGFs8n6MXzZf6Yguvf4GsuSKY1rGUu75/QqRi
+   5KkmdjLK2Vb8YWRU69J1V4ZLYLLMLon1uVNwG0B8mTtixTUbvPS4RLECs
+   ZDtPKmIcV0YuTY2YXnH9xXBtcOQrHZ15l7vnF2lpu6NrQsGonqShF80G/
+   e04M8w2+3SC11BkDHMNQRB3CfbTbxpsEp/QwMnAZ9wvV98z80nabE0nCg
+   w==;
+X-CSE-ConnectionGUID: e9UHnnpaSBK3xbu0JpXtrQ==
+X-CSE-MsgGUID: 4gCpZNGNR7SUipd+yXrX5g==
+X-IronPort-AV: E=McAfee;i="6800,10657,11823"; a="82983375"
+X-IronPort-AV: E=Sophos;i="6.24,216,1774335600"; 
+   d="scan'208";a="82983375"
+Received: from fmviesa002.fm.intel.com ([10.60.135.142])
+  by orvoesa108.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 21 Jun 2026 00:30:29 -0700
+X-CSE-ConnectionGUID: 8rShqhHRQ1WKGq/2MnTbng==
+X-CSE-MsgGUID: N3qUDWfoTQCY1crwPF2UDw==
+X-ExtLoop1: 1
+X-IronPort-AV: E=Sophos;i="6.24,216,1774335600"; 
+   d="scan'208";a="272653933"
+Received: from orsmsx901.amr.corp.intel.com ([10.22.229.23])
+  by fmviesa002.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 21 Jun 2026 00:30:28 -0700
+Received: from ORSMSX901.amr.corp.intel.com (10.22.229.23) by
+ ORSMSX901.amr.corp.intel.com (10.22.229.23) with Microsoft SMTP Server
+ (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
+ 15.2.2562.37; Sun, 21 Jun 2026 00:30:28 -0700
+Received: from ORSEDG901.ED.cps.intel.com (10.7.248.11) by
+ ORSMSX901.amr.corp.intel.com (10.22.229.23) with Microsoft SMTP Server
+ (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
+ 15.2.2562.37 via Frontend Transport; Sun, 21 Jun 2026 00:30:28 -0700
+Received: from SJ2PR03CU001.outbound.protection.outlook.com (52.101.43.4) by
+ edgegateway.intel.com (134.134.137.111) with Microsoft SMTP Server
+ (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
+ 15.2.2562.37; Sun, 21 Jun 2026 00:30:27 -0700
+ARC-Seal: i=1; a=rsa-sha256; s=arcselector10001; d=microsoft.com; cv=none;
+ b=kMIedbUeHdCoeOKgM4vRuf3I9EM/WIlEqV2/IA03mir0HdqdKOckoX1Il4gW7VzASqqiFsakUGIFVMy7VksTqpLgPjJHTl8DtIqNRcv09kb66XSrwmsXCOM79JHYjjo4FIy2uulrAh8CaYnQdY65fbWxHpjvLh8Yr1vX/XFeXnhECnATjnvf1HPuxcCuPB49yLKxrVPWZuz49Kjb6Q6x9xw4dTzkmYW5S0lYUaIDn+ef8w6/ZK5BUQgNVNO0ZgDDhsFnuXaf33ff8HOP6QCDD7tVLxraPsz8PtFA502GgnAenhmyj+/fYmR5YzC1eEEV3UoVVqEe3B4AygQh9j3AgA==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com;
+ s=arcselector10001;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
+ bh=eA1dZYpCygmwyDxXVkVHLYf+rryUxioeBpE92cuTttI=;
+ b=t1Nn+yTjcgLiTC8bi7pt9UNzxwoZYLjobwqdphVgwjRN+bdIG8otySRsW53xm9Gk7bOOIc/hdG/kfecwWEChIOg5J68N4vLeCh4mReQ3lAQQtK+Jwnxdk2okpdg6DNqPwn74yMWdpLzOrjI5PhJ/COCAoEsBrxjgfwShd0DIEKb6qPRlwGWHcpYvKmKVu3AcOlf2SKr4mE9ueRni+P8LU+rPgOL23xxAFKyLs0BUoi1XAwAFz06ZTfmXz43iVXd9uan1NVJk0BKV4Mz0yXYhL6alWX3YWvjqBPP8aJlF+fxt0Hky0H5uDlJGpdFAc/dTHH5XyumBZhUPxz/kQA6iPw==
+ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
+ smtp.mailfrom=intel.com; dmarc=pass action=none header.from=intel.com;
+ dkim=pass header.d=intel.com; arc=none
+Received: from PH0PR11MB7494.namprd11.prod.outlook.com (2603:10b6:510:283::18)
+ by IA1PR11MB7726.namprd11.prod.outlook.com (2603:10b6:208:3f4::20) with
+ Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.21.139.18; Sun, 21 Jun
+ 2026 07:30:25 +0000
+Received: from PH0PR11MB7494.namprd11.prod.outlook.com
+ ([fe80::e642:c73c:6d80:5083]) by PH0PR11MB7494.namprd11.prod.outlook.com
+ ([fe80::e642:c73c:6d80:5083%5]) with mapi id 15.21.0139.009; Sun, 21 Jun 2026
+ 07:30:25 +0000
+From: "Grumbach, Emmanuel" <emmanuel.grumbach@intel.com>
+To: "sashiko-reviews@lists.linux.dev" <sashiko-reviews@lists.linux.dev>
+CC: "linux-pci@vger.kernel.org" <linux-pci@vger.kernel.org>
+Subject: Re: [PATCH] PCI: Disable NoSnoop and Relaxed ordering for Intel
+ wireless BE200
+Thread-Topic: [PATCH] PCI: Disable NoSnoop and Relaxed ordering for Intel
+ wireless BE200
+Thread-Index: AQHdAUruh/HWEZwEC0iMA6tK8iUSn7ZImB0AgAAE6oA=
+Date: Sun, 21 Jun 2026 07:30:25 +0000
+Message-ID: <29e347a8ed29e7fdc52ddba72c8ce9da80239993.camel@intel.com>
+References: <20260621065451.21650-1-emmanuel.grumbach@intel.com>
+	 <20260621071242.B20F31F000E9@smtp.kernel.org>
+In-Reply-To: <20260621071242.B20F31F000E9@smtp.kernel.org>
+Accept-Language: en-US
+Content-Language: en-US
+X-MS-Has-Attach:
+X-MS-TNEF-Correlator:
+user-agent: Evolution 3.60.2 (3.60.2-1.fc44) 
+authentication-results: dkim=none (message not signed)
+ header.d=none;dmarc=none action=none header.from=intel.com;
+x-ms-publictraffictype: Email
+x-ms-traffictypediagnostic: PH0PR11MB7494:EE_|IA1PR11MB7726:EE_
+x-ms-office365-filtering-correlation-id: eccd08ef-5353-4f94-61b1-08decf66f5e7
+x-ms-exchange-senderadcheck: 1
+x-ms-exchange-antispam-relay: 0
+x-microsoft-antispam: BCL:0;ARA:13230040|366016|1800799024|376014|23010399003|38070700021|18002099003|22082099003|11063799006|56012099006|6133799003|4143699003;
+x-microsoft-antispam-message-info: zK22tD8NduQXVNA+l3GdB+DlDRH0pIimsjs7z566ZgYnvigWtgGjg4Nk+Tx1xlBt78bomQLgd9oFy1g3CPnf883XpAYZYNpgAKLwrM3eQbY+SC9g9nLPuRqyrHNr/3LgO7KhOmJQ+i4DFSESqey+BMpS3QMneekeTnMHUwn1XvYJll8KMf5HCPSiCyj4Z3s9FFxWp86lH5JQ2dzazFvK7zmj37+hxIiF71jK4NMAqVqNhLUIJqmqvGKPN2Vjq0rj82fqxJuTXk0//uZkiyr46ue0EyVoNeZa5ElI52uTL2bNbSCwD9dAabzBA7TqiCBBgXf1Npo6JgTSRFxbYG+h0f25+9O9g59icK87TSE8zROFixfQT7i89+BgD2cm9PNq6ybF1YQYOU8zbjR4z/GsR9WHzhhku2wD5/dd4PbHC6umr8qgzQlPowEy244UWzPWGtHt4W+APOF5VeFoTV+gF/gYKocdVyZQ+W3kwbctTThOkLM27AA2UM1njZ0RVUWP1sVdT11Y74YCSzRBsZSbkxBQyfHGfh0U/eNgKvW7SWmZ2TSE/hmMGRDW8kKybUwJ9CAbHp1pNKJ2n+8LRc0WLrAUvjhKES8I0nTf25WAe6GZzDPzHDPVs7ulNpxtxDsusYsKX6IHUswzS0HUReHcIIB6GUtrQ+qOoQG7NTvZSdHVe2RgJVMtRX1lHwYVD2T77LKdc+57QtGykaXjYoqhGQ==
+x-forefront-antispam-report: CIP:255.255.255.255;CTRY:;LANG:en;SCL:1;SRV:;IPV:NLI;SFV:NSPM;H:PH0PR11MB7494.namprd11.prod.outlook.com;PTR:;CAT:NONE;SFS:(13230040)(366016)(1800799024)(376014)(23010399003)(38070700021)(18002099003)(22082099003)(11063799006)(56012099006)(6133799003)(4143699003);DIR:OUT;SFP:1101;
+x-ms-exchange-antispam-messagedata-chunkcount: 1
+x-ms-exchange-antispam-messagedata-0: =?utf-8?B?QW1VNTFmWVI3QUhQYU1NNXZSQ3VzZ2lZVG4xa0NsditkV25CbDd6RlArcCtF?=
+ =?utf-8?B?NDFNNi8rSUdLQkpxY241cktMREI4b0FnMjJWOWs1b0ZaVklOR3pXNCtUajQ3?=
+ =?utf-8?B?a0xiS3crdnpUQzdkWWk1UnZmQ0RDbkFFMTlzd1RJV1JCV3hWbmdVMlNnMnVQ?=
+ =?utf-8?B?L3F5SFI2elhwRWFyT0wzbHRiVTVhSXROQ0J4dWM4US9sVzdWWmUxbHpzbUsw?=
+ =?utf-8?B?YTlCUWhZNEhyQlVHZlJUQXMxT1JFQ2JCVHNyV2tqWkFwaWVNZkREZWJ1SzZo?=
+ =?utf-8?B?ZDM2czhuaWRZRUw1eTBEajZydFpyNkVVbU1sZG5rbkpOQVhWM3Rvd1AyTXJk?=
+ =?utf-8?B?M0dKUEN2K1ZlS2dOWjlZTUozRytUYW1wcC8wb0V4ZW9ta25scFNSVEtub3ZZ?=
+ =?utf-8?B?VCtIS3pzaEpPdTYvS1FOZHVrOFJIMG5TbnByL1c0RFVHRlk2Y1puNGE2RTFs?=
+ =?utf-8?B?a0tTYSs3c1pBQmFDRFBYZXhtWkRIc2R4bnAxcWhhYjFxYnBoT0VwQ0FFdSs2?=
+ =?utf-8?B?NFlPbXdMamdCYkdyK0c2QW9CV1Z2TVZ1czRRV0JBUXAwVUwvd1RpeW0weGVQ?=
+ =?utf-8?B?eVFpSFdibk9zQ2hsaXIwK1cvanpnY2tMV0kweitCa2hBbHpGWmhBT0ZhbVhG?=
+ =?utf-8?B?RW1CT3N1QWhTdkNoY3B2bHZmeVkvSWlMWjJFNUNzby9VaGlONGpWUnl6em9G?=
+ =?utf-8?B?Y0NPK01jSFlRT0MvQzdQUnJsazFlUklYOVk1a3dwWHI5eXJmNWk5NElHWkQ5?=
+ =?utf-8?B?MzcvaHV3eDY1NjNYZFR2NGhBYkM5NmN6MWloeGh5NWZRL1h5SFVUemJjbnBi?=
+ =?utf-8?B?eUQ2N2pxZlc2STdhdi9nTlY4Q2w0cXErNHpHWW80TzFZTjhCMjlRUC9VNU0w?=
+ =?utf-8?B?UVYxY292SVlVQUhsSHY2V1d3OHowUSswY2N4Z3hZVW5XWUx5VXVTTE5pMWFD?=
+ =?utf-8?B?bFNKSTEvRk1EY0hmbEdHRVgzQU95UExrS1M5dEc5UXdjekVRdC85blhEZG1D?=
+ =?utf-8?B?SzBWUktOVmNTZTNFS3U4U24yS1hDMndFV0hpU25LRjlVUVpqRzNsMmZZQXhp?=
+ =?utf-8?B?am45TkNyZXFIcXJtaVVDL3dSYWZPWFZtRTFqbXNjMXZUazBBU2lScFd4akZS?=
+ =?utf-8?B?MDA3LzdDL2VUV0xsQXJPd1JGQTIydnlFYUFpb2ppanZXVko4dHBLemxUREpo?=
+ =?utf-8?B?U0YwYVNPUk5wcFg2MVhBSVd1bFZ1TGxyb3lqWmJpTDlRUVowZW5QNUlUNlpr?=
+ =?utf-8?B?a0ZsRnRBWHVCakF3c2xsY3pBVjZMYVpvU25GV3FRZFh5Zk5tYitBNTQxRVFH?=
+ =?utf-8?B?NEJzQjFpTmVOdFMyTWhaSXU1TDdKemhnOUphaEh5UjFPQ0VEdlpHUHlEMzJh?=
+ =?utf-8?B?NjltN0g1WExtM2x1YXVrYkhlOHREMDh1cnJMTjh3cW8waWFHakFKREhUOU9v?=
+ =?utf-8?B?b0U0Yk9NcjFEbFN1VVp3NU8zUlZwemlMZ0pEcVNRWk50dVpkQ0JGSHYwWFVJ?=
+ =?utf-8?B?b2VoOEtsWVB1NmpDVk5GeEo0OFBKWEhIQlhuM0U5dEMxLzZha2VSUlhjNUFX?=
+ =?utf-8?B?c1gwMGpyYTJFelpLVlBwdFUrWHFWYlIzS3dHVWR2eGdhS2tzWkRkZEI5MWZh?=
+ =?utf-8?B?QkVIQ3JuNTFCN3dWbmZkTm51OVdGUEdHN3JVTDVOUXBvSTc1M0xob1pRdnFY?=
+ =?utf-8?B?RE5iWnZkVkJSYndkNUJtblZSa1JpR1FvcTNlYVZTWWFkTUxoUENyU241ckFT?=
+ =?utf-8?B?NFE0cVlMcU1YcHNTUXBtY3M3QllFb2JzMHBWbithczcxWk4yZWJ3QVFFTGYr?=
+ =?utf-8?B?VjJkd2t4L1UrdHdCK2hScVlrcFFjYjM2ZGRyQ0tWM2tTL1l5SHdtYUczb25l?=
+ =?utf-8?B?VSt6T1VITGNkQ0FwQXBaMWpWOUNjMDhaY2xoQ3ZiOHRueEZIS1pvS0wvUkwv?=
+ =?utf-8?B?QXEzU2NkdC9XVi9CMTg2Y0xFVEJRWVFVYlY5TWRHWFZwSFIxQVpMbDFhM3ky?=
+ =?utf-8?B?VXptc0RyTi9hK0ljdytHeTVJeVF4WXZrS3ozOGl1dGZiYU9udHQyNmFrNVpI?=
+ =?utf-8?B?NTdRQTJHckRQVHZudUNKVEtpbEhOMmZ6NEZnY1p5UklGbk83MXJ2MEdtUkZ6?=
+ =?utf-8?B?R1F6N3lzOGp3a0ZVVkc0UUlaeUsyRTNTYms1NFF6S2gyZnlOdzRzNUtnY01q?=
+ =?utf-8?B?aWdYR0JvNVRScm8xd01lWFZSQ21FMVNnS0FteDRDSTRtYlNvWU5HNzUrbFhK?=
+ =?utf-8?B?bC96M0FEbXJlMzNwd25lcDRGUmoxbGc2M2lvMnQzY09WYkxxSktPS3JBVHVU?=
+ =?utf-8?B?UmtadkJxNzZBZ3dFTTFDY1FHbVAyUFZoaVRGV05ra3RCc2l3YWNlbWY2bXps?=
+ =?utf-8?Q?KzK7EeRgqnEfgNuI=3D?=
+Content-Type: text/plain; charset="utf-8"
+Content-ID: <1E1A82887384D54A8A0A98E32FF2B7BF@namprd11.prod.outlook.com>
+Content-Transfer-Encoding: base64
 Precedence: bulk
 X-Mailing-List: sashiko-reviews@lists.linux.dev
 List-Id: <sashiko-reviews.lists.linux.dev>
 List-Subscribe: <mailto:sashiko-reviews+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:sashiko-reviews+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Subject: Re: [PATCH v6 13/21] RISC-V: perf: Implement supervisor counter
- delegation support
-To: sashiko-reviews@lists.linux.dev
-Cc: devicetree@vger.kernel.org, robh@kernel.org, conor+dt@kernel.org,
- linux-perf-users@vger.kernel.org, linux-riscv@lists.infradead.org
-References: <20260608-counter_delegation-v6-13-285b72ed65a9@meta.com>
- <20260609062339.F223A1F00893@smtp.kernel.org>
-Content-Language: en-US
-X-Report-Abuse: Please report any abuse attempt to abuse@migadu.com and include these headers.
-From: Atish Patra <atish.patra@linux.dev>
-In-Reply-To: <20260609062339.F223A1F00893@smtp.kernel.org>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
-X-Migadu-Flow: FLOW_OUT
+X-Exchange-RoutingPolicyChecked: LqWAzbzYERClKOaoanpQe55TwrICFaDH8ZPAFLq5rpH7FELLQu62OBtxVEVfBKI8vW9OqtstxKCtd/NWZ96CGlG/3oXYfulyL7hbANHyM854pUi7F1q+Ria3eJr7JiQa6Klt8xJQd8G5eBFj6cTT7hK6w/RHjwYUzTKVPF1blT9bbsbuDQLuhgwb+iHATtfCp3hBoS41NEiSZ6F9MoAUO+bGcPZE8Fok7mPenuKp4qapwU9P2nATA3IPknP63FGsGxPW3TRYNC9DUMSOLEcugIoM0pinL+AfjOv/yFWyq7i3ZEnFQh6nM/69+yfTFFyaR0PEkm6uPRjVA73cUBV4fA==
+X-MS-Exchange-CrossTenant-AuthAs: Internal
+X-MS-Exchange-CrossTenant-AuthSource: PH0PR11MB7494.namprd11.prod.outlook.com
+X-MS-Exchange-CrossTenant-Network-Message-Id: eccd08ef-5353-4f94-61b1-08decf66f5e7
+X-MS-Exchange-CrossTenant-originalarrivaltime: 21 Jun 2026 07:30:25.1924
+ (UTC)
+X-MS-Exchange-CrossTenant-fromentityheader: Hosted
+X-MS-Exchange-CrossTenant-id: 46c98d88-e344-4ed4-8496-4ed7712e255d
+X-MS-Exchange-CrossTenant-mailboxtype: HOSTED
+X-MS-Exchange-CrossTenant-userprincipalname: YtbirAxLFPjxflHg+xSKvPKgzEwtrwzwL1ReUo+Yjj26NPr7iaMxi2dr+MRD97NtQ/OuXw+RZK2vhfYCK20QMEAKZaIJzgf0UMJnhmQgeIM=
+X-MS-Exchange-Transport-CrossTenantHeadersStamped: IA1PR11MB7726
+X-OriginatorOrg: intel.com
 
-
-On 6/8/26 11:23 PM, sashiko-bot@kernel.org wrote:
-> Thank you for your contribution! Sashiko AI review found 4 potential issue(s) to consider:
-> - [High] Bitwise shift of signed 32-bit integer causes overflow and corrupts SCOUNTINHIBIT on 64-bit systems.
-> - [High] Non-sampling events are permanently inhibited from counting because HPMEVENT_OF is unconditionally set but never cleared.
-> - [High] On 32-bit architectures, `rvpmu_deleg_ctr_enable_irq` writes modified event configuration to the wrong CSR (`CSR_SIREG4` instead of `CSR_SIREG5`).
-> - [High] SBI PMU snapshot logic breaks supervisor counter delegation by unconditionally bypassing S-mode CSR writes and reading stale shared memory.
-> --
->
-> commit ff1e171673cfe94a12c443765bd5b68dacf3b687
-> Author: Atish Patra <atishp@rivosinc.com>
->
-> RISC-V: perf: Implement supervisor counter delegation support
->
-> This patch adds support for RISC-V ISA extensions (ssccfg, sscsrind,
-> smcntrpmf) that allow programming hpmcounters directly from S-mode.
-> It falls back to the SBI PMU extension if the hardware extensions are
-> unavailable or for firmware counters.
->
->> diff --git a/drivers/perf/riscv_pmu_sbi.c b/drivers/perf/riscv_pmu_sbi.c
->> index 46a25979e95e9..1f16df9d0dd00 100644
->> --- a/drivers/perf/riscv_pmu_sbi.c
->> +++ b/drivers/perf/riscv_pmu_sbi.c
-> [ ... ]
->
->> -static u64 rvpmu_sbi_ctr_read(struct perf_event *event)
->> +static u64 rvpmu_ctr_read(struct perf_event *event)
->>   {
->>   	struct hw_perf_event *hwc = &event->hw;
->>   	int idx = hwc->idx;
-> [Severity: High]
-> Does this function still read stale data from the SBI shared memory when
-> using supervisor counter delegation?
->
-> If a platform supports both SBI PMU snapshots and S-mode counter delegation,
-That's not a likely scenario as S-mode counter delegation is not 
-available for VS mode.
-> the code unconditionally reads from the SBI shared memory for stopped
-> hardware counters. Since S-mode counters are stopped via direct CSR writes,
-> the SBI firmware is bypassed and the shared memory is never updated.
->
-> [ ... ]
->
->> +static void rvpmu_deleg_ctr_enable_irq(struct perf_event *event)
->> +{
->> +	unsigned long hpmevent_curr;
->> +	unsigned long of_mask;
->> +	struct hw_perf_event *hwc = &event->hw;
->> +	int counter_idx = hwc->idx;
->> +	unsigned long sip_val = csr_read(CSR_SIP);
->> +
->> +	if (!is_sampling_event(event) || (sip_val & SIP_LCOFIP))
->> +		return;
-> [Severity: High]
-> Will this early return cause non-sampling events to never be counted?
->
-> In update_deleg_hpmevent(), the HPMEVENT_OF bit is unconditionally set for
-> all events. The Sscofpmf specification states a counter does not increment
-> while its OF bit is 1. If we return early here for non-sampling events
-> (like perf stat), the OF bit is never cleared, which would leave these
-> counters permanently inhibited.
-N/A. Incorrect spec understanding.
-Sscofpmf's OF bit gates the LCOFI interrupt only. it does NOT stop the 
-counter.
->>   
->> -	/* Reinitialize and start all the counter that overflowed */
->> -	while (ctr_ovf_mask) {
->> -		if (ctr_ovf_mask & 0x01) {
->> -			event = cpu_hw_evt->events[idx];
->> -			hwc = &event->hw;
->> -			max_period = riscv_pmu_ctr_get_width_mask(event);
->> -			init_val = local64_read(&hwc->prev_count) & max_period;
->>   #if defined(CONFIG_32BIT)
->> -			sbi_ecall(SBI_EXT_PMU, SBI_EXT_PMU_COUNTER_START, idx, 1,
->> -				  flag, init_val, init_val >> 32, 0);
->> +	hpmevent_curr = csr_ind_read(CSR_SIREG5, SISELECT_SSCCFG_BASE, counter_idx);
->> +	of_mask = (u32)~HPMEVENTH_OF;
->>   #else
->> -			sbi_ecall(SBI_EXT_PMU, SBI_EXT_PMU_COUNTER_START, idx, 1,
->> -				  flag, init_val, 0, 0);
->> +	hpmevent_curr = csr_ind_read(CSR_SIREG2, SISELECT_SSCCFG_BASE, counter_idx);
->> +	of_mask = ~HPMEVENT_OF;
->>   #endif
->> -			perf_event_update_userpage(event);
->> -		}
->> -		ctr_ovf_mask = ctr_ovf_mask >> 1;
->> -		idx++;
->> -	}
->> +
->> +	hpmevent_curr &= of_mask;
->> +#if defined(CONFIG_32BIT)
->> +	csr_ind_write(CSR_SIREG4, SISELECT_SSCCFG_BASE, counter_idx, hpmevent_curr);
-> [Severity: High]
-> Is this writing the event configuration to the wrong CSR?
->
-> The code reads the high 32 bits of the event configuration from CSR_SIREG5
-> and clears the HPMEVENTH_OF bit, but it writes the modified value back to
-> CSR_SIREG4. Since CSR_SIREG4 maps to hpmcounterh, this might overwrite the
-> running counter's upper 32 bits with the event configuration value instead
-> of clearing the OF bit in the hpmevent register.
-
-Good catch. Fixed it in v7.
-
-
->> +#else
->> +	csr_ind_write(CSR_SIREG2, SISELECT_SSCCFG_BASE, counter_idx, hpmevent_curr);
->> +#endif
->> +}
->> +
->> +static void rvpmu_deleg_ctr_start(struct perf_event *event, u64 ival)
->> +{
->> +	unsigned long scountinhibit_val = 0;
->> +	struct hw_perf_event *hwc = &event->hw;
->> +
->> +#if defined(CONFIG_32BIT)
->> +	csr_ind_write(CSR_SIREG, SISELECT_SSCCFG_BASE, hwc->idx, ival & 0xFFFFFFFF);
->> +	csr_ind_write(CSR_SIREG4, SISELECT_SSCCFG_BASE, hwc->idx, ival >> BITS_PER_LONG);
->> +#else
->> +	csr_ind_write(CSR_SIREG, SISELECT_SSCCFG_BASE, hwc->idx, ival);
->> +#endif
->> +
->> +	rvpmu_deleg_ctr_enable_irq(event);
->> +
->> +	scountinhibit_val = csr_read(CSR_SCOUNTINHIBIT);
->> +	scountinhibit_val &= ~(1 << hwc->idx);
-> [Severity: High]
-> Could this bitwise shift result in sign-extension and corrupt SCOUNTINHIBIT
-> on 64-bit systems?
->
-> Because 1 is a signed 32-bit integer, (1 << 31) results in -2147483648.
-> When this is negated by a bitwise NOT or cast to an unsigned long on a
-> 64-bit architecture, it gets sign-extended (e.g., 0x000000007FFFFFFF).
-> This could erroneously clear bits 32-63 of the SCOUNTINHIBIT CSR.
-There are only 32 bit counters defined by architecture.
-> Should this use 1UL << hwc->idx or the BIT() macro instead?
-It's better coding standard to use BIT anyways. Fixed in v7.
-> [ ... ]
->
->> -static void rvpmu_sbi_start_overflow_mask(struct riscv_pmu *pmu,
->> -					  u64 ctr_ovf_mask)
->> +/*
->> + * This function starts all the used counters in two step approach.
->> + * Any counter that did not overflow can be start in a single step
->> + * while the overflowed counters need to be started with updated initialization
->> + * value.
->> + */
->> +static void rvpmu_start_overflow_mask(struct riscv_pmu *pmu, u64 ctr_ovf_mask)
->>   {
->> +	int idx = 0, i;
->> +	struct perf_event *event;
->> +	unsigned long ctr_start_mask = 0;
->> +	u64 max_period, init_val = 0;
->> +	struct hw_perf_event *hwc;
->>   	struct cpu_hw_events *cpu_hw_evt = this_cpu_ptr(pmu->hw_events);
->>   
->>   	if (sbi_pmu_snapshot_available())
->> -		rvpmu_sbi_start_ovf_ctrs_snapshot(cpu_hw_evt, ctr_ovf_mask);
->> -	else
->> -		rvpmu_sbi_start_ovf_ctrs_sbi(cpu_hw_evt, ctr_ovf_mask);
->> +		return rvpmu_sbi_start_ovf_ctrs_snapshot(cpu_hw_evt, ctr_ovf_mask);
-> [Severity: High]
-> Does this check bypass S-mode delegation when both snapshot and delegation
-> are available?
-N/A. Not a likely scenario.
-> If a platform supports both, this unconditionally calls
-> rvpmu_sbi_start_ovf_ctrs_snapshot(), which starts S-mode delegated hardware
-> counters using SBI ECALLs rather than direct S-mode CSR writes.
->
-> [ ... ]
->
->> +static void update_deleg_hpmevent(int counter_idx, uint64_t event_value, uint64_t filter_bits)
->> +{
->> +	u64 hpmevent_value = 0;
->> +
->> +	/* OF bit should be enable during the start if sampling is requested */
->> +	hpmevent_value = (event_value & ~HPMEVENT_MASK) | filter_bits | HPMEVENT_OF;
-> [Severity: High]
-> Are we unconditionally setting the HPMEVENT_OF bit here?
->
-> Although the comment states it should be enabled if sampling is requested,
-> the bit is added for all events. Combined with the early return in
-> rvpmu_deleg_ctr_enable_irq(), this causes non-sampling events to remain
-> inhibited permanently.
-N/A OF bit is for IRQ overflow not for inhibition.
-> [ ... ]
->
->>   static void rvpmu_ctr_stop(struct perf_event *event, unsigned long flag)
->>   {
->> -	rvpmu_sbi_ctr_stop(event, flag);
->> -	/* TODO: Counter delegation implementation */
->> +	struct hw_perf_event *hwc = &event->hw;
->> +
->> +	if ((hwc->flags & PERF_EVENT_FLAG_USER_ACCESS) &&
->> +	    (hwc->flags & PERF_EVENT_FLAG_USER_READ_CNT))
->> +		rvpmu_reset_scounteren((void *)event);
->> +
->> +	if (riscv_pmu_cdeleg_available() && !pmu_sbi_is_fw_event(event)) {
->> +		/*
->> +		 * The counter is already stopped. No need to stop again. Counter
->> +		 * mapping will be reset in clear_idx function.
->> +		 */
->> +		if (flag != RISCV_PMU_STOP_FLAG_RESET)
->> +			rvpmu_deleg_ctr_stop_mask((1 << hwc->idx));
-> [Severity: High]
-> Can this 32-bit shift overflow and corrupt the upper 32 bits of SCOUNTINHIBIT?
->
-> Passing (1 << 31) will sign-extend to 0xFFFFFFFF80000000 on 64-bit systems.
-> When passed to rvpmu_deleg_ctr_stop_mask, it ORs this mask into SCOUNTINHIBIT,
-> which erroneously sets bits 32-63 to 1.
->
-> Consider using 1UL << hwc->idx or the BIT() macro to prevent overflow.
-Yes. Changed to use BIT macro.
+T24gU3VuLCAyMDI2LTA2LTIxIGF0IDA3OjEyICswMDAwLCBzYXNoaWtvLWJvdEBrZXJuZWwub3Jn
+IHdyb3RlOg0KPiBUaGFuayB5b3UgZm9yIHlvdXIgY29udHJpYnV0aW9uISBTYXNoaWtvIEFJIHJl
+dmlldyBmb3VuZCAxIHBvdGVudGlhbA0KPiBpc3N1ZShzKSB0byBjb25zaWRlcjoNCj4gLSBbSGln
+aF0gTWlzc2luZyBzdXNwZW5kL3Jlc3VtZSBmaXh1cCBob29rIGZvciBJbnRlbCBCRTIwMCBQQ0ll
+DQo+IGVycmF0dW0gd29ya2Fyb3VuZA0KPiAtLQ0KPiANCj4gY29tbWl0IGViY2RhYjZkNjhhOTJk
+MjNhYTZjZjE3MTNlOGU3MmQ4N2YwZTYyNzkNCj4gQXV0aG9yOiBFbW1hbnVlbCBHcnVtYmFjaCA8
+ZW1tYW51ZWwuZ3J1bWJhY2hAaW50ZWwuY29tPg0KPiANCj4gUENJOiBEaXNhYmxlIE5vU25vb3Ag
+YW5kIFJlbGF4ZWQgb3JkZXJpbmcgZm9yIEludGVsIHdpcmVsZXNzIEJFMjAwDQo+IA0KPiBUaGlz
+IGNvbW1pdCBkaXNhYmxlcyBOb1Nub29wIGFuZCBSZWxheGVkIG9yZGVyaW5nIG9uIHRoZSByb290
+IHBvcnQNCj4gZm9yIHRoZQ0KPiBJbnRlbCB3aXJlbGVzcyBCRTIwMCBkZXZpY2UgYmVjYXVzZSBp
+dCBmYWlscyB0byBjb3B5IFRMUCBBdHRyaWJ1dGVzDQo+IGZyb20gYQ0KPiBSZXF1ZXN0IHRvIHRo
+ZSBDb21wbGV0aW9uLiANCj4gDQo+ID4gZGlmZiAtLWdpdCBhL2RyaXZlcnMvcGNpL3F1aXJrcy5j
+IGIvZHJpdmVycy9wY2kvcXVpcmtzLmMNCj4gPiAtLS0gYS9kcml2ZXJzL3BjaS9xdWlya3MuYw0K
+PiA+ICsrKyBiL2RyaXZlcnMvcGNpL3F1aXJrcy5jDQo+ID4gQEAgLTQ2NzQsNiArNDY3NCwxMyBA
+QCBzdGF0aWMgdm9pZA0KPiA+IHF1aXJrX2NoZWxzaW9fVDVfZGlzYWJsZV9yb290X3BvcnRfYXR0
+cmlidXRlcyhzdHJ1Y3QgcGNpX2RldiAqcGRldikNCj4gPiDCoERFQ0xBUkVfUENJX0ZJWFVQX0hF
+QURFUihQQ0lfVkVORE9SX0lEX0NIRUxTSU8sIFBDSV9BTllfSUQsDQo+ID4gwqAJCQkNCj4gPiBx
+dWlya19jaGVsc2lvX1Q1X2Rpc2FibGVfcm9vdF9wb3J0X2F0dHJpYnV0ZXMpOw0KPiA+IMKgDQo+
+ID4gKy8qDQo+ID4gKyAqIFRoZSBJbnRlbCB3aXJlbGVzcyBCRTIwMCBmYWlscyB0byBjb3B5IFRM
+UCBBdHRyaWJ1dGVzIGZyb20gYQ0KPiA+IFJlcXVlc3QgdG8gdGhlDQo+ID4gKyAqIENvbXBsZXRp
+b24gaXQgZ2VuZXJhdGVzLg0KPiA+ICsgKi8NCj4gPiArREVDTEFSRV9QQ0lfRklYVVBfSEVBREVS
+KFBDSV9WRU5ET1JfSURfSU5URUwsIDB4MjcyYiwNCj4gPiArCQkJIHF1aXJrX2Rpc2FibGVfcm9v
+dF9wb3J0X2F0dHJpYnV0ZXMpOw0KPiANCj4gW1NldmVyaXR5OiBIaWdoXQ0KPiBXaWxsIHRoaXMg
+d29ya2Fyb3VuZCBzdXJ2aXZlIGEgc3lzdGVtIHN1c3BlbmQgYW5kIHJlc3VtZSBjeWNsZT8NCj4g
+DQo+IFdoZW4gdGhlIEludGVsIEJFMjAwIGRldmljZSBpcyBob3RwbHVnZ2VkLCB0aGUgdXBzdHJl
+YW0gUm9vdCBQb3J0J3MNCj4gY29uZmlndXJhdGlvbiBzdGF0ZSBpcyBzYXZlZCBhdCBib290IHRp
+bWUgYnkgcGNpZV9wb3J0ZHJ2X3Byb2JlKCksDQo+IHdoaWNoIGNhbGxzDQo+IHBjaV9zYXZlX3N0
+YXRlKCkuIFRoZSB3b3JrYXJvdW5kIG1vZGlmaWVzIHRoZSBSb290IFBvcnQncyBjdXJyZW50DQo+
+IGNvbmZpZ3VyYXRpb24gdG8gZGlzYWJsZSBSZWxheGVkIE9yZGVyaW5nIGFuZCBObyBTbm9vcCwg
+YnV0IGl0IGRvZXMNCj4gbm90IHVwZGF0ZQ0KPiB0aGUgUm9vdCBQb3J0J3Mgc2F2ZWQgc3RhdGUg
+YXJyYXkuDQoNClRoYXQncyBhIGdvb2QgcG9pbnQsIGJ1dCBJJ20gbm90IHN1cmUgd2UgcmVhbGx5
+IHRlc3Qgd2VsbCBob3RwbHVnLi4uDQoNCj4gDQo+IFVwb24gc3lzdGVtIHN1c3BlbmQsIHRoZSBQ
+Q0kgY29yZSBza2lwcyBzYXZpbmcgdGhlIFJvb3QgUG9ydCdzIHN0YXRlDQo+IGJlY2F1c2UNCj4g
+aXRzIHN0YXRlX3NhdmVkIGZsYWcgaXMgYWxyZWFkeSB0cnVlLiBEdXJpbmcgcmVzdW1lLA0KPiBw
+Y2lfcmVzdG9yZV9zdGF0ZSgpDQo+IHJlc3RvcmVzIHRoZSBSb290IFBvcnQgdG8gaXRzIG9yaWdp
+bmFsIGJvb3QtdGltZSBzdGF0ZSwgd2hpY2ggd291bGQNCj4gcmUtZW5hYmxlDQo+IHRoZSBwcm9i
+bGVtYXRpYyBhdHRyaWJ1dGVzLg0KPiANCj4gU2hvdWxkIHRoZXJlIGFsc28gYmUgYSBERUNMQVJF
+X1BDSV9GSVhVUF9SRVNVTUVfRUFSTFkgaG9vayByZWdpc3RlcmVkDQo+IGhlcmUgdG8NCj4gZW5z
+dXJlIHRoZSB3b3JrYXJvdW5kIGlzIHJlLWFwcGxpZWQgd2hlbiB0aGUgZGV2aWNlIHJlc3VtZXM/
+DQoNCkknbGwgaGF2ZSB0byBjaGVjayBpZiBzdXNwZW5kIC8gcmVzdW1lIGN5Y2xlcyB3ZXJlIHBh
+cnQgb2YgdGhlIHRlc3RzDQpiZWluZyBjb25kdWN0ZWQuDQo=
