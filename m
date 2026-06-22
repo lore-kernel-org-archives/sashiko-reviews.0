@@ -1,171 +1,248 @@
-Received: from CO1PR03CU002.outbound.protection.outlook.com (mail-westus2azon11010009.outbound.protection.outlook.com [52.101.46.9])
+Received: from flow-b2-smtp.messagingengine.com (flow-b2-smtp.messagingengine.com [202.12.124.137])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 946673BCD2B
-	for <sashiko-reviews@lists.linux.dev>; Mon, 22 Jun 2026 15:36:54 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=fail smtp.client-ip=52.101.46.9
-ARC-Seal:i=2; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1782142615; cv=fail; b=g579yIgoKfWylqJl4ZCk4n0qZuYxqkPx5vPmdhopYfbpXxz3PakQeSnAY0by9R0fcv7eQkINVORd8gqc0lJ0bYHR/hkFGCXFaKwFU75wQlh4uEsVzmSqYUb5/yrisPZYnyJPohLBBtlE5NFaGq7Jie5s0pGCWCrKkF+M7RawUDc=
-ARC-Message-Signature:i=2; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1782142615; c=relaxed/simple;
-	bh=lLgWmy6ocwjDa1M2L1HPnVXQMWpXPslyNrzNFWApF6Q=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:Content-Type:
-	 Content-Disposition:In-Reply-To:MIME-Version; b=mpZnf57ETWgcq9sXKL2uBFfdDsI55+Ld9IV6xvQCUBROwPAbmIdnbvYOxCqAPJOljXZAIdnFLSXsu2l/Bi1y2Oxu8Au5aQvq4O3Vx4pcBLyhCCvRpf1yy3d4kwzdUscMrpU2h9+p2pRilg7OuXbo3fJvjv2sCbOgln1Bm7DqbgA=
-ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=nvidia.com; spf=fail smtp.mailfrom=nvidia.com; dkim=pass (2048-bit key) header.d=Nvidia.com header.i=@Nvidia.com header.b=a4mDC1g8; arc=fail smtp.client-ip=52.101.46.9
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=nvidia.com
-Authentication-Results: smtp.subspace.kernel.org; spf=fail smtp.mailfrom=nvidia.com
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4AF013644A3
+	for <sashiko-reviews@lists.linux.dev>; Mon, 22 Jun 2026 15:40:24 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=202.12.124.137
+ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
+	t=1782142826; cv=none; b=medWFTZhkjibHdnj00bAmEHIhVfXvg0fRjCDbXvRHCznJ67I3UPzZZf+NOLvYEo7Gduhy/CCHMQLxuIZH2tSRrLfyqq/bYYQ+qvsQdInr9vPspY3eo8WWVl4r4VAOqCeZK8rBxacyli/SU8UsFVAVsDaIx4H70i++WaovVnX+bE=
+ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
+	s=arc-20240116; t=1782142826; c=relaxed/simple;
+	bh=u0/SXsldoKxXhIiV9Qp4QD1E4AUPEUcopctnN58PXgU=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=U1KdPtKgFbwv343kl28teyvxLoz3UXPT+mhIC7WsAPnsljpHXWesshExO/4H6GzNm9McXPwQlt9Sm9DVoxGOe5njp8gurgVzpcma1UviRGOcahNxQIppb7HOOHSdC61XhL2lt05gMyqXjXPRICJ7y85BMShe3My6mLDLndsBUkQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=fastmail.org; spf=pass smtp.mailfrom=fastmail.org; dkim=pass (2048-bit key) header.d=fastmail.org header.i=@fastmail.org header.b=c2JhUSCw; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=Mz/h77Hz; arc=none smtp.client-ip=202.12.124.137
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=fastmail.org
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=fastmail.org
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=Nvidia.com header.i=@Nvidia.com header.b="a4mDC1g8"
-ARC-Seal: i=1; a=rsa-sha256; s=arcselector10001; d=microsoft.com; cv=none;
- b=hyI2tg67LKJDH2PrcuewiQJo0g29QTKy1YxnisWzcjB7qxTBU7WMTtPTOEIh6A8fCqAi32G0aRqGEA6jLuyqaJa7iESk4J4x1ll+0PqFvF8KT+HvZXZGAVKrynpmuHcxBA/kQO4NF4Amh+1kJaupuJbabB6Tz8M34Z0+xpsrqfHM8/+W+9UEBknBRADd0QkBx9cufseEK6v1tMl+9gabnHxYiDOpU3LATeL8CSQ/L4qHVFozTlOwq5o4XjeXwaRblCU43XQU2s9XXIZuU5/do8ax0LrAiBtMPyUtIZCQTkBfKFxfGYE1IWpgYeDttxDkFzuP6FvCe+oiN/s9dQvkFQ==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com;
- s=arcselector10001;
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
- bh=yGBM2LCi6a/+3eUSqN0J8m3NwZq1tmKRs+CR206ykhg=;
- b=WGrEpBGjax1KzETJFFiZzTAHtDpXGTHlo1+KngYTsS0V5v7UhIQDOU+LGA/eb5axpOE3HY65ELJxTQQBhhKvo4xvGlTIBJ5oUfxpSObZUsJjXQ5o1uBkI4IZMZRAbDU6CotT8nXapAmL+18tF1MlfYXbfdN7Vfw+q9ht8THcB3axaQiOzSVZEqJHoTwugAxzfQx7VKw+1AGjMI6hCJ5WhKKQ8n7RnmSDLtZJ27Q2bvH9WNpRnX3MLROl79gskILaUqMfJQzpR0toMUdS9Ssk4HLgq1C8HtJ08FKcdzHvpHRRWdsAdzmX+2gxAqDYXyIxEiG1zmI/oSTKveLYL3rHUg==
-ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
- smtp.mailfrom=nvidia.com; dmarc=pass action=none header.from=nvidia.com;
- dkim=pass header.d=nvidia.com; arc=none
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=Nvidia.com;
- s=selector2;
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
- bh=yGBM2LCi6a/+3eUSqN0J8m3NwZq1tmKRs+CR206ykhg=;
- b=a4mDC1g8u0ko9g+O1QyDTFCKNoExgg+ecwpRNjM8Dfq+jr3ZZ5/gTUgLcGTV6Mkjc9hXGYZhgLn2is5QnROkWkn5U0STiW/cjkZ7QeELWDBokSiIoFAwsIY2cbaIk/mICd2iEPKnCLZ18F7JvGXzR+1MfddwEYAVSM+w/kGEnc4nfvZ7WrgRBU/zsPkPhUFPe9K4OfqumAWC23OGSucX2mZdi7E+S0JMuedIUY2lk4z5EPVSOJJW7GQmCarjl5Bg5IwMl4jY0kmYtZTepGsAkxCXsp1SWXTgEBKIv4IfH7ptHX4vxHHVxs/zD8NoVz1ckdgd48EMb73+pFYXOAd+rQ==
-Authentication-Results: dkim=none (message not signed)
- header.d=none;dmarc=none action=none header.from=nvidia.com;
-Received: from CH0PR12MB8488.namprd12.prod.outlook.com (2603:10b6:610:18d::18)
- by MN6PR12MB8591.namprd12.prod.outlook.com (2603:10b6:208:471::15) with
- Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.21.139.19; Mon, 22 Jun
- 2026 15:36:48 +0000
-Received: from CH0PR12MB8488.namprd12.prod.outlook.com
- ([fe80::c565:c0e5:2c8b:c315]) by CH0PR12MB8488.namprd12.prod.outlook.com
- ([fe80::c565:c0e5:2c8b:c315%5]) with mapi id 15.21.0139.018; Mon, 22 Jun 2026
- 15:36:48 +0000
-Date: Mon, 22 Jun 2026 17:36:40 +0200
-From: Thierry Reding <treding@nvidia.com>
-To: Thomas Zimmermann <tzimmermann@suse.de>
-Cc: javierm@redhat.com, maarten.lankhorst@linux.intel.com, 
-	mripard@kernel.org, airlied@gmail.com, simona@ffwll.ch, rayyan@ansari.sh, 
-	dri-devel@lists.freedesktop.org, sashiko-reviews@lists.linux.dev, stable@vger.kernel.org
-Subject: Re: [PATCH v2 1/6] drm/sysfb: simpledrm: Improve framebuffer-size
- validation
-Message-ID: <ajlWgKOnMAmkyZTc@orome>
-X-NVConfidentiality: public
-References: <20260622132433.722823-1-tzimmermann@suse.de>
- <20260622132433.722823-2-tzimmermann@suse.de>
-Content-Type: multipart/signed; micalg=pgp-sha512;
-	protocol="application/pgp-signature"; boundary="klyze6w3qjzq3jpe"
-Content-Disposition: inline
-In-Reply-To: <20260622132433.722823-2-tzimmermann@suse.de>
-X-ClientProxiedBy: BY1P220CA0010.NAMP220.PROD.OUTLOOK.COM
- (2603:10b6:a03:59d::12) To CH0PR12MB8488.namprd12.prod.outlook.com
- (2603:10b6:610:18d::18)
+	dkim=pass (2048-bit key) header.d=fastmail.org header.i=@fastmail.org header.b="c2JhUSCw";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="Mz/h77Hz"
+Received: from phl-compute-01.internal (phl-compute-01.internal [10.202.2.41])
+	by mailflow.stl.internal (Postfix) with ESMTP id 78C7E1300525;
+	Mon, 22 Jun 2026 11:40:23 -0400 (EDT)
+Received: from phl-frontend-03 ([10.202.2.162])
+  by phl-compute-01.internal (MEProxy); Mon, 22 Jun 2026 11:40:23 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=fastmail.org; h=
+	cc:cc:content-transfer-encoding:content-type:content-type:date
+	:date:from:from:in-reply-to:in-reply-to:message-id:mime-version
+	:references:reply-to:subject:subject:to:to; s=fm1; t=1782142823;
+	 x=1782146423; bh=HdXmiLjFCtewYnaNmICznmxrLACPW5YYb76z+fsRb18=; b=
+	c2JhUSCw2ny1UvfLXkcr4RWrVQ8QHarN0TwJd+2QEQBOKxSKtf1mlNNPiQWnY2Zl
+	5edogZs5DeDEIQXs8TL1O4lcxEf6VmaDjxe+gSp3Muyu5sTSMIQx57u19S1OZTjG
+	29UJeW9xc5loUXC3ldRKwusRSXzfIBa+G7cbwtUE4TSzbrJ+CEdDEqDvkCbC2TmP
+	P8fILzW864Em+nypoNolIpc/vb3RvIA3uBCDdQ4SNdld24bwu2e5+tDix6qhBf49
+	w+9Bm+nfJ752sdjZhr1ZtMcqrpXv6w/3oLIHQDW0mD6F7tskfXMcX86dXo/MSKb3
+	hW8fcTPt60Qx6V4wro2TfQ==
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
+	messagingengine.com; h=cc:cc:content-transfer-encoding
+	:content-type:content-type:date:date:feedback-id:feedback-id
+	:from:from:in-reply-to:in-reply-to:message-id:mime-version
+	:references:reply-to:subject:subject:to:to:x-me-proxy
+	:x-me-sender:x-me-sender:x-sasl-enc; s=fm1; t=1782142823; x=
+	1782146423; bh=HdXmiLjFCtewYnaNmICznmxrLACPW5YYb76z+fsRb18=; b=M
+	z/h77HzLhkLrTAJMvhyrn0vxwItuI2Ellq4HFa1jv9gEW2uPeNnEGAo7zUb5VrkW
+	sRxvgwpGFiLKBhbnbTnsaoBDgLBc1dYFxSkdBMG0iIP2bPAtimpM8BGyXHnOr0Pb
+	Qndwvvbbepgo5Zprncbe+or2lqNGIkm49LnxKl/AKfRUaaUYlyjZxbgJmMYRgtka
+	mnbEt35M4n8KPfyI0l+tEwohLiDn5Zx5O1211bparbi4iDE5M6H6BEq6kI/OtQHE
+	8pSCrqK4b4HKXvjRoojnV6b00i/klxvoQHvArZyI2QQnG7rOk+CTc/cS2mAVmSVO
+	+cMfDjzIpu4Z+1L0yKzOw==
+X-ME-Sender: <xms:Zlc5alLBLBVKBly1TqhSTE70zdfsF8JN6RcBEGysqGure2VqL-BHMg>
+    <xme:Zlc5ajYAJIyOQRvo0fcMf-Sgz2ySASW8EgFYBYM9XzO84kr7tigLyFZ5B5jdUDAxT
+    NIUTJeazMJNOAVC5ycHbOaDWpXIv9AgSJ7Xx6XZLnDh1dQgdvT28ZA>
+X-ME-Received: <xmr:Zlc5av92kPTiW5VQI22tfipKxc3tl6YmuVAXIJvNoVhJrcJZcDmfT-wuUJM>
+X-ME-Proxy-Cause: dmFkZTFbSqkzJcDuTJ6NXheCBDU8nHXFmKAvMGPiYbtwFQOeJRVaI++l2BH7FF00TAVvJj
+    ssN5ST8jPIkYKr4nrtzIDG3wTa3y+3110hJWizubP/a7XSVsQxl9pMB9U/k1dqr1ywlpP9
+    4gPlaPPO0HnKcPb9RXvN8xTdcRxW8xb7rP7pEUHeeUSb5XQqFSuudYero8/6WOTLO4LYUe
+    93+l0KugHcnRW7JMHo4KasW0ZqaH14srkulEB3Nsa33kGwnD+hFOlhvQ14D3Z3J0srDbdX
+    tQ/HCS/yTD9q45tguGkGug8dO64d1QJB1Qvdlkmd3F3HSO4P1oPtc5H0c1Y0ARrAp41ClJ
+    88nqTVZc4pjOx4Kxt7hOEwkXr2dVlvq8qp+HGWDlOD6cuZ0gaxeVfrL6fA5ckSlN/P/r7F
+    Fys8Jj/vAV4JHIPWfhcwntpcTiWBKyKyPdCBarQQyuDhzQYs+S2TzYn/4yS0CrnUWXFlSM
+    +KzUbxN5t3jA9RtF4MZDO44zBh1f1xxuJ5Bvdn9PFzaQtUdjaSwksb4YHvEorB+brMwObB
+    VJgIaU2SA/HwqnzL2Y6k8quIok6JN9H7FvR1WZexhENK/drS5GeTZU244zMxJJFnDPwbKS
+    ZLZ3iCTYPasakSLPAHDOMutafZDKWcYrxka6pguCAofdhZqRtQuntSGMIoJg
+X-ME-Proxy: <xmx:Zlc5asYyL1B8W2ppg19mSqNSdl-UAfvthGvMxR2oRp3_J8n7g18yfQ>
+    <xmx:Zlc5arNW81VrUdlyhfGdt5Mwa9bVXlhmdGHTPqxedMVTkOZFnjqu-g>
+    <xmx:Zlc5agAc0rEFKsJj-pGrVDPFoIMcfyMeeh_MHEUGRalD_jf5BbRVlg>
+    <xmx:Zlc5aqJHeL9hb5sVabQ8M51Cb9S_J5GMvr86l0d5dw8Z653umjHTVQ>
+    <xmx:Zlc5asGwe6nukOJLHXqg-czX5yPWEWw5bwRPSj17oU5RQwirZnD0snAW>
+Feedback-ID: ib53e4b78:Fastmail
+Received: by mail.messagingengine.com (Postfix) with ESMTPA; Mon,
+ 22 Jun 2026 11:40:22 -0400 (EDT)
+Date: Mon, 22 Jun 2026 10:40:20 -0500
+From: Ian Bridges <icb@fastmail.org>
+To: sashiko-reviews@lists.linux.dev
+Cc: Simona Vetter <simona@ffwll.ch>, Helge Deller <deller@gmx.de>,
+	linux-fbdev@vger.kernel.org, dri-devel@lists.freedesktop.org,
+	linux-kernel@vger.kernel.org
+Subject: Re: [PATCH] fbdev: fix use-after-free of fb_display[i].mode in
+ store_modes()
+Message-ID: <ajlXZL7nVHxH6mxh@dev>
+References: <ajjoDhAi2y4ArSlz@dev>
+ <20260622080749.D7FC61F000E9@smtp.kernel.org>
 Precedence: bulk
 X-Mailing-List: sashiko-reviews@lists.linux.dev
 List-Id: <sashiko-reviews.lists.linux.dev>
 List-Subscribe: <mailto:sashiko-reviews+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:sashiko-reviews+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-X-MS-PublicTrafficType: Email
-X-MS-TrafficTypeDiagnostic: CH0PR12MB8488:EE_|MN6PR12MB8591:EE_
-X-MS-Office365-Filtering-Correlation-Id: 9c2ee414-6a9e-4573-a150-08ded074129f
-X-MS-Exchange-SenderADCheck: 1
-X-MS-Exchange-AntiSpam-Relay: 0
-X-Microsoft-Antispam:
-	BCL:0;ARA:13230040|1800799024|10070799003|23010399003|366016|7416014|376014|22082099003|18002099003|4143699003|56012099006|11063799006;
-X-Microsoft-Antispam-Message-Info:
-	MGKLM2RHlxkdawsFggPVU5jmG/gh8ZYSLGDDp/0eLmV7VwrjM6/u3teDWjbrYh4964An5bGQvEjQnCT3JPMoS1Ta2VGEURRGWXse0rszRhwuxxfgS9/19xaUwN8GLqZcKL5KZ0+a79fNCqp3zhcT3VB7A4xA3LhrOJHf5eLYu3J/Wwx7Lhy2NlPiWkAZO1uVoI0epOb1fbYYATZGyrA8mlCSMCcoMWjSR+XkDTiiStazJKqRCpY6uNWSc5338BzhhW9T8ub8LTBQwkoVPmuyae4NI0nkaKLHsndKBGaz37M+pl4LbrObCxV65Q/QeZIXTKom3aUpS9N7TURwn72Fv0pd/etYpmy+qnZMDIgzEc59TojEIcwEiyEygUFNExt+gNCCLe5qUlPKqmD1j0B8SQF8GUjSvO1Dlj2Z0o/ghZAH7Ln4w7zZb2SCPGe4cf82BRH0EPWH2v+b9TlCBj8M4UJHLVc+QYwHUwUrInFmFNOR+sB5C5PmmU29XsAQkq/boeILZVE2sXC0v92HzesswExb7tanhwPGQWmWVCpHq1edgUgq5uJEa3oL1bPYDZd+9u9Wl5O1dNMhir9SepNsLWcWW9WB3vrzXDwu6nCwFByxRG74rsSJfZq1K8g8NnaSKdL/TS/hcqkce2cGEczqVVqzxAgyULUL9EpJQYLjcq0=
-X-Forefront-Antispam-Report:
-	CIP:255.255.255.255;CTRY:;LANG:en;SCL:1;SRV:;IPV:NLI;SFV:NSPM;H:CH0PR12MB8488.namprd12.prod.outlook.com;PTR:;CAT:NONE;SFS:(13230040)(1800799024)(10070799003)(23010399003)(366016)(7416014)(376014)(22082099003)(18002099003)(4143699003)(56012099006)(11063799006);DIR:OUT;SFP:1101;
-X-MS-Exchange-AntiSpam-MessageData-ChunkCount: 2
-X-MS-Exchange-AntiSpam-MessageData-0:
-	=?us-ascii?Q?cB8mJV8x3K9Pm6EC3bLn/SvBN10p9YRWRBIbYqAeGiRz1OjiUzzeGfcGETYy?=
- =?us-ascii?Q?+7rQUchRR3wTdNgHGMygMgTEQ2MPg56n/+obJoHzalrdPkFc1NJJqBM9LyRU?=
- =?us-ascii?Q?aQF4be7GGySEjZ76ed1VpQX+wWx/DZAnYQPT/i2+Fb+JQ23dpySCrZG6lm+j?=
- =?us-ascii?Q?FrrniAaVan9FelEMC5uGjnYEvTobSN7gB977SVWiDAOx9Ym6ps576vYJAnqE?=
- =?us-ascii?Q?FatrtIgso0620HXbicVUSEx6OBZdocEhG65z7oN2cCMUJMqbFWn6LiSxoNpE?=
- =?us-ascii?Q?bj6OxJTZycBkhYZt0j3lPxi9OIM1VELsrj8wSf7JZhpVbkvXfjU0epkDvHmi?=
- =?us-ascii?Q?5+o2f2Pas4scgqRF+Yjrv/ZU+o/381hZnJ8pnoWyxN5Ezqfr468u9oLmPFjr?=
- =?us-ascii?Q?bR1UvfTqVrBXFgfyugDbd/hDFzXHjSc22NsmbVyoyLt84l8pMOrz1dh03qPX?=
- =?us-ascii?Q?QirjPHwyNmg0pfkTDue4iuEBxqzQqOqI42d+JNjtYR7vhWGY0K0mt57NdUq4?=
- =?us-ascii?Q?jVb1+9uBAq1uIelNvaSz1cjtvVHPCDfvzKMZ76joYsUaYqmGUR2/QALZqT3n?=
- =?us-ascii?Q?WqcNAX6wk3cRZQG8JUX3JXUfd/+k/hvy4G353NrE2R03Z5fbIhgOo8jq65vX?=
- =?us-ascii?Q?hzaVqYS24P49rFN7PBo1s3yTUvMD/MoVP8JIzjxJCK6KrfQ5/x/xX53x3o6e?=
- =?us-ascii?Q?vZnvLuEv0xvZks9fDzeJSeTi2zMHP/y1eb+oXP13NbWRe/PGA+dTq/xu9pUU?=
- =?us-ascii?Q?qo/5eA56g8LUaZ4VzTL1CxA72ibCe6bh0PBSMCfIp29SptNsoosezLStxe1y?=
- =?us-ascii?Q?Z+UaSjAAKFG0J8h9JzK849lL77gvEaNgasZnpVik6L06tOkQvRoe4vkkzxbp?=
- =?us-ascii?Q?OHejn45JdgjGnQlOoWP1MioxBLXatYDObkIEo2V7Eb7YQdFT7bvi4LoGZnbd?=
- =?us-ascii?Q?d3J3mo3m4aGvVtCIuFvaW8FsAIvDNwMbHDSE01ymsYbf+e+u4rgHHJ4n+i9H?=
- =?us-ascii?Q?+oWKPizjdOBw/Zaxi0XUX4RYTJQRuHFnW5QyAPOf++S+A2Hj8Sxb1UeGF6Cg?=
- =?us-ascii?Q?BK1+AMKZvlIFoeihn2f9Zqtfzd4hbczVvpM7MX9hktVMG6uW5rxEfQP4rCh7?=
- =?us-ascii?Q?uIx9dnSQ/STs3v2oFLTkDwa4jbc4UvBP84BAcH3/xvSEZfD24/yXeuMmmLbR?=
- =?us-ascii?Q?9oGZVkQvxSLNaCL5giygSG/S3D1Jtpljbuf3xCJdjsV0WTSC0tg+rvJf1/qU?=
- =?us-ascii?Q?OeKiEIbe/ZXbpQTQ2sUdhmyCYXayzGRBN9oR2J4pYElhxGe3f22I2WgxxId5?=
- =?us-ascii?Q?jyJSxxQ3drb0oFUto6CYUvaL+GQYqMZ9cEQMM9qR/0/VJTAH/Nvw/CfHntEO?=
- =?us-ascii?Q?pk9S6LVzgycVx1Q2zMBhcM6NsgX8gUp4VOglB3CSPBYWiRpZPDFLComP6nN/?=
- =?us-ascii?Q?6xeovNHeJg+r2J4FT5STuvLZzaIbj266wAmScQDyYcvMWDn6sAQpQQT+kDzY?=
- =?us-ascii?Q?jFk6oHPMZ2wYlOURGbdt61Qa9S4NhKKB/ogQ+QO2ZR9yh94QPU/R3+wYVezn?=
- =?us-ascii?Q?AKI2ud+6NpvcGJZfWs4y0HkjzSrYehgK3qWPP+gPTkE2C/pEWkBv8ynVn0tr?=
- =?us-ascii?Q?qJuuMpWeGDWlmBNBL/2lorqsZqjxAoz6blmQMkW2QzXV+pOD/chQ48aQORHd?=
- =?us-ascii?Q?bJJsU9H6XALcqFWo8i9BnjtU/lAZa0WxWwQxKyqI2UoIljQdxk0AcjD1XQlj?=
- =?us-ascii?Q?P3uy5Q79JfHTWLh/3XEjt5aaGAZwAb3x2uxrpfKFwGkpDHqIJRXhHjJHOhkY?=
-X-MS-Exchange-AntiSpam-MessageData-1: jzgHU4HIp273gQ==
-X-OriginatorOrg: Nvidia.com
-X-MS-Exchange-CrossTenant-Network-Message-Id: 9c2ee414-6a9e-4573-a150-08ded074129f
-X-MS-Exchange-CrossTenant-AuthSource: CH0PR12MB8488.namprd12.prod.outlook.com
-X-MS-Exchange-CrossTenant-AuthAs: Internal
-X-MS-Exchange-CrossTenant-OriginalArrivalTime: 22 Jun 2026 15:36:48.2334
- (UTC)
-X-MS-Exchange-CrossTenant-FromEntityHeader: Hosted
-X-MS-Exchange-CrossTenant-Id: 43083d15-7273-40c1-b7db-39efd9ccc17a
-X-MS-Exchange-CrossTenant-MailboxType: HOSTED
-X-MS-Exchange-CrossTenant-UserPrincipalName: RWRfUTI/vKWiTw9PoEW5zEULHri6D2K+mET54BwfJZI5/YJ/v1zVE/ozy9I+TGUaMswyGXLnExAv21w2I3NtOw==
-X-MS-Exchange-Transport-CrossTenantHeadersStamped: MN6PR12MB8591
-
---klyze6w3qjzq3jpe
-Content-Type: text/plain; protected-headers=v1; charset=us-ascii
+Content-Type: text/plain; charset=iso-8859-1
 Content-Disposition: inline
-Content-Transfer-Encoding: quoted-printable
-Subject: Re: [PATCH v2 1/6] drm/sysfb: simpledrm: Improve framebuffer-size
- validation
-MIME-Version: 1.0
+Content-Transfer-Encoding: 8bit
+In-Reply-To: <20260622080749.D7FC61F000E9@smtp.kernel.org>
 
-On Mon, Jun 22, 2026 at 03:19:35PM +0200, Thomas Zimmermann wrote:
-> Validate the framebuffer size from the firmware against the
-> limitations of struct drm_display_mode. The type only stores sizes
-> in 16-bit fields. Fail probing on errors.
->=20
-> v2:
-> - remove unused function simplefb_get_validated_int0() (Sashiko)
->=20
-> Signed-off-by: Thomas Zimmermann <tzimmermann@suse.de>
-> Fixes: 11e8f5fd223b ("drm: Add simpledrm driver")
-> Cc: <stable@vger.kernel.org> # v5.14+
-> ---
->  drivers/gpu/drm/sysfb/simpledrm.c | 15 ++++-----------
->  1 file changed, 4 insertions(+), 11 deletions(-)
+On Mon, Jun 22, 2026 at 08:07:49AM +0000, sashiko-bot@kernel.org wrote:
 
-Reviewed-by: Thierry Reding <treding@nvidia.com>
+I'm new to submitting kernel patches, so please correct me if I have
+handled this wrong. All four findings are pre-existing and none are
+introduced by this patch, which I scoped to the reported
+fb_display[i].mode use-after-free. Responses inline.
 
---klyze6w3qjzq3jpe
-Content-Type: application/pgp-signature; name="signature.asc"
+> Thank you for your contribution! Sashiko AI review found 4 potential issue(s) to consider:
+> 
+> Pre-existing issues:
+> - [High] Use-After-Free in show_mode() due to dangling fb_info->mode pointer.
+> - [High] Data Race and potential Use-After-Free / list corruption when iterating fb_info->modelist.
+> - [High] NULL pointer dereference in fbcon_new_modelist() for unallocated consoles.
+> - [Medium] Data Race and locking violation modifying fb_display in do_unregister_framebuffer().
+> --
+> 
+> commit 5e256dfc1372231ec16feb6ee8a3218859b0dd4f
+> Author: Ian Bridges <icb@fastmail.org>
+> 
+> fbdev: fix use-after-free of fb_display[i].mode in store_modes()
+> 
+> store_modes() replaces a framebuffer's modelist and frees the old entries
+> with fb_destroy_modelist(), but fb_display[i].mode was left dangling.
+> This commit fixes the use-after-free by clearing the stale pointers with
+> fbcon_delete_modelist() before freeing the old list.
+> 
+> Closes: https://syzkaller.appspot.com/bug?extid=81c7c6b52649fd07299d
+> 
+> > diff --git a/drivers/video/fbdev/core/fbsysfs.c b/drivers/video/fbdev/core/fbsysfs.c
+> > index baa2bae0fb5b3..c761dcf21dafb 100644
+> > --- a/drivers/video/fbdev/core/fbsysfs.c
+> > +++ b/drivers/video/fbdev/core/fbsysfs.c
+> > @@ -111,8 +111,10 @@ static ssize_t store_modes(struct device *device,
+> >  	if (fb_new_modelist(fb_info)) {
+> 
+> [Severity: High]
+> This isn't a bug introduced by this patch, but can this fb_new_modelist()
+> call lead to a NULL pointer dereference for unallocated consoles?
+> 
+> If an unallocated console (where vc_cons[i].d is NULL) is mapped to a
+> framebuffer, fbcon_set_disp() populates fb_display[i].mode and returns early.
+> 
+> When store_modes() calls fb_new_modelist() -> fbcon_new_modelist(),
+> it checks if con2fb_map and fb_display[i].mode are set. Could it then fetch
+> vc = vc_cons[i].d and unconditionally dereference vc->vc_num?
+> 
+> drivers/video/fbdev/core/fbcon.c:fbcon_new_modelist() {
+>     ...
+>     vc = vc_cons[i].d;
+>     ...
+>     fbcon_set_disp(info, &var, vc->vc_num);
+>     ...
+> }
 
------BEGIN PGP SIGNATURE-----
+Confirmed. fbcon_new_modelist() dereferences vc_cons[i].d without a NULL
+check, and a console can have con2fb_map and fb_display[i].mode set while
+vc_cons[i].d is NULL. I hit this while writing the reproducer for this bug.
+It is a separate issue, so I'd argue it needs its own patch adding the NULL
+check.
 
-iQIzBAABCgAdFiEEiOrDCAFJzPfAjcif3SOs138+s6EFAmo5VogACgkQ3SOs138+
-s6G/sQ/+N38eGuw+5JSBEXVb4A3CpPETUlrxKb0u6gEr/qlqErLWK3e8+ud9UJwG
-LIB3PeR46kIJv3I4nNwuWLOTiVvAZZunxrfuGn2CK7vcdpQJ3QMKTm5oh0QYL3Bm
-K+FDeVFJycUaoPKnWAfV2u9LVZUzW8YkoVDJqUjLZk9oSUs8Iy1AZsVMdJLEXj0q
-b/Vrwi/LEERGxEsRwUIO+OwDS8s5OookpfQN7lRhQ/z20UvWl122VnziT12OukdM
-kPSnHQhMGCcrpm+ZCEHs2112UkWs6jvhLeO4rXMKYvEjhKwgPuqPZDMGC4cbp7x6
-dJYXL1BD+jQbwZNSTqkl0N0+bLqwqA+dq+OECpvXcc7/us0LikNhr0vxw3H50vBk
-/kR4HWD8OeLSUcud8eXVbdzbW+8OFrXWJN28VvESvK4Fqb1KXNLlZYTQXjyb1lzB
-Xbkc56gomTouvHkC85Z63qEw4yIwpFBuKhdjf1YB/VWe2Rz//E7CTn+YZB6TgwEk
-25PfK1gq/VaxKKKyOYuGc8p+RKnLR2XEytEJwMeCi9EzvMSdFkllg68VYYylXttf
-h5GW0srZphloK2NtFoTBbtoZ1XkuW6pk7i784sLZ/24sPuDpsRA3vipT3PdAj/Ha
-owo4hB1ddW93shBEuKq+TXJhTzRIpEGA8gAN4Ahrd13omlCecsY=
-=a2Vb
------END PGP SIGNATURE-----
+> 
+> >  		fb_destroy_modelist(&fb_info->modelist);
+> >  		list_splice(&old_list, &fb_info->modelist);
+> > -	} else
+> > +	} else {
+> > +		fbcon_delete_modelist(&old_list);
+> 
+> [Severity: Medium]
+> This is a pre-existing issue, but since we are properly calling
+> fbcon_delete_modelist() under console_lock() here, should other callers do
+> the same?
+> 
+> Looking at do_unregister_framebuffer(), it executes without holding
+> console_lock():
+> 
+> drivers/video/fbdev/core/fbmem.c:do_unregister_framebuffer() {
+>     ...
+>     fbcon_delete_modelist(&fb_info->modelist);
+>     ...
+> }
 
---klyze6w3qjzq3jpe--
+Agreed. do_unregister_framebuffer() runs under registration_lock, not
+console_lock, so the fbcon_delete_modelist() call added by a1f305893074
+writes fb_display[] without console_lock. The call this patch adds to
+store_modes() runs under console_lock and is safe. The unregister call site
+looks worth a separate fix.
+
+> 
+> Since fbcon_delete_mode() iterates the global fb_display array and locklessly
+> assigns NULL to fb_display[i].mode, could this cause a data race with
+> concurrent readers like FBIOPUT_VSCREENINFO?
+> 
+> >  		fb_destroy_modelist(&old_list);
+> 
+> [Severity: High]
+> This is a pre-existing issue, but does destroying old_list leave
+> fb_info->mode dangling?
+> 
+> If fb_info->mode was previously set to point into a struct fb_modelist
+> element from this list, it doesn't appear to be cleared before the list
+> is freed.
+> 
+> Could a subsequent read of the sysfs mode attribute trigger a use-after-free
+> here:
+> 
+> drivers/video/fbdev/core/fbsysfs.c:show_mode() {
+>     ...
+>     return mode_string(buf, 0, fb_info->mode);
+> }
+
+Confirmed, and it still reproduces with this patch applied. store_modes()
+frees the old modelist that fb_info->mode points into, and this patch only
+clears fb_display[i].mode. Writing a mode to /sys/class/graphics/fb0/mode,
+then a new list to /sys/class/graphics/fb0/modes, then reading
+/sys/class/graphics/fb0/mode faults in mode_string() called from
+show_mode(). Since it is the same free in store_modes(), I will fold the
+fix into a v2 of this patch and clear fb_info->mode alongside
+fb_display[i].mode.
+
+> 
+> [Severity: High]
+> This is also a pre-existing issue, but does modifying fb_info->modelist
+> under lock_fb_info() race with sysfs readers?
+> 
+> Looking at show_modes() and store_mode(), they appear to iterate
+> fb_info->modelist locklessly:
+> 
+> drivers/video/fbdev/core/fbsysfs.c:show_modes() {
+>     ...
+>     list_for_each_entry(modelist, &fb_info->modelist, list) {
+>     ...
+> }
+
+Agreed. show_modes() and store_mode() walk fb_info->modelist without
+lock_fb_info(), so they can race the splice and free in store_modes(). This
+looks like a separate locking fix.
+
+> 
+> Since store_modes() splices, modifies, and destroys this list, could a
+> concurrent sysfs read/write follow corrupted pointers into freed memory?
+> 
+> > +	}
+> >  
+> >  	unlock_fb_info(fb_info);
+> >  	console_unlock();
+> 
+> -- 
+> Sashiko AI review · https://sashiko.dev/#/patchset/ajjoDhAi2y4ArSlz@dev?part=1
+
+To summarise, I will send a v2 of this patch that clears both stale pointers
+in store_modes() (fb_display[i].mode and fb_info->mode), and keep the
+fbcon_new_modelist() NULL check and the two locking issues as separate
+patches.
+
+Thanks,
+Ian
