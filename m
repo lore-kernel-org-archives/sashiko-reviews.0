@@ -1,247 +1,274 @@
-Received: from SEYPR02CU001.outbound.protection.outlook.com (mail-koreacentralazon11023104.outbound.protection.outlook.com [40.107.44.104])
+Received: from mx0a-001b2d01.pphosted.com (mx0a-001b2d01.pphosted.com [148.163.156.1])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DAC6835CB89
-	for <sashiko-reviews@lists.linux.dev>; Mon, 22 Jun 2026 06:20:07 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=fail smtp.client-ip=40.107.44.104
-ARC-Seal:i=2; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1782109209; cv=fail; b=L7HnOz7xDJXGUIHj7gUXkmGNK+5vOurITEe4AZAFaniVNJP3+QKXAcdDzIzxQNSXAZF5wCGIREVAaO3NK5URsXwmAYubQcgZOVGB6Qlyr0GDAvj3VkwEyfF2IoQ1nbN7hoXdsUFqEHsa3KR/yCcbG0sZBGP4k5pwHphH5yWqoC4=
-ARC-Message-Signature:i=2; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1782109209; c=relaxed/simple;
-	bh=0Jh9QPV67APO4dbhAdqa0ZR9WBTWPRhvXbiczzXiMU0=;
-	h=Message-ID:Date:Subject:To:Cc:References:From:In-Reply-To:
-	 Content-Type:MIME-Version; b=l7TzazBSJ/gl4hGHcCI9JPxbOKQJz1u1j1bkcYRomi0lZ5tJtPSB3IixGbin25LMbNczQb76yA6X5nM9LHqR2KHbdMJ3UfOHn/PH+RtKMyVMfAzfMvKVeLyjvXwYYF4DTXb8Xip6g+wAXGKJ5seMjOg+rtkf1dyzTqYd/C7bN/M=
-ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=amlogic.com; spf=pass smtp.mailfrom=amlogic.com; dkim=pass (2048-bit key) header.d=amlogic.com header.i=@amlogic.com header.b=j6sjG9x6; arc=fail smtp.client-ip=40.107.44.104
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=amlogic.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=amlogic.com
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7BD9D35F5ED;
+	Mon, 22 Jun 2026 06:51:19 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=148.163.156.1
+ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
+	t=1782111080; cv=none; b=Leby1rckmDUwohUMOVcFfJihCfA+wUYL/DLCADrrwGi97OWGmqwirWcDaCXdVliljSHOQYtSisyK19ZejcparFDrPxjYAK3Ruds61c0qpWBtLcEgV6IaQlvs6cEEisuQSH8ab32IskND5e1h+4T6L79SoMXT7U0Tkj47c3aKYeg=
+ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
+	s=arc-20240116; t=1782111080; c=relaxed/simple;
+	bh=WdKIPWUN5WH8CRR2edf/Lv5w6x60rstgnvn7o1XFCIM=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=TwQHWnMZNpI/FJuJeWgAyK7eyazK5NaUKxy95WWu90kFNEVF9ChzbXw031pqdJC+7LafF9ia92KdEaUDnt77ZPUSVfsVoiFmineDoiAEAGxf+p/8dnrO88qYhCMoTVmztwxQJXI9P2dgcELJYJAcnQvYyDtnQTK/av6JVhFBpTk=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linux.ibm.com; spf=pass smtp.mailfrom=linux.ibm.com; dkim=pass (2048-bit key) header.d=ibm.com header.i=@ibm.com header.b=P/3rKbRo; arc=none smtp.client-ip=148.163.156.1
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linux.ibm.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linux.ibm.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=amlogic.com header.i=@amlogic.com header.b="j6sjG9x6"
-ARC-Seal: i=1; a=rsa-sha256; s=arcselector10001; d=microsoft.com; cv=none;
- b=fbD3OvefVeDb6iBsz11fop91fwju4b2w3FbSkOqlcfJVEqDu2h4ajk4+o7uH5DHBdzRCi/GToZioEbN6HbfAy/TFSGHZvuE4xGlt+ls/eiHtSULxd+HFttfHtV1z9wSH1dfLTj22luGVK9ANRez/uaI82Jsc38gIQZA1OY/pnDiduusoJhhYX+y38ctOrm63fAnwiDNA5ngg1hyhc/82RsaCGUkx934YfdYVGyD5VNLITA5yxVDvx7sUhUbC/Pa7VDAEHBxC8wM3KYa5zq7asuA8uX1XRD85dp6PJpzkjEnr5Ee5VHGyrdmEpUSF2s1OgHX8ZVbdB0Xe2FnuFL+BXg==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com;
- s=arcselector10001;
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
- bh=v0WQs1J82XrgCVLeRm5Euo1rqVjIttoGQvQGGRH9GV0=;
- b=hycft32HvMMp7oDzTP6FW8Cu5Vd2MhVnOvBIxIy5H6KEI7dHEomsFc3S6Qx6mtcrzTFKO3W+2hKsj7sh3vgTFoaqyJmEDnBxikGKRFtVFYFJDQxeWfD27wmHR1yTgNt6HKflBBEGRtUWns5mGWrwXxafJcpdqXp/dRE8KMu9YES5tfUwm/VuGqtxkBjHedhkm4cdlKfespDuooDny4Wk0vhWZSIaj5hq9u+y98tTAB/tege2eFjaNfaNcn9HVji8vfReUyOI3bAvMyKJmk1ZwneH0KlHRfCc8d8+4Yc0LX0oo3Ej3lfopBDUpK8CuqFcOsG9fbDlpqL8Ouh2JH72vw==
-ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
- smtp.mailfrom=amlogic.com; dmarc=pass action=none header.from=amlogic.com;
- dkim=pass header.d=amlogic.com; arc=none
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=amlogic.com;
- s=selector1;
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
- bh=v0WQs1J82XrgCVLeRm5Euo1rqVjIttoGQvQGGRH9GV0=;
- b=j6sjG9x6WedRTnJaxYc2r471Z7I4H3kWjY48jTDI7HGVStjmLOzruoFV9xjfovP1hb75nvmDPoxv1UUYe3TQRJJ1AKudOwcXcxSOfYI/1U39CWAzc/tBuhRjKlcZD503+zwNGwnKpNtRTQAiLTu0dLsnlL3FqMBxGFVfz8Bw44EBZWB8VjFmlxCAxEgVrGwl2r13OvdC/YdypAh12REr2yrex702dQDxo8e0uGPoJYHmxzl/LxPkcXmYGUs79nvAjUORaqqwEnY7Djrty7t+IJgK/tAVZpDzpb8qahsYguZRfHc4k26HXHoC0e+E+PrlWaegqC0H/jP3ImGG1GQUQw==
-Authentication-Results: dkim=none (message not signed)
- header.d=none;dmarc=none action=none header.from=amlogic.com;
-Received: from KL1PR03MB7149.apcprd03.prod.outlook.com (2603:1096:820:ca::7)
- by SE1PPF73DA7E6F9.apcprd03.prod.outlook.com (2603:1096:108:1::854) with
- Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.21.159.7; Mon, 22 Jun
- 2026 06:20:02 +0000
-Received: from KL1PR03MB7149.apcprd03.prod.outlook.com
- ([fe80::2f06:12a:fff0:6506]) by KL1PR03MB7149.apcprd03.prod.outlook.com
- ([fe80::2f06:12a:fff0:6506%5]) with mapi id 15.21.0159.007; Mon, 22 Jun 2026
- 06:20:01 +0000
-Message-ID: <167ab529-1588-4f8a-9297-cecdb16fa0c9@amlogic.com>
-Date: Mon, 22 Jun 2026 14:19:59 +0800
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v4 2/2] clk: amlogic: Add A9 AO clock controller driver
-To: Jerome Brunet <jbrunet@baylibre.com>, sashiko-bot@kernel.org
-Cc: Jian Hu via B4 Relay <devnull+jian.hu.amlogic.com@kernel.org>,
- sashiko-reviews@lists.linux.dev, linux-amlogic@lists.infradead.org,
- neil.armstrong@linaro.org, robh@kernel.org, devicetree@vger.kernel.org,
- conor+dt@kernel.org
-References: <20260618-a9_aoclk-v4-0-569d0425e50c@amlogic.com>
- <20260618-a9_aoclk-v4-2-569d0425e50c@amlogic.com>
- <20260618100341.0A42F1F00A3A@smtp.kernel.org>
- <1j33yjc7b9.fsf@starbuckisacylon.baylibre.com>
-From: Jian Hu <jian.hu@amlogic.com>
-In-Reply-To: <1j33yjc7b9.fsf@starbuckisacylon.baylibre.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
-X-ClientProxiedBy: SI2P153CA0011.APCP153.PROD.OUTLOOK.COM
- (2603:1096:4:140::14) To KL1PR03MB7149.apcprd03.prod.outlook.com
- (2603:1096:820:ca::7)
+	dkim=pass (2048-bit key) header.d=ibm.com header.i=@ibm.com header.b="P/3rKbRo"
+Received: from pps.filterd (m0353729.ppops.net [127.0.0.1])
+	by mx0a-001b2d01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id 65M5IkQw1814109;
+	Mon, 22 Jun 2026 06:51:18 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=ibm.com; h=cc
+	:content-transfer-encoding:content-type:date:from:in-reply-to
+	:message-id:mime-version:references:subject:to; s=pp1; bh=3Arr7j
+	1cZAT9UK56N9PTA4oMJbqdE3ovVJvN1eD+loQ=; b=P/3rKbRoMM2QXROZeDbG9a
+	yrWBMS6zMcka8nWmYRkgVMI88czRJVRDxWgRl5AvFLZdvg6YCK+j/SmLwosUbUBx
+	Lh+NEVq70E479R9eUvlel1WeEhR2dfiUX4P0V24uelWnZ9+i98P+Qd8B5MXF+Rsy
+	dLvSaqd6qOuAbPnXFNcWaOB7KInpuTJiwChTFBxF/fGAcTaL6F/v2ZGxsqFQV6FY
+	2XQLGcTDdBn9CzOh6dDLvOTYO6ww+fVnXh0OjuHXvq8o+zcqRAf+dm60hHvoDbly
+	jgB246su3ERjcSHubZqnvWuNdtWVXNLRFmirljooTF27E0do78/5sHpphjdOss3Q
+	==
+Received: from ppma22.wdc07v.mail.ibm.com (5c.69.3da9.ip4.static.sl-reverse.com [169.61.105.92])
+	by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 4ewjhqfkre-1
+	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+	Mon, 22 Jun 2026 06:51:18 +0000 (GMT)
+Received: from pps.filterd (ppma22.wdc07v.mail.ibm.com [127.0.0.1])
+	by ppma22.wdc07v.mail.ibm.com (8.18.1.7/8.18.1.7) with ESMTP id 65M6nkoj008671;
+	Mon, 22 Jun 2026 06:51:17 GMT
+Received: from smtprelay02.fra02v.mail.ibm.com ([9.218.2.226])
+	by ppma22.wdc07v.mail.ibm.com (PPS) with ESMTPS id 4ex5jw4ytx-1
+	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+	Mon, 22 Jun 2026 06:51:17 +0000 (GMT)
+Received: from smtpav04.fra02v.mail.ibm.com (smtpav04.fra02v.mail.ibm.com [10.20.54.103])
+	by smtprelay02.fra02v.mail.ibm.com (8.14.9/8.14.9/NCO v10.0) with ESMTP id 65M6pDsA27656676
+	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
+	Mon, 22 Jun 2026 06:51:13 GMT
+Received: from smtpav04.fra02v.mail.ibm.com (unknown [127.0.0.1])
+	by IMSVA (Postfix) with ESMTP id F0B7720040;
+	Mon, 22 Jun 2026 06:51:12 +0000 (GMT)
+Received: from smtpav04.fra02v.mail.ibm.com (unknown [127.0.0.1])
+	by IMSVA (Postfix) with ESMTP id B191720043;
+	Mon, 22 Jun 2026 06:51:12 +0000 (GMT)
+Received: from li-008a6a4c-3549-11b2-a85c-c5cc2836eea2.ibm.com (unknown [9.111.88.62])
+	by smtpav04.fra02v.mail.ibm.com (Postfix) with ESMTPS;
+	Mon, 22 Jun 2026 06:51:12 +0000 (GMT)
+Date: Mon, 22 Jun 2026 08:51:11 +0200
+From: Alexander Gordeev <agordeev@linux.ibm.com>
+To: sashiko-reviews@lists.linux.dev
+Cc: Vasily Gorbik <gor@linux.ibm.com>, Heiko Carstens <hca@linux.ibm.com>,
+        linux-s390@vger.kernel.org
+Subject: Re: [PATCH -next v4 2/4] s390/mm: Batch PTE updates in lazy MMU mode
+Message-ID: <6c4e313a-d4da-485e-b264-47a56f6b35b8-agordeev@linux.ibm.com>
+References: <cover.1781789772.git.agordeev@linux.ibm.com>
+ <e50680152fc7d99215d53758fab4b87280d25c20.1781789772.git.agordeev@linux.ibm.com>
+ <20260618151048.063661F000E9@smtp.kernel.org>
 Precedence: bulk
 X-Mailing-List: sashiko-reviews@lists.linux.dev
 List-Id: <sashiko-reviews.lists.linux.dev>
 List-Subscribe: <mailto:sashiko-reviews+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:sashiko-reviews+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-X-MS-PublicTrafficType: Email
-X-MS-TrafficTypeDiagnostic: KL1PR03MB7149:EE_|SE1PPF73DA7E6F9:EE_
-X-MS-Office365-Filtering-Correlation-Id: 485f5dc8-4a66-4b77-85ff-08ded0264ae0
-X-MS-Exchange-SenderADCheck: 1
-X-MS-Exchange-AntiSpam-Relay: 0
-X-Microsoft-Antispam:
-	BCL:0;ARA:13230040|23010399003|1800799024|376014|366016|22082099003|56012099006|5023799004|11063799006|4143699003|18002099003;
-X-Microsoft-Antispam-Message-Info:
-	luGxcplGPWdpEWWCUZgVBas4aE7DWju2D2jXeASRLlvYDstrF+FON3WIwTNvNzhL3AuaA/x4qNDq4LNsxd9JFnSmegGm4QpuvJxr/WkLiKLLEH2SdeHpqH5ZQvmoGGrgFL5rRBoI+sTgWKSuu99v4PRTDNNMh187Mb0w66jyaBn9jq6GVLk6WbmP3Bq5Adhzcjb1C9EWI/NjlLX/3qPPkLifIeZwXdoeQ8PrY1ju1puM33LUGZvPwhLFNwABs2ZUOh2UZKikSA4eRs3HEpCge/N16QNNFkLRKALeYJbTVIjGyx4bI7cEiWb9Uk4A7QWydm6rdyyYoGjieK1qCvhPcM5I7ZL6tnOvH5c0Hislyke73O5h8rajQVL15McqcLQZJzZT+WWHMznhCDNjZj4jiGf64z38XkXcn3R5E+OIEVTzEL3X1u4zkdzjKTpv2G1UjLE9jpIu0MU8QtWZ5oy9gaX2cLe13bF4zqO2pJdRCVpMX9Y7UPPHUnBrMI7CU4+CJpV6t344nzKhOpev03a06aFgbftkxtnkfSAWFuGqIhqC1x9wxNNg4/M/QICddlenBMSAiWc1razpAGxm6cWEITV2ZphABp2bfzuTPQieEBjtnL+gzUqdkuHZ7pLRYGqfLvQJijO7E1redmQ4dS/REd30rIviCh4QP/NVHuWKqWY=
-X-Forefront-Antispam-Report:
-	CIP:255.255.255.255;CTRY:;LANG:en;SCL:1;SRV:;IPV:NLI;SFV:NSPM;H:KL1PR03MB7149.apcprd03.prod.outlook.com;PTR:;CAT:NONE;SFS:(13230040)(23010399003)(1800799024)(376014)(366016)(22082099003)(56012099006)(5023799004)(11063799006)(4143699003)(18002099003);DIR:OUT;SFP:1102;
-X-MS-Exchange-AntiSpam-MessageData-ChunkCount: 1
-X-MS-Exchange-AntiSpam-MessageData-0:
-	=?utf-8?B?NmFucXp4Y1BkK3JLWFhVOEtpZWR1RW9XZVlzTHgvbGpKTE0zY3NWS1dvbEVW?=
- =?utf-8?B?WWlzZVhGK1ZNSUxFb1J5azg1QlFZMmlCa1FzTkJscll0YlJyMmpaSTA5Rmg4?=
- =?utf-8?B?WDFHdmFHVnlWRmQvdDhtTkpNamlCYU44b2ppdzNFQ1B6NDNXL3N5aEQzdTBk?=
- =?utf-8?B?NEFTL0ltYWNxZGdXU044QTVDbmRJNWxmeXdLSUY5V214aFBnbXFGOHBaZWxt?=
- =?utf-8?B?Z3VoUmVtRHhISlVyWEQrd3g4S05nRWtJbllkSThRYzdQY3ROcWxsbVprdTBs?=
- =?utf-8?B?cVhLUUhhWEhZeGxFL0ZVSzlLWHRyWFBteVBVd2ZGUTN5QXNKYjVEN2RvVzdV?=
- =?utf-8?B?Nkozc1o3NTBqRDNLWUIvQ0pIcENFcFkwR1pQWnd0KzdNUWh3WFVoV09HbmpL?=
- =?utf-8?B?L1FxNmorc1dxdEFXQkttTkpNMlVkTWhZNlF5NDhhcndzMk5VVkFmT1FUNzVY?=
- =?utf-8?B?SE13alYzczU1NVkyNTU4dk03dStsaVpjMHN0VHFPdWJ1bXQ2bllXOGJFb1ZM?=
- =?utf-8?B?aElJcUh1KzY3L1cvRlFsUEQ2aTdRQlFNZUg0STAyYWNZOVJMYy9NenE5MjJ0?=
- =?utf-8?B?SWJDTjgzeE9PUjg5TEVVRDdCT3ViL2p6SnB3a1FJN2NLUUlFQW5xMmVJYkpy?=
- =?utf-8?B?YzZhZS9selBwb3d2V3k3ZDdVQnBRdTMxcXpVTjFXcFRkQ2lCTXZvMEhhcktC?=
- =?utf-8?B?RHM0MHl2Z0pBMzgwOTV4c1pZcVdKSk02UmFtTEtIckNhc1RRc2pCenFpMkc0?=
- =?utf-8?B?TnVxbmVCUXp3SHlUZzNSWFlHcWRjelVJNEszdldjK01vMGo1c1JyMEdmOGNI?=
- =?utf-8?B?L2w5SzhBSnVENUxqOWsvUnpsYWFxVVB2UTlBQVQ0MDhYcFVYWGpEY3VEQkxW?=
- =?utf-8?B?YUlnd1JneFVkVGs3Z29saytKckJvV3FMYklZbGo5TG82TFR4aHNzajUvT3pj?=
- =?utf-8?B?ZS94WHQxZDJMVWNraGgyY0JpMW9td3FOUUg2dXJnc1QwaXB5aGlFY0JpZXVx?=
- =?utf-8?B?RDgwODBrWFE2OVZqOTNwcnRrZjFtblN3b082bFFqNzlHRWVsa2lnaDZwUFk2?=
- =?utf-8?B?OXpNWmk1eXQ0REFwaWhPeGplNHpvN2tjekhuMWZlam5Ba1BFMUNvOElCdzVF?=
- =?utf-8?B?a2l1MWpwSUdzZHM0YmRMVlFFTzUrL0kwOGx0Y3JTME5kVk5YeGg5VXhweURM?=
- =?utf-8?B?WEJscm1wVUs1T3NEUTRpOEplM21RYmIrdCthZ3FOdVE2VnBxRklaTkpMNjJN?=
- =?utf-8?B?MXJndHJTNzRGZVpJS2R2alBIWmd4S3VsRVRqZll4SkMrT0JtY1dpTlA2TndB?=
- =?utf-8?B?NDRHNTZXUHMxaGE5R1EyY1JqcDZ3UzJkZXVkd1RsVitJYnFKdHBwWGl0ZkZW?=
- =?utf-8?B?TG5sM0hoWU40eTdpeVF3S05NaGN6dE5GYW5zb0RLYXo4ckc1aEZCc29UWWZs?=
- =?utf-8?B?c1FabUZQNHRCOENKNEFGY2pTL1diVkRVTktpeTdyTjNYRGpyekNzWjY0WmJR?=
- =?utf-8?B?Zkk0ZlhIYm1PNEkyQWQxQ2dZQnVWUmRsQms3WXlvbzMzMzRHT2V0RE1RcUxu?=
- =?utf-8?B?L0x6SmUwNXhnTTZsdkVvTkV4TzFoMTNQRWNxN05ZQUFTWXZmZnk4WHZYclFp?=
- =?utf-8?B?SkFWRnBHWUhraEtwQVEzZ3NTeG5GN1Z1TktxS0Jkall6MmdDcHFkYmVqQ2dG?=
- =?utf-8?B?Mkc2ZmJid2VSNng2RGtaQ3R0RUNNVWthazF0RU9EbmxmcWlncDlSYUdna2dV?=
- =?utf-8?B?RnRIYk1ham1PSHFrMk4wa2xHOFBZdWJOcmpHZ2JJelo3TktPOEx4cG56UkRT?=
- =?utf-8?B?SWVpT2JXZ1NjbDN2WTBqN0wvOXFaUStHaTBpS1BWY3o4eU50ZGZKVE9XclNX?=
- =?utf-8?B?L2dhVmZySzhtWCtIZnlxSWd2RVYwUlU2UU8xWEtpMXNkUE1TQnlqams5RXBm?=
- =?utf-8?B?UEQwckRVNGdnUUwyTnRlOFZZZUpkYmVDaVNaZHlPa1dPR3k5YXYrQjVJaE14?=
- =?utf-8?B?MVZNSXlhbSszNm9qTnRXWnhQTHN3bGVaY0wzUDBtRlBqbEV5dk4wNEtZQXpt?=
- =?utf-8?B?dDJaWkxHSWxnNHVVK201cVgrQ25KQWkvRHkwQ0Z0VnFDcDZyTXJ2cjFHYUNY?=
- =?utf-8?B?cDRjbDhBVHRNSnN1aFEzeXUxRS9xdHloOW83THhvUHhIVHdRY0t2NUtqcW5Q?=
- =?utf-8?B?YVN5aS9mRmlTN3JHTmpLdmNhZHhDZEdSQTBPNHFOMmZJa0RmVnZXOW9mT2JF?=
- =?utf-8?B?RGc2Z2pNTys2SlZHaU9MSlphdkZiS3ZEdHRuVjF1S0poOW1yRjdORGUrc3l5?=
- =?utf-8?B?czlsMTFXVWUrdlJXVC9pNDVuYWZ0SldpWXZCeHNhNEZWZ1F6OHJiUT09?=
-X-OriginatorOrg: amlogic.com
-X-MS-Exchange-CrossTenant-Network-Message-Id: 485f5dc8-4a66-4b77-85ff-08ded0264ae0
-X-MS-Exchange-CrossTenant-AuthSource: KL1PR03MB7149.apcprd03.prod.outlook.com
-X-MS-Exchange-CrossTenant-AuthAs: Internal
-X-MS-Exchange-CrossTenant-OriginalArrivalTime: 22 Jun 2026 06:20:01.8139
- (UTC)
-X-MS-Exchange-CrossTenant-FromEntityHeader: Hosted
-X-MS-Exchange-CrossTenant-Id: 0df2add9-25ca-4b3a-acb4-c99ddf0b1114
-X-MS-Exchange-CrossTenant-MailboxType: HOSTED
-X-MS-Exchange-CrossTenant-UserPrincipalName: pTh9vaqBbpdjQ0mXggKIwNkCjTNC2yzaoyl4ikyMqP/lvEvrcyr5W27Pcz0WGROBW5NTo8CAlMEEwu1hX2X1ag==
-X-MS-Exchange-Transport-CrossTenantHeadersStamped: SE1PPF73DA7E6F9
+Content-Type: text/plain; charset=iso-8859-1
+Content-Disposition: inline
+Content-Transfer-Encoding: 8bit
+In-Reply-To: <20260618151048.063661F000E9@smtp.kernel.org>
+X-TM-AS-GCONF: 00
+X-Authority-Analysis: v=2.4 cv=I4VVgtgg c=1 sm=1 tr=0 ts=6a38db66 cx=c_pps
+ a=5BHTudwdYE3Te8bg5FgnPg==:117 a=5BHTudwdYE3Te8bg5FgnPg==:17
+ a=8nJEP1OIZ-IA:10 a=FelO9ux0wxsA:10 a=VkNPw1HP01LnGYTKEx00:22
+ a=RnoormkPH1_aCDwRdu11:22 a=uAbxVGIbfxUO_5tXvNgY:22 a=c92rfblmAAAA:8
+ a=VnNF1IyMAAAA:8 a=VwQbUJbxAAAA:8 a=dQFjYt8AhRNDjyuOKYEA:9 a=3ZKOabzyN94A:10
+ a=wPNLvfGTeEIA:10 a=GvGzcOZaWPEFPQC_NcjD:22
+X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwNjIyMDA2NSBTYWx0ZWRfX+CvEtxWwx19S
+ rTgOk5aF13Lisgj+TPdFBnR9tVexcQXmzKSm4z/mM1mQC3xP1adfSHQoU+5n/DSh8Bw28naenBH
+ c14D8UHBLXenVpNxidwN/EoL1HfmBmerETuWD1YZGIykbS9UhyyGgVTxOEC9y0M8BZBwNQNev0p
+ oaWVTNcZRdV1obgzfsBE3o69omAjP7q2RTFnW8jtH0M2h65uqBSYGQ6KnQgZnSpAhnwcLdYUkwI
+ m8l1Z8xW8Xc9jcKUIhsaIwBdufYbPnaSrGq3lRv6kKbU33+ae1txxZerQOoJa3oSRRR97MK8BgZ
+ IO3Ov3uJe3/WCK3eaXVF57aaf8SbhylQVWWIwLOaByt6SJL+HLUd7tiFzXyi1hD5CNU8k0s1gZX
+ 72t3nwmUio6Y62zk7yULGHHD4Yo2KvPE6tg1FJy89hn8UIwKeg7bgllybM8ugbnGbW44/Tc++k+
+ GmiNsTzsg1Eg/KkttbQ==
+X-Proofpoint-GUID: 7_rVYTzKrFWI7mbEBaHed7oPAhOBHwuk
+X-Proofpoint-ORIG-GUID: 7_rVYTzKrFWI7mbEBaHed7oPAhOBHwuk
+X-Proofpoint-Spam-Info: AW1haW4tMjYwNjIyMDA2NSBTYWx0ZWRfXzhoml7KU4oho
+ IL6kGszrqBDfk5JtqFS0CH9tUO15fgMSWZs1p7ZQAO99EiX+c4kWdaR1GorIHK/5jPN4xjmivcH
+ XlDp0y4nG7sT3OtbHyPN+Rt4PISGfZk=
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.293,Aquarius:18.0.1143,Hydra:6.1.125,FMLib:17.12.100.49
+ definitions=2026-06-22_01,2026-06-18_03,2025-10-01_01
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
+ lowpriorityscore=0 malwarescore=0 clxscore=1011 impostorscore=0
+ suspectscore=0 phishscore=0 bulkscore=0 spamscore=0 priorityscore=1501
+ adultscore=0 classifier=typeunknown authscore=0 authtc= authcc=
+ route=outbound adjust=0 reason=mlx scancount=1 engine=8.22.0-2606150000
+ definitions=main-2606220065
 
-Hi Jerome,
-
-
-Thanks for your review.
-
-On 6/19/2026 3:34 PM, Jerome Brunet wrote:
-> [ EXTERNAL EMAIL ]
->
-> On jeu. 18 juin 2026 at 10:03, sashiko-bot@kernel.org wrote:
->
->> Thank you for your contribution! Sashiko AI review found 3 potential issue(s) to consider:
->> - [Medium] The AO PWM clocks are registered without an `ao_` or `a9_ao_`
->> prefix, which will cause global namespace collisions with the main clock
->> controller.
->> - [Low] Typographical error in the clock name string literal for the RTC
->> dualdiv input gate: `ao_rtc_duandiv_in` instead of `ao_rtc_dualdiv_in`.
->> - [Low] Missing `#include <linux/module.h>` for `MODULE_*` macros.
->> --
->>
->> commit ef5998ff087b6faed09d9eed4f59078d2b2f0a60
->> Author: Jian Hu <jian.hu@amlogic.com>
->>
->> clk: amlogic: Add A9 AO clock controller driver
->>
->> Add the Always-on clock controller driver for the Amlogic A9 SoC family.
->>
->>> diff --git a/drivers/clk/meson/a9-aoclk.c b/drivers/clk/meson/a9-aoclk.c
->>> new file mode 100644
->>> index 0000000000000..88aa8cf3f5d00
->>> --- /dev/null
->>> +++ b/drivers/clk/meson/a9-aoclk.c
->>> @@ -0,0 +1,488 @@
->>> +// SPDX-License-Identifier: (GPL-2.0-only OR MIT)
->>> +/*
->>> + * Copyright (C) 2026 Amlogic, Inc. All rights reserved
->>> + */
->>> +
->>> +#include <dt-bindings/clock/amlogic,a9-aoclkc.h>
->>> +#include <linux/clk-provider.h>
->>> +#include <linux/platform_device.h>
->> [Severity: Low]
->> Should this file explicitly include <linux/module.h>?
->>
->> The file relies on several module macros at the end (such as MODULE_DESCRIPTION,
->> MODULE_AUTHOR, and MODULE_LICENSE). Although it currently compiles successfully
->> due to transitive includes from <linux/platform_device.h>, standard kernel
->> practice is to include the header explicitly.
-> Yes please fix this
-
-
-Ok, I will fix it in the next version.
-
->> [ ... ]
->>
->>> +static const struct clk_parent_data a9_ao_pwm_parents[] = {
->>> +    { .hw = &a9_ao_xtal.hw },
->>> +    { .fw_name = "fdiv5", },
->>> +    { .fw_name = "fdiv4", },
->>> +    { .fw_name = "fdiv3", }
->>> +};
->>> +
->>> +static A9_COMP_SEL(pwm_a, AO_PWM_CLK_A_CTRL, 9, 0x7, a9_ao_pwm_parents);
->> [Severity: Medium]
->> Will this cause a clock name collision with the main clock controller?
->>
->> Because the A9_COMP_SEL macro uses the #_name stringification operator inside
->> MESON_COMP_SEL, this will generate the clock name as exactly "pwm_a_sel"
->> (and similarly "pwm_a_div" and "pwm_a" for the others), without any "ao_" or
->> "a9_ao_" prefix.
-> I think AI got it wrong and missed the prefix addition. Unless I missed
-> something my self, I think you are fine here
-
-
-Thanks for confirming. That was my understanding as well,
-so I'll keep the current implementation unchanged.
-
->> If the main clock controller conventionally registers a "pwm_a" clock, failing
->> to prefix the Always-On clocks will lead to global namespace collisions in the
->> Common Clock Framework and debugfs.
->>
->>> +static A9_COMP_DIV(pwm_a, AO_PWM_CLK_A_CTRL, 0, 8);
->>> +static A9_COMP_GATE(pwm_a, AO_PWM_CLK_A_CTRL, 8);
->>> +
->>> +static A9_COMP_SEL(pwm_b, AO_PWM_CLK_B_CTRL, 9, 0x7, a9_ao_pwm_parents);
->> [ ... ]
->>
->>> +static struct clk_regmap a9_ao_rtc_dualdiv_in = {
->>> +    .data = &(struct clk_regmap_gate_data){
->>> +            .offset = AO_RTC_BY_OSCIN_CTRL0,
->>> +            .bit_idx = 31,
->>> +    },
->>> +    .hw.init = &(struct clk_init_data) {
->>> +            .name = "ao_rtc_duandiv_in",
->> [Severity: Low]
->> This isn't a bug, but there's a typo in the clock name literal. Should
->> "ao_rtc_duandiv_in" be "ao_rtc_dualdiv_in"?
-> Yes
-
-
-Ok, I will fix it in the next version.
-
->>> +            .ops = &clk_regmap_gate_ops,
->>> +            .parent_hws = (const struct clk_hw *[]) {
->>> +                    &a9_ao_xtal.hw
->>> +            },
+On Thu, Jun 18, 2026 at 03:10:47PM +0000, sashiko-bot@kernel.org wrote:
+> Thank you for your contribution! Sashiko AI review found 2 potential issue(s) to consider:
+> - [Critical] Deferred PTE updates to a per-CPU cache break synchronization with lockless page table walkers like GUP-fast, allowing them to pin pages being concurrently write-protected for COW.
+> - [High] The lazy MMU cache bypasses the `full=1` TLB flush optimization during process teardown, causing an O(N) IPTE storm.
 > --
-> Jerome
+> 
+> commit 38614c455538c6b6144011b070bbbf41513506e6
+> Author: Alexander Gordeev <agordeev@linux.ibm.com>
+> 
+> s390/mm: Batch PTE updates in lazy MMU mode
+> 
+> This commit introduces a per-CPU cache to batch PTE updates while in lazy
+> MMU mode. By caching PTE changes and applying them simultaneously with the
+> IPTE instruction's "Additional Entries" feature, it reduces overall IPTE
+> traffic.
+> 
+> > diff --git a/arch/s390/include/asm/pgtable.h b/arch/s390/include/asm/pgtable.h
+> > --- a/arch/s390/include/asm/pgtable.h
+> > +++ b/arch/s390/include/asm/pgtable.h
+> 
+> [ ... ]
+> 
+> > @@ -1259,11 +1373,13 @@ static inline pte_t ptep_get_and_clear_full(struct mm_struct *mm,
+> >  {
+> >  	pte_t res;
+> >  
+> > -	if (full) {
+> > -		res = ptep_get(ptep);
+> > -		set_pte(ptep, __pte(_PAGE_INVALID));
+> > -	} else {
+> > -		res = ptep_xchg_lazy(mm, addr, ptep, __pte(_PAGE_INVALID));
+> > +	if (!lazy_mmu_ptep_get_and_clear(addr, ptep, &res)) {
+> 
+> [Severity: High]
+> Does checking lazy_mmu_ptep_get_and_clear() before the 'full' flag bypass
+> the teardown optimization and cause an IPTE storm?
+> 
+> During process teardown, exit_mmap() and zap_pte_range() use
+> ptep_get_and_clear_full(..., full=1) to clear PTEs without issuing individual
+> TLB invalidations, deferring the flush to a global teardown at the end.
+> If lazy_mmu_mode_enable_with_ptes() is active, this intercepts the call,
+> writes _PAGE_INVALID to the cache, and bypasses the if (full) path.
+> 
+> Later, when lazy_mmu_mode_disable() flushes the cache, it calls
+> __invalidate_pte_range() in arch/s390/mm/lazy_mmu.c:
+> 
+> static void __invalidate_pte_range(...)
+> {
+> 	...
+> 	if (cpu_has_tlb_lc() && ...)
+> 		__ptep_ipte_range(addr, nr_ptes - 1, ptep, IPTE_LOCAL);
+> 	else
+> 		__ptep_ipte_range(addr, nr_ptes - 1, ptep, IPTE_GLOBAL);
+> 	...
+> }
+> 
+> This unconditionally executes batched IPTE instructions for all cached PTEs.
+> For multi-threaded processes, does this turn an O(1) TLB flush operation
+> into an O(N) global IPTE broadcast, causing a regression in system
+> performance during process termination?
+> 
+> > +		if (full) {
+> > +			res = __ptep_get(ptep);
+> > +			__set_pte(ptep, __pte(_PAGE_INVALID));
+> > +		} else {
+> > +			res = ptep_xchg_lazy(mm, addr, ptep, __pte(_PAGE_INVALID));
+> > +		}
+> >  	}
+> >  	page_table_check_pte_clear(mm, addr, res);
+> 
+> [ ... ]
+> 
+> > @@ -1289,10 +1405,15 @@ static inline pte_t ptep_get_and_clear_full(struct mm_struct *mm,
+> >  static inline void ptep_set_wrprotect(struct mm_struct *mm,
+> >  				      unsigned long addr, pte_t *ptep)
+> >  {
+> > -	pte_t pte = ptep_get(ptep);
+> > +	pte_t pte;
+> >  
+> > -	if (pte_write(pte))
+> > -		ptep_xchg_lazy(mm, addr, ptep, pte_wrprotect(pte));
+> > +	if (!lazy_mmu_ptep_set_wrprotect(addr, ptep)) {
+> 
+> [Severity: Critical]
+> Can intercepting the write-protect operation here break synchronization with
+> lockless page table walkers like GUP-fast?
+> 
+> During fork(), copy_pte_range() calls lazy_mmu_mode_enable_with_ptes().
+> When copy_present_pte() attempts to write-protect the parent's PTE by
+> calling ptep_set_wrprotect(), the lazy MMU mode intercepts the call via
+> __lazy_mmu_ptep_set_wrprotect() in arch/s390/mm/lazy_mmu.c:
+> 
+> bool __lazy_mmu_ptep_set_wrprotect(...)
+> {
+> 	...
+> 	pte = __ipte_range_ptep_get(range, ptep);
+> 	if (pte_write(pte)) {
+> 		pte = pte_wrprotect(pte);
+> 		__ipte_range_set_pte(range, ptep, pte);
+> 	}
+> 	return true;
+> }
+> 
+> This updates the per-CPU cache but leaves the physical PTE completely valid
+> and writable until the cache is flushed at the end of the PMD range. Because
+> GUP-fast operates locklessly, a concurrent thread in the parent process can
+> read the physical PTE, observe that it is still writable, and successfully
+> take a FOLL_WRITE pin on the page.
+> 
+> Meanwhile, fork() proceeds, sees no pins, and shares the page with the
+> child. Does this create a regression where the parent retains a writable
+> GUP pin to a page shared with the child, allowing writes to corrupt the
+> child's memory and break COW isolation?
 
+If this problem existed, it would be a generic problem for all architectures
+that exercise the lazy mmu mode, not just for this implementation. Yet, the
+described scenario is avoided by using mm_struct::write_protect_seq.
 
---
+mm/memory.c::copy_page_range()
 
-Jian
+	if (is_cow) {
+		...
+		raw_write_seqcount_begin(&src_mm->write_protect_seq);
+	}
+	...
+	/* copy the range */
+	...
+	if (is_cow) {
+		raw_write_seqcount_end(&src_mm->write_protect_seq);
+		...
+	}
 
+mm/gup.c::gup_fast()
+
+	if (gup_flags & FOLL_PIN) {
+		if (!raw_seqcount_try_begin(&current->mm->write_protect_seq, seq))
+			return 0;
+	}
+	...
+	local_irq_save(flags);
+	gup_fast_pgd_range(start, end, gup_flags, pages, &nr_pinned);
+	local_irq_restore(flags);
+
+	/*
+	 * When pinning pages for DMA there could be a concurrent write protect 
+	 * from fork() via copy_page_range(), in this case always fail GUP-fast.
+	 */
+	if (gup_flags & FOLL_PIN) {
+		if (read_seqcount_retry(&current->mm->write_protect_seq, seq)) {
+			gup_fast_unpin_user_pages(pages, nr_pinned);
+			return 0;
+		} else {
+		...
+	}
+
+Thus, the suggested flaw is a false positive.
+
+> > +		pte = __ptep_get(ptep);
+> > +		if (pte_write(pte)) {
+> > +			pte = pte_wrprotect(pte);
+> > +			ptep_xchg_lazy(mm, addr, ptep, pte);
+> > +		}
+> > +	}
+> >  }
+> 
+> -- 
+> Sashiko AI review · https://sashiko.dev/#/patchset/cover.1781789772.git.agordeev@linux.ibm.com?part=2
+
+Thanks!
