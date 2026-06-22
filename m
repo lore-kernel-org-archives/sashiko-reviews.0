@@ -1,119 +1,115 @@
-Received: from mail-ed1-f73.google.com (mail-ed1-f73.google.com [209.85.208.73])
+Received: from mail-yx1-f51.google.com (mail-yx1-f51.google.com [74.125.224.51])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 101481FA859
-	for <sashiko-reviews@lists.linux.dev>; Mon, 22 Jun 2026 19:04:54 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.208.73
-ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1782155096; cv=none; b=Sb3wLV+ooav1gV5CKexb/60djO1EIyn4eCIzXIk3ziZzJvF/EqML2exA1wIAFAH8oudpWtiisfZsOPtWoYBlSIYMH9eXXurzfpQn7joV3OtqAz8eYUCYx1MevaDSzGPx7Mi9aNm1D2UrWGcic72TFJop1hVz64rKG4pT2ST/H5I=
-ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1782155096; c=relaxed/simple;
-	bh=ShHbZ1ZNW78ZoUWEkTBJ9s2OyXd5OTwbufXBnfys6KY=;
-	h=Date:In-Reply-To:Mime-Version:References:Message-ID:Subject:From:
-	 To:Cc:Content-Type; b=lKJZV4dpyXtf1Dw7NlktHY2viW3SuylRUVcd6eDyZXNQjx9V0MLV+PF8+waMo18VJGlPr5OFbTw6srtgiu5GxEfVPv9w0MENgdO6DEF74rLWMRMCcOLJNH1QCLC8vXZkWNgY6oYAYwEVVoVfJMcFGwhBpmBkyNETrJYSD20T5Jw=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=google.com; spf=pass smtp.mailfrom=flex--tarunsahu.bounces.google.com; dkim=pass (2048-bit key) header.d=google.com header.i=@google.com header.b=WV+yczGv; arc=none smtp.client-ip=209.85.208.73
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9AF8437B014
+	for <sashiko-reviews@lists.linux.dev>; Mon, 22 Jun 2026 22:10:47 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=pass smtp.client-ip=74.125.224.51
+ARC-Seal:i=2; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
+	t=1782166248; cv=pass; b=QRFq4ekrnkChQotakCw+mSKjtiKEOG0EGLHax/Ac7MAyJKqA3kHowTv+fBdzYxydey7khsPl6zj7mL+Ge9AdyibMH2cVb78wKJYdkfBpZnCNcXibLrTF4g02V2kfSCTGup5lPfJXEbn6gI4sXFna0LvXWrCJaefVQWnVfHMnGUU=
+ARC-Message-Signature:i=2; a=rsa-sha256; d=subspace.kernel.org;
+	s=arc-20240116; t=1782166248; c=relaxed/simple;
+	bh=QqrWApQo7VCDxjiHXQ3hjKNrBnjqHPx3tgxEKUSRHZs=;
+	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
+	 To:Cc:Content-Type; b=XWSDyCBYUTTDKXE6LufNEnw5E8yU+Qh93iKMFFe65Pp8+2sXu6Sabehpm5JNeDM9Q4LRzgUI3g77dpnc0+nuEovmdYkouDJwgcyI2hzeweByreRlW0JZMRX8shgwWb5V11tAOQdQRkHxmIWKaU6Ho5thqCpfKdbxn6OrmjH1b0c=
+ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=google.com; spf=pass smtp.mailfrom=google.com; dkim=pass (2048-bit key) header.d=google.com header.i=@google.com header.b=uPLDKDCp; arc=pass smtp.client-ip=74.125.224.51
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=google.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=flex--tarunsahu.bounces.google.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=google.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=google.com header.i=@google.com header.b="WV+yczGv"
-Received: by mail-ed1-f73.google.com with SMTP id 4fb4d7f45d1cf-6974edf4c84so3513057a12.3
-        for <sashiko-reviews@lists.linux.dev>; Mon, 22 Jun 2026 12:04:54 -0700 (PDT)
+	dkim=pass (2048-bit key) header.d=google.com header.i=@google.com header.b="uPLDKDCp"
+Received: by mail-yx1-f51.google.com with SMTP id 956f58d0204a3-662b95934dcso5145581d50.3
+        for <sashiko-reviews@lists.linux.dev>; Mon, 22 Jun 2026 15:10:47 -0700 (PDT)
+ARC-Seal: i=1; a=rsa-sha256; t=1782166246; cv=none;
+        d=google.com; s=arc-20240605;
+        b=OOo0A3DjrxAD/A+aW/HKmqzsjCSKmKI52sO0hu+D7kIJBecDuHV+itSDLlJishlHL9
+         ve7b5lyh4uYaPN4LgJdB3Rog1CJywWJAbwitwHH37tLCpS9pG6uFnKD9Vg5VUJUA2yoX
+         zD+FhVJiKhKQF8zk/NGNtszmI2xIlu3xUWKJ/D10xhb8K/CrwjOdsEfxaECCbahX6z5h
+         5xn4xv6m7qFpwwSHhlmdwez6MQ6mRdn5ZtpWdrf13PfPxnKzpFXfKMIcm8nW+EUKmVTb
+         aAXt8ofw8NJz6wdSAnXrmqxXt6RdT+g6diIz9IRytA3WVb91Z6jEPbOSz/8mA+hUch9m
+         uY8Q==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com; s=arc-20240605;
+        h=cc:to:subject:message-id:date:from:in-reply-to:references
+         :mime-version:dkim-signature;
+        bh=QqrWApQo7VCDxjiHXQ3hjKNrBnjqHPx3tgxEKUSRHZs=;
+        fh=uA360uvxR9S0K/Y4Lovo7aIaGlBwzVBnnb2BKWupr/4=;
+        b=ArG8vJrkDABWEu2zcqzPMcx556sni71fKb0PHBdKsMkcjRpK1e01LhTPP4S5Vo2Lqd
+         4ohC8haj1/46Xlht/lZycYhS2odSher7suKDwG8YCaNo4QN4X7jywcPkVgTf2Xn6tceV
+         taZ0ILRQB0FtGYLLERyq9myk/0GFahIVuflUDQ1kkLp8nKvBXP/hfoXZTydcl9owCCJQ
+         tHSbA0wdZoCGA8C/djbQbWwmwCSiWQcsxXWZ+TAHGFqUIbm06AEbnobt6mX2VrmthAvm
+         sua07STVMpFuXMUM1aQoxl216UsVjKFdDNCvYSKn7JYUiHsNJifxK2ieoueoxC/TVYuO
+         e6YA==;
+        darn=lists.linux.dev
+ARC-Authentication-Results: i=1; mx.google.com; arc=none
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=google.com; s=20251104; t=1782155093; x=1782759893; darn=lists.linux.dev;
-        h=content-transfer-encoding:cc:to:from:subject:message-id:references
-         :mime-version:in-reply-to:date:from:to:cc:subject:date:message-id
-         :reply-to;
-        bh=F3VJ0UZP+KwFN7MAAYe9I9DBthlkqlN1IgSIedgq86o=;
-        b=WV+yczGvGNZwZqn0AxJwMdnotDfLfI2hLrzAHTUq8twx1Cfw/nbic8yFJq/Zi0MUGw
-         2QXyqRY5+yhL1F/6RiQJbqJWfv5iWulYVTYKHFjZf4NukQMJnmavKvBunbJDczlOtmMV
-         twix/D8CaEmFAfNdcJxqqQ7UVmyAYt76zSrbc9bXyrvQxAo6HKmOS7hgmZjkCv2cL6Lj
-         KFudjJEfW/ChveNklmx5C7gTlfMGm1IQ2XSZce409RcYk+vzq7S9yQ3KrCATiQYFC+6U
-         hTKtGkqRx/TIZO5srnvmi1hYgKMSFGa6a2f06Y/R2WywHn357my2ewH98qZwDEAure9T
-         aVVg==
+        d=google.com; s=20251104; t=1782166246; x=1782771046; darn=lists.linux.dev;
+        h=cc:to:subject:message-id:date:from:in-reply-to:references
+         :mime-version:from:to:cc:subject:date:message-id:reply-to;
+        bh=QqrWApQo7VCDxjiHXQ3hjKNrBnjqHPx3tgxEKUSRHZs=;
+        b=uPLDKDCprxq1HQHfRHa0JhirNKyc9y9bP8IsisjvtzejTY6ll4rZPIP9NFe/XOmYuI
+         F1tCq+aNFtbPMKOqwkGBPGrUpnWoSvNav0Cb5LS8xaj51mz3IZWWfV8bXZ1tJu7UOwGf
+         RttyQftFEApuOMq4cJw6Dlcztrb37OO4M59hdJeOdz0X1DTijcHasLXFKkufryWxRBTg
+         sOF4Af7u9tOgOGAsa1Ee/A/OkogaFwv8RYe1HJP1B3SGEnhXyyqWo6iqEnJ96NzBs8F7
+         YzxCFOPKW0E2ZqWxU8GgQ35o8maJC5hphJoVt2W6EyiEsXtHWpt793p9GH6S+EDTwGIv
+         YIfg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20251104; t=1782155093; x=1782759893;
-        h=content-transfer-encoding:cc:to:from:subject:message-id:references
-         :mime-version:in-reply-to:date:x-gm-message-state:from:to:cc:subject
-         :date:message-id:reply-to;
-        bh=F3VJ0UZP+KwFN7MAAYe9I9DBthlkqlN1IgSIedgq86o=;
-        b=Mhj6/nrtd414v3ll7HxyjsqYiTXBeEEbpg2iShBLyQF4JrY1RaCp1tbZjP/DmJR8Ug
-         /AWkqUw+NxP9vaGIgsPMI0fxungF0F7jp+eUT1iadbUTeJJaoA0LBfLJFmz9G8q+XCsG
-         O+YqOWsQox5qIoiaNiiKoDORZxGFeEd7BaVkpPX2QY61wfpx5JN85SIv840twpZLD/G4
-         l1vn9jRMwU+r7kraVbfhX7INXykYrvT0ONIYyp5BRBhlBYDgrns1yhhdd3XTe6W62UNo
-         QqUvu+RRmjXE5G2gmIF1vkp9gTv7/iJbfOXnRyq/eNElI5H8gFKTsAb1RfKBszJke0NL
-         +9BA==
-X-Gm-Message-State: AOJu0YzNfsWFGTT/7XU9k6VJ9bAxnilIpN/XvFg1VBPmZFoSiSz1lyW0
-	Qn+3CtWJfeWCsm+D18VeHiI/OHpB7qE/0pcukuU3KDBNK3gmCKR6ySzTzaUfTfQqXgxMh4sItbY
-	Q7waw4GJ5XrYHOATRnOCJBHuIuEeN7kb761a4zng0HgL3f6ZEknk6Wwn9HYGBhNsWsLxs0pwIzP
-	smcDTR5I6j1rkslHbuz5ubV30sufFju9dEF9NjzQwLaBzFbisf0Oc02wQLLl8h6XW9
-X-Received: from edfg21-n1.prod.google.com ([2002:a05:6402:a255:10b0:697:908e:d35d])
- (user=tarunsahu job=prod-delivery.src-stubby-dispatcher) by
- 2002:a05:6402:524b:b0:696:565:a9e7 with SMTP id 4fb4d7f45d1cf-696edc6cf37mr7551305a12.9.1782155093205;
- Mon, 22 Jun 2026 12:04:53 -0700 (PDT)
-Date: Mon, 22 Jun 2026 19:04:52 +0000
-In-Reply-To: <20260622185427.2365D1F000E9@smtp.kernel.org>
+        d=1e100.net; s=20251104; t=1782166246; x=1782771046;
+        h=cc:to:subject:message-id:date:from:in-reply-to:references
+         :mime-version:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=QqrWApQo7VCDxjiHXQ3hjKNrBnjqHPx3tgxEKUSRHZs=;
+        b=tYLbAm0U6ojGx/5mL3CnDowGZd9Q8ZVGxhvSHde6EGrGFCwIQsbebQyz08cfyPYESO
+         RrTgVFt2pBeF32FZaX90VuQYpIRs+eDGtnE6bVZ+60CqqXBWETurzwhW35jJjZCabmAb
+         YPqfvr5G1g56MqWjUUsbR5LIFMFnf28pLRcLTueUCMkKvJTFNb0q7Sky1yxTPOFxBVXk
+         af50tBz+dJmZzMB9GCxkk4NY9PRBW9qUXHDYVBW98+5kwW++cIi1hrQw6EIvcedzVBgC
+         2qXCbEzZdc/oa/XJkn37W9TmP1uC4nuGggOmUhfIrebs9dhw/bdkuTdjbrnE2VtM2tXM
+         92VQ==
+X-Gm-Message-State: AOJu0YxLeXcBkyOU9JlUaMKmScFSU4MNpSMdswqAvbe+cQMt5wf+4A/b
+	wjA7q+5eTwMzphZgetclw/7A3omxNzw/FAvs156hFz3hUROEBNMMHNf1/livNxjRO9MRtWbSeBp
+	0oPBBrDrNSJdYsKR6/RG7y0fejO7thTXhgISXOQwJndjDy6nxgxKIMC6CYJuhCA==
+X-Gm-Gg: AfdE7clyUtRlikBkSUoPwwccT3hhxRH7rE4T8P1AeEmb87fvzgOSCZkzghQotbnS0/6
+	zvk95tp53MfKFNdYHE+r54nnRmytU3Qpu8jzNbUe3Z8knCuuAVz3PSZhBWtWirBudiaaVSkm4Jt
+	UqLAp4BbRhfE9TcGzsrigPagxIdp4IZ2I6DlvkAIkZcsYYsIbsRwGkUJTnMJQFMoM7qOJt50KBX
+	lozJChb/nfMIis2i4R6QpfqQzpzUglqNqQ52ZNwxaMll0QVwCEwfdgWdDbdUoUCybzEu+As5vlU
+	txC8CS6i
+X-Received: by 2002:a05:690e:190b:b0:660:4369:8cb1 with SMTP id
+ 956f58d0204a3-66359ebca4emr351633d50.24.1782166245989; Mon, 22 Jun 2026
+ 15:10:45 -0700 (PDT)
 Precedence: bulk
 X-Mailing-List: sashiko-reviews@lists.linux.dev
 List-Id: <sashiko-reviews.lists.linux.dev>
 List-Subscribe: <mailto:sashiko-reviews+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:sashiko-reviews+unsubscribe@lists.linux.dev>
-Mime-Version: 1.0
-References: <20260622184851.2309827-1-tarunsahu@google.com>
- <20260622184851.2309827-8-tarunsahu@google.com> <20260622185427.2365D1F000E9@smtp.kernel.org>
-Message-ID: <9huzo6h2qtuz.fsf@tarunix.c.googlers.com>
-Subject: Re: [PATCH v3 7/9] docs: add documentation for guest_memfd
- preservation via LUO
-From: tarunsahu@google.com
+MIME-Version: 1.0
+References: <20260622-bpf-lskel-fixes-v1-1-7c09a1585ba4@google.com> <20260622211734.EC3831F000E9@smtp.kernel.org>
+In-Reply-To: <20260622211734.EC3831F000E9@smtp.kernel.org>
+From: Sid Nayyar <sidnayyar@google.com>
+Date: Mon, 22 Jun 2026 23:10:34 +0100
+X-Gm-Features: AVVi8CfOEhcUrrhYZvwlyH5EtaTPbHavELWd43PARr_UqLG6dqs-v5jbd-vm4_E
+Message-ID: <CA+OvW8atZ63+=Rgsoaaufj3DUEsPKGUJ9gYURVkNa9UReyuxZg@mail.gmail.com>
+Subject: Re: [PATCH] libbpf: fix weak kfunc name suffix resolution for light skeletons
 To: sashiko-reviews@lists.linux.dev
-Cc: kvm@vger.kernel.org, kexec@lists.infradead.org, 
-	Pasha Tatashin <pasha.tatashin@soleen.com>, seanjc@google.com, 
-	Mike Rapoport <rppt@kernel.org>, Pratyush Yadav <pratyush@kernel.org>, mark.rutland@arm.com, 
-	ackerleytng@google.com, Paolo Bonzini <pbonzini@redhat.com>, 
-	Alexander Graf <graf@amazon.com>
-Content-Type: text/plain; charset="utf-8"
-Content-Transfer-Encoding: quoted-printable
+Cc: bpf@vger.kernel.org
+Content-Type: text/plain; charset="UTF-8"
 
-sashiko-bot@kernel.org writes:
-
+> [Severity: High]
+> By resolving weak kfuncs to their essential names instead of their suffixed
+> names here in RELO_EXTERN_CALL and RELO_EXTERN_LD64 above, does this break
+> backward compatibility fallbacks in light skeletons?
 >
->> diff --git a/virt/kvm/guest_memfd_luo.c b/virt/kvm/guest_memfd_luo.c
->> index c242b1d14c0ac..8411fe86dc2a1 100644
->> --- a/virt/kvm/guest_memfd_luo.c
->> +++ b/virt/kvm/guest_memfd_luo.c
->> @@ -119,11 +119,11 @@ static bool kvm_gmem_luo_can_preserve(struct liveu=
-pdate_file_handler *handler, s
->>  	/*
->>  	 * Only Fully-shared guest_memfd preservation is supported
->>  	 */
->> -	if (GMEM_I(inode)->flags & GUEST_MEMFD_FLAG_INIT_SHARED)
->> +	if (!(GMEM_I(inode)->flags & GUEST_MEMFD_FLAG_INIT_SHARED))
->>  		return 0;
+> If a BPF program uses bpf_ksym_exists() to fall back to an older prototype
+> (e.g., calling func___v1 which takes 1 argument) but the kernel provides a
+> newer prototype without the suffix (taking 2 arguments), this would resolve
+> successfully because prototype validation against the suffix is bypassed.
 >
-> [Severity: Medium]
-> Should this functional logic fix in kvm_gmem_luo_can_preserve() be split =
-into
-> its own patch?=20
->
-> The commit message explicitly states this is a documentation change, but =
-this
-> modifies the condition for GUEST_MEMFD_FLAG_INIT_SHARED in C code, which
-> violates the rule of one logical change per commit and makes tracking bug
-> fixes difficult.
->
+> Would the BPF verifier then accept a program calling the kfunc with only
+> R1 set, causing the kernel to execute the function with uninitialized or
+> garbage data in R2? Alternatively, if the verifier rejects the incompatible
+> register state, wouldn't this entirely break the intended backward
+> compatibility logic?
 
-OOOOPS, This (and the below) should be part of previous patch, I will
-have it fixed in next version next version.
+Self-NACK. Please ignore this patch. Bypassing prototype validation
+and unconditionally resolving to the essential name completely breaks
+the fundamental logic of backward and forward compatibility in BPF
+programs using light skeletons. This patch should be discarded.
 
->> =20
->>  	/*
->> -	 * It makes sure that no memory can converted to private
->> +	 * It makes sure that no memory can be converted to private
->>  	 * even if it was initially fully shared (in-place conversions are
->>  	 * prevented).
->>  	 */
-
-
->
-> --=20
-> Sashiko AI review =C2=B7 https://sashiko.dev/#/patchset/20260622184851.23=
-09827-1-tarunsahu@google.com?part=3D7
+Regards,
+Siddharth Nayyar
