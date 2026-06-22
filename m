@@ -1,303 +1,167 @@
-Received: from smtp-out2.suse.de (smtp-out2.suse.de [195.135.223.131])
+Received: from mail-ed1-f43.google.com (mail-ed1-f43.google.com [209.85.208.43])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5FF3230FC39
-	for <sashiko-reviews@lists.linux.dev>; Mon, 22 Jun 2026 14:54:38 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=195.135.223.131
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1B82332E6BD
+	for <sashiko-reviews@lists.linux.dev>; Mon, 22 Jun 2026 15:08:05 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.208.43
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1782140080; cv=none; b=O3IqWA3E6QUgiDbFudsqZKdsvr7Yf+mzuueduresVIQ5iVjNvNUlOBCpFh60CzDysNhbkUuuYtK5dGXgc5JFfMBhYj26gqDZDqRLkKj0F5WlkpRLcBRhsLvhjN2lPwSufZyu3Z0MZZh/tkBH+ykkz4qf+KVYlG39SmBOk5NbFYA=
+	t=1782140888; cv=none; b=ZlTuUcpu0j9h16kVKYUEARQaC07Wc8BvL50CpX1Jd0ZsO6nD4rygj8OGPzktOK4N/haXGhhjaX7o+z3ZsTlEjW9TXuPmUj1vQ7bN7cRQbBXrz1Ut+sNsgOTxcjvDhAP9CfNmuM9wWQv4ZTCodj4FCTCsv6ZRHzHxEk/8fEhnWW8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1782140080; c=relaxed/simple;
-	bh=4O/Lk+bmL14dJHrMXVZE6YRVaBcltePxcx51t7J73hI=;
-	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=DOegZgRxFslWi640z4s8/+qH3CM8HYjjICb8He2q4zQZVQ1hcjtEKpSIM+WLQhVJ9ClLZBHa3j10HwVNgzdM/xwg0B40FdBcAXU3AndDfM6ky/E1TreKpXX/I7S3rYxfpzxP50vtaHaNLaUZ5O9Zhpd3PHwPBUjynRV1yYNy+xw=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=suse.de; spf=pass smtp.mailfrom=suse.de; dkim=pass (1024-bit key) header.d=suse.de header.i=@suse.de header.b=oEr7QA3m; dkim=permerror (0-bit key) header.d=suse.de header.i=@suse.de header.b=844/Hlof; dkim=pass (1024-bit key) header.d=suse.de header.i=@suse.de header.b=oEr7QA3m; dkim=permerror (0-bit key) header.d=suse.de header.i=@suse.de header.b=844/Hlof; arc=none smtp.client-ip=195.135.223.131
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=suse.de
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=suse.de
+	s=arc-20240116; t=1782140888; c=relaxed/simple;
+	bh=ctkXUqINeog3YaaxNzkhEPEYeUycKQ6ka1jBb3wlaTc=;
+	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
+	 MIME-Version:Content-Type; b=fG3/eTqr/Tp3J5u8L7XeKkqBAOEBnN+IGhtpPmBg3Uk/jYDTV5k5xbeawpYMNMAkcMFeu1Jy/MPrUfoYthlG6UDoZOBOqrfaDS3mwbb9Zw+yh14ptGvgYO4HzjqwirDKHYyX5gTBuj/Ub9YLPtJG2sRluU0s7uthJN04gOAXIfw=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=cloudflare.com; spf=pass smtp.mailfrom=cloudflare.com; dkim=pass (2048-bit key) header.d=cloudflare.com header.i=@cloudflare.com header.b=CPOlTFv5; arc=none smtp.client-ip=209.85.208.43
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=cloudflare.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=cloudflare.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=suse.de header.i=@suse.de header.b="oEr7QA3m";
-	dkim=permerror (0-bit key) header.d=suse.de header.i=@suse.de header.b="844/Hlof";
-	dkim=pass (1024-bit key) header.d=suse.de header.i=@suse.de header.b="oEr7QA3m";
-	dkim=permerror (0-bit key) header.d=suse.de header.i=@suse.de header.b="844/Hlof"
-Received: from imap1.dmz-prg2.suse.org (unknown [10.150.64.97])
-	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
-	 key-exchange X25519 server-signature RSA-PSS (4096 bits) server-digest SHA256)
-	(No client certificate requested)
-	by smtp-out2.suse.de (Postfix) with ESMTPS id 62E1C75991;
-	Mon, 22 Jun 2026 14:54:36 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=suse.de; s=susede2_rsa;
-	t=1782140076; h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
-	 mime-version:mime-version:content-type:content-type:
-	 content-transfer-encoding:content-transfer-encoding:
-	 in-reply-to:in-reply-to:references:references:autocrypt:autocrypt;
-	bh=jxh1gHLoGNtM52tLMMkGn2yRHkmuZf/Zujd0BM3u68s=;
-	b=oEr7QA3mKbhoVPXJ4rVR6K/mwPDkNHBzxLnqHDWCsO4VKPlZjwYj3eRdi2Gf/G3X+QNhXB
-	FUt27PsTIkvIEkgszs0m47WlitGv2qz464gNGHwnl+Mv1ymscQc8SF1bSLShI1Q0tALWBo
-	JRiVozWVzx0FHDh3nj0XWWVT+fksojY=
-DKIM-Signature: v=1; a=ed25519-sha256; c=relaxed/relaxed; d=suse.de;
-	s=susede2_ed25519; t=1782140076;
-	h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
-	 mime-version:mime-version:content-type:content-type:
-	 content-transfer-encoding:content-transfer-encoding:
-	 in-reply-to:in-reply-to:references:references:autocrypt:autocrypt;
-	bh=jxh1gHLoGNtM52tLMMkGn2yRHkmuZf/Zujd0BM3u68s=;
-	b=844/HlofZeD0Pz5Js3SnEw2w3Srz5DH8PDQv+1zn4ZJw7uKsbX3Cqt5dnct4KSDwXol9pf
-	f/D+uc5gFMBL2nBA==
-Authentication-Results: smtp-out2.suse.de;
-	none
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=suse.de; s=susede2_rsa;
-	t=1782140076; h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
-	 mime-version:mime-version:content-type:content-type:
-	 content-transfer-encoding:content-transfer-encoding:
-	 in-reply-to:in-reply-to:references:references:autocrypt:autocrypt;
-	bh=jxh1gHLoGNtM52tLMMkGn2yRHkmuZf/Zujd0BM3u68s=;
-	b=oEr7QA3mKbhoVPXJ4rVR6K/mwPDkNHBzxLnqHDWCsO4VKPlZjwYj3eRdi2Gf/G3X+QNhXB
-	FUt27PsTIkvIEkgszs0m47WlitGv2qz464gNGHwnl+Mv1ymscQc8SF1bSLShI1Q0tALWBo
-	JRiVozWVzx0FHDh3nj0XWWVT+fksojY=
-DKIM-Signature: v=1; a=ed25519-sha256; c=relaxed/relaxed; d=suse.de;
-	s=susede2_ed25519; t=1782140076;
-	h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
-	 mime-version:mime-version:content-type:content-type:
-	 content-transfer-encoding:content-transfer-encoding:
-	 in-reply-to:in-reply-to:references:references:autocrypt:autocrypt;
-	bh=jxh1gHLoGNtM52tLMMkGn2yRHkmuZf/Zujd0BM3u68s=;
-	b=844/HlofZeD0Pz5Js3SnEw2w3Srz5DH8PDQv+1zn4ZJw7uKsbX3Cqt5dnct4KSDwXol9pf
-	f/D+uc5gFMBL2nBA==
-Received: from imap1.dmz-prg2.suse.org (localhost [127.0.0.1])
-	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
-	 key-exchange X25519 server-signature RSA-PSS (4096 bits) server-digest SHA256)
-	(No client certificate requested)
-	by imap1.dmz-prg2.suse.org (Postfix) with ESMTPS id 10382779A8;
-	Mon, 22 Jun 2026 14:54:36 +0000 (UTC)
-Received: from dovecot-director2.suse.de ([2a07:de40:b281:106:10:150:64:167])
-	by imap1.dmz-prg2.suse.org with ESMTPSA
-	id DRWPAqxMOWrdeQAAD6G6ig
-	(envelope-from <tzimmermann@suse.de>); Mon, 22 Jun 2026 14:54:36 +0000
-Message-ID: <926d9d5f-be68-4377-9a90-0d9ace2c2c53@suse.de>
-Date: Mon, 22 Jun 2026 16:54:35 +0200
+	dkim=pass (2048-bit key) header.d=cloudflare.com header.i=@cloudflare.com header.b="CPOlTFv5"
+Received: by mail-ed1-f43.google.com with SMTP id 4fb4d7f45d1cf-691c5776f35so6262189a12.3
+        for <sashiko-reviews@lists.linux.dev>; Mon, 22 Jun 2026 08:08:05 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=cloudflare.com; s=google09082023; t=1782140884; x=1782745684; darn=lists.linux.dev;
+        h=mime-version:message-id:date:user-agent:references:in-reply-to
+         :subject:cc:to:from:from:to:cc:subject:date:message-id:reply-to;
+        bh=X1beVt+7IOcgdQFGOGbC4Ll2RMfXWA8DiQT54PR4ATY=;
+        b=CPOlTFv51SWqsRYamhycnfoe8eNdc3Xmh+Y/bC2RR3utkQDk3DvIBsD2YrMElZTvRn
+         lSQEmK6A1j9jTvS1XPdA4pKYTEkdxfKS0JOoIG7szGEvFpyBdpNbb1xh3prCnJwEbU2n
+         VNeb9r6KsPsvK0Lrd8445PT7GrQ8Y+1/qxPHo+TGHyL9U+OcZQSo6zw1HLMWAemta8vb
+         I656dLcrYwqINgyCrNdqG1uQdb7U343Spt3kNzlU++rWRi3FcZJlXBSPVjthx5xghtFa
+         5nrY4D6xLxnKawQpITMoB+n3oDPK8AP6CsGFjEdqOlMZsS0rhKq0psdZN6u3IrZdFoEh
+         bIPg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20251104; t=1782140884; x=1782745684;
+        h=mime-version:message-id:date:user-agent:references:in-reply-to
+         :subject:cc:to:from:x-gm-gg:x-gm-message-state:from:to:cc:subject
+         :date:message-id:reply-to;
+        bh=X1beVt+7IOcgdQFGOGbC4Ll2RMfXWA8DiQT54PR4ATY=;
+        b=U27WWf7Ieo7L0QXrA+isQZUdqsQc0iknmgn8J7BhjTqN+S3w4txivIX8xlh5rHSBpH
+         19EGkKVbJOxDZlJ3ioKW6O4696sIsnqABlD2hWik7GmtKN6RIMMHTkB8NCvOvZMDd4AE
+         1XgzFYX1PgeUdVictVmfmEdHnu7TXcmhreMLphTLZwc6petk1N6ZMPx7gkTzCCyYnq1i
+         XGLpGB7hQALyoZI+CIYByyXa5BF4I9w99HNSsw0zFFII8ZSAcTTW9m+yigIGES5PWgyS
+         3FcGdollyRDbMnBBGxPTv2RlN44usHA83SA21q9Owt00qkbuzHEQ7EedIqobLTgrI6GV
+         7AeA==
+X-Gm-Message-State: AOJu0YxbwlZsdK12VBNfxLnYrHdqPtvnkTs0CmijvObeX2rudvDPGv7U
+	og16gL3rhFdEqQlk46N8f6QKMgxl0yOR/LCRG4hYUXQG9T/yAhGIvHwuZbtcdkHlbSE=
+X-Gm-Gg: AfdE7clRnOh8CYpkD45T+3HRs2HqaGtiUTjqg2Fs2oBcqciPDX3X/hxiGKngG/JFme/
+	jweaQMspoG1xkOMI2uWJMbn3J1Q167+hvqvp07+cquvM2kXpyUPspJS6Z2GWJ0DMig7LjKZWufI
+	Qgw+44I1U/K7Qw01pF9RfUtK17ag4F1eX71gUX8ze2VdxvzVyoKVdWBO51mvOTHHCsKL1BPgxKc
+	oG2UI0ZCRPQJ1kMS7yGzX5MGLRfkERImICafFw22nvtllLnEHDEVaZE2rFba+yUHYyqvxzqCB3J
+	tM8T/zAfzjQ0QSV9UGIMffFWADX9vPaQqdQFiLbkqS/0hhmnZtDHCB69rFgIvNV+KT3Wfqv+ovn
+	JtT8QmYM6ozq6tQgyfsIXrqd1qPEZQjYs/AKeirUBLhhT2bQnFyQ4FDaJUBFOgDCtvMpO4zoEnW
+	+nqWFD+ZiocWY3Zpc=
+X-Received: by 2002:a05:6402:2346:b0:697:d3e4:4d48 with SMTP id 4fb4d7f45d1cf-697d3e44dcdmr20124a12.22.1782140884354;
+        Mon, 22 Jun 2026 08:08:04 -0700 (PDT)
+Received: from cloudflare.com ([104.28.21.182])
+        by smtp.gmail.com with ESMTPSA id 4fb4d7f45d1cf-6977b82fa67sm3702615a12.4.2026.06.22.08.08.02
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Mon, 22 Jun 2026 08:08:03 -0700 (PDT)
+From: Jakub Sitnicki <jakub@cloudflare.com>
+To: sashiko-bot@kernel.org
+Cc: sashiko-reviews@lists.linux.dev,  bpf@vger.kernel.org
+Subject: Re: [PATCH net v3 1/2] net: lwtunnel: Drop skb metadata before LWT
+ encapsulation
+In-Reply-To: <20260620170951.580641F00A3A@smtp.kernel.org>
+	(sashiko-bot@kernel.org's message of "Sat, 20 Jun 2026 17:09:50
+	+0000")
+References: <20260619-bpf-lwt-drop-skb-metadata-v3-0-71d6a33ab76b@cloudflare.com>
+	<20260619-bpf-lwt-drop-skb-metadata-v3-1-71d6a33ab76b@cloudflare.com>
+	<20260620170951.580641F00A3A@smtp.kernel.org>
+User-Agent: mu4e 1.14.1; emacs 30.2
+Date: Mon, 22 Jun 2026 17:08:02 +0200
+Message-ID: <87cxxi4nql.fsf@cloudflare.com>
 Precedence: bulk
 X-Mailing-List: sashiko-reviews@lists.linux.dev
 List-Id: <sashiko-reviews.lists.linux.dev>
 List-Subscribe: <mailto:sashiko-reviews+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:sashiko-reviews+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v2] drm/fb-helper: Only consider active CRTCs for vblank
- sync
-To: Jani Nikula <jani.nikula@linux.intel.com>, hns@goldelico.com,
- zhengxingda@iscas.ac.cn, maarten.lankhorst@linux.intel.com,
- mripard@kernel.org, airlied@gmail.com, simona@ffwll.ch, akemnade@kernel.org
-Cc: dri-devel@lists.freedesktop.org, linux-kernel@vger.kernel.org,
- letux-kernel@openphoenux.org, kernel@pyra-handheld.com,
- sashiko-reviews@lists.linux.dev, stable@vger.kernel.org
-References: <20260622113434.682292-1-tzimmermann@suse.de>
- <395f15bb770b4be0ffeeb09e7cdeef49340f910c@intel.com>
-Content-Language: en-US
-From: Thomas Zimmermann <tzimmermann@suse.de>
-Autocrypt: addr=tzimmermann@suse.de; keydata=
- xsBNBFs50uABCADEHPidWt974CaxBVbrIBwqcq/WURinJ3+2WlIrKWspiP83vfZKaXhFYsdg
- XH47fDVbPPj+d6tQrw5lPQCyqjwrCPYnq3WlIBnGPJ4/jreTL6V+qfKRDlGLWFjZcsrPJGE0
- BeB5BbqP5erN1qylK9i3gPoQjXGhpBpQYwRrEyQyjuvk+Ev0K1Jc5tVDeJAuau3TGNgah4Yc
- hdHm3bkPjz9EErV85RwvImQ1dptvx6s7xzwXTgGAsaYZsL8WCwDaTuqFa1d1jjlaxg6+tZsB
- 9GluwvIhSezPgnEmimZDkGnZRRSFiGP8yjqTjjWuf0bSj5rUnTGiyLyRZRNGcXmu6hjlABEB
- AAHNJ1Rob21hcyBaaW1tZXJtYW5uIDx0emltbWVybWFubkBzdXNlLmRlPsLAjgQTAQgAOAIb
- AwULCQgHAgYVCgkICwIEFgIDAQIeAQIXgBYhBHIX+6yM6c9jRKFo5WgNwR1TC3ojBQJftODH
- AAoJEGgNwR1TC3ojx1wH/0hKGWugiqDgLNXLRD/4TfHBEKmxIrmfu9Z5t7vwUKfwhFL6hqvo
- lXPJJKQpQ2z8+X2vZm/slsLn7J1yjrOsoJhKABDi+3QWWSGkaGwRJAdPVVyJMfJRNNNIKwVb
- U6B1BkX2XDKDGffF4TxlOpSQzdtNI/9gleOoUA8+jy8knnDYzjBNOZqLG2FuTdicBXblz0Mf
- vg41gd9kCwYXDnD91rJU8tzylXv03E75NCaTxTM+FBXPmsAVYQ4GYhhgFt8S2UWMoaaABLDe
- 7l5FdnLdDEcbmd8uLU2CaG4W2cLrUaI4jz2XbkcPQkqTQ3EB67hYkjiEE6Zy3ggOitiQGcqp
- j//OwE0EWznS4AEIAMYmP4M/V+T5RY5at/g7rUdNsLhWv1APYrh9RQefODYHrNRHUE9eosYb
- T6XMryR9hT8XlGOYRwKWwiQBoWSDiTMo/Xi29jUnn4BXfI2px2DTXwc22LKtLAgTRjP+qbU6
- 3Y0xnQN29UGDbYgyyK51DW3H0If2a3JNsheAAK+Xc9baj0LGIc8T9uiEWHBnCH+RdhgATnWW
- GKdDegUR5BkDfDg5O/FISymJBHx2Dyoklv5g4BzkgqTqwmaYzsl8UxZKvbaxq0zbehDda8lv
- hFXodNFMAgTLJlLuDYOGLK2AwbrS3Sp0AEbkpdJBb44qVlGm5bApZouHeJ/+n+7r12+lqdsA
- EQEAAcLAdgQYAQgAIAIbDBYhBHIX+6yM6c9jRKFo5WgNwR1TC3ojBQJftOH6AAoJEGgNwR1T
- C3ojVSkIALpAPkIJPQoURPb1VWjh34l0HlglmYHvZszJWTXYwavHR8+k6Baa6H7ufXNQtThR
- yIxJrQLW6rV5lm7TjhffEhxVCn37+cg0zZ3j7zIsSS0rx/aMwi6VhFJA5hfn3T0TtrijKP4A
- SAQO9xD1Zk9/61JWk8OysuIh7MXkl0fxbRKWE93XeQBhIJHQfnc+YBLprdnxR446Sh8Wn/2D
- Ya8cavuWf2zrB6cZurs048xe0UbSW5AOSo4V9M0jzYI4nZqTmPxYyXbm30Kvmz0rYVRaitYJ
- 4kyYYMhuULvrJDMjZRvaNe52tkKAvMevcGdt38H4KSVXAylqyQOW5zvPc4/sq9c=
-In-Reply-To: <395f15bb770b4be0ffeeb09e7cdeef49340f910c@intel.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 8bit
-X-Spam-Flag: NO
-X-Spam-Score: -4.30
-X-Spamd-Result: default: False [-4.30 / 50.00];
-	BAYES_HAM(-3.00)[100.00%];
-	NEURAL_HAM_LONG(-1.00)[-1.000];
-	NEURAL_HAM_SHORT(-0.20)[-0.993];
-	MIME_GOOD(-0.10)[text/plain];
-	ARC_NA(0.00)[];
-	RCPT_COUNT_TWELVE(0.00)[14];
-	MIME_TRACE(0.00)[0:+];
-	FUZZY_RATELIMITED(0.00)[rspamd.com];
-	FREEMAIL_TO(0.00)[linux.intel.com,goldelico.com,iscas.ac.cn,kernel.org,gmail.com,ffwll.ch];
-	RCVD_VIA_SMTP_AUTH(0.00)[];
-	MID_RHS_MATCH_FROM(0.00)[];
-	FREEMAIL_ENVRCPT(0.00)[gmail.com];
-	DKIM_SIGNED(0.00)[suse.de:s=susede2_rsa,suse.de:s=susede2_ed25519];
-	FROM_EQ_ENVFROM(0.00)[];
-	FROM_HAS_DN(0.00)[];
-	TO_DN_SOME(0.00)[];
-	RCVD_TLS_ALL(0.00)[];
-	TO_MATCH_ENVRCPT_ALL(0.00)[];
-	RCVD_COUNT_TWO(0.00)[2];
-	URIBL_BLOCKED(0.00)[iscas.ac.cn:email,suse.com:url,suse.de:email,suse.de:mid,imap1.dmz-prg2.suse.org:helo,goldelico.com:email];
-	DBL_BLOCKED_OPENRESOLVER(0.00)[suse.com:url,iscas.ac.cn:email,suse.de:email,suse.de:mid,imap1.dmz-prg2.suse.org:helo]
-X-Spam-Level: 
+Content-Type: text/plain
 
-Hi
-
-Am 22.06.26 um 15:34 schrieb Jani Nikula:
-> On Mon, 22 Jun 2026, Thomas Zimmermann <tzimmermann@suse.de> wrote:
->> Only synchronize fbdev output to the vblank of an active CRTC. Go over
->> the list of CRTCs and pick the first that matches. Fixes warnings as
->> the one shown below
->>
->> [   77.201354] WARNING: drivers/gpu/drm/drm_vblank.c:1320 at drm_crtc_wait_one_vblank+0x194/0x1cc [drm], CPU#1: kworker/1:7/1867
->> [   77.201354] omapdrm omapdrm.0: [drm] vblank wait timed out on crtc 0
->>
->> This currently happens if the fbdev output is not on CRTC 0.
->>
->> Atomic and non-atomic drivers require distinct code paths. As for other
->> fbdev operations, implement both and select the correct one at runtime.
->>
->> Not finding an active CRTC is not a bug. Do not wait in this case, but
->> flush the display update as before.
->>
->> v2:
->> - move look-up code into separate helper
->> - support drivers with legacy modesetting
->> v1:
->> - see https://lore.kernel.org/dri-devel/1c9e0e24-9c4a-4259-8700-cf9e5fd60ca3@suse.de/
->>
->> Co-authored-by: H. Nikolaus Schaller <hns@goldelico.com>
->> Signed-off-by: Thomas Zimmermann <tzimmermann@suse.de>
->> Fixes: d8c4bddcd8bcb ("drm/fb-helper: Synchronize dirty worker with vblank")
->> Tested-by: Icenowy Zheng <zhengxingda@iscas.ac.cn>
->> Closes: https://bugs.debian.org/1138033
->> Cc: <stable@vger.kernel.org> # v6.19+
->> ---
->>   drivers/gpu/drm/drm_fb_helper.c | 71 ++++++++++++++++++++++++++++++++-
->>   1 file changed, 70 insertions(+), 1 deletion(-)
->>
->> diff --git a/drivers/gpu/drm/drm_fb_helper.c b/drivers/gpu/drm/drm_fb_helper.c
->> index 7b11a582f8ec..cbf0a9a7b8e5 100644
->> --- a/drivers/gpu/drm/drm_fb_helper.c
->> +++ b/drivers/gpu/drm/drm_fb_helper.c
->> @@ -225,16 +225,85 @@ static void drm_fb_helper_resume_worker(struct work_struct *work)
->>   	console_unlock();
->>   }
->>   
->> +static int find_crtc_index_atomic(struct drm_fb_helper *helper)
->> +{
->> +	struct drm_device *dev = helper->dev;
->> +	struct drm_plane *plane;
->> +
->> +	drm_for_each_plane(plane, dev) {
->> +		const struct drm_plane_state *plane_state;
->> +		const struct drm_crtc *crtc;
->> +
->> +		if (plane->type != DRM_PLANE_TYPE_PRIMARY)
->> +			continue;
->> +
->> +		plane_state = plane->state;
->> +		if (plane_state->fb != helper->fb || !plane_state->crtc)
->> +			continue; /* plane doesn't display fbdev emulation */
->> +
->> +		crtc = plane_state->crtc;
->> +		if (!crtc->state->active)
->> +			continue;
->> +		if (drm_WARN_ON_ONCE(dev, crtc->index > INT_MAX))
->> +			continue; /* driver bug */
-> I take it this is here because crtc->index is unsigned, and this
-> function returns int so you can have negative error codes. Ditto the
-> other function below.
+On Sat, Jun 20, 2026 at 05:09 PM GMT, sashiko-bot@kernel.org wrote:
+> Thank you for your contribution! Sashiko AI review found 1 potential issue(s) to consider:
+> - [High] Calling `skb_metadata_clear(skb)` on a potentially cloned SKB modifies
+> the shared `skb_shinfo` structure without exclusive access, leading to a data
+> race and silent data corruption for other clones.
+> --
 >
-> I feel like this is something that should be checked once somewhere, if
-> that. I think adding arbitrary checks like this invites more arbitrary
-> checks everywhere. crtc->index is supposed to be invariant over the
-> lifetime of the CRTC.
+> commit a6915ae09d5ba82236d77c5574df958bccb552d5
+> Author: Jakub Sitnicki <jakub@cloudflare.com>
+>
+> net: lwtunnel: Drop skb metadata before LWT encapsulation
+>
+> This commit clears skb metadata before lwt encapsulation across all dispatch
+> helpers. It prevents non-bpf lwt encapsulations from overwriting metadata in
+> the headroom and stops bpf lwt xmit from triggering warnings due to metadata
+> position during skb_data_move().
+>
+>> diff --git a/net/core/lwtunnel.c b/net/core/lwtunnel.c
+>> index f9d76d85d04fd..b01a395d9a966 100644
+>> --- a/net/core/lwtunnel.c
+>> +++ b/net/core/lwtunnel.c
+>> @@ -350,6 +350,8 @@ int lwtunnel_output(struct net *net, struct sock *sk, struct sk_buff *skb)
+>>  	rcu_read_lock();
+>>  	ops = rcu_dereference(lwtun_encaps[lwtstate->type]);
+>>  	if (likely(ops && ops->output)) {
+>> +		/* Encap pushes outer headers over the metadata; drop it. */
+>> +		skb_metadata_clear(skb);
+>
+> [Severity: High]
+> Does calling skb_metadata_clear() here modify the shared skb_shinfo
+> structure without ensuring exclusive access?
+>
+> Since skb_metadata_clear() modifies skb_shinfo(skb)->meta_len, if the
+> buffer is cloned (for instance, via tc mirred or multicast forwarding),
+> this might cause a data race and corrupt the metadata for other clones still
+> processing the packet.
+>
+> Should we unshare the skb first to safely modify the shared info?
 
-Ok, makes sense.
-
-Best regards
-Thomas
+For skb to have metadata we had to go throuhg ip6?_forward to get to LWT
+output, so as I mentioned earlier - we don't need to unclone here
+because ip6?_forward will skb_cow, which already unclones.
 
 >
-> BR,
-> Jani.
+>>  		dev_xmit_recursion_inc();
+>>  		ret = ops->output(net, sk, skb);
+>>  		dev_xmit_recursion_dec();
 >
->> +
->> +		return crtc->index;
->> +	}
->> +
->> +	return -EINVAL;
->> +}
->> +
->> +static int find_crtc_index_legacy(struct drm_fb_helper *helper)
->> +{
->> +	struct drm_device *dev = helper->dev;
->> +	struct drm_crtc *crtc;
->> +
->> +	drm_for_each_crtc(crtc, dev) {
->> +		struct drm_plane *plane = crtc->primary;
->> +
->> +		if (!crtc->enabled)
->> +			continue;
->> +		if (!plane || plane->fb != helper->fb)
->> +			continue; /* CRTC doesn't display fbdev emulation */
->> +		if (drm_WARN_ON_ONCE(dev, crtc->index > INT_MAX))
->> +			continue; /* driver bug */
->> +
->> +		return crtc->index;
->> +	}
->> +
->> +	return -EINVAL;
->> +}
->> +
->> +static int drm_fb_helper_find_crtc_index(struct drm_fb_helper *helper)
->> +{
->> +	struct drm_device *dev = helper->dev;
->> +	int crtc_index;
->> +
->> +	mutex_lock(&dev->mode_config.mutex);
->> +
->> +	if (drm_drv_uses_atomic_modeset(dev))
->> +		crtc_index = find_crtc_index_atomic(helper);
->> +	else
->> +		crtc_index = find_crtc_index_legacy(helper);
->> +
->> +	mutex_unlock(&dev->mode_config.mutex);
->> +
->> +	return crtc_index;
->> +}
->> +
->>   static void drm_fb_helper_fb_dirty(struct drm_fb_helper *helper)
->>   {
->>   	struct drm_device *dev = helper->dev;
->>   	struct drm_clip_rect *clip = &helper->damage_clip;
->>   	struct drm_clip_rect clip_copy;
->> +	int crtc_index;
->>   	unsigned long flags;
->>   	int ret;
->>   
->>   	mutex_lock(&helper->lock);
->> -	drm_client_modeset_wait_for_vblank(&helper->client, 0);
->> +	crtc_index = drm_fb_helper_find_crtc_index(helper);
->> +	if (crtc_index >= 0)
->> +		drm_client_modeset_wait_for_vblank(&helper->client, crtc_index);
->>   	mutex_unlock(&helper->lock);
->>   
->>   	if (drm_WARN_ON_ONCE(dev, !helper->funcs->fb_dirty))
+> [ ... ]
+>
+>> @@ -404,6 +406,8 @@ int lwtunnel_xmit(struct sk_buff *skb)
+>>  	rcu_read_lock();
+>>  	ops = rcu_dereference(lwtun_encaps[lwtstate->type]);
+>>  	if (likely(ops && ops->xmit)) {
+>> +		/* Encap pushes outer headers over the metadata; drop it. */
+>> +		skb_metadata_clear(skb);
+>
+> [Severity: High]
+> Could this similarly corrupt shared metadata if the buffer is cloned?
 
--- 
---
-Thomas Zimmermann
-Graphics Driver Developer
-SUSE Software Solutions Germany GmbH
-Frankenstr. 146, 90461 Nürnberg, Germany, www.suse.com
-GF: Jochen Jaser, Andrew McDonald, Werner Knoblich, (HRB 36809, AG Nürnberg)
+Same as above.
 
+>
+>>  		dev_xmit_recursion_inc();
+>>  		ret = ops->xmit(skb);
+>>  		dev_xmit_recursion_dec();
+>
+> [ ... ]
+>
+>> @@ -455,6 +459,8 @@ int lwtunnel_input(struct sk_buff *skb)
+>>  	rcu_read_lock();
+>>  	ops = rcu_dereference(lwtun_encaps[lwtstate->type]);
+>>  	if (likely(ops && ops->input)) {
+>> +		/* Encap pushes outer headers over the metadata; drop it. */
+>> +		skb_metadata_clear(skb);
+>
+> [Severity: High]
+> Could this also lead to a data race by modifying skb_shinfo on a potentially
+> shared buffer before handing it to ops->input()?
 
+This is valid. For encaps which use LWT input, we need to unclone, as
+this happens before ip6?_forward.
+
+>
+>>  		dev_xmit_recursion_inc();
+>>  		ret = ops->input(skb);
+>>  		dev_xmit_recursion_dec();
