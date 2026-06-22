@@ -1,115 +1,87 @@
-Received: from mail-yx1-f51.google.com (mail-yx1-f51.google.com [74.125.224.51])
+Received: from mail-pl1-f201.google.com (mail-pl1-f201.google.com [209.85.214.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9AF8437B014
-	for <sashiko-reviews@lists.linux.dev>; Mon, 22 Jun 2026 22:10:47 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=pass smtp.client-ip=74.125.224.51
-ARC-Seal:i=2; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1782166248; cv=pass; b=QRFq4ekrnkChQotakCw+mSKjtiKEOG0EGLHax/Ac7MAyJKqA3kHowTv+fBdzYxydey7khsPl6zj7mL+Ge9AdyibMH2cVb78wKJYdkfBpZnCNcXibLrTF4g02V2kfSCTGup5lPfJXEbn6gI4sXFna0LvXWrCJaefVQWnVfHMnGUU=
-ARC-Message-Signature:i=2; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1782166248; c=relaxed/simple;
-	bh=QqrWApQo7VCDxjiHXQ3hjKNrBnjqHPx3tgxEKUSRHZs=;
-	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
-	 To:Cc:Content-Type; b=XWSDyCBYUTTDKXE6LufNEnw5E8yU+Qh93iKMFFe65Pp8+2sXu6Sabehpm5JNeDM9Q4LRzgUI3g77dpnc0+nuEovmdYkouDJwgcyI2hzeweByreRlW0JZMRX8shgwWb5V11tAOQdQRkHxmIWKaU6Ho5thqCpfKdbxn6OrmjH1b0c=
-ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=google.com; spf=pass smtp.mailfrom=google.com; dkim=pass (2048-bit key) header.d=google.com header.i=@google.com header.b=uPLDKDCp; arc=pass smtp.client-ip=74.125.224.51
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E78F529DB86
+	for <sashiko-reviews@lists.linux.dev>; Mon, 22 Jun 2026 23:04:21 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.214.201
+ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
+	t=1782169463; cv=none; b=Nos63na2Ttujr6SlSLxQfoTNo+8sI95GCNev8aNeuLju45a5xet871Ft2DajbL4QWWrEY0m4OJ28IZW/W1JtROT/8Wq6AWL9Z0x0qYNPbja0i+QQ5QbKRub3xmCinpma+WnlrTkEVjYpQBkuZOWlbotieIeVyTwSXEYkHXOc26w=
+ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
+	s=arc-20240116; t=1782169463; c=relaxed/simple;
+	bh=Jmd4nVp4kfTrvTVEijkTHHv51r48Mo7H+ZvtGBWl2O0=;
+	h=Date:In-Reply-To:Mime-Version:References:Message-ID:Subject:From:
+	 To:Cc:Content-Type; b=p8RX+kqrLDnS+ANtHH2VLTbxJQKnAMAf+iJLy2g9IzyGw7FRXG/qHdoR63tXr9mhD21NutrQ/z659sZJ1+m5IDlUAKPrx35uxFPI+EWq3n0OmvRuMg/JuhcjOH921glnS1IQKpF3xd0aINAWJRs6UDoKbr6p76BFdJmlrJ9fJA8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=google.com; spf=pass smtp.mailfrom=flex--seanjc.bounces.google.com; dkim=pass (2048-bit key) header.d=google.com header.i=@google.com header.b=YunY5VEH; arc=none smtp.client-ip=209.85.214.201
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=google.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=google.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=flex--seanjc.bounces.google.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=google.com header.i=@google.com header.b="uPLDKDCp"
-Received: by mail-yx1-f51.google.com with SMTP id 956f58d0204a3-662b95934dcso5145581d50.3
-        for <sashiko-reviews@lists.linux.dev>; Mon, 22 Jun 2026 15:10:47 -0700 (PDT)
-ARC-Seal: i=1; a=rsa-sha256; t=1782166246; cv=none;
-        d=google.com; s=arc-20240605;
-        b=OOo0A3DjrxAD/A+aW/HKmqzsjCSKmKI52sO0hu+D7kIJBecDuHV+itSDLlJishlHL9
-         ve7b5lyh4uYaPN4LgJdB3Rog1CJywWJAbwitwHH37tLCpS9pG6uFnKD9Vg5VUJUA2yoX
-         zD+FhVJiKhKQF8zk/NGNtszmI2xIlu3xUWKJ/D10xhb8K/CrwjOdsEfxaECCbahX6z5h
-         5xn4xv6m7qFpwwSHhlmdwez6MQ6mRdn5ZtpWdrf13PfPxnKzpFXfKMIcm8nW+EUKmVTb
-         aAXt8ofw8NJz6wdSAnXrmqxXt6RdT+g6diIz9IRytA3WVb91Z6jEPbOSz/8mA+hUch9m
-         uY8Q==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com; s=arc-20240605;
-        h=cc:to:subject:message-id:date:from:in-reply-to:references
-         :mime-version:dkim-signature;
-        bh=QqrWApQo7VCDxjiHXQ3hjKNrBnjqHPx3tgxEKUSRHZs=;
-        fh=uA360uvxR9S0K/Y4Lovo7aIaGlBwzVBnnb2BKWupr/4=;
-        b=ArG8vJrkDABWEu2zcqzPMcx556sni71fKb0PHBdKsMkcjRpK1e01LhTPP4S5Vo2Lqd
-         4ohC8haj1/46Xlht/lZycYhS2odSher7suKDwG8YCaNo4QN4X7jywcPkVgTf2Xn6tceV
-         taZ0ILRQB0FtGYLLERyq9myk/0GFahIVuflUDQ1kkLp8nKvBXP/hfoXZTydcl9owCCJQ
-         tHSbA0wdZoCGA8C/djbQbWwmwCSiWQcsxXWZ+TAHGFqUIbm06AEbnobt6mX2VrmthAvm
-         sua07STVMpFuXMUM1aQoxl216UsVjKFdDNCvYSKn7JYUiHsNJifxK2ieoueoxC/TVYuO
-         e6YA==;
-        darn=lists.linux.dev
-ARC-Authentication-Results: i=1; mx.google.com; arc=none
+	dkim=pass (2048-bit key) header.d=google.com header.i=@google.com header.b="YunY5VEH"
+Received: by mail-pl1-f201.google.com with SMTP id d9443c01a7336-2c7c7fdca0cso1333365ad.2
+        for <sashiko-reviews@lists.linux.dev>; Mon, 22 Jun 2026 16:04:21 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=google.com; s=20251104; t=1782166246; x=1782771046; darn=lists.linux.dev;
-        h=cc:to:subject:message-id:date:from:in-reply-to:references
-         :mime-version:from:to:cc:subject:date:message-id:reply-to;
-        bh=QqrWApQo7VCDxjiHXQ3hjKNrBnjqHPx3tgxEKUSRHZs=;
-        b=uPLDKDCprxq1HQHfRHa0JhirNKyc9y9bP8IsisjvtzejTY6ll4rZPIP9NFe/XOmYuI
-         F1tCq+aNFtbPMKOqwkGBPGrUpnWoSvNav0Cb5LS8xaj51mz3IZWWfV8bXZ1tJu7UOwGf
-         RttyQftFEApuOMq4cJw6Dlcztrb37OO4M59hdJeOdz0X1DTijcHasLXFKkufryWxRBTg
-         sOF4Af7u9tOgOGAsa1Ee/A/OkogaFwv8RYe1HJP1B3SGEnhXyyqWo6iqEnJ96NzBs8F7
-         YzxCFOPKW0E2ZqWxU8GgQ35o8maJC5hphJoVt2W6EyiEsXtHWpt793p9GH6S+EDTwGIv
-         YIfg==
+        d=google.com; s=20251104; t=1782169461; x=1782774261; darn=lists.linux.dev;
+        h=cc:to:from:subject:message-id:references:mime-version:in-reply-to
+         :date:from:to:cc:subject:date:message-id:reply-to;
+        bh=DbguCPrep9cl5dKCDjv+7UBnuf7b6qWOrC/gr5Xvvj8=;
+        b=YunY5VEHeKmzTvthFDv8hv9uzNRb34x+yLQA+xxWL5Lb9o5ZceRQOFDHgT5R625R3e
+         42I1GZs/CD6pJrNco6gNRmiIxiVHDN2RakBpXKFc6mdDa+olBVuS1Qkdct6aKdxZ3LLz
+         /chNIEdIJKJUf9butYBTDU8GyMyjXsEdHATWlgQuLuVwjFCh9jAevTR7MxMSDr6uJJwG
+         bPQpubdZaz3zOIPGJsit5gib5cL4UyYEXW9Q1Xb+PJRsd3S3/gtmmXFqyiEuwYl7rlQ7
+         0YLFCpJeBN6nVm6aEd8eD23huBQ1bPZAoXKbSRNIFJjIDkcruvRyGCAPkI6cV4nvkiIx
+         RfrA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20251104; t=1782166246; x=1782771046;
-        h=cc:to:subject:message-id:date:from:in-reply-to:references
-         :mime-version:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=QqrWApQo7VCDxjiHXQ3hjKNrBnjqHPx3tgxEKUSRHZs=;
-        b=tYLbAm0U6ojGx/5mL3CnDowGZd9Q8ZVGxhvSHde6EGrGFCwIQsbebQyz08cfyPYESO
-         RrTgVFt2pBeF32FZaX90VuQYpIRs+eDGtnE6bVZ+60CqqXBWETurzwhW35jJjZCabmAb
-         YPqfvr5G1g56MqWjUUsbR5LIFMFnf28pLRcLTueUCMkKvJTFNb0q7Sky1yxTPOFxBVXk
-         af50tBz+dJmZzMB9GCxkk4NY9PRBW9qUXHDYVBW98+5kwW++cIi1hrQw6EIvcedzVBgC
-         2qXCbEzZdc/oa/XJkn37W9TmP1uC4nuGggOmUhfIrebs9dhw/bdkuTdjbrnE2VtM2tXM
-         92VQ==
-X-Gm-Message-State: AOJu0YxLeXcBkyOU9JlUaMKmScFSU4MNpSMdswqAvbe+cQMt5wf+4A/b
-	wjA7q+5eTwMzphZgetclw/7A3omxNzw/FAvs156hFz3hUROEBNMMHNf1/livNxjRO9MRtWbSeBp
-	0oPBBrDrNSJdYsKR6/RG7y0fejO7thTXhgISXOQwJndjDy6nxgxKIMC6CYJuhCA==
-X-Gm-Gg: AfdE7clyUtRlikBkSUoPwwccT3hhxRH7rE4T8P1AeEmb87fvzgOSCZkzghQotbnS0/6
-	zvk95tp53MfKFNdYHE+r54nnRmytU3Qpu8jzNbUe3Z8knCuuAVz3PSZhBWtWirBudiaaVSkm4Jt
-	UqLAp4BbRhfE9TcGzsrigPagxIdp4IZ2I6DlvkAIkZcsYYsIbsRwGkUJTnMJQFMoM7qOJt50KBX
-	lozJChb/nfMIis2i4R6QpfqQzpzUglqNqQ52ZNwxaMll0QVwCEwfdgWdDbdUoUCybzEu+As5vlU
-	txC8CS6i
-X-Received: by 2002:a05:690e:190b:b0:660:4369:8cb1 with SMTP id
- 956f58d0204a3-66359ebca4emr351633d50.24.1782166245989; Mon, 22 Jun 2026
- 15:10:45 -0700 (PDT)
+        d=1e100.net; s=20251104; t=1782169461; x=1782774261;
+        h=cc:to:from:subject:message-id:references:mime-version:in-reply-to
+         :date:x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+        bh=DbguCPrep9cl5dKCDjv+7UBnuf7b6qWOrC/gr5Xvvj8=;
+        b=DtkvuCi+3XFTIidL2XtZUa0QjsO6ejeJKGgGo350y8rTWI7QKLQH9R+pIOWJZ8/0fP
+         yF1QRjoIJ3WUxBj6szVZgTGLlY60Rz1cWkMTNIuBJqThtcCDKu9SgROBFw47VUHPgPng
+         VlntrIxn/okl8daYCgmyicHOnulJrTMsMKpwhXNf5d+/b7YBDQkpK2Im8YNW0NOTjWWk
+         O+qAXH+C6e5G8eRfwy/INR9j5agD2JhcwhTN2S9Imot1H7O+leC1OkmKTAvNyLhsh54s
+         RReaqL/midX4KKCjSlQQgXPqb0EgEBQBWn/8Gi1Ie4vzT6lYxiWftlzCU0hLHSUnQ68h
+         aWqw==
+X-Gm-Message-State: AOJu0Yz74Z/o8BxpsBPW+cI6wrETIdwK+mudrrW4HMzqe+9v603Rsg3G
+	0dXcBLQPYziyexr7JcJkvau8Zt/RLAGLzuDuQ66Eb6RhLlwhWBaZc+Wru0y2/5GMkrdAYugf8zt
+	18pLI1g==
+X-Received: from plpm7.prod.google.com ([2002:a17:903:3de7:b0:2c6:9f4f:f3b8])
+ (user=seanjc job=prod-delivery.src-stubby-dispatcher) by 2002:a17:903:8cd:b0:2b4:656b:aeb0
+ with SMTP id d9443c01a7336-2c718f67cfbmr186053355ad.35.1782169460861; Mon, 22
+ Jun 2026 16:04:20 -0700 (PDT)
+Date: Mon, 22 Jun 2026 16:04:20 -0700
+In-Reply-To: <DJFI4P57YE9X.20DPMTK9LL7LW@linux.dev>
 Precedence: bulk
 X-Mailing-List: sashiko-reviews@lists.linux.dev
 List-Id: <sashiko-reviews.lists.linux.dev>
 List-Subscribe: <mailto:sashiko-reviews+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:sashiko-reviews+unsubscribe@lists.linux.dev>
-MIME-Version: 1.0
-References: <20260622-bpf-lskel-fixes-v1-1-7c09a1585ba4@google.com> <20260622211734.EC3831F000E9@smtp.kernel.org>
-In-Reply-To: <20260622211734.EC3831F000E9@smtp.kernel.org>
-From: Sid Nayyar <sidnayyar@google.com>
-Date: Mon, 22 Jun 2026 23:10:34 +0100
-X-Gm-Features: AVVi8CfOEhcUrrhYZvwlyH5EtaTPbHavELWd43PARr_UqLG6dqs-v5jbd-vm4_E
-Message-ID: <CA+OvW8atZ63+=Rgsoaaufj3DUEsPKGUJ9gYURVkNa9UReyuxZg@mail.gmail.com>
-Subject: Re: [PATCH] libbpf: fix weak kfunc name suffix resolution for light skeletons
-To: sashiko-reviews@lists.linux.dev
-Cc: bpf@vger.kernel.org
-Content-Type: text/plain; charset="UTF-8"
+Mime-Version: 1.0
+References: <20260622-alloc-trylock-v2-0-31f31367d420@google.com>
+ <20260622-alloc-trylock-v2-6-31f31367d420@google.com> <20260622101056.4120C1F000E9@smtp.kernel.org>
+ <DJFI4P57YE9X.20DPMTK9LL7LW@linux.dev>
+Message-ID: <ajm_dEqauYLBi-7T@google.com>
+Subject: Re: [PATCH v2 06/13] KVM: VMX: Use higher-level allocator
+From: Sean Christopherson <seanjc@google.com>
+To: Brendan Jackman <brendan.jackman@linux.dev>
+Cc: sashiko-reviews@lists.linux.dev, Brendan Jackman <jackmanb@google.com>, 
+	linux-kernel@vger.kernel.org, linux-rt-devel@lists.linux.dev, 
+	kvm@vger.kernel.org
+Content-Type: text/plain; charset="us-ascii"
 
-> [Severity: High]
-> By resolving weak kfuncs to their essential names instead of their suffixed
-> names here in RELO_EXTERN_CALL and RELO_EXTERN_LD64 above, does this break
-> backward compatibility fallbacks in light skeletons?
->
-> If a BPF program uses bpf_ksym_exists() to fall back to an older prototype
-> (e.g., calling func___v1 which takes 1 argument) but the kernel provides a
-> newer prototype without the suffix (taking 2 arguments), this would resolve
-> successfully because prototype validation against the suffix is bypassed.
->
-> Would the BPF verifier then accept a program calling the kfunc with only
-> R1 set, causing the kernel to execute the function with uninitialized or
-> garbage data in R2? Alternatively, if the verifier rejects the incompatible
-> register state, wouldn't this entirely break the intended backward
-> compatibility logic?
+On Mon, Jun 22, 2026, Brendan Jackman wrote:
+> On Mon Jun 22, 2026 at 10:10 AM UTC, sashiko-bot wrote:
+> > Thank you for your contribution! Sashiko AI review found 1 potential issue(s) to consider:
+> > - [Medium] The commit message incorrectly states that `__alloc_pages_node()` allows passing `NUMA_NO_NODE`, while the opposite is true.
+> > --
+> >
+> > commit 7bd439c242125db27305b61b14c9972fb028282a
+> > Author: Brendan Jackman <jackmanb@google.com>
+> >
+> > KVM: VMX: Use higher-level allocator
 
-Self-NACK. Please ignore this patch. Bypassing prototype validation
-and unconditionally resolving to the essential name completely breaks
-the fundamental logic of backward and forward compatibility in BPF
-programs using light skeletons. This patch should be discarded.
+While you're dealing with nits, can you massage the shortlog to something like:
 
-Regards,
-Siddharth Nayyar
+  KVM: VMX: Use no-underscores API when allocating pages for a specific NUMA node
+
+"Use higher-level allocator" is extremely vague, and arguably misleading because
+the "allocator" being used isn't changing.  Which is kinda the point: *nothing*
+is changing in practice.
