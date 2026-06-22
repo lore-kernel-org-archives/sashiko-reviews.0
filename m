@@ -1,21 +1,21 @@
-Received: from out-181.mta0.migadu.com (out-181.mta0.migadu.com [91.218.175.181])
+Received: from out-186.mta1.migadu.com (out-186.mta1.migadu.com [95.215.58.186])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DA6FE3A453B
-	for <sashiko-reviews@lists.linux.dev>; Mon, 22 Jun 2026 10:19:59 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=91.218.175.181
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4AA7F3A5433
+	for <sashiko-reviews@lists.linux.dev>; Mon, 22 Jun 2026 10:22:05 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=95.215.58.186
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1782123602; cv=none; b=a04zqwfPlBYy00BOEYzifoe1a8aWQydHhxITrTKK3hGBtnmluZRS5Uf56ZviCmx1oVcJeBlJp9dGz3lESWS+r4HpgHjy4DJjFomsrlk3QLrWBxF8oLHFR7eDhAxgKh+2Wfo6N3XT29SdHEZVtsKtIgsDXkreaQ/BegYTWnRFcaM=
+	t=1782123726; cv=none; b=DZZkf8yhLhSeo/KJ8uAgNrkbOjEfD+eJyePz90w/T50Mce3uuRBVtHh0sNY/WInESamxzfxo1zyZmlv2Ukyr9WUWCh1Xy8jHYCwgrBprofWCtZNXPXxaE0tl5Yxs2BmrWgEgRunkemJbgKD4tFeM+NViXDAFVsGBgbhLRRzU0KE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1782123602; c=relaxed/simple;
-	bh=MkY6nlLFzSXoALDu4trn6baPHE1gTGNtf+3w8p0yrlc=;
-	h=Mime-Version:Content-Type:Date:Message-Id:Subject:From:To:Cc:
-	 References:In-Reply-To; b=EXuM6tLM21CLRpmshqyHW4qQcdP3WFXNsP7+a0BUBzw4EfxB1bRszLRxmyctazfbFj5AWckTK3IsCsfAESiOzz/5suyiSHSQII9G1PIFeBAjJw1BPLJx09pp9RN1YUg02vmTJIUIbxRUTzLD7KXzTEXYYFul0qzBGCJahCLe5MY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linux.dev; spf=pass smtp.mailfrom=linux.dev; dkim=pass (1024-bit key) header.d=linux.dev header.i=@linux.dev header.b=EEgc7dfM; arc=none smtp.client-ip=91.218.175.181
+	s=arc-20240116; t=1782123726; c=relaxed/simple;
+	bh=V36N5qqTK871HGmVbyRrv3qGLBId8ErFaP2QKthJkZs=;
+	h=Mime-Version:Content-Type:Date:Message-Id:Cc:Subject:From:To:
+	 References:In-Reply-To; b=jW6N0ZmqKFtDzlcHZNyQqXIvgO+DnXRpdlLVMsOyiAguWl1qKavLq6PPdUGa06m+8acVwfYP88gYfUAm7ksLv6jUYByGhbu2vyLpMZP4udRuWaScOHOgqURL42hECSrTMX2lj0Su9YcXAvshIos1IDAdztjdKmYVW/nI1aAXQ6g=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linux.dev; spf=pass smtp.mailfrom=linux.dev; dkim=pass (1024-bit key) header.d=linux.dev header.i=@linux.dev header.b=AB1vYXDf; arc=none smtp.client-ip=95.215.58.186
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linux.dev
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linux.dev
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linux.dev header.i=@linux.dev header.b="EEgc7dfM"
+	dkim=pass (1024-bit key) header.d=linux.dev header.i=@linux.dev header.b="AB1vYXDf"
 Precedence: bulk
 X-Mailing-List: sashiko-reviews@lists.linux.dev
 List-Id: <sashiko-reviews.lists.linux.dev>
@@ -23,73 +23,69 @@ List-Subscribe: <mailto:sashiko-reviews+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:sashiko-reviews+unsubscribe@lists.linux.dev>
 Mime-Version: 1.0
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linux.dev; s=key1;
-	t=1782123598;
+	t=1782123713;
 	h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
 	 to:to:cc:cc:mime-version:mime-version:content-type:content-type:
 	 content-transfer-encoding:content-transfer-encoding:
 	 in-reply-to:in-reply-to:references:references;
-	bh=61qKRNZwBJRNqSbrg5LXzvWIDIKcY6Z0oSAWz/l/52g=;
-	b=EEgc7dfMyD99yO/FTdb6+fz9XHhfSzbmk35fMdpgVn12b3SbRbVOjnN5FVG0jChbniciKr
-	d8Azf0IX/TvIgjVLYPDm4tZ+sYY1/G6iX4Z05LAhQDbCVB5xV2HyqNCn5NMehUwohR7eOk
-	q94lKZPfqYN2VVZ0PdNFZvXycaNgJzQ=
+	bh=V36N5qqTK871HGmVbyRrv3qGLBId8ErFaP2QKthJkZs=;
+	b=AB1vYXDf/UiXtxGrnGPRghKQiJYVCLUt6wcsjNkwxOm4gj1O0DUTcHuk+arNX5KrypiXwG
+	aiGeHbofiEpJV/qmI0XglPUntPxViVk5FmgISyiQDSRTTnzeiQ4lVx/r+xUz1ZVvOgoIrc
+	+Wzeap8md9knZmv7G0wnhUV3G3aHItY=
 Content-Transfer-Encoding: quoted-printable
 Content-Type: text/plain; charset=UTF-8
-Date: Mon, 22 Jun 2026 10:19:56 +0000
-Message-Id: <DJFI39RWHV1O.MMMMMZSK8E8C@linux.dev>
-Subject: Re: [PATCH v2 05/13] perf/x86/intel: Use higher-level allocator
+Date: Mon, 22 Jun 2026 10:21:47 +0000
+Message-Id: <DJFI4P57YE9X.20DPMTK9LL7LW@linux.dev>
+Cc: <linux-kernel@vger.kernel.org>, <linux-rt-devel@lists.linux.dev>,
+ <kvm@vger.kernel.org>
+Subject: Re: [PATCH v2 06/13] KVM: VMX: Use higher-level allocator
 X-Report-Abuse: Please report any abuse attempt to abuse@migadu.com and include these headers.
 From: "Brendan Jackman" <brendan.jackman@linux.dev>
 To: <sashiko-reviews@lists.linux.dev>, "Brendan Jackman"
  <jackmanb@google.com>
-Cc: <linux-rt-devel@lists.linux.dev>, <linux-kernel@vger.kernel.org>
 References: <20260622-alloc-trylock-v2-0-31f31367d420@google.com>
- <20260622-alloc-trylock-v2-5-31f31367d420@google.com>
- <20260622101024.B89C21F000E9@smtp.kernel.org>
-In-Reply-To: <20260622101024.B89C21F000E9@smtp.kernel.org>
+ <20260622-alloc-trylock-v2-6-31f31367d420@google.com>
+ <20260622101056.4120C1F000E9@smtp.kernel.org>
+In-Reply-To: <20260622101056.4120C1F000E9@smtp.kernel.org>
 X-Migadu-Flow: FLOW_OUT
 
 On Mon Jun 22, 2026 at 10:10 AM UTC, sashiko-bot wrote:
 > Thank you for your contribution! Sashiko AI review found 1 potential issu=
 e(s) to consider:
-> - [Medium] The commit message factually misrepresents the API differences=
- between `__alloc_pages_node()` and `alloc_pages_node()`.
+> - [Medium] The commit message incorrectly states that `__alloc_pages_node=
+()` allows passing `NUMA_NO_NODE`, while the opposite is true.
 > --
 >
-> commit a5667683e56825d97c5814c0349e4de3300e3e14
+> commit 7bd439c242125db27305b61b14c9972fb028282a
 > Author: Brendan Jackman <jackmanb@google.com>
 >
-> perf/x86/intel: Use higher-level allocator
+> KVM: VMX: Use higher-level allocator
 >
-> This commit switches the memory allocation in dsalloc_pages() from
-> __alloc_pages_node() to the higher-level alloc_pages_node() function.
-> It also updates a comment to reflect the API change.
+> This commit switches the allocation function used in alloc_vmcs_cpu()
+> from __alloc_pages_node() to alloc_pages_node().
 >
+>> KVM: VMX: Use higher-level allocator
+>>
 >> The difference between __alloc_pages_node() and alloc_pages_node() is
 >> that the former allows you to pass NUMA_NO_NODE.
-            ^^^^^^
-    Sashiko is correct, that should say "latter".
 >
 > [Severity: Medium]
+> Is this description inverted?
+>
+> Looking at include/linux/gfp.h, it appears __alloc_pages_node() explicitl=
+y
+> forbids NUMA_NO_NODE (-1) via VM_BUG_ON(nid < 0).
+>
+> Instead, it is alloc_pages_node() that handles NUMA_NO_NODE by explicitly
+> checking for it and falling back to numa_mem_id().
+>
+> While the code change itself is safe, the justification reverses the
+> behavior of the two APIs. Could the commit message be updated to
+> accurately reflect the API semantics?
 
-Seems like an inflated severity rating, this is basically a typo in the
-commit mesage, and anyone that noticed it would probably have realised
-what happened.
+Repeating myself[0] as this patch has a different CC list from the others:
 
-> Is this description of the API differences accurate?
->
-> Looking at include/linux/gfp.h, it appears the capabilities are actually
-> reversed. alloc_pages_node() is the function that explicitly supports
-> and safely handles NUMA_NO_NODE:
->
-> include/linux/gfp.h:alloc_pages_node_noprof() {
->     if (nid =3D=3D NUMA_NO_NODE)
->         nid =3D numa_mem_id();
->     ...
-> }
->
-> Meanwhile, __alloc_pages_node() expects a valid node ID and contains a
-> VM_BUG_ON(nid < 0 || nid >=3D MAX_NUMNODES) check, which will crash if
-> passed NUMA_NO_NODE.
->
-> Could the commit message be updated to clarify that alloc_pages_node()
-> is the API that safely handles NUMA_NO_NODE?
+Sashiko is correct, the commit message says "former" but it should say
+"latter".
+
+[0] https://lore.kernel.org/all/DJFI39RWHV1O.MMMMMZSK8E8C@linux.dev/
