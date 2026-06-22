@@ -1,44 +1,44 @@
-Received: from canpmsgout11.his.huawei.com (canpmsgout11.his.huawei.com [113.46.200.226])
+Received: from canpmsgout04.his.huawei.com (canpmsgout04.his.huawei.com [113.46.200.219])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8CF092C234A
-	for <sashiko-reviews@lists.linux.dev>; Mon, 22 Jun 2026 11:42:06 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=113.46.200.226
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D5E44274B2A
+	for <sashiko-reviews@lists.linux.dev>; Mon, 22 Jun 2026 11:58:52 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=113.46.200.219
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1782128530; cv=none; b=J+V9ubXj2gZfh7CjEeC+H5AMXowKew4aiY0ur9GK6/G10jAm1Cal9LqDFII9fTd6xuQ3nfmd9b1SYRHSBV1lHFIrCST/Fy6B8HnQCxn1bSlfgs2U4XbaRsC6Op3pQX/2tqpTWtiDM6GAE7RHZmj2UaSaUKgCmfelJTZNizcp5Ds=
+	t=1782129536; cv=none; b=OnUr/Cm/Q9ec9wMza4ZmdSrZJddbPVc/N+iwsX8B4MUlgL7FtNPCsNVG80yiB0g7trQF3P1O7gBDVAeEwRz3LBBUkVrVltamAPtFryltduV11KAY4KWtRZtAvO1HwAlxCiIfoU4hm8RYMX3yF6rDAQfGjIef7wX4V76k6BmXaJU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1782128530; c=relaxed/simple;
-	bh=PuOt9xxu4PIPy02nILXVH7LE9Mf8lOREhdG14jswXjk=;
+	s=arc-20240116; t=1782129536; c=relaxed/simple;
+	bh=mBzFfdwt63phXA4EyRq5Ct03YE8f6Hs5cmyJPfk6uTo=;
 	h=Message-ID:Date:MIME-Version:Subject:To:CC:References:From:
-	 In-Reply-To:Content-Type; b=Cefpf7Yk6I9eCaZJ1lakTsHdRpAb20tEJNMu8EY1DQZhB5CcwsPrsl7red6aIKsC4C/WHateT/LSUY4D9rSR6y24m8sfCbadNeboPNYtsqKVCukgT0+PGMFLjg/lB1C6zKbYWCWZaCGbJgOWRT6+Sw9tD56Yzn7JBkJjtILcPaQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=huawei.com; spf=pass smtp.mailfrom=huawei.com; dkim=pass (1024-bit key) header.d=huawei.com header.i=@huawei.com header.b=lJZUx1H7; arc=none smtp.client-ip=113.46.200.226
+	 In-Reply-To:Content-Type; b=Tw1yAPfUKuf2tAufyRymwmz+doD5UzQzhTuYBkBZcej5gTr+FbudApknb+zI+nqHIqyBtN6bMEkoEYTQ9Cu9LwkJ6BOoXK9kPa/ZKqA5ibX65udBn1yzA6DkL+6SJp8VwY/sxk8bPMCWgkO22MTmOdADN/tacR6auzUuGv3pIdE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=huawei.com; spf=pass smtp.mailfrom=huawei.com; dkim=pass (1024-bit key) header.d=huawei.com header.i=@huawei.com header.b=dpci8ama; arc=none smtp.client-ip=113.46.200.219
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=huawei.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=huawei.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=huawei.com header.i=@huawei.com header.b="lJZUx1H7"
+	dkim=pass (1024-bit key) header.d=huawei.com header.i=@huawei.com header.b="dpci8ama"
 dkim-signature: v=1; a=rsa-sha256; d=huawei.com; s=dkim;
 	c=relaxed/relaxed; q=dns/txt;
 	h=From;
-	bh=guLH7PWsPN4QRiR2otfLo4i4a2OD+mVsl8hoiTPpR7w=;
-	b=lJZUx1H7Or0exrO6C0C4NRLAOtY8A8DY3H2pDw3s4wV41+fyCIqEFCaH7PwfkVnaLG/wNGYPP
-	giKERb+yRAULTFQRtyhMc3tdFteiuv2rmQZ806qdo7V28c8c0Es5I2pn9Hb8rNPrVY7KNLKr6DX
-	OpQmKZtprmml/LTiYDZuryg=
-Received: from mail.maildlp.com (unknown [172.19.163.15])
-	by canpmsgout11.his.huawei.com (SkyGuard) with ESMTPS id 4gkR12148KzKm51;
-	Mon, 22 Jun 2026 19:33:58 +0800 (CST)
+	bh=dN6IP1hSjT3zBfIMoR4CX8mAqxCapWhaNWitozUomXo=;
+	b=dpci8amaNnerLFcvVJkrttavk1dYIK0F5kY/6X860PG5X54NB6QcfifVqOPhYPRqcJMYKj0tE
+	UuYnDWZHAEFsiEJ2PiSVfLpxxVyZMAZFW0P0tbYmoKgaAEE/svG+nobRnJALXNd/zOKbcAeH/zk
+	n2N0KaJARVzWRQ+WpqyYKzI=
+Received: from mail.maildlp.com (unknown [172.19.162.197])
+	by canpmsgout04.his.huawei.com (SkyGuard) with ESMTPS id 4gkRNH4z1Bz1prp5;
+	Mon, 22 Jun 2026 19:50:39 +0800 (CST)
 Received: from dggemv712-chm.china.huawei.com (unknown [10.1.198.32])
-	by mail.maildlp.com (Postfix) with ESMTPS id 48B3D40539;
-	Mon, 22 Jun 2026 19:42:02 +0800 (CST)
+	by mail.maildlp.com (Postfix) with ESMTPS id 26A2240569;
+	Mon, 22 Jun 2026 19:58:44 +0800 (CST)
 Received: from kwepemq100007.china.huawei.com (7.202.195.175) by
  dggemv712-chm.china.huawei.com (10.1.198.32) with Microsoft SMTP Server
  (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
- 15.2.1544.11; Mon, 22 Jun 2026 19:42:02 +0800
+ 15.2.1544.11; Mon, 22 Jun 2026 19:58:43 +0800
 Received: from [10.159.167.44] (10.159.167.44) by
  kwepemq100007.china.huawei.com (7.202.195.175) with Microsoft SMTP Server
  (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
- 15.2.1544.11; Mon, 22 Jun 2026 19:42:01 +0800
-Message-ID: <0cada37c-bd85-49f7-bec3-8850dd57e688@huawei.com>
-Date: Mon, 22 Jun 2026 19:42:01 +0800
+ 15.2.1544.11; Mon, 22 Jun 2026 19:58:42 +0800
+Message-ID: <42dbba04-fa9d-49da-9c01-b8708218ab12@huawei.com>
+Date: Mon, 22 Jun 2026 19:58:42 +0800
 Precedence: bulk
 X-Mailing-List: sashiko-reviews@lists.linux.dev
 List-Id: <sashiko-reviews.lists.linux.dev>
@@ -46,75 +46,71 @@ List-Subscribe: <mailto:sashiko-reviews+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:sashiko-reviews+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v4 5/6] drm/hibmc: Verify the framebuffer pitch to be a
- multiple of 128
+Subject: Re: [PATCH v4 4/6] drm/hibmc: Do not use cpp from struct
+ drm_format_info
 To: Thomas Zimmermann <tzimmermann@suse.de>, <tiantao6@hisilicon.com>,
 	<kong.kongxinwei@hisilicon.com>, <maarten.lankhorst@linux.intel.com>,
 	<mripard@kernel.org>, <airlied@gmail.com>, <simona@ffwll.ch>
 CC: <dri-devel@lists.freedesktop.org>, <sashiko-reviews@lists.linux.dev>,
-	<shiyongbang@huawei.com>, "liangjian(Jim,Kunpeng Solution Development Dept)"
+	<shiyongbang@huawei.com>, "Liangjian(Jim,Kunpeng Solution Development Dept)"
 	<liangjian010@huawei.com>, Chenjianmin <chenjianmin@huawei.com>, "fengsheng
  (A)" <fengsheng5@huawei.com>
 References: <20260618123142.92298-1-tzimmermann@suse.de>
- <20260618123142.92298-6-tzimmermann@suse.de>
+ <20260618123142.92298-5-tzimmermann@suse.de>
 From: Yongbang Shi <shiyongbang@huawei.com>
-In-Reply-To: <20260618123142.92298-6-tzimmermann@suse.de>
+In-Reply-To: <20260618123142.92298-5-tzimmermann@suse.de>
 Content-Type: text/plain; charset="UTF-8"
 Content-Transfer-Encoding: 7bit
-X-ClientProxiedBy: kwepems100002.china.huawei.com (7.221.188.206) To
+X-ClientProxiedBy: kwepems200001.china.huawei.com (7.221.188.67) To
  kwepemq100007.china.huawei.com (7.202.195.175)
 
-> The hibmc hardware requires the framebuffer pitch to be aligned to
-> a multiple of 128. Dumb-buffer creation already guarantees this for
-> the created GEM buffer object. Also verify this contraint during
-> framebuffer creation.
+> Replace uses of struct drm_format_info's cpp with appropriate interfaces.
+> The cpp field contains the characters per pixel. It is deprecated and
+> should be avoided.
+> 
+> Calculate the line width in bytes with drm_format_info_min_pitch(). This
+> is the preferred way of getting pixel and line sizes.
+> 
+> Program HIB_CRT_DISP_CTL_FORMAT from the format's 4CC code instead of
+> calculating the field's value from the cpp.
+> 
+> v4:
+> - introduce fb variable in separate patch (Yongbang)
 > 
 > Signed-off-by: Thomas Zimmermann <tzimmermann@suse.de>
 > ---
->  .../gpu/drm/hisilicon/hibmc/hibmc_drm_drv.c    | 18 +++++++++++++++++-
->  1 file changed, 17 insertions(+), 1 deletion(-)
+>  drivers/gpu/drm/hisilicon/hibmc/hibmc_drm_de.c | 11 +++++++++--
+>  1 file changed, 9 insertions(+), 2 deletions(-)
 > 
-> diff --git a/drivers/gpu/drm/hisilicon/hibmc/hibmc_drm_drv.c b/drivers/gpu/drm/hisilicon/hibmc/hibmc_drm_drv.c
-> index 99b36de1fe13..55d175028c46 100644
-> --- a/drivers/gpu/drm/hisilicon/hibmc/hibmc_drm_drv.c
-> +++ b/drivers/gpu/drm/hisilicon/hibmc/hibmc_drm_drv.c
-> @@ -14,6 +14,7 @@
->  #include <linux/aperture.h>
->  #include <linux/module.h>
->  #include <linux/pci.h>
-> +#include <linux/sizes.h>
+> diff --git a/drivers/gpu/drm/hisilicon/hibmc/hibmc_drm_de.c b/drivers/gpu/drm/hisilicon/hibmc/hibmc_drm_de.c
+> index 19cb16a7daf9..fe73b365e547 100644
+> --- a/drivers/gpu/drm/hisilicon/hibmc/hibmc_drm_de.c
+> +++ b/drivers/gpu/drm/hisilicon/hibmc/hibmc_drm_de.c
+> @@ -119,7 +119,7 @@ static void hibmc_plane_atomic_update(struct drm_plane *plane,
 >  
->  #include <drm/clients/drm_client_setup.h>
->  #include <drm/drm_atomic_helper.h>
-> @@ -106,11 +107,26 @@ static const struct dev_pm_ops hibmc_pm_ops = {
->  				hibmc_pm_resume)
->  };
+>  	writel(gpu_addr, priv->mmio + HIBMC_CRT_FB_ADDRESS);
 >  
-> +static struct drm_framebuffer *hibmc_mode_config_fb_create(struct drm_device *dev,
-> +							   struct drm_file *file_priv,
-> +							   const struct drm_format_info *info,
-> +							   const struct drm_mode_fb_cmd2 *mode_cmd)
-> +{
-> +	int i;
-> +
-> +	for (i = 0; i < info->num_planes; ++i) {
-> +		if (mode_cmd->pitches[i] % SZ_128)
-> +			return ERR_PTR(-EINVAL);
+> -	reg = fb->width * fb->format->cpp[0];
+> +	reg = drm_format_info_min_pitch(fb->format, 0, fb->width);
+>  
+>  	line_l = fb->pitches[0];
+>  	writel(HIBMC_FIELD(HIBMC_CRT_FB_WIDTH_WIDTH, reg) |
+> @@ -129,7 +129,14 @@ static void hibmc_plane_atomic_update(struct drm_plane *plane,
+>  	/* SET PIXEL FORMAT */
+>  	reg = readl(priv->mmio + HIBMC_CRT_DISP_CTL);
+>  	reg &= ~HIBMC_CRT_DISP_CTL_FORMAT_MASK;
+> -	reg |= HIBMC_FIELD(HIBMC_CRT_DISP_CTL_FORMAT, fb->format->cpp[0] * 8 / 16);
+> +	switch (fb->format->format) {
+> +	case DRM_FORMAT_XRGB8888:
+> +		reg |= HIBMC_FIELD(HIBMC_CRT_DISP_CTL_FORMAT, 2);
+> +		break;
+> +	case DRM_FORMAT_RGB565:
+> +		reg |= HIBMC_FIELD(HIBMC_CRT_DISP_CTL_FORMAT, 1);
+> +		break;
 > +	}
-> +
-> +	return drm_gem_fb_create(dev, file_priv, info, mode_cmd);
-> +}
-> +
->  static const struct drm_mode_config_funcs hibmc_mode_funcs = {
->  	.mode_valid = drm_vram_helper_mode_valid,
->  	.atomic_check = drm_atomic_helper_check,
->  	.atomic_commit = drm_atomic_helper_commit,
-> -	.fb_create = drm_gem_fb_create,
-> +	.fb_create = hibmc_mode_config_fb_create,
->  };
+>  	writel(reg, priv->mmio + HIBMC_CRT_DISP_CTL);
+>  }
 >  
->  static int hibmc_kms_init(struct hibmc_drm_private *priv)
-
 
 Reviewed-by: Yongbang Shi <shiyongbang@huawei.com>
 
