@@ -1,198 +1,179 @@
-Received: from mail-pl1-f182.google.com (mail-pl1-f182.google.com [209.85.214.182])
+Received: from mail-wm1-f45.google.com (mail-wm1-f45.google.com [209.85.128.45])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E5EDB342523
-	for <sashiko-reviews@lists.linux.dev>; Mon, 22 Jun 2026 18:17:54 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=pass smtp.client-ip=209.85.214.182
-ARC-Seal:i=2; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1782152276; cv=pass; b=pe+ga+Rtv/s6NX3MtSjY6b2+Jo4AGzgahBfgLbMUHRaflQMThDtp4Yvauc+qyVUaAOH/0vYe8MPtJlu0uTy7sIe0FJ9Dou14g6Gzc8nxscNYRAPS5x2BDLzgl2+MVvp2s9wQUlvj4VzsI1NO3Fk2dt5eLVYP4ar1YRGZN1QjKXo=
-ARC-Message-Signature:i=2; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1782152276; c=relaxed/simple;
-	bh=m11RxMrybFbYq1aegOwyhpbXAUpIQLIK+I74ptbAttQ=;
-	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
-	 To:Cc:Content-Type; b=bVazkOXTIn8gyXdoyXj4eBOLtPW8ROrSyl6EW4QIQJSIgQrtzsOwylGclD74wNgOMtCC/cczttstaz/VNEMcMiabNgNU3h6ElOGNpwaT9BPP14TAeIc/Y2L6ro+DzK7QuqMf4cptYRwt4MnRB7JV8w154TAdpUfb14d+cWUr1V8=
-ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=google.com; spf=pass smtp.mailfrom=google.com; dkim=pass (2048-bit key) header.d=google.com header.i=@google.com header.b=nonh0JGW; arc=pass smtp.client-ip=209.85.214.182
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=google.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=google.com
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 85F0A261388
+	for <sashiko-reviews@lists.linux.dev>; Mon, 22 Jun 2026 18:55:21 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.45
+ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
+	t=1782154523; cv=none; b=I/APMdhgWwPrH1RFVyn7g4MgE/eNiBxOLhAVou5L7We9fJarcHj4M5FylJa07HcOU5SQ5LCgHf0YUCzcRhM2DeX9zTdP5da4aV7Vbi0Dd43YijRMf+Kx1mcuy0SlZY+4mmkeZtD1b16VWJzz7NJp3Jj2DjnTHcrzh7nCab4Nq04=
+ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
+	s=arc-20240116; t=1782154523; c=relaxed/simple;
+	bh=D8VF7z/gei5mUZsjV459hHy43PyQ0ONZ2+ixo9rDpYE=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=roJT8CqIy/HSJIN2/eIJ2U56Vv6IdptwUPTKSHd7i7RZiR4W5a9w4RmUFnCOPGUToVVVN4dhWvBYDdztj7VnjNbL8o1vD9vSusXvwPXdzkJUNfMdTbJMlyJgpYZtTlBiJUb2RvYos8i9fi+b4KgS0kpHP7ap/T0HS4piPudBksg=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=NJRE3PBW; arc=none smtp.client-ip=209.85.128.45
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=google.com header.i=@google.com header.b="nonh0JGW"
-Received: by mail-pl1-f182.google.com with SMTP id d9443c01a7336-2c6a4eccab1so4915ad.1
-        for <sashiko-reviews@lists.linux.dev>; Mon, 22 Jun 2026 11:17:54 -0700 (PDT)
-ARC-Seal: i=1; a=rsa-sha256; t=1782152274; cv=none;
-        d=google.com; s=arc-20260327;
-        b=ph0Tp5TnnUWUkJq5M5ymADwnObivj252FX2M/Lb4e8ni3oj0G8Mq48vhVQYhmtI2kK
-         F9Db4iZHt3KRK51xJg+4HEhlV8WCnSGeH91B7dNXsfRF1r51blNaec2ldLRjaRUq5KmO
-         vEmAO7wTQUizdglU60FIch4OuhrYEINAU1UIUm51bxpsC3vTIxNiWOy4eRMhHfgOLIMw
-         SxXrf/UVK1nTe+FW7RA2j76d+U3semWurPge8lnJDQrXlk5Ov8vV47ZvloON1ewbv/hN
-         Hf5pBFw3wFPKFHJNPXtizq2kHo59ovPZyBvnhPHb+DPWGOv8VKzEodraIUU5E2rtsLU0
-         V+5w==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com; s=arc-20260327;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:dkim-signature;
-        bh=xtFt0nsYRVxh9pjtBHg13JFYnpuDwE2MjabpRY6kgzQ=;
-        fh=RE7v2lIzuaEZ+NODFtxqdkdFUzMEfiO5ZgljgGFmpAY=;
-        b=kDgpU/2sN0umtaNVXCVIwY0Mh9J/WNB0b71GRdxfFCbaaXTt1Y4wVuU+Zj2Xkx3Kyg
-         kFrdsv/UfOMxNiEuPmCQ86bL9j0P8ceI8RtbBkTbJZqF9TT+kqE/dXFDx1sw960mWwKO
-         LPTq+zdh5REHxd1Jv3p14zGFTOpbBFdtcvAvWAsvukXjZ93xEtt7Y90cmKpm1R6mJQwK
-         KR/eS6P2bPj3vqnWhJlkTB0ls7tkN/Zm2Zlcfou9oqo4Ieq3jQcv5t891y98O4zlP6Od
-         hrVWdNpybH4VOzd+fLDZzVNnUbZB3RSsPrwWxZ6fxKG6z+xV7knsBN7J26U8HOsqrdDE
-         gk2A==;
-        darn=lists.linux.dev
-ARC-Authentication-Results: i=1; mx.google.com; arc=none
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="NJRE3PBW"
+Received: by mail-wm1-f45.google.com with SMTP id 5b1f17b1804b1-4923139e940so27914945e9.3
+        for <sashiko-reviews@lists.linux.dev>; Mon, 22 Jun 2026 11:55:21 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=google.com; s=20251104; t=1782152274; x=1782757074; darn=lists.linux.dev;
-        h=content-transfer-encoding:content-type:cc:to:subject:message-id
-         :date:from:in-reply-to:references:mime-version:from:to:cc:subject
-         :date:message-id:reply-to:content-type;
-        bh=xtFt0nsYRVxh9pjtBHg13JFYnpuDwE2MjabpRY6kgzQ=;
-        b=nonh0JGWfyVn+8oW645JQKRUMBq/j1/mra2ONi+J8mf3ezODdbTafa+LUBUdJbI9KJ
-         xl+GoXBRfFkbyakwQde2DVZgdFa2MFowEiGn0FjyUkIPbNWciX7tRK1AnPK+9IfdAuak
-         0aGl11M/FLnPkjxjn3c8WeC10mIr/5x95QGNIcaY8Ct2Qg+k9bEwSICAAXIRjE0oSdFz
-         LZx6hxfZ2zZaSdZG6RD/171c1gvQJ4fE+7gwKrfn0foGsmKEiGoncXA72zcGs5c/Jy2f
-         Zhb+5Q6W3w5eVd95C+2Vcw9I/oSWJ1puZd+EaENqI5ROHWgn3Zz/N8LU30isDM6j9/Y2
-         sLAA==
+        d=gmail.com; s=20251104; t=1782154520; x=1782759320; darn=lists.linux.dev;
+        h=in-reply-to:content-transfer-encoding:content-disposition
+         :mime-version:references:message-id:subject:cc:to:from:date:from:to
+         :cc:subject:date:message-id:reply-to;
+        bh=X7AozSN8XueaE4qvKd3uNMcs9uhqT7nZ8on42KrFBOM=;
+        b=NJRE3PBWj8DCuiEeMhqBwTYUkMI3RHuxE0hgtDMmXfi8LCaxK0bkdT/rgw7+HsJ2H+
+         rVOu9VEbzwcjdNtIfgVi7U8ni3H0u0IklPKG9w44PdofAG4xV+HqCLFY2dE8SnIDSemP
+         1rJrvTB2QiLJRxssF6AN39WhBxnjmIr74P30riKyUSIcgWVHuaYb7szws9+Togt+h//E
+         bkkFHYUnlrCzL+0Zk8Vr0Pq/l+Pc2LAmk31GjJanoIq+9I55iEstadlaSSiStUX3V9uV
+         4xh5Z2mpCWxf4lqiSKs5K/xBV5lYo+wwiqm+3MXnZXGK/GbEpvl1nR+Y/9LIIneFfmMw
+         bBLQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20251104; t=1782152274; x=1782757074;
-        h=content-transfer-encoding:content-type:cc:to:subject:message-id
-         :date:from:in-reply-to:references:mime-version:x-gm-gg
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to
-         :content-type;
-        bh=xtFt0nsYRVxh9pjtBHg13JFYnpuDwE2MjabpRY6kgzQ=;
-        b=bwSVmdC8jewnXdaQ+7a8tcmyixHMUuhT08z3S4+oHQ+NvCdTAd15/G1DZ2eFwJJmOQ
-         BXD/C5GlwxtqRJQ9UVEs0zQ5NZDLsHKnlYLunzR08Qz14jWx+utkOJle8nl7qlwk42LA
-         Duw/jzsxwYFoPh6SjEtGQI6ITfHg4RoEaLshS0z/d7ZNN6X1G9dVQeNIY6nDL0ihBGEj
-         6IO8T02X164koUeETqiDCYZ1pSBXqwcd1/L4sWHJva87fc8brZlpKUKGVd40B3A/Rcyg
-         tMsK5VOtmoS+/BJ/GjAk5PVNmAjRlfl8NdpEW1IZAC1vQff0cuCWjCnJDkaTMyBz7jA1
-         FvjQ==
-X-Gm-Message-State: AOJu0YzLHgL4J/km4fZC83tIUQ2pfWHr2gXfcoVWWKFvd3531kOgrS37
-	0w/Ws8nKIwIxO8qMVO+NoFbKPzOafBIVqxcg3nfBAmIy7fhmcvrSfNEfSNw90g0IWT1t/pSOPbi
-	inzVcK57F55Bs51sSbl8YXlt1fngBKvCmZf70JGSsb/bv4CJaEJlf2T3e
-X-Gm-Gg: AfdE7cnuusSfuVdOwbu6uvDf1/EFwEtEcgfRuQRkg6fqepuQ41pNeHUXQ1Lq0nQSWMH
-	AIXRLPN3KcO+wwD7XvAxHP3gkOVBVTzW+PF2Fbovtf9ISGXq1DliWAysFtiaI+i9Vwew++IPJXO
-	d5N4/cgU2u/af9s+I5xkLi5mXH1zAPmUeKgBIiqv+CyG87MuMcnHMEagIlKm72jXIfkjWFbgz68
-	KQKMMHA9d5N6Ajs3ewMLDSARMWOlzBpPBZt/eOV4znb/MDHfAEF0oa2ZcyuXmeJhCa4MGQV6A==
-X-Received: by 2002:a17:902:e842:b0:2c1:ee6e:4e4e with SMTP id
- d9443c01a7336-2c7c55c4688mr220605ad.31.1782152273465; Mon, 22 Jun 2026
- 11:17:53 -0700 (PDT)
+        d=1e100.net; s=20251104; t=1782154520; x=1782759320;
+        h=in-reply-to:content-transfer-encoding:content-disposition
+         :mime-version:references:message-id:subject:cc:to:from:date:x-gm-gg
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+        bh=X7AozSN8XueaE4qvKd3uNMcs9uhqT7nZ8on42KrFBOM=;
+        b=BU4jUnZxWZLt+57hKMIjHXldnedDPI9LwCejwj2e3GD0OfDLuEivLa41z5DEPXg81d
+         vET4WFKKvXYt8TtBJjcZ6zYclY69mCAzlMax6nkctdGgSxo5iYoeTHALv7WyUJ8U31T8
+         mTmdhqjc/yjbgZ8VhF9bOeEiufhQeawqJadD3WCqTZ4RFmEDH0EsTmbBWK026FWym1HG
+         sBUy86w8NHzm1uSv50vzOztb4+biWkyPe8OxZy3gBCLxEluSWI02uEcFmh/AS9mCASI6
+         XfVpMBvxh82kw0BME2KSn4qRKFghXAItaGHX6GDANonOl8nNyBZ8Am28PY/VzP5iwQrO
+         PuUQ==
+X-Gm-Message-State: AOJu0YzPIcwfQyUBYdWv1SpQFP2wBqysWQMRaOv1bqZz9xleShwe20lT
+	ilyL5JyiECvnJVjqTD4NalVOWEYy3b093iSaWIQ3WdXJkSzn23ONgH+A4Ma7KMFdir+60g==
+X-Gm-Gg: AfdE7cnGW/Gm9Ii9UnV0CqNJdJ+be+sjNVfYRtFXk2dv99x7UrpDXIDMN6yifVP+CV2
+	KEbM0GoImxL4eG81dXYZ6ucmvZlSmVMVrAYvVAUuHF0u+aKjJF83WUjQAcjZokupdueH2QD4T1a
+	5h9uPDOGOZioohXCIGmyC95h0yxyM/Jd22Gtp3LM9phmBBah5P3ruYmjSLxaSHD4xmkN10exArw
+	LHB5STbRNKCoVSpg9Xr+UTUtmqoOD5LBl/vnZa9RDga74UVtuMMqZddNeCMP2MrNbmv3jD2QeSR
+	Ei6+YSveSZ3At9/ef+3oxNfWjZwEq1vNSoAqM1xM7t9rEFrzLrtw8ee8lTYj13ixHR+QiIbNtXI
+	EuX9zRC0GlHTWJFhYuOGUfc93hAETtC/nr3ZCg50AozmF5stcn6DJmXrx32+8TzYCkio3w/F0+n
+	9+x8nQzXtTVEH6F1aJekXGbmmqrnnQDW/pybFNgNm0NatS3ZjSlA==
+X-Received: by 2002:a05:600c:8b37:b0:48f:d5a0:284e with SMTP id 5b1f17b1804b1-4924257c822mr218909665e9.28.1782154519720;
+        Mon, 22 Jun 2026 11:55:19 -0700 (PDT)
+Received: from gmail.com (deskosmtp.auranext.com. [195.134.167.217])
+        by smtp.gmail.com with ESMTPSA id ffacd0b85a97d-466667881b4sm26663646f8f.24.2026.06.22.11.55.19
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Mon, 22 Jun 2026 11:55:19 -0700 (PDT)
+Date: Mon, 22 Jun 2026 20:55:17 +0200
+From: Mahe Tardy <mahe.tardy@gmail.com>
+To: sashiko-reviews@lists.linux.dev
+Cc: bpf@vger.kernel.org
+Subject: Re: [PATCH bpf-next v8 3/7] bpf: add bpf_icmp_send kfunc
+Message-ID: <ajmFFaVQorUS3UO3@gmail.com>
+References: <20260622120515.137082-1-mahe.tardy@gmail.com>
+ <20260622120515.137082-4-mahe.tardy@gmail.com>
+ <20260622123222.5AE7F1F000E9@smtp.kernel.org>
 Precedence: bulk
 X-Mailing-List: sashiko-reviews@lists.linux.dev
 List-Id: <sashiko-reviews.lists.linux.dev>
 List-Subscribe: <mailto:sashiko-reviews+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:sashiko-reviews+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-References: <20260619093531.4038655-1-tmricht@linux.ibm.com> <20260619094233.CBA9B1F000E9@smtp.kernel.org>
-In-Reply-To: <20260619094233.CBA9B1F000E9@smtp.kernel.org>
-From: Ian Rogers <irogers@google.com>
-Date: Mon, 22 Jun 2026 11:17:41 -0700
-X-Gm-Features: AVVi8CffVrqrwBpGjIxgkJVAl6Ad7IfgqkmawX297zMXF4nP1v65i27NURFYVVM
-Message-ID: <CAP-5=fUJbh=dXiadCJJ4d_prCxox1G0WW_WODwSHC4DvwWuQag@mail.gmail.com>
-Subject: Re: [PATCH linux-next] perf test: Skip failing 'perf test aslr' test case
-To: sashiko-reviews@lists.linux.dev, Thomas Richter <tmricht@linux.ibm.com>, 
-	Arnaldo Carvalho de Melo <acme@kernel.org>
-Cc: linux-perf-users@vger.kernel.org, linux-s390@vger.kernel.org, 
-	Vasily Gorbik <gor@linux.ibm.com>, Heiko Carstens <hca@linux.ibm.com>, 
-	Alexander Gordeev <agordeev@linux.ibm.com>, Namhyung Kim <namhyung@kernel.org>
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
+Content-Type: text/plain; charset=iso-8859-1
+Content-Disposition: inline
+Content-Transfer-Encoding: 8bit
+In-Reply-To: <20260622123222.5AE7F1F000E9@smtp.kernel.org>
 
-On Fri, Jun 19, 2026 at 2:42=E2=80=AFAM <sashiko-bot@kernel.org> wrote:
->
-> Thank you for your contribution! Sashiko AI review found 2 potential issu=
-e(s) to consider:
-> - [Medium] Unconditionally setting `err=3D2` when skipping `test_callchai=
-n_aslr` masks prior test failures.
-> - [Medium] Skipping the test incorrectly triggers the test failure cleanu=
-p path, leaking the temporary directory in `/tmp/`.
+On Mon, Jun 22, 2026 at 12:32:22PM +0000, sashiko-bot@kernel.org wrote:
+> Thank you for your contribution! Sashiko AI review found 1 potential issue(s) to consider:
+> - [High] bpf_icmp_send() causes __icmp_send() to bypass broadcast checks and spoof the source address for TC ingress packets.
 > --
->
-> commit d772895777a1677561d1802ac157c32ce73e1379
-> Author: Thomas Richter <tmricht@linux.ibm.com>
->
-> perf test: Skip failing 'perf test aslr' test case
->
-> The test case 'perf test aslr' fails on s390. This commit fixes the failu=
-re
-> by skipping the subtest test_callchain_aslr and emitting a hint when the
-> --call-graph dwarf option is selected.
->
-> Fixes: 60bc9fbc0589 ("perf test: Add inject ASLR test")
->
-> > diff --git a/tools/perf/tests/shell/inject_aslr.sh b/tools/perf/tests/s=
-hell/inject_aslr.sh
-> > index c00461828ea79..7fdb43679dc84 100755
-> > --- a/tools/perf/tests/shell/inject_aslr.sh
-> > +++ b/tools/perf/tests/shell/inject_aslr.sh
-> > @@ -135,8 +135,15 @@ test_callchain_aslr() {
-> >      echo "Callchain ASLR test [Failed - no noploop samples in original=
- file]"
-> >      err=3D1
-> >    elif [ -z "$new_addr" ]; then
-> > -    echo "Callchain ASLR test [Failed - could not find remapped addres=
-s]"
-> > -    err=3D1
-> > +    if perf evlist -v -i "${data}" | grep -q 'sample_type:.*STACK_USER=
-'; then
-> > +      echo "Dropping stack user sample as possible ASLR leak"
-> > +      echo "Call-graph dwarf not supported with 'perf inject --aslr'"
-> > +      echo "Callchain ASLR test [Skip]"
-> > +      err=3D2
->
-> [Severity: Medium]
-> Does unconditionally setting err=3D2 here mask prior test failures?
->
-> If an earlier subtest fails, the global err variable is set to 1. When
-> test_callchain_aslr() decides to skip and assigns err=3D2, it overwrites
-> this previous failure state.
->
-> Since the perf test framework treats an exit code of 2 as a SKIP, the tes=
-t
-> suite will report the entire script as skipped, completely hiding the
-> actual failure from the prior subtest.
->
-> [Severity: Medium]
-> Will skipping this test inadvertently trigger the test failure cleanup pa=
-th
-> and leak the temporary directory?
->
-> The cleanup() function in tools/perf/tests/shell/inject_aslr.sh explicitl=
-y
-> aborts deletion if the exit code or err is non-zero:
->
-> cleanup() {
->   if [ "${exit_code}" -ne 0 ] || [ "${err}" -ne 0 ]; then
-
-
-Thanks for the fix Thomas! I completely agree with what you've done,
-but it exposed this latent issue that we should make the exit_code/err
-comparison -eq 1 rather than -ne 0. Perhaps Arnaldo can fix this, or
-we can address it as a follow-up.
-
-Reviewed-by: Ian Rogers <irogers@google.com>
-
-Thanks,
-Ian
-
->     echo "Test failed! Preserving temp directory: ${temp_dir}"
->     return
->   fi
->   ...
+> 
+> commit 2acddb10f02b54c09816af3432bc928c87824069
+> Author: Mahe Tardy <mahe.tardy@gmail.com>
+> 
+> bpf: add bpf_icmp_send kfunc
+> 
+> This commit adds the bpf_icmp_send kfunc to allow cgroup_skb and tc programs
+> to send ICMP error messages in response to packets. It clones the original
+> packet, optionally assigns a route using ip_route_reply_fill_dst for
+> unrouted ingress packets, and invokes the standard icmp_send or icmpv6_send
+> functions.
+> 
+> > diff --git a/net/core/filter.c b/net/core/filter.c
+> > --- a/net/core/filter.c
+> > +++ b/net/core/filter.c
+> 
+> [ ... ]
+> 
+> > @@ -12546,6 +12548,101 @@ __bpf_kfunc int bpf_xdp_pull_data(struct xdp_md *x, u32 len)
+> > +__bpf_kfunc int bpf_icmp_send(struct __sk_buff *skb_ctx, int type, int code)
+> > +{
+> > +	struct sk_buff *skb = (struct sk_buff *)skb_ctx;
+> > +	struct sk_buff *nskb;
+> > +	struct sock *sk;
+> 
+> [ ... ]
+> 
+> > +	switch (skb->protocol) {
+> > +#if IS_ENABLED(CONFIG_INET)
+> > +	case htons(ETH_P_IP):
+> > +		if (type != ICMP_DEST_UNREACH)
+> > +			return -EOPNOTSUPP;
+> > +		if (code < 0 || code > NR_ICMP_UNREACH)
+> > +			return -EINVAL;
+> > +
+> > +		nskb = skb_clone(skb, GFP_ATOMIC);
+> > +		if (!nskb)
+> > +			return -ENOMEM;
+> > +
+> > +		if (!pskb_network_may_pull(nskb, sizeof(struct iphdr))) {
+> > +			kfree_skb(nskb);
+> > +			return -EBADMSG;
+> > +		}
+> > +
+> > +		if (!skb_dst(nskb) && ip_route_reply_fill_dst(nskb) < 0) {
+>                                       ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+> [Severity: High]
+> Does using ip_route_reply_fill_dst() here cause regressions with how
+> __icmp_send() evaluates routing flags?
+> 
+> For TC ingress packets where skb_dst(nskb) is NULL, this attaches an output
+> route. However, __icmp_send() expects the SKB to have an input route when
+> evaluating rt_flags:
+> 
+> net/ipv4/icmp.c:__icmp_send() {
+>         ...
+>         if (rt->rt_flags & (RTCF_BROADCAST | RTCF_MULTICAST))
+>                 goto out;
+>         ...
+>         saddr = iph->daddr;
+>         if (!(rt->rt_flags & RTCF_LOCAL)) {
+>                 ...
+>                 saddr = 0;
+>         }
+>         ...
 > }
->
-> Because cleanup() was not updated to handle the new skip state, it
-> mistakenly treats err=3D2 as a test failure. This unconditionally leaves
-> behind the /tmp/perf-test-aslr.XXXXXX directory every time the test skips=
-.
->
-> > +    else
-> > +      echo "Callchain ASLR test [Failed - could not find remapped addr=
-ess]"
-> > +      err=3D1
-> > +    fi
-> >    elif [ "$orig_addr" =3D "$new_addr" ]; then
-> >      echo "Callchain ASLR test [Failed - addresses are not remapped]"
-> >      err=3D1
->
-> --
-> Sashiko AI review =C2=B7 https://sashiko.dev/#/patchset/20260619093531.40=
-38655-1-tmricht@linux.ibm.com?part=3D1
->
+> 
+> Because the attached route is an output route, it lacks RTCF_BROADCAST,
+> which might incorrectly allow ICMP replies to broadcast traffic.
+> 
+> Additionally, because RTCF_LOCAL is missing on the output route,
+> __icmp_send() clears saddr. This causes icmp_route_lookup() to select the
+> primary IP of the outgoing interface rather than the specific IP the packet
+> was originally addressed to, violating RFC 1122 requirements for ICMP error
+> source addresses.
+
+Mmh that might be an actual issue that sashiko found here and could
+simplify this patchset by getting rid of the netfilter helpers. Let me
+investigate a little bit more.
+
+> 
+> > +			kfree_skb(nskb);
+> > +			return -EHOSTUNREACH;
+> > +		}
+> > +
+> > +		memset(IPCB(nskb), 0, sizeof(struct inet_skb_parm));
+> > +
+> > +		icmp_send(nskb, type, code, 0);
+> > +		consume_skb(nskb);
+> > +		break;
+> > +#endif
+> 
+> [ ... ]
+> 
+> -- 
+> Sashiko AI review · https://sashiko.dev/#/patchset/20260622120515.137082-1-mahe.tardy@gmail.com?part=3
