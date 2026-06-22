@@ -1,257 +1,129 @@
-Received: from OS0P286CU011.outbound.protection.outlook.com (mail-japanwestazon11020126.outbound.protection.outlook.com [52.101.228.126])
+Received: from canpmsgout08.his.huawei.com (canpmsgout08.his.huawei.com [113.46.200.223])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 58E42322A
-	for <sashiko-reviews@lists.linux.dev>; Mon, 22 Jun 2026 01:43:16 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=fail smtp.client-ip=52.101.228.126
-ARC-Seal:i=2; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1782092597; cv=fail; b=EMVe0RrkdDxa2CtJgqMN5BH9KxgOp0autd7+YOimhrRZPbGP9LE5qRD2RbAQaFfeJldU4lm897I5v/YpsOoDf8VIWEyJcJUpCoe9OdRsNu0DCYHHd/Ph0pVPPn988/kx8uXqVtzUpKNvFCdOPgqf/vhWTXDhnr2x5cGNprba/Mw=
-ARC-Message-Signature:i=2; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1782092597; c=relaxed/simple;
-	bh=W29bydqCM/A0viCX63fqUTHFL59qQQ/YSjl2gAOb79U=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:Content-Type:
-	 Content-Disposition:In-Reply-To:MIME-Version; b=bNOkO77urSfx9AtuFa4rXqWKt3V8Icqqu8sikgCzT3go3u2y20za8dL0pc5OXAlZir+BtLdbI8zbGIKSSgO0pkXOTL3adWOHl0SDmD0U4ZRVqvtPz8XK9hKqf6LtlIPd1WIpYlWLztsqZscCXyVMtVRBQZ6M9/u4vESDe5+z5Mk=
-ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=valinux.co.jp; spf=pass smtp.mailfrom=valinux.co.jp; dkim=fail (1024-bit key) header.d=valinux.co.jp header.i=@valinux.co.jp header.b=Hbg9qyQr reason="signature verification failed"; arc=fail smtp.client-ip=52.101.228.126
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=valinux.co.jp
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=valinux.co.jp
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A5C841A6825
+	for <sashiko-reviews@lists.linux.dev>; Mon, 22 Jun 2026 01:56:13 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=113.46.200.223
+ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
+	t=1782093377; cv=none; b=kv4JRrRJ25i3NbTg9LeED4qKdn6sd/qDOMFwkwLuZCiILvPLS75j642faxy854wfRVqwOM79H8ms9Jfd/3r2w3poP2YKG7InatO5WGIJ4RFHA657KILvtvGzMDbqW0/ba7nMfzpBFcI/U9q1lB7X27ViEufcAeCulkMCfDTpv2U=
+ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
+	s=arc-20240116; t=1782093377; c=relaxed/simple;
+	bh=6F2UYkCvcsk94hR3Vd814iN/foQsjRWXZ6qifUczgBY=;
+	h=Message-ID:Date:MIME-Version:Subject:To:CC:References:From:
+	 In-Reply-To:Content-Type; b=XCvLMplLxUXq3tsCfmV0ulqV9mWqrShbTLaC4hqbgzihXAOm6+BDekbyUzeu9US0SmfCnJqUYMBwY+HnadD0ADI4kSquCjcUrZqO5CLfsiKeQbsBw8yWT0BqJ+XviKklZjfnDkK4G9fWWMrhL6deZk6DsWvx7Tu0dNwRUcneWd0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=huawei.com; spf=pass smtp.mailfrom=huawei.com; dkim=pass (1024-bit key) header.d=huawei.com header.i=@huawei.com header.b=zkEI6co+; arc=none smtp.client-ip=113.46.200.223
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=huawei.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=huawei.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=fail reason="signature verification failed" (1024-bit key) header.d=valinux.co.jp header.i=@valinux.co.jp header.b="Hbg9qyQr"
-ARC-Seal: i=1; a=rsa-sha256; s=arcselector10001; d=microsoft.com; cv=none;
- b=QqXU03RyuCe05FIjgsJ8LdhouLHy12vbmRoK+X/d6iJwYfYKwTOlX62NEx1fVWx+KAyt3PY1Q+hDsBBJHG4wmh3eIei1+p/HgaVc17f718MadVPLuaj9p+sqijfRsLniDJCxFzxsnnq+U7n5VJ4Q6VQjhzRFP53hDJQUX0W2aB+9h22j7jqVAylNHgZ1z1Vezb25yAPIDkQRByW55xdeK0+sy/AVt7GE0eTvb/09s059DQ9wr/JnZS+15mVVg6z5R4rmYuL05UvLptyr8N1tOYPQqoaqZklQ/tQH9qhjF6iah16feEPak5Oe1g338QCYO7HMXsdlBPquw0WWC3bQxw==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com;
- s=arcselector10001;
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
- bh=93wn40yDKM+64uCjRiO/94bQ6jENMrSoScnwLZmt5C0=;
- b=R+pN+fyoAr7BBrCUsF8rKjAmKfoVm8lcBxGjZGfRlorcZSL/zJc/bo2b9S8lmc1GUrydsORac5rPOmNu5qNFpv+6LHIxw2Zg+5xV/JEB5sj27heb1wPOXY7MR7IvsM7Y1udw1qdpI2WbI/5RcnCjkCJRXl3m1EfPvjCh122+dlOTIxFnNNdLovdDT21Yr0DebaZsV3bPGQb8UbeXtj7Vg4HrsYeA2/5/rwLilGjPyLCP1rWNmGFQfd7fnn3SOziSYvAgykk4WDrJRmB39g1gUfVzwtuwmzZ0jjG0kQsrsz/nVJS3BAajjHiMqe3feUaOBfzxF/fW6UxLXnQdcUI+Ig==
-ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
- smtp.mailfrom=valinux.co.jp; dmarc=pass action=none
- header.from=valinux.co.jp; dkim=pass header.d=valinux.co.jp; arc=none
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=valinux.co.jp;
- s=selector1;
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
- bh=93wn40yDKM+64uCjRiO/94bQ6jENMrSoScnwLZmt5C0=;
- b=Hbg9qyQrpcffBLJQWywfsy1rViIxwrUEB1igbc+qtTrECES1gLfegpLk8jI5D7SMSafPmoh1t506SmqHgv/em21TcWDrGn08ywCs+jDmP931N/NpPCGB7AoEL/pV1XZEjhuqbInBHx5FESBa2JFHCHgKe8Yo1yrdtsx8hEo3Zlk=
-Authentication-Results: dkim=none (message not signed)
- header.d=none;dmarc=none action=none header.from=valinux.co.jp;
-Received: from TY7P286MB7722.JPNP286.PROD.OUTLOOK.COM (2603:1096:405:38f::10)
- by OS7P286MB6729.JPNP286.PROD.OUTLOOK.COM (2603:1096:604:42d::10) with
- Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.21.139.19; Mon, 22 Jun
- 2026 01:43:11 +0000
-Received: from TY7P286MB7722.JPNP286.PROD.OUTLOOK.COM
- ([fe80::2305:327c:28ec:9b32]) by TY7P286MB7722.JPNP286.PROD.OUTLOOK.COM
- ([fe80::2305:327c:28ec:9b32%5]) with mapi id 15.21.0139.018; Mon, 22 Jun 2026
- 01:43:11 +0000
-Date: Mon, 22 Jun 2026 10:43:10 +0900
-From: Koichiro Den <den@valinux.co.jp>
-To: sashiko-reviews@lists.linux.dev
-Cc: Frank.Li@kernel.org, vkoul@kernel.org, dmaengine@vger.kernel.org
-Subject: Re: [PATCH v3 02/13] dmaengine: dw-edma: Add core quiesce operations
-Message-ID: <pmxfqgsjposbv6zehrgitqwvbxppc7cfht4xsxw4l2lcjkojkw@ycqyo72w24ji>
-References: <20260620170040.3756043-1-den@valinux.co.jp>
- <20260620170040.3756043-3-den@valinux.co.jp>
- <20260620171536.0DE831F000E9@smtp.kernel.org>
-Content-Type: text/plain; charset=iso-8859-1
-Content-Disposition: inline
-Content-Transfer-Encoding: 8bit
-In-Reply-To: <20260620171536.0DE831F000E9@smtp.kernel.org>
-X-ClientProxiedBy: TYCP286CA0125.JPNP286.PROD.OUTLOOK.COM
- (2603:1096:400:2b6::7) To TY7P286MB7722.JPNP286.PROD.OUTLOOK.COM
- (2603:1096:405:38f::10)
+	dkim=pass (1024-bit key) header.d=huawei.com header.i=@huawei.com header.b="zkEI6co+"
+dkim-signature: v=1; a=rsa-sha256; d=huawei.com; s=dkim;
+	c=relaxed/relaxed; q=dns/txt;
+	h=From;
+	bh=5hfMtSDzgGXtKulm+dm7oYe+aQzpL/O7amMQwhP+lp4=;
+	b=zkEI6co+aWUxfVadZdvZY/vBU9jhv9yYax6YU5jKbnY99CKCByu8zptvH1JtDJTKwkg/2kDaT
+	R23sIjMe3TLrYkfybhgelaZ8XZ63LkbBhUq//O94Kgi3nwofYzQcoHlJup65Aoc8NK+pUw/IQP0
+	uxvzF1SXMhmcjmijsTZ4acM=
+Received: from mail.maildlp.com (unknown [172.19.162.92])
+	by canpmsgout08.his.huawei.com (SkyGuard) with ESMTPS id 4gk9zg6TQkzmVXR;
+	Mon, 22 Jun 2026 09:46:55 +0800 (CST)
+Received: from dggemv706-chm.china.huawei.com (unknown [10.3.19.33])
+	by mail.maildlp.com (Postfix) with ESMTPS id 06C4040562;
+	Mon, 22 Jun 2026 09:56:00 +0800 (CST)
+Received: from kwepemq100007.china.huawei.com (7.202.195.175) by
+ dggemv706-chm.china.huawei.com (10.3.19.33) with Microsoft SMTP Server
+ (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
+ 15.2.1544.11; Mon, 22 Jun 2026 09:55:59 +0800
+Received: from [10.159.167.44] (10.159.167.44) by
+ kwepemq100007.china.huawei.com (7.202.195.175) with Microsoft SMTP Server
+ (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
+ 15.2.1544.11; Mon, 22 Jun 2026 09:55:59 +0800
+Message-ID: <515104e6-979d-456e-8635-3bd5eabf29bc@huawei.com>
+Date: Mon, 22 Jun 2026 09:55:58 +0800
 Precedence: bulk
 X-Mailing-List: sashiko-reviews@lists.linux.dev
 List-Id: <sashiko-reviews.lists.linux.dev>
 List-Subscribe: <mailto:sashiko-reviews+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:sashiko-reviews+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-X-MS-PublicTrafficType: Email
-X-MS-TrafficTypeDiagnostic: TY7P286MB7722:EE_|OS7P286MB6729:EE_
-X-MS-Office365-Filtering-Correlation-Id: ed979cb1-d7c3-4e6a-9c5a-08decfff9e79
-X-MS-Exchange-SenderADCheck: 1
-X-MS-Exchange-AntiSpam-Relay: 0
-X-Microsoft-Antispam:
-	BCL:0;ARA:13230040|23010399003|10070799003|1800799024|376014|366016|7136999003|6133799003|18002099003|22082099003|56012099006|4143699003;
-X-Microsoft-Antispam-Message-Info:
-	9J6bd8b/Oa3tBFHruWY5YQqdliLEtNZfLTLafIX59gWWkFPqcnKmJbx2BRkpdUPUp9CjioaoOgMtQe1u/zeNUlIyRd+9q3uoAAii04xMUIdW6CvnuhyvsWIHK4lWwmkvx1aWpj5W6iCkrOPOr8/QpIgzRd7JNa1Io9lkApNszYepCLZjVd5RGyHsaMJEQorZsXaB3fg0astiaJ+W3Hma5HveSKc97o8ekgStI7C/FXQnXW7HzbqpHQmT8MNWamnutM6HRLjpJKhFlpW19elQ1tCmBvAkwx6dTl691fWUPTQBL+KvNKA3vT7dHVxA0/7gHur3VQ1oQHwD9UaE0y6o4RThpQpObTtGYrx8rXFNUuO/zeFgqOEcx4gDzek3Vqn9+d2CX2u/uFzNGzSZ4o9qGXwiaf1MV8oNSgDjrzwpFQgzSvo0DaWs3TSnPLIqP4HL0qSJOwTKs8UJ/YmZTuV3J62x3N1+hBrlWu/QfCSsbeyCvr5s8WRvS61AiMXy4mCB7/Bgfj4sjqIHc7aVL4AeFVjTwOyjn2pGQ66Barwif71SXX7Aq3ZV0Kv4YGSKW1DbZWswqyqq3Fr3kxIXECuBoji4ASSIohEw/B3XHU3f/rk=
-X-Forefront-Antispam-Report:
-	CIP:255.255.255.255;CTRY:;LANG:en;SCL:1;SRV:;IPV:NLI;SFV:NSPM;H:TY7P286MB7722.JPNP286.PROD.OUTLOOK.COM;PTR:;CAT:NONE;SFS:(13230040)(23010399003)(10070799003)(1800799024)(376014)(366016)(7136999003)(6133799003)(18002099003)(22082099003)(56012099006)(4143699003);DIR:OUT;SFP:1102;
-X-MS-Exchange-AntiSpam-MessageData-ChunkCount: 1
-X-MS-Exchange-AntiSpam-MessageData-0:
-	=?iso-8859-1?Q?vGQCLgNJyr3AJgtvk8SneoqXO4sRv9e4zJoDWtXdPvHX1V7s2k+bVnuuI9?=
- =?iso-8859-1?Q?k/ZwaHbT64SHXKG9icJzgqIKCAIK6W4u55+0BgpkiHR4PL376hM2GSVpvq?=
- =?iso-8859-1?Q?C6VnjsQbML/pZVPAvX88SUCejOMeazWL0OVbdkxHjr77AYBQ4PezLlyY7r?=
- =?iso-8859-1?Q?f3JPjFR3CnHDof72a1UrbaScBlqrRiaOp7FrYg+2f8nlwREFiMYzwz0If3?=
- =?iso-8859-1?Q?1R+X007I6aJreENF/pZc4mmDbsDeBTyqr3y+P9Q7PbwuZgCfG4RQ2DFB32?=
- =?iso-8859-1?Q?DWw6A2rXBIj6beR7l5JoyIKG6LfUxCnUt67IPGTnM1Dlo+ZrtfRlGOBDYA?=
- =?iso-8859-1?Q?XjEvDzqLJUZca8TApzURDR3QN8F1EzgDUwrx+T9E1800t74N+eTe9HY4b9?=
- =?iso-8859-1?Q?pCDX7cLF2pbALnukBD0gkEAcAhg+cjhJcHWJUD47eVbSM1/yGCJ+ouhRmf?=
- =?iso-8859-1?Q?6bXF0vlKD4Tz41RcYxTzpBEJpj6TIlm9gPvjeZj+NNj9E0l8triP4A+yMC?=
- =?iso-8859-1?Q?RDUbaUpfg6lK1O/WpZqEm3DDa8vxV5dM1R8hptPYjIuda9eiexQ0XT4v1H?=
- =?iso-8859-1?Q?RwYROXDL3Py9PcH64fDldXkGxrIoIWSKMqw42i9vC1wsKx0HnLaw0MOH7h?=
- =?iso-8859-1?Q?T/RXCgAlwssPfaFZxYI2k39w6guzRPhT3tfAioHsk7a/zd8mXjrldh0dSV?=
- =?iso-8859-1?Q?3/8F+NCIu19zRm4cDi7WWKSkw/oHuLALNs9gh5gPaz1WqJNJboz65wqzNg?=
- =?iso-8859-1?Q?0MhbPtJR7nC0gjnRas8RSDnGv257vDqzoXNmUGCz05Q+8QbkSpKer27XU8?=
- =?iso-8859-1?Q?QANWq1Cb6on2RITUH4hNRyZXfdcIZR5riNHg9LVFmCND7n9+ACEUvjWlUN?=
- =?iso-8859-1?Q?EXkuHJ9/J8vXRuzmvgIh13HG+z0+XxKqErS4VuUOFSRt+b7PwRmvO/9Iwr?=
- =?iso-8859-1?Q?SLuZ3mOK/45J9TA4cOYH5DkB4qH5ALp5ymDj0GLbBnqblwEdMS4gtL2qSi?=
- =?iso-8859-1?Q?1V+bkiGwqUe2b3YiV1X6dnP0nCYYqfgmXUTVvxv+Cz6lsSfu7wf4UD90kh?=
- =?iso-8859-1?Q?Q8MFwAv46AWRKV76PxfVTVoroF+k1+XnO+BmP8prCgWhpQol6hmvrC0AYH?=
- =?iso-8859-1?Q?vyiEYR2qBbqhIqQFoDl6KpubxaQdDpZwlCvUafxqD/zOTVLrWhtS82f6a9?=
- =?iso-8859-1?Q?+FTgWFjRuZuM+FaRMPKVTCHS6RSDlsCqNtP6Oaw1y3wAnKZAoY5DpAj7JD?=
- =?iso-8859-1?Q?glqbSnHIj2/5APoXSI012JSKviehBdbkt/0dOP8DzpCzLhmPlpzvCm97BF?=
- =?iso-8859-1?Q?Huc/VRjiVvhqO44GXs5wuoANshdELOThf3hxOc3XA5HtBfTseK5/ecSwsU?=
- =?iso-8859-1?Q?onGbKC6C8u8njFH0YFYG3rFtP8ZMxWKyoc3G7+JtdEyCFcxhxjbEuPvq6R?=
- =?iso-8859-1?Q?ZR3wJV5z7XHnslgqh6Qyky7pGuQUu5pak1X10/yxhWz3dbJqjOTJojUwzk?=
- =?iso-8859-1?Q?7Fb6emZCmRECb1YzbTHXtZ7C2507ZA1gPfJK7aBb8O0SBuheywo48INMzJ?=
- =?iso-8859-1?Q?sAVqilVu5W/MCbFBtlbkV1CBySJinaSlN2Or0AwhBxKYJnla3draRVLo5g?=
- =?iso-8859-1?Q?TycccGlR1KLN5U8k/jUDX1OWKfbkjRWQ+IHOlwLP6ZjNXR6DwuxMuBbZ7W?=
- =?iso-8859-1?Q?b9uSQ61j7niHHpyNVrzJWfa4qm2GCQo7Iq4PfvVhtkUIScBeeUJR4OwJa+?=
- =?iso-8859-1?Q?QgI01LVK7eE1CwfCNcgw9KlOCR2vfgSQMKbttQAdlIhWMlO79r2fGGBx2V?=
- =?iso-8859-1?Q?lJIX+gFlXIPMb0XnXD9ksVk06YosD2jJmpi15OfwcC+ikyx0mKP0?=
-X-OriginatorOrg: valinux.co.jp
-X-MS-Exchange-CrossTenant-Network-Message-Id: ed979cb1-d7c3-4e6a-9c5a-08decfff9e79
-X-MS-Exchange-CrossTenant-AuthSource: TY7P286MB7722.JPNP286.PROD.OUTLOOK.COM
-X-MS-Exchange-CrossTenant-AuthAs: Internal
-X-MS-Exchange-CrossTenant-OriginalArrivalTime: 22 Jun 2026 01:43:11.6601
- (UTC)
-X-MS-Exchange-CrossTenant-FromEntityHeader: Hosted
-X-MS-Exchange-CrossTenant-Id: 7a57bee8-f73d-4c5f-a4f7-d72c91c8c111
-X-MS-Exchange-CrossTenant-MailboxType: HOSTED
-X-MS-Exchange-CrossTenant-UserPrincipalName: 0zzCDf8DG6MDAKBVBLP46hZ7VqcR7hYkM51Wt2XcF7yk20/gWwekld/Sa2dU2KvALhvBLZyqKfw9PHSTvPeJrg==
-X-MS-Exchange-Transport-CrossTenantHeadersStamped: OS7P286MB6729
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH v4 3/6] drm/hibmc: Store fb in variable in atomic_update
+To: Thomas Zimmermann <tzimmermann@suse.de>, <tiantao6@hisilicon.com>,
+	<kong.kongxinwei@hisilicon.com>, <maarten.lankhorst@linux.intel.com>,
+	<mripard@kernel.org>, <airlied@gmail.com>, <simona@ffwll.ch>
+CC: <dri-devel@lists.freedesktop.org>, <sashiko-reviews@lists.linux.dev>,
+	<shiyongbang@huawei.com>
+References: <20260618123142.92298-1-tzimmermann@suse.de>
+ <20260618123142.92298-4-tzimmermann@suse.de>
+From: Yongbang Shi <shiyongbang@huawei.com>
+In-Reply-To: <20260618123142.92298-4-tzimmermann@suse.de>
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: 7bit
+X-ClientProxiedBy: kwepems200002.china.huawei.com (7.221.188.68) To
+ kwepemq100007.china.huawei.com (7.202.195.175)
 
-On Sat, Jun 20, 2026 at 05:15:35PM +0000, sashiko-bot@kernel.org wrote:
-> Thank you for your contribution! Sashiko AI review found 2 potential issue(s) to consider:
-> - [High] The v0 eDMA `ch_quiesce` operation globally disables the DMA engine and clobbers interrupt states for all channels in the direction.
-
-This is a false positive under the ownership model enforced by this series.
-
-Still, I should add a short source comment in v4. The v0 eDMA quiesce
-implementation is intentionally direction-granular because the relevant hardware
-controls are direction-granular, and that may be easy to miss from the callback
-name alone.
-
-> - [High] `dw_edma_v0_core_dir_off` modifies the shared direction-wide `int_mask` register without holding `dw->lock`, causing a data race.
-
-This points at a real teardown assumption, but adding the lock only to this new
-helper would fix the wrong layer. The same issue already exists in the
-pre-existing dw_edma_v0_core_off() path if the driver is unbound while local
-DMA engine clients are still programming the same instance. More below.
-
-> --
+> The atomic-update helper frequently refers to the framebuffer in
+> new_state->fb. Store it in a local variable to make the code more
+> readable. No functional changes.
 > 
-> commit d7eb32d006bf71fa3372ef97f6fa793fa851c5c8
-> Author: Koichiro Den <den@valinux.co.jp>
+> Suggested-by: Yongbang Shi <shiyongbang@huawei.com>
+> Signed-off-by: Thomas Zimmermann <tzimmermann@suse.de>
+> ---
+>  drivers/gpu/drm/hisilicon/hibmc/hibmc_drm_de.c | 15 +++++++--------
+>  1 file changed, 7 insertions(+), 8 deletions(-)
 > 
-> dmaengine: dw-edma: Add core quiesce operations
-> 
-> This adds core operations to quiesce only the resources represented by a
-> dw-edma instance. It implements per-channel and per-direction quiesce
-> operations for v0 eDMA and HDMA compatible register layouts.
-> 
-> > diff --git a/drivers/dma/dw-edma/dw-edma-v0-core.c b/drivers/dma/dw-edma/dw-edma-v0-core.c
-> > index 1781ba4f022ec..316d8c94eff9c 100644
-> > --- a/drivers/dma/dw-edma/dw-edma-v0-core.c
-> > +++ b/drivers/dma/dw-edma/dw-edma-v0-core.c
-> 
-> [ ... ]
-> 
-> > @@ -160,6 +160,15 @@ static inline u32 readl_ch(struct dw_edma *dw, enum dw_edma_dir dir, u16 ch,
-> >  	readl_ch(dw, dir, ch, &(__dw_ch_regs(dw, dir, ch)->name))
-> >  
-> >  /* eDMA management callbacks */
-> > +static void dw_edma_v0_core_dir_off(struct dw_edma *dw, enum dw_edma_dir dir)
-> > +{
-> > +	SET_RW_32(dw, dir, int_mask,
-> > +		  EDMA_V0_DONE_INT_MASK | EDMA_V0_ABORT_INT_MASK);
-> 
-> [Severity: High]
-> Does this modification of the shared int_mask register need to be
-> protected by dw->lock?
-> 
-> In dw_edma_v0_core_start(), modifications to int_mask are protected by
-> raw_spin_lock_irqsave(&dw->lock, flags). However,
-> dw_edma_v0_core_dir_off() directly overwrites the entire int_mask
-> register without acquiring dw->lock.
-> 
-> Could this cause a data race where a concurrent read-modify-write cycle
-> in dw_edma_v0_core_start() clobbers the mask state configured here,
-> leaving the interrupt configuration inconsistent?
+> diff --git a/drivers/gpu/drm/hisilicon/hibmc/hibmc_drm_de.c b/drivers/gpu/drm/hisilicon/hibmc/hibmc_drm_de.c
+> index 2e6e189bec1a..19cb16a7daf9 100644
+> --- a/drivers/gpu/drm/hisilicon/hibmc/hibmc_drm_de.c
+> +++ b/drivers/gpu/drm/hisilicon/hibmc/hibmc_drm_de.c
+> @@ -100,18 +100,18 @@ static int hibmc_plane_atomic_check(struct drm_plane *plane,
+>  static void hibmc_plane_atomic_update(struct drm_plane *plane,
+>  				      struct drm_atomic_commit *state)
+>  {
+> -	struct drm_plane_state *new_state = drm_atomic_get_new_plane_state(state,
+> -									   plane);
+> +	struct drm_plane_state *new_state = drm_atomic_get_new_plane_state(state, plane);
+> +	struct drm_framebuffer *fb = new_state->fb;
+>  	u32 reg;
+>  	s64 gpu_addr = 0;
+>  	u32 line_l;
+>  	struct hibmc_drm_private *priv = to_hibmc_drm_private(plane->dev);
+>  	struct drm_gem_vram_object *gbo;
+>  
+> -	if (!new_state->fb)
+> +	if (!fb)
+>  		return;
+>  
+> -	gbo = drm_gem_vram_of_gem(new_state->fb->obj[0]);
+> +	gbo = drm_gem_vram_of_gem(fb->obj[0]);
+>  
+>  	gpu_addr = drm_gem_vram_offset(gbo);
+>  	if (WARN_ON_ONCE(gpu_addr < 0))
+> @@ -119,9 +119,9 @@ static void hibmc_plane_atomic_update(struct drm_plane *plane,
+>  
+>  	writel(gpu_addr, priv->mmio + HIBMC_CRT_FB_ADDRESS);
+>  
+> -	reg = new_state->fb->width * (new_state->fb->format->cpp[0]);
+> +	reg = fb->width * fb->format->cpp[0];
+>  
+> -	line_l = new_state->fb->pitches[0];
+> +	line_l = fb->pitches[0];
+>  	writel(HIBMC_FIELD(HIBMC_CRT_FB_WIDTH_WIDTH, reg) |
+>  	       HIBMC_FIELD(HIBMC_CRT_FB_WIDTH_OFFS, line_l),
+>  	       priv->mmio + HIBMC_CRT_FB_WIDTH);
+> @@ -129,8 +129,7 @@ static void hibmc_plane_atomic_update(struct drm_plane *plane,
+>  	/* SET PIXEL FORMAT */
+>  	reg = readl(priv->mmio + HIBMC_CRT_DISP_CTL);
+>  	reg &= ~HIBMC_CRT_DISP_CTL_FORMAT_MASK;
+> -	reg |= HIBMC_FIELD(HIBMC_CRT_DISP_CTL_FORMAT,
+> -			   new_state->fb->format->cpp[0] * 8 / 16);
+> +	reg |= HIBMC_FIELD(HIBMC_CRT_DISP_CTL_FORMAT, fb->format->cpp[0] * 8 / 16);
+>  	writel(reg, priv->mmio + HIBMC_CRT_DISP_CTL);
+>  }
+>  
 
-To be fair, this patch just adds one more path that relies on the existing
-teardown assumption: the same dw-edma instance must not be torn down while local
-DMA engine clients are still actively programming it.
+Reviewed-by: Yongbang Shi <shiyongbang@huawei.com>
 
-Taking dw->lock here would not fix that fundamental problem. The existing
-core_off() path already writes these direction-wide registers locklessly. If
-dw_edma_v0_core_start() can run concurrently with core_off() or dir_off(), the
-problem is broader than this int_mask write.
+Thanks,
+Yongbang.
 
-So in my opinion, the proper fix is outside this patch and should be one of the
-following:
 
-  (a) Do not allow the driver to be unbound, as Frank pointed out earlier:
-      https://lore.kernel.org/dmaengine/aiHe9UG3FwIACC8B@lizhi-Precision-Tower-5810/
-
-  (b) Harden the DMA engine termination and teardown path so remove waits until
-      existing channel users have stopped using all channels before turning the
-      hardware off.
-
-      Parts of that are covered by another series of mine, esp. patches 3/4/5 of:
-      https://lore.kernel.org/dmaengine/20260615154111.2174161-1-den@valinux.co.jp/
-
-      The remaining piece is the remove ordering itself: dw_edma_remove() should
-      not call dw_edma_core_quiesce() or dw_edma_core_off() until the instance
-      is no longer used nor usable by local DMAengine clients. Only after that
-      should it turn the core off, free IRQs, and unregister the DMA device.
-
-> 
-> > +	SET_RW_32(dw, dir, int_clear,
-> > +		  EDMA_V0_DONE_INT_MASK | EDMA_V0_ABORT_INT_MASK);
-> > +	SET_RW_32(dw, dir, engine_en, 0);
-> > +}
-> 
-> [ ... ]
-> 
-> > +static void dw_edma_v0_core_ch_quiesce(struct dw_edma_chan *chan)
-> > +{
-> > +	dw_edma_v0_core_dir_off(chan->dw, chan->dir);
-> > +}
-> 
-> [Severity: High]
-> Will this globally disable the DMA engine and clobber interrupt states
-> for all active channels in this direction?
-> 
-> The .ch_quiesce operation is intended as a per-channel action. However,
-> dw_edma_v0_core_ch_quiesce() wraps dw_edma_v0_core_dir_off(), which
-> writes 0 to engine_en and masks all interrupts for the entire direction.
-> 
-> If a device has multiple active channels in the same direction, would
-> releasing one delegated channel halt and silently drop pending interrupts
-> for all other active channels in that direction?
-
-At the register level, yes: for v0 eDMA this is direction-granular. The relevant
-control registers, including engine enable and interrupt mask/clear, are not
-per-channel.
-
-The important part is that this series does not allow arbitrary per-channel
-partial ownership for the v0 eDMA and HDMA-compatible layouts. Those layouts
-require ownership of the whole direction before channels in that direction can
-be delegated. So this helper is only used where quiescing the whole direction
-matches the ownership boundary.
-
-HDMA native is different and uses the per-channel quiesce path.
-
-In other words, releasing one delegated v0 eDMA channel is not meant to stop
-unrelated live channels owned by another local user in the same direction. That
-mixed-ownership case is rejected from the beginning.
-
-In short, .quiesce/.ch_quiesce implementations are intentional, but I should add
-source comments to make things clearer for future readers.
-
-Best regards,
-Koichiro
-
-> 
-> -- 
-> Sashiko AI review · https://sashiko.dev/#/patchset/20260620170040.3756043-1-den@valinux.co.jp?part=2
