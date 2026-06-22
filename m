@@ -1,145 +1,119 @@
-Received: from mail-wm1-f51.google.com (mail-wm1-f51.google.com [209.85.128.51])
+Received: from mail-ed1-f73.google.com (mail-ed1-f73.google.com [209.85.208.73])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2D03634752E
-	for <sashiko-reviews@lists.linux.dev>; Mon, 22 Jun 2026 18:56:33 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.51
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 101481FA859
+	for <sashiko-reviews@lists.linux.dev>; Mon, 22 Jun 2026 19:04:54 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.208.73
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1782154595; cv=none; b=gfO5BAkAN9DG3x23Fl9R2yvoUB139UmPht/of/NIr6HjP0Ue6l+t5euObP2JfrNARh2KVLL9Drwc1VNsriwTGa6MJbXdyJ9fLd69Jm3ryls/AOO+nDCvbe5aJhsdz434sVbUoSQDg7COs5cVqfzV9paZmQxNcfjTTjbmX3z8Fcc=
+	t=1782155096; cv=none; b=Sb3wLV+ooav1gV5CKexb/60djO1EIyn4eCIzXIk3ziZzJvF/EqML2exA1wIAFAH8oudpWtiisfZsOPtWoYBlSIYMH9eXXurzfpQn7joV3OtqAz8eYUCYx1MevaDSzGPx7Mi9aNm1D2UrWGcic72TFJop1hVz64rKG4pT2ST/H5I=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1782154595; c=relaxed/simple;
-	bh=b/5AxKlfDLljDsOspE5bNyi8aD14GKd8wsmsXO7uUO4=;
-	h=Mime-Version:Content-Type:Date:Message-Id:Subject:Cc:To:From:
-	 References:In-Reply-To; b=Zz1aaXnrd3WUIDrq6JHqG2ql0r0Izp0u3ktfQgbKtzV5qLXbS5vsB2TUdtfeCyaJmmUM3qZoz0gQRKnMa5lkI+8Hg8cyrkKapH4xOYa2i+L1TB6LcGZLRxy5yhSUTDTXn+km+BcxMpRQ5ewqjWV+y0vJpesFXYDDyWEjWKLmB9U=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=ixC7k2oP; arc=none smtp.client-ip=209.85.128.51
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+	s=arc-20240116; t=1782155096; c=relaxed/simple;
+	bh=ShHbZ1ZNW78ZoUWEkTBJ9s2OyXd5OTwbufXBnfys6KY=;
+	h=Date:In-Reply-To:Mime-Version:References:Message-ID:Subject:From:
+	 To:Cc:Content-Type; b=lKJZV4dpyXtf1Dw7NlktHY2viW3SuylRUVcd6eDyZXNQjx9V0MLV+PF8+waMo18VJGlPr5OFbTw6srtgiu5GxEfVPv9w0MENgdO6DEF74rLWMRMCcOLJNH1QCLC8vXZkWNgY6oYAYwEVVoVfJMcFGwhBpmBkyNETrJYSD20T5Jw=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=google.com; spf=pass smtp.mailfrom=flex--tarunsahu.bounces.google.com; dkim=pass (2048-bit key) header.d=google.com header.i=@google.com header.b=WV+yczGv; arc=none smtp.client-ip=209.85.208.73
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=google.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=flex--tarunsahu.bounces.google.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="ixC7k2oP"
-Received: by mail-wm1-f51.google.com with SMTP id 5b1f17b1804b1-4921e4dd62dso1922655e9.0
-        for <sashiko-reviews@lists.linux.dev>; Mon, 22 Jun 2026 11:56:33 -0700 (PDT)
+	dkim=pass (2048-bit key) header.d=google.com header.i=@google.com header.b="WV+yczGv"
+Received: by mail-ed1-f73.google.com with SMTP id 4fb4d7f45d1cf-6974edf4c84so3513057a12.3
+        for <sashiko-reviews@lists.linux.dev>; Mon, 22 Jun 2026 12:04:54 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20251104; t=1782154592; x=1782759392; darn=lists.linux.dev;
-        h=in-reply-to:references:from:to:cc:subject:message-id:date
-         :content-transfer-encoding:mime-version:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=BGuX+WBhfDluwNW0VRTh1DIO03lIg15lXv1EuQn3pcA=;
-        b=ixC7k2oPxE+Kym0vRH8TifdxY+KbnLYV4nSzzAa9NmypHJH+7Y2DrOtlzr6UFLELMf
-         KtxI+jCnx/j7AOtSiK3sgOK4uK5pg6uUA8aTEU5Jn/nxcW6L+zzRwRsuwB7fWaGPC75V
-         RYi4xHkPfAs1rzVqHOKUshJB1cMjiOiCzszK5P7Q+MDcWYHUjWL/f1R7bHDn5pibTRud
-         BWN/xu8POF8JHD1EO5m/3JnQ4JnHG6WX4uD5DHueIcYvB6S6Xf3yrDzCRroLfnpiSBdb
-         Zm7C7c0U4T0s3BCIvpeBnZykbtqCnsrUgvwDHvAZPY9gCdpzsNosWLAI5ppWvLfdvQpS
-         lQYQ==
+        d=google.com; s=20251104; t=1782155093; x=1782759893; darn=lists.linux.dev;
+        h=content-transfer-encoding:cc:to:from:subject:message-id:references
+         :mime-version:in-reply-to:date:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=F3VJ0UZP+KwFN7MAAYe9I9DBthlkqlN1IgSIedgq86o=;
+        b=WV+yczGvGNZwZqn0AxJwMdnotDfLfI2hLrzAHTUq8twx1Cfw/nbic8yFJq/Zi0MUGw
+         2QXyqRY5+yhL1F/6RiQJbqJWfv5iWulYVTYKHFjZf4NukQMJnmavKvBunbJDczlOtmMV
+         twix/D8CaEmFAfNdcJxqqQ7UVmyAYt76zSrbc9bXyrvQxAo6HKmOS7hgmZjkCv2cL6Lj
+         KFudjJEfW/ChveNklmx5C7gTlfMGm1IQ2XSZce409RcYk+vzq7S9yQ3KrCATiQYFC+6U
+         hTKtGkqRx/TIZO5srnvmi1hYgKMSFGa6a2f06Y/R2WywHn357my2ewH98qZwDEAure9T
+         aVVg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20251104; t=1782154592; x=1782759392;
-        h=in-reply-to:references:from:to:cc:subject:message-id:date
-         :content-transfer-encoding:mime-version:x-gm-gg:x-gm-message-state
-         :from:to:cc:subject:date:message-id:reply-to;
-        bh=BGuX+WBhfDluwNW0VRTh1DIO03lIg15lXv1EuQn3pcA=;
-        b=Jx3u7xZrwwQJ1NBfGZKnm0ACj1JvNm/EfwxY5QC2ta2xlqA/9c2CmFcapqhUqF2Obs
-         CKo/hn0pgexAiKGJiHrdm99elVHyqoM2kD1yOrclKVFnN9kOtTHgRJIdRjF9bOmW2K4d
-         +AisB6BRc27PD3hLUT48ASeUDwsN8QQVmJPjx2uQjs15419HccuIQat55emXnssdShyU
-         VUgoko2D2QEEzFHv6fVBOhJyoIR4Iph0OnkpXS6uVRTyRV25sFVud5DQ3A2CCMklKGID
-         nW26SihpOOZeHPjWM+YzA6BV7kFVSik+rfuSIED+AwynfgSIPbC2yxan97HrgkWbasts
-         AyXA==
-X-Gm-Message-State: AOJu0Yz/aH3dr0umHuKq+RwJd7O2V0jh9JbtFasiynYeVVhC65Bqy713
-	/Wda4ntUN2t1Lidich7gBJ7Xa0Z6ZTlmk8Y/xeL0+S0XPS7J7Nu2Ti3Jhj+cVQ+P
-X-Gm-Gg: AfdE7cnRcRuckqKTDN8T67YxdSXl16ImqVEVIkwiidnxnh36Rc24G3vKcZ6dwPnbqL4
-	WaLX/7V50OGUosTjLcVi6ZQifz92MXOtWVYeSUIzxuOXyONAe+ABjgVF+dDpIYfhGhpiAmpsBQr
-	6OrpQCOH/fQyL9brclvY5rzXYIfTJhD1V6lsC7bT1uoDc7AByLkzcWSPBabLNZfYQfMFiUeuCeU
-	Quj70oIeBcAFlL6fLwdjUWvjVtbrfbXZJitVgveUbjukXRl+6CBU6vFKjQRVaeRwx1SnMkgDIWr
-	OYuWgOfJk0FLR3IKMXjy1//44HQNO0eV3dIjq4QUyAeqOM4n12lanzXpeHbljIJ8imGcyVrKClp
-	+NMQE8XgtiYNwTrrf7tR03lAVx1zy2ychU3Syrl672NyfLpAFniWJg7ymRI/dFP5hVkjcjqC7CA
-	Yu/tZDaljC44vXbScLfbC5DXgULA==
-X-Received: by 2002:a05:600c:3e0a:b0:489:32b:ac0b with SMTP id 5b1f17b1804b1-4925a0a9ad9mr9493665e9.6.1782154592309;
-        Mon, 22 Jun 2026 11:56:32 -0700 (PDT)
-Received: from localhost ([2001:4bb8:19f:d19a:c1d2:e9fd:1b2b:136b])
-        by smtp.gmail.com with ESMTPSA id 5b1f17b1804b1-49245bba787sm193141475e9.1.2026.06.22.11.56.30
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Mon, 22 Jun 2026 11:56:31 -0700 (PDT)
+        d=1e100.net; s=20251104; t=1782155093; x=1782759893;
+        h=content-transfer-encoding:cc:to:from:subject:message-id:references
+         :mime-version:in-reply-to:date:x-gm-message-state:from:to:cc:subject
+         :date:message-id:reply-to;
+        bh=F3VJ0UZP+KwFN7MAAYe9I9DBthlkqlN1IgSIedgq86o=;
+        b=Mhj6/nrtd414v3ll7HxyjsqYiTXBeEEbpg2iShBLyQF4JrY1RaCp1tbZjP/DmJR8Ug
+         /AWkqUw+NxP9vaGIgsPMI0fxungF0F7jp+eUT1iadbUTeJJaoA0LBfLJFmz9G8q+XCsG
+         O+YqOWsQox5qIoiaNiiKoDORZxGFeEd7BaVkpPX2QY61wfpx5JN85SIv840twpZLD/G4
+         l1vn9jRMwU+r7kraVbfhX7INXykYrvT0ONIYyp5BRBhlBYDgrns1yhhdd3XTe6W62UNo
+         QqUvu+RRmjXE5G2gmIF1vkp9gTv7/iJbfOXnRyq/eNElI5H8gFKTsAb1RfKBszJke0NL
+         +9BA==
+X-Gm-Message-State: AOJu0YzNfsWFGTT/7XU9k6VJ9bAxnilIpN/XvFg1VBPmZFoSiSz1lyW0
+	Qn+3CtWJfeWCsm+D18VeHiI/OHpB7qE/0pcukuU3KDBNK3gmCKR6ySzTzaUfTfQqXgxMh4sItbY
+	Q7waw4GJ5XrYHOATRnOCJBHuIuEeN7kb761a4zng0HgL3f6ZEknk6Wwn9HYGBhNsWsLxs0pwIzP
+	smcDTR5I6j1rkslHbuz5ubV30sufFju9dEF9NjzQwLaBzFbisf0Oc02wQLLl8h6XW9
+X-Received: from edfg21-n1.prod.google.com ([2002:a05:6402:a255:10b0:697:908e:d35d])
+ (user=tarunsahu job=prod-delivery.src-stubby-dispatcher) by
+ 2002:a05:6402:524b:b0:696:565:a9e7 with SMTP id 4fb4d7f45d1cf-696edc6cf37mr7551305a12.9.1782155093205;
+ Mon, 22 Jun 2026 12:04:53 -0700 (PDT)
+Date: Mon, 22 Jun 2026 19:04:52 +0000
+In-Reply-To: <20260622185427.2365D1F000E9@smtp.kernel.org>
 Precedence: bulk
 X-Mailing-List: sashiko-reviews@lists.linux.dev
 List-Id: <sashiko-reviews.lists.linux.dev>
 List-Subscribe: <mailto:sashiko-reviews+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:sashiko-reviews+unsubscribe@lists.linux.dev>
 Mime-Version: 1.0
+References: <20260622184851.2309827-1-tarunsahu@google.com>
+ <20260622184851.2309827-8-tarunsahu@google.com> <20260622185427.2365D1F000E9@smtp.kernel.org>
+Message-ID: <9huzo6h2qtuz.fsf@tarunix.c.googlers.com>
+Subject: Re: [PATCH v3 7/9] docs: add documentation for guest_memfd
+ preservation via LUO
+From: tarunsahu@google.com
+To: sashiko-reviews@lists.linux.dev
+Cc: kvm@vger.kernel.org, kexec@lists.infradead.org, 
+	Pasha Tatashin <pasha.tatashin@soleen.com>, seanjc@google.com, 
+	Mike Rapoport <rppt@kernel.org>, Pratyush Yadav <pratyush@kernel.org>, mark.rutland@arm.com, 
+	ackerleytng@google.com, Paolo Bonzini <pbonzini@redhat.com>, 
+	Alexander Graf <graf@amazon.com>
+Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: quoted-printable
-Content-Type: text/plain; charset=UTF-8
-Date: Mon, 22 Jun 2026 20:56:29 +0200
-Message-Id: <DJFT2RVYEMKU.3UA5K39W4GNAQ@gmail.com>
-Subject: Re: [PATCH 1/2] dt-bindings: hwmon: chipcap2: Add label property
-Cc: <linux-hwmon@vger.kernel.org>
-To: <sashiko-reviews@lists.linux.dev>, "Flaviu Nistor"
- <flaviu.nistor@gmail.com>
-From: "Javier Carrasco" <javier.carrasco.cruz@gmail.com>
-X-Mailer: aerc 0.21.0-143-g2f3a2e260c09
-References: <20260622122200.14245-1-flaviu.nistor@gmail.com>
- <20260622123206.593E41F000E9@smtp.kernel.org>
-In-Reply-To: <20260622123206.593E41F000E9@smtp.kernel.org>
 
-On Mon Jun 22, 2026 at 2:32 PM CEST, sashiko-bot wrote:
-> Thank you for your contribution! Sashiko AI review found 2 potential issu=
-e(s) to consider:
->
-...
-> Pre-existing issues:
-> - [High] Threaded interrupt handlers modify shared state without holding =
-any locks, violating hwmon subsystem guidelines and causing potential loss =
-of alarm events.
-> --
-> [Severity: High]
-> This is a pre-existing issue, but does drivers/hwmon/chipcap2.c lack
-> locking between the threaded interrupt handlers and the sysfs paths, whic=
-h
-> could lead to lost alarm events?
->
-> The threaded interrupt handlers modify shared state without holding any
-> locks, which violates hwmon subsystem guidelines.
->
-> If an interrupt fires between the sysfs read and write:
->
-> CPU1 in drivers/hwmon/chipcap2.c:cc2_humidity_min_alarm_status() {
-> 	...
-> 	if (data->rh_alarm.low_alarm) {
-> 		*val =3D (measurement < min_hyst) ? 1 : 0;
->
-> CPU2 in drivers/hwmon/chipcap2.c:cc2_low_interrupt() {
-> 		cc2->rh_alarm.low_alarm =3D true;
-> }
->
-> CPU1 continues:
-> 		data->rh_alarm.low_alarm =3D *val;
-> 	} else {
-> 		*val =3D 0;
-> 	}
-> 	...
-> }
->
-> The interrupt's update will be overwritten with 0 and permanently lost. T=
-he
-> hwmon subsystem guidelines require drivers to implement locking for inter=
-rupt
-> handling and sysfs attributes, recommending the use of hwmon_lock() and
-> hwmon_unlock().
->
-> Could this concurrent access to data->rh_alarm.low_alarm be protected?
+sashiko-bot@kernel.org writes:
 
-I agree with Sashiko's report about the concurrency issue. If an
-interrupt is triggered right after checking data->rh_alarm.low_alarm,
-the status would be 0 instead of 1, if no prior interrupts were
-triggered.
+>
+>> diff --git a/virt/kvm/guest_memfd_luo.c b/virt/kvm/guest_memfd_luo.c
+>> index c242b1d14c0ac..8411fe86dc2a1 100644
+>> --- a/virt/kvm/guest_memfd_luo.c
+>> +++ b/virt/kvm/guest_memfd_luo.c
+>> @@ -119,11 +119,11 @@ static bool kvm_gmem_luo_can_preserve(struct liveu=
+pdate_file_handler *handler, s
+>>  	/*
+>>  	 * Only Fully-shared guest_memfd preservation is supported
+>>  	 */
+>> -	if (GMEM_I(inode)->flags & GUEST_MEMFD_FLAG_INIT_SHARED)
+>> +	if (!(GMEM_I(inode)->flags & GUEST_MEMFD_FLAG_INIT_SHARED))
+>>  		return 0;
+>
+> [Severity: Medium]
+> Should this functional logic fix in kvm_gmem_luo_can_preserve() be split =
+into
+> its own patch?=20
+>
+> The commit message explicitly states this is a documentation change, but =
+this
+> modifies the condition for GUEST_MEMFD_FLAG_INIT_SHARED in C code, which
+> violates the rule of one logical change per commit and makes tracking bug
+> fixes difficult.
+>
 
-Sashiko only reported this issue for the low alarm, but the same applies
-for the high alarm, which is independent and has a dedicated signal.
-I am not sure about using hwmon_lock()/hwmon_unlock() for this, as it
-serializes all kind of accesses and not only the ones concerning the
-interrupt status. That might add some extra delay with many accesses at
-the same time, although the fix would be simpler.
+OOOOPS, This (and the below) should be part of previous patch, I will
+have it fixed in next version next version.
 
-The most optimal way might be using 2 different locks for the two
-interrupts, as they happen in different lanes and don't share data.
-If that is ok, I can prepare a patch to test it on real hardware and send
-it upstream.
+>> =20
+>>  	/*
+>> -	 * It makes sure that no memory can converted to private
+>> +	 * It makes sure that no memory can be converted to private
+>>  	 * even if it was initially fully shared (in-place conversions are
+>>  	 * prevented).
+>>  	 */
 
-Best regards,
-Javier
+
+>
+> --=20
+> Sashiko AI review =C2=B7 https://sashiko.dev/#/patchset/20260622184851.23=
+09827-1-tarunsahu@google.com?part=3D7
