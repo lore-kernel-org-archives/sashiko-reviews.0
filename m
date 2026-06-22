@@ -1,148 +1,262 @@
-Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
+Received: from fhigh-b3-smtp.messagingengine.com (fhigh-b3-smtp.messagingengine.com [202.12.124.154])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 25E7934EF0F;
-	Mon, 22 Jun 2026 15:50:33 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D2B5C274B4A
+	for <sashiko-reviews@lists.linux.dev>; Mon, 22 Jun 2026 15:50:50 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=202.12.124.154
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1782143434; cv=none; b=ixOvwi6Yo9wQvWQFb5JwccnnkHkZseEfdYAZy0YmcUGnXYVVUrFQvPlNvvxMVjFsdyJLl0NHYalcvYZFrFxR1XO9SBbhVwOEHoRuNXKdCgYH2m43qM1CqEmcyluWvNYDcNTreIkZ56k5lsXJcy/DYHxMayTG1xC0Yz0F/jfaS9A=
+	t=1782143453; cv=none; b=dJldY8iX8ExUNb5QnPDIGZhv/sx9xXSd6fuwyyl5tdF5H3rcBpTG+bMFV/qzH+ViLeeMAxdgK9OXGY1VEEgc3NiRgNiIojCYZSdFD175tnMB/lXe2Z8IvSWnLkCGcTG60je9eOOQ2hFYNLzzLfucWenN0CNbdqsIULlvuLS99Ko=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1782143434; c=relaxed/simple;
-	bh=QATy3wWZAgeQlkKPoBXy/75b57BmhnwccBCP5LZxeyo=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=YQVvg+0HGvQY8hVvENHQwSCpuUdmNO3xNfJBSGPOq1tXZv0Pjh6oVLkW4JCnombVfS68ctPASLOUAizO72nDX94F2QOIb7pa0EumLmdemPGIdjwyezQm8zhryXSFEnEs8xkIwNha5ZnfYra+S6+VZ7ZE90wGtyIZ5i6x4iXVksM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=EuvARrXT; arc=none smtp.client-ip=100.103.45.18
+	s=arc-20240116; t=1782143453; c=relaxed/simple;
+	bh=KClrGh4Dug9FXrOIRBzdtd0J2XwzUAP61KLKJbVKYI4=;
+	h=MIME-Version:Date:From:To:Cc:Message-Id:In-Reply-To:References:
+	 Subject:Content-Type; b=kuBVQ3fFTfHjAiEvwwmZ7Iv55msYFn5gsO4zHAg3iuv0rdD7XXVXAkaC6+85ySwZhuQ1c+iTaC6dqca3U7lDheNiwbfPGOwfHW5p2X/PpogZ7oxmcuk/5nMq/cGpj4HKyuHCc0lNXbeFyf3w9pUYt8gvjOTEsRLrPtG6M51wdNk=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=squebb.ca; spf=pass smtp.mailfrom=squebb.ca; dkim=pass (2048-bit key) header.d=squebb.ca header.i=@squebb.ca header.b=Ej8lwo0X; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=VEEOXs7b; arc=none smtp.client-ip=202.12.124.154
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=squebb.ca
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=squebb.ca
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="EuvARrXT"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8A82F1F000E9;
-	Mon, 22 Jun 2026 15:50:31 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=kernel.org;
-	s=k20260515; t=1782143433;
-	bh=HKMXIB/q1rC45uurP0dyb6nvOhoZiIepNCfGubawWOU=;
-	h=Date:From:To:Cc:Subject:References:In-Reply-To;
-	b=EuvARrXTy1veUwn8k5vNeuaCwvEZygZhUvDa6udCl9fT9gUBnfrhoW5e27cQjq+ZC
-	 ZhcYyw5of7yNyXkWhmq3Clcl3+H7bU/fvzCR2HUx5ZePFokayKokPJyPvhlw5mQzUk
-	 v8ndoGcdKf51wNNQZ9Krfs+rShBU3u47NuJCvSxeAmGG+vOc6G1vJOcd5aVX4ylMM2
-	 5cGAJ2x7hkcucv5x+ISOZv2G9b0e3f6OugNcIGbDlhj5eiGD+/4CBoMSjrRrvep7L/
-	 +kuDXS5liUqRKfkCldVA9WoZDsJXE/gJCOwwYO/ikVXuUNgCiOO2c479stu6Yd/81k
-	 EcBBdVl5xVzSw==
-Date: Mon, 22 Jun 2026 17:50:27 +0200
-From: Manivannan Sadhasivam <mani@kernel.org>
-To: sashiko-reviews@lists.linux.dev
-Cc: Wentao Liang <vulab@iscas.ac.cn>, linux-pci@vger.kernel.org
-Subject: Re: [PATCH] PCI: qcom-ep: fix refcount leak in qcom_pcie_ep_probe()
-Message-ID: <beejsw4p3wkf3zvarqxnaknzoyreddhcp7sgt32pb23xlhhvtg@2dghsaqvitqa>
-References: <20260609100747.230521-1-vulab@iscas.ac.cn>
- <20260609101554.36D4B1F00893@smtp.kernel.org>
+	dkim=pass (2048-bit key) header.d=squebb.ca header.i=@squebb.ca header.b="Ej8lwo0X";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="VEEOXs7b"
+Received: from phl-compute-02.internal (phl-compute-02.internal [10.202.2.42])
+	by mailfhigh.stl.internal (Postfix) with ESMTP id 3B4567A0111;
+	Mon, 22 Jun 2026 11:50:50 -0400 (EDT)
+Received: from phl-imap-08 ([10.202.2.84])
+  by phl-compute-02.internal (MEProxy); Mon, 22 Jun 2026 11:50:50 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=squebb.ca; h=cc
+	:cc:content-transfer-encoding:content-type:content-type:date
+	:date:from:from:in-reply-to:in-reply-to:message-id:mime-version
+	:references:reply-to:subject:subject:to:to; s=fm2; t=1782143450;
+	 x=1782229850; bh=IFclBJrZMl0j05zztAZ4GvueODuYVD34Cu6isvvS5pM=; b=
+	Ej8lwo0XOVVH4YvSWdjE06vU5x3AB64c+6sOfeXeZhCdKLfTqQiAGnR1L1IGxuSt
+	1uGLPYd0nDiQWYKO2wfVBAvaWCLbTthOEiKDAvSvirQjXIrwcx4dO8ctQgIlP02o
+	1SHL93ir+zsIwAFNX4dIG+n6NDicr3GPZDKX04xie5TjS/ahI4Jx39lRtkBNrINi
+	Yu3U4ClFcK+eloB8B5qMqUYPVK1UdJcyDectYvms7JIQGBNva1tjoXvzzLnj9YYV
+	mtj2j7CZdI2HnnzHL/qBgUBmGu2k4KQyfhAUY9UjjyFdDLcRCI9+zDTL5kyA8oG0
+	4KXCxV6oiCB0gObtQRoK7g==
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
+	messagingengine.com; h=cc:cc:content-transfer-encoding
+	:content-type:content-type:date:date:feedback-id:feedback-id
+	:from:from:in-reply-to:in-reply-to:message-id:mime-version
+	:references:reply-to:subject:subject:to:to:x-me-proxy
+	:x-me-sender:x-me-sender:x-sasl-enc; s=fm1; t=1782143450; x=
+	1782229850; bh=IFclBJrZMl0j05zztAZ4GvueODuYVD34Cu6isvvS5pM=; b=V
+	EEOXs7b5R8W/+LsV+Aa9Xiezj55kq90RvPz3q4e332rY8DPHs2uBpaufJaJ1p/94
+	/j5P/+mCuBpAmM6E29XfOsbRTWq+5z5KFv+h56WJwxDJM3Y9FWUhDu4j40qNXruB
+	iOva4oYXfNq4UFODIye7EvwSy5/dVtARseTODmKVK7YBmjVwIWlD4lBOiZZ1rDBt
+	zNvQydHPZTBAGgxXbGc7kd20vDnMzxcAWDWkg3pOfhPxZY3lKzSckx1j8uW284aH
+	LxrlXauIxIp+AopkR+jsvQRcb1bGEUkt4/cFdxxsEphsoWZJs/wWHB222NXA4m3v
+	JIOzmddMkb60UtbPoS/5g==
+X-ME-Sender: <xms:2Vk5ama2wMle4oyJXd8Us0rHsmrgegJgtVt8zcpXZUju5M-0mneUmg>
+    <xme:2Vk5akMhhIAJNSJUgK57FpJeDUi5WMlAzV5qWu_mF_IW6wKfBttHKs5tlY8F0QBtf
+    vQRiMhxzD-B0vgP_XTPqE73mvNYBOIM0bGX7buR-yIpI3OXRFeX3oI>
+X-ME-Proxy-Cause: dmFkZTGD4pxu7A6s+42GRSrur1ZIpv2jJ2I5KhLzcttgWh91IOkFt/OWEHPwHalkUkTQSO
+    PpU1oqzXUwCMz1eEV9t2D7aSbFDPJBRHCb/vGT5+mpTQM5vAe6dHuVYuhAmuRImXsSWLTC
+    QbJc/NoX/80s2FAoWVuW4dEqRs4MIM/NUAPz83HKC7KXXpM7sVj2mx2lxzwr1uSI+aJ+Gw
+    hGoqaKiPyFwA+d2HW1uhU0YsOTGdy6iLZslg3Sn482kbGr3uGCgHi0xS3vn1UZz3ZeWNEh
+    YiJedP+Qi09PHZw4ojeQ7gPMvT5fON4f7nJ8L5/A3520F8az/q1opozAdNUf5JX/xz3Qri
+    iWSijvCUVMBmsUEVyHbOA4N2MxFPZfMYxYkmIm2AQgEq7eHYeiZolpV68/5tnWB9+jkcyg
+    kecB8P4qx4YDJQMclG4hEvskVvvmBNnuIlwL3CVafyBuEdmBcBaGHeQWMaEj15Lj5aZ0Gh
+    jwWtj723HuZcrL1UjHcHLAQaSdkjNi0V0ICeGliTdYVFkuWQ+Bs9rKd6Jiqe3rdsuT9y5k
+    TFUQbeA++mH5UprvgBBiGzdfZYB6bZ4iedD2Fq/gIwcGp4AaLq1ZrvxbZPlGQ8cvfOO2f2
+    fRuV7L4hvBqOMrqod3wCr6aBYqJefIdOwrPs1DeFIR+XMlObgx6LysL7vzdw
+X-ME-Proxy: <xmx:2Vk5aqtLIXxWScZouKz9YqV71ngJL73zIeJMoCFC7QWLUGIK6k1tKg>
+    <xmx:2Vk5ajzFZG220nNbgJkWBTtHYwe2BxS-gYcWZcvNOO82PGkyUYscCg>
+    <xmx:2Vk5ak6VANTLc_RDmsKSwuT4lU-tfwYAFFBzz5uODzcFyko7MDxicA>
+    <xmx:2Vk5atWdHcShT6hvC7Bci0agryfy8p1K_lvfB0wM-buPB8Lak7_WZQ>
+    <xmx:2lk5attTXdi-tPsHCk4Sl-BOhR8Gj_8k1RrC7jyKONQ-3nsCVbOAgnpc>
+Feedback-ID: ibe194615:Fastmail
+Received: by mailuser.phl.internal (Postfix, from userid 501)
+	id A55C02CE409A; Mon, 22 Jun 2026 11:50:49 -0400 (EDT)
+X-Mailer: MessagingEngine.com Webmail Interface
 Precedence: bulk
 X-Mailing-List: sashiko-reviews@lists.linux.dev
 List-Id: <sashiko-reviews.lists.linux.dev>
 List-Subscribe: <mailto:sashiko-reviews+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:sashiko-reviews+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
+X-ThreadId: ArMcrDYeUHoR
+Date: Mon, 22 Jun 2026 11:50:29 -0400
+From: "Mark Pearson" <mpearson-lenovo@squebb.ca>
+To: sashiko-reviews@lists.linux.dev
+Cc: linux-watchdog@vger.kernel.org
+Message-Id: <9e76208e-6fb7-4d62-9a49-95fc03a06737@app.fastmail.com>
+In-Reply-To: <20260622145631.DD7041F000E9@smtp.kernel.org>
+References: <mpearson-lenovo@squebb.ca>
+ <20260622144531.2413447-1-mpearson-lenovo@squebb.ca>
+ <20260622145631.DD7041F000E9@smtp.kernel.org>
+Subject: Re: [PATCH] watchdog: lenovo_se30g2_se60_wdt: Watchdog for Lenovo SE30G2 and
+ SE60
 Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-Content-Transfer-Encoding: 8bit
-In-Reply-To: <20260609101554.36D4B1F00893@smtp.kernel.org>
+Content-Transfer-Encoding: quoted-printable
 
-On Tue, Jun 09, 2026 at 10:15:53AM +0000, sashiko-bot@kernel.org wrote:
-> Thank you for your contribution! Sashiko AI review found 3 potential issue(s) to consider:
-> 
-> New issues:
-> - [High] Calling `pm_runtime_disable()` manually in the error path after using `devm_pm_runtime_enable()` causes a double-disable, permanently breaking runtime PM.
-> - [High] The error path for a failed `pm_runtime_put_sync()` falls through to `err_rpm_put`, leading to a double decrement of the runtime PM usage_count.
-> 
-> Pre-existing issues:
-> - [High] Failing the entire probe function if `pm_runtime_put_sync()` returns an error is incorrect and brittle.
+On Mon, Jun 22, 2026, at 10:56 AM, sashiko-bot@kernel.org wrote:
+> Thank you for your contribution! Sashiko AI review found 4 potential=20
+> issue(s) to consider:
+> - [High] The global `se_30g2_60_pdev` pointer is not cleared after=20
+> being freed on the `platform_device_add()` error path, leading to a=20
+> Use-After-Free and Double-Free during module exit.
+
+I belive this is a valid issue - I'll fix in v2.
+
+> - [High] SuperIO configuration mode is prematurely exited before=20
+> reading `bram_base`, causing the read to fail and the driver to map an=20
+> invalid I/O port address.
+
+This one is I believe invalid and behaviour is correct. If someone wiser=
+ than me disagree's please let me know.
+
+> - [Medium] The allocated and added platform device is permanently=20
+> leaked if `platform_driver_register()` fails.
+
+I think this may be valid, I'll add a check in v2 if the device has been=
+ allocated and release if there is a driver registration failure.
+
+> - [Medium] The watchdog driver silently ignores hardware access=20
+> failures if the `bram_base` region cannot be claimed, falsely reportin=
+g=20
+> success to the watchdog core.
+
+I'll address this in v2
+
 > --
-> 
-> commit 2adeb10c2dada5b5e65aed93fd2d269f6cd5a790
-> Author: Wentao Liang <vulab@iscas.ac.cn>
-> 
-> PCI: qcom-ep: fix refcount leak in qcom_pcie_ep_probe()
-> 
-> This commit attempts to fix a runtime PM reference leak in the error paths
-> of qcom_pcie_ep_probe() by introducing a new error label. The new label
-> calls pm_runtime_put_noidle() and pm_runtime_disable() to properly release
-> the reference before returning the error.
-> 
-> > diff --git a/drivers/pci/controller/dwc/pcie-qcom-ep.c b/drivers/pci/controller/dwc/pcie-qcom-ep.c
-> > index 257c2bcb5f76f..c01d4d3b49520 100644
-> > --- a/drivers/pci/controller/dwc/pcie-qcom-ep.c
-> > +++ b/drivers/pci/controller/dwc/pcie-qcom-ep.c
+>
+> commit 9d10faee62683aacec801a77d1defa194acc32d0
+> Author: Mark Pearson <mpearson-lenovo@squebb.ca>
+>
+> watchdog: lenovo_se30g2_se60_wdt: Watchdog for Lenovo SE30G2 and SE60
+>   =20
+> Watchdog driver implementation for Lenovo SE30G2 and SE60 platforms.
+>
+>> diff --git a/drivers/watchdog/lenovo_se30g2_se60_wdt.c b/drivers/watc=
+hdog/lenovo_se30g2_se60_wdt.c
+>> new file mode 100644
+>> index 0000000000000..56e0e9ef8462b
+>> --- /dev/null
+>> +++ b/drivers/watchdog/lenovo_se30g2_se60_wdt.c
+>> @@ -0,0 +1,274 @@
 > [ ... ]
-> > @@ -932,6 +932,10 @@ static int qcom_pcie_ep_probe(struct platform_device *pdev)
-> >  err_ep_deinit:
-> >  	dw_pcie_ep_deinit(&pcie_ep->pci.ep);
-> >  
-> > +err_rpm_put:
-> > +	pm_runtime_put_noidle(dev);
-> > +	pm_runtime_disable(dev);
-> 
+>> +static unsigned short lpc_chip_id(void)
+>> +{
+>> +	unsigned char msb, lsb;
+>> +
+>> +	outb(0x87, CFG_PORT);
+>> +	outb(0x01, CFG_PORT);
+>> +	outb(0x55, CFG_PORT);
+>> +	outb(0x55, CFG_PORT);
+>> +	msb =3D lpc_read(0x20);
+>> +	lsb =3D lpc_read(0x21);
+>> +	lpc_write(0x2, 0x2);
+>
 > [Severity: High]
-> Does calling pm_runtime_disable() here in qcom_pcie_ep_probe() cause a
-> double-disable of runtime PM?
-> 
-> Earlier in the probe function, the code uses devm_pm_runtime_enable(dev).
-> This registers a devres cleanup action that will automatically call
-> pm_runtime_disable() upon probe failure or device removal.
-> 
-> If we explicitly call pm_runtime_disable() here in the error path, it
-> appears it will be executed twice (once explicitly, and once via the devres
-> unwind). Because __pm_runtime_disable() unconditionally increments the
-> device's disable_depth counter, could this leave the counter permanently
-> elevated to 2 and break runtime PM for any subsequent probe attempts?
-> 
+> Does this lpc_write() prematurely exit SuperIO configuration mode?
+>
+> Later in se_30g2_60_wdt_probe(), the code attempts to select the BRAM
+> logical device and read the base address:
+>
+> se_30g2_60_wdt_probe() {
+>     ...
+>     lpc_write(CFG_LDN, CFG_BRAM_LDN);
+>     bram_base =3D (lpc_read(0x60) << 8) | lpc_read(0x61);
+>     ...
+> }
+>
+> If the configuration mode was already exited here, won't these subsequ=
+ent
+> reads return 0xFF, causing bram_base to be set to an invalid address?
+>
+>> +
+>> +	return (msb << 8 | lsb);
+>> +}
+>
+> [ ... ]
+>
+>> +static void wdt_write(unsigned short val)
+>> +{
+>> +	if (!request_muxed_region(bram_base, BRAM_SIZE, DRVNAME))
+>> +		return;
+>> +	bram_write(BRAM_WDT_REG, (val >> 8) & 0xFF);
+>> +	bram_write(BRAM_WDT_REG + 1, val & 0xFF);
+>> +	release_region(bram_base, BRAM_SIZE);
+>> +}
+>> +
+>> +static int wdt_start(struct watchdog_device *wdog)
+>> +{
+>> +	wdt_write(wdog->timeout);
+>> +	return 0;
+>> +}
+>
+> [Severity: Medium]
+> If request_muxed_region() fails in wdt_write(), the function silently =
+returns.
+>
+> Since wdt_start() and wdt_ping() call wdt_write() and always return 0,=
+ won't
+> this falsely report success to the watchdog core even if the hardware =
+write
+> failed?
+>
+> [ ... ]
+>
+>> +static int se_30g2_60_create_device(const struct dmi_system_id *id)
+>> +{
+>> +	int err;
+>> +
+>> +	se_30g2_60_pdev =3D platform_device_alloc("lenovo-se30g2-se60-wdt",=
+ -1);
+>> +	if (!se_30g2_60_pdev)
+>> +		return -ENOMEM;
+>> +
+>> +	err =3D platform_device_add(se_30g2_60_pdev);
+>> +	if (err)
+>> +		platform_device_put(se_30g2_60_pdev);
+>
 > [Severity: High]
-> Will this new error label result in a double decrement of the usage_count
-> if the probe fails during pm_runtime_put_sync()?
-> 
-> Later in qcom_pcie_ep_probe(), if pm_runtime_put_sync() fails, the
-> function jumps to err_disable_irqs:
-> 
->     ret = pm_runtime_put_sync(dev);
->     if (ret < 0) {
->         dev_err(dev, "Failed to suspend device: %d\n", ret);
->         goto err_disable_irqs;
->     }
-> 
-> The err_disable_irqs path then falls through to this new err_rpm_put label.
-> Because pm_runtime_put_sync() maps to __pm_runtime_idle() with the
-> RPM_GET_PUT flag, the usage_count is decremented first before the idle
-> check even begins.
-> 
+> If platform_device_add() fails, platform_device_put() frees the device=
+, but
+> the global se_30g2_60_pdev pointer is not set to NULL.
+>
+> Since dmi_check_system() returns the number of matches regardless of c=
+allback
+> errors, module initialization will proceed. When the module is unloade=
+d,
+> se_30g2_60_wdt_exit() will check if se_30g2_60_pdev is non-NULL and ca=
+ll
+> platform_device_unregister(), leading to a use-after-free and double-f=
+ree.
+>
+> Could se_30g2_60_pdev be explicitly set to NULL on the error path to a=
+void
+> this?
+>
+>> +
+>> +	return err;
+>> +}
+>
+> [ ... ]
+>
+>> +static int __init se_30g2_60_wdt_init(void)
+>> +{
+>> +	if (!dmi_check_system(se_30g2_60))
+>> +		return -ENODEV;
+>> +
+>> +	return platform_driver_register(&se_30g2_60_wdt_driver);
+>> +}
+>
+> [Severity: Medium]
+> If platform_driver_register() fails here, the platform device successf=
+ully
+> allocated and added by the DMI callback is never unregistered.
+>
+> Will this permanently leak the platform device and cause subsequent mo=
+dule load
+> attempts to fail with -EEXIST?
+>
+> --=20
+> Sashiko AI review =C2=B7=20
+> https://sashiko.dev/#/patchset/20260622144531.2413447-1-mpearson-lenov=
+o@squebb.ca?part=3D1
 
-Both of these issues are perfectly valid and is an indicator that the error path
-change proposed by this patch is not correct.
+I'll hold off a couple of days on doing v2 in case there is any other fe=
+edback from maintainers outside of the sashiko recommendations.
 
-- Mani
-
-> If it returns an error like -EAGAIN, the usage_count has already been
-> successfully dropped. Falling through to call pm_runtime_put_noidle()
-> again will attempt to drop the usage_count a second time. Could this
-> wrongfully steal a concurrent thread's reference and lead to an eventual
-> counter underflow?
-> 
-> [Severity: High]
-> This isn't a bug introduced by this patch, but is it correct to treat a
-> negative return from pm_runtime_put_sync() as a fatal probe failure?
-> 
-> Looking at the same code block referenced above in qcom_pcie_ep_probe(),
-> a return value like -EAGAIN simply means the device cannot be synchronously
-> suspended at this exact moment (for example, if another thread concurrently
-> incremented the usage counter).
-> 
-> Since this is a valid runtime PM state and not a hardware or initialization
-> failure, does tearing down the fully working device and failing the probe
-> cause spurious device initialization failures?
-> 
-> > +
-> >  	return ret;
-> >  }
-> 
-> -- 
-> Sashiko AI review · https://sashiko.dev/#/patchset/20260609100747.230521-1-vulab@iscas.ac.cn?part=1
-> 
-
--- 
-மணிவண்ணன் சதாசிவம்
+Mark
