@@ -1,262 +1,259 @@
-Received: from fhigh-b3-smtp.messagingengine.com (fhigh-b3-smtp.messagingengine.com [202.12.124.154])
+Received: from BL2PR02CU003.outbound.protection.outlook.com (mail-eastusazon11011009.outbound.protection.outlook.com [52.101.52.9])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D2B5C274B4A
-	for <sashiko-reviews@lists.linux.dev>; Mon, 22 Jun 2026 15:50:50 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=202.12.124.154
-ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1782143453; cv=none; b=dJldY8iX8ExUNb5QnPDIGZhv/sx9xXSd6fuwyyl5tdF5H3rcBpTG+bMFV/qzH+ViLeeMAxdgK9OXGY1VEEgc3NiRgNiIojCYZSdFD175tnMB/lXe2Z8IvSWnLkCGcTG60je9eOOQ2hFYNLzzLfucWenN0CNbdqsIULlvuLS99Ko=
-ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1782143453; c=relaxed/simple;
-	bh=KClrGh4Dug9FXrOIRBzdtd0J2XwzUAP61KLKJbVKYI4=;
-	h=MIME-Version:Date:From:To:Cc:Message-Id:In-Reply-To:References:
-	 Subject:Content-Type; b=kuBVQ3fFTfHjAiEvwwmZ7Iv55msYFn5gsO4zHAg3iuv0rdD7XXVXAkaC6+85ySwZhuQ1c+iTaC6dqca3U7lDheNiwbfPGOwfHW5p2X/PpogZ7oxmcuk/5nMq/cGpj4HKyuHCc0lNXbeFyf3w9pUYt8gvjOTEsRLrPtG6M51wdNk=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=squebb.ca; spf=pass smtp.mailfrom=squebb.ca; dkim=pass (2048-bit key) header.d=squebb.ca header.i=@squebb.ca header.b=Ej8lwo0X; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=VEEOXs7b; arc=none smtp.client-ip=202.12.124.154
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=squebb.ca
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=squebb.ca
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3C8F730F958
+	for <sashiko-reviews@lists.linux.dev>; Mon, 22 Jun 2026 16:05:40 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=fail smtp.client-ip=52.101.52.9
+ARC-Seal:i=2; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
+	t=1782144341; cv=fail; b=AKI0xjQKuZ7IsA7E5x9cJxFJhs5PLWvFoTJy8SddbtPD9SXvAXtn3sGsTw8qU+FuFXyW436BraIcmpyzc1Df9t3xLczksByMCuQ+m4OgBMfx6p9V6Hqa4nQv+UZug9yo7sSN88y1D9XY0jYLjjPbC1GSgi9k2axY8cXw70HfAes=
+ARC-Message-Signature:i=2; a=rsa-sha256; d=subspace.kernel.org;
+	s=arc-20240116; t=1782144341; c=relaxed/simple;
+	bh=dkHnORNcMfDDiKre34HOwvFTYvI3sWETlqRkgT/AXWU=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:Content-Type:
+	 Content-Disposition:In-Reply-To:MIME-Version; b=AWmUlVipyQSyJlx3RsAfPxitX0s0VnPbFS8KjqbP3tDAE6TMZUd0lIVLHoBkn51A2G6OMI0kaoVHAQeXdXgO20Il815UiBb1jBQcx6aidf4CNA5k3xKY474PKi8a9byigUDYGyc7uvWKQhAtCdG62OUwh+9eUVhfj1UIVKnBVKI=
+ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=nvidia.com; spf=fail smtp.mailfrom=nvidia.com; dkim=pass (2048-bit key) header.d=Nvidia.com header.i=@Nvidia.com header.b=XPOGEM53; arc=fail smtp.client-ip=52.101.52.9
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=nvidia.com
+Authentication-Results: smtp.subspace.kernel.org; spf=fail smtp.mailfrom=nvidia.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=squebb.ca header.i=@squebb.ca header.b="Ej8lwo0X";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="VEEOXs7b"
-Received: from phl-compute-02.internal (phl-compute-02.internal [10.202.2.42])
-	by mailfhigh.stl.internal (Postfix) with ESMTP id 3B4567A0111;
-	Mon, 22 Jun 2026 11:50:50 -0400 (EDT)
-Received: from phl-imap-08 ([10.202.2.84])
-  by phl-compute-02.internal (MEProxy); Mon, 22 Jun 2026 11:50:50 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=squebb.ca; h=cc
-	:cc:content-transfer-encoding:content-type:content-type:date
-	:date:from:from:in-reply-to:in-reply-to:message-id:mime-version
-	:references:reply-to:subject:subject:to:to; s=fm2; t=1782143450;
-	 x=1782229850; bh=IFclBJrZMl0j05zztAZ4GvueODuYVD34Cu6isvvS5pM=; b=
-	Ej8lwo0XOVVH4YvSWdjE06vU5x3AB64c+6sOfeXeZhCdKLfTqQiAGnR1L1IGxuSt
-	1uGLPYd0nDiQWYKO2wfVBAvaWCLbTthOEiKDAvSvirQjXIrwcx4dO8ctQgIlP02o
-	1SHL93ir+zsIwAFNX4dIG+n6NDicr3GPZDKX04xie5TjS/ahI4Jx39lRtkBNrINi
-	Yu3U4ClFcK+eloB8B5qMqUYPVK1UdJcyDectYvms7JIQGBNva1tjoXvzzLnj9YYV
-	mtj2j7CZdI2HnnzHL/qBgUBmGu2k4KQyfhAUY9UjjyFdDLcRCI9+zDTL5kyA8oG0
-	4KXCxV6oiCB0gObtQRoK7g==
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
-	messagingengine.com; h=cc:cc:content-transfer-encoding
-	:content-type:content-type:date:date:feedback-id:feedback-id
-	:from:from:in-reply-to:in-reply-to:message-id:mime-version
-	:references:reply-to:subject:subject:to:to:x-me-proxy
-	:x-me-sender:x-me-sender:x-sasl-enc; s=fm1; t=1782143450; x=
-	1782229850; bh=IFclBJrZMl0j05zztAZ4GvueODuYVD34Cu6isvvS5pM=; b=V
-	EEOXs7b5R8W/+LsV+Aa9Xiezj55kq90RvPz3q4e332rY8DPHs2uBpaufJaJ1p/94
-	/j5P/+mCuBpAmM6E29XfOsbRTWq+5z5KFv+h56WJwxDJM3Y9FWUhDu4j40qNXruB
-	iOva4oYXfNq4UFODIye7EvwSy5/dVtARseTODmKVK7YBmjVwIWlD4lBOiZZ1rDBt
-	zNvQydHPZTBAGgxXbGc7kd20vDnMzxcAWDWkg3pOfhPxZY3lKzSckx1j8uW284aH
-	LxrlXauIxIp+AopkR+jsvQRcb1bGEUkt4/cFdxxsEphsoWZJs/wWHB222NXA4m3v
-	JIOzmddMkb60UtbPoS/5g==
-X-ME-Sender: <xms:2Vk5ama2wMle4oyJXd8Us0rHsmrgegJgtVt8zcpXZUju5M-0mneUmg>
-    <xme:2Vk5akMhhIAJNSJUgK57FpJeDUi5WMlAzV5qWu_mF_IW6wKfBttHKs5tlY8F0QBtf
-    vQRiMhxzD-B0vgP_XTPqE73mvNYBOIM0bGX7buR-yIpI3OXRFeX3oI>
-X-ME-Proxy-Cause: dmFkZTGD4pxu7A6s+42GRSrur1ZIpv2jJ2I5KhLzcttgWh91IOkFt/OWEHPwHalkUkTQSO
-    PpU1oqzXUwCMz1eEV9t2D7aSbFDPJBRHCb/vGT5+mpTQM5vAe6dHuVYuhAmuRImXsSWLTC
-    QbJc/NoX/80s2FAoWVuW4dEqRs4MIM/NUAPz83HKC7KXXpM7sVj2mx2lxzwr1uSI+aJ+Gw
-    hGoqaKiPyFwA+d2HW1uhU0YsOTGdy6iLZslg3Sn482kbGr3uGCgHi0xS3vn1UZz3ZeWNEh
-    YiJedP+Qi09PHZw4ojeQ7gPMvT5fON4f7nJ8L5/A3520F8az/q1opozAdNUf5JX/xz3Qri
-    iWSijvCUVMBmsUEVyHbOA4N2MxFPZfMYxYkmIm2AQgEq7eHYeiZolpV68/5tnWB9+jkcyg
-    kecB8P4qx4YDJQMclG4hEvskVvvmBNnuIlwL3CVafyBuEdmBcBaGHeQWMaEj15Lj5aZ0Gh
-    jwWtj723HuZcrL1UjHcHLAQaSdkjNi0V0ICeGliTdYVFkuWQ+Bs9rKd6Jiqe3rdsuT9y5k
-    TFUQbeA++mH5UprvgBBiGzdfZYB6bZ4iedD2Fq/gIwcGp4AaLq1ZrvxbZPlGQ8cvfOO2f2
-    fRuV7L4hvBqOMrqod3wCr6aBYqJefIdOwrPs1DeFIR+XMlObgx6LysL7vzdw
-X-ME-Proxy: <xmx:2Vk5aqtLIXxWScZouKz9YqV71ngJL73zIeJMoCFC7QWLUGIK6k1tKg>
-    <xmx:2Vk5ajzFZG220nNbgJkWBTtHYwe2BxS-gYcWZcvNOO82PGkyUYscCg>
-    <xmx:2Vk5ak6VANTLc_RDmsKSwuT4lU-tfwYAFFBzz5uODzcFyko7MDxicA>
-    <xmx:2Vk5atWdHcShT6hvC7Bci0agryfy8p1K_lvfB0wM-buPB8Lak7_WZQ>
-    <xmx:2lk5attTXdi-tPsHCk4Sl-BOhR8Gj_8k1RrC7jyKONQ-3nsCVbOAgnpc>
-Feedback-ID: ibe194615:Fastmail
-Received: by mailuser.phl.internal (Postfix, from userid 501)
-	id A55C02CE409A; Mon, 22 Jun 2026 11:50:49 -0400 (EDT)
-X-Mailer: MessagingEngine.com Webmail Interface
+	dkim=pass (2048-bit key) header.d=Nvidia.com header.i=@Nvidia.com header.b="XPOGEM53"
+ARC-Seal: i=1; a=rsa-sha256; s=arcselector10001; d=microsoft.com; cv=none;
+ b=FC9y3YoH2OeLgygakSpl72Z7x2vTJxF6fzfMPTBs0t6YPGIuWrP9jtJLdaw7lzoA3KaQ6yyNQJp2RMOfXWfzfxc3jlkoMV5/M9nLejFfuWxk8K+ug+OglzwbP12RNvbrlyWsYFZXgNgxs40cndICW7OaC6+fm5r/qi9WWBOIoG5+DY/DwE+2iGbP8oqAK7mWEnoHyQA0llEOJVvGMRXJexlSRL1rTb+h7+8y9RW63tBTLZwDFOnFuuFgbkRJ+ZTuQxEISnSdhWAmN7gWL8sZNKodD5PE9JIqyVLzcwDymV/9Hx2e0/F65wqHI4Qqb0HOwxN8FxV4E1q+5emGhVS+VQ==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com;
+ s=arcselector10001;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
+ bh=D8zwOnadhn/K62CvuAGerGeXrh7KD594WLhI4MkJGgY=;
+ b=Fik6COpU7t6jy+2hT/lpe9dZB6JOckLB0FBQKWFILD4b86hBipUu9u9CRgaWXGw8HinXab9Vc3MPy+rw38agTkUQlwdsP8tIPO1PR43fgk4Lqx7qfiy8zwholfZ4y2HWkF8zjojc+2TGWoWNRrKIBpsf6gWWyfRZRGg7PcjkY65A73eUp9k89juNPyrlqNK8nsx2HEZWARKSnf0Ii8M4Uk5CkWEuAhJ9iz+4+zcqhb9yNuzOUv1G3Cv79QOVz/iX9kjCiqq6Hdm1VLN744lRGhT/wcuG1dutHNjCSputEsAn1VVWJm6CdnrgpSVxnlBPHh652iuxqvT6mi9Crlq5JQ==
+ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
+ smtp.mailfrom=nvidia.com; dmarc=pass action=none header.from=nvidia.com;
+ dkim=pass header.d=nvidia.com; arc=none
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=Nvidia.com;
+ s=selector2;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
+ bh=D8zwOnadhn/K62CvuAGerGeXrh7KD594WLhI4MkJGgY=;
+ b=XPOGEM53ymnxBnCR/R00/ThTIN862KwXsbXiyPjCnarmjevrigSVCo5APBZFv/4HwV0HqiyulWn1lffl4DueMjy8C8BFhIOgsy3WSm5XzeSirx64X+AOocRZ/VoPykRO4MSuGfClyhQ0ZOpKhS+CrnHnK3wd/2qsqC5r8x5dq3jJAnFbghzwHatsJT+jTBgxdDdt8WQvHL4XXfjJ8DiuCGs+3fzeylB+Tnze0Sx71EvyqR7Hvs7SLCF/vDRQ/WsqcH4ZrKxSW5G1FNGolhM6HDOphFvZoIj0pbIxj6dJYWXv0bmsWLMq1NFGIKKQvPmlRzlkkbZmQHcneHBlCfV3HA==
+Authentication-Results: dkim=none (message not signed)
+ header.d=none;dmarc=none action=none header.from=nvidia.com;
+Received: from CH0PR12MB8488.namprd12.prod.outlook.com (2603:10b6:610:18d::18)
+ by IA1PR12MB7614.namprd12.prod.outlook.com (2603:10b6:208:429::16) with
+ Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.21.139.20; Mon, 22 Jun
+ 2026 16:05:32 +0000
+Received: from CH0PR12MB8488.namprd12.prod.outlook.com
+ ([fe80::c565:c0e5:2c8b:c315]) by CH0PR12MB8488.namprd12.prod.outlook.com
+ ([fe80::c565:c0e5:2c8b:c315%5]) with mapi id 15.21.0139.018; Mon, 22 Jun 2026
+ 16:05:32 +0000
+Date: Mon, 22 Jun 2026 18:05:26 +0200
+From: Thierry Reding <treding@nvidia.com>
+To: Thomas Zimmermann <tzimmermann@suse.de>
+Cc: javierm@redhat.com, maarten.lankhorst@linux.intel.com, 
+	mripard@kernel.org, airlied@gmail.com, simona@ffwll.ch, rayyan@ansari.sh, 
+	dri-devel@lists.freedesktop.org, sashiko-reviews@lists.linux.dev, stable@vger.kernel.org
+Subject: Re: [PATCH v2 2/6] drm/sysfb: simpledrm: Improve panel-size
+ validation
+Message-ID: <ajlce8LJQVXm2eic@orome>
+X-NVConfidentiality: public
+References: <20260622132433.722823-1-tzimmermann@suse.de>
+ <20260622132433.722823-3-tzimmermann@suse.de>
+Content-Type: multipart/signed; micalg=pgp-sha512;
+	protocol="application/pgp-signature"; boundary="wqtgabbwikes65nj"
+Content-Disposition: inline
+In-Reply-To: <20260622132433.722823-3-tzimmermann@suse.de>
+X-ClientProxiedBy: BE1P281CA0258.DEUP281.PROD.OUTLOOK.COM
+ (2603:10a6:b10:86::10) To CH0PR12MB8488.namprd12.prod.outlook.com
+ (2603:10b6:610:18d::18)
 Precedence: bulk
 X-Mailing-List: sashiko-reviews@lists.linux.dev
 List-Id: <sashiko-reviews.lists.linux.dev>
 List-Subscribe: <mailto:sashiko-reviews+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:sashiko-reviews+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-X-ThreadId: ArMcrDYeUHoR
-Date: Mon, 22 Jun 2026 11:50:29 -0400
-From: "Mark Pearson" <mpearson-lenovo@squebb.ca>
-To: sashiko-reviews@lists.linux.dev
-Cc: linux-watchdog@vger.kernel.org
-Message-Id: <9e76208e-6fb7-4d62-9a49-95fc03a06737@app.fastmail.com>
-In-Reply-To: <20260622145631.DD7041F000E9@smtp.kernel.org>
-References: <mpearson-lenovo@squebb.ca>
- <20260622144531.2413447-1-mpearson-lenovo@squebb.ca>
- <20260622145631.DD7041F000E9@smtp.kernel.org>
-Subject: Re: [PATCH] watchdog: lenovo_se30g2_se60_wdt: Watchdog for Lenovo SE30G2 and
- SE60
-Content-Type: text/plain; charset=utf-8
+X-MS-PublicTrafficType: Email
+X-MS-TrafficTypeDiagnostic: CH0PR12MB8488:EE_|IA1PR12MB7614:EE_
+X-MS-Office365-Filtering-Correlation-Id: bdd43ace-73e7-4868-3f6e-08ded078161e
+X-MS-Exchange-SenderADCheck: 1
+X-MS-Exchange-AntiSpam-Relay: 0
+X-Microsoft-Antispam:
+	BCL:0;ARA:13230040|7416014|376014|10070799003|366016|23010399003|1800799024|3023799007|56012099006|11063799006|4143699003|6133799003|18002099003|22082099003;
+X-Microsoft-Antispam-Message-Info:
+	JZA1C/ibJhYOR0ld3qy9poYFwM2KutDjpJ1HHHRB9VoD6xS4eOiasf6xrQvQpnyzo6GFFf3kIR88V3FvOEDNv+IB7RHEhJ64ckl3WgGhbM+jcHAbWX0iyfJday3iefsUY14BIHHNjoIS9JEM2uO1MQm+4mVzmbtZW0eE6BMpBwfGik2yNX3CpUHndAgZpHAsc45oFjix22TD5tFv8MhW1+Z4GVmwGSuyJ7Mfq6rERVA33almAsfz0jLC0VEfs1AEhiewD0xBC0IZg+q8L0yaiWInuGb24wQFhyU3pWom65/Prkx2hPX4/U976qYKTHhf2jHBaImmk2xqDDeVqQEb5eoQyQ71Tmrn+4eHro0dT/tJE8ESjGZ4vU50gk66Bxt+PaWSegGTjErpQuWg1pYq4J1N04oinOXp5Nv58vzGUjVj/v6qxHkSU9R+QAdla0hoJ/rarTxs/GbZUA5tfpYyHxg2Md2yUyqJteHSEtZ5JPSJ3uX7L3GMkL938TSztM3CrmPEKapgJutz/u7/P7vIU41LvD8208K8WsLoNUu1dRmSQ0yWD0rdFDE7VilV9gJ+c1B8AOv6VhdrPUDe1eI6+T2gQyWzFgSmGPaGPlnjdDMHoHVuz7bvqQ6t63bB4mIxXHoPHyQmnNXqSkgRyim8/X5FnEgufR4+zFZIQggtGrM=
+X-Forefront-Antispam-Report:
+	CIP:255.255.255.255;CTRY:;LANG:en;SCL:1;SRV:;IPV:NLI;SFV:NSPM;H:CH0PR12MB8488.namprd12.prod.outlook.com;PTR:;CAT:NONE;SFS:(13230040)(7416014)(376014)(10070799003)(366016)(23010399003)(1800799024)(3023799007)(56012099006)(11063799006)(4143699003)(6133799003)(18002099003)(22082099003);DIR:OUT;SFP:1101;
+X-MS-Exchange-AntiSpam-MessageData-ChunkCount: 2
+X-MS-Exchange-AntiSpam-MessageData-0:
+	=?us-ascii?Q?EpOWWFPc5r8/Nzr98s9bhyGvl5xKi8f03DZ2S8XkWEETxM9Gn7siT51k5Bz4?=
+ =?us-ascii?Q?lBYC49Io5v5jHeb2qvsefSpvs83Jdtwn86JFSbwgmWhmvacYAF2/6uMiPYor?=
+ =?us-ascii?Q?l8+kUAI9aPHY+qGmCq0aGyf9vB/YqmJQdlz9Ywm0LH5J7ZE6fBGMoXLiWyK9?=
+ =?us-ascii?Q?YXoPz9MF5yXZLsASv0Ci/LpHCLG83uvvj8k634N5G8lbk+dmoc2gqQJynWRk?=
+ =?us-ascii?Q?bbcArHe048vrHUHLpYfS0fy9Bi0tB9qNTeZENdqT1GKAW4ZvxPXz8QL1+bGc?=
+ =?us-ascii?Q?Zb8J/QT36g/b9ewSnmAJ2PehE6k8C0eM4842YQXpvdwTfBmNnhs1PBLCQgO1?=
+ =?us-ascii?Q?K6Pel5qyM0kVrW4B5hQclJ51UonhZv3YgGSXXrQyNgVlQ6IzGGRzB4y2gO8K?=
+ =?us-ascii?Q?uns7V+EiYexNe01Bszbpu5WDkO4OUTz8+6p62foKiLmTAa8ZIgRUvtTRpaC2?=
+ =?us-ascii?Q?6nTn/i8GaUx0EikFFAaitHHfeHhkTNAZokUwf7XA9IAbm4BmV5csEAgtZs/u?=
+ =?us-ascii?Q?JbJBlDH0y5rDXX/gNoeygJF32ZQV2Xc5JPicxDtEF68VfPT1f51cM52Kx9AW?=
+ =?us-ascii?Q?qjM7tmwjcpf/wm9qiMj2bCdrILolQDZNThsV+vh7dR1KmdN3yuBpdAmHXkoy?=
+ =?us-ascii?Q?HK7Xygw2dL1f6CA1a3Ro2x4WglCDYp8T272Z8UCMdzXW4SWscACZ57hlIjpz?=
+ =?us-ascii?Q?wade8D4lZdNXJF2n1lmSBHx1u2GRn/8Gf/6fsUNu/az3FldSvMPG5xyTGNuF?=
+ =?us-ascii?Q?OfBVBfQ99QDaNvaHwftaIivYScaiyBnDWr3R8vPuggz0gu2RwqNJ7n+wfmHV?=
+ =?us-ascii?Q?y2jme2RwfxPqv0KabQWdQIxIhwjPZoc/yaieMItateT6tWa0muwvwkbZD5Ga?=
+ =?us-ascii?Q?PvI2RvLLyO64gI3fVDW/3Wop+2cE++oI2w9bO5nCgwjRtoayPbuV/nGIVIFo?=
+ =?us-ascii?Q?maOZWgI6C+K5tCqO5A2R0nhhJ3eQQS8c1z5hVYDtNR04pcDIKz2wjCWbL7Hh?=
+ =?us-ascii?Q?M1mTNLJceuINd7XlV/FXxihQSlz073Q420c9FWRABTDtEJsK4K3Uon2btOHv?=
+ =?us-ascii?Q?L2U3Gfkzs5LzabY73YK54BfmWx7XL8DxDqnXkKvHnHSz2r60z64SW5L6s9D4?=
+ =?us-ascii?Q?QLGhGmZkb+q8SqyX9jsPDDHlMaRdxLAIm1Rr9xjQXfU47tP8Ig3ZFzeNJ7Zj?=
+ =?us-ascii?Q?84cHsUWjTX6kpxof7+HIjCkUjcdJuqJq8Xgw+XldabG4lgHiimPd34WQFYBG?=
+ =?us-ascii?Q?T6uSyGvIJE5y4RwEEqQbscI+lLdJ7y2V9MlbkydmVKxgJcY61xK6zQkH62Ty?=
+ =?us-ascii?Q?JBQsBwwYOX1dTPIMIUrVlzNPfbpAI38CIgcdM1RxWdhwKRLBi8ImlymY/Kd+?=
+ =?us-ascii?Q?SRotkatlW5N377lN+8ztyk/EWt/DSLSOB/c+x/PdBUJTa8BXMpnuoI1DG07D?=
+ =?us-ascii?Q?897UeDmcBN0IYEQJKZdhRFj9/gfd9kDY3tNngk+XvLYjW28I/bd/6zNMp7Ie?=
+ =?us-ascii?Q?ygS/epubD8X43+PDx4Vjvy8/uwqmkhcaMayN4tG1j6cYheuWQGjuPZvfkZym?=
+ =?us-ascii?Q?/VKyI3UHO9ZnPpxAcHYKCrpvOA5XtyONE8UjdjmRbSQcIwRS6YVJfW2Tz40b?=
+ =?us-ascii?Q?MkXvMnSY+b6rnbF3WJHUAiQFNU2G8qMKbrCUyexkxRpgD0VG0oP1c6tlSd7i?=
+ =?us-ascii?Q?rdF03XZ42/Xm7z+dOXpfAMnR0fQd/JMme8RlH8bAEEoslOqJ/3lPjEEIQz+u?=
+ =?us-ascii?Q?1pRv8QpTM+HP2xGif8thHjI8vHY8fMPnxjhK2loERhOq4H0SUOQehihjfmIj?=
+X-MS-Exchange-AntiSpam-MessageData-1: ZtMTy79q7HQb+A==
+X-OriginatorOrg: Nvidia.com
+X-MS-Exchange-CrossTenant-Network-Message-Id: bdd43ace-73e7-4868-3f6e-08ded078161e
+X-MS-Exchange-CrossTenant-AuthSource: CH0PR12MB8488.namprd12.prod.outlook.com
+X-MS-Exchange-CrossTenant-AuthAs: Internal
+X-MS-Exchange-CrossTenant-OriginalArrivalTime: 22 Jun 2026 16:05:32.0880
+ (UTC)
+X-MS-Exchange-CrossTenant-FromEntityHeader: Hosted
+X-MS-Exchange-CrossTenant-Id: 43083d15-7273-40c1-b7db-39efd9ccc17a
+X-MS-Exchange-CrossTenant-MailboxType: HOSTED
+X-MS-Exchange-CrossTenant-UserPrincipalName: XJq0iM98S9nefgzOSWX0p+dUeXg1Ifdi+NLfwEzshJ7msTl54jkpYt9t7n3iC2TP9iX2bNIOW4vXu4MANRN3HA==
+X-MS-Exchange-Transport-CrossTenantHeadersStamped: IA1PR12MB7614
+
+--wqtgabbwikes65nj
+Content-Type: text/plain; protected-headers=v1; charset=us-ascii
+Content-Disposition: inline
 Content-Transfer-Encoding: quoted-printable
+Subject: Re: [PATCH v2 2/6] drm/sysfb: simpledrm: Improve panel-size
+ validation
+MIME-Version: 1.0
 
-On Mon, Jun 22, 2026, at 10:56 AM, sashiko-bot@kernel.org wrote:
-> Thank you for your contribution! Sashiko AI review found 4 potential=20
-> issue(s) to consider:
-> - [High] The global `se_30g2_60_pdev` pointer is not cleared after=20
-> being freed on the `platform_device_add()` error path, leading to a=20
-> Use-After-Free and Double-Free during module exit.
+On Mon, Jun 22, 2026 at 03:19:36PM +0200, Thomas Zimmermann wrote:
+> Validate the panel size from the device-tree node against the
+> limitations of struct drm_display_mode. The type only stores sizes
+> in 16-bit fields. Fail transparently on errors; do not warn.
+>=20
+> v2:
+> - only use initialized values in debugging output (Sashiko)
+>=20
+> Signed-off-by: Thomas Zimmermann <tzimmermann@suse.de>
+> Fixes: 2a6d731a8f16 ("drm/simpledrm: Allow physical width and height conf=
+iguration via panel node")
+> Cc: Rayyan Ansari <rayyan@ansari.sh>
+> Cc: <stable@vger.kernel.org> # v6.4+
+> ---
+>  drivers/gpu/drm/sysfb/simpledrm.c | 40 ++++++++++++++++++++++++++++---
+>  1 file changed, 37 insertions(+), 3 deletions(-)
+>=20
+> diff --git a/drivers/gpu/drm/sysfb/simpledrm.c b/drivers/gpu/drm/sysfb/si=
+mpledrm.c
+> index 15dcafa9d524..fa2121f81def 100644
+> --- a/drivers/gpu/drm/sysfb/simpledrm.c
+> +++ b/drivers/gpu/drm/sysfb/simpledrm.c
+> @@ -193,6 +193,40 @@ simplefb_get_memory_of(struct drm_device *dev, struc=
+t device_node *of_node)
+>  	return res;
+>  }
+> =20
+> +static u16
+> +__simplefb_get_panel_size_mm_of(struct drm_device *dev, struct device_no=
+de *of_panel_node,
+> +				const char *name)
+> +{
+> +	int ret;
+> +	u32 value;
+> +
+> +	ret =3D of_property_read_u32(of_panel_node, name, &value);
+> +	if (ret) {
+> +		drm_dbg(dev, "simplefb: cannot parse panel %s: error %d\n",
+> +			name, ret);
+> +		return 0; /* not an error, simply ignore */
+> +	}
+> +	if (value > U16_MAX) {
+> +		drm_dbg(dev, "simplefb: panel %s of %u exceeds maximum value\n",
+> +			name, value);
+> +		return 0; /* not an error, simply ignore */
 
-I belive this is a valid issue - I'll fix in v2.
+I wonder if it's perhaps better to move this comment to the function
+scope and explain why this can be ignored. I didn't know and had to go
+look at drm_sysfb_mode() to see that if these are 0, it'll compute the
+physical dimensions based on a default of 96 DPI.
 
-> - [High] SuperIO configuration mode is prematurely exited before=20
-> reading `bram_base`, causing the read to fail and the driver to map an=20
-> invalid I/O port address.
+> +	}
+> +
+> +	return value;
+> +}
+> +
+> +static u16
+> +simplefb_get_panel_width_mm_of(struct drm_device *dev, struct device_nod=
+e *of_panel_node)
+> +{
+> +	return __simplefb_get_panel_size_mm_of(dev, of_panel_node, "width-mm");
+> +}
+> +
+> +static u16
+> +simplefb_get_panel_height_mm_of(struct drm_device *dev, struct device_no=
+de *of_panel_node)
+> +{
+> +	return __simplefb_get_panel_size_mm_of(dev, of_panel_node, "height-mm");
+> +}
+> +
+>  /*
+>   * Simple Framebuffer device
+>   */
+> @@ -594,7 +628,7 @@ static struct simpledrm_device *simpledrm_device_crea=
+te(struct drm_driver *drv,
+>  	struct drm_sysfb_device *sysfb;
+>  	struct drm_device *dev;
+>  	int width, height, stride;
+> -	int width_mm =3D 0, height_mm =3D 0;
+> +	u16 width_mm =3D 0, height_mm =3D 0;
+>  	struct device_node *panel_node;
+>  	const struct drm_format_info *format;
+>  	struct resource *res, *mem =3D NULL;
+> @@ -658,8 +692,8 @@ static struct simpledrm_device *simpledrm_device_crea=
+te(struct drm_driver *drv,
+>  			return ERR_CAST(mem);
+>  		panel_node =3D of_parse_phandle(of_node, "panel", 0);
+>  		if (panel_node) {
+> -			simplefb_read_u32_of(dev, panel_node, "width-mm", &width_mm);
+> -			simplefb_read_u32_of(dev, panel_node, "height-mm", &height_mm);
+> +			width_mm =3D simplefb_get_panel_width_mm_of(dev, panel_node);
+> +			height_mm =3D simplefb_get_panel_height_mm_of(dev, panel_node);
+>  			of_node_put(panel_node);
+>  		}
+>  	} else {
 
-This one is I believe invalid and behaviour is correct. If someone wiser=
- than me disagree's please let me know.
+The drm_sysfb_mode() function that width_mm and height_mm get passed
+into accepts them as unsigned int, so maybe that should be changed as
+well for more consistency?
 
-> - [Medium] The allocated and added platform device is permanently=20
-> leaked if `platform_driver_register()` fails.
+In either case, since they all end up in the u16 in the struct, it's
+obviously correct to check for the range when parsing, so:
 
-I think this may be valid, I'll add a check in v2 if the device has been=
- allocated and release if there is a driver registration failure.
+Reviewed-by: Thierry Reding <treding@nvidia.com>
 
-> - [Medium] The watchdog driver silently ignores hardware access=20
-> failures if the `bram_base` region cannot be claimed, falsely reportin=
-g=20
-> success to the watchdog core.
+--wqtgabbwikes65nj
+Content-Type: application/pgp-signature; name="signature.asc"
 
-I'll address this in v2
+-----BEGIN PGP SIGNATURE-----
 
-> --
->
-> commit 9d10faee62683aacec801a77d1defa194acc32d0
-> Author: Mark Pearson <mpearson-lenovo@squebb.ca>
->
-> watchdog: lenovo_se30g2_se60_wdt: Watchdog for Lenovo SE30G2 and SE60
->   =20
-> Watchdog driver implementation for Lenovo SE30G2 and SE60 platforms.
->
->> diff --git a/drivers/watchdog/lenovo_se30g2_se60_wdt.c b/drivers/watc=
-hdog/lenovo_se30g2_se60_wdt.c
->> new file mode 100644
->> index 0000000000000..56e0e9ef8462b
->> --- /dev/null
->> +++ b/drivers/watchdog/lenovo_se30g2_se60_wdt.c
->> @@ -0,0 +1,274 @@
-> [ ... ]
->> +static unsigned short lpc_chip_id(void)
->> +{
->> +	unsigned char msb, lsb;
->> +
->> +	outb(0x87, CFG_PORT);
->> +	outb(0x01, CFG_PORT);
->> +	outb(0x55, CFG_PORT);
->> +	outb(0x55, CFG_PORT);
->> +	msb =3D lpc_read(0x20);
->> +	lsb =3D lpc_read(0x21);
->> +	lpc_write(0x2, 0x2);
->
-> [Severity: High]
-> Does this lpc_write() prematurely exit SuperIO configuration mode?
->
-> Later in se_30g2_60_wdt_probe(), the code attempts to select the BRAM
-> logical device and read the base address:
->
-> se_30g2_60_wdt_probe() {
->     ...
->     lpc_write(CFG_LDN, CFG_BRAM_LDN);
->     bram_base =3D (lpc_read(0x60) << 8) | lpc_read(0x61);
->     ...
-> }
->
-> If the configuration mode was already exited here, won't these subsequ=
-ent
-> reads return 0xFF, causing bram_base to be set to an invalid address?
->
->> +
->> +	return (msb << 8 | lsb);
->> +}
->
-> [ ... ]
->
->> +static void wdt_write(unsigned short val)
->> +{
->> +	if (!request_muxed_region(bram_base, BRAM_SIZE, DRVNAME))
->> +		return;
->> +	bram_write(BRAM_WDT_REG, (val >> 8) & 0xFF);
->> +	bram_write(BRAM_WDT_REG + 1, val & 0xFF);
->> +	release_region(bram_base, BRAM_SIZE);
->> +}
->> +
->> +static int wdt_start(struct watchdog_device *wdog)
->> +{
->> +	wdt_write(wdog->timeout);
->> +	return 0;
->> +}
->
-> [Severity: Medium]
-> If request_muxed_region() fails in wdt_write(), the function silently =
-returns.
->
-> Since wdt_start() and wdt_ping() call wdt_write() and always return 0,=
- won't
-> this falsely report success to the watchdog core even if the hardware =
-write
-> failed?
->
-> [ ... ]
->
->> +static int se_30g2_60_create_device(const struct dmi_system_id *id)
->> +{
->> +	int err;
->> +
->> +	se_30g2_60_pdev =3D platform_device_alloc("lenovo-se30g2-se60-wdt",=
- -1);
->> +	if (!se_30g2_60_pdev)
->> +		return -ENOMEM;
->> +
->> +	err =3D platform_device_add(se_30g2_60_pdev);
->> +	if (err)
->> +		platform_device_put(se_30g2_60_pdev);
->
-> [Severity: High]
-> If platform_device_add() fails, platform_device_put() frees the device=
-, but
-> the global se_30g2_60_pdev pointer is not set to NULL.
->
-> Since dmi_check_system() returns the number of matches regardless of c=
-allback
-> errors, module initialization will proceed. When the module is unloade=
-d,
-> se_30g2_60_wdt_exit() will check if se_30g2_60_pdev is non-NULL and ca=
-ll
-> platform_device_unregister(), leading to a use-after-free and double-f=
-ree.
->
-> Could se_30g2_60_pdev be explicitly set to NULL on the error path to a=
-void
-> this?
->
->> +
->> +	return err;
->> +}
->
-> [ ... ]
->
->> +static int __init se_30g2_60_wdt_init(void)
->> +{
->> +	if (!dmi_check_system(se_30g2_60))
->> +		return -ENODEV;
->> +
->> +	return platform_driver_register(&se_30g2_60_wdt_driver);
->> +}
->
-> [Severity: Medium]
-> If platform_driver_register() fails here, the platform device successf=
-ully
-> allocated and added by the DMI callback is never unregistered.
->
-> Will this permanently leak the platform device and cause subsequent mo=
-dule load
-> attempts to fail with -EEXIST?
->
-> --=20
-> Sashiko AI review =C2=B7=20
-> https://sashiko.dev/#/patchset/20260622144531.2413447-1-mpearson-lenov=
-o@squebb.ca?part=3D1
+iQIzBAABCgAdFiEEiOrDCAFJzPfAjcif3SOs138+s6EFAmo5XUEACgkQ3SOs138+
+s6GDUg//YdFKHi9j6iuT8sgOHj5xeMEaXLCs3VmlSmYxkr4sRaVz/gz/SdpnGAeZ
+kKnHg3fbueu3V9vL5iegiQTtuPEGyjPIJ5D/+ozSmXDgt6zCcmDxfgOP7U6QYvn0
+A1qJcARW7EvEsfH+kEw5yI7eDKN19akrMLaFF2A+yqf9tkcecbUrvltGvPJzShZA
+hVmA+P+rSRLPjrnBf39Jx6dJGkebBPBHbkGwXnVZFtzPWCP4DJ2KuigqcWnSqW5b
+bXGOw2pgUZtBWdbL+Ng3v3qrccZw4NqtnwVemwFGR8qEUXyT3e/aj9o06f7PVNJi
+zKMVj7Ujib74q3EOugkWntfTGOgS4o8j9mJw+xTcJkgslRxNxvZYvpKA9wqBXNgn
+YPgD15LLKXegr3CrhZkkOy6miBjEcRfRrb3Kr2yAQaLQG+qk5wBwL8E1oIGZljgK
+r1jnIEF80gRoE6+JvoEqD+eQn2nrLtn4Xg33mE8xKcRFRt9zhoStyrLpKEJufWWw
+haplOHUtCDh7gjaRMV3NQ4kBqiqgPicwxNfD8XoBg8ixps5dQ8HiyJQhGi7rXRRG
+jTdafWjWfasd9Hen6x+3HSl0PIBPe3635LC6WA4DO2aq2+Z1IedW0EFBNs1srZmH
+x+9fssO80Dw0CaBEFtn8UYCbHsOREvM2LVhtziL3DN7o1Jwzmg0=
+=TC0O
+-----END PGP SIGNATURE-----
 
-I'll hold off a couple of days on doing v2 in case there is any other fe=
-edback from maintainers outside of the sashiko recommendations.
-
-Mark
+--wqtgabbwikes65nj--
