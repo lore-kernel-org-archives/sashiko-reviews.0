@@ -1,64 +1,67 @@
-Received: from OS0P286CU011.outbound.protection.outlook.com (mail-japanwestazon11020133.outbound.protection.outlook.com [52.101.228.133])
+Received: from SEYPR02CU001.outbound.protection.outlook.com (mail-koreacentralazon11023104.outbound.protection.outlook.com [40.107.44.104])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C532735C1A1
-	for <sashiko-reviews@lists.linux.dev>; Mon, 22 Jun 2026 06:14:33 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=fail smtp.client-ip=52.101.228.133
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DAC6835CB89
+	for <sashiko-reviews@lists.linux.dev>; Mon, 22 Jun 2026 06:20:07 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=fail smtp.client-ip=40.107.44.104
 ARC-Seal:i=2; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1782108875; cv=fail; b=I2qJsz0rSwPnUNzKpg8150/69bh2zuH4il8PjNAEbHULS4DsQW0m+vFXwpBdpRjgOk+MHwe09CiJ4NcR3wkLB3dZtFRGHEIUrU9ZQbhyYr24qGCjnjggVsqyR23w9fO6NraQqkBrC6VftXZx9G8ibpRlYiqQX5nLFduRD9zDCsU=
+	t=1782109209; cv=fail; b=L7HnOz7xDJXGUIHj7gUXkmGNK+5vOurITEe4AZAFaniVNJP3+QKXAcdDzIzxQNSXAZF5wCGIREVAaO3NK5URsXwmAYubQcgZOVGB6Qlyr0GDAvj3VkwEyfF2IoQ1nbN7hoXdsUFqEHsa3KR/yCcbG0sZBGP4k5pwHphH5yWqoC4=
 ARC-Message-Signature:i=2; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1782108875; c=relaxed/simple;
-	bh=mP8gTxcgt4t60ocoswEuP9mwtlp03VAYPmx1KKMUG/8=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:Content-Type:
-	 Content-Disposition:In-Reply-To:MIME-Version; b=D/Pk3uuspnQYxCukENzkAlZ2kZTkOpowBefTl8Rhq/8F+bO0qOSOK2ToExHuGuofHr3D4Mj+ZK+tKNDDDiD1b4DrRivegElykKDCoyeI1Fr6pd4Y/6wM84Sm76LAaXjTxk32Te97cW9DRYyuPwJGVn7DXHXS5BKgdQySzKE8CvM=
-ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=valinux.co.jp; spf=pass smtp.mailfrom=valinux.co.jp; dkim=fail (1024-bit key) header.d=valinux.co.jp header.i=@valinux.co.jp header.b=dXg9DxuJ reason="signature verification failed"; arc=fail smtp.client-ip=52.101.228.133
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=valinux.co.jp
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=valinux.co.jp
+	s=arc-20240116; t=1782109209; c=relaxed/simple;
+	bh=0Jh9QPV67APO4dbhAdqa0ZR9WBTWPRhvXbiczzXiMU0=;
+	h=Message-ID:Date:Subject:To:Cc:References:From:In-Reply-To:
+	 Content-Type:MIME-Version; b=l7TzazBSJ/gl4hGHcCI9JPxbOKQJz1u1j1bkcYRomi0lZ5tJtPSB3IixGbin25LMbNczQb76yA6X5nM9LHqR2KHbdMJ3UfOHn/PH+RtKMyVMfAzfMvKVeLyjvXwYYF4DTXb8Xip6g+wAXGKJ5seMjOg+rtkf1dyzTqYd/C7bN/M=
+ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=amlogic.com; spf=pass smtp.mailfrom=amlogic.com; dkim=pass (2048-bit key) header.d=amlogic.com header.i=@amlogic.com header.b=j6sjG9x6; arc=fail smtp.client-ip=40.107.44.104
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=amlogic.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=amlogic.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=fail reason="signature verification failed" (1024-bit key) header.d=valinux.co.jp header.i=@valinux.co.jp header.b="dXg9DxuJ"
+	dkim=pass (2048-bit key) header.d=amlogic.com header.i=@amlogic.com header.b="j6sjG9x6"
 ARC-Seal: i=1; a=rsa-sha256; s=arcselector10001; d=microsoft.com; cv=none;
- b=r6pFRCpACGaxDLo6V9lbFYmNVIJo5jfemFJokepteDkx74pnVEU4h5DGVCf6PV6VgJZURTEx+PZ9iKc7gfLd93+UBtm9Z9Lv10Dq/y40EnrWrf3BEflxlT8BG4zKAZ4pCqnLl8S1sAOqH2MzY4DTfs8nvH9i93/G0Qtemxvqrzm9Ls/bCPprSefM8IWgL7AwMgn3huXEJWmjV6RW3UCmVXGfR6bCUBIPEKGX/cUBsDeU7WjR1QrLu6Wo6gDQXaNmv+YvIEfRGOUBtucZsrZM8p2MlzW33zB0eCplsjmUKHUfDriAxXAbeshkgRneLdzCQxusB/mXWp5m52bGI5Ryyw==
+ b=fbD3OvefVeDb6iBsz11fop91fwju4b2w3FbSkOqlcfJVEqDu2h4ajk4+o7uH5DHBdzRCi/GToZioEbN6HbfAy/TFSGHZvuE4xGlt+ls/eiHtSULxd+HFttfHtV1z9wSH1dfLTj22luGVK9ANRez/uaI82Jsc38gIQZA1OY/pnDiduusoJhhYX+y38ctOrm63fAnwiDNA5ngg1hyhc/82RsaCGUkx934YfdYVGyD5VNLITA5yxVDvx7sUhUbC/Pa7VDAEHBxC8wM3KYa5zq7asuA8uX1XRD85dp6PJpzkjEnr5Ee5VHGyrdmEpUSF2s1OgHX8ZVbdB0Xe2FnuFL+BXg==
 ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com;
  s=arcselector10001;
  h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
- bh=8cNyVjRTgvI3m4enVWrrClrtlR9VwLkJB+S5KKZP5+M=;
- b=ywxpnRq3uxzB1rnNsk9AHiHsqz2F7QuWXQIZh5aCAVYPEOGRKc2WLG5K/8ur1C0JUMFOVSf88OoJsmIafN0xIO+p05+CiZ5sxTOQ5vSrMCsmMK1fwOYKbA91We4oddi+KkzIghXJhwK/DnM4egCm+Sz89BJzKNXLhrCjRhntR+iNvtTQaxJndhXsX3GhzsznhvLT2QGC1oKzrW09t0WXoujRv5E0NhYjv4u05DVUX5xGuD5/QwP8kG5hbIydAA4BeSV0shgGNWtM7fQuUPox90OOCDUoN5Znej1pBCY6x2JnZQU9R9fBQzb6c5b+93DWXiCExSB+EBE0ixzBBWQ9iA==
+ bh=v0WQs1J82XrgCVLeRm5Euo1rqVjIttoGQvQGGRH9GV0=;
+ b=hycft32HvMMp7oDzTP6FW8Cu5Vd2MhVnOvBIxIy5H6KEI7dHEomsFc3S6Qx6mtcrzTFKO3W+2hKsj7sh3vgTFoaqyJmEDnBxikGKRFtVFYFJDQxeWfD27wmHR1yTgNt6HKflBBEGRtUWns5mGWrwXxafJcpdqXp/dRE8KMu9YES5tfUwm/VuGqtxkBjHedhkm4cdlKfespDuooDny4Wk0vhWZSIaj5hq9u+y98tTAB/tege2eFjaNfaNcn9HVji8vfReUyOI3bAvMyKJmk1ZwneH0KlHRfCc8d8+4Yc0LX0oo3Ej3lfopBDUpK8CuqFcOsG9fbDlpqL8Ouh2JH72vw==
 ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
- smtp.mailfrom=valinux.co.jp; dmarc=pass action=none
- header.from=valinux.co.jp; dkim=pass header.d=valinux.co.jp; arc=none
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=valinux.co.jp;
+ smtp.mailfrom=amlogic.com; dmarc=pass action=none header.from=amlogic.com;
+ dkim=pass header.d=amlogic.com; arc=none
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=amlogic.com;
  s=selector1;
  h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
- bh=8cNyVjRTgvI3m4enVWrrClrtlR9VwLkJB+S5KKZP5+M=;
- b=dXg9DxuJb/V+7pATsbbfFnhBHK4Tryro2MbTLCBhtlA6tTiaqFqW9uuEX5GWJMzy+PgtHixH9WzjbH+6bIkA+EbqRKWwArndbMSGbisgWlUh7qJ2wOaA7aqHfSGOa7ekEg3h81PUzMvTnGUNWS/3kLJttziYnFJjQfprAv4BFbk=
+ bh=v0WQs1J82XrgCVLeRm5Euo1rqVjIttoGQvQGGRH9GV0=;
+ b=j6sjG9x6WedRTnJaxYc2r471Z7I4H3kWjY48jTDI7HGVStjmLOzruoFV9xjfovP1hb75nvmDPoxv1UUYe3TQRJJ1AKudOwcXcxSOfYI/1U39CWAzc/tBuhRjKlcZD503+zwNGwnKpNtRTQAiLTu0dLsnlL3FqMBxGFVfz8Bw44EBZWB8VjFmlxCAxEgVrGwl2r13OvdC/YdypAh12REr2yrex702dQDxo8e0uGPoJYHmxzl/LxPkcXmYGUs79nvAjUORaqqwEnY7Djrty7t+IJgK/tAVZpDzpb8qahsYguZRfHc4k26HXHoC0e+E+PrlWaegqC0H/jP3ImGG1GQUQw==
 Authentication-Results: dkim=none (message not signed)
- header.d=none;dmarc=none action=none header.from=valinux.co.jp;
-Received: from TY7P286MB7722.JPNP286.PROD.OUTLOOK.COM (2603:1096:405:38f::10)
- by TYCP286MB3342.JPNP286.PROD.OUTLOOK.COM (2603:1096:400:2c5::14) with
+ header.d=none;dmarc=none action=none header.from=amlogic.com;
+Received: from KL1PR03MB7149.apcprd03.prod.outlook.com (2603:1096:820:ca::7)
+ by SE1PPF73DA7E6F9.apcprd03.prod.outlook.com (2603:1096:108:1::854) with
  Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.21.139.19; Mon, 22 Jun
- 2026 06:14:28 +0000
-Received: from TY7P286MB7722.JPNP286.PROD.OUTLOOK.COM
- ([fe80::2305:327c:28ec:9b32]) by TY7P286MB7722.JPNP286.PROD.OUTLOOK.COM
- ([fe80::2305:327c:28ec:9b32%5]) with mapi id 15.21.0139.018; Mon, 22 Jun 2026
- 06:14:28 +0000
-Date: Mon, 22 Jun 2026 15:14:27 +0900
-From: Koichiro Den <den@valinux.co.jp>
-To: sashiko-reviews@lists.linux.dev
-Cc: vkoul@kernel.org, dmaengine@vger.kernel.org, Frank.Li@kernel.org
-Subject: Re: [PATCH v3 05/13] dmaengine: dw-edma: Add partial channel
- ownership mode
-Message-ID: <ghjc2vshv6xiuxkweo6sedbm4nrxdrmz7fsz54hki4riyq73cg@d2aai5sakulr>
-References: <20260620170040.3756043-1-den@valinux.co.jp>
- <20260620170040.3756043-6-den@valinux.co.jp>
- <20260620171603.DA6211F000E9@smtp.kernel.org>
-Content-Type: text/plain; charset=iso-8859-1
-Content-Disposition: inline
-Content-Transfer-Encoding: 8bit
-In-Reply-To: <20260620171603.DA6211F000E9@smtp.kernel.org>
-X-ClientProxiedBy: TYCP301CA0085.JPNP301.PROD.OUTLOOK.COM
- (2603:1096:405:7b::7) To TY7P286MB7722.JPNP286.PROD.OUTLOOK.COM
- (2603:1096:405:38f::10)
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.21.159.7; Mon, 22 Jun
+ 2026 06:20:02 +0000
+Received: from KL1PR03MB7149.apcprd03.prod.outlook.com
+ ([fe80::2f06:12a:fff0:6506]) by KL1PR03MB7149.apcprd03.prod.outlook.com
+ ([fe80::2f06:12a:fff0:6506%5]) with mapi id 15.21.0159.007; Mon, 22 Jun 2026
+ 06:20:01 +0000
+Message-ID: <167ab529-1588-4f8a-9297-cecdb16fa0c9@amlogic.com>
+Date: Mon, 22 Jun 2026 14:19:59 +0800
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH v4 2/2] clk: amlogic: Add A9 AO clock controller driver
+To: Jerome Brunet <jbrunet@baylibre.com>, sashiko-bot@kernel.org
+Cc: Jian Hu via B4 Relay <devnull+jian.hu.amlogic.com@kernel.org>,
+ sashiko-reviews@lists.linux.dev, linux-amlogic@lists.infradead.org,
+ neil.armstrong@linaro.org, robh@kernel.org, devicetree@vger.kernel.org,
+ conor+dt@kernel.org
+References: <20260618-a9_aoclk-v4-0-569d0425e50c@amlogic.com>
+ <20260618-a9_aoclk-v4-2-569d0425e50c@amlogic.com>
+ <20260618100341.0A42F1F00A3A@smtp.kernel.org>
+ <1j33yjc7b9.fsf@starbuckisacylon.baylibre.com>
+From: Jian Hu <jian.hu@amlogic.com>
+In-Reply-To: <1j33yjc7b9.fsf@starbuckisacylon.baylibre.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
+X-ClientProxiedBy: SI2P153CA0011.APCP153.PROD.OUTLOOK.COM
+ (2603:1096:4:140::14) To KL1PR03MB7149.apcprd03.prod.outlook.com
+ (2603:1096:820:ca::7)
 Precedence: bulk
 X-Mailing-List: sashiko-reviews@lists.linux.dev
 List-Id: <sashiko-reviews.lists.linux.dev>
@@ -66,199 +69,179 @@ List-Subscribe: <mailto:sashiko-reviews+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:sashiko-reviews+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 X-MS-PublicTrafficType: Email
-X-MS-TrafficTypeDiagnostic: TY7P286MB7722:EE_|TYCP286MB3342:EE_
-X-MS-Office365-Filtering-Correlation-Id: 7b712ebc-f0c1-4a89-9354-08ded025840b
+X-MS-TrafficTypeDiagnostic: KL1PR03MB7149:EE_|SE1PPF73DA7E6F9:EE_
+X-MS-Office365-Filtering-Correlation-Id: 485f5dc8-4a66-4b77-85ff-08ded0264ae0
 X-MS-Exchange-SenderADCheck: 1
 X-MS-Exchange-AntiSpam-Relay: 0
 X-Microsoft-Antispam:
-	BCL:0;ARA:13230040|23010399003|10070799003|1800799024|376014|366016|6133799003|18002099003|22082099003|56012099006|5023799004|4143699003;
+	BCL:0;ARA:13230040|23010399003|1800799024|376014|366016|22082099003|56012099006|5023799004|11063799006|4143699003|18002099003;
 X-Microsoft-Antispam-Message-Info:
-	e10jVbWRlpniDmQn6YlyxxIYD0nw+JkVaEEc8Cgkn/2lbGtej+s0jyCUVX9Sqb7zi9m76JsDMDPR7zgBb7VYlRFijYXAamTQTYJeAHjV/i6Uk6Clh1umCpqDeKTjIWQHuA+qJRzSJv1LB42EBu9CrHxuACVvs5p38DSzK3i+GrU8R4iJ8ULHHi7uXadI5I7Hqds3Ex0o8nSXgSmH8r7mnjO5Sl2IlTGQ6+zhyDp9bMaMrlVC3lyrmGz+lxfaxbcbVId8wZIAq+g/Db/mVNZvS4bSgNf7EfnejUxe5lf4JsL9+g7IpGKggnLTggdPmcbk519mLirgSy7GMX0iEHsZ0c2f1xpfy2sKs+2wL2hC3zbWNk1GxpFpYoBNI8aupadu1CDBuf5cpIxFI3akB1B6LN23YFTfIs2IcPqc6c5ZgryGPqA2K9PB7FfYAhvwf+wQ8BER3g2O8S33h7prR59gYmkfiNLlbNsDEdHDpHUzP+IXOEjn1qBzOpDj4HPqEWglZobbCCeir4TPnPYX9ZhLb1QsPFwiwqpQUrzIN/XZROLOq4xtcNcn5hsgnxrJbwiI1/RM2hsfgwhguKUTPSAnFC95oEvlVnWE1tRqRdgJ0Bg=
+	luGxcplGPWdpEWWCUZgVBas4aE7DWju2D2jXeASRLlvYDstrF+FON3WIwTNvNzhL3AuaA/x4qNDq4LNsxd9JFnSmegGm4QpuvJxr/WkLiKLLEH2SdeHpqH5ZQvmoGGrgFL5rRBoI+sTgWKSuu99v4PRTDNNMh187Mb0w66jyaBn9jq6GVLk6WbmP3Bq5Adhzcjb1C9EWI/NjlLX/3qPPkLifIeZwXdoeQ8PrY1ju1puM33LUGZvPwhLFNwABs2ZUOh2UZKikSA4eRs3HEpCge/N16QNNFkLRKALeYJbTVIjGyx4bI7cEiWb9Uk4A7QWydm6rdyyYoGjieK1qCvhPcM5I7ZL6tnOvH5c0Hislyke73O5h8rajQVL15McqcLQZJzZT+WWHMznhCDNjZj4jiGf64z38XkXcn3R5E+OIEVTzEL3X1u4zkdzjKTpv2G1UjLE9jpIu0MU8QtWZ5oy9gaX2cLe13bF4zqO2pJdRCVpMX9Y7UPPHUnBrMI7CU4+CJpV6t344nzKhOpev03a06aFgbftkxtnkfSAWFuGqIhqC1x9wxNNg4/M/QICddlenBMSAiWc1razpAGxm6cWEITV2ZphABp2bfzuTPQieEBjtnL+gzUqdkuHZ7pLRYGqfLvQJijO7E1redmQ4dS/REd30rIviCh4QP/NVHuWKqWY=
 X-Forefront-Antispam-Report:
-	CIP:255.255.255.255;CTRY:;LANG:en;SCL:1;SRV:;IPV:NLI;SFV:NSPM;H:TY7P286MB7722.JPNP286.PROD.OUTLOOK.COM;PTR:;CAT:NONE;SFS:(13230040)(23010399003)(10070799003)(1800799024)(376014)(366016)(6133799003)(18002099003)(22082099003)(56012099006)(5023799004)(4143699003);DIR:OUT;SFP:1102;
+	CIP:255.255.255.255;CTRY:;LANG:en;SCL:1;SRV:;IPV:NLI;SFV:NSPM;H:KL1PR03MB7149.apcprd03.prod.outlook.com;PTR:;CAT:NONE;SFS:(13230040)(23010399003)(1800799024)(376014)(366016)(22082099003)(56012099006)(5023799004)(11063799006)(4143699003)(18002099003);DIR:OUT;SFP:1102;
 X-MS-Exchange-AntiSpam-MessageData-ChunkCount: 1
 X-MS-Exchange-AntiSpam-MessageData-0:
-	=?iso-8859-1?Q?uIz9FW+2WQF2SbGX3vaCVQX319qZyz7TqwupaZ9p3VkxOJwLRaYF9RQqvZ?=
- =?iso-8859-1?Q?Es/FXsQjTRIxm2NpweXwvOb0Pr5P9fr99iWwcKC6+plqVun8N8ADb/MraW?=
- =?iso-8859-1?Q?XiR8JPZANrI3xZTfjIoVDh5fDdoiNeHgmI95/2ETyAmSNPi6ax+C+Ez/CR?=
- =?iso-8859-1?Q?08Nmy+GoVu1XiyNGESZYC6SUdm+By+xMSQjerK/M3Pumd+z0ybWnltXg9k?=
- =?iso-8859-1?Q?hmPQDa9+j+NF8narhT1BZWgD5yBTPn8tcSfCCgz/AxWXeaci835VdAU5iC?=
- =?iso-8859-1?Q?kxpfg+sQ/aL6kB9RIEisWnTza7hf0w5S5mCUcLowDvsmyecHYW5+39qqUo?=
- =?iso-8859-1?Q?4ekQDWRt8P9UqVTfhsLkrOSZgXtsHU/JC8LsuNwKp3krH/Ljhb5S8QdhRc?=
- =?iso-8859-1?Q?zuNH7ScSq358DQSnICH86oNHyopaKZBisyxGF6pVs7ELh4rbPd4k8g5ftR?=
- =?iso-8859-1?Q?RkvXciEz/yCPBdlRniAS4e2Et/jVh1m8semunte38my7rgMr2iZ5FStq/q?=
- =?iso-8859-1?Q?cU3dEf0+bORxNoCUC1TNVIR8H+C1aqMy+yW7C1qW556lrQmhWo7N0clNJb?=
- =?iso-8859-1?Q?V5WU/8bHQ5y4tp7Psw5mWh6M0wJUA2B6SwaNSU+Bn6b52fbUq4eWX7TSal?=
- =?iso-8859-1?Q?Mjjap2vdJU2BPyiGrlzfWHhsPsuBFN6hjQ5uCILt0SF0+baeQfp+luK3RC?=
- =?iso-8859-1?Q?4O3qGPVbJ+hhSNUq+a9q7OpqgvJqb7Ow6XCUGs1YE0weBnHPZMTn7OxrM0?=
- =?iso-8859-1?Q?cIcs7GLeRY1TOQT6kcbwmCbWb8/cwxWVpyGpmD9QDQNGU08xR3O39+sUhS?=
- =?iso-8859-1?Q?9mOZmhIPAW4Zl8eNlWLvTyIILk68MbITTAiY5xxP0KoJSvfhVDyDvJRzNG?=
- =?iso-8859-1?Q?baLR6dbK2zlU2l83NV2fdWjIj1hdFP/IbPZmDa6AFlWC3HZ0rsNOzidWuk?=
- =?iso-8859-1?Q?FNj9cxHzPVR/mXliW2s5Jtgw4gID78bf5LVKp27Sl1qCRHOos4CtJFj+TD?=
- =?iso-8859-1?Q?JrQoHdR2ZIsTW0wv+/3pzuiZbSiiknFAEVDl9wR5DI/KHSNgHAZX4uSYdE?=
- =?iso-8859-1?Q?fnJV4ApSElE16bGFb3R6WSs0V+cmc//GGARJTha1ZD8ZsGfnvYBHb16mAa?=
- =?iso-8859-1?Q?Jim2c41KcXBuemz0/KM8hIUSE4dAH32da44G9XDYdfY0GtqsZHoOXr1O5k?=
- =?iso-8859-1?Q?ezFgnYV8OmlFG9cz54NNzlTM58QvGdYUbEG9t0kECcdlIzVNrJQpsBaJo1?=
- =?iso-8859-1?Q?T3PVizsnpbQeIvADjp8krE5lWG79+HhA66sK5QgNeYfnerefQX28MB/4wH?=
- =?iso-8859-1?Q?EzBzPe5A7kaOo4QwHj2lvFwzOgpMulhTvJwKfUUQvHrzHouEgRwSM0nrm7?=
- =?iso-8859-1?Q?A51G13aM07mBe7zwYf2z4dTaBswIOLmvca9ddUJRXp1CLvdzSq/4p80fDj?=
- =?iso-8859-1?Q?eaHylgiDdMknlCkiHn028+x6UccmFlwzcS9zSRvLU/Y7qpRhlMDOu/EFwQ?=
- =?iso-8859-1?Q?0lvM+C1zAu3cZr3fSOejj58oO65HaK1SwPMsmohQeIf27BdEcJxZqOyrM2?=
- =?iso-8859-1?Q?Or1nEPDGg5TIUnBdOkdqpaVrnG0nusfM2gCJTFcVZ+DpaWnbhsqZCCKZwb?=
- =?iso-8859-1?Q?Yf7QMOYXQ22yKKdEjw/OjWTQaErGsOPfa6+xrMsL1A1ujmt2I9tu3ItGG+?=
- =?iso-8859-1?Q?DIVo+Nevp3NuAqw15uyggXqK5tw2dbFWxb6fUESqPm+yKBpQ2QqYhiMO9Z?=
- =?iso-8859-1?Q?6xJ/XJuQbxpztfrvkbYkRgVZD5mTSDUt6k6oKZym9Ra7xXUQ9K7j0uIEJL?=
- =?iso-8859-1?Q?yARVOhevc/ngDZATFptT+JS7MtpzRQEbISTOefWopQhsqh1GFphl?=
-X-OriginatorOrg: valinux.co.jp
-X-MS-Exchange-CrossTenant-Network-Message-Id: 7b712ebc-f0c1-4a89-9354-08ded025840b
-X-MS-Exchange-CrossTenant-AuthSource: TY7P286MB7722.JPNP286.PROD.OUTLOOK.COM
+	=?utf-8?B?NmFucXp4Y1BkK3JLWFhVOEtpZWR1RW9XZVlzTHgvbGpKTE0zY3NWS1dvbEVW?=
+ =?utf-8?B?WWlzZVhGK1ZNSUxFb1J5azg1QlFZMmlCa1FzTkJscll0YlJyMmpaSTA5Rmg4?=
+ =?utf-8?B?WDFHdmFHVnlWRmQvdDhtTkpNamlCYU44b2ppdzNFQ1B6NDNXL3N5aEQzdTBk?=
+ =?utf-8?B?NEFTL0ltYWNxZGdXU044QTVDbmRJNWxmeXdLSUY5V214aFBnbXFGOHBaZWxt?=
+ =?utf-8?B?Z3VoUmVtRHhISlVyWEQrd3g4S05nRWtJbllkSThRYzdQY3ROcWxsbVprdTBs?=
+ =?utf-8?B?cVhLUUhhWEhZeGxFL0ZVSzlLWHRyWFBteVBVd2ZGUTN5QXNKYjVEN2RvVzdV?=
+ =?utf-8?B?Nkozc1o3NTBqRDNLWUIvQ0pIcENFcFkwR1pQWnd0KzdNUWh3WFVoV09HbmpL?=
+ =?utf-8?B?L1FxNmorc1dxdEFXQkttTkpNMlVkTWhZNlF5NDhhcndzMk5VVkFmT1FUNzVY?=
+ =?utf-8?B?SE13alYzczU1NVkyNTU4dk03dStsaVpjMHN0VHFPdWJ1bXQ2bllXOGJFb1ZM?=
+ =?utf-8?B?aElJcUh1KzY3L1cvRlFsUEQ2aTdRQlFNZUg0STAyYWNZOVJMYy9NenE5MjJ0?=
+ =?utf-8?B?SWJDTjgzeE9PUjg5TEVVRDdCT3ViL2p6SnB3a1FJN2NLUUlFQW5xMmVJYkpy?=
+ =?utf-8?B?YzZhZS9selBwb3d2V3k3ZDdVQnBRdTMxcXpVTjFXcFRkQ2lCTXZvMEhhcktC?=
+ =?utf-8?B?RHM0MHl2Z0pBMzgwOTV4c1pZcVdKSk02UmFtTEtIckNhc1RRc2pCenFpMkc0?=
+ =?utf-8?B?TnVxbmVCUXp3SHlUZzNSWFlHcWRjelVJNEszdldjK01vMGo1c1JyMEdmOGNI?=
+ =?utf-8?B?L2w5SzhBSnVENUxqOWsvUnpsYWFxVVB2UTlBQVQ0MDhYcFVYWGpEY3VEQkxW?=
+ =?utf-8?B?YUlnd1JneFVkVGs3Z29saytKckJvV3FMYklZbGo5TG82TFR4aHNzajUvT3pj?=
+ =?utf-8?B?ZS94WHQxZDJMVWNraGgyY0JpMW9td3FOUUg2dXJnc1QwaXB5aGlFY0JpZXVx?=
+ =?utf-8?B?RDgwODBrWFE2OVZqOTNwcnRrZjFtblN3b082bFFqNzlHRWVsa2lnaDZwUFk2?=
+ =?utf-8?B?OXpNWmk1eXQ0REFwaWhPeGplNHpvN2tjekhuMWZlam5Ba1BFMUNvOElCdzVF?=
+ =?utf-8?B?a2l1MWpwSUdzZHM0YmRMVlFFTzUrL0kwOGx0Y3JTME5kVk5YeGg5VXhweURM?=
+ =?utf-8?B?WEJscm1wVUs1T3NEUTRpOEplM21RYmIrdCthZ3FOdVE2VnBxRklaTkpMNjJN?=
+ =?utf-8?B?MXJndHJTNzRGZVpJS2R2alBIWmd4S3VsRVRqZll4SkMrT0JtY1dpTlA2TndB?=
+ =?utf-8?B?NDRHNTZXUHMxaGE5R1EyY1JqcDZ3UzJkZXVkd1RsVitJYnFKdHBwWGl0ZkZW?=
+ =?utf-8?B?TG5sM0hoWU40eTdpeVF3S05NaGN6dE5GYW5zb0RLYXo4ckc1aEZCc29UWWZs?=
+ =?utf-8?B?c1FabUZQNHRCOENKNEFGY2pTL1diVkRVTktpeTdyTjNYRGpyekNzWjY0WmJR?=
+ =?utf-8?B?Zkk0ZlhIYm1PNEkyQWQxQ2dZQnVWUmRsQms3WXlvbzMzMzRHT2V0RE1RcUxu?=
+ =?utf-8?B?L0x6SmUwNXhnTTZsdkVvTkV4TzFoMTNQRWNxN05ZQUFTWXZmZnk4WHZYclFp?=
+ =?utf-8?B?SkFWRnBHWUhraEtwQVEzZ3NTeG5GN1Z1TktxS0Jkall6MmdDcHFkYmVqQ2dG?=
+ =?utf-8?B?Mkc2ZmJid2VSNng2RGtaQ3R0RUNNVWthazF0RU9EbmxmcWlncDlSYUdna2dV?=
+ =?utf-8?B?RnRIYk1ham1PSHFrMk4wa2xHOFBZdWJOcmpHZ2JJelo3TktPOEx4cG56UkRT?=
+ =?utf-8?B?SWVpT2JXZ1NjbDN2WTBqN0wvOXFaUStHaTBpS1BWY3o4eU50ZGZKVE9XclNX?=
+ =?utf-8?B?L2dhVmZySzhtWCtIZnlxSWd2RVYwUlU2UU8xWEtpMXNkUE1TQnlqams5RXBm?=
+ =?utf-8?B?UEQwckRVNGdnUUwyTnRlOFZZZUpkYmVDaVNaZHlPa1dPR3k5YXYrQjVJaE14?=
+ =?utf-8?B?MVZNSXlhbSszNm9qTnRXWnhQTHN3bGVaY0wzUDBtRlBqbEV5dk4wNEtZQXpt?=
+ =?utf-8?B?dDJaWkxHSWxnNHVVK201cVgrQ25KQWkvRHkwQ0Z0VnFDcDZyTXJ2cjFHYUNY?=
+ =?utf-8?B?cDRjbDhBVHRNSnN1aFEzeXUxRS9xdHloOW83THhvUHhIVHdRY0t2NUtqcW5Q?=
+ =?utf-8?B?YVN5aS9mRmlTN3JHTmpLdmNhZHhDZEdSQTBPNHFOMmZJa0RmVnZXOW9mT2JF?=
+ =?utf-8?B?RGc2Z2pNTys2SlZHaU9MSlphdkZiS3ZEdHRuVjF1S0poOW1yRjdORGUrc3l5?=
+ =?utf-8?B?czlsMTFXVWUrdlJXVC9pNDVuYWZ0SldpWXZCeHNhNEZWZ1F6OHJiUT09?=
+X-OriginatorOrg: amlogic.com
+X-MS-Exchange-CrossTenant-Network-Message-Id: 485f5dc8-4a66-4b77-85ff-08ded0264ae0
+X-MS-Exchange-CrossTenant-AuthSource: KL1PR03MB7149.apcprd03.prod.outlook.com
 X-MS-Exchange-CrossTenant-AuthAs: Internal
-X-MS-Exchange-CrossTenant-OriginalArrivalTime: 22 Jun 2026 06:14:28.1731
+X-MS-Exchange-CrossTenant-OriginalArrivalTime: 22 Jun 2026 06:20:01.8139
  (UTC)
 X-MS-Exchange-CrossTenant-FromEntityHeader: Hosted
-X-MS-Exchange-CrossTenant-Id: 7a57bee8-f73d-4c5f-a4f7-d72c91c8c111
+X-MS-Exchange-CrossTenant-Id: 0df2add9-25ca-4b3a-acb4-c99ddf0b1114
 X-MS-Exchange-CrossTenant-MailboxType: HOSTED
-X-MS-Exchange-CrossTenant-UserPrincipalName: wUnv2uysBYowmNLEQqn8lduD7SR8jfBafkoLhGnFWt+SIHV22H3s27ynVKdrB6EfR+yVOfM/poM7ZgHAjqkwmA==
-X-MS-Exchange-Transport-CrossTenantHeadersStamped: TYCP286MB3342
+X-MS-Exchange-CrossTenant-UserPrincipalName: pTh9vaqBbpdjQ0mXggKIwNkCjTNC2yzaoyl4ikyMqP/lvEvrcyr5W27Pcz0WGROBW5NTo8CAlMEEwu1hX2X1ag==
+X-MS-Exchange-Transport-CrossTenantHeadersStamped: SE1PPF73DA7E6F9
 
-On Sat, Jun 20, 2026 at 05:16:03PM +0000, sashiko-bot@kernel.org wrote:
-> Thank you for your contribution! Sashiko AI review found 2 potential issue(s) to consider:
-> 
-> New issues:
-> - [High] In partial ownership mode, `dw_edma_probe()` skips the global core reset but fails to quiesce the DMA channels it owns, exposing the driver to fatal race conditions if the hardware is active from a prior state.
+Hi Jerome,
 
-The exact probe-time race described below does not look quite right to me, but
-there is a real initialization-order issue here, which I previously mentioned in
-another series. In short, my conclusion is that this is more of a pre-existing
-issue. More below.
 
-> 
-> Pre-existing issues:
-> - [High] Teardown order in `dw_edma_remove()` disables hardware and frees IRQs before unregistering the DMA device.
+Thanks for your review.
 
-I described two possible approaches ((a) or (b)) here:
-https://lore.kernel.org/dmaengine/pmxfqgsjposbv6zehrgitqwvbxppc7cfht4xsxw4l2lcjkojkw@ycqyo72w24ji/
+On 6/19/2026 3:34 PM, Jerome Brunet wrote:
+> [ EXTERNAL EMAIL ]
+>
+> On jeu. 18 juin 2026 at 10:03, sashiko-bot@kernel.org wrote:
+>
+>> Thank you for your contribution! Sashiko AI review found 3 potential issue(s) to consider:
+>> - [Medium] The AO PWM clocks are registered without an `ao_` or `a9_ao_`
+>> prefix, which will cause global namespace collisions with the main clock
+>> controller.
+>> - [Low] Typographical error in the clock name string literal for the RTC
+>> dualdiv input gate: `ao_rtc_duandiv_in` instead of `ao_rtc_dualdiv_in`.
+>> - [Low] Missing `#include <linux/module.h>` for `MODULE_*` macros.
+>> --
+>>
+>> commit ef5998ff087b6faed09d9eed4f59078d2b2f0a60
+>> Author: Jian Hu <jian.hu@amlogic.com>
+>>
+>> clk: amlogic: Add A9 AO clock controller driver
+>>
+>> Add the Always-on clock controller driver for the Amlogic A9 SoC family.
+>>
+>>> diff --git a/drivers/clk/meson/a9-aoclk.c b/drivers/clk/meson/a9-aoclk.c
+>>> new file mode 100644
+>>> index 0000000000000..88aa8cf3f5d00
+>>> --- /dev/null
+>>> +++ b/drivers/clk/meson/a9-aoclk.c
+>>> @@ -0,0 +1,488 @@
+>>> +// SPDX-License-Identifier: (GPL-2.0-only OR MIT)
+>>> +/*
+>>> + * Copyright (C) 2026 Amlogic, Inc. All rights reserved
+>>> + */
+>>> +
+>>> +#include <dt-bindings/clock/amlogic,a9-aoclkc.h>
+>>> +#include <linux/clk-provider.h>
+>>> +#include <linux/platform_device.h>
+>> [Severity: Low]
+>> Should this file explicitly include <linux/module.h>?
+>>
+>> The file relies on several module macros at the end (such as MODULE_DESCRIPTION,
+>> MODULE_AUTHOR, and MODULE_LICENSE). Although it currently compiles successfully
+>> due to transitive includes from <linux/platform_device.h>, standard kernel
+>> practice is to include the header explicitly.
+> Yes please fix this
 
+
+Ok, I will fix it in the next version.
+
+>> [ ... ]
+>>
+>>> +static const struct clk_parent_data a9_ao_pwm_parents[] = {
+>>> +    { .hw = &a9_ao_xtal.hw },
+>>> +    { .fw_name = "fdiv5", },
+>>> +    { .fw_name = "fdiv4", },
+>>> +    { .fw_name = "fdiv3", }
+>>> +};
+>>> +
+>>> +static A9_COMP_SEL(pwm_a, AO_PWM_CLK_A_CTRL, 9, 0x7, a9_ao_pwm_parents);
+>> [Severity: Medium]
+>> Will this cause a clock name collision with the main clock controller?
+>>
+>> Because the A9_COMP_SEL macro uses the #_name stringification operator inside
+>> MESON_COMP_SEL, this will generate the clock name as exactly "pwm_a_sel"
+>> (and similarly "pwm_a_div" and "pwm_a" for the others), without any "ao_" or
+>> "a9_ao_" prefix.
+> I think AI got it wrong and missed the prefix addition. Unless I missed
+> something my self, I think you are fine here
+
+
+Thanks for confirming. That was my understanding as well,
+so I'll keep the current implementation unchanged.
+
+>> If the main clock controller conventionally registers a "pwm_a" clock, failing
+>> to prefix the Always-On clocks will lead to global namespace collisions in the
+>> Common Clock Framework and debugfs.
+>>
+>>> +static A9_COMP_DIV(pwm_a, AO_PWM_CLK_A_CTRL, 0, 8);
+>>> +static A9_COMP_GATE(pwm_a, AO_PWM_CLK_A_CTRL, 8);
+>>> +
+>>> +static A9_COMP_SEL(pwm_b, AO_PWM_CLK_B_CTRL, 9, 0x7, a9_ao_pwm_parents);
+>> [ ... ]
+>>
+>>> +static struct clk_regmap a9_ao_rtc_dualdiv_in = {
+>>> +    .data = &(struct clk_regmap_gate_data){
+>>> +            .offset = AO_RTC_BY_OSCIN_CTRL0,
+>>> +            .bit_idx = 31,
+>>> +    },
+>>> +    .hw.init = &(struct clk_init_data) {
+>>> +            .name = "ao_rtc_duandiv_in",
+>> [Severity: Low]
+>> This isn't a bug, but there's a typo in the clock name literal. Should
+>> "ao_rtc_duandiv_in" be "ao_rtc_dualdiv_in"?
+> Yes
+
+
+Ok, I will fix it in the next version.
+
+>>> +            .ops = &clk_regmap_gate_ops,
+>>> +            .parent_hws = (const struct clk_hw *[]) {
+>>> +                    &a9_ao_xtal.hw
+>>> +            },
 > --
-> 
-> commit b3810423aa75ab232c8bec54552ca8cb72acd420
-> Author: Koichiro Den <den@valinux.co.jp>
-> 
-> dmaengine: dw-edma: Add partial channel ownership mode
-> 
-> This commit adds a partial ownership flag to allow a dw-edma instance to
-> represent a subset of a controller shared with another OS instance. It skips
-> the initial core reset during probe and uses a limited quiesce path during
-> remove, while enforcing ownership granularity for shared registers.
-> 
-> > diff --git a/drivers/dma/dw-edma/dw-edma-core.c b/drivers/dma/dw-edma/dw-edma-core.c
-> > index c782eaa12021e..d87791205837b 100644
-> > --- a/drivers/dma/dw-edma/dw-edma-core.c
-> > +++ b/drivers/dma/dw-edma/dw-edma-core.c
-> [ ... ]
-> > @@ -1128,8 +1156,10 @@ int dw_edma_probe(struct dw_edma_chip *chip)
-> >  	snprintf(dw->name, sizeof(dw->name), "dw-edma-core:%s",
-> >  		 dev_name(chip->dev));
-> >  
-> > -	/* Disable eDMA, only to establish the ideal initial conditions */
-> > -	dw_edma_core_off(dw);
-> > +	if (!(chip->flags & DW_EDMA_CHIP_PARTIAL)) {
-> > +		/* Disable eDMA only when this instance owns the controller. */
-> > +		dw_edma_core_off(dw);
-> > +	}
-> 
-> [Severity: High]
-> If the instance is in partial ownership mode, could the hardware be
-> active from a prior state (e.g. kexec or an endpoint driver)?
-> 
-> By skipping the global core reset without calling dw_edma_core_quiesce()
-> in its place, the hardware remains active. The driver requests IRQs via
-> dw_edma_irq_request() just below this, before calling
-> dw_edma_channel_setup().
+> Jerome
 
-No one can start new transfers on the delegated channels in the window between
-request_irq() and dw_edma_channel_setup(). On the RC side, the DMA engine device
-has not been registered yet, and the EP-local instance does not submit transfers
-on delegated channels.
 
-However, inside dw_edma_channel_setup(), the channel is currently made visible
-to the IRQ handler before the virt-dma state is initialized:
+--
 
-  (1) set irq->wr_mask/rd_mask
-  (2) initialize the vchan state
+Jian
 
-So if stale hardware status is already present, for example after kexec or an
-unclean handoff from a previous kernel, an interrupt could observe the channel
-as visible to the IRQ handler before the virt-dma state is ready.
-
-I previously described the safer ordering here:
-https://lore.kernel.org/dmaengine/kjslqii4bs3g4pi22mxh72hxnlm7nkesdd3va6zi5fhmjamerw@j7lbrlq5oszd/
-"(1-a) -> (2-a) -> (1-b) -> (2-b)".
-
-I believe the same idea can apply here.
-
-The kexec case itself is still broader than this small ordering fix. If a
-previous kernel leaves an active transfer behind and the new kernel probes the
-same partial-owned instance again, skipping dw_edma_core_off() means the new
-kernel intentionally does not reset the whole DMA controller. That can be
-dangerous, but it sounds like a broader handoff/teardown issue rather than
-something this series should fully solve.
-
-Best regards,
-Koichiro
-
-> 
-> If a pending interrupt fires during this window, the handler will invoke
-> dw_edma_done_interrupt(), which locks and dereferences uninitialized
-> vchan structures:
-> 
-> dw_edma_interrupt_write()
->   dw_edma_done_interrupt()
->     spin_lock_irqsave(&chan->vc.lock, flags)
->     vchan_next_desc()
-> 
-> Since vchan_init() has not been called yet during dw_edma_channel_setup(),
-> does this sequence lead to a kernel panic or NULL pointer dereference?
-> 
-> >  
-> >  	/* Request IRQs */
-> >  	err = dw_edma_irq_request(dw, &wr_alloc, &rd_alloc);
-> [ ... ]
-> > @@ -1173,8 +1203,10 @@ int dw_edma_remove(struct dw_edma_chip *chip)
-> >  	if (!dw)
-> >  		return -ENODEV;
-> >  
-> > -	/* Disable eDMA */
-> > -	dw_edma_core_off(dw);
-> > +	if (chip->flags & DW_EDMA_CHIP_PARTIAL)
-> > +		dw_edma_core_quiesce(dw);
-> > +	else
-> > +		dw_edma_core_off(dw);
-> >  
-> >  	/* Free irqs */
-> >  	for (i = (dw->nr_irqs - 1); i >= 0; i--)
-> >  		free_irq(chip->ops->irq_vector(dev, i), &dw->irq[i]);
-> >  	dw_edma_emul_irq_free(dw);
-> >  
-> >  	/* Deregister eDMA device */
-> >  	dma_async_device_unregister(&dw->dma);
-> 
-> [Severity: High]
-> This is a pre-existing issue, but does the teardown order in
-> dw_edma_remove() expose the driver to a race condition?
-> 
-> The hardware is disabled or quiesced and the IRQs are freed before
-> dma_async_device_unregister() is called. By leaving the dmaengine device
-> registered during this teardown, clients can still issue new transfers via
-> vchan_issue_pending().
-> 
-> This would invoke dw_edma_v0_core_start(), writing to registers of a
-> disabled DMA engine, potentially racing with dw_edma_core_quiesce().
-> Additionally, transfers submitted after free_irq() will hang indefinitely
-> since completion interrupts are no longer available.
-> 
-> Should dma_async_device_unregister() be called before tearing down the
-> underlying hardware and interrupts?
-> 
-> -- 
-> Sashiko AI review · https://sashiko.dev/#/patchset/20260620170040.3756043-1-den@valinux.co.jp?part=5
