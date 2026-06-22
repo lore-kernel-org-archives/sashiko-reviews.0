@@ -1,43 +1,45 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4F0A232ED5C;
-	Mon, 22 Jun 2026 16:40:14 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7323833D4E5;
+	Mon, 22 Jun 2026 16:53:20 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1782146415; cv=none; b=O2ETiQrRFyUdDvEC/XzPFYBGWghRkFkAO9xPdnak48Z0127bqlzpYdks+ZTraVbwQZRyb/86WfhQt2jNkTaXAOfshsZ/JQtFRA7BcMOHkEGghjNxp7bYg7/3BzCrezFbAk1VkCCv084gFthkVE6bIR/kyB4UwS/Ds1lu2V9Pzsg=
+	t=1782147201; cv=none; b=IV/BrN1q5CCYfpDlhRXd9RYQyNfZTLrhy6LR5B9THIEJautdBLC+pWRXHNR5uAcCwdrBSkxibDRkKCO7VHPnRnusr4rZeEFDzjY7ukUgtB+TIYYyvW1Vx4zcdgEdIk1NDvcA5wuuWMwdU5kkzCIufqG9fZKn8AwC0qLCiX6USt8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1782146415; c=relaxed/simple;
-	bh=MY/8mbWFHP+8yXJF48rWBM8I7VF6Z27gjQ3kJeAP/h8=;
+	s=arc-20240116; t=1782147201; c=relaxed/simple;
+	bh=FxJjpsxvkAqSPrNMDbSXqBAMpUNiZ2cgt/xlzF6tb/E=;
 	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=hcAEc3KsXqPpvOzV92tzVtG+vpeAjmLfEUyBEwpl/GQtCN1Xa8swh8uExrj4vqsFUhPSGytEsjoBfATJuRLBmtsU3Vm3xSjoxoQk/VpA4t4iOQYT3ljwJVTUsXuA2YfIkFSvMlgH42mAB4HNPBnMZBJJBfZvS5nAfAuyISl3lYE=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=cNvqn2cN; arc=none smtp.client-ip=100.103.45.18
+	 Content-Type:Content-Disposition:In-Reply-To; b=c9dCv1DnZaQ0chIBwPsLFaLyEgJj4uCVmYgqL/cKb/LmKh9asuI78hTMsEGg6Peir9bG03WTpp5W+BEnaN2CGOdIlMjMJqlSPUF2Ghuw1Oi92Dp7apDUW+gPtY05QupxF3sQ+VNrap3sjWrqZVlz74vXsW2CznWmK0FXiUB5D1E=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=W7u1+3XD; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="cNvqn2cN"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 23F231F000E9;
-	Mon, 22 Jun 2026 16:40:11 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="W7u1+3XD"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 03BCD1F000E9;
+	Mon, 22 Jun 2026 16:53:17 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=kernel.org;
-	s=k20260515; t=1782146413;
-	bh=bvrGjOsOyYiO8Clk6NrgCA8nDYfTVLwfisZMYZVp4a0=;
+	s=k20260515; t=1782147200;
+	bh=9eH6Ui0cecxJPS3dEn05LRmx18eKSljEw+pMdE0wLdw=;
 	h=Date:From:To:Cc:Subject:References:In-Reply-To;
-	b=cNvqn2cN1OGqKHwHNgAnP5XbvIsvUZFjCA0iQ4+0TcsYHMsLI4FNAmWppNU0sBYqf
-	 saSzjwPKiD5FuKEE8lcpfl/YMkifbITpzJRMvxRb+l5CIZetZwOJTuWeYmSYUuRGJu
-	 kk594NMS1QVUIdeX49LZjn+a9zsU2MoxZDvckfRNlVOKIQjWXsS16eh+Oe5kGcJ3ym
-	 7bAtcs1nDJdRm0WvyFifrABX33YK/YykmKE8jpRFmR2Lxnrp1PO0oWvKKL9jeR2UZl
-	 mIAEV2RUvbC9eczCBrAn+/Ia/8zLtixbl7cbO//4KaK5/uhTpn8yy+yVkdbwAQL9CB
-	 H7QgB0fylZ6wg==
-Date: Mon, 22 Jun 2026 17:40:10 +0100
+	b=W7u1+3XDrrbufHbrH6ZQe6V3qFGjUCGYVkJOqAL4vlLVLIMPJx5d+eL10ZeODs278
+	 pSssncH7yv5gMuVsUIuShNLX6bWMWFV426SKDvVvL+IweFeqbJK+5hI012bIBjT3rs
+	 SsEKofTvCEYTyY72aPkkwwDurWsSBjrzr8mr3olukQd2rW+7pBLu1HZQNWxKNQ0ZKY
+	 aDrQJiySg4JIyM4ytXMcuvXkZhIZ4w2w5uVvgOUb7zYf6U0GQRwQEQ1ptI0ErIe/Xc
+	 Ew9HPNFffTspmZ5U1P3K+1+pntc9YZ/YHLvD8DpC7UCIyN7jCKrDU/aZLwKkuzK6NI
+	 zTm7dcinwYsmw==
+Date: Mon, 22 Jun 2026 17:53:16 +0100
 From: Conor Dooley <conor@kernel.org>
-To: sashiko-reviews@lists.linux.dev
-Cc: Yuanshen Cao <alex.caoys@gmail.com>, linux-sunxi@lists.linux.dev,
-	devicetree@vger.kernel.org, Frank.Li@kernel.org, vkoul@kernel.org,
-	robh@kernel.org, dmaengine@vger.kernel.org, conor+dt@kernel.org
-Subject: Re: [PATCH v2 4/5] dt-bindings: dma: sun50i-a64-dma: Add
- allwinner,sun60i-a733-dma compatible string
-Message-ID: <20260622-sloppily-macaw-6f45bcd465c0@spud>
-References: <20260621-sun60i-a733-dma-v2-0-340f205891cc@gmail.com>
- <20260621-sun60i-a733-dma-v2-4-340f205891cc@gmail.com>
- <20260621215235.13FF01F000E9@smtp.kernel.org>
+To: Krzysztof Kozlowski <krzysztof.kozlowski@oss.qualcomm.com>
+Cc: sashiko-reviews@lists.linux.dev, neil.armstrong@linaro.org,
+	vkoul@kernel.org, dri-devel@lists.freedesktop.org, robh@kernel.org,
+	conor+dt@kernel.org, linux-phy@lists.infradead.org,
+	olteanv@gmail.com, devicetree@vger.kernel.org,
+	wsa+renesas@sang-engineering.com
+Subject: Re: [PATCH 2/2] dt-bindings: Drop incorrect usage of double '::'
+Message-ID: <20260622-sullen-botch-6a131a218bbe@spud>
+References: <20260622101606.485961-3-krzysztof.kozlowski@oss.qualcomm.com>
+ <20260622101606.485961-4-krzysztof.kozlowski@oss.qualcomm.com>
+ <20260622101959.37DB41F00A3D@smtp.kernel.org>
+ <0a6f92ba-de8c-48ae-9025-a7570e53e453@oss.qualcomm.com>
 Precedence: bulk
 X-Mailing-List: sashiko-reviews@lists.linux.dev
 List-Id: <sashiko-reviews.lists.linux.dev>
@@ -45,86 +47,75 @@ List-Subscribe: <mailto:sashiko-reviews+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:sashiko-reviews+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Type: multipart/signed; micalg=pgp-sha512;
-	protocol="application/pgp-signature"; boundary="WW65d7u0/5myjBch"
+	protocol="application/pgp-signature"; boundary="SwqP7sa7vCVgtsLA"
 Content-Disposition: inline
-In-Reply-To: <20260621215235.13FF01F000E9@smtp.kernel.org>
+In-Reply-To: <0a6f92ba-de8c-48ae-9025-a7570e53e453@oss.qualcomm.com>
 
 
---WW65d7u0/5myjBch
-Content-Type: text/plain; charset=iso-8859-1
+--SwqP7sa7vCVgtsLA
+Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
 Content-Transfer-Encoding: quoted-printable
 
-On Sun, Jun 21, 2026 at 09:52:34PM +0000, sashiko-bot@kernel.org wrote:
-> Thank you for your contribution! Sashiko AI review found 1 potential issu=
-e(s) to consider:
+On Mon, Jun 22, 2026 at 03:23:05PM +0200, Krzysztof Kozlowski wrote:
+> On 22/06/2026 12:19, sashiko-bot@kernel.org wrote:
+> > Thank you for your contribution! Sashiko AI review found 1 potential is=
+sue(s) to consider:
+> > - [Low] Unintended replacement of BNF notation `::=3D` with `:=3D`.
+> > --
+> >=20
+> > commit a9fdd0b065eb5b6394a9c33ffba0fd5194e80115
+> > Author: Krzysztof Kozlowski <krzysztof.kozlowski@oss.qualcomm.com>
+> >=20
+> > dt-bindings: Drop incorrect usage of double '::'
+> >=20
+> > This commit cleans up device tree binding schemas by removing the redun=
+dant
+> > double colons at the end of descriptions inside YAML literal style bloc=
+ks.
+> >=20
+> > Link: https://yaml.org/spec/1.2.2/#literal-style [1]
+> >=20
+> >> diff --git a/Documentation/devicetree/bindings/mux/mux-consumer.yaml b=
+/Documentation/devicetree/bindings/mux/mux-consumer.yaml
+> >> index 9e2d78a78e409..769243a2bf046 100644
+> >> --- a/Documentation/devicetree/bindings/mux/mux-consumer.yaml
+> >> +++ b/Documentation/devicetree/bindings/mux/mux-consumer.yaml
+> >> @@ -13,8 +13,8 @@ description: |
+> >>    Mux controller consumers should specify a list of mux controllers t=
+hat they
+> >>    want to use with a property containing a 'mux-ctrl-list':
+> >> =20
+> >> -    mux-ctrl-list ::=3D <single-mux-ctrl> [mux-ctrl-list]
+> >> -    single-mux-ctrl ::=3D <mux-ctrl-phandle> [mux-ctrl-specifier]
+> >> +    mux-ctrl-list :=3D <single-mux-ctrl> [mux-ctrl-list]
+> >> +    single-mux-ctrl :=3D <mux-ctrl-phandle> [mux-ctrl-specifier]
+> >=20
+> > [Severity: Low]
+> > Does this unintentionally change the standard Backus-Naur Form (BNF) ::=
+=3D
+> > operator to :=3D? It looks like a global search-and-replace for :: might
 >=20
-> Pre-existing issues:
-> - [High] The IRQ handler loop skips trailing DMA channels if the total nu=
-mber of physical channels is not an exact multiple of the channels per regi=
-ster.
-> --
 >=20
-> commit 1a8550cc9da2ef939f555f682f0d5ea9606e1907
-> Author: Yuanshen Cao <alex.caoys@gmail.com>
->=20
-> dt-bindings: dma: sun50i-a64-dma: Add allwinner,sun60i-a733-dma compatibl=
-e string
->=20
-> Add `allwinner,sun60i-a733-dma` to the list of compatible strings for the
-> `sun50i-a64-dma` dtbinding documentation.
->=20
-> >     While the A733 DMA controller shares many similarities with the sun=
-50i-a64
-> >     DMA controller, it requires a specific configuration due to differe=
-nces in:
-> >     - Interrupt register layout and mapping.
-> >     - Number of channels per interrupt register.
->=20
-> [Severity: High]
-> This isn't a bug introduced by this patch, but could this truncating
-> integer division skip trailing DMA channels if the total number of physic=
-al
-> channels is not an exact multiple of the channels per register?
+> I wasn't sure about that... and indeed this should not be changed. I
+> will send a v2.
 
-What has this got to do with the binding?
+Other than this one that I agree shouldn't be changed to a single :,
+Acked-by: Conor Dooley <conor.dooley@microchip.com>
 
->=20
-> In drivers/dma/sun6i-dma.c:sun6i_dma_interrupt(), the loop condition
-> determines which interrupt registers to poll:
->=20
->     for (i =3D 0; i < sdev->num_pchans / sdev->cfg->num_channels_per_reg;=
- i++) {
->=20
-> For a controller with 12 physical channels (e.g., sun8i_h3_dma_cfg sets
-> nr_max_channels =3D 12) and 8 channels per register, 12 / 8 evaluates to =
-1.
->=20
-> Consequently, the loop only iterates once (for i=3D0), checking interrupts
-> for the first 8 channels and completely ignoring the remaining 4 channels.
-> Any DMA transfers on channels 8-11 will never have their completion
-> interrupts handled, leading to system hangs or driver timeouts.
->=20
-> Could this be updated to use DIV_ROUND_UP() to ensure all applicable
-> interrupt registers are processed?
->=20
-> >     - Support for higher (32G) address widths in LLI parameters.
-> >    =20
-> >     Signed-off-by: Yuanshen Cao <alex.caoys@gmail.com>
->=20
-> --=20
-> Sashiko AI review =B7 https://sashiko.dev/#/patchset/20260621-sun60i-a733=
--dma-v2-0-340f205891cc@gmail.com?part=3D4
+(Although I find the syntax used here to be really confusing and a good
+example in the text would be a lot clearer. OTOH, how to write consumers
+is, I think, well understood, since they all work the same.)
 
---WW65d7u0/5myjBch
+--SwqP7sa7vCVgtsLA
 Content-Type: application/pgp-signature; name=signature.asc
 
 -----BEGIN PGP SIGNATURE-----
 
-iHUEABYKAB0WIQRh246EGq/8RLhDjO14tDGHoIJi0gUCajllagAKCRB4tDGHoIJi
-0s5UAP9S1slw41rYwFBisf7bL7QUmOBKaElvp2GJ/DahUbQYVQD8CMfMpVRjCikN
-ViWBxm1pLtH925QwNMOycGoJD+dfngg=
-=FlOT
+iHUEABYKAB0WIQRh246EGq/8RLhDjO14tDGHoIJi0gUCajloewAKCRB4tDGHoIJi
+0kPnAQD8eVHaFulgAbHw35l/IQzDimQ2fqS5h0DH2KihcqqTKQD/fyaz/rNP6xCD
+y8UHn2H90kJhQjjmt/NRIZ/YFpGyEg0=
+=SCA7
 -----END PGP SIGNATURE-----
 
---WW65d7u0/5myjBch--
+--SwqP7sa7vCVgtsLA--
