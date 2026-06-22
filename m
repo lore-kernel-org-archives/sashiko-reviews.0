@@ -1,203 +1,209 @@
-Received: from smtp-out2.suse.de (smtp-out2.suse.de [195.135.223.131])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from mgamail.intel.com (mgamail.intel.com [198.175.65.17])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 256A035028D
-	for <sashiko-reviews@lists.linux.dev>; Mon, 22 Jun 2026 13:25:06 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=195.135.223.131
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 001813AB277
+	for <sashiko-reviews@lists.linux.dev>; Mon, 22 Jun 2026 13:34:21 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=198.175.65.17
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1782134707; cv=none; b=sJ55gQ9as1+rXf2JGXK7R/AphWFhRA2LqPZe63ZSK/7nojZI/1B4SZEo/wavawihCdaayMYD0J98ripESok41A2JN1iDRcVAhRw99KyleYnzXmujS/ae5YivPsRLaab7dZRxacnSpHT6zJUlTueVpBbtzfrBoem2YjTMY0YETtI=
+	t=1782135264; cv=none; b=EgXJWtw9ZysYVQynvgIXkHhIIDS49HYBVwZcnG7WLfwhfWdF6oSTADAg7KmrNWD8hfYm8ITYBDmx8mz9O+zPHyXQLOk0hpX+tcmv5mwrcFgY3dttgiGfSbKjAV6pKBj6ZplJ7X7viasP7vXXosjVqBeltuOM5aDUAXOJGy4LtYg=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1782134707; c=relaxed/simple;
-	bh=cCXEubPURO6JziBLjj726b6+5m8cAFJd2sNN8kWNRFc=;
-	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=lJencCd+RJUyfHbF35TSdDxkM+mA9l98IhyXYUlmdczwmaFdH4F58UE8EiO6sg5yG1h9GmVtPG4Hl2lYnM2KUgoBJbWeIdo+53kSsT4GMaim6xy6bdocfMsbkHklEc81lMXH0cHhr7Ofpvjm7upMA68BGS20tgXnHikW9UGkcSM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=suse.de; spf=pass smtp.mailfrom=suse.de; dkim=pass (1024-bit key) header.d=suse.de header.i=@suse.de header.b=s9FJJ4sZ; dkim=permerror (0-bit key) header.d=suse.de header.i=@suse.de header.b=3qXbQIfC; dkim=pass (1024-bit key) header.d=suse.de header.i=@suse.de header.b=s9FJJ4sZ; dkim=permerror (0-bit key) header.d=suse.de header.i=@suse.de header.b=3qXbQIfC; arc=none smtp.client-ip=195.135.223.131
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=suse.de
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=suse.de
+	s=arc-20240116; t=1782135264; c=relaxed/simple;
+	bh=JJ3rlqN0C0VeC+P3O2EW2SHdp+5nesw2FXlEGZcZraw=;
+	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
+	 MIME-Version:Content-Type; b=shqnVY/N7p4DMvFohmAJTs3oxznpH9AhCINBNi553YZvpWF0UP9Fn7qkZl3s2uk2n/jYcbwMzmcFBvyGlgxryObGOuGXuNfCYF9kcnDi4QbMKOTzQzrqC8Ykg+ErwUlljJL7q6Kr7c7g+5SYBk5mdl36yLs3kpy+NTGGcMeP2cQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linux.intel.com; spf=pass smtp.mailfrom=intel.com; dkim=pass (2048-bit key) header.d=intel.com header.i=@intel.com header.b=gE+tlzKn; arc=none smtp.client-ip=198.175.65.17
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linux.intel.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=intel.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=suse.de header.i=@suse.de header.b="s9FJJ4sZ";
-	dkim=permerror (0-bit key) header.d=suse.de header.i=@suse.de header.b="3qXbQIfC";
-	dkim=pass (1024-bit key) header.d=suse.de header.i=@suse.de header.b="s9FJJ4sZ";
-	dkim=permerror (0-bit key) header.d=suse.de header.i=@suse.de header.b="3qXbQIfC"
-Received: from imap1.dmz-prg2.suse.org (unknown [10.150.64.97])
-	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
-	 key-exchange X25519 server-signature RSA-PSS (4096 bits) server-digest SHA256)
-	(No client certificate requested)
-	by smtp-out2.suse.de (Postfix) with ESMTPS id E715275D08;
-	Mon, 22 Jun 2026 13:24:41 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=suse.de; s=susede2_rsa;
-	t=1782134681; h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
-	 mime-version:mime-version:
-	 content-transfer-encoding:content-transfer-encoding:
-	 in-reply-to:in-reply-to:references:references;
-	bh=TeU+CBKNbf1ZaAxg2amODgN/OuUs3hH42Q/jjuvFT5w=;
-	b=s9FJJ4sZ6nSJ1jnqWxHSMjxY/OMJ4O6ZL9K/MImfdB+lJJMajhhLR+Yn5VKOX6GJ4UL/5F
-	gVEkCNPG2n35fVpdcov3iXyEjoinhn1vHMo0E8KBTYau48CEK5EsObJvIMe5gRmo5QNtoT
-	9smDKlH3rn+/OUQ3fve5BE/mdBymp/g=
-DKIM-Signature: v=1; a=ed25519-sha256; c=relaxed/relaxed; d=suse.de;
-	s=susede2_ed25519; t=1782134681;
-	h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
-	 mime-version:mime-version:
-	 content-transfer-encoding:content-transfer-encoding:
-	 in-reply-to:in-reply-to:references:references;
-	bh=TeU+CBKNbf1ZaAxg2amODgN/OuUs3hH42Q/jjuvFT5w=;
-	b=3qXbQIfC1Afw49kHw2J4Jt+8rl5YnfYPylWV76WH+y7xhiLVMVV/f0JZ13j79JJhMP56S3
-	vGNmJNNlkcsqdHDQ==
-Authentication-Results: smtp-out2.suse.de;
-	none
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=suse.de; s=susede2_rsa;
-	t=1782134681; h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
-	 mime-version:mime-version:
-	 content-transfer-encoding:content-transfer-encoding:
-	 in-reply-to:in-reply-to:references:references;
-	bh=TeU+CBKNbf1ZaAxg2amODgN/OuUs3hH42Q/jjuvFT5w=;
-	b=s9FJJ4sZ6nSJ1jnqWxHSMjxY/OMJ4O6ZL9K/MImfdB+lJJMajhhLR+Yn5VKOX6GJ4UL/5F
-	gVEkCNPG2n35fVpdcov3iXyEjoinhn1vHMo0E8KBTYau48CEK5EsObJvIMe5gRmo5QNtoT
-	9smDKlH3rn+/OUQ3fve5BE/mdBymp/g=
-DKIM-Signature: v=1; a=ed25519-sha256; c=relaxed/relaxed; d=suse.de;
-	s=susede2_ed25519; t=1782134681;
-	h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
-	 mime-version:mime-version:
-	 content-transfer-encoding:content-transfer-encoding:
-	 in-reply-to:in-reply-to:references:references;
-	bh=TeU+CBKNbf1ZaAxg2amODgN/OuUs3hH42Q/jjuvFT5w=;
-	b=3qXbQIfC1Afw49kHw2J4Jt+8rl5YnfYPylWV76WH+y7xhiLVMVV/f0JZ13j79JJhMP56S3
-	vGNmJNNlkcsqdHDQ==
-Received: from imap1.dmz-prg2.suse.org (localhost [127.0.0.1])
-	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
-	 key-exchange X25519 server-signature RSA-PSS (4096 bits) server-digest SHA256)
-	(No client certificate requested)
-	by imap1.dmz-prg2.suse.org (Postfix) with ESMTPS id A82BE779A8;
-	Mon, 22 Jun 2026 13:24:41 +0000 (UTC)
-Received: from dovecot-director2.suse.de ([2a07:de40:b281:106:10:150:64:167])
-	by imap1.dmz-prg2.suse.org with ESMTPSA
-	id gPcAKJk3OWpYIQAAD6G6ig
-	(envelope-from <tzimmermann@suse.de>); Mon, 22 Jun 2026 13:24:41 +0000
-From: Thomas Zimmermann <tzimmermann@suse.de>
-To: javierm@redhat.com,
-	treding@nvidia.com,
-	maarten.lankhorst@linux.intel.com,
-	mripard@kernel.org,
-	airlied@gmail.com,
-	simona@ffwll.ch,
-	rayyan@ansari.sh
-Cc: dri-devel@lists.freedesktop.org,
-	sashiko-reviews@lists.linux.dev,
-	Thomas Zimmermann <tzimmermann@suse.de>
-Subject: [PATCH v2 6/6] drm/sysfb: simpledrm: Read panel orientation from DT node
-Date: Mon, 22 Jun 2026 15:19:40 +0200
-Message-ID: <20260622132433.722823-7-tzimmermann@suse.de>
-X-Mailer: git-send-email 2.54.0
-In-Reply-To: <20260622132433.722823-1-tzimmermann@suse.de>
-References: <20260622132433.722823-1-tzimmermann@suse.de>
+	dkim=pass (2048-bit key) header.d=intel.com header.i=@intel.com header.b="gE+tlzKn"
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
+  d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
+  t=1782135262; x=1813671262;
+  h=from:to:cc:subject:in-reply-to:references:date:
+   message-id:mime-version;
+  bh=JJ3rlqN0C0VeC+P3O2EW2SHdp+5nesw2FXlEGZcZraw=;
+  b=gE+tlzKnJvZkkMii0TvDfTsxLtlky9+gN5fSTI9XDlAcJ5eYWg+ocs1g
+   2smGVbOds2cFGqpQ6OcAvc48h6XltCbW9rm8Lzi8+2rBV7/a5UANCO8E1
+   ggNn+nHUw2p0nMRhIw2/FEtiQzmz/UuZjeBqI0Hf0ue3qgzSoh0DZ9Wo1
+   fon036mpwWy38vNwkhSRk4zH3nH85Xo/SR2ngu8doINasrgBVFSuS3SqI
+   bDdEpA+Z3FMYJPObgxXLdf52iKfROh3y8LiQXvVNeXwMeWFdMrFno6aYl
+   OLQ4y0CDzWPxSmZlI/nTnldmxKmjQLowIXd9fY+F4QSYFpyWFJ0NMVGKK
+   A==;
+X-CSE-ConnectionGUID: OKpuiRA1T6e1zoFBk0mZ5A==
+X-CSE-MsgGUID: 7YDZE+9IRUKPBmUl7xr76Q==
+X-IronPort-AV: E=McAfee;i="6800,10657,11824"; a="82867929"
+X-IronPort-AV: E=Sophos;i="6.24,218,1774335600"; 
+   d="scan'208";a="82867929"
+Received: from fmviesa007.fm.intel.com ([10.60.135.147])
+  by orvoesa109.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 22 Jun 2026 06:34:21 -0700
+X-CSE-ConnectionGUID: zNPS5jY9T8u6Nm5O7dn+Kw==
+X-CSE-MsgGUID: aEMdhIINQTq/L8a4sqj4KA==
+X-ExtLoop1: 1
+X-IronPort-AV: E=Sophos;i="6.24,218,1774335600"; 
+   d="scan'208";a="246299546"
+Received: from abityuts-desk.ger.corp.intel.com (HELO localhost) ([10.245.245.82])
+  by fmviesa007-auth.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 22 Jun 2026 06:34:16 -0700
+From: Jani Nikula <jani.nikula@linux.intel.com>
+To: Thomas Zimmermann <tzimmermann@suse.de>, hns@goldelico.com,
+ zhengxingda@iscas.ac.cn, maarten.lankhorst@linux.intel.com,
+ mripard@kernel.org, airlied@gmail.com, simona@ffwll.ch,
+ akemnade@kernel.org
+Cc: dri-devel@lists.freedesktop.org, linux-kernel@vger.kernel.org,
+ letux-kernel@openphoenux.org, kernel@pyra-handheld.com,
+ sashiko-reviews@lists.linux.dev, Thomas Zimmermann <tzimmermann@suse.de>,
+ stable@vger.kernel.org
+Subject: Re: [PATCH v2] drm/fb-helper: Only consider active CRTCs for vblank
+ sync
+In-Reply-To: <20260622113434.682292-1-tzimmermann@suse.de>
+Organization: Intel Finland Oy - BIC 0357606-4 - c/o Alberga Business Park,
+ 6 krs Bertel Jungin Aukio 5, 02600 Espoo, Finland
+References: <20260622113434.682292-1-tzimmermann@suse.de>
+Date: Mon, 22 Jun 2026 16:34:12 +0300
+Message-ID: <395f15bb770b4be0ffeeb09e7cdeef49340f910c@intel.com>
 Precedence: bulk
 X-Mailing-List: sashiko-reviews@lists.linux.dev
 List-Id: <sashiko-reviews.lists.linux.dev>
 List-Subscribe: <mailto:sashiko-reviews+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:sashiko-reviews+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
-X-Spam-Flag: NO
-X-Spam-Score: -6.80
-X-Spamd-Result: default: False [-6.80 / 50.00];
-	REPLY(-4.00)[];
-	BAYES_HAM(-3.00)[100.00%];
-	MID_CONTAINS_FROM(1.00)[];
-	NEURAL_HAM_LONG(-1.00)[-1.000];
-	R_MISSING_CHARSET(0.50)[];
-	NEURAL_HAM_SHORT(-0.20)[-1.000];
-	MIME_GOOD(-0.10)[text/plain];
-	FUZZY_RATELIMITED(0.00)[rspamd.com];
-	RCVD_VIA_SMTP_AUTH(0.00)[];
-	MIME_TRACE(0.00)[0:+];
-	ARC_NA(0.00)[];
-	TO_DN_SOME(0.00)[];
-	FREEMAIL_TO(0.00)[redhat.com,nvidia.com,linux.intel.com,kernel.org,gmail.com,ffwll.ch,ansari.sh];
-	RCPT_COUNT_SEVEN(0.00)[10];
-	DKIM_SIGNED(0.00)[suse.de:s=susede2_rsa,suse.de:s=susede2_ed25519];
-	FROM_EQ_ENVFROM(0.00)[];
-	FROM_HAS_DN(0.00)[];
-	R_RATELIMIT(0.00)[to_ip_from(RLof9hwn8p5zsfkob18n85cjgs)];
-	RCVD_TLS_ALL(0.00)[];
-	TO_MATCH_ENVRCPT_ALL(0.00)[];
-	DBL_BLOCKED_OPENRESOLVER(0.00)[suse.de:email,suse.de:mid,imap1.dmz-prg2.suse.org:helo];
-	RCVD_COUNT_TWO(0.00)[2];
-	FREEMAIL_ENVRCPT(0.00)[gmail.com]
-X-Spam-Level: 
+Content-Type: text/plain
 
-A DeviceTree panel node can specify the panel's rotation in steps
-of 90 degrees. Set the DRM connector orientation from the field.
-Do nothing if the field is missing or invalid.
+On Mon, 22 Jun 2026, Thomas Zimmermann <tzimmermann@suse.de> wrote:
+> Only synchronize fbdev output to the vblank of an active CRTC. Go over
+> the list of CRTCs and pick the first that matches. Fixes warnings as
+> the one shown below
+>
+> [   77.201354] WARNING: drivers/gpu/drm/drm_vblank.c:1320 at drm_crtc_wait_one_vblank+0x194/0x1cc [drm], CPU#1: kworker/1:7/1867
+> [   77.201354] omapdrm omapdrm.0: [drm] vblank wait timed out on crtc 0
+>
+> This currently happens if the fbdev output is not on CRTC 0.
+>
+> Atomic and non-atomic drivers require distinct code paths. As for other
+> fbdev operations, implement both and select the correct one at runtime.
+>
+> Not finding an active CRTC is not a bug. Do not wait in this case, but
+> flush the display update as before.
+>
+> v2:
+> - move look-up code into separate helper
+> - support drivers with legacy modesetting
+> v1:
+> - see https://lore.kernel.org/dri-devel/1c9e0e24-9c4a-4259-8700-cf9e5fd60ca3@suse.de/
+>
+> Co-authored-by: H. Nikolaus Schaller <hns@goldelico.com>
+> Signed-off-by: Thomas Zimmermann <tzimmermann@suse.de>
+> Fixes: d8c4bddcd8bcb ("drm/fb-helper: Synchronize dirty worker with vblank")
+> Tested-by: Icenowy Zheng <zhengxingda@iscas.ac.cn>
+> Closes: https://bugs.debian.org/1138033
+> Cc: <stable@vger.kernel.org> # v6.19+
+> ---
+>  drivers/gpu/drm/drm_fb_helper.c | 71 ++++++++++++++++++++++++++++++++-
+>  1 file changed, 70 insertions(+), 1 deletion(-)
+>
+> diff --git a/drivers/gpu/drm/drm_fb_helper.c b/drivers/gpu/drm/drm_fb_helper.c
+> index 7b11a582f8ec..cbf0a9a7b8e5 100644
+> --- a/drivers/gpu/drm/drm_fb_helper.c
+> +++ b/drivers/gpu/drm/drm_fb_helper.c
+> @@ -225,16 +225,85 @@ static void drm_fb_helper_resume_worker(struct work_struct *work)
+>  	console_unlock();
+>  }
+>  
+> +static int find_crtc_index_atomic(struct drm_fb_helper *helper)
+> +{
+> +	struct drm_device *dev = helper->dev;
+> +	struct drm_plane *plane;
+> +
+> +	drm_for_each_plane(plane, dev) {
+> +		const struct drm_plane_state *plane_state;
+> +		const struct drm_crtc *crtc;
+> +
+> +		if (plane->type != DRM_PLANE_TYPE_PRIMARY)
+> +			continue;
+> +
+> +		plane_state = plane->state;
+> +		if (plane_state->fb != helper->fb || !plane_state->crtc)
+> +			continue; /* plane doesn't display fbdev emulation */
+> +
+> +		crtc = plane_state->crtc;
+> +		if (!crtc->state->active)
+> +			continue;
+> +		if (drm_WARN_ON_ONCE(dev, crtc->index > INT_MAX))
+> +			continue; /* driver bug */
 
-Signed-off-by: Thomas Zimmermann <tzimmermann@suse.de>
----
- drivers/gpu/drm/sysfb/simpledrm.c | 32 +++++++++++++++++++++++++++++--
- 1 file changed, 30 insertions(+), 2 deletions(-)
+I take it this is here because crtc->index is unsigned, and this
+function returns int so you can have negative error codes. Ditto the
+other function below.
 
-diff --git a/drivers/gpu/drm/sysfb/simpledrm.c b/drivers/gpu/drm/sysfb/simpledrm.c
-index a04f0c852ea4..b585d17ca817 100644
---- a/drivers/gpu/drm/sysfb/simpledrm.c
-+++ b/drivers/gpu/drm/sysfb/simpledrm.c
-@@ -221,6 +221,33 @@ simplefb_get_panel_height_mm_of(struct drm_device *dev, struct device_node *of_p
- 	return __simplefb_get_panel_size_mm_of(dev, of_panel_node, "height-mm");
- }
- 
-+static enum drm_panel_orientation
-+simplefb_get_panel_orientation_of(struct drm_device *dev, struct device_node *of_panel_node)
-+{
-+	int ret;
-+	u32 rotation;
-+
-+	ret = of_property_read_u32(of_panel_node, "rotation", &rotation);
-+	if (ret) {
-+		drm_dbg(dev, "simplefb: cannot parse panel rotation: error %d\n", ret);
-+		return DRM_MODE_PANEL_ORIENTATION_UNKNOWN;
-+	}
-+
-+	switch (rotation) {
-+	case 0:
-+		return DRM_MODE_PANEL_ORIENTATION_NORMAL;
-+	case 90:
-+		return DRM_MODE_PANEL_ORIENTATION_RIGHT_UP;
-+	case 180:
-+		return DRM_MODE_PANEL_ORIENTATION_BOTTOM_UP;
-+	case 270:
-+		return DRM_MODE_PANEL_ORIENTATION_LEFT_UP;
-+	default:
-+		drm_dbg(dev, "simplefb: cannot parse panel rotation: value %u\n", rotation);
-+		return DRM_MODE_PANEL_ORIENTATION_UNKNOWN;
-+	}
-+}
-+
- /*
-  * Simple Framebuffer device
-  */
-@@ -624,6 +651,7 @@ static struct simpledrm_device *simpledrm_device_create(struct drm_driver *drv,
- 	int width, height, stride;
- 	u16 width_mm = 0, height_mm = 0;
- 	struct device_node *panel_node;
-+	enum drm_panel_orientation orientation = DRM_MODE_PANEL_ORIENTATION_UNKNOWN;
- 	const struct drm_format_info *format;
- 	u64 size;
- 	struct resource *res, *mem = NULL;
-@@ -689,6 +717,7 @@ static struct simpledrm_device *simpledrm_device_create(struct drm_driver *drv,
- 		if (panel_node) {
- 			width_mm = simplefb_get_panel_width_mm_of(dev, panel_node);
- 			height_mm = simplefb_get_panel_height_mm_of(dev, panel_node);
-+			orientation = simplefb_get_panel_orientation_of(dev, panel_node);
- 			of_node_put(panel_node);
- 		}
- 	} else {
-@@ -853,8 +882,7 @@ static struct simpledrm_device *simpledrm_device_create(struct drm_driver *drv,
- 	if (ret)
- 		return ERR_PTR(ret);
- 	drm_connector_helper_add(connector, &simpledrm_connector_helper_funcs);
--	drm_connector_set_panel_orientation_with_quirk(connector,
--						       DRM_MODE_PANEL_ORIENTATION_UNKNOWN,
-+	drm_connector_set_panel_orientation_with_quirk(connector, orientation,
- 						       width, height);
- 
- 	ret = drm_connector_attach_encoder(connector, encoder);
+I feel like this is something that should be checked once somewhere, if
+that. I think adding arbitrary checks like this invites more arbitrary
+checks everywhere. crtc->index is supposed to be invariant over the
+lifetime of the CRTC.
+
+BR,
+Jani.
+
+> +
+> +		return crtc->index;
+> +	}
+> +
+> +	return -EINVAL;
+> +}
+> +
+> +static int find_crtc_index_legacy(struct drm_fb_helper *helper)
+> +{
+> +	struct drm_device *dev = helper->dev;
+> +	struct drm_crtc *crtc;
+> +
+> +	drm_for_each_crtc(crtc, dev) {
+> +		struct drm_plane *plane = crtc->primary;
+> +
+> +		if (!crtc->enabled)
+> +			continue;
+> +		if (!plane || plane->fb != helper->fb)
+> +			continue; /* CRTC doesn't display fbdev emulation */
+> +		if (drm_WARN_ON_ONCE(dev, crtc->index > INT_MAX))
+> +			continue; /* driver bug */
+> +
+> +		return crtc->index;
+> +	}
+> +
+> +	return -EINVAL;
+> +}
+> +
+> +static int drm_fb_helper_find_crtc_index(struct drm_fb_helper *helper)
+> +{
+> +	struct drm_device *dev = helper->dev;
+> +	int crtc_index;
+> +
+> +	mutex_lock(&dev->mode_config.mutex);
+> +
+> +	if (drm_drv_uses_atomic_modeset(dev))
+> +		crtc_index = find_crtc_index_atomic(helper);
+> +	else
+> +		crtc_index = find_crtc_index_legacy(helper);
+> +
+> +	mutex_unlock(&dev->mode_config.mutex);
+> +
+> +	return crtc_index;
+> +}
+> +
+>  static void drm_fb_helper_fb_dirty(struct drm_fb_helper *helper)
+>  {
+>  	struct drm_device *dev = helper->dev;
+>  	struct drm_clip_rect *clip = &helper->damage_clip;
+>  	struct drm_clip_rect clip_copy;
+> +	int crtc_index;
+>  	unsigned long flags;
+>  	int ret;
+>  
+>  	mutex_lock(&helper->lock);
+> -	drm_client_modeset_wait_for_vblank(&helper->client, 0);
+> +	crtc_index = drm_fb_helper_find_crtc_index(helper);
+> +	if (crtc_index >= 0)
+> +		drm_client_modeset_wait_for_vblank(&helper->client, crtc_index);
+>  	mutex_unlock(&helper->lock);
+>  
+>  	if (drm_WARN_ON_ONCE(dev, !helper->funcs->fb_dirty))
+
 -- 
-2.54.0
-
+Jani Nikula, Intel
