@@ -1,119 +1,159 @@
-Received: from canpmsgout04.his.huawei.com (canpmsgout04.his.huawei.com [113.46.200.219])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-ej1-f50.google.com (mail-ej1-f50.google.com [209.85.218.50])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D5E44274B2A
-	for <sashiko-reviews@lists.linux.dev>; Mon, 22 Jun 2026 11:58:52 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=113.46.200.219
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BB9563B14B6
+	for <sashiko-reviews@lists.linux.dev>; Mon, 22 Jun 2026 13:07:29 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.218.50
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1782129536; cv=none; b=OnUr/Cm/Q9ec9wMza4ZmdSrZJddbPVc/N+iwsX8B4MUlgL7FtNPCsNVG80yiB0g7trQF3P1O7gBDVAeEwRz3LBBUkVrVltamAPtFryltduV11KAY4KWtRZtAvO1HwAlxCiIfoU4hm8RYMX3yF6rDAQfGjIef7wX4V76k6BmXaJU=
+	t=1782133652; cv=none; b=lnOdXZZyeIuFWcvRGgoki3NZsK2dU/u+Ixfvlo2SJlWifhOKlF85Tt5bMtEBZO7Z/McdEXgqe+paTEuV1hc4friPmMWvwMmxzfcNAB87xuEiQyeSMgVIPE8jtWoZ2uPRpce53YjRwp17TkuJ2GuGX2m9CJ5ClMmGgNTWP72a+58=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1782129536; c=relaxed/simple;
-	bh=mBzFfdwt63phXA4EyRq5Ct03YE8f6Hs5cmyJPfk6uTo=;
-	h=Message-ID:Date:MIME-Version:Subject:To:CC:References:From:
-	 In-Reply-To:Content-Type; b=Tw1yAPfUKuf2tAufyRymwmz+doD5UzQzhTuYBkBZcej5gTr+FbudApknb+zI+nqHIqyBtN6bMEkoEYTQ9Cu9LwkJ6BOoXK9kPa/ZKqA5ibX65udBn1yzA6DkL+6SJp8VwY/sxk8bPMCWgkO22MTmOdADN/tacR6auzUuGv3pIdE=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=huawei.com; spf=pass smtp.mailfrom=huawei.com; dkim=pass (1024-bit key) header.d=huawei.com header.i=@huawei.com header.b=dpci8ama; arc=none smtp.client-ip=113.46.200.219
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=huawei.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=huawei.com
-Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=huawei.com header.i=@huawei.com header.b="dpci8ama"
-dkim-signature: v=1; a=rsa-sha256; d=huawei.com; s=dkim;
-	c=relaxed/relaxed; q=dns/txt;
-	h=From;
-	bh=dN6IP1hSjT3zBfIMoR4CX8mAqxCapWhaNWitozUomXo=;
-	b=dpci8amaNnerLFcvVJkrttavk1dYIK0F5kY/6X860PG5X54NB6QcfifVqOPhYPRqcJMYKj0tE
-	UuYnDWZHAEFsiEJ2PiSVfLpxxVyZMAZFW0P0tbYmoKgaAEE/svG+nobRnJALXNd/zOKbcAeH/zk
-	n2N0KaJARVzWRQ+WpqyYKzI=
-Received: from mail.maildlp.com (unknown [172.19.162.197])
-	by canpmsgout04.his.huawei.com (SkyGuard) with ESMTPS id 4gkRNH4z1Bz1prp5;
-	Mon, 22 Jun 2026 19:50:39 +0800 (CST)
-Received: from dggemv712-chm.china.huawei.com (unknown [10.1.198.32])
-	by mail.maildlp.com (Postfix) with ESMTPS id 26A2240569;
-	Mon, 22 Jun 2026 19:58:44 +0800 (CST)
-Received: from kwepemq100007.china.huawei.com (7.202.195.175) by
- dggemv712-chm.china.huawei.com (10.1.198.32) with Microsoft SMTP Server
- (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
- 15.2.1544.11; Mon, 22 Jun 2026 19:58:43 +0800
-Received: from [10.159.167.44] (10.159.167.44) by
- kwepemq100007.china.huawei.com (7.202.195.175) with Microsoft SMTP Server
- (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
- 15.2.1544.11; Mon, 22 Jun 2026 19:58:42 +0800
-Message-ID: <42dbba04-fa9d-49da-9c01-b8708218ab12@huawei.com>
-Date: Mon, 22 Jun 2026 19:58:42 +0800
+	s=arc-20240116; t=1782133652; c=relaxed/simple;
+	bh=1etyWsaiUeb9zM/M27udCVQPp+0lo8G8Gomb4RFTGHY=;
+	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
+	 To:Cc:Content-Type; b=nf318YqnfvKCzV3Fcpi36mqPMqmCv9Xnf0gwHRYCptwmd/A114XPVJAVWl7GOilCom+HduJferfh69u57KOeUX98MRGOEE6jz8eYhY2w+wVvqawb469TptIQgfsB4/of64iYBIttUfVwuGjosbK6ckC2KoHwlF7iwco3nx5jNa0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=linux-m68k.org; spf=pass smtp.mailfrom=gmail.com; arc=none smtp.client-ip=209.85.218.50
+Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=linux-m68k.org
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+Received: by mail-ej1-f50.google.com with SMTP id a640c23a62f3a-c0efc7ef797so125759166b.2
+        for <sashiko-reviews@lists.linux.dev>; Mon, 22 Jun 2026 06:07:29 -0700 (PDT)
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20251104; t=1782133648; x=1782738448;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:x-gm-gg:x-gm-message-state:from
+         :to:cc:subject:date:message-id:reply-to;
+        bh=JZq4bH2MyvWfP84B8pnnxe0yT9Gu/blfmP5NcpwNQ1A=;
+        b=XoYzf4aZoWDMazsEms4MtrV081Po/nwp6/GrwDsCIqu/Dd3oTTvPkgkm4kuWCYzbJQ
+         kx2mJT26g8YhnZkbtwj8E29vG6/Z0vg8o1t5lvVgOcL5xcg3f58CNxIa8VgKqnNzUGY4
+         hXjii3ktepD41zBYFG5WMkLWF62fcVzhbV3ReY0tz1ez5WU7WrvHkrrMuMSN+1+QIKeX
+         NmLB/7kdu1GrhCkcRyDHPtcOQknsHIYNPs2l9E5MMzIf+7/evyrOB50e0Zr3KndKKLpz
+         NmoUw8ScKi6PsUlDvx7VhUlPzcKGcQ6bgjegdHZyfvDDWUy425S2hMPV1IZyTZ59jOE+
+         KKzQ==
+X-Gm-Message-State: AOJu0YzSZ9IUxesDlkYb5QUwYpd1OiEttpzWmLlP6tqBmohgMHF/QJTg
+	QN1WPoYbhFScnWtHnpGcRckFJUOlHX3ll3b0gQnUMYb0QBNsPEkk/6FVph/0qiyE2Nw=
+X-Gm-Gg: AfdE7cn3cSkY23d1K0cKdlu+ey0nkRff0tzQNtMonI/1BDKcFdQxGdS8tDno5piVjYr
+	Mq46WwT4CwgJ+uNp38ZMlGt8v4WK4sTILjPp0zOl1cGV0DN0HE7kmxX4SfmgFWywK1uqBqaB4UO
+	IGP5qxv4OD/AHfEsr4eTFSlZiTo67D54ZwKAiJ+Zh9nByDO7qI6imOZcD083HzzYpAzCQ17r50t
+	0SNn2hGjKg/W0WTO7Jn9xJ00IFceUI3bE7TfsE9/HoaPGNXn7WGKgQ8XoduL0lun1JIKV/9ljIs
+	QSKo8ge+LMjld1Flvf2TTvGsZQ2sxL89f16k9l05L4HGy798t1eXymrUeN9YXbvojKJrl+cS4pD
+	FBvdfhvfMnJCLvLpwsf9otM3w+I38Z3AfoeZsCAGZZ5iX3X0Q0YCa1hyUkyojQW5y5QelOOHlpc
+	5XVShBVGAC8wqCuoYOgEgTJGamVrfPWIgUCJKkiD0Wyxr3J0o2+g==
+X-Received: by 2002:a17:907:e849:b0:c09:4ad0:9a3 with SMTP id a640c23a62f3a-c097ae0c8camr752568866b.4.1782133647818;
+        Mon, 22 Jun 2026 06:07:27 -0700 (PDT)
+Received: from mail-ed1-f48.google.com (mail-ed1-f48.google.com. [209.85.208.48])
+        by smtp.gmail.com with ESMTPSA id a640c23a62f3a-c0c60ac80c8sm348475966b.40.2026.06.22.06.07.26
+        for <sashiko-reviews@lists.linux.dev>
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Mon, 22 Jun 2026 06:07:26 -0700 (PDT)
+Received: by mail-ed1-f48.google.com with SMTP id 4fb4d7f45d1cf-69531108f25so8040607a12.2
+        for <sashiko-reviews@lists.linux.dev>; Mon, 22 Jun 2026 06:07:26 -0700 (PDT)
+X-Received: by 2002:a05:6402:5386:b0:691:b158:b416 with SMTP id
+ 4fb4d7f45d1cf-696dde5eb11mr6568890a12.6.1782133645683; Mon, 22 Jun 2026
+ 06:07:25 -0700 (PDT)
 Precedence: bulk
 X-Mailing-List: sashiko-reviews@lists.linux.dev
 List-Id: <sashiko-reviews.lists.linux.dev>
 List-Subscribe: <mailto:sashiko-reviews+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:sashiko-reviews+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v4 4/6] drm/hibmc: Do not use cpp from struct
- drm_format_info
-To: Thomas Zimmermann <tzimmermann@suse.de>, <tiantao6@hisilicon.com>,
-	<kong.kongxinwei@hisilicon.com>, <maarten.lankhorst@linux.intel.com>,
-	<mripard@kernel.org>, <airlied@gmail.com>, <simona@ffwll.ch>
-CC: <dri-devel@lists.freedesktop.org>, <sashiko-reviews@lists.linux.dev>,
-	<shiyongbang@huawei.com>, "Liangjian(Jim,Kunpeng Solution Development Dept)"
-	<liangjian010@huawei.com>, Chenjianmin <chenjianmin@huawei.com>, "fengsheng
- (A)" <fengsheng5@huawei.com>
-References: <20260618123142.92298-1-tzimmermann@suse.de>
- <20260618123142.92298-5-tzimmermann@suse.de>
-From: Yongbang Shi <shiyongbang@huawei.com>
-In-Reply-To: <20260618123142.92298-5-tzimmermann@suse.de>
+References: <20260618181949.3036280-1-prabhakar.mahadev-lad.rj@bp.renesas.com>
+ <20260618181949.3036280-2-prabhakar.mahadev-lad.rj@bp.renesas.com> <20260618183334.F10DD1F000E9@smtp.kernel.org>
+In-Reply-To: <20260618183334.F10DD1F000E9@smtp.kernel.org>
+From: Geert Uytterhoeven <geert@linux-m68k.org>
+Date: Mon, 22 Jun 2026 15:07:11 +0200
+X-Gmail-Original-Message-ID: <CAMuHMdUKuzYPm-3XyMUZCM6K+GpQPE=JgDJdQiaPtwyYR7cYWw@mail.gmail.com>
+X-Gm-Features: AVVi8CelaUC9eVEsVaVP0hR5s-RRU3sKR6olPCsBX6FF2PRrYumOZ-b82ZBXojk
+Message-ID: <CAMuHMdUKuzYPm-3XyMUZCM6K+GpQPE=JgDJdQiaPtwyYR7cYWw@mail.gmail.com>
+Subject: Re: [PATCH v4 1/5] clk: renesas: rzv2h-cpg: Use per-SoC PLL reference
+ frequency for calculations
+To: sashiko-reviews@lists.linux.dev
+Cc: Prabhakar <prabhakar.csengg@gmail.com>, conor+dt@kernel.org, 
+	wsa+renesas@sang-engineering.com, robh@kernel.org, devicetree@vger.kernel.org
 Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: 7bit
-X-ClientProxiedBy: kwepems200001.china.huawei.com (7.221.188.67) To
- kwepemq100007.china.huawei.com (7.202.195.175)
+Content-Transfer-Encoding: quoted-printable
 
-> Replace uses of struct drm_format_info's cpp with appropriate interfaces.
-> The cpp field contains the characters per pixel. It is deprecated and
-> should be avoided.
-> 
-> Calculate the line width in bytes with drm_format_info_min_pitch(). This
-> is the preferred way of getting pixel and line sizes.
-> 
-> Program HIB_CRT_DISP_CTL_FORMAT from the format's 4CC code instead of
-> calculating the field's value from the cpp.
-> 
-> v4:
-> - introduce fb variable in separate patch (Yongbang)
-> 
-> Signed-off-by: Thomas Zimmermann <tzimmermann@suse.de>
-> ---
->  drivers/gpu/drm/hisilicon/hibmc/hibmc_drm_de.c | 11 +++++++++--
->  1 file changed, 9 insertions(+), 2 deletions(-)
-> 
-> diff --git a/drivers/gpu/drm/hisilicon/hibmc/hibmc_drm_de.c b/drivers/gpu/drm/hisilicon/hibmc/hibmc_drm_de.c
-> index 19cb16a7daf9..fe73b365e547 100644
-> --- a/drivers/gpu/drm/hisilicon/hibmc/hibmc_drm_de.c
-> +++ b/drivers/gpu/drm/hisilicon/hibmc/hibmc_drm_de.c
-> @@ -119,7 +119,7 @@ static void hibmc_plane_atomic_update(struct drm_plane *plane,
->  
->  	writel(gpu_addr, priv->mmio + HIBMC_CRT_FB_ADDRESS);
->  
-> -	reg = fb->width * fb->format->cpp[0];
-> +	reg = drm_format_info_min_pitch(fb->format, 0, fb->width);
->  
->  	line_l = fb->pitches[0];
->  	writel(HIBMC_FIELD(HIBMC_CRT_FB_WIDTH_WIDTH, reg) |
-> @@ -129,7 +129,14 @@ static void hibmc_plane_atomic_update(struct drm_plane *plane,
->  	/* SET PIXEL FORMAT */
->  	reg = readl(priv->mmio + HIBMC_CRT_DISP_CTL);
->  	reg &= ~HIBMC_CRT_DISP_CTL_FORMAT_MASK;
-> -	reg |= HIBMC_FIELD(HIBMC_CRT_DISP_CTL_FORMAT, fb->format->cpp[0] * 8 / 16);
-> +	switch (fb->format->format) {
-> +	case DRM_FORMAT_XRGB8888:
-> +		reg |= HIBMC_FIELD(HIBMC_CRT_DISP_CTL_FORMAT, 2);
-> +		break;
-> +	case DRM_FORMAT_RGB565:
-> +		reg |= HIBMC_FIELD(HIBMC_CRT_DISP_CTL_FORMAT, 1);
-> +		break;
-> +	}
->  	writel(reg, priv->mmio + HIBMC_CRT_DISP_CTL);
->  }
->  
+On Fri, 19 Jun 2026 at 14:11, <sashiko-bot@kernel.org> wrote:
+> Thank you for your contribution! Sashiko AI review found 1 potential issu=
+e(s) to consider:
+>
+> Pre-existing issues:
+> - [High] Silent 32-bit unsigned integer overflow and zero-extension corru=
+pts PLL calculations when 'p.k' is negative on 32-bit architectures.
+> --
+>
+> commit 68e2983ee9a6e8d870b293872442cdc2bc7b3e74
+> Author: Lad Prabhakar <prabhakar.mahadev-lad.rj@bp.renesas.com>
+>
+> clk: renesas: rzv2h-cpg: Use per-SoC PLL reference frequency for calculat=
+ions
+>
+> Introduce a per-SoC PLL reference input frequency parameter to avoid
+> relying on a hardcoded 24MHz constant during PLL configuration math.
+>
+> > diff --git a/drivers/clk/renesas/rzv2h-cpg.c b/drivers/clk/renesas/rzv2=
+h-cpg.c
+> > index e271c04cee34f..fff89f2bdc0b2 100644
+> > --- a/drivers/clk/renesas/rzv2h-cpg.c
+> > +++ b/drivers/clk/renesas/rzv2h-cpg.c
+>
+> [ ... ]
+>
+> > @@ -335,9 +335,9 @@ bool rzv2h_get_pll_pars(const struct rzv2h_pll_limi=
+ts *limits,
+> >                                       continue;
+> >
+> >                               /* PLL_M component of (output * 65536 * P=
+LL_P) */
+> > -                             output =3D mul_u32_u32(p.m * 65536, RZ_V2=
+H_OSC_CLK_IN_MEGA);
+> > +                             output =3D mul_u32_u32(p.m * 65536, input=
+_fref);
+> >                               /* PLL_K component of (output * 65536 * P=
+LL_P) */
+> > -                             output +=3D p.k * RZ_V2H_OSC_CLK_IN_MEGA;
+> > +                             output +=3D p.k * input_fref;
+> [Severity: High]
+> This is a pre-existing issue, but does this multiplication safely handle
+> negative values of p.k on 32-bit architectures?
+>
+> Since p.k is a signed 16-bit integer (with limits->k.min allowed to be -3=
+2768)
+> and input_fref is a 32-bit unsigned long, C promotion rules on 32-bit bui=
+lds
+> will convert p.k to a 32-bit unsigned integer before the multiplication.
+>
+> If p.k is negative, the resulting 32-bit unsigned modulo value will be
+> zero-extended when added to the 64-bit output variable. This would incorr=
+ectly
+> add over 4 billion to the output frequency rather than subtracting the
+> intended fraction, which could severely break the PLL parameter search.
 
-Reviewed-by: Yongbang Shi <shiyongbang@huawei.com>
+Good point!
+Although this driver is only used on 64-bit platforms, the code might
+still be used as an example, and copied for use on a 32-bit platform.
 
-Thanks,
-Yongbang.
+> Could p.k be cast to s64 before the multiplication to prevent this unsign=
+ed
+> overflow and ensure proper sign-extension into the 64-bit output?
+>
+> >                               /* Make it in mHz */
+> >                               output *=3D MILLI;
+> >                               output =3D DIV_U64_ROUND_CLOSEST(output, =
+65536 * p.p * divider);
+>
+> --
+> Sashiko AI review =C2=B7 https://sashiko.dev/#/patchset/20260618181949.30=
+36280-1-prabhakar.mahadev-lad.rj@bp.renesas.com?part=3D1
 
+Gr{oetje,eeting}s,
+
+                        Geert
+
+--=20
+Geert Uytterhoeven -- There's lots of Linux beyond ia32 -- geert@linux-m68k=
+.org
+
+In personal conversations with technical people, I call myself a hacker. Bu=
+t
+when I'm talking to journalists I just say "programmer" or something like t=
+hat.
+                                -- Linus Torvalds
