@@ -1,130 +1,303 @@
-Received: from mail-ed1-f49.google.com (mail-ed1-f49.google.com [209.85.208.49])
+Received: from smtp-out2.suse.de (smtp-out2.suse.de [195.135.223.131])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6CFA1307AF0
-	for <sashiko-reviews@lists.linux.dev>; Mon, 22 Jun 2026 14:47:53 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.208.49
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5FF3230FC39
+	for <sashiko-reviews@lists.linux.dev>; Mon, 22 Jun 2026 14:54:38 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=195.135.223.131
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1782139677; cv=none; b=ura6FPvaf2NizovM7qonSO7FKISs4yi6SOshMhsBX6tlXyK8s8nbDIGGfYvE2K9uQlysqh0eP3kI8dRG0KzqkBu8GKQrFKT3jwdgmfaveWTEnIsKZxOS9oD4YcOPbUgxckggIyCVPsH7LpY2uj+/goUh7Bruu0I/sa0JcfP4RNI=
+	t=1782140080; cv=none; b=O3IqWA3E6QUgiDbFudsqZKdsvr7Yf+mzuueduresVIQ5iVjNvNUlOBCpFh60CzDysNhbkUuuYtK5dGXgc5JFfMBhYj26gqDZDqRLkKj0F5WlkpRLcBRhsLvhjN2lPwSufZyu3Z0MZZh/tkBH+ykkz4qf+KVYlG39SmBOk5NbFYA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1782139677; c=relaxed/simple;
-	bh=zYemPZMdTHCuocq7TlEZHrhgov3DesV7eyqbBwxxwNc=;
-	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
-	 MIME-Version:Content-Type; b=lvoflF2RmXP9i40lwehe01SOeOMmVi28cTXVTcv7F8gAlr02gyNMmrbvemegOwFBVTj0mxj+yJGetsdqTeAcBTPgnwVmXPj2hD/0HhA8ZF9quRI+1ig+pn8hFZ3Ly6jvf+9yMdM0/ZT+mOfOZJq8KgoNP5V0N4y0QI2JskLA2yo=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=cloudflare.com; spf=pass smtp.mailfrom=cloudflare.com; dkim=pass (2048-bit key) header.d=cloudflare.com header.i=@cloudflare.com header.b=KWt152kS; arc=none smtp.client-ip=209.85.208.49
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=cloudflare.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=cloudflare.com
+	s=arc-20240116; t=1782140080; c=relaxed/simple;
+	bh=4O/Lk+bmL14dJHrMXVZE6YRVaBcltePxcx51t7J73hI=;
+	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
+	 In-Reply-To:Content-Type; b=DOegZgRxFslWi640z4s8/+qH3CM8HYjjICb8He2q4zQZVQ1hcjtEKpSIM+WLQhVJ9ClLZBHa3j10HwVNgzdM/xwg0B40FdBcAXU3AndDfM6ky/E1TreKpXX/I7S3rYxfpzxP50vtaHaNLaUZ5O9Zhpd3PHwPBUjynRV1yYNy+xw=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=suse.de; spf=pass smtp.mailfrom=suse.de; dkim=pass (1024-bit key) header.d=suse.de header.i=@suse.de header.b=oEr7QA3m; dkim=permerror (0-bit key) header.d=suse.de header.i=@suse.de header.b=844/Hlof; dkim=pass (1024-bit key) header.d=suse.de header.i=@suse.de header.b=oEr7QA3m; dkim=permerror (0-bit key) header.d=suse.de header.i=@suse.de header.b=844/Hlof; arc=none smtp.client-ip=195.135.223.131
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=suse.de
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=suse.de
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=cloudflare.com header.i=@cloudflare.com header.b="KWt152kS"
-Received: by mail-ed1-f49.google.com with SMTP id 4fb4d7f45d1cf-697cd68d7adso802603a12.1
-        for <sashiko-reviews@lists.linux.dev>; Mon, 22 Jun 2026 07:47:53 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=cloudflare.com; s=google09082023; t=1782139672; x=1782744472; darn=lists.linux.dev;
-        h=mime-version:message-id:date:user-agent:references:in-reply-to
-         :subject:cc:to:from:from:to:cc:subject:date:message-id:reply-to;
-        bh=eOx8McGgHCmd0/ew0ozXnnvDEcN08z5gnGYc0YXCEQI=;
-        b=KWt152kS1l21HE1lirVVaH1Kgcu9sVrt5UEwD4MBNVKWAUfPdNPhPa5okpsW2NqjGM
-         p0aPAqZThCdvFXkCehVIXcn4SaUoZeDSODyAcaC8sEF9mSPeWH+kLyLYgIlCXhm2X+gD
-         B7m2q5+OoG+01Qe4FIyUVZbgUlItsvPDn6gCk5P1xyssbUylA6ejYZ9Sabp2Jwm0VzQ0
-         tHxJyQjVezGNQVCUrDGzWmTf0y0I0aWja+MWbcTAXMa8xnIbEfrcGergkL/gboz9/MiO
-         CET5T3498+LhMR6KKafKsyx/KGAqjTlzVU3pqWoggtj+i89eyfLNdLUh9gD1LHH67ewy
-         19tA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20251104; t=1782139672; x=1782744472;
-        h=mime-version:message-id:date:user-agent:references:in-reply-to
-         :subject:cc:to:from:x-gm-gg:x-gm-message-state:from:to:cc:subject
-         :date:message-id:reply-to;
-        bh=eOx8McGgHCmd0/ew0ozXnnvDEcN08z5gnGYc0YXCEQI=;
-        b=b4hB/wr0q3gHqwx2Hs6mzWimvxKYbgJOpppqu5ewuiW0KEor6Igf8gFjb2eijitkF1
-         608qh9K2jzcOn3at9fZITuCYWiBdyZ/05jFfUPItYFTuljh2jzY6d6V+XScuT6ioad2A
-         oJ24jWPJ5SepuEmSMYOOTYZi49n08CjK9f52Q+QHYUy/qOgJAAmbs9GMeT4lu1rXP8JZ
-         mvsSbrMVjUmrilMfi+n2ez9e30rE/AP3o7NzPSrSsGiqias0WVNy9XE//cJ8RiNMrcHV
-         j9IVqpWP//JOblRDKrYNznbeKCH87oJBrAAJCGEPkPC8jec5sT5KUzDqlE7twaguqdsx
-         WwHA==
-X-Gm-Message-State: AOJu0Yy1jrPx5EUruZXVErBTjOm+ApWlixC0oIm7GrCeXy4PYYpxcZM2
-	PNlkQoHY0Wovos+0UathoicvwPkcUMyJB31T190eNFvagbQK2PuULnLiaHGDju9VVb0=
-X-Gm-Gg: AfdE7clD1UOn7QTHtrv1F/P9twITlFoi1jY+Gip45QSQ3hHMWHGF7L3BeBtB6vLnKps
-	ARphDWQOa5hYYxm9Wr9z7Y9eYhp4BvY8EPtDn6jq+2/MNubqwi4grrIvDxGk489c2EQ8of75gKD
-	GVbDS3wcqxJxD5MVXlhb/kJ0UGGnyhb6Hkt+5VH2EzqxdXRam2+M46M76AiS4PFpe4edwM2v/Mp
-	clk1VMf7X4yzCTYgp2B0mKVXfbctvvsRHk/cd2NTWzSi6ufUkcKxIkIbYA/0h3TJWuFSr8K+0+u
-	ATzwszuz4nCL9h+qeNWwGCEAs1d7j7k4Rpph6NBbk3vdxAp4IvrP07c38kkKeH8U0zVj5HEiMSL
-	9RhTjY50BwATPzR7tHNnYycEgOy42vU294ro7eKOAlH78qO8rXOMD63/blNcEdwU4HqgVSfMfka
-	TECgA/uLJdNq0fsEFvDVyMRcrd0A==
-X-Received: by 2002:a05:6402:4307:b0:697:849f:7dd1 with SMTP id 4fb4d7f45d1cf-697849f8021mr3567477a12.5.1782139671680;
-        Mon, 22 Jun 2026 07:47:51 -0700 (PDT)
-Received: from cloudflare.com ([104.28.21.182])
-        by smtp.gmail.com with ESMTPSA id 4fb4d7f45d1cf-6977b82f95dsm3513391a12.3.2026.06.22.07.47.51
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Mon, 22 Jun 2026 07:47:51 -0700 (PDT)
-From: Jakub Sitnicki <jakub@cloudflare.com>
-To: sashiko-bot@kernel.org
-Cc: sashiko-reviews@lists.linux.dev,  bpf@vger.kernel.org
-Subject: Re: [PATCH bpf-next] bpf, unix: Guard sk_msg-dependent code behind
- CONFIG_NET_SOCK_MSG
-In-Reply-To: <20260622131731.E619F1F000E9@smtp.kernel.org>
-	(sashiko-bot@kernel.org's message of "Mon, 22 Jun 2026 13:17:31
-	+0000")
-References: <20260622-bpf-sk_msg-split-unix-v1-1-d7e0cb7bb03b@cloudflare.com>
-	<20260622131731.E619F1F000E9@smtp.kernel.org>
-User-Agent: mu4e 1.14.1; emacs 30.2
-Date: Mon, 22 Jun 2026 16:47:50 +0200
-Message-ID: <87ldc64oo9.fsf@cloudflare.com>
+	dkim=pass (1024-bit key) header.d=suse.de header.i=@suse.de header.b="oEr7QA3m";
+	dkim=permerror (0-bit key) header.d=suse.de header.i=@suse.de header.b="844/Hlof";
+	dkim=pass (1024-bit key) header.d=suse.de header.i=@suse.de header.b="oEr7QA3m";
+	dkim=permerror (0-bit key) header.d=suse.de header.i=@suse.de header.b="844/Hlof"
+Received: from imap1.dmz-prg2.suse.org (unknown [10.150.64.97])
+	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+	 key-exchange X25519 server-signature RSA-PSS (4096 bits) server-digest SHA256)
+	(No client certificate requested)
+	by smtp-out2.suse.de (Postfix) with ESMTPS id 62E1C75991;
+	Mon, 22 Jun 2026 14:54:36 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=suse.de; s=susede2_rsa;
+	t=1782140076; h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
+	 mime-version:mime-version:content-type:content-type:
+	 content-transfer-encoding:content-transfer-encoding:
+	 in-reply-to:in-reply-to:references:references:autocrypt:autocrypt;
+	bh=jxh1gHLoGNtM52tLMMkGn2yRHkmuZf/Zujd0BM3u68s=;
+	b=oEr7QA3mKbhoVPXJ4rVR6K/mwPDkNHBzxLnqHDWCsO4VKPlZjwYj3eRdi2Gf/G3X+QNhXB
+	FUt27PsTIkvIEkgszs0m47WlitGv2qz464gNGHwnl+Mv1ymscQc8SF1bSLShI1Q0tALWBo
+	JRiVozWVzx0FHDh3nj0XWWVT+fksojY=
+DKIM-Signature: v=1; a=ed25519-sha256; c=relaxed/relaxed; d=suse.de;
+	s=susede2_ed25519; t=1782140076;
+	h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
+	 mime-version:mime-version:content-type:content-type:
+	 content-transfer-encoding:content-transfer-encoding:
+	 in-reply-to:in-reply-to:references:references:autocrypt:autocrypt;
+	bh=jxh1gHLoGNtM52tLMMkGn2yRHkmuZf/Zujd0BM3u68s=;
+	b=844/HlofZeD0Pz5Js3SnEw2w3Srz5DH8PDQv+1zn4ZJw7uKsbX3Cqt5dnct4KSDwXol9pf
+	f/D+uc5gFMBL2nBA==
+Authentication-Results: smtp-out2.suse.de;
+	none
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=suse.de; s=susede2_rsa;
+	t=1782140076; h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
+	 mime-version:mime-version:content-type:content-type:
+	 content-transfer-encoding:content-transfer-encoding:
+	 in-reply-to:in-reply-to:references:references:autocrypt:autocrypt;
+	bh=jxh1gHLoGNtM52tLMMkGn2yRHkmuZf/Zujd0BM3u68s=;
+	b=oEr7QA3mKbhoVPXJ4rVR6K/mwPDkNHBzxLnqHDWCsO4VKPlZjwYj3eRdi2Gf/G3X+QNhXB
+	FUt27PsTIkvIEkgszs0m47WlitGv2qz464gNGHwnl+Mv1ymscQc8SF1bSLShI1Q0tALWBo
+	JRiVozWVzx0FHDh3nj0XWWVT+fksojY=
+DKIM-Signature: v=1; a=ed25519-sha256; c=relaxed/relaxed; d=suse.de;
+	s=susede2_ed25519; t=1782140076;
+	h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
+	 mime-version:mime-version:content-type:content-type:
+	 content-transfer-encoding:content-transfer-encoding:
+	 in-reply-to:in-reply-to:references:references:autocrypt:autocrypt;
+	bh=jxh1gHLoGNtM52tLMMkGn2yRHkmuZf/Zujd0BM3u68s=;
+	b=844/HlofZeD0Pz5Js3SnEw2w3Srz5DH8PDQv+1zn4ZJw7uKsbX3Cqt5dnct4KSDwXol9pf
+	f/D+uc5gFMBL2nBA==
+Received: from imap1.dmz-prg2.suse.org (localhost [127.0.0.1])
+	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+	 key-exchange X25519 server-signature RSA-PSS (4096 bits) server-digest SHA256)
+	(No client certificate requested)
+	by imap1.dmz-prg2.suse.org (Postfix) with ESMTPS id 10382779A8;
+	Mon, 22 Jun 2026 14:54:36 +0000 (UTC)
+Received: from dovecot-director2.suse.de ([2a07:de40:b281:106:10:150:64:167])
+	by imap1.dmz-prg2.suse.org with ESMTPSA
+	id DRWPAqxMOWrdeQAAD6G6ig
+	(envelope-from <tzimmermann@suse.de>); Mon, 22 Jun 2026 14:54:36 +0000
+Message-ID: <926d9d5f-be68-4377-9a90-0d9ace2c2c53@suse.de>
+Date: Mon, 22 Jun 2026 16:54:35 +0200
 Precedence: bulk
 X-Mailing-List: sashiko-reviews@lists.linux.dev
 List-Id: <sashiko-reviews.lists.linux.dev>
 List-Subscribe: <mailto:sashiko-reviews+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:sashiko-reviews+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH v2] drm/fb-helper: Only consider active CRTCs for vblank
+ sync
+To: Jani Nikula <jani.nikula@linux.intel.com>, hns@goldelico.com,
+ zhengxingda@iscas.ac.cn, maarten.lankhorst@linux.intel.com,
+ mripard@kernel.org, airlied@gmail.com, simona@ffwll.ch, akemnade@kernel.org
+Cc: dri-devel@lists.freedesktop.org, linux-kernel@vger.kernel.org,
+ letux-kernel@openphoenux.org, kernel@pyra-handheld.com,
+ sashiko-reviews@lists.linux.dev, stable@vger.kernel.org
+References: <20260622113434.682292-1-tzimmermann@suse.de>
+ <395f15bb770b4be0ffeeb09e7cdeef49340f910c@intel.com>
+Content-Language: en-US
+From: Thomas Zimmermann <tzimmermann@suse.de>
+Autocrypt: addr=tzimmermann@suse.de; keydata=
+ xsBNBFs50uABCADEHPidWt974CaxBVbrIBwqcq/WURinJ3+2WlIrKWspiP83vfZKaXhFYsdg
+ XH47fDVbPPj+d6tQrw5lPQCyqjwrCPYnq3WlIBnGPJ4/jreTL6V+qfKRDlGLWFjZcsrPJGE0
+ BeB5BbqP5erN1qylK9i3gPoQjXGhpBpQYwRrEyQyjuvk+Ev0K1Jc5tVDeJAuau3TGNgah4Yc
+ hdHm3bkPjz9EErV85RwvImQ1dptvx6s7xzwXTgGAsaYZsL8WCwDaTuqFa1d1jjlaxg6+tZsB
+ 9GluwvIhSezPgnEmimZDkGnZRRSFiGP8yjqTjjWuf0bSj5rUnTGiyLyRZRNGcXmu6hjlABEB
+ AAHNJ1Rob21hcyBaaW1tZXJtYW5uIDx0emltbWVybWFubkBzdXNlLmRlPsLAjgQTAQgAOAIb
+ AwULCQgHAgYVCgkICwIEFgIDAQIeAQIXgBYhBHIX+6yM6c9jRKFo5WgNwR1TC3ojBQJftODH
+ AAoJEGgNwR1TC3ojx1wH/0hKGWugiqDgLNXLRD/4TfHBEKmxIrmfu9Z5t7vwUKfwhFL6hqvo
+ lXPJJKQpQ2z8+X2vZm/slsLn7J1yjrOsoJhKABDi+3QWWSGkaGwRJAdPVVyJMfJRNNNIKwVb
+ U6B1BkX2XDKDGffF4TxlOpSQzdtNI/9gleOoUA8+jy8knnDYzjBNOZqLG2FuTdicBXblz0Mf
+ vg41gd9kCwYXDnD91rJU8tzylXv03E75NCaTxTM+FBXPmsAVYQ4GYhhgFt8S2UWMoaaABLDe
+ 7l5FdnLdDEcbmd8uLU2CaG4W2cLrUaI4jz2XbkcPQkqTQ3EB67hYkjiEE6Zy3ggOitiQGcqp
+ j//OwE0EWznS4AEIAMYmP4M/V+T5RY5at/g7rUdNsLhWv1APYrh9RQefODYHrNRHUE9eosYb
+ T6XMryR9hT8XlGOYRwKWwiQBoWSDiTMo/Xi29jUnn4BXfI2px2DTXwc22LKtLAgTRjP+qbU6
+ 3Y0xnQN29UGDbYgyyK51DW3H0If2a3JNsheAAK+Xc9baj0LGIc8T9uiEWHBnCH+RdhgATnWW
+ GKdDegUR5BkDfDg5O/FISymJBHx2Dyoklv5g4BzkgqTqwmaYzsl8UxZKvbaxq0zbehDda8lv
+ hFXodNFMAgTLJlLuDYOGLK2AwbrS3Sp0AEbkpdJBb44qVlGm5bApZouHeJ/+n+7r12+lqdsA
+ EQEAAcLAdgQYAQgAIAIbDBYhBHIX+6yM6c9jRKFo5WgNwR1TC3ojBQJftOH6AAoJEGgNwR1T
+ C3ojVSkIALpAPkIJPQoURPb1VWjh34l0HlglmYHvZszJWTXYwavHR8+k6Baa6H7ufXNQtThR
+ yIxJrQLW6rV5lm7TjhffEhxVCn37+cg0zZ3j7zIsSS0rx/aMwi6VhFJA5hfn3T0TtrijKP4A
+ SAQO9xD1Zk9/61JWk8OysuIh7MXkl0fxbRKWE93XeQBhIJHQfnc+YBLprdnxR446Sh8Wn/2D
+ Ya8cavuWf2zrB6cZurs048xe0UbSW5AOSo4V9M0jzYI4nZqTmPxYyXbm30Kvmz0rYVRaitYJ
+ 4kyYYMhuULvrJDMjZRvaNe52tkKAvMevcGdt38H4KSVXAylqyQOW5zvPc4/sq9c=
+In-Reply-To: <395f15bb770b4be0ffeeb09e7cdeef49340f910c@intel.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 8bit
+X-Spam-Flag: NO
+X-Spam-Score: -4.30
+X-Spamd-Result: default: False [-4.30 / 50.00];
+	BAYES_HAM(-3.00)[100.00%];
+	NEURAL_HAM_LONG(-1.00)[-1.000];
+	NEURAL_HAM_SHORT(-0.20)[-0.993];
+	MIME_GOOD(-0.10)[text/plain];
+	ARC_NA(0.00)[];
+	RCPT_COUNT_TWELVE(0.00)[14];
+	MIME_TRACE(0.00)[0:+];
+	FUZZY_RATELIMITED(0.00)[rspamd.com];
+	FREEMAIL_TO(0.00)[linux.intel.com,goldelico.com,iscas.ac.cn,kernel.org,gmail.com,ffwll.ch];
+	RCVD_VIA_SMTP_AUTH(0.00)[];
+	MID_RHS_MATCH_FROM(0.00)[];
+	FREEMAIL_ENVRCPT(0.00)[gmail.com];
+	DKIM_SIGNED(0.00)[suse.de:s=susede2_rsa,suse.de:s=susede2_ed25519];
+	FROM_EQ_ENVFROM(0.00)[];
+	FROM_HAS_DN(0.00)[];
+	TO_DN_SOME(0.00)[];
+	RCVD_TLS_ALL(0.00)[];
+	TO_MATCH_ENVRCPT_ALL(0.00)[];
+	RCVD_COUNT_TWO(0.00)[2];
+	URIBL_BLOCKED(0.00)[iscas.ac.cn:email,suse.com:url,suse.de:email,suse.de:mid,imap1.dmz-prg2.suse.org:helo,goldelico.com:email];
+	DBL_BLOCKED_OPENRESOLVER(0.00)[suse.com:url,iscas.ac.cn:email,suse.de:email,suse.de:mid,imap1.dmz-prg2.suse.org:helo]
+X-Spam-Level: 
 
-On Mon, Jun 22, 2026 at 01:17 PM GMT, sashiko-bot@kernel.org wrote:
-> Thank you for your contribution! Sashiko AI review found 1 potential issue(s) to consider:
-> - [Critical] Calling recvmsg() on a UNIX socket added to a BPF sockmap causes a NULL pointer dereference when CONFIG_NET_SOCK_MSG is disabled.
-> --
->
-> commit 95825431b208bd3fb6f5fe58d504bdcb560273c9
-> Author: Jakub Sitnicki <jakub@cloudflare.com>
->
-> bpf, unix: Guard sk_msg-dependent code behind CONFIG_NET_SOCK_MSG
->
-> This commit conditionally compiles the assignment of recvmsg and 
-> sock_is_readable in AF_UNIX BPF protocol rebuilding functions, guarding them
-> behind CONFIG_NET_SOCK_MSG.
->
->> diff --git a/net/unix/unix_bpf.c b/net/unix/unix_bpf.c
->> index f86ff19e9764d..5289a04b4993f 100644
->> --- a/net/unix/unix_bpf.c
->> +++ b/net/unix/unix_bpf.c
->
-> [ ... ]
->
->> @@ -107,8 +109,10 @@ static void unix_dgram_bpf_rebuild_protos(struct proto *prot, const struct proto
->>  {
->>  	*prot        = *base;
->>  	prot->close  = sock_map_close;
->> +#ifdef CONFIG_NET_SOCK_MSG
->>  	prot->recvmsg = unix_bpf_recvmsg;
->>  	prot->sock_is_readable = sk_msg_is_readable;
->> +#endif
->>  }
->
-> [Severity: Critical]
-> If CONFIG_NET_SOCK_MSG is disabled but CONFIG_BPF_SYSCALL is enabled,
-> doesn't this leave prot->recvmsg as NULL?
->
-> When a UNIX datagram socket is added to a sockmap, its protocol is updated to
-> the rebuilt BPF protocol. If a user then calls recvmsg(), unix_dgram_recvmsg
-> checks if the protocol has been overridden:
->
-> net/unix/af_unix.c:unix_dgram_recvmsg() {
-> 	...
-> 	if (prot != &unix_dgram_proto)
-> 		return prot->recvmsg(sk, msg, size, flags);
-> 	...
-> }
->
-> Will this cause a NULL pointer dereference since prot->recvmsg is never
-> assigned for the rebuilt protocol when CONFIG_NET_SOCK_MSG is disabled?
+Hi
 
-Right, my bad. I will switch the check to `prot->recvmsg != NULL` since
-unix_{dgram,stream}_proto don't set it.
+Am 22.06.26 um 15:34 schrieb Jani Nikula:
+> On Mon, 22 Jun 2026, Thomas Zimmermann <tzimmermann@suse.de> wrote:
+>> Only synchronize fbdev output to the vblank of an active CRTC. Go over
+>> the list of CRTCs and pick the first that matches. Fixes warnings as
+>> the one shown below
+>>
+>> [   77.201354] WARNING: drivers/gpu/drm/drm_vblank.c:1320 at drm_crtc_wait_one_vblank+0x194/0x1cc [drm], CPU#1: kworker/1:7/1867
+>> [   77.201354] omapdrm omapdrm.0: [drm] vblank wait timed out on crtc 0
+>>
+>> This currently happens if the fbdev output is not on CRTC 0.
+>>
+>> Atomic and non-atomic drivers require distinct code paths. As for other
+>> fbdev operations, implement both and select the correct one at runtime.
+>>
+>> Not finding an active CRTC is not a bug. Do not wait in this case, but
+>> flush the display update as before.
+>>
+>> v2:
+>> - move look-up code into separate helper
+>> - support drivers with legacy modesetting
+>> v1:
+>> - see https://lore.kernel.org/dri-devel/1c9e0e24-9c4a-4259-8700-cf9e5fd60ca3@suse.de/
+>>
+>> Co-authored-by: H. Nikolaus Schaller <hns@goldelico.com>
+>> Signed-off-by: Thomas Zimmermann <tzimmermann@suse.de>
+>> Fixes: d8c4bddcd8bcb ("drm/fb-helper: Synchronize dirty worker with vblank")
+>> Tested-by: Icenowy Zheng <zhengxingda@iscas.ac.cn>
+>> Closes: https://bugs.debian.org/1138033
+>> Cc: <stable@vger.kernel.org> # v6.19+
+>> ---
+>>   drivers/gpu/drm/drm_fb_helper.c | 71 ++++++++++++++++++++++++++++++++-
+>>   1 file changed, 70 insertions(+), 1 deletion(-)
+>>
+>> diff --git a/drivers/gpu/drm/drm_fb_helper.c b/drivers/gpu/drm/drm_fb_helper.c
+>> index 7b11a582f8ec..cbf0a9a7b8e5 100644
+>> --- a/drivers/gpu/drm/drm_fb_helper.c
+>> +++ b/drivers/gpu/drm/drm_fb_helper.c
+>> @@ -225,16 +225,85 @@ static void drm_fb_helper_resume_worker(struct work_struct *work)
+>>   	console_unlock();
+>>   }
+>>   
+>> +static int find_crtc_index_atomic(struct drm_fb_helper *helper)
+>> +{
+>> +	struct drm_device *dev = helper->dev;
+>> +	struct drm_plane *plane;
+>> +
+>> +	drm_for_each_plane(plane, dev) {
+>> +		const struct drm_plane_state *plane_state;
+>> +		const struct drm_crtc *crtc;
+>> +
+>> +		if (plane->type != DRM_PLANE_TYPE_PRIMARY)
+>> +			continue;
+>> +
+>> +		plane_state = plane->state;
+>> +		if (plane_state->fb != helper->fb || !plane_state->crtc)
+>> +			continue; /* plane doesn't display fbdev emulation */
+>> +
+>> +		crtc = plane_state->crtc;
+>> +		if (!crtc->state->active)
+>> +			continue;
+>> +		if (drm_WARN_ON_ONCE(dev, crtc->index > INT_MAX))
+>> +			continue; /* driver bug */
+> I take it this is here because crtc->index is unsigned, and this
+> function returns int so you can have negative error codes. Ditto the
+> other function below.
+>
+> I feel like this is something that should be checked once somewhere, if
+> that. I think adding arbitrary checks like this invites more arbitrary
+> checks everywhere. crtc->index is supposed to be invariant over the
+> lifetime of the CRTC.
+
+Ok, makes sense.
+
+Best regards
+Thomas
+
+>
+> BR,
+> Jani.
+>
+>> +
+>> +		return crtc->index;
+>> +	}
+>> +
+>> +	return -EINVAL;
+>> +}
+>> +
+>> +static int find_crtc_index_legacy(struct drm_fb_helper *helper)
+>> +{
+>> +	struct drm_device *dev = helper->dev;
+>> +	struct drm_crtc *crtc;
+>> +
+>> +	drm_for_each_crtc(crtc, dev) {
+>> +		struct drm_plane *plane = crtc->primary;
+>> +
+>> +		if (!crtc->enabled)
+>> +			continue;
+>> +		if (!plane || plane->fb != helper->fb)
+>> +			continue; /* CRTC doesn't display fbdev emulation */
+>> +		if (drm_WARN_ON_ONCE(dev, crtc->index > INT_MAX))
+>> +			continue; /* driver bug */
+>> +
+>> +		return crtc->index;
+>> +	}
+>> +
+>> +	return -EINVAL;
+>> +}
+>> +
+>> +static int drm_fb_helper_find_crtc_index(struct drm_fb_helper *helper)
+>> +{
+>> +	struct drm_device *dev = helper->dev;
+>> +	int crtc_index;
+>> +
+>> +	mutex_lock(&dev->mode_config.mutex);
+>> +
+>> +	if (drm_drv_uses_atomic_modeset(dev))
+>> +		crtc_index = find_crtc_index_atomic(helper);
+>> +	else
+>> +		crtc_index = find_crtc_index_legacy(helper);
+>> +
+>> +	mutex_unlock(&dev->mode_config.mutex);
+>> +
+>> +	return crtc_index;
+>> +}
+>> +
+>>   static void drm_fb_helper_fb_dirty(struct drm_fb_helper *helper)
+>>   {
+>>   	struct drm_device *dev = helper->dev;
+>>   	struct drm_clip_rect *clip = &helper->damage_clip;
+>>   	struct drm_clip_rect clip_copy;
+>> +	int crtc_index;
+>>   	unsigned long flags;
+>>   	int ret;
+>>   
+>>   	mutex_lock(&helper->lock);
+>> -	drm_client_modeset_wait_for_vblank(&helper->client, 0);
+>> +	crtc_index = drm_fb_helper_find_crtc_index(helper);
+>> +	if (crtc_index >= 0)
+>> +		drm_client_modeset_wait_for_vblank(&helper->client, crtc_index);
+>>   	mutex_unlock(&helper->lock);
+>>   
+>>   	if (drm_WARN_ON_ONCE(dev, !helper->funcs->fb_dirty))
+
+-- 
+--
+Thomas Zimmermann
+Graphics Driver Developer
+SUSE Software Solutions Germany GmbH
+Frankenstr. 146, 90461 Nürnberg, Germany, www.suse.com
+GF: Jochen Jaser, Andrew McDonald, Werner Knoblich, (HRB 36809, AG Nürnberg)
+
+
