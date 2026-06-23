@@ -1,442 +1,228 @@
-Received: from canpmsgout08.his.huawei.com (canpmsgout08.his.huawei.com [113.46.200.223])
+Received: from SN4PR0501CU005.outbound.protection.outlook.com (mail-southcentralusazon11011005.outbound.protection.outlook.com [40.93.194.5])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 25DEE2DCF52
-	for <sashiko-reviews@lists.linux.dev>; Tue, 23 Jun 2026 13:13:54 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=113.46.200.223
-ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1782220440; cv=none; b=Hehrh6t4MfTrIfPthpwwxZxdMmOaSKK4myS8qLUzoe/wAbQgBVXUYqzyIwVJ8l8St9sBGnmqlmoOeYZkqYEgwUKJqMGa+0JV+zwG/n4ew8eDdqX8UvVUdjAnA5w3gD/9y9pbgqBIWPUmkrAH5BJistbsgfN5c/pnQ8B7/xMYbpc=
-ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1782220440; c=relaxed/simple;
-	bh=ySKMEQ22xYD2Y4l6Ax0jd3RTOVBK3+MzskEdTOZC9k4=;
-	h=Message-ID:Date:MIME-Version:Subject:To:CC:References:From:
-	 In-Reply-To:Content-Type; b=O+qdu/BPtKlq9si8BOgUwG7NddFE3M2cfdwKajBaWq/kA168ImMxY2e16wLgU34TT6TIIEQ23ceKUQZL2DeFR4qK1HZEwFWJPfS3LaVmmO/+/+aNbhGjvkVhu4AvntAh9yv7zeozoOEcYn/ox1BO8NimGBJ2325i91l0gjJsrJ0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=huawei.com; spf=pass smtp.mailfrom=huawei.com; dkim=pass (1024-bit key) header.d=huawei.com header.i=@huawei.com header.b=bqoyr/JO; arc=none smtp.client-ip=113.46.200.223
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=huawei.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=huawei.com
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 211F437CD45
+	for <sashiko-reviews@lists.linux.dev>; Tue, 23 Jun 2026 13:40:52 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=fail smtp.client-ip=40.93.194.5
+ARC-Seal:i=2; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
+	t=1782222054; cv=fail; b=HjRviYan8gHteNF/fyccYt0P3LOk4j7Q7ke5ZWdta4jjX3hHBeoRE7XV0O6Q7sTzQgPow5qmkCY1AoeO2+PfkFBvjqTTr7ZgF1S0pTzHDNdjZAPFy0lRMdxZQfqSvryINo1N/Jo6L21thWH+f0FkZD2AIGvtHjRLmcikznV7CkM=
+ARC-Message-Signature:i=2; a=rsa-sha256; d=subspace.kernel.org;
+	s=arc-20240116; t=1782222054; c=relaxed/simple;
+	bh=V+cgZVXiQA14FrgpKQ219ZS9jNm6hZuXRyuNlqJI4vc=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:Content-Type:
+	 Content-Disposition:In-Reply-To:MIME-Version; b=sG1xJklFd5UM38eVQLuPQ8vhaMfS7x7AymXguqldinLqUrUK3vcEH+A9YVMcUn8/4Ulz704S3LmqBkSSXOWSLE9hsEduMN/lyGI/8w+0tF6obYDlnybcbDDU2fXUQ+5JCDgtE/EhZEQ4kSEzxhC3kxAt+00R0jD3Zg2IQVaTgYI=
+ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=nvidia.com; spf=fail smtp.mailfrom=nvidia.com; dkim=pass (2048-bit key) header.d=Nvidia.com header.i=@Nvidia.com header.b=aXm3DvzI; arc=fail smtp.client-ip=40.93.194.5
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=nvidia.com
+Authentication-Results: smtp.subspace.kernel.org; spf=fail smtp.mailfrom=nvidia.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=huawei.com header.i=@huawei.com header.b="bqoyr/JO"
-dkim-signature: v=1; a=rsa-sha256; d=huawei.com; s=dkim;
-	c=relaxed/relaxed; q=dns/txt;
-	h=From;
-	bh=o9D5fRtH3QAqxDBqXLVuznNvMK63AIagwhteBwftcZg=;
-	b=bqoyr/JOLinj/NxB1k4HYBv5W4jBhKI6E0PzUCcD/RrKRJnl2BlVAncw+Pom55gYmH8TLyt6O
-	VxYKBA0IkiOsuAAbu8r9CWjMY9KrQ/UpT5abyauF0akKx9dd7bucbmlLYKIvt5LAIeZ8R8K/phR
-	aNyo/kmJnvmHb+AGX9EtScw=
-Received: from mail.maildlp.com (unknown [172.19.163.163])
-	by canpmsgout08.his.huawei.com (SkyGuard) with ESMTPS id 4gl4zL67WnzmV6s;
-	Tue, 23 Jun 2026 21:04:46 +0800 (CST)
-Received: from dggemv712-chm.china.huawei.com (unknown [10.1.198.32])
-	by mail.maildlp.com (Postfix) with ESMTPS id D7FC540575;
-	Tue, 23 Jun 2026 21:13:51 +0800 (CST)
-Received: from kwepemq100007.china.huawei.com (7.202.195.175) by
- dggemv712-chm.china.huawei.com (10.1.198.32) with Microsoft SMTP Server
- (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
- 15.2.1544.11; Tue, 23 Jun 2026 21:13:50 +0800
-Received: from [10.159.167.44] (10.159.167.44) by
- kwepemq100007.china.huawei.com (7.202.195.175) with Microsoft SMTP Server
- (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
- 15.2.1544.11; Tue, 23 Jun 2026 21:13:49 +0800
-Message-ID: <f617a2ed-6432-43ba-8795-a36a82ea0bf5@huawei.com>
-Date: Tue, 23 Jun 2026 21:13:49 +0800
+	dkim=pass (2048-bit key) header.d=Nvidia.com header.i=@Nvidia.com header.b="aXm3DvzI"
+ARC-Seal: i=1; a=rsa-sha256; s=arcselector10001; d=microsoft.com; cv=none;
+ b=YgfU/rDsy0uRqUPxuqc2ykqYJu3t4LkX5/cfJE9X0oGnZCAuAgsfIrxVlpeO6QLulMynm3Auh64B38yBv/ePl++Zl3jkw0FSEHE9Y310mFsQ7GDjfMtya6jM9e96eXboJJqTSCXNng5aUGsqOkLjqbQZI2qXej/POty/pDWuc5usW5JNF6aBHhAAbao82Jb6+Gvba+6wjEYUNk/eRxreS9flya0R459FWm4csju4BIZvNQHGc5/H4HSEeJVyaxk8q9HyVjXiGHHLyviIGh9saZYton//YX+YBkqpCg7oS1E3vJ5N/H8UUxeIumNh91jWiI+/pBU+HrElTxvMtcRd7w==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com;
+ s=arcselector10001;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
+ bh=AemZ3CJ2nt/gY6NgQauj3Q8sgOT6omAA12niy+3H6w8=;
+ b=jrVvZjdGH0FCkjF7ZF2hmR+UTdSJdcLsF4kt5dpNoTqV18p040Z/psIGHPiXL/KTaBiA90JTAnYK+lwZRkJoHUlRCaRbDNmRJUhv9Vo+cqrYxr8j/p8js+FhPfi8bB29CECP5qZLXxXXBTqFw5VB1t15PWKgiqnv/RbFpqUJ4G8RNOKp0l3Kpq+OJMWpctNJq53OBFYRds7BstT76B9VLzCGLHXuQ0nilzMg4vpt6eZBFT1e6y2EpIgQ+n5hB5w+z6Yng1Kw/njE5XFlHdIotQfmB1R6HRT2PlFNZFdrXo932ruGxQnGtvWnDQaqmksg0uSXB2LiD2eFmJjAhDmd1Q==
+ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
+ smtp.mailfrom=nvidia.com; dmarc=pass action=none header.from=nvidia.com;
+ dkim=pass header.d=nvidia.com; arc=none
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=Nvidia.com;
+ s=selector2;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
+ bh=AemZ3CJ2nt/gY6NgQauj3Q8sgOT6omAA12niy+3H6w8=;
+ b=aXm3DvzIzKcuFQsbFPO7Sv1VcLiuZXL6izHNH8o3ZtmAxPoYIEukPfwDH2qf7YmqwbBi/Um0bboCLEzdrNwMvr9j1Cul3NHPc6i5Izx9RMti0MM2LedeXVjFAL3Q7GSJ8Bd/HExaGlklKrHNl2tZ/fMQs/311RqIJmE4HxSC5OVl8Qe1C+E+/xte0iH6vpokroJRn2KPI1yWPVfcyu3BgPgU/z3hwhb44dL1YDYsR8qpMgBoRcGHaOe+uyG2HLpFDg/ShJHsI57+KmEs+IB71MTdQmF2JaMVFj9+RokHUDtnGhOWaEARG6PjP7Ccx+/BqBLzg0bHSCj2v3CWJq8B+Q==
+Authentication-Results: dkim=none (message not signed)
+ header.d=none;dmarc=none action=none header.from=nvidia.com;
+Received: from CH0PR12MB8488.namprd12.prod.outlook.com (2603:10b6:610:18d::18)
+ by MW4PR12MB7465.namprd12.prod.outlook.com (2603:10b6:303:212::18) with
+ Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.21.139.20; Tue, 23 Jun
+ 2026 13:40:47 +0000
+Received: from CH0PR12MB8488.namprd12.prod.outlook.com
+ ([fe80::c565:c0e5:2c8b:c315]) by CH0PR12MB8488.namprd12.prod.outlook.com
+ ([fe80::c565:c0e5:2c8b:c315%5]) with mapi id 15.21.0159.012; Tue, 23 Jun 2026
+ 13:40:45 +0000
+Date: Tue, 23 Jun 2026 15:40:40 +0200
+From: Thierry Reding <treding@nvidia.com>
+To: Thomas Zimmermann <tzimmermann@suse.de>
+Cc: javierm@redhat.com, maarten.lankhorst@linux.intel.com, 
+	mripard@kernel.org, airlied@gmail.com, simona@ffwll.ch, rayyan@ansari.sh, 
+	dri-devel@lists.freedesktop.org, sashiko-reviews@lists.linux.dev, 
+	Sashiko <sashiko-bot@kernel.org>
+Subject: Re: [PATCH v2 5/6] drm/sysfb: simpledrm: Validate mmap size against
+ framebuffer size
+Message-ID: <ajqMoKhDehM7ejGy@orome>
+X-NVConfidentiality: public
+References: <20260622132433.722823-1-tzimmermann@suse.de>
+ <20260622132433.722823-6-tzimmermann@suse.de>
+ <ajleu0THc75Ex7uN@orome>
+ <d162a14b-7432-4d64-9f21-78a1150f9e0c@suse.de>
+Content-Type: multipart/signed; micalg=pgp-sha512;
+	protocol="application/pgp-signature"; boundary="lgywciro6k7wia4r"
+Content-Disposition: inline
+In-Reply-To: <d162a14b-7432-4d64-9f21-78a1150f9e0c@suse.de>
+X-ClientProxiedBy: BE1P281CA0398.DEUP281.PROD.OUTLOOK.COM
+ (2603:10a6:b10:80::14) To CH0PR12MB8488.namprd12.prod.outlook.com
+ (2603:10b6:610:18d::18)
 Precedence: bulk
 X-Mailing-List: sashiko-reviews@lists.linux.dev
 List-Id: <sashiko-reviews.lists.linux.dev>
 List-Subscribe: <mailto:sashiko-reviews+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:sashiko-reviews+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v4 6/6] drm/hibmc: Use gem-shmem with shadow-plane helpers
- for memory management
-To: Thomas Zimmermann <tzimmermann@suse.de>, <tiantao6@hisilicon.com>,
-	<kong.kongxinwei@hisilicon.com>, <maarten.lankhorst@linux.intel.com>,
-	<mripard@kernel.org>, <airlied@gmail.com>, <simona@ffwll.ch>
-CC: <dri-devel@lists.freedesktop.org>, <sashiko-reviews@lists.linux.dev>,
-	"Liangjian(Jim,Kunpeng Solution Development Dept)" <liangjian010@huawei.com>,
-	Chenjianmin <chenjianmin@huawei.com>, "fengsheng (A)"
-	<fengsheng5@huawei.com>, <shiyongbang@huawei.com>
-References: <20260618123142.92298-1-tzimmermann@suse.de>
- <20260618123142.92298-7-tzimmermann@suse.de>
- <368398d6-e4a0-42a2-9226-1200b783bd1e@huawei.com>
- <6fe9c03a-4104-4949-9e9c-af750b360e09@suse.de>
-From: Yongbang Shi <shiyongbang@huawei.com>
-In-Reply-To: <6fe9c03a-4104-4949-9e9c-af750b360e09@suse.de>
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: 8bit
-X-ClientProxiedBy: kwepems200001.china.huawei.com (7.221.188.67) To
- kwepemq100007.china.huawei.com (7.202.195.175)
+X-MS-PublicTrafficType: Email
+X-MS-TrafficTypeDiagnostic: CH0PR12MB8488:EE_|MW4PR12MB7465:EE_
+X-MS-Office365-Filtering-Correlation-Id: 6b84c8ac-cdf4-44aa-da10-08ded12d0729
+X-MS-Exchange-SenderADCheck: 1
+X-MS-Exchange-AntiSpam-Relay: 0
+X-Microsoft-Antispam:
+	BCL:0;ARA:13230040|23010399003|366016|10070799003|7416014|1800799024|376014|18002099003|22082099003|4143699003|56012099006|11063799006|6133799003;
+X-Microsoft-Antispam-Message-Info:
+	d7EMq42JMkrFqutuCLjKwSK74YbU7h3SbcOrFgXLb6aNlceUZ2gFC15fZpfPkCP9cQ1l3Bc7DR5x//hRXL8dK1MfErNf/iWQM6G0gvvgPDd7phsVJTZsQd3VCsb7hK030QPqLO3mqzbRzoL3R9m40NBxCyDhcoXIvGyGqm4ei5wdl9h8AlJrC1gh/kbGjlPb1GoC8tfFNnPjcXp19EdKW2iEVw3o7bV5X7FQKkYS0e22iaEOE00o7WxQusanl+pg3D5k6usDiNJpC64YPoYSgP6tC78b9Jo4NdrJl+bL10EYwgvO0boVBjGm7w8HYvySnDQGcU70BgDBstnYPaTS/2i6KeRx8/NmWgaMyfA26erVXYHP9afZJHim9uwW//hG8VoDiiu+A2dzPtg1ZMdQxEadA3TsVfauDLZa/z5QEFOaMtG/uhmCw+NCFJxCjFhgni6hDqiB55TnBnx25mfOwtGSRrD7JWMv9V1eJZevydCCCg774GNLt2GJfut4cyN5uL/IrJILpNfFVc3sYzqv4Ry9vzYCFOp4qbGjrUMdYj5kbyQSsoFoedQVbM7KAzu6ESrh4lSt+iGu/i4xl4qTOUAfnAKibNASG2XuZL/4fv7EJcikUrhtz8w9wd0zYYwv/5Z0un2TkBoaz4P20lqrGkWqwyyLj/NMpGrHJk4O4SM=
+X-Forefront-Antispam-Report:
+	CIP:255.255.255.255;CTRY:;LANG:en;SCL:1;SRV:;IPV:NLI;SFV:NSPM;H:CH0PR12MB8488.namprd12.prod.outlook.com;PTR:;CAT:NONE;SFS:(13230040)(23010399003)(366016)(10070799003)(7416014)(1800799024)(376014)(18002099003)(22082099003)(4143699003)(56012099006)(11063799006)(6133799003);DIR:OUT;SFP:1101;
+X-MS-Exchange-AntiSpam-MessageData-ChunkCount: 2
+X-MS-Exchange-AntiSpam-MessageData-0:
+	=?us-ascii?Q?dvRwZ54LX2Rxtn5a9XMQ5kg5BvlwarS+Abw0FVeCaxmaqYk2Hf9/bq6vPD+G?=
+ =?us-ascii?Q?viPljrxTlC6JMYxJL39HtBwldKY4HZkWwSuLoLLQOtK5sGPhkAzxSA74fi+E?=
+ =?us-ascii?Q?gfprfHdOqI9RyfbrJJS7SFxdFlPGPGQvDwUwuYnIjNRCc7mIzSdLjcItAhfP?=
+ =?us-ascii?Q?nzfgUyr46oH22rwSDGFvcTt37a7Pecc+eC5Z8z/UZsPIRN8kZA8ryU7JcPHN?=
+ =?us-ascii?Q?ZhoAqwzdBx3S2RETMKQfs4pXYK/0l1hzBg3XcktAZA8IwbNSt4V0zjyD1nQo?=
+ =?us-ascii?Q?EHXL6SdQedaoKlCEqXu7AHGqbOVb/m7HdelT1BlryqPqi7rYr7G7mOMT8leI?=
+ =?us-ascii?Q?xwD2DgD5tFIpBhLDTp6MCabM4m0ghJKwNxJnJCIJj9QvvtT5uBrtmvmhzkhw?=
+ =?us-ascii?Q?USUdDTPrWL3LxlUzKIGfcizYIuEyoTcYvfaw1HTX6n4UiP7+r0DmSyRRAsOQ?=
+ =?us-ascii?Q?ZnK2WZWaOfbKI3C2tV9GYGs4EvknzowWGTX2kfsCXXsWy8cAHTx9Smb1MWKk?=
+ =?us-ascii?Q?qkYyp/GTF/gmElQD3Zt+IvZSq7AS94Lj6IH7dshCL1ldfQ4BUC+MbCCW0/53?=
+ =?us-ascii?Q?xwZXa8aRSJK01rj8l70ORjjGj/m85QfZj5vVX6oF9smrDFRCRciNEAjSCgRe?=
+ =?us-ascii?Q?Lz2uRxiHoT3EYbvtvG70OVGF11/CNcWyugl9Iv23n31cQsp0UDOKcbYMTsRm?=
+ =?us-ascii?Q?xV6R8O7AXIe5bZMSwrrkFzs9IDWDBN32oVR1Gwk/eZV7Ba4Lj07KXbyL3Mzg?=
+ =?us-ascii?Q?Vy2RdJE6HeGNMpka6nW3IVSF7ktirHggxdn03KjQAWZwIKO1w5EdJ9USCb8t?=
+ =?us-ascii?Q?TjHoFZlfFuxJ/oH0Zvy1gMHHbcZFz76bIP/Pte9zxNrMKn331zQsESR2KXjc?=
+ =?us-ascii?Q?aM4hPDFWCmuOfN4NfnmsBW4vDvBqqtk6wkqfI9bddeUQfJpQ9YrmrD5cSL9S?=
+ =?us-ascii?Q?cn7UPuq5c3EQMqYrnG58eAuufyg9b5al36Hpxqr3yec5ZUVRQK4774bcpgAt?=
+ =?us-ascii?Q?j0e9D9mmCb0PjFLKHZbOtrFy/tiAYbSofcE02md2zbrcXI0TfmAao895WFZN?=
+ =?us-ascii?Q?tCQlUeGfQqjZ7/7huVl00/ceIgEGboemRMY/CZHFt2h/fP0W75DS6xUDfCIy?=
+ =?us-ascii?Q?XXeULDBCcl/Yt6K2E3WUF/81LmEC+6dhursMUDYGC0M7sORqCAnoy9qDCQi8?=
+ =?us-ascii?Q?X6raONJ/AjEgD355x/wAUwIsBjW/OBdXggEDtOfszZN6iXBIbL+9yrdVB3rU?=
+ =?us-ascii?Q?i5p9AD14M20TcaeZ1ttLsezphH2UjjK4750z5ccWfMhRx45/wY9f0JTvdMGG?=
+ =?us-ascii?Q?Nfbc1yj/f/czuMfe/krmrAvKpqlm/D6/1ou7sXbNJ8QTHMQIFsM7PTKMCaPe?=
+ =?us-ascii?Q?1BzcFn1dvSLBq23j7OWNpUltZKygzS8L5ernlnJQG55wxZMFlWRaQFKuitMb?=
+ =?us-ascii?Q?VthI7sgd7ItWyE3ZnxcfNxVfxB9QnB/iK/QUtlgQ+IJVEs4DHYmlYcvjkSSA?=
+ =?us-ascii?Q?T0vjbE+kRXxJdvz1AwF9t8WlaGtwnVSA/APMUbYssI75YDmdAXP8Q/RYxUMJ?=
+ =?us-ascii?Q?LFyRbarGPQyN0a7hnLt6AetrFkaHYURt5TcoulCgDQy8Och71lYnxO0F1KgL?=
+ =?us-ascii?Q?8JHmFU6eUHTWTnh1HhWJR5/3fq3kLSmL2625ZF31y2tfPwGj728hg1kV/TvL?=
+ =?us-ascii?Q?xp1vKe1NW+Jtm+MK18kDMgfwNjivlzgAbrIFvm60oCBjisHfMsbUi0WpvyYC?=
+ =?us-ascii?Q?68APVhM9VBvWt/E33h7lPf4LVtPM4gpHNoJ+XNuanZTvjZMyeSElLhYvIhP2?=
+X-MS-Exchange-AntiSpam-MessageData-1: AZKRx05hbO5SRg==
+X-OriginatorOrg: Nvidia.com
+X-MS-Exchange-CrossTenant-Network-Message-Id: 6b84c8ac-cdf4-44aa-da10-08ded12d0729
+X-MS-Exchange-CrossTenant-AuthSource: CH0PR12MB8488.namprd12.prod.outlook.com
+X-MS-Exchange-CrossTenant-AuthAs: Internal
+X-MS-Exchange-CrossTenant-OriginalArrivalTime: 23 Jun 2026 13:40:45.8978
+ (UTC)
+X-MS-Exchange-CrossTenant-FromEntityHeader: Hosted
+X-MS-Exchange-CrossTenant-Id: 43083d15-7273-40c1-b7db-39efd9ccc17a
+X-MS-Exchange-CrossTenant-MailboxType: HOSTED
+X-MS-Exchange-CrossTenant-UserPrincipalName: 4Vti8ox35ryWfkVcvFfX/XO47QpyPXVJj6I8e0qQ0oYWT5ijqyE++OKReVoYic8fZd8DKy6QqpbGJ2YaumE6XQ==
+X-MS-Exchange-Transport-CrossTenantHeadersStamped: MW4PR12MB7465
 
+--lgywciro6k7wia4r
+Content-Type: text/plain; protected-headers=v1; charset=us-ascii
+Content-Disposition: inline
+Content-Transfer-Encoding: quoted-printable
+Subject: Re: [PATCH v2 5/6] drm/sysfb: simpledrm: Validate mmap size against
+ framebuffer size
+MIME-Version: 1.0
+
+On Tue, Jun 23, 2026 at 11:02:39AM +0200, Thomas Zimmermann wrote:
 > Hi
-> 
-> Am 23.06.26 um 09:16 schrieb Yongbang Shi:
->>> Replace the gem-vram memory manager with gem-shmem. Makes the driver more
->>> robust and enables dma-buf sharing with other hardware.
->>>
->>> Gem-vram was created from various drivers that used TTM for their memory
->>> management. All these drivers have meanwhile been converted to gem-shmem.
->>> Using gem-vram is deprecated because it has several problems.
->>>
->>> * TTM requires significant overcommitment of video memory for reliable
->>> page flips. There needs to be 3 times the size of the largest possible
->>> framebuffer available or page flips can fail. This leaves the display
->>> dark without further warning. Hibmc hardware with 32 MiB and a maximum
->>> framebuffer size of 1920x2000 is at the limit.
->>>
->>> * No dma-buf sharing without GTT support. Neither gem-vram nor hibmc
->>> hardware support a GTT address space. This is required to share buffers
->>> with other devices via dma-buf interfaces.
->>>
->>> * TTM requires hardware-accelerated rendering into video memory for
->>> optimal results. As hibmc hardware cannot do this, hibmc renders in
->>> system memory and copies the result to video memory. This can be more
->>> effectively implemented with gem-shmem and DRM's shadow-plane helpers.
->>>
->>> Converting hibmc to gem-shmem and shadow-plane helpers.
->>>
->>> * Replace gem-vram entry points in struct drm_driver with gem-shmem
->>> equivalents. This makes the driver allocate struct drm_gem_shmem_object
->>> for its buffers.
->>>
->>> * Use DRM_GEM_SHADOW_*_PLANE for its plane funcs and plane-helper
->>> funcs. The shadow-plane helpers map a plane's gem buffer objects into
->>> kernel address space during a page flip, so that atomic_update can
->>> copy them to video memory.
->>>
->>> * Handle framebuffer damage in hibmc_plane_atomic_update(). This updates
->>> video memory from the plane's framebuffer. It automatically synchronizes
->>> shared buffers with other devices. Create the framebuffer with
->>> drm_gem_fb_create_with_dirty() to trigger the update on each page flip.
->>>
->>> * Initialize the plane with drm_plane_enable_fb_damage_clips() to limit
->>> the damage updates to the framebuffer areas that changed. We don't want
->>> to do a full-buffer memcpy if only a small area has changed.
->>>
->>> * Test display modes against the available video memory in
->>> hibmc_mode_config_mode_valid(). We only want to announce display modes
->>> that fit into display memory.
->>>
->>> * Map the display memory itself into kernel address space.
->>>
->>> * Do not set drm_mode_config.prefer_shadow. This would advise user space
->>> to install a shadow buffer. But with gem-shmem, the gem buffer object
->>> already acts as a shadow buffer for video memory.
->>>
->>> We use these patterns in many other drivers with similar limitation as
->>> hibmc and its hardware. With these changes in place, hibmc is more robust
->>> and better integrated into the overall DRM framework.
->>>
->>> v3:
->>> - fix coding style
->>> v2:
->>> - do not select TTM symbols
->>>
->>> Signed-off-by: Thomas Zimmermann <tzimmermann@suse.de>
->>> ---
->>>   drivers/gpu/drm/drm_gem_shmem_helper.c        | 22 +++++--
->>>   drivers/gpu/drm/hisilicon/hibmc/Kconfig       |  4 +-
->>>   .../gpu/drm/hisilicon/hibmc/hibmc_drm_de.c    | 38 ++++++++----
->>>   .../gpu/drm/hisilicon/hibmc/hibmc_drm_drv.c   | 62 ++++++++++++++-----
->>>   .../gpu/drm/hisilicon/hibmc/hibmc_drm_drv.h   |  5 ++
->>>   include/drm/drm_gem_shmem_helper.h            |  4 ++
->>>   6 files changed, 100 insertions(+), 35 deletions(-)
->>>
->>> diff --git a/drivers/gpu/drm/drm_gem_shmem_helper.c b/drivers/gpu/drm/drm_gem_shmem_helper.c
->>> index c989459eb215..22ec52e2ffb8 100644
->>> --- a/drivers/gpu/drm/drm_gem_shmem_helper.c
->>> +++ b/drivers/gpu/drm/drm_gem_shmem_helper.c
->>> @@ -473,10 +473,23 @@ void drm_gem_shmem_vunmap_locked(struct drm_gem_shmem_object *shmem,
->>>   }
->>>   EXPORT_SYMBOL_GPL(drm_gem_shmem_vunmap_locked);
->>>   -static int
->>> -drm_gem_shmem_create_with_handle(struct drm_file *file_priv,
->>> -                 struct drm_device *dev, size_t size,
->>> -                 uint32_t *handle)
->>> +/**
->>> + * drm_gem_shmem_create_with_handle - Allocate an object with the given size and
->>> + *    returns a GEM handle
->>> + * @file_priv: DRM file structure to create the dumb buffer for
->>> + * @dev: DRM device
->>> + * @size: Size of the object to allocate
->>> + * @handle: Returns the GEM handle on success
->>> + *
->>> + * Allocates an shmem GEM buffer using drm_gem_shmem_create() and returns
->>> + * a GEM handle to it.
->>> + *
->>> + * Returns:
->>> + * Zero on success, or an error code otherwise.
->>> + */
->>> +int drm_gem_shmem_create_with_handle(struct drm_file *file_priv,
->>> +                     struct drm_device *dev, size_t size,
->>> +                     uint32_t *handle)
->>>   {
->>>       struct drm_gem_shmem_object *shmem;
->>>       int ret;
->>> @@ -495,6 +508,7 @@ drm_gem_shmem_create_with_handle(struct drm_file *file_priv,
->>>         return ret;
->>>   }
->>> +EXPORT_SYMBOL_GPL(drm_gem_shmem_create_with_handle);
->>>     /* Update madvise status, returns true if not purged, else
->>>    * false or -errno.
->>> diff --git a/drivers/gpu/drm/hisilicon/hibmc/Kconfig b/drivers/gpu/drm/hisilicon/hibmc/Kconfig
->>> index d1f3f5793f34..adf4516bf8f6 100644
->>> --- a/drivers/gpu/drm/hisilicon/hibmc/Kconfig
->>> +++ b/drivers/gpu/drm/hisilicon/hibmc/Kconfig
->>> @@ -5,10 +5,8 @@ config DRM_HISI_HIBMC
->>>       select DRM_CLIENT_SELECTION
->>>       select DRM_DISPLAY_HELPER
->>>       select DRM_DISPLAY_DP_HELPER
->>> +    select DRM_GEM_SHMEM_HELPER
->>>       select DRM_KMS_HELPER
->>> -    select DRM_VRAM_HELPER
->>> -    select DRM_TTM
->>> -    select DRM_TTM_HELPER
->>>       select I2C
->>>       select I2C_ALGOBIT
->>>       help
->>> diff --git a/drivers/gpu/drm/hisilicon/hibmc/hibmc_drm_de.c b/drivers/gpu/drm/hisilicon/hibmc/hibmc_drm_de.c
->>> index fe73b365e547..b4ab53db1c08 100644
->>> --- a/drivers/gpu/drm/hisilicon/hibmc/hibmc_drm_de.c
->>> +++ b/drivers/gpu/drm/hisilicon/hibmc/hibmc_drm_de.c
->>> @@ -15,8 +15,10 @@
->>>     #include <drm/drm_atomic.h>
->>>   #include <drm/drm_atomic_helper.h>
->>> +#include <drm/drm_damage_helper.h>
->>>   #include <drm/drm_fourcc.h>
->>> -#include <drm/drm_gem_vram_helper.h>
->>> +#include <drm/drm_gem_atomic_helper.h>
->>> +#include <drm/drm_gem_framebuffer_helper.h>
->>>   #include <drm/drm_vblank.h>
->>>     #include "hibmc_drm_drv.h"
->>> @@ -100,22 +102,35 @@ static int hibmc_plane_atomic_check(struct drm_plane *plane,
->>>   static void hibmc_plane_atomic_update(struct drm_plane *plane,
->>>                         struct drm_atomic_commit *state)
->>>   {
->>> +    struct hibmc_drm_private *priv = to_hibmc_drm_private(plane->dev);
->>>       struct drm_plane_state *new_state = drm_atomic_get_new_plane_state(state, plane);
->>> +    struct drm_shadow_plane_state *shadow_plane_state = to_drm_shadow_plane_state(new_state);
->>>       struct drm_framebuffer *fb = new_state->fb;
->>> +    struct drm_plane_state *old_state = drm_atomic_get_old_plane_state(state, plane);
->>> +    u32 gpu_addr = 0;
->>>       u32 reg;
->>> -    s64 gpu_addr = 0;
->>>       u32 line_l;
->>> -    struct hibmc_drm_private *priv = to_hibmc_drm_private(plane->dev);
->>> -    struct drm_gem_vram_object *gbo;
->>>         if (!fb)
->>>           return;
->>>   -    gbo = drm_gem_vram_of_gem(fb->obj[0]);
->>> +    if (drm_gem_fb_begin_cpu_access(fb, DMA_FROM_DEVICE) == 0) {
->>> +        struct drm_rect damage;
->>> +        struct drm_atomic_helper_damage_iter iter;
->>> +
->>> +        drm_atomic_helper_damage_iter_init(&iter, old_state, new_state);
->>> +        drm_atomic_for_each_plane_damage(&iter, &damage) {
->>> +            struct iosys_map dst[DRM_FORMAT_MAX_PLANES] = {
->>> +                IOSYS_MAP_INIT_VADDR_IOMEM(priv->vram + gpu_addr),
->>> +            };
->>>   -    gpu_addr = drm_gem_vram_offset(gbo);
->>> -    if (WARN_ON_ONCE(gpu_addr < 0))
->>> -        return; /* Bug: we didn't pin the BO to VRAM in prepare_fb. */
->>> +            iosys_map_incr(&dst[0],
->>> +                       drm_fb_clip_offset(fb->pitches[0], fb->format, &damage));
->>> +            drm_fb_memcpy(dst, fb->pitches, shadow_plane_state->data, fb, &damage);
->>> +        }
->>> +
->>> +        drm_gem_fb_end_cpu_access(fb, DMA_FROM_DEVICE);
->>> +    }
->>>         writel(gpu_addr, priv->mmio + HIBMC_CRT_FB_ADDRESS);
->>>   @@ -149,13 +164,11 @@ static const struct drm_plane_funcs hibmc_plane_funcs = {
->>>       .update_plane    = drm_atomic_helper_update_plane,
->>>       .disable_plane    = drm_atomic_helper_disable_plane,
->>>       .destroy = drm_plane_cleanup,
->>> -    .reset = drm_atomic_helper_plane_reset,
->>> -    .atomic_duplicate_state = drm_atomic_helper_plane_duplicate_state,
->>> -    .atomic_destroy_state = drm_atomic_helper_plane_destroy_state,
->>> +    DRM_GEM_SHADOW_PLANE_FUNCS,
->>>   };
->>>     static const struct drm_plane_helper_funcs hibmc_plane_helper_funcs = {
->>> -    DRM_GEM_VRAM_PLANE_HELPER_FUNCS,
->>> +    DRM_GEM_SHADOW_PLANE_HELPER_FUNCS,
->>>       .atomic_check = hibmc_plane_atomic_check,
->>>       .atomic_update = hibmc_plane_atomic_update,
->>>   };
->>> @@ -515,6 +528,7 @@ int hibmc_de_init(struct hibmc_drm_private *priv)
->>>       }
->>>         drm_plane_helper_add(plane, &hibmc_plane_helper_funcs);
->>> +    drm_plane_enable_fb_damage_clips(plane);
->>>         ret = drm_crtc_init_with_planes(dev, crtc, plane,
->>>                       NULL, &hibmc_crtc_funcs, NULL);
->>> diff --git a/drivers/gpu/drm/hisilicon/hibmc/hibmc_drm_drv.c b/drivers/gpu/drm/hisilicon/hibmc/hibmc_drm_drv.c
->>> index 55d175028c46..4d85c89f3f88 100644
->>> --- a/drivers/gpu/drm/hisilicon/hibmc/hibmc_drm_drv.c
->>> +++ b/drivers/gpu/drm/hisilicon/hibmc/hibmc_drm_drv.c
->>> @@ -19,9 +19,10 @@
->>>   #include <drm/clients/drm_client_setup.h>
->>>   #include <drm/drm_atomic_helper.h>
->>>   #include <drm/drm_drv.h>
->>> -#include <drm/drm_fbdev_ttm.h>
->>> +#include <drm/drm_dumb_buffers.h>
->>> +#include <drm/drm_fbdev_shmem.h>
->>>   #include <drm/drm_gem_framebuffer_helper.h>
->>> -#include <drm/drm_gem_vram_helper.h>
->>> +#include <drm/drm_gem_shmem_helper.h>
->>>   #include <drm/drm_managed.h>
->>>   #include <drm/drm_module.h>
->>>   #include <drm/drm_vblank.h>
->>> @@ -72,7 +73,13 @@ static irqreturn_t hibmc_dp_interrupt(int irq, void *arg)
->>>   static int hibmc_dumb_create(struct drm_file *file, struct drm_device *dev,
->>>                    struct drm_mode_create_dumb *args)
->>>   {
->>> -    return drm_gem_vram_fill_create_dumb(file, dev, 0, 128, args);
->>> +    int ret;
->>> +
->>> +    ret = drm_mode_size_dumb(dev, args, SZ_128, 0);
->>> +    if (ret)
->>> +        return ret;
->>> +
->>> +    return drm_gem_shmem_create_with_handle(file, dev, args->size, &args->handle);
->>>   }
->>>     static const struct drm_driver hibmc_driver = {
->>> @@ -82,10 +89,9 @@ static const struct drm_driver hibmc_driver = {
->>>       .desc            = "hibmc drm driver",
->>>       .major            = 1,
->>>       .minor            = 0,
->>> -    .debugfs_init        = drm_vram_mm_debugfs_init,
->>> -    .dumb_create            = hibmc_dumb_create,
->>> -    .dumb_map_offset        = drm_gem_ttm_dumb_map_offset,
->>> -    DRM_FBDEV_TTM_DRIVER_OPS,
->>> +    .gem_prime_import    = drm_gem_shmem_prime_import_no_map,
->>> +    .dumb_create        = hibmc_dumb_create,
->>> +    DRM_FBDEV_SHMEM_DRIVER_OPS,
->>>   };
->>>     static int __maybe_unused hibmc_pm_suspend(struct device *dev)
->>> @@ -107,6 +113,27 @@ static const struct dev_pm_ops hibmc_pm_ops = {
->>>                   hibmc_pm_resume)
->>>   };
->>>   +static enum drm_mode_status hibmc_mode_config_mode_valid(struct drm_device *dev,
->>> +                             const struct drm_display_mode *mode)
->>> +{
->>> +    const struct drm_format_info *info =
->>> +        drm_get_format_info(dev, DRM_FORMAT_XRGB8888, DRM_FORMAT_MOD_LINEAR);
->>> +    struct hibmc_drm_private *priv = to_hibmc_drm_private(dev);
->>> +    unsigned long max_fb_size = priv->vram_size;
->>> +    u64 pitch;
->>> +
->>> +    if (drm_WARN_ON_ONCE(dev, !info))
->>> +        return MODE_ERROR; /* driver bug */
->>> +
->>> +    pitch = drm_format_info_min_pitch(info, 0, mode->hdisplay);
->>> +    if (!pitch)
->>> +        return MODE_BAD_WIDTH;
->>> +    else if (pitch > max_fb_size / mode->vdisplay)
->>> +        return MODE_MEM;
->>> +
->>> +    return MODE_OK;
->>> +}
->>> +
->>>   static struct drm_framebuffer *hibmc_mode_config_fb_create(struct drm_device *dev,
->>>                                  struct drm_file *file_priv,
->>>                                  const struct drm_format_info *info,
->>> @@ -119,11 +146,11 @@ static struct drm_framebuffer *hibmc_mode_config_fb_create(struct drm_device *de
->>>               return ERR_PTR(-EINVAL);
->>>       }
->>>   -    return drm_gem_fb_create(dev, file_priv, info, mode_cmd);
->>> +    return drm_gem_fb_create_with_dirty(dev, file_priv, info, mode_cmd);
->>>   }
->>>     static const struct drm_mode_config_funcs hibmc_mode_funcs = {
->>> -    .mode_valid = drm_vram_helper_mode_valid,
->>> +    .mode_valid = hibmc_mode_config_mode_valid,
->>>       .atomic_check = drm_atomic_helper_check,
->>>       .atomic_commit = drm_atomic_helper_commit,
->>>       .fb_create = hibmc_mode_config_fb_create,
->>> @@ -146,7 +173,6 @@ static int hibmc_kms_init(struct hibmc_drm_private *priv)
->>>       dev->mode_config.max_height = 1200;
->>>         dev->mode_config.preferred_depth = 24;
->>> -    dev->mode_config.prefer_shadow = 1;
->>>         dev->mode_config.funcs = (void *)&hibmc_mode_funcs;
->>>   @@ -351,18 +377,22 @@ static int hibmc_load(struct drm_device *dev)
->>>   {
->>>       struct pci_dev *pdev = to_pci_dev(dev->dev);
->>>       struct hibmc_drm_private *priv = to_hibmc_drm_private(dev);
->>> +    resource_size_t vram_base, vram_size;
->>>       int ret;
->>>         ret = hibmc_hw_init(priv);
->>>       if (ret)
->>>           return ret;
->>>   -    ret = drmm_vram_helper_init(dev, pci_resource_start(pdev, 0),
->>> -                    pci_resource_len(pdev, 0));
->>> -    if (ret) {
->>> -        drm_err(dev, "Error initializing VRAM MM; %d\n", ret);
->>> -        return ret;
->>> -    }
->>> +    vram_base = pci_resource_start(pdev, 0);
->>> +    vram_size = pci_resource_len(pdev, 0);
->>> +
->>> +    priv->vram = devm_ioremap_wc(dev->dev, vram_base, vram_size);
->>> +    if (!priv->vram)
->>> +        return -ENOMEM;
->>> +
->>> +    priv->vram_base = vram_base;
->>> +    priv->vram_size = vram_size;
->>>         ret = hibmc_kms_init(priv);
->>>       if (ret)
->>> diff --git a/drivers/gpu/drm/hisilicon/hibmc/hibmc_drm_drv.h b/drivers/gpu/drm/hisilicon/hibmc/hibmc_drm_drv.h
->>> index cd3a3fca1fe6..dce8572bf63e 100644
->>> --- a/drivers/gpu/drm/hisilicon/hibmc/hibmc_drm_drv.h
->>> +++ b/drivers/gpu/drm/hisilicon/hibmc/hibmc_drm_drv.h
->>> @@ -38,6 +38,11 @@ struct hibmc_drm_private {
->>>       /* hw */
->>>       void __iomem   *mmio;
->>>   +    /* vram */
->>> +    void __iomem *vram;
->>> +    resource_size_t    vram_base;
->>> +    resource_size_t    vram_size;
->>> +
->>>       /* drm */
->>>       struct drm_device dev;
->>>       struct drm_plane primary_plane;
->>> diff --git a/include/drm/drm_gem_shmem_helper.h b/include/drm/drm_gem_shmem_helper.h
->>> index b2c23af628e1..bcbb92f3fe9b 100644
->>> --- a/include/drm/drm_gem_shmem_helper.h
->>> +++ b/include/drm/drm_gem_shmem_helper.h
->>> @@ -142,6 +142,10 @@ struct sg_table *drm_gem_shmem_get_pages_sgt(struct drm_gem_shmem_object *shmem)
->>>   void drm_gem_shmem_print_info(const struct drm_gem_shmem_object *shmem,
->>>                     struct drm_printer *p, unsigned int indent);
->>>   +int drm_gem_shmem_create_with_handle(struct drm_file *file_priv,
->>> +                     struct drm_device *dev, size_t size,
->>> +                     uint32_t *handle);
->>> +
->>>   extern const struct vm_operations_struct drm_gem_shmem_vm_ops;
->>>     /*
->>
->> Reviewed-by: Yongbang Shi <shiyongbang@huawei.com>
-> 
-> Great, thanks a lot. This is the last r-b needed. Maybe I'll go over the series one more time or I'll merged it.
-> 
-> 
-> Sashiko had a number of comments that might be worth addressing in follow-up patches. Those two look more sever than
-> they are:
-> 
-> - [Critical] Missing bounds check on framebuffer size and pitch allows an out-of-bounds write into the memory mapped
-> VRAM. The largest accepted framebuffer is 1920*1200*4 == ~9 MiB. And the minimum size of the video memory is 16 MiB ,
-> right? So we should be safe. Addressing this issue might later be worth a general series that goes into all of the
-> related drivers.
+>=20
+> Am 22.06.26 um 18:13 schrieb Thierry Reding:
+> > On Mon, Jun 22, 2026 at 03:19:39PM +0200, Thomas Zimmermann wrote:
+> > > The size of the mmap'ed framebuffer could be smaller than the minimum
+> > > required framebuffer size. Validate the resource size against the
+> > > framebuffer size.
+> > >=20
+> > > Buggy firmware that triggers this check should be fixed up with a qui=
+rk
+> > > on a case-by-case base.
+> > >=20
+> > > Signed-off-by: Thomas Zimmermann <tzimmermann@suse.de>
+> > > Suggested-by: Sashiko <sashiko-bot@kernel.org>
+> > > ---
+> > >   drivers/gpu/drm/sysfb/simpledrm.c | 25 +++++++++++++++++++++++++
+> > >   1 file changed, 25 insertions(+)
+> > >=20
+> > > diff --git a/drivers/gpu/drm/sysfb/simpledrm.c b/drivers/gpu/drm/sysf=
+b/simpledrm.c
+> > > index 76b9a3f5c4ef..a04f0c852ea4 100644
+> > > --- a/drivers/gpu/drm/sysfb/simpledrm.c
+> > > +++ b/drivers/gpu/drm/sysfb/simpledrm.c
+> > > @@ -6,6 +6,7 @@
+> > >   #include <linux/of_address.h>
+> > >   #include <linux/of_clk.h>
+> > >   #include <linux/of_reserved_mem.h>
+> > > +#include <linux/overflow.h>
+> > >   #include <linux/platform_data/simplefb.h>
+> > >   #include <linux/platform_device.h>
+> > >   #include <linux/pm.h>
+> > > @@ -624,6 +625,7 @@ static struct simpledrm_device *simpledrm_device_=
+create(struct drm_driver *drv,
+> > >   	u16 width_mm =3D 0, height_mm =3D 0;
+> > >   	struct device_node *panel_node;
+> > >   	const struct drm_format_info *format;
+> > > +	u64 size;
+> > >   	struct resource *res, *mem =3D NULL;
+> > >   	struct drm_plane *primary_plane;
+> > >   	struct drm_crtc *crtc;
+> > > @@ -704,6 +706,15 @@ static struct simpledrm_device *simpledrm_device=
+_create(struct drm_driver *drv,
+> > >   		}
+> > >   		stride =3D pitch;
+> > >   	}
+> > > +	if (check_mul_overflow(height, stride, &size)) {
+> > > +		drm_err(dev, "framebuffer size exceeds maximum\n");
+> > > +		return ERR_PTR(-EINVAL);
+> > > +	}
+> > > +	size =3D ALIGN(size, PAGE_SIZE);
+> > > +	if (size < PAGE_SIZE) {
+> > > +		drm_err(dev, "framebuffer alignment exceeds maximum\n");
+> > That error message doesn't make sense to me. Maybe "framebuffer
+> > alignment below minimum", or something along those lines?
+>=20
+> This tests that the align operation did not overflow size. The result wou=
+ld
+> then be 0. With the earlier patches limiting the height and stride and si=
+ze
+> being of u64, it's not possible any longer, I think. But testing it doesn=
+'t
+> really cost us much.
+>=20
+> What do you think of "aligned framebuffer size exceeds maximum"?
 
-Yes, it is safe for the hibmc driver. Currently, the video memory size for all our BMC chips is fixed at 32MB.
+Ah, I misunderstood what the code was doing. Yes, I think that message
+makes it a bit clearer what the error is.
 
->  - [High] Sleep in atomic context due to manual call of `drm_gem_fb_begin_cpu_access()` inside plane
-> atomic update. This is a false positive. The atomic update doesn't run in atomic context. It's named 'atomic' because
-> it's an all-or-nothing operation. Best regards Thomas
-> 
+Thierry
 
-Okay.
+--lgywciro6k7wia4r
+Content-Type: application/pgp-signature; name="signature.asc"
 
-Thanks,
-Yongbang.
+-----BEGIN PGP SIGNATURE-----
 
+iQIzBAABCgAdFiEEiOrDCAFJzPfAjcif3SOs138+s6EFAmo6jNgACgkQ3SOs138+
+s6H/3Q/+J+TRLyHm8l96R4hqKn2KI8CJs642d4VrLqpzUPFg1EZJYQ3+smlC+Fh0
+bJjg6tV5TD3aq3dqwqKEe9EZ9e4U6jNpYFtdMMhlcMYHdSAOjwWSjC/xoL67XTnw
+AOWHYNStmT88nLfhRxyUBuBZ1qleSx2/76LQajmkavkG8KhymjzjJHE7vAHyzRsJ
+7LqNrDm+y/0PfaQn7ZxVYZtB3vfb3WiN0u+KumxeFhhBmKxEK5eySxKL8ehcmR8g
+wPNvuAzRRY6+VxCDh1p6Mnu8fNXsvKbzyA/1dtwGxQTJzjo0yO1S7mCm4/hY5W0i
+bWR7OEGa7lOUHoB6mLEx62XytQaQRz0dgFja5JtUwm9TCDZBoIjfxyFRjsAEDak8
+1azm4jdzvRxFTXmTlLiOhD1UsHNKZ3emfQeCW27VjBW9hQzowC4cw+N9HINI5pr3
+hw9hiZ+KpEra/CNUtjd+mJfaOl2mzjzb0M2W3G5HRApFgcymeqNvT8n6aPOJj7qi
+/5GCG+Av+bKsmCx4E6Jgq91OdTLLZziv9wLO0E/xa9AupBg1UidapxQ7LkNAUkAm
+0ncQUZ5VnQp8U3qDLsNC87aesQdKh4Ef0pJIzd57tf4lW7j+xyRomwoZaDOfGU8F
+1L1sLEfvAHZ9oB7kZzAN9UTH45p8bQuRk8yKNhMztHh0hq7RwlA=
+=v9Tb
+-----END PGP SIGNATURE-----
 
->> Thanks,
->> Yongbang.
->>
-> 
-
+--lgywciro6k7wia4r--
