@@ -1,213 +1,188 @@
-Received: from MW6PR02CU001.outbound.protection.outlook.com (mail-westus2azon11012037.outbound.protection.outlook.com [52.101.48.37])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-dl1-f45.google.com (mail-dl1-f45.google.com [74.125.82.45])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5F8F138D688
-	for <sashiko-reviews@lists.linux.dev>; Tue, 23 Jun 2026 14:25:32 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=fail smtp.client-ip=52.101.48.37
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4A8C8346E56
+	for <sashiko-reviews@lists.linux.dev>; Tue, 23 Jun 2026 14:36:30 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=pass smtp.client-ip=74.125.82.45
 ARC-Seal:i=2; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1782224734; cv=fail; b=hdBGYRsFHHs0/63wR9MpU4em3XMnwNYJjQc77HaShOqjfyD4anLchmKcV1seDodkJmRKNPZKsGHHCXNRJ4249MROSf1uU0pdjsBFqlbpQg7xAc2pVh/sJbtQqV28n3gXNojn1jNl+JGbZoQHAGVKzGFOHMleAnCEoBOObLI1N68=
+	t=1782225392; cv=pass; b=eWH6K1k4TOFaSaC4TZ6OGXERn4B6LwRqrdwh+5gsXC8sZB4EUPVD0Ipf0c6mmEz6xcm++YVoBCcu2HVyAsV3zjXwV9yZer3+RM+GWMkWOU0wjRV1ERODzlmLhP/5V6xC+88Oaf/pEWfXzk+4pJ58MZCU19osZ+lsLBmODErqg+k=
 ARC-Message-Signature:i=2; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1782224734; c=relaxed/simple;
-	bh=2HnNQucv7NwOm9YiOfcmnkP4R+Y9tHp7FHh5dM5HdeI=;
-	h=Message-ID:Date:Subject:To:Cc:References:From:In-Reply-To:
-	 Content-Type:MIME-Version; b=G9PA9d7m9G3Jl6u0LDaAW9Hwmq62zHJipg0yGO4WEhknPfbD0wSMNyf9bbv7HuGL/qO4XLjAmyzVt44gqaej2/gU3cbSc49PJq+V413Q6Kks0Rg6qO3xn9p9/3kuwtaEks3WVOrV0zA4dr13Ml1/ZlRRd36oU5D4YKwZCuVCJpQ=
-ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=amd.com; spf=fail smtp.mailfrom=amd.com; dkim=pass (1024-bit key) header.d=amd.com header.i=@amd.com header.b=caewyW6J; arc=fail smtp.client-ip=52.101.48.37
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=amd.com
-Authentication-Results: smtp.subspace.kernel.org; spf=fail smtp.mailfrom=amd.com
+	s=arc-20240116; t=1782225392; c=relaxed/simple;
+	bh=/3EwYVse55XcLg2zXjtfzrzJAQ2yCF8sQYzT3W5N7/Y=;
+	h=From:In-Reply-To:References:MIME-Version:Date:Message-ID:Subject:
+	 To:Cc:Content-Type; b=tsCFqvzqumFh1SV2D9rg+OdP3cNeb/ANazF9YFZ1F4zxnI999XKYBonU1XwbziUMEhX25++ddHjYuXoy0Fc9fPff0Kj3kdLMS1TPLAwHCWwdzWb//h9uDezt8qVEihUYQpj4p1OPEdAg2UVRVEphx7AdOAkwE17v2A/oN0XYb+c=
+ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=google.com; spf=pass smtp.mailfrom=google.com; dkim=pass (2048-bit key) header.d=google.com header.i=@google.com header.b=UM6Vc7yb; arc=pass smtp.client-ip=74.125.82.45
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=google.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=google.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=amd.com header.i=@amd.com header.b="caewyW6J"
-ARC-Seal: i=1; a=rsa-sha256; s=arcselector10001; d=microsoft.com; cv=none;
- b=iFknbyk+HmsE9DHUDtClsoNKfDydFSgc1hrkYeSOAFho8pum5/dgo2IQDJAR4sqKGa56k/FaLOWVmuuMCTfmaOCC+zsC0kEBBTe6xJKHPMEcRl9F87pWmnLkuiBDuZB6cX3adHN/CpHbjo/XTtLay157lFPy/W1hng8Z17ooURgYsTUMlzbA2lcNuqoMBxRk/zwdh9imPC2jJ17mKpQ/oC4zdIWE9OhQ9C6I5Gj/5JASkM6V4azP+mnVQsIsJXp6JhiH8mEts4GJYWdd3Qo0ovEo/xA2frSh7GBF0bsPbGxVnOOm/T9XkJI9QSdVmPDa/0K9YS/1OKaHCw3h/YwlZQ==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com;
- s=arcselector10001;
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
- bh=sIkRyLCKHMXttwihhmFf5IvE1P82SCgIm7i67/V8vQs=;
- b=GOYUYt0NAT1WZbUbB78ZRy4kYiqJ+UWvafJyvZwCl/QpFb3fdyXrX3nlLvBlwaRn92RQqIrlN2MQGMNSgT6RH0IN546bJKpQHOc0RWQ5JmC3Ob6wy3IprvqbWXQlZIIuuwwen0s7BuOxYyEXy6ArbHbrGgh2Y0TBrPDQ049Ri5eqW3CDFfH+4J1s+ULjhcMBssLjzysW9eCcjxQZfwNESInvSq2BSVqkx4GqY4NO17KCYsy4C5NRELQGtCj2YpzLJ3+qKb3jRaOTdC+haMV6WoeRYb6htFBC2mTE/zHLOfB0b/Huef8QRjuWp/sVYXAuFnDSGj24mmrgNPw1IxAMJg==
-ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
- smtp.mailfrom=amd.com; dmarc=pass action=none header.from=amd.com; dkim=pass
- header.d=amd.com; arc=none
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=amd.com; s=selector1;
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
- bh=sIkRyLCKHMXttwihhmFf5IvE1P82SCgIm7i67/V8vQs=;
- b=caewyW6J11+966KAFMyEr5YzqKbn9WiMKYaZHtLYVQm8wUZU0dW3gYjwgWh+H+pJLjHwswrN5oj/61T8a+G+D/8Ast09hDIEnOrdlU3m7NEeoxRdW1p9L9EkafuADyPok/e2AoYJYRSVR5+cq866VMrIa8F4Jl7R4tl3pfQY/XQ=
-Authentication-Results: dkim=none (message not signed)
- header.d=none;dmarc=none action=none header.from=amd.com;
-Received: from PH8PR12MB6914.namprd12.prod.outlook.com (2603:10b6:510:1cb::21)
- by DM4PR12MB5986.namprd12.prod.outlook.com (2603:10b6:8:69::16) with
- Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.21.139.20; Tue, 23 Jun
- 2026 14:25:28 +0000
-Received: from PH8PR12MB6914.namprd12.prod.outlook.com
- ([fe80::2893:177a:72b0:6000]) by PH8PR12MB6914.namprd12.prod.outlook.com
- ([fe80::2893:177a:72b0:6000%6]) with mapi id 15.21.0159.012; Tue, 23 Jun 2026
- 14:25:28 +0000
-Message-ID: <7cb31679-c658-4120-99be-b640cbff97b8@amd.com>
-Date: Tue, 23 Jun 2026 07:25:25 -0700
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v2] x86/video: Only fall back to vga_default_device()
- without screen info
-Content-Language: en-US
-To: sashiko-reviews@lists.linux.dev
-Cc: linux-pci@vger.kernel.org
-References: <20260623141505.1816786-1-mario.limonciello@amd.com>
- <20260623142133.486151F000E9@smtp.kernel.org>
-From: Mario Limonciello <mario.limonciello@amd.com>
-In-Reply-To: <20260623142133.486151F000E9@smtp.kernel.org>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
-X-ClientProxiedBy: SJ0PR13CA0128.namprd13.prod.outlook.com
- (2603:10b6:a03:2c6::13) To PH8PR12MB6914.namprd12.prod.outlook.com
- (2603:10b6:510:1cb::21)
+	dkim=pass (2048-bit key) header.d=google.com header.i=@google.com header.b="UM6Vc7yb"
+Received: by mail-dl1-f45.google.com with SMTP id a92af1059eb24-139a5f4ca15so4502917c88.1
+        for <sashiko-reviews@lists.linux.dev>; Tue, 23 Jun 2026 07:36:30 -0700 (PDT)
+ARC-Seal: i=1; a=rsa-sha256; t=1782225389; cv=none;
+        d=google.com; s=arc-20240605;
+        b=kOTuoFnDHcPK/ccOq3qJADxIAJuB26fRTWi79jm79tvjtvFf2Pm1+pt/Fc96b5xdfK
+         gXHWRpO2jZtVzv0DG6vQ7XfGozDPkPuUdlWg4ewnzsQTW1odJTK7bCL2pF9ikfR8rg3t
+         7kQPmSK//I6w10wxySCoi88CnRV0zsaHlmuXR+Z0rGTpC4oAi7/o7Tvq5lElXaEmnVhk
+         KtC+HZioIpnkZVyYQW1Zh2myq1jR7EyOLZqKloac7nYd3ah4hFBs8m0GHQpFGecC+k/C
+         z9tjGj6brt26TkqCIeygiZ9N1P+Z/GoszOe74sZ6cb4zfb5cfhRU7CWUC7agFJiSsd/e
+         MQ0g==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com; s=arc-20240605;
+        h=content-transfer-encoding:cc:to:subject:message-id:date
+         :mime-version:references:in-reply-to:from:dkim-signature;
+        bh=vJgphXJdnNJlLlw3xwPgUoTcSpATvUHMKFRtOKS6dyU=;
+        fh=oQKl3z1YuZQACL71AjnmcQxoL4FYVaXJJeOF6RdgwfQ=;
+        b=YsOWcWcj4UqNE5AsFWtaXFaKLswDBXge5ApJY/K0YUHmzHNnGH9egKCVUa41BE2O+p
+         bPXDK2lcG6iOUDor7orXMnivEEtj3yaQK88Il75+NDMY3iRjvQ54XzeUTPTzgu11p4yh
+         K0n+wn3fHbtePgzVF/eATXr6MqEMnxFagS8nvwHWLlVDiimdbfVLwsl140w1LZLWAnWW
+         UAOGwn75IvL2+NTLqQtPyzqcFosR1iHte3/WEXD8mLybVbNGPlzGtEa3Wci0SAktyAYP
+         4g/i6HDoROQz2duaZmuCeEtVa3awimN9mLQtHX1NduFiMmBmtLLC0cf7YcO8KA13Tsis
+         dxvw==;
+        darn=lists.linux.dev
+ARC-Authentication-Results: i=1; mx.google.com; arc=none
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=google.com; s=20251104; t=1782225389; x=1782830189; darn=lists.linux.dev;
+        h=content-transfer-encoding:cc:to:subject:message-id:date
+         :mime-version:references:in-reply-to:from:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=vJgphXJdnNJlLlw3xwPgUoTcSpATvUHMKFRtOKS6dyU=;
+        b=UM6Vc7ybEA4w2JIAsLnYySClzkr28KG168ODwDBvAvGlZn38ZLzlEP4KdlpBxdIV2V
+         x950FdkEfFfOBMaL7xGMbpXvs2i9dTlN9G9oegN2buraDy7d3SUysEWLMLFISFbVg9x/
+         df4NfWAIMirIiMCSGa68L2q3N++m6Ge5/L9rhk9OmhWz0KT8fjY1MCx1/CxkW9ngN3lK
+         iiQjrJQ0PQfW7oeB7b0DpuWpi3NjIV+U818xhJZkjVSgK3JRGVY5fxtRNrcunq8OcOvS
+         DB/NxFRCmFOnma8IlwlexxSa7JU6MQg6dImORc+DHxTzNvUPvHz4/vH6gnnCLaCJ/l/t
+         VdRw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20251104; t=1782225389; x=1782830189;
+        h=content-transfer-encoding:cc:to:subject:message-id:date
+         :mime-version:references:in-reply-to:from:x-gm-gg:x-gm-message-state
+         :from:to:cc:subject:date:message-id:reply-to;
+        bh=vJgphXJdnNJlLlw3xwPgUoTcSpATvUHMKFRtOKS6dyU=;
+        b=JYhD5bmilg/fgTtp/xXaYcS57r7LQeRArwuSghWqLzW5FKtJ2MkyEuoX20EJ1OuXMX
+         QweyfnlP6cy7o4EqV34Jc4SiilwSBAd8DMEUDyyRMksISrUfy13lSKt43WEH561JJi9y
+         yt35DPnXnMzL+UJ9yvzgNfoJQtkPg6OvINp5QiFLrc0DEqwf14/qr+mbEwuDTdV7Q+54
+         m6K+7cEQ9LUIuK2TORC/gXfUBpjdm0F1ojINCYTPBfa8tNMGJSXmPvgE/lGXqnyTK89W
+         qKHMgqTC3L61+YUHGuwew5LZE2qbv9Uo+2Ip+Px6QQjFkrsdy5xLDpoewEGiSbqjnd6u
+         axeA==
+X-Gm-Message-State: AOJu0Yykn00+kkjFUbTXgm/JmzP9FwRmHoGrXQpx2oDFkpRHe+CQxO/6
+	mGAuMBZrYV65eWLHA3A46zdYXNnGhjEF32D2gV5h8Qpo5+wHzlETsZi88OJTOWRaPAom0ZPHlIC
+	tqfWgLBGYpCWq4SJDzMAiQh9dRLX6DGbmuxe8Cnz9xy6rMv5WoKGmebNL
+X-Gm-Gg: AfdE7ckljhTevqN52Gq/HhdL7bvCrz9ConGRGBumwbzZd51a9oyYk3H9A0Du/lTDhgX
+	cUpyNjqphLukqJep/ELxyIJcE4oGOEqfUE6K4YPudX24uPwNs5CIaj+iCe2jleZtKXHV197y3gQ
+	4K1hw5sgT97+l4uSzwvGV29Fd2jvYmD5z42VeVciOVKQtk34XNQd2MsRLkNcBK8lUo+buNsBK6W
+	iM+CV2Pmw7epX69xPZzf0oLb6SoSHxvppyWU5dsAZiei3DQS3YCZfk3OwLbpn1hCAJKZf1GLmYR
+	OsEaL4dRuX2iFyiIq1RcaPhst9l+
+X-Received: by 2002:a05:7022:2204:b0:139:7f71:9ce8 with SMTP id
+ a92af1059eb24-139a3456498mr9963525c88.0.1782225388222; Tue, 23 Jun 2026
+ 07:36:28 -0700 (PDT)
+Received: from 176938342045 named unknown by gmailapi.google.com with
+ HTTPREST; Tue, 23 Jun 2026 07:36:26 -0700
+Received: from 176938342045 named unknown by gmailapi.google.com with
+ HTTPREST; Tue, 23 Jun 2026 07:36:26 -0700
+From: Ackerley Tng <ackerleytng@google.com>
+In-Reply-To: <20260623093335.3C1F91F00A3A@smtp.kernel.org>
+References: <20260623091556.1500930-1-joro@8bytes.org> <20260623091556.1500930-5-joro@8bytes.org>
+ <20260623093335.3C1F91F00A3A@smtp.kernel.org>
 Precedence: bulk
 X-Mailing-List: sashiko-reviews@lists.linux.dev
 List-Id: <sashiko-reviews.lists.linux.dev>
 List-Subscribe: <mailto:sashiko-reviews+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:sashiko-reviews+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-X-MS-PublicTrafficType: Email
-X-MS-TrafficTypeDiagnostic: PH8PR12MB6914:EE_|DM4PR12MB5986:EE_
-X-MS-Office365-Filtering-Correlation-Id: e8d45c85-9567-4033-17ac-08ded133463c
-X-MS-Exchange-SenderADCheck: 1
-X-MS-Exchange-AntiSpam-Relay: 0
-X-Microsoft-Antispam:
-	BCL:0;ARA:13230040|366016|23010399003|1800799024|376014|56012099006|4143699003|11063799006|18002099003|22082099003;
-X-Microsoft-Antispam-Message-Info:
-	hh+SvWgCa6nsdcy21xYW2kVD53rvb1DFIMp5mZeH6M2U+1APZ6+OWQqjp01gFkg9+O6AVn+lV4JnbiD8FXLhcNzN1Ua2Wub3TDjWIPy3e5xPbdwPYd9kBU6OrX0qaGPEs96/URPv2BGI8JoqBy3kf8ILmr+Bbbfsf+UmvFXMr16AbKTofpJvf6EkYtp7gjx8SmaIP3JhQGrxjdG+NjiRThed29JfG+kUBb0zV+qqAOnRof2o8zpImW6j6k6OENTyzSggKgTfZXqczjRMZ+0QJ4gaezhfd607T4Ffo6uB64KIjj4XlnMJYASXxzm331lP8WYO9Z+UvhT9td4reNp2ixFa6OXFf4OqhTf8fmnaf4gjNPPJ0GpBayuQoVd86WWwQgigVKN7dPuIrPH2NV19DFA9RHCUUPhsFBntiynMXe4qUiyNt4vyzMUfjZXRXac1/JaqhmCKPwdFs79MNlzC4sAsNNbi40PFWiF/cdA2jUJDRo1NuBuwkrjM44APD4wKDZL6Flhl73Pg914zn9cYq+uNR2wyaRa54HySoxDxsQFbm3Flu9/FnrwaUJW8VLUj/v3eDw4Msh4qPek2aDbGJo11/VbutXtW4NITo2OqDU30fsuYPFyqpUXL25tiObwrQDyGoHt1A8xv14qzwl78RUMwxiQ1rx6x/Jbr/jRV8Jo=
-X-Forefront-Antispam-Report:
-	CIP:255.255.255.255;CTRY:;LANG:en;SCL:1;SRV:;IPV:NLI;SFV:NSPM;H:PH8PR12MB6914.namprd12.prod.outlook.com;PTR:;CAT:NONE;SFS:(13230040)(366016)(23010399003)(1800799024)(376014)(56012099006)(4143699003)(11063799006)(18002099003)(22082099003);DIR:OUT;SFP:1101;
-X-MS-Exchange-AntiSpam-MessageData-ChunkCount: 1
-X-MS-Exchange-AntiSpam-MessageData-0:
-	=?utf-8?B?SDVZVDIyd3pQdE1mS1J6dmlJbzBIWmRRRXlmbUN2RDd2amhhMm0rK21hVnMy?=
- =?utf-8?B?YURTSjhlTGROWEpkNlYzb2FwY2ZzZUQ1am1Pbm9CS3d0bUhDem9VTHV5dWk0?=
- =?utf-8?B?TnE0dXZJOEoyeDdzby9EbWtSbDhrM3JxUUxtSmdiMEVPczc1cmljUG1LbFgz?=
- =?utf-8?B?b3d1UW1NZWdMM1ZzZjZqM3pqWm9EVVh2eXpPemJ2dXBCU1U0Y0JJTzJvK3U3?=
- =?utf-8?B?anZUaXAyc3FkZWdHQWxWenFTOERNVHpjb3JUU1dZSmVrU3Y4U3YzRHpQN3Nr?=
- =?utf-8?B?RHMvTkJhZzgzOVhvM25jNTVDbkRqTmo2elJBSFdBdUd6WHBjOHJnL3JKaThy?=
- =?utf-8?B?YnlDdlVaUVV1VHNJMGtEMFo5algzNFVHVk9JN2ZrYmRkeW9KVlhaaE1qM0lq?=
- =?utf-8?B?akJLVU1JRk5RQ0prWUZNbWdrOE1QTUk0aGpWRHZIZlh3Q3k1bDk0WWlhaTZD?=
- =?utf-8?B?M0MvMGFPaGZjcTFPMnRibUM0a3hWNExMUUg3RmZoOGdmWGVVWWI2bEcwaVEy?=
- =?utf-8?B?MSt5NDQ3OG05UWlJK2VlakNPNExmZlYwOGxibGRUVk1hWXh4UHFUK1dQN0tw?=
- =?utf-8?B?T2VNUS9jMm1xc1k0N2xnSzFFZ0J4SktpcjJXNnFaQWFxSDc0REdsZDdYR0Za?=
- =?utf-8?B?MThoYVBWUHFTdXJJbFdZTVQ1S2FnMW1LRlNzZXJwamdxRURmQm05SWJlTnQ3?=
- =?utf-8?B?OFhkQnVZMHNubDhnRThZeXMya3Q2NXZhaTFxeVlkNnZIQ3kvS2Vld0FJeDI1?=
- =?utf-8?B?aUJZbk84Y3hDUDRuZVBKd2hrV2xqLzREUFFxV0JweStZZjE1aUtrYVZkUXJs?=
- =?utf-8?B?Q1pNd21vMWxuUUdORS83RTB1RTMrSGhGMFVzeFVwTFhGWFNiYTF0OXg0eTJl?=
- =?utf-8?B?UitKQy9KNHo5SVZHbzk5ZFpld3lta1VJSXFUMjU2SVh1WHlQU0tXOEpaSVdO?=
- =?utf-8?B?dHYydERtdUtlRjJNOTN4TmxZb0MzOGRWNWlXUkNtejdVTzNZS2Y0Ykdhc3lw?=
- =?utf-8?B?elRSQm1kMlI2THlYQWpFRVVKMDA0VnYrRURWQ3REcXZGWHZEWjZyMmhTeEc2?=
- =?utf-8?B?SGMwaXNDTnUzU1RRS21ETnV1V3pqVTFad2dOOUZZcGVZS0dTSFhFYTZ3MTNT?=
- =?utf-8?B?STNOS2d3bzJZTEVnTDhvZmo3dXAxUzdDUWVvc0lsc3dTd0o1K2xCQ1RoY2Jh?=
- =?utf-8?B?cWJ4Yms2SXNvTC9TU2d2K0g0a1FwcmdMV2o0bGpKb01taUJ4Ym9YVnI4REhO?=
- =?utf-8?B?bkg5TCt1ei9ucWNYR0hhcmI2VmRyTllEaXdMQm5ma3p2dVo3RVF2cWxMR0Qr?=
- =?utf-8?B?NldiZjM5MU1jd1hlbW55TWlySURQTGZPbjdKekU4Nm1nQ0RMSG9CZDdsenFl?=
- =?utf-8?B?S1pqTlJGVGRRR2xjTE92WjViNU41d21GYXlpT3cvSWhCY1ZrMFVkMWtFQkI2?=
- =?utf-8?B?c0cyTjRKZm9oejJZK3NzZEFJY1ZFWDZOUXdXZmF6WnhrYzhMVCswVzJvamJZ?=
- =?utf-8?B?V1BHdjFuT2xjdG1HUTVLVkRSZ1craDF4RFNhbmNManFhc1JnalovQ2N6c3lp?=
- =?utf-8?B?ZEtTU3BsYkdBSjhreTFZcGUxKzBPeVhmSTAyS3lTTDU3Yy8yb05mbGZERjc0?=
- =?utf-8?B?djZIb1NlRWx4azhIU1JsV25LdGFoeTQ4ZTFuS2lwSSsya3ZaSTZwTURQdkVh?=
- =?utf-8?B?dVFLZVlKZjl3bXNnRE9wYWZiYXZlZm84QjRJMUlNN3Ewck5rOGthSGR5bGpq?=
- =?utf-8?B?b0M4UmNFVnpLVUFoQ3U4V2JTZy9KMW1PS29CV05ER0NLMGNOaHNKSnR0U0tq?=
- =?utf-8?B?NVVUbDRZWTkvd2xzZXJONGplZGJ6bVpNY2IwbVoraUZSdE1keTdJdTlnZ3FY?=
- =?utf-8?B?SnBIcUdxQUdVTDBKbGFYckFsdGtQV0JnNEdJNXVLRDVTaGordnZvbVNUb29N?=
- =?utf-8?B?MGlyN3dXNTF0SFdFalRRYklHREhNNkU1TjdkZGNhd1NZdEFSbHZMb3FoVUtP?=
- =?utf-8?B?MHB5RGtrZGRWbXpwWlI2ejlabzVnVnkvOTUwMU12bWhWMytONnpCV2FGRkRh?=
- =?utf-8?B?SFFmbTRNM2Y1S0Z4aGhheDhSSlMxQkduZ1kvb2ZpN0dDbkhYZWRLZTNoYWZG?=
- =?utf-8?B?OXJ4TTJpK2k5bHRSeDVxOG9HQ0NjS256K0NRQXpaQ3N6UytVYktJSU1KLzNm?=
- =?utf-8?B?eGRvWWU4QjFxQUZXaHdPbkpKTUdvOXBDWEEvR3IxbUVvbGNjeWJGMlhWMk5p?=
- =?utf-8?B?ZmhBdGxBNFZUMyswK0s2SnRpTXpXSjJ2Q3oyTGl0V1BEMC9NUGs2c0tOa2sy?=
- =?utf-8?Q?CGpwv14ajWgdNfxd/l?=
-X-OriginatorOrg: amd.com
-X-MS-Exchange-CrossTenant-Network-Message-Id: e8d45c85-9567-4033-17ac-08ded133463c
-X-MS-Exchange-CrossTenant-AuthSource: PH8PR12MB6914.namprd12.prod.outlook.com
-X-MS-Exchange-CrossTenant-AuthAs: Internal
-X-MS-Exchange-CrossTenant-OriginalArrivalTime: 23 Jun 2026 14:25:28.6497
- (UTC)
-X-MS-Exchange-CrossTenant-FromEntityHeader: Hosted
-X-MS-Exchange-CrossTenant-Id: 3dd8961f-e488-4e60-8e11-a82d994e183d
-X-MS-Exchange-CrossTenant-MailboxType: HOSTED
-X-MS-Exchange-CrossTenant-UserPrincipalName: dgvLfD5taop+U+RQEXHgtv+sSbQmvRiThsvV0ubTgZEFcHCGjADBCvtMFlhY8ReEemPCFSiSoEMADlkZdYaa1g==
-X-MS-Exchange-Transport-CrossTenantHeadersStamped: DM4PR12MB5986
+Date: Tue, 23 Jun 2026 07:36:26 -0700
+X-Gm-Features: AVVi8CfVMQhPCLdKi-Kz2N8bfv78RoIZSO1YpQwS89D-4s2CIn8OJqjaOGeR-hw
+Message-ID: <CAEvNRgHy9m9RZzu21Un6rNh6iQs55xVjiFZw-Lou9ES3cjqc_Q@mail.gmail.com>
+Subject: Re: [PATCH 4/4] kvm: sev: Acquire a writeable page reference for
+ CPUID pages
+To: sashiko-reviews@lists.linux.dev, =?UTF-8?B?SsO2cmcgUsO2ZGVs?= <joro@8bytes.org>
+Cc: kvm@vger.kernel.org
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 
+sashiko-bot@kernel.org writes:
 
+>
+> [...snip...]
+>
 
-On 6/23/26 07:21, sashiko-bot@kernel.org wrote:
-> Thank you for your contribution! Sashiko AI review found 1 potential issue(s) to consider:
-> - [High] The patch unconditionally returns `false` if `screen_info` has memory resources that do not match any standard PCI BAR, breaking primary device detection for systems booting in legacy VGA text modes.
-> --
-> 
-> commit a8c04b0c2e4edb24a29bd696ebde27323036eb98
-> Author: Mario Limonciello <mario.limonciello@amd.com>
-> 
-> x86/video: Only fall back to vga_default_device() without screen info
-> 
-> This commit changes the primary video device detection on x86 to rely
-> exclusively on screen_info if available, and only falls back to
-> vga_default_device() when no screen info resources are present. This
-> prevents multiple devices from erroneously claiming the primary
-> boot_display attribute.
-> 
-> Closes: https://lore.kernel.org/linux-pci/20260618081803.2790848-1-aaron.ma@canonical.com/#t
-> 
->> diff --git a/arch/x86/video/video-common.c b/arch/x86/video/video-common.c
->> index e0aeee99bc99e..e5fb3cf885fbd 100644
->> --- a/arch/x86/video/video-common.c
->> +++ b/arch/x86/video/video-common.c
-> [ ... ]
->> @@ -43,21 +43,26 @@ bool video_is_primary_device(struct device *dev)
->>   	if (!pci_is_display(pdev))
->>   		return false;
->>   
->> -	if (pdev == vga_default_device())
->> -		return true;
->> -
->>   #ifdef CONFIG_SCREEN_INFO
->>   	numres = screen_info_resources(si, res, ARRAY_SIZE(res));
->> -	for (i = 0; i < numres; ++i) {
->> -		if (!(res[i].flags & IORESOURCE_MEM))
->> -			continue;
->> +	if (numres > 0) {
->> +		for (i = 0; i < numres; ++i) {
->> +			if (!(res[i].flags & IORESOURCE_MEM))
->> +				continue;
->> +
->> +			if (pci_find_resource(pdev, &res[i]))
->> +				return true;
->> +		}
->>   
->> -		if (pci_find_resource(pdev, &res[i]))
->> -			return true;
->> +		return false;
-> 
+Thanks Jorg, commit f13e90059908 ("KVM: SEV: Pin source page for write
+when adding CPUID data for SNP guest") is a combination of this patch
+and the previous, so this is fixed too.
+
+This report caught my attention:
+
 > [Severity: High]
-> Does this unconditional return break primary display detection for systems
-> booting via legacy BIOS or VGA text mode?
-> 
-> When booting in legacy VGA text mode, screen_info_resources() populates
-> resources with legacy memory ranges like 0xa0000 or 0xb8000. Since numres > 0,
-> the code enters this block.
-> 
-> However, legacy VGA windows are implicitly routed and not explicitly
-> represented as standard PCI BARs. Because of this, pci_find_resource() will
-> fail to match.
-> 
-> By returning false here, the code completely bypasses the fallback to
-> vga_default_device() for these legacy systems. Should this fall through to the
-> vga_default_device() check instead of returning false when the resources do
-> not match any standard PCI BAR?
-> 
+> This is a pre-existing issue, but is there a data race and use-after-free
+> risk on kvm_memory_slot between memslot teardown and kvm_gmem_error_folio=
+()?
+>
+> When KVM destroys a memslot, kvm_gmem_unbind() fast-paths the teardown if
+> there is no file:
+>
+> virt/kvm/guest_memfd.c:kvm_gmem_unbind() {
+>     if (!file) {
+>         __kvm_gmem_unbind(slot, slot->gmem.file->private_data);
+>         return;
+>     }
+>     ...
+> }
+>
+> This deliberately skips acquiring filemap_invalidate_lock(file->f_mapping=
+).
+>
 
-Those devices should get a boot_vga attribute instead of boot_display 
-attribute.  I think this is OK.
+Here's how kvm_gmem_unbind() relates to kvm_gmem_release():
 
->>   	}
->>   #endif
->>   
->> -	return false;
->> +	/*
->> +	 * No framebuffer was set up by the firmware/bootloader, so fall back
->> +	 * to the default VGA device.
->> +	 */
->> +	return pdev == vga_default_device();
->>   }
-> 
+This unbinding without filemap_invalidate_lock() covers the case where
 
++ During VM destruction, the memslots are being destroyed:
+  kvm_gmem_unbind() is reached without holding slots_lock
+
+and
+
++ There's a concurrent guest_memfd kvm_gmem_release()
+
+slot->gmem.file is not NULL (yet, kvm_gmem_release() would set that),
+but the file is already closed, hence kvm_gmem_get_file() returns
+NULL. (See CLASS(gmem_get_file, file)(slot);).
+
+Since kvm_gmem_get_file() returns NULL, there's no way to safely take
+the filemap_invalidate_lock(), but we must still do the
+unbinding. Without unbinding, kvm_gmem_release() would iterate
+f->bindings and use slot after free.
+
+> If a hardware memory failure concurrently triggers kvm_gmem_error_folio()=
+,
+> it iterates over f->bindings holding only filemap_invalidate_lock_shared(=
+).
+>
+
+To get to the above unbinding without holding filemap_invalidate_lock(),
+the file would have to already be closed. If the file is closed, the
+inode (and folios) can still be alive. Memory failure can look up the
+folios and hence the inode.
+
+But to reach __kvm_gmem_invalidate_begin() from kvm_gmem_error_folio(),
+we'd have to iterate the files associated with the inode
+(kvm_gmem_for_each_file() in kvm_gmem_invalidate()). Since the file is
+already closed to unbind without filemap_invalidate_lock(), the
+kvm_gmem_error_folio() side won't see the file.
+
+> Because xa_for_each_range() drops the internal RCU lock for each element,
+> could it yield the slot pointer right as kvm_gmem_unbind() completes and
+> frees it, leading to a dereference of freed memory here?
+>
+
+No issue here. Phew.
+
+> virt/kvm/guest_memfd.c:__kvm_gmem_invalidate_begin() {
+>     ...
+>     .start =3D slot->base_gfn + max(pgoff, start) - pgoff,
+>     ...
+> }
+>
+>>  	if (count < 0) {
+>>  		argp->error =3D sev_populate_args.fw_error;
+>
+> --
+> Sashiko AI review =C2=B7 https://sashiko.dev/#/patchset/20260623091556.15=
+00930-1-joro@8bytes.org?part=3D4
