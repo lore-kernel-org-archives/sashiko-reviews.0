@@ -1,68 +1,63 @@
-Received: from BN8PR05CU002.outbound.protection.outlook.com (mail-eastus2azon11011030.outbound.protection.outlook.com [52.101.57.30])
+Received: from MW6PR02CU001.outbound.protection.outlook.com (mail-westus2azon11012037.outbound.protection.outlook.com [52.101.48.37])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5E1FB37C109
-	for <sashiko-reviews@lists.linux.dev>; Tue, 23 Jun 2026 13:43:58 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=fail smtp.client-ip=52.101.57.30
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5F8F138D688
+	for <sashiko-reviews@lists.linux.dev>; Tue, 23 Jun 2026 14:25:32 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=fail smtp.client-ip=52.101.48.37
 ARC-Seal:i=2; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1782222239; cv=fail; b=nmD4/TlFF2SEExbH18nMW6UpYl7I1Y+vz2AkCPfend0uSJbsWmEaJOm/3ninzBjnQXgsuDu+5RTx0e5Kik5I7z0F9nfYWiR5LHzbLMUa6HVIIVRvQJrOF4cdeFkWuLy4iZXrlTNs68K8NTe0w0hSSo4MSso+E8GqSY4POEsteWc=
+	t=1782224734; cv=fail; b=hdBGYRsFHHs0/63wR9MpU4em3XMnwNYJjQc77HaShOqjfyD4anLchmKcV1seDodkJmRKNPZKsGHHCXNRJ4249MROSf1uU0pdjsBFqlbpQg7xAc2pVh/sJbtQqV28n3gXNojn1jNl+JGbZoQHAGVKzGFOHMleAnCEoBOObLI1N68=
 ARC-Message-Signature:i=2; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1782222239; c=relaxed/simple;
-	bh=msGdbKXTiaCTp0EU6TR+GdImqe6WpQr/kPdOgzbqv/k=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:Content-Type:
-	 Content-Disposition:In-Reply-To:MIME-Version; b=j2NHB1j9HX8P9kZgGfdG4Btfn7PQt+11HHcypeS7Gn1nDTATfqKLU3p+bw7VCBHCyS9i4SEGS12/RW2zaeJ2/UNrM3A/i2yaUEeV0VDvqol2dirsYVLvVNVgSajTy+RqptwjHD/V0rixArVfKM5fBr0QcSUEMVHa90dm0UlIxg4=
-ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=nvidia.com; spf=fail smtp.mailfrom=nvidia.com; dkim=pass (2048-bit key) header.d=Nvidia.com header.i=@Nvidia.com header.b=SsQG83SX; arc=fail smtp.client-ip=52.101.57.30
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=nvidia.com
-Authentication-Results: smtp.subspace.kernel.org; spf=fail smtp.mailfrom=nvidia.com
+	s=arc-20240116; t=1782224734; c=relaxed/simple;
+	bh=2HnNQucv7NwOm9YiOfcmnkP4R+Y9tHp7FHh5dM5HdeI=;
+	h=Message-ID:Date:Subject:To:Cc:References:From:In-Reply-To:
+	 Content-Type:MIME-Version; b=G9PA9d7m9G3Jl6u0LDaAW9Hwmq62zHJipg0yGO4WEhknPfbD0wSMNyf9bbv7HuGL/qO4XLjAmyzVt44gqaej2/gU3cbSc49PJq+V413Q6Kks0Rg6qO3xn9p9/3kuwtaEks3WVOrV0zA4dr13Ml1/ZlRRd36oU5D4YKwZCuVCJpQ=
+ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=amd.com; spf=fail smtp.mailfrom=amd.com; dkim=pass (1024-bit key) header.d=amd.com header.i=@amd.com header.b=caewyW6J; arc=fail smtp.client-ip=52.101.48.37
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=amd.com
+Authentication-Results: smtp.subspace.kernel.org; spf=fail smtp.mailfrom=amd.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=Nvidia.com header.i=@Nvidia.com header.b="SsQG83SX"
+	dkim=pass (1024-bit key) header.d=amd.com header.i=@amd.com header.b="caewyW6J"
 ARC-Seal: i=1; a=rsa-sha256; s=arcselector10001; d=microsoft.com; cv=none;
- b=rFUYjJRjP7mPdZeClbxR16jD7Dw6Caz6A94uBHOneUKzq/TdUNCPPhgpO8GxFwwhl+19oK5TmeoAkGMSroazbxACez8nB7Jsn73SK3b1JqLeyLKxmLnP0+k3fYJ60QHSwPJfVLg4Qb6NzYBYBT4g40iPB4MdQ7VnEEGBeuoCPTwIuwd2d/G0obTxn8OitZ4L78s+faZ7b0XBV3xHsldMPghb3ZZm6h14VH9lxOfam0IIXRFsBWXcsTVkG+Plghvnr4VFECnhHF9QhwGeDBG7diVnPI01c+ROvRw4jVOuaVuQ4rkbNzHwzrmCpw1vsYxYEHJwK0n0YMD0PTHNmtKNaQ==
+ b=iFknbyk+HmsE9DHUDtClsoNKfDydFSgc1hrkYeSOAFho8pum5/dgo2IQDJAR4sqKGa56k/FaLOWVmuuMCTfmaOCC+zsC0kEBBTe6xJKHPMEcRl9F87pWmnLkuiBDuZB6cX3adHN/CpHbjo/XTtLay157lFPy/W1hng8Z17ooURgYsTUMlzbA2lcNuqoMBxRk/zwdh9imPC2jJ17mKpQ/oC4zdIWE9OhQ9C6I5Gj/5JASkM6V4azP+mnVQsIsJXp6JhiH8mEts4GJYWdd3Qo0ovEo/xA2frSh7GBF0bsPbGxVnOOm/T9XkJI9QSdVmPDa/0K9YS/1OKaHCw3h/YwlZQ==
 ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com;
  s=arcselector10001;
  h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
- bh=4RThWJ1psdYonXsgCEtW1ZGQkYFh+TFtkVw+WME2R7s=;
- b=BkpKOgFoyhlIPrvlF19249MTqN8SG3G8mSVWLygxmEiFE0BdxdSv6E58ydBfg+ZECbqnMtiUYQBG5L/x6P7P+Qub/GvPTVG9fncNiag0KRacIT1ngQ1jhvMMm68Q0SFHeRCS+8+FpARZuvM72shIOJOs4PB9z4ScjJS59N5IWcIUcrYgXBjuYACq1hYxgOieJHyczj55l0w3/N5zWUvwbsH5n8XZK0mapkpqvYj6NJYjCliQEPwZQO08D2RMUbQ2+LVj5WGo2FlFt2ZMHdBd4ulMN8xulB5lopxF1M+q41DV/kXNT9AaGIeEBwKV9Xc8d7e/ypK0LrfYwZmCyoj37g==
+ bh=sIkRyLCKHMXttwihhmFf5IvE1P82SCgIm7i67/V8vQs=;
+ b=GOYUYt0NAT1WZbUbB78ZRy4kYiqJ+UWvafJyvZwCl/QpFb3fdyXrX3nlLvBlwaRn92RQqIrlN2MQGMNSgT6RH0IN546bJKpQHOc0RWQ5JmC3Ob6wy3IprvqbWXQlZIIuuwwen0s7BuOxYyEXy6ArbHbrGgh2Y0TBrPDQ049Ri5eqW3CDFfH+4J1s+ULjhcMBssLjzysW9eCcjxQZfwNESInvSq2BSVqkx4GqY4NO17KCYsy4C5NRELQGtCj2YpzLJ3+qKb3jRaOTdC+haMV6WoeRYb6htFBC2mTE/zHLOfB0b/Huef8QRjuWp/sVYXAuFnDSGj24mmrgNPw1IxAMJg==
 ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
- smtp.mailfrom=nvidia.com; dmarc=pass action=none header.from=nvidia.com;
- dkim=pass header.d=nvidia.com; arc=none
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=Nvidia.com;
- s=selector2;
+ smtp.mailfrom=amd.com; dmarc=pass action=none header.from=amd.com; dkim=pass
+ header.d=amd.com; arc=none
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=amd.com; s=selector1;
  h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
- bh=4RThWJ1psdYonXsgCEtW1ZGQkYFh+TFtkVw+WME2R7s=;
- b=SsQG83SXKkDoIdrp444tcNzJ17x1WF5SWUYeK/COGq2HJfuKuyB9OdgeAKLj3i2SgsTbE0OC/Ly40lSgjkbrm5NFEeelpeP4aFFYddWAzh8ubRqsUp40mytVozF3tCZgw2Q5QLsIUCj2ZU9AnDTGeZsR30JJTLPatzX1ikx6KwKrFgtSIt20lscNjAhlrzRziieG3TKiCGSKHQ0DFkIjA7vO0ZgObjArVg0zmwJ5SThcCx24FUn7aJpsOptZdwE7pLUZFT4MCAGGyfT3C9H/gSdqtE+6dZfjoykb8XTWiAPSLIfk3EgVlAsLfw5ajm3LNrEqfwyZpHcTo1PGhrGCOw==
+ bh=sIkRyLCKHMXttwihhmFf5IvE1P82SCgIm7i67/V8vQs=;
+ b=caewyW6J11+966KAFMyEr5YzqKbn9WiMKYaZHtLYVQm8wUZU0dW3gYjwgWh+H+pJLjHwswrN5oj/61T8a+G+D/8Ast09hDIEnOrdlU3m7NEeoxRdW1p9L9EkafuADyPok/e2AoYJYRSVR5+cq866VMrIa8F4Jl7R4tl3pfQY/XQ=
 Authentication-Results: dkim=none (message not signed)
- header.d=none;dmarc=none action=none header.from=nvidia.com;
-Received: from CH0PR12MB8488.namprd12.prod.outlook.com (2603:10b6:610:18d::18)
- by DS0PR12MB7780.namprd12.prod.outlook.com (2603:10b6:8:152::6) with
+ header.d=none;dmarc=none action=none header.from=amd.com;
+Received: from PH8PR12MB6914.namprd12.prod.outlook.com (2603:10b6:510:1cb::21)
+ by DM4PR12MB5986.namprd12.prod.outlook.com (2603:10b6:8:69::16) with
  Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.21.139.19; Tue, 23 Jun
- 2026 13:43:51 +0000
-Received: from CH0PR12MB8488.namprd12.prod.outlook.com
- ([fe80::c565:c0e5:2c8b:c315]) by CH0PR12MB8488.namprd12.prod.outlook.com
- ([fe80::c565:c0e5:2c8b:c315%5]) with mapi id 15.21.0159.012; Tue, 23 Jun 2026
- 13:43:51 +0000
-Date: Tue, 23 Jun 2026 15:43:45 +0200
-From: Thierry Reding <treding@nvidia.com>
-To: Thomas Zimmermann <tzimmermann@suse.de>
-Cc: javierm@redhat.com, maarten.lankhorst@linux.intel.com, 
-	mripard@kernel.org, airlied@gmail.com, simona@ffwll.ch, rayyan@ansari.sh, 
-	dri-devel@lists.freedesktop.org, sashiko-reviews@lists.linux.dev
-Subject: Re: [PATCH v2 6/6] drm/sysfb: simpledrm: Read panel orientation from
- DT node
-Message-ID: <ajqNeuYBiSAHHLZn@orome>
-X-NVConfidentiality: public
-References: <20260622132433.722823-1-tzimmermann@suse.de>
- <20260622132433.722823-7-tzimmermann@suse.de>
- <ajlfgXEO4NR-TZ4s@orome>
- <808d917d-28c4-4a84-a647-d5dc9123bd32@suse.de>
-Content-Type: multipart/signed; micalg=pgp-sha512;
-	protocol="application/pgp-signature"; boundary="q2syeh6gxmhpr7jo"
-Content-Disposition: inline
-In-Reply-To: <808d917d-28c4-4a84-a647-d5dc9123bd32@suse.de>
-X-ClientProxiedBy: BE1P281CA0149.DEUP281.PROD.OUTLOOK.COM
- (2603:10a6:b10:7c::10) To CH0PR12MB8488.namprd12.prod.outlook.com
- (2603:10b6:610:18d::18)
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.21.139.20; Tue, 23 Jun
+ 2026 14:25:28 +0000
+Received: from PH8PR12MB6914.namprd12.prod.outlook.com
+ ([fe80::2893:177a:72b0:6000]) by PH8PR12MB6914.namprd12.prod.outlook.com
+ ([fe80::2893:177a:72b0:6000%6]) with mapi id 15.21.0159.012; Tue, 23 Jun 2026
+ 14:25:28 +0000
+Message-ID: <7cb31679-c658-4120-99be-b640cbff97b8@amd.com>
+Date: Tue, 23 Jun 2026 07:25:25 -0700
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH v2] x86/video: Only fall back to vga_default_device()
+ without screen info
+Content-Language: en-US
+To: sashiko-reviews@lists.linux.dev
+Cc: linux-pci@vger.kernel.org
+References: <20260623141505.1816786-1-mario.limonciello@amd.com>
+ <20260623142133.486151F000E9@smtp.kernel.org>
+From: Mario Limonciello <mario.limonciello@amd.com>
+In-Reply-To: <20260623142133.486151F000E9@smtp.kernel.org>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
+X-ClientProxiedBy: SJ0PR13CA0128.namprd13.prod.outlook.com
+ (2603:10b6:a03:2c6::13) To PH8PR12MB6914.namprd12.prod.outlook.com
+ (2603:10b6:510:1cb::21)
 Precedence: bulk
 X-Mailing-List: sashiko-reviews@lists.linux.dev
 List-Id: <sashiko-reviews.lists.linux.dev>
@@ -70,154 +65,149 @@ List-Subscribe: <mailto:sashiko-reviews+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:sashiko-reviews+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 X-MS-PublicTrafficType: Email
-X-MS-TrafficTypeDiagnostic: CH0PR12MB8488:EE_|DS0PR12MB7780:EE_
-X-MS-Office365-Filtering-Correlation-Id: 5472f72c-a441-4c07-3b03-08ded12d75b1
+X-MS-TrafficTypeDiagnostic: PH8PR12MB6914:EE_|DM4PR12MB5986:EE_
+X-MS-Office365-Filtering-Correlation-Id: e8d45c85-9567-4033-17ac-08ded133463c
 X-MS-Exchange-SenderADCheck: 1
 X-MS-Exchange-AntiSpam-Relay: 0
 X-Microsoft-Antispam:
-	BCL:0;ARA:13230040|1800799024|10070799003|23010399003|366016|376014|22082099003|18002099003|11063799006|5023799004|56012099006|4143699003;
+	BCL:0;ARA:13230040|366016|23010399003|1800799024|376014|56012099006|4143699003|11063799006|18002099003|22082099003;
 X-Microsoft-Antispam-Message-Info:
-	CDUa2FCbTd16PPdU8DGkB6c9IeeN1CFR54aBFzNufQ/p9PkkK1Z5HfybOfrFq/zqC26xnv92zUo6f98rqdHLEEAIM8zlq8tQjrpVL4Vz+NN2ueez/5Bo9js9JDG1tNPalVCc6WjNFi69KeOKgKQ7d71eCrYDh6d/Np0dWuLKk/0x4MaVvh4wTpdh86dK/atQUnA5bu/A7t5jsYjoyO213+w7TDwYSPcMhCEYdXbNuYkc6txJhSAhsXgif3aoPnVIGlJe/ruXA+pNtR2zN0vq50vf5C344ry/l9ohfC9x8zcrA1QTsqcLszAVutqLkfopOgvJAtldPvRef/xfohGOgrkMujoI49NmSMsCeZxuVuYyeospEaHRMF66Df0KcoZISTnLYUHLxuj4EUQB+Yvz0NhuDDmBpD3Uf6rF4sC/xZaqdcDFMTXro6rThB7OC3jNhVW4ojiaoQlYtRnGkMLJjU2cfbiVD9GpjopNDnlPqpm58QecXMQgbFKzFmRkO7KqUhhSpNdAc7YWOTtMc5IrbWEEamIN6aHIgz3DDQjsqFO4nql8yPleqCNUAzOEZyIuI7ol5tgXXVxzj0McLL47FiWY9/1zLDrqMVZM8Em6Zgs921nvJMLhKumHiy6IYwK5gqEyFTbDvNYXuyqE0sYALUIIGlRFePjVzWcbt+IWgdA=
+	hh+SvWgCa6nsdcy21xYW2kVD53rvb1DFIMp5mZeH6M2U+1APZ6+OWQqjp01gFkg9+O6AVn+lV4JnbiD8FXLhcNzN1Ua2Wub3TDjWIPy3e5xPbdwPYd9kBU6OrX0qaGPEs96/URPv2BGI8JoqBy3kf8ILmr+Bbbfsf+UmvFXMr16AbKTofpJvf6EkYtp7gjx8SmaIP3JhQGrxjdG+NjiRThed29JfG+kUBb0zV+qqAOnRof2o8zpImW6j6k6OENTyzSggKgTfZXqczjRMZ+0QJ4gaezhfd607T4Ffo6uB64KIjj4XlnMJYASXxzm331lP8WYO9Z+UvhT9td4reNp2ixFa6OXFf4OqhTf8fmnaf4gjNPPJ0GpBayuQoVd86WWwQgigVKN7dPuIrPH2NV19DFA9RHCUUPhsFBntiynMXe4qUiyNt4vyzMUfjZXRXac1/JaqhmCKPwdFs79MNlzC4sAsNNbi40PFWiF/cdA2jUJDRo1NuBuwkrjM44APD4wKDZL6Flhl73Pg914zn9cYq+uNR2wyaRa54HySoxDxsQFbm3Flu9/FnrwaUJW8VLUj/v3eDw4Msh4qPek2aDbGJo11/VbutXtW4NITo2OqDU30fsuYPFyqpUXL25tiObwrQDyGoHt1A8xv14qzwl78RUMwxiQ1rx6x/Jbr/jRV8Jo=
 X-Forefront-Antispam-Report:
-	CIP:255.255.255.255;CTRY:;LANG:en;SCL:1;SRV:;IPV:NLI;SFV:NSPM;H:CH0PR12MB8488.namprd12.prod.outlook.com;PTR:;CAT:NONE;SFS:(13230040)(1800799024)(10070799003)(23010399003)(366016)(376014)(22082099003)(18002099003)(11063799006)(5023799004)(56012099006)(4143699003);DIR:OUT;SFP:1101;
-X-MS-Exchange-AntiSpam-MessageData-ChunkCount: 2
+	CIP:255.255.255.255;CTRY:;LANG:en;SCL:1;SRV:;IPV:NLI;SFV:NSPM;H:PH8PR12MB6914.namprd12.prod.outlook.com;PTR:;CAT:NONE;SFS:(13230040)(366016)(23010399003)(1800799024)(376014)(56012099006)(4143699003)(11063799006)(18002099003)(22082099003);DIR:OUT;SFP:1101;
+X-MS-Exchange-AntiSpam-MessageData-ChunkCount: 1
 X-MS-Exchange-AntiSpam-MessageData-0:
-	=?us-ascii?Q?c3lRHt0H5Z3fL3FSSDaX1nPeozl7hG2i6kv8TjLFEhejf8pj0Jq86wHzwKSJ?=
- =?us-ascii?Q?jwrG6qsuE7kJF2+TZ4J6rDLd3I223Jww4UVqOvl+WOrAXqGOvj6QD/trZCob?=
- =?us-ascii?Q?li4HxWqEimEW9trtAWZ1pjpbIKDfvEo8ef3xGoUSaIZ1zVjU1HhCYukM8rZ0?=
- =?us-ascii?Q?UZabn/lZz0pTvvsa4Htay4trQPF+C4seU6UhJ+prgLT0D/WycQgJKLcjtmLB?=
- =?us-ascii?Q?5SwruR521dngbWJEYBeW6hwYRyngTBkJwIXWJLIRvYwwwsmQD7hBKSXBIcKP?=
- =?us-ascii?Q?ALLtIqDiuyk9P9dxyw+HImOm0Kecu0VMaIPgIqrW8iD6q1iqSxaZz2ALsqbG?=
- =?us-ascii?Q?cgvQsz9GsD2SSu44NlFWxUJLY6H2JNf/vh4cZBh7N8NTBGPjZwDYfoK7zYQC?=
- =?us-ascii?Q?s2a9YW9wIiFiMKbUW5VfcWikvYPlGE87/nXDnUw0pNfKUKZ6v0oeVMKa85CB?=
- =?us-ascii?Q?1rBZzlCCN/jjFlyd+j6uoyzjHoa49PxqWTzeQcrKOEPZnDwlEIZhXgRR7Pmp?=
- =?us-ascii?Q?FoaNtHiXCJko2YlLVE9hy+D12Q+ooZGj6ZdTDZ4jnuQKd6ATrHi/zt5z6b3x?=
- =?us-ascii?Q?M3QZ7wFzyDrybSbX90e8AmRYvtMThtlp8D8U1eM1ydZVkX3LhDkzelLumV/r?=
- =?us-ascii?Q?RimENaz+6gVWi7xPlcXZJ+v06TCqjzW5MV5p2cDUU6/SAVaGDeAKtZUGeCfx?=
- =?us-ascii?Q?7W4BBIhmjgDwjGtmy3bQBanOVF1YHqfJE45ovemfLPkjV6Zc8wHSUapZl/vC?=
- =?us-ascii?Q?sKoY71MAvD7Iikm9OEM//TUIQOkW8PpQZ6w9uchGA0R48EFVR9XbNhCthgvh?=
- =?us-ascii?Q?u1IvyoHu52cfygLHcoR4sEUoJYub6foEOfjTQrQ9Q2BkEzhuew6HD1keAKS8?=
- =?us-ascii?Q?hU3w+yx5owRB73vwCqQYfTp9bK3H6sCP7hrgMkJXr2icqBT9xV6EOBV17N8p?=
- =?us-ascii?Q?WQCJ76Dw+jBwDtee1enJL05tnl6tDam43UcjkmujBdtaQbDAE7NvusO7rEcm?=
- =?us-ascii?Q?1nIurvB0Gmch6kNUllNB4JKJMH64u/k1Ulz1c/gyzo/q1gQdAhYlBxjzeL/V?=
- =?us-ascii?Q?62IEwoLzymrAOhUPSltV7X3G2I2g4U+3XPsb/XOVmZ8hVk0+FPDvUzV+B09N?=
- =?us-ascii?Q?Z3Vn7ehTnuVXhVZNhe9bd7Fiu7Ues+crHAfmLcej6URFnVqinzMPEGEQwmo5?=
- =?us-ascii?Q?llJhmu8LxdLZhsKyIUz97DYQkToG7noRfNqa1qrwql6pvOKhd2X8UTPDyZjE?=
- =?us-ascii?Q?wOHfFXB09cEEX2UdtdovDKANTcp/dgliSTf9b5BVxssstVB7XqqW/fR8W9V+?=
- =?us-ascii?Q?yOgnXPl11GMRFjnIg1vlYFdjcYRu/DfSDOenL8GEyLYvAzFZMQRZDu3bnRra?=
- =?us-ascii?Q?DU/y/nVQSM3kNb0RaSVbJo2HTKM9BI32pUG09b6elM7R0/P3X0atWsPbCxdl?=
- =?us-ascii?Q?0QjPaKnSbUkQBOJMDPBnwQeGOyh5ZhPJaLUV0e/kkTXNmAVg8xgEIU/fttTa?=
- =?us-ascii?Q?7BS7BYhtfeq+dIu/ec8oQIWh+jrvpiK8Ud2TxhbRIMf000DPI46JJuGjpH24?=
- =?us-ascii?Q?KvBsQ7xLSqLky1WQwdrY1E19SPvqZMsmCoyHS/kdwwMRJ0LD4RoyfNdBXYr/?=
- =?us-ascii?Q?Ikzfe3Ljc649J3QfqthTsgKpLXah4sGpOyfo0/qxSuzpTkeW8xEfrrsqUWLt?=
- =?us-ascii?Q?fBz5u41wXnln8j79hSQq0tw+I/4KVRHsgIXybvD1mMz4UTSc3QakzI1jAAHS?=
- =?us-ascii?Q?vvj42ADOq3fQh21h9Uyv1APHb2+uYvvySnyNXI1EJnyrQ8SOD1Mra38KLrG/?=
-X-MS-Exchange-AntiSpam-MessageData-1: fuAloIVuWfCbHA==
-X-OriginatorOrg: Nvidia.com
-X-MS-Exchange-CrossTenant-Network-Message-Id: 5472f72c-a441-4c07-3b03-08ded12d75b1
-X-MS-Exchange-CrossTenant-AuthSource: CH0PR12MB8488.namprd12.prod.outlook.com
+	=?utf-8?B?SDVZVDIyd3pQdE1mS1J6dmlJbzBIWmRRRXlmbUN2RDd2amhhMm0rK21hVnMy?=
+ =?utf-8?B?YURTSjhlTGROWEpkNlYzb2FwY2ZzZUQ1am1Pbm9CS3d0bUhDem9VTHV5dWk0?=
+ =?utf-8?B?TnE0dXZJOEoyeDdzby9EbWtSbDhrM3JxUUxtSmdiMEVPczc1cmljUG1LbFgz?=
+ =?utf-8?B?b3d1UW1NZWdMM1ZzZjZqM3pqWm9EVVh2eXpPemJ2dXBCU1U0Y0JJTzJvK3U3?=
+ =?utf-8?B?anZUaXAyc3FkZWdHQWxWenFTOERNVHpjb3JUU1dZSmVrU3Y4U3YzRHpQN3Nr?=
+ =?utf-8?B?RHMvTkJhZzgzOVhvM25jNTVDbkRqTmo2elJBSFdBdUd6WHBjOHJnL3JKaThy?=
+ =?utf-8?B?YnlDdlVaUVV1VHNJMGtEMFo5algzNFVHVk9JN2ZrYmRkeW9KVlhaaE1qM0lq?=
+ =?utf-8?B?akJLVU1JRk5RQ0prWUZNbWdrOE1QTUk0aGpWRHZIZlh3Q3k1bDk0WWlhaTZD?=
+ =?utf-8?B?M0MvMGFPaGZjcTFPMnRibUM0a3hWNExMUUg3RmZoOGdmWGVVWWI2bEcwaVEy?=
+ =?utf-8?B?MSt5NDQ3OG05UWlJK2VlakNPNExmZlYwOGxibGRUVk1hWXh4UHFUK1dQN0tw?=
+ =?utf-8?B?T2VNUS9jMm1xc1k0N2xnSzFFZ0J4SktpcjJXNnFaQWFxSDc0REdsZDdYR0Za?=
+ =?utf-8?B?MThoYVBWUHFTdXJJbFdZTVQ1S2FnMW1LRlNzZXJwamdxRURmQm05SWJlTnQ3?=
+ =?utf-8?B?OFhkQnVZMHNubDhnRThZeXMya3Q2NXZhaTFxeVlkNnZIQ3kvS2Vld0FJeDI1?=
+ =?utf-8?B?aUJZbk84Y3hDUDRuZVBKd2hrV2xqLzREUFFxV0JweStZZjE1aUtrYVZkUXJs?=
+ =?utf-8?B?Q1pNd21vMWxuUUdORS83RTB1RTMrSGhGMFVzeFVwTFhGWFNiYTF0OXg0eTJl?=
+ =?utf-8?B?UitKQy9KNHo5SVZHbzk5ZFpld3lta1VJSXFUMjU2SVh1WHlQU0tXOEpaSVdO?=
+ =?utf-8?B?dHYydERtdUtlRjJNOTN4TmxZb0MzOGRWNWlXUkNtejdVTzNZS2Y0Ykdhc3lw?=
+ =?utf-8?B?elRSQm1kMlI2THlYQWpFRVVKMDA0VnYrRURWQ3REcXZGWHZEWjZyMmhTeEc2?=
+ =?utf-8?B?SGMwaXNDTnUzU1RRS21ETnV1V3pqVTFad2dOOUZZcGVZS0dTSFhFYTZ3MTNT?=
+ =?utf-8?B?STNOS2d3bzJZTEVnTDhvZmo3dXAxUzdDUWVvc0lsc3dTd0o1K2xCQ1RoY2Jh?=
+ =?utf-8?B?cWJ4Yms2SXNvTC9TU2d2K0g0a1FwcmdMV2o0bGpKb01taUJ4Ym9YVnI4REhO?=
+ =?utf-8?B?bkg5TCt1ei9ucWNYR0hhcmI2VmRyTllEaXdMQm5ma3p2dVo3RVF2cWxMR0Qr?=
+ =?utf-8?B?NldiZjM5MU1jd1hlbW55TWlySURQTGZPbjdKekU4Nm1nQ0RMSG9CZDdsenFl?=
+ =?utf-8?B?S1pqTlJGVGRRR2xjTE92WjViNU41d21GYXlpT3cvSWhCY1ZrMFVkMWtFQkI2?=
+ =?utf-8?B?c0cyTjRKZm9oejJZK3NzZEFJY1ZFWDZOUXdXZmF6WnhrYzhMVCswVzJvamJZ?=
+ =?utf-8?B?V1BHdjFuT2xjdG1HUTVLVkRSZ1craDF4RFNhbmNManFhc1JnalovQ2N6c3lp?=
+ =?utf-8?B?ZEtTU3BsYkdBSjhreTFZcGUxKzBPeVhmSTAyS3lTTDU3Yy8yb05mbGZERjc0?=
+ =?utf-8?B?djZIb1NlRWx4azhIU1JsV25LdGFoeTQ4ZTFuS2lwSSsya3ZaSTZwTURQdkVh?=
+ =?utf-8?B?dVFLZVlKZjl3bXNnRE9wYWZiYXZlZm84QjRJMUlNN3Ewck5rOGthSGR5bGpq?=
+ =?utf-8?B?b0M4UmNFVnpLVUFoQ3U4V2JTZy9KMW1PS29CV05ER0NLMGNOaHNKSnR0U0tq?=
+ =?utf-8?B?NVVUbDRZWTkvd2xzZXJONGplZGJ6bVpNY2IwbVoraUZSdE1keTdJdTlnZ3FY?=
+ =?utf-8?B?SnBIcUdxQUdVTDBKbGFYckFsdGtQV0JnNEdJNXVLRDVTaGordnZvbVNUb29N?=
+ =?utf-8?B?MGlyN3dXNTF0SFdFalRRYklHREhNNkU1TjdkZGNhd1NZdEFSbHZMb3FoVUtP?=
+ =?utf-8?B?MHB5RGtrZGRWbXpwWlI2ejlabzVnVnkvOTUwMU12bWhWMytONnpCV2FGRkRh?=
+ =?utf-8?B?SFFmbTRNM2Y1S0Z4aGhheDhSSlMxQkduZ1kvb2ZpN0dDbkhYZWRLZTNoYWZG?=
+ =?utf-8?B?OXJ4TTJpK2k5bHRSeDVxOG9HQ0NjS256K0NRQXpaQ3N6UytVYktJSU1KLzNm?=
+ =?utf-8?B?eGRvWWU4QjFxQUZXaHdPbkpKTUdvOXBDWEEvR3IxbUVvbGNjeWJGMlhWMk5p?=
+ =?utf-8?B?ZmhBdGxBNFZUMyswK0s2SnRpTXpXSjJ2Q3oyTGl0V1BEMC9NUGs2c0tOa2sy?=
+ =?utf-8?Q?CGpwv14ajWgdNfxd/l?=
+X-OriginatorOrg: amd.com
+X-MS-Exchange-CrossTenant-Network-Message-Id: e8d45c85-9567-4033-17ac-08ded133463c
+X-MS-Exchange-CrossTenant-AuthSource: PH8PR12MB6914.namprd12.prod.outlook.com
 X-MS-Exchange-CrossTenant-AuthAs: Internal
-X-MS-Exchange-CrossTenant-OriginalArrivalTime: 23 Jun 2026 13:43:51.3105
+X-MS-Exchange-CrossTenant-OriginalArrivalTime: 23 Jun 2026 14:25:28.6497
  (UTC)
 X-MS-Exchange-CrossTenant-FromEntityHeader: Hosted
-X-MS-Exchange-CrossTenant-Id: 43083d15-7273-40c1-b7db-39efd9ccc17a
+X-MS-Exchange-CrossTenant-Id: 3dd8961f-e488-4e60-8e11-a82d994e183d
 X-MS-Exchange-CrossTenant-MailboxType: HOSTED
-X-MS-Exchange-CrossTenant-UserPrincipalName: AD/3kqLJNk0z9abm4hQSyz9AKtTEu3liaBmW9sqebR/nOsq4gojudy8YKtDamYtRIQNT7Zthx0e7VtN5IWOBlA==
-X-MS-Exchange-Transport-CrossTenantHeadersStamped: DS0PR12MB7780
+X-MS-Exchange-CrossTenant-UserPrincipalName: dgvLfD5taop+U+RQEXHgtv+sSbQmvRiThsvV0ubTgZEFcHCGjADBCvtMFlhY8ReEemPCFSiSoEMADlkZdYaa1g==
+X-MS-Exchange-Transport-CrossTenantHeadersStamped: DM4PR12MB5986
 
---q2syeh6gxmhpr7jo
-Content-Type: text/plain; protected-headers=v1; charset=us-ascii
-Content-Disposition: inline
-Content-Transfer-Encoding: quoted-printable
-Subject: Re: [PATCH v2 6/6] drm/sysfb: simpledrm: Read panel orientation from
- DT node
-MIME-Version: 1.0
 
-On Tue, Jun 23, 2026 at 11:04:22AM +0200, Thomas Zimmermann wrote:
-> Hi
->=20
-> Am 22.06.26 um 18:17 schrieb Thierry Reding:
-> > On Mon, Jun 22, 2026 at 03:19:40PM +0200, Thomas Zimmermann wrote:
-> > > A DeviceTree panel node can specify the panel's rotation in steps
-> > > of 90 degrees. Set the DRM connector orientation from the field.
-> > > Do nothing if the field is missing or invalid.
-> > >=20
-> > > Signed-off-by: Thomas Zimmermann <tzimmermann@suse.de>
-> > > ---
-> > >   drivers/gpu/drm/sysfb/simpledrm.c | 32 ++++++++++++++++++++++++++++=
-+--
-> > >   1 file changed, 30 insertions(+), 2 deletions(-)
-> > >=20
-> > > diff --git a/drivers/gpu/drm/sysfb/simpledrm.c b/drivers/gpu/drm/sysf=
-b/simpledrm.c
-> > > index a04f0c852ea4..b585d17ca817 100644
-> > > --- a/drivers/gpu/drm/sysfb/simpledrm.c
-> > > +++ b/drivers/gpu/drm/sysfb/simpledrm.c
-> > > @@ -221,6 +221,33 @@ simplefb_get_panel_height_mm_of(struct drm_devic=
-e *dev, struct device_node *of_p
-> > >   	return __simplefb_get_panel_size_mm_of(dev, of_panel_node, "height=
--mm");
-> > >   }
-> > > +static enum drm_panel_orientation
-> > > +simplefb_get_panel_orientation_of(struct drm_device *dev, struct dev=
-ice_node *of_panel_node)
-> > > +{
-> > > +	int ret;
-> > > +	u32 rotation;
-> > > +
-> > > +	ret =3D of_property_read_u32(of_panel_node, "rotation", &rotation);
-> > > +	if (ret) {
-> > > +		drm_dbg(dev, "simplefb: cannot parse panel rotation: error %d\n", =
-ret);
-> > Why is this debug level? Maybe we don't want an error if the property is
-> > absent, but if it really can't be parsed, why not print out a proper
-> > error?
-> >=20
-> > > +		return DRM_MODE_PANEL_ORIENTATION_UNKNOWN;
-> > > +	}
-> > > +
-> > > +	switch (rotation) {
-> > > +	case 0:
-> > > +		return DRM_MODE_PANEL_ORIENTATION_NORMAL;
-> > > +	case 90:
-> > > +		return DRM_MODE_PANEL_ORIENTATION_RIGHT_UP;
-> > > +	case 180:
-> > > +		return DRM_MODE_PANEL_ORIENTATION_BOTTOM_UP;
-> > > +	case 270:
-> > > +		return DRM_MODE_PANEL_ORIENTATION_LEFT_UP;
-> > > +	default:
-> > > +		drm_dbg(dev, "simplefb: cannot parse panel rotation: value %u\n", =
-rotation);
-> > Same here. Seems like we should be verbose when this contains an invalid
-> > value. DT checkers should catch these already, so if the invalid value
-> > makes it here, maybe we should sound the alarm.
->=20
-> Ok. The review bot told me about of_drm_get_panel_orientation(). I intent=
- to
-> reimplement this patch on top of that helper.
 
-Makes sense, yeah.
+On 6/23/26 07:21, sashiko-bot@kernel.org wrote:
+> Thank you for your contribution! Sashiko AI review found 1 potential issue(s) to consider:
+> - [High] The patch unconditionally returns `false` if `screen_info` has memory resources that do not match any standard PCI BAR, breaking primary device detection for systems booting in legacy VGA text modes.
+> --
+> 
+> commit a8c04b0c2e4edb24a29bd696ebde27323036eb98
+> Author: Mario Limonciello <mario.limonciello@amd.com>
+> 
+> x86/video: Only fall back to vga_default_device() without screen info
+> 
+> This commit changes the primary video device detection on x86 to rely
+> exclusively on screen_info if available, and only falls back to
+> vga_default_device() when no screen info resources are present. This
+> prevents multiple devices from erroneously claiming the primary
+> boot_display attribute.
+> 
+> Closes: https://lore.kernel.org/linux-pci/20260618081803.2790848-1-aaron.ma@canonical.com/#t
+> 
+>> diff --git a/arch/x86/video/video-common.c b/arch/x86/video/video-common.c
+>> index e0aeee99bc99e..e5fb3cf885fbd 100644
+>> --- a/arch/x86/video/video-common.c
+>> +++ b/arch/x86/video/video-common.c
+> [ ... ]
+>> @@ -43,21 +43,26 @@ bool video_is_primary_device(struct device *dev)
+>>   	if (!pci_is_display(pdev))
+>>   		return false;
+>>   
+>> -	if (pdev == vga_default_device())
+>> -		return true;
+>> -
+>>   #ifdef CONFIG_SCREEN_INFO
+>>   	numres = screen_info_resources(si, res, ARRAY_SIZE(res));
+>> -	for (i = 0; i < numres; ++i) {
+>> -		if (!(res[i].flags & IORESOURCE_MEM))
+>> -			continue;
+>> +	if (numres > 0) {
+>> +		for (i = 0; i < numres; ++i) {
+>> +			if (!(res[i].flags & IORESOURCE_MEM))
+>> +				continue;
+>> +
+>> +			if (pci_find_resource(pdev, &res[i]))
+>> +				return true;
+>> +		}
+>>   
+>> -		if (pci_find_resource(pdev, &res[i]))
+>> -			return true;
+>> +		return false;
+> 
+> [Severity: High]
+> Does this unconditional return break primary display detection for systems
+> booting via legacy BIOS or VGA text mode?
+> 
+> When booting in legacy VGA text mode, screen_info_resources() populates
+> resources with legacy memory ranges like 0xa0000 or 0xb8000. Since numres > 0,
+> the code enters this block.
+> 
+> However, legacy VGA windows are implicitly routed and not explicitly
+> represented as standard PCI BARs. Because of this, pci_find_resource() will
+> fail to match.
+> 
+> By returning false here, the code completely bypasses the fallback to
+> vga_default_device() for these legacy systems. Should this fall through to the
+> vga_default_device() check instead of returning false when the resources do
+> not match any standard PCI BAR?
+> 
 
-Thierry
+Those devices should get a boot_vga attribute instead of boot_display 
+attribute.  I think this is OK.
 
---q2syeh6gxmhpr7jo
-Content-Type: application/pgp-signature; name="signature.asc"
+>>   	}
+>>   #endif
+>>   
+>> -	return false;
+>> +	/*
+>> +	 * No framebuffer was set up by the firmware/bootloader, so fall back
+>> +	 * to the default VGA device.
+>> +	 */
+>> +	return pdev == vga_default_device();
+>>   }
+> 
 
------BEGIN PGP SIGNATURE-----
-
-iQIzBAABCgAdFiEEiOrDCAFJzPfAjcif3SOs138+s6EFAmo6jZEACgkQ3SOs138+
-s6F3WhAAhVbfQ0HZuJLF5oaD89yT6G1VgePpOYJaTGC9RF4DTAiLUnnt+dJHygP7
-udeoGfyJIvcYnPEdVghJIavZOGhqe0RtlonzbANDb3CHgw0BitXWmxXetyZL4O0T
-wrv1mRv49sQRhu3bcTN7e9g2tLisiKj84tlppiRPXddM/jLDl1WD3QadNv7To7x7
-Z+/gQ8krul534+cUsduc81kQ2pY1SIR3ay+T6ycBQBM7zZqFLHBAKKt76beqYQgf
-HP+RNtUfTNl0M0eqx2buOr1jsfkbsLjLQ+WoHqXytF6HJG186vuqWqTQkWT7P7aI
-N4cpgwZq9WnmKc5R4bpNkuXST07ZXYa8mTAkQImzjqvp4E7lYJHvLs5Im+z7E8eP
-Q+AfjWso8iqh6eZ47qghAUxmz5fN1Xm4Mjcq5LF5XmRZrT62NTppmZjXKKl35rGH
-pRVWP9sQVINsVqQGicPkhj9GfmijOAD0d0u8uDP0psrZCzl+pnL2InXKiAa9zdG4
-ALAGNb/MTVD+KF8h+QWsspNuZAr2wPSMBFCDpUQgZRcZ01Uj6D84l9g0lN7VJXVh
-Ou5C5s/HEKjU8qthDlecb8VmDCIy+yolNfOKJ/1epEPbqebRDcIvqU8Diucg9YXH
-zOMDqeA+YsiR43OGJEaXboika+KwifQwxRQXstn29X56tRuvAp4=
-=/IIC
------END PGP SIGNATURE-----
-
---q2syeh6gxmhpr7jo--
