@@ -1,171 +1,187 @@
-Received: from va-2-37.ptr.blmpb.com (va-2-37.ptr.blmpb.com [209.127.231.37])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from GVXPR05CU001.outbound.protection.outlook.com (mail-swedencentralazon11013036.outbound.protection.outlook.com [52.101.83.36])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EE87B2288D5
-	for <sashiko-reviews@lists.linux.dev>; Tue, 23 Jun 2026 10:03:07 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.127.231.37
-ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1782208992; cv=none; b=MtMB2vA1znz6W77pvXbpeM9iTk656vCQzN+s4BhKen+bNyWCBtBng7LE0QKez1kx03rtQqot3MOTfxyDtBC6gXKvsnC5iMlgANurrcW9N1nVk0diGaTE1v5pdrHUboDMk7p8Y27KMFGhoCX1HQT//w8rFo1QR16dX+d64RXIBF4=
-ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1782208992; c=relaxed/simple;
-	bh=PKj0uf5rG2swSBE04Mi21OhY6wGX8aHMq2N4IxB8ctQ=;
-	h=Cc:Date:Mime-Version:Message-Id:In-Reply-To:To:From:Content-Type:
-	 Subject:References; b=a4UYq5fzD48eVI8u+3FqHa3ux5W6FrKLMyPEF7/ZLuAHOCd4k+aTG/sluiXzdcNJa+EPOYiOZK7uXTvrZ7xdwycWM3xPFJnuWmbGSkcXDl4psC60LFaCoHA4CYHWbwRA2O7x3j31ra/SmEcSB5e/XkdgHocv1KUHDq7132KdTsk=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=fnnas.com; spf=pass smtp.mailfrom=fnnas.com; dkim=pass (2048-bit key) header.d=fnnas-com.20200927.dkim.feishu.cn header.i=@fnnas-com.20200927.dkim.feishu.cn header.b=09RlAIGA; arc=none smtp.client-ip=209.127.231.37
-Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=fnnas.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=fnnas.com
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CE3D6368D7C;
+	Tue, 23 Jun 2026 10:19:03 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=fail smtp.client-ip=52.101.83.36
+ARC-Seal:i=2; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
+	t=1782209945; cv=fail; b=mDWgzuChRLklJkxEEk6r3rPgf+Ku31HuT7CvBeh3ZP7bi4cNfIEncrzHytF6WM23Blz0mM0VE9hxAsUSnry+KDGjkjLmaYPLYBizZTjI303OHeEEqAN7XzM2V6nUkJh0rhWdYF26TWAmgrb0N71TCH5ewdB4rs1NrZmDlvle02M=
+ARC-Message-Signature:i=2; a=rsa-sha256; d=subspace.kernel.org;
+	s=arc-20240116; t=1782209945; c=relaxed/simple;
+	bh=+we5wKOnzZyfgD6CEQeOBYxa9u59yOeVTHyNoagCB5g=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:Content-Type:
+	 Content-Disposition:In-Reply-To:MIME-Version; b=O3qSl8NC0mzzsu7TkVHzhKif57DMxcaKYNjAKzgCe3bR1tmdyCDjWyDvT0Y8XuvNPKSL2DVG6TS60+eeNOcolBiA0w6IivM43+rsruCwlT9/g2+WRHH6bkr1gNS8Dhy0nisM/u6H1pU/8gz2fK4yjXkL3NqJ99b24OBky+wHgaM=
+ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=oss.nxp.com; spf=pass smtp.mailfrom=oss.nxp.com; dkim=fail (2048-bit key) header.d=NXP1.onmicrosoft.com header.i=@NXP1.onmicrosoft.com header.b=aX4WUK63 reason="signature verification failed"; arc=fail smtp.client-ip=52.101.83.36
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=oss.nxp.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=oss.nxp.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=fnnas-com.20200927.dkim.feishu.cn header.i=@fnnas-com.20200927.dkim.feishu.cn header.b="09RlAIGA"
-DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed;
- s=s1; d=fnnas-com.20200927.dkim.feishu.cn; t=1782208981;
-  h=from:subject:mime-version:from:date:message-id:subject:to:cc:
- reply-to:content-type:mime-version:in-reply-to:message-id;
- bh=Pg65HcSR4bp4ci0dPxW+vobr3hyPZZim+6nkamq2r00=;
- b=09RlAIGAk+UfaBUmhCo1r4U+KJDyNItHfHA9Z5iwlu4JxC/j6PW0wvSEGkEeQSs9Y/SCBl
- PK3LPAKqolZ3EKfHiBG7FlFbIgO4+dIjfZfe5KKscbz1txt0SP5DyNpq0hDim3RgW70AdS
- 6L978VRSKe8ZIt1F3x6GA7kRBgA6cnTcXj9/ttLfHhqM2gG00GPm+R/d+zwu5Duw+sMtMO
- 4E7CHOTchhvEUoMhGF9+c0K/XuPXrcj38r6O/H9s61TYEIYL/KEyYq4KewwkasFG413mjr
- UN+791bw1Y4D9bRAlqwArSvDzoMUT0chZw5I53yjQPmgNJoBz+B0hxAJieS/zg==
-Cc: <yukuai@fygo.io>, <linux-raid@vger.kernel.org>
-Date: Tue, 23 Jun 2026 18:02:57 +0800
+	dkim=fail reason="signature verification failed" (2048-bit key) header.d=NXP1.onmicrosoft.com header.i=@NXP1.onmicrosoft.com header.b="aX4WUK63"
+ARC-Seal: i=1; a=rsa-sha256; s=arcselector10001; d=microsoft.com; cv=none;
+ b=FqRCkBBQX8BST42IOe027UIi2o9zKvBHX8nyeBwyV1V5BhyoE5/3W88SEvrR2y+WFIAsHqbRFW+IF7RwHyvJjOoUwoWVPCUbashYxTz5/boM2oPSZQuo63d6KZxjvcY0ONgqpSeP5/b1guDVthuxtvHwsph0iKpPTBwx5HX58zHiOCjbS9YEFvyhK9FBZW3k4KenNnorLHDAztwE099NiKbH3WNzbZHjYrZlh/usYM9UbKJpNZplysjDwfFK/AcYGc9bqvKs5orU7938dSqFEsdGKlkrIad0zAIucupCLmYleVKQBGrDX5WRRneNeTVjSMZO8E0Id7MPUUQv6bZDmg==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com;
+ s=arcselector10001;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
+ bh=wRFkuI3BanOyRlQx2Phyb2xbEFTzlfubJ4eGYNakV10=;
+ b=VBOP1yaTU5ibe0yJ0Zh2NQvU0ufqMkGXT/z/aCVCHY951kSqZhkIFmrZ/Rorwun1KK7NKyh19FX9NIOLLSCIG6tcpIX00WRtsEx9y3twojofm5XnhNgNnUJDKb3F1Nrw6qRP6g7qDFsv/Dy7FswxUOqOAWAGAptsyWlmbiwWZhHELF3RT7C1wtGfJQ7YLb/EzwcjPP/GFuRiSGQoL8S6zQe3D8Qu018mIhXeBKWKacQG/2GlFDVIn9M8yZ2NH7sQL8z/wzI3rUeMsW18622pNRo2wgcZh+Z/rwGoBPQTpJirvjR5RWrYZ4aG6z+y3mVbzZq+qvtCgyLDUeMmNTN3GA==
+ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
+ smtp.mailfrom=oss.nxp.com; dmarc=pass action=none header.from=oss.nxp.com;
+ dkim=pass header.d=oss.nxp.com; arc=none
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=NXP1.onmicrosoft.com;
+ s=selector1-NXP1-onmicrosoft-com;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
+ bh=wRFkuI3BanOyRlQx2Phyb2xbEFTzlfubJ4eGYNakV10=;
+ b=aX4WUK63PtbUrZI4C4kk2AzMKq/6BorjWJd4oBVKgIEE/nDxtVR/8TzdwwggKQcA0KM8Gcr3bO2rlKAF6O+5atmx6avkoxmzcuXlH08puqdTvToe2z/b7WYdaqkJqK4Q5g3EPm9EDyWFo06LD/Ue5CZzZTNo5Lc2ItNpx52plfJuSPaw/Axpc0rjSv1L+OpPm6e0CqQxD2384j+7HOKIJAFIy77UytN7ho2+WfiDQlAMcDrTDUNM68W8yC28HMw8eHr8lcQ02sOtqraBr4Y86u9FyzuuHIystKVQaGOAoliOfFwXUe200Edzsf0SCW3K8opvIVwbA48onIAkh60t7g==
+Authentication-Results: dkim=none (message not signed)
+ header.d=none;dmarc=none action=none header.from=oss.nxp.com;
+Received: from VI1PR04MB5807.eurprd04.prod.outlook.com (2603:10a6:803:ec::21)
+ by VI0PR04MB11868.eurprd04.prod.outlook.com (2603:10a6:800:31e::15) with
+ Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.21.139.18; Tue, 23 Jun
+ 2026 10:19:00 +0000
+Received: from VI1PR04MB5807.eurprd04.prod.outlook.com
+ ([fe80::3da4:2827:d637:37de]) by VI1PR04MB5807.eurprd04.prod.outlook.com
+ ([fe80::3da4:2827:d637:37de%4]) with mapi id 15.21.0139.018; Tue, 23 Jun 2026
+ 10:18:59 +0000
+Date: Tue, 23 Jun 2026 18:22:16 +0800
+From: Joy Zou <joy.zou@oss.nxp.com>
+To: sashiko-reviews@lists.linux.dev
+Cc: linux-input@vger.kernel.org, Frank.Li@kernel.org, imx@lists.linux.dev,
+	dmitry.torokhov@gmail.com
+Subject: Re: [PATCH v4 1/4] Input: snvs_pwrkey - make use of dev_err_probe()
+Message-ID: <ajpeWBne2V8eYOOG@shlinux89>
+References: <20260618-b4-pwrkey-v4-0-4bfda105bdf3@oss.nxp.com>
+ <20260618-b4-pwrkey-v4-1-4bfda105bdf3@oss.nxp.com>
+ <20260618073800.D70B51F00A3D@smtp.kernel.org>
+Content-Type: text/plain; charset=iso-8859-1
+Content-Disposition: inline
+Content-Transfer-Encoding: 8bit
+In-Reply-To: <20260618073800.D70B51F00A3D@smtp.kernel.org>
+X-ClientProxiedBy: MA5PR01CA0016.INDPRD01.PROD.OUTLOOK.COM
+ (2603:1096:a01:177::14) To VI1PR04MB5807.eurprd04.prod.outlook.com
+ (2603:10a6:803:ec::21)
 Precedence: bulk
 X-Mailing-List: sashiko-reviews@lists.linux.dev
 List-Id: <sashiko-reviews.lists.linux.dev>
 List-Subscribe: <mailto:sashiko-reviews+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:sashiko-reviews+unsubscribe@lists.linux.dev>
-Mime-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Message-Id: <8a81ba6e-3501-4b34-98fc-3479295937ff@fnnas.com>
-Content-Transfer-Encoding: quoted-printable
-X-Lms-Return-Path: <lba+26a3a59d3+4ca170+lists.linux.dev+chencheng@fnnas.com>
-In-Reply-To: <20260622122902.F25CD1F00A3A@smtp.kernel.org>
-To: <sashiko-reviews@lists.linux.dev>
-From: "Chen Cheng" <chencheng@fnnas.com>
-Content-Type: text/plain; charset=UTF-8
-Subject: Re: [PATCH v5 3/3] md/raid10: free r10bio before ending master_bio in raid_end_bio_io()
-X-Original-From: Chen Cheng <chencheng@fnnas.com>
-References: <20260622121312.1775322-1-chencheng@fnnas.com> <20260622121312.1775322-4-chencheng@fnnas.com> <20260622122902.F25CD1F00A3A@smtp.kernel.org>
-Received: from [192.168.8.62] ([183.34.169.141]) by smtp.feishu.cn with ESMTPS; Tue, 23 Jun 2026 18:02:58 +0800
+MIME-Version: 1.0
+X-MS-PublicTrafficType: Email
+X-MS-TrafficTypeDiagnostic: VI1PR04MB5807:EE_|VI0PR04MB11868:EE_
+X-MS-Office365-Filtering-Correlation-Id: 31b456f3-842d-4e5c-905b-08ded110d727
+X-MS-Exchange-SenderADCheck: 1
+X-MS-Exchange-AntiSpam-Relay: 0
+X-Microsoft-Antispam:
+	BCL:0;ARA:13230040|366016|376014|1800799024|23010399003|19092799006|22082099003|18002099003|4143699003|56012099006|11063799006|6133799003;
+X-Microsoft-Antispam-Message-Info:
+	iuqI53M4wyKLk+Zdpin3h55Zivd91g1fULIcPd72RcsglxcYJ0igGhdwx7zFHC1aPnxNkDtLRPDvOuT9sP2Gl2n53o8aPBoKiHa8c9ZLWUb+lRdKJA6JVv64ZG3HT1ORvKI7sRL+5i+GXYe09kFclQzleC0ZMVWl9HI7a5o7mNC7cC5yqPdFN+epa1hnPWsFsbUEKjTHRlhO+FGN7djI3/5YERH7UP3/eaAe1WwvH49PhGZqhRjufUrO2r1E96hxxQvmNDmLg2lSgDSXb2T0vbldQJj+XMjvkCBtXznZRtmb3PBj4eUORchJYtmXo+UgJZdWLFjwRpXuoFGB4RO1rfC1/UZztkhqkX5rJJngRhhvBoDjEQd/2/gXO7WMqOICmdJ3Ed0rmm+OFWohYjF/KzmGgRMViMtcrzNEowYybMxFHubb6NocKKzjxTVWRI9aK10Z5wF2YrS7w3wtTzQmY3WnFDU/2ZB1992F2BAV46wbP4QKsOsZn6MhzqlmTRTMTo5HvGzXfuAXAEURO2jvGekVCd7asGZtdC68bsbx06rrmbFvMRj8HoBNB2ZnE+7r+6O0HN4pJUFjzFvNscEsVdBFiM6jbAWqHXyTCvAuy+g=
+X-Forefront-Antispam-Report:
+	CIP:255.255.255.255;CTRY:;LANG:en;SCL:1;SRV:;IPV:NLI;SFV:NSPM;H:VI1PR04MB5807.eurprd04.prod.outlook.com;PTR:;CAT:NONE;SFS:(13230040)(366016)(376014)(1800799024)(23010399003)(19092799006)(22082099003)(18002099003)(4143699003)(56012099006)(11063799006)(6133799003);DIR:OUT;SFP:1101;
+X-MS-Exchange-AntiSpam-MessageData-ChunkCount: 1
+X-MS-Exchange-AntiSpam-MessageData-0:
+	=?iso-8859-1?Q?T17EFbpiq5rf+rGZTZY66ux//UgqoMU1a6CX7g7kUVmk9+udE4Zgx+wrAB?=
+ =?iso-8859-1?Q?emQrAewztUg1XAyoNnjiFJr9crGmcS/R08dlr6uHa63YMifKqE+NYwgjsK?=
+ =?iso-8859-1?Q?lH8YiIgUTC4OyA74tlZX1Lx839ODu2hhDjG7rYXT3AwS6Jw7VgvDGOwarD?=
+ =?iso-8859-1?Q?XPrVokSG75xzVvJ584PeyIdebv1hsQgq7xd/sZyeB2RChB1jW8O4pOE8VW?=
+ =?iso-8859-1?Q?Hszfvv0Ns/TZ6c/tVhwM/U77gXA00V3X/+EJf0or08+mV2iazsDLL8VRcR?=
+ =?iso-8859-1?Q?H4rcfGSp3tsK+2T9vA+mX9bUiX6LoCW3ia8ehn5jj4C1c4Qe1W6rgLYdUG?=
+ =?iso-8859-1?Q?pWkoH7G7/700WffhbX5LYGBul2pPvFARYvNaYg0EflYsQl89Kb5JK8c5Yf?=
+ =?iso-8859-1?Q?hyfrXSKmF+g0yOtmBUiM2/FDFZ/44CSNYM9b2ZifwuJVJy/abovBBstbsn?=
+ =?iso-8859-1?Q?+T0DB/tmhmj97Bwv05qOz450Pt4Po1zbs7pBZPUQcgnlOYoToJKUSHaLQD?=
+ =?iso-8859-1?Q?Qi21acr2twkX0ewOWesIlwRE1bKbKcMImFKZjEGoxNHuYj7ISaYUuphGra?=
+ =?iso-8859-1?Q?Dt7bZBikK5QJtjeaGXMK9gK1Uo1T2kicKdgVn4/0ARCJ0QNqXTWLQZA5j3?=
+ =?iso-8859-1?Q?qYG9T1xuBoEaA+Ei5rS5Cj8WfktzLMf547oyFxteVhFGt3PgCg8Km+cw6g?=
+ =?iso-8859-1?Q?gI+8W6lNPR2nG/Day1JXeMcuOjyVTU7IEB/lInad121ua4gDODJq4SGdvQ?=
+ =?iso-8859-1?Q?XfeacaGdYGt70Kf+S50IkloUsZ36Z8MKA1dqOTgS4zC4OcGH0LzpKN5kh1?=
+ =?iso-8859-1?Q?yOOY8358ODkmOLlbBGyQ4VJm/LXrK4d6KoMTUXe/cT1ulyJrYOGS4UOptF?=
+ =?iso-8859-1?Q?7HuvcKT9IVG/5+eq7lJm71gltgIBwtVPz4gq8X5RR5OrTq8uL3l6HRz85f?=
+ =?iso-8859-1?Q?Ph1FLPflM8hqFTEZafKPV5YybNzNPPtBviObk5oUI/Mzh/5nY8SvQAR1qN?=
+ =?iso-8859-1?Q?Ii7YZkZHwQjFq3QEnEe24oTKKDej4pGT7YB4h0Kkw8V+mJdLLWGd8xYbj4?=
+ =?iso-8859-1?Q?pn06sFMtYVLKMcvPe7L508MIXmZz5ePPSBLZ71PoFIYr3PRkptGjnyhq7b?=
+ =?iso-8859-1?Q?Z/sOzzRqnB/9f+e16X5DPaXDrz6Dz+GLpmMicS8xtXgk0d1joNVgQ6K18m?=
+ =?iso-8859-1?Q?F6T2NSPpafUTx/JvlPX/bKRSafOlDsoT6zUeKYkjCEfgF9n1A/ZVpGVWZX?=
+ =?iso-8859-1?Q?UeZt3wiQReVZqpN5+p7wxQW6u0KI2pKBkmbDivNqTUiQ/iHXT4j4yh/0fR?=
+ =?iso-8859-1?Q?mnVwRaKL4fscIA8zUCdyRTBKX2dgfN6hHKl/x73vprEhoF2pO28daYmKtJ?=
+ =?iso-8859-1?Q?TXCP6dysLEOELZ+yGi9OUpHI7xoxIa0avXZEeB4KzPACN1S44cMiWGoq/K?=
+ =?iso-8859-1?Q?k0TCCF90s9Hpp2HfBtVIVyk0qayzvnkUIh0BV9BL5W+zkuIcNDNaAKE+NG?=
+ =?iso-8859-1?Q?AJvX3w20u1SnH46KtC78f5yyQu5QjgZP4gkRyQzWwPErNse/5KlVUE1VMM?=
+ =?iso-8859-1?Q?6Bo44NY/NiFpOEIaztAiUezuTnzoLx0ZLoPfF0jleUfYxCksZjhL2iBTcs?=
+ =?iso-8859-1?Q?bcSIEWOuVV//2Yo/8xWS7O+z4G7FwZVU7y9QlTVGLLSTavZgB1BEX4KGct?=
+ =?iso-8859-1?Q?iCb3mOStUKb7tA1PEqs1d2BDh80ivArcOyWAKATr3G6dkRSzsFrwnTjXKj?=
+ =?iso-8859-1?Q?WOYBNnGvoobZ2BFhqFVpL65VjBsc3n7AWdbyiLKy/bEGmIcjoI/u4TUS+3?=
+ =?iso-8859-1?Q?7HE+APDj9Onk+BEomIlOx+Wu1BRNyX9i61ERanv67FwN/a00NPdN?=
+X-OriginatorOrg: oss.nxp.com
+X-MS-Exchange-CrossTenant-Network-Message-Id: 31b456f3-842d-4e5c-905b-08ded110d727
+X-MS-Exchange-CrossTenant-AuthSource: VI1PR04MB5807.eurprd04.prod.outlook.com
+X-MS-Exchange-CrossTenant-AuthAs: Internal
+X-MS-Exchange-CrossTenant-OriginalArrivalTime: 23 Jun 2026 10:18:59.7349
+ (UTC)
+X-MS-Exchange-CrossTenant-FromEntityHeader: Hosted
+X-MS-Exchange-CrossTenant-Id: 686ea1d3-bc2b-4c6f-a92c-d99c5c301635
+X-MS-Exchange-CrossTenant-MailboxType: HOSTED
+X-MS-Exchange-CrossTenant-UserPrincipalName: tuUtXNrPAXd+PGSg0Bh5bcFCVWB+tfLh3fOviB3lhRVPdLzE9TcawsTj9y2L++i5UEWn1XA7z49RZegAUVHVK96MlfbRVNWrofbNk0/yBCB4xzdGURmAoiRTQPyX7T1B
+X-MS-Exchange-Transport-CrossTenantHeadersStamped: VI0PR04MB11868
 
-=E5=9C=A8 2026/6/22 20:29, sashiko-bot@kernel.org =E5=86=99=E9=81=93:
-> Thank you for your contribution! Sashiko AI review found 2 potential issu=
-e(s) to consider:
->=20
+On Thu, Jun 18, 2026 at 07:38:00AM +0000, sashiko-bot@kernel.org wrote:
+> Thank you for your contribution! Sashiko AI review found 1 potential issue(s) to consider:
+> 
 > Pre-existing issues:
-> - [High] Incomplete fix: identical Use-After-Free and mempool corruption =
-in `raid_end_discard_bio`.
-> - [High] Memory leak of `r10_bio` on `REQ_NOWAIT` write requests during c=
-luster resync or reshape.
+> - [Medium] Memory leak of struct wake_irq on device unbind
 > --
->=20
-> commit 088539a2820315440079f31df4aa792c8a6bc547
-> Author: Chen Cheng <chencheng@fnnas.com>
->=20
-> md/raid10: free r10bio before ending master_bio in raid_end_bio_io()
->=20
-> This commit reorders the teardown sequence in raid_end_bio_io() to free
-> r10_bio before calling bio_endio(). This prevents a race condition where
-> a concurrent array reshape can alter the geometry and destroy the mempool
-> after the master bio completes but before the r10_bio is freed.
->=20
->> diff --git a/drivers/md/raid10.c b/drivers/md/raid10.c
->> index d740744a97461..a4642c903b202 100644
->> --- a/drivers/md/raid10.c
->> +++ b/drivers/md/raid10.c
->> @@ -332,12 +332,12 @@ static void raid_end_bio_io(struct r10bio *r10_bio=
-)
->>   {
->>   	struct bio *bio =3D r10_bio->master_bio;
->>   	struct r10conf *conf =3D r10_bio->mddev->private;
->> +	bool returned =3D test_and_set_bit(R10BIO_Returned, &r10_bio->state);
->> +	blk_status_t status =3D test_bit(R10BIO_Uptodate, &r10_bio->state)
->> +				? BLK_STS_OK : BLK_STS_IOERR;
->>  =20
->> -	if (!test_and_set_bit(R10BIO_Returned, &r10_bio->state)) {
->> -		if (!test_bit(R10BIO_Uptodate, &r10_bio->state))
->> -			bio->bi_status =3D BLK_STS_IOERR;
->> -		bio_endio(bio);
->> -	}
->> +	put_all_bios(conf, r10_bio);
->> +	mempool_free(r10_bio, conf->r10bio_pool);
->>  =20
->>   	/*
->>   	 * Wake up any possible resync thread that waits for the device
->> @@ -345,7 +345,10 @@ static void raid_end_bio_io(struct r10bio *r10_bio)
->>   	 */
->>   	allow_barrier(conf);
->>  =20
->> -	free_r10bio(r10_bio);
->> +	if (!returned) {
->> +		bio->bi_status =3D status;
->> +		bio_endio(bio);
->> +	}
->>   }
->>  =20
->=20
-> [Severity: High]
-> This is a pre-existing issue, but the exact same race condition appears t=
-o
-> exist in the discard completion path.
->=20
-> In drivers/md/raid10.c:raid_end_discard_bio():
->=20
-> 	} else {
-> 		md_write_end(r10bio->mddev);
-> 		bio_endio(r10bio->master_bio);
-> 		free_r10bio(r10bio);
-> 		break;
-> 	}
->=20
-> Since bio_endio(r10bio->master_bio) drops active_io to zero, couldn't thi=
-s
-> also wake up mddev_suspend() and allow a concurrent reshape to modify
-> conf->geo and destroy conf->r10bio_pool before free_r10bio() is called?
->=20
-
-yes . raid_end_discard_bio have same issue .
-
->=20
-> [Severity: High]
-> This is a pre-existing issue, but does raid10_write_request() leak the r1=
-0_bio
-> on REQ_NOWAIT requests?
->=20
-> In drivers/md/raid10.c:__make_request():
->=20
-> 	r10_bio =3D mempool_alloc(conf->r10bio_pool, GFP_NOIO);
-> ...
-> 	if (bio_data_dir(bio) =3D=3D READ)
-> 		raid10_read_request(mddev, bio, r10_bio);
-> 	else
-> 		raid10_write_request(mddev, bio, r10_bio);
->=20
-> Then in raid10_write_request() during clustered resync:
->=20
-> 	if ((mddev_is_clustered(mddev) &&
-> 	     mddev->cluster_ops->area_resyncing(mddev, WRITE,
-> 						bio->bi_iter.bi_sector,
-> 						bio_end_sector(bio)))) {
-> 		DEFINE_WAIT(w);
-> 		/* Bail out if REQ_NOWAIT is set for the bio */
-> 		if (bio->bi_opf & REQ_NOWAIT) {
-> 			bio_wouldblock_error(bio);
-> 			return;
-> 		}
->=20
-> And later during reshape:
->=20
-> 		if (bio->bi_opf & REQ_NOWAIT) {
-> 			allow_barrier(conf);
-> 			bio_wouldblock_error(bio);
-> 			return;
-> 		}
->=20
-> Since these paths return immediately, they leave the r10_bio allocated. C=
-ould
-> repeated REQ_NOWAIT rejections eventually exhaust conf->r10bio_pool, caus=
-ing
-> subsequent allocations in __make_request() to hang indefinitely?
->=20
-
-seems fixed recently .
+> 
+This is a pre-existing issue that won't be fixed in this patchset.
+Will address it in a separate fix.
+BR
+Joy Zou
+> commit 469e290fcf154d6638767e1e60cb2427638bea98
+> Author: Joy Zou <joy.zou@nxp.com>
+> 
+> Input: snvs_pwrkey - make use of dev_err_probe()
+> 
+> This commit updates the probe function of the snvs_pwrkey driver to
+> use dev_err_probe() for error handling. This simplifies the code and
+> improves logging for deferred probes.
+> 
+> > diff --git a/drivers/input/keyboard/snvs_pwrkey.c b/drivers/input/keyboard/snvs_pwrkey.c
+> > index 954055aaf6e29..8cc6863d26ed8 100644
+> > --- a/drivers/input/keyboard/snvs_pwrkey.c
+> > +++ b/drivers/input/keyboard/snvs_pwrkey.c
+> [ ... ]
+> > @@ -209,16 +201,12 @@ static int imx_snvs_pwrkey_probe(struct platform_device *pdev)
+> >  	error = devm_request_irq(&pdev->dev, pdata->irq,
+> >  			       imx_snvs_pwrkey_interrupt,
+> >  			       0, pdev->name, pdev);
+> > -	if (error) {
+> > -		dev_err(&pdev->dev, "interrupt not available.\n");
+> > -		return error;
+> > -	}
+> > +	if (error)
+> > +		return dev_err_probe(&pdev->dev, error, "interrupt not available.\n");
+> >  
+> >  	error = input_register_device(input);
+> > -	if (error < 0) {
+> > -		dev_err(&pdev->dev, "failed to register input device\n");
+> > -		return error;
+> > -	}
+> > +	if (error < 0)
+> > +		return dev_err_probe(&pdev->dev, error, "failed to register input device\n");
+> >  
+> >  	device_init_wakeup(&pdev->dev, pdata->wakeup);
+> >  	error = dev_pm_set_wake_irq(&pdev->dev, pdata->irq);
+> 
+> [Severity: Medium]
+> This is a pre-existing issue, but does this dev_pm_set_wake_irq() allocation
+> leak when the driver is unbound?
+> 
+> Because this driver relies entirely on devres for resource management and
+> does not implement a .remove callback, there is no explicit call to
+> dev_pm_clear_wake_irq() upon driver unbind.
+> 
+> The device core does not automatically free dev->power.wakeirq during
+> device_pm_remove(), so this allocated wake_irq structure appears to leak
+> every time the driver is unbound.
+> 
+> Could this be fixed by switching to the managed variant,
+> devm_pm_set_wake_irq()?
+> 
+> -- 
+> Sashiko AI review · https://sashiko.dev/#/patchset/20260618-b4-pwrkey-v4-0-4bfda105bdf3@oss.nxp.com?part=1
