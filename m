@@ -1,140 +1,162 @@
-Received: from mail-pf1-f172.google.com (mail-pf1-f172.google.com [209.85.210.172])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from mx0a-001b2d01.pphosted.com (mx0a-001b2d01.pphosted.com [148.163.156.1])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 234013AB26D
-	for <sashiko-reviews@lists.linux.dev>; Tue, 23 Jun 2026 06:05:27 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.210.172
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7C68D3290A6;
+	Tue, 23 Jun 2026 06:13:28 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=148.163.156.1
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1782194730; cv=none; b=qMH6d+czMIXNNTgjjjNsnsbvo043UpDKJbZRZSq8cK6xFXKaCb6tm3pXrA8bhFcM9DIkPTFgiWzJwQJ4oO9o/5PeW5BMWNRB9rIf1RBPBxMM4h31EXb8v3S6yOH29YwpbRaYx6oeBJCPXlE21uwZZPnRNGaLzFF4KrLOIo80cVM=
+	t=1782195209; cv=none; b=UTJoWu2EBUqMJvlNbknISyhm6kRRwEqii5uDriJFHJ0r5nQZvxOoNwwdJuIcLfm4ofx4z307PRq8bwL/DznW4LSafpj9EiqKGXc7Bnv/FHu3w3DvCC0kRJ7tDw71ekdn+DiShz2k3iwTkyZ+vUaOo6Pv2wo5R3zH5xMYmeyacfw=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1782194730; c=relaxed/simple;
-	bh=X0Nc3LPeP3yvoTzuOeTi8HsCjRqSR9NDjqFs9CJsHhs=;
-	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=QBC7XaCbk/QUfbkv03CbDUye/qXgM9YWAm6Lwz/T3nXga5Z4w6ReFk4a4Jto1f9xqinSRRx7C4hn9aZBK2HUSVZulwt+wllzxUV/f5j6zMCYnaHDUkykXXnWlj6T80oWBO1ahnusAjhHeQZfxxS3eVS6YmDRZWNGRm2pFkds2f8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=F/rAdwoG; arc=none smtp.client-ip=209.85.210.172
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+	s=arc-20240116; t=1782195209; c=relaxed/simple;
+	bh=hm17CdDoztPhhS9+7uWhsrGqONsu33qxq7m9Rq2AaSw=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=jkpM0Pi9p1eiuFriq+ph6IaTwHn47E4H1XP2Y3LP2sVh99knGDkYY4WB8SSNydqjbF+7qDGVu04eOk6tS9MATUKO3UEe8YGJEZA7YjisQMdek+Iz6mmxrPP3EjL0pUdUlOLD8Ciss4bFxxkgHjcELYd7yjttZh+32sSV2Nhfc2A=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linux.ibm.com; spf=pass smtp.mailfrom=linux.ibm.com; dkim=pass (2048-bit key) header.d=ibm.com header.i=@ibm.com header.b=ovJdySfu; arc=none smtp.client-ip=148.163.156.1
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linux.ibm.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linux.ibm.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="F/rAdwoG"
-Received: by mail-pf1-f172.google.com with SMTP id d2e1a72fcca58-8422f395a4aso395198b3a.0
-        for <sashiko-reviews@lists.linux.dev>; Mon, 22 Jun 2026 23:05:27 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20251104; t=1782194727; x=1782799527; darn=lists.linux.dev;
-        h=content-transfer-encoding:mime-version:references:in-reply-to
-         :message-id:date:subject:cc:to:from:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=2Ef21YKNRKTwE4+JoXHQ8LZhCHi66wbfOD/5s58Gc8o=;
-        b=F/rAdwoGgN/ebz0zurz1pSh80TxDrb4Qn22jhClV40nEDqZ9YoD9eOKHH3zr/Y8+IG
-         65BbgT5KGP+K85Ze8KaLvxkXWgd/1NVvhD2Ws8OdzvK3psVbwf5pwxPzxD/r2NC3JRN1
-         VkjMD2yBoBXY8UAWkMwikCVYqPhRRNKKEjbNXDdt5PDr8IHHSCrk9Enfin4VDKX4ezLc
-         KaZTwu5AAPHcvXdJP22Vb/ERB3PeXFw/X819KRI97lX0PJ2uAA0sq6Z+KEqG6Xbxvb27
-         kqqNnDKH3KfJurLeAvo5rPYlNy7r0aNRAnIicpY0ytk9BO9D4OCT27UamEMQ4EmbF9qK
-         cdBQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20251104; t=1782194727; x=1782799527;
-        h=content-transfer-encoding:mime-version:references:in-reply-to
-         :message-id:date:subject:cc:to:from:x-gm-gg:x-gm-message-state:from
-         :to:cc:subject:date:message-id:reply-to;
-        bh=2Ef21YKNRKTwE4+JoXHQ8LZhCHi66wbfOD/5s58Gc8o=;
-        b=W1TUqo3wt0maJBaXmhrqLX3uf2FwO6xjJUpnSRiF52HxdabJ6po9ZVoqYm/IEK7nrf
-         CaF+wyYXwjNJ3OcsAUolGkiKep1tuIP3Gzso9pBJCTOEbSy77mWEIRIzZfxC+Zfj66Jf
-         tICYCgy2UJy53AVTIXgSv2huuE2GCJj6Zr7hR1He0dlRu0SV2g0zuzrEXoXbZSvxXRrt
-         QO/pUzV0mwN901JX2naAe3B+x7sZZMFQdthlFa7vercrvhtIV173PBL6djULQFeMOjKG
-         EYFA5TPnw9rbEBprUlAlbhiDSxmrYP13t1fQOwBYGfE4wjhc+7R4sqXzVAM0pBj7Y6To
-         /FiA==
-X-Forwarded-Encrypted: i=1; AFNElJ+ZsfIS72vbTSIkKFeZQYNb9MHfyPK2KQkbZnYFR7iaP/0nMJxKnFlkVBwulbiUppiNjlmqW2RNmQYeNL2F2fM=@lists.linux.dev
-X-Gm-Message-State: AOJu0YwP4bPRtfQ6zqJbdCSv7oQ+Z+8KYSDIvVuuQIwN1HrVrDqHqmaf
-	5hnTaRmpUACd750n0CLBdsdutiXe3564bZdfRr9mJ7cTBxHNz0CDu8hM
-X-Gm-Gg: AfdE7cmXF3yR2Rhe4mV9sooAZ7gw/9UsBZr2PnKy4SQUW8sjdYZ0ya4D7pwC9cSmy7V
-	3GlaecPxWT4u41DLO4eCpE/+UUaynUL5UtPzY2XJCVJzM5nxEHEWXO6sceP3u8izLDuCSh5ZzoP
-	J4zrHG59grpaaqlpBZFheKE/zKJ+86kiDbfGCQaQjNFV/xOquMktUZGz0f0AqEGr1kP1hNDp4+o
-	CUnzFTFjYYGe4ihPvEdH1tWfpYGFHYSgQPfEVPAtViyYh6bRlMoiP5QbJRBgcXA/3R2c1xS3JEK
-	0sVbiRWIBoaxJS3ps+zoKLST7skNKxKIKVCau49KvognUC2Iyt9O6/TbJ50jW8JZoYwFBAiM6PH
-	ePN7Lbd1uhsTyw/vGvEeMMsx/AEaIP/Wtsu8Of74ZB8zh7FATFYqgcIdVYp0mxNTnKRoiy8n/qC
-	UXteUKe2Jsig==
-X-Received: by 2002:a05:6a00:2c95:b0:842:5ea5:5fe0 with SMTP id d2e1a72fcca58-84591b260d6mr2136947b3a.6.1782194727240;
-        Mon, 22 Jun 2026 23:05:27 -0700 (PDT)
-Received: from arch.localdomain ([2409:8a28:a57:2041::1002])
-        by smtp.gmail.com with ESMTPSA id d2e1a72fcca58-84564ee3dc2sm9160454b3a.58.2026.06.22.23.05.23
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Mon, 22 Jun 2026 23:05:26 -0700 (PDT)
-From: Jun Yan <jerrysteve1101@gmail.com>
-To: sashiko-bot@kernel.org
-Cc: conor+dt@kernel.org,
-	devicetree@vger.kernel.org,
-	jerrysteve1101@gmail.com,
-	linux-amlogic@lists.infradead.org,
-	neil.armstrong@linaro.org,
-	robh@kernel.org,
-	sashiko-reviews@lists.linux.dev
-Subject: Re: [PATCH v3 3/3] arm64: dts: amlogic: meson-axg: Disable pcie_phy node by default
-Date: Tue, 23 Jun 2026 14:05:14 +0800
-Message-ID: <20260623060521.599380-1-jerrysteve1101@gmail.com>
-X-Mailer: git-send-email 2.54.0
-In-Reply-To: <20260617083401.8777A1F000E9@smtp.kernel.org>
-References: <20260617083401.8777A1F000E9@smtp.kernel.org>
+	dkim=pass (2048-bit key) header.d=ibm.com header.i=@ibm.com header.b="ovJdySfu"
+Received: from pps.filterd (m0356517.ppops.net [127.0.0.1])
+	by mx0a-001b2d01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id 65N0mXE4352283;
+	Tue, 23 Jun 2026 06:13:27 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=ibm.com; h=cc
+	:content-transfer-encoding:content-type:date:from:in-reply-to
+	:message-id:mime-version:references:subject:to; s=pp1; bh=vp+Cbi
+	lTka8QUgJ8jBBtinfc+r4aAndzPjmuhbG4LoU=; b=ovJdySfus5P1wH+xVD34hK
+	TjhX2ZsgRKcufeg3cSJYfon1einVZeaNHRPtI2+um2Jen/12vpDtwTZxj09bR53n
+	412ap/k+d/ozTzrI0f4efrkX8W7rYicrqimS9Ev4Zw9xlGZfMnt/6k/ElHyUWq/t
+	htBsGBLseJmZYMuN+Jivfy17EQ2vFsTwVpljwuE/UZfc76LvlI49NIo3LXGojNJP
+	MzWq+/HY/P4o2V142IhBP9FWCReXtvSF28jLo1xen64OqTeGpuBi0RFo4BSfo31a
+	FfTwi5Kg30JSDgfRG8gssEkBoJfED0kMldH7Gpi6tAzr2dBPmqTAloaGdVE/2YZw
+	==
+Received: from ppma12.dal12v.mail.ibm.com (dc.9e.1632.ip4.static.sl-reverse.com [50.22.158.220])
+	by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 4ewjk4cwkc-1
+	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+	Tue, 23 Jun 2026 06:13:27 +0000 (GMT)
+Received: from pps.filterd (ppma12.dal12v.mail.ibm.com [127.0.0.1])
+	by ppma12.dal12v.mail.ibm.com (8.18.1.7/8.18.1.7) with ESMTP id 65N64rCD003576;
+	Tue, 23 Jun 2026 06:13:26 GMT
+Received: from smtprelay03.fra02v.mail.ibm.com ([9.218.2.224])
+	by ppma12.dal12v.mail.ibm.com (PPS) with ESMTPS id 4ex56qa1qy-1
+	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+	Tue, 23 Jun 2026 06:13:26 +0000 (GMT)
+Received: from smtpav03.fra02v.mail.ibm.com (smtpav03.fra02v.mail.ibm.com [10.20.54.102])
+	by smtprelay03.fra02v.mail.ibm.com (8.14.9/8.14.9/NCO v10.0) with ESMTP id 65N6DNk443385164
+	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
+	Tue, 23 Jun 2026 06:13:23 GMT
+Received: from smtpav03.fra02v.mail.ibm.com (unknown [127.0.0.1])
+	by IMSVA (Postfix) with ESMTP id E6D4E2004B;
+	Tue, 23 Jun 2026 06:13:22 +0000 (GMT)
+Received: from smtpav03.fra02v.mail.ibm.com (unknown [127.0.0.1])
+	by IMSVA (Postfix) with ESMTP id D06C720043;
+	Tue, 23 Jun 2026 06:13:22 +0000 (GMT)
+Received: from tuxmaker.boeblingen.de.ibm.com (unknown [9.87.85.9])
+	by smtpav03.fra02v.mail.ibm.com (Postfix) with ESMTPS;
+	Tue, 23 Jun 2026 06:13:22 +0000 (GMT)
+Date: Tue, 23 Jun 2026 08:13:21 +0200
+From: Alexander Gordeev <agordeev@linux.ibm.com>
+To: sashiko-reviews@lists.linux.dev
+Cc: Heiko Carstens <hca@linux.ibm.com>, Vasily Gorbik <gor@linux.ibm.com>,
+        linux-s390@vger.kernel.org
+Subject: Re: [PATCH -next v4 3/4] mm/kasan: Introduce helpers for lazy MMU
+ mode sanitizer
+Message-ID: <20260623061321.269982A64-agordeev@linux.ibm.com>
+References: <cover.1781789772.git.agordeev@linux.ibm.com>
+ <0d76139923a280617a21839b7e3f3e7735b58fdf.1781789772.git.agordeev@linux.ibm.com>
+ <20260618150048.F396A1F000E9@smtp.kernel.org>
 Precedence: bulk
 X-Mailing-List: sashiko-reviews@lists.linux.dev
 List-Id: <sashiko-reviews.lists.linux.dev>
 List-Subscribe: <mailto:sashiko-reviews+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:sashiko-reviews+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
+Content-Type: text/plain; charset=iso-8859-1
+Content-Disposition: inline
 Content-Transfer-Encoding: 8bit
+In-Reply-To: <20260618150048.F396A1F000E9@smtp.kernel.org>
+X-TM-AS-GCONF: 00
+X-Proofpoint-Spam-Info: AW1haW4tMjYwNjIzMDA0NCBTYWx0ZWRfX7FSXNz+X4G9v
+ JmPk/OSyGK/NtLCS/IYq3u8Ue/LJe4wv2uic666ZxDKYXw2o3osiyYC7/bNqyV+3nGlI8K9vVIP
+ oyT0uuJIPvgtvG/RrJ6eKoopmfBgOdE=
+X-Proofpoint-ORIG-GUID: 6KIgL9L5teJxi2xUwyx0wBCH3RcJ_uga
+X-Authority-Analysis: v=2.4 cv=Oph/DS/t c=1 sm=1 tr=0 ts=6a3a2407 cx=c_pps
+ a=bLidbwmWQ0KltjZqbj+ezA==:117 a=bLidbwmWQ0KltjZqbj+ezA==:17
+ a=8nJEP1OIZ-IA:10 a=FelO9ux0wxsA:10 a=VkNPw1HP01LnGYTKEx00:22
+ a=RnoormkPH1_aCDwRdu11:22 a=U7nrCbtTmkRpXpFmAIza:22 a=c92rfblmAAAA:8
+ a=VnNF1IyMAAAA:8 a=VwQbUJbxAAAA:8 a=V0YPiZzyHSctQc0-2CwA:9 a=3ZKOabzyN94A:10
+ a=wPNLvfGTeEIA:10 a=GvGzcOZaWPEFPQC_NcjD:22
+X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwNjIzMDA0NCBTYWx0ZWRfX/kfwYAweLXrB
+ zbxkto18TPoc2YJH2avElIwFyl1EeT817XN6nYc5/cYmF9eYjrtsJwsK0L8WkM6fRMsWfmImQ5+
+ eqJvJlHXhB3BqY8EfoZRw549S/4MKZ7KFeKqYPgzq1F9uTRJ+0/kH+x6apFeHFqf/PpmgkdTRy3
+ HOUDhxvoWm3TUJ2c4/k6DZyCFNM02wB0hGcOXB2YBy+hXa/q6Eqgswl9VaHPBANZjtzcz7U703m
+ 58J7KDJJlfUuOgvqSQZvkTH8HwFtIMrULCuoeI1uoheJFeS3daXrebXQSHUE6AjdhDENsK+ETnt
+ 9YyXz6BSFuGls6YPicZb8MAbE/iud7X7oBqNtFIktWxLVsAKTi0rH/gcNd1bTgs/k6PF9pe0Kxb
+ okGxTxAMUBieKQ7xsJT+Pk5WdYV9+ccVwgMbKy7ZYnnOW3tiO+hHIb+q6Stmm6TpUB2C6cVI6Xm
+ XFeXs/MCr4ckqOtPl6g==
+X-Proofpoint-GUID: 6KIgL9L5teJxi2xUwyx0wBCH3RcJ_uga
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.293,Aquarius:18.0.1143,Hydra:6.1.125,FMLib:17.12.100.49
+ definitions=2026-06-23_01,2026-06-22_01,2025-10-01_01
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
+ phishscore=0 lowpriorityscore=0 bulkscore=0 spamscore=0 priorityscore=1501
+ clxscore=1015 impostorscore=0 malwarescore=0 adultscore=0 suspectscore=0
+ classifier=typeunknown authscore=0 authtc= authcc= route=outbound adjust=0
+ reason=mlx scancount=1 engine=8.22.0-2606150000 definitions=main-2606230044
 
+On Thu, Jun 18, 2026 at 03:00:48PM +0000, sashiko-bot@kernel.org wrote:
 > Thank you for your contribution! Sashiko AI review found 1 potential issue(s) to consider:
-> 
-> Pre-existing issues:
-> - [High] Enabling `pcie_phy` on `meson-axg-s400.dts` is insufficient to support PCIe functionality because its hardware dependency `mipi_pcie_analog_dphy` remains disabled.
+> - [Medium] The new KASAN_LAZY_MMU_PTE shadow value is not mapped to a bug type in the KASAN reporting logic, resulting in uninformative "unknown-crash" reports.
 > --
 > 
-> commit cd94d06969e9f9a23ea319f406b8e86e8ed9ec44
-> Author: Jun Yan <jerrysteve1101@gmail.com>
+> commit 7d8731323b7762279e28d0aef3b1b3c457449b81
+> Author: Alexander Gordeev <agordeev@linux.ibm.com>
 > 
-> arm64: dts: amlogic: meson-axg: Disable pcie_phy node by default
+> mm/kasan: Introduce helpers for lazy MMU mode sanitizer
 > 
-> This patch disables the pcie_phy node by default in the meson-axg dtsi file
-> to suppress deferred probe warnings on boards that do not use it. It then
-> explicitly enables pcie_phy in the meson-axg-s400 board device tree to
-> preserve its PCIe functionality.
+> This commit provides helpers to allow architectures to poison and unpoison
+> PTEs during lazy MMU mode. It introduces a new KASAN shadow tag to track
+> and catch direct PTE manipulations that improperly bypass the correct
+> accessors.
 > 
-> > diff --git a/arch/arm64/boot/dts/amlogic/meson-axg-s400.dts b/arch/arm64/boot/dts/amlogic/meson-axg-s400.dts
-> > index 285c6ac1dd613..7ba249cc3d569 100644
-> > --- a/arch/arm64/boot/dts/amlogic/meson-axg-s400.dts
-> > +++ b/arch/arm64/boot/dts/amlogic/meson-axg-s400.dts
-> 
+> > diff --git a/mm/kasan/kasan.h b/mm/kasan/kasan.h
+> > index fc9169a547662..8ba0fbabd75b2 100644
+> > --- a/mm/kasan/kasan.h
+> > +++ b/mm/kasan/kasan.h
 > [ ... ]
+> > @@ -144,12 +144,14 @@ static inline bool kasan_requires_meta(void)
+> >  #define KASAN_PAGE_REDZONE	0xFE  /* redzone for kmalloc_large allocation */
+> >  #define KASAN_SLAB_REDZONE	0xFC  /* redzone for slab object */
+> >  #define KASAN_SLAB_FREE		0xFB  /* freed slab object */
+> > +#define KASAN_LAZY_MMU_PTE	0xFD
 > 
-> > @@ -448,6 +448,10 @@ &pcieB {
-> >  	status = "okay";
-> >  };
-> >  
-> > +&pcie_phy {
-> > +	status = "okay";
-> > +};
+> [Severity: Medium]
+> Since this adds a new shadow tag value, does get_shadow_bug_type() in
+> mm/kasan/report_generic.c also need to be updated to handle it?
 > 
-> [Severity: High]
-> This is a pre-existing issue, but is it sufficient to only enable pcie_phy
-> to restore PCIe functionality on the s400 board?
+> Currently, if KASAN catches a direct PTE access and reads this shadow
+> value, it looks like it will fall through the switch statement in
+> get_shadow_bug_type() and default to reporting an "unknown-crash".
 > 
-> The pcie_phy node depends on the mipi_pcie_analog_dphy analog PHY via its
-> phys property. Looking at meson-axg.dtsi, mipi_pcie_analog_dphy is disabled
-> by default:
-> 
-> arch/arm64/boot/dts/amlogic/meson-axg.dtsi:
->     mipi_pcie_analog_dphy: phy {
->         compatible = "amlogic,axg-mipi-pcie-analog-phy";
->         #phy-cells = <0>;
->         status = "disabled";
->     };
-> 
-> If the analog PHY is not also overridden to "okay" here in meson-axg-s400.dts,
-> will the analog PHY driver fail to probe, causing devm_phy_get(dev, "analog")
-> in the pcie_phy driver to continually return -EPROBE_DEFER?
-> 
+> Would adding KASAN_LAZY_MMU_PTE to the switch cases ensure we get a
+> more descriptive bug type instead?
 
-I'd like to add an additional patch to resolve this pre-existing issue reported by Sashiko.
-Unfortunately I don't have S400 hardware available for testing.
+This is a valid point and the fixup would be:
 
-> -- 
-> Sashiko AI review Â· https://sashiko.dev/#/patchset/20260617082239.645562-1-jerrysteve1101@gmail.com?part=3
+diff --git a/mm/kasan/report_generic.c b/mm/kasan/report_generic.c
+index f5b8e37b3805c..0100e4354a44a 100644
+--- a/mm/kasan/report_generic.c
++++ b/mm/kasan/report_generic.c
+@@ -113,6 +113,9 @@ static const char *get_shadow_bug_type(struct kasan_report_info *info)
+ 	case KASAN_SLAB_FREE_META:
+ 		bug_type = "slab-use-after-free";
+ 		break;
++	case KASAN_LAZY_MMU_PTE:
++		bug_type = "direct-pte-access";
++		break;
+ 	case KASAN_ALLOCA_LEFT:
+ 	case KASAN_ALLOCA_RIGHT:
+ 		bug_type = "alloca-out-of-bounds";
+
+> Sashiko AI review · https://sashiko.dev/#/patchset/cover.1781789772.git.agordeev@linux.ibm.com?part=3
+
+Thanks!
