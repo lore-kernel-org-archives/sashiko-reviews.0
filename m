@@ -1,69 +1,68 @@
-Received: from mx0a-001b2d01.pphosted.com (mx0a-001b2d01.pphosted.com [148.163.156.1])
+Received: from mx0b-001b2d01.pphosted.com (mx0b-001b2d01.pphosted.com [148.163.158.5])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7C68D3290A6;
-	Tue, 23 Jun 2026 06:13:28 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=148.163.156.1
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D0BCC37B41A;
+	Tue, 23 Jun 2026 06:27:10 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=148.163.158.5
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1782195209; cv=none; b=UTJoWu2EBUqMJvlNbknISyhm6kRRwEqii5uDriJFHJ0r5nQZvxOoNwwdJuIcLfm4ofx4z307PRq8bwL/DznW4LSafpj9EiqKGXc7Bnv/FHu3w3DvCC0kRJ7tDw71ekdn+DiShz2k3iwTkyZ+vUaOo6Pv2wo5R3zH5xMYmeyacfw=
+	t=1782196032; cv=none; b=phlLKn11MJLyhBcJ28O4BQboGlG4+anWvAyavlnlnkCaRFMzLcf8tORUhbKPrU1jNW/lX8wAu31NsKEAviW9wQQUFpIT/5cYnnGg8HEEfg0UvBzp0/s/KrVegX2sBGAAfeOca24N3/7UQKWxbVL2xSUUKQXZSSvsVHu0pAcnmWA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1782195209; c=relaxed/simple;
-	bh=hm17CdDoztPhhS9+7uWhsrGqONsu33qxq7m9Rq2AaSw=;
+	s=arc-20240116; t=1782196032; c=relaxed/simple;
+	bh=2BCm/8qi0wegq2UyBJz/fHmNf9U1oh10/dSV1aJS86c=;
 	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=jkpM0Pi9p1eiuFriq+ph6IaTwHn47E4H1XP2Y3LP2sVh99knGDkYY4WB8SSNydqjbF+7qDGVu04eOk6tS9MATUKO3UEe8YGJEZA7YjisQMdek+Iz6mmxrPP3EjL0pUdUlOLD8Ciss4bFxxkgHjcELYd7yjttZh+32sSV2Nhfc2A=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linux.ibm.com; spf=pass smtp.mailfrom=linux.ibm.com; dkim=pass (2048-bit key) header.d=ibm.com header.i=@ibm.com header.b=ovJdySfu; arc=none smtp.client-ip=148.163.156.1
+	 Content-Type:Content-Disposition:In-Reply-To; b=YcFXXf13qkBGvJpUWhFBpZoOLw0aPJAwb1jDOmxj8szsLKQqLFv5XJIKd9uYzXYTA03oaQ+oRoq/t4ZPwTAkS+qGIrXJChu/RqRw5/P0otL7oT0AFHIi902iDNLstz1+EMY1Q3Ldg4LPHf4AMFkmR0JY3gS8W+AVEw/++l6gqg0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linux.ibm.com; spf=pass smtp.mailfrom=linux.ibm.com; dkim=pass (2048-bit key) header.d=ibm.com header.i=@ibm.com header.b=FMKlGQ9Z; arc=none smtp.client-ip=148.163.158.5
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linux.ibm.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linux.ibm.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=ibm.com header.i=@ibm.com header.b="ovJdySfu"
-Received: from pps.filterd (m0356517.ppops.net [127.0.0.1])
-	by mx0a-001b2d01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id 65N0mXE4352283;
-	Tue, 23 Jun 2026 06:13:27 GMT
+	dkim=pass (2048-bit key) header.d=ibm.com header.i=@ibm.com header.b="FMKlGQ9Z"
+Received: from pps.filterd (m0353725.ppops.net [127.0.0.1])
+	by mx0a-001b2d01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id 65N0o0IQ348193;
+	Tue, 23 Jun 2026 06:27:09 GMT
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=ibm.com; h=cc
 	:content-transfer-encoding:content-type:date:from:in-reply-to
-	:message-id:mime-version:references:subject:to; s=pp1; bh=vp+Cbi
-	lTka8QUgJ8jBBtinfc+r4aAndzPjmuhbG4LoU=; b=ovJdySfus5P1wH+xVD34hK
-	TjhX2ZsgRKcufeg3cSJYfon1einVZeaNHRPtI2+um2Jen/12vpDtwTZxj09bR53n
-	412ap/k+d/ozTzrI0f4efrkX8W7rYicrqimS9Ev4Zw9xlGZfMnt/6k/ElHyUWq/t
-	htBsGBLseJmZYMuN+Jivfy17EQ2vFsTwVpljwuE/UZfc76LvlI49NIo3LXGojNJP
-	MzWq+/HY/P4o2V142IhBP9FWCReXtvSF28jLo1xen64OqTeGpuBi0RFo4BSfo31a
-	FfTwi5Kg30JSDgfRG8gssEkBoJfED0kMldH7Gpi6tAzr2dBPmqTAloaGdVE/2YZw
+	:message-id:mime-version:references:subject:to; s=pp1; bh=Wsa5c8
+	Gp6pgW1vQTnTSqP+Uah99A+SQqdXDL4qoizYw=; b=FMKlGQ9Za13dGTzXHN8kKp
+	u0bUFevGvCzbR+v6CwmydyQKXhu++cJsjklt5Ge9p4Rh/QC0ecYQrut5mbfJx86a
+	VGV7wDHFKAtBvr0ADlk45ibNtSugBpgk5qeMMjzJNf0nYu9WgJZx/a7ZNJStIKko
+	XHYHk4WnWndGs59vBwRx79iLSTWjeXQCpdZYay8X6Bzdbos//77qbXE0FyvF15IH
+	uIalXI6sC5YzLpSHDuV5EVlavOoJMmFcxRmJu0YYsHPSNBWjEsUoYkM8392lSjcZ
+	NcgkxgLIckFLTedrQ8ZR7Uthoc7BdtKzPA1F2t+LX3ZUAhyBuOW0JJkQWr0Eclaw
 	==
-Received: from ppma12.dal12v.mail.ibm.com (dc.9e.1632.ip4.static.sl-reverse.com [50.22.158.220])
-	by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 4ewjk4cwkc-1
+Received: from ppma22.wdc07v.mail.ibm.com (5c.69.3da9.ip4.static.sl-reverse.com [169.61.105.92])
+	by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 4ewh9gcyqa-1
 	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Tue, 23 Jun 2026 06:13:27 +0000 (GMT)
-Received: from pps.filterd (ppma12.dal12v.mail.ibm.com [127.0.0.1])
-	by ppma12.dal12v.mail.ibm.com (8.18.1.7/8.18.1.7) with ESMTP id 65N64rCD003576;
-	Tue, 23 Jun 2026 06:13:26 GMT
-Received: from smtprelay03.fra02v.mail.ibm.com ([9.218.2.224])
-	by ppma12.dal12v.mail.ibm.com (PPS) with ESMTPS id 4ex56qa1qy-1
+	Tue, 23 Jun 2026 06:27:09 +0000 (GMT)
+Received: from pps.filterd (ppma22.wdc07v.mail.ibm.com [127.0.0.1])
+	by ppma22.wdc07v.mail.ibm.com (8.18.1.7/8.18.1.7) with ESMTP id 65N6Jc1e022750;
+	Tue, 23 Jun 2026 06:27:08 GMT
+Received: from smtprelay07.fra02v.mail.ibm.com ([9.218.2.229])
+	by ppma22.wdc07v.mail.ibm.com (PPS) with ESMTPS id 4ex5jwa098-1
 	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Tue, 23 Jun 2026 06:13:26 +0000 (GMT)
-Received: from smtpav03.fra02v.mail.ibm.com (smtpav03.fra02v.mail.ibm.com [10.20.54.102])
-	by smtprelay03.fra02v.mail.ibm.com (8.14.9/8.14.9/NCO v10.0) with ESMTP id 65N6DNk443385164
+	Tue, 23 Jun 2026 06:27:08 +0000 (GMT)
+Received: from smtpav04.fra02v.mail.ibm.com (smtpav04.fra02v.mail.ibm.com [10.20.54.103])
+	by smtprelay07.fra02v.mail.ibm.com (8.14.9/8.14.9/NCO v10.0) with ESMTP id 65N6R4r550463016
 	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
-	Tue, 23 Jun 2026 06:13:23 GMT
-Received: from smtpav03.fra02v.mail.ibm.com (unknown [127.0.0.1])
-	by IMSVA (Postfix) with ESMTP id E6D4E2004B;
-	Tue, 23 Jun 2026 06:13:22 +0000 (GMT)
-Received: from smtpav03.fra02v.mail.ibm.com (unknown [127.0.0.1])
-	by IMSVA (Postfix) with ESMTP id D06C720043;
-	Tue, 23 Jun 2026 06:13:22 +0000 (GMT)
+	Tue, 23 Jun 2026 06:27:04 GMT
+Received: from smtpav04.fra02v.mail.ibm.com (unknown [127.0.0.1])
+	by IMSVA (Postfix) with ESMTP id 5BC2C20043;
+	Tue, 23 Jun 2026 06:27:04 +0000 (GMT)
+Received: from smtpav04.fra02v.mail.ibm.com (unknown [127.0.0.1])
+	by IMSVA (Postfix) with ESMTP id 3591820040;
+	Tue, 23 Jun 2026 06:27:04 +0000 (GMT)
 Received: from tuxmaker.boeblingen.de.ibm.com (unknown [9.87.85.9])
-	by smtpav03.fra02v.mail.ibm.com (Postfix) with ESMTPS;
-	Tue, 23 Jun 2026 06:13:22 +0000 (GMT)
-Date: Tue, 23 Jun 2026 08:13:21 +0200
+	by smtpav04.fra02v.mail.ibm.com (Postfix) with ESMTPS;
+	Tue, 23 Jun 2026 06:27:04 +0000 (GMT)
+Date: Tue, 23 Jun 2026 08:27:03 +0200
 From: Alexander Gordeev <agordeev@linux.ibm.com>
 To: sashiko-reviews@lists.linux.dev
-Cc: Heiko Carstens <hca@linux.ibm.com>, Vasily Gorbik <gor@linux.ibm.com>,
+Cc: Vasily Gorbik <gor@linux.ibm.com>, Heiko Carstens <hca@linux.ibm.com>,
         linux-s390@vger.kernel.org
-Subject: Re: [PATCH -next v4 3/4] mm/kasan: Introduce helpers for lazy MMU
- mode sanitizer
-Message-ID: <20260623061321.269982A64-agordeev@linux.ibm.com>
+Subject: Re: [PATCH -next v4 2/4] s390/mm: Batch PTE updates in lazy MMU mode
+Message-ID: <20260623062703.269982B28-agordeev@linux.ibm.com>
 References: <cover.1781789772.git.agordeev@linux.ibm.com>
- <0d76139923a280617a21839b7e3f3e7735b58fdf.1781789772.git.agordeev@linux.ibm.com>
- <20260618150048.F396A1F000E9@smtp.kernel.org>
+ <e50680152fc7d99215d53758fab4b87280d25c20.1781789772.git.agordeev@linux.ibm.com>
+ <20260618151048.063661F000E9@smtp.kernel.org>
 Precedence: bulk
 X-Mailing-List: sashiko-reviews@lists.linux.dev
 List-Id: <sashiko-reviews.lists.linux.dev>
@@ -73,90 +72,246 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=iso-8859-1
 Content-Disposition: inline
 Content-Transfer-Encoding: 8bit
-In-Reply-To: <20260618150048.F396A1F000E9@smtp.kernel.org>
+In-Reply-To: <20260618151048.063661F000E9@smtp.kernel.org>
 X-TM-AS-GCONF: 00
-X-Proofpoint-Spam-Info: AW1haW4tMjYwNjIzMDA0NCBTYWx0ZWRfX7FSXNz+X4G9v
- JmPk/OSyGK/NtLCS/IYq3u8Ue/LJe4wv2uic666ZxDKYXw2o3osiyYC7/bNqyV+3nGlI8K9vVIP
- oyT0uuJIPvgtvG/RrJ6eKoopmfBgOdE=
-X-Proofpoint-ORIG-GUID: 6KIgL9L5teJxi2xUwyx0wBCH3RcJ_uga
-X-Authority-Analysis: v=2.4 cv=Oph/DS/t c=1 sm=1 tr=0 ts=6a3a2407 cx=c_pps
- a=bLidbwmWQ0KltjZqbj+ezA==:117 a=bLidbwmWQ0KltjZqbj+ezA==:17
+X-Proofpoint-GUID: IqwR7pYETvuc7zTQRgI99LBRmHSgmQeh
+X-Proofpoint-Spam-Info: AW1haW4tMjYwNjIzMDA0OCBTYWx0ZWRfX7yLwNGCsPBNy
+ WZr8edLp9YpMS5kYXCImkjdK08liP5QASrvX9YEt/LiAoRdcwEuavnSP5wKKZXO5zDvEbpXFjhb
+ vMLkfmMe5HtabyTZ4ogN9oQAFOTHSlQ=
+X-Authority-Analysis: v=2.4 cv=c62bhx9l c=1 sm=1 tr=0 ts=6a3a273d cx=c_pps
+ a=5BHTudwdYE3Te8bg5FgnPg==:117 a=5BHTudwdYE3Te8bg5FgnPg==:17
  a=8nJEP1OIZ-IA:10 a=FelO9ux0wxsA:10 a=VkNPw1HP01LnGYTKEx00:22
- a=RnoormkPH1_aCDwRdu11:22 a=U7nrCbtTmkRpXpFmAIza:22 a=c92rfblmAAAA:8
- a=VnNF1IyMAAAA:8 a=VwQbUJbxAAAA:8 a=V0YPiZzyHSctQc0-2CwA:9 a=3ZKOabzyN94A:10
+ a=RnoormkPH1_aCDwRdu11:22 a=V8glGbnc2Ofi9Qvn3v5h:22 a=c92rfblmAAAA:8
+ a=VnNF1IyMAAAA:8 a=VwQbUJbxAAAA:8 a=XhNGLxucu5zez_Ri8nIA:9 a=3ZKOabzyN94A:10
  a=wPNLvfGTeEIA:10 a=GvGzcOZaWPEFPQC_NcjD:22
-X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwNjIzMDA0NCBTYWx0ZWRfX/kfwYAweLXrB
- zbxkto18TPoc2YJH2avElIwFyl1EeT817XN6nYc5/cYmF9eYjrtsJwsK0L8WkM6fRMsWfmImQ5+
- eqJvJlHXhB3BqY8EfoZRw549S/4MKZ7KFeKqYPgzq1F9uTRJ+0/kH+x6apFeHFqf/PpmgkdTRy3
- HOUDhxvoWm3TUJ2c4/k6DZyCFNM02wB0hGcOXB2YBy+hXa/q6Eqgswl9VaHPBANZjtzcz7U703m
- 58J7KDJJlfUuOgvqSQZvkTH8HwFtIMrULCuoeI1uoheJFeS3daXrebXQSHUE6AjdhDENsK+ETnt
- 9YyXz6BSFuGls6YPicZb8MAbE/iud7X7oBqNtFIktWxLVsAKTi0rH/gcNd1bTgs/k6PF9pe0Kxb
- okGxTxAMUBieKQ7xsJT+Pk5WdYV9+ccVwgMbKy7ZYnnOW3tiO+hHIb+q6Stmm6TpUB2C6cVI6Xm
- XFeXs/MCr4ckqOtPl6g==
-X-Proofpoint-GUID: 6KIgL9L5teJxi2xUwyx0wBCH3RcJ_uga
+X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwNjIzMDA0OCBTYWx0ZWRfX3TvZPGQvakGD
+ EKFpH3DL2nbL6ZXBtpFaVIK+0quuyM1xw4XkZrWC01jJm1Xq1rIlAMz3OJT7v8AuJ/mECeMZQEh
+ riWT3jqXIz0S0D9DPoTkT/++KUq+xdtCEhPv4G7HhrAIksUsKpJEFJTbzMQaPBCvTHQqHDk3YFR
+ yPCMhEArZlBucahN4XBXyJnj3pDoT83oM05EN4fZs3UUu2EK/1O1fvVs3SzmZyWQZiB02OFE1Xz
+ U1bouNslbmkC3VEPZHkh/QYsm12HDABOxDwB0hHCBDO9eag9h+P2ZQR3JhK2iorB2ryy+k/VtVO
+ ucebCMGNp4yuV7QZ3LxvvIzW/Kgn1okyoRCx9oqry5FvkXsfceE3aKCyEn/yGf6/r0c5z5dpdOQ
+ TjQkrFVuwR51gSkUl3g70GyBnOrZIpnw2H4WzZaBEQ7qMxlEoaES0wNewDOVVLTC8hY3+4CMlq3
+ xChDngFU7adRjCKvYSQ==
+X-Proofpoint-ORIG-GUID: IqwR7pYETvuc7zTQRgI99LBRmHSgmQeh
 X-Proofpoint-Virus-Version: vendor=baseguard
  engine=ICAP:2.0.293,Aquarius:18.0.1143,Hydra:6.1.125,FMLib:17.12.100.49
  definitions=2026-06-23_01,2026-06-22_01,2025-10-01_01
 X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
- phishscore=0 lowpriorityscore=0 bulkscore=0 spamscore=0 priorityscore=1501
- clxscore=1015 impostorscore=0 malwarescore=0 adultscore=0 suspectscore=0
+ lowpriorityscore=0 impostorscore=0 adultscore=0 clxscore=1015 suspectscore=0
+ priorityscore=1501 phishscore=0 spamscore=0 bulkscore=0 malwarescore=0
  classifier=typeunknown authscore=0 authtc= authcc= route=outbound adjust=0
- reason=mlx scancount=1 engine=8.22.0-2606150000 definitions=main-2606230044
+ reason=mlx scancount=1 engine=8.22.0-2606150000 definitions=main-2606230048
 
-On Thu, Jun 18, 2026 at 03:00:48PM +0000, sashiko-bot@kernel.org wrote:
-> Thank you for your contribution! Sashiko AI review found 1 potential issue(s) to consider:
-> - [Medium] The new KASAN_LAZY_MMU_PTE shadow value is not mapped to a bug type in the KASAN reporting logic, resulting in uninformative "unknown-crash" reports.
+On Thu, Jun 18, 2026 at 03:10:47PM +0000, sashiko-bot@kernel.org wrote:
+> Thank you for your contribution! Sashiko AI review found 2 potential issue(s) to consider:
+> - [Critical] Deferred PTE updates to a per-CPU cache break synchronization with lockless page table walkers like GUP-fast, allowing them to pin pages being concurrently write-protected for COW.
+> - [High] The lazy MMU cache bypasses the `full=1` TLB flush optimization during process teardown, causing an O(N) IPTE storm.
 > --
 > 
-> commit 7d8731323b7762279e28d0aef3b1b3c457449b81
+> commit 38614c455538c6b6144011b070bbbf41513506e6
 > Author: Alexander Gordeev <agordeev@linux.ibm.com>
 > 
-> mm/kasan: Introduce helpers for lazy MMU mode sanitizer
+> s390/mm: Batch PTE updates in lazy MMU mode
 > 
-> This commit provides helpers to allow architectures to poison and unpoison
-> PTEs during lazy MMU mode. It introduces a new KASAN shadow tag to track
-> and catch direct PTE manipulations that improperly bypass the correct
-> accessors.
+> This commit introduces a per-CPU cache to batch PTE updates while in lazy
+> MMU mode. By caching PTE changes and applying them simultaneously with the
+> IPTE instruction's "Additional Entries" feature, it reduces overall IPTE
+> traffic.
 > 
-> > diff --git a/mm/kasan/kasan.h b/mm/kasan/kasan.h
-> > index fc9169a547662..8ba0fbabd75b2 100644
-> > --- a/mm/kasan/kasan.h
-> > +++ b/mm/kasan/kasan.h
+> > diff --git a/arch/s390/include/asm/pgtable.h b/arch/s390/include/asm/pgtable.h
+> > --- a/arch/s390/include/asm/pgtable.h
+> > +++ b/arch/s390/include/asm/pgtable.h
+> 
 > [ ... ]
-> > @@ -144,12 +144,14 @@ static inline bool kasan_requires_meta(void)
-> >  #define KASAN_PAGE_REDZONE	0xFE  /* redzone for kmalloc_large allocation */
-> >  #define KASAN_SLAB_REDZONE	0xFC  /* redzone for slab object */
-> >  #define KASAN_SLAB_FREE		0xFB  /* freed slab object */
-> > +#define KASAN_LAZY_MMU_PTE	0xFD
 > 
-> [Severity: Medium]
-> Since this adds a new shadow tag value, does get_shadow_bug_type() in
-> mm/kasan/report_generic.c also need to be updated to handle it?
+> > @@ -1259,11 +1373,13 @@ static inline pte_t ptep_get_and_clear_full(struct mm_struct *mm,
+> >  {
+> >  	pte_t res;
+> >  
+> > -	if (full) {
+> > -		res = ptep_get(ptep);
+> > -		set_pte(ptep, __pte(_PAGE_INVALID));
+> > -	} else {
+> > -		res = ptep_xchg_lazy(mm, addr, ptep, __pte(_PAGE_INVALID));
+> > +	if (!lazy_mmu_ptep_get_and_clear(addr, ptep, &res)) {
 > 
-> Currently, if KASAN catches a direct PTE access and reads this shadow
-> value, it looks like it will fall through the switch statement in
-> get_shadow_bug_type() and default to reporting an "unknown-crash".
+> [Severity: High]
+> Does checking lazy_mmu_ptep_get_and_clear() before the 'full' flag bypass
+> the teardown optimization and cause an IPTE storm?
 > 
-> Would adding KASAN_LAZY_MMU_PTE to the switch cases ensure we get a
-> more descriptive bug type instead?
+> During process teardown, exit_mmap() and zap_pte_range() use
+> ptep_get_and_clear_full(..., full=1) to clear PTEs without issuing individual
+> TLB invalidations, deferring the flush to a global teardown at the end.
+> If lazy_mmu_mode_enable_with_ptes() is active, this intercepts the call,
+> writes _PAGE_INVALID to the cache, and bypasses the if (full) path.
+> 
+> Later, when lazy_mmu_mode_disable() flushes the cache, it calls
+> __invalidate_pte_range() in arch/s390/mm/lazy_mmu.c:
+> 
+> static void __invalidate_pte_range(...)
+> {
+> 	...
+> 	if (cpu_has_tlb_lc() && ...)
+> 		__ptep_ipte_range(addr, nr_ptes - 1, ptep, IPTE_LOCAL);
+> 	else
+> 		__ptep_ipte_range(addr, nr_ptes - 1, ptep, IPTE_GLOBAL);
+> 	...
+> }
+> 
+> This unconditionally executes batched IPTE instructions for all cached PTEs.
+> For multi-threaded processes, does this turn an O(1) TLB flush operation
+> into an O(N) global IPTE broadcast, causing a regression in system
+> performance during process termination?
+> 
+> > +		if (full) {
+> > +			res = __ptep_get(ptep);
+> > +			__set_pte(ptep, __pte(_PAGE_INVALID));
+> > +		} else {
+> > +			res = ptep_xchg_lazy(mm, addr, ptep, __pte(_PAGE_INVALID));
+> > +		}
+> >  	}
+> >  	page_table_check_pte_clear(mm, addr, res);
+> 
+> [ ... ]
 
-This is a valid point and the fixup would be:
+This is a valid concern and a solution could look like the fixup below.
+Yet, there is no real difference with the current version observed and
+therefore I want to stick with it.
 
-diff --git a/mm/kasan/report_generic.c b/mm/kasan/report_generic.c
-index f5b8e37b3805c..0100e4354a44a 100644
---- a/mm/kasan/report_generic.c
-+++ b/mm/kasan/report_generic.c
-@@ -113,6 +113,9 @@ static const char *get_shadow_bug_type(struct kasan_report_info *info)
- 	case KASAN_SLAB_FREE_META:
- 		bug_type = "slab-use-after-free";
- 		break;
-+	case KASAN_LAZY_MMU_PTE:
-+		bug_type = "direct-pte-access";
-+		break;
- 	case KASAN_ALLOCA_LEFT:
- 	case KASAN_ALLOCA_RIGHT:
- 		bug_type = "alloca-out-of-bounds";
+diff --git a/arch/s390/include/asm/pgtable.h b/arch/s390/include/asm/pgtable.h
+index a93e7e7864571..8f4e4a95ee182 100644
+--- a/arch/s390/include/asm/pgtable.h
++++ b/arch/s390/include/asm/pgtable.h
+@@ -41,6 +41,7 @@ extern atomic_long_t direct_pages_count[PG_DIRECT_MAP_MAX];
+ 
+ bool __lazy_mmu_ptep_test_and_clear_young(unsigned long addr, pte_t *ptep, int *res);
+ bool __lazy_mmu_ptep_get_and_clear(unsigned long addr, pte_t *ptep, pte_t *res);
++bool __lazy_mmu_ptep_get_and_clear_full(unsigned long addr, pte_t *ptep, pte_t *res);
+ bool __lazy_mmu_ptep_modify_prot_start(unsigned long addr, pte_t *ptep, pte_t *res);
+ bool __lazy_mmu_ptep_modify_prot_commit(unsigned long addr, pte_t *ptep, pte_t old_pte, pte_t pte);
+ bool __lazy_mmu_ptep_set_wrprotect(unsigned long addr, pte_t *ptep);
+@@ -72,6 +73,14 @@ bool lazy_mmu_ptep_get_and_clear(unsigned long addr, pte_t *ptep, pte_t *res)
+ 	return __lazy_mmu_ptep_get_and_clear(addr, ptep, res);
+ }
+ 
++static inline
++bool lazy_mmu_ptep_get_and_clear_full(unsigned long addr, pte_t *ptep, pte_t *res)
++{
++	if (!is_lazy_mmu_active())
++		return false;
++	return __lazy_mmu_ptep_get_and_clear_full(addr, ptep, res);
++}
++
+ static inline
+ bool lazy_mmu_ptep_modify_prot_start(unsigned long addr, pte_t *ptep, pte_t *res)
+ {
+@@ -1379,13 +1388,14 @@ static inline pte_t ptep_get_and_clear_full(struct mm_struct *mm,
+ {
+ 	pte_t res;
+ 
+-	if (!lazy_mmu_ptep_get_and_clear(addr, ptep, &res)) {
+-		if (full) {
++	if (full) {
++		if (!lazy_mmu_ptep_get_and_clear_full(addr, ptep, &res)) {
+ 			res = __ptep_get(ptep);
+ 			__set_pte(ptep, __pte(_PAGE_INVALID));
+-		} else {
+-			res = ptep_xchg_lazy(mm, addr, ptep, __pte(_PAGE_INVALID));
+ 		}
++	} else {
++		if (!lazy_mmu_ptep_get_and_clear(addr, ptep, &res))
++			res = ptep_xchg_lazy(mm, addr, ptep, __pte(_PAGE_INVALID));
+ 	}
+ 	page_table_check_pte_clear(mm, addr, res);
+ 	/* At this point the reference through the mapping is still present */
+diff --git a/arch/s390/mm/lazy_mmu.c b/arch/s390/mm/lazy_mmu.c
+index ee2385897bc72..076c9cc492954 100644
+--- a/arch/s390/mm/lazy_mmu.c
++++ b/arch/s390/mm/lazy_mmu.c
+@@ -115,23 +115,15 @@ static void enter_ipte_range(struct mm_struct *mm,
+ 	kasan_poison_pte(range->base_pte, nr_ptes);
+ }
+ 
+-static void leave_ipte_range(void)
++static void flush_cache(struct ipte_range *range)
+ {
+ 	pte_t *ptep, *start, *start_cache, *cache;
+ 	unsigned long start_addr, addr;
+-	struct ipte_range *range;
+-	unsigned int nr_ptes;
+ 	int start_idx;
+ 
+-	if (!test_facility(13))
+-		return;
+-
+ 	lockdep_assert_preemption_disabled();
+-	range = this_cpu_read(ipte_range);
+-	if (!range->mm)
+-		goto norange;
+ 	if (!range->start_pte)
+-		goto done;
++		return;
+ 
+ 	start = range->start_pte;
+ 	start_idx = range->start_pte - range->base_pte;
+@@ -155,8 +147,23 @@ static void leave_ipte_range(void)
+ 
+ 	range->start_pte = NULL;
+ 	range->end_pte = NULL;
++}
++
++static void leave_ipte_range(void)
++{
++	struct ipte_range *range;
++	unsigned int nr_ptes;
++
++	if (!test_facility(13))
++		return;
++
++	lockdep_assert_preemption_disabled();
++	range = this_cpu_read(ipte_range);
++	if (!range->mm)
++		goto norange;
++
++	flush_cache(range);
+ 
+-done:
+ 	nr_ptes = (range->base_end - range->base_addr) / PAGE_SIZE;
+ 	kasan_unpoison_pte(range->base_pte, nr_ptes);
+ 
+@@ -328,6 +335,31 @@ bool __lazy_mmu_ptep_get_and_clear(unsigned long addr, pte_t *ptep, pte_t *res)
+ 	return true;
+ }
+ 
++bool __lazy_mmu_ptep_get_and_clear_full(unsigned long addr, pte_t *ptep, pte_t *res)
++{
++	struct ipte_range *range;
++	unsigned int idx;
++	pte_t old;
++
++	range = this_ipte_range(ptep);
++	if (!range)
++		return false;
++
++	lockdep_assert_preemption_disabled();
++	idx = ptep - range->base_pte;
++	old = range->cache[idx];
++	if (pte_val(old) != PTE_POISON)
++		range->cache[idx] = __pte(_PAGE_INVALID);
++
++	flush_cache(range);
++
++	if (pte_val(old) == PTE_POISON)
++		return false;
++	*res = old;
++
++	return true;
++}
++
+ bool __lazy_mmu_ptep_modify_prot_start(unsigned long addr, pte_t *ptep, pte_t *res)
+ {
+ 	return __lazy_mmu_ptep_get_and_clear(addr, ptep, res);
 
-> Sashiko AI review · https://sashiko.dev/#/patchset/cover.1781789772.git.agordeev@linux.ibm.com?part=3
+> Sashiko AI review · https://sashiko.dev/#/patchset/cover.1781789772.git.agordeev@linux.ibm.com?part=2
 
 Thanks!
