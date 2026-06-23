@@ -1,129 +1,181 @@
-Received: from va-2-26.ptr.blmpb.com (va-2-26.ptr.blmpb.com [209.127.231.26])
+Received: from smtp-out2.suse.de (smtp-out2.suse.de [195.135.223.131])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5170B3CF046
-	for <sashiko-reviews@lists.linux.dev>; Tue, 23 Jun 2026 08:44:37 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.127.231.26
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 859F12D77F5
+	for <sashiko-reviews@lists.linux.dev>; Tue, 23 Jun 2026 08:56:55 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=195.135.223.131
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1782204279; cv=none; b=cUYPHpn5n6D3+FMVIYNFyYcnT7a/tZM7SfpRkgOVY2nYvifYrnqvjybZBRsc3sjnN0KeWjqe4n6dV/1BvXuH39KYAqKH2fhrACeeOJsg/n3G7dCQZn4YpjEbLSI3a/A25/BDXxkxdWfAm1UUgI7yPfgdpFFhBZPKQTXhZ7T1tng=
+	t=1782205016; cv=none; b=fI6QNtGuuDDIfO6KzulQjzB/zCv7LaM1BT99CkCYlZesEOegGM5gEWY/waShVAiLX941Ek5hDe20MCeoTA+LcIBcK4v1NFr95NLhAj2ZllwNb5hMHuvhQ8rEjy/M11AIEV6P1WJrHfcQIBOBzOIW7Oc6bqPXQ8QEEWqQbgi7gFo=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1782204279; c=relaxed/simple;
-	bh=6a3JyV+buGly1uktPAWCmnYFHWziVzbl4UjeB3wDa98=;
-	h=Cc:Message-Id:To:Subject:Date:In-Reply-To:Mime-Version:
-	 Content-Type:From:References; b=YjYh9R8RzD63l39+lKrjoSOyxs9fS3Sx+lXccy4/s9Lw2oJmX6HYsjeOJqWxLDZqM7/M4RFnfMHuGbaOl0maLHpXtGYeakoK0LaOxH24Nv1IlPEyijWPKqGTQISgIeRN5afjKMxduSJ1mQKafLOQl23FtnNW1rpKFgFzJcWqu0U=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=fnnas.com; spf=pass smtp.mailfrom=fnnas.com; dkim=pass (2048-bit key) header.d=fnnas-com.20200927.dkim.feishu.cn header.i=@fnnas-com.20200927.dkim.feishu.cn header.b=adMTg3Nh; arc=none smtp.client-ip=209.127.231.26
-Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=fnnas.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=fnnas.com
+	s=arc-20240116; t=1782205016; c=relaxed/simple;
+	bh=QNHtK1HmYLGWut5Lk/dx4QruEmeCpYCTh4Syvg2FqqI=;
+	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
+	 In-Reply-To:Content-Type; b=ronbCkvtwcjtikYNWacT17DrXI+f9Rd3Bexd34+k+l/3ETkuY3EtFe6aG4vEONhPXrWvF81OgL9Umkm9jcmkIK7XpuUYR3kXJFtguCZrbelKOmW4/JiPqJRt+tyCXZfq53kLPZTk+Dc47WEXMrfCi7lWv86q1u4B6rtUBgxqFVA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=suse.de; spf=pass smtp.mailfrom=suse.de; dkim=pass (1024-bit key) header.d=suse.de header.i=@suse.de header.b=TmjYq+ts; dkim=permerror (0-bit key) header.d=suse.de header.i=@suse.de header.b=lsn2SiHQ; dkim=pass (1024-bit key) header.d=suse.de header.i=@suse.de header.b=TmjYq+ts; dkim=permerror (0-bit key) header.d=suse.de header.i=@suse.de header.b=lsn2SiHQ; arc=none smtp.client-ip=195.135.223.131
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=suse.de
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=suse.de
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=fnnas-com.20200927.dkim.feishu.cn header.i=@fnnas-com.20200927.dkim.feishu.cn header.b="adMTg3Nh"
-DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed;
- s=s1; d=fnnas-com.20200927.dkim.feishu.cn; t=1782204265;
-  h=from:subject:mime-version:from:date:message-id:subject:to:cc:
- reply-to:content-type:mime-version:in-reply-to:message-id;
- bh=+2e0KB3c4IEtDmjd5t9RQHu22IMEunkp4T+g9t8dV7I=;
- b=adMTg3NhJ2DIIS73ODseMjK2O4fCUx3iznQRdYqsKmcKl/D6cn8PcFAbyYX+AFnx2h0ecc
- vBWkpo/YQtwhbFkuZk4n07RJ+EfJElp1wM+ppADqBNTO6UAxbgpAI/OiiasU5TxIfpWcpj
- UoD/w3THK30A/pBk3jShqhHXoFTdC+QRHn+d+26JwWxwDCPxbV7MthBohmDRqyZ4WPMqS3
- LyTMlC+BidgfUK1tN0sbhH7FmpV8UFcMkU5jnjcAYSE9yS7RJoVsW5//SsorbjE8sBMXub
- bOkmk67yLj3D5ASE8J0O7Nrw3mgO5uAavNGR5LS+gzsKrCb7r3NV3c40tubZ9w==
-Cc: <linux-raid@vger.kernel.org>, <yukuai@fygo.io>
-Message-Id: <ab103643-dadc-423a-890d-bed781384e17@fnnas.com>
-X-Lms-Return-Path: <lba+26a3a4768+8a13ab+lists.linux.dev+chencheng@fnnas.com>
-Received: from [192.168.8.62] ([183.34.170.156]) by smtp.feishu.cn with ESMTPS; Tue, 23 Jun 2026 16:44:23 +0800
-User-Agent: Mozilla Thunderbird
-X-Original-From: Chen Cheng <chencheng@fnnas.com>
-To: <sashiko-reviews@lists.linux.dev>
-Subject: Re: [PATCH] md: use READ_ONCE() for lockless reads of sb_flags
-Date: Tue, 23 Jun 2026 16:44:21 +0800
-In-Reply-To: <20260623082915.1B8A71F000E9@smtp.kernel.org>
+	dkim=pass (1024-bit key) header.d=suse.de header.i=@suse.de header.b="TmjYq+ts";
+	dkim=permerror (0-bit key) header.d=suse.de header.i=@suse.de header.b="lsn2SiHQ";
+	dkim=pass (1024-bit key) header.d=suse.de header.i=@suse.de header.b="TmjYq+ts";
+	dkim=permerror (0-bit key) header.d=suse.de header.i=@suse.de header.b="lsn2SiHQ"
+Received: from imap1.dmz-prg2.suse.org (unknown [10.150.64.97])
+	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+	 key-exchange X25519 server-signature RSA-PSS (4096 bits) server-digest SHA256)
+	(No client certificate requested)
+	by smtp-out2.suse.de (Postfix) with ESMTPS id 2CABD75D4C;
+	Tue, 23 Jun 2026 08:56:48 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=suse.de; s=susede2_rsa;
+	t=1782205008; h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
+	 mime-version:mime-version:content-type:content-type:
+	 content-transfer-encoding:content-transfer-encoding:
+	 in-reply-to:in-reply-to:references:references:autocrypt:autocrypt;
+	bh=3RnNK/GtLp3yp0QwhGJnVLwz7l0WW2gZlBt7s+tpRA8=;
+	b=TmjYq+tseDuvJkUDRHS2u3LY5GKULsmXtLNv8U1lvVm9gE1EelXBCn7c8tMxRlDTzGNIsN
+	fS+OcHetSS86eKfNMqkqoECbfArLYF8WjgpFdzg41i6cziPv5pKp8t56gtJCWNJL5FZD6o
+	6pWxvSz0XiK27Ov6kBddPGuSfqC+E78=
+DKIM-Signature: v=1; a=ed25519-sha256; c=relaxed/relaxed; d=suse.de;
+	s=susede2_ed25519; t=1782205008;
+	h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
+	 mime-version:mime-version:content-type:content-type:
+	 content-transfer-encoding:content-transfer-encoding:
+	 in-reply-to:in-reply-to:references:references:autocrypt:autocrypt;
+	bh=3RnNK/GtLp3yp0QwhGJnVLwz7l0WW2gZlBt7s+tpRA8=;
+	b=lsn2SiHQlvXURtjNi5fhhPG/M1Tv7glmuVLazcX+NKRUtJ2ODPyMmBRAdkJ/pE/tzxvWiv
+	/111/012Kqq44RAQ==
+Authentication-Results: smtp-out2.suse.de;
+	none
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=suse.de; s=susede2_rsa;
+	t=1782205008; h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
+	 mime-version:mime-version:content-type:content-type:
+	 content-transfer-encoding:content-transfer-encoding:
+	 in-reply-to:in-reply-to:references:references:autocrypt:autocrypt;
+	bh=3RnNK/GtLp3yp0QwhGJnVLwz7l0WW2gZlBt7s+tpRA8=;
+	b=TmjYq+tseDuvJkUDRHS2u3LY5GKULsmXtLNv8U1lvVm9gE1EelXBCn7c8tMxRlDTzGNIsN
+	fS+OcHetSS86eKfNMqkqoECbfArLYF8WjgpFdzg41i6cziPv5pKp8t56gtJCWNJL5FZD6o
+	6pWxvSz0XiK27Ov6kBddPGuSfqC+E78=
+DKIM-Signature: v=1; a=ed25519-sha256; c=relaxed/relaxed; d=suse.de;
+	s=susede2_ed25519; t=1782205008;
+	h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
+	 mime-version:mime-version:content-type:content-type:
+	 content-transfer-encoding:content-transfer-encoding:
+	 in-reply-to:in-reply-to:references:references:autocrypt:autocrypt;
+	bh=3RnNK/GtLp3yp0QwhGJnVLwz7l0WW2gZlBt7s+tpRA8=;
+	b=lsn2SiHQlvXURtjNi5fhhPG/M1Tv7glmuVLazcX+NKRUtJ2ODPyMmBRAdkJ/pE/tzxvWiv
+	/111/012Kqq44RAQ==
+Received: from imap1.dmz-prg2.suse.org (localhost [127.0.0.1])
+	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+	 key-exchange X25519 server-signature RSA-PSS (4096 bits) server-digest SHA256)
+	(No client certificate requested)
+	by imap1.dmz-prg2.suse.org (Postfix) with ESMTPS id D5220779A8;
+	Tue, 23 Jun 2026 08:56:47 +0000 (UTC)
+Received: from dovecot-director2.suse.de ([2a07:de40:b281:106:10:150:64:167])
+	by imap1.dmz-prg2.suse.org with ESMTPSA
+	id nbXcMU9KOmq0ZgAAD6G6ig
+	(envelope-from <tzimmermann@suse.de>); Tue, 23 Jun 2026 08:56:47 +0000
+Message-ID: <32644b7a-c09d-4c81-913d-53d2fc2e2950@suse.de>
+Date: Tue, 23 Jun 2026 10:56:47 +0200
 Precedence: bulk
 X-Mailing-List: sashiko-reviews@lists.linux.dev
 List-Id: <sashiko-reviews.lists.linux.dev>
 List-Subscribe: <mailto:sashiko-reviews+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:sashiko-reviews+unsubscribe@lists.linux.dev>
-Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: quoted-printable
-From: "Chen Cheng" <chencheng@fnnas.com>
-References: <20260623081942.2488045-1-chencheng@fnnas.com> <20260623082915.1B8A71F000E9@smtp.kernel.org>
+MIME-Version: 1.0
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH v2 4/6] drm/sysfb: simpledrm: Improve stride validation
+To: Thierry Reding <treding@nvidia.com>
+Cc: javierm@redhat.com, maarten.lankhorst@linux.intel.com,
+ mripard@kernel.org, airlied@gmail.com, simona@ffwll.ch, rayyan@ansari.sh,
+ dri-devel@lists.freedesktop.org, sashiko-reviews@lists.linux.dev,
+ stable@vger.kernel.org
+References: <20260622132433.722823-1-tzimmermann@suse.de>
+ <20260622132433.722823-5-tzimmermann@suse.de> <ajld8iWQ9iLwBen8@orome>
+Content-Language: en-US
+From: Thomas Zimmermann <tzimmermann@suse.de>
+Autocrypt: addr=tzimmermann@suse.de; keydata=
+ xsBNBFs50uABCADEHPidWt974CaxBVbrIBwqcq/WURinJ3+2WlIrKWspiP83vfZKaXhFYsdg
+ XH47fDVbPPj+d6tQrw5lPQCyqjwrCPYnq3WlIBnGPJ4/jreTL6V+qfKRDlGLWFjZcsrPJGE0
+ BeB5BbqP5erN1qylK9i3gPoQjXGhpBpQYwRrEyQyjuvk+Ev0K1Jc5tVDeJAuau3TGNgah4Yc
+ hdHm3bkPjz9EErV85RwvImQ1dptvx6s7xzwXTgGAsaYZsL8WCwDaTuqFa1d1jjlaxg6+tZsB
+ 9GluwvIhSezPgnEmimZDkGnZRRSFiGP8yjqTjjWuf0bSj5rUnTGiyLyRZRNGcXmu6hjlABEB
+ AAHNJ1Rob21hcyBaaW1tZXJtYW5uIDx0emltbWVybWFubkBzdXNlLmRlPsLAjgQTAQgAOAIb
+ AwULCQgHAgYVCgkICwIEFgIDAQIeAQIXgBYhBHIX+6yM6c9jRKFo5WgNwR1TC3ojBQJftODH
+ AAoJEGgNwR1TC3ojx1wH/0hKGWugiqDgLNXLRD/4TfHBEKmxIrmfu9Z5t7vwUKfwhFL6hqvo
+ lXPJJKQpQ2z8+X2vZm/slsLn7J1yjrOsoJhKABDi+3QWWSGkaGwRJAdPVVyJMfJRNNNIKwVb
+ U6B1BkX2XDKDGffF4TxlOpSQzdtNI/9gleOoUA8+jy8knnDYzjBNOZqLG2FuTdicBXblz0Mf
+ vg41gd9kCwYXDnD91rJU8tzylXv03E75NCaTxTM+FBXPmsAVYQ4GYhhgFt8S2UWMoaaABLDe
+ 7l5FdnLdDEcbmd8uLU2CaG4W2cLrUaI4jz2XbkcPQkqTQ3EB67hYkjiEE6Zy3ggOitiQGcqp
+ j//OwE0EWznS4AEIAMYmP4M/V+T5RY5at/g7rUdNsLhWv1APYrh9RQefODYHrNRHUE9eosYb
+ T6XMryR9hT8XlGOYRwKWwiQBoWSDiTMo/Xi29jUnn4BXfI2px2DTXwc22LKtLAgTRjP+qbU6
+ 3Y0xnQN29UGDbYgyyK51DW3H0If2a3JNsheAAK+Xc9baj0LGIc8T9uiEWHBnCH+RdhgATnWW
+ GKdDegUR5BkDfDg5O/FISymJBHx2Dyoklv5g4BzkgqTqwmaYzsl8UxZKvbaxq0zbehDda8lv
+ hFXodNFMAgTLJlLuDYOGLK2AwbrS3Sp0AEbkpdJBb44qVlGm5bApZouHeJ/+n+7r12+lqdsA
+ EQEAAcLAdgQYAQgAIAIbDBYhBHIX+6yM6c9jRKFo5WgNwR1TC3ojBQJftOH6AAoJEGgNwR1T
+ C3ojVSkIALpAPkIJPQoURPb1VWjh34l0HlglmYHvZszJWTXYwavHR8+k6Baa6H7ufXNQtThR
+ yIxJrQLW6rV5lm7TjhffEhxVCn37+cg0zZ3j7zIsSS0rx/aMwi6VhFJA5hfn3T0TtrijKP4A
+ SAQO9xD1Zk9/61JWk8OysuIh7MXkl0fxbRKWE93XeQBhIJHQfnc+YBLprdnxR446Sh8Wn/2D
+ Ya8cavuWf2zrB6cZurs048xe0UbSW5AOSo4V9M0jzYI4nZqTmPxYyXbm30Kvmz0rYVRaitYJ
+ 4kyYYMhuULvrJDMjZRvaNe52tkKAvMevcGdt38H4KSVXAylqyQOW5zvPc4/sq9c=
+In-Reply-To: <ajld8iWQ9iLwBen8@orome>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 8bit
+X-Spam-Flag: NO
+X-Spam-Score: -4.30
+X-Spamd-Result: default: False [-4.30 / 50.00];
+	BAYES_HAM(-3.00)[100.00%];
+	NEURAL_HAM_LONG(-1.00)[-1.000];
+	NEURAL_HAM_SHORT(-0.20)[-1.000];
+	MIME_GOOD(-0.10)[text/plain];
+	RCVD_VIA_SMTP_AUTH(0.00)[];
+	RCVD_TLS_ALL(0.00)[];
+	ARC_NA(0.00)[];
+	MIME_TRACE(0.00)[0:+];
+	RCPT_COUNT_SEVEN(0.00)[10];
+	FUZZY_RATELIMITED(0.00)[rspamd.com];
+	MID_RHS_MATCH_FROM(0.00)[];
+	FREEMAIL_ENVRCPT(0.00)[gmail.com];
+	DKIM_SIGNED(0.00)[suse.de:s=susede2_rsa,suse.de:s=susede2_ed25519];
+	FROM_HAS_DN(0.00)[];
+	FREEMAIL_CC(0.00)[redhat.com,linux.intel.com,kernel.org,gmail.com,ffwll.ch,ansari.sh,lists.freedesktop.org,lists.linux.dev,vger.kernel.org];
+	TO_DN_SOME(0.00)[];
+	FROM_EQ_ENVFROM(0.00)[];
+	TO_MATCH_ENVRCPT_ALL(0.00)[];
+	RCVD_COUNT_TWO(0.00)[2];
+	DBL_BLOCKED_OPENRESOLVER(0.00)[suse.de:email,suse.de:mid,nvidia.com:email,suse.com:url,imap1.dmz-prg2.suse.org:helo]
+X-Spam-Level: 
 
-=E5=9C=A8 2026/6/23 16:29, sashiko-bot@kernel.org =E5=86=99=E9=81=93:
-> Thank you for your contribution! Sashiko AI review found 1 potential issu=
-e(s) to consider:
-> - [Medium] Incomplete fix: The patch claims to resolve KCSAN data races o=
-n `sb_flags` in md, raid1, raid5, and raid10, but completely omits the nece=
-ssary `READ_ONCE()` updates to the `raid1`, `raid5`, and `raid10` subsystem=
-s.
-> --
->=20
-> commit adcaa558925c24a70a377065ea735febac939f0b
-> Author: Chen Cheng <chencheng@fnnas.com>
->=20
-> md: use READ_ONCE() for lockless reads of sb_flags
->=20
-> This commit adds READ_ONCE() wrappers around lockless reads of mddev->sb_=
-flags
-> to prevent KCSAN data race warnings. The commit message states it address=
-es
-> issues across md, raid1, raid5, and raid10.
->=20
->>      sb_flags is checked without a lock in md, raid1, raid5, and raid10.
->>      KCSAN reports these reads as data races.
->>     =20
->>      The write side uses atomic bit ops.
->>      The read side still has plain loads in a few places.
->>     =20
->>      Use READ_ONCE() for the lockless reads of sb_flags.
->=20
-> [Severity: Medium]
-> Does this patch completely address the data races mentioned in the commit
-> message?
->=20
+Hi
 
-There isn't data races in strong consistency model arch..
-raidXd() would be call periodically, so , steal value is ok..
-But I see kcsan report, and I think use read_once to read would be better.
+Am 22.06.26 um 18:10 schrieb Thierry Reding:
+> On Mon, Jun 22, 2026 at 03:19:38PM +0200, Thomas Zimmermann wrote:
+>> Validate the computed stride against the maximum value INT_MAX.
+>>
+>> Signed-off-by: Thomas Zimmermann <tzimmermann@suse.de>
+>> Fixes: 7bfa5c7b28d6 ("drm/simpledrm: Compute linestride with drm_format_info_min_pitch()")
+>> Cc: <stable@vger.kernel.org> # v6.1+
+>> ---
+>>   drivers/gpu/drm/sysfb/simpledrm.c | 10 ++++++++--
+>>   1 file changed, 8 insertions(+), 2 deletions(-)
+> Ugh... I have a hard time imagining that we'd ever exceed INT_MAX here,
+> but I guess better safe than sorry?
 
-> The commit message indicates that sb_flags is checked without a lock in m=
-d,
-> raid1, raid5, and raid10, and includes KCSAN traces for raid1d, raid5d, a=
-nd
-> raid10d. However, the provided diff only includes changes to drivers/md/m=
-d.c.
->=20
-> Are there additional READ_ONCE() updates missing for the raid1, raid5, an=
-d
-> raid10 subsystems? For example:
-> - drivers/md/raid1.c:raid1d()
-> - drivers/md/raid5.c:raid5d(), ops_run_io(), and reshape_request()
-> - drivers/md/raid10.c:raid10d() and reshape_request()
->=20
+Yeah. The idea of these patches is to harden the driver against all kind 
+of nonsense the firmware might give it. With patch 1 that limits the 
+width to 2^16, I don't think it's possible to exceed a pitch of INT_MAX, 
+but let's check anyway.
 
-raidXd() all call md_check_recovery().
+Best regards
+Thomas
 
->> diff --git a/drivers/md/md.c b/drivers/md/md.c
->> index 096bb64e87bd5..f83cca895f85f 100644
->> --- a/drivers/md/md.c
->> +++ b/drivers/md/md.c
-> [ ... ]
->> @@ -10425,7 +10425,7 @@ void md_check_recovery(struct mddev *mddev)
->>   			spin_unlock(&mddev->lock);
->>   		}
->>  =20
->> -		if (mddev->sb_flags)
->> +		if (READ_ONCE(mddev->sb_flags))
->>   			md_update_sb(mddev, 0);
->>  =20
->>   		/*
->=20
-> [Severity: Medium]
-> Are there other plain reads of sb_flags remaining in this file?
->=20
-> Looking at drivers/md/md.c:__md_stop_writes(), there appears to be anothe=
-r
-> plain lockless read of mddev->sb_flags. Should that also be wrapped with
-> READ_ONCE() to fully eliminate the KCSAN warnings?
->=20
+>
+> Reviewed-by: Thierry Reding <treding@nvidia.com>
 
-Only add protect for lockless path. __md_stop_writes() already protected=20
-by mddev_lock.
+-- 
+--
+Thomas Zimmermann
+Graphics Driver Developer
+SUSE Software Solutions Germany GmbH
+Frankenstr. 146, 90461 Nürnberg, Germany, www.suse.com
+GF: Jochen Jaser, Andrew McDonald, Werner Knoblich, (HRB 36809, AG Nürnberg)
+
+
