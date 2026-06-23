@@ -1,204 +1,82 @@
-Received: from mgamail.intel.com (mgamail.intel.com [192.198.163.15])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-pf1-f201.google.com (mail-pf1-f201.google.com [209.85.210.201])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C11A71DDA18
-	for <sashiko-reviews@lists.linux.dev>; Tue, 23 Jun 2026 00:22:01 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=192.198.163.15
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D2C82376BF1
+	for <sashiko-reviews@lists.linux.dev>; Tue, 23 Jun 2026 00:27:05 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.210.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1782174123; cv=none; b=XVFGOLZd9KF3EMiKHsj7SSSthVXZZ7hqOsuIxNfYrtjvZNxYP7sr8HX59fV/QSglRDDHuZ6rwjF6pp4/0WSxjMUgOO1SJgfk4OLZecAc3xQiOkjwAsnZpu3BYI0EdJz/iqRGJxROLqwHzlXBQl2h+tu2NvZqyRdZ1cK9KD52Q+s=
+	t=1782174426; cv=none; b=geJ6Z5WZ7rpBPizcaBtXf5todhuK0+Rz5hQuAG8waphFTI94KTAISBIg4Vz/gflRUpSsj6CiyEs7HHaUMICSDk8qSFvwGVUKILNUrfRuHLIUBjazwMEy0zHwEtyHJvA7jGF/DyUkF70Gx97dBivpHrXPNeF1AGdgYasJe3yTgmQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1782174123; c=relaxed/simple;
-	bh=RIq0QbN/T4HGXujH3MNJwAZ4U8f43QtGckPLsTfOJ70=;
-	h=Date:From:To:Cc:Subject:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=WHrQc2kt6bJHsfPoRa5vNE9fNCMbLl7M4EWqFIa49Ndepm4BpRBiG/6olBR3jWuYoxp2sIzGCgnXi0PohXmKpvWK4oVoWnRuBmfEfMJ2JXQ4Y0IcrH3qMMpGrBiHoUH1dasI5q82F+Y+XwmQynbU/0GnK3zXzbZXLuM7LptiLfk=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linux.intel.com; spf=pass smtp.mailfrom=linux.intel.com; dkim=pass (2048-bit key) header.d=intel.com header.i=@intel.com header.b=bx5R+9dh; arc=none smtp.client-ip=192.198.163.15
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linux.intel.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linux.intel.com
+	s=arc-20240116; t=1782174426; c=relaxed/simple;
+	bh=44b40FNP+GAQbQbXKQNOho2js7AD+VaXNZPF5DFDsMg=;
+	h=Date:In-Reply-To:Mime-Version:References:Message-ID:Subject:From:
+	 To:Cc:Content-Type; b=AMDMkzcbTI0Wkx6OVwW20aCqxdXoBD/ixgAG5uD1Y6wqrgHEzoLbvSiau4iQBGssKDLag8HYjqubKEV27F47Pd8fz77gNAs7CuUJJSwEXKR4xZEZM/Iv20ci3fF1CP2+YljPTTS97Gw+Xud5SEw/6KATN0O2rPpv0U7mBh8I7Zk=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=google.com; spf=pass smtp.mailfrom=flex--seanjc.bounces.google.com; dkim=pass (2048-bit key) header.d=google.com header.i=@google.com header.b=QeUCInVv; arc=none smtp.client-ip=209.85.210.201
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=google.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=flex--seanjc.bounces.google.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=intel.com header.i=@intel.com header.b="bx5R+9dh"
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
-  d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
-  t=1782174121; x=1813710121;
-  h=date:from:to:cc:subject:message-id:in-reply-to:
-   references:mime-version:content-transfer-encoding;
-  bh=RIq0QbN/T4HGXujH3MNJwAZ4U8f43QtGckPLsTfOJ70=;
-  b=bx5R+9dhlqvzYYHO1bfpZ3F3pA3K2IeEE1Kl9B0bv7UhnO/W8b0flNc2
-   jakYHYVDyzd1oTPfGkUQKapXO0vwG+vjJ1Y3sPZRvI+H77ijbD+/gIBFN
-   Ds5csKjAYHRPI/oUiU4KCYH3G5HsqmdxK6eJvb2tMxxgBYrmC+FucA5Rh
-   K5A4LRumqDb9aqgNhOK2v7dhKO+ZqZrsygCvnPG4PdSFVJP5dlmI26QAS
-   DHMetnToOMzgmqyto0ia9DsQxtg1BRviK/mQ4apNSOjwHOowG3InC13kF
-   fFD8Vm2rsilQHnhXGR0vK9vSTrHUJc2JSuOE2Yf9LYwJz9WujKoB4zYFF
-   w==;
-X-CSE-ConnectionGUID: /ZFLXxEYQL+3c8snM4CMjw==
-X-CSE-MsgGUID: yOHcQ02rQX6hkDGJdW5meg==
-X-IronPort-AV: E=McAfee;i="6800,10657,11825"; a="83026792"
-X-IronPort-AV: E=Sophos;i="6.24,219,1774335600"; 
-   d="scan'208";a="83026792"
-Received: from fmviesa003.fm.intel.com ([10.60.135.143])
-  by fmvoesa109.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 22 Jun 2026 17:22:01 -0700
-X-CSE-ConnectionGUID: iKYGxe/ZQbe4HbImr6oMcg==
-X-CSE-MsgGUID: U/W/gLEvTw+vZk5zLzfQgg==
-X-ExtLoop1: 1
-Received: from patelni-desk.amr.corp.intel.com (HELO localhost) ([10.2.248.44])
-  by fmviesa003-auth.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 22 Jun 2026 17:22:01 -0700
-Date: Mon, 22 Jun 2026 17:21:59 -0700
-From: Nirmal Patel <nirmal.patel@linux.intel.com>
-To: sashiko-bot@kernel.org
-Cc: sashiko-reviews@lists.linux.dev, linux-pci@vger.kernel.org
-Subject: Re: [PATCH v5] PCI: vmd: Add feature to scan BIOS enumerated
- devices.
-Message-ID: <20260622172159.0000402e@linux.intel.com>
-In-Reply-To: <20260622155632.462341F00A3A@smtp.kernel.org>
-References: <20260622154325.119809-1-nirmal.patel@linux.intel.com>
-	<20260622155632.462341F00A3A@smtp.kernel.org>
-X-Mailer: Claws Mail 4.2.0 (GTK 3.24.41; x86_64-w64-mingw32)
+	dkim=pass (2048-bit key) header.d=google.com header.i=@google.com header.b="QeUCInVv"
+Received: by mail-pf1-f201.google.com with SMTP id d2e1a72fcca58-842208d5b0eso3512196b3a.3
+        for <sashiko-reviews@lists.linux.dev>; Mon, 22 Jun 2026 17:27:05 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=google.com; s=20251104; t=1782174425; x=1782779225; darn=lists.linux.dev;
+        h=cc:to:from:subject:message-id:references:mime-version:in-reply-to
+         :date:from:to:cc:subject:date:message-id:reply-to;
+        bh=Aq/owXnFX88Pz3Pf4JSEwe3XNyjNB1kqyEi1wlombTc=;
+        b=QeUCInVvc1UXV5YEtC4CzE1/KJWO0jY1Wn2KVHnF6kfb3t9YDgyqFGTMTqj2sxHNeJ
+         hbBTB0HCoo+AWBMbvpDmlcVExIzTFS2J6WR1SJUNUxmkimYGTCiCM2RjVQV/bJPGkahW
+         r/daFXhop9P7bqJisA0FHyGomF7uZAn+64BPB6jbMgdAun02RWHH9c9ug/xHK+bQA1oz
+         IuRGLUAqXu6R2DV0zsd7auvpqS0ch3cVpqyRqEVRivn5iWu8ShxQ9FEn5u+5U148zlTY
+         3ycFbOTT9NTfUpMPN3Q+ghJMMKi/Q1JtRG9b41aCMJ3LarhUnvCQ2K6MbXwJgATGK9r/
+         wmpw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20251104; t=1782174425; x=1782779225;
+        h=cc:to:from:subject:message-id:references:mime-version:in-reply-to
+         :date:x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+        bh=Aq/owXnFX88Pz3Pf4JSEwe3XNyjNB1kqyEi1wlombTc=;
+        b=STBNtZIjha6jE0L9L8m8y2FPFYwDNY7/clnxzy66AjcCzfIbUDIrzqyvaT6pueyG2H
+         XUUSRItZByCmcJ5KkQ66GYuM4WxiDT/RfdHQboxTN345gD1qCxOJjf0SU7hU6dU4BxgB
+         cMOjte+w7FSdvhY9I9uAaD7kx8++apodVkEE6I8RTEHHUSe9wjAqtuSu6w8OK3WqTTzH
+         PKi21RnU3TRPDvUlpJdGW+1nIK/UDe60moQv6B+bkesAThveuughsaxjhzpMC1F/DZXy
+         gkecssnw8LvTIwBIDSawE5kG7zS/NqYxiZHOWsA72aAB1IUANzTf9DfgaVVUoUczesb1
+         k3uA==
+X-Gm-Message-State: AOJu0YzhTUsOf2rnYLX/zweTpzHEZCZbBQzaxCQwddgmtBgsmZffMNSu
+	9TCETkUdktxDD4PLW/o6V4n0YzuD8n+4VIBr2Sncfqj/LI95vCc90sPxCVIOgYUyZsXmcT6mMdB
+	D6N1wkQ==
+X-Received: from pfwo4.prod.google.com ([2002:a05:6a00:1bc4:b0:845:47bc:59de])
+ (user=seanjc job=prod-delivery.src-stubby-dispatcher) by 2002:a05:6a00:ccd:b0:842:5ea5:5fdd
+ with SMTP id d2e1a72fcca58-84595440182mr611845b3a.40.1782174424841; Mon, 22
+ Jun 2026 17:27:04 -0700 (PDT)
+Date: Mon, 22 Jun 2026 17:27:04 -0700
+In-Reply-To: <CA+EHjTzQhOi-qeiNGpn50o_ko2Cp05qzuKwhiZCgLPCyiwWhrw@mail.gmail.com>
 Precedence: bulk
 X-Mailing-List: sashiko-reviews@lists.linux.dev
 List-Id: <sashiko-reviews.lists.linux.dev>
 List-Subscribe: <mailto:sashiko-reviews+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:sashiko-reviews+unsubscribe@lists.linux.dev>
-MIME-Version: 1.0
-Content-Type: text/plain; charset=US-ASCII
-Content-Transfer-Encoding: 7bit
+Mime-Version: 1.0
+References: <20260618-gmem-inplace-conversion-v8-0-9d2959357853@google.com>
+ <20260618-gmem-inplace-conversion-v8-17-9d2959357853@google.com>
+ <20260619005320.51A8F1F000E9@smtp.kernel.org> <CA+EHjTzQhOi-qeiNGpn50o_ko2Cp05qzuKwhiZCgLPCyiwWhrw@mail.gmail.com>
+Message-ID: <ajnS2NmvfBtgLKky@google.com>
+Subject: Re: [PATCH v8 17/46] KVM: guest_memfd: Advertise KVM_SET_MEMORY_ATTRIBUTES2
+ ioctl
+From: Sean Christopherson <seanjc@google.com>
+To: Fuad Tabba <tabba@google.com>
+Cc: sashiko-reviews@lists.linux.dev, 
+	Ackerley Tng via B4 Relay <devnull+ackerleytng.google.com@kernel.org>, kvm@vger.kernel.org
+Content-Type: text/plain; charset="us-ascii"
 
-On Mon, 22 Jun 2026 15:56:31 +0000
-sashiko-bot@kernel.org wrote:
+On Fri, Jun 19, 2026, Fuad Tabba wrote:
+> On Fri, 19 Jun 2026 at 01:53, <sashiko-bot@kernel.org> wrote:
+> >
+> > Thank you for your contribution! Sashiko AI review found 1 potential issue(s) to consider:
+> > - [Medium] Missing compat_ioctl handler for guest_memfd file operations causes KVM_SET_MEMORY_ATTRIBUTES2 to fail with -ENOTTY for 32-bit userspace.
+> 
+> guest_memfd is gated on 64-bit: x86 selects KVM_GUEST_MEMFD only under
+> X86_64 (arch/x86/kvm/Kconfig:50), and arm64 is 64-bit only. Is 32-bit
+> userspace with guest_memfd a supported configuration?
 
-> Thank you for your contribution! Sashiko AI review found 3 potential
-> issue(s) to consider:
-> - [Critical] vmd_remove_irq_domain() returns early for devices with
-> VMD_FEAT_USE_BIOS_INFO, permanently leaking the IRQ domain and its
-> fwnode, and causing an exploitable Use-After-Free.
-> - [High] vmd_domain_reset() accesses incorrect ECAM offsets when
-> VMD_FEAT_USE_BIOS_INFO is set, failing to reset actual VMD bridges
-> and corrupting unrelated MMIO configuration space.
-> - [Medium] The new `vmd_get_bus_info_from_bar4()` function accesses
-> MMIO regions in BAR4 at hardcoded offsets without validating that the
-> mapped BAR is sufficiently large. --
-> 
-> commit 371d26de7e81b3dcfea77481a03dd53acb14c51c
-> Author: Nirmal Patel <nirmal.patel@linux.intel.com>
-> 
-> PCI: vmd: Add feature to scan BIOS enumerated devices.
-> 
-> Newer VMD devices with ID 0x28c1 use BIOS enumeration for the device
-> tree. This commit updates the VMD driver to read bus hide ranges and
-> shadow registers from VMD BAR4 to perform bus scans for these devices.
-> 
-> > diff --git a/drivers/pci/controller/vmd.c
-> > b/drivers/pci/controller/vmd.c index d4ae250d4bc6d..a4e03f10a54d6
-> > 100644 --- a/drivers/pci/controller/vmd.c
-> > +++ b/drivers/pci/controller/vmd.c  
-> 
-> [ ... ]
-> 
-> > @@ -374,6 +393,9 @@ static void vmd_set_msi_remapping(struct
-> > vmd_dev *vmd, bool enable) 
-> >  static void vmd_remove_irq_domain(struct vmd_dev *vmd)
-> >  {
-> > +	if (!!(vmd->features & VMD_FEAT_USE_BIOS_INFO))
-> > +		return;
-> > +  
-> 
-> [Severity: Critical]
-> Does this early return bypass irq_domain_remove() and
-> irq_domain_free_fwnode(), permanently leaking the IRQ domain?
-> 
-> In vmd_enable_domain(), vmd_create_irq_domain() is successfully called
-> for these devices because VMD_FEAT_CAN_BYPASS_MSI_REMAP is not set.
-> 
-> If the IRQ domain remains globally registered, could it cause a
-> use-after-free when its struct vmd_dev host_data pointer is
-> automatically freed by devres during device removal?
-Let me fix it.
-> 
-> >  	/*
-> >  	 * Some production BIOS won't enable remapping between
-> > soft reboots.
-> >  	 * Ensure remapping is restored before unloading the
-> > driver.  
-> 
-> [ ... ]
-> 
-> > @@ -393,7 +415,12 @@ static void __iomem *vmd_cfg_addr(struct
-> > vmd_dev *vmd, struct pci_bus *bus, unsigned int devfn, int reg, int
-> > len) {
-> >  	unsigned int busnr_ecam = bus->number - vmd->busn_start;
-> > -	u32 offset = PCIE_ECAM_OFFSET(busnr_ecam, devfn, reg);
-> > +	u32 offset;
-> > +
-> > +	if (!!(vmd->features & VMD_FEAT_USE_BIOS_INFO))
-> > +		busnr_ecam = bus->number;
-> > +
-> > +	offset = PCIE_ECAM_OFFSET(busnr_ecam, devfn, reg);  
-> 
-> [Severity: High]
-> Since the ECAM offset calculation now uses the absolute bus number for
-> VMD_FEAT_USE_BIOS_INFO devices, does vmd_domain_reset() also need to
-> be updated?
-> 
-> Looking at vmd_domain_reset(), it iterates bus from 0 to max_buses and
-> calculates the MMIO address like this:
-> 
-> drivers/pci/controller/vmd.c:vmd_domain_reset() {
->     ...
->     for (bus = 0; bus < max_buses; bus++) {
->         for (dev = 0; dev < 32; dev++) {
->             base = vmd->cfgbar + PCIE_ECAM_OFFSET(bus,
->                                     PCI_DEVFN(dev, 0), 0);
->     ...
-> }
-Fair point, i need to change vmd_cfg_addr to avoid reading out of
-bound. I will also udpate ECAM calculation.
-
-> If the VMD buses start at a higher number (e.g., 128), could
-> this hardcoded loop cause vmd_domain_reset() to miss the actual VMD
-> bridges and perform MMIO reads/writes to incorrect offsets in the
-> lower half of the BAR?
-> 
-> >  	if (offset + len >=
-> > resource_size(&vmd->dev->resource[VMD_CFGBAR])) return NULL;  
-> 
-> [ ... ]
-> 
-> > @@ -661,6 +688,46 @@ static int vmd_get_bus_number_start(struct
-> > vmd_dev *vmd) return 0;
-> >  }
-> >  
-> > +static int vmd_get_bus_info_from_bar4(struct vmd_dev *vmd,
-> > +				       resource_size_t *offset1,
-> > +				       resource_size_t *offset2)
-> > +{
-> > +	u64 phys1, phys2, bar4_2840;
-> > +	void __iomem *bar4;
-> > +	u32 base_id;
-> > +	u8 base_bus;
-> > +
-> > +	bar4 = pci_ioremap_bar(vmd->dev, 4);
-> > +	if (!bar4)
-> > +		return -ENOMEM;
-> > +
-> > +	/* Read shadow registers for MEMBAR1 and MEMBAR2 physical
-> > addresses. */
-> > +	phys1 = readq(bar4 + SHADOW_MEMBAR1_28C1);
-> > +	phys2 = readq(bar4 + SHADOW_MEMBAR2_28C1);  
-> 
-> [Severity: Medium]
-> Could these reads access unmapped kernel memory if the device's BAR4
-> is smaller than expected?
-> 
-> Since SHADOW_MEMBAR1_28C1 and BASE_ID_REG_28C1 access offsets like
-> 0x2818 and 0x2840, should we verify that pci_resource_len(vmd->dev,
-> 4) is large enough to cover these offsets before performing the
-> readq() calls?
-
-> 
-> > +	/*
-> > +	 * Read and set bus start number from Base ID register.
-> > 24-bit Base ID
-> > +	 * register is part of 64-bit shadowed reqid hide range
-> > register and
-> > +	 * holds segment, bus, device and function.
-> > +	 */  
-> 
-
+Good question, I genuinely have no idea.  My preference would be to do nothing
+for now, and wait to add the (AIUI) one-liner "fix" until someone comes along
+with a decent use case.
