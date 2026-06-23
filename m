@@ -1,154 +1,171 @@
-Received: from out-174.mta1.migadu.com (out-174.mta1.migadu.com [95.215.58.174])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from va-2-37.ptr.blmpb.com (va-2-37.ptr.blmpb.com [209.127.231.37])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C5EA71D63F0
-	for <sashiko-reviews@lists.linux.dev>; Tue, 23 Jun 2026 09:39:40 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=95.215.58.174
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EE87B2288D5
+	for <sashiko-reviews@lists.linux.dev>; Tue, 23 Jun 2026 10:03:07 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.127.231.37
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1782207582; cv=none; b=jEMo6WQWoAixJvFRBLVH7FwXbJKXtVBZdLQfmfr0/68K75X1MebsfncjEsmlLnwL6OEjzNoskfcwMwfYbDW2fx8rxVJYBMeOP7RELdiyYRblJqRqfFn2VpD4ArW91kopfkl7dHxdvjqj6qMO4qn0voz7vawspGeHzwbYY8DQw7E=
+	t=1782208992; cv=none; b=MtMB2vA1znz6W77pvXbpeM9iTk656vCQzN+s4BhKen+bNyWCBtBng7LE0QKez1kx03rtQqot3MOTfxyDtBC6gXKvsnC5iMlgANurrcW9N1nVk0diGaTE1v5pdrHUboDMk7p8Y27KMFGhoCX1HQT//w8rFo1QR16dX+d64RXIBF4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1782207582; c=relaxed/simple;
-	bh=U4Iqm7QsRQQuARja0p8ycvIe+YfiYRRmTSzgffALWG4=;
-	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=Zh18FIvDH8O97MANgYNjSiKr2lyJ+tVRThsdMM+qvJ/uPvS3hzLvelsqIyEVhPE6WBj2oHYCDk/mkiK4r11JbXXr3HZCDBx6pF0Pt9YSl/NGssJyU7X5LyOTJNtFjNRzkbjnozwgrUirwDmdLb80FKjHrliRZW5YSs3pYtywPGM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linux.dev; spf=pass smtp.mailfrom=linux.dev; dkim=pass (1024-bit key) header.d=linux.dev header.i=@linux.dev header.b=O9s633eC; arc=none smtp.client-ip=95.215.58.174
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linux.dev
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linux.dev
+	s=arc-20240116; t=1782208992; c=relaxed/simple;
+	bh=PKj0uf5rG2swSBE04Mi21OhY6wGX8aHMq2N4IxB8ctQ=;
+	h=Cc:Date:Mime-Version:Message-Id:In-Reply-To:To:From:Content-Type:
+	 Subject:References; b=a4UYq5fzD48eVI8u+3FqHa3ux5W6FrKLMyPEF7/ZLuAHOCd4k+aTG/sluiXzdcNJa+EPOYiOZK7uXTvrZ7xdwycWM3xPFJnuWmbGSkcXDl4psC60LFaCoHA4CYHWbwRA2O7x3j31ra/SmEcSB5e/XkdgHocv1KUHDq7132KdTsk=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=fnnas.com; spf=pass smtp.mailfrom=fnnas.com; dkim=pass (2048-bit key) header.d=fnnas-com.20200927.dkim.feishu.cn header.i=@fnnas-com.20200927.dkim.feishu.cn header.b=09RlAIGA; arc=none smtp.client-ip=209.127.231.37
+Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=fnnas.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=fnnas.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linux.dev header.i=@linux.dev header.b="O9s633eC"
-Message-ID: <1c86fa84-6c9a-4004-9466-c78f036aeee0@linux.dev>
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linux.dev; s=key1;
-	t=1782207579;
-	h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
-	 to:to:cc:cc:mime-version:mime-version:content-type:content-type:
-	 content-transfer-encoding:content-transfer-encoding:
-	 in-reply-to:in-reply-to:references:references;
-	bh=4H/3W3tN6mMIvYBnS9mHCZrNiKkHxT+r8zsyZoeO8nU=;
-	b=O9s633eCYIZQZ0YVj0juvZvctTo7J+i/2DEl814+wgK6ymLPdlfQVSbfvvzDtO7hbalc3E
-	qTw9YAzGNTLA2ZIxAtDf/2UYRrR8aHO3vov/gkpiQk45mbnY7C4ZGvvu1XMX6+4k+iqdKX
-	D30dyAJ8mTkPGux0g8YnHoQ4WzYRo9o=
-Date: Tue, 23 Jun 2026 17:38:50 +0800
+	dkim=pass (2048-bit key) header.d=fnnas-com.20200927.dkim.feishu.cn header.i=@fnnas-com.20200927.dkim.feishu.cn header.b="09RlAIGA"
+DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed;
+ s=s1; d=fnnas-com.20200927.dkim.feishu.cn; t=1782208981;
+  h=from:subject:mime-version:from:date:message-id:subject:to:cc:
+ reply-to:content-type:mime-version:in-reply-to:message-id;
+ bh=Pg65HcSR4bp4ci0dPxW+vobr3hyPZZim+6nkamq2r00=;
+ b=09RlAIGAk+UfaBUmhCo1r4U+KJDyNItHfHA9Z5iwlu4JxC/j6PW0wvSEGkEeQSs9Y/SCBl
+ PK3LPAKqolZ3EKfHiBG7FlFbIgO4+dIjfZfe5KKscbz1txt0SP5DyNpq0hDim3RgW70AdS
+ 6L978VRSKe8ZIt1F3x6GA7kRBgA6cnTcXj9/ttLfHhqM2gG00GPm+R/d+zwu5Duw+sMtMO
+ 4E7CHOTchhvEUoMhGF9+c0K/XuPXrcj38r6O/H9s61TYEIYL/KEyYq4KewwkasFG413mjr
+ UN+791bw1Y4D9bRAlqwArSvDzoMUT0chZw5I53yjQPmgNJoBz+B0hxAJieS/zg==
+Cc: <yukuai@fygo.io>, <linux-raid@vger.kernel.org>
+Date: Tue, 23 Jun 2026 18:02:57 +0800
 Precedence: bulk
 X-Mailing-List: sashiko-reviews@lists.linux.dev
 List-Id: <sashiko-reviews.lists.linux.dev>
 List-Subscribe: <mailto:sashiko-reviews+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:sashiko-reviews+unsubscribe@lists.linux.dev>
-MIME-Version: 1.0
-Subject: Re: [PATCH v2 12/13] mm: Move __alloc_pages() to mm/internal.h
-To: Brendan Jackman <brendan.jackman@linux.dev>
-Cc: linux-kernel@vger.kernel.org, linux-rt-devel@lists.linux.dev,
- sashiko-reviews@lists.linux.dev, Brendan Jackman <jackmanb@google.com>
-References: <20260622-alloc-trylock-v2-0-31f31367d420@google.com>
- <20260622-alloc-trylock-v2-12-31f31367d420@google.com>
- <20260622102105.53D141F00A3A@smtp.kernel.org>
- <DJFJ96IPBX9H.33CCUBF385H1W@linux.dev>
- <037178f2-bd9e-4766-8df1-0881e2eee9c1@linux.dev>
- <DJGBNRPIEYRP.1XDOBS7YGKO1P@linux.dev>
-Content-Language: en-US
-X-Report-Abuse: Please report any abuse attempt to abuse@migadu.com and include these headers.
-From: Hao Ge <hao.ge@linux.dev>
-In-Reply-To: <DJGBNRPIEYRP.1XDOBS7YGKO1P@linux.dev>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 8bit
-X-Migadu-Flow: FLOW_OUT
+Mime-Version: 1.0
+User-Agent: Mozilla Thunderbird
+Message-Id: <8a81ba6e-3501-4b34-98fc-3479295937ff@fnnas.com>
+Content-Transfer-Encoding: quoted-printable
+X-Lms-Return-Path: <lba+26a3a59d3+4ca170+lists.linux.dev+chencheng@fnnas.com>
+In-Reply-To: <20260622122902.F25CD1F00A3A@smtp.kernel.org>
+To: <sashiko-reviews@lists.linux.dev>
+From: "Chen Cheng" <chencheng@fnnas.com>
+Content-Type: text/plain; charset=UTF-8
+Subject: Re: [PATCH v5 3/3] md/raid10: free r10bio before ending master_bio in raid_end_bio_io()
+X-Original-From: Chen Cheng <chencheng@fnnas.com>
+References: <20260622121312.1775322-1-chencheng@fnnas.com> <20260622121312.1775322-4-chencheng@fnnas.com> <20260622122902.F25CD1F00A3A@smtp.kernel.org>
+Received: from [192.168.8.62] ([183.34.169.141]) by smtp.feishu.cn with ESMTPS; Tue, 23 Jun 2026 18:02:58 +0800
 
+=E5=9C=A8 2026/6/22 20:29, sashiko-bot@kernel.org =E5=86=99=E9=81=93:
+> Thank you for your contribution! Sashiko AI review found 2 potential issu=
+e(s) to consider:
+>=20
+> Pre-existing issues:
+> - [High] Incomplete fix: identical Use-After-Free and mempool corruption =
+in `raid_end_discard_bio`.
+> - [High] Memory leak of `r10_bio` on `REQ_NOWAIT` write requests during c=
+luster resync or reshape.
+> --
+>=20
+> commit 088539a2820315440079f31df4aa792c8a6bc547
+> Author: Chen Cheng <chencheng@fnnas.com>
+>=20
+> md/raid10: free r10bio before ending master_bio in raid_end_bio_io()
+>=20
+> This commit reorders the teardown sequence in raid_end_bio_io() to free
+> r10_bio before calling bio_endio(). This prevents a race condition where
+> a concurrent array reshape can alter the geometry and destroy the mempool
+> after the master bio completes but before the r10_bio is freed.
+>=20
+>> diff --git a/drivers/md/raid10.c b/drivers/md/raid10.c
+>> index d740744a97461..a4642c903b202 100644
+>> --- a/drivers/md/raid10.c
+>> +++ b/drivers/md/raid10.c
+>> @@ -332,12 +332,12 @@ static void raid_end_bio_io(struct r10bio *r10_bio=
+)
+>>   {
+>>   	struct bio *bio =3D r10_bio->master_bio;
+>>   	struct r10conf *conf =3D r10_bio->mddev->private;
+>> +	bool returned =3D test_and_set_bit(R10BIO_Returned, &r10_bio->state);
+>> +	blk_status_t status =3D test_bit(R10BIO_Uptodate, &r10_bio->state)
+>> +				? BLK_STS_OK : BLK_STS_IOERR;
+>>  =20
+>> -	if (!test_and_set_bit(R10BIO_Returned, &r10_bio->state)) {
+>> -		if (!test_bit(R10BIO_Uptodate, &r10_bio->state))
+>> -			bio->bi_status =3D BLK_STS_IOERR;
+>> -		bio_endio(bio);
+>> -	}
+>> +	put_all_bios(conf, r10_bio);
+>> +	mempool_free(r10_bio, conf->r10bio_pool);
+>>  =20
+>>   	/*
+>>   	 * Wake up any possible resync thread that waits for the device
+>> @@ -345,7 +345,10 @@ static void raid_end_bio_io(struct r10bio *r10_bio)
+>>   	 */
+>>   	allow_barrier(conf);
+>>  =20
+>> -	free_r10bio(r10_bio);
+>> +	if (!returned) {
+>> +		bio->bi_status =3D status;
+>> +		bio_endio(bio);
+>> +	}
+>>   }
+>>  =20
+>=20
+> [Severity: High]
+> This is a pre-existing issue, but the exact same race condition appears t=
+o
+> exist in the discard completion path.
+>=20
+> In drivers/md/raid10.c:raid_end_discard_bio():
+>=20
+> 	} else {
+> 		md_write_end(r10bio->mddev);
+> 		bio_endio(r10bio->master_bio);
+> 		free_r10bio(r10bio);
+> 		break;
+> 	}
+>=20
+> Since bio_endio(r10bio->master_bio) drops active_io to zero, couldn't thi=
+s
+> also wake up mddev_suspend() and allow a concurrent reshape to modify
+> conf->geo and destroy conf->r10bio_pool before free_r10bio() is called?
+>=20
 
-On 2026/6/23 17:30, Brendan Jackman wrote:
-> On Tue Jun 23, 2026 at 6:50 AM UTC, Hao Ge wrote:
->> Hi Brendan
->>
->>
->> On 2026/6/22 19:14, Brendan Jackman wrote:
->>> On Mon Jun 22, 2026 at 10:21 AM UTC, sashiko-bot wrote:
->>>> Thank you for your contribution! Sashiko AI review found 1 potential issue(s) to consider:
->>>> - [Low] Missing EXPORT_SYMBOL for out-of-line alloc_pages_node_noprof() causes widespread module linker errors.
->>>> --
->>>>
->>>> commit 42f7742177beb0066c00a7aa081250feb5859171
->>>> Author: Brendan Jackman <jackmanb@google.com>
->>>>
->>>> mm: Move __alloc_pages() to mm/internal.h
->>>>
->>>> This commit moves the __alloc_pages() family of internal functions to
->>>> mm/internal.h to restrict them to the mm subsystem. It also moves
->>>> alloc_pages_node_noprof() out-of-line into mm/page_alloc.c since it
->>>> depends on __alloc_pages_noprof().
->>>>
->>>>> diff --git a/mm/page_alloc.c b/mm/page_alloc.c
->>>>> index 36f0d625a4390..38238203ef7b0 100644
->>>>> --- a/mm/page_alloc.c
->>>>> +++ b/mm/page_alloc.c
->>>> [ ... ]
->>>>
->>>>> @@ -5419,6 +5419,17 @@ struct page *__alloc_pages_noprof(gfp_t gfp, unsigned int order,
->>>>>    }
->>>>>    EXPORT_SYMBOL(__alloc_pages_noprof);
->>>> [Severity: Low]
->>>> Since __alloc_pages_noprof() is no longer visible outside of mm/, should this
->>>> EXPORT_SYMBOL be removed?
->>> Yep.
->>>
->>>>> +struct page *alloc_pages_node_noprof(int nid, gfp_t gfp_mask, unsigned int order)
->>>>> +{
->>>>> +	if (nid == NUMA_NO_NODE)
->>>>> +		nid = numa_mem_id();
->>>>> +
->>>>> +	VM_BUG_ON(nid < 0 || nid >= MAX_NUMNODES);
->>>>> +	warn_if_node_offline(nid, gfp_mask);
->>>>> +
->>>>> +	return __alloc_pages_noprof(gfp_mask, order, nid, NULL);
->>>>> +}
->>>> [Severity: Low]
->>>> Does this code cause module linker errors? alloc_pages_node_noprof() is called
->>>> by the alloc_pages_node() macro in include/linux/gfp.h, but it does not have
->>>> an EXPORT_SYMBOL.
->>> Yep. Doesn't show up in defconfig but if you set CONFIG_BLK_DEV_UBLK=m
->>> then:
->>>
->>> ERROR: modpost: "alloc_pages_node_noprof" [drivers/block/ublk_drv.ko] undefined!
->> I was about to report this linker issue myself, but Sashiko caught it first.
->>
->> While testing your patch on top of mm-new, I hit the exact same modpost
->>
->> undefined symbol error as mentioned above:
->>
->>     MODPOST Module.symvers
->> ERROR: modpost: "alloc_pages_node_noprof" [arch/x86/kvm/kvm-intel.ko]
->> undefined!
->> ERROR: modpost: "alloc_pages_node_noprof" [arch/x86/kvm/kvm-amd.ko]
->> undefined!
->> ERROR: modpost: "alloc_pages_node_noprof" [drivers/gpu/drm/ttm/ttm.ko]
->> undefined!
->> ERROR: modpost: "alloc_pages_node_noprof" [drivers/misc/sgi-xp/xpc.ko]
->> undefined!
->> ERROR: modpost: "alloc_pages_node_noprof" [drivers/misc/sgi-gru/gru.ko]
->> undefined!
->> ERROR: modpost: "alloc_pages_node_noprof"
->> [drivers/net/ethernet/amazon/ena/ena.ko] undefined!
->> ERROR: modpost: "alloc_pages_node_noprof"
->> [drivers/net/ethernet/amd/xgbe/amd-xgbe.ko] undefined!
->> ERROR: modpost: "alloc_pages_node_noprof"
->> [drivers/net/ethernet/aquantia/atlantic/atlantic.ko] undefined!
->> ERROR: modpost: "alloc_pages_node_noprof"
->> [drivers/net/ethernet/chelsio/cxgb4/cxgb4.ko] undefined!
->> ERROR: modpost: "alloc_pages_node_noprof"
->> [drivers/net/ethernet/chelsio/cxgb4vf/cxgb4vf.ko] undefined!
->> WARNING: modpost: suppressed 14 unresolved symbol warnings because there
->> were too many)
-> FWIW something like this happened on a previous patchset of mine, and
-> someone was like "so you just sent patches without any testing huh?" so
-> I just wanna note: I did test this (see cover letter for details) I just
-> don't bother with modules!
+yes . raid_end_discard_bio have same issue .
 
+>=20
+> [Severity: High]
+> This is a pre-existing issue, but does raid10_write_request() leak the r1=
+0_bio
+> on REQ_NOWAIT requests?
+>=20
+> In drivers/md/raid10.c:__make_request():
+>=20
+> 	r10_bio =3D mempool_alloc(conf->r10bio_pool, GFP_NOIO);
+> ...
+> 	if (bio_data_dir(bio) =3D=3D READ)
+> 		raid10_read_request(mddev, bio, r10_bio);
+> 	else
+> 		raid10_write_request(mddev, bio, r10_bio);
+>=20
+> Then in raid10_write_request() during clustered resync:
+>=20
+> 	if ((mddev_is_clustered(mddev) &&
+> 	     mddev->cluster_ops->area_resyncing(mddev, WRITE,
+> 						bio->bi_iter.bi_sector,
+> 						bio_end_sector(bio)))) {
+> 		DEFINE_WAIT(w);
+> 		/* Bail out if REQ_NOWAIT is set for the bio */
+> 		if (bio->bi_opf & REQ_NOWAIT) {
+> 			bio_wouldblock_error(bio);
+> 			return;
+> 		}
+>=20
+> And later during reshape:
+>=20
+> 		if (bio->bi_opf & REQ_NOWAIT) {
+> 			allow_barrier(conf);
+> 			bio_wouldblock_error(bio);
+> 			return;
+> 		}
+>=20
+> Since these paths return immediately, they leave the r10_bio allocated. C=
+ould
+> repeated REQ_NOWAIT rejections eventually exhaust conf->r10bio_pool, caus=
+ing
+> subsequent allocations in __make_request() to hang indefinitely?
+>=20
 
-No worries, this is quite common. I've run into the same thing in
-
-my own work — missing =m configs in test builds happens to everyone.
-
-It doesn't affect my testing of this series.
-
-
-> Anyway, this is the 2nd time I've sent a patch that breaks the build of
-> CONFIG_KVM_INTEL=m so I guess it's time to add a new build to my test
-> scripts :)
->
+seems fixed recently .
