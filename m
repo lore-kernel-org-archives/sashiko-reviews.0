@@ -1,151 +1,113 @@
-Received: from out-188.mta0.migadu.com (out-188.mta0.migadu.com [91.218.175.188])
+Received: from out-171.mta1.migadu.com (out-171.mta1.migadu.com [95.215.58.171])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7E46E1A8F84
-	for <sashiko-reviews@lists.linux.dev>; Tue, 23 Jun 2026 04:01:00 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=91.218.175.188
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E33C339022B
+	for <sashiko-reviews@lists.linux.dev>; Tue, 23 Jun 2026 04:04:14 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=95.215.58.171
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1782187263; cv=none; b=f9e+84GeFLJPt4YiTyH1UKZdIRR+x61DPOSafrVNJd73Q+N/VVhOjuJbgGwynFp8Zz5+48k5tc1kAInGy4G0dtbmhy8bV68tGk56EAqxOyIh1NccEgVyfC1usPh5GPvz/FUn0JzigJKXn2vnpWTqEqWhScyGuMC7Ek5BLSGDWCs=
+	t=1782187456; cv=none; b=Omf+5lOR9nDGbcJrwdks6l7PjicJn3GNAAzXtkBctAFFj/SgHsTiTwV3NrovUXFqEUEDKbeTXi0CMA8Fx3rhhgf2K6gvyqW1iXEz+A65R4yHK5nXVxDrBYe8cfueVhFBbDffxDrqBwtvfdcXkQnkQGIvyqKLPoq67qms3YaQNPo=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1782187263; c=relaxed/simple;
-	bh=qyc+kkcySSiaks4GtPyyluU2MSkweVp+Xx/6eq1ws6s=;
+	s=arc-20240116; t=1782187456; c=relaxed/simple;
+	bh=XERz1UHjgNjBqQ6T8Dbot+hJmy/bNOImrf6pcgK8a8o=;
 	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=lvcayLhPKLVCYpy2TFzdillyx5BclXN0Fs/Uc8OTH6S81kL/9OsmljTzuRPpAHJA6TYvJMT6PemMXKsuMhgk3dYxrcSmkZftcXZ0+5vUHSYCvijBYPjJxltsLWNMbUL+2a/WG0rj0LJTTJI5MDPNgER0H1jXDcFuvTIwAMqi640=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linux.dev; spf=pass smtp.mailfrom=linux.dev; dkim=pass (1024-bit key) header.d=linux.dev header.i=@linux.dev header.b=p6I7Grsl; arc=none smtp.client-ip=91.218.175.188
+	 In-Reply-To:Content-Type; b=jMAhuZnKKtizhkpdi7QE+Ebh8I0ZoTaDLR4dELEFG6ctoEWb4mmLwPludyuC1szWMVDQGZ0pzuuNkXkcBSiGlLwJs/xfKvZVGGPiXhlEVSjSO8Jx6UgzzneN0VgzsmlGTpJs6dQo7p5yTX2Dz1j/63g1+86Dm4AeTY2ASa7HjfQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linux.dev; spf=pass smtp.mailfrom=linux.dev; dkim=pass (1024-bit key) header.d=linux.dev header.i=@linux.dev header.b=eoflhPeI; arc=none smtp.client-ip=95.215.58.171
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linux.dev
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linux.dev
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linux.dev header.i=@linux.dev header.b="p6I7Grsl"
-Message-ID: <f8abb228-f46a-4574-98e7-e7af75680537@linux.dev>
+	dkim=pass (1024-bit key) header.d=linux.dev header.i=@linux.dev header.b="eoflhPeI"
+Message-ID: <6c0bc7ef-90b9-450d-969d-b7e0bc5932f8@linux.dev>
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linux.dev; s=key1;
-	t=1782187258;
+	t=1782187453;
 	h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
 	 to:to:cc:cc:mime-version:mime-version:content-type:content-type:
 	 content-transfer-encoding:content-transfer-encoding:
 	 in-reply-to:in-reply-to:references:references;
-	bh=rJthxnYdR1YFK0HF9IBA7wG8cov7ZcDLgwvvsP4R+aQ=;
-	b=p6I7GrslX4G+q88H4I75u2WxBW6W0PHvniIugTwiiUdikTYH/g18xtpgCSgRZnGxjexoS2
-	zsJ3SjS/7eQNdpmO9yHKq27L4GKDXgCkWugKqG5XGvInCgYW1VgU37M2thV2Wq/o8YYD6r
-	6FXRvnG/sutf2WmzbePgSdxUCthRU/c=
-Date: Tue, 23 Jun 2026 12:00:52 +0800
+	bh=FXgqgcLUNk30tsOF9zOvFJ97I+Q8sltRYGN6ogC6q6k=;
+	b=eoflhPeIvwbsnaKhB2VgIcw69wqgNkcbxQJSgVmvbx1voUK9riEKJzqPB9bYTqFZI5+lXK
+	kc2/9Z2Z+nieitEwG/e+cO+xBKmJT4kOmoDnVZu7JvcK2ghLHdJqrdE2eAgyfVaueqOL5M
+	K05pL3Ik03gLyjpJuZ6u8CV8L50sA+s=
+Date: Tue, 23 Jun 2026 12:04:07 +0800
 Precedence: bulk
 X-Mailing-List: sashiko-reviews@lists.linux.dev
 List-Id: <sashiko-reviews.lists.linux.dev>
 List-Subscribe: <mailto:sashiko-reviews+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:sashiko-reviews+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Subject: Re: [PATCH bpf-next v7 02/11] bpf: Disallow interpreter fallback for
- user BPF_ADDR_SPACE_CAST insn
+Subject: Re: [PATCH bpf-next v7 08/11] selftests/bpf: Add tests to verify
+ global percpu data
 Content-Language: en-US
 To: sashiko-reviews@lists.linux.dev
 Cc: bpf@vger.kernel.org
 References: <20260622143557.22955-1-leon.hwang@linux.dev>
- <20260622143557.22955-3-leon.hwang@linux.dev>
- <20260622150759.EC9071F000E9@smtp.kernel.org>
+ <20260622143557.22955-9-leon.hwang@linux.dev>
+ <20260622145733.A049A1F000E9@smtp.kernel.org>
 X-Report-Abuse: Please report any abuse attempt to abuse@migadu.com and include these headers.
 From: Leon Hwang <leon.hwang@linux.dev>
-In-Reply-To: <20260622150759.EC9071F000E9@smtp.kernel.org>
+In-Reply-To: <20260622145733.A049A1F000E9@smtp.kernel.org>
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 7bit
 X-Migadu-Flow: FLOW_OUT
 
-On 22/6/26 23:07, sashiko-bot@kernel.org wrote:
+On 22/6/26 22:57, sashiko-bot@kernel.org wrote:
 [...]
->> diff --git a/kernel/bpf/core.c b/kernel/bpf/core.c
->> index 649cce41e13f3..49398b5bd172d 100644
->> --- a/kernel/bpf/core.c
->> +++ b/kernel/bpf/core.c
->> @@ -2620,6 +2620,7 @@ struct bpf_prog *__bpf_prog_select_runtime(struct bpf_verifier_env *env, struct
->>  		goto finalize;
->>  
->>  	if (IS_ENABLED(CONFIG_BPF_JIT_ALWAYS_ON) ||
->> +	    fp->aux->has_addr_space_cast_insn ||
->>  	    bpf_prog_has_kfunc_call(fp))
->>  		jit_needed = true;
+>> diff --git a/tools/testing/selftests/bpf/prog_tests/global_percpu_subskel.c b/tools/testing/selftests/bpf/prog_tests/global_percpu_subskel.c
+>> new file mode 100644
+>> index 0000000000000..8aebd533d86b5
+>> --- /dev/null
+>> +++ b/tools/testing/selftests/bpf/prog_tests/global_percpu_subskel.c
+> [ ... ]
+>> +void test_global_percpu_data_subskel(void)
+>> +{
+>> +	struct test_global_percpu_data *subskel = NULL;
+>> +	struct bpf_object *obj;
+>> +	int i;
+> [ ... ]
+>> +	if (!ASSERT_OK_PTR(subskel->subskel, "subskel"))
+>> +		goto out;
+>> +	if (!ASSERT_OK_PTR(subskel->maps.percpu, "maps.percpu"))
+>> +		goto out;
+>> +	ASSERT_EQ(bpf_map__type(subskel->maps.percpu), BPF_MAP_TYPE_PERCPU_ARRAY,
+>> +		  "percpu_map_type");
+>> +	ASSERT_GT(subskel->subskel->var_cnt, 0, "var_cnt");
 > 
 > [Severity: Medium]
-> If JIT is disabled or fails, returning -ENOTSUPP here will reject the
-> program load silently without a verifier log message. Unlike
-> bpf_prog_has_kfunc_call() which provides a helpful verbose() log in
-> bpf_fixup_call_args():
-> 
-> 	if (has_kfunc_call) {
-> 		verbose(env, "calling kernel functions are not allowed in non-JITed programs\n");
-> 		return -EINVAL;
-> 	}
-> 
-> Users encountering this for has_addr_space_cast_insn will not see an
-> explanation for the EOPNOTSUPP error. Could we add a verifier log message
-> explaining why JIT is required here?
+> Will this assertion cause the test to unconditionally fail?
 > 
 
-No verifier log support here.
+Luckily, no.
 
-The verifier log has been finalized before calling
-__bpf_prog_select_runtime() in bpf_check().
-
->> diff --git a/kernel/bpf/fixups.c b/kernel/bpf/fixups.c
->> index 3cf2cc6e3ab66..2d5958774b61b 100644
->> --- a/kernel/bpf/fixups.c
->> +++ b/kernel/bpf/fixups.c
->> @@ -1523,6 +1523,8 @@ int bpf_do_misc_fixups(struct bpf_verifier_env *env)
->>  				insn->off = 0;
->>  				insn->imm = 0;
->>  			} /* cast from as(0) to as(1) should be handled by JIT */
->> +			if (insn_is_cast_user(insn))
->> +				prog->aux->has_addr_space_cast_insn = true;
+> Looking at test_global_percpu_data.c, all defined variables are placed
+> in the .percpu section. Since bpftool explicitly skips .percpu maps when
+> generating subskeletons, there appear to be no non-percpu maps with BTF
+> variables present.
 > 
-> [Severity: Critical]
-> This is a pre-existing issue, but the patch attempts to fix interpreter
-> fallback for BPF_ADDR_SPACE_CAST and fails to address the underlying panic
-> with arena programs.
-> 
-> If a program uses an arena and obtains a PTR_TO_ARENA without a cast_user
-> instruction (for instance, using cast_kern), or if the arena map has
-> BPF_F_NO_USER_CONV set, has_addr_space_cast_insn will not be set.
-> 
-> In the case of BPF_F_NO_USER_CONV, the instruction is rewritten to
-> BPF_ALU | BPF_MOV | BPF_X right before the insn_is_cast_user() check.
-> 
-> Memory accesses using PTR_TO_ARENA are rewritten by bpf_do_misc_fixups()
-> to use BPF_PROBE_MEM32 or BPF_PROBE_MEM32SX. If these arena programs fall
-> back to the interpreter, wouldn't they hit the BUG_ON(1) in ___bpf_prog_run()
-> because it lacks handlers for these opcodes?
-> 
-> kernel/bpf/core.c:___bpf_prog_run() {
->     ...
-> 	default_label:
-> 		pr_warn("BPF interpreter: unknown opcode %02x (imm: 0x%x)\n",
-> 			insn->code, insn->imm);
-> 		BUG_ON(1);
->     ...
-> }
-> 
-> Should jit_needed be enforced in __bpf_prog_select_runtime() for all
-> programs using fp->aux->arena instead?
+> If that is the case, subskel->subskel->var_cnt will be exactly 0, causing
+> this check to evaluate to ASSERT_GT(0, 0) and reliably fail the test.
 > 
 
-Sounds reasonable.
+Looking at test_global_percpu_data.c, there are 5 non-percpu global
+variables, which were added in patch #11.
 
-However, I think such similar issues should be fixed using separate
-patches: all interpreter-unsupported insns should be marked as JIT-needed.
+volatile const __u32 num_cpus = 0;
+volatile const int offsetof_num;
+volatile const int elem_sz;
+__u32 percpu_data_sum = 0;
+bool run_iter = false;
 
-Like the way of "bpf: Fix unaligned interpreter panic on JIT fallback
-path" [1], we can verify whether there are the following insns in the
-prog by scanning prog->insnsi:
+So, subskel->subskel->var_cnt will be 5.
 
-* user ADDR_SPACE_CAST
-* PROBE_MEM32, PROBE_MEM32SX
-* ADDR_PERCPU
-* PROBE_ATOMIC
-* indirect jump using insn_array map
+In the generated test_global_percpu_data.subskel.h:
+        /* vars */
+        s->var_cnt = 5;
 
-I think these insns are not supported by interpreter.
-
-Link:
-[1]
-https://lore.kernel.org/bpf/20260615025316.24429-1-yangtiezhu@loongson.cn/
 
 Thanks,
 Leon
+
+>> +
+>> +	for (i = 0; i < subskel->subskel->var_cnt; i++) {
+>> +		const struct bpf_var_skeleton *var;
+> [ ... ]
+> 
 
