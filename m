@@ -1,185 +1,224 @@
-Received: from GVXPR05CU001.outbound.protection.outlook.com (mail-swedencentralazon11013011.outbound.protection.outlook.com [52.101.83.11])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from va-2-38.ptr.blmpb.com (va-2-38.ptr.blmpb.com [209.127.231.38])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5FE57370D65;
-	Tue, 23 Jun 2026 10:20:05 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=fail smtp.client-ip=52.101.83.11
-ARC-Seal:i=2; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1782210006; cv=fail; b=BsqHU4M306jwIEp8S9pW0mShSU4l5qXHDTU6mi+pOMFRm3s+qs0S+xZIE26XXIiiFoggjp0Td7tJlw/v3zaUrvfTosqIUVyoSiHvOh26gYRjFolvkDP3KfQVqJmxq9MdURoXNF+z8iuMh+KbWnXJc19DYgi5AJ2gQl6oDfHv6Rc=
-ARC-Message-Signature:i=2; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1782210006; c=relaxed/simple;
-	bh=z26rlDO2hBeUeOr7rl8yCAlK9QqmCJSg4MT4np8Sinw=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:Content-Type:
-	 Content-Disposition:In-Reply-To:MIME-Version; b=TYVNl6B4Wxvqzf+Z2SxQUGw+cLGX/y/c/44+bx2uX1acN5Esf3TSDT/Q9+lnxLDoZ0lEslXNUVQvkunvgZsBE2PPPH8X1Hc+aawJAi/MvsGyC1/JP1YhcU+ma9MS1nVclN/JHaMIXiVZ9xBneeoPfPt5TBrU6PNFgSv6pUVwnXA=
-ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=oss.nxp.com; spf=pass smtp.mailfrom=oss.nxp.com; dkim=fail (2048-bit key) header.d=NXP1.onmicrosoft.com header.i=@NXP1.onmicrosoft.com header.b=wAzIHqyP reason="signature verification failed"; arc=fail smtp.client-ip=52.101.83.11
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=oss.nxp.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=oss.nxp.com
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 25CAF3769FC
+	for <sashiko-reviews@lists.linux.dev>; Tue, 23 Jun 2026 10:20:43 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.127.231.38
+ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
+	t=1782210047; cv=none; b=JrJcJVY41DJIZ5U9IHMpqIGCQ5McOc32nC0DC4aaDrNXUj6CX6j94EcrivAmPf5N7LGIJ6FqTaqU6W9wghagPokIFxjLXJhraYHS1CMJtu5jyeI/goIKX15hAbNiTnXVqxrf6u87f8sWy6oIbAUE/2NNi+Tm7cwt+bWIJF58hyU=
+ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
+	s=arc-20240116; t=1782210047; c=relaxed/simple;
+	bh=KB5kq+Lb+SJzdN6PKOyVW8lcgKFRGKEOYzXcXIgoc5c=;
+	h=Date:Cc:From:Subject:Message-Id:References:In-Reply-To:To:
+	 Mime-Version:Content-Type; b=SDeX1zNtVIHp4cPapRf+3S1M+x533TnH0iMDB9IaFp5xZZlCsCwbbUgtpJuruqt/O1ll2QUA2mZLu539MxhTnPk4GTw2yFEAGaDqW77MojMFbFg+UCsA9SxX2a/6ZGYapLFGvc1DihG7Wzle+LSvTUts9zGZQXC7fn86cNGuHQ8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=fnnas.com; spf=pass smtp.mailfrom=fnnas.com; dkim=pass (2048-bit key) header.d=fnnas-com.20200927.dkim.feishu.cn header.i=@fnnas-com.20200927.dkim.feishu.cn header.b=RSvbm7mu; arc=none smtp.client-ip=209.127.231.38
+Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=fnnas.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=fnnas.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=fail reason="signature verification failed" (2048-bit key) header.d=NXP1.onmicrosoft.com header.i=@NXP1.onmicrosoft.com header.b="wAzIHqyP"
-ARC-Seal: i=1; a=rsa-sha256; s=arcselector10001; d=microsoft.com; cv=none;
- b=xgH1COKRlboGkkIAcI/7up+NctVh+Wfsl+lZW2/vglHZQXzwEperz3XdmW2vWBUFUYe4VSZdMhI7ErGI+f0bEQ+YPrErYMJ6llUroRzUJHqcFc2rq8n3a86WsIdsfOnUMqSZdwydJwwu4zcsyRtp07rNnaB8cyNwjipcDv47MwMboMYl4fGJe9SF+uLKYLC3N56j60mLrsZp6nSap1WSrJN+dFdB4EoygLxx1HnBhpLUj50jtYz3iDjmuZSdYFP52EPkeg4p4QXyp8M1mchcNn0/0A+Lx1GBd2A8QS+HwK2Dj0tXFXgtOf0wQwzpZUnXKzce7/jpkIriR4UNhuPfQg==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com;
- s=arcselector10001;
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
- bh=H7mjHAxc4G5i8sMEunNBS0QnaiGE/BMvspeqzkw7qi0=;
- b=jLyk4dBqhvp9+8d06e+Z5+zQxtQ3Ln9YDCkaV1b+8ovFbiSE5N5I53BkskxJMnBaXCd/YrnR/AQ5NmNeqVSO76xMTSVgU7XrlhAuUfjBuSo8VBK2x63fxK/tn3Sr/riYv/j4+tEYb+TjvjYGELL8jGo6PS24W6rQZYhr+z3foXDTNt4JMLtlep+tcYFV1HWXfRulC+eV8HevCr/lejdgqmb7Lp4mmT6YiNvQ7UsO/pKQyh/9j1QoxSWzqYo3rYpwG/7h3OBbbiD0Pwe0zHEUuwaKWHH4ih2KABkw7nyRsixMgxQLW1k69S+M+luH95mBhZlLCYWFPR2uDCyAFDfmIw==
-ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
- smtp.mailfrom=oss.nxp.com; dmarc=pass action=none header.from=oss.nxp.com;
- dkim=pass header.d=oss.nxp.com; arc=none
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=NXP1.onmicrosoft.com;
- s=selector1-NXP1-onmicrosoft-com;
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
- bh=H7mjHAxc4G5i8sMEunNBS0QnaiGE/BMvspeqzkw7qi0=;
- b=wAzIHqyPZ1/FOK1OBQWFHtFtKlk1j3R+vOMLvr/27DxXMMcu3PWLUZ15fs7EHsK5UOLSmc0HUUVfp8o4FzQ9ORbTPMNFow/2x7xIjVqNZKExizt9rNL5gPqzU9vHJ3UzSyzDw95pf9dMrcaQ570WPsYsQE3PFmWsfBV1OJIIPCQ6B+oZPh0H3hAjdZ4xtYyeMTFmsDie0C5WCcTV87CbIlo7LI0eHq91O+vtwGUrWgg/mjxp3LicMfuzEf7Lv1BSio+Mtt4tAy2DNHkn+LrggMN8b8D3TtAfF5zITYw+ThsY/JFtPG5xAyZSkgMcJawOtVkJFFvkqsCDUtZyTmgwrg==
-Authentication-Results: dkim=none (message not signed)
- header.d=none;dmarc=none action=none header.from=oss.nxp.com;
-Received: from VI1PR04MB5807.eurprd04.prod.outlook.com (2603:10a6:803:ec::21)
- by VI0PR04MB11868.eurprd04.prod.outlook.com (2603:10a6:800:31e::15) with
- Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.21.139.18; Tue, 23 Jun
- 2026 10:20:02 +0000
-Received: from VI1PR04MB5807.eurprd04.prod.outlook.com
- ([fe80::3da4:2827:d637:37de]) by VI1PR04MB5807.eurprd04.prod.outlook.com
- ([fe80::3da4:2827:d637:37de%4]) with mapi id 15.21.0139.018; Tue, 23 Jun 2026
- 10:20:01 +0000
-Date: Tue, 23 Jun 2026 18:23:19 +0800
-From: Joy Zou <joy.zou@oss.nxp.com>
-To: sashiko-reviews@lists.linux.dev
-Cc: linux-input@vger.kernel.org, imx@lists.linux.dev,
-	dmitry.torokhov@gmail.com, Frank.Li@kernel.org
-Subject: Re: [PATCH v4 3/4] Input: snvs_pwrkey - use local device pointer to
- simple code
-Message-ID: <ajpel+fJwMij/Olf@shlinux89>
-References: <20260618-b4-pwrkey-v4-0-4bfda105bdf3@oss.nxp.com>
- <20260618-b4-pwrkey-v4-3-4bfda105bdf3@oss.nxp.com>
- <20260618073947.0E25C1F000E9@smtp.kernel.org>
-Content-Type: text/plain; charset=iso-8859-1
-Content-Disposition: inline
-Content-Transfer-Encoding: 8bit
-In-Reply-To: <20260618073947.0E25C1F000E9@smtp.kernel.org>
-X-ClientProxiedBy: SI2P153CA0001.APCP153.PROD.OUTLOOK.COM (2603:1096:4:140::7)
- To VI1PR04MB5807.eurprd04.prod.outlook.com (2603:10a6:803:ec::21)
+	dkim=pass (2048-bit key) header.d=fnnas-com.20200927.dkim.feishu.cn header.i=@fnnas-com.20200927.dkim.feishu.cn header.b="RSvbm7mu"
+DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed;
+ s=s1; d=fnnas-com.20200927.dkim.feishu.cn; t=1782210039;
+  h=from:subject:mime-version:from:date:message-id:subject:to:cc:
+ reply-to:content-type:mime-version:in-reply-to:message-id;
+ bh=5YdYUXPymFMjuROW4lLeX68ou59KMxvnjfqYggwilv0=;
+ b=RSvbm7muGr+YllMyIVeRS7ysQUnjmgoYJ9wFvPmpOw/N1FIIyW4w/MwTcOLQa8uw3jHr79
+ N44BDl5WLOFNsBGJSh/Li+IxxrLyOpqh6bvrIvsX4m2SWujLz2DxgKy31WFjcJ+z6r37ht
+ jrTO23q2E30m5BvQYy0SQ8WTZ/idCP0XVk7+NIzyqJcczeJ5AkSf52rK5T+Wu26oLD1xqV
+ AjAWsHtVXPQNjC2LAiZuPrTnqOvdCAxRQqNWSVyZIN6znD0JtdGQlidNNpQNOKCBxEYV9h
+ MuUJoAqfZxBE9u3O6FCo1RnBoOAIbEJD4BmaCtdFnctmeNJtXtcdYgH0MNDZog==
+Date: Tue, 23 Jun 2026 18:20:34 +0800
+User-Agent: Mozilla Thunderbird
+Content-Transfer-Encoding: quoted-printable
+Cc: <yukuai@fygo.io>, <linux-raid@vger.kernel.org>
+From: "Chen Cheng" <chencheng@fnnas.com>
+Subject: Re: [PATCH v5 1/3] md: suspend array when sync_action=reshape
+Message-Id: <44048e05-f7fa-499e-8bb4-bef56da87e86@fnnas.com>
+References: <20260622121312.1775322-1-chencheng@fnnas.com> <20260622121312.1775322-2-chencheng@fnnas.com> <20260622122554.E43991F000E9@smtp.kernel.org>
+X-Lms-Return-Path: <lba+26a3a5df5+642213+lists.linux.dev+chencheng@fnnas.com>
+In-Reply-To: <20260622122554.E43991F000E9@smtp.kernel.org>
+X-Original-From: Chen Cheng <chencheng@fnnas.com>
+Received: from [192.168.8.62] ([183.34.169.141]) by smtp.feishu.cn with ESMTPS; Tue, 23 Jun 2026 18:20:35 +0800
+To: <sashiko-reviews@lists.linux.dev>
 Precedence: bulk
 X-Mailing-List: sashiko-reviews@lists.linux.dev
 List-Id: <sashiko-reviews.lists.linux.dev>
 List-Subscribe: <mailto:sashiko-reviews+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:sashiko-reviews+unsubscribe@lists.linux.dev>
-MIME-Version: 1.0
-X-MS-PublicTrafficType: Email
-X-MS-TrafficTypeDiagnostic: VI1PR04MB5807:EE_|VI0PR04MB11868:EE_
-X-MS-Office365-Filtering-Correlation-Id: eba62a97-e892-4de9-0bf8-08ded110fc69
-X-MS-Exchange-SenderADCheck: 1
-X-MS-Exchange-AntiSpam-Relay: 0
-X-Microsoft-Antispam:
-	BCL:0;ARA:13230040|366016|376014|1800799024|23010399003|19092799006|22082099003|18002099003|4143699003|56012099006|11063799006|6133799003|3023799007;
-X-Microsoft-Antispam-Message-Info:
-	2OcmrDmDxUxx6nqUvBPlVro1UGB44as48oW5Wqw8SilLwhGm71R6GxgEjxSMw3Ag0ksjWWr0EomPYrPYm9XiAO2Q5G0p5oqKOKOGDAoIrIeP2b3ncKD/TqB7XgfnXqxBme3COyw8HxkvwTFM2qLFRBULVb2qQrDnR9440xTatVdUOSix3qipK302UedPHiGGmgJ2/6g6f5bkI5rntHGQ3NUKYZw14W+5cTb7M9k8htiygrS4oSd4zyMRAIAUltzK3hHPF6WS6o703MM0DJzAzJkNeYALlIh3tcelhuSvy8ao/JRXXX6gZAzq81/IPJs7rYiAgXUZy0fT3k5WUUHYMNPlVaYiXIT1cCZh/ixXPUxHx4zaDzjDiOHrFhO59oR7rw5u0yp8/pZ0Sy0BGyxYHRb2ci576mTsB16/BeKRHFPRJTd49qck6d7vjt+0hZ0WqqpGFNonc44uyhr/SKVO7qj1COP4W9nzS+xyp3rW3SU0iqM3nfHIerO9mTgKDAYQkkoZayF0DVbm+ZHrpT4ULJYSz97LB6AjEz9lUDdpZ4d9LZZMwbpRM++zmL719mSCa6hS8/Xl5LdSuB2ASzOgC9pTTxiiULNaQ8aXiSw+ylI=
-X-Forefront-Antispam-Report:
-	CIP:255.255.255.255;CTRY:;LANG:en;SCL:1;SRV:;IPV:NLI;SFV:NSPM;H:VI1PR04MB5807.eurprd04.prod.outlook.com;PTR:;CAT:NONE;SFS:(13230040)(366016)(376014)(1800799024)(23010399003)(19092799006)(22082099003)(18002099003)(4143699003)(56012099006)(11063799006)(6133799003)(3023799007);DIR:OUT;SFP:1101;
-X-MS-Exchange-AntiSpam-MessageData-ChunkCount: 1
-X-MS-Exchange-AntiSpam-MessageData-0:
-	=?iso-8859-1?Q?Jq5tJwzC9WxRkkjQx80tI4fc7YQMj/Yv/blhQprjbj+JuaZv8A4uDU1xxP?=
- =?iso-8859-1?Q?ZyvpMZC8H5riJRBPRgrH7BlXpm1UtpR1zh/pGgQ7TpXBzp2q57pGow7ZFM?=
- =?iso-8859-1?Q?55bof8J8cfHChtzrCiNuT2ReWQCeREoIX5JRfDlbvfh8jQg7kA5p2t35Dh?=
- =?iso-8859-1?Q?GonhHTnwpysNZLEYphSIe6Rsqe1jVS5ENPnZbO1Dy+uU6noV+o3itEufSS?=
- =?iso-8859-1?Q?UouzjAk+mf1tgv41z6IJd11DvBEyQSYWrybdlvhyzBDy5TvQDcxZ3b7nzV?=
- =?iso-8859-1?Q?5hCW7wJxGdNVteGSqVWV5cUlEl5R2cCo1k6GgGHuYIlTJCkbdzwXQv9IZw?=
- =?iso-8859-1?Q?lues70iZNdgZ1bdBhOnnbB7J2nyEV451DOgTpxUA+aGg8Z0q/O8ROWIrvf?=
- =?iso-8859-1?Q?uv4sPEeQkD4whZ8AcBmIAXtexvvNdfuVKxg6ttn4ZiSs6NdAi66u5mNWeb?=
- =?iso-8859-1?Q?Zz1GZUhggrgoFq9tAfCgpqBOZiUWQ24gOBAEqN0zn48Op0Y8T9kZxfogzu?=
- =?iso-8859-1?Q?JuWl0FkLeW0xInLqj++RikUnjtnAFOCr6hDUQagk6Sr/isIkwyD6xUWdz+?=
- =?iso-8859-1?Q?ayiF3i0ztrNucztapQYDMzsUNw4Qcif+Oc2HQSU1iIQYbh2XMjJByqWm0W?=
- =?iso-8859-1?Q?Putk8ytRDj9Z8Kp9G56YW9BJjb/H6TXAAQz7IdA7mTxsqlNF8BTlr9IrS2?=
- =?iso-8859-1?Q?7ZHwMvi4b8bf6ZTpYvjOVOLIxX6TFOIlkgVgogT3HqxCMG9hQMLlIk3JMD?=
- =?iso-8859-1?Q?uqWj8n6D85Pl/Wv0ACPdZq3hB++WkJxAaZ4IdTgPSr9EsIBgb1k4De0ZRD?=
- =?iso-8859-1?Q?mzZxT1RzFcsqnJd8SyeEOeLSsih39xqflBbdMwjLDzoFxwjiqmsy8rBQd6?=
- =?iso-8859-1?Q?/e9qLwU1u6yfB7exiZ9YOG0qZ2/nXZTNIhpS6jutrrUXQOZDjclohWxcdt?=
- =?iso-8859-1?Q?Xumo9b7OL1uLPdcTuqrxr3Sufxb8JXcwVptn35Jnl8wVaZkKqTNujCI6i3?=
- =?iso-8859-1?Q?szsit4a17K51/1g2y90i50VSNU8MzYNSyYnZYh48FvFHBk3MqX6Zfd/JRM?=
- =?iso-8859-1?Q?5oFWpQ01crZDTtI/ZKW5irr6r4hSaorDfmMGBrilqPZwwGLlnB8BOsaZ6y?=
- =?iso-8859-1?Q?z0ljxGVbLQdYPZd0PXyw3PpT15YlXyaRrYARG5horXzDATqv16Z3CJbZDR?=
- =?iso-8859-1?Q?uow9tMa5PZpqwUTH2mINkqmmnZN29Oncrem3XMDWTz9f/zJ2lRGQPmXAIO?=
- =?iso-8859-1?Q?QUOi6sOYHFc2JaZ2+vcKxRXvDv0tu6XI4cb7blDXscn6/PMNflts7TDRQq?=
- =?iso-8859-1?Q?JiMDasWEfzlnlykkgtoqt1OA1hj53wv502EPogjZSn9mXMnz5OAqrrVi+I?=
- =?iso-8859-1?Q?1Ok7vvNece0UlV9U/auXRTrdOk9b996eeCtj46m8vhe7xKu4YCWm0wPDJK?=
- =?iso-8859-1?Q?RA6FnVgS4dT4VKKN6eX0n3HNO8Ms6jiC4YWybFwZ18whdAFE1cPzqoDSmO?=
- =?iso-8859-1?Q?6kViB0OLq3zvFw/GdAB+DVyw/fNYOYCUO/MvNO0AuwbIcFEpzs9TmDjXsp?=
- =?iso-8859-1?Q?UdB0D+hmePZg6rJLFZ3xeErFRfPQQ0R8Jl45zpu4WfC+Uc+6cZvCwScFq2?=
- =?iso-8859-1?Q?WPf3b8+ZqINJ3rbv2gEeZRkhGOtFldDLtK2yPj1niqKmniZWpq6cBX+x3g?=
- =?iso-8859-1?Q?YUYuCDdD3mmqpr/IDmWffuoiWr8wKzcrAs+0abyKrmEg/83JS5ny7y7pU/?=
- =?iso-8859-1?Q?EncFuo04hGUYCoKTr7Q2H4CYWWX7ZFVNyTykL+1fIBMjLuL2MYKvczpefI?=
- =?iso-8859-1?Q?rf9NdFd61mMd8YvNQVXZdLqm5c4DA6WaAySWkuBuqglF1lEdMZ9n?=
-X-OriginatorOrg: oss.nxp.com
-X-MS-Exchange-CrossTenant-Network-Message-Id: eba62a97-e892-4de9-0bf8-08ded110fc69
-X-MS-Exchange-CrossTenant-AuthSource: VI1PR04MB5807.eurprd04.prod.outlook.com
-X-MS-Exchange-CrossTenant-AuthAs: Internal
-X-MS-Exchange-CrossTenant-OriginalArrivalTime: 23 Jun 2026 10:20:01.9339
- (UTC)
-X-MS-Exchange-CrossTenant-FromEntityHeader: Hosted
-X-MS-Exchange-CrossTenant-Id: 686ea1d3-bc2b-4c6f-a92c-d99c5c301635
-X-MS-Exchange-CrossTenant-MailboxType: HOSTED
-X-MS-Exchange-CrossTenant-UserPrincipalName: uy+77IfVlM8+zjumAbJHthAaQzc2E/xSuWtWDsvApaRlpJlGfFUju63Rw2rc2iAbVT43pZhy24GgFKE4TbneRgnBz8Plf818aNmkmPoIdsuGkxzVaIaITHR0boqPyFOJ
-X-MS-Exchange-Transport-CrossTenantHeadersStamped: VI0PR04MB11868
+Mime-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 
-On Thu, Jun 18, 2026 at 07:39:46AM +0000, sashiko-bot@kernel.org wrote:
-> Thank you for your contribution! Sashiko AI review found 1 potential issue(s) to consider:
-> 
+=E5=9C=A8 2026/6/22 20:25, sashiko-bot@kernel.org =E5=86=99=E9=81=93:
+> Thank you for your contribution! Sashiko AI review found 4 potential issu=
+e(s) to consider:
+>=20
+> New issues:
+> - [High] Unmatched mddev_resume() on mddev_lock() failure causes mddev->s=
+uspended underflow.
+> - [High] The retry loop bypasses array re-suspension but leaves the suspe=
+nded flag set, causing unprotected reshape and double-resume.
+> - [High] Suspending the array before calling flush_work() creates a circu=
+lar memory reclaim deadlock.
+>=20
 > Pre-existing issues:
-> - [High] Missing cleanup for device wakeup and wake IRQ on driver unbind causes memory leaks and re-bind warnings.
+> - [High] Cross-task corruption of PF_MEMALLOC_NOIO flags when mddev_suspe=
+nd() and mddev_resume() are interleaved.
 > --
-> 
-This is a pre-existing issue that won't be fixed in this patchset.
-Will address it in a separate fix.
-BR
-Joy Zou
-> commit aed6a36738ed05979b6e5650a6efcf08cfb05a1d
-> Author: Joy Zou <joy.zou@nxp.com>
-> 
-> Input: snvs_pwrkey - use local device pointer to simple code
-> 
-> This patch introduces a local device pointer in imx_snvs_pwrkey_probe()
-> to simplify the code. It replaces repeated references to the platform device
-> pointer with the new local variable.
-> 
-> > diff --git a/drivers/input/keyboard/snvs_pwrkey.c b/drivers/input/keyboard/snvs_pwrkey.c
-> > --- a/drivers/input/keyboard/snvs_pwrkey.c
-> > +++ b/drivers/input/keyboard/snvs_pwrkey.c
-> 
-> [ ... ]
-> 
-> > @@ -191,27 +192,27 @@ static int imx_snvs_pwrkey_probe(struct platform_device *pdev)
-> 
-> [ ... ]
-> 
-> > -	device_init_wakeup(&pdev->dev, pdata->wakeup);
-> > -	error = dev_pm_set_wake_irq(&pdev->dev, pdata->irq);
-> > +	device_init_wakeup(dev, pdata->wakeup);
-> > +	error = dev_pm_set_wake_irq(dev, pdata->irq);
-> 
+>=20
+> commit ec573079e939aa92bfb3fd89247846ae57883ef2
+> Author: Chen Cheng <chencheng@fnnas.com>
+>=20
+> md: suspend array when sync_action=3Dreshape
+>=20
+> This patch suspends the md array before starting a reshape operation to
+> prevent new requests from allocating objects from the old pool during
+> the transition. The array is then resumed on exit.
+>=20
+>> diff --git a/drivers/md/md.c b/drivers/md/md.c
+>> index 096bb64e87bd5..e139f36e30b92 100644
+>> --- a/drivers/md/md.c
+>> +++ b/drivers/md/md.c
+>> @@ -5258,26 +5258,37 @@ static ssize_t
+>>   action_store(struct mddev *mddev, const char *page, size_t len)
+>>   {
+>>   	int ret;
+>> +	bool suspended =3D false;
+>>   	enum sync_action action;
+>>  =20
+>>   	if (!mddev->pers || !mddev->pers->sync_request)
+>>   		return -EINVAL;
+>>  =20
+>> +	action =3D md_sync_action_by_name(page);
+>> +	if (action =3D=3D ACTION_RESHAPE) {
+>> +		ret =3D mddev_suspend(mddev, true);
+>=20
 > [Severity: High]
-> This is a pre-existing issue, but since there is no remove callback in this
-> driver, does this leak the wake IRQ allocation when the driver is unbound?
-> 
-> When the driver is unbound via sysfs, the wake_irq structure allocated by
-> dev_pm_set_wake_irq() seems to remain attached to dev->power.wakeirq.
-> 
-> If the driver is subsequently rebound, will dev_pm_set_wake_irq() fail with
-> -EEXIST and trigger a kernel warning about the wake irq already being
-> initialized?
-> 
-> Furthermore, because device_del() does not automatically free
-> dev->power.wakeirq, could this memory permanently leak when the platform
-> device is destroyed?
-> 
-> Would it be better to use devm_pm_set_wake_irq() here to ensure proper
-> cleanup?
-> 
-> >  	if (error)
-> > -		dev_err(&pdev->dev, "irq wake enable failed.\n");
-> > +		dev_err(dev, "irq wake enable failed.\n");
-> >  
-> >  	return 0;
-> >  }
-> 
-> -- 
-> Sashiko AI review · https://sashiko.dev/#/patchset/20260618-b4-pwrkey-v4-0-4bfda105bdf3@oss.nxp.com?part=3
+> This is a pre-existing issue, but does calling mddev_suspend() and
+> mddev_resume() from concurrent contexts risk corrupting the PF_MEMALLOC_N=
+OIO
+> task flags?
+>=20
+> When mddev_suspend() is called, it stores the task-specific NOIO flag int=
+o
+> the global mddev structure:
+>=20
+> drivers/md/md.c:mddev_suspend() {
+>      ...
+>      mddev->noio_flag =3D memalloc_noio_save();
+>      ...
+> }
+>=20
+> If two tasks concurrently enter mddev_suspend(), the second task incremen=
+ts
+> the suspend counter without overwriting mddev->noio_flag. If the first ta=
+sk
+> then resumes (e.g., on a lock failure) it decrements the counter but retu=
+rns
+> early because the array is still suspended:
+>=20
+> drivers/md/md.c:__mddev_resume() {
+>      if (mddev->suspended) {
+>          mutex_unlock(&mddev->suspend_mutex);
+>          return;
+>      }
+>      ...
+>      memalloc_noio_restore(mddev->noio_flag);
+> }
+>=20
+> This prevents the first task from restoring its NOIO flag. When the secon=
+d
+> task later resumes and drops the counter to 0, it incorrectly restores th=
+e
+> first task's flags onto its own context. Could this leave the first task
+> stuck in NOIO mode indefinitely?
+>=20
+>> +		if (ret)
+>> +			return ret;
+>> +		suspended =3D true;
+>> +	}
+>>   retry:
+>>   	if (work_busy(&mddev->sync_work))
+>>   		flush_work(&mddev->sync_work);
+>=20
+
+Looks like a independent problem, I need to sort out the flow.
+
+> [Severity: High]
+> Can holding the array suspended while synchronously waiting for the worke=
+r
+> thread expose the worker's memory allocations to a circular deadlock?
+>=20
+> If md_start_sync() allocates memory with GFP_KERNEL in the kworker thread
+> (for example, when calling md_register_thread()), it can trigger direct
+> memory reclaim. Because the worker thread did not transition the array to
+> suspended itself, it does not inherit the PF_MEMALLOC_NOIO flag.
+>=20
+> Consequently, memory reclaim can issue I/O to the md device. Since the ar=
+ray
+> is now suspended, md_handle_request() will block this I/O indefinitely. T=
+he
+> worker thread hangs waiting for I/O, and action_store() hangs here in
+> flush_work() waiting for the worker thread, permanently deadlocking the
+> array. Is it safe to suspend the array before flushing the work?
+>=20
+>>  =20
+>>   	ret =3D mddev_lock(mddev);
+>> -	if (ret)
+>> +	if (ret) {
+>> +		mddev_resume(mddev);
+>>   		return ret;
+>> +	}
+>=20
+
+Seems suspend_and_lock() after flush_work() more reasonable.
+
+> [Severity: High]
+> Does this unconditional mddev_resume() risk underflowing the mddev->suspe=
+nded
+> counter if the array was not actually suspended?
+>=20
+> If action_store() is called with an action other than ACTION_RESHAPE, the
+> array is not suspended. If the subsequent mddev_lock() fails (e.g., if it=
+ is
+> interrupted by a signal), the error path unconditionally calls mddev_resu=
+me().
+>=20
+> Since the array was not suspended, __mddev_resume() decrements
+> mddev->suspended from 0 to -1. Because mddev->suspended is a signed integ=
+er
+> and -1 evaluates to true, subsequent calls to mddev_suspend() will see
+> mddev->suspended !=3D 0, increment it back to 0, and return immediately w=
+ithout
+> actually pausing I/O. Could this permanently break the suspension mechani=
+sm
+> for the array?
+>=20
+>>  =20
+>>   	if (work_busy(&mddev->sync_work)) {
+>> -		mddev_unlock(mddev);
+>> +		if (suspended)
+>> +			mddev_unlock_and_resume(mddev);
+>> +		else
+>> +			mddev_unlock(mddev);
+>>   		goto retry;
+>>   	}
+>=20
+
+sure, my mistake.
+
+> [Severity: High]
+> Will the retry loop bypass array re-suspension while leaving the local
+> suspended flag set to true?
+>=20
+> If work_busy(&mddev->sync_work) is true, the code unlocks and resumes the
+> array, then jumps back to the retry label. However, the retry label is pl=
+aced
+> after the mddev_suspend() block.
+>=20
+> The code will not re-suspend the array, but the local 'suspended' boolean
+> remains true. As a result, the reshape operation proceeds on an active,
+> unsuspended array. Furthermore, when the function exits, it will call
+> mddev_unlock_and_resume() again because 'suspended' is true, leading to a
+> double-resume and another mddev->suspended underflow.
+>=20
+> [ ... ]
+>
