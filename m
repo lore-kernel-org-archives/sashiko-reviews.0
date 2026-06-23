@@ -1,116 +1,80 @@
-Received: from va-2-26.ptr.blmpb.com (va-2-26.ptr.blmpb.com [209.127.231.26])
+Received: from mail-pf1-f202.google.com (mail-pf1-f202.google.com [209.85.210.202])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C043B22E3E9
-	for <sashiko-reviews@lists.linux.dev>; Tue, 23 Jun 2026 12:51:22 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.127.231.26
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DB3A2225417
+	for <sashiko-reviews@lists.linux.dev>; Tue, 23 Jun 2026 12:57:00 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.210.202
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1782219096; cv=none; b=l+4uWnyWdHkAMd+t0KckMZAzyRYBBhjCruxl1wJdookCBc8T3JL+2HrW7C0g09JXfOkrlW80SB9ojfc3rZjAzf/N1yS8d0Deu0m7UHWatf0MjCyl9TrpmaNZrINNufCo48VZoW3JYvFbCImgVRcDtyHuS6E2RTJMSJW4cCieGd4=
+	t=1782219421; cv=none; b=UnhAmOMILTttQt520Bm7okSkp1CL+APVKAduyMl+EmoNKdpnLrcdmmjJ9FonFP24d74fVIpafphIECED+3Iq+hMXOzX55QdaV8zTnrtG5nmXac0Lru5VSRqUhtOn9xL8IptIIkxFPpZwzCyyPM9xEw9UmtOlC1kc02XEMik1QD8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1782219096; c=relaxed/simple;
-	bh=3XtlspSA1T0EtcAqXSUE0FKXGL7Eiw5VaTIR30igwSM=;
-	h=Content-Type:To:In-Reply-To:Cc:Subject:Mime-Version:Date:
-	 Message-Id:From:References; b=HgzsYRQSAugHmiIdWo1s6AGmPyqcY2AGUFmNY7CnltHBkHOZhTF30ym228kuX0w6xlxJ4twV/EgvKDoXHcEFSWkIfQFk1OfZUYblW8thr3HrVUI0fA7STf1fVFi5OwL0gT5ta9clD8KG6eF00SZREqUE75MeL4SFmx7BSHbXLOk=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=fnnas.com; spf=pass smtp.mailfrom=fnnas.com; dkim=pass (2048-bit key) header.d=fnnas-com.20200927.dkim.feishu.cn header.i=@fnnas-com.20200927.dkim.feishu.cn header.b=0Zg+wi9u; arc=none smtp.client-ip=209.127.231.26
-Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=fnnas.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=fnnas.com
+	s=arc-20240116; t=1782219421; c=relaxed/simple;
+	bh=cYciK/K71PU3bqDNjuY+Q8z2fxXYxDMG0vk5d6ZKjW0=;
+	h=Date:In-Reply-To:Mime-Version:References:Message-ID:Subject:From:
+	 To:Cc:Content-Type; b=V0o4eVhc3p66aoXXaVFIiu9DBaVD7cVTJCeFO+ZGsQ/gtzjr+IOktSFYCf1fTVrIPGjep2SDq6xrLIPAfFPdqZebOU9CQB5zlhM6IHF1UKDUuq59hcrPLxxO3saityLb/gNQkY104EikXME2abSvZQpsxkXSt/emTQZJsEQlwM8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=google.com; spf=pass smtp.mailfrom=flex--seanjc.bounces.google.com; dkim=pass (2048-bit key) header.d=google.com header.i=@google.com header.b=PQSRAqDr; arc=none smtp.client-ip=209.85.210.202
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=google.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=flex--seanjc.bounces.google.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=fnnas-com.20200927.dkim.feishu.cn header.i=@fnnas-com.20200927.dkim.feishu.cn header.b="0Zg+wi9u"
-DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed;
- s=s1; d=fnnas-com.20200927.dkim.feishu.cn; t=1782219076;
-  h=from:subject:mime-version:from:date:message-id:subject:to:cc:
- reply-to:content-type:mime-version:in-reply-to:message-id;
- bh=5397kGXq9BuZqiBMsUtgfQhHRZZtRApMK8NOvkq3vbA=;
- b=0Zg+wi9ugDOmBqE2bGEf8m5y5mPlTRbaFUhsEdOdneAN+q5K2IOpfe6ODLASis2MO/gxhi
- KXxQGIc+KoC+6x6eb8DH3m96mpDGsbFxO8ji+BpITmtk3enEEH3SiN8uKC4/a46cfDD0FI
- 1nMjNMjbgGNsPY1+ZkicM7mn+41/a85E0XGNKjtJZxePiS197OCT37LpXm+R+i3P/SkcJe
- tV9M9ZlMGqk+84H6IcTNnlNu0BgnrvIOIqYJdGNUoGCheI2rEEBRlVmEQUpGuezCaSxP9f
- ORSVyI1tO4RxuvOLRpFQiLFnI8cLjgH1kBdc4NmHqCryP4LAIQ2rgb7uPcD8Kw==
-Content-Type: text/plain; charset=UTF-8
-To: <sashiko-reviews@lists.linux.dev>
-In-Reply-To: <20260623112532.4D4761F000E9@smtp.kernel.org>
-X-Original-From: Chen Cheng <chencheng@fnnas.com>
-Received: from [192.168.8.62] ([183.34.169.141]) by smtp.feishu.cn with ESMTPS; Tue, 23 Jun 2026 20:51:13 +0800
-Cc: <yukuai@fygo.io>, <linux-raid@vger.kernel.org>, 
-	"Chen Cheng" <chencheng@fnnas.com>, <chenchneg33@gmail.com>
-Subject: Re: [PATCH v2] md: use READ_ONCE() for lockless reads of sb_flags
+	dkim=pass (2048-bit key) header.d=google.com header.i=@google.com header.b="PQSRAqDr"
+Received: by mail-pf1-f202.google.com with SMTP id d2e1a72fcca58-8428384f31fso4010663b3a.3
+        for <sashiko-reviews@lists.linux.dev>; Tue, 23 Jun 2026 05:57:00 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=google.com; s=20251104; t=1782219420; x=1782824220; darn=lists.linux.dev;
+        h=content-transfer-encoding:cc:to:from:subject:message-id:references
+         :mime-version:in-reply-to:date:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=cYciK/K71PU3bqDNjuY+Q8z2fxXYxDMG0vk5d6ZKjW0=;
+        b=PQSRAqDrsx13Sn9qUlKib3z9OUBQ99xWgoIgVMB4BfPAtAhsUoKfz0khHG3pocEi1Q
+         Vf/mcrhonEfcwl4sHJZkl5i+aNkSnMBlYqF7wcCSq3GJ3/f7wzvnfWJ0GR7PabSk8Ua2
+         /WlAdJln4rtCyRzTQ2OHx0jaX65cIsBlcKUie5e7B1eZylXJSYH1Iq4CMUdW6jUxMIGV
+         XoOA8yt0evl7pGdXO1nDBS8OHiZZ5yjNAHonfUizoWTYDjFLhCKIR3dNwXLikhXZeQU/
+         gsORvpr8CFeqkIUhDC4GG1NCqzLAKjUxLOIVQbvesYc1AV8eEMOFVI0Ct6+R/wzeUNAo
+         SpMQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20251104; t=1782219420; x=1782824220;
+        h=content-transfer-encoding:cc:to:from:subject:message-id:references
+         :mime-version:in-reply-to:date:x-gm-message-state:from:to:cc:subject
+         :date:message-id:reply-to;
+        bh=cYciK/K71PU3bqDNjuY+Q8z2fxXYxDMG0vk5d6ZKjW0=;
+        b=ge8H4MhM6+ymFQCYitPEzkBIbRjv8yZOc5vXtVpWYe7HZc6v2joEoi4BSfdfiwRDkd
+         VrEH+UijcE6xtQeG6bfaAjj0C+uNuwq9UjkZXL9r/JGaP9dH5E/PCfer5no/nr6au1Ej
+         ZHmHLGGH9PGCtm2I6iG50lwacH/H8/Tu9dC6eC9P4tIhVXJorwCMbylGZDB+qg/8MrME
+         kT6k2LFcjRh4jC0KsPP0YAN+205SHF/4F8XyUkghNa9FUV9D+ZlKL9eYgtOgtHXju1KE
+         4a4ein+JoiDm7q5jB+QFJtKfqRyuRKmVPnuVct84FI5Wp4uMHK87/WkafXpVT65hEl54
+         GjDw==
+X-Gm-Message-State: AOJu0YwiZezW18RaxtSxHtw/ujiA/ddXG1m9VreRckj0+v/Xn3fMzbrX
+	Eq2jJBuFgo+W5ULX5IZ9j2glnNa13L3qIJQXg9iQ55vHY2W1dfhVwmSQsdmPcUW9lzyWDfTz85U
+	aG4s76w==
+X-Received: from pfez11.prod.google.com ([2002:aa7:888b:0:b0:844:e56c:ba8c])
+ (user=seanjc job=prod-delivery.src-stubby-dispatcher) by 2002:a05:6a00:1f08:b0:845:43d6:14d7
+ with SMTP id d2e1a72fcca58-845507e017amr20047637b3a.16.1782219419781; Tue, 23
+ Jun 2026 05:56:59 -0700 (PDT)
+Date: Tue, 23 Jun 2026 05:56:53 -0700
+In-Reply-To: <ajpSF6HyhgBA3uV3@8bytes.org>
 Precedence: bulk
 X-Mailing-List: sashiko-reviews@lists.linux.dev
 List-Id: <sashiko-reviews.lists.linux.dev>
 List-Subscribe: <mailto:sashiko-reviews+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:sashiko-reviews+unsubscribe@lists.linux.dev>
 Mime-Version: 1.0
-X-Lms-Return-Path: <lba+26a3a8142+53a70b+lists.linux.dev+chencheng@fnnas.com>
-User-Agent: Mozilla Thunderbird
-Date: Tue, 23 Jun 2026 20:51:12 +0800
-Message-Id: <085ee11a-d5f5-4d68-aa21-647543f9ab4a@fnnas.com>
+References: <20260623091556.1500930-1-joro@8bytes.org> <20260623091556.1500930-3-joro@8bytes.org>
+ <20260623092417.5964D1F000E9@smtp.kernel.org> <ajpSF6HyhgBA3uV3@8bytes.org>
+Message-ID: <ajqClZ3kHfDcCxUe@google.com>
+Subject: Re: [PATCH 2/4] kvm: sev: Unmap pages in correct order in sev_gmem_post_populate()
+From: Sean Christopherson <seanjc@google.com>
+To: "=?utf-8?B?SsO2cmcgUsO2ZGVs?=" <joro@8bytes.org>
+Cc: sashiko-reviews@lists.linux.dev, kvm@vger.kernel.org
+Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: quoted-printable
-From: "Chen Cheng" <chencheng@fnnas.com>
-References: <20260623111617.2500313-1-chencheng@fnnas.com> <20260623112532.4D4761F000E9@smtp.kernel.org>
 
-=E5=9C=A8 2026/6/23 19:25, sashiko-bot@kernel.org =E5=86=99=E9=81=93:
-> Thank you for your contribution! Sashiko AI review found 1 potential issu=
-e(s) to consider:
+On Tue, Jun 23, 2026, J=C3=B6rg R=C3=B6del wrote:
+> On Tue, Jun 23, 2026 at 09:24:16AM +0000, sashiko-bot@kernel.org wrote:
+> > Should this second instance be updated to reverse the unmap order as we=
+ll to
+> > prevent kmap stack corruption?
 >=20
-> Pre-existing issues:
-> - [Low] Lockless plain reads of `mddev->recovery` will cause KCSAN data r=
-ace warnings, similar to the ones fixed for `sb_flags`.
-> --
->=20
-> commit f286787fa23a14cb6ec022eb99574f7a85f9957d
-> Author: Chen Cheng <chencheng@fnnas.com>
->=20
-> md: use READ_ONCE() for lockless reads of sb_flags
->=20
-> This patch adds READ_ONCE() annotations to lockless reads of mddev->sb_fl=
-ags
-> across md, raid1, raid5, and raid10. It aims to fix KCSAN data race warni=
-ngs
-> caused by concurrent set_bit() operations on sb_flags.
->=20
->> diff --git a/drivers/md/md.c b/drivers/md/md.c
->> index 096bb64e87bd5..c5c50640b6849 100644
->> --- a/drivers/md/md.c
->> +++ b/drivers/md/md.c
->> @@ -6832,7 +6832,7 @@ int md_run(struct mddev *mddev)
->>   		set_bit(MD_RECOVERY_RECOVER, &mddev->recovery);
->>   	set_bit(MD_RECOVERY_NEEDED, &mddev->recovery);
->=20
-> [Severity: Low]
-> This is a pre-existing issue, but since this patch targets KCSAN warnings=
- for
-> atomic bitmasks, could plain lockless reads of mddev->recovery trigger si=
-milar
-> data races?
->=20
-> There are places where mddev->recovery is read without locks and without
-> READ_ONCE(), potentially causing KCSAN noise against set_bit() updates:
->=20
-> drivers/md/md.c:md_sync_action() {
->      ...
->      unsigned long recovery =3D mddev->recovery;
->      ...
-> }
->=20
-> drivers/md/md.c:set_bitmap_file() {
->      ...
->      if (mddev->recovery || mddev->sync_thread)
->      ...
-> }
->=20
-> drivers/md/md.c:update_array_info() {
->      ...
->      if (mddev->recovery || mddev->sync_thread) {
->      ...
-> }
->=20
-> Should READ_ONCE() also be applied to these reads of mddev->recovery to
-> provide a more complete fix?
->=20
->> -	if (mddev->sb_flags)
->> +	if (READ_ONCE(mddev->sb_flags))
->>   		md_update_sb(mddev, 0);
->=20
+> Yes, it should. Updated for v2.
 
-Only md_sync_action() do lockless u64 plain read, READ_ONCE could be=20
-safer in here ..
+Already fixed, commit 138f5f9cbe37 ("KVM: SEV: Unmap local kmaps in LIFO or=
+der,
+per highmem requirements").
