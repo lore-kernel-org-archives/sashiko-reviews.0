@@ -1,246 +1,128 @@
-Received: from mo4-p01-ob.smtp.rzone.de (mo4-p01-ob.smtp.rzone.de [85.215.255.54])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
-	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 85938344DB1
-	for <sashiko-reviews@lists.linux.dev>; Tue, 23 Jun 2026 07:22:26 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=pass smtp.client-ip=85.215.255.54
-ARC-Seal:i=2; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1782199348; cv=pass; b=pLAsQalOsr6H9RwipL+JI/8yUe6Be5Cvz915SZ1NkWSHZfeNuCW5cxNiFrhZY6FN9zr2J6SlfIfD87a3SEltI85ijfFA3TSilt3eo1ZdoMb0Oda9bHk3XdDUj2j+f5HgFhQWWHIUNKizS1DBnF+7AdDxrfGHuQ7CeqLunKYYcCE=
-ARC-Message-Signature:i=2; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1782199348; c=relaxed/simple;
-	bh=OjzHYqufZLcWP0X57NtIgnbS6S5FI0/hDMnsUlAfGeg=;
-	h=Content-Type:Mime-Version:Subject:From:In-Reply-To:Date:Cc:
-	 Message-Id:References:To; b=RauLuh+Bvo9o0PSO45/Vptr8v4P21cnSbKnJ1xgxE8RVAIyKVBUgR4FRJ1sUlLzIEClxGHHrY66RkBu/5j57RZJAjZWAMco9EINv3VnlCoD0FiwZjkQV+NmzH/SnmRArxl2DJ4jrqtv/YI4IxrD6aeAhb9qIZLT8dtkaiCCL0bk=
-ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=goldelico.com; spf=pass smtp.mailfrom=goldelico.com; dkim=pass (2048-bit key) header.d=goldelico.com header.i=@goldelico.com header.b=MOy7wTf6; dkim=permerror (0-bit key) header.d=goldelico.com header.i=@goldelico.com header.b=pQkK9W2U; arc=pass smtp.client-ip=85.215.255.54
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=goldelico.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=goldelico.com
-Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=goldelico.com header.i=@goldelico.com header.b="MOy7wTf6";
-	dkim=permerror (0-bit key) header.d=goldelico.com header.i=@goldelico.com header.b="pQkK9W2U"
-ARC-Seal: i=1; a=rsa-sha256; t=1782199331; cv=none;
-    d=strato.com; s=strato-dkim-0002;
-    b=sk2421s3Yyab9h4B8cgsnB189bbJvJcbhRpkJYFkBTxXDlG1GSU7XA1q8l8VTcnfZe
-    Y5OSTBBFmvYLhawUAkkBQmH36NlZpivGW4OQSkC10pzHHDZkNOEkOSJjopBBK6T07aRC
-    Ee8BsZsNKlFobp85SMPZ1VqVzy0ZwpHywv26N23f7x7RsS7C+2cePZRJbnI7MtGj0FUS
-    hzmSXEm58CGwFPkvd2+OlkHOZKxaUN5wlaLklbTveEu8m5nGILPZEETLJVHIQwVBNBv4
-    j7qNCeYRXZmJ5QQSDi87fZwrEAONoshiWhrujzbmjcDoXHSmkI18wMnKGOarhRziQgEJ
-    rIOA==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; t=1782199331;
-    s=strato-dkim-0002; d=strato.com;
-    h=To:References:Message-Id:Cc:Date:In-Reply-To:From:Subject:Cc:Date:
-    From:Subject:Sender;
-    bh=WTYAouhypkSMMbUqkmiovoMH0bMziRxtmsQeKkczqhw=;
-    b=GLliX+TRc0SeHVl2jxQY5V9OT68L1bflDDI+wCRYWy2+B9mbpE0uJ+3RV9FGwrDf8/
-    1JJomg4PneJy3hBN2OgPv1sebM26V2hPPO9jprJ7D2mL7NP0Km1GJQaPVUQ9HsKa8vbv
-    yvD5wLGW3sUnS3zyYsvC6qojkzpfQcwJUz7zP/akw8cd8o4L4QvDxZfsv3nOJq45GPJB
-    8gqBlhcaPln9iPdrXOlGEbFMkSw068ZkXFz18JSpFwRUg53XosvQSkLC2vMEBS0Rxawx
-    c6HhzpEP3v/ZKi2OD9MprwTMgO2quN6phu6jZftEzh5iSextU3TcrDVYP46NTrCraa8X
-    dsVA==
-ARC-Authentication-Results: i=1; strato.com;
-    arc=none;
-    dkim=none
-X-RZG-CLASS-ID: mo01
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; t=1782199331;
-    s=strato-dkim-0002; d=goldelico.com;
-    h=To:References:Message-Id:Cc:Date:In-Reply-To:From:Subject:Cc:Date:
-    From:Subject:Sender;
-    bh=WTYAouhypkSMMbUqkmiovoMH0bMziRxtmsQeKkczqhw=;
-    b=MOy7wTf6LEJl2fAWaBzYrkVlE4ae7vwWnSLQQoitxTFss67JifKatvDQ3LYYpd2qxs
-    9K68x/wMA2kfaVMm7OdK3ROVbztViHZ4lxBGtb9dNUS3MXvABSykmL2t4HcnRRGw9CMC
-    8OsvTbrCNE8CpXOh19M2D68Zz7LSx+S4SKaXK8MYSTQ3755rPC3QbDShoAR5CH6QC9kF
-    pDSJES5GzPHyofZJ1wHAW6AN7feKiGWSPPG6+C5PzzRs1VMon9IUTS5SWwi/q40D0cIh
-    UmkHZ0t70+WSmFKCY7befGZxn1or4dy/ValtuHrLYy/htCJULd621qTIlVefMxnvRDE8
-    L5Uw==
-DKIM-Signature: v=1; a=ed25519-sha256; c=relaxed/relaxed; t=1782199331;
-    s=strato-dkim-0003; d=goldelico.com;
-    h=To:References:Message-Id:Cc:Date:In-Reply-To:From:Subject:Cc:Date:
-    From:Subject:Sender;
-    bh=WTYAouhypkSMMbUqkmiovoMH0bMziRxtmsQeKkczqhw=;
-    b=pQkK9W2UDkonRrzqGHC9xllTFrZuRLYYfnn5IE5TgIzY1er79izhIoGMZyqMyh1fjG
-    1ypa0FMmCSv1PH6eKmCA==
-X-RZG-AUTH: ":JGIXVUS7cutRB/49FwqZ7WcJeFKiMhflhwDubTJ9qVpwcQVkPW4I1HrT3ppdzsiNsOz5aTA7oOYU7otmLOEb1cQTmFAp"
-Received: from smtpclient.apple
-    by smtp.strato.de (RZmta 55.0.1 AUTH)
-    with ESMTPSA id Qcf97c25N7MAvdX
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (curve X9_62_prime256v1 with 256 ECDH bits, eq. 3072 bits RSA))
-	(Client did not present a certificate);
-    Tue, 23 Jun 2026 09:22:10 +0200 (CEST)
-Content-Type: text/plain;
-	charset=us-ascii
+Received: from azure-sdnproxy.icoremail.net (azure-sdnproxy.icoremail.net [207.46.229.174])
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id B8AC42E7386
+	for <sashiko-reviews@lists.linux.dev>; Tue, 23 Jun 2026 07:24:36 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=207.46.229.174
+ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
+	t=1782199479; cv=none; b=GkLZA7gjdli6Q/YVLRu/oI8ssXUPzDVUytTswajDex+stZ7+aWw4BBCoIesKgMS3sSvgPJDwP83T5U6SbrocPWA/MQYlM9DQxZK/z/Tkp/OM68UqVh4SQJjZeMvqvrit+0zwFegjRoK9XyncVWpB0kkyXi5Yr7y26xJ9Lesz93o=
+ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
+	s=arc-20240116; t=1782199479; c=relaxed/simple;
+	bh=dwOAONM4VSkVjAb5ai7ToI6VLipoy3Y2BDmxfiEC13o=;
+	h=Date:From:To:Cc:Subject:In-Reply-To:References:Content-Type:
+	 MIME-Version:Message-ID; b=ln8kSfgYgGJPFXsVfhQcWbZrswS5BkY1Fg+hkjSh3qPQWCToLSP1EJvmoerjj46Mt8XllvlC7iUc5XAbWjac4Byhj3m5wqtsrZubKa59BDpYj6GJpCbhKBhjMHG447bP8KMC5xqk1O7H+R+Dzha0iTlQcaqBKdGMp3f5DTWJ574=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=eswincomputing.com; spf=pass smtp.mailfrom=eswincomputing.com; arc=none smtp.client-ip=207.46.229.174
+Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=eswincomputing.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=eswincomputing.com
+Received: from hehuan1$eswincomputing.com ( [10.12.96.103] ) by
+ ajax-webmail-app2 (Coremail) ; Tue, 23 Jun 2026 15:24:31 +0800 (GMT+08:00)
+Date: Tue, 23 Jun 2026 15:24:31 +0800 (GMT+08:00)
+X-CM-HeaderCharset: UTF-8
+From: "Huan He" <hehuan1@eswincomputing.com>
+To: "Guenter Roeck" <linux@roeck-us.net>
+Cc: sashiko-reviews@lists.linux.dev, robh@kernel.org,
+	devicetree@vger.kernel.org, linux-hwmon@vger.kernel.org,
+	conor+dt@kernel.org
+Subject: Re: Re: [PATCH v7 2/2] hwmon: Add Eswin EIC7700 PVT sensor driver
+X-Priority: 3
+X-Mailer: Coremail Webmail Server Version 2024.2-cmXT6 build
+ 20241203(6b039d88) Copyright (c) 2002-2026 www.mailtech.cn
+ mispb-72143050-eaf5-4703-89e0-86624513b4ce-eswincomputing.com
+In-Reply-To: <2d1ae3b5-bc52-4043-9090-a78f30390024@roeck-us.net>
+References: <20260611090639.777-1-hehuan1@eswincomputing.com>
+ <20260611091748.A6EAC1F00898@smtp.kernel.org>
+ <2d1ae3b5-bc52-4043-9090-a78f30390024@roeck-us.net>
+Content-Transfer-Encoding: base64
+Content-Type: text/plain; charset=UTF-8
 Precedence: bulk
 X-Mailing-List: sashiko-reviews@lists.linux.dev
 List-Id: <sashiko-reviews.lists.linux.dev>
 List-Subscribe: <mailto:sashiko-reviews+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:sashiko-reviews+unsubscribe@lists.linux.dev>
-Mime-Version: 1.0 (Mac OS X Mail 16.0 \(3826.700.81.1.8\))
-Subject: Re: [PATCH v2] drm/fb-helper: Only consider active CRTCs for vblank
- sync
-From: "H. Nikolaus Schaller" <hns@goldelico.com>
-In-Reply-To: <20260622113434.682292-1-tzimmermann@suse.de>
-Date: Tue, 23 Jun 2026 09:22:00 +0200
-Cc: zhengxingda@iscas.ac.cn,
- maarten.lankhorst@linux.intel.com,
- mripard@kernel.org,
- airlied@gmail.com,
- simona@ffwll.ch,
- akemnade@kernel.org,
- dri-devel@lists.freedesktop.org,
- linux-kernel@vger.kernel.org,
- letux-kernel@openphoenux.org,
- kernel@pyra-handheld.com,
- sashiko-reviews@lists.linux.dev,
- stable@vger.kernel.org
-Content-Transfer-Encoding: quoted-printable
-Message-Id: <685F8D2B-84D9-45AD-A979-CFDE71F7E9F2@goldelico.com>
-References: <20260622113434.682292-1-tzimmermann@suse.de>
-To: Thomas Zimmermann <tzimmermann@suse.de>
-X-Mailer: Apple Mail (2.3826.700.81.1.8)
+MIME-Version: 1.0
+Message-ID: <1a34da2b.799b.19ef35dcc08.Coremail.hehuan1@eswincomputing.com>
+X-Coremail-Locale: zh_CN
+X-CM-TRANSID:TQJkCgAnPqGvNDpq9XstAA--.8269W
+X-CM-SenderInfo: 5khk3tzqr6v25zlqu0xpsx3x1qjou0bp/1tbiAQEHCmo5Y6MvMQAA
+	sA
+X-Coremail-Antispam: 1Ur529EdanIXcx71UUUUU7IcSsGvfJ3iIAIbVAYjsxI4VWxJw
+	CS07vEb4IE77IF4wCS07vE1I0E4x80FVAKz4kxMIAIbVAFxVCaYxvI4VCIwcAKzIAtYxBI
+	daVFxhVjvjDU=
 
-
-
-> Am 22.06.2026 um 13:33 schrieb Thomas Zimmermann =
-<tzimmermann@suse.de>:
->=20
-> Only synchronize fbdev output to the vblank of an active CRTC. Go over
-> the list of CRTCs and pick the first that matches. Fixes warnings as
-> the one shown below
->=20
-> [   77.201354] WARNING: drivers/gpu/drm/drm_vblank.c:1320 at =
-drm_crtc_wait_one_vblank+0x194/0x1cc [drm], CPU#1: kworker/1:7/1867
-> [   77.201354] omapdrm omapdrm.0: [drm] vblank wait timed out on crtc =
-0
->=20
-> This currently happens if the fbdev output is not on CRTC 0.
->=20
-> Atomic and non-atomic drivers require distinct code paths. As for =
-other
-> fbdev operations, implement both and select the correct one at =
-runtime.
->=20
-> Not finding an active CRTC is not a bug. Do not wait in this case, but
-> flush the display update as before.
->=20
-> v2:
-> - move look-up code into separate helper
-> - support drivers with legacy modesetting
-> v1:
-> - see =
-https://lore.kernel.org/dri-devel/1c9e0e24-9c4a-4259-8700-cf9e5fd60ca3@sus=
-e.de/
->=20
-> Co-authored-by: H. Nikolaus Schaller <hns@goldelico.com>
-> Signed-off-by: Thomas Zimmermann <tzimmermann@suse.de>
-> Fixes: d8c4bddcd8bcb ("drm/fb-helper: Synchronize dirty worker with =
-vblank")
-> Tested-by: Icenowy Zheng <zhengxingda@iscas.ac.cn>
-
-Tested-by: H. Nikolaus Schaller <hns@goldelico.com>
-
-> Closes: https://bugs.debian.org/1138033
-> Cc: <stable@vger.kernel.org> # v6.19+
-> ---
-> drivers/gpu/drm/drm_fb_helper.c | 71 ++++++++++++++++++++++++++++++++-
-> 1 file changed, 70 insertions(+), 1 deletion(-)
->=20
-> diff --git a/drivers/gpu/drm/drm_fb_helper.c =
-b/drivers/gpu/drm/drm_fb_helper.c
-> index 7b11a582f8ec..cbf0a9a7b8e5 100644
-> --- a/drivers/gpu/drm/drm_fb_helper.c
-> +++ b/drivers/gpu/drm/drm_fb_helper.c
-> @@ -225,16 +225,85 @@ static void drm_fb_helper_resume_worker(struct =
-work_struct *work)
-> 	console_unlock();
-> }
->=20
-> +static int find_crtc_index_atomic(struct drm_fb_helper *helper)
-> +{
-> +	struct drm_device *dev =3D helper->dev;
-> +	struct drm_plane *plane;
-> +
-> +	drm_for_each_plane(plane, dev) {
-> +		const struct drm_plane_state *plane_state;
-> +		const struct drm_crtc *crtc;
-> +
-> +		if (plane->type !=3D DRM_PLANE_TYPE_PRIMARY)
-> +			continue;
-> +
-> +		plane_state =3D plane->state;
-> +		if (plane_state->fb !=3D helper->fb || =
-!plane_state->crtc)
-> +			continue; /* plane doesn't display fbdev =
-emulation */
-> +
-> +		crtc =3D plane_state->crtc;
-> +		if (!crtc->state->active)
-> +			continue;
-> +		if (drm_WARN_ON_ONCE(dev, crtc->index > INT_MAX))
-> +			continue; /* driver bug */
-> +
-> +		return crtc->index;
-> +	}
-> +
-> +	return -EINVAL;
-> +}
-> +
-> +static int find_crtc_index_legacy(struct drm_fb_helper *helper)
-> +{
-> +	struct drm_device *dev =3D helper->dev;
-> +	struct drm_crtc *crtc;
-> +
-> +	drm_for_each_crtc(crtc, dev) {
-> +		struct drm_plane *plane =3D crtc->primary;
-> +
-> +		if (!crtc->enabled)
-> +			continue;
-> +		if (!plane || plane->fb !=3D helper->fb)
-> +			continue; /* CRTC doesn't display fbdev =
-emulation */
-> +		if (drm_WARN_ON_ONCE(dev, crtc->index > INT_MAX))
-> +			continue; /* driver bug */
-> +
-> +		return crtc->index;
-> +	}
-> +
-> +	return -EINVAL;
-> +}
-> +
-> +static int drm_fb_helper_find_crtc_index(struct drm_fb_helper =
-*helper)
-> +{
-> +	struct drm_device *dev =3D helper->dev;
-> +	int crtc_index;
-> +
-> +	mutex_lock(&dev->mode_config.mutex);
-> +
-> +	if (drm_drv_uses_atomic_modeset(dev))
-> +		crtc_index =3D find_crtc_index_atomic(helper);
-> +	else
-> +		crtc_index =3D find_crtc_index_legacy(helper);
-> +
-> +	mutex_unlock(&dev->mode_config.mutex);
-> +
-> +	return crtc_index;
-> +}
-> +
-> static void drm_fb_helper_fb_dirty(struct drm_fb_helper *helper)
-> {
-> 	struct drm_device *dev =3D helper->dev;
-> 	struct drm_clip_rect *clip =3D &helper->damage_clip;
-> 	struct drm_clip_rect clip_copy;
-> +	int crtc_index;
-> 	unsigned long flags;
-> 	int ret;
->=20
-> 	mutex_lock(&helper->lock);
-> -	drm_client_modeset_wait_for_vblank(&helper->client, 0);
-> +	crtc_index =3D drm_fb_helper_find_crtc_index(helper);
-> +	if (crtc_index >=3D 0)
-> +		drm_client_modeset_wait_for_vblank(&helper->client, =
-crtc_index);
-> 	mutex_unlock(&helper->lock);
->=20
-> 	if (drm_WARN_ON_ONCE(dev, !helper->funcs->fb_dirty))
-> --=20
-> 2.54.0
->=20
-
+SGkgU2FzaGlrbywgR3VlbnRlciwKClRoYW5rIHlvdSB2ZXJ5IG11Y2ggZm9yIHlvdXIgZGV0YWls
+ZWQgcmV2aWV3LiBXZSBhcHByZWNpYXRlIHRoZSBmZWVkYmFjay4KCj4gCj4gT24gNi8xMS8yNiAw
+MjoxNywgc2FzaGlrby1ib3RAa2VybmVsLm9yZyB3cm90ZToKPiA+IFRoYW5rIHlvdSBmb3IgeW91
+ciBjb250cmlidXRpb24hIFNhc2hpa28gQUkgcmV2aWV3IGZvdW5kIDIgcG90ZW50aWFsIGlzc3Vl
+KHMpIHRvIGNvbnNpZGVyOgo+ID4gLSBbSGlnaF0gVGhlIElSUSBpcyByZXF1ZXN0ZWQgYmVmb3Jl
+IHRoZSBQTSBydW50aW1lIGNsZWFudXAgYWN0aW9uIGlzIHJlZ2lzdGVyZWQsIGxlYWRpbmcgdG8g
+YSBwb3NzaWJsZSB1c2UtYWZ0ZXItZGlzYWJsZSBvZiB0aGUgaGFyZHdhcmUgY2xvY2sgaW4gdGhl
+IElTUiBvbiBkcml2ZXIgcmVtb3ZhbC4KPiA+IC0gW01lZGl1bV0gVGhlIGludGVycnVwdCBoYW5k
+bGVyIGBlaWM3NzAwX3B2dF9oYXJkX2lzcmAgZG9lcyBub3QgY2hlY2sgdGhlIGhhcmR3YXJlIGlu
+dGVycnVwdCBzdGF0dXMgYml0IHRvIHZlcmlmeSBpZiB0aGUgZGV2aWNlIGFjdHVhbGx5IGdlbmVy
+YXRlZCB0aGUgaW50ZXJydXB0Lgo+ID4gLS0KPiA+IAo+ID4gY29tbWl0IDBmNGM4YWVmYjgzNzgw
+ZWUwOTY1MjYzOWViMjg0M2YwMWMyYmFmMzgKPiA+IEF1dGhvcjogSHVhbiBIZSA8aGVodWFuMUBl
+c3dpbmNvbXB1dGluZy5jb20+Cj4gPiAKPiA+IGh3bW9uOiBBZGQgRXN3aW4gRUlDNzcwMCBQVlQg
+c2Vuc29yIGRyaXZlcgo+ID4gCj4gPiBBZGQgc3VwcG9ydCBmb3IgRVNXSU4gRUlDNzcwMCBWb2x0
+YWdlIGFuZCBUZW1wZXJhdHVyZSBzZW5zb3IuIFRoZSBkcml2ZXIKPiA+IHN1cHBvcnRzIHRlbXBl
+cmF0dXJlIGFuZCB2b2x0YWdlIG1vbml0b3Jpbmcgd2l0aCBwb2x5bm9taWFsIGNvbnZlcnNpb24s
+Cj4gPiBhbmQgcHJvdmlkZXMgc3lzZnMgaW50ZXJmYWNlIGZvciBzZW5zb3IgZGF0YSBhY2Nlc3Mu
+Cj4gPiAKPiA+PiBkaWZmIC0tZ2l0IGEvZHJpdmVycy9od21vbi9laWM3NzAwLXB2dC5jIGIvZHJp
+dmVycy9od21vbi9laWM3NzAwLXB2dC5jCj4gPj4gbmV3IGZpbGUgbW9kZSAxMDA2NDQKPiA+PiBp
+bmRleCAwMDAwMDAwMDAwMDAwLi4zYjNhZWQ3NGMzOTQxCj4gPj4gLS0tIC9kZXYvbnVsbAo+ID4+
+ICsrKyBiL2RyaXZlcnMvaHdtb24vZWljNzcwMC1wdnQuYwo+ID4gCj4gPiBbIC4uLiBdCj4gPiAK
+PiA+PiArc3RhdGljIGlycXJldHVybl90IGVpYzc3MDBfcHZ0X2hhcmRfaXNyKGludCBpcnEsIHZv
+aWQgKmRhdGEpCj4gPj4gK3sKPiA+PiArCXN0cnVjdCBwdnRfaHdtb24gKnB2dCA9IGRhdGE7Cj4g
+Pj4gKwlpbnQgYWN0aXZlOwo+ID4+ICsJdTMyIHZhbDsKPiA+PiArCj4gPj4gKwlpZiAoSVNfRU5B
+QkxFRChDT05GSUdfUE0pKSB7Cj4gPj4gKwkJYWN0aXZlID0gcG1fcnVudGltZV9nZXRfaWZfYWN0
+aXZlKHB2dC0+ZGV2KTsKPiA+PiArCQlpZiAoYWN0aXZlIDw9IDApCj4gPj4gKwkJCXJldHVybiBJ
+UlFfTk9ORTsKPiA+PiArCX0KPiA+PiArCj4gPj4gKwllaWM3NzAwX3B2dF91cGRhdGUocHZ0LT5y
+ZWdzICsgUFZUX0lOVCwgUFZUX0lOVF9DTFIsIFBWVF9JTlRfQ0xSKTsKPiA+PiArCS8qCj4gPj4g
+KwkgKiBSZWFkIHRoZSBkYXRhLCB1cGRhdGUgdGhlIGNhY2hlIGFuZCBub3RpZnkgYSB3YWl0ZXIg
+b2YgdGhpcyBldmVudC4KPiA+PiArCSAqLwo+ID4+ICsJdmFsID0gcmVhZGwocHZ0LT5yZWdzICsg
+UFZUX0RBVEEpOwo+ID4+ICsJV1JJVEVfT05DRShwdnQtPmRhdGFfY2FjaGUsIEZJRUxEX0dFVChQ
+VlRfREFUQV9PVVQsIHZhbCkpOwo+ID4+ICsJY29tcGxldGUoJnB2dC0+Y29udmVyc2lvbik7Cj4g
+PiAKPiA+IFtTZXZlcml0eTogTWVkaXVtXQo+ID4gRG9lcyB0aGlzIHVuY29uZGl0aW9uYWxseSBw
+cm9jZXNzIHRoZSBpbnRlcnJ1cHQgd2l0aG91dCBjaGVja2luZyBpZiB0aGUgZGV2aWNlCj4gPiBh
+Y3R1YWxseSBnZW5lcmF0ZWQgaXQ/Cj4gPiAKPiA+IElmIGEgc3B1cmlvdXMgaW50ZXJydXB0IG9j
+Y3VycywgdGhlIElTUiB3aWxsIHByZW1hdHVyZWx5IGNsZWFyIHRoZSBpbnRlcnJ1cHQsCj4gPiBy
+ZWFkIHdoYXRldmVyIHN0YWxlIHZhbHVlIGlzIGluIFBWVF9EQVRBLCBhbmQgY2FsbCBjb21wbGV0
+ZSgmcHZ0LT5jb252ZXJzaW9uKS4KPiA+IFRoaXMgd2lsbCBjYXVzZSB0aGUgd2FpdGluZyB0aHJl
+YWQgaW4gZWljNzcwMF9wdnRfcmVhZF9kYXRhKCkgdG8gd2FrZSB1cCBlYXJseQo+ID4gYW5kIHJl
+dHVybiBzdGFsZSBvciBnYXJiYWdlIGRhdGEgdG8gdXNlcnNwYWNlLgo+ID4gCj4gPiBTaG91bGQg
+dGhlIElTUiByZWFkIHRoZSBzdGF0dXMgcmVnaXN0ZXIgYW5kIHJldHVybiBJUlFfTk9ORSBpZiBp
+dHMgZGV2aWNlIGRpZAo+ID4gbm90IGFzc2VydCB0aGUgaW50ZXJydXB0PwoKSSB3aWxsIG1vZGlm
+eSB0aGUgSVNSIHRvIHJlYWQgUFZUX0lOVCBmaXJzdCBhbmQgcmV0dXJuIElSUV9OT05FIHdoZW4K
+UFZUX0lOVF9TVEFUIGlzIG5vdCBzZXQuCgo+ID4gCj4gPiBbIC4uLiBdCj4gPiAKPiA+PiArCXJl
+dCA9IGVpYzc3MDBfcHZ0X3JlcXVlc3RfaXJxKHB2dCk7Cj4gPj4gKwlpZiAocmV0KSB7Cj4gPj4g
+KwkJaWYgKCFJU19FTkFCTEVEKENPTkZJR19QTSkpCj4gPj4gKwkJCWNsa19kaXNhYmxlX3VucHJl
+cGFyZShwdnQtPmNsayk7Cj4gPj4gKwkJcmV0dXJuIHJldDsKPiA+PiArCX0KPiA+PiArCj4gPj4g
+KwlwbV9ydW50aW1lX2VuYWJsZSgmcGRldi0+ZGV2KTsKPiA+PiArCXBtX3J1bnRpbWVfc2V0X2F1
+dG9zdXNwZW5kX2RlbGF5KCZwZGV2LT5kZXYsIDMwMDApOwo+ID4+ICsJcG1fcnVudGltZV91c2Vf
+YXV0b3N1c3BlbmQoJnBkZXYtPmRldik7Cj4gPj4gKwlwbV9ydW50aW1lX2dldF9ub3Jlc3VtZSgm
+cGRldi0+ZGV2KTsKPiA+PiArCj4gPj4gKwlyZXQgPSBkZXZtX2FkZF9hY3Rpb25fb3JfcmVzZXQo
+cHZ0LT5kZXYsIGVpYzc3MDBfcHZ0X2Rpc2FibGVfcG1fcnVudGltZSwKPiA+PiArCQkJCSAgICAg
+ICBwdnQpOwo+ID4gCj4gPiBbU2V2ZXJpdHk6IEhpZ2hdCj4gPiBDYW4gdGhpcyBkZXZyZXMgc2V0
+dXAgbGVhZCB0byBhY2Nlc3NpbmcgdW5jbG9ja2VkIHJlZ2lzdGVycyBkdXJpbmcgZGV2aWNlCj4g
+PiByZW1vdmFsPwo+ID4gCj4gPiBCZWNhdXNlIGRldnJlcyBleGVjdXRlcyB0ZWFyZG93biBjYWxs
+YmFja3MgaW4gcmV2ZXJzZSBvcmRlciBvZiB0aGVpcgo+ID4gcmVnaXN0cmF0aW9uLCBlaWM3NzAw
+X3B2dF9kaXNhYmxlX3BtX3J1bnRpbWUoKSB3aWxsIHJ1biBiZWZvcmUgdGhlIElSUQo+ID4gaXMg
+ZnJlZWQgYnkgZGV2bV9yZXF1ZXN0X3RocmVhZGVkX2lycSgpJ3MgdGVhcmRvd24uCj4gPiAKPiA+
+IER1cmluZyByZW1vdmFsLCBlaWM3NzAwX3B2dF9kaXNhYmxlX3BtX3J1bnRpbWUoKSBkaXNhYmxl
+cyB0aGUgY2xvY2s6Cj4gPiAKPiA+IGVpYzc3MDBfcHZ0X2Rpc2FibGVfcG1fcnVudGltZSgpIHsK
+PiA+ICAgICAgLi4uCj4gPiAgICAgIGlmICghcG1fcnVudGltZV9zdGF0dXNfc3VzcGVuZGVkKHB2
+dC0+ZGV2KSkgewo+ID4gICAgICAgICAgY2xrX2Rpc2FibGVfdW5wcmVwYXJlKHB2dC0+Y2xrKTsK
+PiA+ICAgICAgICAgIHBtX3J1bnRpbWVfc2V0X3N1c3BlbmRlZChwdnQtPmRldik7Cj4gPiAgICAg
+IH0KPiA+IH0KPiA+IAo+ID4gSWYgYW4gaW50ZXJydXB0IGZpcmVzIGNvbmN1cnJlbnRseSBhbmQg
+dGhlIElTUiBleGVjdXRlcyBwYXN0IHRoZQo+ID4gcG1fcnVudGltZV9nZXRfaWZfYWN0aXZlKCkg
+Y2hlY2sgYmVmb3JlIHRoZSBjbG9jayBpcyBkaXNhYmxlZCwgdGhlIElTUgo+ID4gd2lsbCBhdHRl
+bXB0IHRvIGFjY2VzcyBoYXJkd2FyZSByZWdpc3RlcnMgd2hpbGUgdW5jbG9ja2VkLCB3aGljaCBj
+YW4gbGVhZAo+ID4gdG8gYW4gZXh0ZXJuYWwgYWJvcnQgb3Iga2VybmVsIHBhbmljOgo+ID4gCj4g
+PiBlaWM3NzAwX3B2dF9oYXJkX2lzcigpIHsKPiA+ICAgICAgLi4uCj4gPiAgICAgIGVpYzc3MDBf
+cHZ0X3VwZGF0ZShwdnQtPnJlZ3MgKyBQVlRfSU5ULCAuLi4pOwo+ID4gfQo+ID4gCj4gPiBTaG91
+bGQgdGhlIFBNIHJ1bnRpbWUgY2xlYW51cCBhY3Rpb24gYmUgcmVnaXN0ZXJlZCBiZWZvcmUgdGhl
+IElSUSBpcyByZXF1ZXN0ZWQ/Cj4gPiAKCkkgd2lsbCBtb2RpZnkgdGhlIHByb2JlIHNlcXVlbmNl
+IHRvIHJlZ2lzdGVyIHRoZSBQTSBydW50aW1lIGNsZWFudXAgYWN0aW9uCmJlZm9yZSByZXF1ZXN0
+aW5nIHRoZSBJUlEuCgpCZXN0IHJlZ2FyZHMsCkh1YW4gSGUKCj4gCj4gSWYgbm90IHNvbHZlZCwg
+dGhlc2UgcXVlc3Rpb25zIHdpbGwgYXQgbGVhc3QgaGF2ZSB0byBiZSBhbnN3ZXJlZC4KPiAKPiBU
+aGFua3MsCj4gR3VlbnRlcgo+IAo+ID4+ICsJaWYgKHJldCkgewo+ID4+ICsJCXBtX3J1bnRpbWVf
+cHV0X25vaWRsZSgmcGRldi0+ZGV2KTsKPiA+PiArCQlyZXR1cm4gZGV2X2Vycl9wcm9iZSgmcGRl
+di0+ZGV2LCByZXQsCj4gPj4gKwkJCQkgICAgICJDYW4ndCByZWdpc3RlciBQTSBjbGVhbnVwXG4i
+KTsKPiA+PiArCX0KPiA+IAo=
