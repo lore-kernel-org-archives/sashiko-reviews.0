@@ -1,60 +1,81 @@
-Received: from mx0b-001b2d01.pphosted.com (mx0b-001b2d01.pphosted.com [148.163.158.5])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from smtp-out1.suse.de (smtp-out1.suse.de [195.135.223.130])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 107AB40D596;
-	Tue, 23 Jun 2026 09:04:17 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=148.163.158.5
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D568240D596
+	for <sashiko-reviews@lists.linux.dev>; Tue, 23 Jun 2026 09:04:24 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=195.135.223.130
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1782205459; cv=none; b=ShjryevMU3bYGLTI4TXf0Rdv+PxMvRXf0D3RFm1lxHnVDKyovsm1tyE7EcjEktdrSmkJHsGP5LNqHyj5Kthuruhmh0LzmkYaMRW2kMKobde6nkw+LaRm+sgqyenijNHJa8JnMetQiyuLTDMvXfMA6bXYmfPCO38j62xFI40ahEc=
+	t=1782205466; cv=none; b=WpSVx3tf4J/zVO1yazlM9V/RShSuPVdIOa0RW8Yx9nVS6oRRTWA9/VCkuskkXkslO+GOdCRI6m262pyFnyrLHPPhsVvqoSnQ3+zUKqxZDrhi72syUbYZt2k3VpddrbO1D6IIhBFbmv18iJGAibJmUTia2cPf9iEQrXP8ey2A44k=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1782205459; c=relaxed/simple;
-	bh=jxOv8sgBDBA3TbL5H6V60v2FcnIxAuhuhEvg1ibT3ek=;
+	s=arc-20240116; t=1782205466; c=relaxed/simple;
+	bh=qr2B78NsehGzEXPMI9iKANjeIdqwOtC7/bYwT7fjHOc=;
 	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=gZcXkke5gJh+C+1rodOIyHc5ejn1gR27XI2oCIUqvIaQYb7UYo4j3k/2GkHMj8M39/tEFTOCB9Q2Ldh3rJrGwkERitvpllsTFj56RcZvLT62g16JjHs2PTigammn5XWVp4OjevV4zzycfmLlKVYyPpY/Hrs8+niu0xO4HyP7sVM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linux.ibm.com; spf=pass smtp.mailfrom=linux.ibm.com; dkim=pass (2048-bit key) header.d=ibm.com header.i=@ibm.com header.b=l+Mr/6y2; arc=none smtp.client-ip=148.163.158.5
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linux.ibm.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linux.ibm.com
+	 In-Reply-To:Content-Type; b=CzpeXKKO3LPdIa1Xu2zcp/SuCGN03RrkhO9QYIFKASiYZOf0ehszZ++/Y28lKyHK92bq349fq6793IeJgSTLen7dX37QFKZmnP4fylaUgN9kWFw5r2dmYyc3ssNxJBF75iZR/QhnPYox7V7eQ4TfXBkhOHuf3LVkQijAanJzxQ4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=suse.de; spf=pass smtp.mailfrom=suse.de; dkim=pass (1024-bit key) header.d=suse.de header.i=@suse.de header.b=cHrytJOO; dkim=permerror (0-bit key) header.d=suse.de header.i=@suse.de header.b=ErFW24e8; dkim=pass (1024-bit key) header.d=suse.de header.i=@suse.de header.b=cHrytJOO; dkim=permerror (0-bit key) header.d=suse.de header.i=@suse.de header.b=ErFW24e8; arc=none smtp.client-ip=195.135.223.130
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=suse.de
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=suse.de
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=ibm.com header.i=@ibm.com header.b="l+Mr/6y2"
-Received: from pps.filterd (m0360072.ppops.net [127.0.0.1])
-	by mx0a-001b2d01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id 65N6mMC91078731;
-	Tue, 23 Jun 2026 09:04:17 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=ibm.com; h=cc
-	:content-transfer-encoding:content-type:date:from:in-reply-to
-	:message-id:mime-version:references:subject:to; s=pp1; bh=30ooUK
-	cWhq1w/zbU/MyM6ICmThDbvIOf9c7k2x9EONE=; b=l+Mr/6y2CMDTgzuqddnchG
-	97gWAODKLGKtRH1u7/Gc1u4W+JeJfbRS0EBZS7/v0Sj9SBWNLiL+YJBUUQEw+M9A
-	DOpJIzrbJm8hw3wjWbeByZpVvhgeGndKRmIE9l6UpSKc3yC/d66rtSoYQ4Hl0Kc1
-	dbA6/PE0/v9O1snxp69bXr+ddvSAbZ/qn9+YhgOaRWkMHumQC1BoREiEF0mySa0b
-	C9rxV4UF2TqcDcmvPmMHwyym9FiGG1VJ3u/ANJfxETq1F71swd8GkpZw8PjgZNBT
-	k6+NWtD2y8RO1vQK2iuI0MzeB7WT+t/DktdHDxYKmbRg6a/hrjKwqjFOLr+pZygQ
-	==
-Received: from ppma22.wdc07v.mail.ibm.com (5c.69.3da9.ip4.static.sl-reverse.com [169.61.105.92])
-	by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 4ewjgsnf7k-1
-	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Tue, 23 Jun 2026 09:04:16 +0000 (GMT)
-Received: from pps.filterd (ppma22.wdc07v.mail.ibm.com [127.0.0.1])
-	by ppma22.wdc07v.mail.ibm.com (8.18.1.7/8.18.1.7) with ESMTP id 65N8ngs1019901;
-	Tue, 23 Jun 2026 09:04:16 GMT
-Received: from smtprelay01.fra02v.mail.ibm.com ([9.218.2.227])
-	by ppma22.wdc07v.mail.ibm.com (PPS) with ESMTPS id 4ex5jwaht3-1
-	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Tue, 23 Jun 2026 09:04:16 +0000 (GMT)
-Received: from smtpav04.fra02v.mail.ibm.com (smtpav04.fra02v.mail.ibm.com [10.20.54.103])
-	by smtprelay01.fra02v.mail.ibm.com (8.14.9/8.14.9/NCO v10.0) with ESMTP id 65N94CQh45547792
-	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
-	Tue, 23 Jun 2026 09:04:12 GMT
-Received: from smtpav04.fra02v.mail.ibm.com (unknown [127.0.0.1])
-	by IMSVA (Postfix) with ESMTP id 055572004E;
-	Tue, 23 Jun 2026 09:04:12 +0000 (GMT)
-Received: from smtpav04.fra02v.mail.ibm.com (unknown [127.0.0.1])
-	by IMSVA (Postfix) with ESMTP id BA59E2004B;
-	Tue, 23 Jun 2026 09:04:11 +0000 (GMT)
-Received: from [9.224.77.173] (unknown [9.224.77.173])
-	by smtpav04.fra02v.mail.ibm.com (Postfix) with ESMTP;
-	Tue, 23 Jun 2026 09:04:11 +0000 (GMT)
-Message-ID: <dd6bf1a1-063e-4dc1-b246-d986851cea5e@linux.ibm.com>
-Date: Tue, 23 Jun 2026 11:04:11 +0200
+	dkim=pass (1024-bit key) header.d=suse.de header.i=@suse.de header.b="cHrytJOO";
+	dkim=permerror (0-bit key) header.d=suse.de header.i=@suse.de header.b="ErFW24e8";
+	dkim=pass (1024-bit key) header.d=suse.de header.i=@suse.de header.b="cHrytJOO";
+	dkim=permerror (0-bit key) header.d=suse.de header.i=@suse.de header.b="ErFW24e8"
+Received: from imap1.dmz-prg2.suse.org (imap1.dmz-prg2.suse.org [IPv6:2a07:de40:b281:104:10:150:64:97])
+	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+	 key-exchange X25519 server-signature RSA-PSS (4096 bits) server-digest SHA256)
+	(No client certificate requested)
+	by smtp-out1.suse.de (Postfix) with ESMTPS id 04D6670696;
+	Tue, 23 Jun 2026 09:04:23 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=suse.de; s=susede2_rsa;
+	t=1782205463; h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
+	 mime-version:mime-version:content-type:content-type:
+	 content-transfer-encoding:content-transfer-encoding:
+	 in-reply-to:in-reply-to:references:references:autocrypt:autocrypt;
+	bh=h1kifrZeZK96pomCNrUCon+Yyo2hdBxXRm9KC8tFn5w=;
+	b=cHrytJOO9Zw/xqeidzcTvOisvcRQBEJscVwmAqZSoF3B0k1gj6V0zeCU1e6VKfTZOS3g7G
+	X8Qo8z/NEbh1txWpl2AvAwhJiQlsfKRw7c5/gt7aMioztLPI7AJ+KU10jH0JLVbcXs95NL
+	ITFJJhkD08qOC79qW7fl8Olzim4y2a4=
+DKIM-Signature: v=1; a=ed25519-sha256; c=relaxed/relaxed; d=suse.de;
+	s=susede2_ed25519; t=1782205463;
+	h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
+	 mime-version:mime-version:content-type:content-type:
+	 content-transfer-encoding:content-transfer-encoding:
+	 in-reply-to:in-reply-to:references:references:autocrypt:autocrypt;
+	bh=h1kifrZeZK96pomCNrUCon+Yyo2hdBxXRm9KC8tFn5w=;
+	b=ErFW24e8Cxe2fInJkUJLhQh53c6MS9lywb0VAY2X+4Gvg+Frnti8jIH9iRwx+R/G5pCMfN
+	QEgoulzbOl0ycZCw==
+Authentication-Results: smtp-out1.suse.de;
+	dkim=pass header.d=suse.de header.s=susede2_rsa header.b=cHrytJOO;
+	dkim=pass header.d=suse.de header.s=susede2_ed25519 header.b=ErFW24e8
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=suse.de; s=susede2_rsa;
+	t=1782205463; h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
+	 mime-version:mime-version:content-type:content-type:
+	 content-transfer-encoding:content-transfer-encoding:
+	 in-reply-to:in-reply-to:references:references:autocrypt:autocrypt;
+	bh=h1kifrZeZK96pomCNrUCon+Yyo2hdBxXRm9KC8tFn5w=;
+	b=cHrytJOO9Zw/xqeidzcTvOisvcRQBEJscVwmAqZSoF3B0k1gj6V0zeCU1e6VKfTZOS3g7G
+	X8Qo8z/NEbh1txWpl2AvAwhJiQlsfKRw7c5/gt7aMioztLPI7AJ+KU10jH0JLVbcXs95NL
+	ITFJJhkD08qOC79qW7fl8Olzim4y2a4=
+DKIM-Signature: v=1; a=ed25519-sha256; c=relaxed/relaxed; d=suse.de;
+	s=susede2_ed25519; t=1782205463;
+	h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
+	 mime-version:mime-version:content-type:content-type:
+	 content-transfer-encoding:content-transfer-encoding:
+	 in-reply-to:in-reply-to:references:references:autocrypt:autocrypt;
+	bh=h1kifrZeZK96pomCNrUCon+Yyo2hdBxXRm9KC8tFn5w=;
+	b=ErFW24e8Cxe2fInJkUJLhQh53c6MS9lywb0VAY2X+4Gvg+Frnti8jIH9iRwx+R/G5pCMfN
+	QEgoulzbOl0ycZCw==
+Received: from imap1.dmz-prg2.suse.org (localhost [127.0.0.1])
+	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+	 key-exchange X25519 server-signature RSA-PSS (4096 bits) server-digest SHA256)
+	(No client certificate requested)
+	by imap1.dmz-prg2.suse.org (Postfix) with ESMTPS id C1AF0779A8;
+	Tue, 23 Jun 2026 09:04:22 +0000 (UTC)
+Received: from dovecot-director2.suse.de ([2a07:de40:b281:106:10:150:64:167])
+	by imap1.dmz-prg2.suse.org with ESMTPSA
+	id JZAtLhZMOmrfbQAAD6G6ig
+	(envelope-from <tzimmermann@suse.de>); Tue, 23 Jun 2026 09:04:22 +0000
+Message-ID: <808d917d-28c4-4a84-a647-d5dc9123bd32@suse.de>
+Date: Tue, 23 Jun 2026 11:04:22 +0200
 Precedence: bulk
 X-Mailing-List: sashiko-reviews@lists.linux.dev
 List-Id: <sashiko-reviews.lists.linux.dev>
@@ -62,61 +83,144 @@ List-Subscribe: <mailto:sashiko-reviews+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:sashiko-reviews+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v5 2/9] KVM: s390: Fix dat_peek_cmma() overflow
-To: sashiko-reviews@lists.linux.dev, Claudio Imbrenda <imbrenda@linux.ibm.com>
-Cc: Heiko Carstens <hca@linux.ibm.com>, kvm@vger.kernel.org,
-        Alexander Gordeev <agordeev@linux.ibm.com>,
-        Vasily Gorbik
- <gor@linux.ibm.com>, linux-s390@vger.kernel.org
-References: <20260622160739.202044-1-imbrenda@linux.ibm.com>
- <20260622160739.202044-3-imbrenda@linux.ibm.com>
- <20260622162348.33B201F000E9@smtp.kernel.org>
+Subject: Re: [PATCH v2 6/6] drm/sysfb: simpledrm: Read panel orientation from
+ DT node
+To: Thierry Reding <treding@nvidia.com>
+Cc: javierm@redhat.com, maarten.lankhorst@linux.intel.com,
+ mripard@kernel.org, airlied@gmail.com, simona@ffwll.ch, rayyan@ansari.sh,
+ dri-devel@lists.freedesktop.org, sashiko-reviews@lists.linux.dev
+References: <20260622132433.722823-1-tzimmermann@suse.de>
+ <20260622132433.722823-7-tzimmermann@suse.de> <ajlfgXEO4NR-TZ4s@orome>
 Content-Language: en-US
-From: Christian Borntraeger <borntraeger@linux.ibm.com>
-In-Reply-To: <20260622162348.33B201F000E9@smtp.kernel.org>
+From: Thomas Zimmermann <tzimmermann@suse.de>
+Autocrypt: addr=tzimmermann@suse.de; keydata=
+ xsBNBFs50uABCADEHPidWt974CaxBVbrIBwqcq/WURinJ3+2WlIrKWspiP83vfZKaXhFYsdg
+ XH47fDVbPPj+d6tQrw5lPQCyqjwrCPYnq3WlIBnGPJ4/jreTL6V+qfKRDlGLWFjZcsrPJGE0
+ BeB5BbqP5erN1qylK9i3gPoQjXGhpBpQYwRrEyQyjuvk+Ev0K1Jc5tVDeJAuau3TGNgah4Yc
+ hdHm3bkPjz9EErV85RwvImQ1dptvx6s7xzwXTgGAsaYZsL8WCwDaTuqFa1d1jjlaxg6+tZsB
+ 9GluwvIhSezPgnEmimZDkGnZRRSFiGP8yjqTjjWuf0bSj5rUnTGiyLyRZRNGcXmu6hjlABEB
+ AAHNJ1Rob21hcyBaaW1tZXJtYW5uIDx0emltbWVybWFubkBzdXNlLmRlPsLAjgQTAQgAOAIb
+ AwULCQgHAgYVCgkICwIEFgIDAQIeAQIXgBYhBHIX+6yM6c9jRKFo5WgNwR1TC3ojBQJftODH
+ AAoJEGgNwR1TC3ojx1wH/0hKGWugiqDgLNXLRD/4TfHBEKmxIrmfu9Z5t7vwUKfwhFL6hqvo
+ lXPJJKQpQ2z8+X2vZm/slsLn7J1yjrOsoJhKABDi+3QWWSGkaGwRJAdPVVyJMfJRNNNIKwVb
+ U6B1BkX2XDKDGffF4TxlOpSQzdtNI/9gleOoUA8+jy8knnDYzjBNOZqLG2FuTdicBXblz0Mf
+ vg41gd9kCwYXDnD91rJU8tzylXv03E75NCaTxTM+FBXPmsAVYQ4GYhhgFt8S2UWMoaaABLDe
+ 7l5FdnLdDEcbmd8uLU2CaG4W2cLrUaI4jz2XbkcPQkqTQ3EB67hYkjiEE6Zy3ggOitiQGcqp
+ j//OwE0EWznS4AEIAMYmP4M/V+T5RY5at/g7rUdNsLhWv1APYrh9RQefODYHrNRHUE9eosYb
+ T6XMryR9hT8XlGOYRwKWwiQBoWSDiTMo/Xi29jUnn4BXfI2px2DTXwc22LKtLAgTRjP+qbU6
+ 3Y0xnQN29UGDbYgyyK51DW3H0If2a3JNsheAAK+Xc9baj0LGIc8T9uiEWHBnCH+RdhgATnWW
+ GKdDegUR5BkDfDg5O/FISymJBHx2Dyoklv5g4BzkgqTqwmaYzsl8UxZKvbaxq0zbehDda8lv
+ hFXodNFMAgTLJlLuDYOGLK2AwbrS3Sp0AEbkpdJBb44qVlGm5bApZouHeJ/+n+7r12+lqdsA
+ EQEAAcLAdgQYAQgAIAIbDBYhBHIX+6yM6c9jRKFo5WgNwR1TC3ojBQJftOH6AAoJEGgNwR1T
+ C3ojVSkIALpAPkIJPQoURPb1VWjh34l0HlglmYHvZszJWTXYwavHR8+k6Baa6H7ufXNQtThR
+ yIxJrQLW6rV5lm7TjhffEhxVCn37+cg0zZ3j7zIsSS0rx/aMwi6VhFJA5hfn3T0TtrijKP4A
+ SAQO9xD1Zk9/61JWk8OysuIh7MXkl0fxbRKWE93XeQBhIJHQfnc+YBLprdnxR446Sh8Wn/2D
+ Ya8cavuWf2zrB6cZurs048xe0UbSW5AOSo4V9M0jzYI4nZqTmPxYyXbm30Kvmz0rYVRaitYJ
+ 4kyYYMhuULvrJDMjZRvaNe52tkKAvMevcGdt38H4KSVXAylqyQOW5zvPc4/sq9c=
+In-Reply-To: <ajlfgXEO4NR-TZ4s@orome>
 Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
-X-TM-AS-GCONF: 00
-X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwNjIzMDA3MCBTYWx0ZWRfX4IBYG/Rgie0O
- P/vf++5Fofd9h72W4NcmDaHX6sU67VbIm0pDArQRH8eU/HT4a6eg1D1IrbFla58Ru63oGb9QYEF
- bGqE2ne0BKEluXN/t/tm1O7x3EON6kiGSc/fblrtjcfqDC67bHCBXo8UYuemB3IxqGKjYQbMJJ3
- g5A5rpGq1we5+SR7zU1bXMHxGP3A4YXQTUA4tTgI6zcy/5VfmXe4r4PxRYAvxSWnVzj7tvoXc0P
- LbsiUZVtMYhTatQCfEcxilpqHBWqi4iiSTKuUFlFKVaNXYWDQhaDv4PUdti9Ik+seWLjTXI6iGQ
- pDaBKrVbUzx1IKHMxH5WLw3j4GXUMjCKaPvMXeR4Wy2wouwNdr/mEiXP1k4UGap+fn4ERTsGrXJ
- mD7jVYm2yk3RZyUEJeaR1tE8dkJnvmZ7cqwmrg56GilwLebLYvOVltrQ8hvUFp+Eb9AG3KvUKev
- E4v3X+iDHRKCa9hYQZw==
-X-Proofpoint-GUID: d6CdkbHUoXc0HWwwelf66SymezsajplQ
-X-Proofpoint-Spam-Info: AW1haW4tMjYwNjIzMDA3MCBTYWx0ZWRfXzOu5/RWEXN1j
- eE0O5BUX2VbPIzrarBYuwp9ScF87MGpV5cZ5b0tYfJKqWi9tbXpjEda3aqwtenAMqH31ctmfD0K
- GA4TcjiHLfEovPkfB4qbnnWjv20WY18=
-X-Authority-Analysis: v=2.4 cv=I/lVgtgg c=1 sm=1 tr=0 ts=6a3a4c10 cx=c_pps
- a=5BHTudwdYE3Te8bg5FgnPg==:117 a=5BHTudwdYE3Te8bg5FgnPg==:17
- a=IkcTkHD0fZMA:10 a=FelO9ux0wxsA:10 a=VkNPw1HP01LnGYTKEx00:22
- a=RnoormkPH1_aCDwRdu11:22 a=RzCfie-kr_QcCd8fBx8p:22 a=VwQbUJbxAAAA:8
- a=kj-dBZAJfm4ZBbkn5ggA:9 a=QEXdDO2ut3YA:10
-X-Proofpoint-ORIG-GUID: d6CdkbHUoXc0HWwwelf66SymezsajplQ
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.293,Aquarius:18.0.1143,Hydra:6.1.125,FMLib:17.12.100.49
- definitions=2026-06-23_02,2026-06-22_01,2025-10-01_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
- lowpriorityscore=0 spamscore=0 phishscore=0 clxscore=1011 priorityscore=1501
- adultscore=0 impostorscore=0 bulkscore=0 suspectscore=0 malwarescore=0
- classifier=typeunknown authscore=0 authtc= authcc= route=outbound adjust=0
- reason=mlx scancount=1 engine=8.22.0-2606150000 definitions=main-2606230070
+Content-Transfer-Encoding: 8bit
+X-Rspamd-Action: no action
+X-Rspamd-Queue-Id: 04D6670696
+X-Spam-Flag: NO
+X-Spam-Score: -4.51
+X-Spam-Level: 
+X-Spamd-Result: default: False [-4.51 / 50.00];
+	BAYES_HAM(-3.00)[100.00%];
+	NEURAL_HAM_LONG(-1.00)[-1.000];
+	R_DKIM_ALLOW(-0.20)[suse.de:s=susede2_rsa,suse.de:s=susede2_ed25519];
+	NEURAL_HAM_SHORT(-0.20)[-1.000];
+	MIME_GOOD(-0.10)[text/plain];
+	MX_GOOD(-0.01)[];
+	TO_MATCH_ENVRCPT_ALL(0.00)[];
+	DKIM_SIGNED(0.00)[suse.de:s=susede2_rsa,suse.de:s=susede2_ed25519];
+	FREEMAIL_ENVRCPT(0.00)[gmail.com];
+	FUZZY_RATELIMITED(0.00)[rspamd.com];
+	RBL_SPAMHAUS_BLOCKED_OPENRESOLVER(0.00)[2a07:de40:b281:104:10:150:64:97:from];
+	MIME_TRACE(0.00)[0:+];
+	ARC_NA(0.00)[];
+	FREEMAIL_CC(0.00)[redhat.com,linux.intel.com,kernel.org,gmail.com,ffwll.ch,ansari.sh,lists.freedesktop.org,lists.linux.dev];
+	DKIM_TRACE(0.00)[suse.de:+];
+	TO_DN_SOME(0.00)[];
+	RCVD_COUNT_TWO(0.00)[2];
+	FROM_EQ_ENVFROM(0.00)[];
+	FROM_HAS_DN(0.00)[];
+	RCVD_TLS_ALL(0.00)[];
+	DNSWL_BLOCKED(0.00)[2a07:de40:b281:104:10:150:64:97:from];
+	RCPT_COUNT_SEVEN(0.00)[9];
+	MID_RHS_MATCH_FROM(0.00)[];
+	RCVD_VIA_SMTP_AUTH(0.00)[];
+	RECEIVED_SPAMHAUS_BLOCKED_OPENRESOLVER(0.00)[2a07:de40:b281:106:10:150:64:167:received];
+	DBL_BLOCKED_OPENRESOLVER(0.00)[imap1.dmz-prg2.suse.org:rdns,imap1.dmz-prg2.suse.org:helo,suse.com:url,suse.de:dkim,suse.de:email,suse.de:mid]
+X-Rspamd-Server: rspamd1.dmz-prg2.suse.org
+
+Hi
+
+Am 22.06.26 um 18:17 schrieb Thierry Reding:
+> On Mon, Jun 22, 2026 at 03:19:40PM +0200, Thomas Zimmermann wrote:
+>> A DeviceTree panel node can specify the panel's rotation in steps
+>> of 90 degrees. Set the DRM connector orientation from the field.
+>> Do nothing if the field is missing or invalid.
+>>
+>> Signed-off-by: Thomas Zimmermann <tzimmermann@suse.de>
+>> ---
+>>   drivers/gpu/drm/sysfb/simpledrm.c | 32 +++++++++++++++++++++++++++++--
+>>   1 file changed, 30 insertions(+), 2 deletions(-)
+>>
+>> diff --git a/drivers/gpu/drm/sysfb/simpledrm.c b/drivers/gpu/drm/sysfb/simpledrm.c
+>> index a04f0c852ea4..b585d17ca817 100644
+>> --- a/drivers/gpu/drm/sysfb/simpledrm.c
+>> +++ b/drivers/gpu/drm/sysfb/simpledrm.c
+>> @@ -221,6 +221,33 @@ simplefb_get_panel_height_mm_of(struct drm_device *dev, struct device_node *of_p
+>>   	return __simplefb_get_panel_size_mm_of(dev, of_panel_node, "height-mm");
+>>   }
+>>   
+>> +static enum drm_panel_orientation
+>> +simplefb_get_panel_orientation_of(struct drm_device *dev, struct device_node *of_panel_node)
+>> +{
+>> +	int ret;
+>> +	u32 rotation;
+>> +
+>> +	ret = of_property_read_u32(of_panel_node, "rotation", &rotation);
+>> +	if (ret) {
+>> +		drm_dbg(dev, "simplefb: cannot parse panel rotation: error %d\n", ret);
+> Why is this debug level? Maybe we don't want an error if the property is
+> absent, but if it really can't be parsed, why not print out a proper
+> error?
+>
+>> +		return DRM_MODE_PANEL_ORIENTATION_UNKNOWN;
+>> +	}
+>> +
+>> +	switch (rotation) {
+>> +	case 0:
+>> +		return DRM_MODE_PANEL_ORIENTATION_NORMAL;
+>> +	case 90:
+>> +		return DRM_MODE_PANEL_ORIENTATION_RIGHT_UP;
+>> +	case 180:
+>> +		return DRM_MODE_PANEL_ORIENTATION_BOTTOM_UP;
+>> +	case 270:
+>> +		return DRM_MODE_PANEL_ORIENTATION_LEFT_UP;
+>> +	default:
+>> +		drm_dbg(dev, "simplefb: cannot parse panel rotation: value %u\n", rotation);
+> Same here. Seems like we should be verbose when this contains an invalid
+> value. DT checkers should catch these already, so if the invalid value
+> makes it here, maybe we should sound the alarm.
+
+Ok. The review bot told me about of_drm_get_panel_orientation(). I 
+intent to reimplement this patch on top of that helper.
+
+Best regards
+Thomas
+
+>
+> Thierry
+
+-- 
+--
+Thomas Zimmermann
+Graphics Driver Developer
+SUSE Software Solutions Germany GmbH
+Frankenstr. 146, 90461 Nürnberg, Germany, www.suse.com
+GF: Jochen Jaser, Andrew McDonald, Werner Knoblich, (HRB 36809, AG Nürnberg)
 
 
-Am 22.06.26 um 18:23 schrieb sashiko-bot@kernel.org:
-> Thank you for your contribution! Sashiko AI review found 1 potential issue(s) to consider:
-> 
-> Pre-existing issues:
-> - [High] Uninitialized kernel memory is leaked to userspace during CMMA peek and get operations due to gaps left in the vmalloc'd buffer.
-
-> kvm_s390_get_cmma_bits() {
->     ...
->     values = vmalloc(args->count);
->     ...
-> }
-
-
-This is already fixed via
-https://git.kernel.org/pub/scm/linux/kernel/git/kvms390/linux.git/commit/?h=next&id=c7dda3d0f869dc97223448a06c9a2e5235928e48
