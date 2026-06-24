@@ -1,178 +1,152 @@
-Received: from mail-yw1-f171.google.com (mail-yw1-f171.google.com [209.85.128.171])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from mx0b-0031df01.pphosted.com (mx0b-0031df01.pphosted.com [205.220.180.131])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A908522538F
-	for <sashiko-reviews@lists.linux.dev>; Wed, 24 Jun 2026 07:42:12 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=pass smtp.client-ip=209.85.128.171
-ARC-Seal:i=2; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1782286934; cv=pass; b=DMhhapPvcMGGhR11QaS5Pr7ZtfqM0TvWeMmiNFnwLcHLFtZIljnR9ZdpW7vAg1dfXHnlsvGgnjjvObyoXv92RoYI+ftv+qMk5pBCmmEplzHm1KLIoKWslINjoS0lY/JILhJ9jMMYndJDTW9mOsmuBYBM/LwohwWy8LEy65FuLpI=
-ARC-Message-Signature:i=2; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1782286934; c=relaxed/simple;
-	bh=QR4Wy0tL8cCx/yg2BbocD46eH1jIHB4yYuylS36en84=;
-	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
-	 To:Cc:Content-Type; b=Vn7XM/z3M3DQeumlcs/686EnasFguNQKQ9XKmGLsyBRDsoCBFA/Yu17irrV5afP1UnhSu6tsM+5uOFTk75VlQfZaXUQJqXYq741UkyeKPmP4jpZWs+QfNbbck44x0Wz9hzg7OkeZVBEl0wXAJzczHUdqsoSHhgqfHDBEtcCYfUQ=
-ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=AKtrPyTV; arc=pass smtp.client-ip=209.85.128.171
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5111F345CB2
+	for <sashiko-reviews@lists.linux.dev>; Wed, 24 Jun 2026 08:35:02 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.180.131
+ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
+	t=1782290103; cv=none; b=Spql5uLzvO467h1jzNj4bxiiX1iBt3XcrwtlhoUMeGLxh/Dvcf0cmIhaLEssf14hTyhhX4bVg177HganqmuWZC22XhPBrTFE0l2xlTvACAKi5LVq6N0ZDHu25NSmOls8juc470xVcjzbEQlkUwjBfVcR1Fc0p3/ypPi7B1o01yY=
+ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
+	s=arc-20240116; t=1782290103; c=relaxed/simple;
+	bh=htoxQB7Zr4deDUOX4Mg2XTgZsnaZj1b8ci5u3iYnfP0=;
+	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
+	 In-Reply-To:Content-Type; b=otrbwXS/peU5N+/Z8Lo6bs98g5TsJJfJJtsu4Z0z94VHIItpn7xvIWC5NmHZBKBcpnQwY6e7zF/mkTyFKs/zsn0mK9Y2pi3Tt20OtPpF8wZgBpvHUYtl6U700PptzmhPIz9llgnRr9J1Av7zrul4gH9sWPQ94kPKFQJglQ0RH8k=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com; spf=pass smtp.mailfrom=oss.qualcomm.com; dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b=RhSKEbPH; dkim=pass (2048-bit key) header.d=oss.qualcomm.com header.i=@oss.qualcomm.com header.b=iwK7R2JE; arc=none smtp.client-ip=205.220.180.131
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=oss.qualcomm.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="AKtrPyTV"
-Received: by mail-yw1-f171.google.com with SMTP id 00721157ae682-7fd5346b5e2so16694347b3.0
-        for <sashiko-reviews@lists.linux.dev>; Wed, 24 Jun 2026 00:42:12 -0700 (PDT)
-ARC-Seal: i=1; a=rsa-sha256; t=1782286931; cv=none;
-        d=google.com; s=arc-20260327;
-        b=l+WJNEWORgrdJNh1ez7mPpQJVA4RfNcE7z78BauEGUY0SUEOhR07ML4yVCEqOPiCFx
-         tFJqiQzcjMPjl2MBpqkWiEhO0feWAOIijpGX56PXkDVpUrJfgIIPhqNlqlcC5z9WM0vX
-         vYkSK9x7FSAjvn6UnVMQfAyDo68PDmL879hq7kFJGz/IqAb+yQ5MYR4LYdKTlnWG6qXO
-         QkL0GySoFv9DeFUNGXdXrRkpsxhUSK7Dvfqku9iAhYS9ajTjrU/ILoerwvshA4XF4IK7
-         cqVd/tC5tCnqHRAOHa5KAD1co1CEL3F2scTDrC7Qp9jlQ9c5d7mm4QJo3kx9HMJJqfj/
-         0JJQ==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com; s=arc-20260327;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:dkim-signature;
-        bh=0+yTRolSITyDjcXP+5W2UVcOpjVAsvKMU8I2YD9YKI0=;
-        fh=uA360uvxR9S0K/Y4Lovo7aIaGlBwzVBnnb2BKWupr/4=;
-        b=beca9yltkA8NmGxdgQzuq1p70jC9EjhC3sLjHDPtoclwYnoyBoYCoPT8GzxsyIo8HT
-         5WbTM8b96S8Z5bfzdiWsfyHgUDF54g9M3SQf8TbaiBB8wb+fX6WGMsq1Yg/7dPIfnQiH
-         blcMg0BEtRZi/qlnglRzm4o3HTna+8AjzNycbGZnAIi5yREJ6rMo7oLRbc95MTXmBF9b
-         SCDaMx10/soKdQXF++WepMWTgFATYQnhXbDTQxB63WXX6XvIr6LD5b0eLKNKc26BSGjw
-         JgfwPwbwcmR3rBtj3nQ7LtvoI0NuXXSgPTGlWvWhrRcumh0+yZyz9CytSlSqh4SSpJED
-         Co5w==;
-        darn=lists.linux.dev
-ARC-Authentication-Results: i=1; mx.google.com; arc=none
+	dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b="RhSKEbPH";
+	dkim=pass (2048-bit key) header.d=oss.qualcomm.com header.i=@oss.qualcomm.com header.b="iwK7R2JE"
+Received: from pps.filterd (m0279868.ppops.net [127.0.0.1])
+	by mx0a-0031df01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id 65O7FtLH2440420
+	for <sashiko-reviews@lists.linux.dev>; Wed, 24 Jun 2026 08:35:01 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=qualcomm.com; h=
+	cc:content-transfer-encoding:content-type:date:from:in-reply-to
+	:message-id:mime-version:references:subject:to; s=qcppdkim1; bh=
+	5mrd230kpk0uUu17irqvk0Ds0ZSnBgyPtN1TTgwZ7Z0=; b=RhSKEbPHNn8q8j/e
+	lguLjB8G1nVkkg10CM8wZv7GhiT4Lo1Kmz1HuUTwjC4JHkfUqJTV6uBCbb7WVWQl
+	ne8p7cXcbfjslXvAqYatgyXP0dNERwSRpMXLLbTFKv1Z5qyqk3CcjfONNhsS/+uP
+	b7uKVVMp0mRt2r6BURikDlmZ8VDYOY/rDACDaX11KOxRGrd4wunDZT2waN8iVlIV
+	QwA8Bm0VoPMmDbC1mnbyqT84iaIxYTJvxVtSGiAfulYHd2GQzfVnDQL/qzRlyblS
+	cVcVw059dQfoHO2TQBeyDg6jZ2BgNq0Ol+m6jDuH53FEwpp9l/3fXCBNU5mQn/3Z
+	CVIKzw==
+Received: from mail-pf1-f197.google.com (mail-pf1-f197.google.com [209.85.210.197])
+	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 4f0apq08xf-1
+	(version=TLSv1.3 cipher=TLS_AES_128_GCM_SHA256 bits=128 verify=NOT)
+	for <sashiko-reviews@lists.linux.dev>; Wed, 24 Jun 2026 08:35:00 +0000 (GMT)
+Received: by mail-pf1-f197.google.com with SMTP id d2e1a72fcca58-842211d6e48so1095650b3a.0
+        for <sashiko-reviews@lists.linux.dev>; Wed, 24 Jun 2026 01:35:00 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20251104; t=1782286931; x=1782891731; darn=lists.linux.dev;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=0+yTRolSITyDjcXP+5W2UVcOpjVAsvKMU8I2YD9YKI0=;
-        b=AKtrPyTVHuDfSEq2qE4a9OBLwDrT63v1pB75IIWPh7o9cvfDXTvaCxpej2TVSwZPFW
-         LA+zjqLxKOS+2duwFd7nq4FpmqHbzt7pvooEctnGblvlzztFWxwTEtXGN9cjAbOgNVKc
-         9andDnun2HuShymr8p0bLv+Q1toUcMlvUr20KwwCsDwhA794rQBWU/qFzT59I9hhOlcG
-         R4pzjup1eRGaHpgQRhmElBD7pPCGLKNivFOVi9bznWrXneRP3jj8yd2E2dSlY69+K1KN
-         cs96JKdZUVsCj4Rq8Iqc73bko9Ys1A1Gust1+oElqMZQoYy86QDC0CQSRxrVcASNky3P
-         EExA==
+        d=oss.qualcomm.com; s=google; t=1782290100; x=1782894900; darn=lists.linux.dev;
+        h=content-transfer-encoding:in-reply-to:from:content-language
+         :references:cc:to:subject:user-agent:mime-version:date:message-id
+         :from:to:cc:subject:date:message-id:reply-to;
+        bh=5mrd230kpk0uUu17irqvk0Ds0ZSnBgyPtN1TTgwZ7Z0=;
+        b=iwK7R2JEWPhxBlkSojxIXb7VWcnwN5xgKd+uvgI6dtRYzGeMtzAPiVdAV/MXEJB1hm
+         Fr0nF2MtpPf3GMpaAd655zt+RNJXkFToZbdGmnVjZjdzeyGu2QGEYHUReoKrtj3NEZN3
+         WDej+ir2cQKC+Jj8SYDQZeGt3nQ4FfTOjIPcopAoPi15aP6mhgYTJXGFzlFZJWpyIYHL
+         VErjcInZlytwvlHBoc3JthBQKi2xZdQLG20BPuAXNoUG7/vtFCbuohDbt33OG/dJLI5N
+         G8pSdaCXSU+tpcGoKBymFut6EQVuRrdN508DiUa675gMSGVL3Sqp0HFApw5ccq93Verf
+         AIsg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20251104; t=1782286931; x=1782891731;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:x-gm-gg:x-gm-message-state:from
-         :to:cc:subject:date:message-id:reply-to;
-        bh=0+yTRolSITyDjcXP+5W2UVcOpjVAsvKMU8I2YD9YKI0=;
-        b=ojWhMxmKwyHe+nAtoYTs0/jq1wXxkLLzW1lUnjI11xhxUMTI4O+mRsGStR8yn3cVqk
-         ixzkpfKAUlicJbFBC7+IR/2RshaKY0216rixgHcgZ6vm/qDO9FbKlgtaYX1dKu60Mwmt
-         qjVQCMIfijXUTiawRnYtggFl/b/+mrTIeOm44RVjK6E/e345+4kdOCD1FNQ50woZQrlw
-         6jpNNO8k7tuGNIjJ/s07vrkRAsVOHtGYuauDZLnO5khtv0N+l70x3blexmpCzZsq5Gn8
-         PiXPjVNn8XxOkcrFNnJYJQ7uktxRXH1oETpGvxuAvsRCcTBYRRxF24pKoCz3wD0q28/I
-         RuQg==
-X-Gm-Message-State: AOJu0Yx85ivjYdk1Xn8v2UUNtM9hpEizmRJVmpNQnnmR+RCAcVrJp+64
-	1cQm71eNG4ZIIeiV2yOSCFGAi6jCiWCU+4hb1yb1jMsgLdc6aXjOYxPnCTyAbOMx+cexGiAZ+p7
-	n67T6zhFjO+DQkGvmwTb9Tu4rYH44g7KJ6KWji4wAQx7T
-X-Gm-Gg: AfdE7cnXyjMJIpdFegw72u0MbDHGWnlHDfkm+5mPTr2Oah2zoq0by+LiOKmlW7u1L4r
-	wU1zmj0nvWxp4vMtqxMHhznUGEPznsWhOBLdx4UZkge/kfkeE0zvxvblrbBGvF1U/Pw35GYXhK2
-	E2hy/g0pCvL5V2E3nHtnMthScxbYRpQZJR3x2pyons283wEHx6kCwimEUR251D0Kih6qdtjr7yb
-	MaWuVnw5m6j2lw3EqXQO6HPTFSj6S/+GijUhfar/xRrBPwySIcGKYylZVwiBWQYRFmR76qymPkC
-	wiYw4VwVFoU7vM97Bp23wJfkxKdIG8HzcC1wlFsu
-X-Received: by 2002:a05:690c:660b:b0:7b1:9036:a23a with SMTP id
- 00721157ae682-80672115b07mr70122167b3.14.1782286931474; Wed, 24 Jun 2026
- 00:42:11 -0700 (PDT)
+        d=1e100.net; s=20251104; t=1782290100; x=1782894900;
+        h=content-transfer-encoding:in-reply-to:from:content-language
+         :references:cc:to:subject:user-agent:mime-version:date:message-id
+         :x-gm-gg:x-gm-message-state:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=5mrd230kpk0uUu17irqvk0Ds0ZSnBgyPtN1TTgwZ7Z0=;
+        b=oehij0fZnLDTLhVW438oFPLT/qpSRuonKK8Kwn77xIPe54ggYom7UPa3clHfWQk8ZD
+         fGPRgfoeicsj+lK8+QNw6x/SUfvxopGZQXB5STtLc3cuxlMihbUt2hGFkdL0B1SmwZKU
+         A7LXInJne8JAKEr0j+v/QndUZ7YVpTvMhV1bnoWWpcutW6KeMhQ2FtAXY9DPivopYVhC
+         AOU+gr6PlTiSIbYPgmeEzlqBVpI79GrCSrvHC23y1vHESOX0KACd9eT9ClFar0swj1fS
+         adpG1EEiBoDMppqdWZqrCWXvLjxwN7IRIV8slf4r7QTorspZgUmTNbDXWiqz1QV75jQ5
+         ixYA==
+X-Forwarded-Encrypted: i=1; AFNElJ/c8kUIMMQjzwRRefNZTPgcRryHb/p6LkBl849yGCOhQTOm9cifROVdqkQylh+gR7iDV3Zl+2LF40pidtgVpmk=@lists.linux.dev
+X-Gm-Message-State: AOJu0Yw24xAE5lZAJHCKPmUb77P9FXjIjX7s+lxt6qujnQLQ2etlyOEF
+	xfhHb40HVAB/DLS4rvHiCwT5Z+am15zZ7sGTwei43OQtKlHiuQOYompad9zRRnpyx1uqlOrmSCQ
+	CdeFopaMI1LaN7VW+T3SpOT+pvIE3HYNj3B0rp7mjeww36RKRDoE8mRT4j0NqVR12lHV5z8g=
+X-Gm-Gg: AfdE7cmyqvIkE8juKnsR1SUQG4RYvODgtYQcgtlQvgSG0mS2RmuC0ra/cvYFHdfr8ki
+	s/p9CZLeVcwkVsB8PzP6eTSdsj/zAuKG9vfCUDttZAYDlcJbrEMcuGpVHirdbTIcxuaaj4+HP2l
+	6DSQWmAc/VRJOvpbqJu6JbWhgX304opYEdFlLeaWB0GbZXutXfCYKyPFBy1mr/Ok0v+NR6C8m2T
+	lWO8mTJNeCCRrilQQY7GUFrZWbLUWa7itT7Tayb7oDuBbd4mi2OGrk9ticnJpHTlnpi9Q67ZbvV
+	rVx+lMVpaSwy5fW02hdHssfN/D9FhbjIUJIGDEbz8UL0m+3IvgV08/8EnYADyzZ9h0vfsLgmV6z
+	g80iPpGmpAaYxwJvmMAvIO8EyUaMf72EoK7U96RVTqfy7Kw==
+X-Received: by 2002:a05:6a00:b46:b0:842:7992:bdd6 with SMTP id d2e1a72fcca58-845a2cad138mr3014609b3a.36.1782290100040;
+        Wed, 24 Jun 2026 01:35:00 -0700 (PDT)
+X-Received: by 2002:a05:6a00:b46:b0:842:7992:bdd6 with SMTP id d2e1a72fcca58-845a2cad138mr3014577b3a.36.1782290099604;
+        Wed, 24 Jun 2026 01:34:59 -0700 (PDT)
+Received: from [10.219.57.229] ([202.46.23.19])
+        by smtp.gmail.com with ESMTPSA id d2e1a72fcca58-845a40f4722sm1628731b3a.43.2026.06.24.01.34.55
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Wed, 24 Jun 2026 01:34:59 -0700 (PDT)
+Message-ID: <c2bb7a24-e1d0-4308-ab53-208901108a5a@oss.qualcomm.com>
+Date: Wed, 24 Jun 2026 14:04:54 +0530
 Precedence: bulk
 X-Mailing-List: sashiko-reviews@lists.linux.dev
 List-Id: <sashiko-reviews.lists.linux.dev>
 List-Subscribe: <mailto:sashiko-reviews+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:sashiko-reviews+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-References: <20260624072031.735846-1-sun.jian.kdev@gmail.com> <20260624073738.86F361F000E9@smtp.kernel.org>
-In-Reply-To: <20260624073738.86F361F000E9@smtp.kernel.org>
-From: sun jian <sun.jian.kdev@gmail.com>
-Date: Wed, 24 Jun 2026 15:41:58 +0800
-X-Gm-Features: AVVi8CeAGESJLiZKG7OzP6_ac3ToJrHzDDedwPDcUfl7iYoO0CEiUoore4N-_u4
-Message-ID: <CABFUUZFSwaQoq6_uRA0qwsuSO7hxfvyn9jmD-i-iUer7QZ_eSQ@mail.gmail.com>
-Subject: Re: [PATCH bpf 1/2] bpf: Avoid eliding lookup NULLness for inner map templates
-To: sashiko-reviews@lists.linux.dev
-Cc: bpf@vger.kernel.org
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH v22 04/13] firmware: psci: Introduce command-based resets
+To: Lorenzo Pieralisi <lpieralisi@kernel.org>, Arnd Bergmann <arnd@arndb.de>,
+        Sebastian Reichel <sre@kernel.org>,
+        Mark Rutland <mark.rutland@arm.com>, Rob Herring <robh@kernel.org>,
+        Krzysztof Kozlowski <krzk+dt@kernel.org>,
+        Conor Dooley <conor+dt@kernel.org>,
+        Souvik Chakravarty <Souvik.Chakravarty@arm.com>,
+        Bartosz Golaszewski <brgl@kernel.org>,
+        Sudeep Holla <sudeep.holla@kernel.org>
+Cc: krzk+dt@kernel.org, conor+dt@kernel.org, devicetree@vger.kernel.org,
+        robh@kernel.org, sashiko-reviews@lists.linux.dev
+References: <20260514-arm-psci-system_reset2-vendor-reboots-v22-4-28a5bde07483@oss.qualcomm.com>
+ <20260514212353.881AFC2BCB8@smtp.kernel.org>
+Content-Language: en-US
+From: Shivendra Pratap <shivendra.pratap@oss.qualcomm.com>
+In-Reply-To: <20260514212353.881AFC2BCB8@smtp.kernel.org>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
+X-Proofpoint-GUID: 2Qv65kL_rneY9CYTfW_u5lt1HbsXJrcM
+X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwNjI0MDA3MCBTYWx0ZWRfX7n8CluYgOnNc
+ FkxSCJg4kBdiiwiQCECJoO7mhhT+RaMJRYZK5T18qdvxvjeYTckWCAgmORx5tebnAY8a6DY94DU
+ dj3FhDDnXz5E7yiBGHqcIQGkn4JTWcd7HQp8EFKcqrp6foMbgEEEs66mioJq5O5kLtzpqqceUea
+ fFojoGSWvYjjp6pQjDhqHCI8vuLhKzmB6tKkgJSHpIHS76/39fV8j5DyFY2X+ZHr4ktMZCkclcU
+ Jya/MEem9rlQrw3qeUebHOk+AVWOsIx49UWM8ZZwnTzsY4SuzePTZ7nO9uvBbogr8qVDlamXP8I
+ oWvmYcZzndvATAbqtC4yejaBhl56l0jj3uBJuFvQkm5EucBOkTwHbRBmx74d04xAro/HwUt1EX5
+ 57alKLh7c3hSELauJx24iJsDKFrcRzXaPHUI1NxhyNC0FQjaGncxh+/k6hGQgnjtN5jQJfAydZ3
+ adq5W46Pd4Jlm+mN2Cg==
+X-Proofpoint-Spam-Info: AW1haW4tMjYwNjI0MDA3MCBTYWx0ZWRfX/xxy/PeycfLf
+ c+TLIE2PJrojvFl5j/DHW1hfikwoggmKuyInK+V+4f3hBE9Pn5gEyAvpNchkzapcTaRbqO0Og7b
+ pCHchQPktXac050mPN/HOQmzcf7Yemw=
+X-Authority-Analysis: v=2.4 cv=NpbhtcdJ c=1 sm=1 tr=0 ts=6a3b96b4 cx=c_pps
+ a=rEQLjTOiSrHUhVqRoksmgQ==:117 a=j4ogTh8yFefVWWEFDRgCtg==:17
+ a=IkcTkHD0fZMA:10 a=FelO9ux0wxsA:10 a=s4-Qcg_JpJYA:10
+ a=VkNPw1HP01LnGYTKEx00:22 a=u7WPNUs3qKkmUXheDGA7:22 a=ZpdpYltYx_vBUK5n70dp:22
+ a=VwQbUJbxAAAA:8 a=Mda6OO27nty_hdtp-zcA:9 a=QEXdDO2ut3YA:10
+ a=2VI0MkxyNR6bbpdq8BZq:22
+X-Proofpoint-ORIG-GUID: 2Qv65kL_rneY9CYTfW_u5lt1HbsXJrcM
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.293,Aquarius:18.0.1143,Hydra:6.1.125,FMLib:17.12.100.49
+ definitions=2026-06-24_02,2026-06-23_01,2025-10-01_01
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
+ clxscore=1011 suspectscore=0 phishscore=0 malwarescore=0 lowpriorityscore=0
+ priorityscore=1501 bulkscore=0 adultscore=0 spamscore=0 impostorscore=0
+ classifier=typeunknown authscore=0 authtc= authcc= route=outbound adjust=0
+ reason=mlx scancount=1 engine=8.22.0-2606150000 definitions=main-2606240070
 
-On Wed, Jun 24, 2026 at 3:37=E2=80=AFPM <sashiko-bot@kernel.org> wrote:
->
-> Thank you for your contribution! Sashiko AI review found 1 potential issu=
-e(s) to consider:
->
-> Pre-existing issues:
-> - [Critical] The patch relies on the `BPF_F_INNER_MAP` flag to prevent un=
-safe NULL-check elision for inner map templates. However, this fix is funda=
-mentally incomplete because `BPF_MAP_TYPE_PERCPU_ARRAY` explicitly rejects =
-the `BPF_F_INNER_MAP` flag during creation. This leaves per-CPU arrays vuln=
-erable to out-of-bounds memory accesses and NULL pointer dereferences.
-> --
->
-> commit 3ab30507af620d9da556d3b2d80a1f172474785b
-> Author: Sun Jian <sun.jian.kdev@gmail.com>
->
-> bpf: Avoid eliding lookup NULLness for inner map templates
->
-> This commit prevents the verifier from eliding NULLness checks for array =
-maps
-> used as inner map templates. It achieves this by requiring that the
-> BPF_F_INNER_MAP flag is not set on the map before clearing the PTR_MAYBE_=
-NULL
-> flag from the register.
->
-> > diff --git a/kernel/bpf/verifier.c b/kernel/bpf/verifier.c
-> > index 69d75515ed3f7..a32704bb5e058 100644
-> > --- a/kernel/bpf/verifier.c
-> > +++ b/kernel/bpf/verifier.c
-> > @@ -10577,6 +10577,7 @@ static int check_helper_call(struct bpf_verifie=
-r_env *env, struct bpf_insn *insn
-> >
-> >               if (func_id =3D=3D BPF_FUNC_map_lookup_elem &&
-> >                   can_elide_value_nullness(meta.map.ptr->map_type) &&
-> > +                 !(meta.map.ptr->map_flags & BPF_F_INNER_MAP) &&
->
-> [Severity: Critical]
-> This isn't a bug introduced by this patch, but does this check completely
-> prevent NULL-check elision for all inner map templates?
->
-> Looking at can_elide_value_nullness(), it allows both BPF_MAP_TYPE_ARRAY
-> and BPF_MAP_TYPE_PERCPU_ARRAY.
->
-> However, in array_map_alloc_check(), the BPF_F_INNER_MAP flag is
-> explicitly rejected for per-CPU arrays:
->
-> kernel/bpf/arraymap.c:array_map_alloc_check() {
->     if (attr->map_type !=3D BPF_MAP_TYPE_ARRAY &&
->         attr->map_flags & (BPF_F_MMAPABLE | BPF_F_INNER_MAP))
->         return -EINVAL;
->     ...
-> }
->
-> Since BPF_MAP_TYPE_PERCPU_ARRAY can never have the BPF_F_INNER_MAP flag
-> set, won't this allow the verifier to still incorrectly elide NULLness
-> checks for per-CPU arrays used as inner map templates?
->
-> If a per-CPU array with a large max_entries is used as an inner map
-> template, and a concrete map with a smaller max_entries is inserted at
-> runtime (which is possible because percpu_array_map_ops.map_meta_equal us=
-es
-> bpf_map_meta_equal() which ignores max_entries checks), couldn't this
-> lead to an out-of-bounds access or NULL pointer dereference?
->
-> Additionally, since percpu_array_map_gen_lookup() also relies on
-> BPF_F_INNER_MAP to skip JIT inlining, will it inline the lookup with the
-> template's excessively large bounds hardcoded, resulting in out-of-bounds
-> heap reads on the concrete inner map?
->
-> >                   meta.const_map_key >=3D 0 &&
-> >                   meta.const_map_key < meta.map.ptr->max_entries)
-> >                       ret_flag &=3D ~PTR_MAYBE_NULL;
->
-> --
-> Sashiko AI review =C2=B7 https://sashiko.dev/#/patchset/20260624072031.73=
-5846-1-sun.jian.kdev@gmail.com?part=3D1
 
-Please ignore this series.
 
-I just noticed that Nuoqi Gui's "[PATCH bpf v2 0/2] Keep dynamic inner
-array lookups nullable" already covers the same verifier issue and
-selftest.
+On 15-05-2026 02:53, sashiko-bot@kernel.org wrote:
+> - [High] The API illegally truncates the 64-bit PSCI SYSTEM_RESET2 cookie parameter to 32 bits, violating the ARM PSCI specification.
 
-Sorry for the noise.
+Hi Lorenzo,
+
+Was going through this comment. The patch currently uses a 32 bit 
+cookie. The spec also talks about "SMC64 - uint64 - cookie". Can you 
+please suggest if we should add support for 64 bit cookie here?
+
+This will require a re-design for supporting about up-to three 32-bit 
+numbers in reboot-mode framework.
+
+thanks,
+Shivendra
