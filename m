@@ -1,180 +1,197 @@
-Received: from mail-yx1-f50.google.com (mail-yx1-f50.google.com [74.125.224.50])
+Received: from mail-yx1-f44.google.com (mail-yx1-f44.google.com [74.125.224.44])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 09EF5305E28
-	for <sashiko-reviews@lists.linux.dev>; Wed, 24 Jun 2026 19:54:21 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=pass smtp.client-ip=74.125.224.50
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 75EFC3E0C7E
+	for <sashiko-reviews@lists.linux.dev>; Wed, 24 Jun 2026 20:22:21 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=pass smtp.client-ip=74.125.224.44
 ARC-Seal:i=2; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1782330863; cv=pass; b=UdAEazo2s0cajtYQLFbRY95WUmBy0Jp5a/CEJZq1EG1F18HyzTUQoo9E3GL+kbku8ic6JJXP7VPMO1Cqksqe4BIxyRxGnKby9w8DU+i2krXWpzI8yR1/zy0AF/UqnMgAt4zGtEoH+DHoL3nf6EjWkZNAIj1D70ASDFw63RE3CGQ=
+	t=1782332542; cv=pass; b=CHLoMH0Y0Z06V/JYCBUelAW8lLsODyGlCDcIgiyxvc21e58Di23pRHUKrSQtd0XsEp907dn++heag2DkkFh1WmUT7a5m942tF6EISumOpJGH7t3u3WWxBzFPHSPjDj6R1Ah4/bvBQLxnMfUFQqh0oDp6Bj8sCjs//TEU5eWpqYs=
 ARC-Message-Signature:i=2; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1782330863; c=relaxed/simple;
-	bh=yGW+rfVoYBJACn5bz7D625MSTBsjlPbEBqkQTyAh0S4=;
+	s=arc-20240116; t=1782332542; c=relaxed/simple;
+	bh=BtjUuXZ73D/qyp8VKn6KPfK6YXmAmDeXxF1Yp71qiyo=;
 	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
-	 To:Cc:Content-Type; b=hMBJbR4ty3QCmzs8BPZE/QI3llTppYZYtE8VVRbZEuDrGHIZ42CAaAjK9mUJ8WWeQhV6pIHA35nSKXhxVsu5qPaU3XF46Jyjd7cSyHtenL3aUu8byJV8mh3McrNI/V9i+E35f+rQdgIH0h5Ex1tEfmprDJutAibsu01QeIEddiI=
-ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=oltChB0G; arc=pass smtp.client-ip=74.125.224.50
+	 To:Cc:Content-Type; b=PJ0q0hgXJr9YhFzt9vAgacEhgPavqnFWVhb3Tv6NTojgqZVkE9R9biWygLLfAcPwvEUtD75xfcwoXfP3Or1bM9OEwIc4m01/GDn4W79XSQof4wdsWtAUqmIQxeAxTFudj/eXfGjb2++RJgrJY/I70BBTv8ah/Itf65d6yNjkhVg=
+ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=MJpJMEHE; arc=pass smtp.client-ip=74.125.224.44
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="oltChB0G"
-Received: by mail-yx1-f50.google.com with SMTP id 956f58d0204a3-662dd616cdbso1520525d50.1
-        for <sashiko-reviews@lists.linux.dev>; Wed, 24 Jun 2026 12:54:21 -0700 (PDT)
-ARC-Seal: i=1; a=rsa-sha256; t=1782330861; cv=none;
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="MJpJMEHE"
+Received: by mail-yx1-f44.google.com with SMTP id 956f58d0204a3-663b9826fecso1403169d50.2
+        for <sashiko-reviews@lists.linux.dev>; Wed, 24 Jun 2026 13:22:21 -0700 (PDT)
+ARC-Seal: i=1; a=rsa-sha256; t=1782332540; cv=none;
         d=google.com; s=arc-20240605;
-        b=aGfPCLIwfAxKlDW28vXxL9seiWKZUUB0i6AnjQLM28q5DoThxiw+AqfYPI+/Fjr/Co
-         ny4By3TEtkbLlnKaHuLN6HLBabPzXwMUJ2VdOp7JKdrx3w8//5E6ajUHEYEfAPIcYKEP
-         Gfo5nsrERs9ShWnrq0e4jXpITXoHu3pNUIHNyXvjY67BYWTnO80jXyWNZF+MEeoK0zlR
-         zinQJZP3lwXaT3n2YfywR56L6eD/HIiqp4NUA3PIF2tDFAqt3Kxsc1Psf1Q8iaWakGUm
-         8P9u7AstHLffKl1BJA8TZmeHYmRkV5kISbOykF8VEyCnZb140rkGNtDRGEie6snXT1nd
-         cwTA==
+        b=DH57eAYRRbRLAvaDTx7qlfKnR3qYByIRcfLLkJVNB7SslgbIg2Q3ITu40mRIayGMSZ
+         weM3IbGXStM2pSCMBe3qSe/uKBxmJayQgCQkGrP03WIpyjRfy9qUDSwtSPiU+pW433yL
+         lm1k+Oj1RSrqBXpWRJtjTe6zo0YqltCUhQQ4AubnlgAYBYv7n1R2efqPT9uPrdbkuOfP
+         o8dfiF1TVvvtm7ZkdZ5yu7XDeacWkAHuGj7jCNEsvVVO7gPJpAjmvzU0UFBzv/Xn/8Pm
+         UwqM6nX262Gi8jJzzW16Ym/WT2xFFgBdCKN1+qHGySqOj2KjUgsvbEtMFUfPcWr+MCYa
+         V3gQ==
 ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com; s=arc-20240605;
         h=content-transfer-encoding:cc:to:subject:message-id:date:from
          :in-reply-to:references:mime-version:dkim-signature;
-        bh=9zi8vt2Jkqw/BXMyJ0QyA2n/KwDWooYawhwWLuXdEns=;
+        bh=fNe75pW3ZXrVsmALyOE2GE0eISHbsPXr9AeMBKq40Eo=;
         fh=uA360uvxR9S0K/Y4Lovo7aIaGlBwzVBnnb2BKWupr/4=;
-        b=g8ueh3+rtfXRYITAt0C7gp+lHc2v8WNbZrtPq1xF2kgSzHgZAKrKCMHEVZGqOKoc/g
-         LBIaFeTCGfy6iKE10tnllA4nzLLcXZsexqUvTYxgg80LfkjeCDNFKOF7uas8lW/AE4Zl
-         3dQ5PDEcDBh15gbgNoHpYz0TQlcZS0ggmojk7KLu+vyGMOtYsCVeCUeQIU9z8FD6SFzF
-         iu14AEC3lfEOeM8ZPBBEherOe5nkPUEg6oGwgTbC1pmGP8wX+oyRlccL1kQj6SEWhPzw
-         mWveGoR++maeBy4KUCcTXV8mpME88OiBk+aZ7fsc84mFfH2M1cLW2eb/09UxEF9dl3vP
-         oQ+w==;
+        b=V9OD2NqKcXqQ9cWyovxSspzwbS5xwFYVVGgA3XnQA9Le5LxoTNFEw+jgNl5hlpSYnC
+         KxuQoGFq06YixYytdc7JlHNnVGgabKCoKKzf9i0yZS6QxJqY4OBzrT7i5VA6dY5xUBRu
+         6mu6yoH00kzZ/fiRB5CIJUFqjbkgSNSW3YMgN4xeuvbnIZJHVqcuH3qNOUc1C22WQFfE
+         W0M/5HDQ5q4ezXXymwXEVVgsu1bPIiOM1G+ee/sVcFHXQ/KvvS8xs5f84rotVt3UIsUR
+         qY5yPExxs463xRNUN9LSkA7PlTeKjT6I0koZO95db3Z+X+klpz1iIzFwIMyvni7PZbCY
+         9YUA==;
         darn=lists.linux.dev
 ARC-Authentication-Results: i=1; mx.google.com; arc=none
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20251104; t=1782330861; x=1782935661; darn=lists.linux.dev;
+        d=gmail.com; s=20251104; t=1782332540; x=1782937340; darn=lists.linux.dev;
         h=content-transfer-encoding:cc:to:subject:message-id:date:from
          :in-reply-to:references:mime-version:from:to:cc:subject:date
          :message-id:reply-to;
-        bh=9zi8vt2Jkqw/BXMyJ0QyA2n/KwDWooYawhwWLuXdEns=;
-        b=oltChB0G6SCzA2sAhsj1IY7JgQaJxpBeBM1eO4XrWHjV1YrDnSyPvVaUGVitN8Z4tS
-         zLeBFHSJ7ochC3UsKL6OgX73lecyyciH8FAPK1R3/rwg6FHhiqUQwgIytx5jfbMEnRmF
-         IV/lZVxgB1bj0r9i5BCCu+YURGMd+HOP7uDbiM2iK0g8wWh3CkpptbDFBgEZVn807rGM
-         QFdafi1vjQpEaLRTYLf+B6hvKAjDvVV/tcU856+R15R0qyM2q1in/JRmyo0eMd8bkDkK
-         ga5FunFX7h6Jy3bY+L8c/zHKrvU6yorVSqFlMcDaRcJCrfxE8Z0+paSAEtsU7hzxTGMH
-         Deiw==
+        bh=fNe75pW3ZXrVsmALyOE2GE0eISHbsPXr9AeMBKq40Eo=;
+        b=MJpJMEHEFAfevxM4VokY9ru+24Wd7JUpxfJ4K/d87uYds7zB+0d5AjixsG6u0c0XTV
+         dz56U8nVR/VFAwGO/dcopPnSmyLoBlUpi2PYMJZbYLZ2FcFrTqJGJ9ELlq0nog2eCO01
+         1TiR6wgow6xq30UaIle2atrBQ8NTfXOcBpmuwksIFC0ed5PVTXVeliXQFBqAQesaTNFD
+         tpni/VSToZ7pe6ocZaUIIwbLpuMP8NEZi485nGFxU27yROcOuNowkM0/T4dOEoLP22of
+         pUtCkAkai1esUGe39dvpRtkKWEA46km6TcqVHJEaVcI5fJpjCWZVovM/srhz3MOYdhw3
+         a/5Q==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20251104; t=1782330861; x=1782935661;
+        d=1e100.net; s=20251104; t=1782332540; x=1782937340;
         h=content-transfer-encoding:cc:to:subject:message-id:date:from
          :in-reply-to:references:mime-version:x-gm-gg:x-gm-message-state:from
          :to:cc:subject:date:message-id:reply-to;
-        bh=9zi8vt2Jkqw/BXMyJ0QyA2n/KwDWooYawhwWLuXdEns=;
-        b=En/SHWdEKhR3sfLppvt35haPdKvTZGmAsD/GsfZxizGOodR4DHW2wB9jEKIKV6GG1V
-         uqDZ8WIANJVOxgbzZM2oU2Jo7NC5+oyShjS6oxQ17t1jUTZKHM/WI1RISCYkSInNHyBW
-         JBJQp8PkLxErG+DOCYvl653l7Eyq+/xEVstvh2UsoQpGyJFfK0wVqD6KdV8W0fybZVVr
-         Gjx7BHg9v2Iq0FVGMiOtNTWmRtd+ydxXfcMx17dxlk59pegyCl4aI/y1yZQI4RSGtdKG
-         J+fenmD62p8nXnEdZ0IactvogxRmlkA1drjJjnJvxo5JtZFx+bpF7DcTraSf4hWkBGae
-         CaHQ==
-X-Gm-Message-State: AOJu0YzbT046cCc46Wo9mdE8S42uJjiWyaTVK30l/wXi4724f9yKCq/z
-	Q3wCUYNWmPL3U2bWdLM7PENLVraHj3VZh8ZQl/fatIKz6w6NNGOAwdFfy8s7tQgfzjlSV0Kt5kJ
-	br4mBTGO81uwRtzgH4E5JwSSNBanzPC4Lx0iG
-X-Gm-Gg: AfdE7ckVEOs3ws5MkKA+ZroW2ZOiUXDJMGIY5d/9uOmLtWlHvtcCDbHcV6Un23lv168
-	9Gkr7Ab/TwbZQlU7Gl/z/FkTb/0P+8YRCMLV9CQ3U8YEx19hFGSzyuLxoqFoOkI3cPN/iF+JwaU
-	4pQlzIyk39h8fBQps7FnwV2veVnEufvUTyZs39l88lVkiV3falBbg6sac27/1ymqApOhxf0i1wk
-	7LZZbiiyGU8HKcF43hu6kjyuAw3ZG7/1+jXn90kxlDhWxKVF1Gu8NCGYV/qCn1CgDK/ydcL
-X-Received: by 2002:a05:690e:169e:b0:660:5b90:b426 with SMTP id
- 956f58d0204a3-6636e53e726mr4172564d50.46.1782330860995; Wed, 24 Jun 2026
- 12:54:20 -0700 (PDT)
+        bh=fNe75pW3ZXrVsmALyOE2GE0eISHbsPXr9AeMBKq40Eo=;
+        b=BpDVzYzaKWZskjYZNhxYSosFCTEtpALUcIa9KcB63bx8P2RwReWzqNJL4x6oIRICtR
+         /B0N36DknZDlIJB4tUJP6hpj3ireNMqzlZrPMBpW7hutX/VGFGVMxMlMSCnYHLw4mz+5
+         ghsCLrTpMCeiLZoVomRlKDU2ieMNrLvoh/JbdmzOKqFsOLmtwOFVC76U4IpukVsGggcl
+         em/TfowNQUSEs+rdaP7vL1TagBFQS0jUPpJa/AFeXEM8U6DfKRTe+FP3VbqebZAp1OBv
+         UtFLCaaLD3Z9IlYXa6HBmgD/ziVxRVfa4UYhve/SZzyHbF07B7q7kXHGxJI2B76PwbXN
+         vpWw==
+X-Gm-Message-State: AOJu0YwLGfhSuljOeVRdinp3Pyaj4EVdLfb4RofYdozGw2cGLsIcaSby
+	s8XykLOGMwK0lKPDogsDHIxglsmrsCEDyLPlp8oFBWXeHT5iEg4GoWlgNIr1czZ7BopD3Zn+UG1
+	1aex21q51ZxAcBXC6IEgXaT4OV0wHu8YjgA==
+X-Gm-Gg: AfdE7cn22Hgm3C9sDGv1mmCw8MS8o06sqsQgqBpfyFg26JqHRtsGVLNTgp09s9szkxr
+	MgwnfLtKC5lnRUeC6rJI+jQsKzsnHCPHQLouynZmWhpR7uOL35dUCJmI0EOPB0JGSMopllXiaUw
+	H3RaD4OKvI5kghoE7+T4pno5ZATkV2AvQ9WiW5ag84DKL+pXmi7Fj96xuN/zWt7SQw8s9nRhPTs
+	hlyv7QBNoJS9GPdtM9YDpbecGrgnidGG4AIUkHcv5a2yyOUlozZ3VCRgvkRJchUUm0Si5piPTzm
+	6T0IXw8=
+X-Received: by 2002:a05:690e:1382:b0:65e:1d95:29d5 with SMTP id
+ 956f58d0204a3-66312f6d069mr21718468d50.41.1782332540348; Wed, 24 Jun 2026
+ 13:22:20 -0700 (PDT)
 Precedence: bulk
 X-Mailing-List: sashiko-reviews@lists.linux.dev
 List-Id: <sashiko-reviews.lists.linux.dev>
 List-Subscribe: <mailto:sashiko-reviews+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:sashiko-reviews+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-References: <20260623175006.3136053-1-ameryhung@gmail.com> <20260623175006.3136053-14-ameryhung@gmail.com>
- <20260623235342.01B1D1F000E9@smtp.kernel.org>
-In-Reply-To: <20260623235342.01B1D1F000E9@smtp.kernel.org>
+References: <20260623175006.3136053-1-ameryhung@gmail.com> <20260623175006.3136053-15-ameryhung@gmail.com>
+ <20260624000312.AD6581F000E9@smtp.kernel.org>
+In-Reply-To: <20260624000312.AD6581F000E9@smtp.kernel.org>
 From: Amery Hung <ameryhung@gmail.com>
-Date: Wed, 24 Jun 2026 12:54:09 -0700
-X-Gm-Features: AVVi8CfmwNMUdiauR6BDPeoAXHl3owOZ2zx-8waBBUKlemLLZK7trk5sd6GrhxQ
-Message-ID: <CAMB2axMG5W+48gmPHZ=vgg_LT7YwostYT9NboV=J77XBCEOscQ@mail.gmail.com>
-Subject: Re: [PATCH bpf-next v2 13/15] libbpf: Support attaching struct_ops to
- a cgroup
+Date: Wed, 24 Jun 2026 13:22:09 -0700
+X-Gm-Features: AVVi8CeluNs5g7tmC-ra0iSyMfqPCKtbCKXij75pC2NX9hfHTma3PP7t1VOVK6o
+Message-ID: <CAMB2axPJ+iQ4kr4RkQtGYbzUe8sfVaVc3vjXj6_Gv=1NNhEP4Q@mail.gmail.com>
+Subject: Re: [PATCH bpf-next v2 14/15] selftests/bpf: Test attaching
+ struct_ops to a cgroup
 To: sashiko-reviews@lists.linux.dev
 Cc: bpf@vger.kernel.org
 Content-Type: text/plain; charset="UTF-8"
 Content-Transfer-Encoding: quoted-printable
 
-On Tue, Jun 23, 2026 at 4:53=E2=80=AFPM <sashiko-bot@kernel.org> wrote:
+On Tue, Jun 23, 2026 at 5:03=E2=80=AFPM <sashiko-bot@kernel.org> wrote:
 >
 > Thank you for your contribution! Sashiko AI review found 1 potential issu=
 e(s) to consider:
-> - [High] bpf_map__attach_cgroup_opts() does not verify that the map has B=
-PF_F_LINK set before calling bpf_map_update_elem(), leading to unintended g=
-lobal registration of the struct_ops map.
+> - [Medium] Test state pollution in the `inherit` subtest bypasses the int=
+ended `cgroup_bpf_inherit()` testing path because the child cgroup persists=
+ from the previous `hierarchy` subtest.
 > --
 >
-> commit 4549a23db01bbdf38f2f884251281fc0a75a8c97
+> commit 9dd80df6f86c72623dac7d2f203da4036e4e8827
 > Author: Martin KaFai Lau <martin.lau@kernel.org>
-> Subject: Add bpf_map__attach_cgroup_opts() to attach a struct_ops map to =
-a cgroup
+> Subject: selftests/bpf: Test bpf_tcp_ops cgroup generic link
 >
-> This commit introduces bpf_map__attach_cgroup_opts() to allow attaching a
-> struct_ops map to a cgroup via a BPF link. It also extends
-> bpf_prog_query_opts with a type_id field to select the struct_ops type
-> during a BPF_STRUCT_OPS query.
+> This commit adds selftests for attaching bpf_tcp_ops struct_ops to cgroup=
+s via
+> the generic cgroup link infrastructure. The tests validate various behavi=
+ors
+> including execution order, query interfaces, updates, and inheritance.
 >
-> > diff --git a/tools/lib/bpf/libbpf.c b/tools/lib/bpf/libbpf.c
-> > index 1368752aa13c..17f8466e33fa 100644
-> > --- a/tools/lib/bpf/libbpf.c
-> > +++ b/tools/lib/bpf/libbpf.c
+> > diff --git a/tools/testing/selftests/bpf/prog_tests/bpf_tcp_ops.c b/too=
+ls/testing/selftests/bpf/prog_tests/bpf_tcp_ops.c
+> > new file mode 100644
+> > index 000000000000..4d087bdc4613
+> > --- /dev/null
+> > +++ b/tools/testing/selftests/bpf/prog_tests/bpf_tcp_ops.c
+>
 > [ ... ]
-> > @@ -14104,6 +14104,65 @@ struct bpf_link *bpf_map__attach_struct_ops(co=
-nst struct bpf_map *map)
-> >       return &link->link;
-> >  }
-> >
-> > +struct bpf_link *bpf_map__attach_cgroup_opts(const struct bpf_map *map=
-, int cgroup_fd,
-> > +                                          const struct bpf_cgroup_opts=
- *opts)
+>
+> > +static void run_hierarchy_subtest(void)
 > > +{
-> [ ... ]
-> > +     link =3D calloc(1, sizeof(*link));
-> > +     if (!link)
-> > +             return libbpf_err_ptr(-ENOMEM);
+> > +     struct bpf_tcp_ops *skel =3D NULL;
+> > +     struct netns_obj *ns =3D NULL;
+> > +     int parent_fd, child_fd =3D -1;
 > > +
-> > +     err =3D bpf_map_update_elem(map->fd, &zero, map->st_ops->kern_vda=
-ta, 0);
->
-> [Severity: High]
-> Does this function need to verify that the map has the BPF_F_LINK flag
-> set before calling bpf_map_update_elem()?
->
-> If a user passes a struct_ops map without the BPF_F_LINK flag to
-> bpf_map__attach_cgroup_opts(), bpf_map_update_elem() will globally
-> register the struct_ops.
->
-> The subsequent bpf_link_create() call will then fail because
-> BPF_STRUCT_OPS links require BPF_F_LINK. This results in the struct_ops
-> remaining globally active on the system despite the API returning an erro=
-r.
->
-
-Agree. bpf_map__attach_cgroup_opts() does bpf_map_update_elem() before
-bpf_link_create(). For a map without BPF_F_LINK that update takes the
-non-link path and registers the struct_ops globally, which can't be
-undone once the subsequent bpf_link_create() fails. I'll add an
-explicit BPF_F_LINK check.
-
-> > +     if (err && err !=3D -EBUSY) {
-> > +             free(link);
-> > +             return libbpf_err_ptr(err);
-> > +     }
+> > +     parent_fd =3D test__join_cgroup(CGROUP_PATH);
+> > +     if (!ASSERT_GE(parent_fd, 0, "join_parent_cgroup"))
+> > +             return;
 > > +
-> > +     link->link.detach =3D bpf_link__detach_struct_ops;
+> > +     child_fd =3D create_and_get_cgroup(CGROUP_PATH "/child");
+> > +     if (!ASSERT_GE(child_fd, 0, "create_child_cgroup"))
+> > +             goto done;
 > > +
-> > +     fd =3D bpf_link_create(map->fd, cgroup_fd, BPF_STRUCT_OPS, &link_=
-create_opts);
-> > +     if (fd < 0) {
-> > +             free(link);
-> > +             return libbpf_err_ptr(fd);
-> > +     }
+> > +     if (!ASSERT_OK(join_cgroup(CGROUP_PATH "/child"), "join_child_cgr=
+oup"))
+> > +             goto done;
 > > +
-> > +     link->link.fd =3D fd;
-> > +     link->map_fd =3D map->fd;
+> > +     ns =3D netns_new(TEST_NETNS, true);
+> > +     if (!ASSERT_OK_PTR(ns, "netns_new"))
+> > +             goto done;
 > > +
-> > +     return &link->link;
+> > +     skel =3D bpf_tcp_ops__open_and_load();
+> > +     if (!ASSERT_OK_PTR(skel, "open_and_load"))
+> > +             goto done;
+> > +
+> > +     test_hierarchy(parent_fd, child_fd, skel);
+> > +
+> > +done:
+> > +     bpf_tcp_ops__destroy(skel);
+> > +     netns_free(ns);
+> > +     if (child_fd >=3D 0)
+> > +             close(child_fd);
+> > +     close(parent_fd);
 > > +}
+>
+> [Severity: Medium]
+> Does this code leak the child cgroup and pollute the state for the inheri=
+t
+> subtest?
+>
+> Because the child cgroup is not explicitly removed here (e.g., via
+> remove_cgroup()), the directory persists in the filesystem after the file
+> descriptor is closed.
+>
+> When test_inherit() runs immediately afterward, its call to
+> create_and_get_cgroup() will re-open this existing cgroup instead of crea=
+ting a
+> new one. This causes test_inherit() to silently bypass the intended
+> cgroup_bpf_inherit() testing path, and instead exercise the
+> cgroup_bpf_update_effective() path during the parent attachment.
+>
+> [ ... ]
+
+Ack. I will fix the missing cleanup: join the original cgroup and
+remove the child cgroup.
+
+>
+> > +static void test_inherit(int parent_fd, struct bpf_tcp_ops *skel)
+> > +{
+> > +     struct bpf_link *plink =3D NULL;
+> > +     int child_fd =3D -1;
+> > +
+> > +     plink =3D bpf_map__attach_cgroup_opts(skel->maps.tcp_ops1, parent=
+_fd, NULL);
+> > +     if (!ASSERT_OK_PTR(plink, "attach_parent"))
+> > +             goto done;
+> > +
+> > +     child_fd =3D create_and_get_cgroup(CGROUP_PATH "/child");
 >
 > --
 > Sashiko AI review =C2=B7 https://sashiko.dev/#/patchset/20260623175006.31=
-36053-1-ameryhung@gmail.com?part=3D13
+36053-1-ameryhung@gmail.com?part=3D14
