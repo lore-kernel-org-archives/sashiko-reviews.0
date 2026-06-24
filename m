@@ -1,80 +1,80 @@
-Received: from mail-pl1-f170.google.com (mail-pl1-f170.google.com [209.85.214.170])
+Received: from mail-pl1-f176.google.com (mail-pl1-f176.google.com [209.85.214.176])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D2A9B33BBBA
-	for <sashiko-reviews@lists.linux.dev>; Wed, 24 Jun 2026 17:01:55 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=pass smtp.client-ip=209.85.214.170
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4BF5633F5A9
+	for <sashiko-reviews@lists.linux.dev>; Wed, 24 Jun 2026 17:13:18 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=pass smtp.client-ip=209.85.214.176
 ARC-Seal:i=2; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1782320517; cv=pass; b=nlD3xjoK2+XAiZr2AXLKaH011v9bg5EP4jzR5Qrm69Qd1l8SqCNHBFLPyriVYPE7ITp2vCYC6eHP9NlCCgBncUGQR1cKEs+Jnnoovjc8hxN5puqB5Mi/8q3y7r5eBVG2ugh9HQBQFsipvKC9J/l8Dd3Iv7H8XYZjTgfATdBxLN0=
+	t=1782321199; cv=pass; b=UpbyJmxHUv53/QlKO4QY7Lge1B5JyI/QmwYS7Ndi653pmD31Ql7DtbzVvvQDeAicTd46y9cagJfRDMivcf+ynqQbMe7Jj8mhKRn+BvRdnuoJBCJtwRs8MllutDQHMhLQRyf9SdXNUt4G7eSTWox4K46+601wGgGGpCUeCmls+Jo=
 ARC-Message-Signature:i=2; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1782320517; c=relaxed/simple;
-	bh=IEnlcR40Ofp2M9bOp50jNBFJL7CwLeUtAjIhQ6M+58I=;
+	s=arc-20240116; t=1782321199; c=relaxed/simple;
+	bh=M+qWvplBCfNcYUYxb18e9U3vILZNPA0XupfsmVtyyio=;
 	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
-	 To:Cc:Content-Type; b=gHheKO4GYMbFRpEaYwml3xaYuEDBdz/8FJxr9q8BcPgSqn/6SoLDNgm9ZstEQsIoVzL9e+pjdt3Q9lwIzm6xY9OZxRgekUV3fDVBNRmaHzPwBNDY1EbXk2Kuv5BUR9vcQnfg2i13aHJOmfhLUP9Su/okmNoBo1EjEU8M2YQZc5M=
-ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=mptxPDSU; arc=pass smtp.client-ip=209.85.214.170
+	 To:Cc:Content-Type; b=LgsQ6LjrMjbYNnKHgmj0CBYvAqg8OVIo8r/hpiaSM9qIXpdssk8HcjWyKmnZWr6nV+s5/dV5D/pSkC0ozm0Cf/lErOr8EQ5xGWUkyCxA2aU75aDBwI4ddKEA5wxYfW/35enAvMUtPE1iMnkKm/cK5TDWVkzD7+G0i+0oTZugIbQ=
+ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=IiFGG4be; arc=pass smtp.client-ip=209.85.214.176
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="mptxPDSU"
-Received: by mail-pl1-f170.google.com with SMTP id d9443c01a7336-2c7f385883cso1804385ad.2
-        for <sashiko-reviews@lists.linux.dev>; Wed, 24 Jun 2026 10:01:55 -0700 (PDT)
-ARC-Seal: i=1; a=rsa-sha256; t=1782320515; cv=none;
-        d=google.com; s=arc-20240605;
-        b=DLlAZna5px/fEt1bF6d65tJYSHlb1chPkZrjfRFby6UbF0hDd/cirtDAkU08sJZWpm
-         XOmzr5Zbp54Et/OunS22l0gQWtEwq3YF+Cju3kiUnFpqjiTL+gAjKGKKqdswgDWI4Koj
-         ar/MOKJXOQWgtJiDzF0K4zomRjmWF182+jdlrDVIQ0FrrKGLzslEsxj0bm5lv2rmtSvM
-         z9K3ZZed6L8j5QYSVMOzOTtEcLpkurvbNsSl6geL2+OtmrlzyR7p+VHlJXRAdIYAN7lZ
-         TDBk4cm/n03AMWQCfCmt2FkKxdQhQZWO9J6a1wGDiLkD786PO3r1dkX4mZVFzwWhruO1
-         dKAQ==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com; s=arc-20240605;
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="IiFGG4be"
+Received: by mail-pl1-f176.google.com with SMTP id d9443c01a7336-2c6afcc99a5so420785ad.0
+        for <sashiko-reviews@lists.linux.dev>; Wed, 24 Jun 2026 10:13:18 -0700 (PDT)
+ARC-Seal: i=1; a=rsa-sha256; t=1782321197; cv=none;
+        d=google.com; s=arc-20260327;
+        b=mgfJoIIJLhA6QyrMTHz/2tcGoagXKB6KFvLHh8wYxUIPRZj0erSmDtavk2nCYMSk7t
+         8h7RDYJH3Q/QU5ZqB57OPiLcrQhpdxLfToAjIeRYu0wWLGvcmkRhlNix4g602Vyjd373
+         tHiErmE1rcKdhH49bIw5UsBNBCB5gcx0OQAgzGq7Vuyui2swQ+eNt6LGtAIT7yLx2UZD
+         k/ahlAvnqOCB0HRz23rcLlG89+AYDWMv9OHTuFOSdwmwJOTI1i+VhEdCXC9rs8G4zBxj
+         YGJlziiv2mnvhHNeJAbNDqaNhnpKygrAI2TSR/FwXMrx4tYddNC+zh5Oe+TTF1aNGx+g
+         UvkQ==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com; s=arc-20260327;
         h=content-transfer-encoding:cc:to:subject:message-id:date:from
          :in-reply-to:references:mime-version:dkim-signature;
-        bh=kaOi2FI8KJXRo8Ej4CH3FqXJaSTUFin19ugye02gcZc=;
-        fh=R7ITYP0dP+GTNq1raVt0oZn7mapsqsrv19YFdFDXlX0=;
-        b=LVwELfpBv3/clUtFPMx4O3hBcoTnx6ABrdvumNazoZbdERdoVDGlrbqwTpXj/rQHAH
-         ZW2iRfuhqzj+PZ5Z3gXVhjJloawFuNBoHaIkLn9EOaB/Iivcj6wDFuBe83PbZDpyWcgv
-         9Ou/ELiOpAAD5wKku8tS96KvG37NzdWKx+IMlMWNteoTdIglpOVEsPDwyAui5RLaPxqL
-         TzNlIKjmNuVnHOrOt21wMBGM7LOuc14Y8uFkiTIWSWHNs2JpWxGKQ2/dYusOOdcdqOxV
-         9HLBQqsKw3SA/zY8jjsH4kRRVVQhVkKHPeXVArJHzI9sD+jPaLGAhk/1SSr1Xjrjips1
-         l5GA==;
+        bh=gPujeRuuTxJJkg1/xr5Q6pxPlOf/lNNbV1Cb9sjSGUw=;
+        fh=mTP6TkWV1IhQRgyhsEpYqIpiXvhDlZKdHAfNRdOTDjk=;
+        b=WMHg31moq8zzW+qEmIu7y80QpTfsD6rInE0un3oJA+ko6PWin2XH25UPG4KAAu8gf5
+         74NnTFbGfs+50WTrO0KykXLWwtGRayHku7PhymHgN19DX/jLkvXuxdwe+F8XZhDNS/1g
+         Cdr/P9nSAHuOnFKC2y1E1sW1yS4o8YkpVBUEOhqjWMSQXE9+SBSkWmBmh8Mmc7xfTiA2
+         gEeZvEDMLs0j2SqrrqJ2MjZe8K1W5QxQNhGvuWrhImM8S60JFL969cba11IOVXveCjIm
+         0DJ7Tyi2YfWunWGO1dNt7VvDVSTcg4s8w4fCc6ElGmKE6n4JYtfu27yXwYGiMVAybP0Q
+         A5+w==;
         darn=lists.linux.dev
 ARC-Authentication-Results: i=1; mx.google.com; arc=none
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20251104; t=1782320515; x=1782925315; darn=lists.linux.dev;
+        d=gmail.com; s=20251104; t=1782321197; x=1782925997; darn=lists.linux.dev;
         h=content-transfer-encoding:cc:to:subject:message-id:date:from
          :in-reply-to:references:mime-version:from:to:cc:subject:date
          :message-id:reply-to;
-        bh=kaOi2FI8KJXRo8Ej4CH3FqXJaSTUFin19ugye02gcZc=;
-        b=mptxPDSUsdBYOdBAkJkAKYgbnggQ5y5xcY8+Br/e5ODLJ6TYg9AmoIBg/m1n8apLpk
-         umhFaPUH5XucglLzpxfCixvofwU5dS1u3pf3gcjpWr50ft0yhJFDB5up5MxztrlIethQ
-         W46eWcK7JX9V8fzCzuRESc1WnqCXeqF+RHlf3vmhuXczyaB3yzMtlCfqj3SLnFF9pPny
-         pv1a74K3qyXxpQba3/UhBkRf+sNf/p7rloKzUrdYszunvs+DflbRgLMa56a6D78EMv8T
-         lRvP7XhKGx3vrNDzuFguiACFvz96YGfv58QFtLlf4ZDhPRvvrWobiDqZuBxDTS3suC9j
-         aFFg==
+        bh=gPujeRuuTxJJkg1/xr5Q6pxPlOf/lNNbV1Cb9sjSGUw=;
+        b=IiFGG4beyYppayuhsZ0H4Vt4bGVhBp3HQBsymeTmNCih4st9uJX2gheL+yBKebx0LB
+         lUS82EQbf0l6xENvQ8mre01n1ljjYyzD2R/mOWnOyJqA7F/8uFOr0x69PzCqqZmGu3QQ
+         6YygR1ncVKNHxsQNu1h8l2N9UxJ4DJNmYyQ2hTZoviwyEUHzy9t2SoHANH7i248WPXAt
+         Q60lse8yBQ7ilOTVjTyl02jZkM5myA1Na18nodi4Ac4rfpEQXZIY4ZPOtnruygT60Yfx
+         dGtyKhx9c7Xi6pERSRZPdMEHKKsQMMltjE2xzDmf5VlWo6T63styAl7wtOZLkN0mQfW6
+         8Ibw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20251104; t=1782320515; x=1782925315;
+        d=1e100.net; s=20251104; t=1782321197; x=1782925997;
         h=content-transfer-encoding:cc:to:subject:message-id:date:from
          :in-reply-to:references:mime-version:x-gm-gg:x-gm-message-state:from
          :to:cc:subject:date:message-id:reply-to;
-        bh=kaOi2FI8KJXRo8Ej4CH3FqXJaSTUFin19ugye02gcZc=;
-        b=ffC9A/6aB48G9XaE1tEkv3xpCoLff2rWouaY9kBjaijBfaGZ3sc8k6XiE9c1odJoow
-         IWPXLsQOUXjN4U/YAhip2c0XXPsXFGkwyAjRdOPcpmJLueIe7smruj5OmDLb6VhtQ6u5
-         Pvzwp0QNdwU2arJAFjP0IsTlhLUFmQ63Gy0XvYwj+wQhYCo4jVYiylaxIi3luYH8tLDr
-         xPwGifs0+k8GwKRtRBnomhtoVpW4jmPKkGUMkp3vEAD01W0WJgx96o9KYu7QnxqOKgrZ
-         Z7WP/5HqmgE5HdVmADrFcie902sQMkfk+EaXTP7TS1g7b1q8wMWKShkN6MWbMz9utsdG
-         z8ag==
-X-Gm-Message-State: AOJu0YxqsojfOwt2dM5x2B/o0XmLRagmY+OYxh/9HtxBRag9P6a+34DP
-	YsqDCnf96ehIssFvePulv1Ls/mU6P654nwITLkNluqUMEwVH9SQereAIY9e418qo2kPwAVMmn+H
-	MoH/cQ5iNliBGQyKroLYW+DlXdkKSqR5z41Ixr5E40g==
-X-Gm-Gg: AfdE7cmCaOKztNPEKAwXwQgjOidObMlMtdR1T6hIvhHnt5BkHOQu3u6lpXjo6rGlHlG
-	xZiq5/ZvD024wLqFPsN+H4AHJzC3fdsnLGWr2qLCRQiQpMHzanGYivG9aD0Muk8OPZwLORUX7D0
-	A5KUvRCY6CkDaz385Nn7GmLR+03WCP2zkLsg5o4Lmt6VBjrVkzh3sIdrEtsHi+9SaxJBI14OSgL
-	pcr5il+uJ+Hzjj3ypvjChSDPk2B2cQ/PwZhboLV2JsjpBMgWs2RtDUqCVcw9i+aUEvjLY9B2r/G
-	q7ic+N8notJC5riwVg18UIDgZIEmKtn1JMbrMNslZZjgUou1xnYhq2417NemrcIVKWXNmBh6100
-	BRL1nVRDyjGaRG6ancMucX0Y=
-X-Received: by 2002:a17:902:ea08:b0:2ae:450c:951e with SMTP id
- d9443c01a7336-2c7e1538ea4mr43720445ad.17.1782320514821; Wed, 24 Jun 2026
- 10:01:54 -0700 (PDT)
+        bh=gPujeRuuTxJJkg1/xr5Q6pxPlOf/lNNbV1Cb9sjSGUw=;
+        b=cXi1Kx8JkGHoUPi2X7hhN8CD1ehfNv6JcUbjqA9r/o3xr39tqE9z4aU776lL2St1um
+         ScJVSRGeaOn0Xmecwx2/Db0yQQsGr3IqRujdpk0y7DLnaVCLHLl0Kej4hDdsPZMs32KC
+         lSi6KjTf7EkL9gAXMGSqTlGzXiaf/44G5iJ840H5FDzaakNZ9iC221VGi/6h6kCciqr4
+         nXTaxOrh/JLbKMwXdooJEtec8mY+RHz/f+osPtTQEgm7VnEmAnnuQRUFLNSh1C1jYNlP
+         9qia+NhC90G/IU4m1oqGJtZhULsar3okF2m4Mfvd+rgphCbB2NzCSXVuVSaMN6tB1A1g
+         swRQ==
+X-Gm-Message-State: AOJu0YzA5BIPMc6UBGJMsOl4A25CM2EXUHVGw7ZkA5VyZgUmRTJPMLOG
+	5irD2B3NkIvmGoj7p6yY09CJ346mZj9bXqzwYjbYOLem3C7+7F8+1nLffe+/N2CE9THr1RxSEu3
+	lVXpyctiwxJE5ZqsuAiRLPnNjkGpHtOxzYOhynjq55w==
+X-Gm-Gg: AfdE7clE+YdBpfKwj8bhCWq76TTWdoWWV6DT0NiOseV3EMszT/Tv543LljCXL1IeGw4
+	1sc5ABv6blAfBPuEWFK21hULwKNtQwYAjy6juZ/vRK2LTe3I6ZL2RUMXSHwmuRhQ8FyHYtKAk97
+	svscGVmSWQJXFsAnGi/qL2cvJzwsn1R5tDScxVZQabf0ltplqpFEIMwystP3NxBmASo2pLE9ghY
+	ozdx2qDHp5YS6afVBCLH63PA2DnvX7VdfqHlbN5SPIwCQErInNchbisoyOQeJbav3/vdY5tYeQ8
+	5iXSK3VjVWl5yLzaiZag/jZYxpBk3Ph31osZRVYY3OJXhoXFx6yVRy002mhr76wHLSR+C+QoDCy
+	eHtUsMq8r0tA+
+X-Received: by 2002:a17:903:8c5:b0:2bd:3c21:a053 with SMTP id
+ d9443c01a7336-2c7c3ff8e32mr74153345ad.24.1782321197437; Wed, 24 Jun 2026
+ 10:13:17 -0700 (PDT)
 Precedence: bulk
 X-Mailing-List: sashiko-reviews@lists.linux.dev
 List-Id: <sashiko-reviews.lists.linux.dev>
@@ -82,129 +82,168 @@ List-Subscribe: <mailto:sashiko-reviews+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:sashiko-reviews+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 References: <20260624155452.211646-1-nishidafmly@gmail.com>
- <20260624155452.211646-8-nishidafmly@gmail.com> <20260624160917.1508E1F000E9@smtp.kernel.org>
-In-Reply-To: <20260624160917.1508E1F000E9@smtp.kernel.org>
+ <20260624155452.211646-6-nishidafmly@gmail.com> <20260624161238.6813B1F000E9@smtp.kernel.org>
+In-Reply-To: <20260624161238.6813B1F000E9@smtp.kernel.org>
 From: Hiroshi Nishida <nishidafmly@gmail.com>
-Date: Wed, 24 Jun 2026 10:01:43 -0700
-X-Gm-Features: AVVi8CfIVKsbV7HRoSR2KmegZf5pZmJbYFAFDKc55a2x-PNcx3YNYozfm1ixLuw
-Message-ID: <CAE1ksKQnBogsm5nW7z0t9iZsb12xwVfTzzRGgpoBS8VxckS-1Q@mail.gmail.com>
-Subject: Re: [PATCH 7/8] md/raid5: raise MAX_STRIPE_BATCH from 8 to 32
+Date: Wed, 24 Jun 2026 10:13:06 -0700
+X-Gm-Features: AVVi8Cd-I-K9Emy_--RjqAi-F2e80vtRrtAAnC_s1NYaq--6GifSG0NkgPsXSuk
+Message-ID: <CAE1ksKQi2WibOMxR1wwceqJXw4CLd1FHvuAuKTbqMBWHnuf0Pg@mail.gmail.com>
+Subject: Re: [PATCH 5/8] md/raid5: submit a window of stripes during resync/recovery
 To: sashiko-reviews@lists.linux.dev
-Cc: yukuai@fygo.io, linux-raid@vger.kernel.org
+Cc: linux-raid@vger.kernel.org, yukuai@fygo.io
 Content-Type: text/plain; charset="UTF-8"
 Content-Transfer-Encoding: quoted-printable
 
- > [High] Raising MAX_STRIPE_BATCH to 32 while keeping the spawn threshold =
-at 8
- > lets the first worker grab all 32 stripes and starves the others.
+> [High] TOCTOU on still_degraded: the degraded check was moved before the
+> blocking stripe get + schedule_timeout, so a drive failing during the sle=
+ep
+> leaves a stale still_degraded that can wrongly clear the NEEDED bit.
 
-You're right.  In stock, MAX_STRIPE_BATCH does double duty -- it caps
-the greedy dequeue
-in handle_active_stripes() AND is the spawn divisor in
-raid5_wakeup_stripe_thread() --
-and keeping those equal is what balances the workers woken against the
-work each one takes.
-My patch grew the dequeue cap to 32 but left the spawn divisor at 8,
-so for ~32 pending stripes it wakes 4 workerswhile the first greedily
-takes all 32 and
-the rest find empty lists -- serializing the batch and adding
-pointless lock contention, exactly as you describe.
+Agreed -- this is a real regression I introduced.
+I hoisted the still_degraded computation so the window could reuse it,
+but that placed it before the blocking get and the
+schedule_timeout_uninterruptible(1),
+whereas stock computes it after.
+In v2 I'll move the still_degraded computation back below the blocking
+get of the first stripe (restoring stock's ordering).
+The remaining window stripes are fetched with R5_GAS_NOBLOCK and don't
+sleep, so they can reuse that
+value without reopening the race across a sleep.
 
-The lock-amortization benefit was never isolated, and re-coupling the two (=
-spawn
-divisor =3D batch) just trades it for coarser worker granularity, so
-I'll drop this
-patch from v2 rather than guess at the tuning.
+  > [High] The batch loop ignores md_bitmap_start_sync()'s return and
+force-syncs
+  > clean stripes in the window.
+
+Also correct.
+Stock makes the skip decision once at the top
+(!md_bitmap_start_sync(..., true) && sync_blocks >=3D ...),
+but the window loop doesn't, so a clean bitmap region the window
+crosses gets synced unnecessarily.
+In v2 I'll have the window honor the bitmap and stop at the boundary of the
+dirty region being resynced, rather than extending into already-in-sync str=
+ipes.
+
+Both are correctness details the per-stripe path got right and my
+batching dropped;
+I'll fold the fixes into v2 and re-test the bitmap resync path.
 
 Thanks,
 
-2026=E5=B9=B46=E6=9C=8824=E6=97=A5(=E6=B0=B4) 9:09 <sashiko-bot@kernel.org>=
+2026=E5=B9=B46=E6=9C=8824=E6=97=A5(=E6=B0=B4) 9:12 <sashiko-bot@kernel.org>=
 :
 >
-> Thank you for your contribution! Sashiko AI review found 1 potential issu=
+> Thank you for your contribution! Sashiko AI review found 2 potential issu=
 e(s) to consider:
-> - [High] Increasing MAX_STRIPE_BATCH to 32 without proportionally increas=
-ing STRIPE_BATCH_WORKERS serializes stripe processing and causes worker sta=
-rvation.
+> - [High] The batch loop ignores the return value of md_bitmap_start_sync(=
+), forcing clean stripes to be unnecessarily synchronized.
+> - [High] Time-of-check to time-of-use race on the array's degraded state,=
+ leading to silent data corruption via incorrect bitmap updates.
 > --
 >
-> commit b1a0a169dabd8b46b6b9ca40375034cf879934c6
+> commit 01d1e80ee6aa253c48c233e7fc218fbdac9522fa
 > Author: Hiroshi Nishida <nishidafmly@gmail.com>
 >
-> md/raid5: raise MAX_STRIPE_BATCH from 8 to 32
+> md/raid5: submit a window of stripes during resync/recovery
 >
-> This commit increases the maximum stripe batch size from 8 to 32 to
-> amortize device_lock acquisition over more stripes. It also introduces
-> STRIPE_BATCH_WORKERS to decouple the worker spawning threshold from the
-> batch size.
+> This commit alters raid5_sync_request() to dispatch up to 32 stripes per
+> call instead of one. It attempts to submit the remaining stripes in the
+> window with a non-blocking flag to avoid the per-stripe throttle sleep.
 >
-> > diff --git a/drivers/md/raid5.c b/drivers/md/raid5.c
-> > index c8787ab7b309c..ad6230415af33 100644
-> > --- a/drivers/md/raid5.c
-> > +++ b/drivers/md/raid5.c
+> diff --git a/drivers/md/raid5.c b/drivers/md/raid5.c
+> index 9cb4ed3bd85c5..8e9edaaca667b 100644
+> --- a/drivers/md/raid5.c
+> +++ b/drivers/md/raid5.c
+> @@ -6620,16 +6621,7 @@ static inline sector_t raid5_sync_request(...)
 > [ ... ]
-> > @@ -210,7 +210,7 @@ static void raid5_wakeup_stripe_thread(struct strip=
-e_head *sh)
-> >       /* at least one worker should run to avoid race */
-> >       queue_work_on(sh->cpu, raid5_wq, &group->workers[0].work);
+> > -     sh =3D raid5_get_active_stripe(conf, NULL, sector_nr,
+> > -                                  R5_GAS_NOBLOCK);
+> > -     if (sh =3D=3D NULL) {
+> > -             sh =3D raid5_get_active_stripe(conf, NULL, sector_nr, 0);
+> > -             /* make sure we don't swamp the stripe cache if someone e=
+lse
+> > -              * is trying to get access
+> > -              */
+> > -             schedule_timeout_uninterruptible(1);
+> > -     }
+> > -     /* Need to check if array will still be degraded after recovery/r=
+esync
+> > +     /* Check once whether array will still be degraded after recovery=
+/resync.
+> >        * Note in case of > 1 drive failures it's possible we're rebuild=
+ing
+> >        * one drive while leaving another faulty drive in array.
+> >        */
+> > @@ -6640,13 +6632,42 @@ static inline sector_t raid5_sync_request(...)
+> >                       still_degraded =3D true;
+> >       }
 > >
-> > -     thread_cnt =3D group->stripes_cnt / MAX_STRIPE_BATCH - 1;
-> > +     thread_cnt =3D group->stripes_cnt / STRIPE_BATCH_WORKERS - 1;
-> >       /* wakeup more workers */
-> >       for (i =3D 1; i < conf->worker_cnt_per_group && thread_cnt > 0; i=
-++) {
+> > +     /* First stripe: block if stripe cache is full, then throttle. */
+> > +     sh =3D raid5_get_active_stripe(conf, NULL, sector_nr, R5_GAS_NOBL=
+OCK);
+> > +     if (sh =3D=3D NULL) {
+> > +             sh =3D raid5_get_active_stripe(conf, NULL, sector_nr, 0);
+> > +             /* make sure we don't swamp the stripe cache if someone e=
+lse
+> > +              * is trying to get access
+> > +              */
+> > +             schedule_timeout_uninterruptible(1);
+> > +     }
 >
 > [Severity: High]
-> Will increasing the stripe batch size while keeping the worker spawn thre=
-shold
-> small serialize stripe processing and starve the worker threads?
+> Does moving the degraded check before the stripe allocation introduce a
+> time-of-check to time-of-use race?
 >
-> With this change, raid5_wakeup_stripe_thread() still wakes up an addition=
-al
-> worker for every 8 pending stripes (e.g., waking 4 threads for 32 stripes=
-).
+> If a drive fails during the potential sleep in raid5_get_active_stripe() =
+or
+> schedule_timeout_uninterruptible(), the stale still_degraded value is use=
+d
+> below to update the bitmap. This could incorrectly clear the NEEDED bit,
+> potentially leaving parity inconsistent if the system crashes before the =
+sync
+> completes.
 >
-> However, the first awakened worker executing handle_active_stripes() will
-> greedily dequeue up to MAX_STRIPE_BATCH (32) stripes under the lock:
+> >       md_bitmap_start_sync(mddev, sector_nr, &sync_blocks, still_degrad=
+ed);
+> >       set_bit(STRIPE_SYNC_REQUESTED, &sh->state);
+> >       set_bit(STRIPE_HANDLE, &sh->state);
 >
-> drivers/md/raid5.c:handle_active_stripes() {
->     ...
->     while (batch_size < MAX_STRIPE_BATCH &&
->            (sh =3D __get_priority_stripe(conf, group)) !=3D NULL)
->         batch[batch_size++] =3D sh;
->     ...
-> }
->
-> It appears the first thread will steal all 32 pending stripes and process
-> them sequentially, while the other awakened threads acquire the lock,
-> find the lists empty, and exit without doing any work.
->
-> Could this cause a performance regression by serializing CPU-intensive pa=
-rity
-> operations onto a single thread, while also creating unnecessary lock
-> contention from the starved threads?
->
-> > diff --git a/drivers/md/raid5.h b/drivers/md/raid5.h
-> > index 7aeba1fc7f09e..1f37dabd727be 100644
-> > --- a/drivers/md/raid5.h
-> > +++ b/drivers/md/raid5.h
 > [ ... ]
-> > @@ -496,7 +496,8 @@ struct disk_info {
-> >  #define BYPASS_THRESHOLD     1
-> >  #define NR_HASH                      (PAGE_SIZE / sizeof(struct hlist_=
-head))
-> >  #define HASH_MASK            (NR_HASH - 1)
-> > -#define MAX_STRIPE_BATCH     8
-> > +#define MAX_STRIPE_BATCH     32      /* stripes per handle_active_stri=
-pes pass */
-> > +#define STRIPE_BATCH_WORKERS 8       /* stripes-per-worker threshold f=
-or spawning */
-> >  #define RAID5_SYNC_WINDOW    32      /* stripes to pre-submit per sync=
-_request call */
+>
+> > +     win_sector =3D sector_nr + RAID5_STRIPE_SECTORS(conf);
+> > +     for (submitted =3D 1;
+> > +          submitted < RAID5_SYNC_WINDOW && win_sector < max_sector &&
+> > +          win_sector < mddev->resync_max;
+> > +          submitted++, win_sector +=3D RAID5_STRIPE_SECTORS(conf)) {
+> > +             sh =3D raid5_get_active_stripe(conf, NULL, win_sector,
+> > +                                          R5_GAS_NOBLOCK);
+> > +             if (!sh)
+> > +                     break;
+> > +             md_bitmap_start_sync(mddev, win_sector, &sync_blocks,
+> > +                                  still_degraded);
+> > +             set_bit(STRIPE_SYNC_REQUESTED, &sh->state);
+> > +             set_bit(STRIPE_HANDLE, &sh->state);
+>
+> [Severity: High]
+> Does this batch loop unnecessarily synchronize clean stripes?
+>
+> The boolean return value of md_bitmap_start_sync() is ignored here. If th=
+e
+> first stripe needs sync but subsequent stripes in the window are clean, t=
+his
+> loop unconditionally queues every stripe for synchronization regardless o=
+f
+> its clean/dirty state, forcing read-rebuild-write cycles on clean stripes=
+.
+>
+> > +             raid5_release_stripe(sh);
+> > +     }
+> > +
+> > +     return submitted * RAID5_STRIPE_SECTORS(conf);
+> >  }
 >
 > --
 > Sashiko AI review =C2=B7 https://sashiko.dev/#/patchset/20260624155452.21=
-1646-1-nishidafmly@gmail.com?part=3D7
+1646-1-nishidafmly@gmail.com?part=3D5
 
 
 
