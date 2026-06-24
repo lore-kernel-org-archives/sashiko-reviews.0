@@ -1,115 +1,178 @@
-Received: from va-2-36.ptr.blmpb.com (va-2-36.ptr.blmpb.com [209.127.231.36])
+Received: from mail-yw1-f171.google.com (mail-yw1-f171.google.com [209.85.128.171])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4A7F8388378
-	for <sashiko-reviews@lists.linux.dev>; Wed, 24 Jun 2026 06:32:45 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.127.231.36
-ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1782282767; cv=none; b=OCPwm7n9a0gXcs3zfaOh5ylbF7mdyWXHCnZS1eqFIE1JmECCJkXfWuqogsINMBc2NWUqi4IdlJ98US9ZEHrQ/GHLJI0x6AYnix3OZ0bh/JdGkl1Kgi/feGhoomRrZoHxa3VMoEkZmnt6q2XkC2SukBILd2PQ/h5tNUTON+0Y55M=
-ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1782282767; c=relaxed/simple;
-	bh=QNCFY19qmD7v8/OACFuQ9+AMmsX1HzrtDbFmy8IMb7w=;
-	h=From:Subject:To:References:Message-Id:Mime-Version:Content-Type:
-	 Date:In-Reply-To:Cc; b=aIW4S5OBRFVYSEgSRUTBBqrnL/LxwVS3mguDT2/cZZto6ZnfPXdiRk74XCorHEdjjrAXzEaVolAZApJyqPIT+uKH/hVbqrBCOQSQdbOez3mWHcs32GCvVojg+HiNkO1l5AdW0HdN6pD5lwwvrXmHcGopLj3gl5q/ktVxt2yelNg=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=fnnas.com; spf=pass smtp.mailfrom=fnnas.com; dkim=pass (2048-bit key) header.d=fnnas-com.20200927.dkim.feishu.cn header.i=@fnnas-com.20200927.dkim.feishu.cn header.b=AlzVWoAZ; arc=none smtp.client-ip=209.127.231.36
-Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=fnnas.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=fnnas.com
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A908522538F
+	for <sashiko-reviews@lists.linux.dev>; Wed, 24 Jun 2026 07:42:12 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=pass smtp.client-ip=209.85.128.171
+ARC-Seal:i=2; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
+	t=1782286934; cv=pass; b=DMhhapPvcMGGhR11QaS5Pr7ZtfqM0TvWeMmiNFnwLcHLFtZIljnR9ZdpW7vAg1dfXHnlsvGgnjjvObyoXv92RoYI+ftv+qMk5pBCmmEplzHm1KLIoKWslINjoS0lY/JILhJ9jMMYndJDTW9mOsmuBYBM/LwohwWy8LEy65FuLpI=
+ARC-Message-Signature:i=2; a=rsa-sha256; d=subspace.kernel.org;
+	s=arc-20240116; t=1782286934; c=relaxed/simple;
+	bh=QR4Wy0tL8cCx/yg2BbocD46eH1jIHB4yYuylS36en84=;
+	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
+	 To:Cc:Content-Type; b=Vn7XM/z3M3DQeumlcs/686EnasFguNQKQ9XKmGLsyBRDsoCBFA/Yu17irrV5afP1UnhSu6tsM+5uOFTk75VlQfZaXUQJqXYq741UkyeKPmP4jpZWs+QfNbbck44x0Wz9hzg7OkeZVBEl0wXAJzczHUdqsoSHhgqfHDBEtcCYfUQ=
+ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=AKtrPyTV; arc=pass smtp.client-ip=209.85.128.171
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=fnnas-com.20200927.dkim.feishu.cn header.i=@fnnas-com.20200927.dkim.feishu.cn header.b="AlzVWoAZ"
-DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed;
- s=s1; d=fnnas-com.20200927.dkim.feishu.cn; t=1782282759;
-  h=from:subject:mime-version:from:date:message-id:subject:to:cc:
- reply-to:content-type:mime-version:in-reply-to:message-id;
- bh=Z38jOtd0UchS/P9yGsksjC9qEN9lSSS3lQ6W1XCzxjU=;
- b=AlzVWoAZFvyedmL6ZOpeLgVS1MUPCpxr5x1q7KH72d/zstjpIbc002CLPLN5qpCLLp5RTo
- JpYOWO+2NQHY4oSVcxnLGrUpkPKcUFFSHhlinHzwWHQmwf0mmOx2NrZ7bAfo1a7wbG7MZ6
- qro0V0cUazoBabmiTOIfdS9Z12qu9CvJs+Z/WDittcHGauN5Cq04SwvTuqpM1aCVK+RXoP
- 4N+mGlCRmr8/+39+mtGz0F5HKSQwZeEaPac7F7IYq6rpjYyu8ZXyoDClOm6dvSZRBhkouY
- hxDzb/qBdqsnUuBJjuOCz4Wl1/UDpg4MhKbtkh/sZ7v8N6L6kkW3pEb+bNRYsA==
-From: "Chen Cheng" <chencheng@fnnas.com>
-Subject: Re: [PATCH v6 2/3] md/raid10: resize r10bio_pool for reshape
-To: <sashiko-reviews@lists.linux.dev>
-References: <20260623123840.2521340-1-chencheng@fnnas.com> <20260623123840.2521340-3-chencheng@fnnas.com> <20260623130100.477FE1F000E9@smtp.kernel.org>
-X-Original-From: Chen Cheng <chencheng@fnnas.com>
-Message-Id: <05b24fee-b9d9-45b5-9453-abd3d0b6b3d8@fnnas.com>
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="AKtrPyTV"
+Received: by mail-yw1-f171.google.com with SMTP id 00721157ae682-7fd5346b5e2so16694347b3.0
+        for <sashiko-reviews@lists.linux.dev>; Wed, 24 Jun 2026 00:42:12 -0700 (PDT)
+ARC-Seal: i=1; a=rsa-sha256; t=1782286931; cv=none;
+        d=google.com; s=arc-20260327;
+        b=l+WJNEWORgrdJNh1ez7mPpQJVA4RfNcE7z78BauEGUY0SUEOhR07ML4yVCEqOPiCFx
+         tFJqiQzcjMPjl2MBpqkWiEhO0feWAOIijpGX56PXkDVpUrJfgIIPhqNlqlcC5z9WM0vX
+         vYkSK9x7FSAjvn6UnVMQfAyDo68PDmL879hq7kFJGz/IqAb+yQ5MYR4LYdKTlnWG6qXO
+         QkL0GySoFv9DeFUNGXdXrRkpsxhUSK7Dvfqku9iAhYS9ajTjrU/ILoerwvshA4XF4IK7
+         cqVd/tC5tCnqHRAOHa5KAD1co1CEL3F2scTDrC7Qp9jlQ9c5d7mm4QJo3kx9HMJJqfj/
+         0JJQ==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com; s=arc-20260327;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:dkim-signature;
+        bh=0+yTRolSITyDjcXP+5W2UVcOpjVAsvKMU8I2YD9YKI0=;
+        fh=uA360uvxR9S0K/Y4Lovo7aIaGlBwzVBnnb2BKWupr/4=;
+        b=beca9yltkA8NmGxdgQzuq1p70jC9EjhC3sLjHDPtoclwYnoyBoYCoPT8GzxsyIo8HT
+         5WbTM8b96S8Z5bfzdiWsfyHgUDF54g9M3SQf8TbaiBB8wb+fX6WGMsq1Yg/7dPIfnQiH
+         blcMg0BEtRZi/qlnglRzm4o3HTna+8AjzNycbGZnAIi5yREJ6rMo7oLRbc95MTXmBF9b
+         SCDaMx10/soKdQXF++WepMWTgFATYQnhXbDTQxB63WXX6XvIr6LD5b0eLKNKc26BSGjw
+         JgfwPwbwcmR3rBtj3nQ7LtvoI0NuXXSgPTGlWvWhrRcumh0+yZyz9CytSlSqh4SSpJED
+         Co5w==;
+        darn=lists.linux.dev
+ARC-Authentication-Results: i=1; mx.google.com; arc=none
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20251104; t=1782286931; x=1782891731; darn=lists.linux.dev;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=0+yTRolSITyDjcXP+5W2UVcOpjVAsvKMU8I2YD9YKI0=;
+        b=AKtrPyTVHuDfSEq2qE4a9OBLwDrT63v1pB75IIWPh7o9cvfDXTvaCxpej2TVSwZPFW
+         LA+zjqLxKOS+2duwFd7nq4FpmqHbzt7pvooEctnGblvlzztFWxwTEtXGN9cjAbOgNVKc
+         9andDnun2HuShymr8p0bLv+Q1toUcMlvUr20KwwCsDwhA794rQBWU/qFzT59I9hhOlcG
+         R4pzjup1eRGaHpgQRhmElBD7pPCGLKNivFOVi9bznWrXneRP3jj8yd2E2dSlY69+K1KN
+         cs96JKdZUVsCj4Rq8Iqc73bko9Ys1A1Gust1+oElqMZQoYy86QDC0CQSRxrVcASNky3P
+         EExA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20251104; t=1782286931; x=1782891731;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:x-gm-gg:x-gm-message-state:from
+         :to:cc:subject:date:message-id:reply-to;
+        bh=0+yTRolSITyDjcXP+5W2UVcOpjVAsvKMU8I2YD9YKI0=;
+        b=ojWhMxmKwyHe+nAtoYTs0/jq1wXxkLLzW1lUnjI11xhxUMTI4O+mRsGStR8yn3cVqk
+         ixzkpfKAUlicJbFBC7+IR/2RshaKY0216rixgHcgZ6vm/qDO9FbKlgtaYX1dKu60Mwmt
+         qjVQCMIfijXUTiawRnYtggFl/b/+mrTIeOm44RVjK6E/e345+4kdOCD1FNQ50woZQrlw
+         6jpNNO8k7tuGNIjJ/s07vrkRAsVOHtGYuauDZLnO5khtv0N+l70x3blexmpCzZsq5Gn8
+         PiXPjVNn8XxOkcrFNnJYJQ7uktxRXH1oETpGvxuAvsRCcTBYRRxF24pKoCz3wD0q28/I
+         RuQg==
+X-Gm-Message-State: AOJu0Yx85ivjYdk1Xn8v2UUNtM9hpEizmRJVmpNQnnmR+RCAcVrJp+64
+	1cQm71eNG4ZIIeiV2yOSCFGAi6jCiWCU+4hb1yb1jMsgLdc6aXjOYxPnCTyAbOMx+cexGiAZ+p7
+	n67T6zhFjO+DQkGvmwTb9Tu4rYH44g7KJ6KWji4wAQx7T
+X-Gm-Gg: AfdE7cnXyjMJIpdFegw72u0MbDHGWnlHDfkm+5mPTr2Oah2zoq0by+LiOKmlW7u1L4r
+	wU1zmj0nvWxp4vMtqxMHhznUGEPznsWhOBLdx4UZkge/kfkeE0zvxvblrbBGvF1U/Pw35GYXhK2
+	E2hy/g0pCvL5V2E3nHtnMthScxbYRpQZJR3x2pyons283wEHx6kCwimEUR251D0Kih6qdtjr7yb
+	MaWuVnw5m6j2lw3EqXQO6HPTFSj6S/+GijUhfar/xRrBPwySIcGKYylZVwiBWQYRFmR76qymPkC
+	wiYw4VwVFoU7vM97Bp23wJfkxKdIG8HzcC1wlFsu
+X-Received: by 2002:a05:690c:660b:b0:7b1:9036:a23a with SMTP id
+ 00721157ae682-80672115b07mr70122167b3.14.1782286931474; Wed, 24 Jun 2026
+ 00:42:11 -0700 (PDT)
 Precedence: bulk
 X-Mailing-List: sashiko-reviews@lists.linux.dev
 List-Id: <sashiko-reviews.lists.linux.dev>
 List-Subscribe: <mailto:sashiko-reviews+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:sashiko-reviews+unsubscribe@lists.linux.dev>
-Mime-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Content-Type: text/plain; charset=UTF-8
-Received: from [192.168.8.62] ([183.34.167.222]) by smtp.feishu.cn with ESMTPS; Wed, 24 Jun 2026 14:32:35 +0800
-Date: Wed, 24 Jun 2026 14:32:34 +0800
-In-Reply-To: <20260623130100.477FE1F000E9@smtp.kernel.org>
+MIME-Version: 1.0
+References: <20260624072031.735846-1-sun.jian.kdev@gmail.com> <20260624073738.86F361F000E9@smtp.kernel.org>
+In-Reply-To: <20260624073738.86F361F000E9@smtp.kernel.org>
+From: sun jian <sun.jian.kdev@gmail.com>
+Date: Wed, 24 Jun 2026 15:41:58 +0800
+X-Gm-Features: AVVi8CeAGESJLiZKG7OzP6_ac3ToJrHzDDedwPDcUfl7iYoO0CEiUoore4N-_u4
+Message-ID: <CABFUUZFSwaQoq6_uRA0qwsuSO7hxfvyn9jmD-i-iUer7QZ_eSQ@mail.gmail.com>
+Subject: Re: [PATCH bpf 1/2] bpf: Avoid eliding lookup NULLness for inner map templates
+To: sashiko-reviews@lists.linux.dev
+Cc: bpf@vger.kernel.org
+Content-Type: text/plain; charset="UTF-8"
 Content-Transfer-Encoding: quoted-printable
-X-Lms-Return-Path: <lba+26a3b7a05+f8d120+lists.linux.dev+chencheng@fnnas.com>
-Cc: <yukuai@fygo.io>, <linux-raid@vger.kernel.org>
 
-=E5=9C=A8 2026/6/23 21:00, sashiko-bot@kernel.org =E5=86=99=E9=81=93:
+On Wed, Jun 24, 2026 at 3:37=E2=80=AFPM <sashiko-bot@kernel.org> wrote:
+>
 > Thank you for your contribution! Sashiko AI review found 1 potential issu=
 e(s) to consider:
-> - [Medium] The newly allocated `new_pool` is leaked on the `reshape_backw=
-ards` error path.
-> --
->=20
-> commit 2142096170ffdd8a1caabfde6f2461f6e7d64f61
-> Author: Chen Cheng <chencheng@fnnas.com>
->=20
-> md/raid10: resize r10bio_pool for reshape
->     =20
-> When reshape grows raid_disks, the pool must also switch to new geometry
-> object size, and allocate a new geometry size pool and replace the old.
->=20
-> But not for shrinking reshape, because regular I/O can still use the
-> prev geo for sectors that have not crossed reshape_progress yet.
->=20
->> diff --git a/drivers/md/raid10.c b/drivers/md/raid10.c
->> index cee5a253a281d..d740744a97461 100644
->> --- a/drivers/md/raid10.c
->> +++ b/drivers/md/raid10.c
-> [ ... ]
->> @@ -4411,6 +4422,11 @@ static int raid10_start_reshape(struct mddev *mdd=
-ev)
->>   		return -EINVAL;
->>  =20
->>   	conf->offset_diff =3D min_offset_diff;
->> +	if (mddev->delta_disks > 0) {
->> +		new_pool =3D create_r10bio_pool(new.raid_disks);
->> +		if (!new_pool)
->> +			return -ENOMEM;
->> +	}
->>   	spin_lock_irq(&conf->device_lock);
->>   	if (conf->mirrors_new) {
->>   		memcpy(conf->mirrors_new, conf->mirrors,
->=20
-> [Severity: Medium]
-> Will this newly allocated new_pool be leaked if the reshape_backwards
-> error path is triggered?
->=20
-> If an array is configured for a reshape that expands the number of disks
-> (delta_disks > 0), the new_pool is allocated here. However, if the
-> component device sizes are also reduced such that the array is set to
-> reshape backwards, it can hit a pre-existing error check a few lines
-> down:
-
-It's impossible use backward reshape while delta disk > 0 or change=20
-component size.
-
->=20
-> 	if (mddev->reshape_backwards) {
-> 		sector_t size =3D raid10_size(mddev, 0, 0);
-> 		if (size < mddev->array_sectors) {
-> 			spin_unlock_irq(&conf->device_lock);
-> 			pr_warn("md/raid10:%s: array size must be reduce before number of disk=
-s\n",
-> 				mdname(mddev));
-> 			return -EINVAL;
-> 		}
->=20
-> This direct return skips the standard cleanup path at the abort label,
-> causing the mempool_t structure and its preallocated elements to leak.
-> Should we add a mempool_destroy(new_pool) here, or change the return to
-> a goto abort?
 >
+> Pre-existing issues:
+> - [Critical] The patch relies on the `BPF_F_INNER_MAP` flag to prevent un=
+safe NULL-check elision for inner map templates. However, this fix is funda=
+mentally incomplete because `BPF_MAP_TYPE_PERCPU_ARRAY` explicitly rejects =
+the `BPF_F_INNER_MAP` flag during creation. This leaves per-CPU arrays vuln=
+erable to out-of-bounds memory accesses and NULL pointer dereferences.
+> --
+>
+> commit 3ab30507af620d9da556d3b2d80a1f172474785b
+> Author: Sun Jian <sun.jian.kdev@gmail.com>
+>
+> bpf: Avoid eliding lookup NULLness for inner map templates
+>
+> This commit prevents the verifier from eliding NULLness checks for array =
+maps
+> used as inner map templates. It achieves this by requiring that the
+> BPF_F_INNER_MAP flag is not set on the map before clearing the PTR_MAYBE_=
+NULL
+> flag from the register.
+>
+> > diff --git a/kernel/bpf/verifier.c b/kernel/bpf/verifier.c
+> > index 69d75515ed3f7..a32704bb5e058 100644
+> > --- a/kernel/bpf/verifier.c
+> > +++ b/kernel/bpf/verifier.c
+> > @@ -10577,6 +10577,7 @@ static int check_helper_call(struct bpf_verifie=
+r_env *env, struct bpf_insn *insn
+> >
+> >               if (func_id =3D=3D BPF_FUNC_map_lookup_elem &&
+> >                   can_elide_value_nullness(meta.map.ptr->map_type) &&
+> > +                 !(meta.map.ptr->map_flags & BPF_F_INNER_MAP) &&
+>
+> [Severity: Critical]
+> This isn't a bug introduced by this patch, but does this check completely
+> prevent NULL-check elision for all inner map templates?
+>
+> Looking at can_elide_value_nullness(), it allows both BPF_MAP_TYPE_ARRAY
+> and BPF_MAP_TYPE_PERCPU_ARRAY.
+>
+> However, in array_map_alloc_check(), the BPF_F_INNER_MAP flag is
+> explicitly rejected for per-CPU arrays:
+>
+> kernel/bpf/arraymap.c:array_map_alloc_check() {
+>     if (attr->map_type !=3D BPF_MAP_TYPE_ARRAY &&
+>         attr->map_flags & (BPF_F_MMAPABLE | BPF_F_INNER_MAP))
+>         return -EINVAL;
+>     ...
+> }
+>
+> Since BPF_MAP_TYPE_PERCPU_ARRAY can never have the BPF_F_INNER_MAP flag
+> set, won't this allow the verifier to still incorrectly elide NULLness
+> checks for per-CPU arrays used as inner map templates?
+>
+> If a per-CPU array with a large max_entries is used as an inner map
+> template, and a concrete map with a smaller max_entries is inserted at
+> runtime (which is possible because percpu_array_map_ops.map_meta_equal us=
+es
+> bpf_map_meta_equal() which ignores max_entries checks), couldn't this
+> lead to an out-of-bounds access or NULL pointer dereference?
+>
+> Additionally, since percpu_array_map_gen_lookup() also relies on
+> BPF_F_INNER_MAP to skip JIT inlining, will it inline the lookup with the
+> template's excessively large bounds hardcoded, resulting in out-of-bounds
+> heap reads on the concrete inner map?
+>
+> >                   meta.const_map_key >=3D 0 &&
+> >                   meta.const_map_key < meta.map.ptr->max_entries)
+> >                       ret_flag &=3D ~PTR_MAYBE_NULL;
+>
+> --
+> Sashiko AI review =C2=B7 https://sashiko.dev/#/patchset/20260624072031.73=
+5846-1-sun.jian.kdev@gmail.com?part=3D1
+
+Please ignore this series.
+
+I just noticed that Nuoqi Gui's "[PATCH bpf v2 0/2] Keep dynamic inner
+array lookups nullable" already covers the same verifier issue and
+selftest.
+
+Sorry for the noise.
