@@ -1,80 +1,80 @@
-Received: from mail-pl1-f179.google.com (mail-pl1-f179.google.com [209.85.214.179])
+Received: from mail-pg1-f177.google.com (mail-pg1-f177.google.com [209.85.215.177])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D6E4E23C8AE
-	for <sashiko-reviews@lists.linux.dev>; Wed, 24 Jun 2026 16:48:52 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=pass smtp.client-ip=209.85.214.179
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E7C4B33D51A
+	for <sashiko-reviews@lists.linux.dev>; Wed, 24 Jun 2026 16:51:08 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=pass smtp.client-ip=209.85.215.177
 ARC-Seal:i=2; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1782319734; cv=pass; b=fYBZK0U39EOSYCP39eiUrfsT/yLkfXMGzZKEKrBl7TSQGSvCbomnJctfmFtzVcZo8aXMGnOXmVPU4ueR+lD8ar5/MCL+o8qUADoUvLI5RZTQzrEBIuPUaUU8iCt8NS7QnpUmI6MQMAH0NHXZZgmvqdbub1DhPiRUgA3rGI4ZMJM=
+	t=1782319870; cv=pass; b=QdFyi15OiEm16DtYJrCjS79pzUpLc8c7cUSRJF+dID2sx5QqwOldlL90Pg0sqyH1xTgpwEtCjyZoeBD/UZzHLPRr/jodKKLNWW0QVK7jstjmd/TRupd8Q1E8X5ady5QKC9aO1dhjCF+dNlYGXbGrj1fE8tGEZfFwzwa1BBEgdRY=
 ARC-Message-Signature:i=2; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1782319734; c=relaxed/simple;
-	bh=tUd9MSOf6Gpfnj/DjRgEetNk24cj0Ww3vsmnBOJTSdU=;
+	s=arc-20240116; t=1782319870; c=relaxed/simple;
+	bh=cjvPvtEsTHCAOU+IjGR4oOnSd0wTDR9pc2SGE/nQchk=;
 	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
-	 To:Cc:Content-Type; b=snJMCfpEektA7eAQWYU4UUwMkfOui6EedVsb0Z6gm2TmF1F8dIpI+ohTylAxmPZ3A9/gaksqeDChOtjjrEAxo2z4IKGc2VMklFHe1n9JDvnGxvDtjYUdq5VTZxcDIxEovoNxeslCa9U9Ot3XYZfHJFKYbqc5BSCh9c7QVZ1K2LA=
-ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=C287PPDE; arc=pass smtp.client-ip=209.85.214.179
+	 To:Cc:Content-Type; b=MRu3etd/5m0L/u0EPBHNzIqMDs39ksKJIKKk3R9E49HTSacjpE7sqNzBeU+/4qgZvaSuF630ucygVfgfTNZWMc6vCBKXk7y2N3vTePQd9u1AhCLGURPQrXYm1TdhExu3lyIE9pYUEgh53ev9hhQX1Agad+BNG20ulpuXSJktros=
+ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=h96Vc/Sn; arc=pass smtp.client-ip=209.85.215.177
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="C287PPDE"
-Received: by mail-pl1-f179.google.com with SMTP id d9443c01a7336-2c7f11150cfso3074615ad.1
-        for <sashiko-reviews@lists.linux.dev>; Wed, 24 Jun 2026 09:48:52 -0700 (PDT)
-ARC-Seal: i=1; a=rsa-sha256; t=1782319732; cv=none;
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="h96Vc/Sn"
+Received: by mail-pg1-f177.google.com with SMTP id 41be03b00d2f7-c8fee9f63d5so462841a12.0
+        for <sashiko-reviews@lists.linux.dev>; Wed, 24 Jun 2026 09:51:08 -0700 (PDT)
+ARC-Seal: i=1; a=rsa-sha256; t=1782319868; cv=none;
         d=google.com; s=arc-20240605;
-        b=XG8x8Eu2xS1cpKvCZ41fSPXDLyrejELoN3zdaolp3K0vVROBBOrnqEjdT6B4x98Cdi
-         j3YlQlpUzaENQYSQ/2LTJhUaAWmyZETpxbP9FrxMCZwPtjEJBlOkS2qp4oa9w87N7Pjs
-         xpG/gWkNktwG73AM4DRpmJpTsNC6wDXJl5S5S6Dg720XIwDHb6p9fWM+AgOKUkqmKW9z
-         tLJN3hGofqke74JMfLN+fxfP/IMDeDyEaKfPPs7GJovo9Be3E1XthyfIlD8Ohe+hgF7L
-         N875PCWxuAx+KSaMkhcV5TYS5rZqlr2n7Uzy9GdET2uFZvCJ3dZabLqB5q7/csDgbjzp
-         5zNQ==
+        b=kGqU5To6hcs9CW69f1AqDwBVwoy/77ase1JpZHoaN0bIXCDk4nxqULe8wj1Sre/s8l
+         sTNFuZ8/eiKEcgyujWDEb7vYFOVPjJ0N4GJ8dvCKNuTusJwzoxpleFyUFkvcBJG0pHUt
+         zSt6DFCNMMYEoeYG9yzKIlr9/9T13dvBzgujFcRhl/RPak4ghCTtQzuiBZMMu2+JUM1i
+         nVQkHU2bQXjIi35uhCry0SBLUIyU0mcoMsozAYv8DaI/CZZbqV6BqL1Nq/E6n6XjfGL8
+         LQ2UF86iYgjEqb5xEpVE+i86Fd7FuDq3nCeRr+gJ802mJeXgp1IK024bJCm4hzKAhKRK
+         vItg==
 ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com; s=arc-20240605;
         h=content-transfer-encoding:cc:to:subject:message-id:date:from
          :in-reply-to:references:mime-version:dkim-signature;
-        bh=Eqa0a7zsYCqL0jsMUMAnI+leBn+5NE0HEyi9TIA0TpY=;
-        fh=R7ITYP0dP+GTNq1raVt0oZn7mapsqsrv19YFdFDXlX0=;
-        b=Nnkw8K8f6Qm1BQChGJooAzuFvJ5EI/REHM+hxRrKZxMciX0+sbhoNN35xDRZWEQYwE
-         spHxXHjFwjdxd7Hl//kU4WFZlxc84LojJ9Ep1G/IHnpsrLB7R66drgyjRbSfyhr/p6Xt
-         1TFIFrN8BQj94FGS7Nqwou/r8v1HH14JiArBkw5eSgvpU1hMlsA7ZNMGJ81yM6tN7B6Q
-         q2Wv7p991uWMP+UYjB3DXuyVHpTTk2BI7zjm9nmd5AstnbTW6RlWa5voFr1cVnVVOmp+
-         Y4d7odSKGHloksV3+yBT5U4+kC/SLFZorqpNdJANLAEseY7P1ALTH8k09jS2B1hsrBhF
-         xFxg==;
+        bh=CkhSwh0tn/SPxaM6seg68NrgymEV8OV7TF7kZYQtoSw=;
+        fh=mTP6TkWV1IhQRgyhsEpYqIpiXvhDlZKdHAfNRdOTDjk=;
+        b=ITLpL6bl1sC2w3arRVO7BBeh1u80kkgztIdL/9c3lwSxOsTePD7P8EJvr/5o3ineGa
+         FIcpSwp64PwA8Bl+sQv+4s3XsTqYRX3bNLgt7K8Pqow8D3JW/8wY35hDrFwjQ622FjId
+         MJM+q7I5laAlrXdqgXRWF9cayXGTI2d5vzmwxJ5DaX4V5EqVY+viMequZ/nf4KkcyMEt
+         tFTaGeInrPtEcpH8rYDcezc3HMgDDu+0fbBHDlJwYY2WjBEnAhu2WeGifsa1fnN/gLjV
+         S1N+FFvyoGWR+Uq/Rw1jpoPRZeYc9mbWZFcanFCjhsK16adym9FnOObBBbKlIyR2raHH
+         9zZg==;
         darn=lists.linux.dev
 ARC-Authentication-Results: i=1; mx.google.com; arc=none
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20251104; t=1782319732; x=1782924532; darn=lists.linux.dev;
+        d=gmail.com; s=20251104; t=1782319868; x=1782924668; darn=lists.linux.dev;
         h=content-transfer-encoding:cc:to:subject:message-id:date:from
          :in-reply-to:references:mime-version:from:to:cc:subject:date
          :message-id:reply-to;
-        bh=Eqa0a7zsYCqL0jsMUMAnI+leBn+5NE0HEyi9TIA0TpY=;
-        b=C287PPDEkHIXWE1JYMSIHqap+Xd50u/A+xczTJ+NozIsuAoFhHxXhRBUdKVDyPMeDr
-         xeHGL3vyfE3hDVcXm46wUgA8PzEYZMOzwNR95PGQvft5kV2Qox/lYx5paMnhlSmQMULB
-         HLbp7gusjAFK97F9GtwhGcAFM78NgRAx9IjpTlW5zclMx1mCwfP8fX2Y5l5j9a0My8pR
-         5RpFbVm6gDPEH0x8Lk2ZZqkUmx97qoFc8xpMW7+8fDKVsqBh7L3fTQ6fV4TDOyiUIuJk
-         wqYF2ygHWcNs+rsuXRxBaTqtfPrNNFHsMvT+XTbMaItM5OZ9c+qWFDjcBzzr/Q2jo8Ap
-         S4Hg==
+        bh=CkhSwh0tn/SPxaM6seg68NrgymEV8OV7TF7kZYQtoSw=;
+        b=h96Vc/SnnmX/ICHBGrjAUwONCUPUu0Qmjt9/Oemg13HO8u8bYnjgt41fkCVQDtEyRo
+         rDG7oob7atUM/3H8YYNrJVc1cTExzQIv6I7w/Zih8GyzdOgfXqDGwoQ3/FFZ18jJ2JmA
+         ZUXeWAX//wl64tfUrOQv2H2FtL61b5Nq9YHDt5carCoyve0xIcz7otk38p5odKOybTEZ
+         rDQcHf/qM0SuoiJGI/kLdUzIJ7ze45mgXdy66MM2UXL9ncGeWgxXNcJD+rJpTYmF/1Qv
+         SSsllVm08M/TWQ8vDB6e12JGylf1f2dKx+a8Ts11WCFlC5WRs/Juu64ZqhuLA8mkE3+a
+         ZhVg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20251104; t=1782319732; x=1782924532;
+        d=1e100.net; s=20251104; t=1782319868; x=1782924668;
         h=content-transfer-encoding:cc:to:subject:message-id:date:from
          :in-reply-to:references:mime-version:x-gm-gg:x-gm-message-state:from
          :to:cc:subject:date:message-id:reply-to;
-        bh=Eqa0a7zsYCqL0jsMUMAnI+leBn+5NE0HEyi9TIA0TpY=;
-        b=PGPd0cOx/LI+tltpiiMAxfXF+kdLKQ0/x+iPJBC0RYFM+royZmvoy9xVm+hsh2Vnpy
-         KhQRX/U99omnlfcCrtiUo/UhDj3lHjTD6erxPtQ8evAfYhkwEEqK7S5zLMv0dnSHwlMf
-         Fp0VEbXCtzVEP4flOzV7mQPTExkP5mCgAcB+TPDGhRgB9/RbQMzQSYkxb8VQf/9OUqnU
-         4qSRtxBeVEuD9/7vVy2TVW9ie973yecDex8+H9XjfCoKCM1yYpX+XM3TQGCQf9y+K3yN
-         TQXITfKAlMiAfkuR3g7jS/GEUQ4TNJ8knEl3remdhlJjN28QT9kq1aNcg2VCYyE0ictg
-         RTAw==
-X-Gm-Message-State: AOJu0YzToL4a7YvnmDJwosxbsLnOtN+FCExp+dBVtrbnsGw5F8er2HK1
-	jquaxEpztY+2G0uSKwH4RHsRIQwbJx4xgQCftym/yMdI91/hasN04YED3cFo2bB4RRwbqGFJWBp
-	NXP766IPhMLr6gdTTlEoMXx+PUXHfNG49Gb7yMoRmOg==
-X-Gm-Gg: AfdE7cmhh5QrZ5EzYS3pJNnHl+qzarrqw2UI9yxrANkoa1UdVV1JHqeSjsGmV1v2MQz
-	rLAYyvnj3wlyuzWR+bzw/rkGVFiLPgmwPWTnw2Gooe184nhsPotMxSC18jo7Rdc+LywVPlfHo0I
-	ER0RZuxe4gT7quAlUHEv6dFLy7uiAQ9YE9QELyNLExygb/7Rq/Li67inDRjh9Lws00uJ5XG/ly8
-	SiCC2eUJ0kS7YGqDw6vZ3H1h9kK09nPbeQqZXQmiGxWnH3ETkDBOAXAmWz8efZtb4XohJmNbJRs
-	Mkf10uhiR/uncoDNo0Z1bLdt364a51XKWgJYR9LEM90/8QkOWOHbYx4C1WBwttn/AGA8t5ssCAJ
-	V9+36+bmkhZ1A
-X-Received: by 2002:a17:903:1aad:b0:2c1:ef9:4516 with SMTP id
- d9443c01a7336-2c7e15c5297mr43674665ad.35.1782319732029; Wed, 24 Jun 2026
- 09:48:52 -0700 (PDT)
+        bh=CkhSwh0tn/SPxaM6seg68NrgymEV8OV7TF7kZYQtoSw=;
+        b=hdlQqKlU1R0GVTmoDI6Eh9iEx+wFTU9NqC16BQ9QpYSuQuGb0k1YIkwimaTds0870I
+         mbS861an7CVb4K/rDT4140N0+qCIYPZif5xJ9dllxabohxeLnPM0T0dQpcvbtjwGoG7n
+         cB9YbgPptgFdNwXDttXivC/1Q4Guvl6+ZmtO7xkpG3ng+ACYLXwmfCvNu9ofQwuiHMJP
+         fr9tXMGPGbzwXu/QUFsnyQuP5i83HeM+/Qbj4N6nEuFsBRkRW71bq5A3isA300G3fki9
+         uvNwjK8FPAdZT4DEzfx4tJuIaD9MCwRqm7peW/PvyQ2pVNDB4D9Us2hLROjrlun2Q7YP
+         03wQ==
+X-Gm-Message-State: AOJu0YzZqP+6JvlIR/NV9tPUKXw9TL5OL50jFRWKHqEwuGEmhbDeRMOE
+	DuZvfC3Cp4fCSpMsxjs/TB1Y2mjRw0g3KeW8AmJoAp3xxvVaJSZ2VJOpM6y8xnXGdo5g9kiXGbB
+	6wnV9vENrAxWWN9OWm2AHeWQAaLXWKMn5f5nDsljdfQ==
+X-Gm-Gg: AfdE7cmv7Sz7nH09he9+BaoUF6pfSyXTp6IGYWKm+25gAtmz2B5vs8pwFM43TIT/V0o
+	MpAeYSJaVlOYa4UsfsIewOsR+7YbUg+Qjlc2qioQdnG0jRNXFoiP1dSfFIYMaaNl9X8sv77LeHY
+	81nR0If9llCCJBFbqOCvzL2JFCResLTjg3stY2pYNX9KUVlZowHZwUIiCczVoF4wTUBQJVOFyvl
+	gihwhG3QXffzC7nX8Mex2KRY7VJyLX0bZJu88dQlbOZsQcsgN8t1/GynYQt7ZvMMEMpw7fP6HcB
+	3of0YMr7xVZc8bNsBWoChSBfgVMDwGxJPJOaz670B/2zb/A7IBDluWnD7OAtv8FebJ/5cnjEKuk
+	GSJfBLK4Dn/Zn
+X-Received: by 2002:a17:903:240b:b0:2b0:608d:d8a8 with SMTP id
+ d9443c01a7336-2c7e13bad7amr45153165ad.1.1782319868022; Wed, 24 Jun 2026
+ 09:51:08 -0700 (PDT)
 Precedence: bulk
 X-Mailing-List: sashiko-reviews@lists.linux.dev
 List-Id: <sashiko-reviews.lists.linux.dev>
@@ -82,82 +82,109 @@ List-Subscribe: <mailto:sashiko-reviews+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:sashiko-reviews+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 References: <20260624155421.211626-1-nishidafmly@gmail.com>
- <20260624155421.211626-5-nishidafmly@gmail.com> <20260624160331.9C5F51F000E9@smtp.kernel.org>
-In-Reply-To: <20260624160331.9C5F51F000E9@smtp.kernel.org>
+ <20260624155421.211626-6-nishidafmly@gmail.com> <20260624155828.3C6F91F000E9@smtp.kernel.org>
+In-Reply-To: <20260624155828.3C6F91F000E9@smtp.kernel.org>
 From: Hiroshi Nishida <nishidafmly@gmail.com>
-Date: Wed, 24 Jun 2026 09:48:41 -0700
-X-Gm-Features: AVVi8Cc7jSMc1yHpFFYbnDbaOM6sh9UWwBeIwtrsGUnSAeV1VUeKclqRIYl7iAU
-Message-ID: <CAE1ksKRGv8SVTuSh80L5VLs_O-+jhnSvnLi7fkLRT1g-HW3sZg@mail.gmail.com>
-Subject: Re: [PATCH 4/5] md: use sector_t for recovery_active in status_resync()
+Date: Wed, 24 Jun 2026 09:50:56 -0700
+X-Gm-Features: AVVi8CdhXqTw5nypB8-AWepGa7-ArMWEpSofzhJN9Dg4XePtsj-rfRWJ7mxBlhc
+Message-ID: <CAE1ksKTSn6dSApiYdNve8WZuDC7P=6KnDPODsvrWw=FJ-7W=gQ@mail.gmail.com>
+Subject: Re: [PATCH 5/5] md: clarify the resync ETA comment in status_resync()
 To: sashiko-reviews@lists.linux.dev
-Cc: yukuai@fygo.io, linux-raid@vger.kernel.org
+Cc: linux-raid@vger.kernel.org, yukuai@fygo.io
 Content-Type: text/plain; charset="UTF-8"
 Content-Transfer-Encoding: quoted-printable
 
-> [Medium] mddev->recovery_active is a standard atomic_t, not "sector-typed=
-";
-> changing the local to sector_t doesn't prevent narrowing.
+> The comment states that the divisor db is scaled up by 32, but the code
+> rt =3D div64_u64(rt, db/32+1); divides db by 32 -- scaling it down.
 
-You're right -- mddev->recovery_active is an atomic_t and
-atomic_read() returns int, so there's nothing wider to narrow; the
-int->sector_t conversion just moves to the assignment.
-The change is only a type-consistency tidy (the local is used solely
-with the sector_t curr_mark_cnt/resync_mark_cnt), not a narrowing fix.
-I'll reword the commit message in v2 accordingly and drop the
-"sector-typed atomic"/"narrows" wording.
+You're right -- the code divides by db/32, which scales the divisor
+*down* by 32 (so the intermediate quotient is 32x larger and keeps
+low-order bits a plain divide by db would lose), and rt is then
+rescaled by the >> 5.
+My rewritten comment had the direction backwards.  I'll fix it in v2:
 
+      rt is, in exact arithmetic, (remaining sectors) * dt / db.  To keep
+      precision near the end of resync, when the remaining count is close t=
+o db,
+      the dividend is divided by db/32 rather than db -- i.e. the divisor i=
+s
+      scaled down by 32, so the intermediate quotient is 32x larger -- and =
+rt is
+      scaled back down by 32 (>> 5) afterwards.
 
-2026=E5=B9=B46=E6=9C=8824=E6=97=A5(=E6=B0=B4) 9:03 <sashiko-bot@kernel.org>=
+  Thanks,
+
+2026=E5=B9=B46=E6=9C=8824=E6=97=A5(=E6=B0=B4) 8:58 <sashiko-bot@kernel.org>=
 :
 >
 > Thank you for your contribution! Sashiko AI review found 1 potential issu=
 e(s) to consider:
-> - [Medium] The commit message falsely claims `mddev->recovery_active` is =
-a 'sector-typed atomic' and that declaring a local variable as `int` 'needl=
-essly narrows it', but the structure field remains a standard 32-bit `atomi=
-c_t`.
+> - [Low] The newly added comment incorrectly states that the divisor `db` =
+is scaled up by 32, when the code actually scales it down.
 > --
 >
-> commit 7ec77a6b233ce4d151f7fc723e5f312b20b4ac92
+> commit 21672ecf7d2b823245c32b9d2699f7cf1a5c2e7c
 > Author: Hiroshi Nishida <nishidafmly@gmail.com>
 >
-> md: use sector_t for recovery_active in status_resync()
+> md: clarify the resync ETA comment in status_resync()
 >
-> This commit changes the local variable recovery_active in status_resync()
-> from int to sector_t. The commit message states this is to match the type
-> of mddev->recovery_active and avoid needlessly narrowing the value.
+> This commit updates the block comment above the remaining-time computatio=
+n
+> in status_resync() to clarify the calculation logic. It is a comment-only
+> change.
 >
-> > recovery_active holds a sector count read from the sector-typed atomic
-> > mddev->recovery_active and is then combined with the sector_t values
-> > curr_mark_cnt and resync_mark_cnt. Declaring it as a plain int needless=
-ly
-> > narrows it and mixes signedness into sector_t arithmetic; declare it
-> > sector_t to match.
+> > diff --git a/drivers/md/md.c b/drivers/md/md.c
+> > index 0cd85cc92ed31..a5c0da0d11334 100644
+> > --- a/drivers/md/md.c
+> > +++ b/drivers/md/md.c
+> > @@ -8916,17 +8916,11 @@ static int status_resync(struct seq_file *seq, =
+struct mddev *mddev)
+> >        * db: blocks written from mark until now
+> >        * rt: remaining time
+> >        *
+> > -      * rt is a sector_t, which is always 64bit now. We are keeping
+> > -      * the original algorithm, but it is not really necessary.
+> > -      *
+> > -      * Original algorithm:
+> > -      *   So we divide before multiply in case it is 32bit and close
+> > -      *   to the limit.
+> > -      *   We scale the divisor (db) by 32 to avoid losing precision
+> > -      *   near the end of resync when the number of remaining sectors
+> > -      *   is close to 'db'.
+> > -      *   We then divide rt by 32 after multiplying by db to compensat=
+e.
+> > -      *   The '+1' avoids division by zero if db is very small.
+> > +      * rt is computed as (remaining sectors) * dt / db.  To keep prec=
+ision
+> > +      * near the end of resync, when the remaining count is close to d=
+b, the
+> > +      * divisor db is scaled up by 32 before the divide and rt is scal=
+ed back
 >
-> [Severity: Medium]
-> Is this description accurate? Looking at struct mddev in drivers/md/md.h,
-> recovery_active is defined as a standard atomic_t:
+> [Severity: Low]
+> Is this new comment accurate regarding the math applied to db?
 >
-> drivers/md/md.h:struct mddev {
->     ...
->     atomic_t recovery_active;
->     ...
-> }
+> The comment states that the divisor db is scaled up by 32, but looking at
+> the actual code:
 >
-> Since atomic_t is a 32-bit signed integer, and atomic_read() returns an i=
-nt,
-> does changing this local variable to sector_t actually prevent narrowing?=
- The
-> implicit cast from int to sector_t will now simply happen at assignment
-> rather than during the arithmetic operations.
+>     rt =3D max_sectors - resync;
+>     rt =3D div64_u64(rt, db/32+1);
 >
-> Could the commit message be updated to reflect that mddev->recovery_activ=
-e
-> is a standard atomic_t, rather than a "sector-typed atomic"?
+> This divides db by 32, effectively scaling it down rather than up (which =
+in
+> turn scales the resulting quotient up). Does this comment need to be
+> adjusted to reflect the db/32 downscaling?
+>
+> > +      * down by 32 afterwards.  The '+1' avoids division by zero when =
+db is
+> > +      * very small.
+> >        */
+> >       dt =3D ((jiffies - mddev->resync_mark) / HZ);
+> >       if (!dt) dt++;
 >
 > --
 > Sashiko AI review =C2=B7 https://sashiko.dev/#/patchset/20260624155421.21=
-1626-1-nishidafmly@gmail.com?part=3D4
+1626-1-nishidafmly@gmail.com?part=3D5
 
 
 
