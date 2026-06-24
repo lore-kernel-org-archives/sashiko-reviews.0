@@ -1,66 +1,168 @@
-Received: from m16.mail.163.com (m16.mail.163.com [117.135.210.5])
+Received: from out-177.mta0.migadu.com (out-177.mta0.migadu.com [91.218.175.177])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 827742F5321
-	for <sashiko-reviews@lists.linux.dev>; Wed, 24 Jun 2026 04:16:24 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=117.135.210.5
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AEC383876CC
+	for <sashiko-reviews@lists.linux.dev>; Wed, 24 Jun 2026 06:28:32 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=91.218.175.177
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1782274589; cv=none; b=TFzt3/zKNC/GFrco/rAK4hLd7RJM1oEHiZLJGRxsxsmjc0pXDp0NZnhuhGDVUuYQFTPD+6tfBCCEvgmxBYvmg9CKM2ZrAafCYA8/NxEIcrdP2+lQr/cX+2/0+buJdJUZlMLzjzAFami9BvxKy67ELSmVvJ7mOctwLb7UwuUknwU=
+	t=1782282515; cv=none; b=Uvli55t1jDP5lzR4OJyNImOgyyxXel90p8VM9oKW43Q/YOIEjrPP1cyjdOPFjCSych8j9aS0bylsgcPOmyXp8WcmRHXrCWKC8ij88Jj0IEvZIG/SQYvY3igKM10EFhxiWwS/L9Wo68fbRTwD3RhWzljttNAKiZ21Pb/wMJNiFag=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1782274589; c=relaxed/simple;
-	bh=Lc26KowJlK3e/jAywrrZ3UUhy70I+NCKhEk/sENq78o=;
-	h=Date:From:To:Cc:Subject:In-Reply-To:References:Content-Type:
-	 MIME-Version:Message-ID; b=ltsZJOOmVjm1SxyrhswAqRFtOrC0Scw9yvHAnPwL8mEjMT7W/vLDIEg+f3jid4xWM9yh4NtbL/9fpPPCLb7fGLyMNbZyyw6NBK6qedugrJVzM7AeL9UhSv6/4k5rxTUESAQazNntqwILKTjH7pDCJtkR8+QNf+5xYd9kqcbN9KY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=163.com; spf=pass smtp.mailfrom=163.com; dkim=pass (1024-bit key) header.d=163.com header.i=@163.com header.b=ZzPTJxSA; arc=none smtp.client-ip=117.135.210.5
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=163.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=163.com
+	s=arc-20240116; t=1782282515; c=relaxed/simple;
+	bh=diyWkTM4kt73oCmmBLaZ99hUASeaY7n05vEeCxCGaRM=;
+	h=Message-ID:Date:MIME-Version:Subject:From:To:Cc:References:
+	 In-Reply-To:Content-Type; b=DnpGNs7kpXJF1wXFMDJ3fPzaqpgjIjJZW3I/EjPjYCp4/SDDVw9thepBwLBchDy9bYP7iuZWiA4oH+5Gwqqd6ajJC99C/EidgMYS2fm8BzPaSewXvMnMgroyWJCOT9cGe0bOz0SvdnDt3ZEJAYRX2WLurDCgoAESITmwPKoEBrs=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linux.dev; spf=pass smtp.mailfrom=linux.dev; dkim=pass (1024-bit key) header.d=linux.dev header.i=@linux.dev header.b=AlRsTa24; arc=none smtp.client-ip=91.218.175.177
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linux.dev
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linux.dev
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=163.com header.i=@163.com header.b="ZzPTJxSA"
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=163.com;
-	s=s110527; h=Date:From:To:Subject:Content-Type:MIME-Version:
-	Message-ID; bh=Lc26KowJlK3e/jAywrrZ3UUhy70I+NCKhEk/sENq78o=; b=Z
-	zPTJxSAphWRAL6kiPi1iU+WGv3LgO0vRJOzZDAF7fEGUJLkeQf1h4ZjvmIMeb2hw
-	7+meo6FFHy3b/DXgjc7cWoOJzBnH8Fcl7Rz6R2cOookA6jJgrIGtBBVpheKdhR9x
-	pyuBXuBSvgTUNjNKMzIXOKpsUrok4iO+ZoOkqptoN0=
-Received: from haoxiang_li2024$163.com ( [36.112.3.223] ) by
- ajax-webmail-wmsvr-40-108 (Coremail) ; Wed, 24 Jun 2026 12:16:20 +0800
- (CST)
-Date: Wed, 24 Jun 2026 12:16:20 +0800 (CST)
-From: haoxiang_li2024  <haoxiang_li2024@163.com>
-To: "Daniel Wagner" <dwagner@suse.de>
-Cc: sashiko-reviews@lists.linux.dev, linux-scsi@vger.kernel.org
-Subject: Re:Re: [PATCH] scsi: elx: efct: Fix IO leak on unsupported
- additional CDB
-X-Priority: 3
-X-Mailer: Coremail Webmail Server Version 2023.4-cmXT build
- 20260403(27802f6d) Copyright (c) 2002-2026 www.mailtech.cn 163com
-In-Reply-To: <947fd1e6-cbf0-4b2e-a0c7-9d4bda439ff2@flourine.local>
-References: <20260622075844.832871-1-haoxiang_li2024@163.com>
- <20260622081220.9D0B71F000E9@smtp.kernel.org>
- <947fd1e6-cbf0-4b2e-a0c7-9d4bda439ff2@flourine.local>
-X-NTES-SC: AL_Qu2TAP6cu00j5iKZYukfmUwSj+s8WsO0vf4i245fO5B+jCLpyzEDYXpkLHTOzeC2LxuSuwqcbydQy+9XTK1GRYsko+89fU4V09dpWRxhCieCeg==
-Content-Transfer-Encoding: base64
-Content-Type: text/plain; charset=GBK
+	dkim=pass (1024-bit key) header.d=linux.dev header.i=@linux.dev header.b="AlRsTa24"
+Message-ID: <cb712203-ede9-4112-86b7-3f1eaba7ab0f@linux.dev>
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linux.dev; s=key1;
+	t=1782282510;
+	h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+	 to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+	 content-transfer-encoding:content-transfer-encoding:
+	 in-reply-to:in-reply-to:references:references;
+	bh=qHOojswqGj26rct1hzoC4cnOA9xdjT7lyq480mzutKo=;
+	b=AlRsTa24jM/J1CQMBDdvQV3lU9Lzv+9dMuVs2sC1Qo1qImNC/sMvfPLz2zFcssOfKxvQvy
+	/1NOb94hjE6dV0lJ/O3HcC8nGkzcMkgls5dT60yuPNA6B7qM3wBHPyUfV5NtQGhJ5BvtIH
+	N1FsRgTDdMy6jCjLn5p3kbsgZlUduXQ=
+Date: Wed, 24 Jun 2026 14:28:25 +0800
 Precedence: bulk
 X-Mailing-List: sashiko-reviews@lists.linux.dev
 List-Id: <sashiko-reviews.lists.linux.dev>
 List-Subscribe: <mailto:sashiko-reviews+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:sashiko-reviews+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Message-ID: <59cce810.3e4f.19ef7d7df07.Coremail.haoxiang_li2024@163.com>
-X-Coremail-Locale: zh_CN
-X-CM-TRANSID:bCgvCgDX3wIUWjtqbqgPAA--.1208W
-X-CM-SenderInfo: xkdr5xpdqjszblsqjki6rwjhhfrp/xtbC7RQFc2o7WhSnFAAA3j
-X-Coremail-Antispam: 1U5529EdanIXcx71UUUUU7vcSsGvfC2KfnxnUU==
+Subject: Re: [PATCH bpf-next v7 11/11] selftests/bpf: Add test to verify
+ bpf_iter for global percpu data
+Content-Language: en-US
+X-Report-Abuse: Please report any abuse attempt to abuse@migadu.com and include these headers.
+From: Leon Hwang <leon.hwang@linux.dev>
+To: sashiko-reviews@lists.linux.dev
+Cc: bpf@vger.kernel.org
+References: <20260622143557.22955-1-leon.hwang@linux.dev>
+ <20260622143557.22955-12-leon.hwang@linux.dev>
+ <20260622150844.28C551F000E9@smtp.kernel.org>
+ <08991b5a-b043-4533-bcea-1e4aff7ff6f3@linux.dev>
+In-Reply-To: <08991b5a-b043-4533-bcea-1e4aff7ff6f3@linux.dev>
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 7bit
+X-Migadu-Flow: FLOW_OUT
 
-CgpBdCAyMDI2LTA2LTIyIDE2OjQzOjA0LCAiRGFuaWVsIFdhZ25lciIgPGR3YWduZXJAc3VzZS5k
-ZT4gd3JvdGU6Cj5JbmRlZWQsIHRoZSBjYWxsc2l0ZSBuZWVkcyB0byBoYW5kbGUgdGhlIGVycm9y
-IGNvZGUgcmV0dXJuIGJ5Cj5lZmN0X2Rpc3BhdGNoX2ZjcF9jbWQgYW5kIG5vdCBqdXN0IGJsaW5k
-bHkgZW5xdWV1ZSB0aGUgaW8uCgpBZ3JlZWQuIFRoYXQgaXMgYSBzZXBhcmF0ZSBwcmUtZXhpc3Rp
-bmcgaXNzdWU6IGVmY3RfZGlzcGF0Y2hfZnJhbWUoKQpzaG91bGQgaGFuZGxlIHRoZSByZXR1cm4g
-dmFsdWUgZnJvbSBlZmN0X2Rpc3BhdGNoX2ZjcF9jbWQoKSwgYmVjYXVzZQp0aGUgU0VORF9GUkFN
-RSBwYXRoIG1heSBjb25zdW1lIHNlcSBhbmQgZnJlZSBpdCBhc3luY2hyb25vdXNseS4KCiBUaGlz
-IHBhdGNoIGZpeGVzIGEgZGlmZmVyZW50IHBhdGgsIHdoZXJlIHVuc3VwcG9ydGVkIGFkZGl0aW9u
-YWwgQ0RCCiByZXR1cm5zIGFmdGVyIGVmY3RfaW8gYWxsb2NhdGlvbiBhbmQgYmVmb3JlIHRoZSBJ
-TyBpcyBoYW5kZWQgb2ZmLiBJIGNhbgogc2VuZCBhIHNlcGFyYXRlIGZvbGxvdy11cCBwYXRjaCBm
-b3IgdGhlIHNlcXVlbmNlIG93bmVyc2hpcCBpc3N1ZS4KClRoYW5rcywKSGFveGlhbmcK
+On 23/6/26 12:05, Leon Hwang wrote:
+> On 22/6/26 23:08, sashiko-bot@kernel.org wrote:
+> [...]
+>>> diff --git a/tools/testing/selftests/bpf/prog_tests/global_data_init.c b/tools/testing/selftests/bpf/prog_tests/global_data_init.c
+>>> index e4c290492ff8a..32734e1dbfb00 100644
+>>> --- a/tools/testing/selftests/bpf/prog_tests/global_data_init.c
+>>> +++ b/tools/testing/selftests/bpf/prog_tests/global_data_init.c
+>> [ ... ]
+>>> @@ -279,6 +279,56 @@ static void test_global_percpu_data_verifier_log(void)
+>>>  	RUN_TESTS(test_global_percpu_data);
+>>>  }
+>>>  
+>>> +static void test_global_percpu_data_iter(void)
+>>> +{
+>>> +	DECLARE_LIBBPF_OPTS(bpf_iter_attach_opts, opts);
+>>> +	struct test_global_percpu_data *skel;
+>>> +	union bpf_iter_link_info linfo = {};
+>>> +	struct bpf_link *link = NULL;
+>>> +	int fd, num_cpus, len, err;
+>>> +	char buf[16];
+>>> +
+>>> +	num_cpus = libbpf_num_possible_cpus();
+>>> +	if (!ASSERT_GT(num_cpus, 0, "libbpf_num_possible_cpus"))
+>>> +		return;
+>>> +
+>>> +	skel = test_global_percpu_data__open();
+>>> +	if (!ASSERT_OK_PTR(skel, "test_global_percpu_data__open"))
+>>> +		return;
+>>> +
+>>> +	skel->rodata->num_cpus = num_cpus;
+>>> +	skel->rodata->offsetof_num = offsetof(struct test_global_percpu_data__percpu, struct_data);
+>>> +	skel->rodata->offsetof_num += sizeof(skel->percpu->struct_data) - sizeof(int);
+>>> +	skel->rodata->elem_sz = roundup(sizeof(struct test_global_percpu_data__percpu), 8);
+>>
+>> [Severity: High]
+>> This is a pre-existing issue, but does iterating over per-CPU maps expose
+>> uninitialized kernel heap memory?
+>>
+>> When working with per-CPU maps, temporary buffers are allocated using kmalloc
+>> without the __GFP_ZERO flag in functions like bpf_iter_init_array_map in
+>> kernel/bpf/arraymap.c:
+>>
+>> kernel/bpf/arraymap.c:bpf_iter_init_array_map() {
+>>     ...
+>>     value_buf = kmalloc(buf_size, GFP_USER | __GFP_NOWARN);
+>>     ...
+>> }
+>>
+>> This is also done in kernel/bpf/hashtab.c:bpf_iter_init_hash_map().
+>>
+>> If the map contains a BTF record, bpf_obj_memcpy in include/linux/bpf.h
+>> explicitly stops at map->value_size instead of filling the entire rounded-up
+>> size:
+>>
+>> include/linux/bpf.h:bpf_obj_memcpy() {
+>>     ...
+>>     memcpy(dst + curr_off, src + curr_off, size - curr_off);
+>>     ...
+>> }
+>>
+>> This fails to overwrite the padding bytes up to round_up(map->value_size, 8).
+
+
+True.
+
+The padding bytes of non-zeroed k/kvmalloc() could be exposed to user space.
+
+Verified the issue by a LOOKUP_ELEM test:
+https://github.com/Asphaltt/bpf/commits/bpf/avoid-uninit-mem/v1/.
+
+test_map_uninit_mem_exposure:FAIL:zeroed tail bytes unexpected memory
+mismatch
+actual:
+        2B 2B 2B 2B
+expected:
+        00 00 00 00
+
+Will post the fix later.
+
+Thanks,
+Leon
+
+>> Because the BPF verifier allows the iterator program to read the entire
+>> round_up(map->value_size, 8) * num_possible_cpus() bytes, the uninitialized
+>> padding from kmalloc is exposed to the BPF program.
+>>
+>> Similarly, in kernel/bpf/syscall.c:map_lookup_elem(), kvmalloc is used
+>> without zeroing:
+>>
+>> kernel/bpf/syscall.c:map_lookup_elem() {
+>>     ...
+>>     value = kvmalloc(value_size, GFP_USER | __GFP_NOWARN);
+>>     ...
+>> }
+>>
+>> This means sys_bpf BPF_MAP_LOOKUP_ELEM also copies this uninitialized padding
+>> back to user space via copy_to_user, causing a direct kernel heap info leak.
+>>
+>> Could this be addressed by zeroing these allocations or ensuring the padding is
+>> cleared when copying map values?
+>>
+> 
+> Will verify the issue by separate selftests.
+> 
+> If true, will post separate patch to fix it.
+> 
+> Thanks,
+> Leon
+> 
+>>> +	skel->percpu->struct_data.nums[6] = 0xc0de;
+>>> +
+>>> +	err = test_global_percpu_data__load(skel);
+>> [ ... ]
+>>
+> 
+
