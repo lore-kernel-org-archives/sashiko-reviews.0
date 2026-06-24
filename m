@@ -1,130 +1,115 @@
-Received: from fhigh-b4-smtp.messagingengine.com (fhigh-b4-smtp.messagingengine.com [202.12.124.155])
+Received: from www62.your-server.de (www62.your-server.de [213.133.104.62])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6A9E43B0AFA
-	for <sashiko-reviews@lists.linux.dev>; Wed, 24 Jun 2026 14:18:36 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=202.12.124.155
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4C3AE3CBE97;
+	Wed, 24 Jun 2026 15:32:28 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=213.133.104.62
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1782310718; cv=none; b=nyEzBZxz/winxCjIH68bPVbgDrjsvLxRZDznf6IhNUSe2R8e9p1PYZyd7naBVO4ah7gyTukSmsPcsV6ETVC2n0QIsRgeomRH3sR/6C53LFZL8OZavhlm6Y5abf4dM50aACVBy7Iy/DXvZCLQ/tXxUyMl6e6MVDxcahbsslN0JWk=
+	t=1782315150; cv=none; b=F6a0OHLNttbY0IuT03ngfyQa/n7Fyt74ZnL6F8Zu1d5mbZkkAOawef96NUxxiBxv8P1jfUdtwzmEG2JarzOxYtCzHJR4PV1a5PVaH0aOlUBwAyUv60Ov976CCaPF2LxIUxgZt8pYtvu7ad3CNwXJrwXBU3dRSCqWHg93TnkaGW4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1782310718; c=relaxed/simple;
-	bh=iO7gmX1DCKXF2Z8L/sVvXOVjNns7SLOCN13hDBVJIfs=;
-	h=MIME-Version:Date:From:To:Cc:Message-Id:In-Reply-To:References:
-	 Subject:Content-Type; b=Ap38vReSZWBvB5blCsoe6iTUfe+yL5gIIgJVekUIuUyqBagckqbMHZVb46t5t5Etajgqw2AyYgbQf5hZD7+3ERVihiCrMeCzU5m8jycqrWnNmMxMtjmCd86cOKzicjTnHPS8EyIE58UDVv+mJ6+3VpByZ7q2CXe7r44ITxWDo8g=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=squebb.ca; spf=pass smtp.mailfrom=squebb.ca; dkim=pass (2048-bit key) header.d=squebb.ca header.i=@squebb.ca header.b=jVlJJQMg; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=E4qvKizR; arc=none smtp.client-ip=202.12.124.155
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=squebb.ca
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=squebb.ca
+	s=arc-20240116; t=1782315150; c=relaxed/simple;
+	bh=Vb9LzQyJ1fatJEW9hgnBqERsvhP3BeOt0Tf/UplKfHY=;
+	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
+	 In-Reply-To:Content-Type; b=ssYC14ZxHWRSPuJ6ub/1DuB8bsKkilrQaJTTu/TyfYXp8xrGXdONiGwxP6ZDSOwjSDaI9yVNAwZbvcbUq3K83HfXEsf6yh0RHKiS26PJPo3FRZYrfv263y1XOL4lKc+I5+9tpLbgNK81wH1n1na375cVSFEWIkc6SYAxMWu4JRc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=iogearbox.net; spf=pass smtp.mailfrom=iogearbox.net; dkim=pass (2048-bit key) header.d=iogearbox.net header.i=@iogearbox.net header.b=bYbbWUOP; arc=none smtp.client-ip=213.133.104.62
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=iogearbox.net
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=iogearbox.net
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=squebb.ca header.i=@squebb.ca header.b="jVlJJQMg";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="E4qvKizR"
-Received: from phl-compute-02.internal (phl-compute-02.internal [10.202.2.42])
-	by mailfhigh.stl.internal (Postfix) with ESMTP id AC6DC7A011B;
-	Wed, 24 Jun 2026 10:18:35 -0400 (EDT)
-Received: from phl-imap-08 ([10.202.2.84])
-  by phl-compute-02.internal (MEProxy); Wed, 24 Jun 2026 10:18:35 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=squebb.ca; h=cc
-	:cc:content-transfer-encoding:content-type:content-type:date
-	:date:from:from:in-reply-to:in-reply-to:message-id:mime-version
-	:references:reply-to:subject:subject:to:to; s=fm2; t=1782310715;
-	 x=1782397115; bh=pRNfmdzFIYEyxcxRNKFhV0lLl2b6fmqj+E+uLAkRrD0=; b=
-	jVlJJQMgZBJR7rCBvbRij9KUPN/JzkebXiLAUTbqR2L3z6hH3oy7RTT7t3H5YkMw
-	710qWuj5a0zAo49FJq7rm8VyTp9esCakjlOep9k5bPDOQwr8Dz5AGgQLarIgVBu7
-	J+iRxmlKfuuOXZiY/x+5RgGNNZCw7i9yFiE7EnxG0vHS8jx31buOrXeWgjMdkGHH
-	RbsK09mGEgAUYfk6SPoqykWKwzlHgNM1B+UKS4L+Mergw137PGf+lTwShRud/PDA
-	oXb8EoPJqzmPvrBZko8hz4ub76OlJ29RrBFkaCag+Oe3kWH/omjJXX0505k5EJwC
-	wKflhEXA4lstYR3YM/j9QA==
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
-	messagingengine.com; h=cc:cc:content-transfer-encoding
-	:content-type:content-type:date:date:feedback-id:feedback-id
-	:from:from:in-reply-to:in-reply-to:message-id:mime-version
-	:references:reply-to:subject:subject:to:to:x-me-proxy
-	:x-me-sender:x-me-sender:x-sasl-enc; s=fm1; t=1782310715; x=
-	1782397115; bh=pRNfmdzFIYEyxcxRNKFhV0lLl2b6fmqj+E+uLAkRrD0=; b=E
-	4qvKizRFdV2eiKZJwnD4ak45tCtPlPq1RJF+MvQ3Cz9/GlvipskB5WxfaFOIWUhU
-	kr6XTWzp0fbyTPSTKkKBARouJGRpsI+sqJoWB4OVY7/M4w378ODcSh0nq+TJdWkO
-	fF4SLMadbJl2idUZWPiKSjX3yg3LopbDfWYfJ3dnJmu8xNRDdGFaDLSvh/HiJ4ZV
-	5FkPhEQesaAjCe0K2EPYsdgkaPewWIITBoh2Jhgh+GAzy99BhVbpLwVlYfkxMNoi
-	ljQm1WziTuuGXpj5Sl1ryNr7sxD8OipcZ5HB5CQ5MdZGx4nbeRjBQDsdWjMLT6kZ
-	5QxhPijqO+H2rHmZgFViA==
-X-ME-Sender: <xms:O-c7ai6eJbTcHUlt-1TWXA0sXE3Qx5-7sU5yl6-qkbn2CrLFHQu7BQ>
-    <xme:O-c7amuBGBIafYII59lMMgHOtarPcyULVlD401eDJrw_AkgN1pfSjLkRCzzJoQoyY
-    MRLg1XjtXvyQj8YGfJrNAcWPephdL0t9IetDOe0eu5N9q0O8h-F1y0>
-X-ME-Proxy-Cause: dmFkZTE8oTXKo528XYJKN0NqMMN0ly7mk6Sad1m+P4mTYdrckvC7xeP+iWEoUn1bnCDsPc
-    yi+kwZXOrBMfBumkSQ5GCMKJ2nm52jq+q5yluV9qgwI/IXaP+lGEiyIyytIm6x+DyIxmmq
-    6jXs39+IjnooZrMKq9EUipchLCCw7IkCvrl8ojPwYZ71YLYlIDhaSmSzY3T4bnmY7fWyzc
-    rcHJN8heqD1TrXvYOzXt7UnMVww3RzI/FiSgnLmDkkckBKsa7XwCsKrE2MYlPHaNnR1PDt
-    Mfn2DUYq4gRloJu4qOjXv3L0t1loaR9Q22hhrhnyqSZ1ms8j2wZJcgF68GeyO5Wsau/1b5
-    eT7NA+tnfLKRryQXWunjao1sVCIfLQGUKKCzdS7dckU52ISF0vwPK5SJX8IjtsMjAor9ZT
-    bbr7dtCXa/czNsFgOjkea80DJjOnqBaFf6PrBFnA/V1e2Y+jfzodphooUM8LkXJTUCK38u
-    7E+dU4LbDpIKab81T2fpkixCAU705etveTBnMISKdOh3Vc481VuZ7U6XPMLTGQ6vo/Mll+
-    XN089zyfojCMzH2e8aD8RuevcyG+IjvJ9Hwd944ZjBV0oC1HWpbjpFiY4jkSzX+P0V/Fqu
-    hv/iaecqabd8Ez9k0qmPvawuXgkDco4Ez5lrNXwDzHk/roy8Ldj6qw+LgILA
-X-ME-Proxy: <xmx:O-c7aodsJmGYRgWBcrOPD_fkXpS2s3Ac5PlJxsj9J3-qRpT94DpFqA>
-    <xmx:O-c7aqUA4wv0Yi2mqh6uk_i5coUQMMAlp7MWrgrFI7n8IBEHyxunCA>
-    <xmx:O-c7aheOKh6xwZFiSMdAk6dK4Fx5zj09p7xZVi5bpWxJOpexpJNjbw>
-    <xmx:O-c7amPqKWajIobn65aQpFuOFY_dSCt0XV-k0Ajgg68TpzDELdxufA>
-    <xmx:O-c7agxoCC7Xym0WPVYTJg2-3-b-WAAhjaZ5rF65TeVdG11nd-4L0dJK>
-Feedback-ID: ibe194615:Fastmail
-Received: by mailuser.phl.internal (Postfix, from userid 501)
-	id 402B22CE409A; Wed, 24 Jun 2026 10:18:35 -0400 (EDT)
-X-Mailer: MessagingEngine.com Webmail Interface
+	dkim=pass (2048-bit key) header.d=iogearbox.net header.i=@iogearbox.net header.b="bYbbWUOP"
+DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed;
+	d=iogearbox.net; s=default2302; h=Content-Transfer-Encoding:Content-Type:
+	In-Reply-To:From:References:Cc:To:Subject:MIME-Version:Date:Message-ID:Sender
+	:Reply-To:Content-ID:Content-Description:Resent-Date:Resent-From:
+	Resent-Sender:Resent-To:Resent-Cc:Resent-Message-ID;
+	bh=Vb9LzQyJ1fatJEW9hgnBqERsvhP3BeOt0Tf/UplKfHY=; b=bYbbWUOPiC+h+Wyh/8IB7s/xaR
+	//h5j3W4WH9FSu6chR7CCmIAjnPaqzrrbCIs+iG+h2/r4zYhs+2we/sAzWTr/ouW77SZ6vVNU9+gX
+	eRNOhOxAikiGLS1HZuecWhHt0YDhjUrInOAw9Uebi1a2z/ISxWlgYxrUpAVM1dAkc9Z0LUFv6Vso7
+	SEg9GRbjBI264Tkm21qg2hSY8vSYtFPIBzk3e1KbUtRIiKKdIpIWNoWt1VgVkRX7igdkGHQ0ZzRcg
+	jSsELgSL5k+gj9eZlLatCwqKH0EE5JeyiX9qYPRN8HyzEaaCWgY/P5Rj/HCm5p6J4Sw0aVAG+7ycl
+	4K8XeiFQ==;
+Received: from sslproxy04.your-server.de ([78.46.152.42])
+	by www62.your-server.de with esmtpsa  (TLS1.3) tls TLS_AES_256_GCM_SHA384
+	(Exim 4.96.2)
+	(envelope-from <daniel@iogearbox.net>)
+	id 1wcPaU-00041K-1v;
+	Wed, 24 Jun 2026 17:32:26 +0200
+Received: from localhost ([127.0.0.1])
+	by sslproxy04.your-server.de with esmtpsa  (TLS1.3) tls TLS_AES_256_GCM_SHA384
+	(Exim 4.96)
+	(envelope-from <daniel@iogearbox.net>)
+	id 1wcPZW-000Ma3-07;
+	Wed, 24 Jun 2026 17:32:26 +0200
+Message-ID: <2e6b9155-8d64-46e8-8e5d-660ce69b6da0@iogearbox.net>
+Date: Wed, 24 Jun 2026 17:32:25 +0200
 Precedence: bulk
 X-Mailing-List: sashiko-reviews@lists.linux.dev
 List-Id: <sashiko-reviews.lists.linux.dev>
 List-Subscribe: <mailto:sashiko-reviews+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:sashiko-reviews+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-X-ThreadId: ArMcrDYeUHoR
-Date: Wed, 24 Jun 2026 10:18:14 -0400
-From: "Mark Pearson" <mpearson-lenovo@squebb.ca>
-To: "Guenter Roeck" <linux@roeck-us.net>, sashiko-reviews@lists.linux.dev
-Cc: linux-watchdog@vger.kernel.org
-Message-Id: <40b59984-9907-4391-a05d-3590402d93a2@app.fastmail.com>
-In-Reply-To: <b3e11c2a-3b64-4a7a-b8f7-76773747d6a0@roeck-us.net>
-References: <mpearson-lenovo@squebb.ca>
- <20260622144531.2413447-1-mpearson-lenovo@squebb.ca>
- <20260622145631.DD7041F000E9@smtp.kernel.org>
- <9e76208e-6fb7-4d62-9a49-95fc03a06737@app.fastmail.com>
- <b3e11c2a-3b64-4a7a-b8f7-76773747d6a0@roeck-us.net>
-Subject: Re: [PATCH] watchdog: lenovo_se30g2_se60_wdt: Watchdog for Lenovo SE30G2 and
- SE60
-Content-Type: text/plain
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH bpf-next v2 1/5] bpf: Verify signed loader metadata at
+ load time
+To: sashiko-reviews@lists.linux.dev
+Cc: bpf@vger.kernel.org
+References: <20260624140301.93421-1-daniel@iogearbox.net>
+ <20260624140301.93421-2-daniel@iogearbox.net>
+ <20260624144803.7AADB1F000E9@smtp.kernel.org>
+Content-Language: en-US
+From: Daniel Borkmann <daniel@iogearbox.net>
+Autocrypt: addr=daniel@iogearbox.net; keydata=
+ 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
+In-Reply-To: <20260624144803.7AADB1F000E9@smtp.kernel.org>
+Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 7bit
+X-Virus-Scanned: Clear (ClamAV 1.4.3/28041/Wed Jun 24 08:24:54 2026)
 
-Hi Guenter
-
-On Tue, Jun 23, 2026, at 10:19 PM, Guenter Roeck wrote:
-> On 6/22/26 08:50, Mark Pearson wrote:
->> On Mon, Jun 22, 2026, at 10:56 AM, sashiko-bot@kernel.org wrote:
->>> Thank you for your contribution! Sashiko AI review found 4 potential
->>> issue(s) to consider:
->>> - [High] The global `se_30g2_60_pdev` pointer is not cleared after
->>> being freed on the `platform_device_add()` error path, leading to a
->>> Use-After-Free and Double-Free during module exit.
->> 
->> I belive this is a valid issue - I'll fix in v2.
->> 
->>> - [High] SuperIO configuration mode is prematurely exited before
->>> reading `bram_base`, causing the read to fail and the driver to map an
->>> invalid I/O port address.
->> 
->> This one is I believe invalid and behaviour is correct. If someone wiser than me disagree's please let me know.
->> 
->
-> How would anyone but you know ? Normally Super-IO access is disabled
-> after the exit sequence is sent (as "lpc_write(0x2, 0x2);" in lpc_chip_id()
-> seems to do). Maybe this EC is different and does not disable access to
-> its IO space after "lpc_write(0x2, 0x2);". Or maybe that write does not
-> disable Super-IO access at all. Again, who but you would know if the EC
-> behaves differently than all the other Super-IO chips and embedded
-> controllers out there ?
->
-> If you say this is correct, we'll have to believe you.
->
-> Thanks,
-> Guenter
-
-Yeah. I went and checked with the HW team on this one, and I've changed it.
-Fix for this will be in v2 as well.
-
-Mark
+On 6/24/26 4:48 PM, sashiko-bot@kernel.org wrote:
+> Thank you for your contribution! Sashiko AI review found 1 potential issue(s) to consider:
+> - [High] TOCTOU race in BPF signed program verification allows bypassing signature via concurrent modification of user-space fd_array.
+For the v3, I'll rework this slightly, and I'm looking into potentially caching the
+fd_array entries into kernel memory at process_fd_array() time. As it stands, the
+TOCTOU as described could only swap maps that were part of the signature and had the
+exclusive-digest binding, and given the loader only uses 1 metadata map today, there
+is nothing to permute. But in either case, I'll address it.
