@@ -1,80 +1,81 @@
-Received: from mail-qt1-f172.google.com (mail-qt1-f172.google.com [209.85.160.172])
+Received: from mail-qt1-f174.google.com (mail-qt1-f174.google.com [209.85.160.174])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5D8E038BF8D
-	for <sashiko-reviews@lists.linux.dev>; Wed, 24 Jun 2026 16:11:51 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=pass smtp.client-ip=209.85.160.172
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 59A41322B8C
+	for <sashiko-reviews@lists.linux.dev>; Wed, 24 Jun 2026 16:14:43 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=pass smtp.client-ip=209.85.160.174
 ARC-Seal:i=2; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1782317512; cv=pass; b=WJ3WHFLNJeh2uKuMtH8O+DAM3CX1ULYL2SGMJqC2wvHcSBF2zo9zerU//+U+zY9e1MjFW+oxhWc+UTXTK3T3DNaNHty1p6vFbDXzVRtifppd0vJq22dJXbAJN6NxI4UTWmEABRg6GbFei7IhooDqxwceUhcTjWh1Xfq0TK87ue8=
+	t=1782317684; cv=pass; b=u676JGIUVDZVHVB9C4zkrYOFRyzvv5ib/J+MdaQvff0CbXjI5kw+tR3zkHG+vIDGsdWbnNUd/HwxCfhlDBTxrIGgmrZ/5FEYqcbKSMzb4TX3S6KWCp0rlqncl6yEhAuCBbKzp3H4+AvlzZo6a0uXYVP9Wm5kbNHY00xHCOSmiJI=
 ARC-Message-Signature:i=2; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1782317512; c=relaxed/simple;
-	bh=i4e86Jwp+OIhxo/bQ7S5pnJZz/h6kWIWtcT0Ec4iL3A=;
+	s=arc-20240116; t=1782317684; c=relaxed/simple;
+	bh=Sdzgqtv1Tmlni/DBclt3F/1Zy3gjhyQWqH2lmWCayf0=;
 	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
-	 To:Cc:Content-Type; b=bvaE5+iJnnx1doYcAcDkIWUmlKPethrZ0gbefdjNuL+zEr1DojZcxftjktvJCgUWQTnjdr93kWuHiV834J/0wF/luThdmoawJTuoI5vKo2etlUpuSnA7voOEAqkP9FY6Bl95tgjaSlLHs7PFl3FyUiK5ziDz7INBdiV6xDRuddE=
-ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=google.com; spf=pass smtp.mailfrom=google.com; dkim=pass (2048-bit key) header.d=google.com header.i=@google.com header.b=vs6HSUPc; arc=pass smtp.client-ip=209.85.160.172
+	 To:Cc:Content-Type; b=QbwpUNdeyLTv9Cwe6uHigoZisNa1YH7NAOJP0VzszSnaPHjYj0/gLuhTsxtar8gZgYdkzOETglmfihnV3IGbUmNQ0zZOE7J5pOm8Yz6yzYyL6oiZWIeolbj4zxznLgD0cUh1Xlrb45HpRqDqMO0bo3svro8nVF+JZYoS+7NO8l0=
+ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=google.com; spf=pass smtp.mailfrom=google.com; dkim=pass (2048-bit key) header.d=google.com header.i=@google.com header.b=N0a+C77s; arc=pass smtp.client-ip=209.85.160.174
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=google.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=google.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=google.com header.i=@google.com header.b="vs6HSUPc"
-Received: by mail-qt1-f172.google.com with SMTP id d75a77b69052e-519ed52bcc6so333021cf.0
-        for <sashiko-reviews@lists.linux.dev>; Wed, 24 Jun 2026 09:11:51 -0700 (PDT)
-ARC-Seal: i=1; a=rsa-sha256; t=1782317510; cv=none;
+	dkim=pass (2048-bit key) header.d=google.com header.i=@google.com header.b="N0a+C77s"
+Received: by mail-qt1-f174.google.com with SMTP id d75a77b69052e-51765331535so296811cf.1
+        for <sashiko-reviews@lists.linux.dev>; Wed, 24 Jun 2026 09:14:43 -0700 (PDT)
+ARC-Seal: i=1; a=rsa-sha256; t=1782317682; cv=none;
         d=google.com; s=arc-20260327;
-        b=NHeCNx6lQcOS2cjsUgwOqJ+4POei21j2OJq1CZAOWOBRtrbPIQchRdTKDb/5UqIt1N
-         WdCKG7WAzsNNp1dLDyh5J59DERV1dak5HD5xod10+dRnQGnlDP1LmlK8d7kKPGbTgqQ7
-         wbr2zFcpO6xXHyM/evPvf9jEeDtUNRwO/Q4AB3VWNVV0duiVS8D3smsrooagKw7goBgX
-         iPJyQCc3NmorUBVR1fOQJ3iJKKusrhoOL9+x0cDCSUOrBTcz4OJ7zEWieuw0lfXb9UuO
-         GG0lYzHR4Zj/fjkqL3KVj8DwMq52Iv9QJqTfcej1V8h+dchxc+nTYSaFqa+EhfaCTy/y
-         KsOg==
+        b=ovUbgh1ZmD27J2Nkt0earDv5rpIdarHqY0EiBTM+rA4VHpxvYBv6aH6qUN9PcLIbDU
+         njKU0bwr4dGC+uq3Zs8piObHh61h7X3OyNXCO7/5GUrgeWCr0pFssHBwmAQQvewwU7Rm
+         /cHLTs73I3XFNio0DmgCvtYY499gPg8ihxn6OpO6Mekpmt8D4Sa3ARlx2MbCxKegs/KP
+         +fDoCN5SgnoQ6fAmgWaOY+Azr49kjYKUogEG7WPnYZe+xd+iWqUwhDvptwBzbtOm6LqF
+         mR4mhAcCh0k/GvNBaCVprPOYD6btp50YFOLSre3K28nZUUD55X+dgkssXPUXowvDA8il
+         Sddg==
 ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com; s=arc-20260327;
         h=content-transfer-encoding:cc:to:subject:message-id:date:from
          :in-reply-to:references:mime-version:dkim-signature;
-        bh=03HlajHYUVXQega1jc/AIpR2MEQ1MKGT9erwN37eJR4=;
-        fh=udba0pH2dL4K77eaNcWQL+PuV/Tx2h93m7qfDF6b09c=;
-        b=TlzzSKMlKWU5ji/iqZ9f+EIBgenMPBuGqBT+mlvNmgEJDFx9nsrvWH2Q6/Cksj3hFE
-         KP5ir3xgnIO0EZU+0YXFsjukRNLq4EHQvo2darFv2owsbZUL/mI8J5YEoCfBPpY2TVo9
-         l7v20v9XM+SB8gkM6VJqSDA6Ma2+obQbxsHmsOgdhTkiADE3GT7uWtIewSsgoRxl5NXr
-         lQ/3yUXMq/M+kx2Hg4yvdXjm+Z90swulaco9y7tjuRZ8Ih3JHYdibTWI24sEGV8i13l2
-         kZVgyyxx18RIqdr098+uAJVh3J88vFW/K1orqmFOBGKXcIxA6QkA4tGRRKmOcBsS6qiG
-         0tFA==;
+        bh=L4jqqFTyVaEfw5oQOEDvCjggk+pjLmWqgC46xkeFBNE=;
+        fh=FveIH4/heLdjykJqUFaun0Ya0q5T+IXfEN37pnA+52Y=;
+        b=kbUyneDsuYisrcYggMFODPFtXvHK4/avoYOnj60OZOBUdg4JUlkELh32sNvWCEpyLS
+         nqkh8PgLcyEirmSCCMOnolABWLXPMdUq+XKDMUTPHQRcNgrN8FKfgBQPnB8J0C0xgIn4
+         8TBjcTP+1/0YGNJxZ+nka7hKoeMuLEkLSp/QN7X53761spsozYJxcuCAG4KXaFjjy0St
+         xWVZ1wXYyxWcct+HoPz1kxYVg8hi01g94/jX1jc8FxCPI8saMYcUpEejEVIO1bpu6uxG
+         xYGS7fnOkxqCCiCcB/8OU9kBSBNjhobx/YiF+SXKVtXKvY6wD41bMwjo4027ffpWn5r5
+         PEog==;
         darn=lists.linux.dev
 ARC-Authentication-Results: i=1; mx.google.com; arc=none
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=google.com; s=20251104; t=1782317510; x=1782922310; darn=lists.linux.dev;
+        d=google.com; s=20251104; t=1782317682; x=1782922482; darn=lists.linux.dev;
         h=content-transfer-encoding:content-type:cc:to:subject:message-id
          :date:from:in-reply-to:references:mime-version:from:to:cc:subject
          :date:message-id:reply-to:content-type;
-        bh=03HlajHYUVXQega1jc/AIpR2MEQ1MKGT9erwN37eJR4=;
-        b=vs6HSUPcoHPolvag1c+dYrHoayTMdTQfIoDd8aGZUvod0ozPftjxq7Ac+n0YRCAylE
-         jz0QWjLIqGmpLuS5MExGmZulGu1fkgFAWMrxERdK9eUOtoQ/G4BDnTGYRw4aS+pbu7zF
-         V7SlcnLPN5olHfe0Hm1P6KNW+KCccnfduu8Sp+GytXapYcwnIT2wAaVXhZ0dFUk5/zgo
-         OBaUPpC3TRdEGOtBGr5RTgFPUozbWa010HjLRmqhVv+2UCv/znprt0l2NFBMGyCbVj9w
-         nJj9aYBYZZM0+nZdc1KE70C2mvAqwr8ENmk3oLKf6Ypt/7avQYmJBLD2Fd32CM0Ep5bO
-         qRuA==
+        bh=L4jqqFTyVaEfw5oQOEDvCjggk+pjLmWqgC46xkeFBNE=;
+        b=N0a+C77s4PYXgC/RuSsGwKG7dxp5BB7zB2jzx2oQV+dTjCNU7sI8+u+r3RuTzSs/vu
+         u+NyGQr8/f1aNRi2dvRlfFl4HERRJwBDaJ+BfuaqyCjyILXxjKBdXmsMCx6jfb63IHju
+         7rCVAEujhwRiz6/eGrWRS0Jjd0mktbQqRnnszIrpBeaU0DtodgCw5/y60DFtzs93DVmh
+         l0+N8rhdCtXWVDWTV/PVMLaGOui5BFwYA635tf7sfCW4GywPDMmnr+vWeMUwAroipKu6
+         rKjGwaBbifnA8NhmO5qCzYaA989CUC74v95D7MCdNmzKGYsKRQoK55bCvOM3iQd/KxDZ
+         nJlA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20251104; t=1782317510; x=1782922310;
+        d=1e100.net; s=20251104; t=1782317682; x=1782922482;
         h=content-transfer-encoding:content-type:cc:to:subject:message-id
          :date:from:in-reply-to:references:mime-version:x-gm-gg
          :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to
          :content-type;
-        bh=03HlajHYUVXQega1jc/AIpR2MEQ1MKGT9erwN37eJR4=;
-        b=ToWgSSwBUQ9be6LyR+/zaqfUp4BK36MC/uect5uKAr9yTZQgS22XLwHXp5V8hzb19a
-         UTq/L0uA18ITw2EdYf9hQzvKzPRU1pzY7HaKUUdv+dxTcbeyXqG9QlKxtCyPd0ckhjtl
-         1XZEeoEUxnJEql2YSAHYW5GAnXRoXajrYxhrpcYeWwwm6r5GCzSU9iF23Gb470PhUkNl
-         diUTF1DozuqdiUg8N5gaj7txfrdDJrWAkRWfRKsQGJFEHTJq36Ai5ztt5kRZiq9LESAT
-         c7d0qXEtiSgIv5uZCOB4mXCMDnJtZe5n1EilnOuAAq1KK/Maf3LHxQYBxRuln3pxE3MD
-         0uXw==
-X-Gm-Message-State: AOJu0Yzm9iDiHZEzzUmsUawNKCX0L/8HA1YbwqNZlSojDCU0KW8IbHSF
-	pNq1nflvNtTP5epbhIn74wC+kRpU+UGXZtBjVD3XazqTueC2avTNOTEg6F5Qcgjo4LlZDlE9RFe
-	fJ0t3RL9MQXJ9xoiOYe7jqgSeON5M8H1FhcpPZ82u
-X-Gm-Gg: AfdE7clpGpcEjG5AjqB2dI7EA3fL/8BHM+Ccw/qDr773n3wXbWVdnE2Ee7AlMWTo6vu
-	hO8di3ogWfSWuwfgg/WHRXVz0Njbi6jixDuwN7mHQzLfkV4q5SaxCvgNyWu45WdFevO/koD9/u6
-	+6vl4cCdDpEKxrzoDTMfs/vZER4iYug4gPgy5BmldPV4P9TP+RErxhGT4ryyAGTPcM8e/hk2cBq
-	hK7zvPRzhYiJhk3p4ogPQSUAtKpKAGx+SY0Jn0zJSnnxFE+YBHnu7l8+EPhhYxHYic5UrRrCmBP
-	CsyxusQEqlksvWfn/vtvvJAvijU=
-X-Received: by 2002:ac8:5d46:0:b0:516:4f62:85ee with SMTP id
- d75a77b69052e-51a628a18f2mr177831cf.19.1782317508374; Wed, 24 Jun 2026
- 09:11:48 -0700 (PDT)
+        bh=L4jqqFTyVaEfw5oQOEDvCjggk+pjLmWqgC46xkeFBNE=;
+        b=NQVHlLFys6yX+YNP58+acdOw15qVPOzzx2xUWDRHAgbUtRzVUfimC6zNFgJqj4KkvH
+         sk9yr+YFhIffuPKDAva0R0qZtw+en60kB9qwBQpbkfnWk40AW5dEHQXsbItJtgYE9cmq
+         FoIOWqmvOSbi+K9S3M6o8s1BHXGzwJ1uLSW85VhoiLOtapWRZVNxpTBjbz8I0sqprYVd
+         /oRJvCPqGdyrNnTYTl1NlRv6BLMpOVeq5rjApRVLEmcvnUOMkQf6+49sf6gETUfIrtjb
+         UmeBHpXyggsn4Qi3JDQ6PSaGeB56ijVvd9NFOQRehs6eXqTwgy0pgjqhf/25XN64kvDl
+         Rv0Q==
+X-Forwarded-Encrypted: i=1; AFNElJ8Wf3NIJwPK2wd2ttod/4CnZ312ex4WMTDELn7/zSJmYiZVSh/ALxEXQyhnHgDO7XApp3XJjB4l6di4k7YqxU0=@lists.linux.dev
+X-Gm-Message-State: AOJu0YzlKNymKmRbPH7X49B+jLrHPOHdmxZHy/mc9OFV9eIfwZ1vmZxv
+	DaAzk1oXVS0zw5BGPGL2xPc9pSIqhKz8fh4Ter7C+wx5WcSIqO9GWeXSDLUK05dQn8ZQHoy0Q9z
+	IxVzB5KSIgWKk8G2/He/q9rUZmRhddb5b71KFo3rd
+X-Gm-Gg: AfdE7cly1BksYuMx5dD943p4vmh07uGOa4ctG4gXycv148UhroON9prv8AmX/+ZZnQj
+	vW2y1ATyfErIROIGhYCWuP7NDHYZ8gVFDTxSFmSewZVI4IgeyQ9IQXMJ8Q6WiOVwJxDBJEt/6FL
+	nlVrzRCM/yItlOcKZki8jvIrNN8xrLPViVoJG1mPS4R60kJPCtO/rALxiJjOCahi3p16bBkHiIq
+	CWi2LRoNLaOBFWnrQRpfx35tEeK00crpJkDncJHLG435Nrb88T8yKzv8usPEgjSg+iTUzEh9+1E
+	USbrQQps5RFn9Odm7rXg+THAu0w=
+X-Received: by 2002:a05:622a:14:b0:519:df4f:6c93 with SMTP id
+ d75a77b69052e-51a617dba42mr10324841cf.20.1782317681383; Wed, 24 Jun 2026
+ 09:14:41 -0700 (PDT)
 Precedence: bulk
 X-Mailing-List: sashiko-reviews@lists.linux.dev
 List-Id: <sashiko-reviews.lists.linux.dev>
@@ -82,72 +83,56 @@ List-Subscribe: <mailto:sashiko-reviews+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:sashiko-reviews+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 References: <20260622-alloc-trylock-v2-0-31f31367d420@google.com>
- <20260622-alloc-trylock-v2-5-31f31367d420@google.com> <20260622101024.B89C21F000E9@smtp.kernel.org>
- <DJFI39RWHV1O.MMMMMZSK8E8C@linux.dev>
-In-Reply-To: <DJFI39RWHV1O.MMMMMZSK8E8C@linux.dev>
+ <20260622-alloc-trylock-v2-6-31f31367d420@google.com> <20260622101056.4120C1F000E9@smtp.kernel.org>
+ <DJFI4P57YE9X.20DPMTK9LL7LW@linux.dev> <ajm_dEqauYLBi-7T@google.com> <ajnTJ03IxVnBXWdp@google.com>
+In-Reply-To: <ajnTJ03IxVnBXWdp@google.com>
 From: Suren Baghdasaryan <surenb@google.com>
-Date: Wed, 24 Jun 2026 09:11:37 -0700
-X-Gm-Features: AVVi8Cc2zHvrDuEdKpPHHKmUg2PGDzxosR3pi7Y0Yans9uRd-KXWtfdx2gyhT20
-Message-ID: <CAJuCfpG9SS+-3St3jBqku3mJrZ4+OQpiuKkZSAaL7r3r4AbtmA@mail.gmail.com>
-Subject: Re: [PATCH v2 05/13] perf/x86/intel: Use higher-level allocator
-To: Brendan Jackman <brendan.jackman@linux.dev>
-Cc: sashiko-reviews@lists.linux.dev, Brendan Jackman <jackmanb@google.com>, 
-	linux-rt-devel@lists.linux.dev, linux-kernel@vger.kernel.org
+Date: Wed, 24 Jun 2026 09:14:30 -0700
+X-Gm-Features: AVVi8CfUZG4ru4sHeWtIPbsYQyBEOrJbLz3f3SZdi_mmHQdVijFR8buxYw7ygJ4
+Message-ID: <CAJuCfpEUZ-xL7ebW21Q=5wXDFuJSeh52Ei-8YLsRUdXiB5NiYg@mail.gmail.com>
+Subject: Re: [PATCH v2 06/13] KVM: VMX: Use higher-level allocator
+To: Yosry Ahmed <yosry@kernel.org>
+Cc: Sean Christopherson <seanjc@google.com>, Brendan Jackman <brendan.jackman@linux.dev>, 
+	sashiko-reviews@lists.linux.dev, Brendan Jackman <jackmanb@google.com>, 
+	linux-kernel@vger.kernel.org, linux-rt-devel@lists.linux.dev, 
+	kvm@vger.kernel.org
 Content-Type: text/plain; charset="UTF-8"
 Content-Transfer-Encoding: quoted-printable
 
-On Mon, Jun 22, 2026 at 3:20=E2=80=AFAM Brendan Jackman
-<brendan.jackman@linux.dev> wrote:
+On Mon, Jun 22, 2026 at 5:29=E2=80=AFPM Yosry Ahmed <yosry@kernel.org> wrot=
+e:
 >
-> On Mon Jun 22, 2026 at 10:10 AM UTC, sashiko-bot wrote:
-> > Thank you for your contribution! Sashiko AI review found 1 potential is=
-sue(s) to consider:
-> > - [Medium] The commit message factually misrepresents the API differenc=
-es between `__alloc_pages_node()` and `alloc_pages_node()`.
-> > --
+> On Mon, Jun 22, 2026 at 04:04:20PM -0700, Sean Christopherson wrote:
+> > On Mon, Jun 22, 2026, Brendan Jackman wrote:
+> > > On Mon Jun 22, 2026 at 10:10 AM UTC, sashiko-bot wrote:
+> > > > Thank you for your contribution! Sashiko AI review found 1 potentia=
+l issue(s) to consider:
+> > > > - [Medium] The commit message incorrectly states that `__alloc_page=
+s_node()` allows passing `NUMA_NO_NODE`, while the opposite is true.
+> > > > --
+> > > >
+> > > > commit 7bd439c242125db27305b61b14c9972fb028282a
+> > > > Author: Brendan Jackman <jackmanb@google.com>
+> > > >
+> > > > KVM: VMX: Use higher-level allocator
 > >
-> > commit a5667683e56825d97c5814c0349e4de3300e3e14
-> > Author: Brendan Jackman <jackmanb@google.com>
+> > While you're dealing with nits, can you massage the shortlog to somethi=
+ng like:
 > >
-> > perf/x86/intel: Use higher-level allocator
+> >   KVM: VMX: Use no-underscores API when allocating pages for a specific=
+ NUMA node
 > >
-> > This commit switches the memory allocation in dsalloc_pages() from
-> > __alloc_pages_node() to the higher-level alloc_pages_node() function.
-> > It also updates a comment to reflect the API change.
-> >
-> >> The difference between __alloc_pages_node() and alloc_pages_node() is
-> >> that the former allows you to pass NUMA_NO_NODE.
->             ^^^^^^
->     Sashiko is correct, that should say "latter".
-> >
-> > [Severity: Medium]
+> > "Use higher-level allocator" is extremely vague, and arguably misleadin=
+g because
+> > the "allocator" being used isn't changing.  Which is kinda the point: *=
+nothing*
+> > is changing in practice.
 >
-> Seems like an inflated severity rating, this is basically a typo in the
-> commit mesage, and anyone that noticed it would probably have realised
-> what happened.
-
-With the fix of that "extremely medium severity issue",
-
-Reviewed-by: Suren Baghdasaryan <surenb@google.com>
-
+> Maybe "higher-level allocator API"?
 >
-> > Is this description of the API differences accurate?
-> >
-> > Looking at include/linux/gfp.h, it appears the capabilities are actuall=
-y
-> > reversed. alloc_pages_node() is the function that explicitly supports
-> > and safely handles NUMA_NO_NODE:
-> >
-> > include/linux/gfp.h:alloc_pages_node_noprof() {
-> >     if (nid =3D=3D NUMA_NO_NODE)
-> >         nid =3D numa_mem_id();
-> >     ...
-> > }
-> >
-> > Meanwhile, __alloc_pages_node() expects a valid node ID and contains a
-> > VM_BUG_ON(nid < 0 || nid >=3D MAX_NUMNODES) check, which will crash if
-> > passed NUMA_NO_NODE.
-> >
-> > Could the commit message be updated to clarify that alloc_pages_node()
-> > is the API that safely handles NUMA_NO_NODE?
+> no-underscores is just.. meh :P
+
+It's overall a good idea to add "No functional change intended" at the
+end of the changelog in all these cleanup patches.
+
 >
