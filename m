@@ -1,114 +1,144 @@
-Received: from mail-yw1-f178.google.com (mail-yw1-f178.google.com [209.85.128.178])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D7E7A3E5A05
-	for <sashiko-reviews@lists.linux.dev>; Wed, 24 Jun 2026 21:07:14 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=pass smtp.client-ip=209.85.128.178
-ARC-Seal:i=2; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1782335236; cv=pass; b=baaxMRv8KiJ1PtciKFEM+qEMkUKKyrEe5M5iucxYbJfTPdvJROqwuc67rYCQKYwo8E0tuu6qV+MBp+dhK7U5+2nIWO3A0COTl79e8GqMTkRrTUao4OLs5vCdIHhl1VB1W8YEpOUgM2qio0ZXFethd2tn+8xggBfHknE7mVmVwcs=
-ARC-Message-Signature:i=2; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1782335236; c=relaxed/simple;
-	bh=41gHxPt7HUxFBkNkDE3LM0TVD4IOiCpFU2mOz/M/aAM=;
-	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
-	 To:Cc:Content-Type; b=Ee7vO9mNR2prkD87egeQTNrnghDiVLQ/DMrq+qkqS8UDXKhObrC1HcGSDPLzrCrjqEMmLfZDaWKl3vCv0794dl/dVhW2XR1XD7VZksnNfeW9+4oE+chfRRwBDuIG6/k3QPvlm8X+MN/FP7ahmMAdquzPPqnBVFpKKnSS6wSWmrU=
-ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=My810cEE; arc=pass smtp.client-ip=209.85.128.178
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 905AF1F03DE;
+	Wed, 24 Jun 2026 21:22:07 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
+ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
+	t=1782336128; cv=none; b=WPsJaIw6efJfAzXpeihAtLcpXh0513x8zAF+RY2+0Od8kFiwgnvyocoLM+XH9wLR31/63vF0sR++aljy3p0MBt0ofUNPToMRxhBr5SbRki1d3wAFzOpuonXfrvj7OLcRP7vmJ9M6lEWECVbiD9h7xRzcKF30J47ZeLhqCc4jvvk=
+ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
+	s=arc-20240116; t=1782336128; c=relaxed/simple;
+	bh=Qmwc5gv51dRHM+VDXxrnHsD2BieEbpPWfqIFgSieJug=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=sissrEmgqIS6N3C36utkNA//JXINtJ00hEn4zzixvTa59eEl8npTovrV9kgqFrruyoJPtG1wwGbROl80aJBrSUFyMUvU5/TvFeQ5rQLjSzNPpU3LX1msLwujHlWaUNdO9dJOBa3LKOLAoFWl3T5pEH9EaFn0WeQZnOpYJt8lFNE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=ilxTVg0/; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="My810cEE"
-Received: by mail-yw1-f178.google.com with SMTP id 00721157ae682-806449d108aso20375567b3.2
-        for <sashiko-reviews@lists.linux.dev>; Wed, 24 Jun 2026 14:07:14 -0700 (PDT)
-ARC-Seal: i=1; a=rsa-sha256; t=1782335234; cv=none;
-        d=google.com; s=arc-20240605;
-        b=ijNz/t6JARw+OeMBE6gZ/Z2AJ2xvLrVrsVpHOh/6+DUUm9LAF2xH14KKq4u1KPtrVQ
-         ENaxHCrvRlRxiCBG3kex96ahSoTVDpozqwzx+cgpWiBYLIcn2Ql0tCJJR+e/GbuQF16i
-         14QPwVf6bNzweB9gaOVsDm+890K66Ob1t0HuxUujGZ3s5eo0wx4T0BRrZGNs4sCbjyyh
-         KMZXG+iVjk7DQhDw8tUI5TFa/Fu+Eial3SMTHUSMRbOkZ/JS/+XYcelxSQtW2WrBNLG8
-         nfBdni64Ii276/0DyMZxwHDYqz0SuSvI/4zsM96NsTh6lrnvOIYUyfgrkt6QObiWSx1k
-         XFag==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com; s=arc-20240605;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:dkim-signature;
-        bh=41gHxPt7HUxFBkNkDE3LM0TVD4IOiCpFU2mOz/M/aAM=;
-        fh=9+UbgyY1ZWC2J7dzZW8G17BO0JbabJj9TMd/QWMVoDQ=;
-        b=Rhq/k8ojOLcILWVze0xtazzUpttdPtP7DlsQct4oMuefKSgMJBhiwAyqRqZLlCkDmP
-         FWwbMt0KDvC5wqRtirEAIoCGnA1g7aCJTNTc4rZVQ4azUW+WSjiKPsthB7b/QF/EqOm/
-         aAnawdAc1OaKydXYzlD87rUTWPsEdgT7+o7Tem3spy8kKWCNRxjFhVTicvAJsL9JKMIK
-         znJJd/PWqds8HYjJVj3yu4HisM+QCC2RdYw4Qir/jJLPgE1MT5UVV6E4pAV8HUGxotsd
-         ALXy269pCTA/9JTJNZD1iicKmqsJdgHFAxqb8HMOOh6qdVQuOYYvr3uwoIOsiUYchvO9
-         0ltQ==;
-        darn=lists.linux.dev
-ARC-Authentication-Results: i=1; mx.google.com; arc=none
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20251104; t=1782335234; x=1782940034; darn=lists.linux.dev;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=41gHxPt7HUxFBkNkDE3LM0TVD4IOiCpFU2mOz/M/aAM=;
-        b=My810cEEhyzjbjQaUw+rt7I6Hr4m55HKX2WoyNMKm0lKrzT0RQAnuMdq8ozb833DL5
-         s1OpX3rFWF6WROQBVtWCxz8Fo+wKjkGuL3sIbOAWo713Yrei2eTtEmS63YIVSC8923tW
-         702+/VA3dRt9EmtrvXW8b+DzdjtDyfnrShlXFHMzKB2uuh6c/BirKK4t3tDstdUX+muU
-         glv+3VlIz9kTDZaVcrOIVkGkXFjcoJgwmAJuMNH9TTtxVCpd8GNeod5Wi/V3nxzpg+Hp
-         Emip/IjZa6GsEt549VZ67pFQbOR8ADDWdETK9Bq5HJ6xGftCkrsIVjYhJS7yg+/CbljF
-         9WzQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20251104; t=1782335234; x=1782940034;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:x-gm-gg:x-gm-message-state:from
-         :to:cc:subject:date:message-id:reply-to;
-        bh=41gHxPt7HUxFBkNkDE3LM0TVD4IOiCpFU2mOz/M/aAM=;
-        b=LPZUWtpYJ00hx0MF3WKsoSLZmVeXS0Pj4Sxk0fcKpPUj8CrxZfTnkVaNVuztRp1oQZ
-         pMVql2RJDN6qjEYdtja40mD+KETxl+qTuEDr9BUcPgBD8AUdEX9CTbndbFupos1r50yx
-         E4KkaPiSipawES/8ma5bmOS+iDJunSYVee9RLiaZN4QUCkGAWoi4JB2dtExSzDWtDMTv
-         2oJBInCohOGw2VxcQGJxMKwB1IBJWoqweSL9Q3s46OLbxtUZMmRHjNK3KLL9hySwE40I
-         JkvAoT7hUKgM5+hXpn3VOSGILt+5ahn3T5bRazy5zGe7qmVYz8RIcW/bExvvQdBMPMOm
-         cgzg==
-X-Gm-Message-State: AOJu0YxM9GRRwz3Ovi8mUzP4BtHNANUMRemlUAskLHJrjOjUiFVPP3nX
-	MKE1GzUwBW/djO2/hxSTtJdSshtmpOUObNDl2+L3vmHNRc2h14VcgR6i9J5PS/KmqBNQ+HcSfeQ
-	egBwbDd/ruiV+2Lkp0nBGk0IrsRlcG8A=
-X-Gm-Gg: AfdE7ck2bpnEYGpXQLEuPPAJQzQyYuaRAD8cJLZNA6UEYyKoEAaTjblWImu4EIz0Fnw
-	PAfcx+eC1DyYF1oymRKcN7Acwn/DxRgXBWTDRZ0WlPrkj8SM9+Jxa6mQH6Gsw3ppk+InINTVLi6
-	Fbf+ISZdeq8Xbx63UNovah/xnu5yrLGnZnoyMshs2g9ruN5IFu99PchQxQ7KtuC6KRdkahF8Y/O
-	guHaUSxyJ263K9NoaVoSiJp3upy0whPjjWqZRGpwh2wLh/pqdnX+M8I6pTA+vpD5LeNmFQZeUww
-	VquO8FnYJdiV8EIVi6bKTwDyihpfq7/XH7q7K/wE0inMs+yABei5aNhUF3o=
-X-Received: by 2002:a05:690c:e3eb:b0:7b2:bf20:cdc3 with SMTP id
- 00721157ae682-807eeb6f49dmr52477487b3.0.1782335233754; Wed, 24 Jun 2026
- 14:07:13 -0700 (PDT)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="ilxTVg0/"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 346481F000E9;
+	Wed, 24 Jun 2026 21:22:07 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=kernel.org;
+	s=k20260515; t=1782336127;
+	bh=qHn85mFbXT3jrShdWQ4xG1gA+rAj4XQZoF0cMI3Wlds=;
+	h=Date:From:To:Cc:Subject:References:In-Reply-To;
+	b=ilxTVg0/mKu/VPZq1wdy9bmvnyTUvXoDZEJS7bnrKahMpX7/zT38VHFIXOT8NXlxh
+	 DXdO/Z5+xrJsMryyUrX0krp+ENhiyBIhWZ5oqXkjNeNqM1db96jhQuf3aAhYq3+OCz
+	 1lJeRlP2amtPnBCNr7o2coYJ3s/GAMWO65fdDF2wxEGNz9AlcZTiA5uJZCYaT+nSON
+	 V5QLvt8N32NAcqJhbflo8PnzcSCRrNw5Imh9THULmMFG/YKTWHy/zB5zrrqSvZk7Sa
+	 gBbJD5TvTVpQEqsfsZkM7/7hBcFEAYHphF+vvcSz4HrsvZWphuO9H2kEXlHd2fuKLT
+	 Po4gYyoXdQRpQ==
+Date: Wed, 24 Jun 2026 14:22:06 -0700
+From: Oliver Upton <oupton@kernel.org>
+To: sashiko-reviews@lists.linux.dev
+Cc: kvmarm@lists.linux.dev, Marc Zyngier <maz@kernel.org>
+Subject: Re: [PATCH v2 2/2] KVM: arm64: nv: Treat S1PTW permission faults
+ specially
+Message-ID: <ajxKfk5elMbcNuSb@kernel.org>
+References: <20260624202446.1698535-1-oupton@kernel.org>
+ <20260624202446.1698535-3-oupton@kernel.org>
+ <20260624203516.E76241F000E9@smtp.kernel.org>
 Precedence: bulk
 X-Mailing-List: sashiko-reviews@lists.linux.dev
 List-Id: <sashiko-reviews.lists.linux.dev>
 List-Subscribe: <mailto:sashiko-reviews+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:sashiko-reviews+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-References: <20260625-bpf-htab-task-work-uaf-v1-1-31e711ccb159@cherr.cc>
- <20260624193149.3EE921F000E9@smtp.kernel.org> <ajxEE59cuz9XUWMV@pve.cherr>
-In-Reply-To: <ajxEE59cuz9XUWMV@pve.cherr>
-From: Alexei Starovoitov <alexei.starovoitov@gmail.com>
-Date: Wed, 24 Jun 2026 14:07:00 -0700
-X-Gm-Features: AVVi8CdU58htoB5Js73L8sSmYdKMl6WQEpVsEYhmQ9JMyh58gXCYVNgBn07RzCk
-Message-ID: <CAADnVQJeMsZWpJavHz-X0h3VKEMRN-xhHy-wpOOqFB3dA=pfDA@mail.gmail.com>
-Subject: Re: [PATCH] bpf: Fix use-after-free in htab elem with bpf_task_work
-To: Shengzhuo Wei <me@cherr.cc>
-Cc: sashiko-reviews@lists.linux.dev, bpf <bpf@vger.kernel.org>
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <20260624203516.E76241F000E9@smtp.kernel.org>
 
-On Wed, Jun 24, 2026 at 1:55=E2=80=AFPM Shengzhuo Wei <me@cherr.cc> wrote:
->
-> On 2026-06-24 19:31, sashiko-bot@kernel.org wrote:
-> > Thank you for your contribution! Sashiko AI review found 5 potential is=
-sue(s) to consider:
-> >
-> > New issues:
-> > - [Critical] Unconditional call to `check_and_init_map_value` on inline=
- element memory causes out-of-bounds writes for per-CPU maps.
-> > - [High] Dynamic memory allocation (`kmalloc(GFP_ATOMIC)`) in the eleme=
-nt free path breaks NMI safety and causes memory exhaustion.
-> > - [High] Permanent bricking of `BPF_TASK_WORK` fields during in-place m=
-ap updates.
-> >
-> Will try to fix in v2
+On Wed, Jun 24, 2026 at 08:35:16PM +0000, sashiko-bot@kernel.org wrote:
+> > +	/*
+> > +	 * S1PTW permission faults do not provide sufficient syndrome information
+> > +	 * to determine if the fault was for read or write permissions. Perform a
+> > +	 * read permission check and an optional write permission check, relying
+> > +	 * on the fact that:
+> > +	 *
+> > +	 *  - The table walker at minimum requires read permission
+> > +	 *
+> > +	 *  - The L1 hypervisor also needs to deal with the architecture and
+> > +	 *    cannot directly infer the failing permission from the fault context
+> > +	 */
+> > +	if (kvm_vcpu_abt_iss1tw(vcpu)) {
+> > +		forward_fault = !trans->readable;
+> > +		if (write_fault)
+> > +			forward_fault |= !trans->writable;
+> > +	} else if (kvm_vcpu_trap_is_iabt(vcpu)) {
+> >  		if (vcpu_mode_priv(vcpu))
+> >  			forward_fault = !kvm_s2_trans_exec_el1(vcpu->kvm, trans);
+> >  		else
+> >  			forward_fault = !kvm_s2_trans_exec_el0(vcpu->kvm, trans);
+> 
+> [Severity: High]
+> This is a pre-existing issue, but does this logic miss a read-permission
+> dependency check for normal instruction aborts?
+> 
+> If an L1 hypervisor maps a page for L2 with Stage-2 PTE AP=00 (no read/write)
+> and XN=0 (executable), and L2 attempts to fetch an instruction, the hardware
+> generates a Stage-2 Instruction Abort (Permission Fault) because execution
+> requires read permission.
 
-Do not. There is nothing to fix in the first place.
+This does not match my understanding of stage-2 permissions. S2AP
+controls data permissions, whereas the XN field controls instruction
+fetches. The pseudocode also supports this view, where execute
+permissions are computed separately from S2AP:
 
-pw-bot: cr
+AArch64.S2DirectBasePermissions()
+"""
+    S2AccessControls s2perms;
+    bit w;
+    constant bit r = permissions.s2ap<0>;
+    if permissions.s2ap<1> == '1' then
+        w = '1';
+    // Descriptors marked with DBM set have the effective value of S2AP[1] set.
+    // This implies no Permission faults caused by lack of write permissions are
+    // reported, and the Dirty bit can be set.
+    elsif permissions.dbm == '1' && walkparams.hd == '1' then
+        // An update occurs here, conditional to being able to append to HDBSS
+        if walkparams.hdbss == '1' then
+            w = if CanAppendToHDBSS() then '1' else '0';
+        else
+            w = '1';
+    else
+        w = '0';
+
+    bit px, ux;
+    case (permissions.s2xn:permissions.s2xnx) of
+        when '00' (px,ux) = ('1','1');
+        when '01' (px,ux) = ('0','1');
+        when '10' (px,ux) = ('0','0');
+        when '11' (px,ux) = ('1','0');
+
+    x = if accdesc.el == EL0 then ux else px;
+    s2perms.r = r;
+    s2perms.w = w;
+    s2perms.x = x;
+    s2perms.r_rcw = r;
+    s2perms.w_rcw = w;
+    s2perms.r_mmu = r;
+    s2perms.w_mmu = w;
+    s2perms.toplevel0 = '0';
+    s2perms.toplevel1 = '0';
+    s2perms.overlay = FALSE;
+
+    return s2perms;
+"""
+
+AArch64.S2CheckPermissions()
+"""
+    elsif accdesc.acctype == AccessType_IFETCH then
+        if s2perms.overlay && s2perms.ox == '0' then
+            fault.statuscode = Fault_Permission;
+            fault.overlay    = TRUE;
+        elsif (memtype == MemType_Device &&
+                ConstrainUnpredictable(Unpredictable_INSTRDEVICE) == Constraint_FAULT) then
+            fault.statuscode = Fault_Permission;
+
+        // Prevent execution from Non-secure space by Realm state
+        elsif accdesc.ss == SS_Realm && walkstate.baseaddress.paspace != PAS_Realm then
+            fault.statuscode = Fault_Permission;
+        elsif s2perms.x == '0' then
+            fault.statuscode = Fault_Permission;
+"""
+
+Thanks,
+Oliver
