@@ -1,80 +1,80 @@
-Received: from mail-pl1-f181.google.com (mail-pl1-f181.google.com [209.85.214.181])
+Received: from mail-pl1-f170.google.com (mail-pl1-f170.google.com [209.85.214.170])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 05E48330662
-	for <sashiko-reviews@lists.linux.dev>; Wed, 24 Jun 2026 16:53:20 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=pass smtp.client-ip=209.85.214.181
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D2A9B33BBBA
+	for <sashiko-reviews@lists.linux.dev>; Wed, 24 Jun 2026 17:01:55 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=pass smtp.client-ip=209.85.214.170
 ARC-Seal:i=2; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1782320002; cv=pass; b=B+eoDawx4zesxnTo5Ihdfim8Mbl/bR1mdF9jLrrw87dLNNClX+OB+CAzdE7ni39kTDKqSFH0Sps2W8TvcSgyQ0k9Zs0RSbm+9jL3ESFIRAlH8QA4DkHJPhnl6VxtrBt5EL0Z0LpkNUE41LM/uY2vFqT4sbKwoeHw4SeqtFn59NE=
+	t=1782320517; cv=pass; b=nlD3xjoK2+XAiZr2AXLKaH011v9bg5EP4jzR5Qrm69Qd1l8SqCNHBFLPyriVYPE7ITp2vCYC6eHP9NlCCgBncUGQR1cKEs+Jnnoovjc8hxN5puqB5Mi/8q3y7r5eBVG2ugh9HQBQFsipvKC9J/l8Dd3Iv7H8XYZjTgfATdBxLN0=
 ARC-Message-Signature:i=2; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1782320002; c=relaxed/simple;
-	bh=1YKOn6iykGR+PpfgAmVKfnTkua3jmSo3nJ/j1AVT4Gk=;
+	s=arc-20240116; t=1782320517; c=relaxed/simple;
+	bh=IEnlcR40Ofp2M9bOp50jNBFJL7CwLeUtAjIhQ6M+58I=;
 	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
-	 To:Cc:Content-Type; b=FmV//ZHazZsCsxSGi1EO3nKxAEcT8t/A8wC6ib9onnzlreXPuECGc5dDklIJZnl+e25u+mHqU6olJV+A80neBPMqHEVzgALu1wzQlTh0aTsyEYmO2pXBOg4cgmapdn3g6ofMo8XJFGHpLiaelm9xui3kzVKXGlyGzru84iRY3Bg=
-ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=AN41GLqM; arc=pass smtp.client-ip=209.85.214.181
+	 To:Cc:Content-Type; b=gHheKO4GYMbFRpEaYwml3xaYuEDBdz/8FJxr9q8BcPgSqn/6SoLDNgm9ZstEQsIoVzL9e+pjdt3Q9lwIzm6xY9OZxRgekUV3fDVBNRmaHzPwBNDY1EbXk2Kuv5BUR9vcQnfg2i13aHJOmfhLUP9Su/okmNoBo1EjEU8M2YQZc5M=
+ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=mptxPDSU; arc=pass smtp.client-ip=209.85.214.170
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="AN41GLqM"
-Received: by mail-pl1-f181.google.com with SMTP id d9443c01a7336-2c7cfa17fedso10274435ad.3
-        for <sashiko-reviews@lists.linux.dev>; Wed, 24 Jun 2026 09:53:20 -0700 (PDT)
-ARC-Seal: i=1; a=rsa-sha256; t=1782320000; cv=none;
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="mptxPDSU"
+Received: by mail-pl1-f170.google.com with SMTP id d9443c01a7336-2c7f385883cso1804385ad.2
+        for <sashiko-reviews@lists.linux.dev>; Wed, 24 Jun 2026 10:01:55 -0700 (PDT)
+ARC-Seal: i=1; a=rsa-sha256; t=1782320515; cv=none;
         d=google.com; s=arc-20240605;
-        b=TR4mq4hi0eXwQE0/s+7/6fWimFla826OXTHIDCcKXYFbjjr4OvpxrWcIYEnfo4N/FZ
-         /RPf+0rLL8yXB4qzSlQ5D+rlcGP1ZBWHrIyaKyGuR4VozZ4Pun6c/LLixILThCa85PDs
-         x+kMP36J6pnz7MrcdA9DCj/gVW0pALW1Q4MzCsS++hTzWtP7I7UoHhvOk2x2/1aTDeWU
-         o1cJcHVkYtKtl5ulHBp2SuvIgB+NBoOkgtsqy7IrV6hgtnvo9g6O36N7ttj/4r/eSpt9
-         U8gAhxwQP8g+/pooF1UKlvtQ0/I0nmwKAegX6wxR5CBj6MCYuM++r1PEPdMlv6A/kYvL
-         QUsQ==
+        b=DLlAZna5px/fEt1bF6d65tJYSHlb1chPkZrjfRFby6UbF0hDd/cirtDAkU08sJZWpm
+         XOmzr5Zbp54Et/OunS22l0gQWtEwq3YF+Cju3kiUnFpqjiTL+gAjKGKKqdswgDWI4Koj
+         ar/MOKJXOQWgtJiDzF0K4zomRjmWF182+jdlrDVIQ0FrrKGLzslEsxj0bm5lv2rmtSvM
+         z9K3ZZed6L8j5QYSVMOzOTtEcLpkurvbNsSl6geL2+OtmrlzyR7p+VHlJXRAdIYAN7lZ
+         TDBk4cm/n03AMWQCfCmt2FkKxdQhQZWO9J6a1wGDiLkD786PO3r1dkX4mZVFzwWhruO1
+         dKAQ==
 ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com; s=arc-20240605;
         h=content-transfer-encoding:cc:to:subject:message-id:date:from
          :in-reply-to:references:mime-version:dkim-signature;
-        bh=8BIRn0WlxcOKwd3gT1ODjWCiP9As9Dq4sSxam8CvvJo=;
-        fh=mTP6TkWV1IhQRgyhsEpYqIpiXvhDlZKdHAfNRdOTDjk=;
-        b=CzRChLFAVztfjtiTEpGEWllZereGc3iRyiX8fD8NJlWGLpz0v+is3Y1/oax2qZigk2
-         uSF9/6TpLiSamboDa03WXadcrJpLOG1NC9TR0DgQdQrIHkQmHn3/LUBdQkBQLXyHd1lc
-         egl+VwkWoX2M7jVoVXoiUQVux88VVnmveDd+qGzwngEfFLXqfuItBON59iD6FUt7WKt5
-         6KOMxAe7+ksX7h3+JCFmgLWB1RhMjLD/lyhj8fwxcwsyNVysGW8vZeB87Cp8GliFnsxS
-         6vLh9AsQPUzptAeIz1PXOJXQS1N9F9m+VMylgJ5mEDISQcoz50HAQTDxzZt40NVLb+jX
-         U7hw==;
+        bh=kaOi2FI8KJXRo8Ej4CH3FqXJaSTUFin19ugye02gcZc=;
+        fh=R7ITYP0dP+GTNq1raVt0oZn7mapsqsrv19YFdFDXlX0=;
+        b=LVwELfpBv3/clUtFPMx4O3hBcoTnx6ABrdvumNazoZbdERdoVDGlrbqwTpXj/rQHAH
+         ZW2iRfuhqzj+PZ5Z3gXVhjJloawFuNBoHaIkLn9EOaB/Iivcj6wDFuBe83PbZDpyWcgv
+         9Ou/ELiOpAAD5wKku8tS96KvG37NzdWKx+IMlMWNteoTdIglpOVEsPDwyAui5RLaPxqL
+         TzNlIKjmNuVnHOrOt21wMBGM7LOuc14Y8uFkiTIWSWHNs2JpWxGKQ2/dYusOOdcdqOxV
+         9HLBQqsKw3SA/zY8jjsH4kRRVVQhVkKHPeXVArJHzI9sD+jPaLGAhk/1SSr1Xjrjips1
+         l5GA==;
         darn=lists.linux.dev
 ARC-Authentication-Results: i=1; mx.google.com; arc=none
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20251104; t=1782320000; x=1782924800; darn=lists.linux.dev;
+        d=gmail.com; s=20251104; t=1782320515; x=1782925315; darn=lists.linux.dev;
         h=content-transfer-encoding:cc:to:subject:message-id:date:from
          :in-reply-to:references:mime-version:from:to:cc:subject:date
          :message-id:reply-to;
-        bh=8BIRn0WlxcOKwd3gT1ODjWCiP9As9Dq4sSxam8CvvJo=;
-        b=AN41GLqMQ3kb8intMQYz8r0kAOI+QDbtxeXsF+H/67UjGAktkrEdZRekxkbNS5aWYK
-         nW7jBQCi0VDBSbbWh/qsSLYXlRzT368SX/gc0Fn5SrxtzYk0fWVvg29Yy6WoGqXrplEt
-         DQL2GH+cFRgxLpQEl+/1aX7YVbSpxK6qOktnVQsJzKk3nivWebzqaqRhZJ48ER7DPKWp
-         6HZFMXy68PHLXtQ8H9DAJA/zggMqunt4V6hf0LZaOtAOzvGfSs3GbkhjgDUHCuqrH99u
-         UAnRWAqX7l00oV5d83qOHPe1Gu5jh3sBP1+c5gG7gr0zJB6Fbmm4gbDrkWlYNiS12wQl
-         HmZw==
+        bh=kaOi2FI8KJXRo8Ej4CH3FqXJaSTUFin19ugye02gcZc=;
+        b=mptxPDSUsdBYOdBAkJkAKYgbnggQ5y5xcY8+Br/e5ODLJ6TYg9AmoIBg/m1n8apLpk
+         umhFaPUH5XucglLzpxfCixvofwU5dS1u3pf3gcjpWr50ft0yhJFDB5up5MxztrlIethQ
+         W46eWcK7JX9V8fzCzuRESc1WnqCXeqF+RHlf3vmhuXczyaB3yzMtlCfqj3SLnFF9pPny
+         pv1a74K3qyXxpQba3/UhBkRf+sNf/p7rloKzUrdYszunvs+DflbRgLMa56a6D78EMv8T
+         lRvP7XhKGx3vrNDzuFguiACFvz96YGfv58QFtLlf4ZDhPRvvrWobiDqZuBxDTS3suC9j
+         aFFg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20251104; t=1782320000; x=1782924800;
+        d=1e100.net; s=20251104; t=1782320515; x=1782925315;
         h=content-transfer-encoding:cc:to:subject:message-id:date:from
          :in-reply-to:references:mime-version:x-gm-gg:x-gm-message-state:from
          :to:cc:subject:date:message-id:reply-to;
-        bh=8BIRn0WlxcOKwd3gT1ODjWCiP9As9Dq4sSxam8CvvJo=;
-        b=kTkAcNsBu0cyXpb5gI+d4a+1l2rbJbdSiKJGaBSXtq8ztF8XXEVpsBIkqjdhg08GuO
-         UXE2hVzWCpW0OEx5pUbM4XshNDfPwXrqyca98d5PPnezOM7C0TmKYKfRpvGaSRcLINOk
-         XlUuqLkCvwlKOre0pd88askHD76qZOeeGTX7th/sQ3KDFWDvnMGMRqKoaH7qHaIGRRWW
-         DHLpQ6rt7xLNoap7OV10KWto3AHy9GeQBP5cXRCJz1PKnJtvzB+RWO8NrzOoh+Hpi+h+
-         /teFea6lgKw492F3FgMOMto0yA1V4Zc1llqpDf5dgoLPY1aTuF/fHJduhowvef3CqEDb
-         m0rQ==
-X-Gm-Message-State: AOJu0YwRWAImXFW6XPqX/yyX2plMIbrgmVbqZgvmbrAd/W4zu1wc9Slw
-	c5QeHs2RMdECwfbVBaNbw2A8o4e/UGaoLR1/UmsePUlYxNnxqSs9J9g4MDhoFzXDOOOdA9ewxGw
-	3PM5yifeHwOfE0Lcfhf2Ikjd7bgE304zht7WgfaWg+w==
-X-Gm-Gg: AfdE7cnHCqToUOsX4tmrcZdbMRVQ2T4LL++7KFu7RytXj5gxjuA4SR24SzXeVx/AFMT
-	ozjm+g88jYYZ7fpeJgoaZ7/6sMNbVvx+onqJ1VuABdB2iQet0tvQbvtn090azj59lQQuvWXjij4
-	enVytYgIiOn8NrTZGwMBGmrjMWPQJnXpb/y73fM9e5DZ/7PsUZAKZkk4lr1kujQ6C9kMbKd4glD
-	Jcg78qkr1xJCegTV+wrtxoCwfiVDcEqAjn3S7vihBtXEiexzh6MZSgPfK/P9dXU4XBv+8TiXHFl
-	O2srq4VqWp4xeHagSFFSBJnqKYhMhc3BPkTPXPmldTOZuq+Jlo1vKDSGJRYytS9TFM7kb9Ai1F5
-	8tj7UEbcFOgv7IEvP6eXQzh4=
-X-Received: by 2002:a17:902:ea12:b0:2c6:a76c:3c6a with SMTP id
- d9443c01a7336-2c7e1465892mr46323745ad.9.1782320000213; Wed, 24 Jun 2026
- 09:53:20 -0700 (PDT)
+        bh=kaOi2FI8KJXRo8Ej4CH3FqXJaSTUFin19ugye02gcZc=;
+        b=ffC9A/6aB48G9XaE1tEkv3xpCoLff2rWouaY9kBjaijBfaGZ3sc8k6XiE9c1odJoow
+         IWPXLsQOUXjN4U/YAhip2c0XXPsXFGkwyAjRdOPcpmJLueIe7smruj5OmDLb6VhtQ6u5
+         Pvzwp0QNdwU2arJAFjP0IsTlhLUFmQ63Gy0XvYwj+wQhYCo4jVYiylaxIi3luYH8tLDr
+         xPwGifs0+k8GwKRtRBnomhtoVpW4jmPKkGUMkp3vEAD01W0WJgx96o9KYu7QnxqOKgrZ
+         Z7WP/5HqmgE5HdVmADrFcie902sQMkfk+EaXTP7TS1g7b1q8wMWKShkN6MWbMz9utsdG
+         z8ag==
+X-Gm-Message-State: AOJu0YxqsojfOwt2dM5x2B/o0XmLRagmY+OYxh/9HtxBRag9P6a+34DP
+	YsqDCnf96ehIssFvePulv1Ls/mU6P654nwITLkNluqUMEwVH9SQereAIY9e418qo2kPwAVMmn+H
+	MoH/cQ5iNliBGQyKroLYW+DlXdkKSqR5z41Ixr5E40g==
+X-Gm-Gg: AfdE7cmCaOKztNPEKAwXwQgjOidObMlMtdR1T6hIvhHnt5BkHOQu3u6lpXjo6rGlHlG
+	xZiq5/ZvD024wLqFPsN+H4AHJzC3fdsnLGWr2qLCRQiQpMHzanGYivG9aD0Muk8OPZwLORUX7D0
+	A5KUvRCY6CkDaz385Nn7GmLR+03WCP2zkLsg5o4Lmt6VBjrVkzh3sIdrEtsHi+9SaxJBI14OSgL
+	pcr5il+uJ+Hzjj3ypvjChSDPk2B2cQ/PwZhboLV2JsjpBMgWs2RtDUqCVcw9i+aUEvjLY9B2r/G
+	q7ic+N8notJC5riwVg18UIDgZIEmKtn1JMbrMNslZZjgUou1xnYhq2417NemrcIVKWXNmBh6100
+	BRL1nVRDyjGaRG6ancMucX0Y=
+X-Received: by 2002:a17:902:ea08:b0:2ae:450c:951e with SMTP id
+ d9443c01a7336-2c7e1538ea4mr43720445ad.17.1782320514821; Wed, 24 Jun 2026
+ 10:01:54 -0700 (PDT)
 Precedence: bulk
 X-Mailing-List: sashiko-reviews@lists.linux.dev
 List-Id: <sashiko-reviews.lists.linux.dev>
@@ -82,134 +82,129 @@ List-Subscribe: <mailto:sashiko-reviews+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:sashiko-reviews+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 References: <20260624155452.211646-1-nishidafmly@gmail.com>
- <20260624155452.211646-7-nishidafmly@gmail.com> <20260624160726.2B9161F000E9@smtp.kernel.org>
-In-Reply-To: <20260624160726.2B9161F000E9@smtp.kernel.org>
+ <20260624155452.211646-8-nishidafmly@gmail.com> <20260624160917.1508E1F000E9@smtp.kernel.org>
+In-Reply-To: <20260624160917.1508E1F000E9@smtp.kernel.org>
 From: Hiroshi Nishida <nishidafmly@gmail.com>
-Date: Wed, 24 Jun 2026 09:53:08 -0700
-X-Gm-Features: AVVi8CdzUzUpWfTZUjvJHGvAckn35Sku1BaU2R15oqRJV6Hh0aAtw4sO4uhAZmM
-Message-ID: <CAE1ksKTBHgcUqb-qw8N5FYc895sniwNqesW9AsPYJ-xeqe_DkQ@mail.gmail.com>
-Subject: Re: [PATCH 6/8] md/raid5: allocate worker groups per NUMA node
+Date: Wed, 24 Jun 2026 10:01:43 -0700
+X-Gm-Features: AVVi8CfIVKsbV7HRoSR2KmegZf5pZmJbYFAFDKc55a2x-PNcx3YNYozfm1ixLuw
+Message-ID: <CAE1ksKQnBogsm5nW7z0t9iZsb12xwVfTzzRGgpoBS8VxckS-1Q@mail.gmail.com>
+Subject: Re: [PATCH 7/8] md/raid5: raise MAX_STRIPE_BATCH from 8 to 32
 To: sashiko-reviews@lists.linux.dev
-Cc: linux-raid@vger.kernel.org, yukuai@fygo.io
+Cc: yukuai@fygo.io, linux-raid@vger.kernel.org
 Content-Type: text/plain; charset="UTF-8"
 Content-Transfer-Encoding: quoted-printable
 
-> [High] kzalloc_node(size, GFP_NOIO, i) -- i is a sequential index, not a =
-node ID
-> [High, pre-existing] worker_groups sized by num_possible_nodes() but inde=
-xed
-> by node ID -> OOB on sparse NUMA
+ > [High] Raising MAX_STRIPE_BATCH to 32 while keeping the spawn threshold =
+at 8
+ > lets the first worker grab all 32 stripes and starves the others.
 
-Both are valid.
-The kzalloc_node(..., i) is wrong on sparse NUMA node IDs -- i runs
-0..num_possible_nodes()-1, which only equals the node ID when nodes
-are dense -- and it rides on the pre-existing assumption that the
-worker_groups array (sized by the node *count*) can be indexed by
-cpu_to_node().
+You're right.  In stock, MAX_STRIPE_BATCH does double duty -- it caps
+the greedy dequeue
+in handle_active_stripes() AND is the spawn divisor in
+raid5_wakeup_stripe_thread() --
+and keeping those equal is what balances the workers woken against the
+work each one takes.
+My patch grew the dequeue cap to 32 but left the spawn divisor at 8,
+so for ~32 pending stripes it wakes 4 workerswhile the first greedily
+takes all 32 and
+the rest find empty lists -- serializing the batch and adding
+pointless lock contention, exactly as you describe.
 
-The NUMA-locality win here is multi-socket-only and I don't have a
-measurement to justify it, so rather than grow this into a sparse-NUMA
-correctness fix I'll
-drop this patch from v2.
-The pre-existing worker_groups sizing/indexing issue is real and
-separate; thanks for catching it.
+The lock-amortization benefit was never isolated, and re-coupling the two (=
+spawn
+divisor =3D batch) just trades it for coarser worker granularity, so
+I'll drop this
+patch from v2 rather than guess at the tuning.
 
 Thanks,
 
-
-2026=E5=B9=B46=E6=9C=8824=E6=97=A5(=E6=B0=B4) 9:07 <sashiko-bot@kernel.org>=
+2026=E5=B9=B46=E6=9C=8824=E6=97=A5(=E6=B0=B4) 9:09 <sashiko-bot@kernel.org>=
 :
 >
-> Thank you for your contribution! Sashiko AI review found 2 potential issu=
+> Thank you for your contribution! Sashiko AI review found 1 potential issu=
 e(s) to consider:
->
-> New issues:
-> - [High] The patch incorrectly uses a sequential loop index `i` as the NU=
-MA node ID parameter to `kzalloc_node()`.
->
-> Pre-existing issues:
-> - [High] The `worker_groups` array is sized using `num_possible_nodes()` =
-but is indexed by the raw NUMA node ID, leading to out-of-bounds accesses o=
-n systems with sparse NUMA node IDs.
+> - [High] Increasing MAX_STRIPE_BATCH to 32 without proportionally increas=
+ing STRIPE_BATCH_WORKERS serializes stripe processing and causes worker sta=
+rvation.
 > --
 >
-> commit bce08bf6ce446b00da625ff4028f5782b756e17c
+> commit b1a0a169dabd8b46b6b9ca40375034cf879934c6
 > Author: Hiroshi Nishida <nishidafmly@gmail.com>
 >
-> md/raid5: allocate worker groups per NUMA node
+> md/raid5: raise MAX_STRIPE_BATCH from 8 to 32
 >
-> alloc_thread_groups() previously allocated all r5worker arrays in a
-> single kcalloc() block, assigning workers for NUMA node N from node 0
-> memory.  On multi-socket systems this causes remote memory traffic on
-> every worker->work and worker->temp_inactive_list access.
+> This commit increases the maximum stripe batch size from 8 to 32 to
+> amortize device_lock acquisition over more stripes. It also introduces
+> STRIPE_BATCH_WORKERS to decouple the worker spawning threshold from the
+> batch size.
 >
 > > diff --git a/drivers/md/raid5.c b/drivers/md/raid5.c
-> > index 8e9edaaca667b..c8787ab7b309c 100644
+> > index c8787ab7b309c..ad6230415af33 100644
 > > --- a/drivers/md/raid5.c
 > > +++ b/drivers/md/raid5.c
 > [ ... ]
-> > @@ -7336,7 +7340,6 @@ static int alloc_thread_groups(struct r5conf *con=
-f, int cnt, int *group_cnt,
-> [ ... ]
-> >       *group_cnt =3D num_possible_nodes();
-> > -     size =3D sizeof(struct r5worker) * cnt;
-> > -     workers =3D kcalloc(size, *group_cnt, GFP_NOIO);
-> >       *worker_groups =3D kzalloc_objs(struct r5worker_group, *group_cnt=
-,
-> >                                     GFP_NOIO);
->
-> [Severity: High]
-> This isn't a bug introduced by this patch, but could this array sizing ca=
-use
-> an out-of-bounds access on systems with sparse NUMA nodes?
->
-> We size the worker_groups array using num_possible_nodes(), which is a co=
-unt.
-> On systems with sparse NUMA node IDs (for example, nodes 0 and 8), the ar=
-ray
-> would only have 2 elements. Later, in raid5_wakeup_stripe_thread(), we in=
-dex
-> into this array using cpu_to_group(cpu) which expands to cpu_to_node(cpu)=
-.
-> If a CPU belongs to node 8, we would access conf->worker_groups[8], excee=
-ding
-> the allocated size and corrupting memory.
->
-> > -     if (!*worker_groups || !workers) {
-> > -             kfree(workers);
-> > -             kfree(*worker_groups);
-> > +     if (!*worker_groups)
-> >               return -ENOMEM;
-> > -     }
+> > @@ -210,7 +210,7 @@ static void raid5_wakeup_stripe_thread(struct strip=
+e_head *sh)
+> >       /* at least one worker should run to avoid race */
+> >       queue_work_on(sh->cpu, raid5_wq, &group->workers[0].work);
 > >
-> > +     size =3D sizeof(struct r5worker) * cnt;
-> >       for (i =3D 0; i < *group_cnt; i++) {
-> > -             struct r5worker_group *group;
-> > +             struct r5worker_group *group =3D &(*worker_groups)[i];
-> > +             struct r5worker *workers;
-> > +
-> > +             workers =3D kzalloc_node(size, GFP_NOIO, i);
+> > -     thread_cnt =3D group->stripes_cnt / MAX_STRIPE_BATCH - 1;
+> > +     thread_cnt =3D group->stripes_cnt / STRIPE_BATCH_WORKERS - 1;
+> >       /* wakeup more workers */
+> >       for (i =3D 1; i < conf->worker_cnt_per_group && thread_cnt > 0; i=
+++) {
 >
 > [Severity: High]
-> Could passing the sequential loop index i directly to kzalloc_node cause =
-a
-> NULL pointer dereference on systems with sparse NUMA nodes?
+> Will increasing the stripe batch size while keeping the worker spawn thre=
+shold
+> small serialize stripe processing and starve the worker threads?
 >
-> Since num_possible_nodes returns a count rather than an upper bound on ID=
-s,
-> on a system with nodes 0 and 8, i would be evaluated as 1. Passing an
-> unpopulated node ID to kzalloc_node without validation can lead to a cras=
-h
-> when accessing NODE_DATA(nid). Should this loop use
-> for_each_node_state(nid, N_MEMORY) or similar to get the actual node ID
-> instead of using the loop counter?
+> With this change, raid5_wakeup_stripe_thread() still wakes up an addition=
+al
+> worker for every 8 pending stripes (e.g., waking 4 threads for 32 stripes=
+).
 >
-> > +             if (!workers)
-> > +                     goto out_free;
+> However, the first awakened worker executing handle_active_stripes() will
+> greedily dequeue up to MAX_STRIPE_BATCH (32) stripes under the lock:
+>
+> drivers/md/raid5.c:handle_active_stripes() {
+>     ...
+>     while (batch_size < MAX_STRIPE_BATCH &&
+>            (sh =3D __get_priority_stripe(conf, group)) !=3D NULL)
+>         batch[batch_size++] =3D sh;
+>     ...
+> }
+>
+> It appears the first thread will steal all 32 pending stripes and process
+> them sequentially, while the other awakened threads acquire the lock,
+> find the lists empty, and exit without doing any work.
+>
+> Could this cause a performance regression by serializing CPU-intensive pa=
+rity
+> operations onto a single thread, while also creating unnecessary lock
+> contention from the starved threads?
+>
+> > diff --git a/drivers/md/raid5.h b/drivers/md/raid5.h
+> > index 7aeba1fc7f09e..1f37dabd727be 100644
+> > --- a/drivers/md/raid5.h
+> > +++ b/drivers/md/raid5.h
+> [ ... ]
+> > @@ -496,7 +496,8 @@ struct disk_info {
+> >  #define BYPASS_THRESHOLD     1
+> >  #define NR_HASH                      (PAGE_SIZE / sizeof(struct hlist_=
+head))
+> >  #define HASH_MASK            (NR_HASH - 1)
+> > -#define MAX_STRIPE_BATCH     8
+> > +#define MAX_STRIPE_BATCH     32      /* stripes per handle_active_stri=
+pes pass */
+> > +#define STRIPE_BATCH_WORKERS 8       /* stripes-per-worker threshold f=
+or spawning */
+> >  #define RAID5_SYNC_WINDOW    32      /* stripes to pre-submit per sync=
+_request call */
 >
 > --
 > Sashiko AI review =C2=B7 https://sashiko.dev/#/patchset/20260624155452.21=
-1646-1-nishidafmly@gmail.com?part=3D6
+1646-1-nishidafmly@gmail.com?part=3D7
 
 
 
