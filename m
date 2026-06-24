@@ -1,312 +1,280 @@
-Received: from mail-yx1-f46.google.com (mail-yx1-f46.google.com [74.125.224.46])
+Received: from mail-pl1-f181.google.com (mail-pl1-f181.google.com [209.85.214.181])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BBAD2351C34
-	for <sashiko-reviews@lists.linux.dev>; Wed, 24 Jun 2026 17:24:42 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=pass smtp.client-ip=74.125.224.46
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D9C6F33D6F7
+	for <sashiko-reviews@lists.linux.dev>; Wed, 24 Jun 2026 17:25:41 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=pass smtp.client-ip=209.85.214.181
 ARC-Seal:i=2; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1782321884; cv=pass; b=px1myTWm59kHPD6l1bUSMffMInupWGErK2oP/e5fk/2ZoEEQ2xhK6kqBL3szLTAllK/MXv2T9HiVrA0uyFR9WLwlPhXa5fS1gDj8vYKkrBW4Pb6yGvUEuE8MSH8xfhqiEsHueOY5c7mDI+7LlHgGWBRuRB/I0XwKiRTPZj/C800=
+	t=1782321943; cv=pass; b=lWpPFaSprVIR8hAyTGVukbU8/Iro0CRewuI3ld31JYu8iNViJwnvzXyVh4sntfJm49l/auMrvhqbiemi2mNhy1PdMVo/AJoyXP5nXguuNY6oFTrbJng8gqUdzR79wZZ8XQawpQUrUG2DpVSSBDEVyh36v9KQTbnzdcfA8b3jJaQ=
 ARC-Message-Signature:i=2; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1782321884; c=relaxed/simple;
-	bh=CgaZvZGY4e/EKVwuFfxFMZAVMcCg1E+jJOW3/B10q0o=;
+	s=arc-20240116; t=1782321943; c=relaxed/simple;
+	bh=FDHI7VnrkkCOG8jvaI6SfzXOA+cSFumE07u+TGQZETg=;
 	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
-	 To:Cc:Content-Type; b=p8bWnB4zSmPjN5kPqNgJ8RtUa1VWcRxfZiVUc6B6GvEQ02dUdEzzhkAvJyxh3gd4nDW3cVnUoyffoKEUNK07huhhozLb2Y3jxA5a31xkn2ffmv+1ZH6s6oALVFEAzSwM9+9CtWajYJXD6MqsoRZnTxWhqG2lYASwgIE6RDSSHcE=
-ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=bWkECmb3; arc=pass smtp.client-ip=74.125.224.46
+	 To:Cc:Content-Type; b=Fbd9Va4UpCobVqDaxovBBrxU2aYv6Ql4Tz9AxpiIbKKqiSj07h1RBTgqjIWufnVmRRznkXOnvQKNwaWEo9Y1shBir2yPOo/WgsuoOvAu8py+ExBCNKuDgfTHsOqET9XDne1k7kI5sQK57jvaLGkKE7O/gkt5x/JHXrlZpQu9B0Y=
+ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=i4G10iRJ; arc=pass smtp.client-ip=209.85.214.181
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="bWkECmb3"
-Received: by mail-yx1-f46.google.com with SMTP id 956f58d0204a3-662bb8b1f93so1380876d50.1
-        for <sashiko-reviews@lists.linux.dev>; Wed, 24 Jun 2026 10:24:42 -0700 (PDT)
-ARC-Seal: i=1; a=rsa-sha256; t=1782321881; cv=none;
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="i4G10iRJ"
+Received: by mail-pl1-f181.google.com with SMTP id d9443c01a7336-2c6b67d5fa1so8059155ad.2
+        for <sashiko-reviews@lists.linux.dev>; Wed, 24 Jun 2026 10:25:41 -0700 (PDT)
+ARC-Seal: i=1; a=rsa-sha256; t=1782321941; cv=none;
         d=google.com; s=arc-20240605;
-        b=lZGINCvbor1giuZsW3qLOeva12gpBwAFTbNcyoRxxptAChD1QQstw1RsfxW5/ZRubt
-         M8D4eC9uKUauzXo67XKWQ8S7k8C28lJPIZqCIlvLRSTk5ZwB+2dj62IeBalFwVwV0LE3
-         bjZTSpk+SLVvzORjdlWWODZ0JcsCkNz9u5OXJRVQ8p1ETPVr3tAhL3DpuRAj1O3VpH4w
-         z6fAFrYOgdDuPFeJUVQY6h3+pSv3gj0ql8plmWra1AJpnd/EN9HKrRcH9xbsMLcWSMUj
-         9kGzaJCj0oDU5mDExubtyOv950VdM3pMEKQnWMfIaAGjJaGeU5KsjTpfus3IssbHjwYS
-         TeqQ==
+        b=N5/rnCEJkjGstuZer29BEImSPzsaztB5sWnSYl8bhmWiKlpExdN+0Mlvdyv2mTBUmg
+         o41YBqFGlwAaHCJFaDloJyWhh9H24OIPDFSQmG2QDTJ9mRVvgHEjfh4YocAPAT0Sun9Z
+         tf2L3TP0iPJeHpLzLVW14LFA6Kbc72s4OGc2JfAE9khi2jTfIXBfgRNFB3cBPPHi2+GE
+         jQV0+ziyufmcr7vpffbIodJuEBXggv+cGeMkVjjFNn6AtGmfCyrVu7GEo8YpeC91pudM
+         rE3snhIbxAE+/+U7FOTFJVje1q1tPoLCohJGNQja5fRd/LhMA1jYOKbz//bJACPie69k
+         2NoQ==
 ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com; s=arc-20240605;
         h=content-transfer-encoding:cc:to:subject:message-id:date:from
          :in-reply-to:references:mime-version:dkim-signature;
-        bh=E1wkuHZkbsib5kIV/a5Yk3B4Y1qMn1xPyrOQ/gPCTXM=;
-        fh=uA360uvxR9S0K/Y4Lovo7aIaGlBwzVBnnb2BKWupr/4=;
-        b=jdE+8V8NXN4nYbpXUUiZ3t7e7845F/C97TCBmHNEKHeVRCjhi/iEnXJIGDV7tXl6OT
-         rhU0tatTLDx7boGGZyxNK9aR3BWwZlP38xTlg4zkPt6hTw+ACezhcivZSy9XPmI7nbNm
-         gui/SDp7A6wdXJQ0NQtUhzCn7k9dajBqGi7f3CuS40q6CYgVw38n+yz99L1c+ZPKfjaN
-         n8vpqli+4MY7TExxbYh0wqrYtr3Mgd8FfZ3P6SU4VGICjsFwBw6PJOfzjruKOdY+jkK/
-         1684FxYoOE58mnJUKasd8cpeBLI+Vgq7mXG2MbRoXbopPQIwF8hJuVnKnhBdrur5OUqi
-         846Q==;
+        bh=Ylil1kH8ULfeMONK9EVQ0jpuT/tHZ2Z7F3bsoKK5hxY=;
+        fh=mTP6TkWV1IhQRgyhsEpYqIpiXvhDlZKdHAfNRdOTDjk=;
+        b=e8S0v0+jXElZgWn7gD+sEVcQJ3hBsndNIW0d5bXREiJGQBZQUozilL6IL21hEzjrQZ
+         qFNQvcDTIZIAa1G0dUYuaxvKds12vSR2M9B/spp8j1/EgYDQCjP999TJg2yDLCRQRqUE
+         eRTZjjOG8JVWd846orvjUNxl6JS9hzdF+Q/uvNLMG0qmJ7AXmAEEF3dLBr/Ou5v3Wt70
+         NlIjoRCWMEyrwSdQsQ9B/F68I9s20rKsUJHo3L6C1fghnHfkNMoRPzgLRLTCu14hD7Vd
+         KvYmljcq8oAz+Sw74dmey9sxOQ+pD25Q1TU28EgajBFe0PRpwBPkYmuWfxilGxPUoqm1
+         MPIA==;
         darn=lists.linux.dev
 ARC-Authentication-Results: i=1; mx.google.com; arc=none
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20251104; t=1782321881; x=1782926681; darn=lists.linux.dev;
+        d=gmail.com; s=20251104; t=1782321941; x=1782926741; darn=lists.linux.dev;
         h=content-transfer-encoding:cc:to:subject:message-id:date:from
          :in-reply-to:references:mime-version:from:to:cc:subject:date
          :message-id:reply-to;
-        bh=E1wkuHZkbsib5kIV/a5Yk3B4Y1qMn1xPyrOQ/gPCTXM=;
-        b=bWkECmb32rznqNSFLdrvTf1ERC1KNCdt8HHZnC1UagvmUiMVeBT8KDgqas4E35gFIP
-         Nq180inft2ErfPinTb2OxKI9ZrsMkridel/X0xuSCbOrHY5mXDytY8gkC7P35ScCztCC
-         Vcdxihn97smlIg7oKsgrYI5lSmxzFDQjOePv0SybEmMjnXi9s2dyAeGlrIKqVQTz7PSd
-         qSGPchLPLfS07mlWUrNCe4s6UPviwNY+H37SWKycrgn/dLKQmGK238hoasC7BldGOj7e
-         JGCyqWvtbnYq4at9YBjVNfIPz+/33KOsVvlFSXtEK/znv8sKV+mp/TkraRBipFu/Mg+N
-         NJWA==
+        bh=Ylil1kH8ULfeMONK9EVQ0jpuT/tHZ2Z7F3bsoKK5hxY=;
+        b=i4G10iRJUzlT6GL/NktMseV6qXZ8gh3loONy7q/2ozO3dpbmpG/3Wgem2gmN6w3AQe
+         DTILSe1+NnXl8jQSjJdifFlTQx53HW6mfhB1POyQcs7fQzogXZBCi9rU2XIBqCx4Sx+G
+         wGamUEGAtdHFhmWizTM+DxPaBisg2Y6VSUqpyJkcdSghZhawmtOEs2221tlHyc+xSkII
+         BA/w3Ta7j9qbhUV4sS4d8z4HxyOguTMJ8jgRIsCd/qgAhgoTg1ltSICsRkJofC5gnivV
+         8DEu6WyuuSp4hoj87ywlLPatltqFIgvP6IzGeiUMluvHZ0jcGLfdmII0djLYCBKsWFOI
+         VpSw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20251104; t=1782321881; x=1782926681;
+        d=1e100.net; s=20251104; t=1782321941; x=1782926741;
         h=content-transfer-encoding:cc:to:subject:message-id:date:from
          :in-reply-to:references:mime-version:x-gm-gg:x-gm-message-state:from
          :to:cc:subject:date:message-id:reply-to;
-        bh=E1wkuHZkbsib5kIV/a5Yk3B4Y1qMn1xPyrOQ/gPCTXM=;
-        b=Ltw4mbHIH33vUqxhE8WAp3lHqX2cvNooDQBIZV4RceJvXJz/aWumxs4evwkHbWbkP2
-         grHWuA2O/6oC4ZXWILBNw5FOLZLVsN45dBQPw4VLgNDeuGVKizzSBx3WcBKnsZqx3DXn
-         m6irqlzi7Vpa7IhIE0nFb0yhKZfrsqhWoSW5iDbxuepfjyuydK59fYOTMY0FiUglsj17
-         qhlZj+e8FTAeoIET11iMUIhXJ3O+nSVGMpycyU3usDMiUqCrfjSUVkKRqz4Ia7Vsb6pN
-         8ey6m23bImrQEcm37aCDW1HOaLX1d7UR/3tfSqDnUXfEAeNs3xeWqNCBBZ+snrVtvVP4
-         wq9A==
-X-Gm-Message-State: AOJu0Yz1+D5gebBH7s8UOXckii1vqkx9dh1yXUddf1bTAUfh7tpKNpta
-	sB7N3ZupL6050fKW7r93Djjww2MjLmlBt7dgwse+SkdT2q1dMPfl0zcOqjTHc+oo57uCDFAfXGd
-	iuHLEEDh1BqNHAgyorpQZLxwtmpKUAP1BgwgI
-X-Gm-Gg: AfdE7cl+PQmyWwRuf97dHPLpz45gdsH3kjehBugYA1afgg6X+AkfqQicvwKPKgbGe6e
-	O6QAQ4Y0l71w27gfC3Z0JTjVi1aXdzC6Kyrrx9nr72vgYgFfIr2lciRtauqt6G30YVY5JJVuf4F
-	Cf8aK2jnU8miL3yOi1h9wKIyGtDkeKGpQ1ZUvsU97+KGo0z7bZ/MiTwGISgVRpZ++b1zpQZA/tX
-	qlr5LZStqc+OhR8BQpCtgZyieIm+xibd3R352YhG3ukilo+B6UXORUASKTkvDP0F1plU3ZV
-X-Received: by 2002:a05:690e:130d:b0:65c:2208:8c6a with SMTP id
- 956f58d0204a3-6635a305368mr7227481d50.42.1782321881331; Wed, 24 Jun 2026
- 10:24:41 -0700 (PDT)
+        bh=Ylil1kH8ULfeMONK9EVQ0jpuT/tHZ2Z7F3bsoKK5hxY=;
+        b=oMVHwD8RJJ9QE6ZycQu4hpU5OxV6WggYi4xYkq0tezu4NQnbcTEC3/8+ZlmhE0jmY+
+         E+HNmf3YbsLb+BmtkB4Z/4Zq9air2ZzhrDBm8bhviO9gOwvwNtHc96+xjcvQPxjj7p1G
+         nOjnj4Vj4+QHjtuJPDK2CsShr93xjZvkpPydj3WCYGsFd3iOEj54+wti36FKTYk+V68z
+         F2PsfLCdGdzO1k13pot0azR6k+hOpu1mM5S/jDM2AuwQ9LcCIdxXa/+/b/UXxYzqNiU6
+         zH1WESUjdwfIaRRdIiPUuBsfo+2B5LkvH+50nt6x5GEDEL9kDrPz4qZfhKdyMHMmgvxJ
+         AfOw==
+X-Gm-Message-State: AOJu0YxnTzNRb6CGIfR6Vet9p9fIM5/3i8Rq+LFIxzzDUxfxooEVSos/
+	o39aPLoirBcqIoSKSAYtKdlwG/8j9P7KyJ2NbLsZAIlBovp/TMLRQSlYazd3gwHyIiDIOQbDNLK
+	SoqdMe/74ELsquLdBOET8XM4H8S4l8xbNoaBi6sLQRA==
+X-Gm-Gg: AfdE7cl4ID9td57IjGLkBsGQhu5JFbdk30wRXECKpDT3N4ystkGQ8QNEU2UW/SQeS2n
+	difWnTKZoaSbn8/IkvgdTSVxF8kYklmwrS6YqbpjSiRnfcQsRhK11OCOYEOuLsa+Wftb2x21hue
+	pzKcszeG2jygNW6orzzLhAKU5xjZpfWtAtdxKtQvgi6oAiqKJ6JDnrdC/LZogzVg4iEqBdNdd1p
+	7jolGZj1ww9WWoqJh7wd3OoaqC47bLAB7lb0wIXYUfHwDCFoAMYvlPwa2QirsC8j7OIeSn02DpG
+	f8wyU4Lc4M+u3Av7Fm3ANUvIh6JPVh6YbGKxXc8zM2lsQQ+VhVaZX5W1osHXBsS8Nrt4agEJWE1
+	UCJs8Z254JGx4
+X-Received: by 2002:a17:902:ec88:b0:2b7:aa20:3c61 with SMTP id
+ d9443c01a7336-2c7c7724fedmr90657185ad.33.1782321941003; Wed, 24 Jun 2026
+ 10:25:41 -0700 (PDT)
 Precedence: bulk
 X-Mailing-List: sashiko-reviews@lists.linux.dev
 List-Id: <sashiko-reviews.lists.linux.dev>
 List-Subscribe: <mailto:sashiko-reviews+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:sashiko-reviews+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-References: <20260623175006.3136053-1-ameryhung@gmail.com> <20260623175006.3136053-10-ameryhung@gmail.com>
- <20260623225359.77EE31F00A3A@smtp.kernel.org>
-In-Reply-To: <20260623225359.77EE31F00A3A@smtp.kernel.org>
-From: Amery Hung <ameryhung@gmail.com>
-Date: Wed, 24 Jun 2026 10:24:30 -0700
-X-Gm-Features: AVVi8CfocQt9hWr32v2QEQ80f9bKIfkVHJv2cXBIKPpLa-2WNtpQNV5_4ic1_XQ
-Message-ID: <CAMB2axMA9GuQDitxDQiirPDD3pbw2z1U=pM2P+=8hm_WF8HJWg@mail.gmail.com>
-Subject: Re: [PATCH bpf-next v2 09/15] bpf: Add infrastructure to support
- attaching struct_ops to cgroups
+References: <20260624155452.211646-1-nishidafmly@gmail.com>
+ <20260624155452.211646-2-nishidafmly@gmail.com> <20260624161624.12CC81F000E9@smtp.kernel.org>
+In-Reply-To: <20260624161624.12CC81F000E9@smtp.kernel.org>
+From: Hiroshi Nishida <nishidafmly@gmail.com>
+Date: Wed, 24 Jun 2026 10:25:29 -0700
+X-Gm-Features: AVVi8CdRZclWHH6Q8FyuThmyI_0HKCh5bG2NnxDlL83UnzvO6xAEuuog11b_vKY
+Message-ID: <CAE1ksKSByKNH=F7BY+VWtycoRgchwCK-wiCoSb0ANaOMKw-kAA@mail.gmail.com>
+Subject: Re: [PATCH 1/8] md: change chunk_sectors and stripe cache counts to
+ unsigned int
 To: sashiko-reviews@lists.linux.dev
-Cc: bpf@vger.kernel.org
+Cc: linux-raid@vger.kernel.org, yukuai@fygo.io
 Content-Type: text/plain; charset="UTF-8"
 Content-Transfer-Encoding: quoted-printable
 
-On Tue, Jun 23, 2026 at 3:54=E2=80=AFPM <sashiko-bot@kernel.org> wrote:
+> [Medium] unsigned types don't enable right-shift optimization for variabl=
+e divisions.
+
+You're right -- the hot-path divisions go through
+sector_div()/do_div() (already u32),
+and sectors_per_chunk is a runtime value, so signedness changes no codegen.
+The rationale is wrong and the change has no perf benefit, so I'll
+drop this patch
+from v2 rather than reword a claim that doesn't hold.
+
+> [Low] unupdated %d specifiers for the now-unsigned fields.
+Another reason to drop it -- avoids the %d/%u churn. (They don't warn
+in a default
+build, only under -Wformat-signedness, but they are inconsistent.)
+
+ > [Critical, pre-existing] round_down/round_up with a non-power-of-two div=
+isor.
+Good catch, and independent of this series.
+sectors_per_chunk =3D chunk_sectors * (raid_disks - max_degraded)
+isn't a power of two whenever the data-disk count isn't (raid5 4-disk
+-> 3 data),
+and round_down/round_up are mask-based.
+I'll send a separate fix switching to rounddown()/roundup() with a Fixes: t=
+ag.
+
+Thanks,
+
+2026=E5=B9=B46=E6=9C=8824=E6=97=A5(=E6=B0=B4) 9:16 <sashiko-bot@kernel.org>=
+:
 >
-> Thank you for your contribution! Sashiko AI review found 4 potential issu=
+> Thank you for your contribution! Sashiko AI review found 3 potential issu=
 e(s) to consider:
 >
 > New issues:
-> - [High] The `bpf_cgroup_struct_ops_foreach` macro does not filter out du=
-mmy sentinel elements, leading to type confusion and kernel panics.
-> - [High] Strict `rcu_dereference()` in `bpf_cgroup_struct_ops_foreach` ca=
-uses lockdep splats or panics for sleepable struct_ops.
-> - [High] Array truncation during `purge_effective_progs` if the struct_op=
-s type was registered without `cfi_stubs`.
+> - [Medium] The commit's core justification is false. Changing the types t=
+o unsigned does not enable compiler right-shift optimizations for variable =
+divisions.
+> - [Low] Unupdated printf-style format specifiers passing unsigned fields =
+to '%d' cause compiler warnings (-Wformat) and break builds configured with=
+ -Werror.
 >
 > Pre-existing issues:
-> - [High] `bpf_cgroup_array_copy_to_user()` incorrectly returns -ENOSPC wh=
-en trailing dummy elements exist, breaking userspace queries.
+> - [Critical] The macro `round_down` is incorrectly used with a non-power-=
+of-two divisor, causing silent data corruption in bitmap sector calculation=
+s.
 > --
 >
-> commit a3bccbe6dc639128f470580a5e6281248194eb4e
-> Author: Martin KaFai Lau <martin.lau@kernel.org>
+> commit 86528a8b22367a5ee16a7cb19a1d56bf58f6aa67
+> Author: Hiroshi Nishida <nishidafmly@gmail.com>
 >
-> bpf: Add infrastructure to support attaching struct_ops to cgroups
+> md: change chunk_sectors and stripe cache counts to unsigned int
 >
-> This patch adds necessary infrastructure to attach a struct_ops map to a
-> cgroup. It reuses existing cgroup bpf structures and logic to handle the
-> attachment, hierarchy, and ordering of struct_ops maps. It also implement=
-s
-> a separate struct bpf_link_ops for cgroup's struct_ops link.
+> This commit changes several structural fields and local variables like
+> chunk_sectors and max_nr_stripes from signed to unsigned int. The stated
+> rationale is to prevent negative values and enable right-shift compiler
+> optimizations for power-of-two division in the hot I/O path.
 >
-> > diff --git a/include/linux/bpf-cgroup.h b/include/linux/bpf-cgroup.h
-> > index 4d0cc65976a14..8a75a6cd73096 100644
-> > --- a/include/linux/bpf-cgroup.h
-> > +++ b/include/linux/bpf-cgroup.h
-> > @@ -110,6 +112,18 @@ struct bpf_prog_list {
-> >       u32 flags;
-> >  };
-> >
-> > +#define bpf_cgroup_struct_ops_foreach(var, item, cgrp, atype)         =
-       \
-> > +     for (item =3D rcu_dereference((cgrp)->bpf.effective[atype])->item=
-s;\
-> > +          ((var) =3D READ_ONCE(item->kdata));                         =
- \
-> > +          item++)
+> >     chunk_sectors, new_chunk_sectors, prev_chunk_sectors, max_nr_stripe=
+s,
+> >     and min_nr_stripes are never negative. Using signed int is semantic=
+ally
+> >     wrong and prevents the compiler from optimizing division/modulo by
+> >     power-of-two chunk sizes to right shifts in the hot I/O path.
 >
-> [Severity: High]
-> Does this macro fail to filter out dummy sentinel elements?
+> [Severity: Medium]
+> Is this optimization rationale accurate? The hot I/O path uses sector_div=
+(),
+> which expands to do_div(). The do_div() macro explicitly casts the diviso=
+r
+> to a 32-bit unsigned integer, so the division was already operating on an
+> unsigned value.
 >
-> When update_effective_progs() fails under memory pressure, the kernel fal=
-ls
-> back to purge_effective_progs(), which overwrites the detached link's poi=
-nter
-> with a dummy sentinel value (struct_ops_cfi_stubs[atype]).
+> Additionally, because sectors_per_chunk is a runtime variable rather than=
+ a
+> compile-time constant, would the compiler be able to optimize it into a
+> right shift without a conditional branch?
 >
-> Since the macro yields every non-NULL element to the caller subsystem,
-> including these dummy sentinels, could this cause type confusion and kern=
-el
-> panics if the subsystem accesses data fields on the dummy struct?
->
-
-Already replied in v1. Short version here again: cfi_stubs are used as
-dummy struct_ops. They are safe to call and not filtered out for
-performance reasons.
-
-> [Severity: High]
-> Will this strict rcu_dereference() cause lockdep splats or panics for
-> sleepable struct_ops?
->
-> The patch introduces free_after_mult_rcu_gp to support sleepable struct_o=
-ps,
-> meaning a subsystem executing a sleepable bpf program must hold
-> rcu_read_lock_trace() instead of the standard rcu_read_lock(). However,
-> rcu_dereference() rigidly enforces that rcu_read_lock() is held.
->
-> If the subsystem holds rcu_read_lock_trace(), lockdep will splat, and if
-> it erroneously holds rcu_read_lock(), the kernel will crash when the
-> sleepable bpf program actually sleeps.
->
-> Should this use rcu_dereference_check() or similar to accommodate sleepab=
-le
-> contexts?
->
-
-Already replied in v1. The macro is only intended for non-sleepable
-struct_ops. A sleepable version can be added later when the new
-struct_ops is added.
-
-> > +
-> > +static inline bool cgroup_bpf_is_struct_ops_atype(enum cgroup_bpf_atta=
-ch_type atype)
-> > +{
-> > +     return atype =3D=3D CGROUP_TCP_SOCK_OPS;
-> > +}
-> > +void cgroup_bpf_struct_ops_register(int atype, u32 type_id, void *cfi_=
-stubs, bool mult_trace);
-> > +int cgroup_bpf_struct_ops_attach(struct bpf_map *map, const union bpf_=
-attr *attr);
-> > +
-> >  void __init cgroup_bpf_lifetime_notifier_init(void);
->
+> > diff --git a/drivers/md/md.h b/drivers/md/md.h
+> > index d8daf0f75cbbe..b9ad26844799d 100644
+> > --- a/drivers/md/md.h
+> > +++ b/drivers/md/md.h
 > [ ... ]
+> > @@ -437,7 +437,7 @@ struct mddev {
+> >       int                             external;       /* metadata is
+> >                                                        * managed extern=
+ally */
+> >       char                            metadata_type[17]; /* externally =
+set*/
+> > -     int                             chunk_sectors;
+> > +     unsigned int                    chunk_sectors;
 >
-> > diff --git a/kernel/bpf/btf.c b/kernel/bpf/btf.c
-> > index 64572f85edc83..d591f306ace52 100644
-> > --- a/kernel/bpf/btf.c
-> > +++ b/kernel/bpf/btf.c
+> [Severity: Low]
+> Does changing this field to unsigned int cause compiler warnings with
+> existing format strings?
 >
+> For example, chunk_size_show() in drivers/md/md.c appears to use %d to
+> format mddev->chunk_sectors:
+>
+> chunk_size_show() {
+>     ...
+>     return sprintf(page, "%d (%d)\n",
+>                    mddev->new_chunk_sectors << 9,
+>                    mddev->chunk_sectors << 9);
+> }
+>
+> Will this break builds configured with -Werror?
+>
+> > diff --git a/drivers/md/raid5.h b/drivers/md/raid5.h
+> > index cb5feae04db27..5cd9d0f36b6e0 100644
+> > --- a/drivers/md/raid5.h
+> > +++ b/drivers/md/raid5.h
 > [ ... ]
+> > @@ -572,12 +572,12 @@ struct r5conf {
+> >       /* only protect corresponding hash list and inactive_list */
+> >       spinlock_t              hash_locks[NR_STRIPE_HASH_LOCKS];
+> >       struct mddev            *mddev;
+> > -     int                     chunk_sectors;
+> > +     unsigned int            chunk_sectors;
+> >       int                     level, algorithm, rmw_level;
+> >       int                     max_degraded;
+> >       int                     raid_disks;
+> > -     int                     max_nr_stripes;
+> > -     int                     min_nr_stripes;
+> > +     unsigned int            max_nr_stripes;
+> > +     unsigned int            min_nr_stripes;
 >
-> > @@ -9868,6 +9872,23 @@ btf_add_struct_ops(struct btf *btf, struct bpf_s=
-truct_ops *st_ops,
-> >       if (err)
-> >               return err;
-> >
-> > +     if (cgroup_atype) {
-> > +             if (!cgroup_bpf_is_struct_ops_atype(cgroup_atype) ||
-> > +                 st_ops->reg || st_ops->unreg || st_ops->free_after_ta=
-sks_rcu_gp) {
-> > +                     bpf_struct_ops_desc_release(&tab->ops[btf->struct=
-_ops_tab->cnt]);
-> > +                     return -EINVAL;
-> > +             }
-> > +
-> > +             /* There is no need to unregister from cgroup when the
-> > +              * btf_free(). No struct_ops map and its cgroup link
-> > +              * can be created once its btf is gone.
-> > +              */
-> > +             cgroup_bpf_struct_ops_register(cgroup_atype,
-> > +                                            tab->ops[btf->struct_ops_t=
-ab->cnt].type_id,
-> > +                                            st_ops->cfi_stubs,
-> > +                                            st_ops->free_after_mult_rc=
-u_gp);
+> [Severity: Low]
+> Will the changes to min_nr_stripes and max_nr_stripes also trigger format
+> warnings?
 >
-> [Severity: High]
-> Does this path accept st_ops->cfi_stubs without validating that it is non=
--NULL?
+> Places like raid5_end_read_request() and raid5_set_cache_size() still use
+> %d to print these fields. For instance, in raid5_set_cache_size():
 >
-> If a struct_ops type is registered without providing cfi_stubs (e.g., if
-> CONFIG_CFI_CLANG is disabled), struct_ops_cfi_stubs[atype] will be NULL.
+> pr_err("md/raid:%s: Cannot increase cache size, ret=3D%d, new_size=3D%d, =
+min_nr_stripes=3D%d, max_nr_stripes=3D%d\n",
+>        ...
+>        conf->min_nr_stripes,
+>        conf->max_nr_stripes);
 >
-> Later, if a link is detached and update_effective_progs() fails due to me=
-mory
-> pressure, the fallback bpf_cgroup_array_delete_safe_at() overwrites the
-> detached program's slot with bpf_cgroup_array_dummy().
->
-> Because cfi_stubs is NULL, it writes NULL into the middle of the array.
->
-> Since NULL is used as the array terminator, won't this prematurely trunca=
-te
-> the array and silently bypass all attached bpf programs that follow the
-> detached one?
->
-
-Seems like a false positive. bpf_struct_ops_desc_init() already
-rejects struct_ops registration with NULL cfi_stubs.
-
-> > +     }
-> > +
-> >       btf->struct_ops_tab->cnt++;
-> >
-> >       return 0;
->
+> > diff --git a/drivers/md/raid5.c b/drivers/md/raid5.c
+> > index 0c5c9fb0606ee..28828e083c2b3 100644
+> > --- a/drivers/md/raid5.c
+> > +++ b/drivers/md/raid5.c
 > [ ... ]
+> > @@ -2970,7 +2970,7 @@ sector_t raid5_compute_sector(struct r5conf *conf=
+, sector_t r_sector,
+> >       sector_t new_sector;
+> >       int algorithm =3D previous ? conf->prev_algo
+> >                                : conf->algorithm;
+> > -     int sectors_per_chunk =3D previous ? conf->prev_chunk_sectors
+> > +     unsigned int sectors_per_chunk =3D previous ? conf->prev_chunk_se=
+ctors
+> >                                        : conf->chunk_sectors;
 >
-> > diff --git a/kernel/bpf/cgroup.c b/kernel/bpf/cgroup.c
-> > index 081d81de18163..a808d2a31f11d 100644
-> > --- a/kernel/bpf/cgroup.c
-> > +++ b/kernel/bpf/cgroup.c
+> [Severity: Critical]
+> This is a pre-existing issue, but could the use of sectors_per_chunk
+> cause problems when passed to rounding macros?
 >
-> [ ... ]
+> Looking at raid5_bitmap_sector():
 >
-> > @@ -355,7 +407,12 @@ static int bpf_cgroup_array_copy_to_user(struct bp=
-f_prog_array *array,
-> >       for (item =3D array->items; item->prog && i < cnt; item++) {
-> >               if (item->prog =3D=3D bpf_cgroup_array_dummy(atype))
-> >                       continue;
-> > -             id =3D item->prog->aux->id;
-> > +
-> > +             if (cgroup_bpf_is_struct_ops_atype(atype))
-> > +                     id =3D bpf_struct_ops_kdata_map_id(item->kdata);
-> > +             else
-> > +                     id =3D item->prog->aux->id;
-> > +
-> >               if (copy_to_user(prog_ids + i, &id, sizeof(id)))
-> >                       return -EFAULT;
-> >               i++;
+> raid5_bitmap_sector() {
+>     ...
+>     sectors_per_chunk =3D conf->chunk_sectors *
+>         (conf->raid_disks - conf->max_degraded);
+>     start =3D round_down(start, sectors_per_chunk);
+>     end =3D round_up(end, sectors_per_chunk);
+>     ...
+> }
 >
-> [Severity: High]
-> This is a pre-existing issue, but does bpf_cgroup_array_copy_to_user()
-> incorrectly return -ENOSPC when trailing dummy elements exist?
->
-> If a cgroup link is detached under memory pressure, it leaves a trailing =
-dummy
-> sentinel in the array.
->
-> When userspace calls bpf_prog_query with an exact-sized buffer, the loop
-> breaks via "i < cnt" exactly when i =3D=3D cnt, leaving "item" pointing t=
-o the
-> dummy element.
->
-> Since item->prog is non-NULL (it is the dummy), the function evaluates
-> "return item->prog ? -ENOSPC : 0;" and erroneously returns -ENOSPC.
->
-> This breaks userspace queries, causing userspace tools to continually rec=
-eive
-> -ENOSPC and attempt to allocate larger buffers, eventually exhausting mem=
-ory.
-
-This issue is pre-existing and the severity should be low. This is an
-unlikely path when the system is under pressure. Can be fixed later
-with bpf_prog_array_copy_core() if really needed.
-
+> The round_down() and round_up() macros are designed specifically for
+> power-of-two divisors. If the number of data disks is not a power of two,
+> sectors_per_chunk will not be a power of two, which would yield incorrect
+> sector boundaries.
 >
 > --
-> Sashiko AI review =C2=B7 https://sashiko.dev/#/patchset/20260623175006.31=
-36053-1-ameryhung@gmail.com?part=3D9
+> Sashiko AI review =C2=B7 https://sashiko.dev/#/patchset/20260624155452.21=
+1646-1-nishidafmly@gmail.com?part=3D1
+
+
+
+--=20
+Hiroshi Nishida
+nishidafmly@gmail.com
