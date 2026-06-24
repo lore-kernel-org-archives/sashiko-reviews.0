@@ -1,128 +1,114 @@
-Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-yw1-f178.google.com (mail-yw1-f178.google.com [209.85.128.178])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2C2403E5578;
-	Wed, 24 Jun 2026 21:00:45 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
-ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1782334846; cv=none; b=cyjef3b3is6pGNiwwlMCW2pnvfZJTJdgxkv9UgRr+8nMdtLhd7LXe4YZj2o+NVDEgHtNARZfdUEvJrnwzYjgWd3xfvuCr6VMxFJ7vBwL1K3xJHGek5gqFBLHv9eFYZ5djAGCGROh1aSnb0DBAxXvRkcKLf/PCKZpZIq9TNSBtWA=
-ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1782334846; c=relaxed/simple;
-	bh=i406byhSaQV0V7DZutKrEC4gHcx1ajLRGHczan5z1nU=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=T6i0CKGkrE4cK5mbUHnxcSDGi+bJ74+HAdMZ0CEKyFxyIrpiHT9DKQB90MkOoJreL6VqHUQT5pwDnKwP3h5Cauuj8tMOQhA61ihU+oqeMFfYHufgsuXMoO5EonPOXSAx0zGyLChaMVixuxSfYxytJAe1pmL0zLTt4UvASMOZIcw=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=JcZPWqQU; arc=none smtp.client-ip=100.103.45.18
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D7E7A3E5A05
+	for <sashiko-reviews@lists.linux.dev>; Wed, 24 Jun 2026 21:07:14 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=pass smtp.client-ip=209.85.128.178
+ARC-Seal:i=2; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
+	t=1782335236; cv=pass; b=baaxMRv8KiJ1PtciKFEM+qEMkUKKyrEe5M5iucxYbJfTPdvJROqwuc67rYCQKYwo8E0tuu6qV+MBp+dhK7U5+2nIWO3A0COTl79e8GqMTkRrTUao4OLs5vCdIHhl1VB1W8YEpOUgM2qio0ZXFethd2tn+8xggBfHknE7mVmVwcs=
+ARC-Message-Signature:i=2; a=rsa-sha256; d=subspace.kernel.org;
+	s=arc-20240116; t=1782335236; c=relaxed/simple;
+	bh=41gHxPt7HUxFBkNkDE3LM0TVD4IOiCpFU2mOz/M/aAM=;
+	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
+	 To:Cc:Content-Type; b=Ee7vO9mNR2prkD87egeQTNrnghDiVLQ/DMrq+qkqS8UDXKhObrC1HcGSDPLzrCrjqEMmLfZDaWKl3vCv0794dl/dVhW2XR1XD7VZksnNfeW9+4oE+chfRRwBDuIG6/k3QPvlm8X+MN/FP7ahmMAdquzPPqnBVFpKKnSS6wSWmrU=
+ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=My810cEE; arc=pass smtp.client-ip=209.85.128.178
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="JcZPWqQU"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0A39A1F000E9;
-	Wed, 24 Jun 2026 21:00:45 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=kernel.org;
-	s=k20260515; t=1782334845;
-	bh=cWN8hhpXmxnLAQ5ay7HLCp1IVEH4k3sOxPQpSwRpQ+8=;
-	h=Date:From:To:Cc:Subject:References:In-Reply-To;
-	b=JcZPWqQUXncyAr9AybO2yr3+w3eBQ6AOGLF9r1q+/YW6szLEpmvIPPbBhPFVbg2e4
-	 cy1JRhiYM3n0PXrt38xThNJBg0cJTK93oEZvbO6BMji8Mak+HAdA4/egLppE7O+Opo
-	 9pKPp/C0CM75ixin8kc9F9E3ogW/yvh1XSNIhkKFKa1CaHt1bFnp622ub3OF/yR8vT
-	 O2gjPrXGYaGlaIPg0jbHW6I7YnOJ7HSk+zeatl8eKk85OcdMVuA2CZQVlqGYSMdCMv
-	 M9fLaKxSEpSYgfDDUpIWFoirw3d7tR9uA5ObIo8j3Pfb6IRrztUbj8WDr8L2YJhadW
-	 lvlXHE2UjYOZw==
-Date: Wed, 24 Jun 2026 14:00:43 -0700
-From: Oliver Upton <oupton@kernel.org>
-To: sashiko-reviews@lists.linux.dev
-Cc: Marc Zyngier <maz@kernel.org>, kvmarm@lists.linux.dev
-Subject: Re: [PATCH v2 1/2] KVM: arm64: Only consider S1PTW a write fault if
- HA is set
-Message-ID: <ajxFe5N2CXySmLbU@kernel.org>
-References: <20260624202446.1698535-1-oupton@kernel.org>
- <20260624202446.1698535-2-oupton@kernel.org>
- <20260624204025.519861F000E9@smtp.kernel.org>
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="My810cEE"
+Received: by mail-yw1-f178.google.com with SMTP id 00721157ae682-806449d108aso20375567b3.2
+        for <sashiko-reviews@lists.linux.dev>; Wed, 24 Jun 2026 14:07:14 -0700 (PDT)
+ARC-Seal: i=1; a=rsa-sha256; t=1782335234; cv=none;
+        d=google.com; s=arc-20240605;
+        b=ijNz/t6JARw+OeMBE6gZ/Z2AJ2xvLrVrsVpHOh/6+DUUm9LAF2xH14KKq4u1KPtrVQ
+         ENaxHCrvRlRxiCBG3kex96ahSoTVDpozqwzx+cgpWiBYLIcn2Ql0tCJJR+e/GbuQF16i
+         14QPwVf6bNzweB9gaOVsDm+890K66Ob1t0HuxUujGZ3s5eo0wx4T0BRrZGNs4sCbjyyh
+         KMZXG+iVjk7DQhDw8tUI5TFa/Fu+Eial3SMTHUSMRbOkZ/JS/+XYcelxSQtW2WrBNLG8
+         nfBdni64Ii276/0DyMZxwHDYqz0SuSvI/4zsM96NsTh6lrnvOIYUyfgrkt6QObiWSx1k
+         XFag==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com; s=arc-20240605;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:dkim-signature;
+        bh=41gHxPt7HUxFBkNkDE3LM0TVD4IOiCpFU2mOz/M/aAM=;
+        fh=9+UbgyY1ZWC2J7dzZW8G17BO0JbabJj9TMd/QWMVoDQ=;
+        b=Rhq/k8ojOLcILWVze0xtazzUpttdPtP7DlsQct4oMuefKSgMJBhiwAyqRqZLlCkDmP
+         FWwbMt0KDvC5wqRtirEAIoCGnA1g7aCJTNTc4rZVQ4azUW+WSjiKPsthB7b/QF/EqOm/
+         aAnawdAc1OaKydXYzlD87rUTWPsEdgT7+o7Tem3spy8kKWCNRxjFhVTicvAJsL9JKMIK
+         znJJd/PWqds8HYjJVj3yu4HisM+QCC2RdYw4Qir/jJLPgE1MT5UVV6E4pAV8HUGxotsd
+         ALXy269pCTA/9JTJNZD1iicKmqsJdgHFAxqb8HMOOh6qdVQuOYYvr3uwoIOsiUYchvO9
+         0ltQ==;
+        darn=lists.linux.dev
+ARC-Authentication-Results: i=1; mx.google.com; arc=none
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20251104; t=1782335234; x=1782940034; darn=lists.linux.dev;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=41gHxPt7HUxFBkNkDE3LM0TVD4IOiCpFU2mOz/M/aAM=;
+        b=My810cEEhyzjbjQaUw+rt7I6Hr4m55HKX2WoyNMKm0lKrzT0RQAnuMdq8ozb833DL5
+         s1OpX3rFWF6WROQBVtWCxz8Fo+wKjkGuL3sIbOAWo713Yrei2eTtEmS63YIVSC8923tW
+         702+/VA3dRt9EmtrvXW8b+DzdjtDyfnrShlXFHMzKB2uuh6c/BirKK4t3tDstdUX+muU
+         glv+3VlIz9kTDZaVcrOIVkGkXFjcoJgwmAJuMNH9TTtxVCpd8GNeod5Wi/V3nxzpg+Hp
+         Emip/IjZa6GsEt549VZ67pFQbOR8ADDWdETK9Bq5HJ6xGftCkrsIVjYhJS7yg+/CbljF
+         9WzQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20251104; t=1782335234; x=1782940034;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:x-gm-gg:x-gm-message-state:from
+         :to:cc:subject:date:message-id:reply-to;
+        bh=41gHxPt7HUxFBkNkDE3LM0TVD4IOiCpFU2mOz/M/aAM=;
+        b=LPZUWtpYJ00hx0MF3WKsoSLZmVeXS0Pj4Sxk0fcKpPUj8CrxZfTnkVaNVuztRp1oQZ
+         pMVql2RJDN6qjEYdtja40mD+KETxl+qTuEDr9BUcPgBD8AUdEX9CTbndbFupos1r50yx
+         E4KkaPiSipawES/8ma5bmOS+iDJunSYVee9RLiaZN4QUCkGAWoi4JB2dtExSzDWtDMTv
+         2oJBInCohOGw2VxcQGJxMKwB1IBJWoqweSL9Q3s46OLbxtUZMmRHjNK3KLL9hySwE40I
+         JkvAoT7hUKgM5+hXpn3VOSGILt+5ahn3T5bRazy5zGe7qmVYz8RIcW/bExvvQdBMPMOm
+         cgzg==
+X-Gm-Message-State: AOJu0YxM9GRRwz3Ovi8mUzP4BtHNANUMRemlUAskLHJrjOjUiFVPP3nX
+	MKE1GzUwBW/djO2/hxSTtJdSshtmpOUObNDl2+L3vmHNRc2h14VcgR6i9J5PS/KmqBNQ+HcSfeQ
+	egBwbDd/ruiV+2Lkp0nBGk0IrsRlcG8A=
+X-Gm-Gg: AfdE7ck2bpnEYGpXQLEuPPAJQzQyYuaRAD8cJLZNA6UEYyKoEAaTjblWImu4EIz0Fnw
+	PAfcx+eC1DyYF1oymRKcN7Acwn/DxRgXBWTDRZ0WlPrkj8SM9+Jxa6mQH6Gsw3ppk+InINTVLi6
+	Fbf+ISZdeq8Xbx63UNovah/xnu5yrLGnZnoyMshs2g9ruN5IFu99PchQxQ7KtuC6KRdkahF8Y/O
+	guHaUSxyJ263K9NoaVoSiJp3upy0whPjjWqZRGpwh2wLh/pqdnX+M8I6pTA+vpD5LeNmFQZeUww
+	VquO8FnYJdiV8EIVi6bKTwDyihpfq7/XH7q7K/wE0inMs+yABei5aNhUF3o=
+X-Received: by 2002:a05:690c:e3eb:b0:7b2:bf20:cdc3 with SMTP id
+ 00721157ae682-807eeb6f49dmr52477487b3.0.1782335233754; Wed, 24 Jun 2026
+ 14:07:13 -0700 (PDT)
 Precedence: bulk
 X-Mailing-List: sashiko-reviews@lists.linux.dev
 List-Id: <sashiko-reviews.lists.linux.dev>
 List-Subscribe: <mailto:sashiko-reviews+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:sashiko-reviews+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <20260624204025.519861F000E9@smtp.kernel.org>
+References: <20260625-bpf-htab-task-work-uaf-v1-1-31e711ccb159@cherr.cc>
+ <20260624193149.3EE921F000E9@smtp.kernel.org> <ajxEE59cuz9XUWMV@pve.cherr>
+In-Reply-To: <ajxEE59cuz9XUWMV@pve.cherr>
+From: Alexei Starovoitov <alexei.starovoitov@gmail.com>
+Date: Wed, 24 Jun 2026 14:07:00 -0700
+X-Gm-Features: AVVi8CdU58htoB5Js73L8sSmYdKMl6WQEpVsEYhmQ9JMyh58gXCYVNgBn07RzCk
+Message-ID: <CAADnVQJeMsZWpJavHz-X0h3VKEMRN-xhHy-wpOOqFB3dA=pfDA@mail.gmail.com>
+Subject: Re: [PATCH] bpf: Fix use-after-free in htab elem with bpf_task_work
+To: Shengzhuo Wei <me@cherr.cc>
+Cc: sashiko-reviews@lists.linux.dev, bpf <bpf@vger.kernel.org>
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 
-On Wed, Jun 24, 2026 at 08:40:24PM +0000, sashiko-bot@kernel.org wrote:
-> > +	/*
-> > +	 * The architecture sucks; assume that the S1PTW fetched for write if
-> > +	 * HA is enabled at stage-1. Note that hardware updates to dirty state
-> > +	 * and table AF are predicated on HA=1 (DDI0487 M.a D24.2.194; R_SNVTX).
-> > +	 */
-> > +	if (kvm_vcpu_abt_iss1tw(vcpu))
-> > +		return effective_tcr_ha(vcpu);
-> 
-> [Severity: High]
-> Does unconditionally treating S1PTW faults as writes when HA is enabled break
-> guests that use pre-populated page tables in read-only memslots?
-> 
-> If a guest populates its page tables with the Access Flag already set, places
-> them in an RO memslot, and enables HA in its TCR, the hardware only needs read
-> access during a walk. However, if a translation fault occurs,
-> kvm_is_write_fault() will unconditionally evaluate to true because of
-> effective_tcr_ha().
-> 
-> This will cause kvm_handle_guest_abort() to see a write fault on an RO memslot
-> and inject a spurious Synchronous External Abort (SEA) into the guest, even
-> though the hardware only needed to read the page table. Could we retain the
-> conditional check for permission faults to avoid this?
+On Wed, Jun 24, 2026 at 1:55=E2=80=AFPM Shengzhuo Wei <me@cherr.cc> wrote:
+>
+> On 2026-06-24 19:31, sashiko-bot@kernel.org wrote:
+> > Thank you for your contribution! Sashiko AI review found 5 potential is=
+sue(s) to consider:
+> >
+> > New issues:
+> > - [Critical] Unconditional call to `check_and_init_map_value` on inline=
+ element memory causes out-of-bounds writes for per-CPU maps.
+> > - [High] Dynamic memory allocation (`kmalloc(GFP_ATOMIC)`) in the eleme=
+nt free path breaks NMI safety and causes memory exhaustion.
+> > - [High] Permanent bricking of `BPF_TASK_WORK` fields during in-place m=
+ap updates.
+> >
+> Will try to fix in v2
 
-Gah, I tested with QEMU+EDK2 for this exact purpose but did so on an
-implementation without HAFDBS.
+Do not. There is nothing to fix in the first place.
 
-> > +static enum trans_regime vcpu_trans_regime(struct kvm_vcpu *vcpu)
-> > +{
-> > +	if (!is_hyp_ctxt(vcpu))
-> > +		return TR_EL10;
-> > +
-> > +	return vcpu_el2_e2h_is_set(vcpu) ? TR_EL20 : TR_EL2;
-> > +}
-> 
-> [Severity: High]
-> Does vcpu_trans_regime() correctly handle unprivileged memory accesses 
-> like LDTR/STTR executed from EL2?
-> 
-> By returning TR_EL2 based strictly on the vCPU's execution context, KVM
-> disregards that unprivileged instructions at EL2 use the EL1 and 0 translation
-> regime (TCR_EL1) when HCR_EL2.E2H is 0 or TGE is 0.
-> 
-> Since KVM cannot distinguish an LDTR fault from an LDR fault via the ESR
-> syndrome, it will read TCR_EL2.HA in __effective_tcr_ha() instead of
-> TCR_EL1.HA. If TCR_EL1.HA is 1 but TCR_EL2.HA is 0, KVM incorrectly evaluates
-> HA as disabled.
-> 
-> This causes KVM to treat a legitimate S1PTW permission fault (generated to
-> update the Access Flag) as a read fault, refusing to grant write permissions.
-> The hardware will then fault again on retry, creating an infinite stage-2 fault
-> loop that hangs the guest vCPU.
-
-This is wrong, the LDTR instruction does not use an out-of-context
-translation regime.
-
-If HCR_EL2.{E2H,TGE} != {1,1}, LDTR silently upgrades to a privileged
-access.
-
-"""
-func AArch64_IsUnprivAccessPriv() => boolean
-begin
-    var privileged : boolean;
-
-    case PSTATE.EL of
-        when EL0 =>
-            privileged = FALSE;
-        when EL1 => privileged = EffectiveHCR_EL2_NVx()[1:0] == '11';
-        when EL2 => privileged = !ELIsInHost(EL0);
-        when EL3 =>
-            privileged = TRUE;
-    end;
-
-    if IsFeatureImplemented(FEAT_UAO) && PSTATE.UAO == '1' then
-        privileged = PSTATE.EL != EL0;
-    end;
-
-    return privileged;
-end;
-"""
+pw-bot: cr
