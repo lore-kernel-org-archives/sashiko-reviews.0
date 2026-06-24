@@ -1,181 +1,135 @@
-Received: from mx0a-0031df01.pphosted.com (mx0a-0031df01.pphosted.com [205.220.168.131])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-dl1-f50.google.com (mail-dl1-f50.google.com [74.125.82.50])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CDE6434676F
-	for <sashiko-reviews@lists.linux.dev>; Wed, 24 Jun 2026 13:32:37 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.168.131
-ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1782307958; cv=none; b=gn/OM7B0k2QlNcF+bSOHMxLtVhAW8i7l0Fn2XZeRMgYPm0NqtD3tB+e2nus1zUtvtHMP4PrkfA6zpPlyhXY4BdHEtM+wC5C647JJH3flR5I6+07pHOysv8AgWAhJOHYKIubSILBT5CXjLX53caOtOU9CXPG6+R1BeOu1TOc9w4w=
-ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1782307958; c=relaxed/simple;
-	bh=omwyuqulGFGHWQeeHx5ij2yog4yrYPZqWTkWqeld3S8=;
-	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=MaEePYEKdZw0cB1ub4AHvMNJBmXI+50idcb34uglozC4cjIev+noLwYSAU2ajBDaKtkrWFUjCg1U6eU3NI7UUAbu/2QsFj3Cbc8a8BzDSlw1cbjlBbsowyQR5pCOcqJm1D3ntr/himLA10DKmnA0o2X1/ovO4h+wqEqI610lznc=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com; spf=pass smtp.mailfrom=oss.qualcomm.com; dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b=WZ4t5G6u; dkim=pass (2048-bit key) header.d=oss.qualcomm.com header.i=@oss.qualcomm.com header.b=AaHXc3Eg; arc=none smtp.client-ip=205.220.168.131
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=oss.qualcomm.com
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 28580C8CE
+	for <sashiko-reviews@lists.linux.dev>; Wed, 24 Jun 2026 13:37:59 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=pass smtp.client-ip=74.125.82.50
+ARC-Seal:i=2; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
+	t=1782308280; cv=pass; b=UAGPujwOWRWddJR0LlbPpP/27+EYRYGI3AH7RzwcxpZAqXx2+2XUDarNpqTLDrAZvIfLaISUwXxmBOzbwL0/ZkruJd0QBj2nA037PVfL7tdzuLxhcuguFAkTlh8saP5T+bR694H6qxMKpS0KlB74RQ0cfZZpeTJDt3QyFgEsong=
+ARC-Message-Signature:i=2; a=rsa-sha256; d=subspace.kernel.org;
+	s=arc-20240116; t=1782308280; c=relaxed/simple;
+	bh=JbnF8tlvwsmPMUGz/K9mddurBUf197LtClXob6r9Br0=;
+	h=From:In-Reply-To:References:MIME-Version:Date:Message-ID:Subject:
+	 To:Cc:Content-Type; b=ALabdMBj2X8LdbDZ79bi6YYGwp0SUneGiCtJvFSiYh8i60wVdrqu2bMm9kiEVKJpcyGpXt2yC+wigG6LgM2jH8G6Nl4ePvFudZ9Tj83pOTe7ZEtaCvjvuIXctnHCvBQ22L8gYajTxRala+azZiDBYzlNgXN+OeiHgnIjYzeQHg0=
+ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=google.com; spf=pass smtp.mailfrom=google.com; dkim=pass (2048-bit key) header.d=google.com header.i=@google.com header.b=LHyKxCHo; arc=pass smtp.client-ip=74.125.82.50
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=google.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=google.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b="WZ4t5G6u";
-	dkim=pass (2048-bit key) header.d=oss.qualcomm.com header.i=@oss.qualcomm.com header.b="AaHXc3Eg"
-Received: from pps.filterd (m0279866.ppops.net [127.0.0.1])
-	by mx0a-0031df01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id 65OANUKs2582973
-	for <sashiko-reviews@lists.linux.dev>; Wed, 24 Jun 2026 13:32:37 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=qualcomm.com; h=
-	cc:content-transfer-encoding:content-type:date:from:in-reply-to
-	:message-id:mime-version:references:subject:to; s=qcppdkim1; bh=
-	Dgs9noh+aVMYmMVI+RiZ548pHFrtQba3o3tk53GSo6k=; b=WZ4t5G6ukBEor6jW
-	Ti7uDiJOoY0Fx4/D9vcg4oUOoEh+31mpxDiCC4gG3Ifq0IklBiSif6yGccNOHXsE
-	LIzKYk152+ObLrTxvt79LqZUEXjzCauSJI9PjVlmpIeQCK7kYFDKDu8wsSV6595S
-	pDBqcAZVY3Tp1SYroMKkBZzkwj067vLl8Huy3WgIZRU2XBC8ybEAeg2ZM6mCn3YZ
-	/SLWedBJzbRch6WvT2i+4gzNTuJ6z6TYieyiGNYRhzJI+P2KsMCdkwHM6RrgWJwg
-	dYe4mc1yqNSFkSpiykPmD1zVYHEmK56Uy6zEeFHgaC4WFJfx2T052aAbsVambpyH
-	mT5akQ==
-Received: from mail-pj1-f72.google.com (mail-pj1-f72.google.com [209.85.216.72])
-	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 4f00evbacc-1
-	(version=TLSv1.3 cipher=TLS_AES_128_GCM_SHA256 bits=128 verify=NOT)
-	for <sashiko-reviews@lists.linux.dev>; Wed, 24 Jun 2026 13:32:36 +0000 (GMT)
-Received: by mail-pj1-f72.google.com with SMTP id 98e67ed59e1d1-37de6edd915so722901a91.1
-        for <sashiko-reviews@lists.linux.dev>; Wed, 24 Jun 2026 06:32:36 -0700 (PDT)
+	dkim=pass (2048-bit key) header.d=google.com header.i=@google.com header.b="LHyKxCHo"
+Received: by mail-dl1-f50.google.com with SMTP id a92af1059eb24-139aff562e1so1393738c88.1
+        for <sashiko-reviews@lists.linux.dev>; Wed, 24 Jun 2026 06:37:58 -0700 (PDT)
+ARC-Seal: i=1; a=rsa-sha256; t=1782308278; cv=none;
+        d=google.com; s=arc-20240605;
+        b=TWLoRo1rcti9Ptevco0nEzyYdwXjvTH7+drI6zU3mFIZgap2W4BBoLNvb1AuyKrK7+
+         EYRrn0W+lbNdS9WWTnUbCmHECT/3AigMzH6wyxq33QLl7TT4IzCWe/DGb9JdcUx5xX2p
+         zof0Vtv8HXqOcYzNvcZGJdxrl3wH5cTmL0rjzRDIgdYPOr1+h85ON0plbTpElvA2bfHU
+         oKsi13PdmvNsGgt8am4m3/RKEGyUuieKd2dlL/wvdqq7WzSxpH44l6DVnzHJ0Db7mYZE
+         hBF0J7880AcQ8j5T+e0sWaiN0csFVUfVhlKfOdoDYWnsPq2+IM/po4ZUS6dTC9Ml/ojk
+         MHEw==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com; s=arc-20240605;
+        h=cc:to:subject:message-id:date:mime-version:references:in-reply-to
+         :from:dkim-signature;
+        bh=JbnF8tlvwsmPMUGz/K9mddurBUf197LtClXob6r9Br0=;
+        fh=tKBL2KXLKCLRBTD9ZJ0FoV+9Me0vuTjMuw2DMNrS+zE=;
+        b=F/19aP/9KrEq0fqBknVfhC+ZCSWIHZi1pdeUQ/jLWd4CsQCfRI+LplPBYmcosCe7R0
+         lBUjghuM0BDI4evbga1fjBHgUbYC5lTtnjVXhrtj1zDLonzGwrGu1pLsrk/EnQeOuOEo
+         LNypSskLp+Dgime+lUpujYCrj0JGbn9HG2Ql/Sr1T1JFRR06z6KlRfsXE5pg4NomrhqY
+         pK0d4oU2ltHDJXGW6H45sGM/BH8ti4Ilr2KRXwKoLS34Yqg7pk+e7OLLA+pRqFT+GVDh
+         AOBV4TAlyHnyMfvgYrs+caI6uyc0sZ41G9c66clDEODVwXQi7s5MiTyMKgVxwr/0yMrq
+         EizQ==;
+        darn=lists.linux.dev
+ARC-Authentication-Results: i=1; mx.google.com; arc=none
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=oss.qualcomm.com; s=google; t=1782307956; x=1782912756; darn=lists.linux.dev;
-        h=content-transfer-encoding:in-reply-to:from:content-language
-         :references:cc:to:subject:user-agent:mime-version:date:message-id
-         :from:to:cc:subject:date:message-id:reply-to;
-        bh=Dgs9noh+aVMYmMVI+RiZ548pHFrtQba3o3tk53GSo6k=;
-        b=AaHXc3EgPGhbHOZZ5yVJIpqKQzFibVwHoBAcL2dmD9yxTEQ8+9jhic3K4jyPvBsbxo
-         fXxhrNpKRD+FtYeThAYNf7RVYmgnlT2CQFFYw2bfepvxIASmacZ/6F0r6E501SGJcXzb
-         CrjrwwfPeCZjyok80cGsaTXLbGxj1jnMIFgflKYVe3gspCqrv+vdcx0kFpewCP9iX3F7
-         mHp/E+B8YQn7tOSnGjdq4q2gKT70qZnYUdCYZegqgneWZ8L2A+z4Ya9oY1uSg+7HpMiV
-         VET1LC02wPw7Uhlx/MokOrEZyvDtzQ+38nHen6rXFnC468tYrE26w6NM8GAPFkiyeiqe
-         h+yg==
+        d=google.com; s=20251104; t=1782308278; x=1782913078; darn=lists.linux.dev;
+        h=cc:to:subject:message-id:date:mime-version:references:in-reply-to
+         :from:from:to:cc:subject:date:message-id:reply-to;
+        bh=JbnF8tlvwsmPMUGz/K9mddurBUf197LtClXob6r9Br0=;
+        b=LHyKxCHo6D4nqEITg7EOofVcdC72DjHuDaSKE8B3v+4lTf5AYdWGYBXJuuqrBTmoy8
+         YfHvHlrX2SWZzcLBShl5bRS1i8BGxr6ma0W3XMY+J3wvsvmR+eMeoKwnZS+1+semakau
+         Byrh9Vhri0T77jG9JN+0DToBhUGKbR+b4JTGcftLigPvGDlbi+ZmaB0y/wPt0821oIjf
+         GKtb9lg61CYVjQufSccabr37haExtQ2pAFaohNVLOMi01SFc8wSXdKzchMw7XUMbSag5
+         oKfAF724zbP6rq8Bp5bqd98WsFs1jVQsA/16rZbP1Ort6b4rLTmk3KQ2eCzQ4ZpuWVEq
+         CdUg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20251104; t=1782307956; x=1782912756;
-        h=content-transfer-encoding:in-reply-to:from:content-language
-         :references:cc:to:subject:user-agent:mime-version:date:message-id
-         :x-gm-gg:x-gm-message-state:from:to:cc:subject:date:message-id
+        d=1e100.net; s=20251104; t=1782308278; x=1782913078;
+        h=cc:to:subject:message-id:date:mime-version:references:in-reply-to
+         :from:x-gm-gg:x-gm-message-state:from:to:cc:subject:date:message-id
          :reply-to;
-        bh=Dgs9noh+aVMYmMVI+RiZ548pHFrtQba3o3tk53GSo6k=;
-        b=pOd0dL7BzWpoVTXWfqlAbLPqr5S0wnoo+NENEublKfr9pBroVFJEaEmyTkr7IQgMLv
-         wwqERLObVTTPi/YV2+p1JdUBr5tg83IyYWVh8SdN5gPFC0hx5hdczkLTE8/qyQ3Kugbt
-         u56g9hrOO+n8SGXJsOiIEWag5RiJxDWRAhm7SjZDPVGvu7raLoFA1NVAcPXJ6kzyda8M
-         yj/gX8yyeNp2est8x4gXa1WV8tUAWPO8kp3pO5caaLfCB4Bh5D/CGcTSma9RbT8v3xar
-         H9FNhYcnXVyU56uoJZHqLscoOr0rOp4enH7QAOTLUlOZFUyFQIKjyUsQq+EH2EjisC8u
-         kYhA==
-X-Gm-Message-State: AOJu0Yz9/wB7FUQrq5JE8S6p2Q3m1Rc8S3KBsGcrG0QDJBJtpBatZGSZ
-	AvmLkgVb2iWeKhGXaJ6rSTIYRp47JT+toZBBJ9Gb4U7ffugGyMvQJWtDjMx04UK7iDHhhqwaDoG
-	iuJ6C3Ng6CGF9FJHqf6dRY+nS3xIwkNZWFJtGwuWE75i7gpUP5oWzbXeTdWY+cuF7eKcmalSyZ8
-	sOEbw=
-X-Gm-Gg: AfdE7cmGVt49TYNRFe2UUx3nUUu7cYMI8pF6bGqLNVHZ0rTFyVqM7We2nczXTwqJE8R
-	0wsjJNOjbmDm2U5L9QBh7sXNPFLOEegQQnbM2U7n6UZlJVWs/4wQJUeatZYpHFhKpWw8Q6tLnax
-	IbCuil/fJ3ahKbCFcoU9ebu5SHZM/do1btui1UU4Nq/iMfqQraiDRyy5+sEJ29I8gWKZAik1KqP
-	1ZoYGId6rTG73gJfXIL1/xcr26ejfkKw9LKt8yotEugVkW4T2+BxecjURCYORRCrED9vuaod7SW
-	Gs3zuQQUj+NfnfhOmEoUTJ4VU48ScqvyMT1OwN8KMSDEWrDpxN+352rKFjrDzkrasD+HudbGzb4
-	0qPCda3obH9F3pTPsgilAI4ydjFittsQBa1zPqJJ2ZME=
-X-Received: by 2002:a17:90b:1807:b0:35b:9894:f6f9 with SMTP id 98e67ed59e1d1-37dd0dd1110mr9044615a91.18.1782307956211;
-        Wed, 24 Jun 2026 06:32:36 -0700 (PDT)
-X-Received: by 2002:a17:90b:1807:b0:35b:9894:f6f9 with SMTP id 98e67ed59e1d1-37dd0dd1110mr9044566a91.18.1782307955632;
-        Wed, 24 Jun 2026 06:32:35 -0700 (PDT)
-Received: from [10.218.35.45] ([202.46.22.19])
-        by smtp.gmail.com with ESMTPSA id 98e67ed59e1d1-37de3cfc92fsm1201836a91.0.2026.06.24.06.32.33
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Wed, 24 Jun 2026 06:32:35 -0700 (PDT)
-Message-ID: <475fe567-9e0d-4710-902d-a63470813273@oss.qualcomm.com>
-Date: Wed, 24 Jun 2026 19:02:31 +0530
+        bh=JbnF8tlvwsmPMUGz/K9mddurBUf197LtClXob6r9Br0=;
+        b=A+/txDM4JR5P7PWJLmUIyjZGe/kHEUfm0FFEROIF/uOG4GBFBSvLa1xpx8U5oZkAbK
+         1nvObMHyWZOXSpTUh2Gbo9jl6/CloaHyXfe/F71ppD43kS4Z9zdjpK9SLsb7CxW9kQWy
+         2fgzUkHs234WxkWZpQd77OAx8FeQIThc43dGnSxRuvG8qWd4Er4b10kLpqHFN+hE7MS4
+         epmVhNxyA2On7SzSUi2Llasc6i46slWNCaVeqVD9NbOtErRQwTxMBlZ9fr3MWVuVQ3zn
+         Czzwto82C/BL3sGBFvJwEqnDFYeEANHAWCLte5yKqJCVs+jm8MGb8ZwWFsnAAYB94yxl
+         oB4A==
+X-Forwarded-Encrypted: i=1; AFNElJ/jbauGgNPex7CfhUJvDM2uCKxGg06G6PuImV15u/o7tlO71Cs5A2xwh3AwQs8IpyztR/W8IgkuNkdK6LUK35Q=@lists.linux.dev
+X-Gm-Message-State: AOJu0YyXj0Ot5FN8W+6L0CMCZgnfqNRf1TOmmGzuyfJFZs7PktkWoeka
+	+f4pJhuq5/CmgvVhYdqmO9ks4ukYxWOvJ4Qdae/vpEE0+nRcymdErKz/EMN6XGqUAGC8CbqD0gA
+	/DheeqG5jb5RMEbf1z0YtUzs5/9+TPGej0sP1tImSPnIl4ijcPKFgjKaUveQ=
+X-Gm-Gg: AfdE7clYQD9p+McirJ60Z+VLyeuJTnDTMclgmv6hfC2JzpMQRL/2ZiX8t1kHhkgCh9r
+	v573s05OX8IsQ0qAgomUAoR1vV8BFR9XZDAr3nEHrPV+YdXCuTpRMnp37lgjbXs/T9gMIwXl/Sj
+	Gm2+KrrMFAw3SmXbcomSX58hz0cL2AOMtZHivKtqLh0iWs8v0dlUUDsUIihG7YPHNf0M4/ukct7
+	JnMMl9k2ZyLzLr0MaAvP9mElNBqzhZioAAJd4+m+Ri/aAcyER6//79xvN5tJ5Fyzobix/mVshWb
+	lB+6+OnxlsFcEjvDhrUOL38F+QKl
+X-Received: by 2002:a05:7022:6624:b0:138:37a4:fcc4 with SMTP id
+ a92af1059eb24-139d0c10057mr2617590c88.13.1782308277270; Wed, 24 Jun 2026
+ 06:37:57 -0700 (PDT)
+Received: from 176938342045 named unknown by gmailapi.google.com with
+ HTTPREST; Wed, 24 Jun 2026 06:37:56 -0700
+Received: from 176938342045 named unknown by gmailapi.google.com with
+ HTTPREST; Wed, 24 Jun 2026 06:37:56 -0700
+From: Ackerley Tng <ackerleytng@google.com>
+In-Reply-To: <CA+EHjTxdN+TsqSyp+f+8QO-BbOgHEebmpMhJbmD0D8quWg3s8A@mail.gmail.com>
+References: <20260618-gmem-inplace-conversion-v8-0-9d2959357853@google.com>
+ <20260618-gmem-inplace-conversion-v8-7-9d2959357853@google.com>
+ <20260619005533.984EC1F000E9@smtp.kernel.org> <CA+EHjTxdN+TsqSyp+f+8QO-BbOgHEebmpMhJbmD0D8quWg3s8A@mail.gmail.com>
 Precedence: bulk
 X-Mailing-List: sashiko-reviews@lists.linux.dev
 List-Id: <sashiko-reviews.lists.linux.dev>
 List-Subscribe: <mailto:sashiko-reviews+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:sashiko-reviews+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v2 2/4] PCI: qcom: Keep PERST# GPIO state as-is during
- probe
-To: sashiko-reviews@lists.linux.dev
-Cc: linux-phy@lists.infradead.org, vkoul@kernel.org, neil.armstrong@linaro.org,
-        linux-pci@vger.kernel.org, olteanv@gmail.com
-References: <20260521-link_retain-v2-2-08ed448b081c@oss.qualcomm.com>
- <20260521134316.8B9821F000E9@smtp.kernel.org>
-Content-Language: en-US
-From: Krishna Chaitanya Chundru <krishna.chundru@oss.qualcomm.com>
-In-Reply-To: <20260521134316.8B9821F000E9@smtp.kernel.org>
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 7bit
-X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwNjI0MDExMiBTYWx0ZWRfXyyO8d61fxwHO
- oYBbYAbHGpXjmTQ8uiyuBK21FJDiYRDY/2oKxcIt/pnkqWJ7qpeD2zln7QQffTq/j5+0Bg6hLAC
- G94AUt7dIO+23HgNoXx0jgQTYoRNFXnli4mKtRyR/OU/PBZDfNNsdswZoEWsgREYtni6dY4A4Ex
- zM0GyMExxXIIMsX/q1HqHv68TplcRD9imr7MbiN4ld77eAOjjtiJ/0InmQUwM60qjX2SjIk435u
- 1kJHxh2qK50ctVhRGhH44+FU6BBV+IxU3NcZluYKion2BZdIezauJdk3n6fsuRrzUE9AwEmFXZS
- dL/HGcJAt+dKcYMNA/SK9sToFIJuveOgTUeZl3rttLpJ1owFxlFrUbqjZ1D9XTJWRS2yg+4+Hov
- IXdnn/DPEr3iJNmUu05UZ1a3nMa96Wh/UAKms/M8hIwwsN/XIxg+TrYlCoCswDGhoK4G+fIKDBN
- fEpE3Cd/ZKtKojEKdbw==
-X-Proofpoint-ORIG-GUID: Re78hu-M3vBI3waRm6BgRLrPFYImCHci
-X-Proofpoint-GUID: Re78hu-M3vBI3waRm6BgRLrPFYImCHci
-X-Proofpoint-Spam-Info: AW1haW4tMjYwNjI0MDExMiBTYWx0ZWRfX24qUgQPjyYRU
- LA2oXy7ffS5Wu0jpVdYgujETq/mrax01Efpc6LFuyq16lOt9z8OhivTZ8L2LpGP3u0d2XSaOxp4
- VVVY7DjsniTgzNuD8xxH6ueJD+Xrr/U=
-X-Authority-Analysis: v=2.4 cv=JbaMa0KV c=1 sm=1 tr=0 ts=6a3bdc74 cx=c_pps
- a=RP+M6JBNLl+fLTcSJhASfg==:117 a=fChuTYTh2wq5r3m49p7fHw==:17
- a=IkcTkHD0fZMA:10 a=FelO9ux0wxsA:10 a=s4-Qcg_JpJYA:10
- a=VkNPw1HP01LnGYTKEx00:22 a=u7WPNUs3qKkmUXheDGA7:22 a=YMgV9FUhrdKAYTUUvYB2:22
- a=VwQbUJbxAAAA:8 a=EUspDBNiAAAA:8 a=N6vRwfa21d4p-6sfUasA:9 a=QEXdDO2ut3YA:10
- a=iS9zxrgQBfv6-_F4QbHw:22
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.293,Aquarius:18.0.1143,Hydra:6.1.125,FMLib:17.12.100.49
- definitions=2026-06-24_03,2026-06-23_01,2025-10-01_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
- bulkscore=0 priorityscore=1501 phishscore=0 lowpriorityscore=0 spamscore=0
- malwarescore=0 suspectscore=0 adultscore=0 impostorscore=0 clxscore=1011
- classifier=typeunknown authscore=0 authtc= authcc= route=outbound adjust=0
- reason=mlx scancount=1 engine=8.22.0-2606150000 definitions=main-2606240112
+Date: Wed, 24 Jun 2026 06:37:56 -0700
+X-Gm-Features: AVVi8CdiT8IYvHNr-i5_WMx1t0IMgMVlt_53LlQKQ1trLegTSEWDN2cz65gsFkw
+Message-ID: <CAEvNRgHzrPAkLD6a2GYM6KpFBbHscghW3sVrVWv8XvjF+1BD1g@mail.gmail.com>
+Subject: Re: [PATCH v8 07/46] KVM: Rename memory attribute APIs to prepare for
+ in-place gmem conversion
+To: Fuad Tabba <tabba@google.com>, sashiko-reviews@lists.linux.dev
+Cc: Ackerley Tng via B4 Relay <devnull+ackerleytng.google.com@kernel.org>, kvm@vger.kernel.org
+Content-Type: text/plain; charset="UTF-8"
 
+Fuad Tabba <tabba@google.com> writes:
 
-
-On 5/21/2026 7:13 PM, sashiko-bot@kernel.org wrote:
-> Thank you for your contribution! Sashiko AI review found 1 potential issue(s) to consider:
-> - [High] Silent hardware control failure due to incorrect GPIO direction when using `GPIOD_ASIS`.
-> --
 >
-> commit b4b7937282f9b2dc2dff52265ec3936b1024af9d
-> Author: Krishna Chaitanya Chundru <krishna.chundru@oss.qualcomm.com>
+> [...snip...]
 >
-> PCI: qcom: Keep PERST# GPIO state as-is during probe
+>> Pre-existing issues:
+>> - [High] `kvm_range_has_vm_memory_attributes` iterates over potentially massive ranges under `rcu_read_lock()` without yielding, leading to RCU stalls.
 >
-> This commit changes the PERST# GPIO request to use GPIOD_ASIS instead of
-> GPIOD_OUT_HIGH. This preserves the existing GPIO state configured by the
-> bootloader or firmware to avoid unintentionally asserting reset during
-> probe.
+> Not a concern. The xarray walk is pointer comparisons with no I/O or
+> allocation per iteration. Realistic ranges (memslot-sized, low
+> millions of GFNs) complete in microseconds. The "billions of elements"
+> scenario mentioned below requires ~8 GB of xarray metadata to even set
+> up and doesn't happen in practice. The `!attrs` fast path
+> short-circuits via `xas_find` when no entries exist. This is the
+> standard xarray-under-RCU pattern used throughout KVM and mm/. Pre-
+> existing and unchanged by this rename patch.
 >
->> diff --git a/drivers/pci/controller/dwc/pcie-qcom.c b/drivers/pci/controller/dwc/pcie-qcom.c
->> index af6bf5cce65be..bfe873cbf44f6 100644
->> --- a/drivers/pci/controller/dwc/pcie-qcom.c
->> +++ b/drivers/pci/controller/dwc/pcie-qcom.c
->> @@ -1707,7 +1707,7 @@ static int qcom_pcie_parse_perst(struct qcom_pcie *pcie,
->>  		goto parse_child_node;
->>  
->>  	reset = devm_fwnode_gpiod_get(dev, of_fwnode_handle(np), "reset",
->> -				      GPIOD_OUT_HIGH, "PERST#");
->> +				      GPIOD_ASIS, "PERST#");
-> [Severity: High]
-> If the bootloader leaves the PERST# pin floating or as an input, will
-> this cause gpiod_set_value_cansleep() to silently fail later?
->
-> When using GPIOD_ASIS, if the pin was not previously configured as an
-> output, GPIOD_FLAG_IS_OUT will not be set in the GPIO descriptor.
->
-> Later in qcom_pcie_host_init(), the driver attempts to toggle the reset
-> pin by calling gpiod_set_value_cansleep() via __qcom_pcie_perst_assert().
->
-> Because gpiod_set_value_cansleep() enforces directionality, it will
-> return -EPERM if the pin is not configured as an output. Since
-> __qcom_pcie_perst_assert() ignores the return value of
-> gpiod_set_value_cansleep(), the reset line might never actually be driven.
->
-> Could this break PCIe link initialization on platforms where the
-> bootloader hasn't set the GPIO direction to output?
-There is pincntrl in the devicetree to make the direction OUT if bootloader
-doesn't set
-this pin out.
-
-- Krishna Chaitanya.
+> /fuad
 >
 
+Thanks for looking into this, I agree that each iteration is fast so
+it's not too bad.
+
+Setting up vm memory attributes with 1 entry per index in
+kvm_vm_set_mem_attributes() actually does allocations, so it is kind of
+slow and affects VM startup time. That's also okay since it isn't done
+while holding rcu_read_lock().
+
+For the private/shared attribute kvm_range_has_vm_memory_attributes() is
+on the deprecation path so I'd say optimizing the setup is a task for
+another day.
+
+>>
+>> [...snip...]
+>>
