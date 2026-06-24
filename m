@@ -1,306 +1,214 @@
-Received: from AM0PR83CU005.outbound.protection.outlook.com (mail-westeuropeazon11010056.outbound.protection.outlook.com [52.101.69.56])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-yx1-f53.google.com (mail-yx1-f53.google.com [74.125.224.53])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 570943DD508
-	for <sashiko-reviews@lists.linux.dev>; Wed, 24 Jun 2026 17:57:56 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=fail smtp.client-ip=52.101.69.56
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3BFA7325707
+	for <sashiko-reviews@lists.linux.dev>; Wed, 24 Jun 2026 18:24:19 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=pass smtp.client-ip=74.125.224.53
 ARC-Seal:i=2; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1782323877; cv=fail; b=dAzn+8nl32iE6wiGWDX6ARoBtr7edIrF/KLdk7XiYYMXBWvNZPHnNL8b8Lbh1+KJKIVKlsl7Bta5ZTSfdaTSbZl83UeIP+3dy/HtGa+tsMLyD1ZgR4jb/GAjOibWq9FbzwaPXWFM5yMEfQnhG2DaGgVaEwtXsjmE5ZnscYgchRs=
+	t=1782325461; cv=pass; b=ftqzZ/sg7JCDpGgfggIC8qx4t4UXgBSazASfmuod0jW/VICgfMTORtDx2L36h0CTZdWSMghEQrXuGTbkPbar3LY92GEGGG1J0BudglKkILWj1oJt3OkPK7OcrAJGxpUsmEgXxOiMMFfdvL8h2dA7gLRH7X7wndPYGeYjaEtsnFs=
 ARC-Message-Signature:i=2; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1782323877; c=relaxed/simple;
-	bh=OXN9pZVWODKCzfUA7nuEYBCjXM6dJzT3ZtPmFRZCJ2s=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:Content-Type:
-	 Content-Disposition:In-Reply-To:MIME-Version; b=DsLvXLsQCJn5I7CpRx8esxK9Gpl4niOiZeweYJcObFUyuAsbQlVWpPFGCh1Q6h/qeahMoPGRxQdPuCIiOrpKt1UcOL8FDy6/7FeqkI/e/+b6kns33tPeV84bGv2MiA+MkUNembJoj0xcnkRS1wk9d9RenMZM7lfmNt9hNGdjLlA=
-ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=oss.nxp.com; spf=pass smtp.mailfrom=oss.nxp.com; dkim=fail (2048-bit key) header.d=NXP1.onmicrosoft.com header.i=@NXP1.onmicrosoft.com header.b=ibnEk0/d reason="signature verification failed"; arc=fail smtp.client-ip=52.101.69.56
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=oss.nxp.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=oss.nxp.com
+	s=arc-20240116; t=1782325461; c=relaxed/simple;
+	bh=Hb4xLTgfJp/9y8lwsQ79+W67aztOiRgsiVtE17jRaQE=;
+	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
+	 To:Cc:Content-Type; b=DlxJnEkIMncbnx5MyN2TgjgRdqi3VHsOfS9nN8eGlHsHqAnkXzSwQn+RRNzJj7yXdb7ixocchPiJfT/l2CzBXb87/Lsz85+fcuZ7txcY2b3bACIKx6G3FX2t7hpMrO70Ii2usPmSHwt6PdP5aqKVJtYDu/fS5VbEKSm0hqEsBQo=
+ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=izX7nKjB; arc=pass smtp.client-ip=74.125.224.53
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=fail reason="signature verification failed" (2048-bit key) header.d=NXP1.onmicrosoft.com header.i=@NXP1.onmicrosoft.com header.b="ibnEk0/d"
-ARC-Seal: i=1; a=rsa-sha256; s=arcselector10001; d=microsoft.com; cv=none;
- b=RzhJjkK02sCeV5GU4k0eYKmoRcNXFqoRaqQmW9uP7D9mt4KWUZwLSpaLJbwhb9xWHZf+a8BjXffIjqRAcGRZA6eMeEAmDejFvuLL5U6eRkZTtqsbx6QAmVGIjwljS+WfOrhsZO3xtuV+fmMMpdc+A+BeEHa282LtdlHMcizY0Ij7Jin1de9GrUkZfiDnjBqOsdazG9d3VOe84C6hXJ4stNDkeGc/lyKNt8DO8gK4kJAH5ExZd5VdZmNUfpt1EAtz11RzAQ6uwwykGrqLHmfhq+h2u98eMDwx8ssXOpqZ5zn4FgKe7bDjEYcdiCVIhNFxg6aN6uJKv5v56ZM4J6fWlQ==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com;
- s=arcselector10001;
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
- bh=nYPSIkocWvhbHlYTcunK2i0YDPgy7yz4s7dXtYvAfmU=;
- b=kGKnz2hxbZ8Z9CC/3YK+KAP7UWc9Og2PeS5tNCHkuk3cvdOr56yyw8QMbudYk2cLETZDKnc/2pxJBVrTdgCtgjl2LZ7KLJyOYolhk6bkPF5hUs3SA9QtCUzJe6M/eHyALVWn342zkti2FVraP6P8AgAjxllK2+L1R+wEhWSVG7XefBnWBMNNkK7/eE3BwZk4yOfUjzUP2FwKtZT5ht0Ab1cH2imQeEBi9DJfvxtEiJ3N6Kdw9XBAHXX7aDqQvObnRI68LuN7887MUx0XdYy8LINHfZSMSFFvWiMx7jTwFsE5TKeysgRpfleAJAG9bSpbpwNJ9i9IJOk06r0sKnchcg==
-ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
- smtp.mailfrom=oss.nxp.com; dmarc=pass action=none header.from=oss.nxp.com;
- dkim=pass header.d=oss.nxp.com; arc=none
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=NXP1.onmicrosoft.com;
- s=selector1-NXP1-onmicrosoft-com;
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
- bh=nYPSIkocWvhbHlYTcunK2i0YDPgy7yz4s7dXtYvAfmU=;
- b=ibnEk0/dDIQKrmc24M5WyWB8gWGGz5OnyV7XsIktP6xeCALEe3HMxM5HKHjOWQ9ZzR2mhC4HIfJXQhuE6ZCyB9Usap8McGYL5gcVRqYQDbVUrsBP/5fTd3m6glhHnAzCac64Gu9KDuQpfd3hjOEGHlREQEi6GdZrQdZjNMoLpf4H6GSFoVCq3aXSL1xiWmROPU45nSfpNgtHBRSsL+kvYttTtxhmbOUv3h6buJsCkcA1njaJaTMKkMoeoZXdUDAmeEb/W/zBaELJq39GDZ7I+mVvWUZmRbgYyQrooS34+QXxWGpKnPsQGaUS7uu7Y0bG+sTTMWwVL0AulcarS7qj9Q==
-Authentication-Results: dkim=none (message not signed)
- header.d=none;dmarc=none action=none header.from=oss.nxp.com;
-Received: from GV2PR04MB11799.eurprd04.prod.outlook.com (2603:10a6:150:2cf::9)
- by AS8PR04MB8610.eurprd04.prod.outlook.com (2603:10a6:20b:425::22) with
- Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.21.159.12; Wed, 24 Jun
- 2026 17:57:53 +0000
-Received: from GV2PR04MB11799.eurprd04.prod.outlook.com
- ([fe80::2146:83a2:5329:b7c]) by GV2PR04MB11799.eurprd04.prod.outlook.com
- ([fe80::2146:83a2:5329:b7c%6]) with mapi id 15.21.0159.007; Wed, 24 Jun 2026
- 17:57:53 +0000
-Date: Wed, 24 Jun 2026 13:57:46 -0400
-From: Frank Li <Frank.li@oss.nxp.com>
-To: sashiko-reviews@lists.linux.dev
-Cc: Akhil R <akhilrajeev@nvidia.com>, linux-hwmon@vger.kernel.org,
-	devicetree@vger.kernel.org, robh@kernel.org,
-	linux-i3c@lists.infradead.org, conor+dt@kernel.org,
-	Frank.Li@kernel.org
-Subject: Re: [PATCH v5 04/12] i3c: master: Add support for devices using
- SETAASA
-Message-ID: <ajwamrU8ehBINzxq@lizhi-Precision-Tower-5810>
-References: <20260624102153.1770072-1-akhilrajeev@nvidia.com>
- <20260624102153.1770072-5-akhilrajeev@nvidia.com>
- <20260624104326.AE6C81F000E9@smtp.kernel.org>
-Content-Type: text/plain; charset=iso-8859-1
-Content-Disposition: inline
-Content-Transfer-Encoding: 8bit
-In-Reply-To: <20260624104326.AE6C81F000E9@smtp.kernel.org>
-X-ClientProxiedBy: SA9PR13CA0075.namprd13.prod.outlook.com
- (2603:10b6:806:23::20) To GV2PR04MB11799.eurprd04.prod.outlook.com
- (2603:10a6:150:2cf::9)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="izX7nKjB"
+Received: by mail-yx1-f53.google.com with SMTP id 956f58d0204a3-66058b880e9so1496238d50.2
+        for <sashiko-reviews@lists.linux.dev>; Wed, 24 Jun 2026 11:24:19 -0700 (PDT)
+ARC-Seal: i=1; a=rsa-sha256; t=1782325459; cv=none;
+        d=google.com; s=arc-20240605;
+        b=iz9hO3LTJcsZffxhTZexsfmYXBaaX/vVJ4WhhUsL3iQPg8hDxq+Crp/gQzE1FcFc5m
+         SqDzGQeW88e2EgGRh6Wd0Kiv7sHKsPpUQ7o71G/dgrm30cUMEYMqPR7kfFPdZM/gd5vu
+         ND3PiT1JdZSpASfPjDfA+/qhXlYzjD4UVQEFgeQ+p/9DPCGvW1aMwyIwmWizagpIT9ZF
+         NiLGk9HkYG3ndERIi7cX9bXupbWnb3umY+I6CR/Ni/v7gYJiEXYtzkYKwr0Wj3gtXgiu
+         /M8Fq3+ZdGWZPGvjwiX9CM/mZ4UgTFWUfMRPC4lfhWFx/msbMXmsd/DMZ5P7XFY7Occb
+         3Z9Q==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com; s=arc-20240605;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:dkim-signature;
+        bh=IY4/t9eKkaWP4XUnsXNVlFzjY/g3Uh9b/Y5kJrRDbTM=;
+        fh=uA360uvxR9S0K/Y4Lovo7aIaGlBwzVBnnb2BKWupr/4=;
+        b=XUgQj0ssj6znobvhuEoeJnu6/zaFztEE6ZccAzp04zhxwogPuj+rCvzKskTJq7e/Mu
+         rZsDLwBRuZEjK/lEqMhbBRpJBnI7fUjLZLjQ6LKnpyBGFr5Qj+6DQ5JcjHW4D7fQSV3f
+         TS6s/Yt01L3NK/cwW34i5mm9y8FsEIBX8mHhDeYCF3lggpCusNJqSb3TH9CsnsjyANJ7
+         29ntT5ZIUgTDe5lXVSqXXeiN54H+CUtP/G7ZQXPnaaiIFnWQAooEFUUO9BTOsq3LtVv2
+         M4eljBnsgarSWiG+k5RA8hv9+cEUNz2nfkdcN8UUB5cXLukqOXmU/Ah/pDW1VP1fM4B4
+         IOPg==;
+        darn=lists.linux.dev
+ARC-Authentication-Results: i=1; mx.google.com; arc=none
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20251104; t=1782325459; x=1782930259; darn=lists.linux.dev;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=IY4/t9eKkaWP4XUnsXNVlFzjY/g3Uh9b/Y5kJrRDbTM=;
+        b=izX7nKjBgB4yMJrn3iun/BxibiHg/JxbJQ0eAThtOa2pWlMJ7ByobzuyCeRnDndFI8
+         PlgXYFk/EJPNgKEWzDKnvPBmbdE8dd0HSRpJTBkIh9Vpn7bMps4CqZRc8jFfbAzYRA7U
+         KrTWq8UN6VJewRfbDgILQn9/apTuD9mMMUib7EL5+53eSwowNymfQyspq0/EeT8/YTXS
+         kfGP2ZdUXVb4J+nZKMjR4E/DSSvY2icTn8jSgxGDhMdj9TcOqrQE2TbrAzYcMYDHy49J
+         EjnhmXm4iu8U7jUciCCaccL/rwFZ2RaMJWMTSyv2QbDLgYPwckA2Z3A4LdrBrTu3h6Ik
+         tsMQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20251104; t=1782325459; x=1782930259;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:x-gm-gg:x-gm-message-state:from
+         :to:cc:subject:date:message-id:reply-to;
+        bh=IY4/t9eKkaWP4XUnsXNVlFzjY/g3Uh9b/Y5kJrRDbTM=;
+        b=bxzfOv2s7P/Lt1YCNK7r7rT8Y6a1Y1iLnBFT7KTen+LKMGH9SuVdHlYdoP8waboyhE
+         eQcWYaWOpDbCaNqNYIomVVhwJcECO3wU/LziMfdWcq2L4nTBHkLQMpBIkuiE7wg4tQnL
+         Ejb1RyYDHuIsIGGj68weZlJhO6QMobo2+IDeoRWkQcglGl5kCtGBjVxo/eRtAmQlquFD
+         sIc+28PFuqWQK/WQd+++vgmUMZHFH9+HvDZWyhAhRNwYMvq75VxlfF/Y/pw0l0i9WSXh
+         6JMJwG5TOSrNMgtO2gblnftrUZHI+IM/rXe6BJ0otZdjZlZSQm46ukn5q9s7bXp6Faqb
+         GwOg==
+X-Gm-Message-State: AOJu0YyCxQISHyHM21WJE2gzcyGLuUcVioLQHcNE85/umLLoU7CyKcq5
+	YP1CzYciHNSp1E8wBN2oKMA0CqBnqn5MA1yYb2zen9oCsEo+vQ2xNmnhzfp7gbAgh/HWI7IZgzv
+	Gr2kXhjD4V2MTtbEcgSYdtKjmP5alRzqKhQ==
+X-Gm-Gg: AfdE7cmnr1j75IYEQgUQeevZbX9qT6LbGJtEqGmEPQ7wDPQKcGWzgUN0MIjHW3Dv5qL
+	6IrlMTJMw/huMwMFek2TZTesrfrGtn1qW66nnEwtFRzGEdZwLVsgsAzIm+9NEMVgtR4fG5TgCeu
+	H6zE1dbgG579RUaihwtqiehtM3/EdKDmcujJfDN5cbLk+e4VAITAYefKtPWDxxfpAm40JZ+ro1U
+	HZOU+WjCb0n82+mVzcMEESCx2Pi7fneEGSkUXMvsFokEzDO0miCoBBzcHHHQWvanM4YjX8u
+X-Received: by 2002:a05:690e:4842:b0:661:37ed:63ad with SMTP id
+ 956f58d0204a3-6636e58827bmr2940730d50.43.1782325459014; Wed, 24 Jun 2026
+ 11:24:19 -0700 (PDT)
 Precedence: bulk
 X-Mailing-List: sashiko-reviews@lists.linux.dev
 List-Id: <sashiko-reviews.lists.linux.dev>
 List-Subscribe: <mailto:sashiko-reviews+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:sashiko-reviews+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-X-MS-PublicTrafficType: Email
-X-MS-TrafficTypeDiagnostic: GV2PR04MB11799:EE_|AS8PR04MB8610:EE_
-X-MS-Office365-Filtering-Correlation-Id: e61a08e0-7a2f-4d7a-f3d2-08ded21a1cff
-X-MS-Exchange-SenderADCheck: 1
-X-MS-Exchange-AntiSpam-Relay: 0
-X-Microsoft-Antispam:
-	BCL:0;ARA:13230040|1800799024|19092799006|23010399003|366016|376014|22082099003|18002099003|56012099006|3023799007|4143699003|11063799006|6133799003;
-X-Microsoft-Antispam-Message-Info:
-	KhdOKL46Xet4zTSQJEBPzkh8bAz6FYHBqjQOLGDFL7qvRGL41nhPBukDc/ym16EwL+J6ba+BKFaA8SwbDp3wv42Xaq9B6Jmf58zoOhllheFQZr0TlFc7NG9fK85M9wkqBtuqnqhhbTFWSaR2+Dv4KxH3sspg8URZoZXiYuL+PYwtuksr6sy80KdRGaXp6B2k6CT83s4JcV3e7lavwoPg0X7GKvkpR19OLP9NSEau6v+brUVDFLUazpk3grtJ9Gsd7tZBDC3rosAmC1fdwnhiESVt3U7L44BllTtMJBnzPeKm2aMo9MG6s0Se54ZxK6+HDh48wCLs2UzkDX4Xj34h+jlJlxzpnkryTIvviFcPUa4Y4h6MiOYneMsdYuQ06nYZMtQjxphJqUHni88yaNzVV5Ikmg2amZ8TnAGNc4NARa6PEmLKUsT6AEWJQOK84bcC1WMwU3gVbZGsWe/t5o+P+7HcChU0lBkGeLJShdUX36UEsAVr1Y3XetFGvHjwZW/rQB8c0U2lyMnkC8rLlLWwB2XAoytDagNmyYTYAdH9iA6MCRpM35rsXmtsrDI9uAKzMTqVF614n3LV8UVhgmW1cptF/Wne/BEt6ALXGZJ8h18=
-X-Forefront-Antispam-Report:
-	CIP:255.255.255.255;CTRY:;LANG:en;SCL:1;SRV:;IPV:NLI;SFV:NSPM;H:GV2PR04MB11799.eurprd04.prod.outlook.com;PTR:;CAT:NONE;SFS:(13230040)(1800799024)(19092799006)(23010399003)(366016)(376014)(22082099003)(18002099003)(56012099006)(3023799007)(4143699003)(11063799006)(6133799003);DIR:OUT;SFP:1101;
-X-MS-Exchange-AntiSpam-MessageData-ChunkCount: 1
-X-MS-Exchange-AntiSpam-MessageData-0:
-	=?iso-8859-1?Q?SVXNVZUab5Mla2Zl9MMDhi0+KRakujeC8dxKLYTFjjm4UW3PfMOV91kiQV?=
- =?iso-8859-1?Q?joXc0iopBSs8TL5BqghjpbD/2+jCyhzGZWCQ5w+cksfHV//XyI0sHfKU8J?=
- =?iso-8859-1?Q?U4WvQmXqzDVRjdmH72GiYV+osnofq3zXN2S+k0mjyEUiG0/vKwSiU9kPth?=
- =?iso-8859-1?Q?Eld4ZDmFNWzE73hhNUV8c3S/Cpt4j1TYvOd1QqPOS+ysrwPCdidj7bXrMW?=
- =?iso-8859-1?Q?SB3QNUf2WrqYNln9K34BR8KtIrGhLNhJLIi510vxYsGv1XWXKhL+v22TJ1?=
- =?iso-8859-1?Q?UFQxOuazBZMiJZgSYbzHnsG0fqFVbaDuL6QiLClbpyYEqVlBC50UTfGe4B?=
- =?iso-8859-1?Q?0Jb0vr8UOoH1vSV6iJ3DRIrQjM42vcTNeypvJWycULGJ3csarMoEqV03iX?=
- =?iso-8859-1?Q?1lzYULQ+R3dlxhV70nVtaSaCklS+hxtXqSGLeDwtQgpsBGFfp6I4FUn1L8?=
- =?iso-8859-1?Q?3DILo+AWx0bt18/NzWNjOo0L1mJ+4niAbyhA/jL+hjIyxjsbvdQAbPwUDo?=
- =?iso-8859-1?Q?K7ev3Lg8XrsOTspTeg344BK3gRETlxJpsmjYJCJ7SeF1Lm7oHxnYtjH0jN?=
- =?iso-8859-1?Q?XdF61U81kw14OAB8ENZnaPBerZ2iyRs657/vAuFJ0mZnTBFTETUaxJQLKN?=
- =?iso-8859-1?Q?kEiCZlUgAQGt6gt4973uGK19+0IAzwkE3/RwpuHCCh4O/c4ePIRF1n3xRd?=
- =?iso-8859-1?Q?PWC7kb/PknQlP0AOtgvERS+J2ubRqiBXIrW2/mMDznARFXECL5dE6Q2dzd?=
- =?iso-8859-1?Q?jMXD4W6MWGIDR+vCP5jbTHuCJmXzAYJktCScPZK/VwnpyfWYCv9oJwJQPU?=
- =?iso-8859-1?Q?qGnuVhBg5bNSx9ROgEy9FbHoBautANeGTlrBPiXBZ6W82HkEmARQ8aOchp?=
- =?iso-8859-1?Q?B/yb61RHtAfiDZ3AMHjZoaoMAMSljtNQnM7uCiyq+rjDGjCNMuRwYhUDkH?=
- =?iso-8859-1?Q?ztSYw5lBwwW/4JNaPzUvNrhySYKy93+TNYVZFBWxdHLx6W0xervrhVJ20V?=
- =?iso-8859-1?Q?+wYM2S/SQp3pEfscaYg1FDKWK/As+nyDbLB1XcG3Zed4s3d8a2ZgUm4lQo?=
- =?iso-8859-1?Q?I2XvduPuZduVXbtwbUOXINC5t89k7cAtUIcQTXkyeLh7CfqjWYLOHDzcyA?=
- =?iso-8859-1?Q?088jTZ46xUcExTb+8rotNq7xO7w7KWlmbx4WfvwsA4hGdGTrLGUgVUIh5y?=
- =?iso-8859-1?Q?w0TYYfmQ7Xg+B2Pl+njfia1YC7HYDO4b+NJ54QP8GdSuEeAIDGhYw53z9o?=
- =?iso-8859-1?Q?gfRRwvW34dvPlQh4IbdqloZml4XPQAZneVn64yUMj8XGnbbRHDNUXn+y8U?=
- =?iso-8859-1?Q?X7ZTgSypisaw/m+grToA+BVaj/QetiQIDCK35dOWLuGJz7Mh6c3YeUmMk9?=
- =?iso-8859-1?Q?Z4Fa8ldFRBIzA0E0GZeFU9YT9cFO3+aKh/IBJV4peKURGapQbSkAwzA6xI?=
- =?iso-8859-1?Q?i8c7NXCF+IMICW3pT28Dgc22e78WP8d5VZ2HMt45tg2kApEGxJW51JlbAO?=
- =?iso-8859-1?Q?9Vy7NdR52qYoNck8sa17s8Ue4xsotPxhSOFVHpvQ1+NzFOSwHiElNChmxT?=
- =?iso-8859-1?Q?x32beW/XWmgr9kff2rceBbvJyjAbDWX63/b21EAv5o/HHZVU/2O2Pa8rxt?=
- =?iso-8859-1?Q?uwOEhAv8GGzjV2t0trgScXHdWF+9UGos9ToNoZRb3aW8NeKXU1xX1lATb9?=
- =?iso-8859-1?Q?bf2T4cKtJUxNFESxHTPEZcHlRikT9BUtO8E26axFHOgtnjpnQNLnx4ltZO?=
- =?iso-8859-1?Q?BofaKZPlh/EG12lkhYzm6lWDF+DuICiWQR8CVJuPelLqzAqzdNJOVeEfTQ?=
- =?iso-8859-1?Q?wE+W1ZzJnKRadI8F1gKk5tO72u7s+ow=3D?=
-X-OriginatorOrg: oss.nxp.com
-X-MS-Exchange-CrossTenant-Network-Message-Id: e61a08e0-7a2f-4d7a-f3d2-08ded21a1cff
-X-MS-Exchange-CrossTenant-AuthSource: GV2PR04MB11799.eurprd04.prod.outlook.com
-X-MS-Exchange-CrossTenant-AuthAs: Internal
-X-MS-Exchange-CrossTenant-OriginalArrivalTime: 24 Jun 2026 17:57:53.3902
- (UTC)
-X-MS-Exchange-CrossTenant-FromEntityHeader: Hosted
-X-MS-Exchange-CrossTenant-Id: 686ea1d3-bc2b-4c6f-a92c-d99c5c301635
-X-MS-Exchange-CrossTenant-MailboxType: HOSTED
-X-MS-Exchange-CrossTenant-UserPrincipalName: OaD6A/CVLMATgre1Hu2JSqJhEDbs8MBULeHXB+gcxZtVUdqdjTm8b+Nm+IYoDYfNEeIJCy+4OUdhUfrNsj8Q78vsUgha36HaRNyys3Yxns6+1e539XJN8/1KBtF+JLFb
-X-MS-Exchange-Transport-CrossTenantHeadersStamped: AS8PR04MB8610
+References: <20260623175006.3136053-1-ameryhung@gmail.com> <20260623175006.3136053-12-ameryhung@gmail.com>
+ <20260623232250.6F1551F000E9@smtp.kernel.org>
+In-Reply-To: <20260623232250.6F1551F000E9@smtp.kernel.org>
+From: Amery Hung <ameryhung@gmail.com>
+Date: Wed, 24 Jun 2026 11:24:06 -0700
+X-Gm-Features: AVVi8CfGHzJvG4ND1DAHRQMFh9mCT59_erhCaC7fFPP3NcxAPyISMo77xTmsw4c
+Message-ID: <CAMB2axM=ui2aZe8aDF6wr1ZZQe46AL4NAirF8wUWq2NMmLkhjA@mail.gmail.com>
+Subject: Re: [PATCH bpf-next v2 11/15] bpf: tcp: Support selected sock_ops
+ callbacks as struct_ops
+To: sashiko-reviews@lists.linux.dev
+Cc: bpf@vger.kernel.org
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 
-On Wed, Jun 24, 2026 at 10:43:26AM +0000, sashiko-bot@kernel.org wrote:
-> Thank you for your contribution! Sashiko AI review found 3 potential issue(s) to consider:
+On Tue, Jun 23, 2026 at 4:22=E2=80=AFPM <sashiko-bot@kernel.org> wrote:
 >
-> New issues:
-> - [High] SETAASA broadcast is sent before SETDASA direct assignments, which breaks initialization for devices that natively support SETAASA but are configured for SETDASA.
->
-> Pre-existing issues:
-> - [High] Missing RSTDAA on error path due to premature address slot clearing leads to bus address collision.
-> - [High] Double free and Use-After-Free of `desc->dev` when `device_register()` fails.
+> Thank you for your contribution! Sashiko AI review found 2 potential issu=
+e(s) to consider:
+> - [High] bpf_tcp_ops allows sleepable BPF programs which will trigger ker=
+nel panics when executed within the RCU read-side critical sections of the =
+dispatcher macros.
+> - [Low] Multi-line comments in BPF subsystem files must have the opening =
+`/*` on its own line.
 > --
 >
-> commit 08b7cd00b36fcaa4fe6292af27e273df6dc64b5a
-> Author: Akhil R <akhilrajeev@nvidia.com>
+> commit c794084a252357df7f0bbf934f1e1707d2dd52fd
+> Author: Martin KaFai Lau <martin.lau@kernel.org>
+> Subject: bpf: tcp: Add bpf_tcp_ops and support attaching to cgroups
 >
-> i3c: master: Add support for devices using SETAASA
+> This commit adds a TCP-specific struct_ops type, bpf_tcp_ops, and support=
+s
+> attaching it to cgroups. It wires up several existing sock_ops callbacks =
+to
+> allow each callback to have its own function signature.
 >
-> Add support for devices using SETAASA attached to DDR5 memory modules that
-> do not support ENTDAA. Devices using SETAASA assign their pre-defined static
-> addresses as dynamic addresses during DAA.
+> Link: https://drive.google.com/file/d/1wjKZth6T0llLJ_ONPAL_6Q_jbxbAjByp/v=
+iew?usp=3Dsharing
 >
-> > diff --git a/drivers/i3c/master.c b/drivers/i3c/master.c
-> > index 4bba2bad897a7..3deae8cdae525 100644
-> > --- a/drivers/i3c/master.c
-> > +++ b/drivers/i3c/master.c
->
+> > diff --git a/include/net/tcp.h b/include/net/tcp.h
+> > index 6d376ea4d1c0..2102f9f2afd6 100644
+> > --- a/include/net/tcp.h
+> > +++ b/include/net/tcp.h
 > [ ... ]
->
-> > @@ -1878,6 +1924,22 @@ static int i3c_master_early_i3c_dev_add(struct i3c_master_controller *master,
-> >  	if (ret)
-> >  		goto err_free_dev;
+> > @@ -2953,12 +2953,120 @@ static inline void tcp_clear_sock_ops_cb_flags=
+(struct sock *sk)
 > >
-> > +	/*
-> > +	 * For devices using SETAASA instead of ENTDAA, the address is statically
-> > +	 * assigned. Update the dynamic address to the provided static address.
-> > +	 * Reattach the I3C device after updating the dynamic address with the same
-> > +	 * static address. It is not mandatory for such devices to implement CCC
-> > +	 * commands like GETPID, GETDCR etc. Hence, we can return after reattaching.
-> > +	 */
-> > +	if (i3cdev->boardinfo->static_addr_method & I3C_ADDR_METHOD_SETAASA) {
-> > +		i3cdev->info.dyn_addr = i3cdev->boardinfo->static_addr;
-> > +		ret = i3c_master_reattach_i3c_dev_locked(i3cdev, 0);
-> > +		if (ret)
-> > +			goto err_rstdaa;
-> > +
-> > +		return 0;
-> > +	}
-> > +
->
-> [Severity: High]
-> This is a pre-existing issue, but missing RSTDAA on the error path due to
-> premature address slot clearing can lead to bus address collisions.
->
-> In i3c_master_early_i3c_dev_add(), the driver assigns the dynamic address
-> with SETDASA and reattaches the device. If reattaching fails, the error
-> path internally calls i3c_master_put_i3c_addrs(), which clears the
-> init_dyn_addr slot status back to I3C_ADDR_SLOT_FREE.
->
-> When the code jumps to err_rstdaa:
->
-> err_rstdaa:
-> 	i3c_master_rstdaa_locked(master, i3cdev->boardinfo->init_dyn_addr);
->
-> It calls i3c_master_rstdaa_locked() to reset the device's dynamic address.
-> However, i3c_master_rstdaa_locked() verifies the slot status:
->
-> drivers/i3c/master.c:i3c_master_rstdaa_locked() {
->     ...
-> 	if (addr != I3C_BROADCAST_ADDR && addrstat != I3C_ADDR_SLOT_I3C_DEV)
-> 		return -EINVAL;
->     ...
-> }
->
-> Because the slot was just freed, the function silently returns without
-> sending the RSTDAA CCC command.
->
-> Will this allow the hardware device to continue squatting on the dynamic
-> address while the master considers the slot free, causing collisions later?
->
-> >  	ret = i3c_master_setdasa_locked(master, i3cdev->info.static_addr,
-> >  					i3cdev->boardinfo->init_dyn_addr);
->
-> [ ... ]
->
-> > @@ -2232,6 +2294,12 @@ static int i3c_master_bus_init(struct i3c_master_controller *master)
-> >  	if (ret)
-> >  		goto err_bus_cleanup;
+> >  #endif
 > >
-> > +	if (master->addr_method & I3C_ADDR_METHOD_SETAASA) {
-> > +		ret = i3c_master_setaasa_locked(master);
-> > +		if (ret)
-> > +			goto err_bus_cleanup;
-> > +	}
+> > +#if defined(CONFIG_BPF_JIT) && defined(CONFIG_CGROUP_BPF)
 > > +
+> > +struct bpf_tcp_ops {
+> > +     /* Should return the initial SYN (active open) or SYN-ACK (passiv=
+e open)
+> > +      * retransmission timeout. Return the timeout in jiffies, or <=3D=
+ 0 for
+> > +      * the kernel default.
+> > +      *
+> > +      * @req: request_sock on the passive (synack) path; NULL otherwis=
+e.
+> > +      */
 >
-> [Severity: High]
-> Is it possible that sending the SETAASA broadcast before direct SETDASA
-> assignments breaks initialization for devices that natively support SETAASA
-> but are configured for SETDASA?
->
-> According to the I3C specification, any device on the bus natively supporting
-> SETAASA will respond to this broadcast by adopting its static address as its
-> dynamic address.
->
-> After this broadcast, the driver iterates through devices and attempts to
-> assign custom dynamic addresses via direct SETDASA commands:
->
-> drivers/i3c/master.c:i3c_master_early_i3c_dev_add() {
->     ...
-> 	ret = i3c_master_setdasa_locked(master, i3cdev->info.static_addr,
-> 					i3cdev->boardinfo->init_dyn_addr);
->     ...
-> }
->
-> Since the target device already adopted its dynamic address during the
-> SETAASA broadcast, it is no longer in the unassigned state and will NACK
-> the subsequent SETDASA command.
-
-Look like correct, but I am not sure if target will NACK SETDASA. Or should
-use SETNEWDA for SETAASA method.
-
-Frank
-
->
-> Could this cause device initialization to abort entirely?
->
-> Should SETDASA direct assignments be executed before broadcasting SETAASA?
->
-> >  	/*
-> >  	 * Reserve init_dyn_addr first, and then try to pre-assign dynamic
-> >  	 * address and retrieve device information if needed.
+> [Severity: Low]
+> This isn't a bug, but could these multi-line comments be updated to place=
+ the
+> opening /* on its own line?
 >
 > [ ... ]
+> > diff --git a/net/ipv4/bpf_tcp_ops.c b/net/ipv4/bpf_tcp_ops.c
+> > new file mode 100644
+> > index 000000000000..cf53c95a0dbc
+> > --- /dev/null
+> > +++ b/net/ipv4/bpf_tcp_ops.c
+> [ ... ]
+> > +BPF_CALL_0(bpf_tcp_ops_get_retval)
+> > +{
+> > +     struct bpf_tramp_run_ctx *ctx =3D
+> > +             container_of(current->bpf_ctx, struct bpf_tramp_run_ctx, =
+run_ctx);
+> > +
+> > +     /* bpf_get_retval() is only exposed to timeout_init/rwnd_init, wh=
+ich
+> > +      * always run via bpf_tcp_ops_call_int(). Its run_ctx carries the=
+ int
+> > +      * return value chained across the bpf_tcp_ops attached to the cg=
+roup
+> > +      * and is this program's saved_run_ctx.
+> > +      */
+>
+> [Severity: Low]
+> This isn't a bug, but would it be better to adjust this multi-line commen=
+t so
+> that the opening /* rests on its own line?
+>
+> [ ... ]
+> > +static struct bpf_struct_ops bpf_tcp_ops =3D {
+> > +     .verifier_ops =3D &bpf_tcp_ops_verifier,
+> > +     .init_member =3D bpf_tcp_ops_init_member,
+> > +     .init =3D bpf_tcp_ops_init,
+> > +     .validate =3D bpf_tcp_ops_validate,
+> > +     .name =3D "bpf_tcp_ops",
+> > +     .cgroup_atype =3D CGROUP_TCP_SOCK_OPS,
+> > +     .cfi_stubs =3D &__bpf_tcp_ops,
+> > +     .owner =3D THIS_MODULE,
+> > +};
 >
 > [Severity: High]
-> This isn't a bug introduced by this patch, but there is a potential double
-> free and use-after-free of desc->dev when device_register() fails.
+> Is it possible for sleepable BPF programs to be loaded for this struct_op=
+s
+> type?
 >
-> In i3c_master_register_new_i3c_devs(), if device_register() fails,
-> put_device() is called:
+> Without a .check_member callback to explicitly reject them, the verifier
+> might allow sleepable programs to attach.
 >
-> drivers/i3c/master.c:i3c_master_register_new_i3c_devs() {
->     ...
-> 	ret = device_register(&desc->dev->dev);
-> 	if (ret) {
-> 		dev_err(&master->dev, "Failed to add I3C device (err = %d)\n", ret);
-> 		put_device(&desc->dev->dev);
-> 	}
->     ...
-> }
+> If a sleepable program is attached, could it trigger a scheduling while
+> atomic kernel panic?
 >
-> This drops the reference count to 0 and triggers i3c_device_release(), which
-> frees desc->dev via kfree(i3cdev). However, the pointer desc->dev is not set
-> to NULL and remains dangling in the master->bus.devs.i3c list.
+
+This is a real issue. I will add check_member rejecting sleepable programs.
+
+> Looking at include/net/tcp.h, the callbacks are invoked inside an RCU
+> read-side critical section:
 >
-> Later, when the master module is unloaded or unregistered, the cleanup
-> iterates over the list:
->
-> drivers/i3c/master.c:i3c_master_unregister_i3c_devs() {
->     ...
-> 		if (!i3cdev->dev)
-> 			continue;
->
-> 		i3cdev->dev->desc = NULL;
-> 		if (device_is_registered(&i3cdev->dev->dev))
-> 			device_unregister(&i3cdev->dev->dev);
-> 		else
-> 			put_device(&i3cdev->dev->dev);
-> 		i3cdev->dev = NULL;
->     ...
-> }
->
-> Because i3cdev->dev is a dangling pointer, the check passes. This leads to
-> writing to i3cdev->dev->desc (use-after-free) and calling put_device() again
-> (double free).
->
-> Could we set desc->dev to NULL after put_device() in the registration error
-> path?
+> bpf_tcp_ops_call()
+>     rcu_read_lock_dont_migrate();
+>     bpf_cgroup_struct_ops_foreach(...) {
+>         if (tcp_ops->op)
+>             tcp_ops->op(...);
+>     }
+>     rcu_read_unlock_migrate();
 >
 > --
-> Sashiko AI review · https://sashiko.dev/#/patchset/20260624102153.1770072-1-akhilrajeev@nvidia.com?part=4
+> Sashiko AI review =C2=B7 https://sashiko.dev/#/patchset/20260623175006.31=
+36053-1-ameryhung@gmail.com?part=3D11
