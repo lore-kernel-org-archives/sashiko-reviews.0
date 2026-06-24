@@ -1,135 +1,130 @@
-Received: from mail-dl1-f50.google.com (mail-dl1-f50.google.com [74.125.82.50])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from fhigh-b4-smtp.messagingengine.com (fhigh-b4-smtp.messagingengine.com [202.12.124.155])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 28580C8CE
-	for <sashiko-reviews@lists.linux.dev>; Wed, 24 Jun 2026 13:37:59 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=pass smtp.client-ip=74.125.82.50
-ARC-Seal:i=2; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1782308280; cv=pass; b=UAGPujwOWRWddJR0LlbPpP/27+EYRYGI3AH7RzwcxpZAqXx2+2XUDarNpqTLDrAZvIfLaISUwXxmBOzbwL0/ZkruJd0QBj2nA037PVfL7tdzuLxhcuguFAkTlh8saP5T+bR694H6qxMKpS0KlB74RQ0cfZZpeTJDt3QyFgEsong=
-ARC-Message-Signature:i=2; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1782308280; c=relaxed/simple;
-	bh=JbnF8tlvwsmPMUGz/K9mddurBUf197LtClXob6r9Br0=;
-	h=From:In-Reply-To:References:MIME-Version:Date:Message-ID:Subject:
-	 To:Cc:Content-Type; b=ALabdMBj2X8LdbDZ79bi6YYGwp0SUneGiCtJvFSiYh8i60wVdrqu2bMm9kiEVKJpcyGpXt2yC+wigG6LgM2jH8G6Nl4ePvFudZ9Tj83pOTe7ZEtaCvjvuIXctnHCvBQ22L8gYajTxRala+azZiDBYzlNgXN+OeiHgnIjYzeQHg0=
-ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=google.com; spf=pass smtp.mailfrom=google.com; dkim=pass (2048-bit key) header.d=google.com header.i=@google.com header.b=LHyKxCHo; arc=pass smtp.client-ip=74.125.82.50
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=google.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=google.com
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6A9E43B0AFA
+	for <sashiko-reviews@lists.linux.dev>; Wed, 24 Jun 2026 14:18:36 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=202.12.124.155
+ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
+	t=1782310718; cv=none; b=nyEzBZxz/winxCjIH68bPVbgDrjsvLxRZDznf6IhNUSe2R8e9p1PYZyd7naBVO4ah7gyTukSmsPcsV6ETVC2n0QIsRgeomRH3sR/6C53LFZL8OZavhlm6Y5abf4dM50aACVBy7Iy/DXvZCLQ/tXxUyMl6e6MVDxcahbsslN0JWk=
+ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
+	s=arc-20240116; t=1782310718; c=relaxed/simple;
+	bh=iO7gmX1DCKXF2Z8L/sVvXOVjNns7SLOCN13hDBVJIfs=;
+	h=MIME-Version:Date:From:To:Cc:Message-Id:In-Reply-To:References:
+	 Subject:Content-Type; b=Ap38vReSZWBvB5blCsoe6iTUfe+yL5gIIgJVekUIuUyqBagckqbMHZVb46t5t5Etajgqw2AyYgbQf5hZD7+3ERVihiCrMeCzU5m8jycqrWnNmMxMtjmCd86cOKzicjTnHPS8EyIE58UDVv+mJ6+3VpByZ7q2CXe7r44ITxWDo8g=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=squebb.ca; spf=pass smtp.mailfrom=squebb.ca; dkim=pass (2048-bit key) header.d=squebb.ca header.i=@squebb.ca header.b=jVlJJQMg; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=E4qvKizR; arc=none smtp.client-ip=202.12.124.155
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=squebb.ca
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=squebb.ca
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=google.com header.i=@google.com header.b="LHyKxCHo"
-Received: by mail-dl1-f50.google.com with SMTP id a92af1059eb24-139aff562e1so1393738c88.1
-        for <sashiko-reviews@lists.linux.dev>; Wed, 24 Jun 2026 06:37:58 -0700 (PDT)
-ARC-Seal: i=1; a=rsa-sha256; t=1782308278; cv=none;
-        d=google.com; s=arc-20240605;
-        b=TWLoRo1rcti9Ptevco0nEzyYdwXjvTH7+drI6zU3mFIZgap2W4BBoLNvb1AuyKrK7+
-         EYRrn0W+lbNdS9WWTnUbCmHECT/3AigMzH6wyxq33QLl7TT4IzCWe/DGb9JdcUx5xX2p
-         zof0Vtv8HXqOcYzNvcZGJdxrl3wH5cTmL0rjzRDIgdYPOr1+h85ON0plbTpElvA2bfHU
-         oKsi13PdmvNsGgt8am4m3/RKEGyUuieKd2dlL/wvdqq7WzSxpH44l6DVnzHJ0Db7mYZE
-         hBF0J7880AcQ8j5T+e0sWaiN0csFVUfVhlKfOdoDYWnsPq2+IM/po4ZUS6dTC9Ml/ojk
-         MHEw==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com; s=arc-20240605;
-        h=cc:to:subject:message-id:date:mime-version:references:in-reply-to
-         :from:dkim-signature;
-        bh=JbnF8tlvwsmPMUGz/K9mddurBUf197LtClXob6r9Br0=;
-        fh=tKBL2KXLKCLRBTD9ZJ0FoV+9Me0vuTjMuw2DMNrS+zE=;
-        b=F/19aP/9KrEq0fqBknVfhC+ZCSWIHZi1pdeUQ/jLWd4CsQCfRI+LplPBYmcosCe7R0
-         lBUjghuM0BDI4evbga1fjBHgUbYC5lTtnjVXhrtj1zDLonzGwrGu1pLsrk/EnQeOuOEo
-         LNypSskLp+Dgime+lUpujYCrj0JGbn9HG2Ql/Sr1T1JFRR06z6KlRfsXE5pg4NomrhqY
-         pK0d4oU2ltHDJXGW6H45sGM/BH8ti4Ilr2KRXwKoLS34Yqg7pk+e7OLLA+pRqFT+GVDh
-         AOBV4TAlyHnyMfvgYrs+caI6uyc0sZ41G9c66clDEODVwXQi7s5MiTyMKgVxwr/0yMrq
-         EizQ==;
-        darn=lists.linux.dev
-ARC-Authentication-Results: i=1; mx.google.com; arc=none
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=google.com; s=20251104; t=1782308278; x=1782913078; darn=lists.linux.dev;
-        h=cc:to:subject:message-id:date:mime-version:references:in-reply-to
-         :from:from:to:cc:subject:date:message-id:reply-to;
-        bh=JbnF8tlvwsmPMUGz/K9mddurBUf197LtClXob6r9Br0=;
-        b=LHyKxCHo6D4nqEITg7EOofVcdC72DjHuDaSKE8B3v+4lTf5AYdWGYBXJuuqrBTmoy8
-         YfHvHlrX2SWZzcLBShl5bRS1i8BGxr6ma0W3XMY+J3wvsvmR+eMeoKwnZS+1+semakau
-         Byrh9Vhri0T77jG9JN+0DToBhUGKbR+b4JTGcftLigPvGDlbi+ZmaB0y/wPt0821oIjf
-         GKtb9lg61CYVjQufSccabr37haExtQ2pAFaohNVLOMi01SFc8wSXdKzchMw7XUMbSag5
-         oKfAF724zbP6rq8Bp5bqd98WsFs1jVQsA/16rZbP1Ort6b4rLTmk3KQ2eCzQ4ZpuWVEq
-         CdUg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20251104; t=1782308278; x=1782913078;
-        h=cc:to:subject:message-id:date:mime-version:references:in-reply-to
-         :from:x-gm-gg:x-gm-message-state:from:to:cc:subject:date:message-id
-         :reply-to;
-        bh=JbnF8tlvwsmPMUGz/K9mddurBUf197LtClXob6r9Br0=;
-        b=A+/txDM4JR5P7PWJLmUIyjZGe/kHEUfm0FFEROIF/uOG4GBFBSvLa1xpx8U5oZkAbK
-         1nvObMHyWZOXSpTUh2Gbo9jl6/CloaHyXfe/F71ppD43kS4Z9zdjpK9SLsb7CxW9kQWy
-         2fgzUkHs234WxkWZpQd77OAx8FeQIThc43dGnSxRuvG8qWd4Er4b10kLpqHFN+hE7MS4
-         epmVhNxyA2On7SzSUi2Llasc6i46slWNCaVeqVD9NbOtErRQwTxMBlZ9fr3MWVuVQ3zn
-         Czzwto82C/BL3sGBFvJwEqnDFYeEANHAWCLte5yKqJCVs+jm8MGb8ZwWFsnAAYB94yxl
-         oB4A==
-X-Forwarded-Encrypted: i=1; AFNElJ/jbauGgNPex7CfhUJvDM2uCKxGg06G6PuImV15u/o7tlO71Cs5A2xwh3AwQs8IpyztR/W8IgkuNkdK6LUK35Q=@lists.linux.dev
-X-Gm-Message-State: AOJu0YyXj0Ot5FN8W+6L0CMCZgnfqNRf1TOmmGzuyfJFZs7PktkWoeka
-	+f4pJhuq5/CmgvVhYdqmO9ks4ukYxWOvJ4Qdae/vpEE0+nRcymdErKz/EMN6XGqUAGC8CbqD0gA
-	/DheeqG5jb5RMEbf1z0YtUzs5/9+TPGej0sP1tImSPnIl4ijcPKFgjKaUveQ=
-X-Gm-Gg: AfdE7clYQD9p+McirJ60Z+VLyeuJTnDTMclgmv6hfC2JzpMQRL/2ZiX8t1kHhkgCh9r
-	v573s05OX8IsQ0qAgomUAoR1vV8BFR9XZDAr3nEHrPV+YdXCuTpRMnp37lgjbXs/T9gMIwXl/Sj
-	Gm2+KrrMFAw3SmXbcomSX58hz0cL2AOMtZHivKtqLh0iWs8v0dlUUDsUIihG7YPHNf0M4/ukct7
-	JnMMl9k2ZyLzLr0MaAvP9mElNBqzhZioAAJd4+m+Ri/aAcyER6//79xvN5tJ5Fyzobix/mVshWb
-	lB+6+OnxlsFcEjvDhrUOL38F+QKl
-X-Received: by 2002:a05:7022:6624:b0:138:37a4:fcc4 with SMTP id
- a92af1059eb24-139d0c10057mr2617590c88.13.1782308277270; Wed, 24 Jun 2026
- 06:37:57 -0700 (PDT)
-Received: from 176938342045 named unknown by gmailapi.google.com with
- HTTPREST; Wed, 24 Jun 2026 06:37:56 -0700
-Received: from 176938342045 named unknown by gmailapi.google.com with
- HTTPREST; Wed, 24 Jun 2026 06:37:56 -0700
-From: Ackerley Tng <ackerleytng@google.com>
-In-Reply-To: <CA+EHjTxdN+TsqSyp+f+8QO-BbOgHEebmpMhJbmD0D8quWg3s8A@mail.gmail.com>
-References: <20260618-gmem-inplace-conversion-v8-0-9d2959357853@google.com>
- <20260618-gmem-inplace-conversion-v8-7-9d2959357853@google.com>
- <20260619005533.984EC1F000E9@smtp.kernel.org> <CA+EHjTxdN+TsqSyp+f+8QO-BbOgHEebmpMhJbmD0D8quWg3s8A@mail.gmail.com>
+	dkim=pass (2048-bit key) header.d=squebb.ca header.i=@squebb.ca header.b="jVlJJQMg";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="E4qvKizR"
+Received: from phl-compute-02.internal (phl-compute-02.internal [10.202.2.42])
+	by mailfhigh.stl.internal (Postfix) with ESMTP id AC6DC7A011B;
+	Wed, 24 Jun 2026 10:18:35 -0400 (EDT)
+Received: from phl-imap-08 ([10.202.2.84])
+  by phl-compute-02.internal (MEProxy); Wed, 24 Jun 2026 10:18:35 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=squebb.ca; h=cc
+	:cc:content-transfer-encoding:content-type:content-type:date
+	:date:from:from:in-reply-to:in-reply-to:message-id:mime-version
+	:references:reply-to:subject:subject:to:to; s=fm2; t=1782310715;
+	 x=1782397115; bh=pRNfmdzFIYEyxcxRNKFhV0lLl2b6fmqj+E+uLAkRrD0=; b=
+	jVlJJQMgZBJR7rCBvbRij9KUPN/JzkebXiLAUTbqR2L3z6hH3oy7RTT7t3H5YkMw
+	710qWuj5a0zAo49FJq7rm8VyTp9esCakjlOep9k5bPDOQwr8Dz5AGgQLarIgVBu7
+	J+iRxmlKfuuOXZiY/x+5RgGNNZCw7i9yFiE7EnxG0vHS8jx31buOrXeWgjMdkGHH
+	RbsK09mGEgAUYfk6SPoqykWKwzlHgNM1B+UKS4L+Mergw137PGf+lTwShRud/PDA
+	oXb8EoPJqzmPvrBZko8hz4ub76OlJ29RrBFkaCag+Oe3kWH/omjJXX0505k5EJwC
+	wKflhEXA4lstYR3YM/j9QA==
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
+	messagingengine.com; h=cc:cc:content-transfer-encoding
+	:content-type:content-type:date:date:feedback-id:feedback-id
+	:from:from:in-reply-to:in-reply-to:message-id:mime-version
+	:references:reply-to:subject:subject:to:to:x-me-proxy
+	:x-me-sender:x-me-sender:x-sasl-enc; s=fm1; t=1782310715; x=
+	1782397115; bh=pRNfmdzFIYEyxcxRNKFhV0lLl2b6fmqj+E+uLAkRrD0=; b=E
+	4qvKizRFdV2eiKZJwnD4ak45tCtPlPq1RJF+MvQ3Cz9/GlvipskB5WxfaFOIWUhU
+	kr6XTWzp0fbyTPSTKkKBARouJGRpsI+sqJoWB4OVY7/M4w378ODcSh0nq+TJdWkO
+	fF4SLMadbJl2idUZWPiKSjX3yg3LopbDfWYfJ3dnJmu8xNRDdGFaDLSvh/HiJ4ZV
+	5FkPhEQesaAjCe0K2EPYsdgkaPewWIITBoh2Jhgh+GAzy99BhVbpLwVlYfkxMNoi
+	ljQm1WziTuuGXpj5Sl1ryNr7sxD8OipcZ5HB5CQ5MdZGx4nbeRjBQDsdWjMLT6kZ
+	5QxhPijqO+H2rHmZgFViA==
+X-ME-Sender: <xms:O-c7ai6eJbTcHUlt-1TWXA0sXE3Qx5-7sU5yl6-qkbn2CrLFHQu7BQ>
+    <xme:O-c7amuBGBIafYII59lMMgHOtarPcyULVlD401eDJrw_AkgN1pfSjLkRCzzJoQoyY
+    MRLg1XjtXvyQj8YGfJrNAcWPephdL0t9IetDOe0eu5N9q0O8h-F1y0>
+X-ME-Proxy-Cause: dmFkZTE8oTXKo528XYJKN0NqMMN0ly7mk6Sad1m+P4mTYdrckvC7xeP+iWEoUn1bnCDsPc
+    yi+kwZXOrBMfBumkSQ5GCMKJ2nm52jq+q5yluV9qgwI/IXaP+lGEiyIyytIm6x+DyIxmmq
+    6jXs39+IjnooZrMKq9EUipchLCCw7IkCvrl8ojPwYZ71YLYlIDhaSmSzY3T4bnmY7fWyzc
+    rcHJN8heqD1TrXvYOzXt7UnMVww3RzI/FiSgnLmDkkckBKsa7XwCsKrE2MYlPHaNnR1PDt
+    Mfn2DUYq4gRloJu4qOjXv3L0t1loaR9Q22hhrhnyqSZ1ms8j2wZJcgF68GeyO5Wsau/1b5
+    eT7NA+tnfLKRryQXWunjao1sVCIfLQGUKKCzdS7dckU52ISF0vwPK5SJX8IjtsMjAor9ZT
+    bbr7dtCXa/czNsFgOjkea80DJjOnqBaFf6PrBFnA/V1e2Y+jfzodphooUM8LkXJTUCK38u
+    7E+dU4LbDpIKab81T2fpkixCAU705etveTBnMISKdOh3Vc481VuZ7U6XPMLTGQ6vo/Mll+
+    XN089zyfojCMzH2e8aD8RuevcyG+IjvJ9Hwd944ZjBV0oC1HWpbjpFiY4jkSzX+P0V/Fqu
+    hv/iaecqabd8Ez9k0qmPvawuXgkDco4Ez5lrNXwDzHk/roy8Ldj6qw+LgILA
+X-ME-Proxy: <xmx:O-c7aodsJmGYRgWBcrOPD_fkXpS2s3Ac5PlJxsj9J3-qRpT94DpFqA>
+    <xmx:O-c7aqUA4wv0Yi2mqh6uk_i5coUQMMAlp7MWrgrFI7n8IBEHyxunCA>
+    <xmx:O-c7aheOKh6xwZFiSMdAk6dK4Fx5zj09p7xZVi5bpWxJOpexpJNjbw>
+    <xmx:O-c7amPqKWajIobn65aQpFuOFY_dSCt0XV-k0Ajgg68TpzDELdxufA>
+    <xmx:O-c7agxoCC7Xym0WPVYTJg2-3-b-WAAhjaZ5rF65TeVdG11nd-4L0dJK>
+Feedback-ID: ibe194615:Fastmail
+Received: by mailuser.phl.internal (Postfix, from userid 501)
+	id 402B22CE409A; Wed, 24 Jun 2026 10:18:35 -0400 (EDT)
+X-Mailer: MessagingEngine.com Webmail Interface
 Precedence: bulk
 X-Mailing-List: sashiko-reviews@lists.linux.dev
 List-Id: <sashiko-reviews.lists.linux.dev>
 List-Subscribe: <mailto:sashiko-reviews+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:sashiko-reviews+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Date: Wed, 24 Jun 2026 06:37:56 -0700
-X-Gm-Features: AVVi8CdiT8IYvHNr-i5_WMx1t0IMgMVlt_53LlQKQ1trLegTSEWDN2cz65gsFkw
-Message-ID: <CAEvNRgHzrPAkLD6a2GYM6KpFBbHscghW3sVrVWv8XvjF+1BD1g@mail.gmail.com>
-Subject: Re: [PATCH v8 07/46] KVM: Rename memory attribute APIs to prepare for
- in-place gmem conversion
-To: Fuad Tabba <tabba@google.com>, sashiko-reviews@lists.linux.dev
-Cc: Ackerley Tng via B4 Relay <devnull+ackerleytng.google.com@kernel.org>, kvm@vger.kernel.org
-Content-Type: text/plain; charset="UTF-8"
+X-ThreadId: ArMcrDYeUHoR
+Date: Wed, 24 Jun 2026 10:18:14 -0400
+From: "Mark Pearson" <mpearson-lenovo@squebb.ca>
+To: "Guenter Roeck" <linux@roeck-us.net>, sashiko-reviews@lists.linux.dev
+Cc: linux-watchdog@vger.kernel.org
+Message-Id: <40b59984-9907-4391-a05d-3590402d93a2@app.fastmail.com>
+In-Reply-To: <b3e11c2a-3b64-4a7a-b8f7-76773747d6a0@roeck-us.net>
+References: <mpearson-lenovo@squebb.ca>
+ <20260622144531.2413447-1-mpearson-lenovo@squebb.ca>
+ <20260622145631.DD7041F000E9@smtp.kernel.org>
+ <9e76208e-6fb7-4d62-9a49-95fc03a06737@app.fastmail.com>
+ <b3e11c2a-3b64-4a7a-b8f7-76773747d6a0@roeck-us.net>
+Subject: Re: [PATCH] watchdog: lenovo_se30g2_se60_wdt: Watchdog for Lenovo SE30G2 and
+ SE60
+Content-Type: text/plain
+Content-Transfer-Encoding: 7bit
 
-Fuad Tabba <tabba@google.com> writes:
+Hi Guenter
 
+On Tue, Jun 23, 2026, at 10:19 PM, Guenter Roeck wrote:
+> On 6/22/26 08:50, Mark Pearson wrote:
+>> On Mon, Jun 22, 2026, at 10:56 AM, sashiko-bot@kernel.org wrote:
+>>> Thank you for your contribution! Sashiko AI review found 4 potential
+>>> issue(s) to consider:
+>>> - [High] The global `se_30g2_60_pdev` pointer is not cleared after
+>>> being freed on the `platform_device_add()` error path, leading to a
+>>> Use-After-Free and Double-Free during module exit.
+>> 
+>> I belive this is a valid issue - I'll fix in v2.
+>> 
+>>> - [High] SuperIO configuration mode is prematurely exited before
+>>> reading `bram_base`, causing the read to fail and the driver to map an
+>>> invalid I/O port address.
+>> 
+>> This one is I believe invalid and behaviour is correct. If someone wiser than me disagree's please let me know.
+>> 
 >
-> [...snip...]
+> How would anyone but you know ? Normally Super-IO access is disabled
+> after the exit sequence is sent (as "lpc_write(0x2, 0x2);" in lpc_chip_id()
+> seems to do). Maybe this EC is different and does not disable access to
+> its IO space after "lpc_write(0x2, 0x2);". Or maybe that write does not
+> disable Super-IO access at all. Again, who but you would know if the EC
+> behaves differently than all the other Super-IO chips and embedded
+> controllers out there ?
 >
->> Pre-existing issues:
->> - [High] `kvm_range_has_vm_memory_attributes` iterates over potentially massive ranges under `rcu_read_lock()` without yielding, leading to RCU stalls.
+> If you say this is correct, we'll have to believe you.
 >
-> Not a concern. The xarray walk is pointer comparisons with no I/O or
-> allocation per iteration. Realistic ranges (memslot-sized, low
-> millions of GFNs) complete in microseconds. The "billions of elements"
-> scenario mentioned below requires ~8 GB of xarray metadata to even set
-> up and doesn't happen in practice. The `!attrs` fast path
-> short-circuits via `xas_find` when no entries exist. This is the
-> standard xarray-under-RCU pattern used throughout KVM and mm/. Pre-
-> existing and unchanged by this rename patch.
->
-> /fuad
->
+> Thanks,
+> Guenter
 
-Thanks for looking into this, I agree that each iteration is fast so
-it's not too bad.
+Yeah. I went and checked with the HW team on this one, and I've changed it.
+Fix for this will be in v2 as well.
 
-Setting up vm memory attributes with 1 entry per index in
-kvm_vm_set_mem_attributes() actually does allocations, so it is kind of
-slow and affects VM startup time. That's also okay since it isn't done
-while holding rcu_read_lock().
-
-For the private/shared attribute kvm_range_has_vm_memory_attributes() is
-on the deprecation path so I'd say optimizing the setup is a task for
-another day.
-
->>
->> [...snip...]
->>
+Mark
