@@ -1,215 +1,174 @@
-Received: from mail-yx1-f52.google.com (mail-yx1-f52.google.com [74.125.224.52])
+Received: from mail-dl1-f50.google.com (mail-dl1-f50.google.com [74.125.82.50])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9024631A572
-	for <sashiko-reviews@lists.linux.dev>; Wed, 24 Jun 2026 22:41:41 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=pass smtp.client-ip=74.125.224.52
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 00E072DC789
+	for <sashiko-reviews@lists.linux.dev>; Wed, 24 Jun 2026 23:47:48 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=pass smtp.client-ip=74.125.82.50
 ARC-Seal:i=2; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1782340903; cv=pass; b=lOGerj9onakt1bo91kX5qfzIo4q6ai35MZqAMoSlNcEQ1Wj+MuMJ+IfyIz2XHimhFPUIgor0jBlwEAwPlpDnbPWzrRw0wBw9jJjwZJfhWyTKe6HejabAgPfUtLeivnLl15bEhoRrqGRqnDpnDoe1gTfu83xQTpkkS+/asmB0tKI=
+	t=1782344871; cv=pass; b=LrnMBSqtCj7p7ZCG2l7/VHNyL4CKF2N2NQnlG7wLJEivtDwx7WUPmbEuNIRQhCaYnOXPE79I80bAOp8+ABe5g/UjJW6czllLRBANHIK8ExgwR1lBMjBfAFuQUNeKp7Eq4IM/taPl37K9wDaS79wg3OM6yvUO50JaRedqg+f/7JU=
 ARC-Message-Signature:i=2; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1782340903; c=relaxed/simple;
-	bh=lGJ2gfHSnw57MpbofjpuTPtD42d8yiISwF4In2IuKDk=;
-	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
-	 To:Cc:Content-Type; b=BZ65S4Fl/5UVkRp/mYrAQc4rw68FqIq9tvaJKlt3+3o32Mw4+Yyh1zLz2jjr2dK9i3iI3+y/OnSD2ifEkrreCcU/IH1Xdf2svcOH0E/U4eNgmq/GThhHkqA8CVghuAyx2QQGsfiMQE25cgElcSWmjIvrBsdYXY2Ueqhqm3ObXQM=
-ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=chromium.org; spf=pass smtp.mailfrom=chromium.org; dkim=pass (1024-bit key) header.d=chromium.org header.i=@chromium.org header.b=GuN11l4Z; arc=pass smtp.client-ip=74.125.224.52
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=chromium.org
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=chromium.org
+	s=arc-20240116; t=1782344871; c=relaxed/simple;
+	bh=BOTs7ndZFpsyfsR7Xd704fb0PFSbUEVOoFzPWcbnkd8=;
+	h=From:In-Reply-To:References:MIME-Version:Date:Message-ID:Subject:
+	 To:Cc:Content-Type; b=rkYnfQFQW2OHU8LNmIfHtN9XQm2aqL1olKEVfU6ogdRI6jKwl3cSCT+/RGglJ+OJZ89zbsCe3Fk4DK4Ay3TVfJySxl51yxKjcx8vERKIq+hSnuub7phCP7dm3+9NY3FaOA18SjbSzRA70jUju2ehel1rsiuxjsil8gDp03wliXk=
+ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=google.com; spf=pass smtp.mailfrom=google.com; dkim=pass (2048-bit key) header.d=google.com header.i=@google.com header.b=Eg6WmlOO; arc=pass smtp.client-ip=74.125.82.50
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=google.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=google.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=chromium.org header.i=@chromium.org header.b="GuN11l4Z"
-Received: by mail-yx1-f52.google.com with SMTP id 956f58d0204a3-662d484ff3bso1612906d50.1
-        for <sashiko-reviews@lists.linux.dev>; Wed, 24 Jun 2026 15:41:41 -0700 (PDT)
-ARC-Seal: i=1; a=rsa-sha256; t=1782340900; cv=none;
-        d=google.com; s=arc-20240605;
-        b=XMXeLbNH5sG+wVKhnG6xQk3BbO3W++oUgjHuSp317sPfpqxJbGimh0CXwaqyjUeewc
-         WU1uJk65shwUdl5vhCXBIynlwdc+39CPaeJjp5DakCp+CXC//uLdDvhkoH7RMGCQ3dxd
-         fZBQSJDf3yHghRUGLAbPo3OHjbhLlH/j6xrx9P9tF3wTM5ojOMq+Jts8/YwLtb4E8Fxm
-         mzAy1WYhQ2l6dbZQnQboqatDVxh6eUAFBX+l3SWaVkjHFgLESM+RfFP2ybmXdX7hlkzH
-         WTCLKvOMUty3EqqScuesDCeLPoDMdBvcgErx7z02ELBFjRTdIOJ8jfg9x+Wkm4+QOv7G
-         Cbmg==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com; s=arc-20240605;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:dkim-signature;
-        bh=y1uYuwI5UQMrf4FOORVNSBAqq2rAsy2aYavTdYoUa1c=;
-        fh=N47MUBkmNywxHSo9ss1k+sO8bLxvsbbVY+II0SarRNU=;
-        b=iqi/FCXFq2HF+qemieuuytwUqyAqeEJqrGN2wq00B6UL5hm2Mq29OdkzrfVIxDQTVW
-         o0aqJjL1eQYOz2yWsVz2y1GLHbuTTDergDIezGQyPz6cusfY8BbcRyRhhzTW6MRNooho
-         SXkTEA6hRWVwjSGDaGbA1LiaP0KXcQW+OSGtov7MpoMZakrfe7lzHmvd8u+19EcEmY2k
-         F34HYD9qYF9ssYnH6pHSU3Lt9pLavOWMkYYSa/E47usgXUqftTljTN3Sga0Br8czTX3C
-         lCqHyaa/weLAuXgZLSTApJQzqmnBnj9RvXclUKdg0TQlN+UBbBabfZXyC87Em+vdvYXd
-         L07w==;
+	dkim=pass (2048-bit key) header.d=google.com header.i=@google.com header.b="Eg6WmlOO"
+Received: by mail-dl1-f50.google.com with SMTP id a92af1059eb24-13986d61b4eso999698c88.0
+        for <sashiko-reviews@lists.linux.dev>; Wed, 24 Jun 2026 16:47:48 -0700 (PDT)
+ARC-Seal: i=1; a=rsa-sha256; t=1782344868; cv=none;
+        d=google.com; s=arc-20260327;
+        b=cQ9eKS6wu1BpKtHZZiVk1X0HKPjCS1lJiCO3D29Z+OMCgbhoWj95tarMDxhmj8ltau
+         RSWJlA4gQGcPTpNP0w7Ff9SV6A4xjRRJajDin6eI7y8yl9tzib1G6wsFUSQUfXaEb5Za
+         W+DRAr42ow5SWmz8S4/EgiGXVAdKqJg8zeR8cfQhJRER5blO/0vKuvhZ/4vNUd2UFcnO
+         B6fzWdfDa/Owd82kSjIWbnAkBiXHxNuqDNoF1qc2LxK9BMfFNU1Jw1w8Fls1lnHh48PA
+         WEQ4Etd8k8YspkHKEBqBXTX9ObME0l2KSSbLhGZV1k9HFCZeUsZwVpRXo1OtNyBzKq0Y
+         vzYA==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com; s=arc-20260327;
+        h=content-transfer-encoding:cc:to:subject:message-id:date
+         :mime-version:references:in-reply-to:from:dkim-signature;
+        bh=18U+I3MBHpVGWp0B9SjNPE91pyZLnJEIxilKZScMveI=;
+        fh=KVy4+j+TE0qJlGnL1oxDtQvAs+ZlkPteDJwxhHS2piY=;
+        b=WZkkZ/XgMia4HTPSQtY0MJ9At3Icn7dgGo+gfzayrjdIXfo3k3MNhYjEjRpnGHo5ny
+         qEWcZtITDx0Tym3gvjcxG/2wv9n4lGXgrvvuxuySUPTNyd2++GmyB50MZ7+a8yObUTKd
+         2HabXFHbycajnp4L7WsgxOdm3pwqdyP0uoDip2dNmGS73NMF1mQzAaW4zdPaBg+zZIdX
+         9JgVN1Bdj77jmtgNaJRj4UgmUGKmnJtm8Cz8QVuBL1kOX4uC6hkjV947wDv0tf8m6id1
+         3ANqCpwGbGSbpqAhH3cZB+SMJDWayW3e+RAP5H0Mf1tgVhwzCGWIsOVCdcYW69tqNqnL
+         mG2g==;
         darn=lists.linux.dev
 ARC-Authentication-Results: i=1; mx.google.com; arc=none
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=chromium.org; s=google; t=1782340900; x=1782945700; darn=lists.linux.dev;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:from:to:cc:subject:date
+        d=google.com; s=20251104; t=1782344868; x=1782949668; darn=lists.linux.dev;
+        h=content-transfer-encoding:cc:to:subject:message-id:date
+         :mime-version:references:in-reply-to:from:from:to:cc:subject:date
          :message-id:reply-to;
-        bh=y1uYuwI5UQMrf4FOORVNSBAqq2rAsy2aYavTdYoUa1c=;
-        b=GuN11l4ZthJWQD1diNXzPqfqssFynnc+CdJQcueIQelcN1SZGVDMNvZsXBeAobrc/k
-         dFS11IJDiCtVR0Tcw1MsWfnCM/PwgDpHCSZg6DKDpf7MBF0aXklBLhLgoZ9flj0QkXgi
-         AWEyTOISuxiHBRyY/9oCsJtJBOMxVbFw7ZrCM=
+        bh=18U+I3MBHpVGWp0B9SjNPE91pyZLnJEIxilKZScMveI=;
+        b=Eg6WmlOO4VE97IZldEkAvldRLvfIZFw9UiC1pLsaJ2WTSl+5OpNzcBFWBOnvO4vqNk
+         h3Yjfc5XQCVZp7Nsp3zqL5cexE86QHJyE919ArbWlg6/fnSog0ycK8N/XETOgzWg/UaJ
+         K+dnBe3gHH+gGsKJjFVWQfpt/x5xz1miIwq/t43l/xSdL0nkwiYyKECb2axaiq/BV/ON
+         7LOYx3K/oTsVMYmg/HDj11ncUaqT9dQPPxF0ome/xWtYHXRb+OHhIgCPlHmfr6NoeIpz
+         ca+9dJOcstIRK2kIn8o+WW9Q7cV8waWZKzD7KrOIlIhY4tI95+ncCKqhwlf8cR2dNpW0
+         NpEg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20251104; t=1782340900; x=1782945700;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:x-gm-gg:x-gm-message-state:from
-         :to:cc:subject:date:message-id:reply-to;
-        bh=y1uYuwI5UQMrf4FOORVNSBAqq2rAsy2aYavTdYoUa1c=;
-        b=nPVNsA6egWob9qaYaSCuEtgLueq782i6OQAX4kLGrWTMuUroh7hRCiOSAfQrcDM8Yi
-         t0WBb/2uFpJNyPo6GpTgd6MejlMgQq378EhnAmA5pyDC+UQV78JXqt9JRBU5o8FA8bJu
-         YZbut05pOReGo8J0lmGIyYj71b4r02/BdMtL/6ItLV0s9iljCoIZFSKL5ZwQN/Zdi/Fo
-         FUXCblhedE4rxueYIB/JgLAOPBcH0BNEwOK5d9iZ1KuGQLJTFLgB1VnkBftnIytdSNNI
-         I+Kx/G2EBhYcQ8DYEtVPG+uFAFapo7hhpGQTRk7u7r9gb3CAiaRNVhXOR9JGjj9lbrPj
-         Pr/A==
-X-Gm-Message-State: AOJu0YwjOdkqnWY/BarZsJqsQIMPcU/7xLV8vpnDlaAw7io65MaaFXwk
-	zLCTUvMzZp3AR6TxfEMS7vghh97ovSl7qnXR1gLIsyJ5ZRkX9Gbj9n7Ab17laxQTUuM4268sBBb
-	3MZHnh+94OkVHkcfB5YXWj0tzM0fZP3X2Ae5vWg8Gwn3eNzZV5rm2WK0L
-X-Gm-Gg: AfdE7cme8NNol7EsEdFssqiw3VDK/NWrGjTbgihR21Z/jHfj7Z1+GH2DMe+4WclTDD1
-	lQxok4jcmuzvnjF2Lbx6d0JFqI2JdL/dUvYpnwmOqwOSy6/ASalgZxXiERpR6BuQF4B2Lx0rPvg
-	gRIHGtlGQcsLMZtUejRl2iAuxpjRo+i+nUL7NzwQ63eicIGoFEnZ5JmDH5EPiNqSgjiyuMU5u62
-	7G5tLYEvNupMve5pYae4cAcHGhtEErGDGcWm5t56ccRaIDjRADR/jtI5LCA1nXkkbjaO+lwBPp2
-	DjzfFgka+aWGZ2uLW3HSRrVUMQ==
-X-Received: by 2002:a05:690e:13c6:b0:65d:7d86:7758 with SMTP id
- 956f58d0204a3-6636e4fd15dmr4910430d50.59.1782340900600; Wed, 24 Jun 2026
- 15:41:40 -0700 (PDT)
+        d=1e100.net; s=20251104; t=1782344868; x=1782949668;
+        h=content-transfer-encoding:cc:to:subject:message-id:date
+         :mime-version:references:in-reply-to:from:x-gm-gg:x-gm-message-state
+         :from:to:cc:subject:date:message-id:reply-to;
+        bh=18U+I3MBHpVGWp0B9SjNPE91pyZLnJEIxilKZScMveI=;
+        b=FrzIZ0n4aoFwS2UgSk+sNq+HCpskogpU0sLkc6vVat2W1iQcbPCkByM959LBm8Ex14
+         ecgRRoY5ELRvgzbmy0Ic1/N137ap34EHoscqAC20HhAfTE7Ec1kzvRUqVPv42G1v/Bw0
+         xba02kpuK7QHDB1jWmymemQhvAbRaO6ThtxzMOfWrbrsWBU9RSCnbTEV1dLfMTcsC+ZW
+         ZBFfe/Ps0ykEKoTRz3xITwSXb29mLEbfeFYzgNKKmiOTNrQnJOYnGqwfgsiAxIjRj+V/
+         Vkz7Yi7p5XUHaOcBLXuvoFmtXqf39cFyY/Pp19RUHqUAm3uFeihtf8jLTwFh9i0g5jQR
+         3JkQ==
+X-Gm-Message-State: AOJu0Yy/5JuRezcB0v/lXXc9rYaBlKrwTJ/jRIRVYxmvSMIOPHmqFQZQ
+	iRdXjKz8EYDSfaEw7TOIIUxGimbLclt8Pi5batC0Q8buOkhzRCAEtftKU7pG88RH9k6WgzWOXqB
+	pAfLywytuETmkyVczs8lRvIWsD1zgK5Q0pg/kZSTMn6qwxwf9HIERXo+p
+X-Gm-Gg: AfdE7cmBSpdfsj9B76VaHBwXpdTFXiRZM+UOdASsANE7/cM/b1yLh2U+dWCLNJRvTRx
+	pDICpMTY4pJRJvHmNEHD3E1ECSuOlzZny2pbgZVt5twJEF11tsjlglUy3f72XZUzr5aaoxOueKs
+	VDKRZIA6WidfsLi5nSNpzhIaHtqgjHWrqzJ5MSM+gPO45FHY9shzlHTIiCM8QDZlf/MLerZ6nut
+	LlPGp3DhIGAU2wwIfRxcGaY7KN7E5rG24SbiQVJ1Lxn6cG16iuhaNy9UtjbOnHBTyfEtq5Mur/Z
+	8yj0cAAG35UA935z6jA86VYMVr3BDOejFa4fxNlJuLk6s6LLn7vpLeqIBYU=
+X-Received: by 2002:a05:7022:98d:b0:136:c565:e83a with SMTP id
+ a92af1059eb24-139dbb3ec98mr135615c88.24.1782344867276; Wed, 24 Jun 2026
+ 16:47:47 -0700 (PDT)
+Received: from 176938342045 named unknown by gmailapi.google.com with
+ HTTPREST; Wed, 24 Jun 2026 16:47:45 -0700
+Received: from 176938342045 named unknown by gmailapi.google.com with
+ HTTPREST; Wed, 24 Jun 2026 16:47:45 -0700
+From: Ackerley Tng <ackerleytng@google.com>
+In-Reply-To: <20260619005856.09DD81F000E9@smtp.kernel.org>
+References: <20260618-gmem-inplace-conversion-v8-0-9d2959357853@google.com>
+ <20260618-gmem-inplace-conversion-v8-24-9d2959357853@google.com> <20260619005856.09DD81F000E9@smtp.kernel.org>
 Precedence: bulk
 X-Mailing-List: sashiko-reviews@lists.linux.dev
 List-Id: <sashiko-reviews.lists.linux.dev>
 List-Subscribe: <mailto:sashiko-reviews+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:sashiko-reviews+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-References: <20260609-send-upstream-v4-3-b843d5e6ced3@chromium.org> <20260609045604.44FE71F00893@smtp.kernel.org>
-In-Reply-To: <20260609045604.44FE71F00893@smtp.kernel.org>
-From: Jingyuan Liang <jingyliang@chromium.org>
-Date: Wed, 24 Jun 2026 15:41:29 -0700
-X-Gm-Features: AVVi8CcTKZzbbZlWyreRB8uD4ucjtFXbjur0kDwQgo7E4rh-_3tMMR2pon7swuI
-Message-ID: <CAEe3GZFVuy_Y-qHtXtdiZkoQk3vK357ZnJO2A_1WroQASSbs8g@mail.gmail.com>
-Subject: Re: [PATCH v4 03/11] HID: spi-hid: add transport driver skeleton for
- HID over SPI bus
-To: sashiko-reviews@lists.linux.dev
-Cc: robh@kernel.org, conor+dt@kernel.org, devicetree@vger.kernel.org, 
-	dmitry.torokhov@gmail.com, linux-input@vger.kernel.org
+Date: Wed, 24 Jun 2026 16:47:45 -0700
+X-Gm-Features: AVVi8CcyRflzPmfvQme9jCFwguwaCgRojeI5Y2eDu1yNbRvAkdDgWUV4du7WdVU
+Message-ID: <CAEvNRgE6iKBhMYM64rgvuVEOvAFyNoryzpjTtSQRf5TcrLTepA@mail.gmail.com>
+Subject: Re: [PATCH v8 24/46] KVM: guest_memfd: Make in-place conversion the default
+To: sashiko-reviews@lists.linux.dev, 
+	Ackerley Tng via B4 Relay <devnull+ackerleytng.google.com@kernel.org>
+Cc: kvm@vger.kernel.org
 Content-Type: text/plain; charset="UTF-8"
 Content-Transfer-Encoding: quoted-printable
 
-On Mon, Jun 8, 2026 at 9:56=E2=80=AFPM <sashiko-bot@kernel.org> wrote:
->
-> Thank you for your contribution! Sashiko AI review found 2 potential issu=
+sashiko-bot@kernel.org writes:
+
+> Thank you for your contribution! Sashiko AI review found 1 potential issu=
 e(s) to consider:
-> - [High] Embedded arrays `read_approval_header` and `read_approval_body` =
-are used for SPI DMA transfers without cacheline alignment, risking memory =
-corruption.
-> - [Medium] Unchecked return values of reset operations in `spi_hid_dev_in=
-it` and `spi_hid_resume`
+> - [Medium] Unprivileged userspace can trigger a WARN_ON_ONCE if the host =
+administrator misconfigures a module parameter.
 > --
 >
-> commit ea35a3a23739acaca367a8d250ef25c96d22df36
-> Author: Angela Czubak <acz@semihalf.com>
+> commit bf8cb04a544d7b8235d73034e0febf195ab335c3
+> Author: Ackerley Tng <ackerleytng@google.com>
 >
-> HID: spi-hid: add transport driver skeleton for HID over SPI bus
+> KVM: guest_memfd: Make in-place conversion the default
 >
-> Create spi-hid folder and add Kconfig and Makefile for spi-hid driver.
-> Add basic device structure, definitions, and probe/remove functions.
+> This commit makes in-place conversion the default when the architecture
+> supports private memory. It introduces a module parameter to override the
+> default and adds a warning in the CoCo VM memory population path if in-pl=
+ace
+> conversion is disabled without enabling per-VM memory attributes.
 >
-> > diff --git a/drivers/hid/spi-hid/spi-hid-core.c b/drivers/hid/spi-hid/s=
-pi-hid-core.c
-> > new file mode 100644
-> > index 0000000000000..02a7608c4b882
-> > --- /dev/null
-> > +++ b/drivers/hid/spi-hid/spi-hid-core.c
-> > @@ -0,0 +1,213 @@
->
-> [ ... ]
->
-> > +/* Driver context */
-> > +struct spi_hid {
-> > +     struct spi_device       *spi;   /* spi device. */
-> > +     struct hid_device       *hid;   /* pointer to corresponding HID d=
-ev. */
-> > +
-> > +     struct spihid_ops       *ops;
-> > +     struct spi_hid_conf     *conf;
-> > +
-> > +     enum hidspi_power_state power_state;
-> > +
-> > +     u32 regulator_error_count;
-> > +     int regulator_last_error;
-> > +     u32 bus_error_count;
-> > +     int bus_last_error;
-> > +     u32 dir_count;  /* device initiated reset count. */
-> > +};
->
-> [Severity: High]
-> Does embedding the read_approval_header and read_approval_body arrays dir=
-ectly
-> in this struct for SPI DMA transfers risk memory corruption?
->
-> When these buffers are passed as tx_buf to spi_sync() (e.g. in
-> spi_hid_input_sync()), they lack the ____cacheline_aligned directive. On
-> architectures with non-coherent DMA, cache maintenance operations could
-> encompass adjacent struct members.
->
-> Concurrent CPU writes to those adjacent members during the DMA mapping wi=
-ndow
-> will be destroyed, leading to memory corruption.
->
-> Should these buffers be cacheline aligned, or dynamically allocated?
-
-read_approval_header and read_approval_body arrays are not in this patch.
-
->
-> [ ... ]
->
-> > +int spi_hid_core_probe(struct spi_device *spi, struct spihid_ops *ops,
-> > +                    struct spi_hid_conf *conf)
-> > +{
->
-> [ ... ]
->
-> > +     /*
-> > +      * At the end of probe we initialize the device:
-> > +      *   0) assert reset, bias the interrupt line
-> > +      *   1) sleep minimal reset delay
-> > +      *   2) request IRQ
-> > +      *   3) power up the device
-> > +      *   4) deassert reset (high)
-> > +      * After this we expect an IRQ with a reset response.
-> > +      */
-> > +
-> > +     shid->ops->assert_reset(shid->ops);
-> > +
-> > +     shid->ops->sleep_minimal_reset_delay(shid->ops);
->
-> [ ... ]
->
-> > +     error =3D shid->ops->power_up(shid->ops);
-> > +     if (error) {
-> > +             dev_err(dev, "%s: could not power up\n", __func__);
-> > +             return error;
-> > +     }
-> > +
-> > +     shid->ops->deassert_reset(shid->ops);
+>> diff --git a/virt/kvm/guest_memfd.c b/virt/kvm/guest_memfd.c
+>> index 86c9f5b0863cb..5cb73543c03c8 100644
+>> --- a/virt/kvm/guest_memfd.c
+>> +++ b/virt/kvm/guest_memfd.c
+>> @@ -1193,10 +1193,15 @@ static bool kvm_gmem_range_is_private(struct fil=
+e *file, pgoff_t index,
+>>  {
+>>  	struct maple_tree *mt =3D &GMEM_I(file_inode(file))->attributes;
+>>
+>> +#ifdef CONFIG_KVM_VM_MEMORY_ATTRIBUTES
+>>  	if (!gmem_in_place_conversion)
+>>  		return kvm_range_has_vm_memory_attributes(kvm, gfn, gfn + nr_pages,
+>>  							  KVM_MEMORY_ATTRIBUTE_PRIVATE,
+>>  							  KVM_MEMORY_ATTRIBUTE_PRIVATE);
+>> +#else
+>> +	if (WARN_ON_ONCE(!gmem_in_place_conversion))
+>> +		return false;
+>> +#endif
 >
 > [Severity: Medium]
-> Can hardware reset failures be masked here?
+> Could this WARN_ON_ONCE() be triggered by unprivileged userspace if the
+> administrator misconfigures the module parameter?
 >
-> The assert_reset and deassert_reset callbacks return integer error codes.
-> However, their return values are ignored in spi_hid_core_probe() (as well=
- as
-> resume paths).
+> If the system administrator sets kvm.gmem_in_place_conversion=3D0 on a ke=
+rnel
+> compiled without CONFIG_KVM_VM_MEMORY_ATTRIBUTES, it appears this warning=
+ can
+> be reached from an unprivileged ioctl path calling kvm_gmem_populate().
 >
-> If deassert_reset() fails, the device may remain in reset, causing the dr=
-iver
-> to hang waiting for a reset response IRQ that will never arrive.
+> Since an unprivileged user creating a CoCo VM can intentionally trigger t=
+his
+> warning, could this act as a host-side denial of service on systems confi=
+gured
+> with panic_on_warn=3D1?
 >
-> Should these return values be checked and handled?
->
-> > +
-> > +     dev_dbg(dev, "%s: d3 -> %s\n", __func__,
-> > +             spi_hid_power_mode_string(shid->power_state));
-> > +
-> > +     return 0;
-> > +}
+> Would it be better to convert this to a pr_warn_once()
+
+Sean, what do you think of using pr_warn_once()?
+
+> or perhaps validate the
+> module parameter at initialization time?
+
+I thought about this too, but didn't want to move it to initialization
+time because this (populate) is probably the first time the kernel
+knows for sure something is used weirdly.
+
+Like, perhaps the admin did compile without
+CONFIG_KVM_VM_MEMORY_ATTRIBUTES and also set gmem_in_place_conversion=3D0
+but wants to use the host only for non-CoCo VMs and hence doesn't need a
+warning, idk.
+
 >
 > --
-> Sashiko AI review =C2=B7 https://sashiko.dev/#/patchset/20260609-send-ups=
-tream-v4-0-b843d5e6ced3@chromium.org?part=3D3
+> Sashiko AI review =C2=B7 https://sashiko.dev/#/patchset/20260618-gmem-inp=
+lace-conversion-v8-0-9d2959357853@google.com?part=3D24
