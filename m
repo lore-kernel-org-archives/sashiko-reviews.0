@@ -1,144 +1,89 @@
-Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
+Received: from mailtransmit05.runbox.com (mailtransmit05.runbox.com [185.226.149.38])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 905AF1F03DE;
-	Wed, 24 Jun 2026 21:22:07 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4E0F9371D0E;
+	Wed, 24 Jun 2026 21:23:59 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=185.226.149.38
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1782336128; cv=none; b=WPsJaIw6efJfAzXpeihAtLcpXh0513x8zAF+RY2+0Od8kFiwgnvyocoLM+XH9wLR31/63vF0sR++aljy3p0MBt0ofUNPToMRxhBr5SbRki1d3wAFzOpuonXfrvj7OLcRP7vmJ9M6lEWECVbiD9h7xRzcKF30J47ZeLhqCc4jvvk=
+	t=1782336245; cv=none; b=iV5IDgtQEurLseZprF7vBmxbSiergYtIy6Q7SkV6i7Cvb4VTbOixj9/cbdbTo5e42ngJYnvUj8/424hhiw6Ajz4XPU1BzW7axtSogRVzbLyEgsLcayhy43wsQLGWOq4+eF8PLV+pfWmwaAH9Q7l058Q5VFQ+Fgk/Bbae1TEWz4o=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1782336128; c=relaxed/simple;
-	bh=Qmwc5gv51dRHM+VDXxrnHsD2BieEbpPWfqIFgSieJug=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=sissrEmgqIS6N3C36utkNA//JXINtJ00hEn4zzixvTa59eEl8npTovrV9kgqFrruyoJPtG1wwGbROl80aJBrSUFyMUvU5/TvFeQ5rQLjSzNPpU3LX1msLwujHlWaUNdO9dJOBa3LKOLAoFWl3T5pEH9EaFn0WeQZnOpYJt8lFNE=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=ilxTVg0/; arc=none smtp.client-ip=100.103.45.18
+	s=arc-20240116; t=1782336245; c=relaxed/simple;
+	bh=LZ6uvJ4/wvlPkVNuNVv98QEduTT1Zb1Pw/hDIUzw4c8=;
+	h=Message-ID:Date:MIME-Version:From:Subject:To:Cc:References:
+	 In-Reply-To:Content-Type; b=elcOWKMxWSyyKGdF3ImyWSVlo7YY3TQmv5C47jbvslXI/Yi886HkYMF5j2aXyKFyN5QpxHAEgK1wNZUe7OSHcnqVPf8Ke6P4q7FS1A99CPDPMSF4dAvuKQWOcxk1ym3nMxgBPKJHNEe9BXn3+83LYLtSo+alDPW7k2rzowYIuRA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=rbox.co; spf=pass smtp.mailfrom=rbox.co; dkim=pass (2048-bit key) header.d=rbox.co header.i=@rbox.co header.b=N4cnugxK; arc=none smtp.client-ip=185.226.149.38
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=rbox.co
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=rbox.co
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="ilxTVg0/"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 346481F000E9;
-	Wed, 24 Jun 2026 21:22:07 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=kernel.org;
-	s=k20260515; t=1782336127;
-	bh=qHn85mFbXT3jrShdWQ4xG1gA+rAj4XQZoF0cMI3Wlds=;
-	h=Date:From:To:Cc:Subject:References:In-Reply-To;
-	b=ilxTVg0/mKu/VPZq1wdy9bmvnyTUvXoDZEJS7bnrKahMpX7/zT38VHFIXOT8NXlxh
-	 DXdO/Z5+xrJsMryyUrX0krp+ENhiyBIhWZ5oqXkjNeNqM1db96jhQuf3aAhYq3+OCz
-	 1lJeRlP2amtPnBCNr7o2coYJ3s/GAMWO65fdDF2wxEGNz9AlcZTiA5uJZCYaT+nSON
-	 V5QLvt8N32NAcqJhbflo8PnzcSCRrNw5Imh9THULmMFG/YKTWHy/zB5zrrqSvZk7Sa
-	 gBbJD5TvTVpQEqsfsZkM7/7hBcFEAYHphF+vvcSz4HrsvZWphuO9H2kEXlHd2fuKLT
-	 Po4gYyoXdQRpQ==
-Date: Wed, 24 Jun 2026 14:22:06 -0700
-From: Oliver Upton <oupton@kernel.org>
-To: sashiko-reviews@lists.linux.dev
-Cc: kvmarm@lists.linux.dev, Marc Zyngier <maz@kernel.org>
-Subject: Re: [PATCH v2 2/2] KVM: arm64: nv: Treat S1PTW permission faults
- specially
-Message-ID: <ajxKfk5elMbcNuSb@kernel.org>
-References: <20260624202446.1698535-1-oupton@kernel.org>
- <20260624202446.1698535-3-oupton@kernel.org>
- <20260624203516.E76241F000E9@smtp.kernel.org>
+	dkim=pass (2048-bit key) header.d=rbox.co header.i=@rbox.co header.b="N4cnugxK"
+Received: from mailtransmit02.runbox ([10.9.9.162] helo=aibo.runbox.com)
+	by mailtransmit05.runbox.com with esmtps  (TLS1.2) tls TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256
+	(Exim 4.93)
+	(envelope-from <mhal@rbox.co>)
+	id 1wcV4Z-0071dr-RD; Wed, 24 Jun 2026 23:23:51 +0200
+DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed; d=rbox.co;
+	s=selector2; h=Content-Transfer-Encoding:Content-Type:In-Reply-To:References:
+	Cc:To:Subject:From:MIME-Version:Date:Message-ID;
+	bh=zRExXg/2xKpyaZBKsbhm1YAA7S81C3fWbe3RBi1I51w=; b=N4cnugxKNpCHythSsB0WD2zPvM
+	iIekjtb/wu5NvNEFjRKN/ZTzggdpX7JS87f/aSD/MX96iszVHTIqYJhEX0+un5+JwFBP7fDdmIHW6
+	UFTbFOUaugh1Nk9gOWPi+jqk19cOpsAXjUoJqhpYwibuXnLbiozWTFlAuLTS0virOvCwWfGZ1xT/f
+	F8hbVOR00pAtZbNloss0+mZRlnmcRe9XUAfhenia9QqG1Kza8pgd5v2C5AD3WFjnBKEQIvtVWWdbB
+	5vVUCgjstz3A3duL4w8KaRPapM2cBcHiblHr8XXZgrKk6o78P9AxLYWdf+Q6b6sL5xGdN9Cq5cSkw
+	EDEDq3ZQ==;
+Received: from [10.9.9.73] (helo=submission02.runbox)
+	by mailtransmit02.runbox with esmtp (Exim 4.86_2)
+	(envelope-from <mhal@rbox.co>)
+	id 1wcV4Z-0000af-CT; Wed, 24 Jun 2026 23:23:51 +0200
+Received: by submission02.runbox with esmtpsa  [Authenticated ID (604044)]  (TLS1.2:ECDHE_SECP256R1__RSA_PSS_RSAE_SHA256__AES_256_GCM:256)
+	(Exim 4.95)
+	id 1wcV4T-0038pr-6d;
+	Wed, 24 Jun 2026 23:23:45 +0200
+Message-ID: <bf5b90ae-4f7c-4a64-9fe1-73428c64608f@rbox.co>
+Date: Wed, 24 Jun 2026 23:23:39 +0200
 Precedence: bulk
 X-Mailing-List: sashiko-reviews@lists.linux.dev
 List-Id: <sashiko-reviews.lists.linux.dev>
 List-Subscribe: <mailto:sashiko-reviews+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:sashiko-reviews+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <20260624203516.E76241F000E9@smtp.kernel.org>
+User-Agent: Mozilla Thunderbird
+From: Michal Luczaj <mhal@rbox.co>
+Subject: Re: [PATCH bpf 2/2] selftests/bpf: Add test for UDP sock leak on
+ sockmap lookup-bind-release
+To: Emil Tsalapatis <emil@etsalapatis.com>, sashiko-reviews@lists.linux.dev
+Cc: bpf@vger.kernel.org
+References: <20260623-sockmap-lookup-udp-leak-v1-0-05804f9308e4@rbox.co>
+ <20260623-sockmap-lookup-udp-leak-v1-2-05804f9308e4@rbox.co>
+ <20260623190018.2B5A11F000E9@smtp.kernel.org>
+ <DJGQQDCXHU7C.8HTXC4NI0134@etsalapatis.com>
+Content-Language: pl-PL, en-GB
+In-Reply-To: <DJGQQDCXHU7C.8HTXC4NI0134@etsalapatis.com>
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 7bit
 
-On Wed, Jun 24, 2026 at 08:35:16PM +0000, sashiko-bot@kernel.org wrote:
-> > +	/*
-> > +	 * S1PTW permission faults do not provide sufficient syndrome information
-> > +	 * to determine if the fault was for read or write permissions. Perform a
-> > +	 * read permission check and an optional write permission check, relying
-> > +	 * on the fact that:
-> > +	 *
-> > +	 *  - The table walker at minimum requires read permission
-> > +	 *
-> > +	 *  - The L1 hypervisor also needs to deal with the architecture and
-> > +	 *    cannot directly infer the failing permission from the fault context
-> > +	 */
-> > +	if (kvm_vcpu_abt_iss1tw(vcpu)) {
-> > +		forward_fault = !trans->readable;
-> > +		if (write_fault)
-> > +			forward_fault |= !trans->writable;
-> > +	} else if (kvm_vcpu_trap_is_iabt(vcpu)) {
-> >  		if (vcpu_mode_priv(vcpu))
-> >  			forward_fault = !kvm_s2_trans_exec_el1(vcpu->kvm, trans);
-> >  		else
-> >  			forward_fault = !kvm_s2_trans_exec_el0(vcpu->kvm, trans);
+On 6/23/26 23:18, Emil Tsalapatis wrote:
+> On Tue Jun 23, 2026 at 3:00 PM EDT, sashiko-bot wrote:
+>> New issues:
+>> - [Medium] The cgroup file descriptor `cg` is leaked because it is never closed in `test_sockmap_lookup_bind_release()`.
+>> - [Low] The `struct sockaddr_in sa` is passed to the kernel via `xconnect` with uninitialized bytes in its `sin_zero` padding.
+>> ...
 > 
-> [Severity: High]
-> This is a pre-existing issue, but does this logic miss a read-permission
-> dependency check for normal instruction aborts?
+> I think these issues are borderline cosmetic but valid.
+
+Sure, I've fixed them in v2.
+
+>> [Severity: High]
+>> This is a pre-existing issue, but does calling bpf_bind() here mutate the
+>> SOCK_RCU_FREE state and cause bpf_sk_release() to skip decrementing the
+>> reference count?
+>> ...
 > 
-> If an L1 hypervisor maps a page for L2 with Stage-2 PTE AP=00 (no read/write)
-> and XN=0 (executable), and L2 attempts to fetch an instruction, the hardware
-> generates a Stage-2 Instruction Abort (Permission Fault) because execution
-> requires read permission.
+> AFAICT this is actually not a problem for this specific test, because we
+> fix it in patch 1/2. We have already added the socket to the sockmap so
+> udp_bpf_update_proto should have triggered. It looks like Sashiko missed
+> this?
 
-This does not match my understanding of stage-2 permissions. S2AP
-controls data permissions, whereas the XN field controls instruction
-fetches. The pseudocode also supports this view, where execute
-permissions are computed separately from S2AP:
-
-AArch64.S2DirectBasePermissions()
-"""
-    S2AccessControls s2perms;
-    bit w;
-    constant bit r = permissions.s2ap<0>;
-    if permissions.s2ap<1> == '1' then
-        w = '1';
-    // Descriptors marked with DBM set have the effective value of S2AP[1] set.
-    // This implies no Permission faults caused by lack of write permissions are
-    // reported, and the Dirty bit can be set.
-    elsif permissions.dbm == '1' && walkparams.hd == '1' then
-        // An update occurs here, conditional to being able to append to HDBSS
-        if walkparams.hdbss == '1' then
-            w = if CanAppendToHDBSS() then '1' else '0';
-        else
-            w = '1';
-    else
-        w = '0';
-
-    bit px, ux;
-    case (permissions.s2xn:permissions.s2xnx) of
-        when '00' (px,ux) = ('1','1');
-        when '01' (px,ux) = ('0','1');
-        when '10' (px,ux) = ('0','0');
-        when '11' (px,ux) = ('1','0');
-
-    x = if accdesc.el == EL0 then ux else px;
-    s2perms.r = r;
-    s2perms.w = w;
-    s2perms.x = x;
-    s2perms.r_rcw = r;
-    s2perms.w_rcw = w;
-    s2perms.r_mmu = r;
-    s2perms.w_mmu = w;
-    s2perms.toplevel0 = '0';
-    s2perms.toplevel1 = '0';
-    s2perms.overlay = FALSE;
-
-    return s2perms;
-"""
-
-AArch64.S2CheckPermissions()
-"""
-    elsif accdesc.acctype == AccessType_IFETCH then
-        if s2perms.overlay && s2perms.ox == '0' then
-            fault.statuscode = Fault_Permission;
-            fault.overlay    = TRUE;
-        elsif (memtype == MemType_Device &&
-                ConstrainUnpredictable(Unpredictable_INSTRDEVICE) == Constraint_FAULT) then
-            fault.statuscode = Fault_Permission;
-
-        // Prevent execution from Non-secure space by Realm state
-        elsif accdesc.ss == SS_Realm && walkstate.baseaddress.paspace != PAS_Realm then
-            fault.statuscode = Fault_Permission;
-        elsif s2perms.x == '0' then
-            fault.statuscode = Fault_Permission;
-"""
+Yeah, it does look like.
 
 Thanks,
-Oliver
+Michal
