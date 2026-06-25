@@ -1,164 +1,211 @@
-Received: from mail-yx1-f52.google.com (mail-yx1-f52.google.com [74.125.224.52])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from mx0b-0031df01.pphosted.com (mx0b-0031df01.pphosted.com [205.220.180.131])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AD69F3D88FA
-	for <sashiko-reviews@lists.linux.dev>; Thu, 25 Jun 2026 11:20:51 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=pass smtp.client-ip=74.125.224.52
-ARC-Seal:i=2; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1782386452; cv=pass; b=eSH1IuOvBp4iyLRsnp31k9y2tlQ0yhftwJKz3FuTcQiUQO15xgdILJZepgExc0AyeM1zXV7/KW92oUXdb7Zbwsbde95xv7fcAqArJOLEs6bpDdSVmZe0HIUqumGf6NxvIwzEXe0EJWeU2k0yieYrUYcLnEtnz7wc4pxMsxhJQaA=
-ARC-Message-Signature:i=2; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1782386452; c=relaxed/simple;
-	bh=DBGRRLjKyXInFkVjuZiiItHB+vEqg1vprNXOqYiM1QY=;
-	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
-	 To:Cc:Content-Type; b=W0+v6JkIwhRTvrUMiPUdjv75Vm9qq6Wmwo1DM3E6gvdUyydwaCU/h9bvonZVqHcMUx5rtbJoAs7laydy5Bv0ImlwgOPAT6BTm3QRXM/8Z1C9s/aqFrxAUu4P1PjyQah0ErU1IG02z1NGtv5865WUC7aqRbo0viyUZjK68bYCmz0=
-ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=google.com; spf=pass smtp.mailfrom=google.com; dkim=pass (2048-bit key) header.d=google.com header.i=@google.com header.b=rrAmRyWv; arc=pass smtp.client-ip=74.125.224.52
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=google.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=google.com
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B4E453DA5A9
+	for <sashiko-reviews@lists.linux.dev>; Thu, 25 Jun 2026 11:29:39 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.180.131
+ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
+	t=1782386981; cv=none; b=KneAGpZUrA2gDjPzqTfID6vZzjyYwYkvzCMUuYhXZyAWYnBS0Ckq9ub71xJOOcwM37mumTo72OG0Dt3AmZqIg7eRWNK5z45kMyRsj+1xVbg4cPcnBBMM2eloYoPeJOnwVtxqEh9WENhu2607kK1/JTWoClgJhWpfBougdUVA0NA=
+ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
+	s=arc-20240116; t=1782386981; c=relaxed/simple;
+	bh=FeigaeCzSOK6iW/OKgSAX5GIoUm/l8/iWDJQKj0rvj8=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=YdGAckVaV3VhF/g4p0vNyDQBHpaQsdXrme2Qac0xkaZnBfp1ZkOSMBA4XMjYmBvUB8VVHgr9ypNCval+TGPF4nR7gF6yJg1ZZAiqJLSUiUkekN4Su+Uqzrxt5o18MSptyCIhmq8+ayb0h5SuP7S2tQoZ+V9Z4Wn2QmG+CfGu6Pg=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com; spf=pass smtp.mailfrom=oss.qualcomm.com; dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b=VnhRxF6I; dkim=pass (2048-bit key) header.d=oss.qualcomm.com header.i=@oss.qualcomm.com header.b=Oem81IAG; arc=none smtp.client-ip=205.220.180.131
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=oss.qualcomm.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=google.com header.i=@google.com header.b="rrAmRyWv"
-Received: by mail-yx1-f52.google.com with SMTP id 956f58d0204a3-66481f17a4cso825035d50.1
-        for <sashiko-reviews@lists.linux.dev>; Thu, 25 Jun 2026 04:20:51 -0700 (PDT)
-ARC-Seal: i=1; a=rsa-sha256; t=1782386451; cv=none;
-        d=google.com; s=arc-20260327;
-        b=bK3mXSxYwckwRw0/mcbHlDCByYg1X8uTzZYP6fxwEa8FoMxTgDSUSG4eIgUrp+V9lQ
-         Bxnc6NoIHOPO6udsk8HBagrWnqSe/QAxuh0x+VWtAl9++c7JbOR94WsM/F4jK2shNQhk
-         yGml4NQ1j78MhGaCmV5/uDP+MLkfZnzx4SVLSL4KUMwqOoBR6SuUp7yxfN6oAOaFTBgI
-         m7zvwG9tT/K6+73wsHpJle0Osokpzphq3OIJPFVvtHLNINhh60NiulYQm5zQ27yy/6ll
-         Fk4tX4IYxs54W54EhOlCG8KVsYVdxXrHCTfivvDTxQ8KCUtuBlPgxjquZxSInyKyWQri
-         jhQA==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com; s=arc-20260327;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:dkim-signature;
-        bh=3lf13cIJBwNAT6Ke7JgHfnNymgELoxPci9N8XDoYvcY=;
-        fh=uA360uvxR9S0K/Y4Lovo7aIaGlBwzVBnnb2BKWupr/4=;
-        b=JCU1XaXKulWT3x7elzH2H5djKX6UG++ZHXHDfO1LpZqxb7xMQmTTDKKUXdMbCJhutM
-         OJCNuGN/588uzD37z6k0qVbDR+Kcdf1qBA3ggyTbTMF3EcXpJjk1wi9cu7heY2KTAe/V
-         1n/Ig0ypVJPjZrKrIm36/fdPw6H2OsKTc5bMKk2FDCQEnAsSwcRNbYouB3Hm7Re+aB+N
-         lkSSFnvdgCgXnCBNCXvo04bPbbNcRK2RtAQ/Am6mpiHyx1hl8O0hKDhcl2dkZt+zji94
-         paEK1JwU3G5Up5/id5+tKLNQ8F1dtI4SwUr/Adbpm6C/+i4wpe8SZ6RRLbuT0b3Cx7Ms
-         uYTA==;
-        darn=lists.linux.dev
-ARC-Authentication-Results: i=1; mx.google.com; arc=none
+	dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b="VnhRxF6I";
+	dkim=pass (2048-bit key) header.d=oss.qualcomm.com header.i=@oss.qualcomm.com header.b="Oem81IAG"
+Received: from pps.filterd (m0279873.ppops.net [127.0.0.1])
+	by mx0a-0031df01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id 65P9k2ni1921324
+	for <sashiko-reviews@lists.linux.dev>; Thu, 25 Jun 2026 11:29:38 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=qualcomm.com; h=
+	cc:content-transfer-encoding:content-type:date:from:in-reply-to
+	:message-id:mime-version:references:subject:to; s=qcppdkim1; bh=
+	KAAWbB5ZoFnvyjzUub8MKnikqeHBsD0LJWooySWChIY=; b=VnhRxF6Igru8Fj5s
+	4fztfEUk4pCk2tarxFFBy9tQLtUBGcaiMqP5Qs/SWkbN2Vnx0PViVQM4pS2gu7bC
+	ATzRWm5Q7w2wHSmpmeekTywbQobOgVwYCqDgyBkXBHFpYWKzqaWHSHQzAVKTxTCZ
+	O7rVRRu6FZrzruzjMyT6rwBNBwVbQm3aAphhcOh8NJMAGz0HBjrKyUgQ/vl7v6OR
+	fFG6evMRbb2CH3bgxJvLXxbug3rkKNTwza6p467gvAYiv3w/btTPkW+vk3maCPGm
+	SoZrMcZ2UhPAL5rJKI1NJdAaVKekWrvrWpa2KAdd5hIoycs0khJ61uyVeclgNJTV
+	ikVPIQ==
+Received: from mail-dy1-f200.google.com (mail-dy1-f200.google.com [74.125.82.200])
+	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 4f0ueu9y0a-1
+	(version=TLSv1.3 cipher=TLS_AES_128_GCM_SHA256 bits=128 verify=NOT)
+	for <sashiko-reviews@lists.linux.dev>; Thu, 25 Jun 2026 11:29:38 +0000 (GMT)
+Received: by mail-dy1-f200.google.com with SMTP id 5a478bee46e88-30c13bb8ca9so2754080eec.0
+        for <sashiko-reviews@lists.linux.dev>; Thu, 25 Jun 2026 04:29:38 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=google.com; s=20251104; t=1782386451; x=1782991251; darn=lists.linux.dev;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=3lf13cIJBwNAT6Ke7JgHfnNymgELoxPci9N8XDoYvcY=;
-        b=rrAmRyWvEO1+DAcxesU3+SR+56ZsKuRqsGsQF265dbIPVTbDdMZL8/KprseHcb99wl
-         c1bL3aMmPzzViMAOOIVq/PLDs/7J/QLgqCmLjTfwD/dP5BdXbmgQ3wXrABCVUXoJZRJf
-         CFbP5lhE57o1FUtzSXX4rzkpEFiTaI3xo5/yZfdB54VNMqN9g2ARzauT47n0xYrV+ey0
-         FHoXHbip0tkdg2xacHmfqSoEOhZoLQr9VdWau0z8pwj4LST0YXI/xNJdXePXul81wSPv
-         Dx+4prpEkLkd65TOtI5pER7sIT7OLO90amKjQnWElxB0OOxPW1D3nshrhLvtcsdH3yQc
-         t0Tg==
+        d=oss.qualcomm.com; s=google; t=1782386978; x=1782991778; darn=lists.linux.dev;
+        h=in-reply-to:content-transfer-encoding:content-disposition
+         :mime-version:references:message-id:subject:cc:to:from:date:from:to
+         :cc:subject:date:message-id:reply-to;
+        bh=KAAWbB5ZoFnvyjzUub8MKnikqeHBsD0LJWooySWChIY=;
+        b=Oem81IAG/dDYJQBscyuzDXFnr8tjYJAwQSeBa2Zbg03Al8iNiq1ZqbZztCDZdQfuHm
+         oYnDNaCN6tgVVhK+4Asb6RFT2wqXNypk6WRwEJt1Hp0TDOMuskdBcAAJOguqaKq02odZ
+         FPS3Ar+KOGqdEDW9q+T6OmQRnlQju8qsNj83Bz4oAfxVbfwAumB0UQRRQHmFQzlvJd3j
+         wYLssEaqhU+mTHuRAURgS/g5F4ggm/lmKJDvGvFYR3w4vd6tKJzvEXkyl0C+HRKGBJ3J
+         vsTHBnKrfqDbppfGMwIb804wKlUPegwzbf2H3GAhjRghjs9V3SjdZKk0cZ5r24DVK6dg
+         P5Bg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20251104; t=1782386451; x=1782991251;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:x-gm-gg:x-gm-message-state:from
-         :to:cc:subject:date:message-id:reply-to;
-        bh=3lf13cIJBwNAT6Ke7JgHfnNymgELoxPci9N8XDoYvcY=;
-        b=EPci439FpoSd98hLyUn9RsAn9LjlO3iub5wKtMH7aWnBdXogjQNKNqq5mZNMeTjd+2
-         SbOormNfaF0yJJHEf5uMESXC1DMVUlVdjRDW4QPNgsIWCIHvZp6iC658XrUlmKXVzzmI
-         K3zpDku379kQhmz0Xtg/sAEDXjYq2yh5kfT3U9nACmJNVaW1dhDteeFpLvQw1Lp96R1e
-         uQi/k6p0Za6P7XRGitlCNjlVUM1axawqOFhnMNdUHZ/MjcBCKI3+auvRvb0466mOC2gK
-         +w5PM0+AJR3cVObWIELQwDNImvI6g69+G8NmD8fBxRxpOIBb7C9fQMeTESJ644W3WsmN
-         qmVg==
-X-Gm-Message-State: AOJu0Yyvs/diYWk4c3Sc4MBxzMY+TW6s2xfWGQdTNmvUSdn3ohoWZ9nz
-	fbisrwhu8RVSsaCjXajz/omG7SaxofcEuL96uAkNlwLwZ62EvDtUzNYwppH974uO22HrwllPyPU
-	hyF3wcXHCBBm/CN9A7jWrGz0tIsfZsDTF7/4uhVBAMUHTXDSH9uEBF714sM1Ag1nn
-X-Gm-Gg: AfdE7clttd+VWA/fwQbOwX9lVCK7OBoep4l5aoDZgITgTHPdwUBRELrw8t3hoIrRxnn
-	SPSicTMiblJgv5vkUv+JaDFzJ18PYKqZ7udyQnSn4qPCierRMK3XuokZryhdHI6ylvKglLawF1z
-	czgQ1SO+Z3NgZispEFipPsF0sOwP/Nk5S1WZHPiuBmwwhbCuQ2NOo3rp7ElLttDnzeATHl5A60n
-	2gEAzaK5sQG+yao4aVliT/7TeoOkMIvZicCeJPfGMEvP4dT4STTDAUj9QHAmPt6RfP3pQkdFJLP
-	6iPtlVjHyYLtmH93nM34D56Gv+s=
-X-Received: by 2002:a05:690e:134b:b0:662:ca79:ceb6 with SMTP id
- 956f58d0204a3-663556a32e2mr9336230d50.31.1782386449969; Thu, 25 Jun 2026
- 04:20:49 -0700 (PDT)
+        d=1e100.net; s=20251104; t=1782386978; x=1782991778;
+        h=in-reply-to:content-transfer-encoding:content-disposition
+         :mime-version:references:message-id:subject:cc:to:from:date:x-gm-gg
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+        bh=KAAWbB5ZoFnvyjzUub8MKnikqeHBsD0LJWooySWChIY=;
+        b=Woa/5BUiVOXywPfkOJmtthuFHUueY0abe0AaCeumPZhWfuRntUrKSKWH67Or8GZy9h
+         W02PXnRCRpMrJ52r4QU1WNAeb+PLEw0bcEVtkK3WAA5mnCYv6hR9a1fuRaOOJmUoMmwW
+         UJkz/zg3QM1z6ytR/zGEUIz1xQPeaxgUstXBwTzgN1sUiNfZ/WZZz4IIt1xZPVA2HBgP
+         3Fjj/QvaO9NA181WVXGGITbPwRW28TTHfXJN12B7lBlYnSsghJKf36QOAFbTyeLq37mU
+         LKSwbCkyJEKDOg8KipjDzdAVZ3fVVoer0LO5OWbk9Qk3XpbKhJODUC7Q0fwD626z8pRl
+         z4/Q==
+X-Gm-Message-State: AOJu0YwY43kUFO6WXuECezdwqoxsCXXu61Lk6GiyXUJyR5vACkwto3aJ
+	p/jOXr8UFrvm3NEztZpJd255wYj3sjngNY9DIPMOg+9G/aT8Oc0AaFO44exdGJeJE6iLbubRme8
+	dp0ICDe8YEZQd2z1aetsIlSKlu2C5pYsc2KH9lLUGywAjufYrTkozGbQ79eyDZITsXeB8WdXZc4
+	sMphU=
+X-Gm-Gg: AfdE7cmp/FKFYzxamMzHCAkmJ7lfwQVCaNdMELw86Iv/+3ndsr2Rdi42MeUYvTctXbF
+	TqP2rpWQdkvThg8CeegUqQEI6qZnPL4JX2joCPYKW1xQdUiKZcLjAgH9Ac+LjD+Uv8yFxsOG3M1
+	8Pj9zT2AQflVZ3DG+0vvgn7nvNrR3Te6Spe8ZMJPl1xJJfwBEBJ6t6NCb8skwDdbyMeaxbmZiGI
+	o/UpvM/BGCITgFkUKJTlsYl2FM26v7CEhOUhR/eFzNZStLpa6aQxjnFeD6h06D2Jl+Psat3f1Tf
+	s6jHuf8dveX1SqpmwSllnoiAuJS1MbvPAy1mXDPq9YuhQZTOUnV3dTdMlMUMmUGq7A8V7qGwc7B
+	OLIsDwWNbYNaRM/4SQcHEyEPYbdn/QmAn34wU5A==
+X-Received: by 2002:a05:7301:a88:b0:304:4f23:4466 with SMTP id 5a478bee46e88-30c84be5889mr2505591eec.15.1782386977409;
+        Thu, 25 Jun 2026 04:29:37 -0700 (PDT)
+X-Received: by 2002:a05:7301:a88:b0:304:4f23:4466 with SMTP id 5a478bee46e88-30c84be5889mr2505544eec.15.1782386976723;
+        Thu, 25 Jun 2026 04:29:36 -0700 (PDT)
+Received: from hu-mojha-hyd.qualcomm.com ([202.46.23.25])
+        by smtp.gmail.com with ESMTPSA id 5a478bee46e88-30c7c4ca21fsm8467784eec.6.2026.06.25.04.29.34
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Thu, 25 Jun 2026 04:29:36 -0700 (PDT)
+Date: Thu, 25 Jun 2026 16:59:31 +0530
+From: Mukesh Ojha <mukesh.ojha@oss.qualcomm.com>
+To: sashiko-reviews@lists.linux.dev
+Cc: conor+dt@kernel.org, robh@kernel.org, devicetree@vger.kernel.org
+Subject: Re: [PATCH v4 04/19] firmware: qcom: scm: use dev_err_probe() for
+ dload address failure
+Message-ID: <20260625112931.4ibhxk3zjgpclaob@hu-mojha-hyd.qualcomm.com>
+References: <20260624190830.3131112-1-mukesh.ojha@oss.qualcomm.com>
+ <20260624190830.3131112-5-mukesh.ojha@oss.qualcomm.com>
+ <20260624192213.C82691F000E9@smtp.kernel.org>
 Precedence: bulk
 X-Mailing-List: sashiko-reviews@lists.linux.dev
 List-Id: <sashiko-reviews.lists.linux.dev>
 List-Subscribe: <mailto:sashiko-reviews+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:sashiko-reviews+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-References: <20260624-bpf-lskel-fixes-v2-1-e8ac5974a72c@google.com> <20260624183439.E32C91F000E9@smtp.kernel.org>
-In-Reply-To: <20260624183439.E32C91F000E9@smtp.kernel.org>
-From: Sid Nayyar <sidnayyar@google.com>
-Date: Thu, 25 Jun 2026 12:20:38 +0100
-X-Gm-Features: AVVi8Ce1SRY_WU6H7QOzLEn99skkGSFZNDX8JS4f4yjc032yPW_W0GtUXsqSmnY
-Message-ID: <CA+OvW8ZN0ZcWy_cPO+Z5toPdNtm5x3HQx0JTAkD2YUKoGh1Acg@mail.gmail.com>
-Subject: Re: [PATCH v2] bpf: allow BPF_LOG_KERNEL from kernel space
-To: sashiko-reviews@lists.linux.dev
-Cc: bpf@vger.kernel.org
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
+Content-Type: text/plain; charset=iso-8859-1
+Content-Disposition: inline
+Content-Transfer-Encoding: 8bit
+In-Reply-To: <20260624192213.C82691F000E9@smtp.kernel.org>
+X-Proofpoint-ORIG-GUID: 1aiWUJCkP8YQZ1gupAGGMRmrzvUl1A1B
+X-Proofpoint-Spam-Info: AW1haW4tMjYwNjI1MDA5OCBTYWx0ZWRfX0NSHeC7fpUS/
+ jSE3A4XXttCRhiCqwKMqlPkAwi6fKU4avknM8T7cqFQu1uVytbpek+if47H3emsmqPatvwJsMc4
+ U4rNMgkVTD66DXKSIlv6yy4SwQf5znM=
+X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwNjI1MDA5OCBTYWx0ZWRfX2poRrQqO2s5X
+ 9G/xMB3Er3VmB0zZsdzakIHSE0Ur03Bmpav9gVS0RCgJe2ytZJYW4OmoWbDHFmrji1NLw6xP68u
+ jowpHsswy1Fc5sfu5iXAYpGmxz9qHDqfCy1wuSUujgSO/4tqBUD7YydqtKTfUwH/QTjJqr3UyIw
+ JjGVJBgHBP86+BRVehEL7880zHm5dVXOmWwKx7FJyBoFV4VaQwtfiSSYkn80xXW7nP/tdHpQJGa
+ Uzj9nkk0966EH+5TKsU+PpLhwPnzRrijpxMw9t3MFUZ+OvaiVJA32Hu9phIYif0ydUW0AW34fpV
+ Q08lykrY9TqNmmuGAORr5ra29XX0cchLz87ycVD2Pjk/aQfjxHulimh/jpd0LGjkSgZUTcFyvuR
+ SoJI5xDzN4mkLSWOAD1RrTXDMssQVg6NJHHYQenobIkw54lnS08aUaFTbQpRk9nbIDQhrIf4Cah
+ VaEXhphcHFaSu/Zcw3A==
+X-Authority-Analysis: v=2.4 cv=b/SCJNGx c=1 sm=1 tr=0 ts=6a3d1122 cx=c_pps
+ a=PfFC4Oe2JQzmKTvty2cRDw==:117 a=ZePRamnt/+rB5gQjfz0u9A==:17
+ a=8nJEP1OIZ-IA:10 a=FelO9ux0wxsA:10 a=s4-Qcg_JpJYA:10
+ a=VkNPw1HP01LnGYTKEx00:22 a=u7WPNUs3qKkmUXheDGA7:22 a=rJkE3RaqiGZ5pbrm-msn:22
+ a=c92rfblmAAAA:8 a=EUspDBNiAAAA:8 a=VwQbUJbxAAAA:8 a=2b9AtHKk-1rM_mh8X8gA:9
+ a=3ZKOabzyN94A:10 a=wPNLvfGTeEIA:10 a=6Ab_bkdmUrQuMsNx7PHu:22
+ a=GvGzcOZaWPEFPQC_NcjD:22
+X-Proofpoint-GUID: 1aiWUJCkP8YQZ1gupAGGMRmrzvUl1A1B
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.293,Aquarius:18.0.1143,Hydra:6.1.125,FMLib:17.12.100.49
+ definitions=2026-06-25_01,2026-06-24_01,2025-10-01_01
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
+ priorityscore=1501 lowpriorityscore=0 suspectscore=0 phishscore=0 bulkscore=0
+ adultscore=0 clxscore=1015 spamscore=0 malwarescore=0 impostorscore=0
+ classifier=typeunknown authscore=0 authtc= authcc= route=outbound adjust=0
+ reason=mlx scancount=1 engine=8.22.0-2606150000 definitions=main-2606250098
 
-On Wed, Jun 24, 2026 at 7:34=E2=80=AFPM <sashiko-bot@kernel.org> wrote:
->
-> > @@ -831,6 +840,11 @@ int bpf_log_attr_init(struct bpf_log_attr *log, u6=
-4 log_buf, u32 log_size, u32 l
-> >       char __user *ubuf_common =3D u64_to_user_ptr(common->log_buf);
-> >       char __user *ubuf =3D u64_to_user_ptr(log_buf);
-> >
-> > +     if (common->log_level =3D=3D BPF_LOG_KERNEL && !uattr_common.is_k=
-ernel)
-> > +             return -EINVAL;
-> > +     if (log_level =3D=3D BPF_LOG_KERNEL && !uattr.is_kernel)
-> > +             return -EINVAL;
-> > +
-> >       if (!bpf_verifier_log_attr_valid(common->log_level, ubuf_common, =
-common->log_size) ||
-> >           !bpf_verifier_log_attr_valid(log_level, ubuf, log_size))
-> >               return -EINVAL;
->
-> [Severity: Medium]
-> Does this code handle BPF_LOG_KERNEL correctly when it is specified via
-> BPF_COMMON_ATTRS?
->
-> Since BPF_LOG_KERNEL outputs directly to dmesg, the user buffer is 0,
-> meaning ubuf and ubuf_common will be NULL.
->
-> Slightly further down in bpf_log_attr_init(), the mismatch checks and
-> inheritance logic rely on these buffers being non-NULL:
->
->     if (ubuf && ubuf_common && (ubuf !=3D ubuf_common || ...))
->         return -EINVAL;
->
->     ...
->
->     if (!ubuf && ubuf_common) {
->         log->ubuf =3D ubuf_common;
->         log->level =3D common->log_level;
->         ...
->     }
->
-> If a caller passes BPF_LOG_KERNEL via common attributes
-> (ubuf_common =3D=3D NULL), it seems the inheritance condition
-> (!ubuf && ubuf_common) will be false, and the common logging level will
-> be silently ignored.
-
-BPF_LOG_KERNEL should only be passed by in-kernel loaders. Entry point
-for in-kernel loaders is kern_sys_bpf() doesn't pass any common
-attributes. Hence this situation should not occur.
-
-> Additionally, if a caller specifies BPF_LOG_KERNEL alongside a standard
-> common log level (ubuf =3D=3D NULL, ubuf_common !=3D NULL), the mismatch =
-check
-> is bypassed, and the specific BPF_LOG_KERNEL is silently overwritten by
-> the common attributes instead of returning -EINVAL.
-
-Again this situation should also be impossible due to the same
-reasoning as before.
-
-> Could the null-buffer checks be updated to properly support inheriting
-> and validating BPF_LOG_KERNEL?
-
-I think we should add commentary in bpf_log_attr_init() to clarify
-these scenarios. Maybe rewriting some checks is also in order.
-
+On Wed, Jun 24, 2026 at 07:22:13PM +0000, sashiko-bot@kernel.org wrote:
+> Thank you for your contribution! Sashiko AI review found 2 potential issue(s) to consider:
+> 
+> Pre-existing issues:
+> - [High] The global `qcom_tzmem_dev` pointer is set during `qcom_tzmem_enable()` but is never cleared on probe failure, causing subsequent probe retries to permanently fail with `-EBUSY`.
+> - [High] The probe function calls `of_reserved_mem_device_init()` but does not call `of_reserved_mem_device_release()` on subsequent error paths, leading to permanent probe failure or resource leaks upon probe retry.
 > --
-> Sashiko AI review =C2=B7 https://sashiko.dev/#/patchset/20260624-bpf-lske=
-l-fixes-v2-1-e8ac5974a72c@google.com?part=3D1
+> 
+> commit 6dc15526252b78a9c217f06ed35ed4966a794450
+> Author: Mukesh Ojha <mukesh.ojha@oss.qualcomm.com>
+> 
+> firmware: qcom: scm: use dev_err_probe() for dload address failure
+> 
+> Replace the bare return ret after qcom_scm_find_dload_address() with
+> dev_err_probe() to produce a consistent, deferred-probe-aware error
+> message when the download-mode address cannot be resolved.
+> 
+> > diff --git a/drivers/firmware/qcom/qcom_scm.c b/drivers/firmware/qcom/qcom_scm.c
+> > index c8a84836887f0..6cd4d9468456f 100644
+> > --- a/drivers/firmware/qcom/qcom_scm.c
+> > +++ b/drivers/firmware/qcom/qcom_scm.c
+> > @@ -2750,7 +2750,8 @@ static int qcom_scm_probe(struct platform_device *pdev)
+> >  	scm->dev = &pdev->dev;
+> >  	ret = qcom_scm_find_dload_address(&pdev->dev, &scm->dload_mode_addr);
+> >  	if (ret < 0)
+> > -		return ret;
+> > +		return dev_err_probe(&pdev->dev, ret,
+> > +				     "Failed to get download mode address\n");
+> >  
+> >  	mutex_init(&scm->scm_bw_lock);
+> 
+> [Severity: High]
+> This is a pre-existing issue, but does qcom_scm_probe() properly release
+> resources on later probe failures?
+> 
+> Later in qcom_scm_probe(), of_reserved_mem_device_init() is called to setup
+> reserved memory:
+> 
+> drivers/firmware/qcom/qcom_scm.c:qcom_scm_probe() {
+> 	...
+> 	ret = of_reserved_mem_device_init(scm->dev);
+> 	if (ret && ret != -ENODEV)
+> 		return dev_err_probe(scm->dev, ret,
+> 				     "Failed to setup the reserved memory region for TZ mem\n");
+> 	...
+> }
+> 
+> However, subsequent error paths, such as platform_get_irq_optional() returning
+> -EPROBE_DEFER, exit directly without calling of_reserved_mem_device_release().
+> 
+> If the probe is deferred, will this cause the next probe attempt to fail with
+> -EBUSY, or leak memory by duplicating the rmem_assigned_device list entry on
+> every retry?
+> 
+> [Severity: High]
+> This is a pre-existing issue, but does qcom_tzmem_enable() cause a permanent
+> probe failure if qcom_scm_probe() defers later in the function?
+> 
+> qcom_tzmem_enable() sets a static qcom_tzmem_dev pointer in qcom_tzmem.c:
+> 
+> drivers/firmware/qcom/qcom_tzmem.c:qcom_tzmem_enable() {
+> 	if (qcom_tzmem_dev)
+> 		return -EBUSY;
+> 
+> 	qcom_tzmem_dev = dev;
+> 
+> 	return qcom_tzmem_init();
+> }
+> 
+> Since qcom_scm_probe() does not clear this pointer if it defers after this
+> call, will subsequent probe retries permanently fail with -EBUSY when
+> qcom_tzmem_enable() checks the still-set pointer?
+> 
 
---
-Regards,
-Siddharth Nayyar
+Since they are existing issues, sent patches for them in the list
+separately.
+
+ -- 
+> Sashiko AI review · https://sashiko.dev/#/patchset/20260624190830.3131112-1-mukesh.ojha@oss.qualcomm.com?part=4
+
+-- 
+-Mukesh Ojha
