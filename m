@@ -1,37 +1,37 @@
-Received: from smtp-out1.suse.de (smtp-out1.suse.de [195.135.223.130])
+Received: from smtp-out2.suse.de (smtp-out2.suse.de [195.135.223.131])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BA1C8395AE3
-	for <sashiko-reviews@lists.linux.dev>; Thu, 25 Jun 2026 09:45:32 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=195.135.223.130
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8C748388E55
+	for <sashiko-reviews@lists.linux.dev>; Thu, 25 Jun 2026 09:45:37 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=195.135.223.131
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1782380734; cv=none; b=Y9Qsvw9WmIrYASiIkeGZJUAumzUG9t/WWC2HNLCwqzZZVPkePQAVWQZOVsnNOkkN2TG8PQ3tlInm1z5ah0kh6affK8wo82UD0Gy2wbpbIVS7GIiYPzVO1e47w3PkkTACEUY3t8Parv/mD+xgQivVt2ZlIVZTbs+Wo6mG/bMr0LA=
+	t=1782380738; cv=none; b=rwbmlstXvHpuOnfH5hjRoFHOo+WHjGh/C6Uf8ddIXRaKOsQczQsT3IjbzJ8Mf+vzwEzOCLIe19w2qYQr8zH0nU79kN8/8UhhAE/mj5inoE1b8bdNGWPfzPlI5M1QRmvb0RZII+WGS4VA1/UhrNBSdKvurc/OeJ/l6SKjC3pRlxA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1782380734; c=relaxed/simple;
-	bh=ba15D75QIGCnFlLqRWnX2KuViKZ8OSvcRc2nfjgR340=;
+	s=arc-20240116; t=1782380738; c=relaxed/simple;
+	bh=IQ7hXB3/ZH3rAHg+XYg0HjC47gAlp18vvoGV4CK8pjU=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=a7pCy12RIrfI/9+1rOX1eWqIkik5pXaRSgNu6tgVXuPFTpL75L7VQIhM7wD+DVGg2e6c7j35wo8TvzJyfpRZNgCW/6CnrgWMYRFL6jaDeP0w4A/RuPGQV+l4G8+jhIEJknTEsVvotCwdZsNNrKJXKk0QGwMzRp1cqsMCI7nxfU4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=suse.de; spf=pass smtp.mailfrom=suse.de; arc=none smtp.client-ip=195.135.223.130
+	 MIME-Version; b=n6KvZp+Ya8u1tNwRhsfdIlqi+NPJtQ33QWCa7hFRZFTgydxvdhMXDkeaD/ba0cc41ER0bUkvHoYamVaniJoLq6SZfTNgDRC9HuVZEx2jp67gNRML38lvJqE9YH/BLOGciksyaAvl51S7lGpDqmqEAdfyRSZFSc0ZTY5cUanq2Qg=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=suse.de; spf=pass smtp.mailfrom=suse.de; arc=none smtp.client-ip=195.135.223.131
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=suse.de
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=suse.de
 Received: from imap1.dmz-prg2.suse.org (imap1.dmz-prg2.suse.org [IPv6:2a07:de40:b281:104:10:150:64:97])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature RSA-PSS (4096 bits) server-digest SHA256)
 	(No client certificate requested)
-	by smtp-out1.suse.de (Postfix) with ESMTPS id CE5AC718F3;
+	by smtp-out2.suse.de (Postfix) with ESMTPS id 1AAD575E24;
 	Thu, 25 Jun 2026 09:45:19 +0000 (UTC)
-Authentication-Results: smtp-out1.suse.de;
+Authentication-Results: smtp-out2.suse.de;
 	none
 Received: from imap1.dmz-prg2.suse.org (localhost [127.0.0.1])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature RSA-PSS (4096 bits) server-digest SHA256)
 	(No client certificate requested)
-	by imap1.dmz-prg2.suse.org (Postfix) with ESMTPS id 7BD74779A8;
-	Thu, 25 Jun 2026 09:45:19 +0000 (UTC)
+	by imap1.dmz-prg2.suse.org (Postfix) with ESMTPS id C4B47779AB;
+	Thu, 25 Jun 2026 09:45:18 +0000 (UTC)
 Received: from dovecot-director2.suse.de ([2a07:de40:b281:106:10:150:64:167])
 	by imap1.dmz-prg2.suse.org with ESMTPSA
-	id QKO5HK/4PGqaBQAAD6G6ig
-	(envelope-from <tzimmermann@suse.de>); Thu, 25 Jun 2026 09:45:19 +0000
+	id QGfULq74PGqaBQAAD6G6ig
+	(envelope-from <tzimmermann@suse.de>); Thu, 25 Jun 2026 09:45:18 +0000
 From: Thomas Zimmermann <tzimmermann@suse.de>
 To: javierm@redhat.com,
 	treding@nvidia.com,
@@ -44,11 +44,10 @@ To: javierm@redhat.com,
 	rayyan@ansari.sh
 Cc: dri-devel@lists.freedesktop.org,
 	sashiko-reviews@lists.linux.dev,
-	Thomas Zimmermann <tzimmermann@suse.de>,
-	Sashiko <sashiko-bot@kernel.org>
-Subject: [PATCH v3 5/7] drm/sysfb: simpledrm: Validate mmap size against framebuffer size
-Date: Thu, 25 Jun 2026 11:39:37 +0200
-Message-ID: <20260625094509.157581-6-tzimmermann@suse.de>
+	Thomas Zimmermann <tzimmermann@suse.de>
+Subject: [PATCH v3 3/7] drm/sysfb: simpledrm: Inline simplefb_get_validated_int()
+Date: Thu, 25 Jun 2026 11:39:35 +0200
+Message-ID: <20260625094509.157581-4-tzimmermann@suse.de>
 X-Mailer: git-send-email 2.54.0
 In-Reply-To: <20260625094509.157581-1-tzimmermann@suse.de>
 References: <20260625094509.157581-1-tzimmermann@suse.de>
@@ -62,100 +61,63 @@ Content-Transfer-Encoding: 8bit
 X-Rspamd-Pre-Result: action=no action;
 	module=replies;
 	Message is reply to one we originated
-X-Rspamd-Queue-Id: CE5AC718F3
-X-Spam-Flag: NO
-X-Spam-Score: -4.00
-X-Spam-Level: 
-X-Rspamd-Action: no action
-X-Rspamd-Server: rspamd1.dmz-prg2.suse.org
 X-Rspamd-Pre-Result: action=no action;
 	module=replies;
 	Message is reply to one we originated
+X-Spam-Flag: NO
+X-Spam-Score: -4.00
+X-Spam-Level: 
+X-Rspamd-Server: rspamd2.dmz-prg2.suse.org
 X-Spamd-Result: default: False [-4.00 / 50.00];
 	REPLY(-4.00)[]
+X-Rspamd-Queue-Id: 1AAD575E24
+X-Rspamd-Action: no action
 
-The size of the mmap'ed framebuffer could be smaller than the minimum
-required framebuffer size. Validate the resource size against the
-framebuffer size.
-
-Buggy firmware that triggers this check should be fixed up with a quirk
-on a case-by-case base.
-
-v3:
-- fix size checks (Sashiko)
-- improve error message for alignment check (Thierry)
-- do not store aligned size value
+The helper simplefb_get_validated_int() is only a wrapper around
+drm_sysfb_get_validated_int(). Inline the function into its callers.
 
 Signed-off-by: Thomas Zimmermann <tzimmermann@suse.de>
-Suggested-by: Sashiko <sashiko-bot@kernel.org>
 Reviewed-by: Thierry Reding <treding@nvidia.com>
 ---
- drivers/gpu/drm/sysfb/simpledrm.c | 24 ++++++++++++++++++++++++
- 1 file changed, 24 insertions(+)
+ drivers/gpu/drm/sysfb/simpledrm.c | 11 ++---------
+ 1 file changed, 2 insertions(+), 9 deletions(-)
 
 diff --git a/drivers/gpu/drm/sysfb/simpledrm.c b/drivers/gpu/drm/sysfb/simpledrm.c
-index a899dfb747bf..9e0711e0095a 100644
+index 6bbe779ec870..b4e91191a0ba 100644
 --- a/drivers/gpu/drm/sysfb/simpledrm.c
 +++ b/drivers/gpu/drm/sysfb/simpledrm.c
-@@ -6,6 +6,7 @@
- #include <linux/of_address.h>
- #include <linux/of_clk.h>
- #include <linux/of_reserved_mem.h>
-+#include <linux/overflow.h>
- #include <linux/platform_data/simplefb.h>
- #include <linux/platform_device.h>
- #include <linux/pm.h>
-@@ -623,6 +624,7 @@ static struct simpledrm_device *simpledrm_device_create(struct drm_driver *drv,
- 	u16 width_mm = 0, height_mm = 0;
- 	struct device_node *panel_node;
- 	const struct drm_format_info *format;
-+	u64 size;
- 	struct resource *res, *mem = NULL;
- 	struct drm_plane *primary_plane;
- 	struct drm_crtc *crtc;
-@@ -713,6 +715,14 @@ static struct simpledrm_device *simpledrm_device_create(struct drm_driver *drv,
- 		}
- 		stride = pitch;
- 	}
-+	if (check_mul_overflow(height, stride, &size)) {
-+		drm_err(dev, "framebuffer size exceeds maximum\n");
-+		return ERR_PTR(-EINVAL);
-+	}
-+	if (ALIGN(size, PAGE_SIZE) < PAGE_SIZE) {
-+		drm_err(dev, "page-aligned framebuffer exceeds maximum\n");
-+		return ERR_PTR(-EINVAL);
-+	}
+@@ -41,13 +41,6 @@
+  * Helpers for simplefb
+  */
  
- 	sysfb->fb_mode = drm_sysfb_mode(width, height, width_mm, height_mm);
- 	sysfb->fb_format = format;
-@@ -738,6 +748,13 @@ static struct simpledrm_device *simpledrm_device_create(struct drm_driver *drv,
+-static int
+-simplefb_get_validated_int(struct drm_device *dev, const char *name,
+-			   uint32_t value)
+-{
+-	return drm_sysfb_get_validated_int(dev, name, value, INT_MAX);
+-}
+-
+ static const struct drm_format_info *
+ simplefb_get_validated_format(struct drm_device *dev, const char *format_name)
+ {
+@@ -95,7 +88,7 @@ static int
+ simplefb_get_stride_pd(struct drm_device *dev,
+ 		       const struct simplefb_platform_data *pd)
+ {
+-	return simplefb_get_validated_int(dev, "stride", pd->stride);
++	return drm_sysfb_get_validated_int(dev, "stride", pd->stride, INT_MAX);
+ }
  
- 		drm_dbg(dev, "using system memory framebuffer at %pr\n", mem);
+ static const struct drm_format_info *
+@@ -159,7 +152,7 @@ simplefb_get_stride_of(struct drm_device *dev, struct device_node *of_node)
  
-+		if (size > resource_size(mem)) {
-+			drm_err(dev,
-+				"framebuffer size of %llu exceeds memory range %pr\n",
-+				size, mem);
-+			return ERR_PTR(-EINVAL);
-+		}
-+
- 		screen_base = devm_memremap(dev->dev, mem->start, resource_size(mem), MEMREMAP_WC);
- 		if (IS_ERR(screen_base))
- 			return screen_base;
-@@ -771,6 +788,13 @@ static struct simpledrm_device *simpledrm_device_create(struct drm_driver *drv,
- 			mem = res;
- 		}
+ 	if (ret)
+ 		return ret;
+-	return simplefb_get_validated_int(dev, "stride", stride);
++	return drm_sysfb_get_validated_int(dev, "stride", stride, INT_MAX);
+ }
  
-+		if (size > resource_size(mem)) {
-+			drm_err(dev,
-+				"framebuffer size of %llu exceeds memory range %pr\n",
-+				size, mem);
-+			return ERR_PTR(-EINVAL);
-+		}
-+
- 		screen_base = devm_ioremap_wc(&pdev->dev, mem->start, resource_size(mem));
- 		if (!screen_base)
- 			return ERR_PTR(-ENOMEM);
+ static const struct drm_format_info *
 -- 
 2.54.0
 
