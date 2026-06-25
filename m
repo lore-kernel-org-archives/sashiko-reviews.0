@@ -1,121 +1,176 @@
-Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
+Received: from out-170.mta0.migadu.com (out-170.mta0.migadu.com [91.218.175.170])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D2C5926ED4F;
-	Thu, 25 Jun 2026 15:43:37 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4FB7E3E7172
+	for <sashiko-reviews@lists.linux.dev>; Thu, 25 Jun 2026 16:15:49 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=91.218.175.170
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1782402219; cv=none; b=IIJ9OUJjkqzjqQOpD/cOPaSEd/U8/1hWnmPaKA6gXkmc3JX/+Q7dH39hzgD4iOB8l5aCHYEcPpJdHavUoSPyeDuPqjpsTw9bMS2PJl813inp0KT8B71PpQlGWxuRWeVNFB56loTxNnE0ktDBVJz8T0oBouRUqlys44e1IJcKVv8=
+	t=1782404151; cv=none; b=OkLKJ6vG7CfO9Hl2MUq7mVpD7fY0jZS8095inDl1j3pXdGc9iXbB6mIU4HhXVc0J4RXR2wsrlhBnSfu9Gu4mZWeGUPF+j8IQ6ucugn3fKfNhQebeH/XRr6LbnZKQugScJwGnOBPoVCnixe2bUnKh1R1zwzQxsLYSfksfh5LyxAA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1782402219; c=relaxed/simple;
-	bh=GTxRGfIofU69HdepXDcVaWOfr0ys4GXlJk8CRgWIm50=;
-	h=Date:Message-ID:From:To:Cc:Subject:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=hfJA0OaMZxPA020rtTlPbq50H9rbBKY2DJHYDnS69o8l+p/g38eL8HzalfjcrH5v2pGc3fZQsOJiFvfJYrOBhmoSsicj7oHSfTd3sGCZ9V3UzIRJA8FDD7ZUb724THzrHFO0uheVirYwifKhEK/EhgQkuzkqC/0IkCE++9bvVGA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=Z6OSVD9E; arc=none smtp.client-ip=100.103.45.18
+	s=arc-20240116; t=1782404151; c=relaxed/simple;
+	bh=g1B1cvHyOF8jXKsO42iY7id1Lb56+h85qCBGS2Z5zyE=;
+	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
+	 To:Cc:Content-Type; b=N9IGsgwCYrTyA6ONlcElYEcUY23syrl+HNddtXpABlNgksrAhJsfaxd9ib2aUWqX5JypCmLdB3hxkhjnwWsjlatAYgx3+C+bjNbzrZ5fCmSN50mIa9XRds3+u8VziXEr9OkpGdhDV4nPaC/j4P4QfMXua341r/ZB2d4ER/pGqeI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linux.dev; spf=pass smtp.mailfrom=linux.dev; dkim=pass (1024-bit key) header.d=linux.dev header.i=@linux.dev header.b=WsY979Ck; arc=none smtp.client-ip=91.218.175.170
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linux.dev
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linux.dev
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="Z6OSVD9E"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 528FB1F000E9;
-	Thu, 25 Jun 2026 15:43:37 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=kernel.org;
-	s=k20260515; t=1782402217;
-	bh=zgckjcnTw2uZ7wwmfYqn2bQSr2oBXuMLJK0V5jCB+D8=;
-	h=Date:From:To:Cc:Subject:In-Reply-To:References;
-	b=Z6OSVD9ElFWcTDLX2eVYt0pt0QDvQt5D0ANOM4JgE/pezOsxyKRS23ITCPlQyuDlC
-	 m066zgdl56UtL0OTWryCbkGsU7Ei4iHppsCvFhukidbUL5x1NJknAPSp5yyMCxqLgW
-	 P4eGSB9EtpPvx4q5I6CwQgggjqQdYkLllj8AiGs/lgO4Ki4Hwjh5QxE1g7zf/D8mc+
-	 mlLB5J9IFNX+3ERQo0Kzz6tj/atXZIGOOt7DPWqy03GTGs+RJJvfPHV6rgzTFURbxl
-	 y0RxtjXYZDK1iaQitiJYAMwDsA7EbwlHfmTOa1wt6NoZkezAQdrubPmqnZfaBE9Nn9
-	 fcMuWRpN+FMGg==
-Received: from sofa.misterjones.org ([185.219.108.64] helo=goblin-girl.misterjones.org)
-	by disco-boy.misterjones.org with esmtpsa  (TLS1.3) tls TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384
-	(Exim 4.98.2)
-	(envelope-from <maz@kernel.org>)
-	id 1wcmEp-0000000G2My-1b7N;
-	Thu, 25 Jun 2026 15:43:35 +0000
-Date: Thu, 25 Jun 2026 16:43:34 +0100
-Message-ID: <86echur5g9.wl-maz@kernel.org>
-From: Marc Zyngier <maz@kernel.org>
-To: Oliver Upton <oupton@kernel.org>
-Cc: sashiko-reviews@lists.linux.dev,
-	kvmarm@lists.linux.dev
-Subject: Re: [PATCH v2 1/2] KVM: arm64: Only consider S1PTW a write fault if HA is set
-In-Reply-To: <ajxFe5N2CXySmLbU@kernel.org>
-References: <20260624202446.1698535-1-oupton@kernel.org>
-	<20260624202446.1698535-2-oupton@kernel.org>
-	<20260624204025.519861F000E9@smtp.kernel.org>
-	<ajxFe5N2CXySmLbU@kernel.org>
-User-Agent: Wanderlust/2.15.9 (Almost Unreal) SEMI-EPG/1.14.7 (Harue)
- FLIM-LB/1.14.9 (=?UTF-8?B?R29qxY0=?=) APEL-LB/10.8 EasyPG/1.0.0 Emacs/30.1
- (aarch64-unknown-linux-gnu) MULE/6.0 (HANACHIRUSATO)
+	dkim=pass (1024-bit key) header.d=linux.dev header.i=@linux.dev header.b="WsY979Ck"
+X-Gm-Message-State: AOJu0YygzufugtVMz5v/81FUebgfz04StTeMP7oDoNspq+wQLO0+xrbP
+	mFab6SzQUMCYerFyv6M/Hv8DzsagscPfYsuvebHL23EYc7k8P9KTP7t/RiDLh2qG5y2r+UwChiN
+	1Gh2IinXHItQ1hW4a+tOOUUBgXQREdrpJPL1p/RQW
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linux.dev; s=key1;
+	t=1782404146;
+	h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+	 to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+	 content-transfer-encoding:content-transfer-encoding:
+	 in-reply-to:in-reply-to:references:references;
+	bh=Nzzok+ws8sgLCcoLt6BxzJuaEaiIk2UI7TgTr+Q9kQU=;
+	b=WsY979CkTXaBgSGOkN0YGqZB2Z1K/KX8encTRtm1/x+GhZaZR3gYRiW49J0xgzfz05Wlqu
+	6B6ix7sjBLqlBfyOv9EjzsHzDbzrf2qay/Y5NptR87/o6fKBY5sbk+aV5vMGflwOaYi1kY
+	Zcsbw+WCrkvn0PYm8KEgxIcSq4m4vTY=
+X-Received: by 2002:a05:622a:2610:b0:517:5ec3:b59c with SMTP id
+ d75a77b69052e-51a6e99fc93mr11713871cf.2.1782404139969; Thu, 25 Jun 2026
+ 09:15:39 -0700 (PDT)
 Precedence: bulk
 X-Mailing-List: sashiko-reviews@lists.linux.dev
 List-Id: <sashiko-reviews.lists.linux.dev>
 List-Subscribe: <mailto:sashiko-reviews+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:sashiko-reviews+unsubscribe@lists.linux.dev>
-MIME-Version: 1.0 (generated by SEMI-EPG 1.14.7 - "Harue")
-Content-Type: text/plain; charset=US-ASCII
-X-SA-Exim-Connect-IP: 185.219.108.64
-X-SA-Exim-Rcpt-To: oupton@kernel.org, sashiko-reviews@lists.linux.dev, kvmarm@lists.linux.dev
-X-SA-Exim-Mail-From: maz@kernel.org
-X-SA-Exim-Scanned: No (on disco-boy.misterjones.org); SAEximRunCond expanded to false
+MIME-Version: 1.0
+References: <20260625144807.2603272-1-fuad.tabba@linux.dev>
+ <20260625144807.2603272-3-fuad.tabba@linux.dev> <20260625145703.460B41F000E9@smtp.kernel.org>
+In-Reply-To: <20260625145703.460B41F000E9@smtp.kernel.org>
+X-Report-Abuse: Please report any abuse attempt to abuse@migadu.com and include these headers.
+From: Fuad Tabba <fuad.tabba@linux.dev>
+Date: Thu, 25 Jun 2026 17:14:00 +0100
+X-Gmail-Original-Message-ID: <CA+EHjTzaPwrS363oGXUCqNz+O1Hho4Z7zAsbBik8mO-eQSKD=g@mail.gmail.com>
+X-Gm-Features: AVVi8CdDBKermqUbxAG9chDiZX1S1v9hJkMy-Mo7dX4CKTB7W6jSYzxLH6sOxn0
+Message-ID: <CA+EHjTzaPwrS363oGXUCqNz+O1Hho4Z7zAsbBik8mO-eQSKD=g@mail.gmail.com>
+Subject: Re: [PATCH v2 2/2] KVM: arm64: selftests: Add MMIO sign-extending
+ load test
+To: sashiko-reviews@lists.linux.dev
+Cc: kvmarm@lists.linux.dev, Oliver Upton <oupton@kernel.org>, 
+	Marc Zyngier <maz@kernel.org>
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
+X-Migadu-Flow: FLOW_OUT
 
-On Wed, 24 Jun 2026 22:00:43 +0100,
-Oliver Upton <oupton@kernel.org> wrote:
-> 
-> On Wed, Jun 24, 2026 at 08:40:24PM +0000, sashiko-bot@kernel.org wrote:
-> > > +	/*
-> > > +	 * The architecture sucks; assume that the S1PTW fetched for write if
-> > > +	 * HA is enabled at stage-1. Note that hardware updates to dirty state
-> > > +	 * and table AF are predicated on HA=1 (DDI0487 M.a D24.2.194; R_SNVTX).
-> > > +	 */
-> > > +	if (kvm_vcpu_abt_iss1tw(vcpu))
-> > > +		return effective_tcr_ha(vcpu);
-> > 
-> > [Severity: High]
-> > Does unconditionally treating S1PTW faults as writes when HA is enabled break
-> > guests that use pre-populated page tables in read-only memslots?
-> > 
-> > If a guest populates its page tables with the Access Flag already set, places
-> > them in an RO memslot, and enables HA in its TCR, the hardware only needs read
-> > access during a walk.
+On Thu, 25 Jun 2026 at 15:57, <sashiko-bot@kernel.org> wrote:
+>
+> Thank you for your contribution! Sashiko AI review found 1 potential issu=
+e(s) to consider:
+> - [Medium] Guest EL1 will crash with an Instruction Abort because the `el=
+0_be_loads` assembly block shares a page with EL1 test code and is marked a=
+s EL0-accessible.
+> --
+>
+> commit 60c24b3648e8f92661ec2d484d27ac4580cad60a
+> Author: Fuad Tabba <fuad.tabba@linux.dev>
+>
+> KVM: arm64: selftests: Add MMIO sign-extending load test
+>
+> Adds a test for sign-extending MMIO loads (LDRSB, LDRSH, LDRSW) into Xt
+> and Wt destinations, with and without the sign bit set. The host supplies
+> the MMIO data and checks the guest register holds the sign-extended value=
+.
+>
+> > diff --git a/tools/testing/selftests/kvm/arm64/mmio_sign_ext.c b/tools/=
+testing/selftests/kvm/arm64/mmio_sign_ext.c
+> > new file mode 100644
+> > index 0000000000000..06708ab6db8c0
+> > --- /dev/null
+> > +++ b/tools/testing/selftests/kvm/arm64/mmio_sign_ext.c
+>
+> [ ... ]
+>
+> > +extern char el0_be_loads[], el0_be_loads_end[];
+> > +asm(
+> > +"    .pushsection .text, \"ax\"\n"
+> > +"    .global el0_be_loads\n"
+> > +"el0_be_loads:\n"
+>
+> [Severity: Medium]
+> Will this crash guest EL1 with an Instruction Abort?
+>
+> The el0_be_loads assembly block lacks page alignment directives, placing =
+it
+> adjacent to EL1 executable code in the same page of the .text section.
+>
+> When make_el0_accessible() is called in main():
+>
+>     make_el0_accessible(vm, (uint64_t)el0_be_loads,
+>                         el0_be_loads_end - el0_be_loads);
+>
+> It makes the shared page EL0-accessible by setting PTE_USER. This
+> inadvertently makes the EL1 guest_code on the same page EL0-accessible. I=
+n
+> the ARMv8 EL1&0 translation regime, an instruction fetch by EL1 from an
+> EL0-accessible memory page unconditionally generates a Permission Fault.
 
-Correct, this is a consequence of R_HDTRB.
+Nice catch! You're right: AP[2:1]=3D01 grants UnprivWrite, and the
+architecture removes PrivExecute whenever UnprivWrite is present,
+regardless of PXN (ARM ARM D8.4.1.2). The call is also unnecessary:
+EL0 instruction fetch is controlled by UXN (already 0), not AP bits.
+The EL0 stub only needs data access to the MMIO page, not to its own
+code.
 
-> > However, if a translation fault occurs,
-> > kvm_is_write_fault() will unconditionally evaluate to true because of
-> > effective_tcr_ha().
-> > 
-> > This will cause kvm_handle_guest_abort() to see a write fault on an RO memslot
-> > and inject a spurious Synchronous External Abort (SEA) into the guest, even
-> > though the hardware only needed to read the page table. Could we retain the
-> > conditional check for permission faults to avoid this?
-> 
-> Gah, I tested with QEMU+EDK2 for this exact purpose but did so on an
-> implementation without HAFDBS.
+The fix is to drop the second make_el0_accessible call and the
+now-unused el0_be_loads_end label. Re-tested with and without the
+previous patch (patch 1/2), all tests pass with the fix and the first
+sign-bit case fails without it.
 
-I've been chewing on that one for a bit, and came up with the
-following argument:
+Marc, can you fold this in or would you like me to respin?
 
-- We're missing one of Read or Write because of L1's doing, and L1
-  needs to do *something* about it. We don't need to find out about HA
-  in the guest, we just need to forward the fault (and it is probably
-  enough to check that we're in a nested context).
+--- a/tools/testing/selftests/kvm/arm64/mmio_sign_ext.c
++++ b/tools/testing/selftests/kvm/arm64/mmio_sign_ext.c
+@@ -77,7 +77,7 @@ static void guest_loads_le(void)
+  * fault on the little-endian tables. x0 holds MMIO_ADDR; results return i=
+n
+  * x19..x28 (tests[] order) via a single SVC.
+  */
+-extern char el0_be_loads[], el0_be_loads_end[];
++extern char el0_be_loads[];
+ asm(
+ "    .pushsection .text, \"ax\"\n"
+ "    .global el0_be_loads\n"
+@@ -93,8 +93,6 @@ asm(
+ "    ldrsw    x27, [x0]\n"
+ "    ldrsw    x28, [x0]\n"
+ "    svc    #0\n"
+-"    .global el0_be_loads_end\n"
+-"el0_be_loads_end:\n"
+ "    .popsection\n"
+ );
 
-- We have checked that HA==1, derived from that that we need R+W, and
-  we're missing the Write permission because the page is marked RO
-  (assuming that KVM still maps with Read permission by default):
+@@ -213,11 +211,8 @@ int main(void)
+                 el0_svc_handler);
 
-  - either it is "opportunistically" RO (dirty tracking, page never
-    written to), and we flip it to RW, rince, repeat.
+     be =3D vcpu_mixed_endian_el0(vcpu);
+-    if (be) {
++    if (be)
+         make_el0_accessible(vm, MMIO_ADDR, vm->page_size);
+-        make_el0_accessible(vm, (uint64_t)el0_be_loads,
+- el0_be_loads_end - el0_be_loads);
+-    }
 
-  - or it is hard-wired to RO at the memslot level, and the only
-    possibility is that the PTW is trying to perform an atomic access
-    (as per R_HDTRB), which we should be able to reject with an
-    "Unsupported atomic hardware update fault".
+     ksft_print_header();
+     ksft_set_plan(ARRAY_SIZE(tests) * (be ? 2 : 1));
 
-Thoughts?
 
-	M.
+Cheers,
+/fuad
 
--- 
-Without deviation from the norm, progress is not possible.
+
+
+
+
+>
+> > +"    ldrsb   x19, [x0]\n"
+> > +"    ldrsb   x20, [x0]\n"
+> > +"    ldrsb   w21, [x0]\n"
+>
+> --
+> Sashiko AI review =C2=B7 https://sashiko.dev/#/patchset/20260625144807.26=
+03272-1-fuad.tabba@linux.dev?part=3D2
+>
