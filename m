@@ -1,95 +1,149 @@
-Received: from mgamail.intel.com (mgamail.intel.com [192.198.163.18])
+Received: from BYAPR05CU005.outbound.protection.outlook.com (mail-westusazon11010004.outbound.protection.outlook.com [52.101.85.4])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C09951CAA78
-	for <sashiko-reviews@lists.linux.dev>; Thu, 25 Jun 2026 07:01:13 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=192.198.163.18
-ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1782370874; cv=none; b=Ja9G0NytH2fJFMJ8wV9BZD+8c+r1lFcKOhbiOwcNH61xdgDZvwkCyG8p5xgEWcwUhDgOEKgheuwU+swphawqNkZroGPXOsESEYY8sic3HzrXQ+ndnA0OCE0xfJeTjHE2jC9w3czlgU5FBsnTa7mx3u9QjYPPCsUP/FWaBitmRuk=
-ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1782370874; c=relaxed/simple;
-	bh=FrJ+LoUd6SBQpLfHYdEsasboBY+X3lvEa8doR43M6/o=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=BtRlLjR+k1Wpu6ZOlnu5QUX15KpdoKVm6GxVv7YMAWQhaI7jsAsw+uConVqCNHbarlg8vMJhTFyMWr0hgikxNPLb900Hlkk9+/+rTcOhe6vgVZG/QaBIp9bgiijUoZbl6mPuSZGh1XAKVcOBJrezePqoNFtuj48lavO2lacfB9o=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linux.intel.com; spf=pass smtp.mailfrom=linux.intel.com; dkim=pass (2048-bit key) header.d=intel.com header.i=@intel.com header.b=GIrypn0z; arc=none smtp.client-ip=192.198.163.18
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linux.intel.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linux.intel.com
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3EB531862A
+	for <sashiko-reviews@lists.linux.dev>; Thu, 25 Jun 2026 09:38:44 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=fail smtp.client-ip=52.101.85.4
+ARC-Seal:i=2; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
+	t=1782380325; cv=fail; b=IqDHUClKHmpM6PnkojTQ1p9A9FikIiw8s06sacl/5w4uN7El9bS8GrwZEiKSj8fTQjrrcSRHrtr+aL0aS2vsTdnK9J2dNyVc3GNRCvZgzooCuoFV0ERGZzOg5v2EBuhGKFy2pjhMEd6DJMt6wjSoBBTR+6TZWaSEg5KW/yz4T7I=
+ARC-Message-Signature:i=2; a=rsa-sha256; d=subspace.kernel.org;
+	s=arc-20240116; t=1782380325; c=relaxed/simple;
+	bh=9xKeG9nc5tg3XTQjU57ZQ48fhA7THD1iCnQDaw1jNjc=;
+	h=From:To:CC:Subject:Date:Message-ID:In-Reply-To:References:
+	 MIME-Version:Content-Type; b=FTXMQPfOotvvvgojlOSobeHJmVrne0RlQvObsGilrdVsLShysHnBU0m2Z80I0T1dug8Plu/zNNgWbCImqbtXfWdR+STc1UOYuaVOGjjy+8vRL38T7WALKA74JJERGe8QrnglhLE+IF/xC2yOBAOf+aUX3Bap3usDwWR6JuADeaI=
+ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=nvidia.com; spf=fail smtp.mailfrom=nvidia.com; dkim=pass (2048-bit key) header.d=Nvidia.com header.i=@Nvidia.com header.b=l98A9RUD; arc=fail smtp.client-ip=52.101.85.4
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=nvidia.com
+Authentication-Results: smtp.subspace.kernel.org; spf=fail smtp.mailfrom=nvidia.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=intel.com header.i=@intel.com header.b="GIrypn0z"
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
-  d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
-  t=1782370874; x=1813906874;
-  h=date:from:to:cc:subject:message-id:references:
-   mime-version:content-transfer-encoding:in-reply-to;
-  bh=FrJ+LoUd6SBQpLfHYdEsasboBY+X3lvEa8doR43M6/o=;
-  b=GIrypn0z/CNsuV7X9iHbJrD6k/fQ6mhdKzTv2lkUchfFJ19Lf48GqHGs
-   hbLJHALIrvOY31MNR6/c7REk28qj7t4s+4HU5lXvQG00qUXLuAa/y1wMP
-   or5nYa2/cTa4OQb7NRfRvASysNS0Tn+GtjDGvOiM3EvbBik77qM4z/a21
-   z+BwVGELKdiVi9dXanQV4Wv/mOBu2UgBD3yvfLUCY2HhjonldipO3O5mK
-   emPxUwgOCYgFsEZtMw4rp+nM9Hm/Er5wCdCYQKVTOyIpHOyLNSSXlHyBj
-   mItW2MFoATt8wjLjCV7gCUi0t4xyt0MjgiWF4hplCc89B4QT2jXZyUF6Z
-   g==;
-X-CSE-ConnectionGUID: IRUjDguBQ3Ko/0s2I/5uFA==
-X-CSE-MsgGUID: 4Dt4R+zPRAeW3IyB/THPTQ==
-X-IronPort-AV: E=McAfee;i="6800,10657,11827"; a="82261076"
-X-IronPort-AV: E=Sophos;i="6.24,224,1774335600"; 
-   d="scan'208";a="82261076"
-Received: from fmviesa010.fm.intel.com ([10.60.135.150])
-  by fmvoesa112.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 25 Jun 2026 00:01:13 -0700
-X-CSE-ConnectionGUID: JFe2EMe8RviKcwVQkYVERg==
-X-CSE-MsgGUID: sG7MqyM+T/ihlXZ1WaQC5w==
-X-ExtLoop1: 1
-X-IronPort-AV: E=Sophos;i="6.24,224,1774335600"; 
-   d="scan'208";a="246422616"
-Received: from yilunxu-optiplex-7050.sh.intel.com (HELO localhost) ([10.239.159.165])
-  by fmviesa010.fm.intel.com with ESMTP; 25 Jun 2026 00:01:12 -0700
-Date: Thu, 25 Jun 2026 15:01:11 +0800
-From: Xu Yilun <yilun.xu@linux.intel.com>
-To: sashiko-reviews@lists.linux.dev
-Cc: kvm@vger.kernel.org
-Subject: Re: [PATCH v2 06/17] x86/virt/tdx: Re-initialize the extensions on
- runtime TDX module update
-Message-ID: <ajzSNyvVsvPzs/94@yilunxu-OptiPlex-7050>
-References: <20260618081355.3253581-1-yilun.xu@linux.intel.com>
- <20260618081355.3253581-7-yilun.xu@linux.intel.com>
- <20260618085835.98A041F000E9@smtp.kernel.org>
+	dkim=pass (2048-bit key) header.d=Nvidia.com header.i=@Nvidia.com header.b="l98A9RUD"
+ARC-Seal: i=1; a=rsa-sha256; s=arcselector10001; d=microsoft.com; cv=none;
+ b=qRnqlr/IUZf/yTUsjpZ2uAaoXNmFfsUlmW2PX4g7mSvF1JyARb68TzaLQoAdm01TIsKw8ourzBhkOWg3VzBiKwusTGMkODs7JyY5KXcAxccEoYLaPmLcfgcVH+ZOqBJi0yt9ymEflTQptPeEQ2tZQdShVKHLdey5Jl+zVhDwimJvtc1fggotlyzaPyK7kpiILN0lcgRvs5GtzyK7T+q3B6DZn98kcp3iw1q2fAn4B4XHvoOb94H33kTDvbHFZvFUEYRzga7A+fhnXvfdkFtWerzLdV0u5cyDJ/YQhRCWALzkMPvlV1x5gZBbTQ8jh0OVnueZZsNI2KeMjVCmZ82rJQ==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com;
+ s=arcselector10001;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
+ bh=8pg48n25lL1iA9Cj6kylt7j5xobV3uQgCTOs6c9WQzs=;
+ b=RgKpgS6BRmt6YLRhjeadmllh4i4P25ffaBIfWBlDPqus6czHc6ct+zyy5BBbM/BJr0BcYBw6GtvhLMDC312+kLoUx71j2SjMj97/PwNWD2s/dv9Qk1+YoZbZqKLJO47NIc7iFjIB0s5L5jDmeQYS6movj5P5yg3RndZPmEJddgLjCq84im6KomP4Lql5Bdj5lPvHDyvs9sPMpNB/NSG3a9otbmP5bcUTZADWvl2YjlDIHn4Gcx5sHi3x4FtVvT7BIGgrgWB5UikQcYJKfxURwgN+iEXrgP3DnxAlLUhzJGuJgikeTwyWgcG0XnmiiIdVEO/Wo1k3j16DNdqgmDIkLQ==
+ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass (sender ip is
+ 216.228.118.233) smtp.rcpttodomain=oss.nxp.com smtp.mailfrom=nvidia.com;
+ dmarc=pass (p=reject sp=reject pct=100) action=none header.from=nvidia.com;
+ dkim=none (message not signed); arc=none (0)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=Nvidia.com;
+ s=selector2;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
+ bh=8pg48n25lL1iA9Cj6kylt7j5xobV3uQgCTOs6c9WQzs=;
+ b=l98A9RUDjVmhYrv4T5kIP+3h6NcPpzAFpd+t6rkZKCFqHN3jBVKbqKThnm60ytukgFUT1eUWSPsRTmQNF14S6hGC/QpI5A2X2Eizonj69RDQlTWXshf6/VPzRsnCDOimEue/P64bKYC4qPu8eJQ35+ToQQWDQSqXIkbBA3GRLPN0FHBZxjGXbA/H9OR3UfSvr0EE4NYZubWk7mUZwjUKtOGicSZ+6a4bq4e+hvZIoiVRgR0EddwDeUsPEzf8QammWMBQrVtIP92aTPXs74RzAaKtaFBfr2B4a11AD7KzJ76PvvS45GtBZuFxG1fiDHovQXpNmPWSrIwPQwagPBsbWQ==
+Received: from MN0PR04CA0025.namprd04.prod.outlook.com (2603:10b6:208:52d::24)
+ by SA1PR12MB6893.namprd12.prod.outlook.com (2603:10b6:806:24c::12) with
+ Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.21.139.18; Thu, 25 Jun
+ 2026 09:38:38 +0000
+Received: from BL6PEPF0001AB4B.namprd04.prod.outlook.com
+ (2603:10b6:208:52d:cafe::5e) by MN0PR04CA0025.outlook.office365.com
+ (2603:10b6:208:52d::24) with Microsoft SMTP Server (version=TLS1_3,
+ cipher=TLS_AES_256_GCM_SHA384) id 15.21.159.16 via Frontend Transport; Thu,
+ 25 Jun 2026 09:38:38 +0000
+X-MS-Exchange-Authentication-Results: spf=pass (sender IP is 216.228.118.233)
+ smtp.mailfrom=nvidia.com; dkim=none (message not signed)
+ header.d=none;dmarc=pass action=none header.from=nvidia.com;
+Received-SPF: Pass (protection.outlook.com: domain of nvidia.com designates
+ 216.228.118.233 as permitted sender) receiver=protection.outlook.com;
+ client-ip=216.228.118.233; helo=mail.nvidia.com; pr=C
+Received: from mail.nvidia.com (216.228.118.233) by
+ BL6PEPF0001AB4B.mail.protection.outlook.com (10.167.242.69) with Microsoft
+ SMTP Server (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
+ 15.21.181.6 via Frontend Transport; Thu, 25 Jun 2026 09:38:37 +0000
+Received: from drhqmail201.nvidia.com (10.126.190.180) by mail.nvidia.com
+ (10.127.129.6) with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.2562.20; Thu, 25 Jun
+ 2026 02:38:21 -0700
+Received: from drhqmail203.nvidia.com (10.126.190.182) by
+ drhqmail201.nvidia.com (10.126.190.180) with Microsoft SMTP Server
+ (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
+ 15.2.2562.20; Thu, 25 Jun 2026 02:38:20 -0700
+Received: from build-akhilrajeev-noble-20260602.internal (10.127.8.11) by
+ mail.nvidia.com (10.126.190.182) with Microsoft SMTP Server id 15.2.2562.20
+ via Frontend Transport; Thu, 25 Jun 2026 02:38:16 -0700
+From: Akhil R <akhilrajeev@nvidia.com>
+To: <frank.li@oss.nxp.com>
+CC: <Frank.Li@kernel.org>, <akhilrajeev@nvidia.com>, <conor+dt@kernel.org>,
+	<devicetree@vger.kernel.org>, <linux-hwmon@vger.kernel.org>,
+	<linux-i3c@lists.infradead.org>, <robh@kernel.org>,
+	<sashiko-reviews@lists.linux.dev>
+Subject: Re: [PATCH v5 04/12] i3c: master: Add support for devices using SETAASA
+Date: Thu, 25 Jun 2026 09:38:15 +0000
+Message-ID: <20260625093815.1794492-1-akhilrajeev@nvidia.com>
+X-Mailer: git-send-email 2.43.0
+In-Reply-To: <ajwamrU8ehBINzxq@lizhi-Precision-Tower-5810>
+References: <ajwamrU8ehBINzxq@lizhi-Precision-Tower-5810>
 Precedence: bulk
 X-Mailing-List: sashiko-reviews@lists.linux.dev
 List-Id: <sashiko-reviews.lists.linux.dev>
 List-Subscribe: <mailto:sashiko-reviews+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:sashiko-reviews+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
 Content-Transfer-Encoding: 8bit
-In-Reply-To: <20260618085835.98A041F000E9@smtp.kernel.org>
+Content-Type: text/plain
+X-NV-OnPremToCloud: ExternallySecured
+X-EOPAttributedMessage: 0
+X-MS-PublicTrafficType: Email
+X-MS-TrafficTypeDiagnostic: BL6PEPF0001AB4B:EE_|SA1PR12MB6893:EE_
+X-MS-Office365-Filtering-Correlation-Id: c8ba63e3-d908-4e2d-7789-08ded29d88d9
+X-MS-Exchange-SenderADCheck: 1
+X-MS-Exchange-AntiSpam-Relay: 0
+X-Microsoft-Antispam:
+	BCL:0;ARA:13230040|1800799024|82310400026|376014|23010399003|36860700016|18002099003|22082099003|3023799007|6133799003|56012099006|11063799006;
+X-Microsoft-Antispam-Message-Info:
+	NyaYoNtivXhW0Pady7qzrQ8nv31caJ5GKBqQTH1l9jiKGLkvDVSA1oetMJFkyN4hl0jy7kneKtJxueN0d8wGxkitylJr3n4To+mEiiqL0s8gr/2fNuo2zr/YM/FLPdju5+FyI27pRflIJ/XUr6UdObVh6p45NsuZ5bBOZNrIzM8qs4f2nP7i51f+KCi54cnHp3+OqQXfGJ6k6MQETqTe9KsvunTWARI18o6IbTKww5wbkNHLzo5pKMs5B+Y4I38D+Il7HbNr9kE9sApwikF0nA4Gxsml2KKWPBldKFuA8YnlJAE5VzbTkAy9O7Frg5/4cf/XEVeGt4eN7EXI3PqOEXdJ0Y61fkIVkv4NCdKiTPpmAmqjc/H1phf52gn/LIOjE453HFlbeD2hKewy3qoRJ1aIBl+7mfAJWfnZMPUHGGkz3asRzMiFd0zqtY7HlAG60hhkVoEWXJPuLb3FirzOOM5e5GoKQe0D7DQGm04QwWLiC94UgsPhtxt8DOeFcvvMTpW1oaXxW0MQU+zyEV35Njhgs47PqON5ZBrNmLEyita0HcuFStQEpjd23tV8WMKnGmnGzCLJKYTrZnmK2hiYLRh17TTIXvVIQVXYJj+3IrjmZOkJd3xfouW3bEqKSxiIxRmoquEGpKet74JUqGBcPOK20dSgODNJ4P8AwViq5Kv3/JfA/CzZi0oalnWYipL2u58RlJoXizXInwnCDnD1hw==
+X-Forefront-Antispam-Report:
+	CIP:216.228.118.233;CTRY:US;LANG:en;SCL:1;SRV:;IPV:NLI;SFV:NSPM;H:mail.nvidia.com;PTR:dc7edge2.nvidia.com;CAT:NONE;SFS:(13230040)(1800799024)(82310400026)(376014)(23010399003)(36860700016)(18002099003)(22082099003)(3023799007)(6133799003)(56012099006)(11063799006);DIR:OUT;SFP:1101;
+X-MS-Exchange-AntiSpam-MessageData-ChunkCount: 1
+X-MS-Exchange-AntiSpam-MessageData-0:
+	FAkjHJDhNE4OcquwbEPAsOcpX2H3cUJ6bAIwsoLN5QEELlxJM+F10uuUw3YEX3kxcsXWNWWyhZap7PDPoiQ1GyijvDkLdZy2uvhLOFcclReQGtzvC1LzJzTo8ZEIUzDNUmnZrRKvz27Ve24s5HKPsp5lgjZC5FFjFYLv8aSjjbbtDU8IqGdNlR7N6+Cipar65Pi0JPcJCKqp6VvbfU4i9fYG9TJRbB6VGf/LOp0YO1aTg1rA+ymj3dgIwfXcR7X8h7k9jM0M0+Pl9blhVcInylNHj6hYfXhYhcRm8fN7gwn23xuOmRgEGU17h1cOCILlSyF/h3GLbvamKfP3u+xkoSz3J83mJdxNSVrsVBlXy818P23oJbHvZBzUNDbpXb3hIMwRlQZedHJsokLVnWbhKPGLtikqUB3ozy74guPlRULT/aZjtq3srFzfPND/G6TA
+X-OriginatorOrg: Nvidia.com
+X-MS-Exchange-CrossTenant-OriginalArrivalTime: 25 Jun 2026 09:38:37.8961
+ (UTC)
+X-MS-Exchange-CrossTenant-Network-Message-Id: c8ba63e3-d908-4e2d-7789-08ded29d88d9
+X-MS-Exchange-CrossTenant-Id: 43083d15-7273-40c1-b7db-39efd9ccc17a
+X-MS-Exchange-CrossTenant-OriginalAttributedTenantConnectingIp: TenantId=43083d15-7273-40c1-b7db-39efd9ccc17a;Ip=[216.228.118.233];Helo=[mail.nvidia.com]
+X-MS-Exchange-CrossTenant-AuthSource:
+	BL6PEPF0001AB4B.namprd04.prod.outlook.com
+X-MS-Exchange-CrossTenant-AuthAs: Anonymous
+X-MS-Exchange-CrossTenant-FromEntityHeader: HybridOnPrem
+X-MS-Exchange-Transport-CrossTenantHeadersStamped: SA1PR12MB6893
 
-> > +	return tdx_ext_init();
+On Wed, 24 Jun 2026 13:57:46 -0400, Frank Li wrote:
+...
+...
+>> [Severity: High]
+>> Is it possible that sending the SETAASA broadcast before direct SETDASA
+>> assignments breaks initialization for devices that natively support SETAASA
+>> but are configured for SETDASA?
+>>
+>> According to the I3C specification, any device on the bus natively supporting
+>> SETAASA will respond to this broadcast by adopting its static address as its
+>> dynamic address.
+>>
+>> After this broadcast, the driver iterates through devices and attempts to
+>> assign custom dynamic addresses via direct SETDASA commands:
+>>
+>> drivers/i3c/master.c:i3c_master_early_i3c_dev_add() {
+>>     ...
+>> 	ret = i3c_master_setdasa_locked(master, i3cdev->info.static_addr,
+>> 					i3cdev->boardinfo->init_dyn_addr);
+>>     ...
+>> }
+>>
+>> Since the target device already adopted its dynamic address during the
+>> SETAASA broadcast, it is no longer in the unassigned state and will NACK
+>> the subsequent SETDASA command.
 > 
-> [Severity: Critical]
-> Could this result in an infinite loop during a runtime update?
-> 
-> The tdx_module_run_update() function runs under stop_machine(), meaning
-> local interrupts are explicitly disabled. When this calls tdx_ext_init(), 
-> it executes the following polling loop:
-> 
->     do {
->         r = seamcall(TDH_EXT_INIT, &args);
->     } while (r == TDX_INTERRUPTED_RESUMABLE);
-> 
-> If an external hardware interrupt becomes pending during the update, the TDX
-> module exits to the host and returns TDX_INTERRUPTED_RESUMABLE. Because the
-> host CPU has interrupts disabled, it cannot service the interrupt and simply
-> continues execution.
-> 
-> Does this mean the loop condition evaluates to true, immediately re-executing
-> the seamcall, and permanently deadlocking the system?
+> Look like correct, but I am not sure if target will NACK SETDASA. Or should
+> use SETNEWDA for SETAASA method.
 
-No, According to TDX module SPEC [1], 5.4.1. SEAMCALL Instruction (Common),
-RAX[bit 24] == 0 shows "Pending interrupts are detected only if the host
-VMM’s RFLAGS.IF is 1."  Linux now doesn't set this bit for any SEAMCALL.
+Yes, this looks valid for mixed device buses. I can move
+i3c_master_setaasa_locked() after the SETDASA handling and before
+i3c_master_do_daa() in the same function, so SETDASA-assigned devices will
+ignore the later SETAASA broadcast. Does that sound good to you?
 
-That means SEAMCALLs will keep on executing if host disabled interrupts
-so will not deadlock the system.
-
-[1] https://cdrdv2.intel.com/v1/dl/getContent/795381
+Best Regards,
+Akhil
