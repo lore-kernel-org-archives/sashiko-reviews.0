@@ -1,187 +1,209 @@
-Received: from smtp-out2.suse.de (smtp-out2.suse.de [195.135.223.131])
+Received: from mail-pg1-f170.google.com (mail-pg1-f170.google.com [209.85.215.170])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 47474225413
-	for <sashiko-reviews@lists.linux.dev>; Thu, 25 Jun 2026 09:45:43 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=195.135.223.131
-ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1782380744; cv=none; b=NxS9B9Rwt58JjfSbuKEWqN9jdZ7RepEby6AXUXCci4smmzg8/EWYRhG4HRte1lk22GyoSommLzmXAGkMwCz4jM+Wxxf9+ZnrzXQJMlWI+4b9rHUWjohzFwlrtFcXBuKrTjXae8xdd974Mwk4JjRoNEVdgyorX7JL/9atGNxiGKs=
-ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1782380744; c=relaxed/simple;
-	bh=70pmhFgiPIaTQhsqGD9ps151idK+Fb/MpUojvU19l1M=;
-	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=pQsemDKnuMW2S1T1cTARB2RMioWZVifxpPnaGYXYX/Dji9YcCvLFqLHekAA2sBwzioQWQYg8wofCdhqq/L7ZJalT4J2p2T4s0XyhxLYs5BdGVc189jnXvcRNuTlJ3J58VxqnY45Y/GSbanpjv9mFrdgkwcaU7ooB/bbMxYTuQ3g=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=suse.de; spf=pass smtp.mailfrom=suse.de; dkim=pass (1024-bit key) header.d=suse.de header.i=@suse.de header.b=OeY/I4Sj; dkim=permerror (0-bit key) header.d=suse.de header.i=@suse.de header.b=V3xPErmM; dkim=pass (1024-bit key) header.d=suse.de header.i=@suse.de header.b=OeY/I4Sj; dkim=permerror (0-bit key) header.d=suse.de header.i=@suse.de header.b=V3xPErmM; arc=none smtp.client-ip=195.135.223.131
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=suse.de
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=suse.de
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 72AF43A6F1B
+	for <sashiko-reviews@lists.linux.dev>; Thu, 25 Jun 2026 09:47:10 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=pass smtp.client-ip=209.85.215.170
+ARC-Seal:i=2; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
+	t=1782380831; cv=pass; b=cLsym9fI++4BqVtrOqI3zCVgkJcAVmV0VC2sgdiPRvChKgsd+kUQ8l9lBNpqbeci9UP5Da0meV5UIQwd753fV7bbxz5F4Y/nQe+BWi13MyZhMoPGTppOD5nYqsq+VD926Fhdh5V76WzQ2wFvOX/QDW7KZ9j9K8B8/mbABfKbK1Q=
+ARC-Message-Signature:i=2; a=rsa-sha256; d=subspace.kernel.org;
+	s=arc-20240116; t=1782380831; c=relaxed/simple;
+	bh=OHfzDZiO+22xCUVSG9DhOlbcNAiA0c8REP0YT5bVzR0=;
+	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
+	 To:Cc:Content-Type; b=Lp5tcDx7UFW0nQNDEiKHThHMqZpwn9vYXP4xy1LGaLIVbSwOs2zMwj+06D5G9NsakFcYmYQSw/BwnODtgAuHZpFkLyF9uyYEuXFnoPmisygiXW2KlACV4OIHoKL5tQ46yHfaxG1oovYIhJUbDTBKHIUt4ATT9RJinHUZLJ6ihek=
+ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=DsXcjxO+; arc=pass smtp.client-ip=209.85.215.170
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=suse.de header.i=@suse.de header.b="OeY/I4Sj";
-	dkim=permerror (0-bit key) header.d=suse.de header.i=@suse.de header.b="V3xPErmM";
-	dkim=pass (1024-bit key) header.d=suse.de header.i=@suse.de header.b="OeY/I4Sj";
-	dkim=permerror (0-bit key) header.d=suse.de header.i=@suse.de header.b="V3xPErmM"
-Received: from imap1.dmz-prg2.suse.org (unknown [10.150.64.97])
-	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
-	 key-exchange X25519 server-signature RSA-PSS (4096 bits) server-digest SHA256)
-	(No client certificate requested)
-	by smtp-out2.suse.de (Postfix) with ESMTPS id 81F6876165;
-	Thu, 25 Jun 2026 09:45:20 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=suse.de; s=susede2_rsa;
-	t=1782380720; h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
-	 mime-version:mime-version:
-	 content-transfer-encoding:content-transfer-encoding:
-	 in-reply-to:in-reply-to:references:references;
-	bh=3izCRn7O2AFtnLVnkDo0eWxGSWNVQyNUlXQA0j0tLHY=;
-	b=OeY/I4Sj2TuC+1J07bjY1csqUpRO/mDN06RPgMkR+cP1ozC8XhaFdj4pAPXpZLDg8gxU60
-	OdXl6KUvOkIeDKxvsOHLXNeMhEfuffQIExP2+RXOnZHNs1C5oBwwqap+jgfK258zElwzc0
-	TOUfAtVBLHS5oJWozr1rhe9cLuemH1I=
-DKIM-Signature: v=1; a=ed25519-sha256; c=relaxed/relaxed; d=suse.de;
-	s=susede2_ed25519; t=1782380720;
-	h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
-	 mime-version:mime-version:
-	 content-transfer-encoding:content-transfer-encoding:
-	 in-reply-to:in-reply-to:references:references;
-	bh=3izCRn7O2AFtnLVnkDo0eWxGSWNVQyNUlXQA0j0tLHY=;
-	b=V3xPErmMvt+77k9f6GKw+bc5lIetlECCX5OGgOQPNeGwnf/gKfGojhW+mOG3ye2Ad4iygl
-	czmnY2aeLvv/hdBg==
-Authentication-Results: smtp-out2.suse.de;
-	none
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=suse.de; s=susede2_rsa;
-	t=1782380720; h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
-	 mime-version:mime-version:
-	 content-transfer-encoding:content-transfer-encoding:
-	 in-reply-to:in-reply-to:references:references;
-	bh=3izCRn7O2AFtnLVnkDo0eWxGSWNVQyNUlXQA0j0tLHY=;
-	b=OeY/I4Sj2TuC+1J07bjY1csqUpRO/mDN06RPgMkR+cP1ozC8XhaFdj4pAPXpZLDg8gxU60
-	OdXl6KUvOkIeDKxvsOHLXNeMhEfuffQIExP2+RXOnZHNs1C5oBwwqap+jgfK258zElwzc0
-	TOUfAtVBLHS5oJWozr1rhe9cLuemH1I=
-DKIM-Signature: v=1; a=ed25519-sha256; c=relaxed/relaxed; d=suse.de;
-	s=susede2_ed25519; t=1782380720;
-	h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
-	 mime-version:mime-version:
-	 content-transfer-encoding:content-transfer-encoding:
-	 in-reply-to:in-reply-to:references:references;
-	bh=3izCRn7O2AFtnLVnkDo0eWxGSWNVQyNUlXQA0j0tLHY=;
-	b=V3xPErmMvt+77k9f6GKw+bc5lIetlECCX5OGgOQPNeGwnf/gKfGojhW+mOG3ye2Ad4iygl
-	czmnY2aeLvv/hdBg==
-Received: from imap1.dmz-prg2.suse.org (localhost [127.0.0.1])
-	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
-	 key-exchange X25519 server-signature RSA-PSS (4096 bits) server-digest SHA256)
-	(No client certificate requested)
-	by imap1.dmz-prg2.suse.org (Postfix) with ESMTPS id 337EA779A8;
-	Thu, 25 Jun 2026 09:45:20 +0000 (UTC)
-Received: from dovecot-director2.suse.de ([2a07:de40:b281:106:10:150:64:167])
-	by imap1.dmz-prg2.suse.org with ESMTPSA
-	id uGNWC7D4PGqaBQAAD6G6ig
-	(envelope-from <tzimmermann@suse.de>); Thu, 25 Jun 2026 09:45:20 +0000
-From: Thomas Zimmermann <tzimmermann@suse.de>
-To: javierm@redhat.com,
-	treding@nvidia.com,
-	maarten.lankhorst@linux.intel.com,
-	mripard@kernel.org,
-	airlied@gmail.com,
-	simona@ffwll.ch,
-	neil.armstrong@linaro.org,
-	jesszhan0024@gmail.com,
-	rayyan@ansari.sh
-Cc: dri-devel@lists.freedesktop.org,
-	sashiko-reviews@lists.linux.dev,
-	Thomas Zimmermann <tzimmermann@suse.de>
-Subject: [PATCH v3 7/7] drm/sysfb: simpledrm: Read panel orientation from DT node
-Date: Thu, 25 Jun 2026 11:39:39 +0200
-Message-ID: <20260625094509.157581-8-tzimmermann@suse.de>
-X-Mailer: git-send-email 2.54.0
-In-Reply-To: <20260625094509.157581-1-tzimmermann@suse.de>
-References: <20260625094509.157581-1-tzimmermann@suse.de>
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="DsXcjxO+"
+Received: by mail-pg1-f170.google.com with SMTP id 41be03b00d2f7-c88d4606ec8so768598a12.0
+        for <sashiko-reviews@lists.linux.dev>; Thu, 25 Jun 2026 02:47:10 -0700 (PDT)
+ARC-Seal: i=1; a=rsa-sha256; t=1782380829; cv=none;
+        d=google.com; s=arc-20260327;
+        b=iSrrg/qp7e2Anrfg4S/5B+POUDukc+9L6mAwbqCsl750d7uCHgrKqiPmtBOGVx5JGY
+         NG36x2ohaCmZKnLAGQI/7aS8ubsTmco363NpelJxyh4Y6cHZ6Cux91MbGPacZdh5C3Z6
+         FX0ACngLTMkDPFOMeOA1ifBhAQJ6Os8GSpX7ZyB6h7TxBCVYWGpbpMZUSBt1UmLA63mR
+         0w1MiEwvNca7RNsaLTiy/J+WGC6m3U0oKjRPCqx0bH7FT+INBRJeUeWrUxDs09tRoxu9
+         ffulB19FwK0YQ5ecQ0QgMX3cNbuuii/aaQ1vumw0RnbpLrtUcwqozkE5jcjt28Xhnafl
+         igUg==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com; s=arc-20260327;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:dkim-signature;
+        bh=NeTcUSKNh7vn3DPm8mPGV6I8X3SxE2IeoHKBOqLxT7s=;
+        fh=bN3WHTlzXcVIr2RkgMpk3NXK/DwXOefqRaFpMbeYf7s=;
+        b=IJxTSaLL0HmfafN9CAX0fb8b8osiC6fkV0H5Cg6EsUrTNgXuFkTdOmJHbfxWdYewqO
+         LJtUYjhc9/NrViGo57h87L9SU2sGeXltCc04pc93qJFErhZRYr5Ma4n4Viqvu0cfSZCe
+         tMk3TjQNq4yqI6PKVB4r5EagmUzw2P2kVUVs/YPD+EyQH5jsYf0L+9e2z6Vc0ZHoQT38
+         2CCZ591MfyiqM4JvgCwKwwNgSs7MUXmEO16U23DvTspVUqL7YC6c6Nz7X8ZeIunSEBwV
+         5D0XG+Z/b712GEwdLT79CLieiM37fupmbXNmsKjT5gaTbeF4eBMOCr7UXbwe+q3mXaH6
+         V4kA==;
+        darn=lists.linux.dev
+ARC-Authentication-Results: i=1; mx.google.com; arc=none
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20251104; t=1782380829; x=1782985629; darn=lists.linux.dev;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=NeTcUSKNh7vn3DPm8mPGV6I8X3SxE2IeoHKBOqLxT7s=;
+        b=DsXcjxO+sLTOWn7x4XQVAwDT2dRF1Frwvqpikyioavf1Ka2rsqz31VSuaHiIhkHeZw
+         6mgBC3jWJDBg9SlEM49kiPnrMz0XUXwLJYmxk4i+Z4ERDsf62X/GrfBeDvT83qrcLR7G
+         m4YIeSPqxHvBelHzzYF1dqjbi3lMzcmmQEIwqqOxh9g0h664H88TGjFQE8jiyFHidHWT
+         G8cnvD/yp+qL8nI/lPd5nL/1X21wyz4QDpKOBwe5kbkHY/6tv3x1Mhw7AUu+wzT0/28v
+         3srStKie3vJuqqvRzLrtxqqiIdixQe9w4IQIJQ3TTKEoArVBxdBDuAVa/AuLBxoz7hHq
+         BGnQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20251104; t=1782380829; x=1782985629;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:x-gm-gg:x-gm-message-state:from
+         :to:cc:subject:date:message-id:reply-to;
+        bh=NeTcUSKNh7vn3DPm8mPGV6I8X3SxE2IeoHKBOqLxT7s=;
+        b=YZXrX9rYv3p3Uyt/pmPx1oXYiThMiWqUxdMKudozkPN3HASkhXDd45SZvmu8aGpf7p
+         YFBrlIM4AaTsSoktoPeNkrmE2QekZcFHbBIkrGr6nPIKevW4pKa6VQJ8Ad4+GkujFTpv
+         yTDVFsqyB+wgrtsz8wpZDUuU42tnuFC9dyU7Cp5V1FarioUq3avG/RlRyfFYQ6d5aPN4
+         /0vc1lvLzcXJFfPtXaOWJW44Z3p7BGzXAF6F2olMhiVB0oU0txfgmHDe/w/bOy09cfCD
+         s1ipWWK8VRNTZV+1qM/IA26shsKpCHQNxo58+X4RxEB0nmzj0Zee4dAnthd9T+oG51z+
+         dh6Q==
+X-Gm-Message-State: AOJu0YxIJIIm305yMmQ1jxJZdSUZ4JvnVxup0AovKWyir5uNQsiTufjy
+	AlCNf5NeN/8rEUXldvguelDy0UN87SEHZt2IJjryPLJHKV6pKWIBqkYtEc3IkRH+CI8Zij/CcWM
+	CimZyWQFVfC5+h9yXgwp+I9VYIEqP924mWV3/Ju0=
+X-Gm-Gg: AfdE7cm0egbSz5ZjodYBX9sQvjBdZJB+unQhxH8rihbKG7bUSSf1o9TzexdDrjvyFnD
+	OMVrjEEE6ZxkOzHyNS7RkQ0LoYhWYwGp1B0vU+mAYV54wmQhbFHxCoTloPU58P+FBnJUpnF5KEH
+	HH28OrLVolya5HoxYHOFCSAArfMfExos6l+dUKMsee0wD0OK3yLlHF9I2nEWLaTfUquTOu/rZcL
+	DTkD+vCY8xRUZPsIoZuwz1h2RsePuzH6P5iLbHIlIlS1NbVc5JlsCgv34ZSMg5iyuwVI0btl3s=
+X-Received: by 2002:a05:6a21:48a:b0:3b3:1c7b:ff7 with SMTP id
+ adf61e73a8af0-3bd4b013d3dmr2153617637.46.1782380829609; Thu, 25 Jun 2026
+ 02:47:09 -0700 (PDT)
 Precedence: bulk
 X-Mailing-List: sashiko-reviews@lists.linux.dev
 List-Id: <sashiko-reviews.lists.linux.dev>
 List-Subscribe: <mailto:sashiko-reviews+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:sashiko-reviews+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
-X-Spam-Flag: NO
-X-Spamd-Result: default: False [-6.80 / 50.00];
-	REPLY(-4.00)[];
-	BAYES_HAM(-3.00)[100.00%];
-	MID_CONTAINS_FROM(1.00)[];
-	NEURAL_HAM_LONG(-1.00)[-1.000];
-	R_MISSING_CHARSET(0.50)[];
-	NEURAL_HAM_SHORT(-0.20)[-1.000];
-	MIME_GOOD(-0.10)[text/plain];
-	ARC_NA(0.00)[];
-	RCVD_VIA_SMTP_AUTH(0.00)[];
-	DBL_BLOCKED_OPENRESOLVER(0.00)[imap1.dmz-prg2.suse.org:helo,suse.de:email,suse.de:mid];
-	RCPT_COUNT_TWELVE(0.00)[12];
-	MIME_TRACE(0.00)[0:+];
-	TO_DN_SOME(0.00)[];
-	FUZZY_RATELIMITED(0.00)[rspamd.com];
-	FROM_HAS_DN(0.00)[];
-	FREEMAIL_TO(0.00)[redhat.com,nvidia.com,linux.intel.com,kernel.org,gmail.com,ffwll.ch,linaro.org,ansari.sh];
-	RCVD_COUNT_TWO(0.00)[2];
-	TO_MATCH_ENVRCPT_ALL(0.00)[];
-	RCVD_TLS_ALL(0.00)[];
-	FROM_EQ_ENVFROM(0.00)[];
-	R_RATELIMIT(0.00)[to_ip_from(RLof9hwn8p5zsfkob18n85cjgs)];
-	DKIM_SIGNED(0.00)[suse.de:s=susede2_rsa,suse.de:s=susede2_ed25519];
-	FREEMAIL_ENVRCPT(0.00)[gmail.com]
-X-Spam-Level: 
-X-Spam-Score: -6.80
+References: <20260625092721.238366-1-suryasaimadhu369@gmail.com> <20260625094138.3703C1F000E9@smtp.kernel.org>
+In-Reply-To: <20260625094138.3703C1F000E9@smtp.kernel.org>
+From: Sai Madhu <suryasaimadhu369@gmail.com>
+Date: Thu, 25 Jun 2026 15:16:58 +0530
+X-Gm-Features: AVVi8CfsHYSnakeHovcTcaZI38pNmBO3X7k9j1ewhVQt7YnLD6s_rVgjH6ruqwA
+Message-ID: <CAB0uMAe0V5GL0M4tVFYag+4TsYskfiSk=+HANgM6hRb31KB7xw@mail.gmail.com>
+Subject: Re: [PATCH] staging: fbtft: replace empty modifier argument with
+ no-op macro
+To: sashiko-reviews@lists.linux.dev
+Cc: dri-devel@lists.freedesktop.org
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 
-A device-tree panel node can specify the panel's rotation in steps
-of 90 degrees. Set the DRM connector orientation accordingly. Use
-UNKNOWN for the orientation if the field is missing or invalid.
+Thank you for the review. These are pre-existing issues not
+introduced by my patch. I will investigate and send fixes
+for both the unaligned access and buffer size calculation.
 
-v3:
-- read the orientation with drm_of_get_panel_orientation() (Thierry)
+Regards,
+suryasaimadhu.
 
-Signed-off-by: Thomas Zimmermann <tzimmermann@suse.de>
----
- drivers/gpu/drm/sysfb/simpledrm.c | 11 +++++++++--
- 1 file changed, 9 insertions(+), 2 deletions(-)
-
-diff --git a/drivers/gpu/drm/sysfb/simpledrm.c b/drivers/gpu/drm/sysfb/simpledrm.c
-index 9e0711e0095a..21ddf4502ecc 100644
---- a/drivers/gpu/drm/sysfb/simpledrm.c
-+++ b/drivers/gpu/drm/sysfb/simpledrm.c
-@@ -28,6 +28,7 @@
- #include <drm/drm_managed.h>
- #include <drm/drm_modeset_helper.h>
- #include <drm/drm_modeset_helper_vtables.h>
-+#include <drm/drm_of.h>
- #include <drm/drm_print.h>
- #include <drm/drm_probe_helper.h>
- 
-@@ -623,6 +624,7 @@ static struct simpledrm_device *simpledrm_device_create(struct drm_driver *drv,
- 	int width, height, stride;
- 	u16 width_mm = 0, height_mm = 0;
- 	struct device_node *panel_node;
-+	enum drm_panel_orientation orientation = DRM_MODE_PANEL_ORIENTATION_UNKNOWN;
- 	const struct drm_format_info *format;
- 	u64 size;
- 	struct resource *res, *mem = NULL;
-@@ -698,6 +700,12 @@ static struct simpledrm_device *simpledrm_device_create(struct drm_driver *drv,
- 			ret = simplefb_get_panel_height_mm_of(dev, panel_node);
- 			if (ret > 0)
- 				height_mm = ret;
-+			/*
-+			 * Ignore errors from parsing the panel orientation. With
-+			 * the orientation initialized to UNKNOWN, the connector
-+			 * helpers will do the right thing.
-+			 */
-+			drm_of_get_panel_orientation(panel_node, &orientation);
- 			of_node_put(panel_node);
- 		}
- 	} else {
-@@ -861,8 +869,7 @@ static struct simpledrm_device *simpledrm_device_create(struct drm_driver *drv,
- 	if (ret)
- 		return ERR_PTR(ret);
- 	drm_connector_helper_add(connector, &simpledrm_connector_helper_funcs);
--	drm_connector_set_panel_orientation_with_quirk(connector,
--						       DRM_MODE_PANEL_ORIENTATION_UNKNOWN,
-+	drm_connector_set_panel_orientation_with_quirk(connector, orientation,
- 						       width, height);
- 
- 	ret = drm_connector_attach_encoder(connector, encoder);
--- 
-2.54.0
-
+On Thu, 25 Jun 2026 at 15:11, <sashiko-bot@kernel.org> wrote:
+>
+> Thank you for your contribution! Sashiko AI review found 2 potential issu=
+e(s) to consider:
+>
+> Pre-existing issues:
+> - [High] Incorrect buffer size calculation causes out-of-bounds read and =
+information leak over SPI when `startbyte` is used.
+> - [High] Pointer arithmetic creates an unaligned pointer for 16-bit regis=
+ter writes when `startbyte` is used, causing an unaligned memory access.
+> --
+>
+> commit 5efb24fc5a4ff6b0f2481a7887082d742684defc
+> Author: suryasaimadhu <suryasaimadhu369@gmail.com>
+>
+> staging: fbtft: replace empty modifier argument with no-op macro
+>
+> This commit defines an identity function fbtft_write_reg_no_modifier() an=
+d
+> uses it to replace empty modifier arguments in define_fbtft_write_reg()
+> macro calls to fix checkpatch errors.
+>
+> > diff --git a/drivers/staging/fbtft/fbtft-bus.c b/drivers/staging/fbtft/=
+fbtft-bus.c
+> > index 30e436ff19e4c..2169f8d1d1b83 100644
+> > --- a/drivers/staging/fbtft/fbtft-bus.c
+> > +++ b/drivers/staging/fbtft/fbtft-bus.c
+> > @@ -11,6 +11,7 @@
+> >   *
+> >   *********************************************************************=
+********/
+> >
+> > +#define fbtft_write_reg_no_modifier(x) (x)
+> >  #define define_fbtft_write_reg(func, buffer_type, data_type, modifier)=
+        \
+> >  void func(struct fbtft_par *par, int len, ...)                        =
+        \
+> >  {                                                                     =
+        \
+>
+> [Severity: High]
+> This is a pre-existing issue, but does this pointer arithmetic create an
+> unaligned memory access on strict-alignment architectures?
+>
+> When par->startbyte is non-zero, buf is advanced by one byte in
+> define_fbtft_write_reg():
+>
+>         if (par->startbyte) {
+>                 *(u8 *)par->buf =3D par->startbyte;
+>                 buf =3D (buffer_type *)(par->buf + 1);
+>                 offset =3D 1;
+>         }
+>
+> Since buffer_type can be a 16-bit type like u16 or __be16 (for example, i=
+n
+> fbtft_write_reg16_bus8 or fbtft_write_reg16_bus16), adding 1 byte to the
+> aligned par->buf creates an odd address.
+>
+> The code then dereferences this unaligned pointer:
+>
+>         *buf =3D modifier((data_type)va_arg(args, unsigned int));
+>
+> Could this trigger an alignment fault resulting in a kernel panic on
+> architectures that require strict alignment?
+>
+> [ ... ]
+>
+> > @@ -62,9 +63,9 @@ out:                                                 =
+                             \
+> >  }                                                                     =
+        \
+> >  EXPORT_SYMBOL(func);
+> >
+> > -define_fbtft_write_reg(fbtft_write_reg8_bus8, u8, u8, )
+> > +define_fbtft_write_reg(fbtft_write_reg8_bus8, u8, u8, fbtft_write_reg_=
+no_modifier)
+> >  define_fbtft_write_reg(fbtft_write_reg16_bus8, __be16, u16, cpu_to_be1=
+6)
+> > -define_fbtft_write_reg(fbtft_write_reg16_bus16, u16, u16, )
+> > +define_fbtft_write_reg(fbtft_write_reg16_bus16, u16, u16, fbtft_write_=
+reg_no_modifier)
+>
+> [Severity: High]
+> This is a pre-existing issue, but is there an out-of-bounds read when
+> calculating the length to send over SPI?
+>
+> When startbyte is configured, offset is set to 1. The macro
+> define_fbtft_write_reg() uses the following size calculation for the fina=
+l
+> transfer:
+>
+>                 fbtft_write_buf_dc(par, par->buf,
+>                                    len * (sizeof(data_type) + offset), 1)=
+;
+>
+> Because the parenthesis includes both sizeof(data_type) and offset, the s=
+ize
+> grows too quickly. For example, with a len of 63, a 16-bit data_type, and=
+ an
+> offset of 1, the size evaluates to 63 * (2 + 1) =3D 189 bytes.
+>
+> Does this result in reading past the end of par->buf and sending
+> uninitialized kernel heap memory to the display controller, potentially
+> causing a kernel panic if it crosses an unmapped page boundary?
+>
+> --
+> Sashiko AI review =C2=B7 https://sashiko.dev/#/patchset/20260625092721.23=
+8366-1-suryasaimadhu369@gmail.com?part=3D1
