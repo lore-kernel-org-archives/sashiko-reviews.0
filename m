@@ -1,117 +1,143 @@
-Received: from mail-pl1-f173.google.com (mail-pl1-f173.google.com [209.85.214.173])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from us-smtp-delivery-124.mimecast.com (us-smtp-delivery-124.mimecast.com [170.10.133.124])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 92162279DB6
-	for <sashiko-reviews@lists.linux.dev>; Fri, 26 Jun 2026 20:47:55 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=pass smtp.client-ip=209.85.214.173
-ARC-Seal:i=2; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1782506876; cv=pass; b=Lww7rrxW0o1AUFmSQIPkdXPGepJRR2MVvG3T7WDMbAjqTPQoFOx93OkBVJsIcSqYas7DMbAkn90/jjPYvECGIFp2rb5jp5n7OwCGfHBkeZvqCNpdaW1jLyWaq8UtnDM+LjKkRL4aw+IE0U8PyuXHBSaBMBrB7vbn5vioQdIB/is=
-ARC-Message-Signature:i=2; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1782506876; c=relaxed/simple;
-	bh=fRXLpqtWS107ISqvj9m9xqfBNcFxfHU43kRA6lGd1wk=;
-	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
-	 To:Cc:Content-Type; b=GlVda8O8FghBV0m+3q19S4obVNn0LyreiOvERP6lGb2vI5Ta9vv4xZkEebFbJz6c5cn2cPczf6FaHNgMjSidbPwnzTtcobjHfylY3qIF9LPlpMJzqOAlaFC22XA9cxnzPn1DDqD9a5C6QBOjaKBT81QjjL79MqCz/7sq+sAfpK0=
-ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=googlemail.com; spf=pass smtp.mailfrom=googlemail.com; dkim=pass (2048-bit key) header.d=googlemail.com header.i=@googlemail.com header.b=LhFcW/ds; arc=pass smtp.client-ip=209.85.214.173
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=googlemail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=googlemail.com
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AAED237D124
+	for <sashiko-reviews@lists.linux.dev>; Fri, 26 Jun 2026 21:09:35 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=170.10.133.124
+ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
+	t=1782508176; cv=none; b=oHsTFm1wiCb1JOL0VcjpRIqMhgEgH+N4CAvNU4UWK7DdD4QM4eRsdT2sU2B3n/k1pU+Q9E6S+WhiBSmuJicc/QzwAsxaOT2abYtghMT+WJ91GR/owcHy4UAMaAP0c8QtihhB1zbc/dRNFrg5Ad0QTYvJHtpZBUGgJZdG86cY474=
+ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
+	s=arc-20240116; t=1782508176; c=relaxed/simple;
+	bh=p5NuRXWxHZL7HSMOlW8j1c7ZG7a/X+DBRZOzL+Au79I=;
+	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
+	 In-Reply-To:Content-Type; b=R9gHe2GA2tEEI1H0shYeLG+fjvoGyPUTLsO6qSGwjiw0zfGoBKnsVNK/x9Zh0+llSuP70pylYdrfdR3hKOTdzt8iu3rib9vETQpKus/JLPdYVK2nlZ7nI455vQEal6LiF2Ed3nlHAhMuPHigw5mmBgdPdfULpL/pYm7u/+3ckQw=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=redhat.com; spf=pass smtp.mailfrom=redhat.com; dkim=pass (1024-bit key) header.d=redhat.com header.i=@redhat.com header.b=ALpWqzxF; arc=none smtp.client-ip=170.10.133.124
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=redhat.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=redhat.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=googlemail.com header.i=@googlemail.com header.b="LhFcW/ds"
-Received: by mail-pl1-f173.google.com with SMTP id d9443c01a7336-2c7f11150cfso9356775ad.1
-        for <sashiko-reviews@lists.linux.dev>; Fri, 26 Jun 2026 13:47:55 -0700 (PDT)
-ARC-Seal: i=1; a=rsa-sha256; t=1782506875; cv=none;
-        d=google.com; s=arc-20260327;
-        b=XgwGunDkAG7Q3Ndu09MiRYJ4Wk9xqCXhF/4rGCScTJhiClKjAG4fe9aY2QulawLZF4
-         uYgqnm0Kh8YG/odWPUSAP2AXeaJjTA0+aLiR8wPuyp1bIss4ezq8kd+wwUEB4Wr5yden
-         CBG78zuS2anwMxszuxs4Tx75e94bDPYUpkrCIzMIEksMPrTUqA5wqF+SkXxN5gAVpolW
-         DtPYT140m+CIDvm5azIubOSc0dBoXj9BGO1yRiFEm5raCgt63FOqMwSoKrn9y5+n976N
-         d2MYJc6u/MHplFusnzv5HOcJ/TWcU3RNXeLEbOZtwLuhkclCUzbW3k3P1WXbn+kRKOTo
-         537Q==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com; s=arc-20260327;
-        h=cc:to:subject:message-id:date:from:in-reply-to:references
-         :mime-version:dkim-signature;
-        bh=sNLuqs8AENajSxrPRNeAARQCcGTvPkM88RwMuF6w8X4=;
-        fh=rXpS7ZoNGj077E0weHvrjKFME5+RZVs0tg1GsovAsn8=;
-        b=oFSdJK8rjIj3A1D9yWq5ITrXKMJnaPQ/hFZ3yLrEDAeMsxJ5VAbFra0k8pKdQG7v76
-         oHHJPJtCVPNmOJqgi1cAQKd74m9V43tC9yUNOE5L5/tUyrZHjIYB0Q5oplK+JJZeAX9F
-         XLcMowT79jIbFKmXASyGbc3Y/Jij3rHZ2PExS0cmWu0GL1aIUD4LXk6NmbPR7KcDbtpJ
-         Nc7CzRVLp97hjPfycg+5igZYdxWflAau5AsaRsW1Z4FbuKkF35VROgm7nDUqNOYjJ+/e
-         70d9VJFBZXeXBJD4+Bhye2oCN1XN1juoAL4fqXzC9J4Ug7m0jb345rYMau2Dzret0uQd
-         v1rA==;
-        darn=lists.linux.dev
-ARC-Authentication-Results: i=1; mx.google.com; arc=none
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=googlemail.com; s=20251104; t=1782506875; x=1783111675; darn=lists.linux.dev;
-        h=cc:to:subject:message-id:date:from:in-reply-to:references
-         :mime-version:from:to:cc:subject:date:message-id:reply-to;
-        bh=sNLuqs8AENajSxrPRNeAARQCcGTvPkM88RwMuF6w8X4=;
-        b=LhFcW/ds0YYHqbq0IH2ar5vtQ/0X+x+4IX3TeXnsicy8m19Y9VaBwhZbJatnZu8yG9
-         eMWmYV/bUx8RQdKSgyUoJOR1iKBfsjVpTL0a9yaJS5ygirnodr0dOfz8pT3rIw119tiB
-         wPE0JA8u99ezX3vk+AcNo5PH6Oktle+p8EgdPO8qvrFPePBhfcZi3yzm15zd9Fk1C0nb
-         JqUb0Iwqj/m8FbKhEp00gwRFbdXnjzyAyrnI+jyEl+uwEjOkgjJ8/xungvMmXaqDlo8h
-         WmVJXxoyl1K47DKeQLSIlaVRrTEUs9y3+iYnAYLtWzSdywaCs6vzM4GWgDp6CuYbiKZs
-         UjDA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20251104; t=1782506875; x=1783111675;
-        h=cc:to:subject:message-id:date:from:in-reply-to:references
-         :mime-version:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=sNLuqs8AENajSxrPRNeAARQCcGTvPkM88RwMuF6w8X4=;
-        b=jJaCERt0nCjm9sBiVoeCoksvcGf64id1EmXW7FJpHYNGj1u9E3HOOcL9wbKip94N6l
-         WRyKfRLDI0pJPou+JPikAs7cEbQMRCvj60xsiLdIqVSXx97jvvGg1ukOUTOoxJb3RDoZ
-         K3+0jM++Vp5r5mYaKirD8PUkKlaTkVbDIQ+Y1rjteh9gv3LhKlJea1GH2+ppqWS8c/Ys
-         2SU8xJp8S+8tANxJaxGaJkIzgolapkdaR6CgAWISAYdFVjji7tW3rxxaO8oJZinVDJqC
-         dhSYY+yHaawo6V/+MNEMdHmGZ3M5sztMfYnO909+vIjr31re+9h3bXJnEgjGghr+GrHw
-         m0BQ==
-X-Gm-Message-State: AOJu0YwOPR28pdELjK27SIXBTs0z9Dw1Y5OGs/OitojxxjlrsIJVkuAS
-	li2BJGqh4Y4W4pzUeWzg/wumE2lT4QANaxGLwQZS5RZxhfAuRlry5wh6mR+/i8qqMOTwQhPRSJu
-	Aag0qwbOpzXD7DmatsmUVmOmTBQlbiXVSVw==
-X-Gm-Gg: AfdE7cnl8rhvmZdEh9InjQSw3z5RteJhDn+Z1dHVS9BoFWiS/I9Ktz6RjqCJT4tcHG9
-	/fQNB3203Qm/a7yTMPI4C4uxlYN1MUHmHPaqm+Bz529aZ73LqPgzUTiqnJ3AmkxyqLlBiQoc9Wv
-	sFY2+iyb2grnjqAqnE95zi6EinOLLKaMrAlo8fpjp+zfHXuc3yGBBlIEn71OoPh29KK21abxKJo
-	rnaDz6gV60hQC3P6oENY2togh2u4jQmkZGu15v3mvLvxmhbboWSS1OLgmDtSHTNGkYvnMdi+Mad
-	JKnQ80rBSjy6AA2dRCAi+TQsd7hYKg==
-X-Received: by 2002:a17:902:ec86:b0:2c0:bcb3:86f with SMTP id
- d9443c01a7336-2c7fc657921mr81245665ad.6.1782506874711; Fri, 26 Jun 2026
- 13:47:54 -0700 (PDT)
+	dkim=pass (1024-bit key) header.d=redhat.com header.i=@redhat.com header.b="ALpWqzxF"
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+	s=mimecast20190719; t=1782508174;
+	h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+	 to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+	 content-transfer-encoding:content-transfer-encoding:
+	 in-reply-to:in-reply-to:references:references;
+	bh=fwmtT1GjJzm138Am5YJs6eEInH1pAcSg3KNmpY7mNK0=;
+	b=ALpWqzxFz7ZhvV7axxZv4jsF79bLA3K7bzVb6Cdz3hEmXXxQQ26OxaTd3hVDERlqX1ijEX
+	cn9ChfnLKqUjxKlMeI2kHmTXuB4jG5c6qUO77vJw7jPa6+DA1FAaAlHVaQSJpZKB0gseXb
+	GcXoOF7JjMgz9BDEu4g8ZWCaA5Notdo=
+Received: from mx-prod-mc-01.mail-002.prod.us-west-2.aws.redhat.com
+ (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
+ relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-646--hCPccckPFWuDWTRCAEopw-1; Fri,
+ 26 Jun 2026 17:09:31 -0400
+X-MC-Unique: -hCPccckPFWuDWTRCAEopw-1
+X-Mimecast-MFC-AGG-ID: -hCPccckPFWuDWTRCAEopw_1782508170
+Received: from mx-prod-int-05.mail-002.prod.us-west-2.aws.redhat.com (mx-prod-int-05.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.17])
+	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+	 key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
+	(No client certificate requested)
+	by mx-prod-mc-01.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS id 1F39A1955EAF;
+	Fri, 26 Jun 2026 21:09:30 +0000 (UTC)
+Received: from [10.2.16.156] (unknown [10.2.16.156])
+	by mx-prod-int-05.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP id C95B71956095;
+	Fri, 26 Jun 2026 21:09:28 +0000 (UTC)
+Message-ID: <5e28abd4-51cf-4bd2-9cde-a9d12b710ecc@redhat.com>
+Date: Fri, 26 Jun 2026 17:09:27 -0400
 Precedence: bulk
 X-Mailing-List: sashiko-reviews@lists.linux.dev
 List-Id: <sashiko-reviews.lists.linux.dev>
 List-Subscribe: <mailto:sashiko-reviews+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:sashiko-reviews+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-References: <20260626080422.4191435-1-christianshewitt@gmail.com> <20260626081559.6EDE41F000E9@smtp.kernel.org>
-In-Reply-To: <20260626081559.6EDE41F000E9@smtp.kernel.org>
-From: Martin Blumenstingl <martin.blumenstingl@googlemail.com>
-Date: Fri, 26 Jun 2026 22:47:43 +0200
-X-Gm-Features: AVVi8CeetCkdMw8FSSJAzul0ZypuaM92e6F0OmO4razl-HqicBdqZsRoebx4nho
-Message-ID: <CAFBinCA8bCvJ92refztTgZsA_PXCUi852B-3a5ytY4LSAncivQ@mail.gmail.com>
-Subject: Re: [PATCH] ASoC: meson: aiu: fifo-spdif: soft reset the S/PDIF
- datapath on start/stop
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH v8 09/11] cgroup/cpuset: Support multiple source cpusets
+ for cpuset_*attach()
 To: sashiko-reviews@lists.linux.dev
-Cc: Christian Hewitt <christianshewitt@gmail.com>, linux-amlogic@lists.infradead.org, 
-	neil.armstrong@linaro.org
-Content-Type: text/plain; charset="UTF-8"
+Cc: hannes@cmpxchg.org, mkoutny@suse.com, tj@kernel.org
+References: <20260626181923.133658-1-longman@redhat.com>
+ <20260626181923.133658-10-longman@redhat.com>
+ <20260626190419.0DDA21F000E9@smtp.kernel.org>
+From: Waiman Long <longman@redhat.com>
+In-Reply-To: <20260626190419.0DDA21F000E9@smtp.kernel.org>
+X-Scanned-By: MIMEDefang 3.0 on 10.30.177.17
+X-Mimecast-Spam-Score: 0
+X-Mimecast-MFC-PROC-ID: V3hx48B5ijIfxGGfbICTxNsxjGuSweB1UfJtIx2Uz4o_1782508170
+X-Mimecast-Originator: redhat.com
+Content-Language: en-US
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
 
-[ ... ]
+On 6/26/26 3:04 PM, sashiko-bot@kernel.org wrote:
+> Thank you for your contribution! Sashiko AI review found 1 potential issue(s) to consider:
 >
-> > @@ -68,12 +69,16 @@ static int fifo_spdif_trigger(struct snd_pcm_substream *substream, int cmd,
-> >       case SNDRV_PCM_TRIGGER_START:
-> >       case SNDRV_PCM_TRIGGER_RESUME:
-> >       case SNDRV_PCM_TRIGGER_PAUSE_RELEASE:
-> > +             snd_soc_component_write(component, AIU_RST_SOFT,
-> > +                                     AIU_RST_SOFT_958_FAST);
+> Pre-existing issues:
+> - [High] This problem wasn't introduced by this patch, but there is a data race on `cpuset->nr_deadline_tasks` between process context (using `cpuset_mutex`) and scheduler context (using `rq->lock`).
+> --
+>
+> commit 359aed8e7e754859ff7cfcc47cab539b93c181d8
+> Author: Waiman Long <longman@redhat.com>
+>
+> cgroup/cpuset: Support multiple source cpusets for cpuset_*attach()
+>
+> This commit updates cpuset migration to handle multiple source cpusets by
+> tracking them in a singly linked list. It correctly updates task migration
+> states for deadline tasks and shifts attach context tracking.
+>
+>> diff --git a/kernel/cgroup/cpuset.c b/kernel/cgroup/cpuset.c
+>> index 39bccb131181a..792b474de237c 100644
+>> --- a/kernel/cgroup/cpuset.c
+>> +++ b/kernel/cgroup/cpuset.c
+> [ ... ]
+>> @@ -3057,6 +3071,25 @@ static void reset_migrate_dl_data(struct cpuset *cs)
+>>   	cs->dl_bw_cpu = -1;
+>>   }
+>>   
+>> +/*
+>> + * Clear and optionally apply (@cancel is false) the attach related data in the
+>> + * source cpusets.
+>> + */
+>> +static void clear_attach_data(struct llist_head *head, bool cancel)
+>> +{
+>> +	struct cpuset *cs, *next;
+>> +	struct llist_node *lnode = __llist_del_all(head);
+>> +
+>> +	llist_for_each_entry_safe(cs, next, lnode, attach_node) {
+>> +		init_llist_node(&cs->attach_node);
+>> +		if (cs->nr_migrate_dl_tasks) {
+>> +			if (!cancel)
+>> +				cs->nr_deadline_tasks += cs->nr_migrate_dl_tasks;
 > [Severity: High]
-> Does this introduce a race condition on start? In fifo_spdif_trigger(),
-> aiu_fifo_trigger() is called before the switch statement, which starts the
-> upstream DMA engine before we issue the downstream S/PDIF fast domain soft
-> reset.
+> This isn't a bug introduced by this patch, but does this non-atomic
+> modification of cs->nr_deadline_tasks introduce a data race with scheduler
+> context?
 >
-> Could this discard audio frames fetched by the DMA into the FIFO before the
-> reset, causing left/right channel swapping and audio artifacts?
-I don't think so. The sequence introduced by Christian matches the
-vendor driver (see my other email with review notes).
+> Looking at inc_dl_tasks_cs(), the same field is modified under rq->lock:
+>
+> kernel/cgroup/cpuset.c:inc_dl_tasks_cs() {
+>      ...
+>      cs->nr_deadline_tasks++;
+>      ...
+> }
+>
+> If one thread modifies this in process context via clear_attach_data() under
+> cpuset_mutex, and concurrently another thread changes a task to SCHED_DEADLINE
+> (via switched_to_dl() -> inc_dl_tasks_cs()) under rq->lock, can the updates be
+> lost due to the race?
+>
+> If the count corrupts and drops to zero prematurely, could
+> dl_update_tasks_root_domain() skip tracking DL bandwidth, violating deadline
+> scheduling bandwidth invariants and potentially leading to CPU overcommit?
 
-> Additionally, the ALSA PCM trigger callback executes in atomic context with
-> the stream spinlock held. Is it safe to call snd_soc_component_write() here?
-My understanding is that ALSA uses mutex instead of spinlocks, meaning
-this comment is incorrect.
+Yes, it looks like we should make nr_deadline_tasks an atomic_t to avoid 
+data corruption.
+
+Cheers,
+Longman
+
+>> +			cs->nr_migrate_dl_tasks = 0;
+>> +		}
+>> +	}
+>> +}
+>> +
+
