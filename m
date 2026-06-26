@@ -1,125 +1,120 @@
-Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
+Received: from endrift.com (endrift.com [173.255.198.10])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BD94E219E8;
-	Fri, 26 Jun 2026 00:56:02 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7884B1E633C
+	for <sashiko-reviews@lists.linux.dev>; Fri, 26 Jun 2026 02:23:39 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=173.255.198.10
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1782435363; cv=none; b=kcDrHOGMH3TQpwYQQaCfFNhpYBWo5kM42KCOfYHGeXBgIyd/VS2NyuRl2rmBwZBaPl49onyTGITcMi7dUnRGNWd5qlqW037Ssh6SmNe0hrD6ELDGFbSQ9LhtvTbWPKtyeHYhYk8Gxi52oJpmNAB3Zc1ZWZNvEqAXVmD2hPBzmqM=
+	t=1782440621; cv=none; b=L3vNfbYGPpZbWAkxAKJXOwJnXLbfkB/GSIIBVc/bNttdXPAAcVmFrELfYk1gRn8IC0CJzfYFkp3byzDIfqoWakIey/QgYStcILDcxGOShho24/ImY+JZbztHl6n7wOzFZlm0Gu0KM4cyTv60EO2ACK3USjdMVK0af/zSpIkayP8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1782435363; c=relaxed/simple;
-	bh=qOX06uWedos8rk+zFyXSIy7MKZGpuLVWmx2CoklomW0=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=VYjPGLv4M7XFm9MaTLXvsRbbATQubT+cG+P+ZhhpSAlmbtwJ5vD/y+r1Wl2hKhGisQ5oRrwlMlr2kdR0T+vD2fCpCgfTMX5KNAcP9V3kojX1TD1bmqYR2GRWMbWDAeATldn698o+gOBKoPm2BE/9MSG8E81sfYbpunNoLGrfH4o=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=mDoepVE5; arc=none smtp.client-ip=100.103.45.18
+	s=arc-20240116; t=1782440621; c=relaxed/simple;
+	bh=XpMC6Y5whEOwulrzdfFzbfqb6Q9PR5L9eW6LFKByM9Y=;
+	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
+	 In-Reply-To:Content-Type; b=hOylqDGK34XvaNrhTlbzzA9G75YRBvjrir9VqgLSf6MbscGkh9lpQQgx3RYl7lPAvGvydPoJt5T6ABYtzJckKd7dP/kcvskxwiEi24D8pAZ5j7AEh2f8mF5JVb3LN2heqrqMwHl49pC/m0DcgmHSqNHCJMNrEMxyD7OBzdktlZA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=endrift.com; spf=pass smtp.mailfrom=endrift.com; dkim=pass (2048-bit key) header.d=endrift.com header.i=@endrift.com header.b=CsUkzDdw; arc=none smtp.client-ip=173.255.198.10
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=endrift.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=endrift.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="mDoepVE5"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 41F9D1F000E9;
-	Fri, 26 Jun 2026 00:56:02 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=kernel.org;
-	s=k20260515; t=1782435362;
-	bh=ysKKFfnEd9fMd34RVQdBVCJIRaNtCRv3LpzVrhgDaX8=;
-	h=Date:From:To:Cc:Subject:References:In-Reply-To;
-	b=mDoepVE53LkKVx3X0Az2q4ZO6fzO0EHxOt2Nsbda81xHb+VAlB8fTyVMuhpvHrca8
-	 Ev50sfyZDfpx4SzeIF1E61JprAyY0Kn8ezkSLSUjfwMkOp8eK95+w+sseNyVwoQDj3
-	 XbO/+7hWvif7xzMKHOf52aIFHqgHHJ+0xP8QuxubpEVp9dnjEthn8okC2TupivYCZ8
-	 yCjgfka+6uDh/2nysqKEfWP2PTpnAEgPYAwcrqTckkTbEIXwhw7kbHxaY/hdGEXc1T
-	 l4+izbOCea818ZmAAcRyxLOScFoZE03Bhg8/pOyrwxVQaLX/ISUfIpZaDnP9QpCB/m
-	 OHrDomEwSY4xA==
-Date: Thu, 25 Jun 2026 17:56:00 -0700
-From: Drew Fustini <fustini@kernel.org>
-To: sashiko-reviews@lists.linux.dev
-Cc: linux-riscv@lists.infradead.org, linux-kernel@vger.kernel.org,
-	linux-rt-devel@lists.linux.dev
-Subject: Re: [PATCH v2 3/8] riscv: Add support for srmcfg CSR from Ssqosid
- extension
-Message-ID: <aj3OIASOuSsvxJ+k@x1>
-References: <20260624-dfustini-atl-sc-cbqri-dt-v2-0-2f8049fd902b@kernel.org>
- <20260624-dfustini-atl-sc-cbqri-dt-v2-3-2f8049fd902b@kernel.org>
- <20260625015006.DF5041F000E9@smtp.kernel.org>
+	dkim=pass (2048-bit key) header.d=endrift.com header.i=@endrift.com header.b="CsUkzDdw"
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=endrift.com; s=2020;
+	t=1782440618; bh=XpMC6Y5whEOwulrzdfFzbfqb6Q9PR5L9eW6LFKByM9Y=;
+	h=Date:Subject:To:Cc:References:From:In-Reply-To:From;
+	b=CsUkzDdwsWccak6XD+kMiz+gq04pq+BZSOLqqg9IWRsJ0yEr5ddUzG+jfV4rHOLRx
+	 OlTCiUZHn2PYv5jfrPNVoVd51RSVAW4XGOG4sjmXOxiUwNFx3gsG29q8VcbeOt7uwT
+	 5NC+Nd3q1D4CSxdmrzNkK2dSKQN2qj4EJoijTgH60IkxvgGFny5s8M8WxlXd5j3dK8
+	 D6clOgqvTU0/yxpRi/PZ5Fj8QGSR4hxtSY9TvfrUzvEFbXmWcFnyRmvYJPNB6d5a+Q
+	 I8/GRqxr+RUF3x0zM34UkLCCaj2kbCe9P1wh454WMgu0anr74PfId5FjkPR03CyMQV
+	 60IYCOpc0mr4g==
+Received: from [192.168.0.27] (71-212-73-87.tukw.qwest.net [71.212.73.87])
+	by endrift.com (Postfix) with ESMTPSA id A68ADA018;
+	Thu, 25 Jun 2026 19:23:38 -0700 (PDT)
+Message-ID: <7dab0b1f-f757-46ad-961f-2114191b0e57@endrift.com>
+Date: Thu, 25 Jun 2026 19:23:36 -0700
 Precedence: bulk
 X-Mailing-List: sashiko-reviews@lists.linux.dev
 List-Id: <sashiko-reviews.lists.linux.dev>
 List-Subscribe: <mailto:sashiko-reviews+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:sashiko-reviews+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <20260625015006.DF5041F000E9@smtp.kernel.org>
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH v6 3/3] HID: nintendo: Add unified report format support
+To: sashiko-reviews@lists.linux.dev
+Cc: dmitry.torokhov@gmail.com, linux-input@vger.kernel.org
+References: <20260625045948.2343168-1-vi@endrift.com>
+ <20260625045948.2343168-4-vi@endrift.com>
+ <20260625051335.6F41E1F000E9@smtp.kernel.org>
+Content-Language: en-US
+From: Vicki Pfau <vi@endrift.com>
+Autocrypt: addr=vi@endrift.com; keydata=
+ xsBNBFtJAmYBCADmRIN9O/aBbYc93lUMvG2hPip++otLit+65EwNHB1y9BmbVr0Q8Tz7rbAM
+ K2mB0EiA4Z3DesoLIOzlJq0E4fgDsAi8ok/i7aTx35d0Qeab95GEdkCMcL98xNJE0agq+KYk
+ pnvFlhdyC23K32KdOijsUqqbd86GgxRZmuf/Yf932KxKAj+n0aFBw5y6i0ep7WQBF6ytpqah
+ Uzy04D//smiTr6rrXg+C09MX0XZ2Fvcv3gmimnoV6C/ZCO1Zecqyhrs0YFfdIhFEBp2ItYim
+ MoeU4g6y726gyRO/+wwzZkryJMU8hHootzW1gUylZeELSwx8uIJSHFiLE7AK+M5soPtDABEB
+ AAHNG1ZpY2tpIFBmYXUgPHZpQGVuZHJpZnQuY29tPsLAjgQTAQoAOBYhBNj+0QMp9OPSosB4
+ 6X72E7X7Nb0rBQJbSQJmAhsDBQsJCAcCBhUKCQgLAgQWAgMBAh4BAheAAAoJEH72E7X7Nb0r
+ WIcH/0GnIOkmAyy2UlgS/VKi193ZRWYJjBfUncIBf57gLt1KYY0PvUoR9MVvkLqcx8vaCxWh
+ bVSqzxT6WU1ECp/URdQV2W4IGB6W4B8rT3VGw0QzbVVQRmt6vReEMFVL+vBfgHKTRBItiy7x
+ Bd+JZDusiyrrGok9TqqkBYlZPWE29ajiOAe05N1UhuRq7y8w/bOkzFD36ohMtfqV4hByWV+q
+ d0LujqgZm1AkM1FqpJ4j8h1Gox5rpmWfaHJmBQ8HcKqQfwACQCvDNHS2vlTXJYfxlh+mVerL
+ YKZgWnyvqx4pLKqJOXQKssIaDjnDfTu6bQgXvhaKb1+piBUYuoe9/+3E15TOwE0EW0kCZgEI
+ AL/KzT+NR1/LbJ7Kuv3gAHFp+S7cfyyPSamN6i6/X135vNSawG7g81iWUweAW6YahFA2haqw
+ t+8/Bm9Dzc8rF6RHCElK1GoHiF4SIYQxjqPo2wwqvTad9FblWTfaYRKfVDvNz2Rz4i681JrR
+ 8gizvzJPX+gocH7FMzPwb1DAwL2kKA5wilgAGSv8nZqeG55hNt2t/XiT6Yd97DJv86D24UUP
+ BetLTq2jUWtX+omt+JhF3QzMjnyGQYKHNXUB/ipBxNSkwnDrWg/f1EjDtNzuOHManJDC9Bqi
+ qhi1abiTNlmmewI5iLEnnxzfSKS5HO9nCC1szl229DHwIMH7jA+G+z0AEQEAAcLAdgQYAQoA
+ IBYhBNj+0QMp9OPSosB46X72E7X7Nb0rBQJbSQJmAhsMAAoJEH72E7X7Nb0roioIAM0oDKEU
+ QH7Og4+AXm35uklIiCX6cFQPgDVlQn7M/QFLnEhhCfPTt8PkIIN4dLgs4lIJxExpgQWgOLUX
+ h+ZLLupzZXoysAXfdwNLf/RqRed/zTZbUjssy4D7yeNIJThzU32kDy0Hx3pMNM/Hd9yaXmHL
+ LDkfwcyQuqA9+eeOogkDC8inLNLfYQ8JtVQZuWppNcbOZkBxfMVAmPHg6C9fe2biQFojoLPe
+ 4nQheprKfBp5QsY2cIjP8kaWPpfJEJ5i2aNgtrfebEzjYoWWLkK78Lo8qABdxkVhH6rhAlw2
+ rVf41cHNCfHF7ddvOb9IItWacXxYn7ql+dI/Se3+ISWDboQ=
+In-Reply-To: <20260625051335.6F41E1F000E9@smtp.kernel.org>
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 7bit
 
-On Thu, Jun 25, 2026 at 01:50:06AM +0000, sashiko-bot@kernel.org wrote:
+
+
+On 6/24/26 10:13 PM, sashiko-bot@kernel.org wrote:
 > Thank you for your contribution! Sashiko AI review found 1 potential issue(s) to consider:
-> - [High] CPU hotplug cache invalidation is registered at the wrong state (CPUHP_AP_ONLINE_DYN), allowing the srmcfg cache sentinel to be overwritten before the CPU goes offline.
+> - [High] Global minimum report size check incorrectly rejects valid legacy, non-unified reports.
 > --
 > 
-> commit d51eb8c4a6c5a57f238cc53688229c08ea6418e1
-> Author: Drew Fustini <fustini@kernel.org>
+> commit ebbc8f2a738bc80390ec8c8785093f44578537e8
+> Author: Vicki Pfau <vi@endrift.com>
 > 
-> riscv: Add support for srmcfg CSR from Ssqosid extension
+> HID: nintendo: Add unified report format support
 > 
-> This commit adds support for the srmcfg CSR defined in the Ssqosid ISA
-> extension. It introduces a per-cpu cache to avoid redundant CSR writes
-> during context switches and uses CPU hotplug and PM notifiers to manage
-> cache invalidation.
+> This commit adds support for the unified report format that all controllers
+> also support. It includes overlapping fields for like buttons and axes between
+> them.
 > 
-> Link: https://github.com/riscv/riscv-ssqosid/releases/tag/v1.0
-> 
-> > diff --git a/arch/riscv/kernel/qos.c b/arch/riscv/kernel/qos.c
-> > new file mode 100644
-> > index 0000000000000..ea33201a43f61
-> > --- /dev/null
-> > +++ b/arch/riscv/kernel/qos.c
+>> diff --git a/drivers/hid/hid-nintendo.c b/drivers/hid/hid-nintendo.c
+>> index ae360f4d15d1a..9cb4a503fe2d3 100644
+>> --- a/drivers/hid/hid-nintendo.c
+>> +++ b/drivers/hid/hid-nintendo.c
 > 
 > [ ... ]
 > 
-> > +static int riscv_srmcfg_reset_cache(unsigned int cpu)
-> > +{
-> > +	per_cpu(cpu_srmcfg, cpu) = U32_MAX;
-> > +	return 0;
-> > +}
-> 
-> [ ... ]
-> 
-> > +static int __init riscv_srmcfg_init(void)
-> > +{
-> > +	int err;
-> > +
-> > +	if (!riscv_has_extension_unlikely(RISCV_ISA_EXT_SSQOSID))
-> > +		return 0;
-> > +
-> > +	/*
-> > +	 * cpuhp_setup_state() invokes the startup callback locally on every
-> > +	 * already-online CPU, so no separate seed loop is needed here.
-> > +	 */
-> > +	err = cpuhp_setup_state(CPUHP_AP_ONLINE_DYN, "riscv/srmcfg:online",
-> > +				riscv_srmcfg_reset_cache, riscv_srmcfg_reset_cache);
+>> @@ -3732,7 +3833,7 @@ static int switch2_event(struct hid_device *hdev, struct hid_report *report, uin
+>>  	if (report->type != HID_INPUT_REPORT)
+>>  		return 0;
+>>  
+>> -	if (size < 15)
+>> +	if (size < 17)
+>>  		return -EINVAL;
+>>  
 > 
 > [Severity: High]
-> Does registering the hotplug callbacks at CPUHP_AP_ONLINE_DYN run too early
-> during teardown and too late during startup?
+> Does this global size check incorrectly reject valid non-unified reports?
 > 
-> Since CPUHP_AP_ONLINE_DYN teardown runs while the CPU is still schedulable,
-> could the U32_MAX sentinel set by riscv_srmcfg_reset_cache() be overwritten
-> by subsequent context switches (such as switching to the idle thread) before
-> the CPU actually goes offline?
+> Since non-unified reports like NS2_REPORT_GC only access up to raw_data[14]
+> and can legitimately have a size of exactly 15 bytes, it seems this check will
+> cause those legitimate 15-byte or 16-byte reports to be dropped with -EINVAL
+> in switch2_event().
+> 
+> Should this 17-byte requirement be scoped inside the case NS2_REPORT_UNIFIED:
+> block instead?
+> 
 
-That is correct that the U32_MAX sentinel can be overwritten by the idle
-task or per-cpu kthreads that run while CPU is dying. This is not a
-problem in practice as they have thread.srmcfg == 0 which results in
-cpu_srmcfg_default.
-
-I will update the riscv_srmcfg_reset_cache() comment to clarify that the
-teardown callback is not relied on.
-
-> If a CPU is offlined and then onlined, the stale cache would persist while
-> the hardware CSR has been reset. Because the CPU becomes schedulable before
-> the CPUHP_AP_ONLINE_DYN startup callback runs, a task matching the stale
-> cache might skip the required CSR write and run with incorrect hardware tags.
-
-A normal task cannot run on the CPU before the startup callback re-arms
-the sentinel. riscv_srmcfg_reset_cache() writes cpu_srmcfg = U32_MAX
-before set_cpu_active(). Only the idle task and per-cpu kthreads run in
-the window before, and they carry thread.srmcfg == 0. That means they
-take the CPU default rcid and mcid, not stale ones.
-
-Drew
+Generally speaking, these reports should always be 63 bytes. This check is mostly here as a basic sanity check to make sure we don't accidentally reach out of bounds in the case of something very weird happening. It's fine if it seems a little overzealous since it's so far beyond normal operation already. I would guess than the Switch 2 rejects anything that short out-of-hand already.
