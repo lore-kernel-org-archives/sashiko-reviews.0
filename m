@@ -1,120 +1,147 @@
-Received: from endrift.com (endrift.com [173.255.198.10])
+Received: from out-171.mta1.migadu.com (out-171.mta1.migadu.com [95.215.58.171])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7884B1E633C
-	for <sashiko-reviews@lists.linux.dev>; Fri, 26 Jun 2026 02:23:39 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=173.255.198.10
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 41C6E3DDDA1
+	for <sashiko-reviews@lists.linux.dev>; Fri, 26 Jun 2026 07:20:56 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=95.215.58.171
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1782440621; cv=none; b=L3vNfbYGPpZbWAkxAKJXOwJnXLbfkB/GSIIBVc/bNttdXPAAcVmFrELfYk1gRn8IC0CJzfYFkp3byzDIfqoWakIey/QgYStcILDcxGOShho24/ImY+JZbztHl6n7wOzFZlm0Gu0KM4cyTv60EO2ACK3USjdMVK0af/zSpIkayP8=
+	t=1782458459; cv=none; b=pdmCk+GuqGATybociyukNLCb7RIA3sfAKV3Z1xNyDDZeQju2TXvf5CSnU+ZcLD4+267VO6h8gxpsabzA7pbvUoWfHNsRzm0vhmYMFdIJPv7Ost2DTGPBSMvLgW/9it8eIaaOL8M4MJEeL+5fkU9iRJxL0Un3XqABY141hAx4/1A=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1782440621; c=relaxed/simple;
-	bh=XpMC6Y5whEOwulrzdfFzbfqb6Q9PR5L9eW6LFKByM9Y=;
-	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=hOylqDGK34XvaNrhTlbzzA9G75YRBvjrir9VqgLSf6MbscGkh9lpQQgx3RYl7lPAvGvydPoJt5T6ABYtzJckKd7dP/kcvskxwiEi24D8pAZ5j7AEh2f8mF5JVb3LN2heqrqMwHl49pC/m0DcgmHSqNHCJMNrEMxyD7OBzdktlZA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=endrift.com; spf=pass smtp.mailfrom=endrift.com; dkim=pass (2048-bit key) header.d=endrift.com header.i=@endrift.com header.b=CsUkzDdw; arc=none smtp.client-ip=173.255.198.10
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=endrift.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=endrift.com
+	s=arc-20240116; t=1782458459; c=relaxed/simple;
+	bh=BAFolVFMNSJJ1WhL7ay+SwoCFLJHn/caCrt8d5Xh0n8=;
+	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
+	 To:Cc:Content-Type; b=I4BhVcgXYqWw4GzqeaqT0+YOiwykGbB6xO3FRD0b1x27HAOpZjTHcI4Xg32GoNHEyrDsDAJyGd8jSvImOQdwBtbgw42MUvrO7uK1MYKBdvBtVdaoU+wNHqIGOgcYzIEfoGpNJNq0gYyJs/l3es/nieh/SN3FEaVp8o4rWd9Dp3Q=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linux.dev; spf=pass smtp.mailfrom=linux.dev; dkim=pass (1024-bit key) header.d=linux.dev header.i=@linux.dev header.b=L28OTF9A; arc=none smtp.client-ip=95.215.58.171
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linux.dev
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linux.dev
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=endrift.com header.i=@endrift.com header.b="CsUkzDdw"
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=endrift.com; s=2020;
-	t=1782440618; bh=XpMC6Y5whEOwulrzdfFzbfqb6Q9PR5L9eW6LFKByM9Y=;
-	h=Date:Subject:To:Cc:References:From:In-Reply-To:From;
-	b=CsUkzDdwsWccak6XD+kMiz+gq04pq+BZSOLqqg9IWRsJ0yEr5ddUzG+jfV4rHOLRx
-	 OlTCiUZHn2PYv5jfrPNVoVd51RSVAW4XGOG4sjmXOxiUwNFx3gsG29q8VcbeOt7uwT
-	 5NC+Nd3q1D4CSxdmrzNkK2dSKQN2qj4EJoijTgH60IkxvgGFny5s8M8WxlXd5j3dK8
-	 D6clOgqvTU0/yxpRi/PZ5Fj8QGSR4hxtSY9TvfrUzvEFbXmWcFnyRmvYJPNB6d5a+Q
-	 I8/GRqxr+RUF3x0zM34UkLCCaj2kbCe9P1wh454WMgu0anr74PfId5FjkPR03CyMQV
-	 60IYCOpc0mr4g==
-Received: from [192.168.0.27] (71-212-73-87.tukw.qwest.net [71.212.73.87])
-	by endrift.com (Postfix) with ESMTPSA id A68ADA018;
-	Thu, 25 Jun 2026 19:23:38 -0700 (PDT)
-Message-ID: <7dab0b1f-f757-46ad-961f-2114191b0e57@endrift.com>
-Date: Thu, 25 Jun 2026 19:23:36 -0700
+	dkim=pass (1024-bit key) header.d=linux.dev header.i=@linux.dev header.b="L28OTF9A"
+X-Gm-Message-State: AOJu0YziZD2h+97OCGPdATYNetSqrdiQLTHJA/ZO+tNUuglKs59w6A8u
+	hj+bU547OXkV7sM2hCEfWPYCNdhgHdgEX3ylltls3v/Y0wIGV5gZ/3SighOlQYredcXdlWSU8pn
+	llLe/FgPxi4gnpPRNJem+2mWysBVqqXtA9VNTV2z1
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linux.dev; s=key1;
+	t=1782458454;
+	h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+	 to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+	 content-transfer-encoding:content-transfer-encoding:
+	 in-reply-to:in-reply-to:references:references;
+	bh=qwwwL0HrcXVcn+htSRSdhtA7hZBA+Y61bxFLzkhaoWU=;
+	b=L28OTF9Ao+YJWOIQ19pNa6KDXHDhInFUwWnFe6D5xyLWKiNBuu6rIo1IapHGjktRYkEJ0x
+	fe9yKV8cbcz88TRcBrI9g9jxu7tPpgoo3vXAWdjH9J9Fnj04TSw6TcR81XPQjHOc9Pv2WY
+	tuYgjP8wsCRrdvkhEmTVuodrEZdHLfY=
+X-Received: by 2002:a05:622a:2516:b0:517:99ea:ab7e with SMTP id
+ d75a77b69052e-51a7d830b45mr7217711cf.24.1782458437067; Fri, 26 Jun 2026
+ 00:20:37 -0700 (PDT)
 Precedence: bulk
 X-Mailing-List: sashiko-reviews@lists.linux.dev
 List-Id: <sashiko-reviews.lists.linux.dev>
 List-Subscribe: <mailto:sashiko-reviews+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:sashiko-reviews+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v6 3/3] HID: nintendo: Add unified report format support
+References: <20260619070508.802802-1-tabba@google.com> <20260619070508.802802-5-tabba@google.com>
+ <20260619071601.A5E641F000E9@smtp.kernel.org> <CA+EHjTwpB2fmoYGfkP5RVZcB4sgbVPQ0=QR5dyUJnpQ_VQa+pA@mail.gmail.com>
+In-Reply-To: <CA+EHjTwpB2fmoYGfkP5RVZcB4sgbVPQ0=QR5dyUJnpQ_VQa+pA@mail.gmail.com>
+X-Report-Abuse: Please report any abuse attempt to abuse@migadu.com and include these headers.
+From: Fuad Tabba <fuad.tabba@linux.dev>
+Date: Fri, 26 Jun 2026 08:19:59 +0100
+X-Gmail-Original-Message-ID: <CA+EHjTy2MyMzv8oq-x87LZJLf7y-SHxO1jwWXA3x0M_HUKSGSw@mail.gmail.com>
+X-Gm-Features: AVVi8Ce8dyIuWx8tJVPE2blGqNzxnjcwkrzuo6Dzb1kt0PXRRI5yESCQ1UTFP9Q
+Message-ID: <CA+EHjTy2MyMzv8oq-x87LZJLf7y-SHxO1jwWXA3x0M_HUKSGSw@mail.gmail.com>
+Subject: Re: [PATCH 4/8] KVM: arm64: Move PSCI helper functions to a shared header
 To: sashiko-reviews@lists.linux.dev
-Cc: dmitry.torokhov@gmail.com, linux-input@vger.kernel.org
-References: <20260625045948.2343168-1-vi@endrift.com>
- <20260625045948.2343168-4-vi@endrift.com>
- <20260625051335.6F41E1F000E9@smtp.kernel.org>
-Content-Language: en-US
-From: Vicki Pfau <vi@endrift.com>
-Autocrypt: addr=vi@endrift.com; keydata=
- xsBNBFtJAmYBCADmRIN9O/aBbYc93lUMvG2hPip++otLit+65EwNHB1y9BmbVr0Q8Tz7rbAM
- K2mB0EiA4Z3DesoLIOzlJq0E4fgDsAi8ok/i7aTx35d0Qeab95GEdkCMcL98xNJE0agq+KYk
- pnvFlhdyC23K32KdOijsUqqbd86GgxRZmuf/Yf932KxKAj+n0aFBw5y6i0ep7WQBF6ytpqah
- Uzy04D//smiTr6rrXg+C09MX0XZ2Fvcv3gmimnoV6C/ZCO1Zecqyhrs0YFfdIhFEBp2ItYim
- MoeU4g6y726gyRO/+wwzZkryJMU8hHootzW1gUylZeELSwx8uIJSHFiLE7AK+M5soPtDABEB
- AAHNG1ZpY2tpIFBmYXUgPHZpQGVuZHJpZnQuY29tPsLAjgQTAQoAOBYhBNj+0QMp9OPSosB4
- 6X72E7X7Nb0rBQJbSQJmAhsDBQsJCAcCBhUKCQgLAgQWAgMBAh4BAheAAAoJEH72E7X7Nb0r
- WIcH/0GnIOkmAyy2UlgS/VKi193ZRWYJjBfUncIBf57gLt1KYY0PvUoR9MVvkLqcx8vaCxWh
- bVSqzxT6WU1ECp/URdQV2W4IGB6W4B8rT3VGw0QzbVVQRmt6vReEMFVL+vBfgHKTRBItiy7x
- Bd+JZDusiyrrGok9TqqkBYlZPWE29ajiOAe05N1UhuRq7y8w/bOkzFD36ohMtfqV4hByWV+q
- d0LujqgZm1AkM1FqpJ4j8h1Gox5rpmWfaHJmBQ8HcKqQfwACQCvDNHS2vlTXJYfxlh+mVerL
- YKZgWnyvqx4pLKqJOXQKssIaDjnDfTu6bQgXvhaKb1+piBUYuoe9/+3E15TOwE0EW0kCZgEI
- AL/KzT+NR1/LbJ7Kuv3gAHFp+S7cfyyPSamN6i6/X135vNSawG7g81iWUweAW6YahFA2haqw
- t+8/Bm9Dzc8rF6RHCElK1GoHiF4SIYQxjqPo2wwqvTad9FblWTfaYRKfVDvNz2Rz4i681JrR
- 8gizvzJPX+gocH7FMzPwb1DAwL2kKA5wilgAGSv8nZqeG55hNt2t/XiT6Yd97DJv86D24UUP
- BetLTq2jUWtX+omt+JhF3QzMjnyGQYKHNXUB/ipBxNSkwnDrWg/f1EjDtNzuOHManJDC9Bqi
- qhi1abiTNlmmewI5iLEnnxzfSKS5HO9nCC1szl229DHwIMH7jA+G+z0AEQEAAcLAdgQYAQoA
- IBYhBNj+0QMp9OPSosB46X72E7X7Nb0rBQJbSQJmAhsMAAoJEH72E7X7Nb0roioIAM0oDKEU
- QH7Og4+AXm35uklIiCX6cFQPgDVlQn7M/QFLnEhhCfPTt8PkIIN4dLgs4lIJxExpgQWgOLUX
- h+ZLLupzZXoysAXfdwNLf/RqRed/zTZbUjssy4D7yeNIJThzU32kDy0Hx3pMNM/Hd9yaXmHL
- LDkfwcyQuqA9+eeOogkDC8inLNLfYQ8JtVQZuWppNcbOZkBxfMVAmPHg6C9fe2biQFojoLPe
- 4nQheprKfBp5QsY2cIjP8kaWPpfJEJ5i2aNgtrfebEzjYoWWLkK78Lo8qABdxkVhH6rhAlw2
- rVf41cHNCfHF7ddvOb9IItWacXxYn7ql+dI/Se3+ISWDboQ=
-In-Reply-To: <20260625051335.6F41E1F000E9@smtp.kernel.org>
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 7bit
+Cc: kvmarm@lists.linux.dev, Oliver Upton <oupton@kernel.org>, 
+	Marc Zyngier <maz@kernel.org>
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
+X-Migadu-Flow: FLOW_OUT
 
+On Fri, 19 Jun 2026 at 08:24, Fuad Tabba <tabba@google.com> wrote:
+>
+> On Fri, 19 Jun 2026 at 08:16, <sashiko-bot@kernel.org> wrote:
+> >
+> > Thank you for your contribution! Sashiko AI review found 1 potential is=
+sue(s) to consider:
+> > - [Low] The header `include/kvm/arm_psci.h` is not self-contained due t=
+o missing includes for dependencies used in the newly added inline function=
+s.
+>
+> The header was already not self-contained before this commit: the
+> pre-existing kvm_psci_version() uses vcpu_has_feature() from
+> asm/kvm_emulate.h without including it. Every .c file that includes
+> arm_psci.h already includes kvm_emulate.h. The other dependencies
+> (lower_32_bits, MPIDR_HWID_BITMASK) are transitively available through
+> linux/kvm_host.h.
 
+We've been throught this before my friend [1]
 
-On 6/24/26 10:13 PM, sashiko-bot@kernel.org wrote:
-> Thank you for your contribution! Sashiko AI review found 1 potential issue(s) to consider:
-> - [High] Global minimum report size check incorrectly rejects valid legacy, non-unified reports.
-> --
-> 
-> commit ebbc8f2a738bc80390ec8c8785093f44578537e8
-> Author: Vicki Pfau <vi@endrift.com>
-> 
-> HID: nintendo: Add unified report format support
-> 
-> This commit adds support for the unified report format that all controllers
-> also support. It includes overlapping fields for like buttons and axes between
-> them.
-> 
->> diff --git a/drivers/hid/hid-nintendo.c b/drivers/hid/hid-nintendo.c
->> index ae360f4d15d1a..9cb4a503fe2d3 100644
->> --- a/drivers/hid/hid-nintendo.c
->> +++ b/drivers/hid/hid-nintendo.c
-> 
-> [ ... ]
-> 
->> @@ -3732,7 +3833,7 @@ static int switch2_event(struct hid_device *hdev, struct hid_report *report, uin
->>  	if (report->type != HID_INPUT_REPORT)
->>  		return 0;
->>  
->> -	if (size < 15)
->> +	if (size < 17)
->>  		return -EINVAL;
->>  
-> 
-> [Severity: High]
-> Does this global size check incorrectly reject valid non-unified reports?
-> 
-> Since non-unified reports like NS2_REPORT_GC only access up to raw_data[14]
-> and can legitimately have a size of exactly 15 bytes, it seems this check will
-> cause those legitimate 15-byte or 16-byte reports to be dropped with -EINVAL
-> in switch2_event().
-> 
-> Should this 17-byte requirement be scoped inside the case NS2_REPORT_UNIFIED:
-> block instead?
-> 
+The header was already not self-contained before this commit: the
+pre-existing kvm_psci_version() uses vcpu_has_feature() from
+asm/kvm_emulate.h without including it. Every .c file that includes
+arm_psci.h already includes kvm_emulate.h. The other dependencies
+(lower_32_bits, MPIDR_HWID_BITMASK) are transitively available through
+linux/kvm_host.h.
 
-Generally speaking, these reports should always be 63 bytes. This check is mostly here as a basic sanity check to make sure we don't accidentally reach out of bounds in the case of something very weird happening. It's fine if it seems a little overzealous since it's so far beyond normal operation already. I would guess than the Switch 2 rejects anything that short out-of-hand already.
+Cheers,
+/fuad
+
+[1] https://lore.kernel.org/all/CA+EHjTwpB2fmoYGfkP5RVZcB4sgbVPQ0=3DQR5dyUJ=
+npQ_VQa+pA@mail.gmail.com/
+
+>
+> Cheers,
+> /fuad
+>
+> > --
+> >
+> > commit 5533f45659b895d2266b9d4cfb6fd00ea1dc5f92
+> > Author: Fuad Tabba <tabba@google.com>
+> >
+> > KVM: arm64: Move PSCI helper functions to a shared header
+> >
+> > This commit moves several PSCI helper functions out of psci.c and into =
+the
+> > shared include/kvm/arm_psci.h header. This includes kvm_psci_valid_affi=
+nity()
+> > and kvm_psci_narrow_to_32bit(), along with renaming psci_affinity_mask(=
+).
+> >
+> > [ ... ]
+> >
+> > > diff --git a/include/kvm/arm_psci.h b/include/kvm/arm_psci.h
+> > > index cbaec804eb839..f86a006d67136 100644
+> > > --- a/include/kvm/arm_psci.h
+> > > +++ b/include/kvm/arm_psci.h
+> > > @@ -38,6 +38,33 @@ static inline int kvm_psci_version(struct kvm_vcpu=
+ *vcpu)
+> > >       return KVM_ARM_PSCI_0_1;
+> > >  }
+> > >
+> > > +/* Narrow the PSCI register arguments (r1 to r3) to 32 bits. */
+> > > +static inline void kvm_psci_narrow_to_32bit(struct kvm_vcpu *vcpu)
+> > > +{
+> > > +     int i;
+> > > +
+> > > +     /*
+> > > +      * Zero the input registers' upper 32 bits. They will be fully
+> > > +      * zeroed on exit, so we're fine changing them in place.
+> > > +      */
+> > > +     for (i =3D 1; i < 4; i++)
+> > > +             vcpu_set_reg(vcpu, i, lower_32_bits(vcpu_get_reg(vcpu, =
+i)));
+> >
+> > [Severity: Low]
+> > Does this change leave arm_psci.h relying on implicit includes?
+> >
+> > The moved inline function kvm_psci_narrow_to_32bit() relies on vcpu_set=
+_reg()
+> > and vcpu_get_reg() which are defined in asm/kvm_emulate.h, as well as
+> > lower_32_bits() which comes from linux/wordpart.h.
+> >
+> > Should this header explicitly include those files to ensure it remains
+> > self-contained, so that future users don't encounter build errors if th=
+ey
+> > include this file first?
+> >
+> > --
+> > Sashiko AI review =C2=B7 https://sashiko.dev/#/patchset/20260619070508.=
+802802-1-tabba@google.com?part=3D4
