@@ -1,106 +1,250 @@
-Received: from perceval.ideasonboard.com (perceval.ideasonboard.com [213.167.242.64])
+Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2D9533DBD55;
-	Fri, 26 Jun 2026 12:33:07 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=213.167.242.64
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 22AB43F44FC;
+	Fri, 26 Jun 2026 12:41:10 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1782477190; cv=none; b=Dk3wp5vo5t7B34Gb6aetHB0FBnteyh4bZ3S+qR7uW6TKxdWBKNpad+9W86H2NvDrEmbw5RWhhoVVD6BFTglEvz0Y7jV9eV7L8Za1TtyPx6JDPo6tEa9Qy8Cn8UBrPbfNvAJ07nl2rc1rt0aRB8fzY6K1JrM5YPl0Gk44ZJq2JbI=
+	t=1782477672; cv=none; b=b5V5Alth+D6oRBruqD8TwTvhTcgrY4Hw8PFyqNhDGhvg/gKMaFElwAGplCdUcrhjN5Enhcm67BpzJQ0hYyxAHCRzWkpdGCm4seNDSalKxXKHs32M6kqHmwSEc8PAD7V6KwkT/3DHdrSfAqRB+roUYnDDKTodkCJ5OKUfNvwvjMk=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1782477190; c=relaxed/simple;
-	bh=AD/rgS2yrWJfwfl9/AeTa0uM/dDOan4Hs9d7ZKdjbjA=;
-	h=Content-Type:MIME-Version:In-Reply-To:References:Subject:From:Cc:
-	 To:Date:Message-ID; b=otATfaHBpLV1r6hdhFubXevDl/oO4GRGSA7dKRgdKUGAinJqCwNquCl+ihF5N+j30RqLZSxawG9AbLnzspaBle1x1jvkQGUMJRfd8AwuTK1k8zP2OmMx2NuTyYKlWdy/sW1JVq/Vs2lb8wr91o3UqV2dzpKaZC110jmHhX55gBE=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=ideasonboard.com; spf=pass smtp.mailfrom=ideasonboard.com; dkim=pass (1024-bit key) header.d=ideasonboard.com header.i=@ideasonboard.com header.b=Y9bufFXA; arc=none smtp.client-ip=213.167.242.64
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=ideasonboard.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=ideasonboard.com
+	s=arc-20240116; t=1782477672; c=relaxed/simple;
+	bh=0UejVAi8/6569N1EBprj5W/iqY2e5pWsMrCOAhU645I=;
+	h=Date:Message-ID:From:To:Cc:Subject:In-Reply-To:References:
+	 MIME-Version:Content-Type; b=M4X8ny1ALUvD3kbmA7ybcNcE39QT1zeS+sdnCa9eqZ+57o6I4apFipzVSUiVfB7rsEEtKfAdi2x0BudIX0ku5xhKNARxoVCueSdF1el1C/NT/docDjJVmaX7KSkl+v6Hc+EWpvLSzmwd56VGCZNIyNvSJVLoOdjVYm9HYZNOGfQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=APJDhQw1; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=ideasonboard.com header.i=@ideasonboard.com header.b="Y9bufFXA"
-Received: from monstersaurus.ideasonboard.com (cpc89244-aztw30-2-0-cust6594.18-1.cable.virginm.net [86.31.185.195])
-	by perceval.ideasonboard.com (Postfix) with ESMTPSA id D7DFF174;
-	Fri, 26 Jun 2026 14:32:25 +0200 (CEST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=ideasonboard.com;
-	s=mail; t=1782477145;
-	bh=AD/rgS2yrWJfwfl9/AeTa0uM/dDOan4Hs9d7ZKdjbjA=;
-	h=In-Reply-To:References:Subject:From:Cc:To:Date:From;
-	b=Y9bufFXANqvkz3zqsR4De5M/U2SwIEdDJTuNDQIIIPzu76cjy8lmVCUHdi+4YM7pY
-	 Ru7JmT8Bc2PXjx5Xirb2rcDeN4lTLxXtXrC5NNWy+buy9GAbyAKcy3YJn19vEknbuB
-	 a7FiiB6RCy+A05grpyybGkvGwvgQpDse84JXEVwM=
-Content-Type: text/plain; charset="utf-8"
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="APJDhQw1"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id C11AD1F000E9;
+	Fri, 26 Jun 2026 12:41:10 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=kernel.org;
+	s=k20260515; t=1782477670;
+	bh=3NCzdsx5KZMZ1wmssjwQd/gh170VUGx221Dc/0PwPbk=;
+	h=Date:From:To:Cc:Subject:In-Reply-To:References;
+	b=APJDhQw18cZQHEntw+EbWHvLcFysGmIjCcOUsPdcXTYMb0YsPKzRdB7GM/lNRBCqi
+	 EjgnnhtcS/Vwrli3SVVGwJyb34oGUU46fcwgvkPGPmy5AK6I/jRxQ5dJYscMUVlYPJ
+	 ggeDj1eiRLtuWUKJBVejTrluidMzRtvieaXgFBe2NX3mU39NlSRXTvafWDcfJNSkAQ
+	 9CVJwELsZmScSu0yMHXXwvKfglSYvDj79Mbtj1hzOHOPBYCrxJwAMPjbVA81nmtHf0
+	 0yTBcwijhJNqyAXpZxzBrCpi+LiuYcK5lzpWYRQ77rpEXl9jBk651lX4ntuNhVfstN
+	 BpVeEhY8GOJiw==
+Received: from sofa.misterjones.org ([185.219.108.64] helo=goblin-girl.misterjones.org)
+	by disco-boy.misterjones.org with esmtpsa  (TLS1.3) tls TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384
+	(Exim 4.98.2)
+	(envelope-from <maz@kernel.org>)
+	id 1wd5rp-0000000GKvi-0Cvk;
+	Fri, 26 Jun 2026 12:41:09 +0000
+Date: Fri, 26 Jun 2026 13:41:08 +0100
+Message-ID: <86a4shqxsr.wl-maz@kernel.org>
+From: Marc Zyngier <maz@kernel.org>
+To: sashiko-reviews@lists.linux.dev
+Cc: kvmarm@lists.linux.dev,
+	kvm@vger.kernel.org,
+	"Oliver Upton" <oupton@kernel.org>
+Subject: Re: [PATCH] KVM: Make kvm_io_bus_get_dev() filter devices by ops
+In-Reply-To: <20260626114635.82A0B1F00A3A@smtp.kernel.org>
+References: <20260626111344.802555-1-maz@kernel.org>
+	<20260626114635.82A0B1F00A3A@smtp.kernel.org>
+User-Agent: Wanderlust/2.15.9 (Almost Unreal) SEMI-EPG/1.14.7 (Harue)
+ FLIM-LB/1.14.9 (=?UTF-8?B?R29qxY0=?=) APEL-LB/10.8 EasyPG/1.0.0 Emacs/30.1
+ (aarch64-unknown-linux-gnu) MULE/6.0 (HANACHIRUSATO)
 Precedence: bulk
 X-Mailing-List: sashiko-reviews@lists.linux.dev
 List-Id: <sashiko-reviews.lists.linux.dev>
 List-Subscribe: <mailto:sashiko-reviews+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:sashiko-reviews+unsubscribe@lists.linux.dev>
-MIME-Version: 1.0
+MIME-Version: 1.0 (generated by SEMI-EPG 1.14.7 - "Harue")
+Content-Type: text/plain; charset=US-ASCII
 Content-Transfer-Encoding: quoted-printable
-In-Reply-To: <20260626121557.92C6D1F000E9@smtp.kernel.org>
-References: <20260626-kbingham-orientation-v2-0-47178be927b4@ideasonboard.com> <20260626-kbingham-orientation-v2-4-47178be927b4@ideasonboard.com> <20260626121557.92C6D1F000E9@smtp.kernel.org>
-Subject: Re: [PATCH v2 4/8] ARM: tegra: Convert to new media orientation definitions
-From: Kieran Bingham <kieran.bingham@ideasonboard.com>
-Cc: wsa+renesas@sang-engineering.com, devicetree@vger.kernel.org, robh@kernel.org, conor+dt@kernel.org, Frank.Li@kernel.org, imx@lists.linux.dev
-To: sashiko-bot@kernel.org, sashiko-reviews@lists.linux.dev
-Date: Fri, 26 Jun 2026 13:33:04 +0100
-Message-ID: <178247718423.372005.12851091564301822991@ping.linuxembedded.co.uk>
-User-Agent: alot/0.9.1
+X-SA-Exim-Connect-IP: 185.219.108.64
+X-SA-Exim-Rcpt-To: sashiko-reviews@lists.linux.dev, kvmarm@lists.linux.dev, kvm@vger.kernel.org, oupton@kernel.org
+X-SA-Exim-Mail-From: maz@kernel.org
+X-SA-Exim-Scanned: No (on disco-boy.misterjones.org); SAEximRunCond expanded to false
 
-Hi Sashiko,
-
-Quoting sashiko-bot@kernel.org (2026-06-26 13:15:57)
+On Fri, 26 Jun 2026 12:46:35 +0100,
+sashiko-bot@kernel.org wrote:
+>=20
 > Thank you for your contribution! Sashiko AI review found 1 potential issu=
 e(s) to consider:
-> - [Low] The commit introduces an undefined macro `MEDIA_ORIENTATION_REAR`=
-, causing a Device Tree Compiler (dtc) build failure.
+>=20
+> Pre-existing issues:
+> - [High] Dropping the SRCU lock in kvm_io_bus_get_dev() exposes a Use-Aft=
+er-Free for VGIC redistributors.
 > --
 >=20
-> commit 26c9ba57e237b4ebfdbb6dbf2af353106c11c695
-> Author: Kieran Bingham <kieran.bingham@ideasonboard.com>
+> commit 954101cd7bbd1642133e68638e5210cf89b88023
+> Author: Marc Zyngier <maz@kernel.org>
 >=20
-> ARM: tegra: Convert to new media orientation definitions
+> KVM: Make kvm_io_bus_get_dev() filter devices by ops
 >=20
-> The commit updates the NVIDIA device trees to use new media orientation
-> definitions instead of hardcoded integer values for video interface devic=
-es.
+> This commit updates kvm_io_bus_get_dev() to check the device ops pointer
+> before dropping the SRCU lock. This aims to prevent lifetime issues where
+> a caller might introspect an object of the wrong type after the lock is
+> dropped.
 >=20
-> > diff --git a/arch/arm/boot/dts/nvidia/tegra30-lg-x3.dtsi b/arch/arm/boo=
-t/dts/nvidia/tegra30-lg-x3.dtsi
-> > index 60e8a19aa70ec..c58e3026a115e 100644
-> > --- a/arch/arm/boot/dts/nvidia/tegra30-lg-x3.dtsi
-> > +++ b/arch/arm/boot/dts/nvidia/tegra30-lg-x3.dtsi
+> > diff --git a/virt/kvm/kvm_main.c b/virt/kvm/kvm_main.c
+> > --- a/virt/kvm/kvm_main.c
+> > +++ b/virt/kvm/kvm_main.c
+>=20
 > [ ... ]
-> > @@ -1216,7 +1217,7 @@ rear-camera@10 {
-> >                       dvdd-supply =3D <&vdd_1v2_rear>;
-> >                       avdd-supply =3D <&vdd_2v7_rear>;
+>=20
+> > @@ -6081,7 +6082,9 @@ struct kvm_io_device *kvm_io_bus_get_dev(struct k=
+vm *kvm, enum kvm_bus bus_idx,
+> >  	if (dev_idx < 0)
+> >  		goto out_unlock;
 > > =20
-> > -                     orientation =3D <1>; /* Rear camera */
-> > +                     orientation =3D <MEDIA_ORIENTATION_REAR>;
->=20
-> [Severity: Low]
-> Will this cause a Device Tree Compiler build failure?
->=20
-> Looking at the dt-bindings/media/video-interface-devices.h header, it
-> defines MEDIA_ORIENTATION_FRONT, MEDIA_ORIENTATION_BACK, and
-> MEDIA_ORIENTATION_EXTERNAL.
->=20
-> Since MEDIA_ORIENTATION_REAR is undefined, the C preprocessor will leave =
-it
-> as an unexpanded token, which will cause a syntax error when dtc parses i=
-t.
-> Could this be updated to use MEDIA_ORIENTATION_BACK instead?
-
-Ah man - the heat must have been getting to me. That's definitely
-supposed to be MEDIA_ORIENTATION_BACK. I shouldn't have read the comment
-I replaced.
-
---
-Kieran
-
-
->=20
-> >                       rotation =3D <90>;
+> > -	iodev =3D bus->range[dev_idx].dev;
+> > +	if (bus->range[dev_idx].dev &&
+> > +	    bus->range[dev_idx].dev->ops =3D=3D ops)
+> > +		iodev =3D bus->range[dev_idx].dev;
 > > =20
-> >                       nvmem =3D <&m24c08>;
+> >  out_unlock:
+> >  	srcu_read_unlock(&kvm->srcu, srcu_idx);
 >=20
-> --=20
-> Sashiko AI review =C2=B7 https://sashiko.dev/#/patchset/20260626-kbingham=
--orientation-v2-0-47178be927b4@ideasonboard.com?part=3D4
+> [Severity: High]
+> This is a pre-existing issue, but does dropping the SRCU lock here before
+> returning the matched device pointer expose a use-after-free?
+>=20
+> If a host VMM concurrently executes KVM_SIGNAL_MSI (with a doorbell addre=
+ss
+> overlapping the redistributor) and KVM_CREATE_VCPU (forced to fail due to
+> resource exhaustion), the failed vCPU creation path can unregister the
+> device and free the vCPU memory.
+>=20
+> Because the SRCU lock is already dropped here, the unregister path won't
+> be blocked. When the MSI injection path resumes in __vgic_doorbell_to_its=
+(),
+> it can dereference the freed vCPU memory:
+>=20
+> arch/arm64/kvm/vgic/vgic-its.c:__vgic_doorbell_to_its() {
+>     ...
+>     kvm_io_dev =3D kvm_io_bus_get_dev(kvm, KVM_MMIO_BUS, &kvm_io_gic_ops,=
+ db);
+>     if (!kvm_io_dev)
+>         return ERR_PTR(-EINVAL);
+>=20
+>     iodev =3D container_of(kvm_io_dev, struct vgic_io_device, dev);
+>     if (iodev->iodev_type !=3D IODEV_ITS)
+>         return ERR_PTR(-EINVAL);
+>     ...
+> }
+
+Gniii... I guess the last option is to bite the bullet and make sure
+that any filtering occurs with the SRCU lock held. Something like the
+patch below. Or just move the locking outside of the helper and keep
+it completely inside the caller.
+
+	M.
+
+=46rom 4f6872cf57b3d30dcc81155e0ef6ac8bc6075fba Mon Sep 17 00:00:00 2001
+From: Marc Zyngier <maz@kernel.org>
+Date: Thu, 25 Jun 2026 15:28:38 +0100
+Subject: [PATCH] KVM: Add lock-protected filtering to kvm_io_bus_get_dev()
+
+kvm_io_bus_get_dev() returns a device that is only matched by the
+address, and nothing else. This can cause a lifetime issue if
+the matched device is not the expected type, as by the time
+the caller can introspect the object, it might be gone (the srcu
+lock having been dropped).
+
+Add a callback to this helper so that users can check the validity
+of the device while under the srcu lock, and update the sole user
+to pass its own filter.
+
+Reported-by: Will Deacon <will@kernel.org>
+Signed-off-by: Marc Zyngier <maz@kernel.org>
+Fixes: 8a39d00670f07 ("KVM: kvm_io_bus: Add kvm_io_bus_get_dev() call")
+Cc: stable@vger.kernel.org
+---
+ arch/arm64/kvm/vgic/vgic-its.c | 24 ++++++++++++++----------
+ include/linux/kvm_host.h       |  1 +
+ virt/kvm/kvm_main.c            |  4 +++-
+ 3 files changed, 18 insertions(+), 11 deletions(-)
+
+diff --git a/arch/arm64/kvm/vgic/vgic-its.c b/arch/arm64/kvm/vgic/vgic-its.c
+index 4477f870c7b36..d8541690e7ba2 100644
+--- a/arch/arm64/kvm/vgic/vgic-its.c
++++ b/arch/arm64/kvm/vgic/vgic-its.c
+@@ -503,23 +503,27 @@ static unsigned long vgic_mmio_read_its_idregs(struct=
+ kvm *kvm,
+ 	return 0;
+ }
+=20
++static bool vgic_its_device_filter(struct kvm_io_device *dev)
++{
++	if (dev && dev->ops =3D=3D &kvm_io_gic_ops) {
++		struct vgic_io_device *iodev;
++
++		iodev =3D container_of(dev, struct vgic_io_device, dev);
++		return iodev->iodev_type =3D=3D IODEV_ITS;
++	}
++
++	return false;
++}
++
+ static struct vgic_its *__vgic_doorbell_to_its(struct kvm *kvm, gpa_t db)
+ {
+ 	struct kvm_io_device *kvm_io_dev;
+-	struct vgic_io_device *iodev;
+=20
+-	kvm_io_dev =3D kvm_io_bus_get_dev(kvm, KVM_MMIO_BUS, db);
++	kvm_io_dev =3D kvm_io_bus_get_dev(kvm, KVM_MMIO_BUS, vgic_its_device_filt=
+er, db);
+ 	if (!kvm_io_dev)
+ 		return ERR_PTR(-EINVAL);
+=20
+-	if (kvm_io_dev->ops !=3D &kvm_io_gic_ops)
+-		return ERR_PTR(-EINVAL);
+-
+-	iodev =3D container_of(kvm_io_dev, struct vgic_io_device, dev);
+-	if (iodev->iodev_type !=3D IODEV_ITS)
+-		return ERR_PTR(-EINVAL);
+-
+-	return iodev->its;
++	return container_of(kvm_io_dev, struct vgic_io_device, dev)->its;
+ }
+=20
+ static unsigned long vgic_its_cache_key(u32 devid, u32 eventid)
+diff --git a/include/linux/kvm_host.h b/include/linux/kvm_host.h
+index 4c14aee1fb063..3610a6986be3d 100644
+--- a/include/linux/kvm_host.h
++++ b/include/linux/kvm_host.h
+@@ -231,6 +231,7 @@ int kvm_io_bus_register_dev(struct kvm *kvm, enum kvm_b=
+us bus_idx, gpa_t addr,
+ int kvm_io_bus_unregister_dev(struct kvm *kvm, enum kvm_bus bus_idx,
+ 			      struct kvm_io_device *dev);
+ struct kvm_io_device *kvm_io_bus_get_dev(struct kvm *kvm, enum kvm_bus bus=
+_idx,
++					 bool (*filter)(struct kvm_io_device *),
+ 					 gpa_t addr);
+=20
+ #ifdef CONFIG_KVM_ASYNC_PF
+diff --git a/virt/kvm/kvm_main.c b/virt/kvm/kvm_main.c
+index 881f92d7a469e..c4f6044ae89fe 100644
+--- a/virt/kvm/kvm_main.c
++++ b/virt/kvm/kvm_main.c
+@@ -6066,6 +6066,7 @@ int kvm_io_bus_unregister_dev(struct kvm *kvm, enum k=
+vm_bus bus_idx,
+ }
+=20
+ struct kvm_io_device *kvm_io_bus_get_dev(struct kvm *kvm, enum kvm_bus bus=
+_idx,
++					 bool (*filter)(struct kvm_io_device *),
+ 					 gpa_t addr)
+ {
+ 	struct kvm_io_bus *bus;
+@@ -6082,7 +6083,8 @@ struct kvm_io_device *kvm_io_bus_get_dev(struct kvm *=
+kvm, enum kvm_bus bus_idx,
+ 	if (dev_idx < 0)
+ 		goto out_unlock;
+=20
+-	iodev =3D bus->range[dev_idx].dev;
++	if (filter(bus->range[dev_idx].dev))
++		iodev =3D bus->range[dev_idx].dev;
+=20
+ out_unlock:
+ 	srcu_read_unlock(&kvm->srcu, srcu_idx);
+--=20
+2.47.3
+
+
+--=20
+Without deviation from the norm, progress is not possible.
