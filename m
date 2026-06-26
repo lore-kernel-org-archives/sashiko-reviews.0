@@ -1,83 +1,106 @@
-Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
+Received: from perceval.ideasonboard.com (perceval.ideasonboard.com [213.167.242.64])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C2A4237188A;
-	Fri, 26 Jun 2026 10:53:36 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2D9533DBD55;
+	Fri, 26 Jun 2026 12:33:07 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=213.167.242.64
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1782471217; cv=none; b=sUWjVF/x3JFreSA0KOVi1QKEotcZl4QBnOoIhe/D2g8U3bNlT92pJ7A6n6h5wid8GyT7BUEw6xMOvTaABrB/QQv8SIhmk3V4LYzLFg0CSeU74342KhekK3X+AcnITv5PnpLhykjALXfx++Pen3fzG5THfAxnyWIt3+Rq1gR5DqE=
+	t=1782477190; cv=none; b=Dk3wp5vo5t7B34Gb6aetHB0FBnteyh4bZ3S+qR7uW6TKxdWBKNpad+9W86H2NvDrEmbw5RWhhoVVD6BFTglEvz0Y7jV9eV7L8Za1TtyPx6JDPo6tEa9Qy8Cn8UBrPbfNvAJ07nl2rc1rt0aRB8fzY6K1JrM5YPl0Gk44ZJq2JbI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1782471217; c=relaxed/simple;
-	bh=k4b/BPqIGDPh6NjPFaEn2eHsRKNvZYT2eoEw3kioFVM=;
-	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=pp7RVYMygVvdjwKYw1f8cjU5yC+uGVqVBaqRLcwzlBTTxu0AYtz5xDUlBSDAgchpLZJQv70L20meMsdCY/8Ito285wgkR2hf5rjoWpD1SlAMUL2MS1g9qhMJHIlvPnIFDQkSDxxtOdvA83nu03dZkAJKTuDLrV20X5jNCDipn/Q=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=ktiUQdQg; arc=none smtp.client-ip=100.103.45.18
+	s=arc-20240116; t=1782477190; c=relaxed/simple;
+	bh=AD/rgS2yrWJfwfl9/AeTa0uM/dDOan4Hs9d7ZKdjbjA=;
+	h=Content-Type:MIME-Version:In-Reply-To:References:Subject:From:Cc:
+	 To:Date:Message-ID; b=otATfaHBpLV1r6hdhFubXevDl/oO4GRGSA7dKRgdKUGAinJqCwNquCl+ihF5N+j30RqLZSxawG9AbLnzspaBle1x1jvkQGUMJRfd8AwuTK1k8zP2OmMx2NuTyYKlWdy/sW1JVq/Vs2lb8wr91o3UqV2dzpKaZC110jmHhX55gBE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=ideasonboard.com; spf=pass smtp.mailfrom=ideasonboard.com; dkim=pass (1024-bit key) header.d=ideasonboard.com header.i=@ideasonboard.com header.b=Y9bufFXA; arc=none smtp.client-ip=213.167.242.64
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=ideasonboard.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=ideasonboard.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="ktiUQdQg"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1D71D1F000E9;
-	Fri, 26 Jun 2026 10:53:36 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=kernel.org;
-	s=k20260515; t=1782471216;
-	bh=po+ReanQt/H+Q889M4kf7cgjyS5Vi31nK8fSrnPhUOQ=;
-	h=Date:Subject:To:Cc:References:From:In-Reply-To;
-	b=ktiUQdQgO4kOLu/WGLqYLQ6/llR6jXosBAIY1Q7av3HKAEXb4n9w1SnFsyIHe8TU2
-	 mcaDcr3qbT63mmz0rdE3yK9eE9X1RBnI/cHGK+YRMs7CTetfY/7DV9dMdePm+X3eU0
-	 WHFa4U3AzN6WOyFipqXxXksYE57GKLAajpjoI4oU0NaMzUZHzx4/z6cXWSoKgFP8Wz
-	 k5QNqXj/aHKbq3ZnRpGr+YTn7jSsOuPEUky9VQzKgI9k4bbrUK1pwV2orGF7JZ2d57
-	 oIV9YeUii6JegDgJjRo5uXLHyE2YgclvPpC7IOzfFuPVN86BKktwSGF/rMJ+amKVJV
-	 9OblI496ntL4g==
-Message-ID: <d4952ad4-05a5-49ea-aadd-65785d241c4b@kernel.org>
-Date: Fri, 26 Jun 2026 05:53:34 -0500
+	dkim=pass (1024-bit key) header.d=ideasonboard.com header.i=@ideasonboard.com header.b="Y9bufFXA"
+Received: from monstersaurus.ideasonboard.com (cpc89244-aztw30-2-0-cust6594.18-1.cable.virginm.net [86.31.185.195])
+	by perceval.ideasonboard.com (Postfix) with ESMTPSA id D7DFF174;
+	Fri, 26 Jun 2026 14:32:25 +0200 (CEST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=ideasonboard.com;
+	s=mail; t=1782477145;
+	bh=AD/rgS2yrWJfwfl9/AeTa0uM/dDOan4Hs9d7ZKdjbjA=;
+	h=In-Reply-To:References:Subject:From:Cc:To:Date:From;
+	b=Y9bufFXANqvkz3zqsR4De5M/U2SwIEdDJTuNDQIIIPzu76cjy8lmVCUHdi+4YM7pY
+	 Ru7JmT8Bc2PXjx5Xirb2rcDeN4lTLxXtXrC5NNWy+buy9GAbyAKcy3YJn19vEknbuB
+	 a7FiiB6RCy+A05grpyybGkvGwvgQpDse84JXEVwM=
+Content-Type: text/plain; charset="utf-8"
 Precedence: bulk
 X-Mailing-List: sashiko-reviews@lists.linux.dev
 List-Id: <sashiko-reviews.lists.linux.dev>
 List-Subscribe: <mailto:sashiko-reviews+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:sashiko-reviews+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 2/2] arm64: dts: socfpga: agilex5: update channel
- interrupts for gmac1 and gmac2
-Content-Language: en-US
-To: sashiko-reviews@lists.linux.dev
-Cc: devicetree@vger.kernel.org, robh@kernel.org, conor+dt@kernel.org
-References: <20260626042541.1091774-1-dinguyen@kernel.org>
- <20260626042541.1091774-2-dinguyen@kernel.org>
- <20260626043146.961401F000E9@smtp.kernel.org>
-From: Dinh Nguyen <dinguyen@kernel.org>
-In-Reply-To: <20260626043146.961401F000E9@smtp.kernel.org>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
+Content-Transfer-Encoding: quoted-printable
+In-Reply-To: <20260626121557.92C6D1F000E9@smtp.kernel.org>
+References: <20260626-kbingham-orientation-v2-0-47178be927b4@ideasonboard.com> <20260626-kbingham-orientation-v2-4-47178be927b4@ideasonboard.com> <20260626121557.92C6D1F000E9@smtp.kernel.org>
+Subject: Re: [PATCH v2 4/8] ARM: tegra: Convert to new media orientation definitions
+From: Kieran Bingham <kieran.bingham@ideasonboard.com>
+Cc: wsa+renesas@sang-engineering.com, devicetree@vger.kernel.org, robh@kernel.org, conor+dt@kernel.org, Frank.Li@kernel.org, imx@lists.linux.dev
+To: sashiko-bot@kernel.org, sashiko-reviews@lists.linux.dev
+Date: Fri, 26 Jun 2026 13:33:04 +0100
+Message-ID: <178247718423.372005.12851091564301822991@ping.linuxembedded.co.uk>
+User-Agent: alot/0.9.1
 
+Hi Sashiko,
 
-
-On 6/25/26 23:31, sashiko-bot@kernel.org wrote:
-> Thank you for your contribution! Sashiko AI review found 1 potential issue(s) to consider:
-> - [Medium] Incomplete DT update: gmac0 is left with an invalid interrupt count that will fail dtbs validation.
+Quoting sashiko-bot@kernel.org (2026-06-26 13:15:57)
+> Thank you for your contribution! Sashiko AI review found 1 potential issu=
+e(s) to consider:
+> - [Low] The commit introduces an undefined macro `MEDIA_ORIENTATION_REAR`=
+, causing a Device Tree Compiler (dtc) build failure.
 > --
-> 
-> commit ce31f4c657e3508e9aef68e6da54a09c1d243026
-> Author: Dinh Nguyen <dinguyen@kernel.org>
-> 
-> arm64: dts: socfpga: agilex5: update channel interrupts for gmac1 and gmac2
-> 
-> Populate the gmac1 and gmac2 interrupt list to support 8 TX/RX queue
-> pairs.
-> 
->> diff --git a/arch/arm64/boot/dts/intel/socfpga_agilex5.dtsi b/arch/arm64/boot/dts/intel/socfpga_agilex5.dtsi
->> index 02e62d954e949..140e4bf9fb155 100644
->> --- a/arch/arm64/boot/dts/intel/socfpga_agilex5.dtsi
->> +++ b/arch/arm64/boot/dts/intel/socfpga_agilex5.dtsi
->> @@ -670,8 +670,40 @@ gmac1: ethernet@10820000 {
->>   			compatible = "altr,socfpga-stmmac-agilex5",
->>   				     "snps,dwxgmac-2.10";
->>   			reg = <0x10820000 0x3500>;
-> 
-> [Severity: Medium]
-> Should gmac0 also be updated to include 17 interrupts?
-> 
+>=20
+> commit 26c9ba57e237b4ebfdbb6dbf2af353106c11c695
+> Author: Kieran Bingham <kieran.bingham@ideasonboard.com>
+>=20
+> ARM: tegra: Convert to new media orientation definitions
+>=20
+> The commit updates the NVIDIA device trees to use new media orientation
+> definitions instead of hardcoded integer values for video interface devic=
+es.
+>=20
+> > diff --git a/arch/arm/boot/dts/nvidia/tegra30-lg-x3.dtsi b/arch/arm/boo=
+t/dts/nvidia/tegra30-lg-x3.dtsi
+> > index 60e8a19aa70ec..c58e3026a115e 100644
+> > --- a/arch/arm/boot/dts/nvidia/tegra30-lg-x3.dtsi
+> > +++ b/arch/arm/boot/dts/nvidia/tegra30-lg-x3.dtsi
+> [ ... ]
+> > @@ -1216,7 +1217,7 @@ rear-camera@10 {
+> >                       dvdd-supply =3D <&vdd_1v2_rear>;
+> >                       avdd-supply =3D <&vdd_2v7_rear>;
+> > =20
+> > -                     orientation =3D <1>; /* Rear camera */
+> > +                     orientation =3D <MEDIA_ORIENTATION_REAR>;
+>=20
+> [Severity: Low]
+> Will this cause a Device Tree Compiler build failure?
+>=20
+> Looking at the dt-bindings/media/video-interface-devices.h header, it
+> defines MEDIA_ORIENTATION_FRONT, MEDIA_ORIENTATION_BACK, and
+> MEDIA_ORIENTATION_EXTERNAL.
+>=20
+> Since MEDIA_ORIENTATION_REAR is undefined, the C preprocessor will leave =
+it
+> as an unexpanded token, which will cause a syntax error when dtc parses i=
+t.
+> Could this be updated to use MEDIA_ORIENTATION_BACK instead?
 
-There was an earlier patch that updatee gmac0 to 17 interrupts:
+Ah man - the heat must have been getting to me. That's definitely
+supposed to be MEDIA_ORIENTATION_BACK. I shouldn't have read the comment
+I replaced.
 
-https://lore.kernel.org/all/20260609131641.28476-1-muhammad.nazim.amirul.nazle.asmade@altera.com/
+--
+Kieran
 
-Dinh
+
+>=20
+> >                       rotation =3D <90>;
+> > =20
+> >                       nvmem =3D <&m24c08>;
+>=20
+> --=20
+> Sashiko AI review =C2=B7 https://sashiko.dev/#/patchset/20260626-kbingham=
+-orientation-v2-0-47178be927b4@ideasonboard.com?part=3D4
