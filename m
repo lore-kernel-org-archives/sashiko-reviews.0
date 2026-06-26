@@ -1,149 +1,329 @@
-Received: from mail-wm1-f54.google.com (mail-wm1-f54.google.com [209.85.128.54])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from SN4PR2101CU001.outbound.protection.outlook.com (mail-southcentralusazon11012062.outbound.protection.outlook.com [40.93.195.62])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1B0493E559A
-	for <sashiko-reviews@lists.linux.dev>; Fri, 26 Jun 2026 13:58:22 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.54
-ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1782482306; cv=none; b=MBElm9/snZ7fB3iBa1WQGANw2gBVuuu3J0Y8lM+BMLabgMrW4h9C5NSzXkF8uXpyLUmG3AaViAtxfDKwyA7gPi+ExXlCHjWY8nlYVj1C+lt0aoW4NnGQkQMbDZdCHp6C6b9f4fA5+TW/l5UqcZWgbsOsXcl+nE436eWB+s+t1wo=
-ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1782482306; c=relaxed/simple;
-	bh=/WCcy2mMxh3czGC0dprku4jfYTdMIC0iKhzoyaVwlFg=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=O5GaKD/vp31G9P9/irnwmLz5K6Ut1mPQh9dDhlnxueohUAqpa7M97Xl1aoxpOtNb96d8dtPZHGbtPzLoKw0aHm9lP6qZePMN9LjvetkQi+jFm5cdOnA0eaVTtS0SWx7QTMTaEf5+ofyug/ePAfNCkJA68hJsj7V1x2IkKeYk1yA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=baylibre.com; spf=pass smtp.mailfrom=baylibre.com; dkim=pass (2048-bit key) header.d=baylibre.com header.i=@baylibre.com header.b=ouNDgKLp; arc=none smtp.client-ip=209.85.128.54
-Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=baylibre.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=baylibre.com
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 50C18387361
+	for <sashiko-reviews@lists.linux.dev>; Fri, 26 Jun 2026 15:26:45 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=fail smtp.client-ip=40.93.195.62
+ARC-Seal:i=2; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
+	t=1782487608; cv=fail; b=NBGasuN0F6ynudilxIst0GwGrwd9wgHz6KYN2J/Ed+vsbVxLBBKWtylhFDUhgsriOYmnQx2279ujpmmEOIM7D2fgmQrE2x2tc0f7MuGVjNzidcy5fslPJh5N7RcrjhZnHZSIDEQxH1FlvPEJRXjb3L1fPwwDVPMdJ6IQzvcu3Fs=
+ARC-Message-Signature:i=2; a=rsa-sha256; d=subspace.kernel.org;
+	s=arc-20240116; t=1782487608; c=relaxed/simple;
+	bh=rpR9LkYV1hmN/b5h2T0iiiuMjEmMyRZFaTt9vfeUhtY=;
+	h=Message-ID:Date:Subject:To:Cc:References:From:In-Reply-To:
+	 Content-Type:MIME-Version; b=rGk1gAZMPrK0D1R3StYbaNolKuz39kKVGy0ItqU9maZvAXHjzAVF8iPn1uQhPlIc403aCS6ogmwoemxvKoQyDGRPQrGzTPhd+xBfH2+JlVQCqcof2969X5ux1rb3UpmFAuF/HTRICkmsek3bZLRlMxsNkG8pIxVhbJNHABrEbrM=
+ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=amd.com; spf=fail smtp.mailfrom=amd.com; dkim=pass (1024-bit key) header.d=amd.com header.i=@amd.com header.b=oEiJJIEz; arc=fail smtp.client-ip=40.93.195.62
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=amd.com
+Authentication-Results: smtp.subspace.kernel.org; spf=fail smtp.mailfrom=amd.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=baylibre.com header.i=@baylibre.com header.b="ouNDgKLp"
-Received: by mail-wm1-f54.google.com with SMTP id 5b1f17b1804b1-490cf3000f0so9906525e9.1
-        for <sashiko-reviews@lists.linux.dev>; Fri, 26 Jun 2026 06:58:22 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=baylibre.com; s=google; t=1782482301; x=1783087101; darn=lists.linux.dev;
-        h=in-reply-to:content-disposition:mime-version:references:message-id
-         :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
-        bh=YYBimURlHUn+mpSz1R9LJBKjen+CWJXOrvIJURfJyEU=;
-        b=ouNDgKLpy7UHi97aRjBZZOlneh+n9yhfSjgthcYCcxXyXbYcbWFPPuO8noUmZJiIEj
-         T6j2Omju97l5BHFxxQQldiQ9f8W97N8aiIAr2c2FIXuVAIQAv0fUBeyZsp+slmtkdLXj
-         a7KXMbSC+2TIGG3LiajN39N3ipA3tzgrVuRQiCY+A+WniPRFySvawDaoVVTmJ2kQhraq
-         VnqKCm/fOomd8KYRaKcIYvVQ2u6pp2Zh0V+qJNcJ8ZAn++J8SRpjl7velmc74hg7gRBe
-         89hNjDxRxDcYinAx830TTkge8SSmCNm7q7EYoj623M/f1WA3Ok/EugDq2qqj73K+wHBk
-         74kw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20251104; t=1782482301; x=1783087101;
-        h=in-reply-to:content-disposition:mime-version:references:message-id
-         :subject:cc:to:from:date:x-gm-gg:x-gm-message-state:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=YYBimURlHUn+mpSz1R9LJBKjen+CWJXOrvIJURfJyEU=;
-        b=LAFRQbWVgVpAffsWAQ4PWmW7l1P8kVPt/d8/x/tFSDOwXTA+uib86qF/B5HjhPol1y
-         EuyTbk/Mv6Pju4whYBHzK8EIuhg4HSJBrevZalYfbyiLVdh3aPDdvGMTvBz5/VDANVYM
-         psX57yRvf6S3SXOxGLlsmcYmYpPmS4wbgLTWEp8dIYPC5LpPYZV/vZijk3JOoTXiYWPj
-         sV9ogwgcNcZ0InGBh3lKpZ5yM/whk/eHdYvmsxsZu2hUMJi3oE8riQpUSR0ml+vSyZoB
-         XNjDK09baDLfuvQTTmfk5+kf5SXYVMnUa/3nR7XvTl5JNqJhkZWFrYqONMm1orwoZTlr
-         ZIcQ==
-X-Gm-Message-State: AOJu0YxaIXrOhtbaRyd/TOL5b11ZE4cFN48x0jY80gcXtYr2l8OZuBn0
-	LhS4pWm4UPnnOcoecmeJ39lzwqEyng1JoTjdH0DY7hZKUP44uMdmxADtjJC0QPYBeksLG5/XD55
-	Wugyc
-X-Gm-Gg: AfdE7cmgEShiC3timcORtuVmzcmXa0tC7v7eeDhd1S7nZzFsbXmYTejXEu5QVQqW8xd
-	6yjq7Ine/xx4dIb4eLxBxA3HflWId2hdvyqBFi6ftgH52OAV6l9z1XWyE0SLsmJt9S5b/DTrqdA
-	+kdSBI1V3vnFriu0bb7Q4b2TbewL81hgJmBUUmTLz0mJYi7FcYm3SP0/TJngXO4EL+uGmP8J762
-	QqakgQPVnaQz7MvhCeL44Stnxy3K0wCUAeKFXamqG/X6MR4HP9R1+939M/sbKa4tExIIFhPJo4p
-	+zChvjHOGE6JbO615VkiJvad+NMNKJV8E6+J4QCP0o7qRl1jZ+CZyL8eiNjwrd+cwdvLR82eb1n
-	YOz8YN5R/UQjw/yeL1ruLdkQGXhi4xq/HpFoo6XaFmABy0oe0Ma08IKF8Re09MRDhAWWUBX508b
-	VUKoTuhZKBplR/vteH1GXZXITYrLPYndrDzZQEupGznNEoHrMBZbsQUepTDGlLAN0Ay7tuOnD0B
-	DZi
-X-Received: by 2002:a05:600c:a403:b0:490:d9d0:51c8 with SMTP id 5b1f17b1804b1-4926689207cmr87782145e9.18.1782482301348;
-        Fri, 26 Jun 2026 06:58:21 -0700 (PDT)
-Received: from localhost (p200300f65f47db04b3606a871f5f1c38.dip0.t-ipconnect.de. [2003:f6:5f47:db04:b360:6a87:1f5f:1c38])
-        by smtp.gmail.com with UTF8SMTPSA id 5b1f17b1804b1-4926c27fcdfsm53888345e9.1.2026.06.26.06.58.19
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Fri, 26 Jun 2026 06:58:20 -0700 (PDT)
-Date: Fri, 26 Jun 2026 15:58:19 +0200
-From: Uwe =?utf-8?Q?Kleine-K=C3=B6nig?= <u.kleine-koenig@baylibre.com>
-To: sashiko-reviews@lists.linux.dev
-Cc: Frank.Li@kernel.org, imx@lists.linux.dev
-Subject: Re: [PATCH v1 4/6] power: Use named initializers for
- platform_device_id arrays
-Message-ID: <aj6EzGn2Ds2offEc@monoceros>
-References: <1ceacf4f9c3f827bcad85b378aa04cdca1c04635.1780048925.git.u.kleine-koenig@baylibre.com>
- <20260529110229.9474D1F00893@smtp.kernel.org>
+	dkim=pass (1024-bit key) header.d=amd.com header.i=@amd.com header.b="oEiJJIEz"
+ARC-Seal: i=1; a=rsa-sha256; s=arcselector10001; d=microsoft.com; cv=none;
+ b=gRuIK1JJZ6UFPWgYN/HGmRc69gqZXncfiMi2uHpKw/84j8ptmH3nj2PkHF/ztlqKqJ/nkidGkDchYDrxTdZd8HojeS9CMosc/4A0U+tPVYrG0rGqRtd0hPvCg8Hbjy5c8hGXU9DfGWZkUr3EoylM1dQET5IamC5ycOpraC1v1mBbQib368Lu6T9L/jZB1gr/HFtSJbZNqXKWjDxdiKtv3ISHY+l2+TI9VbiB3ZDch/eL04iS7FlnnqWB+Tjl7NX3UjLe0RNO++6E88MW5NfFpu3ennAdH+GfVKzBQlIe8nCemSQa7TAG8tvNlAo3efIaPwaXd3Gj9fVWZjziE7oSWg==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com;
+ s=arcselector10001;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
+ bh=2xFdHiqlS35MscSY9dJA1+H2sYQ4jQCU/gr+E3jfV08=;
+ b=q1RN0+Ikc4XadGSwNZUzaR5XbAcnOwKd1GTp8JRNte9TgVrzuRMQT16O3NyCu46fvo25F8tzOsCNxthEEJcRQUVisKHSDsm9tybFmV6GawyzzlmT376HnjVwDFyYd0NpBmXCOYqTw+0dCUvnjxe8LCo+2TaCm7M7PGksOiFLEs+RvTILFxaX6Oj3bk1c6QmSGM07BJWgnzvPKAs43tKM/f/n45WxYk2vZNzyYoyal9R+UrTvFqp1Pm63/bL3+/QLPgMZQP4ztutOefoojclZ8D2YcraspsLxnugJUsgbQkvSLWp2f3ALerdQ3ekkMxqv4DKrIvE3krUDjn8ScKnsrw==
+ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
+ smtp.mailfrom=amd.com; dmarc=pass action=none header.from=amd.com; dkim=pass
+ header.d=amd.com; arc=none
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=amd.com; s=selector1;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
+ bh=2xFdHiqlS35MscSY9dJA1+H2sYQ4jQCU/gr+E3jfV08=;
+ b=oEiJJIEzXbVsX/4+/LHahFyU3BoAoEbBlPiVv3bcgTXOS9VItZgpDZfynStkg+XywZvz1gF0wC+LVUVp828NybJNRAVK8oCBElAghNqHTI2r3YFqwQM3PTOsh1Un4yLuYYQSU0kAjMd/jz2B/nhwJfhOqGK68y4p8haMUTQLTro=
+Authentication-Results: dkim=none (message not signed)
+ header.d=none;dmarc=none action=none header.from=amd.com;
+Received: from BL4PR12MB9482.namprd12.prod.outlook.com (2603:10b6:208:58d::19)
+ by CH3PR12MB8075.namprd12.prod.outlook.com (2603:10b6:610:122::5) with
+ Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.21.159.18; Fri, 26 Jun
+ 2026 15:26:41 +0000
+Received: from BL4PR12MB9482.namprd12.prod.outlook.com
+ ([fe80::e4cf:3801:9631:2965]) by BL4PR12MB9482.namprd12.prod.outlook.com
+ ([fe80::e4cf:3801:9631:2965%4]) with mapi id 15.21.0159.016; Fri, 26 Jun 2026
+ 15:26:40 +0000
+Message-ID: <3ac6b44c-febb-4c20-a737-aba34de5c208@amd.com>
+Date: Fri, 26 Jun 2026 20:56:35 +0530
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH v5] dmaengine: dw-edma: Enable HDMA 64R/W Channels
+To: sashiko-reviews@lists.linux.dev, Devendra K Verma <devendra.verma@amd.com>
+Cc: Frank.Li@kernel.org, vkoul@kernel.org, dmaengine@vger.kernel.org,
+ "Verma, Devendra" <Devendra.Verma@amd.com>
+References: <20260626132151.1875965-1-devendra.verma@amd.com>
+ <20260626134641.87D161F000E9@smtp.kernel.org>
+Content-Language: en-US
+From: "Verma, Devendra" <devverma@amd.com>
+In-Reply-To: <20260626134641.87D161F000E9@smtp.kernel.org>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
+X-ClientProxiedBy: PN2PR01CA0227.INDPRD01.PROD.OUTLOOK.COM
+ (2603:1096:c01:eb::14) To BL4PR12MB9482.namprd12.prod.outlook.com
+ (2603:10b6:208:58d::19)
 Precedence: bulk
 X-Mailing-List: sashiko-reviews@lists.linux.dev
 List-Id: <sashiko-reviews.lists.linux.dev>
 List-Subscribe: <mailto:sashiko-reviews+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:sashiko-reviews+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: multipart/signed; micalg=pgp-sha512;
-	protocol="application/pgp-signature"; boundary="xs4ntcqafh3l4ivh"
-Content-Disposition: inline
-In-Reply-To: <20260529110229.9474D1F00893@smtp.kernel.org>
+X-MS-PublicTrafficType: Email
+X-MS-TrafficTypeDiagnostic: BL4PR12MB9482:EE_|CH3PR12MB8075:EE_
+X-MS-Office365-Filtering-Correlation-Id: 355d00a8-f45d-44dc-8683-08ded3975239
+X-MS-Exchange-SenderADCheck: 1
+X-MS-Exchange-AntiSpam-Relay: 0
+X-Microsoft-Antispam:
+	BCL:0;ARA:13230040|366016|1800799024|23010399003|376014|22082099003|18002099003|4143699003|56012099006|11063799006|6133799003;
+X-Microsoft-Antispam-Message-Info:
+	9UbZu1fJonkufeJfaPW0ew77oAt7m8D01fe2/bOZrPD/Qq332gdmSNy6R6zqtgXixQ8lj/Wr+wk9hJiUp6GcDErkLkS+fnWgohVk7NfZal8CaZBdsRsPKfkO0htQqJKoA03jLAc8LAVpZK8wwFQ2fzoQNS+fC2uQSNfchDM5xnUXkiRnOpvop58/hO2hnp8jGEuGOk+ugHUlO4wliwvDE6fWq4u5Kr6D9oGLaSu/Tb6P0+wBquBLwJa4NdaXXbNA2qfxfQqKmeXE5V9gKRDEdgG5nHsfrawZMn/AZXt3Qn0lqfgVOnTtKDN1QRJSmVS43D28dBK+UoTOe877u/bdPd7jxl1J0f8PjZZzhmGYXxg5nLlZAJDTCSg28CatTDRGL+SOX+IXo+KvcgcpfFna8itm+uxYaLWVPnPY+qEoa37bG+HiH0G6b1Z7F2HMnZgNC5C9K6HGUibVViWe+fXY5p/FH0J0oQ3MVLBgNSPBaZAAPGn3w2xRRpylBVJKg86T1pabhVRZZyZiK+qDhjMIpTlWajN7elARWE4PzfqDuX9lVLrxRkCzALXCEwoDX74KqWVFKD1JmgYhnwzcUhsC/DQ7bijYOm+4C2qwkP7mrDAP/8hZD/nLJqnuD/7tWgpd8bZVk8l4EF/L8gGr5pJZF/ICFfziTAvb0zBewxAM2Yc=
+X-Forefront-Antispam-Report:
+	CIP:255.255.255.255;CTRY:;LANG:en;SCL:1;SRV:;IPV:NLI;SFV:NSPM;H:BL4PR12MB9482.namprd12.prod.outlook.com;PTR:;CAT:NONE;SFS:(13230040)(366016)(1800799024)(23010399003)(376014)(22082099003)(18002099003)(4143699003)(56012099006)(11063799006)(6133799003);DIR:OUT;SFP:1101;
+X-MS-Exchange-AntiSpam-MessageData-ChunkCount: 1
+X-MS-Exchange-AntiSpam-MessageData-0:
+	=?utf-8?B?dU52MUZudDVtdERncG1DbEJHSU12NlFFWGdKbHNTOSt3bmdHVnZFRWVKQ0N2?=
+ =?utf-8?B?THpMZmg1b1hOY0NPVFFEUm82Q0JUdzQwVnRVd1BNcXgzQzFyWGVJeFhPNVVp?=
+ =?utf-8?B?L0VpQnQrY0lwN1hIMzVCMi81UmNQYmFWdkE5Sm12ZmtLeEJaeFE3ZGRRL2ZP?=
+ =?utf-8?B?OEFDQkkwVDh0aXJSQVNYMUllNjF1VUlwSWNkRkdZV0syc2lRbUZtbnY5K3U4?=
+ =?utf-8?B?VlAzMWxRbFhZRjZsSm53c3RwYmJBU3B5eUNCY2Uxa055N2p6c3RoakJ4c0sr?=
+ =?utf-8?B?MjByWjhWWjVMMmkvMlMwK3cvSnY5c2dmMEswUVZOUmwwYU5WaWcybTBienVa?=
+ =?utf-8?B?UE5vMVMyQm9RcGQxNFhZYmV1SThFRS9vUE9YZE53ZHFURmEwNnBYeVZyWkdz?=
+ =?utf-8?B?RTdrTVNsOVFJdkY5OS9xTTlVRE5wNVFRTy8rbDhOWlF2V2ViZ2tKdUZGb1Yx?=
+ =?utf-8?B?OEJoOVdPeVlCNWFJVVdORkhvMEJRMVJ5UExyMXRDZyt4WWhCRURJZy9JczJP?=
+ =?utf-8?B?SUNuTnR3Y3FIRlhiL2F6QWo5ak1UQWVzR013K2Flc2Z0MkNWU005blYvc25G?=
+ =?utf-8?B?ZWxMVEdSNi9KWktaUnZQMUJkNE1xNEwrOGhPOU5McnJrT21PSkpocGJGU0Fr?=
+ =?utf-8?B?cHU3QzVONXJEYTc5RXRUZ21za1hiMUF3eEUwRml1RkhpVWVYWXRsT2xQMXF4?=
+ =?utf-8?B?bDNnRDFtdDF6eW1qVW1jNmhIUkp2QTA5enl0RFduenFOanp5bTRQWjQ0bGlF?=
+ =?utf-8?B?dkJNRkVaSGorMDZvQVNlRG1xbmFTYWFWZmVLYWZVclZrU0hZSUYvKzBxVmVv?=
+ =?utf-8?B?UklpemUxYzk4TGRjTGV1V0Z0d0R1Tm5GUHZZUURySTdzLzJZT2tZajNGc3Bz?=
+ =?utf-8?B?aE9lZzVCSTFMT09SSWV5VU5DYUNnRnMzMkErYTl3TzFjVUdiQ0RRdFlyM0dD?=
+ =?utf-8?B?Tm03NFlDVkpCREh1VnhCQStGVFVXTDNadXVEVEFIeXBzanNLcHVoVk5YbUw0?=
+ =?utf-8?B?NGY2OFlDbFVYUDZlc2EzRWNhN0dna0NBWDFGUzBnTDFtbkFtVUZjd1UyK1Ra?=
+ =?utf-8?B?Y1lnd2xhK2RtV1B3b0srcDRSc0Q5MzRlU3pNRDFKL2twdjBRUnNuZ2VnQm9W?=
+ =?utf-8?B?MTlvOFRLT1VTWGFRZld1eXpjTFBLdmxpRG1xNGljVnB0ZHd6VHVGVTlPR21i?=
+ =?utf-8?B?NU8veUZ0TDBRcHFTNWo3dk1mRzJuQjN1M21PZ3VSWmk1MFE2L2RobmltMElk?=
+ =?utf-8?B?RTRtOVU0WEJOTXNvM3R4MVdPbWNrQkYzVFVQemU4cVBIWHMxay9BZjVuZ01w?=
+ =?utf-8?B?RldoRGs3eEkxdENZTEF2ZnBlc0ZJWUxVTlIrZ0loK3FPYnZTV2c1U1pRZEdE?=
+ =?utf-8?B?dXhJNG9ta1ptcXRLczlMWUdWTXdhQmJJSW9DUWFFcDZad0JDUGpmL0F1aXlQ?=
+ =?utf-8?B?MGx0KzY1SXdaQzVTU3hIdjJaZCtrMWxFOWNZdkZjM2dwRXRKR0s0VnFpK0pu?=
+ =?utf-8?B?QWd1VkNFYS84RFVVdU1jWms1ZzNocmNQS1FuOW1rMDNBb25TVHI4eWdnZ1Qy?=
+ =?utf-8?B?ZHJ3VExLQy9Nd1N0dkM3S2pzRzJOcS8zQVNCVjAyandjNmsxZ3h3ZVBpclNt?=
+ =?utf-8?B?YmMyRjUyUGY1eGxsY05jd3JqWFZ0WTRiMVJwRDlLUS9RdnRqNkFTZnZ0cVg5?=
+ =?utf-8?B?c1FwLzh2ZXpZdVZhZm1VT2xubTRmelRxY3J1RisxNnRWTmZKcXdHYUhYL1lN?=
+ =?utf-8?B?YVo5TmVDcXp5eWhlaVdFZGNYbDZheDMxb3RXMlN6cXNwSVdhSHlFaGNyTWVN?=
+ =?utf-8?B?dXlDL094QWF2M2ZjVEk3L0RQYWVMeHpFSHZ5ejZ5Nmlsa09zN3cvMjBHcGcw?=
+ =?utf-8?B?V3J6QWp0SFBBUThrUzRQM25UeGRGV3BEUzRrS3pXQW9HQjd3UDAwWWYwbkFT?=
+ =?utf-8?B?bGVLQngwcmlGbmR5Q3R2RittZ1BSOTFVM2hvNEJpbVUwTDZwcjhidlNaZ1BQ?=
+ =?utf-8?B?MGpwelkwZm9rR3NQaVI0ZzRFYVJtMG9GWEZLL2dGSWdjVlRvdGlYQWRCSkxE?=
+ =?utf-8?B?dTdNaFZWenVWVVoyQ2JpL051QStYZUlzb1NHUXRvNXZveUlQQitxazFpOVRo?=
+ =?utf-8?B?TWNCQnRZalBCTmRUS2VoWnBVU045YjlLSmdTVU1VYUJKVzNjSTNwaEl4WDBJ?=
+ =?utf-8?B?TU85Rk9FaFdCUXFUZlh3aFB1V0NMOHVMMHBlVXRydGNGRzZ5VTZKL0RBZEpE?=
+ =?utf-8?B?cnlKSytKcnpTeU8yUGdzL3hzTkJTdVVpbCtGeVFPOVVEMDNjMXgwYUJvUkYw?=
+ =?utf-8?B?RVFNcG5Wa3EyazJ3TElDT2NtakQzTVpiZGIvOFJzcDVjeDR4d1ZOdz09?=
+X-OriginatorOrg: amd.com
+X-MS-Exchange-CrossTenant-Network-Message-Id: 355d00a8-f45d-44dc-8683-08ded3975239
+X-MS-Exchange-CrossTenant-AuthSource: BL4PR12MB9482.namprd12.prod.outlook.com
+X-MS-Exchange-CrossTenant-AuthAs: Internal
+X-MS-Exchange-CrossTenant-OriginalArrivalTime: 26 Jun 2026 15:26:40.7342
+ (UTC)
+X-MS-Exchange-CrossTenant-FromEntityHeader: Hosted
+X-MS-Exchange-CrossTenant-Id: 3dd8961f-e488-4e60-8e11-a82d994e183d
+X-MS-Exchange-CrossTenant-MailboxType: HOSTED
+X-MS-Exchange-CrossTenant-UserPrincipalName: KS5A/Br73RhhxFcyuv3734CNtknqbDp1sDlUOqHpqi0b6sjR44LDFXlrgGs+Z3pEb4Ur5s/t8g52GF8y1LeJRg==
+X-MS-Exchange-Transport-CrossTenantHeadersStamped: CH3PR12MB8075
 
+Hi Frank, Vinod
 
---xs4ntcqafh3l4ivh
-Content-Type: text/plain; protected-headers=v1; charset=iso-8859-1
-Content-Disposition: inline
-Content-Transfer-Encoding: quoted-printable
-Subject: Re: [PATCH v1 4/6] power: Use named initializers for
- platform_device_id arrays
-MIME-Version: 1.0
+Do you have any suggestion about handling of the repeated comments from
+AI?
+On every version of this patch the similar issues have been raised and
+I am replying with the same answers as many version-times.
+Please suggest so that multiple replies to the same queries by AI bot
+can be managed.
 
-On Fri, May 29, 2026 at 11:02:29AM +0000, sashiko-bot@kernel.org wrote:
-> Thank you for your contribution! Sashiko AI review found 1 potential issu=
-e(s) to consider:
-> - [Low] The explicit `.driver_data` initialization `TYPE_MAX8998` for `ma=
-x8998-battery` was silently dropped without mention in the commit message.
+regards,
+Devendra
+
+On 26-Jun-26 19:16, sashiko-bot@kernel.org wrote:
+> Thank you for your contribution! Sashiko AI review found 3 potential issue(s) to consider:
+> 
+> New issues:
+> - [High] The DesignWare PCIe controller integration rejects eDMA initialization for HDMA platforms with more than 8 channels because `dw_pcie_edma_find_channels` and `dw_pcie_edma_irq_vector` unconditionally enforce the old 8-channel limit.
+> 
+> Pre-existing issues:
+> - [High] The arguments `dir` and `ch` are swapped when calling `GET_CH_32` in `dw_hdma_v0_core_ch_status`, causing it to read the wrong hardware registers.
+> - [High] The driver requests shared IRQs before the interrupt context data is fully initialized, exposing a NULL pointer dereference window if an interrupt fires early.
 > --
->=20
-> commit 02f2c38ebeef8dff34934050c70916818fb36a18
-> Author: Uwe Kleine-K=F6nig (The Capable Hub) <u.kleine-koenig@baylibre.co=
-m>
->=20
-> power: Use named initializers for platform_device_id arrays
->=20
-> This commit updates various power supply and reset drivers to use named
-> initializers for platform_device_id arrays. It also unifies spacing and
-> comma usage across these array definitions.
->=20
-> > diff --git a/drivers/power/supply/max8998_charger.c b/drivers/power/sup=
-ply/max8998_charger.c
-> > index 418b882b163d1..b0eda2b51e7f0 100644
-> > --- a/drivers/power/supply/max8998_charger.c
-> > +++ b/drivers/power/supply/max8998_charger.c
-> > @@ -188,7 +188,7 @@ static int max8998_battery_probe(struct platform_de=
-vice *pdev)
-> >  }
-> > =20
-> >  static const struct platform_device_id max8998_battery_id[] =3D {
-> > -	{ "max8998-battery", TYPE_MAX8998 },
-> > +	{ .name =3D "max8998-battery" },
->=20
-> [Severity: Low]
-> Is it intentional that the TYPE_MAX8998 driver data assignment was dropped
-> here?
+> 
+> commit cc43ddee72586cbf9f93d80ae20f2b0a9e539a31
+> Author: Devendra K Verma <devendra.verma@amd.com>
+> 
+> dmaengine: dw-edma: Enable HDMA 64R/W Channels
+> 
+> This commit updates the DesignWare eDMA driver to support up to 64 read and
+> write channels for HDMA. It introduces HDMA-specific macros, adjusts channel
+> counts in device structures, and switches bitmasks to 64-bit to accommodate
+> the higher channel counts.
+> 
+>> diff --git a/drivers/dma/dw-edma/dw-edma-core.c b/drivers/dma/dw-edma/dw-edma-core.c
+>> index c2feb3adc79fa..adf1b3939f96c 100644
+>> --- a/drivers/dma/dw-edma/dw-edma-core.c
+>> +++ b/drivers/dma/dw-edma/dw-edma-core.c
+> [ ... ]
+>> @@ -1079,6 +1079,8 @@ int dw_edma_probe(struct dw_edma_chip *chip)
+>>   	struct dw_edma *dw;
+>>   	u32 wr_alloc = 0;
+>>   	u32 rd_alloc = 0;
+>> +	u16 max_wr_cnt;
+>> +	u16 max_rd_cnt;
+>>   	int i, err;
+>>   
+>>   	if (!chip)
+>> @@ -1094,20 +1096,25 @@ int dw_edma_probe(struct dw_edma_chip *chip)
+>>   
+>>   	dw->chip = chip;
+>>   
+>> -	if (dw->chip->mf == EDMA_MF_HDMA_NATIVE)
+>> +	if (dw->chip->mf == EDMA_MF_HDMA_NATIVE) {
+>>   		dw_hdma_v0_core_register(dw);
+>> -	else
+>> +		max_wr_cnt = HDMA_MAX_WR_CH;
+>> +		max_rd_cnt = HDMA_MAX_RD_CH;
+>> +	} else {
+>>   		dw_edma_v0_core_register(dw);
+>> +		max_wr_cnt = EDMA_MAX_WR_CH;
+>> +		max_rd_cnt = EDMA_MAX_RD_CH;
+>> +	}
+>>   
+>>   	raw_spin_lock_init(&dw->lock);
+>>   
+>>   	dw->wr_ch_cnt = min_t(u16, chip->ll_wr_cnt,
+>>   			      dw_edma_core_ch_count(dw, EDMA_DIR_WRITE));
+>> -	dw->wr_ch_cnt = min_t(u16, dw->wr_ch_cnt, EDMA_MAX_WR_CH);
+>> +	dw->wr_ch_cnt = min_t(u16, dw->wr_ch_cnt, max_wr_cnt);
+>>   
+>>   	dw->rd_ch_cnt = min_t(u16, chip->ll_rd_cnt,
+>>   			      dw_edma_core_ch_count(dw, EDMA_DIR_READ));
+>> -	dw->rd_ch_cnt = min_t(u16, dw->rd_ch_cnt, EDMA_MAX_RD_CH);
+>> +	dw->rd_ch_cnt = min_t(u16, dw->rd_ch_cnt, max_rd_cnt);
+>>   
+>>   	if (!dw->wr_ch_cnt && !dw->rd_ch_cnt)
+>>   		return -EINVAL;
+> 
+> [Severity: High]
+> This is a pre-existing issue, but does the current probe sequence expose a
+> window for a NULL pointer dereference if an early interrupt fires?
+> 
+> In dw_edma_probe(), we call dw_edma_irq_request() which registers a shared
+> IRQ handler:
+> 
+>      err = request_irq(irq, dw_edma_interrupt_common,
+>                        IRQF_SHARED, dw->name, &dw->irq[0]);
+> 
+> However, the interrupt context data (irq->dw) isn't populated until the later
+> call to dw_edma_channel_setup():
+> 
+>      irq->dw = dw;
+> 
+> If another device sharing the same IRQ line triggers an interrupt before
+> dw_edma_channel_setup() completes, could the handler dereference a NULL
+> dw_irq->dw pointer?
+> 
+> [ ... ]
 
-Yes, it was intentional, but that change doesn't fit to the commit log.
+As this is pre-existing issue, it shall be taken in a separate patch
+series.
 
-The driver doesn't use the value in .driver_data, so the change is fine
-in principle. Given that the patch was already applied, I think it's
-fine to keep it as is, but of course I'm open to respin with that detail
-fixed.
+>> diff --git a/drivers/dma/dw-edma/dw-hdma-v0-core.c b/drivers/dma/dw-edma/dw-hdma-v0-core.c
+>> index 632abb8b481cf..61064de293b85 100644
+>> --- a/drivers/dma/dw-edma/dw-hdma-v0-core.c
+>> +++ b/drivers/dma/dw-edma/dw-hdma-v0-core.c
+> [ ... ]
+>> @@ -118,19 +129,20 @@ dw_hdma_v0_core_handle_int(struct dw_edma_irq *dw_irq, enum dw_edma_dir dir,
+>>   	unsigned long total, pos, val;
+>>   	irqreturn_t ret = IRQ_NONE;
+>>   	struct dw_edma_chan *chan;
+>> -	unsigned long off, mask;
+>> +	DECLARE_BITMAP(mask, 64);
+>> +	unsigned long off;
+>>   
+>>   	if (dir == EDMA_DIR_WRITE) {
+>>   		total = dw->wr_ch_cnt;
+>>   		off = 0;
+>> -		mask = dw_irq->wr_mask;
+>> +		bitmap_from_u64(mask, dw_irq->wr_mask);
+>>   	} else {
+>>   		total = dw->rd_ch_cnt;
+>>   		off = dw->wr_ch_cnt;
+>> -		mask = dw_irq->rd_mask;
+>> +		bitmap_from_u64(mask, dw_irq->rd_mask);
+>>   	}
+>>   
+>> -	for_each_set_bit(pos, &mask, total) {
+>> +	for_each_set_bit(pos, mask, total) {
+>>   		chan = &dw->chan[pos + off];
+>>   
+>>   		val = dw_hdma_v0_core_status_int(chan);
+> 
+> [Severity: High]
+> This is a pre-existing issue, but is it possible that
+> dw_hdma_v0_core_ch_status() reads from the wrong hardware register by
+> swapping its arguments?
+> 
+> When checking the status, the GET_CH_32 macro expects the direction first,
+> then the channel:
+> 
+>      GET_CH_32(dw, dir, ch, name)
+> 
+> However, dw_hdma_v0_core_ch_status() passes chan->id before chan->dir:
+> 
+>      tmp = FIELD_GET(HDMA_V0_CH_STATUS_MASK,
+>                      GET_CH_32(dw, chan->id, chan->dir, ch_stat));
+> 
+> Could this lead to incorrect channel status checks?
+> 
+> [ ... ]
 
-Best regards
-Uwe
+This issue shall be taken in a separate patch series.
 
---xs4ntcqafh3l4ivh
-Content-Type: application/pgp-signature; name="signature.asc"
+>> diff --git a/include/linux/dma/edma.h b/include/linux/dma/edma.h
+>> index 1fafd5b0e3153..da7a5cc93ad43 100644
+>> --- a/include/linux/dma/edma.h
+>> +++ b/include/linux/dma/edma.h
+>> @@ -14,6 +14,8 @@
+>>   
+>>   #define EDMA_MAX_WR_CH                                  8
+>>   #define EDMA_MAX_RD_CH                                  8
+>> +#define HDMA_MAX_WR_CH                                  64
+>> +#define HDMA_MAX_RD_CH                                  64
+>>   
+>>   struct dw_edma;
+>>   
+> 
+> [Severity: High]
+> With the expansion to 64 channels, will the DesignWare PCIe controller
+> integration reject valid HDMA configurations?
+> 
+> In dw_pcie_edma_find_channels(), the code unconditionally enforces the old
+> EDMA_MAX_WR_CH (8) limits:
+> 
+>      if (!pci->edma.ll_wr_cnt || pci->edma.ll_wr_cnt > EDMA_MAX_WR_CH ||
+>          !pci->edma.ll_rd_cnt || pci->edma.ll_rd_cnt > EDMA_MAX_RD_CH)
+>          return -EINVAL;
+> 
 
------BEGIN PGP SIGNATURE-----
+This particular function targets non-HDMA platforms which suggests that
+increasing the channel limit will not affect anything here.
+This code shall be retained as is. It is not affected by increase in
+limit for HDMA channels.
 
-iQEzBAABCgAdFiEEP4GsaTp6HlmJrf7Tj4D7WH0S/k4FAmo+hXgACgkQj4D7WH0S
-/k6jhgf/Q3MgW/5Ove9zmOEESBkVHo1SCbxx6nWy8QX8dmvjpdl+RdVZU5xFML+1
-Brut08xdhimi9SlqRNUJgr/fx8JPw6xoioNua4dp4WMHUq5gSF01/q9hcb9E9DT2
-6Et1r2jIIBmiP1n8xUBMzNZBPJo6xxLCrrNazcv0k/SikarAYN13Q5qzy7Ne1hs/
-k3YDPctRG3L0b3EsKT6EBjEIYRb8k/6VZ7DXkHwDNr8Esd3a7RaJtA9Q2asuul9n
-Nb82sJaM+4En2s7JaYc1rFIKuMOcXGg+EEY3PDbj+pPjDAcsKP/TCxaEMgZqNUg6
-eRpQR74nP96QqaCP/pQln5tD+KKgZA==
-=OSso
------END PGP SIGNATURE-----
+> Similarly, dw_pcie_edma_irq_vector() enforces a maximum of 16 vectors:
+> 
+>      if (nr >= EDMA_MAX_WR_CH + EDMA_MAX_RD_CH)
+>          return -EINVAL;
+> 
+> Do these bounding checks in the PCIe controller driver also need to be
+> updated to handle the new HDMA_MAX_WR_CH and HDMA_MAX_RD_CH limits, to
+> prevent the device probe from completely failing?
+> 
 
---xs4ntcqafh3l4ivh--
+This shall not affect the working of IP, with minimum interrupt count of
+1 also IP should work. If required, it shall be taken in a separate
+patch series.
+
