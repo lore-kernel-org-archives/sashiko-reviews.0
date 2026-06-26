@@ -1,124 +1,83 @@
-Received: from mail-wm1-f52.google.com (mail-wm1-f52.google.com [209.85.128.52])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5F94F3ED101
-	for <sashiko-reviews@lists.linux.dev>; Fri, 26 Jun 2026 10:52:49 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.52
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C2A4237188A;
+	Fri, 26 Jun 2026 10:53:36 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1782471170; cv=none; b=e5lu/S8zJHl7db1ZQyZopIh17U765Xh9TfldQJ5hDHQ3CncvFfQoM/Yck1ytSeJ70/AkpQ8e+Rxtcnn5pcOhrvrqBD+2dhufgcTg7nyzuwUlmDTxhdnxsuINylt4aKeCxkTzUWn2LEuX3jtPO8liBbblKjgvO2DY3WQl2uCTKq0=
+	t=1782471217; cv=none; b=sUWjVF/x3JFreSA0KOVi1QKEotcZl4QBnOoIhe/D2g8U3bNlT92pJ7A6n6h5wid8GyT7BUEw6xMOvTaABrB/QQv8SIhmk3V4LYzLFg0CSeU74342KhekK3X+AcnITv5PnpLhykjALXfx++Pen3fzG5THfAxnyWIt3+Rq1gR5DqE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1782471170; c=relaxed/simple;
-	bh=fS91BX94afUHBq0hR34eheoAQu1ZkCenArwqnm/q0JY=;
-	h=Date:From:To:Cc:Subject:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=n00rVKi2QrhmV1fHqDEDBTS0G3/HI3dODwRr9gVcHoOD7L+5C40TKJbMPA6rpcS3I1PotV27Ale8DABNgi/mSKiJZgvgdDOCEnSF+NiiObDy7mMiTTsdnjtk0wBXt7n2NVZABeaPR4Hd6mf+xS8YBFxCW8nsnlOaALbbnmOYHaI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=nv63onbT; arc=none smtp.client-ip=209.85.128.52
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+	s=arc-20240116; t=1782471217; c=relaxed/simple;
+	bh=k4b/BPqIGDPh6NjPFaEn2eHsRKNvZYT2eoEw3kioFVM=;
+	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
+	 In-Reply-To:Content-Type; b=pp7RVYMygVvdjwKYw1f8cjU5yC+uGVqVBaqRLcwzlBTTxu0AYtz5xDUlBSDAgchpLZJQv70L20meMsdCY/8Ito285wgkR2hf5rjoWpD1SlAMUL2MS1g9qhMJHIlvPnIFDQkSDxxtOdvA83nu03dZkAJKTuDLrV20X5jNCDipn/Q=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=ktiUQdQg; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="nv63onbT"
-Received: by mail-wm1-f52.google.com with SMTP id 5b1f17b1804b1-490b3637b90so5206095e9.3
-        for <sashiko-reviews@lists.linux.dev>; Fri, 26 Jun 2026 03:52:49 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20251104; t=1782471168; x=1783075968; darn=lists.linux.dev;
-        h=content-transfer-encoding:mime-version:references:in-reply-to
-         :message-id:subject:cc:to:from:date:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=No42VPQLeiDXP/prwUIiSxKS26SONyeJJDp1wy05z7k=;
-        b=nv63onbTN1PpjoL7bqkefM9aI7om3J1f83SX+kN2oNng3ZzQ/Zd12vrZDLmOxkLrhX
-         QnOrZKT1sXfBIdk9PWfpLzn8CMBwplxNjRz4MkvjfMOqzjdLOqskWHrzDUzo4UDQCizb
-         Q9eimUh7+L4yJ4qvzcoIA/rpJDiY2cFD4uTFvnn+rJSj+KaafUByKwoEyDtG97FY+r0j
-         2Uet6wCjvfRXdfZCDrZL8h4lIufzY3ykcV15JUWCZa/ac/oc+fUC2caeGyFfVNyBGLPf
-         5VaXiEMsQ5SUQr7X1OulfGlJYfNrJZNhdHdz0dcbx06C31GXMMY+B38qBiWpPU0lJ4ar
-         eyHg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20251104; t=1782471168; x=1783075968;
-        h=content-transfer-encoding:mime-version:references:in-reply-to
-         :message-id:subject:cc:to:from:date:x-gm-gg:x-gm-message-state:from
-         :to:cc:subject:date:message-id:reply-to;
-        bh=No42VPQLeiDXP/prwUIiSxKS26SONyeJJDp1wy05z7k=;
-        b=rE3OcNgDIQDZ75jFtzlxZqDBdjAFViWoL0b4+K5eTMThKAruSgx5FO+IpjlrxqFkTO
-         VkA2EXb7qkUwjv5glNN9nsiU+4houcI1GSWRpWeTqS/dWuCLSo+3rlNkbD/Jzle1b9UP
-         jd0VSX1MypazIDal1/eav9DAuXFN6cdYDoELXIlFVZ306OSdyMroZmVVn2gn5A0cAjAF
-         rGiquyJ8ASZSOFQSQlYNccUWqwbIBBAl/OljeSfJzyJktLvp9kw47lIX/GSoHxlrV0mE
-         p+DlQEpSHP++wRbRqd2VhwiAomfyQD/xnc+jWzJpIJH6iA2y6RQXzNq1ocosjykgM12y
-         IEgw==
-X-Gm-Message-State: AOJu0YzqYQ1nbBoML+1CdGNcIcSk2akkecbyw6R8NPUDJIKm6GJaNg/p
-	2oWJ1QAz+xwL/n3/oLP3jEssUTUA72fhBB9YPoJ96YbYQpL4KrkOGWvF
-X-Gm-Gg: AfdE7clSikx9l5LU1B2R/K/DgvMsg2Sn/+guPn1WUaUOQr7hNf5Zx73WG8lj9dqV3WX
-	XB3D9OhyFq1McMvNsxsaxg6ew+nMDl0xtWcxxrkQReDJRWrADKyS8Bevvez3ofCwxXJmO7tnS0A
-	zaOv/Fht+4wRDMILBO3tOm8uds3ahAHLrXXEintZz6cdCra56O+1naA4ZBcdDY1zxOMaZgoYnsy
-	sInrgvW2o4iOdJBKvCLJ2+QvJ+t00ZFuv1hn/TK/+ELOP3oJ1YI7r6V4ZGrOsZHtX/DwAaemKjZ
-	21527jfJxhw1F1PKT4lN6m7NnlDUXkjQCQhGeC63ZmHE4+J89O2LxK6jiRdcEEhSqpFvEFQN7hl
-	CZqdNxgycxMCR7NuFYBfD4Pm0KQnCoqoJDzyGIx3Dlvyt9LZvgODAYD2ZjZEK9x2oopS84pSpz0
-	YKI6S0BYW+PKUr83bTjDKnEycenSID0pQbkbvtBmZ6LLML2Quj4Q==
-X-Received: by 2002:a05:600c:1d0d:b0:492:1e36:85dd with SMTP id 5b1f17b1804b1-4926689f6d5mr98905305e9.37.1782471167704;
-        Fri, 26 Jun 2026 03:52:47 -0700 (PDT)
-Received: from pumpkin (82-69-66-36.dsl.in-addr.zen.co.uk. [82.69.66.36])
-        by smtp.gmail.com with ESMTPSA id ffacd0b85a97d-46f8d6f10absm2089932f8f.5.2026.06.26.03.52.47
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Fri, 26 Jun 2026 03:52:47 -0700 (PDT)
-Date: Fri, 26 Jun 2026 11:52:46 +0100
-From: David Laight <david.laight.linux@gmail.com>
-To: sashiko-bot@kernel.org
-Cc: sashiko-reviews@lists.linux.dev, yukuai@fygo.io,
- linux-raid@vger.kernel.org
-Subject: Re: [PATCH v2 next] drivers/md/md: Use bounded strings ops when
- setting disk->disk_name
-Message-ID: <20260626115246.3477f614@pumpkin>
-In-Reply-To: <20260626085141.3AEBC1F000E9@smtp.kernel.org>
-References: <20260626084334.3012-1-david.laight.linux@gmail.com>
-	<20260626085141.3AEBC1F000E9@smtp.kernel.org>
-X-Mailer: Claws Mail 4.1.1 (GTK 3.24.38; arm-unknown-linux-gnueabihf)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="ktiUQdQg"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1D71D1F000E9;
+	Fri, 26 Jun 2026 10:53:36 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=kernel.org;
+	s=k20260515; t=1782471216;
+	bh=po+ReanQt/H+Q889M4kf7cgjyS5Vi31nK8fSrnPhUOQ=;
+	h=Date:Subject:To:Cc:References:From:In-Reply-To;
+	b=ktiUQdQgO4kOLu/WGLqYLQ6/llR6jXosBAIY1Q7av3HKAEXb4n9w1SnFsyIHe8TU2
+	 mcaDcr3qbT63mmz0rdE3yK9eE9X1RBnI/cHGK+YRMs7CTetfY/7DV9dMdePm+X3eU0
+	 WHFa4U3AzN6WOyFipqXxXksYE57GKLAajpjoI4oU0NaMzUZHzx4/z6cXWSoKgFP8Wz
+	 k5QNqXj/aHKbq3ZnRpGr+YTn7jSsOuPEUky9VQzKgI9k4bbrUK1pwV2orGF7JZ2d57
+	 oIV9YeUii6JegDgJjRo5uXLHyE2YgclvPpC7IOzfFuPVN86BKktwSGF/rMJ+amKVJV
+	 9OblI496ntL4g==
+Message-ID: <d4952ad4-05a5-49ea-aadd-65785d241c4b@kernel.org>
+Date: Fri, 26 Jun 2026 05:53:34 -0500
 Precedence: bulk
 X-Mailing-List: sashiko-reviews@lists.linux.dev
 List-Id: <sashiko-reviews.lists.linux.dev>
 List-Subscribe: <mailto:sashiko-reviews+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:sashiko-reviews+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=US-ASCII
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH 2/2] arm64: dts: socfpga: agilex5: update channel
+ interrupts for gmac1 and gmac2
+Content-Language: en-US
+To: sashiko-reviews@lists.linux.dev
+Cc: devicetree@vger.kernel.org, robh@kernel.org, conor+dt@kernel.org
+References: <20260626042541.1091774-1-dinguyen@kernel.org>
+ <20260626042541.1091774-2-dinguyen@kernel.org>
+ <20260626043146.961401F000E9@smtp.kernel.org>
+From: Dinh Nguyen <dinguyen@kernel.org>
+In-Reply-To: <20260626043146.961401F000E9@smtp.kernel.org>
+Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 7bit
 
-On Fri, 26 Jun 2026 08:51:40 +0000
-sashiko-bot@kernel.org wrote:
 
+
+On 6/25/26 23:31, sashiko-bot@kernel.org wrote:
 > Thank you for your contribution! Sashiko AI review found 1 potential issue(s) to consider:
-> - [Low] Inconsistent coding style for the sizeof operator in newly added code.
+> - [Medium] Incomplete DT update: gmac0 is left with an invalid interrupt count that will fail dtbs validation.
 > --
 > 
-> commit 663613700e83a5bb9c1749d80b4fae68752645fb
-> Author: David Laight <david.laight.linux@gmail.com>
+> commit ce31f4c657e3508e9aef68e6da54a09c1d243026
+> Author: Dinh Nguyen <dinguyen@kernel.org>
 > 
-> drivers/md/md: Use bounded strings ops when setting disk->disk_name
+> arm64: dts: socfpga: agilex5: update channel interrupts for gmac1 and gmac2
 > 
-> This commit replaces unbounded strcpy() and sprintf() with bounded strscpy()
-> and snprintf() operations when setting the disk_name in md_alloc() to improve
-> safety.
+> Populate the gmac1 and gmac2 interrupt list to support 8 TX/RX queue
+> pairs.
 > 
-> > diff --git a/drivers/md/md.c b/drivers/md/md.c
-> > index d1465bcd86c81..afbdc52a11270 100644
-> > --- a/drivers/md/md.c
-> > +++ b/drivers/md/md.c
-> > @@ -6354,11 +6354,11 @@ struct mddev *md_alloc(dev_t dev, char *name)  
-> [ ... ]
-> >  	if (name)
-> > -		strcpy(disk->disk_name, name);
-> > +		strscpy(disk->disk_name, name);
-> >  	else if (partitioned)
-> > -		sprintf(disk->disk_name, "md_d%d", unit);
-> > +		snprintf(disk->disk_name, sizeof(disk->disk_name), "md_d%d", unit);
-> >  	else
-> > -		sprintf(disk->disk_name, "md%d", unit);
-> > +		snprintf(disk->disk_name, sizeof (disk->disk_name), "md%d", unit);  
+>> diff --git a/arch/arm64/boot/dts/intel/socfpga_agilex5.dtsi b/arch/arm64/boot/dts/intel/socfpga_agilex5.dtsi
+>> index 02e62d954e949..140e4bf9fb155 100644
+>> --- a/arch/arm64/boot/dts/intel/socfpga_agilex5.dtsi
+>> +++ b/arch/arm64/boot/dts/intel/socfpga_agilex5.dtsi
+>> @@ -670,8 +670,40 @@ gmac1: ethernet@10820000 {
+>>   			compatible = "altr,socfpga-stmmac-agilex5",
+>>   				     "snps,dwxgmac-2.10";
+>>   			reg = <0x10820000 0x3500>;
 > 
-> [Severity: Low]
-> This isn't a bug, but there is an inconsistent coding style for the sizeof
-> operator here in md_alloc(). The adjacent branch uses sizeof(disk->disk_name)
-> without a space, while this newly added branch includes a space. The kernel
-> coding style prefers no space after sizeof.
+> [Severity: Medium]
+> Should gmac0 also be updated to include 17 interrupts?
 > 
 
-B****r I only fixed one of them :-(
+There was an earlier patch that updatee gmac0 to 17 interrupts:
 
-	David
+https://lore.kernel.org/all/20260609131641.28476-1-muhammad.nazim.amirul.nazle.asmade@altera.com/
 
-
+Dinh
