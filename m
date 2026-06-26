@@ -1,248 +1,225 @@
-Received: from smtp-out2.suse.de (smtp-out2.suse.de [195.135.223.131])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from out-188.mta1.migadu.com (out-188.mta1.migadu.com [95.215.58.188])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6635F3E3C4D
-	for <sashiko-reviews@lists.linux.dev>; Fri, 26 Jun 2026 07:30:54 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=195.135.223.131
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A72E93DCD8D
+	for <sashiko-reviews@lists.linux.dev>; Fri, 26 Jun 2026 07:31:24 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=95.215.58.188
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1782459059; cv=none; b=NWS2NrLXu2oV0BgCBei2ZMXIccXNdt5/mQ57Xobbq5d84DLLYMG8kGpeY+dWAoJ/bJuQSinbJTXkOI1lCzjZR7nxRCAHktoTsla0gZrMHrZsv9N4msPIbJuximYDSSN1/uOyCIllu934lsS1xPSqcgeElweKphfM8bohWYTrhCg=
+	t=1782459086; cv=none; b=blPU+X1k3HzbOlSr999pxniFnTepDP0uS4Oy8rVHShxmkkCALgpNKuSYppu8R3fErSdh4dZGWNwG9lRjgF30csYFh7qIR8hwnIR4JeH7wSFqBfdRsAnGBU+EcTCd08Ndm28CP/svodCGmXZ6o8rbzoG8dKK8uEIqbxcI5ydbKl4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1782459059; c=relaxed/simple;
-	bh=5p/RHzzf8rvJXNCkQf63w1T2K2zipGrnxj5IHC7x9/4=;
-	h=From:To:Cc:Subject:Date:Message-ID:MIME-Version; b=iv86mtQMd8+DjGQ37kZhtksqWJ6LMH9eDbxKyW3BjeV4KPFw6stRrJvpffdYTlkZTW+aRhVNngvcW9JojbHTwncbWv6gJXp4CTJ+X7VuIvgZtUcl6UvbFzpCNLV9J86VcA+2EQoVTMCvHQmgkVV0nSW5VAxZ7wqoKYGZtqW7Zfg=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=suse.de; spf=pass smtp.mailfrom=suse.de; dkim=pass (1024-bit key) header.d=suse.de header.i=@suse.de header.b=EjIA0fQN; dkim=permerror (0-bit key) header.d=suse.de header.i=@suse.de header.b=lAVrHvDf; dkim=pass (1024-bit key) header.d=suse.de header.i=@suse.de header.b=EjIA0fQN; dkim=permerror (0-bit key) header.d=suse.de header.i=@suse.de header.b=lAVrHvDf; arc=none smtp.client-ip=195.135.223.131
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=suse.de
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=suse.de
+	s=arc-20240116; t=1782459086; c=relaxed/simple;
+	bh=OEc9yOg8EqWibdPoyfbkDcO433W+IMrTKTKTmdxVcSg=;
+	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
+	 To:Cc:Content-Type; b=r6VD+USP0zkoQjuS0I9E+1sCFKmWiafeHMgB5HtKTVzGIj38l1wCQjdN3ewzqNq8BHJnImcJo8RZ3R9CsrA54k81hUJFBGCJ39GIPmuRYszWX7a3s1frpodTQPng0n71vy096VnTBASLkgh0eelnJknM/p846ugcK1bJ59OodJs=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linux.dev; spf=pass smtp.mailfrom=linux.dev; dkim=pass (1024-bit key) header.d=linux.dev header.i=@linux.dev header.b=qSISMNeC; arc=none smtp.client-ip=95.215.58.188
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linux.dev
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linux.dev
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=suse.de header.i=@suse.de header.b="EjIA0fQN";
-	dkim=permerror (0-bit key) header.d=suse.de header.i=@suse.de header.b="lAVrHvDf";
-	dkim=pass (1024-bit key) header.d=suse.de header.i=@suse.de header.b="EjIA0fQN";
-	dkim=permerror (0-bit key) header.d=suse.de header.i=@suse.de header.b="lAVrHvDf"
-Received: from imap1.dmz-prg2.suse.org (unknown [10.150.64.97])
-	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
-	 key-exchange X25519 server-signature RSA-PSS (4096 bits) server-digest SHA256)
-	(No client certificate requested)
-	by smtp-out2.suse.de (Postfix) with ESMTPS id 439EF759BE;
-	Fri, 26 Jun 2026 07:30:52 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=suse.de; s=susede2_rsa;
-	t=1782459052; h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
-	 mime-version:mime-version:  content-transfer-encoding:content-transfer-encoding;
-	bh=Cn0PtJjGRM91dum2BvUS3J2KV+mR2z/ujYEBK7nDp38=;
-	b=EjIA0fQNfSUrlZjN++GAoo/jE7F8lDGiZw3O7j7J7BwyU/LrW0Mc13VVPAsf3WTT9vxN9I
-	9IFc51ECX5U6KG9hb2kp4whvykhSmC9XlVMxkPLCACtjSYzNmUXANV3iIH5csEKg/d9Cud
-	e4XQKh4/Yut1w9hAucBU2yDpg06pzG8=
-DKIM-Signature: v=1; a=ed25519-sha256; c=relaxed/relaxed; d=suse.de;
-	s=susede2_ed25519; t=1782459052;
-	h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
-	 mime-version:mime-version:  content-transfer-encoding:content-transfer-encoding;
-	bh=Cn0PtJjGRM91dum2BvUS3J2KV+mR2z/ujYEBK7nDp38=;
-	b=lAVrHvDfQjpQyhPZBLdUz8Vk6TuAgy448dxCHP+r5d5xzwLvtsxj7UWEXtSHk6kHbVCnr5
-	hmMzmwMVomNwHkCQ==
-Authentication-Results: smtp-out2.suse.de;
-	none
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=suse.de; s=susede2_rsa;
-	t=1782459052; h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
-	 mime-version:mime-version:  content-transfer-encoding:content-transfer-encoding;
-	bh=Cn0PtJjGRM91dum2BvUS3J2KV+mR2z/ujYEBK7nDp38=;
-	b=EjIA0fQNfSUrlZjN++GAoo/jE7F8lDGiZw3O7j7J7BwyU/LrW0Mc13VVPAsf3WTT9vxN9I
-	9IFc51ECX5U6KG9hb2kp4whvykhSmC9XlVMxkPLCACtjSYzNmUXANV3iIH5csEKg/d9Cud
-	e4XQKh4/Yut1w9hAucBU2yDpg06pzG8=
-DKIM-Signature: v=1; a=ed25519-sha256; c=relaxed/relaxed; d=suse.de;
-	s=susede2_ed25519; t=1782459052;
-	h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
-	 mime-version:mime-version:  content-transfer-encoding:content-transfer-encoding;
-	bh=Cn0PtJjGRM91dum2BvUS3J2KV+mR2z/ujYEBK7nDp38=;
-	b=lAVrHvDfQjpQyhPZBLdUz8Vk6TuAgy448dxCHP+r5d5xzwLvtsxj7UWEXtSHk6kHbVCnr5
-	hmMzmwMVomNwHkCQ==
-Received: from imap1.dmz-prg2.suse.org (localhost [127.0.0.1])
-	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
-	 key-exchange X25519 server-signature RSA-PSS (4096 bits) server-digest SHA256)
-	(No client certificate requested)
-	by imap1.dmz-prg2.suse.org (Postfix) with ESMTPS id E3F6A779A8;
-	Fri, 26 Jun 2026 07:30:51 +0000 (UTC)
-Received: from dovecot-director2.suse.de ([2a07:de40:b281:106:10:150:64:167])
-	by imap1.dmz-prg2.suse.org with ESMTPSA
-	id VYv9NasqPmpNUAAAD6G6ig
-	(envelope-from <tzimmermann@suse.de>); Fri, 26 Jun 2026 07:30:51 +0000
-From: Thomas Zimmermann <tzimmermann@suse.de>
-To: hns@goldelico.com,
-	zhengxingda@iscas.ac.cn,
-	jani.nikula@linux.intel.com,
-	maarten.lankhorst@linux.intel.com,
-	mripard@kernel.org,
-	airlied@gmail.com,
-	simona@ffwll.ch,
-	akemnade@kernel.org
-Cc: dri-devel@lists.freedesktop.org,
-	linux-kernel@vger.kernel.org,
-	letux-kernel@openphoenux.org,
-	kernel@pyra-handheld.com,
-	sashiko-reviews@lists.linux.dev,
-	Thomas Zimmermann <tzimmermann@suse.de>
-Subject: [PATCH v3] drm/fb-helper: Only consider active CRTCs for vblank sync
-Date: Fri, 26 Jun 2026 09:30:40 +0200
-Message-ID: <20260626073048.453206-1-tzimmermann@suse.de>
-X-Mailer: git-send-email 2.54.0
+	dkim=pass (1024-bit key) header.d=linux.dev header.i=@linux.dev header.b="qSISMNeC"
+X-Gm-Message-State: AOJu0Yw5TcuDyMNc645zI0MhGIeaOU2pJoya3jDg9x07P2j6Kzn98mJv
+	o1cKtC6bGVbmdMlUyOb5XpfMskCyJIqDC+aa58cWKhA31uBBo6jUxGmrnePBmJ1MIJZQeImHV7Q
+	w5fy2gdIy9hcH2sT9F9N11y+8+UsDZb4f05sImlI2
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linux.dev; s=key1;
+	t=1782459083;
+	h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+	 to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+	 content-transfer-encoding:content-transfer-encoding:
+	 in-reply-to:in-reply-to:references:references;
+	bh=mnSIankP1B496nsaCP1FChLJmI3HhObTJqr8uBliVQY=;
+	b=qSISMNeCGa3J/A8Pbx98CsoMEbFcx+XZSYOrq9nPnkqS9eshDvoepjHWIpca1q6m0X/oCx
+	+vUBP6v53hQjT2od23UHibEtGs11nyXgQa00MP/HeFWZm893/3QTd76QyC96HPIScem33r
+	/XQnGwnMqWHTXHa2M1zXef/FJFxNBEw=
+X-Received: by 2002:ac8:59c3:0:b0:516:4f62:85ec with SMTP id
+ d75a77b69052e-51a850c88f1mr1317711cf.17.1782459079675; Fri, 26 Jun 2026
+ 00:31:19 -0700 (PDT)
 Precedence: bulk
 X-Mailing-List: sashiko-reviews@lists.linux.dev
 List-Id: <sashiko-reviews.lists.linux.dev>
 List-Subscribe: <mailto:sashiko-reviews+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:sashiko-reviews+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
-X-Spam-Flag: NO
-X-Spamd-Result: default: False [-2.80 / 50.00];
-	BAYES_HAM(-3.00)[100.00%];
-	MID_CONTAINS_FROM(1.00)[];
-	NEURAL_HAM_LONG(-1.00)[-1.000];
-	R_MISSING_CHARSET(0.50)[];
-	NEURAL_HAM_SHORT(-0.20)[-0.999];
-	MIME_GOOD(-0.10)[text/plain];
-	TO_MATCH_ENVRCPT_ALL(0.00)[];
-	ARC_NA(0.00)[];
-	RCVD_VIA_SMTP_AUTH(0.00)[];
-	FROM_HAS_DN(0.00)[];
-	RCPT_COUNT_TWELVE(0.00)[14];
-	MIME_TRACE(0.00)[0:+];
-	DBL_BLOCKED_OPENRESOLVER(0.00)[suse.de:email,suse.de:mid,imap1.dmz-prg2.suse.org:helo];
-	FUZZY_RATELIMITED(0.00)[rspamd.com];
-	FROM_EQ_ENVFROM(0.00)[];
-	RCVD_COUNT_TWO(0.00)[2];
-	FREEMAIL_TO(0.00)[goldelico.com,iscas.ac.cn,linux.intel.com,kernel.org,gmail.com,ffwll.ch];
-	RCVD_TLS_ALL(0.00)[];
-	TO_DN_SOME(0.00)[];
-	DKIM_SIGNED(0.00)[suse.de:s=susede2_rsa,suse.de:s=susede2_ed25519];
-	FREEMAIL_ENVRCPT(0.00)[gmail.com]
-X-Spam-Level: 
-X-Spam-Score: -2.80
+References: <20260626070408.3420953-1-fuad.tabba@linux.dev>
+ <20260626070408.3420953-7-fuad.tabba@linux.dev> <20260626072444.F1EA31F000E9@smtp.kernel.org>
+In-Reply-To: <20260626072444.F1EA31F000E9@smtp.kernel.org>
+X-Report-Abuse: Please report any abuse attempt to abuse@migadu.com and include these headers.
+From: Fuad Tabba <fuad.tabba@linux.dev>
+Date: Fri, 26 Jun 2026 08:30:42 +0100
+X-Gmail-Original-Message-ID: <CA+EHjTz1F45Ws1W23ukNvCLLyE0SvHtTOeH75O12YYqn1xwkHQ@mail.gmail.com>
+X-Gm-Features: AVVi8CcfDyHzCN27M_yVdIayGu23Hbu9MJ874ZKPAOam1wvFApxWUxOchKwxFqQ
+Message-ID: <CA+EHjTz1F45Ws1W23ukNvCLLyE0SvHtTOeH75O12YYqn1xwkHQ@mail.gmail.com>
+Subject: Re: [PATCH v3 6/8] KVM: arm64: Minimise EL2's exposure of host VGIC
+ state during world switch
+To: sashiko-reviews@lists.linux.dev
+Cc: kvmarm@lists.linux.dev, Oliver Upton <oupton@kernel.org>, 
+	Marc Zyngier <maz@kernel.org>
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
+X-Migadu-Flow: FLOW_OUT
 
-Only synchronize fbdev output to the vblank of an active CRTC. Go over
-the list of CRTCs and pick the first that matches. Fixes warnings as
-the one shown below
+On Fri, 26 Jun 2026 at 08:24, <sashiko-bot@kernel.org> wrote:
+>
+> Thank you for your contribution! Sashiko AI review found 1 potential issu=
+e(s) to consider:
+>
+> Pre-existing issues:
+> - [Critical] The patch correctly fixes TOCTOU and arbitrary read/write vu=
+lnerabilities for GICv3 by preventing EL2 from directly dereferencing host-=
+provided pointers in `handle___vgic_v3_save_aprs` and `handle___vgic_v3_res=
+tore_vmcr_aprs`. However, it leaves the exact same vulnerability unpatched =
+in the GICv5 equivalents: `handle___vgic_v5_save_apr` and `handle___vgic_v5=
+_restore_vmcr_apr`. These functions take a host-supplied pointer (`cpu_if`)=
+, which they pass directly to the inner save/restore functions via `kern_hy=
+p_va`. Because `kern_hyp_va` is idempotent for hypervisor linear-map pointe=
+rs, the untrusted host (which is an adversary in the pKVM threat model) can=
+ pass an arbitrary EL2 memory address. This allows the host to execute arbi=
+trary memory reads and writes in the hypervisor (e.g., writing the value of=
+ `SYS_ICH_APR_EL2` to arbitrary EL2 memory or reading arbitrary memory into=
+ sysregs), completely bypassing pKVM isolation.
+> --
+>
+> commit 815e460f9f860b3c06ec7eb259e1f2d75d196c33
+> Author: Marc Zyngier <maz@kernel.org>
+>
+> KVM: arm64: Minimise EL2's exposure of host VGIC state during world switc=
+h
+>
+> The host passes a vgic_v3_cpu_if pointer to the __vgic_v3_save_aprs and
+> __vgic_v3_restore_vmcr_aprs hypercalls, which EL2 dereferences
+> wholesale. That exposes the host's full VGIC emulation state to the
+> hypervisor, against pKVM's isolation goals.
+>
+> > diff --git a/arch/arm64/kvm/hyp/nvhe/hyp-main.c b/arch/arm64/kvm/hyp/nv=
+he/hyp-main.c
+> > index 45d717889f6ea..f3233ee343a39 100644
+> > --- a/arch/arm64/kvm/hyp/nvhe/hyp-main.c
+> > +++ b/arch/arm64/kvm/hyp/nvhe/hyp-main.c
+>
+> [ ... ]
+>
+> > @@ -508,16 +520,63 @@ static void handle___vgic_v3_init_lrs(struct kvm_=
+cpu_context *host_ctxt)
+> >
+> >  static void handle___vgic_v3_save_aprs(struct kvm_cpu_context *host_ct=
+xt)
+> >  {
+> > -     DECLARE_REG(struct vgic_v3_cpu_if *, cpu_if, host_ctxt, 1);
+> > +     struct pkvm_hyp_vcpu *hyp_vcpu;
+> > +     struct kvm_vcpu *host_vcpu;
+> >
+> > -     __vgic_v3_save_aprs(kern_hyp_va(cpu_if));
+> > +     host_vcpu =3D get_host_hyp_vcpus_from_vgic_v3_cpu_if(host_ctxt, 1=
+,
+> > +                                                        &hyp_vcpu);
+> > +     if (!host_vcpu)
+> > +             return;
+> > +
+> > +     if (unlikely(hyp_vcpu)) {
+> > +             struct vgic_v3_cpu_if *hyp_cpu_if, *host_cpu_if;
+> > +             int i;
+> > +
+> > +             hyp_cpu_if =3D &hyp_vcpu->vcpu.arch.vgic_cpu.vgic_v3;
+> > +             __vgic_v3_save_aprs(hyp_cpu_if);
+> > +
+> > +             host_cpu_if =3D &host_vcpu->arch.vgic_cpu.vgic_v3;
+> > +             host_cpu_if->vgic_vmcr =3D hyp_cpu_if->vgic_vmcr;
+> > +             for (i =3D 0; i < ARRAY_SIZE(host_cpu_if->vgic_ap0r); i++=
+) {
+> > +                     host_cpu_if->vgic_ap0r[i] =3D hyp_cpu_if->vgic_ap=
+0r[i];
+> > +                     host_cpu_if->vgic_ap1r[i] =3D hyp_cpu_if->vgic_ap=
+1r[i];
+> > +             }
+> > +     } else {
+> > +             __vgic_v3_save_aprs(&host_vcpu->arch.vgic_cpu.vgic_v3);
+> > +     }
+> >  }
+> >
+> >  static void handle___vgic_v3_restore_vmcr_aprs(struct kvm_cpu_context =
+*host_ctxt)
+> >  {
+> > -     DECLARE_REG(struct vgic_v3_cpu_if *, cpu_if, host_ctxt, 1);
+> > +     struct pkvm_hyp_vcpu *hyp_vcpu;
+> > +     struct kvm_vcpu *host_vcpu;
+> > +
+> > +     host_vcpu =3D get_host_hyp_vcpus_from_vgic_v3_cpu_if(host_ctxt, 1=
+,
+> > +                                                        &hyp_vcpu);
+> > +     if (!host_vcpu)
+> > +             return;
+> >
+> > -     __vgic_v3_restore_vmcr_aprs(kern_hyp_va(cpu_if));
+> > +     if (unlikely(hyp_vcpu)) {
+> > +             struct vgic_v3_cpu_if *hyp_cpu_if, *host_cpu_if;
+> > +             int i;
+> > +
+> > +             hyp_cpu_if =3D &hyp_vcpu->vcpu.arch.vgic_cpu.vgic_v3;
+> > +             host_cpu_if =3D &host_vcpu->arch.vgic_cpu.vgic_v3;
+> > +
+> > +             hyp_cpu_if->vgic_vmcr =3D host_cpu_if->vgic_vmcr;
+> > +             /* Should be a one-off */
+> > +             hyp_cpu_if->vgic_sre =3D (ICC_SRE_EL1_DIB |
+> > +                                     ICC_SRE_EL1_DFB |
+> > +                                     ICC_SRE_EL1_SRE);
+> > +             for (i =3D 0; i < ARRAY_SIZE(host_cpu_if->vgic_ap0r); i++=
+) {
+> > +                     hyp_cpu_if->vgic_ap0r[i] =3D host_cpu_if->vgic_ap=
+0r[i];
+> > +                     hyp_cpu_if->vgic_ap1r[i] =3D host_cpu_if->vgic_ap=
+1r[i];
+> > +             }
+> > +
+> > +             __vgic_v3_restore_vmcr_aprs(hyp_cpu_if);
+> > +     } else {
+> > +             __vgic_v3_restore_vmcr_aprs(&host_vcpu->arch.vgic_cpu.vgi=
+c_v3);
+> > +     }
+> >  }
+>
+> [Severity: Critical]
+> This is a pre-existing issue, but while this patch correctly fixes the TO=
+CTOU
+> and arbitrary read/write vulnerabilities for GICv3, it seems the same pat=
+tern
+> remains unpatched in the GICv5 equivalents:
+>
+> arch/arm64/kvm/hyp/nvhe/hyp-main.c:handle___vgic_v5_save_apr() {
+>         DECLARE_REG(struct vgic_v5_cpu_if *, cpu_if, host_ctxt, 1);
+>         __vgic_v5_save_apr(kern_hyp_va(cpu_if));
+> }
+>
+> arch/arm64/kvm/hyp/nvhe/hyp-main.c:handle___vgic_v5_restore_vmcr_apr() {
+>         DECLARE_REG(struct vgic_v5_cpu_if *, cpu_if, host_ctxt, 1);
+>         __vgic_v5_restore_vmcr_apr(kern_hyp_va(cpu_if));
+> }
+>
+> Since kern_hyp_va() is idempotent for hypervisor linear-map pointers, cou=
+ld
+> the untrusted host (which is an adversary in the pKVM threat model) pass =
+an
+> arbitrary EL2 memory address here?
+>
+> Would this allow the host to execute arbitrary memory reads and writes in=
+ the
+> hypervisor (for example, writing the value of SYS_ICH_APR_EL2 to arbitrar=
+y
+> EL2 memory or reading arbitrary memory into sysregs), which might bypass =
+pKVM
+> isolation?
 
-[   77.201354] WARNING: drivers/gpu/drm/drm_vblank.c:1320 at drm_crtc_wait_one_vblank+0x194/0x1cc [drm], CPU#1: kworker/1:7/1867
-[   77.201354] omapdrm omapdrm.0: [drm] vblank wait timed out on crtc 0
+We covered this too [1]:
 
-This currently happens if the fbdev output is not on CRTC 0.
+GICv5 is not supported in protected mode (is_protected_kvm_enabled()
+gate in vgic-v5.c skips device registration entirely), so the v5
+handlers are unreachable.
 
-Atomic and non-atomic drivers require distinct code paths. As for other
-fbdev operations, implement both and select the correct one at runtime.
 
-Not finding an active CRTC is not a bug. Do not wait in this case, but
-flush the display update as before.
+Cheers,
+/fuad
 
-v3:
-- drop excessive state validation (Jani)
-- acquire plane and CRTC mutices (Sashiko)
-v2:
-- move look-up code into separate helper
-- support drivers with legacy modesetting
-v1:
-- see https://lore.kernel.org/dri-devel/1c9e0e24-9c4a-4259-8700-cf9e5fd60ca3@suse.de/
+[1] https://lore.kernel.org/all/CA+EHjTxSZOwDBwVidTnjkNCzS-F9x=3DYXfZFQs0pB=
+0OyJWcby7Q@mail.gmail.com/
 
-Co-authored-by: H. Nikolaus Schaller <hns@goldelico.com>
-Signed-off-by: Thomas Zimmermann <tzimmermann@suse.de>
-Fixes: d8c4bddcd8bcb ("drm/fb-helper: Synchronize dirty worker with vblank")
-Tested-by: Icenowy Zheng <zhengxingda@iscas.ac.cn>
-Tested-by: H. Nikolaus Schaller <hns@goldelico.com>
-Closes: https://bugs.debian.org/1138033
----
- drivers/gpu/drm/drm_fb_helper.c | 73 ++++++++++++++++++++++++++++++++-
- 1 file changed, 72 insertions(+), 1 deletion(-)
-
-diff --git a/drivers/gpu/drm/drm_fb_helper.c b/drivers/gpu/drm/drm_fb_helper.c
-index 7b11a582f8ec..67b187f5c6bf 100644
---- a/drivers/gpu/drm/drm_fb_helper.c
-+++ b/drivers/gpu/drm/drm_fb_helper.c
-@@ -225,16 +225,87 @@ static void drm_fb_helper_resume_worker(struct work_struct *work)
- 	console_unlock();
- }
- 
-+static int find_crtc_index_atomic(struct drm_fb_helper *helper)
-+{
-+	struct drm_device *dev = helper->dev;
-+	struct drm_plane *plane;
-+	int crtc_index = -EINVAL;
-+
-+	drm_for_each_plane(plane, dev) {
-+		const struct drm_plane_state *plane_state;
-+
-+		if (plane->type != DRM_PLANE_TYPE_PRIMARY)
-+			continue;
-+
-+		drm_modeset_lock(&plane->mutex, NULL);
-+		plane_state = plane->state;
-+
-+		if (plane_state->fb == helper->fb && plane_state->crtc) {
-+			struct drm_crtc *crtc = plane_state->crtc;
-+
-+			drm_modeset_lock(&crtc->mutex, NULL);
-+			if (crtc->state->active)
-+				crtc_index = crtc->index;
-+			drm_modeset_unlock(&crtc->mutex);
-+		}
-+		drm_modeset_unlock(&plane->mutex);
-+
-+		if (crtc_index >= 0)
-+			break;
-+	}
-+
-+	return crtc_index;
-+}
-+
-+static int find_crtc_index_legacy(struct drm_fb_helper *helper)
-+{
-+	struct drm_device *dev = helper->dev;
-+	struct drm_crtc *crtc;
-+
-+	drm_for_each_crtc(crtc, dev) {
-+		struct drm_plane *plane = crtc->primary;
-+
-+		if (!crtc->enabled)
-+			continue;
-+		if (!plane || plane->fb != helper->fb)
-+			continue; /* CRTC doesn't display fbdev emulation */
-+
-+		return crtc->index;
-+	}
-+
-+	return -EINVAL;
-+}
-+
-+static int drm_fb_helper_find_crtc_index(struct drm_fb_helper *helper)
-+{
-+	struct drm_device *dev = helper->dev;
-+	int crtc_index;
-+
-+	mutex_lock(&dev->mode_config.mutex);
-+
-+	if (drm_drv_uses_atomic_modeset(dev))
-+		crtc_index = find_crtc_index_atomic(helper);
-+	else
-+		crtc_index = find_crtc_index_legacy(helper);
-+
-+	mutex_unlock(&dev->mode_config.mutex);
-+
-+	return crtc_index;
-+}
-+
- static void drm_fb_helper_fb_dirty(struct drm_fb_helper *helper)
- {
- 	struct drm_device *dev = helper->dev;
- 	struct drm_clip_rect *clip = &helper->damage_clip;
- 	struct drm_clip_rect clip_copy;
-+	int crtc_index;
- 	unsigned long flags;
- 	int ret;
- 
- 	mutex_lock(&helper->lock);
--	drm_client_modeset_wait_for_vblank(&helper->client, 0);
-+	crtc_index = drm_fb_helper_find_crtc_index(helper);
-+	if (crtc_index >= 0)
-+		drm_client_modeset_wait_for_vblank(&helper->client, crtc_index);
- 	mutex_unlock(&helper->lock);
- 
- 	if (drm_WARN_ON_ONCE(dev, !helper->funcs->fb_dirty))
--- 
-2.54.0
-
+>
+> --
+> Sashiko AI review =C2=B7 https://sashiko.dev/#/patchset/20260626070408.34=
+20953-1-fuad.tabba@linux.dev?part=3D6
