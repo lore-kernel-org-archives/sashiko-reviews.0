@@ -1,323 +1,136 @@
-Received: from AS8PR04CU009.outbound.protection.outlook.com (mail-westeuropeazon11011033.outbound.protection.outlook.com [52.101.70.33])
+Received: from AM0PR02CU008.outbound.protection.outlook.com (mail-westeuropeazon11023076.outbound.protection.outlook.com [52.101.72.76])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id ADA831EB19B
-	for <sashiko-reviews@lists.linux.dev>; Fri, 26 Jun 2026 16:00:47 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=fail smtp.client-ip=52.101.70.33
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 29966376BEF
+	for <sashiko-reviews@lists.linux.dev>; Fri, 26 Jun 2026 16:10:33 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=fail smtp.client-ip=52.101.72.76
 ARC-Seal:i=2; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1782489649; cv=fail; b=lbgf5aMWqrULZqFdAE3oGu+HXbzwvXCaqR4VVELrcrCLoJH4X58VkutFAX3qTLt/FrClTDWyY7Hkk77aTB7laMJHZV2YjnKAT2jZkNemZEfIUgBw6V+a7q5V+HlLk0qZOewQ7ivT1vXeQAjCFVql7fX8tIRZ3idBoXT5YhVlJQk=
+	t=1782490235; cv=fail; b=ccqXlTV4I0swwqBM1anvBUDk6rd0h6We1zBAsJMSIHlkIw9fZlSE0sE2lwcBEkvoOeNoPvXipl3CoWgW8d/aHBtCbdhJESwuJgW+cYlKktFcFx7ybJBvVnVkb7q4UIxT4YIlKO3o/zRUA5B26EtGz5F6fLL6cB7pnRVDVB5Tc78=
 ARC-Message-Signature:i=2; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1782489649; c=relaxed/simple;
-	bh=NBm5NeQ3ddH6MOU8fw7wFSypy5YW/8AVLjG/M3y8Nfg=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:Content-Type:
-	 Content-Disposition:In-Reply-To:MIME-Version; b=Q+pCZiZmMqQAkp4y9jpJTNwmrAN/5npwF17U9C9VR5hcSrhkaJHTF6hGZeqFonxMqvJzL+IzaX44w3db4NU2CjhpGi580R5Ts4LTzEa7zcEepBC+SF6IDf7bRaY/1osw44AgD//l8mPQq3lSHlFw4bruetoQS8VkrcYF69ZFiHQ=
-ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=oss.nxp.com; spf=pass smtp.mailfrom=oss.nxp.com; dkim=pass (2048-bit key) header.d=NXP1.onmicrosoft.com header.i=@NXP1.onmicrosoft.com header.b=SZ8DYibr; arc=fail smtp.client-ip=52.101.70.33
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=oss.nxp.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=oss.nxp.com
+	s=arc-20240116; t=1782490235; c=relaxed/simple;
+	bh=LcKMuczr/RnrbfeF8BTa2S+XRiT0ILA2j2X+4D71Qpc=;
+	h=From:To:CC:Subject:Date:Message-ID:MIME-Version:Content-Type; b=YCyWcRtlqeJM9rt+X5hCeRAQGzPHNsJAM3xRMcEYu/HLWzNJ6eYyMMMVMxiUTUIskxDex8OtbsrzgTJZT1I+ZvUTv43kvX47pG/V6Tcoa3J7ukvGmnlKSeWJpimOLZf/IpJrKRv5urZuwkjmpkGd/GCF5j63yyxJNpze6jvG0IM=
+ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=phytec.com; spf=pass smtp.mailfrom=phytec.com; dkim=pass (2048-bit key) header.d=phytec.com header.i=@phytec.com header.b=XC+kUdVh; arc=fail smtp.client-ip=52.101.72.76
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=phytec.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=phytec.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=NXP1.onmicrosoft.com header.i=@NXP1.onmicrosoft.com header.b="SZ8DYibr"
+	dkim=pass (2048-bit key) header.d=phytec.com header.i=@phytec.com header.b="XC+kUdVh"
 ARC-Seal: i=1; a=rsa-sha256; s=arcselector10001; d=microsoft.com; cv=none;
- b=qe2Lwt9Aqd03OxloZ7MPPZad8inl/N/aXT08QfQEq2XecTeFSeuA1aSBgSqKCdMxIKeJWBj3yrS7V3LO8+foDKCg/JNiHHlsjbXaUN9p5nRxaH4BKCgCGCfMzeSa4KRjz/BVmlivU3kRZIXGVisK/hRrgB3ZlfLmZUxC2FyP0rB+Pdw1+acU9NCfdFwAWnmIPDCYq5K2DEP18oxO4V+MM7tTGk7FZiHHojwbMLD68UDRZBrEkpzW+iwHk17qPHUbyMtpc25EX2KPefwUjcDwRN/8AX/jlOuHwvq8G1q4OUE3DXuz2g46sNfcoSx7GkuiGhFcqYihtx5pceP3rFU9vw==
+ b=oljR08au37E9aX3TOW+SOsrlG90yzIF585DN9DB+sncleqZFkVppbWR/sURLeYcVdh7HGAaSeGiIJNct8JBObRbDLQVtUKBfuWXAFCRnVm09jSfsFcLM+xF9VuiB2ba9rkeAbSM67IZ2orA0/GC7JBlQYFP3E9hlv1whwwRVbnnBGynidbpvBxZNYHvIQKZLMkCUz2lSpC2wUDhDebFxSpDOhw0PPk0gLsU75UZhgvbItDprUSEqWDiyqOnkHSFWTWLTv4bmAy3SCyQmn/vY1wFE7fVOJgSsKENLS/26DAsPHujbLfWBgQ65dzUqgvkKqYtwYO8LqWg5HpwWf+yKag==
 ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com;
  s=arcselector10001;
  h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
- bh=iIPuyTJthoo2f18tWe8hYfurTNdhvLBzuqbESON8zyg=;
- b=yue28og4bjH7Q+l+sOOlwXAnjDvu4ohTDtP263kOaBqiYcvoObFJ5zA5cQaej8GK5q4svCySY6DdT5Mu4pwxr5qqNRPs/++qDiLO8ftxrCfP1ZjfwDbFT6NkmRJ5q0TlK8UNcqDqEDMb7i/opliELeBX887gWCKWtPJdDR1M2C6VxsrzcAKdZ+4l+ofovjtF6EFnSRsRlglU6ptgofYzt+648pNpIjy0rGIUKi3inJDckk0hUCbOm72QFdcn2d9t7O7ow+ZFthRcALIGRvTdSyTbGIvXVU7LT0LE5OoaiXFJZsTRmHPPkZXLxESQoRjBN0HRkYFyX6cBIDFVD3CxsA==
-ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
- smtp.mailfrom=oss.nxp.com; dmarc=pass action=none header.from=oss.nxp.com;
- dkim=pass header.d=oss.nxp.com; arc=none
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=NXP1.onmicrosoft.com;
- s=selector1-NXP1-onmicrosoft-com;
+ bh=2aWBvZh578V8IDg5VB5A5waCEKnBVyKHYVkUeWcOaBQ=;
+ b=snFG4zn4BTtB0T8LuSi0n2y5hHasBKjhJ6Mm3epR0M08i4GgRWkfVlRDGGD51ThiIwr1bk8Ybwiz48sZ+y9a7Q6vNVbqKy5ZCwnuaCQZIgGP16ueb2vN3F/H3fesVzdDRrSqMCoHA4/SkNHmj4+aCrViozOQSW2cmKpRjKvZz3LAZ/swZue8gatCstG3oR4Q8attBOtn1gc6504KiMJF5v/LqIOTPPqlY4CWGxEB4H2qsKls43gFM93hL/WZ1ovJUcqPBya5ZHrV+vItFLnR3/tu/jjXwlaciKAWJddLV9f9dpD3iY5ImF5gCq2LchSoJ6A9FxjmJM8a2Xze0UF1Ew==
+ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=softfail (sender ip
+ is 91.26.50.189) smtp.rcpttodomain=ti.com smtp.mailfrom=phytec.com;
+ dmarc=fail (p=none sp=none pct=100) action=none header.from=phytec.com;
+ dkim=none (message not signed); arc=none (0)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=phytec.com;
+ s=selector1;
  h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
- bh=iIPuyTJthoo2f18tWe8hYfurTNdhvLBzuqbESON8zyg=;
- b=SZ8DYibrUFr7t4di446OjSmx2nScJC2/blNJHmMZlNjy3wsMMhjJLAOND5AuwVH1EJZZUVsPTIr/l18OJxu1V9OUIUDmyBY2sHuosHYhIE3PVm4tiTPQyxqDXSzVNmFLQegZBZoMdP9h/kb2h4jvgj6GgmBFs2HPZeNYXEQLxgaSOZewrMZnJoR1iyMDe1FM8/48IZLVLH5EceiKdJpjK7hTaRwY65imKlkz9v+OavogHuCylefIq6rOOuHNxwZFooFGdlff8BNIsmM342j3Ao2AGWouueRz8u677eZYmimBoLRAKmji41Or+sbfQ+0i0t1VBUQpclA4w47PXfFKRg==
-Authentication-Results: dkim=none (message not signed)
- header.d=none;dmarc=none action=none header.from=oss.nxp.com;
-Received: from GV2PR04MB11799.eurprd04.prod.outlook.com (2603:10a6:150:2cf::9)
- by OSKPR04MB11416.eurprd04.prod.outlook.com (2603:10a6:e10:9b::6) with
+ bh=2aWBvZh578V8IDg5VB5A5waCEKnBVyKHYVkUeWcOaBQ=;
+ b=XC+kUdVhH0osl91cykwbmrRgkD+IBROyKJ6mueYwTXqgg0eAHPsWFkIwuG/HHUD6XpyXNs+uscm/+vmsWSvcEbEA1DUJ2B32ClHFOsOcm/0EfXAWwNGN+J+klO4a0q4TL9QdJcFe9Ip1ghVn2hoesodADnpNZ0V9fMP0u4BPHGb0KEgUFqTLp0DpZa8e0JZydGevA0eJMyNRvflDGla2W8lp44RYkYaxExfgqYIrf9oiQXBCdAJ+Jj3cUV885vRWYGSYcSJMVG/KNVBHBzLsW3IIcqlmQ9ZFic+lwXNLvMEMB/yrwBQzdgpotwmmVOr8tp1HmaX/vn6bu8B5nE+6Jw==
+Received: from DUZP191CA0070.EURP191.PROD.OUTLOOK.COM (2603:10a6:10:4fa::20)
+ by AS5P195MB3382.EURP195.PROD.OUTLOOK.COM (2603:10a6:20b:753::21) with
  Microsoft SMTP Server (version=TLS1_2,
  cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.21.159.16; Fri, 26 Jun
- 2026 16:00:44 +0000
-Received: from GV2PR04MB11799.eurprd04.prod.outlook.com
- ([fe80::2146:83a2:5329:b7c]) by GV2PR04MB11799.eurprd04.prod.outlook.com
- ([fe80::2146:83a2:5329:b7c%6]) with mapi id 15.21.0159.007; Fri, 26 Jun 2026
- 16:00:44 +0000
-Date: Fri, 26 Jun 2026 11:00:34 -0500
-From: Frank Li <Frank.li@oss.nxp.com>
-To: "Verma, Devendra" <devverma@amd.com>
-Cc: sashiko-reviews@lists.linux.dev,
-	Devendra K Verma <devendra.verma@amd.com>, Frank.Li@kernel.org,
-	vkoul@kernel.org, dmaengine@vger.kernel.org
-Subject: Re: [PATCH v5] dmaengine: dw-edma: Enable HDMA 64R/W Channels
-Message-ID: <aj6iIr61LI9Sm10h@SMW015318>
-References: <20260626132151.1875965-1-devendra.verma@amd.com>
- <20260626134641.87D161F000E9@smtp.kernel.org>
- <3ac6b44c-febb-4c20-a737-aba34de5c208@amd.com>
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <3ac6b44c-febb-4c20-a737-aba34de5c208@amd.com>
-X-ClientProxiedBy: PH0PR07CA0058.namprd07.prod.outlook.com
- (2603:10b6:510:e::33) To GV2PR04MB11799.eurprd04.prod.outlook.com
- (2603:10a6:150:2cf::9)
+ 2026 16:10:30 +0000
+Received: from DB1PEPF000509F8.eurprd02.prod.outlook.com
+ (2603:10a6:10:4fa:cafe::9a) by DUZP191CA0070.outlook.office365.com
+ (2603:10a6:10:4fa::20) with Microsoft SMTP Server (version=TLS1_3,
+ cipher=TLS_AES_256_GCM_SHA384) id 15.21.159.17 via Frontend Transport; Fri,
+ 26 Jun 2026 16:10:29 +0000
+X-MS-Exchange-Authentication-Results: spf=softfail (sender IP is 91.26.50.189)
+ smtp.mailfrom=phytec.com; dkim=none (message not signed)
+ header.d=none;dmarc=fail action=none header.from=phytec.com;
+Received-SPF: SoftFail (protection.outlook.com: domain of transitioning
+ phytec.com discourages use of 91.26.50.189 as permitted sender)
+Received: from Postix.phytec.de (91.26.50.189) by
+ DB1PEPF000509F8.mail.protection.outlook.com (10.167.242.154) with Microsoft
+ SMTP Server (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
+ 15.21.181.6 via Frontend Transport; Fri, 26 Jun 2026 16:10:29 +0000
+Received: from phytec.com (172.25.39.17) by Postix.phytec.de (172.25.0.11)
+ with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.2562.37; Fri, 26 Jun
+ 2026 18:10:25 +0200
+From: Nathan Morrisson <nmorrisson@phytec.com>
+To: <nm@ti.com>, <vigneshr@ti.com>, <kristo@kernel.org>, <robh@kernel.org>,
+	<krzk+dt@kernel.org>, <conor+dt@kernel.org>
+CC: <afd@ti.com>, <sashiko-reviews@lists.linux.dev>,
+	<linux-arm-kernel@lists.infradead.org>, <devicetree@vger.kernel.org>,
+	<linux-kernel@vger.kernel.org>, <upstream@lists.phytec.de>
+Subject: [PATCH v2 1/2] dt-bindings: arm: ti: Add bindings for PHYTEC AM67x based hardware
+Date: Fri, 26 Jun 2026 09:10:13 -0700
+Message-ID: <20260626161014.1146128-1-nmorrisson@phytec.com>
+X-Mailer: git-send-email 2.43.0
 Precedence: bulk
 X-Mailing-List: sashiko-reviews@lists.linux.dev
 List-Id: <sashiko-reviews.lists.linux.dev>
 List-Subscribe: <mailto:sashiko-reviews+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:sashiko-reviews+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
+Content-Transfer-Encoding: 8bit
+Content-Type: text/plain
+X-ClientProxiedBy: Postix.phytec.de (172.25.0.11) To Postix.phytec.de
+ (172.25.0.11)
+X-EOPAttributedMessage: 0
 X-MS-PublicTrafficType: Email
-X-MS-TrafficTypeDiagnostic: GV2PR04MB11799:EE_|OSKPR04MB11416:EE_
-X-MS-Office365-Filtering-Correlation-Id: 504ea85a-b15e-4368-cd1d-08ded39c144b
+X-MS-TrafficTypeDiagnostic: DB1PEPF000509F8:EE_|AS5P195MB3382:EE_
+X-MS-Office365-Filtering-Correlation-Id: 4947259d-ae55-45d9-34d6-08ded39d70eb
 X-MS-Exchange-SenderADCheck: 1
 X-MS-Exchange-AntiSpam-Relay: 0
 X-Microsoft-Antispam:
-	BCL:0;ARA:13230040|376014|366016|23010399003|1800799024|19092799006|22082099003|18002099003|6133799003|11063799006|56012099006|4143699003;
+	BCL:0;ARA:13230040|36860700016|1800799024|7416014|376014|23010399003|82310400026|11063799006|56012099006|18002099003;
 X-Microsoft-Antispam-Message-Info:
-	b9NiyemLqjwXJwDYz/m5xBmS0Wdw75wN6Y48cBebzxdlDZg936l3zWGcw80IfmQ6IdHw1cqUt2pFDSpRb03brPcaNyLfKNWAwrC9yEYERIWreC9oaFioa+qn8WdtjCloSKZ2U4UPeR566n0uafF+bw18OZ2JOJW1CvDj4LHbl3kJo4NzPGHVMGVGdkl5WswWg9R3p1/dcUTIMETmkAsMpdpafDPA9QL61Z8hXoAdfDZTJQE94e24fn/9J4hn3/XAZCm4P2ITnhz4bNHaYXx17QhikKVOeg4IZSiKGSG/omrnDGOsM5vEUUpjNvFIfqthyHLSvorXvhcFXLIGUdI+FKfz5PigsqFFHZdooZIj1RCkycqihOK1BhAT1TbPO4tldpgVno4K4YeNVPR/iFBRTCwCQSWT5TfaDo6Ud7q7mAzOBZpFwM/5z2giZUNH/J6duKs+3LEXR1OR2Xc2j3L3xfdW6phvVuMburUKFyt0iFN58HyUGiYufvSYhNr7WamO8qUk3TF9vlplYr/PO6w8nCrYyDzGc54/76HpHIpZklkEB+A+ccKxEiAHupMwgs+mNitedh9VWoPk6KlUhDi/wM6sivh4qegnKCEBfAwg7/r4vp5tFOE/hx2QrMCfi7qqlKXj8R2nq+PMBvuKvZJQcX8Zxr9SXj/IUxo8jkbPSTY=
+	uPlAaXax8wta2ytK7AnTgTdVdMzzy6m7nW6WPY5MYm7JUQE6UtbJCLuY2lq+a69+xahto6ivukrXqsQLIKyywL9hCdQ5b47xZycqtTgXfIGi67++gS8NKVpSJv7so0Mf8QJs+C0ns38LtdIvdI3I4yYEBnPGGOYUNdcGLkiTukXFmK0t+WL45kRdqHv+uyWAnQJanZ5NmiRIT42OurI8T3Zp5YYGYZ80ve5ra58M+7VVmwYpbzJW8vBbbjqHRwCc1nH2aMJtxVkeeZIbAcjdw2EXX0iptZTADvtuCrzJ/cYMdDiwhb0DT28r/fsW4yb4/fn+5by7ischA0ASrBlmX3RBuPuso5oCd2tcS8NBy5M5hBImbZ4HZFyT5tGB9Md+RnnBbaFIf+HKP9wW0l1Z/hSkZxFb3llH8zeEYUOrpI/iWGY6x9Iqjc6KaDXlYINAwdA8AqnzWpOe38p1NHAed/cPI49ebNnBvlZzV3kagCgH7gFf0H1T7q2amB/cVuqgu7DBTG15f5T/tgir2Vv1kOdMwhKHx/dMEURXUkr7uDr5v0KoifRURCQWwdVNjTSs74VkfROZrfifMHlFgubd7BIKrsTxFiSz8hTWDir1f1kP69ciS5W3LyTtdnMg7oRJ9uvmr7YjBRaSNHza+4lKEVHVHIxH5I0f6LSFNmfg9BmeDlvSiNHWoZEWx4glaNkOkAdOhpRvWj4W++bm/ZN+Cw==
 X-Forefront-Antispam-Report:
-	CIP:255.255.255.255;CTRY:;LANG:en;SCL:1;SRV:;IPV:NLI;SFV:NSPM;H:GV2PR04MB11799.eurprd04.prod.outlook.com;PTR:;CAT:NONE;SFS:(13230040)(376014)(366016)(23010399003)(1800799024)(19092799006)(22082099003)(18002099003)(6133799003)(11063799006)(56012099006)(4143699003);DIR:OUT;SFP:1101;
+	CIP:91.26.50.189;CTRY:DE;LANG:en;SCL:1;SRV:;IPV:CAL;SFV:NSPM;H:Postix.phytec.de;PTR:InfoDomainNonexistent;CAT:NONE;SFS:(13230040)(36860700016)(1800799024)(7416014)(376014)(23010399003)(82310400026)(11063799006)(56012099006)(18002099003);DIR:OUT;SFP:1102;
 X-MS-Exchange-AntiSpam-MessageData-ChunkCount: 1
 X-MS-Exchange-AntiSpam-MessageData-0:
-	=?us-ascii?Q?N1BjqAJDJTsg3DYGhoih6K0bq3IhviLl+50XSVTsh4dHmtc7iHqijNbtgaS+?=
- =?us-ascii?Q?ebdnPMChe8iVGl3zN4XpbMPRw2Je1OfUw9r7vaNacOrj/Xl6AluvBPQ//LvC?=
- =?us-ascii?Q?9H6bqzFlQ6KdlhKFiJdM8FnQ6u+KCyIIxA4PQrgEdBKPGevkFcAxhfFmwJ3f?=
- =?us-ascii?Q?x1151PxQj+2v/VsHAbJ3sj0QgfksVKMpkJCy2yIUEObr5FXhzrKdrvSqBnSp?=
- =?us-ascii?Q?j5Id6l7QJQl00I/0HkwSLKjtwqoQ10aB0bhY8jSrUg1m3QY7wB18a1xHrPHE?=
- =?us-ascii?Q?y0vTqLn/2fatqpELWOooEMX/2kScSSLtF/nVuTOAFEOq86ENzyXRsabDPenI?=
- =?us-ascii?Q?aVJtFScDrNGEd8K7CmIL8HaHx5xxyTaBThXf0t9BbzbH5K9KHdYNtVp3Ealp?=
- =?us-ascii?Q?3GKeuhzXvOoWeON4iMazWU5vKHcD21KFikFst2X7kda1MbG2O955MeeqgHGz?=
- =?us-ascii?Q?4A52UAvfgT8jkI8cKarUtPYhwGxu1RtAy6SGkKDQVnuEqbtkShPMI4fsu1Dz?=
- =?us-ascii?Q?nI5/D8vnounNiR7+akOnMoZ0BCWaVTdSwDEA+xyyvUDVQW+EC2x+mWquvmXn?=
- =?us-ascii?Q?oLdK4Iq2TbhtHbQyFcXLOANY/0GbB9seDYivNkbgwBw7i1bzvyv7YdAlib+j?=
- =?us-ascii?Q?QYBhpijQt3mKy9rjajUOGyDb2YYl9m05Mdch9EDnbiDMo2jp9h9o1TwIYRJT?=
- =?us-ascii?Q?I579/ttnAGqcakRUKWwYrsUSgVHP6trslxFAnw+OyRgSgovZAV/iehyXPXe7?=
- =?us-ascii?Q?5RpTzlgrasN1riEPyLSflfWcn1stZd8j/XYZ3lO2S+450AzyH4Ly56S2B3Od?=
- =?us-ascii?Q?LW1eyPlUxGL4RFZ46pX8O+jzO0mb7zduQOV6OQtymkGLGs3utGeysWChjUnq?=
- =?us-ascii?Q?1uF+tjqU7iq7JVwLsyH3PcJI9SOz1hC9s8fmRC3BZL3TiJWHIKq7D5ORV1OA?=
- =?us-ascii?Q?Ak3bf1xcOOYo4qM3PZaMN+Ww/j/c/AkrvGEzhSagUUL1TaRSLqUB3RQMwWdK?=
- =?us-ascii?Q?EZbjCfBazUVXd4eD5ruRXBVCCnNkRAqzeI+7f6ngtCiZMmjDmF77TGT4/IGo?=
- =?us-ascii?Q?kWeaVX/spDzFFVMcW67GzOy0cju+meYSAPEGs7jmBU55Kz4Is7uxA7eG8GO7?=
- =?us-ascii?Q?qdyOsy2f4BObjFPKQcb/fYsK5alVg+4CWZ9Ab+fYc6Og1nEZnWacMGvrq21q?=
- =?us-ascii?Q?TlLW9/UrHli6rKSypFzWxTo6KGQIq/98KDjKglmhBMIV/T9ErGWaERrKRxHO?=
- =?us-ascii?Q?H8G5dmwk6CA4+iIjlFFT56FC6RU/UsOZgyHySJgJcnAECUO+QhpgX4SXllvh?=
- =?us-ascii?Q?vfFIxd1k9jWk5V7Lsn5gjRtekJv8PCEewxTpQyGUHq/7Fl/1AYPh1Mgy2eef?=
- =?us-ascii?Q?IXZhD5oTeLvg1z1rFT3AcMZAzrz+Mxort5corDBJdqbwjyuCVdDX3eEeKWcQ?=
- =?us-ascii?Q?WZMsQqtOxvavD6AnV/rrFTqZ2fpFcKc6zlNYgmm8hizro93KD7OL6hiNB1fz?=
- =?us-ascii?Q?Fy5AQPYhNdJtQ84GFC+PYAbZisQiCo4l9krBK1YkkT1PjU8Ltn6CieAkaydb?=
- =?us-ascii?Q?7XNc9NAk1+kWaSwtBO7hVTKjCjTnqV6ANYphw+r2XKnhtfjw3/euNq6E92Lb?=
- =?us-ascii?Q?zMeSm/0e35yzx7l6Oht73MMU17QW1aeO9+FjLXRAL4ZI8qZ331h76L44Lc+v?=
- =?us-ascii?Q?xTLhcvT/gh4UZUqnDhskkYrjXnQT2q+KPXW7tlLE3QzQHDmQibjLFo67YkDc?=
- =?us-ascii?Q?o8MH3UA7MN13v2sBtgasZ9Tf3H5Y9/7BxNXzWLmhPMRQ9s687TJ1?=
-X-OriginatorOrg: oss.nxp.com
-X-MS-Exchange-CrossTenant-Network-Message-Id: 504ea85a-b15e-4368-cd1d-08ded39c144b
-X-MS-Exchange-CrossTenant-AuthSource: GV2PR04MB11799.eurprd04.prod.outlook.com
-X-MS-Exchange-CrossTenant-AuthAs: Internal
-X-MS-Exchange-CrossTenant-OriginalArrivalTime: 26 Jun 2026 16:00:44.5724
+	C+3YlPlzEh9kdGplEFyAUcMmkn3nUOdwFGDnP+ZYT642Pk7XNKas5dpv3589YX3nk/auKqxvsQuvEB1zEcQPsSBQC2yHGF+aknuXt2exyXjqCaI9GxA/5WHD1pEEgoWUuTfEzuEmwLe6Js/jbNhR4q0hgQMMmFJ5xJTlRTV6nMzB+naPmaGhx98OH914+OBDH019pwl0v5dgAtMm19FGfrBVoqPo7wiH5+n2OINc3P7az1JGiAIKQnC/AvSNIJ/DsaVTGLSJ2/HUxhr9qIe1Z/VciiLbH28fwYIkZyjB5DzZhvge6Pq824Gd5xj5+Alj4CK+t8p2KtzRDOfkszltHP81XIalthYmr+9/uJyEm9XvZS3T6nuWoc/VKAehorvqmBHWa5wn0itw/P/h15EqxfJ12tfb/2D4NvINNDCEoTIiTj3EOYws2B/w/Uq0vJZL
+X-OriginatorOrg: phytec.com
+X-MS-Exchange-CrossTenant-OriginalArrivalTime: 26 Jun 2026 16:10:29.0248
  (UTC)
-X-MS-Exchange-CrossTenant-FromEntityHeader: Hosted
-X-MS-Exchange-CrossTenant-Id: 686ea1d3-bc2b-4c6f-a92c-d99c5c301635
-X-MS-Exchange-CrossTenant-MailboxType: HOSTED
-X-MS-Exchange-CrossTenant-UserPrincipalName: YfB31yqtWyVddMIC376CJwFZkzRUKfQDmKDeAkY/24eitIk4/u93DwIAAK3RpGS8IgvZ2lypAKqzZm/5gzUWQOVom3r94a1dTfISxEwD+s4DjGm4hZeohBbg1rmLBDD2
-X-MS-Exchange-Transport-CrossTenantHeadersStamped: OSKPR04MB11416
+X-MS-Exchange-CrossTenant-Network-Message-Id: 4947259d-ae55-45d9-34d6-08ded39d70eb
+X-MS-Exchange-CrossTenant-Id: e609157c-80e2-446d-9be3-9c99c2399d29
+X-MS-Exchange-CrossTenant-OriginalAttributedTenantConnectingIp: TenantId=e609157c-80e2-446d-9be3-9c99c2399d29;Ip=[91.26.50.189];Helo=[Postix.phytec.de]
+X-MS-Exchange-CrossTenant-AuthSource:
+	DB1PEPF000509F8.eurprd02.prod.outlook.com
+X-MS-Exchange-CrossTenant-AuthAs: Anonymous
+X-MS-Exchange-CrossTenant-FromEntityHeader: HybridOnPrem
+X-MS-Exchange-Transport-CrossTenantHeadersStamped: AS5P195MB3382
 
-On Fri, Jun 26, 2026 at 08:56:35PM +0530, Verma, Devendra wrote:
-> Hi Frank, Vinod
->
-> Do you have any suggestion about handling of the repeated comments from
-> AI?
-> On every version of this patch the similar issues have been raised and
-> I am replying with the same answers as many version-times.
-> Please suggest so that multiple replies to the same queries by AI bot
-> can be managed.
+Add device tree bindings for the AM67x based phyCORE-AM67x SoM and
+phyBOARD-Rigel.
 
-You can omit pre-existing. Only reply once when patch close to land. I hope
-there are tool, which can help identified comments and pull your previous
-reply.
+Signed-off-by: Nathan Morrisson <nmorrisson@phytec.com>
+Acked-by: Conor Dooley <conor.dooley@microchip.com>
+---
+Changes in v2:
+ * Use spaces instead of tabs for indentation
 
-On method may help:
+ Documentation/devicetree/bindings/arm/ti/k3.yaml | 7 +++++++
+ 1 file changed, 7 insertions(+)
 
-After I provided review-by, you can reply you already checked AI's results,
-so It help vnod offload his checking work.
+diff --git a/Documentation/devicetree/bindings/arm/ti/k3.yaml b/Documentation/devicetree/bindings/arm/ti/k3.yaml
+index 69b5441cbf1a..ae47190d1f82 100644
+--- a/Documentation/devicetree/bindings/arm/ti/k3.yaml
++++ b/Documentation/devicetree/bindings/arm/ti/k3.yaml
+@@ -222,6 +222,13 @@ properties:
+               - ti,j722s-evm
+           - const: ti,j722s
+ 
++      - description: K3 AM67 SoC PHYTEC phyBOARD-Rigel
++        items:
++          - enum:
++              - phytec,am6754-phyboard-rigel
++          - const: phytec,am67-phycore-som
++          - const: ti,j722s
++
+       - description: K3 J742S2 SoC
+         items:
+           - enum:
+-- 
+2.43.0
 
-AI is quite new for us. we are looking for efficent flow to handle it.
-
-Frank
-
->
-> regards,
-> Devendra
->
-> On 26-Jun-26 19:16, sashiko-bot@kernel.org wrote:
-> > Thank you for your contribution! Sashiko AI review found 3 potential issue(s) to consider:
-> >
-> > New issues:
-> > - [High] The DesignWare PCIe controller integration rejects eDMA initialization for HDMA platforms with more than 8 channels because `dw_pcie_edma_find_channels` and `dw_pcie_edma_irq_vector` unconditionally enforce the old 8-channel limit.
-> >
-> > Pre-existing issues:
-> > - [High] The arguments `dir` and `ch` are swapped when calling `GET_CH_32` in `dw_hdma_v0_core_ch_status`, causing it to read the wrong hardware registers.
-> > - [High] The driver requests shared IRQs before the interrupt context data is fully initialized, exposing a NULL pointer dereference window if an interrupt fires early.
-> > --
-> >
-> > commit cc43ddee72586cbf9f93d80ae20f2b0a9e539a31
-> > Author: Devendra K Verma <devendra.verma@amd.com>
-> >
-> > dmaengine: dw-edma: Enable HDMA 64R/W Channels
-> >
-> > This commit updates the DesignWare eDMA driver to support up to 64 read and
-> > write channels for HDMA. It introduces HDMA-specific macros, adjusts channel
-> > counts in device structures, and switches bitmasks to 64-bit to accommodate
-> > the higher channel counts.
-> >
-> > > diff --git a/drivers/dma/dw-edma/dw-edma-core.c b/drivers/dma/dw-edma/dw-edma-core.c
-> > > index c2feb3adc79fa..adf1b3939f96c 100644
-> > > --- a/drivers/dma/dw-edma/dw-edma-core.c
-> > > +++ b/drivers/dma/dw-edma/dw-edma-core.c
-> > [ ... ]
-> > > @@ -1079,6 +1079,8 @@ int dw_edma_probe(struct dw_edma_chip *chip)
-> > >   	struct dw_edma *dw;
-> > >   	u32 wr_alloc = 0;
-> > >   	u32 rd_alloc = 0;
-> > > +	u16 max_wr_cnt;
-> > > +	u16 max_rd_cnt;
-> > >   	int i, err;
-> > >   	if (!chip)
-> > > @@ -1094,20 +1096,25 @@ int dw_edma_probe(struct dw_edma_chip *chip)
-> > >   	dw->chip = chip;
-> > > -	if (dw->chip->mf == EDMA_MF_HDMA_NATIVE)
-> > > +	if (dw->chip->mf == EDMA_MF_HDMA_NATIVE) {
-> > >   		dw_hdma_v0_core_register(dw);
-> > > -	else
-> > > +		max_wr_cnt = HDMA_MAX_WR_CH;
-> > > +		max_rd_cnt = HDMA_MAX_RD_CH;
-> > > +	} else {
-> > >   		dw_edma_v0_core_register(dw);
-> > > +		max_wr_cnt = EDMA_MAX_WR_CH;
-> > > +		max_rd_cnt = EDMA_MAX_RD_CH;
-> > > +	}
-> > >   	raw_spin_lock_init(&dw->lock);
-> > >   	dw->wr_ch_cnt = min_t(u16, chip->ll_wr_cnt,
-> > >   			      dw_edma_core_ch_count(dw, EDMA_DIR_WRITE));
-> > > -	dw->wr_ch_cnt = min_t(u16, dw->wr_ch_cnt, EDMA_MAX_WR_CH);
-> > > +	dw->wr_ch_cnt = min_t(u16, dw->wr_ch_cnt, max_wr_cnt);
-> > >   	dw->rd_ch_cnt = min_t(u16, chip->ll_rd_cnt,
-> > >   			      dw_edma_core_ch_count(dw, EDMA_DIR_READ));
-> > > -	dw->rd_ch_cnt = min_t(u16, dw->rd_ch_cnt, EDMA_MAX_RD_CH);
-> > > +	dw->rd_ch_cnt = min_t(u16, dw->rd_ch_cnt, max_rd_cnt);
-> > >   	if (!dw->wr_ch_cnt && !dw->rd_ch_cnt)
-> > >   		return -EINVAL;
-> >
-> > [Severity: High]
-> > This is a pre-existing issue, but does the current probe sequence expose a
-> > window for a NULL pointer dereference if an early interrupt fires?
-> >
-> > In dw_edma_probe(), we call dw_edma_irq_request() which registers a shared
-> > IRQ handler:
-> >
-> >      err = request_irq(irq, dw_edma_interrupt_common,
-> >                        IRQF_SHARED, dw->name, &dw->irq[0]);
-> >
-> > However, the interrupt context data (irq->dw) isn't populated until the later
-> > call to dw_edma_channel_setup():
-> >
-> >      irq->dw = dw;
-> >
-> > If another device sharing the same IRQ line triggers an interrupt before
-> > dw_edma_channel_setup() completes, could the handler dereference a NULL
-> > dw_irq->dw pointer?
-> >
-> > [ ... ]
->
-> As this is pre-existing issue, it shall be taken in a separate patch
-> series.
->
-> > > diff --git a/drivers/dma/dw-edma/dw-hdma-v0-core.c b/drivers/dma/dw-edma/dw-hdma-v0-core.c
-> > > index 632abb8b481cf..61064de293b85 100644
-> > > --- a/drivers/dma/dw-edma/dw-hdma-v0-core.c
-> > > +++ b/drivers/dma/dw-edma/dw-hdma-v0-core.c
-> > [ ... ]
-> > > @@ -118,19 +129,20 @@ dw_hdma_v0_core_handle_int(struct dw_edma_irq *dw_irq, enum dw_edma_dir dir,
-> > >   	unsigned long total, pos, val;
-> > >   	irqreturn_t ret = IRQ_NONE;
-> > >   	struct dw_edma_chan *chan;
-> > > -	unsigned long off, mask;
-> > > +	DECLARE_BITMAP(mask, 64);
-> > > +	unsigned long off;
-> > >   	if (dir == EDMA_DIR_WRITE) {
-> > >   		total = dw->wr_ch_cnt;
-> > >   		off = 0;
-> > > -		mask = dw_irq->wr_mask;
-> > > +		bitmap_from_u64(mask, dw_irq->wr_mask);
-> > >   	} else {
-> > >   		total = dw->rd_ch_cnt;
-> > >   		off = dw->wr_ch_cnt;
-> > > -		mask = dw_irq->rd_mask;
-> > > +		bitmap_from_u64(mask, dw_irq->rd_mask);
-> > >   	}
-> > > -	for_each_set_bit(pos, &mask, total) {
-> > > +	for_each_set_bit(pos, mask, total) {
-> > >   		chan = &dw->chan[pos + off];
-> > >   		val = dw_hdma_v0_core_status_int(chan);
-> >
-> > [Severity: High]
-> > This is a pre-existing issue, but is it possible that
-> > dw_hdma_v0_core_ch_status() reads from the wrong hardware register by
-> > swapping its arguments?
-> >
-> > When checking the status, the GET_CH_32 macro expects the direction first,
-> > then the channel:
-> >
-> >      GET_CH_32(dw, dir, ch, name)
-> >
-> > However, dw_hdma_v0_core_ch_status() passes chan->id before chan->dir:
-> >
-> >      tmp = FIELD_GET(HDMA_V0_CH_STATUS_MASK,
-> >                      GET_CH_32(dw, chan->id, chan->dir, ch_stat));
-> >
-> > Could this lead to incorrect channel status checks?
-> >
-> > [ ... ]
->
-> This issue shall be taken in a separate patch series.
->
-> > > diff --git a/include/linux/dma/edma.h b/include/linux/dma/edma.h
-> > > index 1fafd5b0e3153..da7a5cc93ad43 100644
-> > > --- a/include/linux/dma/edma.h
-> > > +++ b/include/linux/dma/edma.h
-> > > @@ -14,6 +14,8 @@
-> > >   #define EDMA_MAX_WR_CH                                  8
-> > >   #define EDMA_MAX_RD_CH                                  8
-> > > +#define HDMA_MAX_WR_CH                                  64
-> > > +#define HDMA_MAX_RD_CH                                  64
-> > >   struct dw_edma;
-> >
-> > [Severity: High]
-> > With the expansion to 64 channels, will the DesignWare PCIe controller
-> > integration reject valid HDMA configurations?
-> >
-> > In dw_pcie_edma_find_channels(), the code unconditionally enforces the old
-> > EDMA_MAX_WR_CH (8) limits:
-> >
-> >      if (!pci->edma.ll_wr_cnt || pci->edma.ll_wr_cnt > EDMA_MAX_WR_CH ||
-> >          !pci->edma.ll_rd_cnt || pci->edma.ll_rd_cnt > EDMA_MAX_RD_CH)
-> >          return -EINVAL;
-> >
->
-> This particular function targets non-HDMA platforms which suggests that
-> increasing the channel limit will not affect anything here.
-> This code shall be retained as is. It is not affected by increase in
-> limit for HDMA channels.
->
-> > Similarly, dw_pcie_edma_irq_vector() enforces a maximum of 16 vectors:
-> >
-> >      if (nr >= EDMA_MAX_WR_CH + EDMA_MAX_RD_CH)
-> >          return -EINVAL;
-> >
-> > Do these bounding checks in the PCIe controller driver also need to be
-> > updated to handle the new HDMA_MAX_WR_CH and HDMA_MAX_RD_CH limits, to
-> > prevent the device probe from completely failing?
-> >
->
-> This shall not affect the working of IP, with minimum interrupt count of
-> 1 also IP should work. If required, it shall be taken in a separate
-> patch series.
->
