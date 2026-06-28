@@ -1,180 +1,148 @@
-Received: from mail-yx1-f41.google.com (mail-yx1-f41.google.com [74.125.224.41])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from mx0b-0031df01.pphosted.com (mx0b-0031df01.pphosted.com [205.220.180.131])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E7DC13A1E69
-	for <sashiko-reviews@lists.linux.dev>; Sun, 28 Jun 2026 12:36:48 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=pass smtp.client-ip=74.125.224.41
-ARC-Seal:i=2; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1782650210; cv=pass; b=IadlimFxX5E+zMgzsDS15ruWWVsAIOdLkARFsqvoyg4wph+qYsuy6WH02h3iBqvSBLfAOqYzye5Ejt9j9+yRKOX8DUpgij5ZmMzuvbgyoQRyPZd87fxdbr9PfumtU+ZUm7aJgHp5KrDs+z+VELaU7gdcUDzAhLLlEZWyISFa6Yc=
-ARC-Message-Signature:i=2; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1782650210; c=relaxed/simple;
-	bh=QT3KyRx/yYFX7YJbB0Phy/hJFhtSz/3fbeRsVp3f/3o=;
-	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
-	 To:Cc:Content-Type; b=LZNtqfPi0CmzBcEwDozmbLYunVUIcGVUyYTph4HjAjhXrawg1H+zSWfin9IWxuqEN8yro1b6ly/UJuegbyjISQ/CM3tMT06vnWJmRLFQCEb6WcUfpqfzgObEnEQEeeKfv6CMs5Mp7kvxETNZxwK2Xjmr5MB3QuXpaXaiatqVqXQ=
-ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=mojatatu.com; spf=none smtp.mailfrom=mojatatu.com; dkim=pass (1024-bit key) header.d=mojatatu.com header.i=@mojatatu.com header.b=jIxTJ1re; arc=pass smtp.client-ip=74.125.224.41
-Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=mojatatu.com
-Authentication-Results: smtp.subspace.kernel.org; spf=none smtp.mailfrom=mojatatu.com
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 19A9234404F
+	for <sashiko-reviews@lists.linux.dev>; Sun, 28 Jun 2026 12:51:28 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.180.131
+ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
+	t=1782651090; cv=none; b=A5onkq9n/+EkR56rxVQHoNiGwK1eXGLKZ2YbBVt0DQiok0dh/RVquyDOKHFRPlZCfmo5mutzpteqLfY2t/bG54zr9r5p53Q+GhZo5ZpTjWnHYg2qrqMKhKLOdU8dta72McZw7nUAPOMJ+6flVIIytaQNLH+C/aHXZtigbHkii60=
+ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
+	s=arc-20240116; t=1782651090; c=relaxed/simple;
+	bh=RDSYHfnxcOWds9DWCjFzNdwK3p9oDntSlN05/iqC6sM=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=WayWTqTXqY+7nPmD9avuiqqAuMXXwJ1qNgjaMWGbTlAmUo3fN3N2/4uk424CZbQb66xCxxuqUjYH5xI68CsRjlZ1EEqYSB650zHCBV4QgMPYltgRK6unCJahVAGpcmv4vVXuItYIzq5KjUrXtj+J4+Z6G2uBpz52pBRHS15i2xM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com; spf=pass smtp.mailfrom=oss.qualcomm.com; dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b=kN+iuZAw; dkim=pass (2048-bit key) header.d=oss.qualcomm.com header.i=@oss.qualcomm.com header.b=PRkpvIDd; arc=none smtp.client-ip=205.220.180.131
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=oss.qualcomm.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=mojatatu.com header.i=@mojatatu.com header.b="jIxTJ1re"
-Received: by mail-yx1-f41.google.com with SMTP id 956f58d0204a3-664d910cc75so79032d50.1
-        for <sashiko-reviews@lists.linux.dev>; Sun, 28 Jun 2026 05:36:48 -0700 (PDT)
-ARC-Seal: i=1; a=rsa-sha256; t=1782650208; cv=none;
-        d=google.com; s=arc-20260327;
-        b=Bj3z1j2a9rPBASaS1lC4q4CXh9/57H3FPo3TObPsQyhHPOh6ssLSO08Whn7ZP47Wkp
-         6L3z9t2T6wFIuNgom/icWTli8LXlx5EEY8r3mBnS8EiFZdAkYVg8P61EXYpEL8ZGy21q
-         QL2pHx6teADLbp/WkLZoQQLCVZGBoyY/e5QIj+a62afYBU7quJFCW5LRZktD8FpEBVEL
-         SX5Jgc7rwQTvKTX0yE3LT1oRVJm0i5JXa55iwVkTLlmKGu+v2tvH9rskYm6Bho2uWbti
-         sRPQr/cXdXNa0xl7knDUrvsSC/tLMRfT2MS2NiQ31tCu4zd6D+dGgOUn0i0p5bycxX9i
-         UqYQ==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com; s=arc-20260327;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:dkim-signature;
-        bh=vzP5f4zYs9UEe0wmc6361FiYfWw38ZSqAfPCOvm2SFQ=;
-        fh=aqMxS9E53NE+iUAgfcQEIspTRHEdhwwI6iEOaoTTfuA=;
-        b=S0m8BjK3HX0ZbH1j4k5MV4OQcfs1nxeSY1SPriIMn3zd9sujSIN/QVOK1j69HvHlD5
-         +jYFHbRByJzkOGtW+0g35Ey3XbqNYVVI/188O5/XK70f4zhqy4/B6L24uQ2AULq0fT2y
-         XNfFXdsM9Ex9lB89exsTD96ouICog8VCBrJyO457N58KUoC8oS4zhK0fvB55wUA6s14L
-         LLH2nnp4Ex51rhkIbZsuCw0gHdrXo0MAWDcYFBRW2zzUqb9lcjdfteFad4Gbl1OIulv4
-         tkT0r4UV2LU6I3EEdfPdv3PbYHOoBP/KenptaLqbncXDflm2yiquv9zkt4pfylE8F/JG
-         4EwQ==;
-        darn=lists.linux.dev
-ARC-Authentication-Results: i=1; mx.google.com; arc=none
+	dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b="kN+iuZAw";
+	dkim=pass (2048-bit key) header.d=oss.qualcomm.com header.i=@oss.qualcomm.com header.b="PRkpvIDd"
+Received: from pps.filterd (m0279869.ppops.net [127.0.0.1])
+	by mx0a-0031df01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id 65S9P3DB3633101
+	for <sashiko-reviews@lists.linux.dev>; Sun, 28 Jun 2026 12:51:28 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=qualcomm.com; h=
+	cc:content-type:date:from:in-reply-to:message-id:mime-version
+	:references:subject:to; s=qcppdkim1; bh=ehENsRl0qPpAQgK5q0nAXXAN
+	4wFst+lTFJbIeKL/+yk=; b=kN+iuZAwZ7aHzx+m5UJxv+UeDzOzlC34TL46iJff
+	ehA5cDaMvE2itl4tn+ePtCGugU9YXEJZRgkb1wzGZyb/rL5dQRsK0Pcu+rMd0r7s
+	eMp7ZDjvjc+IX5TZb1ttDdRv4t/5DAZXJklEs3Hmck0qwTXO+yjqCDb5/2QKkzVD
+	t3hei8gAhudjYDG8XaRfbTG3QQv3WjFZimxlykO5UteEjsWeRuzCI5oUQ268X5dn
+	Jivlb6xHFVVqze0Nj1AdhopkY5Y8HD6Bpe4WFbXKJ80E/qnVdzXgTS/W08V2mU6+
+	W93NylTZC3B5/VxbB9btEnuu4qqL4G/H6vXMbl6myUrIag==
+Received: from mail-qv1-f71.google.com (mail-qv1-f71.google.com [209.85.219.71])
+	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 4f26tutw8e-1
+	(version=TLSv1.3 cipher=TLS_AES_128_GCM_SHA256 bits=128 verify=NOT)
+	for <sashiko-reviews@lists.linux.dev>; Sun, 28 Jun 2026 12:51:27 +0000 (GMT)
+Received: by mail-qv1-f71.google.com with SMTP id 6a1803df08f44-8db8b467f13so57961026d6.1
+        for <sashiko-reviews@lists.linux.dev>; Sun, 28 Jun 2026 05:51:27 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=mojatatu.com; s=google; t=1782650208; x=1783255008; darn=lists.linux.dev;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=vzP5f4zYs9UEe0wmc6361FiYfWw38ZSqAfPCOvm2SFQ=;
-        b=jIxTJ1reMJPaJX8ojeJCv16JpMK2seHXpBUdjuc2Lvj/0bo3th0ZfTJ/UlxFUcacIn
-         gR18po3cq7jaIQ/OuOaOWWoyfX7VxX/i0aGT57aPLbN1kSx4G6YAGMcwbY+fjzj1MlkE
-         t5CGVlMe+cPc7pcmnt0e7h15u4/GEw2V97W2c=
+        d=oss.qualcomm.com; s=google; t=1782651087; x=1783255887; darn=lists.linux.dev;
+        h=in-reply-to:content-disposition:mime-version:references:message-id
+         :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
+        bh=ehENsRl0qPpAQgK5q0nAXXAN4wFst+lTFJbIeKL/+yk=;
+        b=PRkpvIDdkkyZoVjxixI1OIsVXImRNKmUZjOCOkZHPomZmbav6x40mXtqyyJI1bxW0/
+         SUCFWd4tfPlxdftGZvn2+yMd+NxkPrXQT8I0KXkEjoM7uMRm++tz0WHPOxmU4hMYB4bo
+         3r9wuJUKRYkvQq+Vo89frJt/mmoy6kWR79e/OPjk8oY8AgfXuo7C3wXvzjiAoAz4rQLw
+         LK0CbiPT5ev/EiBZ9FBleXaDY8Nasqlqma+du6g5DhYi/Tht/A1tba5Y17ojbyDUvGlv
+         y6JACAa4IieX0TUIAG1Qjhqsskv++UYRVqizOcXPm0ebUkpqe26i2YKldQCPOtmAjMjY
+         TVdA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20251104; t=1782650208; x=1783255008;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:x-gm-gg:x-gm-message-state:from
-         :to:cc:subject:date:message-id:reply-to;
-        bh=vzP5f4zYs9UEe0wmc6361FiYfWw38ZSqAfPCOvm2SFQ=;
-        b=pH+JJ398uNRwgRvBoUWB2K4Mq9qkVqvxe783iikU9zCfpg1EDJuQmGs3TXQFzIwC2s
-         +GtVjoN7Q/D6d4maKfHYldOrmlE25kSPPRY0lPePV9JcKZQR+yqazc539yyA656AD7eW
-         v6LYzyvaFSamLnx+hiK27m0ddDTfvy3eTIoZFRwUPIn4JU0JWtklosAXhlq4de9XSmmj
-         /mXPrElIpWG99cQZ+S+IzOBTEBm0lfsnU7Dt3X5ZiSn24THHbVK4Ahjee3S/7Iwj2BcF
-         ep2+JExYsNRsLTVHc/shINRt7Rokc5xDrbiY3ZSqmzDVeNn3cDkCqvAqZnAbezvf5Abr
-         K4SA==
-X-Gm-Message-State: AOJu0YxTN33BqhmvJc8z7QfG48zEGHUqnV+geWYrk9dw67cM1fxZ5dL4
-	pXAGjQBt5JDztpdAwDpSKH91X8cakSPi8NRpqUkywNSTw+Wr5hYdHxGyWLqZsSa2/8kzVW5jBun
-	9dulPDUU0426IBaPq690nKZBN7/BMIpo5HMNzyrVKajvuqJocePs=
-X-Gm-Gg: AfdE7cmRbgO5sKMkS6sXSvDXTUmq019WyfmN+WOlEWJ8osHIUCiID0JBDpTP2WcRut5
-	C69BvyTxEjr/znpD4N6Ahc5IN9+44v1zWvPQFK7nJNdJ4z5Q8cKi5dcSTgZv5S+l8F3cQdSyhwE
-	ikw2BYWLbD76lX4tapSLYEQf8eovpk+RXITNMl9qSxiXv6mCYzSBW4v5g4Ll3QuIx/tYqvBWRYg
-	wHkdgYWsiv8KPP01AzswwSiEOP4ezQQyNw+LfZKEgVxIhuGoP/EC7UZrrUltqfL0nvbdHzSNUrN
-	M8/Zqrzf
-X-Received: by 2002:a05:690e:4508:10b0:660:5e32:b2a2 with SMTP id
- 956f58d0204a3-66487e08811mr8856149d50.49.1782650207987; Sun, 28 Jun 2026
- 05:36:47 -0700 (PDT)
+        d=1e100.net; s=20251104; t=1782651087; x=1783255887;
+        h=in-reply-to:content-disposition:mime-version:references:message-id
+         :subject:cc:to:from:date:x-gm-gg:x-gm-message-state:from:to:cc
+         :subject:date:message-id:reply-to;
+        bh=ehENsRl0qPpAQgK5q0nAXXAN4wFst+lTFJbIeKL/+yk=;
+        b=Dc+NDvuYY8r8cvs9A4dIXtfSLecM9L9EMO38ikb6Ww9enqsW2jHLTlZd1iK4Zl2Gsd
+         PIhbEAslS0kw/Q67Es6d3OlLbKczJaw7rMdQDB8cENcOlZ0ggq3wv+krRIiwl5X2owKF
+         9MhhE9WU3mqq4ySlqjdpcBVysREsULlc0vI9bDi+ol3cfC8Va9KOO5Z+K8ppFraa1qcy
+         vZ3PbL6DNcHiEsNLKTEENn97pFOUH6xpBgCCljxr/nUAks3K7PCczoUsfrpy3HAb+VK+
+         aa9ZO6mdPbC4WQ0MFsyxOqU6Kt/76SWgWCq6lkyr+uY94i4m9Ft/5CG57sCPjkzfgcyM
+         BQ3Q==
+X-Gm-Message-State: AOJu0Yw56ZOjQuJvzKU8SKILKkR0EfHy4434Z1KRXrPjapKeXR17+b6/
+	Y7foGSHOIylUWEwzLCRy1TQ0OdxckfA+TshskZWAE/W5NbT8JUKindbKB/ZDVxJlrPr1QOP1Rnr
+	kjrVFwAruwC34VVWaQLmM7sPIgmkspb/uNP5zuecwVXmMJofdszuETtxRPMDiUMNgj8unazJvMZ
+	JL584=
+X-Gm-Gg: AfdE7cnZ13TIipEjHlwJMByPz38TefIg3OvVI2eD4ZB3wpI947Q5rVmdoNhShXXfGy5
+	zPQS8qVRE+4JOKOvpSgqI+MApzRahwsAVaN9kWoCDrPaxlhPSNuPKDaFBfYjK+g/v0El6FbPoTh
+	k6CrJ2qytnY6ev07gTRfxdxaX/a++DvRWpi9CY+uOFCxvl8k/uY1ewhgFIXqUX7CUUIdk2WzQQ9
+	7mfPgtik1qw3CNhlEhM+0CrUq/UMEkSFFCKw4y1cMDgwirz82Gxq1giMFfCXnC6Bk0YDCq59w9C
+	TmrGMLJXbmzcAn3OAOYD7D/xgAhPcJeQi8TX2yr0674RkqiBDhbMOryacgqH1YR1oPExkPDWukd
+	VvPWfmTYLb3qSfaTs9vl2GIuZV6dXFoJ7DRREcVDoSmnd4YrboXCsf23HNRA+mPWRyMGf+BiCre
+	g1vDwJcHuj+y1CXDhwGZfzNn/0
+X-Received: by 2002:a05:620a:4451:b0:915:b852:4361 with SMTP id af79cd13be357-9293bf25c13mr2064033585a.20.1782651087262;
+        Sun, 28 Jun 2026 05:51:27 -0700 (PDT)
+X-Received: by 2002:a05:620a:4451:b0:915:b852:4361 with SMTP id af79cd13be357-9293bf25c13mr2064031585a.20.1782651086833;
+        Sun, 28 Jun 2026 05:51:26 -0700 (PDT)
+Received: from umbar.lan (2001-14ba-a073-af00-264b-feff-fe8b-be8a.rev.dnainternet.fi. [2001:14ba:a073:af00:264b:feff:fe8b:be8a])
+        by smtp.gmail.com with ESMTPSA id 38308e7fff4ca-39ad31a81adsm26842481fa.28.2026.06.28.05.51.25
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Sun, 28 Jun 2026 05:51:25 -0700 (PDT)
+Date: Sun, 28 Jun 2026 15:51:24 +0300
+From: Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>
+To: sashiko-reviews@lists.linux.dev
+Cc: Konstantin Shabanov <mail@etehtsea.me>, robh@kernel.org,
+        conor+dt@kernel.org, devicetree@vger.kernel.org
+Subject: Re: [PATCH v4 3/4] arm64: dts: qcom: Add HONOR MagicBook Art 14
+ device tree
+Message-ID: <fcpwtgtyfab72iwkouvybul6o5cwswqxxj6vud6giljpqzlpp3@oyvcbx5227dm>
+References: <20260628094031.54452-1-mail@etehtsea.me>
+ <20260628094031.54452-4-mail@etehtsea.me>
+ <20260628095420.4A7751F000E9@smtp.kernel.org>
 Precedence: bulk
 X-Mailing-List: sashiko-reviews@lists.linux.dev
 List-Id: <sashiko-reviews.lists.linux.dev>
 List-Subscribe: <mailto:sashiko-reviews+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:sashiko-reviews+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-References: <20260626165156.169012-1-jhs@mojatatu.com> <20260626165156.169012-4-jhs@mojatatu.com>
- <20260627165220.CA0CD1F000E9@smtp.kernel.org>
-In-Reply-To: <20260627165220.CA0CD1F000E9@smtp.kernel.org>
-From: Jamal Hadi Salim <jhs@mojatatu.com>
-Date: Sun, 28 Jun 2026 08:36:36 -0400
-X-Gm-Features: AVVi8CcMk-OTbWtGzb65ms48PIO_Ru3oLcwHNHpBqSVb0aZgtGM3z9o_xVpkdK0
-Message-ID: <CAM0EoM=Sm82LdxrX-tckyxyGbNOawQ0DAXnEPowgyYVZbx=vqw@mail.gmail.com>
-Subject: Re: [PATCH net 3/3] selftests/tc-testing: Verify bpf redirect on RED
- block with preceding clsact (egress) classifier
-To: sashiko-reviews@lists.linux.dev
-Cc: bpf@vger.kernel.org, 
-	Linux Kernel Network Developers <netdev@vger.kernel.org>, Victor Nogueira <victor@mojatatu.com>
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <20260628095420.4A7751F000E9@smtp.kernel.org>
+X-Proofpoint-Spam-Info: AW1haW4tMjYwNjI4MDExMiBTYWx0ZWRfX67cyMll3KzHo
+ foiM76mQKykKt3HRavLD5vVW/KQjIVmv/+jRP86EB0kEhyHH03IiQd6hG9DmOWX3L19Qb9iNS1o
+ z/k3KD8aWXejnYRYl+K1AHq6KrXC4a4=
+X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwNjI4MDExMiBTYWx0ZWRfX1WOb8Nr2KdAF
+ xh+cdKhDrUxa0WDuHjyuQnsSe/7rejU/rGD4SRGKRgOFej3RVXkAbSkFRYikCbWgaXIeIKbPPSA
+ 7F60Nq4Dn9SYm4hsIpz8V3oICw9shGDqR6nfqdiO4WgsAW7nw3C7A4ojSI3mD+c1p8xSnHQ77W2
+ Ixvq4wuiTZIdFq5tYIBmVNuKg4ymcnBeguBvyySiUDx4qp/n8WXjWvAtWKLRw+hKai0zWdhuA/R
+ 1fBVcR3xBPY6LPQ8xnUaOGBLvXs/lTuCuML2DPdEiHBM/WqEqOezaSvrWPKLoAkTsIoyQw1PizK
+ 1NBaO/R+daND4BilfxuIWvvgE1Vli7idDDlo/x0kr40Djt0EbLlpsDfdyZz/SxtcCa/hiBAZKev
+ +gdzgMjYJpE0biMocqk6gUtHRDQPKmA4zxi7pIQwxLuLbXM4xg5ORWuXkKnJSo5lV4arNRXRlKB
+ vt3Ck/xYSypsNvypRyA==
+X-Proofpoint-GUID: 1BQAMYoPtnLrHmqTvvaK8MdE_xodQLnG
+X-Proofpoint-ORIG-GUID: 1BQAMYoPtnLrHmqTvvaK8MdE_xodQLnG
+X-Authority-Analysis: v=2.4 cv=DY8nbPtW c=1 sm=1 tr=0 ts=6a4118cf cx=c_pps
+ a=UgVkIMxJMSkC9lv97toC5g==:117 a=xqWC_Br6kY4A:10 a=kj9zAlcOel0A:10
+ a=FelO9ux0wxsA:10 a=s4-Qcg_JpJYA:10 a=VkNPw1HP01LnGYTKEx00:22
+ a=u7WPNUs3qKkmUXheDGA7:22 a=_glEPmIy2e8OvE2BGh3C:22 a=VwQbUJbxAAAA:8
+ a=WHjzPRnL89bxSTNla3wA:9 a=CjuIK1q_8ugA:10 a=1HOtulTD9v-eNWfpl4qZ:22
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.293,Aquarius:18.0.1143,Hydra:6.1.125,FMLib:17.12.100.49
+ definitions=2026-06-28_03,2026-06-26_01,2025-10-01_01
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
+ phishscore=0 malwarescore=0 bulkscore=0 clxscore=1015 impostorscore=0
+ lowpriorityscore=0 spamscore=0 priorityscore=1501 suspectscore=0 adultscore=0
+ classifier=typeunknown authscore=0 authtc= authcc= route=outbound adjust=0
+ reason=mlx scancount=1 engine=8.22.0-2606150000 definitions=main-2606280112
 
-On Sat, Jun 27, 2026 at 12:52=E2=80=AFPM <sashiko-bot@kernel.org> wrote:
->
-> Thank you for your contribution! Sashiko AI review found 1 potential issu=
-e(s) to consider:
-> - [Medium] Hardcoded BPF object path 'action-ebpf' instead of using '$EBP=
-FDIR/action-ebpf'.
+On Sun, Jun 28, 2026 at 09:54:19AM +0000, sashiko-bot@kernel.org wrote:
+> Thank you for your contribution! Sashiko AI review found 5 potential issue(s) to consider:
+> - [High] Mismatch between touchpad interrupt GPIO and its pinctrl configuration.
+> - [Medium] Type-C SBU (Sideband Use) routing is omitted from the USB-C connectors in `pmic-glink`, breaking the DisplayPort Alt Mode AUX channel.
+
+This is fine, assuming that DP is rewrired...
+
+> - [Medium] QMP DisplayPort PHY is directly connected to `hdmi-connector` without an intervening DP-to-HDMI bridge node.
+
+... and it is. But here Sahiko is right. There should be some kind of
+bridge device on your laptop. Could you please check and describe it?
+It might be driven by the simple-bridge Linux driver, it can need no
+control, but it should be present in DT.
+
+> - [Medium] Both WooferRight and TweeterRight are routed to the same 'WSA2 WSA_SPK2 OUT' source widget.
+> - [Medium] The touchscreen reset pin (gpio48) is configured in pinctrl but never driven to an active output state.
 > --
->
-> commit f4ff308069725bd7a3b6c6f843ecb0fda5b73239
-> Author: Victor Nogueira <victor@mojatatu.com>
->
-> selftests/tc-testing: Verify bpf redirect on RED block with preceding cls=
-act (egress) classifier
->
-> This commit adds a test case to reproduce a NULL pointer dereference when=
- a
-> bpf filter attached to a RED block (which uses shared blocks) returns
-> TC_ACT_REDIRECT while a preceding clsact egress classifier is present. Th=
-e
-> issue stems from a stack-allocated bpf_net_context being torn down before
-> tcf_qevent_handle() calls skb_do_redirect().
->
-> > diff --git a/tools/testing/selftests/tc-testing/tc-tests/infra/qdiscs.j=
-son b/tools/testing/selftests/tc-testing/tc-tests/infra/qdiscs.json
-> > index a1f97a4b606e8..762f86ceab1cd 100644
-> > --- a/tools/testing/selftests/tc-testing/tc-tests/infra/qdiscs.json
-> > +++ b/tools/testing/selftests/tc-testing/tc-tests/infra/qdiscs.json
-> [ ... ]
-> > @@ -1540,5 +1540,37 @@
-> [ ... ]
-> > +    {
-> > +        "id": "fb8d",
-> > +        "name": "Verify bpf redirect on RED block with preceding clsac=
-t (egress) classifier",
-> > +        "category": [
-> > +            "qdisc",
-> > +            "red",
-> > +            "qevent",
-> > +            "clsact"
-> > +        ],
-> > +        "plugins": {
-> > +            "requires": "nsPlugin"
-> > +        },
-> > +        "setup": [
-> > +            "$IP addr add 10.10.10.1/24 dev $DUMMY",
-> > +            "$IP neigh add 10.10.10.2 lladdr 02:00:00:00:00:01 dev $DU=
-MMY nud permanent",
-> > +            "$TC qdisc add dev $DUMMY handle 1: root tbf rate 1Mbit bu=
-rst 10K limit 1M",
-> > +            "$TC qdisc add dev $DUMMY parent 1:1 handle 11: red limit =
-1M avpkt 1400 probability 1 burst 38 harddrop min 30000 max 30001 qevent ea=
-rly_drop block 10",
-> > +            "$TC qdisc add dev $DUMMY clsact",
-> > +            "$TC filter add dev $DUMMY egress protocol ip prio 1 match=
-all action gact pass",
-> > +            "$TC filter add block 10 protocol ip prio 1 matchall actio=
-n bpf obj action-ebpf sec action-redirect"
->
-> [Severity: Medium]
-> In the setup block for "Verify bpf redirect on RED block with preceding c=
-lsact
-> (egress) classifier", will this test fail with a file-not-found error whe=
-n
-> the tdc.py runner is executed in an out-of-tree build environment or with=
- a
-> customized $EBPFDIR?
->
-> Should this path be updated to use $EBPFDIR/action-ebpf instead of the
-> hardcoded action-ebpf so it aligns with other tests in the suite and find=
-s
-> the BPF object correctly?
+> 
 
-The $EBPFDIR issue seems to be legit. Victor?
-
-cheers,
-jamal
-
-> > +        ],
-> > +        "cmdUnderTest": "bash -c 'data=3D$(head -c 1400 /dev/zero | tr=
- \"\\0\" \"x\"); exec 3>/dev/udp/10.10.10.2/12345; for i in $(seq 1 8000); =
-do printf \"%s\" \"$data\" >&3; done; exit 0'",
-> [ ... ]
->
-> --
-> Sashiko AI review =C2=B7 https://sashiko.dev/#/patchset/20260626165156.16=
-9012-1-jhs@mojatatu.com?part=3D3
+-- 
+With best wishes
+Dmitry
