@@ -1,221 +1,227 @@
-Received: from mail-pf1-f172.google.com (mail-pf1-f172.google.com [209.85.210.172])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from mx0b-0031df01.pphosted.com (mx0b-0031df01.pphosted.com [205.220.180.131])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0F4BE3A6B66
-	for <sashiko-reviews@lists.linux.dev>; Sun, 28 Jun 2026 12:28:58 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=pass smtp.client-ip=209.85.210.172
-ARC-Seal:i=2; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1782649740; cv=pass; b=b1TY5H4rRNyCHetn/JRw3DB0nPoF8kX/Zv3t7xSRz/4CLGu+iS4p+L77vU5kN6AUZSpGDRWqMH5KurXj+HjnW1u4mDgCa9zVvLxXT2q2ESpFruXI2pJ5FapCUPerJsuOiRXygSMRkFO1XK6alElLxu4Bc8/xCKehHY/vDWqm6Gc=
-ARC-Message-Signature:i=2; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1782649740; c=relaxed/simple;
-	bh=5ApnCwq5Hsy6OnK5R9dFY0h0QMvGDBvhMeGj0FhJ0Eg=;
-	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
-	 To:Cc:Content-Type; b=amlXxhspKvw7eUwZw1B6Li+78PLLTwhtG+mQ+TkwjHDOy+Yke+V07KU2CTzR2Ng1/rgdrZhetQN3M/Q00ZNQk40/b22AeoP5P9bWEs7x8NMkYR9o8W2sIqS7vIsCU50iE629nDkTqxPJ8IBoebbmCp6l7ezFhYkT2F8nkUOq++Y=
-ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=mojatatu.com; spf=none smtp.mailfrom=mojatatu.com; dkim=pass (1024-bit key) header.d=mojatatu.com header.i=@mojatatu.com header.b=Tea3aOKZ; arc=pass smtp.client-ip=209.85.210.172
-Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=mojatatu.com
-Authentication-Results: smtp.subspace.kernel.org; spf=none smtp.mailfrom=mojatatu.com
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CC67D3A168F
+	for <sashiko-reviews@lists.linux.dev>; Sun, 28 Jun 2026 12:33:29 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.180.131
+ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
+	t=1782650011; cv=none; b=VgW7bTosZE0k9iXp9TaBgR//YwkyqwCDX/OdovuWRHefCDrjobOj0vAtTkatCXM5aNYVryCZUirt8E2tcrPAcCqD0Z8N7gQlB++1CmDL8ai55QWdBc9uAVF1UdxzxY55nHNvlcRjo5NVvSM9p6u3vfkbqGoUbbahUJZZZjAXSt8=
+ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
+	s=arc-20240116; t=1782650011; c=relaxed/simple;
+	bh=mykbP1tmhDjVBsB+bhm2oNPjCzqiU+fEZXgkJTccrvU=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=srG1rpxXRWmrn94DPZL9P1ERW9PpAhQNoq3Oxn0lOP+bI7v9MigF53UPfoM4BdJrYd4FuXCysi/3+mBSoHjv0T1NJxj4BS5vhLOPNpU6iuFh6Ug9XRBbzKDwL6uyOAAp9rF3mp22ynShtws1mDtpQ/bx0P78kfJAOwJpccHDty4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com; spf=pass smtp.mailfrom=oss.qualcomm.com; dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b=cHujCWWk; dkim=pass (2048-bit key) header.d=oss.qualcomm.com header.i=@oss.qualcomm.com header.b=UkspscxG; arc=none smtp.client-ip=205.220.180.131
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=oss.qualcomm.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=mojatatu.com header.i=@mojatatu.com header.b="Tea3aOKZ"
-Received: by mail-pf1-f172.google.com with SMTP id d2e1a72fcca58-845dc38ad4dso575547b3a.0
-        for <sashiko-reviews@lists.linux.dev>; Sun, 28 Jun 2026 05:28:58 -0700 (PDT)
-ARC-Seal: i=1; a=rsa-sha256; t=1782649738; cv=none;
-        d=google.com; s=arc-20260327;
-        b=SpQtTLERrd0l24iVoXI8FAlc5ubuRNoMPeJ2Z1wsiWGwnsba745xwHxOyIlnrZ+Mgy
-         +h2wwYrwIss/uYFZbUH0pmu3NJuPS7ZjlHDl6TLwWXamv8YlmExe/j89VKByKDZp8Y+e
-         CeKgMnoqasoXbHCZHEAI587kCYNkmIEbkc83WWANcOEiOuVyXWjVvYqM8BjeTthaHpmg
-         xGSdILB81D10/s6KiCz4lnmzQWrO88cI30D1NoJXx1rUGGVsiO9E55A7Yv1UP9l29eVl
-         SCUSOiUImru8FeKFk7VFOVFdWzlB/V3x/skw1QNsHUutvWycv/ZVTHnPqQtns01z+iFk
-         lQmA==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com; s=arc-20260327;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:dkim-signature;
-        bh=sEdjbIGDqsoiW4GawsVBo2JW1gWoEIpSwHHzh69Rb4A=;
-        fh=h6FRjY4Vg/+m/z24uvzYaeQBI8nwVTWs0k3ZXJWq2bs=;
-        b=kS4sEGn/dG+Ko/Hig0a0AZybMIUMSrk8sRBiMNlmF0xnzVuomxs79zzcBKqTiUJbha
-         x2ugjtEO9wX26KJx4jlCp7ZJOgQVv6QTttOlM1m5FGyOzuuZCHCQRguATHZ+JKMlq+N3
-         KK6D/O60jmgdQhNXLDdjt+HAFfEeTKLOoJCPtk0+7Mq52whOR6cLd31MqsNIcYbslfck
-         Sd4k0hrw5erodLJ1z11ET1E2c51Xh4CwiIqRiPSo/ZbBDmaKpz25GG0QMhDsN/B4B1s/
-         aJhvsAd9V80Zv+wES0ax6JYYToXpQQ/jWts1DYeuLphLqLIenP42oKmOm1KEEYvkMRe4
-         uGHQ==;
-        darn=lists.linux.dev
-ARC-Authentication-Results: i=1; mx.google.com; arc=none
+	dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b="cHujCWWk";
+	dkim=pass (2048-bit key) header.d=oss.qualcomm.com header.i=@oss.qualcomm.com header.b="UkspscxG"
+Received: from pps.filterd (m0279872.ppops.net [127.0.0.1])
+	by mx0a-0031df01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id 65S9P3vx3594108
+	for <sashiko-reviews@lists.linux.dev>; Sun, 28 Jun 2026 12:33:28 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=qualcomm.com; h=
+	cc:content-type:date:from:in-reply-to:message-id:mime-version
+	:references:subject:to; s=qcppdkim1; bh=iMYnMWBp77TV2qENzpNgtRcZ
+	SO5SxyLvA6XoKjxuz0M=; b=cHujCWWkTidRlrat45BIiorrO+2mngzn53H0cvys
+	xFGS5sfcY6D/phIjo+VZKLXf4bVw6kkd2ZHkZAagjCBLm9Moug0WavnVQhkPaR0X
+	ChKK8L3hEy+3AkvaOHkFWfvSpo0U6APLQ/WRTjC/V5LT5HenkQKCPzt1gPA/mqBN
+	8jVkotE6sE3B4+4eaJePKa4LkcPfUXLydTTb8eIg2ggpzU+76HzExBCJJRk5cGym
+	1BY66FrF1usMTNV9ewtKFWGnfv8UYSzKHmyYeKsSiiUlSr4I/+xsR2Gl1MS0N1eu
+	7UoQTKjUeHA08szGFRJH9yPbMAt2jWpGRi9des6H08zo1w==
+Received: from mail-qk1-f200.google.com (mail-qk1-f200.google.com [209.85.222.200])
+	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 4f26w6jv6u-1
+	(version=TLSv1.3 cipher=TLS_AES_128_GCM_SHA256 bits=128 verify=NOT)
+	for <sashiko-reviews@lists.linux.dev>; Sun, 28 Jun 2026 12:33:28 +0000 (GMT)
+Received: by mail-qk1-f200.google.com with SMTP id af79cd13be357-92b4b575561so383063585a.1
+        for <sashiko-reviews@lists.linux.dev>; Sun, 28 Jun 2026 05:33:28 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=mojatatu.com; s=google; t=1782649738; x=1783254538; darn=lists.linux.dev;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=sEdjbIGDqsoiW4GawsVBo2JW1gWoEIpSwHHzh69Rb4A=;
-        b=Tea3aOKZW2057VOpbYa8OMnk4oKAhFbJfex6fR6lH0du8K813/Daf6fswYZEC7KpGQ
-         eVZNZa9J7asPVEWZisO8IRjEzPNv5xwGvAAwxMs83iSZ0Bd8kgLy6kS0EoScyaqpdqa2
-         TLs+p7BSAZ0R8AnVLZXrpxL68k2p3zjE52vPs=
+        d=oss.qualcomm.com; s=google; t=1782650008; x=1783254808; darn=lists.linux.dev;
+        h=in-reply-to:content-disposition:mime-version:references:message-id
+         :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
+        bh=iMYnMWBp77TV2qENzpNgtRcZSO5SxyLvA6XoKjxuz0M=;
+        b=UkspscxGqh/a0PLO4t3n9jEzhWammE9wXRRRXhOwHgGWU1VbNFkEAkKp5Lo1dK40Mn
+         NYvQxeE74yDgoynBn0WSo/sojDDiEBOwMdX54vrPRnY0JAXP0g8Kq3hTKKygdb6FFu/1
+         TWkswixcTEnyFR9Al+s/FzbQSvgw2eHQO795RDZW/lYjbZiYRobxlOo9thzK/8W42r4W
+         AG8KAn68fbVD6CTwUGBUjd8JJQakb8DsaaJ63qUEbSAYzOz2zU+LCaABm+vzXSWek1GO
+         sW4IYK/ISdVr8pSknHWbi7grDUzc06twXRcBmPZ7Tzdot2EXo7W9r5wUDcdhDC2ez1xu
+         doIg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20251104; t=1782649738; x=1783254538;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:x-gm-gg:x-gm-message-state:from
-         :to:cc:subject:date:message-id:reply-to;
-        bh=sEdjbIGDqsoiW4GawsVBo2JW1gWoEIpSwHHzh69Rb4A=;
-        b=U6lxgM7IqTzBWjj0THjqLePeyrK+UP0J9ENU5WSjIpo5xW+2nd+o8VUVuklxC7KPOV
-         g79uzvJtzWiLkVO5g7/1Z1HMhWLhImpvqkRaHxkA53NS+0otXxHTljgLWWyqsu9HiuvG
-         kTSAF926jqolrYih1IpscR31Wf3ZvBNLBMiyhmgEHbQm4VEEjdShtukW/tFbjJo24uov
-         LVrq11lY+1j/h05VXYIyvz+aeMz6of0Hc7WSVpk+SAojdkfSs4NsxIdywB701RYIYHeI
-         eSbbORmpUjWygG7E7otghmMu/Xd6UFxfPtwoJcyU92R0Xwtoflkpt4zt6AOdRsa8NjHw
-         iX1A==
-X-Gm-Message-State: AOJu0YxvYUwX0fTude/LN/keDfqH5ppSSsWBxAtNRp0OsEOpqkgKU27S
-	O5dfXSjtpk3Cc60abhk5Op3GChK6/5N1PGX7Gs6ura2A0q2AjaY+l5kxov6AQo4gyuqhue4gzk0
-	JBoSxGSqWkGsMzdIfc5XiLSgDE7fdc3Co0FVXEYTFjhFz9Q/svhCktA==
-X-Gm-Gg: AfdE7cl0nVAV/VcdX/tucPiEPRNz/y1gOLwusAZgPS9SveYazamOPeemfkXRCMNRq79
-	xtr6NrE1D77AGvqLmP/2nLO4B+IU7uDZdmx0l/vbeF3m9FKpEQKgK24ol5E5X5JvFk3I/DwWstS
-	D6+lVxh/vU6vcpU2qGzM0dLnEICkzJFnNAESyO8XuYBQOF3YlUrVADW4JgcimBh5LAZoJ3NA9fH
-	reZZ//ksjYftNGr4TO1hGhE+jCo+cvHzUC7B5tQraTyPbFVPMH/Y/BUOIpG1S/19zaDOwdxZs3O
-	p8bPHWbw
-X-Received: by 2002:a05:6a00:32ce:b0:845:4888:74c5 with SMTP id
- d2e1a72fcca58-845b3ab50a8mr14060519b3a.23.1782649738333; Sun, 28 Jun 2026
- 05:28:58 -0700 (PDT)
+        d=1e100.net; s=20251104; t=1782650008; x=1783254808;
+        h=in-reply-to:content-disposition:mime-version:references:message-id
+         :subject:cc:to:from:date:x-gm-gg:x-gm-message-state:from:to:cc
+         :subject:date:message-id:reply-to;
+        bh=iMYnMWBp77TV2qENzpNgtRcZSO5SxyLvA6XoKjxuz0M=;
+        b=RsIH6o1WLxEVPWQtiG4pKoWR5+NAdB0IT3UVuYDgGdp8mrVp8PauZfKXYn+KFCe705
+         T9Rz/fNZxSyMiOcLzEfS4Kq5zhawOGb95/wFWsAYMOwWSd4BQaed9DtAgYTJy80tyfLZ
+         xhUfH5TFhSgiKRQiMBIWXUvNR57hN0RpCTN7nkZNCMDhnMopE1VegBq3orwdLr/firwK
+         13yyarrMvZXzghNOF/VUeUS2ACISdDNyZhMMOxXXwPYJYs4bxydHe2aOpWIpQv4elXDw
+         SkN8cfyvh5KK3boFy7xrmF+m4Z/ys/baZv+ftI9gK98OAAYZxhNmsOLjjp3+1DSi23bo
+         gQSw==
+X-Forwarded-Encrypted: i=1; AFNElJ/M4EFvK6RBaq6h0SD1UzRqhs5cLRXfqDDF9zP7xaNzleO9InWEvgdwGRbdR+L33z9K9qHsB6NCWCAgfY5IflA=@lists.linux.dev
+X-Gm-Message-State: AOJu0YzGvgkJQkzmYO495GhBdO5BvasqVlp3Fyv+6LViPTbg1WErNYu4
+	PaRALfD+14/rsjwExEh1VtA1TSpEVqB+QrLTRAcHDTY3inSk+M/OaBYT8V+wwQJb2EzwOImtkN/
+	pRkurcv3roAqj9aXeK8PzrewJ6KwIRGTuOldj08olWIGq4d8gyOnwQkojeZcJAkRl8z7jAD0=
+X-Gm-Gg: AfdE7cnpbdSSgi+w7/S37/qsR+SQr2Ctza+yMtSqO7diaNLeqesj/PI8I1WLHk/t4wZ
+	Bmv85faNSsjpNUalOBWK1P38G2UCV1wxd58hMmfliUDSKypSKRGPVczqb8bzWXbSJBYt/kq/8CB
+	zzGG2iicGjvPv5ekfmVHImW9kmIEBqa2Hra2WxBG3CMwL089Q42Pg6GTXl8EEQNc3LXQ2egxZ3V
+	ns8AjSWQaN/XvTlc97cH2QXbfsqn20pZeykONZpV/5lAtOGGDliP6YWCeiFSMbMreY8axEVygcH
+	DkJP+T24+g7pfYdOLSveJm5/g3zc5J8AMGwlhoR+r3sTLfTxx1nkQ200YFDN+29mFyJwFwOivmr
+	0DafdMGS0Os+5Lf2MHkbKRt8yZ7k336EtXd25iOy4SCL8rqlRiyfnyn5G1Oz6QM/sMTT8V3qmh1
+	FQaCOIfGK/Iw58D3RrmjG9BpCy
+X-Received: by 2002:a05:620a:4147:b0:915:9da9:b51b with SMTP id af79cd13be357-92600a83049mr3348414985a.16.1782650007968;
+        Sun, 28 Jun 2026 05:33:27 -0700 (PDT)
+X-Received: by 2002:a05:620a:4147:b0:915:9da9:b51b with SMTP id af79cd13be357-92600a83049mr3348411585a.16.1782650007434;
+        Sun, 28 Jun 2026 05:33:27 -0700 (PDT)
+Received: from umbar.lan (2001-14ba-a073-af00-264b-feff-fe8b-be8a.rev.dnainternet.fi. [2001:14ba:a073:af00:264b:feff:fe8b:be8a])
+        by smtp.gmail.com with ESMTPSA id 38308e7fff4ca-39af63056f2sm9044421fa.17.2026.06.28.05.33.24
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Sun, 28 Jun 2026 05:33:25 -0700 (PDT)
+Date: Sun, 28 Jun 2026 15:33:23 +0300
+From: Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>
+To: Kamal Wadhwa <kamal.wadhwa@oss.qualcomm.com>
+Cc: Rakesh Kota <rakesh.kota@oss.qualcomm.com>,
+        linux-arm-msm <linux-arm-msm@vger.kernel.org>,
+        sashiko-reviews@lists.linux.dev,
+        Komal Bajaj <komal.bajaj@oss.qualcomm.com>, robh@kernel.org,
+        linux-phy@lists.infradead.org, neil.armstrong@linaro.org,
+        vkoul@kernel.org, olteanv@gmail.com, krzk+dt@kernel.org,
+        conor+dt@kernel.org, devicetree@vger.kernel.org
+Subject: Re: [PATCH 3/4] arm64: dts: qcom: Add Shikra CQM SoM platform
+Message-ID: <5idu4ljmcvcvzqsr5g73h2roxzs36l6xxc5ju6ovc5aitt3gx4@wmfqueyf2rj6>
+References: <20260512-shikra-dt-v1-3-716438330dd0@oss.qualcomm.com>
+ <20260513042836.073F9C2BCB7@smtp.kernel.org>
+ <t2sw6owdxy5iyodjqsldbw6bfaqnezhgvc4hhylxuyrrbjkjto@iwf4dr5nmot3>
+ <20260513142936.kauwa3czigfs7qs5@hu-kotarake-hyd.qualcomm.com>
+ <0ac665bb-1a21-4077-aa9e-97162f7f4784@oss.qualcomm.com>
+ <20260514103918.cs5m5kcxcrcgukvx@hu-kamalw-hyd.qualcomm.com>
+ <obdxony34ckfbtsqj66siszw44sgieskcye5hg66ulkisctpwl@fyqczpze5tnw>
+ <20260518114927.edxbzvklqatlntv2@hu-kamalw-hyd.qualcomm.com>
+ <CAO9ioeVMieo8HtpRw+n4ZU9uV-_RQM061q5XfAA1Dtk2fnp4+g@mail.gmail.com>
+ <bvankzuazswuigrm7hvyjqigzfaru5o43wi3zvyphgme2pgqwz@pyspqky3u6cn>
 Precedence: bulk
 X-Mailing-List: sashiko-reviews@lists.linux.dev
 List-Id: <sashiko-reviews.lists.linux.dev>
 List-Subscribe: <mailto:sashiko-reviews+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:sashiko-reviews+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-References: <20260626165156.169012-1-jhs@mojatatu.com> <20260626165156.169012-3-jhs@mojatatu.com>
- <20260627165220.096B61F00A3A@smtp.kernel.org>
-In-Reply-To: <20260627165220.096B61F00A3A@smtp.kernel.org>
-From: Jamal Hadi Salim <jhs@mojatatu.com>
-Date: Sun, 28 Jun 2026 08:28:46 -0400
-X-Gm-Features: AVVi8CeUfCgYCrMiVLpafN92ArCYDophcwyfKGs-OnnxoG-o95tadQncfOA3DcM
-Message-ID: <CAM0EoMkUeJYuPbg-qXxFLEtiLuntT+g4MeY-sHy5yBSVd7+j2Q@mail.gmail.com>
-Subject: Re: [PATCH net 2/3] net/sched: Handle TC_ACT_REDIRECT from qdisc
- filter chains
-To: sashiko-reviews@lists.linux.dev
-Cc: bpf@vger.kernel.org, 
-	Linux Kernel Network Developers <netdev@vger.kernel.org>, Petr Machata <petrm@nvidia.com>
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <bvankzuazswuigrm7hvyjqigzfaru5o43wi3zvyphgme2pgqwz@pyspqky3u6cn>
+X-Proofpoint-ORIG-GUID: RK5s9XXlBWnbLGaombpb6s3K2nGc_-Fb
+X-Proofpoint-Spam-Info: AW1haW4tMjYwNjI4MDExMCBTYWx0ZWRfX//q1OsEHYaQN
+ 0HWKRtxnxAefGgCHzCA0JXwgLcNWp+xhoKW9l0uIxcfv70FAwpz9llhqdN4tIS/XKurxl481kab
+ i+YKyy5dsFAqSGZdv71e68v6VSAVSuQ=
+X-Proofpoint-GUID: RK5s9XXlBWnbLGaombpb6s3K2nGc_-Fb
+X-Authority-Analysis: v=2.4 cv=SuugLvO0 c=1 sm=1 tr=0 ts=6a411498 cx=c_pps
+ a=hnmNkyzTK/kJ09Xio7VxxA==:117 a=xqWC_Br6kY4A:10 a=kj9zAlcOel0A:10
+ a=FelO9ux0wxsA:10 a=s4-Qcg_JpJYA:10 a=VkNPw1HP01LnGYTKEx00:22
+ a=u7WPNUs3qKkmUXheDGA7:22 a=yx91gb_oNiZeI1HMLzn7:22 a=VwQbUJbxAAAA:8
+ a=EUspDBNiAAAA:8 a=9oNDkMca_vBqraWRZNIA:9 a=CjuIK1q_8ugA:10
+ a=PEH46H7Ffwr30OY-TuGO:22
+X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwNjI4MDExMCBTYWx0ZWRfXyNHCAEwHAcNO
+ g3/bul+MrP5hXcID1z24IMKhVxkWzDn+YgKLvyre0k8OXLHJ0DZJLs0gkx15TTNaE4MLRUz1qUp
+ Qd1yx1RmvTUi+T+0qhX9vKCaZRm3hlF8yKLQAaosvrpPY7Y0yEpbV2s+GcO2pwPwvlpPDs5L7P0
+ M7AMcYWwynjEl5wT62T+pQr/5O7sRWPO7+qg0gLxSD7MCJS+OdObQdODjh/hbJ2dgir37VCr3Rk
+ MKDyYvCkY9pjG2naIjw47AVqlHohAN7AAqLTFoPaFagDn09tOSKspayv5aCIBjhGvYwonjEl9Ll
+ tDDIeVayUfJhHgsQVNvx1ligVoRb3Qmym8N6rMZi1kq+DjV2TF9iszOVwBBkJinv9/a5saWUaMF
+ PUYa9LX+nkNpSFQdI2k6CnMLehERn5lE9loPZDdv+rgmWE3Jh4KaGMTxREVaM7M46fMY1Chsgtc
+ arg7Ii0kTcbNaQV545w==
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.293,Aquarius:18.0.1143,Hydra:6.1.125,FMLib:17.12.100.49
+ definitions=2026-06-28_03,2026-06-26_01,2025-10-01_01
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
+ lowpriorityscore=0 spamscore=0 adultscore=0 priorityscore=1501 clxscore=1015
+ phishscore=0 bulkscore=0 impostorscore=0 suspectscore=0 malwarescore=0
+ classifier=typeunknown authscore=0 authtc= authcc= route=outbound adjust=0
+ reason=mlx scancount=1 engine=8.22.0-2606150000 definitions=main-2606280110
 
-On Sat, Jun 27, 2026 at 12:52=E2=80=AFPM <sashiko-bot@kernel.org> wrote:
->
-> Thank you for your contribution! Sashiko AI review found 2 potential issu=
-e(s) to consider:
-> - [High] Removal of TC_ACT_REDIRECT support from qevents (tcf_qevent_hand=
-le) breaks existing eBPF redirect functionality.
-> - [Low] pr_warn_once() used inside a static inline function in a header f=
-ile will print multiple times.
-> --
->
-> commit d96e142c03f9c1a1e9ac2e1d8c8fe26605053b10
-> Author: Jamal Hadi Salim <jhs@mojatatu.com>
->
-> net/sched: Handle TC_ACT_REDIRECT from qdisc filter chains
->
-> When a TC filter attached to a qdisc filter chain returns TC_ACT_REDIRECT=
-,
-> the redirect is silently lost. This patch adds a tcf_classify_qdisc()
-> wrapper to convert TC_ACT_REDIRECT to TC_ACT_SHOT and drops the packet.
-> It also removes the TC_ACT_REDIRECT case from tcf_qevent_handle() since
-> it is handled by the wrapper.
->
-> > diff --git a/include/net/pkt_cls.h b/include/net/pkt_cls.h
-> > index 3bd08d7f39c18..3a542a72e9a55 100644
-> > --- a/include/net/pkt_cls.h
-> > +++ b/include/net/pkt_cls.h
-> [ ... ]
-> > @@ -159,6 +159,19 @@ static inline int tcf_classify(struct sk_buff *skb=
-,
-> >
-> >  #endif
-> >
-> > +static inline int tcf_classify_qdisc(struct sk_buff *skb,
-> > +                                  const struct tcf_proto *tp,
-> > +                                  struct tcf_result *res, bool compat_=
-mode)
-> > +{
-> > +     int ret =3D tcf_classify(skb, NULL, tp, res, compat_mode);
-> > +
-> > +     if (unlikely(ret =3D=3D TC_ACT_REDIRECT)) {
-> > +             pr_warn_once("TC_ACT_REDIRECT from qdisc filter chains is=
- not supported; use eBPF with clsact or mirred redirect instead\n");
->
-> [Severity: Low]
-> Is this going to print multiple times instead of strictly once globally?
->
-> Because tcf_classify_qdisc() is a static inline function in a header file=
-,
-> each C file including it (like the various qdisc modules) will create its=
- own
-> local instance of the static __already_done variable used by pr_warn_once=
-().
+On Thu, Jun 25, 2026 at 09:11:19PM +0530, Kamal Wadhwa wrote:
+> On Wed, Jun 17, 2026 at 03:48:14PM +0300, Dmitry Baryshkov wrote:
+> > On Mon, 18 May 2026 at 14:49, Kamal Wadhwa
+> > <kamal.wadhwa@oss.qualcomm.com> wrote:
+> > >
+> > > On Sun, May 17, 2026 at 08:18:15PM +0300, Dmitry Baryshkov wrote:
+> > > > On Thu, May 14, 2026 at 04:09:18PM +0530, Kamal Wadhwa wrote:
+> > > > > On Wed, May 13, 2026 at 06:14:20PM +0300, Dmitry Baryshkov wrote:
+> > > > > > On 13/05/2026 17:29, Rakesh Kota wrote:
+> > > > > > > On Wed, May 13, 2026 at 03:01:47PM +0300, Dmitry Baryshkov wrote:
+> > > > > > > > On Wed, May 13, 2026 at 04:28:35AM +0000, sashiko-bot@kernel.org wrote:
+> > > > > > > > > Thank you for your contribution! Sashiko AI review found 2 potential issue(s) to consider:
+> > > > > > > > > - [High] The PMIC regulator definitions omit their required input supply dependencies (e.g., `vdd_s2-supply`, `vdd_l3-supply`), breaking the power hierarchy.
+> > > > > > > > > - [Medium] The device tree inaccurately hardcodes the `compatible` string to a different PMIC model (`qcom,rpm-pm2250-regulators`) instead of explicitly identifying the actual hardware (PM4125).
+> > > > > > > > > --
+> > > > > > > > > > +
+> > > > > > > > > > +         pm4125_s2: s2 {
+> > > > > > > > > > +                 regulator-min-microvolt = <1000000>;
+> > > > > > > > > > +                 regulator-max-microvolt = <1200000>;
+> > > > > > > > > > +         };
+> > > > > > > > >
+> > > > > > > > > Do these regulators need to explicitly define their input supply dependencies
+> > > > > > > > > such as vdd_s2-supply?
+> > > > > > > > >
+> > > > > > > > > Without these properties, the regulator framework might be unaware that the
+> > > > > > > > > PMIC regulators draw power from upstream supplies.
+> > > > > > > > >
+> > > > > > > > > If the kernel dynamically manages the upstream supply and its reference count
+> > > > > > > > > drops to zero, could it be disabled, causing an unexpected power loss for
+> > > > > > > > > downstream components?
+> > > > > > > >
+> > > > > > > > And this is a correct comment. Please provide missing supplies.
+> > > > > > > >
+> > > > > > > As per the Qualcomm system design, the parent-child supply relationship
+> > > > > > > is managed by the RPM firmware, not the Linux regulator framework. The
+> > > > > > > RPM ensures the parent supply is never disabled until all subsystem
+> > > > > > > votes are cleared.
+> > > > > >
+> > > > > > How is this different from other, previous platforms?
+> > > > >
+> > > > > This is not different. In the previous platforms too this is taken care from the
+> > > > > RPM/RPMH firmware side, the only case where we may need explicit vote to parent
+> > > > > is for non-rpmh/rpm regulator rails (like i2c based regulator pm8008), which
+> > > > > may have a RPM/RPMH regulator as a parent.
+> > > > >
+> > > > > Even on those previous targets the parent rail of all RPM/RPMH regulators are
+> > > > > internally voted by RPM/RPMH FW at proper voltage with required headroom
+> > > > > calculated based on the active child rails. This was done for all the
+> > > > > subsystems (including APPS) regulators.
+> > > > >
+> > > > > So no explicit handling from the APPS is required for parent supply.
+> > > >
+> > > > You are explaining the driver behaviour. But the question is about the
+> > > > hardware description. If there is no difference, please add necessary
+> > > > supplies back.
+> > >
+> > > I understand your concern about descibing the parent-child relation in the
+> > > devicetree, and given that we have been almost always followed this for all
+> > > the previous targets, it will expected of us to add them.
+> > 
+> > Yes.
+> > 
+> > >
+> > > However, we want to avoid the unnecessary access to the parent from APPS.
+> > 
+> > Why? What is the reason? Do we want to do the same for all the
+> > platforms? Only for Shikra? Something else?
+> > 
+> > > At the moment, I do not see a way to avoid that, if we add the parent
+> > > regulators.
+> > 
+> > That depend on the answer to the previous question. In the end, we can
+> > make the driver ignore the parents by removing them from the regulator
+> > desc.
+> 
+> Ok, this seems like a good suggestion, so you mean its ok if we define the
+> regulator desc's supply column with NULL? And only keep that in the DT?
+> 
+> you mean like this?
+> https://git.kernel.org/pub/scm/linux/kernel/git/torvalds/linux.git/tree/drivers/regulator/qcom-rpmh-regulator.c?h=v7.1#n1453
+> 
+> (please let me know if i got that right. thanks)
 
-This was intentional. I used WARN_ONCE() initially, but NIPA testing
-may consider that as something "bad". In any case, this usage is
-common, just ignore it.
+Yes. Don't forget to explain in the commit message, why you are doing
+so.
 
-> > +             ret =3D TC_ACT_SHOT;
-> > +     }
-> > +     return ret;
-> > +}
-> > +
-> >  static inline unsigned long
-> >  __cls_set_class(unsigned long *clp, unsigned long cl)
-> >  {
-> > diff --git a/net/sched/cls_api.c b/net/sched/cls_api.c
-> > index 3e67600a4a1a1..3ca56d060e28f 100644
-> > --- a/net/sched/cls_api.c
-> > +++ b/net/sched/cls_api.c
-> > @@ -4033,7 +4033,7 @@ struct sk_buff *tcf_qevent_handle(struct tcf_qeve=
-nt *qe, struct Qdisc *sch, stru
-> >
-> >       fl =3D rcu_dereference_bh(qe->filter_chain);
-> >
-> > -     switch (tcf_classify(skb, NULL, fl, &cl_res, false)) {
-> > +     switch (tcf_classify_qdisc(skb, fl, &cl_res, false)) {
->
-> [Severity: High]
-> Does this break existing eBPF redirect functionality for qevents?
->
-
-Again, design intent. I will update the commit message to state this
-clearly with the following text:
----
-Remove the TC_ACT_REDIRECT case from tcf_qevent_handle().
-skb_do_redirect() belongs in the BPF plumbing layer (net/core/), not
-in net/sched/. The case was never consistent with the rest of the
-qdisc classification infrastructure, where no classify function
-handles
-TC_ACT_REDIRECT.
----
-
-IMO, it appears to have been TheLinuxWay(tm) i.e a cut-and-paste from
-existing code on day 1 of  the qevent introduction rather than a
-deliberate design decision.
-Ccing Petr to see if he thinks differently.
-
-cheers,
-jamal
-
-> Prior to this patch, tcf_qevent_handle() correctly handled TC_ACT_REDIREC=
-T
-> by calling skb_do_redirect(skb). By using the tcf_classify_qdisc() wrappe=
-r
-> here, TC_ACT_REDIRECT is unconditionally converted to TC_ACT_SHOT. This
-> inadvertently drops packets that were legitimately redirecting from qeven=
-ts.
->
-> >       case TC_ACT_SHOT:
-> >               qdisc_qstats_drop(sch);
-> >               __qdisc_drop(skb, to_free);
-> > @@ -4045,10 +4045,6 @@ struct sk_buff *tcf_qevent_handle(struct tcf_qev=
-ent *qe, struct Qdisc *sch, stru
-> >               __qdisc_drop(skb, to_free);
-> >               *ret =3D __NET_XMIT_STOLEN;
-> >               return NULL;
-> > -     case TC_ACT_REDIRECT:
-> > -             skb_do_redirect(skb);
-> > -             *ret =3D __NET_XMIT_STOLEN;
-> > -             return NULL;
-> >       case TC_ACT_CONSUMED:
-> >               *ret =3D __NET_XMIT_STOLEN;
-> >               return NULL;
->
-> --
-> Sashiko AI review =C2=B7 https://sashiko.dev/#/patchset/20260626165156.16=
-9012-1-jhs@mojatatu.com?part=3D2
+-- 
+With best wishes
+Dmitry
