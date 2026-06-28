@@ -1,133 +1,163 @@
-Received: from mailtransmit05.runbox.com (mailtransmit05.runbox.com [185.226.149.38])
+Received: from fout-b7-smtp.messagingengine.com (fout-b7-smtp.messagingengine.com [202.12.124.150])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CFE283B8D40;
-	Sun, 28 Jun 2026 21:59:41 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=185.226.149.38
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 14B8B346E4C
+	for <sashiko-reviews@lists.linux.dev>; Sun, 28 Jun 2026 22:13:23 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=202.12.124.150
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1782683983; cv=none; b=FxmM7d4XYXImiQ+UNM9OYM/wcSW17ckd1U6BT9qjpqrjzmb4az40rZsN8fWzle4lOIkjFlHJHCLmMVLuCWBn4zMNJ4xcp7qu4KWPYPbiMSIM22AYPtutbYOCxp/hRJ3IcpWaWzmtFDbrxh83SRdaHoF+mTx1wxAiZKm8Rn7Ffkg=
+	t=1782684806; cv=none; b=uK1Tg1+dQyXT7MOQTvETPaneXRJLJ3tme/1qgvfqBrOlycUPEDZHN3artclQj1vCes1FrEWUrLMj0ENtBGGe25QafccbJZPQ0YjH1yG42TdWmrgp8Po4BYl+Ke00K/myr1+RkSWTVReoTS1/qfJOgOmnmcBogdkSCJqJDk6MDLA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1782683983; c=relaxed/simple;
-	bh=t2sMTNUbxD4BknlcrTMpWc4SMcLbIGXrma4CzOJVaWI=;
-	h=Message-ID:Date:MIME-Version:From:Subject:To:Cc:References:
-	 In-Reply-To:Content-Type; b=kWQg0vLYuXA4zjKfo2W0oooKusfqJfmh6LGRrLCuqbtdPo0wOvtsvlu7vcYfKJBSloVzx7krmS1advjVwI9d8iozoMRwbblxXVpmZEXSbdjiDGfLeHSDQ8Y13gdD6WUJuxct1tNYhY1Q5JayaIzV2ZMgOmwVnbpRsVNM47uxBGQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=rbox.co; spf=pass smtp.mailfrom=rbox.co; dkim=pass (2048-bit key) header.d=rbox.co header.i=@rbox.co header.b=RXCF0CAP; arc=none smtp.client-ip=185.226.149.38
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=rbox.co
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=rbox.co
+	s=arc-20240116; t=1782684806; c=relaxed/simple;
+	bh=ozaBsu5/rrlxZT3SQgt8UpGfMmLsGXhI3ZWESyfFpUk=;
+	h=MIME-Version:Date:From:To:Cc:Message-Id:In-Reply-To:References:
+	 Subject:Content-Type; b=jcRxVMtJg35r7K7U81ixPYrNA8ty8hkcNoiLAZP9+qByBukwoX/xWT6vidhtPhv5wODrTirfGgVvFctvWPizHBfqgI5GBx/wI/l2A0n5GcnssGLvYLA5FDboQLiYvoeacuS7YGi4PcVO+lyhVHijNypsQg/4DU05PR0qNvS+Lc4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=squebb.ca; spf=pass smtp.mailfrom=squebb.ca; dkim=pass (2048-bit key) header.d=squebb.ca header.i=@squebb.ca header.b=wTtQoCbb; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=ZQjUcD6R; arc=none smtp.client-ip=202.12.124.150
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=squebb.ca
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=squebb.ca
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=rbox.co header.i=@rbox.co header.b="RXCF0CAP"
-Received: from mailtransmit03.runbox ([10.9.9.163] helo=aibo.runbox.com)
-	by mailtransmit05.runbox.com with esmtps  (TLS1.2) tls TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256
-	(Exim 4.93)
-	(envelope-from <mhal@rbox.co>)
-	id 1wdxXQ-001ZMg-30; Sun, 28 Jun 2026 23:59:40 +0200
-DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed; d=rbox.co;
-	s=selector2; h=Content-Transfer-Encoding:Content-Type:In-Reply-To:References:
-	Cc:To:Subject:From:MIME-Version:Date:Message-ID;
-	bh=Huq7o+X/3/jMiP4VYmjn9/eydGCayTj3Mb+IM0OaK4w=; b=RXCF0CAPXKlGI5A4Yqx6tF0OlK
-	ZCqFYbb77AJkJ2QolHT6+H0XB3DQ0PgwHhHluqMQfPHVviYa38xuACMeXEBcVWK5ijzyGu0iuHQx9
-	uhAU0V/5gRFaXJSgj9lydtnRVHjOdXQCcvn3pvlmMokdsxgCPMX5fyaQqmEzr63S4gyVKxHZVZFJZ
-	ejBtTVRRJhJ1Gw1FvvdnFq8k3xlZuqqq2SfJ9w3P0WZghuI5ss2cZhqhKJ01TjcYDOPcHN8wrS4Rx
-	gVtWgkZV3VhJ8HZg9F3O3aXZCTt9EkUTLNxOqrVd1CECebyaJkfNM+7vIhHQQezkmRLqYE+0IadZb
-	isqZb1gg==;
-Received: from [10.9.9.73] (helo=submission02.runbox)
-	by mailtransmit03.runbox with esmtp (Exim 4.86_2)
-	(envelope-from <mhal@rbox.co>)
-	id 1wdxXP-00060f-RW; Sun, 28 Jun 2026 23:59:39 +0200
-Received: by submission02.runbox with esmtpsa  [Authenticated ID (604044)]  (TLS1.2:ECDHE_SECP256R1__RSA_PSS_RSAE_SHA256__AES_256_GCM:256)
-	(Exim 4.95)
-	id 1wdxXN-00DEJc-Qo;
-	Sun, 28 Jun 2026 23:59:37 +0200
-Message-ID: <e08be4f5-0bd9-4228-843d-86ed20594bac@rbox.co>
-Date: Sun, 28 Jun 2026 23:59:37 +0200
+	dkim=pass (2048-bit key) header.d=squebb.ca header.i=@squebb.ca header.b="wTtQoCbb";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="ZQjUcD6R"
+Received: from phl-compute-02.internal (phl-compute-02.internal [10.202.2.42])
+	by mailfout.stl.internal (Postfix) with ESMTP id 5EE5A1D000F4;
+	Sun, 28 Jun 2026 18:13:23 -0400 (EDT)
+Received: from phl-imap-08 ([10.202.2.84])
+  by phl-compute-02.internal (MEProxy); Sun, 28 Jun 2026 18:13:23 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=squebb.ca; h=cc
+	:cc:content-transfer-encoding:content-type:content-type:date
+	:date:from:from:in-reply-to:in-reply-to:message-id:mime-version
+	:references:reply-to:subject:subject:to:to; s=fm2; t=1782684803;
+	 x=1782771203; bh=gUt+pb9IpwUlNB7Lw1zD/n57/TpTgrylENozfOnRNmw=; b=
+	wTtQoCbbnwKQ+anX52amQaeaV3+eCkvsddMX78R65/frKM3AuXWH/tz3QVn3IfMO
+	y7/hdZBUpR07Z3odZfX0uKiiXEM07LUyGNeGKjTAV/cNiD4OJmcIFbA5RAhgwdNq
+	ve0Mei2Qcfuby6UcKIO6/aSPYL+IwhkbamUHMVy+RIuMsshiB0jrTp3Cr8t7/RfR
+	2jHcYHYfYHN4WJECkrWd2pGmCZ2LoBfyD2xornrdgbAGhqjNlytmfmiGK3lvdxLx
+	A1JCoAisnFOQ/YHCGRLxVXllk2DintKzf1mPZBWtvPkBTmw6rOanWlcj5NeA+QcV
+	UUx7olj+79P9gstXI5aLYw==
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
+	messagingengine.com; h=cc:cc:content-transfer-encoding
+	:content-type:content-type:date:date:feedback-id:feedback-id
+	:from:from:in-reply-to:in-reply-to:message-id:mime-version
+	:references:reply-to:subject:subject:to:to:x-me-proxy
+	:x-me-sender:x-me-sender:x-sasl-enc; s=fm1; t=1782684803; x=
+	1782771203; bh=gUt+pb9IpwUlNB7Lw1zD/n57/TpTgrylENozfOnRNmw=; b=Z
+	QjUcD6R/J45y1rXsB5UEeH7utnciVaXuybcdJcMXJL4pvtgnE8htfTNa0BVJifIS
+	fw7weEmzAxf5OXi1RZcmz1bgY00JahqA88z53a+3yvIOgU0pCvvXNg/XlHb0vRGX
+	HUedeW3fosG54VTV9nvTGZbBXPosfH8CyC0qGuauSslU+QofiYpPrMoCTZErdXPJ
+	DzpfR/RRA1qrl4E7uws8P4jwidvsKPORxtYout5WvER0LGQxzQTYdsIWmhwMKvHy
+	FTqQMoyfdfma5dda6o7X7EEJqXezfp8YNhW5Bp/82Q1FoVkcTYY1N+zY/jTPoVCQ
+	pS9bkRH+y8yGWDSBCQE8g==
+X-ME-Sender: <xms:g5xBapT5Y62rERuIHL3J10348adx7NvpSznMa-DM_gX2yVt0wlzerw>
+    <xme:g5xBatkPy-2nk105L8STOn1Pn4qzNLufqsoeZDuAiamets2caVLyeU1aAKbQkvyh1
+    6UtAeAx1Dfwae_OjY9jX655bLHz7PfIq9h7mJQrjU5m7AsnklbTw0E>
+X-ME-Proxy-Cause: dmFkZTGb3NFbVFloWOueSolH6l5cBlbHmmLtM1Ms9o7oEYSibMCr1SXO+mhQ/siSExmxO0
+    +ufwnIGmx2xhKyyWR/xa0aaLVdOQni+9keRxbF49QgUIVOp0cEq7zPNPHJ5LA5Jr2UW5l7
+    LBt6E/zGsGLhSd2T+F93llAaF1TorgdAXbKT2qBOFmOtrVaQgr6O7DGYenHHCPbb2Rpf5z
+    SxGmSSosspeeeaVW790hjGIa4r4TbKVItz032SyVK0nk2NG3yS9giCKhS4LhNfj2PRGr0a
+    9Z4XTAZYpYXIUOwAlutcVolOYnsLIPB4EMIDx7PnOLKvOj6+uKNQS9kQMFmzT6nzqxtnMh
+    sufBDBYfbGhsPXCsIyjze5oUgN1pghtuCE9cOQ5XjQWIvB559sFHm6SQ05e+T9J6GOsOOp
+    kg3pae8mRnnmKqZSUVPsRjtmsDdSkiAbjPBDLtiZvQLFgA88VnQf23EWEJusRMEHJsSZ89
+    M/mmiy8piu2hQOZfaFlnbiPHhJkgaOiX8oab3SGKHB1ZQBYybx1wmgMp4PJJ9leWu1sJNM
+    a9raWUikUmDGt4WVbxfpVCEY0kbxobzerOLJRHNmR/BR99rFfs8pGcpzHNa3fkuaPbvUgR
+    7Bd5zRbxiI3CgV/Nl2OF4l0rVQ03fpLcEwcv/zM2gCycqYxwyorCz8uVruLQ
+X-ME-Proxy: <xmx:g5xBai1kN4EuWC6vF9R0gxc2VmHiopRFpFvP23SecOeOnczzba150g>
+    <xmx:g5xBalOWozKuR6oK7DaGH-vRsSAoW8J9d3T55e4X4ZJfpDWV5kNe_A>
+    <xmx:g5xBai2dDIUhy4eG3pZwrzx0vKx15qzXEYoH_gIHUlN9VdKeOi2nJA>
+    <xmx:g5xBasEaQEorCmXNNe__RZDf2juLTk0u7y7UwQ5nu-xeYnZFQZnZZQ>
+    <xmx:g5xBagIcRJcPGLXfIgVYRt7qmpNZ2-9iPVdeTi6d2kNzkvRQVwj2vIBA>
+Feedback-ID: ibe194615:Fastmail
+Received: by mailuser.phl.internal (Postfix, from userid 501)
+	id 06AA72CE409C; Sun, 28 Jun 2026 18:13:23 -0400 (EDT)
+X-Mailer: MessagingEngine.com Webmail Interface
 Precedence: bulk
 X-Mailing-List: sashiko-reviews@lists.linux.dev
 List-Id: <sashiko-reviews.lists.linux.dev>
 List-Subscribe: <mailto:sashiko-reviews+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:sashiko-reviews+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-From: Michal Luczaj <mhal@rbox.co>
-Subject: Re: [PATCH bpf v2 1/4] bpf, sockmap: Reject unhashed UDP sockets on
- sockmap update
-To: sashiko-reviews@lists.linux.dev
-Cc: bpf@vger.kernel.org
-References: <20260626-sockmap-lookup-udp-leak-v2-0-7e7e201c951a@rbox.co>
- <20260626-sockmap-lookup-udp-leak-v2-1-7e7e201c951a@rbox.co>
- <20260626205814.BAC3C1F000E9@smtp.kernel.org>
-Content-Language: pl-PL, en-GB
-In-Reply-To: <20260626205814.BAC3C1F000E9@smtp.kernel.org>
-Content-Type: text/plain; charset=UTF-8
+X-ThreadId: ArMcrDYeUHoR
+Date: Sun, 28 Jun 2026 18:13:02 -0400
+From: "Mark Pearson" <mpearson-lenovo@squebb.ca>
+To: "Guenter Roeck" <linux@roeck-us.net>, sashiko-reviews@lists.linux.dev
+Cc: linux-watchdog@vger.kernel.org
+Message-Id: <9860a408-cb2b-4ce4-88fe-8b65da720edd@app.fastmail.com>
+In-Reply-To: <58920807-fbde-4a7e-b9bb-5a29be5ccced@roeck-us.net>
+References: <mpearson-lenovo@squebb.ca>
+ <20260625174328.3339996-1-mpearson-lenovo@squebb.ca>
+ <20260625175235.49B101F000E9@smtp.kernel.org>
+ <58920807-fbde-4a7e-b9bb-5a29be5ccced@roeck-us.net>
+Subject: Re: [PATCH v2] watchdog: lenovo_se30g2_se60_wdt: Watchdog for Lenovo SE30G2
+ and SE60
+Content-Type: text/plain
 Content-Transfer-Encoding: 7bit
 
-On 6/26/26 22:58, sashiko-bot@kernel.org wrote:
-> ...
-> [Severity: High]
-> This is a pre-existing issue, but does this leave TCP sockets susceptible to
-> the exact same state-transition leak?
-> 
-> If a TCP socket is held by a BPF program in TCP_ESTABLISHED state and then
-> transitions to TCP_LISTEN, inet_hash() unconditionally sets SOCK_RCU_FREE:
-> 
-> net/ipv4/inet_hashtables.c:inet_hash() {
->     ...
->     sock_set_flag(sk, SOCK_RCU_FREE);
->     ...
-> }
-> 
-> This dynamic state change would cause bpf_sk_release() to evaluate
-> sk_is_refcounted(sk) as false and skip the refcount decrement, leading to
-> a memory leak similar to the UDP case.
-> 
->> +	if (sk_is_udp(sk))
->> +		return sk_hashed(sk);
+Hi Guenter,
 
-Right, TCP sockets can leak in a similar fashion.
+On Sun, Jun 28, 2026, at 11:12 AM, Guenter Roeck wrote:
+> On 6/25/26 10:52, sashiko-bot@kernel.org wrote:
+>> Thank you for your contribution! Sashiko AI review found 1 potential issue(s) to consider:
+>> - [Medium] Incorrect error cleanup for a registered platform device leaves a zombified sysfs device.
+>> --
+>> 
+>> commit 728400a02a11a5d2e004ae6d02e2731670483271
+>> Author: Mark Pearson <mpearson-lenovo@squebb.ca>
+>> 
+>> watchdog: lenovo_se30g2_se60_wdt: Watchdog for Lenovo SE30G2 and SE60
+>> 
+>> This commit adds the watchdog driver implementation for Lenovo SE30G2 and
+>> SE60 platforms.
+>> 
+>>> diff --git a/drivers/watchdog/lenovo_se30g2_se60_wdt.c b/drivers/watchdog/lenovo_se30g2_se60_wdt.c
+>>> --- /dev/null
+>>> +++ b/drivers/watchdog/lenovo_se30g2_se60_wdt.c
+>> [ ... ]
+>>> +static int se_30g2_60_create_device(const struct dmi_system_id *id)
+>>> +{
+>>> +	int err;
+>>> +
+>>> +	se_30g2_60_pdev = platform_device_alloc("lenovo-se30g2-se60-wdt", -1);
+>>> +	if (!se_30g2_60_pdev)
+>>> +		return -ENOMEM;
+>>> +
+>>> +	err = platform_device_add(se_30g2_60_pdev);
+>>> +	if (err) {
+>>> +		platform_device_put(se_30g2_60_pdev);
+>>> +		se_30g2_60_pdev = NULL;
+>>> +	}
+>>> +
+>>> +	return err;
+>>> +}
+>> [ ... ]
+>>> +static int __init se_30g2_60_wdt_init(void)
+>>> +{
+>>> +	int err;
+>>> +
+>>> +	if (!dmi_check_system(se_30g2_60))
+>>> +		return -ENODEV;
+>>> +
+>>> +	err = platform_driver_register(&se_30g2_60_wdt_driver);
+>>> +	if (err && se_30g2_60_pdev) {
+>>> +		platform_device_put(se_30g2_60_pdev);
+>> 
+>> [Severity: Medium]
+>> Since the device was successfully added to the system bus via
+>> platform_device_add() in the DMI callback earlier, will calling
+>> platform_device_put() here just drop the allocation reference without
+>> removing the device from the sysfs hierarchy?
+>> 
+>> Should this error path use platform_device_unregister() instead to avoid
+>> leaving a zombie device on the bus that could cause collisions on a later
+>> module load?
+>> 
+> I don't understand this code either. The parallel platform_device_put()
+> on error in se_30g2_60_create_device() seems risky. Each of the Lenovo
+> drivers uses a different mechanism to register the driver and the device.
+> Why ? That just makes it more difficult to review the code.
+>
+> Guenter
 
-unreferenced object 0xffff88810544b400 (size 3200):
-  comm "softirq", pid 0, jiffies 4299372426
-  hex dump (first 32 bytes):
-    7f 00 00 01 7f 00 00 01 48 40 f2 e3 00 00 00 00  ........H@......
-    02 00 07 40 00 00 00 00 00 00 00 00 00 00 00 00  ...@............
-  backtrace (crc 82faf8d5):
-    kmem_cache_alloc_noprof+0x53e/0x640
-    sk_prot_alloc+0x69/0x240
-    sk_clone+0x79/0x1200
-    inet_csk_clone_lock+0x30/0x760
-    tcp_create_openreq_child+0x34/0x2740
-    tcp_v4_syn_recv_sock+0x12e/0x1080
-    tcp_check_req+0x447/0x2310
-    tcp_v4_rcv+0x1026/0x3c90
-    ip_protocol_deliver_rcu+0x93/0x340
-    ip_local_deliver_finish+0x356/0x5c0
-    ip_local_deliver+0x184/0x4a0
-    ip_rcv+0x4f4/0x5b0
-    __netif_receive_skb_one_core+0x153/0x1b0
-    process_backlog+0x28d/0x1190
-    __napi_poll+0xa7/0x520
-    net_rx_action+0x3f0/0xca0
+Originally this was the same as the lenovo_se10 (I thought about combining them but it got messy do didn't). After review by sashiko pointed out the potential lack of free so I did this fix, but looks like this is wrong too. I need to go and revisit.
+I'm sick right now (some sort of summer flu...it sucks) but I'll update it hopefully next week and do a new version.
 
-But I guess that's a material for a followup series?
+On the differences between lenovo drivers - agreed. A lot of that is down to new issues being pointed out during the review of each driver as they are submitted. I'll happily bring them all up to the same base once I get this one right.
 
-> [Severity: High]
-> Could a memory ordering regression here allow unbound UDP sockets to still
-> bypass this check?
-> 
-> In udp_v4_get_port(), the flag and hash are set:
-> 
-> net/ipv4/udp.c:udp_v4_get_port() {
->     ...
->     sock_set_flag(sk, SOCK_RCU_FREE);
->     sk_add_node_rcu(sk, &hslot->head);
->     ...
-> }
-> 
-> Because these stores lack a memory barrier between them, could sk_hashed(sk)
-> return true on another CPU while SOCK_RCU_FREE is not yet visible, allowing
-> the leak to still trigger?
-
-I'd like to verify it on a weakly-ordered CPU; please give me a day or two.
-
-thanks,
-Michal
-
+Mark
