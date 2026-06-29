@@ -1,44 +1,44 @@
 Received: from foss.arm.com (foss.arm.com [217.140.110.172])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id C56F9407576;
-	Mon, 29 Jun 2026 17:09:45 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id F015744B663;
+	Mon, 29 Jun 2026 17:26:52 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=217.140.110.172
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1782752988; cv=none; b=n6yKl/lZ+3kZJqKZfa4dbC9/c6krVbVdpNSlo2jd0TRYKIn19/Uk3hZJxyqJgKO2hR6RuyX5EKkb+vMkpcVj16kxwMWDfEgk6f8u16+JadF6KKHbGFgABlwT8yMWonVuuB95p+OuW/KIskfC8V6IrHvyXiz1U2d5YSHD/G+PNH8=
+	t=1782754014; cv=none; b=aAKvOZBitJD8r6IAG7XSu25x/p1tPumMBuzOF4z4MJz6KflCECxayTex0N+3lDHYiISHjJw+kjYNuU/R5uPr1UqqIadPZvs3tOVpP5s6YtKSlEUHP/roLOTQbCfOmrHmdTqPB0MZESuvxq98+I14vsuovAhfLDkciBwHHwv2L6s=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1782752988; c=relaxed/simple;
-	bh=HtYs6nHNYRhKihK/pnZLJUTygtL0W6XFav106LI/DNY=;
+	s=arc-20240116; t=1782754014; c=relaxed/simple;
+	bh=twCp3UAdFQ3jI5FFB+ZfFejbSMS6e565YtXepbK/Ub8=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type:Content-Disposition; b=iw7SEI7wm+bLfQX0C/GrFQ5hRjsgO8rAoeCxU9IvAEYIAvC4Vc0UJ+uknVNe3gmc2Vm1hSpjBVhbqOLONreFqs7Zz7wn5Z2Y0YuzfR4MogW2I5qBBz1T5zVYE1eB7JFO9rTU3OUh819ZYvaU5gU1aXhCQ7cyIgM1yJv1YGx2hyE=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=arm.com; spf=pass smtp.mailfrom=arm.com; dkim=pass (1024-bit key) header.d=arm.com header.i=@arm.com header.b=gAFadE7n; arc=none smtp.client-ip=217.140.110.172
+	 MIME-Version:Content-Type:Content-Disposition; b=Q0RsrHZlTLBr35rZKoUg3g4S93tCf52YiOdCCL/OUrVvbmSMvES7tUj3/eyJErk6C6tvqkfAiT5ZtFhrVQDmcHdDxN0aJC7qUqwB/rexbTDnPsuZb9NWZHWDku+yjDLt+t6YPuZaBxnHC5hTs09n3MyDYRVXIPZ81C4R0EpshNo=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=arm.com; spf=pass smtp.mailfrom=arm.com; dkim=pass (1024-bit key) header.d=arm.com header.i=@arm.com header.b=glgu0d7S; arc=none smtp.client-ip=217.140.110.172
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=arm.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=arm.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=arm.com header.i=@arm.com header.b="gAFadE7n"
+	dkim=pass (1024-bit key) header.d=arm.com header.i=@arm.com header.b="glgu0d7S"
 Received: from usa-sjc-imap-foss1.foss.arm.com (unknown [10.121.207.14])
-	by usa-sjc-mx-foss1.foss.arm.com (Postfix) with ESMTP id BEA563565;
-	Mon, 29 Jun 2026 10:09:40 -0700 (PDT)
+	by usa-sjc-mx-foss1.foss.arm.com (Postfix) with ESMTP id DA9A53565;
+	Mon, 29 Jun 2026 10:26:47 -0700 (PDT)
 Received: from LeoBrasDK.cambridge.arm.com (LeoBrasDK.cambridge.arm.com [10.2.212.21])
-	by usa-sjc-imap-foss1.foss.arm.com (Postfix) with ESMTPSA id 34B503F673;
-	Mon, 29 Jun 2026 10:09:44 -0700 (PDT)
+	by usa-sjc-imap-foss1.foss.arm.com (Postfix) with ESMTPSA id 4A1B83F673;
+	Mon, 29 Jun 2026 10:26:51 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=simple/simple; d=arm.com; s=foss;
-	t=1782752985; bh=HtYs6nHNYRhKihK/pnZLJUTygtL0W6XFav106LI/DNY=;
+	t=1782754012; bh=twCp3UAdFQ3jI5FFB+ZfFejbSMS6e565YtXepbK/Ub8=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=gAFadE7nqMC4H76sTmKxXTToqWHnS2wXc/WPOMx94NvoDYSjArCIVVVguFtnc5jFG
-	 H4oVVwVT5tj66rUoKI8kpi5QEcgNT1hoHW4ON9RxfqNQxXUMPon1JV3JoNnuaNmUxI
-	 gH+U9cp7LQOw83SFXKMa76bpHPAjA8leRS9NEHpU=
+	b=glgu0d7SILxDx/NGXotdnQsRZOirBfCPKxssC6/UbNatYgB6JaljwgLYSXhSAfUX8
+	 L66B1yHFz3K2NDiJRJWNVFMEVFjsIzHAyPTPQi6F6sIDLGoeqeItpL63USMlmzKvYv
+	 WJq2yAj7VYG97KXsks0edv86g9MEhqUJfvGs37wY=
 From: Leonardo Bras <leo.bras@arm.com>
 To: sashiko-reviews@lists.linux.dev
 Cc: Leonardo Bras <leo.bras@arm.com>,
-	kvm@vger.kernel.org,
-	Oliver Upton <oupton@kernel.org>,
 	Marc Zyngier <maz@kernel.org>,
-	kvmarm@lists.linux.dev
-Subject: Re: [PATCH v2 11/13] kvm/dirty_ring: Add arch-generic interface for hw-accelerated dirty-ring cleaning
-Date: Mon, 29 Jun 2026 18:09:42 +0100
-Message-ID: <akKm1hXLG-oi1HGh@LeoBrasDK>
+	Oliver Upton <oupton@kernel.org>,
+	kvmarm@lists.linux.dev,
+	kvm@vger.kernel.org
+Subject: Re: [PATCH v2 12/13] KVM: arm64: Add hardware-accelerated dirty-ring cleaning routine
+Date: Mon, 29 Jun 2026 18:26:49 +0100
+Message-ID: <akKq2fvsUWPxuCHU@LeoBrasDK>
 X-Mailer: git-send-email 2.54.0
-In-Reply-To: <20260629114904.701E81F000E9@smtp.kernel.org>
-References: <20260629111820.1873540-1-leo.bras@arm.com> <20260629111820.1873540-12-leo.bras@arm.com> <20260629114904.701E81F000E9@smtp.kernel.org>
+In-Reply-To: <20260629114921.2E78C1F000E9@smtp.kernel.org>
+References: <20260629111820.1873540-1-leo.bras@arm.com> <20260629111820.1873540-13-leo.bras@arm.com> <20260629114921.2E78C1F000E9@smtp.kernel.org>
 Precedence: bulk
 X-Mailing-List: sashiko-reviews@lists.linux.dev
 List-Id: <sashiko-reviews.lists.linux.dev>
@@ -49,44 +49,201 @@ Content-Type: text/plain; charset=iso-8859-1
 Content-Disposition: inline
 Content-Transfer-Encoding: 8bit
 
-On Mon, Jun 29, 2026 at 11:49:03AM +0000, sashiko-bot@kernel.org wrote:
-> Thank you for your contribution! Sashiko AI review found 1 potential issue(s) to consider:
-> - [Medium] Hardware-accelerated dirty ring reset completely bypasses the reset tracepoint.
+On Mon, Jun 29, 2026 at 11:49:20AM +0000, sashiko-bot@kernel.org wrote:
+> Thank you for your contribution! Sashiko AI review found 6 potential issue(s) to consider:
+> 
+> New issues:
+> - [Critical] Unvalidated userspace memory accesses in dirty ring clearing lead to host DoS and memory corruption.
+> - [High] Missing TLB invalidation and DSB in dirty ring hardware path.
+> - [High] Hardware buffer allocation lacks strict physical alignment guarantees.
+> 
+> Pre-existing issues:
+> - [High] Missing architecturally required context synchronization (ISB) after control register writes.
+> - [High] Unsafe wfi() polling loop causes lost wakeups and CPU lockups.
+> - [Medium] Hardware dirty log clearing erroneously falls back to software due to incorrect return value processing.
 > --
 > 
-> commit 8d48fca1a0a1a0e2a8d66dd93d79ffc96e524e83
+> commit 9f463875fd0f7eddcaa7053b557d7a2cc21e83c1
 > Author: Leonardo Bras <leo.bras@arm.com>
 > 
-> kvm/dirty_ring: Add arch-generic interface for hw-accelerated dirty-ring cleaning
+> KVM: arm64: Add hardware-accelerated dirty-ring cleaning routine
 > 
-> This commit introduces kvm_arch_dirty_ring_clear() to allow architectures
-> to implement hardware-accelerated dirty-ring routines. It adds a call to
-> this new function in kvm_dirty_ring_reset(), which will fall back to the
-> software version if the hardware version is not implemented or fails.
+> This commit implements an arm64 version of kvm_arch_dirty_ring_clear using
+> FEAT_HACDBS. It translates dirty-ring entries into HDBSS entries and uses
+> the hardware mechanism to mark writable-dirty pages as clean. Invalid
+> entries are then cleared, falling back to software cleaning on error.
 > 
+> > diff --git a/arch/arm64/kvm/dirty_bit.c b/arch/arm64/kvm/dirty_bit.c
+> > --- a/arch/arm64/kvm/dirty_bit.c
+> > +++ b/arch/arm64/kvm/dirty_bit.c
 > [ ... ]
+> > static int dirty_bit_clear(struct kvm *kvm, u64 *hw_entries, int size)
+> > {
+> > 	u64 hcr_el2;
+> > 	int ret;
+> > 
+> > 	preempt_disable();
+> > 
+> > 	hcr_el2 = read_sysreg(HCR_EL2);
+> > 	write_sysreg(hcr_el2 | HCR_EL2_VM, HCR_EL2);
+> > 	__load_stage2(&kvm->arch.mmu);
 > 
-> > diff --git a/virt/kvm/dirty_ring.c b/virt/kvm/dirty_ring.c
-> > index 42de1a511037a..fe4e7da6cc4a6 100644
-> > --- a/virt/kvm/dirty_ring.c
-> > +++ b/virt/kvm/dirty_ring.c
-> > @@ -133,6 +134,9 @@ int kvm_dirty_ring_reset(struct kvm *kvm, struct kvm_dirty_ring *ring,
-> >  	 */
-> >  	lockdep_assert_held(&kvm->slots_lock);
-> >  
-> > +	if (kvm_arch_dirty_ring_clear(kvm, ring, nr_entries_reset) >= 0)
-> > +		return 0;
+> [Severity: High]
+> This is a pre-existing issue, but does this missing ISB after control register
+> writes expose the pipeline to undefined architectural states?
+> 
+> Writing to HCR_EL2 requires an immediate context synchronization event.
+> Executing __load_stage2 immediately after without an isb means it might
+> operate under a stale configuration.
+
+See prev patches
+
+
+> 
+> > 
+> > 	hacdbs_start(hw_entries, size);
+> > 
+> > 	do {
+> > 		wfi();
+> > 	} while (this_cpu_read(hacdbs_pcp.status) == HACDBS_RUNNING);
+> 
+> [Severity: High]
+> This is a pre-existing issue, but can this unprotected wfi wait loop cause
+> a lost wakeup and an indefinite CPU stall?
+> 
+> Because local interrupts are not masked around this check and wait, a timely
+> interrupt could satisfy the condition prematurely before wfi executes.
+> 
+
+iden
+
+> [ ... ]
+> > 	if (idx != 0) {
+> > 		ret = dirty_bit_clear(kvm, hw_entries, idx);
+> > 		*flush = *flush || ret > 0;
+> > 	}
+> > out_err:
+> > 	if (unlikely(ret != idx)) {
 > 
 > [Severity: Medium]
-> Does this early return bypass the trace_kvm_dirty_ring_reset() tracepoint
-> at the bottom of the function?
+> This is a pre-existing issue, but does this logic incorrectly evaluate a
+> successful batch outcome as an error?
 > 
-> When hardware-accelerated dirty ring cleaning succeeds, returning early here
-> skips the tracepoint entirely. This could break observability tools and
-> scripts that rely on this tracepoint to monitor KVM dirty ring resets.
+> If the loop finishes exactly on a batch boundary, idx is reset to 0, but ret
+> holds the success count of the previous batch. This causes the mismatch check
+> to evaluate to true, forcing a -EAGAIN return and triggering an unnecessary
+> software fallback.
+> 
 
-Ok, sure, I can goto-out to before the tracing, then.
+iden
 
+> [ ... ]
+> > @@ -256,6 +256,72 @@ int __kvm_arch_dirty_log_clear(struct kvm *kvm,
+> >  	return ret;
+> >  }
+> >  
+> > +int __kvm_arch_dirty_ring_clear(struct kvm *kvm, struct kvm_dirty_ring *ring,
+> > +				int *nr_entries_reset)
+> > +{
+> > +	u64 *hw_entries;
+> > +	u64 slot_offset = 0;
+> > +	u64 ttwl;
+> > +	int i, ret;
+> > +	u32 slot = -1;
+> > +
+> > +	if (signal_pending(current))
+> > +		return -EINTR;
+> > +
+> > +	ttwl = HDBSS_ENTRY_TTWL(KVM_PGTABLE_LAST_LEVEL);
+> > +
+> > +	hw_entries = kmalloc(max(ring->size * sizeof(u64), PAGE_SIZE), GFP_KERNEL);
+> 
+> [Severity: High]
+> Does this kmalloc call lack the strict physical alignment guarantees required
+> by the hardware accelerator?
+> 
+> Since kmalloc does not guarantee natural physical alignment for large buffers,
+> is it possible for physical address truncation to occur? This could cause the
+> hardware accelerator to parse unaligned memory and corrupt arbitrary page DBM
+> bits.
+
+I recall it had size-alignmen guarantees. Largest buffer size should be 
+64k x 8B, so it should be ok.
+
+
+> 
+> > +	if (!hw_entries)
+> > +		return -ENOMEM;
+> > +
+> > +	for (i = 0; i < ring->size; i++) {
+> > +		struct kvm_dirty_gfn *entry;
+> > +		gfn_t gfn;
+> > +
+> > +		entry = &ring->dirty_gfns[(ring->reset_index + i) &
+> > +					  (ring->size - 1)];
+> > +
+> > +		if (!kvm_dirty_gfn_harvested(entry))
+> > +			break;
+> > +
+> > +		if (entry->slot != slot) {
+> > +			struct kvm_memory_slot *memslot;
+> > +
+> > +			memslot = kvm_dirty_ring_get_memslot(kvm, entry->slot);
+> > +			slot = entry->slot;
+> > +			slot_offset = memslot->base_gfn;
+> 
+> [Severity: Critical]
+> Can an invalid, user-provided entry->slot lead to a NULL pointer dereference
+> here?
+> 
+> The memslot pointer is dereferenced directly to read base_gfn without a NULL
+> check.
+> 
+> > +		}
+> > +
+> > +		gfn = slot_offset + entry->offset;
+> 
+
+Correct. I have to verify the return value of get_memslot before using it.
+Will do in v3
+
+> [Severity: Critical]
+> Is entry->offset validated against the memslot bounds?
+> 
+> Using an unvalidated user-provided offset here allows arbitrary Stage-2 GPA
+> computation. This could enable Stage-2 memory corruption or privilege
+> escalation.
+
+Correct. Will verify the offset against memslot size before this.
+Will be done in v3.
+
+> 
+> > +
+> > +		hw_entries[i] = (gfn_to_gpa(gfn) & HDBSS_ENTRY_IPA) |
+> > +				ttwl | HDBSS_ENTRY_VALID;
+> > +	}
+> > +
+> > +	ret = dirty_bit_clear(kvm, hw_entries, i);
+> 
+> [Severity: High]
+> Does this path miss an architecturally required TLB invalidation and DSB?
+> 
+> dirty_bit_clear relies on the caller to handle the TLBI (as noted in its
+> internal comments for the log clearing path), but this ring clearing routine
+> appears to jump directly to invalidating the entries and returning.
+
+There is a dsb() and then a TLBI before returning to guest.
+
+> 
+> This could leave stale writable TLB entries in the guest.
+> 
+> > +
+> > +	/* Set as invalid all successfully cleaned entries */
+> > +	for (int j = 0; j < ret; j++) {
+> [ ... ]
 > 
 > -- 
-> Sashiko AI review · https://sashiko.dev/#/patchset/20260629111820.1873540-1-leo.bras@arm.com?part=11
+> Sashiko AI review · https://sashiko.dev/#/patchset/20260629111820.1873540-1-leo.bras@arm.com?part=12
+
+Thanks!
+Leo
