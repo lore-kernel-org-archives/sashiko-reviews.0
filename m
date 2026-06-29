@@ -1,158 +1,153 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 346D041930A
-	for <sashiko-reviews@lists.linux.dev>; Mon, 29 Jun 2026 15:16:13 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F2DC13E1D16;
+	Mon, 29 Jun 2026 15:16:47 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1782746174; cv=none; b=HGLulVDXv3tbC0+VWatn4n4zgenevABbHcwvZ2cttBg/LbZOlIqXr4cMl+jQmGQN2UW/DT/5dM9QKJgkbdEEFp7zL5cTF1mgJ2thwsXlWq32yYLW+1ERgPvpJG955FAJChSAitHm6xi1tfEa1Wi2Uspkw0kl6htTurJF4wTU3ek=
+	t=1782746209; cv=none; b=l+KkVVWPsEAy/rwGBhthBJXu/9WCnBi2I7AXounxfEm8BIKTtFV1Xdzna27GGQ/WnHvT8ZaAyfPsgZUPxkcwGfBV3Z2cvUjL45eh12ZaQ9fsAB+BZkt4HoOaXQ1V13V4VVzNNkkbuda490OgLnY+y/ynUsf49QLshq/BcY3BIS0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1782746174; c=relaxed/simple;
-	bh=5qUvDc/anpKY0rZWXjGyA7aC9jD5KwFfUPFWYDXIwuo=;
-	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
-	 To:Cc:Content-Type; b=p1Dwxyb4VT/FDXQzI1NXhDqRTBq8JdPizF3LPHhUy+MhlG2w9jF561cwMAQCPp1LCLSPsw9XjHekxAMk2KUrqzKWnfdK4QMXsxfvHjlEAKkJ7a4OF+dmYam2F5I2hSfHurf9FS6DB4FVQJB1IcQeZ1GKfsWiqVancB8fr99IfQo=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=QRrqQBNq; arc=none smtp.client-ip=100.103.45.18
+	s=arc-20240116; t=1782746209; c=relaxed/simple;
+	bh=AV3l5fVgtxTGprNu1pDmP2wuvYyWSJFeofspKPbFotI=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=KUHAmSmbWbbS/q/m8DfHVSxGnq37WjdzopI03yXM9fxXnefh/Khx4OvxOSEzlKF6z/BElXuClzs1RfpXL2VJl4QEicfUhZQbmToUrCXOFlf7ydqH2EC/6N7GYv/+NqlZlIRDm3OQf0hpcBe6Xaa09Vwc5C/iOpJs0UTXzvbxNTo=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=gQH/acCK; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="QRrqQBNq"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 03B321F00A3F
-	for <sashiko-reviews@lists.linux.dev>; Mon, 29 Jun 2026 15:16:12 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="gQH/acCK"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 69FD11F000E9;
+	Mon, 29 Jun 2026 15:16:46 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=kernel.org;
-	s=k20260515; t=1782746173;
-	bh=eohseHTDVRorRwqLGgg5MSpmUGbKyFrl+Pmkvc7rkbU=;
-	h=References:In-Reply-To:Reply-To:From:Date:Subject:To:Cc;
-	b=QRrqQBNqmhO8gQLY/RpbMxC3EEMDVBUulR8F5IrMqI8z2p1Gp5nViDZCmERffAgn9
-	 BZkRt7Ce7re84q4acTElbEInzATEA9UHSV5q4lokpD8ItAldAvt4h8Njra2wJFXhJ5
-	 3V+1t54Evi8kyULd440f3IYRO0K0zu8r/Upahc4bkATxc+Q+H4oCaXNwwx9Kg99Yus
-	 ixoGNguok7z8aZnfUmgz9Gr/LMR9wJU/+jH+opKT742KohANrPVOHpYLMhL8IPIZx+
-	 1fi+5NuhUhpfBMe7bvKrmjrnkJ7HIM9JLXg3lxv5uYuGYssZ2qtpC94DqhdIF3Qpza
-	 ZIoljEqaQLIAw==
-Received: by mail-lj1-f177.google.com with SMTP id 38308e7fff4ca-3996c9eeebeso27225851fa.1
-        for <sashiko-reviews@lists.linux.dev>; Mon, 29 Jun 2026 08:16:12 -0700 (PDT)
-X-Forwarded-Encrypted: i=1; AHgh+Rq8Vo1gj5e4wCiqER4TNyaef854DdohDT+yB4an1YtgswOahTfE/m9xUa03OlrlLfUamalv/VW6U1pVcJTI68Y=@lists.linux.dev
-X-Gm-Message-State: AOJu0Yyh0wAZ7iOHvw5fMNcYDcsj93ZBtxy5e22L5Kf3DGbUzLoHu/R3
-	Q6/7lDwKNIqO3Uxz4cgZ5qjC+Q3BxHyFT/Yn3Fa6Tp+NzlYsqG2KJufjbgvC1tN5OGc4+9Ns9jW
-	8oArNMmhon2iLlhf6PuwQ+RgwU5UO2t8=
-X-Received: by 2002:a05:651c:1986:b0:39b:90f:b1dc with SMTP id
- 38308e7fff4ca-39b090fc4f4mr12449031fa.13.1782746171458; Mon, 29 Jun 2026
- 08:16:11 -0700 (PDT)
+	s=k20260515; t=1782746207;
+	bh=iIgejC6IQrPGLLqgVPr+xqlt9s+MfdG8wn6GjoNgG6A=;
+	h=Date:From:To:Cc:Subject:References:In-Reply-To;
+	b=gQH/acCKvJMVdLCh2PWTn+o5+zrz4Vi0PMIGAqzA18D4vLL9xtEOXuWZ6hFc/Ya9U
+	 QrOXqz8SS9HAx5qiyd7sYl+hIR4pZBaDclW+PnUf9xWKxTYWWeqgd9wZm0vWt4qRf7
+	 Qdv4dLr+iHB75y+LTO0qB6HuuTIyF8I03nBLP4pbpA57fH4f2M/DBwcGaebKa+/k6k
+	 5lk/udHUO/35V/x14cZ+j63aMOS+W5SqGM9+KLJsqnBgwfMfsAd0w5v1BP2yUKKHJC
+	 ICoZ0N+h7jywHMqLvZTWOsejlT2EqOs8Hh1TZfs+lYDBUsHoRj+P+n+7U889w9RO2A
+	 9idvMsJR42N1A==
+Date: Mon, 29 Jun 2026 16:16:44 +0100
+From: Conor Dooley <conor@kernel.org>
+To: Jerome Brunet <jbrunet@baylibre.com>
+Cc: sashiko-bot@kernel.org, sashiko-reviews@lists.linux.dev,
+	linux-sunxi@lists.linux.dev, robh@kernel.org,
+	devicetree@vger.kernel.org, conor+dt@kernel.org
+Subject: Re: [PATCH v2 1/6] dt-bindings: rtc: sun6i: add sun60i-a733 support
+Message-ID: <20260629-aliens-busload-ef9178973b4f@spud>
+References: <20260629-a733-rtc-v2-0-7b72112784f8@baylibre.com>
+ <20260629-a733-rtc-v2-1-7b72112784f8@baylibre.com>
+ <20260629125305.0DF981F000E9@smtp.kernel.org>
+ <1jpl198jzk.fsf@starbuckisacylon.baylibre.com>
 Precedence: bulk
 X-Mailing-List: sashiko-reviews@lists.linux.dev
 List-Id: <sashiko-reviews.lists.linux.dev>
 List-Subscribe: <mailto:sashiko-reviews+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:sashiko-reviews+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-References: <20260629-a733-rtc-v2-0-7b72112784f8@baylibre.com>
- <20260629-a733-rtc-v2-6-7b72112784f8@baylibre.com> <20260629131546.8D0261F000E9@smtp.kernel.org>
- <1jy0fx8lvp.fsf@starbuckisacylon.baylibre.com>
-In-Reply-To: <1jy0fx8lvp.fsf@starbuckisacylon.baylibre.com>
-Reply-To: wens@kernel.org
-From: Chen-Yu Tsai <wens@kernel.org>
-Date: Mon, 29 Jun 2026 23:15:59 +0800
-X-Gmail-Original-Message-ID: <CAGb2v64VWt6KBtQsqSez9HWBASh50txA4TvKwvdSeFtDH-x9rg@mail.gmail.com>
-X-Gm-Features: AVVi8CepgUHMPDQkqp9e-_HXov3hbmLBBrR-cBueJlKz6r_Uxuo6w9fTKHdibJI
-Message-ID: <CAGb2v64VWt6KBtQsqSez9HWBASh50txA4TvKwvdSeFtDH-x9rg@mail.gmail.com>
-Subject: Re: [PATCH v2 6/6] clk: sunxi-ng: sun6i-rtc: add a733 support
-To: Jerome Brunet <jbrunet@baylibre.com>
-Cc: sashiko-bot@kernel.org, sashiko-reviews@lists.linux.dev, robh@kernel.org, 
-	linux-sunxi@lists.linux.dev, devicetree@vger.kernel.org, conor+dt@kernel.org
-Content-Type: text/plain; charset="UTF-8"
+Content-Type: multipart/signed; micalg=pgp-sha512;
+	protocol="application/pgp-signature"; boundary="ikOrL7wRpvUSBvGg"
+Content-Disposition: inline
+In-Reply-To: <1jpl198jzk.fsf@starbuckisacylon.baylibre.com>
+
+--ikOrL7wRpvUSBvGg
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
 Content-Transfer-Encoding: quoted-printable
 
-On Mon, Jun 29, 2026 at 10:25=E2=80=AFPM Jerome Brunet <jbrunet@baylibre.co=
-m> wrote:
->
-> On lun. 29 juin 2026 at 13:15, sashiko-bot@kernel.org wrote:
->
+On Mon, Jun 29, 2026 at 05:05:51PM +0200, Jerome Brunet wrote:
+> On lun. 29 juin 2026 at 12:53, sashiko-bot@kernel.org wrote:
+>=20
 > > Thank you for your contribution! Sashiko AI review found 1 potential is=
 sue(s) to consider:
-> > - [Critical] The master DCXO enable bit is incorrectly mapped as the
-> > exclusive enable bit for the 32kHz divider. This will cause the clock
-> > framework to inadvertently turn off the master oscillator, freezing the
-> > system.
+> > - [Low] The `clock-output-names` property has a global `maxItems: 3`
+> > constraint and a description limiting it to three clocks, which contrad=
+icts
+> > the new clock outputs (IDs up to 11) added for the sun60i-a733-rtc.
 > > --
 > >
-> > commit 83ebb861eeea7934e5df335b0d1620cad0b733bf
+> > commit a1565b632e372c724867216463a453c9d1600ad2
 > > Author: Jerome Brunet <jbrunet@baylibre.com>
 > >
-> > clk: sunxi-ng: sun6i-rtc: add a733 support
+> > dt-bindings: rtc: sun6i: add sun60i-a733 support
+> >    =20
+> > Adds a new rtc compatible for the sun60i-a733 SoC and new IDs for the
+> > peripheral oscillator clock gates of this SoC.
 > >
-> > This commit adds support for the sun60i a733 CCU RTC. It introduces a
-> > new auto-detecting oscillator divider and several phy reference clocks
-> > with dedicated clock gates.
-> >
-> >> diff --git a/drivers/clk/sunxi-ng/ccu-sun6i-rtc.c b/drivers/clk/sunxi-=
-ng/ccu-sun6i-rtc.c
-> >> index 25dd87e78eb7a..2ec09e3464724 100644
-> >> --- a/drivers/clk/sunxi-ng/ccu-sun6i-rtc.c
-> >> +++ b/drivers/clk/sunxi-ng/ccu-sun6i-rtc.c
+> >> diff --git a/Documentation/devicetree/bindings/rtc/allwinner,sun6i-a31=
+-rtc.yaml b/Documentation/devicetree/bindings/rtc/allwinner,sun6i-a31-rtc.y=
+aml
+> >> index 9df5cdb6f63f2..197a6f67b180a 100644
+> >> --- a/Documentation/devicetree/bindings/rtc/allwinner,sun6i-a31-rtc.ya=
+ml
+> >> +++ b/Documentation/devicetree/bindings/rtc/allwinner,sun6i-a31-rtc.ya=
+ml
+> >> @@ -33,6 +33,7 @@ properties:
+> >>            - enum:
+> >>                - allwinner,sun20i-d1-rtc
+> >>                - allwinner,sun55i-a523-rtc
+> >> +              - allwinner,sun60i-a733-rtc
+> >>            - const: allwinner,sun50i-r329-rtc
 > >
 > > [ ... ]
 > >
-> >> @@ -227,8 +237,28 @@ static struct clk_fixed_factor osc24M_32k_div_clk=
- =3D {
-> >>                                          0),
-> >>  };
-> >>
-> >> -static SUNXI_CCU_GATE_HW(osc24M_32k_clk, "osc24M-32k", &osc24M_32k_di=
-v_clk.hw,
-> >> -                     LOSC_OUT_GATING_REG, BIT(16), 0);
-> >> +static struct clk_div_table osc24M_32k_div_a733_table[] =3D {
-> >> +    { .val =3D 0, .div =3D 732 },
-> >> +    { .val =3D 1, .div =3D 586 },
-> >> +    { .val =3D 2, .div =3D 793 },
-> >> +    { .val =3D 3, .div =3D 732 },
-> >> +    { /* Sentinel */ },
-> >> +};
-> >> +
-> >> +static struct ccu_div osc24M_32k_div_a733_clk =3D {
-> >> +    .enable =3D BIT(1),
+> >> diff --git a/include/dt-bindings/clock/sun6i-rtc.h b/include/dt-bindin=
+gs/clock/sun6i-rtc.h
+> >> index 3bd3aa3d57ce1..5132a393ca4b6 100644
+> >> --- a/include/dt-bindings/clock/sun6i-rtc.h
+> >> +++ b/include/dt-bindings/clock/sun6i-rtc.h
+> >> @@ -6,5 +6,9 @@
+> >>  #define CLK_OSC32K		0
+> >>  #define CLK_OSC32K_FANOUT	1
+> >>  #define CLK_IOSC		2
+> >> +#define CLK_HOSC_UFS		8
+> >> +#define CLK_HOSC_HDMI		9
+> >> +#define CLK_HOSC_SERDES0	10
+> >> +#define CLK_HOSC_SERDES1	11
 > >
-> > [Severity: Critical]
-> > This maps the master DCXO enable bit, BIT(1) defined earlier as
-> > DCXO_CTRL_DCXO_EN, directly to the 32kHz divider's lifecycle.
->
-> Forgot to remove that unused define
->
+> > [Severity: Low]
+> > Will adding clock IDs up to 11 conflict with the existing clock-output-=
+names
+> > constraint in allwinner,sun6i-a31-rtc.yaml?
 > >
-> > If a board uses an external 32kHz crystal, the rtc-32k clock mux is
-> > reparented to osc32k_clk, leaving this internal osc24M-32k-div clock wi=
-th
-> > zero active consumers.
+> > The clock-output-names property currently has a global maxItems constra=
+int
+> > alongside its description:
 > >
-> > During late boot, the clock framework's clk_disable_unused() routine wa=
-lks
-> > the clock tree and will disable this clock, clearing BIT(1) in DCXO_CTR=
-L_REG.
+> >   clock-output-names:
+> >     minItems: 1
+> >     maxItems: 3
+> >     description:
+> >       The RTC provides up to three clocks
 > >
-> > Could this cause a hard system freeze? Since this bit physically turns =
-off
-> > the shared master 24MHz crystal (DCXO), does it immediately stop the CP=
-U,
-> > PLLs, and all peripherals?
->
-> I don't quite get what the AI is trying to report here. If there are no
-> user, the clock will be gated ... so ? Am I missing something ?
+> > If a device tree author attempts to define an array of clock-output-nam=
+es
+> > to document all outputs for the allwinner,sun60i-a733-rtc node, won't i=
+t fail
+> > dt_binding_check validation because it exceeds the maximum allowed item=
+s?
+>=20
+> Not quite sure what to do with that one.
+>=20
+> The h616 compatible devices all exposed more than 3 clock through the
+> provider, even if the higher IDs did not have define.
+>=20
+> The clock output names for the h616 compatible device are not really
+> supposed to be defined through DT ... at least AFAIU ??
 
-I think it's just getting confused. Since you said it was unused and you
-plan to remove it, I would just ignore the AI.
+The output names aren't even defined anyway, so the property is not
+really all that helpful. It's worth increasing the max to whatever is
+permitted now and look into the conditional sections to see if any
+constraints need updating.
 
+--ikOrL7wRpvUSBvGg
+Content-Type: application/pgp-signature; name=signature.asc
 
-ChenYu
+-----BEGIN PGP SIGNATURE-----
 
-> >
-> >> +    .div    =3D _SUNXI_CCU_DIV_TABLE(14, 2, osc24M_32k_div_a733_table=
-),
-> >> +    .common =3D {
-> >> +            .reg            =3D DCXO_CTRL_REG,
-> >> +            .hw.init        =3D CLK_HW_INIT_PARENTS_DATA("osc24M-32k-=
-div",
-> >> +                                                       osc24M,
-> >> +                                                       &ccu_rodiv_ops=
-,
-> >> +                                                       0),
-> >> +    },
-> >> +};
->
-> --
-> Jerome
->
+iHUEABYKAB0WIQRh246EGq/8RLhDjO14tDGHoIJi0gUCakKMXAAKCRB4tDGHoIJi
+0uAOAQDWZnHOaoJjJp7KnT92/8egsTTLoA7FrX2Iawn+kUmAZwEAooWfygxiGHXR
+HCwkdNQv8x9nm9kBBkt2gh3PA3JS2gw=
+=w6P2
+-----END PGP SIGNATURE-----
+
+--ikOrL7wRpvUSBvGg--
