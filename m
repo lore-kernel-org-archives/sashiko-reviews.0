@@ -1,174 +1,408 @@
-Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
-	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3D55C346766;
-	Mon, 29 Jun 2026 15:41:01 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
+Received: from foss.arm.com (foss.arm.com [217.140.110.172])
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id D5ACF3B6BE4;
+	Mon, 29 Jun 2026 15:43:32 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=217.140.110.172
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1782747663; cv=none; b=JxmSfor9s9ARZ95IKz13V/tkkvkV6/hzUNqYStVC0rCLik5IBzFiLV4M5NL0j5Svv8SdoRNxFxUrtmBNlI9+/5V0GzMyeZ5bxFuM1SakFyvZQ2HoGtqOSyclTBkIq6+XM+Uz88uiCn1N6abBHofP/bN9OVs8GDljVF1YZYfVcpM=
+	t=1782747814; cv=none; b=Nayejsv2V/Xqym7KiwbDVqfQfGeIUv5+h+/RG2AioVDpM9cCMEX5WJjsCtMrrsaL8xSnvQbajujv3CrT4pwhnGambwqnfW0mASodz7NwFOWM1oXUJ3UKbpBu0MHEpOOrkdOdWKuiDP/lvpZl6VtOPkUfQZLIH3ne0B82Eb3c2R4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1782747663; c=relaxed/simple;
-	bh=rswPskcN/RRQHGJ902UrZcCJGTezAbbrNN6coAxwfc4=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=ZLCaQcRX9jzMwc9Vh+d0v+Qp+jaG0JIUlmzyDNaTVMglqU+QFjdb/aln78xNaP3FLBP4ovHq0k2aMH7d73xnkf4ExR+szvSt8PC8Ubv3ZlbGj9Fo6itti21Xtu5reKz5m3AlOtq5Z3kDhUWq6B/NXN8n5qBCHunTNlQUEmVJeDY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=S0nOe/r5; arc=none smtp.client-ip=100.103.45.18
+	s=arc-20240116; t=1782747814; c=relaxed/simple;
+	bh=6GolJiylRxOcj7cu03lGLgzPugnpFr9jX5w3dGIkXJA=;
+	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
+	 MIME-Version:Content-Type:Content-Disposition; b=ixiByHBu6H65+bh9V5HKrynoygOJmRuvQ6K6UHtB0stG2uICoHnas3ownnrUVPopFytaStKQ1WVZjNFnYpfwm/PSngqHsQd1KjjVSJGRP++BPCTkW8yyYHHzq+NAveOUbaK3Rarkbz7Fnsyo/59pmy8QiJgsLT3ITAjMAaKjnYU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=arm.com; spf=pass smtp.mailfrom=arm.com; dkim=pass (1024-bit key) header.d=arm.com header.i=@arm.com header.b=cQ5gC3VB; arc=none smtp.client-ip=217.140.110.172
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=arm.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=arm.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="S0nOe/r5"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 349F51F000E9;
-	Mon, 29 Jun 2026 15:41:00 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=kernel.org;
-	s=k20260515; t=1782747661;
-	bh=PzRxgBHlbkeuvPpeSnjPJmcCLBvqWL+knmj3C3qFY9U=;
-	h=Date:From:To:Cc:Subject:References:In-Reply-To;
-	b=S0nOe/r5BiPQMgC/pEsdNyfJmtZFPQ1mn2eFSbSbB0GEy/E37qrUwkj82dLhnA2xe
-	 OAPua0cPJRZUQJPDQuMQzaEjfjILbAzJ+ER94pp4ts67aHN0ZB2ZwTbRoxZV/B4Q39
-	 s/7Lyp6HcTlkgO7HF9Kv6+StugeicBpcmp6sUj2DOJAgzl+EhRtNLtR6VNQ3f7clXM
-	 Ixm6hUEJ2EGIdsfX/M3MQUQ8joPjxC6nJsrdhkcez6462pf52VYOwdyf+n1DlhHVBB
-	 KVRGWBBcgzIfS4UFYFWDP8RjSuGI6Vn/ecA12Yy8PKKXi40GCA2Lh07KOz0/pIPYyQ
-	 smSb1wOrg4hHQ==
-Date: Mon, 29 Jun 2026 16:40:58 +0100
-From: Conor Dooley <conor@kernel.org>
-To: Jerome Brunet <jbrunet@baylibre.com>
-Cc: Chen-Yu Tsai <wens@kernel.org>, sashiko-bot@kernel.org,
-	sashiko-reviews@lists.linux.dev, linux-sunxi@lists.linux.dev,
-	robh@kernel.org, devicetree@vger.kernel.org, conor+dt@kernel.org
-Subject: Re: [PATCH v2 1/6] dt-bindings: rtc: sun6i: add sun60i-a733 support
-Message-ID: <20260629-grime-chasing-8f09675e5013@spud>
-References: <20260629-a733-rtc-v2-0-7b72112784f8@baylibre.com>
- <20260629-a733-rtc-v2-1-7b72112784f8@baylibre.com>
- <20260629125305.0DF981F000E9@smtp.kernel.org>
- <1jpl198jzk.fsf@starbuckisacylon.baylibre.com>
- <20260629-aliens-busload-ef9178973b4f@spud>
- <CAGb2v67QV4gt=iXvaWeRCAxcasvzSpgTPodHhspd2ka19Hgdtg@mail.gmail.com>
- <1jechp8j0a.fsf@starbuckisacylon.baylibre.com>
+	dkim=pass (1024-bit key) header.d=arm.com header.i=@arm.com header.b="cQ5gC3VB"
+Received: from usa-sjc-imap-foss1.foss.arm.com (unknown [10.121.207.14])
+	by usa-sjc-mx-foss1.foss.arm.com (Postfix) with ESMTP id A959F26AC;
+	Mon, 29 Jun 2026 08:43:27 -0700 (PDT)
+Received: from LeoBrasDK.cambridge.arm.com (LeoBrasDK.cambridge.arm.com [10.2.212.21])
+	by usa-sjc-imap-foss1.foss.arm.com (Postfix) with ESMTPSA id 304523F673;
+	Mon, 29 Jun 2026 08:43:31 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=simple/simple; d=arm.com; s=foss;
+	t=1782747812; bh=6GolJiylRxOcj7cu03lGLgzPugnpFr9jX5w3dGIkXJA=;
+	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
+	b=cQ5gC3VBrP6bMo5KEqoQSaxAE/JbbgBYAzpG5y0VLGvzbsaeqhKpaJ/RmD0xk4Ky4
+	 1PaZGcGFP8MmWu1dlGNabmQABqS1vBqSuco//sJqZYWS0ShViKuxkEIj7B9dUTT+4g
+	 BvUOnyfqkOFwkvxqHAIJwYtq91KaiIVTkc21eoMg=
+From: Leonardo Bras <leo.bras@arm.com>
+To: sashiko-reviews@lists.linux.dev
+Cc: Leonardo Bras <leo.bras@arm.com>,
+	kvmarm@lists.linux.dev,
+	Oliver Upton <oupton@kernel.org>,
+	Marc Zyngier <maz@kernel.org>,
+	kvm@vger.kernel.org
+Subject: Re: [PATCH v2 05/13] KVM: arm64: Detect (via ACPI) and initialize HACDBSIRQ
+Date: Mon, 29 Jun 2026 16:43:29 +0100
+Message-ID: <akKSoZkYWDTE07hi@LeoBrasDK>
+X-Mailer: git-send-email 2.54.0
+In-Reply-To: <20260629113242.9142A1F000E9@smtp.kernel.org>
+References: <20260629111820.1873540-1-leo.bras@arm.com> <20260629111820.1873540-6-leo.bras@arm.com> <20260629113242.9142A1F000E9@smtp.kernel.org>
 Precedence: bulk
 X-Mailing-List: sashiko-reviews@lists.linux.dev
 List-Id: <sashiko-reviews.lists.linux.dev>
 List-Subscribe: <mailto:sashiko-reviews+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:sashiko-reviews+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: multipart/signed; micalg=pgp-sha512;
-	protocol="application/pgp-signature"; boundary="FsVq+3ZUQ4Vt+gBu"
+Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-In-Reply-To: <1jechp8j0a.fsf@starbuckisacylon.baylibre.com>
+Content-Transfer-Encoding: 8bit
 
---FsVq+3ZUQ4Vt+gBu
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-Content-Transfer-Encoding: quoted-printable
+On Mon, Jun 29, 2026 at 11:32:42AM +0000, sashiko-bot@kernel.org wrote:
+> Thank you for your contribution! Sashiko AI review found 12 potential issue(s) to consider:
+> - [Critical] The `wfi()` loop in `dirty_bit_clear()` creates a check-then-sleep race condition that can stall the CPU indefinitely.
+> - [Critical] The level-triggered `HACDBSIRQ` is not acknowledged or cleared in the interrupt handler, resulting in an infinite interrupt storm.
+> - [High] Missing `isb()` context synchronization barrier after writing to control-plane system registers `HCR_EL2` and `SYS_HACDBSCONS_EL2`.
+> - [High] Missing memory barrier (`dmb ish`) before starting the HACDBS hardware engine.
+> - [High] The ACPI MADT parser registers `hacdbsirq_gsi` without verifying it is non-zero, risking a hijack of SGI 0.
+> - [High] Missing `default:` case in the error handling switch statement leaves the tracking status unchanged on unexpected hardware errors, causing a vCPU hang.
+> - [High] If HACDBS IRQ initialization fails, the feature remains enabled in KVM, causing a permanent host hang upon first use of dirty tracking.
+> - [Medium] ACPI GSI mapping is leaked if `request_percpu_irq()` fails.
+> - [Medium] Missing teardown of HACDBS resources if KVM subsystem initialization fails.
+> - [Medium] The per-cpu HACDBS status is initialized after enabling the per-cpu interrupt, causing a TOCTOU race.
+> - [Medium] Calling `smp_processor_id()` in a preemptible context triggers a kernel BUG/warning.
+> - [Low] A variable declaration immediately follows a case label, violating C syntax rules and causing a build failure.
+> --
+> 
+> commit a0d2df687f2678f7a10866e285efd8319bf84cea
+> Author: Leonardo Bras <leo.bras@arm.com>
+> 
+> KVM: arm64: Detect (via ACPI) and initialize HACDBSIRQ
+> 
+> Find via ACPI the Id for HACDBSIRQ, initialize it as a per-cpu IRQ and make
+> sure any cpu able to run virtualization has it active. Introduce a per-cpu
+> structure used by the HACDBSIRQ handler to keep track of entries size and
+> the status of HACDBS.
+> 
+> Link: https://github.com/tianocore/edk2/issues/12409
+> 
+> > diff --git a/arch/arm64/kvm/arm.c b/arch/arm64/kvm/arm.c
+> > index 50adfff75be82..dc1a4629aaeb9 100644
+> > --- a/arch/arm64/kvm/arm.c
+> > +++ b/arch/arm64/kvm/arm.c
+> [ ... ]
+> > @@ -2481,6 +2484,8 @@ static int __init init_subsystems(void)
+> >  	if (err)
+> >  		goto out;
+> >  
+> > +	kvm_hacdbs_init();
+> > +
+> >  	kvm_register_perf_callbacks();
+> >  
+> >  	err = kvm_hyp_trace_init();
+> 
+> [Severity: Medium]
+> If a subsequent initialization step like kvm_hyp_trace_init() fails, the
+> code branches to the out: error path and aborts KVM initialization. Does
+> this path need to call a teardown function to free the per-CPU IRQ and
+> release the GSI allocated by kvm_hacdbs_init()?
+> 
 
-On Mon, Jun 29, 2026 at 05:27:01PM +0200, Jerome Brunet wrote:
-> On lun. 29 juin 2026 at 23:20, Chen-Yu Tsai <wens@kernel.org> wrote:
->=20
-> > On Mon, Jun 29, 2026 at 11:16=E2=80=AFPM Conor Dooley <conor@kernel.org=
-> wrote:
-> >>
-> >> On Mon, Jun 29, 2026 at 05:05:51PM +0200, Jerome Brunet wrote:
-> >> > On lun. 29 juin 2026 at 12:53, sashiko-bot@kernel.org wrote:
-> >> >
-> >> > > Thank you for your contribution! Sashiko AI review found 1 potenti=
-al issue(s) to consider:
-> >> > > - [Low] The `clock-output-names` property has a global `maxItems: =
-3`
-> >> > > constraint and a description limiting it to three clocks, which co=
-ntradicts
-> >> > > the new clock outputs (IDs up to 11) added for the sun60i-a733-rtc.
-> >> > > --
-> >> > >
-> >> > > commit a1565b632e372c724867216463a453c9d1600ad2
-> >> > > Author: Jerome Brunet <jbrunet@baylibre.com>
-> >> > >
-> >> > > dt-bindings: rtc: sun6i: add sun60i-a733 support
-> >> > >
-> >> > > Adds a new rtc compatible for the sun60i-a733 SoC and new IDs for =
-the
-> >> > > peripheral oscillator clock gates of this SoC.
-> >> > >
-> >> > >> diff --git a/Documentation/devicetree/bindings/rtc/allwinner,sun6=
-i-a31-rtc.yaml b/Documentation/devicetree/bindings/rtc/allwinner,sun6i-a31-=
-rtc.yaml
-> >> > >> index 9df5cdb6f63f2..197a6f67b180a 100644
-> >> > >> --- a/Documentation/devicetree/bindings/rtc/allwinner,sun6i-a31-r=
-tc.yaml
-> >> > >> +++ b/Documentation/devicetree/bindings/rtc/allwinner,sun6i-a31-r=
-tc.yaml
-> >> > >> @@ -33,6 +33,7 @@ properties:
-> >> > >>            - enum:
-> >> > >>                - allwinner,sun20i-d1-rtc
-> >> > >>                - allwinner,sun55i-a523-rtc
-> >> > >> +              - allwinner,sun60i-a733-rtc
-> >> > >>            - const: allwinner,sun50i-r329-rtc
-> >> > >
-> >> > > [ ... ]
-> >> > >
-> >> > >> diff --git a/include/dt-bindings/clock/sun6i-rtc.h b/include/dt-b=
-indings/clock/sun6i-rtc.h
-> >> > >> index 3bd3aa3d57ce1..5132a393ca4b6 100644
-> >> > >> --- a/include/dt-bindings/clock/sun6i-rtc.h
-> >> > >> +++ b/include/dt-bindings/clock/sun6i-rtc.h
-> >> > >> @@ -6,5 +6,9 @@
-> >> > >>  #define CLK_OSC32K                0
-> >> > >>  #define CLK_OSC32K_FANOUT 1
-> >> > >>  #define CLK_IOSC          2
-> >> > >> +#define CLK_HOSC_UFS              8
-> >> > >> +#define CLK_HOSC_HDMI             9
-> >> > >> +#define CLK_HOSC_SERDES0  10
-> >> > >> +#define CLK_HOSC_SERDES1  11
-> >> > >
-> >> > > [Severity: Low]
-> >> > > Will adding clock IDs up to 11 conflict with the existing clock-ou=
-tput-names
-> >> > > constraint in allwinner,sun6i-a31-rtc.yaml?
-> >> > >
-> >> > > The clock-output-names property currently has a global maxItems co=
-nstraint
-> >> > > alongside its description:
-> >> > >
-> >> > >   clock-output-names:
-> >> > >     minItems: 1
-> >> > >     maxItems: 3
-> >> > >     description:
-> >> > >       The RTC provides up to three clocks
-> >> > >
-> >> > > If a device tree author attempts to define an array of clock-outpu=
-t-names
-> >> > > to document all outputs for the allwinner,sun60i-a733-rtc node, wo=
-n't it fail
-> >> > > dt_binding_check validation because it exceeds the maximum allowed=
- items?
-> >> >
-> >> > Not quite sure what to do with that one.
-> >> >
-> >> > The h616 compatible devices all exposed more than 3 clock through the
-> >> > provider, even if the higher IDs did not have define.
-> >> >
-> >> > The clock output names for the h616 compatible device are not really
-> >> > supposed to be defined through DT ... at least AFAIU ??
-> >>
-> >> The output names aren't even defined anyway, so the property is not
-> >> really all that helpful. It's worth increasing the max to whatever is
-> >> permitted now and look into the conditional sections to see if any
-> >> constraints need updating.
-> >
-> > Or just not allow it for the newer RTC compatible? On the kernel side,
->=20
-> I was edging toward this. Would this be acceptable to you Conor ?
-> I'm thinking about disallowing it for all the h616 compatible ones, not
-> just the a733.
+Maybe. Another solution would be to put it after anything that may present 
+any error. I wonder how ofter do we get kvm to fail startup, though.
 
-Works for me.
-Just make sure you note somewhere that the names aren't ever defined
-anyway.
+> > diff --git a/arch/arm64/kvm/dirty_bit.c b/arch/arm64/kvm/dirty_bit.c
+> > index 32fe938d6bf70..789da8712b1b4 100644
+> > --- a/arch/arm64/kvm/dirty_bit.c
+> > +++ b/arch/arm64/kvm/dirty_bit.c
+> [ ... ]
+> > @@ -14,3 +21,93 @@
+> >  	(((x) << HDBSS_ENTRY_TTWL_SHIFT) & HDBSS_ENTRY_TTWL_MASK)
+> >  #define HDBSS_ENTRY_TTWL_RESV HDBSS_ENTRY_TTWL(-4)
+> >  #define HDBSS_ENTRY_IPA GENMASK_ULL(55, 12)
+> > +
+> > +static __ro_after_init int hacdbsirq = -1;
+> > +
+> > +static irqreturn_t hacdbsirq_handler(int irq, void *pcpu)
+> > +{
+> > +	u64 cons = read_sysreg_s(SYS_HACDBSCONS_EL2);
+> > +	unsigned long err = FIELD_GET(HACDBSCONS_EL2_ERR_REASON, cons);
+> > +
+> > +	switch (err) {
+> > +	case HACDBSCONS_EL2_ERR_REASON_NOF:
+> > +		this_cpu_write(hacdbs_pcp.status, HACDBS_IDLE);
+> > +		break;
+> > +	case HACDBSCONS_EL2_ERR_REASON_IPAHACF:
+> > +		/* When size not a power of two >= 4k, exit with reserved TTLW */
+> > +		int index = FIELD_GET(HACDBSCONS_EL2_INDEX, cons);
+> 
+> [Severity: Low]
+> Does this variable declaration cause a build failure?
 
---FsVq+3ZUQ4Vt+gBu
-Content-Type: application/pgp-signature; name=signature.asc
+No
 
------BEGIN PGP SIGNATURE-----
+> Under standard C rules,
+> a label can only be attached to a statement, and a declaration is not a
+> statement.
 
-iHUEABYKAB0WIQRh246EGq/8RLhDjO14tDGHoIJi0gUCakKSCgAKCRB4tDGHoIJi
-0gn5AQDD5BpnbkEuXFqjXr45UvCGpc0VNOtAllspIK02XLX22gEAtkL5sluYvcyP
-4gx+sYYqb+rdzPsLBlKIqNSYOsEaLQ8=
-=q2lG
------END PGP SIGNATURE-----
+That's not a label.
 
---FsVq+3ZUQ4Vt+gBu--
+> 
+> > +
+> > +		if (index >= this_cpu_read(hacdbs_pcp.size)) {
+> > +			this_cpu_write(hacdbs_pcp.status, HACDBS_IDLE);
+> > +			break;
+> > +		}
+> > +		fallthrough;
+> > +	case HACDBSCONS_EL2_ERR_REASON_STRUCTF:
+> > +	case HACDBSCONS_EL2_ERR_REASON_IPAF:
+> > +		this_cpu_write(hacdbs_pcp.status, HACDBS_ERROR);
+> > +		break;
+> 
+> [Severity: High]
+> What happens if the hardware reports an undefined or reserved error reason
+> in HACDBSCONS_EL2_ERR_REASON?
+> 
+> Without a default: case, the tracking status wouldn't be updated, remaining
+> as HACDBS_RUNNING. Could this cause the synchronous wfi() wait loop in
+> dirty_bit_clear() to spin forever and lock up the host CPU?
+
+I get the error code by reading a 2-bit bitfield. There can only be 4 
+different combinations here, and all are dealt with. 
+
+> 
+> > +	}
+> > +
+> > +	return IRQ_HANDLED;
+> > +}
+> 
+> [Severity: Critical]
+> Is it necessary to write back to a hardware register to acknowledge or clear
+> the active source of this interrupt before returning?
+> 
+> The ACPI MADT registers the HACDBS interrupt as ACPI_LEVEL_SENSITIVE.
+> Since a level-triggered interrupt remains asserted until explicitly cleared,
+> would returning IRQ_HANDLED without clearing the hardware signal trap the CPU
+> in an infinite loop of executing the ISR?
+> 
+
+I am pretty sure this is done by generic code.
+
+> > +
+> > +void kvm_hacdbs_cpu_up(void)
+> > +{
+> > +	if (hacdbsirq < 0)
+> > +		return;
+> > +
+> > +	enable_percpu_irq(hacdbsirq, IRQ_TYPE_LEVEL_HIGH);
+> > +	this_cpu_write(hacdbs_pcp.status, HACDBS_IDLE);
+> > +}
+> 
+> [Severity: Medium]
+> Could this sequence cause a race condition if a pending interrupt fires
+> immediately upon being unmasked?
+> 
+> If hacdbsirq_handler() executes and updates the state, and then
+> kvm_hacdbs_cpu_up() resumes and unconditionally overwrites the state
+> with HACDBS_IDLE, the handler's update would be lost. Should the status
+> be initialized before enabling the interrupt?
+
+This is a per-cpu irq, and above happens when we are enabling 
+virtualization on a CPU. Prior to the endo of kvm_hacdbs_cpu_up() there 
+should be no guest running in this cpu, so faulting is not an issue. 
+
+> 
+> > +
+> > +void kvm_hacdbs_cpu_down(void)
+> > +{
+> > +	if (hacdbsirq < 0)
+> > +		return;
+> > +
+> > +	disable_percpu_irq(hacdbsirq);
+> > +	this_cpu_write(hacdbs_pcp.status, HACDBS_OFF);
+> > +}
+> > +
+> > +#ifdef CONFIG_ACPI
+> > +static int __init hacdbs_acpi_get_irq(void)
+> > +{
+> > +	struct acpi_madt_generic_interrupt *gicc;
+> > +	u32 gsi;
+> > +	int irq;
+> > +
+> > +	gicc = acpi_cpu_get_madt_gicc(smp_processor_id());
+> 
+> [Severity: Medium]
+> Is it safe to call smp_processor_id() here?
+> 
+> Since kvm_hacdbs_init() is called from init_subsystems() during a
+> device_initcall, preemption is enabled. Would calling smp_processor_id()
+> directly without disabling preemption trigger a kernel bug/warning if
+> CONFIG_DEBUG_PREEMPT is enabled? Should raw_smp_processor_id() or
+> get_cpu()/put_cpu() be used instead?
+
+This is called in init time, by kvm_arm_init(). Also, it should not matter 
+as we are not actually touching anything from that cpu, but instead just 
+fetching this read-only information about the IRQ.
+
+
+> 
+> > +	if (gicc->header.length < ACPI_MADT_GICC_HACDBSIRQ)
+> > +		return -ENXIO;
+> > +
+> > +	gsi =  gicc->hacdbsirq_gsi;
+> > +
+> > +	irq = acpi_register_gsi(NULL, gsi, ACPI_LEVEL_SENSITIVE, ACPI_ACTIVE_HIGH);
+> 
+> [Severity: High]
+> Does the GSI read from ACPI need to be validated before registration?
+> 
+> If the firmware does not support HACDBS, it might leave this field as 0.
+> On ARM64, GSI 0 corresponds to Software Generated Interrupt (SGI) 0, which is
+> used for Inter-Processor Interrupts (IPIs). Could registering a device
+> interrupt handler on GSI 0 corrupt host IPI handling and crash the system?
+> 
+
+Adding a test here could be easy.
+In any case I remember testing with the table entry being zero and this 
+not being an issue.
+
+> > +	if (irq < 0) {
+> > +		pr_warn("ACPI: Unable to register HACDBS interrupt: %d\n", gsi);
+> > +		return -ENXIO;
+> > +	}
+> > +
+> > +	return irq;
+> > +}
+> 
+> [Severity: Medium]
+> If the subsequent call to request_percpu_irq() in kvm_hacdbs_init() fails,
+> how is this ACPI GSI mapping cleaned up?
+> 
+> Since hacdbs_acpi_get_irq() only returns the mapped IRQ and discards the
+> original GSI, it seems impossible for the caller to properly unregister it
+> via acpi_unregister_gsi(), which would result in leaking the resource.
+> 
+
+This feature should only be enabled if the whole system supports HACDBS, so 
+once one cpu succeeds in request_percpu_irq() every other one should 
+succeed as well.
+
+> > +#else
+> > +#define hacdbs_acpi_get_irq() (-ENXIO)
+> > +#endif
+> > +
+> > +void __init kvm_hacdbs_init(void)
+> > +{
+> > +	int irq;
+> > +
+> > +	/* FEAT_HACDBS is only supported if Linux runs in EL2 (VHE) */
+> > +	if (!system_supports_hacdbs() || !is_kernel_in_hyp_mode())
+> > +		return;
+> > +
+> > +	irq = hacdbs_acpi_get_irq();
+> > +	if (irq < 0)
+> > +		return;
+> > +
+> > +	if (request_percpu_irq(irq, hacdbsirq_handler, "HACDBSIRQ", &hacdbs_pcp) < 0)
+> > +		return;
+> 
+> [Severity: High]
+> If request_percpu_irq() or hacdbs_acpi_get_irq() fails, the function returns
+> early. Is there a global flag that needs to be unset to tell KVM that HACDBS
+> hardware cleaning is unavailable?
+
+The availability is tracked by hacdbsirq variable. Once it's set, it means 
+the whole system supports hacdbs, and the IRQ is available.
+
+
+> 
+> If KVM later assumes hardware support is available and calls
+> dirty_bit_clear() unconditionally, it might set the software status to
+> HACDBS_RUNNING and wait in a wfi() loop. Since the IRQ is disabled or
+> unmapped, the handler would never fire, resulting in a host hang.
+>
+> 
+> Additionally, I have a few questions regarding the implementation of
+> dirty_bit_clear() and hacdbs_start(), which appear to interact with the
+> features introduced in this patch:
+> 
+> [Severity: High]
+> In dirty_bit_clear(), is an isb() required after the write to HCR_EL2?
+>
+
+No, and __load_stage2 will do that anyway if needed, as it also sets 
+registers. Also, it's done at the end of hacdbs_start()
+ 
+> dirty_bit_clear() {
+>     ...
+>     write_sysreg(hcr_el2 | HCR_EL2_VM, HCR_EL2);
+>     __load_stage2(&kvm->arch.mmu);
+>     ...
+> }
+> 
+> Similarly, in hacdbs_start(), is an isb() required after writing to
+> SYS_HACDBSCONS_EL2?
+> 
+
+it's done at the end of hacdbs_start.
+
+> hacdbs_start() {
+>     ...
+>     sysreg_clear_set_s(SYS_HACDBSCONS_EL2,
+>                        HACDBSCONS_EL2_ERR_REASON | HACDBSCONS_EL2_INDEX, 0);
+> 
+>     br = (virt_to_phys(hw_entries) & HACDBSBR_EL2_BADDR_MASK) |
+>     ...
+> }
+> 
+> The ARM64 subsystem guidelines indicate that writes to control-plane system
+> registers must be followed by an isb() as the very next instruction to
+> ensure subsequent instructions do not execute with an architecturally
+> undefined pipeline state.
+> 
+
+Those intructions are unrelated between themselves, the one at the end of 
+hacdbs_start() should be enough.
+
+> [Severity: Critical]
+> Does the wfi() loop in dirty_bit_clear() contain a check-then-sleep race
+> condition?
+> 
+> dirty_bit_clear() {
+>     ...
+>     do {
+>         wfi();
+>     } while (this_cpu_read(hacdbs_pcp.status) == HACDBS_RUNNING);
+>     ...
+> }
+> 
+> Although preemption is disabled, local interrupts are not disabled during this
+> check. If the hardware interrupt fires after the condition is checked but
+> before the wfi() executes, the CPU could service the interrupt, update the
+> status to HACDBS_IDLE, return, and then execute wfi(). The CPU would then
+> sleep indefinitely, causing a host hard lockup.
+
+Until the next interrupt, though. Very unlikely, but possible.
+
+Maybe a WFIT (timeout), then?
+
+> 
+> [Severity: High]
+> In hacdbs_start(), is a memory barrier like `dmb ish` required before starting
+> the hardware engine?
+> 
+> hacdbs_start() {
+>     ...
+>     if (size_b < size_p2)
+>         hw_entries[size] = HDBSS_ENTRY_VALID | HDBSS_ENTRY_TTWL_RESV;
+>     ...
+>     write_sysreg_s(br, SYS_HACDBSBR_EL2);
+>     isb();
+> }
+> 
+> A sentinel stop entry is written to the memory buffer before writing to
+> SYS_HACDBSBR_EL2 to enable the engine. Since system register writes are not
+> inherently ordered with respect to memory stores, the hardware engine might
+> begin reading before the stop entry is visible in coherent memory.
+> 
+
+And that could mean possibly running though entries that are not supposed 
+to be valid, but could be because we are talking about random data.
+So we need to make sure the write buffer is clear before setting the 
+register.
+
+Thanks
+Leo
+
+
