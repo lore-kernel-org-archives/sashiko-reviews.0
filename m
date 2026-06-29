@@ -1,87 +1,44 @@
-Received: from flow-a6-smtp.messagingengine.com (flow-a6-smtp.messagingengine.com [103.168.172.141])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
-	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 37F01429825
-	for <sashiko-reviews@lists.linux.dev>; Mon, 29 Jun 2026 16:02:44 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.141
+Received: from foss.arm.com (foss.arm.com [217.140.110.172])
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 96D4F3F1ACE;
+	Mon, 29 Jun 2026 16:07:47 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=217.140.110.172
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1782748965; cv=none; b=lUkz8JscVfb5M5HOxwp5tAfQc0iWSG6sCIQIfWsAClrqUHDrKh4OnYivbE/r4zKmf/HmEfUwnLdkSJzr+JIDounBbnrAOXGhxcziRrfjeG79YyqVZLlwDcmUNGlVbA9LNvZJP3NflSfgdnbE9yCUHgPGFeP7exTXe2Vbft5Cwrg=
+	t=1782749269; cv=none; b=LW7AfhxSHjwtRBCPSBcGf/hxS02qRl8pCdjqRJdaXbGGScLyaFFkoZmem1HFRpza3mM/KXRfRY4PSjP4O7Q/LKp788eF/4H3jQyBeu5DjgsVIHNivZl4xgHLZComFN4bM1JgyhloqVzUYiiSsSHj6jeThmrlqqg51XB1cksX9E0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1782748965; c=relaxed/simple;
-	bh=xUf6430MUJDHSC5orAznw95bP/KW4glg9syvaE6YZhY=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=KAULuRLcPFYjcm9RT9YF/CULLYC0uDcnM4aY6VQdYcNh9jqoFUcygD9bvQhNgMZHsXuFef7jo8i6cuFyOkG+estHDr9CY6u/Tgg442MP2oaNHghvbTTjAGcw/BAJgI6NKz/yY6+oZjRVVzpTCdQtGolzWoYyAUAmjCzRDGAfYYI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=shutemov.name; spf=pass smtp.mailfrom=shutemov.name; dkim=pass (2048-bit key) header.d=shutemov.name header.i=@shutemov.name header.b=lterjNH4; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=f4Prm+vx; arc=none smtp.client-ip=103.168.172.141
-Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=shutemov.name
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=shutemov.name
+	s=arc-20240116; t=1782749269; c=relaxed/simple;
+	bh=Mjvo52VT9PrvJbf5FmuNElarfWOLVI0IFquOoLh0FW0=;
+	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
+	 MIME-Version:Content-Type:Content-Disposition; b=oaBV8UvPRCq4bV6c2ZnSSSRlJt4cWm5PBpfD6/KQs1H4/wy8VyDDnsuT5PKIWNVhbtp209AvQx97gsy5zPQMYG2HUmI3S5o6GxJhrJDPwfL7YWwyyjA2GLUeSiHbfTkX5285ZZDDI4bBgYN3/mB1EXol5P6GD+pGfWhgOOTGTys=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=arm.com; spf=pass smtp.mailfrom=arm.com; dkim=pass (1024-bit key) header.d=arm.com header.i=@arm.com header.b=axnPYlNy; arc=none smtp.client-ip=217.140.110.172
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=arm.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=arm.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=shutemov.name header.i=@shutemov.name header.b="lterjNH4";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="f4Prm+vx"
-Received: from phl-compute-07.internal (phl-compute-07.internal [10.202.2.47])
-	by mailflow.phl.internal (Postfix) with ESMTP id 6FBBF138037E;
-	Mon, 29 Jun 2026 12:02:43 -0400 (EDT)
-Received: from phl-frontend-04 ([10.202.2.163])
-  by phl-compute-07.internal (MEProxy); Mon, 29 Jun 2026 12:02:43 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=shutemov.name;
-	 h=cc:cc:content-type:content-type:date:date:from:from
-	:in-reply-to:in-reply-to:message-id:mime-version:references
-	:reply-to:subject:subject:to:to; s=fm3; t=1782748963; x=
-	1782756163; bh=5M7UrWTmU2fnWKZojvoJwc5RGoqcaVVltooaRFZSbD8=; b=l
-	terjNH4SS6dbm7ZLR3cT8v0CQWM6BYPp7JwJx5JHs6wYmDrskeL9eFpXHU7x5FP9
-	i7ovNMukFffN45qrCtjS5pVHdrUWJQuIsxug6mnYgJ8XN1PRNJw/yVQufVv8vV7W
-	X25/eoFjgyFoGvv/DplYNLrPAV5fdPTMfp9adZ+5bzKIyTk6uVbaMcXvodkORq9m
-	rFz7oNrgxuYOPK4a5gD+/YhYEfqASmYZVM2laU8bM5n3xGFrX7mIEaj+7sRV+yIr
-	P9fS3RowK9esq9C4O+4JY6c03GlWm9STey+km/jkknM04NQGoy79z8VBAilMDjli
-	3ISCnhaa/y/MXCmTkojQg==
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
-	messagingengine.com; h=cc:cc:content-type:content-type:date:date
-	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
-	:message-id:mime-version:references:reply-to:subject:subject:to
-	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm1; t=
-	1782748963; x=1782756163; bh=5M7UrWTmU2fnWKZojvoJwc5RGoqcaVVltoo
-	aRFZSbD8=; b=f4Prm+vxw0uPrjIauItnXpWZWosjcyK5uKoXRf3h8MOxc0RK/TQ
-	NxeUehuXq0dAp9HeDS6CARmGeyw6ESQNFvu11X8Zdy7XaU2nr0Jrwzc/+0s9c3RN
-	wnIGjqIIwd5En4IDHPFOA8jE6kMWpN5/L0zoZZEhliNp7YEioZGAM2trxB4bnNZX
-	UK6BlFw63n7yRsTEeZVRMNsD9gl9y4+lLXuC19yw09hvfS5RdqrC3SJT2ARSuID1
-	froiUydCH9CNMUaEOr+hXtUy87hkEW1knryg4vVMfH/cZfHcAeZs7azys99Izkgs
-	TnnqGCY/NaiYRZVVYMArKRvnHBoCtfUsQ8Q==
-X-ME-Sender: <xms:I5dCahmrywK2XmKKrXi34cxfd-7jZ5vYqMOZDLC0dONzWjSgGWB0IA>
-    <xme:I5dCalPY2ZqO546gF66vI4g5nJZD3yjlQCs-aNCcJMfRorFAHAyrva09ADxB68QqJ
-    WCZoneYSMMDZwQWA9yDBJYZiAI2vmZ_lYZdxTAl_oSAtJhs39SZai0>
-X-ME-Received: <xmr:I5dCah7z1q6CBoH2evDYJLFJ126BboKdoqYET9eu2yv8roOyvjPZ_-Mbc0P7Ow>
-X-ME-Proxy-Cause: dmFkZTFDlTNK+FNohJg4noCYbW5VpwAEJ/3lhl31ZFTIvh6wOi6MwAQn2pdhCP1fDqPjSp
-    DThp5HlJoStLNnqS7NKN1XFUvrVLCFaaDrqKHocOP7Q0yFfyk9vYJwPjD4MtZnSSU+huSE
-    0bkQ4ZIkzUfj30WTfAyH257AFUsdMzCDhw0NoGAJUakjPmDj4VwuK9ibUEs2fq3McnGv78
-    Nh2JYbn4djoiaQDuiejPXLoPHxDQPhQeipCwDaQnTK65xBeDKRnJz9LO1G0ubz+7ygczav
-    kf9ymsjv6R0e7EpJWlgyVS12qRilACHu4La+l0bLD0/MxAsnjj+YIo73t+IxeqDILoe3aI
-    EGi5XfI/jWveDG9g4WL+5X/HQPKMnj5RRBtKX05jMG7+yCi7C450Ue3g9/WkhfbZVE1DD+
-    BXn09yMHPghVteggvBz2uHm+ayYXAy4SInb/5Q8CrS2AiPIChqLo/yfuVTLXhZg9UKdLu2
-    BK7bij7g/xg9IyuQmHAsF2svJoFNX+gKUlLyXZVTwg0oU9NpZFhqZIhetDbTjdDqIw6FxV
-    NDL+Jg024Pzi/8xay+OtYIKFSFiKHP9C82afWChq9YWh8ws9G8Mxn40tP1FMgFeJw3igq/
-    7iPc6nh1nX/NB32lxDYrSzQ1mF4YU4WilWmhoSLeg78JloBwBmC45O+6h4XA
-X-ME-Proxy: <xmx:I5dCamKBecsIvHRTs86s7_UMNMQyF4VfTO6wv8sfOFicnMvOAY836Q>
-    <xmx:I5dCatKhWeWhuybIyaV1aL_pZOF0pD_VdovgDw0lObYC_lxqQBUnww>
-    <xmx:I5dCam1ygCErQMLo99_D0L_5-34w1LIlYTQEGpJyn4JSFaCCkqubHQ>
-    <xmx:I5dCatyNiRsJqyMNLB5UB_39zZ8g0COnUVokKpTu8WxgXOfpBZtTqA>
-    <xmx:I5dCam1Ngh67dJljnvhol0Oi168Rb156u1MIFMAysA-Umwqcqk0HfOvm>
-Feedback-ID: ie3994620:Fastmail
-Received: by mail.messagingengine.com (Postfix) with ESMTPA; Mon,
- 29 Jun 2026 12:02:42 -0400 (EDT)
-Date: Mon, 29 Jun 2026 17:02:41 +0100
-From: Kiryl Shutsemau <kirill@shutemov.name>
-To: sashiko-reviews@lists.linux.dev, akpm@linux-foundation.org, 
-	rppt@kernel.org, peterx@redhat.com, david@kernel.org
-Cc: kvm@vger.kernel.org, ljs@kernel.org, surenb@google.com, 
-	vbabka@kernel.org, Liam.Howlett@oracle.com, ziy@nvidia.com, corbet@lwn.net, 
-	skhan@linuxfoundation.org, seanjc@google.com, pbonzini@redhat.com, jthoughton@google.com, 
-	aarcange@redhat.com, sj@kernel.org, usama.arif@linux.dev, linux-mm@kvack.org, 
-	linux-kernel@vger.kernel.org, linux-doc@vger.kernel.org, linux-kselftest@vger.kernel.org, 
-	kernel-team@meta.com
-Subject: Re: [PATCH v7 07/15] mm: preserve RWP marker across PTE rewrites
-Message-ID: <akKWzol3mExZhVYq@thinkstation>
-References: <20260629120749.566063-1-kirill@shutemov.name>
- <20260629120749.566063-8-kirill@shutemov.name>
- <20260629123320.1EF891F000E9@smtp.kernel.org>
+	dkim=pass (1024-bit key) header.d=arm.com header.i=@arm.com header.b="axnPYlNy"
+Received: from usa-sjc-imap-foss1.foss.arm.com (unknown [10.121.207.14])
+	by usa-sjc-mx-foss1.foss.arm.com (Postfix) with ESMTP id 5CE262574;
+	Mon, 29 Jun 2026 09:07:42 -0700 (PDT)
+Received: from LeoBrasDK.cambridge.arm.com (LeoBrasDK.cambridge.arm.com [10.2.212.21])
+	by usa-sjc-imap-foss1.foss.arm.com (Postfix) with ESMTPSA id C9F473F905;
+	Mon, 29 Jun 2026 09:07:45 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=simple/simple; d=arm.com; s=foss;
+	t=1782749266; bh=Mjvo52VT9PrvJbf5FmuNElarfWOLVI0IFquOoLh0FW0=;
+	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
+	b=axnPYlNyVV9sjHYiFuBpLDuteyGxPKuSQonJVUQn0fAl9ZI1e2VgCrhK3sYueDzOx
+	 kcBOMg0ucnjdwahL7F9n3RJARBuvqxOGlSmLooaXyCicBTowNFB60LaYQHBmSD6jD4
+	 XodHw00jel9/bSFfWXSEaOSTqXj5PdpQdo75YQ9Y=
+From: Leonardo Bras <leo.bras@arm.com>
+To: sashiko-reviews@lists.linux.dev
+Cc: Leonardo Bras <leo.bras@arm.com>,
+	Oliver Upton <oupton@kernel.org>,
+	Marc Zyngier <maz@kernel.org>,
+	kvm@vger.kernel.org,
+	kvmarm@lists.linux.dev
+Subject: Re: [PATCH v2 07/13] kvm: Add arch-generic interface for hw-accelerated dirty-bitmap cleaning
+Date: Mon, 29 Jun 2026 17:07:43 +0100
+Message-ID: <akKYT8-MDDjtuauF@LeoBrasDK>
+X-Mailer: git-send-email 2.54.0
+In-Reply-To: <20260629113819.619D91F000E9@smtp.kernel.org>
+References: <20260629111820.1873540-1-leo.bras@arm.com> <20260629111820.1873540-8-leo.bras@arm.com> <20260629113819.619D91F000E9@smtp.kernel.org>
 Precedence: bulk
 X-Mailing-List: sashiko-reviews@lists.linux.dev
 List-Id: <sashiko-reviews.lists.linux.dev>
@@ -90,13 +47,84 @@ List-Unsubscribe: <mailto:sashiko-reviews+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-In-Reply-To: <20260629123320.1EF891F000E9@smtp.kernel.org>
+Content-Transfer-Encoding: 8bit
 
-On Mon, Jun 29, 2026 at 12:33:19PM +0000, sashiko-bot@kernel.org wrote:
-> Thank you for your contribution! Sashiko AI review found 3 potential issue(s) to consider:
-> - [Critical] do_swap_page bypasses RWP tracking on non-exclusive private pages by resolving COW faults internally, dropping the RWP marker.
+On Mon, Jun 29, 2026 at 11:38:18AM +0000, sashiko-bot@kernel.org wrote:
+> Thank you for your contribution! Sashiko AI review found 2 potential issue(s) to consider:
+> - [Critical] Data loss (lost dirty pages) when kvm_arch_dirty_log_clear fails during KVM_GET_DIRTY_LOG.
+> - [High] Out-of-bounds read of userspace buffer in kvm_arch_dirty_log_clear during KVM_CLEAR_DIRTY_LOG.
+> --
+> 
+> commit ea34df3acf2397922e1a2152d707b3b9f6012964
+> Author: Leonardo Bras <leo.bras@arm.com>
+> 
+> kvm: Add arch-generic interface for hw-accelerated dirty-bitmap cleaning
+> 
+> Introduce kvm_arch_dirty_log_clear() that allow implementation of
+> arch-specific hardware-accelerated dirty-log routines.
+> 
+> > diff --git a/virt/kvm/kvm_main.c b/virt/kvm/kvm_main.c
+> > index e44c20c049610..a25b8902cdfc1 100644
+> > --- a/virt/kvm/kvm_main.c
+> > +++ b/virt/kvm/kvm_main.c
+> > @@ -2262,6 +2263,10 @@ static int kvm_get_dirty_log_protect(struct kvm *kvm, struct kvm_dirty_log *log)
+> >  		dirty_bitmap_buffer = kvm_second_dirty_bitmap(memslot);
+> >  		memset(dirty_bitmap_buffer, 0, n);
+> >  
+> > +		if (kvm_arch_dirty_log_clear(kvm, memslot, NULL,
+> > +					     dirty_bitmap_buffer, &flush) >= 0)
+> > +			goto out;
+> > +
+> 
+> [Severity: Critical]
+> If kvm_arch_dirty_log_clear() successfully clears some pages in hardware but
+> subsequently fails and returns an error, will the fallback loop overwrite the
+> successfully cleared bits?
+> 
+> It appears that if the arch hook returns an error, KVM falls back to the
+> generic software loop which includes:
+> 
+>     mask = xchg(&dirty_bitmap[i], 0);
+>     dirty_bitmap_buffer[i] = mask;
+>     
+> Because the generic fallback loop blindly overwrites dirty_bitmap_buffer[i]
+> with the remaining uncleared bits, could this result in silently losing the
+> dirty pages that the arch hook managed to clear before failing?
 
-Okay, this one is real. I will add test-case for it and fix in v8.
+Yes, it falls back to software. 
+But it will only overwrite the bits IF the entry is not empty.
 
--- 
-  Kiryl Shutsemau / Kirill A. Shutemov
+One thing that could happen, though, is that the error happened in 
+the middle of the 64-page slot, and the output buffer would contain bits 
+set, while the dirty-bitmap also contains them. That would cause the bits 
+to be overwritten. To avoid that, we could ask to make sure to only clear 
+the dirty-bitmap word/slot if all bits have been cleaned. 
+
+> 
+> [ ... ]
+> 
+> > @@ -2373,6 +2379,10 @@ static int kvm_clear_dirty_log_protect(struct kvm *kvm,
+> >  	if (copy_from_user(dirty_bitmap_buffer, log->dirty_bitmap, n))
+> >  		return -EFAULT;
+> >  
+> > +	if (kvm_arch_dirty_log_clear(kvm, memslot, log, dirty_bitmap_buffer,
+> > +				     &flush) >= 0)
+> > +		goto out;
+> > +
+> 
+> [Severity: High]
+> Could passing dirty_bitmap_buffer directly to the arch-specific routine lead
+> to an out-of-bounds read?
+> 
+> When userspace calls KVM_CLEAR_DIRTY_LOG with a first_page > 0, KVM copies
+> exactly num_pages bits into dirty_bitmap_buffer starting at index 0.
+> 
+> If the arch implementation of kvm_arch_dirty_log_clear() assumes the buffer
+> represents the entire memslot and reads from it using an absolute offset like
+> log->first_page / BITS_PER_LONG, would it read past the end of this
+> partially-sized array?
+> 
+
+Dealt with this in the implementation. Maybe it should be clear to whoever 
+implements it will have to take that into account as well.
+
