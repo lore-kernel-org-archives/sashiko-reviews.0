@@ -1,141 +1,130 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4A9E637C930;
-	Mon, 29 Jun 2026 20:26:02 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C28BD1DED4C;
+	Mon, 29 Jun 2026 20:29:06 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1782764764; cv=none; b=oVLSyChGdJFbDTLpp/49u1AzPBX5wRY6n5g08tArNROGMnpPG/p8ZCo5esuk1/JZPiKncmfyZNkLQHmhmNQychB1UBZtY0jeAm275aYbUjNnQNxYS837Y72Nfhww5W6JiWO+AsHXGOvu/CJeAW7ZNw0ylFnp3MC+f5tNW/7Xxw8=
+	t=1782764947; cv=none; b=RHJKxLgFsD4+SA94Te4XmSA/HVlaVAoJdtPOt/iS7uXPuAkRj8hOjTJqietmk1EtUmnxzs59bvPS+6/wpaMhhog5m8S/UHrXE70tTBh75pFgDriOba+lDYxnv5Ozv/y+iqWsBbs1D3mmBNcpIG1h8WEiSe+xbat8Io/Mi76VN7o=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1782764764; c=relaxed/simple;
-	bh=72EfKXbpMfG1CuuESPj7eBDgrBSqUvnN1lLV2sSL1MQ=;
+	s=arc-20240116; t=1782764947; c=relaxed/simple;
+	bh=EkWiumAdGdEZA1wyoGx6kM49zgLeXp5JyNmsc5Y8gj8=;
 	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=UzrfvGE0RH21WTCUVm1wh/8qtnXz5bUgeIxwSDO2N9O3Nriuhq+u64SVN9DPg86vAYQpbArrnUikln6JchMr+54JW4QhabTv9GSlQmr2AcNGt/D6/jESnSrRYjeKyKwYHTLSO6jUrAqYPSIxSjqRVmr3CHMF9n/X9GWi/Mj9bEQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=F6DgZxlW; arc=none smtp.client-ip=100.103.45.18
+	 Content-Type:Content-Disposition:In-Reply-To; b=OBCCDdukXLLE+OGLKjtbAf4WKpu/p80gbEsbPAeJDkP8IuC428wACbJYWThd3Je/d8oyhPDg89OpMXinECzsJ7NuXOlnqsAGrxvyIm6cNcsQBtzv+g9WHmHmVJa1xWcmHfAvtrTQ7bgbIuzK9Bn7cEvgViwDt+z+9xzTVQevgq4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=NXQ/2Gjc; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="F6DgZxlW"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id C19321F000E9;
-	Mon, 29 Jun 2026 20:26:02 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="NXQ/2Gjc"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5F8E01F000E9;
+	Mon, 29 Jun 2026 20:29:06 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=kernel.org;
-	s=k20260515; t=1782764762;
-	bh=onLZDZMcTlO4TEIuhHie61iOchqDX4z2IhGHn95Ci5w=;
+	s=k20260515; t=1782764946;
+	bh=QiaiMk/8MUSUEOkj3Bec2LDycEF7ymV/xwRgd60b7SA=;
 	h=Date:From:To:Cc:Subject:References:In-Reply-To;
-	b=F6DgZxlWWASiK5iXZZW8cycy4rou1r8yd0kJ6ct/wWKnAKw3Log6rBPfgcoxxDoDM
-	 Hh3ivEc+5NXJW/sxTJ5f6nS1/9p4PvUed4h2E5L5a2b/aYQHU9x4+kSJy23QMnCoGw
-	 hW0p2o0MHZbXIKCgdRapCCTct85dC2SfOWk/Uy8rKyUx5GQN3pNQMpOprTskDEsOe2
-	 F4SteXDM3A2PyCi9g8U6vSk60mfHx4h7E/Me8IbQmvum4rkzM46NEXYalirovp6TV4
-	 /RYeqShRH2zQaTrF9/+0SLEdBEH96MotPj1uMI2sW47JZDL2qj1LyvQEGhtseoWFS5
-	 In4WHmbefD3CQ==
-Date: Mon, 29 Jun 2026 20:26:01 +0000
+	b=NXQ/2GjcMKp6N4pT+J8LYT4BZoAFjra9sd3+wEFa1UEnfqV4R9Xye+XvKruo/SLEq
+	 2KtC3pIIteEw5iEkDuaNMsHRia04+WP6zPpN6v/94Nue/4Sil9p5C/dpg+d2lZNKzz
+	 wS7l7yZ3ZlkbFPR9/aDfaEcmSx9ZNSVqyOZQZyVWhQcwzIItOctcwKI4b/ATCVMY8B
+	 8tJp3VIWxGPrB2LmTCyDmuZXqwyW+ez99j/5YYbn0JHA2zZmsLxLPOblgE6gZ5mqhB
+	 4wMu5Ac/c2pMyUO9ykNcbWQ6GzttdffJh8+eWM7WUxQVjqXtQTA7GqHju2OlRXGUDm
+	 Fo3Y6QOEuTqYA==
+Date: Mon, 29 Jun 2026 20:29:05 +0000
 From: Yosry Ahmed <yosry@kernel.org>
 To: sashiko-reviews@lists.linux.dev
 Cc: kvm@vger.kernel.org
-Subject: Re: [PATCH v3 05/10] KVM: selftests: Reuse GPR switching logic for
- nVMX
-Message-ID: <akLTk3geAmXIc-My@google.com>
+Subject: Re: [PATCH v3 08/10] KVM: selftests: Trigger save+restore randomly
+ in the #PF stress test
+Message-ID: <akLU4Zdfal21geBW@google.com>
 References: <20260629183746.699840-1-yosry@kernel.org>
- <20260629183746.699840-6-yosry@kernel.org>
- <20260629184932.550311F00A3A@smtp.kernel.org>
+ <20260629183746.699840-9-yosry@kernel.org>
+ <20260629184837.AC6A81F000E9@smtp.kernel.org>
 Precedence: bulk
 X-Mailing-List: sashiko-reviews@lists.linux.dev
 List-Id: <sashiko-reviews.lists.linux.dev>
 List-Subscribe: <mailto:sashiko-reviews+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:sashiko-reviews+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
+Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-Content-Transfer-Encoding: 8bit
-In-Reply-To: <20260629184932.550311F00A3A@smtp.kernel.org>
+In-Reply-To: <20260629184837.AC6A81F000E9@smtp.kernel.org>
 
-On Mon, Jun 29, 2026 at 06:49:31PM +0000, sashiko-bot@kernel.org wrote:
+On Mon, Jun 29, 2026 at 06:48:37PM +0000, sashiko-bot@kernel.org wrote:
 > Thank you for your contribution! Sashiko AI review found 1 potential issue(s) to consider:
-> - [Medium] The newly introduced VMX_SWITCH_GPRS_ASM logic makes vmlaunch and vmresume thread-unsafe, corrupting L1 host and L2 guest register state in multi-vCPU nested tests.
+> - [Medium] The aggressive 1ms signal interval can starve the guest and cause the test to deterministically fail on slower or nested environments.
 > --
 > 
-> commit f53344a36faa652dd7b5c7d1e749a4bffbc5242b
+> commit 4750524a9d34a97e2957bdf96a22b57c5404cb65
 > Author: Yosry Ahmed <yosry@kernel.org>
 > 
-> KVM: selftests: Reuse GPR switching logic for nVMX
+> KVM: selftests: Trigger save+restore randomly in the #PF stress test
 > 
-> This commit introduces VMX_SWITCH_GPRS_ASM to reuse the GPR switching logic
-> from SVM for nVMX. It replaces the push/pop of registers with
-> VMX_SWITCH_GPRS_ASM during vmlaunch and vmresume operations for both standard
-> and enlightened VMCS.
+> This patch introduces a background thread in the page fault stress test that
+> sends SIGUSR1 to the vCPU thread to trigger exits to userspace. This allows
+> exercising race conditions between page fault handling in the guest and
+> save/restore paths in the host.
 > 
-> > diff --git a/tools/testing/selftests/kvm/include/x86/vmx.h b/tools/testing/selftests/kvm/include/x86/vmx.h
-> > index 4bcfd60e3aecb..a808dc21c9f21 100644
-> > --- a/tools/testing/selftests/kvm/include/x86/vmx.h
-> > +++ b/tools/testing/selftests/kvm/include/x86/vmx.h
+> > diff --git a/tools/testing/selftests/kvm/x86/stress_save_restore_pf_test.c b/tools/testing/selftests/kvm/x86/stress_save_restore_pf_test.c
+> > index 1b6f64bbcf937..bbbb5bb2a2ee1 100644
+> > --- a/tools/testing/selftests/kvm/x86/stress_save_restore_pf_test.c
+> > +++ b/tools/testing/selftests/kvm/x86/stress_save_restore_pf_test.c
+> 
 > [ ... ]
-> > @@ -373,34 +387,23 @@ static inline int vmlaunch(void)
-> >  	if (enable_evmcs)
-> >  		return evmcs_vmlaunch();
-> >  
-> > -	__asm__ __volatile__("push %%rbp;"
-> > -			     "push %%rcx;"
-> > -			     "push %%rdx;"
-> > -			     "push %%rsi;"
-> > -			     "push %%rdi;"
-> > -			     "push $0;"
-> > +	__asm__ __volatile__("push $0;"
-> >  			     "vmwrite %%rsp, %[host_rsp];"
-> >  			     "lea 1f(%%rip), %%rax;"
-> >  			     "vmwrite %%rax, %[host_rip];"
-> > +			     VMX_SWITCH_GPRS_ASM
-> >  			     "vmlaunch;"
+> 
+> > @@ -94,15 +96,41 @@ static void guest_access_memory(void *arg)
+> > +static void *sigusr_thread_fn(void *arg)
+> > +{
+> > +	pthread_t vcpu_thread = (pthread_t)arg;
+> > +
+> > +	for (;;) {
+> > +		pthread_testcancel();
+> > +		pthread_kill(vcpu_thread, SIGUSR1);
+> > +		usleep(msecs_to_usecs(1));
+> > +	}
+> > +	return NULL;
+> > +}
+> 
+> [ ... ]
+> 
+> > @@ -151,18 +179,30 @@ int main(int argc, char *argv[])
+> >  	while (count++ < NR_ITERATIONS) {
+> > +		/*
+> > +		 * Only handle SIGUSR while the vCPU is running, otherwise
+> > +		 * ignore it to avoid interrupting other ioctls/syscalls.
+> > +		 */
+> > +		vcpu_sigusr_listen();
+> >  		r = __vcpu_run(vcpu);
+> > -		TEST_ASSERT(!r, "vcpu_run failed");
+> > -		TEST_ASSERT_KVM_EXIT_REASON(vcpu, KVM_EXIT_IO);
+> > -
+> > -		get_ucall(vcpu, &uc);
+> > -		if (uc.cmd == UCALL_ABORT) {
+> > +		if (r == -1)
+> > +			TEST_ASSERT_EQ(errno, EINTR);
+> > +		vcpu_sigusr_ignore();
 > 
 > [Severity: Medium]
-> Will this replacement make vmlaunch() thread-unsafe in multi-vCPU nested
-> tests?
+> Can the aggressive 1ms signal interval from sigusr_thread_fn starve the guest
+> and cause deterministic test failures in slower environments?
 > 
-> Since VMX_SWITCH_GPRS_ASM uses GUEST_SWITCH_GPR_ASM which operates on a
-> single shared guest_regs array in L1 memory, concurrent executions by
-> multiple vCPUs (e.g., via memstress_l2_guest_entry) could clobber the saved
-> host state and L2 initial state for all but one vCPU.
+> The first time __vcpu_run executes for a newly created VM, it performs
+> expensive kernel-side initializations like setting up the shadow MMU. If this
+> setup takes longer than 1ms (which is probable in nested or heavily loaded CI
+> environments), the background thread will send SIGUSR1 before the guest
+> actually executes.
 > 
-> The previous push/pop sequence was thread-safe since it used the stack.
-> Does this same thread-safety issue apply to vmresume() and the evmcs variants
-> that also adopted this macro?
-
-Yes, I should have explicitly called this out. This replaces the
-apparently thread-safe push/pop sequence with reusing the GPR switching
-logic in SVM, which isn't thread-safe at all (uses a global array).
-
-However this is still an improvement imo because:
-- The logic here is half-baked and prompts the UCALL clobber hack as it
-  doesn't properly save/restore everything. Reusing the GPR switching
-  logic used by SVM allows us to drop that hack.
-
-- It's more likely (imo) that we hit a problem due to the half-baked
-  GPR save/restore logic than thread-safety. This is evidently true by
-  the fact that the stress test added in this series fails on VMX with
-  the existing push/pop sequence. OTOH, no tests are failing on SVM due
-  to lack of thread-safety. There is only one test that uses more than
-  one vCPU with nested anyway (the memstress test).
-
-I think the logical next step is to move the GPR array to be per-vCPU,
-making it thread-safe for both VMX and SVM in a proper way, but this is
-outside the scope of this series.
-
+> When KVM detects the pending signal, it will abort the entry and return
+> -EINTR. Because main catches -EINTR and immediately proceeds to save the
+> unchanged state and recreate the VM for the next iteration, the test can get
+> stuck in a cycle where the guest never makes forward progress.
 > 
-> >  			     "incq (%%rsp);"
-> > -			     "1: pop %%rax;"
-> > -			     "pop %%rdi;"
-> > -			     "pop %%rsi;"
-> > -			     "pop %%rdx;"
-> > -			     "pop %%rcx;"
-> > -			     "pop %%rbp;"
-> > +			     "1: ;"
-> > +			     VMX_SWITCH_GPRS_ASM
-> > +			     "pop %%rax;"
-> >  			     : [ret]"=&a"(ret)
-> >  			     : [host_rsp]"r"((u64)HOST_RSP),
-> >  			       [host_rip]"r"((u64)HOST_RIP)
-> > -			     : "memory", "cc", "rbx", "r8", "r9", "r10",
-> > -			       "r11", "r12", "r13", "r14", "r15");
-> > +			     : "memory", "cc");
-> >  	return ret;
-> >  }
-> 
-> -- 
-> Sashiko AI review · https://sashiko.dev/#/patchset/20260629183746.699840-1-yosry@kernel.org?part=5
+> After exhausting all iterations doing nothing but VM recreations, the test
+> would then fail the guest_faults > 0 assertion at the end. Could we verify
+> that the guest actually ran and made forward progress before destroying the
+> VM, or perhaps increase the signal interval?
+
+The signal interval was initially 100us and that did cause problems on
+slower kernels (with DEBUG options or ASAN). With 1 msec, we don't
+observe any problems internally with DEBUG or ASAN builds on a variety
+of platforms. So I think we are good with 1 msec.
+
+Increasing the interval too much will probably make the test less
+effective, as the signal is less likely to hit in interesting race
+windows.
