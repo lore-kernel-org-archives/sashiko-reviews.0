@@ -1,133 +1,110 @@
-Received: from mail-wm1-f42.google.com (mail-wm1-f42.google.com [209.85.128.42])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 12D6D348C44
-	for <sashiko-reviews@lists.linux.dev>; Mon, 29 Jun 2026 13:58:25 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.42
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D870E3431F8
+	for <sashiko-reviews@lists.linux.dev>; Mon, 29 Jun 2026 14:14:04 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1782741507; cv=none; b=Q5B7MgaIIsfmLOPIwj4MdDEilkBysLJBSKBqFmetluXR8VBbe6QwcbDxkB1KwMgcHuV125BMkyxqF8x1OBa7bxXJotscUJzj0iVSeslnkoL3aAkWol0rfIzKh+UlvcNRiSFPjn8BIKQUykCp2FJq6yb22j83KDEv9qwyzIZF31Q=
+	t=1782742445; cv=none; b=nv18ISoiDAPIN0Z0dCaYMmDC9vLvbahoT0ddTmdiTznoAE7DqtZ5p59kg4CxXdT4/ybe1IH0J+GM5oG5XjX8RDIxJ7MGDs72Geei6Qstfv/CrmP5Ya/8AaAggnUhSufjXt6cIg++/qfXTZQm5igVRv3k9SQidnTEkkW4dia/EwQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1782741507; c=relaxed/simple;
-	bh=yOzbqmPiymX68IbIPL916O/Rd6K79n+KEjdHVuEkcE0=;
-	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
-	 MIME-Version:Content-Type; b=qYSh2aLdHv7I19ugq2WCRNuK230ODtCX3TokMcFxhBJvH6jbBVf52wNItmiFn0SP3gdcuJscXhZPJ32uScMn90uGu0BsRu2ZRZpEOw0xpDSH3iql8vsdo0aqfO/TEDS+JSIaQ44o7JdUPpXufEL40q2ao2xmgzqC4tWUWog1i/c=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=baylibre.com; spf=pass smtp.mailfrom=baylibre.com; dkim=pass (2048-bit key) header.d=baylibre.com header.i=@baylibre.com header.b=QOK3Z+Js; arc=none smtp.client-ip=209.85.128.42
-Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=baylibre.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=baylibre.com
+	s=arc-20240116; t=1782742445; c=relaxed/simple;
+	bh=KW8IEw7h3wB+i8CqctSJ9EOR82sULfO4TolMRZgebTY=;
+	h=MIME-Version:Date:From:To:Cc:Message-Id:In-Reply-To:References:
+	 Subject:Content-Type; b=miH4XJlRf+b93Y1U/+6r34X+5d2E+QZWAjBSH2TP4cvTOmKDlUCPOtL6M6IyWhTwaViFmD6SI45dClWMrr0doXeOi4S2Akjuxf5yto6vyexVRgcUo762xW4PYx3LQRgCn+lrhmcYRoVSD0rQrkTWYSW7l1MlQzQ1kM5pilwFjzw=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=LpnRAdAr; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=baylibre.com header.i=@baylibre.com header.b="QOK3Z+Js"
-Received: by mail-wm1-f42.google.com with SMTP id 5b1f17b1804b1-4903d730b1fso43108575e9.2
-        for <sashiko-reviews@lists.linux.dev>; Mon, 29 Jun 2026 06:58:25 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=baylibre.com; s=google; t=1782741504; x=1783346304; darn=lists.linux.dev;
-        h=mime-version:message-id:date:user-agent:references:in-reply-to
-         :subject:cc:to:from:from:to:cc:subject:date:message-id:reply-to;
-        bh=PATmqIJOT58g+w0bwm0EGEjm0V85SjTo4ZbuYUtUfhE=;
-        b=QOK3Z+JsuDmd7OyWwshlrCFWY8mdm9vWWlAddqnRarhCwZFL7fKGg21XbLL6uVdx0M
-         Nk7F/7rNYlzjoctrAcXqpv0Yhft3vIM0EqYm84ec0UAe47dK4ef3GU1O0jGxd6mNhZoZ
-         E5vbQUZmrej8b73fMZeOZaYPCyMM5QEXGepVhYmn6mSXR5Gth1AlT9jffHZR6Pd2b+zJ
-         5ACCggvVgqqqv4c8M5hkLXzoW9n06Fx4/Y3fV4UAp9fZV9AVjKi/gBuwKIvOLDLMvrb3
-         OyzeKaIhHthaYwZuNon0DQP4MXRJvpSzDCKIvFnjCiNeA1c2GZh7Rm0XXUHE+s3nUDQ0
-         ORFg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20251104; t=1782741504; x=1783346304;
-        h=mime-version:message-id:date:user-agent:references:in-reply-to
-         :subject:cc:to:from:x-gm-gg:x-gm-message-state:from:to:cc:subject
-         :date:message-id:reply-to;
-        bh=PATmqIJOT58g+w0bwm0EGEjm0V85SjTo4ZbuYUtUfhE=;
-        b=jYqcSGe43IqmCqStJAO3CGXre9rH5NZQTgp6diokbmGRGLxbW/vvls/G57TRVpfbkz
-         BXu6YyLu6rRCLDvVGwy/dS8Z2D5AIFn+kmZ059i6biuYC0eEN4E1DYle7b2mLDbsmkVl
-         eou41Zgty0F9UyJW6zw8qHMOTFxjvJiEGyi3TZxb3mIZj1iEuDx8t7taNQQCv4+EJk/F
-         USLG2FIOPxpWS8fgyAlzTDZTlxz/F4UhihWZ7zzkSHbZlAZnTutSl8cnJOdopekmM4li
-         jYxMXrnNd8w4rGja4i1WfAghhLj9SrLq2SgfMZQZADP7LqYQqzc+D675OpGhhRHHDpta
-         3+XQ==
-X-Gm-Message-State: AOJu0Yx5IEqeFKiQz4a6/UUo0lfhPhy1/3og1+EP4Zms/eAH37ew0eWp
-	Kh6TXfb2Bntd66Lp0vBYtgo78hOhw+EQSesAzr6mOGPmAKQg2y26SPDH6yPArqSGJtE=
-X-Gm-Gg: AfdE7ck1NfozFEXThPmf0uP2Ou9bJ4ODwdtgnA46jkPKNewn9GYg0nbc9KGCgg0oSmx
-	i8knt0pjCRiw+3atISWaqE5nX0w5Pz3quSbYwBnPGrQDVwH5/21pUk3IA0zzvALM6v81GUd/Jzs
-	xGfbH/5fZaMZt1F8DID71LbuJXad0msyj7ZEd11HnTW0g4gEvx8s+GaCNjE5AA4DubjyO/t1uEJ
-	GHZCsHzf2AzJEwIPipYpMh6Tk12yIaf03AktwIKQf2xVS9tthLJHbQvI65uJknreXls9Ljp0W8o
-	/yuyKtSMloynPochMbe5CscqyJEQBkVKRADoAg1MZSiCJgm1NZLDsmXkRFKp+wXOjqrSgpEyu0k
-	MdB5LyIc5RlmuOY+rf5B7qb6XVmrqIGoRJ4SSO03+CCl7vC035aXMaV1biHxRQmZeHWj81+ToUH
-	IK5diudLqyjPY=
-X-Received: by 2002:a05:600c:3b85:b0:490:50c5:8153 with SMTP id 5b1f17b1804b1-4926683231fmr259468755e9.2.1782741504468;
-        Mon, 29 Jun 2026 06:58:24 -0700 (PDT)
-Received: from localhost ([2a01:e0a:3c5:5fb1:1d21:f5d5:2d3c:23a7])
-        by smtp.gmail.com with UTF8SMTPSA id 5b1f17b1804b1-492690100c7sm351172685e9.12.2026.06.29.06.58.23
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Mon, 29 Jun 2026 06:58:24 -0700 (PDT)
-From: Jerome Brunet <jbrunet@baylibre.com>
-To: sashiko-bot@kernel.org
-Cc: sashiko-reviews@lists.linux.dev,  linux-sunxi@lists.linux.dev,
-  robh@kernel.org,  devicetree@vger.kernel.org,  conor+dt@kernel.org
-Subject: Re: [PATCH v2 4/6] clk: sunxi-ng: div: add read-only operation support
-In-Reply-To: <20260629130342.73C851F000E9@smtp.kernel.org>
-	(sashiko-bot@kernel.org's message of "Mon, 29 Jun 2026 13:03:41
-	+0000")
-References: <20260629-a733-rtc-v2-0-7b72112784f8@baylibre.com>
-	<20260629-a733-rtc-v2-4-7b72112784f8@baylibre.com>
-	<20260629130342.73C851F000E9@smtp.kernel.org>
-User-Agent: mu4e 1.12.9; emacs 30.1
-Date: Mon, 29 Jun 2026 15:58:22 +0200
-Message-ID: <1jcxx9a1oh.fsf@starbuckisacylon.baylibre.com>
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="LpnRAdAr"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id A76BB1F00A3D
+	for <sashiko-reviews@lists.linux.dev>; Mon, 29 Jun 2026 14:14:04 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=kernel.org;
+	s=k20260515; t=1782742444;
+	bh=zgO5KN+Wm0fBYOnN0eVfGFwzS7J9/a8+joS8PR2qCPc=;
+	h=Date:From:To:Cc:In-Reply-To:References:Subject;
+	b=LpnRAdArH10MJQGWXr/wG6j2DXwFTdirzD/406+NFUyUQbXTN6wN3R/qRPdCZQQ5i
+	 hk2J42umaFomTMXtwg9WtzJtOH4hTttEH+oBqm3EMz5HePp/o5qyttvp5A9fHntcZy
+	 xpmbtov0kvxYXdYnu4j/ti9DO1NHHOM0SwiC77g0/aNFwl9Yd8HmJ2IrUg3lsuFeSc
+	 3c8CTGPI9UHo2sIkxG1pvtFItROxEiX2dIKMuoNDli44V4njcvFCYta7s3rXn1dhS3
+	 SAy8smgR6UIgOmq2Pllzm+gR5WUPMV0Crx6aNdtP6ymkzIpftTWJj/T9btstZZ20uG
+	 R279jDAlg25og==
+Received: from phl-compute-04.internal (phl-compute-04.internal [10.202.2.44])
+	by mailfauth.phl.internal (Postfix) with ESMTP id EB8DFF4007B;
+	Mon, 29 Jun 2026 10:14:03 -0400 (EDT)
+Received: from phl-imap-05 ([10.202.2.95])
+  by phl-compute-04.internal (MEProxy); Mon, 29 Jun 2026 10:14:03 -0400
+X-ME-Sender: <xms:q31Cavxu9swq3kAsQkuSNeuj2zXC6Ex19Bw5Dfmq2Wo3YD9snwH3aA>
+    <xme:q31CaiF9gmCzTohxyt3NMs9CtTDF8nwdi1pZx43hvkwCtzgMsX7aTLEp8HQI-pRPQ
+    jl2TsPx2Kw44qckBhkoME5qxLskqQDr0xiR_-QENGY0Syk2cKpEHeQ>
+X-ME-Proxy-Cause: dmFkZTGhgvkS1CpP06NJt7Z0WFiFnobYXvPu8VZnYgjRVToACZ1nB7j7tJxmS6PXCeKzS9
+    i7v+HEi+bEtj9teiL9y8GKllTdv9BQ2GzracmUummtJaLHiVBOppWxOYoMChb2gckZHSs/
+    fR+PttWq4sRibzkVgdUITvED59GSumoBpanoxANnlHO/O/YItY5Ae6idhL2flXxBhrsf9N
+    RIWw+/gK91Iz2q1PGBa5mEXFFSmqWWopqwyCkVq4Bfn20i1i/b9dWQ+TyR/QdSI9iEwBMp
+    QdyZaIq9gdzWuLfHtQwRh1BqipZnNLBjQhABOgXoXCeW14VgvaygoQpTEbV3E8/t03BtGD
+    KoPaPvrQ069915W2LykTC9JveR8/NtGz+I+ct3mzy/lpjC3Du99eTXFHI7O/1yKX8u9PVj
+    YGUqui6YX3Ys8tUQ544SWI7LtK+rFPPoaFAKOf7yiTE1/r4YgJa+P8/PJxs/gtoPytNzew
+    YtEXXtqE6pYgprEm7KzsCmHfTsGKvXJR2WU3bBzzEHlhCz3QOqF+5PXP6EABtze1DixqJe
+    Wv2Y/r7VosldafzF0OR9TOcjUu0kzduM4lz4Tv73skCHAg1DmFtdRzc+VuMhC7TVh3pzxe
+    8r/qGzFUAj4ERyMagEJjCGni+5+KHhpAouoSxPcUqRI31kVelLCPpOcmGoOg
+X-ME-Proxy: <xmx:q31CajlwIlDmxA1ae0OuNxq3mNMSUjwgf825DN51RAJsUxj_w6rXiA>
+    <xmx:q31Caqg_eunFHM9yAicCEQKAbOWXpQbCQEoU3kiFjQ7I8VbnvSzGoA>
+    <xmx:q31Cajdl4eV8_KYjFgZF_60Sl0vTlZtDG58g0Sv1CNmxND0tVGiLng>
+    <xmx:q31CaijyiEao9EIuYHrai8JS5iSNLdWEppg5I3ldZqi0g2t-86rYBg>
+    <xmx:q31CajzaNGVpNFmqMZXg8kdN_zp7q4QiX6s-AJwN3GIgWXuvNvO_qaPO>
+Feedback-ID: i36794607:Fastmail
+Received: by mailuser.phl.internal (Postfix, from userid 501)
+	id B65C5182007E; Mon, 29 Jun 2026 10:14:03 -0400 (EDT)
+X-Mailer: MessagingEngine.com Webmail Interface
 Precedence: bulk
 X-Mailing-List: sashiko-reviews@lists.linux.dev
 List-Id: <sashiko-reviews.lists.linux.dev>
 List-Subscribe: <mailto:sashiko-reviews+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:sashiko-reviews+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
+X-ThreadId: ApXC9W2Mc05c
+Date: Mon, 29 Jun 2026 16:13:41 +0200
+From: "Arnd Bergmann" <arnd@kernel.org>
+To: sashiko-reviews@lists.linux.dev
+Cc: linux-input@vger.kernel.org, linux-leds@vger.kernel.org,
+ "Dmitry Torokhov" <dmitry.torokhov@gmail.com>, "Lee Jones" <lee@kernel.org>
+Message-Id: <356abc3a-ff85-4238-a7b6-83eea744258d@app.fastmail.com>
+In-Reply-To: <20260629134613.F154B1F000E9@smtp.kernel.org>
+References: <20260629130329.1291953-1-arnd@kernel.org>
+ <20260629130329.1291953-7-arnd@kernel.org>
+ <20260629134613.F154B1F000E9@smtp.kernel.org>
+Subject: Re: [PATCH 6/6] [v5] gpiolib: turn off legacy interface by default
 Content-Type: text/plain
+Content-Transfer-Encoding: 7bit
 
-On lun. 29 juin 2026 at 13:03, sashiko-bot@kernel.org wrote:
+On Mon, Jun 29, 2026, at 15:46, sashiko-bot@kernel.org wrote:
+> Thank you for your contribution! Sashiko AI review found 2 potential 
+> issue(s) to consider:
+> - [High] Drivers depending on `GPIOLIB_LEGACY` rather than selecting it 
+> are rendered unselectable and silently disabled on normal builds.
+> - [Low] Disabling CONFIG_GPIOLIB_LEGACY by default causes widespread 
+> build failures for platforms and drivers still relying on legacy GPIO 
+> functions.
 
-> Thank you for your contribution! Sashiko AI review found 1 potential issue(s) to consider:
-> - [Medium] `ccu_rodiv_ops` omits the `.determine_rate` callback, which breaks rate rounding, reparenting, and proper rate propagation for clocks using `CLK_SET_RATE_PARENT`.
-> --
->
-> commit 97a1d0e7adc68eb81524d76b0c667da1b5f1be50
-> Author: Jerome Brunet <jbrunet@baylibre.com>
->
-> clk: sunxi-ng: div: add read-only operation support
->
-> Add support for sunxi-ng read-only dividers to be used by the a733
-> oscillator detection logic.
->
->> diff --git a/drivers/clk/sunxi-ng/ccu_div.c b/drivers/clk/sunxi-ng/ccu_div.c
->> index 62d680ccb524b..0e3d9e6e30fb0 100644
->> --- a/drivers/clk/sunxi-ng/ccu_div.c
->> +++ b/drivers/clk/sunxi-ng/ccu_div.c
->> @@ -143,3 +143,14 @@ const struct clk_ops ccu_div_ops = {
->>  	.set_rate	= ccu_div_set_rate,
->>  };
->>  EXPORT_SYMBOL_NS_GPL(ccu_div_ops, "SUNXI_CCU");
->> +
->> +const struct clk_ops ccu_rodiv_ops = {
->> +	.disable	= ccu_div_disable,
->> +	.enable		= ccu_div_enable,
->> +	.is_enabled	= ccu_div_is_enabled,
->> +
->> +	.get_parent	= ccu_div_get_parent,
->> +
->> +	.recalc_rate	= ccu_div_recalc_rate,
->
-> [Severity: Medium]
-> Does this struct need a .determine_rate callback to prevent breaking rate
-> rounding and parent rate propagation?
+That is the idea, yes: If someone adds back a new legacy user, they
+will get a build failure after this patch.
 
-I don't think is a problem in the specific context of this series since
-not parent on the RO clock may adjust but it is indeed something to fix
-in the next revision
-
+>> All users of the legacy interface now select CONFIG_GPIOLIB_LEGACY,
+>> so it can be turned off by default and only get built on platforms
+>> that still have one unconverted driver.
 >
-> If a driver registers a clock using these exported operations and sets the
-> CLK_SET_RATE_PARENT flag, the Common Clock Framework's
-> clk_core_round_rate_nolock() falls back to a pass-through behavior when
-> .determine_rate is missing. This causes it to forward the child's requested
-> rate unmodified to the parent, ignoring the divider scaling, and also causes
-> mux reparenting to fail.
+> [Severity: High]
+> Is this description entirely accurate?
 >
->> +};
->> +EXPORT_SYMBOL_NS_GPL(ccu_rodiv_ops, "SUNXI_CCU");
+> There appear to be drivers that use 'depends on GPIOLIB_LEGACY' rather than
+> selecting it, such as MFD_AAT2870_CORE, MFD_SI476X_CORE, and
+> SND_SOC_TLV320DAC33.
+>
+> If GPIOLIB_LEGACY defaults to 'n' without COMPILE_TEST enabled, will these
+> drivers be rendered unselectable and silently disabled on normal builds?
 
--- 
-Jerome
+Yes, correct. I made sure that all platforms that do use GPIO
+numbers select those symbols. The three drivers listed above
+can only work if a platform has a board file with the corresponding
+platform data, but nothing provides si476x_platform_data or
+aat2870_platform_data, and SND_SOC_TLV320DAC33 is already
+a hidden Kconfig symbol and disabled for all platforms.
+
+      Arnd
