@@ -1,153 +1,99 @@
-Received: from mail-pl1-f176.google.com (mail-pl1-f176.google.com [209.85.214.176])
+Received: from mail-wr1-f41.google.com (mail-wr1-f41.google.com [209.85.221.41])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CF6CD3DB62A
-	for <sashiko-reviews@lists.linux.dev>; Mon, 29 Jun 2026 07:59:53 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.214.176
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 259CF3DA5A8
+	for <sashiko-reviews@lists.linux.dev>; Mon, 29 Jun 2026 08:44:02 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.221.41
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1782719995; cv=none; b=ugzg7NVqrFO1+Jv07uh8CAXHbg3lzltffhp7IDOr2/c7eEhbm8bbUawXlHqzof/J1yDpaWgsKqSVSGdrCfZwhgPKSCXwT/EcP92fvnbKnaeOQcTuMHZWJ7x8XocsOaS7la3+lPgT/x7Q/xjPNOyJ3Qk+f1ZKp43NIe/rINVLELk=
+	t=1782722644; cv=none; b=kD4M7x3QYX9hauiYqurpiGVzba+S6/Ytta2191dHxDyna70zxEp2I0In/RxUpoW71sVT1KWZjS2F/6p6JWeitX6o5FcqosZUFwj7LuGRjA0w6V3XLPgY0HihQpYy6ZUpn/lGP9YEjOcSHnnvH7JfUO/DetruRMVOApp69z14aj0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1782719995; c=relaxed/simple;
-	bh=Fjh6McgL6DD/8o9fAgQe2P5kMAp4EdOgL+d2WCEdkpw=;
-	h=Mime-Version:Content-Type:Date:Message-Id:To:Cc:Subject:From:
-	 References:In-Reply-To; b=a0uw4azylLyXtVw/2yupML53ntzH9Bw63VLs00399338QZn0INGdoWknTqVrGyLyQayRUeSFgGS29wMipLj47QneW2ATXCDy3uQBiuT/wTtJ3rpML29mdxjBy3UXSArT5UzK4ijmADqltiIQo5aHP4E2zgqVjH2ILx7Mks5937Y=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=RNYXr7cN; arc=none smtp.client-ip=209.85.214.176
+	s=arc-20240116; t=1782722644; c=relaxed/simple;
+	bh=MIKe3kWQjK+xmv1ipQpshiw76Ja4PFM8nvJNMM+vmgY=;
+	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
+	 MIME-Version; b=T2sbZI2HsojhaJJuJjW3cstR3SkHK/EAZu987vwrsPQsgfvuD+pRvCfUcP9N75Xiw93PHvFjYY0ll3gZXt4JKgshBY3918AWqTSOJwpKy4olaAjLk8z4IVmIMp4+pj0wbaTk2q+jQXeTFnXiKrMfUrFcs62uSn3zJwHO6vMksZc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=Z8WM4+u8; arc=none smtp.client-ip=209.85.221.41
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="RNYXr7cN"
-Received: by mail-pl1-f176.google.com with SMTP id d9443c01a7336-2c9e8a1d256so8529735ad.1
-        for <sashiko-reviews@lists.linux.dev>; Mon, 29 Jun 2026 00:59:53 -0700 (PDT)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="Z8WM4+u8"
+Received: by mail-wr1-f41.google.com with SMTP id ffacd0b85a97d-470174001a0so1195203f8f.0
+        for <sashiko-reviews@lists.linux.dev>; Mon, 29 Jun 2026 01:44:02 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20251104; t=1782719993; x=1783324793; darn=lists.linux.dev;
-        h=in-reply-to:references:from:subject:cc:to:message-id:date
-         :content-transfer-encoding:mime-version:from:to:cc:subject:date
+        d=gmail.com; s=20251104; t=1782722641; x=1783327441; darn=lists.linux.dev;
+        h=content-transfer-encoding:mime-version:references:in-reply-to
+         :message-id:date:subject:cc:to:from:from:to:cc:subject:date
          :message-id:reply-to;
-        bh=rezmMRoW0TY1v4PkJTz+2piz1eElRyv9KkMLuNl5nCA=;
-        b=RNYXr7cNXgo5QRDc31rlRD7Y7SySMFjCqdodK8zkQORvfiQJbNYQiiI9H+TS2qdTbq
-         UGHBvkKUGnr0BgBv87vFSwMUy60HkkoyAL3SZob/S0+qXTtOqCZ4PtL11/kl694urg3u
-         SYbOntRwUCCpd/OoSQBahX7FJtp20CBhh2r0qGyvuk3O5rWrz6BUjoqcFOibbXjTDZLN
-         Im9zjG0GPtEFIXQvYB8NWJkVK14cYyDB/i0bo2aWp14NLAW53n4dngDzRcxLjvEvRFcF
-         RKzhzJoyE+IO+yji1VtnO1iLSK78MWR+ghbM1q5/OX9FGM0+p4d4JWz+iQndgVfw0IUq
-         bfmQ==
+        bh=PGm9QONZukO2Q5rdaZt121dw8G3tFHNBSookGlxPwSY=;
+        b=Z8WM4+u8DW67G+Q/hkbwK9vdilx6SqBt2eITHaGw4+JEHEKKr/XbrexjBbdnUkgSy0
+         7pZ1M6cVKd2/Q0Iy8PVVzA7RhJ5jc7zzLf0Q/1+V9S2mozLFHretEGMpCoXElVtvMAwp
+         rIDdKzIbn0OLpuk+Bi2tvPTOo3YOAihwYBUsBfcbo7UvRiyIaBMTN/y3z16944t3RYQ4
+         QAZ4Y3LqvOX1EeDy9kt0kKIj4Mw3ZAiynaRUT1ANxkqXXMPkG/iGfRh5cvMRkAWmczP/
+         q8cFkvO2nk2bs2cSiQsIjSrmy2AmNZ9qNGvD0SB7xS4oGT4kAFmW7KeprbFC/3DzsqNn
+         8M/Q==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20251104; t=1782719993; x=1783324793;
-        h=in-reply-to:references:from:subject:cc:to:message-id:date
-         :content-transfer-encoding:mime-version:x-gm-gg:x-gm-message-state
-         :from:to:cc:subject:date:message-id:reply-to;
-        bh=rezmMRoW0TY1v4PkJTz+2piz1eElRyv9KkMLuNl5nCA=;
-        b=YOB7GJB/Fj1ntVUrgDCDaZ0+9EF8sNj+LNX4KfiHH72huhfiMHLkZkFBgHnXU4LYHn
-         u/HOqTCL/xKDxDobU6n0D8XFGXXqC6kwEojlZ2S1suO+Za78dvxLIp2mn+LSc+ENLT5Z
-         KWO6fU+HMCdZSJXgaKoFaG5susKvzQLrAuENVLfvspHtdyiubdoZo3PoKLctxtKZWXDA
-         xWrVofEXaXFTlwuyGSgUKXqVS+p27nGs2swXOSebXNLCH292Ee9+/ntHeKNsceVIjQ02
-         hHNDJIkzL8EQKPfZpQ01VtqHA3U0K3cjGQqR7TzoFowymO+KmX7ZSdWTcAofNN09+gGB
-         drFw==
-X-Gm-Message-State: AOJu0YyQ4rLxDYzRYm2F3bolXTlk+CRBnxm83LQKjLmok6svR4X7DQUH
-	hsC6WNkXXTrSCL7G8Vdu91KemI9GVklMgjVfHgZnamduf4agoXf9RoCP
-X-Gm-Gg: AfdE7cnS6zc2q+7UN0tWcHNU9ZpNcCcbcasK3jndd9a1oY/+cRPxfgl8NoOAXrtl/cp
-	lS8FBSnmwZ0cBv5cXtmdHoNzh6DCJcY3LGiOkSt8SWbkhP0NaFIGUTlNiqRpJTDokcVkED/UWN2
-	yACo0q8Fn6t9rGBiDqzyjKjE0lzughyWsnNPjJwLpfT/39umuTQIsddiuhB7jTsBddJ8nKGLZGA
-	yQ+epchL8s/j0ClntFcvo4Ze9SXDfIeHQUmrhzEe+8yMmTJyYcuaMaX2M5LRYe3KRmfhM3Gb7z7
-	berOOVik/EPcCyADoQ5QoS8JoP59OKuQsmAx5s37JTtTAcNEhNjs4e88BV1Xa0366vQsnFNIk/P
-	oGX4uN5e+hXQFn6/J58MJsSlk23bxAn0ROR8t9vMb4D5hpC5U7Jwbf3c2YJZbb+ZPRIZxsoPQTn
-	ZfrAUVsx9Nr+hp+q7xgdlu6vmUa1lTRf9+EM/+/USZ1DGCmB4UaCKPsuS9Q4tGUbQ35Ju9u6Pf9
-	F+aTj6wvbM6/91/hx3+2Z+WOOiQD06sKnaG4eOp
-X-Received: by 2002:a17:903:2443:b0:2c9:ceb9:865b with SMTP id d9443c01a7336-2c9ceb989a7mr46743485ad.21.1782719993052;
-        Mon, 29 Jun 2026 00:59:53 -0700 (PDT)
-Received: from localhost ([143.248.188.236])
-        by smtp.gmail.com with ESMTPSA id d9443c01a7336-2c9cd6916e3sm32503885ad.40.2026.06.29.00.59.50
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Mon, 29 Jun 2026 00:59:52 -0700 (PDT)
+        d=1e100.net; s=20251104; t=1782722641; x=1783327441;
+        h=content-transfer-encoding:mime-version:references:in-reply-to
+         :message-id:date:subject:cc:to:from:x-gm-gg:x-gm-message-state:from
+         :to:cc:subject:date:message-id:reply-to;
+        bh=PGm9QONZukO2Q5rdaZt121dw8G3tFHNBSookGlxPwSY=;
+        b=kGaBbOHyDZhQIs0ztMN3uk+dv8bfHRt2msa06I3Yj9V/yTLoP6QW87qD+PS89KcAfU
+         jbaEzOr7fPQyl32g3Lev5SJ8VqvLhKaNt1aGL1Gh2+4TB/HI4CY3AMgtAMBrIZcfHgi5
+         8PvdxaC35JgsIh2Xi6mxZmH90ZCyn0p/urgmGOL1oy2CJzU0jIisImjKi+m70FnzAGkP
+         IBfG/u8fr3YIKCxgOe0WVfmIZd10I5JAsvUkh0dzMbikOHaVQzXIKj4wzJD4qyjQRu1J
+         4tWdJY+VqLCoNgjb2vuIuaDhiV4roO3wzbu36F8I7zG+ZerPFrpG4zOWvdZxv0esf2aa
+         Vw+g==
+X-Forwarded-Encrypted: i=1; AHgh+RqezJ3fz9Ynt4LicTBO1VrAgeYhy9XS/GFb5izUr+ToFEswsQem9MkVNWtSc7cVY0l6HldXmS2SjZqVJ27Gvao=@lists.linux.dev
+X-Gm-Message-State: AOJu0Yx9chPm0Y5JMEdZFGNyZZ1f3ZDuljBfAyaKagSzV18NW3PtsIX0
+	ecTlOtPaJ/U7lx/UQw2MhlETRt2sNv7qao0rUC2iZYNO/8KlzH1xD5r9
+X-Gm-Gg: AfdE7clerRBzbrt8ZRW0io28W3C6NFjuoF5LKBrEQauZXWyB63XvZCMXZz88zmOWSlN
+	pYU30aJ5EdedNVmv3uzl0tqseAjwptaJLaYVZsLAYVQ+0OqVeH3Zi39ym0H+04C8DN4L1eYxSCw
+	568hW3HBDgdULQlkpDP/mLCPL1ulX/2VZCvdJA2+VYYfFOIKS56r+m0O1h16IUbEKKoY91jLZaX
+	ZPMgOcDaAGgp0oK3QoT/LwttuJ0lhDCxNk9m6/CJn8Z71ba4TLXD7dLxP5EB1Xg0zyoWTJE+tXb
+	MJrlLnNFrFe0HOrPUErnvAIe5wTWewv1Y9GwL70nbmk9iQ3FWzGLTFtWTEfOXQ9piudmO3/vhRN
+	VXDAGBoDAMTD0jzKtncGx7iZvHPmkm2SkojvQPW4kbxmB5gPBifj3yZKD0MFVFfKHoCZJcfMXgZ
+	wfhgp2xVlHmH/T0L95CvmAPBx+X+g=
+X-Received: by 2002:a05:6000:4210:b0:470:4d27:97a3 with SMTP id ffacd0b85a97d-4704d2799d5mr12518285f8f.1.1782722641174;
+        Mon, 29 Jun 2026 01:44:01 -0700 (PDT)
+Received: from anthony.local ([2a06:c701:49b2:4c00:12ff:e0ff:fea5:3d2e])
+        by smtp.gmail.com with ESMTPSA id ffacd0b85a97d-46f8d6f10absm41208583f8f.5.2026.06.29.01.43.59
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Mon, 29 Jun 2026 01:44:00 -0700 (PDT)
+From: Amit Barzilai <amit.barzilai22@gmail.com>
+To: Javier Martinez Canillas <javierm@redhat.com>,
+	Maarten Lankhorst <maarten.lankhorst@linux.intel.com>,
+	Maxime Ripard <mripard@kernel.org>,
+	Thomas Zimmermann <tzimmermann@suse.de>,
+	David Airlie <airlied@gmail.com>,
+	Simona Vetter <simona@ffwll.ch>
+Cc: dri-devel@lists.freedesktop.org,
+	sashiko-reviews@lists.linux.dev
+Subject: Re: [PATCH 1/3] drm/ssd130x: fix column and row end address in partial updates for ssd132x
+Date: Mon, 29 Jun 2026 11:43:16 +0300
+Message-ID: <20260629084317.10265-1-amit.barzilai22@gmail.com>
+X-Mailer: git-send-email 2.54.0
+In-Reply-To: <20260622123631.8B4A31F000E9@smtp.kernel.org>
+References: 
 Precedence: bulk
 X-Mailing-List: sashiko-reviews@lists.linux.dev
 List-Id: <sashiko-reviews.lists.linux.dev>
 List-Subscribe: <mailto:sashiko-reviews+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:sashiko-reviews+unsubscribe@lists.linux.dev>
-Mime-Version: 1.0
-Content-Transfer-Encoding: quoted-printable
-Content-Type: text/plain; charset=UTF-8
-Date: Mon, 29 Jun 2026 07:59:48 +0000
-Message-Id: <DJLDHST0Y4ML.68M47LW7EDG4@gmail.com>
-To: "Alexandre Courbot" <acourbot@nvidia.com>, "SeungJong Ha"
- <engineer.jjhama@gmail.com>
-Cc: <sashiko-reviews@lists.linux.dev>, <ojeda@kernel.org>,
- <dri-devel@lists.freedesktop.org>, <dakr@kernel.org>,
- <rust-for-linux@vger.kernel.org>, <nova-gpu@lists.linux.dev>
-Subject: Re: [PATCH RFC 4/4] gpu: nova-core: gsp: convert GspMem to zerocopy
- via the transmute bridge
-From: "SeungJong Ha" <engineer.jjhama@gmail.com>
-X-Mailer: aerc 0.21.0
-References: <20260628-dma-zerocopy-bridge-v1-0-9a2895ebe30d@gmail.com>
- <20260628-dma-zerocopy-bridge-v1-4-9a2895ebe30d@gmail.com>
- <20260628172200.B116D1F000E9@smtp.kernel.org>
- <20260628182154.712621-1-engineer.jjhama@gmail.com>
- <DJLCGEB0ZTL7.3C1BGJRHW35HC@nvidia.com>
-In-Reply-To: <DJLCGEB0ZTL7.3C1BGJRHW35HC@nvidia.com>
+MIME-Version: 1.0
+Content-Transfer-Encoding: 8bit
 
-On Mon Jun 29, 2026 at 4:10 PM JST, Alexandre Courbot wrote:
-> On Mon Jun 29, 2026 at 3:21 AM JST, SeungJong Ha wrote:
->> On Sun Jun 28, 2026 at 5:22 PM UTC, Sashiko AI review wrote:
->>> This isn't a bug introduced by this patch, but could this coherent shar=
-ed
->>> memory lead to a time-of-check to time-of-use vulnerability?
->>>
->>> The driver validates lengths and checksums by reading fields like lengt=
-h
->>> from GspMsgElement, which is mapped directly into shared memory. For
->>> instance, in wait_for_msg():
->>>
->>> wait_for_msg()
->>>     let (header, slice_1) =3D GspMsgElement::from_bytes_prefix(slice_1)=
-.ok_or(EIO)?;
->>>
->>> However, receive_msg() seems to re-read the header fields directly from
->>> shared memory to advance the ring buffer pointer:
->>>
->>> receive_msg()
->>>     self.gsp_mem.advance_cpu_read_ptr(u32::try_from(
->>>         message.header.length().div_ceil(GSP_PAGE_SIZE),
->>>     )?);
->>>
->>> Can a compromised hardware component modify the message length concurre=
-ntly
->>> after the initial validation but before pointer advancement, potentiall=
-y
->>> corrupting the host read pointer?
->>>
->>> Similarly, send_single_command() initializes a message header in shared
->>> memory and then reads its element_count to advance the write pointer:
->>>
->>> send_single_command()
->>>     let elem_count =3D dst.header.element_count();
->>>     self.seq +=3D 1;
->>>     self.gsp_mem.advance_cpu_write_ptr(elem_count);
->>>
->>> Does this allow the device to race and corrupt the host write pointer b=
-y
->>> modifying element_count before it is read back?
->>
->> This is pre-existing and not changed by this patch: it only makes
->> explicit (via a checked `zerocopy` derive) what the previous `unsafe
->> impl transmute::{FromBytes, AsBytes}` already allowed implicitly -- the
->> layout is byte-identical and the message-handling path is untouched -- s=
-o
->> it neither introduces nor addresses this. I'm not familiar enough with
->> the GSP threat model to judge whether the TOCTOU is in scope here; if it
->> is worth noting, I can add a TODO comment near the affected reads.
->
-> So I understand that this as a copy-pasted Claude/Sashiko block, but
-> would also appreciate if the human behind the keyboard could provide the
-> context required to easily understand which part of the code this is
-> about.
+On Mon, Jun 22, 2026 at 12:36:30PM +0000, sashiko-bot@kernel.org wrote:
+> Pre-existing issues:
+> - [High] Potential 1-byte out-of-bounds read past the heap buffer in
+>   `ssd132x_update_rect` when device width is configured to an odd value.
 
-Sorry, that reply was an unedited block. Here is the concrete context.
+As stated in the review, this is a pre-existing issue and is not touched by
+this series, which only corrects the SET_COL_RANGE/SET_ROW_RANGE end
+addresses sent to the controller.
 
-It is the message-queue read path in gsp/cmdq.rs (wait_for_msg() /
-receive_msg() / send_single_command()).
-I haven't touched that logic; this patch only swaps the unsafe transmute
-impls for a checked zerocopy derive. If it's worth noting, I'm happy to add
-a comment near those reads.
+Gentle ping on the series -- it's been about a week with no comments. Is
+there anything you'd like changed for it to be picked up? Happy to spin a
+v2 if needed.
 
+-- 
 Thanks,
-SeungJong
-
+Amit
