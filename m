@@ -1,81 +1,87 @@
-Received: from foss.arm.com (foss.arm.com [217.140.110.172])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id F08153F6C59;
-	Mon, 29 Jun 2026 16:52:48 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=217.140.110.172
+Received: from mail2.andi.de1.cc (vmd64148.contaboserver.net [161.97.139.27])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+	(No client certificate requested)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8255C3F7899
+	for <sashiko-reviews@lists.linux.dev>; Mon, 29 Jun 2026 16:59:43 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=161.97.139.27
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1782751970; cv=none; b=piWGMYGjw9FgRtZvgK+mAkU/EF8b+mMQZQ5gE9FdNFzvISnnmNe8o/3iNZhu7scJ2E5OyGvrGBP2Rbk16IkmNlLemG6dUfVl/+5aVtFfULMdUkTHaVuitWNBjQ0BXqrhcA7rj13TY0n+dL/MQjKp3wvDf630NTuTB3Ku+DObPI4=
+	t=1782752384; cv=none; b=GSD8wNplm9jYSW3FCUT5WtLPYUYo1+3eerMsEy6opUghVNgysDn9JBJ8xh4ZbOlyxgIjWxxeEzxveMnJBSGCTiQblVaBIKHoJl5QtKeE+x0PWNahH4XIYbtTWf9Mt1a0w1s0Xz7HFpx87/BeMbaqrJZrFnJRGNyoDytT6V89Qs4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1782751970; c=relaxed/simple;
-	bh=00vW6xipBiyFR76uBGRTBR0bmLU5JmyMK3KbgqXru44=;
-	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=ZUh+a82Gm5kMeegexgXqTC1M7dPIm9rtpkn2n3KB64WzprIlD/MWhHtxiNtGb3iwxpwtuAqorhyDJrtVgYbOuC9xZDLLcus5TkI6MLqlddl5WM0N/HUsdtWROJqWI3kfAMveP9G0UUsUsrgGo1LdgtUmpce45dk8/e9tV3c2El0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=arm.com; spf=pass smtp.mailfrom=arm.com; dkim=pass (1024-bit key) header.d=arm.com header.i=@arm.com header.b=bBWwP1cp; arc=none smtp.client-ip=217.140.110.172
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=arm.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=arm.com
+	s=arc-20240116; t=1782752384; c=relaxed/simple;
+	bh=VxU/JmcOoSuyWrxPs/w+JWyEysO8s82Hp+PgAfGNA20=;
+	h=Date:From:To:Cc:Subject:Message-ID:In-Reply-To:References:
+	 MIME-Version:Content-Type; b=LxTi/AZHQLcxw6E6nbimu2hCeubabTUxyryrAFVjNNvyL/sV0PNp8mdxEHgXfJYGrdQpUzK7aUh85CRDEvUTRHLTrFsSFftziyMA1YfwstaynvqS36uRZGrhtzEVYYMUAhPH9H0mKo0js7jYUKu+X5WcU3CbyTYxRSjERd7NlTQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=kemnade.info; spf=pass smtp.mailfrom=kemnade.info; dkim=pass (2048-bit key) header.d=kemnade.info header.i=@kemnade.info header.b=Ka5bkiF7; arc=none smtp.client-ip=161.97.139.27
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=kemnade.info
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=kemnade.info
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=arm.com header.i=@arm.com header.b="bBWwP1cp"
-Received: from usa-sjc-imap-foss1.foss.arm.com (unknown [10.121.207.14])
-	by usa-sjc-mx-foss1.foss.arm.com (Postfix) with ESMTP id DB092355A;
-	Mon, 29 Jun 2026 09:52:43 -0700 (PDT)
-Received: from [10.1.36.193] (e121487-lin.cambridge.arm.com [10.1.36.193])
-	by usa-sjc-imap-foss1.foss.arm.com (Postfix) with ESMTPSA id 66F773F905;
-	Mon, 29 Jun 2026 09:52:47 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=simple/simple; d=arm.com; s=foss;
-	t=1782751968; bh=00vW6xipBiyFR76uBGRTBR0bmLU5JmyMK3KbgqXru44=;
-	h=Date:Subject:To:Cc:References:From:In-Reply-To:From;
-	b=bBWwP1cpgvjri1QeAlJlcrda+3OT6/gFQLL7wtR30IrQbkifMXtQCzQfFOZ/L/9LG
-	 Y4GR+xYmfRV+n6Aoogiv1O+aXdI76mhkbPUlWyqb+zZ2JwJEs0LucW+WM00Tne18J8
-	 EdjphcmkK3NP7KTtXQ2V40uYy4MwfaddOtFeujU8=
-Message-ID: <b8e90340-ee2a-4024-bc77-a00b139ea7ee@arm.com>
-Date: Mon, 29 Jun 2026 17:52:45 +0100
+	dkim=pass (2048-bit key) header.d=kemnade.info header.i=@kemnade.info header.b="Ka5bkiF7"
+Received: from mail.andi.de1.cc ([2a02:c205:3004:2154::1])
+	by mail2.andi.de1.cc with esmtps  (TLS1.3) tls TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384
+	(Exim 4.98.2)
+	(envelope-from <andreas@kemnade.info>)
+	id 1weFKf-0000000FdQK-24gV
+	for sashiko-reviews@lists.linux.dev;
+	Mon, 29 Jun 2026 18:59:41 +0200
+DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed;
+	d=kemnade.info; s=20220719; h=References:In-Reply-To:Subject:Cc:To:From:
+	Reply-To:Content-ID:Content-Description;
+	bh=Wl6VBPyNkT9JR6XDXNkycx4Te2988DvHWTjdeEBLZvA=; t=1782752381; x=1783961981; 
+	b=Ka5bkiF7A7BiSshhnw9+ZgbKoEB7N0UWGeYx4I/v4u0MlAOPqs1OGTYRLOIYztxPTCL3NIs+wT6
+	PdDWq0iZSRMerxxeRIfC2Gm+IrLExwB4CxLkIZtFrT+r7UipdgG8NiUMjQvxBlh4zyAxKDZ4FVxga
+	XceLOmmsfKju7Ya2xvqmNUKHFuHS0QhStNFNlvWmt/daPckH+ky/ddW5bj4nr7zFwrBqBX3CzCehk
+	UFv6qnBlj1tJWdJh5OyjuTSgu5YJXV6vNjr6eTXRXcVMvxxJqatyihl1D9nw00p2sv3KvyDlstqAC
+	Hr6Ema5wSTVp1GfmqFG8v/IYfnwuOyEZVtXQ==;
+Date: Mon, 29 Jun 2026 18:59:40 +0200
+From: Andreas Kemnade <andreas@kemnade.info>
+To: sashiko-bot@kernel.org
+Cc: sashiko-reviews@lists.linux.dev, dri-devel@lists.freedesktop.org
+Subject: Re: [PATCH v4] drm/omap: dsi: avoid sending bta sync all the time
+ in writes
+Message-ID: <20260629185940.283b101d@kemnade.info>
+In-Reply-To: <20260629160448.13D001F000E9@smtp.kernel.org>
+References: <20260629-vm-upstr-v4-1-9f0c62d8808e@kemnade.info>
+	<20260629160448.13D001F000E9@smtp.kernel.org>
+X-Mailer: Claws Mail 4.3.1 (GTK 3.24.49; aarch64-unknown-linux-gnu)
 Precedence: bulk
 X-Mailing-List: sashiko-reviews@lists.linux.dev
 List-Id: <sashiko-reviews.lists.linux.dev>
 List-Subscribe: <mailto:sashiko-reviews+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:sashiko-reviews+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v2 05/13] KVM: arm64: Detect (via ACPI) and initialize
- HACDBSIRQ
-To: Leonardo Bras <leo.bras@arm.com>, sashiko-reviews@lists.linux.dev
-Cc: kvmarm@lists.linux.dev, Oliver Upton <oupton@kernel.org>,
- Marc Zyngier <maz@kernel.org>, kvm@vger.kernel.org
-References: <20260629111820.1873540-1-leo.bras@arm.com>
- <20260629111820.1873540-6-leo.bras@arm.com>
- <20260629113242.9142A1F000E9@smtp.kernel.org> <akKSoZkYWDTE07hi@LeoBrasDK>
-Content-Language: en-GB
-From: Vladimir Murzin <vladimir.murzin@arm.com>
-In-Reply-To: <akKSoZkYWDTE07hi@LeoBrasDK>
-Content-Type: text/plain; charset=UTF-8
+Content-Type: text/plain; charset=US-ASCII
 Content-Transfer-Encoding: 7bit
 
-Hi,
+On Mon, 29 Jun 2026 16:04:47 +0000
+sashiko-bot@kernel.org wrote:
 
-On 6/29/26 16:43, Leonardo Bras wrote:
->>> +	case HACDBSCONS_EL2_ERR_REASON_IPAHACF:
->>> +		/* When size not a power of two >= 4k, exit with reserved TTLW */
->>> +		int index = FIELD_GET(HACDBSCONS_EL2_INDEX, cons);
->> [Severity: Low]
->> Does this variable declaration cause a build failure?
-> No
+> > -	if (r < 0)
+> > +	if ((!r) && wait_for_completion_timeout(&completion,
+> > +				msecs_to_jiffies(500)) == 0)
+> > +		r = -EIO;
+> > +
+> > +	dsi_unregister_isr_vc(dsi, vc, dsi_completion_handler,
+> > +			      &completion, DSI_VC_IRQ_PACKET_SENT);
+> > +	if (r)
+> >  		return r;  
 > 
->> Under standard C rules,
->> a label can only be attached to a statement, and a declaration is not a
->> statement.
-> That's not a label.
+> [Severity: High]
+> Could this lead to a stack use-after-free if the timeout is reached?
+> 
+> The wait_for_completion_timeout() can return 0 (timeout), after which
+> dsi_unregister_isr_vc() unregisters the ISR and the function returns,
+> destroying the on-stack completion. 
+> 
+> However, dsi_unregister_isr_vc() doesn't appear to synchronize with the IRQ
+> handler. If the hardware IRQ fires right after the timeout and the handler
+> executes from its lockless copy of the ISR table, could it call
+> dsi_completion_handler() with a dangling pointer to the destroyed stack
+> frame?
 
-I think Sashiko is right
+There are several places in this file having that problem. So it is not new.
+I have sent a fix here:
 
-arch/arm64/kvm/dirty_bit.c: In function 'hacdbsirq_handler':
-arch/arm64/kvm/dirty_bit.c:336:3: error: a label can only be part of a statement and a declaration is not a statement
-  336 |   int index = FIELD_GET(HACDBSCONS_EL2_INDEX, cons);
-      |   ^~~
-make[4]: *** [scripts/Makefile.build:289: arch/arm64/kvm/dirty_bit.o] Error 1
-make[4]: *** Waiting for unfinished jobs....
+https://lore.kernel.org/lkml/20260629-dsi-uaf-v1-1-a5e894f4e4d1@kemnade.info/T/#u
 
-Based on other threads you might need GCC<=10.5.0 to hit that.
-
-Obvious fix-up would be to wrap the case into curly braces :)
-
-Cheers
-Vladimir
+Regards,
+Andreas
