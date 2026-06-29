@@ -1,163 +1,98 @@
-Received: from fout-b7-smtp.messagingengine.com (fout-b7-smtp.messagingengine.com [202.12.124.150])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from cstnet.cn (smtp25.cstnet.cn [159.226.251.25])
+	(using TLSv1.2 with cipher DHE-RSA-AES256-SHA (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 14B8B346E4C
-	for <sashiko-reviews@lists.linux.dev>; Sun, 28 Jun 2026 22:13:23 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=202.12.124.150
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EFB753B1B3
+	for <sashiko-reviews@lists.linux.dev>; Mon, 29 Jun 2026 05:47:51 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=159.226.251.25
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1782684806; cv=none; b=uK1Tg1+dQyXT7MOQTvETPaneXRJLJ3tme/1qgvfqBrOlycUPEDZHN3artclQj1vCes1FrEWUrLMj0ENtBGGe25QafccbJZPQ0YjH1yG42TdWmrgp8Po4BYl+Ke00K/myr1+RkSWTVReoTS1/qfJOgOmnmcBogdkSCJqJDk6MDLA=
+	t=1782712073; cv=none; b=t8uC0RREXO22LrLB/WaDgK52DvQsgO+KWNjW4w727iMzaEEtykn+dMhpEVT21pEsNRtixCqVnV+kIw1K3H6mFCjlrM1QC54xuJXoWH++eYii3xzVxC/TzsX7ATYcjfUT2xUvyyE1NhoR9RcJ7XX+xuy6GZ5Kwxh8qHslvifE4tA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1782684806; c=relaxed/simple;
-	bh=ozaBsu5/rrlxZT3SQgt8UpGfMmLsGXhI3ZWESyfFpUk=;
-	h=MIME-Version:Date:From:To:Cc:Message-Id:In-Reply-To:References:
-	 Subject:Content-Type; b=jcRxVMtJg35r7K7U81ixPYrNA8ty8hkcNoiLAZP9+qByBukwoX/xWT6vidhtPhv5wODrTirfGgVvFctvWPizHBfqgI5GBx/wI/l2A0n5GcnssGLvYLA5FDboQLiYvoeacuS7YGi4PcVO+lyhVHijNypsQg/4DU05PR0qNvS+Lc4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=squebb.ca; spf=pass smtp.mailfrom=squebb.ca; dkim=pass (2048-bit key) header.d=squebb.ca header.i=@squebb.ca header.b=wTtQoCbb; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=ZQjUcD6R; arc=none smtp.client-ip=202.12.124.150
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=squebb.ca
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=squebb.ca
-Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=squebb.ca header.i=@squebb.ca header.b="wTtQoCbb";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="ZQjUcD6R"
-Received: from phl-compute-02.internal (phl-compute-02.internal [10.202.2.42])
-	by mailfout.stl.internal (Postfix) with ESMTP id 5EE5A1D000F4;
-	Sun, 28 Jun 2026 18:13:23 -0400 (EDT)
-Received: from phl-imap-08 ([10.202.2.84])
-  by phl-compute-02.internal (MEProxy); Sun, 28 Jun 2026 18:13:23 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=squebb.ca; h=cc
-	:cc:content-transfer-encoding:content-type:content-type:date
-	:date:from:from:in-reply-to:in-reply-to:message-id:mime-version
-	:references:reply-to:subject:subject:to:to; s=fm2; t=1782684803;
-	 x=1782771203; bh=gUt+pb9IpwUlNB7Lw1zD/n57/TpTgrylENozfOnRNmw=; b=
-	wTtQoCbbnwKQ+anX52amQaeaV3+eCkvsddMX78R65/frKM3AuXWH/tz3QVn3IfMO
-	y7/hdZBUpR07Z3odZfX0uKiiXEM07LUyGNeGKjTAV/cNiD4OJmcIFbA5RAhgwdNq
-	ve0Mei2Qcfuby6UcKIO6/aSPYL+IwhkbamUHMVy+RIuMsshiB0jrTp3Cr8t7/RfR
-	2jHcYHYfYHN4WJECkrWd2pGmCZ2LoBfyD2xornrdgbAGhqjNlytmfmiGK3lvdxLx
-	A1JCoAisnFOQ/YHCGRLxVXllk2DintKzf1mPZBWtvPkBTmw6rOanWlcj5NeA+QcV
-	UUx7olj+79P9gstXI5aLYw==
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
-	messagingengine.com; h=cc:cc:content-transfer-encoding
-	:content-type:content-type:date:date:feedback-id:feedback-id
-	:from:from:in-reply-to:in-reply-to:message-id:mime-version
-	:references:reply-to:subject:subject:to:to:x-me-proxy
-	:x-me-sender:x-me-sender:x-sasl-enc; s=fm1; t=1782684803; x=
-	1782771203; bh=gUt+pb9IpwUlNB7Lw1zD/n57/TpTgrylENozfOnRNmw=; b=Z
-	QjUcD6R/J45y1rXsB5UEeH7utnciVaXuybcdJcMXJL4pvtgnE8htfTNa0BVJifIS
-	fw7weEmzAxf5OXi1RZcmz1bgY00JahqA88z53a+3yvIOgU0pCvvXNg/XlHb0vRGX
-	HUedeW3fosG54VTV9nvTGZbBXPosfH8CyC0qGuauSslU+QofiYpPrMoCTZErdXPJ
-	DzpfR/RRA1qrl4E7uws8P4jwidvsKPORxtYout5WvER0LGQxzQTYdsIWmhwMKvHy
-	FTqQMoyfdfma5dda6o7X7EEJqXezfp8YNhW5Bp/82Q1FoVkcTYY1N+zY/jTPoVCQ
-	pS9bkRH+y8yGWDSBCQE8g==
-X-ME-Sender: <xms:g5xBapT5Y62rERuIHL3J10348adx7NvpSznMa-DM_gX2yVt0wlzerw>
-    <xme:g5xBatkPy-2nk105L8STOn1Pn4qzNLufqsoeZDuAiamets2caVLyeU1aAKbQkvyh1
-    6UtAeAx1Dfwae_OjY9jX655bLHz7PfIq9h7mJQrjU5m7AsnklbTw0E>
-X-ME-Proxy-Cause: dmFkZTGb3NFbVFloWOueSolH6l5cBlbHmmLtM1Ms9o7oEYSibMCr1SXO+mhQ/siSExmxO0
-    +ufwnIGmx2xhKyyWR/xa0aaLVdOQni+9keRxbF49QgUIVOp0cEq7zPNPHJ5LA5Jr2UW5l7
-    LBt6E/zGsGLhSd2T+F93llAaF1TorgdAXbKT2qBOFmOtrVaQgr6O7DGYenHHCPbb2Rpf5z
-    SxGmSSosspeeeaVW790hjGIa4r4TbKVItz032SyVK0nk2NG3yS9giCKhS4LhNfj2PRGr0a
-    9Z4XTAZYpYXIUOwAlutcVolOYnsLIPB4EMIDx7PnOLKvOj6+uKNQS9kQMFmzT6nzqxtnMh
-    sufBDBYfbGhsPXCsIyjze5oUgN1pghtuCE9cOQ5XjQWIvB559sFHm6SQ05e+T9J6GOsOOp
-    kg3pae8mRnnmKqZSUVPsRjtmsDdSkiAbjPBDLtiZvQLFgA88VnQf23EWEJusRMEHJsSZ89
-    M/mmiy8piu2hQOZfaFlnbiPHhJkgaOiX8oab3SGKHB1ZQBYybx1wmgMp4PJJ9leWu1sJNM
-    a9raWUikUmDGt4WVbxfpVCEY0kbxobzerOLJRHNmR/BR99rFfs8pGcpzHNa3fkuaPbvUgR
-    7Bd5zRbxiI3CgV/Nl2OF4l0rVQ03fpLcEwcv/zM2gCycqYxwyorCz8uVruLQ
-X-ME-Proxy: <xmx:g5xBai1kN4EuWC6vF9R0gxc2VmHiopRFpFvP23SecOeOnczzba150g>
-    <xmx:g5xBalOWozKuR6oK7DaGH-vRsSAoW8J9d3T55e4X4ZJfpDWV5kNe_A>
-    <xmx:g5xBai2dDIUhy4eG3pZwrzx0vKx15qzXEYoH_gIHUlN9VdKeOi2nJA>
-    <xmx:g5xBasEaQEorCmXNNe__RZDf2juLTk0u7y7UwQ5nu-xeYnZFQZnZZQ>
-    <xmx:g5xBagIcRJcPGLXfIgVYRt7qmpNZ2-9iPVdeTi6d2kNzkvRQVwj2vIBA>
-Feedback-ID: ibe194615:Fastmail
-Received: by mailuser.phl.internal (Postfix, from userid 501)
-	id 06AA72CE409C; Sun, 28 Jun 2026 18:13:23 -0400 (EDT)
-X-Mailer: MessagingEngine.com Webmail Interface
+	s=arc-20240116; t=1782712073; c=relaxed/simple;
+	bh=7eMT/5OJZExsdCRpRwYeHNZnjLSS5v1EO44ZAyej80k=;
+	h=Message-ID:Subject:From:To:Cc:Date:In-Reply-To:References:
+	 Content-Type:MIME-Version; b=VdFKEa1Rscx+n8cR6E05VQTjToXnGyHj/YZkgdtS/V4PA+peE2xPhIUuuB6UjShNq7ly0jx3Zvf4MIcdUrXLetEt8FgYsTz5u1P5P3hiWm+BlCGEkccQo6ZHX/47A64z3vtlKxh2d5+fbE6OrA5uYpRKhSjk0tuPcjBX50q8WBc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=iscas.ac.cn; spf=pass smtp.mailfrom=iscas.ac.cn; arc=none smtp.client-ip=159.226.251.25
+Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=iscas.ac.cn
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=iscas.ac.cn
+Received: from edelgard.fodlan.icenowy.me (unknown [112.94.101.182])
+	by APP-05 (Coremail) with SMTP id zQCowABXr9IFB0JqwRvqFQ--.34785S2;
+	Mon, 29 Jun 2026 13:47:49 +0800 (CST)
+Message-ID: <b7edb3650856d154b860dce9260dffe4932458af.camel@iscas.ac.cn>
+Subject: Re: [PATCH] dt-bindings: display: verisilicon,dc: make resets
+ non-optional
+From: Icenowy Zheng <zhengxingda@iscas.ac.cn>
+To: sashiko-reviews@lists.linux.dev
+Cc: conor+dt@kernel.org, devicetree@vger.kernel.org, 
+	dri-devel@lists.freedesktop.org, robh@kernel.org
+Date: Mon, 29 Jun 2026 13:47:49 +0800
+In-Reply-To: <20260629053600.336811F000E9@smtp.kernel.org>
+References: <20260629053017.4050868-1-zhengxingda@iscas.ac.cn>
+	 <20260629053600.336811F000E9@smtp.kernel.org>
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
+User-Agent: Evolution 3.58.3 
 Precedence: bulk
 X-Mailing-List: sashiko-reviews@lists.linux.dev
 List-Id: <sashiko-reviews.lists.linux.dev>
 List-Subscribe: <mailto:sashiko-reviews+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:sashiko-reviews+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-X-ThreadId: ArMcrDYeUHoR
-Date: Sun, 28 Jun 2026 18:13:02 -0400
-From: "Mark Pearson" <mpearson-lenovo@squebb.ca>
-To: "Guenter Roeck" <linux@roeck-us.net>, sashiko-reviews@lists.linux.dev
-Cc: linux-watchdog@vger.kernel.org
-Message-Id: <9860a408-cb2b-4ce4-88fe-8b65da720edd@app.fastmail.com>
-In-Reply-To: <58920807-fbde-4a7e-b9bb-5a29be5ccced@roeck-us.net>
-References: <mpearson-lenovo@squebb.ca>
- <20260625174328.3339996-1-mpearson-lenovo@squebb.ca>
- <20260625175235.49B101F000E9@smtp.kernel.org>
- <58920807-fbde-4a7e-b9bb-5a29be5ccced@roeck-us.net>
-Subject: Re: [PATCH v2] watchdog: lenovo_se30g2_se60_wdt: Watchdog for Lenovo SE30G2
- and SE60
-Content-Type: text/plain
-Content-Transfer-Encoding: 7bit
+X-CM-TRANSID:zQCowABXr9IFB0JqwRvqFQ--.34785S2
+X-Coremail-Antispam: 1UD129KBjvJXoWxJry7Xw4fCr4rKr18tw1DJrb_yoW8GF13pF
+	sxXF42kr48tFs7tFsrAr4rCa42q3Z3tF15JrnYqrWDAay7GFy3tFWakFyruayDCr18Z345
+	uw45WwnIva4q9FJanT9S1TB71UUUUU7qnTZGkaVYY2UrUUUUjbIjqfuFe4nvWSU5nxnvy2
+	9KBjDU0xBIdaVrnRJUUUk2b7Iv0xC_KF4lb4IE77IF4wAFF20E14v26r1j6r4UM7CY07I2
+	0VC2zVCF04k26cxKx2IYs7xG6rWj6s0DM7CIcVAFz4kK6r1j6r18M28lY4IEw2IIxxk0rw
+	A2F7IY1VAKz4vEj48ve4kI8wA2z4x0Y4vE2Ix0cI8IcVAFwI0_Gr0_Xr1l84ACjcxK6xII
+	jxv20xvEc7CjxVAFwI0_Gr0_Cr1l84ACjcxK6I8E87Iv67AKxVWxJr0_GcWl84ACjcxK6I
+	8E87Iv6xkF7I0E14v26rxl6s0DM2AIxVAIcxkEcVAq07x20xvEncxIr21l5I8CrVACY4xI
+	64kE6c02F40Ex7xfMcIj6xIIjxv20xvE14v26r1j6r18McIj6I8E87Iv67AKxVWUJVW8Jw
+	Am72CE4IkC6x0Yz7v_Jr0_Gr1lF7xvr2IY64vIr41lc7CjxVAaw2AFwI0_JF0_Jw1l42xK
+	82IYc2Ij64vIr41l4I8I3I0E4IkC6x0Yz7v_Jr0_Gr1lx2IqxVAqx4xG67AKxVWUJVWUGw
+	C20s026x8GjcxK67AKxVWUGVWUWwC2zVAF1VAY17CE14v26r126r1DMIIYrxkI7VAKI48J
+	MIIF0xvE2Ix0cI8IcVAFwI0_Jr0_JF4lIxAIcVC0I7IYx2IY6xkF7I0E14v26r1j6r4UMI
+	IF0xvE42xK8VAvwI8IcIk0rVWUJVWUCwCI42IY6I8E87Iv67AKxVWUJVW8JwCI42IY6I8E
+	87Iv6xkF7I0E14v26r4j6r4UJbIYCTnIWIevJa73UjIFyTuYvjxU4oUDDUUUU
+X-CM-SenderInfo: x2kh0wp0lqwv3d6l2u1dvotugofq/
 
-Hi Guenter,
+=E5=9C=A8 2026-06-29=E4=B8=80=E7=9A=84 05:35 +0000=EF=BC=8Csashiko-bot@kern=
+el.org=E5=86=99=E9=81=93=EF=BC=9A
+> Thank you for your contribution! Sashiko AI review found 1 potential
+> issue(s) to consider:
+> - [Low] The commit message incorrectly states that the controller
+> requires 'two reset lines', while the actual binding schema and
+> examples define three reset lines ('core', 'axi', 'ahb').
+> --
+>=20
+> commit 11712ddd9a2861c41656c6eb9cdbd525c93e3665
+> Author: Icenowy Zheng <zhengxingda@iscas.ac.cn>
+>=20
+> dt-bindings: display: verisilicon, dc: make resets non-optional
+>=20
+> This commit makes the resets and reset-names properties mandatory for
+> the
+> DC8200 controller variant. The commit message notes that the in-tree
+> device tree already populates these lines and the driver handles them
+> gracefully if missing in other variants.
+>=20
+> > The only variant supported by the binding now, the DC8200
+> > controller on
+> > T-Head TH1520, requires two reset lines.
+>=20
+> [Severity: Low]
+> Is the description of "two reset lines" accurate here?=20
+>=20
+> Looking at the existing schema in verisilicon,dc.yaml under the
+> resets
+> property, it defines three reset items (DC Core reset, DMA AXI bus
+> reset,
+> and Configuration AHB bus reset). Should the commit message mention
+> three
+> resets instead of two?
 
-On Sun, Jun 28, 2026, at 11:12 AM, Guenter Roeck wrote:
-> On 6/25/26 10:52, sashiko-bot@kernel.org wrote:
->> Thank you for your contribution! Sashiko AI review found 1 potential issue(s) to consider:
->> - [Medium] Incorrect error cleanup for a registered platform device leaves a zombified sysfs device.
->> --
->> 
->> commit 728400a02a11a5d2e004ae6d02e2731670483271
->> Author: Mark Pearson <mpearson-lenovo@squebb.ca>
->> 
->> watchdog: lenovo_se30g2_se60_wdt: Watchdog for Lenovo SE30G2 and SE60
->> 
->> This commit adds the watchdog driver implementation for Lenovo SE30G2 and
->> SE60 platforms.
->> 
->>> diff --git a/drivers/watchdog/lenovo_se30g2_se60_wdt.c b/drivers/watchdog/lenovo_se30g2_se60_wdt.c
->>> --- /dev/null
->>> +++ b/drivers/watchdog/lenovo_se30g2_se60_wdt.c
->> [ ... ]
->>> +static int se_30g2_60_create_device(const struct dmi_system_id *id)
->>> +{
->>> +	int err;
->>> +
->>> +	se_30g2_60_pdev = platform_device_alloc("lenovo-se30g2-se60-wdt", -1);
->>> +	if (!se_30g2_60_pdev)
->>> +		return -ENOMEM;
->>> +
->>> +	err = platform_device_add(se_30g2_60_pdev);
->>> +	if (err) {
->>> +		platform_device_put(se_30g2_60_pdev);
->>> +		se_30g2_60_pdev = NULL;
->>> +	}
->>> +
->>> +	return err;
->>> +}
->> [ ... ]
->>> +static int __init se_30g2_60_wdt_init(void)
->>> +{
->>> +	int err;
->>> +
->>> +	if (!dmi_check_system(se_30g2_60))
->>> +		return -ENODEV;
->>> +
->>> +	err = platform_driver_register(&se_30g2_60_wdt_driver);
->>> +	if (err && se_30g2_60_pdev) {
->>> +		platform_device_put(se_30g2_60_pdev);
->> 
->> [Severity: Medium]
->> Since the device was successfully added to the system bus via
->> platform_device_add() in the DMI callback earlier, will calling
->> platform_device_put() here just drop the allocation reference without
->> removing the device from the sysfs hierarchy?
->> 
->> Should this error path use platform_device_unregister() instead to avoid
->> leaving a zombie device on the bus that could cause collisions on a later
->> module load?
->> 
-> I don't understand this code either. The parallel platform_device_put()
-> on error in se_30g2_60_create_device() seems risky. Each of the Lenovo
-> drivers uses a different mechanism to register the driver and the device.
-> Why ? That just makes it more difficult to review the code.
->
-> Guenter
+Thanks for this tip, it seems that my memory in brain bitfilpped and
+this deserves a fix.
 
-Originally this was the same as the lenovo_se10 (I thought about combining them but it got messy do didn't). After review by sashiko pointed out the potential lack of free so I did this fix, but looks like this is wrong too. I need to go and revisit.
-I'm sick right now (some sort of summer flu...it sucks) but I'll update it hopefully next week and do a new version.
+Thanks,
+Icenowy
 
-On the differences between lenovo drivers - agreed. A lot of that is down to new issues being pointed out during the review of each driver as they are submitted. I'll happily bring them all up to the same base once I get this one right.
-
-Mark
