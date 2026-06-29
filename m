@@ -1,124 +1,164 @@
-Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
+Received: from DU2PR03CU002.outbound.protection.outlook.com (mail-northeuropeazon11011030.outbound.protection.outlook.com [52.101.65.30])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 58DA42E7378;
-	Mon, 29 Jun 2026 09:04:09 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
-ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1782723850; cv=none; b=RV/3tVjOwLWPgqY+Et+HAnd/EOARHcjpSYA785ze1mnxfWFUNXSLCUQg5nx22XftPWPULExru50Ne7vw2j3YSR1mX1oOdwQ7k9kKGw3d7u7Pm4PQp0NdAYW0NoMavQf1+zlTj7538rHSgswyzz9Nhf1dlWs8OyMuzBIx1DU/vbg=
-ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1782723850; c=relaxed/simple;
-	bh=RVdxQ2RAmOaNdTad8IiKHVXi3qAH2aFd0ABc3FHPUdI=;
-	h=Date:From:To:cc:Subject:In-Reply-To:Message-ID:References:
-	 MIME-Version:Content-Type; b=QLvtE2qR/vC6L0TccFbMKgBP59/0MfJC4GqIcB7IyeUhRhX6r/QdUH/23HWq1tUNe/+oYJb5uPYGwWglee6LEXUNcLsz1tTOLRocgB8gbYkv7W0CmOXoyUUsqvZcuiKBfCllKTT2SeVZ4QVVvXQ7VhIy7Gxp3YUBd7dCGmNHp38=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=gMJckqs8; arc=none smtp.client-ip=100.103.45.18
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 766503F8EA6
+	for <sashiko-reviews@lists.linux.dev>; Mon, 29 Jun 2026 09:13:03 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=fail smtp.client-ip=52.101.65.30
+ARC-Seal:i=2; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
+	t=1782724385; cv=fail; b=cj23VFvbkmIlVJjCD8+paCyY1PDUNbZdms1GdlfXEPUg0T1evR9Ir5drGzL+hLSEXxm5SScPVh7jrE1T66xWbGAmq1F7DAfOAm6ywTXfIESyDgrKf4i6gPfQ7bSHRLzZuRmXGNFQu3RfgesJanUVqFNCpD2cF0+gqyIc01F6mn4=
+ARC-Message-Signature:i=2; a=rsa-sha256; d=subspace.kernel.org;
+	s=arc-20240116; t=1782724385; c=relaxed/simple;
+	bh=hAiKE/tjjGqP7b9yLf1noMrTqrEa/G5l3y8Cw00sGUg=;
+	h=From:To:CC:Subject:In-Reply-To:References:Date:Message-ID:
+	 MIME-Version:Content-Type; b=DGWCCcUyd0YkhTKBADPL7InnmNWMyfK9WGzfQMTghcQm+35LVsJy5/Tc5uI4rTXvTEKIjdvk9nxw74KY9ayM/TGh60qEDR5gqQK+yMANs4+bDEqRM3OQzX8RpJF7OxEiyjWMi9j7CHAvNBC/iIdaObFmIQmC41pUKeXy44yIhWQ=
+ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=axis.com; spf=pass smtp.mailfrom=axis.com; dkim=pass (1024-bit key) header.d=axis.com header.i=@axis.com header.b=K6S+vBGk; arc=fail smtp.client-ip=52.101.65.30
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=axis.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=axis.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="gMJckqs8"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 581BD1F000E9;
-	Mon, 29 Jun 2026 09:04:08 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=kernel.org;
-	s=k20260515; t=1782723848;
-	bh=Z78Z17Ge6giHMbB5UqVWbp5PTueMP2nMjA5h+9o/UAQ=;
-	h=Date:From:To:cc:Subject:In-Reply-To:References;
-	b=gMJckqs8wAN5zl9IJd3F3x4ik1u9Xl+sNQ6pv/x2ONxdG9oU5XL4L9Tq1lHfqtc8D
-	 ckwonjJnQ2oZdw3tkzFAppDdNOb//XJkRJBFmCubRgkBzatmoyEfF74hqRe+wiRcdn
-	 dgM0i19j1qAxSsp+VL2Do9V7/N9lrVwmgYxTVDseQ6RQObr6Ll0RSJB7RALIVftVLt
-	 eTFbwWdPRbS2qgolWcKiEgJGTDfovFIJOWEG3nLhbdBMos/fspHds+UfQkWkBOxMdT
-	 htx7RIxZ5rsL1cvGFXwyFhcZGoo7uKQdwjEZzijTIQdPlmdVOju+SH5mDbVClmNaOa
-	 sQlSvzS10daWA==
-Date: Mon, 29 Jun 2026 11:04:06 +0200 (CEST)
-From: Jiri Kosina <jikos@kernel.org>
-To: =?GB2312?Q?=D0=BB=D6=C2=B0=EE_=28XIE_Zhibang=29?= <Yeking@Red54.com>
-cc: linux-input@vger.kernel.org, hansg@kernel.org, dmitry.torokhov@gmail.com, 
-    bentiss@kernel.org, dianders@chromium.org, linux-kernel@vger.kernel.org, 
-    sashiko-bot@kernel.org, sashiko-reviews@lists.linux.dev, 
-    superm1@kernel.org
-Subject: Re: [PATCH v6] HID: i2c-hid: Refactor _DSM helper and add
- i2c-hid-acpi-prp0001 driver
-In-Reply-To: <tencent_FD772005ED5B8FB435F3DFDF73437BC58F06@qq.com>
-Message-ID: <360r0r52-n546-s91n-s51p-893o79415s74@xreary.bet>
-References: <tencent_8AE8ED913FEC8151B4BA3D85D6BB7F3ACF08@qq.com> <tencent_FD772005ED5B8FB435F3DFDF73437BC58F06@qq.com>
+	dkim=pass (1024-bit key) header.d=axis.com header.i=@axis.com header.b="K6S+vBGk"
+ARC-Seal: i=1; a=rsa-sha256; s=arcselector10001; d=microsoft.com; cv=none;
+ b=d547sAUUqZrDfKxnYXYnbwBFfwKrbumqGVMm7SDVIzHgHpw2qEWVfLATRwhKaQBbvgHuR0NUKk47bUO9Qo6j1zJ8lptAZ6KM2stgRQuVaPLYhRnxRhJ6wIPg4KQTeQtE4TDPzqKtGu4vUtdB5ADb9aHSph9jJnvn9bk/fo2T2HCN1SWTPPP2y7iz9ld00GX5lAqXshXQWnx8EWKLKSTx489SZQgy+WGwi+duW13uSDk1K6bR0DHez2r4QADw8O4P/0pnaAG+elB1+3TxonuS+tUj6boZ8V0Ih5G08OzMzMq01j/J716zKFiWeJf+Ef8eE4Sy37JDIilItxGz350ANg==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com;
+ s=arcselector10001;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
+ bh=Z8Zt4gYXPb+idIvcPCrwGDWMCWkgI92ruPs7bFaPPCQ=;
+ b=MmyWJIpngiMSIBlxast6gb0xcEdHOlZX0k09lQeWTjew7/vRTJrSBBZo68OoOpRf9gH+iYDOVc34rnuSG+t6n85V86ErjoT5dNc4sVWNz7B/ycbH5hiaKyVUvSBRQ2J3YPz3bIqpSHiW2xDpT45I/qtvx/QIQkWrxRPJTwz6cIDKzJ3pW3NzssYJfB/IjnXUS5G7Nuk4mO5iS6qJYPSF4DTc8C+s/DvEFd5JT3SSQEiUxVxtkT35A8AZhKTwki2ZHKVaV6qSpCzB2FSV7+l7Mkkiw9pZeYA3/FmUwvoIJDiwDug2QGzs/l5oNBtVBCIxXXgrHeFNmmg1nlYoUcWwdg==
+ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass (sender ip is
+ 195.60.68.100) smtp.rcpttodomain=kernel.org smtp.mailfrom=axis.com;
+ dmarc=pass (p=none sp=none pct=100) action=none header.from=axis.com;
+ dkim=none (message not signed); arc=none (0)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=axis.com; s=selector1;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
+ bh=Z8Zt4gYXPb+idIvcPCrwGDWMCWkgI92ruPs7bFaPPCQ=;
+ b=K6S+vBGkzYxmJQjl8OFGvO3EOZwLULbcFNBcMFtD3RlQ3r1GZTG/t4RdSdVRoJbb2jzq/zjnagNL/dcmoGTE3VOC3c45/ykjBbuGRVE0LtY9M5n/DcWUZ1Doe2BbjZmK3tNf6o5PLbM0rH3rEXJLt7fxIrTxItZGlyLnGumhZnw=
+Received: from AM0P190CA0010.EURP190.PROD.OUTLOOK.COM (2603:10a6:208:190::20)
+ by DBAPR02MB6438.eurprd02.prod.outlook.com (2603:10a6:10:17c::22) with
+ Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.21.159.19; Mon, 29 Jun
+ 2026 09:12:58 +0000
+Received: from AMS0EPF000001A4.eurprd05.prod.outlook.com
+ (2603:10a6:208:190:cafe::8e) by AM0P190CA0010.outlook.office365.com
+ (2603:10a6:208:190::20) with Microsoft SMTP Server (version=TLS1_3,
+ cipher=TLS_AES_256_GCM_SHA384) id 15.21.159.19 via Frontend Transport; Mon,
+ 29 Jun 2026 09:12:58 +0000
+X-MS-Exchange-Authentication-Results: spf=pass (sender IP is 195.60.68.100)
+ smtp.mailfrom=axis.com; dkim=none (message not signed)
+ header.d=none;dmarc=pass action=none header.from=axis.com;
+Received-SPF: Pass (protection.outlook.com: domain of axis.com designates
+ 195.60.68.100 as permitted sender) receiver=protection.outlook.com;
+ client-ip=195.60.68.100; helo=mail.axis.com; pr=C
+Received: from mail.axis.com (195.60.68.100) by
+ AMS0EPF000001A4.mail.protection.outlook.com (10.167.16.229) with Microsoft
+ SMTP Server (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
+ 15.21.181.6 via Frontend Transport; Mon, 29 Jun 2026 09:12:58 +0000
+Received: from pc67007-2609 (10.4.0.13) by se-mail10w.axis.com (10.20.40.10)
+ with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.1748.39; Mon, 29 Jun
+ 2026 11:12:57 +0200
+From: Waqar Hameed <waqar.hameed@axis.com>
+To: <sashiko-bot@kernel.org>
+CC: <sashiko-reviews@lists.linux.dev>, <devicetree@vger.kernel.org>,
+	<conor+dt@kernel.org>, <robh@kernel.org>, <kernel@axis.com>
+Subject: Re: [PATCH v3 1/2] dt-bindings: power: supply: Add TI BQ25630 charger
+In-Reply-To: <20260628220739.B37191F000E9@smtp.kernel.org>
+	(sashiko-bot@kernel.org's message of "Sun, 28 Jun 2026 22:07:39 +0000")
+References: <cover.1782683551.git.waqar.hameed@axis.com>
+	<3c28e53cff6d2e6ee94f8bf516ffa75134cb0959.1782683551.git.waqar.hameed@axis.com>
+	<20260628220739.B37191F000E9@smtp.kernel.org>
+User-Agent: a.out
+Date: Mon, 29 Jun 2026 11:12:57 +0200
+Message-ID: <pndh5mlemli.a.out@axis.com>
 Precedence: bulk
 X-Mailing-List: sashiko-reviews@lists.linux.dev
 List-Id: <sashiko-reviews.lists.linux.dev>
 List-Subscribe: <mailto:sashiko-reviews+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:sashiko-reviews+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: QUOTED-PRINTABLE
+Content-Type: text/plain
+X-ClientProxiedBy: se-mail11w.axis.com (10.20.40.11) To se-mail10w.axis.com
+ (10.20.40.10)
+X-EOPAttributedMessage: 0
+X-MS-PublicTrafficType: Email
+X-MS-TrafficTypeDiagnostic: AMS0EPF000001A4:EE_|DBAPR02MB6438:EE_
+X-MS-Office365-Filtering-Correlation-Id: 4b5acaf5-88ea-4ad6-6b81-08ded5be9ce6
+X-MS-Exchange-SenderADCheck: 1
+X-MS-Exchange-AntiSpam-Relay: 0
+X-Microsoft-Antispam:
+	BCL:0;ARA:13230040|23010399003|376014|82310400026|36860700016|1800799024|13003099007|22082099003|18002099003|4143699003|11063799006|56012099006;
+X-Microsoft-Antispam-Message-Info:
+	Ubo9eJr+bVwSRsHKVDH2Qq9veRvb9yRk2FXY9Qg+sHkSKSAt3I7YuVyYWQtH2Vc/Op9dn28aLpaA0jD2fq77lpWtbAQpQXLkvNkC3RN4Ce+19Q41iswSoqKtNxnbuF+n4cRO5nNM2pONQ1rhORbQh8+om15lqJfXUqPmLQqZ68EkkQh3JawYFehyRvAbmP3CKr/d7wBtgN8rUG4lrAJ4ZDB6JHlhgmCnpyKyE2nG30WMKUqq2kH9K/5GZOdMP7QYcn18OWFmTjAR5eeLqeQPOpO48VGLNROiKUEazmM9dpnhVq1137kQ3zvs1ezYYz/2iss3HbMGh7FYxrTm+eJJDKI0zSxpWZ4FGBoPELVznM++l9ht19pxcYxdR3g4ocV/ecp1oX/MMMUEAig687PLX4y41jGpYPVVRmU2pccOTdQHkRp0yJK66fKsvTFX+ilypB2SVcPikvPnxqWAF82h4vfCUHLOA5+NbYNrhU24f95TnlRcIebu4zYqD+E1FVk29/wSkMAjKnyNoH8SuxHO17GEva+8ALUyEe7EnAMbYI2cm3kDe6ficrY3YV7UK2oa5Dcpa0sf/R8a/2hmkQM9se0F32rGWBr03FVFWeCwdtkw+2EOx0LwkcWeooH2q7HoehGl/X1Ysll8nlnVFV/4AzNr8H7B5xx1iugowWozGrKixn8YVysIn0an5ImzfwRd8cldtm8DxGVoU7duSDQa5g==
+X-Forefront-Antispam-Report:
+	CIP:195.60.68.100;CTRY:SE;LANG:en;SCL:1;SRV:;IPV:NLI;SFV:NSPM;H:mail.axis.com;PTR:InfoDomainNonexistent;CAT:NONE;SFS:(13230040)(23010399003)(376014)(82310400026)(36860700016)(1800799024)(13003099007)(22082099003)(18002099003)(4143699003)(11063799006)(56012099006);DIR:OUT;SFP:1101;
+X-MS-Exchange-AntiSpam-MessageData-ChunkCount: 1
+X-MS-Exchange-AntiSpam-MessageData-0:
+	RVUvX2R8FeTvbqAeI4RyC4SMzuAjDdZ/8tyGIzsZNO3uEAFBvn06oEbXck3KCNYVpavKquyj4wRDjzrDCI4tZna221x+3tIpNlWUfl3CbR1SFVbftD4MI4Oi1pIKZ71G40UKS6W9QnloA+5T9SqRSqhzLRDc2RlCCIL2y0wcCa9rYoOE1zJd38DTlty6EX3h3bbBXVy7KNTSB4sKDYhksP6gtJIYihHoveEzF2ObBhO5R8xNyg6Mmx98elsx6i7SHUK+0xdZTMAqZnix7SM5LfGcsNTi15+tv4+yckb3hR7lxQPeQoOuSB3ApWv7AtKWb689OSgwmYyB9rWGWL9PMKxrc5dnLt05jVt/ueCFMoq6AgI/w8Dl2uX+TyWWUPTxWIxJEqMb6K9i3hB0bUpHdW8RMsRirPajpwB1UHOyBRAZWHk4OO4zZ1rRy4GAHI4o
+X-OriginatorOrg: axis.com
+X-MS-Exchange-CrossTenant-OriginalArrivalTime: 29 Jun 2026 09:12:58.5654
+ (UTC)
+X-MS-Exchange-CrossTenant-Network-Message-Id: 4b5acaf5-88ea-4ad6-6b81-08ded5be9ce6
+X-MS-Exchange-CrossTenant-Id: 78703d3c-b907-432f-b066-88f7af9ca3af
+X-MS-Exchange-CrossTenant-OriginalAttributedTenantConnectingIp: TenantId=78703d3c-b907-432f-b066-88f7af9ca3af;Ip=[195.60.68.100];Helo=[mail.axis.com]
+X-MS-Exchange-CrossTenant-AuthSource:
+	AMS0EPF000001A4.eurprd05.prod.outlook.com
+X-MS-Exchange-CrossTenant-AuthAs: Anonymous
+X-MS-Exchange-CrossTenant-FromEntityHeader: HybridOnPrem
+X-MS-Exchange-Transport-CrossTenantHeadersStamped: DBAPR02MB6438
 
-On Wed, 24 Jun 2026, =E8=B0=A2=E8=87=B4=E9=82=A6 (XIE Zhibang) wrote:
+Cc: kernel@axis.com
 
-> Move the _DSM call that gets the HID descriptor address from
-> i2c-hid-acpi.c into i2c-hid-acpi.h as a static inline so both the ACPI
-> and the new PRP0001 driver can use it. While refactoring, move the
-> blacklist check and the _DSM call to the top of probe() to avoid a
-> pointless alloc when the device is blacklisted or does not implement the
-> _DSM.
->=20
-> Some devices, for example the Lenovo KaiTian N60d and Inspur CP300L3,
-> are declared with _HID "PRP0001" and _DSD compatible "hid-over-i2c" but
-> lack "hid-descr-addr" from the _DSD and provide the HID descriptor
-> address only through an ACPI _DSM. The OF driver fails to probe them
-> because it requires hid-descr-addr. Add a new driver that handles these
-> devices by calling the shared _DSM helper.
->=20
-> Fixes: b33752c30023 ("HID: i2c-hid: Reorganize so ACPI and OF are separat=
-e modules")
-> Signed-off-by: =E8=B0=A2=E8=87=B4=E9=82=A6 (XIE Zhibang) <Yeking@Red54.co=
-m>
-> ---
-> v2: Name the unused parameter and document why
-> acpi_device_fix_up_power() is skipped.
-> v3: Add a dev_warn() asking users to contact vendors for firmware
-> updates, and use existing locals in devm_kzalloc() and
-> acpi_device_fix_up_power().
-> v4: Double the power-up delay from 250ms to 500ms.
-> v5: Document why of_match_ptr() on the of_match_table is safe when
-> CONFIG_OF=3Dn.
-> v6: Increase power-up delay from 500ms to 750ms. During cold boot on low
-> battery, 500ms causes non-fatal I2C transfer errors (-ENXIO). 750ms
-> fixes them.
+On Sun, Jun 28, 2026 at 22:07 +0000 sashiko-bot@kernel.org wrote:
 
-Thanks for all the effort you've put into this.
+> Thank you for your contribution! Sashiko AI review found 1 potential issue(s) to consider:
+> - [Low] The devicetree binding example references an undefined phandle label
+> `&bat`, which will cause `dtc` compilation to fail during `make
+> dt_binding_check`.
+> --
+>
+> commit 4d0f17bc3ce487f6e8027b9ef945b17aba3d6bee
+> Author: Waqar Hameed <waqar.hameed@axis.com>
+>
+> dt-bindings: power: supply: Add TI BQ25630 charger
+>
+> This commit adds devicetree bindings for the TI BQ25630 battery charger.
+> It defines standard properties for I2C and interrupts, and sets up
+> requirements for a monitored battery reference.
+>
+>> diff --git a/Documentation/devicetree/bindings/power/supply/ti,bq25630.yaml
+>> b/Documentation/devicetree/bindings/power/supply/ti,bq25630.yaml
+>> new file mode 100644
+>> index 0000000000000..3f2904731c5a4
+>> --- /dev/null
+>> +++ b/Documentation/devicetree/bindings/power/supply/ti,bq25630.yaml
+>
+> [ ... ]
+>
+>> +examples:
+>> +  - |
+>> +    #include <dt-bindings/interrupt-controller/irq.h>
+>> +
+>> +    i2c {
+>> +        #address-cells = <1>;
+>> +        #size-cells = <0>;
+>> +
+>> +        charger@6b {
+>> +            compatible = "ti,bq25630";
+>> +            reg = <0x6b>;
+>> +            interrupts = <13 IRQ_TYPE_EDGE_FALLING>;
+>> +            monitored-battery = <&bat>;
+>
+> [Severity: Low]
+> Does this example reference an undefined phandle label?
+>
+> Looking at the example scope, the node with the bat label is not defined
+> anywhere. Could this cause dtc compilation to fail with a 'Reference to 
+> non-existent node or label' error during make dt_binding_check?
 
-[ ... snip ... ]
-> --- a/drivers/hid/i2c-hid/Kconfig
-> +++ b/drivers/hid/i2c-hid/Kconfig
-> @@ -22,6 +22,24 @@ config I2C_HID_ACPI
->  =09  will be called i2c-hid-acpi.  It will also build/depend on the
->  =09  module i2c-hid.
-> =20
-> +config I2C_HID_ACPI_PRP0001
-> +=09tristate "Driver for PRP0001 devices missing hid-descr-addr"
-> +=09depends on ACPI
-> +=09depends on DRM || !DRM
-> +=09select I2C_HID_CORE
-> +=09help
-> +=09  Say Y here if you want support for I2C HID touchpads that
-> +=09  are declared with _HID "PRP0001" and _DSD compatible
-> +=09  "hid-over-i2c" but lack the "hid-descr-addr" property from
-> +=09  the _DSD. The HID descriptor address is instead provided
-> +=09  through an ACPI _DSM. Known affected devices include the
-> +=09  Lenovo KaiTian N60d and Inspur CP300L3.
-> +
-> +=09  If unsure, say N.
-> +
-> +=09  This support is also available as a module. If so, the
-> +=09  module will be called i2c-hid-acpi-prp0001.
+No, `make dt_binding_check` passes. This was discussed in first patchset
+[1].
 
-The only question I have -- do we really want to have this build-time=20
-selectable by the endusers? It's unlikely that the description will make=20
-sense to most of the people, being very low-level technical, and they'd be=
-=20
-unsure what to chose.
+>
+>> +        };
+>> +    };
+>> +...
 
-Is there a reason not to include it alwyas under the I2C_HID_CORE=20
-umbrella?
-
-Thanks,
-
---=20
-Jiri Kosina
-SUSE Labs
-
+[1] https://lore.kernel.org/lkml/65f55d19b4bcf8f07300df5922ba1605bb669138.1772201049.git.waqar.hameed@axis.com/
