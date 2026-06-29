@@ -1,210 +1,149 @@
-Received: from hedgehog.birch.relay.mailchannels.net (hedgehog.birch.relay.mailchannels.net [23.83.209.81])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-wm1-f50.google.com (mail-wm1-f50.google.com [209.85.128.50])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 51542423A7B
-	for <sashiko-reviews@lists.linux.dev>; Mon, 29 Jun 2026 15:02:42 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=23.83.209.81
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3311A4266A4
+	for <sashiko-reviews@lists.linux.dev>; Mon, 29 Jun 2026 15:05:56 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.50
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1782745363; cv=none; b=kvKD85LOd59MGVqk+Z/dp9iGqLGu9jD5tzegn14/Nmjq3T9hw3T91rU4EKgnuzJlmfBReuZ6lTEW1bmP3d6iZuT+yrtYuNPgx2K0c/Ul39gm3O4unWTL2L1a5RINb7KMIeEWvJ/g183OT8Yr2fYzNs9jfC68bLe0oGAOaDqoEsg=
+	t=1782745557; cv=none; b=XL05FeOUDskrJ+8o6i/8IxedL9yYnHROl4x2d4OaE0bPmC6O+R2MrgD9dVw50xouQNUOSmIjp5CXjUNJwUGOy4QkQVXiFHSDXvTHu1YHw9s57svholVLGUn0bVwucrbykZWpdH4iYpYfXMtbMh1xmTwSYuMfBc3eDstGkwUdunk=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1782745363; c=relaxed/simple;
-	bh=bETxppE7r2zaDQBmNRICozZJzwQhrE9wCcmGlg6Qckw=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=V0C+91IxoZtR51E3xxD1Kwuwa9VSfMEO3rH5RBjfQme1DVfeuNl67qPQXxzHymc9kSNOPmhGPxa+AozG9N7EUXUfq1SGqDcng/L4EPYsDEuKVnipZgliWbeyDx1E8WDv+ihaAZjCJlaPVS+RDc+NE3GwvyAUbYv2Cry0G3olavs=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=stgolabs.net; spf=fail smtp.mailfrom=stgolabs.net; dkim=pass (2048-bit key) header.d=stgolabs.net header.i=@stgolabs.net header.b=ClG7FqVg; arc=none smtp.client-ip=23.83.209.81
-Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=stgolabs.net
-Authentication-Results: smtp.subspace.kernel.org; spf=fail smtp.mailfrom=stgolabs.net
+	s=arc-20240116; t=1782745557; c=relaxed/simple;
+	bh=NIbfOpAFlLlvaPWeifBrHOW03ZGaSqQUgrtJhDxVpjk=;
+	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
+	 MIME-Version:Content-Type; b=CBD768CNTPkeZS/YobXxRrM5FQg4afjhmUzV9xVnuOPNWP3Oxd42HpX/qe+oN/CRwUEsk5sFSphT/7vgxnKLZJf5sJntlHEUNp4qSa+m8k9MhZX+2qV3qxHeCaTYBkLWrtc8BfiIJ49xg1FNnYE56DDBNBHCihaJd70en2+T/Hc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=baylibre.com; spf=pass smtp.mailfrom=baylibre.com; dkim=pass (2048-bit key) header.d=baylibre.com header.i=@baylibre.com header.b=K47dHuDr; arc=none smtp.client-ip=209.85.128.50
+Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=baylibre.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=baylibre.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=stgolabs.net header.i=@stgolabs.net header.b="ClG7FqVg"
-X-Sender-Id: dreamhost|x-authsender|dave@stgolabs.net
-Received: from relay.mailchannels.net (localhost [127.0.0.1])
-	by relay.mailchannels.net (Postfix) with ESMTP id 230DD943086;
-	Mon, 29 Jun 2026 14:44:10 +0000 (UTC)
-Received: from pdx1-sub0-mail-a254.dreamhost.com (trex-green-0.trex.outbound.svc.cluster.local [100.98.255.9])
-	(Authenticated sender: dreamhost)
-	by relay.mailchannels.net (Postfix) with ESMTPA id 982BA9435C2;
-	Mon, 29 Jun 2026 14:44:09 +0000 (UTC)
-X-Sender-Id: dreamhost|x-authsender|dave@stgolabs.net
-X-MC-Relay: Neutral
-X-MailChannels-SenderId: dreamhost|x-authsender|dave@stgolabs.net
-X-MailChannels-Auth-Id: dreamhost
-X-Dime-Cure: 7f473c85584cb72d_1782744250019_321482182
-X-MC-Loop-Signature: 1782744250019:3095423882
-X-MC-Ingress-Time: 1782744250018
-Received: from pdx1-sub0-mail-a254.dreamhost.com (pop.dreamhost.com
- [64.90.62.162])
-	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384)
-	by 100.98.255.9 (trex/7.1.5);
-	Mon, 29 Jun 2026 14:44:10 +0000
-Received: from offworld (181-161-142-22.fo.baf.movistar.cl [181.161.142.22])
-	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
-	 key-exchange ECDHE (P-256) server-signature RSA-PSS (2048 bits) server-digest SHA256)
-	(No client certificate requested)
-	(Authenticated sender: dave@stgolabs.net)
-	by pdx1-sub0-mail-a254.dreamhost.com (Postfix) with ESMTPSA id 4gppvD3thFz105D;
-	Mon, 29 Jun 2026 07:44:08 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=stgolabs.net;
-	s=dreamhost; t=1782744249;
-	bh=92OdsPY/wMiJiP7SJGn/dV/PeVTcGI8OzmVFRfTqX/s=;
-	h=Date:From:To:Cc:Subject:Content-Type;
-	b=ClG7FqVghwvjhI1QriwIGLoA7czLtSWsxcLoNqOS0gjIbmAaZQXQhhZdoTfdes8zK
-	 PvxYTaxdI+3JISo6mTs9ZRSkz2Rm2JUrn9e+ZbdntuKUh5VGn9AogdDGdceglaXcXZ
-	 E7UwBk/OzN8QCgEhX0/tIt0CnQTX0hWjoJJL8QdQnpOq1G481loW//rCR8evKFLFNs
-	 rhP/HHEb/crtm60wyQddcs3ZYvKumgex91xDTAIzfoLo8JaXt3A/L6O7cWPftc9Z0x
-	 9zOEIuukPy3NX3O/Mw+MF/bs+SRNYB1P/pNRCtVisZ34r5Emt/M8Hmt8Qa9XMbHL25
-	 gxleVjSezD2+g==
-Date: Mon, 29 Jun 2026 07:44:03 -0700
-From: Davidlohr Bueso <dave@stgolabs.net>
-To: Richard Cheng <icheng@nvidia.com>
-Cc: sashiko-reviews@lists.linux.dev, linux-cxl@vger.kernel.org
-Subject: Re: [PATCH v5 1/5] cxl: Add BI register probing and port
- initialization
-Message-ID: <20260629144403.wuwhbqpfimdg524a@offworld>
-References: <20260615145529.13848-2-dave@stgolabs.net>
- <20260615173541.BE49D1F000E9@smtp.kernel.org>
- <ajo8nZVglGsutdpg@MWDK4CY14F>
+	dkim=pass (2048-bit key) header.d=baylibre.com header.i=@baylibre.com header.b="K47dHuDr"
+Received: by mail-wm1-f50.google.com with SMTP id 5b1f17b1804b1-49395888c7bso28152265e9.0
+        for <sashiko-reviews@lists.linux.dev>; Mon, 29 Jun 2026 08:05:55 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=baylibre.com; s=google; t=1782745554; x=1783350354; darn=lists.linux.dev;
+        h=mime-version:message-id:date:user-agent:references:in-reply-to
+         :subject:cc:to:from:from:to:cc:subject:date:message-id:reply-to;
+        bh=DAzrVW08LVfxI+Bn9EkRfmN0dtsivlXeptpZjuWvIi0=;
+        b=K47dHuDr8YnSleXWvX37HvOUQ27v9DtkJu3Ch/RPmncgT/rJEW/TU3pUD72FmQvFre
+         YFmYUBasj5OHE4TBory5H/yBEM6bnsft8/jcX/F/29pF5Ok2mmPA3AwW3py3qwvSDmmE
+         J9fbac6+5rKaNOYHP8locFqRFlkLJcyNEvbPa/pG0owAAVya0HGObCdl/OfW0fZymi5F
+         6Cd03WNxJ4mcMa/RVzreudwLDcPMWSZIM7xETXpMVB5zVXZPQjrNFe2RLr4+RydFLlG3
+         25g/ayRGF70HTVDqaCWY4Us7aQdyEnAsz7ChLHwRm1war8w4HOVCjfRV4YY4xK53uzdz
+         hbiQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20251104; t=1782745554; x=1783350354;
+        h=mime-version:message-id:date:user-agent:references:in-reply-to
+         :subject:cc:to:from:x-gm-gg:x-gm-message-state:from:to:cc:subject
+         :date:message-id:reply-to;
+        bh=DAzrVW08LVfxI+Bn9EkRfmN0dtsivlXeptpZjuWvIi0=;
+        b=B7AVvYo2xI7tLHvMOdO55x98fwy7EZQLf75ZbmFb+c3KQGS54/gRHlZx/t+SI7Zt1k
+         2S6mP67kSTjGmJdxe/2u/wIcQmNQtqmGNuqac6oEDo/6p7PTp5sm4iHT5IPmlALJmbrx
+         93vacZIVV1ygN+YhReb1kmXQjMzcYnnhug9oWPw9/uSTaN0KezF6LQSmRDd/Z3IlDsd8
+         +rJAVb2LZer+atNii8qVFAbH873UpLXOEhWQgai5COTFbFmFO7632rq8fip6G2j8q5Se
+         BQx3MaaEmD2V1TJk3UM2T11UJR0/s2xsZJAajv54z+W9BvsOl51rI++3EVY040Vk9VCw
+         vU8Q==
+X-Gm-Message-State: AOJu0YxosVgiju1X1jhL+dYllwOQ3lwfEULUYoD+/RxQ6MpQMfHQ9v+Q
+	uaN6g9ukapgK+RuXWSXMhEolC0VzwsMwIzzlg7KC4cuW1bIs77XYcpaPtcI53s5geus=
+X-Gm-Gg: AfdE7ckA3l+w6kKQUvOIcOpBrE5RRhK5LvgZ88nTFKhkuELTqLRSrMANaLGw9lk76Zm
+	1y8IxxASC/oWcCdRzIf6AWe/Y6P0UQj0NmhRidI1QmPURrXCO9AA1BR/+1ReGgl4gkS/osjkTS+
+	l/DMtzziptI6U/7IUnF4ZHeRZwb8UYxU3mdU8l0/ppvvHCVX5BjAs7DU9Sagi0NJSvefy9u0WMS
+	PZhxFJ6kpsJdN8asmYjtNRJpwTg7SNn8CFnkYH7yG5a279yBysbPFXSBBdPmonphOrvZAd01Vhz
+	icPptpQMEDg4XpwI0RjByxevbQCAwr/lATsYe0Pzp8haIBuh/jGv5hjSYPGhCfTpwGZBFgXUQKD
+	95lfFAKRCnouWitg4S/pQ0czsbYx9iH1i+nDklM9cGtXpbYned6R1iiLJeuOcL+i14W6goa1eot
+	XnoSFvfEFv7Xw=
+X-Received: by 2002:a05:600c:45c3:b0:493:9b02:484c with SMTP id 5b1f17b1804b1-493b82b9e7amr734905e9.29.1782745554300;
+        Mon, 29 Jun 2026 08:05:54 -0700 (PDT)
+Received: from localhost ([2a01:e0a:3c5:5fb1:1d21:f5d5:2d3c:23a7])
+        by smtp.gmail.com with UTF8SMTPSA id 5b1f17b1804b1-4932f100e4asm220013365e9.1.2026.06.29.08.05.53
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Mon, 29 Jun 2026 08:05:53 -0700 (PDT)
+From: Jerome Brunet <jbrunet@baylibre.com>
+To: sashiko-bot@kernel.org
+Cc: sashiko-reviews@lists.linux.dev,  linux-sunxi@lists.linux.dev,
+  robh@kernel.org,  devicetree@vger.kernel.org,  conor+dt@kernel.org
+Subject: Re: [PATCH v2 1/6] dt-bindings: rtc: sun6i: add sun60i-a733 support
+In-Reply-To: <20260629125305.0DF981F000E9@smtp.kernel.org>
+	(sashiko-bot@kernel.org's message of "Mon, 29 Jun 2026 12:53:04
+	+0000")
+References: <20260629-a733-rtc-v2-0-7b72112784f8@baylibre.com>
+	<20260629-a733-rtc-v2-1-7b72112784f8@baylibre.com>
+	<20260629125305.0DF981F000E9@smtp.kernel.org>
+User-Agent: mu4e 1.12.9; emacs 30.1
+Date: Mon, 29 Jun 2026 17:05:51 +0200
+Message-ID: <1jpl198jzk.fsf@starbuckisacylon.baylibre.com>
 Precedence: bulk
 X-Mailing-List: sashiko-reviews@lists.linux.dev
 List-Id: <sashiko-reviews.lists.linux.dev>
 List-Subscribe: <mailto:sashiko-reviews+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:sashiko-reviews+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii; format=flowed
-Content-Disposition: inline
-In-Reply-To: <ajo8nZVglGsutdpg@MWDK4CY14F>
-User-Agent: NeoMutt/20220429
+Content-Type: text/plain
 
-On Tue, 23 Jun 2026, Richard Cheng wrote:
+On lun. 29 juin 2026 at 12:53, sashiko-bot@kernel.org wrote:
 
->On Mon, Jun 15, 2026 at 05:35:41PM +0800, sashiko-bot@kernel.org wrote:
->> Thank you for your contribution! Sashiko AI review found 1 potential issue(s) to consider:
->> - [High] devm mappings for dport BI registers leak on hotplug due to being called outside the dport devres group in cxl_port_add_dport.
->> --
->>
->> commit a836080fdf13fa334055f7f13a95491b66ef793f
->> Author: Davidlohr Bueso <dave@stgolabs.net>
->>
->> cxl: Add BI register probing and port initialization
->>
->> This commit adds register probing for BI Route Table and BI Decoder capability
->> structures. It introduces helpers to map the BI Decoder of a downstream port
->> at dport-creation time and a port's own BI capability during port probe.
->>
->> > diff --git a/drivers/cxl/port.c b/drivers/cxl/port.c
->> > index ada51948d52fa..ca8d8c14b7876 100644
->> > --- a/drivers/cxl/port.c
->> > +++ b/drivers/cxl/port.c
->>
->> [ ... ]
->>
->> > @@ -261,6 +321,17 @@ static struct cxl_dport *cxl_port_add_dport(struct cxl_port *port,
->> >  	/* This group was only needed for early exit above */
->> >  	devres_remove_group(&port->dev, no_free_ptr(port_dr_group));
->> >
->> > +	if (dev_is_pci(dport_dev)) {
->> > +		switch (pci_pcie_type(to_pci_dev(dport_dev))) {
->> > +		case PCI_EXP_TYPE_ROOT_PORT:
->> > +		case PCI_EXP_TYPE_DOWNSTREAM:
->> > +			cxl_dport_map_bi(dport);
->>
->> [Severity: High]
->> Does this leak devm mappings if the dport is hot-removed?
->>
->> Looking at cxl_port_add_dport(), devm_cxl_add_dport_by_dev() creates a
->> devres group for the dport on the parent port's device. However,
->> cxl_dport_map_bi() is called after devm_cxl_add_dport_by_dev() returns,
->> meaning the devres group has already been closed.
->>
->> Because cxl_dport_map_bi() calls devm_cxl_iomap_block() against the parent
->> port device, these devm allocations bypass the dport group and attach
->> directly to the parent port device.
->>
->> If the dport is hot-removed, the dport devres group is released, but the BI
->> capability mappings appear to be left behind. If the dport is subsequently
->> re-added, won't devm_request_mem_region() fail with -EBUSY due to the
->> physical address region conflict, permanently breaking BI capabilities?
->>
+> Thank you for your contribution! Sashiko AI review found 1 potential issue(s) to consider:
+> - [Low] The `clock-output-names` property has a global `maxItems: 3`
+> constraint and a description limiting it to three clocks, which contradicts
+> the new clock outputs (IDs up to 11) added for the sun60i-a733-rtc.
+> --
 >
->Hi Davidlohr,
+> commit a1565b632e372c724867216463a453c9d1600ad2
+> Author: Jerome Brunet <jbrunet@baylibre.com>
 >
->I think sashiko-bot's is right on this part, this part runs after devm_cxl_add_dport_by_dev()
->has already closed the dport's devres group, so the BI request_mem_region()/ioremap() land on
->the port's devres list outside that group. On runtime dport removal the group release won't free
->them, and re-adding the dport then fails the BI region request with -EBUSY.
+> dt-bindings: rtc: sun6i: add sun60i-a733 support
+>     
+> Adds a new rtc compatible for the sun60i-a733 SoC and new IDs for the
+> peripheral oscillator clock gates of this SoC.
 >
->The dport RAS mapping is done inside __devm_cxl_add_dport() while the group is still open for
->this reason.
->I would suggest mapping BI the same way which is to move cxl_dport_map_bi() into __devm_cxl_add_dport()
->next to the RAS setup, and set map->host like RAS does.
+>> diff --git a/Documentation/devicetree/bindings/rtc/allwinner,sun6i-a31-rtc.yaml b/Documentation/devicetree/bindings/rtc/allwinner,sun6i-a31-rtc.yaml
+>> index 9df5cdb6f63f2..197a6f67b180a 100644
+>> --- a/Documentation/devicetree/bindings/rtc/allwinner,sun6i-a31-rtc.yaml
+>> +++ b/Documentation/devicetree/bindings/rtc/allwinner,sun6i-a31-rtc.yaml
+>> @@ -33,6 +33,7 @@ properties:
+>>            - enum:
+>>                - allwinner,sun20i-d1-rtc
+>>                - allwinner,sun55i-a523-rtc
+>> +              - allwinner,sun60i-a733-rtc
+>>            - const: allwinner,sun50i-r329-rtc
+>
+> [ ... ]
+>
+>> diff --git a/include/dt-bindings/clock/sun6i-rtc.h b/include/dt-bindings/clock/sun6i-rtc.h
+>> index 3bd3aa3d57ce1..5132a393ca4b6 100644
+>> --- a/include/dt-bindings/clock/sun6i-rtc.h
+>> +++ b/include/dt-bindings/clock/sun6i-rtc.h
+>> @@ -6,5 +6,9 @@
+>>  #define CLK_OSC32K		0
+>>  #define CLK_OSC32K_FANOUT	1
+>>  #define CLK_IOSC		2
+>> +#define CLK_HOSC_UFS		8
+>> +#define CLK_HOSC_HDMI		9
+>> +#define CLK_HOSC_SERDES0	10
+>> +#define CLK_HOSC_SERDES1	11
+>
+> [Severity: Low]
+> Will adding clock IDs up to 11 conflict with the existing clock-output-names
+> constraint in allwinner,sun6i-a31-rtc.yaml?
+>
+> The clock-output-names property currently has a global maxItems constraint
+> alongside its description:
+>
+>   clock-output-names:
+>     minItems: 1
+>     maxItems: 3
+>     description:
+>       The RTC provides up to three clocks
+>
+> If a device tree author attempts to define an array of clock-output-names
+> to document all outputs for the allwinner,sun60i-a733-rtc node, won't it fail
+> dt_binding_check validation because it exceeds the maximum allowed items?
 
-I went with this adding a new devm_cxl_dport_bi_setup() helper and calling it from
-__devm_cxl_add_dport():
+Not quite sure what to do with that one.
 
-diff --git a/drivers/cxl/core/pci.c b/drivers/cxl/core/pci.c
-index cdb741d09b9e..5511a8b33062 100644
---- a/drivers/cxl/core/pci.c
-+++ b/drivers/cxl/core/pci.c
-@@ -929,6 +929,44 @@ int cxl_port_get_possible_dports(struct cxl_port *port)
-  	return ctx.count;
-  }
-  
-+static void cxl_dport_map_bi(struct cxl_dport *dport)
-+{
-+	struct cxl_register_map *map = &dport->reg_map;
-+	struct device *dev = dport->dport_dev;
-+
-+	if (!map->component_map.bi_decoder.valid) {
-+		dev_dbg(dev, "BI Decoder registers not found\n");
-+		return;
-+	}
-+
-+	if (cxl_map_component_regs(map, &dport->regs.component,
-+				   BIT(CXL_CM_CAP_CAP_ID_BI_DECODER)))
-+		dev_dbg(dev, "Failed to map BI Decoder capability\n");
-+}
-+
-+/**
-+ * devm_cxl_dport_bi_setup - Map BI Decoder registers on a CXL dport
-+ * @dport: the cxl_dport that needs to be initialized
-+ *
-+ * Must be called while the dport's devres group is open so iomap
-+ * allocations are released on dport removal.
-+ */
-+void devm_cxl_dport_bi_setup(struct cxl_dport *dport)
-+{
-+	if (!dev_is_pci(dport->dport_dev))
-+		return;
-+
-+	switch (pci_pcie_type(to_pci_dev(dport->dport_dev))) {
-+	case PCI_EXP_TYPE_ROOT_PORT:
-+	case PCI_EXP_TYPE_DOWNSTREAM:
-+		dport->reg_map.host = dport_to_host(dport);
-+		cxl_dport_map_bi(dport);
-+		break;
-+	default:
-+		break;
-+	}
-+}
-+
-  /*
-   * BI requires 256B Flit operation on the link. RP/DSP/endpoint must
-   * also have the BI Decoder cap mapped (@bi); for USPs the BI RT cap
-diff --git a/drivers/cxl/core/port.c b/drivers/cxl/core/port.c
-index 63005cf0fa91..74bbc195d624 100644
---- a/drivers/cxl/core/port.c
-+++ b/drivers/cxl/core/port.c
-@@ -1264,8 +1264,10 @@ __devm_cxl_add_dport(struct cxl_port *port, struct device *dport_dev,
-  
-  	cxl_debugfs_create_dport_dir(dport);
-  
--	if (!dport->rch)
-+	if (!dport->rch) {
-  		devm_cxl_dport_ras_setup(dport);
-+		devm_cxl_dport_bi_setup(dport);
-+	}
-  
-  	/* keep the group, and mark the end of devm actions */
-  	cxl_dport_close_dr_group(dport, no_free_ptr(dport_dr_group));
+The h616 compatible devices all exposed more than 3 clock through the
+provider, even if the higher IDs did not have define.
 
-Thanks,
-Davidlohr
+The clock output names for the h616 compatible device are not really
+supposed to be defined through DT ... at least AFAIU ??
+
+-- 
+Jerome
