@@ -1,148 +1,89 @@
-Received: from CO1PR03CU002.outbound.protection.outlook.com (mail-westus2azon11010006.outbound.protection.outlook.com [52.101.46.6])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-wr1-f49.google.com (mail-wr1-f49.google.com [209.85.221.49])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8E0C039B97E;
-	Mon, 29 Jun 2026 07:11:05 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=fail smtp.client-ip=52.101.46.6
-ARC-Seal:i=2; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1782717066; cv=fail; b=L9dpR19w45+OxukPeQALICOwDmIoJL9GklcLRc5hokoxSf0+jCb/Nk7A4CXr8NnSZDMMr3gA9gY/5A5h03sjF4F3v1bZTDhfcw51Umypu9hcZ2vXi8bR4N9gTCbFQm+gU03YUlNbX2CPuwt8LRSqmtWNRMDtqy0JsZqNGyRRynY=
-ARC-Message-Signature:i=2; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1782717066; c=relaxed/simple;
-	bh=NxgzIuEY3lRHTX1pISZhbFXHtP1ZyczjeCRXmt7PT0E=;
-	h=Content-Type:Date:Message-Id:From:To:Cc:Subject:References:
-	 In-Reply-To:MIME-Version; b=CGynvpRiDQhqeROyzTUmcfK7k9wru/SnJVW+BtaPoeXYGo6xknl8loJSgeCYZd27//O0L16xwHXfrMKCENVVV1RpIRDGYSR1WiwO0Ml5SjzxEfgx85x7kkVkjkTNtbnsQaerupBzJ3GjAlKGQ7xNRYAe0gjv479W1lYztQtJSTg=
-ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=nvidia.com; spf=fail smtp.mailfrom=nvidia.com; dkim=pass (2048-bit key) header.d=Nvidia.com header.i=@Nvidia.com header.b=moem1u7O; arc=fail smtp.client-ip=52.101.46.6
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=nvidia.com
-Authentication-Results: smtp.subspace.kernel.org; spf=fail smtp.mailfrom=nvidia.com
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 85A44394780
+	for <sashiko-reviews@lists.linux.dev>; Mon, 29 Jun 2026 07:12:01 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.221.49
+ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
+	t=1782717122; cv=none; b=p7y+cfLnqbWZPceYEJwsPl+2vFiW2rc0nXWcTZN/nlQk/C2A7pyOK5VrAnxRlihgjyY2QpchGMaE17jCq8BvomYzBVQOtHsHSCkkL2BeeLPDIKj74EQTnbnAzJQ5Z2J6zvxwbhDPQJfwuqHtyfVcp0EP7weNnDLP8fsrhusWpwI=
+ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
+	s=arc-20240116; t=1782717122; c=relaxed/simple;
+	bh=5dLAwEvtWaHtLcVbYsoHyc9TqtGJVQ5X1Y4VsvB2t/o=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=XSXNnwvc4yzkCeABSVIdCXaOG3pqV0vTx8oF0maJa/guJJqR1NSKrR5LzpIhhCvkhyP8fibXI/z9UkxCGY5AGwjCWWOUjPUggP/86Wyi8HKKDKyoykStGBZtb0fDhWKLjUzwOrJx38x8WwA6B9fxuEML/xuS/uBXpfZCfTbW7bk=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=AYJZOEX3; arc=none smtp.client-ip=209.85.221.49
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=Nvidia.com header.i=@Nvidia.com header.b="moem1u7O"
-ARC-Seal: i=1; a=rsa-sha256; s=arcselector10001; d=microsoft.com; cv=none;
- b=QSr7XJmtUy4wcFrO0sox40FXe0GnZhdkKNeCZQ0vEyPmdeR0u3tdUKuelbHle2p550buQS0wpe0eNJ2o0pFntk/fcdeABZPeBXnY16ft35SNJL8COlpuVyCnCDrq/pW7N/khDA5YnL9bbEtx4ssrmeHcYhcgU1wDJMmNIBR7g7Mxklkduq0Rrc4i72KdOS/cIfVH8lDtfJcdawNjjRnhzhsccbmF8M09I+kiwRCIi14u2B/fdp72qwhYo6nIT0fbIlx4aU40ZhznYL1BlHINlxPLOGi+PuwyClhlCTE7wxCTXpPZAPRGpuS51N6ML13yukRG80Bc0fkOeetBhvVfhw==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com;
- s=arcselector10001;
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
- bh=NxgzIuEY3lRHTX1pISZhbFXHtP1ZyczjeCRXmt7PT0E=;
- b=CnqM8/XtxiEnUsou7m5uQVRV0mrs2xH8SszBWH6dAhpTIY/8vY9r0xtJOoljlewORvSF0UVVGCrqjptbxMEeC2cFLCAbkhJnqhH5n9QwB4DZRSMZqEJ6s2MukHY8mKgNDw6sM3VpaO7LencQibwvfYmHBZVNDEIVC32yTCkG+CvMPcKt+lsXUbf2hBHlUWpGomEM6OPr8xAMVAI+vEUPuUPgPDp8QocKTmwcy6jlDZAG79nEDubmXWMaSd94AA0ucKY9OnUXScA2rvh++znRhZ9TqQ8YHHy9CCRuMsaozJZbEC2M9tNIsCGoDIGH/9kX8uo99hgUM7ksGmZIYlMPOw==
-ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
- smtp.mailfrom=nvidia.com; dmarc=pass action=none header.from=nvidia.com;
- dkim=pass header.d=nvidia.com; arc=none
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=Nvidia.com;
- s=selector2;
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
- bh=NxgzIuEY3lRHTX1pISZhbFXHtP1ZyczjeCRXmt7PT0E=;
- b=moem1u7OwqKRdy4BU5rYzvWRXskFmRIObdMavEIBudfGyIvTsA+ahxAxZi21rozIFsEMrsTvCWazM/kg0VsKYiOrzBWhjW6WuEKpaT1LMOZq7sDYu62iUx83ucKDtH611Z0/o3aQZVtulVJ83IL8Sxd5+sMkhhug/XdaHFi+czhBw3zLVF6sRSOsvWTcN4JlcaMgCXO1KM0JsiPVWKMA35xSEhq+ek2/Ktj/5Pes/iZ7KKWMN7XtN2wFhGGErHdRyrRHPyE53HPAopfVQHOjmcK0gF3YJpcASABDs0hNDTUrKF+Yf8YVFhjBBnJke9ricH1ip7c88np1jCulBIahEg==
-Authentication-Results: dkim=none (message not signed)
- header.d=none;dmarc=none action=none header.from=nvidia.com;
-Received: from CH2PR12MB3990.namprd12.prod.outlook.com (2603:10b6:610:28::18)
- by BL4PR12MB9533.namprd12.prod.outlook.com (2603:10b6:208:58f::21) with
- Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.21.159.19; Mon, 29 Jun
- 2026 07:11:01 +0000
-Received: from CH2PR12MB3990.namprd12.prod.outlook.com
- ([fe80::7de1:4fe5:8ead:5989]) by CH2PR12MB3990.namprd12.prod.outlook.com
- ([fe80::7de1:4fe5:8ead:5989%4]) with mapi id 15.21.0159.018; Mon, 29 Jun 2026
- 07:11:01 +0000
-Content-Type: text/plain; charset=UTF-8
-Date: Mon, 29 Jun 2026 16:10:57 +0900
-Message-Id: <DJLCGEB0ZTL7.3C1BGJRHW35HC@nvidia.com>
-From: "Alexandre Courbot" <acourbot@nvidia.com>
-To: "SeungJong Ha" <engineer.jjhama@gmail.com>
-Cc: <sashiko-reviews@lists.linux.dev>, <ojeda@kernel.org>,
- <dri-devel@lists.freedesktop.org>, <dakr@kernel.org>,
- <rust-for-linux@vger.kernel.org>, <nova-gpu@lists.linux.dev>
-Subject: Re: [PATCH RFC 4/4] gpu: nova-core: gsp: convert GspMem to zerocopy
- via the transmute bridge
-Content-Transfer-Encoding: quoted-printable
-References: <20260628-dma-zerocopy-bridge-v1-0-9a2895ebe30d@gmail.com>
- <20260628-dma-zerocopy-bridge-v1-4-9a2895ebe30d@gmail.com>
- <20260628172200.B116D1F000E9@smtp.kernel.org>
- <20260628182154.712621-1-engineer.jjhama@gmail.com>
-In-Reply-To: <20260628182154.712621-1-engineer.jjhama@gmail.com>
-X-ClientProxiedBy: TY4P301CA0067.JPNP301.PROD.OUTLOOK.COM
- (2603:1096:405:36a::11) To CH2PR12MB3990.namprd12.prod.outlook.com
- (2603:10b6:610:28::18)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="AYJZOEX3"
+Received: by mail-wr1-f49.google.com with SMTP id ffacd0b85a97d-46cacc39191so702199f8f.0
+        for <sashiko-reviews@lists.linux.dev>; Mon, 29 Jun 2026 00:12:01 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20251104; t=1782717120; x=1783321920; darn=lists.linux.dev;
+        h=in-reply-to:content-disposition:mime-version:references:message-id
+         :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
+        bh=14U3oSmp6/cxdfs7VbabXG2V4XXAB0Fo6JU3//lbVyA=;
+        b=AYJZOEX3QaGuhWgB8+pFfDN1HWvi2LDaNr8nqxO8i5glPe6KrU4QTXI2THDsipt1Av
+         3DNsQlGRfeP3SSQo4jyIF27JjGNOTYNFjRsNY8Fp5n3sZ2MACDF4TkbRNz7F9sEoLxc7
+         T0me56kjAuOhxJuOYEksvP0YrieVtW4lCfJgwlQEqSohJgk5jDBozQlvVev8YIhrAyxb
+         SIlQ9xjxWRVqzu24nOxhkOP3EysXAen18jB4eOnOJp3ix+DJ385vm6LVHaswTxIcaQOo
+         L9W2dMfu8qH2lBKyYEQHq6jHqiBYrlbMwqmdaambM/0zHe5MOfm4vaNQ2a2LZiYiGktX
+         Y3pw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20251104; t=1782717120; x=1783321920;
+        h=in-reply-to:content-disposition:mime-version:references:message-id
+         :subject:cc:to:from:date:x-gm-gg:x-gm-message-state:from:to:cc
+         :subject:date:message-id:reply-to;
+        bh=14U3oSmp6/cxdfs7VbabXG2V4XXAB0Fo6JU3//lbVyA=;
+        b=XAlmuSDCQdVoWicZZLqUTrNsffhfgCgLoCJ3ZljqPnbI6FSMxpXp8uquJpFJPW7csu
+         NHyFK9n1GM3P0IRnjnXMu54SIveHnnFPULuYqNBkgBpIyDD5YAlV+/A/pPNOV4IKPOP6
+         PTu3UQwDk7Lke+vYkE+rWJNcbdLp98cZ3L7shMTy4dB17LzE7A1OXmD9f0n2hfR8MWaz
+         hQPARCLTNcYRdGn4Uia6B8Cd2g3j0bQ3CmUdBiv99+ZXXFVM5LADbkMn1Of8xpLkZPe6
+         tfmeK0e7HKCzvH8tHd9w0HV6cZWYVHPO5Z5hZuWzHlb4RAHcUxvAZ1VRFVTDltsyomw9
+         HSLA==
+X-Gm-Message-State: AOJu0YzzG71BxBO697lPcmvx8r52d+rogSDtdeeIq4KI6BEWdxOskUmw
+	3crWAyT7kL9YNL8iGFiP8MHQHvolbOzIW4kwMd27AtyXb0xLOqZP5gGbvHAVMO8J
+X-Gm-Gg: AfdE7cketKWPhBFSqfRN310nlAHEknT+vrPpw3woj0Bzu8t213UL+tlvaCuE2QlRCx2
+	0IAey5y56EbSSQ8YJqs96oDNkfL00p1KNvcs5dm3G7bUdG/WVsddRSkkAiPl+M2qmJiXvnAlr/o
+	zk9R9qBpJ6dAaJcfinz7dMILL4kzm5j/7G8FI7rpCQyTbeEV1oMjcurYqs/7WCG6ywQ+VFjznMx
+	fFxnID7QfXM8Rfed1jC4ZPEK3CtX/3zxMuRSZQTX9RdBjQuu8ay9i+6OV3ZP0NGFV6bQXa9n8Th
+	uOjdgtPhlscGAE+F8hxr30x9DGIFlVs/ZiVtERXiodqROj8hT+4xhPL51bUGcL2Nq/PtuGjm8AU
+	EsmsLIbIogzhBTGMrb3Caj6hSSHFffTWVGymezKZ2lEvMed54EvnpKfGUw5X7+WCBaQUmzBekZP
+	hXDmCB0X75zA==
+X-Received: by 2002:a5d:5888:0:b0:460:6b12:1783 with SMTP id ffacd0b85a97d-46da706dbd9mr24010558f8f.4.1782717119929;
+        Mon, 29 Jun 2026 00:11:59 -0700 (PDT)
+Received: from localhost ([2c0f:3d00:6be:8900:9cf4:43df:e612:817b])
+        by smtp.gmail.com with ESMTPSA id ffacd0b85a97d-470f55acda0sm19216148f8f.23.2026.06.29.00.11.58
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Mon, 29 Jun 2026 00:11:59 -0700 (PDT)
+Date: Mon, 29 Jun 2026 10:11:55 +0300
+From: Dan Carpenter <error27@gmail.com>
+To: sashiko-reviews@lists.linux.dev
+Cc: dri-devel@lists.freedesktop.org
+Subject: Re: [PATCH] drm/vmwgfx: Fix NULL vs error pointer bug in
+ vmw_prime_import_sg_table()
+Message-ID: <akIauwCZJNQwGrI_@stanley.mountain>
+References: <akIR3WlKLCiCTb5T@stanley.mountain>
+ <20260629064342.7FB8B1F00A3A@smtp.kernel.org>
 Precedence: bulk
 X-Mailing-List: sashiko-reviews@lists.linux.dev
 List-Id: <sashiko-reviews.lists.linux.dev>
 List-Subscribe: <mailto:sashiko-reviews+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:sashiko-reviews+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-X-MS-PublicTrafficType: Email
-X-MS-TrafficTypeDiagnostic: CH2PR12MB3990:EE_|BL4PR12MB9533:EE_
-X-MS-Office365-Filtering-Correlation-Id: d5523aba-8fbb-472f-f299-08ded5ad933e
-X-MS-Exchange-SenderADCheck: 1
-X-MS-Exchange-AntiSpam-Relay: 0
-X-Microsoft-Antispam:
-	BCL:0;ARA:13230040|23010399003|10070799003|376014|1800799024|366016|4143699003|56012099006|11063799006|22082099003|18002099003;
-X-Microsoft-Antispam-Message-Info:
-	xI9SIEtNfwY1TaSzvpKVA90O+2tq6RucbpXreBYKKdfgdHdH5n0sJKatqJq+yr1QCGmXMO1r7RhuWK8pJ5SqbMnm2Mcodt5NPFOoe6we8BGEZ/ivnie+ik7aDH2Lz9uRkEVHFSZzn1cNp/l89a+Xgwm6mMA8H/tJZC7Xo0PgM6EdYBF+3kOgonGVWgm2b0NiebMp3/nkSHI7Mp0aA+OVXW2ksM1dP8S1y/cTN/yeEUAtpX0kLKlhGOH914MltNmgbqV0qbIbh/v26wnS5A3GBreWN1XwbEO2qKv1R85EWAnp4+LhGR/Nq62TaQ5KBzdv+iB2tujHcZHk/P9E2Fhpd4iLT0KFIUOMQnTM+q7QhKrIN/jzAQBe5aUOJG3xeSIGs9mjzS9FH+H6eGfcoolzPeQmpVCuNFb0s7PNA9Iv6dXRisaSIgR69dVdtHdNcVN45Z/woc4+vb/0cfBBLLifVxKCL0ZEKKy1hfQtkGRCXJ0FmvslgXR0izGdUb72ebQP04At3tliCxe4x0FhwQqSV+sv6msYYUHA/K+OylPufHxPQdpD0v3Rt0fTkoVNdfAlbZCFCRrAciw7hiyouqf819jgwBTS3QtxijijGrpfsrrz33sw/q2RygzNCymcH/27qSeAlJJ4C41yU98cZCteAFBTuXo4mzh7iugNGl4H9kY=
-X-Forefront-Antispam-Report:
-	CIP:255.255.255.255;CTRY:;LANG:en;SCL:1;SRV:;IPV:NLI;SFV:NSPM;H:CH2PR12MB3990.namprd12.prod.outlook.com;PTR:;CAT:NONE;SFS:(13230040)(23010399003)(10070799003)(376014)(1800799024)(366016)(4143699003)(56012099006)(11063799006)(22082099003)(18002099003);DIR:OUT;SFP:1101;
-X-MS-Exchange-AntiSpam-MessageData-ChunkCount: 2
-X-MS-Exchange-AntiSpam-MessageData-0:
-	=?utf-8?B?S0xMTmMvaHFHVVdTWWpPNnNFWUx4R1Ezb0NPTVozYWdoWHBjeTdiZ0xyaHBo?=
- =?utf-8?B?RTFjU3d5dy82bXp6UTdvRzRxbkdCY1BMOXczSGh5WjNjUjB0UHpGd0NDY0lH?=
- =?utf-8?B?WTF6eVJtb3c5SkpoemVzM1Uzb09kUmxJRUFZbEN3OUtMd0FHbEx3SEpkYlZk?=
- =?utf-8?B?aURVK1FOdzh2amo3c00wNDZYR0w2UTFmSW4wRTR2YXpBNHE1Nm1kbVlDSDlQ?=
- =?utf-8?B?YnFOaGQ0cUp0Ulp2MENUUkQ4ZUVrU0RqbVFGbk5hVlJ1cVF0eU56WE5JSFdM?=
- =?utf-8?B?KzZSRzFzQ3hUSWhuOUxROGNXdG11QzBnbFE2TzZsUWdvSlBqVXhVSjhlZWlo?=
- =?utf-8?B?WGNTMHB5ZW0vZmJFSGtEbnp3dXBvYWZ5UU1lZnRFQTFGaFBJcWUweDlVM3Zr?=
- =?utf-8?B?K3FqR0FCRGlXOWMxell0MVJpcDF1aG53VlZORGtCR0UxT0YwaHdFdVpudjBH?=
- =?utf-8?B?VTV3cFgxR294N1lrT3RqREErZUNjNGxQdG9vdHVzVy82azY4TzJsODV5WHdz?=
- =?utf-8?B?QlBqOXdnWmc1WDJma3B2QzZmeWkzUFZYeGhaVEV3MS9NRTJSRWlSbHErUUs2?=
- =?utf-8?B?cDdjOURyNVAzc3l6L0hFbFhTeStEUGgxRjdlOEVzY2hjaGpNK3JrS0pUMW1U?=
- =?utf-8?B?bFJhWEJaWER4QWI2bXNVUFNMbnRlc1NBaEZnMXhISEdIZWVGMHJSUHdNK0VI?=
- =?utf-8?B?Z0JGRmtRdTkxOG9mQTRsVUl5NkhjZnplMnozZlhCeWZaaFhvU1JsbWNiQlhq?=
- =?utf-8?B?alYxTmVIaXBpSE9aakxRcS9Xc1I3ME0zbzd2VzJ1cmdiMWFQd1RYMGZabVd2?=
- =?utf-8?B?WGpkdVJ4NW41SDk4eUdMd2VRUmE5VDFNNHdTY0FBNVZQNmhGbTdpMHgwd0VL?=
- =?utf-8?B?TzBlZVU4SjhlNUhqb1hyYjI0eDRlSDFuTTRxaEQ5OTFJNjlaUGtMQm5HZm5h?=
- =?utf-8?B?QWVMbk5mQ3NFWHZKSTBmbk1WeUVhSzI4VURBSktYYVNCcU5SYzNGdTZwdlAy?=
- =?utf-8?B?aDRDT2crbDh1RlNndnROUWVaZVBmZWh1V1k4ZFVCWUZoa3F6NVFXWlRmd1hw?=
- =?utf-8?B?YTRnNUdyK0pjU2ZlK1dNSkJPSTBhakY2N1E0TG9KVWh0Z3M5Vk5FcU5VUDFX?=
- =?utf-8?B?ank0Yk1tVHBQU1h0OWg5REo1Z1cvYjkveGd5ZEVtbGV3TW4zQjFsWHdPcFNs?=
- =?utf-8?B?WVZYSWY1L09VNGZlYXUvMG0yYjVkRUdjZmpreEJUNDFnRHV2TmZNR1o2dFA4?=
- =?utf-8?B?SHpicDk3TVNEdnlRKzNOdS9qaTdGUExmMWRCR0svMzRKemJtaGxhcFNHQk90?=
- =?utf-8?B?aEI2TkprOHVUYnYwWVJtS2w0bjA5ZVB3SmVFUzMrZjdsYVFuMXdVNnF0ZTky?=
- =?utf-8?B?ODc5UmtZTUorMGlWMWNTQnRCUi9VazJNOFZZeVc0NFNrRloxMEwrN2FLSG5T?=
- =?utf-8?B?V010OSsrVzVINTFVS0cwb0FjQ2N4R1RyNVBCbmxmMUpieGhQamlKNTJnbWlR?=
- =?utf-8?B?aXNwUVRCYTl6eHRmZXp1QU9qcjU4enhQOEtpV0hQRkR6b01zTXNVMDFJeTZX?=
- =?utf-8?B?THVHakJrOWhXaHpXL1NqcEQxekxxL0pLSGxhVFkwQlRrbDJhK0NkbjVnbmVF?=
- =?utf-8?B?cTEzTWdNRUJ3YzkzN29pVHZnQkhDa2hselN2dFBuK0NzTzBiY0xFOU9CbnVv?=
- =?utf-8?B?M2dlY2h4RWdPVENwWGhwcEtvS0llcWd5dGNMT3dHaUErM3pEV1R2WnpXZXV2?=
- =?utf-8?B?YTBTVjVod0V5TmthZWs4YkNZSm1xaUdEUDlPZXRtOW9NWTQwMzFQTVlSVDBM?=
- =?utf-8?B?ZTh1THI3Q3BRbG1NR214cFRTck9mNnpaOFc2RzlwRyszVkxrNkxJR0s0c1dm?=
- =?utf-8?B?UUFMcDFEcGg2ZGFQZkhpTHRkcmR0MldnUkRFSTVXVEFWc3d4Y3FMWHZmeEF4?=
- =?utf-8?B?UUkveVdyamY5dnVPOENxRGJMcEhWTEFFeHBLUnhoeXBDRWZNWDBRa3Z0ZHZW?=
- =?utf-8?B?SXVNdFB0V2tXa0hmZXUxZUZ0czcrT2F0bzlJYnQ2Uk1Pd3JhaU5YTFRTWStC?=
- =?utf-8?B?LzNTRXdlMWY1bkNNajZIY3VBMW9iNCtQT1U5aDB4WEFaTXlUVFdnZytQV04z?=
- =?utf-8?B?dHgwZXhiSk1Bb3NXNHRiaHo1YUwwc0NuRUFrN1MrSW5VRXlDM1BUVTJ1RHFE?=
- =?utf-8?B?eEpJUzAzMEFkV0JoMmlaaWQ3Wkt6a3IzMkdMVU5HYnBmTUZJTGJ0NThUTDQ1?=
- =?utf-8?B?dmNIMXpuUU80UTJBNS96YjJuRUw1UGtWM2xyOE9va1JMTHlKTDMxNDJQT0RT?=
- =?utf-8?B?ZU9Jc3dsejB1c1hHWXlpNzVpL1FKY0F0R0gzWElvMVkzTUpUcFB3VFFZQmlv?=
- =?utf-8?Q?dIMHscE1etoR2dDFCmX2PuIoiqLniLu9d+Ym0qS2prjWq?=
-X-MS-Exchange-AntiSpam-MessageData-1: N/ZsM+ebQQAdVg==
-X-OriginatorOrg: Nvidia.com
-X-MS-Exchange-CrossTenant-Network-Message-Id: d5523aba-8fbb-472f-f299-08ded5ad933e
-X-MS-Exchange-CrossTenant-AuthSource: CH2PR12MB3990.namprd12.prod.outlook.com
-X-MS-Exchange-CrossTenant-AuthAs: Internal
-X-MS-Exchange-CrossTenant-OriginalArrivalTime: 29 Jun 2026 07:11:01.3435
- (UTC)
-X-MS-Exchange-CrossTenant-FromEntityHeader: Hosted
-X-MS-Exchange-CrossTenant-Id: 43083d15-7273-40c1-b7db-39efd9ccc17a
-X-MS-Exchange-CrossTenant-MailboxType: HOSTED
-X-MS-Exchange-CrossTenant-UserPrincipalName: O9oK/ojMy2xdCFSJ/7dl2w8FeSPlISCA06dGGTJBo0WzPmBVP2oasXwrB2jiPXFDBLG90Yh0dBQL35oJ0ld5iQ==
-X-MS-Exchange-Transport-CrossTenantHeadersStamped: BL4PR12MB9533
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <20260629064342.7FB8B1F00A3A@smtp.kernel.org>
 
-On Mon Jun 29, 2026 at 3:21 AM JST, SeungJong Ha wrote:
-> This is pre-existing and not changed by this patch: it only makes
-> explicit (via a checked `zerocopy` derive) what the previous `unsafe
-> impl transmute::{FromBytes, AsBytes}` already allowed implicitly -- the
-> layout is byte-identical and the message-handling path is untouched -- so
-> it neither introduces nor addresses this. I'm not familiar enough with
-> the GSP threat model to judge whether the TOCTOU is in scope here; if it
-> is worth noting, I can add a TODO comment near the affected reads.
+On Mon, Jun 29, 2026 at 06:43:12AM +0000, sashiko-bot@kernel.org wrote:
+> Thank you for your contribution! Sashiko AI review found 1 potential issue(s) to consider:
+> 
+> Pre-existing issues:
+> - [High] The error path unconditionally returns ERR_PTR(-ENOMEM), masking the actual error code from vmw_bo_create().
+> --
 
-So I understand that this as a copy-pasted Claude/Sashiko block, but
-would also appreciate if the human behind the keyboard could provide the
-context required to easily understand which part of the code this is
-about.
+Fair enough.  It's better to propagate the error code.
+
+regards,
+dan carpenter
+
