@@ -1,120 +1,103 @@
-Received: from us-smtp-delivery-124.mimecast.com (us-smtp-delivery-124.mimecast.com [170.10.133.124])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-ed1-f51.google.com (mail-ed1-f51.google.com [209.85.208.51])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3278E332EAD
-	for <sashiko-reviews@lists.linux.dev>; Mon, 29 Jun 2026 11:02:34 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=170.10.133.124
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 114DD38A718
+	for <sashiko-reviews@lists.linux.dev>; Mon, 29 Jun 2026 11:37:38 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.208.51
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1782730956; cv=none; b=H6zNSvXk+8sB5EtoRFap6KXHCcopX7kr1SdHtmuni4eXmt5AW+HJFCk+WBI1Jlze5gf+v9bzRi7bTaJjtWd9osC/x27IbMHByIXJ+xWsgobRchOE1XVIH2TabLJzlAAaX6NbQe6hLL9eeCWbbrqs7UOJxzpE2h2Tlufh4Fb8tsE=
+	t=1782733060; cv=none; b=S67mqAxqB5SS6uJdkPkAosGxD1YeaVeQdSwsTiFdXEFFVHtuKDGBR8KzHZJ7Es5GxA1Da7/DAmLlRzEWetiyenBJigcU8/mtQN8Vtr0/QsndTRFO+6C1whKrp7j5ydn8/Uu/bpMfFpElYjZzBbn2HZtgoTQlHaGqieZR02Y8kF4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1782730956; c=relaxed/simple;
-	bh=zjh5mpPt/l8KeG3MwBmajn6B5tOyg8JTogBMs1zgZGA=;
+	s=arc-20240116; t=1782733060; c=relaxed/simple;
+	bh=yo/QqEyBv6r0KEfB6JhNXuJFLEKJf6YiuY5wQi5XRbg=;
 	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
-	 MIME-Version:Content-Type; b=h0dch/cQQA4bU6q5PkFmALacbjUDgslA7ywNBzwdCC6FfXGQ9ZG10se+bSkiQmAAcpn8fHByVyBOlERKJz3wJs1UxQRUsbTuA2KCauOmvYy2/CfDrup3SNapRPbh4dd/ugGCShBPKwBO7OqwkkWZOd8q1i83j2xuJeDn1B8Xrxs=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=redhat.com; spf=pass smtp.mailfrom=redhat.com; dkim=pass (1024-bit key) header.d=redhat.com header.i=@redhat.com header.b=SNrswBqn; arc=none smtp.client-ip=170.10.133.124
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=redhat.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=redhat.com
+	 MIME-Version:Content-Type; b=TqE+xgVxD3HZW90EGnibYsnmgXFEP2kg06FdkSHM4m9qEs1B7TInaE62KqR7v53p6swzlJ3DwSAOpk6Zd3+HgL1SdP7RTE6N6KVQxaeFi+Jd7DjCvXoUqpD0eQ7A9bJ70jJgKNam0G4aOG6C6R1SoG29GOPMGRiqKMt02WkYfQ4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=cloudflare.com; spf=pass smtp.mailfrom=cloudflare.com; dkim=pass (2048-bit key) header.d=cloudflare.com header.i=@cloudflare.com header.b=B9RE+efH; arc=none smtp.client-ip=209.85.208.51
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=cloudflare.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=cloudflare.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=redhat.com header.i=@redhat.com header.b="SNrswBqn"
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
-	s=mimecast20190719; t=1782730954;
-	h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
-	 to:to:cc:cc:mime-version:mime-version:content-type:content-type:
-	 in-reply-to:in-reply-to:references:references;
-	bh=V08Udq0tZlJLOccj0MLLEN1U44SsQfheARIHuvO4nm0=;
-	b=SNrswBqnEknwZk8HZJIplMUuP3dZENJZ3blltZ5F8ZoenM1psfWUTQxaJg9KahD4oLmN9z
-	c8U3MeoZjaFVDk2l1URvt707eomqdWtXoP1Eos3Zs7K44WR+bQFADF+SMsoyq6DIc99MSQ
-	bvWak7yfEImp2EKjRdG2ltnsIYJ4S8A=
-Received: from mail-wm1-f70.google.com (mail-wm1-f70.google.com
- [209.85.128.70]) by relay.mimecast.com with ESMTP with STARTTLS
- (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-596-eJujwFmYMpW4fo_fLEqhog-1; Mon, 29 Jun 2026 07:02:32 -0400
-X-MC-Unique: eJujwFmYMpW4fo_fLEqhog-1
-X-Mimecast-MFC-AGG-ID: eJujwFmYMpW4fo_fLEqhog_1782730952
-Received: by mail-wm1-f70.google.com with SMTP id 5b1f17b1804b1-4932f0fdcebso20199855e9.2
-        for <sashiko-reviews@lists.linux.dev>; Mon, 29 Jun 2026 04:02:32 -0700 (PDT)
+	dkim=pass (2048-bit key) header.d=cloudflare.com header.i=@cloudflare.com header.b="B9RE+efH"
+Received: by mail-ed1-f51.google.com with SMTP id 4fb4d7f45d1cf-697e96dd8d2so5049553a12.1
+        for <sashiko-reviews@lists.linux.dev>; Mon, 29 Jun 2026 04:37:38 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=cloudflare.com; s=google09082023; t=1782733057; x=1783337857; darn=lists.linux.dev;
+        h=mime-version:message-id:date:user-agent:references:in-reply-to
+         :subject:cc:to:from:from:to:cc:subject:date:message-id:reply-to;
+        bh=wsUvbYZueAc+svWz2xljZ6btlooKMmGWQDBlphVR8PI=;
+        b=B9RE+efHk0boi0smUPj4hHFtxZezQ8BOnwmV+XPQlu4tsCS8cbJPCYT3kgnhWrDOob
+         BCdrMoB6RRGYpk97rByog/U0UpxcXd9G+EqnnHrdbS3uAIg7H9VQjlnPgckA98uNd+9J
+         6O64sORkKhzILRlLW5vmhVxi+yHKVMzOs7yChBfOpwkFQvlOCBGqxDGg7Q2npxjDAo3m
+         sOex/v/wEr+eYAoRdOSYqImuEIC75xcuSTKJi1A7RMwmMA51y62IkLI0wYkykKrQubec
+         KBvbc4DrGcVCTHo6AM61z0qyGB7uiTF6BPjIhQZm/F9xYfP0w+wKiLrap0auF5sP/ljS
+         baMA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20251104; t=1782730952; x=1783335752;
-        h=mime-version:message-id:date:references:in-reply-to:subject:cc:to
-         :from:x-gm-gg:x-gm-message-state:from:to:cc:subject:date:message-id
-         :reply-to;
-        bh=V08Udq0tZlJLOccj0MLLEN1U44SsQfheARIHuvO4nm0=;
-        b=JCRsFOxdxofRUycWwKdPKIHvzoaZB0fHJ39cUiQA+r0lZLIkx7cdcw/y4d+4XSX36X
-         Yl8Roe9FLW/ZFB8PZaYvzNquwmroZNCTPxVJA5r7mjKJ7JBF8edOP2zlxUJcvwgGTeXB
-         VWL6ym5jXAPS8/TmNtqyE7izBWXZcT03sy6U8X91JBIs7muerD2fKOnLst7iCjNg+NfX
-         bmefjK1x6oOsP5s09x2NNEWkGOFHlQuYm5u93C+Pfgc/rccZ2Lc/EAp7luGsEnI6njcv
-         K6vz6MWl8aAke1Er+XZD4r0+X5KZY2jfIwVOPDvqGnriR/WXFropyGXa/pa1ZKLY+Iuv
-         4UZw==
-X-Forwarded-Encrypted: i=1; AFNElJ/NRRQiJ3Hk/1Z1URjIe3Oe5oa4JbY1afd2CXIlBlqTVjlklKK/AgBtTmtwLb22j90/0UUF1urTZV67h39ZDCY=@lists.linux.dev
-X-Gm-Message-State: AOJu0Yzr0WzzhwIIctwa7fXgwMmo1EvBIVSU8Cm720Gcmn9ukRYuR3IW
-	vTqv/39L+BvRuKHNShsBywUDrfSDihWI4n8H9/ASEFF7245RxejpJD9MMsCVVZLc7RXpQmS92qx
-	4sofIVo4uyYQf8onKTgjKIUUKy1Auvw/ksFqiNJe9YR+xIz/z22GrdhzDN4MKTWKqYmF+dg==
-X-Gm-Gg: AfdE7cnr47/TDdTYDdSVAEwdNsO2aHuGSwIyc8xmhYXbi2fAwUPMeF7zIdEMDP310iW
-	lMWO3Asmwl0BOeBHmQggyBmYW+WeSancnhNyV0QTaxSbuOrhxHsBMfymYWuWDl31ea/1vL1xqm+
-	Nck5Zh707yLp9Z79PB4g2X1iUmz5iclJdwkr2KQ3bVSjPz5DM/1MnKrW81qj9kl4IQK5M0h8ieI
-	IchQxmsOpt6jLZpWtIEJfVFxOXU/GbN6t18NvEnhf4zZmaV7kxjmCjtS5QfTelLtaHlZhrPPE5n
-	Np+Z/fnY0/8UshHU0QF/2EdGg1YAe+gZketxYCyBZ3AAI4zy1yGV6FMKc1SiGa1lADfj0K4AE0x
-	xM5AgdnhJ3BjQktu+D60JOfUqEJo8G4OosXH8+0qQ4j62LqJFA4U+2ci1/+uhSEAgvmDvVg==
-X-Received: by 2002:a05:600c:3b28:b0:48a:906b:14ca with SMTP id 5b1f17b1804b1-4926687e77emr234847825e9.20.1782730951693;
-        Mon, 29 Jun 2026 04:02:31 -0700 (PDT)
-X-Received: by 2002:a05:600c:3b28:b0:48a:906b:14ca with SMTP id 5b1f17b1804b1-4926687e77emr234847085e9.20.1782730951162;
-        Mon, 29 Jun 2026 04:02:31 -0700 (PDT)
-Received: from localhost (62-151-111-63.jazzfree.ya.com. [62.151.111.63])
-        by smtp.gmail.com with ESMTPSA id 5b1f17b1804b1-49268f7670bsm300917355e9.0.2026.06.29.04.02.29
+        d=1e100.net; s=20251104; t=1782733057; x=1783337857;
+        h=mime-version:message-id:date:user-agent:references:in-reply-to
+         :subject:cc:to:from:x-gm-gg:x-gm-message-state:from:to:cc:subject
+         :date:message-id:reply-to;
+        bh=wsUvbYZueAc+svWz2xljZ6btlooKMmGWQDBlphVR8PI=;
+        b=BjbJV9nI0yEleD2zPeOBKLc6iXXyVh2Qs9lUL5KiOoiPNqPi7QcblZXn+hfKJjTOH1
+         dMaG0cJi8lBcnDq+2In7/OS1zQ9LoT7uYXRD55IOVVpOCWaMDHDEmTJWqItxxqIGg+3k
+         U7phwytg0a30k96sYhvrF5ZieeE47OYcXy0ArChga3cSctirU3DTIbfEC6YLeAdmKVMK
+         BVcBNvQ6VWi49hPR6nsUrJMAo5HOfmt7/DZayMmtfEk1Hnjf4Afo0p6j87U7s7Bskhzs
+         c6tV0wQprclBgTmohWuZhlFFl5xwlJDZ8ucXyii2IVasTpt4V8/S+L/lraSEiYM7RT0s
+         MweA==
+X-Gm-Message-State: AOJu0YyGWfsQMhJ4HvSzDj5LYinxBtGG/Kha4IMYm+PjdtsUBThrtRcg
+	OQi2/2gDCGDVcsI86EcXOZtCnuS1qcvwL4z6YP9mWNhQR8Ka3q9FVq/Ee0FIZrSJne0=
+X-Gm-Gg: AfdE7clqWjX2CmYmn4kD6NPwbYwaCuywsvcDK6bgIKqcvmpozeHyVbqvJMEzfC1BT3q
+	p0hEHSjHY3P16hydMoLvlamlnbcAOidk2Buf6Vuq3Hl4O/hhpZSaY34ln5AvIPPdF4TbWaqe9k8
+	OKSN/QyhjIOtWoLq2t4HKb+E3lcZvn5yukOk1tO/tkxSTa3qO3EpuHNbpjtPQ/gtnF4auoZu+0x
+	t3YvVLdns8BVxHIPQEy78I+waGx1nqQba/Spc3TBHiG8ZQMiy86LRpM+pDeaN1hz0zdf38PKFt3
+	CM/GUA5fEwJWFXa4thpNZObkAbrqC/E2LKlT28Nqcfrsn6vvcznoUJbBlHnoXodcdjyjehPjokP
+	Q6pLn+tR72v/UB99Q029iLYcm4dNMWHd9VKTe5h1MU4FMrF5D7LcOimE1rTE0JEs2BwRKA12Ux5
+	A9FU0PkG693jvzRmMFNs4Z+85HPw==
+X-Received: by 2002:a05:6402:3415:b0:698:3e69:615f with SMTP id 4fb4d7f45d1cf-6983e697ddbmr3013953a12.4.1782733057478;
+        Mon, 29 Jun 2026 04:37:37 -0700 (PDT)
+Received: from cloudflare.com ([104.28.21.182])
+        by smtp.gmail.com with ESMTPSA id 4fb4d7f45d1cf-6986625efc1sm1527299a12.19.2026.06.29.04.37.35
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Mon, 29 Jun 2026 04:02:29 -0700 (PDT)
-From: Javier Martinez Canillas <javierm@redhat.com>
-To: Thomas Zimmermann <tzimmermann@suse.de>, treding@nvidia.com,
- maarten.lankhorst@linux.intel.com, mripard@kernel.org, airlied@gmail.com,
- simona@ffwll.ch, neil.armstrong@linaro.org, jesszhan0024@gmail.com,
- rayyan@ansari.sh
-Cc: dri-devel@lists.freedesktop.org, sashiko-reviews@lists.linux.dev, Thomas
- Zimmermann <tzimmermann@suse.de>
-Subject: Re: [PATCH v3 0/7] drm/sysfb: simpledrm: Various improvements
-In-Reply-To: <20260625094509.157581-1-tzimmermann@suse.de>
-References: <20260625094509.157581-1-tzimmermann@suse.de>
-Date: Mon, 29 Jun 2026 13:02:28 +0200
-Message-ID: <87h5mld2yj.fsf@ocarina.mail-host-address-is-not-set>
+        Mon, 29 Jun 2026 04:37:36 -0700 (PDT)
+From: Jakub Sitnicki <jakub@cloudflare.com>
+To: Michal Luczaj <mhal@rbox.co>
+Cc: sashiko-reviews@lists.linux.dev,  bpf@vger.kernel.org
+Subject: Re: [PATCH bpf v2 1/4] bpf, sockmap: Reject unhashed UDP sockets on
+ sockmap update
+In-Reply-To: <e08be4f5-0bd9-4228-843d-86ed20594bac@rbox.co> (Michal Luczaj's
+	message of "Sun, 28 Jun 2026 23:59:37 +0200")
+References: <20260626-sockmap-lookup-udp-leak-v2-0-7e7e201c951a@rbox.co>
+	<20260626-sockmap-lookup-udp-leak-v2-1-7e7e201c951a@rbox.co>
+	<20260626205814.BAC3C1F000E9@smtp.kernel.org>
+	<e08be4f5-0bd9-4228-843d-86ed20594bac@rbox.co>
+User-Agent: mu4e 1.14.1; emacs 30.2
+Date: Mon, 29 Jun 2026 13:37:34 +0200
+Message-ID: <87v7b137cx.fsf@cloudflare.com>
 Precedence: bulk
 X-Mailing-List: sashiko-reviews@lists.linux.dev
 List-Id: <sashiko-reviews.lists.linux.dev>
 List-Subscribe: <mailto:sashiko-reviews+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:sashiko-reviews+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-X-Mimecast-Spam-Score: 0
-X-Mimecast-MFC-PROC-ID: TYnFfKq3afH9KAPDQrQ48oXrS7QA8gAG8qExskGtTaY_1782730952
-X-Mimecast-Originator: redhat.com
 Content-Type: text/plain
 
-Thomas Zimmermann <tzimmermann@suse.de> writes:
-
-Hello Thomas,
-
-> Patches 1 to 5 improve validation of the values provided by the
-> device firmware.
+On Sun, Jun 28, 2026 at 11:59 PM +02, Michal Luczaj wrote:
+> On 6/26/26 22:58, sashiko-bot@kernel.org wrote:
+>> [Severity: High]
+>> Could a memory ordering regression here allow unbound UDP sockets to still
+>> bypass this check?
+>> 
+>> In udp_v4_get_port(), the flag and hash are set:
+>> 
+>> net/ipv4/udp.c:udp_v4_get_port() {
+>>     ...
+>>     sock_set_flag(sk, SOCK_RCU_FREE);
+>>     sk_add_node_rcu(sk, &hslot->head);
+>>     ...
+>> }
+>> 
+>> Because these stores lack a memory barrier between them, could sk_hashed(sk)
+>> return true on another CPU while SOCK_RCU_FREE is not yet visible, allowing
+>> the leak to still trigger?
 >
-> Patches 6 and 7 improve support for panel orientation. There's a rotation
-> property in the DT panel node. Read the value and set the connector's
-> orientation property accordingly. To do so, patch 6 moves the existing
-> code for parsing the rotation to drm_of.c. This makes it available to
-> simpledrm without introducing a dependency on DRM_PANEL.
->
-> v3:
-> - use shared helper for parsing the panel orentation (Thierry)
-> - fix framebuffer size checks (Sashiko)
-> - minor improvements
-> v2:
-> - further improve input validation (Sashiko)
->
+> I'd like to verify it on a weakly-ordered CPU; please give me a day or two.
 
-The whole series looks good to me.
-
-Reviewed-by: Javier Martinez Canillas <javierm@redhat.com>
-
--- 
-Best regards,
-
-Javier Martinez Canillas
-Core Platforms
-Red Hat
-
+False positive, IMO.
+Both ->get_port and sock_map_sk_state_allowed run with sk_lock held.
