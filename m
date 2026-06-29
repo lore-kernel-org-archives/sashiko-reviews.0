@@ -1,39 +1,46 @@
-Received: from fanzine2.igalia.com (fanzine2.igalia.com [213.97.179.56])
+Received: from mailtransmit05.runbox.com (mailtransmit05.runbox.com [185.226.149.38])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AFE18383339
-	for <sashiko-reviews@lists.linux.dev>; Mon, 29 Jun 2026 21:23:08 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=213.97.179.56
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1E99E3AE1A9
+	for <sashiko-reviews@lists.linux.dev>; Mon, 29 Jun 2026 21:41:11 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=185.226.149.38
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1782768191; cv=none; b=KphfVeCdzijjMSk9kGU0pzt3X5LPdYpksIHtPGBYnuqnwvcL1zm44wfc3+SLqoNuaOnWMrkPUy3/xrFp+gkw3OGH60Mh+GBgrCoVpjAOzCdr07ZO8RPicCnZQHuzwxSQQIw8TT/iyXb0f40l38BjzLV9pxYluENFBHuOi48CsX0=
+	t=1782769276; cv=none; b=o0GfJPgSUq7s4qtmqNO7DSUCO6LcTakoN7KfgmoAByyH4SoUifOGgStAezmGrK5RlLxXFYefmY/vqBCMPo+ffjIrmE8/16b6UdRlCpEjVH9pYpOTzqccpPs9TVHH3yw2B3VUUrt3psE8wg4WqBGnnGVEq4Fn2VHf20II2Taj/1o=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1782768191; c=relaxed/simple;
-	bh=BdyV0AfwZ0caIH+WEYF9oFajefR6ftl1XAxpbTOXjBA=;
+	s=arc-20240116; t=1782769276; c=relaxed/simple;
+	bh=q/UZhJLTcR/gXnQX8qZu7rmqKVgYwFJt8zGK4X3m5bQ=;
 	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=IBeehmDNNASZhPflON3D9XyepaopefGllxZxuxIBNNk/kjXpJCRzRnB8OsR9KLQ8+elUC59C5zyJ5QuEGCWbh8Uqh31I1sPj8uucTiODgXjeUHsornzv87VyZsD/mQP47Br8pkgZGm4aVCyoJJ5Brr2C5DiHCCOHkvqDt47/Jtw=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=Igalia.com; spf=pass smtp.mailfrom=Igalia.com; dkim=pass (2048-bit key) header.d=igalia.com header.i=@igalia.com header.b=SFrAqTJ7; arc=none smtp.client-ip=213.97.179.56
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=Igalia.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=Igalia.com
+	 In-Reply-To:Content-Type; b=CH3RJpP+sTwLtRmUTFJKPYrkbUtHyifzIasNBlOfpxwRsiBUb88VgwHyfVzqk0a3gLC7V+OuseEYkcK72SC+xmnaMHahZYeyUkZ+WcoqXTC1BVm4aGoCczwtOq1kIqn4dY4qYoZKC2bIydEIOpv59vzV4cJ6I6viwxTCyOYus+g=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=rbox.co; spf=pass smtp.mailfrom=rbox.co; dkim=pass (2048-bit key) header.d=rbox.co header.i=@rbox.co header.b=K3fzcSq1; arc=none smtp.client-ip=185.226.149.38
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=rbox.co
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=rbox.co
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=igalia.com header.i=@igalia.com header.b="SFrAqTJ7"
-DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed; d=igalia.com;
-	s=20170329; h=Content-Transfer-Encoding:Content-Type:In-Reply-To:From:
-	References:Cc:To:Subject:MIME-Version:Date:Message-ID:Sender:Reply-To:
-	Content-ID:Content-Description:Resent-Date:Resent-From:Resent-Sender:
-	Resent-To:Resent-Cc:Resent-Message-ID:List-Id:List-Help:List-Unsubscribe:
-	List-Subscribe:List-Post:List-Owner:List-Archive;
-	bh=izJizNDApY+23qEKEsJqU5rP1tPC0fkmJ33zLpRJmnQ=; b=SFrAqTJ7BMFqGLN0W6511uUc3O
-	dGUp0SuxPckwiPx54jXtsK60AUfIkMakANrx7sTOmVqiDTu2tQocDaZEXQq83gECAW7S2xl24krhG
-	OHCdwMeRL0ConKLGKEbv+/M3wOVLoHz45rrIJu9i53iiPC/x77H7yRmznCPUMAwMNtR3F37wLi0JS
-	N963gj2vebAF63jF5e3CaCl3JRepUt0gpfvhYrLXnDREuvqnmSx3WxZsxFtFpIFZpJ2FDruf4GiMR
-	4/kjRF2nyViu342xIdfndoQc3vM0Mk+J/nPWMr4VTcMxk27rZS4dPebYVI5Vr0Eq53VllxL4xGSnn
-	SMcwqUwA==;
-Received: from c-73-157-168-91.hsd1.or.comcast.net ([73.157.168.91] helo=[192.168.1.133])
-	by fanzine2.igalia.com with esmtpsa 
-	(Cipher TLS1.3:ECDHE_X25519__RSA_PSS_RSAE_SHA256__AES_128_GCM:128) (Exim)
-	id 1weJRY-006nmn-1q; Mon, 29 Jun 2026 23:23:04 +0200
-Message-ID: <a27c27aa-8323-4730-bfa6-26b1ae38f784@Igalia.com>
-Date: Mon, 29 Jun 2026 14:22:58 -0700
+	dkim=pass (2048-bit key) header.d=rbox.co header.i=@rbox.co header.b="K3fzcSq1"
+Received: from mailtransmit03.runbox ([10.9.9.163] helo=aibo.runbox.com)
+	by mailtransmit05.runbox.com with esmtps  (TLS1.2) tls TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256
+	(Exim 4.93)
+	(envelope-from <mhal@rbox.co>)
+	id 1weJj3-004IAM-K0
+	for sashiko-reviews@lists.linux.dev; Mon, 29 Jun 2026 23:41:09 +0200
+DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed; d=rbox.co;
+	s=selector2; h=Content-Transfer-Encoding:Content-Type:In-Reply-To:From:
+	References:Cc:To:Subject:MIME-Version:Date:Message-ID;
+	bh=P1L8Z8G8KodH0qArwjyT17wPJ1f2sTYLoOeISVOZaH0=; b=K3fzcSq1LqO1hbDXydVIHwgQ18
+	XWk53gXoNI2FnvbNZX0rFB1IvpRfGLMWPRyVE9sX2ZB6RrX2BjIMt/ru6J8SBB9ybULaMz35MOmyQ
+	lkYs957HRd8TgNBwOkM8ayZ2UPD3aCuwFpNVRBJEGb+XiimGjtSFrBm1T21z9loNaFzjnYnkPxfyP
+	5OwvhtJJeLHK0+7C4hUZgeo3puw1FZbcsjphKTom+/xL8ANuKTGMb5mtIJ6ZPBBxIC4cahOXCwt1I
+	Ux/Ic16UFxkuSCDFXIi4+MxorOyjVTp/GAyandkHnva0SEunisORwgJ1i/fU56TgGiXi+gJn+UjQ+
+	+iWrqq2A==;
+Received: from [10.9.9.74] (helo=submission03.runbox)
+	by mailtransmit03.runbox with esmtp (Exim 4.86_2)
+	(envelope-from <mhal@rbox.co>)
+	id 1weJj3-0005nw-8u; Mon, 29 Jun 2026 23:41:09 +0200
+Received: by submission03.runbox with esmtpsa  [Authenticated ID (604044)]  (TLS1.2:ECDHE_SECP256R1__RSA_PSS_RSAE_SHA256__AES_256_GCM:256)
+	(Exim 4.95)
+	id 1weJik-00FxCt-NN;
+	Mon, 29 Jun 2026 23:40:50 +0200
+Message-ID: <26ecbce0-48ad-4b53-a0b7-34b59870e010@rbox.co>
+Date: Mon, 29 Jun 2026 23:40:49 +0200
 Precedence: bulk
 X-Mailing-List: sashiko-reviews@lists.linux.dev
 List-Id: <sashiko-reviews.lists.linux.dev>
@@ -41,142 +48,62 @@ List-Subscribe: <mailto:sashiko-reviews+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:sashiko-reviews+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v6 3/9] drm/amd/display: use
- drmm_writeback_connector_init()
-To: Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>
-Cc: sashiko-reviews@lists.linux.dev, dri-devel@lists.freedesktop.org,
- wsa+renesas@sang-engineering.com
-References: <20260612-wb-drop-encoder-v6-3-9f3a54f81310@oss.qualcomm.com>
- <20260612185828.C0D241F00A3E@smtp.kernel.org>
- <e98e6632-20a1-4e76-a6e5-916066c7438a@Igalia.com>
- <eieq74qmqkkrgovktpon6umq2an3l6xmih2gqxjqtawmtvnesl@zpxepcxb3hm6>
-Content-Language: en-GB
-From: John Harrison <John.Harrison@Igalia.com>
-In-Reply-To: <eieq74qmqkkrgovktpon6umq2an3l6xmih2gqxjqtawmtvnesl@zpxepcxb3hm6>
-Content-Type: text/plain; charset=UTF-8; format=flowed
+Subject: Re: [PATCH bpf v2 1/4] bpf, sockmap: Reject unhashed UDP sockets on
+ sockmap update
+To: Jakub Sitnicki <jakub@cloudflare.com>
+Cc: sashiko-reviews@lists.linux.dev, bpf@vger.kernel.org
+References: <20260626-sockmap-lookup-udp-leak-v2-0-7e7e201c951a@rbox.co>
+ <20260626-sockmap-lookup-udp-leak-v2-1-7e7e201c951a@rbox.co>
+ <20260626205814.BAC3C1F000E9@smtp.kernel.org>
+ <e08be4f5-0bd9-4228-843d-86ed20594bac@rbox.co>
+ <87v7b137cx.fsf@cloudflare.com>
+Content-Language: pl-PL, en-GB
+From: Michal Luczaj <mhal@rbox.co>
+In-Reply-To: <87v7b137cx.fsf@cloudflare.com>
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 7bit
 
-On 6/16/26 00:42, Dmitry Baryshkov wrote:
-> On Mon, Jun 15, 2026 at 11:27:12AM -0700, John Harrison wrote:
->> On 6/12/26 11:58, sashiko-bot@kernel.org wrote:
->>> Thank you for your contribution! Sashiko AI review found 2 potential issue(s) to consider:
->>>
->>> New issues:
->>> - [High] Dangling drmm cleanup action on writeback connector initialization error path leads to Use-After-Free, and possible build failure with drmm_kfree.
->>>
->>> Pre-existing issues:
->>> - [High] Pre-existing memory leak of `wb_info` and sleeping in atomic context in `dm_set_writeback()`.
->>> --
->>>
->>> commit 946e1af8401710237d25526b5d87b4357eceb542
->>> Author: Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>
->>>
->>> drm/amd/display: use drmm_writeback_connector_init()
->>>
->>> The patch converts the driver to use drmm_writeback_connector_init() and
->>> drmm_plain_encoder_alloc() to ensure proper cleanup of the writeback
->>> connector instance and its job queue.
->>>
->>>> --- a/drivers/gpu/drm/amd/display/amdgpu_dm/amdgpu_dm.c
->>>> +++ b/drivers/gpu/drm/amd/display/amdgpu_dm/amdgpu_dm.c
->>> [ ... ]
->>>> @@ -11086,7 +11086,7 @@ static void dm_set_writeback(struct amdgpu_display_manager *dm,
->>>>    		return;
->>>>    	}
->>>> -	acrtc = to_amdgpu_crtc(wb_conn->encoder.crtc);
->>>> +	acrtc = to_amdgpu_crtc(crtc_state->base.crtc);
+On 6/29/26 13:37, Jakub Sitnicki wrote:
+> On Sun, Jun 28, 2026 at 11:59 PM +02, Michal Luczaj wrote:
+>> On 6/26/26 22:58, sashiko-bot@kernel.org wrote:
 >>> [Severity: High]
->>> This is a pre-existing issue, but does dm_set_writeback() allocate memory
->>> using GFP_KERNEL in an atomic context?
+>>> Could a memory ordering regression here allow unbound UDP sockets to still
+>>> bypass this check?
 >>>
->>> It appears that wb_info is allocated using kzalloc_obj() earlier in this
->>> function, which implicitly uses GFP_KERNEL. However, this function is called
->>> from amdgpu_dm_atomic_commit_tail(), which is an atomic context where sleeping
->>> functions are forbidden.
+>>> In udp_v4_get_port(), the flag and hash are set:
 >>>
->>> Additionally, dc_stream_add_writeback() copies the contents of wb_info by
->>> value, but the originally allocated pointer seems to never be freed before
->>> dm_set_writeback() returns. Does this introduce a memory leak every time a
->>> writeback job is queued?
+>>> net/ipv4/udp.c:udp_v4_get_port() {
+>>>     ...
+>>>     sock_set_flag(sk, SOCK_RCU_FREE);
+>>>     sk_add_node_rcu(sk, &hslot->head);
+>>>     ...
+>>> }
 >>>
->>>>    	if (!acrtc) {
->>>>    		drm_err(adev_to_drm(adev), "no amdgpu_crtc found\n");
->>>>    		kfree(wb_info);
->>> [ ... ]
->>>> --- a/drivers/gpu/drm/amd/display/amdgpu_dm/amdgpu_dm_wb.c
->>>> +++ b/drivers/gpu/drm/amd/display/amdgpu_dm/amdgpu_dm_wb.c
->>> [ ... ]
->>>> @@ -188,17 +187,26 @@ int amdgpu_dm_wb_connector_init(struct amdgpu_display_manager *dm,
->>>>    	struct dc *dc = dm->dc;
->>>>    	struct dc_link *link = dc_get_link_at_index(dc, link_index);
->>>>    	int res = 0;
->>>> +	struct drm_encoder *encoder;
->>>> +
->>>> +	encoder = drmm_plain_encoder_alloc(&dm->adev->ddev, NULL,
->>>> +					   DRM_MODE_ENCODER_VIRTUAL, NULL);
->>>> +	if (IS_ERR(encoder))
->>>> +		return PTR_ERR(encoder);
->>>> +
->>>> +	drm_encoder_helper_add(encoder, &amdgpu_dm_wb_encoder_helper_funcs);
->>>> +
->>>> +	encoder->possible_crtcs = amdgpu_dm_get_encoder_crtc_mask(dm->adev);
->>>>    	wbcon->link = link;
->>>>    	drm_connector_helper_add(&wbcon->base.base, &amdgpu_dm_wb_conn_helper_funcs);
->>>> -	res = drm_writeback_connector_init(&dm->adev->ddev, &wbcon->base,
->>>> +	res = drmm_writeback_connector_init(&dm->adev->ddev, &wbcon->base,
->>>>    					    &amdgpu_dm_wb_connector_funcs,
->>>> -					    &amdgpu_dm_wb_encoder_helper_funcs,
->>>> +					    encoder,
->>>>    					    amdgpu_dm_wb_formats,
->>>> -					    ARRAY_SIZE(amdgpu_dm_wb_formats),
->>>> -					    amdgpu_dm_get_encoder_crtc_mask(dm->adev));
->>>> +					    ARRAY_SIZE(amdgpu_dm_wb_formats));
->>> [Severity: High]
->>> If drmm_writeback_connector_init() fails internally after successfully calling
->>> drmm_connector_init(), will it leave the drmm_connector_cleanup_action
->>> registered?
->> I'm not following this one. everything that drmm_writeback_connector_init()
->> does has a check on the return code and only if everything works does it
->> register the cleanup function as the last action. So how do you get a
->> dangling anything?
+>>> Because these stores lack a memory barrier between them, could sk_hashed(sk)
+>>> return true on another CPU while SOCK_RCU_FREE is not yet visible, allowing
+>>> the leak to still trigger?
 >>
->>> The caller, amdgpu_dm_initialize_drm_device(), appears to handle this failure
->>> by attempting to free the connector using drmm_kfree(). Since drmm_kfree()
->>> requires a dev argument, will this missing argument result in a build failure?
->> Bizarre that it is complaining about something in a totally different patch.
->>
->>> More importantly, since drmm_kfree() frees the memory but does not unregister
->>> actions, will the managed resource list later execute
->>> drmm_connector_cleanup_action on the already-freed pointer, resulting in a
->>> use-after-free when the DRM device is torn down?
->> Isn't this just lying? The whole point of drmm_kfree() is surely that it
->> does unregister the cleanup of the allocation?
-> The question is not about freeint the memory, but about unrolling the
-> connector registration. I'll take a look later whether Sashiko is
-> hallucinating or not
-Any updates on this patch set?
+>> I'd like to verify it on a weakly-ordered CPU; please give me a day or two.
+> 
+> False positive, IMO.
+> Both ->get_port and sock_map_sk_state_allowed run with sk_lock held.
 
-I think sashiko is hallucinating at least some of the above. The comment 
-about drmm_kfree not unregistering is definitely bogus - because 
-drmm_kfree certainly should unregister the cleanup action for the 
-allocation being freed. Or maybe it is simply confused and is actually 
-meaning the unregister action for wbconn->base rather than for wbconn 
-itself. In which case, obviously it is not going to unregister the 
-cleanup action for a different object entirely.
+What about an update coming from iter/task_file? You get an unlocked socket
+via bpf_sock_from_file(ctx->file). And sock_map_update_elem()'s
+bh_lock_sock(sk) doesn't care if socket is owned.
 
-And presumably it is meaning "drm_writeback_connector_cleanup" when it 
-says "drmm_connector_cleanup_action", given that the latter does not 
-exist! But as already noted, that cleanup action is registered as the 
-very last operation in the init sequence. So if the action has been 
-registered then there will be no cleanup or roll back required because 
-everything has succeeded. And at unload time, actions are run in reverse 
-order of registration so the connector cleanup action will be run before 
-the wbconn memory is freed.
+I was looking at iter/task_file in the context of [0]'s follow-up. With or
+without [1], we're getting closer to enforcing (stronger) locking in
+sock_map_update_elem(), per Martin's suggestion. Along the lines of
 
-John.
+   if (!has_current_bpf_ctx() && sock_owned_by_user_nocheck(sk))
+      ret = -EBUSY;
+   else if (WARN_ON_ONCE(has_current_bpf_ctx() && !sock_owned_by_user_nocheck(sk)))
+      ret = -EINVAL;
+   ...
 
+Would that fly?
 
->
->>>>    	if (res)
->>>>    		return res;
+[0]: https://lore.kernel.org/bpf/20260414-unix-proto-update-null-ptr-deref-v4-0-2af6fe97918e@rbox.co/
+[1]: https://lore.kernel.org/bpf/20260629172704.1302218-1-rhkrqnwk98@gmail.com/
 
