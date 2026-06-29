@@ -1,125 +1,124 @@
-Received: from us-smtp-delivery-124.mimecast.com (us-smtp-delivery-124.mimecast.com [170.10.133.124])
+Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EDDB63F929C
-	for <sashiko-reviews@lists.linux.dev>; Mon, 29 Jun 2026 08:56:12 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=170.10.133.124
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 58DA42E7378;
+	Mon, 29 Jun 2026 09:04:09 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1782723374; cv=none; b=JOryWMsPojsaDdblAdHUgVIUQLHbDrZhWGvLF+dRGi61fwKsftOHpvQMLZQoPpXTRCwq8RsbTakjAWUXNHfSun3QRpK+BSaWBSk014YfRrRluzqsCFGAllqs77Ji2PnaV3qlw5rYexO4Ymukr4nBNOTtYisGk/LEGZHvTNAHbMI=
+	t=1782723850; cv=none; b=RV/3tVjOwLWPgqY+Et+HAnd/EOARHcjpSYA785ze1mnxfWFUNXSLCUQg5nx22XftPWPULExru50Ne7vw2j3YSR1mX1oOdwQ7k9kKGw3d7u7Pm4PQp0NdAYW0NoMavQf1+zlTj7538rHSgswyzz9Nhf1dlWs8OyMuzBIx1DU/vbg=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1782723374; c=relaxed/simple;
-	bh=rF6EBn7rMd5aRx6RV1AjA5XWgGQqhiwjIgHMv70JtVI=;
-	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
-	 MIME-Version:Content-Type; b=N+53yPnE1jbEZY2mvn0Y0OQhfea/BgXVMM9XQYJy3iD7BLLbj6UqCE3wPdy7mn3wiDoDJ/eX3hDxCLQRmdBlDV+gnlHQKk9FgG0mQdyfWCUyS8AvmitX6mgYeqnJiieAXBEyqUxynwmg8UDsz8YawOkBUCaBcQ+Yi2l3mFoPU1E=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=redhat.com; spf=pass smtp.mailfrom=redhat.com; dkim=pass (1024-bit key) header.d=redhat.com header.i=@redhat.com header.b=M7Z6AdPE; arc=none smtp.client-ip=170.10.133.124
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=redhat.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=redhat.com
+	s=arc-20240116; t=1782723850; c=relaxed/simple;
+	bh=RVdxQ2RAmOaNdTad8IiKHVXi3qAH2aFd0ABc3FHPUdI=;
+	h=Date:From:To:cc:Subject:In-Reply-To:Message-ID:References:
+	 MIME-Version:Content-Type; b=QLvtE2qR/vC6L0TccFbMKgBP59/0MfJC4GqIcB7IyeUhRhX6r/QdUH/23HWq1tUNe/+oYJb5uPYGwWglee6LEXUNcLsz1tTOLRocgB8gbYkv7W0CmOXoyUUsqvZcuiKBfCllKTT2SeVZ4QVVvXQ7VhIy7Gxp3YUBd7dCGmNHp38=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=gMJckqs8; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=redhat.com header.i=@redhat.com header.b="M7Z6AdPE"
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
-	s=mimecast20190719; t=1782723372;
-	h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
-	 to:to:cc:cc:mime-version:mime-version:content-type:content-type:
-	 in-reply-to:in-reply-to:references:references;
-	bh=oovJIoNGk4eGagKRDaw9pqXMujhus9ut370XvRbtgL4=;
-	b=M7Z6AdPErOE6xR+OJxA2ArXOEg4HZmpwqrBHSmSq2Ua03ZGZLx0lUmYwksl6mvSBNicRQ0
-	pH8kaTHOZ93TsNid8b5bng7qAwiLmVBl8GPKMtuXfDka7fh0s4oQp1gGWFgwwglkKSS14a
-	FBsGkCeWjVVMt8WrEJKeexDicuP6Hbg=
-Received: from mail-wr1-f72.google.com (mail-wr1-f72.google.com
- [209.85.221.72]) by relay.mimecast.com with ESMTP with STARTTLS
- (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-152-Ea2AZyjEOSOkok86HqsGuw-1; Mon, 29 Jun 2026 04:56:09 -0400
-X-MC-Unique: Ea2AZyjEOSOkok86HqsGuw-1
-X-Mimecast-MFC-AGG-ID: Ea2AZyjEOSOkok86HqsGuw_1782723368
-Received: by mail-wr1-f72.google.com with SMTP id ffacd0b85a97d-45f3d008865so2360513f8f.0
-        for <sashiko-reviews@lists.linux.dev>; Mon, 29 Jun 2026 01:56:09 -0700 (PDT)
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20251104; t=1782723368; x=1783328168;
-        h=mime-version:message-id:date:references:in-reply-to:subject:cc:to
-         :from:x-gm-gg:x-gm-message-state:from:to:cc:subject:date:message-id
-         :reply-to;
-        bh=oovJIoNGk4eGagKRDaw9pqXMujhus9ut370XvRbtgL4=;
-        b=Y/Z757+xZbN8PY+KFPV+2abF9JBfhz9Z2x96i3xjAZRVQmgKWsdGY91xoLLhg1KME4
-         bnPCXFTJGlnKLVAULnLGhpyXT7UIzoBNRhG2BoLgg9LBswQloq+HGWKLnDacam9taGV6
-         /V2eDJk6gW9mdWzNMXSvMFnyX5gpJghbOhhzY6zfXy2/a7vd1EJ5RkAk18zDJsiLtAUb
-         5uNpfmhCSwzboCdIEAYVfewr2Re+YKNt4jQtVpy/Fi0kvAsu7xSoufR+bsN6pGxu49tl
-         g0ulhDHw8CfIV/4/EQoRL0cDpUfv01taES4Rm3xNb9PrtVpILkAletRhP4xVERQFGL4q
-         uM1A==
-X-Forwarded-Encrypted: i=1; AHgh+RoQx2EdIJaOSlD3yCwcAQGeGQVYNmQJYUvtNzHZOLMPhnyNy2+DG9gTmF9fdmGKQI3PFW03Ct6rPW5VsfYE5yc=@lists.linux.dev
-X-Gm-Message-State: AOJu0Ywx0tzWkrnqdl4CUfmqn/62InNoj78XQ9/jHjezY/+v3PZc+yBV
-	nl9oJl6d/gubS6/43G00/a4LAV4N6LOk66RsfbRBQDubeZHk6AUqsCcpBVpFiGWJGLwn1TNBjyp
-	M5scZ2fHhgz+BW/8h9IPUgjtT/McGSKYga/7JuQOm9SeicyNN4SIBSAzyPIsbwRKGZ9MU5g==
-X-Gm-Gg: AfdE7clbue/gCj411a5MFFSvM4JcXAOJXkQNLTpM5xTtUeQnbsfYnPyhCiKEe6o6z+9
-	OgFpwziYREDjatmYneqTrbXSE862DiVpqX+/ZfNV70DRIn1K277RGEURymJT+JBrCSrUNJvIcvJ
-	DtAAFtVbGn2IRrbjaGK5lYnUMU59H0cC1SWRsuNvUETuqWwg2snAYuuniNr/BDGl1AlfwD6zLr6
-	ugWvY7FZoEHBeHmS6dqPaQ4ZGMWpO6+/r3fJERUKR9BR7kgF2AFF4hHuQn9zXMuXJ0c5sb+pd9s
-	ZeogipedCrH8wNoKMtGYG9vawdin5j1efwPWH9jA18/7Qj/dRz9sPauiYCIhYNSdXY5pOZ1hRO9
-	rrmrIlUFxmu/bTTG+ymIrwgU7M390viUvbAdbiR3qAkORn+mVyTdpH08i/tkcp5hrzmwi2w==
-X-Received: by 2002:a05:6000:46c8:b0:45e:dd32:92fa with SMTP id ffacd0b85a97d-46a7efb7522mr27270418f8f.12.1782723368384;
-        Mon, 29 Jun 2026 01:56:08 -0700 (PDT)
-X-Received: by 2002:a05:6000:46c8:b0:45e:dd32:92fa with SMTP id ffacd0b85a97d-46a7efb7522mr27270397f8f.12.1782723367842;
-        Mon, 29 Jun 2026 01:56:07 -0700 (PDT)
-Received: from localhost (62-151-111-63.jazzfree.ya.com. [62.151.111.63])
-        by smtp.gmail.com with ESMTPSA id ffacd0b85a97d-4726b76e6f8sm17377098f8f.13.2026.06.29.01.56.06
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Mon, 29 Jun 2026 01:56:07 -0700 (PDT)
-From: Javier Martinez Canillas <javierm@redhat.com>
-To: Amit Barzilai <amit.barzilai22@gmail.com>, Maarten Lankhorst
- <maarten.lankhorst@linux.intel.com>, Maxime Ripard <mripard@kernel.org>,
- Thomas Zimmermann <tzimmermann@suse.de>, David Airlie <airlied@gmail.com>,
- Simona Vetter <simona@ffwll.ch>
-Cc: dri-devel@lists.freedesktop.org, sashiko-reviews@lists.linux.dev
-Subject: Re: [PATCH 1/3] drm/ssd130x: fix column and row end address in
- partial updates for ssd132x
-In-Reply-To: <20260629084317.10265-1-amit.barzilai22@gmail.com>
-References: <20260629084317.10265-1-amit.barzilai22@gmail.com>
-Date: Mon, 29 Jun 2026 10:56:06 +0200
-Message-ID: <87mrwdd8t5.fsf@ocarina.mail-host-address-is-not-set>
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="gMJckqs8"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 581BD1F000E9;
+	Mon, 29 Jun 2026 09:04:08 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=kernel.org;
+	s=k20260515; t=1782723848;
+	bh=Z78Z17Ge6giHMbB5UqVWbp5PTueMP2nMjA5h+9o/UAQ=;
+	h=Date:From:To:cc:Subject:In-Reply-To:References;
+	b=gMJckqs8wAN5zl9IJd3F3x4ik1u9Xl+sNQ6pv/x2ONxdG9oU5XL4L9Tq1lHfqtc8D
+	 ckwonjJnQ2oZdw3tkzFAppDdNOb//XJkRJBFmCubRgkBzatmoyEfF74hqRe+wiRcdn
+	 dgM0i19j1qAxSsp+VL2Do9V7/N9lrVwmgYxTVDseQ6RQObr6Ll0RSJB7RALIVftVLt
+	 eTFbwWdPRbS2qgolWcKiEgJGTDfovFIJOWEG3nLhbdBMos/fspHds+UfQkWkBOxMdT
+	 htx7RIxZ5rsL1cvGFXwyFhcZGoo7uKQdwjEZzijTIQdPlmdVOju+SH5mDbVClmNaOa
+	 sQlSvzS10daWA==
+Date: Mon, 29 Jun 2026 11:04:06 +0200 (CEST)
+From: Jiri Kosina <jikos@kernel.org>
+To: =?GB2312?Q?=D0=BB=D6=C2=B0=EE_=28XIE_Zhibang=29?= <Yeking@Red54.com>
+cc: linux-input@vger.kernel.org, hansg@kernel.org, dmitry.torokhov@gmail.com, 
+    bentiss@kernel.org, dianders@chromium.org, linux-kernel@vger.kernel.org, 
+    sashiko-bot@kernel.org, sashiko-reviews@lists.linux.dev, 
+    superm1@kernel.org
+Subject: Re: [PATCH v6] HID: i2c-hid: Refactor _DSM helper and add
+ i2c-hid-acpi-prp0001 driver
+In-Reply-To: <tencent_FD772005ED5B8FB435F3DFDF73437BC58F06@qq.com>
+Message-ID: <360r0r52-n546-s91n-s51p-893o79415s74@xreary.bet>
+References: <tencent_8AE8ED913FEC8151B4BA3D85D6BB7F3ACF08@qq.com> <tencent_FD772005ED5B8FB435F3DFDF73437BC58F06@qq.com>
 Precedence: bulk
 X-Mailing-List: sashiko-reviews@lists.linux.dev
 List-Id: <sashiko-reviews.lists.linux.dev>
 List-Subscribe: <mailto:sashiko-reviews+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:sashiko-reviews+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-X-Mimecast-Spam-Score: 0
-X-Mimecast-MFC-PROC-ID: 0PI846Rvi37ClhX7iDYpsrk8Rmd2ILOADKcuatmlAqo_1782723368
-X-Mimecast-Originator: redhat.com
-Content-Type: text/plain
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: QUOTED-PRINTABLE
 
-Amit Barzilai <amit.barzilai22@gmail.com> writes:
+On Wed, 24 Jun 2026, =E8=B0=A2=E8=87=B4=E9=82=A6 (XIE Zhibang) wrote:
 
-Hello Amit,
+> Move the _DSM call that gets the HID descriptor address from
+> i2c-hid-acpi.c into i2c-hid-acpi.h as a static inline so both the ACPI
+> and the new PRP0001 driver can use it. While refactoring, move the
+> blacklist check and the _DSM call to the top of probe() to avoid a
+> pointless alloc when the device is blacklisted or does not implement the
+> _DSM.
+>=20
+> Some devices, for example the Lenovo KaiTian N60d and Inspur CP300L3,
+> are declared with _HID "PRP0001" and _DSD compatible "hid-over-i2c" but
+> lack "hid-descr-addr" from the _DSD and provide the HID descriptor
+> address only through an ACPI _DSM. The OF driver fails to probe them
+> because it requires hid-descr-addr. Add a new driver that handles these
+> devices by calling the shared _DSM helper.
+>=20
+> Fixes: b33752c30023 ("HID: i2c-hid: Reorganize so ACPI and OF are separat=
+e modules")
+> Signed-off-by: =E8=B0=A2=E8=87=B4=E9=82=A6 (XIE Zhibang) <Yeking@Red54.co=
+m>
+> ---
+> v2: Name the unused parameter and document why
+> acpi_device_fix_up_power() is skipped.
+> v3: Add a dev_warn() asking users to contact vendors for firmware
+> updates, and use existing locals in devm_kzalloc() and
+> acpi_device_fix_up_power().
+> v4: Double the power-up delay from 250ms to 500ms.
+> v5: Document why of_match_ptr() on the of_match_table is safe when
+> CONFIG_OF=3Dn.
+> v6: Increase power-up delay from 500ms to 750ms. During cold boot on low
+> battery, 500ms causes non-fatal I2C transfer errors (-ENXIO). 750ms
+> fixes them.
 
-Thank for your patches.
+Thanks for all the effort you've put into this.
 
-> On Mon, Jun 22, 2026 at 12:36:30PM +0000, sashiko-bot@kernel.org wrote:
->> Pre-existing issues:
->> - [High] Potential 1-byte out-of-bounds read past the heap buffer in
->>   `ssd132x_update_rect` when device width is configured to an odd value.
->
-> As stated in the review, this is a pre-existing issue and is not touched by
-> this series, which only corrects the SET_COL_RANGE/SET_ROW_RANGE end
-> addresses sent to the controller.
->
-> Gentle ping on the series -- it's been about a week with no comments. Is
-> there anything you'd like changed for it to be picked up? Happy to spin a
-> v2 if needed.
->
+[ ... snip ... ]
+> --- a/drivers/hid/i2c-hid/Kconfig
+> +++ b/drivers/hid/i2c-hid/Kconfig
+> @@ -22,6 +22,24 @@ config I2C_HID_ACPI
+>  =09  will be called i2c-hid-acpi.  It will also build/depend on the
+>  =09  module i2c-hid.
+> =20
+> +config I2C_HID_ACPI_PRP0001
+> +=09tristate "Driver for PRP0001 devices missing hid-descr-addr"
+> +=09depends on ACPI
+> +=09depends on DRM || !DRM
+> +=09select I2C_HID_CORE
+> +=09help
+> +=09  Say Y here if you want support for I2C HID touchpads that
+> +=09  are declared with _HID "PRP0001" and _DSD compatible
+> +=09  "hid-over-i2c" but lack the "hid-descr-addr" property from
+> +=09  the _DSD. The HID descriptor address is instead provided
+> +=09  through an ACPI _DSM. Known affected devices include the
+> +=09  Lenovo KaiTian N60d and Inspur CP300L3.
+> +
+> +=09  If unsure, say N.
+> +
+> +=09  This support is also available as a module. If so, the
+> +=09  module will be called i2c-hid-acpi-prp0001.
 
-Sorry, I was on PTO and couldn't take a look to your series. I plan to do
-it this week.
+The only question I have -- do we really want to have this build-time=20
+selectable by the endusers? It's unlikely that the description will make=20
+sense to most of the people, being very low-level technical, and they'd be=
+=20
+unsure what to chose.
 
-One question, though. How did you find these issues and came up with the
-fixes ?
+Is there a reason not to include it alwyas under the I2C_HID_CORE=20
+umbrella?
 
-It was just reading the code and the datasheets or were the issues (and
-fixes?) identified by an LLM? If the latter, then you need to add an
-Assisted-by tag to your pa+tches.
+Thanks,
 
--- 
-Best regards,
-
-Javier Martinez Canillas
-Core Platforms
-Red Hat
+--=20
+Jiri Kosina
+SUSE Labs
 
