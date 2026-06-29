@@ -1,142 +1,174 @@
-Received: from mail-lf1-f42.google.com (mail-lf1-f42.google.com [209.85.167.42])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D580F43901C
-	for <sashiko-reviews@lists.linux.dev>; Mon, 29 Jun 2026 15:27:36 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=pass smtp.client-ip=209.85.167.42
-ARC-Seal:i=2; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1782746858; cv=pass; b=VpMnQhJJQ1pYjycNnG56YR1Vrf3w9+d+t8disGXEO4+Pgj9HBGDkojdivniCZf6SlIo/fpYlehk5/tCA/o/vbrHkYIr4MjEDbFkb1D3R/ivx7UMgiFfHRCxw2ZCSz3LFSQlSzZ0zWfe6z6JPoVS9CkpnjpVQ88xlyL66GCxAh9M=
-ARC-Message-Signature:i=2; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1782746858; c=relaxed/simple;
-	bh=4qOR90tTRCkVBMGE2YOkqSvyYF1Pm1pU3Tovf2gPwL0=;
-	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
-	 To:Cc:Content-Type; b=Lj4oXi7pB0ttRgjOq3XxQt9iOnEsD5snkzsCmg5QftjNXxBnxdbLy5GWf5z3zMltj5vm0KZZG0/98pCCOATATWRjmNtT4YSAqwez9cazvh1yi5By5VOo1IISmuRc9ssbzme7oDKOGXFrNIszGA2CPabD9is7pswURTO/k8y4ufk=
-ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=google.com; spf=pass smtp.mailfrom=google.com; dkim=pass (2048-bit key) header.d=google.com header.i=@google.com header.b=UVw/dprT; arc=pass smtp.client-ip=209.85.167.42
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=google.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=google.com
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3D55C346766;
+	Mon, 29 Jun 2026 15:41:01 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
+ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
+	t=1782747663; cv=none; b=JxmSfor9s9ARZ95IKz13V/tkkvkV6/hzUNqYStVC0rCLik5IBzFiLV4M5NL0j5Svv8SdoRNxFxUrtmBNlI9+/5V0GzMyeZ5bxFuM1SakFyvZQ2HoGtqOSyclTBkIq6+XM+Uz88uiCn1N6abBHofP/bN9OVs8GDljVF1YZYfVcpM=
+ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
+	s=arc-20240116; t=1782747663; c=relaxed/simple;
+	bh=rswPskcN/RRQHGJ902UrZcCJGTezAbbrNN6coAxwfc4=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=ZLCaQcRX9jzMwc9Vh+d0v+Qp+jaG0JIUlmzyDNaTVMglqU+QFjdb/aln78xNaP3FLBP4ovHq0k2aMH7d73xnkf4ExR+szvSt8PC8Ubv3ZlbGj9Fo6itti21Xtu5reKz5m3AlOtq5Z3kDhUWq6B/NXN8n5qBCHunTNlQUEmVJeDY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=S0nOe/r5; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=google.com header.i=@google.com header.b="UVw/dprT"
-Received: by mail-lf1-f42.google.com with SMTP id 2adb3069b0e04-5aebbe750f8so4324e87.1
-        for <sashiko-reviews@lists.linux.dev>; Mon, 29 Jun 2026 08:27:36 -0700 (PDT)
-ARC-Seal: i=1; a=rsa-sha256; t=1782746855; cv=none;
-        d=google.com; s=arc-20260327;
-        b=GtJgB8dsMmAxnSk+vGJB02NgQadGaZDAX/0pV4yak0Sfk/RITnCIOIgoU44ovyeO8K
-         KUxVk9aWXQq/DvuSSXeqZ/grs6adkXuZENVW2CXD3Nj/33+7hO3haDSpFugHyrtC8391
-         DPLHC/RF8UoaVBH2GLueG3SqsB4zxAM/5lE4wSTAccxYW+i2u6e5i69oTfIN2HuvdZ/B
-         wuIdJcNRaNyfYj+ZL/qOJ4rM3aoAcfRmGAL8jR51ljqM8yyVOnrMV3+r0JyV65UF5fy1
-         8BZXUff+rfrt66NMTAgfrluy6q5vwLJMN7UiXw3uKiTEND6VMsY/QERjfBl5CI/dh3Il
-         41xw==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com; s=arc-20260327;
-        h=cc:to:subject:message-id:date:from:in-reply-to:references
-         :mime-version:dkim-signature;
-        bh=nSMNBXqdu7f+jFfHmGj9KxEgcM0T/vdkEFz8bc4WpYw=;
-        fh=xLMIvr/pz7G9CQ2ZglJuqJ3UVqzLRcz1lQUUc1vwAR4=;
-        b=IqbbLkHmDY9BYbm6U4Su2ESPkAKuR0u9aQKQfkdDoxRFMzQ7xAQdTeuHog0Gk679xN
-         LZm6mvP7+NIcDAg/gpnMeaojgQDlWueCXcH5i4bwqYsKuPeZ7aNrKgv8hqf3k4urnJcX
-         cf+Wcqh9FxWdu2VZvBIE5MF2lJ3kqoL7HwVqLRuAmxLlINuyUrz2AVXIf3WvTKX+i9Dc
-         qgu96/Xq1OqG210mWlaVq8B8e+B39/Xt4K1Jf5m8Kl57uFQpswg31eW5ENzeg5h100HT
-         4M7vb5Md2bUMDd0YMINa4CkFRAza3xesqOad3uE8NGojoxhoR3jgZYMswi+wceidmAcP
-         fDyg==;
-        darn=lists.linux.dev
-ARC-Authentication-Results: i=1; mx.google.com; arc=none
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=google.com; s=20251104; t=1782746855; x=1783351655; darn=lists.linux.dev;
-        h=content-type:cc:to:subject:message-id:date:from:in-reply-to
-         :references:mime-version:from:to:cc:subject:date:message-id:reply-to
-         :content-type;
-        bh=nSMNBXqdu7f+jFfHmGj9KxEgcM0T/vdkEFz8bc4WpYw=;
-        b=UVw/dprT9O+HO7oTXfzGp3SFfBdTxGgi97Nv7HNrCYf939umict1q5U+9h2LvCIn9O
-         ANqHK89j5WJCoBOGgHNvPeicVW2JR9mDBm6CtJaG8+INK/+ocUC6HRE5ASg3kzHyLILT
-         3utx5M0bevxlh3/muR8drQaWKji2YAN1akr5F3iogLtTnb4IdYJfrwvD2/0cbEdjAJlr
-         qFRIIJw+GcFXat/2bX2bBZ1lC6zeGj9jKv5jX8DvcJnCmXsSo51lSBKpvZq7gJpZgKBX
-         /348pt01tVVZ8dcD9rkSum4lGbbXFRDFkujbMwJWn5jhjBusjI0PLxbRRdoRXSoCKf8q
-         oNAg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20251104; t=1782746855; x=1783351655;
-        h=content-type:cc:to:subject:message-id:date:from:in-reply-to
-         :references:mime-version:x-gm-gg:x-gm-message-state:from:to:cc
-         :subject:date:message-id:reply-to:content-type;
-        bh=nSMNBXqdu7f+jFfHmGj9KxEgcM0T/vdkEFz8bc4WpYw=;
-        b=QXagJLEPuOciRa5A6UdaOUfMu0EBJCDDBVAbOtpLhFPH/8DWSb7VNu53vWziH+XsUy
-         xdnUGqIIMu8ehR+h/mrzSABlEWoAG/eddCX6W4gcwi7dCDclEHh0VK//saiO6DWHzaMn
-         BBP2HAVBT8XSJQPkS/CHAg401Fm/qji8pe2Jbet1G5dJr9OgWvX+fHZzZmDq4rVj5K0b
-         FefVhhFjeJMak4F5qNTJ2ZtbS0Rd6kWFfNvPkaVryqyJhYg2jzxtm/KCjO6jZDfro1YU
-         n3JV9dDbGB1/rrzSs5nvhtm7cCgbjYFn/UGNr9yv2NxSce9rdRLZuAsVy3R66eH00tiV
-         YtcA==
-X-Gm-Message-State: AOJu0YzWZX6fmffdJZbDDTv1ybk7YDrFIhrpOO3JV5dJL1D/rgiG7I02
-	SeIgaYRrXxWoHwupBkLY3s67QmW0BuYzMMVdpyxwmqCu1Pba7eBEq15AfBEs0wcP0XtZVeL7byW
-	yBczOrAXR4OQVY3FoNorpbScEoOsLMld2VXIQFfdmrS9+bnkDs22zO4cufCc=
-X-Gm-Gg: AfdE7cmfQkkIn4ioBvmERauRtzB5iaGlGtqGgUy3xIzw9MdJRzhO28HIOOhBz62pBA1
-	92uFIdm1nudxMLLBA+qUKFijaJYOZQCf2mpg2ABMTck8NAiY0nWR/iMnVxEFRdtu3U+l7PBhzT1
-	NvW4D/Gf+CqfF97yAS/fyFdE8IOAkCEgDFUWOdYczbS67dfVbFTCllO+F/8jBuSPMKc7pG+98Cy
-	lRnq0N//VKvlOQqSqIU3wRvde2tmCpuil3CQ6eJUjXHsYoKqEytK7/j4Fqc599u4mp07wjk2g==
-X-Received: by 2002:a05:6512:4289:b0:5ae:ba7d:e41e with SMTP id
- 2adb3069b0e04-5aebd79ed0cmr6149e87.10.1782746854623; Mon, 29 Jun 2026
- 08:27:34 -0700 (PDT)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="S0nOe/r5"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 349F51F000E9;
+	Mon, 29 Jun 2026 15:41:00 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=kernel.org;
+	s=k20260515; t=1782747661;
+	bh=PzRxgBHlbkeuvPpeSnjPJmcCLBvqWL+knmj3C3qFY9U=;
+	h=Date:From:To:Cc:Subject:References:In-Reply-To;
+	b=S0nOe/r5BiPQMgC/pEsdNyfJmtZFPQ1mn2eFSbSbB0GEy/E37qrUwkj82dLhnA2xe
+	 OAPua0cPJRZUQJPDQuMQzaEjfjILbAzJ+ER94pp4ts67aHN0ZB2ZwTbRoxZV/B4Q39
+	 s/7Lyp6HcTlkgO7HF9Kv6+StugeicBpcmp6sUj2DOJAgzl+EhRtNLtR6VNQ3f7clXM
+	 Ixm6hUEJ2EGIdsfX/M3MQUQ8joPjxC6nJsrdhkcez6462pf52VYOwdyf+n1DlhHVBB
+	 KVRGWBBcgzIfS4UFYFWDP8RjSuGI6Vn/ecA12Yy8PKKXi40GCA2Lh07KOz0/pIPYyQ
+	 smSb1wOrg4hHQ==
+Date: Mon, 29 Jun 2026 16:40:58 +0100
+From: Conor Dooley <conor@kernel.org>
+To: Jerome Brunet <jbrunet@baylibre.com>
+Cc: Chen-Yu Tsai <wens@kernel.org>, sashiko-bot@kernel.org,
+	sashiko-reviews@lists.linux.dev, linux-sunxi@lists.linux.dev,
+	robh@kernel.org, devicetree@vger.kernel.org, conor+dt@kernel.org
+Subject: Re: [PATCH v2 1/6] dt-bindings: rtc: sun6i: add sun60i-a733 support
+Message-ID: <20260629-grime-chasing-8f09675e5013@spud>
+References: <20260629-a733-rtc-v2-0-7b72112784f8@baylibre.com>
+ <20260629-a733-rtc-v2-1-7b72112784f8@baylibre.com>
+ <20260629125305.0DF981F000E9@smtp.kernel.org>
+ <1jpl198jzk.fsf@starbuckisacylon.baylibre.com>
+ <20260629-aliens-busload-ef9178973b4f@spud>
+ <CAGb2v67QV4gt=iXvaWeRCAxcasvzSpgTPodHhspd2ka19Hgdtg@mail.gmail.com>
+ <1jechp8j0a.fsf@starbuckisacylon.baylibre.com>
 Precedence: bulk
 X-Mailing-List: sashiko-reviews@lists.linux.dev
 List-Id: <sashiko-reviews.lists.linux.dev>
 List-Subscribe: <mailto:sashiko-reviews+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:sashiko-reviews+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-References: <20260629-alloc-trylock-v3-0-57bef0eadbc2@google.com>
- <20260629-alloc-trylock-v3-5-57bef0eadbc2@google.com> <20260629142921.9A05A1F000E9@smtp.kernel.org>
-In-Reply-To: <20260629142921.9A05A1F000E9@smtp.kernel.org>
-From: Brendan Jackman <jackmanb@google.com>
-Date: Mon, 29 Jun 2026 17:27:22 +0200
-X-Gm-Features: AVVi8Cez06atlBYDxc5qOHWHrzUA1EIkcGdk101W9a6vnlRoxyYgsDx2otTEPB8
-Message-ID: <CA+i-1C1cBhQAmmUK3Ltezq-VLwQKdGD1TMrZ=AAzzNHQcwxQ0w@mail.gmail.com>
-Subject: Re: [PATCH v3 05/16] mm/page_alloc: unify __alloc_frozen_pages[_nolock]_noprof()
-To: sashiko-reviews@lists.linux.dev
-Cc: linux-rt-devel@lists.linux.dev, linux-kernel@vger.kernel.org
-Content-Type: text/plain; charset="UTF-8"
+Content-Type: multipart/signed; micalg=pgp-sha512;
+	protocol="application/pgp-signature"; boundary="FsVq+3ZUQ4Vt+gBu"
+Content-Disposition: inline
+In-Reply-To: <1jechp8j0a.fsf@starbuckisacylon.baylibre.com>
 
-On Mon, 29 Jun 2026 at 16:29, <sashiko-bot@kernel.org> wrote:
->
-> Thank you for your contribution! Sashiko AI review found 1 potential issue(s) to consider:
-> - [High] Spurious allocation failures for ALLOC_NOLOCK on fragmented systems
-> --
->
-> commit e9001ddaf8c952ebe08e5042f720b09e0b4a5da8
-> Author: Brendan Jackman <jackmanb@google.com>
->
-> mm/page_alloc: unify __alloc_frozen_pages[_nolock]_noprof()
->
-> This commit unifies the core allocator entry points by pulling the ALLOC_NOLOCK
-> control up into __alloc_frozen_pages_noprof(). It turns the nolock variant
-> into a thin wrapper that just sets the ALLOC_NOLOCK flag and handles
-> NUMA_NO_NODE.
->
-> > diff --git a/mm/page_alloc.c b/mm/page_alloc.c
-> > index a3ba63c7f9199..8d409d075e3e9 100644
-> > --- a/mm/page_alloc.c
-> > +++ b/mm/page_alloc.c
->
-> [ ... ]
->
-> > @@ -5310,9 +5384,9 @@ struct page *__alloc_frozen_pages_noprof(gfp_t gfp, unsigned int order,
-> >       fastpath_alloc_flags |= alloc_flags_nofragment(zonelist_zone(ac.preferred_zoneref), gfp);
-> >       fastpath_alloc_flags |= alloc_flags_nonblocking(gfp, order) & ALLOC_HIGHATOMIC;
+--FsVq+3ZUQ4Vt+gBu
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+Content-Transfer-Encoding: quoted-printable
+
+On Mon, Jun 29, 2026 at 05:27:01PM +0200, Jerome Brunet wrote:
+> On lun. 29 juin 2026 at 23:20, Chen-Yu Tsai <wens@kernel.org> wrote:
+>=20
+> > On Mon, Jun 29, 2026 at 11:16=E2=80=AFPM Conor Dooley <conor@kernel.org=
+> wrote:
+> >>
+> >> On Mon, Jun 29, 2026 at 05:05:51PM +0200, Jerome Brunet wrote:
+> >> > On lun. 29 juin 2026 at 12:53, sashiko-bot@kernel.org wrote:
+> >> >
+> >> > > Thank you for your contribution! Sashiko AI review found 1 potenti=
+al issue(s) to consider:
+> >> > > - [Low] The `clock-output-names` property has a global `maxItems: =
+3`
+> >> > > constraint and a description limiting it to three clocks, which co=
+ntradicts
+> >> > > the new clock outputs (IDs up to 11) added for the sun60i-a733-rtc.
+> >> > > --
+> >> > >
+> >> > > commit a1565b632e372c724867216463a453c9d1600ad2
+> >> > > Author: Jerome Brunet <jbrunet@baylibre.com>
+> >> > >
+> >> > > dt-bindings: rtc: sun6i: add sun60i-a733 support
+> >> > >
+> >> > > Adds a new rtc compatible for the sun60i-a733 SoC and new IDs for =
+the
+> >> > > peripheral oscillator clock gates of this SoC.
+> >> > >
+> >> > >> diff --git a/Documentation/devicetree/bindings/rtc/allwinner,sun6=
+i-a31-rtc.yaml b/Documentation/devicetree/bindings/rtc/allwinner,sun6i-a31-=
+rtc.yaml
+> >> > >> index 9df5cdb6f63f2..197a6f67b180a 100644
+> >> > >> --- a/Documentation/devicetree/bindings/rtc/allwinner,sun6i-a31-r=
+tc.yaml
+> >> > >> +++ b/Documentation/devicetree/bindings/rtc/allwinner,sun6i-a31-r=
+tc.yaml
+> >> > >> @@ -33,6 +33,7 @@ properties:
+> >> > >>            - enum:
+> >> > >>                - allwinner,sun20i-d1-rtc
+> >> > >>                - allwinner,sun55i-a523-rtc
+> >> > >> +              - allwinner,sun60i-a733-rtc
+> >> > >>            - const: allwinner,sun50i-r329-rtc
+> >> > >
+> >> > > [ ... ]
+> >> > >
+> >> > >> diff --git a/include/dt-bindings/clock/sun6i-rtc.h b/include/dt-b=
+indings/clock/sun6i-rtc.h
+> >> > >> index 3bd3aa3d57ce1..5132a393ca4b6 100644
+> >> > >> --- a/include/dt-bindings/clock/sun6i-rtc.h
+> >> > >> +++ b/include/dt-bindings/clock/sun6i-rtc.h
+> >> > >> @@ -6,5 +6,9 @@
+> >> > >>  #define CLK_OSC32K                0
+> >> > >>  #define CLK_OSC32K_FANOUT 1
+> >> > >>  #define CLK_IOSC          2
+> >> > >> +#define CLK_HOSC_UFS              8
+> >> > >> +#define CLK_HOSC_HDMI             9
+> >> > >> +#define CLK_HOSC_SERDES0  10
+> >> > >> +#define CLK_HOSC_SERDES1  11
+> >> > >
+> >> > > [Severity: Low]
+> >> > > Will adding clock IDs up to 11 conflict with the existing clock-ou=
+tput-names
+> >> > > constraint in allwinner,sun6i-a31-rtc.yaml?
+> >> > >
+> >> > > The clock-output-names property currently has a global maxItems co=
+nstraint
+> >> > > alongside its description:
+> >> > >
+> >> > >   clock-output-names:
+> >> > >     minItems: 1
+> >> > >     maxItems: 3
+> >> > >     description:
+> >> > >       The RTC provides up to three clocks
+> >> > >
+> >> > > If a device tree author attempts to define an array of clock-outpu=
+t-names
+> >> > > to document all outputs for the allwinner,sun60i-a733-rtc node, wo=
+n't it fail
+> >> > > dt_binding_check validation because it exceeds the maximum allowed=
+ items?
+> >> >
+> >> > Not quite sure what to do with that one.
+> >> >
+> >> > The h616 compatible devices all exposed more than 3 clock through the
+> >> > provider, even if the higher IDs did not have define.
+> >> >
+> >> > The clock output names for the h616 compatible device are not really
+> >> > supposed to be defined through DT ... at least AFAIU ??
+> >>
+> >> The output names aren't even defined anyway, so the property is not
+> >> really all that helpful. It's worth increasing the max to whatever is
+> >> permitted now and look into the conditional sections to see if any
+> >> constraints need updating.
 > >
-> > -     /* First allocation attempt */
-> > +     /* First allocation attempt (or, for nolock, only attempt) */
-> >       page = get_page_from_freelist(alloc_gfp, order, fastpath_alloc_flags, &ac);
-> > -     if (likely(page))
-> > +     if (likely(page) || (alloc_flags & ALLOC_NOLOCK))
-> >               goto out;
->
-> [Severity: High]
-> Could this lead to spurious allocation failures for ALLOC_NOLOCK requests
-> on fragmented systems?
->
-> In the pre-patch code, alloc_frozen_pages_nolock_noprof() bypassed
-> alloc_flags_nofragment(), allowing it to successfully steal pages from
-> other migratetypes when its preferred migratetype was empty.
+> > Or just not allow it for the newer RTC compatible? On the kernel side,
+>=20
+> I was edging toward this. Would this be acceptable to you Conor ?
+> I'm thinking about disallowing it for all the h616 compatible ones, not
+> just the a733.
 
-Oh, yep. Given "no functional change intended" this should not set
-ALLOC_NOFRAGMENT when ac.alloc_flags has ALLOC_NOLOCK.
+Works for me.
+Just make sure you note somewhere that the names aren't ever defined
+anyway.
 
-(Is this intentional? Do we really want to allow "opportunistic"
-allocations, which are very much allowed to fail, to fragment memory?
-It doesn't look like this was discussed at when the nolock
-functionality was added).
+--FsVq+3ZUQ4Vt+gBu
+Content-Type: application/pgp-signature; name=signature.asc
+
+-----BEGIN PGP SIGNATURE-----
+
+iHUEABYKAB0WIQRh246EGq/8RLhDjO14tDGHoIJi0gUCakKSCgAKCRB4tDGHoIJi
+0gn5AQDD5BpnbkEuXFqjXr45UvCGpc0VNOtAllspIK02XLX22gEAtkL5sluYvcyP
+4gx+sYYqb+rdzPsLBlKIqNSYOsEaLQ8=
+=q2lG
+-----END PGP SIGNATURE-----
+
+--FsVq+3ZUQ4Vt+gBu--
