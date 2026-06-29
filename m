@@ -1,99 +1,313 @@
-Received: from mail-wr1-f41.google.com (mail-wr1-f41.google.com [209.85.221.41])
+Received: from mail-ot1-f67.google.com (mail-ot1-f67.google.com [209.85.210.67])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 259CF3DA5A8
-	for <sashiko-reviews@lists.linux.dev>; Mon, 29 Jun 2026 08:44:02 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.221.41
-ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1782722644; cv=none; b=kD4M7x3QYX9hauiYqurpiGVzba+S6/Ytta2191dHxDyna70zxEp2I0In/RxUpoW71sVT1KWZjS2F/6p6JWeitX6o5FcqosZUFwj7LuGRjA0w6V3XLPgY0HihQpYy6ZUpn/lGP9YEjOcSHnnvH7JfUO/DetruRMVOApp69z14aj0=
-ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1782722644; c=relaxed/simple;
-	bh=MIKe3kWQjK+xmv1ipQpshiw76Ja4PFM8nvJNMM+vmgY=;
-	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=T2sbZI2HsojhaJJuJjW3cstR3SkHK/EAZu987vwrsPQsgfvuD+pRvCfUcP9N75Xiw93PHvFjYY0ll3gZXt4JKgshBY3918AWqTSOJwpKy4olaAjLk8z4IVmIMp4+pj0wbaTk2q+jQXeTFnXiKrMfUrFcs62uSn3zJwHO6vMksZc=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=Z8WM4+u8; arc=none smtp.client-ip=209.85.221.41
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7AB123F8251
+	for <sashiko-reviews@lists.linux.dev>; Mon, 29 Jun 2026 08:48:38 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=pass smtp.client-ip=209.85.210.67
+ARC-Seal:i=2; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
+	t=1782722920; cv=pass; b=B5frU42X4h6Hp1pXpNytq1lUQNOgxXgG7WeXRot4+2CPHE8o2kzriJXfhR+sJ+8zwCup4o1yJTbtrNxEuNuyNTWodkmOAWFmSprRKNk9sbPMjf3H2Tv4E3CAmnX1Ctw4Qq0xZ4rv50+BVwqNmc3z8rwVOtVv0XYVijeBD5OZWtE=
+ARC-Message-Signature:i=2; a=rsa-sha256; d=subspace.kernel.org;
+	s=arc-20240116; t=1782722920; c=relaxed/simple;
+	bh=vlj9kY1XGfqdtCgT3fZ5VL5CEwYNVtFcBJZbVqediMU=;
+	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
+	 To:Cc:Content-Type; b=RIILe9Y8r7InuNBtj+i8Sx6sfhmbusRmvJPAfh1o1twFsFvvNtlYTd4Ll8SJq0776+CCvZ+AeVANXw8DaXAxdKeTDoZ3ZmS79odCyp7zCSq3UNtpOjfXWDd3AlyANi50eo6z+FUa2T0KJ/IsNwha9zfrBkoBPwPGpYr/xWcAQYc=
+ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=SezGyDLR; arc=pass smtp.client-ip=209.85.210.67
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="Z8WM4+u8"
-Received: by mail-wr1-f41.google.com with SMTP id ffacd0b85a97d-470174001a0so1195203f8f.0
-        for <sashiko-reviews@lists.linux.dev>; Mon, 29 Jun 2026 01:44:02 -0700 (PDT)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="SezGyDLR"
+Received: by mail-ot1-f67.google.com with SMTP id 46e09a7af769-7e6128bd9b3so1559796a34.1
+        for <sashiko-reviews@lists.linux.dev>; Mon, 29 Jun 2026 01:48:38 -0700 (PDT)
+ARC-Seal: i=1; a=rsa-sha256; t=1782722917; cv=none;
+        d=google.com; s=arc-20260327;
+        b=iANXAeiqu0xFyOWAFp7kUzPd+x4rcWzQs842PKOyWUsw8RYynpvNF2czWjFBBGZPyB
+         WXm2nglNSKAqjsXMWSMUeM4w2zMq32N07FqqcZqXew9rgRLWAkpJ6aoOMzA4UQxzGF8V
+         LXlpvUdnKTLLthH/Is2bG1qlwT+muNBMHDvh0ZIQQi158IMTo0eP9S6HfqQdA996Nh8K
+         Bj/zob+lrO3Mb/vqVE6du6p7gDSYNtajyYlljI7WVAwpouIZ14N1faBKYEi0mIqfcnwQ
+         J812YgssvuFaeFuvLlIplF9nykQh0u/bCIx6k15mEMDIIHlckKaUsIj4fm+GJnV1Qyc1
+         hSqA==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com; s=arc-20260327;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:dkim-signature;
+        bh=aUFVwir31Lt9p8bnST+2MesNqx8N4BFQ0O5QuspoUJc=;
+        fh=xPpY1eJncIbZYzB1EwAwSnJKmF4AWv783JvkNJMI/QQ=;
+        b=de6qgLqgUl9dUSIFWc6pWOn9mpLkAn1GZa7t/filcBbmsljyqip1dUtUuYeGlKxa7J
+         o+tXmEaQ0GF6CTRaDOrZ3wqcVUa9Q1bvGM70dwFbAipMnOkYuijBPqEoEryFq/LtB5IW
+         cc16vNe74Ughudh3uNoo1t35QsztOQJuWFqTdpsLKdxBn2Xdd3NgtmWEUE0byw1UlQGS
+         J2P8x/XXxEA3BaffUOj2NWwPL4kRr3WQV/eWCOKpJIQHUDx2NHvyRzXyCdCv9HeDytpd
+         gev3roUwHiDnu7tJtwkusYgBPzj9jK2p7ngB45yc2kS+zjM2UiDWJiUi313u7lfgNoqR
+         zERQ==;
+        darn=lists.linux.dev
+ARC-Authentication-Results: i=1; mx.google.com; arc=none
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20251104; t=1782722641; x=1783327441; darn=lists.linux.dev;
-        h=content-transfer-encoding:mime-version:references:in-reply-to
-         :message-id:date:subject:cc:to:from:from:to:cc:subject:date
+        d=gmail.com; s=20251104; t=1782722917; x=1783327717; darn=lists.linux.dev;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:from:to:cc:subject:date
          :message-id:reply-to;
-        bh=PGm9QONZukO2Q5rdaZt121dw8G3tFHNBSookGlxPwSY=;
-        b=Z8WM4+u8DW67G+Q/hkbwK9vdilx6SqBt2eITHaGw4+JEHEKKr/XbrexjBbdnUkgSy0
-         7pZ1M6cVKd2/Q0Iy8PVVzA7RhJ5jc7zzLf0Q/1+V9S2mozLFHretEGMpCoXElVtvMAwp
-         rIDdKzIbn0OLpuk+Bi2tvPTOo3YOAihwYBUsBfcbo7UvRiyIaBMTN/y3z16944t3RYQ4
-         QAZ4Y3LqvOX1EeDy9kt0kKIj4Mw3ZAiynaRUT1ANxkqXXMPkG/iGfRh5cvMRkAWmczP/
-         q8cFkvO2nk2bs2cSiQsIjSrmy2AmNZ9qNGvD0SB7xS4oGT4kAFmW7KeprbFC/3DzsqNn
-         8M/Q==
+        bh=aUFVwir31Lt9p8bnST+2MesNqx8N4BFQ0O5QuspoUJc=;
+        b=SezGyDLRcaWAddGO+dQ+TC1O78tcarpo43nUH6L6XXzGN7KqRQuMAHzReWxqZ04mht
+         rlwBJL5Se0JsAwkCw2o98Or/TMUgP+xN0OsWRWheOWktYuLaY7ad0DXWFliylyxt+j5B
+         56XukFSNn34Xbtn51mmil6qHUxvZLCy3yMvlc2g090YhVYFFVQM3JXB7DYjci5NgDBtu
+         KohyKFkWIs1akbEs3hLKProEkr7HRWO0wDiMlc3FjuY88dvdK/1VlP6txdcM7n0mKUFC
+         iBqMq0BpKHRf6TLO5k0WaPbR5hG5RLDD3v/xPgNw902LdyaCFytvBFKatayRq2t6RM37
+         NVbQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20251104; t=1782722641; x=1783327441;
-        h=content-transfer-encoding:mime-version:references:in-reply-to
-         :message-id:date:subject:cc:to:from:x-gm-gg:x-gm-message-state:from
+        d=1e100.net; s=20251104; t=1782722917; x=1783327717;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:x-gm-gg:x-gm-message-state:from
          :to:cc:subject:date:message-id:reply-to;
-        bh=PGm9QONZukO2Q5rdaZt121dw8G3tFHNBSookGlxPwSY=;
-        b=kGaBbOHyDZhQIs0ztMN3uk+dv8bfHRt2msa06I3Yj9V/yTLoP6QW87qD+PS89KcAfU
-         jbaEzOr7fPQyl32g3Lev5SJ8VqvLhKaNt1aGL1Gh2+4TB/HI4CY3AMgtAMBrIZcfHgi5
-         8PvdxaC35JgsIh2Xi6mxZmH90ZCyn0p/urgmGOL1oy2CJzU0jIisImjKi+m70FnzAGkP
-         IBfG/u8fr3YIKCxgOe0WVfmIZd10I5JAsvUkh0dzMbikOHaVQzXIKj4wzJD4qyjQRu1J
-         4tWdJY+VqLCoNgjb2vuIuaDhiV4roO3wzbu36F8I7zG+ZerPFrpG4zOWvdZxv0esf2aa
-         Vw+g==
-X-Forwarded-Encrypted: i=1; AHgh+RqezJ3fz9Ynt4LicTBO1VrAgeYhy9XS/GFb5izUr+ToFEswsQem9MkVNWtSc7cVY0l6HldXmS2SjZqVJ27Gvao=@lists.linux.dev
-X-Gm-Message-State: AOJu0Yx9chPm0Y5JMEdZFGNyZZ1f3ZDuljBfAyaKagSzV18NW3PtsIX0
-	ecTlOtPaJ/U7lx/UQw2MhlETRt2sNv7qao0rUC2iZYNO/8KlzH1xD5r9
-X-Gm-Gg: AfdE7clerRBzbrt8ZRW0io28W3C6NFjuoF5LKBrEQauZXWyB63XvZCMXZz88zmOWSlN
-	pYU30aJ5EdedNVmv3uzl0tqseAjwptaJLaYVZsLAYVQ+0OqVeH3Zi39ym0H+04C8DN4L1eYxSCw
-	568hW3HBDgdULQlkpDP/mLCPL1ulX/2VZCvdJA2+VYYfFOIKS56r+m0O1h16IUbEKKoY91jLZaX
-	ZPMgOcDaAGgp0oK3QoT/LwttuJ0lhDCxNk9m6/CJn8Z71ba4TLXD7dLxP5EB1Xg0zyoWTJE+tXb
-	MJrlLnNFrFe0HOrPUErnvAIe5wTWewv1Y9GwL70nbmk9iQ3FWzGLTFtWTEfOXQ9piudmO3/vhRN
-	VXDAGBoDAMTD0jzKtncGx7iZvHPmkm2SkojvQPW4kbxmB5gPBifj3yZKD0MFVFfKHoCZJcfMXgZ
-	wfhgp2xVlHmH/T0L95CvmAPBx+X+g=
-X-Received: by 2002:a05:6000:4210:b0:470:4d27:97a3 with SMTP id ffacd0b85a97d-4704d2799d5mr12518285f8f.1.1782722641174;
-        Mon, 29 Jun 2026 01:44:01 -0700 (PDT)
-Received: from anthony.local ([2a06:c701:49b2:4c00:12ff:e0ff:fea5:3d2e])
-        by smtp.gmail.com with ESMTPSA id ffacd0b85a97d-46f8d6f10absm41208583f8f.5.2026.06.29.01.43.59
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Mon, 29 Jun 2026 01:44:00 -0700 (PDT)
-From: Amit Barzilai <amit.barzilai22@gmail.com>
-To: Javier Martinez Canillas <javierm@redhat.com>,
-	Maarten Lankhorst <maarten.lankhorst@linux.intel.com>,
-	Maxime Ripard <mripard@kernel.org>,
-	Thomas Zimmermann <tzimmermann@suse.de>,
-	David Airlie <airlied@gmail.com>,
-	Simona Vetter <simona@ffwll.ch>
-Cc: dri-devel@lists.freedesktop.org,
-	sashiko-reviews@lists.linux.dev
-Subject: Re: [PATCH 1/3] drm/ssd130x: fix column and row end address in partial updates for ssd132x
-Date: Mon, 29 Jun 2026 11:43:16 +0300
-Message-ID: <20260629084317.10265-1-amit.barzilai22@gmail.com>
-X-Mailer: git-send-email 2.54.0
-In-Reply-To: <20260622123631.8B4A31F000E9@smtp.kernel.org>
-References: 
+        bh=aUFVwir31Lt9p8bnST+2MesNqx8N4BFQ0O5QuspoUJc=;
+        b=KYs2V7fu1SzAfH+u6eulW+kIF/QowCz5Q2gPWih5R3ymG3kttQPGuRBgLzQAUcvjro
+         937xCrFnlTFIexk5alLltONbtbT3NY2iw23pG3gckzO8LMsrd43MLAzkdoiQhehUQ69l
+         hmxBfrLN+oVjlsN3tBPfhhfE1nmRMsfUH6ejIDd0zC1M7u/y9N67VWLORKiZxgnxOHhY
+         rimz/vmjqXP+KrzrpKHRnod3NxmzDRQ248qFqsWgIkmAOGDadWEd66UmX1jFuSLQmk9K
+         Ef4dGQW2JDY4AWr9fp1jagAb4enoyiYyisnnHhdVffjSzMXBpfYlRxWpebJUQ6HFC3O0
+         0n9w==
+X-Gm-Message-State: AOJu0Ywubtpv8IzQofGvvO0pkiL6fLhrnEej75I7G2Hwe7iVGcq7o38F
+	r/LdQdYmeqzAAiXoRb1DbBZABtf/4nqphH2KzBl+2ZhLAGSH9iqlYk1dZSGS2ETl7URLdvUV2+5
+	NDkFFUv51NzDqAQ8pj9vQyFD5E5da4jVRhrPgjwDNClhb
+X-Gm-Gg: AfdE7cmf36ov6XRT1y4rBSXudwfwYxPm8jUhXyiilyWk58o+3omVwPirOB7b1RagUnW
+	SvTzFWF+pJXWMXMvGuriDga59sVIbQXwG+O9GPOtb8SEka8OwBPJ3Nr2jrVjZTo1TH70N7auGqM
+	2gYb1D6hGyOMaebPOVBXceVFay5el7rS7LtZRsu59+eosM0P4XDodIiceAYcrc+DbNWxZ8ZAPeS
+	6Iid+nyTOSSlrb8TOAfHLJYLZMHDKUzCghpi/3KdVhJL5NmKDHZuT6JTreMKySsUFWqN9BIUWXe
+	Nt6k1HplkvA=
+X-Received: by 2002:a05:6830:4902:b0:7e9:b4d0:539c with SMTP id
+ 46e09a7af769-7e9b4d05cb4mr7597336a34.29.1782722917221; Mon, 29 Jun 2026
+ 01:48:37 -0700 (PDT)
 Precedence: bulk
 X-Mailing-List: sashiko-reviews@lists.linux.dev
 List-Id: <sashiko-reviews.lists.linux.dev>
 List-Subscribe: <mailto:sashiko-reviews+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:sashiko-reviews+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
+References: <20260627225755.1710837-2-coiaprant@gmail.com> <20260627225755.1710837-6-coiaprant@gmail.com>
+ <20260627230820.8C6AA1F000E9@smtp.kernel.org>
+In-Reply-To: <20260627230820.8C6AA1F000E9@smtp.kernel.org>
+From: Coia Prant <coiaprant@gmail.com>
+Date: Mon, 29 Jun 2026 16:48:24 +0800
+X-Gm-Features: AVVi8CfuknIVpEUVONl1MaX488tBt0lHnX7_3hgzJaRxPHZonPlvSzmvsY1S_nE
+Message-ID: <CALj3r0iZzrJUiEa4E8jftrZYcPxik7JoCXSt-zSh5c-6jzaQHQ@mail.gmail.com>
+Subject: Re: [PATCH 3/3] arm64: dts: rockchip: Add devicetree for the
+ Graperain G3568 v2
+To: sashiko-reviews@lists.linux.dev
+Cc: robh@kernel.org, conor+dt@kernel.org, devicetree@vger.kernel.org
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 
-On Mon, Jun 22, 2026 at 12:36:30PM +0000, sashiko-bot@kernel.org wrote:
-> Pre-existing issues:
-> - [High] Potential 1-byte out-of-bounds read past the heap buffer in
->   `ssd132x_update_rect` when device width is configured to an odd value.
+<sashiko-bot@kernel.org> =E4=BA=8E2026=E5=B9=B46=E6=9C=8828=E6=97=A5=E5=91=
+=A8=E6=97=A5 07:08=E5=86=99=E9=81=93=EF=BC=9A
+>
+> Thank you for your contribution! Sashiko AI review found 4 potential issu=
+e(s) to consider:
+> - [Medium] Incorrect `press-threshold-microvolt` values in `adc-keys` use=
+ boundary midpoints instead of nominal voltages, causing the MENU button to=
+ misregister as ESC.
+> - [Medium] The WiFi SDIO interface specifies `keep-power-in-suspend`, but=
+ its I/O voltage supply (`vcc_1v8`) is configured to turn off in suspend, b=
+reaking Wake-on-WLAN.
+> - [Medium] The AP6356S Bluetooth UART is missing hardware flow control pr=
+operties and the required Bluetooth child node.
+> - [Low] The deprecated `gpio` property is used instead of `gpios` in fixe=
+d regulator nodes.
+> --
+>
+> commit 13181564cb78799e1d57eb0995588d8e839f22a5
+> Author: Coia Prant <coiaprant@gmail.com>
+> arm64: dts: rockchip: Add devicetree for the Graperain G3568 v2
+>
+> This patch introduces the device tree for the Graperain G3568 v2, an RK35=
+68
+> based development board. It configures the hardware peripherals including
+> ethernet, storage, wireless, and power regulators.
+>
+> Link: https://image.chukouplus.com/upload/C_153/product_file/20211022/6da=
+ddec9e400458816dd4c57ba807fc3.pdf
+> Link: https://blog.gov.cooking/archives/research-graperain-g3568-v2-and-f=
+lash.html
+>
+> > diff --git a/arch/arm64/boot/dts/rockchip/rk3568-graperain-g3568-v2.dts=
+ b/arch/arm64/boot/dts/rockchip/rk3568-graperain-g3568-v2.dts
+> > new file mode 100644
+> > index 0000000000000..221992d6c6003
+> > --- /dev/null
+> > +++ b/arch/arm64/boot/dts/rockchip/rk3568-graperain-g3568-v2.dts
+> > @@ -0,0 +1,894 @@
+>
+> [ ... ]
+>
+> > +     adc-keys {
+> > +             compatible =3D "adc-keys";
+> > +             io-channels =3D <&saradc 0>;
+> > +             io-channel-names =3D "buttons";
+> > +             keyup-threshold-microvolt =3D <1800000>;
+> > +             poll-interval =3D <100>;
+> > +
+> > +             button-esc {
+> > +                     label =3D "esc";
+> > +                     linux,code =3D <KEY_ESC>;
+> > +                     press-threshold-microvolt =3D <1250000>;
+> > +             };
+> > +
+> > +             button-menu {
+> > +                     label =3D "menu";
+> > +                     linux,code =3D <KEY_MENU>;
+> > +                     press-threshold-microvolt =3D <1600000>;
+>
+> [Severity: Medium]
+> Will this cause the menu button to misregister as esc?
+>
+> The adc-keys driver uses a nearest-neighbor algorithm to match the ADC
+> reading to the button. Since the commit message indicates the nominal
+> voltages are 1.1V for ESC and 1.4V for MENU, an ADC reading of 1.4V from
+> pressing MENU is closer to the ESC threshold of 1.25V (0.15V difference)
+> than the MENU threshold of 1.6V (0.2V difference).
+>
+> Could we use the exact expected nominal voltages here instead of the
+> boundary midpoints?
+>
+> [ ... ]
+>
+> > +     vcc5v0_usb_host: regulator-vcc5v0-usb-host {
+> > +             compatible =3D "regulator-fixed";
+> > +             enable-active-high;
+> > +             gpio =3D <&gpio0 RK_PA6 GPIO_ACTIVE_HIGH>;
+>
+> [Severity: Low]
+> Is this using the deprecated gpio property?
+>
+> The standard regulator-fixed binding expects gpios instead of gpio, which
+> can cause device tree schema validation warnings.
+>
+> > +             pinctrl-names =3D "default";
+> > +             pinctrl-0 =3D <&vcc5v0_usb_host_en>;
+> > +             regulator-name =3D "vcc5v0_usb_host";
+> > +             regulator-min-microvolt =3D <5000000>;
+> > +             regulator-max-microvolt =3D <5000000>;
+> > +             vin-supply =3D <&vcc5v0_usb>;
+> > +     };
+> > +
+> > +     vcc5v0_usb_otg: regulator-vcc5v0-usb-otg {
+> > +             compatible =3D "regulator-fixed";
+> > +             enable-active-high;
+> > +             gpio =3D <&gpio0 RK_PA5 GPIO_ACTIVE_HIGH>;
+>
+> [Severity: Low]
+> Would it be better to use the gpios property here as well to match the
+> regulator-fixed device tree binding schema?
+>
+> [ ... ]
+>
+> > +/* used for AP6356S WiFi */
+> > +&sdmmc2 {
+> > +     bus-width =3D <4>;
+> > +     cap-sd-highspeed;
+> > +     cap-sdio-irq;
+> > +     keep-power-in-suspend;
+> > +     mmc-pwrseq =3D <&sdio_pwrseq>;
+> > +     non-removable;
+> > +     pinctrl-names =3D "default";
+> > +     pinctrl-0 =3D <&sdmmc2m0_bus4 &sdmmc2m0_cmd &sdmmc2m0_clk>;
+> > +     sd-uhs-sdr104;
+> > +     vmmc-supply =3D <&vcc3v3_sys>;
+> > +     vqmmc-supply =3D <&vcc_1v8>;
+>
+> [Severity: Medium]
+> Will this configuration break Wake-on-WLAN and SDIO communication on resu=
+me?
+>
+> This node specifies keep-power-in-suspend, but the vqmmc-supply is set to
+> vcc_1v8. Looking at the vcc_1v8 regulator definition (DCDC_REG5) earlier =
+in
+> the file, it is configured with regulator-off-in-suspend.
+>
+> Cutting power to the SDIO I/O domain during suspend violates the power
+> sequencing for keep-power-in-suspend and prevents out-of-band wake interr=
+upts
+> from signaling the host.
+>
+> [ ... ]
+>
+> > +/* used for WiFi/BT AP6356S */
+> > +&uart8 {
+> > +     pinctrl-0 =3D <&uart8m0_xfer &uart8m0_ctsn>;
+> > +     status =3D "okay";
+> > +};
+>
+> [Severity: Medium]
+> Does this Bluetooth UART configuration need hardware flow control and a
+> device child node?
+>
+> High-speed Bluetooth modules like the AP6356S generally rely on RTS/CTS t=
+o
+> prevent buffer overflows, but the uart-has-rtscts property and the
+> uart8m0_rtsn pin configuration are missing here.
+>
+> Additionally, without a bluetooth child node (such as compatible =3D
+> "brcm,bcm4345c5"), the kernel's HCI UART driver might not be able to prob=
+e
+> and initialize the module automatically.
+>
+> [ ... ]
+>
+> --
+> Sashiko AI review =C2=B7 https://sashiko.dev/#/patchset/20260627225755.17=
+10837-2-coiaprant@gmail.com?part=3D3
 
-As stated in the review, this is a pre-existing issue and is not touched by
-this series, which only corrects the SET_COL_RANGE/SET_ROW_RANGE end
-addresses sent to the controller.
+Thanks for the thorough review.
 
-Gentle ping on the series -- it's been about a week with no comments. Is
-there anything you'd like changed for it to be picked up? Happy to spin a
-v2 if needed.
+Here are my responses to the issues raised:
 
--- 
-Thanks,
-Amit
+1. ADC Keys threshold (Medium)
+
+The current threshold values (1.25V for ESC and 1.6V for MENU) are intentio=
+nally
+set to midpoints, as the adc-keys driver uses a nearest-neighbor algorithm =
+to
+match ADC readings. These midpoints provide the largest decision margin and
+minimize the risk of mis=E2=80=91detection. I have verified the functionali=
+ty with
+evtest, and the buttons are correctly recognized. Therefore, I will keep th=
+is
+configuration unchanged.
+
+2. GPIO property in fixed regulators (Low)
+
+This is correct that gpios is the preferred property now, and gpio is
+deprecated.
+Since this board and the X3568 v4 share almost identical hardware, I plan t=
+o
+address this for both boards in a separate, follow=E2=80=91up patch series =
+to ensure
+consistency.
+
+3. SDIO vqmmc-supply and regulator-off-in-suspend (Medium)
+
+This is a valid concern. The configuration conflict between
+keep-power-in-suspend
+and regulator-off-in-suspend is indeed problematic. However, this same patt=
+ern
+appears in many existing RK3568 board files and appears to be a historical
+mistake that has been copied across multiple devices. I believe this should=
+ be
+fixed systematically at the platform level rather than on a per=E2=80=91boa=
+rd basis.
+Should we submit a separate patch series to clean up this issue for all RK3=
+568?
+
+4. Bluetooth UART flow control and child node (Medium)
+
+Agreed that hardware flow control (uart-has-rtscts) and a Bluetooth child n=
+ode
+are required for proper operation. Since this is a common requirement
+for similar board
+ (X3568 v4), I will address this in a separate follow=E2=80=91up patch seri=
+es
+to improve consistency
+ across the platform.
+
+If there are no more questions, I will submit PATCH v2.
+
+Thanks.
+
+Best,
+Coia
