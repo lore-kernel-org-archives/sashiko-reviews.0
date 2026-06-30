@@ -1,123 +1,197 @@
-Received: from mail.loongson.cn (mail.loongson.cn [114.242.206.163])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 8668C2857FA
-	for <sashiko-reviews@lists.linux.dev>; Tue, 30 Jun 2026 03:20:06 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=114.242.206.163
+Received: from out-179.mta1.migadu.com (out-179.mta1.migadu.com [95.215.58.179])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+	(No client certificate requested)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 52C1440D598
+	for <sashiko-reviews@lists.linux.dev>; Tue, 30 Jun 2026 04:35:07 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=95.215.58.179
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1782789609; cv=none; b=r5MoNXfEKijXtuLnYdrf15igMfA/q22Smssrt55ggOKvAlhJb4GCnD5Lv6/dHcoQ1eWKuyvJAcQtnFVdIuJ2uWurFo+fbBTsgNSRKBy5dkssb4O8brSp3TiJWJc+yTx/d0Vn9WTskDkWf2aj6EAdrtnmz7eSPTocpMNbbyOuy+I=
+	t=1782794109; cv=none; b=iZfup2ckWNDTQdsKo16sUI0WH1QFjnStELhXUARgMYCnEuDiq3b1OY3DOR5a0Hsh/+wSHyel5+Ir298elc3kDVU9ZZxhaExOVHj0B5M8YgAGjlw3/k6585nz9PEkkDJhnmYiHteVREsPQZC8naH8krb8YfNW5py1b1EKiydTFko=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1782789609; c=relaxed/simple;
-	bh=mUq3InlUgj+BAWa9s2S5mLTFpk5qAryF8o1OYoMXI5s=;
-	h=Subject:To:Cc:References:From:Message-ID:Date:MIME-Version:
-	 In-Reply-To:Content-Type; b=LUzvxzo0IrnDl7S0OA7rNgzCSyZcpRwzfiCuFC+ReFhqvBbwKLnHlLL72fqcntwaShNS4lPyV3ogglySyvnkKuvZeEAG+0omtltvsZWBsDcAZfiMSdaWrc4EJlQHQIyoMCGhfkoqh5Zdf7Z9sHpMuFM6BVbI4T6CssAtWqAu3UI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=loongson.cn; spf=pass smtp.mailfrom=loongson.cn; arc=none smtp.client-ip=114.242.206.163
-Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=loongson.cn
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=loongson.cn
-Received: from loongson.cn (unknown [113.200.148.30])
-	by gateway (Coremail) with SMTP id _____8DxRenjNUNqcnwZAA--.58909S3;
-	Tue, 30 Jun 2026 11:20:04 +0800 (CST)
-Received: from [10.130.40.83] (unknown [113.200.148.30])
-	by front1 (Coremail) with SMTP id qMiowJBxSeDhNUNqDIy4AA--.22102S3;
-	Tue, 30 Jun 2026 11:20:02 +0800 (CST)
-Subject: Re: [PATCH v1 3/4] LoongArch: BPF: Refactor jump offset calculation
- in tail call
-To: sashiko-reviews@lists.linux.dev
-Cc: bpf@vger.kernel.org
-References: <20260630022705.11536-1-yangtiezhu@loongson.cn>
- <20260630022705.11536-4-yangtiezhu@loongson.cn>
- <20260630024002.26F4D1F000E9@smtp.kernel.org>
-From: Tiezhu Yang <yangtiezhu@loongson.cn>
-Message-ID: <38d77460-2824-13e6-ef64-6732c60c30fb@loongson.cn>
-Date: Tue, 30 Jun 2026 11:20:01 +0800
-User-Agent: Mozilla/5.0 (X11; Linux loongarch64; rv:68.0) Gecko/20100101
- Thunderbird/68.7.0
+	s=arc-20240116; t=1782794109; c=relaxed/simple;
+	bh=y/04EdBzzHdRlsfF0oPaZCIwM/XdlAzWW4cyqcAUUH4=;
+	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
+	 In-Reply-To:Content-Type; b=exD5BmUIymfjnXPFbUF5+dJWi39QRa7zG+GKJhEOeLyqyKFI9AL7uvOuX0tQ+rDUkkgeO3tzrT1a7A37d2RdSZUMJqKRzNWRXPh/3WJnsV/AxzMq064h/z2Yg1d8cL2OS3VKlPijAODKFhySdy2SISNDC/YtP8qYtWvYh3LpnMw=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linux.dev; spf=pass smtp.mailfrom=linux.dev; dkim=pass (1024-bit key) header.d=linux.dev header.i=@linux.dev header.b=RNkBf8/9; arc=none smtp.client-ip=95.215.58.179
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linux.dev
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linux.dev
+Authentication-Results: smtp.subspace.kernel.org;
+	dkim=pass (1024-bit key) header.d=linux.dev header.i=@linux.dev header.b="RNkBf8/9"
+Message-ID: <7a53b311-92f8-4058-bd92-73b4e64a96d7@linux.dev>
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linux.dev; s=key1;
+	t=1782794095;
+	h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+	 to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+	 content-transfer-encoding:content-transfer-encoding:
+	 in-reply-to:in-reply-to:references:references;
+	bh=G0hzdxx9t9+R3e5R6FejY/wwQQYMET+soEHVV0SefJg=;
+	b=RNkBf8/9pBI2jrZdOX/nx4RkjvAVG/AoJ8gw/sClDQntNYrbLbXM1XMuz1kp12GM0S4mXE
+	jpo54jqedh9eoDOkVPQOkqmMQiD/TAbxhRzXtcHJ9IATulDqkncp3dMJmT/0m58JtHOdTa
+	XoNQnfiuBYCVgwFC9K5hG5mJptxtMe8=
+Date: Tue, 30 Jun 2026 12:34:14 +0800
 Precedence: bulk
 X-Mailing-List: sashiko-reviews@lists.linux.dev
 List-Id: <sashiko-reviews.lists.linux.dev>
 List-Subscribe: <mailto:sashiko-reviews+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:sashiko-reviews+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-In-Reply-To: <20260630024002.26F4D1F000E9@smtp.kernel.org>
-Content-Type: text/plain; charset=utf-8; format=flowed
+Subject: Re: [PATCH v3 15/16] mm: replace __GFP_NO_CODETAG with
+ ALLOC_NO_CODETAG
+To: sashiko-reviews@lists.linux.dev, Brendan Jackman <jackmanb@google.com>
+Cc: linux-kernel@vger.kernel.org, linux-rt-devel@lists.linux.dev,
+ Andrew Morton <akpm@linux-foundation.org>,
+ Suren Baghdasaryan <surenb@google.com>
+References: <20260629-alloc-trylock-v3-0-57bef0eadbc2@google.com>
+ <20260629-alloc-trylock-v3-15-57bef0eadbc2@google.com>
+ <20260629155637.A59241F000E9@smtp.kernel.org>
 Content-Language: en-US
+X-Report-Abuse: Please report any abuse attempt to abuse@migadu.com and include these headers.
+From: Hao Ge <hao.ge@linux.dev>
+In-Reply-To: <20260629155637.A59241F000E9@smtp.kernel.org>
+Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 8bit
-X-CM-TRANSID:qMiowJBxSeDhNUNqDIy4AA--.22102S3
-X-CM-SenderInfo: p1dqw3xlh2x3gn0dqz5rrqw2lrqou0/
-X-Coremail-Antispam: 1Uk129KBj93XoWxurykZryfuryUGF4kKrWfJFc_yoW5GFykpF
-	Z0gwn3Aay7Wr1Dtanrt395X3WUtw1kGry7Gr1rGr10y3yYqr9FgFW5Ka15ua48Cw4kZw4S
-	qFs0v34SvF4DAacCm3ZEXasCq-sJn29KB7ZKAUJUUUUU529EdanIXcx71UUUUU7KY7ZEXa
-	sCq-sGcSsGvfJ3Ic02F40EFcxC0VAKzVAqx4xG6I80ebIjqfuFe4nvWSU5nxnvy29KBjDU
-	0xBIdaVrnRJUUUvIb4IE77IF4wAFF20E14v26r1j6r4UM7CY07I20VC2zVCF04k26cxKx2
-	IYs7xG6rWj6s0DM7CIcVAFz4kK6r1j6r18M28lY4IEw2IIxxk0rwA2F7IY1VAKz4vEj48v
-	e4kI8wA2z4x0Y4vE2Ix0cI8IcVAFwI0_Jr0_JF4l84ACjcxK6xIIjxv20xvEc7CjxVAFwI
-	0_Jr0_Gr1l84ACjcxK6I8E87Iv67AKxVW8Jr0_Cr1UM28EF7xvwVC2z280aVCY1x0267AK
-	xVW8Jr0_Cr1UM2AIxVAIcxkEcVAq07x20xvEncxIr21l57IF6xkI12xvs2x26I8E6xACxx
-	1l5I8CrVACY4xI64kE6c02F40Ex7xfMcIj6xIIjxv20xvE14v26r1j6r18McIj6I8E87Iv
-	67AKxVW8JVWxJwAm72CE4IkC6x0Yz7v_Jr0_Gr1lF7xvr2IY64vIr41lc7I2V7IY0VAS07
-	AlzVAYIcxG8wCF04k20xvY0x0EwIxGrwCFx2IqxVCFs4IE7xkEbVWUJVW8JwC20s026c02
-	F40E14v26r1j6r18MI8I3I0E7480Y4vE14v26r106r1rMI8E67AF67kF1VAFwI0_Jrv_JF
-	1lIxkGc2Ij64vIr41lIxAIcVC0I7IYx2IY67AKxVWUJVWUCwCI42IY6xIIjxv20xvEc7Cj
-	xVAFwI0_Jr0_Gr1lIxAIcVCF04k26cxKx2IYs7xG6r1j6r1xMIIF0xvEx4A2jsIE14v26r
-	4j6F4UMIIF0xvEx4A2jsIEc7CjxVAFwI0_Gr0_Gr1UYxBIdaVFxhVjvjDU0xZFpf9x07j8
-	sqAUUUUU=
+X-Migadu-Flow: FLOW_OUT
 
-On 2026/6/30 上午10:40, sashiko-bot@kernel.org wrote:
-> Thank you for your contribution! Sashiko AI review found 1 potential issue(s) to consider:
-> - [High] Spurious JIT compilation failure for large BPF programs with tail calls due to invalid jump offset calculation in the first JIT pass.
+
+CC Andrew and Suren
+
+
+On 2026/6/29 23:56, sashiko-bot@kernel.org wrote:
+> Thank you for your contribution! Sashiko AI review found 2 potential issue(s) to consider:
+>
+> New issues:
+> - [Low] The fallback `#else` definition of `pgalloc_tag_add` was not updated to accept `unsigned int alloc_flags`.
+>
+> Pre-existing issues:
+> - [Critical] TOCTOU race in `__alloc_tag_add_early_pfn` leading to an out-of-bounds array write.
 > --
-> 
-> commit c7d3e2cbf4a615b76ec73b1fff169ff7f13381b9
-> Author: Tiezhu Yang <yangtiezhu@loongson.cn>
-> 
-> LoongArch: BPF: Refactor jump offset calculation in tail call
-> 
-> This patch modifies the jump offset calculation in emit_bpf_tail_call()
-> to use an absolute target reference anchor based on the next instruction
-> offset, ensuring immediate offsets land precisely on instruction boundaries.
-> 
->> diff --git a/arch/loongarch/net/bpf_jit.c b/arch/loongarch/net/bpf_jit.c
->> --- a/arch/loongarch/net/bpf_jit.c
->> +++ b/arch/loongarch/net/bpf_jit.c
+>
+> commit ccee7f6d4bcf9d00da38c878e97dd852c5e649b3
+> Author: Brendan Jackman <jackmanb@google.com>
+>
+> mm: replace __GFP_NO_CODETAG with ALLOC_NO_CODETAG
+>
+> This commit replaces the mm-internal __GFP_NO_CODETAG flag with a
+> new alloc_flags bit, ALLOC_NO_CODETAG. It plumbs alloc_flags through
+> several allocator functions to allow passing this flag directly to the
+> alloc_tag code.
+>
+>> diff --git a/mm/alloc_tag.c b/mm/alloc_tag.c
+>> index d9be1cf5187d9..a32a94e759b94 100644
+>> --- a/mm/alloc_tag.c
+>> +++ b/mm/alloc_tag.c
 > [ ... ]
->> @@ -310,12 +306,12 @@ static int emit_bpf_tail_call(struct jit_ctx *ctx, int insn)
+>> @@ -806,7 +795,8 @@ static void __init __alloc_tag_add_early_pfn(unsigned long pfn)
+>>   	do {
+>>   		pool = READ_ONCE(current_pfn_pool);
+>>   		if (!pool || atomic_read(&pool->count) >= PFN_POOL_SIZE) {
+>> -			struct page *new_page = alloc_page(__GFP_HIGH | __GFP_NO_CODETAG);
+>> +			struct page *new_page = __alloc_pages(__GFP_HIGH, 0, numa_mem_id(),
+>> +							      NULL, ALLOC_NO_CODETAG);
+>>   			struct pfn_pool *new;
+> [Severity: Critical]
+> This is a pre-existing issue, but is there a time-of-check to time-of-use
+> race condition here?
+>
+> If multiple CPUs are active during the deferred init window, could they
+> concurrently observe the same remaining capacity?
+>
+> CPU1:
+>      if (!pool || atomic_read(&pool->count) >= PFN_POOL_SIZE)
+>
+> CPU2:
+>      if (!pool || atomic_read(&pool->count) >= PFN_POOL_SIZE)
+>
+> If both see 1 remaining slot, won't they both proceed to call
+> atomic_fetch_add() on the pool counter further down in this function?
+> This could cause an out-of-bounds array write at pool->pfns[PFN_POOL_SIZE].
+
+
+It's interesting.
+
+I didn't get this warning from Sashiko when I submitted the patch earlier,
+
+I'm not sure what changed on its end to trigger it now.
+
+No worries though, unless I've overlooked some detail,
+
+I believe this is a false positive
+
+
+Even if both CPUs see 1 remaining slot and both skip the pool-growing 
+branch,
+
+they still have to go through atomic_cmpxchg to actually claim it.
+
+static void __init __alloc_tag_add_early_pfn(unsigned long pfn)
+{
+     struct pfn_pool *pool;
+     int idx;
+
+     do {
+         pool = READ_ONCE(current_pfn_pool);
+         if (!pool || atomic_read(&pool->count) >= PFN_POOL_SIZE) {
+         .........
+         }
+         idx = atomic_read(&pool->count);
+         if (idx >= PFN_POOL_SIZE)
+             continue;
+         if (atomic_cmpxchg(&pool->count, idx, idx + 1) == idx)
+             break;
+     } while (1);
+
+     pool->pfns[idx] = pfn;
+}
+
+
+Only one wins, the other gets a CAS failure and loops back.
+
+There's no path where both write to pfns[PFN_POOL_SIZE].
+
+
+Given that, I think we can ignore this Sashiko report and
+
+move forward with Brendan's patch.
+
+
+Thanks
+
+Best Regards
+
+Hao
+
+
 > [ ... ]
->>   	off = offsetof(struct bpf_array, map.max_entries);
->>   	emit_insn(ctx, ldwu, t1, a1, off);
->>   	/* bgeu $a2, $t1, jmp_offset */
->> +	jmp_offset = ctx->offset[insn + 1] - ctx->idx;
->>   	if (emit_tailcall_jmp(ctx, BPF_JGE, a2, t1, jmp_offset) < 0)
->>   		goto toofar;
-> 
-> [Severity: High]
-> Does this calculation cause large BPF programs to fail JIT compilation during
-> the first pass?
-> 
-> During the first JIT pass, ctx->offset[insn + 1] is not yet populated and will
-> be 0. As a result, jmp_offset evaluates to -ctx->idx.
-> 
-> If ctx->idx exceeds 32767 for a large program, jmp_offset will fail the 16-bit
-> bounds check inside emit_tailcall_jmp(), causing JIT compilation to abort
-> prematurely.
-> 
-> Previously, jmp_offset used a small relative offset which safely fit within
-> the 16-bit limit during the initial pass.
-
-Thank you for catching this critical corner case, you are correct.
-
-During Pass 1, ctx->offset[insn + 1] is uninitialized (0), making
-jmp_offset = -ctx->idx. For large BPF programs, this negative offset
-overflows the 16-bit range check inside emit_tailcall_jmp(), causing
-the JIT compilation to abort prematurely.
-
-To fix this cleanly without breaking any function signatures, we can
-use ctx->image to detect Pass 1. Since conditional branch instructions
-on LoongArch always have a fixed 4-byte size, using a safe dummy offset
-(like 0) during Pass 1 will not affect the size estimation but will
-successfully bypass the 16-bit bounds check.
-
-I will send a v2 patch shortly with the following guard logic:
-
-   jmp_offset = ctx->image ? (ctx->offset[insn + 1] - ctx->idx) : 0;
-
-Thanks,
-Tiezhu
-
+>> diff --git a/mm/page_alloc.c b/mm/page_alloc.c
+>> index 026f33f217036..803b32e5a5e47 100644
+>> --- a/mm/page_alloc.c
+>> +++ b/mm/page_alloc.c
+> [ ... ]
+>> @@ -1263,17 +1263,17 @@ void __pgalloc_tag_add(struct page *page, struct task_struct *task,
+>>   		alloc_tag_add_early_pfn(page_to_pfn(page), alloc_flags);
+>>   		if (task->alloc_tag)
+>>   			alloc_tag_set_inaccurate(task->alloc_tag);
+>>   	}
+>>   }
+>>   
+>>   static inline void pgalloc_tag_add(struct page *page, struct task_struct *task,
+>> -				   unsigned int nr, gfp_t gfp_flags)
+>> +				   unsigned int nr, unsigned int alloc_flags)
+>>   {
+>>   	if (mem_alloc_profiling_enabled())
+>> -		__pgalloc_tag_add(page, task, nr, gfp_flags);
+>> +		__pgalloc_tag_add(page, task, nr, alloc_flags);
+>>   }
+> [Severity: Low]
+> Does this change miss updating the fallback definition of pgalloc_tag_add()
+> when memory allocation profiling is disabled?
+>
+> If the kernel is compiled without mem-alloc profiling, the dummy function
+> signature appears to still use the old type:
+>
+> static inline void pgalloc_tag_add(struct page *page, struct task_struct *task,
+>                     unsigned int nr, gfp_t gfp_flags) {}
+>
+> Since callers like post_alloc_hook() are now passing an unsigned int
+> for alloc_flags, won't this cause a Sparse type mismatch warning because
+> gfp_t is a restricted bitwise type?
+>
