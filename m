@@ -1,195 +1,226 @@
-Received: from CO1PR03CU002.outbound.protection.outlook.com (mail-westus2azon11010039.outbound.protection.outlook.com [52.101.46.39])
+Received: from OSPPR02CU001.outbound.protection.outlook.com (mail-norwayeastazon11013050.outbound.protection.outlook.com [40.107.159.50])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0E0F22BEFF5
-	for <sashiko-reviews@lists.linux.dev>; Tue, 30 Jun 2026 08:16:37 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=fail smtp.client-ip=52.101.46.39
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E075A392C56;
+	Tue, 30 Jun 2026 08:29:31 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=fail smtp.client-ip=40.107.159.50
 ARC-Seal:i=2; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1782807399; cv=fail; b=QPY3zEqqrH5xDxc/NOiBjTvLtBfIjCnMJ4U7dBalRtDGGlArMIVzLW3zzFw6rorRDdpxQ4DdGjHG3BlhtEBZJ3w8s9tPocLBNtLb0WYQImOiCUb35d5yphcXQxCtqOkyhG/JVX/RIcXlWiW7jd5KwXSRdyYW+mYauUfEz1NEQlY=
+	t=1782808173; cv=fail; b=Q0tJm48NWZ5KKMviIpFZLGHNvYCRoeHJI9AzpbavMkQS/Nk4IpmY6b4Kfc6VTsT8tIZNYzJ3+rGpnwC5P9msStr34hHz/L1GfeTI/jQ5+KYkshj5IcIvyygz+77SYbWmvG1rgVinDvutLp76sdLdrmIRPSO3VtIPf6DKWzKXD3E=
 ARC-Message-Signature:i=2; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1782807399; c=relaxed/simple;
-	bh=8ixM2KX9HVuryp+Nx5pqh6K7SW5d1y01mqwaWRS/kY0=;
-	h=Message-ID:Date:MIME-Version:Subject:To:CC:References:From:
-	 In-Reply-To:Content-Type; b=OCb8ensQgPWGiWIOMkpMeDWOhlta92tQwChQDUXwzXrNjaSdJZM27bR8SwZYJxucagUg2T1vNcG6eYOJ5XoKY1CjiXR3+JpjGE9vLllt/oPawRMPYAcWwmUNrBCwFeFE1Bd181LkDb/rzw++5OxE+tkqR4MRNhKUl9WbyRhqOeE=
-ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=amd.com; spf=fail smtp.mailfrom=amd.com; dkim=pass (1024-bit key) header.d=amd.com header.i=@amd.com header.b=LaHGuXnB; arc=fail smtp.client-ip=52.101.46.39
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=amd.com
-Authentication-Results: smtp.subspace.kernel.org; spf=fail smtp.mailfrom=amd.com
+	s=arc-20240116; t=1782808173; c=relaxed/simple;
+	bh=eQwhYcC/P9W7Gol5VSICtS/GYT0pzpenKRTpsZs/KAg=;
+	h=From:To:CC:Subject:Date:Message-ID:References:In-Reply-To:
+	 Content-Type:MIME-Version; b=szFm+MAM6sEgjgjfL2cgl9hizbXcpaOAuI+JZZbshcQ6pvt81npNn+Dw5fxlExSlVlcAs0InUjQQALa0BhPDdE8Gy0XMLFb/cD6+JACAJ0ve/U9irAeJxirnAmh8l/j7h5QY49ua4CibiJ5ap8Q7Ul4qDcVkEZjkq0N3HTC4tZU=
+ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=nxp.com; spf=pass smtp.mailfrom=nxp.com; dkim=pass (2048-bit key) header.d=nxp.com header.i=@nxp.com header.b=mjMhBTyS; arc=fail smtp.client-ip=40.107.159.50
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=nxp.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=nxp.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=amd.com header.i=@amd.com header.b="LaHGuXnB"
+	dkim=pass (2048-bit key) header.d=nxp.com header.i=@nxp.com header.b="mjMhBTyS"
 ARC-Seal: i=1; a=rsa-sha256; s=arcselector10001; d=microsoft.com; cv=none;
- b=B3H8NHCw/RmXfezQGXMztvrCiztN96osyvf9HFEtyO6RUuK5eeLj90CUygqLeiI2nj1Ohgk0R4d4LXZnX3H7d9aWSp4Uj+hJEGByPDlVSOEahJC4ccZBNbaquRjqKx10G18BRoGUcBGapDUgAEnVkO5TO2K7SebypPFsZZ0mrb2EpnaIg8tQggIlPsD/AV0P5fCAXY1Wu/EU9gADztLQrliY4Rc6TLkeeDeKpWO1yECbgPuOUCSbGRtQ+/9GgSrlRg5RfRWT9ucQrnPmd8x6q3IhBIhb+j+eS05cjI5UOZTKu6iTZLQr5MPsw0q76RvgNyLga0zchZBMDx+mAjeZ9A==
+ b=G7DGkXioPearFhAaGdjAM380wrhMNLUA6TSBdg1b2LnmEi8/qFtvaboLkAhHzUhCn4uERRlow+Led+pgFhMv6MsOKAp6dY01bWBc11MUVXMrkzGMqBSnv7f8/m3xh7mKbbZyd5zy3OlG4ndJwEmKrIHDIzCrfweHiOUKcMpdAvh0eEgaTs8rSya+YwZcgSJdzQZxl+on8sf1ClVuDvZlr6bFA/9JFrXdcqwXco/lcq4/q1Uen5ACQMuN/da65zsI1Ho/X/0ec38E8Z5rI8U9otiKmsxfsmjB66d+T+xfWRZP+W131P5JGyUlr6bdpmgRwYsXXNkLTxQE1Pk1lN9xag==
 ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com;
  s=arcselector10001;
  h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
- bh=rKQWl+l2XaVOwegCSWCoBKhTPM0pH0mvM38FRdnJxKQ=;
- b=t75vjp2rz+/9WaiWjxoytPDYD5i0Viy/AA9Y9N374vqJ94xxLdlLAJuKiwksEvm+WrjGlVCRAwBkd3rp5D+yecuwwZevX7F9eVC8r2QEsqpBZWBDIzyHX2NRAfPZOnkTiieik+LDCnGuEbAh4rleA2O4XJi0ByPSYlhyiA/fFDl6gDqDCiE10Qi14Tfzur8Lwx+ChyDyYiCT4/Een5YaQ6KYK+ff+D2jvpZ37IlxwFOBktsy8zPhUq2SLCuf+ZUiHX6fNYpsUUxoXdBpJceASprCPgBWCNOopX9p0Ov68g/drnjx/qA/UXqoPKokiNeVW7AOumQHGZ0hBB83251x/w==
-ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass (sender ip is
- 165.204.84.17) smtp.rcpttodomain=lists.linux.dev smtp.mailfrom=amd.com;
- dmarc=pass (p=quarantine sp=quarantine pct=100) action=none
- header.from=amd.com; dkim=none (message not signed); arc=none (0)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=amd.com; s=selector1;
+ bh=o0QWQjt1sjA6OjcqrMA02EYrWxn0rziRHhrH9lyBAp4=;
+ b=en1N8dwSPSZC6/6keOf3GaexhJ2Ly3mhuLKw2y8GqNuTfgoWC4lwQ5ZrIT1v5cmQlhZ89BpiFBiUBXqQrjFVyJ2JLBea1v0bFZvMr4FIp8vipDXkYFGIObxN+L5FpjYtJxm+mGK3MGvGfmfBY3BVda4qt7xABVngTinUlnphzHuEXwBVK10Nd5FWk84iY0P4PgVKFLh/dbkMl+J/gQk0epPzPmtRv9jrBDDj2GD2BwWDdhdAIAxrXqKRqPWYcEw11laBY9Vj850gh47AzpH6huJwIBZ5UA8ROcNszMe4XOZWCB/+4TFPP8q29t3SuFojgF7ektTD3IewI/RqI2b8NA==
+ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
+ smtp.mailfrom=nxp.com; dmarc=pass action=none header.from=nxp.com; dkim=pass
+ header.d=nxp.com; arc=none
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=nxp.com; s=selector1;
  h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
- bh=rKQWl+l2XaVOwegCSWCoBKhTPM0pH0mvM38FRdnJxKQ=;
- b=LaHGuXnByKf+JDTNiav5E+Xizq0akIvvb1rRu2X6HPLUpDsfNLJApXhRAb5BKX41QxzE/74H7o0mt9XiZegbi7YcH5U2Pu3qslN67NptO3kvURwJQvjx3CtoeHtLv216PRTW/buUmXQgxJGJQSSLv5Klsr9i+DyqRK8NwgcV/rw=
-Received: from SJ0PR13CA0154.namprd13.prod.outlook.com (2603:10b6:a03:2c7::9)
- by SJ0PR12MB6927.namprd12.prod.outlook.com (2603:10b6:a03:483::12) with
- Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.21.181.8; Tue, 30 Jun
- 2026 08:16:32 +0000
-Received: from SJ5PEPF000001F5.namprd05.prod.outlook.com
- (2603:10b6:a03:2c7:cafe::9e) by SJ0PR13CA0154.outlook.office365.com
- (2603:10b6:a03:2c7::9) with Microsoft SMTP Server (version=TLS1_3,
- cipher=TLS_AES_256_GCM_SHA384) id 15.21.181.8 via Frontend Transport; Tue, 30
- Jun 2026 08:16:32 +0000
-X-MS-Exchange-Authentication-Results: spf=pass (sender IP is 165.204.84.17)
- smtp.mailfrom=amd.com; dkim=none (message not signed)
- header.d=none;dmarc=pass action=none header.from=amd.com;
-Received-SPF: Pass (protection.outlook.com: domain of amd.com designates
- 165.204.84.17 as permitted sender) receiver=protection.outlook.com;
- client-ip=165.204.84.17; helo=satlexmb07.amd.com; pr=C
-Received: from satlexmb07.amd.com (165.204.84.17) by
- SJ5PEPF000001F5.mail.protection.outlook.com (10.167.242.73) with Microsoft
- SMTP Server (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
- 15.21.181.6 via Frontend Transport; Tue, 30 Jun 2026 08:16:32 +0000
-Received: from Satlexmb09.amd.com (10.181.42.218) by satlexmb07.amd.com
- (10.181.42.216) with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.2562.41; Tue, 30 Jun
- 2026 03:16:31 -0500
-Received: from satlexmb07.amd.com (10.181.42.216) by satlexmb09.amd.com
- (10.181.42.218) with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.2562.41; Tue, 30 Jun
- 2026 01:16:31 -0700
-Received: from [10.136.39.208] (10.180.168.240) by satlexmb07.amd.com
- (10.181.42.216) with Microsoft SMTP Server id 15.2.2562.41 via Frontend
- Transport; Tue, 30 Jun 2026 03:16:30 -0500
-Message-ID: <45be33f3-0853-44e8-834b-ce52bf241fb5@amd.com>
-Date: Tue, 30 Jun 2026 13:46:29 +0530
+ bh=o0QWQjt1sjA6OjcqrMA02EYrWxn0rziRHhrH9lyBAp4=;
+ b=mjMhBTySQBd80xMkxzyGZsDfqS1Ibb5Jd5cc7rHzbwGomH80VSskp/n9HI/pEVFwURgVzPd6N7ib6cQy4APNfCQ1f45ZankyEIUvc7Ct27SHxsP2lKE8NMHw8rb0sP0ovrPboXgyI3X3H8lrd1tCBNk6b1ktK3aAdTUdzOlfC+2ut+ZWaLO9hSV0Z5MNy/ggZig2iALVKmg7J9AiBg006a2s7wEM0rDuu2zsW1IfZvQpPY6/WFwYD/oQNvQULoCiOJIZQFW47RvTNDEVrhylkcQgEc7khFv5MsvV+zq+xl1kPmG7yk6U1uUvqU46tKXzn4mEERGy0kacHb3GNcPNbA==
+Received: from VI0PR04MB12114.eurprd04.prod.outlook.com
+ (2603:10a6:800:315::13) by PA4PR04MB7901.eurprd04.prod.outlook.com
+ (2603:10a6:102:ca::22) with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.21.159.19; Tue, 30 Jun
+ 2026 08:29:27 +0000
+Received: from VI0PR04MB12114.eurprd04.prod.outlook.com
+ ([fe80::feda:fd0e:147f:f994]) by VI0PR04MB12114.eurprd04.prod.outlook.com
+ ([fe80::feda:fd0e:147f:f994%6]) with mapi id 15.21.0159.015; Tue, 30 Jun 2026
+ 08:29:27 +0000
+From: Sherry Sun <sherry.sun@nxp.com>
+To: "sashiko-reviews@lists.linux.dev" <sashiko-reviews@lists.linux.dev>
+CC: "linux-pci@vger.kernel.org" <linux-pci@vger.kernel.org>,
+	"conor+dt@kernel.org" <conor+dt@kernel.org>, "devicetree@vger.kernel.org"
+	<devicetree@vger.kernel.org>, "imx@lists.linux.dev" <imx@lists.linux.dev>,
+	"robh@kernel.org" <robh@kernel.org>, "Frank.Li@kernel.org"
+	<Frank.Li@kernel.org>
+Subject: RE: [PATCH V4 1/7] arm: dts: imx6qdl-sabresd: Move power supply
+ property to Root Port node
+Thread-Topic: [PATCH V4 1/7] arm: dts: imx6qdl-sabresd: Move power supply
+ property to Root Port node
+Thread-Index: AQHdCFZhui8f4Jaj1EKsTKDW3PGEYrZWomEAgAAaXsA=
+Date: Tue, 30 Jun 2026 08:29:27 +0000
+Message-ID:
+ <VI0PR04MB121140E47C76871AA506A754E92F72@VI0PR04MB12114.eurprd04.prod.outlook.com>
+References: <20260630060710.3294811-1-sherry.sun@oss.nxp.com>
+ <20260630060710.3294811-2-sherry.sun@oss.nxp.com>
+ <20260630062731.3C7AA1F000E9@smtp.kernel.org>
+In-Reply-To: <20260630062731.3C7AA1F000E9@smtp.kernel.org>
+Accept-Language: zh-CN, en-US
+Content-Language: en-US
+X-MS-Has-Attach:
+X-MS-TNEF-Correlator:
+authentication-results: dkim=none (message not signed)
+ header.d=none;dmarc=none action=none header.from=nxp.com;
+x-ms-publictraffictype: Email
+x-ms-traffictypediagnostic: VI0PR04MB12114:EE_|PA4PR04MB7901:EE_
+x-ms-office365-filtering-correlation-id: df773c80-5752-4bdb-3003-08ded681b2d9
+x-ms-exchange-senderadcheck: 1
+x-ms-exchange-antispam-relay: 0
+x-microsoft-antispam:
+ BCL:0;ARA:13230040|366016|23010399003|376014|1800799024|19092799006|38070700021|11063799006|18002099003|4143699003|3023799007|6133799003|22082099003|56012099006;
+x-microsoft-antispam-message-info:
+ tigqwLTL03lnq3NYWVVuAm1gtI2MAaCNof48BYpMEIQGUHonj2kp/WOKkPXuOhtA19QStqOAcQr0qbaKglLwitntxL8mAzUdwH9GcJPpcy34j+XiCxa4icf9GmBnEDePVot+u4+dP7E3KFXOBVebJUCn/AgnzrpWPeKygFnNzzb0Xrd1M9yOcTvWqDPNg4+5nnM9BBmNMDoGkUeK652Ef0ULd98ud+jWhQHif3netjFI80gOtaQ9+qDSxRJQmPikTNW+YkMg7sWVIVACggwPmf5hg1hUoVVA17CbdQwURAYNIyOeYymUpXfXGZpha2LrW71LMhcCVFGBz2tgs6TU4RS3DvxZ32oJyPPncpYUQXZ29F7qBz7cN0gkuRSC6GsCBfhwDFPbyezNpb+8RaYodD+mbs0S79vtJu1DCu0ayV/9gx5w9+S19plOTAXOHTz9CxjSSf3V60hhTiV3uKKiIHZ7vx2Fr68FTVry/MjS1rssDv3LEj5p8eGiLQR5XdhN8+hQA13xbYwMjmpFT7wCssbXv8AfhPQ2KQVHApCHYTdVJRJDQLgMSYWjz24sh+jbqd3zgTM2qjAiuFmD8WtFLGp3ATtwFwPLB9AvPwdc1/6MibPFRdP2eI4B9DZfo3aQ0ReM5pTpIw7adxRMvh7gSbaRdWmCyTI+nEE+jjcb+gO7tYnHE15Mcw+qnNVdNwDkFebhYmGa3hWOqUkC5m72HOjNbmt5TZ7IVzNx7M56f2Y=
+x-forefront-antispam-report:
+ CIP:255.255.255.255;CTRY:;LANG:en;SCL:1;SRV:;IPV:NLI;SFV:NSPM;H:VI0PR04MB12114.eurprd04.prod.outlook.com;PTR:;CAT:NONE;SFS:(13230040)(366016)(23010399003)(376014)(1800799024)(19092799006)(38070700021)(11063799006)(18002099003)(4143699003)(3023799007)(6133799003)(22082099003)(56012099006);DIR:OUT;SFP:1101;
+x-ms-exchange-antispam-messagedata-chunkcount: 1
+x-ms-exchange-antispam-messagedata-0:
+ =?us-ascii?Q?nTTz2jzJRcvHvjZcUPRV2Fgw0/0BWvYEs1HgKh7KemXga53qy15bUZx7PVtu?=
+ =?us-ascii?Q?2yIj/siu7IxJlYTCWeHcsOy9yuPbu6T9HyJ3m8eUeDYUaS69RwlQkXr23y3N?=
+ =?us-ascii?Q?RQkmHddO85yUPQ55QIasZFlnrugXaImMC/uCSL+COnwHbqCLAFXoK1TohWTb?=
+ =?us-ascii?Q?YBv6rJ9zCOFo7R5xDLZIXFlEa2Kuv+bvBzqhEBhKEBzPsBMiAEyTn7k+owjN?=
+ =?us-ascii?Q?Gm7U6ygMKfGmUcpEeoWTDXVQPp0FMGb9e9C7Y/pvwTkhJo9a36yJrhHmEpgC?=
+ =?us-ascii?Q?JypnW3oNf3WrEYTjzakTUgM7aASOS/69B9SDk6nqDnKN4XW6G8fzL2SSw5qZ?=
+ =?us-ascii?Q?fFxiIe8qBF6QmgDJ64SyKbEmBS8w1gncLQ9HkWfYaSVu/hCgrzhO32uTOX6X?=
+ =?us-ascii?Q?BJwu52TJ9HOLrDIvEmNkZjccV7co+uWdRlpk8JVXbGYKyr1MA0dJXXcKZijg?=
+ =?us-ascii?Q?tb/y3kBDaHoWSD0QZkdTsIq3JvMHpt8SlDKw8DfC7M/uWLBpbTx8fof5nG+9?=
+ =?us-ascii?Q?Syj0mWX+kW1CFSGSywPxzzGPOQsE0b/w+x/mg5DCZZs/MJfDDP/zn94SVxaR?=
+ =?us-ascii?Q?BUWRlMYimksDOVtdr5KTlq1cPFbf4jX5ngktFdAfCl7p09IyqtYgVcQnS7y2?=
+ =?us-ascii?Q?kBUuJ2q3P5D5oxCDl0eTPQ1YvSZXEDCohW9MmXglRXgRA0eOxsmtw30xoWdg?=
+ =?us-ascii?Q?g9wKimYhZ/3keH4ja5BOss6m9M2MojZoEawHVXez6pmLLT5gpHqT9Y3KhWyk?=
+ =?us-ascii?Q?gDoj99geKIP8lf8z7LAAHxYLiU4tumC8BFzmFR8SgyNIn5fD38y1uC56fTwN?=
+ =?us-ascii?Q?DbPjJ6iblUvDU7YJKSBGzLfXIQ1PMUzlE/5v27BfRVh08GNWNLK9byiFy2DE?=
+ =?us-ascii?Q?eYZW8hSFN3254Gp9JbTfQaBPkoHczqCAOtdeHC6yFoBeF4/iOj0euFzvqm1O?=
+ =?us-ascii?Q?aI24Oqe85u+1aijZ3QfVY0DbLi66l1zLg2v4p4NkKhl/3FZlrED1tk90HJS6?=
+ =?us-ascii?Q?EnccDJF9CeOyqVBuudrsopkms6J/LyuY7oIT2Jydre7M1JOqxnijeUSoywQi?=
+ =?us-ascii?Q?504qNtInRckk5rw7UAJkbvH76zP1Wcqr/PF3SM8wi+QYmziz8b4VfGG+oIPw?=
+ =?us-ascii?Q?IgTIyC1Sn6gMvGV0Z3pIphvXN6SY8l92LVpdoFh7YqxpDp+8+PceO4KijBoD?=
+ =?us-ascii?Q?gyjw/1eT9d+ZgiIJVVGP6XL6PmmqdXmaT7CU99eEvHNZ0sYe0jb0InVAfgrH?=
+ =?us-ascii?Q?7lKSJB5mnz7F4PINNo6Tqq4VNvBna6YXXk871NvOg+vPvItwWxsBdyU+UKBS?=
+ =?us-ascii?Q?0J9f0WPLxceuyeDCFKknQsaxWgTJNXQ7VTHwgrWG0C/uID0IXV4s3LMj/8Cx?=
+ =?us-ascii?Q?7HFnyiNoeVBZScTs2KHTf9MFWMFlHZNE5fBFeJ8ZLtge+D5jhTQg1b4qJHrV?=
+ =?us-ascii?Q?vLmlG1MpnGlj4al9mP2ObMrzZqgzx3pAuuE31CoU6aUZz0ewo9SJJCucvfrN?=
+ =?us-ascii?Q?i6ZTsnKT9RHa/+TVYKeN2EpGa4Y46uoMM2gIosl+KnIodvJaRFNpcsFxTkyO?=
+ =?us-ascii?Q?Imhu4Xcs9pwk3agHYJ4O9EZklnUw/zJCKvw7ksaOUq/TI8ItRVBAVL4iPne9?=
+ =?us-ascii?Q?h6kWjt64iXHLZvszbwWDeqBudCmLRil0AmbqywmY3lMABv/VSFv/2G90lHqV?=
+ =?us-ascii?Q?BxPm7cw7p0yGqiII1szBbex4d1bJQdQjIfmy0wI4kH3Iue7U?=
+Content-Type: text/plain; charset="us-ascii"
+Content-Transfer-Encoding: quoted-printable
 Precedence: bulk
 X-Mailing-List: sashiko-reviews@lists.linux.dev
 List-Id: <sashiko-reviews.lists.linux.dev>
 List-Subscribe: <mailto:sashiko-reviews+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:sashiko-reviews+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v5 3/8] arm64/runtime-const: Introduce
- runtime_const_mask_32()
-To: <sashiko-reviews@lists.linux.dev>
-CC: Alexander Gordeev <agordeev@linux.ibm.com>, Heiko Carstens
-	<hca@linux.ibm.com>, Vasily Gorbik <gor@linux.ibm.com>,
-	<linux-s390@vger.kernel.org>
-References: <20260630045531.3939-1-kprateek.nayak@amd.com>
- <20260630045531.3939-4-kprateek.nayak@amd.com>
- <20260630050742.0BBB21F000E9@smtp.kernel.org>
-Content-Language: en-US
-From: K Prateek Nayak <kprateek.nayak@amd.com>
-In-Reply-To: <20260630050742.0BBB21F000E9@smtp.kernel.org>
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: 7bit
-X-EOPAttributedMessage: 0
-X-MS-PublicTrafficType: Email
-X-MS-TrafficTypeDiagnostic: SJ5PEPF000001F5:EE_|SJ0PR12MB6927:EE_
-X-MS-Office365-Filtering-Correlation-Id: 8646c670-239a-4296-a0af-08ded67fe4fa
-X-MS-Exchange-SenderADCheck: 1
-X-MS-Exchange-AntiSpam-Relay: 0
-X-Microsoft-Antispam:
-	BCL:0;ARA:13230040|23010399003|82310400026|36860700016|376014|1800799024|13003099007|18002099003|22082099003|3023799007|56012099006|11063799006|5023799004|4143699003|6133799003;
-X-Microsoft-Antispam-Message-Info:
-	QjVQMLtzJdyqIYDEREDljdXHKIAQ8ixNGUp6+3HNqGo2ZRBYD7VTPR3oB66S+4ShSmUNmfgCCzmtx+3wiwkBOgJbWSiqllejakJWe1o46v3LdRNfWm/CAHmnRRzUh/nLC6jYwUJfDheHQwIISt2lPrQMIQw1XPGa3KzleJzl1CvQxiGSbVHFAXrELz6mTthiQRwvh9YIvPQmEs7zlkc52VCvAR2vsqr4GUwyn+W7NhvKWTx4+6gb/QmgrjQPMFRN9+JrcKvZGm7IzPB8p03fHe9dY+32xCFEvyeDk8jozK6h8jbvL02Aleuu3hBL/QM2O6dATdK4McRQqyDhvi1wabkrjldd7Fk8JXDT85SgXwWoPUFKCGZQLx0IFLV4yiIy0TcUeZV/nQwAUMwBhbrOhyi6lhuaifUvAsP3a2ZfQlzY8FXGSoV9jCthV07vvVrymWQxBgkKCUjELHjjB+kGJRRd1OIY1Xfyt74y0qjkHkbmWgKUH5myGKYz6YBYSU+rucYixvczk5nTQlXL/CbnbflXfX8JxIZcqpfM+fYozr/g82OSTzMwEi4t7o8UxgOpN8k30G+wYxyjG8EguAjJLAxjhQG/YZOtP8KB4tTpED79dwAsyec3KCVmgD8YJtwgx2lfTBN+PQXMT75lYeKibQy4vaOen2JkJt+dK5SGjKYcghDOwboOH79yuRQJTxYGNbjRD9kkCf18Ez5v8Wy0OA==
-X-Forefront-Antispam-Report:
-	CIP:165.204.84.17;CTRY:US;LANG:en;SCL:1;SRV:;IPV:NLI;SFV:NSPM;H:satlexmb07.amd.com;PTR:InfoDomainNonexistent;CAT:NONE;SFS:(13230040)(23010399003)(82310400026)(36860700016)(376014)(1800799024)(13003099007)(18002099003)(22082099003)(3023799007)(56012099006)(11063799006)(5023799004)(4143699003)(6133799003);DIR:OUT;SFP:1101;
-X-MS-Exchange-AntiSpam-MessageData-ChunkCount: 1
-X-MS-Exchange-AntiSpam-MessageData-0:
-	IsyDmfF9vFc687suBupwGhp9caQxLx7dOwUpdamgphKTdTSy3cC2ObrwtR6QNCewqaRv5fPe90CDJEWtVYclA2dIDXS3z2nlHnXccFQwQcFpTD1dwtLmwscLDg7ilt7PCPKha2Kf+o1Ob/jRyPUS5Nc8ODb84p3zt6cIIk3KtizpF37gmXr/oUCK4XGQDrBgjXMY57OChisO3DCRyRVls+5ejyfj8gA8ZCpRZGjJlMJF0J1qlQusTTWV3cXOlLtMQueLllkV0MQ6Xhc3FjdJNG7nPS3mQ0EWUTUJZoI4x5pj9368oYytFAGl6fs+Z9hrvs6c7zJGHIFBUhLNZCMd210FYHFxJ/8VBxQr99XSCAXiWe/8cW8FKv/BlhgC5PM/PKh+h/PsxIXHPMfo8ufqPVzAfdf5NMBzGnSae7buJJylgt5NNu9zEjlbWJyT+g//
-X-OriginatorOrg: amd.com
-X-MS-Exchange-CrossTenant-OriginalArrivalTime: 30 Jun 2026 08:16:32.3244
+X-OriginatorOrg: nxp.com
+X-MS-Exchange-CrossTenant-AuthAs: Internal
+X-MS-Exchange-CrossTenant-AuthSource: VI0PR04MB12114.eurprd04.prod.outlook.com
+X-MS-Exchange-CrossTenant-Network-Message-Id: df773c80-5752-4bdb-3003-08ded681b2d9
+X-MS-Exchange-CrossTenant-originalarrivaltime: 30 Jun 2026 08:29:27.2634
  (UTC)
-X-MS-Exchange-CrossTenant-Network-Message-Id: 8646c670-239a-4296-a0af-08ded67fe4fa
-X-MS-Exchange-CrossTenant-Id: 3dd8961f-e488-4e60-8e11-a82d994e183d
-X-MS-Exchange-CrossTenant-OriginalAttributedTenantConnectingIp: TenantId=3dd8961f-e488-4e60-8e11-a82d994e183d;Ip=[165.204.84.17];Helo=[satlexmb07.amd.com]
-X-MS-Exchange-CrossTenant-AuthSource:
-	SJ5PEPF000001F5.namprd05.prod.outlook.com
-X-MS-Exchange-CrossTenant-AuthAs: Anonymous
-X-MS-Exchange-CrossTenant-FromEntityHeader: HybridOnPrem
-X-MS-Exchange-Transport-CrossTenantHeadersStamped: SJ0PR12MB6927
+X-MS-Exchange-CrossTenant-fromentityheader: Hosted
+X-MS-Exchange-CrossTenant-id: 686ea1d3-bc2b-4c6f-a92c-d99c5c301635
+X-MS-Exchange-CrossTenant-mailboxtype: HOSTED
+X-MS-Exchange-CrossTenant-userprincipalname: U/cFIdbrjalsv9eWRWFfEWpBoyD4Erz2FfpVXm/X7Rg06LtmlZkFB3Mg8Xf7aO03T1wCRaz8S1XhUfs8FpjrCQ==
+X-MS-Exchange-Transport-CrossTenantHeadersStamped: PA4PR04MB7901
 
-Hello,
-
-On 6/30/2026 10:37 AM, sashiko-bot@kernel.org wrote:
-> [You don't often get email from sashiko-bot@kernel.org. Learn why this is important at https://aka.ms/LearnAboutSenderIdentification ]
-> 
-> Thank you for your contribution! Sashiko AI review found 2 potential issue(s) to consider:
-> - [Medium] Calling `__fls(val)` before `BUG_ON(!val)` invokes undefined behavior for `val == 0`, potentially allowing the compiler to optimize away the safety check.
-> - [Low] The commit message incorrectly references `amd64` instead of `arm64` and misspells `density`.
+> Thank you for your contribution! Sashiko AI review found 2 potential issu=
+e(s)
+> to consider:
+> - [High] Removing the legacy `vpcie-supply` property breaks PCIe initiali=
+zation
+> on older kernels and non-pwrctrl environments.
+> - [Medium] Adding `vpcie3v3-supply` to the Root Port node without
+> documenting it in the binding schema causes a schema validation failure.
 > --
-> 
-> commit e9b79c78d336baf757f7578713831df9b1c4c1b9
-> Author: K Prateek Nayak <kprateek.nayak@amd.com>
-> 
-> arm64/runtime-const: Introduce runtime_const_mask_32()
-> 
-> This patch introduces runtime_const_mask_32 to optimize the mask operation
-> in the futex hash computation hot path using the UBFX instruction. It also
-> adds __runtime_fixup_mask to patch the 32-bit mask in the asm block once
-> the mask is known.
-> 
-> Link: https://developer.arm.com/documentation/ddi0602/2026-03/Base-Instructions/ [1]
-> Link: https://lore.kernel.org/lkml/20260430094730.31624-4-kprateek.nayak@amd.com/ [2]
-> 
->> instruction is used for amd64 to improve instruction dinsity and
->> performance.
-> 
-> [Severity: Low]
-> This isn't a bug, but there are a couple of typos here. Should "amd64" be
-> "arm64", and "dinsity" be "density"?
+>=20
+> commit 1190644448a0f1a3780ae7b3d2a75e1606ab6017
+> Author: Sherry Sun <sherry.sun@nxp.com>
+> arm: dts: imx6qdl-sabresd: Move power supply property to Root Port node
+>=20
+> This commit moves the power supply property from the PCIe controller node
+> to the Root Port child node. This change aims to support the new PCI pwrc=
+trl
+> framework.
+>=20
+> > diff --git a/arch/arm/boot/dts/nxp/imx/imx6qdl-sabresd.dtsi
+> > b/arch/arm/boot/dts/nxp/imx/imx6qdl-sabresd.dtsi
+> > index fe9046c03ddd6..c52b8897f9995 100644
+> > --- a/arch/arm/boot/dts/nxp/imx/imx6qdl-sabresd.dtsi
+> > +++ b/arch/arm/boot/dts/nxp/imx/imx6qdl-sabresd.dtsi
+> > @@ -756,12 +756,12 @@ &pcie {
+> >  	pinctrl-0 =3D <&pinctrl_pcie>;
+> >  	/* This property is deprecated, use reset-gpios from the Root Port
+> node. */
+> >  	reset-gpio =3D <&gpio7 12 GPIO_ACTIVE_LOW>;
+> > -	vpcie-supply =3D <&reg_pcie>;
+>=20
+> [Severity: High]
+> Will removing the legacy vpcie-supply property break backward compatibili=
+ty
+> with older drivers?
+>=20
+> Older drivers, such as pci-imx6.c, looking for this property via
+> devm_regulator_get_optional("vpcie") in the host bridge node will receive=
+ an
+> error code and silently skip enabling the PCIe regulator. Because the reg=
+ulator
+> lacks an always-on constraint, it will remain off, which can cause PCIe l=
+ink
+> failures on older kernels or when booting with the generic PCI power cont=
+rol
+> framework disabled.
+>=20
+> Device trees generally act as stable hardware descriptions. Can this prop=
+erty
+> be kept in the parent node while adding vpcie3v3-supply to the child node=
+,
+> since the regulator core can safely handle multiple consumers?
+>=20
 
-Ah! Yes. Sorry about that. I'll wait for a while for more comments and
-spin a v5.1 if necessary to fix those typos.
+As documented in Documentation/devicetree/bindings/ABI.rst, "a stable
+binding means that a newer kernel will not break on an older device
+tree, but that doesn't mean the binding is frozen for all time." The
+compatibility guarantee is one-directional: new kernels must support
+old DTS files, but old kernels are not required to work with new DTS
+files.
 
-> 
->> diff --git a/arch/arm64/include/asm/runtime-const.h b/arch/arm64/include/asm/runtime-const.h
->> index 838145bc289d2..371c9a4bc2d4b 100644
->> --- a/arch/arm64/include/asm/runtime-const.h
->> +++ b/arch/arm64/include/asm/runtime-const.h
-> [ ... ]
->> +static inline void __runtime_fixup_mask(void *where, unsigned long val)
->> +{
->> +     unsigned int width = __fls(val) + 1;
->> +     __le32 *p = where;
->> +     u32 insn;
->> +
->> +     /*
-> [ ... ]
->> +      */
->> +     BUG_ON(!val || width > 32 || (GENMASK(width - 1, 0) != val));
-> 
+The driver already preserves the legacy fallback path for this:
+
+    /* Legacy regulator handling for DT backward compatibility. */
+    if (imx_pcie->vpcie) {
+        ret =3D regulator_enable(imx_pcie->vpcie);
+        ...
+    }
+
+So a new kernel running with an old DTS that still has vpcie-supply on
+the controller node will continue to work correctly.
+
+Users are not expected to pair a new DTS with an old kernel. Doing so
+would break in many other ways beyond this single property.=20
+
+> >  	status =3D "okay";
+> >  };
+> >
+> >  &pcie_port0 {
+> >  	reset-gpios =3D <&gpio7 12 GPIO_ACTIVE_LOW>;
+> > +	vpcie3v3-supply =3D <&reg_pcie>;
+>=20
 > [Severity: Medium]
-> Does evaluating __fls(val) before the BUG_ON(!val) check invoke undefined
-> behavior if val is 0?
-> 
-> Looking at __fls(), it uses __builtin_clzl(word) which is undefined when
-> the argument is 0:
-> 
-> include/asm-generic/bitops/builtin-__fls.h:__fls() {
->     return (sizeof(word) * 8) - 1 - __builtin_clzl(word);
-> }
-> 
-> Could the compiler use Value Range Propagation to assume val is non-zero
-> due to the __fls() call, and silently optimize away the !val safety guard?
+> Could adding vpcie3v3-supply here without documenting it in the binding
+> schema cause a schema validation failure?
+>=20
+> The pcie@0 node definition in the fsl,imx6q-pcie.yaml binding schema uses
+> "unevaluatedProperties: false", meaning all properties must be explicitly
+> documented. Since vpcie3v3-supply is not documented in that file or in th=
+e
+> core PCI schemas, the schema validator will likely reject it.
 
-How does that work? "width" is calculated as __fls(val) so why would the
-compiler make assumption on the possible values of "val" based on that call
-alone?
+vpcie3v3-supply is documented in dt-schema:
+https://github.com/devicetree-org/dt-schema/blob/main/dtschema/schemas/pci/=
+pci-bus-common.yaml
 
-I suppose you are referring to an issue like
-https://gcc.gnu.org/pipermail/gcc/2023-November/242808.html but that is
--O3 and under normal circumstances, the propagation is stopped if the
-compiler believes there is possibility of undefined behavior:
-https://github.com/gcc-mirror/gcc/blob/7ebc766bdbc8584699acb3f8fd30b2c393923c06/gcc/gimple-range-op.cc#L937-L944
-
-That said, I can fix it in the next version to always check for 0 before
-__fls().
-
--- 
-Thanks and Regards,
-Prateek
-
+Best Regards
+Sherry
