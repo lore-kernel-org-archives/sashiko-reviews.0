@@ -1,150 +1,91 @@
-Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
-	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 617A8368D46;
-	Tue, 30 Jun 2026 14:46:16 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
+Received: from foss.arm.com (foss.arm.com [217.140.110.172])
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 2D2BA43D4EF;
+	Tue, 30 Jun 2026 14:52:42 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=217.140.110.172
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1782830777; cv=none; b=TOTH6cg9mo7u3RUvIKMj1uyzNPaZWT6HqrzSSQz9sn9Wv6bD7rKAjNjgclw9jVIOP+KqchLLaDE2PmqF1NIxhLrS4yKu72NcCVgEbHwDIWA6EEqSoQaXEawhAgeTVIAgvciz1vLTRmz6t2KiPHyUfa8Waf5qkbc8z+Hi4y1vGVU=
+	t=1782831166; cv=none; b=jZvIuO5xj6ZB+lbSpg4WXM/hu+qnspiSN4dTRl54KhwJ7cdQUeGUKJ37r/ld3es+2ymdNVdcTD3JTFUXm0BCspvKp3xM1S7TbJwwnZbzV9dvxQRHH0XFMRXUMMSap3ONyGqGrDQTO3cxL7iFX/9/JhdGq1Lqdpgo5UjeDFQSFtY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1782830777; c=relaxed/simple;
-	bh=et6WWXnaS2+pKmOqfW2RoPxasq8OHuop6VwHgCWWPSU=;
-	h=Content-Type:MIME-Version:Message-Id:In-Reply-To:References:
-	 Subject:From:To:Cc:Date; b=WB5C+SOmZwWut1JD0TKchAV+jPMoltAoYeqD13ZLG9yahOLl0QOIjiwGtFo38sAJH8Bl4Sr7G/QAwe08qBF7Uq6uBDIgpfY0mR8mMdXcdOkbzFKXpvQcpN0Q7D19kZVggQVJ9EuPblttRdXR/GmOSQih9Kh6IgWovRMTcsHgmSI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=LSsPTQJ/; arc=none smtp.client-ip=100.103.45.18
+	s=arc-20240116; t=1782831166; c=relaxed/simple;
+	bh=R2m2wkxAHKJmBaJqAUn0cb0UfYgrhUeIdOnjx/m/q14=;
+	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
+	 MIME-Version:Content-Type:Content-Disposition; b=H4Nxo/SUQdAPeiJNF+sOltFfRoYUmO/vQBPckZosO8Fm774hzyO15DXXwpovGlnOnvqMX3yrR6pGTW7+sSsB+WADl4lyclerjBciJXnbtFBj47dLguOUxo3qMN0vRlD4N0PbJ1CFIjDCF4DBjKrvFiYOWOhN/AFdOFu4uTNfStk=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=arm.com; spf=pass smtp.mailfrom=arm.com; dkim=pass (1024-bit key) header.d=arm.com header.i=@arm.com header.b=ZBK9WxED; arc=none smtp.client-ip=217.140.110.172
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=arm.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=arm.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="LSsPTQJ/"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id AC9051F000E9;
-	Tue, 30 Jun 2026 14:46:15 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=kernel.org;
-	s=k20260515; t=1782830776;
-	bh=tUR1TZqZgIjf7g/qHfTnghrYzXKLgJDw1xWeRAXLWJo=;
-	h=In-Reply-To:References:Subject:From:To:Cc:Date;
-	b=LSsPTQJ/A+v2jDQU690DW1fqHe/pLTvNXjuDFl1rNxlNreEw651MXk4g2iYcEkoLB
-	 KROa+IraIHhnWx/b6ykEYVlhLxSwURZ9K26rgS/qXttBW2D93uWcRAWbN5dIAwlbi8
-	 X02xOAeT7hZ0ojScXO8wXPseolmhnMbMlwzYfR7RhiuZ1xZfY05wJ87frNwYoh+nrQ
-	 RO4Ul8we42r3+7z/nlPPDsK5oKwF/PsNJqIJsydcQPhx+LzlUVH7yErgroIo+P11v9
-	 LP8cPpZBrN1+fcphatL2PpF7s8pSsl8PMQveBJqOfHIP7AJJaiXkR04oMK6v1IZemB
-	 Fla9dRfgznWKw==
-Content-Type: multipart/mixed; boundary="===============4372272007352423530=="
+	dkim=pass (1024-bit key) header.d=arm.com header.i=@arm.com header.b="ZBK9WxED"
+Received: from usa-sjc-imap-foss1.foss.arm.com (unknown [10.121.207.14])
+	by usa-sjc-mx-foss1.foss.arm.com (Postfix) with ESMTP id C03112F27;
+	Tue, 30 Jun 2026 07:52:37 -0700 (PDT)
+Received: from LeoBrasDK.cambridge.arm.com (LeoBrasDK.cambridge.arm.com [10.2.212.21])
+	by usa-sjc-imap-foss1.foss.arm.com (Postfix) with ESMTPSA id 3D7203F85F;
+	Tue, 30 Jun 2026 07:52:41 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=simple/simple; d=arm.com; s=foss;
+	t=1782831162; bh=R2m2wkxAHKJmBaJqAUn0cb0UfYgrhUeIdOnjx/m/q14=;
+	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
+	b=ZBK9WxEDWF6JYOiYZ+s6rYt4uMOqdHSmkj2m6dg+1njq4VkQ4hpvNik7HZouZE2n3
+	 PWffD2rBuCtsHwFFEZbtaX3fR71yudO1jCcfR4VBMwVg4koYmdsj+2K/Y/xpu+vzjP
+	 TdlnyVBqr5t6HuXSBb1a3XQD0aWFOcoY5bGrmB18=
+From: Leonardo Bras <leo.bras@arm.com>
+To: Vladimir Murzin <vladimir.murzin@arm.com>
+Cc: Leonardo Bras <leo.bras@arm.com>,
+	sashiko-reviews@lists.linux.dev,
+	kvmarm@lists.linux.dev,
+	Oliver Upton <oupton@kernel.org>,
+	Marc Zyngier <maz@kernel.org>,
+	kvm@vger.kernel.org
+Subject: Re: [PATCH v2 05/13] KVM: arm64: Detect (via ACPI) and initialize HACDBSIRQ
+Date: Tue, 30 Jun 2026 15:52:39 +0100
+Message-ID: <akPYN3bXxIia5obQ@LeoBrasDK>
+X-Mailer: git-send-email 2.54.0
+In-Reply-To: <b8e90340-ee2a-4024-bc77-a00b139ea7ee@arm.com>
+References: <20260629111820.1873540-1-leo.bras@arm.com> <20260629111820.1873540-6-leo.bras@arm.com> <20260629113242.9142A1F000E9@smtp.kernel.org> <akKSoZkYWDTE07hi@LeoBrasDK> <b8e90340-ee2a-4024-bc77-a00b139ea7ee@arm.com>
 Precedence: bulk
 X-Mailing-List: sashiko-reviews@lists.linux.dev
 List-Id: <sashiko-reviews.lists.linux.dev>
 List-Subscribe: <mailto:sashiko-reviews+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:sashiko-reviews+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Message-Id: <da582eb50a1b974b40f4f4c22b0ff138e490d84e0c3ff06a6f13428f62608ded@mail.kernel.org>
-In-Reply-To: <tencent_5E4F8F8DADA5DE0DAD924ADD835DD7991707@qq.com>
-References: <tencent_5E4F8F8DADA5DE0DAD924ADD835DD7991707@qq.com>
-Subject: Re: [PATCH v4] bpf: Fix smp_processor_id() call trace for preemptible kernels
-From: bot+bpf-ci@kernel.org
-To: eadavis@qq.com,sashiko-bot@kernel.org
-Cc: eadavis@qq.com,jiayuan.chen@linux.dev,sashiko-reviews@lists.linux.dev,andrii@kernel.org,ast@kernel.org,bpf@vger.kernel.org,daniel@iogearbox.net,eddyz87@gmail.com,emil@etsalapatis.com,jolsa@kernel.org,linux-kernel@vger.kernel.org,martin.lau@linux.dev,memxor@gmail.com,netdev@vger.kernel.org,song@kernel.org,syzkaller-bugs@googlegroups.com,yonghong.song@linux.dev,ast@kernel.org,andrii@kernel.org,daniel@iogearbox.net,martin.lau@kernel.org,eddyz87@gmail.com,yonghong.song@linux.dev,clm@meta.com,ihor.solodrai@linux.dev
-Date: Tue, 30 Jun 2026 14:46:15 +0000 (UTC)
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+Content-Transfer-Encoding: 8bit
 
---===============4372272007352423530==
-Content-Type: text/plain; charset="us-ascii"
-MIME-Version: 1.0
-Content-Transfer-Encoding: 7bit
+On Mon, Jun 29, 2026 at 05:52:45PM +0100, Vladimir Murzin wrote:
+> Hi,
+> 
+> On 6/29/26 16:43, Leonardo Bras wrote:
+> >>> +	case HACDBSCONS_EL2_ERR_REASON_IPAHACF:
+> >>> +		/* When size not a power of two >= 4k, exit with reserved TTLW */
+> >>> +		int index = FIELD_GET(HACDBSCONS_EL2_INDEX, cons);
+> >> [Severity: Low]
+> >> Does this variable declaration cause a build failure?
+> > No
+> > 
+> >> Under standard C rules,
+> >> a label can only be attached to a statement, and a declaration is not a
+> >> statement.
+> > That's not a label.
+> 
+> I think Sashiko is right
+> 
+> arch/arm64/kvm/dirty_bit.c: In function 'hacdbsirq_handler':
+> arch/arm64/kvm/dirty_bit.c:336:3: error: a label can only be part of a statement and a declaration is not a statement
+>   336 |   int index = FIELD_GET(HACDBSCONS_EL2_INDEX, cons);
+>       |   ^~~
+> make[4]: *** [scripts/Makefile.build:289: arch/arm64/kvm/dirty_bit.o] Error 1
+> make[4]: *** Waiting for unfinished jobs....
+> 
+> Based on other threads you might need GCC<=10.5.0 to hit that.
+> 
+> Obvious fix-up would be to wrap the case into curly braces :)
+> 
+> Cheers
+> Vladimir
 
-> bpf: Fix smp_processor_id() call trace for preemptible kernels
->
-> bpf_mem_cache_free_rcu() maybe called in preemptible context, this
-> will trigger the below warning message:
->
-> BUG: using smp_processor_id() in preemptible [00000000] code: syz.0.17/5820
-> caller is bpf_mem_cache_free_rcu+0x48/0xc0 kernel/bpf/memalloc.c:954
-> Call Trace:
->  check_preemption_disabled+0xd3/0xe0 lib/smp_processor_id.c:47
->  bpf_mem_cache_free_rcu+0x48/0xc0 kernel/bpf/memalloc.c:954
->  rhtab_delete_elem+0x185a/0x1b30 kernel/bpf/hashtab.c:2969
->  __rhtab_map_lookup_and_delete_batch+0x935/0xcb0 kernel/bpf/hashtab.c:3349
->  bpf_map_do_batch+0x445/0x630 kernel/bpf/syscall.c:-1
->  __sys_bpf+0x906/0xd90 kernel/bpf/syscall.c:-1
->
-> this_cpu_ptr() access needs to be guarded against migration.
+Right!
+I could finally understand what it meant on a next patch, where it 
+explained the issue in a different way. Will add curly braces (or declare 
+the variable before, honestly), and this should go.
 
-The commit message says "guarded against migration" but the fix actually
-disables preemption using get_cpu()/put_cpu(). Is this description accurate?
-
-get_cpu() does preempt_disable() + __smp_processor_id(), not just
-migrate_disable(). The later sentence "disabling preemption rather than
-prohibiting migration" correctly describes the fix, but this earlier line
-understates the requirement.
-
-> Wrapping this batch operation in bpf_disable_instrumentation() risk
-> blinding BPF tracing globally on the CPU if preemption occurs.
->
-> bpf_disable_instrumentation() increments the per-CPU bpf_prog_active counter.
-> Because migrate_disable() and rcu_read_lock() do not disable preemption under
-> CONFIG_PREEMPT_RCU, the task can be preempted during this potentially long
-> loop.
->
-> If preempted, bpf_prog_active would remain elevated on that CPU, which could
-> cause subsequent tasks scheduled on the same CPU to silently drop BPF tracing
-> events (kprobes, tracepoints, perf).
-
-The reasoning about bpf_disable_instrumentation() is sound, but could the
-commit message clarify that rhtab_delete_elem() already calls
-bpf_disable_instrumentation() internally?
-
-Looking at rhtab_delete_elem():
-
-kernel/bpf/hashtab.c:rhtab_delete_elem() {
-    ...
-    bpf_disable_instrumentation();
-    ret = rhashtable_remove_fast(&rhtab->table, &elem->htab_node,
-                                  rhtab->rhtable_params);
-    bpf_enable_instrumentation();
-    ...
-}
-
-This means the same "blinding BPF tracing" window already exists in the
-per-element path. The argument is against a longer-held instrumentation
-disable across the entire loop, not a categorical concern.
-
-> Therefore, we fix this by disabling preemption rather than prohibiting
-> migration.
->
-> Fixes: 5af6807bdb10 ("bpf: Introduce bpf_mem_free_rcu() similar to kfree_rcu().")
-
-Should the Fixes tag point to a different commit? The bug occurs when
-__rhtab_map_lookup_and_delete_batch() calls rhtab_delete_elem() which calls
-bpf_mem_cache_free_rcu() in preemptible context.
-
-Commit 5af6807bdb10 introduced bpf_mem_free_rcu() in 2023 but did not modify
-kernel/bpf/hashtab.c or introduce the rhtab code. The call chain was
-introduced by:
-
-  Fixes: 6905f8601298 ("bpf: Allow special fields in resizable hashtab")
-
-which added the rhtab implementation including __rhtab_map_lookup_and_delete_batch()
-and the call to bpf_mem_cache_free_rcu() in rhtab_delete_elem().
-
-> Reported-by: syzbot+fd7e415d891073b83e1f@syzkaller.appspotmail.com
-> Closes: https://syzkaller.appspot.com/bug?extid=fd7e415d891073b83e1f
-> Signed-off-by: Edward Adam Davis <eadavis@qq.com>
-
-[ ... ]
-
-> diff --git a/kernel/bpf/hashtab.c b/kernel/bpf/hashtab.c
-> --- a/kernel/bpf/hashtab.c
-> +++ b/kernel/bpf/hashtab.c
-> @@ -3345,8 +3345,10 @@
->  	}
->
->  	if (do_delete) {
-> +		get_cpu();
->  		for (i = 0; i < total; i++)
->  			rhtab_delete_elem(rhtab, del_elems[i], NULL, 0);
-> +		put_cpu();
->  	}
->
->  	rcu_read_unlock();
-
----
-AI reviewed your patch. Please fix the bug or email reply why it's not a bug.
-See: https://github.com/kernel-patches/vmtest/blob/master/ci/claude/README.md
-
-CI run summary: https://github.com/kernel-patches/bpf/actions/runs/28451219226
---===============4372272007352423530==--
+Thanks!
+Leo
