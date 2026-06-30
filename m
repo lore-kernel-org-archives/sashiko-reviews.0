@@ -1,197 +1,372 @@
-Received: from out-179.mta1.migadu.com (out-179.mta1.migadu.com [95.215.58.179])
+Received: from out162-62-57-49.mail.qq.com (out162-62-57-49.mail.qq.com [162.62.57.49])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 52C1440D598
-	for <sashiko-reviews@lists.linux.dev>; Tue, 30 Jun 2026 04:35:07 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=95.215.58.179
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8D50632D0D4
+	for <sashiko-reviews@lists.linux.dev>; Tue, 30 Jun 2026 05:05:28 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=162.62.57.49
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1782794109; cv=none; b=iZfup2ckWNDTQdsKo16sUI0WH1QFjnStELhXUARgMYCnEuDiq3b1OY3DOR5a0Hsh/+wSHyel5+Ir298elc3kDVU9ZZxhaExOVHj0B5M8YgAGjlw3/k6585nz9PEkkDJhnmYiHteVREsPQZC8naH8krb8YfNW5py1b1EKiydTFko=
+	t=1782795931; cv=none; b=R1ZbBi6hOdBAmr048xxvlxZOwAc2tZM/8VDsQEjAGzjprAKH51Rn75Y+YdQCS42mA6oadriB48sRH7h0Wefr5RElGy6MQSMw6dThP+HdkVYvS8Yp/O/DtzdP9yH3tSJEZBUJavEf4CsNTZyNty8EJjWNzOcGOE9oj/wOytjVy4g=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1782794109; c=relaxed/simple;
-	bh=y/04EdBzzHdRlsfF0oPaZCIwM/XdlAzWW4cyqcAUUH4=;
-	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=exD5BmUIymfjnXPFbUF5+dJWi39QRa7zG+GKJhEOeLyqyKFI9AL7uvOuX0tQ+rDUkkgeO3tzrT1a7A37d2RdSZUMJqKRzNWRXPh/3WJnsV/AxzMq064h/z2Yg1d8cL2OS3VKlPijAODKFhySdy2SISNDC/YtP8qYtWvYh3LpnMw=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linux.dev; spf=pass smtp.mailfrom=linux.dev; dkim=pass (1024-bit key) header.d=linux.dev header.i=@linux.dev header.b=RNkBf8/9; arc=none smtp.client-ip=95.215.58.179
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linux.dev
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linux.dev
+	s=arc-20240116; t=1782795931; c=relaxed/simple;
+	bh=7Gg7DwSR3N/ELf78YGze95NezMxZg6tGkentWvxFXnI=;
+	h=Message-ID:From:To:Cc:Subject:Date:In-Reply-To:References:
+	 MIME-Version:Content-Type; b=J6Kp9VZSLWA1aOTMf1f4I8tqhCvhQXt81MkkhpccegosDLan1qI9l0peHkiMvVtIVAQloaZVYWSKYVfSkPeomD+xONcfrbAulvKGcuRp4EE22Y+SBn+B++875wh5gxwqhR9clGhPHEY7bVW8UB6kKpJSXvQZFQmEkpBD5kHh3YY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=Red54.com; spf=pass smtp.mailfrom=red54.com; dkim=pass (1024-bit key) header.d=qq.com header.i=@qq.com header.b=uyrQ7Q0E; arc=none smtp.client-ip=162.62.57.49
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=Red54.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=red54.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linux.dev header.i=@linux.dev header.b="RNkBf8/9"
-Message-ID: <7a53b311-92f8-4058-bd92-73b4e64a96d7@linux.dev>
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linux.dev; s=key1;
-	t=1782794095;
-	h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
-	 to:to:cc:cc:mime-version:mime-version:content-type:content-type:
-	 content-transfer-encoding:content-transfer-encoding:
-	 in-reply-to:in-reply-to:references:references;
-	bh=G0hzdxx9t9+R3e5R6FejY/wwQQYMET+soEHVV0SefJg=;
-	b=RNkBf8/9pBI2jrZdOX/nx4RkjvAVG/AoJ8gw/sClDQntNYrbLbXM1XMuz1kp12GM0S4mXE
-	jpo54jqedh9eoDOkVPQOkqmMQiD/TAbxhRzXtcHJ9IATulDqkncp3dMJmT/0m58JtHOdTa
-	XoNQnfiuBYCVgwFC9K5hG5mJptxtMe8=
-Date: Tue, 30 Jun 2026 12:34:14 +0800
+	dkim=pass (1024-bit key) header.d=qq.com header.i=@qq.com header.b="uyrQ7Q0E"
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=qq.com; s=s201512;
+	t=1782795917; bh=DuMZ2Zdgsa5L5dfJyMSCTVNg+r6hlY+Of+p6RNsTOT0=;
+	h=From:To:Cc:Subject:Date:In-Reply-To:References;
+	b=uyrQ7Q0EuvKaSZKcRijSvlwz0i+o+p4onnck1AnPxN5Llkhe5VVrk4d/i2UTxCKeg
+	 UijvzyoVbMXraS65ZcupVxWRD+CEdMV8t1TN1+gXnziTeuY/MxyOaVQuznQBUNaS4Q
+	 sNEVlVHg+edICl+lE7MxofEyJiXtN2o7i7ExskIg=
+Received: from mail.red54.com ([139.99.8.57])
+	by newxmesmtplogicsvrsza73-0.qq.com (NewEsmtp) with SMTP
+	id 141AACDF; Tue, 30 Jun 2026 13:05:01 +0800
+X-QQ-mid: xmsmtpt1782795901tvlsrfhf6
+Message-ID: <tencent_76FCB13C1FB6FBFFA004F2D19AF6E458030A@qq.com>
+X-QQ-XMAILINFO: M2SvzgchpLqfG5jR4Zp2XcPC/AqHkhG6dgPFyAgXmPKollbxgbxeVlpXYZZZG2
+	 FFWKxOms6kDzVzPe41364ihOCi0kvf8mGm++vF/KnRGsGesSVmnXX+Gu1TiCToBxCxelxpLoFvkK
+	 MaFBf4WqrbH2s0vJWGlni3WxMkSXApmJPdgY8AOc+N0luraqLptSXw9cs7qvdBUauiMyKtJIvMhx
+	 DgauxEDDD1X5RaeAtN2X2j6gKqc4lqupTtlZRwxDEXLbMnt1QTbvtuRwpICtN1wHGziuYgukQrYJ
+	 Qe4xKjfJaEH+co3XV0byY9Ht0pOfZQoSEQSUV7ScyJMjmI1TwAz1zmc5Tx7idHSmo5QcWhOCsF52
+	 sWFIPisbdGLZ2wXlL0JrU+Iz7KAA+7jxZCHlnK3aXBrhGDsC8VzMEd8D42xLBYMczw26HfJgBhrv
+	 axsbHgAqrPm4qAPBfK2pXkPWb733XXqb4EvSx2oGcBOHHuRN1v+W+KXRgTfZU1L7biME1OfFxlnu
+	 v5T+FqO8KqAoZShUtUSvfTUQu/Cfx3gpSQHRgW5A+aHfAMCehAaGjT26159BGBDLE5CTZpL2u4nS
+	 fZT68XDFqhTPm/0c6k/zIDpHG7+QwV3qN5RFmnuV2JNTgOhyC4A9x8x42KDDTvLcSUojGUH3Q6hb
+	 CRSvWeiMp2Y2zRL/jGXRI9UqJia0L4C3YMCy4c0doUVTceGqOe4K/HdYAd8JpDzlXHx5xASto5WT
+	 +xoGMl+BkZoyZgHLLODPWt4D5/zuCBbSgWQAoociN0IXK82vrYkmyXN06jU1HoOvLwzqYtL++ha1
+	 zr41ivHORG/ZcxJf3miU3yiWSHc22FOfiIvsjmeM5g48ie+9w1V90FYrT25hV7qPlR6OCvgbiDae
+	 ArPQ4jTE0evaUJcPX12l4Jv4moEYgQYucEEune9QCU8wxVhWvtazFpL41YvYDOFjlLy/zOJVx1oV
+	 ak/pMoopxL+S/UiFCSZAXksKFojIIIvS1IN975u9H7MHi2nge7C5pkAmtirO7oY+9XodJnE29QYn
+	 E/yB0RTpuk51LGY/bWhkxpJmnc0jN/aZFOENGaQvncUQuBtT7Sl+8F/v90nrlXL/0WIYUHHQ==
+X-QQ-XMRINFO: Nq+8W0+stu50tPAe92KXseR0ZZmBTk3gLg==
+Sender: yeking@red54.com
+From: =?UTF-8?q?=E8=B0=A2=E8=87=B4=E9=82=A6=20=28XIE=20Zhibang=29?= <Yeking@Red54.com>
+To: linux-input@vger.kernel.org,
+	hansg@kernel.org,
+	dmitry.torokhov@gmail.com,
+	bentiss@kernel.org,
+	jikos@kernel.org
+Cc: Yeking@Red54.com,
+	dianders@chromium.org,
+	linux-kernel@vger.kernel.org,
+	sashiko-bot@kernel.org,
+	sashiko-reviews@lists.linux.dev,
+	superm1@kernel.org
+Subject: [PATCH v7] HID: i2c-hid: Refactor _DSM helper and add i2c-hid-acpi-prp0001 driver
+Date: Tue, 30 Jun 2026 05:04:21 +0000
+X-OQ-MSGID: <20260630050421.49172-1-Yeking@Red54.com>
+X-Mailer: git-send-email 2.43.0
+In-Reply-To: <360r0r52-n546-s91n-s51p-893o79415s74@xreary.bet>
+References: <360r0r52-n546-s91n-s51p-893o79415s74@xreary.bet>
 Precedence: bulk
 X-Mailing-List: sashiko-reviews@lists.linux.dev
 List-Id: <sashiko-reviews.lists.linux.dev>
 List-Subscribe: <mailto:sashiko-reviews+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:sashiko-reviews+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Subject: Re: [PATCH v3 15/16] mm: replace __GFP_NO_CODETAG with
- ALLOC_NO_CODETAG
-To: sashiko-reviews@lists.linux.dev, Brendan Jackman <jackmanb@google.com>
-Cc: linux-kernel@vger.kernel.org, linux-rt-devel@lists.linux.dev,
- Andrew Morton <akpm@linux-foundation.org>,
- Suren Baghdasaryan <surenb@google.com>
-References: <20260629-alloc-trylock-v3-0-57bef0eadbc2@google.com>
- <20260629-alloc-trylock-v3-15-57bef0eadbc2@google.com>
- <20260629155637.A59241F000E9@smtp.kernel.org>
-Content-Language: en-US
-X-Report-Abuse: Please report any abuse attempt to abuse@migadu.com and include these headers.
-From: Hao Ge <hao.ge@linux.dev>
-In-Reply-To: <20260629155637.A59241F000E9@smtp.kernel.org>
-Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-X-Migadu-Flow: FLOW_OUT
 
+Move the _DSM call that gets the HID descriptor address from
+i2c-hid-acpi.c into i2c-hid-acpi.h as a static inline so both the ACPI
+and the new PRP0001 driver can use it. While refactoring, move the
+blacklist check and the _DSM call to the top of probe() to avoid a
+pointless alloc when the device is blacklisted or does not implement the
+_DSM.
 
-CC Andrew and Suren
+Some devices, for example the Lenovo KaiTian N60d and Inspur CP300L3,
+are declared with _HID "PRP0001" and _DSD compatible "hid-over-i2c" but
+lack "hid-descr-addr" from the _DSD and provide the HID descriptor
+address only through an ACPI _DSM. The OF driver fails to probe them
+because it requires hid-descr-addr. Add a new driver that handles these
+devices by calling the shared _DSM helper.
 
+Link: https://lore.kernel.org/tencent_F6FC553D1BB737FC00062AD0FEF43C580F0A@qq.com
+Fixes: b33752c30023 ("HID: i2c-hid: Reorganize so ACPI and OF are separate modules")
+Signed-off-by: 谢致邦 (XIE Zhibang) <Yeking@Red54.com>
+---
+v2: Name the unused parameter and document why
+acpi_device_fix_up_power() is skipped.
+v3: Add a dev_warn() asking users to contact vendors for firmware
+updates, and use existing locals in devm_kzalloc() and
+acpi_device_fix_up_power().
+v4: Double the power-up delay from 250ms to 500ms.
+v5: Document why of_match_ptr() on the of_match_table is safe when
+CONFIG_OF=n.
+v6: Increase power-up delay from 500ms to 750ms. During cold boot on low
+battery, 500ms causes non-fatal I2C transfer errors (-ENXIO). 750ms
+fixes them.
+v7: Drop I2C_HID_ACPI_PRP0001 Kconfig entry and build the driver under
+CONFIG_I2C_HID_ACPI instead. Also wrap acpi_handle_err parameters across
+two lines.
 
-On 2026/6/29 23:56, sashiko-bot@kernel.org wrote:
-> Thank you for your contribution! Sashiko AI review found 2 potential issue(s) to consider:
->
-> New issues:
-> - [Low] The fallback `#else` definition of `pgalloc_tag_add` was not updated to accept `unsigned int alloc_flags`.
->
-> Pre-existing issues:
-> - [Critical] TOCTOU race in `__alloc_tag_add_early_pfn` leading to an out-of-bounds array write.
-> --
->
-> commit ccee7f6d4bcf9d00da38c878e97dd852c5e649b3
-> Author: Brendan Jackman <jackmanb@google.com>
->
-> mm: replace __GFP_NO_CODETAG with ALLOC_NO_CODETAG
->
-> This commit replaces the mm-internal __GFP_NO_CODETAG flag with a
-> new alloc_flags bit, ALLOC_NO_CODETAG. It plumbs alloc_flags through
-> several allocator functions to allow passing this flag directly to the
-> alloc_tag code.
->
->> diff --git a/mm/alloc_tag.c b/mm/alloc_tag.c
->> index d9be1cf5187d9..a32a94e759b94 100644
->> --- a/mm/alloc_tag.c
->> +++ b/mm/alloc_tag.c
-> [ ... ]
->> @@ -806,7 +795,8 @@ static void __init __alloc_tag_add_early_pfn(unsigned long pfn)
->>   	do {
->>   		pool = READ_ONCE(current_pfn_pool);
->>   		if (!pool || atomic_read(&pool->count) >= PFN_POOL_SIZE) {
->> -			struct page *new_page = alloc_page(__GFP_HIGH | __GFP_NO_CODETAG);
->> +			struct page *new_page = __alloc_pages(__GFP_HIGH, 0, numa_mem_id(),
->> +							      NULL, ALLOC_NO_CODETAG);
->>   			struct pfn_pool *new;
-> [Severity: Critical]
-> This is a pre-existing issue, but is there a time-of-check to time-of-use
-> race condition here?
->
-> If multiple CPUs are active during the deferred init window, could they
-> concurrently observe the same remaining capacity?
->
-> CPU1:
->      if (!pool || atomic_read(&pool->count) >= PFN_POOL_SIZE)
->
-> CPU2:
->      if (!pool || atomic_read(&pool->count) >= PFN_POOL_SIZE)
->
-> If both see 1 remaining slot, won't they both proceed to call
-> atomic_fetch_add() on the pool counter further down in this function?
-> This could cause an out-of-bounds array write at pool->pfns[PFN_POOL_SIZE].
+ drivers/hid/i2c-hid/Makefile               |   2 +-
+ drivers/hid/i2c-hid/i2c-hid-acpi-prp0001.c | 104 +++++++++++++++++++++
+ drivers/hid/i2c-hid/i2c-hid-acpi.c         |  52 +++--------
+ drivers/hid/i2c-hid/i2c-hid-acpi.h         |  33 +++++++
+ 4 files changed, 152 insertions(+), 39 deletions(-)
+ create mode 100644 drivers/hid/i2c-hid/i2c-hid-acpi-prp0001.c
+ create mode 100644 drivers/hid/i2c-hid/i2c-hid-acpi.h
 
+diff --git a/drivers/hid/i2c-hid/Makefile b/drivers/hid/i2c-hid/Makefile
+index 55bd5e0f35af..38d5d827f3ce 100644
+--- a/drivers/hid/i2c-hid/Makefile
++++ b/drivers/hid/i2c-hid/Makefile
+@@ -8,7 +8,7 @@ obj-$(CONFIG_I2C_HID_CORE)			+= i2c-hid.o
+ i2c-hid-objs					=  i2c-hid-core.o
+ i2c-hid-$(CONFIG_DMI)				+= i2c-hid-dmi-quirks.o
+ 
+-obj-$(CONFIG_I2C_HID_ACPI)			+= i2c-hid-acpi.o
++obj-$(CONFIG_I2C_HID_ACPI)			+= i2c-hid-acpi.o i2c-hid-acpi-prp0001.o
+ obj-$(CONFIG_I2C_HID_OF)			+= i2c-hid-of.o
+ obj-$(CONFIG_I2C_HID_OF_ELAN)			+= i2c-hid-of-elan.o
+ obj-$(CONFIG_I2C_HID_OF_GOODIX)			+= i2c-hid-of-goodix.o
+diff --git a/drivers/hid/i2c-hid/i2c-hid-acpi-prp0001.c b/drivers/hid/i2c-hid/i2c-hid-acpi-prp0001.c
+new file mode 100644
+index 000000000000..d2cf4714ae7f
+--- /dev/null
++++ b/drivers/hid/i2c-hid/i2c-hid-acpi-prp0001.c
+@@ -0,0 +1,104 @@
++// SPDX-License-Identifier: GPL-2.0-only
++/*
++ * HID over I2C driver for PRP0001 devices missing hid-descr-addr
++ *
++ * Some devices, for example the Lenovo KaiTian N60d and Inspur CP300L3, use
++ * _HID "PRP0001" with _DSD compatible "hid-over-i2c" but lack "hid-descr-addr"
++ * from the _DSD. The HID descriptor address is provided only through an ACPI
++ * _DSM. The TPD0 node in the DSDT shows _DSM Function 1 returning 0x20.
++ *
++ * Copyright (C) 2026 谢致邦 (XIE Zhibang) <Yeking@Red54.com>
++ */
++
++#include <linux/delay.h>
++#include <linux/device.h>
++#include <linux/i2c.h>
++#include <linux/module.h>
++#include <linux/of.h>
++
++#include "i2c-hid.h"
++#include "i2c-hid-acpi.h"
++
++static int i2c_hid_acpi_prp0001_power_up(struct i2chid_ops *ops)
++{
++	/* give the device time to power up */
++	msleep(750);
++	return 0;
++}
++
++static struct i2chid_ops i2c_hid_acpi_prp0001_ops = {
++	.power_up = i2c_hid_acpi_prp0001_power_up,
++	/*
++	 * No .restore_sequence needed: the _DSM on these devices returns a
++	 * constant (0x20) with no side effects, unlike some PNP0C50 _DSM
++	 * implementations that switch the hardware between PS/2 and I2C modes.
++	 */
++};
++
++static int i2c_hid_acpi_prp0001_probe(struct i2c_client *client)
++{
++	struct device *dev = &client->dev;
++	struct acpi_device *adev;
++	u16 hid_descriptor_address;
++	int ret;
++
++	/* If hid-descr-addr is present, let i2c-hid-of handle it */
++	if (device_property_present(dev, "hid-descr-addr"))
++		return -ENODEV;
++
++	adev = ACPI_COMPANION(dev);
++	if (!adev)
++		return -ENODEV;
++
++	ret = i2c_hid_acpi_get_descriptor(adev);
++	if (ret < 0)
++		return ret;
++	dev_warn(dev,
++		 "hid-descr-addr device property NOT found, using ACPI _DSM fallback. Contact vendor for firmware update!\n");
++	hid_descriptor_address = ret;
++
++	/*
++	 * No acpi_device_fix_up_power() needed: TPD0 has no _PS0, _PS3, _PSC
++	 * or _PRx methods and follows I2C bus power.
++	 */
++	return i2c_hid_core_probe(client, &i2c_hid_acpi_prp0001_ops,
++				  hid_descriptor_address, 0);
++}
++
++static const struct of_device_id i2c_hid_acpi_prp0001_of_match[] = {
++	{ .compatible = "hid-over-i2c" },
++	{},
++};
++MODULE_DEVICE_TABLE(of, i2c_hid_acpi_prp0001_of_match);
++
++static const struct i2c_device_id i2c_hid_acpi_prp0001_id[] = {
++	{ .name = "hid-over-i2c" },
++	{ }
++};
++MODULE_DEVICE_TABLE(i2c, i2c_hid_acpi_prp0001_id);
++
++static struct i2c_driver i2c_hid_acpi_prp0001_driver = {
++	.driver = {
++		.name	= "i2c_hid_acpi_prp0001",
++		.pm	= &i2c_hid_core_pm,
++		.probe_type = PROBE_PREFER_ASYNCHRONOUS,
++		/*
++		 * of_match_ptr() makes this NULL when CONFIG_OF=n, but that's
++		 * fine: the I2C id_table with "hid-over-i2c" handles matching
++		 * via client->name (set by acpi_set_modalias() from the _DSD
++		 * compatible property).
++		 */
++		.of_match_table = of_match_ptr(i2c_hid_acpi_prp0001_of_match),
++	},
++
++	.probe		= i2c_hid_acpi_prp0001_probe,
++	.remove		= i2c_hid_core_remove,
++	.shutdown	= i2c_hid_core_shutdown,
++	.id_table	= i2c_hid_acpi_prp0001_id,
++};
++
++module_i2c_driver(i2c_hid_acpi_prp0001_driver);
++
++MODULE_DESCRIPTION("HID over I2C driver for PRP0001 devices missing hid-descr-addr");
++MODULE_AUTHOR("谢致邦 (XIE Zhibang) <Yeking@Red54.com>");
++MODULE_LICENSE("GPL");
+diff --git a/drivers/hid/i2c-hid/i2c-hid-acpi.c b/drivers/hid/i2c-hid/i2c-hid-acpi.c
+index abd700a101f4..13f977d6aab6 100644
+--- a/drivers/hid/i2c-hid/i2c-hid-acpi.c
++++ b/drivers/hid/i2c-hid/i2c-hid-acpi.c
+@@ -25,9 +25,9 @@
+ #include <linux/kernel.h>
+ #include <linux/module.h>
+ #include <linux/pm.h>
+-#include <linux/uuid.h>
+ 
+ #include "i2c-hid.h"
++#include "i2c-hid-acpi.h"
+ 
+ struct i2c_hid_acpi {
+ 	struct i2chid_ops ops;
+@@ -48,39 +48,11 @@ static const struct acpi_device_id i2c_hid_acpi_blacklist[] = {
+ 	{ }
+ };
+ 
+-/* HID I²C Device: 3cdff6f7-4267-4555-ad05-b30a3d8938de */
+-static guid_t i2c_hid_guid =
+-	GUID_INIT(0x3CDFF6F7, 0x4267, 0x4555,
+-		  0xAD, 0x05, 0xB3, 0x0A, 0x3D, 0x89, 0x38, 0xDE);
+-
+-static int i2c_hid_acpi_get_descriptor(struct i2c_hid_acpi *ihid_acpi)
+-{
+-	struct acpi_device *adev = ihid_acpi->adev;
+-	acpi_handle handle = acpi_device_handle(adev);
+-	union acpi_object *obj;
+-	u16 hid_descriptor_address;
+-
+-	if (acpi_match_device_ids(adev, i2c_hid_acpi_blacklist) == 0)
+-		return -ENODEV;
+-
+-	obj = acpi_evaluate_dsm_typed(handle, &i2c_hid_guid, 1, 1, NULL,
+-				      ACPI_TYPE_INTEGER);
+-	if (!obj) {
+-		acpi_handle_err(handle, "Error _DSM call to get HID descriptor address failed\n");
+-		return -ENODEV;
+-	}
+-
+-	hid_descriptor_address = obj->integer.value;
+-	ACPI_FREE(obj);
+-
+-	return hid_descriptor_address;
+-}
+-
+ static void i2c_hid_acpi_restore_sequence(struct i2chid_ops *ops)
+ {
+ 	struct i2c_hid_acpi *ihid_acpi = container_of(ops, struct i2c_hid_acpi, ops);
+ 
+-	i2c_hid_acpi_get_descriptor(ihid_acpi);
++	i2c_hid_acpi_get_descriptor(ihid_acpi->adev);
+ }
+ 
+ static void i2c_hid_acpi_shutdown_tail(struct i2chid_ops *ops)
+@@ -93,24 +65,28 @@ static void i2c_hid_acpi_shutdown_tail(struct i2chid_ops *ops)
+ static int i2c_hid_acpi_probe(struct i2c_client *client)
+ {
+ 	struct device *dev = &client->dev;
++	struct acpi_device *adev = ACPI_COMPANION(dev);
+ 	struct i2c_hid_acpi *ihid_acpi;
+ 	u16 hid_descriptor_address;
+ 	int ret;
+ 
+-	ihid_acpi = devm_kzalloc(&client->dev, sizeof(*ihid_acpi), GFP_KERNEL);
++	if (acpi_match_device_ids(adev, i2c_hid_acpi_blacklist) == 0)
++		return -ENODEV;
++
++	ret = i2c_hid_acpi_get_descriptor(adev);
++	if (ret < 0)
++		return ret;
++	hid_descriptor_address = ret;
++
++	ihid_acpi = devm_kzalloc(dev, sizeof(*ihid_acpi), GFP_KERNEL);
+ 	if (!ihid_acpi)
+ 		return -ENOMEM;
+ 
+-	ihid_acpi->adev = ACPI_COMPANION(dev);
++	ihid_acpi->adev = adev;
+ 	ihid_acpi->ops.shutdown_tail = i2c_hid_acpi_shutdown_tail;
+ 	ihid_acpi->ops.restore_sequence = i2c_hid_acpi_restore_sequence;
+ 
+-	ret = i2c_hid_acpi_get_descriptor(ihid_acpi);
+-	if (ret < 0)
+-		return ret;
+-	hid_descriptor_address = ret;
+-
+-	acpi_device_fix_up_power(ihid_acpi->adev);
++	acpi_device_fix_up_power(adev);
+ 
+ 	return i2c_hid_core_probe(client, &ihid_acpi->ops,
+ 				  hid_descriptor_address, 0);
+diff --git a/drivers/hid/i2c-hid/i2c-hid-acpi.h b/drivers/hid/i2c-hid/i2c-hid-acpi.h
+new file mode 100644
+index 000000000000..0bbed1853313
+--- /dev/null
++++ b/drivers/hid/i2c-hid/i2c-hid-acpi.h
+@@ -0,0 +1,33 @@
++/* SPDX-License-Identifier: GPL-2.0-only */
++
++#ifndef _I2C_HID_ACPI_H
++#define _I2C_HID_ACPI_H
++
++#include <linux/acpi.h>
++#include <linux/uuid.h>
++
++static inline int i2c_hid_acpi_get_descriptor(struct acpi_device *adev)
++{
++	/* HID I²C Device: 3cdff6f7-4267-4555-ad05-b30a3d8938de */
++	static const guid_t i2c_hid_guid =
++		GUID_INIT(0x3CDFF6F7, 0x4267, 0x4555,
++			  0xAD, 0x05, 0xB3, 0x0A, 0x3D, 0x89, 0x38, 0xDE);
++
++	acpi_handle handle = acpi_device_handle(adev);
++	union acpi_object *obj;
++	u16 addr;
++
++	obj = acpi_evaluate_dsm_typed(handle, &i2c_hid_guid,
++				      1, 1, NULL, ACPI_TYPE_INTEGER);
++	if (!obj) {
++		acpi_handle_err(handle,
++				"Error _DSM call to get HID descriptor address failed\n");
++		return -ENODEV;
++	}
++
++	addr = obj->integer.value;
++	ACPI_FREE(obj);
++	return addr;
++}
++
++#endif
+-- 
+2.52.0
 
-It's interesting.
-
-I didn't get this warning from Sashiko when I submitted the patch earlier,
-
-I'm not sure what changed on its end to trigger it now.
-
-No worries though, unless I've overlooked some detail,
-
-I believe this is a false positive
-
-
-Even if both CPUs see 1 remaining slot and both skip the pool-growing 
-branch,
-
-they still have to go through atomic_cmpxchg to actually claim it.
-
-static void __init __alloc_tag_add_early_pfn(unsigned long pfn)
-{
-     struct pfn_pool *pool;
-     int idx;
-
-     do {
-         pool = READ_ONCE(current_pfn_pool);
-         if (!pool || atomic_read(&pool->count) >= PFN_POOL_SIZE) {
-         .........
-         }
-         idx = atomic_read(&pool->count);
-         if (idx >= PFN_POOL_SIZE)
-             continue;
-         if (atomic_cmpxchg(&pool->count, idx, idx + 1) == idx)
-             break;
-     } while (1);
-
-     pool->pfns[idx] = pfn;
-}
-
-
-Only one wins, the other gets a CAS failure and loops back.
-
-There's no path where both write to pfns[PFN_POOL_SIZE].
-
-
-Given that, I think we can ignore this Sashiko report and
-
-move forward with Brendan's patch.
-
-
-Thanks
-
-Best Regards
-
-Hao
-
-
-> [ ... ]
->> diff --git a/mm/page_alloc.c b/mm/page_alloc.c
->> index 026f33f217036..803b32e5a5e47 100644
->> --- a/mm/page_alloc.c
->> +++ b/mm/page_alloc.c
-> [ ... ]
->> @@ -1263,17 +1263,17 @@ void __pgalloc_tag_add(struct page *page, struct task_struct *task,
->>   		alloc_tag_add_early_pfn(page_to_pfn(page), alloc_flags);
->>   		if (task->alloc_tag)
->>   			alloc_tag_set_inaccurate(task->alloc_tag);
->>   	}
->>   }
->>   
->>   static inline void pgalloc_tag_add(struct page *page, struct task_struct *task,
->> -				   unsigned int nr, gfp_t gfp_flags)
->> +				   unsigned int nr, unsigned int alloc_flags)
->>   {
->>   	if (mem_alloc_profiling_enabled())
->> -		__pgalloc_tag_add(page, task, nr, gfp_flags);
->> +		__pgalloc_tag_add(page, task, nr, alloc_flags);
->>   }
-> [Severity: Low]
-> Does this change miss updating the fallback definition of pgalloc_tag_add()
-> when memory allocation profiling is disabled?
->
-> If the kernel is compiled without mem-alloc profiling, the dummy function
-> signature appears to still use the old type:
->
-> static inline void pgalloc_tag_add(struct page *page, struct task_struct *task,
->                     unsigned int nr, gfp_t gfp_flags) {}
->
-> Since callers like post_alloc_hook() are now passing an unsigned int
-> for alloc_flags, won't this cause a Sparse type mismatch warning because
-> gfp_t is a restricted bitwise type?
->
