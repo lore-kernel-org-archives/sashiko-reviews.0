@@ -1,78 +1,87 @@
-Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
+Received: from out-178.mta1.migadu.com (out-178.mta1.migadu.com [95.215.58.178])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 673883E44E0;
-	Tue, 30 Jun 2026 10:04:38 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BF7D42D2496
+	for <sashiko-reviews@lists.linux.dev>; Tue, 30 Jun 2026 10:04:48 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=95.215.58.178
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1782813879; cv=none; b=iTHVM1Ba+/DyXVd1dXa0RLogrCMOsDc8xRz45gBGZUQcMRiPuwZk3g/5EO094haDAHl7Xga6v7SC2waAlzr4pYdhwlPeRJd+Hrh+X7Tb2mS/SrPZOzM3Os5zJCus/USXO7lFNQh7ispo2by10GYnDLKegVqZkO8C01NTLJgRWZo=
+	t=1782813890; cv=none; b=UgWJkgv+FITHMdaGnCAYUhZww6ed+fD/QTkm1o0VlOfz9/thP0a6bliSZza3dX3COAvq7nEfFMKA3uipKPqNP97ieNcDVO/XHfKNnDJBHd1E74f0vlmWEHSRldY6n0VMRTf1cmi7NalUriF9AVI04+V5lS+F6R7XlDLI2pRCOUk=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1782813879; c=relaxed/simple;
-	bh=09WOWTCw5tDbPOdV7wp/vCgW9f6Fp4w0o02Bo7vUZAY=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=QwBrnXTKbAwObVMCzqQ6fwPhaW2ikY1mE29TnjV6l1ZaSWSDLUiQjL6oWFhsJjKZj91waa9WUzM+4xEkR6qlcuuEyKb7GHPtAYY22EQlA26qh/3XCdDuSt2LhitcDVyRnOWvGwxhaiFOVtgdhTcX+Yef/DCNo2R92kUBmNWLJ2I=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=EpPmHs3E; arc=none smtp.client-ip=100.103.45.18
+	s=arc-20240116; t=1782813890; c=relaxed/simple;
+	bh=tYdqggSTU0eUTRUtG2ICREbhztwMifrsi84mldUuOdg=;
+	h=Mime-Version:Content-Type:Date:Message-Id:Cc:Subject:From:To:
+	 References:In-Reply-To; b=Cg6wBxRxPqwkj8M34wcXsB3DjpJ/4aQrMQEDCaRgTCOrMpbCp/bSS2U2YzDA4/qr6ciK7C5QPr6IEx9nfmSaZose7CvxQ1NdWAjWmFy+v9Nff4ozg19YxJZFgwny2sb7vmEfzp0BM0keEOoY4qBCrXO7583r4Rz+UDvv2Y0cHWE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linux.dev; spf=pass smtp.mailfrom=linux.dev; dkim=pass (1024-bit key) header.d=linux.dev header.i=@linux.dev header.b=WbxxYJwb; arc=none smtp.client-ip=95.215.58.178
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linux.dev
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linux.dev
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="EpPmHs3E"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 529761F000E9;
-	Tue, 30 Jun 2026 10:04:33 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=kernel.org;
-	s=k20260515; t=1782813878;
-	bh=Z4UJjEnZI2IYJ5pUOsVosDLT9elMsKBFDjcbHBD7kKU=;
-	h=Date:From:To:Cc:Subject:References:In-Reply-To;
-	b=EpPmHs3E3KdDFMh4Bnn2wtm6nJ9lTEv/lIgf/9sQeG/nw/VENYLifFndX4rAiCjvV
-	 qDzUUQ97ZuQe6Bx5wZUYrQTx9yCfQhurmN/BO3lUylkIqdTT4cWIyejsFxih+TURxT
-	 vG+dpFcG00Xv32kVFzXtHMhVzGaJ5xGHm/Cpno/BsSEl5Nz0O2ihINyjipustybPaa
-	 Fb9Ei5IhzkKcaAFvgYvKKFLU8Dd5E6SO+sRqlAUMvy28EBWLdXm8nVxB2cSuxVfhBE
-	 bTgwNqf/5tCAn0LqzOQSK4TTKWSvnc18hlOjm2AGNoWcC63M/B/N3Ak7LpWNPXzf90
-	 5oXrAURnDlq5g==
-Date: Tue, 30 Jun 2026 12:04:29 +0200
-From: Lorenzo Pieralisi <lpieralisi@kernel.org>
-To: Shivendra Pratap <shivendra.pratap@oss.qualcomm.com>
-Cc: Arnd Bergmann <arnd@arndb.de>, Sebastian Reichel <sre@kernel.org>,
-	Mark Rutland <mark.rutland@arm.com>, Rob Herring <robh@kernel.org>,
-	Krzysztof Kozlowski <krzk+dt@kernel.org>,
-	Conor Dooley <conor+dt@kernel.org>,
-	Souvik Chakravarty <Souvik.Chakravarty@arm.com>,
-	Bartosz Golaszewski <brgl@kernel.org>,
-	Sudeep Holla <sudeep.holla@kernel.org>, devicetree@vger.kernel.org,
-	sashiko-reviews@lists.linux.dev
-Subject: Re: [PATCH v22 04/13] firmware: psci: Introduce command-based resets
-Message-ID: <akOUrV5BwU9/PuLJ@lpieralisi>
-References: <20260514-arm-psci-system_reset2-vendor-reboots-v22-4-28a5bde07483@oss.qualcomm.com>
- <20260514212353.881AFC2BCB8@smtp.kernel.org>
- <c2bb7a24-e1d0-4308-ab53-208901108a5a@oss.qualcomm.com>
+	dkim=pass (1024-bit key) header.d=linux.dev header.i=@linux.dev header.b="WbxxYJwb"
 Precedence: bulk
 X-Mailing-List: sashiko-reviews@lists.linux.dev
 List-Id: <sashiko-reviews.lists.linux.dev>
 List-Subscribe: <mailto:sashiko-reviews+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:sashiko-reviews+unsubscribe@lists.linux.dev>
-MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <c2bb7a24-e1d0-4308-ab53-208901108a5a@oss.qualcomm.com>
+Mime-Version: 1.0
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linux.dev; s=key1;
+	t=1782813877;
+	h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+	 to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+	 content-transfer-encoding:content-transfer-encoding:
+	 in-reply-to:in-reply-to:references:references;
+	bh=/o3Bb//lZA6jxEu1tVIEz7VRsC6xt3cTJJ+Aag4plFs=;
+	b=WbxxYJwbA+X92xFrlfqDZ1XKBS2fIteWH4gIxBeQ6uiGbxdhPP+JKauh+PsVnrkgU7TtG3
+	18XMQmlePJJmJ1+9pL5TC20jTIHpeHBhtCmdZAehF4BCeGenjAjldoWbJfQJunY2UZM3ah
+	erQoZ2nlVdLkDqylbRnRUVJE8+BScTs=
+Content-Transfer-Encoding: quoted-printable
+Content-Type: text/plain; charset=UTF-8
+Date: Tue, 30 Jun 2026 10:04:27 +0000
+Message-Id: <DJMARS53FLR0.HUOA8X4VT5E2@linux.dev>
+Cc: <linux-rt-devel@lists.linux.dev>, <linux-kernel@vger.kernel.org>
+Subject: Re: [PATCH v3 16/16] mm: remove the __GFP_NO_OBJ_EXT flag
+X-Report-Abuse: Please report any abuse attempt to abuse@migadu.com and include these headers.
+From: "Brendan Jackman" <brendan.jackman@linux.dev>
+To: <sashiko-reviews@lists.linux.dev>, "Brendan Jackman"
+ <jackmanb@google.com>
+References: <20260629-alloc-trylock-v3-0-57bef0eadbc2@google.com>
+ <20260629-alloc-trylock-v3-16-57bef0eadbc2@google.com>
+ <20260629160239.334E71F000E9@smtp.kernel.org>
+In-Reply-To: <20260629160239.334E71F000E9@smtp.kernel.org>
+X-Migadu-Flow: FLOW_OUT
 
-On Wed, Jun 24, 2026 at 02:04:54PM +0530, Shivendra Pratap wrote:
-> 
-> 
-> On 15-05-2026 02:53, sashiko-bot@kernel.org wrote:
-> > - [High] The API illegally truncates the 64-bit PSCI SYSTEM_RESET2 cookie parameter to 32 bits, violating the ARM PSCI specification.
-> 
-> Hi Lorenzo,
-> 
-> Was going through this comment. The patch currently uses a 32 bit cookie.
-> The spec also talks about "SMC64 - uint64 - cookie". Can you please suggest
-> if we should add support for 64 bit cookie here?
+On Mon Jun 29, 2026 at 4:02 PM UTC, sashiko-bot wrote:
+> Thank you for your contribution! Sashiko AI review found 1 potential issu=
+e(s) to consider:
+> - [Medium] Incomplete removal of `__GFP_NO_OBJ_EXT` flag leaves the bit r=
+eserved in the core kernel.
+> --
+>
+> commit d2006cc547e302003b4c27943f81bc40cdd90223
+> Author: Brendan Jackman <jackmanb@google.com>
+>
+> mm: remove the __GFP_NO_OBJ_EXT flag
+>
+> This commit removes the __GFP_NO_OBJ_EXT flag from the tools copy of
+> gfp_types.h. Its previous users have been converted to use
+> SLAB_ALLOC_NO_RECURSE or ALLOC_NO_CODETAG instead.
+>
+>> diff --git a/tools/include/linux/gfp_types.h b/tools/include/linux/gfp_t=
+ypes.h
+>> index 6c75df30a281d..a93b8bd200b76 100644
+>> --- a/tools/include/linux/gfp_types.h
+>> +++ b/tools/include/linux/gfp_types.h
+>> @@ -55,7 +55,6 @@ enum {
+>>  #ifdef CONFIG_LOCKDEP
+>>  	___GFP_NOLOCKDEP_BIT,
+>>  #endif
+>> -	___GFP_NO_OBJ_EXT_BIT,
+>
+> [Severity: Medium]
+> Is it possible that the core kernel header updates were missed? The
+> changes in this patch only modify the tools copy of the header, which
+> causes it to diverge from the actual kernel definitions.
+>
+> Looking at include/linux/gfp_types.h, ___GFP_NO_OBJ_EXT_BIT remains
+> reserved in the core kernel.=20
 
-I am afraid the bot is right, it is not correct to assume that the
-cookie upper 32-bits are always 0 :(
-
-Thanks,
-Lorenzo
-
-> 
-> This will require a re-design for supporting about up-to three 32-bit
-> numbers in reboot-mode framework.
-> 
-> thanks,
-> Shivendra
+LOL, Sashiko is correct, I did not actually delete __GFP_NO_OBJ_EXT in
+this patch.
