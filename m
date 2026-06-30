@@ -1,152 +1,199 @@
-Received: from xmbghk7.mail.qq.com (xmbghk7.mail.qq.com [43.163.128.43])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
-	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 656E840FDAC
-	for <sashiko-reviews@lists.linux.dev>; Tue, 30 Jun 2026 12:46:48 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=43.163.128.43
+Received: from foss.arm.com (foss.arm.com [217.140.110.172])
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id CC0C13F58FE;
+	Tue, 30 Jun 2026 12:58:54 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=217.140.110.172
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1782823612; cv=none; b=F5MgZQxaMJgGu2VIu02RvP5M6ElHtk8F13MovApz7Bc1iFvL0adJDbQO/lQp4J6J4/6foG3QZAxBqwES8mO1fTpPkGC0BrZbRjZ/1SQbSh8tIhogPNMl+3KBnOsqdwIsFcSQ30Wb9tIxeGgPqET/EQWV98NqY0zAgKXDcmF/was=
+	t=1782824336; cv=none; b=d07JM6msK0+1QeBPyRICnViRPAREs8I3f75rYUYMAW7g3rpfY3hxQpo6UfSW+FZJHYOeIPnim8DSwX04vr+DfnuJLR+/fNQxiFVST1NTEbyvrEN9CnO57B4fLoVDQoxQiHFtXbbtfBYl4/vQtm5uOdhnrK0VObUoCA3lw7C9lpQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1782823612; c=relaxed/simple;
-	bh=PxqKtpx3FyLpZNRYpTr7hcZOV7MsKvNIU9b44l4suLU=;
-	h=Message-ID:From:To:Cc:Subject:Date:In-Reply-To:References:
-	 MIME-Version; b=FfEANwBMSV7ntogB/q33bzSV7pG3vOkvRRiExrP+0kB9z6HsZQi8uLDPwTeDrgBEpNMnut8OtGM/M42WShWoi60QLuyXs4UW0tbuQ1lh8oUvEpxKHO263VjjdOnxzw0oRjJHLhL1UvTQf/KSIDSW/JwRYVty4PqOo5Rq8o27D6Q=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=qq.com; spf=pass smtp.mailfrom=qq.com; dkim=pass (1024-bit key) header.d=qq.com header.i=@qq.com header.b=IubpzA3+; arc=none smtp.client-ip=43.163.128.43
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=qq.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=qq.com
+	s=arc-20240116; t=1782824336; c=relaxed/simple;
+	bh=rQy6ufZS/d06sy42Nw501NI/EZ81qs0zBsu6gj+Ji9s=;
+	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
+	 MIME-Version:Content-Type:Content-Disposition; b=t8uvLO7RPLL0IAHwD9K8wa5lXsfVmAJcTZ7hQu35ktN24puKfqkTDAhn4YW4AP2sOkNLCT23NwflfJy/qgXhr4ifYdt1VqTuO+IR4HSCAoXG6u6egjoSKvmfX77xHVpFIxvmpSyEI/5I8M4qTO3C4RGCcBFRhb6NsWDgjdvGi5Y=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=arm.com; spf=pass smtp.mailfrom=arm.com; dkim=pass (1024-bit key) header.d=arm.com header.i=@arm.com header.b=c3QxyXBT; arc=none smtp.client-ip=217.140.110.172
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=arm.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=arm.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=qq.com header.i=@qq.com header.b="IubpzA3+"
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=qq.com; s=s201512;
-	t=1782823599; bh=NlISi6Rp/uuCxNnD2Etwb/tWLq6Cin3Mm/X4skjvR7s=;
-	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=IubpzA3+wpiV2AIPx+fqM9pd0IzehOjvUG3lHnHF9t6BBNnHs7V0PALdmspVsQBqz
-	 1tiVfMv3futg6HRDj3YOSbIQ72yz1T8kOctugQ8yDRoXga/aHO8BttppyEWAOBV7Eq
-	 1No0HRAcNOZVhHpEMc1K26TTyUmIlbw9H8MYknsc=
-Received: from lxu-ped-host.. ([111.198.231.89])
-	by newxmesmtplogicsvrszb43-0.qq.com (NewEsmtp) with SMTP
-	id BA4B2CE7; Tue, 30 Jun 2026 20:46:36 +0800
-X-QQ-mid: xmsmtpt1782823596tj0y34xgz
-Message-ID: <tencent_B6259ABAF5BB63335B9E3C1BB74B071BD608@qq.com>
-X-QQ-XMAILINFO: Nj+lDvaLCxoMXhcko6wIWnPCjB0eSfVRTB26+OCAW/vdXE5lbw1ou9JGeaMq19
-	 7MgHJKDPvitT5i1NFKrIhLbYH2x+yyOvQV2UrOoxcGfKX1gyVTm8bwx/ILeRd3kRZRzOdLotGfLU
-	 qrD3ZL1o+7Ob96EXX9KgV3xmKQv1C2FWGRxKUrrINmeXQ3XBN3IvWp2KvLBBoRdpLkCxTKyUyTWB
-	 Q5zq3ZRhdHnHVKjxRvh5az/op2DNTKqbjaS97nSA9o/HsUid7fwF/p0H/Ww8yDaSSdcHQ2jixiIA
-	 7IhlIzqNL6ogmHT0f4QbBDObpdFbbWl7dXophKAdlgWi6QP9+ccy6DalTmseCnraK1XXodTxFP/h
-	 j2/vBH2ORcohThCIafP4j3Afu82g8XUYEG2ezIQsm/p29QA8NXj+qh+veH3h5SnZ617Ag3hFj2Vm
-	 6yBJhva4XCtE31V82v5f7VWaPMiyhfHQqQvUjwi1bVnl8MzXaVkhHv4ybOrISyvT45zgPwODFpyj
-	 83GXtJMIsTFovdUBNG0dFa3HFArdbdM86hHNAP6dqTK7/ECO6YZv2OSUYks2XA1aOtIO3+G4/EWh
-	 qnJkaPcghECr14SSJVpmugleRAmmYoII64w9nRUvcEWOg4a16l1WrBczRGNbqZ7sgBqXeET/QTBN
-	 GZw7rNhUTrpasr1A1dL6vuKenDoXAJaizdkL6BwfzzD0x4cJVjtvcty0JALPoRvVPzNyxuJOgo+K
-	 jjf21PZBv1V0QPFRkAYDVOeP2Ts68f2liZw0ZZ6aDgaVN5aVmVImUv7pmdDDt1fIY2vinDo8K0J5
-	 Ma7xAJzaaBIEZHkTwdevM19HpdGps22ltoiUGxv2YJbuHUUPOj4WfaipGsYfrSb9Bc9TrqqwSiOP
-	 /gxsB5CqeZ5rKeOV2aGtRj19Hi4ulLz6df/X+Ygf9vyKEIdB63962sYXr6FAm6rM1F38mM4Cuaxk
-	 LkVabudPNmRuuS4ixYSfh7osDTl2ohEEvjbT7ZmmVnicZ61gaF94WgoNPzJKngr/nte5NQzUn+Ur
-	 Bk6HLC8KQhOe34nx12ojNZ/Cs/JlQ=
-X-QQ-XMRINFO: MSVp+SPm3vtSI1QTLgDHQqIV1w2oNKDqfg==
-From: Edward Adam Davis <eadavis@qq.com>
-To: jiayuan.chen@linux.dev
-Cc: bpf@vger.kernel.org,
-	eadavis@qq.com,
-	sashiko-bot@kernel.org,
-	sashiko-reviews@lists.linux.dev
-Subject: Re: [PATCH v2] bpf: Fix smp_processor_id() call trace for preemptible kernels
-Date: Tue, 30 Jun 2026 20:46:37 +0800
-X-OQ-MSGID: <20260630124636.953001-2-eadavis@qq.com>
-X-Mailer: git-send-email 2.43.0
-In-Reply-To: <f72ebb75-66e8-47ae-b1f0-e77d6a24f3e0@linux.dev>
-References: <f72ebb75-66e8-47ae-b1f0-e77d6a24f3e0@linux.dev>
+	dkim=pass (1024-bit key) header.d=arm.com header.i=@arm.com header.b="c3QxyXBT"
+Received: from usa-sjc-imap-foss1.foss.arm.com (unknown [10.121.207.14])
+	by usa-sjc-mx-foss1.foss.arm.com (Postfix) with ESMTP id AA31016F8;
+	Tue, 30 Jun 2026 05:58:49 -0700 (PDT)
+Received: from LeoBrasDK.cambridge.arm.com (LeoBrasDK.cambridge.arm.com [10.2.212.21])
+	by usa-sjc-imap-foss1.foss.arm.com (Postfix) with ESMTPSA id 2E6F43F905;
+	Tue, 30 Jun 2026 05:58:53 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=simple/simple; d=arm.com; s=foss;
+	t=1782824334; bh=rQy6ufZS/d06sy42Nw501NI/EZ81qs0zBsu6gj+Ji9s=;
+	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
+	b=c3QxyXBT0n3rNLXsrfGjdolNmH2SKD+rk1rGRJQT1fdpDUF5wBkAe5GpMLivflJ7k
+	 bqbOMbwtOglkrWwBDb7/VqTHg5ZxgU3zsGX/cAB0WkWuehN7eWjArjntbJVfv3BpBN
+	 vijushwNdXxGe3uHgDG5F7Ytt0w5M8qWHM+fhKi0=
+From: Leonardo Bras <leo.bras@arm.com>
+To: Oliver Upton <oupton@kernel.org>
+Cc: Leonardo Bras <leo.bras@arm.com>,
+	sashiko-reviews@lists.linux.dev,
+	Marc Zyngier <maz@kernel.org>,
+	kvmarm@lists.linux.dev,
+	kvm@vger.kernel.org,
+	Wei-Lin Chang <weilin.chang@arm.com>
+Subject: Re: [PATCH v2 02/13] KVM: arm64: Enable eager hugepage splitting if HDBSS is available
+Date: Tue, 30 Jun 2026 13:58:48 +0100
+Message-ID: <akO9iHJmKN7MzTjM@LeoBrasDK>
+X-Mailer: git-send-email 2.54.0
+In-Reply-To: <akKmHqRaZEUjN3zY@kernel.org>
+References: <20260629111820.1873540-1-leo.bras@arm.com> <20260629111820.1873540-3-leo.bras@arm.com> <20260629113645.BE6801F000E9@smtp.kernel.org> <akKFlzAdB43lRpi1@LeoBrasDK> <akKmHqRaZEUjN3zY@kernel.org>
 Precedence: bulk
 X-Mailing-List: sashiko-reviews@lists.linux.dev
 List-Id: <sashiko-reviews.lists.linux.dev>
 List-Subscribe: <mailto:sashiko-reviews+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:sashiko-reviews+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
 Content-Transfer-Encoding: 8bit
 
-On Tue, 30 Jun 2026 20:25:30 +0800, Jiayuan Chen wrote:
->On 6/30/26 7:14 PM, Edward Adam Davis wrote:
->> On Tue, 30 Jun 2026 09:48:23 +0000, Sashiko wrote:
->>> [Severity: High]
->>> Does this fix the issue at the right layer? By adding the preemption
->>> protection here, it masks the fact that the caller is running with migration
->>> enabled, which leaves sibling APIs vulnerable.
->>>
->>> For example, in __rhtab_map_lookup_and_delete_batch() in
->>> kernel/bpf/hashtab.c, the batch loop iterates and calls rhtab_delete_elem()
->>> without disabling migration.
->>>
->>> If the map elements contain special fields (like BPF_KPTR),
->>> rhtab_delete_elem() will first call rhtab_check_and_free_fields(), which
->>> eventually calls bpf_mem_free().
->>>
->>> Since bpf_mem_free() also uses this_cpu_ptr() without get_cpu() protection:
->>>
->>> kernel/bpf/memalloc.c:bpf_mem_free() {
->>>      ...
->>>      unit_free(this_cpu_ptr(ma->caches)->cache + idx, ptr);
->>>      ...
->>> }
->>>
->>> Will this result in the exact same BUG being triggered on that path? Should
->>> the missing migration protection be added to
->>> __rhtab_map_lookup_and_delete_batch() instead of modifying the allocator
->>> here?
->> Like this?
->>
->> diff --git a/kernel/bpf/hashtab.c b/kernel/bpf/hashtab.c
->> index 9f394e1aa2e8..7b98c2eea685 100644
->> --- a/kernel/bpf/hashtab.c
->> +++ b/kernel/bpf/hashtab.c
->> @@ -3345,8 +3345,10 @@ static int __rhtab_map_lookup_and_delete_batch(struct bpf_map *map,
->>   	}
->>
->>   	if (do_delete) {
->> +		get_cpu();
->>   		for (i = 0; i < total; i++)
->>   			rhtab_delete_elem(rhtab, del_elems[i], NULL, 0);
->> +		put_cpu();
->>   	}
->>
->>   	rcu_read_unlock();
->
->
->This splat is specific to rhash...
->
->For HASH/PERCPU_HASH/..., most operations are performed under
->bpf_disable_instrumentation(); see __htab_map_lookup_and_delete_batch().
->
->But for rhash, bpf_mem_cache_free_rcu() is called outside the
->bpf_disable_instrumentation() region; see
->__rhtab_map_lookup_and_delete_batch().
-Let's use bpf_disable/enable_instrumentation() consistently to protect
-__rhtab_map_lookup_and_delete_batch().
+On Mon, Jun 29, 2026 at 10:06:38AM -0700, Oliver Upton wrote:
+> On Mon, Jun 29, 2026 at 03:47:51PM +0100, Leonardo Bras wrote:
+> > On Mon, Jun 29, 2026 at 11:36:45AM +0000, sashiko-bot@kernel.org wrote:
+> > > Thank you for your contribution! Sashiko AI review found 2 potential issue(s) to consider:
+> > > 
+> > > New issues:
+> > > - [High] The default eager page splitting chunk size violates the KVM_CAP_ARM_EAGER_SPLIT_CHUNK_SIZE UAPI contract by using a value that is not a valid block size for 16KB and 64KB page kernels.
+> > > 
+> > > Pre-existing issues:
+> > > - [Critical] Dropping mmu_lock between primary and nested stage-2 write-protection creates a window where nested guests can bypass dirty logging.
+> > > --
+> > > 
+> > > commit 09e1d250ed331b9dc20b42b7f9315892a86a5d50
+> > > Author: Leonardo Bras <leo.bras@arm.com>
+> > > 
+> > > KVM: arm64: Enable eager hugepage splitting if HDBSS is available
+> > > 
+> > > This commit enables eager hugepage splitting by default for systems
+> > > supporting HDBSS, setting the default chunk size to 256K pages at
+> > > stage2 initialization.
+> > > 
+> > > > diff --git a/arch/arm64/kvm/mmu.c b/arch/arm64/kvm/mmu.c
+> > > > index 6c941aaa10c63..e086c01a9325e 100644
+> > > > --- a/arch/arm64/kvm/mmu.c
+> > > > +++ b/arch/arm64/kvm/mmu.c
+> > > > @@ -1027,8 +1027,12 @@ int kvm_init_stage2_mmu(struct kvm *kvm, struct kvm_s2_mmu *mmu, unsigned long t
+> > > >  	for_each_possible_cpu(cpu)
+> > > >  		*per_cpu_ptr(mmu->last_vcpu_ran, cpu) = -1;
+> > > >  
+> > > > -	 /* The eager page splitting is disabled by default */
+> > > > -	mmu->split_page_chunk_size = KVM_ARM_EAGER_SPLIT_CHUNK_SIZE_DEFAULT;
+> > > > +	 /* The eager page splitting is disabled by default if system has no HDBSS */
+> > > > +	if (system_supports_hdbss())
+> > > > +		mmu->split_page_chunk_size = 256 * 1024 * PAGE_SIZE;
+> > > 
+> > > [Severity: High]
+> > > Does this hardcoded chunk size violate the KVM_CAP_ARM_EAGER_SPLIT_CHUNK_SIZE
+> > > UAPI contract on kernels with 16KB or 64KB pages?
+> > > 
+> > > By setting the default chunk size to 256 * 1024 * PAGE_SIZE, this evaluates to
+> > > 4GB on 16KB page systems and 16GB on 64KB page systems.
+> > > 
+> > > However, in arch/arm64/kvm/arm.c:kvm_vm_ioctl_enable_cap(), the chunk size is
+> > > validated against valid architectural block sizes:
+> > > 
+> > >     if (!new_cap || kvm_is_block_size_supported(new_cap)) {
+> > >     ...
+> > > 
+> > > Since 4GB and 16GB are not valid block sizes on those configurations, a VMM
+> > > like QEMU attempting to read the default capability via KVM_CHECK_EXTENSION
+> > > and set it back via KVM_ENABLE_CAP will be rejected with -EINVAL.
+> > 
+> > Sure, changing this to something like PMD_SIZE or PUD_SIZE should be no issue.
+> >  
+> > But this raises a topic I would like to understand:
+> > - Do we actually need this to be a block_size to assure correctness? or is 
+> >   it just about efficiency?
+> 
+> What value is there in having a chunk size larger than the largest
+> possible block mapping? The whole UAPI is deliberately tied up with page
+> table geometry.
 
-diff --git a/kernel/bpf/hashtab.c b/kernel/bpf/hashtab.c
-index 9f394e1aa2e8..d3f2f8a379e8 100644
---- a/kernel/bpf/hashtab.c
-+++ b/kernel/bpf/hashtab.c
-@@ -3299,6 +3299,7 @@ static int __rhtab_map_lookup_and_delete_batch(struct bpf_map *map,
- 	dst_val = values;
- 	total = 0;
- 
-+	bpf_disable_instrumentation();
- 	rcu_read_lock();
- 
- 	/*
-@@ -3313,6 +3314,7 @@ static int __rhtab_map_lookup_and_delete_batch(struct bpf_map *map,
- 		elem = rhtab_lookup_elem(map, cursor);
- 		if (!elem) {
- 			rcu_read_unlock();
-+			bpf_enable_instrumentation();
- 			ret = -EAGAIN;
- 			goto free;
- 		}
-@@ -3350,6 +3352,7 @@ static int __rhtab_map_lookup_and_delete_batch(struct bpf_map *map,
- 	}
- 
- 	rcu_read_unlock();
-+	bpf_enable_instrumentation();
- 
- 	if (total == 0) {
- 		ret = -ENOENT;
+Not larger, possibly smallerv My concern was the difference in pages to 
+split between 4k, 16k and 64k.
 
+> 
+> Overall, I'm not buying the argument for changing the behavior of
+> KVM_CAP_ARM_EAGER_SPLIT_CHUNK_SIZE. There are very good reasons for
+> *not* eagerly splitting the entire address space, especially if you know
+> the working set of the VM is small.
+> 
+> You can still use HDBSS without eagerly splitting, so long as block
+> mappings are {DBM, S2AP_W} = {0, 0} and leaf mappings (which have
+> a writable PFN) are {1, 0}.
+> 
+
+Block mappings being read-only, and leaf mappings being writable-clean, 
+then? Could you please ellaborate on why does not it need eager-split?
+
+As a review, what I recall from the strategy for hw dirty-logging was:
+- If we have HDBSS, add DBM for all writable pages {1, 1}
+- On dirty-logging start, make them writable-clean {1, 0}
+  - Can be done using HACDBS
+  - Enable HDBSS & HAFDBS
+
+We don't have a fault for making pages dirty anymore, as this is done 
+by HAFDBS and recorded by HDBSS, so splitting does not happen on demand 
+anymore. So if we want to split pages, for better tracking granularity, or 
+anything, we have to eager-split them.
+
+Not doing so may cause us to have different level leaf sizes (pages & 
+hugepages) mixed up in HDBSS, which adds complexity, on top of possibly 
+making a live migration slower (the whole leaf entry has to be sent over 
+network).
+
+> > > [Severity: Critical]
+> > > This is a pre-existing issue, but by enabling eager hugepage splitting by
+> > > default for HDBSS, does this exacerbate a race condition with nested guests
+> > > bypassing dirty logging?
+> > > 
+> > > In arch/arm64/kvm/mmu.c:kvm_arch_mmu_enable_log_dirty_pt_masked(), KVM enables
+> > > dirty logging by write-protecting the primary stage-2 and then calling
+> > > kvm_mmu_split_huge_pages():
+> > > 
+> > >     if (kvm_dirty_log_manual_protect_and_init_set(kvm))
+> > >         kvm_mmu_split_huge_pages(kvm, start, end);
+> > > 
+> > >     kvm_nested_s2_wp(kvm);
+> > > 
+> > > Because kvm_mmu_split_huge_pages() can drop the mmu_lock to top-up the memory
+> > > cache or reschedule, a race window is created before kvm_nested_s2_wp()
+> > > protects the nested stage-2 tables.
+> > > 
+> > > While the lock is dropped, a nested VCPU can fault, map the page via its
+> > > separate shadow stage-2 (which hasn't been write-protected yet), and write to
+> > > the page without setting the dirty bitmap, leading to silent memory corruption
+> > > after live migration.
+> > > 
+> > 
+> > But if it's already write-protected in S2, if the nested VCPU faults 
+> > something, would not that be handled by non-nested faulting routine?
+> > 
+> > I understand very little of nested, and I can't understand how does that 
+> > work properly. Maybe Marc or Wei Lin may have a better answer for that.
+> 
+> The only time this would be an issue is if we allowed userspace to
+> observe a clean dirty bitmap with a stale, writable shadow stage-2. All
+> roads go through the slots_lock, so I don't believe this is actually an
+> issue.
+> 
+
+Awesome! 
+
+> The order of events Sashiko mentions makes no sense. If the shadow
+> stage-2 translation is already writable there would be no intervening
+> fault. Since the dirty bitmap is already cleared for these GFNs, a
+> racing write permission fault would actually set the dirty bitmap.
+> 
+> With that being said, I'd be happy with kvm_nested_s2_wp() getting moved
+> up earlier in the function anyway as it is easy to forget that the
+> mmu_lock could be dropped in between.
+> 
+
+Makes sense.
+
+Thanks!
+Leo
