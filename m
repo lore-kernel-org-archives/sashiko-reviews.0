@@ -1,230 +1,182 @@
-Received: from mx0b-0031df01.pphosted.com (mx0b-0031df01.pphosted.com [205.220.180.131])
+Received: from mx0a-001b2d01.pphosted.com (mx0a-001b2d01.pphosted.com [148.163.156.1])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 597A62F3C1F;
-	Tue, 30 Jun 2026 12:42:32 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.180.131
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3BBE940BCD5;
+	Tue, 30 Jun 2026 12:42:49 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=148.163.156.1
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1782823353; cv=none; b=TzoVZyb3PWTxl6hdPMo/kbs2ckvGHN1v+qOPrvw12vGwPZcg08mrUOJaIQDsQ/FdzmHcsEQClq/8euHOd1l0FbEgXJ7q/6JYpkJvqggPK3gUJzR2UCjxs3N9f+aoGoafRWg5mY43sLE/dk8NCk0Sub1Vs6jLutdaD4gXAnFV+4Y=
+	t=1782823371; cv=none; b=A2uFeSKLinyI/RD0VFzMJnb7/iEWAqwXWM3W7AOWGlNyh7K47QkEMCuL8IhyZyCdAUqX/+iRUyFoYUdxP59BFwUlYimGWGZPRP7QqDK7VqWJK04CYTxPyfzhuBVBa7moZXkZJmLS7mKA+Kp8elFwoUeCqFPyATUkwyYUCdRCiiM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1782823353; c=relaxed/simple;
-	bh=gp5bTxd6r+a1Z4S6aiNQaJ1V8jbHgPofAH2QrGYvM+4=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=BPPZLBlrrZ0OPyZPi4MyTpeuduE46ngPFhoYuOGCE6wx8ETrmFrtHzGA2GzsE5qdoJ7CnEZ7Vx1K7ZPtbURED1lFD4mwMwnExKGu93iOSpO82UPoIziJinWNNCcBo1eNi9MfAfxMwGIrlv/pc5e8byOdmkdl+hVszY2V0lP0yIA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com; spf=pass smtp.mailfrom=qualcomm.com; dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b=DdPBPXF5; arc=none smtp.client-ip=205.220.180.131
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=qualcomm.com
+	s=arc-20240116; t=1782823371; c=relaxed/simple;
+	bh=+cJXEm+KjRZ0DpPg5so5fYZK1PrmRDTUwD1K58JzvJM=;
+	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
+	 In-Reply-To:Content-Type; b=ESE5CH7CBIrIHZR5D65wdKVfbVtHt9V+XLPziH9tevcjGcy5LtcobAOCDtxRykx+gTMqGlp24G2hbbPWYzi/nubT7fVJ20wzGW2hXHetdZunrtA6ATSQ2BHKsZCwt4qH19Mct/jbL/SWFvuCAuNCWfoQDcLwir/0UVpp/MgQDzc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linux.ibm.com; spf=pass smtp.mailfrom=linux.ibm.com; dkim=pass (2048-bit key) header.d=ibm.com header.i=@ibm.com header.b=PThlLmLz; arc=none smtp.client-ip=148.163.156.1
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linux.ibm.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linux.ibm.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b="DdPBPXF5"
-Received: from pps.filterd (m0279870.ppops.net [127.0.0.1])
-	by mx0a-0031df01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id 65U9nDaS1590648;
-	Tue, 30 Jun 2026 12:42:26 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=qualcomm.com; h=
-	cc:content-transfer-encoding:content-type:date:from:in-reply-to
-	:message-id:mime-version:references:subject:to; s=qcppdkim1; bh=
-	pbEcFUqCI1I444S5LBnGuYIz870doEZNoKmsbA97ESI=; b=DdPBPXF5AvbAgGKb
-	EpiD6aE6k2ZvjV/IC8rSOMWqsbm1w1wCMYTBk7NQTip1D/D/KxeKAZ8XTEN6ktSB
-	PMPaPCzZtmUwImvl2NHfrSdu5vuikzHdTj897xwXlj8oCQmgzGRjZ32aPQp0oo5U
-	CQrnv0MyzGYmfXEEICws04QEV/TVE4vumkiQ4bqUuZwOGvvOl2a5N69vTxot/xj+
-	O0zOohRPaP87JYf+98PQ2h5wn7bJqnxSOEAW4huWhW301GpENj9dGsmB+oOs1XLy
-	Jd5vzdapuYr2koQt+eB9sxTlugUmawwSf7TT0/7P6BB0kuF4dv10ENBkq3W2Wl6h
-	Tl8MaA==
-Received: from apblrppmta02.qualcomm.com (blr-bdr-fw-01_GlobalNAT_AllZones-Outside.qualcomm.com [103.229.18.19])
-	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 4f3y9k3jk9-1
+	dkim=pass (2048-bit key) header.d=ibm.com header.i=@ibm.com header.b="PThlLmLz"
+Received: from pps.filterd (m0360083.ppops.net [127.0.0.1])
+	by mx0a-001b2d01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id 65U9nBqQ1699827;
+	Tue, 30 Jun 2026 12:42:42 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=ibm.com; h=cc
+	:content-transfer-encoding:content-type:date:from:in-reply-to
+	:message-id:mime-version:references:subject:to; s=pp1; bh=Iv4pWc
+	cesCIXtCFMCSOry33zmxaQyYIaEt252rw6iDA=; b=PThlLmLzx44dIDJnkOTSCS
+	EoeXYpQhixLqzEGuKtA7PoDp1/E9yAbPMJYrgizen0SSyArKA1wG9y0VwrCAUqVh
+	9k843HOajTGVjKpTkxmqupN6iV5NNEu5pWiIBu6TqGaG2V7EBvHd8sTAhAUxTCB9
+	resZkZnNofsFi46Opq3fMzHgh8KpmyGNtSToJ6w+ducgya6Dj2xw29UB+GGuKuqD
+	7rMOj6Z17VuyHKXMMN3uhWE83ed0KrDO9onnkhlZBdtgpkm6A00aTNxcAIpszbLG
+	xkRBy3PUsx9nSHTWX+78AwQB5g6VgFTB6SQpc7FEZitQvhjLfak070F+7msl7P+g
+	==
+Received: from ppma13.dal12v.mail.ibm.com (dd.9e.1632.ip4.static.sl-reverse.com [50.22.158.221])
+	by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 4f26pdxsum-1
 	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Tue, 30 Jun 2026 12:42:25 +0000 (GMT)
-Received: from pps.filterd (APBLRPPMTA02.qualcomm.com [127.0.0.1])
-	by APBLRPPMTA02.qualcomm.com (8.18.1.7/8.18.1.7) with ESMTP id 65UCgLPE001898;
-	Tue, 30 Jun 2026 12:42:21 GMT
-Received: from pps.reinject (localhost [127.0.0.1])
-	by APBLRPPMTA02.qualcomm.com (PPS) with ESMTPS id 4f27kjpv3x-1
+	Tue, 30 Jun 2026 12:42:41 +0000 (GMT)
+Received: from pps.filterd (ppma13.dal12v.mail.ibm.com [127.0.0.1])
+	by ppma13.dal12v.mail.ibm.com (8.18.1.7/8.18.1.7) with ESMTP id 65UCJaBs022884;
+	Tue, 30 Jun 2026 12:42:40 GMT
+Received: from smtprelay04.dal12v.mail.ibm.com ([172.16.1.6])
+	by ppma13.dal12v.mail.ibm.com (PPS) with ESMTPS id 4f2u2ga2rm-1
 	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Tue, 30 Jun 2026 12:42:21 +0000 (GMT)
-Received: from APBLRPPMTA02.qualcomm.com (APBLRPPMTA02.qualcomm.com [127.0.0.1])
-	by pps.reinject (8.18.1.12/8.18.1.12) with ESMTP id 65UCgLAI001892;
-	Tue, 30 Jun 2026 12:42:21 GMT
-Received: from hu-devc-hyd-u22-c.qualcomm.com (hu-kotarake-hyd.qualcomm.com [10.213.97.140])
-	by APBLRPPMTA02.qualcomm.com (PPS) with ESMTPS id 65UCgLRl001885
-	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Tue, 30 Jun 2026 12:42:21 +0000 (GMT)
-Received: by hu-devc-hyd-u22-c.qualcomm.com (Postfix, from userid 2389607)
-	id 5C304B22; Tue, 30 Jun 2026 18:12:20 +0530 (+0530)
-Date: Tue, 30 Jun 2026 18:12:20 +0530
-From: Rakesh Kota <rakesh.kota@oss.qualcomm.com>
-To: Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>
-Cc: Kamal Wadhwa <kamal.wadhwa@oss.qualcomm.com>,
-        linux-arm-msm <linux-arm-msm@vger.kernel.org>,
-        sashiko-reviews@lists.linux.dev,
-        Komal Bajaj <komal.bajaj@oss.qualcomm.com>, robh@kernel.org,
-        linux-phy@lists.infradead.org, neil.armstrong@linaro.org,
-        vkoul@kernel.org, olteanv@gmail.com, krzk+dt@kernel.org,
-        conor+dt@kernel.org, devicetree@vger.kernel.org,
-        Jishnu Prakash <jishnu.prakash@oss.qualcomm.com>
-Subject: Re: [PATCH 3/4] arm64: dts: qcom: Add Shikra CQM SoM platform
-Message-ID: <20260630124220.4lja4zshpf66kwj3@hu-kotarake-hyd.qualcomm.com>
-References: <20260513042836.073F9C2BCB7@smtp.kernel.org>
- <t2sw6owdxy5iyodjqsldbw6bfaqnezhgvc4hhylxuyrrbjkjto@iwf4dr5nmot3>
- <20260513142936.kauwa3czigfs7qs5@hu-kotarake-hyd.qualcomm.com>
- <0ac665bb-1a21-4077-aa9e-97162f7f4784@oss.qualcomm.com>
- <20260514103918.cs5m5kcxcrcgukvx@hu-kamalw-hyd.qualcomm.com>
- <obdxony34ckfbtsqj66siszw44sgieskcye5hg66ulkisctpwl@fyqczpze5tnw>
- <20260518114927.edxbzvklqatlntv2@hu-kamalw-hyd.qualcomm.com>
- <CAO9ioeVMieo8HtpRw+n4ZU9uV-_RQM061q5XfAA1Dtk2fnp4+g@mail.gmail.com>
- <bvankzuazswuigrm7hvyjqigzfaru5o43wi3zvyphgme2pgqwz@pyspqky3u6cn>
- <5idu4ljmcvcvzqsr5g73h2roxzs36l6xxc5ju6ovc5aitt3gx4@wmfqueyf2rj6>
+	Tue, 30 Jun 2026 12:42:40 +0000 (GMT)
+Received: from smtpav05.wdc07v.mail.ibm.com (smtpav05.wdc07v.mail.ibm.com [10.39.53.232])
+	by smtprelay04.dal12v.mail.ibm.com (8.14.9/8.14.9/NCO v10.0) with ESMTP id 65UCgeKQ31720120
+	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
+	Tue, 30 Jun 2026 12:42:40 GMT
+Received: from smtpav05.wdc07v.mail.ibm.com (unknown [127.0.0.1])
+	by IMSVA (Postfix) with ESMTP id E496058059;
+	Tue, 30 Jun 2026 12:42:39 +0000 (GMT)
+Received: from smtpav05.wdc07v.mail.ibm.com (unknown [127.0.0.1])
+	by IMSVA (Postfix) with ESMTP id CCEE458043;
+	Tue, 30 Jun 2026 12:42:37 +0000 (GMT)
+Received: from [9.39.22.207] (unknown [9.39.22.207])
+	by smtpav05.wdc07v.mail.ibm.com (Postfix) with ESMTP;
+	Tue, 30 Jun 2026 12:42:37 +0000 (GMT)
+Message-ID: <c7290425-f198-4993-ab5b-03a7cbb54483@linux.ibm.com>
+Date: Tue, 30 Jun 2026 18:12:35 +0530
 Precedence: bulk
 X-Mailing-List: sashiko-reviews@lists.linux.dev
 List-Id: <sashiko-reviews.lists.linux.dev>
 List-Subscribe: <mailto:sashiko-reviews+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:sashiko-reviews+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-Content-Transfer-Encoding: 8bit
-In-Reply-To: <5idu4ljmcvcvzqsr5g73h2roxzs36l6xxc5ju6ovc5aitt3gx4@wmfqueyf2rj6>
-X-QCInternal: smtphost
-X-QCInternal: smtphost
-X-Proofpoint-Spam-Info: AW1haW4tMjYwNjMwMDExNiBTYWx0ZWRfX8IVfUzrVn4AQ
- qoPQpdsjPBZ+4BZlXCLYgWDD2ROie62+NUXqPMvATMV+laUf/nIvCYNAVJPaWtkYuHTJ2Snlyl8
- fAqrn05ZYKEtERnKsVNDPl91rSngGbE=
-X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwNjMwMDExNiBTYWx0ZWRfX070g4lEWipdr
- jU8odaZLQ+mfTFtrEQPC2hbuVZO8M6TinFYig63N59FnHYQM6tRPHK/PK6BW8kE1jjmfDG9IhAJ
- jMYtXehwq4WHZoUfbnEAaNQQxsS6+wGzmcJ0CqGQzBq9ZddHGygUhpx6P4R+xkPO1yCsylbYOXS
- rVaJglf9kheKK6DVnQkn6m0hwSsLe7tOn7z9GkoRuA9eTjC6HM6PI4A00tOwxCrM5hAKZDrK7cv
- 1P3XE+AxGK0r7lXOLxtEPEKjfvZ/u5NWrPAvbJqc5MAfZefud3kvV3Z66JSX1BlVKTfyIAjLAty
- i3TXbDYBYSrqVZIIqAhPSu/fVginwHl6AAUSttv91oKIwd+LJ+4OiXvkJrzK0R+tHhh5HpelOVf
- zB1ojrJ040qPig3T/8GXHI0WP0aQZGrnVar/tjMy6ZSZAXOocgJhmfcIJ0vw8DjTu0GP45PsOvm
- zyCi8JsdRzDAzJDKdEg==
-X-Proofpoint-ORIG-GUID: Ntk5LAX5Wt_02VD-9YJ-vtQGQhhQ3i0W
-X-Authority-Analysis: v=2.4 cv=TeqmcxQh c=1 sm=1 tr=0 ts=6a43b9b2 cx=c_pps
- a=Ou0eQOY4+eZoSc0qltEV5Q==:117 a=Ou0eQOY4+eZoSc0qltEV5Q==:17
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH v3] perf dso: Fix kallsyms DSO detection with fallback
+ logic
+To: sashiko-reviews@lists.linux.dev
+Cc: linux-perf-users@vger.kernel.org, Namhyung Kim <namhyung@kernel.org>,
+        Arnaldo Carvalho de Melo <acme@kernel.org>,
+        Ian Rogers <irogers@google.com>
+References: <20260626161052.1024439-2-tshah@linux.ibm.com>
+ <20260626163135.6936F1F000E9@smtp.kernel.org>
+Content-Language: en-US
+From: Tanushree Shah <tshah@linux.ibm.com>
+In-Reply-To: <20260626163135.6936F1F000E9@smtp.kernel.org>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
+X-TM-AS-GCONF: 00
+X-Proofpoint-Reinject: loops=2 maxloops=12
+X-Proofpoint-GUID: GaiKXuYDai7Af3S2ZdSXEcuXcGJLPgTk
+X-Proofpoint-Spam-Info: AW1haW4tMjYwNjMwMDExNCBTYWx0ZWRfX8iC3/9Rwj2UV
+ CqV590BNw1jmoHj+kp9PdAWdFZDYxF7CL/usq/6nvvMRTKbYj+N103g9w1yrUeLfNE8rmy5/7JT
+ D6Xl3JFmwUeyTSk5/jbLrFDjBjAxfdM=
+X-Authority-Analysis: v=2.4 cv=edsNubEH c=1 sm=1 tr=0 ts=6a43b9c1 cx=c_pps
+ a=AfN7/Ok6k8XGzOShvHwTGQ==:117 a=AfN7/Ok6k8XGzOShvHwTGQ==:17
  a=IkcTkHD0fZMA:10 a=FelO9ux0wxsA:10 a=VkNPw1HP01LnGYTKEx00:22
- a=u7WPNUs3qKkmUXheDGA7:22 a=gowsoOTTUOVcmtlkKump:22 a=VwQbUJbxAAAA:8
- a=EUspDBNiAAAA:8 a=EUfvLHg3fUMcTtBup20A:9 a=3ZKOabzyN94A:10 a=QEXdDO2ut3YA:10
-X-Proofpoint-GUID: Ntk5LAX5Wt_02VD-9YJ-vtQGQhhQ3i0W
+ a=RnoormkPH1_aCDwRdu11:22 a=iQ6ETzBq9ecOQQE5vZCe:22 a=VwQbUJbxAAAA:8
+ a=VnNF1IyMAAAA:8 a=7Y6hcW0sWS5Gh66Wr2IA:9 a=QEXdDO2ut3YA:10
+X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwNjMwMDExNCBTYWx0ZWRfX3WzTZB8ehmA5
+ +kACy+wVPM0RUYFF/oKhBdveaRcrnOmxIZFaFDU5PBt5ZlrBO3dNA4/jfWpF1zthCZMqQ5z+qqw
+ 2enbeeEIWe+ELOrLBhnozzCWyhnutOJ11NxXGkHcsklaOkJU9Un92810PwcHRXXbhRwOrSmdGNO
+ nYzF/Evi8B4NOX1O9CdqTYSchj25joB2Fi2yr6dxpVwKm9tHAOMWBYS+UMwAiEPi7RXAro0ZWW+
+ QYpOgo7LruGzwMe+/IfVR3qJ8LSZFSlgglhXSheIwB2GjcmyClcmEc4p5uR1eXhOFyvKu4StCBQ
+ 9h7R0tsyF1nz5Xy9bOUD65C10p4cyHwvUh9I6AncffowK5eJ3XCX2MCL3q5CvJJhETyDpnNS3fs
+ 9WtHxUjmAuj6AUO4vqf1wsRGaEHfnBQK9Uw2gv6eWgzuyOqfJR5Ep3v3Cpi+Y0IF4LRITG6FUzn
+ NAcT9UVoSrU6rt58Vpw==
+X-Proofpoint-ORIG-GUID: i2s7GpnLKc0zORtmBp4Xx_1X7ZpycoGK
 X-Proofpoint-Virus-Version: vendor=baseguard
  engine=ICAP:2.0.293,Aquarius:18.0.1143,Hydra:6.1.125,FMLib:17.12.100.49
  definitions=2026-06-30_03,2026-06-26_01,2025-10-01_01
 X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
- clxscore=1015 impostorscore=0 phishscore=0 priorityscore=1501 malwarescore=0
- spamscore=0 adultscore=0 suspectscore=0 bulkscore=0 lowpriorityscore=0
+ priorityscore=1501 malwarescore=0 adultscore=0 impostorscore=0 bulkscore=0
+ spamscore=0 suspectscore=0 clxscore=1015 lowpriorityscore=0 phishscore=0
  classifier=typeunknown authscore=0 authtc= authcc= route=outbound adjust=0
- reason=mlx scancount=1 engine=8.22.0-2606150000 definitions=main-2606300116
+ reason=mlx scancount=1 engine=8.22.0-2606150000 definitions=main-2606300114
 
-On Sun, Jun 28, 2026 at 03:33:23PM +0300, Dmitry Baryshkov wrote:
-> On Thu, Jun 25, 2026 at 09:11:19PM +0530, Kamal Wadhwa wrote:
-> > On Wed, Jun 17, 2026 at 03:48:14PM +0300, Dmitry Baryshkov wrote:
-> > > On Mon, 18 May 2026 at 14:49, Kamal Wadhwa
-> > > <kamal.wadhwa@oss.qualcomm.com> wrote:
-> > > >
-> > > > On Sun, May 17, 2026 at 08:18:15PM +0300, Dmitry Baryshkov wrote:
-> > > > > On Thu, May 14, 2026 at 04:09:18PM +0530, Kamal Wadhwa wrote:
-> > > > > > On Wed, May 13, 2026 at 06:14:20PM +0300, Dmitry Baryshkov wrote:
-> > > > > > > On 13/05/2026 17:29, Rakesh Kota wrote:
-> > > > > > > > On Wed, May 13, 2026 at 03:01:47PM +0300, Dmitry Baryshkov wrote:
-> > > > > > > > > On Wed, May 13, 2026 at 04:28:35AM +0000, sashiko-bot@kernel.org wrote:
-> > > > > > > > > > Thank you for your contribution! Sashiko AI review found 2 potential issue(s) to consider:
-> > > > > > > > > > - [High] The PMIC regulator definitions omit their required input supply dependencies (e.g., `vdd_s2-supply`, `vdd_l3-supply`), breaking the power hierarchy.
-> > > > > > > > > > - [Medium] The device tree inaccurately hardcodes the `compatible` string to a different PMIC model (`qcom,rpm-pm2250-regulators`) instead of explicitly identifying the actual hardware (PM4125).
-> > > > > > > > > > --
-> > > > > > > > > > > +
-> > > > > > > > > > > +         pm4125_s2: s2 {
-> > > > > > > > > > > +                 regulator-min-microvolt = <1000000>;
-> > > > > > > > > > > +                 regulator-max-microvolt = <1200000>;
-> > > > > > > > > > > +         };
-> > > > > > > > > >
-> > > > > > > > > > Do these regulators need to explicitly define their input supply dependencies
-> > > > > > > > > > such as vdd_s2-supply?
-> > > > > > > > > >
-> > > > > > > > > > Without these properties, the regulator framework might be unaware that the
-> > > > > > > > > > PMIC regulators draw power from upstream supplies.
-> > > > > > > > > >
-> > > > > > > > > > If the kernel dynamically manages the upstream supply and its reference count
-> > > > > > > > > > drops to zero, could it be disabled, causing an unexpected power loss for
-> > > > > > > > > > downstream components?
-> > > > > > > > >
-> > > > > > > > > And this is a correct comment. Please provide missing supplies.
-> > > > > > > > >
-> > > > > > > > As per the Qualcomm system design, the parent-child supply relationship
-> > > > > > > > is managed by the RPM firmware, not the Linux regulator framework. The
-> > > > > > > > RPM ensures the parent supply is never disabled until all subsystem
-> > > > > > > > votes are cleared.
-> > > > > > >
-> > > > > > > How is this different from other, previous platforms?
-> > > > > >
-> > > > > > This is not different. In the previous platforms too this is taken care from the
-> > > > > > RPM/RPMH firmware side, the only case where we may need explicit vote to parent
-> > > > > > is for non-rpmh/rpm regulator rails (like i2c based regulator pm8008), which
-> > > > > > may have a RPM/RPMH regulator as a parent.
-> > > > > >
-> > > > > > Even on those previous targets the parent rail of all RPM/RPMH regulators are
-> > > > > > internally voted by RPM/RPMH FW at proper voltage with required headroom
-> > > > > > calculated based on the active child rails. This was done for all the
-> > > > > > subsystems (including APPS) regulators.
-> > > > > >
-> > > > > > So no explicit handling from the APPS is required for parent supply.
-> > > > >
-> > > > > You are explaining the driver behaviour. But the question is about the
-> > > > > hardware description. If there is no difference, please add necessary
-> > > > > supplies back.
-> > > >
-> > > > I understand your concern about descibing the parent-child relation in the
-> > > > devicetree, and given that we have been almost always followed this for all
-> > > > the previous targets, it will expected of us to add them.
-> > > 
-> > > Yes.
-> > > 
-> > > >
-> > > > However, we want to avoid the unnecessary access to the parent from APPS.
-> > > 
-> > > Why? What is the reason? Do we want to do the same for all the
-> > > platforms? Only for Shikra? Something else?
-> > > 
-> > > > At the moment, I do not see a way to avoid that, if we add the parent
-> > > > regulators.
-> > > 
-> > > That depend on the answer to the previous question. In the end, we can
-> > > make the driver ignore the parents by removing them from the regulator
-> > > desc.
-> > 
-> > Ok, this seems like a good suggestion, so you mean its ok if we define the
-> > regulator desc's supply column with NULL? And only keep that in the DT?
-> > 
-> > you mean like this?
-> > https://git.kernel.org/pub/scm/linux/kernel/git/torvalds/linux.git/tree/drivers/regulator/qcom-rpmh-regulator.c?h=v7.1#n1453
-> > 
-> > (please let me know if i got that right. thanks)
+
+Thanks for the review.
+On 26/06/26 22:01, sashiko-bot@kernel.org wrote:
+> Thank you for your contribution! Sashiko AI review found 1 potential issue(s) to consider:
 > 
-> Yes. Don't forget to explain in the commit message, why you are doing
-> so.
-
-Currently, Agatti uses the same PMIC, so we cannot set the driver
-supply name reference to NULL. Since it's an older target,
-we'll need to run a regression before making any driver-level changes.
-
-Additionally, the child-to-parent regulator ganging differs between
-Shikra and Agatti:
-
- - On Agatti, l3 regulator is ganged with vdd_l13_l14_l15_l16
- - On Shikra, l3 is ganged with vdd_l2_l3
-
-Since vdd_l2_l3 is not present as a supply name in the driver, it will
-be skipped by the driver and would only serve as a representational
-reference in the DT.
-
-We have two options to consider:
-
-Option 1: Skip adding the child/parent relationship for Shikra for now,
-since the DT bindings are not enforcing it. (Ref:
-https://git.kernel.org/pub/scm/linux/kernel/git/torvalds/linux.git/tree/Documentation/devicetree/bindings/regulator/qcom,smd-rpm-regulator.yaml?h=v7.1)
-
-Option 2: Go ahead and add the Shikra-specific ganging in DT now. Since
-the supply name (vdd_l2_l3) does not match what the driver expects
-(Agatti's mapping), it will be gracefully skipped by the driver — making
-it safe to add for documentation/representation purposes without any
-functional impact.
-
-So,Please share your thoughts on above options ?
+> Pre-existing issues:
+> - [High] Use-After-Free vulnerability due to lockless access of `dso->long_name` in `dso__is_kallsyms`.
+> --
+> 
+> commit 9c2571a16a38ac5caaaeb737772bc4cd229c357c
+> Author: Tanushree Shah <tshah@linux.ibm.com>
+> 
+> perf dso: Fix kallsyms DSO detection with fallback logic
+> 
+> This commit fixes an issue where kallsyms build-id symlinks fail to be
+> created during perf record/inject because the dso_binary_type is not
+> yet explicitly set. It falls back to matching the long_name against
+> known kallsyms strings when the binary type is not found. A strict
+> validation function is also added for guest kallsyms to prevent path
+> traversal attacks.
+> 
+>> diff --git a/tools/perf/util/dso.h b/tools/perf/util/dso.h
+>> index 2916b954a804b..884cca37753c4 100644
+>> --- a/tools/perf/util/dso.h
+>> +++ b/tools/perf/util/dso.h
+> [ ... ]
+>> @@ -924,8 +959,28 @@ static inline bool dso__is_kcore(const struct dso *dso)
+>>   static inline bool dso__is_kallsyms(const struct dso *dso)
+>>   {
+>>   	enum dso_binary_type bt = dso__binary_type(dso);
+>> +	const char *name;
+>> +
+>> +	if (bt == DSO_BINARY_TYPE__KALLSYMS || bt == DSO_BINARY_TYPE__GUEST_KALLSYMS)
+>> +		return true;
+>> +
+>> +	if (bt != DSO_BINARY_TYPE__NOT_FOUND)
+>> +		return false;
+>> +
+>> +	if (!RC_CHK_ACCESS(dso)->kernel)
+>> +		return false;
+>> +
+>> +	name = RC_CHK_ACCESS(dso)->long_name;
+>> +	if (!name)
+>> +		return false;
+>> +
+>> +	if (!strcmp(name, DSO__NAME_KALLSYMS))
+>> +		return true;
+> 
+> [Severity: High]
+> This isn't a bug introduced by this patch, but lockless access to
+> dso->long_name is a systemic flaw that could lead to a use-after-free here.
+> 
+> If a concurrent thread modifies the DSO (e.g., the event processing thread in
+> perf top handling a ksymbol register event calls
+> machine__process_ksymbol_register() -> dso__set_long_name()), the old
+> long_name can be freed while the UI thread is executing dso__is_kallsyms()
+> and performing this strcmp().
+> 
+> Is it safe to expand the surface area of this pre-existing lockless string
+> dereference into a function that was previously safe?
+> 
+>> +
+>> +	if (!strcmp(name, DSO__NAME_GUEST_KALLSYMS))
+>> +		return true;
+>>   
+>> -	return bt == DSO_BINARY_TYPE__KALLSYMS || bt == DSO_BINARY_TYPE__GUEST_KALLSYMS;
+>> +	return is_guest_kallsyms_pid_name(name);
+>>   }
+>>   
+>>   bool dso__is_object_file(const struct dso *dso);
+> 
+Since this is a pre-existing issue and outside the scope of this change, 
+I will take this up separately.
 
 Thanks
-Rakesh kota
+Tanushree Shah
