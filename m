@@ -1,87 +1,142 @@
-Received: from out-178.mta1.migadu.com (out-178.mta1.migadu.com [95.215.58.178])
+Received: from smtpout-02.galae.net (smtpout-02.galae.net [185.246.84.56])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BF7D42D2496
-	for <sashiko-reviews@lists.linux.dev>; Tue, 30 Jun 2026 10:04:48 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=95.215.58.178
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F2F9B3E9C26
+	for <sashiko-reviews@lists.linux.dev>; Tue, 30 Jun 2026 10:28:24 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=185.246.84.56
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1782813890; cv=none; b=UgWJkgv+FITHMdaGnCAYUhZww6ed+fD/QTkm1o0VlOfz9/thP0a6bliSZza3dX3COAvq7nEfFMKA3uipKPqNP97ieNcDVO/XHfKNnDJBHd1E74f0vlmWEHSRldY6n0VMRTf1cmi7NalUriF9AVI04+V5lS+F6R7XlDLI2pRCOUk=
+	t=1782815307; cv=none; b=qE1U3+ZiATIhvn8ibE7HL41T3bsG1lE90yZn4K6QmsYNYPajt5rseoGkRPcqlxqRuTP/HvP3Nt5hWSz8M2mF6m2JeEnoOgKx3puyHaVrwcWQXpsiAkMd73qoA6cZXgdPjka/sQS1Lcuq9JFXvYjJyEusm0eJUJpP1UDyo9I5HHA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1782813890; c=relaxed/simple;
-	bh=tYdqggSTU0eUTRUtG2ICREbhztwMifrsi84mldUuOdg=;
-	h=Mime-Version:Content-Type:Date:Message-Id:Cc:Subject:From:To:
-	 References:In-Reply-To; b=Cg6wBxRxPqwkj8M34wcXsB3DjpJ/4aQrMQEDCaRgTCOrMpbCp/bSS2U2YzDA4/qr6ciK7C5QPr6IEx9nfmSaZose7CvxQ1NdWAjWmFy+v9Nff4ozg19YxJZFgwny2sb7vmEfzp0BM0keEOoY4qBCrXO7583r4Rz+UDvv2Y0cHWE=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linux.dev; spf=pass smtp.mailfrom=linux.dev; dkim=pass (1024-bit key) header.d=linux.dev header.i=@linux.dev header.b=WbxxYJwb; arc=none smtp.client-ip=95.215.58.178
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linux.dev
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linux.dev
+	s=arc-20240116; t=1782815307; c=relaxed/simple;
+	bh=iAQY6TCrDj8LfUpuZjFjTTB1GWYcGsCqzNYYlW2+uJs=;
+	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
+	 MIME-Version:Content-Type; b=BMcfLRqU0fpSbVa+sO4wK4VTd3UeEFS7YtsACZ65hosYAWkFPSOa/vzGpHENDRsmRetKnk8Of6bgyxgmy78S+QJenaMqXyglkKDXD2pT1R/VfWDHDQ/gkQlkQAFeJXxnTdx3JTSjou99WydiaaBJaGF/SYpI+4l0BI7EMon8P7I=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=bootlin.com; spf=pass smtp.mailfrom=bootlin.com; dkim=pass (2048-bit key) header.d=bootlin.com header.i=@bootlin.com header.b=A5lRI0nm; arc=none smtp.client-ip=185.246.84.56
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=bootlin.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=bootlin.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linux.dev header.i=@linux.dev header.b="WbxxYJwb"
+	dkim=pass (2048-bit key) header.d=bootlin.com header.i=@bootlin.com header.b="A5lRI0nm"
+Received: from smtpout-01.galae.net (smtpout-01.galae.net [212.83.139.233])
+	by smtpout-02.galae.net (Postfix) with ESMTPS id ADC421A0C75;
+	Tue, 30 Jun 2026 10:28:23 +0000 (UTC)
+Received: from mail.galae.net (mail.galae.net [212.83.136.155])
+	by smtpout-01.galae.net (Postfix) with ESMTPS id 7AC176025A;
+	Tue, 30 Jun 2026 10:28:23 +0000 (UTC)
+Received: from [127.0.0.1] (localhost [127.0.0.1]) by localhost (Mailerdaemon) with ESMTPSA id 5D3C1106F1D96;
+	Tue, 30 Jun 2026 12:28:22 +0200 (CEST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=bootlin.com; s=dkim;
+	t=1782815302; h=from:subject:date:message-id:to:cc:mime-version:content-type:
+	 content-transfer-encoding:in-reply-to:references;
+	bh=+45Kh3Satp3HBEK6If/oF4JoJaoBdx7zAqswznQZd8E=;
+	b=A5lRI0nmyKuAE7DExkUqwE3nvY8dreV4gtcQPOB0GX52Cj+7BpicSwuwNtlHwCRNZ9KnH4
+	JV3sNbXy6IiTZXvoyl+h+64ra9dtRJps61BbP4ADeCteWmLtvWPzxdyrF9/bImWU5Qan0t
+	zsk22dgw27mXa9URexNbfMuMCBr86TlrhX26gDbVyVbfY2NOgcKbCrIE64i3an4C046AAD
+	kFvkgF4G9TKP+tJ2DUzfrG/afQCVNxVONsGPeMh5W74SOTgWMXnxN7E/J3wJwoJEL8VK4I
+	VZDN+xWCWJ3qtue/K3BoRq6c+pH+SARBEnjlbpHeChQ4oIcvovKtfkeOYxwkYQ==
+From: Gregory CLEMENT <gregory.clement@bootlin.com>
+To: sashiko-reviews@lists.linux.dev
+Cc: linux-scsi@vger.kernel.org, linux-kernel@vger.kernel.org,
+ linux-rt-devel@lists.linux.dev
+Subject: Re: [PATCH] scsi: ufs: core: Avoid sleeping in hard interrupt
+ context when PREEMP_RT is enabled.
+In-Reply-To: <20260630102343.728131F000E9@smtp.kernel.org>
+References: <20260630-ufshcd-spinlock-sleep-fix-v1-1-339b05a1c6f4@bootlin.com>
+ <20260630102343.728131F000E9@smtp.kernel.org>
+Date: Tue, 30 Jun 2026 12:28:21 +0200
+Message-ID: <878q7wb9ve.fsf@BLaptop.bootlin.com>
 Precedence: bulk
 X-Mailing-List: sashiko-reviews@lists.linux.dev
 List-Id: <sashiko-reviews.lists.linux.dev>
 List-Subscribe: <mailto:sashiko-reviews+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:sashiko-reviews+unsubscribe@lists.linux.dev>
-Mime-Version: 1.0
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linux.dev; s=key1;
-	t=1782813877;
-	h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
-	 to:to:cc:cc:mime-version:mime-version:content-type:content-type:
-	 content-transfer-encoding:content-transfer-encoding:
-	 in-reply-to:in-reply-to:references:references;
-	bh=/o3Bb//lZA6jxEu1tVIEz7VRsC6xt3cTJJ+Aag4plFs=;
-	b=WbxxYJwbA+X92xFrlfqDZ1XKBS2fIteWH4gIxBeQ6uiGbxdhPP+JKauh+PsVnrkgU7TtG3
-	18XMQmlePJJmJ1+9pL5TC20jTIHpeHBhtCmdZAehF4BCeGenjAjldoWbJfQJunY2UZM3ah
-	erQoZ2nlVdLkDqylbRnRUVJE8+BScTs=
+MIME-Version: 1.0
+Content-Type: text/plain; charset=utf-8
 Content-Transfer-Encoding: quoted-printable
-Content-Type: text/plain; charset=UTF-8
-Date: Tue, 30 Jun 2026 10:04:27 +0000
-Message-Id: <DJMARS53FLR0.HUOA8X4VT5E2@linux.dev>
-Cc: <linux-rt-devel@lists.linux.dev>, <linux-kernel@vger.kernel.org>
-Subject: Re: [PATCH v3 16/16] mm: remove the __GFP_NO_OBJ_EXT flag
-X-Report-Abuse: Please report any abuse attempt to abuse@migadu.com and include these headers.
-From: "Brendan Jackman" <brendan.jackman@linux.dev>
-To: <sashiko-reviews@lists.linux.dev>, "Brendan Jackman"
- <jackmanb@google.com>
-References: <20260629-alloc-trylock-v3-0-57bef0eadbc2@google.com>
- <20260629-alloc-trylock-v3-16-57bef0eadbc2@google.com>
- <20260629160239.334E71F000E9@smtp.kernel.org>
-In-Reply-To: <20260629160239.334E71F000E9@smtp.kernel.org>
-X-Migadu-Flow: FLOW_OUT
+X-Last-TLS-Session-Version: TLSv1.3
 
-On Mon Jun 29, 2026 at 4:02 PM UTC, sashiko-bot wrote:
-> Thank you for your contribution! Sashiko AI review found 1 potential issu=
+Hello,
+
+> Thank you for your contribution! Sashiko AI review found 2 potential issu=
 e(s) to consider:
-> - [Medium] Incomplete removal of `__GFP_NO_OBJ_EXT` flag leaves the bit r=
-eserved in the core kernel.
+> - [Low] The static function `ufshcd_intr` becomes unused when `CONFIG_PRE=
+EMPT_RT` is enabled, causing a compiler warning.
+> - [Low] Typo in the newly added source code comment.
+
+Both of Sachiko's comments are valid. I am addressing these issues in
+the next version.
+
+Gregory
+
 > --
 >
-> commit d2006cc547e302003b4c27943f81bc40cdd90223
-> Author: Brendan Jackman <jackmanb@google.com>
+> commit 6afdc0b243918ce89eb55cea6349f608516d9d03
+> Author: Gregory CLEMENT <gregory.clement@bootlin.com>
 >
-> mm: remove the __GFP_NO_OBJ_EXT flag
+> scsi: ufs: core: Avoid sleeping in hard interrupt context when PREEMP_RT =
+is enabled.
 >
-> This commit removes the __GFP_NO_OBJ_EXT flag from the tools copy of
-> gfp_types.h. Its previous users have been converted to use
-> SLAB_ALLOC_NO_RECURSE or ALLOC_NO_CODETAG instead.
+> This commit addresses a sleeping-in-hard-irq context bug under PREEMPT_RT=
+.=20
+> It mitigates the issue by bypassing the hard IRQ handler and directly=20
+> registering the threaded interrupt handler when PREEMPT_RT is enabled.
 >
->> diff --git a/tools/include/linux/gfp_types.h b/tools/include/linux/gfp_t=
-ypes.h
->> index 6c75df30a281d..a93b8bd200b76 100644
->> --- a/tools/include/linux/gfp_types.h
->> +++ b/tools/include/linux/gfp_types.h
->> @@ -55,7 +55,6 @@ enum {
->>  #ifdef CONFIG_LOCKDEP
->>  	___GFP_NOLOCKDEP_BIT,
->>  #endif
->> -	___GFP_NO_OBJ_EXT_BIT,
+>> diff --git a/drivers/ufs/core/ufshcd.c b/drivers/ufs/core/ufshcd.c
+>> index d3044a3089b53..6d82658a1a66b 100644
+>> --- a/drivers/ufs/core/ufshcd.c
+>> +++ b/drivers/ufs/core/ufshcd.c
+>> @@ -11235,9 +11235,17 @@ int ufshcd_init(struct ufs_hba *hba, void __iom=
+em *mmio_base, unsigned int irq)
+>>  	 */
+>>  	ufshcd_readl(hba, REG_INTERRUPT_ENABLE);
+>>=20=20
+>> -	/* IRQ registration */
+>> +	/* IRQ registration
+>> +	 * In the case of PREMMP_RT, directly use the threaded
 >
-> [Severity: Medium]
-> Is it possible that the core kernel header updates were missed? The
-> changes in this patch only modify the tools copy of the header, which
-> causes it to diverge from the actual kernel definitions.
+> [Severity: Low]
+> This isn't a bug, but there is a typo in this comment ("PREMMP_RT" instead
+> of "PREEMPT_RT"). The commit subject also has a small typo ("PREEMP_RT").
 >
-> Looking at include/linux/gfp_types.h, ___GFP_NO_OBJ_EXT_BIT remains
-> reserved in the core kernel.=20
+>> +	 * interrupt to avoid using a spinlock (which could sleep)
+>> +	 * in the hard IRQ handler.
+>> +	 */
+>> +#ifdef CONFIG_PREEMPT_RT
+>> +	err =3D devm_request_irq(dev, irq, ufshcd_threaded_intr, IRQF_SHARED, =
+UFSHCD, hba);
+>> +#else
+>>  	err =3D devm_request_threaded_irq(dev, irq, ufshcd_intr, ufshcd_thread=
+ed_intr,
+>>  					IRQF_ONESHOT | IRQF_SHARED, UFSHCD, hba);
+>> +#endif
+>
+> [Severity: Low]
+> Will this cause a compiler warning for an unused function when building w=
+ith
+> CONFIG_PREEMPT_RT=3Dy?=20
+>
+> Because the reference to ufshcd_intr() is compiled out in the #else block=
+,=20
+> but its static definition remains unconditionally compiled earlier in the=
+=20
+> file:
+>
+> static irqreturn_t ufshcd_intr(int irq, void *__hba)
+> {
+>     ...
+> }
+>
+> Could this break builds that have CONFIG_WERROR=3Dy enabled due to the=20
+> -Wunused-function warning?
+>
+>>  	if (err) {
+>>  		dev_err(hba->dev, "request irq failed\n");
+>>  		goto out_disable;
+>
+> --=20
+> Sashiko AI review =C2=B7 https://sashiko.dev/#/patchset/20260630-ufshcd-s=
+pinlock-sleep-fix-v1-1-339b05a1c6f4@bootlin.com?part=3D1
 
-LOL, Sashiko is correct, I did not actually delete __GFP_NO_OBJ_EXT in
-this patch.
+--=20
+Gr=C3=A9gory CLEMENT, Bootlin
+Embedded Linux and Kernel engineering
+https://bootlin.com
