@@ -1,107 +1,156 @@
-Received: from us-smtp-delivery-124.mimecast.com (us-smtp-delivery-124.mimecast.com [170.10.133.124])
+Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B866F3FF1B1
-	for <sashiko-reviews@lists.linux.dev>; Tue, 30 Jun 2026 11:16:42 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=170.10.133.124
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 458DE401A26;
+	Tue, 30 Jun 2026 11:44:31 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1782818204; cv=none; b=kdHJKBDVMgP1K3bHTNpS4Q1998nyC+ZcdKF9jIzwIaBRA762pXtSgA96AYfJcjK9bd0JiyyMYzH4NZxN08OP4p1voywAAvxd09wUV4qGYBD+s7cApy/5vNAzQRfP876/fTGCTs+5W0WZOveDslosIpBUY2VPtN9bukk6TBu3Fz4=
+	t=1782819872; cv=none; b=p+o4YX5L26KQaoPAYIjLBVFfdLTEWxouehYIwzMgz1w9qVjKkUSiE0gV0AGIJxuhlQwriWZimwCFJFrmXDnzLJLE+KvvSx+tK0xQNR1adCbozoWeJh53VHt8GvLlCKGQGJgWY+I4m+pbzoA3OkSIfve5ZvOYD/npSj5EzpP5+yI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1782818204; c=relaxed/simple;
-	bh=bEON7K8Vr8Kx5q5byvQDSczhV13SQRe7zMRCYJBiu/w=;
-	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
-	 MIME-Version:Content-Type; b=GzrZZ5kR9CAVFgU2awR1/18vk9vJuBmWxI7NnBaeGxMTzSdf6VCaCmTpzIzo46Wa8My6twBj2+0rPXH7iaR3Auyri8ZqpUPBg52EjuRApL6A0EoIRx6qc1ubia8/4JReZm6zPENynGlGxPgEQdLU+48CG8QBJ7wlC29I6WUuuDE=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=redhat.com; spf=pass smtp.mailfrom=redhat.com; dkim=pass (1024-bit key) header.d=redhat.com header.i=@redhat.com header.b=ZL2iACrJ; arc=none smtp.client-ip=170.10.133.124
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=redhat.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=redhat.com
+	s=arc-20240116; t=1782819872; c=relaxed/simple;
+	bh=5yq77nu9XP0da0HQr/0ginv99dRYo67hL0d3GpMJoM0=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=ALNvD9yfTpqsUpzesTz7SPMtsYiJ4iAnvIfineAH7I9z809zsV0rYOioFNBdHC8IbD1JMXyxYpxTZthU8vRVk5/bLCf6rGztjOf57nmax7+yMVntiQnEYIPOa0ehlor4axKcldYyszNsFNvru7d6qy7JAKvU60/KqMH6Z8DF3qQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=ERiLVI57; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=redhat.com header.i=@redhat.com header.b="ZL2iACrJ"
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
-	s=mimecast20190719; t=1782818201;
-	h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
-	 to:to:cc:cc:mime-version:mime-version:content-type:content-type:
-	 in-reply-to:in-reply-to:references:references;
-	bh=uK4u7OlksOPt/6U/1SRzlgkV9O8eOQE5cC4CBUyYFcg=;
-	b=ZL2iACrJUc2zI0wlNzNlxO8yeYuVofR3ZrNbk+cN98B2bIRyq+f9xgGyjr5vH8rpCPeWEZ
-	+vXMhPTGD75xPQ+AFVkJgASTlpOIt4dPhKa+zmH1WZYcgtfwQ90NOC/BiclTEzfKsuH5ry
-	tBxi09q9ktyXyFbskkW4qdlxDtwYnTY=
-Received: from mail-wm1-f71.google.com (mail-wm1-f71.google.com
- [209.85.128.71]) by relay.mimecast.com with ESMTP with STARTTLS
- (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-260-uRWND3oyNuW_pp4quBZj3Q-1; Tue, 30 Jun 2026 07:16:39 -0400
-X-MC-Unique: uRWND3oyNuW_pp4quBZj3Q-1
-X-Mimecast-MFC-AGG-ID: uRWND3oyNuW_pp4quBZj3Q_1782818198
-Received: by mail-wm1-f71.google.com with SMTP id 5b1f17b1804b1-493a6135724so21233505e9.0
-        for <sashiko-reviews@lists.linux.dev>; Tue, 30 Jun 2026 04:16:39 -0700 (PDT)
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20251104; t=1782818198; x=1783422998;
-        h=mime-version:message-id:date:references:in-reply-to:subject:cc:to
-         :from:x-gm-gg:x-gm-message-state:from:to:cc:subject:date:message-id
-         :reply-to;
-        bh=uK4u7OlksOPt/6U/1SRzlgkV9O8eOQE5cC4CBUyYFcg=;
-        b=Ht8iChkkT06pciDeiIeQ3cWurWBdQuDnYDdL1Q7553HqH1n14WbHxsmpGo7Suq79HL
-         6rZGDAdHwbkNitKeM2qmUAv2UfSArBhU22x8YLlFkB9f5FYROx9FF+hY9cka6ZYrVdHZ
-         A2bOfFwaCWSKJ3Tw9jUM0Ljq56Dt9bNcRAQpZk2YpPpMOGxuQBBi7I89KJWylCdbr2LS
-         1TSjfk5OoDvKP4ET8aVOdDvMwd+Cs8n/uD407ZaYTfr1oynWls4X7ZUYMj2Hs/bG79E9
-         LH8UPm0Gtyl60EpYuRxBM5d6NLAwfwn32M06e/rn0A/H9zv0tOsmbUIHK+i+irpXExn1
-         r4Ew==
-X-Forwarded-Encrypted: i=1; AFNElJ+MEKVRZMVNqVbJHfax/VUgdvnnRgavaAuCGgLtJtGIwiKyYFkY88FkEGuUmYfeWOQVM3TeXj1bsodPfNItItM=@lists.linux.dev
-X-Gm-Message-State: AOJu0YzfK+dczHBaGn1NX4GLTmsBNXrtMQvQY90J2VLsGMuPLaCIk3g+
-	lG2nipNMp6syJNCM7VdZKehABWSc1/TIBRZ9qUczJz4RlRDkx9okT2yXomw1EP+9xvVPuuXGSJ8
-	tyKNEOIJLBrAm1exwMES+O5Lfumo8LNK7jmNzXFl2y01zOHWDxy8aAHOOvNl/H4tuToLDKQ==
-X-Gm-Gg: AfdE7cm5dfnomBpE5zZJpAY4KcqfjydJE7XFzWnKrwtynnO5u8EKpp/20SBf6bfWfHX
-	d2gXJvTSYQynJiM0YbXviVdaJ1LMzzCKo+ZUsr5BEWRu2Uq9CU/bY3f8z602h/h+x2teGnf9hZh
-	Ch2EMOv9ZNvUTrWMoUT7h74vCHyUIlFh02Bkno0wQxjzWO8UvIfspEfXAAuj6Pwl1d2VbcHL0bB
-	x3KKNHYXJ6ENlaPLnay/nZ3nimzwjcUwEOiA+2u36M+x78X7eEeCvvLlEW6KvXzEVipqSVYXHWR
-	iXhLaTjPCKzQmUGqFuQv/PCvpVzS5U4+MSiu351QX8+Bpu5mZMMIIkRU9byiJCm/2VkgZDt6eQE
-	09XuolVQQvDJkYWN7k+8h4J2M7EunBdiXXUGS4bmKhfCoYFka4D4YxcVsH2+B+RYH74tfbg==
-X-Received: by 2002:a05:600c:4752:b0:493:a6b7:cae5 with SMTP id 5b1f17b1804b1-493bda7170amr1944675e9.28.1782818198015;
-        Tue, 30 Jun 2026 04:16:38 -0700 (PDT)
-X-Received: by 2002:a05:600c:4752:b0:493:a6b7:cae5 with SMTP id 5b1f17b1804b1-493bda7170amr1944225e9.28.1782818197518;
-        Tue, 30 Jun 2026 04:16:37 -0700 (PDT)
-Received: from localhost (62-151-111-63.jazzfree.ya.com. [62.151.111.63])
-        by smtp.gmail.com with ESMTPSA id 5b1f17b1804b1-493b8ccc7d7sm64473555e9.2.2026.06.30.04.16.36
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Tue, 30 Jun 2026 04:16:36 -0700 (PDT)
-From: Javier Martinez Canillas <javierm@redhat.com>
-To: Amit Barzilai <amit.barzilai22@gmail.com>
-Cc: airlied@gmail.com, dri-devel@lists.freedesktop.org,
- maarten.lankhorst@linux.intel.com, mripard@kernel.org,
- sashiko-reviews@lists.linux.dev, simona@ffwll.ch, tzimmermann@suse.de
-Subject: Re: [PATCH 1/3] drm/ssd130x: fix column and row end address in
- partial updates for ssd132x
-In-Reply-To: <20260630110806.23204-1-amit.barzilai22@gmail.com>
-References: <87echococs.fsf@ocarina.mail-host-address-is-not-set>
- <20260630110806.23204-1-amit.barzilai22@gmail.com>
-Date: Tue, 30 Jun 2026 13:16:35 +0200
-Message-ID: <87bjcscm7g.fsf@ocarina.mail-host-address-is-not-set>
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="ERiLVI57"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id C467D1F000E9;
+	Tue, 30 Jun 2026 11:44:26 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=kernel.org;
+	s=k20260515; t=1782819871;
+	bh=2KBDOll4GMj8Xfu4+L85xz6BotaANVhD9Ce6vFh6LHI=;
+	h=Date:From:To:Cc:Subject:References:In-Reply-To;
+	b=ERiLVI57eEZpqup9A7Um99SlDXCimXro4YdJYEivIUVgGFlwn7spuweuA2iufdsi/
+	 yHis0b92rWQk8YfxXmUgT1GJ0oyH/4PwVwl3I2uOm5hG2XfV6pheU2w71PTNZLSRKp
+	 c8g8dqRAECK1sEUzJxExkvnIVmQVKd9/lDrVQozsyHZa3Jd+XLqmwdiCBYZhlnzk9d
+	 /xkVSsbxM3lNIGL6zQAqyFFp7q5pJSZyJ0s3zuS8Gg56KuP3LXepVnpddqLAUdTgHr
+	 tQYRpQeL2sy+eEtAqEhJcRMhngohKbN+pn9x35VWoQtRpmPQ/n7ajbOLkyiGJ5KsU3
+	 1q9975ubJ9gbw==
+Date: Tue, 30 Jun 2026 13:44:22 +0200
+From: Manivannan Sadhasivam <mani@kernel.org>
+To: Sherry Sun <sherry.sun@nxp.com>
+Cc: Krzysztof Kozlowski <krzk@kernel.org>, 
+	"sashiko-reviews@lists.linux.dev" <sashiko-reviews@lists.linux.dev>, 
+	"manivannan.sadhasivam@oss.qualcomm.com" <manivannan.sadhasivam@oss.qualcomm.com>, "linux-pci@vger.kernel.org" <linux-pci@vger.kernel.org>, 
+	"robh@kernel.org" <robh@kernel.org>, "Frank.Li@kernel.org" <Frank.Li@kernel.org>, 
+	"conor+dt@kernel.org" <conor+dt@kernel.org>, "devicetree@vger.kernel.org" <devicetree@vger.kernel.org>, 
+	"imx@lists.linux.dev" <imx@lists.linux.dev>, Hongxing Zhu <hongxing.zhu@nxp.com>
+Subject: Re: [PATCH 1/2] dt-bindings: connector: pcie-m2-e: Add 3.3Vaux
+ supply support
+Message-ID: <yzittnr2ebvzcozvoquvjiuxxh4a7wn5g4lqdyqmv663jutjii@bhfrxrs4oga6>
+References: <20260609033840.2006078-2-sherry.sun@oss.nxp.com>
+ <20260609034408.BC69D1F00893@smtp.kernel.org>
+ <20260609-unique-magnificent-eel-eb623f@quoll>
+ <VI0PR04MB121140EFB8E614326D799503A921A2@VI0PR04MB12114.eurprd04.prod.outlook.com>
+ <mvxoynvocxcalxcwogbiovg5yurjczxqfu2fqkji33bunmlplz@zxqjsdjts65j>
+ <VI0PR04MB12114DBDD65F25FB615EA8967921A2@VI0PR04MB12114.eurprd04.prod.outlook.com>
+ <ihrmgh6etb2n5zqjbrykfjjms4a6zgpzwjgrd3rvy24jufbss7@f4nfxrp7jksy>
+ <VI0PR04MB12114DA25D08329D3DC2C3ADA921B2@VI0PR04MB12114.eurprd04.prod.outlook.com>
+ <6ouch5ybqk7gws3yrvc2sylq67nioqva6klc7o7wcgbpobs2lu@ioscmsg6ufyx>
+ <VI0PR04MB1211485955B552B1F2207680592182@VI0PR04MB12114.eurprd04.prod.outlook.com>
 Precedence: bulk
 X-Mailing-List: sashiko-reviews@lists.linux.dev
 List-Id: <sashiko-reviews.lists.linux.dev>
 List-Subscribe: <mailto:sashiko-reviews+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:sashiko-reviews+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-X-Mimecast-Spam-Score: 0
-X-Mimecast-MFC-PROC-ID: 9LLKgVf4t1m-PHw07EzR2ikI2r5xBQ8RzE_tTuPFC7s_1782818198
-X-Mimecast-Originator: redhat.com
-Content-Type: text/plain
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+Content-Transfer-Encoding: 8bit
+In-Reply-To: <VI0PR04MB1211485955B552B1F2207680592182@VI0PR04MB12114.eurprd04.prod.outlook.com>
 
-Amit Barzilai <amit.barzilai22@gmail.com> writes:
+On Fri, Jun 12, 2026 at 10:52:10AM +0000, Sherry Sun wrote:
+> > On Thu, Jun 11, 2026 at 03:59:28AM +0000, Sherry Sun wrote:
+> > > > On Wed, Jun 10, 2026 at 10:13:00AM +0000, Sherry Sun wrote:
+> > > > > > On Wed, Jun 10, 2026 at 08:40:54AM +0000, Sherry Sun wrote:
+> > > > > > > > On Tue, Jun 09, 2026 at 03:44:08AM +0000,
+> > > > > > > > sashiko-bot@kernel.org
+> > > > wrote:
+> > > > > > > > > Thank you for your contribution! Sashiko AI review found 1
+> > > > > > > > > potential
+> > > > > > > > issue(s) to consider:
+> > > > > > > > > - [Medium] The `vpcie3v3aux-supply` property describes a
+> > > > > > > > > non-existent
+> > > > > > > > hardware feature on the M.2 Key E connector to work around a
+> > > > > > > > software policy.
+> > > > > > > >
+> > > > > > > > Feels valid. Describe which pin on M2 connector are you
+> > representing.
+> > > > > > > >
+> > > > > > >
+> > > > > > > Refer to PCI Express M.2 Specification r5.1 sec3.1.1 Power
+> > > > > > > Sources and Grounds.
+> > > > > > >
+> > > > > > > PCI Express M.2 Socket 1 utilizes a 3.3 V power source. The
+> > > > > > > voltage source, 3.3 V, is expected to be available during the
+> > > > > > > system’s stand-by/suspend state to support wake event
+> > > > > > > processing on the communications card.
+> > > > > > >
+> > > > > > > But the current vpcie3v3-supply may be gated off during system
+> > > > suspend.
+> > > > > > > So I  tried to add vpcie3v3aux-supply to let this 3.3 V power
+> > > > > > > source always on for PCIe M.2 Key E connector. That means
+> > > > > > > vpcie3v3aux-supply and vpcie3v3-supply actually refer to the
+> > > > > > > same 3.3 V
+> > > > power source.
+> > > > > > >
+> > > > > > > @Mani, do you think this is reasonable? Or do you have any
+> > > > > > > other better solutions? Thanks!
+> > > > > > >
+> > > > > >
+> > > > > > There is no Vaux defined in the M.2 spec. So you cannot define
+> > > > > > that supply in the binding. You can define the custom Vaux
+> > > > > > supply as a fixed regulator in DT and mark it always on so that
+> > > > > > it is keeps supplying
+> > > > 3.3v to the card.
+> > > > > >
+> > > > >
+> > > > > Hi Mani, thanks for the suggestion, but adding an always on
+> > > > > regulator may cause board power waste, current solution ensures
+> > > > > the 3.3v regulator is only enabled when M.2 connector needs to work .
+> > > > >
+> > > >
+> > > > What do you mean by 'need to work'? For getting the M.2 card to
+> > > > work, you already have 3.3v supply. If you want the board to be
+> > > > always ON, then you need to supply 3.3Vaux, which should be always ON
+> > too.
+> > > >
+> > > > But who is turning off vpcie3v3-supply? M.2 connector driver or the
+> > > > platform?
+> > > >
+> > >
+> > > Hi Mani,
+> > > I'm not sure if I understand your question correctly, actually it's
+> > > the platform driver that calls the M.2 connector driver to turn off vpcie3v3-
+> > supply.
+> > > Take i.MX pci device as an example,
+> > > pm_suspend() -> imx_pcie_suspend_noirq() -> imx_pcie_host_exit() ->
+> > > pci_pwrctrl_power_off_devices() -> pwrseq_power_off() ->
+> > > pwrseq_unit_disable() -> pwrseq_pcie_m2_vregs_disable()
+> > >
+> > > Taking back to M.2 Specification:
+> > > PCI Express M.2 Socket 1 utilizes a 3.3 V power source. The voltage
+> > > source, 3.3 V, is expected to be available during the system’s
+> > > stand-by/suspend state to support wake event processing on the
+> > > communications card.
+> > >
+> > > Per my understanding of the above, the M.2 Spec actually suggest the
+> > > 3.3 V power source should not be turned off.
+> > > Should we simply enable the 3.3 V power source in
+> > > pwrseq_pcie_m2_probe() and remove the
+> > pwrseq_pcie_m2_vregs_unit_data?
+> > >
+> > 
+> > Just don't call pci_pwrctrl_power_off_devices() from the suspend path.
+> > 
+> 
+> Hi Mani, do you mean use dw_pcie_rp::skip_pwrctrl_off flag to avoid powering
+> off devices during suspend and also not power on the devices in the init path?
+> 
 
-> Javier Martinez Canillas <javierm@redhat.com> writes:
->> Up to you. As said, I don't know were we draw the line so I will let you decide
->> if you want a v2 with the tags.
->
-> I don't believe the usage was enough to warrant the tag, since the LLM only reviewed changes I'd
-> already written and reasoned out myself - let's keep v1 as is.
->
+Yes, something along those lines.
 
-Works for me. As metioned, I'll try to review your patches this week.
+- Mani
 
 -- 
-Best regards,
-
-Javier Martinez Canillas
-Core Platforms
-Red Hat
-
+மணிவண்ணன் சதாசிவம்
